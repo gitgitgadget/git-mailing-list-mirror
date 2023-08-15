@@ -2,98 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0BD3C41513
-	for <git@archiver.kernel.org>; Tue, 15 Aug 2023 22:12:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CAE8FC04A94
+	for <git@archiver.kernel.org>; Tue, 15 Aug 2023 22:17:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239589AbjHOWLm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Aug 2023 18:11:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41646 "EHLO
+        id S238679AbjHOWQj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Aug 2023 18:16:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239393AbjHOWLL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Aug 2023 18:11:11 -0400
-Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DA7E1FEC
-        for <git@vger.kernel.org>; Tue, 15 Aug 2023 15:11:09 -0700 (PDT)
-Received: by mail-yb1-xb2a.google.com with SMTP id 3f1490d57ef6-d645b95c7b8so5097675276.0
-        for <git@vger.kernel.org>; Tue, 15 Aug 2023 15:11:09 -0700 (PDT)
+        with ESMTP id S239399AbjHOWQc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Aug 2023 18:16:32 -0400
+Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C6D5198C
+        for <git@vger.kernel.org>; Tue, 15 Aug 2023 15:16:31 -0700 (PDT)
+Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-583b3aa4f41so61621577b3.2
+        for <git@vger.kernel.org>; Tue, 15 Aug 2023 15:16:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1692137469; x=1692742269;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1692137791; x=1692742591;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=K8wuaTzcZIkuIqjtgAVuxTYWKbBNvowWYxFT20STKdo=;
-        b=gFb2Dvqn0S7JYSRfU0uY5frrkPRBK1lSUVB2NfyTiaIGjuQuazUvk8jnKiO4US39mA
-         E2KuMoAaHCS4qkNTDwo+S3zrCpVYHa8iXVO90Sy7uHlvuGmpjNRKMwQi0ZFRI6hZLpa4
-         PuYW1eWzEv2UyN4rUVuEFPsQRcvXYwq9MJ8T86VsSipF9Hbfh+MHtOG3BniK1IcReMEQ
-         NxBl3atS8CNomI4eFnpxTpUHyE0RFtoFvcb4mNNPOfTw1Ds2KVWpc9ebg3u8/GQXagi0
-         OGLiiYcn+pmKgn2RpS4h+1xDlhe838tDhVt6IdjDt19ht/DRf6n+O+F/75oT49uJTfNv
-         sXKg==
+        bh=6rSbVOk19lfgiiy3NU4dIrbLQkMABJ+4ZMgNa0A1z1A=;
+        b=eDC+qTmdaEfZ94MKncFLSro4sTyREDI2sx88WM3RHOHt9/g3uvPThSAb8VsF8DvkFi
+         t/3smhagCg86hPBy22iG1bpydg/xhSpb5nRqBvWmoDSPz7O47d0GpCwsbFtsBLA1Mfju
+         FlJJf0/Z72yTUqkLzUQtphyV8NoNa/QxP5WA81dtNI2FPuObvykFFi6ibX0vur0ACAkw
+         CZxHZYTCwVEBTqY9sBsdSsqeKLVqJgV+YDo1Quo379eflQQqspgCd2Un7g2BjAqFCAqL
+         RZ6WLjivgsk7ekETVmOmFmwx52AharwIW6pJxz6Jss8s5A3a5QSUhOgMZ9yDGKHrvOJD
+         PdBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692137469; x=1692742269;
+        d=1e100.net; s=20221208; t=1692137791; x=1692742591;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=K8wuaTzcZIkuIqjtgAVuxTYWKbBNvowWYxFT20STKdo=;
-        b=N5VmyHDTMeCDfeIt3Py0H0uDSpwJKuKxZtfTzBszgcXBEkwtfO+k6DUyD7wWd9o3rV
-         oXO0HvayjJd+gcaHq4n2TsJZwQYTdH+lQSbXracPf3DntW4+vn3iCtFK5pBv82e+/FkX
-         ZAulTMgHhB6jODRGhHQrU+BVH0hvcG16tfyNSsWcyenWhTBx7THQMztM6wWUyfgeoqzq
-         Diu4biYlhpJm+MjgRMOX7n2XTuUyknBK+SFlVPt34ChSvErBUnCKIAGiEGco7LD+I7kw
-         XClAHScDbYo+XXHuVC6PKU1uYFHp6nX8K4lvMQB1cbzbRkTFln0BuT6Uj4Kf7sSlFwsy
-         HQcA==
-X-Gm-Message-State: AOJu0YwfqdztwFlnfyG1899Y5OGry/uF9DdPq3YqGC/BkM6Q33GqlMJ+
-        zMqHXd3w6GJdOnliA9EQOVyD9w==
-X-Google-Smtp-Source: AGHT+IFZEZ+d5MTo6nNfGU194w38cSKfdNWr5+8unVafBneGCfLuBCjvf/MiatsFDeo8JK9cs9B8vw==
-X-Received: by 2002:a25:50c4:0:b0:d10:7acb:24e0 with SMTP id e187-20020a2550c4000000b00d107acb24e0mr53794ybb.41.1692137468697;
-        Tue, 15 Aug 2023 15:11:08 -0700 (PDT)
+        bh=6rSbVOk19lfgiiy3NU4dIrbLQkMABJ+4ZMgNa0A1z1A=;
+        b=Mn3yyplfJwVs4NZMvnIVdCBG8YefiF04K73bNqIC+4UL4zvfeKIt9xSkmOKlAilfzf
+         YvamiBEGsmgT2o0Ur0aL4N1dzvTOf8Psr7PRrf0+TuON3O7eg29ag9q6K7jkw8KipIwZ
+         tKEPNqOLGQbPMbGXp3PcZ8/CWBA9zlZO3qtP/zQnlpfb3lLXNoKD6Fis9mJdjIIu4vkb
+         pvIMcLhhnZ/P+QFJ8SJlE2+eC3+uVpsPhNMvjLWFSnjEfi2WDFANFfw1qJRhGNY+8TLF
+         5TYaeYp46Dkc1P2jlU+IUWJ69Oa9MiayI8XEcpIRrXmUuYZkw2edRu462lvCBcPsXyk/
+         4JBw==
+X-Gm-Message-State: AOJu0YzPKRXXsl3S8Xm0jy/ZU6aMCpibT4bJdDpl/ezqmQCDefc5OzXy
+        F17Q/KayDFYeh79zxVJ9M/dwOw==
+X-Google-Smtp-Source: AGHT+IGA5fOD6pEvf44l77ZEee4un3YAnBaUxfus+wkiXbzMLy+HVFuakI5doFm6Dk+gcHFCZocv5g==
+X-Received: by 2002:a81:4755:0:b0:571:11ea:b2dd with SMTP id u82-20020a814755000000b0057111eab2ddmr13963901ywa.32.1692137790786;
+        Tue, 15 Aug 2023 15:16:30 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id p185-20020a2542c2000000b00d1890dac6a7sm3181135yba.29.2023.08.15.15.11.08
+        by smtp.gmail.com with ESMTPSA id s4-20020a0dd004000000b005794a9576f0sm3648906ywd.9.2023.08.15.15.16.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Aug 2023 15:11:08 -0700 (PDT)
-Date:   Tue, 15 Aug 2023 18:11:07 -0400
+        Tue, 15 Aug 2023 15:16:30 -0700 (PDT)
+Date:   Tue, 15 Aug 2023 18:16:29 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
-Subject: Re: [Bug] In `git-rev-list(1)`, using the `--objects` flag doesn't
- work well with the `--not` flag, as non-commit objects are not excluded
-Message-ID: <ZNv3+xOCi920StXO@nand.local>
-References: <CAOLa=ZQmjroDiOcUsu_MHtQ-88QHU9qeZPOPh+KJJ3dFoF2q0A@mail.gmail.com>
- <xmqqttt0hzl2.fsf@gitster.g>
+To:     Andy Koppe <andy.koppe@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: main != master at github.com/git/git
+Message-ID: <ZNv5PQlkn6tbUcH7@nand.local>
+References: <20230715103758.3862-1-andy.koppe@gmail.com>
+ <20230715160730.4046-1-andy.koppe@gmail.com>
+ <kl6l351j22dr.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <CAHWeT-ZA8f-TGRwDHixAvi5kddVBbuK8LpVGJ9cjYZMsMk5ODw@mail.gmail.com>
+ <xmqq7cpwjhr1.fsf@gitster.g>
+ <006574bd-4d53-495e-8cfe-677ede521908@gmail.com>
+ <xmqq350kjfk8.fsf@gitster.g>
+ <ce5d20db-2220-45dd-8c39-2a52e0f9f816@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqttt0hzl2.fsf@gitster.g>
+In-Reply-To: <ce5d20db-2220-45dd-8c39-2a52e0f9f816@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 15, 2023 at 12:31:37PM -0700, Junio C Hamano wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
+On Tue, Aug 15, 2023 at 08:29:43PM +0100, Andy Koppe wrote:
+> On 15/08/2023 20:01, Junio C Hamano wrote:
+> > > See [1], where main currently is at v2.41.0.
+> > >
+> > > [1] https://github.com/git/git/tree/main
+> >
+> > Ah, that one.  The CI job is unfortunately attached to that tree and
+> > updating 'master' and 'main' with the same commit at the same time
+> > wastes CI cycles, so I had to tentatively stop updating it.
+> >
+> > It used to be that 'main' was set to lag behind 'master' by 24 hours
+> > or so to prevent the problem---CI notices that the commit updated
+> > 'main' has been already dealt with 24 hours ago at 'master' and
+> > refrains from wasting time on it.  But resurrecting it would still
+> > make folks confused about how 'main' is different from 'master'.
+> > Perhaps it is a good time to remove stale 'main' and keep only
+> > 'master' there?
 >
-> > If you notice here, the objects
-> > `8baef1b4abc478178b004d62031cf7fe6db6f903`,
-> > `086885f71429e3599c8c903b0e9ed491f6522879` and
-> > `7a67abed5f99fdd3ee203dd137b9818d88b1bafd` are included in the output,
-> > these objects are reachable from
-> > `91fa9611a355db77a07f963c746d57f75af380da` and shouldn't have been
-> > included since we used the `--not` flag.
->
-> For performance reasons, we cannot afford to enumerate all objects
-> that are reachable from --not objects and exclude them from the
-> output.  So it is a balancing act to decide where to draw the line.
+> An alternative might be to exclude one of the branches in the workflow file,
+> as per [1].
 
-As a hack, you can exploit the existing bitmap traversal routine to
-build up an exact mapping of what is and isn't on either side of your
-reachability query.
+I think that this should be relatively straightforward to do, and would
+be preferable to dropping 'main'.
 
-IOW, if you run:
+Here's an (untested) patch that should do the trick:
 
-    git repack -ad --write-bitmap-index
+--- >8 ---
+diff --git a/.github/workflows/check-whitespace.yml b/.github/workflows/check-whitespace.yml
+index a58e2dc8ad..764f46b21f 100644
+--- a/.github/workflows/check-whitespace.yml
++++ b/.github/workflows/check-whitespace.yml
+@@ -8,6 +8,8 @@ name: check-whitespace
+ on:
+   pull_request:
+     types: [opened, synchronize]
++    branches_ignore:
++      - main
 
-and then repeat the rev-list query with `--use-bitmap-index`, you should
-get exact results.
+ # Avoid unnecessary builds. Unlike the main CI jobs, these are not
+ # ci-configurable (but could be).
+diff --git a/.github/workflows/l10n.yml b/.github/workflows/l10n.yml
+index 6c3849658a..f6767a73d2 100644
+--- a/.github/workflows/l10n.yml
++++ b/.github/workflows/l10n.yml
+@@ -1,6 +1,12 @@
+ name: git-l10n
 
-Note that this will only work if pack.useBitmapBoundaryTraversal is set
-to false, since the boundary-based traversal that is behind that
-configuration option is susceptible to the same one-sided error.
+-on: [push, pull_request_target]
++on:
++  push:
++    branches_ignore:
++      - main
++  pull_request_target:
++    branches_ignore:
++      - main
+
+ # Avoid unnecessary builds. Unlike the main CI jobs, these are not
+ # ci-configurable (but could be).
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index 079645b776..eaaf6a9151 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -1,6 +1,12 @@
+ name: CI
+
+-on: [push, pull_request]
++on:
++  push:
++    branches-ignore:
++      - main
++  pull_request:
++    branches-ignore:
++      - main
+
+ env:
+   DEVELOPER: 1
+--- 8< ---
+
+> [1] https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#example-excluding-branches
 
 Thanks,
 Taylor
