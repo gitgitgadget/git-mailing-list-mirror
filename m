@@ -2,141 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B044C0015E
-	for <git@archiver.kernel.org>; Tue, 15 Aug 2023 14:02:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 694C4C001B0
+	for <git@archiver.kernel.org>; Tue, 15 Aug 2023 15:26:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237487AbjHOOCL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Aug 2023 10:02:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54888 "EHLO
+        id S236572AbjHOPZ6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Aug 2023 11:25:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237476AbjHOOBl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Aug 2023 10:01:41 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AE39199A
-        for <git@vger.kernel.org>; Tue, 15 Aug 2023 07:01:39 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id ffacd0b85a97d-31956020336so2728627f8f.0
-        for <git@vger.kernel.org>; Tue, 15 Aug 2023 07:01:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692108097; x=1692712897;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=f4sMRN1Z5on9wwMXCMmgo/qYoMXdNoLucHoq3z36LvY=;
-        b=ay9z//70TCxJ0dehgz8mXvJECittzx4CU9Qc2+ssdPESkWM9xpa8aqQRSisg/MlKYi
-         vKx3yDNlZSV+1V4Eeu1wd2S65KW0ddvP5QE+nc7MmV48hGTle28wlb45iVxKlRzOXKpS
-         70jkITUglVsy0w0+QyjBmO+jp6JkUCJAmsE7eaZLcfqHTr0Y6MUOTdq/mLGZyfKgxG2f
-         8KupxCyOmUsKYQ3BX82ZQZPLTqtYZNun+aXbY7OyNYDXnSwZWYjZYB36ITIZpLylKt2x
-         JE5xnI+b73wmYW270ySMg5IT4H9oqQlv+ikhoxXOt/2Gf1BYOLC3kI8Tj/EdZjZ3slA0
-         DCBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692108097; x=1692712897;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=f4sMRN1Z5on9wwMXCMmgo/qYoMXdNoLucHoq3z36LvY=;
-        b=OBPAlgUL5oSR+fpEEw4wjxV/pu8hYcNbqlP34VfbmqIkt843tGHPOlfSZowWhiIYm1
-         Q5dI6w1BtHudGrVga/5ccPzieEA3dbh4DjOv8A+boxPYqJCwI+UxpW7eHtlCjzOn3380
-         GzoToLUPPm7VpXV8yyQlWBB9D3s/H4St/Guan6/iRyEk5Wj1Lsl9V9H97MzH4UxTyoXf
-         U1azr0NwtMSxK8yWv+hdPMe61WjINccKmDFBXwZKSoyhhxajconkjAifvwM7T06X3xqG
-         J2JtmkyyTYRgI9zVOSgF4v5I4jhB9iY3VQFCMu8yv0O0KNZaIURHPLt98rVW43fFruuk
-         GltA==
-X-Gm-Message-State: AOJu0YxDMH+BnWwqwUUzTYqN2ZM81tMb9K0heSGAOjLVqegp1PWY5J8Z
-        YIoaRLMGxMH/DmqctIISeg0=
-X-Google-Smtp-Source: AGHT+IFConkEEh73WylaAEHe3UhDYc97kHryjsEMN+9aZaza7Ze9SeCyeQIo5VWVPyZs7NjNeheL5w==
-X-Received: by 2002:adf:e90e:0:b0:317:59a6:6f68 with SMTP id f14-20020adfe90e000000b0031759a66f68mr1999968wrm.0.1692108097228;
-        Tue, 15 Aug 2023 07:01:37 -0700 (PDT)
-Received: from [192.168.1.212] ([90.242.223.1])
-        by smtp.gmail.com with ESMTPSA id j4-20020adfff84000000b003142ea7a661sm18106438wrr.21.2023.08.15.07.01.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Aug 2023 07:01:36 -0700 (PDT)
-Message-ID: <8b629666-ca43-4a38-ba70-1c017d547984@gmail.com>
-Date:   Tue, 15 Aug 2023 15:01:36 +0100
+        with ESMTP id S238022AbjHOPZr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Aug 2023 11:25:47 -0400
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A3A4E74
+        for <git@vger.kernel.org>; Tue, 15 Aug 2023 08:25:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+ s=s29768273; t=1692113134; x=1692717934; i=tboegi@web.de;
+ bh=pHmS9ff+soygQD9TVI1BCAlAay/Ba3D/nJUylivDuIE=;
+ h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+ b=p7OyVJutOFBaV9Mi0CBj7e7GmAxjZJOR/nV4k+7W4MO76CSVYSUqbGIi4vlpcJ/onZGlKi8
+ V9QPv1hvGr8du93nlr06NIq5NJmzWuQUIo4oiy7eEzODhqC+b5Iawfs/r3e0iiXW9XAryspgz
+ tJU6HiBAqMuDOhG+sKq2KwpgfgLJ3jV5guvwx2zmad4F+c2zteHfyfSUUK7k9CmVjK7VPH6Tx
+ md0/KKkUgzRTZRFTkL0/lZ0+2SzckRoS/YVmuMP4WhjPJE5umI8dDlQwZ8qBuOFUaY/VzC+9F
+ G0/FXPYc8vvRU7jo+5iRv5sMNSZSLdk2FHpRmLsJq40jOHsEMz4Q==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MWz8l-1qGKyV1L4r-00XKds; Tue, 15
+ Aug 2023 17:25:34 +0200
+Date:   Tue, 15 Aug 2023 17:25:33 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     phillip.wood@dunelm.org.uk
+Cc:     git@vger.kernel.org, friebetill@gmail.com,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v1 1/1] git stash needing mkdir deletes untracked file
+Message-ID: <20230815152511.suipgnzr2wgolmsx@tb-raspi4>
+References: <5260C6A0-C53C-4F6D-B899-6AD8601F8458@gmail.com>
+ <20230808172624.14205-1-tboegi@web.de>
+ <6e40eb0b-2331-1e39-bee0-c9720c24d1c8@gmail.com>
+ <20230809184751.ffwolkvjwoptnmen@tb-raspi4>
+ <9f76de24-d337-ed41-fb81-888dba0b1656@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 3/3] rebase: move parse_opt_keep_empty() down
-Content-Language: en-US
-To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>, git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-References: <xmqqiler8cga.fsf@gitster.g>
- <20230809171531.2564844-1-oswald.buddenhagen@gmx.de>
- <20230809171531.2564844-4-oswald.buddenhagen@gmx.de>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20230809171531.2564844-4-oswald.buddenhagen@gmx.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <9f76de24-d337-ed41-fb81-888dba0b1656@gmail.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:SJ4ACOgyANcOxUXKhsZy9YSFxxaaE+UoaR+yDc/bH1hu9rqdJWz
+ 3E53//ZQjeZfYGxG/EVMguSaNxWQCZDvBW87gtcPhAR+hCepNHS34GOK7xqGLOpINyOOmvU
+ odeqMEZmZy5pDBh6MknhblP7SY86bcKRIWV5/+bwBYNM112ysE0t80GSYUB3TkHkC9uYLZv
+ jzP5LfYYIErG7xwsiJWyQ==
+UI-OutboundReport: notjunk:1;M01:P0:T7GL/0NiF8A=;7RIlyAUb5p9UTHY/fsZyGGmppLk
+ m250HvJRCQtT6OOGw2/ol14E7cl0MJtCFFcoJAcSjzlIk9Tha0zQOV2OLOIL1GYGHvk2xSamh
+ bNw+/yN3zKr7PmmmDh3YEkXlDjIYYM9QF19s9UZo4AxoIfRFI2tXrcj8gQtuhnyYH8l8aJG2L
+ qCkX7vV3BbyrsNtJm1og60ghlAHgLqbph5zOlyw/ohHF0g7fj29iOmNAAEcHjK+hViejN42kR
+ sbHkviU/kO9DfPhzcouF2Hq7AQsh1EO2gvVRDzhzeOV4xvDam3HfeT3j55WS4mni94UU9cAdE
+ n6PGMIsrHG+z+pRHyZHJ/FUDRDeuNoSO6MZswpHNdl/OxrosPmrWO/0OkEiShIvxBBU1C/txP
+ +YtmGDIXtJ9NGTWq6nZ8rubLusMLH1TClH4gdSpWJxybCgvHCbiZUiBkicAKnz1W/kXOPnldo
+ 8V7fWNgFWbiNHVTPT5/x3++tcgyrEAUxXEYaC0TjoMfAgBy5ED/j9geXIr6VQeAk/yyZrDN60
+ FQgACEeDzq5ccNfNhbisUYWoR9R2itcl9MuGuwZ6T0TpSpYhBP+8a7VltM20MwQXZEc7enxIg
+ NnhJSATkcSoGhOyx8SaxQlcb6plrcRahd/rfjJ96PT81cQPA5dHExO11pYF2TZtJck6Sh50MK
+ fsYdu0fYLO0lGgSmLL7Um4EFuAKwpb23gtXqlB5GZz+3qZMTNT5r9UNp/C6ymeoDHrLpL3CzQ
+ fPodbUligILLaHUa4tjofpjx+1O132xgnsTjGtcP6et9uMcd4gEvIL7dR8YzqaXe73UCsGalE
+ tHW0wZdpj+5OkvZIWc9efvtY5SL3RNrOPssGiUgmsibeL10e8fy3aBoplp8F0AVZDwjoBSMPe
+ zfE14cA0oqP42foq5P0CXhKkUp0EbpFnC/G7VNNz3oR4yBomnx6joyBzonIbcZzNHdq7r5iy0
+ YxV5hzcpT9tTllGd//sye/qYhBM=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Oswald
+On Tue, Aug 15, 2023 at 10:15:37AM +0100, Phillip Wood wrote:
+> Hi Torsten
+>
+> Sorry for the slow reply
 
-On 09/08/2023 18:15, Oswald Buddenhagen wrote:
-> This moves it right next to parse_opt_empty(), which is a much more
-> logical place. As a side effect, this removes the need for a forward
-> declaration of imply_merge().
-> 
-> Acked-by: Phillip Wood <phillip.wood123@gmail.com>
-> Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-> 
-> ---
-> i'm not sure how to "translate" phillip's informal approval; the
-> acked-by doesn't seem quite right. please adjust as necessary.
+No problem.
+Thanks for the response, I think that we have an
+agreement not to overwrite an untracked file, when a directory
+with the same name needs to be created.
 
-I think we should just delete that trailer, I don't approve of this 
-change any more strongly than I do the rest of the series - they all 
-look like useful improvements to me, thanks for working on them.
+I try to come up with a patch series -
+starting with the stash operation.
 
-Best Wishes
-
-Phillip
-
-> Cc: Junio C Hamano <gitster@pobox.com>
-> ---
->   builtin/rebase.c | 25 ++++++++++++-------------
->   1 file changed, 12 insertions(+), 13 deletions(-)
-> 
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index 4a093bb125..13ca5a644b 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -376,19 +376,6 @@ static int run_sequencer_rebase(struct rebase_options *opts)
->   	return ret;
->   }
->   
-> -static void imply_merge(struct rebase_options *opts, const char *option);
-> -static int parse_opt_keep_empty(const struct option *opt, const char *arg,
-> -				int unset)
-> -{
-> -	struct rebase_options *opts = opt->value;
-> -
-> -	BUG_ON_OPT_ARG(arg);
-> -
-> -	imply_merge(opts, unset ? "--no-keep-empty" : "--keep-empty");
-> -	opts->keep_empty = !unset;
-> -	return 0;
-> -}
-> -
->   static int is_merge(struct rebase_options *opts)
->   {
->   	return opts->type == REBASE_MERGE;
-> @@ -982,6 +969,18 @@ static enum empty_type parse_empty_value(const char *value)
->   	die(_("unrecognized empty type '%s'; valid values are \"drop\", \"keep\", and \"ask\"."), value);
->   }
->   
-> +static int parse_opt_keep_empty(const struct option *opt, const char *arg,
-> +				int unset)
-> +{
-> +	struct rebase_options *opts = opt->value;
-> +
-> +	BUG_ON_OPT_ARG(arg);
-> +
-> +	imply_merge(opts, unset ? "--no-keep-empty" : "--keep-empty");
-> +	opts->keep_empty = !unset;
-> +	return 0;
-> +}
-> +
->   static int parse_opt_empty(const struct option *opt, const char *arg, int unset)
->   {
->   	struct rebase_options *options = opt->value;
+>
+> On 09/08/2023 19:47, Torsten B=F6gershausen wrote:
+> > On Wed, Aug 09, 2023 at 02:15:28PM +0100, Phillip Wood wrote:
+> > > Hi Torsten
+> > >
+> > > Thanks for working on this. I've cc'd Junio for his unpack_trees()
+> > > knowledge.
+> >
+> > Thanks Eric for the review.
+> >
+> > Hej Phillip,
+> > I have been playing around with the whole thing some time.
+> > At the end I had a version, which did fiddle the information
+> > that we are doing a `git stash` (and not any other operation)
+> > into entry.c, and all test cases passed.
+> > So in principle I can dig out all changes, polish them
+> > and send them out, after doing cleanups of course.
+>
+> I don't think we should be treating "git stash" as a special case here -
+> commands like "git checkout" should not be removing untracked files
+> unprompted either.
+>
+> > (And that could take a couple of days, or weeks ;-)
+> >
+> > My main question is still open:
+> > Is it a good idea, to create a "helper file" ?
+> > The naming can be discussed, we may stick the date/time
+> > into the filename to make it really unique, or so.
+>
+> I think stopping and telling the user that the file would be overwritten=
+ as
+> we do in other cases would be better.
+>
+> > Reading the different reports and including own experience,
+> > I still think that a directory called ".deleted-by-user"
+> > or ".wastebin" or something in that style is a good idea.
+>
+> I can see an argument for being able to opt-in to that for "git restore"=
+ and
+> "git reset --hard" but that is a different problem to the one here.
+>
+> Best Wishes
+>
+> Phillip
+>
