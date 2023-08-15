@@ -2,178 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9DB9C41513
-	for <git@archiver.kernel.org>; Tue, 15 Aug 2023 08:07:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3142C04FE0
+	for <git@archiver.kernel.org>; Tue, 15 Aug 2023 09:16:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235535AbjHOIG3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Aug 2023 04:06:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40070 "EHLO
+        id S235924AbjHOJQT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Aug 2023 05:16:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57582 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235539AbjHOIFz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Aug 2023 04:05:55 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FCC61733
-        for <git@vger.kernel.org>; Tue, 15 Aug 2023 01:05:53 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-3fe32016bc8so46350625e9.1
-        for <git@vger.kernel.org>; Tue, 15 Aug 2023 01:05:53 -0700 (PDT)
+        with ESMTP id S236068AbjHOJPk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Aug 2023 05:15:40 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AB49A6
+        for <git@vger.kernel.org>; Tue, 15 Aug 2023 02:15:39 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-3fe24dd8898so48667355e9.2
+        for <git@vger.kernel.org>; Tue, 15 Aug 2023 02:15:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692086752; x=1692691552;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oDkhM5QRshos5EP2iUppE1deAcsi4etzn31IyJLYpe8=;
-        b=jXdnzcVbai8j6RQjoAFUYOM7zOwUqzSh5iSIrXbE2nMjOTz/q5l/SaQwoRPE/ORbb+
-         qmBkCXJAYuHDXOlAOshrC86Hfq77TadRXcTw8O5kTVfIDrLig452+3C1MI3rbkilRMb1
-         YgS38okjwSVxLOl1kYmMIDl7d3gf+1/cERMIWoRcYqrd47edsiEsrUP8EG5zfYNtEmtl
-         ZMX+YK/fLYYFmbzCX8oJUD0pNdjU5tyVCnS2lCk2ObWXfPCK94NJ0lFMsrziQ7pyIFNV
-         imu0zA9XUFU3WaUgPNyVZpzHrEPpdTDP75I/PqM2OgQI07f4B0mYq8ZtEliY/lWSxqaE
-         jBTA==
+        d=gmail.com; s=20221208; t=1692090937; x=1692695737;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=9VpElbbDNLpbpBiYnTGp68OppolZ+UTdZcJQ3qJnE1I=;
+        b=QcOOSzfGXVafboXHM4iwlGiVZ5h0W8z9KSMhsPRu7Y5Zehzhgk951LTvT7ImoT42Fs
+         VreHwyVvOD/f07qZ71z4mhxyz8rG/+jFLfXMyc//+WmV32WIOyDX/VGg2Q1d+lLsr120
+         Boi3LIvRwEr+edLAuoO7CEgbtaGRyQxIQ9D4cXf/zVlJsngsUEvO/Q9AR3g9iAMC6wHe
+         d2nzkasPkVLW816NXXS3cymKmK/U4wHO+4PzibWcwGv298IAeCJvQwGDVhKVxdDIoDrD
+         xyKoVBg5xd5u8jgH18xCfBMwpafbj5y3oJ90l7Kzqgd3BIurMeBWWnDAQmKsBd86TnO4
+         mCgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692086752; x=1692691552;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=oDkhM5QRshos5EP2iUppE1deAcsi4etzn31IyJLYpe8=;
-        b=gNBy7+cSCVF5x/RBY4yLwkMGRO9HVsbjoYJElhjGe5CyBzrZAGZhPRh78i+B9PNUPZ
-         KXIuVfIOxjF+mvPHlir7AlIwZfJwtc1V6BQ/m3ufO+xC88QVqzPWP8/Q2um56A0pKYVt
-         Mvh4HPnjGH5/yaPskWjMD1mRy5FJLElMqgqfWslji+v0ySzEHYpukUZCtzaDZul+M6yo
-         TFFHFv1v7CB5X1c7o3SN+0bM/WvOuadrPs6tWxwz1NRcipDSytukgOPNbQwNSDxzYoP4
-         CJ8p04cbrok3GH6cIShZAW9oOoHApjkveKRZYXgSV12HbIYPXiIG0dsLIF2hdDJRohok
-         6HDA==
-X-Gm-Message-State: AOJu0YwRbu7ArVxOiixVS49tmHRzwT8BE/6Zs0/JTSWpZnYLNBSfDXBp
-        KIZ1bMNTXYkFR/odsG/Pdbhkxs2nIyF0+locKZe0Hg2hU9ofqcHt
-X-Google-Smtp-Source: AGHT+IH5jP/8t9h1az7DQ1Wh04voBus/f54qUFuXHRf85jaQROrE3kqXZ/knvVlwIOun5TalPwGUBlNZNP8UJp5pPVM=
-X-Received: by 2002:a5d:4e46:0:b0:314:1ad7:2ea8 with SMTP id
- r6-20020a5d4e46000000b003141ad72ea8mr6932321wrt.54.1692086751581; Tue, 15 Aug
- 2023 01:05:51 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1692090937; x=1692695737;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9VpElbbDNLpbpBiYnTGp68OppolZ+UTdZcJQ3qJnE1I=;
+        b=Kznkocc5BPN5UWsedPW5sJ2S5WGWd8wVhNXkKW/YoC1mEA+o/ckUoSN4cn8gBfDvCW
+         hgoZjxws2noq7lLCP4dS5Z15Sh8sQiaBA1uALW+h7Xeg5ua14WLel0iORcgTk6wMZSX7
+         +N2QeyG8niAIKlTDJ5WkeK/WcOjAhEF2IcWGjd9QrfsGWIo92a6BLIzVFILloPyX3ba5
+         D/NVGdvpKqyaBK1CpH4sfZVO2ysEMlHoWZYbM2UWXsPH39ZBA1HNpuQeU5XMeLr3b8Mn
+         5Tt6wdG0cvDZbKtP5g7la9wdbmuIpU6HruT2pv9AMzSYHVBovGDna6kqf2B2YuQYWR7v
+         xmJA==
+X-Gm-Message-State: AOJu0YyEhO9zzd0nSrXEDtfBw9zzrlqbHIbvuuXHZvq6OcCZ60PL0a7B
+        2AYTdCAqjKvHyMTS4HfnLYk=
+X-Google-Smtp-Source: AGHT+IEun8c2/I8CU2ljSgIAu4DKCXXYdo+Y8EyQTDz4XomfMHL5VS7g61F3GwFcJLWvEdWDnIMAYQ==
+X-Received: by 2002:a05:600c:204e:b0:3fe:1287:d2a0 with SMTP id p14-20020a05600c204e00b003fe1287d2a0mr8936267wmg.21.1692090937273;
+        Tue, 15 Aug 2023 02:15:37 -0700 (PDT)
+Received: from [192.168.1.101] ([90.242.223.1])
+        by smtp.googlemail.com with ESMTPSA id k5-20020a7bc405000000b003fbdbd0a7desm19934561wmi.27.2023.08.15.02.15.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 15 Aug 2023 02:15:37 -0700 (PDT)
+Message-ID: <9f76de24-d337-ed41-fb81-888dba0b1656@gmail.com>
+Date:   Tue, 15 Aug 2023 10:15:37 +0100
 MIME-Version: 1.0
-References: <20230711133035.16916-1-cheskaqiqi@gmail.com> <20230718232916.31660-1-cheskaqiqi@gmail.com>
- <20230718232916.31660-3-cheskaqiqi@gmail.com> <5e478d8b-9ef4-864b-41e4-e0a79877d278@github.com>
- <kl6la5v82izn.fsf@chooglen-macbookpro.roam.corp.google.com>
-In-Reply-To: <kl6la5v82izn.fsf@chooglen-macbookpro.roam.corp.google.com>
-From:   Shuqi Liang <cheskaqiqi@gmail.com>
-Date:   Tue, 15 Aug 2023 16:05:40 +0800
-Message-ID: <CAMO4yUEwjAfe93Kur5XFzrzXLYpP4=vOg17vDvW-cFmjYLAnOw@mail.gmail.com>
-Subject: Re: [PATCH v4 2/3] attr.c: read attributes in a sparse directory
-To:     Glen Choo <chooglen@google.com>, git@vger.kernel.org,
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v1 1/1] git stash needing mkdir deletes untracked file
+Content-Language: en-US
+To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+        phillip.wood@dunelm.org.uk
+Cc:     git@vger.kernel.org, friebetill@gmail.com,
         Junio C Hamano <gitster@pobox.com>,
-        Victoria Dye <vdye@github.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Eric Sunshine <sunshine@sunshineco.com>
+References: <5260C6A0-C53C-4F6D-B899-6AD8601F8458@gmail.com>
+ <20230808172624.14205-1-tboegi@web.de>
+ <6e40eb0b-2331-1e39-bee0-c9720c24d1c8@gmail.com>
+ <20230809184751.ffwolkvjwoptnmen@tb-raspi4>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20230809184751.ffwolkvjwoptnmen@tb-raspi4>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Glen,
+Hi Torsten
 
-I just realized I missed your previous email =E2=80=93 my apologies for the=
- delay!
-Really appreciate your insights on the patches=EF=BC=81
+Sorry for the slow reply
 
-I'm trying to wrap my head around the points you've made. If I'm reading
-you right, you're suggesting that in my patch2, the logic for 'read from
-a blob if the .gitattributes is not in the index' isn't being executed?
-You think the index is still being expanded and hence this part of the
-code doesn't influence the test results. In particular, you're referring
-to the 'check-attr with pathspec outside sparse definition' and
-'diff --check with pathspec outside sparse definition' tests, right?
+On 09/08/2023 19:47, Torsten Bögershausen wrote:
+> On Wed, Aug 09, 2023 at 02:15:28PM +0100, Phillip Wood wrote:
+>> Hi Torsten
+>>
+>> Thanks for working on this. I've cc'd Junio for his unpack_trees()
+>> knowledge.
+> 
+> Thanks Eric for the review.
+> 
+> Hej Phillip,
+> I have been playing around with the whole thing some time.
+> At the end I had a version, which did fiddle the information
+> that we are doing a `git stash` (and not any other operation)
+> into entry.c, and all test cases passed.
+> So in principle I can dig out all changes, polish them
+> and send them out, after doing cleanups of course.
 
-I tried out the code changes you shared, but the tests didn=E2=80=99t pass =
-for
-me. In the original setup, even with the expanded index, the base code
-couldn't read the attributes from files within a sparse directory.
-So, I'm inclined to think that the modifications in patch2 have a direct
-bearing on whether the tests pass or fail.
+I don't think we should be treating "git stash" as a special case here - 
+commands like "git checkout" should not be removing untracked files 
+unprompted either.
 
-Would love to hear more about your thoughts on this. Thanks again for
-diving deep into the patches=EF=BC=81
+> (And that could take a couple of days, or weeks ;-)
+> 
+> My main question is still open:
+> Is it a good idea, to create a "helper file" ?
+> The naming can be discussed, we may stick the date/time
+> into the filename to make it really unique, or so.
 
-On Fri, Aug 4, 2023 at 12:22=E2=80=AFAM Glen Choo <chooglen@google.com> wro=
-te:
->
-> Here's something odd that I spotted that I think other reviewers haven't
-> mentioned. That said, Victoria has already given quite extensive review
-> and I trust her judgement on this series, so if I accidentally end up
-> contradicting her, ignore me and trust her instead :)
->
-> Victoria Dye <vdye@github.com> writes:
->
-> >> -test_expect_failure 'check-attr with pathspec outside sparse definiti=
-on' '
-> >> +test_expect_success 'check-attr with pathspec outside sparse definiti=
-on' '
-> >
-> > Re: my suggested change to the test in patch 1 [2], when I applied _thi=
-s_
-> > patch, the test still failed for the 'sparse-index' case. It doesn't se=
-em to
-> > be a problem with your patch, but rather a bug in 'diff' that can be
-> > reproduced with this test (using the infrastructure in t1092):
-> >
-> > test_expect_failure 'diff --cached shows differences in sparse director=
-y' '
-> >       init_repos &&
-> >
-> >       test_all_match git reset --soft update-folder1 &&
-> >       test_all_match git diff --cached -- folder1/a
-> > '
-> >
-> > It's not immediately obvious to me what the problem is, but my guess is=
- it's
-> > some mis-handling of sparse directories in the internal diff machinery.
-> > Given the likely complexity of the issue, I'd be content with you leavi=
-ng
-> > the 'diff --check' test as 'test_expect_failure' with a note about the =
-bug
-> > in 'diff' to fix later. Or, if you do want to investigate & fix it now,=
- I
-> > wouldn't be opposed to that either. :)
-> >
-> > [2] https://lore.kernel.org/git/c3ebe3b4-88b9-8ca2-2ee3-39a3e0d82201@gi=
-thub.com/
->
-> Because the 'diff --check' test is broken, and 'git check-attr' still
-> expands the index (as noted in the next patch), the code that implements
-> 'read from a blob if the .gitattributes is not in the index' is not
-> exercised by the tests in this patch (it gets exercised in the next
-> patch). IOW, you can remove this logic and the tests still pass, like
-> so:
->
-> ----- >8 --------- >8 --------- >8 --------- >8 --------- >8 ----
-> diff --git a/attr.c b/attr.c
-> index 1488b8e18a..abfa2078ac 100644
-> --- a/attr.c
-> +++ b/attr.c
-> @@ -23,6 +23,7 @@
->  #include "thread-utils.h"
->  #include "tree-walk.h"
->  #include "object-name.h"
-> +#include "trace2.h"
->
->  const char git_attr__true[] =3D "(builtin)true";
->  const char git_attr__false[] =3D "\0(builtin)false";
-> @@ -847,9 +848,11 @@ static struct attr_stack *read_attr_from_index(struc=
-t index_state *istate,
->             S_ISSPARSEDIR(istate->cache[pos]->ce_mode) &&
->             !strncmp(istate->cache[pos]->name, path, ce_namelen(istate->c=
-ache[pos])) &&
->             !normalize_path_copy(normalize_path, path)) {
-> -               relative_path =3D normalize_path + ce_namelen(istate->cac=
-he[pos]);
-> -               stack =3D read_attr_from_blob(istate, &istate->cache[pos]=
-->oid, relative_path, flags);
-> +               /* relative_path =3D normalize_path + ce_namelen(istate->=
-cache[pos]); */
-> +               /* stack =3D read_attr_from_blob(istate, &istate->cache[p=
-os]->oid, relative_path, flags); */
-> +               trace2_printf("Tried to read from blob");
->         } else {
-> +               trace2_printf("Tried to read from index");
->                 buf =3D read_blob_data_from_index(istate, path, &size);
->                 if (!buf)
->                         return NULL;
-> ----- >8 --------- >8 --------- >8 --------- >8 --------- >8 ----
->
-> If I were writing patches and encountered this situation, I would squash
-> patches 2-3/3 together since both are closely related and quite small,
-> but I'll leave the decision to you + other reviewers.
+I think stopping and telling the user that the file would be overwritten 
+as we do in other cases would be better.
+
+> Reading the different reports and including own experience,
+> I still think that a directory called ".deleted-by-user"
+> or ".wastebin" or something in that style is a good idea.
+
+I can see an argument for being able to opt-in to that for "git restore" 
+and "git reset --hard" but that is a different problem to the one here.
+
+Best Wishes
+
+Phillip
+
