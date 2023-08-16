@@ -2,66 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE7ECC001DF
-	for <git@archiver.kernel.org>; Wed, 16 Aug 2023 17:18:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ABF01C41513
+	for <git@archiver.kernel.org>; Wed, 16 Aug 2023 18:25:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345161AbjHPRSR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Aug 2023 13:18:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39340 "EHLO
+        id S1345481AbjHPSYz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Aug 2023 14:24:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345182AbjHPRRw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Aug 2023 13:17:52 -0400
-Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65A4319A1
-        for <git@vger.kernel.org>; Wed, 16 Aug 2023 10:17:51 -0700 (PDT)
-Received: by mail-qt1-x835.google.com with SMTP id d75a77b69052e-4036bd4fff1so17131cf.0
-        for <git@vger.kernel.org>; Wed, 16 Aug 2023 10:17:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1692206270; x=1692811070;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=g1dtOWuU9C9eadWAyWDBo4aYFzHSuuWvoysv6mGCyG0=;
-        b=uBF6kPCYQp4wxTUFbiL5u14DWO6lPQSZ0TCxRodkl9T4ATkVj4I1bNO+LdfAvFr+d+
-         pUJv6aWCqOLhw2I7IOacyGuaK24o1PjW7qWOfZUjiwJO4pvff5jtYpeSwPtsyn4sRzty
-         p3cO92DP7vZMYe/DrKa9uqmTUQa/QNj/nff7a3xUwgT3XNLRm6negLbhL1EP+/veuL8A
-         Rd1+irN8cO8JdhKMJzqQQE5ZXiONLB9gN3ZIsGQPZqAmyYqtls6x79jJwINsC27lJDzc
-         3Fpy8paofHbFUF3HY7Ko7sArvNYq5pHIyPO9zZJ7P8EP1arcptbRwvBluS2Y+fn8pGcw
-         ZTiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692206270; x=1692811070;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=g1dtOWuU9C9eadWAyWDBo4aYFzHSuuWvoysv6mGCyG0=;
-        b=ZvYl4A2iQllpLg3FMdpkAfkxuWB3ISm7ohM+KueiSdWbpp/+ikB7DAD8Cwy9RKsI4I
-         D58/aHOOJ8bhiuLTXdvxqr5/bW7GbRcPvtU0yOdWTipNHUHdmX7jg5aJFXgw/bncLJ1b
-         NzvOjEhL5yQrUWGUw17j2oFFz6egAx5Zig9NAIKlI5MY0dlnIbRsz64Kl3fnwgXX5BTg
-         GWrSkIGQ3Q1PmqqZbXKa26IMC6yBO6IGBWKP2lahwzRFxvBAOqbeqfpYKFwI4BEGl7zi
-         y9HS/64R0PHKmUMdoUClCGenm934aJwFSymP0Bcsni0azJcbWnfAOFt5UOoRkGuPckzv
-         xD8g==
-X-Gm-Message-State: AOJu0Ywnk/9y7YgDfKEUfaGvbEOmQotl3CYGePEbb5pPGsxwkT6K8nI3
-        6759tmveQ7SCuJwN0bWgpZFDYJ9SfrHUkK8ZRcSLAQ==
-X-Google-Smtp-Source: AGHT+IHBk8Q4+BWxbZR3NXHmUtJJyC7sE7Nk8GP+yR8KV6W7GaAYD6608HAokLm4kyQLtULD9O8HtQq5AppoqF5+4XQ=
-X-Received: by 2002:ac8:5fc1:0:b0:3fd:ad1b:4e8a with SMTP id
- k1-20020ac85fc1000000b003fdad1b4e8amr12261qta.22.1692206270465; Wed, 16 Aug
- 2023 10:17:50 -0700 (PDT)
+        with ESMTP id S1345525AbjHPSYx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Aug 2023 14:24:53 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 017D810C1
+        for <git@vger.kernel.org>; Wed, 16 Aug 2023 11:24:50 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5616F1AE030;
+        Wed, 16 Aug 2023 14:24:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=W3o1qQSdOj1Ak5DOwM2Ye+BBnsJsrVqaCfU8yJ
+        SxxaQ=; b=ix5rOQB73SiPWOq9vrQM06c5KFOCwGxzlGa6EXzjKmIMdaaAyFFCdz
+        wcjRi4DUgnU0J4UICbczuXvjNXaneQNV37d9MeU17JcEmbtkJBwrVltIOCfnT0Up
+        qbM+Aq3QEf3txNwPqOGR44aViiGgWRVa+orBbftjKEJDdTzzNz5pI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4F9E31AE02F;
+        Wed, 16 Aug 2023 14:24:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.58.166])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B488E1AE02E;
+        Wed, 16 Aug 2023 14:24:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Karthik Nayak <karthik.188@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [Bug] In `git-rev-list(1)`, using the `--objects` flag doesn't
+ work well with the `--not` flag, as non-commit objects are not excluded
+References: <CAOLa=ZQmjroDiOcUsu_MHtQ-88QHU9qeZPOPh+KJJ3dFoF2q0A@mail.gmail.com>
+        <xmqqttt0hzl2.fsf@gitster.g>
+        <CAOLa=ZQPmtqT9OHxh5uFq0rg+9L02tnmh1UE52em-rXPmFR6yg@mail.gmail.com>
+Date:   Wed, 16 Aug 2023 11:24:48 -0700
+In-Reply-To: <CAOLa=ZQPmtqT9OHxh5uFq0rg+9L02tnmh1UE52em-rXPmFR6yg@mail.gmail.com>
+        (Karthik Nayak's message of "Wed, 16 Aug 2023 00:56:58 +0200")
+Message-ID: <xmqqbkf6g80f.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20230627195251.1973421-1-calvinwan@google.com>
- <20230810163346.274132-1-calvinwan@google.com> <kl6lmsyy8sfj.fsf@chooglen-macbookpro.roam.corp.google.com>
- <56d0838d-12a5-8a8a-3c3e-7d473f2977e8@gmail.com>
-In-Reply-To: <56d0838d-12a5-8a8a-3c3e-7d473f2977e8@gmail.com>
-From:   Calvin Wan <calvinwan@google.com>
-Date:   Wed, 16 Aug 2023 10:17:39 -0700
-Message-ID: <CAFySSZBN+-HVPekCjkshepKZLB5uP-m9A=1bWm5Z_OBUVtgQYQ@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 0/7] Introduce Git Standard Library
-To:     phillip.wood@dunelm.org.uk
-Cc:     git@vger.kernel.org, nasamuffin@google.com,
-        jonathantanmy@google.com, linusa@google.com, vdye@github.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2F90E846-3C62-11EE-B91A-C65BE52EC81B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for resolving the conflicts on master. I should've rebased
-before sending out this v2 since it's built off of 2.41 with some of
-my other patch cleanup series.
+Karthik Nayak <karthik.188@gmail.com> writes:
+
+> The provided reproduction recipe unfortunately uses a linear
+> history and therefore, is not the same as the example provided by
+> me. Here is a reproducible recipe following the same commands you
+> used:
+> $ rm -fr new ; git init new ; cd new
+> $ echo foo >foo
+> $ git add -A; git commit -m one; git rev-parse HEAD
+> 26fb965d7439c1760677377bf314d8933de0b716
+> $ mkdir bar; echo goo >bar/goo
+> $ git add -A; git commit -m two; git rev-parse HEAD
+> $ git checkout -B branch
+> $ git reset --hard @~1
+> HEAD is now at 26fb965 one
+> $ git add -A; git commit -m three; git rev-parse HEAD
+> 91ef508167eb683486c3df6f8d07622b61ed698d
+>
+> $ git rev-list --objects HEAD ^master
+> 91ef508167eb683486c3df6f8d07622b61ed698d
+> ff05824d2f76436c61d2c971e11a27514aba6948
+> 8baef1b4abc478178b004d62031cf7fe6db6f903 abc
+> 086885f71429e3599c8c903b0e9ed491f6522879 bar
+> 7a67abed5f99fdd3ee203dd137b9818d88b1bafd bar/goo
+
+Thanks, but the above is not recreating the same as your original
+(where did "moo" go???).  Also "git rev-parse HEAD" for the sanity
+checking should be spelled "git rev-parse HEAD:" if you want to help
+others looking into the issue---anybody trying to reproduce will NOT
+have the same commit object name, but the point of these checks is
+to show the tree object name, which should reproduce for them.
+
