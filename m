@@ -2,79 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 27A9FC001DF
-	for <git@archiver.kernel.org>; Wed, 16 Aug 2023 17:17:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE7ECC001DF
+	for <git@archiver.kernel.org>; Wed, 16 Aug 2023 17:18:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242860AbjHPRRO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Aug 2023 13:17:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43672 "EHLO
+        id S1345161AbjHPRSR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Aug 2023 13:18:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39340 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345156AbjHPRQn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Aug 2023 13:16:43 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F6562701
-        for <git@vger.kernel.org>; Wed, 16 Aug 2023 10:16:40 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4035C2D136;
-        Wed, 16 Aug 2023 13:16:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=wBLfqNUnarByNxD2HPHJ6qgt+aRJ8z8lVAwLfb
-        Se0OQ=; b=eP4OANCa8V1LP0jdg7UaiMFBYkkBqoQNgPm1p9lO9zWHNIZ5kPdSof
-        lmt3PLhWr62ksZY/MlEJBAiiwCGH0iWzyvrph2+gquXxIXU8187Zz9Sw/yLyF7VY
-        Yw+SbFkhN2eTYVWij38Y4rcl/4/ZkDQy5BkvYrNSCFfJSvnrfeJbM=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3863B2D135;
-        Wed, 16 Aug 2023 13:16:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.58.166])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 425CF2D134;
-        Wed, 16 Aug 2023 13:16:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
-        John Cai <johncai86@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v5 0/8] Repack objects into separate packfiles based on
- a filter
-References: <20230808082608.582319-1-christian.couder@gmail.com>
-        <20230812000011.1227371-1-christian.couder@gmail.com>
-        <xmqqv8dhjfgm.fsf@gitster.g> <ZNvxg7BVJ+C5XFY4@nand.local>
-        <xmqqjztwgcnc.fsf@gitster.g> <ZNwFlcS3SOS9h77N@nand.local>
-        <xmqqfs4jhp3p.fsf@gitster.g> <ZNwaoGBNrpdzlPUq@nand.local>
-Date:   Wed, 16 Aug 2023 10:16:34 -0700
-In-Reply-To: <ZNwaoGBNrpdzlPUq@nand.local> (Taylor Blau's message of "Tue, 15
-        Aug 2023 20:38:56 -0400")
-Message-ID: <xmqqil9egb65.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S1345182AbjHPRRw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Aug 2023 13:17:52 -0400
+Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65A4319A1
+        for <git@vger.kernel.org>; Wed, 16 Aug 2023 10:17:51 -0700 (PDT)
+Received: by mail-qt1-x835.google.com with SMTP id d75a77b69052e-4036bd4fff1so17131cf.0
+        for <git@vger.kernel.org>; Wed, 16 Aug 2023 10:17:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1692206270; x=1692811070;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=g1dtOWuU9C9eadWAyWDBo4aYFzHSuuWvoysv6mGCyG0=;
+        b=uBF6kPCYQp4wxTUFbiL5u14DWO6lPQSZ0TCxRodkl9T4ATkVj4I1bNO+LdfAvFr+d+
+         pUJv6aWCqOLhw2I7IOacyGuaK24o1PjW7qWOfZUjiwJO4pvff5jtYpeSwPtsyn4sRzty
+         p3cO92DP7vZMYe/DrKa9uqmTUQa/QNj/nff7a3xUwgT3XNLRm6negLbhL1EP+/veuL8A
+         Rd1+irN8cO8JdhKMJzqQQE5ZXiONLB9gN3ZIsGQPZqAmyYqtls6x79jJwINsC27lJDzc
+         3Fpy8paofHbFUF3HY7Ko7sArvNYq5pHIyPO9zZJ7P8EP1arcptbRwvBluS2Y+fn8pGcw
+         ZTiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692206270; x=1692811070;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=g1dtOWuU9C9eadWAyWDBo4aYFzHSuuWvoysv6mGCyG0=;
+        b=ZvYl4A2iQllpLg3FMdpkAfkxuWB3ISm7ohM+KueiSdWbpp/+ikB7DAD8Cwy9RKsI4I
+         D58/aHOOJ8bhiuLTXdvxqr5/bW7GbRcPvtU0yOdWTipNHUHdmX7jg5aJFXgw/bncLJ1b
+         NzvOjEhL5yQrUWGUw17j2oFFz6egAx5Zig9NAIKlI5MY0dlnIbRsz64Kl3fnwgXX5BTg
+         GWrSkIGQ3Q1PmqqZbXKa26IMC6yBO6IGBWKP2lahwzRFxvBAOqbeqfpYKFwI4BEGl7zi
+         y9HS/64R0PHKmUMdoUClCGenm934aJwFSymP0Bcsni0azJcbWnfAOFt5UOoRkGuPckzv
+         xD8g==
+X-Gm-Message-State: AOJu0Ywnk/9y7YgDfKEUfaGvbEOmQotl3CYGePEbb5pPGsxwkT6K8nI3
+        6759tmveQ7SCuJwN0bWgpZFDYJ9SfrHUkK8ZRcSLAQ==
+X-Google-Smtp-Source: AGHT+IHBk8Q4+BWxbZR3NXHmUtJJyC7sE7Nk8GP+yR8KV6W7GaAYD6608HAokLm4kyQLtULD9O8HtQq5AppoqF5+4XQ=
+X-Received: by 2002:ac8:5fc1:0:b0:3fd:ad1b:4e8a with SMTP id
+ k1-20020ac85fc1000000b003fdad1b4e8amr12261qta.22.1692206270465; Wed, 16 Aug
+ 2023 10:17:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A7AB9E7A-3C58-11EE-B870-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+References: <20230627195251.1973421-1-calvinwan@google.com>
+ <20230810163346.274132-1-calvinwan@google.com> <kl6lmsyy8sfj.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <56d0838d-12a5-8a8a-3c3e-7d473f2977e8@gmail.com>
+In-Reply-To: <56d0838d-12a5-8a8a-3c3e-7d473f2977e8@gmail.com>
+From:   Calvin Wan <calvinwan@google.com>
+Date:   Wed, 16 Aug 2023 10:17:39 -0700
+Message-ID: <CAFySSZBN+-HVPekCjkshepKZLB5uP-m9A=1bWm5Z_OBUVtgQYQ@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 0/7] Introduce Git Standard Library
+To:     phillip.wood@dunelm.org.uk
+Cc:     git@vger.kernel.org, nasamuffin@google.com,
+        jonathantanmy@google.com, linusa@google.com, vdye@github.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
-
-> I think that there is a bug lurking in the sense of trying to reuse
-> bitmaps when covering a pack that doesn't have reachability closure in
-> this particular scenario.
->
-> But there are no "blessed" use-cases for doing this. So I think that we
-> should indeed fix this, but I am not immediately concerned here.
-
-OK.
-
-> No; we can either reuse a complete bitmap or not. So it's fine to OR
-> all of the (permuted) bits into ent->bitmap, but it's not OK to fill in
-> just part of them.
-
-Sounds sane.
-
+Thanks for resolving the conflicts on master. I should've rebased
+before sending out this v2 since it's built off of 2.41 with some of
+my other patch cleanup series.
