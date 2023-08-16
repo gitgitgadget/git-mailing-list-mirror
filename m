@@ -2,101 +2,168 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AA9DC04FE0
-	for <git@archiver.kernel.org>; Wed, 16 Aug 2023 07:15:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 060E6C04A94
+	for <git@archiver.kernel.org>; Wed, 16 Aug 2023 09:18:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242345AbjHPHPL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Aug 2023 03:15:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34800 "EHLO
+        id S243261AbjHPJRj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Aug 2023 05:17:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242347AbjHPHO5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Aug 2023 03:14:57 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D69762112
-        for <git@vger.kernel.org>; Wed, 16 Aug 2023 00:14:53 -0700 (PDT)
+        with ESMTP id S243314AbjHPJR1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Aug 2023 05:17:27 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0AA0269F
+        for <git@vger.kernel.org>; Wed, 16 Aug 2023 02:17:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de;
- s=s31663417; t=1692170091; x=1692774891; i=johannes.schindelin@gmx.de;
- bh=bCPrBERX7at4WuBOMuQ+YY4M3HkEE1ekcUlC3Wu/ijk=;
- h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
- b=ajHScTFXb2c/AnVV4sKnLah4VrKMPjYOZGYrEs+7UpgEaQ7EzJrfbLaHfBgXEZd/d9pIl1o
- UqevZHqle+n3inpmEBOVXf2u5/Ec6b5yyMqY4a7iHy7pqlUdQIwj8hEFLhRrUSBgOGGLp/8fS
- ol0TZSj0cWvx9q+wg8U1k7+tS9Je6czdVJd8xl6r0yxUCwIP27oTWV0hWJuivQmsQeqHdR//9
- cuonrICXH5zfOda2KQTBMSmtOQT4IRNkkSrFkt088qOeEW4yHbAx5iT2hs3KNH2rKhlRWUDdb
- K/SViJYTOe+g21VZFE7XfAEldRB60xx8zFGLbpW2GmJX9WQ+9hpg==
+ s=s31663417; t=1692177433; x=1692782233; i=johannes.schindelin@gmx.de;
+ bh=N4WJ6LbJ7eZflUY/ZuXtEkpyTYti6DaBzzmWh1/plbU=;
+ h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+ b=RvqrngrsDiTE9vMi7M6A163M85wZQTPkUJAbuLcoN8efnQsAo7kRNB4YeCn2cxTpxDtHgE8
+ EZR9PbiJJoCErHC+uvdSY8fPzZdgXYUgiMG4Nc82nLobmN5lQp9fSZ4vnAWo04resSL/T0otx
+ u6ofcfz9RIYwGSnOBjrp6P1nwIdLBV6fJPRFV/Nu4hOD3LeRzwV6yqiVE1b+0JnlBf/IBYN/y
+ dAlQW0msNuEO2t/7Gt8K/Y9eublUQCssxUnpOWZF4azTScJmzlk8sWnbxJh9FfqTyNJ7Bw6Vb
+ 9rSzyt5AHppOOQ0IHPoIsMOsWqzqeSitlPG2LZRKEPQW9O0sJIjA==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from
- fv-az1102-863.ghvsf53df5vutddeto4bu05etf.jx.internal.cloudapp.net
- ([40.84.178.208]) by mail.gmx.net (mrgmx105 [212.227.17.168]) with ESMTPSA
- (Nemesis) id 1MQMuX-1qAMTC0QKH-00MNwL; Wed, 16 Aug 2023 09:14:51 +0200
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.42.0-rc2
-Date:   Wed, 16 Aug 2023 07:14:48 +0000
-Message-ID: <20230816071448.4166-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.41.0
-Content-Type: text/plain; charset=UTF-8
+Received: from [172.23.242.68] ([80.151.253.86]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M7b2d-1qOlam20PV-0080Zy; Wed, 16
+ Aug 2023 11:17:13 +0200
+Date:   Wed, 16 Aug 2023 10:36:33 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Mark Ruvald Pedersen via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Mark Ruvald Pedersen <mped@oticon.com>,
+        Mark Ruvald Pedersen <mped@demant.com>
+Subject: Re: [PATCH 1/2] sequencer: truncate labels to accommodate loose
+ refs
+In-Reply-To: <xmqqr0oastxv.fsf@gitster.g>
+Message-ID: <42dd6b6f-4d33-724c-ab15-ba7bb5ead733@gmx.de>
+References: <pull.1562.git.git.1691685300.gitgitgadget@gmail.com>        <4971e3c52504bf965aa754c9a5d31abddbcc1466.1691685300.git.gitgitgadget@gmail.com> <xmqqr0oastxv.fsf@gitster.g>
 MIME-Version: 1.0
-Fcc:    Sent
-X-Provags-ID: V03:K1:vycukdWqV8MihWjB09215ew2tT0QRDeJZWh/4O04J9fWGBhBMti
- 9ip/2eBPwdjCxSdWIghSxgrSJ2Pgj4Mtq+vYuRecyyxy67GH2+bAw/fNFDHWUCS2KonIiQ0
- PIMU5hZMAwxcY+2ndooq7CiI1Trc+rKY5Wc7gaPN9+wF2TUmLSpesFcDAOOVSiDgV1zxdA/
- x6QrBFJGLnx3Xe5E+uV1A==
-UI-OutboundReport: notjunk:1;M01:P0:Hqna7HSLOew=;zR7o+Xoa809zLefFrdsiK+3RyWj
- /SaJF2xzGL5P9xBKH+wlhEPD+KqCoN8A315oaA5LCi2WDa+Q4FPSZU2a9FDri00fo9ZDuHT0Y
- m8hHdfGOLaP8c7tWyji+KKavHXxkmr4WypO9HTIeqJh9Q9Knuy/vspOv7rm2G1WAkTT+7H8OC
- EgGhVYcL8tdpir9Y3CwbW9CjqPh2iym0SjvIczFcbj2VNS4Mlt1mFZzrBytqrHpMn/QpMn2Gy
- 1NGON9kIIRloXjDDd43VX7QqLDUPNqgY/TF6NxuD880UeDLM10r15kMOqifq/cXQTu62OdPLD
- CGEgav8jJZWaR5pmmi4J9bilFwUiNbfRPTjSKaPi0DM5MTdpF/qtGk9RyD8wqSJY2chFFwsu2
- wQqmouVRfvKS0IeH3Oz4baGaXJcQdYMNo3gUx02A49AFXUvENL8t0fExWnswv9ut5w1fyjfB4
- YttdjDztUB/DBGawlGnbu1P93BGlDx8gwnVFDY/0oseO9wMPVDe70Q8c2JPfHMV+LS57OKYHI
- angcJYwSBichRzqyspr0MLyMp3MF7MdOhUPW1TPDoQTvEsNavaAfu2G+L+8k41Rhm5qSnn6bs
- jGq7s+JNZO3YcZt5ZcP8aI69MVfytcyGmBBaK3rPqci/dVnG4xWO2G2nMWqJ3+BwQIJNuAqmH
- jF6Wqyonyymh2NKU4I47p7NN0auVQUFJHW/I88S0rOSP81a9a16YKYRR+KPm2VA9d0brBEld7
- YmVXMEIsP6wsheCbvuz+aX04BGW0WRfhZGS4LMs02eX+0ARi17algFKpZsJ2mBf+GL/7qbUgY
- NvhHqPeMplvTqUyHmjquXO9W/ftW1pQSBMcto69hcEpc0VjAIbFtgHOGxO01gjZD8eQKV/o0o
- KbfRQ+WeqXjtdqocrnrqDmDYLrTHHGc2uLti20yMlJ7SPdOvQlggo/fPRj1Fe1om983+5H8SM
- 3G6jQQ==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:d8Lg6FtYERzZjVx+uLZXFkgdmDaM5VcIHQm3ox8Z2B6syLqSgjQ
+ KghpsmQdT2cj1pDTbNOX4kF/7x3/U7K44SFZRGQocUSp0DD3qnSiMWPg4OiQ9bvEfb/x+33
+ Aih2G4+P9l/g6QO7apHG83hGn8nciCIK5bEQ6CEvxhOe9r2X1/O+nzMZv7HesJwoltyeEqH
+ BVfZPOQotsDPno2c85uFg==
+UI-OutboundReport: notjunk:1;M01:P0:A9ButZc6dzQ=;xJB0/t+KPPgnU4pHUk2zu6p1LB5
+ 9xatW76WPa35HqSjknX6U3GuJk4c+lgP8oijghPGwiCWPoMnUM4m0c1VLk5fD55jXNVvNjpXl
+ 8zgnLLB2qYQqusSfJNmZmVImj0g/udZE/wpkil7qpcrHmQZCn6ym2W59N6GI07AojAcNj8RS/
+ 1FdL0zJxqPrWjfV/0yWncrUT1/RQBK2W/L7Vii6pC8K9cJs9ikudQJgHU8SpSvZGvh6eq6Azd
+ Gwr39/PAPv/53xUvygj66IU+iZmiNKPktZS6eqvksVIiHC8B8XSEcylQnfJjm9FnDaqGdlv1E
+ yyYRByFGx7546fyJrba0RA7ysWSB/r7lpgYaNzqZ7xh5DylZxojAjAB1aWOAVeqrkxmdaptWz
+ tFztDL7hGsWQzaEYFDq0ZtZyPhuhzkLxqKY+B6X93L3d4PNcVF94zn6xKe4p2D4wvnud8OhEn
+ spsB7KIbScrWPc4KKbKThYr7JZg1pKwnveKCKNmeHAysJvtSbzz1O5/DwSjyYu0+K6KKNCCP1
+ LGUEfwc8+IsqDczSoac1YVC2a9Q6m6JMQLrHj8CyxV9IF4Qr8dNV0ZcMsI0mQIeaK8E+/638q
+ hhWSozkAXVgvihHOKFC6fE7b2TxeKQxiAtepHC+uYCpu4mPc6Oa3OsBg3epLRI4ABQLBlMUc+
+ toQ1cBa+D50sNam3WivzM2hexoxdcOJbMwCyodDdexekDwaC54LOBB5hmZLsH0Bm9WuHoc2tK
+ +wKXjdw8DLVUvFT424g7bRMbT9eE/tWKz5hGSnEKABLvcBWmNSltf+cFM4UPV2V77TuP5RN9j
+ WDLXdSfzoqQoydXf9TUhU0u10abkbbQKPq35Hxbuqbqr1UlqP/Vf6ROKWYhs59wKrk1Fhb5tr
+ R/sJev2ofN4Ra2GalnX3XVYv1ZIQs//fse46T2PXSBNwR+BLYxIlzkO96oRsnr/fBs7WSJ4xb
+ Tn0lf+zGj6mnzT4w2GWTFbBE9F0=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git users,
+Hi,
 
-I hereby announce that Git for Windows 2.42.0-rc2 is available from:
+On Thu, 10 Aug 2023, Junio C Hamano wrote:
 
-    https://github.com/git-for-windows/git/releases/tag/v2.42.0-rc2.windows.1
+> "Mark Ruvald Pedersen via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>
+> > +/*
+> > + * To accommodate common filesystem limitations, where the loose refs=
+' file
+> > + * names must not exceed `NAME_MAX`, the labels generated by `git reb=
+ase
+> > + * --rebase-merges` need to be truncated if the corresponding commit =
+subjects
+> > + * are too long.
+> > + * Add some margin to stay clear from reaching `NAME_MAX`.
+> > + */
+> > +#define GIT_MAX_LABEL_LENGTH ((NAME_MAX) - (LOCK_SUFFIX_LEN) - 16)
+>
+> OK.  Hopefully no systems defien NAME_MAX shorter than 20 bytes ;-).
 
-Changes since Git for Windows v2.41.0(3) (July 13th 2023)
+If there are, we already have problems with the following paths:
 
-New Features
+	#CHARS  git_path
+	---------------------------------
+	20      BISECT_ANCESTORS_OK
+	20      BISECT_EXPECTED_REV
+	20      BISECT_FIRST_PARENT
+	22      fsmonitor--daemon.ipc
+	23      drop_redundant_commits
+	23      git-rebase-todo.backup
+	23      keep_redundant_commits
+	23      reschedule-failed-exec
+	24      allow_rerere_autoupdate
+	26      no-reschedule-failed-exec
 
-  * Comes with Git v2.42.0-rc2.
-  * Comes with cURL v8.2.1.
-  * Comes with Git LFS v3.4.0.
-  * Comes with OpenSSL v3.1.2.
-  * Comes with OpenSSH v9.4.P1.
-  * Comes with Git Credential Manager v2.3.1.
+So I think we're good ;-)
 
-Bug Fixes
+> We may suffix "-%d" to make it unique after this truncation, so
+> there definitely is a need for some slop, and 16-bytes should
+> sufficiently be long.
+>
+>
+> > @@ -5404,14 +5415,34 @@ static const char *label_oid(struct object_id =
+*oid, const char *label,
+> >  		 *
+> >  		 * Note that we retain non-ASCII UTF-8 characters (identified
+> >  		 * via the most significant bit). They should be all acceptable
+> > -		 * in file names. We do not validate the UTF-8 here, that's not
+> > -		 * the job of this function.
+> > +		 * in file names.
+> > +		 *
+> > +		 * As we will use the labels as names of (loose) refs, it is
+> > +		 * vital that the name not be longer than the maximum component
+> > +		 * size of the file system (`NAME_MAX`). We are careful to
+> > +		 * truncate the label accordingly, allowing for the `.lock`
+> > +		 * suffix and for the label to be UTF-8 encoded (i.e. we avoid
+> > +		 * truncating in the middle of a character).
+> >  		 */
+> > -		for (; *label; label++)
+> > -			if ((*label & 0x80) || isalnum(*label))
+> > +		for (; *label && buf->len + 1 < max_len; label++)
+> > +			if (isalnum(*label) ||
+> > +			    (!label_is_utf8 && (*label & 0x80)))
+> >  				strbuf_addch(buf, *label);
+> > +			else if (*label & 0x80) {
+> > +				const char *p =3D label;
+> > +
+> > +				utf8_width(&p, NULL);
+> > +				if (p) {
+> > +					if (buf->len + (p - label) > max_len)
+> > +						break;
+> > +					strbuf_add(buf, label, p - label);
+> > +					label =3D p - 1;
+> > +				} else {
+> > +					label_is_utf8 =3D 0;
+> > +					strbuf_addch(buf, *label);
+> > +				}
+>
+> Utf8_width() does let you advance one unicode character at a time as
+> its side effect, but it may be a bit overkill, as its primary
+> function is to compute the display width of that character.
+>
+> We could take advantage of the fact that the first byte of a UTF-8
+> character has two high-bits set (i.e. 11xxxxxx) while the second and
+> subsequent bytes have only the top-bit set and the second highest
+> bit clear (i.e. 10xxxxxx) to simplify/optimize it.  If this were in
+> a performance sensitive codepath, that is.
 
-  * When init.defaultBranch is changed manually in the system config,
-    subsequent Git for Windows upgrades would overwrite that change.
-    This has been fixed.
-  * When running on a remote APFS share, Git would fail, which has been
-    fixed.
+It is not a performance-critical code path, so I erred on the side of
+simplicity (although I have to admit that the post image of the diff is
+not exactly for the faint of heart).
 
-Git-2.42.0-rc2-64-bit.exe | 6d7772323a683772cbc221596dfff66710c8ca3cbacc58283d0faf42f246691d
-Git-2.42.0-rc2-32-bit.exe | ed993c5396f1d656b94fbc4aeed60f568167cc14532746117cb25b0dda90668f
-PortableGit-2.42.0-rc2-64-bit.7z.exe | 22a120b2ac59a9379ea462267cde9d8aaaf5f399ecf160cd4853a6b8247925e6
-PortableGit-2.42.0-rc2-32-bit.7z.exe | 17083a0ecd7539876099a938d2843e5029be05a027280d7463dcda602701beff
-MinGit-2.42.0-rc2-64-bit.zip | c92688495a1c2b4ea760b32070b3ea6ff4313b5095d40958006aea61764fadd1
-MinGit-2.42.0-rc2-32-bit.zip | 5b54762906e8c18f6129496b4971fa6082e97dfb30a02e2a4174ce99ce181eee
-MinGit-2.42.0-rc2-busybox-64-bit.zip | 19c76cb4f3cfabd26522ef45841d4053fb57b1e76c585ad957393e0504828fad
-MinGit-2.42.0-rc2-busybox-32-bit.zip | 6f3696fd214776cfeb251a04fe618e8cbfe7c454160777df4e2e79ce7d400853
-Git-2.42.0-rc2-64-bit.tar.bz2 | cdea6633fa5a914bc3f00f476e067ca768319cf7f69867c307488d2c72f8173f
-Git-2.42.0-rc2-32-bit.tar.bz2 | 34129e2fb5440f12e9c5099cc21a0159da9b4134c461014953ba6edcd4b00cec
+Could we maybe form the plan to keep in the back of our heads that we
+already have a UTF-8-truncating functionality in sequencer, and in case
+another user should turn up, implemnt that optimized function in
+`utf8.[ch]`?
 
-Ciao,
+> I'll queue it as-is for now, as we are in "regression fix only"
+> phase of the cycle, and have enough time to polish it.
+
+Thanks,
 Johannes
