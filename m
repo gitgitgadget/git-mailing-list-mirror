@@ -2,89 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BA70C10F19
-	for <git@archiver.kernel.org>; Wed, 16 Aug 2023 18:53:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98E9DC25B7D
+	for <git@archiver.kernel.org>; Wed, 16 Aug 2023 20:25:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345661AbjHPSw7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Aug 2023 14:52:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33672 "EHLO
+        id S236852AbjHPUYm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Aug 2023 16:24:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345672AbjHPSwc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Aug 2023 14:52:32 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87DF026B7
-        for <git@vger.kernel.org>; Wed, 16 Aug 2023 11:52:21 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DB82F1AE398;
-        Wed, 16 Aug 2023 14:52:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=PFcK+JWGCAf4
-        /ZKRK2ITt6eoM8zHRKQI0QgFYqqP5Ek=; b=x2N9HjlneJl+riHAdqKX4uE8OHB4
-        mbcnR+MY+Bh6YSUSQwgWg8SPFO/DIGexOVmbXmKcqqHPyqJFH1gvsJd24lX3/283
-        GZqU6BCHJulR5o4ZvWHLR/wJunZgasOYX5PTlzAA18gZNVzY5B2sd7PD8zIfXtHV
-        UqNy7BVXHSAQkbU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D4F5A1AE38F;
-        Wed, 16 Aug 2023 14:52:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.58.166])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4ED901AE38E;
-        Wed, 16 Aug 2023 14:52:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 4/4] rev-list-options: fix typo in `--stdin` documentation
-References: <cover.1692194193.git.martin.agren@gmail.com>
-        <b1b3f1d10b64e63c62db0105957a4ad5e0295d34.1692194193.git.martin.agren@gmail.com>
-        <xmqqzg2qesoq.fsf@gitster.g>
-Date:   Wed, 16 Aug 2023 11:52:19 -0700
-In-Reply-To: <xmqqzg2qesoq.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-        16 Aug 2023 11:41:09 -0700")
-Message-ID: <xmqqv8dees64.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S1346132AbjHPUY2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Aug 2023 16:24:28 -0400
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 370F726A8
+        for <git@vger.kernel.org>; Wed, 16 Aug 2023 13:24:23 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id d9443c01a7336-1bdb801c667so45802655ad.1
+        for <git@vger.kernel.org>; Wed, 16 Aug 2023 13:24:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1692217462; x=1692822262;
+        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
+         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=A8BfkJiP4ntE8rZbjUsCQZquqT6JQG0x59/TX2BGnpg=;
+        b=nJBswMst0B8R7s7QrlgnscOHtneppZEo41HZYy5Oobo6JbFrCUIeAYw2AZd0rQtbOK
+         IAi0Vcrk9slhryew6CSv1dn6QWzVoCm0Kw96jtZaDPdkSk8gUFClemoT5oSJ7eST55Ws
+         EfvJlKZmm0UFTg2WP+xlidhCii0eGtG5eMzgnUP6FWYmjAHptOL6EqNH2GY3OUoLKUS0
+         XaCGGVq2NUbQ9wSGbUoLQmCABMFwXT8N05QM2nAM7tVbNR9u+tVxpmccPkoAOW3mmkqI
+         SSFScb8phOwnEAlEQOJPs8EAWm4+wubCWoPBy5agnSJcdN6nF2DxMbHGHzRQQfQsk0IG
+         d6Jg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692217462; x=1692822262;
+        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
+         :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=A8BfkJiP4ntE8rZbjUsCQZquqT6JQG0x59/TX2BGnpg=;
+        b=FmgkG9TgWywQKQ/ZiVoTjNx0SwQf/3GdGRYLc5GpijjV8Uy2tbsh952VdnPwxvgzsM
+         Xkmdq/XtlT0BWMv5QaulylykB9EtQbVmuM2Vp9oZ9Tvhvu4xjJHk6rGaUJ3HMB1xVzOz
+         vxfnRx6QFE8d+bYqJiXHx+fxTWMonzu950S6GuDdSbNNoAgQb4lUIcorbbJ0tX1OIsES
+         YxnPGgFVvNomlbhf1WNGs+YxNJB+5vVIp8PMpSr3OxvIsNEh0hXcMJkhJcjX1t3z67mD
+         DhPpGhxW/0dNMNei2mpDGtHy5v9hggmqzsmREHPz/ynXCt+ZIWXumo0lLLOXqvcflAd3
+         B6cA==
+X-Gm-Message-State: AOJu0Yw1Cc4XwQfaHbiIGdUJdnUfrSXSQKaI3smtKiAh6vkN+MWev/Zw
+        aVaBaNysl2rp+kJeBfZ7XZQMkbCLvNArWQ==
+X-Google-Smtp-Source: AGHT+IG2GzH98N5Ap0T3JQn9YtVuyCzK2HWA0VucZ59WmdBIoLFGWhzC0egg7gzTIRTfb+QfQIrNfg==
+X-Received: by 2002:a17:903:1251:b0:1b8:66f6:87a3 with SMTP id u17-20020a170903125100b001b866f687a3mr3824127plh.52.1692217462296;
+        Wed, 16 Aug 2023 13:24:22 -0700 (PDT)
+Received: from five231003 ([49.37.158.198])
+        by smtp.gmail.com with ESMTPSA id h17-20020a170902f7d100b001bbb598b8bbsm13626265plw.41.2023.08.16.13.24.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Aug 2023 13:24:21 -0700 (PDT)
+Date:   Thu, 17 Aug 2023 01:54:17 +0530
+From:   Kousik Sanagavarapu <five231003@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>
+Subject: Re: [GSoC] Blog
+Message-ID: <ZN0wcT8q7_FKJLLs@five231003>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 07638186-3C66-11EE-B2D8-C65BE52EC81B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <ZIdrQybUsjEcxMrb@five231003>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
+Week 12 post is here
 
-> Martin =C3=85gren <martin.agren@gmail.com> writes:
->
->> With `--stdin`, we read *from* standard input, not *for*.
->
-> True, and the name of the stream is "the standard input".
+	Week 12: https://five-sh.github.io/2023/08/16/week12
 
-... but there are too numerous instances of unadorned "standard
-input" in the documentation, let's leave it for now.
+Feel free to suggest any changes or comment on or off list.
 
-Thanks for these fixes.  Queued all four and will fast track.
-
->
->> Signed-off-by: Martin =C3=85gren <martin.agren@gmail.com>
->> ---
->>  Documentation/rev-list-options.txt | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-li=
-st-options.txt
->> index e6468bf0eb..a4a0cb93b2 100644
->> --- a/Documentation/rev-list-options.txt
->> +++ b/Documentation/rev-list-options.txt
->> @@ -237,7 +237,7 @@ endif::git-rev-list[]
->> =20
->>  --stdin::
->>  	In addition to getting arguments from the command line, read
->> -	them for standard input as well. This accepts commits and
->> +	them from standard input as well. This accepts commits and
->>  	pseudo-options like `--all` and `--glob=3D`. When a `--` separator
->>  	is seen, the following input is treated as paths and used to
->>  	limit the result.
+Thanks
