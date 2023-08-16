@@ -2,152 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CAC8C001B0
-	for <git@archiver.kernel.org>; Wed, 16 Aug 2023 16:31:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 16757C001B0
+	for <git@archiver.kernel.org>; Wed, 16 Aug 2023 16:45:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344643AbjHPQb0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Aug 2023 12:31:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44700 "EHLO
+        id S236124AbjHPQpZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Aug 2023 12:45:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344774AbjHPQbI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Aug 2023 12:31:08 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19A811980
-        for <git@vger.kernel.org>; Wed, 16 Aug 2023 09:31:07 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2bb99fbaebdso11542521fa.0
-        for <git@vger.kernel.org>; Wed, 16 Aug 2023 09:31:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692203465; x=1692808265;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sgTvJRpsvyKNBAqmJmDhZlcyMkn20ApwxoOEGev1qy8=;
-        b=pxELjP/WRFvwBJk/3/zIXFkC/SEGDvqN9vRUPRgcS/Pal5pZOhEJOXfaT7a4AcYad5
-         sLVGAiW/NluM42pRS+LzawVSV4lDmdUP5QneHUkEL2YctD7Q1qmQMhTqKEZ/c0LoOgGv
-         3Th1qiot7lOmYPK3ZtIXRZ2NvrO6gqEA/2u9hbyfCVtBuFPUlBsG+QCnLlmDLu9fx+8r
-         iY8Ajkr9pHD5bLlDrRXdaMPWNTyTCRcUIDdDrAX2McQslq6W7b1tTXtmfCPXCqyFFfr6
-         6bH7jqt7z3GiJtHbUQb9wa29SZXZdNZqiuMz1Lj7kVyrXCURInVE1lJoJjuri8zEU5Tg
-         b21A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692203465; x=1692808265;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=sgTvJRpsvyKNBAqmJmDhZlcyMkn20ApwxoOEGev1qy8=;
-        b=ga3o8lDX3Rl8NMK7T23SREn9CpidmYtNUf/xlynbZEt/ctAfn918K5NnEOa74vs+n2
-         wEB9YYN2yk6Qmrs60lkeGLvoxuqpJg9r7psQG/PdupDIrg9yy7U+Fd+YMDK3lMnTioCn
-         ZfiwYt/O2NtmJacjJb7uvXJkBwtAwMJGHoN3gCES96Lr+9UUanCR0/MJEC56Cd7jjQS7
-         ylTdTw1S8oM11a6nqOYADWjNGIs4a8TlAOhbnEdY1LwCNaGKebkKo95DASCXe6BjT+aN
-         0u8ABi6vmJS/aZfnFV9XiDQSE/dwmQSUdSc1SpV9nFSEa+DLqh2hNAfEaIBnZlJflFK1
-         S6vA==
-X-Gm-Message-State: AOJu0YweNLkMGNUtqipnrnXM37Zez7lzyF00cF1ZKx1PPUoa1G13oU9J
-        kGfPyHoUxsA8LBfHo8X3PGCYdZglkI7qLtPQ3Wc=
-X-Google-Smtp-Source: AGHT+IEodCMIjY2ElmnZUAXRsK7fvHh7CxuWh3AAtikp6bTIpNe6YGfa6iBO3aY3xTbssQN6LfzWR+fswF42lu6yf7g=
-X-Received: by 2002:a2e:4952:0:b0:2b9:eb9d:cc51 with SMTP id
- b18-20020a2e4952000000b002b9eb9dcc51mr1679208ljd.49.1692203465139; Wed, 16
- Aug 2023 09:31:05 -0700 (PDT)
+        with ESMTP id S1345024AbjHPQom (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Aug 2023 12:44:42 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C09433A84
+        for <git@vger.kernel.org>; Wed, 16 Aug 2023 09:44:09 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C69671AD1EA;
+        Wed, 16 Aug 2023 12:44:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=La7kDswNx5w6+y8dpTATC3FNL0UgSSJf7q+bNM
+        sq82g=; b=nKFismjK6K4Ez3JW1Kzwh4jqTdRnVe/G2+Wf1eRa/pY+giKqw2Xjf/
+        xbYTa7pEDV94nqaaef2pUVk5AUVq5WIDoQLbnbcheX20Ch6efWjy2azRecRVbsn1
+        Duo5J8R4CvNtB5HuuUQiopZADA0Nm5Ew7ouISXihxZTlBG4GhA/bM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BD2C31AD1E9;
+        Wed, 16 Aug 2023 12:44:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.58.166])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C76B71AD1E6;
+        Wed, 16 Aug 2023 12:44:06 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH] upload-pack: fix exit code when denying fetch of
+ unreachable object ID
+References: <pull.1572.git.1691678450757.gitgitgadget@gmail.com>
+        <fe028981d353158e9840eb035194ca15e6a2c15e.1692165840.git.ps@pks.im>
+        <xmqqjztvezen.fsf@gitster.g>
+Date:   Wed, 16 Aug 2023 09:44:04 -0700
+In-Reply-To: <xmqqjztvezen.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
+        16 Aug 2023 09:16:00 -0700")
+Message-ID: <xmqq8rabey3v.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-References: <CAMRL+qYYGJ-LYG8qZpJOq+_=YO_C7JSTH4TPDpbEA4fRdANP7w@mail.gmail.com>
- <20230816025715.GB2248431@coredump.intra.peff.net>
-In-Reply-To: <20230816025715.GB2248431@coredump.intra.peff.net>
-From:   Patrick <patrickf3139@gmail.com>
-Date:   Wed, 16 Aug 2023 09:30:38 -0700
-Message-ID: <CAMRL+qbGBOiR49A0FDYgZJmMbsfyeTZkzVmEdrCRYEanjv195A@mail.gmail.com>
-Subject: Re: Force usage of pager for diff, show, etc when piping to non-TTY
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1DB3B4EA-3C54-11EE-94F1-C65BE52EC81B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jeff, thank you for your expert and thorough response!
-You make a good point that users usually pipe the output of a prettier
-tool to a pager themselves. In the case of delta, delta can be
-configured to selectively pipe to a pager itself, so delta's docs
-doesn't tell users to pipe: `core.pager =3D delta` (source:
-https://dandavison.github.io/delta/configuration.html)
+Junio C Hamano <gitster@pobox.com> writes:
 
-However, for diff-so-fancy, it might not work cleanly because users
-are told to explicitly pipe it to a pager. `core.pager "diff-so-fancy
-| less --tabs=3D4 -RFX"` (source:
-https://github.com/so-fancy/diff-so-fancy#with-git).
+> The change to the code sounds sensible in that it is a move to
+> restore the status quo, and we know that the original never intended
+> to "fix" the exit status from 128 to 1.  The test change etches the
+> status quo in stone, which is a bit more than that and might be
+> debatable, but when we someday formally declare that users should
+> not be relying on the exit status that are not documented, we would
+> hunt for the uses of test_expect_code in the tests and turn this one
+> back, and probably do the same to others that are too strict on the
+> exact exit status, so I think that half of the change is OK, at
+> least for now.
+>
+> Comments?
 
-I haven't looked at other tools but it's clear this approach is not
-guaranteed to work for all configurations so I should look into
-something else.
+An alternative to make this "fix" without setting any policy is to
+do this.  That is, to remove the change to the test part and then to
+rephrase the tail end of the proposed commit log message.
 
-Jeff, would you be so kind as to elaborate more on the
-interactive.diffFilter approach? My understanding is that
-interactive.diffFilter is only used for git add -p or git reset -p.
-However, the limitation for my use case is I need to use the pager
-for git log and git show so that won't work. So then, you are
-suggesting that I ask my users to opt in by setting an arbitrary git
-config like fzf.pager and then read out the pager from that git var?
+I can go either way.  I personally prefer our tests not to be overly
+strict about behaviors they test, especially the ones we do not
+document.
 
-On Tue, Aug 15, 2023 at 7:57=E2=80=AFPM Jeff King <peff@peff.net> wrote:
->
-> On Tue, Aug 15, 2023 at 05:09:13PM -0700, Patrick wrote:
->
-> > I noticed there is no option I can pass to git to use the pager set in
-> > my gitconfig even when piping to non-TTY. Is there a workaround? If
-> > not, may I request this as a new feature?
->
-> I don't think there is a workaround. We have "git --paginate", but it
-> really means "paginate this command using the default rules, even if it
-> is not a command that is usually paginated".
->
-> Looking at the code in setup_pager(), I think the check for "is stdout a
-> tty" is fed directly into the decision of whether to use a pager.
-> There's no way to override it within Git. You'd have to trick Git by
-> opening a pty in the calling program and pumping the data through it
-> (which is what our test suite does; see t/test-terminal.perl).
->
-> So I think it would need a new option. But...
->
-> > Use case: integrate tools like Delta or diff-so-fancy when building
-> > wrappers around git commands. See
-> > https://github.com/dandavison/delta/discussions/840 and
-> > https://github.com/PatrickF1/fzf.fish/discussions/202 for examples.
->
-> I'm not quite sure that's what you want. When a user configures a custom
-> pager using a prettifier tool like that, they usually further pipe the
-> output to a pager like "less". E.g., I have:
->
->   [pager]
->   log =3D diff-highlight | less
->
-> in my config. If you are trying to save output that looks like what the
-> user would see on their tty, you want the first half of that pipeline
-> (the diff-highlight here), but not the second (less). Of course it
-> mostly works because less is smart enough to behave like a noop "cat"
-> when stdout isn't a tty. So it might be OK in practice.
->
-> I think your script might be better off doing the piping itself. In
-> theory you could ask Git what the configured pager is and the run it
-> yourself, but:
->
->   1. You can use "git var GIT_PAGER" to get the default pager, but not
->      command-specific ones. So you'd have to check "git config
->      pager.log", etc, yourself, which means reimplementing some of Git's
->      logic.
->
->   2. You'd get a string like "diff-highlight | less", and then you'd
->      have to decide whether to parse off the "| less" part yourself,
->      which is obviously error-prone since the string can be an
->      arbitrarily complex shell expression.
->
-> When we were faced with a similar situation within Git, we ended up
-> adding a new config option: interactive.diffFilter. This is used by "add
-> -p", etc, to filter diffs that are shown to the user. It does mean the
-> user has to repeat themselves (I have to set it to "diff-highlight"
-> separately from my settings for pager.log, pager.diff, etc). But it's
-> unambiguous, and it gives the user the flexibility of configuring
-> various outputs differently if they choose.
->
-> So depending on what your script does, you could use a similar config
-> option. Or even just use interactive.diffFilter if your use case is
-> conceptually the same.
->
-> -Peff
+1:  77d0f01405 ! 1:  5f33a843de upload-pack: fix exit code when denying fetch of unreachable object ID
+    @@ Commit message
+         seems rather clear that this is an unintended side effect of the change
+         given that this change in behaviour was not mentioned at all.
+     
+    -    Fix this regression by exiting with 128 again and tighten one of our
+    -    tests to catch such unintended side effects.
+    +    Restore the status-quo by exiting with 128.  The test in t5703 to
+    +    ensure that "git fetch" fails by using test_must_fail, which does
+    +    not care between exiting 1 and 128, so this changes will not affect
+    +    any test.
+     
+         Signed-off-by: Patrick Steinhardt <ps@pks.im>
+         Signed-off-by: Junio C Hamano <gitster@pobox.com>
+     
+    - ## t/t5703-upload-pack-ref-in-want.sh ##
+    -@@ t/t5703-upload-pack-ref-in-want.sh: test_expect_success 'server is initially ahead - no ref in want' '
+    - 	rm -rf local &&
+    - 	cp -r "$LOCAL_PRISTINE" local &&
+    - 	inconsistency main $(test_oid numeric) &&
+    --	test_must_fail git -C local fetch 2>err &&
+    -+	test_expect_code 128 git -C local fetch 2>err &&
+    - 	test_i18ngrep "fatal: remote error: upload-pack: not our ref" err
+    - '
+    - 
+    -
+      ## upload-pack.c ##
+     @@ upload-pack.c: static void check_non_tip(struct upload_pack_data *data)
+      			packet_writer_error(&data->writer,
