@@ -2,168 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 060E6C04A94
-	for <git@archiver.kernel.org>; Wed, 16 Aug 2023 09:18:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA0FDC04A6A
+	for <git@archiver.kernel.org>; Wed, 16 Aug 2023 13:31:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243261AbjHPJRj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Aug 2023 05:17:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38756 "EHLO
+        id S245557AbjHPNbX convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Wed, 16 Aug 2023 09:31:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243314AbjHPJR1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Aug 2023 05:17:27 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0AA0269F
-        for <git@vger.kernel.org>; Wed, 16 Aug 2023 02:17:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de;
- s=s31663417; t=1692177433; x=1692782233; i=johannes.schindelin@gmx.de;
- bh=N4WJ6LbJ7eZflUY/ZuXtEkpyTYti6DaBzzmWh1/plbU=;
- h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
- b=RvqrngrsDiTE9vMi7M6A163M85wZQTPkUJAbuLcoN8efnQsAo7kRNB4YeCn2cxTpxDtHgE8
- EZR9PbiJJoCErHC+uvdSY8fPzZdgXYUgiMG4Nc82nLobmN5lQp9fSZ4vnAWo04resSL/T0otx
- u6ofcfz9RIYwGSnOBjrp6P1nwIdLBV6fJPRFV/Nu4hOD3LeRzwV6yqiVE1b+0JnlBf/IBYN/y
- dAlQW0msNuEO2t/7Gt8K/Y9eublUQCssxUnpOWZF4azTScJmzlk8sWnbxJh9FfqTyNJ7Bw6Vb
- 9rSzyt5AHppOOQ0IHPoIsMOsWqzqeSitlPG2LZRKEPQW9O0sJIjA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([80.151.253.86]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M7b2d-1qOlam20PV-0080Zy; Wed, 16
- Aug 2023 11:17:13 +0200
-Date:   Wed, 16 Aug 2023 10:36:33 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Mark Ruvald Pedersen via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Mark Ruvald Pedersen <mped@oticon.com>,
-        Mark Ruvald Pedersen <mped@demant.com>
-Subject: Re: [PATCH 1/2] sequencer: truncate labels to accommodate loose
- refs
-In-Reply-To: <xmqqr0oastxv.fsf@gitster.g>
-Message-ID: <42dd6b6f-4d33-724c-ab15-ba7bb5ead733@gmx.de>
-References: <pull.1562.git.git.1691685300.gitgitgadget@gmail.com>        <4971e3c52504bf965aa754c9a5d31abddbcc1466.1691685300.git.gitgitgadget@gmail.com> <xmqqr0oastxv.fsf@gitster.g>
+        with ESMTP id S245604AbjHPNbQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Aug 2023 09:31:16 -0400
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EE94E52
+        for <git@vger.kernel.org>; Wed, 16 Aug 2023 06:31:15 -0700 (PDT)
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
+        (authenticated bits=0)
+        by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 37GDSmPj1826925
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 16 Aug 2023 13:28:48 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From:   <rsbecker@nexbridge.com>
+To:     "'Jeff King'" <peff@peff.net>, "'Taylor Blau'" <me@ttaylorr.com>
+Cc:     "'Andy Koppe'" <andy.koppe@gmail.com>,
+        "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>
+References: <20230715103758.3862-1-andy.koppe@gmail.com> <20230715160730.4046-1-andy.koppe@gmail.com> <kl6l351j22dr.fsf@chooglen-macbookpro.roam.corp.google.com> <CAHWeT-ZA8f-TGRwDHixAvi5kddVBbuK8LpVGJ9cjYZMsMk5ODw@mail.gmail.com> <xmqq7cpwjhr1.fsf@gitster.g> <006574bd-4d53-495e-8cfe-677ede521908@gmail.com> <xmqq350kjfk8.fsf@gitster.g> <ce5d20db-2220-45dd-8c39-2a52e0f9f816@gmail.com> <ZNv5PQlkn6tbUcH7@nand.local> <20230816022420.GA2248431@coredump.intra.peff.net>
+In-Reply-To: <20230816022420.GA2248431@coredump.intra.peff.net>
+Subject: RE: main != master at github.com/git/git
+Date:   Wed, 16 Aug 2023 09:30:57 -0400
+Organization: Nexbridge Inc.
+Message-ID: <000901d9d045$e780f790$b682e6b0$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:d8Lg6FtYERzZjVx+uLZXFkgdmDaM5VcIHQm3ox8Z2B6syLqSgjQ
- KghpsmQdT2cj1pDTbNOX4kF/7x3/U7K44SFZRGQocUSp0DD3qnSiMWPg4OiQ9bvEfb/x+33
- Aih2G4+P9l/g6QO7apHG83hGn8nciCIK5bEQ6CEvxhOe9r2X1/O+nzMZv7HesJwoltyeEqH
- BVfZPOQotsDPno2c85uFg==
-UI-OutboundReport: notjunk:1;M01:P0:A9ButZc6dzQ=;xJB0/t+KPPgnU4pHUk2zu6p1LB5
- 9xatW76WPa35HqSjknX6U3GuJk4c+lgP8oijghPGwiCWPoMnUM4m0c1VLk5fD55jXNVvNjpXl
- 8zgnLLB2qYQqusSfJNmZmVImj0g/udZE/wpkil7qpcrHmQZCn6ym2W59N6GI07AojAcNj8RS/
- 1FdL0zJxqPrWjfV/0yWncrUT1/RQBK2W/L7Vii6pC8K9cJs9ikudQJgHU8SpSvZGvh6eq6Azd
- Gwr39/PAPv/53xUvygj66IU+iZmiNKPktZS6eqvksVIiHC8B8XSEcylQnfJjm9FnDaqGdlv1E
- yyYRByFGx7546fyJrba0RA7ysWSB/r7lpgYaNzqZ7xh5DylZxojAjAB1aWOAVeqrkxmdaptWz
- tFztDL7hGsWQzaEYFDq0ZtZyPhuhzkLxqKY+B6X93L3d4PNcVF94zn6xKe4p2D4wvnud8OhEn
- spsB7KIbScrWPc4KKbKThYr7JZg1pKwnveKCKNmeHAysJvtSbzz1O5/DwSjyYu0+K6KKNCCP1
- LGUEfwc8+IsqDczSoac1YVC2a9Q6m6JMQLrHj8CyxV9IF4Qr8dNV0ZcMsI0mQIeaK8E+/638q
- hhWSozkAXVgvihHOKFC6fE7b2TxeKQxiAtepHC+uYCpu4mPc6Oa3OsBg3epLRI4ABQLBlMUc+
- toQ1cBa+D50sNam3WivzM2hexoxdcOJbMwCyodDdexekDwaC54LOBB5hmZLsH0Bm9WuHoc2tK
- +wKXjdw8DLVUvFT424g7bRMbT9eE/tWKz5hGSnEKABLvcBWmNSltf+cFM4UPV2V77TuP5RN9j
- WDLXdSfzoqQoydXf9TUhU0u10abkbbQKPq35Hxbuqbqr1UlqP/Vf6ROKWYhs59wKrk1Fhb5tr
- R/sJev2ofN4Ra2GalnX3XVYv1ZIQs//fse46T2PXSBNwR+BLYxIlzkO96oRsnr/fBs7WSJ4xb
- Tn0lf+zGj6mnzT4w2GWTFbBE9F0=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQK2iEj3UYOva04rtepGq3XGG6Ck6AGB+JDGAiSBonABWk1vJgKEKMhRAcxDmJkCXFI7vgIst0xsAYUClvsBU/EmEq2t4W8Q
+Content-Language: en-ca
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-On Thu, 10 Aug 2023, Junio C Hamano wrote:
-
-> "Mark Ruvald Pedersen via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
+On Tuesday, August 15, 2023 10:24 PM, Jeff King wrote:
+>On Tue, Aug 15, 2023 at 06:16:29PM -0400, Taylor Blau wrote:
 >
-> > +/*
-> > + * To accommodate common filesystem limitations, where the loose refs=
-' file
-> > + * names must not exceed `NAME_MAX`, the labels generated by `git reb=
-ase
-> > + * --rebase-merges` need to be truncated if the corresponding commit =
-subjects
-> > + * are too long.
-> > + * Add some margin to stay clear from reaching `NAME_MAX`.
-> > + */
-> > +#define GIT_MAX_LABEL_LENGTH ((NAME_MAX) - (LOCK_SUFFIX_LEN) - 16)
+>> > An alternative might be to exclude one of the branches in the
+>> > workflow file, as per [1].
+>>
+>> I think that this should be relatively straightforward to do, and
+>> would be preferable to dropping 'main'.
 >
-> OK.  Hopefully no systems defien NAME_MAX shorter than 20 bytes ;-).
-
-If there are, we already have problems with the following paths:
-
-	#CHARS  git_path
-	---------------------------------
-	20      BISECT_ANCESTORS_OK
-	20      BISECT_EXPECTED_REV
-	20      BISECT_FIRST_PARENT
-	22      fsmonitor--daemon.ipc
-	23      drop_redundant_commits
-	23      git-rebase-todo.backup
-	23      keep_redundant_commits
-	23      reschedule-failed-exec
-	24      allow_rerere_autoupdate
-	26      no-reschedule-failed-exec
-
-So I think we're good ;-)
-
-> We may suffix "-%d" to make it unique after this truncation, so
-> there definitely is a need for some slop, and 16-bytes should
-> sufficiently be long.
+>That was my inclination, too, though I wonder if that might cause hassles for Git for
+>Windows:
 >
+>  $ git ls-remote --symref https://github.com/git-for-windows/git HEAD
+>  ref: refs/heads/main	HEAD
+>  a67b85bf88ddbccae96714edb64d741ddfc3a1c9	HEAD
 >
-> > @@ -5404,14 +5415,34 @@ static const char *label_oid(struct object_id =
-*oid, const char *label,
-> >  		 *
-> >  		 * Note that we retain non-ASCII UTF-8 characters (identified
-> >  		 * via the most significant bit). They should be all acceptable
-> > -		 * in file names. We do not validate the UTF-8 here, that's not
-> > -		 * the job of this function.
-> > +		 * in file names.
-> > +		 *
-> > +		 * As we will use the labels as names of (loose) refs, it is
-> > +		 * vital that the name not be longer than the maximum component
-> > +		 * size of the file system (`NAME_MAX`). We are careful to
-> > +		 * truncate the label accordingly, allowing for the `.lock`
-> > +		 * suffix and for the label to be UTF-8 encoded (i.e. we avoid
-> > +		 * truncating in the middle of a character).
-> >  		 */
-> > -		for (; *label; label++)
-> > -			if ((*label & 0x80) || isalnum(*label))
-> > +		for (; *label && buf->len + 1 < max_len; label++)
-> > +			if (isalnum(*label) ||
-> > +			    (!label_is_utf8 && (*label & 0x80)))
-> >  				strbuf_addch(buf, *label);
-> > +			else if (*label & 0x80) {
-> > +				const char *p =3D label;
-> > +
-> > +				utf8_width(&p, NULL);
-> > +				if (p) {
-> > +					if (buf->len + (p - label) > max_len)
-> > +						break;
-> > +					strbuf_add(buf, label, p - label);
-> > +					label =3D p - 1;
-> > +				} else {
-> > +					label_is_utf8 =3D 0;
-> > +					strbuf_addch(buf, *label);
-> > +				}
+>I'm not sure how big a deal it would be in practice. Obviously they carry patches that
+>are not in upstream git and could adjust the file themselves that way. But it might
+>introduce extra friction, and in my experience changes to "meta" files like this can be
+>a hassle, because you often want them independently on every branch (though in
+>theory this one only matters for the "main" branch itself).
 >
-> Utf8_width() does let you advance one unicode character at a time as
-> its side effect, but it may be a bit overkill, as its primary
-> function is to compute the display width of that character.
->
-> We could take advantage of the fact that the first byte of a UTF-8
-> character has two high-bits set (i.e. 11xxxxxx) while the second and
-> subsequent bytes have only the top-bit set and the second highest
-> bit clear (i.e. 10xxxxxx) to simplify/optimize it.  If this were in
-> a performance sensitive codepath, that is.
+>So I won't say it's obviously a bad idea, but it might bear some thinking on what the
+>ramifications would be for downstream.
 
-It is not a performance-critical code path, so I erred on the side of
-simplicity (although I have to admit that the post image of the diff is
-not exactly for the faint of heart).
+Would it not be more convenient just to add a GitHub action that set main = master for each push?
 
-Could we maybe form the plan to keep in the back of our heads that we
-already have a UTF-8-truncating functionality in sequencer, and in case
-another user should turn up, implemnt that optimized function in
-`utf8.[ch]`?
-
-> I'll queue it as-is for now, as we are in "regression fix only"
-> phase of the cycle, and have enough time to polish it.
-
-Thanks,
-Johannes
