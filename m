@@ -2,194 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AD73EB64DD
-	for <git@archiver.kernel.org>; Thu, 17 Aug 2023 10:08:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 330C9C27C7A
+	for <git@archiver.kernel.org>; Thu, 17 Aug 2023 13:23:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349552AbjHQKH6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Aug 2023 06:07:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55184 "EHLO
+        id S1351407AbjHQNXA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Aug 2023 09:23:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349808AbjHQKHi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Aug 2023 06:07:38 -0400
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C02A2D61
-        for <git@vger.kernel.org>; Thu, 17 Aug 2023 03:07:35 -0700 (PDT)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-        by mailout.west.internal (Postfix) with ESMTP id D83B93200910;
-        Thu, 17 Aug 2023 06:07:32 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Thu, 17 Aug 2023 06:07:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-        :content-type:content-type:date:date:from:from:in-reply-to
-        :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm1; t=1692266852; x=1692353252; bh=Ev
-        cdwN0SXx5Goz19j9ExypwIzlHbWzuw4mLrpwpVXW0=; b=CeeRMK22j5NNGWJrxv
-        K3afaLXMvv1cDrdao58pZPLW+ZusoHqcAH5qpvXWIMKCKOEnNi6Ri3qFo7lLiRRw
-        AdCcEtaEmqvtieRpLwPaFgbdNwT3x2NIa6d801XS4pvatMYlt30nFApFWb7ypB3s
-        Yi8fS4IcUwMhwfpr1PYBALT8jIAWAXxiK+lx/W220sdQBlsr7FLqIqUJf142raYc
-        z1BpNRV6g7NkshB7bv2msg3nmmt9khSb4kpLF/4Rl+25MSY2K7Y9IN4FkY/yafye
-        3X/8QNucRE0R3kgEv2gOObw+OIOmDwBjOl24flMEYP8S62AhQDuFSqbT7DEky5rE
-        x3cQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:content-type:date:date
-        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm1; t=1692266852; x=1692353252; bh=EvcdwN0SXx5Go
-        z19j9ExypwIzlHbWzuw4mLrpwpVXW0=; b=dOxVgZVXdheUd80ikTNqy5Qn8J15I
-        m+AlhLEWgHzcrx3ft+o+H1z+l+qgkNh7Ib840eNPP7Ld2x2z2Y4oJWtIfNjdqec+
-        waA3td2yML/+XDadDWEgAgdo/xSBBlV+rgdSN3udBjA0A50/4enQxWp8e/KfmRNu
-        gblwoO3HjsgrS5Q09KSdZqBlX50Si7mwtO9AicPoRVZYYka4Mi278OQTg1upjOEl
-        LSDZKPgyVDg712IVsJ5GicU85e6Dv0j3HFbKWhOUheUKh/052pUKBd3+4EQPr8U3
-        kXIv3u4M/QNfD0kDDywONI/0XP+tU1Rkhl808VjNdEfiukp9SgnOqZhKQ==
-X-ME-Sender: <xms:Y_HdZL08fwE_17lk1cN8G6aK4QKAfaPR3yPC0a9CYavn5W1nLfgk1Q>
-    <xme:Y_HdZKHG8B-hivna8T0_vx-MdTYS5MIsFZqP5-6xmntPpA09Zc5wdJVNcSTgrLki9
-    fXPFHoYXtzVeFuImw>
-X-ME-Received: <xmr:Y_HdZL6QxZ0yCmzLo-mdPGV-ozdUOmmamL7zCPmwKwidYfdArRL-f5VuAmVy_mrGUKRBC7McAbqgwoNtqFRZPMTV5pGeMhpDoAys4VkfclPO>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrudduuddgvdegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:Y_HdZA3BNCX47q9fPFTBAZfbnTw8bkn_igH8WkEqKLq1Iv0GanTjvQ>
-    <xmx:Y_HdZOGkJ7fBqFsU93oT-ORcvIj5F6hEhWYhFFr7vx2UbX8tMzkwkQ>
-    <xmx:Y_HdZB_2VTizgGwh-H85PhQ_2H1WDiddqusDtvj-VBAEe3j85U-0-A>
-    <xmx:ZPHdZAMB7KTS6JuxnD6-oQuaZT6j5rnZocqsi7rmFT_sjbA_KFyB2Q>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 17 Aug 2023 06:07:31 -0400 (EDT)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id 119d67b4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Thu, 17 Aug 2023 10:05:12 +0000 (UTC)
-Date:   Thu, 17 Aug 2023 12:07:25 +0200
-From:   Patrick Steinhardt <ps@pks.im>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org
-Subject: Re: [PATCH] upload-pack: fix exit code when denying fetch of
- unreachable object ID
-Message-ID: <ZN3xXfJEETBIn7nu@tanuki>
-References: <pull.1572.git.1691678450757.gitgitgadget@gmail.com>
- <fe028981d353158e9840eb035194ca15e6a2c15e.1692165840.git.ps@pks.im>
- <xmqqjztvezen.fsf@gitster.g>
- <xmqq8rabey3v.fsf@gitster.g>
- <CABQH79pick0c1UVc+W8n2QtVmSJAjqXcJGtYSm0aahAFDNvE1g@mail.gmail.com>
- <xmqqa5uqckwd.fsf@gitster.g>
+        with ESMTP id S1351499AbjHQNWv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Aug 2023 09:22:51 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AF5926A8
+        for <git@vger.kernel.org>; Thu, 17 Aug 2023 06:22:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de;
+ s=s31663417; t=1692278521; x=1692883321; i=johannes.schindelin@gmx.de;
+ bh=CJrgkQ5GdNxIjnyfFECiAGLTEuwWFRW24Ne128zqR8A=;
+ h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+ b=fqW3/8cpkd5QwNbgC+wTdarwWXiWxHSuzkkuUCyBHidlkQI/sOvk8G7hKpVQlNpE8ArUjx0
+ 7KfLFC3gruMQmKUMv5XSWeP3/x0rXve+1qolkM0I5rrt7jU7onhm7XlwxzyUFOtW3TqAR4rGB
+ 9ZIdbaEvRf+VN7l1JXxWr09G4hn4vK2XBgipWkl/LTWAWweyamOzXxrxZKiB1tuFjVUHNJp7b
+ 2nTRg/A76xYRvKiuvJhE4jsgsN9rBsw02xJsMxqNDkqA/02/deBGGmFD9S32K1OMQtUrYdZuK
+ +xqUH7FLX6wIIU7USXIDf/XH5OObLZrw76VAmbStiqHrqvs1PKrQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.214.70]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MeU0q-1pwSib0i7Y-00aRtw; Thu, 17
+ Aug 2023 15:22:01 +0200
+Date:   Thu, 17 Aug 2023 15:21:59 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     Elijah Newren <newren@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        John Cai <johncai86@gmail.com>, git <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Aug 2023, #01; Wed, 2)
+In-Reply-To: <CABPp-BE5h6C1iuGDz4HdJzb2bDLidEnQ0_U4fv93JrYXA2_cbw@mail.gmail.com>
+Message-ID: <304f2a49-5e05-7655-9f87-2011606df5db@gmx.de>
+References: <xmqqfs518gdh.fsf@gitster.g> <CAP8UFD1vuB2kRr890B7GXum9HAMjRep86zy2tE4yE2C3W5QGHA@mail.gmail.com> <CAP8UFD2Fw+oGz4VK=_i3B_D_VMQqMoXTJPpXRbkDiWjHciEqJw@mail.gmail.com> <xmqqv8dqhlkz.fsf@gitster.g>
+ <CABPp-BE5h6C1iuGDz4HdJzb2bDLidEnQ0_U4fv93JrYXA2_cbw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="5zh88TAG0+cAaP0m"
-Content-Disposition: inline
-In-Reply-To: <xmqqa5uqckwd.fsf@gitster.g>
+Content-Type: multipart/mixed; boundary="8323328-1130246202-1692278521=:158"
+X-Provags-ID: V03:K1:dcUReyOpWibHme3xftCzYwutflY2d+hZR34FvAVeTDBeApHtp6f
+ 1gsMl+WCKHPkue/HnJ/iXE4vreblesTOAA1og03jskOBwEfhL5uP7Fe+8aQSm5/gzTFvBH1
+ YqoKs8G2hUfdzwzRiTgLSI6aMc4fYNmzQgmsqCpFxDsRe5ei4MGGWclBEsEqjbQWRDgMA0e
+ IfuXgOnst9RwSczzWZvUg==
+UI-OutboundReport: notjunk:1;M01:P0:OpW6pFjGCHg=;jXbIK5FNNG1R8svyc2KoEoe1r8L
+ /JuNdEHnM8rZ65i4HDjj26/EEDT2HRyrMt+Pg7+lF4wmigmAsIqswMt90oCJeyt62VSxOTeDt
+ mUoy2qJM2zAl8JgAfcOBKUUQ0OXUzkk/NyGq8IkaLdOhwl/U9DBKwfE1imXo9y8XO7W8wMkFs
+ LhEZeJRwQ0YICj2hntLj0K/N1Ckp4ymPSgy6tCw0RmYOfGTf61lz46li2PV6JHuFL3tkCXzwM
+ UV4GRgvNGuCMZkVItE8J91uqiXcg/9as3G2xGHyKBkBAsMRlV/v2RSnaM6fXNGPW9oKTxOkVP
+ /NCpzJATUnoXM6FyHFHydzCnKo5ahIsn7Aae9FNswanOiLT1T2UeG57BkyLY34bJoUor+vH24
+ N5UfNwZ/u1HS8V1ODdyy/dFuUTUnFr71mpI5yvPjVbxBc6yIeTu7Smp58toUOJElYCiUfdq3c
+ CmTbq0Ir4Gct6yiSjUYH14B0msbS9Ser+6ZeLGRmJUsiwy61Q00O4UbLbyt3teqOsj+6VC8RN
+ 0l4kUzuyLfFh5hLm6RMd3LzPGPkQLzTpjqU6xTzBMrvtIRc8cKrPmpookX3HW+xTxCv8FtJFC
+ pSGddl0q4h5RFKPGgFD8GdFs/DDZGj2DrpvN2ZDhoVFtu6cNchJihSlmqPgZZwmQDUcwg/X4V
+ LSYT/U38xPvBnxTvYplgIkJ5rcpuHwieqjoUbEG1A8g24bMovyBGwx8R4BgrkvjzBIjeQiTmf
+ xXKpuW127U1/Yp+U3YCbXawG4rVjEg47jVeezACMF08vO87WyWfR9h64sqB0q1QtQKCXOGyl1
+ RWGO/nWtvkQfvrThOaUbH00yA4mbgUoyyk8rs7IkTOH2LyIvPfV/rtXBQJduR6MytcomubwXY
+ yUVtWiClgPVh9dS093KNDmaXjTd8d88CEXNcq+obe2rEYlUjysUXsy7bsk272Il84C5FhjyPD
+ 8cpm1cPZPncjNayC1UEkg11m6WY=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
---5zh88TAG0+cAaP0m
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--8323328-1130246202-1692278521=:158
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Aug 16, 2023 at 10:12:18PM -0700, Junio C Hamano wrote:
-> Derrick Stolee <derrickstolee@github.com> writes:
->=20
-> [jc: the message I am responding to may not be on the list archive,
->  as it was multipart/alternative with text/html in it, but I think
->  the main point from you can be seen by others only from the parts
->  I quoted here].
->=20
-> > While I don't think we should document that the exit code has
-> > a special meaning for the builtin, adding the test will help
-> > prevent another accidental change in the future. If the patch is
-> > worth taking (to fix the accidental change) then I think the test
-> > should stay, so we don't make this change accidentally again.
->=20
-> I think my stance is a bit more nuanced, in that the first half of
-> the patch to make us exit with 128 is worth taking, simply because
-> we did not have to and did not intend to change the exit status, but
-> the other half of the patch, using test_expect_code in the test
-> suite, sends a wrong message that somehow exact value of non-zero
-> exit status in this particular case matters.
->=20
-> To put it another way, if your patch to shuffle the calls for two
-> error messages, concluded with a call to exit(), were written in the
-> ideal world, you would have passed 128 to exit(), *and* you wouldn't
-> have added any test that says "fetch should exit with 128 and not 1
-> when it fails".  I aimed to massage Patrick's patch so that the
-> original patch from you will become that patch in the ideal world
-> when it is squashed in.
+Hi,
 
-I tend to agree with Derrick -- if we think that it is important enough
-to restore the exit code, whether that change was intentional or not,
-then I think it makes sense to also add a test. The benefit of that test
-wouldn't be to say "This is cast into stone", but rather to indicate to
-the developer that a change that they have just been doing has an
-unintentional side effect.
+On Mon, 7 Aug 2023, Elijah Newren wrote:
 
-The problem I see with my own stance though is that if you extend it to
-the extreme, every single `test_must_fail` would need to do exact error
-code checking. The benefit of this would be kind of dubious though as
-long as we do not decide to attach meaning to specific error codes.
+> On Mon, Aug 7, 2023 at 9:19=E2=80=AFAM Junio C Hamano <gitster@pobox.com=
+> wrote:
+> >
+> [...]
+> > >> However in a recent article
+> > >> (https://github.blog/2023-07-27-scaling-merge-ort-across-github/)
+> > >> GitHub says that they are already using git-replay (though not sure
+> > >> it's this exact version or another one), and GitLab plans to use it
+> > >> too.
+> >
+> > So there are plenty folks who are capable of reviewing but they are
+> > not interested in giving it to the general public by withholding
+> > their reviews ;-)?
+>
+> I can see how one could jump to that conclusion, but I don't think
+> it's warranted.  I have a little information that might shed some
+> light:
+>
+> -----
+>
+> At the beginning of July, well before the above link came out,
+> Johannes sent me an email pointing me at
+> https://github.blog/changelog/2023-06-28-rebase-commits-now-created-usin=
+g-the-merge-ort-strategy/.
+> In the email, he also noted my earlier stated concerns on the list
+> (about releasing `replay` early possibly painting us into a corner
+> preventing some desired goals for the tool from being realized), and
+> tried to ensure we could still work towards having a `replay` command
+> like the one I envisioned while also asking for my thoughts on pushing
+> for the current portion of work to be published and included in git.
+> My sense was he was pushing for the work to be released, but just
+> being careful about my concerns first.
 
-In general I often wish that we had better ways to transport the
-circumstances of why a specific command has failed to the caller. In
-Gitaly, we often have to fall back to parsing the standard error stream
-of a command in order to figure out the failure cause, which does not
-exactly feel great given that these are rather intended to be consumed
-by a user rather than a program.
+Indeed. The patches that are running on GitHub to support rebases
+incorporate v3 of the `git-replay` patch series, and add a couple of
+patches on top to perform rebases similar to how things were done using
+libgit2 before.
 
-Whether that information should be transported via exit codes though...
-I don't know. An exit code can only convey so much information and they
-often feel fragile to me. Documenting them explicitly would of course
-already go a long way, but that wouldn't quite help the fact that this
-mechanism still can't convey more information than "The command has
-failed because of a specific root cause". Many commands perform more
-than a single unit of work though, so even if we know the root cause we
-still wouldn't necessarily know where exactly it has failed.=20
+> Unfortunately, I was on vacation that week, and sadly have otherwise
+> been buried in coming up to speed on a new team and haven't had time
+> to even respond to git-related stuff.  I didn't respond to him until
+> late last week.
+>
+> I pointed out that the 'EXPERIMENTAL' banner addresses most of my
+> concerns so it should be fine to move forward, but I suspect my delay
+> has resulted in him now being buried in other matters, and in the
+> mean-time the article Christian highlighted was produced by others.
 
-One way to fix this would be to give commands a way to return structured
-error data to the caller instead of relying on exit codes. But that is
-of course a bigger topic, and I feel like I'm digressing.
+The article was produced with my input, so I cannot claim innocence.
 
-Patrick
+The reason why I did not respond earlier is that I wanted to have more
+time to push forward with your vision of `git replay`, in a direction
+where it avoids repeating the design of `git rebase`.
 
-> > To my view, test cases can change in the future as long as
-> > there is good justification in doing so. Having existing tests
-> > helps to demonstrate a change in behavior.
->=20
-> I agree with that 100%, but the thing is that the error shuffling
-> patch will not escape 'next' until the upcoming release, at which
-> time we can rewind and redo 'next'.  I think the first half of
-> Patrick's fix would be a good material to squash into that patch,
-> which would make the result identical to the one that would have
-> been written in the ideal world I described above.
->=20
-> And the other half would not have a place to be in that patch in the
-> ideal world.  IOW, there is no "change in behaviour" we want to
-> demonstrate here, as we will pretend nothing bad happened after the
-> upcoming release ;-)
->=20
-> Thanks.
+About integrating the current patch series as-is, I would be fine with it.
+The best support I can offer is that this code (with minor changes that do
+not fundamentally modify how the core logic works) has performed
+gazillions of rebases in the meantime.
 
---5zh88TAG0+cAaP0m
-Content-Type: application/pgp-signature; name="signature.asc"
+We just need to be mindful to keep that EXPERIMENTAL label until we fully
+implement the design Elijah envisions. Which might very well need the user
+interface to change rather drastically.
 
------BEGIN PGP SIGNATURE-----
+> Anyway, hope that helps.  I did review V2 and have been meaning to
+> comment on V3 (and respond to Toon's comments), though not sure my
+> "review" counts as such since I'm the original author of most of the
+> patches...
+>
+> (And sorry for being missing in action.  I've flagged a few other
+> emails that I'm hoping I can follow up on, but my time is currently
+> quite limited...)
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmTd8VwACgkQVbJhu7ck
-PpRQvQ//eGfulRcm5FKsv2HgDZ83A/f+q5jzzvWT+OJxTEcGoJMlk4HNd3x766LK
-+p+QoLNSGNA6RmkU3PyewU8PVoULNM/+9OzrpnCMMqlRvqOgRblo1IwigMO402fF
-qYESiYF/mWDvNm073DGSJigH7gAKMX+wMIqWluhiNujhSub4iSdzdhKh5CMZaupn
-Nta4uCbi2SPbZnwHBXdu0cJSrEkbmLzTTw3+0Yhbk5eDlBFkUW09vdhxTZmUm38j
-bQng44N8jgWdh+2dUytPsmYlZ7uqXgo1zaOuX2D11bvrm3UwwUBh/YrGe6C2150Y
-NG5VxtcducAGFKdsl39fDYl2OxEBEODMDWdlNmI479BaXt6cw0YWouKlrloVXyhz
-kU7YXMw8LpyXwvL8ChIVYVj69hU/rY8m/X8fjUOC9/nbA0CfpILBZUrS+4tcugfA
-/taRfYQR1cVKIqPHtEkgHRld1MnyC82clHXes9YsGUSOVLQ+iy1fOZ66XOc2ROio
-WpE46ql21IqOQASeNrRN4eoBLn1tFCCyAj11NlJE5rfl6qpZl82Xbq7c9GCgNoqS
-titU6ANftxuVcuKCV4DKKzqa7g3DQGcxHIJ4yT9REi3lnPDADqZTrROJWk4xi8Hj
-Wfgivdp+pzxUSNR+JJ469LPLw0PTDPNylpeyLAxfS/FkO37PR+Y=
-=3tG2
------END PGP SIGNATURE-----
+I haven't been a frequent guest on the Git mailing list, either, lately...
 
---5zh88TAG0+cAaP0m--
+Ciao,
+Johannes
+
+--8323328-1130246202-1692278521=:158--
