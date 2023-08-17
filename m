@@ -2,56 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EBBEC64EDA
-	for <git@archiver.kernel.org>; Thu, 17 Aug 2023 21:40:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5A9FC678DC
+	for <git@archiver.kernel.org>; Thu, 17 Aug 2023 21:54:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355373AbjHQVjh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Aug 2023 17:39:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59258 "EHLO
+        id S1355450AbjHQVyQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Aug 2023 17:54:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1355426AbjHQVjM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Aug 2023 17:39:12 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 438FF3AA2
-        for <git@vger.kernel.org>; Thu, 17 Aug 2023 14:39:04 -0700 (PDT)
-Received: (qmail 31009 invoked by uid 109); 17 Aug 2023 21:39:03 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 17 Aug 2023 21:39:03 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1769 invoked by uid 111); 17 Aug 2023 21:39:04 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 17 Aug 2023 17:39:04 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 17 Aug 2023 17:39:02 -0400
-From:   Jeff King <peff@peff.net>
-To:     Patrik =?utf-8?B?SMOkZ2dsdW5k?= <patrik.h.hagglund@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: clone (single) commit id?
-Message-ID: <20230817213902.GA3036503@coredump.intra.peff.net>
-References: <CABtpZSGcL8hkk3HA3ECtt7KeLPOhuB0n7EKN1Tg5ZHpFBE0V0A@mail.gmail.com>
- <20230817195641.GD3032779@coredump.intra.peff.net>
- <CABtpZSFT2BLJpeDwizZiXB8+tRRLqz+iAFuWaXAiwH_EgS5gag@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABtpZSFT2BLJpeDwizZiXB8+tRRLqz+iAFuWaXAiwH_EgS5gag@mail.gmail.com>
+        with ESMTP id S1355445AbjHQVyG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Aug 2023 17:54:06 -0400
+Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBC091FF3
+        for <git@vger.kernel.org>; Thu, 17 Aug 2023 14:54:05 -0700 (PDT)
+Received: by mail-pg1-x549.google.com with SMTP id 41be03b00d2f7-565aee93236so425350a12.1
+        for <git@vger.kernel.org>; Thu, 17 Aug 2023 14:54:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1692309245; x=1692914045;
+        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=4930nbO6VWG0yGQMdAtLvc3FVglrrCjyolX5YRPobN0=;
+        b=zsh+zDw961CKaVZu+oW8s7WK4Yi6ottDqZvBjN6Vr7pJMmAt0+IZzW32WwqgW/QUGQ
+         jM9OqfIaJlwVkhNiaA4M5WWo+LpiYRRmHujf2X8PA8g02pUmGR960j9a+DupWMKFKmyY
+         ZKCUDCrSAbU1g9Ff5h6QGVJMw1fHvyES1zyALh7yJLMsO2P9K9YKEXt/cUWahaKEGYn3
+         usXNiCD13BMPwmdxPfX+Id6kU9CJKYP/z2UHtukwItbgbssyjT89BB8kOhoIc7Eji9Cp
+         MUuR9ZzsOrtP9lgV48bRc3/bfboJu9cU2+qcdSGmdXNATHvcnAlIoogZCtbcr5v40Toz
+         lVcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692309245; x=1692914045;
+        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=4930nbO6VWG0yGQMdAtLvc3FVglrrCjyolX5YRPobN0=;
+        b=fnQ0pdTk+emsidyYY4mRS/vJtsazelLYOWIxK2jV5EaSK+B/PBBPnvdkuUsm1BWpMS
+         vhD0QbAgw2gw/ywgP9SbIV7IIvEPfWqwbBzdLrJvvrsfw5VM98FPlW2R0oGQCz20A5Et
+         Q/ftjGCMWIVVq7ww/hM6kc7/S/mOCSTnOFkX2eKm/8Jv6tgSxLfLJgsSdG5Nh0r8Lat+
+         4hkxDDBAVkfBxRL8Ke/puEyl6Cw9aZqzkoTjf7DJh0PxqwFu0J9QZI5fOPazMUkkJLmd
+         T+GMRBMgkkrsDq78KzWzGZkNCkjqBdnpfEKvCWfRGr+Eths+npyEtvdRQcQl3S09MStQ
+         5Oww==
+X-Gm-Message-State: AOJu0YzVi3XfaKS/gJqNNfA70PeuxX2q5RfUbBFNQCfF6nK7gsF6w7wv
+        PWbixLMB8Jq92YjXSxpyMKsVmGqhHSPk0eDCl1IDqaX8HmKagMqCH4ec2OgB+0bskO/na4y030u
+        wyoDrA6NgBPGTmO4EkmObj6AA41wbbQbq01A6QqiHEyXuQSP9hgLwwnO8i0XbXQB5opRmvlh0S3
+        PGbLE=
+X-Google-Smtp-Source: AGHT+IHBmLmpyKD/bMRbnMirR0jKSiY1SXdDJU7Yozy0Z6R8FpDnje07GKeDpb8Xx+RCIjtFPPEvUuLxM5v45oj24seRAw==
+X-Received: from taylorsantiago.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:5c64])
+ (user=taylorsantiago job=sendgmr) by 2002:a63:3c15:0:b0:542:904c:41ed with
+ SMTP id j21-20020a633c15000000b00542904c41edmr92142pga.10.1692309245347; Thu,
+ 17 Aug 2023 14:54:05 -0700 (PDT)
+Date:   Thu, 17 Aug 2023 14:53:24 -0700
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.42.0.rc2.1.gb06b9712e4
+Message-ID: <20230817215325.2550998-1-taylorsantiago@google.com>
+Subject: [PATCH 0/1] Fix the order of consuming unpackLimit config settings.
+From:   Taylor Santiago <taylorsantiago@google.com>
+To:     git@vger.kernel.org
+Cc:     Taylor Santiago <taylorsantiago@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 17, 2023 at 10:20:20PM +0200, Patrik Hägglund wrote:
+The documentation for fetch.unpackLimit states that fetch.unpackLimit
+should be treated as higher priority than transfer.unpackLimit, but the
+intended order is currently inverted.
 
-> As said, I want to use a commit id for reproducability and
-> performance. The CI flow starts several jobs, all using the same
-> commit id. A remote branch may be updated, and therefore considered
-> not good (reproducible) enough as the reference here.
+Taylor Santiago (1):
+  Fix the order of consuming unpackLimit config settings.
 
-Oh, sorry, I didn't realize that was the sticking point. No, sadly I
-don't think there is any way to feed a direct oid to clone currently.
-Clone does know how to end up on a detached HEAD (e.g., if you specify a
-tag with "--branch"). IMHO that would be a useful feature to learn, but
-I think most folks resort to init+fetch, since it's most often useful in
-scripted situations (like CI) anyway.
+ fetch-pack.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
--Peff
+
+base-commit: f1ed9d7dc0e49dc1a044941d821c9d2342313c26
+-- 
+2.41.0.694.ge786442a9b-goog
+
