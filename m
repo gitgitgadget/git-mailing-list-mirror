@@ -2,77 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BEAFC531DF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45552C54799
 	for <git@archiver.kernel.org>; Thu, 17 Aug 2023 19:57:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354787AbjHQT5F (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Aug 2023 15:57:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34880 "EHLO
+        id S1354775AbjHQT5E (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Aug 2023 15:57:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354820AbjHQT4q (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Aug 2023 15:56:46 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3968B359B
-        for <git@vger.kernel.org>; Thu, 17 Aug 2023 12:56:42 -0700 (PDT)
-Received: (qmail 29535 invoked by uid 109); 17 Aug 2023 19:56:41 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 17 Aug 2023 19:56:41 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 652 invoked by uid 111); 17 Aug 2023 19:56:42 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 17 Aug 2023 15:56:42 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 17 Aug 2023 15:56:41 -0400
-From:   Jeff King <peff@peff.net>
-To:     Patrik =?utf-8?B?SMOkZ2dsdW5k?= <patrik.h.hagglund@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: clone (single) commit id?
-Message-ID: <20230817195641.GD3032779@coredump.intra.peff.net>
-References: <CABtpZSGcL8hkk3HA3ECtt7KeLPOhuB0n7EKN1Tg5ZHpFBE0V0A@mail.gmail.com>
+        with ESMTP id S1354797AbjHQT4k (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Aug 2023 15:56:40 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E73ED35B5
+        for <git@vger.kernel.org>; Thu, 17 Aug 2023 12:56:28 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5893120698;
+        Thu, 17 Aug 2023 15:56:28 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=bVC/iGGxzxTYtN+3ysTTfoJ7a8s+jFYa7XYOL+
+        frObs=; b=JOIMZIsGWV2Id7vH6qbn7uJzmXjXgzLa08dtC1J3KMitt6cTnL5tEE
+        J+ckaro9pZf0b1DDmQnK3GORwDPGi7rVUT1RVBUmURFdqly46P0nRjJkJlTVZHjn
+        EfV2OhdGlxvnG59nRtdUP24iaVVwdYEI1hpuMA3NZUDiAOE9yWAaI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5037420697;
+        Thu, 17 Aug 2023 15:56:28 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.58.166])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8D5E920696;
+        Thu, 17 Aug 2023 15:56:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Paul Watson <pwatson2@wellmed.net>
+Subject: Re: [PATCH] diff: tighten interaction between -w and --exit-code
+References: <MW2PR12MB25558D1886C4AA2A95A5FC618709A@MW2PR12MB2555.namprd12.prod.outlook.com>
+        <xmqqbkfh8nu3.fsf@gitster.g> <xmqqv8ded018.fsf@gitster.g>
+        <20230817051059.GA3006160@coredump.intra.peff.net>
+        <xmqqy1i9bqcm.fsf@gitster.g>
+        <20230817194912.GB3032779@coredump.intra.peff.net>
+Date:   Thu, 17 Aug 2023 12:56:23 -0700
+In-Reply-To: <20230817194912.GB3032779@coredump.intra.peff.net> (Jeff King's
+        message of "Thu, 17 Aug 2023 15:49:12 -0400")
+Message-ID: <xmqqttsxbfyw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABtpZSGcL8hkk3HA3ECtt7KeLPOhuB0n7EKN1Tg5ZHpFBE0V0A@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2528AAC0-3D38-11EE-91A8-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 17, 2023 at 09:45:19PM +0200, Patrik Hägglund wrote:
+Jeff King <peff@peff.net> writes:
 
-> In our CI setup, for reproducibility and performance reasons, I want
-> to be able to clone a repository with only a single given commit id
-> (commit hash). (Using 'git init' + 'git fetch' + 'git checkout' is
-> possible, but more elaborate/low-level.)
-> 
-> At https://lore.kernel.org/git/MN2PR12MB3616C1F2E97A18547740651DF9E29@MN2PR12MB3616.namprd12.prod.outlook.com/
-> it is stated that:
-> 
-> > Never mind, I see, feature exists but server needs to allow it. Sigh.
-> 
-> However, I'm not able to find this in the Git documentation. Can
-> someone point out how to configure this? Can this be better
-> documented?
+> Yeah, without having really dug into the problem too far, that does
+> sound a lot better. I also wonder to what degree you could apply the
+> same strategy to other formats (I guess it depends on them removing
+> whitespace-only changes from a structure). From the test I posted
+> earlier, it does look like many of them have the same blind spots for
+> mode-only changes (and I suspect addition/removal of empty files is
+> another corner case to check).
 
-I'd use a shallow clone with depth 1, like:
+I have something cooking.  Stay tuned, without getting excited too
+much ;-)
 
-  git clone -b $your_branch --depth 1 $remote_url
-
-Note that "--depth" implies --single-branch, so it will really just grab
-that one branch (and if it's the remote's default branch that you want,
-you can omit the "-b $your_branch" part).
-
-If you find the shape of history useful (e.g., your CI wants to look at
-just new commits), you might also find partial clones useful. Something
-like:
-
-  git clone --filter=blob:none $remote_url
-
-will fetch all commits and trees, but only load blobs on-demand (so
-basically whatever is needed to check out that tip commit). You can
-pare it down further by switching to "--filter=tree:0", which will avoid
-trees (but note that filling in trees when you need them is a bit more
-expensive, since inherently you have to make a round-trip to the server
-for each level of tree).
-
--Peff
+Thanks.
