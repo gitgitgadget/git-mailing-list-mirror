@@ -2,91 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 07EB0C3DA4D
-	for <git@archiver.kernel.org>; Thu, 17 Aug 2023 16:13:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DB73C3DA65
+	for <git@archiver.kernel.org>; Thu, 17 Aug 2023 17:08:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351947AbjHQQMn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Aug 2023 12:12:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40182 "EHLO
+        id S1353428AbjHQRHu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Aug 2023 13:07:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351973AbjHQQMR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Aug 2023 12:12:17 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEE2530F6
-        for <git@vger.kernel.org>; Thu, 17 Aug 2023 09:12:15 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6EDA234FF7;
-        Thu, 17 Aug 2023 12:12:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Qe0I2yvr+Jl81pB4WORZacEIfOPqfrBe2/2gay
-        I2vts=; b=JV8MlXkhdi2rYF4bZx0WtcT8XBQb42nZgNF1wWpUkWNiIrZnUKJTuI
-        QcukPQ1LSXRnsM9w4bua04RqyJZ9rci+XJ6JhRlOdUlvebwJagybh9GXbgWmWR5c
-        oPRDbZxaErgWEbqttoBe3oi1r6ijsQJfBHy97ZN2fXdyn4rHQKNVg=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6765934FF6;
-        Thu, 17 Aug 2023 12:12:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.58.166])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5ECC534FF5;
-        Thu, 17 Aug 2023 12:12:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Paul Watson <pwatson2@wellmed.net>
-Subject: Re: [PATCH] diff: tighten interaction between -w and --exit-code
-References: <MW2PR12MB25558D1886C4AA2A95A5FC618709A@MW2PR12MB2555.namprd12.prod.outlook.com>
-        <xmqqbkfh8nu3.fsf@gitster.g> <xmqqv8ded018.fsf@gitster.g>
-        <20230817051059.GA3006160@coredump.intra.peff.net>
-Date:   Thu, 17 Aug 2023 09:12:09 -0700
-In-Reply-To: <20230817051059.GA3006160@coredump.intra.peff.net> (Jeff King's
-        message of "Thu, 17 Aug 2023 01:10:59 -0400")
-Message-ID: <xmqqy1i9bqcm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S1353836AbjHQRHa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Aug 2023 13:07:30 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58D0C2D7D
+        for <git@vger.kernel.org>; Thu, 17 Aug 2023 10:07:27 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2bb9a063f26so29421fa.2
+        for <git@vger.kernel.org>; Thu, 17 Aug 2023 10:07:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1692292045; x=1692896845;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vUZNoN8nAwVvZ+8RFKITSvLRMf/ekchuVWQZetgH/FY=;
+        b=TZZB5OSA99fBNGXgcHrBdD2TlB2fGdiQeNAQHhqhQxJoU9awls4L/gp4zOMxeH6swW
+         clrJkW2aS/aMhy4nCrY5BJGU50afozHoug/cyNK/+mxgpiQm1D9jiFDUOMbzCsISw7Jl
+         +KunDGyz6Ba6KDdQXhcL4Pr5gbWtE8pEA+5fQBFfdWsX95/74LShIrDhcLwIfiqNMFv1
+         qY/JJk20hzu+9RHXgR63k/iMg7/5Qn/xiLw2uS5V3OHKKGEEJjzP5i4ACP/CvnoW/leL
+         WHFB7lYBnsd32zy0aDwe6NEM3enSUxNavNRbTPiGR+VfgYDdaYXlslpVteZiRlSmjtx1
+         rLHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692292045; x=1692896845;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vUZNoN8nAwVvZ+8RFKITSvLRMf/ekchuVWQZetgH/FY=;
+        b=RItRkNz96goftfYVNAShxHhoVYsH/ESz2QfiR+740kZ6zLGSOXVUHdTsnxLHae6sdb
+         2aw1/GMH+kU+o1VPlZbqmoMDgMvmcZI+Ci64JEQ6S9zODNRVVF2yxIuLoYROU8vMzGJC
+         gPBmN1lX6PzDhKbcrK2V3znQ2BA7FlatLZPKMsL0deB5rp6ehYS5ni8UcZ0rjqBNAnHY
+         2HGC4Q1Rw3fxhQ2gqgQsgeAjcSEAFrMWh6ghoEsrSL1Hknmq4GcgnITo5/X58uCupY4q
+         ll3c4tnL8PelhDef4OCToyJcw43RsS6KUitelhtH3eG9Z3NP6w3bd+Zu/0/PvW06dPxV
+         tLeA==
+X-Gm-Message-State: AOJu0Yw1UCeGpW3eeV+BMU0nK+tgqsjOUUXBppKia0Q0QQCfzldcLrN1
+        NRTT2KcVbH6UAMeF1O+9MskMpbZ6vvmaQzvCEtYBRQVfEVFnTQ==
+X-Google-Smtp-Source: AGHT+IHvBFJnNjWxzMqx7zKmM7Gz/pqy/6vspUPLG4pwGhX08kL90Ryyxl7pgv09u36DdGXhqLjDpXZiyBHJQegKvj0=
+X-Received: by 2002:a2e:9ac6:0:b0:2b6:a6e7:5afa with SMTP id
+ p6-20020a2e9ac6000000b002b6a6e75afamr4965005ljj.12.1692292045197; Thu, 17 Aug
+ 2023 10:07:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D1D5E3CA-3D18-11EE-88FD-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+References: <CAMRL+qYYGJ-LYG8qZpJOq+_=YO_C7JSTH4TPDpbEA4fRdANP7w@mail.gmail.com>
+ <20230816025715.GB2248431@coredump.intra.peff.net> <CAMRL+qbGBOiR49A0FDYgZJmMbsfyeTZkzVmEdrCRYEanjv195A@mail.gmail.com>
+ <20230817054405.GD3006160@coredump.intra.peff.net>
+In-Reply-To: <20230817054405.GD3006160@coredump.intra.peff.net>
+From:   Patrick <patrickf3139@gmail.com>
+Date:   Thu, 17 Aug 2023 10:06:58 -0700
+Message-ID: <CAMRL+qbSn058AsMW7+d1nRbt4Ao6R+BZ6HYHxDrVQhURgWoy7Q@mail.gmail.com>
+Subject: Re: Force usage of pager for diff, show, etc when piping to non-TTY
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Hi Jeff, I think I finally get it now. Thank you for so patiently
+explaining this to me in different ways. I'm sorry I was slow to
+understand heh.
+Just to be really clear, the filter in `interactive.diffFilter` is
+meant as a filter for transforming (think a photo filter), as opposed
+to a filter that removes elements, correct? I think that's what I got
+tripped up on when you explained the first two times.
 
-> For the diffstat case, I think we could check the mode here, but there
-> are other cases (e.g., adding or deleting an empty file). The code right
-> below the hunk I quoted seems to try to deal with that (the "cancelling
-> the no-op" your comment mentions). I'm not sure if we want something
-> like this:
+On Wed, Aug 16, 2023 at 10:44=E2=80=AFPM Jeff King <peff@peff.net> wrote:
 >
-> diff --git a/diff.c b/diff.c
-> index 38b57b589f..1dbfdaeff0 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -3853,6 +3853,8 @@ static void builtin_diffstat(const char *name_a, const char *name_b,
->  				&& one->mode == two->mode) {
->  				free_diffstat_file(file);
->  				diffstat->nr--;
-> +			} else {
-> +				o->found_changes = 1;
->  			}
->  		}
->  	}
-
-That is much better.  In all cases where the above diffstat->nr-- is
-not reached and diffstat is kept is where we found changes, so an
-even simpler solution that fundamentally cannot go wrong would be to
-see "diffstat->nr" at the end (i.e. "are we going to show diffstat
-for *any* filepair?").  If it is non-zero, we did find a difference.
-
-Then we do not have to wonder if that else clause is in the right
-place, or we have to do something similar to the above for cases
-where DIFF_FILE_VALID() is not true for both sides (i.e. creation or
-deletion).
-
-Thanks.
-
-
-
+> On Wed, Aug 16, 2023 at 09:30:38AM -0700, Patrick wrote:
+>
+> > Jeff, would you be so kind as to elaborate more on the
+> > interactive.diffFilter approach? My understanding is that
+> > interactive.diffFilter is only used for git add -p or git reset -p.
+> > However, the limitation for my use case is I need to use the pager
+> > for git log and git show so that won't work. So then, you are
+> > suggesting that I ask my users to opt in by setting an arbitrary git
+> > config like fzf.pager and then read out the pager from that git var?
+>
+> Yes, they'd have to set a new config variable. Though if you are really
+> just filtering diffs and the semantics would be the same as
+> interactive.diffFilter, I would probably just use that. You could also
+> introduce a new foo.diffFilter option, and if unset have it default to
+> the value of interactive.diffFilter. That provides flexibility without
+> forcing users to repeat themselves.
+>
+> That said, I would not be surprised if many users who set pager.log do
+> not even know about interactive.diffFilter. It's a bit more obscure, and
+> came later.
+>
+> If you do want to follow that approach, the simplest example is probably
+> just to see how it was added to the perl code in 01143847db
+> (add--interactive: allow custom diff highlighting programs, 2016-02-27):
+>
+>   https://github.com/git/git/commit/01143847dbf4fbf27268650f3ace16eac03b3=
+130
+>
+> In shell it might look something like:
+>
+>   filter=3D$(git config --get interactive.difffilter)
+>   if test -n "$filter"; then
+>     git show ... | eval "$filter"
+>   else
+>     git show ...
+>   fi
+>
+> -Peff
