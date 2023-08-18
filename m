@@ -2,94 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 691E7C678DC
-	for <git@archiver.kernel.org>; Fri, 18 Aug 2023 00:36:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C07B1C7EE2D
+	for <git@archiver.kernel.org>; Fri, 18 Aug 2023 15:11:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356722AbjHRAgV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Aug 2023 20:36:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57330 "EHLO
+        id S1377983AbjHRPK5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Aug 2023 11:10:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1356715AbjHRAf6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Aug 2023 20:35:58 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71B892D65
-        for <git@vger.kernel.org>; Thu, 17 Aug 2023 17:35:56 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CD8091A8F3D;
-        Thu, 17 Aug 2023 20:35:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=KI5zdelGDoeMSayFwNUrhVqTK6hHyKWdmHJzf/
-        UQJVE=; b=DoZ0p5Nd4NaPVwQQ570kSX2I3P5BrMLsUlZgXjyDE98HdPmm8FmtX9
-        /NeVoirNpgNsnML8NG2AILGBJExELmOZRQ4VLf4s5IjAeESBM5WG77+Z7A+tZzwx
-        lmXoL8bpFabmHY8x+Q2nupt8VCRzLmYdjSBkh/LW2CcbHFmPvSz/8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C3E8D1A8F3C;
-        Thu, 17 Aug 2023 20:35:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.58.166])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1B00F1A8F3B;
-        Thu, 17 Aug 2023 20:35:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     <rsbecker@nexbridge.com>
-Cc:     "'Jeff King'" <peff@peff.net>, "'Taylor Blau'" <me@ttaylorr.com>,
-        "'Andy Koppe'" <andy.koppe@gmail.com>, <git@vger.kernel.org>
-Subject: Re: main != master at github.com/git/git
-References: <20230715103758.3862-1-andy.koppe@gmail.com>
-        <20230715160730.4046-1-andy.koppe@gmail.com>
-        <kl6l351j22dr.fsf@chooglen-macbookpro.roam.corp.google.com>
-        <CAHWeT-ZA8f-TGRwDHixAvi5kddVBbuK8LpVGJ9cjYZMsMk5ODw@mail.gmail.com>
-        <xmqq7cpwjhr1.fsf@gitster.g>
-        <006574bd-4d53-495e-8cfe-677ede521908@gmail.com>
-        <xmqq350kjfk8.fsf@gitster.g>
-        <ce5d20db-2220-45dd-8c39-2a52e0f9f816@gmail.com>
-        <ZNv5PQlkn6tbUcH7@nand.local>
-        <20230816022420.GA2248431@coredump.intra.peff.net>
-        <000901d9d045$e780f790$b682e6b0$@nexbridge.com>
-Date:   Thu, 17 Aug 2023 17:35:53 -0700
-In-Reply-To: <000901d9d045$e780f790$b682e6b0$@nexbridge.com>
-        (rsbecker@nexbridge.com's message of "Wed, 16 Aug 2023 09:30:57
-        -0400")
-Message-ID: <xmqqo7j5uqza.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S1378000AbjHRPKm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Aug 2023 11:10:42 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F973E5F
+        for <git@vger.kernel.org>; Fri, 18 Aug 2023 08:10:40 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-522bd411679so1268667a12.0
+        for <git@vger.kernel.org>; Fri, 18 Aug 2023 08:10:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1692371439; x=1692976239;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=r8TmXTbWf7gRj2IRTALOkB3j4W0cDB17istLFj0hVZQ=;
+        b=HgRg1Q+mf9vSGPQYb9j9LnMQ4Oc/k0/2Bq+secV10fQrd2JqknbsOpMP0xxtOQ6AqV
+         xYfL6dixd4AG6Pa49AIN76mypYyRQmB1h0tPIiQDFY9N0DmDzNtKlMEn5QAM+JvyKsae
+         YJrcZI/tK66PJxE47iZ7UZqKdq0GdcehRzL9cTNUs3oorgxtZ+BWfmGf+AVRDhHFgUgy
+         CTsXNoAolt4DSPh+BkEBEZyHrqM9Taaqxgu9bCADh7QlaXMt8lv94757BU7J8JYXc0Gq
+         m6GaSTOUzrky/AssyCtzB+6/K9E3cbpiHsOi6YQ/fNQxwwg7XA/VZH9hwVv4KyTuEo+m
+         WCCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692371439; x=1692976239;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=r8TmXTbWf7gRj2IRTALOkB3j4W0cDB17istLFj0hVZQ=;
+        b=TVTmBe7h7A/EgNbj/KWEQvUFaZtD8gr83fh7nbnfE2Wv7h/Bb0iFqqc351SweOnwLN
+         Fwy/ycIv63U1sj9l3trVUltSVg6jhusXvLTPtkeL1jlHwIqOf5NYllVTj1JDg+1VG9Bv
+         QCzBcBuz/UwO1CneYqd3XL1gmqClAyKp5MtomyqRiUXwGDuGECPRHhhp3yy0FaHZjAPa
+         IU/luHhrN6yOTHh6sngEAq1yiu0oFnbIEl+q4TEGv+8kPe6fuP3jzSpGNFreBZGSSov6
+         7WIRqBR2VPE+HDbR76rto5JIS3xJrN3CRy9oaP4pfeKmp0KEz78piDT+VZE4BpOMNJSn
+         M53w==
+X-Gm-Message-State: AOJu0Yw8WI+SGfgDnqM7ynMQbHIHY0iHPCtRow1YajcqNVznmIEy+EUv
+        NFokCDBAI7Xf7OWwxqxsXbxwtrGFsERFvt1zV54=
+X-Google-Smtp-Source: AGHT+IHTkHxrXrPpluy35nBtpIOVKoBVG7DCpgiTU9fIu/fwxm5ub+oriuh3Hou00sBuIv5EhOIuJXfaAgNN8F2PBZU=
+X-Received: by 2002:a05:6402:1499:b0:522:cef7:83c3 with SMTP id
+ e25-20020a056402149900b00522cef783c3mr2398533edv.8.1692371438916; Fri, 18 Aug
+ 2023 08:10:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3094F888-3D5F-11EE-94C4-25B3960A682E-77302942!pb-smtp2.pobox.com
+References: <ZNwhVOggObU7aVTr@nand.local>
+In-Reply-To: <ZNwhVOggObU7aVTr@nand.local>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Fri, 18 Aug 2023 17:10:25 +0200
+Message-ID: <CAP8UFD2Yw1XazomxEj0QB20FoaxkO16t_xgRurtnqCCOuhX-eQ@mail.gmail.com>
+Subject: Re: Git in Outreachy? (December, 2023)
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Hariom verma <hariom18599@gmail.com>,
+        Victoria Dye <vdye@github.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-<rsbecker@nexbridge.com> writes:
+(Adding a few people who could be interested in helping with this in Cc:)
 
-> Would it not be more convenient just to add a GitHub action that
-> set main = master for each push?
+On Wed, Aug 16, 2023 at 3:07=E2=80=AFAM Taylor Blau <me@ttaylorr.com> wrote=
+:
+>
+> Christian and I got an email from the Outreachy organizers asking if
+> the Git project is interested in participating this year. Last year we
+> submitted projects, but ultimately did not select anybody from the
+> program.
 
-If "my private working area calls the primary integration branch
-'master', but for publishing repositories, I have to push it twice,
-once to 'master' and then to 'main'" were the problem, the solution
-I would rather want to see implemented is to an ability for the
-repository owners to set a symref that makes 'main' refer to
-'master', so that I do not have to worry about the aliasing.  But it
-is not a problem (the push refspec can be set up to send the same
-commit to two different branches just fine).
+Actually we actually selected someone and a backup person in case the
+first person was not eligible to participate, but unfortunately it
+happened that both of them weren't eligible. And we learned that after
+the selection process was closed.
 
-In any case, I am not sure if it would solve the problem being
-discussed: when CI runner sees branches updated to commit that
-hasn't been worked on, a new job is created to work on that commit,
-and updating two branches with the same commit at the same time
-unfortunately means two independent CI jobs work on the same commit
-in parallel.  The 'lagging behind by 24 hours' hack I mentioned
-earlier was one way to work it around, but it would confuse folks.
+The year before we had no applicants for some reason.
 
-I'd really prefer not to special case 'main' (or 'master' for that
-matter), primarily because some downstreams rely more heavily on
-'main' as Peff pointed out, but also because the problem is not
-'master' vs 'main'.  If 'next' happens to become empty soon after a
-new cycle starts and points at the same commit as 'master', we will
-see the same waste of cycles between 'master' and 'next'.
+> I think it would be good to participate in this year's December cohort.
+> September 1, 2023 at 4pm UTC is the initial community application
+> deadline.
 
-Thanks.
+I agree it would be nice, and I am willing to mentor, or if possible
+co-mentor, someone.
+
+> If we're interested, the project submission deadline is September 29th.
+> By then, we'd need:
+>
+>   - Volunteers to act as mentors
+
+I wonder if we need a few Org Admins too.
+
+>   - Updates to our applicant materials on git.github.io (project ideas,
+>     as well as potential microprojects).
+
+Yeah, I can start working on the applicant material after my current vacati=
+on.
+
+> If folks are interested, I'd be more than happy to answer any questions
+> about participating, and overall logistics of the program.
+
+Thanks,
+Christian.
