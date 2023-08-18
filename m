@@ -2,55 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9261BEE498D
-	for <git@archiver.kernel.org>; Fri, 18 Aug 2023 19:01:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E5E2EE498E
+	for <git@archiver.kernel.org>; Fri, 18 Aug 2023 19:05:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1379527AbjHRTAc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Aug 2023 15:00:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60900 "EHLO
+        id S1379538AbjHRTF0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Aug 2023 15:05:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379534AbjHRTAQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Aug 2023 15:00:16 -0400
-Received: from bluemchen.kde.org (bluemchen.kde.org [209.51.188.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFCCE2D7D
-        for <git@vger.kernel.org>; Fri, 18 Aug 2023 12:00:14 -0700 (PDT)
-Received: from ugly.fritz.box (localhost [127.0.0.1])
-        by bluemchen.kde.org (Postfix) with ESMTP id A52EA24129;
-        Fri, 18 Aug 2023 15:00:12 -0400 (EDT)
-Received: by ugly.fritz.box (masqmail 0.3.6-dev, from userid 1000)
-        id 1qX4hg-kR7-00; Fri, 18 Aug 2023 21:00:12 +0200
-Date:   Fri, 18 Aug 2023 21:00:12 +0200
-From:   Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] update-index doc: v4 is OK with JGit and libgit2
-Message-ID: <ZN+/vJysYcri/iBz@ugly>
-References: <xmqqil9cusfn.fsf@gitster.g>
+        with ESMTP id S1379582AbjHRTFX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Aug 2023 15:05:23 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFEF23A94
+        for <git@vger.kernel.org>; Fri, 18 Aug 2023 12:05:21 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8F66B2835E;
+        Fri, 18 Aug 2023 15:05:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=H/lUBCobOaEzMpf7mkm0LFkCoTPBJdqPRa1Zu2
+        P0Rac=; b=rwAH3syPOiNYEeJe1IIIAIP3Ihrdz2IuZX8PqYE1aRfrqaHwFOv8ec
+        LLrx/wK1bcqczIO/jc0Amu6pQgffg8TUYIyCkArZMnQgvpJqQr/0Tm2K9QlYvIAQ
+        3p1IdCaSp7O37TG9qN10m5i9RVE5YL2UIvV3USoUwH1LdoKsTbt3U=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 883CB2835D;
+        Fri, 18 Aug 2023 15:05:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.58.166])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 310012835C;
+        Fri, 18 Aug 2023 15:05:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     <rsbecker@nexbridge.com>
+Cc:     <git@vger.kernel.org>
+Subject: Re: [BUG] Git 2.42.0-rc2 t1092.57 script error
+References: <018601d9d1fc$2049ede0$60ddc9a0$@nexbridge.com>
+Date:   Fri, 18 Aug 2023 12:05:16 -0700
+In-Reply-To: <018601d9d1fc$2049ede0$60ddc9a0$@nexbridge.com>
+        (rsbecker@nexbridge.com's message of "Fri, 18 Aug 2023 13:47:52
+        -0400")
+Message-ID: <xmqqedk0uq6r.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <xmqqil9cusfn.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2B454180-3DFA-11EE-A894-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 18, 2023 at 11:16:44AM -0700, Junio C Hamano wrote:
->+time. The first version to support it was Git 1.8.0 released in
->+October 2012,
+<rsbecker@nexbridge.com> writes:
 
-"Git supports it since version 1.8.0[, which was] released in October 
-2012, and ..." would be probably easier to read.
-
->and support for it was added to libgit2 in 2016 and
-
-+to
-
->+JGit in 2020,
-
->respectively.
+> I'm getting the following error when running t1092.57 in Git 2.42.0-rc2
+> on NonStop ia64:
 >
-this use of "respectively" is bogus; just leave it off. it would make 
-sense if you wrote "was added to libgit2 and jgit in 2016 and 2020, 
-respectively", but this would just complicate matters.
+> + ensure_not_expanded status
+> test_region[8]: test: argument expected
+> grep: ensure_full_index: No such file or directory
+> error: last command exited with $?=1
+> not ok 57 - sparse-index is not expanded
+>
+> Any suggestions?
 
-regards
+Sorry for not coming up with anything concrete.
+
+"ensure_not_expanded status" should be running as its second step
+
+	test_region ! index ensure_full_index trace2.txt
+
+Which should do this:
+
+    test_region () {
+            local expect_exit=0
+            if test "$1" = "!"
+            then
+                    expect_exit=1
+                    shift
+            fi
+
+            grep -e	'"region_enter".*"category":"'"$1"'","label":"'"$2"\" "$3"
+            exitcode=$?
+
+            if test $exitcode != $expect_exit
+            then
+
+
+As "grep" complains that ensure_full_index is not a file, when the
+command runs there the file name is "$3".
+
+So it appears to me that the first 
+
+	test "$1" = "!"
+
+is not firing and failing to set expect_exit to 1 and shift the "!"
+out of $@.  Why?  I dunno.  Perhaps your shell has quirks around
+"local"?  I dunno.
+
+
