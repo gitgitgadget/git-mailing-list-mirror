@@ -2,163 +2,186 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A054DEE49A3
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 910B9EE499B
 	for <git@archiver.kernel.org>; Fri, 18 Aug 2023 23:38:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242814AbjHRXhz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Aug 2023 19:37:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54512 "EHLO
+        id S242829AbjHRXh4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Aug 2023 19:37:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242769AbjHRXhg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Aug 2023 19:37:36 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D580420C
-        for <git@vger.kernel.org>; Fri, 18 Aug 2023 16:37:34 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4ABA31A3B54;
-        Fri, 18 Aug 2023 19:37:34 -0400 (EDT)
+        with ESMTP id S242790AbjHRXhl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Aug 2023 19:37:41 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E82A30DF
+        for <git@vger.kernel.org>; Fri, 18 Aug 2023 16:37:39 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8E7AC29CE1;
+        Fri, 18 Aug 2023 19:37:38 -0400 (EDT)
         (envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
         :subject:date:message-id:in-reply-to:references:mime-version
-        :content-transfer-encoding; s=sasl; bh=6cUyhkD72BiUtI8oHTlZaQcwD
-        o0CjWeruwuCrTCDqWw=; b=QOWLKCAmgiztziff9rj45oCb/f5jBCv9b38MEuT5R
-        FZRJMCxNu3l91waEnhiPYsKKZYytejxw9Eyfx4DtdBfHOqdLZej1aU98UWy+SHQn
-        g/Rv20WqAhCyLmMFnbm/I2nfXMXHvoPOrVBqnck3zFJja32MUxr33Qp9SIL2WM43
-        +A=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4342A1A3B53;
-        Fri, 18 Aug 2023 19:37:34 -0400 (EDT)
+        :content-transfer-encoding; s=sasl; bh=N6ej98JkVt9EwBMfn4xIdlXtq
+        acyZTJBWM1ADnj/oDA=; b=IAyH9UG1Uzn5jJrsYFKapEDcZHZkBNRrk1luLSBRG
+        xWZS3WOb3AiD7A/3yt1IN59QO615kPfxTm9CKeB1FxA3m+YGm0S+TnX9apChECPK
+        oSq5bFUD8gIrlPzEINbuUzda9IgpZcBbGV3G+e5RBKYFa+DK8h1Fp2K2XqmbwolO
+        64=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8821A29CE0;
+        Fri, 18 Aug 2023 19:37:38 -0400 (EDT)
         (envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.83.58.166])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A9AC11A3B52;
-        Fri, 18 Aug 2023 19:37:33 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4505E29CDF;
+        Fri, 18 Aug 2023 19:37:35 -0400 (EDT)
         (envelope-from gitster@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
-Subject: [PATCH v2 2/3] update-index: add --show-index-version
-Date:   Fri, 18 Aug 2023 16:37:28 -0700
-Message-ID: <20230818233729.2766281-3-gitster@pobox.com>
+Subject: [PATCH v2 3/3] test-tool: retire "index-version"
+Date:   Fri, 18 Aug 2023 16:37:29 -0700
+Message-ID: <20230818233729.2766281-4-gitster@pobox.com>
 X-Mailer: git-send-email 2.42.0-rc2-7-gf9972720e9
 In-Reply-To: <20230818233729.2766281-1-gitster@pobox.com>
 References: <20230818233729.2766281-1-gitster@pobox.com>
 MIME-Version: 1.0
-X-Pobox-Relay-ID: 34952E6E-3E20-11EE-9029-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 3586A37A-3E20-11EE-8CB6-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"git update-index --version N" is used to set the index format
-version to a specific version, but there was no way to query the
-current version used in the on-disk index file.
-
-Teach the command a new "--show-index-version" option, and also
-teach the "--index-version N" option to report what the version was
-when run with the "--verbose" option.
+As "git update-index --show-index-version" can do the same thing,
+the test-tool lost its reason to exist.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/git-update-index.txt |  6 +++++-
- builtin/update-index.c             | 19 +++++++++++++------
- t/t2107-update-index-basic.sh      | 16 ++++++++++++++++
- 3 files changed, 34 insertions(+), 7 deletions(-)
+ Makefile                              |  1 -
+ t/helper/test-index-version.c         | 15 ---------------
+ t/helper/test-tool.c                  |  1 -
+ t/helper/test-tool.h                  |  1 -
+ t/t1600-index.sh                      |  2 +-
+ t/t1700-split-index.sh                |  2 +-
+ t/t2104-update-index-skip-worktree.sh |  6 +++---
+ 7 files changed, 5 insertions(+), 23 deletions(-)
+ delete mode 100644 t/helper/test-index-version.c
 
-diff --git a/Documentation/git-update-index.txt b/Documentation/git-updat=
-e-index.txt
-index a367f8d65a..3f204891ce 100644
---- a/Documentation/git-update-index.txt
-+++ b/Documentation/git-update-index.txt
-@@ -162,7 +162,8 @@ you will need to handle the situation manually.
- 	Write the resulting index out in the named on-disk format version.
- 	Supported versions are 2, 3 and 4. The current default version is 2
- 	or 3, depending on whether extra features are used, such as
--	`git add -N`.
-+	`git add -N`.  With `--verbose` option, also reports the
-+	version the index file uses before and after this command.
- +
- Version 4 performs a simple pathname compression that reduces index
- size by 30%-50% on large repositories, which results in faster load
-@@ -171,6 +172,9 @@ and support for it was added to libgit2 in 2016 and t=
-o JGit in 2020.
- Older editions of this manual page called it "relatively young", but
- it should be considered mature technology these days.
-=20
-+--show-index-version::
-+	Report the index format version used by the on-disk index file.
-+	See `--index-version` above.
-=20
- -z::
- 	Only meaningful with `--stdin` or `--index-info`; paths are
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index 5fab9ad2ec..e713e2a04c 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -1089,6 +1089,8 @@ int cmd_update_index(int argc, const char **argv, c=
-onst char *prefix)
- 			resolve_undo_clear_callback),
- 		OPT_INTEGER(0, "index-version", &preferred_index_format,
- 			N_("write index in this format")),
-+		OPT_SET_INT(0, "show-index-version", &preferred_index_format,
-+			    N_("show index format version"), -1),
- 		OPT_BOOL(0, "split-index", &split_index,
- 			N_("enable or disable split index")),
- 		OPT_BOOL(0, "untracked-cache", &untracked_cache,
-@@ -1181,15 +1183,20 @@ int cmd_update_index(int argc, const char **argv,=
- const char *prefix)
-=20
- 	getline_fn =3D nul_term_line ? strbuf_getline_nul : strbuf_getline_lf;
- 	if (preferred_index_format) {
--		if (preferred_index_format < INDEX_FORMAT_LB ||
--		    INDEX_FORMAT_UB < preferred_index_format)
-+		if (preferred_index_format < 0) {
-+			printf(_("%d\n"), the_index.version);
-+		} else if (preferred_index_format < INDEX_FORMAT_LB ||
-+			   INDEX_FORMAT_UB < preferred_index_format) {
- 			die("index-version %d not in range: %d..%d",
- 			    preferred_index_format,
- 			    INDEX_FORMAT_LB, INDEX_FORMAT_UB);
+diff --git a/Makefile b/Makefile
+index e440728c24..5323c76aa0 100644
+--- a/Makefile
++++ b/Makefile
+@@ -808,7 +808,6 @@ TEST_BUILTINS_OBJS +=3D test-hash-speed.o
+ TEST_BUILTINS_OBJS +=3D test-hash.o
+ TEST_BUILTINS_OBJS +=3D test-hashmap.o
+ TEST_BUILTINS_OBJS +=3D test-hexdump.o
+-TEST_BUILTINS_OBJS +=3D test-index-version.o
+ TEST_BUILTINS_OBJS +=3D test-json-writer.o
+ TEST_BUILTINS_OBJS +=3D test-lazy-init-name-hash.o
+ TEST_BUILTINS_OBJS +=3D test-match-trees.o
+diff --git a/t/helper/test-index-version.c b/t/helper/test-index-version.=
+c
+deleted file mode 100644
+index a06c45c1f8..0000000000
+--- a/t/helper/test-index-version.c
++++ /dev/null
+@@ -1,15 +0,0 @@
+-#include "test-tool.h"
+-#include "cache.h"
 -
--		if (the_index.version !=3D preferred_index_format)
--			the_index.cache_changed |=3D SOMETHING_CHANGED;
--		the_index.version =3D preferred_index_format;
-+		} else {
-+			if (the_index.version !=3D preferred_index_format)
-+				the_index.cache_changed |=3D SOMETHING_CHANGED;
-+			report(_("index-version: was %d, set to %d"),
-+			       the_index.version, preferred_index_format);
-+			the_index.version =3D preferred_index_format;
-+		}
- 	}
+-int cmd__index_version(int argc UNUSED, const char **argv UNUSED)
+-{
+-	struct cache_header hdr;
+-	int version;
+-
+-	memset(&hdr,0,sizeof(hdr));
+-	if (read(0, &hdr, sizeof(hdr)) !=3D sizeof(hdr))
+-		return 0;
+-	version =3D ntohl(hdr.hdr_version);
+-	printf("%d\n", version);
+-	return 0;
+-}
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index abe8a785eb..621ac3dd10 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -38,7 +38,6 @@ static struct test_cmd cmds[] =3D {
+ 	{ "hashmap", cmd__hashmap },
+ 	{ "hash-speed", cmd__hash_speed },
+ 	{ "hexdump", cmd__hexdump },
+-	{ "index-version", cmd__index_version },
+ 	{ "json-writer", cmd__json_writer },
+ 	{ "lazy-init-name-hash", cmd__lazy_init_name_hash },
+ 	{ "match-trees", cmd__match_trees },
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index ea2672436c..a641c3a81d 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -32,7 +32,6 @@ int cmd__getcwd(int argc, const char **argv);
+ int cmd__hashmap(int argc, const char **argv);
+ int cmd__hash_speed(int argc, const char **argv);
+ int cmd__hexdump(int argc, const char **argv);
+-int cmd__index_version(int argc, const char **argv);
+ int cmd__json_writer(int argc, const char **argv);
+ int cmd__lazy_init_name_hash(int argc, const char **argv);
+ int cmd__match_trees(int argc, const char **argv);
+diff --git a/t/t1600-index.sh b/t/t1600-index.sh
+index 9368d82f7d..62e7fd1596 100755
+--- a/t/t1600-index.sh
++++ b/t/t1600-index.sh
+@@ -118,7 +118,7 @@ test_index_version () {
+ 		fi &&
+ 		git add a &&
+ 		echo $EXPECTED_OUTPUT_VERSION >expect &&
+-		test-tool index-version <.git/index >actual &&
++		git update-index --show-index-version >actual &&
+ 		test_cmp expect actual
+ 	)
+ }
+diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
+index b4ab166369..a7b7263b35 100755
+--- a/t/t1700-split-index.sh
++++ b/t/t1700-split-index.sh
+@@ -43,7 +43,7 @@ test_expect_success 'enable split index' '
+ 	git config splitIndex.maxPercentChange 100 &&
+ 	git update-index --split-index &&
+ 	test-tool dump-split-index .git/index >actual &&
+-	indexversion=3D$(test-tool index-version <.git/index) &&
++	indexversion=3D$(git update-index --show-index-version) &&
 =20
- 	if (read_from_stdin) {
-diff --git a/t/t2107-update-index-basic.sh b/t/t2107-update-index-basic.s=
-h
-index 89b285fa3a..c78d1e9396 100755
---- a/t/t2107-update-index-basic.sh
-+++ b/t/t2107-update-index-basic.sh
-@@ -111,4 +111,20 @@ test_expect_success '--chmod=3D+x and chmod=3D-x in =
-the same argument list' '
- 	test_cmp expect actual
+ 	# NEEDSWORK: Stop hard-coding checksums.
+ 	if test "$indexversion" =3D "4"
+diff --git a/t/t2104-update-index-skip-worktree.sh b/t/t2104-update-index=
+-skip-worktree.sh
+index b8686aabd3..0bab134d71 100755
+--- a/t/t2104-update-index-skip-worktree.sh
++++ b/t/t2104-update-index-skip-worktree.sh
+@@ -39,7 +39,7 @@ test_expect_success 'setup' '
  '
 =20
-+test_expect_success '--index-version' '
-+	git commit --allow-empty -m snap &&
-+	git reset --hard &&
-+
-+	git update-index --index-version 2 >actual &&
-+	test_must_be_empty actual &&
-+
-+	git update-index --show-index-version >actual &&
-+	echo 2 >expect &&
-+	test_cmp expect actual &&
-+
-+	git update-index --index-version 4 --verbose >actual &&
-+	echo "index-version: was 2, set to 4" >expect &&
-+	test_cmp expect actual
-+'
-+
+ test_expect_success 'index is at version 2' '
+-	test "$(test-tool index-version < .git/index)" =3D 2
++	test "$(git update-index --show-index-version)" =3D 2
+ '
+=20
+ test_expect_success 'update-index --skip-worktree' '
+@@ -48,7 +48,7 @@ test_expect_success 'update-index --skip-worktree' '
+ '
+=20
+ test_expect_success 'index is at version 3 after having some skip-worktr=
+ee entries' '
+-	test "$(test-tool index-version < .git/index)" =3D 3
++	test "$(git update-index --show-index-version)" =3D 3
+ '
+=20
+ test_expect_success 'ls-files -t' '
+@@ -61,7 +61,7 @@ test_expect_success 'update-index --no-skip-worktree' '
+ '
+=20
+ test_expect_success 'index version is back to 2 when there is no skip-wo=
+rktree entry' '
+-	test "$(test-tool index-version < .git/index)" =3D 2
++	test "$(git update-index --show-index-version)" =3D 2
+ '
+=20
  test_done
 --=20
 2.42.0-rc2-7-gf9972720e9
