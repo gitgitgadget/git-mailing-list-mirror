@@ -2,90 +2,164 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DE63EE49A1
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A054DEE49A3
 	for <git@archiver.kernel.org>; Fri, 18 Aug 2023 23:38:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242750AbjHRXhy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Aug 2023 19:37:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54508 "EHLO
+        id S242814AbjHRXhz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Aug 2023 19:37:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242751AbjHRXhf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Aug 2023 19:37:35 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2778B30DF
+        with ESMTP id S242769AbjHRXhg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Aug 2023 19:37:36 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D580420C
         for <git@vger.kernel.org>; Fri, 18 Aug 2023 16:37:34 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BD12F1A1E5B;
-        Fri, 18 Aug 2023 19:37:32 -0400 (EDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4ABA31A3B54;
+        Fri, 18 Aug 2023 19:37:34 -0400 (EDT)
         (envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
         :subject:date:message-id:in-reply-to:references:mime-version
-        :content-transfer-encoding; s=sasl; bh=YqXpVrSSnLpevaKdN/GOU4cbE
-        ho1tWSlR4J9ytaD/ok=; b=oEqJiGEnPlDopJ69glDVt2Lvxg1Nhv1PYcygm/K/7
-        +SmV7vyu2AMnbGXvlyiNtyrDmeg+/lzW0rJP0B2fLU20t+/GP1xtpzIPX1cteMif
-        ZVxYVedSS7BWmj97W7EYXKDVjNnrYA+Mus6QkMlrLD6Fyorpyit0r00RuDUcP9CZ
-        F0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B42791A1E59;
-        Fri, 18 Aug 2023 19:37:32 -0400 (EDT)
+        :content-transfer-encoding; s=sasl; bh=6cUyhkD72BiUtI8oHTlZaQcwD
+        o0CjWeruwuCrTCDqWw=; b=QOWLKCAmgiztziff9rj45oCb/f5jBCv9b38MEuT5R
+        FZRJMCxNu3l91waEnhiPYsKKZYytejxw9Eyfx4DtdBfHOqdLZej1aU98UWy+SHQn
+        g/Rv20WqAhCyLmMFnbm/I2nfXMXHvoPOrVBqnck3zFJja32MUxr33Qp9SIL2WM43
+        +A=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4342A1A3B53;
+        Fri, 18 Aug 2023 19:37:34 -0400 (EDT)
         (envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.83.58.166])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 25FB11A1E58;
-        Fri, 18 Aug 2023 19:37:32 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A9AC11A3B52;
+        Fri, 18 Aug 2023 19:37:33 -0400 (EDT)
         (envelope-from gitster@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
-Subject: [PATCH v2 1/3] update-index doc: v4 is OK with JGit and libgit2
-Date:   Fri, 18 Aug 2023 16:37:27 -0700
-Message-ID: <20230818233729.2766281-2-gitster@pobox.com>
+Subject: [PATCH v2 2/3] update-index: add --show-index-version
+Date:   Fri, 18 Aug 2023 16:37:28 -0700
+Message-ID: <20230818233729.2766281-3-gitster@pobox.com>
 X-Mailer: git-send-email 2.42.0-rc2-7-gf9972720e9
 In-Reply-To: <20230818233729.2766281-1-gitster@pobox.com>
 References: <20230818233729.2766281-1-gitster@pobox.com>
 MIME-Version: 1.0
-X-Pobox-Relay-ID: 33AA3850-3E20-11EE-A94E-25B3960A682E-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 34952E6E-3E20-11EE-9029-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Being invented in late 2012 no longer makes the index v4 format
-"relatively young".
+"git update-index --version N" is used to set the index format
+version to a specific version, but there was no way to query the
+current version used in the on-disk index file.
 
-The support for the index version 4 was added to libgit2 with their
-5625d86b (index: support index v4, 2016-05-17) and to JGit with
-their e9cb0a8e (DirCache: support index V4, 2020-08-10).
+Teach the command a new "--show-index-version" option, and also
+teach the "--index-version N" option to report what the version was
+when run with the "--verbose" option.
 
-Let's update the paragraph that discouraged its use for folks overly
-cautious about cross-tool compatibility.
-
-Helped-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/git-update-index.txt | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ Documentation/git-update-index.txt |  6 +++++-
+ builtin/update-index.c             | 19 +++++++++++++------
+ t/t2107-update-index-basic.sh      | 16 ++++++++++++++++
+ 3 files changed, 34 insertions(+), 7 deletions(-)
 
 diff --git a/Documentation/git-update-index.txt b/Documentation/git-updat=
 e-index.txt
-index f4bb9c5daf..a367f8d65a 100644
+index a367f8d65a..3f204891ce 100644
 --- a/Documentation/git-update-index.txt
 +++ b/Documentation/git-update-index.txt
-@@ -166,9 +166,11 @@ you will need to handle the situation manually.
+@@ -162,7 +162,8 @@ you will need to handle the situation manually.
+ 	Write the resulting index out in the named on-disk format version.
+ 	Supported versions are 2, 3 and 4. The current default version is 2
+ 	or 3, depending on whether extra features are used, such as
+-	`git add -N`.
++	`git add -N`.  With `--verbose` option, also reports the
++	version the index file uses before and after this command.
  +
  Version 4 performs a simple pathname compression that reduces index
  size by 30%-50% on large repositories, which results in faster load
--time. Version 4 is relatively young (first released in 1.8.0 in
--October 2012). Other Git implementations such as JGit and libgit2
--may not support it yet.
-+time.  Git supports it since version 1.8.0, released in October 2012,
-+and support for it was added to libgit2 in 2016 and to JGit in 2020.
-+Older editions of this manual page called it "relatively young", but
-+it should be considered mature technology these days.
-+
+@@ -171,6 +172,9 @@ and support for it was added to libgit2 in 2016 and t=
+o JGit in 2020.
+ Older editions of this manual page called it "relatively young", but
+ it should be considered mature technology these days.
+=20
++--show-index-version::
++	Report the index format version used by the on-disk index file.
++	See `--index-version` above.
 =20
  -z::
  	Only meaningful with `--stdin` or `--index-info`; paths are
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 5fab9ad2ec..e713e2a04c 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -1089,6 +1089,8 @@ int cmd_update_index(int argc, const char **argv, c=
+onst char *prefix)
+ 			resolve_undo_clear_callback),
+ 		OPT_INTEGER(0, "index-version", &preferred_index_format,
+ 			N_("write index in this format")),
++		OPT_SET_INT(0, "show-index-version", &preferred_index_format,
++			    N_("show index format version"), -1),
+ 		OPT_BOOL(0, "split-index", &split_index,
+ 			N_("enable or disable split index")),
+ 		OPT_BOOL(0, "untracked-cache", &untracked_cache,
+@@ -1181,15 +1183,20 @@ int cmd_update_index(int argc, const char **argv,=
+ const char *prefix)
+=20
+ 	getline_fn =3D nul_term_line ? strbuf_getline_nul : strbuf_getline_lf;
+ 	if (preferred_index_format) {
+-		if (preferred_index_format < INDEX_FORMAT_LB ||
+-		    INDEX_FORMAT_UB < preferred_index_format)
++		if (preferred_index_format < 0) {
++			printf(_("%d\n"), the_index.version);
++		} else if (preferred_index_format < INDEX_FORMAT_LB ||
++			   INDEX_FORMAT_UB < preferred_index_format) {
+ 			die("index-version %d not in range: %d..%d",
+ 			    preferred_index_format,
+ 			    INDEX_FORMAT_LB, INDEX_FORMAT_UB);
+-
+-		if (the_index.version !=3D preferred_index_format)
+-			the_index.cache_changed |=3D SOMETHING_CHANGED;
+-		the_index.version =3D preferred_index_format;
++		} else {
++			if (the_index.version !=3D preferred_index_format)
++				the_index.cache_changed |=3D SOMETHING_CHANGED;
++			report(_("index-version: was %d, set to %d"),
++			       the_index.version, preferred_index_format);
++			the_index.version =3D preferred_index_format;
++		}
+ 	}
+=20
+ 	if (read_from_stdin) {
+diff --git a/t/t2107-update-index-basic.sh b/t/t2107-update-index-basic.s=
+h
+index 89b285fa3a..c78d1e9396 100755
+--- a/t/t2107-update-index-basic.sh
++++ b/t/t2107-update-index-basic.sh
+@@ -111,4 +111,20 @@ test_expect_success '--chmod=3D+x and chmod=3D-x in =
+the same argument list' '
+ 	test_cmp expect actual
+ '
+=20
++test_expect_success '--index-version' '
++	git commit --allow-empty -m snap &&
++	git reset --hard &&
++
++	git update-index --index-version 2 >actual &&
++	test_must_be_empty actual &&
++
++	git update-index --show-index-version >actual &&
++	echo 2 >expect &&
++	test_cmp expect actual &&
++
++	git update-index --index-version 4 --verbose >actual &&
++	echo "index-version: was 2, set to 4" >expect &&
++	test_cmp expect actual
++'
++
+ test_done
 --=20
 2.42.0-rc2-7-gf9972720e9
 
