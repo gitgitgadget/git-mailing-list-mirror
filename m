@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37187EE49A4
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F382EEE49A8
 	for <git@archiver.kernel.org>; Sun, 20 Aug 2023 09:00:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230154AbjHTJAL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 20 Aug 2023 05:00:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39316 "EHLO
+        id S230156AbjHTJAM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 20 Aug 2023 05:00:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230149AbjHTJAE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Aug 2023 05:00:04 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3E3DF5
-        for <git@vger.kernel.org>; Sun, 20 Aug 2023 01:54:59 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id ffacd0b85a97d-31c3df710bdso130062f8f.1
-        for <git@vger.kernel.org>; Sun, 20 Aug 2023 01:54:59 -0700 (PDT)
+        with ESMTP id S230129AbjHTJAF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Aug 2023 05:00:05 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C3F3D2
+        for <git@vger.kernel.org>; Sun, 20 Aug 2023 01:55:01 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id 5b1f17b1804b1-3fe12baec61so22410985e9.2
+        for <git@vger.kernel.org>; Sun, 20 Aug 2023 01:55:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692521698; x=1693126498;
+        d=gmail.com; s=20221208; t=1692521700; x=1693126500;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yK4dJKHnsgQTHz6D/V7urLIMYM3bYVHGa4CBQy0UjKc=;
-        b=QeOsOi8q1055V+UGOKy0yf8uaoO24yPIkEfNd5PjYukmG1b/4/tyRUcyR5joHIKmk2
-         8Rz9DLWznBG8IBDQfBvaW02J8Fgjh0BWTmXZqEmHgAI14IuSqDnuFgBFh/56HtWu7Jyq
-         mgUbPoLtajnBmi1X9CSQt1nlib5nlwsIWEk/atrl0CJDPs5rXh3TsQH9TWQhBUwSzkrG
-         a883EFg4lFWDZ7iJ6i1d7TiTlIQQQDgTbl5zlKOdNY8PwCcmcjLbqzxNAtBtRo/Ljqnw
-         PkzdjRmkz2F+3ltU/AEiG0STrT4GtovGcJhnYwcp2fY9JsgfwplVeyVYIJnFAZ8xJwmI
-         05Iw==
+        bh=8qiqD3kvSXbgsPdz2fouf+93nbEh+ABrlnUBeqKFPJc=;
+        b=h4p5bul2bwi89U3AqIp3dtGJqi4x0TwxHuPyosyVew2Vu/h7qYbrIm7EQAUHpIg+8m
+         lHn3Lo8YEZVQ+UhbUocU6pN6GVZJjw9ETioV7uhlsIrz2Qken8rxUvLtenS0yTJuDArZ
+         i3yUOFhH5g/4qf4aVWgTiYr9EAOVrx/okeAnpPoevR4bA3h/igIKmuvh623JEQuBZ9LM
+         gfM7kOKssT6VWTHIcdG0pV7GIONPJnIouXHk7fRn2NgKJQLQiYdBEBi1OX8/ESuDCE90
+         6pl4dQfCVhRGHEL3Ey5LElz1o7VJbufGvDjk4ttephHnUPihTh6CFGzvKQ0lDlCfweTI
+         aScA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692521698; x=1693126498;
+        d=1e100.net; s=20221208; t=1692521700; x=1693126500;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=yK4dJKHnsgQTHz6D/V7urLIMYM3bYVHGa4CBQy0UjKc=;
-        b=K1EnayFZzSB2rQzZ6Wqsw2KCJn7v+i3nWHFPR1Ham9Nyj37gF6OsdkS9usW9KvnyNW
-         0sW+dK/oMnkKcJmbG9iZok4BT3GcA9+lEzh9WBhb1rgGjgGCRqEg6Aos8KNwpkP53SOX
-         mg/uQ4cb4nhe150SLuqJ1aBi0z3ltE1SQybhfvS/w0YtzK9GotlWTvBEfd+3hxAHI+MZ
-         WfQyVsvQ6NtKsj2ukw8dzGYRPe/LIxGm103D3ND84eAbLf2kjdqXeMp7+gqCeK+/tHo7
-         WdDYfOzR99F4TcXogjUQJ8NjdvykR1NDY7pX7iMEEQBIuMUC9xh4FOMxH9PmOMZTsj7L
-         mmaA==
-X-Gm-Message-State: AOJu0Yzc7V+hN+qAJoP5U/NnQk0lg0tNv1uey+3IIRQklkctAthPlGZ1
-        U/dhlwb2vy86weWdUt7emXz+n2zrXq8wrGaS
-X-Google-Smtp-Source: AGHT+IGPLRPE8qe7cfUknurzsmifK+xJRuiZ6Lp2cVmnh/yNbn9LYatJBf+UbzTraer08X7EsFf7nQ==
-X-Received: by 2002:a5d:494c:0:b0:314:1ce9:3c86 with SMTP id r12-20020a5d494c000000b003141ce93c86mr2772105wrs.0.1692521698396;
-        Sun, 20 Aug 2023 01:54:58 -0700 (PDT)
+        bh=8qiqD3kvSXbgsPdz2fouf+93nbEh+ABrlnUBeqKFPJc=;
+        b=GQT+IvrcZnv2gtHjdLoNUaVCbeqiMhA76JBZKKR5/we/jUlDlDxpGkVOzMcMX2IyX1
+         ySLwY/udClHQGN7iXyPwoXaoR0BzR87oLyZKSohU0epYppw2gbZfLcVTHSeDTu9V122q
+         yDjjxXmQgErnfYOWXznuB7T0VhhWLpjzepSNv/ymL5wG3kmZ2Ibs0vsmv9hPcQ/Lqwh+
+         3LVTwbmjUkPH5nDLPVw1URSkquV6wPNC3obIkzoNSwsS9mMSpFWgZ/JUtGBXPMLlfIbU
+         drcH9AX9LvGgmjkHV0ZiJfA83hwPDqNByaTtvnDxmnQ3dj/LzE5x/hModLCi3oDP2bWL
+         Xk5Q==
+X-Gm-Message-State: AOJu0YwngxvepjZ4I/33wX21rwdqkD1SlVsJTCxCL4aTBuKv16pARPda
+        n7iFG4w36l7q/eO6p4kI2aCGNQ8+aWEGtqGV
+X-Google-Smtp-Source: AGHT+IHj9vDpmtVQoBgvlnpFi5ZXcHMMCjL/5eLmLH/eCVBXH8qswOJqwr5RcbODKrcci0b8lInjMg==
+X-Received: by 2002:a5d:66ce:0:b0:31a:d5fa:d710 with SMTP id k14-20020a5d66ce000000b0031ad5fad710mr2874139wrw.2.1692521699632;
+        Sun, 20 Aug 2023 01:54:59 -0700 (PDT)
 Received: from localhost.localdomain (cpc105060-sgyl40-2-0-cust995.18-2.cable.virginm.net. [81.111.15.228])
-        by smtp.gmail.com with ESMTPSA id y15-20020adff6cf000000b0031759e6b43fsm8652539wrp.39.2023.08.20.01.54.57
+        by smtp.gmail.com with ESMTPSA id y15-20020adff6cf000000b0031759e6b43fsm8652539wrp.39.2023.08.20.01.54.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Aug 2023 01:54:58 -0700 (PDT)
+        Sun, 20 Aug 2023 01:54:59 -0700 (PDT)
 From:   Andy Koppe <andy.koppe@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, glencbz@gmail.com, phillip.wood123@gmail.com,
         Andy Koppe <andy.koppe@gmail.com>
-Subject: [PATCH v4 7/8] pretty: add pointer and tag options to %(decorate)
-Date:   Sun, 20 Aug 2023 09:53:35 +0100
-Message-ID: <20230820085336.8615-8-andy.koppe@gmail.com>
+Subject: [PATCH v4 8/8] decorate: use commit color for HEAD arrow
+Date:   Sun, 20 Aug 2023 09:53:36 +0100
+Message-ID: <20230820085336.8615-9-andy.koppe@gmail.com>
 X-Mailer: git-send-email 2.42.0-rc1
 In-Reply-To: <20230820085336.8615-1-andy.koppe@gmail.com>
 References: <20230810211619.19055-1-andy.koppe@gmail.com>
@@ -66,141 +66,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add pointer and tag options to %(decorate) format, to allow to override
-the " -> " string used to show where HEAD points and the "tag: " string
-used to mark tags.
+Use the commit color instead of the HEAD color for the arrow or custom
+symbol in "HEAD -> branch" decorations, for visual consistency with the
+prefix, separator and suffix symbols, which are also colored with the
+commit color.
 
-Document in pretty-formats.txt and test in t4205-log-pretty-formats.sh.
+This change was triggered by the possibility that one could choose to
+use the same symbol for the pointer and the separator options in
+%(decorate), in which case they ought to be the same color.
+
+A related precedent is 'ls -l', where the arrow for symlinks gets the
+default color rather than that of the symlink name.
+
+Amend test t4207-log-decoration-colors.sh accordingly.
 
 Signed-off-by: Andy Koppe <andy.koppe@gmail.com>
 ---
- Documentation/pretty-formats.txt |  9 +++++++++
- log-tree.c                       | 12 +++++++++---
- log-tree.h                       |  2 ++
- pretty.c                         |  6 +++++-
- t/t4205-log-pretty-formats.sh    |  7 ++++++-
- 5 files changed, 31 insertions(+), 5 deletions(-)
+ log-tree.c                       | 2 +-
+ t/t4207-log-decoration-colors.sh | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index 709d85af21..d38b4ab566 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -233,6 +233,15 @@ parentheses (`%x29`), due to their role in the option syntax.
- ** 'prefix=<value>': Shown before the list of ref names.  Defaults to "{nbsp}`(`".
- ** 'suffix=<value>': Shown after the list of ref names.  Defaults to "`)`".
- ** 'separator=<value>': Shown between ref names.  Defaults to "`,`{nbsp}".
-+** 'pointer=<value>': Shown between HEAD and the branch it points to, if any.
-+		      Defaults to "{nbsp}`->`{nbsp}".
-+** 'tag=<value>': Shown before tag names. Defaults to "`tag:`{nbsp}".
-+
-++
-+For example, to produce decorations with no wrapping
-+or tag annotations, and spaces as separators:
-++
-+`%(decorate:prefix=,suffix=,tag=,separator= )`
- 
- '%(describe[:<options>])'::
- human-readable name, like linkgit:git-describe[1]; empty string for
 diff --git a/log-tree.c b/log-tree.c
-index 44f4693567..50b4850eda 100644
+index 50b4850eda..504da6b519 100644
 --- a/log-tree.c
 +++ b/log-tree.c
-@@ -317,6 +317,8 @@ void format_decorations(struct strbuf *sb,
- 	const char *prefix = " (";
- 	const char *suffix = ")";
- 	const char *separator = ", ";
-+	const char *pointer = " -> ";
-+	const char *tag = "tag: ";
+@@ -369,7 +369,7 @@ void format_decorations(struct strbuf *sb,
  
- 	decoration = get_name_decoration(&commit->object);
- 	if (!decoration)
-@@ -329,6 +331,10 @@ void format_decorations(struct strbuf *sb,
- 			suffix = opts->suffix;
- 		if (opts->separator)
- 			separator = opts->separator;
-+		if (opts->pointer)
-+			pointer = opts->pointer;
-+		if (opts->tag)
-+			tag = opts->tag;
- 	}
- 
- 	color_commit = diff_get_color(use_color, DIFF_COMMIT);
-@@ -351,9 +357,9 @@ void format_decorations(struct strbuf *sb,
- 				strbuf_addstr(sb, color_reset);
- 			}
- 
--			if (decoration->type == DECORATION_REF_TAG) {
-+			if (*tag && decoration->type == DECORATION_REF_TAG) {
- 				strbuf_addstr(sb, color);
--				strbuf_addstr(sb, "tag: ");
-+				strbuf_addstr(sb, tag);
- 				strbuf_addstr(sb, color_reset);
- 			}
- 
-@@ -364,7 +370,7 @@ void format_decorations(struct strbuf *sb,
  			if (current_and_HEAD &&
  			    decoration->type == DECORATION_REF_HEAD) {
- 				strbuf_addstr(sb, color);
--				strbuf_addstr(sb, " -> ");
-+				strbuf_addstr(sb, pointer);
+-				strbuf_addstr(sb, color);
++				strbuf_addstr(sb, color_commit);
+ 				strbuf_addstr(sb, pointer);
  				strbuf_addstr(sb, color_reset);
  				strbuf_addstr(sb, decorate_get_color(use_color, current_and_HEAD->type));
- 				show_name(sb, current_and_HEAD);
-diff --git a/log-tree.h b/log-tree.h
-index 14898de8ac..41c776fea5 100644
---- a/log-tree.h
-+++ b/log-tree.h
-@@ -17,6 +17,8 @@ struct decoration_options {
- 	char *prefix;
- 	char *suffix;
- 	char *separator;
-+	char *pointer;
-+	char *tag;
- };
+diff --git a/t/t4207-log-decoration-colors.sh b/t/t4207-log-decoration-colors.sh
+index df804f38e2..21986a866d 100755
+--- a/t/t4207-log-decoration-colors.sh
++++ b/t/t4207-log-decoration-colors.sh
+@@ -54,7 +54,7 @@ cmp_filtered_decorations () {
+ test_expect_success 'commit decorations colored correctly' '
+ 	cat >expect <<-EOF &&
+ 	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_HEAD}HEAD${c_reset}\
+-${c_HEAD} -> ${c_reset}${c_branch}main${c_reset}${c_commit}, \
++${c_commit} -> ${c_reset}${c_branch}main${c_reset}${c_commit}, \
+ ${c_reset}${c_tag}tag: ${c_reset}${c_tag}v1.0${c_reset}${c_commit}, \
+ ${c_reset}${c_tag}tag: ${c_reset}${c_tag}B${c_reset}${c_commit})${c_reset} B
+ ${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}\
+@@ -79,7 +79,7 @@ test_expect_success 'test coloring with replace-objects' '
  
- int parse_decorate_color_config(const char *var, const char *slot_name, const char *value);
-diff --git a/pretty.c b/pretty.c
-index 1639efe2f8..7f3abb676c 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1407,7 +1407,9 @@ static void parse_decoration_options(const char **arg,
- {
- 	while (parse_decoration_option(arg, "prefix", &opts->prefix) ||
- 	       parse_decoration_option(arg, "suffix", &opts->suffix) ||
--	       parse_decoration_option(arg, "separator", &opts->separator))
-+	       parse_decoration_option(arg, "separator", &opts->separator) ||
-+	       parse_decoration_option(arg, "pointer", &opts->pointer) ||
-+	       parse_decoration_option(arg, "tag", &opts->tag))
- 		;
- }
+ 	cat >expect <<-EOF &&
+ 	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_HEAD}HEAD${c_reset}\
+-${c_HEAD} -> ${c_reset}${c_branch}main${c_reset}${c_commit}, \
++${c_commit} -> ${c_reset}${c_branch}main${c_reset}${c_commit}, \
+ ${c_reset}${c_tag}tag: ${c_reset}${c_tag}D${c_reset}${c_commit})${c_reset} D
+ 	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}\
+ ${c_tag}tag: ${c_reset}${c_tag}C${c_reset}${c_commit}, \
+@@ -105,7 +105,7 @@ test_expect_success 'test coloring with grafted commit' '
  
-@@ -1416,6 +1418,8 @@ static void free_decoration_options(const struct decoration_options *opts)
- 	free(opts->prefix);
- 	free(opts->suffix);
- 	free(opts->separator);
-+	free(opts->pointer);
-+	free(opts->tag);
- }
- 
- static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
-diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-index 6ba399c5be..16626e4fe9 100755
---- a/t/t4205-log-pretty-formats.sh
-+++ b/t/t4205-log-pretty-formats.sh
-@@ -600,7 +600,12 @@ test_expect_success 'pretty format %decorate' '
- 	echo "%(decorate:prefix=[ ,suffix= ],separater=; )" >expect4 &&
- 	git log --format="%(decorate:prefix=[ ,suffix= ],separater=%x3B )" \
- 		-1 >actual4 &&
--	test_cmp expect4 actual4
-+	test_cmp expect4 actual4 &&
-+
-+	echo "HEAD->foo bar qux" >expect5 &&
-+	git log --format="%(decorate:prefix=,suffix=,separator= ,tag=,pointer=->)" \
-+		-1 >actual5 &&
-+	test_cmp expect5 actual5
- '
- 
- cat >trailers <<EOF
+ 	cat >expect <<-EOF &&
+ 	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_HEAD}HEAD${c_reset}\
+-${c_HEAD} -> ${c_reset}${c_branch}main${c_reset}${c_commit}, \
++${c_commit} -> ${c_reset}${c_branch}main${c_reset}${c_commit}, \
+ ${c_reset}${c_tag}tag: ${c_reset}${c_tag}D${c_reset}${c_commit}, \
+ ${c_reset}${c_grafted}replaced${c_reset}${c_commit})${c_reset} D
+ 	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}\
 -- 
 2.42.0-rc2
 
