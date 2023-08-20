@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7566EE49A4
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CEFA6EE49A8
 	for <git@archiver.kernel.org>; Sun, 20 Aug 2023 09:00:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230018AbjHTI75 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 20 Aug 2023 04:59:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50888 "EHLO
+        id S230140AbjHTJAB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 20 Aug 2023 05:00:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229612AbjHTI74 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Aug 2023 04:59:56 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EFAAEC
-        for <git@vger.kernel.org>; Sun, 20 Aug 2023 01:54:56 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-3feddbb670cso11111495e9.3
-        for <git@vger.kernel.org>; Sun, 20 Aug 2023 01:54:56 -0700 (PDT)
+        with ESMTP id S230126AbjHTJAB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Aug 2023 05:00:01 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96826A2
+        for <git@vger.kernel.org>; Sun, 20 Aug 2023 01:54:58 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2bcb89b4767so3118161fa.3
+        for <git@vger.kernel.org>; Sun, 20 Aug 2023 01:54:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692521695; x=1693126495;
+        d=gmail.com; s=20221208; t=1692521697; x=1693126497;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=SjONEozaizDuIj7r8Z8I6bm4as5NrbCS2U96FB17dbk=;
-        b=VXLElxbeIqd9xyUULlXHyU6mc0yseyzY3De9o9A01RG+aIIfCU6m8Z/rMVb2jrNS/8
-         zsciPVZmDID0LZ6nVjZMHndMCdxVuxJ9dlkLR6DRK9Lh8C4Zl6y2/PG5qlAHrCp0nvv8
-         pMkplI16ovS3oT3mybaLaOhZSd5s5IzGBN5WHX2ypxoi8CUDAdtclTMaZj/2XlgDmHPS
-         AOX+HFraBC3DBAJG5nZFsn0aZe7eHRfPsrswNh0JHBRBYtgcbLYiWGzSds7PtKShNVyB
-         bdWbQU1gm096HFi6st87dJxM7viAicsvpKqNhkZW++hl2YPNKjPr+qRC/JmYks4NRi+T
-         nHjQ==
+        bh=X7XFeevufjAjcE2XkTtR0tFM7aOlYpNqLsPQ1W9Wbzs=;
+        b=RntkbZzIYRXt8WrHDk8gksoNyvOOFdH5CcPVsgP5TAnofbb2yezWaYm+jyqVLbrBB8
+         T9fBwVKtXuR97eIp9rvodluDaqOxLNFDEZik3UQ6tp+QMRAxWtjVQ5Et2rp+vaYN20E5
+         NZDTFh4/8J5Jmeq0odOLBrCMxRL0suggsN2YXEm6c3+xAyaZ/MCh9dM4fFkGzAd8rH75
+         xLyKlDvB/2PQhiLtGw2NF4inn9bIGVUc8hINuZifnn5bSld6b9WFNYUe0oxMvJ1KjcLR
+         lg4yq2AEqNcWY2L8n8YhiPDwrH93KoqzIAKHJm/qAE+dX3OQIY6XhKUCWhjVq1PbuX/B
+         aLxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692521695; x=1693126495;
+        d=1e100.net; s=20221208; t=1692521697; x=1693126497;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=SjONEozaizDuIj7r8Z8I6bm4as5NrbCS2U96FB17dbk=;
-        b=dHcLabH9Bz8jZUm83Y6zW+7pa4t/1ioDZnxzEXM+LD9lJgNLFRBPzp8Z1Qmx3cKl5E
-         4Btv8efr6XEy0gHi178veB2XwrYdzqlzTKL2V8tNJvSDwQygHKK01K9qV2sKeP3NYP7o
-         UW7ay6hekiDcZASsX9BWrHV0q71ykYDa2/iKFKQhHljlNfAkT2laQXFyIhcwwF1CP4tN
-         oVvcQAkdJYMWP44Py5F3LDF3N2VpIv8xCIMOt9Fittf0TmSWTh5Dy7tIFA3rwyspnNTd
-         hedGdP2b2nEZ0Y2E2BlFq3UTluQ8Bx6tSUynT/Re2xPwVsoZ9jYlB6zOVHoOV5foI9Iw
-         4zGQ==
-X-Gm-Message-State: AOJu0YyqQCJ4bAR7QJeHDby1o0TjU1+233agoNrhYsBM5Cma/voN9eat
-        jBQAqGV/Rx5np2KPg6rimNOrA23erWHoTHEu
-X-Google-Smtp-Source: AGHT+IFE0nV4xPJ9fRyxAPmGAj7OyUGM900fia8ux0Nl824Evsod914KqrlQIv3eJl7ybjE01ogbmw==
-X-Received: by 2002:a7b:c051:0:b0:3fc:a49:4c05 with SMTP id u17-20020a7bc051000000b003fc0a494c05mr2495925wmc.40.1692521694397;
-        Sun, 20 Aug 2023 01:54:54 -0700 (PDT)
+        bh=X7XFeevufjAjcE2XkTtR0tFM7aOlYpNqLsPQ1W9Wbzs=;
+        b=AbolgSAa4BG/zcXNEZODX/m6fFMilglyEOIJx42vQQIzMX0Cv494f/WqT5IfvbBH2O
+         k5wqu9rsHrvLcWNBeR0ZqxUzHp5b3lg50tqqOUM5OkZUdXNCMPWGkDpC7sDXu7Tf8QI2
+         FSpT3gTSkRsDfzqd5OUhtXkW3EO8FW4IW3ThsaFlBhT1Z05091n9kn3bgg39yh3zTMxf
+         1+xWmNTCIe+gG4Rg6kP6sb+F4k6ROPWhvQLr4qeMbVNe0VnjsufocNJyvUt2WMC88AeK
+         fdKY02EOcRYdbNHzUdW/HG/L60407bO5fZ5h0YXsg2kgxflSiG1PWHSPqHH1UtkN+bas
+         wgcA==
+X-Gm-Message-State: AOJu0Yy62Mkjeq7HqfeEyVkdK+ABRIlAKgehlmuHzrHbsG+Q0GwKC4py
+        L2De0lyDaA6pUq9T4153R0fuYyBKbOypFYb9
+X-Google-Smtp-Source: AGHT+IETm5fpQRKZWPCvLKT2hMX3MnoiNaf+ZEI1RnbnQJrwALcBB6CGEHCNJwQeT42sosQynStzyg==
+X-Received: by 2002:a05:6512:3e9:b0:4ff:7046:984a with SMTP id n9-20020a05651203e900b004ff7046984amr2322028lfq.7.1692521696628;
+        Sun, 20 Aug 2023 01:54:56 -0700 (PDT)
 Received: from localhost.localdomain (cpc105060-sgyl40-2-0-cust995.18-2.cable.virginm.net. [81.111.15.228])
-        by smtp.gmail.com with ESMTPSA id y15-20020adff6cf000000b0031759e6b43fsm8652539wrp.39.2023.08.20.01.54.53
+        by smtp.gmail.com with ESMTPSA id y15-20020adff6cf000000b0031759e6b43fsm8652539wrp.39.2023.08.20.01.54.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Aug 2023 01:54:54 -0700 (PDT)
+        Sun, 20 Aug 2023 01:54:56 -0700 (PDT)
 From:   Andy Koppe <andy.koppe@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, glencbz@gmail.com, phillip.wood123@gmail.com,
         Andy Koppe <andy.koppe@gmail.com>
-Subject: [PATCH v4 2/8] pretty-formats: enclose options in angle brackets
-Date:   Sun, 20 Aug 2023 09:53:30 +0100
-Message-ID: <20230820085336.8615-3-andy.koppe@gmail.com>
+Subject: [PATCH v4 5/8] decorate: color each token separately
+Date:   Sun, 20 Aug 2023 09:53:33 +0100
+Message-ID: <20230820085336.8615-6-andy.koppe@gmail.com>
 X-Mailer: git-send-email 2.42.0-rc1
 In-Reply-To: <20230820085336.8615-1-andy.koppe@gmail.com>
 References: <20230810211619.19055-1-andy.koppe@gmail.com>
@@ -66,63 +66,134 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Enclose the 'options' placeholders in the %(describe) and %(trailers)
-format specifiers in angle brackets to clarify that they are
-placeholders rather than keywords.
+Wrap "tag:" prefixes and the arrows in "HEAD -> branch" decorations in
+their own color sequences. Otherwise, if --graph is used, tag names or
+arrows can end up uncolored when %w width formatting breaks a line just
+before them. This is because --graph resets the color after doing its
+drawing at the start of a line.
 
-Also remove the indentation from their descriptions, instead of
-increasing it to account for the extra two angle bracket in the
-headings. The indentation isn't required by asciidoc, it doesn't reflect
-how the output text is formatted, and it's inconsistent with the
-following bullet points that are at the same level in the output.
+Amend test t4207-log-decoration-colors.sh accordingly.
 
 Signed-off-by: Andy Koppe <andy.koppe@gmail.com>
 ---
- Documentation/pretty-formats.txt | 24 ++++++++++--------------
- 1 file changed, 10 insertions(+), 14 deletions(-)
+ log-tree.c                       | 14 +++++++---
+ t/t4207-log-decoration-colors.sh | 44 ++++++++++++++++++--------------
+ 2 files changed, 36 insertions(+), 22 deletions(-)
 
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index 5e1432951b..851a9878e6 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -224,13 +224,11 @@ The placeholders are:
- 	linkgit:git-rev-list[1])
- '%d':: ref names, like the --decorate option of linkgit:git-log[1]
- '%D':: ref names without the " (", ")" wrapping.
--'%(describe[:options])':: human-readable name, like
--			  linkgit:git-describe[1]; empty string for
--			  undescribable commits.  The `describe` string
--			  may be followed by a colon and zero or more
--			  comma-separated options.  Descriptions can be
--			  inconsistent when tags are added or removed at
--			  the same time.
-+'%(describe[:<options>])'::
-+human-readable name, like linkgit:git-describe[1]; empty string for
-+undescribable commits.  The `describe` string may be followed by a colon and
-+zero or more comma-separated options.  Descriptions can be inconsistent when
-+tags are added or removed at the same time.
- +
- ** 'tags[=<bool-value>]': Instead of only considering annotated tags,
-    consider lightweight tags as well.
-@@ -283,13 +281,11 @@ endif::git-rev-list[]
- '%gE':: reflog identity email (respecting .mailmap, see
- 	linkgit:git-shortlog[1] or linkgit:git-blame[1])
- '%gs':: reflog subject
--'%(trailers[:options])':: display the trailers of the body as
--			  interpreted by
--			  linkgit:git-interpret-trailers[1]. The
--			  `trailers` string may be followed by a colon
--			  and zero or more comma-separated options.
--			  If any option is provided multiple times the
--			  last occurrence wins.
-+'%(trailers[:<options>])'::
-+display the trailers of the body as interpreted by
-+linkgit:git-interpret-trailers[1]. The `trailers` string may be followed by
-+a colon and zero or more comma-separated options. If any option is provided
-+multiple times, the last occurrence wins.
- +
- ** 'key=<key>': only show trailers with specified <key>. Matching is done
-    case-insensitively and trailing colon is optional. If option is
+diff --git a/log-tree.c b/log-tree.c
+index 7c6d3f1ac3..44f4693567 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -342,26 +342,34 @@ void format_decorations(struct strbuf *sb,
+ 		 * appeared, skipping the entry for current.
+ 		 */
+ 		if (decoration != current_and_HEAD) {
++			const char *color =
++				decorate_get_color(use_color, decoration->type);
++
+ 			if (*prefix) {
+ 				strbuf_addstr(sb, color_commit);
+ 				strbuf_addstr(sb, prefix);
+ 				strbuf_addstr(sb, color_reset);
+ 			}
+ 
+-			strbuf_addstr(sb, decorate_get_color(use_color, decoration->type));
+-			if (decoration->type == DECORATION_REF_TAG)
++			if (decoration->type == DECORATION_REF_TAG) {
++				strbuf_addstr(sb, color);
+ 				strbuf_addstr(sb, "tag: ");
++				strbuf_addstr(sb, color_reset);
++			}
+ 
++			strbuf_addstr(sb, color);
+ 			show_name(sb, decoration);
++			strbuf_addstr(sb, color_reset);
+ 
+ 			if (current_and_HEAD &&
+ 			    decoration->type == DECORATION_REF_HEAD) {
++				strbuf_addstr(sb, color);
+ 				strbuf_addstr(sb, " -> ");
+ 				strbuf_addstr(sb, color_reset);
+ 				strbuf_addstr(sb, decorate_get_color(use_color, current_and_HEAD->type));
+ 				show_name(sb, current_and_HEAD);
++				strbuf_addstr(sb, color_reset);
+ 			}
+-			strbuf_addstr(sb, color_reset);
+ 
+ 			prefix = separator;
+ 		}
+diff --git a/t/t4207-log-decoration-colors.sh b/t/t4207-log-decoration-colors.sh
+index ded33a82e2..df804f38e2 100755
+--- a/t/t4207-log-decoration-colors.sh
++++ b/t/t4207-log-decoration-colors.sh
+@@ -53,15 +53,17 @@ cmp_filtered_decorations () {
+ # to this test since it does not contain any decoration, hence --first-parent
+ test_expect_success 'commit decorations colored correctly' '
+ 	cat >expect <<-EOF &&
+-	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_HEAD}HEAD -> \
+-${c_reset}${c_branch}main${c_reset}${c_commit}, \
+-${c_reset}${c_tag}tag: v1.0${c_reset}${c_commit}, \
+-${c_reset}${c_tag}tag: B${c_reset}${c_commit})${c_reset} B
+-${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}tag: A1${c_reset}${c_commit}, \
++	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_HEAD}HEAD${c_reset}\
++${c_HEAD} -> ${c_reset}${c_branch}main${c_reset}${c_commit}, \
++${c_reset}${c_tag}tag: ${c_reset}${c_tag}v1.0${c_reset}${c_commit}, \
++${c_reset}${c_tag}tag: ${c_reset}${c_tag}B${c_reset}${c_commit})${c_reset} B
++${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}\
++${c_tag}tag: ${c_reset}${c_tag}A1${c_reset}${c_commit}, \
+ ${c_reset}${c_remoteBranch}other/main${c_reset}${c_commit})${c_reset} A1
+-	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_stash}refs/stash${c_reset}${c_commit})${c_reset} \
+-On main: Changes to A.t
+-	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}tag: A${c_reset}${c_commit})${c_reset} A
++	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}\
++${c_stash}refs/stash${c_reset}${c_commit})${c_reset} On main: Changes to A.t
++	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}\
++${c_tag}tag: ${c_reset}${c_tag}A${c_reset}${c_commit})${c_reset} A
+ 	EOF
+ 
+ 	git log --first-parent --no-abbrev --decorate --oneline --color=always --all >actual &&
+@@ -76,12 +78,14 @@ test_expect_success 'test coloring with replace-objects' '
+ 	git replace HEAD~1 HEAD~2 &&
+ 
+ 	cat >expect <<-EOF &&
+-	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_HEAD}HEAD -> \
+-${c_reset}${c_branch}main${c_reset}${c_commit}, \
+-${c_reset}${c_tag}tag: D${c_reset}${c_commit})${c_reset} D
+-	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}tag: C${c_reset}${c_commit}, \
++	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_HEAD}HEAD${c_reset}\
++${c_HEAD} -> ${c_reset}${c_branch}main${c_reset}${c_commit}, \
++${c_reset}${c_tag}tag: ${c_reset}${c_tag}D${c_reset}${c_commit})${c_reset} D
++	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}\
++${c_tag}tag: ${c_reset}${c_tag}C${c_reset}${c_commit}, \
+ ${c_reset}${c_grafted}replaced${c_reset}${c_commit})${c_reset} B
+-	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}tag: A${c_reset}${c_commit})${c_reset} A
++	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}\
++${c_tag}tag: ${c_reset}${c_tag}A${c_reset}${c_commit})${c_reset} A
+ EOF
+ 
+ 	git log --first-parent --no-abbrev --decorate --oneline --color=always HEAD >actual &&
+@@ -100,13 +104,15 @@ test_expect_success 'test coloring with grafted commit' '
+ 	git replace --graft HEAD HEAD~2 &&
+ 
+ 	cat >expect <<-EOF &&
+-	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_HEAD}HEAD -> \
+-${c_reset}${c_branch}main${c_reset}${c_commit}, \
+-${c_reset}${c_tag}tag: D${c_reset}${c_commit}, \
++	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_HEAD}HEAD${c_reset}\
++${c_HEAD} -> ${c_reset}${c_branch}main${c_reset}${c_commit}, \
++${c_reset}${c_tag}tag: ${c_reset}${c_tag}D${c_reset}${c_commit}, \
+ ${c_reset}${c_grafted}replaced${c_reset}${c_commit})${c_reset} D
+-	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}tag: v1.0${c_reset}${c_commit}, \
+-${c_reset}${c_tag}tag: B${c_reset}${c_commit})${c_reset} B
+-	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}tag: A${c_reset}${c_commit})${c_reset} A
++	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}\
++${c_tag}tag: ${c_reset}${c_tag}v1.0${c_reset}${c_commit}, \
++${c_reset}${c_tag}tag: ${c_reset}${c_tag}B${c_reset}${c_commit})${c_reset} B
++	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}\
++${c_tag}tag: ${c_reset}${c_tag}A${c_reset}${c_commit})${c_reset} A
+ 	EOF
+ 
+ 	git log --first-parent --no-abbrev --decorate --oneline --color=always HEAD >actual &&
 -- 
 2.42.0-rc2
 
