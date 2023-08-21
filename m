@@ -2,266 +2,174 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A525EEE49A5
-	for <git@archiver.kernel.org>; Mon, 21 Aug 2023 20:20:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7A60EE49A5
+	for <git@archiver.kernel.org>; Mon, 21 Aug 2023 20:21:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230444AbjHUUUu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Aug 2023 16:20:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51772 "EHLO
+        id S230444AbjHUUV4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Aug 2023 16:21:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49682 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230441AbjHUUUt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Aug 2023 16:20:49 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74D48E3
-        for <git@vger.kernel.org>; Mon, 21 Aug 2023 13:20:47 -0700 (PDT)
-Received: (qmail 17397 invoked by uid 109); 21 Aug 2023 20:20:47 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 21 Aug 2023 20:20:47 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18735 invoked by uid 111); 21 Aug 2023 20:20:47 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 21 Aug 2023 16:20:47 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 21 Aug 2023 16:20:46 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Romain Chossart <romainchossart@gmail.com>, git@vger.kernel.org
-Subject: [PATCH v2 7/7] diff: drop useless "status" parameter from
- diff_result_code()
-Message-ID: <20230821202046.GG1798590@coredump.intra.peff.net>
-References: <20230821201358.GA2663749@coredump.intra.peff.net>
+        with ESMTP id S229503AbjHUUVz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Aug 2023 16:21:55 -0400
+Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 048EDE4
+        for <git@vger.kernel.org>; Mon, 21 Aug 2023 13:21:54 -0700 (PDT)
+Received: by mail-yb1-xb31.google.com with SMTP id 3f1490d57ef6-d665467e134so3922734276.2
+        for <git@vger.kernel.org>; Mon, 21 Aug 2023 13:21:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1692649313; x=1693254113;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Vw45rwI/zC87UjvXDzcR0PKND8+Z8+JuNg+e6RHozoc=;
+        b=dEZBoHC5ZNXowAHd+ZqAeEQ1zbxwHu8wTRB6wcGm08YhmPBrcdt9d08CVG5IIuQJ0n
+         wyp50UBi2xxW5/Wo6fiWhRMLoVVwaqipmz90iP0L0GGIroQ19WI/XGoDKnRXERH09QMv
+         bapuZpVix/1UmYlHp5/QjfmfIQjVNE+Au68lJwr63/B07Hi++6K8ptx5VIKWKFo1R5xZ
+         KCiWm+QVRp8hb5n2d234do2sNalteCHNiMYyPjegXgY+ymFR94ZuTgQE6HA9fiItXkju
+         DrT4mLJSiyXnCwf9s0CoJZ0hfrJIocGiW+jhSbYB9YrPNnKFP9UN8SYrrGHNPNAJ73Kv
+         YHnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692649313; x=1693254113;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Vw45rwI/zC87UjvXDzcR0PKND8+Z8+JuNg+e6RHozoc=;
+        b=VBVLMkQSdlshelvKXU6ipwJPouu9NNbHEKBY+4CPosOvAvpoUbloBqDsEHEQU4/nTj
+         jmuIvK231mMDaL9y8U+mYnrO9iCPWrmOcIvkMo3aGf78zPqtv8/KWiQUjdh0XdQHEdqU
+         heO0/bDxQxBYiKIUiAh4YzN3ijb4F9XnAAADtsMyppxjx7AM68iXAxZw3oCMtJn8R/3N
+         X5cLk27eLUiUc/OR8OlZCiQ0CwiXhS2rn0Uo53G1/nKfKQh25jEcT26AaVvuwrbnD2wo
+         bkI87RBrVDaJS3RrAz+cjm2EXFYIvO8JT/mtdeNZV2bM1v2NsWAD6clLOGcUILW0IeKB
+         XLwQ==
+X-Gm-Message-State: AOJu0YzafS7DpzuHa6g6icULf6dhkrKnJylEM/L+00f89bOp3Iep/nfv
+        5pbUekTH4FUYpRPlyCTeXao/1A==
+X-Google-Smtp-Source: AGHT+IE7u3BNskOzy9KGmCQIJn26xJNR6nZ+d4qBRpmlq8rcJlg7GYkwIWTJZjzLJInf6ps9ZVPWrg==
+X-Received: by 2002:a25:ce47:0:b0:c2c:7665:9a57 with SMTP id x68-20020a25ce47000000b00c2c76659a57mr8552252ybe.64.1692649313109;
+        Mon, 21 Aug 2023 13:21:53 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id q7-20020a258207000000b00d607f70d762sm1952044ybk.32.2023.08.21.13.21.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Aug 2023 13:21:52 -0700 (PDT)
+Date:   Mon, 21 Aug 2023 16:21:49 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH 1/6] bloom: annotate filters with hash version
+Message-ID: <ZOPHXcTMlB77CsCh@nand.local>
+References: <e23a956401c5619bd46e8ec9b0e1df958cbcbfec.1691426160.git.me@ttaylorr.com>
+ <20230811214651.3326180-1-jonathantanmy@google.com>
+ <ZN57Gsz+wk9n6/Da@nand.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230821201358.GA2663749@coredump.intra.peff.net>
+In-Reply-To: <ZN57Gsz+wk9n6/Da@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Many programs use diff_result_code() to get a user-visible program exit
-code from a diff result (e.g., checking opts.found_changes if
---exit-code was requested).
+On Thu, Aug 17, 2023 at 03:55:06PM -0400, Taylor Blau wrote:
+> > Another thing that we might want to track is whether the Bloom filter is
+> > a reference to an existing buffer (and thus does not need to be freed)
+> > or a reference to a malloc-ed buffer that we must free. But both before
+> > and after this patch set, a malloc-ed buffer is never overridden by a
+> > reference-to-existing-buffer, so we should still be fine for now. (This
+> > patch set does add a scenario in which a reference-to-existing buffer is
+> > overridden by a malloc-ed buffer, but that's the only new scenario.)
+>
+> Yeah, I think there is some opportunity for clean-up here. I'll take a
+> look...
 
-This function also takes a "status" parameter, which seems at first
-glance that it could be used to propagate an error encountered when
-computing the diff. But it doesn't work that way:
+This ended up being pretty reasonable. I'm not sure whether I should
+include it here or not, since any leaks in the Bloom subsystem are
+definitely not new as of this series.
 
-  - negative values are passed through as-is, but are not appropriate as
-    program exit codes
+But the patch is relatively straightforward anyway, so I think throwing
+it on the end would be OK:
 
-  - when --exit-code or --check is in effect, we _ignore_ the passed-in
-    status completely. So a failed diff which did not have a chance to
-    set opts.found_changes would erroneously report "success, no
-    changes" instead of propagating the error.
+--- 8< ---
+diff --git a/bloom.c b/bloom.c
+index 24dd874e46..ff131893cd 100644
+--- a/bloom.c
++++ b/bloom.c
+@@ -59,6 +59,7 @@ int load_bloom_filter_from_graph(struct commit_graph *g,
+ 					sizeof(unsigned char) * start_index +
+ 					BLOOMDATA_CHUNK_HEADER_SIZE);
+ 	filter->version = g->bloom_filter_settings->hash_version;
++	filter->to_free = NULL;
 
-After recent cleanups, neither of these bugs is possible to trigger, as
-every caller just passes in "0". So rather than fixing them, we can
-simply drop the useless parameter instead.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/describe.c          | 2 +-
- builtin/diff-files.c        | 2 +-
- builtin/diff-index.c        | 2 +-
- builtin/diff-tree.c         | 2 +-
- builtin/diff.c              | 2 +-
- builtin/log.c               | 2 +-
- builtin/stash.c             | 6 +++---
- builtin/submodule--helper.c | 2 +-
- diff-no-index.c             | 2 +-
- diff.c                      | 6 ++----
- diff.h                      | 2 +-
- wt-status.c                 | 4 ++--
- 12 files changed, 16 insertions(+), 18 deletions(-)
-
-diff --git a/builtin/describe.c b/builtin/describe.c
-index 8cdc25b748..a9e375882b 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -687,7 +687,7 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
- 				BUG("malformed internal diff-index command line");
- 			run_diff_index(&revs, 0);
- 
--			if (!diff_result_code(&revs.diffopt, 0))
-+			if (!diff_result_code(&revs.diffopt))
- 				suffix = NULL;
- 			else
- 				suffix = dirty;
-diff --git a/builtin/diff-files.c b/builtin/diff-files.c
-index 04070607b1..f38912cd40 100644
---- a/builtin/diff-files.c
-+++ b/builtin/diff-files.c
-@@ -83,7 +83,7 @@ int cmd_diff_files(int argc, const char **argv, const char *prefix)
- 	if (repo_read_index_preload(the_repository, &rev.diffopt.pathspec, 0) < 0)
- 		die_errno("repo_read_index_preload");
- 	run_diff_files(&rev, options);
--	result = diff_result_code(&rev.diffopt, 0);
-+	result = diff_result_code(&rev.diffopt);
- 	release_revisions(&rev);
- 	return result;
+ 	return 1;
  }
-diff --git a/builtin/diff-index.c b/builtin/diff-index.c
-index 2c6a179832..220f341ffa 100644
---- a/builtin/diff-index.c
-+++ b/builtin/diff-index.c
-@@ -73,7 +73,7 @@ int cmd_diff_index(int argc, const char **argv, const char *prefix)
- 		return -1;
- 	}
- 	run_diff_index(&rev, option);
--	result = diff_result_code(&rev.diffopt, 0);
-+	result = diff_result_code(&rev.diffopt);
- 	release_revisions(&rev);
- 	return result;
+@@ -231,6 +232,18 @@ void init_bloom_filters(void)
+ 	init_bloom_filter_slab(&bloom_filters);
  }
-diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
-index c9ba35f143..86be634286 100644
---- a/builtin/diff-tree.c
-+++ b/builtin/diff-tree.c
-@@ -232,5 +232,5 @@ int cmd_diff_tree(int argc, const char **argv, const char *prefix)
- 		diff_free(&opt->diffopt);
- 	}
- 
--	return diff_result_code(&opt->diffopt, 0);
-+	return diff_result_code(&opt->diffopt);
- }
-diff --git a/builtin/diff.c b/builtin/diff.c
-index 3eba691b82..0b313549c7 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -608,7 +608,7 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
- 		builtin_diff_combined(&rev, argc, argv,
- 				      ent.objects, ent.nr,
- 				      first_non_parent);
--	result = diff_result_code(&rev.diffopt, 0);
-+	result = diff_result_code(&rev.diffopt);
- 	if (1 < rev.diffopt.skip_stat_unmatch)
- 		refresh_index_quietly();
- 	release_revisions(&rev);
-diff --git a/builtin/log.c b/builtin/log.c
-index db3a88bfe9..5d808c92f4 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -549,7 +549,7 @@ static int cmd_log_walk_no_free(struct rev_info *rev)
- 	    rev->diffopt.flags.check_failed) {
- 		return 02;
- 	}
--	return diff_result_code(&rev->diffopt, 0);
-+	return diff_result_code(&rev->diffopt);
- }
- 
- static int cmd_log_walk(struct rev_info *rev)
-diff --git a/builtin/stash.c b/builtin/stash.c
-index e799b660f0..53e8868ba1 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -973,7 +973,7 @@ static int show_stash(int argc, const char **argv, const char *prefix)
- 	}
- 	log_tree_diff_flush(&rev);
- 
--	ret = diff_result_code(&rev.diffopt, 0);
-+	ret = diff_result_code(&rev.diffopt);
- cleanup:
- 	strvec_clear(&stash_args);
- 	free_stash_info(&info);
-@@ -1111,13 +1111,13 @@ static int check_changes_tracked_files(const struct pathspec *ps)
- 	diff_setup_done(&rev.diffopt);
- 
- 	run_diff_index(&rev, DIFF_INDEX_CACHED);
--	if (diff_result_code(&rev.diffopt, 0)) {
-+	if (diff_result_code(&rev.diffopt)) {
- 		ret = 1;
- 		goto done;
- 	}
- 
- 	run_diff_files(&rev, 0);
--	if (diff_result_code(&rev.diffopt, 0)) {
-+	if (diff_result_code(&rev.diffopt)) {
- 		ret = 1;
- 		goto done;
- 	}
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 3764ed1f9c..6f3bf33e61 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -670,7 +670,7 @@ static void status_submodule(const char *path, const struct object_id *ce_oid,
- 	setup_revisions(diff_files_args.nr, diff_files_args.v, &rev, &opt);
- 	run_diff_files(&rev, 0);
- 
--	if (!diff_result_code(&rev.diffopt, 0)) {
-+	if (!diff_result_code(&rev.diffopt)) {
- 		print_status(flags, ' ', path, ce_oid,
- 			     displaypath);
- 	} else if (!(flags & OPT_CACHED)) {
-diff --git a/diff-no-index.c b/diff-no-index.c
-index 4771cf02aa..8aead3e332 100644
---- a/diff-no-index.c
-+++ b/diff-no-index.c
-@@ -364,7 +364,7 @@ int diff_no_index(struct rev_info *revs,
- 	 * The return code for --no-index imitates diff(1):
- 	 * 0 = no changes, 1 = changes, else error
- 	 */
--	ret = diff_result_code(&revs->diffopt, 0);
-+	ret = diff_result_code(&revs->diffopt);
- 
- out:
- 	for (i = 0; i < ARRAY_SIZE(to_free); i++)
-diff --git a/diff.c b/diff.c
-index ee3eb629e3..2de5d3d098 100644
---- a/diff.c
-+++ b/diff.c
-@@ -6973,16 +6973,14 @@ void diffcore_std(struct diff_options *options)
- 	options->found_follow = 0;
- }
- 
--int diff_result_code(struct diff_options *opt, int status)
-+int diff_result_code(struct diff_options *opt)
- {
- 	int result = 0;
- 
- 	diff_warn_rename_limit("diff.renameLimit",
- 			       opt->needed_rename_limit,
- 			       opt->degraded_cc_to_c);
--	if (!opt->flags.exit_with_status &&
--	    !(opt->output_format & DIFF_FORMAT_CHECKDIFF))
--		return status;
+
++static void free_one_bloom_filter(struct bloom_filter *filter)
++{
++	if (!filter)
++		return;
++	free(filter->to_free);
++}
 +
- 	if (opt->flags.exit_with_status &&
- 	    opt->flags.has_changes)
- 		result |= 01;
-diff --git a/diff.h b/diff.h
-index 528f00d5e1..caf1528bf0 100644
---- a/diff.h
-+++ b/diff.h
-@@ -647,7 +647,7 @@ int do_diff_cache(const struct object_id *, struct diff_options *);
- int diff_flush_patch_id(struct diff_options *, struct object_id *, int);
- void flush_one_hunk(struct object_id *result, git_hash_ctx *ctx);
- 
--int diff_result_code(struct diff_options *, int);
-+int diff_result_code(struct diff_options *);
- 
- int diff_no_index(struct rev_info *,
- 		  int implicit_no_index, int, const char **);
-diff --git a/wt-status.c b/wt-status.c
-index 545cea948f..981adb09f3 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -2581,7 +2581,7 @@ int has_unstaged_changes(struct repository *r, int ignore_submodules)
- 	rev_info.diffopt.flags.quick = 1;
- 	diff_setup_done(&rev_info.diffopt);
- 	run_diff_files(&rev_info, 0);
--	result = diff_result_code(&rev_info.diffopt, 0);
-+	result = diff_result_code(&rev_info.diffopt);
- 	release_revisions(&rev_info);
- 	return result;
- }
-@@ -2615,7 +2615,7 @@ int has_uncommitted_changes(struct repository *r,
- 
- 	diff_setup_done(&rev_info.diffopt);
- 	run_diff_index(&rev_info, DIFF_INDEX_CACHED);
--	result = diff_result_code(&rev_info.diffopt, 0);
-+	result = diff_result_code(&rev_info.diffopt);
- 	release_revisions(&rev_info);
- 	return result;
- }
--- 
-2.42.0.rc2.423.g967ecb4f2b
++void deinit_bloom_filters(void)
++{
++	deep_clear_bloom_filter_slab(&bloom_filters, free_one_bloom_filter);
++}
++
+ static int pathmap_cmp(const void *hashmap_cmp_fn_data UNUSED,
+ 		       const struct hashmap_entry *eptr,
+ 		       const struct hashmap_entry *entry_or_key,
+@@ -247,7 +260,7 @@ static int pathmap_cmp(const void *hashmap_cmp_fn_data UNUSED,
+ static void init_truncated_large_filter(struct bloom_filter *filter,
+ 					int version)
+ {
+-	filter->data = xmalloc(1);
++	filter->data = filter->to_free = xmalloc(1);
+ 	filter->data[0] = 0xFF;
+ 	filter->len = 1;
+ 	filter->version = version;
+@@ -449,6 +462,7 @@ struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
+ 			filter->len = 1;
+ 		}
+ 		CALLOC_ARRAY(filter->data, filter->len);
++		filter->to_free = filter->data;
+
+ 		hashmap_for_each_entry(&pathmap, &iter, e, entry) {
+ 			struct bloom_key key;
+diff --git a/bloom.h b/bloom.h
+index 4462fc3908..c1d74d63e6 100644
+--- a/bloom.h
++++ b/bloom.h
+@@ -56,6 +56,8 @@ struct bloom_filter {
+ 	unsigned char *data;
+ 	size_t len;
+ 	int version;
++
++	void *to_free;
+ };
+
+ /*
+@@ -96,6 +98,7 @@ void add_key_to_filter(const struct bloom_key *key,
+ 		       const struct bloom_filter_settings *settings);
+
+ void init_bloom_filters(void);
++void deinit_bloom_filters(void);
+
+ enum bloom_filter_computed {
+ 	BLOOM_NOT_COMPUTED = (1 << 0),
+diff --git a/commit-graph.c b/commit-graph.c
+index 183ed90b6d..f22f2d350d 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -2532,6 +2532,9 @@ int write_commit_graph(struct object_directory *odb,
+
+ 	res = write_commit_graph_file(ctx);
+
++	if (ctx->changed_paths)
++		deinit_bloom_filters();
++
+ 	if (ctx->split)
+ 		mark_commit_graphs(ctx);
+
+--- >8 ---
+
+Thanks,
+Taylor
