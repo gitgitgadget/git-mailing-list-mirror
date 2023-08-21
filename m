@@ -2,62 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB03BEE49A5
-	for <git@archiver.kernel.org>; Mon, 21 Aug 2023 21:44:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 244FCEE49A5
+	for <git@archiver.kernel.org>; Mon, 21 Aug 2023 21:44:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231130AbjHUVoq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Aug 2023 17:44:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40726 "EHLO
+        id S231153AbjHUVot (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Aug 2023 17:44:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231156AbjHUVoo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Aug 2023 17:44:44 -0400
-Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B56618E
-        for <git@vger.kernel.org>; Mon, 21 Aug 2023 14:44:38 -0700 (PDT)
-Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-58caaedb20bso43622027b3.1
-        for <git@vger.kernel.org>; Mon, 21 Aug 2023 14:44:38 -0700 (PDT)
+        with ESMTP id S231156AbjHUVos (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Aug 2023 17:44:48 -0400
+Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F279132
+        for <git@vger.kernel.org>; Mon, 21 Aug 2023 14:44:41 -0700 (PDT)
+Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-58df8cab1f2so42577757b3.3
+        for <git@vger.kernel.org>; Mon, 21 Aug 2023 14:44:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1692654277; x=1693259077;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1692654280; x=1693259080;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=4e6CTo3zCBO/PX00stZfCGUtsN45iWmh3zhdV8cVHmQ=;
-        b=4O9U+6bbH73iDJrifbaYswWr10Hh+ZsJTe8uLblpNMOyCQSNTdKELU/AbqKru1UpWw
-         UT/XoMnXXtXGF1q4EUaSSTQ+bSUjU85h8I9cnmkMWN3wzLllhEnspVPBIrpgXdurJz5I
-         ZY7BYSO/VAy0hh/eLzp7sjLuWgFXAWXEDJrWunW/rpekJO5M2DVvKu8awD3jTjuHF1Wm
-         PzUrzmt5HiNxKrJLcpqrANWRkrTxw/pmTwRFhZY1fN5gFxO8WCIT+aRl9dkvm+TADaHQ
-         WibPLXVOMe2iMb8+4qrT8+LK0hJ6JmBXrUt0BvAjER/+LxKcLWfoo8ul4ZPp6eIP46xL
-         AIXg==
+        bh=AFVkjvLL1z2bJFpK4xCHS/gzkxsTrBHG4zxDSPjI0po=;
+        b=NoIrxPK2S8HURDBFRbCQj+U286jicn81M+IP8TswOlt8h1N8t+xZWFeUQOyJHNW89s
+         kEV0Exn0faENr59CUfn1rApBnnVCU1Ll0eI1xLMBrpv3dKS7+MYFzMpV2IQwNxESSrPE
+         XnFiQzFgjaxs/7aWk64HKmLeN/Ug7QNitbHWCanKEKMWoYoQVfGb92HELrD29Tc1DHBE
+         eevIgH5J7tIypDZZVn28tXE9wDZ7t2uuNP5UHWuS5udYCZtRvoZ1tK8sKWBsoHkTtpc+
+         +wJE1uAdw145e0Sv+jybQ+hwNBig0V9rhJGm+iz0jnxNM+aKOkmrICy1uihqduo2TUTR
+         RWPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692654277; x=1693259077;
+        d=1e100.net; s=20221208; t=1692654280; x=1693259080;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4e6CTo3zCBO/PX00stZfCGUtsN45iWmh3zhdV8cVHmQ=;
-        b=c5SrN0MSoQ4IgJVDP8FaGlpA+AJ2cvJ1ZopTbyhESNCBDT9uWqfooFtGc3dIM8IALv
-         6fW0KbzlqZspHdMfrRsazRiU0d1FNrE605xJzwkOikLVzHpcSk/m2zQLQuPpa/Bvj32g
-         JTjw4/RIe/jmz+pFyZk9/XPXEesufCX5ekwIr7vATSzFVzEQXVkyP1mJUy4BBZ08YjN3
-         kV59E2QK9hMVvXIuoEgKyOFQvJTcYo9/MRRWFDsAIYjghS5YZhursSIQ77Uu6eTVvN0v
-         zCQfNmEZbjLZMyzrYOcHoTxqCqT1EOhsLvkMdI7usoP3AXgmLJ2xbSI5Rb98mlj9mxO+
-         1bFg==
-X-Gm-Message-State: AOJu0YwDvJA/mriqzbmKmsLPa6NzIVYfVYjdZLaZoUlpUn7VYRv9Woih
-        5kJatlhSKNxs3BANZflugbXWc07d3uhRXiH7N31JAA==
-X-Google-Smtp-Source: AGHT+IFqZqMzJ8hNRI8ivMv5cQWepWdGp4VTcvu3Pm3F5dP66YQsmotI4M80+BI7YNGZSpPja1npsw==
-X-Received: by 2002:a0d:d608:0:b0:584:61df:45e8 with SMTP id y8-20020a0dd608000000b0058461df45e8mr7395486ywd.13.1692654277143;
-        Mon, 21 Aug 2023 14:44:37 -0700 (PDT)
+        bh=AFVkjvLL1z2bJFpK4xCHS/gzkxsTrBHG4zxDSPjI0po=;
+        b=UevN0x/O7tlY49s+jYO1p33hyZba5gvxMRgqPiq+9fCTBvxSAbjgGAaz2DJAqwZkih
+         s6zW+29y6J17knkiYy/jEJgpAJWxz2OVJ0gU9h6zcLhdDG3xNCayCFfaVKfvBW6uYRe3
+         8sMenl6wo5lu1YjLZ9fZ6A/MvaSbwX9g13rdQgSFNIJMLFdA7W+/4PLdfk8I1N84uA0A
+         /GtB2afWQPPcdiOpwZ8lizsVrq7TGik3ZdQ7jWy+flwyatTcmgCds6AemtEQh7Kty2cW
+         CTCM99Q7esDtIAnkfd+6mhmQyKn0e1vu5iukIdg3lb3g3JBbNDBe5pocFLp/QSv0HcVh
+         oe+g==
+X-Gm-Message-State: AOJu0YyknuxsxESsmqvMEXvet13MHKoxoc4yyh7EApBc0sbcyypyZR36
+        V8J16wTddjTFjfsfOYNr0tx/uJ9+dJ2U4GXdP3o45Q==
+X-Google-Smtp-Source: AGHT+IHw9CzzC+Groq83F1udp5zX50+QFEWoFD9lxjV7FzbMqm0Bo9rYPGmywP7MWRO2blo4PSe00g==
+X-Received: by 2002:a81:7106:0:b0:592:36d:7430 with SMTP id m6-20020a817106000000b00592036d7430mr6079897ywc.39.1692654280695;
+        Mon, 21 Aug 2023 14:44:40 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id x185-20020a817cc2000000b00577269ba9e9sm2429770ywc.86.2023.08.21.14.44.36
+        by smtp.gmail.com with ESMTPSA id v22-20020a814816000000b005922c29c025sm459207ywa.108.2023.08.21.14.44.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Aug 2023 14:44:36 -0700 (PDT)
-Date:   Mon, 21 Aug 2023 17:44:36 -0400
+        Mon, 21 Aug 2023 14:44:40 -0700 (PDT)
+Date:   Mon, 21 Aug 2023 17:44:39 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>,
         Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         Derrick Stolee <derrickstolee@github.com>
-Subject: [PATCH 12/15] commit-graph: drop unnecessary
- `graph_read_bloom_data_context`
-Message-ID: <7c144a535d30dbccff5e9b32b18571058d16c809.1692654233.git.me@ttaylorr.com>
+Subject: [PATCH 13/15] object.h: fix mis-aligned flag bits table
+Message-ID: <a86f7259b66dcb5a2bc26e9a59397213d24313e2.1692654233.git.me@ttaylorr.com>
 References: <cover.1692654233.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -67,59 +66,26 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The `graph_read_bloom_data_context` struct was introduced in an earlier
-commit in order to pass pointers to the commit-graph and changed-path
-Bloom filter version when reading the BDAT chunk.
+Bit position 23 is one column too far to the left.
 
-The previous commit no longer writes through the changed_paths_version
-pointer, making the surrounding context structure unnecessary. Drop it
-and pass a pointer to the commit-graph directly when reading the BDAT
-chunk.
-
-Noticed-by: Jonathan Tan <jonathantanmy@google.com>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- commit-graph.c | 14 ++------------
- 1 file changed, 2 insertions(+), 12 deletions(-)
+ object.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/commit-graph.c b/commit-graph.c
-index 665a3edf78..a8e33c0739 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -304,16 +304,10 @@ static int graph_read_oid_lookup(const unsigned char *chunk_start,
- 	return 0;
- }
+diff --git a/object.h b/object.h
+index 114d45954d..db25714b4e 100644
+--- a/object.h
++++ b/object.h
+@@ -62,7 +62,7 @@ void object_array_init(struct object_array *array);
  
--struct graph_read_bloom_data_context {
--	struct commit_graph *g;
--	int *commit_graph_changed_paths_version;
--};
--
- static int graph_read_bloom_data(const unsigned char *chunk_start,
- 				  size_t chunk_size, void *data)
- {
--	struct graph_read_bloom_data_context *c = data;
--	struct commit_graph *g = c->g;
-+	struct commit_graph *g = data;
- 	uint32_t hash_version;
- 	hash_version = get_be32(chunk_start);
- 
-@@ -405,14 +399,10 @@ struct commit_graph *parse_commit_graph(struct repo_settings *s,
- 	}
- 
- 	if (s->commit_graph_changed_paths_version) {
--		struct graph_read_bloom_data_context context = {
--			.g = graph,
--			.commit_graph_changed_paths_version = &s->commit_graph_changed_paths_version
--		};
- 		pair_chunk(cf, GRAPH_CHUNKID_BLOOMINDEXES,
- 			   &graph->chunk_bloom_indexes);
- 		read_chunk(cf, GRAPH_CHUNKID_BLOOMDATA,
--			   graph_read_bloom_data, &context);
-+			   graph_read_bloom_data, graph);
- 	}
- 
- 	if (graph->chunk_bloom_indexes && graph->chunk_bloom_data) {
+ /*
+  * object flag allocation:
+- * revision.h:               0---------10         15             23------27
++ * revision.h:               0---------10         15               23------27
+  * fetch-pack.c:             01    67
+  * negotiator/default.c:       2--5
+  * walker.c:                 0-2
 -- 
 2.42.0.4.g52b49bb434
 
