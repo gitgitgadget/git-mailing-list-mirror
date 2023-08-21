@@ -2,170 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 630A4EE4996
-	for <git@archiver.kernel.org>; Mon, 21 Aug 2023 21:34:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B9B0EE4996
+	for <git@archiver.kernel.org>; Mon, 21 Aug 2023 21:44:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230483AbjHUVeu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Aug 2023 17:34:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39646 "EHLO
+        id S230309AbjHUVoA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Aug 2023 17:44:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230459AbjHUVet (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Aug 2023 17:34:49 -0400
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09587133
-        for <git@vger.kernel.org>; Mon, 21 Aug 2023 14:34:45 -0700 (PDT)
-Received: by mail-oi1-x234.google.com with SMTP id 5614622812f47-3a812843f0fso2291159b6e.2
-        for <git@vger.kernel.org>; Mon, 21 Aug 2023 14:34:45 -0700 (PDT)
+        with ESMTP id S229638AbjHUVoA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Aug 2023 17:44:00 -0400
+Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F429CE
+        for <git@vger.kernel.org>; Mon, 21 Aug 2023 14:43:58 -0700 (PDT)
+Received: by mail-yb1-xb34.google.com with SMTP id 3f1490d57ef6-d7484cfdc11so2186845276.1
+        for <git@vger.kernel.org>; Mon, 21 Aug 2023 14:43:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1692653684; x=1693258484;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=bCMXdNFyiCh4dmsIJPYjqZttwI/hyKg2AP3DgpjyCYg=;
-        b=Vf60gQux0cYSxCvnh+AC9vbAgvRSUdbd2LCB2Avr6468uRAXKGkrldnVQ3YtQvzg7l
-         a08slo4DM7WPg4nHdCQZXfk6EopQVBDHg9vPeUmAPON7tkAN4HlKHaWetEO373KF0zSY
-         KtybG3pkDHhDO26d871Ezxr21tANz7pu2r25BIZxuG1JiKuIRfWryn4BOqL1Gc2Cm1vj
-         6DgNpBdHQiJm2w58PRpS0iEjcpLQVio+U9i2IfbhFv1QcTDWGp4ivEhjon52QXIFdODd
-         90ogjKqvxOwwkk2nV9EgZC2RLmRO5q7kD6DqJ76oQxtB7OXD2rVx1DtQrTTi6oxE6XOL
-         FysA==
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1692654237; x=1693259037;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=uf2/4MPrcDEoRBqyJtEI2+Cklfjn4GWR1SuBSFacGMU=;
+        b=sCx+83Z1nI/wFy0Bq6ytYJXG/X0XMKLqcnNv4qKrd4VWJoDDwSTv8GG+AnCxW3a7Rz
+         sBVciwoqzrT/w89djerYzieQssxs34xNpfu9tGeQUfNR8sUjx3rSApJdC3EQZyTUbt5j
+         yJCyc45/A6+P7674jwrezT+QRMvMG0ap7KLSr914L9kl6VOiBsZUDUkSXUgurAuRfG9r
+         ROaydcCyQJv7fNf775ctvyrTL6CmW6RSoTnkYoZYwGM12Rj5bL5acs9yVAijQ1/H9Ty7
+         mSO9MnWbA+Q9bOTUHxOepySjoRtBh1xkL8i8fcUTnMIsQmAAhEu1vVVRDK0JqKzw4/i1
+         WJLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692653684; x=1693258484;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bCMXdNFyiCh4dmsIJPYjqZttwI/hyKg2AP3DgpjyCYg=;
-        b=E55ceaSFgdxP15SRL2MSehk7t/2imfg4le/GKf6iiJ0shLfh0ZDpygrpWxmPgTpTJC
-         LX/lKoDBW1TlZ1FutcZxRZHMSpS9f7q8VNthPtbDJjhZ7wOXMgyuOH00/DH/AJmEmIht
-         7PTXdkVGHHLDboSCAhyBi8nsFZF5GwUwHJyOYAOxdKDQEQKJvCtPhsctvjqQMOHE0tdi
-         O5lh9CsBVrXLybaT+QGNQmDBTSnNt149+1qwxZi1+Do0MySleJJLRF3Ya5FwMQglIDmg
-         u1XfPVehQGAfZe2uh2RFLDMxn11WmohKbQIxuo9c8l++gy7xVCsrqzB80SFelS9oXdgZ
-         JN0w==
-X-Gm-Message-State: AOJu0YyYzxn7/Y3uTcdjWhRKKb1xW9qRzc1zx2DJNG1TMTG5fM3tjUKQ
-        gW6g81Mzfzrd2QYySos6mSyQboYtSdAsxprpNEKSRA==
-X-Google-Smtp-Source: AGHT+IHWCT9FN13v79hAWWjOAyg86xuHzrgYofMQsuLlH++KodjRvJL9ak6jIGalwRBG4ZrLvuSmPQ==
-X-Received: by 2002:a05:6358:70f:b0:134:e63f:a891 with SMTP id e15-20020a056358070f00b00134e63fa891mr3511959rwj.29.1692653684065;
-        Mon, 21 Aug 2023 14:34:44 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1692654237; x=1693259037;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=uf2/4MPrcDEoRBqyJtEI2+Cklfjn4GWR1SuBSFacGMU=;
+        b=G3uQbJOZXX61EM2PlA60flZzQUiHjB8bmyZ/cVWqOVOIv59iqYcq9uWADb+aV7BSJq
+         AW064D++LWbZaRkxSXDFhrFPWjleYx/jK0W+4VRi41iAfA9mSSEKrUlkCRG4TebzFjI9
+         0l2lulKNiX07dhu+aDPJduqyGoc91PSxD6IOrOQ2VAXNcwj785bqivYXVqLIq8C34i+5
+         8sm6d6eZ+FjfDOsIlY43PyFoCV9RS7SBAhvwfHsoypHJC2eDT5co8f30WAVEvryoBbpU
+         r5fC25fSPsoiQp+KlOfmmPo03mcFmsEXD6YeZwP8IRrfzcKjxZnDHqn++A/zVfrCOFkg
+         qxKw==
+X-Gm-Message-State: AOJu0Yy7upmARWoh8WISJW+KnTqVz4pSgb99G3WgmGz7r2xw8MsTitCb
+        bq+wod810BkymDUW3LO+uTCpjReCWjurmJ58S91KoQ==
+X-Google-Smtp-Source: AGHT+IG11+iedHc3zeeRDtZ8YJa188f5tWiaPVRZtZVKN8BW6210yGtlBMldB0Wq4FMAHc3LQ3EjiQ==
+X-Received: by 2002:a25:ae01:0:b0:d63:1d3b:9416 with SMTP id a1-20020a25ae01000000b00d631d3b9416mr7972386ybj.2.1692654237380;
+        Mon, 21 Aug 2023 14:43:57 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id v17-20020a814811000000b00583b40d907esm2451150ywa.16.2023.08.21.14.34.43
+        by smtp.gmail.com with ESMTPSA id 19-20020a250d13000000b00d13b72fae3esm2063605ybn.2.2023.08.21.14.43.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Aug 2023 14:34:43 -0700 (PDT)
-Date:   Mon, 21 Aug 2023 17:34:42 -0400
+        Mon, 21 Aug 2023 14:43:57 -0700 (PDT)
+Date:   Mon, 21 Aug 2023 17:43:56 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
         Derrick Stolee <derrickstolee@github.com>
-Subject: [PATCH v3 4/4] commit-graph: commit-graph: avoid repeated mixed
- generation number warnings
-Message-ID: <52b49bb43492f1dad366eb438b0c23e065c37710.1692653671.git.me@ttaylorr.com>
-References: <ZNUiEXF5CP6WMk9A@nand.local>
- <cover.1692653671.git.me@ttaylorr.com>
+Subject: [PATCH 00/15] bloom: changed-path Bloom filters v2
+Message-ID: <cover.1692654233.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1692653671.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When validating that a commit-graph has either all zero, or all non-zero
-generation numbers, we emit a warning on both the rising and falling
-edge of transitioning between the two.
+This series combines the efforts in [1] and [2] to culminate in v2 of
+the changed-path Bloom filter format (which uses a bona-fide murmur3
+implementation) as well as an efficient upgrade path for repositories
+with few non-ASCII paths.
 
-So if we are unfortunate enough to see a commit-graph which has a
-repeating sequence of zero, then non-zero generation numbers, we'll
-generate many warnings that contain more or less the same information.
+The first seven patches are from [1], and are unchanged from that
+version. Most of the remaining patches are from [2], and they have been
+modified based on the review therein.
 
-Avoid this by keeping track of a single example for a commit with zero-
-and non-zero generation, and emit a single warning at the end of
-verification if both are non-NULL.
+The final patch is new, and avoids leaking memory when the Bloom
+subsystem is initialized both in the read- and read/write-cases.
 
-Co-authored-by: Jeff King <peff@peff.net>
-Signed-off-by: Jeff King <peff@peff.net>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- commit-graph.c          | 29 +++++++++++++----------------
- t/t5318-commit-graph.sh |  4 ++--
- 2 files changed, 15 insertions(+), 18 deletions(-)
+Thanks to Jonathan and Peff who have both helped a great deal in putting
+these patches together. And, as always, thanks in advance for your
+review!
 
-diff --git a/commit-graph.c b/commit-graph.c
-index acca753ce8..9e6eaa8a46 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -2560,9 +2560,6 @@ static void graph_report(const char *fmt, ...)
- 	va_end(ap);
- }
- 
--#define GENERATION_ZERO_EXISTS 1
--#define GENERATION_NUMBER_EXISTS 2
--
- static int commit_graph_checksum_valid(struct commit_graph *g)
- {
- 	return hashfile_checksum_valid(g->data, g->data_len);
-@@ -2575,7 +2572,8 @@ static int verify_one_commit_graph(struct repository *r,
- {
- 	uint32_t i, cur_fanout_pos = 0;
- 	struct object_id prev_oid, cur_oid;
--	int generation_zero = 0;
-+	struct commit *seen_gen_zero = NULL;
-+	struct commit *seen_gen_non_zero = NULL;
- 
- 	verify_commit_graph_error = verify_commit_graph_lite(g);
- 	if (verify_commit_graph_error)
-@@ -2681,19 +2679,12 @@ static int verify_one_commit_graph(struct repository *r,
- 			graph_report(_("commit-graph parent list for commit %s terminates early"),
- 				     oid_to_hex(&cur_oid));
- 
--		if (!commit_graph_generation_from_graph(graph_commit)) {
--			if (generation_zero == GENERATION_NUMBER_EXISTS)
--				graph_report(_("commit-graph has generation number zero for commit %s, but non-zero elsewhere"),
--					     oid_to_hex(&cur_oid));
--			generation_zero = GENERATION_ZERO_EXISTS;
--		} else {
--			if (generation_zero == GENERATION_ZERO_EXISTS)
--				graph_report(_("commit-graph has non-zero generation number for commit %s, but zero elsewhere"),
--					     oid_to_hex(&cur_oid));
--			generation_zero = GENERATION_NUMBER_EXISTS;
--		}
-+		if (commit_graph_generation_from_graph(graph_commit))
-+			seen_gen_non_zero = graph_commit;
-+		else
-+			seen_gen_zero = graph_commit;
- 
--		if (generation_zero == GENERATION_ZERO_EXISTS)
-+		if (seen_gen_zero)
- 			continue;
- 
- 		/*
-@@ -2719,6 +2710,12 @@ static int verify_one_commit_graph(struct repository *r,
- 				     odb_commit->date);
- 	}
- 
-+	if (seen_gen_zero && seen_gen_non_zero)
-+		graph_report(_("commit-graph has both zero and non-zero "
-+			       "generations (e.g., commits '%s' and '%s')"),
-+			     oid_to_hex(&seen_gen_zero->object.oid),
-+			     oid_to_hex(&seen_gen_non_zero->object.oid));
-+
- 	return verify_commit_graph_error;
- }
- 
-diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index 8e96471b34..ba65f17dd9 100755
---- a/t/t5318-commit-graph.sh
-+++ b/t/t5318-commit-graph.sh
-@@ -620,12 +620,12 @@ test_expect_success 'detect incorrect chunk count' '
- 
- test_expect_success 'detect mixed generation numbers (non-zero to zero)' '
- 	corrupt_graph_and_verify $GRAPH_BYTE_COMMIT_GENERATION_LAST "\0\0\0\0" \
--		"but non-zero elsewhere"
-+		"both zero and non-zero generations"
- '
- 
- test_expect_success 'detect mixed generation numbers (zero to non-zero)' '
- 	corrupt_graph_and_verify $GRAPH_BYTE_COMMIT_GENERATION "\0\0\0\0" \
--		"but zero elsewhere"
-+		"both zero and non-zero generations"
- '
- 
- test_expect_success 'git fsck (checks commit-graph when config set to true)' '
+[1]: https://lore.kernel.org/git/cover.1684790529.git.jonathantanmy@google.com/
+[2]: https://lore.kernel.org/git/cover.1691426160.git.me@ttaylorr.com/
+
+Jonathan Tan (4):
+  gitformat-commit-graph: describe version 2 of BDAT
+  t4216: test changed path filters with high bit paths
+  repo-settings: introduce commitgraph.changedPathsVersion
+  commit-graph: new filter ver. that fixes murmur3
+
+Taylor Blau (11):
+  t/helper/test-read-graph.c: extract `dump_graph_info()`
+  bloom.h: make `load_bloom_filter_from_graph()` public
+  t/helper/test-read-graph: implement `bloom-filters` mode
+  bloom: annotate filters with hash version
+  bloom: prepare to discard incompatible Bloom filters
+  t/t4216-log-bloom.sh: harden `test_bloom_filters_not_used()`
+  commit-graph.c: unconditionally load Bloom filters
+  commit-graph: drop unnecessary `graph_read_bloom_data_context`
+  object.h: fix mis-aligned flag bits table
+  commit-graph: reuse existing Bloom filters where possible
+  bloom: introduce `deinit_bloom_filters()`
+
+ Documentation/config/commitgraph.txt     |  26 ++-
+ Documentation/gitformat-commit-graph.txt |   9 +-
+ bloom.c                                  | 208 +++++++++++++++++++++--
+ bloom.h                                  |  38 ++++-
+ commit-graph.c                           |  36 +++-
+ object.h                                 |   3 +-
+ oss-fuzz/fuzz-commit-graph.c             |   2 +-
+ repo-settings.c                          |   6 +-
+ repository.h                             |   2 +-
+ t/helper/test-bloom.c                    |   9 +-
+ t/helper/test-read-graph.c               |  67 ++++++--
+ t/t0095-bloom.sh                         |   8 +
+ t/t4216-log-bloom.sh                     | 184 +++++++++++++++++++-
+ 13 files changed, 548 insertions(+), 50 deletions(-)
+
 -- 
 2.42.0.4.g52b49bb434
