@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AE7F4EE49A5
-	for <git@archiver.kernel.org>; Mon, 21 Aug 2023 21:34:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65BB1EE4996
+	for <git@archiver.kernel.org>; Mon, 21 Aug 2023 21:34:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230167AbjHUVej (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Aug 2023 17:34:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42464 "EHLO
+        id S230231AbjHUVeo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Aug 2023 17:34:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229518AbjHUVej (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Aug 2023 17:34:39 -0400
-Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F23B410E
-        for <git@vger.kernel.org>; Mon, 21 Aug 2023 14:34:36 -0700 (PDT)
-Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-59234aaca15so10365857b3.3
-        for <git@vger.kernel.org>; Mon, 21 Aug 2023 14:34:36 -0700 (PDT)
+        with ESMTP id S229518AbjHUVen (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Aug 2023 17:34:43 -0400
+Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB921116
+        for <git@vger.kernel.org>; Mon, 21 Aug 2023 14:34:39 -0700 (PDT)
+Received: by mail-yb1-xb2b.google.com with SMTP id 3f1490d57ef6-d7485d37283so2209763276.1
+        for <git@vger.kernel.org>; Mon, 21 Aug 2023 14:34:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1692653676; x=1693258476;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1692653679; x=1693258479;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=l5d8NzSBkSiNkrrtEFvPrJ7LnWsfZfx/6iDS0oVdLVk=;
-        b=sDNz5ypVpTpHl84IB0lari4sZjxOnpcB8ZeU6PEFIDOgynFKpOX/1rHgaqpCZNMOuK
-         O0NlEF0vYSyocVsIXLCh3v8Q2TAzC58CdNuzO2TGd8YWWT3+dX3emdxssSDFR58vkgCN
-         EkH1waUYkm+/Bo6Ta61f1SAmtxnGNo230vzlIZ0bJjOA5jpipdvvFcuTENM/qIrEtyXk
-         v/OtpfqzVu8vVfqtVEe3EXcAUrSDeItqk9mH13x3sJj0bf6akbbvexjozSDuXec2C7im
-         Yn3OMLPqYqI52X/m4SA8+VyN+FIAnVD+lG6SfhjCRMtigfyXrpCj6Y8RAL1KxLsMB6w4
-         vY+g==
+        bh=Jlb4stkDk/YPWFDkKIlLo1/NLXcPj/5xIHz7ofLlxvg=;
+        b=He1yqnlO/zL5Vib4tg8yfnNUi9vVlyGoCgGDxln/hSFxN7XmIVOSF4DnQfZ4tMnZCx
+         jDOO2Vw+ZVe5w9AOvFtj1ilXWMG/4pVqR1T6qMdi8PJE6YnJoiMpMo3sVTmi+n5z1pWH
+         +mq/4vflRs2+g70awCO5gzayoMykLBWfTUKSlfo7vY/tjWvZzN9mUYzevjqD0yeEZmoA
+         G3OWDaHEgDzGhdJOwt247iA2ylmLOu7OKUqOPL0oB1pN6IRIOfsvoi879BVwHhlM6+e6
+         q3FEJoyD/C0obMDrtju6e9O9QMYJFJMdXuy4tnU8pSw4MV8CVcz8KxpAgaGIQH7PEWV/
+         ZHNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692653676; x=1693258476;
+        d=1e100.net; s=20221208; t=1692653679; x=1693258479;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=l5d8NzSBkSiNkrrtEFvPrJ7LnWsfZfx/6iDS0oVdLVk=;
-        b=OdsAbQURBtahP5YduIXlcdyEy9cmCYfmRClqXAemmeayO1WszWGYK2Bul4/8yR6ave
-         RSTFbJRYV8o9tskIqBZIOdJu4ysk9eRvnvkV3Ipsa/kHKrrNg56w0KaBOkc9jA6pDxqF
-         RObp6Y8qV5FM+RvgCtN+w449ygTG1peytdvY7AIsNkYyQjuvV+AQDU1G50MXWOYjBEPk
-         S+2ACnqm9Q66Cl3TkbWK5g1ecx9gUbk1+qV76ovJmjYGQUJZMMFMTmYibaw4ZzRk82qT
-         ouAAavCEjJG9tw82OUjnogV0K+iVOUUtoXPKjn5nIRGaJvGFqE+nGS6FStywk3O5xOj3
-         UaPg==
-X-Gm-Message-State: AOJu0YwEgR+NlbNjlErlHwcho3Vi5PoTCgR0sEqk4FOcdFxL8bQThY8D
-        cXH0TrObZGHlJxm+GQrvKjtNynHZrJHQh1ELaFQ/ww==
-X-Google-Smtp-Source: AGHT+IESg4rlTzgi0CZcT3ABKU4g+LCCmtNeJ2ZYiXfebdc26YvAR6+heasV1B4ZbcwmiakdwUFEvw==
-X-Received: by 2002:a0d:d1c4:0:b0:583:b2a3:f780 with SMTP id t187-20020a0dd1c4000000b00583b2a3f780mr6970413ywd.49.1692653676040;
-        Mon, 21 Aug 2023 14:34:36 -0700 (PDT)
+        bh=Jlb4stkDk/YPWFDkKIlLo1/NLXcPj/5xIHz7ofLlxvg=;
+        b=Pz7NmJrjfxaT6SpiG1W3sOAgrL1cF+C/6nQCZMlv0qDpTr6VxpkPMjQrCPcFiWleqv
+         xFLNuyCIsbd597Mi6OI0GxiLSudG3YdVVSE4agurZx3ocWcBiTdCZhPmsto8sf//5mbc
+         eH5zPP21IOeirEh0GuMUNGSpDCiMywRvKxKlBt+Yr1cv6XcdNxP7/d/c1jM6HFpSgubb
+         NSvMKNf47BelgHhIAiBuRt69wLwLNHqOgVrjsq3/X5HRokDY5J5Z/ybse2XCKJk5O9aR
+         qSZnEKze85AnQx34iZAm0uncrqmlUdX6LsuldJQgAbLbhNFIfu0nBk7MvjDLbZXBmfSR
+         wH/Q==
+X-Gm-Message-State: AOJu0YwkjKzQCfH9WPqpLKE32ZenogBja0InYGpb+ZLhtx8ZULxei62O
+        Zji41r6+PMrM7YwGUDCXI/CA+1RAWvs4JhzQT3+mrA==
+X-Google-Smtp-Source: AGHT+IFUDOxYFlncthPvrlv1bCqWAsi103QMo6kD5djBMY6JQvezjTJ8oJKRAUyoEseaxjO1PkV/rw==
+X-Received: by 2002:a25:8689:0:b0:d0c:ceef:c668 with SMTP id z9-20020a258689000000b00d0cceefc668mr9214609ybk.25.1692653678785;
+        Mon, 21 Aug 2023 14:34:38 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id c10-20020a81df0a000000b00577044eb00esm2395948ywn.21.2023.08.21.14.34.35
+        by smtp.gmail.com with ESMTPSA id e191-20020a2537c8000000b00d6861b49f01sm2053449yba.65.2023.08.21.14.34.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Aug 2023 14:34:35 -0700 (PDT)
-Date:   Mon, 21 Aug 2023 17:34:34 -0400
+        Mon, 21 Aug 2023 14:34:38 -0700 (PDT)
+Date:   Mon, 21 Aug 2023 17:34:37 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Derrick Stolee <derrickstolee@github.com>
-Subject: [PATCH v3 1/4] commit-graph: introduce
- `commit_graph_generation_from_graph()`
-Message-ID: <c88f945a547ac7da41c85f09e2cc01ce3472ed79.1692653671.git.me@ttaylorr.com>
+Subject: [PATCH v3 2/4] commit-graph: verify swapped zero/non-zero generation
+ cases
+Message-ID: <8f8e0b6644135717e0035ffbcb18446a5d83d192.1692653671.git.me@ttaylorr.com>
 References: <ZNUiEXF5CP6WMk9A@nand.local>
  <cover.1692653671.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -66,89 +66,59 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 2ee11f7261 (commit-graph: return generation from memory, 2023-03-20),
-the `commit_graph_generation()` function stopped returning zeros when
-asked to locate the generation number of a given commit.
+From: Jeff King <peff@peff.net>
 
-This was done at the time to prepare for a later change which set
-generation values in memory, meaning that we could no longer rely on
-`graph_pos` alone to tell us whether or not to trust the generation
-number returned by this function.
+In verify_one_commit_graph(), we have code that complains when a commit
+is found with a generation number of zero, and then later with a
+non-zero number. It works like this:
 
-In 2ee11f7261, it was noted that this change only impacted very old
-commit-graphs, which were written with all commits having generation
-number 0. Indeed, zero is not a valid generation number, so we should
-never expect to see that value outside of the aforementioned case.
+  1. When we see an entry with generation zero, we set the
+     generation_zero flag to GENERATION_ZERO_EXISTS.
 
-The test fallout in 2ee11f7261 indicated that we were no longer able to
-fsck a specific old case of commit-graph corruption, where we see a
-non-zero generation number after having seen a generation number of 0
-earlier.
+  2. When we later see an entry with a non-zero generation, we complain
+     if the flag is GENERATION_ZERO_EXISTS.
 
-Introduce a variant of `commit_graph_generation()` which behaves like
-that function did prior to 2ee11f7261, known as
-`commit_graph_generation_from_graph()`. Then use this function in the
-context of `verify_one_commit_graph()`, where we only want to trust the
-values from the graph.
+There's a matching GENERATION_NUMBER_EXISTS value, which in theory would
+be used to find the case that we see the entries in the opposite order:
 
+  1. When we see an entry with a non-zero generation, we set the
+     generation_zero flag to GENERATION_NUMBER_EXISTS.
+
+  2. When we later see an entry with a zero generation, we complain if
+     the flag is GENERATION_NUMBER_EXISTS.
+
+But that doesn't work; step 2 is implemented, but there is no step 1. We
+never use NUMBER_EXISTS at all, and Coverity rightly complains that step
+2 is dead code.
+
+We can fix that by implementing that step 1.
+
+Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- commit-graph.c          | 14 ++++++++++++--
- t/t5318-commit-graph.sh |  2 +-
- 2 files changed, 13 insertions(+), 3 deletions(-)
+ commit-graph.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
 diff --git a/commit-graph.c b/commit-graph.c
-index 0aa1640d15..c68f5c6b3a 100644
+index c68f5c6b3a..acca753ce8 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -128,6 +128,16 @@ timestamp_t commit_graph_generation(const struct commit *c)
- 	return GENERATION_NUMBER_INFINITY;
- }
- 
-+static timestamp_t commit_graph_generation_from_graph(const struct commit *c)
-+{
-+	struct commit_graph_data *data =
-+		commit_graph_data_slab_peek(&commit_graph_data_slab, c);
-+
-+	if (!data || data->graph_pos == COMMIT_NOT_FROM_GRAPH)
-+		return GENERATION_NUMBER_INFINITY;
-+	return data->generation;
-+}
-+
- static struct commit_graph_data *commit_graph_data_at(const struct commit *c)
- {
- 	unsigned int i, nth_slab;
-@@ -2659,7 +2669,7 @@ static int verify_one_commit_graph(struct repository *r,
- 					     oid_to_hex(&graph_parents->item->object.oid),
- 					     oid_to_hex(&odb_parents->item->object.oid));
- 
--			generation = commit_graph_generation(graph_parents->item);
-+			generation = commit_graph_generation_from_graph(graph_parents->item);
- 			if (generation > max_generation)
- 				max_generation = generation;
- 
-@@ -2671,7 +2681,7 @@ static int verify_one_commit_graph(struct repository *r,
- 			graph_report(_("commit-graph parent list for commit %s terminates early"),
- 				     oid_to_hex(&cur_oid));
- 
--		if (!commit_graph_generation(graph_commit)) {
-+		if (!commit_graph_generation_from_graph(graph_commit)) {
- 			if (generation_zero == GENERATION_NUMBER_EXISTS)
+@@ -2686,9 +2686,12 @@ static int verify_one_commit_graph(struct repository *r,
  				graph_report(_("commit-graph has generation number zero for commit %s, but non-zero elsewhere"),
  					     oid_to_hex(&cur_oid));
-diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index 4df76173a8..4e70820c74 100755
---- a/t/t5318-commit-graph.sh
-+++ b/t/t5318-commit-graph.sh
-@@ -598,7 +598,7 @@ test_expect_success 'detect incorrect generation number' '
+ 			generation_zero = GENERATION_ZERO_EXISTS;
+-		} else if (generation_zero == GENERATION_ZERO_EXISTS)
+-			graph_report(_("commit-graph has non-zero generation number for commit %s, but zero elsewhere"),
+-				     oid_to_hex(&cur_oid));
++		} else {
++			if (generation_zero == GENERATION_ZERO_EXISTS)
++				graph_report(_("commit-graph has non-zero generation number for commit %s, but zero elsewhere"),
++					     oid_to_hex(&cur_oid));
++			generation_zero = GENERATION_NUMBER_EXISTS;
++		}
  
- test_expect_success 'detect incorrect generation number' '
- 	corrupt_graph_and_verify $GRAPH_BYTE_COMMIT_GENERATION "\01" \
--		"commit-graph generation for commit"
-+		"but zero elsewhere"
- '
- 
- test_expect_success 'detect incorrect commit date' '
+ 		if (generation_zero == GENERATION_ZERO_EXISTS)
+ 			continue;
 -- 
 2.42.0.4.g52b49bb434
 
