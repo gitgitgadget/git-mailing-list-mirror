@@ -2,102 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DDC37EE4993
-	for <git@archiver.kernel.org>; Mon, 21 Aug 2023 14:56:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE19BEE4996
+	for <git@archiver.kernel.org>; Mon, 21 Aug 2023 15:44:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232327AbjHUO4w (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Aug 2023 10:56:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35508 "EHLO
+        id S236437AbjHUPob (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Aug 2023 11:44:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230031AbjHUO4v (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Aug 2023 10:56:51 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AFFDE2
-        for <git@vger.kernel.org>; Mon, 21 Aug 2023 07:56:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de;
- s=s31663417; t=1692629791; x=1693234591; i=johannes.schindelin@gmx.de;
- bh=hqLBhs0BA7NjarIpgt0d5BizW8eD14j39hcWhbuJKNc=;
- h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
- b=eAd5tq9QQJFLhoSFOrinJt4WiEjnuKm3SmmIBAdVg05i/qM2Oh5bQ33Rf+JENjxPqgzto2R
- Z9BPAoGwaDL8GwdlYQYiZxrUMeYSx3bcFFLF7RwEAQbCCvj9V/UJJ+CpHbR+89orolXrOlKsL
- EKsihxkvVBtXWCx0BFs6nHDvvSyq6xbyRKHkIeyZfHwrKNLpa2zYzSy+3Q05JV+2N00MnIN4H
- OKCHOWlg61IoSbm0SHVjC1UMF3f322DflxdHziaeH8fgeTl4aFVgS+a99g2lUgrA9vjsp+IdN
- ebEpPvxzCMaUHY6+NUN1Qr971DsKABU/rqbWPQSEcBZPfsCq4Pug==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.212.15]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MoO6C-1pwmVa49iC-00okSt; Mon, 21
- Aug 2023 16:56:31 +0200
-Date:   Mon, 21 Aug 2023 16:56:28 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     rsbecker@nexbridge.com, 'Jeff King' <peff@peff.net>,
-        'Taylor Blau' <me@ttaylorr.com>,
-        'Andy Koppe' <andy.koppe@gmail.com>, git@vger.kernel.org
-Subject: Re: main != master at github.com/git/git
-In-Reply-To: <xmqqo7j5uqza.fsf@gitster.g>
-Message-ID: <15b89f2e-adb8-ea2b-fd74-2cbe95e20501@gmx.de>
-References: <20230715103758.3862-1-andy.koppe@gmail.com>        <20230715160730.4046-1-andy.koppe@gmail.com>        <kl6l351j22dr.fsf@chooglen-macbookpro.roam.corp.google.com>        <CAHWeT-ZA8f-TGRwDHixAvi5kddVBbuK8LpVGJ9cjYZMsMk5ODw@mail.gmail.com>     
-   <xmqq7cpwjhr1.fsf@gitster.g>        <006574bd-4d53-495e-8cfe-677ede521908@gmail.com>        <xmqq350kjfk8.fsf@gitster.g>        <ce5d20db-2220-45dd-8c39-2a52e0f9f816@gmail.com>        <ZNv5PQlkn6tbUcH7@nand.local>        <20230816022420.GA2248431@coredump.intra.peff.net>
-        <000901d9d045$e780f790$b682e6b0$@nexbridge.com> <xmqqo7j5uqza.fsf@gitster.g>
+        with ESMTP id S230303AbjHUPoa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Aug 2023 11:44:30 -0400
+Received: from pb-sasl-trial2.pobox.com (pb-sasl-trial2.pobox.com [64.147.108.86])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3998DB
+        for <git@vger.kernel.org>; Mon, 21 Aug 2023 08:44:28 -0700 (PDT)
+Received: from pb-sasl-trial2.pobox.com (localhost.local [127.0.0.1])
+        by pb-sasl-trial2.pobox.com (Postfix) with ESMTP id CFE73290D5;
+        Mon, 21 Aug 2023 11:44:25 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=HXMQ1O1LYM9JOv7rnSxxzVKPSDPyNMCuxfJkYU
+        kXvxk=; b=OGNNucmYgd19O9JErIMrDJ6O0YbNLPch7cPCfUWlxCTxolOV+OtW98
+        SbJa+dnfieEUoxewVbglGS+m5ZssNVn13qkRKONGVbnuf1vDeky2xTygyZmSUc/B
+        fEckMGxzul91xjPvet5c47yvIxeZ5El3t4Wn7MuHgBbvnHjFWZwBI=
+Received: from pb-smtp2.nyi.icgroup.com (pb-smtp2.pobox.com [10.90.30.54])
+        by pb-sasl-trial2.pobox.com (Postfix) with ESMTP id B5FA4290D2;
+        Mon, 21 Aug 2023 11:44:25 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.58.166])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F19751B9846;
+        Mon, 21 Aug 2023 11:44:24 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jiang Xin <worldhello.net@gmail.com>
+Cc:     Git l10n discussion group <git-l10n@googlegroups.com>,
+        Git List <git@vger.kernel.org>,
+        Alessandro Menti <alessandro.menti@alessandromenti.it>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Arkadii Yakovets <ark@cho.red>, Arusekk <arek_koz@o2.pl>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Christopher =?utf-8?Q?D=C3=ADaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        Daniel Santos <dacs.git@brilhante.top>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com>,
+        Emir SARI <bitigchi@me.com>, Emir SARI <emir_sari@icloud.com>,
+        Gwan-gyeong Mun <elongbug@gmail.com>,
+        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+        Jimmy Angelakos <vyruss@hellug.gr>,
+        Jordi Mas <jmas@softcatala.org>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        Teng Long <dyroneteng@gmail.com>,
+        =?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+        Yi-Jyun Pan <pan93412@gmail.com>
+Subject: Re: [GIT PULL] l10n updates for 2.42.0 round 2
+References: <20230820232538.9751-1-worldhello.net@gmail.com>
+Date:   Mon, 21 Aug 2023 08:44:23 -0700
+In-Reply-To: <20230820232538.9751-1-worldhello.net@gmail.com> (Jiang Xin's
+        message of "Mon, 21 Aug 2023 07:25:37 +0800")
+Message-ID: <xmqqpm3gs8mg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:GWg65h7D55JTD9+OzbPV2b9FMc4Qj8YKFCCfE2IHS+o08SNvlQp
- GLHbkyyXuhgZWHM/fDEhqBzACTo4M1eLzWgKC8lxooxGyde+KHQ8o7QPW54soCf4F/yJBmL
- Ex20hSmPJR8+HdymNpaZBgv71KEoc8UKFVblkJtxdoX/kkLXJ1GKAAoulAbLVL5IR2FDeml
- GUoDQY967YLF0ahn8Hc7Q==
-UI-OutboundReport: notjunk:1;M01:P0:hS+YkmH68L8=;2QrKRKnjfoGh2BML+UYc52VjAbm
- 5AWrW9n8aOj6Nk6tqMFDOmSPwWT8YErhQGaIpmpHnENHnlbJvkOtmCbMk2gmN0hS1e6sYryV4
- La2K+l7BglFlp6PeBOHUPnHfxSkZ78b04/WGYsrMWT0GAWWB4X8YXfUJYdAtBzlP5mo12A4UZ
- pHkcCey5Pk22C140veM2DN+eDUYIC/B0JVIo+lxMADf6hJg6npJ/XdLvhk7icuN/TLEntDtPb
- WhrDIAF85hRTC4epJpV+sn1wXAoCekTPOXGmhpp04yRbKAdP9lf8DPu8kPUNd8P0V2Mtnf0qH
- PnsuWwePgcxC/rvdmxP3f3XlDe9TNV+HYrLXniCxer8KMrbpJX2Nv/eyhW4S+pbhmn17j1xOr
- 3XYKJI1T4SoZg9YUkkBRgTxu1mMjlXAZ39mBMbajUWuDJulxr4ta04HQYnm/gij2eZAziTH2O
- uWShEWkTLKBFq1euRnn/qAXBxI8uRRMr4vLzny8CxoglBrc+mYQUlqoNxvqFBTL6nI7JUyinW
- tbQotezBf2e0psi5nl1V+eNGU4Pmds1ALg5Qot2RnsOrxYWGDB1Lf3CBYVs+yxMbV7t9mEBoY
- UmI9shiZKaTq1zcJBwk/lXwKfk5ypHh6IHAFFFSadrBLfjDCmzE4gJFOQsZ6HDQMKkz6Led4h
- XUbo3HcIu3Eg/7pmoL6MI/E6pJtZf/5vdIVREvrtQO1Mj1ULzsKR30PAMqgN9T7t4g/EcBqLr
- tDxQe+nmXGRaBfcS4wW35UXiakP8ACkQmUBvY8TOEgnIBQ6LZwTiB5eBqO0xpCP3v8fHGTpKC
- EajqiQBRP+mllFqhm3hfslY8EsfSoS3NxiBwXn7fLiyzgUE7CDUkTv5KZr+NnZ6YiH/t7YFvt
- SakoqABvtAE6DLzCH9xurna8BV0d6fBLfRTKbQ9COWqduni3kXKCVNuSyhydS1DapxIqzBiPW
- YNVdlVrzfDhb1cMNSNXg+hci5iQ=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9ADF0CE2-4039-11EE-8F38-25B3960A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-On Thu, 17 Aug 2023, Junio C Hamano wrote:
-
-> <rsbecker@nexbridge.com> writes:
+> Please pull the following l10n updates for Git 2.42.0.
 >
-> [...] when CI runner sees branches updated to commit that hasn't been
-> worked on, a new job is created to work on that commit, and updating two
-> branches with the same commit at the same time unfortunately means two
-> independent CI jobs work on the same commit in parallel.
+> The following changes since commit f1ed9d7dc0e49dc1a044941d821c9d2342313c26:
+>
+>   Git 2.42-rc2 (2023-08-15 10:20:02 -0700)
+>
+> are available in the Git repository at:
+>
+>   git@github.com:git-l10n/git-po.git tags/l10n-2.42.0-rnd2
+>
+> for you to fetch changes up to d1f87c2148b025a9c664e64db17205783ef2991c:
+>
+>   Merge branch 'po-id' of github.com:bagasme/git-po (2023-08-21 07:05:38 +0800)
 
-My understanding is that the recommended way to handle this via the
-`concurrency` key [*1*]. That is, if we changed
-
-    concurrency:
-      group: windows-build-${{ github.ref }}
-      cancel-in-progress: ${{ needs.ci-config.outputs.skip_concurrent =3D=
-=3D 'yes' }}
-
-to
-
-    concurrency:
-      group: windows-build-${{ github.sha }}
-
-then pushing both `master` and `next` pointing at the same commit would
-start only one of the workflow runs immediately, keeping the second one
-pending until the first run is done. If the first run succeeds, the second
-run will pick up that status and avoid running everything all over again,
-via `skip-if-redundant`.
-
-Ciao,
-Johannes
-
-Footnote *1*:
-https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-git=
-hub-actions#concurrency
+Thanks, will do.
