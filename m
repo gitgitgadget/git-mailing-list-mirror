@@ -2,79 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FCD8EE49A6
-	for <git@archiver.kernel.org>; Mon, 21 Aug 2023 17:07:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 626E2EE4993
+	for <git@archiver.kernel.org>; Mon, 21 Aug 2023 17:07:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236950AbjHURH3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Aug 2023 13:07:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50038 "EHLO
+        id S236949AbjHURH2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Aug 2023 13:07:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236927AbjHURH1 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S236943AbjHURH1 (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 21 Aug 2023 13:07:27 -0400
-Received: from bluemchen.kde.org (bluemchen.kde.org [209.51.188.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3806E103
+Received: from bluemchen.kde.org (bluemchen.kde.org [IPv6:2001:470:142:8::100])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38AC610F
         for <git@vger.kernel.org>; Mon, 21 Aug 2023 10:07:25 -0700 (PDT)
 Received: from ugly.fritz.box (localhost [127.0.0.1])
-        by bluemchen.kde.org (Postfix) with ESMTP id B8F87241CE;
+        by bluemchen.kde.org (Postfix) with ESMTP id B94FE2421F;
         Mon, 21 Aug 2023 13:07:21 -0400 (EDT)
 Received: by ugly.fritz.box (masqmail 0.3.6-dev, from userid 1000)
-        id 1qY8N6-QKQ-00; Mon, 21 Aug 2023 19:07:20 +0200
+        id 1qY8N6-QKK-00; Mon, 21 Aug 2023 19:07:20 +0200
 From:   Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Linus Arver <linusa@google.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: [PATCH v4 2/2] git-revert.txt: add discussion
-Date:   Mon, 21 Aug 2023 19:07:20 +0200
-Message-Id: <20230821170720.577850-2-oswald.buddenhagen@gmx.de>
+        Kristoffer Haugsbakk <code@khaugsbakk.name>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Subject: [PATCH v4 1/2] sequencer: beautify subject of reverts of reverts
+Date:   Mon, 21 Aug 2023 19:07:19 +0200
+Message-Id: <20230821170720.577850-1-oswald.buddenhagen@gmx.de>
 X-Mailer: git-send-email 2.40.0.152.g15d061e6df
-In-Reply-To: <20230821170720.577850-1-oswald.buddenhagen@gmx.de>
+In-Reply-To: <20230809171531.2564807-1-oswald.buddenhagen@gmx.de>
 References: <20230809171531.2564807-1-oswald.buddenhagen@gmx.de>
- <20230821170720.577850-1-oswald.buddenhagen@gmx.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The section is inspired by git-commit.txt.
+Instead of generating a silly-looking `Revert "Revert "foo""`, make it
+a more humane `Reapply "foo"`.
+
+This is done for two reasons:
+- To cover the actually common case of just a double revert.
+- To encourage people to rewrite summaries of recursive reverts by
+  setting an example (a subsequent commit will also do this explicitly
+  in the documentation).
+
+To achieve these goals, the mechanism does not need to be particularly
+sophisticated. Therefore, more complicated alternatives which would
+"compress more efficiently" have not been implemented.
 
 Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 
 ---
-v4:
-- adjusted summary prefix & payload wording
+v3:
+- capitulate at first sight of a pre-existing recursive reversion, as
+  handling the edge cases is a bottomless pit
+- reworked commit message again
+- moved test into existing file
+- generalized docu change and factored it out
+
+v2:
+- add discussion to commit message
+- add paragraph to docu
+- add test
+- use skip_prefix() instead of starts_with()
+- catch pre-existing double reverts
 
 Cc: Junio C Hamano <gitster@pobox.com>
-Cc: Linus Arver <linusa@google.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Cc: Phillip Wood <phillip.wood123@gmail.com>
 ---
- Documentation/git-revert.txt | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ sequencer.c                   | 11 +++++++++++
+ t/t3501-revert-cherry-pick.sh | 25 +++++++++++++++++++++++++
+ 2 files changed, 36 insertions(+)
 
-diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
-index d2e10d3dce..cbe0208834 100644
---- a/Documentation/git-revert.txt
-+++ b/Documentation/git-revert.txt
-@@ -142,6 +142,16 @@ EXAMPLES
- 	changes. The revert only modifies the working tree and the
- 	index.
+diff --git a/sequencer.c b/sequencer.c
+index cc9821ece2..12ec158922 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -2249,13 +2249,24 @@ static int do_pick_commit(struct repository *r,
+ 	 */
  
-+DISCUSSION
-+----------
+ 	if (command == TODO_REVERT) {
++		const char *orig_subject;
 +
-+While git creates a basic commit message automatically, it is
-+_strongly_ recommended to explain why the original commit is being
-+reverted.
-+In addition, repeatedly reverting reverts will result in increasingly
-+unwieldy subject lines, for example 'Reapply "Reapply "<original subject>""'.
-+Please consider rewording these to be shorter and more unique.
-+
- CONFIGURATION
- -------------
+ 		base = commit;
+ 		base_label = msg.label;
+ 		next = parent;
+ 		next_label = msg.parent_label;
+ 		if (opts->commit_use_reference) {
+ 			strbuf_addstr(&msgbuf,
+ 				"# *** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***");
++		} else if (skip_prefix(msg.subject, "Revert \"", &orig_subject) &&
++			   /*
++			    * We don't touch pre-existing repeated reverts, because
++			    * theoretically these can be nested arbitrarily deeply,
++			    * thus requiring excessive complexity to deal with.
++			    */
++			   !starts_with(orig_subject, "Revert \"")) {
++			strbuf_addstr(&msgbuf, "Reapply \"");
++			strbuf_addstr(&msgbuf, orig_subject);
+ 		} else {
+ 			strbuf_addstr(&msgbuf, "Revert \"");
+ 			strbuf_addstr(&msgbuf, msg.subject);
+diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
+index e2ef619323..7011e3a421 100755
+--- a/t/t3501-revert-cherry-pick.sh
++++ b/t/t3501-revert-cherry-pick.sh
+@@ -176,6 +176,31 @@ test_expect_success 'advice from failed revert' '
+ 	test_cmp expected actual
+ '
  
++test_expect_success 'title of fresh reverts' '
++	test_commit --no-tag A file1 &&
++	test_commit --no-tag B file1 &&
++	git revert --no-edit HEAD &&
++	echo "Revert \"B\"" >expect &&
++	git log -1 --pretty=%s >actual &&
++	test_cmp expect actual &&
++	git revert --no-edit HEAD &&
++	echo "Reapply \"B\"" >expect &&
++	git log -1 --pretty=%s >actual &&
++	test_cmp expect actual &&
++	git revert --no-edit HEAD &&
++	echo "Revert \"Reapply \"B\"\"" >expect &&
++	git log -1 --pretty=%s >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'title of legacy double revert' '
++	test_commit --no-tag "Revert \"Revert \"B\"\"" file1 &&
++	git revert --no-edit HEAD &&
++	echo "Revert \"Revert \"Revert \"B\"\"\"" >expect &&
++	git log -1 --pretty=%s >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'identification of reverted commit (default)' '
+ 	test_commit to-ident &&
+ 	test_when_finished "git reset --hard to-ident" &&
 -- 
 2.40.0.152.g15d061e6df
 
