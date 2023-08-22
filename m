@@ -2,92 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9AD5AEE4996
-	for <git@archiver.kernel.org>; Tue, 22 Aug 2023 04:48:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D183EE49A8
+	for <git@archiver.kernel.org>; Tue, 22 Aug 2023 06:15:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232400AbjHVEs7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Aug 2023 00:48:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59540 "EHLO
+        id S232948AbjHVGPG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Aug 2023 02:15:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232067AbjHVEs6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Aug 2023 00:48:58 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D12B189
-        for <git@vger.kernel.org>; Mon, 21 Aug 2023 21:48:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de;
- s=s31663417; t=1692679716; x=1693284516; i=johannes.schindelin@gmx.de;
- bh=98PqPIdH28Vstjn/nD3pxDCWqrzipSAccKT8bYP1+Sw=;
- h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
- b=AZ/jw/V13opaX34KWbSjqMAhYfjnHGbg9gH5Ul61uuL9X78Ydmbcxz69OuS+1BVV2RbfFsq
- WkREA/k1C7FuBv/D43k6r6OUPXslX4jL3G+APAvP/BkrbIq8m9YslXR8h7N0cphe/AWw3VRj7
- fmOrW9VErtxuYifHSPbIyr4OUzs2JkCBLNLuMnWfyxdBwi86FPgI1pocA4YJN/GzNaCkqAfZk
- RRw9/1N7tKE6xOB4ny50+fRAcZx+uRjKdTNIpCtnRE/Yv1wxzXDAb6PkkuTM57Kj4fEOf6SyN
- sCiSmMjfC4dZpWRQcOv0RKgSnuFNJ9sMxDeS5UsryO1KR09G+qgQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.212.15]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MdNcG-1pzFcC13Qm-00ZOec; Tue, 22
- Aug 2023 06:48:36 +0200
-Date:   Tue, 22 Aug 2023 06:48:33 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org, rsbecker@nexbridge.com,
-        'Jeff King' <peff@peff.net>, 'Taylor Blau' <me@ttaylorr.com>,
-        'Andy Koppe' <andy.koppe@gmail.com>
-Subject: Re: [PATCH] ci: avoid building from the same commit in parallel
-In-Reply-To: <xmqqpm3fn16f.fsf@gitster.g>
-Message-ID: <99e19de6-c17d-e85f-dc58-1019aed1e2b1@gmx.de>
-References: <20230715103758.3862-1-andy.koppe@gmail.com> <20230715160730.4046-1-andy.koppe@gmail.com> <kl6l351j22dr.fsf@chooglen-macbookpro.roam.corp.google.com> <CAHWeT-ZA8f-TGRwDHixAvi5kddVBbuK8LpVGJ9cjYZMsMk5ODw@mail.gmail.com> <xmqq7cpwjhr1.fsf@gitster.g>
- <006574bd-4d53-495e-8cfe-677ede521908@gmail.com> <xmqq350kjfk8.fsf@gitster.g> <ce5d20db-2220-45dd-8c39-2a52e0f9f816@gmail.com> <ZNv5PQlkn6tbUcH7@nand.local> <20230816022420.GA2248431@coredump.intra.peff.net> <000901d9d045$e780f790$b682e6b0$@nexbridge.com>
- <xmqqo7j5uqza.fsf@gitster.g> <15b89f2e-adb8-ea2b-fd74-2cbe95e20501@gmx.de> <xmqqttssqsj5.fsf@gitster.g> <xmqq1qfvor35.fsf_-_@gitster.g> <xmqqpm3fn16f.fsf@gitster.g>
+        with ESMTP id S230116AbjHVGPF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Aug 2023 02:15:05 -0400
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A48611C
+        for <git@vger.kernel.org>; Mon, 21 Aug 2023 23:15:03 -0700 (PDT)
+Received: by mail-oi1-x230.google.com with SMTP id 5614622812f47-3a412653335so3094447b6e.1
+        for <git@vger.kernel.org>; Mon, 21 Aug 2023 23:15:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1692684902; x=1693289702;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=E0JpuAm7xpSrUvHNWxUfAJQnxUQuurm7pBVtXrpq0Y0=;
+        b=Hfjh2a20GFOvjcvZLWV975aFCagTwb1m/tv/qzkpH5yW0uWdmHN7SSHLXXrK24IJcI
+         +qHcAlgMotpuFVTJx4DzebN+m49Ml20u+PwbRw1YexgcQQgUz5QEzPK1vWkfvwSjZ8Lp
+         480a+TlO20uTn93+/yfHMyHzB4Tdp5ZIP8FTolimIfrFIVvWQo/fvmP0tTFNxnCu10T+
+         V/EtZSOaZAf/vN+olxni6jbfOrh4nCJYLqnFzOL5IucFkeyDWM8HEF4Q4gU7UJf46f9v
+         SJQrPHl87lgyN+FPCIfmBymFyv27dZ31dFkQHSDCmXGf5pneprHQYjUfMPWoMWvcZ5OJ
+         ePjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692684902; x=1693289702;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=E0JpuAm7xpSrUvHNWxUfAJQnxUQuurm7pBVtXrpq0Y0=;
+        b=hH3c8yYdXZB4wWNISE1vu62kX5gQm3tbiiq9p7BBtrJJF7lZd6U+95mXOQ8CImYD31
+         9ZvsO0O/MBgtaBDyE5VpVymtku1REnzzAcH64C5Nndc3BppmZyx9ibe8bjiUIY7LZ/C9
+         FEXv0tCO2WuAljXzaABpIyeM8CYcxCc2g/P9TncrLzbRc7hpAD3qMOVLFvRU+6yWGDak
+         24uvb6CQeJfnqL4xfiVaPpGiHny9ZJAoXcR/Y84TlTuqMTfx/NYcTeifCl0Senz7HYdF
+         8ndU4m5DsOk3ecwXP+VucZWDkRKBXe2OMjzo/FEQupyHpdZjz/ahZ6mG5m5tBlTp/sdP
+         XoUA==
+X-Gm-Message-State: AOJu0Yzj7hfQEzH6s+KuSjyrpvv857K23XEKMadWZ5wTWC80pRNlRjyw
+        yLFMSDwdiGB+rURYxdnBLNA=
+X-Google-Smtp-Source: AGHT+IGhOG5uswK+N35mp4I7Oikg1pylXvWzEIDGZB1qRK/Gw1/mLisBvDysWEpSsRoDB9hJjsJTmw==
+X-Received: by 2002:a05:6358:990e:b0:135:3f5c:9675 with SMTP id w14-20020a056358990e00b001353f5c9675mr9584452rwa.19.1692684902337;
+        Mon, 21 Aug 2023 23:15:02 -0700 (PDT)
+Received: from [192.168.10.148] ([103.136.137.241])
+        by smtp.gmail.com with ESMTPSA id c6-20020a637246000000b00553d42a7cb5sm7099925pgn.68.2023.08.21.23.15.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 21 Aug 2023 23:15:02 -0700 (PDT)
+Message-ID: <2c31a3d4-59f7-d036-0c6b-5fd62cc7a2fa@gmail.com>
+Date:   Tue, 22 Aug 2023 11:44:41 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:fxMM9YMFx7HeOvVsEpP61MC8X8o91VEsQ7EwYfBGK681lhx/nba
- 0vF7VXAV1u0VQTC4/v3vHxCeaxAd4W/cv6L8a2aMGR2GsuoX4aSQRe2TxUHY+8imuNFCcvR
- SMo71PM0rPMFnAZEmh8aAYQ/t2+44/dvCeZiINk/vD3SLh5tzV/y2aKkDW9ra7Zl32qLAgX
- /YQaHGGLhdOy/cVnsoNpw==
-UI-OutboundReport: notjunk:1;M01:P0:oi5SFiX63jU=;us69RS6E+ENqjnlG2bkrGtOfDYm
- c1HSVH4nQENlfPH1JhPw1BVUeQOuazC+b86xqe0jmdSTrefh+To3SQCSMBUV2vygo93EL/ZIS
- uTCFnOH2TswNe7x+ENizCu9oBhNpo48lEXGvtiuSmXY6pcXV6aKKsGoZXbReCkYlTY6bf+PCH
- XAE/N7xXtG7U+nR3NR0FroOUP2M3wvZBC7I5r8mZZU+UA0gjqfrU2bt9mC9Wz6Al2Gw2pqIbo
- 0WRW2vNgEFoDuF6Ihxp4zN5UqyOp8d1H2pm3f9cDKOiNdxX7MqqyUvbnGkXlrfI6uCZPVTIaT
- Gk8T2rANDvA/A/6mxAMdEGnFrIFBEF7tCt/znWi6Mph3eGQcspPWQgEzHTtubhRSW62H6DLS0
- h1Zgs5+pysy4U1NjwdjA01PGFAn8/5fxdpjqImvYbEJqLo4enNs+10R2Q8NTdgVbnn99KpgxA
- 3Ty4gACXU1u/lRntc6a5d4NSEBvSHjlrU9PF1Xb0xsIF845B8wVILyrvolB8wvz+Jdx8rPygO
- wLk00Qy6negVF9OfcS+quxhj1BZRYkNL0PpVy4ZAZp5KSjhQU7yXypcebd0NuZUYQIEODf2uG
- VAfvQQJ60KzGs5PL1MF7uLMZcW2AOqcxZCRgPqm4O4Z62ewISp9no8++6QsBO2Mow+vRhcfBq
- FPfMKpxhsj9P5wBGqIj2cf0kbEZEO82bUNO+TCpLkXuvYcCxY4Wb71dh3Xn5E3vpylvyC8ptF
- TRd+SE/f6YpwluGjU7Uofk1rWbMlrZ/8XqEE61xb0LMoIl1ufXSm7UwCGvaNpQaz33ya0/eNX
- QSoy/NgoELGMyhperixQiNaNPr7ArnLR70vbrh4Bwv5VTcAzGufcdhNjD1JRJxw6UoFIr4ZCJ
- av+ICNozKP48hvXWBE6/7M5ppRGbLld4uMj+PlsYB5ZjvG0ynS1jM6KXMY8eBtT4O5n2KaS8+
- em7/jA==
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Subject: Re: Git in Outreachy? (December, 2023)
+To:     Christian Couder <christian.couder@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, Hariom verma <hariom18599@gmail.com>,
+        Victoria Dye <vdye@github.com>
+References: <ZNwhVOggObU7aVTr@nand.local>
+ <CAP8UFD2Yw1XazomxEj0QB20FoaxkO16t_xgRurtnqCCOuhX-eQ@mail.gmail.com>
+Content-Language: en-US
+In-Reply-To: <CAP8UFD2Yw1XazomxEj0QB20FoaxkO16t_xgRurtnqCCOuhX-eQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
 
-On Mon, 21 Aug 2023, Junio C Hamano wrote:
 
-> If we wanted to do this, I suspect that we need to serialize the
-> entire thing, not at the individual level where we currently define
-> the "concurrency" thing.
+On 18 August 2023 8:40:25 pm IST, Christian Couder 
+<christian.couder@gmail.com> wrote:
+>(Adding a few people who could be interested in helping with this in Cc:)
+>
 
-Right, we'd need that `concurrency: ${{ github.sha }}` attribute on the
-`config` job.
+Thanks, Christian!
 
-BTW there is another caveat. According to the documentation, if a job is
-queued while another job is already queued, that other job is canceled in
-favor of the latest one.
+>> I think it would be good to participate in this year's December cohort.
+>> September 1, 2023 at 4pm UTC is the initial community application
+>> deadline.
+>
+>I agree it would be nice, and I am willing to mentor, or if possible
+>co-mentor, someone.
+>
+>> If we're interested, the project submission deadline is September 29th.
+>> By then, we'd need:
+>>
+>>   - Volunteers to act as mentors
 
-I have not verified this by testing it out, but have no reason to doubt
-it.
+Depending on the projects that we'll be proposing, I may be able to 
+co-mentor for one. Though, my timeline looks uncertain now. So, I'm 
+unsure about it. I should be able to mention for sure after before the 
+mentor sign-up deadline.
 
-If that's the case, pushing, say, `master`, `main` and `next` to the same
-SHA will see one of them canceled. Which might be okay, if the cancelation
-message on the canceled one is indicative enough.
+> I wonder if we need a few Org Admins too.
 
-This all depends on reducing the number of flakes (in particular the p4
-tests in the ASAN job), but that's a story for another day.
+Regardless, I should be able to help us an Org Admin if there's a need :-)
 
-Ciao,
-Johannes
+>
+>>   - Updates to our applicant materials on git.github.io (project ideas,
+>>     as well as potential microprojects).
+>
+>Yeah, I can start working on the applicant material after my current vacation.
+>
+
+That's great, Christian. Let me know in case you need any help with it.
+
+>> If folks are interested, I'd be more than happy to answer any questions
+>> about participating, and overall logistics of the program.
+>
+
+I'm guessing the mentor sign up deadline aligns with the project 
+submission timeline. Could you kindly confirm the same, Taylor?
+
+--
+Sivaraam
