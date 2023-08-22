@@ -2,144 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DF06EE49AA
-	for <git@archiver.kernel.org>; Tue, 22 Aug 2023 04:05:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4355EE4996
+	for <git@archiver.kernel.org>; Tue, 22 Aug 2023 04:36:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232338AbjHVEFz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Aug 2023 00:05:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57628 "EHLO
+        id S232413AbjHVEgf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Aug 2023 00:36:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230312AbjHVEFy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Aug 2023 00:05:54 -0400
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5478187
-        for <git@vger.kernel.org>; Mon, 21 Aug 2023 21:05:52 -0700 (PDT)
-Received: by mail-pl1-x62f.google.com with SMTP id d9443c01a7336-1bdbbede5d4so31530535ad.2
-        for <git@vger.kernel.org>; Mon, 21 Aug 2023 21:05:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=trimble.com; s=google; t=1692677152; x=1693281952;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:date:from:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=/c7p4wsXYvHbfTLiIp1hb+p/dVB6GEAS59Tz7v07TA4=;
-        b=WB/8dZGK7fdTitX49ecIl5myq2mD0dfFB/mnKcc7IWIKRdP+PXhIDE0OnVB1J9sEwU
-         8mLt29l8FklWsPSjvW79FMtM1FmGAcUkDzUesBUtspZ5t38GIBb9pJS5yRsbQXpfcNtY
-         lenVVkBPEmXsNjLh7ydHbZ4kecNZ3bSaZsrts=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692677152; x=1693281952;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:date:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/c7p4wsXYvHbfTLiIp1hb+p/dVB6GEAS59Tz7v07TA4=;
-        b=VngAr/nzH0Kxg9PkfEAU38JhqRft2NZgoJsChZ6joIXaQwKY44F0qkj7vi1XAU5k35
-         lOsc9FlU8wqGNSAAWQ3ZlpwSNGEx2T82aVY9UL88EXQIT1mjy8KyeXyhJtltTgyIutz1
-         lkxbMFKy7n+bBYyTzIzZ4mEe3lh0m4FB1/S5VsFDXerIm7bbUQRsFXPrsM8WkDRLvyIi
-         N2tE+lQsp4pXNVHlDXixrsA+t1nGCG/z0dtdFx3/DxlrotHzO9i2u9lL9QOM9/aHN6JK
-         gBVBuF2RIblU+SHCb3gCEQv+EGMsHRvQ4I+KmclYmkCHxj5ZURjj/0xPHbYuRjtwnRCL
-         MEMg==
-X-Gm-Message-State: AOJu0YyIYa9JUSF5mdyTxCYl1kYJPBxr+WMD/Wk79INlpCN7tnKnrBw/
-        ZfPClgD8Lewi5NuMppUmMdtNkr72Gs3dHwIoKJmK3A==
-X-Google-Smtp-Source: AGHT+IHEyC+9Z/VPlRDz+dE3xDjhycKK778pVxmfldSCEI18OtXchE+oyNBr7iFYP7Kv7rQv3q0tyQ==
-X-Received: by 2002:a17:902:d342:b0:1bf:6ad7:228b with SMTP id l2-20020a170902d34200b001bf6ad7228bmr7420127plk.8.1692677152073;
-        Mon, 21 Aug 2023 21:05:52 -0700 (PDT)
-Received: from GSINGLE-NZ-DE.ap.trimblecorp.net ([155.63.200.2])
-        by smtp.gmail.com with ESMTPSA id f5-20020a170902684500b001bf6ea340b3sm4221423pln.116.2023.08.21.21.05.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Aug 2023 21:05:51 -0700 (PDT)
-From:   "U-AP\\GSingleton" <grant_singleton@trimble.com>
-X-Google-Original-From: "U-AP\\GSingleton" <GSingleton@GSINGLE-NZ-DE.ap.trimblecorp.net>
-Date:   Tue, 22 Aug 2023 16:05:47 +1200
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org
-Subject: Re: Corrupt repo with force push when using a reference repo
-Message-ID: <ZOQ0GxPn-anJlLxQ@GSINGLE-NZ-DE.ap.trimblecorp.net>
-References: <MN2PR03MB5072F08C68E7F32C9F5AC866A614A@MN2PR03MB5072.namprd03.prod.outlook.com>
- <ZNwkh47mBJxcSYkm@tapette.crustytoothpaste.net>
+        with ESMTP id S232344AbjHVEge (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Aug 2023 00:36:34 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AC56184
+        for <git@vger.kernel.org>; Mon, 21 Aug 2023 21:36:30 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 849FC1AB32;
+        Tue, 22 Aug 2023 00:36:29 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=IJoD6bvUEhs0Fy7NVZA8kIH49mmG2/2IhsQcen
+        n2U94=; b=pxIjHidG8k0QRXJeAPORvEgTVTgI9PeqF62qMRdcm7jIMPv2t8EYY7
+        bLcvqd0oAUAcAy61q7SBdnppw4TELYWWwKvN7+yAaGjF0AHly50pmoxfmtaTgYUe
+        RtauR35K890HdWgnkonMYbWwDJBACdOLm4kNETdoeeOEUmWZlIqXw=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7C5E41AB31;
+        Tue, 22 Aug 2023 00:36:29 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.58.166])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 15C921AB2F;
+        Tue, 22 Aug 2023 00:36:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Cc:     rsbecker@nexbridge.com, 'Jeff King' <peff@peff.net>,
+        'Taylor Blau' <me@ttaylorr.com>,
+        'Andy Koppe' <andy.koppe@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] ci: avoid building from the same commit in parallel
+References: <20230715103758.3862-1-andy.koppe@gmail.com>
+        <20230715160730.4046-1-andy.koppe@gmail.com>
+        <kl6l351j22dr.fsf@chooglen-macbookpro.roam.corp.google.com>
+        <CAHWeT-ZA8f-TGRwDHixAvi5kddVBbuK8LpVGJ9cjYZMsMk5ODw@mail.gmail.com>
+        <xmqq7cpwjhr1.fsf@gitster.g>
+        <006574bd-4d53-495e-8cfe-677ede521908@gmail.com>
+        <xmqq350kjfk8.fsf@gitster.g>
+        <ce5d20db-2220-45dd-8c39-2a52e0f9f816@gmail.com>
+        <ZNv5PQlkn6tbUcH7@nand.local>
+        <20230816022420.GA2248431@coredump.intra.peff.net>
+        <000901d9d045$e780f790$b682e6b0$@nexbridge.com>
+        <xmqqo7j5uqza.fsf@gitster.g>
+        <15b89f2e-adb8-ea2b-fd74-2cbe95e20501@gmx.de>
+        <xmqqttssqsj5.fsf@gitster.g> <xmqq1qfvor35.fsf_-_@gitster.g>
+Date:   Mon, 21 Aug 2023 21:36:24 -0700
+In-Reply-To: <xmqq1qfvor35.fsf_-_@gitster.g> (Junio C. Hamano's message of
+        "Mon, 21 Aug 2023 17:31:26 -0700")
+Message-ID: <xmqqpm3fn16f.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZNwkh47mBJxcSYkm@tapette.crustytoothpaste.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 745C6B02-40A5-11EE-9095-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 16, 2023 at 01:21:11AM +0000, brian m. carlson wrote:
-> On 2023-08-15 at 04:05:34, Grant Singleton wrote:
-> > Thank you for filling out a Git bug report!
-> > Please answer the following questions to help us understand your issue.
-> > 
-> > What did you do before the bug happened? (Steps to reproduce your issue)
-> > 
-> > With 3 clones of a repo, one on branch-a one a mirror,  another using the mirror as a reference repo on branch-b, do the following
-> > 
-> > # in the repo on branch-a, make a change, commit and push
-> > cd bad-object-test
-> > echo $(( RANDOM % 1000 + 1 )) > file.txt
-> > git ci -am "change a file"
-> > git push
-> > 
-> > # do a git fetch in the reference repo
-> > cd ../bad-object-test.git/
-> > git fetch
-> > 
-> > # do a git pull in the repo on branch-b
-> > cd ../bad-object-test-with-reference-repo/
-> > git pull
-> > 
-> > # All good so far
-> > 
-> > # in the repo on branch-a, discard HEAD and force push
-> > cd ../bad-object-test
-> > git reset --hard HEAD~1
-> > git push --force
-> > 
-> > # do a git fetch in the reference repo and then prune loose objects
-> > cd ../bad-object-test.git/
-> > git fetch
-> > git prune -v --expire=now
-> 
-> When you clone using --shared or --reference, you implicitly depend on
-> the objects in the referenced repository existing without being pruned
-> for the integrity of the repository.
-> 
-> The manual page for git clone says this:
-> 
->   NOTE: this is a possibly dangerous operation; do not use it unless you
->   understand what it does. If you clone your repository using this
->   option and then delete branches (or use any other Git command that
->   makes any existing commit unreferenced) in the source repository, some
->   objects may become unreferenced (or dangling). These objects may be
->   removed by normal Git operations (such as git commit) which
->   automatically call git maintenance run --auto. (See
->   git‐maintenance(1).) If these objects are removed and were referenced
->   by the cloned repository, then the cloned repository will become
->   corrupt.
-> 
-> If you want to change the references in any non-fast-forward way or do
-> any sort of GC or pruning in the reference repository, you need to run
-> `git repack -a` in the non-reference repository to repack all of the
-> objects in that repository and dissociate it from the reference
-> repository.
-> 
-> In general, unless you are _very_ sure you know what you're doing, you
-> usually want to use `--dissociate` with `--reference` such that you
-> detach immediately.
-> -- 
-> brian m. carlson (he/him or they/them)
-> Toronto, Ontario, CA
+Junio C Hamano <gitster@pobox.com> writes:
 
-Ok, sorry and thanks, I should have read more of the documentation.
+>  * There are tons of concurrency groups defined, but as a trial
+>    change, here is to cover the "regular" matrix that consumes the
+>    most resources (linux-asan-ubsan is the worst culprit, it seems).
 
-For some context, we're doing this on a bunch of Jenkins agents for our
-CI/CD pipeline on a somewhat bloating monolithic repo. We have 30-40
-clones on each machine, so the reference repos save us a lot of network
-traffic, time to fetch and disk space.
+Unfortunately, this did not work.
 
-So IIUC I can do a `git repack -kad` in the reference repo to pack loose
-objects and keep unreachable commits that may be referenced by other
-repos using the reference repo.
+https://github.com/git/git/actions/runs/5933451874
+https://github.com/git/git/actions/runs/5933451805
 
-Grant Singleton
-Christchurch, New Zealand
+are trial runs that had the same commit with this patch pushed to
+'seen' and 'pu'.  While one of them started the "regular" matrix,
+the other one indeed went into paused state and waited.  But that is
+way too late.  What happened was that their "config" (which everything
+else depends on) started in parallel before the serialization at the
+"regular" matrix kicked in.
 
+So, one did wait before doing the "regular" matrix, until the other
+one finished everything, and then kept going and did its own
+"regular" matrix for the same commit.  It is because the avoidance
+of "redundant build" was done at the "config" phase, which both of
+them had already done X-<.
+
+If we wanted to do this, I suspect that we need to serialize the
+entire thing, not at the individual level where we currently define
+the "concurrency" thing.
