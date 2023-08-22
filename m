@@ -2,87 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C190DEE4993
-	for <git@archiver.kernel.org>; Tue, 22 Aug 2023 15:35:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EA4FEE49A3
+	for <git@archiver.kernel.org>; Tue, 22 Aug 2023 15:51:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237175AbjHVPfK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Aug 2023 11:35:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51940 "EHLO
+        id S236572AbjHVPvK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Aug 2023 11:51:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233612AbjHVPfJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Aug 2023 11:35:09 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BF84113
-        for <git@vger.kernel.org>; Tue, 22 Aug 2023 08:35:08 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-317f1c480eeso4170452f8f.2
-        for <git@vger.kernel.org>; Tue, 22 Aug 2023 08:35:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692718506; x=1693323306;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NWQlc4S4/EY/zS6vB1+bATfrju9WXkD8hsi67vyKcb8=;
-        b=N+qPg5NnIPSNFgMvHwWZTzwj1rhvivRS+e/4KSovavWaLwl5gSVbUTZ0t+D+TVCuGE
-         ltLSShgRkNdfH7hPSbRlk3eJ2Nedp9kKM2A47Z3k4fPGLhKKX+Q3/h4FS9fIZAwdlvzJ
-         mYSivkPyQBqDh072VaXY2L/jzWQ+nqD/l+AUmYU/+LEpRsZTVeklmtVaVjvfNrHoRjZ/
-         oG/tMBEobUeqa4yYQiSbo9epF4cWGiDvI7tlWLrvOkJ4PtuecNSmISPJHwqrfNWvSZWX
-         iKAvOvX+M+WA4U4fWyrZCo/1EzfJbUmBJJ3FVfEhYKKzB1GNIIjIb/c5gXmfeab1NPxC
-         Wyyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692718506; x=1693323306;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=NWQlc4S4/EY/zS6vB1+bATfrju9WXkD8hsi67vyKcb8=;
-        b=bKO+DtQVKb9DdsN4tO0ZRZ5OlGILLb6rrI6Bh3pm07vy7yhrAg0jO3CFkTwC+IUg8R
-         8CI8r9TFudypSLCtgDFM6tIeRXLTdd94uepdhTa9pAEA1y9oO1wYGQR83z8MvRm1OtXo
-         KPzJX/GqUSm+Cp332m/gWSu/VUGAWc/tGfaxv+6wzfGLCcLTHDa0Ge3ogNpGyBcyFOGf
-         7a7R57u1H97XlW7dQ+goupqQgZxGzmFalxcBxqr3akEtRVjJswxaC/lTOoHk5iTRbuEU
-         cv6ZmPAHYnLQxxdoZjmeLM/zon4QdifvgaWeOZf6zoENqeYesDXwOsl3FE3oH7OMrimX
-         nSpA==
-X-Gm-Message-State: AOJu0Yw/2y0AUuNVfWz4qQHhHVI7A0y4RBkWd1isejos2jz1qiE59fed
-        R/tbaZhQhCAshzBZ922X4nABZlphnyw+Vgj282RAkVZ09Z07Ww==
-X-Google-Smtp-Source: AGHT+IFQw6UqwUTvcL0T5LkJFcVO2/FPcv8khFnjZXVcBU2NylddT6+gsqhy+FzzUahsxjMZ+cXS+rs2yHoPTknkJSk=
-X-Received: by 2002:a5d:4c4a:0:b0:319:7aa5:b880 with SMTP id
- n10-20020a5d4c4a000000b003197aa5b880mr7206051wrt.48.1692718506034; Tue, 22
- Aug 2023 08:35:06 -0700 (PDT)
+        with ESMTP id S235796AbjHVPvK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Aug 2023 11:51:10 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 973E3CEC
+        for <git@vger.kernel.org>; Tue, 22 Aug 2023 08:50:43 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3CB651E693;
+        Tue, 22 Aug 2023 11:50:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=KOgjxwguxKcUDN9D3O/7xbVU4GlQaWoYnC8J2H
+        IIW4I=; b=LPK7BTKvz9ONAIoH7hzCKQXmzBhAXX12pxVyIps0wHJv1i5CDYy92Z
+        1eVobXegzm25EsWzBJZTi3rR7Kgxq6BOhbXJxpzrNM6y+alBTCrQlcuCwXATEyWL
+        HCADqcLZEyj/xIn3fv6QWzI/HnC8IxB2Aw7cZS60EWkMI0acludAw=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 351241E692;
+        Tue, 22 Aug 2023 11:50:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.58.166])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3EEA51E691;
+        Tue, 22 Aug 2023 11:50:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Hesse <list@eworm.de>
+Cc:     Kousik Sanagavarapu <five231003@gmail.com>, git@vger.kernel.org,
+        Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>
+Subject: Re: [PATCH v2 1/1] t6300: fix match with insecure memory
+References: <20230821202606.49067-1-list@eworm.de>
+        <ZORpucPcjzm-dhjP@five231003> <20230822110404.1c002dcf@leda.eworm.net>
+Date:   Tue, 22 Aug 2023 08:50:38 -0700
+In-Reply-To: <20230822110404.1c002dcf@leda.eworm.net> (Christian Hesse's
+        message of "Tue, 22 Aug 2023 11:04:04 +0200")
+Message-ID: <xmqqcyzfm5yp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20230711135214.17445-1-cheskaqiqi@gmail.com>
-In-Reply-To: <20230711135214.17445-1-cheskaqiqi@gmail.com>
-From:   Shuqi Liang <cheskaqiqi@gmail.com>
-Date:   Tue, 22 Aug 2023 23:34:53 +0800
-Message-ID: <CAMO4yUEwOCNtk2L9ooXHTMC-ysVG0xgHB5UWW_pb7gwzDpy4Dg@mail.gmail.com>
-Subject: Re: [GSoC] Blog:More Sparse Index Integrations
-To:     git@vger.kernel.org, Victoria Dye <vdye@github.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: A4541360-4103-11EE-9D8D-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Christian Hesse <list@eworm.de> writes:
 
-Week 9-12 post and GSOC final report is here:
-
-Week 9-10:https://cheskaqiqi.github.io/2023/08/20/Week9-10/
-
-Week 11-12:https://cheskaqiqi.github.io/2023/08/21/Week11-12/
-
-Final report: https://cheskaqiqi.github.io/2023/08/22/Final/
-
-Thanks
-Shuqi
-
-On Tue, Jul 11, 2023 at 9:52=E2=80=AFPM Shuqi Liang <cheskaqiqi@gmail.com> =
-wrote:
+> Kousik Sanagavarapu <five231003@gmail.com> on Tue, 2023/08/22 13:24:
+>> Christian Hesse <list@eworm.de> wrote:
+>> 
+>> > From: Christian Hesse <mail@eworm.de>
+>> > 
+>> > Running the tests in a build environment makes gnupg print a warning:
+>> > 
+>> > gpg: Warning: using insecure memory!
+>> >
+>> > This warning breaks the match, as `head` misses one line. Let's strip
+>> > the line, make `head` return what is expected and fix the match.
+>> >
+>> > Signed-off-by: Christian Hesse <mail@eworm.de>  
+>> 
+>> I think a bit of an explanation about why this warning is showing up in the
+>> commit message would be good.
+>> 
+>> "man gpg" gives me <stripped>
+>> 
+>> So it seems that this warning will pop up if gpg is writing memory pages to
+>> disk which is bad because as stated above we don't want these pages written
+>> to disk which is a security risk.
 >
-> Hi,
-> Week 5-8 post is here
->
->         Week 5-6: https://cheskaqiqi.github.io/2023/06/25/Week5-6/
->
->   Week 7-8: https://cheskaqiqi.github.io/2023/07/05/Week7-8/
->
-> Thanks
-> Shuqi
->
+> The Arch Linux packages are built inside a clean container, started via
+> systemd-nspawn. Within the container the system call @memlock is not allowed
+> by default, for security reasons.
+
+Thanks for Kousik and Christian for discussing this.  The phrase "in
+a build environment" in the proposed log message puzzled me, as the
+program does not seem to print such warning in my build environment.
+
+And environments where memlock is disabled are probably not limited
+to containers used to build Arch's packages.  "in a build
+environment" -> "in an enviornment where memlock is disabled" would
+have avoided puzzling readers.
+
