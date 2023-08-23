@@ -2,107 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 764F6EE49A0
-	for <git@archiver.kernel.org>; Wed, 23 Aug 2023 03:29:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 235CBEE49A0
+	for <git@archiver.kernel.org>; Wed, 23 Aug 2023 03:32:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231816AbjHWD36 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Aug 2023 23:29:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39156 "EHLO
+        id S232265AbjHWDcp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Aug 2023 23:32:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229824AbjHWD35 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Aug 2023 23:29:57 -0400
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82481CF2
-        for <git@vger.kernel.org>; Tue, 22 Aug 2023 20:29:55 -0700 (PDT)
-Received: by mail-pl1-x62c.google.com with SMTP id d9443c01a7336-1bdf4752c3cso31244445ad.2
-        for <git@vger.kernel.org>; Tue, 22 Aug 2023 20:29:55 -0700 (PDT)
+        with ESMTP id S229824AbjHWDco (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Aug 2023 23:32:44 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0A54CF2
+        for <git@vger.kernel.org>; Tue, 22 Aug 2023 20:32:42 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-50095f6bdc5so892e87.1
+        for <git@vger.kernel.org>; Tue, 22 Aug 2023 20:32:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692761395; x=1693366195;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=5i5y/1FDdwwNbEXNrzdXi753Z2ODem8RS8W/fWS1iOU=;
-        b=gQjrJ9b4J0Xp+WiNrGe9j3EQzbt5O15mGuBW196vI5jYBPUTG1yVHVfMgH0rMCJYrd
-         7KRyYrKvQDkGT5omyhG7K2i+2/OQ8cWetCIKjglaiCaYfl72U3IIa5RQqNtmjb5l33M+
-         bBONYlLb2Pd0sC3nt2VIXeYss/XW5TKnZubP9xn6+IvOxmFZy7EkL4RCbvhEULBMtPfE
-         HviSzxXIDhqHLRgEZ326zIgPZBVv9dSW6cFJoFQa3ldWI9hz5eY+ag3DnJUA92lgSg1q
-         OiPeWU33A39n0ho19CcBrkDlwCLx+htWnUMbIY1B5oypH6TnIj+MNnTs70yIPFJEHGQ+
-         eq5g==
+        d=google.com; s=20221208; t=1692761561; x=1693366361;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=F3bz3XIJAcq93Ln5mBu2FC5vLkQ6BPh6T6UpA/AUrMA=;
+        b=wqPc/hlzXD4nRHdDOebqC4mwSQWaUo76OS5uhFK0d1N0gOKzYlYJrB4HLSRPRJb5ge
+         Bxn+gX+5jY248r71mN7ufqGWmmz77EVsewWqSgCg+RgiMXhRbFHx1REplUPe156pkKrK
+         kGDktqIi9P00VCvrR1jeheDO0YQZW/KJ1qPuvlwkwpgUlNdwDXEeSm/YUjz0rx75oUTR
+         sZah2JXT3Q+PTCNx0/tPltcadO/USMufZ8DsOsflLuiWfHOLxzgokrh6GFveZ3g03RQO
+         6Yem9us6u2JGkNzPNHZM2Ljs5Mi7myuRzjZLDM8h9XqEnD+4+omSBFaSOTV3BqlRsiZm
+         7uKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692761395; x=1693366195;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5i5y/1FDdwwNbEXNrzdXi753Z2ODem8RS8W/fWS1iOU=;
-        b=hly20BBzvP61k/JjpexNqQiLOS99yBfokFjgdFfEAsIGNDEAn7Z8j4ASD1WJqM+dbI
-         uQKiFqvW7JOvn9lJwzD7E5uIAmfKC5TUUnQEBaKEHXqbqLQG5QDlvLya91huSqTTgBPP
-         eaHWESXEQLUaSlt4TQyTSMLBEndLehfvmbVwmcXleJr8SlOJ9W5lSvg+vakBcd02a1QP
-         edqbNsLA27GQ/Rwr1XRcZ5DqVdcUkRBMDZGCKlFCpmvAHd8mOr3Fo5qpNWsV/WK3hp+X
-         t7eMDHpnaDX4k75g/xW3et8zi2O/rlOypuh1UrIWjqIRzmnFlH6P/gNNXKQk4gqkQ0IF
-         60ZA==
-X-Gm-Message-State: AOJu0Yy2WaxmTud+7gGQ9JnkjydOKLTzHecXlLYrNQ4JPOrHeisz1XFz
-        JFkfUDube2g3IJjJk6l9mzEs9DVDNTl5tg==
-X-Google-Smtp-Source: AGHT+IF9rxXKIKrMrJF/9AKlnkzxyoaW2lSK3yLEMIKSV0KwkGVZVUN2nsQmQdZ9bAw4kNOSRQUp9Q==
-X-Received: by 2002:a17:903:124b:b0:1bb:a367:a70 with SMTP id u11-20020a170903124b00b001bba3670a70mr10064950plh.17.1692761394571;
-        Tue, 22 Aug 2023 20:29:54 -0700 (PDT)
-Received: from xavier.lan ([2607:fa18:92fe:92b::2a2])
-        by smtp.gmail.com with ESMTPSA id kx14-20020a170902f94e00b001b567bbe82dsm9762591plb.150.2023.08.22.20.29.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Aug 2023 20:29:53 -0700 (PDT)
-From:   Alex Henrie <alexhenrie24@gmail.com>
-To:     git@vger.kernel.org, Jens.Lehmann@web.de, gitster@pobox.com
-Cc:     Alex Henrie <alexhenrie24@gmail.com>
-Subject: [PATCH] submodule: deprecate --recurse-submodules=""
-Date:   Tue, 22 Aug 2023 21:28:37 -0600
-Message-ID: <20230823032839.731375-1-alexhenrie24@gmail.com>
-X-Mailer: git-send-email 2.41.0
+        d=1e100.net; s=20221208; t=1692761561; x=1693366361;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=F3bz3XIJAcq93Ln5mBu2FC5vLkQ6BPh6T6UpA/AUrMA=;
+        b=j/3bbQsaf+CIGEyL1v4p4O2VQ+u4HyozOfY+0JsyRu2xtfc61KvyAuYXlpcxTXLNCF
+         9M5fLaw9y7+UVOKi14UnQ8uTdFnpd+jzrn/oh8WFkOTOAhGA4KL6qatwMruBSNlmn+7k
+         JUGLrjRB7aP2sgT5n5YKmrD6lvRYWtMYonifE/YdV8J30zq397orOTVe+tG9bQPtjizR
+         xsL97r1UJUN0Ed64bDlx2MKVRDyfM33RI/W9GvhgJyljJEZ6qL1XN7uYU0ksRdbo8aNJ
+         ZniLVFxwJ2rmWeNrLRDX0UbCwKOtLP/fsxMR3Sr6uakKdqMnjSifGgHctGmquhlHNywY
+         Dl9A==
+X-Gm-Message-State: AOJu0Yx1OvUEgwbCY6IjP5hdFXrMjP0wAsjTzFTZiZjYc+IW4gr6EKPP
+        l95CxMXkMP3erDgoffGh8+2qsMBJEBdf1mkEPOlIx3IgqWhx/3ivQ+A=
+X-Google-Smtp-Source: AGHT+IE+57PBCEUiP60p2s9UU2Yke5LZiYNuFOLl+dfTcV7BpftW2emRIGfhdRoPZwg1/TRZlJyM3Gdg+E88DF5nE1E=
+X-Received: by 2002:ac2:44b9:0:b0:4ff:8df5:bf17 with SMTP id
+ c25-20020ac244b9000000b004ff8df5bf17mr104653lfm.5.1692761560825; Tue, 22 Aug
+ 2023 20:32:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230817215325.2550998-1-taylorsantiago@google.com>
+ <20230817215325.2550998-2-taylorsantiago@google.com> <20230821203051.GA1800481@coredump.intra.peff.net>
+ <xmqqttsrn9l2.fsf@gitster.g> <CAKacvadS8X_nb6Z=yub9eJ54hRYWq4B7CYrWaw=uXBY8dPChYA@mail.gmail.com>
+ <xmqqcyzeh6a2.fsf@gitster.g>
+In-Reply-To: <xmqqcyzeh6a2.fsf@gitster.g>
+From:   Taylor Santiago <taylorsantiago@google.com>
+Date:   Tue, 22 Aug 2023 20:32:24 -0700
+Message-ID: <CAKacvadHXrgVmAfT_W+wPyhhRP2hVXXcVRB3rX8ArKvqUpe=Ug@mail.gmail.com>
+Subject: Re: [PATCH 1/1] Fix the order of consuming unpackLimit config settings.
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The unusual syntax --recurse-submodules="" (that is,
---recurse-submodules with an empty string argument) has been an
-undocumented synonym of --recurse-submodules without an argument since
-commit 8f0700dd33 (fetch/pull: Add the 'on-demand' value to the
---recurse-submodules option, 2011-03-06). Deprecate that syntax to avoid
-confusion with the submodule.recurse config option, where
-submodule.recurse="" is equivalent to --no-recurse-submodules.
+Looks good to me.
 
-The same thing was done for --rebase-merges="" in commit 33561f5170
-(rebase: deprecate --rebase-merges="", 2023-03-25).
+Thanks for the info on the patch process. I also am sending this mail
+in plain text mode so hopefully the mailing list doesn't drop it.
 
-Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
----
- submodule-config.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/submodule-config.c b/submodule-config.c
-index 6a48fd12f6..8acb42744d 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -332,11 +332,17 @@ int option_fetch_parse_recurse_submodules(const struct option *opt,
- 
- 	if (unset) {
- 		*v = RECURSE_SUBMODULES_OFF;
-+	} else if (!arg) {
-+		*v = RECURSE_SUBMODULES_ON;
- 	} else {
--		if (arg)
--			*v = parse_fetch_recurse_submodules_arg(opt->long_name, arg);
--		else
--			*v = RECURSE_SUBMODULES_ON;
-+		if (!*arg) {
-+			warning(_("--recurse-submodules with an empty string "
-+				  "argument is deprecated and will stop "
-+				  "working in a future version of Git. Use "
-+				  "--recurse-submodules without an argument "
-+				  "instead, which does the same thing."));
-+		}
-+		*v = parse_fetch_recurse_submodules_arg(opt->long_name, arg);
- 	}
- 	return 0;
- }
--- 
-2.41.0
-
+On Tue, Aug 22, 2023 at 6:55=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Taylor Santiago <taylorsantiago@google.com> writes:
+>
+> > Thank you! How would you like me to proceed? Should I submit the above =
+as a
+> > v2 of the earlier patch?
+>
+> There is nothing "above" as you seem to be top posting ;-)
+>
+> When somebody else helps by supplying an "squashable" patch, often
+> people are expected to review it and then update their patch(es)
+> using the given material to produce a v2.
+>
+> But as I said, the "squashable" one was only about the receive-pack
+> side; even if you combined it with your original, tests for the
+> fetch side were still missing, so it was not sufficient for a v2.
+>
+> As I didn't see your reply message (to which I am responding to)
+> until now, mostly because it was dropped by the mailing list
+> (perhaps it was an HTML e-mail from GMail or something???), I've
+> further worked on the tests to cover the fetch side and sent out a
+> full version (not a squashable, but just a replacement for the whole
+> thing).  It is archived and viewable at
+>
+>   https://lore.kernel.org/git/xmqqpm3eh7f6.fsf@gitster.g
+>
+> Part of it is still your original patch, some material in its
+> proposed commit log message was given by Peff, and the rest was
+> written by me, so it carries names of three people.
+>
+> If the result looks acceptable to you, then saying "Yup, that looks
+> good" would be the simplest answer to give to move things forward.
+>
+> Thanks.
