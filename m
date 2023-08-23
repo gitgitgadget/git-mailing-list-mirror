@@ -2,73 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B04CC3DA6F
-	for <git@archiver.kernel.org>; Wed, 23 Aug 2023 20:27:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1ABB2C27C40
+	for <git@archiver.kernel.org>; Wed, 23 Aug 2023 20:41:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236213AbjHWU03 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Aug 2023 16:26:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39426 "EHLO
+        id S236565AbjHWUlX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Aug 2023 16:41:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236502AbjHWU0R (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Aug 2023 16:26:17 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF03510DE
-        for <git@vger.kernel.org>; Wed, 23 Aug 2023 13:26:13 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A7C1A195769;
-        Wed, 23 Aug 2023 16:26:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=8rL+ZwVIddGW2lDwyCluVUGHYnGpYMjnC476DQ
-        V5+rQ=; b=KcMbAzLO/XsQmsZWCf7toTY19WiTJUqOVYB0mcQTrdLAWq3v+5ydIV
-        bbFyJo84w+N9xs0AloVaDeW+IvbNTXmRa6kppseWTlNeyUjR8gA/XHIBjntoHC89
-        E2JKFybspeaqVmGZqJQ1nx9OYdo7kMFEy/ebbSRmruDtvyAo3af9s=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A020F195768;
-        Wed, 23 Aug 2023 16:26:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.185.212.55])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 17993195767;
-        Wed, 23 Aug 2023 16:26:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org,
-        Jens.Lehmann@web.de
-Subject: Re: [PATCH] submodule: deprecate --recurse-submodules=""
-References: <20230823032839.731375-1-alexhenrie24@gmail.com>
-        <ZOZf4/DYOKqQLjR+@nand.local>
-Date:   Wed, 23 Aug 2023 13:26:09 -0700
-In-Reply-To: <ZOZf4/DYOKqQLjR+@nand.local> (Taylor Blau's message of "Wed, 23
-        Aug 2023 15:37:07 -0400")
-Message-ID: <xmqqa5uhfqu6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S235074AbjHWUkw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Aug 2023 16:40:52 -0400
+Received: from symantec4.comsats.net.pk (symantec4.comsats.net.pk [203.124.41.30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FAECE54
+        for <git@vger.kernel.org>; Wed, 23 Aug 2023 13:40:44 -0700 (PDT)
+X-AuditID: cb7c291e-06dff70000002aeb-14-64e659d97099
+Received: from iesco.comsatshosting.com (iesco.comsatshosting.com [210.56.28.11])
+        (using TLS with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by symantec4.comsats.net.pk (Symantec Messaging Gateway) with SMTP id 5C.14.10987.9D956E46; Thu, 24 Aug 2023 00:11:22 +0500 (PKT)
+DomainKey-Signature: a=rsa-sha1; c=nofws; q=dns;
+        d=iesco.com.pk; s=default;
+        h=received:content-type:mime-version:content-transfer-encoding
+          :content-description:subject:to:from:date:reply-to;
+        b=TtZhIDKW54izLbkd1g/a+gvCwnsaqxckTlAtf4t9FZ9TWJMX5MhAjEZ0VFBTDfBMY
+          hjX534n/dqwutevCjp5j1FcAz0tKt4y8Ga7jQoX60lMz8QYWBDQ7mMEN0Xn10VKco
+          eaIoeP4xAR0hEFMK+wv/Np6nPQHtqIJW82hYFgZJo=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=iesco.com.pk; s=default;
+        h=reply-to:date:from:to:subject:content-description
+          :content-transfer-encoding:mime-version:content-type;
+        bh=GMzYzcyTxDsE6wX/XHG6MHqAdAiHrhqbmmLQ/TZ1QnQ=;
+        b=Cwy/L/XnJNPCe9KFHd0GFii5UJaQqbI9EfraHaPYJmJUnb3O6MDPAfVetLCVtkn4m
+          oENWkgZH7kyIaClhEkZQ4gIUDhz2S28K+GmrSCaPaMgAh6Hd480I+x+dc69fvPuxY
+          tRYku6ZVJCgduLIBYjbOvVQS2EquHLitgUqlGkaqQ=
+Received: from [94.156.6.90] (UnknownHost [94.156.6.90]) by iesco.comsatshosting.com with SMTP;
+   Thu, 24 Aug 2023 01:37:41 +0500
+Message-ID: <5C.14.10987.9D956E46@symantec4.comsats.net.pk>
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4BE37928-41F3-11EE-A5F7-25B3960A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
+Content-Description: Mail message body
+Subject: Re; Interest,
+To:     git@vger.kernel.org
+From:   "Chen Yun" <conference@iesco.com.pk>
+Date:   Wed, 23 Aug 2023 13:37:56 -0700
+Reply-To: chnyne@gmail.com
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrLLMWRmVeSWpSXmKPExsVyyUKGW/dW5LMUg2kzWC26rnQzOTB6fN4k
+        F8AYxWWTkpqTWZZapG+XwJWxZN0FloLdzBVt/YtYGhgfM3UxcnJICJhIzN51na2LkYtDSGAP
+        k8TGnbMYQRwWgdXMEnN2v2GCcB4yS7w4f5wVoqyZUeLW/pXsIP28AtYSW5ddA5vFLKAncWPq
+        FDaIuKDEyZlPWCDi2hLLFr5m7mLkALLVJL52lYCEhQXEJD5NWwY2RkRAXOLt8ZlgNpuAlsT/
+        +XvBRrIIqEq8enoJbKSQgJTExivr2SYw8s9Csm0Wkm2zkGybhbBtASPLKkaJ4srcRGCwJZvo
+        JefnFieWFOvlpZboFWRvYgQG4ukaTbkdjEsvJR5iFOBgVOLhLfj5NEWINbEMqOsQowQHs5II
+        7xefZylCvCmJlVWpRfnxRaU5qcWHGKU5WJTEeW2FniULCaQnlqRmp6YWpBbBZJk4OKUaGM84
+        HxIzruqXO3HAONXL0kuAT8r8++FD7tHK3leDfy5q10m0dVLaN/dpoKR3UuEk13l3dV9fKBAz
+        /n00x6qpyMYie75zb6pZk3jX86JJtx7oa6e6m3J49a5dGHnPmLlON8tFLkm5aoGI6HOfmM+O
+        5XFMgQKHPj/zWb3j8ddj3yMOP427mmGhxFKckWioxVxUnAgADbTR/EACAAA=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+Re; Interest,
 
-> So here we'd be doing the equivalent of
->
->     *v = RECURSE_SUBMODULES_OFF;
->
-> when trying to parse `--recurse-submodules=""`. Should this advice
-> instead say "[...] Use --no-recurse-submodules without an argument,
-> which does the same thing"?
+I am interested in discussing the Investment proposal as I explained
+in my previous mail. May you let me know your interest and the
+possibility of a cooperation aimed for mutual interest.
 
-Sounds right.  So there is nothing to change here, I guess.
+Looking forward to your mail for further discussion.
 
-If --recurse-submodules="" does something people do not expect to
-happen, an warning might be warranted, but I somehow do not think
-that is the case here.  If we are not hurting anybody by accepting
-that (possibly unusual) form, I do not think we would want to add an
-extra warning, either.
+Regards
 
-Thanks.
+------
+Chen Yun - Chairman of CREC
+China Railway Engineering Corporation - CRECG
+China Railway Plaza, No.69 Fuxing Road, Haidian District, Beijing, P.R.
+China
+
