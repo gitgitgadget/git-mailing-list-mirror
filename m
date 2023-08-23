@@ -2,86 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73A25C3DA66
-	for <git@archiver.kernel.org>; Wed, 23 Aug 2023 18:37:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 79449C3DA66
+	for <git@archiver.kernel.org>; Wed, 23 Aug 2023 18:40:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238188AbjHWShP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Aug 2023 14:37:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55926 "EHLO
+        id S238222AbjHWSkl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Aug 2023 14:40:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232847AbjHWShO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Aug 2023 14:37:14 -0400
-Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B669FD
-        for <git@vger.kernel.org>; Wed, 23 Aug 2023 11:37:12 -0700 (PDT)
-Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-5922b96c5fcso32664697b3.0
-        for <git@vger.kernel.org>; Wed, 23 Aug 2023 11:37:12 -0700 (PDT)
+        with ESMTP id S237972AbjHWSkl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Aug 2023 14:40:41 -0400
+Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71E87E6F
+        for <git@vger.kernel.org>; Wed, 23 Aug 2023 11:40:37 -0700 (PDT)
+Received: by mail-yb1-xb2b.google.com with SMTP id 3f1490d57ef6-d77f614243aso66845276.0
+        for <git@vger.kernel.org>; Wed, 23 Aug 2023 11:40:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1692815831; x=1693420631;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1692816036; x=1693420836;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=eSkAXuZKIckMG+3KfVPIlbKljuAVyVFpXfU9rDeV+OQ=;
-        b=iSBcepCvuD3ej69Wse8U4oXO39veJjBeVdBPal0oHC7Zo4kJBqtwsiqFH5aTuRAf5o
-         JwX5/8Z31oXs2ahniRaYi2O2DfiM7c4FoRKpAx5VEPQkzHjCyeU2xMCmOjejJLRhEeIy
-         fyWVU/viR/jx8z3qVWdZXS26/sR+Y0K1QjB3XXcz9uIHm0IKmrSgzUjK3VXDU1Sk8ZlT
-         EW2qqCQQAIGWNVOEocS9gzfxgMPW3TZQtP9w0BYGtSb4kFsEeUVwhwnjbCtmTEubyKut
-         ARNhbUlH99NzaRmdw0kJNo2P4Vn6f0n6jBRjSWAYPfj249vLdZbAS9C+P0YtSOhxEE/C
-         0pDg==
+        bh=r3wUM0jGjwtg6ExZldX99gQkGDShZ1t49Z0rdUTwltU=;
+        b=fORFSL6fsLrEuLP42KKN3GllsP8DCoONkMFoy4NIwX4SEaGanolX9E8ObuHkNurOsm
+         lqbyZ3T3hrfNTjZ9LPiLcBQBWDLftYOXT6KEZ03AwPSTpZ7bFmiyfBH2UjPztl/FFmtV
+         PhLODSEmDilA1/8aHCCgEhOgz2mUpnNynh8xlMyPqUUAN86E8HB8X02/iobBsCipujfm
+         RlRJPWJ/jN6Y1xxPqq7udz03kqNANXJE8Hso3yI3a5Tr95Rg6EjB4js76/AzqUBbqIcC
+         fIrM6bf4SGAUY5x+utVxXezGlZrfVvd3pb23v3sLKtlBzwTv0M8h1kEkC2ucYfpEnapL
+         zUVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692815831; x=1693420631;
+        d=1e100.net; s=20221208; t=1692816036; x=1693420836;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=eSkAXuZKIckMG+3KfVPIlbKljuAVyVFpXfU9rDeV+OQ=;
-        b=c/SmO1on6jWs6/Nv8uzhLfupvRS9O37ssxw9eZXq8jqFVK9YmAmwrijIRLwz0WL8D4
-         AB8Vua3RhXkmUumkAcoPLAHS97CkmNuxFlhIx7dEXfnwrp42wNJdJKiy6xvz8BJ1BxdN
-         3aPvUuN11Bsy1alPMK+GI+4eY9ht/C9IF/rxSa0sbcx0HdFw1T0IEq2oRpO29gAv7rdw
-         opP4DMSD/BRtpWM8S6l94q8nzs2/5tttqNlWM+1F/0isS7oW+OcVQ+nXBaFZaxm88aat
-         pwwVA84xxZxN44LEDCAaS7DzwUIXkb7Tt/8T9MfnwCH2iqb3RUwcU5QBF3fW4Sm1233s
-         1XOA==
-X-Gm-Message-State: AOJu0YyL2OzUhaYXfzsvhKZtXuB/0jBw24sbS+/LcBy4x/pP8xZXR3G4
-        IqRAs3RzLQjys2jA4Of4wPm0E1LPsQN92oaK823t0w==
-X-Google-Smtp-Source: AGHT+IE2i+IGLihJyDUU92iEsfOJ89xHIpqAvLBfJ38g8EAORewbNnpf1O5z3/2lnffLogDp8Ddbkw==
-X-Received: by 2002:a0d:f586:0:b0:569:e7cb:cd4e with SMTP id e128-20020a0df586000000b00569e7cbcd4emr13236364ywf.48.1692815831291;
-        Wed, 23 Aug 2023 11:37:11 -0700 (PDT)
+        bh=r3wUM0jGjwtg6ExZldX99gQkGDShZ1t49Z0rdUTwltU=;
+        b=HkWHde4/IvKHKYmZFh/28hhABgBnmJPTpA7BSVJmiyT82Vw+JPgj6OVsgQe46Xj0hY
+         IKbVIgYyuo0MYMBoTHUe1Y9ydC35wd4xSiDO3VWVjAIsfrGfGmkiYIDSt7HHO2toCE7Y
+         dOxVA+GiNh3BwQLOaGD9FSWZISWDXhMCRw2pefVSDvopbVPloY49dhlPsFMasCKOtOXY
+         FalczCHgOqridtbZWRnylYqAqMiwo4eYF6KeUpZq7ILNaCojNnLkzmxYLWjDS1fuV9HO
+         sD4Axa2hwCxQjzmboiWDlmgG+CVQKxjs/5HOUxOjB/rIeQHbDbpJDgg7iUmJDbw9GY9N
+         /wcA==
+X-Gm-Message-State: AOJu0YxebUW7tFHEvxkLgrIiAJfLgHyXhGuhyjn3nUJdR8BGXHoDi+9y
+        ktcOHl4ZNuZC7axgrkOWFcOibg==
+X-Google-Smtp-Source: AGHT+IH4Qe33mWWfAF41HaVixS2YolNJHRz7aB2fgBQm2yoLYDgWJGgVj4nV1DvLOF0MfP0013Nbig==
+X-Received: by 2002:a25:9f8e:0:b0:d64:6cd9:29a4 with SMTP id u14-20020a259f8e000000b00d646cd929a4mr10789078ybq.61.1692816036549;
+        Wed, 23 Aug 2023 11:40:36 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id i127-20020a819185000000b0058c4e33b2d6sm3487825ywg.90.2023.08.23.11.37.10
+        by smtp.gmail.com with ESMTPSA id f9-20020a056902038900b00d071631665fsm2839768ybs.59.2023.08.23.11.40.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Aug 2023 11:37:10 -0700 (PDT)
-Date:   Wed, 23 Aug 2023 14:37:06 -0400
+        Wed, 23 Aug 2023 11:40:36 -0700 (PDT)
+Date:   Wed, 23 Aug 2023 14:40:35 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: 2.43 release date adjustment?
-Message-ID: <ZOZR0jesPpCDNbRj@nand.local>
-References: <ZOYdG8RtPIgymtBV@nand.local>
- <xmqqpm3dg27i.fsf@gitster.g>
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+        Hariom verma <hariom18599@gmail.com>,
+        Victoria Dye <vdye@github.com>
+Subject: Re: Git in Outreachy? (December, 2023)
+Message-ID: <ZOZSo7vJztHcvb4W@nand.local>
+References: <ZNwhVOggObU7aVTr@nand.local>
+ <CAP8UFD2Yw1XazomxEj0QB20FoaxkO16t_xgRurtnqCCOuhX-eQ@mail.gmail.com>
+ <2c31a3d4-59f7-d036-0c6b-5fd62cc7a2fa@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqpm3dg27i.fsf@gitster.g>
+In-Reply-To: <2c31a3d4-59f7-d036-0c6b-5fd62cc7a2fa@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 23, 2023 at 09:20:33AM -0700, Junio C Hamano wrote:
-> > Should we consider pushing back the release to the week after
-> > Thanksgiving, say on 2023-11-27? This cycle is already somewhat long so
-> > we could move the release up to 2023-11-13, but I think it would be
-> > nice to have folks around in case of any brown paper-bag fixes.
+On Tue, Aug 22, 2023 at 11:44:41AM +0530, Kaartic Sivaraam wrote:
+> > > If folks are interested, I'd be more than happy to answer any questions
+> > > about participating, and overall logistics of the program.
 >
-> I am not sure how it would help to place the release day immediately
-> after the off-week everybody has stayed off the keyboard, though.  I
-> would prefer to see fully working weeks during the pre-release
-> period so that people can work on last minute regression fixes, so I
-> hoped it would work much better to release before the holiday week
-> begins, rather than after it ends.
+> I'm guessing the mentor sign up deadline aligns with the project submission
+> timeline. Could you kindly confirm the same, Taylor?
 
-Perhaps then we should shorten this cycle by a week and plan to cut the
-release on 2023-11-13.
-
-That gives us a full working week to catch any bugs, and gives everybody
-a nice break before starting on 2.44. Thoughts?
+I couldn't find any specific mention of it on the schedule[1], but AFAIR
+we can add mentors at any time after the Git project confirms its
+participation.
 
 Thanks,
 Taylor
+
+[1]: https://www.outreachy.org/apply/project-selection/
