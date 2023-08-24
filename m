@@ -2,133 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 908DFC6FA8F
-	for <git@archiver.kernel.org>; Thu, 24 Aug 2023 22:48:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76C96C6FA8F
+	for <git@archiver.kernel.org>; Thu, 24 Aug 2023 22:57:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243888AbjHXWsB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Aug 2023 18:48:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34004 "EHLO
+        id S243983AbjHXW4r (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Aug 2023 18:56:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42992 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244009AbjHXWrv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Aug 2023 18:47:51 -0400
-Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06D43E4B
-        for <git@vger.kernel.org>; Thu, 24 Aug 2023 15:47:50 -0700 (PDT)
-Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-59231a1ca9eso4419907b3.1
-        for <git@vger.kernel.org>; Thu, 24 Aug 2023 15:47:49 -0700 (PDT)
+        with ESMTP id S244043AbjHXW4p (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Aug 2023 18:56:45 -0400
+Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C0A01BFA
+        for <git@vger.kernel.org>; Thu, 24 Aug 2023 15:56:43 -0700 (PDT)
+Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-59205f26e47so4387727b3.2
+        for <git@vger.kernel.org>; Thu, 24 Aug 2023 15:56:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1692917269; x=1693522069;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1692917803; x=1693522603;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=hdXPXKvwg6/c+D+fktXfz6BHShux2ILztKUWLJuomU0=;
-        b=DqqfUD0VytkA+tKC/3uw4T0lxBTRjlb8TpZUlQWSnmCIbGWOSrwfngWuCyr6XPSfqO
-         2RarkaKOcI94Aityx11G3lZZt+TjkeriGH9UVsTp6/tNTp/JEypfGmbpBMp4KjfDT3ax
-         K5iUMzl+Qiv4Y+vKvIYcCsR6UY6EQ/T3jf1P+KQK0j4cde2JYqwtPYxDUb8JxNJIUbB3
-         qsrJdQ75zNlLZI1eg50SUpd7ez6WTYu4VhRKBTVR1axHh152PtMZt1HxuVUj23mZBbiZ
-         IDmgRt3CzqN2o2DqL9eRwwhi23pEGRy53saTAx7ES/oqQE11s1UWozaxw6FlraOIHXU1
-         d89g==
+        bh=lfLCNc437Q6hMz/YlmrljAR4n2n152N3bdTQpRDI5Ys=;
+        b=ESer49Ca9TAgf6VBdK+5ImR4eEKuL96MlK99VolguYssaayG0PTElby9Ib6FCNXr6u
+         U33Ce4l7frM3gkHoBlUF2QRdWjPOHApGFb1CfGCPukz9EBZbnDNASgIyXRUccL/OZ7KV
+         nCtar0K9U4kNMOKGhdM41Ud4fCJnzJYeupHiOmcAa/VMbVw2swYcAqoozZtWTJGyZX4j
+         NLYUsyIHvLQGicwilkc1rYa/pc3UNPFOGDLmdWrNnm9GYH1l7VXXBwFTg/tPeif6yGpG
+         //eSDMco9sxfzqZ7vm4hdZU0s0SaJyXCDh5QTIN9iw1jsgxnKCzu01kSnKn6mzmwmeIV
+         XoKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692917269; x=1693522069;
+        d=1e100.net; s=20221208; t=1692917803; x=1693522603;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hdXPXKvwg6/c+D+fktXfz6BHShux2ILztKUWLJuomU0=;
-        b=XXIpJ2gkgKC4V5amf9yzgX6SkgQkJ3IPpBBc5OfmM6mQnjCfTE399KNzS8aqnFgaiZ
-         jWaV0P5aGvH4w/WvSs47QWBNfclO1Nq4dIWxuQOGNN2N7RHfRqf34pb1SbsPxCe5zx37
-         XcV5Ag9fjXaJ2hM3KErrNN+TM3PRfItayLhLEiV2DFCKbd/SkcfT9ViiYP/PndtI44QM
-         lYQtORDwVlSylX4JwyR/b+lB5l6Xt4SjFqmEYqP6zG5QiGc2JMfiTSK6v0xvXvLfE7Bb
-         U4dlGYK0x6dAqI1wkLi5+loKKSeJwkfOLL7jFOQ2eyyl1uMSrAkFQ/0NuE74wv/Jkyor
-         E+mQ==
-X-Gm-Message-State: AOJu0YwM49gS4UKu0TZS0SIFiVo4qoCrvyw8g7dqTxnPP90qqcUPgYFN
-        j/J1x8+NPAiy5i/IfwXxiDpmWw==
-X-Google-Smtp-Source: AGHT+IHgtAAozQhM2WH8w0DfNtsqMDCflqjEaAsyTAXRnHIkHMUuFC8WNgT78FjQOHsMZW/+DiFLLg==
-X-Received: by 2002:a81:478b:0:b0:589:d617:e7c4 with SMTP id u133-20020a81478b000000b00589d617e7c4mr16358792ywa.16.1692917269214;
-        Thu, 24 Aug 2023 15:47:49 -0700 (PDT)
+        bh=lfLCNc437Q6hMz/YlmrljAR4n2n152N3bdTQpRDI5Ys=;
+        b=Dy3OKW1jSM1H/8yV4JMh5iPn2del2CwD3c3Xz/kvzhHOIT8ZVkfkqdDafD7wpN9P0V
+         WKknX/3LCcsMjMZpTXE5IOtf/+QEoq6I8ZUEfrIco4GNr8XUYicU6bl5dE0ez470npU4
+         zUsTXGr2URdLF6d4z6fFqTsJQGB7e58za7dUzDXVjS4EQNZ8WDIpvWDcOt08fehKecWL
+         XxDH3zhea6Z3ChsmDj50DB8vHPWGorUwy1ssczACddBrP+79WNBgmdpYmRo8+yYXFmfQ
+         t4Xkwc4wTLM+Odow00o03Zyi+IbkG17GPr5WJ4VQbjlm5OyynfsU7AG4U7p8D3atWo0y
+         ChXg==
+X-Gm-Message-State: AOJu0YwMQFMhzv1A93uT7I01Ib9UEeAPWLH6RIs4KQWJ1TY6InfHRntF
+        hamery9ticgNU/cYdvCpXGHgPYPjKZWKB1cP1tC4Ug==
+X-Google-Smtp-Source: AGHT+IHPtXPWALGMoY7IO37iHLyTxr+625HL2BgCPC3k/ZHVXtSTCVcZeZ2PYxvU9kyqdIn3fTyixg==
+X-Received: by 2002:a25:adc5:0:b0:d42:42f8:93c2 with SMTP id d5-20020a25adc5000000b00d4242f893c2mr16400247ybe.16.1692917802739;
+        Thu, 24 Aug 2023 15:56:42 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id c80-20020a814e53000000b0058ddb62f99bsm155098ywb.38.2023.08.24.15.47.48
+        by smtp.gmail.com with ESMTPSA id n196-20020a2540cd000000b00d071631665fsm103011yba.59.2023.08.24.15.56.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Aug 2023 15:47:48 -0700 (PDT)
-Date:   Thu, 24 Aug 2023 18:47:47 -0400
+        Thu, 24 Aug 2023 15:56:42 -0700 (PDT)
+Date:   Thu, 24 Aug 2023 18:56:41 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH 2/6] bloom: prepare to discard incompatible Bloom
- filters
-Message-ID: <ZOfeE1K8aRIECVm4@nand.local>
-References: <a4cb5fe69247ba737a8373948c1f4ff8a150d283.1691426160.git.me@ttaylorr.com>
- <20230824222051.2320003-1-jonathantanmy@google.com>
+To:     Alexei Podtelezhnikov <apodtele@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: confused git diff -G
+Message-ID: <ZOfgKQfqvef9FXZ6@nand.local>
+References: <CAJU=AjWatV6A5Vx-yqRfG=yeUWxMvKocc4nTsdq58WHjaYFEzw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230824222051.2320003-1-jonathantanmy@google.com>
+In-Reply-To: <CAJU=AjWatV6A5Vx-yqRfG=yeUWxMvKocc4nTsdq58WHjaYFEzw@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 24, 2023 at 03:20:51PM -0700, Jonathan Tan wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
-> > diff --git a/bloom.c b/bloom.c
-> > index 9b6a30f6f6..739fa093ba 100644
-> > --- a/bloom.c
-> > +++ b/bloom.c
-> > @@ -250,6 +250,23 @@ static void init_truncated_large_filter(struct bloom_filter *filter,
-> >  	filter->version = version;
-> >  }
-> >
-> > +struct bloom_filter *get_bloom_filter(struct repository *r, struct commit *c)
-> > +{
-> > +	struct bloom_filter *filter;
-> > +	int hash_version;
-> > +
-> > +	filter = get_or_compute_bloom_filter(r, c, 0, NULL, NULL);
-> > +	if (!filter)
-> > +		return NULL;
-> > +
-> > +	prepare_repo_settings(r);
-> > +	hash_version = r->settings.commit_graph_changed_paths_version;
-> > +
-> > +	if (!(hash_version == -1 || hash_version == filter->version))
-> > +		return NULL; /* unusable filter */
-> > +	return filter;
-> > +}
+On Thu, Aug 24, 2023 at 06:08:18PM -0400, Alexei Podtelezhnikov wrote:
+> I find this sections of the docs confusing:
 >
-> I missed this the last time, but this should match what fill_bloom_key()
-> does. Use get_bloom_filter_settings(),
+> git diff -G (https://git.kernel.org/pub/scm/git/git.git/tree/Documentation/diff-options.txt#n656)
+>
+>  I do not follow why the example talks about `git log -G` and commits.
+> I see that thai file is included in git-log .txt but I do not
+> understand how to use git  diff -G.
 
-I'm not sure I'm following. Are you saying that we should use
-get_bloom_filter_settings() instead of reading the value from
-r->settings directly?
+I agree that it can be somewhat confusing :-).
 
-> then compare filter->version to version 2 if hash_version is 2, and to
-> version 1 otherwise.
+The linked section DIFFCORE-PICKAXE in gitdiffcore(7) may be helpful:
 
-Hmm. I think we're already doing the right thing here, no? IIUC, you're
-saying to do something like:
+    DIFFCORE-PICKAXE: FOR DETECTING ADDITION/DELETION OF SPECIFIED STRING
+           This transformation limits the set of filepairs to those that
+           change specified strings between the preimage and the
+           postimage in a certain way. -S<block of text> and -G<regular
+           expression> options are used to specify different ways these
+           strings are sought.
 
-    struct bloom_filter_settings *s = get_bloom_filter_settings(r);
-    struct bloom_filter *f = get_or_compute_bloom_filter(r, c, ...);
-    int hash_version;
+           [...]
 
-    if (!f)
-      return NULL;
+           "-G<regular expression>" (mnemonic: grep) detects filepairs
+           whose textual diff has an added or a deleted line that
+           matches the given regular expression. This means that it will
+           detect in-file (or what rename-detection considers the same
+           file) moves, which is noise. The implementation runs diff
+           twice and greps, and this can be quite expensive. To speed
+           things up binary files without textconv filters will be
+           ignored.
 
-    prepare_repo_settings(r);
-    hash_version = r->settings.commit_graph_changed_paths_version;
+So if I have a setup like:
 
-    if (!(hash_version == -1 || hash_version == s->hash_version))
-      return NULL; /* incompatible */
-    return f;
+    $ git init repo
+    $ git -C repo commit --allow-empty -m base
+    $ for c in a b; do echo $c>repo/$c && git -C $repo add $c; done
+    $ git -C repo commit -m changes
 
-?
+Then you can see `-G` has the effect of limiting the output of 'git
+diff' to just those file(s) whose diff matches the regular expression
+given to `-G`, like so:
 
-If so, I think that we're already OK here, since s->hash_version is
-always going to take the same value as f->version, since f->version is
-assigned in bloom.c::load_bloom_filter_from_graph(), which does:
+    $ git -C repo diff --stat HEAD^
+     a | 1 +
+     b | 1 +
+     2 files changed, 2 insertions(+)
+    $ git -C repo diff --stat HEAD^ -G a
+     a | 1 +
+     1 file changed, 1 insertion(+)
+    $ git -C repo diff --stat HEAD^ -G b
+     b | 1 +
+     1 file changed, 1 insertion(+)
 
-    filter->version = g->bloom_filter_settings->hash_version;
-
-Or are we talking about two different things entirely? ;-)
+(I'm using --stat here to keep the output brief, since the contents are
+only important insomuch as files "a" and "b" match the regular
+expressions "a" and "b", respectively).
 
 Thanks,
 Taylor
