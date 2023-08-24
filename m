@@ -2,73 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE921C7EE2C
-	for <git@archiver.kernel.org>; Thu, 24 Aug 2023 14:45:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B583C71153
+	for <git@archiver.kernel.org>; Thu, 24 Aug 2023 15:01:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241608AbjHXOo7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Aug 2023 10:44:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37924 "EHLO
+        id S240038AbjHXPBB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Aug 2023 11:01:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241530AbjHXOoo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Aug 2023 10:44:44 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7501F1BE
-        for <git@vger.kernel.org>; Thu, 24 Aug 2023 07:44:40 -0700 (PDT)
-Received: (qmail 13245 invoked by uid 109); 24 Aug 2023 14:44:40 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 24 Aug 2023 14:44:40 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19514 invoked by uid 111); 24 Aug 2023 14:44:39 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 24 Aug 2023 10:44:39 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 24 Aug 2023 10:44:39 -0400
-From:   Jeff King <peff@peff.net>
-To:     Ganriel =?utf-8?B?TsO8dHpp?= <gnuetzi@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Git credential-cache manager is not treating `path=` correctly
-Message-ID: <20230824144439.GB3108100@coredump.intra.peff.net>
-References: <20230823192207.GC2355007@coredump.intra.peff.net>
- <14F3D856-6A3B-45F8-B5FD-9CD5D0CB7C47@gmail.com>
+        with ESMTP id S242052AbjHXPAv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Aug 2023 11:00:51 -0400
+Received: from bluemchen.kde.org (bluemchen.kde.org [209.51.188.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0FEF19AA
+        for <git@vger.kernel.org>; Thu, 24 Aug 2023 08:00:48 -0700 (PDT)
+Received: from ugly.fritz.box (localhost [127.0.0.1])
+        by bluemchen.kde.org (Postfix) with ESMTP id 599D723FF1;
+        Thu, 24 Aug 2023 11:00:47 -0400 (EDT)
+Received: by ugly.fritz.box (masqmail 0.3.6-dev, from userid 1000)
+        id 1qZBpG-Mdl-00; Thu, 24 Aug 2023 17:00:46 +0200
+From:   Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v4] sequencer: rectify empty hint in call of require_clean_work_tree()
+Date:   Thu, 24 Aug 2023 17:00:46 +0200
+Message-Id: <20230824150046.802008-1-oswald.buddenhagen@gmx.de>
+X-Mailer: git-send-email 2.40.0.152.g15d061e6df
+In-Reply-To: <ZNTI6xpXIRaoFlxx@ugly>
+References: <ZNTI6xpXIRaoFlxx@ugly>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <14F3D856-6A3B-45F8-B5FD-9CD5D0CB7C47@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 23, 2023 at 11:02:44PM +0200, Ganriel Nützi wrote:
+The canonical way to represent "no error hint" is making it NULL, which
+shortcuts the error() call altogether. This fixes the output by removing
+the line which said just "error:", which would appear when the worktree
+is dirtied while editing the initial rebase todo file. This was
+introduced by 97e1873 (rebase -i: rewrite complete_action() in C,
+2018-08-28), which did a somewhat inaccurate conversion from shell.
 
-> What I did not get from the documentation ist that a “store” of a
-> generic (without path) credential , e.g https://www.server.com will
-> just overwrite the more specific ones already in there. (So that is
-> the case in my test, right? And the prompt happens in the first fill
-> because useHttpPath=true but there is nomore any credential entry in
-> the cache which would match (only the generic but that does not
-> match), right?)
+To avoid that such bugs re-appear, test for the condition in
+require_clean_work_tree().
 
-Right, exactly. It's possible that other helpers may behave differently
-here, but certainly the scheme used by both "store" and "cache" is to
-delete/replace anything that matches with the new credential.
+Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 
-> I am not sure but I thought that using cache is safer than store
-> because i generally dont want to have credentials on a disk.
+---
+yeah, so i _did_ miss something.
 
-It is safer. I used the "store" one while testing because it is easy to
-look at its internal state at any point with "cat ~/.git-credentials". :)
+v4:
+- fixed reproduction instructions
+v3:
+- added BUG()
+- rewrote commit message again
+v2:
+- expanded commit message
 
-But the same logic should apply to "cache", and my "use two helpers"
-trick should work by giving it a separate socket, like:
+Cc: Junio C Hamano <gitster@pobox.com>
+---
+ sequencer.c | 2 +-
+ wt-status.c | 6 +++++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-  [credential]
-  helper = cache
+diff --git a/sequencer.c b/sequencer.c
+index cc9821ece2..d15a7409d8 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -6182,7 +6182,7 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+ 	if (checkout_onto(r, opts, onto_name, &oid, orig_head))
+ 		goto cleanup;
+ 
+-	if (require_clean_work_tree(r, "rebase", "", 1, 1))
++	if (require_clean_work_tree(r, "rebase", NULL, 1, 1))
+ 		goto cleanup;
+ 
+ 	todo_list_write_total_nr(&new_todo);
+diff --git a/wt-status.c b/wt-status.c
+index 8a1a4fb1f0..c8c1780566 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -2654,8 +2654,12 @@ int require_clean_work_tree(struct repository *r,
+ 	}
+ 
+ 	if (err) {
+-		if (hint)
++		if (hint) {
++			if (!*hint)
++				BUG("empty hint passed to require_clean_work_tree();"
++				    " use NULL instead");
+ 			error("%s", hint);
++		}
+ 		if (!gently)
+ 			exit(128);
+ 	}
+-- 
+2.40.0.152.g15d061e6df
 
-  [credential "https://www.server.com/repos/1.git"]
-  # separate socket/daemon for path-respecting entries
-  helper =
-  helper = credential --socket=$HOME/.git-credential-cache/socket-path
-  useHttpPath = true
-
--Peff
