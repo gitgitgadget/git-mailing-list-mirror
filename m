@@ -2,78 +2,54 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5F70C3DA66
-	for <git@archiver.kernel.org>; Thu, 24 Aug 2023 01:22:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78E51C27C40
+	for <git@archiver.kernel.org>; Thu, 24 Aug 2023 06:16:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238990AbjHXBVo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Aug 2023 21:21:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38930 "EHLO
+        id S240020AbjHXGPe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Aug 2023 02:15:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239066AbjHXBVg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Aug 2023 21:21:36 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C75D10E4
-        for <git@vger.kernel.org>; Wed, 23 Aug 2023 18:21:35 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B59211A3068;
-        Wed, 23 Aug 2023 21:21:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=2o9LQVNUz7Br0eZwCoJm/pm0Ec1f+/MO0qjcSk
-        +PNIE=; b=Cd9IXe2Nh5b5uPxte1W2+c02NlS2AgTNq5PZb3/Zcl//QyBrAXJkZX
-        PWvjQSccZ7lc+3vK0r5vanD5f92CbCGn/zCemM9Q3c9q+2arn2uKdL2tC9RvqJBD
-        xV7Ob2u/RpbRsZyiPnRtIIHNqQno85ugLX9wyJE2+G8g4uGPGw/40=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id ADB1B1A3067;
-        Wed, 23 Aug 2023 21:21:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.185.212.55])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 18F9E1A3066;
-        Wed, 23 Aug 2023 21:21:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org
-Subject: Re: 2.43 release date adjustment?
-References: <ZOYdG8RtPIgymtBV@nand.local> <xmqqpm3dg27i.fsf@gitster.g>
-        <ZOZR0jesPpCDNbRj@nand.local> <xmqqh6ope8v6.fsf@gitster.g>
-        <ZOZ+cbkrXsEcQyaW@nand.local> <xmqqcyzde7r2.fsf@gitster.g>
-        <ZOaJXSZu4Bv6aXEH@nand.local>
-Date:   Wed, 23 Aug 2023 18:21:33 -0700
-In-Reply-To: <ZOaJXSZu4Bv6aXEH@nand.local> (Taylor Blau's message of "Wed, 23
-        Aug 2023 18:34:05 -0400")
-Message-ID: <xmqqo7ixck0y.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S240038AbjHXGPH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Aug 2023 02:15:07 -0400
+Received: from bluemchen.kde.org (bluemchen.kde.org [IPv6:2001:470:142:8::100])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9E6B170C
+        for <git@vger.kernel.org>; Wed, 23 Aug 2023 23:14:49 -0700 (PDT)
+Received: from ugly.fritz.box (localhost [127.0.0.1])
+        by bluemchen.kde.org (Postfix) with ESMTP id 69529241CA;
+        Thu, 24 Aug 2023 02:14:47 -0400 (EDT)
+Received: by ugly.fritz.box (masqmail 0.3.6-dev, from userid 1000)
+        id 1qZ3cE-AcW-00; Thu, 24 Aug 2023 08:14:46 +0200
+Date:   Thu, 24 Aug 2023 08:14:46 +0200
+From:   Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        Kristoffer Haugsbakk <code@khaugsbakk.name>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v4 1/2] sequencer: beautify subject of reverts of reverts
+Message-ID: <ZOb1ViHIaqX8PcHV@ugly>
+References: <20230809171531.2564807-1-oswald.buddenhagen@gmx.de>
+ <20230821170720.577850-1-oswald.buddenhagen@gmx.de>
+ <ZOZnNDd2pMX6M2Au@nand.local>
+ <xmqqsf89e8wz.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9037DECE-421C-11EE-A143-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <xmqqsf89e8wz.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
-
-> On Wed, Aug 23, 2023 at 03:03:45PM -0700, Junio C Hamano wrote:
->> Taylor Blau <me@ttaylorr.com> writes:
->>
->> > No specific reason to expect bugs. Just trying to line things up so that
->> > we have (a) people around when the release is tagged, and (b) don't have
->> > a release hanging over our heads either during or immediately after a
->> > week when most US developers are offline.
->>
->> That is exactly what I call "expecting a post-release fixes".
->>
->> A much more important thing is to make sure we catch them before the
->> release and devise ways to help us do so, perhaps opting more userbase
->> into testing early.
+On Wed, Aug 23, 2023 at 02:38:36PM -0700, Junio C Hamano wrote:
+>Taylor Blau <me@ttaylorr.com> writes:
 >
-> I agree, but shouldn't we still plan such that we have folks around for
-> a week after the release in case something was missed?
+>> This version is looking good. The main functionality is well-reasoned
+>> and straightforwardly implemented. One minor suggestion that you could
+>> consider squashing in is some test clean-up like so:
+>>
+>
+>Yeah it does make the test more concise and what is expected stand
+>out more clearly.  Good suggestion.
+>
+agreed. do you want to squash it on your end, or should i reroll?
 
-I would rather want to see us try hard to avoid regressing in the
-first place, instead of plan to have regression in the release and
-have folks around after the release date.
-
+regards
