@@ -2,103 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 162E0C7113B
-	for <git@archiver.kernel.org>; Thu, 24 Aug 2023 20:51:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E3E4BC7113B
+	for <git@archiver.kernel.org>; Thu, 24 Aug 2023 20:56:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243600AbjHXUuj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Aug 2023 16:50:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57670 "EHLO
+        id S243583AbjHXUzc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Aug 2023 16:55:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243646AbjHXUuZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Aug 2023 16:50:25 -0400
+        with ESMTP id S243604AbjHXUy7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Aug 2023 16:54:59 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26CFC1BE2
-        for <git@vger.kernel.org>; Thu, 24 Aug 2023 13:50:10 -0700 (PDT)
-Received: (qmail 16352 invoked by uid 109); 24 Aug 2023 20:50:10 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97D481993
+        for <git@vger.kernel.org>; Thu, 24 Aug 2023 13:54:57 -0700 (PDT)
+Received: (qmail 16385 invoked by uid 109); 24 Aug 2023 20:54:57 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 24 Aug 2023 20:50:10 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 24 Aug 2023 20:54:57 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22407 invoked by uid 111); 24 Aug 2023 20:50:11 -0000
+Received: (qmail 22427 invoked by uid 111); 24 Aug 2023 20:54:57 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 24 Aug 2023 16:50:11 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 24 Aug 2023 16:54:57 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 24 Aug 2023 16:50:09 -0400
+Date:   Thu, 24 Aug 2023 16:54:56 -0400
 From:   Jeff King <peff@peff.net>
 To:     Taylor Blau <me@ttaylorr.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Teng Long <dyroneteng@gmail.com>,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Subject: Re: [PATCH 0/3] leak tests: mark remaining tests leak-free as such
-Message-ID: <20230824205009.GA1516@coredump.intra.peff.net>
+Message-ID: <20230824205456.GA2309362@coredump.intra.peff.net>
 References: <cover.1692902414.git.me@ttaylorr.com>
+ <20230824205009.GA1516@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1692902414.git.me@ttaylorr.com>
+In-Reply-To: <20230824205009.GA1516@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 24, 2023 at 02:40:34PM -0400, Taylor Blau wrote:
+On Thu, Aug 24, 2023 at 04:50:10PM -0400, Jeff King wrote:
 
-> While working on another topic that cleared up some leaks, I wanted to
-> see if any new tests became leak-free, so I ran:
+> If I run a few by hand, I _do_ see leaks in them, but the exit codes are
+> hidden from the test suite (they are sub-programs of scripts, etc). I
+> guess you also have:
 > 
->     $ make SANITIZE=leak
->     $ make GIT_TEST_PASSING_SANITIZE_LEAK=check GIT_TEST_OPTS=-i test
+>   GIT_TEST_SANITIZE_LEAK_LOG=true
+> 
+> set, which should find those (and which you mention in your first
+> commit). Turning that on eliminates some of them, but I'm left with:
+> 
+>   t5614 t5317 t5503
+> 
+> not in your list. Which is super weird, because t5614 is marked with
+> TEST_PASSES_SANITIZE_LEAK. Hrm. And if I run it again, I get a
+> _different_ set (t5614 again, along with your 4, but also t5303, t7701,
+> and t4050). I wonder if we have a race in the leak-log code or
+> something (I'm running under prove with -j32, naturally).
 
-Is that exactly what you ran? Because I'd expect the second "make"
-invocation to rebuild Git _without_ SANITIZE=leak enabled in that case.
-(Though I would have then expected most of the scripts to complain
-loudly about the mismatch; did you "cd t" in between the two?).
+Argh. It is this again:
 
->  t/t3321-notes-stripspace.sh | 1 +
->  t/t5571-pre-push-hook.sh    | 1 +
->  t/t5583-push-branches.sh    | 1 +
->  t/t7516-commit-races.sh     | 2 ++
->  4 files changed, 5 insertions(+)
+  https://lore.kernel.org/git/Yxl62zODF4oy1QL9@coredump.intra.peff.net/
 
-If I run a single:
+Can we revisit that patch? Included again below for reference.
 
-  make SANITIZE=leak GIT_TEST_PASSING_SANITIZE_LEAK=check GIT_TEST_OPTS=-i test
+-- >8 --
+Subject: [PATCH] test-lib: ignore uninteresting LSan output
 
-on v2.42.0, I get many hits. All of the ones you mentioned, plus:
+When I run the tests in leak-checking mode the same way our CI job does,
+like:
 
-  t7408 t5407 t7008 t5811 t3407 t6001 t4058 t2016
+  make SANITIZE=leak \
+       GIT_TEST_PASSING_SANITIZE_LEAK=true \
+       GIT_TEST_SANITIZE_LEAK_LOG=true \
+       test
 
-If I run a few by hand, I _do_ see leaks in them, but the exit codes are
-hidden from the test suite (they are sub-programs of scripts, etc). I
-guess you also have:
+then LSan can racily produce useless entries in the log files that look
+like this:
 
-  GIT_TEST_SANITIZE_LEAK_LOG=true
+  ==git==3034393==Unable to get registers from thread 3034307.
 
-set, which should find those (and which you mention in your first
-commit). Turning that on eliminates some of them, but I'm left with:
+I think they're mostly harmless based on the source here:
 
-  t5614 t5317 t5503
+  https://github.com/llvm/llvm-project/blob/7e0a52e8e9ef6394bb62e0b56e17fa23e7262411/compiler-rt/lib/lsan/lsan_common.cpp#L414
 
-not in your list. Which is super weird, because t5614 is marked with
-TEST_PASSES_SANITIZE_LEAK. Hrm. And if I run it again, I get a
-_different_ set (t5614 again, along with your 4, but also t5303, t7701,
-and t4050). I wonder if we have a race in the leak-log code or
-something (I'm running under prove with -j32, naturally).
+which reads:
 
-> This series marks all leak-free tests as such, meaning that the above
-> "make test" invocation will pass after this series. The bulk of the
-> tests which are marked here in the first patch were always
-> leak-free[^1]. The remaining two patches address a couple of special
-> cases of tests which are also leak-free.
+    PtraceRegistersStatus have_registers =
+        suspended_threads.GetRegistersAndSP(i, &registers, &sp);
+    if (have_registers != REGISTERS_AVAILABLE) {
+      Report("Unable to get registers from thread %llu.\n", os_id);
+      // If unable to get SP, consider the entire stack to be reachable unless
+      // GetRegistersAndSP failed with ESRCH.
+      if (have_registers == REGISTERS_UNAVAILABLE_FATAL)
+        continue;
+      sp = stack_begin;
+    }
 
-Hmm. If I check t5571, for example, by bisecting on:
+The program itself still runs fine and LSan doesn't cause us to abort.
+But test-lib.sh looks for any non-empty LSan logs and marks the test as
+a failure anyway, under the assumption that we simply missed the failing
+exit code somehow.
 
-  make SANITIZE=leak && (cd t && ./t5571-pre-push-hook.sh -v -i)
+I don't think I've ever seen this happen in the CI job, but running
+locally using clang-14 on an 8-core machine, I can't seem to make it
+through a full run of the test suite without having at least one
+failure. And it's a different one every time (though they do seem to
+often be related to packing tests, which makes sense, since that is one
+of our biggest users of threaded code).
 
-it shows that it was fixed by 861c56f6f9 (branch: fix a leak in
-setup_tracking, 2023-06-11), which make sense. There are a bunch of leak
-fixes in the same series, which makes me wonder if they're responsible
-for most of these.
+We can hack around this by only counting LSan log files that contain a
+line that doesn't match our known-uninteresting pattern.
 
-If the leaks are gone, I am happy that we are marking them. But it is
-weird to me that we are getting different results.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/test-lib.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
--Peff
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 293caf0f20..5ea5d1d62a 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -334,6 +334,7 @@ nr_san_dir_leaks_ () {
+ 	find "$TEST_RESULTS_SAN_DIR" \
+ 		-type f \
+ 		-name "$TEST_RESULTS_SAN_FILE_PFX.*" 2>/dev/null |
++	xargs grep -lv "Unable to get registers from thread" |
+ 	wc -l
+ }
+ 
+-- 
+2.42.0.448.g0caf9a9e14
+
