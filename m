@@ -2,90 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6046EC71133
-	for <git@archiver.kernel.org>; Fri, 25 Aug 2023 12:58:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8562EC3DA66
+	for <git@archiver.kernel.org>; Fri, 25 Aug 2023 17:07:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240254AbjHYM6R (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Aug 2023 08:58:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38162 "EHLO
+        id S1344179AbjHYRHH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Aug 2023 13:07:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39158 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244994AbjHYM5w (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Aug 2023 08:57:52 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 695182120
-        for <git@vger.kernel.org>; Fri, 25 Aug 2023 05:57:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de;
- s=s31663417; t=1692968218; x=1693573018; i=johannes.schindelin@gmx.de;
- bh=CBmeiMTgGp2JqxWWKlN4tFhEO8k7CiZTwHoeLRNHozM=;
- h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
- b=RBmvOzUmfCp6ZwP/s3BQz/9JQHzVmuXzfOdk38pf9KpOkNzLxs7qosbdVHPm1g4P5bVPkE8
- 5dwph1d5VA5EJxyyGziEJ0gOgssNH+FtzeaUylZ9vOZ4xgq4bsvVwUUksXuWCB469Om7EFYZ3
- FkQbU+apLGbkP0ZJ3ODe3XZpn280qFgTz6rPMeE270Zwew75NpPDzPGNh6Kd1cqiFo+OCzGq9
- SGjpjHj667aNBPnBZfXcAP2i7eUu2KtakCg4yNXrbX2PHQZX1VEWEEKXhe2BAK83iIdSJIQzz
- PLwAcNbdFSRXOQ8saQYSOhXtZu1paJIKu039DP0wD9P/4wYTDG1Q==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.212.15]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mk0JW-1ppA4Q2DMm-00kS5x; Fri, 25
- Aug 2023 14:56:58 +0200
-Date:   Fri, 25 Aug 2023 14:56:55 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org, rsbecker@nexbridge.com,
-        'Jeff King' <peff@peff.net>, 'Taylor Blau' <me@ttaylorr.com>,
-        'Andy Koppe' <andy.koppe@gmail.com>
-Subject: Re: [PATCH] ci: avoid building from the same commit in parallel
-In-Reply-To: <xmqqzg2hg2nv.fsf@gitster.g>
-Message-ID: <312f2c2c-1411-53c8-dd5f-24ab9097571a@gmx.de>
-References: <20230715103758.3862-1-andy.koppe@gmail.com> <20230715160730.4046-1-andy.koppe@gmail.com> <kl6l351j22dr.fsf@chooglen-macbookpro.roam.corp.google.com> <CAHWeT-ZA8f-TGRwDHixAvi5kddVBbuK8LpVGJ9cjYZMsMk5ODw@mail.gmail.com> <xmqq7cpwjhr1.fsf@gitster.g>
- <006574bd-4d53-495e-8cfe-677ede521908@gmail.com> <xmqq350kjfk8.fsf@gitster.g> <ce5d20db-2220-45dd-8c39-2a52e0f9f816@gmail.com> <ZNv5PQlkn6tbUcH7@nand.local> <20230816022420.GA2248431@coredump.intra.peff.net> <000901d9d045$e780f790$b682e6b0$@nexbridge.com>
- <xmqqo7j5uqza.fsf@gitster.g> <15b89f2e-adb8-ea2b-fd74-2cbe95e20501@gmx.de> <xmqqttssqsj5.fsf@gitster.g> <xmqq1qfvor35.fsf_-_@gitster.g> <xmqqpm3fn16f.fsf@gitster.g> <99e19de6-c17d-e85f-dc58-1019aed1e2b1@gmx.de> <xmqqjztnm6v0.fsf@gitster.g>
- <1da763f3-60bf-a572-2c71-336b1fa5553d@gmx.de> <xmqqzg2hg2nv.fsf@gitster.g>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:B9qOtmKdBXm3IEuQ2v/jdu/yP8vCp44JLj9orUd5m40ey8fY3K9
- dcxxJilgNkJ62CZR9jQsffigbroEC1mC5pnwQJGPBnWobyQnhDktj2yRGxcmntVGjgj3u/L
- XUv0sVCuFO7zuwm0yn2nWfDhWyizUlq9aqFGGxH9+OdslVszecuGZA1o1xFsx0/OJUbsdM9
- RvTAT7n0jrjGys/w1mz4A==
-UI-OutboundReport: notjunk:1;M01:P0:1GdVxDMvoGs=;vAkMuM5A79Rl2444GGstn76/QmV
- DJ5RMxA9rW8HHwZt4s75Drd+HxnFsjFirto1M2TRFHWtWuHeuZRgFsUWPfzgWgAnNjEvWK8lI
- SO29G7ywUcr3u1R5fWQo/zK2vkosrbl8YFY60aA623MjVeu0YvaFg7hPm9GhF/1CKN8sln1nT
- 4ZJzsrruNa+kl2auNA230L9rP6YCl2mreHNLe8pqvZ7Q54Lqg34ILXMLM4/tZAh9eI7p4t/P1
- 4cpGUJqBNMg/R00RQVMWHbaMIxcZ5DS2cyGxRfKAg6+BN8Lar44QXEomSm40FOefGre640YyB
- LR3kynToeLqGgMqdalSJ+EQzoOcQy2h6So4QIBW78eq4csnky4zRQOD8/Tln5jdsf7xGLN9OT
- A5Ce/jHZk0uzovRgzE+82IYhLUsPxtrRseXCx/bFclI31r7FLlFLpTLmVIoQxBHWl/HjRYuqb
- 6PHxrbAj4qgcPkXSokXKVhIUSr6bOdUqfNoRJdAkGuTELFqA66B2C4UPE2HkD6ARPdIYuwzHP
- uv216FI8M0LyJ44zSKa5E0ioNl7rI2qNNwwYviNjDWxmSHHYkSd/gjcqQGVjCL/1zkEhI4dle
- epkvqX8Kv1Q3CVtAlyWqkB7dhfg3aSSYTc7pH0tLNkZZT5/r9Zv2SRC5IquCYYQFBvILmmDkn
- JDKh9j6wdfB4zqWW/YvaUxy/WsOEPtlqaA9FpD8Zp2kRrCX7vq2cSJA2N3BWfx9JW9vwe4tlL
- NGNOHI/hhAC+tvoWvgrUe8E+q4qRxmLGBh5aUNTNSW+qBlowZIsbaMT//mY7NazqNruPKN4fh
- hqRLYT/pzNjzT+MifdW1xGRmflQn+xvv2NlQrcKbjP0sm/TpPGds62AhJcN/Z3Xpo/Z8PoqCh
- A5/YXShrnKJF3PmmM+LlVI5C08E47erIoKEKRnFU6hLz1V2bk0IZf8w5ay5l7WcR4pwF5eHyg
- QWvtTvSvSpzLQrBQyZsbwAk0Er0=
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S1344236AbjHYRHB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Aug 2023 13:07:01 -0400
+Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C7431FF5
+        for <git@vger.kernel.org>; Fri, 25 Aug 2023 10:06:59 -0700 (PDT)
+Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-58fbfcb8d90so17547677b3.1
+        for <git@vger.kernel.org>; Fri, 25 Aug 2023 10:06:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1692983218; x=1693588018;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ye7Z6qucvYPTHWrRavU5AzrUsqDyF1r8WhrLWh67/Bs=;
+        b=qYHnJ369C7zmBO1VBEoRDrrxJ4QPJNWnH9cRfO4uiZBue7hNKUriXy7ICNh3OMbyPW
+         UMPM4bBAkUGZtXwvfddWMkF5rr2g9+ITd25rMzEYimB/w4bBneDTwaX/X/AtRL1POn2d
+         +o1qpEhUdvGWBLzFaaLHgHJigfiivVq6t/A195BZ+yFWE+qEoFcUFp7lyW/ch/xjjUOu
+         IZTSZwD2XjU6peNtBowXTRPPBxEA6rmDglZGGMplu0G+/pgfdgXQD+el8qTha53MA8HU
+         FaGihx/Y49JWjWeTMLe320kMKe+F3HH93ux/DEQXVkHx/laVZ1q2mbPy+s83UfY/BFJq
+         Z2RA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692983218; x=1693588018;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ye7Z6qucvYPTHWrRavU5AzrUsqDyF1r8WhrLWh67/Bs=;
+        b=eBXqOXGxHDnmzcUFRR6yl25QgOwJd+phsuszkla03K4oHnSLvO0iAtUKKJNqTJDIzv
+         kZq9T9ES7rWAju7LqEyKkB3l4Cv+6oQ6mJdC6QqVrVjLlP8gVqKTbZwA04tUFNcQcnf0
+         ibZ1pupYZZG8StNiA2b1CFiIqIvqt3G+Hjg/Ep3uyneY/GtXfziLA2w2zF8GSQS9h7/h
+         u6kWXisx8JIq1JDhbOlLXK6adUHaSivy5xHiYEuVa1t9O8a/aX8bnVJstPidr+TXiQLj
+         dymrk25Vk44BvGEAW4EMqAhBI2ByB2Ful4L5XUa26Y8L+NnhkQ9o7S/4HLMnnQ8N97Yw
+         CaUg==
+X-Gm-Message-State: AOJu0YwuYdcKQUiQzJPUpgo75rLllDH7P+e3KXXFTvgAuMViOT4pi0LZ
+        WFMnF/Zj8cUQnkxgdB4ZcAOxClikkdtT9fbBZmlt
+X-Google-Smtp-Source: AGHT+IFcqICv2f46eimUUVCOak1fvulV6jv1Rc7BdfPbC4KsjzEnZtplmJq+/TWg6X1LJs2o9Wo5Y80k/M5XW9LwWPUx
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:3542:abaa:d8d5:eddb])
+ (user=jonathantanmy job=sendgmr) by 2002:a81:b60c:0:b0:592:83d2:1f86 with
+ SMTP id u12-20020a81b60c000000b0059283d21f86mr284337ywh.4.1692983218603; Fri,
+ 25 Aug 2023 10:06:58 -0700 (PDT)
+Date:   Fri, 25 Aug 2023 10:06:56 -0700
+In-Reply-To: <20230824222246.2320443-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.42.0.rc1.204.g551eb34607-goog
+Message-ID: <20230825170656.2598201-1-jonathantanmy@google.com>
+Subject: Re: [PATCH 00/15] bloom: changed-path Bloom filters v2
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Jonathan Tan <jonathantanmy@google.com> writes:
+> Taylor Blau <me@ttaylorr.com> writes:
+> > Jonathan Tan (4):
+> >   gitformat-commit-graph: describe version 2 of BDAT
+> >   t4216: test changed path filters with high bit paths
+> >   repo-settings: introduce commitgraph.changedPathsVersion
+> >   commit-graph: new filter ver. that fixes murmur3
+> > 
+> > Taylor Blau (11):
+> >   t/helper/test-read-graph.c: extract `dump_graph_info()`
+> >   bloom.h: make `load_bloom_filter_from_graph()` public
+> >   t/helper/test-read-graph: implement `bloom-filters` mode
+> >   bloom: annotate filters with hash version
+> >   bloom: prepare to discard incompatible Bloom filters
+> >   t/t4216-log-bloom.sh: harden `test_bloom_filters_not_used()`
+> >   commit-graph.c: unconditionally load Bloom filters
+> >   commit-graph: drop unnecessary `graph_read_bloom_data_context`
+> >   object.h: fix mis-aligned flag bits table
+> >   commit-graph: reuse existing Bloom filters where possible
+> >   bloom: introduce `deinit_bloom_filters()`
+> 
+> Thanks. I had one small comment (sent as an email reply to one of the
+> patches), but everything else looks good.
 
-On Wed, 23 Aug 2023, Junio C Hamano wrote:
+I mistakenly sent my reply to an earlier version [1]. (Taylor has seen
+it, so this note is more for future readers who might be curious about
+what that email reply contains.)
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
-> > Here is the patch:
-> >
-> > -- snipsnap --
-> > From: Junio C Hamano <gitster@pobox.com>
-> > Date: Mon, 21 Aug 2023 17:31:26 -0700
-> > Subject: [PATCH] ci: avoid building from the same commit in parallel
->
-> I forgot to say that I do not think I deserve the credit in the end
-> result, as you've done all the hard part.
->
-> Mind taking the authorship, while demoting me to "Helped-by" status?
-
-Sure. But I disagree that I did most of the work. You tried all the
-avenues that I would have tried, saving me tons of time by spending yours.
-
-Thank you,
-Johannes
+[1] https://lore.kernel.org/git/20230824222051.2320003-1-jonathantanmy@google.com/
