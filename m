@@ -2,106 +2,554 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68734C83F16
-	for <git@archiver.kernel.org>; Sat, 26 Aug 2023 08:06:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77835C83F01
+	for <git@archiver.kernel.org>; Sat, 26 Aug 2023 15:07:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232034AbjHZIGJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 26 Aug 2023 04:06:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54510 "EHLO
+        id S229781AbjHZPGg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 26 Aug 2023 11:06:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232091AbjHZIGI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Aug 2023 04:06:08 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.3])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3724E1A5
-        for <git@vger.kernel.org>; Sat, 26 Aug 2023 01:06:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
- s=s29768273; t=1693037161; x=1693641961; i=l.s.r@web.de;
- bh=tDIlduMAUsyhXyOyOD/ItpANNZnqWoxLX7rngpEMSF0=;
- h=X-UI-Sender-Class:Date:To:From:Subject;
- b=izDeVhnE8S5RhnN6GuHePALZvyo84BnbpzMK7r/06MfS1S0m3v2bKvsXiskcI++qOBSD8CW
- fVkwipxTqnSQjC9Tu+lXHrHOnQEkYDBxZPJVtJ4zzXmbpAEIW6gD+TeIg6oop3RKkSipvkIqO
- n+AGOoybasGzy8sjDRLqM0CG+gs6QQZahu2nr4iX6AzacIwbo4UKfPQ8LZHR2woupV7FQuwjx
- iRTJCu3c5GyNobaBIILHFDcnf9b3wxgL3fX4IHZ9VCfN961MZ8TWxJgeTtJWIi1CFjJh667n+
- 8SD8dS5Nk8/QQAGZiec/dErxitf38Hv1X4s5eq1FjvinRpx34PKQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.151.130]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1M9Zdw-1qfIUP1dUy-005qo3 for
- <git@vger.kernel.org>; Sat, 26 Aug 2023 10:06:01 +0200
-Message-ID: <2b08dc43-621d-2170-c4a6-c2aac33a9a19@web.de>
-Date:   Sat, 26 Aug 2023 10:06:00 +0200
+        with ESMTP id S229761AbjHZPGS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Aug 2023 11:06:18 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AB3E1A6
+        for <git@vger.kernel.org>; Sat, 26 Aug 2023 08:06:14 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id 4fb4d7f45d1cf-5298e43bb67so3899346a12.1
+        for <git@vger.kernel.org>; Sat, 26 Aug 2023 08:06:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1693062373; x=1693667173;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=VSkAaQlckv9fbZKc+h4zwbaUl3uaU+rqltRQ70OkmT0=;
+        b=AUro7hSno49cRKkIoVIPlFtIq1ZyhnvJXuURtVDxZNPz4cMQFvhYgsFPpGA26r8JYs
+         KqddSobp61ga0M+VN6a5GhS+xDXTIzQliQBgyu7sC3q8WsStjT/jxrF/6kLuFIfWkh/k
+         54sUjKRRbeFZQ/WMLhxxtjXq1ThOwSJ4pHx9YnjTiBC1eSUstFzB+PCw4GZAwkvnV/gZ
+         tMRkFxerPWE4zy0jxSnmPfS7eXYTbXk/eprIGu15OR1f/k85vseT+n1HTFSlDLABnvER
+         6CwGOtzckA8jX0wMVuV4QZjrZnB8cC9mlJxHbulyzCpLlZj9aVjeG1Xe+z5s/bb19evJ
+         5z9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693062373; x=1693667173;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VSkAaQlckv9fbZKc+h4zwbaUl3uaU+rqltRQ70OkmT0=;
+        b=BIhPtgyNqBmwbr/qr3fkIx/dW9fFQXJN641R9720SqNAFJtJ0ydYtpWlaeJ/QjqmxZ
+         mooqRn7LX2+qQzTnBzRaFfH3qrkwbY1sO4jAf9q4TihR+YX/MS9MmWIuibXbSwYFBLNi
+         iAUAEJj6uTwgUCDwOW7J0JLBuxYu+uN8l2PtBDuVpP7Jq+Duwg5de3BE9zeUKBtxQO1W
+         X2css54E+1331mmXCaVyVHa9vPkPVtVlcYeJkAxS7BPE7Bog2TvmmRGBYZHw51SKZkV9
+         Mrewc31Lq6cxE0v98rpFFLwxdZdCgbBr3+sMBwJzV7YpHrs+hiIbEUl02qIQVXwSMpwM
+         LRLw==
+X-Gm-Message-State: AOJu0YyH5WcoKffSeOS3rD1VPWzARKGhQBjqUJGBURQq0DrIPY/uB8J2
+        aaB6Ixc3Kh4p1bscWE9+1U0=
+X-Google-Smtp-Source: AGHT+IEBc0s3peb24CGGviItiCXSGfJy1H7O4R2VeyVKvC8Ei/e9X+j5RTyQDyMNFzQXtCkkVPii5g==
+X-Received: by 2002:aa7:cf09:0:b0:523:37f0:2d12 with SMTP id a9-20020aa7cf09000000b0052337f02d12mr23882047edy.17.1693062372592;
+        Sat, 26 Aug 2023 08:06:12 -0700 (PDT)
+Received: from localhost (78-131-17-96.pool.digikabel.hu. [78.131.17.96])
+        by smtp.gmail.com with ESMTPSA id v19-20020aa7d9d3000000b005256771db39sm2231217eds.58.2023.08.26.08.06.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 26 Aug 2023 08:06:11 -0700 (PDT)
+Date:   Sat, 26 Aug 2023 17:06:10 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 07/15] commit-graph: new filter ver. that fixes murmur3
+Message-ID: <20230826150610.GA1928@szeder.dev>
+References: <cover.1692654233.git.me@ttaylorr.com>
+ <72150bd026befc758b41386cf571c6a33a754d4e.1692654233.git.me@ttaylorr.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.14.0
-Content-Language: en-US
-To:     Git List <git@vger.kernel.org>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: PATCH] parse-options: allow omitting option help text
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:HrMxicecajGJ/R5mdL34EdB5iDLlCHB3R8Vcv5rCuXCsJ7Pggvp
- F1B5G2SOBoxvM9ELveGbsTmQMC80i3vPDMBCLScGaogsvwypArbLB0p3yZMzpCD10U4pc1O
- 2ZZO/qdjmy+bkpTJusTmo+fHR/jwNpe6lpQAq9VlkZMuBjRknIAdv2iMtfgceLQVtAzHiWM
- R0E5Ag4EWWKBLsvAtZceA==
-UI-OutboundReport: notjunk:1;M01:P0:+t64txgksNE=;Hn8o1puQv2c1wY1+Ffc5G7d5A38
- z8+J+1EXchoXjedZ3ut9n6qGecWoNJKhiYdDhgQbzolRWnJ1QdHc7xZcyc8niTpOHLMYsWVSE
- g/uw+rt2I8ykP5IwLfSUes3rj0UIDiAVRXjFenscCOUsSvDAcaS6dkOC1zAqnMQ6A7GZ105JW
- nRqndV1k2z/op7KPrgB2AbZT6i8u+GlTtdy4rUQ/SJPE4m0KSea1TVB4GziPk7dRYuGvk7Okc
- R59X8HO+VhLz4vNtQAh9T6tjq4p7KzzhxzSfBEzB7pbH6huqFV7MCFr0eIbF3JDS1TtMyfwI7
- EZq/rbnQRNKmIzk+vGcKa1v47JDJFpacK9VAAYKatPYjGV+hQxKRQjByHRXPVQ9W3NQGkU5KC
- A/+Qy8t4DHjwFBcC9Ep4JxVS1W4eJRlE6Y2hsDxJE3nbC13nw+A4m2KBMY2uw4R7u6zKVwzr5
- u8+328tTGWSgxKx7gXOTYGAHpglQ3zSgAS+Sx9CufIeS/P2kFuYKCo/KRJfDxTVUhSGtOW4+j
- goa8dUxQmHRkhzoRTmOEupsg5XixLukk3rdgA4ZiFqGGCABAKGiD9SVQf5kngwGCQsp3EYZyb
- VImzbhxupigrgyjtgcgWJotnzTefJfqgO8dP89nbUJNvKUSCAPe+42g2Bp9zPm8I2ITH+fg6g
- YH8UgqwU3hJv1b4N52ex0YrcKeX9eoLugvdfsIpFjL6FDHgoQdpwqSCPhGqmuYs5Z2WAfm0y/
- 6M9lIOQe5m+/AygtA4Lz7EgE2LChxNZdPxIrib0Ym1Tc7fkOLfaw8n90g+w5uCRImZNVYxop4
- Rf1EMMlmDBQ0FiwdPHU8cBvuFqjuDFI6ZewbPCM05HhucxEHUPctm7Px+JPjNstqeRP+CNMeH
- fe8BBAuUM82qD0Gbu0QdGC7WbPdMfoqu4y47MZpmZOVoL9RjGFeXq7uPTAmql5e/eO4u/A7v5
- Mmj/uw==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <72150bd026befc758b41386cf571c6a33a754d4e.1692654233.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-1b68387e02 (builtin/receive-pack.c: use parse_options API, 2016-03-02)
-added the options --stateless-rpc, --advertise-refs and
-=2D-reject-thin-pack-for-testing with a NULL `help` string; 03831ef7b5
-(difftool: implement the functionality in the builtin, 2017-01-19)
-similarly added the "helpless" option --prompt.  Presumably this was
-done because all four options are hidden and self-explanatory.
+On Mon, Aug 21, 2023 at 05:44:15PM -0400, Taylor Blau wrote:
+> From: Jonathan Tan <jonathantanmy@google.com>
+> 
+> The murmur3 implementation in bloom.c has a bug when converting series
+> of 4 bytes into network-order integers when char is signed (which is
+> controllable by a compiler option, and the default signedness of char is
+> platform-specific). When a string contains characters with the high bit
+> set, this bug causes results that, although internally consistent within
+> Git, does not accord with other implementations of murmur3 (thus,
+> the changed path filters wouldn't be readable by other off-the-shelf
+> implementatios of murmur3) and even with Git binaries that were compiled
+> with different signedness of char. This bug affects both how Git writes
+> changed path filters to disk and how Git interprets changed path filters
+> on disk.
+> 
+> Therefore, introduce a new version (2) of changed path filters that
+> corrects this problem. The existing version (1) is still supported and
+> is still the default, but users should migrate away from it as soon
+> as possible.
+> 
+> Because this bug only manifests with characters that have the high bit
+> set, it may be possible that some (or all) commits in a given repo would
+> have the same changed path filter both before and after this fix is
+> applied. However, in order to determine whether this is the case, the
+> changed paths would first have to be computed, at which point it is not
+> much more expensive to just compute a new changed path filter.
+> 
+> So this patch does not include any mechanism to "salvage" changed path
+> filters from repositories. There is also no "mixed" mode - for each
+> invocation of Git, reading and writing changed path filters are done
+> with the same version number; this version number may be explicitly
+> stated (typically if the user knows which version they need) or
+> automatically determined from the version of the existing changed path
+> filters in the repository.
+> 
+> There is a change in write_commit_graph(). graph_read_bloom_data()
+> makes it possible for chunk_bloom_data to be non-NULL but
+> bloom_filter_settings to be NULL, which causes a segfault later on. I
+> produced such a segfault while developing this patch, but couldn't find
+> a way to reproduce it neither after this complete patch (or before),
+> but in any case it seemed like a good thing to include that might help
+> future patch authors.
+> 
+> The value in t0095 was obtained from another murmur3 implementation
+> using the following Go source code:
+> 
+>   package main
+> 
+>   import "fmt"
+>   import "github.com/spaolacci/murmur3"
+> 
+>   func main() {
+>           fmt.Printf("%x\n", murmur3.Sum32([]byte("Hello world!")))
+>           fmt.Printf("%x\n", murmur3.Sum32([]byte{0x99, 0xaa, 0xbb, 0xcc, 0xdd, 0xee, 0xff}))
+>   }
+> 
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Taylor Blau <me@ttaylorr.com>
+> ---
+>  Documentation/config/commitgraph.txt |  5 +-
+>  bloom.c                              | 69 +++++++++++++++++++-
+>  bloom.h                              |  8 ++-
+>  commit-graph.c                       | 32 ++++++++--
+>  t/helper/test-bloom.c                |  9 ++-
+>  t/t0095-bloom.sh                     |  8 +++
+>  t/t4216-log-bloom.sh                 | 96 ++++++++++++++++++++++++++++
+>  7 files changed, 214 insertions(+), 13 deletions(-)
+> 
+> diff --git a/Documentation/config/commitgraph.txt b/Documentation/config/commitgraph.txt
+> index 2dc9170622..acc74a2f27 100644
+> --- a/Documentation/config/commitgraph.txt
+> +++ b/Documentation/config/commitgraph.txt
+> @@ -15,7 +15,7 @@ commitGraph.readChangedPaths::
+>  
+>  commitGraph.changedPathsVersion::
+>  	Specifies the version of the changed-path Bloom filters that Git will read and
+> -	write. May be -1, 0 or 1.
+> +	write. May be -1, 0, 1, or 2.
+>  +
+>  Defaults to -1.
+>  +
+> @@ -28,4 +28,7 @@ filters when instructed to write.
+>  If 1, Git will only read version 1 Bloom filters, and will write version 1
+>  Bloom filters.
+>  +
+> +If 2, Git will only read version 2 Bloom filters, and will write version 2
+> +Bloom filters.
+> ++
+>  See linkgit:git-commit-graph[1] for more information.
+> diff --git a/bloom.c b/bloom.c
+> index 3e78cfe79d..ebef5cfd2f 100644
+> --- a/bloom.c
+> +++ b/bloom.c
+> @@ -66,7 +66,64 @@ int load_bloom_filter_from_graph(struct commit_graph *g,
+>   * Not considered to be cryptographically secure.
+>   * Implemented as described in https://en.wikipedia.org/wiki/MurmurHash#Algorithm
+>   */
+> -uint32_t murmur3_seeded(uint32_t seed, const char *data, size_t len)
+> +uint32_t murmur3_seeded_v2(uint32_t seed, const char *data, size_t len)
 
-They cause a NULL pointer dereference when using the option --help-all
-with their respective tool, though.  Handle such options gracefully
-instead by turning the NULL pointer into an empty string at the top of
-the loop, always printing a newline at the end and passing through the
-separating newlines from the help text.
+Nit: MurmurHash3 implementations in C/C++ (apart from the sample
+implementation on Wikipedia), and other hash functions taking data
+pointer and buffer size parameters in general, have a 'const void
+*data' parameter, not 'const char*'.
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- parse-options.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+> +{
+> +	const uint32_t c1 = 0xcc9e2d51;
+> +	const uint32_t c2 = 0x1b873593;
+> +	const uint32_t r1 = 15;
+> +	const uint32_t r2 = 13;
+> +	const uint32_t m = 5;
+> +	const uint32_t n = 0xe6546b64;
+> +	int i;
+> +	uint32_t k1 = 0;
+> +	const char *tail;
+> +
+> +	int len4 = len / sizeof(uint32_t);
+> +
+> +	uint32_t k;
+> +	for (i = 0; i < len4; i++) {
+> +		uint32_t byte1 = (uint32_t)(unsigned char)data[4*i];
+> +		uint32_t byte2 = ((uint32_t)(unsigned char)data[4*i + 1]) << 8;
+> +		uint32_t byte3 = ((uint32_t)(unsigned char)data[4*i + 2]) << 16;
+> +		uint32_t byte4 = ((uint32_t)(unsigned char)data[4*i + 3]) << 24;
+> +		k = byte1 | byte2 | byte3 | byte4;
+> +		k *= c1;
+> +		k = rotate_left(k, r1);
+> +		k *= c2;
+> +
+> +		seed ^= k;
+> +		seed = rotate_left(seed, r2) * m + n;
+> +	}
+> +
+> +	tail = (data + len4 * sizeof(uint32_t));
+> +
+> +	switch (len & (sizeof(uint32_t) - 1)) {
+> +	case 3:
+> +		k1 ^= ((uint32_t)(unsigned char)tail[2]) << 16;
+> +		/*-fallthrough*/
+> +	case 2:
+> +		k1 ^= ((uint32_t)(unsigned char)tail[1]) << 8;
+> +		/*-fallthrough*/
+> +	case 1:
+> +		k1 ^= ((uint32_t)(unsigned char)tail[0]) << 0;
+> +		k1 *= c1;
+> +		k1 = rotate_left(k1, r1);
+> +		k1 *= c2;
+> +		seed ^= k1;
+> +		break;
+> +	}
+> +
+> +	seed ^= (uint32_t)len;
+> +	seed ^= (seed >> 16);
+> +	seed *= 0x85ebca6b;
+> +	seed ^= (seed >> 13);
+> +	seed *= 0xc2b2ae35;
+> +	seed ^= (seed >> 16);
+> +
+> +	return seed;
+> +}
+> +
+> +static uint32_t murmur3_seeded_v1(uint32_t seed, const char *data, size_t len)
+>  {
+>  	const uint32_t c1 = 0xcc9e2d51;
+>  	const uint32_t c2 = 0x1b873593;
+> @@ -131,8 +188,14 @@ void fill_bloom_key(const char *data,
+>  	int i;
+>  	const uint32_t seed0 = 0x293ae76f;
+>  	const uint32_t seed1 = 0x7e646e2c;
+> -	const uint32_t hash0 = murmur3_seeded(seed0, data, len);
+> -	const uint32_t hash1 = murmur3_seeded(seed1, data, len);
+> +	uint32_t hash0, hash1;
+> +	if (settings->hash_version == 2) {
+> +		hash0 = murmur3_seeded_v2(seed0, data, len);
+> +		hash1 = murmur3_seeded_v2(seed1, data, len);
+> +	} else {
+> +		hash0 = murmur3_seeded_v1(seed0, data, len);
+> +		hash1 = murmur3_seeded_v1(seed1, data, len);
+> +	}
+>  
+>  	key->hashes = (uint32_t *)xcalloc(settings->num_hashes, sizeof(uint32_t));
+>  	for (i = 0; i < settings->num_hashes; i++)
+> diff --git a/bloom.h b/bloom.h
+> index 1e4f612d2c..138d57a86b 100644
+> --- a/bloom.h
+> +++ b/bloom.h
+> @@ -8,9 +8,11 @@ struct commit_graph;
+>  struct bloom_filter_settings {
+>  	/*
+>  	 * The version of the hashing technique being used.
+> -	 * We currently only support version = 1 which is
+> +	 * The newest version is 2, which is
+>  	 * the seeded murmur3 hashing technique implemented
+> -	 * in bloom.c.
+> +	 * in bloom.c. Bloom filters of version 1 were created
+> +	 * with prior versions of Git, which had a bug in the
+> +	 * implementation of the hash function.
+>  	 */
+>  	uint32_t hash_version;
+>  
+> @@ -80,7 +82,7 @@ int load_bloom_filter_from_graph(struct commit_graph *g,
+>   * Not considered to be cryptographically secure.
+>   * Implemented as described in https://en.wikipedia.org/wiki/MurmurHash#Algorithm
+>   */
+> -uint32_t murmur3_seeded(uint32_t seed, const char *data, size_t len);
+> +uint32_t murmur3_seeded_v2(uint32_t seed, const char *data, size_t len);
+>  
+>  void fill_bloom_key(const char *data,
+>  		    size_t len,
+> diff --git a/commit-graph.c b/commit-graph.c
+> index da99f15fdf..f7322c4fff 100644
+> --- a/commit-graph.c
+> +++ b/commit-graph.c
+> @@ -304,17 +304,26 @@ static int graph_read_oid_lookup(const unsigned char *chunk_start,
+>  	return 0;
+>  }
+>  
+> +struct graph_read_bloom_data_context {
+> +	struct commit_graph *g;
+> +	int *commit_graph_changed_paths_version;
+> +};
+> +
+>  static int graph_read_bloom_data(const unsigned char *chunk_start,
+>  				  size_t chunk_size, void *data)
+>  {
+> -	struct commit_graph *g = data;
+> +	struct graph_read_bloom_data_context *c = data;
+> +	struct commit_graph *g = c->g;
+>  	uint32_t hash_version;
+> -	g->chunk_bloom_data = chunk_start;
+>  	hash_version = get_be32(chunk_start);
+>  
+> -	if (hash_version != 1)
+> +	if (*c->commit_graph_changed_paths_version == -1) {
+> +		*c->commit_graph_changed_paths_version = hash_version;
+> +	} else if (hash_version != *c->commit_graph_changed_paths_version) {
+>  		return 0;
+> +	}
+>  
+> +	g->chunk_bloom_data = chunk_start;
+>  	g->bloom_filter_settings = xmalloc(sizeof(struct bloom_filter_settings));
+>  	g->bloom_filter_settings->hash_version = hash_version;
+>  	g->bloom_filter_settings->num_hashes = get_be32(chunk_start + 4);
+> @@ -402,10 +411,14 @@ struct commit_graph *parse_commit_graph(struct repo_settings *s,
+>  	}
+>  
+>  	if (s->commit_graph_changed_paths_version) {
+> +		struct graph_read_bloom_data_context context = {
+> +			.g = graph,
+> +			.commit_graph_changed_paths_version = &s->commit_graph_changed_paths_version
+> +		};
+>  		pair_chunk(cf, GRAPH_CHUNKID_BLOOMINDEXES,
+>  			   &graph->chunk_bloom_indexes);
+>  		read_chunk(cf, GRAPH_CHUNKID_BLOOMDATA,
+> -			   graph_read_bloom_data, graph);
+> +			   graph_read_bloom_data, &context);
+>  	}
+>  
+>  	if (graph->chunk_bloom_indexes && graph->chunk_bloom_data) {
+> @@ -2376,6 +2389,13 @@ int write_commit_graph(struct object_directory *odb,
+>  	}
+>  	if (!commit_graph_compatible(r))
+>  		return 0;
+> +	if (r->settings.commit_graph_changed_paths_version < -1
+> +	    || r->settings.commit_graph_changed_paths_version > 2) {
+> +		warning(_("attempting to write a commit-graph, but "
+> +			  "'commitgraph.changedPathsVersion' (%d) is not supported"),
+> +			r->settings.commit_graph_changed_paths_version);
+> +		return 0;
+> +	}
+>  
+>  	CALLOC_ARRAY(ctx, 1);
+>  	ctx->r = r;
+> @@ -2388,6 +2408,8 @@ int write_commit_graph(struct object_directory *odb,
+>  	ctx->write_generation_data = (get_configured_generation_version(r) == 2);
+>  	ctx->num_generation_data_overflows = 0;
+>  
+> +	bloom_settings.hash_version = r->settings.commit_graph_changed_paths_version == 2
+> +		? 2 : 1;
+>  	bloom_settings.bits_per_entry = git_env_ulong("GIT_TEST_BLOOM_SETTINGS_BITS_PER_ENTRY",
+>  						      bloom_settings.bits_per_entry);
+>  	bloom_settings.num_hashes = git_env_ulong("GIT_TEST_BLOOM_SETTINGS_NUM_HASHES",
+> @@ -2417,7 +2439,7 @@ int write_commit_graph(struct object_directory *odb,
+>  		g = ctx->r->objects->commit_graph;
+>  
+>  		/* We have changed-paths already. Keep them in the next graph */
+> -		if (g && g->chunk_bloom_data) {
+> +		if (g && g->bloom_filter_settings) {
+>  			ctx->changed_paths = 1;
+>  			ctx->bloom_settings = g->bloom_filter_settings;
+>  		}
+> diff --git a/t/helper/test-bloom.c b/t/helper/test-bloom.c
+> index aabe31d724..3cbc0a5b50 100644
+> --- a/t/helper/test-bloom.c
+> +++ b/t/helper/test-bloom.c
+> @@ -50,6 +50,7 @@ static void get_bloom_filter_for_commit(const struct object_id *commit_oid)
+>  
+>  static const char *bloom_usage = "\n"
+>  "  test-tool bloom get_murmur3 <string>\n"
+> +"  test-tool bloom get_murmur3_seven_highbit\n"
+>  "  test-tool bloom generate_filter <string> [<string>...]\n"
+>  "  test-tool bloom get_filter_for_commit <commit-hex>\n";
+>  
+> @@ -64,7 +65,13 @@ int cmd__bloom(int argc, const char **argv)
+>  		uint32_t hashed;
+>  		if (argc < 3)
+>  			usage(bloom_usage);
+> -		hashed = murmur3_seeded(0, argv[2], strlen(argv[2]));
+> +		hashed = murmur3_seeded_v2(0, argv[2], strlen(argv[2]));
+> +		printf("Murmur3 Hash with seed=0:0x%08x\n", hashed);
+> +	}
+> +
+> +	if (!strcmp(argv[1], "get_murmur3_seven_highbit")) {
+> +		uint32_t hashed;
+> +		hashed = murmur3_seeded_v2(0, "\x99\xaa\xbb\xcc\xdd\xee\xff", 7);
+>  		printf("Murmur3 Hash with seed=0:0x%08x\n", hashed);
+>  	}
+>  
+> diff --git a/t/t0095-bloom.sh b/t/t0095-bloom.sh
+> index b567383eb8..c8d84ab606 100755
+> --- a/t/t0095-bloom.sh
+> +++ b/t/t0095-bloom.sh
+> @@ -29,6 +29,14 @@ test_expect_success 'compute unseeded murmur3 hash for test string 2' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'compute unseeded murmur3 hash for test string 3' '
+> +	cat >expect <<-\EOF &&
+> +	Murmur3 Hash with seed=0:0xa183ccfd
+> +	EOF
+> +	test-tool bloom get_murmur3_seven_highbit >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+>  test_expect_success 'compute bloom key for empty string' '
+>  	cat >expect <<-\EOF &&
+>  	Hashes:0x5615800c|0x5b966560|0x61174ab4|0x66983008|0x6c19155c|0x7199fab0|0x771ae004|
+> diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
+> index 2d4a3fefee..775e59d864 100755
+> --- a/t/t4216-log-bloom.sh
+> +++ b/t/t4216-log-bloom.sh
+> @@ -447,4 +447,100 @@ test_expect_success 'version 1 changed-path used when version 1 requested' '
+>  	)
+>  '
+>  
+> +test_expect_success 'version 1 changed-path not used when version 2 requested' '
+> +	(
+> +		cd highbit1 &&
+> +		git config --add commitgraph.changedPathsVersion 2 &&
+> +		test_bloom_filters_not_used "-- $CENT"
+> +	)
+> +'
+> +
+> +test_expect_success 'version 1 changed-path used when autodetect requested' '
+> +	(
+> +		cd highbit1 &&
+> +		git config --add commitgraph.changedPathsVersion -1 &&
+> +		test_bloom_filters_used "-- $CENT"
+> +	)
+> +'
+> +
+> +test_expect_success 'when writing another commit graph, preserve existing version 1 of changed-path' '
+> +	test_commit -C highbit1 c1double "$CENT$CENT" &&
+> +	git -C highbit1 commit-graph write --reachable --changed-paths &&
 
-diff --git a/parse-options.c b/parse-options.c
-index 76d2e76b49..e8e076c3a6 100644
-=2D-- a/parse-options.c
-+++ b/parse-options.c
-@@ -1186,14 +1186,15 @@ static enum parse_opt_result usage_with_options_in=
-ternal(struct parse_opt_ctx_t
- 			continue;
- 		}
+Nit: Since there is a subshell cd-ing into the 'highbit1' directory
+anyway, it would look clearer to put these two commands into that
+subshell as well.
+This applies to some of the later test cases as well.
 
--		for (cp =3D _(opts->help); *cp; cp =3D np) {
-+		for (cp =3D opts->help ? _(opts->help) : ""; *cp; cp =3D np) {
- 			np =3D strchrnul(cp, '\n');
--			usage_padding(outfile, pos);
--			fprintf(outfile, "%.*s\n", (int)(np - cp), cp);
- 			if (*np)
- 				np++;
-+			usage_padding(outfile, pos);
-+			fwrite(cp, 1, np - cp, outfile);
- 			pos =3D 0;
- 		}
-+		fputc('\n', outfile);
+> +	(
+> +		cd highbit1 &&
+> +		git config --add commitgraph.changedPathsVersion -1 &&
+> +		echo "options: bloom(1,10,7) read_generation_data" >expect &&
+> +		test-tool read-graph >full &&
+> +		grep options full >actual &&
+> +		test_cmp expect actual
+> +	)
+> +'
+> +
+> +test_expect_success 'set up repo with high bit path, version 2 changed-path' '
+> +	git init highbit2 &&
+> +	git -C highbit2 config --add commitgraph.changedPathsVersion 2 &&
+> +	test_commit -C highbit2 c2 "$CENT" &&
+> +	git -C highbit2 commit-graph write --reachable --changed-paths
+> +'
+> +
+> +test_expect_success 'check value of version 2 changed-path' '
+> +	(
+> +		cd highbit2 &&
+> +		echo "c01f" >expect &&
+> +		get_first_changed_path_filter >actual &&
+> +		test_cmp expect actual
+> +	)
+> +'
+> +
+> +test_expect_success 'version 2 changed-path used when version 2 requested' '
+> +	(
+> +		cd highbit2 &&
+> +		test_bloom_filters_used "-- $CENT"
 
- 		if (positive_name) {
- 			if (find_option_by_long_name(all_opts, positive_name))
-=2D-
-2.42.0
+This test_bloom_filter_used helper runs two pathspec-limited 'git log'
+invocations, one with disabled and the other with enabled
+commit-graph, and thus with disabled and enabled modified path Bloom
+filters, and compares their output.
+
+One of the flaws of the current modified path Bloom filters
+implementation is that it doesn't check Bloom filters for root
+commits.
+
+In several of the above test cases test_bloom_filters_used is invoked
+in a repository with only a root commit, so they don't check that
+the output is the same with and without Bloom filters.
+
+> +	)
+> +'
+> +
+> +test_expect_success 'version 2 changed-path not used when version 1 requested' '
+> +	(
+> +		cd highbit2 &&
+> +		git config --add commitgraph.changedPathsVersion 1 &&
+> +		test_bloom_filters_not_used "-- $CENT"
+> +	)
+> +'
+> +
+> +test_expect_success 'version 2 changed-path used when autodetect requested' '
+> +	(
+> +		cd highbit2 &&
+> +		git config --add commitgraph.changedPathsVersion -1 &&
+> +		test_bloom_filters_used "-- $CENT"
+> +	)
+> +'
+> +
+> +test_expect_success 'when writing another commit graph, preserve existing version 2 of changed-path' '
+> +	test_commit -C highbit2 c2double "$CENT$CENT" &&
+> +	git -C highbit2 commit-graph write --reachable --changed-paths &&
+> +	(
+> +		cd highbit2 &&
+> +		git config --add commitgraph.changedPathsVersion -1 &&
+> +		echo "options: bloom(2,10,7) read_generation_data" >expect &&
+> +		test-tool read-graph >full &&
+> +		grep options full >actual &&
+> +		test_cmp expect actual
+> +	)
+> +'
+> +
+> +test_expect_success 'when writing commit graph, do not reuse changed-path of another version' '
+> +	git init doublewrite &&
+> +	test_commit -C doublewrite c "$CENT" &&
+> +	git -C doublewrite config --add commitgraph.changedPathsVersion 1 &&
+> +	git -C doublewrite commit-graph write --reachable --changed-paths &&
+> +	git -C doublewrite config --add commitgraph.changedPathsVersion 2 &&
+> +	git -C doublewrite commit-graph write --reachable --changed-paths &&
+> +	(
+> +		cd doublewrite &&
+> +		echo "c01f" >expect &&
+> +		get_first_changed_path_filter >actual &&
+> +		test_cmp expect actual
+> +	)
+> +'
+
+The string "split" occurs twice in this patch series, but only in
+patch hunk contexts, and it doesn't occur at all in the previous long
+thread about the original patch series.
+
+Unfortunately, split commit-graphs weren't really considered in the
+design of the modified path Bloom filters feature, and layers with
+different Bloom filter settings weren't considered at all.  I've
+reported it back then, but the fixes so far were incomplete, and e.g.
+the test cases shown in
+
+  https://public-inbox.org/git/20201015132147.GB24954@szeder.dev/
+
+still fail.
+
+Since the interaction of different versions and split commit-graphs
+was neither mentioned in any of the commit messages nor discussed
+during the previous rounds, and there isn't any test case excercising
+it, and since the Bloom filter version information is stored in the
+same 'g->bloom_filter_settings' structure as the number of hashes, I'm
+afraid (though haven't actually checked) that handling commit-graph
+layers with different Bloom filter versions is prone to the same
+issues as well.
+
+
