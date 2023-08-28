@@ -2,101 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 724F2C83F12
-	for <git@archiver.kernel.org>; Mon, 28 Aug 2023 22:49:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 993A4C71153
+	for <git@archiver.kernel.org>; Mon, 28 Aug 2023 22:53:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234245AbjH1WtW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Aug 2023 18:49:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41860 "EHLO
+        id S234286AbjH1WxT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Aug 2023 18:53:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234260AbjH1WtH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Aug 2023 18:49:07 -0400
+        with ESMTP id S234335AbjH1WxE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Aug 2023 18:53:04 -0400
 Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 069ED11C
-        for <git@vger.kernel.org>; Mon, 28 Aug 2023 15:49:04 -0700 (PDT)
-Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-58fb73e26a6so44400617b3.1
-        for <git@vger.kernel.org>; Mon, 28 Aug 2023 15:49:03 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3665799
+        for <git@vger.kernel.org>; Mon, 28 Aug 2023 15:53:01 -0700 (PDT)
+Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-5922b96c5fcso44460047b3.0
+        for <git@vger.kernel.org>; Mon, 28 Aug 2023 15:53:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1693262943; x=1693867743;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Uybh8rnZhhbKkmri1ZeKPTbLGoOHsiiD9dw3FdQmnio=;
-        b=aeJ/WG+aCy9Gl4N6xhB0m8vzSy0h2a/iVR1vaZC0r+JowMJIQRWIKfdifxHWDTal42
-         G8EE7ExUpnPgY9vnbonInzXz40Q+YIfW5Ta9lhpEYTJx57AX6JbZLRU5vOCws3nON+A7
-         /h6b50vSI4G9Q5wlIAvBzzjWqw9wtRUt8Y8luakaJDoJVzxlqIxMl1OYxIzRUwOqSg7f
-         KE3yvc77bQOIlfwQbqUNI7Wuap3q3xlZ1DfNc7UJSULbCpCfEyc8wwZkj5/HtnOUQRo1
-         AVcMZ2Q69XfK6mJCEv4eE0Wx8ysUIMCGzgwNHDPwrU7NdpXj1nwUmwIjrC0d9kAq7SNs
-         4dog==
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1693263180; x=1693867980;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=nF6suqJ6Q8WuyTlKIQHkPYlFwZJHpu9xa7j+9QflZDU=;
+        b=L9yodV2QBfjoa2wzgbaGe7jKSe+ssCjgVBx84Wq8fZAj9QvFMus3zsPAjxjk0TRh1+
+         u/qGrmkrKRI6CoRkKlKSMeqNU4rP8njKM6QImtkF1MqAuIAjp3jRyBwAAN93tiDPBfcI
+         1jACLSecfR5okJktQwJVwqKXZ/VQol/EApambIz3Z55EmrVia8Le6f8rOCx1dmoUmfoR
+         XEcPY3/tmmHN54W/Ug5wHXY7P4Vqw2CmLZgdusB3N58Aqi9KTgQqIbCz4zONvJeGlhAJ
+         aaRN1YuHj9gEVAvx1dd+7z2Jf43bd56WELqJuBbWCVxgGOibpTZN406YI6u9OdjUsNqf
+         lz1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693262943; x=1693867743;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Uybh8rnZhhbKkmri1ZeKPTbLGoOHsiiD9dw3FdQmnio=;
-        b=b1705YRa+N1IsLR5lZYesP2SjBTfzbsZG6NKmell+xhubZXoi+Na8VCX0tzYbZ2OmJ
-         WKwl/xAlwziDlXWYQY/8P94/80LzLfQgN76yfuIRwZEvYU07EgqaW3deMoOBBunsaeDd
-         9B+RtJ3d4xxHDRp9VNE9MJXNYKQgE8wS06fZ7EBRzZUkf8FysPYLqbq1cdIfB9m8ymB+
-         26wgqFIR7WFca9T2gcbnMcLb679z9+kXpXuwQviilIJtVWhUN2gLAUG/4Wrtg4FH6gdb
-         oHHbV0WzaJnIwKnG23+NZYy+U5e27M7shacPqE3hgda4/bey+8icUFd9TzYbV4yR8yc7
-         Kecg==
-X-Gm-Message-State: AOJu0YxUZV0fQYo4QYOx48noJ0ojtIMzuDBnMYyW3q46YJ4WJdo8W3FL
-        oKI6RqlAU85nfD2Oh4WZz4j6W6XhkiXTwv194WLEng==
-X-Google-Smtp-Source: AGHT+IGGU2g3ANWknOotAKfKackukavqVMXs9TgLPCf8IprNzFafyA0pbV4Oi6/wywuimW68lKfxZg==
-X-Received: by 2002:a81:784d:0:b0:592:9235:4bcc with SMTP id t74-20020a81784d000000b0059292354bccmr11318139ywc.50.1693262943003;
-        Mon, 28 Aug 2023 15:49:03 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1693263180; x=1693867980;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nF6suqJ6Q8WuyTlKIQHkPYlFwZJHpu9xa7j+9QflZDU=;
+        b=HcAuA2M1TVizjOnlNsLi1LkiSyS3cIk3zcd5c6p0NnnpM1bvv3NqopVCdOLHYJcAUo
+         O8k1HyqP6a1QguojiUcY7t7YeCIRaCER2P/pPl5s/8IhgFcC62AP982Px1tOPUDUuoe2
+         MULtp50rJnmVPsPWXzcfiKsd2O+n1JMgGpcEjY3XSmdDg4U+M8zaIcgNSaZpvqaUKMRB
+         TppkUJK9+oUc2OnNTp/0goMF5kZeYT+vKCnFDPlHuVMrT2finl9SW5XvDg5bi1oLIcxw
+         RR5BwkveYHVl9rEL8wQmVr0SnDsfddUy0zYeB5MRxz0TYkhrt/IGdPcJGeyNZYlWXvKs
+         ztWA==
+X-Gm-Message-State: AOJu0YwCoXqjJtFiO3Hwmao0OiUMwtfxLzmXzSccqYoAVXCoL/59pmk6
+        nTCdHPKa2gFpszGHKJgIPSdaWPW45Zpz/gIYto5ITA==
+X-Google-Smtp-Source: AGHT+IHvn7cxVMn4spno3ndqATPQqZWTTp+083fAQ9p6IxT6CYEhdO3VhGhIz5UdpBAW7rpjGQEhyQ==
+X-Received: by 2002:a81:60c2:0:b0:591:4f2b:7eea with SMTP id u185-20020a8160c2000000b005914f2b7eeamr26561743ywb.18.1693263180312;
+        Mon, 28 Aug 2023 15:53:00 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id i9-20020a81f209000000b00594fff48796sm1469936ywm.75.2023.08.28.15.49.02
+        by smtp.gmail.com with ESMTPSA id d15-20020a81ab4f000000b005925765aa30sm2418074ywk.135.2023.08.28.15.52.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Aug 2023 15:49:02 -0700 (PDT)
-Date:   Mon, 28 Aug 2023 18:48:58 -0400
+        Mon, 28 Aug 2023 15:53:00 -0700 (PDT)
+Date:   Mon, 28 Aug 2023 18:52:59 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: [PATCH 0/4] pack-objects: support `--max-pack-size` for cruft packs
-Message-ID: <cover.1693262936.git.me@ttaylorr.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: [PATCH v2 2/4] leak tests: mark a handful of tests as leak-free
+Message-ID: <164f37cade68104e7cae7613cad833eeeb87b4f1.1693263171.git.me@ttaylorr.com>
+References: <cover.1692902414.git.me@ttaylorr.com>
+ <cover.1693263171.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <cover.1693263171.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This short series comes from the beginning of a longer one with the goal
-of giving users more flexible options to manage a set of cruft packs.
+In the topic merged via 5a4f8381b6 (Merge branch
+'ab/mark-leak-free-tests', 2021-10-25), a handful of tests in the suite
+were marked as leak-free.
 
-The goal of that series is to be able to do things like:
+Since then, a handful of tests have become leak-free due to changes like
 
-    $ git repack --cruft --max-cruft-size=10G
+  - 861c56f6f9 (branch: fix a leak in setup_tracking, 2023-06-11), and
+  - 866b43e644 (do_read_index(): always mark index as initialized unless
+    erroring out, 2023-06-29)
 
-and coalesce smaller cruft packs together until they reach the given
-threshold.
+, but weren't updated at the time to mark themselves as such. This leads
+to test "failures" when running:
 
-This series takes a tiny step towards that direction by making
-`--max-pack-size` work with cruft packs. This will be necessary since we
-have to guess the size of cruft packs when we combine two or more
-existing cruft packs.
+    $ make SANITIZE=leak
+    $ make -C t \
+        GIT_TEST_PASSING_SANITIZE_LEAK=check \
+        GIT_TEST_SANITIZE_LEAK_LOG=true \
+        GIT_TEST_OPTS=-vi test
 
-This accommodates situations like having an object which, when packed
-with a cruft pack that is below the size threshold, crosses over and
-causes the resulting pack to go above the size threshold. When
-specifying `--max-pack-size`, we would split the pack appropriately, and
-pack the aforementioned object separately.
+This patch closes those gaps by exporting TEST_PASSES_SANITIZE_LEAK=true
+before sourcing t/test-lib.sh on most remaining leak-free tests.
 
-But that is neither here nor there, since this series just makes a start
-in getting `--max-pack-size` to work with `--cruft`. Thanks in advance
-for your review!
+There are a couple of other tests which are similarly leak-free, but not
+included in the list of tests touched by this patch. The remaining tests
+will be addressed in the subsequent two patches.
 
-Taylor Blau (4):
-  builtin/pack-objects.c: remove unnecessary strbuf_reset()
-  builtin/pack-objects.c: support `--max-pack-size` with `--cruft`
-  Documentation/gitformat-pack.txt: remove multi-cruft packs alternative
-  Documentation/gitformat-pack.txt: drop mixed version section
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ t/t5571-pre-push-hook.sh | 1 +
+ t/t7516-commit-races.sh  | 2 ++
+ 2 files changed, 3 insertions(+)
 
- Documentation/git-pack-objects.txt |  4 +--
- Documentation/gitformat-pack.txt   | 36 +-------------------
- builtin/pack-objects.c             |  8 ++---
- builtin/repack.c                   |  3 +-
- t/t5329-pack-objects-cruft.sh      | 54 ++++++++++++++++++++++++------
- 5 files changed, 50 insertions(+), 55 deletions(-)
-
+diff --git a/t/t5571-pre-push-hook.sh b/t/t5571-pre-push-hook.sh
+index a11b20e378..448134c4bf 100755
+--- a/t/t5571-pre-push-hook.sh
++++ b/t/t5571-pre-push-hook.sh
+@@ -4,6 +4,7 @@ test_description='check pre-push hooks'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success 'setup' '
+diff --git a/t/t7516-commit-races.sh b/t/t7516-commit-races.sh
+index 2d38a16480..bb95f09810 100755
+--- a/t/t7516-commit-races.sh
++++ b/t/t7516-commit-races.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+ 
+ test_description='git commit races'
++
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success 'race to create orphan commit' '
 -- 
 2.42.0.49.g03c54e21ee
+
