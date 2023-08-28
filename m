@@ -2,106 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50F65C83F12
-	for <git@archiver.kernel.org>; Mon, 28 Aug 2023 14:43:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C3D6C83F15
+	for <git@archiver.kernel.org>; Mon, 28 Aug 2023 14:50:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229601AbjH1Omf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Aug 2023 10:42:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36584 "EHLO
+        id S231836AbjH1OuD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Aug 2023 10:50:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229778AbjH1OmU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Aug 2023 10:42:20 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BC79A1
-        for <git@vger.kernel.org>; Mon, 28 Aug 2023 07:42:17 -0700 (PDT)
-Received: (qmail 29120 invoked by uid 109); 28 Aug 2023 14:42:16 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 28 Aug 2023 14:42:16 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32402 invoked by uid 111); 28 Aug 2023 14:42:16 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 28 Aug 2023 10:42:16 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 28 Aug 2023 10:42:15 -0400
-From:   Jeff King <peff@peff.net>
-To:     Drew DeVault <sir@cmpwn.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] builtin/log.c: prepend "RFC" on --rfc
-Message-ID: <20230828144215.GA2537587@coredump.intra.peff.net>
-References: <20230828125132.25144-1-sir@cmpwn.com>
+        with ESMTP id S231967AbjH1Ots (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Aug 2023 10:49:48 -0400
+Received: from out-252.mta0.migadu.com (out-252.mta0.migadu.com [91.218.175.252])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B648E1
+        for <git@vger.kernel.org>; Mon, 28 Aug 2023 07:49:45 -0700 (PDT)
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cmpwn.com; s=key1;
+        t=1693234183;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=sI1RvM/Yn//Ud/uVl56yAPKNSW2u9yw3ej1IC8VLN6M=;
+        b=Ad1DWWBKsibd/TPOpMqirKGP/Unp02QftEZUzwbTPZR9XvStBj84qXd08QTKnQUhoi+TKI
+        feIMDh0NWf/ROJiKsO2aX2nfQHkIYhyorWj13FwThn7m3Mskxf96fNASxIPTwh/Jja1u6L
+        EI5u+yVaK7j4nppgoe81zAul9pbrGMfEUM3YAijnknv6IIPPRxUi1DJDiXyxzL/j2U3big
+        YL3wdW9tmgZSgjuEUltfsnOUXsSRsNHUVAEJ8nwzAbY2DCaUXZ1qpsVEhcjUA8PBMpCEZa
+        vmU0jJjcflmoQXSLIEIFlf9sa9YvOw2qoH4HAvLAgtITGMM4+1qOTWmQ0jYLkg==
+From:   Drew DeVault <sir@cmpwn.com>
+To:     git@vger.kernel.org
+Cc:     Drew DeVault <sir@cmpwn.com>
+Subject: [PATCH v2] builtin/log.c: prepend "RFC" on --rfc
+Date:   Mon, 28 Aug 2023 16:48:49 +0200
+Message-ID: <20230828144940.18245-1-sir@cmpwn.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20230828125132.25144-1-sir@cmpwn.com>
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 28, 2023 at 02:50:34PM +0200, Drew DeVault wrote:
+Rather than replacing the configured subject prefix (either through the
+git config or command line) entirely with "RFC PATCH", this change
+prepends RFC to whatever subject prefix was already in use.
 
-> Rather than replacing the configured subject prefix (either through the
-> git config or command line) entirely with "RFC PATCH", this change
-> prepends RFC to whatever subject prefix was already in use.
-> 
-> This is useful, for example, when a user is working on a repository that
-> has a subject prefix considered to disambiguate patches:
-> 
-> 	git config format.subjectPrefix 'PATCH my-project'
-> 
-> Prior to this change, formatting patches with --rfc would lose the
-> 'my-project' information.
+This is useful, for example, when a user is working on a repository that
+has a subject prefix considered to disambiguate patches:
 
-This sounds like a good change to me. It would be backwards-incompatible
-for anybody expecting:
+	git config format.subjectPrefix 'PATCH my-project'
 
-  git format-patch --subject=foo --rfc
+Prior to this change, formatting patches with --rfc would lose the
+'my-project' information.
 
-to override the --subject line, but that seems rather unlikely.
+Signed-off-by: Drew DeVault <sir@cmpwn.com>
+---
+v2 incorporates feedback from Jeff King regarding the lifetime of the
+heap-allocated "RFC %s" formatted string.
 
-> Implementation note: this introduces a small memory leak, but freeing it
-> requires a non-trivial amount of refactoring and some dubious choices
-> that I was not sure of for a small patch; and it seems like memory leaks
-> in this context are tolerated anyway from a perusal of the existing
-> code.
+ Documentation/git-format-patch.txt |  6 +++---
+ builtin/log.c                      | 12 +++++++++++-
+ t/t4014-format-patch.sh            |  9 +++++++++
+ 3 files changed, 23 insertions(+), 4 deletions(-)
 
-We do have a lot of small leaks like this, but we've been trying to
-clean them up slowly. There's some infrastructure in the test suite for
-marking scripts as leak-free, but t4014 is not yet there, so this
-won't cause CI to complain at this point.
-
-It is tempting while we are here and thinking about it to put in an easy
-hack, like storing the allocated string in a static variable.
-
->  static int rfc_callback(const struct option *opt, const char *arg, int unset)
->  {
-> +	int n;
-> +	char *prefix;
-> +	const char *prev;
-> +
->  	BUG_ON_OPT_NEG(unset);
->  	BUG_ON_OPT_ARG(arg);
-> -	return subject_prefix_callback(opt, "RFC PATCH", unset);
-> +
-> +	prev = ((struct rev_info *)opt->value)->subject_prefix;
-> +	assert(prev != NULL);
-> +	n = snprintf(NULL, 0, "RFC %s", prev);
-> +	assert(n > 0);
-> +	prefix = xmalloc(n + 1);
-> +	n = snprintf(prefix, n + 1, "RFC %s", prev);
-> +	assert(n > 0);
-> +
-> +	return subject_prefix_callback(opt, prefix, unset);
->  }
-
-We try to avoid manually computing string sizes like this, since it's
-error-prone and can be subject to integer overflow attacks (not in this
-case, but every instance makes auditing harder). You can use xstrfmt()
-instead.
-
-Coupled with the leak-hack from above, maybe just:
-
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index 373b46fc0d..fdc52cf826 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -229,9 +229,9 @@ populated with placeholder text.
+ 	variable, or 64 if unconfigured.
+ 
+ --rfc::
+-	Alias for `--subject-prefix="RFC PATCH"`. RFC means "Request For
+-	Comments"; use this when sending an experimental patch for
+-	discussion rather than application.
++	Prepends "RFC" to the subject prefix (producing "RFC PATCH" by
++	default). RFC means "Request For Comments"; use this when sending
++	an experimental patch for discussion rather than application.
+ 
+ -v <n>::
+ --reroll-count=<n>::
 diff --git a/builtin/log.c b/builtin/log.c
-index db3a88bfe9..579c3a2419 100644
+index db3a88bfe9..854216ee9c 100644
 --- a/builtin/log.c
 +++ b/builtin/log.c
 @@ -1476,9 +1476,19 @@ static int subject_prefix_callback(const struct option *opt, const char *arg,
@@ -109,21 +87,42 @@ index db3a88bfe9..579c3a2419 100644
  static int rfc_callback(const struct option *opt, const char *arg, int unset)
  {
 +	/*
-+	 * "avoid" leak by holding on to a reference to the memory, since we
-+	 * need the string for the lifetime of the process anyway
++	 * The subject_prefix in rev_info is not heap-allocated except in this
++	 * specific case, so there is no obvious place to free it. Since this
++	 * value is retained for the lifetime of the process, we just
++	 * statically allocate storage for it here.
 +	 */
 +	static char *prefix;
-+
  	BUG_ON_OPT_NEG(unset);
  	BUG_ON_OPT_ARG(arg);
 -	return subject_prefix_callback(opt, "RFC PATCH", unset);
 +
 +	free(prefix);
 +	prefix = xstrfmt("RFC %s", ((struct rev_info *)opt->value)->subject_prefix);
-+
 +	return subject_prefix_callback(opt, prefix, unset);
  }
  
  static int numbered_cmdline_opt = 0;
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index 3cf2b7a7fb..a7fe839683 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -1377,6 +1377,15 @@ test_expect_success '--rfc' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success '--rfc does not overwrite prefix' '
++	cat >expect <<-\EOF &&
++	Subject: [RFC PATCH foobar 1/1] header with . in it
++	EOF
++	git format-patch -n -1 --stdout --subject-prefix "PATCH foobar" --rfc >patch &&
++	grep ^Subject: patch >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success '--from=ident notices bogus ident' '
+ 	test_must_fail git format-patch -1 --stdout --from=foo >patch
+ '
+-- 
+2.42.0
 
-The rest of the patch (docs and tests) looked good to me.
