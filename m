@@ -2,31 +2,32 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 55B7EC83F12
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C33A5C71153
 	for <git@archiver.kernel.org>; Mon, 28 Aug 2023 21:48:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232908AbjH1Vrv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Aug 2023 17:47:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59412 "EHLO
+        id S233384AbjH1Vrw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Aug 2023 17:47:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233026AbjH1VrV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Aug 2023 17:47:21 -0400
+        with ESMTP id S233780AbjH1Vrg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Aug 2023 17:47:36 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C8D2189
-        for <git@vger.kernel.org>; Mon, 28 Aug 2023 14:47:18 -0700 (PDT)
-Received: (qmail 526 invoked by uid 109); 28 Aug 2023 21:47:18 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC18A186
+        for <git@vger.kernel.org>; Mon, 28 Aug 2023 14:47:32 -0700 (PDT)
+Received: (qmail 534 invoked by uid 109); 28 Aug 2023 21:47:32 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 28 Aug 2023 21:47:18 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 28 Aug 2023 21:47:32 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4520 invoked by uid 111); 28 Aug 2023 21:47:18 -0000
+Received: (qmail 4526 invoked by uid 111); 28 Aug 2023 21:47:33 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 28 Aug 2023 17:47:18 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 28 Aug 2023 17:47:33 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Mon, 28 Aug 2023 17:47:17 -0400
+Date:   Mon, 28 Aug 2023 17:47:31 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 02/22] sequencer: mark repository argument as unused
-Message-ID: <20230828214717.GB3831137@coredump.intra.peff.net>
+Subject: [PATCH 04/22] pack-bitmap: mark unused parameters in show_object
+ callback
+Message-ID: <20230828214731.GD3831137@coredump.intra.peff.net>
 References: <20230828214604.GA3830831@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -36,45 +37,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In sequencer_get_last_command(), we don't ever look at the repository
-parameter. It _should_ be used when calling into git_path_* functions,
-but the one we use here is declared with the non-REPO variant of
-GIT_PATH_FUNC(), and so just uses the_repository internally.
-
-We could change the path helper to use REPO_GIT_PATH_FUNC(), but doing
-so piecemeal is not great. There are 41 uses of GIT_PATH_FUNC() in
-sequencer.c, and inconsistently switching one makes the code more
-confusing. Likewise, this one function is used in half a dozen other
-spots, all of which would need to start passing in a repository argument
-(with rippling effects up the call stack).
-
-So let's punt on that for now and just silence any -Wunused-parameter
-warning.
-
-Note that we could also drop this parameter entirely, as the function is
-always called directly, and not as a callback that has to conform to
-some external interface. But since we'd eventually want to use the
-repository parameter, let's leave it in place to avoid disrupting the
-callers twice.
+This is similar to the cases in c50dca2a18 (list-objects: mark unused
+callback parameters, 2023-02-24), but was added after that commit.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- sequencer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ pack-bitmap.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index 82dc3e160e..41fd79d215 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2649,7 +2649,7 @@ static int parse_insn_line(struct repository *r, struct todo_item *item,
- 	return item->commit ? 0 : -1;
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index 6afc03d1e4..ca8319b87c 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -1101,8 +1101,9 @@ static void show_boundary_commit(struct commit *commit, void *_data)
+ 	}
  }
  
--int sequencer_get_last_command(struct repository *r, enum replay_action *action)
-+int sequencer_get_last_command(struct repository *r UNUSED, enum replay_action *action)
+-static void show_boundary_object(struct object *object,
+-				 const char *name, void *data)
++static void show_boundary_object(struct object *object UNUSED,
++				 const char *name UNUSED,
++				 void *data UNUSED)
  {
- 	const char *todo_file, *bol;
- 	struct strbuf buf = STRBUF_INIT;
+ 	BUG("should not be called");
+ }
 -- 
 2.42.0.505.g4c6fb48dec
 
