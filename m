@@ -2,32 +2,31 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6B20C83F12
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2946C71153
 	for <git@archiver.kernel.org>; Mon, 28 Aug 2023 21:49:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231609AbjH1Vs4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Aug 2023 17:48:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58994 "EHLO
+        id S233680AbjH1Vs5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Aug 2023 17:48:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233799AbjH1VsW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Aug 2023 17:48:22 -0400
+        with ESMTP id S232046AbjH1VsY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Aug 2023 17:48:24 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53BB0F9
-        for <git@vger.kernel.org>; Mon, 28 Aug 2023 14:48:19 -0700 (PDT)
-Received: (qmail 594 invoked by uid 109); 28 Aug 2023 21:48:19 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE817F9
+        for <git@vger.kernel.org>; Mon, 28 Aug 2023 14:48:21 -0700 (PDT)
+Received: (qmail 597 invoked by uid 109); 28 Aug 2023 21:48:21 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 28 Aug 2023 21:48:19 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 28 Aug 2023 21:48:21 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4571 invoked by uid 111); 28 Aug 2023 21:48:19 -0000
+Received: (qmail 4574 invoked by uid 111); 28 Aug 2023 21:48:22 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 28 Aug 2023 17:48:19 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 28 Aug 2023 17:48:22 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Mon, 28 Aug 2023 17:48:18 -0400
+Date:   Mon, 28 Aug 2023 17:48:20 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 19/22] fetch: mark unused parameter in ref_transaction
- callback
-Message-ID: <20230828214818.GS3831137@coredump.intra.peff.net>
+Subject: [PATCH 20/22] bundle-uri: mark unused parameters in callbacks
+Message-ID: <20230828214820.GT3831137@coredump.intra.peff.net>
 References: <20230828214604.GA3830831@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -37,28 +36,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since this callback is just trying to collect the set of queued tag
-updates, there is no need for it to look at old_oid at all. Mark it as
-unused to appease -Wunused-parameter.
+The first hunk is similar to 02c3c59e62 (hashmap: mark unused callback
+parameters, 2022-08-19), but was added after that commit.
+
+The other two are used with for_all_bundles_in_list(), but don't use
+their void data pointer.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/fetch.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ bundle-uri.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index eed4a7cdb6..8f93529505 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -308,7 +308,7 @@ static void clear_item(struct refname_hash_entry *item)
+diff --git a/bundle-uri.c b/bundle-uri.c
+index 4b5c49b93d..8492fffd2f 100644
+--- a/bundle-uri.c
++++ b/bundle-uri.c
+@@ -20,7 +20,7 @@ static struct {
+ 	{ BUNDLE_HEURISTIC_CREATIONTOKEN, "creationToken" },
+ };
  
+-static int compare_bundles(const void *hashmap_cmp_fn_data,
++static int compare_bundles(const void *hashmap_cmp_fn_data UNUSED,
+ 			   const struct hashmap_entry *he1,
+ 			   const struct hashmap_entry *he2,
+ 			   const void *id)
+@@ -45,7 +45,7 @@ void init_bundle_list(struct bundle_list *list)
+ }
  
- static void add_already_queued_tags(const char *refname,
--				    const struct object_id *old_oid,
-+				    const struct object_id *old_oid UNUSED,
- 				    const struct object_id *new_oid,
- 				    void *cb_data)
+ static int clear_remote_bundle_info(struct remote_bundle_info *bundle,
+-				    void *data)
++				    void *data UNUSED)
  {
+ 	FREE_AND_NULL(bundle->id);
+ 	FREE_AND_NULL(bundle->uri);
+@@ -779,7 +779,7 @@ static int unbundle_all_bundles(struct repository *r,
+ 	return 0;
+ }
+ 
+-static int unlink_bundle(struct remote_bundle_info *info, void *data)
++static int unlink_bundle(struct remote_bundle_info *info, void *data UNUSED)
+ {
+ 	if (info->file)
+ 		unlink_or_warn(info->file);
 -- 
 2.42.0.505.g4c6fb48dec
 
