@@ -2,134 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 461B4C83F11
-	for <git@archiver.kernel.org>; Mon, 28 Aug 2023 12:58:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37027C83F12
+	for <git@archiver.kernel.org>; Mon, 28 Aug 2023 13:53:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230335AbjH1M5s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Aug 2023 08:57:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51088 "EHLO
+        id S230142AbjH1Nw7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Aug 2023 09:52:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231598AbjH1M5f (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Aug 2023 08:57:35 -0400
-X-Greylist: delayed 346 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 28 Aug 2023 05:57:31 PDT
-Received: from out-247.mta0.migadu.com (out-247.mta0.migadu.com [91.218.175.247])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBFE2C3
-        for <git@vger.kernel.org>; Mon, 28 Aug 2023 05:57:31 -0700 (PDT)
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cmpwn.com; s=key1;
-        t=1693227102;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=STuyrror4xcLQO9JkZp+pWlccgFQSbsQ7tYtCf0d6/8=;
-        b=I6jXCT4bV/ZATX2uVJawDElHgpz25vgh22KKg/cd2NQCjrGNIdJ0LYrn/lI/LVSouAPpxc
-        LCy1MJV3gMehxrnQoyB0ElX7Vv1I0UTwxyQTBVvNQzQqzXvEyFDvwR/z0XZuIfWVkLSSGE
-        rGz0IG9hhHcL4eVGTs4WfQFhf9mxC18dYPCBq8Bjsy8jlPbqKiiGsay7W9zd2eUHAY36a3
-        ZRL7XAC/EhdzWXmyn10C/Dqh31IILVH1D+VjRxSBwm1vyM8L10dk8MMafw2P3fJ/ZlLwXO
-        /wcP9BysyDR9N1BrVg/v16wiLcSDEGOQrrSGDKKHt356gNH0IGXjaf93XI4oOg==
-From:   Drew DeVault <sir@cmpwn.com>
-To:     git@vger.kernel.org
-Cc:     Drew DeVault <sir@cmpwn.com>
-Subject: [PATCH] builtin/log.c: prepend "RFC" on --rfc
-Date:   Mon, 28 Aug 2023 14:50:34 +0200
-Message-ID: <20230828125132.25144-1-sir@cmpwn.com>
-MIME-Version: 1.0
+        with ESMTP id S230358AbjH1Nwd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Aug 2023 09:52:33 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70AE5C0
+        for <git@vger.kernel.org>; Mon, 28 Aug 2023 06:52:30 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-401ceda85cdso3949615e9.1
+        for <git@vger.kernel.org>; Mon, 28 Aug 2023 06:52:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1693230749; x=1693835549;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Ma/LVAu3UJU2P7GZt6zvEcUB9KDjuxMMaQnRr0cfGME=;
+        b=JszjdEPrfarUTAsCXlT+c/tUCK+n4YVMYOvHyVdomrpmfD23kebbUVcsg+oSHMRibP
+         ene7Zz/5nyx5ONUqeCsIMe+6sDf2hiFwhhnACD6a1gklaVzBOedLJa2zyy3TFbpDQ+rh
+         onrM137F2jhIs0Mifsk9JzboUPtyymEGIYcFo2f12lVqP9dU+rgMjRWWgVQWsVc0CiyM
+         VbdwTE3LUTt1bUdu8vWZgKAQysWa12vjH5B5s+GRX5s/CS8hWqklfHbvDlSBwVkVUIEK
+         M5Nuy/eA8ZbsdGSFxZDvNPNrHMjxCsfElNKNsPzgU63JHiihp4PKzU1/p6/U2vSkilDn
+         aFdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693230749; x=1693835549;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Ma/LVAu3UJU2P7GZt6zvEcUB9KDjuxMMaQnRr0cfGME=;
+        b=V4BBetio69f1PtwNgMARjDXPa+mwK/f2c5/DO0ZsteFJKBdab6A8BhTvnl3NiFDEcV
+         LiRTihGf/QpSeX2OmaH+5LQteOf14ts1inZzrCBztdtbVs00Ir3qeeVJOr+IJiABGFWn
+         oyD51FRYgTSeZJnqCpnJ8rJgJS8o1qOHk0D1Rd4b3iz1mIA8x1tH/M0deHh+5QWn60gr
+         rLc5INRVxDuWg0qSdUryya0SHbmuhnmxvzG+g3yca0zBq76tGoLT+gD6wV2X9c7WyLlV
+         3AxzsBCWgK+l3CgDLCy4haQlyqA5jF5ppsRpzPlHZC6QJPHuSmBRTa1Zr92dSMqM2CvZ
+         GwPQ==
+X-Gm-Message-State: AOJu0YyUedKf5/sMMSRJPiYrKHda/18ObszvBJA3zcxmzQ/jGLgXrOxE
+        PUsWF5UNoCEsveQqicRtgSCxQLmyuek=
+X-Google-Smtp-Source: AGHT+IHTmuc5hfJ9KO8HJ3YLUMK261HKNLG+CFqU3ctV7C5LPxkf8jhQfIz3HN5G9tZnghQ5P4jnhg==
+X-Received: by 2002:a1c:ed14:0:b0:401:b1c6:97dc with SMTP id l20-20020a1ced14000000b00401b1c697dcmr7233654wmh.23.1693230748678;
+        Mon, 28 Aug 2023 06:52:28 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id q20-20020a7bce94000000b003fedcd02e2asm10840372wmj.35.2023.08.28.06.52.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Aug 2023 06:52:28 -0700 (PDT)
+Message-ID: <e9858b31db66101b04d93695390f48316bae8199.1693230746.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1569.v3.git.1693230746.gitgitgadget@gmail.com>
+References: <pull.1569.v2.git.1692725056.gitgitgadget@gmail.com>
+        <pull.1569.v3.git.1693230746.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 28 Aug 2023 13:52:24 +0000
+Subject: [PATCH v3 1/3] scalar: add --[no-]src option
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, johannes.schindelin@gmx.de,
+        Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rather than replacing the configured subject prefix (either through the
-git config or command line) entirely with "RFC PATCH", this change
-prepends RFC to whatever subject prefix was already in use.
+From: Derrick Stolee <derrickstolee@github.com>
 
-This is useful, for example, when a user is working on a repository that
-has a subject prefix considered to disambiguate patches:
+Some users have strong aversions to Scalar's opinion that the repository
+should be in a 'src' directory, even though this creates a clean slate
+for placing build artifacts in adjacent directories.
 
-	git config format.subjectPrefix 'PATCH my-project'
+The new --no-src option allows users to opt out of the default behavior.
 
-Prior to this change, formatting patches with --rfc would lose the
-'my-project' information.
+While adding options, make sure the usage output by 'scalar clone -h'
+reports the same as the SYNOPSIS line in Documentation/scalar.txt.
 
-Signed-off-by: Drew DeVault <sir@cmpwn.com>
+Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
-Implementation note: this introduces a small memory leak, but freeing it
-requires a non-trivial amount of refactoring and some dubious choices
-that I was not sure of for a small patch; and it seems like memory leaks
-in this context are tolerated anyway from a perusal of the existing
-code.
+ Documentation/scalar.txt |  8 +++++++-
+ scalar.c                 | 11 +++++++++--
+ t/t9211-scalar-clone.sh  | 12 ++++++++++++
+ 3 files changed, 28 insertions(+), 3 deletions(-)
 
- Documentation/git-format-patch.txt |  6 +++---
- builtin/log.c                      | 15 ++++++++++++++-
- t/t4014-format-patch.sh            |  9 +++++++++
- 3 files changed, 26 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index 373b46fc0d..fdc52cf826 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -229,9 +229,9 @@ populated with placeholder text.
- 	variable, or 64 if unconfigured.
+diff --git a/Documentation/scalar.txt b/Documentation/scalar.txt
+index f33436c7f65..361f51a6473 100644
+--- a/Documentation/scalar.txt
++++ b/Documentation/scalar.txt
+@@ -8,7 +8,8 @@ scalar - A tool for managing large Git repositories
+ SYNOPSIS
+ --------
+ [verse]
+-scalar clone [--single-branch] [--branch <main-branch>] [--full-clone] <url> [<enlistment>]
++scalar clone [--single-branch] [--branch <main-branch>] [--full-clone]
++	[--[no-]src] <url> [<enlistment>]
+ scalar list
+ scalar register [<enlistment>]
+ scalar unregister [<enlistment>]
+@@ -80,6 +81,11 @@ remote-tracking branch for the branch this option was used for the initial
+ cloning. If the HEAD at the remote did not point at any branch when
+ `--single-branch` clone was made, no remote-tracking branch is created.
  
- --rfc::
--	Alias for `--subject-prefix="RFC PATCH"`. RFC means "Request For
--	Comments"; use this when sending an experimental patch for
--	discussion rather than application.
-+	Prepends "RFC" to the subject prefix (producing "RFC PATCH" by
-+	default). RFC means "Request For Comments"; use this when sending
-+	an experimental patch for discussion rather than application.
- 
- -v <n>::
- --reroll-count=<n>::
-diff --git a/builtin/log.c b/builtin/log.c
-index db3a88bfe9..d986faebed 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1476,9 +1476,22 @@ static int subject_prefix_callback(const struct option *opt, const char *arg,
- 
- static int rfc_callback(const struct option *opt, const char *arg, int unset)
++--[no-]src::
++	By default, `scalar clone` places the cloned repository within a
++	`<entlistment>/src` directory. Use `--no-src` to place the cloned
++	repository directly in the `<enlistment>` directory.
++
+ --[no-]full-clone::
+ 	A sparse-checkout is initialized by default. This behavior can be
+ 	turned off via `--full-clone`.
+diff --git a/scalar.c b/scalar.c
+index df7358f481c..938bb73f3ce 100644
+--- a/scalar.c
++++ b/scalar.c
+@@ -409,6 +409,7 @@ static int cmd_clone(int argc, const char **argv)
  {
-+	int n;
-+	char *prefix;
-+	const char *prev;
-+
- 	BUG_ON_OPT_NEG(unset);
- 	BUG_ON_OPT_ARG(arg);
--	return subject_prefix_callback(opt, "RFC PATCH", unset);
-+
-+	prev = ((struct rev_info *)opt->value)->subject_prefix;
-+	assert(prev != NULL);
-+	n = snprintf(NULL, 0, "RFC %s", prev);
-+	assert(n > 0);
-+	prefix = xmalloc(n + 1);
-+	n = snprintf(prefix, n + 1, "RFC %s", prev);
-+	assert(n > 0);
-+
-+	return subject_prefix_callback(opt, prefix, unset);
- }
+ 	const char *branch = NULL;
+ 	int full_clone = 0, single_branch = 0, show_progress = isatty(2);
++	int src = 1;
+ 	struct option clone_options[] = {
+ 		OPT_STRING('b', "branch", &branch, N_("<branch>"),
+ 			   N_("branch to checkout after clone")),
+@@ -417,10 +418,13 @@ static int cmd_clone(int argc, const char **argv)
+ 		OPT_BOOL(0, "single-branch", &single_branch,
+ 			 N_("only download metadata for the branch that will "
+ 			    "be checked out")),
++		OPT_BOOL(0, "src", &src,
++			 N_("create repository within 'src' directory")),
+ 		OPT_END(),
+ 	};
+ 	const char * const clone_usage[] = {
+-		N_("scalar clone [<options>] [--] <repo> [<dir>]"),
++		N_("scalar clone [--single-branch] [--branch <main-branch>] [--full-clone]\n"
++		   "\t[--[no-]src] <url> [<enlistment>]"),
+ 		NULL
+ 	};
+ 	const char *url;
+@@ -456,7 +460,10 @@ static int cmd_clone(int argc, const char **argv)
+ 	if (is_directory(enlistment))
+ 		die(_("directory '%s' exists already"), enlistment);
  
- static int numbered_cmdline_opt = 0;
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 3cf2b7a7fb..a7fe839683 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -1377,6 +1377,15 @@ test_expect_success '--rfc' '
- 	test_cmp expect actual
+-	dir = xstrfmt("%s/src", enlistment);
++	if (src)
++		dir = xstrfmt("%s/src", enlistment);
++	else
++		dir = xstrdup(enlistment);
+ 
+ 	strbuf_reset(&buf);
+ 	if (branch)
+diff --git a/t/t9211-scalar-clone.sh b/t/t9211-scalar-clone.sh
+index 872ad1c9c2b..7869f45ee64 100755
+--- a/t/t9211-scalar-clone.sh
++++ b/t/t9211-scalar-clone.sh
+@@ -180,4 +180,16 @@ test_expect_success 'scalar clone warns when background maintenance fails' '
+ 	grep "could not turn on maintenance" err
  '
  
-+test_expect_success '--rfc does not overwrite prefix' '
-+	cat >expect <<-\EOF &&
-+	Subject: [RFC PATCH foobar 1/1] header with . in it
-+	EOF
-+	git format-patch -n -1 --stdout --subject-prefix "PATCH foobar" --rfc >patch &&
-+	grep ^Subject: patch >actual &&
-+	test_cmp expect actual
++test_expect_success '`scalar clone --no-src`' '
++	scalar clone --src "file://$(pwd)/to-clone" with-src &&
++	scalar clone --no-src "file://$(pwd)/to-clone" without-src &&
++
++	test_path_is_dir with-src/src &&
++	test_path_is_missing without-src/src &&
++
++	(cd with-src/src && ls ?*) >with &&
++	(cd without-src && ls ?*) >without &&
++	test_cmp with without
 +'
 +
- test_expect_success '--from=ident notices bogus ident' '
- 	test_must_fail git format-patch -1 --stdout --from=foo >patch
- '
+ test_done
 -- 
-2.42.0
+gitgitgadget
 
