@@ -2,138 +2,599 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF77CC83F15
-	for <git@archiver.kernel.org>; Mon, 28 Aug 2023 18:38:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 17DF2C83F12
+	for <git@archiver.kernel.org>; Mon, 28 Aug 2023 19:09:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233150AbjH1SiS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Aug 2023 14:38:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49562 "EHLO
+        id S233217AbjH1TJD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Aug 2023 15:09:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233034AbjH1Sht (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Aug 2023 14:37:49 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3A4EC6
-        for <git@vger.kernel.org>; Mon, 28 Aug 2023 11:37:36 -0700 (PDT)
-Received: (qmail 31250 invoked by uid 109); 28 Aug 2023 18:37:36 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 28 Aug 2023 18:37:36 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2334 invoked by uid 111); 28 Aug 2023 18:37:36 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 28 Aug 2023 14:37:36 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 28 Aug 2023 14:37:35 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        Teng Long <dyroneteng@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: [PATCH] test-lib: ignore uninteresting LSan output
-Message-ID: <20230828183735.GA3015072@coredump.intra.peff.net>
-References: <cover.1692902414.git.me@ttaylorr.com>
- <b1711c4c817f95011bc477a9485c115b4926c7da.1692902414.git.me@ttaylorr.com>
- <20230824210238.GA940724@coredump.intra.peff.net>
- <ZOj7XqRSmIFxaI3P@nand.local>
- <20230825203819.GC2382334@coredump.intra.peff.net>
- <xmqqttsjgh3h.fsf@gitster.g>
+        with ESMTP id S231859AbjH1TIf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Aug 2023 15:08:35 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 909F7102
+        for <git@vger.kernel.org>; Mon, 28 Aug 2023 12:08:30 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1AF2F305DD;
+        Mon, 28 Aug 2023 15:08:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+        :subject:date:message-id:mime-version:content-type; s=sasl; bh=H
+        rRCXBmv5QjcCF81PMSmoCfa6w8kiuu0LadNvgHkNU0=; b=AQ4WROPV+Ah8Qt2/n
+        vijlr5Ozks8rT4o9LejSMjJsclFBmqwThH/HqhGN0xo0vvSffERF73x/ZlvS2WS+
+        OKE89N8DG0I/x7C5xyFPCYRIydKdc3eE9cUSl7d1Qb3xzWzvaKdLakXbkG6v6PBO
+        5h5Ub4nyTkon3JCKFk0g+znd/c=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 14396305DC;
+        Mon, 28 Aug 2023 15:08:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.185.212.55])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2F0E4305DB;
+        Mon, 28 Aug 2023 15:08:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Subject: What's cooking in git.git (Aug 2023, #08; Mon, 28)
+X-master-at: 5dc72c0fbcbccf7dbb42e470e55dafbd2afdf343
+X-next-at: 7437a81fcf65029fe0d26191d952ee59c0ab922b
+Date:   Mon, 28 Aug 2023 12:08:26 -0700
+Message-ID: <xmqqa5ubgf2t.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqttsjgh3h.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 44A55D02-45D6-11EE-A13C-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 28, 2023 at 11:24:50AM -0700, Junio C Hamano wrote:
+Here are the topics that have been cooking in my tree.  Commits
+prefixed with '+' are in 'next' (being in 'next' is a sign that a
+topic is stable enough to be used and are candidate to be in a
+future release).  Commits prefixed with '-' are only in 'seen', and
+aren't considered "accepted" at all and may be annotated with an URL
+to a message that raises issues but they are no means exhaustive.  A
+topic without enough support may be discarded after a long period of
+no activity (of course they can be resubmit when new interests
+arise).
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > I do think we should apply the racy-thread log fix, though. I thought we
-> > had discussed it at the time, but there doesn't seem to be anything in
-> > the archive. And I was willing to let it go as a weird one-off at the
-> > time, but now that it wasted another 30 minutes of my life discovering
-> > the problem again, I'm in favor of applying it.
-> >
-> > Whether it happens as part of your re-rolled series, or is applied
-> > separately, I am OK either way. :)
-> 
-> Whether it comes from you or Taylor, I do favor to see it as a new
-> message at lore archive than having to fish an older message from it
-> ;-)
+The cycle for 2.43 has started.  Hopefully we can drain the topics
+that have been cooking in 'next' during the pre-release freeze
+period down to 'master' by the end of this week.
 
-I re-sent it already as part of this thread. But I guess the definition
-of "older" may depend on whether you were paying attention to the thread
-at that point. ;)
+Copies of the source code to Git live in many repositories, and the
+following is a list of the ones I push into or their mirrors.  Some
+repositories have only a subset of branches.
 
-Here it is again. Let's just consider it as its own topic. There is
-nothing in Taylor's series that depends on it (it's just that it was
-useful for me to reproduce his findings).
+With maint, master, next, seen, todo:
 
--- >8 --
-Subject: [PATCH] test-lib: ignore uninteresting LSan output
+	git://git.kernel.org/pub/scm/git/git.git/
+	git://repo.or.cz/alt-git.git/
+	https://kernel.googlesource.com/pub/scm/git/git/
+	https://github.com/git/git/
+	https://gitlab.com/git-vcs/git/
 
-When I run the tests in leak-checking mode the same way our CI job does,
-like:
+With all the integration branches and topics broken out:
 
-  make SANITIZE=leak \
-       GIT_TEST_PASSING_SANITIZE_LEAK=true \
-       GIT_TEST_SANITIZE_LEAK_LOG=true \
-       test
+	https://github.com/gitster/git/
 
-then LSan can racily produce useless entries in the log files that look
-like this:
+Even though the preformatted documentation in HTML and man format
+are not sources, they are published in these repositories for
+convenience (replace "htmldocs" with "manpages" for the manual
+pages):
 
-  ==git==3034393==Unable to get registers from thread 3034307.
+	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
+	https://github.com/gitster/git-htmldocs.git/
 
-I think they're mostly harmless based on the source here:
+Release tarballs are available at:
 
-  https://github.com/llvm/llvm-project/blob/7e0a52e8e9ef6394bb62e0b56e17fa23e7262411/compiler-rt/lib/lsan/lsan_common.cpp#L414
+	https://www.kernel.org/pub/software/scm/git/
 
-which reads:
+--------------------------------------------------
+[New Topics]
 
-    PtraceRegistersStatus have_registers =
-        suspended_threads.GetRegistersAndSP(i, &registers, &sp);
-    if (have_registers != REGISTERS_AVAILABLE) {
-      Report("Unable to get registers from thread %llu.\n", os_id);
-      // If unable to get SP, consider the entire stack to be reachable unless
-      // GetRegistersAndSP failed with ESRCH.
-      if (have_registers == REGISTERS_UNAVAILABLE_FATAL)
-        continue;
-      sp = stack_begin;
-    }
+* rs/parse-options-help-text-is-optional (2023-08-28) 1 commit
+ - parse-options: allow omitting option help text
 
-The program itself still runs fine and LSan doesn't cause us to abort.
-But test-lib.sh looks for any non-empty LSan logs and marks the test as
-a failure anyway, under the assumption that we simply missed the failing
-exit code somehow.
+ It may be tempting to leave the help text NULL for a command line
+ option that is either hidden or too obvious, but "git subcmd -h"
+ and "git subcmd --help-all" would have segfaulted if done so.  Now
+ the help text is optional.
 
-I don't think I've ever seen this happen in the CI job, but running
-locally using clang-14 on an 8-core machine, I can't seem to make it
-through a full run of the test suite without having at least one
-failure. And it's a different one every time (though they do seem to
-often be related to packing tests, which makes sense, since that is one
-of our biggest users of threaded code).
+ Will merge to 'next'.
+ source: <2b08dc43-621d-2170-c4a6-c2aac33a9a19@web.de>
 
-We can hack around this by only counting LSan log files that contain a
-line that doesn't match our known-uninteresting pattern.
+--------------------------------------------------
+[Graduated to 'master']
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- t/test-lib.sh | 1 +
- 1 file changed, 1 insertion(+)
+* mh/credential-erase-improvements-more (2023-07-26) 2 commits
+  (merged to 'next' on 2023-08-08 at fd1ba4accf)
+ + credential/wincred: erase matching creds only
+ + credential/libsecret: erase matching creds only
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 293caf0f20..5ea5d1d62a 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -334,6 +334,7 @@ nr_san_dir_leaks_ () {
- 	find "$TEST_RESULTS_SAN_DIR" \
- 		-type f \
- 		-name "$TEST_RESULTS_SAN_FILE_PFX.*" 2>/dev/null |
-+	xargs grep -lv "Unable to get registers from thread" |
- 	wc -l
- }
- 
--- 
-2.42.0.448.g0caf9a9e14
+ Update two credential helpers to correctly match which credential
+ to erase; they dropped not the ones with stale password.
+ source: <pull.1527.v2.git.git.1690387585634.gitgitgadget@gmail.com>
+ source: <pull.1529.git.git.1687596777147.gitgitgadget@gmail.com>
 
+
+* mh/credential-libsecret-attrs (2023-06-16) 1 commit
+  (merged to 'next' on 2023-08-08 at dc73a2c55a)
+ + credential/libsecret: store new attributes
+
+ The way authentication related data other than passwords (e.g.
+ oath token and password expiration data) are stored in libsecret
+ keyrings has been rethought.
+ source: <pull.1469.v5.git.git.1686945306242.gitgitgadget@gmail.com>
+
+--------------------------------------------------
+[Stalled]
+
+* cc/repack-sift-filtered-objects-to-separate-pack (2023-08-13) 8 commits
+ . gc: add `gc.repackFilterTo` config option
+ . repack: implement `--filter-to` for storing filtered out objects
+ . gc: add `gc.repackFilter` config option
+ . repack: add `--filter=<filter-spec>` option
+ . repack: refactor finding pack prefix
+ . repack: refactor finishing pack-objects command
+ . t/helper: add 'find-pack' test-tool
+ . pack-objects: allow `--filter` without `--stdout`
+
+ "git repack" machinery learns to pay attention to the "--filter="
+ option.
+
+ Kicked out of the 'seen', as it still seems to be failing tests.
+ cf. https://github.com/git/git/actions/runs/5850998716/job/15861158252#step:4:1822
+ source: <20230812000011.1227371-1-christian.couder@gmail.com>
+
+
+* ob/send-email-interactive-failure (2023-08-21) 1 commit
+ - send-email: prompt-dependent exit codes
+
+ "git send-email" exits with non-zero status when end-user
+ interaction causes any prepared message not to be sent.
+
+ Expecting a reroll.
+ Without an opt-in fix, this will be a backward-incompatible
+ change that needs mention in the release notes.
+ source: <20230821170720.577835-1-oswald.buddenhagen@gmx.de>
+
+
+* cc/git-replay (2023-06-03) 15 commits
+ - replay: stop assuming replayed branches do not diverge
+ - replay: add --contained to rebase contained branches
+ - replay: add --advance or 'cherry-pick' mode
+ - replay: disallow revision specific options and pathspecs
+ - replay: use standard revision ranges
+ - replay: make it a minimal server side command
+ - replay: remove HEAD related sanity check
+ - replay: remove progress and info output
+ - replay: add an important FIXME comment about gpg signing
+ - replay: don't simplify history
+ - replay: introduce pick_regular_commit()
+ - replay: die() instead of failing assert()
+ - replay: start using parse_options API
+ - replay: introduce new builtin
+ - t6429: remove switching aspects of fast-rebase
+
+ No reviews?
+ source: <20230602102533.876905-1-christian.couder@gmail.com>
+
+
+* tk/cherry-pick-sequence-requires-clean-worktree (2023-06-01) 1 commit
+ - cherry-pick: refuse cherry-pick sequence if index is dirty
+
+ "git cherry-pick A" that replays a single commit stopped before
+ clobbering local modification, but "git cherry-pick A..B" did not,
+ which has been corrected.
+
+ Expecting a reroll.
+ cf. <999f12b2-38d6-f446-e763-4985116ad37d@gmail.com>
+ source: <pull.1535.v2.git.1685264889088.gitgitgadget@gmail.com>
+
+--------------------------------------------------
+[Cooking]
+
+* jk/diff-result-code-cleanup (2023-08-21) 7 commits
+  (merged to 'next' on 2023-08-25 at 3b1280d42f)
+ + diff: drop useless "status" parameter from diff_result_code()
+ + diff: drop useless return values in git-diff helpers
+ + diff: drop useless return from run_diff_{files,index} functions
+ + diff: die when failing to read index in git-diff builtin
+ + diff: show usage for unknown builtin_diff_files() options
+ + diff-files: avoid negative exit value
+ + diff: spell DIFF_INDEX_CACHED out when calling run_diff_index()
+
+ "git diff --no-such-option" and other corner cases around the exit
+ status of the "diff" command has been corrected.
+
+ Will merge to 'master'.
+ source: <20230821201358.GA2663749@coredump.intra.peff.net>
+
+
+* tb/path-filter-fix (2023-08-21) 15 commits
+ - bloom: introduce `deinit_bloom_filters()`
+ - commit-graph: reuse existing Bloom filters where possible
+ - object.h: fix mis-aligned flag bits table
+ - commit-graph: drop unnecessary `graph_read_bloom_data_context`
+ - commit-graph.c: unconditionally load Bloom filters
+ - t/t4216-log-bloom.sh: harden `test_bloom_filters_not_used()`
+ - bloom: prepare to discard incompatible Bloom filters
+ - bloom: annotate filters with hash version
+ - commit-graph: new filter ver. that fixes murmur3
+ - repo-settings: introduce commitgraph.changedPathsVersion
+ - t4216: test changed path filters with high bit paths
+ - t/helper/test-read-graph: implement `bloom-filters` mode
+ - bloom.h: make `load_bloom_filter_from_graph()` public
+ - t/helper/test-read-graph.c: extract `dump_graph_info()`
+ - gitformat-commit-graph: describe version 2 of BDAT
+
+ The Bloom filter used for path limited history traversal was broken
+ on systems whose "char" is unsigned; update the implementation and
+ bump the format version to 2.
+
+ Comments?
+ source: <cover.1692654233.git.me@ttaylorr.com>
+
+
+* ch/t6300-verify-commit-test-cleanup (2023-08-23) 2 commits
+  (merged to 'next' on 2023-08-24 at 15b842867e)
+ + t/t6300: drop magic filtering
+ + t/lib-gpg: forcibly run a trustdb update
+
+ Test clean-up.
+
+ Will merge to 'master'.
+ source: <20230822150149.541ccb35@leda.eworm.net>
+
+
+* ts/unpacklimit-config-fix (2023-08-22) 1 commit
+  (merged to 'next' on 2023-08-23 at 4fabd9a697)
+ + transfer.unpackLimit: fetch/receive.unpackLimit takes precedence
+
+ transfer.unpackLimit ought to be used as a fallback, but overrode
+ fetch.unpackLimit and receive.unpackLimit instead.
+
+ Will merge to 'master'.
+ source: <xmqqpm3eh7f6.fsf@gitster.g>
+
+
+* js/config-parse (2023-08-23) 4 commits
+ - config-parse: split library out of config.[c|h]
+ - config.c: accept config_parse_options in git_config_from_stdin
+ - config: report config parse errors using cb
+ - config: split out config_parse_options
+
+ Split out parsing routines for the configuration files into a
+ separate file.
+
+ Needs review.
+ source: <cover.1692827403.git.steadmon@google.com>
+
+
+* jc/ci-skip-same-commit (2023-08-25) 1 commit
+  (merged to 'next' on 2023-08-28 at e978717961)
+ + ci: avoid building from the same commit in parallel
+
+ Tweak GitHub Actions CI so that pushing the same commit to multiple
+ branch tips at the same time will not waste building and testing
+ the same thing twice.
+
+ Will merge to 'master'.
+ source: <1da763f3-60bf-a572-2c71-336b1fa5553d@gmx.de>
+
+
+* py/git-gui-updates (2023-08-24) 16 commits
+  (merged to 'next' on 2023-08-28 at df0b742344)
+ + Merge https://github.com/prati0100/git-gui
+ + Merge branch 'ml/cygwin-fixes'
+ + git-gui - use mkshortcut on Cygwin
+ + git-gui - use cygstart to browse on Cygwin
+ + git-gui - remove obsolete Cygwin specific code
+ + git gui Makefile - remove Cygwin modifications
+ + Merge branch 'ab/makeflags'
+ + Makefiles: change search through $(MAKEFLAGS) for GNU make 4.4
+ + Merge branch 'js/windows-rce'
+ + Work around Tcl's default `PATH` lookup
+ + Move the `_which` function (almost) to the top
+ + Move is_<platform> functions to the beginning
+ + is_Cygwin: avoid `exec`ing anything
+ + windows: ignore empty `PATH` elements
+ + Merge branch 'vk/readme-typo'
+ + git-gui: Fix a typo in README
+
+ Git GUI updates.
+
+ Will merge to 'master'.
+
+
+* tb/mark-more-tests-as-leak-free (2023-08-24) 3 commits
+ - leak tests: mark t5583-push-branches.sh as leak-free
+ - leak tests: mark t3321-notes-stripspace.sh as leak-free
+ - leak tests: mark a handful of tests as leak-free
+
+ source: <cover.1692902414.git.me@ttaylorr.com>
+
+
+* ob/sequencer-empty-hint-fix (2023-08-24) 1 commit
+  (merged to 'next' on 2023-08-24 at 626c52ad72)
+ + sequencer: rectify empty hint in call of require_clean_work_tree()
+
+ Update the use of API for consistency between two calls to
+ require_clean_work_tree() from the sequencer code.
+
+ Will merge to 'master'.
+ source: <20230824150046.802008-1-oswald.buddenhagen@gmx.de>
+
+
+* jc/diff-exit-code-with-w-fixes (2023-08-21) 5 commits
+  (merged to 'next' on 2023-08-23 at 436a0aec3d)
+ + diff: the -w option breaks --exit-code for --raw and other output modes
+ + t4040: remove test that succeeded for a wrong reason
+ + diff: teach "--stat -w --exit-code" to notice differences
+ + diff: mode-only change should be noticed by "--patch -w --exit-code"
+ + diff: move the fallback "--exit-code" code down
+
+ "git diff -w --exit-code" with various options did not work
+ correctly, which is being addressed.
+
+ Will merge to 'master'.
+ source: <20230818235932.3253552-1-gitster@pobox.com>
+
+
+* jc/update-index-show-index-version (2023-08-18) 3 commits
+ - test-tool: retire "index-version"
+ - update-index: add --show-index-version
+ - update-index doc: v4 is OK with JGit and libgit2
+
+ "git update-index" learns "--show-index-version" to inspect
+ the index format version used by the on-disk index file.
+
+ Needs review.
+ source: <20230818233729.2766281-1-gitster@pobox.com>
+
+
+* ob/revert-of-revert-is-reapply (2023-08-21) 2 commits
+ - git-revert.txt: add discussion
+ - sequencer: beautify subject of reverts of reverts
+
+ Tweak the default log message created by "git revert" when
+ reverting a commit that records a revert.
+
+ Expecting a (hopefully small and final) reroll.
+ cf. <ZOZnNDd2pMX6M2Au@nand.local>
+ source: <20230809171531.2564807-1-oswald.buddenhagen@gmx.de>
+
+
+* ob/format-patch-description-file (2023-08-21) 1 commit
+  (merged to 'next' on 2023-08-25 at 89ea619311)
+ + format-patch: add --description-file option
+
+ "git format-patch" learns a way to feed cover letter description,
+ that (1) can be used on detached HEAD where there is no branch
+ description available, and (2) also can override the branch
+ description if there is one.
+
+ Will merge to 'master'.
+ source: <20230821170720.577820-1-oswald.buddenhagen@gmx.de>
+
+
+* ds/scalar-updates (2023-08-28) 3 commits
+  (merged to 'next' on 2023-08-28 at 093e6bcb9c)
+ + scalar reconfigure: help users remove buggy repos
+ + setup: add discover_git_directory_reason()
+ + scalar: add --[no-]src option
+
+ Scalar updates.
+ Will merge to 'master'.
+ source: <pull.1569.v3.git.1693230746.gitgitgadget@gmail.com>
+
+
+* jc/mv-d-to-d-error-message-fix (2023-08-11) 1 commit
+  (merged to 'next' on 2023-08-21 at 2220d22d6f)
+ + mv: fix error for moving directory to another
+
+ Typofix in an error message.
+
+ Will merge to 'master'.
+ source: <xmqqjzu1njt0.fsf@gitster.g>
+
+
+* sl/sparse-check-attr (2023-08-11) 3 commits
+  (merged to 'next' on 2023-08-21 at c202b15517)
+ + check-attr: integrate with sparse-index
+ + attr.c: read attributes in a sparse directory
+ + t1092: add tests for 'git check-attr'
+
+ Teach "git check-attr" work better with sparse-index.
+
+ Will merge to 'master'.
+ cf. <3b2a5b4b-ab8f-746b-6b69-8e8262b6390b@github.com>
+ source: <20230811142211.4547-1-cheskaqiqi@gmail.com>
+
+
+* ws/svn-with-new-readline (2023-08-11) 1 commit
+ - git-svn: avoid creating more than one than one Term::ReadLine object
+
+ Adjust to newer Term::ReadLine to prevent it from breaking
+ the interactive prompt code in git-svn.
+
+ Not needed for correctness.
+ source: <20230810011831.1423208-1-wesleys@opperschaap.net>
+
+
+* ak/pretty-decorate-more (2023-08-21) 8 commits
+ - decorate: use commit color for HEAD arrow
+ - pretty: add pointer and tag options to %(decorate)
+ - pretty: add %(decorate[:<options>]) format
+ - decorate: color each token separately
+ - decorate: avoid some unnecessary color overhead
+ - decorate: refactor format_decorations()
+ - pretty-formats: enclose options in angle brackets
+ - pretty-formats: define "literal formatting code"
+
+ Teach "git log --format" a customizable %(decorate) placeholder.
+
+ What's the status of this thing?
+ source: <20230820185009.20095-1-andy.koppe@gmail.com>
+
+
+* tb/commit-graph-verify-fix (2023-08-21) 4 commits
+  (merged to 'next' on 2023-08-23 at 2b4b74bb0d)
+ + commit-graph: avoid repeated mixed generation number warnings
+ + t/t5318-commit-graph.sh: test generation zero transitions during fsck
+ + commit-graph: verify swapped zero/non-zero generation cases
+ + commit-graph: introduce `commit_graph_generation_from_graph()`
+
+ Update commit-graph verification code that detects mixture of zero
+ and non-zero generation numbers.
+
+ Will merge to 'master'.
+ source: <cover.1692653671.git.me@ttaylorr.com>
+
+
+* la/trailer-cleanups (2023-08-06) 5 commits
+ - trailer: rename *_DEFAULT enums to *_UNSPECIFIED
+ - trailer: teach find_patch_start about --no-divider
+ - trailer: split process_command_line_args into separate functions
+ - trailer: split process_input_file into separate pieces
+ - trailer: separate public from internal portion of trailer_iterator
+
+ Code clean-up.
+
+ Expecting a reroll.
+ cf. <owlyy1iifq0n.fsf@fine.c.googlers.com>
+ source: <pull.1563.git.1691211879.gitgitgadget@gmail.com>
+
+
+* la/trailer-test-and-doc-updates (2023-08-10) 14 commits
+ - SQUASH???
+ - trailer doc: <token> is a <key> or <keyAlias>, not both
+ - trailer doc: separator within key suppresses default separator
+ - trailer doc: emphasize the effect of configuration variables
+ - trailer --unfold help: prefer "reformat" over "join"
+ - trailer --parse docs: add explanation for its usefulness
+ - trailer --only-input: prefer "configuration variables" over "rules"
+ - trailer --parse help: expose aliased options
+ - trailer --no-divider help: describe usual "---" meaning
+ - trailer: trailer location is a place, not an action
+ - trailer doc: narrow down scope of --where and related flags
+ - trailer: add tests to check defaulting behavior with --no-* flags
+ - trailer test description: this tests --where=after, not --where=before
+ - trailer tests: make test cases self-contained
+
+ Test coverage improvement for trailers.
+
+ Expecting a reroll.
+ cf. <owlyh6p5fpi7.fsf@fine.c.googlers.com>
+ source: <pull.1564.v2.git.1691702283.gitgitgadget@gmail.com>
+
+
+* jc/rerere-cleanup (2023-08-25) 4 commits
+ - rerere: modernize use of empty strbuf
+ - rerere: try_merge() should use LL_MERGE_ERROR when it means an error
+ - rerere: fix comment on handle_file() helper
+ - rerere: simplify check_one_conflict() helper function
+ (this branch uses jc/unresolve-removal.)
+
+ Code clean-up.
+
+ Not ready to be reviewed yet.
+ source: <20230731224409.4181277-1-gitster@pobox.com>
+
+
+* pw/rebase-i-after-failure (2023-08-01) 7 commits
+ - rebase -i: fix adding failed command to the todo list
+ - rebase --continue: refuse to commit after failed command
+ - rebase: fix rewritten list for failed pick
+ - sequencer: factor out part of pick_commits()
+ - sequencer: use rebase_path_message()
+ - rebase -i: remove patch file after conflict resolution
+ - rebase -i: move unlink() calls
+
+ Various fixes to the behaviour of "rebase -i" when the command got
+ interrupted by conflicting changes.
+
+ Expecting a reroll.
+ The latter half of the series should be reviewed by those who have
+ more stake in the sequencer code than myself.
+ cf. <619e458b-218b-a790-dfb4-9200e201b513@gmail.com>
+ source: <pull.1492.v3.git.1690903412.gitgitgadget@gmail.com>
+
+
+* jc/unresolve-removal (2023-07-31) 7 commits
+ - checkout: allow "checkout -m path" to unmerge removed paths
+ - checkout/restore: add basic tests for --merge
+ - checkout/restore: refuse unmerging paths unless checking out of the index
+ - update-index: remove stale fallback code for "--unresolve"
+ - update-index: use unmerge_index_entry() to support removal
+ - resolve-undo: allow resurrecting conflicted state that resolved to deletion
+ - update-index: do not read HEAD and MERGE_HEAD unconditionally
+ (this branch is used by jc/rerere-cleanup.)
+
+ "checkout --merge -- path" and "update-index --unresolve path" did
+ not resurrect conflicted state that was resolved to remove path,
+ but now they do.
+
+ Needs review.
+ source: <20230731224409.4181277-1-gitster@pobox.com>
+
+
+* rj/status-bisect-while-rebase (2023-08-01) 1 commit
+ - status: fix branch shown when not only bisecting
+
+ "git status" is taught to show both the branch being bisected and
+ being rebased when both are in effect at the same time.
+
+ Needs review.
+ cf. <xmqqtttia3vn.fsf@gitster.g>
+ source: <48745298-f12b-8efb-4e48-90d2c22a8349@gmail.com>
+
+
+* js/doc-unit-tests (2023-08-17) 3 commits
+ - ci: run unit tests in CI
+ - unit tests: add TAP unit test framework
+ - unit tests: Add a project plan document
+
+ Process to add some form of low-level unit tests has started.
+
+ Comments?
+ source: <cover.1692297001.git.steadmon@google.com>
+
+--------------------------------------------------
+[Discarded]
+
+* jt/path-filter-fix (2023-08-08) 8 commits
+  (merged to 'next' on 2023-08-09 at 59952b9ec9)
+ + commit-graph: fix small leak with invalid changedPathsVersion
+  (merged to 'next' on 2023-08-03 at d99958c287)
+ + commit-graph: new filter ver. that fixes murmur3
+ + repo-settings: introduce commitgraph.changedPathsVersion
+ + t4216: test changed path filters with high bit paths
+ + t/helper/test-read-graph: implement `bloom-filters` mode
+ + bloom.h: make `load_bloom_filter_from_graph()` public
+ + t/helper/test-read-graph.c: extract `dump_graph_info()`
+ + gitformat-commit-graph: describe version 2 of BDAT
+
+ The Bloom filter used for path limited history traversal was broken
+ on systems whose "char" is unsigned; update the implementation and
+ bump the format version to 2.
+
+ Reverted out of 'next', superseded by the tb/path-filter-fix topic.
+ cf. <ZMqp6K2iXixWH/zT@nand.local>
+ source: <cover.1690912539.git.jonathantanmy@google.com>
+ source: <20230808192240.GA4091261@coredump.intra.peff.net>
+
+
+* ab/tag-object-type-errors (2023-05-10) 4 commits
+ . tag: don't emit potentially incorrect "object is a X, not a Y"
+ . tag: don't misreport type of tagged objects in errors
+ . object tests: add test for unexpected objects in tags
+ . Merge branch 'jk/parse-object-type-mismatch' into ab/tag-object-type-errors
+
+ Hardening checks around mismatched object types when one of those
+ objects is a tag.
+
+ Stalled for too long.
+ source: <cover-v2-0.3-00000000000-20221230T011725Z-avarab@gmail.com>
