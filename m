@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D39EC83F17
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D098C71153
 	for <git@archiver.kernel.org>; Mon, 28 Aug 2023 13:53:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230517AbjH1NxC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Aug 2023 09:53:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58162 "EHLO
+        id S230488AbjH1NxB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Aug 2023 09:53:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230396AbjH1Nwe (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230394AbjH1Nwe (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 28 Aug 2023 09:52:34 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 068FBBA
-        for <git@vger.kernel.org>; Mon, 28 Aug 2023 06:52:32 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id ffacd0b85a97d-31dcd553fecso624936f8f.2
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8918CC1
+        for <git@vger.kernel.org>; Mon, 28 Aug 2023 06:52:31 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-3fefe898f76so31611485e9.0
         for <git@vger.kernel.org>; Mon, 28 Aug 2023 06:52:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20221208; t=1693230750; x=1693835550;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=htJOzMSrygmxl2J+Ne8ipkhQPCgbWi+D8lekxfgQSDc=;
-        b=XHlN4Ts6lFgTglEt1SDyW+cqUwaJE0EITaDLBt9Diu5Ew7dsmdQxpohXaAlwoycaDv
-         0k2PfoaWCYDG2FXIhtU98SGc12hyaGIiU00izXPf34cEORQbhcxHmaC70clIZnzJKc0b
-         9PtVAtfgbdSzTTdAbtvWnRcZoclXpnjgqMrdThBli32FEWPOQNIqZ5bQWIN65paDZqBS
-         q4oiAeIzXvYT5e+BV449udD3iecpNaNoR5W9PCTtwbjInESMzYqw6TSZwIwzBbspl78K
-         4ImTXXyPXaNmCZPgI8aJJ5dvgOq0NZB5+gWU91jiSROBGPe6TDmj8RVuc1YLGISgnnop
-         7DCw==
+        bh=xzoQNktzoSnHfC4+dATV7Vz0Easvz/lR5+PwLDO0idE=;
+        b=mKx4dL0/KdGSKXrTeWAO6VxbwlDzf/re+s5BP8R8U9rGoU3zMVwTLiMGmGHjgbxbl6
+         vlMhar7a6V1t9CS2LhD7pVwZh59tkh5vPNKVwN+wh5VkaubeV9WAgz3gDkMV5/VHJRmU
+         rRvkdr9ZKLk40IkpfqQtsIigQelOx+uBnXS9ouWtl6MJa38KkIKl21bM5owHLW903XKN
+         274uE/1ZDiNoepBVUv+4TORM9lI1arekSkFRxpqBPFUFarA0/l8ourXtEXRyxwTRuMWA
+         RcBCA1RyJek+j2zSTmpCPpa3X3LcxFv/Pu3MgBEsTvrYNNatuSWJVx6Vd+OebfgnzGnK
+         CVHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20221208; t=1693230750; x=1693835550;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=htJOzMSrygmxl2J+Ne8ipkhQPCgbWi+D8lekxfgQSDc=;
-        b=QJXGGgFFF6bJ+uVmKdtQgw+ReW5SMdK9RZXBOL9o+PvCgJjDPLcrN6mGJ5l/BbjT02
-         rpa1bBvYzCJpEtUyG7W3WCTwd5W+xziSaSt7E8gXacO+Bq2Er++ELkpldgA9wlgYrozn
-         xdnARZai+m7I09oMSz7U8seqz20r/LeIZKZONvZsuBh/a+0E5TDTHaM8ZQ67uFpEXfQx
-         cOODpTGShNXcjBztMGNsRoHZ6gLhGXd2MJaiEsuAIuDhSwb9FLl9x0Lq7c0KJx1fLZOT
-         LchVFoAy0jG14eJHSoQFcF+uVuQ6v3A/Bi2OqdKJC/TTshX3oAY4Ce2O7MCYaWGr/vu+
-         BKYg==
-X-Gm-Message-State: AOJu0YzDwgNYMKuJ9a3ckf9MCb1WcRtlu/yvOoU7fFZP7DnCf0E0fkDs
-        SA/MW6xZs2Tn1Rk4OQafxUeeYH2QP/Y=
-X-Google-Smtp-Source: AGHT+IGtCtpw0ihHrbGnfoYq5BA++0/uuc+jxQLZTlJOIPmEdVzKXxWD2WlelCtdnvfW7pq3iav8vw==
-X-Received: by 2002:a5d:630d:0:b0:31a:c6b2:8c63 with SMTP id i13-20020a5d630d000000b0031ac6b28c63mr17360752wru.21.1693230750181;
-        Mon, 28 Aug 2023 06:52:30 -0700 (PDT)
+        bh=xzoQNktzoSnHfC4+dATV7Vz0Easvz/lR5+PwLDO0idE=;
+        b=QcBOVSFz71sJk0hslbgC38d2UX16DNn4eGXFQ/7yvR8uHHoJaaC+zU4gKfClv0XZGQ
+         9jS1aT+vMznL1QSTU3a+Egh6E9vmyeG4jVayu1KU4Qe9oGRLzkyM0n+d4x5xY4/aiJrE
+         1Yb991hBcNn2SUmECWYctLE3Y1inj2Pv4IE6+eO5y+hw4afMIvWD2ZiZL6VXSteUZ5++
+         vGtJ4WZPabHWCwRZMaTajJ2hIMQhYkLgJXxjxyQgzrFhjfyyCBDrpQ4+9e47bEQMquA4
+         zminjAhu+SzJd8fFbvGQ1IrjBUuX/CaJC4Us8HTaSzm6fakrxFSpevxwd2pfrevYAFqz
+         /e2w==
+X-Gm-Message-State: AOJu0YyVhGwPCceEUPKndqZo80rrbjbyknxlwQv6hOdM62ZCGqxU4BMK
+        HJs5l2RiUMuCTcCtBKlkP9FuSeU3nZ0=
+X-Google-Smtp-Source: AGHT+IECR6tVQdR9q96KWUbo0jikSjmM7U8AI1T1fy4ZeundAzxI/VNVWdKeRPBRhhjQDDK2+V83nQ==
+X-Received: by 2002:a7b:c4c9:0:b0:3f6:9634:c8d6 with SMTP id g9-20020a7bc4c9000000b003f69634c8d6mr19647394wmk.18.1693230749480;
+        Mon, 28 Aug 2023 06:52:29 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f10-20020adfdb4a000000b0031980294e9fsm10550224wrj.116.2023.08.28.06.52.29
+        by smtp.gmail.com with ESMTPSA id q20-20020a7bce94000000b003fedcd02e2asm10840392wmj.35.2023.08.28.06.52.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 28 Aug 2023 06:52:29 -0700 (PDT)
-Message-ID: <ac234b157558e6142d0d06f6baf80e1e80f063b5.1693230746.git.gitgitgadget@gmail.com>
+Message-ID: <3c16fa6897f9138fe25ad8c0d4fead333668f9fc.1693230746.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1569.v3.git.1693230746.gitgitgadget@gmail.com>
 References: <pull.1569.v2.git.1692725056.gitgitgadget@gmail.com>
         <pull.1569.v3.git.1693230746.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 28 Aug 2023 13:52:26 +0000
-Subject: [PATCH v3 3/3] scalar reconfigure: help users remove buggy repos
+Date:   Mon, 28 Aug 2023 13:52:25 +0000
+Subject: [PATCH v3 2/3] setup: add discover_git_directory_reason()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,106 +71,185 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-When running 'scalar reconfigure -a', Scalar has warning messages about
-the repository missing (or not containing a .git directory). Failures
-can also happen while trying to modify the repository-local config for
-that repository.
+There are many reasons why discovering a Git directory may fail. In
+particular, 8959555cee7 (setup_git_directory(): add an owner check for
+the top-level directory, 2022-03-02) added ownership checks as a
+security precaution.
 
-These warnings may seem confusing to users who don't understand what
-they mean or how to stop them.
+Callers attempting to set up a Git directory may want to inform the user
+about the reason for the failure. For that, expose the enum
+discovery_result from within setup.c and move it into cache.h where
+discover_git_directory() is defined.
 
-Add a warning that instructs the user how to remove the warning in
-future installations.
+I initially wanted to change the return type of discover_git_directory()
+to be this enum, but several callers rely upon the "zero means success".
+The two problems with this are:
+
+1. The zero value of the enum is actually GIT_DIR_NONE, so nonpositive
+   results are errors.
+
+2. There are multiple successful states; positive results are
+   successful.
+
+It is worth noting that GIT_DIR_NONE is not returned, so we remove this
+option from the enum. We must be careful to keep the successful reasons
+as positive values, so they are given explicit positive values.
+
+Instead of updating all callers immediately, add a new method,
+discover_git_directory_reason(), and convert discover_git_directory() to
+be a thin shim on top of it.
+
+One thing that is important to note is that discover_git_directory()
+previously returned -1 on error, so let's continue that into the future.
+There is only one caller (in scalar.c) that depends on that signedness
+instead of a non-zero check, so clean that up, too.
+
+Because there are extra checks that discover_git_directory_reason() does
+after setup_git_directory_gently_1(), there are other modes that can be
+returned for failure states. Add these modes to the enum, but be sure to
+explicitly add them as BUG() states in the switch of
+setup_git_directory_gently().
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- scalar.c | 59 +++++++++++++++++++++++++++++++++++++++++---------------
- 1 file changed, 43 insertions(+), 16 deletions(-)
+ setup.c | 34 ++++++++++++----------------------
+ setup.h | 35 ++++++++++++++++++++++++++++++++---
+ 2 files changed, 44 insertions(+), 25 deletions(-)
 
-diff --git a/scalar.c b/scalar.c
-index 938bb73f3ce..fb2940c2a00 100644
---- a/scalar.c
-+++ b/scalar.c
-@@ -664,6 +664,7 @@ static int cmd_reconfigure(int argc, const char **argv)
- 	git_config(get_scalar_repos, &scalar_repos);
+diff --git a/setup.c b/setup.c
+index 18927a847b8..2e607632dbd 100644
+--- a/setup.c
++++ b/setup.c
+@@ -1221,19 +1221,6 @@ static const char *allowed_bare_repo_to_string(
+ 	return NULL;
+ }
  
- 	for (i = 0; i < scalar_repos.nr; i++) {
-+		int succeeded = 0;
- 		const char *dir = scalar_repos.items[i].string;
+-enum discovery_result {
+-	GIT_DIR_NONE = 0,
+-	GIT_DIR_EXPLICIT,
+-	GIT_DIR_DISCOVERED,
+-	GIT_DIR_BARE,
+-	/* these are errors */
+-	GIT_DIR_HIT_CEILING = -1,
+-	GIT_DIR_HIT_MOUNT_POINT = -2,
+-	GIT_DIR_INVALID_GITFILE = -3,
+-	GIT_DIR_INVALID_OWNERSHIP = -4,
+-	GIT_DIR_DISALLOWED_BARE = -5,
+-};
+-
+ /*
+  * We cannot decide in this function whether we are in the work tree or
+  * not, since the config can only be read _after_ this function was called.
+@@ -1385,21 +1372,23 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
+ 	}
+ }
  
- 		strbuf_reset(&commondir);
-@@ -674,30 +675,56 @@ static int cmd_reconfigure(int argc, const char **argv)
+-int discover_git_directory(struct strbuf *commondir,
+-			   struct strbuf *gitdir)
++enum discovery_result discover_git_directory_reason(struct strbuf *commondir,
++						    struct strbuf *gitdir)
+ {
+ 	struct strbuf dir = STRBUF_INIT, err = STRBUF_INIT;
+ 	size_t gitdir_offset = gitdir->len, cwd_len;
+ 	size_t commondir_offset = commondir->len;
+ 	struct repository_format candidate = REPOSITORY_FORMAT_INIT;
++	enum discovery_result result;
  
- 			if (errno != ENOENT) {
- 				warning_errno(_("could not switch to '%s'"), dir);
--				res = -1;
--				continue;
-+				goto loop_end;
- 			}
+ 	if (strbuf_getcwd(&dir))
+-		return -1;
++		return GIT_DIR_CWD_FAILURE;
  
- 			strbuf_addstr(&buf, dir);
- 			if (remove_deleted_enlistment(&buf))
--				res = error(_("could not remove stale "
--					      "scalar.repo '%s'"), dir);
--			else
--				warning(_("removing stale scalar.repo '%s'"),
-+				error(_("could not remove stale "
-+					"scalar.repo '%s'"), dir);
-+			else {
-+				warning(_("removed stale scalar.repo '%s'"),
- 					dir);
-+				succeeded = 1;
-+			}
- 			strbuf_release(&buf);
--		} else if (discover_git_directory(&commondir, &gitdir) < 0) {
--			warning_errno(_("git repository gone in '%s'"), dir);
--			res = -1;
--		} else {
--			git_config_clear();
-+			goto loop_end;
-+		}
-+
-+		switch (discover_git_directory_reason(&commondir, &gitdir)) {
-+		case GIT_DIR_INVALID_OWNERSHIP:
-+			warning(_("repository at '%s' has different owner"), dir);
-+			goto loop_end;
-+
-+		case GIT_DIR_INVALID_GITFILE:
-+		case GIT_DIR_INVALID_FORMAT:
-+			warning(_("repository at '%s' has a format issue"), dir);
-+			goto loop_end;
-+
-+		case GIT_DIR_DISCOVERED:
-+			succeeded = 1;
-+			break;
-+
-+		default:
-+			warning(_("repository not found in '%s'"), dir);
-+			break;
-+		}
- 
--			the_repository = &r;
--			r.commondir = commondir.buf;
--			r.gitdir = gitdir.buf;
-+		git_config_clear();
- 
--			if (set_recommended_config(1) < 0)
--				res = -1;
-+		the_repository = &r;
-+		r.commondir = commondir.buf;
-+		r.gitdir = gitdir.buf;
-+
-+		if (set_recommended_config(1) >= 0)
-+			succeeded = 1;
-+
-+loop_end:
-+		if (!succeeded) {
-+			res = -1;
-+			warning(_("to unregister this repository from Scalar, run\n"
-+				  "\tgit config --global --unset --fixed-value scalar.repo \"%s\""),
-+				dir);
- 		}
+ 	cwd_len = dir.len;
+-	if (setup_git_directory_gently_1(&dir, gitdir, NULL, 0) <= 0) {
++	result = setup_git_directory_gently_1(&dir, gitdir, NULL, 0);
++	if (result <= 0) {
+ 		strbuf_release(&dir);
+-		return -1;
++		return result;
  	}
  
+ 	/*
+@@ -1429,11 +1418,11 @@ int discover_git_directory(struct strbuf *commondir,
+ 		strbuf_setlen(commondir, commondir_offset);
+ 		strbuf_setlen(gitdir, gitdir_offset);
+ 		clear_repository_format(&candidate);
+-		return -1;
++		return GIT_DIR_INVALID_FORMAT;
+ 	}
+ 
+ 	clear_repository_format(&candidate);
+-	return 0;
++	return result;
+ }
+ 
+ const char *setup_git_directory_gently(int *nongit_ok)
+@@ -1515,10 +1504,11 @@ const char *setup_git_directory_gently(int *nongit_ok)
+ 		}
+ 		*nongit_ok = 1;
+ 		break;
+-	case GIT_DIR_NONE:
++	case GIT_DIR_CWD_FAILURE:
++	case GIT_DIR_INVALID_FORMAT:
+ 		/*
+ 		 * As a safeguard against setup_git_directory_gently_1 returning
+-		 * this value, fallthrough to BUG. Otherwise it is possible to
++		 * these values, fallthrough to BUG. Otherwise it is possible to
+ 		 * set startup_info->have_repository to 1 when we did nothing to
+ 		 * find a repository.
+ 		 */
+diff --git a/setup.h b/setup.h
+index 58fd2605dd2..b48cf1c43b5 100644
+--- a/setup.h
++++ b/setup.h
+@@ -42,16 +42,45 @@ const char *resolve_gitdir_gently(const char *suspect, int *return_error_code);
+ #define resolve_gitdir(path) resolve_gitdir_gently((path), NULL)
+ 
+ void setup_work_tree(void);
++
++/*
++ * discover_git_directory_reason() is similar to discover_git_directory(),
++ * except it returns an enum value instead. It is important to note that
++ * a zero-valued return here is actually GIT_DIR_NONE, which is different
++ * from discover_git_directory.
++ */
++enum discovery_result {
++	GIT_DIR_EXPLICIT = 1,
++	GIT_DIR_DISCOVERED = 2,
++	GIT_DIR_BARE = 3,
++	/* these are errors */
++	GIT_DIR_HIT_CEILING = -1,
++	GIT_DIR_HIT_MOUNT_POINT = -2,
++	GIT_DIR_INVALID_GITFILE = -3,
++	GIT_DIR_INVALID_OWNERSHIP = -4,
++	GIT_DIR_DISALLOWED_BARE = -5,
++	GIT_DIR_INVALID_FORMAT = -6,
++	GIT_DIR_CWD_FAILURE = -7,
++};
++enum discovery_result discover_git_directory_reason(struct strbuf *commondir,
++						    struct strbuf *gitdir);
++
+ /*
+  * Find the commondir and gitdir of the repository that contains the current
+  * working directory, without changing the working directory or other global
+  * state. The result is appended to commondir and gitdir.  If the discovered
+  * gitdir does not correspond to a worktree, then 'commondir' and 'gitdir' will
+  * both have the same result appended to the buffer.  The return value is
+- * either 0 upon success and non-zero if no repository was found.
++ * either 0 upon success and -1 if no repository was found.
+  */
+-int discover_git_directory(struct strbuf *commondir,
+-			   struct strbuf *gitdir);
++static inline int discover_git_directory(struct strbuf *commondir,
++					 struct strbuf *gitdir)
++{
++	if (discover_git_directory_reason(commondir, gitdir) <= 0)
++		return -1;
++	return 0;
++}
++
+ const char *setup_git_directory_gently(int *);
+ const char *setup_git_directory(void);
+ char *prefix_path(const char *prefix, int len, const char *path);
 -- 
 gitgitgadget
+
