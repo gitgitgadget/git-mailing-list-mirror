@@ -2,135 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88918C83F12
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD35CC83F18
 	for <git@archiver.kernel.org>; Mon, 28 Aug 2023 22:53:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234257AbjH1WxS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Aug 2023 18:53:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51538 "EHLO
+        id S234294AbjH1WxU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Aug 2023 18:53:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234326AbjH1Ww5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Aug 2023 18:52:57 -0400
-Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1247799
-        for <git@vger.kernel.org>; Mon, 28 Aug 2023 15:52:55 -0700 (PDT)
-Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-5920efd91c7so43284787b3.2
-        for <git@vger.kernel.org>; Mon, 28 Aug 2023 15:52:55 -0700 (PDT)
+        with ESMTP id S234336AbjH1WxJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Aug 2023 18:53:09 -0400
+Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C71E99
+        for <git@vger.kernel.org>; Mon, 28 Aug 2023 15:53:06 -0700 (PDT)
+Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-58d41109351so64933467b3.1
+        for <git@vger.kernel.org>; Mon, 28 Aug 2023 15:53:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1693263174; x=1693867974;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1693263185; x=1693867985; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=PVXM7+o/bzcf7lN5nkl8rF6Ga4lXvRLMjRS9lXclObU=;
-        b=TLkiwsGan1tV+2PienSWlNJyAkZ7BbXpbWNZZePWJFf8e6q/+tqdG9cl5QbGbR0Lxg
-         Xrp+ovg69p2/m2GeNkCDiwEOV3QCse7uJhLxd/S/fIClGJ1uLeiSNJZMknyK+3xATq5l
-         JVUVkuaUr0+jEGyK3fSuULLKDJ6sn3LsknWHPfG3ntiKKxLdgLiq+XxwUbLrLs1EW/ta
-         jyu2TJAOV6jtaomlIcRVqnk3cPPTIISNE30CwZiXpmjOimOs0L6D9chiE+kpV1KwQcnt
-         ePAOf9oLOQOtSWDXEYW8/+5cpf1B9TDIfcoCBaExbzi46l/FXlxQrApCEDc7tGjfSP/Z
-         Z/7Q==
+        bh=WLV4ZWApsmO0kuPIdYj0hxnbYvgZRufZuj3K65KOvuo=;
+        b=RXcN+IFQEtkLB7LsUpwbWJk60c0XsCP0hTWhJKSVzPr8CzV7P1LML4qf1cjnxlBl5N
+         60Es61S9qkVFftE9YTjYBE5UwQwVef1fd3JI697bPRSfhYwqB/UC+/aZppD2aziHX9At
+         rX6krGzkqloHUoq/aXtc8B5tUEJ2sM14vnRUXtH1J8KQg0cMye2oUzyw5OMINAQkREvz
+         E/n2lI5QvuPdEy0ayOxJbX4VocIJ9X6pAzZ67Vxrz59mNbmP6n9UxFMeHDPtQI+kwGNR
+         YpGt2lnbxfn5uBL7k+f8sn7Ssch//0aN7aSYC/VAeEBhzVvPx10l95vEtmEvP7ILUrvk
+         uMgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693263174; x=1693867974;
+        d=1e100.net; s=20221208; t=1693263185; x=1693867985;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PVXM7+o/bzcf7lN5nkl8rF6Ga4lXvRLMjRS9lXclObU=;
-        b=JYHAbqUPwrNhmjVNjkI83sN+XbRw9uhucJq2HYJBMSEqd/vWGB5EpUf7xODv+4kiK5
-         hpCM17djYBDlhqLWsm8/WC3/DY6vdJNTSM5dZ43yW50iWZS1LBIQ4neiVe+YZ11e/qXh
-         ow2uGe/n5vOpLrag8VDN/+06rT4fhyn2RL0RW7bzVIwKiKBFTzPz55G5qGY19+FZ7Gk9
-         c41ukr6splcfqkVlQQ22SGU3YVjdWyWDGe6aci3TGdpK3BooUMC1VQtZpcRbvhtsIf+z
-         Kbin9bf2KxEfNXC/4sF/vYfkB3PIDLSTVBgi+x7b25rbQpQ/cCh1yqFdm9TcVcHYv7qP
-         VRfQ==
-X-Gm-Message-State: AOJu0YzNGEUnFM44zjX72XOqcvw6KI27BLIE71Voy2kHGSsbyxIdb9/U
-        5m9c2EuODAKdmg/QCwNRbZ1FyCqo4eVzhn15Fsu04Q==
-X-Google-Smtp-Source: AGHT+IEn/72LuSQN1V2a25qImPDvvUc/sBFRRO7gtaWuoAOW5McRMvdNI6G/RT6abDHnEtCmBbJCog==
-X-Received: by 2002:a0d:cec7:0:b0:573:d3cd:3d2a with SMTP id q190-20020a0dcec7000000b00573d3cd3d2amr28325993ywd.28.1693263174129;
-        Mon, 28 Aug 2023 15:52:54 -0700 (PDT)
+        bh=WLV4ZWApsmO0kuPIdYj0hxnbYvgZRufZuj3K65KOvuo=;
+        b=VylyCokUXFomQK0NX/OuUhsMIhkAqr1RC1j+GQuj2IsAC04xHagCTOjvAshEWMf43Q
+         I72u+Vhc8loBUtKe2S8hN+tQXala8nTXDR0C06qaWH4/VPbQxxA4TE1GGqifFOk/SlHM
+         zNhxhM1rIdkSsW3DBHp09CJecKd4KrG0lL+PqA3Rrzu11BAzc48CNq3dlpbK+3l85aNO
+         TsgIdTzZHCFsGWTcsGlZyphrgQM1YS9ZgnMzL/qWs0QnQfljlPWrMCb45QYVYEKy1kJj
+         bu5T0ks/78NxYfAIBRt6HE8pwlaT63X0aUYV8P1gRy6TAOUGFs+/rXkUX6IZfsEpJJHD
+         q9fA==
+X-Gm-Message-State: AOJu0YxJ3LdIWOJN94FK91p5p6FbkHlXsXEbc9TK5HzyxCiGG20LRH4/
+        s9WWgDdoksRYssoGJTVBGqRBI94XrJI0lOvi8t1Yjw==
+X-Google-Smtp-Source: AGHT+IEZJnNNXWIIp713bJ2rRAAX3h6V1Pk9EE1fcTNa+UxoLfdorOIbr9m8DGUzV6X7jHG6xF6o5g==
+X-Received: by 2002:a0d:dd0f:0:b0:586:b0ad:18fa with SMTP id g15-20020a0ddd0f000000b00586b0ad18famr1059807ywe.25.1693263185454;
+        Mon, 28 Aug 2023 15:53:05 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id db21-20020a05690c0dd500b005950be5bf24sm1291711ywb.116.2023.08.28.15.52.53
+        by smtp.gmail.com with ESMTPSA id eb6-20020a05690c26c600b00594fb0e2db3sm1516842ywb.138.2023.08.28.15.53.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Aug 2023 15:52:53 -0700 (PDT)
-Date:   Mon, 28 Aug 2023 18:52:52 -0400
+        Mon, 28 Aug 2023 15:53:05 -0700 (PDT)
+Date:   Mon, 28 Aug 2023 18:53:04 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: [PATCH v2 0/4] leak tests: mark remaining tests leak-free as such
-Message-ID: <cover.1693263171.git.me@ttaylorr.com>
+Subject: [PATCH v2 4/4] leak tests: mark t5583-push-branches.sh as leak-free
+Message-ID: <a16a0b2cac0923febf8738b59299608f1d813f7a.1693263171.git.me@ttaylorr.com>
 References: <cover.1692902414.git.me@ttaylorr.com>
+ <cover.1693263171.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1692902414.git.me@ttaylorr.com>
+In-Reply-To: <cover.1693263171.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Here is a reroll of my (I guess now mine and Peff's!) series to update
-our test scripts to accurately mark which ones are leak-free.
+When t5583-push-branches.sh was originally introduced via 425b4d7f47
+(push: introduce '--branches' option, 2023-05-06), it was not leak-free.
+In fact, the test did not even run correctly until 022fbb655d (t5583:
+fix shebang line, 2023-05-12), but after applying that patch, we see a
+failure at t5583.8:
 
-This is mostly unchanged from the previous round, modulo cleaning up the
-first (now second) patch's message, and inserting a new patch from Peff
-at the beginning to ignore noisy LSan output.
+    ==2529087==ERROR: LeakSanitizer: detected memory leaks
 
-Thanks in advance for your review!
+    Direct leak of 384 byte(s) in 1 object(s) allocated from:
+        #0 0x7fb536330986 in __interceptor_realloc ../../../../src/libsanitizer/lsan/lsan_interceptors.cpp:98
+        #1 0x55e07606cbf9 in xrealloc wrapper.c:140
+        #2 0x55e075fb6cb3 in prio_queue_put prio-queue.c:42
+        #3 0x55e075ec81cb in get_reachable_subset commit-reach.c:917
+        #4 0x55e075fe9cce in add_missing_tags remote.c:1518
+        #5 0x55e075fea1e4 in match_push_refs remote.c:1665
+        #6 0x55e076050a8e in transport_push transport.c:1378
+        #7 0x55e075e2eb74 in push_with_options builtin/push.c:401
+        #8 0x55e075e2edb0 in do_push builtin/push.c:458
+        #9 0x55e075e2ff7a in cmd_push builtin/push.c:702
+        #10 0x55e075d8aaf0 in run_builtin git.c:452
+        #11 0x55e075d8af08 in handle_builtin git.c:706
+        #12 0x55e075d8b12c in run_argv git.c:770
+        #13 0x55e075d8b6a0 in cmd_main git.c:905
+        #14 0x55e075e81f07 in main common-main.c:60
+        #15 0x7fb5360ab6c9 in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+        #16 0x7fb5360ab784 in __libc_start_main_impl ../csu/libc-start.c:360
+        #17 0x55e075d88f40 in _start (git+0x1ff40) (BuildId: 38ad998b85a535e786129979443630d025ec2453)
 
-Jeff King (1):
-  test-lib: ignore uninteresting LSan output
+    SUMMARY: LeakSanitizer: 384 byte(s) leaked in 1 allocation(s).
 
-Taylor Blau (3):
-  leak tests: mark a handful of tests as leak-free
-  leak tests: mark t3321-notes-stripspace.sh as leak-free
-  leak tests: mark t5583-push-branches.sh as leak-free
+This leak was addressed independently via 68b51172e3 (commit-reach: fix
+memory leak in get_reachable_subset(), 2023-06-03), which makes t5583
+leak-free.
 
- t/t3321-notes-stripspace.sh | 1 +
- t/t5571-pre-push-hook.sh    | 1 +
- t/t5583-push-branches.sh    | 1 +
- t/t7516-commit-races.sh     | 2 ++
- t/test-lib.sh               | 1 +
- 5 files changed, 6 insertions(+)
+But t5583 was not in the tree when 68b51172e3 was written, and the two
+only met after the latter was merged back in via 693bde461c (Merge
+branch 'mh/commit-reach-get-reachable-plug-leak', 2023-06-20).
 
-Range-diff against v1:
--:  ---------- > 1:  7dd42212c0 test-lib: ignore uninteresting LSan output
-1:  b1711c4c81 ! 2:  164f37cade leak tests: mark a handful of tests as leak-free
-    @@ Commit message
-         'ab/mark-leak-free-tests', 2021-10-25), a handful of tests in the suite
-         were marked as leak-free.
-     
-    -    As far as I can tell, each patch from that series ran tests from a
-    -    handful of subject areas, such as "some ls-files tests", or "all trace2
-    -    tests". This left some gaps in which tests had and hadn't been audited
-    -    to be leak-free.
-    +    Since then, a handful of tests have become leak-free due to changes like
-     
-    -    This patch closes those gaps by exporting TEST_PASSES_SANITIZE_LEAK=true
-    -    before sourcing t/test-lib.sh on most remaining leak-free tests. This
-    -    list was compiled by doing:
-    +      - 861c56f6f9 (branch: fix a leak in setup_tracking, 2023-06-11), and
-    +      - 866b43e644 (do_read_index(): always mark index as initialized unless
-    +        erroring out, 2023-06-29)
-    +
-    +    , but weren't updated at the time to mark themselves as such. This leads
-    +    to test "failures" when running:
-     
-             $ make SANITIZE=leak
-    -        $ make \
-    +        $ make -C t \
-                 GIT_TEST_PASSING_SANITIZE_LEAK=check \
-                 GIT_TEST_SANITIZE_LEAK_LOG=true \
-                 GIT_TEST_OPTS=-vi test
-     
-    -    and looking through the list of failing tests in the output.
-    +    This patch closes those gaps by exporting TEST_PASSES_SANITIZE_LEAK=true
-    +    before sourcing t/test-lib.sh on most remaining leak-free tests.
-     
-         There are a couple of other tests which are similarly leak-free, but not
-         included in the list of tests touched by this patch. The remaining tests
-         will be addressed in the subsequent two patches.
-     
-    +    Helped-by: Jeff King <peff@peff.net>
-         Signed-off-by: Taylor Blau <me@ttaylorr.com>
-     
-      ## t/t5571-pre-push-hook.sh ##
-2:  cfeca88942 = 3:  116555fc02 leak tests: mark t3321-notes-stripspace.sh as leak-free
-3:  4011eb6a8b = 4:  a16a0b2cac leak tests: mark t5583-push-branches.sh as leak-free
+At that point, t5583 was leak-free. Let's mark it as such accordingly.
+
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ t/t5583-push-branches.sh | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/t/t5583-push-branches.sh b/t/t5583-push-branches.sh
+index e7e1b6dab6..320f49c753 100755
+--- a/t/t5583-push-branches.sh
++++ b/t/t5583-push-branches.sh
+@@ -5,6 +5,7 @@ test_description='check the consisitency of behavior of --all and --branches'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ delete_refs() {
 -- 
 2.42.0.49.g03c54e21ee
