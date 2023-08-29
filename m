@@ -2,179 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65BE4C83F16
-	for <git@archiver.kernel.org>; Tue, 29 Aug 2023 19:15:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EBBFAC71153
+	for <git@archiver.kernel.org>; Tue, 29 Aug 2023 20:39:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237499AbjH2TOg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Aug 2023 15:14:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45572 "EHLO
+        id S240505AbjH2UjF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Aug 2023 16:39:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239862AbjH2TOU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Aug 2023 15:14:20 -0400
-Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1A70193
-        for <git@vger.kernel.org>; Tue, 29 Aug 2023 12:14:15 -0700 (PDT)
-Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-59234aaca15so54370917b3.3
-        for <git@vger.kernel.org>; Tue, 29 Aug 2023 12:14:15 -0700 (PDT)
+        with ESMTP id S240546AbjH2UjB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Aug 2023 16:39:01 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67D4EFD
+        for <git@vger.kernel.org>; Tue, 29 Aug 2023 13:38:59 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-52a3aa99bcdso6735633a12.0
+        for <git@vger.kernel.org>; Tue, 29 Aug 2023 13:38:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1693336455; x=1693941255;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=qBHmAR7Wvo8Qu79+3/NWYeM+1lX+bZKq1OhCgIXPKqo=;
-        b=IQMHYN05qg/LMLWomIGXVhuWCAOju7xVh9UUJmOrarO3Ds332PC+fYO3kB1LtF9bwn
-         vJtDpe6B6Bbg0CPXV519kOkej4BgJNCoyb87u0HcK+AjwEbbXPAjdnIGwNOEKHWXbnVN
-         LdlEuDVgLSEjULuAK4G3khkEFRWaLiP3PWMsKhtYoph0/jBZ1OsuQNwPUtxeC5XC+DDH
-         JZlSnDP7V44iiP5qqiY10juZC9V/b1RjpWpGT7r/hI5nK9lJpJvZM3BrTbA4gCUEZRy+
-         8AOO/F3gKBRwSC92j3RlM94YTQpyHKD/SPWdB/nhx+HusotASzdj6lPfjM6m3zt4iJEB
-         k9cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693336455; x=1693941255;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20221208; t=1693341538; x=1693946338; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=qBHmAR7Wvo8Qu79+3/NWYeM+1lX+bZKq1OhCgIXPKqo=;
-        b=Ae4ozUh6kwP0HGHXuk/c6FNutkA8E3IT30qp5ocfPdgDQqOeweJifcQMZ3ike+nDrg
-         ATfoDNuukQYccv7VlAIth6Oh2MDjPRvi6daQjojBhSvzWMsIobM2S71ufsUYeWbhS5lZ
-         F6o1BIRjT0TeYYV1gxxczjOK/k4p8F7RdBmlwNcdxq9aRZx68Nb4Sc/FAVaiaw/DbnK4
-         MJXk18Addq4GykODJA2sfNI8CnkalcmRRASnGgVJHWXx71kyZI/+NgtQdnALW5ea4+u1
-         d50ImXztI/0wspJpUxvoeuCuiCsfARArUsiyT9sLX7dXprMCishOiCGmZNnLYhvh+l7r
-         F8gg==
-X-Gm-Message-State: AOJu0Yx6KsM9oXuTOigFzbzPTqNaoOexVDeRdtKAIVVPK+cwWgmYu0tr
-        Ob4JqpA/fyCUrtvnY4iEGXQRjClVgLkAuRw24lI4fA==
-X-Google-Smtp-Source: AGHT+IFUXTBpgpn1/6a6ZTfHX2avm0LJInAxfwrvZeaAG6aBSxoj4+vzdKI8jtGbPipmpPvEsZDOqw==
-X-Received: by 2002:a81:5285:0:b0:58d:5df8:f61e with SMTP id g127-20020a815285000000b0058d5df8f61emr32318043ywb.2.1693336455129;
-        Tue, 29 Aug 2023 12:14:15 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id y130-20020a0dd688000000b005704c4d3579sm2906050ywd.40.2023.08.29.12.14.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Aug 2023 12:14:14 -0700 (PDT)
-Date:   Tue, 29 Aug 2023 15:14:13 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH 2/6] bloom: prepare to discard incompatible Bloom
- filters
-Message-ID: <ZO5DheoYy/syeJ+9@nand.local>
-References: <ZOj6PazHzDeQrY88@nand.local>
- <20230829164926.367260-1-jonathantanmy@google.com>
+        bh=kGg3Cj3dNS6BI2nE1a4i2IdIgtc8GPVCNHJOwXXZsH4=;
+        b=LCJjnVNvlGVVvjKiE9sAqGOmPAnbwnYWXkmLs7l544ZqwHXwlX5SVtAU2O771Fdj+e
+         Driv5UJYtSgtrjr8fRdrmy+htt7JUGVyuxsRFpR1wqHWPj7j3DDaJqhMdi5EqNit+jCP
+         w8rqMUWOBVcOliXUe0JTohVZ+LY1mOM8jim7uojDfioIz4v4moAzTimn7PqZieOUfsi+
+         HpQTaxXA0GiXDh0SfIIF4tcJFbpHS8phYEd6FDI6geDAmOSdjSEe9Idn+btOjnJ0JTx0
+         OjRB64o22aW3IrWd0Fyan3wKm52M8mxNCTFuVNmmvsKBB5Nxmr+o5PsGjMiBICjUFRTo
+         rmsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693341538; x=1693946338;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=kGg3Cj3dNS6BI2nE1a4i2IdIgtc8GPVCNHJOwXXZsH4=;
+        b=X8qYYjZfJR4zNn7PS6lEaFkstcrcmVxYYcpiUZryqkhLsRZE74kCAnxTti3P016J3y
+         eun4UWDcPr1kB/tXL2e82j3C1WqbsAsIx1DREhFfAgKJktRQ5SCxg54zFo6CsPHyia5g
+         E3mPipNsVKsiN8CdPIHtT4wYa73iYLJjgjBCkeD23jM3xcirmFjsRQpNA9iLx+meDyPC
+         7ZY2eCoZFhyJnz+dQLNo540zPOvLaWiv12+0v7sCHUzZ4baKBKL7PjdMf25rF3RSNP8G
+         JMtihQcNYHfzRnggAEPApn5iaS6Pg8gpepu7OOx3P+9lJ15i+Bu3XAEoAGZlobKFyVts
+         kfDQ==
+X-Gm-Message-State: AOJu0YykyWpvSUu8rqoToTklLEc0JOCFXA/TdQtshmqh969lI0ecuWYN
+        AqpuyjHbrA/+jJ74g7ashJ7kfnzKoAzuzo1vv2E=
+X-Google-Smtp-Source: AGHT+IFA5ahDhVpq6CVA8FRXYOQh/bOnVc8X7yXBvn2CBy9U7raVEdNB1pt82iWWJMXEdAiMLh/cbS1EmrsDVVbY6XM=
+X-Received: by 2002:a05:6402:1a59:b0:51e:5322:a642 with SMTP id
+ bf25-20020a0564021a5900b0051e5322a642mr272061edb.27.1693341537611; Tue, 29
+ Aug 2023 13:38:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20230829164926.367260-1-jonathantanmy@google.com>
+References: <ZNwhVOggObU7aVTr@nand.local> <CAP8UFD2Yw1XazomxEj0QB20FoaxkO16t_xgRurtnqCCOuhX-eQ@mail.gmail.com>
+ <2c31a3d4-59f7-d036-0c6b-5fd62cc7a2fa@gmail.com> <ZOZSo7vJztHcvb4W@nand.local>
+ <435a2aa3-59f8-d2bc-f653-4f93d86b9c31@gmail.com> <ZO4wxU1ilpa6/3EW@nand.local>
+In-Reply-To: <ZO4wxU1ilpa6/3EW@nand.local>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 29 Aug 2023 22:38:45 +0200
+Message-ID: <CAP8UFD2CGf8efBHquS=LJP8uQ5ivuDryqGz96PZ81oDtrNgNXw@mail.gmail.com>
+Subject: Re: Git in Outreachy? (December, 2023)
+To:     Taylor Blau <me@ttaylorr.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc:     git@vger.kernel.org, Hariom verma <hariom18599@gmail.com>,
+        Victoria Dye <vdye@github.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 29, 2023 at 09:49:26AM -0700, Jonathan Tan wrote:
-> > > > +	if (!(hash_version == -1 || hash_version == filter->version))
-> > >
-> > > No need for the comparison to -1 here.
-> >
-> > I'm not sure I understand your suggestion. When we fetch the filter from
-> > get_or_compute_bloom_filter(), we have filter->version set to the
-> > hash_version from the containing graph's Bloom filter settings.
-> >
-> > So (besides the normalization), I would think that:
-> >
-> >     struct bloom_filter_settings *s = get_bloom_filter_settings(r);
-> >     struct bloom_filter *f = get_bloom_filter(...);
-> >
-> >     assert(s->hash_version == f->version);
-> >
-> > would hold.
+On Tue, Aug 29, 2023 at 7:54=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote=
+:
 >
-> My mention to avoid the comparison to -1 was just for completeness
-> - since we're normalizing the value of hash_version to 1 or 2, we no
-> longer need to compare it to -1.
+> On Tue, Aug 29, 2023 at 11:14:38PM +0530, Kaartic Sivaraam wrote:
+> > BTW, I think the deadline to sign up for Outreachy is approaching soon =
+I
+> > believe. The community page [1] seems to indicate that we haven't signe=
+d up
+> > yet. Given that there was an interest in us participating in Outreachy,=
+ I
+> > just wanted to check whether we've signed up our community ?
 >
-> As for whether s->hash_version is always equal to f->version, I think
-> that it may not be true if for some reason, there are multiple commit
-> graph files on disk, not all with the same Bloom filter version.
+> Indeed. I was waiting to see if interested parties had the resources to
+> sponsor an Outreachy student, since we have to pay Outreachy for each
+> student we accept.
 
-Apologies for not quite grokking this, but I am still somewhat confused.
+It will take some time before I can confirm whether or not GitLab is
+willing to sponsor one Outreachy intern.
 
-Suppose we applied something like your suggestion on top of this patch,
-like so:
+> If you (or others) are interested in mentoring but don't have a way to
+> pay Outreachy, we could certainly discuss allocating some of the
+> project's funds to support one or two students.
 
---- 8< ---
-diff --git a/bloom.c b/bloom.c
-index 739fa093ba..ee81976342 100644
---- a/bloom.c
-+++ b/bloom.c
-@@ -253,16 +253,16 @@ static void init_truncated_large_filter(struct bloom_filter *filter,
- struct bloom_filter *get_bloom_filter(struct repository *r, struct commit *c)
- {
- 	struct bloom_filter *filter;
--	int hash_version;
-+	struct bloom_filter_settings *settings;
+I clicked on the "Community will participate" button, but this leads
+to a page saying "Outreachy internship funding is required" and where
+we have to list the sponsors we have, the amount of funds they are
+willing to sponsor, if the funding is secured and the funding decision
+date. I think I will fill this out saying that we have 3 (potential)
+sponsors: the Git project, GitHub and GitLab. I will not check the
+"funding is secured" checkbox and say that the decision date is
+October 5 (so just one day before the deadline for "Project list
+finalized"). This will leave time to find out if we can indeed sponsor
+at least one intern.
 
- 	filter = get_or_compute_bloom_filter(r, c, 0, NULL, NULL);
- 	if (!filter)
- 		return NULL;
+Let me know if that works for both of you.
 
- 	prepare_repo_settings(r);
--	hash_version = r->settings.commit_graph_changed_paths_version;
-+	settings = get_bloom_filter_settings(r);
+By the way, Kaartic, do you still want to be an org admin? And Taylor
+are you Ok with Kaartic being an org admin?
 
--	if (!(hash_version == -1 || hash_version == filter->version))
-+	if (filter->version != (settings->hash_version == 2 ? 2 : 1))
- 		return NULL; /* unusable filter */
- 	return filter;
- }
---- >8 ---
+It seems that I received an email asking me to confirm Kaartic as an
+org admin, but I couldn't confirm then and later when clicked to the
+link to confirm it looked like it wasn't possible anymore to confirm
+that. So not sure what happened, but maybe we could try again to
+register you as an org admin.
 
-We have a handful of failing tests, notably including t4216.1, which
-tries to read settings->hash_version, but fails since settings is NULL.
-I believe this happens when we have a computed Bloom filter prepared for
-some commit, but have not yet written a commit graph containing that (or
-any) Bloom filter.
-
-But I think we're talking about different things here. The point of
-get_bloom_filter() as a wrapper around get_or_compute_bloom_filter() is
-to only return Bloom filters that are readable under the configuration
-commitGraph.changedPathsVersion.
-
-We have a handle on what version was used to compute Bloom filters in
-each layer of the graph by reading its "version" field, which is written
-via load_bloom_filter_from_graph().
-
-So we want to return a non-NULL filter exactly when we (a) have a Bloom
-filter computed for the given commit, and (b) its version matches the
-version specified in commitGraph.chagnedPathsVersion.
-
-Are you saying that we need to do the normalization ahead of time so
-that we don't emit filters that have different hash versions when
-working in a commit-graph chain where each layer may use different Bloom
-filter settings? If so, then I think the change we'd need to make is
-limited to:
-
---- 8< ---
-diff --git a/bloom.c b/bloom.c
-index 739fa093ba..d5cc23b0a8 100644
---- a/bloom.c
-+++ b/bloom.c
-@@ -260,9 +260,9 @@ struct bloom_filter *get_bloom_filter(struct repository *r, struct commit *c)
- 		return NULL;
-
- 	prepare_repo_settings(r);
--	hash_version = r->settings.commit_graph_changed_paths_version;
-+	hash_version = r->settings.commit_graph_changed_paths_version == 2 ? 2 : 1;
-
--	if (!(hash_version == -1 || hash_version == filter->version))
-+	if (hash_version == filter->version)
- 		return NULL; /* unusable filter */
- 	return filter;
- }
---- >8 ---
-
-But that doesn't quite work, either, since it's breaking some assumption
-from the caller and causing us not to write out any Bloom filters (I
-haven't investigated further, but I'm not sure that this is the right
-path in the first place...).
-
-So I am not sure what you are suggesting, but I am sure that I'm missing
-something.
-
-Thanks,
-Taylor
+Best,
+Christian.
