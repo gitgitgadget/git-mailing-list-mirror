@@ -2,185 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5516AC6FA8F
-	for <git@archiver.kernel.org>; Tue, 29 Aug 2023 15:35:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2970C6FA8F
+	for <git@archiver.kernel.org>; Tue, 29 Aug 2023 15:56:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237291AbjH2PfZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Aug 2023 11:35:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57672 "EHLO
+        id S237229AbjH2P4S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Aug 2023 11:56:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49930 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237286AbjH2PfR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Aug 2023 11:35:17 -0400
-Received: from out-242.mta1.migadu.com (out-242.mta1.migadu.com [IPv6:2001:41d0:203:375::f2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A90961B7
-        for <git@vger.kernel.org>; Tue, 29 Aug 2023 08:35:13 -0700 (PDT)
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cmpwn.com; s=key1;
-        t=1693323311;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=XSjWFWiPl09LtZ2LpTOCU/MGy+kjBXZOwOFyfctDK0g=;
-        b=QdUMbBBs+yba0qZzOZcWO9AuHAYo9gtTL7aSDUJUlVclUIfBM481GTYTE5MG8ak6cQPv+o
-        ZyPl3l5UQn30qvbSHUmQLHIFfDw5EGNqxz5sqJMi4NNouMVoM9A73EHH9CayzzmwdEDiR8
-        QMSAqrMYqoCxlFUrry2TlOof6K8tIK5xZ/9sTxpc7lwepHQNHydb4C5PyKHyBrS5w8UfTE
-        AlLc/JIOgy+MMvjgx3kIuuNVzA0TzJXojYhSO7RUmGzZRyDo0HCNFEkL5zCBrfhtNYsbJf
-        gx7jbfkAvswnmuIa+j1GP4lgnGCQXHiofWnKdfWcD8F0L1mfLfcxFuD9KnSFfw==
-From:   Drew DeVault <sir@cmpwn.com>
-To:     git@vger.kernel.org
-Cc:     Drew DeVault <sir@cmpwn.com>
-Subject: [PATCH git v3] builtin/log.c: prepend "RFC" on --rfc
-Date:   Tue, 29 Aug 2023 17:34:42 +0200
-Message-ID: <20230829153509.27164-1-sir@cmpwn.com>
+        with ESMTP id S237408AbjH2Pzq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Aug 2023 11:55:46 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 483CE12F
+        for <git@vger.kernel.org>; Tue, 29 Aug 2023 08:55:43 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-31768ce2e81so3812367f8f.1
+        for <git@vger.kernel.org>; Tue, 29 Aug 2023 08:55:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1693324542; x=1693929342;
+        h=content-transfer-encoding:in-reply-to:cc:from:references:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=chc/tIYPs2OpdLsIZ8PAW1Yu5wziidpyXd7GjmfBC8U=;
+        b=Fmj3OHfUglOkGEnUDb6G0TSUvRLBRLorNJz24KpSEirPZfMWZovOlb0Kb1QGzLr0Es
+         iY4sJO9pTChDtLQ6G6qPOjmCbMeivSGACbhitkckAbMdF126runWJhYbSzYVCcEomzSf
+         d1KGP5new/1CX3T6Btu1g4uOzODBIkF5LO/8Ss1GuoWV1/KDsQxBtwcofJUTJGd53oPX
+         CbSMeMzmbAbvD7vOhFv3zd42RTPzI0NVjpjyAOLnSjCf18b2MPwUW++K8oZEmH8kScim
+         4u/BMpRU/sIJjTGZc+/T6pqlibf0iGyUduOWZqZZ5YOylXLDuHyfMT4/olk+rf3t/u5l
+         Rc0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693324542; x=1693929342;
+        h=content-transfer-encoding:in-reply-to:cc:from:references:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=chc/tIYPs2OpdLsIZ8PAW1Yu5wziidpyXd7GjmfBC8U=;
+        b=O9CLY7zlqtGXU/8kgeh+S/Rvis917uJ5W5RUzjQ9DNmHudcwEseZQ85aQfr9p6/0Cs
+         pCpGGD9p8xRVkxksq03y297PlmXYmECpD0iYnPXvU5YPIEjnfbEcANoSoNO5hFVmM4XP
+         4EAVU9wUGME7T8+NyHj6meCZYiNZrmKfW+g7R4NdjJV6IQjr8J4MU2rsLLRQedDY1HRX
+         YUzwIUgBU8hg671pcG0YjNJYegtPX1sVweHqD9DxPUGIgXKuQFuZxbhDRxpMBUP6SQZ/
+         0iLPCM6s0s+41N0tsDQ8+/wBhGqYXmdRwru09Fnwlmbu1AM91keuFr+ywn0hTV2n3+bc
+         CR8w==
+X-Gm-Message-State: AOJu0Yy9v+UDItDC8ndYs0QURPSMNh/2i9YVrw0bqhz5Gi+2kUHv88Ce
+        c1eL+954NtE69wYe0EZT9it0ad+6WrrDxQ==
+X-Google-Smtp-Source: AGHT+IHRsLLUycjGwgNzXQRcHsLNRBzalomfDCZ8UALc8FsN95X7D3/TXfN2v9bVaOPGuyTDmtNe4A==
+X-Received: by 2002:a5d:4a86:0:b0:319:642f:93ad with SMTP id o6-20020a5d4a86000000b00319642f93admr19677569wrq.13.1693324541442;
+        Tue, 29 Aug 2023 08:55:41 -0700 (PDT)
+Received: from [192.168.1.212] ([90.242.223.1])
+        by smtp.gmail.com with ESMTPSA id q6-20020a05600c46c600b00401dc20a070sm152019wmo.43.2023.08.29.08.55.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 29 Aug 2023 08:55:41 -0700 (PDT)
+Message-ID: <e65c93ec-0221-492b-b538-450b60cf1e59@gmail.com>
+Date:   Tue, 29 Aug 2023 16:55:30 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 02/22] sequencer: mark repository argument as unused
+Content-Language: en-US
+To:     Jeff King <peff@peff.net>, git@vger.kernel.org
+References: <20230828214604.GA3830831@coredump.intra.peff.net>
+ <20230828214717.GB3831137@coredump.intra.peff.net>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>
+In-Reply-To: <20230828214717.GB3831137@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rather than replacing the configured subject prefix (either through the
-git config or command line) entirely with "RFC PATCH", this change
-prepends RFC to whatever subject prefix was already in use.
+Hi Peff
 
-This is useful, for example, when a user is working on a repository that
-has a subject prefix considered to disambiguate patches:
+On 28/08/2023 22:47, Jeff King wrote:
+> In sequencer_get_last_command(), we don't ever look at the repository
+> parameter. It _should_ be used when calling into git_path_* functions,
+> but the one we use here is declared with the non-REPO variant of
+> GIT_PATH_FUNC(), and so just uses the_repository internally.
+> 
+> We could change the path helper to use REPO_GIT_PATH_FUNC(), but doing
+> so piecemeal is not great. There are 41 uses of GIT_PATH_FUNC() in
+> sequencer.c,
 
-	git config format.subjectPrefix 'PATCH my-project'
+Wow, I knew there were quite a few but I hadn't realized there were that 
+many. Changing them all to take a struct repository will be a big change 
+and will make struct repo_cache_path a lot larger.
 
-Prior to this change, formatting patches with --rfc would lose the
-'my-project' information.
+> and inconsistently switching one makes the code more
+> confusing. Likewise, this one function is used in half a dozen other
+> spots, all of which would need to start passing in a repository argument
+> (with rippling effects up the call stack).
+> 
+> So let's punt on that for now and just silence any -Wunused-parameter
+> warning.
+> 
+> Note that we could also drop this parameter entirely, as the function is
+> always called directly, and not as a callback that has to conform to
+> some external interface. But since we'd eventually want to use the
+> repository parameter, let's leave it in place to avoid disrupting the
+> callers twice.
 
-Signed-off-by: Drew DeVault <sir@cmpwn.com>
----
-v3 rewrites the --rfc handler to use OPT_BOOL and track the RFC status
-separately from the subject prefix as a whole, and updates the tests and
-documentation per Junio's feedback.
+I think that makes sense as we're going to need that argument 
+eventually. I was curious as to why this function takes a repository 
+argument. When the function was added in 4a72486de97 (fix 
+cherry-pick/revert status after commit, 2019-04-16) it called 
+parse_insn_line() which takes a repository argument. It was refactored 
+in ed5b1ca10b (status: do not report errors in sequencer/todo, 
+2019-06-27) and I failed to notice that the repository was unused 
+afterwards.
 
- Documentation/git-format-patch.txt | 18 ++++++++++++------
- builtin/log.c                      | 24 +++++++++++-------------
- t/t4014-format-patch.sh            | 12 +++++++++++-
- 3 files changed, 34 insertions(+), 20 deletions(-)
+Best Wishes
 
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index 373b46fc0d..698c197213 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -217,9 +217,15 @@ populated with placeholder text.
- 
- --subject-prefix=<subject prefix>::
- 	Instead of the standard '[PATCH]' prefix in the subject
--	line, instead use '[<subject prefix>]'. This
--	allows for useful naming of a patch series, and can be
--	combined with the `--numbered` option.
-+	line, instead use '[<subject prefix>]'. This can be used
-+	to name a patch series, and can be combined with the
-+	`--numbered` option.
-++
-+The config option format.subjectPrefix may also be used to to configure
-+a subject prefix to apply to a given repository for all patches. This
-+is often useful on mailing lists which receive patches for several
-+repositories and can be used to disambiguate the patches (with a value
-+of e.g. "PATCH my-project").
- 
- --filename-max-length=<n>::
- 	Instead of the standard 64 bytes, chomp the generated output
-@@ -229,9 +235,9 @@ populated with placeholder text.
- 	variable, or 64 if unconfigured.
- 
- --rfc::
--	Alias for `--subject-prefix="RFC PATCH"`. RFC means "Request For
--	Comments"; use this when sending an experimental patch for
--	discussion rather than application.
-+	Prepends "RFC" to the subject prefix (producing "RFC PATCH" by
-+	default). RFC means "Request For Comments"; use this when sending
-+	an experimental patch for discussion rather than application.
- 
- -v <n>::
- --reroll-count=<n>::
-diff --git a/builtin/log.c b/builtin/log.c
-index db3a88bfe9..16f4343852 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1474,13 +1474,6 @@ static int subject_prefix_callback(const struct option *opt, const char *arg,
- 	return 0;
- }
- 
--static int rfc_callback(const struct option *opt, const char *arg, int unset)
--{
--	BUG_ON_OPT_NEG(unset);
--	BUG_ON_OPT_ARG(arg);
--	return subject_prefix_callback(opt, "RFC PATCH", unset);
--}
--
- static int numbered_cmdline_opt = 0;
- 
- static int numbered_callback(const struct option *opt, const char *arg,
-@@ -1907,6 +1900,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	struct strbuf rdiff_title = STRBUF_INIT;
- 	struct strbuf sprefix = STRBUF_INIT;
- 	int creation_factor = -1;
-+	int rfc = 0;
- 
- 	const struct option builtin_format_patch_options[] = {
- 		OPT_CALLBACK_F('n', "numbered", &numbered, NULL,
-@@ -1930,9 +1924,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 			    N_("mark the series as Nth re-roll")),
- 		OPT_INTEGER(0, "filename-max-length", &fmt_patch_name_max,
- 			    N_("max length of output filename")),
--		OPT_CALLBACK_F(0, "rfc", &rev, NULL,
--			    N_("use [RFC PATCH] instead of [PATCH]"),
--			    PARSE_OPT_NOARG | PARSE_OPT_NONEG, rfc_callback),
-+		OPT_BOOL(0, "rfc", &rfc, N_("use [RFC PATCH] instead of [PATCH]")),
- 		OPT_STRING(0, "cover-from-description", &cover_from_description_arg,
- 			    N_("cover-from-description-mode"),
- 			    N_("generate parts of a cover letter based on a branch's description")),
-@@ -2048,13 +2040,19 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	if (cover_from_description_arg)
- 		cover_from_description_mode = parse_cover_from_description(cover_from_description_arg);
- 
-+	if (rfc) {
-+		strbuf_addf(&sprefix, "RFC %s", rev.subject_prefix);
-+	} else {
-+		strbuf_addstr(&sprefix, rev.subject_prefix);
-+	}
-+
- 	if (reroll_count) {
--		strbuf_addf(&sprefix, "%s v%s",
--			    rev.subject_prefix, reroll_count);
-+		strbuf_addf(&sprefix, " v%s", reroll_count);
- 		rev.reroll_count = reroll_count;
--		rev.subject_prefix = sprefix.buf;
- 	}
- 
-+	rev.subject_prefix = sprefix.buf;
-+
- 	for (i = 0; i < extra_hdr.nr; i++) {
- 		strbuf_addstr(&buf, extra_hdr.items[i].string);
- 		strbuf_addch(&buf, '\n');
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 3cf2b7a7fb..5d5bc21fd1 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -1373,7 +1373,17 @@ test_expect_success '--rfc' '
- 	Subject: [RFC PATCH 1/1] header with . in it
- 	EOF
- 	git format-patch -n -1 --stdout --rfc >patch &&
--	grep ^Subject: patch >actual &&
-+	grep "^Subject:" patch >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--rfc does not overwrite prefix' '
-+	cat >expect <<-\EOF &&
-+	Subject: [RFC PATCH foobar 1/1] header with . in it
-+	EOF
-+	git -c format.subjectPrefix="PATCH foobar" \
-+		format-patch -n -1 --stdout --rfc >patch &&
-+	grep "^Subject:" patch >actual &&
- 	test_cmp expect actual
- '
- 
--- 
-2.42.0
+Phillip
 
+
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>   sequencer.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/sequencer.c b/sequencer.c
+> index 82dc3e160e..41fd79d215 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -2649,7 +2649,7 @@ static int parse_insn_line(struct repository *r, struct todo_item *item,
+>   	return item->commit ? 0 : -1;
+>   }
+>   
+> -int sequencer_get_last_command(struct repository *r, enum replay_action *action)
+> +int sequencer_get_last_command(struct repository *r UNUSED, enum replay_action *action)
+>   {
+>   	const char *todo_file, *bol;
+>   	struct strbuf buf = STRBUF_INIT;
