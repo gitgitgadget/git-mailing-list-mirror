@@ -2,100 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E37DC83F18
-	for <git@archiver.kernel.org>; Tue, 29 Aug 2023 17:45:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA5CBC71153
+	for <git@archiver.kernel.org>; Tue, 29 Aug 2023 17:53:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238081AbjH2RpA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Aug 2023 13:45:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49378 "EHLO
+        id S238152AbjH2RxB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Aug 2023 13:53:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238142AbjH2Rot (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Aug 2023 13:44:49 -0400
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43A911AE
-        for <git@vger.kernel.org>; Tue, 29 Aug 2023 10:44:46 -0700 (PDT)
-Received: by mail-oi1-x233.google.com with SMTP id 5614622812f47-3a7781225b4so3192867b6e.3
-        for <git@vger.kernel.org>; Tue, 29 Aug 2023 10:44:46 -0700 (PDT)
+        with ESMTP id S238197AbjH2Rwm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Aug 2023 13:52:42 -0400
+Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D964E9
+        for <git@vger.kernel.org>; Tue, 29 Aug 2023 10:52:39 -0700 (PDT)
+Received: by mail-yb1-xb34.google.com with SMTP id 3f1490d57ef6-d7485d37283so4490708276.1
+        for <git@vger.kernel.org>; Tue, 29 Aug 2023 10:52:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1693331085; x=1693935885;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=g5GbwGW0AuA4ti/BGrgE/KUXuSu6baveG3wnTh2QUis=;
-        b=OH+aM1xYObZ4hTe/xOlqPm71EtqNamVGOBsPDDnA1j55i9zGanl5T85GsRDOMa5JTM
-         D/qtQXK2L0nL9xeis/RdbmPnApZSmrCLnBBOhMpJsogcsSTZW7WIz5meMZUy16rO446l
-         MxT4riwvaY1Gji0HahA8Gmj5fimec8tNG+DyhOkso2Jfp8hi2lHNqy7IX8tA3cDU0mmD
-         j4B2FfQp68wug3EnqZtHkLwUGT8h1eaLcSB/D70CNsnyDYi+Iv4m/no2PkFukVObJvQT
-         PoayfFTdq6zqwIok2e227ix66yM9KfwOofF4TPvLWZ3mJGCc0hn+euHz6WvVI2Um5EA4
-         2H3w==
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1693331558; x=1693936358;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=94yxijUvo8/z3Adsxxn+pMFTVrWkIqXIH0+fIeDKvmU=;
+        b=N6Zi4M1jAPuTEWW4e8iW5/1rChUnPdje0Ve3v27ObBzfbxmku6tR3PawtNoNPFX/MX
+         qQy6uU1vjjDhGtEYwhK8U/R4yYqgGMITnUcHF0fkNzwmARXBfARL6lNt6x+G0dbBNMto
+         dvfD/raGi9uxX2N8RLQz2PvHLdBTa3ZG19VXxFyYikLW/SCLvX5foJdf6Bv15fuN0L3Q
+         45sYKs6ZFo0bnVdLf7pPm4cy1UnQM5BzRi9Aa/tY6jcoDX9TQ/OCQdgOhAtWahkUZLoJ
+         rFoXtsL5U+HqDSF5ZRPtCBJhi2VA+WQuDIWFxnJnAiVBJZkMcxvqQoaavHREA/ys/oMp
+         hP2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693331085; x=1693935885;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=g5GbwGW0AuA4ti/BGrgE/KUXuSu6baveG3wnTh2QUis=;
-        b=RQfmpPzvByR8Ibf9/7W/KFvXIe4ZoZbcffjDXZJ3bz+uPVgH2Ek2HZFXGl6OFNrueK
-         CDyRa7wcY1awW++wroygiEvPzbEP5KMX1a07UNGsWReeAfz/6Zh+OzKk0CvWU7x10nej
-         OfZS6U2m9N3xxlAVdcWZd0QGzvCtwEHzLDA7kFcVKxoxV9iYyUo88jP5CFpFCiWMil4b
-         th/s6O4ntspRM634lWd7hZyGpdC81OVZyUToSZGIZ8zFalnnQ+UAC1HesEU/caiuGG06
-         d5RqTjUqXB3H2vG40Kk3xy8B317GJkwQLsZnUIDTENaeyEPXDUuZ5tm+jhkhQnoL7fum
-         OMyA==
-X-Gm-Message-State: AOJu0Yyb6j8L1jUI4zM3jCIJ6tAPfkRyN7Pd80ddq8PDjdZSkoaMQ2PX
-        tPqiCKEyyB3mWk+a8YtWFuc=
-X-Google-Smtp-Source: AGHT+IEi4E7mXCQ3K/C1RPEpGLslnYBzkD/Xt9b4+NDJxXVu2qtq9wkbQ3Qnjctjgr1iRh/Lqotv7w==
-X-Received: by 2002:a05:6808:199e:b0:3a7:208c:4406 with SMTP id bj30-20020a056808199e00b003a7208c4406mr16711960oib.1.1693331085506;
-        Tue, 29 Aug 2023 10:44:45 -0700 (PDT)
-Received: from [192.168.208.87] ([49.204.136.113])
-        by smtp.gmail.com with ESMTPSA id w27-20020a63af1b000000b0056c24c2e23dsm9346738pge.25.2023.08.29.10.44.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Aug 2023 10:44:45 -0700 (PDT)
-Message-ID: <435a2aa3-59f8-d2bc-f653-4f93d86b9c31@gmail.com>
-Date:   Tue, 29 Aug 2023 23:14:38 +0530
+        d=1e100.net; s=20221208; t=1693331558; x=1693936358;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=94yxijUvo8/z3Adsxxn+pMFTVrWkIqXIH0+fIeDKvmU=;
+        b=TlnuA9Bi+nECph2Ad/UyoWjPcSl7e2mdGstlLiMlmAT0LG3rKhuBhdLyPiSjupGeXC
+         fGNVQTiYu+kAKmnldmU9sBFh6YGpTJZ1/y5iZaoKscaK/Y0lxLUMrU3eACq3iGBItEnp
+         H71ZlRsKOfTaRuQ+MlYdiXGT2VC03qcFE6UdLDZh99hQ1urTpN1oZWEEAtj1jpsZVsB9
+         TpHz6sgm2egNH6G2ARBAjVpmJ8mXT0gdwCtrNyFHJDn+GsleDNn4mJrn4K+vQX5G//e7
+         zLnTb5xnV1l2ic5qcMAWXGcSlStH2GgcqeNG2JU5njuQoPRB8P503L//KBGyREjLgiTF
+         OA7A==
+X-Gm-Message-State: AOJu0YxFOYBNlfLBxZm1wXrhupzL0E25RGYv50O52g1WXVfLKi/z1AZk
+        XnCfRqnHhvLJ+AgV2AgwzMo8MuGiLLhoPek9Hd23FQ==
+X-Google-Smtp-Source: AGHT+IEd2t26+YsxPAgUDmRcGbwXudmaQjUh99amOcLo/881MuaHCseKaR9not05onZq5zEjEzofEw==
+X-Received: by 2002:a25:51c9:0:b0:d7b:95ff:14f with SMTP id f192-20020a2551c9000000b00d7b95ff014fmr14279ybb.61.1693331558293;
+        Tue, 29 Aug 2023 10:52:38 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id n188-20020a25dac5000000b00d7745e2bb19sm2298366ybf.29.2023.08.29.10.52.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Aug 2023 10:52:38 -0700 (PDT)
+Date:   Tue, 29 Aug 2023 13:52:37 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/4] builtin/pack-objects.c: support `--max-pack-size`
+ with `--cruft`
+Message-ID: <ZO4wZdaR/I06n+E8@nand.local>
+References: <cover.1693262936.git.me@ttaylorr.com>
+ <b6d945197faaef8243bddf78f672a340404e6ac4.1693262936.git.me@ttaylorr.com>
+ <xmqqr0nld9u9.fsf@gitster.g>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: Git in Outreachy? (December, 2023)
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
-        Hariom verma <hariom18599@gmail.com>,
-        Victoria Dye <vdye@github.com>
-References: <ZNwhVOggObU7aVTr@nand.local>
- <CAP8UFD2Yw1XazomxEj0QB20FoaxkO16t_xgRurtnqCCOuhX-eQ@mail.gmail.com>
- <2c31a3d4-59f7-d036-0c6b-5fd62cc7a2fa@gmail.com>
- <ZOZSo7vJztHcvb4W@nand.local>
-Content-Language: en-US
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-In-Reply-To: <ZOZSo7vJztHcvb4W@nand.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqr0nld9u9.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 24/08/23 00:10, Taylor Blau wrote:
-> On Tue, Aug 22, 2023 at 11:44:41AM +0530, Kaartic Sivaraam wrote:
->>>> If folks are interested, I'd be more than happy to answer any questions
->>>> about participating, and overall logistics of the program.
->>
->> I'm guessing the mentor sign up deadline aligns with the project submission
->> timeline. Could you kindly confirm the same, Taylor?
-> 
-> I couldn't find any specific mention of it on the schedule[1], but AFAIR
-> we can add mentors at any time after the Git project confirms its
-> participation.
+On Tue, Aug 29, 2023 at 10:42:06AM -0700, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
 >
+> > When pack-objects learned the `--cruft` option back in b757353676
+> > (builtin/pack-objects.c: --cruft without expiration, 2022-05-20), we
+> > explicitly forbade `--cruft` with `--max-pack-size`.
+> >
+> > At the time, there was no specific rationale given in the patch for not
+> > supporting the `--max-pack-size` option with `--cruft`. (As best I can
+> > remember, it's because we were trying to push users towards only ever
+> > having a single cruft pack, but I cannot be sure).
+>
+> I am reasonably sure it was the case but then I do not recall we
+> ever discussing how the second cruft pack gets consolidated into one
+> by combining it with the existing one.
 
-Ok Taylor. Thanks for the information!
+Yeah. We write the combined cruft pack just like we would any other, and
+record each packed object's most recent mtime available from either:
 
-BTW, I think the deadline to sign up for Outreachy is approaching soon I 
-believe. The community page [1] seems to indicate that we haven't signed 
-up yet. Given that there was an interest in us participating in 
-Outreachy, I just wanted to check whether we've signed up our community ?
+  - a loose copy of that object, if one exists
+  - the mtime of the .pack file for any packed copies of that object
+    which may exist
+  - the mtime of that object as recorded in an .mtimes file (if that
+    file was packed as cruft).
 
+> > diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> > index 868efe7e0f..a046994a43 100644
+> > --- a/builtin/pack-objects.c
+> > +++ b/builtin/pack-objects.c
+> > @@ -1190,8 +1190,7 @@ static void write_pack_file(void)
+> >  		unsigned char hash[GIT_MAX_RAWSZ];
+> >  		char *pack_tmp_name = NULL;
+> >
+> > -		if (pack_to_stdout)
+> > -			f = hashfd_throughput(1, "<stdout>", progress_state);
+> > +		if (pack_to_stdout) f = hashfd_throughput(1, "<stdout>", progress_state);
+> >  		else
+> >  			f = create_tmp_packfile(&pack_tmp_name);
+>
+> An unintended change, I am sure ;-)
+>
+> It is very surprising that absolutely no real change is needed to
+> allow cruft packs to honor the settings, other than removing the
+> seemingly artificial inter-option-compatibility roadblocks (all
+> hunks for it omitted above as they were trivially obvious).  I am
+> sure the first hunk to fold an "if" statement onto a single line is
+> not what makes the feature to actually work ;-)
 
-[[ References ]]
+Hah, this made me laugh. Indeed, a whitespace change around this
+if-statement is not the make-or-break change we needed to make this
+feature work!
 
-[1]: https://www.outreachy.org/communities/cfp/git/
+I'm happy to clean this up and resubmit it, but you may have already
+done so, in which case I'll leave this as-is.
 
--- 
-Sivaraam
+Thanks,
+Taylor
