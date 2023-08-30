@@ -2,110 +2,171 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD61AC83F2A
-	for <git@archiver.kernel.org>; Wed, 30 Aug 2023 18:29:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E3D7BC83F1D
+	for <git@archiver.kernel.org>; Wed, 30 Aug 2023 18:29:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231740AbjH3S3c (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Aug 2023 14:29:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50336 "EHLO
+        id S231889AbjH3S3d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Aug 2023 14:29:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243479AbjH3LKr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Aug 2023 07:10:47 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38738CC9
-        for <git@vger.kernel.org>; Wed, 30 Aug 2023 04:10:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de;
- s=s31663417; t=1693393842; x=1693998642; i=johannes.schindelin@gmx.de;
- bh=f21FnhcmRBqFo4MWa2t2KWjOSMdVjhUXG3rrZNFXsls=;
- h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
- b=GZ29Da34JO0zNsMmFAoNqiE5IfoLWPlf5ZtQFrxyEHIkzNr3RIrCoFnSoNb7Mr0D+NxVURT
- Bsw5Mn2NowukoBnxjHRLonfP8kQrlHdiiZs2JJazBqyy0vynARYiEoNKK6vfj25gPxqwomxWR
- WcqBUtrluHwam7bweUDfSvoDkme7Ve4MMJuJp0ULHEd6udWEqztIyT0YXnYpC4d9577pSkWFU
- uh0uyN8OMzvtlBmJ/SKPehHXCmdwTTJ4lYDTmTeJIzLcNcqeiQ0TupY46v+BBtBkDY9jr68pl
- BVI/Wbpkwo98ztXRanq+qdWtr7kT14kkyBD265V6BluQLK0mSSkA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from
- fv-az585-898.501l53qtsreu5c51wanflvb2vb.jx.internal.cloudapp.net
- ([13.66.78.82]) by mail.gmx.net (mrgmx004 [212.227.17.190]) with ESMTPSA
- (Nemesis) id 1MNKhs-1qLS0334l0-00Oo5g; Wed, 30 Aug 2023 13:10:42 +0200
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.42.0(2)
-Date:   Wed, 30 Aug 2023 11:10:39 +0000
-Message-ID: <20230830111039.3679-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.42.0
-Content-Type: text/plain; charset=UTF-8
-MIME-Version: 1.0
-Fcc:    Sent
-X-Provags-ID: V03:K1:k3amfqE/hLoY4y5cKNPzjrkv06tF2NBMEzk71OhI1Bsk43SnaU+
- YpQv7030wJfcIDRqegQfTyaW7JPi+8M4C0oytW0KfEBjBAKxBqXgEIGwyzP7LnHdnQwhXgg
- IoEqtnpG7J6oBvDQHU6uy/t2vviV8G0qdfIUXlzIIaIRpBNeIkWo7oRGflJXbSF+0cFZpFs
- 5Y5mkEuWtUSvj4jYjH/Ug==
-UI-OutboundReport: notjunk:1;M01:P0:tQ+H/A8mb6E=;FnPXNtrGOKZYqgTh9rRpj8dE6h3
- dgb9GsABlj3fAl3gcTBfJ1L9Q53hoKImgRJlr98ptR29UD5K7RPU9z72YYM3gRt/O2lIPu0xS
- I+qAdpnAxsvPhb6TG5J8bTAszw1zTj+FWQkDdaHS+d7ae/y4ZMgvZZGjPMMenIiLJHIwTWviK
- HzGty3mK7CGiWM8QLon4raH/SEtfE4bZGbg8HY4kA/My16F22liCh2utwRNfySkJWQ3u6p+5c
- CaPREixl246FvCcTA/TKN0XaoSL1KTXKYnvv6po6beYLm1n2+HFg0hYIIthGFYM/bilNdOUa3
- IefzGdUAJdu0G++Mw85Fi/u+jhAV2wzdjlt715Mk58SsgnjSnGjHXLr2Ekq9fYkdAwEKGHL9I
- aKRfYtO1OOdqtAkiGtEfRgijySlGPtzXwR6Pe2fPaUwmPA/EzJ17OnPtb2L2p97DnMPlUf+AR
- dIS53TyfFrl1DQCZCh4tGuuAtKuz+8NLnNL8xYEe7nFaO1pNPS24ZYT+zkqFPAajSSfSkwJ27
- lZ3WuWwCDyVIYcg2uC1fRljEsoeFAQvuItc1XMEy1PpzS0m2fjWfH3WzO0WYHI32EIoEVSu35
- y88CF05/qbKnMJxjN/RBWttzlN9Tti9ON1jVG+4FXz32JrZMdlHej18jnkVWrpA93+hEXSuGf
- +xyt0m3m7giKZp11ZWgGm70tHnWv0o7dXcGS4f70RxGdlCpOb1/LOUUfhyT8/B8IZgVmQKTNI
- Iyr+poRT15FCNeMjrnLZPxEyZlEa5UXQibiySNL4yYmw0J/yPwfjg+IiwSQ/SAig89kpr1ay3
- kEe9ofKPnWJHamoN6nuH2dHVhkuymxoyFUT8o1rj64rwqwsTYwLsD6xU/ck9daWi4GznXRH3J
- bxmZIC22x+9xQ5olLa3evpjpGdFmztcxzN7lLVZAnjtVZlFxJdGjdlQT09ftLghZQBvgwSYEt
- I1fZcA==
+        with ESMTP id S1343750AbjH3QoU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Aug 2023 12:44:20 -0400
+Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DD2019A
+        for <git@vger.kernel.org>; Wed, 30 Aug 2023 09:44:18 -0700 (PDT)
+Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-594e1154756so64397087b3.2
+        for <git@vger.kernel.org>; Wed, 30 Aug 2023 09:44:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1693413857; x=1694018657; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=4Jp/c5phBFct3TYWG4B5bYT8Dn2fmoiJY9/aSuGAeWE=;
+        b=5juOe1Rh4Z8dgU33yWSW4Nm3WHzd9oTe4U3EGNVsq5Iwf737tus/A9UdLKqKlWLMgO
+         tSbNvoWluG9haVCDK3rt88RLlNGYlRG333luk7fZnJ9g/QNyJ/XTqqL/yW2YFjowMBz0
+         ROOAUNCEOelgaRMsst7d8EODQjYHMvxVGi/NIPup+RTJwYpizryVOeEKb6oYhDpbACU8
+         Epv9qj0ietIdzX9ZM86W325LK9wvO6NMpjs3Zc4MbnogDVBQtWV3ZxlpFxc5UToSvTIF
+         ezTYtGL4+7unoPBnOnhbBRqNjyXygYeeJXNKiDkNT/uwAzGRoPbfByyfX8t8LrmQYuXM
+         SOWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693413857; x=1694018657;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=4Jp/c5phBFct3TYWG4B5bYT8Dn2fmoiJY9/aSuGAeWE=;
+        b=HH7UXG+BVQGDX4gOKO+/uCsx3zjOrIENF1OdXPUL4FeDRzvmIOIpnYqUo4hld/gU2K
+         kwpKN61ys32GgRt4vbva8+ID6zBJ2LVD+7pfaX2OOa7xNMJQBI/5zfNSm/5thmxENe9i
+         GyeDMKBEGeZAb6Z/UASsF3DK+d1df6DxSqshs628ydFImz9t9Ft2otvcQYvb1CVIZcV/
+         PkO4IFWnICUoofqNdBCpXpdJK5DsjT19uEzMWKvr9Y36QtJJXBpcciECQXEDo0snPuQp
+         V3kPsm1dPLuswPfuH3joPKM3iayxmx/yJLj6CsFbWij1ehKM59jwmlvs4eQfPbCTBLED
+         DQUg==
+X-Gm-Message-State: AOJu0Ywo1rwxykQ9UcI0RuCXSMXjx1GH8MCs1vXW+9145/bLPvtW/WkB
+        kORckiPOO9WMymXAWcobdMUIzizO3Py5u+D4dewjpRuszX6o71S2oc7d70B5kWTcKUCHadU6XlS
+        mwt1u0Fm6Ph8RZRcXW0F4Vldkr3A4Du52jrynFnFg94lEIFNa51dZtK/au2dEj1jZGYujq/FKqw
+        3g
+X-Google-Smtp-Source: AGHT+IGd21/ocXpGOm/J/mwsf8vBJLlVeQNrnTJ18jKT4kd2ve1J21UDNL8gEUpEJeHYY3khadMaeMlOps9cwjmCOBSR
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:2899:32d6:b7e3:8e6e])
+ (user=jonathantanmy job=sendgmr) by 2002:a81:b188:0:b0:586:5d03:67c8 with
+ SMTP id p130-20020a81b188000000b005865d0367c8mr89440ywh.3.1693413857268; Wed,
+ 30 Aug 2023 09:44:17 -0700 (PDT)
+Date:   Wed, 30 Aug 2023 09:43:49 -0700
+In-Reply-To: <cover.1693413637.git.jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <cover.1692654233.git.me@ttaylorr.com> <cover.1693413637.git.jonathantanmy@google.com>
+X-Mailer: git-send-email 2.42.0.rc2.253.gd59a3bf2b4-goog
+Message-ID: <3de6cd8460de51c3d866b0df9c219dd985f7433f.1693413637.git.jonathantanmy@google.com>
+Subject: [PATCH v2 09/15] bloom: prepare to discard incompatible Bloom filters
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        "SZEDER =?utf-8?B?R8OhYm9y?=" <szeder.dev@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git users,
+From: Taylor Blau <me@ttaylorr.com>
 
-I hereby announce that Git for Windows 2.42.0(2) is available from:
+Callers use the inline `get_bloom_filter()` implementation as a thin
+wrapper around `get_or_compute_bloom_filter()`. The former calls the
+latter with a value of "0" for `compute_if_not_present`, making
+`get_bloom_filter()` the default read-only path for fetching an existing
+Bloom filter.
 
-    https://gitforwindows.org/
+Callers expect the value returned from `get_bloom_filter()` is usable,
+that is that it's compatible with the configured value corresponding to
+`commitGraph.changedPathsVersion`.
 
-Changes since Git for Windows v2.42.0 (August 21st 2023)
+This is OK, since the commit-graph machinery only initializes its BDAT
+chunk (thereby enabling it to service Bloom filter queries) when the
+Bloom filter hash_version is compatible with our settings. So any value
+returned by `get_bloom_filter()` is trivially useable.
 
-As announced previously, Git for Windows will drop support for Windows
-7 and for Windows 8 in one of the next versions, following Cygwin's and
-MSYS2's lead (Git for Windows relies on MSYS2 for components such as
-Bash and Perl).
+However, subsequent commits will load the BDAT chunk even when the Bloom
+filters are built with incompatible hash versions. Prepare to handle
+this by teaching `get_bloom_filter()` to discard filters that are
+incompatible with the configured hash version.
 
-Following the footsteps of the MSYS2 and Cygwin projects on which Git
-for Windows depends, the 32-bit variant of Git for Windows is being
-phased out.
+Callers who wish to read incompatible filters (e.g., for upgrading
+filters from v1 to v2) may use the lower level routine,
+`get_or_compute_bloom_filter()`.
 
-Bug Fixes
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ bloom.c | 20 +++++++++++++++++++-
+ bloom.h | 20 ++++++++++++++++++--
+ 2 files changed, 37 insertions(+), 3 deletions(-)
 
-  * Git for Windows v2.42.0's release notes claimed that it ships with
-    Git LFS v3.4.0, which is incorrect and has been fixed in this
-    release.
-  * The installer option to enable support for Pseudo Consoles has been
-    handled incorrectly since Git for Windows v2.41.0, which has been
-    fixed.
-  * Some Git commands (those producing paged output, for example)
-    experienced a significant slow-down under certain circumstances,
-    when running on a machine joined to a domain controller, which has
-    been fixed.
-  * As of Git for Windows v2.41.0, when installed into a location whose
-    path contains non-ASCII characters, it was no longer possible to
-    fetch from/push to remote repositories via https://, which has been
-    fixed.
+diff --git a/bloom.c b/bloom.c
+index 9b6a30f6f6..739fa093ba 100644
+--- a/bloom.c
++++ b/bloom.c
+@@ -250,6 +250,23 @@ static void init_truncated_large_filter(struct bloom_filter *filter,
+ 	filter->version = version;
+ }
+ 
++struct bloom_filter *get_bloom_filter(struct repository *r, struct commit *c)
++{
++	struct bloom_filter *filter;
++	int hash_version;
++
++	filter = get_or_compute_bloom_filter(r, c, 0, NULL, NULL);
++	if (!filter)
++		return NULL;
++
++	prepare_repo_settings(r);
++	hash_version = r->settings.commit_graph_changed_paths_version;
++
++	if (!(hash_version == -1 || hash_version == filter->version))
++		return NULL; /* unusable filter */
++	return filter;
++}
++
+ struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
+ 						 struct commit *c,
+ 						 int compute_if_not_present,
+@@ -275,7 +292,8 @@ struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
+ 						     filter, graph_pos);
+ 	}
+ 
+-	if (filter->data && filter->len)
++	if ((filter->data && filter->len) &&
++	    (!settings || settings->hash_version == filter->version))
+ 		return filter;
+ 	if (!compute_if_not_present)
+ 		return NULL;
+diff --git a/bloom.h b/bloom.h
+index 330a140520..bfe389e29c 100644
+--- a/bloom.h
++++ b/bloom.h
+@@ -110,8 +110,24 @@ struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
+ 						 const struct bloom_filter_settings *settings,
+ 						 enum bloom_filter_computed *computed);
+ 
+-#define get_bloom_filter(r, c) get_or_compute_bloom_filter( \
+-	(r), (c), 0, NULL, NULL)
++/*
++ * Find the Bloom filter associated with the given commit "c".
++ *
++ * If any of the following are true
++ *
++ *   - the repository does not have a commit-graph, or
++ *   - the repository disables reading from the commit-graph, or
++ *   - the given commit does not have a Bloom filter computed, or
++ *   - there is a Bloom filter for commit "c", but it cannot be read
++ *     because the filter uses an incompatible version of murmur3
++ *
++ * , then `get_bloom_filter()` will return NULL. Otherwise, the corresponding
++ * Bloom filter will be returned.
++ *
++ * For callers who wish to inspect Bloom filters with incompatible hash
++ * versions, use get_or_compute_bloom_filter().
++ */
++struct bloom_filter *get_bloom_filter(struct repository *r, struct commit *c);
+ 
+ int bloom_filter_contains(const struct bloom_filter *filter,
+ 			  const struct bloom_key *key,
+-- 
+2.42.0.rc2.253.gd59a3bf2b4-goog
 
-Git-2.42.0.2-64-bit.exe | bd9b41641a258fd16d99beecec66132160331d685dfb4c714cea2bcc78d63bdb
-Git-2.42.0.2-32-bit.exe | f2b6257d00127dd484d94e52ea9bada743cf333fb02398260419dbc0fff10a09
-PortableGit-2.42.0.2-64-bit.7z.exe | 9254a4a0c597f1c4700cb607cedd83aef2215c289a3b2b1b7475cf58d51c005e
-PortableGit-2.42.0.2-32-bit.7z.exe | 213e48d5d0e86f4cf2da2d5d1012e477d58ea03f16d7008b6751c32f731080c1
-MinGit-2.42.0.2-64-bit.zip | 7139f2c13667c70facd6c105d955a4bbd034b807535963b5f6fc6ed026bb53a3
-MinGit-2.42.0.2-32-bit.zip | 7569cf510d1e66c0a976f617994662eb314f7e7f35edcf51caea2758a6c2a6a9
-MinGit-2.42.0.2-busybox-64-bit.zip | 1cef42a21205dc53a91e2ce219f2a9eeb71665dec4901e520a7fd445044bb69d
-MinGit-2.42.0.2-busybox-32-bit.zip | 9583598523a56957ff71920fafeac9e15cdcdf25010098afd59d43a6af26478c
-Git-2.42.0.2-64-bit.tar.bz2 | c192e56f8ed3d364acc87ad04d1f5aa6ae03c23b32b67bf65fcc6f9b8f032e65
-Git-2.42.0.2-32-bit.tar.bz2 | 64cd27bebd457592a83c2aa8bf0555ef6501675769f330b7558041d17cbb52fa
-
-Ciao,
-Johannes
