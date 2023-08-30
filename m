@@ -2,104 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6935FC83F1D
-	for <git@archiver.kernel.org>; Tue, 29 Aug 2023 23:47:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 081E8C83F12
+	for <git@archiver.kernel.org>; Wed, 30 Aug 2023 00:19:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241344AbjH2Xqj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Aug 2023 19:46:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44746 "EHLO
+        id S236296AbjH3ATU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Aug 2023 20:19:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241406AbjH2XqM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Aug 2023 19:46:12 -0400
+        with ESMTP id S233522AbjH3ASs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Aug 2023 20:18:48 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F580CD1
-        for <git@vger.kernel.org>; Tue, 29 Aug 2023 16:45:43 -0700 (PDT)
-Received: (qmail 15009 invoked by uid 109); 29 Aug 2023 23:45:43 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D9BFCC2
+        for <git@vger.kernel.org>; Tue, 29 Aug 2023 17:18:46 -0700 (PDT)
+Received: (qmail 15111 invoked by uid 109); 30 Aug 2023 00:18:45 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 29 Aug 2023 23:45:43 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 30 Aug 2023 00:18:45 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19949 invoked by uid 111); 29 Aug 2023 23:45:43 -0000
+Received: (qmail 20448 invoked by uid 111); 30 Aug 2023 00:18:46 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 29 Aug 2023 19:45:43 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 29 Aug 2023 20:18:46 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 29 Aug 2023 19:45:42 -0400
+Date:   Tue, 29 Aug 2023 20:18:44 -0400
 From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v2 22/22] update-ref: mark unused parameter in parser
- callbacks
-Message-ID: <20230829234542.GT227214@coredump.intra.peff.net>
-References: <20230829234305.GA226944@coredump.intra.peff.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] .github/workflows: add coverity action
+Message-ID: <20230830001844.GA227310@coredump.intra.peff.net>
+References: <4590e1381feb8962cadf2b40b22086531d662ef8.1692675172.git.me@ttaylorr.com>
+ <6534ba5d-f4a6-71e6-5b0f-9cba2be8426e@gmx.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230829234305.GA226944@coredump.intra.peff.net>
+In-Reply-To: <6534ba5d-f4a6-71e6-5b0f-9cba2be8426e@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The parsing of stdin is driven by a table of function pointers; mark
-unused parameters in concrete functions to avoid -Wunused-parameter
-warnings.
+On Tue, Aug 29, 2023 at 10:18:24AM +0200, Johannes Schindelin wrote:
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/update-ref.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+> - Limit it by repository "topics" (think: "repository tags"):
+> 
+> 	if: contains(github.event.repository.topics, 'has-coverity-secrets')
 
-diff --git a/builtin/update-ref.c b/builtin/update-ref.c
-index 242102273e..c0c4e65e6f 100644
---- a/builtin/update-ref.c
-+++ b/builtin/update-ref.c
-@@ -311,8 +311,8 @@ static void report_ok(const char *command)
- 	fflush(stdout);
- }
- 
--static void parse_cmd_option(struct ref_transaction *transaction,
--			     const char *next, const char *end)
-+static void parse_cmd_option(struct ref_transaction *transaction UNUSED,
-+			     const char *next, const char *end UNUSED)
- {
- 	const char *rest;
- 	if (skip_prefix(next, "no-deref", &rest) && *rest == line_termination)
-@@ -321,16 +321,16 @@ static void parse_cmd_option(struct ref_transaction *transaction,
- 		die("option unknown: %s", next);
- }
- 
--static void parse_cmd_start(struct ref_transaction *transaction,
--			    const char *next, const char *end)
-+static void parse_cmd_start(struct ref_transaction *transaction UNUSED,
-+			    const char *next, const char *end UNUSED)
- {
- 	if (*next != line_termination)
- 		die("start: extra input: %s", next);
- 	report_ok("start");
- }
- 
- static void parse_cmd_prepare(struct ref_transaction *transaction,
--			      const char *next, const char *end)
-+			      const char *next, const char *end UNUSED)
- {
- 	struct strbuf error = STRBUF_INIT;
- 	if (*next != line_termination)
-@@ -341,7 +341,7 @@ static void parse_cmd_prepare(struct ref_transaction *transaction,
- }
- 
- static void parse_cmd_abort(struct ref_transaction *transaction,
--			    const char *next, const char *end)
-+			    const char *next, const char *end UNUSED)
- {
- 	struct strbuf error = STRBUF_INIT;
- 	if (*next != line_termination)
-@@ -352,7 +352,7 @@ static void parse_cmd_abort(struct ref_transaction *transaction,
- }
- 
- static void parse_cmd_commit(struct ref_transaction *transaction,
--			     const char *next, const char *end)
-+			     const char *next, const char *end UNUSED)
- {
- 	struct strbuf error = STRBUF_INIT;
- 	if (*next != line_termination)
--- 
-2.42.0.528.g7950723a09
+FWIW, I like this approach the most. As you note, it's not exactly
+obvious to discover, but I think it is the most flexible. And setting up
+Coverity runs already requires a lot of non-obvious steps (like creating
+an account with them and getting a token to paste into the GitHub
+secrets area).
+
+My gut feeling is that we should be able to do something with env
+variables to avoid the (ab)use of repository tags, but when I looked
+into this in the past, it wasn't possible.  However, poking at it again
+now, it seems that the "vars" context (but not "secrets") is available
+to "jobs.*.if". I'm not sure if I missed before, or if that's a new
+feature since the last time I checked.
+
+At any rate, it seems to work to do:
+
+  if: vars.ENABLE_COVERITY != ''
+
+or even make COVERITY_SCAN_EMAIL a "var" instead of a "secret", and use
+that. Likewise, I think we could do:
+
+  if: contains(vars.COVERITY_BRANCHES, github.ref_name)
+
+to allow individual repositories to do their own branch selection (that
+is matching by substring, which is probably good enough, but if you want
+to get fancy, I think we can use fromJSON to interpret the contents of
+the variable).
+
+(I had mostly looked into this in the context of branch selection for
+our ci-config job, and I think we could do something similar there).
+
+-Peff
