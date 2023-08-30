@@ -2,190 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EEE44C83F25
-	for <git@archiver.kernel.org>; Wed, 30 Aug 2023 18:29:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 583F8C83F17
+	for <git@archiver.kernel.org>; Wed, 30 Aug 2023 18:29:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231131AbjH3S3V (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Aug 2023 14:29:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39138 "EHLO
+        id S230144AbjH3S3P (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Aug 2023 14:29:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343747AbjH3QoN (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1343746AbjH3QoN (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 30 Aug 2023 12:44:13 -0400
-Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14C121A4
-        for <git@vger.kernel.org>; Wed, 30 Aug 2023 09:44:11 -0700 (PDT)
-Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-58c8cbf0a0dso18655637b3.1
-        for <git@vger.kernel.org>; Wed, 30 Aug 2023 09:44:11 -0700 (PDT)
+Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D4841A3
+        for <git@vger.kernel.org>; Wed, 30 Aug 2023 09:44:10 -0700 (PDT)
+Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-58d9e327d3aso78599897b3.3
+        for <git@vger.kernel.org>; Wed, 30 Aug 2023 09:44:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1693413850; x=1694018650; darn=vger.kernel.org;
+        d=google.com; s=20221208; t=1693413846; x=1694018646; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=a11gaofxrwFqbqRH+84gjUe3pKqOaKVtS0Dgj0k1MQI=;
-        b=s/iMLwG5KsmkixRVn2xFtxSXZHPexKAb7rKPEbogkBuMP+CQj1Oh9M6L0TcSpMJ+xA
-         WR+HinQqH2qjgPDdoJOYVm+LN5y3963XTZx+rHSccnI6kca0nxL+553DA2xxV3RBSKTI
-         QCVhBiw8Zga9qp/nM4q456swuY6n7lSF13owv3+t13qxpbtApHAdzNR0ehSA/hNzpdW3
-         wsAi2I6evoDiJ3lmOjx4a0l2KUDNzTM1Wb5gGbBoKOyGygFSQg0yWWH6YG03ot6268ip
-         hP3xEY+2zhJwzyvDp6N5L0bHX3WRr6MdfJWZ+U0HyVE3LJZwJdc92MZAPqS4EniELkMp
-         jyfg==
+        bh=uC2JFGNAOhYsPuPpZuh5TqQsTwfLN0uDDymzZBtqK6M=;
+        b=5XeLst22qUZbxSoyTLffQmsNbAQIlT5yP1SgXCylOcTJaVMDroFqAeJJio0jt5OJfL
+         ej7df7+hzYkOhYQwj9FSeWc5ceyTevC2WirjSe5GYV6ygPMYqZl67s1ueVIzKhh3f52S
+         Dh+ZE8Gl3I6qXXobHNXvkfxqIO9eCq9A79DkKRs+YRUwNb8RpIfwPsJVmb1zHQaZpVVv
+         9bgxAi2cvIk75uSxSRCjCPISoSdtaMUGZdzY02Ws5Ix63UQVKSh2p8yzKPLvEZYy7fqH
+         TGNmmNw4L5vc60hC6oxCssUdhi05Xp2zQcpKYrq8xrFAFtby3FGlXQbxIhWnv2a+NUPG
+         j3Xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693413850; x=1694018650;
+        d=1e100.net; s=20221208; t=1693413846; x=1694018646;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=a11gaofxrwFqbqRH+84gjUe3pKqOaKVtS0Dgj0k1MQI=;
-        b=fT+nucDb3SrMyvzATQH4DsoCjcBZjpGtQ2oTgwNVnnszxSjeQq6+jcFIvh/EYYbc+p
-         eve/ZRE465yEaYTOmAua45fFqsG5aNzB/un3c/L/0rbBQEXJ1osUoYQ5cBk/wX64BWND
-         Mk/uIk3Tfc5QQHYDGERnFx5JAK06qtKTAfU0aNsmU5ycpqU3tC1bmIw12aJRtDFBzptz
-         +2L6sULqeaPVV4YS4hj3Ht/hJhHY5n6Lq3AeNBLb9hSOUI8OWSBdsAhjW+HHKZNMRFgu
-         e6EplghiMh0aTkv3N3MZjf0m3eNf08YuTlzU61dH2SzotmZEDRA5UfKG46JFHGZPdKhe
-         Bttg==
-X-Gm-Message-State: AOJu0YxGmEzEJd3dTM6kKz50NFzEliTt2VqKqFiWDBNDT11N/z9itr/x
-        +8CVKlMopjtBlincks4gI2Bn31ihhLUUHNFANaVqE9SeT6hyyGuT/rKrb+XPKeG8MfKzQAv+yCx
-        Kke33SShHE4mh0tvxZgNh/O4tPfL8IEXztPQ1ETqcekkU9NZx+vPiRcIeJDSjBs13TDd1DufPzC
-        zJ
-X-Google-Smtp-Source: AGHT+IGzxcgEP50oy9LSjTTIW2vGZVwXN/P3c/lRqWzYa4z9II5Lx1WEDcQ6NRtshyHfRSAFQ8IBFsqS+47KcwVlRjW1
+        bh=uC2JFGNAOhYsPuPpZuh5TqQsTwfLN0uDDymzZBtqK6M=;
+        b=YAy6/8eFikU4h4/ofDJ8Q10pSVZj0eWF/1Yp0OjviAr3o4J5sbw6yG/jqzsksHhkzj
+         W1n69Ws1cK1Vkvun73VIz5Nh4GX3QNQFF/fZ5E0GTg+wDKOnik49XZ6NFdZ8hDI5AWN9
+         uLPK+U+NaHOxZZbcaW6ktrY/24cyjBl5KsDh6M1HgLSEHCG4N+zJNH/zUSRkByh6d50V
+         ue7SzUKiBa+Plwrabylfch+wJcMUsK1AX0VC02EK26oAdl6QCVmEEVgai+IatULdxPeq
+         jv+lu8Qt94NLuSei80BgzcPFl3HZZxn9wxzijXix46HT4rLBRU87OnEwaAEsC+OwCooS
+         +MHw==
+X-Gm-Message-State: AOJu0Yzao1hh8H9g6wdzUrvS+9reoLwvp0OmKaKX9feRe3d789Qj3XQo
+        VyGw6EKW/UOTeOvZeEORDpX44dqcw88nuJJ5obvWWYCd5FyCQX178OEX8XhxZOU1+I2i+tm7dsU
+        heXD3bZlAhtDVqw26+3cb+GZiQt7TxjozqBog71BF46fHzrt4IR4p/AzTO9bY4ZgvorC1zhEoq4
+        Gf
+X-Google-Smtp-Source: AGHT+IE1r07DKY7gjzbovmL2OvnZgk9MxXGopkVxYaS/ZeawjsA2iRzAMKe80CF4HyxrbEhriU3UUKes3VP9pc7fHPLP
 X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:2899:32d6:b7e3:8e6e])
- (user=jonathantanmy job=sendgmr) by 2002:a05:6902:1823:b0:d78:28d0:15bc with
- SMTP id cf35-20020a056902182300b00d7828d015bcmr6436ybb.4.1693413850250; Wed,
- 30 Aug 2023 09:44:10 -0700 (PDT)
-Date:   Wed, 30 Aug 2023 09:43:46 -0700
+ (user=jonathantanmy job=sendgmr) by 2002:a81:a785:0:b0:579:e07c:2798 with
+ SMTP id e127-20020a81a785000000b00579e07c2798mr82919ywh.2.1693413846697; Wed,
+ 30 Aug 2023 09:44:06 -0700 (PDT)
+Date:   Wed, 30 Aug 2023 09:43:44 -0700
 In-Reply-To: <cover.1693413637.git.jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <cover.1692654233.git.me@ttaylorr.com> <cover.1693413637.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.42.0.rc2.253.gd59a3bf2b4-goog
-Message-ID: <94ad289dbb1cedfed2b8c66a3b805028e8038317.1693413637.git.jonathantanmy@google.com>
-Subject: [PATCH v2 06/15] repo-settings: introduce commitgraph.changedPathsVersion
+Message-ID: <3a25f90c15b65df29c31b205346d303abd54ce96.1693413637.git.jonathantanmy@google.com>
+Subject: [PATCH v2 04/15] t/helper/test-read-graph: implement `bloom-filters` mode
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
         Junio C Hamano <gitster@pobox.com>,
-        "SZEDER =?utf-8?B?R8OhYm9y?=" <szeder.dev@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
+        "SZEDER =?utf-8?B?R8OhYm9y?=" <szeder.dev@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A subsequent commit will introduce another version of the changed-path
-filter in the commit graph file. In order to control which version to
-write (and read), a config variable is needed.
+From: Taylor Blau <me@ttaylorr.com>
 
-Therefore, introduce this config variable. For forwards compatibility,
-teach Git to not read commit graphs when the config variable
-is set to an unsupported version. Because we teach Git this,
-commitgraph.readChangedPaths is now redundant, so deprecate it and
-define its behavior in terms of the config variable we introduce.
+Implement a mode of the "read-graph" test helper to dump out the
+hexadecimal contents of the Bloom filter(s) contained in a commit-graph.
 
-This commit does not change the behavior of writing (Git writes changed
-path filters when explicitly instructed regardless of any config
-variable), but a subsequent commit will restrict Git such that it will
-only write when commitgraph.changedPathsVersion is a recognized value.
-
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/config/commitgraph.txt | 23 ++++++++++++++++++++---
- commit-graph.c                       |  2 +-
- oss-fuzz/fuzz-commit-graph.c         |  2 +-
- repo-settings.c                      |  6 +++++-
- repository.h                         |  2 +-
- 5 files changed, 28 insertions(+), 7 deletions(-)
+ t/helper/test-read-graph.c | 42 +++++++++++++++++++++++++++++++++-----
+ 1 file changed, 37 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/config/commitgraph.txt b/Documentation/config/commitgraph.txt
-index 30604e4a4c..2dc9170622 100644
---- a/Documentation/config/commitgraph.txt
-+++ b/Documentation/config/commitgraph.txt
-@@ -9,6 +9,23 @@ commitGraph.maxNewFilters::
- 	commit-graph write` (c.f., linkgit:git-commit-graph[1]).
+diff --git a/t/helper/test-read-graph.c b/t/helper/test-read-graph.c
+index 3375392f6c..899b5f41cc 100644
+--- a/t/helper/test-read-graph.c
++++ b/t/helper/test-read-graph.c
+@@ -47,10 +47,32 @@ static void dump_graph_info(struct commit_graph *graph)
+ 	printf("\n");
+ }
  
- commitGraph.readChangedPaths::
--	If true, then git will use the changed-path Bloom filters in the
--	commit-graph file (if it exists, and they are present). Defaults to
--	true. See linkgit:git-commit-graph[1] for more information.
-+	Deprecated. Equivalent to commitGraph.changedPathsVersion=-1 if true, and
-+	commitGraph.changedPathsVersion=0 if false. (If commitGraph.changedPathVersion
-+	is also set, commitGraph.changedPathsVersion takes precedence.)
+-int cmd__read_graph(int argc UNUSED, const char **argv UNUSED)
++static void dump_graph_bloom_filters(struct commit_graph *graph)
++{
++	uint32_t i;
 +
-+commitGraph.changedPathsVersion::
-+	Specifies the version of the changed-path Bloom filters that Git will read and
-+	write. May be -1, 0 or 1.
-++
-+Defaults to -1.
-++
-+If -1, Git will use the version of the changed-path Bloom filters in the
-+repository, defaulting to 1 if there are none.
-++
-+If 0, Git will not read any Bloom filters, and will write version 1 Bloom
-+filters when instructed to write.
-++
-+If 1, Git will only read version 1 Bloom filters, and will write version 1
-+Bloom filters.
-++
-+See linkgit:git-commit-graph[1] for more information.
-diff --git a/commit-graph.c b/commit-graph.c
-index 0aa1640d15..da99f15fdf 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -401,7 +401,7 @@ struct commit_graph *parse_commit_graph(struct repo_settings *s,
- 			graph->read_generation_data = 1;
- 	}
++	for (i = 0; i < graph->num_commits + graph->num_commits_in_base; i++) {
++		struct bloom_filter filter = { 0 };
++		size_t j;
++
++		if (load_bloom_filter_from_graph(graph, &filter, i) < 0) {
++			fprintf(stderr, "missing Bloom filter for graph "
++				"position %"PRIu32"\n", i);
++			continue;
++		}
++
++		for (j = 0; j < filter.len; j++)
++			printf("%02x", filter.data[j]);
++		if (filter.len)
++			printf("\n");
++	}
++}
++
++int cmd__read_graph(int argc, const char **argv)
+ {
+ 	struct commit_graph *graph = NULL;
+ 	struct object_directory *odb;
++	int ret = 0;
  
--	if (s->commit_graph_read_changed_paths) {
-+	if (s->commit_graph_changed_paths_version) {
- 		pair_chunk(cf, GRAPH_CHUNKID_BLOOMINDEXES,
- 			   &graph->chunk_bloom_indexes);
- 		read_chunk(cf, GRAPH_CHUNKID_BLOOMDATA,
-diff --git a/oss-fuzz/fuzz-commit-graph.c b/oss-fuzz/fuzz-commit-graph.c
-index 2992079dd9..325c0b991a 100644
---- a/oss-fuzz/fuzz-commit-graph.c
-+++ b/oss-fuzz/fuzz-commit-graph.c
-@@ -19,7 +19,7 @@ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
- 	 * possible.
- 	 */
- 	the_repository->settings.commit_graph_generation_version = 2;
--	the_repository->settings.commit_graph_read_changed_paths = 1;
-+	the_repository->settings.commit_graph_changed_paths_version = 1;
- 	g = parse_commit_graph(&the_repository->settings, (void *)data, size);
- 	repo_clear(the_repository);
- 	free_commit_graph(g);
-diff --git a/repo-settings.c b/repo-settings.c
-index 525f69c0c7..db8fe817f3 100644
---- a/repo-settings.c
-+++ b/repo-settings.c
-@@ -24,6 +24,7 @@ void prepare_repo_settings(struct repository *r)
- 	int value;
- 	const char *strval;
- 	int manyfiles;
-+	int read_changed_paths;
+ 	setup_git_directory();
+ 	odb = the_repository->objects->odb;
+@@ -58,12 +80,22 @@ int cmd__read_graph(int argc UNUSED, const char **argv UNUSED)
+ 	prepare_repo_settings(the_repository);
  
- 	if (!r->gitdir)
- 		BUG("Cannot add settings for uninitialized repository");
-@@ -54,7 +55,10 @@ void prepare_repo_settings(struct repository *r)
- 	/* Commit graph config or default, does not cascade (simple) */
- 	repo_cfg_bool(r, "core.commitgraph", &r->settings.core_commit_graph, 1);
- 	repo_cfg_int(r, "commitgraph.generationversion", &r->settings.commit_graph_generation_version, 2);
--	repo_cfg_bool(r, "commitgraph.readchangedpaths", &r->settings.commit_graph_read_changed_paths, 1);
-+	repo_cfg_bool(r, "commitgraph.readchangedpaths", &read_changed_paths, 1);
-+	repo_cfg_int(r, "commitgraph.changedpathsversion",
-+		     &r->settings.commit_graph_changed_paths_version,
-+		     read_changed_paths ? -1 : 0);
- 	repo_cfg_bool(r, "gc.writecommitgraph", &r->settings.gc_write_commit_graph, 1);
- 	repo_cfg_bool(r, "fetch.writecommitgraph", &r->settings.fetch_write_commit_graph, 0);
+ 	graph = read_commit_graph_one(the_repository, odb);
+-	if (!graph)
+-		return 1;
++	if (!graph) {
++		ret = 1;
++		goto done;
++	}
  
-diff --git a/repository.h b/repository.h
-index 5f18486f64..f71154e12c 100644
---- a/repository.h
-+++ b/repository.h
-@@ -29,7 +29,7 @@ struct repo_settings {
+-	dump_graph_info(graph);
++	if (argc <= 1)
++		dump_graph_info(graph);
++	else if (!strcmp(argv[1], "bloom-filters"))
++		dump_graph_bloom_filters(graph);
++	else {
++		fprintf(stderr, "unknown sub-command: '%s'\n", argv[1]);
++		ret = 1;
++	}
  
- 	int core_commit_graph;
- 	int commit_graph_generation_version;
--	int commit_graph_read_changed_paths;
-+	int commit_graph_changed_paths_version;
- 	int gc_write_commit_graph;
- 	int fetch_write_commit_graph;
- 	int command_requires_full_index;
++done:
+ 	UNLEAK(graph);
+ 
+-	return 0;
++	return ret;
+ }
 -- 
 2.42.0.rc2.253.gd59a3bf2b4-goog
 
