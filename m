@@ -2,71 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 505A8C83F2F
-	for <git@archiver.kernel.org>; Thu, 31 Aug 2023 20:48:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 811DCC83F2F
+	for <git@archiver.kernel.org>; Thu, 31 Aug 2023 20:56:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233704AbjHaUsm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 31 Aug 2023 16:48:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36696 "EHLO
+        id S244481AbjHaU4I (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 31 Aug 2023 16:56:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347457AbjHaUsl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Aug 2023 16:48:41 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3329E5F
-        for <git@vger.kernel.org>; Thu, 31 Aug 2023 13:48:30 -0700 (PDT)
-Received: (qmail 25828 invoked by uid 109); 31 Aug 2023 20:48:30 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 31 Aug 2023 20:48:30 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11244 invoked by uid 111); 31 Aug 2023 20:48:30 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 31 Aug 2023 16:48:30 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 31 Aug 2023 16:48:29 -0400
-From:   Jeff King <peff@peff.net>
+        with ESMTP id S233704AbjHaU4H (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Aug 2023 16:56:07 -0400
+Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6DB31B0
+        for <git@vger.kernel.org>; Thu, 31 Aug 2023 13:56:02 -0700 (PDT)
+Received: by mail-yb1-xb34.google.com with SMTP id 3f1490d57ef6-bcb6dbc477eso988150276.1
+        for <git@vger.kernel.org>; Thu, 31 Aug 2023 13:56:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1693515362; x=1694120162; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=BE/2s3jBAUH7zrwiQQiP1VRrPxqifg1WR0De+y8igYs=;
+        b=FWbShBYYAkb+PBQ6fTyOl1wvtMxdLMecyVUgQqpSeXxTyl2YSBlOHPfGq0XpkznvLJ
+         spcHGnYpUP0hfFFQDdKYsf2+zv8Ug6nfEo2m87CbeqpknL4E/dFEmFLjMcI02exWBtEX
+         8bH7Q70zmkz5xc+mF3gkz0CTGMtNAnW+RSbCqHWeOI8o+fq8aHOvQG21wx8xxuOKjsI1
+         QUDVL2Bf5zqLVCKJaVlZzlCjsEfaAQZbpdGmaSd25/xTc0HT7kG9koTsXyNgS8MU+nJb
+         nN/nEo+y0rIK4SHoA2PDyAMyLQ1+uwmZf99DjMqmxgpdo/ujqTXDhAU7Zd8vHFiZCz1l
+         Q7Aw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693515362; x=1694120162;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BE/2s3jBAUH7zrwiQQiP1VRrPxqifg1WR0De+y8igYs=;
+        b=Txg5D8dlBqE6VAk+Lof30ua/U6diuocVRVfvVMmdupV/0MWN3brZZO9DQkggsUEdkj
+         JONMXgHImdZuitq77IqDJ/tmiMhcHAF9da1Z4kXxTag93/gh1g/vz1KdzTuOMGa9aRE+
+         0moVKAkvXOPuZtBPgTby4ZPIuo2J+jCux4x2TvwxhOVZDnfi7BScc9neXU3P9TdPXazt
+         GDfDeVFiDSk6YEdNZojIGLe3pxA0tx7mWyRT4lnISG8/1crXbbxK1o21hwdHuVIrA8QX
+         dEgQO+Gi9MLWZVbD/HgpszghC9OV0GAwGA1qWwvcs9VRJstvQ1qdGUp4PXrF1UbSa7+L
+         1hWQ==
+X-Gm-Message-State: AOJu0Yzpi7hM8VS/l19HgM1iyKumBZTCnsLvWZyxyCdS9zK5BoakqL79
+        ZDwcpYBMJ4KHr6RAu43D0s5NFQ==
+X-Google-Smtp-Source: AGHT+IG7RXoPB7Oq+6Y3ScM5qNfk5qSdxvaHjDiwAHjsxZijo37axGffnnsiqWUlfn8alga3Q7SkWA==
+X-Received: by 2002:a5b:6c3:0:b0:d47:3d16:4b0d with SMTP id r3-20020a5b06c3000000b00d473d164b0dmr869502ybq.25.1693515361806;
+        Thu, 31 Aug 2023 13:56:01 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id g18-20020a256b12000000b00d7473b81a2csm519264ybc.26.2023.08.31.13.56.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 31 Aug 2023 13:56:01 -0700 (PDT)
+Date:   Thu, 31 Aug 2023 16:55:59 -0400
+From:   Taylor Blau <me@ttaylorr.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH 4/8] parse-options: mark unused "opt" parameter in
- callbacks
-Message-ID: <20230831204829.GA3233491@coredump.intra.peff.net>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH 1/8] merge: make xopts a strvec
+Message-ID: <ZPD+X0JihpYzPI6+@nand.local>
 References: <20230831070935.GA3197495@coredump.intra.peff.net>
- <20230831071820.GB3197751@coredump.intra.peff.net>
- <xmqqil8vxjcd.fsf@gitster.g>
- <20230831175018.GB3208283@coredump.intra.peff.net>
+ <20230831071230.GA3197647@coredump.intra.peff.net>
+ <xmqqcyz3z032.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230831175018.GB3208283@coredump.intra.peff.net>
+In-Reply-To: <xmqqcyz3z032.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 31, 2023 at 01:50:18PM -0400, Jeff King wrote:
+On Thu, Aug 31, 2023 at 08:46:25AM -0700, Junio C Hamano wrote:
+> > I guess you could argue this is a backwards-incompatible change, but the
+> > existing behavior of --no-strategy-option is so dumb that I can't
+> > believe somebody would prefer it (plus revert/cherry-pick already use
+> > OPT_STRVEC for their matching "-X").
+> >
+> > I didn't bother adding a test since we're just re-using OPT_STRVEC code
+> > that is used elsewhere.
+>
+> I do not think of any useful way to have "--no-strategy-option" on
+> the command line (either as an early part of an alias or in a
+> script) that does nothing (it's not like the command requires at
+> least one -X option on the command line), either.  Just like
+> fb60b9f3 (sequencer: use struct strvec to store merge strategy
+> options, 2023-04-10), which met no complaints about a possible
+> fallout by the behaviour change, I do not think that this change
+> even deserves an entry in the backward compatibility notes.
 
-> > > -static int parse_refmap_arg(const struct option *opt, const char *arg, int unset)
-> > > +static int parse_refmap_arg(const struct option *opt UNUSED,
-> > > +			    const char *arg, int unset)
-> > >  {
-> > >  	BUG_ON_OPT_NEG(unset);
-> > 
-> > Can't this just point opt->value at the global &refmap?  Obviously
-> > not a huge deal, as we could have taken the "annotate as UNUSED"
-> > approach for all the functions in [3/8].
-> 
-> Hmm, yeah. I think I looked at the abstract refspec_append() here and
-> assumed that it might be touching other variables. But it's not. It's
-> operating purely on the &refspec we pass it (and even though it uses
-> ALLOC_GROW, the "nr" and "alloc" are both contained in the struct). So
-> yeah, it really should have been converted in patch 3.
+I concur with both of you. In a project like this one, we should be
+rather generous with the set of things we expect users to do. But even
+in a quite generous interpretation, I cannot imagine anybody relying on
+this behavior, so I think skipping a mention of it in the backwards
+compatibility section makes sense.
 
-Oh, btw, there are two other cases in this patch that _could_ be
-converted but I left alone. In log.c, we have a to_callback() and a
-cc_callback(), both of which take a single string list. But there is
-also header_callback(), which resets both of those when it sees
---no-add-header. So I left them alone as a set.
-
-However, it occurs to me that to_callback() and cc_callback() can just
-be OPT_STRING_LIST these days. And that is probably a worthwhile
-cleanup to do.
-
--Peff
+Thanks,
+Taylor
