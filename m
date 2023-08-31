@@ -2,91 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2621CC83F10
-	for <git@archiver.kernel.org>; Thu, 31 Aug 2023 06:25:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 333D5C83F2B
+	for <git@archiver.kernel.org>; Thu, 31 Aug 2023 07:09:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241483AbjHaGZf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 31 Aug 2023 02:25:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53682 "EHLO
+        id S236347AbjHaHJl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 31 Aug 2023 03:09:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234884AbjHaGZe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Aug 2023 02:25:34 -0400
+        with ESMTP id S233170AbjHaHJj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Aug 2023 03:09:39 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0EAAE49
-        for <git@vger.kernel.org>; Wed, 30 Aug 2023 23:25:02 -0700 (PDT)
-Received: (qmail 21173 invoked by uid 109); 31 Aug 2023 06:23:22 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E08B1A6
+        for <git@vger.kernel.org>; Thu, 31 Aug 2023 00:09:36 -0700 (PDT)
+Received: (qmail 21332 invoked by uid 109); 31 Aug 2023 07:09:36 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 31 Aug 2023 06:23:22 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 31 Aug 2023 07:09:36 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3027 invoked by uid 111); 31 Aug 2023 06:23:23 -0000
+Received: (qmail 3401 invoked by uid 111); 31 Aug 2023 07:09:38 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 31 Aug 2023 02:23:23 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 31 Aug 2023 03:09:38 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 31 Aug 2023 02:23:20 -0400
+Date:   Thu, 31 Aug 2023 03:09:35 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 10/10] lower core.maxTreeDepth default to 2048
-Message-ID: <20230831062320.GJ3185325@coredump.intra.peff.net>
-References: <20230831061735.GA2702156@coredump.intra.peff.net>
+Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Subject: [PATCH 0/8] more unused parameters in parseopt callbacks
+Message-ID: <20230831070935.GA3197495@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230831061735.GA2702156@coredump.intra.peff.net>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On my Linux system, all of our recursive tree walking algorithms can run
-up to the 4096 default limit without segfaulting. But not all platforms
-will have stack sizes as generous (nor might even Linux if we kick off a
-recursive walk within a thread).
+Here are some more patches silencing -Wunused-parameter warnings. I've
+prepared them on top of the patches queued in jk/unused-post-2.42, but
+they should apply equally well directly on 'master'.
 
-In particular, several of the tests added in the previous few commits
-fail in our Windows CI environment. Through some guess-and-check
-pushing, I found that 3072 is still too much, but 2048 is OK.
+These ones are a bit more interesting than usual, because there were
+some actual code changes and cleanups that seemed preferable to just
+annotating.
 
-These are obviously vague heuristics, and there is nothing to promise
-that another system might not have trouble at even lower values. But it
-seems unlikely anybody will be too angry about a 2048-depth limit (this
-is close to the default max-pathname limit on Linux even for a
-pathological path like "a/a/a/..."). So let's just lower it.
+I'm adding René to the cc based on our earlier discussion of callbacks
+which ignore opt->value. See patch 3 in particular. Also some of your
+recent work gets a nice shout-out in patch 2. :)
 
-Some alternatives are:
+  [1/8]: merge: make xopts a strvec
+  [2/8]: merge: simplify parsing of "-n" option
+  [3/8]: parse-options: prefer opt->value to globals in callbacks
+  [4/8]: parse-options: mark unused "opt" parameter in callbacks
+  [5/8]: merge: do not pass unused opt->value parameter
+  [6/8]: parse-options: add more BUG_ON() annotations
+  [7/8]: interpret-trailers: mark unused "unset" parameters in option callbacks
+  [8/8]: parse-options: mark unused parameters in noop callback
 
-  - configure separate defaults for Windows versus other platforms.
+ builtin/add.c                |  2 ++
+ builtin/checkout-index.c     |  2 +-
+ builtin/describe.c           |  6 +++--
+ builtin/fast-export.c        | 36 +++++++++++++++++-------------
+ builtin/fetch.c              |  3 ++-
+ builtin/gc.c                 |  2 +-
+ builtin/interpret-trailers.c | 18 +++++++--------
+ builtin/log.c                | 18 ++++++++++-----
+ builtin/merge.c              | 43 +++++++++---------------------------
+ builtin/pack-objects.c       | 27 ++++++++++++----------
+ builtin/read-tree.c          |  2 +-
+ builtin/update-index.c       |  4 ++--
+ parse-options-cb.c           |  4 +++-
+ 13 files changed, 84 insertions(+), 83 deletions(-)
 
-  - just skip the tests on Windows. This leaves Windows users with the
-    annoying case that they can be crashed by running out of stack
-    space, but there shouldn't be any security implications (they can't
-    go deep enough to hit integer overflow problems).
-
-Since the original default was arbitrary, it seems less confusing to
-just lower it, keeping behavior consistent across platforms.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-Arguably this could be squashed into patch 5. But I thought that
-following the sequence of logic (from "4096 is probably OK" to "whoops,
-it's not") had some value to share. AFAIK GitHub is still running with
-the 4096 limit; I discovered the Windows issue only while preparing this
-for upstream. But I still find it highly unlikely that somebody would
-run into it in practice.
-
- environment.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/environment.c b/environment.c
-index 8e25b5ef02..bb3c2a96a3 100644
---- a/environment.c
-+++ b/environment.c
-@@ -81,7 +81,7 @@ int merge_log_config = -1;
- int precomposed_unicode = -1; /* see probe_utf8_pathname_composition() */
- unsigned long pack_size_limit_cfg;
- enum log_refs_config log_all_ref_updates = LOG_REFS_UNSET;
--int max_allowed_tree_depth = 4096;
-+int max_allowed_tree_depth = 2048;
- 
- #ifndef PROTECT_HFS_DEFAULT
- #define PROTECT_HFS_DEFAULT 0
--- 
-2.42.0.561.gaa987ecc69
