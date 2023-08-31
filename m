@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C8DBC83F2E
-	for <git@archiver.kernel.org>; Thu, 31 Aug 2023 06:15:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86F5BC83F29
+	for <git@archiver.kernel.org>; Thu, 31 Aug 2023 06:15:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343743AbjHaGPq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 31 Aug 2023 02:15:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50006 "EHLO
+        id S1343572AbjHaGPs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 31 Aug 2023 02:15:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232588AbjHaGPk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Aug 2023 02:15:40 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB071E0
-        for <git@vger.kernel.org>; Wed, 30 Aug 2023 23:15:37 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-31c479ede21so304824f8f.2
-        for <git@vger.kernel.org>; Wed, 30 Aug 2023 23:15:37 -0700 (PDT)
+        with ESMTP id S245635AbjHaGPm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Aug 2023 02:15:42 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5DC5CDD
+        for <git@vger.kernel.org>; Wed, 30 Aug 2023 23:15:39 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-401d10e3e54so3876735e9.2
+        for <git@vger.kernel.org>; Wed, 30 Aug 2023 23:15:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1693462536; x=1694067336; darn=vger.kernel.org;
+        d=gmail.com; s=20221208; t=1693462538; x=1694067338; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=TcNCEV02FNopnwM40T1pAoRlxIYH68QM3v1pI2RK28c=;
-        b=cOgAr59gGpvULUGdD6/iQhyKPh9ozoLTPA6L2WGlP7FUN81fQxgISEztqZz64XukzK
-         1hn7RjTcgc4bG4c1XAXYgOT6srpajJNSC+RAkolL5eXQ4dPrhqCKd1cYrOiu3Vqzy11J
-         QicvumErb+3tRt4QJVa8GUNFleQ7l2f77VQB+G/NL1ZAH50uYaDyBB30DcqgWZvjnifu
-         Pqq/iSRHswSUONRrs77+rUm19sm482h650pKEmX+3fjtjyzZqeT9zEti4/0hGTtS5pFe
-         9Xor7d2/6toehJRfDeiZ9wt86Cll+36S3HreZwjx7emoHStRPeLPjxiX31A14UVA1nOf
-         cSdw==
+        bh=NPUNwTpoGT9m/YFejKsp7W7P/TOk3usDGQALMcYRJwg=;
+        b=EXOFAtP8vt5of9FWhhtsmIJtMFcojdo8c1wXPDEriFgzWS4wp+bIGYsdcYs50JQTfh
+         4jF9BpvyRHWgY4jbMGZQegKGlRYJzPFo09eW1uhYeoXB3i1qFperyMSzHi2pMYsQ/0ks
+         fRVUesp614zucxXKdARqCPr/RXUkbEQ5q3NVD94GVDlYln0OybFvpF6v9QLyB0HpX1GR
+         rEQ8y1FzZXOltO1iqJ6U+c6fc5UiUI5iAv8kPXtvSIE1p6mg9XOtLdRwCcIX3hiqthGd
+         69ol2hZJoUzV/FhwJl4nFvR7agB0cfqxlmtvSMSnYFBmJuI+4FgkANXFqySpF2bPnf/D
+         D4xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693462536; x=1694067336;
+        d=1e100.net; s=20221208; t=1693462538; x=1694067338;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=TcNCEV02FNopnwM40T1pAoRlxIYH68QM3v1pI2RK28c=;
-        b=akxM18mTjWRmuRtjiKPEnNd/ojfpWNXyY/kG4KgDUmuAzvS2ZGgAUIeQnJiHB2BhFJ
-         I0E4wHvao2YF16CdNujcCRDinOVctB9hjyhaq7x+FD3zZfqKBYnw+/pv/puSZSENTe2P
-         WA1/RKB5G6AwNuBz/SqrOQ4L8yekWtJUx9cNkYgMZa1JfwB9u6SyBEg+q2zZCpBjlbU1
-         9pKY+JaerP91V7T8B33yujHThWcIIkpWJ2eUADdfFJ55gXTaUXvtre98iU7jTQHcAs02
-         MYqHJDjXSU1+7y6jpW5Hc61IVDwRkxtPjM8gNf2V6gAPtT3sNovpv8WZxprt0k1WcDtr
-         dHrg==
-X-Gm-Message-State: AOJu0YxAtYRp7ZV/tE0hdZhwfFoMmHPL/XSC3oGWYBCH6D1w3vgMkh5n
-        Syla4J9ZA2OVpHBFv9qBymelCYA9FD4=
-X-Google-Smtp-Source: AGHT+IH9cosZxwGfuaKG4/IshI8X6pHqa8NAMKx8LYPd0BVWruLN04C/E4beljz/BBlItFdp1emNUA==
-X-Received: by 2002:a5d:5946:0:b0:313:f0d7:a43 with SMTP id e6-20020a5d5946000000b00313f0d70a43mr3187820wri.23.1693462536100;
-        Wed, 30 Aug 2023 23:15:36 -0700 (PDT)
+        bh=NPUNwTpoGT9m/YFejKsp7W7P/TOk3usDGQALMcYRJwg=;
+        b=JQj9xgRWhGkNQxTfi0WEVO/+Jq73enBH/Id9V6nJrUJ6JAlDX6oNCxVFkLIxBEcNyo
+         dhpvDuKhGm53a77tIl1++dL4eUgf2lNYJlgai8WGF/pS/S8sZhSgKxpxWNwGMRNSNKS2
+         7GFJuHhaZ6b5weFab4c0Sazyh1yBLLBqxKBiG6SU+x6QMhyHLYGqoDvxNS2XxmAmt9Tt
+         eCP4XU+DHsOGWfMv4KJLeX7Lr5NNhrcUN0gDCio3GHNHOpBMipAgJcgXDz3Y+c4KTEPA
+         71hLDerLumYI9XK2mh3WrO0ASKdPcF3vewPo6AJ4vRN7SYB5iKYBb/hdxrMWvGIzUgS9
+         X/Hw==
+X-Gm-Message-State: AOJu0YxYUw98o7WsKH3vJBo641zGl8IyEvhYWI5yLkVV8WTrfsKYdhXO
+        ZMvhKB0xOhZHeOgWOC8M6DkpvJC9tL0=
+X-Google-Smtp-Source: AGHT+IGZEB1d6EnVMk1Dy7q20CPUQL8wTfoCzmm3vy/JSp6LfX6WZTyMmUZeL9/9wtNsMx7RKe/tow==
+X-Received: by 2002:adf:e443:0:b0:319:7b66:7803 with SMTP id t3-20020adfe443000000b003197b667803mr3421466wrm.55.1693462537937;
+        Wed, 30 Aug 2023 23:15:37 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e4-20020adfe7c4000000b0031c6581d55esm1004141wrn.91.2023.08.30.23.15.35
+        by smtp.gmail.com with ESMTPSA id j4-20020a5d5644000000b003143b14848dsm996650wrw.102.2023.08.30.23.15.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Aug 2023 23:15:35 -0700 (PDT)
-Message-ID: <90db3d5d41f8042a28cce02f910e7b6d5904308d.1693462532.git.gitgitgadget@gmail.com>
+        Wed, 30 Aug 2023 23:15:37 -0700 (PDT)
+Message-ID: <fb03f5aa6e59bd191b2c3d9a6446828cc3130fa5.1693462532.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1579.git.1693462532.gitgitgadget@gmail.com>
 References: <pull.1579.git.1693462532.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 31 Aug 2023 06:15:30 +0000
-Subject: [PATCH 2/4] unit-tests: do not mistake `.pdb` files for being
- executable
+Date:   Thu, 31 Aug 2023 06:15:32 +0000
+Subject: [PATCH 4/4] artifacts-tar: when including `.dll` files, don't forget
+ the unit-tests
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,30 +69,33 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When building the unit tests via CMake, the `.pdb` files are built.
-Those are, essentially, files containing the debug information
-separately from the executables.
+As of recent, Git also builds executables in `t/unit-tests/`. For
+technical reasons, when building with CMake and Visual C, the
+dependencies (".dll files") need to be copied there, too, otherwise
+running the executable will fail "due to missing dependencies".
 
-Let's not confuse them with the executables we actually want to run.
+The CMake definition already contains the directives to copy those
+`.dll` files, but we also need to adjust the `artifacts-tar` rule in
+the `Makefile` accordingly to let the `vs-test` job in the CI runs
+pass successfully.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/Makefile | 2 +-
+ Makefile | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/Makefile b/t/Makefile
-index 095334bfdec..38fe0ded5bd 100644
---- a/t/Makefile
-+++ b/t/Makefile
-@@ -42,7 +42,7 @@ TPERF = $(sort $(wildcard perf/p[0-9][0-9][0-9][0-9]-*.sh))
- TINTEROP = $(sort $(wildcard interop/i[0-9][0-9][0-9][0-9]-*.sh))
- CHAINLINTTESTS = $(sort $(patsubst chainlint/%.test,%,$(wildcard chainlint/*.test)))
- CHAINLINT = '$(PERL_PATH_SQ)' chainlint.pl
--UNIT_TESTS = $(sort $(filter-out %.h %.c %.o unit-tests/t-basic%,$(wildcard unit-tests/t-*)))
-+UNIT_TESTS = $(sort $(filter-out %.h %.c %.o %.pdb unit-tests/t-basic%,$(wildcard unit-tests/t-*)))
+diff --git a/Makefile b/Makefile
+index 4016da6e39c..d95a7b19b50 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3596,7 +3596,7 @@ rpm::
+ .PHONY: rpm
  
- # `test-chainlint` (which is a dependency of `test-lint`, `test` and `prove`)
- # checks all tests in all scripts via a single invocation, so tell individual
+ ifneq ($(INCLUDE_DLLS_IN_ARTIFACTS),)
+-OTHER_PROGRAMS += $(shell echo *.dll t/helper/*.dll)
++OTHER_PROGRAMS += $(shell echo *.dll t/helper/*.dll t/unit-tests/*.dll)
+ endif
+ 
+ artifacts-tar:: $(ALL_COMMANDS_TO_INSTALL) $(SCRIPT_LIB) $(OTHER_PROGRAMS) \
 -- 
 gitgitgadget
-
