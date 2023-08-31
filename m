@@ -2,34 +2,34 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C74A0C83F37
-	for <git@archiver.kernel.org>; Thu, 31 Aug 2023 21:21:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 011BAC83F2F
+	for <git@archiver.kernel.org>; Thu, 31 Aug 2023 21:21:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347511AbjHaVVN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 31 Aug 2023 17:21:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58426 "EHLO
+        id S1347543AbjHaVVk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 31 Aug 2023 17:21:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344470AbjHaVVM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Aug 2023 17:21:12 -0400
+        with ESMTP id S1347548AbjHaVVh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Aug 2023 17:21:37 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D57511B
-        for <git@vger.kernel.org>; Thu, 31 Aug 2023 14:21:09 -0700 (PDT)
-Received: (qmail 25995 invoked by uid 109); 31 Aug 2023 21:21:08 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53A23CC5
+        for <git@vger.kernel.org>; Thu, 31 Aug 2023 14:21:30 -0700 (PDT)
+Received: (qmail 26005 invoked by uid 109); 31 Aug 2023 21:21:29 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 31 Aug 2023 21:21:08 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 31 Aug 2023 21:21:29 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11587 invoked by uid 111); 31 Aug 2023 21:21:09 -0000
+Received: (qmail 11593 invoked by uid 111); 31 Aug 2023 21:21:30 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 31 Aug 2023 17:21:09 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 31 Aug 2023 17:21:30 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 31 Aug 2023 17:21:07 -0400
+Date:   Thu, 31 Aug 2023 17:21:28 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: [PATCH v2 05/10] parse-options: prefer opt->value to globals in
+Subject: [PATCH v2 06/10] parse-options: mark unused "opt" parameter in
  callbacks
-Message-ID: <20230831212107.GE949469@coredump.intra.peff.net>
+Message-ID: <20230831212128.GF949469@coredump.intra.peff.net>
 References: <20230831211637.GA949188@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -39,316 +39,156 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We have several parse-options callbacks that ignore their "opt"
-parameters entirely. This is a little unusual, as we'd normally put the
-result of the parsing into opt->value. In the case of these callbacks,
-though, they directly manipulate global variables instead (and in
-most cases the caller sets opt->value to NULL in the OPT_CALLBACK
-declaration).
+The previous commit argued that parse-options callbacks should try to
+use opt->value rather than touching globals directly. In some cases,
+however, that's awkward to do. Some callbacks touch multiple variables,
+or may even just call into an abstracted function that does so.
 
-The immediate symptom we'd like to deal with is that the unused "opt"
-variables trigger -Wunused-parameter. But how to fix that is debatable.
-One option is to annotate them with UNUSED. But another is to have the
-caller pass in the appropriate variable via opt->value, and use it. That
-has the benefit of making the callbacks reusable (in theory at least),
-and makes it clear from the OPT_CALLBACK declaration which variables
-will be affected (doubly so for the cases in builtin/fast-export.c,
-where we do set opt->value, but it is completely ignored!).
+In some of these cases we _could_ convert them by stuffing the multiple
+variables into a single struct and passing the struct pointer through
+opt->value. But that may make other parts of the code less readable,
+as the struct relationship has to be mentioned everywhere.
 
-The slight downside is that we lose type safety, since they're now
-passing through void pointers.
-
-I went with the "just use them" approach here. The loss of type safety
-is unfortunate, but that is already an issue with most of the other
-callbacks. If we want to try to address that, we should do so more
-consistently (and this patch would prepare these callbacks for whatever
-we choose to do there).
-
-Note that in the cases in builtin/fast-export.c, we are passing
-anonymous enums. We'll have to give them names so that we can declare
-the appropriate pointer type within the callbacks.
+Let's just accept that these cases are special and leave them as-is. But
+we do need to mark their "opt" parameters to satisfy -Wunused-parameter.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/checkout-index.c     |  8 +++++---
- builtin/describe.c           |  6 ++++--
- builtin/fast-export.c        | 36 +++++++++++++++++++++---------------
- builtin/fetch.c              |  4 ++--
- builtin/interpret-trailers.c | 12 ++++++------
- builtin/pack-objects.c       | 21 ++++++++++++---------
- 6 files changed, 50 insertions(+), 37 deletions(-)
+ builtin/gc.c           |  2 +-
+ builtin/log.c          | 10 ++++++----
+ builtin/merge.c        |  2 +-
+ builtin/pack-objects.c |  6 +++---
+ builtin/read-tree.c    |  2 +-
+ builtin/update-index.c |  4 ++--
+ 6 files changed, 14 insertions(+), 12 deletions(-)
 
-diff --git a/builtin/checkout-index.c b/builtin/checkout-index.c
-index 6687a495ff..6ef6ac4c2e 100644
---- a/builtin/checkout-index.c
-+++ b/builtin/checkout-index.c
-@@ -193,14 +193,16 @@ static const char * const builtin_checkout_index_usage[] = {
- static int option_parse_stage(const struct option *opt,
- 			      const char *arg, int unset)
- {
-+	int *stage = opt->value;
-+
- 	BUG_ON_OPT_NEG(unset);
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 369bd43fb2..b842349d86 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -1403,7 +1403,7 @@ static void initialize_task_config(int schedule)
+ 	strbuf_release(&config_name);
+ }
  
- 	if (!strcmp(arg, "all")) {
--		checkout_stage = CHECKOUT_ALL;
-+		*stage = CHECKOUT_ALL;
- 	} else {
- 		int ch = arg[0];
- 		if ('1' <= ch && ch <= '3')
--			checkout_stage = arg[0] - '0';
-+			*stage = arg[0] - '0';
- 		else
- 			die(_("stage should be between 1 and 3 or all"));
- 	}
-@@ -238,7 +240,7 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
- 			N_("write the content to temporary files")),
- 		OPT_STRING(0, "prefix", &state.base_dir, N_("string"),
- 			N_("when creating files, prepend <string>")),
--		OPT_CALLBACK_F(0, "stage", NULL, "(1|2|3|all)",
-+		OPT_CALLBACK_F(0, "stage", &checkout_stage, "(1|2|3|all)",
- 			N_("copy out the files from named stage"),
- 			PARSE_OPT_NONEG, option_parse_stage),
- 		OPT_END()
-diff --git a/builtin/describe.c b/builtin/describe.c
-index b28a4a1f82..718b5c3073 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -561,9 +561,11 @@ static void describe(const char *arg, int last_one)
- static int option_parse_exact_match(const struct option *opt, const char *arg,
- 				    int unset)
+-static int task_option_parse(const struct option *opt,
++static int task_option_parse(const struct option *opt UNUSED,
+ 			     const char *arg, int unset)
  {
-+	int *val = opt->value;
-+
- 	BUG_ON_OPT_ARG(arg);
+ 	int i, num_selected = 0;
+diff --git a/builtin/log.c b/builtin/log.c
+index fb90d43717..3599063554 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -118,16 +118,17 @@ static struct string_list decorate_refs_exclude = STRING_LIST_INIT_NODUP;
+ static struct string_list decorate_refs_exclude_config = STRING_LIST_INIT_NODUP;
+ static struct string_list decorate_refs_include = STRING_LIST_INIT_NODUP;
  
--	max_candidates = unset ? DEFAULT_CANDIDATES : 0;
-+	*val = unset ? DEFAULT_CANDIDATES : 0;
+-static int clear_decorations_callback(const struct option *opt,
+-					    const char *arg, int unset)
++static int clear_decorations_callback(const struct option *opt UNUSED,
++				      const char *arg, int unset)
+ {
+ 	string_list_clear(&decorate_refs_include, 0);
+ 	string_list_clear(&decorate_refs_exclude, 0);
+ 	use_default_decoration_filter = 0;
  	return 0;
  }
  
-@@ -578,7 +580,7 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL(0, "long",       &longformat, N_("always use long format")),
- 		OPT_BOOL(0, "first-parent", &first_parent, N_("only follow first parent")),
- 		OPT__ABBREV(&abbrev),
--		OPT_CALLBACK_F(0, "exact-match", NULL, NULL,
-+		OPT_CALLBACK_F(0, "exact-match", &max_candidates, NULL,
- 			       N_("only output exact matches"),
- 			       PARSE_OPT_NOARG, option_parse_exact_match),
- 		OPT_INTEGER(0, "candidates", &max_candidates,
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 56dc69fac1..70aff515ac 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -33,9 +33,9 @@ static const char *fast_export_usage[] = {
- };
+-static int decorate_callback(const struct option *opt, const char *arg, int unset)
++static int decorate_callback(const struct option *opt UNUSED, const char *arg,
++			     int unset)
+ {
+ 	if (unset)
+ 		decoration_style = 0;
+@@ -1555,7 +1556,8 @@ static int inline_callback(const struct option *opt, const char *arg, int unset)
+ 	return 0;
+ }
  
- static int progress;
--static enum { SIGNED_TAG_ABORT, VERBATIM, WARN, WARN_STRIP, STRIP } signed_tag_mode = SIGNED_TAG_ABORT;
--static enum { TAG_FILTERING_ABORT, DROP, REWRITE } tag_of_filtered_mode = TAG_FILTERING_ABORT;
--static enum { REENCODE_ABORT, REENCODE_YES, REENCODE_NO } reencode_mode = REENCODE_ABORT;
-+static enum signed_tag_mode { SIGNED_TAG_ABORT, VERBATIM, WARN, WARN_STRIP, STRIP } signed_tag_mode = SIGNED_TAG_ABORT;
-+static enum tag_of_filtered_mode { TAG_FILTERING_ABORT, DROP, REWRITE } tag_of_filtered_mode = TAG_FILTERING_ABORT;
-+static enum reencode_mode { REENCODE_ABORT, REENCODE_YES, REENCODE_NO } reencode_mode = REENCODE_ABORT;
- static int fake_missing_tagger;
- static int use_done_feature;
- static int no_data;
-@@ -53,16 +53,18 @@ static struct revision_sources revision_sources;
- static int parse_opt_signed_tag_mode(const struct option *opt,
- 				     const char *arg, int unset)
+-static int header_callback(const struct option *opt, const char *arg, int unset)
++static int header_callback(const struct option *opt UNUSED, const char *arg,
++			   int unset)
  {
-+	enum signed_tag_mode *val = opt->value;
-+
- 	if (unset || !strcmp(arg, "abort"))
--		signed_tag_mode = SIGNED_TAG_ABORT;
-+		*val = SIGNED_TAG_ABORT;
- 	else if (!strcmp(arg, "verbatim") || !strcmp(arg, "ignore"))
--		signed_tag_mode = VERBATIM;
-+		*val = VERBATIM;
- 	else if (!strcmp(arg, "warn"))
--		signed_tag_mode = WARN;
-+		*val = WARN;
- 	else if (!strcmp(arg, "warn-strip"))
--		signed_tag_mode = WARN_STRIP;
-+		*val = WARN_STRIP;
- 	else if (!strcmp(arg, "strip"))
--		signed_tag_mode = STRIP;
-+		*val = STRIP;
- 	else
- 		return error("Unknown signed-tags mode: %s", arg);
- 	return 0;
-@@ -71,12 +73,14 @@ static int parse_opt_signed_tag_mode(const struct option *opt,
- static int parse_opt_tag_of_filtered_mode(const struct option *opt,
- 					  const char *arg, int unset)
- {
-+	enum tag_of_filtered_mode *val = opt->value;
-+
- 	if (unset || !strcmp(arg, "abort"))
--		tag_of_filtered_mode = TAG_FILTERING_ABORT;
-+		*val = TAG_FILTERING_ABORT;
- 	else if (!strcmp(arg, "drop"))
--		tag_of_filtered_mode = DROP;
-+		*val = DROP;
- 	else if (!strcmp(arg, "rewrite"))
--		tag_of_filtered_mode = REWRITE;
-+		*val = REWRITE;
- 	else
- 		return error("Unknown tag-of-filtered mode: %s", arg);
- 	return 0;
-@@ -85,21 +89,23 @@ static int parse_opt_tag_of_filtered_mode(const struct option *opt,
- static int parse_opt_reencode_mode(const struct option *opt,
- 				   const char *arg, int unset)
- {
-+	enum reencode_mode *val = opt->value;
-+
  	if (unset) {
--		reencode_mode = REENCODE_ABORT;
-+		*val = REENCODE_ABORT;
- 		return 0;
- 	}
- 
- 	switch (git_parse_maybe_bool(arg)) {
- 	case 0:
--		reencode_mode = REENCODE_NO;
-+		*val = REENCODE_NO;
- 		break;
- 	case 1:
--		reencode_mode = REENCODE_YES;
-+		*val = REENCODE_YES;
- 		break;
- 	default:
- 		if (!strcasecmp(arg, "abort"))
--			reencode_mode = REENCODE_ABORT;
-+			*val = REENCODE_ABORT;
- 		else
- 			return error("Unknown reencoding mode: %s", arg);
- 	}
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 8f93529505..fd134ba74d 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -176,7 +176,7 @@ static int parse_refmap_arg(const struct option *opt, const char *arg, int unset
- 	 * "git fetch --refmap='' origin foo"
- 	 * can be used to tell the command not to store anywhere
- 	 */
--	refspec_append(&refmap, arg);
-+	refspec_append(opt->value, arg);
- 
- 	return 0;
+ 		string_list_clear(&extra_hdr, 0);
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 21363b7985..0436986dab 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -231,7 +231,7 @@ static void append_strategy(struct strategy *s)
+ 	use_strategies[use_strategies_nr++] = s;
  }
-@@ -2204,7 +2204,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 			   PARSE_OPT_HIDDEN, option_fetch_parse_recurse_submodules),
- 		OPT_BOOL(0, "update-shallow", &update_shallow,
- 			 N_("accept refs that update .git/shallow")),
--		OPT_CALLBACK_F(0, "refmap", NULL, N_("refmap"),
-+		OPT_CALLBACK_F(0, "refmap", &refmap, N_("refmap"),
- 			       N_("specify fetch refmap"), PARSE_OPT_NONEG, parse_refmap_arg),
- 		OPT_STRING_LIST('o', "server-option", &server_options, N_("server-specific"), N_("option to transmit")),
- 		OPT_IPVERSION(&family),
-diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
-index c5e8345265..6aadce6a1e 100644
---- a/builtin/interpret-trailers.c
-+++ b/builtin/interpret-trailers.c
-@@ -26,19 +26,19 @@ static enum trailer_if_missing if_missing;
- static int option_parse_where(const struct option *opt,
- 			      const char *arg, int unset)
+ 
+-static int option_parse_strategy(const struct option *opt,
++static int option_parse_strategy(const struct option *opt UNUSED,
+ 				 const char *name, int unset)
  {
--	return trailer_set_where(&where, arg);
-+	return trailer_set_where(opt->value, arg);
- }
- 
- static int option_parse_if_exists(const struct option *opt,
- 				  const char *arg, int unset)
- {
--	return trailer_set_if_exists(&if_exists, arg);
-+	return trailer_set_if_exists(opt->value, arg);
- }
- 
- static int option_parse_if_missing(const struct option *opt,
- 				   const char *arg, int unset)
- {
--	return trailer_set_if_missing(&if_missing, arg);
-+	return trailer_set_if_missing(opt->value, arg);
- }
- 
- static void new_trailers_clear(struct list_head *trailers)
-@@ -97,11 +97,11 @@ int cmd_interpret_trailers(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL(0, "in-place", &opts.in_place, N_("edit files in place")),
- 		OPT_BOOL(0, "trim-empty", &opts.trim_empty, N_("trim empty trailers")),
- 
--		OPT_CALLBACK(0, "where", NULL, N_("action"),
-+		OPT_CALLBACK(0, "where", &where, N_("action"),
- 			     N_("where to place the new trailer"), option_parse_where),
--		OPT_CALLBACK(0, "if-exists", NULL, N_("action"),
-+		OPT_CALLBACK(0, "if-exists", &if_exists, N_("action"),
- 			     N_("action if trailer already exists"), option_parse_if_exists),
--		OPT_CALLBACK(0, "if-missing", NULL, N_("action"),
-+		OPT_CALLBACK(0, "if-missing", &if_missing, N_("action"),
- 			     N_("action if trailer is missing"), option_parse_if_missing),
- 
- 		OPT_BOOL(0, "only-trailers", &opts.only_trailers, N_("output only the trailers")),
+ 	if (unset)
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index d2a162d528..492372ee5d 100644
+index 492372ee5d..91b4b7c177 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -4120,29 +4120,32 @@ static void add_extra_kept_packs(const struct string_list *names)
- static int option_parse_quiet(const struct option *opt, const char *arg,
- 			      int unset)
- {
-+	int *val = opt->value;
-+
- 	BUG_ON_OPT_ARG(arg);
+@@ -3739,7 +3739,7 @@ static void show_object__ma_allow_promisor(struct object *obj, const char *name,
+ 	show_object(obj, name, data);
+ }
  
- 	if (!unset)
--		progress = 0;
--	else if (!progress)
--		progress = 1;
-+		*val = 0;
-+	else if (!*val)
-+		*val = 1;
+-static int option_parse_missing_action(const struct option *opt,
++static int option_parse_missing_action(const struct option *opt UNUSED,
+ 				       const char *arg, int unset)
+ {
+ 	assert(arg);
+@@ -4150,7 +4150,7 @@ static int option_parse_index_version(const struct option *opt,
  	return 0;
  }
  
- static int option_parse_index_version(const struct option *opt,
- 				      const char *arg, int unset)
+-static int option_parse_unpack_unreachable(const struct option *opt,
++static int option_parse_unpack_unreachable(const struct option *opt UNUSED,
+ 					   const char *arg, int unset)
  {
-+	struct pack_idx_option *popts = opt->value;
- 	char *c;
- 	const char *val = arg;
+ 	if (unset) {
+@@ -4165,7 +4165,7 @@ static int option_parse_unpack_unreachable(const struct option *opt,
+ 	return 0;
+ }
  
+-static int option_parse_cruft_expiration(const struct option *opt,
++static int option_parse_cruft_expiration(const struct option *opt UNUSED,
+ 					 const char *arg, int unset)
+ {
+ 	if (unset) {
+diff --git a/builtin/read-tree.c b/builtin/read-tree.c
+index 1fec702a04..8196ca9dd8 100644
+--- a/builtin/read-tree.c
++++ b/builtin/read-tree.c
+@@ -49,7 +49,7 @@ static const char * const read_tree_usage[] = {
+ 	NULL
+ };
+ 
+-static int index_output_cb(const struct option *opt, const char *arg,
++static int index_output_cb(const struct option *opt UNUSED, const char *arg,
+ 				 int unset)
+ {
  	BUG_ON_OPT_NEG(unset);
- 
--	pack_idx_opts.version = strtoul(val, &c, 10);
--	if (pack_idx_opts.version > 2)
-+	popts->version = strtoul(val, &c, 10);
-+	if (popts->version > 2)
- 		die(_("unsupported index version %s"), val);
- 	if (*c == ',' && c[1])
--		pack_idx_opts.off32_limit = strtoul(c+1, &c, 0);
--	if (*c || pack_idx_opts.off32_limit & 0x80000000)
-+		popts->off32_limit = strtoul(c+1, &c, 0);
-+	if (*c || popts->off32_limit & 0x80000000)
- 		die(_("bad index version '%s'"), val);
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index aee3cb8cbd..59acae3336 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -856,7 +856,7 @@ static int chmod_callback(const struct option *opt,
  	return 0;
  }
-@@ -4190,7 +4193,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 		LIST_OBJECTS_FILTER_INIT;
  
- 	struct option pack_objects_options[] = {
--		OPT_CALLBACK_F('q', "quiet", NULL, NULL,
-+		OPT_CALLBACK_F('q', "quiet", &progress, NULL,
- 			       N_("do not show progress meter"),
- 			       PARSE_OPT_NOARG, option_parse_quiet),
- 		OPT_SET_INT(0, "progress", &progress,
-@@ -4200,7 +4203,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL(0, "all-progress-implied",
- 			 &all_progress_implied,
- 			 N_("similar to --all-progress when progress meter is shown")),
--		OPT_CALLBACK_F(0, "index-version", NULL, N_("<version>[,<offset>]"),
-+		OPT_CALLBACK_F(0, "index-version", &pack_idx_opts, N_("<version>[,<offset>]"),
- 		  N_("write the pack index file in the specified idx format version"),
- 		  PARSE_OPT_NONEG, option_parse_index_version),
- 		OPT_MAGNITUDE(0, "max-pack-size", &pack_size_limit,
+-static int resolve_undo_clear_callback(const struct option *opt,
++static int resolve_undo_clear_callback(const struct option *opt UNUSED,
+ 				const char *arg, int unset)
+ {
+ 	BUG_ON_OPT_NEG(unset);
+@@ -890,7 +890,7 @@ static int parse_new_style_cacheinfo(const char *arg,
+ }
+ 
+ static enum parse_opt_result cacheinfo_callback(
+-	struct parse_opt_ctx_t *ctx, const struct option *opt,
++	struct parse_opt_ctx_t *ctx, const struct option *opt UNUSED,
+ 	const char *arg, int unset)
+ {
+ 	struct object_id oid;
 -- 
 2.42.0.561.gaa987ecc69
 
