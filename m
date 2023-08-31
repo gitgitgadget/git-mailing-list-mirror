@@ -2,31 +2,31 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43D00C83F29
-	for <git@archiver.kernel.org>; Thu, 31 Aug 2023 06:22:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EDA11C83F10
+	for <git@archiver.kernel.org>; Thu, 31 Aug 2023 06:23:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243081AbjHaGW4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 31 Aug 2023 02:22:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35822 "EHLO
+        id S1343945AbjHaGXE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 31 Aug 2023 02:23:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241088AbjHaGWp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Aug 2023 02:22:45 -0400
+        with ESMTP id S1345071AbjHaGW6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Aug 2023 02:22:58 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 522A4E4A
-        for <git@vger.kernel.org>; Wed, 30 Aug 2023 23:22:06 -0700 (PDT)
-Received: (qmail 21163 invoked by uid 109); 31 Aug 2023 06:21:56 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC99DE67
+        for <git@vger.kernel.org>; Wed, 30 Aug 2023 23:22:16 -0700 (PDT)
+Received: (qmail 21166 invoked by uid 109); 31 Aug 2023 06:22:04 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 31 Aug 2023 06:21:56 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 31 Aug 2023 06:22:04 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3015 invoked by uid 111); 31 Aug 2023 06:21:57 -0000
+Received: (qmail 3018 invoked by uid 111); 31 Aug 2023 06:22:05 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 31 Aug 2023 02:21:57 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 31 Aug 2023 02:22:05 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 31 Aug 2023 02:21:55 -0400
+Date:   Thu, 31 Aug 2023 02:22:03 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 07/10] read_tree(): respect max_allowed_tree_depth
-Message-ID: <20230831062155.GG3185325@coredump.intra.peff.net>
+Subject: [PATCH 08/10] list-objects: respect max_allowed_tree_depth
+Message-ID: <20230831062203.GH3185325@coredump.intra.peff.net>
 References: <20230831061735.GA2702156@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -36,134 +36,105 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The read_tree() function reads trees recursively (via its read_tree_at()
-helper). This can cause it to run out of stack space on very deep trees.
-Let's teach it about the new core.maxTreeDepth option.
+The tree traversal in list-objects.c, which is used by "rev-list
+--objects", etc, uses recursion and may run out of stack space. Let's
+teach it about the new core.maxTreeDepth config option.
 
-The easiest way to demonstrate this is via "ls-tree -r", which the test
-covers. Note that I needed a tree depth of ~30k to trigger a segfault on
-my Linux system, not the 4100 used by our "big" test in t6700. However,
-that test still tells us what we want: that the default 4096 limit is
-enough to prevent segfaults on all platforms. We could bump it, but that
-increases the cost of the test setup for little gain.
+We unfortunately can't return an error here, as this code doesn't
+produce an error return at all. We'll die() instead, which matches the
+behavior when we see an otherwise broken tree.
 
-As an interesting side-note: when I originally wrote this patch about 4
-years ago, I needed a depth of ~50k to segfault. But porting it forward,
-the number is much lower. Seemingly little things like cf0983213c (hash:
-add an algo member to struct object_id, 2021-04-26) take it from 32,722
-to 29,080.
+Note that this will also generally reject such deep trees from entering
+the repository from a fetch or push, due to the use of rev-list in the
+connectivity check. But it's not foolproof! We stop traversing when we
+see an UNINTERESTING object, and the connectivity check marks existing
+ref tips as UNINTERESTING. So imagine commit X has a tree
+with maximum depth N. If you then create a new commit Y with a tree
+entry "Y:subdir" that points to "X^{tree}", then the depth of Y will be
+N+1. But a connectivity check running "git rev-list --objects Y --not X"
+won't realize that; it will stop traversing at X^{tree}, since that was
+already reachable.
+
+So this will stop naive pushes of too-deep trees, but not carefully
+crafted malicious ones. Doing it robustly and efficiently would require
+caching the maximum depth of each tree (i.e., the longest path to any
+leaf entry). That's much more complex and not strictly needed. If each
+recursive algorithm limits itself already, then that's sufficient.
+Blocking the objects from entering the repo would be a nice
+belt-and-suspenders addition, but it's not worth the extra cost.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- sparse-index.c        | 2 +-
+ list-objects.c        | 8 ++++++++
  t/t6700-tree-depth.sh | 9 +++++++++
- tree.c                | 9 +++++++--
- tree.h                | 1 +
- wt-status.c           | 2 +-
- 5 files changed, 19 insertions(+), 4 deletions(-)
+ 2 files changed, 17 insertions(+)
 
-diff --git a/sparse-index.c b/sparse-index.c
-index 1fdb07a9e6..3578feb283 100644
---- a/sparse-index.c
-+++ b/sparse-index.c
-@@ -391,7 +391,7 @@ void expand_index(struct index_state *istate, struct pattern_list *pl)
- 		strbuf_setlen(&base, 0);
- 		strbuf_add(&base, ce->name, strlen(ce->name));
+diff --git a/list-objects.c b/list-objects.c
+index e60a6cd5b4..c25c72b32c 100644
+--- a/list-objects.c
++++ b/list-objects.c
+@@ -14,13 +14,15 @@
+ #include "packfile.h"
+ #include "object-store-ll.h"
+ #include "trace.h"
++#include "environment.h"
  
--		read_tree_at(istate->repo, tree, &base, &ps,
-+		read_tree_at(istate->repo, tree, &base, 0, &ps,
- 			     add_path_to_index, &ctx);
+ struct traversal_context {
+ 	struct rev_info *revs;
+ 	show_object_fn show_object;
+ 	show_commit_fn show_commit;
+ 	void *show_data;
+ 	struct filter *filter;
++	int depth;
+ };
  
- 		/* free directory entries. full entries are re-used */
+ static void show_commit(struct traversal_context *ctx,
+@@ -118,7 +120,9 @@ static void process_tree_contents(struct traversal_context *ctx,
+ 				    entry.path, oid_to_hex(&tree->object.oid));
+ 			}
+ 			t->object.flags |= NOT_USER_GIVEN;
++			ctx->depth++;
+ 			process_tree(ctx, t, base, entry.path);
++			ctx->depth--;
+ 		}
+ 		else if (S_ISGITLINK(entry.mode))
+ 			; /* ignore gitlink */
+@@ -156,6 +160,9 @@ static void process_tree(struct traversal_context *ctx,
+ 	    !revs->include_check_obj(&tree->object, revs->include_check_data))
+ 		return;
+ 
++	if (ctx->depth > max_allowed_tree_depth)
++		die("exceeded maximum allowed tree depth");
++
+ 	failed_parse = parse_tree_gently(tree, 1);
+ 	if (failed_parse) {
+ 		if (revs->ignore_missing_links)
+@@ -349,6 +356,7 @@ static void traverse_non_commits(struct traversal_context *ctx,
+ 		if (!path)
+ 			path = "";
+ 		if (obj->type == OBJ_TREE) {
++			ctx->depth = 0;
+ 			process_tree(ctx, (struct tree *)obj, base, path);
+ 			continue;
+ 		}
 diff --git a/t/t6700-tree-depth.sh b/t/t6700-tree-depth.sh
-index d4d17db2ae..93ec41df03 100755
+index 93ec41df03..f5d284b16e 100755
 --- a/t/t6700-tree-depth.sh
 +++ b/t/t6700-tree-depth.sh
-@@ -63,4 +63,13 @@ test_expect_success 'default limit for git-archive fails gracefully' '
- 	test_must_fail git archive big >/dev/null
+@@ -72,4 +72,13 @@ test_expect_success 'default limit for ls-tree fails gracefully' '
+ 	test_must_fail git ls-tree -r big >/dev/null
  '
  
-+test_expect_success 'limit recursion of ls-tree -r' '
-+	git $small_ok ls-tree -r small &&
-+	test_must_fail git $small_no ls-tree -r small
++test_expect_success 'limit recursion of rev-list --objects' '
++	git $small_ok rev-list --objects small >/dev/null &&
++	test_must_fail git $small_no rev-list --objects small >/dev/null
 +'
 +
-+test_expect_success 'default limit for ls-tree fails gracefully' '
-+	test_must_fail git ls-tree -r big >/dev/null
++test_expect_success 'default limit for rev-list fails gracefully' '
++	test_must_fail git rev-list --objects big >/dev/null
 +'
 +
  test_done
-diff --git a/tree.c b/tree.c
-index c745462f96..990f9c9854 100644
---- a/tree.c
-+++ b/tree.c
-@@ -10,11 +10,13 @@
- #include "alloc.h"
- #include "tree-walk.h"
- #include "repository.h"
-+#include "environment.h"
- 
- const char *tree_type = "tree";
- 
- int read_tree_at(struct repository *r,
- 		 struct tree *tree, struct strbuf *base,
-+		 int depth,
- 		 const struct pathspec *pathspec,
- 		 read_tree_fn_t fn, void *context)
- {
-@@ -24,6 +26,9 @@ int read_tree_at(struct repository *r,
- 	int len, oldlen = base->len;
- 	enum interesting retval = entry_not_interesting;
- 
-+	if (depth > max_allowed_tree_depth)
-+		return error("exceeded maximum allowed tree depth");
-+
- 	if (parse_tree(tree))
- 		return -1;
- 
-@@ -74,7 +79,7 @@ int read_tree_at(struct repository *r,
- 		strbuf_add(base, entry.path, len);
- 		strbuf_addch(base, '/');
- 		retval = read_tree_at(r, lookup_tree(r, &oid),
--				      base, pathspec,
-+				      base, depth + 1, pathspec,
- 				      fn, context);
- 		strbuf_setlen(base, oldlen);
- 		if (retval)
-@@ -89,7 +94,7 @@ int read_tree(struct repository *r,
- 	      read_tree_fn_t fn, void *context)
- {
- 	struct strbuf sb = STRBUF_INIT;
--	int ret = read_tree_at(r, tree, &sb, pathspec, fn, context);
-+	int ret = read_tree_at(r, tree, &sb, 0, pathspec, fn, context);
- 	strbuf_release(&sb);
- 	return ret;
- }
-diff --git a/tree.h b/tree.h
-index 1b5ecbda6b..cc6ddf51b3 100644
---- a/tree.h
-+++ b/tree.h
-@@ -44,6 +44,7 @@ typedef int (*read_tree_fn_t)(const struct object_id *, struct strbuf *, const c
- 
- int read_tree_at(struct repository *r,
- 		 struct tree *tree, struct strbuf *base,
-+		 int depth,
- 		 const struct pathspec *pathspec,
- 		 read_tree_fn_t fn, void *context);
- 
-diff --git a/wt-status.c b/wt-status.c
-index 5b1378965c..996f8635c3 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -739,7 +739,7 @@ static void wt_status_collect_changes_initial(struct wt_status *s)
- 			ps.max_depth = -1;
- 
- 			strbuf_add(&base, ce->name, ce->ce_namelen);
--			read_tree_at(istate->repo, tree, &base, &ps,
-+			read_tree_at(istate->repo, tree, &base, 0, &ps,
- 				     add_file_to_list, s);
- 			continue;
- 		}
 -- 
 2.42.0.561.gaa987ecc69
 
