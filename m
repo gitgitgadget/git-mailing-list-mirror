@@ -2,34 +2,34 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09546C83F2F
-	for <git@archiver.kernel.org>; Thu, 31 Aug 2023 21:23:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7552FC83F2F
+	for <git@archiver.kernel.org>; Thu, 31 Aug 2023 21:23:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245437AbjHaVXD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 31 Aug 2023 17:23:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44620 "EHLO
+        id S1347524AbjHaVXH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 31 Aug 2023 17:23:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343610AbjHaVXA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Aug 2023 17:23:00 -0400
+        with ESMTP id S1347549AbjHaVXF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Aug 2023 17:23:05 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C2E210D1
-        for <git@vger.kernel.org>; Thu, 31 Aug 2023 14:22:23 -0700 (PDT)
-Received: (qmail 26031 invoked by uid 109); 31 Aug 2023 21:22:16 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2900E1703
+        for <git@vger.kernel.org>; Thu, 31 Aug 2023 14:22:28 -0700 (PDT)
+Received: (qmail 26039 invoked by uid 109); 31 Aug 2023 21:22:21 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 31 Aug 2023 21:22:16 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 31 Aug 2023 21:22:21 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11613 invoked by uid 111); 31 Aug 2023 21:22:16 -0000
+Received: (qmail 11618 invoked by uid 111); 31 Aug 2023 21:22:22 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 31 Aug 2023 17:22:16 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 31 Aug 2023 17:22:22 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 31 Aug 2023 17:22:15 -0400
+Date:   Thu, 31 Aug 2023 17:22:20 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: [PATCH v2 09/10] interpret-trailers: mark unused "unset" parameters
- in option callbacks
-Message-ID: <20230831212215.GI949469@coredump.intra.peff.net>
+Subject: [PATCH v2 10/10] parse-options: mark unused parameters in noop
+ callback
+Message-ID: <20230831212220.GJ949469@coredump.intra.peff.net>
 References: <20230831211637.GA949188@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -39,61 +39,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There are a few parse-option callbacks that do not look at their "unset"
-parameters, but also do not set PARSE_OPT_NONEG. At first glance this
-seems like a bug, as we'd ignore "--no-if-exists", etc.
+Unsurprisingly, the noop options callback doesn't bother to look at any
+of its parameters. Let's mark them so that -Wunused-parameter does not
+complain.
 
-But they do work fine, because when "unset" is true, then "arg" is NULL.
-And all three functions pass "arg" on to helper functions which do the
-right thing with the NULL.
-
-Note that this shortcut would not be correct if any callback used
-PARSE_OPT_NOARG (in which case "arg" would be NULL but "unset" would be
-false). But none of these do.
-
-So the code is fine as-is. But we'll want to mark the unused "unset"
-parameters to quiet -Wunused-parameter. I've also added a comment to
-make this rather subtle situation more explicit.
+Another option would be to drop the callback and have parse-options
+itself recognize OPT_NOOP_NOARG. But that seems like extra work for no
+real benefit.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-I looked at another BUG_ON here, but it was just so ugly and one-off
-that I preferred just adding the comments.
+ parse-options-cb.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
- builtin/interpret-trailers.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
-index 6aadce6a1e..a110e69f83 100644
---- a/builtin/interpret-trailers.c
-+++ b/builtin/interpret-trailers.c
-@@ -24,20 +24,23 @@ static enum trailer_if_exists if_exists;
- static enum trailer_if_missing if_missing;
- 
- static int option_parse_where(const struct option *opt,
--			      const char *arg, int unset)
-+			      const char *arg, int unset UNUSED)
- {
-+	/* unset implies NULL arg, which is handled in our helper */
- 	return trailer_set_where(opt->value, arg);
+diff --git a/parse-options-cb.c b/parse-options-cb.c
+index a24521dee0..bdc7fae497 100644
+--- a/parse-options-cb.c
++++ b/parse-options-cb.c
+@@ -227,7 +227,9 @@ int parse_opt_strvec(const struct option *opt, const char *arg, int unset)
+ 	return 0;
  }
  
- static int option_parse_if_exists(const struct option *opt,
--				  const char *arg, int unset)
-+				  const char *arg, int unset UNUSED)
+-int parse_opt_noop_cb(const struct option *opt, const char *arg, int unset)
++int parse_opt_noop_cb(const struct option *opt UNUSED,
++		      const char *arg UNUSED,
++		      int unset UNUSED)
  {
-+	/* unset implies NULL arg, which is handled in our helper */
- 	return trailer_set_if_exists(opt->value, arg);
+ 	return 0;
  }
- 
- static int option_parse_if_missing(const struct option *opt,
--				   const char *arg, int unset)
-+				   const char *arg, int unset UNUSED)
- {
-+	/* unset implies NULL arg, which is handled in our helper */
- 	return trailer_set_if_missing(opt->value, arg);
- }
- 
 -- 
 2.42.0.561.gaa987ecc69
-
