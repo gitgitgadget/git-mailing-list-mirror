@@ -2,146 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BADD7CA0FF6
-	for <git@archiver.kernel.org>; Fri,  1 Sep 2023 20:56:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5B3FCA0FF6
+	for <git@archiver.kernel.org>; Fri,  1 Sep 2023 21:50:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236738AbjIAU4W (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 Sep 2023 16:56:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58120 "EHLO
+        id S229741AbjIAVrN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 Sep 2023 17:47:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229939AbjIAU4W (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Sep 2023 16:56:22 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D23E210F3
-        for <git@vger.kernel.org>; Fri,  1 Sep 2023 13:56:18 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id 3f1490d57ef6-d7ba833ef2aso2183809276.0
-        for <git@vger.kernel.org>; Fri, 01 Sep 2023 13:56:18 -0700 (PDT)
+        with ESMTP id S231544AbjIAVpo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Sep 2023 17:45:44 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 207A4138
+        for <git@vger.kernel.org>; Fri,  1 Sep 2023 14:44:18 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-99cce6f7de2so315132966b.3
+        for <git@vger.kernel.org>; Fri, 01 Sep 2023 14:44:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1693601778; x=1694206578; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:from:subject:message-id
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4m77+gmenWIEbq/dVck0ke/lmi2bj1kqJcNPHtDghoY=;
-        b=TTGGZMjHZdJZb0Zfkr4AUIupxFd9X7WBXSzrOOemMZggf3IEsNV34BQ4W2UBASX0zG
-         MYblM2sZ+tWip9913N44+fFfN35+qKxGmYKeUshbiCuNt6BjwDK1V+KVNi7H2YQKXlMG
-         T2IIppi3tLSjnE+zI5DDoGPLjdhEcDqruuImaNi6pq8swZorCP7HTutiQWwOxXAH6Rmf
-         sQ8yOJ9+PUlgJe6V23ocXs+mdeOmffO2EgC0ctE3rC+S3vpTv3rv4/fL2WGokI5mv884
-         2F0qlWJ67LuUnJ5l/1kPzOueOAbLYFk6h6p6gx8WpUgjJcaOvKz3v3x1pev7VdAxYm7d
-         m2EQ==
+        d=gmail.com; s=20221208; t=1693604656; x=1694209456; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=CgLYYIcgVtz4M2/Qtrd5Q8lLNuTaoqgxWqpOq7IeAT4=;
+        b=Ugh6Vo9A1sKm17Qlw4uz9GmqaoSobkeWGK3dXRYSg1IIhxuLj2lJMNDmu5xz4D5+Wz
+         UxESU5lgXuoFpjh/cEdPz35xbCKwxQWfVUlKjzjIXiWCdmAFRxWmP8YsZ094ejaW14cr
+         ++ptikiCQ6LMsG9F1tJNhU3Zbp12VYB0D79zEl16DzsjCPsT81modw07ffXoh36gVaV6
+         MXxplWE+PabvgPgEC1teG21w9AgYyOBQbp6s25AcfI75x7QqAcZDTwQbOiOeFqNlxiGO
+         9EUoCEUejQnT454wNT98kNxdMXgkftYlGGXg1R4CDZlWUUjnbHFJVcqjayhpIi518mrg
+         pzcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693601778; x=1694206578;
-        h=content-transfer-encoding:cc:to:from:subject:message-id
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=4m77+gmenWIEbq/dVck0ke/lmi2bj1kqJcNPHtDghoY=;
-        b=boPz5oibxyVQf7c0E3Kx8xMM7RJUu6eFmeWUQru4mQ6u6vtYo2jzXluwSkb7inKW4d
-         12dRyWeUEZU9IC54sLAV+5AjBN1aTYH7JLirMekg/JxBjYV+LYoStZ3Bk4BOTYoR0sXo
-         Cx+LsKJk8gR25rsssYbPX6A7ZHM5wrQ3GN9J31eolOHaWrjf+HtztcyNXhcOdVdBwW/T
-         4F31Giyg78yDJbQhxp+2BJjjDHrQ4vh+0UczRTZwRFbpt+QSYZxkzwj4nBbAs+K3okTc
-         4fQdw0qRYTmxy9VgjXyRYvKsq1qiuamqdeiU5DvBKHaXIw29DKUtlBBWpwpSbzoLQxcT
-         g4vA==
-X-Gm-Message-State: AOJu0YxZ1XtnSWtUVElrl1jnZ0+xoVUm8MRudF7Av62FDwT2+PAXkvxG
-        9ylmDvwyRKAVJb3mqJJ5lqSWX6n5lIajr4EV96G4
-X-Google-Smtp-Source: AGHT+IE8anh0uuJ84YTlfqL//CjP1dMibdhw7YH+RTEZSHHhjjseeEpDnN58w8eF6hCjXSt6ihSaIJyztlRB/Rf3hK6V
-X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:b036:168a:a330:172d])
- (user=jonathantanmy job=sendgmr) by 2002:a25:e68c:0:b0:d7a:bd65:18ba with
- SMTP id d134-20020a25e68c000000b00d7abd6518bamr94470ybh.3.1693601778111; Fri,
- 01 Sep 2023 13:56:18 -0700 (PDT)
-Date:   Fri,  1 Sep 2023 13:56:15 -0700
-In-Reply-To: <20230830200218.GA5147@szeder.dev>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.42.0.283.g2d96d420d3-goog
-Message-ID: <20230901205616.3572722-1-jonathantanmy@google.com>
-Subject: Re: [PATCH 07/15] commit-graph: new filter ver. that fixes murmur3
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     "=?UTF-8?q?SZEDER=20G=C3=A1bor?=" <szeder.dev@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Derrick Stolee <derrickstolee@github.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        d=1e100.net; s=20221208; t=1693604656; x=1694209456;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CgLYYIcgVtz4M2/Qtrd5Q8lLNuTaoqgxWqpOq7IeAT4=;
+        b=IDl8nub7CHgY8f85JkhywE2IGx2tcac2HCaalH0v7A9kiYga584oINKM9aSwpQVRgG
+         J2vPOhZtOZ5e0QFv3aeegCZWKlUFm0YxZpyLctTqk8nuGe6Mxo4jKeI4WF4c55QD4qT6
+         sPua7RWSbAzUnFiB5u7A1yv2QHztgMnRYFrgYUpvjlzACrqtCuMZQfkZr1xr5Sqq6FlS
+         r619amHO7cbudHDniHFU3/ShkMhE5RXhQDWh/NvJr80L7BmJOLqdEBk0CEulGYtOCBNW
+         fqhKdStsoxW5awYfCqjsoEoFn4S9szC1Jkj/U+DLid5i9OAn4OfOYauyC12lEkgKjiP4
+         qz5Q==
+X-Gm-Message-State: AOJu0YxcOCDufAXLJntV7JjyLSS92zhCMFIkgBz6J5ag5cpCjIIOMF/d
+        EZtHIg3OctgpxAvvuCLiw2B+61IA1WoJeQ==
+X-Google-Smtp-Source: AGHT+IHXckExAg/dUy2qyiJbw5SZQT9+KK13cFR0ayDqOgwpH0AFaAQNNIswei0EbrBMHFVhucxhnA==
+X-Received: by 2002:a05:600c:5120:b0:402:a464:1a20 with SMTP id o32-20020a05600c512000b00402a4641a20mr2515598wms.33.1693603986856;
+        Fri, 01 Sep 2023 14:33:06 -0700 (PDT)
+Received: from [192.168.0.17] (cpc105060-sgyl40-2-0-cust995.18-2.cable.virginm.net. [81.111.15.228])
+        by smtp.gmail.com with ESMTPSA id l7-20020a1c7907000000b003fed8e12d62sm5967175wme.27.2023.09.01.14.33.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 01 Sep 2023 14:33:06 -0700 (PDT)
+Message-ID: <e8ff187f-9566-4761-b240-6bdc06c003d8@gmail.com>
+Date:   Fri, 1 Sep 2023 22:33:03 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 0/8] pretty: add %(decorate[:<options>]) format
+Content-Language: en-GB
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc:     glencbz@gmail.com, phillip.wood123@gmail.com
+References: <20230820085336.8615-1-andy.koppe@gmail.com>
+ <20230820185009.20095-1-andy.koppe@gmail.com> <xmqqcyz5cxy3.fsf@gitster.g>
+From:   Andy Koppe <andy.koppe@gmail.com>
+In-Reply-To: <xmqqcyz5cxy3.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
-> I'd prefer to leave the test cases unchanged, and make the revision
-> walking machinery look at Bloom filters even for root commits, because
-> this is an annoying and recurring testing issue.  I remember it
-> annoyed me back then, when I wanted to reproduce a couple of bugs that
-> I knew were there, but my initial test cases didn't fail because the
-> Bloom filter of the root commit was ignored; Derrick overlooked this
-> in b16a8277644, you overlooked it now, and none of the reviewers then
-> and now caught it, either.
+On 29/08/2023 22:59, Junio C Hamano wrote:
+> Andy Koppe <andy.koppe@gmail.com> writes:
+> 
+>> Apologies for sending another version so soon, but I realized that I
+>> hadn't removed the use of a compound literal from the first commit where
+>> I had added it, so it still appeared in the patches. The overall diff
+>> for v5 is the same as for v4.
+> 
+> Sorry, but I lost track.  How does this latest round of the topic
+> look to folks?  Ready to go?
 
-I agree that making the revwalk look at Bloom filters of root commits
-is an urgent matter for the reasons you describe (it's something
-easily missed that slows down future development and/or makes future
-development error-prone), but so is moving to a correct murmur3
-implementation, I think, and one shouldn't stop the other. There could
-be an argument that because the revwalk doesn't look at root commit
-Bloom filters, any development on a new Bloom filter hash version is
-suspect, but I don't think that has to be completely true.
+Unfortunately there haven't been any comments beyond v2, apart from your 
+request not to introduce compound literals, which I've addressed.
 
-> > My original design (up to patch 7 in this patch set) defends against
-> > this by taking the very first version detected and rejecting every
-> > other version, and Taylor's subsequent design reads every version, but
-> > annotates filters with its version. So I think we're covered.
->=20
-> In the meantime I adapted the test cases from the above linked message
-> to write commit-graph layers with different Bloom filter versions, and
-> it does fail, because commits from the bottom commit-graph layer are
-> omitted from the revision walk's output.  And the test case doesn't
-> even need a middle layer without modified path Bloom filters to "hide"
-> the different version in the bottom layer.  Merging the layers seems
-> to work, though.
+I haven't got any changes to this pending.
 
-For what it's worth, your test case below (with test_expect_success
-instead of test_expect_failure) passes with my original design. With the
-full patch set, it does fail, but for what it's worth, I did spot this,
-providing an incomplete solution [1] and then a complete one [2]. Your
-test case passes if I also include the following:
-
-  diff --git a/bloom.c b/bloom.c
-  index ff131893cd..1bafd62a4e 100644
-  --- a/bloom.c
-  +++ b/bloom.c
-  @@ -344,6 +344,10 @@ struct bloom_filter *get_bloom_filter(struct reposit=
-ory *r, struct commit *c)
-  =20
-          prepare_repo_settings(r);
-          hash_version =3D r->settings.commit_graph_changed_paths_version;
-  +       if (hash_version =3D=3D -1) {
-  +               struct bloom_filter_settings *s =3D get_bloom_filter_sett=
-ings(r);
-  +               hash_version =3D (s && s->hash_version =3D=3D 2) ? 2 : 1;
-  +       }
-  =20
-          if (!(hash_version =3D=3D -1 || hash_version =3D=3D filter->versi=
-on))
-                  return NULL; /* unusable filter */
-
-[1] https://lore.kernel.org/git/20230824222051.2320003-1-jonathantanmy@goog=
-le.com/
-[2] https://lore.kernel.org/git/20230829220432.558674-1-jonathantanmy@googl=
-e.com/
-
-> Besides fixing this issue, I think that the interaction of different
-> Bloom filter versions and split commit-graphs needs to be thoroughly
-> covered with test cases and discussed in the commit messages before
-> this series could be considered good for merging.
-
-Regarding commit messages, I can see that in "commit-graph: new filter
-ver. that fixes murmur3", I could add "(the first version read if there
-are multiple versions of changed path filters in the repository)" after
-"automatically determined from the version of the existing changed path
-filters in the repository". Taylor's patches already inherently cover
-multiple versions, I think, since Bloom filters are annotated with their
-versions, individually.
-
-Regarding tests, yes, we could add the one you provided.
-
-If you (or anyone else) can spot anything else that should be added,
-please let us know.
+Regards,
+Andy
