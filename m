@@ -2,125 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84245CA0FFD
-	for <git@archiver.kernel.org>; Sat,  2 Sep 2023 06:08:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 254D8CA0FFC
+	for <git@archiver.kernel.org>; Sat,  2 Sep 2023 06:20:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351585AbjIBGHO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 2 Sep 2023 02:07:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57194 "EHLO
+        id S231330AbjIBGUq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 2 Sep 2023 02:20:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242288AbjIBGHO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Sep 2023 02:07:14 -0400
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF6C310F5
-        for <git@vger.kernel.org>; Fri,  1 Sep 2023 23:07:04 -0700 (PDT)
-Received: by mail-pf1-x435.google.com with SMTP id d2e1a72fcca58-68c0cb00fb3so2387536b3a.2
-        for <git@vger.kernel.org>; Fri, 01 Sep 2023 23:07:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1693634824; x=1694239624; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=fRqEqNcLc/hg+DOXyDMj6TS3vWkwfINQF5Er/jV90Tw=;
-        b=QvHOtQ6tOOVcCIKPO1JyXuT6Xy3G7d/7UY8hv1g6sL1IlPzko9HRSOr2s7UdPA+gXo
-         NSzlfjHAKHP19+Pyrf8vwxN49UK4ReRrpINORRDv7QAtjHmhY6HnUhEVLLNtQ60fu4G7
-         lXjuVL7xcQ/eJ7eeCnA36qciBgwpDFDiOGQNww7m8wIR8bnXhQH+NManaH8fLGZtSu7O
-         0bQXbSqEL/mZRbUfJzIrozOLrw9+a2lpvdyUMFLmKCh7tGpP//JJKSZlYs2CqTuqWfsW
-         7jQcWomCxrKli33hQXx1CZM0Ccrpe/CER9/bIo/nihjgJf4cJlW9AuDALdiMzbjHYCfs
-         9GzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693634824; x=1694239624;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fRqEqNcLc/hg+DOXyDMj6TS3vWkwfINQF5Er/jV90Tw=;
-        b=DsxaOpqprq/s7IPW1pOM0DDNQHUjoHB+uDaE92MuSsaUr7Duiw3Wf+alZxounSTmNE
-         7+R89fAE6WTNLPXlrmWjo63tgfu6Ofd4NEatDtqhFcTE1z4zN6FpOAj5iH0ihqUHNNiR
-         jnh/M+2mpOkR8rpnL6Zqhr0gd0dZ2gQLCTTVsC49N7v4asjt9OGMTZqdDD/LEdd9t4ZC
-         zsMV1OZx3OtL3BzfNl12fFOpi93SP367FbtGEFgDc323I31BGzArUJD/zdsmXHTGpqom
-         2Qv8pW9NsuZd2GcgffgVmPGD3PgaQKpwmWp7JmlTFCeBOGz4kf9s7hEluScrsr7iPgWO
-         KmXw==
-X-Gm-Message-State: AOJu0YztB11+IsgvmyTD/gYOY9nDjv44Fn422TO+b1LyM+YeN5NLwCya
-        gR1dMXONk0HNjk12nqGEuoU=
-X-Google-Smtp-Source: AGHT+IHyCisDSOkKwYsWWPnqKVf+oob2SmKhfV4Hbx6HIjmpXKx8jJYBaTwkVjXQcLRV0l5ck9v/Dg==
-X-Received: by 2002:a05:6a00:2303:b0:68a:4d66:ca1 with SMTP id h3-20020a056a00230300b0068a4d660ca1mr5894613pfh.6.1693634824311;
-        Fri, 01 Sep 2023 23:07:04 -0700 (PDT)
-Received: from ?IPv6:::1? ([2401:4900:4dd9:8e02:8f26:4c57:3627:3630])
-        by smtp.gmail.com with ESMTPSA id fm19-20020a056a002f9300b0068c1ac1784csm3846785pfb.59.2023.09.01.23.07.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Sep 2023 23:07:03 -0700 (PDT)
-Date:   Sat, 02 Sep 2023 11:36:59 +0530
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To:     Christian Couder <christian.couder@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
-CC:     git@vger.kernel.org, Hariom verma <hariom18599@gmail.com>,
-        Victoria Dye <vdye@github.com>
-Subject: Re: Git in Outreachy? (December, 2023)
-User-Agent: K-9 Mail for Android
-In-Reply-To: <CAP8UFD2CGf8efBHquS=LJP8uQ5ivuDryqGz96PZ81oDtrNgNXw@mail.gmail.com>
-References: <ZNwhVOggObU7aVTr@nand.local> <CAP8UFD2Yw1XazomxEj0QB20FoaxkO16t_xgRurtnqCCOuhX-eQ@mail.gmail.com> <2c31a3d4-59f7-d036-0c6b-5fd62cc7a2fa@gmail.com> <ZOZSo7vJztHcvb4W@nand.local> <435a2aa3-59f8-d2bc-f653-4f93d86b9c31@gmail.com> <ZO4wxU1ilpa6/3EW@nand.local> <CAP8UFD2CGf8efBHquS=LJP8uQ5ivuDryqGz96PZ81oDtrNgNXw@mail.gmail.com>
-Message-ID: <90CB8070-62AC-42A0-B686-1CE5415EA0FB@gmail.com>
+        with ESMTP id S234608AbjIBGUm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Sep 2023 02:20:42 -0400
+Received: from mout.web.de (mout.web.de [212.227.17.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 138A710FA
+        for <git@vger.kernel.org>; Fri,  1 Sep 2023 23:20:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+ s=s29768273; t=1693635629; x=1694240429; i=l.s.r@web.de;
+ bh=JIIyufxDmJafVq2fHd64LGPTmDII4/k5zBms3N/Gh+E=;
+ h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=X/0MU1n/z860lcH20j9p9kh3Ge/WBZ1VUhtl0W2bV830lz/jTnFZh11GcUwRkwbZbtxmY6H
+ wn5F+ws1UHa746o4C7TuCKkXiZ2z28xKlK2KC2Kr07J0U8q8zGJ2/CbO/3Wirvu6+r7BjppoC
+ utdboUEto50zgLKC4gCoXpsy3HwmKDQxcjPrjRQgjmiIJSUciGle6sZvXjColiws9/PL0N1z+
+ n1GH51vtyv3rhphD6+goNNId1RxFoukVRccte9Z8tjQBJ8ftPt5OAQMge4xWufs0G/LztVwnr
+ JqUWtxWUOfi+JYixk1KBEkta2haH1JdoxEeq/MBSR/imNfRcqjzQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.152.246]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1N79RG-1pbRQn3Pe0-017Tnd; Sat, 02
+ Sep 2023 08:20:29 +0200
+Message-ID: <75100a68-78d1-b22c-0497-36548c518b7b@web.de>
+Date:   Sat, 2 Sep 2023 08:20:28 +0200
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.15.0
+Subject: Re: [PATCH v2 02/10] merge: simplify parsing of "-n" option
+To:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
+References: <20230831211637.GA949188@coredump.intra.peff.net>
+ <20230831211716.GB949469@coredump.intra.peff.net>
+Content-Language: en-US
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <20230831211716.GB949469@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:PvD+iP2VRYZNGD/8lmkLrEsHxV326UaUaZBpPuL+NnLKL/an0xu
+ LUEhKEEd9q9FR6tDInsIEu3Cw5mK4pYsCruH9UBWLx8Y8O70a2dCRnkRqjQ9kmGjIX0kFjH
+ /lNf0ceKGTVuRLf3HVXhLjl/vbXdRP7gbjTei0yOtpbwoTzA6NDOzB4eXqa0UIfisPfp1un
+ VT0PzFaJVLFrErjDpAILg==
+UI-OutboundReport: notjunk:1;M01:P0:L3fci6iYnyU=;SB7G66lVqXldy3GbmClOYVXGvM9
+ qJSg8N0Fr30s14XNrgv85kOp8eWwup7gmWsrR84vrJLaTuRLIkzv/2vsTzyQj3kxMcmJgOoLQ
+ 28M3tLn0OzgCmWNuSgXB/nip0LXWifPG54qPU5ZZ5kTtN+2avXKcFQ1yDNtF+JkKflb5cazM4
+ Y7KWRNrSVMEG7BnbxCcckPVo3ucYoyxAqbFZkTLXP15OA9t+kRPV96A2tos9F32alz1gqjIbx
+ wRzNwqlaFSV3VJTAgGXu9am6ZshJTeSY4LfXHLtAmh2bNtBiP5o98kBLw4aTH55i0DycF5AqQ
+ ldNkZzMV6HvORduYJ5bSVoBGOJMEOrMIVSdTEj2FfEcm9kIAddBGoamjrUuHKqoJwHbIDHeiN
+ XARHtUm8gmHo+usPyFOHPTf7LptBNn0HMVJAsNcvh2vlJqG0Tj3KATnMTSRdSisRH5zctVeEY
+ A+sxjWqNcJkWzZITlrBDke4E5I0tehxFbntgI1jeNqZkLuzEpEgRuScfw3o4ZLv+9B5uXuYbL
+ TAbXh2xOL7sG+KeILy7rwafp095b/6EPXLX7yW40d2lMsnPKlsNLcvXRfQTnek14AAxV2+1PY
+ uE0zl1Ia4YLPvFzqEodTmcXZIL4qxVswcbyee3kWY+zoHYfHaSUbCUeS5JAsQ2WtsFGCOzLFQ
+ 1xN+o2rTPonIMKzmjjcVgezjcdFvOSDO3itHtl8942ElbImDdaEVeEnzlkmRCNyt3Vb3WgKMr
+ NLdV8ShleF372uHLXSI/o3E+pAGpCipSZFI57sUhtX4uXGVdHcJ9XiigEF2dXRKnuYp5x1lSB
+ ji/9rGayIqmp2eE4f3Tu/yX2ALsGb5m0tI1yebp87i7brXIbIEsesQduED8l1xr1Q6wAPgwDH
+ X3p6j25mJMZOe9ATc4wDpBuw021Vr1gmzgRs0BWZ1FMW9ZTW874wHR2S5lZhgZFwWnHrXDTR4
+ lBKmi+YdOnH5V2erIxcDq1xWvNQ=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 30 August 2023 2:08:45 am IST, Christian Couder <christian=2Ecouder@gma=
-il=2Ecom> wrote:
->On Tue, Aug 29, 2023 at 7:54=E2=80=AFPM Taylor Blau <me@ttaylorr=2Ecom> w=
-rote:
->>
+Am 31.08.23 um 23:17 schrieb Jeff King:
+> The "-n" option is implemented by an option callback, as it is really a
+> "reverse bool". If given, it sets show_diffstat to 0. In theory, when
+> negated, it would set the same flag to 1. But it's not possible to
+> trigger that, since short options cannot be negated.
 >
->It will take some time before I can confirm whether or not GitLab is
->willing to sponsor one Outreachy intern=2E
+> So in practice this is really just a SET_INT to 0. Let's use that
+> instead, which shortens the code.
 >
->> If you (or others) are interested in mentoring but don't have a way to
->> pay Outreachy, we could certainly discuss allocating some of the
->> project's funds to support one or two students=2E
+> Note that negation here would do the wrong thing (as with any SET_INT
+> with a value of "0"). We could specify PARSE_OPT_NONEG to future-proof
+> ourselves against somebody adding a long option name (which would make
+> it possible to negate). But there's not much point:
 >
->I clicked on the "Community will participate" button, but this leads
->to a page saying "Outreachy internship funding is required" and where
->we have to list the sponsors we have, the amount of funds they are
->willing to sponsor, if the funding is secured and the funding decision
->date=2E I think I will fill this out saying that we have 3 (potential)
->sponsors: the Git project, GitHub and GitLab=2E I will not check the
->"funding is secured" checkbox and say that the decision date is
->October 5 (so just one day before the deadline for "Project list
->finalized")=2E This will leave time to find out if we can indeed sponsor
->at least one intern=2E
+>   1. Nobody is going to do that, because the negated form already
+>      exists, and is called "--stat" (which is defined separately so that
+>      "--no-stat" works).
 >
->Let me know if that works for both of you=2E
+>   2. If they did, the BUG() check added by 3284b93862 (parse-options:
+>      disallow negating OPTION_SET_INT 0, 2023-08-08) will catch it (and
+>      that check is smart enough to realize that our short-only option is
+>      OK).
 >
-
-Great=2E Thanks for signing Git up for the program, Christian!
-
->By the way, Kaartic, do you still want to be an org admin? And Taylor
->are you Ok with Kaartic being an org admin?
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  builtin/merge.c | 13 ++-----------
+>  1 file changed, 2 insertions(+), 11 deletions(-)
 >
->It seems that I received an email asking me to confirm Kaartic as an
->org admin, but I couldn't confirm then and later when clicked to the
->link to confirm it looked like it wasn't possible anymore to confirm
->that=2E So not sure what happened, but maybe we could try again to
->register you as an org admin=2E
+> diff --git a/builtin/merge.c b/builtin/merge.c
+> index 53e9fe70d9..21363b7985 100644
+> --- a/builtin/merge.c
+> +++ b/builtin/merge.c
+> @@ -241,18 +241,9 @@ static int option_parse_strategy(const struct optio=
+n *opt,
+>  	return 0;
+>  }
 >
+> -static int option_parse_n(const struct option *opt,
+> -			  const char *arg, int unset)
+> -{
+> -	BUG_ON_OPT_ARG(arg);
+> -	show_diffstat =3D unset;
+> -	return 0;
+> -}
 
-I actually hit that button to become a community coordinator without confi=
-rming here about the need=2E
+Great -- the less custom callbacks, the better.
 
-I would be able to help as a community coordinator for this round=2E I'm n=
-ot sure about being able to mentor, yet=2E
+> -
+>  static struct option builtin_merge_options[] =3D {
+> -	OPT_CALLBACK_F('n', NULL, NULL, NULL,
+> -		N_("do not show a diffstat at the end of the merge"),
+> -		PARSE_OPT_NOARG, option_parse_n),
+> +	OPT_SET_INT('n', NULL, &show_diffstat,
+> +		N_("do not show a diffstat at the end of the merge"), 0),
+>  	OPT_BOOL(0, "stat", &show_diffstat,
+>  		N_("show a diffstat at the end of the merge")),
 
-That said, I believe both of you would do a great job as coordinators for =
-the Git community=2E So, if you feel like you both could manage without hel=
-p, that's totally fine=2E I'll check on the project list once it's availabl=
-e and explore the feasibility of mentoring :-)
+Makes it easier to see that we can replace the two complementary
+definitions with a single one:
 
-Thanks,
-Sivaraam
+	OPT_NEGBIT('n', "no-stat",
+		N_("do not show a diffstat at the end of the merge"), 1),
 
-Sent from my Android device with K-9 Mail=2E Please excuse my brevity=2E
+Which is a separate topic, of course.  And if we did that, however, ...
+
+>  	OPT_BOOL(0, "summary", &show_diffstat, N_("(synonym to --stat)")),
+
+... we wouldn't be able to use OPT_ALIAS here anymore (which we arguably
+should) because it doesn't allow referencing the negated (or
+"positivated") form -- but that is yet another separate topic.
+
+Ren=C3=A9
