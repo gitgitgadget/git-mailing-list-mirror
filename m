@@ -2,210 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2382C71153
-	for <git@archiver.kernel.org>; Sat,  2 Sep 2023 11:39:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ED8B6C71153
+	for <git@archiver.kernel.org>; Sat,  2 Sep 2023 13:26:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352046AbjIBLhZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 2 Sep 2023 07:37:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33316 "EHLO
+        id S240991AbjIBNZJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 2 Sep 2023 09:25:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231500AbjIBLhY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Sep 2023 07:37:24 -0400
-Received: from mout.web.de (mout.web.de [217.72.192.78])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FB61DD
-        for <git@vger.kernel.org>; Sat,  2 Sep 2023 04:37:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
- s=s29768273; t=1693654629; x=1694259429; i=l.s.r@web.de;
- bh=IJM7MqpZiOEYRweyL2GwtZOliQq3ceq2U07lSEJTHGM=;
- h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
- b=iVvw+4n9j6RaV/kQaC2WcAxWcXtsp8HMMnW8CRIdau0U+gLR9qwVMAmXj+j/oTkJDNNhHuR
- FhFGP4GbOEOuugVAowXQ5cJkYahzi6VzNkAyogN+MLQMnBe/fy8PAAGYLC9Qj3cC7P/dk/r7k
- NnqzgUeFRP3iUgVO0yfsILOuc5Jn5gsX5pt7rt8L9FAzUU6D/G00N5upncQzwlJPc3A7rDdzz
- KnAB6hGOIfeZrFllYMmTRCWt6Grm/zx5Y7J6rMtNWh/90V16d7ldtjsV1i87FlCS7lxnVWoUQ
- yuK30X8wyIgGm6UaBhMWmfhLcVOXfHapwvydmzObiR4e4Js1XV2g==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.152.246]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MumNN-1pkz8Y31mt-00rOSL; Sat, 02
- Sep 2023 13:37:09 +0200
-Message-ID: <3bf1bd4a-9d28-32c1-7838-09acd2c85d03@web.de>
-Date:   Sat, 2 Sep 2023 13:37:08 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.15.0
-Subject: Re: [PATCH v2 10/10] parse-options: mark unused parameters in noop
- callback
+        with ESMTP id S229936AbjIBNZH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Sep 2023 09:25:07 -0400
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10olkn2092.outbound.protection.outlook.com [40.92.42.92])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D358E1A8
+        for <git@vger.kernel.org>; Sat,  2 Sep 2023 06:25:02 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=M1Hacjj4wy1fjt4mpKBoLJjxVpCHEtXpWLuyICxhuyNWKDPviob+tJLql3l7xvDqyyWfYGxvwCWFxK6M2MQTUsGn9+TShrdlqdh9+/bfwy/5llWcnj99bcFFDYVAv918Av15AimU5IvO+MwQxLCdgtC2glOokr1PdlFU14fInOVFjKk3et0p/Hrh6ybwk9ZhPLoawhHnIKI30cNvL93yNG53MO145yx81/huBS8cESVj5YlGoVdhTFnB6srCFYqS4EvNVdfCBQ8zSiXqCRffBTTWDJy3OrumChJMTsJyCyND2sxf/G0Xnkt+sI0pb68b/kMLkTooGNnJQfbIRqz9Gg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=WZSipocox4r7GwnSdqaZFdQyStU/fQ+bjnkeGNVxfJI=;
+ b=VU0zzdX0ImTktPKu+oSQ1471D1egbYaL+WedterlhyO3mz59h8GBSDGQHEE3V/944IMJFQHRE0xzJ3VJlY55pBAIWvMqEEOKxiqfesJHDJbGT0Rf11XX8ENkqCdPMAtsx3CuFTpf2B0YjXXWurCmweK1DDe7m1G4b9Q1GaPdzXmn+xJqWMTypynQSPTuwzVFboMs+Sqqku1h03gW0sPY059Q+xMdtF+0njFnWgcSFPofbPnNuRdU67dV5SA2VUvE6KAMQS9TnVfXO0CuPdh7vuztcryzgXGPZqf1Pm5fnGN/vxfeE5HrSvKNv+4uobkbB93fOi+90kshfKGwo4fdDA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=WZSipocox4r7GwnSdqaZFdQyStU/fQ+bjnkeGNVxfJI=;
+ b=Gl0HWUKAANciqKH1pA8gbj7QG0XHoGIt2dYboONhoZ2chHh6QdCt4TOI7WvTKYQ6Q3SFpOX8S+Yk5YYWJkMB2d7lgfNIfwwKKkeOu7HAhQptRP19nupEzZV0NwLW0VnoL6mOTaiohlAb4IUO+wwFtZjl4/fiipLmjpU/JyGmbRtwexOEHfR11yCTKNCD6z+o0OTn2H36cBl/ZSIcstu5zFJzB10anknu31GVA2Cqa8qF0MQ+iNI4XB/13sbi5SNOnw8ZV+6SP1BUtVKU9Jf4RBfe93XvGhNhh35i01rJNqvVM2gM/20enVS0tloChv6o4yDK876CcHXc5V0OS5y0rQ==
+Received: from CH2PR07MB7334.namprd07.prod.outlook.com (2603:10b6:610:ab::12)
+ by SJ0PR07MB7519.namprd07.prod.outlook.com (2603:10b6:a03:28a::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6768.15; Sat, 2 Sep
+ 2023 13:25:00 +0000
+Received: from CH2PR07MB7334.namprd07.prod.outlook.com
+ ([fe80::ea80:5f96:36c5:bb67]) by CH2PR07MB7334.namprd07.prod.outlook.com
+ ([fe80::ea80:5f96:36c5:bb67%5]) with mapi id 15.20.6768.016; Sat, 2 Sep 2023
+ 13:25:00 +0000
+From:   ross nicholas Oneil thomas <rossrecovery93245@outlook.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Hello world 
+Thread-Topic: Hello world 
+Thread-Index: AQHZ3aDfMGGqN8luP0WT2qVhel8mAw==
+Date:   Sat, 2 Sep 2023 13:25:00 +0000
+Message-ID: <CH2PR07MB733402912E8047DB89F81665FBEBA@CH2PR07MB7334.namprd07.prod.outlook.com>
+Accept-Language: en-US
 Content-Language: en-US
-To:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-References: <20230831211637.GA949188@coredump.intra.peff.net>
- <20230831212220.GJ949469@coredump.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <20230831212220.GJ949469@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-tmn:  [ot8yYAdCthmyuETyVNrWrnt0imUYQnrWjfn9expvH8U=]
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CH2PR07MB7334:EE_|SJ0PR07MB7519:EE_
+x-ms-office365-filtering-correlation-id: f3e204d0-c753-49d6-f1b5-08dbabb80234
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: TjxzhvFCccjZmyBNmt+R1v5AAPhAfh9bWGOmnGqGSBIXZj7gt2QTLXLNaTH7uz2lvd1WTi1115ZqKzvha3a4b7YRO6QATq8fxkZNpGypvy5naJduOLJ3mW8yryfaTXBL142yRxmKPLwi2WguApjG4m0+AqmjgdtA9bzBjBT0BCKkwzEFWPcN7s/mrFjJ7ys46EVH9o2RPdDfa1AiqfWgLbUFFmAPIjyEBvzWIKowJtF7uMC0QdVFKfJ4vf9pQGW/kDKFTlMQu+qzj+lE3LcIzsD8Mc3Wn+QHco5iyJbVj/ESROrlPj24K2XJQ9VRGJwVJjHXh3wLE65jRd1Hmow0kktdTqGMQY+vfoeMYOiDkzri9LXfj/eb0+4iMyX1ITHecY/oL9XIuaoL2M4Ch1XCFyV+EPPE5vz//Z5fnPC18A9ykvhLhFOyYpOWbL/s8rU/P63+aXwjmNtpq08PaxZ/rPLfWr9UmrQzGqOnvHfXx+imPMsWz5mb+PZYt4ZCWBVFiI6aSlb/dZ7Ntbftv9HPJUSt193MulruXPcdEaC1oF8rG+2ib9dpX3qRtlt7yTkB
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?8uZVgm6/Djo+7JPrBApW8XpcMcr5QzeIXi1d+SULXZYwqsF0PAzeFZCJX8o6?=
+ =?us-ascii?Q?Ui4C3sgY/uVPAuBt+ulpeBMCZ2Y/GBX+9vOXzsuP50/vEmcweyXT52NySm9C?=
+ =?us-ascii?Q?21ziOhGC4t9DiLCt4/QSv7iwzDTMfEfmUGeP8xj7DUu0UgOoJ+1w0mBSWemv?=
+ =?us-ascii?Q?8JOWiNIOdPhLuJ1c13kQ+7hZ6vGvP7SZP1j5BfyKzjZpq0cC+FMyTA8upMtE?=
+ =?us-ascii?Q?2QM81grejMNaTCVMIhkR6BwfDVmi7iimNMMmZjsdcQjVONExxb3SCLaXe6gI?=
+ =?us-ascii?Q?i4npSBT46hcoxNCzcAWZ2Sgc3YU/fcm+K6RTfpF8jPQhQJ4YQlQ8IHqsCRt3?=
+ =?us-ascii?Q?qdjgwy1AUHGXWZF+BgAmW7OpiEL9Xvjnki1BxGNyBFgMDT3NzYqsUozH8cRo?=
+ =?us-ascii?Q?swhmZAi4qnagw5pwtoZA+XtlrWSP+5jC2//rK96O/YPv+vQKXxLAF+X2A3uX?=
+ =?us-ascii?Q?0HxSWCkW5Vp3Voy++yxxre2NZ2xDGB4FHRtiFfuxm0NO1m+DXZLLkOUgrGnm?=
+ =?us-ascii?Q?cOp/Q+5Txo4aHInure1umxXCNUg1/28FTsbgX+5VCkTA1cqCOzxn62c9uTBp?=
+ =?us-ascii?Q?ygJRzQYNL5/rfkxF6VSA/C5VnY3bO7IPZ/Dry8/TZdh+9KZbTeGSixQJ6QQc?=
+ =?us-ascii?Q?RvRdjb0q2/9s0q/9mUfw1hUKvCbIYVgvhRSG9TldzmSbDy7uD334VPxyQt2n?=
+ =?us-ascii?Q?8+kqaEdtFbb/rLvHZ0NDb0y/S1AvLTJpfvgm51IO6batzgQe63uSxmJfI2+s?=
+ =?us-ascii?Q?J6lTjsiYIkw4T7vsYH1Qy1cHpKOQUZ05mDItS1gu6r+i7XH2l8PKez4wZ9/X?=
+ =?us-ascii?Q?kuWzuJDRmlx668L5HHbbYeG9ogqJ/0eyLGF2VaoT+S+oCfF3Pn++9bfrx/om?=
+ =?us-ascii?Q?SuSMpXDGo4LER16nuNy+bWaFRJtpVAqqUrtFI+vBoJrQKvWeUiS6yMWuMrfL?=
+ =?us-ascii?Q?G7nLiCOYAXzXz+q4/2agXThOJPA3MYonvhQNXCkY3TAeNmpqfNi30lpfC++D?=
+ =?us-ascii?Q?ts/wkQP0OiC2vx4TlS+U0T6XnzMy4Dw4WqaOMiVeKgWxSioKgFOB/+seupVa?=
+ =?us-ascii?Q?aCbJk0Hfr2CMllOrpu3f7syJ4yPPZCIZp9AxFJ9nCY9EzNICfD1LqDVg/1ii?=
+ =?us-ascii?Q?ur4nM7DK18JLxZYyv/XlL6wU9kNvUwu9o3V0z3bCSQ4ELio2BZM4jLYXo/KT?=
+ =?us-ascii?Q?XHVVivMFy+BVPMI8iWVWc3jb4xGRVNC/dRUNVa7hotHrz9XzX3T/mULK7Y52?=
+ =?us-ascii?Q?EV0itddi1IpCiCodUmux?=
+Content-Type: text/plain; charset="us-ascii"
+Content-ID: <3392C03CB8057D448B9484E6D7F274B5@sct-15-20-4755-11-msonline-outlook-5fbaf.templateTenant>
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:reQQw2ITdotd8EfojUVg+APf5QWEnst7h6U9qW71l/ElKzir1HY
- NhnUnyI1kryfelFlTS3CxBWoD057smrgr+KP431+wpBXlpdOv63Pxi67ZpqgydLGIra40Vm
- vMiZ60HbbRPVppEyqlsjUrL0SKcWorvExNp9VpZV4WBTWrHfkyLm1cmhqi2eBv8FgV2cEu+
- llfugiE90XRvojfeV5d8Q==
-UI-OutboundReport: notjunk:1;M01:P0:Zw6skHX2E7U=;dOjUyXqJWtTPf1r6yDOOFTFMYnf
- I2KFXn1A4tUtQr72v7yHKw+IqCSUORrXcJU28ozmUm4UZVZXmU7XcwFZuHl45BdJd/V23JkVE
- qlsfUv4w/Uy47PsAJIY44s2KWfQuQ4lsZKoHn1Ez/il8lhgl/c+0dHu/vIss8280HwUjF3tJ1
- Bg8hBNN10/vnZcUvx12I4tdO/4BN6YqBrQykppRIGe6dHlXkwQttdTu6m9eE93NnkxUGAJWTD
- Ff7x0NyUrmE60RRe0/IYhV58SRAURs+ISnWPPBk7fmXP+YzWcqVsRB7yTQxGXa9hxrjylTLti
- SmH7iFsUzTkEVZLKPdrI521pmkEIfJYqS3KAjQLC3vjFUIDRHs8VfGNYzAmF/c1lHgR3S9RIX
- +cJxkKKYuTbkiu8Qy1VBTeKlVlGQ85Eud7UbfCbL1PShFk1P8ssFOpkK3NlXrbak6qQIqqWpL
- Zm8IHhJUfzmUfdjJYtQ4541FcOnvLJKzyFvTvARuTC5Bf3w6pbzekwxJ9WA614jFk2sxMUg1u
- kUdv2z8QkbLaB3j4cPzNRA1KPLf6UhvHuiwjxf07mC4mC3Dgs7JyQ4885ZCQSwfZP3reGcF9v
- 9s73czgpo62V/vPCTgv9wZCFGL82Bfvhfl0+t5zWRU815sNMTfouA8CAr5TwqDDGgDshwB8eH
- uHFjua5aBK00lmArHgtMQn7jq8wCJX7PxY3YbAECvpd763YRv2YazgBPuYWBesov4k4kPdih+
- Ref71YuviNmd7PXSOGUxEexyQt6tTMpHTn2f5emjqOuKFjq2wX4vJrXSC1S12DyDdcPktIknH
- sJx7fwdaGTD0iize+65eT0J9P21DwlA4NYqc7lk01kMGycSV9X+r3ur9NPso3WRAUcXfyS8ML
- 2dFJIQTT6zNcBe3iimXzumnt6GtE+gPaRDaecl6RPv+kmyW1o1UhTPIeO0mzStLmy2JplR0Gl
- jsvvnNkm174V92azU7hFpV/f7Ws=
+MIME-Version: 1.0
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CH2PR07MB7334.namprd07.prod.outlook.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: f3e204d0-c753-49d6-f1b5-08dbabb80234
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Sep 2023 13:25:00.2243
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR07MB7519
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 31.08.23 um 23:22 schrieb Jeff King:
-> Unsurprisingly, the noop options callback doesn't bother to look at any
-> of its parameters. Let's mark them so that -Wunused-parameter does not
-> complain.
->
-> Another option would be to drop the callback and have parse-options
-> itself recognize OPT_NOOP_NOARG. But that seems like extra work for no
-> real benefit.
+Hello hello hello
 
-I'm not sure about that -- we don't need to add special flags or option
-types to drop parse_opt_noop_cb().
-
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  parse-options-cb.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
->
-> diff --git a/parse-options-cb.c b/parse-options-cb.c
-> index a24521dee0..bdc7fae497 100644
-> --- a/parse-options-cb.c
-> +++ b/parse-options-cb.c
-> @@ -227,7 +227,9 @@ int parse_opt_strvec(const struct option *opt, const=
- char *arg, int unset)
->  	return 0;
->  }
->
-> -int parse_opt_noop_cb(const struct option *opt, const char *arg, int un=
-set)
-> +int parse_opt_noop_cb(const struct option *opt UNUSED,
-> +		      const char *arg UNUSED,
-> +		      int unset UNUSED)
->  {
->  	return 0;
->  }
-
-Your patch is simple and makes sense.  The one below is more
-complicated, but leaves the code in a slightly better state.  I'd go
-with that variant if I'd had to add OPT_NOOP_NOARG today, and I
-slightly prefer it, but similar to you think that the benefit is low
-(though non-zero).  So I'm unsure if that's enough to be worth it or
-just bikeshedding with some hindsight..
-
-Ren=C3=A9
-
-
-
-=2D-- >8 ---
-Subject: [PATCH] parse-options: let NULL callback be a noop
-
-Allow OPTION_CALLBACK options to have a NULL callback function pointer
-and do nothing in that case, yet still handle arguments as usual.  Use
-this to replace parse_opt_noop_cb().
-
-We lose the ability to distinguish between a forgotten function pointer
-and intentional noop, but that will be caught by a compiler warning
-about an unused function in many cases and having an option do nothing
-is a benign failure mode.
-
-We also lose the ability to add a warning to the callback, but we
-haven't done that since it was added by 6acec0380b (parseopt: add
-OPT_NOOP_NOARG, 2011-09-28), so we probably won't do it soon.  We can
-add a callback back when we want to show a warning.
-
-By letting go of features we don't need this patch simplifies the
-parse-options API and gets rid of an exported empty function.
-
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- parse-options-cb.c | 5 -----
- parse-options.c    | 7 +++----
- parse-options.h    | 2 --
- 3 files changed, 3 insertions(+), 11 deletions(-)
-
-diff --git a/parse-options-cb.c b/parse-options-cb.c
-index a24521dee0..e79cd54ec2 100644
-=2D-- a/parse-options-cb.c
-+++ b/parse-options-cb.c
-@@ -227,11 +227,6 @@ int parse_opt_strvec(const struct option *opt, const =
-char *arg, int unset)
- 	return 0;
- }
-
--int parse_opt_noop_cb(const struct option *opt, const char *arg, int unse=
-t)
--{
--	return 0;
--}
--
- /**
-  * Recreates the command-line option in the strbuf.
-  */
-diff --git a/parse-options.c b/parse-options.c
-index 76d2e76b49..5be8de93f5 100644
-=2D-- a/parse-options.c
-+++ b/parse-options.c
-@@ -201,8 +201,9 @@ static enum parse_opt_result get_value(struct parse_op=
-t_ctx_t *p,
- 		}
- 		if (opt->callback)
- 			return (*opt->callback)(opt, p_arg, p_unset) ? (-1) : 0;
--		else
-+		if (opt->ll_callback)
- 			return (*opt->ll_callback)(p, opt, p_arg, p_unset);
-+		return 0;
- 	}
- 	case OPTION_INTEGER:
- 		if (unset) {
-@@ -494,9 +495,7 @@ static void parse_options_check(const struct option *o=
-pts)
- 				optbug(opts, "should not accept an argument");
- 			break;
- 		case OPTION_CALLBACK:
--			if (!opts->callback && !opts->ll_callback)
--				optbug(opts, "OPTION_CALLBACK needs one callback");
--			else if (opts->callback && opts->ll_callback)
-+			if (opts->callback && opts->ll_callback)
- 				optbug(opts, "OPTION_CALLBACK can't have two callbacks");
- 			break;
- 		case OPTION_LOWLEVEL_CALLBACK:
-diff --git a/parse-options.h b/parse-options.h
-index 57a7fe9d91..41bb47120d 100644
-=2D-- a/parse-options.h
-+++ b/parse-options.h
-@@ -348,7 +348,6 @@ struct option {
- 	.long_name =3D (l), \
- 	.help =3D N_("no-op (backward compatibility)"), \
- 	.flags =3D PARSE_OPT_HIDDEN | PARSE_OPT_NOARG, \
--	.callback =3D parse_opt_noop_cb, \
- }
-
- #define OPT_ALIAS(s, l, source_long_name) { \
-@@ -490,7 +489,6 @@ int parse_opt_commit(const struct option *, const char=
- *, int);
- int parse_opt_tertiary(const struct option *, const char *, int);
- int parse_opt_string_list(const struct option *, const char *, int);
- int parse_opt_strvec(const struct option *, const char *, int);
--int parse_opt_noop_cb(const struct option *, const char *, int);
- int parse_opt_passthru(const struct option *, const char *, int);
- int parse_opt_passthru_argv(const struct option *, const char *, int);
- /* value is enum branch_track* */
-=2D-
-2.42.0
+Sent from my iPhone
+Mr.R,Thomas =20
+(559-816-2950
