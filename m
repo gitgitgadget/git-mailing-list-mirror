@@ -2,143 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17371C83F2D
-	for <git@archiver.kernel.org>; Sun,  3 Sep 2023 07:16:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AEC1C83F2D
+	for <git@archiver.kernel.org>; Sun,  3 Sep 2023 09:01:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232320AbjICHQS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 3 Sep 2023 03:16:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44916 "EHLO
+        id S236075AbjICI7t (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 3 Sep 2023 04:59:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60166 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229464AbjICHQR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Sep 2023 03:16:17 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A745B197
-        for <git@vger.kernel.org>; Sun,  3 Sep 2023 00:16:13 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-500bb392ab7so801391e87.1
-        for <git@vger.kernel.org>; Sun, 03 Sep 2023 00:16:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks.biz; s=google; t=1693725372; x=1694330172; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gjQ84uyU8BqP/zeALnmK968kAT/ihAczSeH2nXp6Tp8=;
-        b=PQRbFsIQqxMYU80TCO0YjlA2raD/MiLAUgDI0T1ZRf7xKtEsqMAhEO6Jn22pK8oT+a
-         zDH+R/JzqPezWY8ce6q8skB+Yf5H6egZp91+9I9G2dVn7dy8OVjz4ZjXXKozy4ldx572
-         YPaei1D/2r2DkfO8R4NXwxArX2paTc9ZcbTeo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693725372; x=1694330172;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gjQ84uyU8BqP/zeALnmK968kAT/ihAczSeH2nXp6Tp8=;
-        b=gVMmqUmZwQ+3+K2+slmqfgovS4qz2szdVyHzUeRBPX6xORLL1s9/HK1Li5z2StMufw
-         k9Kro0Uw7jogMSyeQkTcpu9aopq64g8guhPlBymwOpdfOaE8u7vLyT1XVZ5HippqhxFd
-         ztuBve5bdhInQrL7m09kVCswZh6K7n5PQo9sXmx0QYbFBFiNYa6ZjnBKRWwNJdOQEqAM
-         Ny++nS05uJSIS/LIk+UhQFYbeBv85ozAcgDE4vvR5BUaBXP2YfMrn8XvP7zOEayzkA9y
-         rWBvC01GgNCCIJ6nrSpcUetJ8miWNvSZGsrd2l/N/+kaKHAUphvqrIVy6wkhkzODYBKe
-         gX3w==
-X-Gm-Message-State: AOJu0Yz53RqraTT60ksAUXPMBoyUbPYS+tLM9WYRKfNHQUS4mc5MKqhz
-        Xhs5pBMfoL68NdgDZR4tOzIPoZLIFOo1wmqJN7ZmPg==
-X-Google-Smtp-Source: AGHT+IEKqK+iTEqF81CDIWKmTK3amxNzDoFb2p/Linoc57UZM7LVrmnWEoyC4kAeFuE9ejuxaYeE8wGYgcMivISTXZc=
-X-Received: by 2002:a05:6512:3148:b0:500:808c:91f7 with SMTP id
- s8-20020a056512314800b00500808c91f7mr3681795lfi.13.1693725371676; Sun, 03 Sep
- 2023 00:16:11 -0700 (PDT)
+        with ESMTP id S233079AbjICI7t (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Sep 2023 04:59:49 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17F18120
+        for <git@vger.kernel.org>; Sun,  3 Sep 2023 01:59:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de;
+ s=s31663417; t=1693731578; x=1694336378; i=johannes.schindelin@gmx.de;
+ bh=4xA6lVKPb29xocltG0Dr+4weMIs9xGLECxj7j2vMx+g=;
+ h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+ b=sWXPNdX+h0wXST9e0QUElKZ8krIUgFjNHzUessW+hWa+f+9ZpGSV+5uv2SDlkSGO9c4Hhes
+ NweItIcj60EzjpaJamTA4OwMZnL4UlgxDQ2qGQ5TFzuVxU8qfWgOybV/bWzeflKnav4Tw51LP
+ pI58VugUWwbdRwOqD2rFrKNVbc2sVJoQXHqZh0irH8R0hst9EGERjoLYQW+C/riUht0J0SoYe
+ 94OGNxS9fcLgYgsIZogjd34kgjQms6f9NJMPMVzqrA70YgknHaP9+qfW2eYw6IL71o9Hc4d3X
+ AnKx8Hb+ksx7psVn4jkv5QIfuajkkg0A0UbgmfwNb6OQ4GP5fsAA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.214.152]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MvK0X-1pmGtP1snJ-00rGbr; Sun, 03
+ Sep 2023 10:59:38 +0200
+Date:   Sun, 3 Sep 2023 10:59:37 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     Jeff King <peff@peff.net>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/2] ci: allow branch selection through "vars"
+In-Reply-To: <20230830195113.GA1709824@coredump.intra.peff.net>
+Message-ID: <d000f469-2b7d-e037-c92e-013034490461@gmx.de>
+References: <20230830194919.GA1709446@coredump.intra.peff.net> <20230830195113.GA1709824@coredump.intra.peff.net>
 MIME-Version: 1.0
-References: <CAPMMpogUxq59zj+=7UDiURYbydAwvymOqhEWaheT9fkU8HaP4Q@mail.gmail.com>
- <xmqqilp1znn1.fsf@gitster.g> <nycvar.QRO.7.76.6.2206182358350.349@tvgsbejvaqbjf.bet>
- <xmqqczf5lgk3.fsf@gitster.g>
-In-Reply-To: <xmqqczf5lgk3.fsf@gitster.g>
-From:   Tao Klerks <tao@klerks.biz>
-Date:   Sun, 3 Sep 2023 09:16:00 +0200
-Message-ID: <CAPMMpojUrfSmpgWVh3TTn_uamPCcyHRQf2R3APSpEjsqujNXvA@mail.gmail.com>
-Subject: Re: Plumbing for mapping from a remote tracking ref to the remote ref?
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:E2j5KjFCARaHAhU4hDtYYT0Xrzb+m/xWOpwcUqdSderZi7AFsfg
+ E0R46JMIEwaQssBlT8cswPxjLB86e8rMuOeYiQ0elbsx9vKNTJ5k1//fqFdBRGd8a0pZbC5
+ yDIk3APIReV6psPiSfZZu88dlpQ2DmWxZF24kbUeQ1apJx5YomRuyV9X36jpkwkhgVog8Nd
+ XKGrHUacyRvoQ9T0HRE1A==
+UI-OutboundReport: notjunk:1;M01:P0:wkov25OUZiE=;mE6vtSgbaX/SehWlVh3xrQjhZYk
+ L9aPjJis5c8IG7Ie9s+E45bj2t7Zw/3aDcN+prRtaBoO3Qzt5/uIq1x8pdzbSRbPby9Qea0Sf
+ cKiSvAkvyO0ZboO+INIQHC/YnTId9vQf+11OZLMrB95u4Uz/4fqy665JvvIxjsu4v4dtgeBrI
+ 7gUzz7Ic3mHyScNiPjzS9YireEhredX0okkDR0usV6Z58KysiZfBSE4tqmTHOJuQblxDqavlI
+ 0BfdJtNAvmM53JHeYgOi04ocYNeT08MGF8+9+5Agd/eZu++zQUhYAnHSSCr6ILBXOt3QGoIsV
+ vUC9Kl121M4iI4mMNOtzgLEaKQ359+ZSryJWU4mDS6Xmphe5gjtYnD3+WJe8qt++YePnTeTAr
+ tqtbBW7wMls12R8xgXM6GYpymvUPOxq3bqw2jPEJWgz40YZZIzqHHW8kYvB8o8bjxX0+nAx3b
+ B/H9Z9SmNVCFA5oO9XN5r298nSn02L+Zv8MdjoiOO0bcjvRzVuZXDSzLYgkhtSB5DUt9t9fSW
+ 8CFlTmrVvCaMPWLQLQnHi3WaKP2IzMJzJtJh+i3EIYUNPLVo9Ne3ZxXf3hs0AQS9LdDPY0D/t
+ jepOSV1aOUtsTFAtixcb73XNp2H/kYocZIOOnEW9DaD9enfcJI9mQ2/P+9pBmON1YWyCGLh5r
+ 766/Dvi0mNLq5YAvaQgQTqbAo31T1uVBSKRqd0bqqxESrtlmC+/i1OsW5wkFvzeCnkdXP6BZY
+ nJIp9skC69jD3g4pef6jprkq8ae+GLukqkV8+6nZZ2IAELTYsVfuKu+lW0rHSRfnnze2ltUn3
+ LyCkIKZL1jDeCCCnXjAap7wGhLOGNU63qW+PLpziBJLt+ErF9puHPgn/wdFZpggqyqHpRVvbM
+ jru+3VQubR98fVTkJxTSX+6HqdTgGdFoiWdh+NDA+AnsjMiLU4b4eY1foMuEQNc6cH+QwS8+g
+ qnOjp8UPTgktwKhmoG58uQOzzkc=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jun 19, 2022 at 1:04=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
-> >>      $ git refmap refs/remotes/somepath/{branch-A,branch-B}
-> >>      origin refs/heads/branch-A
-> >>      origin refs/heads/branch-B
-> >>
-> >> IOW, you give name(s) of remote-tracking branches and then you get
-> >> the remote and their ref for these?
-> >
-> > Modulo introducing a new top-level command (a subcommand of `git remote=
-`
-> > would make much more sense and make the feature eminently more
-> > discoverable), and modulo allowing patterns in the ref to match, I agre=
-e.
->
-> "git remote" is primarily about "I have this remote---tell me more
-> about it", but this query goes in the other direction, and that is
-> why I threw a non-existing command to solicit alternatives that are
-> potentially better than "git remote".
+Hi Jeff,
 
-Thank you for the responses here, and my apologies for not following
-up (much) earlier.
+On Wed, 30 Aug 2023, Jeff King wrote:
 
-Given that "git remote" already deals with different types of args
-(remotes, URLs, remote branches), could it make sense to introduce a
-dedicated new subcommand, not directly related to "set-branches", eg
-"map-refs"? I agree with Dscho that keeping it under "git remote"
-would help with discoverability and avoid clutter in the global
-namespace: Git already has many top-level commands, the "theme" under
-which this one fits is definitely "remote stuff", and "git remote"
-already does a number of substantially-different things all related
-with *remote configuration*.
+> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+> index 1b41278a7f..c364abb8f8 100644
+> --- a/.github/workflows/main.yml
+> +++ b/.github/workflows/main.yml
+> @@ -21,6 +21,7 @@ concurrency:
+>  jobs:
+>    ci-config:
+>      name: config
+> +    if: vars.CI_BRANCHES == '' || contains(vars.CI_BRANCHES, github.ref_name)
 
-In fact that's another way of seeing things: most of "git remote"'s
-current subcommands are just syntactic sugar over "git config" (the
-two that operate outside of the config are "set-head" and "update"),
-and this new one would be config-focused in exactly the same way.
+This might be too loose a check, as branch names that are a substring of
+any name listed in `CI_BRANCHES` would be false positive match. For
+example, if `CI_BRANCHES` was set to `maint next seen`, a branch called
+`see` would be a false match.
 
-To Junio's question along the lines of "what if someone mapped
-multiple remote namespaces to a single 'tracking namespace' location
-in the local repo?" (which I hope is rare - I seem to recall there are
-at least some operations that warn when this is detected), this
-ambiguity would be absent in a "git remote" subcommand, as it would
-take a remote name.
+Due to the absence of a `concat()` function (for more details, see
+https://docs.github.com/en/actions/learn-github-actions/expressions#functions),
+I fear that we'll have to resort to something like `contains(format(' {0} ',
+vars.CI_BRANCHES), format(' {0} ', github.ref_name))`.
 
-I had also considered some new weird "@{remotemapping}"-style syntax
-to rev-parse, but here precisely there *would* be no implicit remote
-context, and so getting more than one answer would be an option, and
-that doesn't make sense for rev-parse.
-
-Regarding patterns and wildcards, for *my* purpose at least, they
-don't make much sense: The whole purpose of the exercise is to say "I
-know the ref I want updated in my repo, I know what remote that it is
-mapped to or that I want to update it from, I want to know exactly
-what to put in a "git fetch <remote_name> <remote_ref>..." call, to
-get that ref updated correctly/consistently for the current repo,
-without affecting any other refs that this repo has mapped for that
-remote.
-
-Would something like the following be mutually agreeable?
-
-       $ git remote origin map-ref
-refs/remotes/my-favorite-remotes/origin/someref
-      refs/heads/someref
-
-       $ git remote origin map-ref
-refs/remotes/my-favorite-remotes/origin/someref
-refs/remotes/my-favorite-remotes/origin/someotherref
-      refs/heads/someref
-      refs/heads/someotherref
-
-     $ git remote origin map-ref refs/remotes/someotherpath/someref
-      error: the ref "refs/remotes/someotherpath/someref" is not
-mapped in any configured refspec of remote "origin".
-
-
-Thanks,
-Tao
+Ciao,
+Johannes
