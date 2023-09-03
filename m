@@ -2,121 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ECD2EC71153
-	for <git@archiver.kernel.org>; Sun,  3 Sep 2023 04:50:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 17371C83F2D
+	for <git@archiver.kernel.org>; Sun,  3 Sep 2023 07:16:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235642AbjICEuc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 3 Sep 2023 00:50:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50816 "EHLO
+        id S232320AbjICHQS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 3 Sep 2023 03:16:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229576AbjICEuZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Sep 2023 00:50:25 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EFA8CC5
-        for <git@vger.kernel.org>; Sat,  2 Sep 2023 21:50:21 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7F04B1A01A9;
-        Sun,  3 Sep 2023 00:50:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=7MggxzAN3kimcaf56snjlHM8vwqJFMOSoygU4P
-        x+Cyk=; b=yhfsWq/9VTa64kltntoNJM5+PbPX2+bjnBuirzWYCcvlxG/aiGhykE
-        b6PjzGwYvFbyhfb+O7BlYPQk+ER5yssHN2b80T+p+NYvItRRfvuwA5IA7vuoThn7
-        n8SpQjTgyExfJS5eoBwefsBZcCMghUR0fm5/2+3xuhDSfvGVKFtiY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 771971A01A6;
-        Sun,  3 Sep 2023 00:50:20 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.145.39.59])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E55BE1A01A5;
-        Sun,  3 Sep 2023 00:50:19 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Wesley Schwengle <wesleys@opperschaap.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 2/3] builtin/rebase.c: Emit warning when rebasing
- without a forkpoint
-In-Reply-To: <xmqq4jkckuy7.fsf@gitster.g> (Junio C. Hamano's message of "Sat,
-        02 Sep 2023 16:37:52 -0700")
-References: <xmqq1qfiubg5.fsf@gitster.g>
-        <20230902221641.1399624-1-wesleys@opperschaap.net>
-        <20230902221641.1399624-3-wesleys@opperschaap.net>
-        <xmqq4jkckuy7.fsf@gitster.g>
-Date:   Sat, 02 Sep 2023 21:50:18 -0700
-Message-ID: <xmqqlednuagl.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        with ESMTP id S229464AbjICHQR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Sep 2023 03:16:17 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A745B197
+        for <git@vger.kernel.org>; Sun,  3 Sep 2023 00:16:13 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-500bb392ab7so801391e87.1
+        for <git@vger.kernel.org>; Sun, 03 Sep 2023 00:16:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=klerks.biz; s=google; t=1693725372; x=1694330172; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gjQ84uyU8BqP/zeALnmK968kAT/ihAczSeH2nXp6Tp8=;
+        b=PQRbFsIQqxMYU80TCO0YjlA2raD/MiLAUgDI0T1ZRf7xKtEsqMAhEO6Jn22pK8oT+a
+         zDH+R/JzqPezWY8ce6q8skB+Yf5H6egZp91+9I9G2dVn7dy8OVjz4ZjXXKozy4ldx572
+         YPaei1D/2r2DkfO8R4NXwxArX2paTc9ZcbTeo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693725372; x=1694330172;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=gjQ84uyU8BqP/zeALnmK968kAT/ihAczSeH2nXp6Tp8=;
+        b=gVMmqUmZwQ+3+K2+slmqfgovS4qz2szdVyHzUeRBPX6xORLL1s9/HK1Li5z2StMufw
+         k9Kro0Uw7jogMSyeQkTcpu9aopq64g8guhPlBymwOpdfOaE8u7vLyT1XVZ5HippqhxFd
+         ztuBve5bdhInQrL7m09kVCswZh6K7n5PQo9sXmx0QYbFBFiNYa6ZjnBKRWwNJdOQEqAM
+         Ny++nS05uJSIS/LIk+UhQFYbeBv85ozAcgDE4vvR5BUaBXP2YfMrn8XvP7zOEayzkA9y
+         rWBvC01GgNCCIJ6nrSpcUetJ8miWNvSZGsrd2l/N/+kaKHAUphvqrIVy6wkhkzODYBKe
+         gX3w==
+X-Gm-Message-State: AOJu0Yz53RqraTT60ksAUXPMBoyUbPYS+tLM9WYRKfNHQUS4mc5MKqhz
+        Xhs5pBMfoL68NdgDZR4tOzIPoZLIFOo1wmqJN7ZmPg==
+X-Google-Smtp-Source: AGHT+IEKqK+iTEqF81CDIWKmTK3amxNzDoFb2p/Linoc57UZM7LVrmnWEoyC4kAeFuE9ejuxaYeE8wGYgcMivISTXZc=
+X-Received: by 2002:a05:6512:3148:b0:500:808c:91f7 with SMTP id
+ s8-20020a056512314800b00500808c91f7mr3681795lfi.13.1693725371676; Sun, 03 Sep
+ 2023 00:16:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 62545072-4A15-11EE-A12E-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+References: <CAPMMpogUxq59zj+=7UDiURYbydAwvymOqhEWaheT9fkU8HaP4Q@mail.gmail.com>
+ <xmqqilp1znn1.fsf@gitster.g> <nycvar.QRO.7.76.6.2206182358350.349@tvgsbejvaqbjf.bet>
+ <xmqqczf5lgk3.fsf@gitster.g>
+In-Reply-To: <xmqqczf5lgk3.fsf@gitster.g>
+From:   Tao Klerks <tao@klerks.biz>
+Date:   Sun, 3 Sep 2023 09:16:00 +0200
+Message-ID: <CAPMMpojUrfSmpgWVh3TTn_uamPCcyHRQf2R3APSpEjsqujNXvA@mail.gmail.com>
+Subject: Re: Plumbing for mapping from a remote tracking ref to the remote ref?
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Sun, Jun 19, 2022 at 1:04=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> >>      $ git refmap refs/remotes/somepath/{branch-A,branch-B}
+> >>      origin refs/heads/branch-A
+> >>      origin refs/heads/branch-B
+> >>
+> >> IOW, you give name(s) of remote-tracking branches and then you get
+> >> the remote and their ref for these?
+> >
+> > Modulo introducing a new top-level command (a subcommand of `git remote=
+`
+> > would make much more sense and make the feature eminently more
+> > discoverable), and modulo allowing patterns in the ref to match, I agre=
+e.
+>
+> "git remote" is primarily about "I have this remote---tell me more
+> about it", but this query goes in the other direction, and that is
+> why I threw a non-existing command to solicit alternatives that are
+> potentially better than "git remote".
 
-> If you rewind to lose commits from the branch you are (re)building
-> against, and what was rewound and discarded was part of the work you
-> are building, whether it is on a local branch or on a remote branch
-> that contains what you have already pushed, they will be discarded,
-> it is by design, and it is a known deficiency with the fork-point
-> heuristics.  How the fork-point heuristics breaks down is rather
-> well known ...
+Thank you for the responses here, and my apologies for not following
+up (much) earlier.
 
-Another tangent, this time very closely related to this topic, is
-that it may be worth warning when the fork-point heuristics chooses
-the base commit that is different from the original upstream,
-regardless of how we ended up using fork-point heuristics.
+Given that "git remote" already deals with different types of args
+(remotes, URLs, remote branches), could it make sense to introduce a
+dedicated new subcommand, not directly related to "set-branches", eg
+"map-refs"? I agree with Dscho that keeping it under "git remote"
+would help with discoverability and avoid clutter in the global
+namespace: Git already has many top-level commands, the "theme" under
+which this one fits is definitely "remote stuff", and "git remote"
+already does a number of substantially-different things all related
+with *remote configuration*.
 
-Experienced users may not be confused when the heuristics kicks in
-and when it does not (e.g. because they configured, because they
-used the "lazy" form, or because they gave "--fork-point" from the
-command line explicitly), but they still may get surprising results
-if a reflog entry chosen to be used as the base by the heuristics is
-not what they expected to be used, and can lose their work that way.
-Imagine that you pushed your work to the remote that is a shared
-repository, and then continued building on top of it, while others
-rewound the remote branch to eject your work, and your "git fetch"
-updated the remote-tracking branch.  You'll be pretty much in the
-same situation you had in your reproduction recipe that rewound your
-own local branch that you used to build your derived work on and
-would lose your work the same way, if you do not notice that the
-remote branch has been rewound (and the fork-point heuristics chose
-a "wrong" commit from the reflog of your remote-tracking branch.
+In fact that's another way of seeing things: most of "git remote"'s
+current subcommands are just syntactic sugar over "git config" (the
+two that operate outside of the config are "set-head" and "update"),
+and this new one would be config-focused in exactly the same way.
 
-Perhaps something along the lines of this (not even compile tested,
-though)...  It might even be useful to show a shortlog between the
-.restrict_revision and .upstream, which is the list of commits that
-is potentially lost, but that might turn out to be excessively loud
-and noisy in the workflow of those who do benefit from the
-fork-point heuristics because their project rewinds branches too
-often and too wildly for them to manually keep track of.  I dunno.
+To Junio's question along the lines of "what if someone mapped
+multiple remote namespaces to a single 'tracking namespace' location
+in the local repo?" (which I hope is rare - I seem to recall there are
+at least some operations that warn when this is detected), this
+ambiguity would be absent in a "git remote" subcommand, as it would
+take a remote name.
+
+I had also considered some new weird "@{remotemapping}"-style syntax
+to rev-parse, but here precisely there *would* be no implicit remote
+context, and so getting more than one answer would be an option, and
+that doesn't make sense for rev-parse.
+
+Regarding patterns and wildcards, for *my* purpose at least, they
+don't make much sense: The whole purpose of the exercise is to say "I
+know the ref I want updated in my repo, I know what remote that it is
+mapped to or that I want to update it from, I want to know exactly
+what to put in a "git fetch <remote_name> <remote_ref>..." call, to
+get that ref updated correctly/consistently for the current repo,
+without affecting any other refs that this repo has mapped for that
+remote.
+
+Would something like the following be mutually agreeable?
+
+       $ git remote origin map-ref
+refs/remotes/my-favorite-remotes/origin/someref
+      refs/heads/someref
+
+       $ git remote origin map-ref
+refs/remotes/my-favorite-remotes/origin/someref
+refs/remotes/my-favorite-remotes/origin/someotherref
+      refs/heads/someref
+      refs/heads/someotherref
+
+     $ git remote origin map-ref refs/remotes/someotherpath/someref
+      error: the ref "refs/remotes/someotherpath/someref" is not
+mapped in any configured refspec of remote "origin".
 
 
- builtin/rebase.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
-
-diff --git c/builtin/rebase.c w/builtin/rebase.c
-index 50cb85751f..432a97e205 100644
---- c/builtin/rebase.c
-+++ w/builtin/rebase.c
-@@ -1721,9 +1721,15 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	if (keep_base && options.reapply_cherry_picks)
- 		options.upstream = options.onto;
- 
--	if (options.fork_point > 0)
-+	if (options.fork_point > 0) {
- 		options.restrict_revision =
- 			get_fork_point(options.upstream_name, options.orig_head);
-+		if (options.restrict_revision &&
-+		    options.restrict_revision != options.upstream)
-+			warning(_("fork-point heuristics using %s from the reflog of %s"),
-+				oid_to_hex(&options.restrict_revision->object.oid),
-+				options.upstream_name);
-+	}
- 
- 	if (repo_read_index(the_repository) < 0)
- 		die(_("could not read index"));
-
+Thanks,
+Tao
