@@ -2,140 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 25E2ECA0FE3
-	for <git@archiver.kernel.org>; Mon,  4 Sep 2023 10:05:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AAD0C83F33
+	for <git@archiver.kernel.org>; Mon,  4 Sep 2023 10:10:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238199AbjIDKFc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 Sep 2023 06:05:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52584 "EHLO
+        id S238681AbjIDKKg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 Sep 2023 06:10:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237326AbjIDKFb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Sep 2023 06:05:31 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C2F819B
-        for <git@vger.kernel.org>; Mon,  4 Sep 2023 03:05:25 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id ffacd0b85a97d-31c5cac3ae2so1069815f8f.3
-        for <git@vger.kernel.org>; Mon, 04 Sep 2023 03:05:25 -0700 (PDT)
+        with ESMTP id S231425AbjIDKKf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Sep 2023 06:10:35 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D10CAD
+        for <git@vger.kernel.org>; Mon,  4 Sep 2023 03:10:31 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id ffacd0b85a97d-307d20548adso1087829f8f.0
+        for <git@vger.kernel.org>; Mon, 04 Sep 2023 03:10:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1693821924; x=1694426724; darn=vger.kernel.org;
+        d=gmail.com; s=20221208; t=1693822230; x=1694427030; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=tdkz9Q5MDP9+vJ1ko6uPWRWbT+wRHtGGCcVfwlKPhhI=;
-        b=rOJHkHNZz1+jqZScqC99rzGC/5UcdzwQ7QdH44yWd9vz7ZYvhAV3svzj9x71t3JbsN
-         X3+/ZQrtTEmldH3HWDyCUcsvXDUh27vjRv5i+cyi6HWJty/5WUt1asRvPzKFh766wnlc
-         S+SfaieChRC3JFHZ3DRWfNjltRvgTNHFJ9XR99M3bkh6YvpE8RgVYdXIda5HXXEmZNez
-         huxS7PDp0o0rJRWnc7qhnyS/DoTQBer62dkpShDY1k0YmBJlxu+toGc1/r72mahqY/RM
-         ob28Ar89bFJRKY4iFJFi5kKekP6N7671afsmdOOTor68+eUP76uNNSjprpOFxK0Fuh3Q
-         KApQ==
+        bh=Dx1PWfrajZrb9Pj8f/Iv4yru2tg7csQHpLgsZo9vktc=;
+        b=CS3JYOtBSwEuP9NNiz2CWIdZssBaSNq/nDvwy49hgOogyCh6fQsSexk+uWqkZYF8+n
+         mk1So/bg65SrAAhOV+v6DxV+uF/PZ8YzHUmrkqYDTkDmszOqkuHSdlGek6N2MMQApc0k
+         lQD+VbueyNdGhfV7M5/AS5V/HeCVDn3hQ8X61T3iALdDI8VOTjWVhZRzX5co5xECqD+9
+         MN4gFMGxBFoxEvqVzpohbP2lGVAh4WV071lvkgxe6tOVr2LamBd6MmVh2kout6Bh5IXD
+         w2D4q3Um+tCTeRfYzcF6vlAFSNl+fLtcjvpsoWcP3aySSkDYEMhJNlBd932P0ewp0FpW
+         KCVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693821924; x=1694426724;
+        d=1e100.net; s=20221208; t=1693822230; x=1694427030;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=tdkz9Q5MDP9+vJ1ko6uPWRWbT+wRHtGGCcVfwlKPhhI=;
-        b=US87N6sOjQzJ+wI3PAEgxJ317Oz6t4VXKho9/3xo/p5+puj9m9AJibYqMbuVloW5y3
-         DUFAocwxLjzWybTPQxhHssUsxSC065tH8ahDBC2flUjPZIYw7ngLM76hGhGtkM3YcBOr
-         2nCgJYNJXwm46zOF/QxdVxYSEi3TVpjoBM5nQ3HZV2/xsIYXuUTE3IPFZ5n+qeTXZlQO
-         0Bza7mvJ2nVQSCPZ4CJLMQ5rTEsj+MkMR8PZs5I4x90rHUS9BwiSIP3eT4ImIa7Z0rZi
-         ceV3J1rtIE7oEMM6iXBRAZGB0CnFlB+biq3600tyyYA46LS35Zna17ADgHURGiV32dZO
-         xmSw==
-X-Gm-Message-State: AOJu0Yz5FjbcH7oqfgfCQhuviG3UO5GucntxPjAe+mwl04yhUvfxQZUO
-        9oXpBT+h0Tux9zMuFRry7LM=
-X-Google-Smtp-Source: AGHT+IFpI/4TYCpRUWzdbdxMIARsXYwzaemHMQuvyoTB2e0CJG6yLPpZIfVZKM/wN/X3sB7cc/l7Jw==
-X-Received: by 2002:a5d:560a:0:b0:317:e5ec:8767 with SMTP id l10-20020a5d560a000000b00317e5ec8767mr6792235wrv.21.1693821923391;
-        Mon, 04 Sep 2023 03:05:23 -0700 (PDT)
+        bh=Dx1PWfrajZrb9Pj8f/Iv4yru2tg7csQHpLgsZo9vktc=;
+        b=CZRfkTZNhp1HTKB5SbS+KIMH3LB4SniV4wAyowTEC9DGNRZLklT+PGBysYrH/XfAnx
+         LP0qDpQEhm4pvUtpnTbVCxdUaldTyUWgCyPcTMTtfMZOwQhh38PzoGFhNf/HH3wGMB1U
+         8+qpk8/382Raw5W2Hcc7egp4SSHUzjr6+XnLXSzeJzV+NYxSTWnIHFZWJYKL+tlqZIlB
+         Xae2kbYkGKocdzU2VEHRHgj+q0b+Fm5WhUzfN/rsd+UOlmwQ1Wwpx2NrQYw5krW/ATvi
+         CnWdzGM4ta55SpFaW5seBktTLeVdTd1G2wdAmABPwhBOgwcno0KllkrzEPiEio5sDwel
+         ty9A==
+X-Gm-Message-State: AOJu0Yyl0jelE6eLZZJc+c1clopt9FQ1Ej1TM4mmZIgmLklWTvWxiHv9
+        YV+THMzJWv03Z++2twnEMs8=
+X-Google-Smtp-Source: AGHT+IEmMOS4GZ/v1WYMs76qIwBkFz7+wc3dW03JIVF5dnUCQWKdrxWeRawuMH8/6JZue22kypmjBw==
+X-Received: by 2002:adf:ed84:0:b0:31a:d450:c513 with SMTP id c4-20020adfed84000000b0031ad450c513mr7880151wro.26.1693822229857;
+        Mon, 04 Sep 2023 03:10:29 -0700 (PDT)
 Received: from [192.168.1.101] ([90.242.223.1])
-        by smtp.googlemail.com with ESMTPSA id x16-20020adfffd0000000b0031c8a43712asm14083307wrs.69.2023.09.04.03.05.22
+        by smtp.googlemail.com with ESMTPSA id x16-20020adfffd0000000b0031c8a43712asm14083307wrs.69.2023.09.04.03.10.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 Sep 2023 03:05:23 -0700 (PDT)
-Message-ID: <4e0628ab-c39c-410d-864b-b7c74f9e04b1@gmail.com>
-Date:   Mon, 4 Sep 2023 11:05:22 +0100
+        Mon, 04 Sep 2023 03:10:29 -0700 (PDT)
+Message-ID: <553482a5-e7cc-47ed-9279-307f258748ca@gmail.com>
+Date:   Mon, 4 Sep 2023 11:10:29 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] sequencer: update abort safety file more sparingly
+Subject: Re: [PATCH] sequencer: fix error message on failure to copy
+ SQUASH_MSG
 Content-Language: en-US
-To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
-        phillip.wood@dunelm.org.uk
-Cc:     git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <20230903151132.739166-1-oswald.buddenhagen@gmx.de>
- <29fb7a38-1e92-457a-93ff-0e64ac09b907@gmail.com> <ZPTdmnHfDcTBqaSl@ugly>
- <fdf80c36-0e28-44f3-9cef-85d38d2d48f1@gmail.com> <ZPTqEIvW3zJ4eafT@ugly>
+To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>, git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20230903151132.739136-1-oswald.buddenhagen@gmx.de>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <ZPTqEIvW3zJ4eafT@ugly>
+In-Reply-To: <20230903151132.739136-1-oswald.buddenhagen@gmx.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/09/2023 21:18, Oswald Buddenhagen wrote:
-> On Sun, Sep 03, 2023 at 08:48:14PM +0100, Phillip Wood wrote:
->> On 03/09/2023 20:25, Oswald Buddenhagen wrote:
->>> On Sun, Sep 03, 2023 at 07:40:00PM +0100, Phillip Wood wrote:
->>>> it only matters for "cherry-pick --skip"
->>>>
->>> that doesn't seem right. a --skip is just a --continue with a prior 
->>> reset, more or less.
->>
->> sequencer_skip() calls rollback_is_safe() which checks the abort 
->> safety file.
->>
-> that's weird. can you think of a good reason for doing that?
-
-I think it is clear from the code - so it does not reset changes after 
-the user has committed the conflict resolution.
-
->>> i'll try to find a better "choke point".
->>
->> I think that is probably tricky,
->>
-> yeah
+On 03/09/2023 16:11, Oswald Buddenhagen wrote:
+> The message talked about renaming, while the actual action is copying.
+> This was introduced by 6e98de72c ("sequencer (rebase -i): add support
+> for the 'fixup' and 'squash' commands", 2017-01-02).
 > 
->> I'm not really clear what the aim/purpose of this refactoring is.
->>
-> to make my head not explode.
-> more specifically, to get it out of the way of the rebase path, which is 
-> what i'm actually concerned with.
+> Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+> 
+> ---
+> i didn't try verifying whether the action shouldn't be actually be a
+> move, as i'm getting lost in this forest of files.
 
-rebase and cherry-pick share the same code path most of the time. In 
-particular "cherry-pick --continue" and "rebase --continue" both use 
-sequencer_continue() as their entry point so I think the best you can do 
-is guard the calls to update_abort_safety_file() with "if 
-(!is_rebase_i(opts))" or add "if (is_rebase_i(opts)) return" to the 
-start of update_abort_safety_file().
-
-> generally, i think this whole ad-hoc state management is a nightmare, 
-> and i'd be surprised if there weren't some more loose ends.
-> i think i'd aim for an object-oriented-ish design with an encapsulated 
-> state, lazy loading getters, lazy setters, and a commit entry point (or 
-> maybe several partial ones). no idea how that would play out.
-
-I've been working on something similar to only write the state to disc 
-when the sequencer stops for user interaction. I'm hoping to have the 
-first set of patches ready to submit in the next development cycle. You 
-can see the branch at [1]. It is very much a work in progress at the 
-moment, the code is mostly OK (I'm running it in my git build) but some 
-commits are empty, others need splitting and the commit messages need a 
-lot of work. The basic idea is to add a private struct that holds the 
-state and write that to disc when pick_commits() returns.
+This looks good, thanks. I think copying the file is OK. We're creating 
+.git/SQUASH_MSG as a convenience in case the user decides to commit the 
+conflict resolution themselves rather than leaving it to "rebase 
+--continue". I don't think we reuse the contents of 
+rebase_path_squash_msg() when tho rebase continues but copying it 
+certainly isn't wrong and we're not in a hot path where we need to worry 
+about the cost of copying a small file.
 
 Best Wishes
 
 Phillip
 
-[1] https://github.com/phillipwood/git/commits/wip/sequencer-context
-
->>> if you did a fresh commit before or after the single pick, you'd lose 
->>> it.
->>
->> Oh, I can see that you'd lose a commit made before a single pick but I 
->> don't see how you'd lose a commit made after it.
->>
-> right. thinko. it's a bit late here. ^^
+> Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Cc: Phillip Wood <phillip.wood123@gmail.com>
+> Cc: Junio C Hamano <gitster@pobox.com>
 > 
-> regards
+> ---
+> totally on a tangent, does someone feel like teaching copy_file() to try
+> ioctl(FICLONE) (i.e., reflink) first?
+> ---
+>   sequencer.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/sequencer.c b/sequencer.c
+> index a66dcf8ab2..2f3d7d4eee 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -2320,7 +2320,7 @@ static int do_pick_commit(struct repository *r,
+>   			const char *dest = git_path_squash_msg(r);
+>   			unlink(dest);
+>   			if (copy_file(dest, rebase_path_squash_msg(), 0666)) {
+> -				res = error(_("could not rename '%s' to '%s'"),
+> +				res = error(_("could not copy '%s' to '%s'"),
+>   					    rebase_path_squash_msg(), dest);
+>   				goto leave;
+>   			}
 
