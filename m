@@ -2,134 +2,252 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38530C71153
-	for <git@archiver.kernel.org>; Mon,  4 Sep 2023 13:37:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B64A9C83F33
+	for <git@archiver.kernel.org>; Mon,  4 Sep 2023 14:32:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353110AbjIDNhS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 Sep 2023 09:37:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43356 "EHLO
+        id S244347AbjIDOcI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 Sep 2023 10:32:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34564 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353114AbjIDNhQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Sep 2023 09:37:16 -0400
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52B40CFB
-        for <git@vger.kernel.org>; Mon,  4 Sep 2023 06:37:01 -0700 (PDT)
-Received: by mail-pf1-x42b.google.com with SMTP id d2e1a72fcca58-68a41031768so706759b3a.3
-        for <git@vger.kernel.org>; Mon, 04 Sep 2023 06:37:01 -0700 (PDT)
+        with ESMTP id S229770AbjIDOcH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Sep 2023 10:32:07 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49E5094
+        for <git@vger.kernel.org>; Mon,  4 Sep 2023 07:32:03 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-31f4950333cso702528f8f.3
+        for <git@vger.kernel.org>; Mon, 04 Sep 2023 07:32:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1693834621; x=1694439421; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=V7Dqn+dyjc2Y73prSwwMIRz5bqcLSKWaILC9Pp2pRUQ=;
-        b=cXVlBFrwoQVztRR1rH930v0wLR4i5LmlHrrHOwH2ts/Sar/3pvJ3O5W8Fsju7mQ3+z
-         DLSiuZLqTnuPc3Vo7XDc7sTCL9eKZfSaZe+nJ0QtdNh51rEf1cKDdu9Yjzs3yfMKQlzV
-         FBaAZrRd/EIUZ59GmDQ1RYqUYG2HPnBWjQGJ58lT5TFH+spHsJB+pgqDCGmLOKEvjATg
-         1cvHKN2yH+cJ37XEfHosXMtuArRO9kfbyGKktQS/dxoT2JYT37Y+6Wgi28JaObMsqdsA
-         4D58zfV6genB23Qz8zP9ew2egd62Hayn95jrDVS5w7eZ5D//sy2WPfldgpLu2f9h6mhw
-         iaqQ==
+        d=gmail.com; s=20221208; t=1693837922; x=1694442722; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=ciidY0sOgEEVjdxj7sx8EMj8gNiVtevKcUbkCPqFcC8=;
+        b=QwUUeckHZsigYqUSLylcQ0uewQmu8Ld9f+DAi2HyIP7wsfg+zKLuOSUOuT/1zntDn+
+         IR+F3jQsgdmDlwxiE/Y2SM4k1I2rsYVI0DhVuNM+8Yyc/qZIiWqPR/pc2HlwQYyzqduH
+         pzPGCAcQfhgTXp0VimZj0DT1XYR05hZx9300EpY1CTKvTcUgnpWGQ5ebUbWspoSYB3wb
+         FMmfiqtQ3PKCKPVdvlGpWFhjunEs61P5OoN0bfFuIMUqGxWKSnZtT9W64uK8HPrECjE5
+         GNH8Pl45q+Qz8BiHg+K1nmowas+NmKcbAKHxLK2x9Kdv/ibFm6pFlU4fLbCt/IMx8Iqt
+         hIUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693834621; x=1694439421;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=V7Dqn+dyjc2Y73prSwwMIRz5bqcLSKWaILC9Pp2pRUQ=;
-        b=OH8knqoWAdXfSa/H2VbpcF2B2btNobWSuJh79hyrOuSh1DBH/+iEZJ4YLhowmUTJsC
-         GpQ2+t5QB5+i+/6tEwl1xYvhiqaUnJFgC9nhyh3Vxowuo1qNUGa4/fO90wzOYmKX5E7g
-         8iYbexmy0e7hI/W294TsmcwnL018jZL3uoVOna8nPf7S+qvCxvIMDUKuV5t8RHHrDPMP
-         Z0q3ePKWYcWkpGmD4KglVAXFK2JSXYrUM9mASr6aOZ2yT4zwJHVviL3RTunfPwM9jBbR
-         AKMQkYDJiMSb1bHwev3TSWkzmaiYEA2gUN6kx0zLe1ZoMeTfnivF9jYrfJl/XLseTSBw
-         NWKw==
-X-Gm-Message-State: AOJu0YzvxfEcGaHXf2Oe+eFmPrZCHXCUX/E8juy7Q0mTnkCbikZxyClp
-        CXXaAz4N3JIkOiKheUCdgU8=
-X-Google-Smtp-Source: AGHT+IGcoSVcY5PoshlszWy92e2iFrp2mfKSHmzSGUTHmA30I+oJM1/sYX7H8b4rFKrJxXjFZIdmDg==
-X-Received: by 2002:a05:6a00:1741:b0:68a:6173:295b with SMTP id j1-20020a056a00174100b0068a6173295bmr10083850pfc.2.1693834620648;
-        Mon, 04 Sep 2023 06:37:00 -0700 (PDT)
-Received: from debian.me ([103.124.138.83])
-        by smtp.gmail.com with ESMTPSA id c5-20020aa781c5000000b0068a3dd6c1dasm7596569pfn.142.2023.09.04.06.36.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Sep 2023 06:37:00 -0700 (PDT)
-Received: by debian.me (Postfix, from userid 1000)
-        id AFED581E9BFD; Mon,  4 Sep 2023 20:36:57 +0700 (WIB)
-Date:   Mon, 4 Sep 2023 20:36:57 +0700
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-To:     Radovan =?utf-8?Q?Halu=C5=A1ka?= <radovan.haluska1@gmail.com>,
-        git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>,
-        William Sprent <williams@unity3d.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: Potential bug in `git checkout --quiet`
-Message-ID: <ZPXdeRnLu6oKoVt2@debian.me>
-References: <9419E14B-5933-4773-B1BA-899A7DA75D96@gmail.com>
+        d=1e100.net; s=20221208; t=1693837922; x=1694442722;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ciidY0sOgEEVjdxj7sx8EMj8gNiVtevKcUbkCPqFcC8=;
+        b=jZd7BUga5w4kufXU2MiU4Sk4waOCEO/wpvOiS6ans+Sd2OpG1di+6odkNxPDQ0XVbn
+         LP0gBOv1FvvxWN/LYTekA3Hn0Qk4a4tmF1KKknRYlkUX6bUWBMI1bpR/mCEgMEOuRAhK
+         Ag0ulbgw3vY10p+R+lIPDlweFf0uAZEgGqTGJObWgkw/v+IrNnwCUz8UcAsjJRTPper5
+         TFpNP3ihpGMRiWy0l4uL4IntuNkIr/yyoYUr0M+SczoRIZ2n6uBdXj60wxCczeO0waiR
+         Ht1IPzB/NKeNUzVdmJH67E6Z2rD2AqzOI6PAkAwGtOeCBsbQiEHpiZymMFgH9Uk5Zv0s
+         J32g==
+X-Gm-Message-State: AOJu0YwxnnYdvYBFV0mq+Wjf8LHqQUPPAgnkhKD0nDTkqqiMKpJRdW1v
+        DSjLeKxm6glXvR6B7wK8WDM=
+X-Google-Smtp-Source: AGHT+IEGKZxX5vtNds0hfVyhIcLt5Vzkb9f7N8NOreInCsOIcK2Pg7m35NDuI3evMfk+TIvToBILHA==
+X-Received: by 2002:a05:6000:787:b0:31f:4173:2ac8 with SMTP id bu7-20020a056000078700b0031f41732ac8mr3888451wrb.18.1693837921509;
+        Mon, 04 Sep 2023 07:32:01 -0700 (PDT)
+Received: from [192.168.1.212] ([90.242.223.1])
+        by smtp.gmail.com with ESMTPSA id d15-20020adffd8f000000b00317ab75748bsm14702546wrr.49.2023.09.04.07.32.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 04 Sep 2023 07:32:01 -0700 (PDT)
+Message-ID: <4606961d-6ead-4cad-8831-5bbded31b23b@gmail.com>
+Date:   Mon, 4 Sep 2023 15:31:51 +0100
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="kcNYvcEtn7wXT+dw"
-Content-Disposition: inline
-In-Reply-To: <9419E14B-5933-4773-B1BA-899A7DA75D96@gmail.com>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 5/7] rebase: fix rewritten list for failed pick
+Content-Language: en-US
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Stefan Haller <lists@haller-berlin.de>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Glen Choo <chooglen@google.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <pull.1492.v2.git.1682089074.gitgitgadget@gmail.com>
+ <pull.1492.v3.git.1690903412.gitgitgadget@gmail.com>
+ <df4019458665eccf2b16cdf1d6c1061186a62711.1690903412.git.gitgitgadget@gmail.com>
+ <304553b3-3668-0b98-c6dc-3c047fd9e34c@gmx.de>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <304553b3-3668-0b98-c6dc-3c047fd9e34c@gmx.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Dscho
 
---kcNYvcEtn7wXT+dw
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 23/08/2023 09:55, Johannes Schindelin wrote:
+> Hi Phillip,
+> 
+> On Tue, 1 Aug 2023, Phillip Wood via GitGitGadget wrote:
+> 
+>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>
+>> git rebase keeps a list that maps the OID of each commit before it was
+>> rebased to the OID of the equivalent commit after the rebase.  This list
+>> is used to drive the "post-rewrite" hook that is called at the end of a
+>> successful rebase. When a rebase stops for the user to resolve merge
+>> conflicts the OID of the commit being picked is written to
+>> ".git/rebase-merge/stopped-sha". Then when the rebase is continued that
+>> OID is added to the list of rewritten commits. Unfortunately if a commit
+>> cannot be picked because it would overwrite an untracked file we still
+>> write the "stopped-sha1" file. This means that when the rebase is
+>> continued the commit is added into the list of rewritten commits even
+>> though it has not been picked yet.
+>>
+>> Fix this by not calling error_with_patch() for failed commands. The pick
+>> has failed so there is nothing to commit and therefore we do not want to
+>> set up the state files for committing staged changes when the rebase
+>> continues. This change means we no-longer write a patch for the failed
+>> command or display the error message printed by error_with_patch(). As
+>> the command has failed the patch isn't really useful and in any case the
+>> user can inspect the commit associated with the failed command by
+>> inspecting REBASE_HEAD. Unless the user has disabled it we already print
+>> an advice message that is more helpful than the message from
+>> error_with_patch() which the user will still see. Even if the advice is
+>> disabled the user will see the messages from the merge machinery
+>> detailing the problem.
+>>
+>> To simplify writing REBASE_HEAD in this case pick_one_commit() is
+>> modified to avoid duplicating the code that adds the failed command
+>> back into the todo list.
+> 
+> This motivates the change well, and answered all but one of the questions
+> I had about it, being:
+> 
+>> diff --git a/sequencer.c b/sequencer.c
+>> index 62277e7bcc1..e25abfd2fb4 100644
+>> --- a/sequencer.c
+>> +++ b/sequencer.c
+>> [...]
+>> @@ -4658,12 +4659,8 @@ static int pick_one_commit(struct repository *r,
+>>   			     check_todo);
+>>   	if (is_rebase_i(opts) && res < 0) {
+>>   		/* Reschedule */
+>> -		advise(_(rescheduled_advice),
+>> -		       get_item_line_length(todo_list, todo_list->current),
+>> -		       get_item_line(todo_list, todo_list->current));
+>> -		todo_list->current--;
+> 
+> Why is it okay to remove this decrement?
+> 
+> Here is why: The code that calls `save_todo()` in the `if (reschedule)`
+> block of the loop of `pick_commits()` _duplicates_ the logic that is
+> removed here, including the advice and the decrementing of `current`.
+> 
+> I had to instrument the code before and after this patch to figure this
+> out, as I had missed the fact that the now-remaining code also decremented
+> the `current` attribute.
+> 
+> So: All is good with this patch. If you'd like to amend the commit message
+> accordingly, I would not be opposed, but I could now live equally as
+> easily without it.
 
-On Mon, Sep 04, 2023 at 02:56:37PM +0200, Radovan Halu=C5=A1ka wrote:
-> What did you do before the bug happened? (Steps to reproduce your issue)
->=20
-> ```
-> git clone --quiet --branch master --depth 1 --no-checkout --filter blob:n=
-one \
->     git@github.com:acatai/Strategy-Card-Game-AI-Competition.git locm-agen=
-ts
-> cd locm-agents
-> git sparse-checkout set --no-cone
-> git sparse-checkout add 'contest-2022-08-COG/ByteRL'
-> git checkout --quiet
-> ```
->=20
-> What did you expect to happen? (Expected behavior)
->=20
-> I expected to receive no output from any of the commands above.
->=20
-> What happened instead? (Actual behavior)
->=20
-> I received an output from the last command even though the `--quiet` swit=
-ch was specified
->=20
-> What's different between what you expected and what actually happened?
->=20
-> This shouldn't have been printed on the screen:
->=20
-> '''
-> remote: Enumerating objects: 28, done.
-> remote: Counting objects: 100% (28/28), done.
-> remote: Compressing objects: 100% (27/27), done.
-> remote: Total 28 (delta 0), reused 25 (delta 0), pack-reused 0
-> Receiving objects: 100% (28/28), 31.40 MiB | 4.94 MiB/s, done.
-> '''
->=20
+I'll try and add something to the commit message when I re-roll
 
-I can reproduce this bug on v2.40.0 using your reproducer above. Yet,
-`git checkout --quiet` on normal repos (not partial ones) works as
-expected. Cc'ing people working on sparse-checkout recently.
+Thanks
 
-Thanks.
+Phillip
 
---=20
-An old man doll... just what I always wanted! - Clara
-
---kcNYvcEtn7wXT+dw
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQQZO/gRNchuWgPJR+Z7tWyQc2rTCAUCZPXdcgAKCRB7tWyQc2rT
-CL0RAP4tzEUU8t16Y8CZwOHkeh2CVCtdGojRWcI/mjnOupdTcwEAl5uwvQc4g2o3
-r9LWAmGHQB+bfbuZMev5N6uGrbtFfgg=
-=SDuM
------END PGP SIGNATURE-----
-
---kcNYvcEtn7wXT+dw--
+>> -		if (save_todo(todo_list, opts))
+>> -			return -1;
+>> +		*reschedule = 1;
+>> +		return -1;
+>>   	}
+>>   	if (item->command == TODO_EDIT) {
+>>   		struct commit *commit = item->commit;
+> 
+> I'd like to point out how delighted I am about this careful test case:
+> 
+>> diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
+>> index 96ae0edf1e1..4938ebb1c17 100755
+>> --- a/t/t3430-rebase-merges.sh
+>> +++ b/t/t3430-rebase-merges.sh
+>> @@ -165,12 +165,12 @@ test_expect_success 'failed `merge -C` writes patch (may be rescheduled, too)' '
+>>   	test_config sequence.editor \""$PWD"/replace-editor.sh\" &&
+>>   	test_tick &&
+>>   	test_must_fail git rebase -ir HEAD &&
+>> +	test_cmp_rev REBASE_HEAD H^0 &&
+>>   	grep "^merge -C .* G$" .git/rebase-merge/done &&
+>>   	grep "^merge -C .* G$" .git/rebase-merge/git-rebase-todo &&
+>> -	test_path_is_file .git/rebase-merge/patch &&
+>> +	test_path_is_missing .git/rebase-merge/patch &&
+>>
+>>   	: fail because of merge conflict &&
+>> -	rm G.t .git/rebase-merge/patch &&
+>>   	git reset --hard conflicting-G &&
+>>   	test_must_fail git rebase --continue &&
+>>   	! grep "^merge -C .* G$" .git/rebase-merge/git-rebase-todo &&
+>> diff --git a/t/t5407-post-rewrite-hook.sh b/t/t5407-post-rewrite-hook.sh
+>> index 5f3ff051ca2..ad7f8c6f002 100755
+>> --- a/t/t5407-post-rewrite-hook.sh
+>> +++ b/t/t5407-post-rewrite-hook.sh
+>> @@ -17,6 +17,12 @@ test_expect_success 'setup' '
+>>   	git checkout A^0 &&
+>>   	test_commit E bar E &&
+>>   	test_commit F foo F &&
+>> +	git checkout B &&
+>> +	git merge E &&
+>> +	git tag merge-E &&
+>> +	test_commit G G &&
+>> +	test_commit H H &&
+>> +	test_commit I I &&
+>>   	git checkout main &&
+>>
+>>   	test_hook --setup post-rewrite <<-EOF
+>> @@ -173,6 +179,48 @@ test_fail_interactive_rebase () {
+>>   	)
+>>   }
+>>
+>> +test_expect_success 'git rebase with failed pick' '
+>> +	clear_hook_input &&
+>> +	cat >todo <<-\EOF &&
+>> +	exec >bar
+>> +	merge -C merge-E E
+>> +	exec >G
+>> +	pick G
+>> +	exec >H 2>I
+>> +	pick H
+>> +	fixup I
+>> +	EOF
+>> +
+>> +	(
+>> +		set_replace_editor todo &&
+>> +		test_must_fail git rebase -i D D 2>err
+>> +	) &&
+>> +	grep "would be overwritten" err &&
+>> +	rm bar &&
+>> +
+>> +	test_must_fail git rebase --continue 2>err &&
+>> +	grep "would be overwritten" err &&
+>> +	rm G &&
+>> +
+>> +	test_must_fail git rebase --continue 2>err &&
+>> +	grep "would be overwritten" err &&
+>> +	rm H &&
+>> +
+>> +	test_must_fail git rebase --continue 2>err &&
+>> +	grep "would be overwritten" err &&
+>> +	rm I &&
+>> +
+>> +	git rebase --continue &&
+>> +	echo rebase >expected.args &&
+>> +	cat >expected.data <<-EOF &&
+>> +	$(git rev-parse merge-E) $(git rev-parse HEAD~2)
+>> +	$(git rev-parse G) $(git rev-parse HEAD~1)
+>> +	$(git rev-parse H) $(git rev-parse HEAD)
+>> +	$(git rev-parse I) $(git rev-parse HEAD)
+>> +	EOF
+>> +	verify_hook_input
+>> +'
+>> +
+>>   test_expect_success 'git rebase -i (unchanged)' '
+>>   	git reset --hard D &&
+>>   	clear_hook_input &&
+> 
+> Here is my ACK.
+> 
+> Thank you,
+> Johannes
