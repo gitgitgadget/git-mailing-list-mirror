@@ -2,101 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BF96C83F2C
-	for <git@archiver.kernel.org>; Sun,  3 Sep 2023 21:29:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10079C83F33
+	for <git@archiver.kernel.org>; Mon,  4 Sep 2023 06:21:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348521AbjICV3h (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 3 Sep 2023 17:29:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33906 "EHLO
+        id S1352323AbjIDGVf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 Sep 2023 02:21:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229495AbjICV3h (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Sep 2023 17:29:37 -0400
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11olkn2037.outbound.protection.outlook.com [40.92.19.37])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05A89E5
-        for <git@vger.kernel.org>; Sun,  3 Sep 2023 14:29:34 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=b7JIHXRFMkB4M4ViasKNsd8O4C1iERvIYlMxpWIq2uQTtsQtsfPpcK7qYLv/qzsL5f8oFChc7KgBgIjL6mpmGvAkJENNlhvJcEHviui7yr7DdZCnPZK+Moi4BXgzxd/lAvfjV7/YmDKJsO72SSyh382Pt+qLx8jUomZ8o+WYpv1w7RBpMtKxEfaFlRbhCc6xGLQdVvLL1g9z9P0X5fHORRnDW1BJnk5udrg4FbwklL/71p4MEaxa8nepydpVHnc0M6ISYAgCVHcEH6efzkGqJOjjryO4d6CdGtYb3ZkR49L7+iRcAUvBnUTkJMVMpAN9xFrvD4oSlLRmwgdGlTKMhg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
- b=LWxwXFvOr5AMozbzu3IChe1/LQ7Ul94gu5E2tU8YvyH5aE1Qf9WqcJrau6AJVcWdGdAhFtg+OKeye0vyRRQgpp5JqLtKpNQlDtbPHa+LqvK4khOKw/hVehUyWn00bnW7RY/CYOhlSVY2a8+sPOspPJpU7Lx4qVLVl8ncMb+mnLq/qWfgT63R0n6mKHZ5E/OYhw1h+oFyFFrbIgabGJh5JYDiZfyBSokSF0VEbE3fIiPWkb586fDmvwY3UfqVMBdt6/HBq8XiRJlU6aUnVWgxS4UcaMnFFj1SFseX9o8pKSkZYBsXQnfoKXfWC64+57ocX0YJWIMWVNtVqMGVKXjOvw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
- b=Fay6kybqFrO+DJpqN7wTehG+XYtfdgJW/X+PY8fHeAD+n6hktrxe8PaOZglRjU+MKSY9mAR49b5+C4T8bgfbMfLhK7wrnPJmbEqHlafePCwi5buaEgelvOWhwRvX3nsN6d/dim6NTQeL6RwKgrVcc5FcsjKEAVQh2WVO5X8zXtBNwsUxvAWcrxP3xpRjy8/V7sIfF4/M4r4xCj9CImgBB1z95zh6EZ3SsJ7xiIzR+8Lf/8kAbzZRlM8b3b80kuZPNREYp5Lb3RKiKTtdUq2lmTSuG/JCOnoEWueB0Wj7hUWIQbzDqckTBIQYapGnhLUUwaJVi4if5XpPHkSNkbSMCg==
-Received: from CO6PR08MB7690.namprd08.prod.outlook.com (2603:10b6:303:135::9)
- by DM8PR08MB7447.namprd08.prod.outlook.com (2603:10b6:8:d::7) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6745.30; Sun, 3 Sep 2023 21:29:32 +0000
-Received: from CO6PR08MB7690.namprd08.prod.outlook.com
- ([fe80::1ff2:f621:3023:c786]) by CO6PR08MB7690.namprd08.prod.outlook.com
- ([fe80::1ff2:f621:3023:c786%4]) with mapi id 15.20.6745.030; Sun, 3 Sep 2023
- 21:29:32 +0000
-From:   tony raynes <tonyraynes12325@outlook.com>
-To:     "gitgitgadget@gmail.com" <gitgitgadget@gmail.com>
-CC:     "Johannes.Schindelin@gmx.de" <Johannes.Schindelin@gmx.de>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "newren@gmail.com" <newren@gmail.com>,
-        "plroskin@gmail.com" <plroskin@gmail.com>
-Subject: Re: [PATCH 1/2] am: pay attention to user-defined context size
-Thread-Topic: [PATCH 1/2] am: pay attention to user-defined context size
-Thread-Index: AQHZ2+BaHhsI/CnD80u/6v7M7vzuxA==
-Date:   Sun, 3 Sep 2023 21:29:32 +0000
-Message-ID: <CO6PR08MB7690C44ACF26939BAAA62E71F5E5A@CO6PR08MB7690.namprd08.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: 
-x-tmn:  [keK7HrVrNENa0e8nMHOrebMSzTtLw/0GHEpnKzUGLuY=]
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CO6PR08MB7690:EE_|DM8PR08MB7447:EE_
-x-ms-office365-filtering-correlation-id: 661e1952-24a0-4283-2a87-08dbacc4dcd9
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: Z12o+jeog6BlEJ9V9123DWkDjdrNO5uPOSBNId9nD8zkCZCNn2wVqKje4z1r0VHWqqpux12LyCnaRs2UXZDJ7GxVBnP3zNLXcu4UdYuzi38HNVamGum/NaMNZ/Z5wM+w7/slIvk/L+Xpyf8IN8/JFjIyD5kju307hVBqHQd4XZb+pYNZ02usl4/udMrrp9Byp0zKnzUMlCTxaxZr7inTF/DwT3QYzYdKGkpM2FizHCCzIK7x6zPbKBFO5KjAdghUIXAiyWrsrcmbLahJLuAZCS+hUpMtWMgOzHCL1o7WV1k=
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?hL7ygaOWgLRaTDIiFOtF2DM3gGHuusQl72uv7EOMB2rdKy23QF+cUZFaZj?=
- =?iso-8859-1?Q?uV61Ewr75RBExENgMZ+T8z9YZit8q7deH0QkG41xIsMPhCK27rqXhRCDsG?=
- =?iso-8859-1?Q?794qSX7mDHXl9PiV4AxLjdwW7W6rSv02oDxdHvZelL2/0dmIWL7209abwY?=
- =?iso-8859-1?Q?tRhHIFjuBXzcJ6PZw/FXOCMBAlWGAUQm7BecdRYye+6oRHoafFlgdn2iOx?=
- =?iso-8859-1?Q?RYEG0zIfPH9D74lJ4pybssS5EKaWmQqlLvyUVPYwp7WiMdmIwAgQTtuu1d?=
- =?iso-8859-1?Q?5DSkcl3Ct0YGkzzM0azCtjaU5pwVpqdGfb9Qa10ZpIcz6tDBvbIAd4WCCp?=
- =?iso-8859-1?Q?h46/GWxgvsTViGIiDuedVg2bXUpqq8drzbbplB/FthAJnNPN7b8PpLOOlD?=
- =?iso-8859-1?Q?K5oefr52y5Rljk4BTl1sDUKHIDQaE7UjiQnUAWpx+5CrkpmkM5ArPiGT33?=
- =?iso-8859-1?Q?PDsRhBwpDz2ylAXSoNS+r7Lf1T24yaNkKtiUjIZCk4gpdukdx0yQT7H2Ud?=
- =?iso-8859-1?Q?f9v3EfVfIOjzGRBh8xRWit/4zpJxgQPcQ12bqZyH6Eq6LE/DKUyHxfaNvr?=
- =?iso-8859-1?Q?8Gw5URur0y679+6g64QIm+x5M2FlOw/NqJsyj8UEgwLSdlzxy8taAHKQDl?=
- =?iso-8859-1?Q?wlhmxBrFMiUkVwPN2jwKmiBfs8mXwcRz60z/YVWYslQV127LKiLHI4F/dR?=
- =?iso-8859-1?Q?Ox/v3Tq/6iPsnNbhAZ89Bto4Z9XCaA4wUkM5k/6tkp6aW8lLP2wwMNSehC?=
- =?iso-8859-1?Q?5SmKLwLNYS9sW+SBaL7WsRRjZ6ANY4nk0uISce/duSiANe0q/AZXo21SKk?=
- =?iso-8859-1?Q?6Zp/e9gLowu01z66QqEMuQJgft4leb75Rl7URlc50zOWwRlUIQPTgO+83L?=
- =?iso-8859-1?Q?yLcWohbDcu0vN+uLb3nAEjomhlhBEfyefQ+siBhtQNPJVznfeJxkJ/2lBD?=
- =?iso-8859-1?Q?bKACQU/vAHpsT3GkzmO4SeARUbXplh6us+e/cUuFnG1UUt1C9raGXGjUoC?=
- =?iso-8859-1?Q?5b5UPg0L/spqQPwAawhsZG/Y/qGpq3Lgw5Jpnrh1k9m5us18Bfl6ywbkLw?=
- =?iso-8859-1?Q?0lJPCli0WsoPp7JQ8ytDZio4ydkFitwZUgvMbJGmHVkWbIKiGHXoDq7l3E?=
- =?iso-8859-1?Q?VYp+WAts9Y5QU08BNdrFyXe+AMZSThqhdGflmGoDQJLXhEdjL4Zx9G1/Ly?=
- =?iso-8859-1?Q?d3j2zBBRlHmItqCtQFm8pYKlptRKginKbsNZiorY2czTAc1amnkF8QPHjB?=
- =?iso-8859-1?Q?nb48gYlfm98FiwyvG7/UOo5ASwlFm+NBfR1pbNNpc=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S1352321AbjIDGVe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Sep 2023 02:21:34 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44BE0E6
+        for <git@vger.kernel.org>; Sun,  3 Sep 2023 23:21:30 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-31c73c21113so875314f8f.1
+        for <git@vger.kernel.org>; Sun, 03 Sep 2023 23:21:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1693808488; x=1694413288; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=zmnYuxUULsEPf81ZsbIk/cY9hO4zMMB2s+0buZyRiKM=;
+        b=mN0ZodrPlYtlFxJg6kiRAeRM8Alsom1raXVPj/zZ0B7+5nl8TB1fd+DvP1tgvIdzIm
+         Vlqq69Rs86toEIj8+Rves+zhwH9aSQ8zhNTHwPgtfjPTZnZiB9JSmuKFKl/qnMeFaTyq
+         3GjYsd5X8fWI5wL69KWE2MWfunXlWf/8HICMFVS4RcKo49PQxGkl12LJCWlNL7IrYJJ4
+         KX2nVcGGVTmQtpRvnPIW77zJn9y925gKee+d0YC5I1eBbX5WO+NZq9eheWkvUstZg6+x
+         lJz+XllYI+SjVrOVXZORQAjsy0KrGo4GpNlmbQI5oL25IhqWt0kvbyjBjyrnwTs2WkUl
+         86fA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693808488; x=1694413288;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zmnYuxUULsEPf81ZsbIk/cY9hO4zMMB2s+0buZyRiKM=;
+        b=JBSumFxV19RTKg8HzYf4RaFb5m/JBm9UvrnaWqTZ39/YUoQ+CHsJFKpDnYfNFXeZLo
+         VrLTP4wc5jSfzoEXk0SHms2Ux2CF2eSMnWp6kelIqjlLh0DkyJPuyK6WdLyF3BCh0ivZ
+         qTTvt3tGsE2fwy11LFnQr/jrlAhlfD6YCkW5RM4dyvUsxR5IPt+BSqV/LNX2sDqUBS+n
+         5TyatoyCemN59Gq22Lwk3/UxxIbgjcLKgC6/nmBbva//1hpD/7HAD8yLmlCtRe3zaqK4
+         7N+iJDcjonTQpJIjA0Whz+YagYo4HbqXIvpsdfEwh3Q02vP+hGX3KKCfUOSSZsIjZxC4
+         RcCA==
+X-Gm-Message-State: AOJu0Yz+7J+LWO3Xg5yjt+Uz1V01w+RDt8zP2TxpQBgmP87q3qcXtZ1b
+        zCATUa0DdnOjwz/zg4Pu4cf9UYA2mBM=
+X-Google-Smtp-Source: AGHT+IGpwP1lKLSqiF4xALgA19tifZxiZuSe1q4uqdWuDNgI0bjVBMRxuCorfnRTjXkVrLa2jXZfMg==
+X-Received: by 2002:adf:ed50:0:b0:318:1535:34fb with SMTP id u16-20020adfed50000000b00318153534fbmr6615521wro.13.1693808488278;
+        Sun, 03 Sep 2023 23:21:28 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a2-20020adff7c2000000b003177074f830sm13482994wrq.59.2023.09.03.23.21.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 03 Sep 2023 23:21:27 -0700 (PDT)
+Message-ID: <pull.1580.git.1693808487058.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 04 Sep 2023 06:21:26 +0000
+Subject: [PATCH] var: avoid a segmentation fault when `HOME` is unset
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CO6PR08MB7690.namprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 661e1952-24a0-4283-2a87-08dbacc4dcd9
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Sep 2023 21:29:32.1562
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM8PR08MB7447
+To:     git@vger.kernel.org
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+
+The code introduced in 576a37fccbf (var: add attributes files locations,
+2023-06-27) paid careful attention to use `xstrdup()` for pointers known
+never to be `NULL`, and `xstrdup_or_null()` otherwise.
+
+One spot was missed, though: `git_attr_global_file()` can return `NULL`,
+when the `HOME` variable is not set (and neither `XDG_CONFIG_HOME`), a
+scenario not too uncommon in certain server scenarios.
+
+Fix this, and add a test case to avoid future regressions.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+    var: avoid a segmentation fault when HOME is unset
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1580%2Fdscho%2Favoid-segfault-in-git-var-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1580/dscho/avoid-segfault-in-git-var-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1580
+
+ builtin/var.c      | 2 +-
+ t/t0007-git-var.sh | 9 +++++++++
+ 2 files changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/var.c b/builtin/var.c
+index 74161bdf1c6..8cf7dd9e2e5 100644
+--- a/builtin/var.c
++++ b/builtin/var.c
+@@ -66,7 +66,7 @@ static char *git_attr_val_system(int ident_flag UNUSED)
+ 
+ static char *git_attr_val_global(int ident_flag UNUSED)
+ {
+-	char *file = xstrdup(git_attr_global_file());
++	char *file = xstrdup_or_null(git_attr_global_file());
+ 	if (file) {
+ 		normalize_path_copy(file, file);
+ 		return file;
+diff --git a/t/t0007-git-var.sh b/t/t0007-git-var.sh
+index 8cb597f99c4..ff4fd9348cc 100755
+--- a/t/t0007-git-var.sh
++++ b/t/t0007-git-var.sh
+@@ -268,4 +268,13 @@ test_expect_success 'listing and asking for variables are exclusive' '
+ 	test_must_fail git var -l GIT_COMMITTER_IDENT
+ '
+ 
++test_expect_success '`git var -l` works even without HOME' '
++	(
++		XDG_CONFIG_HOME= &&
++		export XDG_CONFIG_HOME &&
++		unset HOME &&
++		git var -l
++	)
++'
++
+ test_done
+
+base-commit: 43c8a30d150ecede9709c1f2527c8fba92c65f40
+-- 
+gitgitgadget
