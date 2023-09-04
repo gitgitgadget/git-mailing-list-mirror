@@ -2,83 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35E84C71153
-	for <git@archiver.kernel.org>; Mon,  4 Sep 2023 15:29:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A3BCC83F33
+	for <git@archiver.kernel.org>; Mon,  4 Sep 2023 17:14:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351482AbjIDP3f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 Sep 2023 11:29:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44336 "EHLO
+        id S1345881AbjIDRNo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 Sep 2023 13:13:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351031AbjIDP3e (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Sep 2023 11:29:34 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3DE1CC4
-        for <git@vger.kernel.org>; Mon,  4 Sep 2023 08:29:28 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-500cfb168c6so2645697e87.2
-        for <git@vger.kernel.org>; Mon, 04 Sep 2023 08:29:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks.biz; s=google; t=1693841367; x=1694446167; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+/Pu6ibvopOu3hb6xFCMQvx3iImNE5F+c6APp+QOGLI=;
-        b=Adr2/EuqL2ClVFcuF8xZEL9H3kGvE0WYJ90vQdtilb0eG9KOwt+Pbo9/ww1mB42K4u
-         M37vGF79in37uLrmNxcP7T+k6x8eH3d6LjTBigvXgv4CdyMuQLARaaXt28rhiNAQAxek
-         h41d4lrqPIHOlDlBFxETvvRk6DvR8jzQEmvjw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693841367; x=1694446167;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+/Pu6ibvopOu3hb6xFCMQvx3iImNE5F+c6APp+QOGLI=;
-        b=b7KlFIW+mBqpM/MU0EFzcOptuIw0HAo7HaRV+0b3f74U2vx5ZABd+O4ULR1QardypQ
-         CuS/kLWHNVfUmyO7u6vNaodovcagCu4YKjUM52sVY3k+Orei6IRifhTSvK0GwVU8DQeT
-         Wdi8Tcj44BHRtZ4ncb9DJ3cnmyaVxtXYcez8BkelBdlvrXETMQgJ4G/OlAXXZd2PXU+v
-         SPAccDjSyyhIaepFVjaFRthe3X7BwA6bMpNdEyWejT53Cp8bL+ZetGoSzlZ4GX1uvVY+
-         8mFUyXS/h8Kg3gVpt7AeukSwAMWwARtvFAon+2KRbAbc26c6H/AsVGko1vigJq02HXWN
-         dq/Q==
-X-Gm-Message-State: AOJu0YwY25LuKoWSjWGih6tB2sb1Gv0LVmghl9C3Nd4Y9sYjN4waspxY
-        DuqTH1ZgUpDqpphQlx1jALxYzUiTNrzMGbJEclcrNaDgp+0C6gqQzypJgw==
-X-Google-Smtp-Source: AGHT+IGkfmV72Gj0t2AS8rxVsc80LSPrTAejgs/aJ6gN9NwDx/X4tYxIqBmLgH8f+1YnAdORBQQUuMr5jCDF1T0Z9c8=
-X-Received: by 2002:a05:6512:3b2c:b0:500:d970:6541 with SMTP id
- f44-20020a0565123b2c00b00500d9706541mr9044354lfv.39.1693841366642; Mon, 04
- Sep 2023 08:29:26 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAPMMpoixKnr4BkKd8jeU+79Edhqtu4R7m8=BX4ZSYKdBHDzK=w@mail.gmail.com>
- <CAPMMpoj7s=ewXJfJyxvrcHjpmOOWEWBvZ94OOuVmYs2UQ482HA@mail.gmail.com>
-In-Reply-To: <CAPMMpoj7s=ewXJfJyxvrcHjpmOOWEWBvZ94OOuVmYs2UQ482HA@mail.gmail.com>
-From:   Tao Klerks <tao@klerks.biz>
-Date:   Mon, 4 Sep 2023 17:29:16 +0200
-Message-ID: <CAPMMpohpKJdopSpZu+ehE0MZrH8cksgtY1NEHFyZz2jj+LOKhA@mail.gmail.com>
-Subject: Re: Is "bare"ness in the context of multiple worktrees weird? Bitmap
- error in git gc.
-To:     git <git@vger.kernel.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S229781AbjIDRNn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Sep 2023 13:13:43 -0400
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75522E6C
+        for <git@vger.kernel.org>; Mon,  4 Sep 2023 10:13:37 -0700 (PDT)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+        by mailout.nyi.internal (Postfix) with ESMTP id 653315C0196;
+        Mon,  4 Sep 2023 13:13:34 -0400 (EDT)
+Received: from imap49 ([10.202.2.99])
+  by compute6.internal (MEProxy); Mon, 04 Sep 2023 13:13:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+         h=cc:cc:content-type:content-type:date:date:from:from
+        :in-reply-to:in-reply-to:message-id:mime-version:references
+        :reply-to:sender:subject:subject:to:to; s=fm3; t=1693847614; x=
+        1693934014; bh=P/mITRclCqJvOImtoeD+iPXwpizoTct2QStUXqqzsiY=; b=A
+        begj5BYM2UppEb1W/Vw+2I2q95SQ7lDfUBcilqWUVGjlEHJOTokKi4+JXpGTodE+
+        B/Y8MZXuwt1QbnC0EyhFpZVKhax9wiwJAyKXgeN8M4zSWhFzpRZI3dXBcNHCgV1C
+        0Qyz4uhoO2rj312DXpk/hf+EVGrkYAg6TO2HO1YJOCpmOkE/kKnPmdASsVTgT1BF
+        paTK7mTaA0RhAJZ95fz4j6VEmWxjeUF4DUA6nakxRtyx0npcjXjdovLB6Rp+uCO6
+        nDQhQhjYL49gU2bzymu1UsIYdg+Vfx6fhSZ3u5vFa1k14/AgXutucM1h9aZGrp6w
+        4mAKqz9L29CqaZp/92znA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:content-type:date:date
+        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm1; t=1693847614; x=1693934014; bh=P/mITRclCqJvO
+        ImtoeD+iPXwpizoTct2QStUXqqzsiY=; b=fZcixBReRhEQHwgqectgq+FMtDLsN
+        huA+BcVLcueLSVjjk0H8GD3n49GKsjGS6NnwVcdytECdkfviQwYcrP4bcPPPPJRX
+        j8AqYiH4n6wWkQc2PowegfF8/+kJtXjbzOFw7hR/ULD08CCJ34Tvqf+1Gslqxsil
+        mJj6r+JEOXFxhjx2gzRc4rZw/8FbGBgmFe2wtNA7P9Od51mPcti1a4xYHrvTH4ja
+        MP4hJjLkNx7DlHygI9Hl2Te2MYjqluTAu9d9xXXtSUCcCIwxblGi7D2AVLgaMaP5
+        XpL57xasYtSyRdUKIzH0A71H92dOKYTQUvP+mS5EpztMp33fY+Njij05Q==
+X-ME-Sender: <xms:PhD2ZOaNZ4e7riVtZ0Uyjn833a-xfmDSKO-eYYUqojp4Wqoc8t2xl3s>
+    <xme:PhD2ZBYrkjyqjsZmFQn-gFIw5Ohvru2nKifKipG5OpmpZlzwzL4C6t6RTZDRwgVZG
+    DvodUE9_ldBl9vSQQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrudegkedgudduudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdfm
+    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
+    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedtkedtjeeiffelteffheeiheeufffg
+    heelueeftdejkeeufffgiefhgeekffffueenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:PhD2ZI90muA2nRARTF0jABs7N5k9LOwwEARZ7lshSewtmYtvk18p8g>
+    <xmx:PhD2ZAqHMyFKbShwFKRBtVM8ZZxK9HFMZV2sPjolUhjRUVPS1-qNcQ>
+    <xmx:PhD2ZJo_v9NbKlXJ559zWiablUN4wj6MDHLZnaeVM_du-iyjc7KknA>
+    <xmx:PhD2ZKCpTB51FwpNYrjWX_zrz9vrS6vl8IEf5SNXiZDGDvPT278-yQ>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id 2252B15A0091; Mon,  4 Sep 2023 13:13:34 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-701-g9b2f44d3ee-fm-20230823.001-g9b2f44d3
+Mime-Version: 1.0
+Message-Id: <8642763e-d3e7-49c4-b2ea-d5e4bebfbca5@app.fastmail.com>
+In-Reply-To: <94b9535b-8c2a-eb8f-90fb-cd0f998ec57e@gmx.de>
+References: <cover.1686505920.git.code@khaugsbakk.name>
+ <cover.1693584310.git.code@khaugsbakk.name>
+ <e9a59108311369d8197b9870a8810d5283ec124f.1693584310.git.code@khaugsbakk.name>
+ <94b9535b-8c2a-eb8f-90fb-cd0f998ec57e@gmx.de>
+Date:   Mon, 04 Sep 2023 19:10:49 +0200
+From:   "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, "Denton Liu" <liu.denton@gmail.com>,
+        "Jeff King" <peff@peff.net>
+Subject: Re: [PATCH v2 1/3] range-diff: treat notes like `log`
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 4, 2023 at 4:59=E2=80=AFPM Tao Klerks <tao@klerks.biz> wrote:
->
->
-> It seems, to me, that "my setup" makes a lot more sense than what you
-> end up with when you use "--separate-git-dir", and that the behavior
-> there predates the current "mutual reference" model of
-> worktrees-to-their-repo. If "my" use of "core.bare" in the example
-> above is sound - then should the implementation of
-> "--separate-git-dir" be changed to produce a bare repo with a
-> "worktrees" folder, like you get if you clone bare and add a worktree
-> in two separate steps?
->
+Hi Dscho
 
-And to confuse matters further, I just stumbled across
-https://github.com/git/git/blob/master/contrib/workdir/git-new-workdir
-- I don't understand when you would want to use that vs, again, a bare
-repo with one or more worktrees properly attached via two-way
-references, their own indexes, their own reflogs, etc.
+On Sun, Sep 3, 2023, at 14:17, Johannes Schindelin wrote:
+> Hi Kristoffer,
+>
+> On Fri, 1 Sep 2023, Kristoffer Haugsbakk wrote:
+>
+> > [snip]
+>
+> Very well explained.
+>
+> The root cause for this is 8cf51561d1e (range-diff: fix a crash in parsing
+> git-log output, 2020-04-15) which added the `--notes` argument in
+> `read_patches()`' call. The commit message explains why this is needed:
+> the (necessary) `--pretty=medium` would turn off the notes, therefore
+> `--notes` had to be added to reinstate the original behavior (except, as
+> you pointed out, in the case `--notes=<ref>` was specified).
 
-Is it the case that this contrib script predates the current "git
-worktree" support?
+That's interesting. I didn't find that commit in my history spelunking.
+
+>> Remedy this by co-opting the `--standard-notes` option which has been
+>> deprecated since ab18b2c0df[2] and which is currently only documented in
+>> `pretty-options`.
+>
+> This sounds a bit less desirable, though, than passing the `--notes`
+> argument only as needed. This patch (on top of `notes-range-diff` in your
+> fork) lets the new test still pass while leaving `--standard-notes`
+> deprecated:
+>
+> [snip]
+
+I like it. I didn't like my solution but it was the only thing that I
+could get to work. I would like to use your solution instead. Thank you.
+
+Maybe you could supply a commit message for v3? v3 would then consist of
+two commits:
+
+1. Your fix
+2. Those two tests
+
+Or should it be handled in some other way?
+
+Cheers
+
+-- 
+Kristoffer Haugsbakk
