@@ -2,230 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C3F70C83F3F
-	for <git@archiver.kernel.org>; Mon,  4 Sep 2023 14:37:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A1D6C83F3F
+	for <git@archiver.kernel.org>; Mon,  4 Sep 2023 14:41:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234960AbjIDOha (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 Sep 2023 10:37:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53156 "EHLO
+        id S240439AbjIDOlt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 Sep 2023 10:41:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242649AbjIDOh3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Sep 2023 10:37:29 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9C05CFB
-        for <git@vger.kernel.org>; Mon,  4 Sep 2023 07:37:25 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-401da71b83cso14941775e9.2
-        for <git@vger.kernel.org>; Mon, 04 Sep 2023 07:37:25 -0700 (PDT)
+        with ESMTP id S229869AbjIDOlr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Sep 2023 10:41:47 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C4411AC
+        for <git@vger.kernel.org>; Mon,  4 Sep 2023 07:41:43 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-523100882f2so2109152a12.2
+        for <git@vger.kernel.org>; Mon, 04 Sep 2023 07:41:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1693838244; x=1694443044; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=fuh9itsd6M/8+aqYMeFb8llmv30O1M4wJ6xoZ5KAGNI=;
-        b=VLUg0O47ds51+8/3SGGjCtxPqqwTLVNAkIDuFb5a4B03b35nBmJmA1N70x4xYVbV2P
-         NAHY/f9gWqaCokX9fc0xvCRcC1UdwM0fx6JOIZWKFo2hRALH2Vf4DKLbZkv/D+ewCKWW
-         Vq1ZP7Wa/7jN7SL+P6Mn4wdoYKiSCxWfy2/hSiCyGZHU5C/OTOw1mLkNYYlcZAZ/AarV
-         W2S8RnlocMzPmapAW41zivXp4H8+OERZ2z0/awSqgHTGd2ZQev+hxhJGJD/FMpR5x77X
-         fbCDu5pDNNwzdbaEwPVAyZbhoeJdL4UGERBt/lskXvE/dyGhP72hz+sptjExaX8GjqCT
-         FUXw==
+        d=klerks.biz; s=google; t=1693838502; x=1694443302; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=p0x5WuSyYHAvPOTLAoT49uq8pcNO7dq4F5hhSG1a9vY=;
+        b=aVf++mH9bhAvIyCXRHRwZjbKXIy5HWSlkf25Hr7dS2eZOYCEOSWtNVZwgyMYQAAO+g
+         pUNtAsw7K77aDTe4E5ZyxOsSzGxH59PwFWBW5Na5PNZafzI8ChShE2U82FtdvnvK/DeJ
+         JAkv8nfCn2695jd9A+sQiW5MJNwFvFQyO43vY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693838244; x=1694443044;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=fuh9itsd6M/8+aqYMeFb8llmv30O1M4wJ6xoZ5KAGNI=;
-        b=a2eHXniWXas6PMZwFtqG9H30tRdbfSfG5OmKxcymv2SgKW70R42MHdzyXGk3g6jqZU
-         zBeAlkQi3so+2JdosXFcsgvC+GLhLGDVJKzV8MJDQyXJ19tDaBa8CVnvNsrd3E4xuYmY
-         gUEgg4xD6La7mCdkAGkeEuw17Z891GCkeipwZIbF4BqOOevaCRAjOrwpI5t7D5ZGGwji
-         JFoSq+9XkwKGyt5O6OcDuhB5RpN1vOKCajNQJQaRbdxQIn5u2rc6c5xHmY9X1xPf0XTc
-         tozxmP1lTP8iXMP47QNFjwJkO8FTOcbf1ikuCADuLLN7pu2BSCH2R14KSTcU4BBmS5O8
-         J2Lg==
-X-Gm-Message-State: AOJu0Yzkc7f9I9M5OiT9PdZi9oVjwTzINc1ngFVPTkhajXX4t5g1QaBr
-        gphFL/zY5aCy+vWammCuZh8=
-X-Google-Smtp-Source: AGHT+IF6AezyVUMM4hv84Xg7FxRkiqbf/29K9tNiRD66O7t/j7TeeLhFmOTfhNkaMBAeJv1Jrem8ow==
-X-Received: by 2002:a1c:7417:0:b0:3f8:2777:15e with SMTP id p23-20020a1c7417000000b003f82777015emr6951349wmc.31.1693838243860;
-        Mon, 04 Sep 2023 07:37:23 -0700 (PDT)
-Received: from [192.168.1.212] ([90.242.223.1])
-        by smtp.gmail.com with ESMTPSA id f22-20020a7bc8d6000000b00401c9228bf7sm14111094wml.18.2023.09.04.07.37.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 Sep 2023 07:37:23 -0700 (PDT)
-Message-ID: <02c28b26-4658-43c8-b1d1-7f1e09bda609@gmail.com>
-Date:   Mon, 4 Sep 2023 15:37:14 +0100
+        d=1e100.net; s=20221208; t=1693838502; x=1694443302;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=p0x5WuSyYHAvPOTLAoT49uq8pcNO7dq4F5hhSG1a9vY=;
+        b=Jft9JZ5BCwBtQj9++peoT/8V2tIwGyV2zE9CyG/+lmB9VtRmJd+ei8US1yfb18yT+B
+         2HPcYFG7flBCmw6pRIJQxupaHeU7Y95VnBYKZ3clihvM47NdHxwhIGxCv5KPToLDFY4M
+         kysMGBJKRYbVVKK9JsPVnBiZYOiOy/asrWNZZ7R/B2PXR/l13T0p5Vz0cSZCoJ7bSk/m
+         E14IctN8EqFnk9uAqVIUwQWR+B53uc+A8OE/Ih1JSsNuOW5PpD64WiScyvvhy0fPTvsR
+         htb+qFKtCX3nZwYx4hNrqDE4Vsly8BbS4/AQKoTn3pX8ZpFD3ZaIh5s6rDbQCe92HRX5
+         RFLQ==
+X-Gm-Message-State: AOJu0Yw8xFdgOiHSxDA0aWtwuaAj3AanpQPrJGLYat8GoMUX4NZz3+gx
+        5gwCxQu+Upj6lHdUvVXX7OgXEmaKHZX4DKLeAu2C/Rk8E7pTY/OaBgoZsA==
+X-Google-Smtp-Source: AGHT+IGUI00KltzcUiTysLzMYs2/X8dkUI22mK+/+gOIr5zwSnBlc9uZWUdn27kjWixOlJWZlhOJiibzarj8tGG6p1g=
+X-Received: by 2002:aa7:d603:0:b0:523:4922:c9c4 with SMTP id
+ c3-20020aa7d603000000b005234922c9c4mr8480612edr.11.1693838501561; Mon, 04 Sep
+ 2023 07:41:41 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 6/7] rebase --continue: refuse to commit after failed
- command
-Content-Language: en-US
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Stefan Haller <lists@haller-berlin.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Glen Choo <chooglen@google.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <pull.1492.v2.git.1682089074.gitgitgadget@gmail.com>
- <pull.1492.v3.git.1690903412.gitgitgadget@gmail.com>
- <2ed7cbe5fff2d104a1246783909c6c4b75c559f2.1690903412.git.gitgitgadget@gmail.com>
- <a5bfea5f-0d0d-f7ed-3f72-37e3db6f5b2c@gmx.de>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <a5bfea5f-0d0d-f7ed-3f72-37e3db6f5b2c@gmx.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From:   Tao Klerks <tao@klerks.biz>
+Date:   Mon, 4 Sep 2023 16:41:31 +0200
+Message-ID: <CAPMMpoixKnr4BkKd8jeU+79Edhqtu4R7m8=BX4ZSYKdBHDzK=w@mail.gmail.com>
+Subject: Is "bare"ness in the context of multiple worktrees weird? Bitmap
+ error in git gc.
+To:     git <git@vger.kernel.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho
+Hi folks,
 
-On 23/08/2023 10:01, Johannes Schindelin wrote:
-> Hi Phillip,
-> 
-> On Tue, 1 Aug 2023, Phillip Wood via GitGitGadget wrote:
-> 
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> If a commit cannot be picked because it would overwrite an untracked
->> file then "git rebase --continue" should refuse to commit any staged
->> changes as the commit was not picked. This is implemented by refusing to
->> commit if the message file is missing. The message file is chosen for
->> this check because it is only written when "git rebase" stops for the
->> user to resolve merge conflicts.
->>
->> Existing commands that refuse to commit staged changes when continuing
->> such as a failed "exec" rely on checking for the absence of the author
->> script in run_git_commit(). This prevents the staged changes from being
->> committed but prints
->>
->>      error: could not open '.git/rebase-merge/author-script' for
->>      reading
->>
->> before the message about not being able to commit. This is confusing to
->> users and so checking for the message file instead improves the user
->> experience. The existing test for refusing to commit after a failed exec
->> is updated to check that we do not print the error message about a
->> missing author script anymore.
-> 
-> I am delighted to see an improvement of the user experience!
-> 
-> However, I could imagine that users would still be confused when seeing
-> the advice about staged changes, even if nothing was staged at all.
+I work with a project that often, or typically, benefits from having
+multiple worktrees where users are working with different versions of
+the code.
 
-If nothing is staged then this message wont trigger because is_clean 
-will be false.
+Worktrees make particular sense in this project for all the usual
+reasons, plus the fact that it is a very *large* repo - multiple gigs
+of repo, and very fast-moving; cloning and fetching less often is
+nice.
 
-> Could you introduce a new advice message specifically for the case where
-> untracked files are in the way and prevent changes from being applied?
+One problem that we found users to have, early on when we introduced
+worktrees, was that it was not obvious to users that there was (or why
+there was) a "main" worktree, containing the actual ".git" repo, and
+"subsidiary" worktrees, in the same directory location. Git by default
+makes worktrees *subfolders* of the initial/main worktree/folder, but
+we put them alongside each other to make other project tooling be able
+to treat all worktrees consistently; in daily use there is absolutely
+no difference between them, in all the "project tooling" there cannot
+be a practical difference... but if you choose to delete a worktree,
+and it happens to be the "special" one that contains the repo...
+you've just lost stuff that you didn't expect to lose (any local
+branches and stashes, basically).
 
-We have an advice message now that is printed when the rebase stops in 
-that case. The message here is printed when the user runs "rebase 
---continue" with staged changes and we're not expecting to commit 
-anything because the commit couldn't be picked or we're containing from 
-a break command or bad exec/label/reset etc.
+Because worktree use was so useful/widespread/critical on this
+project, and we already had a custom cloning process that introduced
+selective refspecs etc, we introduced a special clone topology: the
+initial clone is a bare repo, and that folder gets a specific clear
+name (ending in .git). Then we create worktrees attached to that bare
+repo.
 
+Generally speaking, this has worked *very* well: I would recommend it
+generally as a recognized/supported local-repo-setup. The most
+important thing that makes this *possible* is the fact that "git
+rev-parse --is-bare-repository" returns True in the bare repo folder,
+where the lack of index and HEAD shouldn't bother git, and it returns
+False in any one of the worktrees. It feels like things were designed
+to work this way, even though I can find no explicit mention of this
+topology in the docs.
 
-> P.S.: To save both you and me time, here is my ACK for patch 7/7
-> (actually, the entire patch series, but _maybe_ you want to change
-> "impove" -> "improve" in the cover letter's subject) ;-)
+However, from time to time something weird happens: Today I finally
+started to understand why I was seeing a crazy GC error about bitmaps,
+intermittently: It seems to be because "git gc" wants to create
+bitmaps in bare repos, but can't do so properly when we're in a
+partial clone... or something like that?
 
-Thanks for taking the time to read through the patches and for you 
-comments. I'll fix the typo when I re-roll
+EG repro:
+```
+git clone --bare https://github.com/ksylor/ohshitgit dangit_shared.git
+--filter=blob:none
+git -C dangit_shared.git worktree add $PWD/dangit_wt3
+cd dangit_wt3/
+echo "this is some new unique blob in the repo" > new_blob.txt
+git add new_blob.txt && git commit -m "new blob"
+cd ../dangit_shared.git/
+git gc
+```
 
-Best Wishes
+This yields, at the end of the GC run:
+```
+warning: Failed to write bitmap index. Packfile doesn't have full
+closure (object bf86ed1b2602ac3a8d4724bcdf6707b156673aac is missing)
+fatal: failed to write bitmap index
+fatal: failed to run repack
+```
 
-Phillip
+On the other hand, running "git gc" in one of the worktrees works fine
+(except you first need to delete a couple of ".tmp-*" files from the
+"objects/pack" folder, if you already got the error above).
 
->>
->> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->> ---
->>   sequencer.c                   |  5 +++++
->>   t/t3404-rebase-interactive.sh | 18 +++++++++++++++++-
->>   t/t3430-rebase-merges.sh      |  4 ++++
->>   3 files changed, 26 insertions(+), 1 deletion(-)
->>
->> diff --git a/sequencer.c b/sequencer.c
->> index e25abfd2fb4..a90b015e79c 100644
->> --- a/sequencer.c
->> +++ b/sequencer.c
->> @@ -4977,6 +4977,11 @@ static int commit_staged_changes(struct repository *r,
->>
->>   	is_clean = !has_uncommitted_changes(r, 0);
->>
->> +	if (!is_clean && !file_exists(rebase_path_message())) {
->> +		const char *gpg_opt = gpg_sign_opt_quoted(opts);
->> +
->> +		return error(_(staged_changes_advice), gpg_opt, gpg_opt);
->> +	}
->>   	if (file_exists(rebase_path_amend())) {
->>   		struct strbuf rev = STRBUF_INIT;
->>   		struct object_id head, to_amend;
->> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
->> index 6d3788c588b..a8ad398956a 100755
->> --- a/t/t3404-rebase-interactive.sh
->> +++ b/t/t3404-rebase-interactive.sh
->> @@ -604,7 +604,8 @@ test_expect_success 'clean error after failed "exec"' '
->>   	echo "edited again" > file7 &&
->>   	git add file7 &&
->>   	test_must_fail git rebase --continue 2>error &&
->> -	test_i18ngrep "you have staged changes in your working tree" error
->> +	test_i18ngrep "you have staged changes in your working tree" error &&
->> +	test_i18ngrep ! "could not open.*for reading" error
->>   '
->>
->>   test_expect_success 'rebase a detached HEAD' '
->> @@ -1290,6 +1291,11 @@ test_expect_success 'rebase -i commits that overwrite untracked files (pick)' '
->>   	test_cmp_rev REBASE_HEAD I &&
->>   	rm file6 &&
->>   	test_path_is_missing .git/rebase-merge/patch &&
->> +	echo changed >file1 &&
->> +	git add file1 &&
->> +	test_must_fail git rebase --continue 2>err &&
->> +	grep "error: you have staged changes in your working tree" err &&
->> +	git reset --hard HEAD &&
->>   	git rebase --continue &&
->>   	test_cmp_rev HEAD I
->>   '
->> @@ -1310,6 +1316,11 @@ test_expect_success 'rebase -i commits that overwrite untracked files (squash)'
->>   	test_cmp_rev REBASE_HEAD I &&
->>   	rm file6 &&
->>   	test_path_is_missing .git/rebase-merge/patch &&
->> +	echo changed >file1 &&
->> +	git add file1 &&
->> +	test_must_fail git rebase --continue 2>err &&
->> +	grep "error: you have staged changes in your working tree" err &&
->> +	git reset --hard HEAD &&
->>   	git rebase --continue &&
->>   	test $(git cat-file commit HEAD | sed -ne \$p) = I &&
->>   	git reset --hard original-branch2
->> @@ -1330,6 +1341,11 @@ test_expect_success 'rebase -i commits that overwrite untracked files (no ff)' '
->>   	test_cmp_rev REBASE_HEAD I &&
->>   	rm file6 &&
->>   	test_path_is_missing .git/rebase-merge/patch &&
->> +	echo changed >file1 &&
->> +	git add file1 &&
->> +	test_must_fail git rebase --continue 2>err &&
->> +	grep "error: you have staged changes in your working tree" err &&
->> +	git reset --hard HEAD &&
->>   	git rebase --continue &&
->>   	test $(git cat-file commit HEAD | sed -ne \$p) = I
->>   '
->> diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
->> index 4938ebb1c17..804ff819782 100755
->> --- a/t/t3430-rebase-merges.sh
->> +++ b/t/t3430-rebase-merges.sh
->> @@ -169,6 +169,10 @@ test_expect_success 'failed `merge -C` writes patch (may be rescheduled, too)' '
->>   	grep "^merge -C .* G$" .git/rebase-merge/done &&
->>   	grep "^merge -C .* G$" .git/rebase-merge/git-rebase-todo &&
->>   	test_path_is_missing .git/rebase-merge/patch &&
->> +	echo changed >file1 &&
->> +	git add file1 &&
->> +	test_must_fail git rebase --continue 2>err &&
->> +	grep "error: you have staged changes in your working tree" err &&
->>
->>   	: fail because of merge conflict &&
->>   	git reset --hard conflicting-G &&
->> --
->> gitgitgadget
->>
->>
+I at first thought this was a bug - but as I realized the problematic
+behavior was tied to the "core.bare" setting (and its expression at
+runtime through "git rev-parse --is-bare-repository"), it became more
+obvious that maybe the system could/should be able to make assumptions
+about the kind of repo that has this "true", and assume there are no
+local-object-derived non-promisor packfiles (or whatever it is about
+this example that makes things unhappy).
+
+So, I guess I'm confused as to what "core.bare" is supposed to mean:
+Is it intended to mean "there is no index nor HEAD here, and that's
+good, don't worry" (in which case my setup is presumably "supported",
+and the gc behavior is buggy?), or is it intended to mean "this is the
+kind of repository in which there are no worktrees" (in which case I
+am abusing the system and get the errors I deserve)?
+
+CC Dscho, who made the worktree support that I rely on work about 16
+years ago it seems, and Taylor Blau and Patrick Steinhardt, who I
+think have made changes in the area of the code concerned with whether
+or not we try to create bitmaps, and might have an opinion as to
+whether the assumptions made by "gc" at the moment are unsafe, or my
+use or "core.bare" in this context is wrong.
+
+Thanks for any feedback!
+Tao
