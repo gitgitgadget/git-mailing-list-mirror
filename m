@@ -2,151 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 379C0C71153
-	for <git@archiver.kernel.org>; Mon,  4 Sep 2023 10:16:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 82235C71153
+	for <git@archiver.kernel.org>; Mon,  4 Sep 2023 12:48:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239249AbjIDKQf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 Sep 2023 06:16:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55736 "EHLO
+        id S230219AbjIDMsV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 Sep 2023 08:48:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232168AbjIDKQf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Sep 2023 06:16:35 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A11461B4
-        for <git@vger.kernel.org>; Mon,  4 Sep 2023 03:16:31 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-402c1407139so13886425e9.1
-        for <git@vger.kernel.org>; Mon, 04 Sep 2023 03:16:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1693822590; x=1694427390; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=xClqB1Sf+LDfbBtxkdqOar+zKOtVdFVzNGms4y6p2o0=;
-        b=COi3bX2dcVLVAlRN4tgomTC2V7Nr0CJMvQa9XoCc3bxgimEUcYlM5utRNZCHrjDsTe
-         /IF9TVfLIaBlMA+R9SUcMUVzIe0w444pmSxYWSeeExKSQsq0izcs0Eu1He1jEsuPt9OB
-         b0O2WOpJ2YUp80/tFrl/m/kbniwEmkoWEqkeA+5syTOoJWBKCIPlpcooXTsucIal6S4O
-         z0X3KjKVF4Hoi0vaJ2uuaSt16/xTV022w/sQCTRtOqsx0Ymk2OaAFmAlQRSerHEYiu+9
-         Kc02YUyLaXBHf3xPB4kxlY/E+1S4uG8tCG0n51bJ3svx81oz/FOhBUevURjQ6EgqPz6Q
-         utfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693822590; x=1694427390;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xClqB1Sf+LDfbBtxkdqOar+zKOtVdFVzNGms4y6p2o0=;
-        b=Ga9GHOTatjKhSgwztWzG4jrYrKpTnh5HTXBUvV4P58WKLTuh2/yT+b6VoYgGpY4jE2
-         UDP5XR05ATPxSe23YO7XUvqkOvm2pct551tfKgKaNWHg3hPoMGOoglXwoUtqearlku3j
-         dDw5qA+Cxrl9TTV+gLifFEVE0PaH2BKRQAbE3WHsuMg4Wz+TvLhyet+F0AEWfLhLFHd9
-         IO6P2QuP6UKrz4/2w5oC3UsjX35iUckzVjUJmKwOhEqsNXlAnwT6mBSK4KkiswMtrMp9
-         4Y6ru64HlQpdHECNT8RCX8fAoUXyLnDOjBlRN3NTIVTcnWrStGP3yGK4Ftxvz1p5SBNU
-         Sx4w==
-X-Gm-Message-State: AOJu0YyGDMvDUi4+YIjVJP02wQjn/spxKrLS3JTZyN7WTTeqby2SZr75
-        NkFgav5pdA6JTkP4Ls1dPmvwuo6mrXFWGg==
-X-Google-Smtp-Source: AGHT+IHNv/JiqNLf51eh09pdr5UKizzpFqDwHt28E8y8oX0MkmGzIE//g5b7P+q0fF0obLZwQ1+fZg==
-X-Received: by 2002:a05:600c:218d:b0:401:cffd:995e with SMTP id e13-20020a05600c218d00b00401cffd995emr6856571wme.35.1693822589945;
-        Mon, 04 Sep 2023 03:16:29 -0700 (PDT)
-Received: from [192.168.1.101] ([90.242.223.1])
-        by smtp.googlemail.com with ESMTPSA id n8-20020a7bcbc8000000b00401d8810c8bsm16630417wmi.15.2023.09.04.03.16.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 Sep 2023 03:16:29 -0700 (PDT)
-Message-ID: <d9710161-ddb8-4b0a-9729-6b54cd56427d@gmail.com>
-Date:   Mon, 4 Sep 2023 11:16:28 +0100
+        with ESMTP id S229454AbjIDMsU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Sep 2023 08:48:20 -0400
+Received: from bluemchen.kde.org (bluemchen.kde.org [209.51.188.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E20ED1AD
+        for <git@vger.kernel.org>; Mon,  4 Sep 2023 05:48:14 -0700 (PDT)
+Received: from ugly.fritz.box (localhost [127.0.0.1])
+        by bluemchen.kde.org (Postfix) with ESMTP id 22069240DE;
+        Mon,  4 Sep 2023 08:48:12 -0400 (EDT)
+Received: by ugly.fritz.box (masqmail 0.3.6-dev, from userid 1000)
+        id 1qd900-NfT-00; Mon, 04 Sep 2023 14:48:12 +0200
+Date:   Mon, 4 Sep 2023 14:48:12 +0200
+From:   Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+To:     phillip.wood@dunelm.org.uk
+Cc:     git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] sequencer: update abort safety file more sparingly
+Message-ID: <ZPXSDKTjK4k1LGjk@ugly>
+References: <20230903151132.739166-1-oswald.buddenhagen@gmx.de>
+ <29fb7a38-1e92-457a-93ff-0e64ac09b907@gmail.com>
+ <ZPTdmnHfDcTBqaSl@ugly>
+ <fdf80c36-0e28-44f3-9cef-85d38d2d48f1@gmail.com>
+ <ZPTqEIvW3zJ4eafT@ugly>
+ <4e0628ab-c39c-410d-864b-b7c74f9e04b1@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 2/3] builtin/rebase.c: Emit warning when rebasing
- without a forkpoint
-To:     Junio C Hamano <gitster@pobox.com>,
-        Wesley Schwengle <wesleys@opperschaap.net>
-Cc:     git@vger.kernel.org
-References: <xmqq1qfiubg5.fsf@gitster.g>
- <20230902221641.1399624-1-wesleys@opperschaap.net>
- <20230902221641.1399624-3-wesleys@opperschaap.net>
- <xmqq4jkckuy7.fsf@gitster.g> <xmqqlednuagl.fsf@gitster.g>
-Content-Language: en-US
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqqlednuagl.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="6hBKrcZd/viSU9Dw"
+Content-Disposition: inline
+In-Reply-To: <4e0628ab-c39c-410d-864b-b7c74f9e04b1@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/09/2023 05:50, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
->> If you rewind to lose commits from the branch you are (re)building
->> against, and what was rewound and discarded was part of the work you
->> are building, whether it is on a local branch or on a remote branch
->> that contains what you have already pushed, they will be discarded,
->> it is by design, and it is a known deficiency with the fork-point
->> heuristics.  How the fork-point heuristics breaks down is rather
->> well known ...
-> 
-> Another tangent, this time very closely related to this topic, is
-> that it may be worth warning when the fork-point heuristics chooses
-> the base commit that is different from the original upstream,
-> regardless of how we ended up using fork-point heuristics.
 
-I think that is a good idea and would help to mitigate the surprise that 
-some users have expressed when --fork-point kicks and they didn't know 
-about it. I think we may want to compare "branch_base" which holds the 
-merge-base of HEAD and upstream with "restrict_revision" to decide when 
-to warn.
+--6hBKrcZd/viSU9Dw
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
 
-Best Wishes
+On Mon, Sep 04, 2023 at 11:05:22AM +0100, Phillip Wood wrote:
+>On 03/09/2023 21:18, Oswald Buddenhagen wrote:
+>> On Sun, Sep 03, 2023 at 08:48:14PM +0100, Phillip Wood wrote:
+>>> On 03/09/2023 20:25, Oswald Buddenhagen wrote:
+>>>> On Sun, Sep 03, 2023 at 07:40:00PM +0100, Phillip Wood wrote:
+>>>>> it only matters for "cherry-pick --skip"
+>>>>>
+>>>> that doesn't seem right. a --skip is just a --continue with a prior 
+>>>> reset, more or less.
+>>>
+>>> sequencer_skip() calls rollback_is_safe() which checks the abort 
+>>> safety file.
+>>>
+>> that's weird. can you think of a good reason for doing that?
+>
+>I think it is clear from the code - so it does not reset changes after 
+>the user has committed the conflict resolution.
+>
+yeah, i've researched that meanwhile.
+the background is that the machinery that was originally introduced for 
+abort safety was later (ab-)used for checking whether a --skip makes 
+sense (de81ca3f36, "cherry-pick/revert: add --skip option", 2019-07-02).  
+this made the state file a misnomer (not that "abort-safety" was a 
+particularly good name to start with - i'd have used "latest-head" or 
+some such).
 
-Phillip
+but the implementation made no sense to me, so i read the mailing list 
+archive. the result is the attached patch.
+however, even so, it seems kinda wrong to me: going by HEAD means that 
+dropping commits would also trigger it, which would make the given 
+advice misleading.
+in fact, the situation this code path is covering is fundamentally 
+different from the normal merge conflict: rather than letting the user 
+resolve it and us finishing the commit, we are rescheduling the pick.  
+but that means that --skip needs to skip whatever the next command is?  
+that doesn't sound right.
+also, i just tried --continue after a path conflict, and it apparently 
+did the same as --skip, so something is really wrong.
+also, when we have no _HEAD, actually attempting to `reset --merge` is 
+pointless, no?
 
-> Experienced users may not be confused when the heuristics kicks in
-> and when it does not (e.g. because they configured, because they
-> used the "lazy" form, or because they gave "--fork-point" from the
-> command line explicitly), but they still may get surprising results
-> if a reflog entry chosen to be used as the base by the heuristics is
-> not what they expected to be used, and can lose their work that way.
-> Imagine that you pushed your work to the remote that is a shared
-> repository, and then continued building on top of it, while others
-> rewound the remote branch to eject your work, and your "git fetch"
-> updated the remote-tracking branch.  You'll be pretty much in the
-> same situation you had in your reproduction recipe that rewound your
-> own local branch that you used to build your derived work on and
-> would lose your work the same way, if you do not notice that the
-> remote branch has been rewound (and the fork-point heuristics chose
-> a "wrong" commit from the reflog of your remote-tracking branch.
-> 
-> Perhaps something along the lines of this (not even compile tested,
-> though)...  It might even be useful to show a shortlog between the
-> .restrict_revision and .upstream, which is the list of commits that
-> is potentially lost, but that might turn out to be excessively loud
-> and noisy in the workflow of those who do benefit from the
-> fork-point heuristics because their project rewinds branches too
-> often and too wildly for them to manually keep track of.  I dunno.
-> 
-> 
->   builtin/rebase.c | 8 +++++++-
->   1 file changed, 7 insertions(+), 1 deletion(-)
-> 
-> diff --git c/builtin/rebase.c w/builtin/rebase.c
-> index 50cb85751f..432a97e205 100644
-> --- c/builtin/rebase.c
-> +++ w/builtin/rebase.c
-> @@ -1721,9 +1721,15 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->   	if (keep_base && options.reapply_cherry_picks)
->   		options.upstream = options.onto;
->   
-> -	if (options.fork_point > 0)
-> +	if (options.fork_point > 0) {
->   		options.restrict_revision =
->   			get_fork_point(options.upstream_name, options.orig_head);
-> +		if (options.restrict_revision &&
-> +		    options.restrict_revision != options.upstream)
-> +			warning(_("fork-point heuristics using %s from the reflog of %s"),
-> +				oid_to_hex(&options.restrict_revision->object.oid),
-> +				options.upstream_name);
-> +	}
->   
->   	if (repo_read_index(the_repository) < 0)
->   		die(_("could not read index"));
-> 
+oh, and i just noticed that the git-prompt is buggy: it doesn't tell me 
+about the interrupted multi-pick nested into an interrupted rebase.
 
+ugh, and rebase lets me continue despite still being in the multi-pick.
+
+and the path conflict check is made ineffective by the file in question 
+being in .gitignore?! (i force-added config.mak.autogen for testing, and 
+cherry-picking over it goes through just fine.)
+
+>> i think i'd aim for an object-oriented-ish design with an 
+>> encapsulated state, lazy loading getters, lazy setters, and a commit 
+>> entry point (or maybe several partial ones). no idea how that would 
+>> play out.
+>
+>I've been working on something similar
+>
+awesome!
+(well, except for the rebase nightmare in my own series i expect because 
+of this.)
+
+>to only write the state to disc when the sequencer stops for user 
+>interaction.
+>
+note that this must cover ctrl-c as well, because the sequencer state 
+must be consistent with HEAD. of course one could also delay updating 
+HEAD, but that hinges on no relevant hooks being present, i think?  
+git-replay has a huge advantage here ...
+
+regards
+
+--6hBKrcZd/viSU9Dw
+Content-Type: text/x-diff; charset=us-ascii
+Content-Disposition: attachment;
+	filename="0001-sequencer-improve-comment-in-sequencer_skip.patch"
+
+From eb81dc1d5ecb7d9d3cf4608b93c30250392f6fc7 Mon Sep 17 00:00:00 2001
+From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Date: Mon, 4 Sep 2023 13:07:04 +0200
+Subject: [PATCH] sequencer: improve comment in sequencer_skip()
+
+It wasn't clear under which circumstances the described path would be
+relevant.
+
+Change-Id: Ie9fd8a619dad4daf163c5efdb2f9a9eccf17307d
+Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+---
+ sequencer.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
+
+diff --git a/sequencer.c b/sequencer.c
+index c0ff165b83..11d2368ab1 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -3359,12 +3359,13 @@ int sequencer_skip(struct repository *r, struct replay_opts *opts)
+ 	 * If the corresponding .git/<ACTION>_HEAD exists, we know that the
+ 	 * action is in progress and we can skip the commit.
+ 	 *
+-	 * Otherwise we check that the last instruction was related to the
+-	 * particular subcommand we're trying to execute and barf if that's not
+-	 * the case.
+-	 *
+-	 * Finally we check that the rollback is "safe", i.e., has the HEAD
+-	 * moved? In this case, it doesn't make sense to "reset the merge" and
++	 * But if the action would have overwritten an untracked file, no
++	 * corresponding _HEAD file exists.
++	 * In this case we fall back to checking that the last instruction was
++	 * related to the particular subcommand we're trying to execute and barf
++	 * if that's not the case.
++	 * We also check that the rollback is "safe", i.e., whether the HEAD
++	 * moved. If it did, it doesn't make sense to "reset the merge" and
+ 	 * "skip the commit" as the user already handled this by committing. But
+ 	 * we'd not want to barf here, instead give advice on how to proceed. We
+ 	 * only need to check that when .git/<ACTION>_HEAD doesn't exist because
+-- 
+2.42.0.324.gb1ea313d68
+
+
+--6hBKrcZd/viSU9Dw--
