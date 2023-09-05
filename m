@@ -2,123 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41CA1CA0FFF
-	for <git@archiver.kernel.org>; Tue,  5 Sep 2023 19:08:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4381C83F3E
+	for <git@archiver.kernel.org>; Tue,  5 Sep 2023 19:25:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241622AbjIETID (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Sep 2023 15:08:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49668 "EHLO
+        id S236319AbjIETZd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Sep 2023 15:25:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241620AbjIETIC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Sep 2023 15:08:02 -0400
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B65E69F
-        for <git@vger.kernel.org>; Tue,  5 Sep 2023 12:07:32 -0700 (PDT)
-Received: by mail-pf1-x436.google.com with SMTP id d2e1a72fcca58-68bed2c786eso1922534b3a.0
-        for <git@vger.kernel.org>; Tue, 05 Sep 2023 12:07:32 -0700 (PDT)
+        with ESMTP id S237513AbjIETZ3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Sep 2023 15:25:29 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0003E46
+        for <git@vger.kernel.org>; Tue,  5 Sep 2023 12:25:00 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id 4fb4d7f45d1cf-52a1ce52ef4so4112100a12.2
+        for <git@vger.kernel.org>; Tue, 05 Sep 2023 12:25:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1693940801; x=1694545601; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=L9G4lJHNJRCMkqHJXhj+rP/1SboK06GBw+jpieoSgDU=;
-        b=oirvodon23tcvPcWmDkPN08mRMoSTaoHpCUviJtzvHZ7WaCFQvIPrYmYaj7ddQJuWs
-         6bIAx0cc6ZjcO/MFKFFg6yHwcaLlXADetRgNLZbcPCqec26jqvcti5QcNsPsn68wqwUn
-         OvJqLi8LidksZ6//9GNjH6mNhffJPUTY+b8+XoL/bdaC9c+4cW76I29bCMgYmMq4Pjq/
-         mbaOggeDvlfzbJYYr77689qzjdBCI1MGD2VTJURPo+3YB+GFh4j+H0ChpzMRnfcdkCBC
-         IWREIt7R8pto1A0atcZ4rSy4gZsQP1xT/Ekdz9Tq8Zhs6knSs54vXJq0LwOMxC4WTdeR
-         H4Ag==
+        d=gmail.com; s=20221208; t=1693941897; x=1694546697; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:date:subject:cc:to:from:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=vNiyZTcBktaN35hdEi1ccJ99DBVek94ghG2MjZ0SpvM=;
+        b=UFzr0ZlI42vfXrdtXX6qThR+EWiY8sEkezzGAx8kaN6zr8zo6LXkQQTUxPxH6hkKKT
+         2sBcHZndhcP0Km1ynvVEAeyWdejrUBudeleTzzdBq0WNIAQ6zt1IoNTRp2XKC9oUWS8n
+         2GM9NyfraOy4IK1PbnmxWJ2+IodLz9NCgUIud0HNLYlkt6vhphAwZ80iT0sw1LQcbKvo
+         tnAOA7Y5SMX+l/5lifU8o9RZgoJ7+CFk7Av1lpMBYUKq6ada+1jhuCQ6bwJK0i71B7Tv
+         9C8+rAaqvHeo/oj2kGJjV+CeE35UdeOf2RY8Rze9/ra6f6eLnfPcX3aIHMssh4QuIv3D
+         Wx5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693940801; x=1694545601;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=L9G4lJHNJRCMkqHJXhj+rP/1SboK06GBw+jpieoSgDU=;
-        b=SWNBio42drJhURqc4nEG9Dpx4CADWtlhi/a206e5tqrCgrjfDqPcgJls8BTcnbO9KP
-         oyasAeq8xV21Vw2N9o0/C5tLffquEkXk1mlkKvdvRyfgiOrSwhNO5LAa/f2uPRB/J45c
-         dRoH06xYcYVoT6ZOwKmJ2Rt9LZWeINBg+mTJZqjY867WidcnfUZ46JuvQGjFVXwFQzgK
-         h7/RKYoQ8/v5rTiDiFBx+R7b5gCFCjWqDKzmp7z6md3Ns7twuu9g1r8y6Iv/4KbFugbA
-         w+3EXzbjXe6VW+QMt59Ew4C9uwuEbWw86tyVSRhC5UqCenaGlsD8ZBHmoJimrcWYRh/r
-         gU3Q==
-X-Gm-Message-State: AOJu0YxLAZPrrvyk3TuZ5jCpeuPxuvq2u0sdxJUVqNwciut0SRGRpxET
-        rsFQTP4L2wWEO2VfUMLNfppucJjL+L6qjLqKeuM7od+0l8g=
-X-Google-Smtp-Source: AGHT+IE0U9NqpT87aNa8t3vY+SCqmtAsXAP2m0V0Juy4R3BOTF2XbHq3CC5J+j9HutsiXwrz6gWdh4kWKEPytbdPekA=
-X-Received: by 2002:a05:6a20:142:b0:14b:dd4e:bd7f with SMTP id
- 2-20020a056a20014200b0014bdd4ebd7fmr11302228pzs.4.1693940801163; Tue, 05 Sep
- 2023 12:06:41 -0700 (PDT)
-MIME-Version: 1.0
-From:   Max Amelchenko <maxamel2002@gmail.com>
-Date:   Tue, 5 Sep 2023 22:06:27 +0300
-Message-ID: <CAN47KsVqamQgFT6sNS=C3Mz=aHEeaRYCYDrkFp3YgZUkSNYzqw@mail.gmail.com>
-Subject: git clone command leaves orphaned ssh process on system
+        d=1e100.net; s=20221208; t=1693941897; x=1694546697;
+        h=mime-version:user-agent:message-id:date:subject:cc:to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vNiyZTcBktaN35hdEi1ccJ99DBVek94ghG2MjZ0SpvM=;
+        b=UZ0RP5mea5cBR+/cZvQJnV9ek6K8rSJqz2RCuJLKVBUVGPJ2m7DfBqj9a9oi/gF/hH
+         XZlt1I/qgG0r/IL7zBKXfp7q/TQzUBmD0oxQiI3tvs1JW7b1u+0st6+125wWyZYiYGH0
+         fJObNWT51mhNf45VtfmeJr5PDyLonoEyNmVbyxO79yNWCsGEHUpsrjlFe1qUbg5H2BMW
+         R+Nwi8Oa8w8Q/Wm89NukU8LxMF+SaUGsB+h8R6551uOdVXTM08/VjoH+EadLr6G89NB8
+         RwMa3sGnmVRI/FdFN3VuXfXW9/SxFfD0CC9ufka8xiaNco/DSx5BeOUyIqYOrnbQjhju
+         J+jw==
+X-Gm-Message-State: AOJu0YyRUQwnFzXd8g8/HIqe3g9nUv8gzDS/+9R+0kmeH3TurjeEMp/8
+        gzjjtm3jeLkfDKaxWAcr1Hzb5pJ0nu8=
+X-Google-Smtp-Source: AGHT+IF9GpGH3Y32vG9XWj7Z55VGXWH0FA9eSzsH0lX3llC6ha0vALKWDhF4xYP4daSHnGnczG7jdA==
+X-Received: by 2002:a19:4f54:0:b0:500:9734:545a with SMTP id a20-20020a194f54000000b005009734545amr394548lfk.5.1693936348482;
+        Tue, 05 Sep 2023 10:52:28 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id c19-20020ac25313000000b004fe7011072fsm2450969lfh.58.2023.09.05.10.52.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Sep 2023 10:52:27 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Junio C Hamano <gitster@pobox.com>, John Cai <johncai86@gmail.com>
+Subject: [PATCH 1/1] doc/diff-options: fix link to generating patch section
+Date:   Tue, 05 Sep 2023 20:52:27 +0300
+Message-ID: <87zg20qzhg.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+First, there is no need for conditional referencing, as all the files
+that include "diff-options.txt" eventually include
+"diff-generate-patch.txt" as well.
 
-Run the command:
-ps aux
-Observe no ssh processes running on system.
+Next, when formatted as man-page, the section title is rendered
+"GENERATING PATCH TEXT WITH -P" whereas reference still reads
+"Generating patch text with -p", that is both inconsistent and makes
+searching harder than it needs to be.
 
-Run git clone against a non-existent hostname:
-git clone -v --depth=1 -b 3.23.66
-ssh://*****@*****lab-prod.server.sim.cloud/terraform/modules/aws-eks
-/tmp/dest
-Observe the command fails with:
+Fix the issues by just referring to the section, without custom
+reference text, and then unconditionally.
 
-Could not resolve hostname *****lab-prod.server.sim.cloud: Name or
-service not known
+Fixes: ebdc46c242 (docs: link generating patch sections)
+Signed-off-by: Sergey Organov <sorganov@gmail.com>
+---
+ Documentation/diff-options.txt | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-Run:
-ps aux
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index 9f33f887711d..c07488b123c6 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -22,13 +22,7 @@ ifndef::git-format-patch[]
+ -p::
+ -u::
+ --patch::
+-	Generate patch (see section titled
+-ifdef::git-log[]
+-<<generate_patch_text_with_p, "Generating patch text with -p">>).
+-endif::git-log[]
+-ifndef::git-log[]
+-"Generating patch text with -p").
+-endif::git-log[]
++	Generate patch (see <<generate_patch_text_with_p>>).
+ ifdef::git-diff[]
+ 	This is the default.
+ endif::git-diff[]
+-- 
+2.25.1
 
-Observe a defunct ssh process is left behind.
-
-
-What did you expect to happen? (Expected behavior)
-I expected the command to quit without leaving any processes behind.
-
-What happened instead? (Actual behavior)
-The command quit and left a defunct ssh process on the system.
-
-What's different between what you expected and what actually happened?
-I don't want zombie processes left after any git command (either failed or not).
-
-Anything else you want to add:
-These processes are zombie orphaned, meaning we're stuck with them
-until system reboot (which is bad).
-
-Please review the rest of the bug report below.
-
-You can delete any lines you don't wish to share.
-
-
-
-[System Info]
-
-git version:
-
-git version 2.40.1
-
-cpu: aarch64
-
-no commit associated with this build
-
-sizeof-long: 8
-
-sizeof-size_t: 8
-
-shell-path: /bin/sh
-
-compiler info: gnuc: 7.3
-
-libc info: glibc: 2.26
-
-$SHELL (typically, interactive shell): <unset>
-
-
-
-[Enabled Hooks]
-
-not run from a git repository - no hooks to show
