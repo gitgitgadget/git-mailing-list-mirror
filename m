@@ -2,89 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B910CA0FFD
-	for <git@archiver.kernel.org>; Tue,  5 Sep 2023 15:59:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 096ABCA0FF3
+	for <git@archiver.kernel.org>; Tue,  5 Sep 2023 16:00:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233163AbjIEP75 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Sep 2023 11:59:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44168 "EHLO
+        id S233219AbjIEQAA convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Tue, 5 Sep 2023 12:00:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354518AbjIEMMw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Sep 2023 08:12:52 -0400
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03D5412A
-        for <git@vger.kernel.org>; Tue,  5 Sep 2023 05:12:26 -0700 (PDT)
-Received: by mail-pf1-x42b.google.com with SMTP id d2e1a72fcca58-68a529e1974so1401405b3a.3
-        for <git@vger.kernel.org>; Tue, 05 Sep 2023 05:12:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1693915945; x=1694520745; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=o4REez0xpcO8Qotr3H2O8AOOCsAvKLWOyezsej6pW0M=;
-        b=i4a+Vl4eWyYqNWA93yCm7bPZEvjEQc/1Re3s9J4ygQ7hAN4aHRnkogCovOnaA0a81A
-         mTId9hlnJ+73pHgJitvJqo3yRYO9rJTstTIPEd89dK1DR2ITkSCGX/Nw9aXXXfQMJvB4
-         U4bB7mdbGDGWLXW9gYPSZAeRz0GdRqlvMIiUBuoBwi97/8+2Wr1uNZMeEsUqo2YmIuxo
-         1Xg3s7nd6zB1LGR/gytTYm7ArTslOP6Ebv8KJYmpf7LjohG1dFEITKuhLChrr1zA48LM
-         uySgeSm03wqUWfp5ChK6fa5pTvhKbQx9jBk6OWWgHyxPG5f9hMJVV78TkM9Aw/CYSVTD
-         aMNQ==
+        with ESMTP id S1352400AbjIEFoK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Sep 2023 01:44:10 -0400
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B643DD
+        for <git@vger.kernel.org>; Mon,  4 Sep 2023 22:44:06 -0700 (PDT)
+Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-76dbd877cd9so128899085a.0
+        for <git@vger.kernel.org>; Mon, 04 Sep 2023 22:44:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693915945; x=1694520745;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=o4REez0xpcO8Qotr3H2O8AOOCsAvKLWOyezsej6pW0M=;
-        b=WZOJ+WAwVOOTav/SuvtI2t74x4l4gqJsaDMVul0BB07YLXYseWwnpLsUd1PquaZxGm
-         2cw2Bzl5NLYlvM4tDNVam+lY0GA8eblRpkXqQtYSAozXcD2xOGLmKIvvDRkiS2Zmy6lW
-         a4Lf3E6NP1AP2eWXOllth6PsG03hsWnY5gg14YsPiibfYcrZ0cuq3HA1v17uyaMrH6Sc
-         ZchrYMEQq2mrKHtV0nZL+G36Fd2csL2CgsYHuNvyHhf20HlP3zASh1Fzn+fV3FLZ5Q7n
-         Pm9SjXAD7FM6GyFfLAgPt1083X/EqMXRs+WvVa3a/C/CDqidR7/PapxN0L5NTSQqBl4n
-         g/Xw==
-X-Gm-Message-State: AOJu0YxPZnZkx7p1HMit+ZzwxzVW1HCXSTnBqT4RAeXMhzpWzgQrAdF+
-        Kd/aNUQ1J2xgjTr2+NbaAf3oZ32fj098N/yBZM0=
-X-Google-Smtp-Source: AGHT+IGsQAmduNHRFnZdAZanZ6tvKo7Taj1jyh+DT0qODuVBcPc8dSCPJlkRJc7Uei1Kvx9toU9inA==
-X-Received: by 2002:a05:6a21:4841:b0:148:1826:f834 with SMTP id au1-20020a056a21484100b001481826f834mr10306014pzc.54.1693915945182;
-        Tue, 05 Sep 2023 05:12:25 -0700 (PDT)
-Received: from C02FT0QBMD6V.usts.net ([2408:8000:b001:1:1f:58ff:f102:103])
-        by smtp.gmail.com with ESMTPSA id jl4-20020a170903134400b001b9de4fb749sm9246422plb.20.2023.09.05.05.12.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Sep 2023 05:12:24 -0700 (PDT)
-From:   Han Young <hanyang.tony@bytedance.com>
-To:     git@vger.kernel.org
-Cc:     Han Young <hanyang.tony@bytedance.com>
-Subject: [PATCH] show doc: redirect user to git log manual instead of git diff-tree
-Date:   Tue,  5 Sep 2023 20:12:19 +0800
-Message-Id: <20230905121219.69762-1-hanyang.tony@bytedance.com>
-X-Mailer: git-send-email 2.40.0
+        d=1e100.net; s=20221208; t=1693892645; x=1694497445;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=J6cEqY+IuhpkbmwqGUh+JHBn2Pme4KdmB7R9tIzrXok=;
+        b=gkDB4PKEuvHN96fqGFne2lWOS79vrITCJBzR0VCObBMt9EetfrXUAV8O9dnz1B8H3N
+         kPTE9VZave+TA1lYrPlJ+6AZxyCXnuJ6MUb9VOtF/EDx3XSP5dM3nIkmfsuMMyMmtzBT
+         a36Fsj9Sq79J4S2txlTgYkPbv8GqVVGn6d8ob01Yg72XkaSpkZdPLgcrnKvzL1VwiG2m
+         u5f/63eQujMz46JCRLsJ1A6CDcUfNYYKJYgnHXkY1DmWwu846CV849O63n2lwCtdrAY4
+         3/WA2H2u3iY0tFiMPIV3Sagqj5vz2+nSAFSPE0EYK2Gexlrikecs05KyNa5V2XdQWah+
+         ZoXQ==
+X-Gm-Message-State: AOJu0Yy/W7mm+hH9rG8AtKfi/bcZm7jDgs1EhDALK7HflqSYYYPG8Oxl
+        hsytVWK3QsN1+SKPkXPAyUUr0vw6IdXLbEoA01M=
+X-Google-Smtp-Source: AGHT+IHTOJanaY/m9Gjh1lMIpWYYCR0fazOpk9KHqNrBAL/MF4JtX56Auzt5m95aA/3YjbDwTE3YQ+JxGKo1GdacbMU=
+X-Received: by 2002:a05:620a:2ae2:b0:76e:eeaa:a06e with SMTP id
+ bn34-20020a05620a2ae200b0076eeeaaa06emr13048278qkb.4.1693892645617; Mon, 04
+ Sep 2023 22:44:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAPMMpoixKnr4BkKd8jeU+79Edhqtu4R7m8=BX4ZSYKdBHDzK=w@mail.gmail.com>
+ <CAPig+cTeQDMpWQ-zCf6i9H-yhrdCndX6gs67sypuqmHZZcHm7w@mail.gmail.com> <xmqqedjdtoh5.fsf@gitster.g>
+In-Reply-To: <xmqqedjdtoh5.fsf@gitster.g>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 5 Sep 2023 01:43:54 -0400
+Message-ID: <CAPig+cRJhrGmnBRm2dporcXiRr4SzRmpM2LTMm0S7wo0XbOU9Q@mail.gmail.com>
+Subject: Re: Is "bare"ness in the context of multiple worktrees weird? Bitmap
+ error in git gc.
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Tao Klerks <tao@klerks.biz>, git <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While git show accepts options that apply to the git diff-tree command,
-some options do not make sense in the context of git show.
-The options of git show are handled using the machinery of git log.
-The git log manual page is a better place to look into than git diff-tree
-for options that are not in the git show manual page.
+On Mon, Sep 4, 2023 at 9:09 PM Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> > This is not accurate. There is no default location for new worktrees;
+> > git-worktree creates the new worktree at the location specified by the
+> > user:
+> >
+> >     git worktree add [<options>] <path> [<commit>]
+> >
+> > where <path> -- the only mandatory argument -- specifies the location.
+>
+> All correct.  The per-worktree part of the repository data does live
+> in a subdirectory of the ".git" directory and that was probably what
+> Tao had in mind, though.
 
-Signed-off-by: Han Young <hanyang.tony@bytedance.com>
----
- Documentation/git-show.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+That could be. I read Tao's explanation as meaning that people do this:
 
-diff --git a/Documentation/git-show.txt b/Documentation/git-show.txt
-index 2b1bc7288d..13f63f5210 100644
---- a/Documentation/git-show.txt
-+++ b/Documentation/git-show.txt
-@@ -26,7 +26,7 @@ with --name-only).
- 
- For plain blobs, it shows the plain contents.
- 
--The command takes options applicable to the 'git diff-tree' command to
-+The command takes options applicable to the 'git log' command to
- control how the changes the commit introduces are shown.
- 
- This manual page describes only the most frequently used options.
--- 
-2.40.0
+    git clone foo.git foo
+    cd foo
+    git worktree add bar
+    git worktree add baz
 
+rather than (perhaps) this:
+
+    git clone foo.git foo
+    cd foo
+    git worktree add ../bar
+    git worktree add ../baz
+
+But it's possible I misunderstood.
+
+> >> Is it the case that this contrib script predates the current "git
+> >> worktree" support?
+> >
+> > git-new-workdir predates git-worktree by quite a few years and, as I
+> > understand it, remains in-tree because it fills a niche not entirely
+> > filled by git-worktree.
+>
+> I actually think there is no longer a valid workflow whose support
+> by "worktree" is still insufficient and the script has outlived its
+> usefulness.  I have been a heavy user of the new-workdir script to
+> maintain my build environments, but I always have the HEAD of these
+> workdir's detached, so I can easily switch my arrangement to use the
+> "git worktree" without losing any flexibility.
+
+My response was based upon my recollection of the periodic message
+which shows up on the mailing list reporting a bug or submitting an
+improvement for git-new-workdir, accompanied by a statement that
+git-new-workdir is still a better fit for the user's particular
+use-case. But I've never used it myself, so it's good to hear from
+someone (you) who does use it.
+
+> Perhaps we should remove it, possibly leaving a tombstone file like
+> how we removed stuff from the contrib/examples directory.
+
+Perhaps.
