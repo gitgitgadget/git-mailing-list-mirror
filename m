@@ -2,101 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4381C83F3E
-	for <git@archiver.kernel.org>; Tue,  5 Sep 2023 19:25:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0743CA100D
+	for <git@archiver.kernel.org>; Tue,  5 Sep 2023 20:36:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236319AbjIETZd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Sep 2023 15:25:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54794 "EHLO
+        id S243802AbjIEUgs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Sep 2023 16:36:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237513AbjIETZ3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Sep 2023 15:25:29 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0003E46
-        for <git@vger.kernel.org>; Tue,  5 Sep 2023 12:25:00 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id 4fb4d7f45d1cf-52a1ce52ef4so4112100a12.2
-        for <git@vger.kernel.org>; Tue, 05 Sep 2023 12:25:00 -0700 (PDT)
+        with ESMTP id S241436AbjIEUgr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Sep 2023 16:36:47 -0400
+Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D961CE
+        for <git@vger.kernel.org>; Tue,  5 Sep 2023 13:36:39 -0700 (PDT)
+Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-58cbdf3eecaso28099567b3.0
+        for <git@vger.kernel.org>; Tue, 05 Sep 2023 13:36:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1693941897; x=1694546697; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:subject:cc:to:from:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=vNiyZTcBktaN35hdEi1ccJ99DBVek94ghG2MjZ0SpvM=;
-        b=UFzr0ZlI42vfXrdtXX6qThR+EWiY8sEkezzGAx8kaN6zr8zo6LXkQQTUxPxH6hkKKT
-         2sBcHZndhcP0Km1ynvVEAeyWdejrUBudeleTzzdBq0WNIAQ6zt1IoNTRp2XKC9oUWS8n
-         2GM9NyfraOy4IK1PbnmxWJ2+IodLz9NCgUIud0HNLYlkt6vhphAwZ80iT0sw1LQcbKvo
-         tnAOA7Y5SMX+l/5lifU8o9RZgoJ7+CFk7Av1lpMBYUKq6ada+1jhuCQ6bwJK0i71B7Tv
-         9C8+rAaqvHeo/oj2kGJjV+CeE35UdeOf2RY8Rze9/ra6f6eLnfPcX3aIHMssh4QuIv3D
-         Wx5Q==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1693946198; x=1694550998; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=vcSETnIdd8s4NxZiPJYoH/3BgpiFJSRMsCaTDhpiLk8=;
+        b=x+0gj8QHcjSNLvExASG27Ym1S2OcULGXCUMeO47WiGGyWorzgo/wJ3xQHwREcCTGTe
+         4YxOffz1tli3xdpjlSCFPGo0YbFnjuSXddYe+mCWITusIjq2fbcX/Vz/CC7VH7OPI2an
+         EkyFSikCVFdXAbu47JPd01CwcBLCy85ooalJu91y4ITF9aDmvdCcF68PDs5dk8WBzx5J
+         q9Nyzl7baoU9tqZhk49YsO8cSHWFb1M3oHmiqJkzgnvn1h5zKX4A1BWyGBK01G++G07a
+         q3SMlNElKzkOcdArqUI40xNWJU59McZep02y82i+vBAdufziXRWarRJGc7xqDOcUJCD0
+         bzAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693941897; x=1694546697;
-        h=mime-version:user-agent:message-id:date:subject:cc:to:from
+        d=1e100.net; s=20221208; t=1693946198; x=1694550998;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vNiyZTcBktaN35hdEi1ccJ99DBVek94ghG2MjZ0SpvM=;
-        b=UZ0RP5mea5cBR+/cZvQJnV9ek6K8rSJqz2RCuJLKVBUVGPJ2m7DfBqj9a9oi/gF/hH
-         XZlt1I/qgG0r/IL7zBKXfp7q/TQzUBmD0oxQiI3tvs1JW7b1u+0st6+125wWyZYiYGH0
-         fJObNWT51mhNf45VtfmeJr5PDyLonoEyNmVbyxO79yNWCsGEHUpsrjlFe1qUbg5H2BMW
-         R+Nwi8Oa8w8Q/Wm89NukU8LxMF+SaUGsB+h8R6551uOdVXTM08/VjoH+EadLr6G89NB8
-         RwMa3sGnmVRI/FdFN3VuXfXW9/SxFfD0CC9ufka8xiaNco/DSx5BeOUyIqYOrnbQjhju
-         J+jw==
-X-Gm-Message-State: AOJu0YyRUQwnFzXd8g8/HIqe3g9nUv8gzDS/+9R+0kmeH3TurjeEMp/8
-        gzjjtm3jeLkfDKaxWAcr1Hzb5pJ0nu8=
-X-Google-Smtp-Source: AGHT+IF9GpGH3Y32vG9XWj7Z55VGXWH0FA9eSzsH0lX3llC6ha0vALKWDhF4xYP4daSHnGnczG7jdA==
-X-Received: by 2002:a19:4f54:0:b0:500:9734:545a with SMTP id a20-20020a194f54000000b005009734545amr394548lfk.5.1693936348482;
-        Tue, 05 Sep 2023 10:52:28 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id c19-20020ac25313000000b004fe7011072fsm2450969lfh.58.2023.09.05.10.52.27
+        bh=vcSETnIdd8s4NxZiPJYoH/3BgpiFJSRMsCaTDhpiLk8=;
+        b=bOYr64266v3pZ5sS0TddiPfBXfU/1rSpB+nGNOURddmllJJ4NlEbiJdVjkGCl7tWNj
+         kGVRNQUYgv9hHu0a+tLJ2JR4PSB9ZxdCEcYZ2VxgVAi7mTaFDFy2YtKKxV+ktkmyUw9l
+         2WMr2Hgnz5dsDnw50kjk2wCTRU/zAFC+ih6gi555yS/tcdQ/FqMPAXrrz1Ay//QQIBzy
+         f5p16JUt1QKqEtV8lkL8c+n/fSVuspuleatfPaPgzwBYeZFvHyUE3y8FPj0OfyWVzUfg
+         gcObnf0N0EqCi7EZaU6fpErXKMVqxKKKb+v9vZ+FQYbo0x+tzxeqkYOtCPVZ0MwtN3db
+         X0hA==
+X-Gm-Message-State: AOJu0YyWZK4NuSznsfMhLlHNPkJqO5om34ED3zPKvvz8nKtRy9xpoxlF
+        XYtoTgcC28hHIXvEa03XIs7GaWqAzXSvtJ0PlrfGEA==
+X-Google-Smtp-Source: AGHT+IFH+YDmshKNxJyEjTFO3M3YL3S3mN12d/2es7EYlieXdd9aezrDv5fFjD3CLc6SxzstRmbPLQ==
+X-Received: by 2002:a81:a1d6:0:b0:583:c917:7ff0 with SMTP id y205-20020a81a1d6000000b00583c9177ff0mr13391413ywg.51.1693946198363;
+        Tue, 05 Sep 2023 13:36:38 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id z198-20020a0dd7cf000000b005925d7b62e0sm3343712ywd.24.2023.09.05.13.36.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Sep 2023 10:52:27 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
+        Tue, 05 Sep 2023 13:36:38 -0700 (PDT)
+Date:   Tue, 5 Sep 2023 16:36:37 -0400
+From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, John Cai <johncai86@gmail.com>
-Subject: [PATCH 1/1] doc/diff-options: fix link to generating patch section
-Date:   Tue, 05 Sep 2023 20:52:27 +0300
-Message-ID: <87zg20qzhg.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 0/8] repack: refactor pack snapshot-ing logic
+Message-ID: <cover.1693946195.git.me@ttaylorr.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-First, there is no need for conditional referencing, as all the files
-that include "diff-options.txt" eventually include
-"diff-generate-patch.txt" as well.
+This series refactors some of the 'git repack' internals to keep track
+of existing packs in a set of string lists stored in a single structure,
+instead of passing around multiple string lists to different functions
+throughout the various paths.
 
-Next, when formatted as man-page, the section title is rendered
-"GENERATING PATCH TEXT WITH -P" whereas reference still reads
-"Generating patch text with -p", that is both inconsistent and makes
-searching harder than it needs to be.
+The result is that the interface around pack deletion, marking packs as
+redundant, and handling the set of pre-existing packs (both kept and
+non-kept) is significantly cleaner without introducing any functional
+changes.
 
-Fix the issues by just referring to the section, without custom
-reference text, and then unconditionally.
+I didn't mean to produce so much churn when I started writing these
+patches, which began as a simple effort to rename a couple of variables
+for more consistency.
 
-Fixes: ebdc46c242 (docs: link generating patch sections)
-Signed-off-by: Sergey Organov <sorganov@gmail.com>
----
- Documentation/diff-options.txt | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+Thanks in advance for your review!
 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 9f33f887711d..c07488b123c6 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -22,13 +22,7 @@ ifndef::git-format-patch[]
- -p::
- -u::
- --patch::
--	Generate patch (see section titled
--ifdef::git-log[]
--<<generate_patch_text_with_p, "Generating patch text with -p">>).
--endif::git-log[]
--ifndef::git-log[]
--"Generating patch text with -p").
--endif::git-log[]
-+	Generate patch (see <<generate_patch_text_with_p>>).
- ifdef::git-diff[]
- 	This is the default.
- endif::git-diff[]
+Taylor Blau (8):
+  builtin/repack.c: extract structure to store existing packs
+  builtin/repack.c: extract marking packs for deletion
+  builtin/repack.c: extract redundant pack cleanup for --geometric
+  builtin/repack.c: extract redundant pack cleanup for existing packs
+  builtin/repack.c: extract `has_existing_non_kept_packs()`
+  builtin/repack.c: store existing cruft packs separately
+  builtin/repack.c: drop `DELETE_PACK` macro
+  builtin/repack.c: extract common cruft pack loop
+
+ builtin/repack.c | 288 ++++++++++++++++++++++++++++-------------------
+ 1 file changed, 174 insertions(+), 114 deletions(-)
+
 -- 
-2.25.1
-
+2.42.0.119.gca7d13e7bf
