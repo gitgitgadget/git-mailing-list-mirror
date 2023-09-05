@@ -2,79 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DECA1CCF9E5
-	for <git@archiver.kernel.org>; Tue,  5 Sep 2023 23:26:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 609BCCCF9F0
+	for <git@archiver.kernel.org>; Wed,  6 Sep 2023 00:02:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235493AbjIEX0f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Sep 2023 19:26:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47206 "EHLO
+        id S243515AbjIFADA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Sep 2023 20:03:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232289AbjIEX0f (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Sep 2023 19:26:35 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0651F9E
-        for <git@vger.kernel.org>; Tue,  5 Sep 2023 16:26:32 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B66DE25B46;
-        Tue,  5 Sep 2023 19:26:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=t4+eG5SPpiPNjqvhj8leeO8CCoQNF1Df25nr3c
-        9WmFs=; b=ybYjMBME272gwg4BBLl/pxjPwiPSK01rkVFJheYWeOChGRiy390Uwm
-        NJqI+4Y0J9hnnX26qDNQUMFiUsSysoaZPv52F5KzF9TEUGS6fFkE2iZojilpyKCQ
-        YgYYhTflqO1EqGdxobd+dopRaUZ2F36m4liUzuyttpiNhnuYPU0ys=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id AE74125B45;
-        Tue,  5 Sep 2023 19:26:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.145.39.59])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 35ACF25B44;
-        Tue,  5 Sep 2023 19:26:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Han Young <hanyang.tony@bytedance.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] show doc: redirect user to git log manual instead of
- git diff-tree
-In-Reply-To: <20230905121219.69762-1-hanyang.tony@bytedance.com> (Han Young's
-        message of "Tue, 5 Sep 2023 20:12:19 +0800")
-References: <20230905121219.69762-1-hanyang.tony@bytedance.com>
-Date:   Tue, 05 Sep 2023 16:26:26 -0700
-Message-ID: <xmqq7cp4p5gd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        with ESMTP id S236879AbjIFADA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Sep 2023 20:03:00 -0400
+X-Greylist: delayed 409 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 05 Sep 2023 17:02:54 PDT
+Received: from forward203c.mail.yandex.net (forward203c.mail.yandex.net [178.154.239.218])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEFB01AB
+        for <git@vger.kernel.org>; Tue,  5 Sep 2023 17:02:54 -0700 (PDT)
+Received: from forward103b.mail.yandex.net (forward103b.mail.yandex.net [IPv6:2a02:6b8:c02:900:1:45:d181:d103])
+        by forward203c.mail.yandex.net (Yandex) with ESMTP id 6964D62757
+        for <git@vger.kernel.org>; Wed,  6 Sep 2023 02:56:08 +0300 (MSK)
+Received: from mail-nwsmtp-smtp-production-main-84.iva.yp-c.yandex.net (mail-nwsmtp-smtp-production-main-84.iva.yp-c.yandex.net [IPv6:2a02:6b8:c0c:332f:0:640:4ab4:0])
+        by forward103b.mail.yandex.net (Yandex) with ESMTP id 1BF1D60077;
+        Wed,  6 Sep 2023 02:56:03 +0300 (MSK)
+Received: by mail-nwsmtp-smtp-production-main-84.iva.yp-c.yandex.net (smtp/Yandex) with ESMTPSA id xthug44DbOs0-OjWnX2A1;
+        Wed, 06 Sep 2023 02:56:02 +0300
+X-Yandex-Fwd: 1
+Authentication-Results: mail-nwsmtp-smtp-production-main-84.iva.yp-c.yandex.net; dkim=pass
+Message-ID: <e8af1e31-793c-4623-bc97-13b80ac98774@perk11.info>
+Date:   Tue, 5 Sep 2023 18:55:56 -0500
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A2C46694-4C43-11EE-9190-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] advice: improve hint for diverging branches.
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>,
+        Konstantin Pereiaslov via GitGitGadget 
+        <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org
+References: <pull.1570.git.git.1693861162353.gitgitgadget@gmail.com>
+ <xmqqh6o8p5pl.fsf@gitster.g>
+From:   Konstantin Pereiaslov <perk11@perk11.info>
+In-Reply-To: <xmqqh6o8p5pl.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Han Young <hanyang.tony@bytedance.com> writes:
+Thank you, all good points. I will work on the wording
+improvements based on your suggestions.
 
-> While git show accepts options that apply to the git diff-tree command,
-> some options do not make sense in the context of git show.
+"Consider the following options:" should be on a new line and
+get a "hint:" prefix, I will fix that.
 
-Wow, "diff-tree" is a bit too arcane, I would agree.
 
-Strictly speaking, "options to control how the changes are shown"
-are options that are meant for "diff" command (e.g. "--stat", "-w"),
-but "log" understands some of the "diff" command options, the
-updated text is *not* incorrect.
+As far as the danger to the user, I was talking about the fact that
+the user doing "git reset --hard" is going to lose any uncommitted
+work as well as any commits currently in the branch.
 
-Because "show" is about displaying individual commits and not range,
-some options that are meant for the "log" command (e.g.
-"--first-parent", "--no-merges") do not make much sense.  So
+ > "But more importantly, what guarantees your recomputation using
+ > '*refspecs' here will match the result of the logic that computed
+ > 'divergent', which certainly would have already known what commit we
+ > tried to fast-forward our branch to, and where that commit came
+ > from?  We shouldn't be computing the same thing twice, and in
+ > different ways; that is a sure way to introduce inconsistent
+ > results.
 
-    Some options that `git log` command understands can be used to
-    control how the changes the commit introduces are shown.
+This makes sens, I did it this way because I wanted to get a remote and
+branch name, not just hash id and it was difficult to get this information.
+I will try to rework it so that it shares the code with the logic that 
+determines
+the divergence status.
+Any tips on what's the best way to do that would be highly appreciated.
 
-or something like that, perhaps?  I dunno.
-
-> -The command takes options applicable to the 'git diff-tree' command to
-> +The command takes options applicable to the 'git log' command to
->  control how the changes the commit introduces are shown.
->  
->  This manual page describes only the most frequently used options.
+On 9/5/23 18:20, Junio C Hamano wrote:
+> "Konstantin Pereiaslov via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>
+>> From: Konstantin Pereiaslov <perk11@perk11.info>
+>>
+>> Added a description of what the offered options will do and for pull
+>> also offered a 3rd option during a pull - a hard reset.
+>> This option should be helpful for the new users that accidentally
+>> committed into the wrong branch which is a scenario I saw very
+>> often.
+> cf. Documentation/SubmittingPatches:[[describe-changes]]
+>
+>> The resulting tooltip looks like this for pull:
+>>
+>> hint: Diverging branches can't be fast-forwarded.
+>> Consider the following options:
+> We do not give "hint:" prefix to this line???
+>
+>> hint:
+>> hint: To merge remote changes into your branch:
+>> hint:   git merge --no-ff
+>> hint:
+>> hint: To apply your changes on top of remote changes:
+>> hint:   git rebase
+> Hmph, "apply" -> "replay" perhaps?
+>
+>> hint: To discard your local changes and apply the remote changes:
+> Here "apply" is definitely a misnomer.  Nothing is applied; you just
+> discard your work and adopt (or "accept") the state of the remote as
+> a whole.
+>
+>> hint:   git reset --hard refs/remotes/upstream/branch-name
+>> hint:
+>> hint: Disable this message with "git config advice.diverging false"
+> OK.
+>
+> Overall, "... looks like this" should be shown a bit indented so
+> that the example stands out from the text that explains the example.
+>
+>> There is some danger because it's semi-destructive, but so are
+>> other options offered if user doesn't know the commands to
+>> revert back.
+> Sorry, but I do not quite understand what you want to say here.
+>
+>> @@ -1112,8 +1126,10 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+>>   
+>>   	/* ff-only takes precedence over rebase */
+>>   	if (opt_ff && !strcmp(opt_ff, "--ff-only")) {
+>> -		if (divergent)
+>> -			die_ff_impossible();
+>> +		if (divergent) {
+>> +			const char* pull_branch_spec = get_pull_branch(repo, *refspecs);
+> In this codebase, asterisk sticks to the variable/function
+> identifier, not types.
+>
+> But more importantly, what guarantees your recomputation using
+> '*refspecs' here will match the result of the logic that computed
+> 'divergent', which certainly would have already known what commit we
+> tried to fast-forward our branch to, and where that commit came
+> from?  We shouldn't be computing the same thing twice, and in
+> different ways; that is a sure way to introduce inconsistent
+> results.
+>
+>> +			die_ff_impossible_during_pull(pull_branch_spec);
+>> +		}
+>>   		opt_rebase = REBASE_FALSE;
+>>   	}
+>>   	/* If no action specified and we can't fast forward, then warn. */
+>>
+>> base-commit: d814540bb75bbd2257f9a6bf59661a84fe8cf3cf
+> Thanks.
