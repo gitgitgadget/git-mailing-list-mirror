@@ -2,96 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A7F6CA0FF3
-	for <git@archiver.kernel.org>; Tue,  5 Sep 2023 16:00:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DFB7DCA0FFD
+	for <git@archiver.kernel.org>; Tue,  5 Sep 2023 16:00:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233625AbjIEQAO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Sep 2023 12:00:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44224 "EHLO
+        id S233675AbjIEQAW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Sep 2023 12:00:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354869AbjIEPNr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Sep 2023 11:13:47 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E672F18D
-        for <git@vger.kernel.org>; Tue,  5 Sep 2023 08:13:43 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 17D2C1A8B54;
-        Tue,  5 Sep 2023 11:13:43 -0400 (EDT)
+        with ESMTP id S1354841AbjIEO5X (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Sep 2023 10:57:23 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03BA518C
+        for <git@vger.kernel.org>; Tue,  5 Sep 2023 07:57:19 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5429D1B6CEC;
+        Tue,  5 Sep 2023 10:57:12 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=9P9+gLRmsZYfT9uU1MK/wtg2a8fMIprfNurSKg
-        ATIOs=; b=BezAW04r8EdkQuzHYF2AQtFojEwyhL736MXodfUxDooozRfhvL7ktb
-        BpOu0M1x/0BrmX6HLO04woW+lQmUKNTlD280tD1jxyXGMeU40rXb9BWDm+BneFQx
-        Oxwr65ai/upA713pSeWj7b0pU5CpcSm/U3ozaoAho1WxwTrbG2Cms=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 100941A8B53;
-        Tue,  5 Sep 2023 11:13:43 -0400 (EDT)
+        :content-type; s=sasl; bh=1OXLlO5frn3Q9T/3Mi8SPAUucHarXLubLOaZSf
+        OJzZ4=; b=q1gbeSoTOr8+azJlf+rVHW5mBQNk/bWU6jhdTPCQ249qC/Ur9dy3gs
+        uOlFhMXR8erAje3pGGjXckOl6wtBBqgTs1+Qq6DFsHquU9YYbwvqWWLQY1tl3kDl
+        EDPJ405fT4qLVrfWM6ys4OHR01KRbaH0bH2C5AwclCsp8wA+dBvyM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4A57F1B6CEB;
+        Tue,  5 Sep 2023 10:57:12 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.145.39.59])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 713D61A8B52;
-        Tue,  5 Sep 2023 11:13:42 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B01D01B6CEA;
+        Tue,  5 Sep 2023 10:57:11 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Tao Klerks <tao@klerks.biz>, git <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>
-Subject: Re: Is "bare"ness in the context of multiple worktrees weird?
- Bitmap error in git gc.
-In-Reply-To: <CAPig+cRJhrGmnBRm2dporcXiRr4SzRmpM2LTMm0S7wo0XbOU9Q@mail.gmail.com>
-        (Eric Sunshine's message of "Tue, 5 Sep 2023 01:43:54 -0400")
-References: <CAPMMpoixKnr4BkKd8jeU+79Edhqtu4R7m8=BX4ZSYKdBHDzK=w@mail.gmail.com>
-        <CAPig+cTeQDMpWQ-zCf6i9H-yhrdCndX6gs67sypuqmHZZcHm7w@mail.gmail.com>
-        <xmqqedjdtoh5.fsf@gitster.g>
-        <CAPig+cRJhrGmnBRm2dporcXiRr4SzRmpM2LTMm0S7wo0XbOU9Q@mail.gmail.com>
-Date:   Tue, 05 Sep 2023 08:13:41 -0700
-Message-ID: <xmqqmsy0slei.fsf@gitster.g>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Stefan Haller <lists@haller-berlin.de>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Glen Choo <chooglen@google.com>
+Subject: Re: [PATCH v3 6/7] rebase --continue: refuse to commit after failed
+ command
+In-Reply-To: <87fbc8c9-f42b-b374-fee1-57c58f5e8fc0@gmx.de> (Johannes
+        Schindelin's message of "Tue, 5 Sep 2023 13:17:53 +0200 (CEST)")
+References: <pull.1492.v2.git.1682089074.gitgitgadget@gmail.com>
+        <pull.1492.v3.git.1690903412.gitgitgadget@gmail.com>
+        <2ed7cbe5fff2d104a1246783909c6c4b75c559f2.1690903412.git.gitgitgadget@gmail.com>
+        <a5bfea5f-0d0d-f7ed-3f72-37e3db6f5b2c@gmx.de>
+        <02c28b26-4658-43c8-b1d1-7f1e09bda609@gmail.com>
+        <87fbc8c9-f42b-b374-fee1-57c58f5e8fc0@gmx.de>
+Date:   Tue, 05 Sep 2023 07:57:10 -0700
+Message-ID: <xmqqy1hksm61.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: CCCCDA06-4BFE-11EE-9250-25B3960A682E-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 7E450FEA-4BFC-11EE-91A8-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
->> All correct.  The per-worktree part of the repository data does live
->> in a subdirectory of the ".git" directory and that was probably what
->> Tao had in mind, though.
->
-> That could be. I read Tao's explanation as meaning that people do this:
->
->     git clone foo.git foo
->     cd foo
->     git worktree add bar
->     git worktree add baz
->
-> rather than (perhaps) this:
->
->     git clone foo.git foo
->     cd foo
->     git worktree add ../bar
->     git worktree add ../baz
+> With your patch, there are now four users of the `is_clean` value, and
+> all but one of them ask for the negated value.
 
-Ah, that reading does totally make sense.
+Excellent observation.  That strongly argues for the flipping of
+polarity, i.e. many people want to know "is it unclean/dirty?".  It
+is funny that the name of the helper function where the value comes
+from, i.e. has_uncommitted_changes(), has the desired polarity.
 
-But I am not sure it would lead to "we need to carefully protect the
-primary worktree", because it is rather obvious, especially if you
-bypass "git worktree remove" and use "rm -fr", you would lose
-everybody underneath if you remove the "foo" in the "worktrees are
-subdirectories of the primary" variant in the above examples.
+> It's not really the responsibility of this patch series, but I could
+> imagine that it would be nicer to future readers if a patch was added that
+> would invert the meaning of that variable and rename it to
+> `needs_committing`. At least to me, that would make the intention of the
+> code eminently clearer.
 
-Even though deriving the worktree(s) from a separate and protected
-bare repositories does protect you from total disaster caused by
-removing "rm -fr" and bypassing "git worktree remove", it still
-should be discouraged, as the per-worktree states left behind in the
-repository interfere with the operations in surviving worktrees.
-Teaching folks not to do "rm -fr" would be the first step to a more
-pleasant end-user experience, I would think.
+While I agree, after reading the code, that it would make it easier
+to follow to flip the polarity of the variable, I would advise
+against renaming from state based naming (is it dirty?) to action
+based naming (must we commit?), *if* the variable is checked to
+sometimes see if we has something that we _could_ commit, while some
+other times to see if we _must_ commit before we can let the user
+proceed.
 
-Thanks.
+"Does the index hold some changes to be committed?" is better
+question than "Must we commit?" or "Could we commit?" to derive the
+name of this variable from if that is the case, I would think.
+
+
+
+
 
