@@ -2,89 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 080EACA0FFA
-	for <git@archiver.kernel.org>; Tue,  5 Sep 2023 16:03:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 93BE8CCF9AE
+	for <git@archiver.kernel.org>; Tue,  5 Sep 2023 16:18:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234071AbjIEQAm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Sep 2023 12:00:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53192 "EHLO
+        id S232745AbjIEP7m (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Sep 2023 11:59:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354355AbjIEK6T (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Sep 2023 06:58:19 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89D7D1A8
-        for <git@vger.kernel.org>; Tue,  5 Sep 2023 03:58:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de;
- s=s31663417; t=1693911486; x=1694516286; i=johannes.schindelin@gmx.de;
- bh=JO0TnVB1IFNbWL6uc+NnKzP0OK3dxp6ePWEy5sViIgU=;
- h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
- b=lmw/QljNWhlfF27yOzkWcy7kezvEidbFZKZ52kNtbPwBRCVV/MIShc+YxGFD1Id+6WbPpOR
- GfV3W4RCpPocZ6FMUBpjB4QDmP1hT/IrGN1XV0W6Mk1iyCGgR7Gy9vBQJ858SUQk1anDRdo/T
- Rmb5wrQ8MV9ZtfhCSXmiQPwKMAsKnXElnjZ/M5O5rNbZQzTah5L/NHZ6sIQw8Qjwle0/KBCE+
- kYoN5OlbAWW0QTr97VGjbGfkNS1lraSOGfzPhnezvZT8m7ekQlKR+pTqUMGcW2MuCWtIeZioO
- WEIf02zvA5qDnSmE0g7p2bKfXqisjXIFzPfvV1/v1uNGiOHHuKCw==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.214.152]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MvsJ5-1pky7t2nnr-00sygP; Tue, 05
- Sep 2023 12:58:06 +0200
-Date:   Tue, 5 Sep 2023 12:58:05 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] var: avoid a segmentation fault when `HOME` is unset
-In-Reply-To: <ZPY9j0XDt/VVMnhG@tapette.crustytoothpaste.net>
-Message-ID: <d43d0b9d-6e97-94e6-2843-e6025142f963@gmx.de>
-References: <pull.1580.git.1693808487058.gitgitgadget@gmail.com> <ZPY9j0XDt/VVMnhG@tapette.crustytoothpaste.net>
+        with ESMTP id S1353561AbjIEGn3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Sep 2023 02:43:29 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD2FE1B4
+        for <git@vger.kernel.org>; Mon,  4 Sep 2023 23:43:22 -0700 (PDT)
+Received: (qmail 13620 invoked by uid 109); 5 Sep 2023 06:43:21 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 05 Sep 2023 06:43:21 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19382 invoked by uid 111); 5 Sep 2023 06:43:10 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 05 Sep 2023 02:43:10 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 5 Sep 2023 02:43:07 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 02/10] merge: simplify parsing of "-n" option
+Message-ID: <20230905064307.GA199565@coredump.intra.peff.net>
+References: <20230831211637.GA949188@coredump.intra.peff.net>
+ <20230831211716.GB949469@coredump.intra.peff.net>
+ <75100a68-78d1-b22c-0497-36548c518b7b@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:CXfYiO1Yto4aA27uTkXptiknInK7NavwOuCtMOEjpYYlfKulHVu
- 2SWYcCm3sOYNhWrc2G5IKyhjBpjwv/FRx5QUBzGqndX20RrDJZwmoxr5HutJ6W8N1/+JmEU
- Q2lLiySdZEWOrbrhHqN82xXiJXsGp/mbgZkmG5Umgew4V61hoEVgwYrUqK6pb21AKAYS/hm
- 6lUpP0jqXyTT2mncV0AHQ==
-UI-OutboundReport: notjunk:1;M01:P0:CiaSesmIrSc=;yhhTkQuhgdiY9pEnLw3lKK+1EPM
- Qv+ZBLmxqT2CLboSbpb2g7QuCyn/DB1BlKlDvJPvaZ2LvDgcfyDuv7bm1256P11f63MF4tkAN
- valfupvFEjq7NRgmRI7ekPTp5LfdaqmhVePeDVeDi8iPVC5s+mRFtKX06qkp8/lW0TLW4nILV
- D/1uQa/xreVl7v7wYAidhLp0NYkYL5mo2b00svV3B4rrbaucedbCPbkg4RX1qXOtPyYT7R78J
- R6JIjMGF+c/wA1lP4TPhOmxoxB5QTWVk9R+o87o/uTAPQCtNcqnz9b3lwTUMUOrUlvpJxld0i
- PA+rSsO5mR123kostceCZHXENWgHD9R9Rp4zViB19qqXF0uSOCsTcr/8YDgU7Pika0Pc0qc0N
- 5/oEtdp9xa+frtM35Co+AqMEca2gNaTvsNSUsYq/gZo6pKSAA98hr/WhFLCaLziypEF0KaI1L
- Px7kzo+/uc6fGrVJCswDNMQsztGDIWE/A28Vyu8zlLVtRIZzzXq3ZgF5IXNXZDD0TUAyvkui9
- SkwrnmQ8522Wv6EmPahWcLYAJMZTF56M+iZxiiPBrsw9vj4aHjA24fyYYJz4wbo/mi6Zk4uiX
- GJ7XEa0tmcvQrMm3Z5P48pra7Fl6BDUeCdAugf62i9c8r+cPIoOG3z1RR7rMoV21l6mSHvrZu
- T5WisMCkR+vIlKl526k/0pxNTVJ0kcSf4BDzRoEfiw8unCl+6yM3+VuHoScweXP6/NmyQghpX
- /2oP36VhBcs53N2h/U6psKb3wcKlaLcW/jj/aKnvLD2XbNcDJzX2TkA6TGvf6gIsT+ac7pAhs
- gXCqpfd9duyvF7AsE1WQPqcKr7RGeD9J1OL/XcpnEARu6s5y26suZPHhHzb2xqRCeVzl6XrHB
- j7n8J1cioTD4bwwIY15EXNjWCgrNHLEGiEXXdLMIgAX8fci+9EC8fMFqQnyJLnwfs6H57hlbb
- 3yyFwA==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <75100a68-78d1-b22c-0497-36548c518b7b@web.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi brian,
+On Sat, Sep 02, 2023 at 08:20:28AM +0200, René Scharfe wrote:
 
-On Mon, 4 Sep 2023, brian m. carlson wrote:
+> >  static struct option builtin_merge_options[] = {
+> > -	OPT_CALLBACK_F('n', NULL, NULL, NULL,
+> > -		N_("do not show a diffstat at the end of the merge"),
+> > -		PARSE_OPT_NOARG, option_parse_n),
+> > +	OPT_SET_INT('n', NULL, &show_diffstat,
+> > +		N_("do not show a diffstat at the end of the merge"), 0),
+> >  	OPT_BOOL(0, "stat", &show_diffstat,
+> >  		N_("show a diffstat at the end of the merge")),
+> 
+> Makes it easier to see that we can replace the two complementary
+> definitions with a single one:
+> 
+> 	OPT_NEGBIT('n', "no-stat",
+> 		N_("do not show a diffstat at the end of the merge"), 1),
+> 
+> Which is a separate topic, of course.  And if we did that, however, ...
 
-> On 2023-09-04 at 06:21:26, Johannes Schindelin via GitGitGadget wrote:
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > The code introduced in 576a37fccbf (var: add attributes files location=
-s,
-> > 2023-06-27) paid careful attention to use `xstrdup()` for pointers kno=
-wn
-> > never to be `NULL`, and `xstrdup_or_null()` otherwise.
-> >
-> > One spot was missed, though: `git_attr_global_file()` can return `NULL=
-`,
-> > when the `HOME` variable is not set (and neither `XDG_CONFIG_HOME`), a
-> > scenario not too uncommon in certain server scenarios.
-> >
-> > Fix this, and add a test case to avoid future regressions.
->
-> Looks good to me.
+Ah, I thought we had a "reverse bool" of some kind, but I couldn't find
+it. NEGBIT was what I was looking for. But yeah, I agree it gets more
+complicated with the various aliases. I think what I have here is a good
+stopping point for this series, but if you want to go further on it, be
+my guest. :)
 
-Thank you for the review.
-
-Ciao,
-Johannes
+-Peff
