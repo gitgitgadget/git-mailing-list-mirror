@@ -2,63 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E02DECA0FFB
-	for <git@archiver.kernel.org>; Tue,  5 Sep 2023 16:00:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9351CA0FFC
+	for <git@archiver.kernel.org>; Tue,  5 Sep 2023 16:00:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229546AbjIEQAE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Sep 2023 12:00:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44512 "EHLO
+        id S233400AbjIEQAH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Sep 2023 12:00:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353688AbjIEHRY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Sep 2023 03:17:24 -0400
+        with ESMTP id S1353708AbjIEHYt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Sep 2023 03:24:49 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EA7BCC2
-        for <git@vger.kernel.org>; Tue,  5 Sep 2023 00:17:20 -0700 (PDT)
-Received: (qmail 13697 invoked by uid 109); 5 Sep 2023 07:17:20 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 429C7A8
+        for <git@vger.kernel.org>; Tue,  5 Sep 2023 00:24:46 -0700 (PDT)
+Received: (qmail 13712 invoked by uid 109); 5 Sep 2023 07:24:45 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 05 Sep 2023 07:17:20 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 05 Sep 2023 07:24:45 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19824 invoked by uid 111); 5 Sep 2023 07:17:21 -0000
+Received: (qmail 19873 invoked by uid 111); 5 Sep 2023 07:24:47 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 05 Sep 2023 03:17:21 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 05 Sep 2023 03:24:47 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 5 Sep 2023 03:17:19 -0400
+Date:   Tue, 5 Sep 2023 03:24:44 -0400
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] name-rev: use OPT_HIDDEN_BOOL for --peel-tag
-Message-ID: <20230905071719.GF199565@coredump.intra.peff.net>
-References: <5a86c8f8-fcdc-fee9-8af5-aa5ecb036d2e@web.de>
+To:     phillip.wood@dunelm.org.uk
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 0/2] replacing ci/config/allow-ref with a repo variable
+Message-ID: <20230905072444.GH199565@coredump.intra.peff.net>
+References: <20230830194919.GA1709446@coredump.intra.peff.net>
+ <8624fc43-ab42-442b-a141-851fc35dd24f@gmail.com>
+ <20230901173214.GA1947546@coredump.intra.peff.net>
+ <d3d1109b-3a1f-4e8b-be8d-6581d45f1b81@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <5a86c8f8-fcdc-fee9-8af5-aa5ecb036d2e@web.de>
+In-Reply-To: <d3d1109b-3a1f-4e8b-be8d-6581d45f1b81@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Sep 02, 2023 at 08:38:34PM +0200, René Scharfe wrote:
+On Mon, Sep 04, 2023 at 10:56:15AM +0100, Phillip Wood wrote:
 
-> adfc1857bd (describe: fix --contains when a tag is given as input,
-> 2013-07-18) added the option --peel-tag, defining it using a positional
-> struct option initializer and a comment indicating that it's intended to
-> be a hidden OPT_BOOL.  4741edd549 (Remove deprecated OPTION_BOOLEAN for
-> parsing arguments, 2013-08-03) added the macro OPT_HIDDEN_BOOL, which
-> allows to express this more succinctly.  Use it.
+> > Yes, I think it would be possible to do something like:
+> > 
+> >    if: |
+> >      (vars.CI_BRANCHES == '' || contains(vars.CI_BRANCHES, github.ref_name)) &&
+> >      !contains(vars.CI_BRANCHES_REJECT, github.ref_name)
+> > 
+> > It doesn't allow globbing, though. Do you need that?
+> 
+> Oh I'd missed that, yes I do. All the globs are prefix matches but I'm not
+> sure that helps.
 
-Yeah, this is a definite improvement.
+It does make it easier. There's no globbing function available to us,
+but if we know something is a prefix, there's a startsWith() we can use.
+It does seem we're getting a combinatorial expansion of things to check,
+though:
 
-OPT_HIDDEN_BOOL() itself is a little funny to me. I guess back then we
-did not have the "_F" variants, but really it is just:
+  - full names to accept
+  - full names to reject
+  - prefixes to accept
+  - prefixes to reject
 
-  OPT_BOOL_F(0, "peel-tag", &peel_tag,
-	     N_("dereference tags in the input (internal use)")),
-	     PARSE_OPT_HIDDEN);
-
-which would remove one more special case (after all, being hidden is
-orthogonal to the type). But there are enough of them that maybe having
-a special name for this is worth it. I dunno. But we could probably
-simplify the definition, at least. :)
+I wrote "prefixes" but I'm actually not sure how feasible that is. That
+implies iterating over the list of prefixes, which I'm not sure we can
+do.
 
 -Peff
