@@ -2,58 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39B8CCA1018
-	for <git@archiver.kernel.org>; Tue,  5 Sep 2023 16:45:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5084FCA0FFA
+	for <git@archiver.kernel.org>; Tue,  5 Sep 2023 17:56:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235802AbjIEQoy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Sep 2023 12:44:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49194 "EHLO
+        id S237647AbjIER4P (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Sep 2023 13:56:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349328AbjIEQVn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Sep 2023 12:21:43 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4820D1BCC
-        for <git@vger.kernel.org>; Tue,  5 Sep 2023 09:18:29 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-9a2a4a5472dso769651766b.1
-        for <git@vger.kernel.org>; Tue, 05 Sep 2023 09:18:29 -0700 (PDT)
+        with ESMTP id S237505AbjIER4F (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Sep 2023 13:56:05 -0400
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85B3C49E0
+        for <git@vger.kernel.org>; Tue,  5 Sep 2023 10:48:26 -0700 (PDT)
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-401f503b529so27791495e9.0
+        for <git@vger.kernel.org>; Tue, 05 Sep 2023 10:48:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks.biz; s=google; t=1693930261; x=1694535061; darn=vger.kernel.org;
+        d=klerks.biz; s=google; t=1693935726; x=1694540526; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=AtRrjSbeeslRhVyNu5hXFDOCNvWpNn+EbkEOctKt5Pc=;
-        b=Lw+ArrRHMJTvOEWkJEL/7HJU2o/nCK6hTgpOTVq9dBWWE/0mjrqaDqoB8YFZamLtba
-         PwR7xxGA2IisWFTh2kga69+jDSHVK9MmbSklcpsY3Qt2OmRoDU4YVwirjezJsccCKKEb
-         /EXwPBlqoJoe2mYaWjmxz35HeLco1/Yr7dik0=
+        bh=X6ChB/HHhC0N2JrW5kQD35fSttRmoo4Qu0o4QhF48bE=;
+        b=dZhOvXMrhAXnEqrqQ7vf9oAGKW/4DbNWdGZ26ltgj6c9D7kzDfiPUou20ot0Opy+mx
+         CeMVBwaubT5Kfps23vDe2pf/5U8L1gYxiq58Ecta7ME9aj3oMENjWJa+qAelXnN/S3gX
+         Uo65gmgWSwA7RUtOvLCRGd0rmCkb6ukGcV764=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693930261; x=1694535061;
+        d=1e100.net; s=20221208; t=1693935726; x=1694540526;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=AtRrjSbeeslRhVyNu5hXFDOCNvWpNn+EbkEOctKt5Pc=;
-        b=ZFXNQESlDfgKZU6GMda6kE2PtbDu4kr1cqy0+7dGhCFOQtH/HiQweTo++S3UFZPxc/
-         gyc2fd7R3LgVJLrV8NWx65yEuq3V8kH2C5Sxa4vCmrKVK5xaEn+eTMgV6ApyAciqZxEP
-         JIf0pbI6RTYz6BnUQ89H2eHQ2F6k2/vF6Yz4pLsHkY5dlhXuuWuRYPbGL0/LWORwcg+f
-         BCnUtsQnxIXbWWfOk0Rm8g/FEMZAB8PQq5lbs2i31Bk9C3qUbaY5YgIcdU6DEWBK7r9L
-         9xA2BwBJa+dhd09Tw4q0X68wI7JO1271ZrpbDGihVFqQx9zC6nHJZgG3zIOGEe6FUzsn
-         fIDA==
-X-Gm-Message-State: AOJu0Yz0ro4WoSTGh31aUo/gdM3oPHU4tP3dXsbN0uG3DR++TGv1KmzP
-        7NQBoSoXZiGXsxTO8mArGqwnOJfuvCGR80+Z56Da3g==
-X-Google-Smtp-Source: AGHT+IE+xgnbS6VLi7j4/z8aOldTd2u0Bg1mQM9b3fl37q5dY2/o1TLDrUxvf3G43k/uCYLs1ZemRejFDZtFtfpOse4=
-X-Received: by 2002:a17:907:97c6:b0:9a5:962c:cb6c with SMTP id
- js6-20020a17090797c600b009a5962ccb6cmr276121ejc.31.1693930260880; Tue, 05 Sep
- 2023 09:11:00 -0700 (PDT)
+        bh=X6ChB/HHhC0N2JrW5kQD35fSttRmoo4Qu0o4QhF48bE=;
+        b=Q4oyr3LJsI4Ccq5EcNHs3KU6gfpACSl5h5HREMPABWVBABf0FOmBOTuW9kvwQqyMnd
+         IFV3eyf53P0E0MR9/tLyphhcHfvOqLb/pDpDruXgMXp/AP/9khgslUWh2Q7UlNhNiEPb
+         xZWRVrhciTwswlFcvz8HsY0Azzsz/QQSpI7Jd0/lH5KsyMLJRf2GuUerDPRqiYtxPTg5
+         AwDl2ByXRdaP9U+sDMqMnz4AdNoy1somLRUH7fgwdtxXuNjwKHihWzD+Nv6cezmeeQkG
+         /G8drQGESFKYnc6OZwRo7MqrYJD3E1kLZN2B4ITXc+kWOot2AnFgsFD0qU6AQJtMgfys
+         +82w==
+X-Gm-Message-State: AOJu0YxDPKnooz+DIMnUcpGOfP4TRa70acwamiHt1s/P8RTY6J9KTK/k
+        mgEv5zfJbkiqJyx6NNJMn0WpfPE1m9tlNfaICVDXbiL7GjPsYc2Pmd56qw==
+X-Google-Smtp-Source: AGHT+IFGGNlD9pYgG2KnvhLI/NEn0msYvazkybnacmmOrSMkCM52zFgUYBoNwIsgYj9X+A+nqNqgh3b8NDckN2jy03g=
+X-Received: by 2002:a17:906:4d:b0:9a5:cf81:d556 with SMTP id
+ 13-20020a170906004d00b009a5cf81d556mr312486ejg.26.1693931124425; Tue, 05 Sep
+ 2023 09:25:24 -0700 (PDT)
 MIME-Version: 1.0
 References: <CAPMMpoixKnr4BkKd8jeU+79Edhqtu4R7m8=BX4ZSYKdBHDzK=w@mail.gmail.com>
  <CAPig+cTeQDMpWQ-zCf6i9H-yhrdCndX6gs67sypuqmHZZcHm7w@mail.gmail.com>
-In-Reply-To: <CAPig+cTeQDMpWQ-zCf6i9H-yhrdCndX6gs67sypuqmHZZcHm7w@mail.gmail.com>
+ <xmqqedjdtoh5.fsf@gitster.g> <CAPig+cRJhrGmnBRm2dporcXiRr4SzRmpM2LTMm0S7wo0XbOU9Q@mail.gmail.com>
+ <xmqqmsy0slei.fsf@gitster.g>
+In-Reply-To: <xmqqmsy0slei.fsf@gitster.g>
 From:   Tao Klerks <tao@klerks.biz>
-Date:   Tue, 5 Sep 2023 18:10:50 +0200
-Message-ID: <CAPMMpog3o=DtOrC9L6ED42XkegdObkh3rGm617q4u2oofBC1TA@mail.gmail.com>
+Date:   Tue, 5 Sep 2023 18:25:14 +0200
+Message-ID: <CAPMMpogm2tr0dy1nsV9NtF4O8-JS=_L3J0+yKRc7KbyAJ-PNbQ@mail.gmail.com>
 Subject: Re: Is "bare"ness in the context of multiple worktrees weird? Bitmap
  error in git gc.
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     git <git@vger.kernel.org>,
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>, git <git@vger.kernel.org>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>
 Content-Type: text/plain; charset="UTF-8"
@@ -62,116 +64,82 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 5, 2023 at 2:26=E2=80=AFAM Eric Sunshine <sunshine@sunshineco.c=
-om> wrote:
+On Tue, Sep 5, 2023 at 5:13=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
 >
-> On Mon, Sep 4, 2023 at 10:41=E2=80=AFAM Tao Klerks <tao@klerks.biz> wrote=
-:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+>
+> >> All correct.  The per-worktree part of the repository data does live
+> >> in a subdirectory of the ".git" directory and that was probably what
+> >> Tao had in mind, though.
 > >
-> > One problem that we found users to have, early on when we introduced
-> > worktrees, was that it was not obvious to users that there was (or why
-> > there was) a "main" worktree, containing the actual ".git" repo, and
-> > "subsidiary" worktrees, in the same directory location. Git by default
-> > makes worktrees *subfolders* of the initial/main worktree/folder, but
+> > That could be. I read Tao's explanation as meaning that people do this:
+> >
+> >     git clone foo.git foo
+> >     cd foo
+> >     git worktree add bar
+> >     git worktree add baz
+> >
+> > rather than (perhaps) this:
+> >
+> >     git clone foo.git foo
+> >     cd foo
+> >     git worktree add ../bar
+> >     git worktree add ../baz
 >
-> This is not accurate. There is no default location for new worktrees;
-> git-worktree creates the new worktree at the location specified by the
-> user:
->
->     git worktree add [<options>] <path> [<commit>]
->
-> where <path> -- the only mandatory argument -- specifies the location.
->
-
-Right - I know you *can* create worktrees in the "parent path", and
-now that I revisit the doc I see there are even a couple examples that
-do exactly that - but whenever I've talked with people who've tried
-"git worktree add" independently, they ended up with the nested
-worktrees and wondering why things work this weird way.
-
-The idea that the "most trivial" example of creating a worktree would
-be "git worktree add ../my_new_worktree" is, I believe, very
-non-obvious.
-
-The other thing that is I believe is non-obvious, in the current
-solution, is that *if* you end up placing multiple worktrees at the
-same level, *and* you end up using them "interchangeably" as you
-presumably would in some or most scenarios, even though their *usage*
-is identical, their "importance", or "lifetime" is very much not.
-
->
-> It indeed was designed to work this way. It is perfectly legitimate to
-> create worktrees attached to a bare repository[1].
+> Ah, that reading does totally make sense.
 >
 
-Awesome, thx for confirming!
+Fwiw, Eric's reading was my intended one. The people I have spoken
+with, as well as myself, have started using "git worktree" by doing
+the former, and only later felt really transgressive when placing the
+worktrees explicitly on a higher level, on equal footing with the
+"main worktree". To me it seemed natural that the "nested worktrees"
+approach was the expected one, as otherwise it gets even harder to
+explain/justify the operational difference between the "main worktree"
+and the other worktrees - then leading to the bare+worktrees approach
+to eliminate that operational difference.
 
-> in a bare repository
-> scenario, the term "main worktree" refers to the bare repository, not
-> to the "blessed" worktree containing the ".git/" directory (since
-> there is no such worktree in this case).
+> But I am not sure it would lead to "we need to carefully protect the
+> primary worktree", because it is rather obvious, especially if you
+> bypass "git worktree remove" and use "rm -fr", you would lose
+> everybody underneath if you remove the "foo" in the "worktrees are
+> subdirectories of the primary" variant in the above examples.
 
-Noted, thank you. We have been using the word "repository" vs worktree
-- the (main) GITDIR is the repo, the worktrees are all just worktrees.
-There is no "main worktree" in the way we talk about things, although
-clearly the official nomenclature doesn't square with that, which I
-might need to address at some point.
+Right, sorry, too many poorly-expressed thoughts crammed together.
 
+We need to start carefully protecting main worktree *when we start to
+get clever* and actually add the worktrees as siblings to the main
+worktree. That protection is indeed "implicit" before you start using
+"../"... but then you have other issues of
+git-worktree-within-git-worktree confusion.
 
-> Worktrees appear to be a red-herring. It's possible to reproduce this
-> error without them. For instance:
->
->     % git clone --bare --filter=3Dblob:none
-> https://github.com/ksylor/ohshitgit dangit_shared.git
->     % git clone dangit_shared.git foop
->     % cd foop
->     % echo nothing >nothing
->     % git add nothing
->     % git commit -m nothing
->     fatal: unable to read dbbb0682a7690b62ccf51b2a8648fa71ac671348
->     % git push origin master
->     % cd ../dangit_shared.git
->     % git gc
->     ...
->     warning: Failed to write bitmap index. Packfile doesn't have full
-> closure (object bf86ed1b2602ac3a8d4724bcdf6707b156673aac is missing)
->     fatal: failed to write bitmap index
->     fatal: failed to run repack
->
-
-Hmm, I don't really understand what happened there, but it looks to me
-like you went *much* further off the beaten path by cloning from a
-partial clone. Afaik that's hard-not-supported...?
+Is there a manual for "expected typical usage of git worktree" somewhere?
 
 >
-> The former, meaning that your setup should be supported. Citing
-> documentation for `core.bare`:
->
->     If true this repository is assumed to be bare and has no working
->     directory associated with it. If this is the case a number of
->     commands that require a working directory will be disabled, such
->     as git-add(1) or git-merge(1).
->
+> Even though deriving the worktree(s) from a separate and protected
+> bare repositories does protect you from total disaster caused by
+> removing "rm -fr" and bypassing "git worktree remove", it still
+> should be discouraged, as the per-worktree states left behind in the
+> repository interfere with the operations in surviving worktrees.
 
-Thanks again!
+Right, that's fine. Of course you're going to encourage deleting the
+worktrees carefully... but equally of-course, some people *will* do
+"rm -fr that-worktree-I-dont-know-how-to-clean", and when they do,
+telling them "just 'git worktree repair'" is much easier than telling
+them to "recover deleted files 'cause your local branches just
+evaporated"
 
->
-> `--separate-git-dir` predates multiple-worktree support by several
-> years and is distinct in purpose from --bare and multiple-worktrees
-> (in fact, a couple somewhat recent fixes [2,3] were needed to prevent
-> --separate-git-dir from breaking worktree administrative data). My
-> understand from scanning history is that --separate-git-dir was
-> introduced in aid of submodule support and perhaps other use-cases.
+> Teaching folks not to do "rm -fr" would be the first step to a more
+> pleasant end-user experience, I would think.
 
-OK, so if it is legitimate as-is... why doesn't it set
-"core.worktree"? At least that way there'd be a solid two-way
-reference like with "git worktree" worktrees.
+The less arcane trivia you *need* to teach users for them to be
+effective, the better the experience is for everyone.
 
-Or is the *point* of the submodule and/or other use-cases that the
-gitdir can't "know" its worktree??
-
-> git-new-workdir predates git-worktree by quite a few years and, as I
-> understand it, remains in-tree because it fills a niche not entirely
-> filled by git-worktree.
-
-OK, I'll keep my nose out of this one entirely either way, thx :)
+The fact that "deleting a standalone git repo only deletes what's in
+that standalone git repo the way you've done your whole life, but in
+this environment what look like multiple repos are actually
+'worktrees', if you ever delete one your life *might*, if you choose
+the wrong one, suddenly be very unpleasant" is arcane trivia, in my
+opinion. Better to set things up so they *can't* shoot themselves in
+the foot with a bullet of that caliber.
