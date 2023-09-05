@@ -2,78 +2,184 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BC29C83F2C
-	for <git@archiver.kernel.org>; Tue,  5 Sep 2023 16:00:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D62AAC83F2C
+	for <git@archiver.kernel.org>; Tue,  5 Sep 2023 16:00:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233455AbjIEQAK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Sep 2023 12:00:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43254 "EHLO
+        id S233539AbjIEQAM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Sep 2023 12:00:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353667AbjIEHJx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Sep 2023 03:09:53 -0400
+        with ESMTP id S1353682AbjIEHNF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Sep 2023 03:13:05 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 673EB1B4
-        for <git@vger.kernel.org>; Tue,  5 Sep 2023 00:09:50 -0700 (PDT)
-Received: (qmail 13673 invoked by uid 109); 5 Sep 2023 07:09:49 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EA7CCC2
+        for <git@vger.kernel.org>; Tue,  5 Sep 2023 00:13:02 -0700 (PDT)
+Received: (qmail 13685 invoked by uid 109); 5 Sep 2023 07:13:01 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 05 Sep 2023 07:09:49 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 05 Sep 2023 07:13:01 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19721 invoked by uid 111); 5 Sep 2023 07:09:50 -0000
+Received: (qmail 19786 invoked by uid 111); 5 Sep 2023 07:13:02 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 05 Sep 2023 03:09:50 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 05 Sep 2023 03:13:02 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 5 Sep 2023 03:09:48 -0400
+Date:   Tue, 5 Sep 2023 03:12:59 -0400
 From:   Jeff King <peff@peff.net>
 To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 10/10] parse-options: mark unused parameters in noop
- callback
-Message-ID: <20230905070948.GD199565@coredump.intra.peff.net>
+Subject: [PATCH v3 04/10] checkout-index: delay automatic setting of
+ to_tempfile
+Message-ID: <20230905071259.GE199565@coredump.intra.peff.net>
 References: <20230831211637.GA949188@coredump.intra.peff.net>
- <20230831212220.GJ949469@coredump.intra.peff.net>
- <3bf1bd4a-9d28-32c1-7838-09acd2c85d03@web.de>
+ <20230831212051.GD949469@coredump.intra.peff.net>
+ <c7855b08-46ee-5df0-4b0f-67ea57d84b18@web.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <3bf1bd4a-9d28-32c1-7838-09acd2c85d03@web.de>
+In-Reply-To: <c7855b08-46ee-5df0-4b0f-67ea57d84b18@web.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Sep 02, 2023 at 01:37:08PM +0200, René Scharfe wrote:
+On Sat, Sep 02, 2023 at 08:20:43AM +0200, René Scharfe wrote:
 
-> --- >8 ---
-> Subject: [PATCH] parse-options: let NULL callback be a noop
+> Am 31.08.23 um 23:20 schrieb Jeff King:
+> > @@ -269,6 +268,11 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
+> >  		state.base_dir = "";
+> >  	state.base_dir_len = strlen(state.base_dir);
+> >
+> > +	if (to_tempfile < 0)
+> > +		to_tempfile = (checkout_stage == CHECKOUT_ALL);
+> > +	if (!to_tempfile && checkout_stage == CHECKOUT_ALL)
+> > +		die("--stage=all and --no-temp are incompatible");
 > 
-> Allow OPTION_CALLBACK options to have a NULL callback function pointer
-> and do nothing in that case, yet still handle arguments as usual.  Use
-> this to replace parse_opt_noop_cb().
-> 
-> We lose the ability to distinguish between a forgotten function pointer
-> and intentional noop, but that will be caught by a compiler warning
-> about an unused function in many cases and having an option do nothing
-> is a benign failure mode.
+> How about making this message translatable from the start and following
+> the convention from 12909b6b8a (i18n: turn "options are incompatible"
+> into "cannot be used together", 2022-01-05) to reuse the existing
+> translations?
 
-Yeah, my concern would be missing an accidental NULL here. I guess that
-is pretty unlikely in practice, though. I'd guess the worst case would
-be somebody accidentally putting the function into the "opt->value" slot
-where the compiler might then think it is used (though I don't know
-off-hand if it would complain about an implicit conversion of a function
-pointer into a "void *").
+Good catch. I forgot that we had standardized some of these. The other
+error messages in the file aren't translated, but I don't think that's
+an intentional choice (even though it is plumbing). Some of them are
+obviously quite old and don't match our usual style (like starting with
+"checkout-index: ").
 
-> We also lose the ability to add a warning to the callback, but we
-> haven't done that since it was added by 6acec0380b (parseopt: add
-> OPT_NOOP_NOARG, 2011-09-28), so we probably won't do it soon.  We can
-> add a callback back when we want to show a warning.
-> 
-> By letting go of features we don't need this patch simplifies the
-> parse-options API and gets rid of an exported empty function.
+Rather than re-send the whole series, I _think_ this is the only patch I
+would change in a re-roll (if you buy me "sure, go ahead and send it on
+top" evasions in my other responses).
 
-Your patch looks correct to me. I probably wouldn't have bothered to
-write it, but now you did. :) My inclination would be to go with my
-dumb-simple one for this series, and it looks like you may have
-collected a few slight-more-risky-but-maybe-worthwhile parseopt cleanups
-on top that could make their own series.
+So here's a replacement patch 4 that fixes up the message.
 
--Peff
+-- >8 --
+Subject: checkout-index: delay automatic setting of to_tempfile
+
+Using --stage=all requires writing to tempfiles, since we cannot put
+multiple stages into a single file. So --stage=all implies --temp.
+
+But we do so by setting to_tempfile in the options callback for --stage,
+rather than after all options have been parsed. This leads to two bugs:
+
+  1. If you run "checkout-index --stage=all --stage=2", this should not
+     imply --temp, but it currently does. The callback cannot just unset
+     to_tempfile when it sees the "2" value, because it no longer knows
+     if its value was from the earlier --stage call, or if the user
+     specified --temp explicitly.
+
+  2. If you run "checkout-index --stage=all --no-temp", the --no-temp
+     will overwrite the earlier implied --temp. But this mode of
+     operation cannot work, and the command will fail with "<path>
+     already exists" when trying to write the higher stages.
+
+We can fix both by lazily setting to_tempfile. We'll make it a tristate,
+with -1 as "not yet given", and have --stage=all enable it only after
+all options are parsed. Likewise, after all options are parsed we can
+detect and reject the bogus "--no-temp" case.
+
+Note that this does technically change the behavior for "--stage=all
+--no-temp" for paths which have only one stage present (which
+accidentally worked before, but is now forbidden). But this behavior was
+never intended, and you'd have to go out of your way to try to trigger
+it.
+
+The new tests cover both cases, as well the general "--stage=all implies
+--temp", as most of the other tests explicitly say "--temp". Ironically,
+the test "checkout --temp within subdir" is the only one that _doesn't_
+use "--temp", and so was implicitly covering this case. But it seems
+reasonable to have a more explicit test alongside the other related
+ones.
+
+Suggested-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/checkout-index.c       |  9 +++++++--
+ t/t2004-checkout-cache-temp.sh | 20 ++++++++++++++++++++
+ 2 files changed, 27 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/checkout-index.c b/builtin/checkout-index.c
+index f62f13f2b5..526c210bcb 100644
+--- a/builtin/checkout-index.c
++++ b/builtin/checkout-index.c
+@@ -24,7 +24,7 @@
+ static int nul_term_line;
+ static int checkout_stage; /* default to checkout stage0 */
+ static int ignore_skip_worktree; /* default to 0 */
+-static int to_tempfile;
++static int to_tempfile = -1;
+ static char topath[4][TEMPORARY_FILENAME_LENGTH + 1];
+ 
+ static struct checkout state = CHECKOUT_INIT;
+@@ -196,7 +196,6 @@ static int option_parse_stage(const struct option *opt,
+ 	BUG_ON_OPT_NEG(unset);
+ 
+ 	if (!strcmp(arg, "all")) {
+-		to_tempfile = 1;
+ 		checkout_stage = CHECKOUT_ALL;
+ 	} else {
+ 		int ch = arg[0];
+@@ -269,6 +268,12 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
+ 		state.base_dir = "";
+ 	state.base_dir_len = strlen(state.base_dir);
+ 
++	if (to_tempfile < 0)
++		to_tempfile = (checkout_stage == CHECKOUT_ALL);
++	if (!to_tempfile && checkout_stage == CHECKOUT_ALL)
++		die(_("options '%s' and '%s' cannot be used together"),
++		    "--stage=all", "--no-temp");
++
+ 	/*
+ 	 * when --prefix is specified we do not want to update cache.
+ 	 */
+diff --git a/t/t2004-checkout-cache-temp.sh b/t/t2004-checkout-cache-temp.sh
+index b16d69ca4a..45dd1bc858 100755
+--- a/t/t2004-checkout-cache-temp.sh
++++ b/t/t2004-checkout-cache-temp.sh
+@@ -117,6 +117,26 @@ test_expect_success 'checkout all stages/one file to temporary files' '
+ 	test $(cat $s3) = tree3path1)
+ '
+ 
++test_expect_success '--stage=all implies --temp' '
++	rm -f path* .merge_* actual &&
++	git checkout-index --stage=all -- path1 &&
++	test_path_is_missing path1
++'
++
++test_expect_success 'overriding --stage=all resets implied --temp' '
++	rm -f path* .merge_* actual &&
++	git checkout-index --stage=all --stage=2 -- path1 &&
++	echo tree2path1 >expect &&
++	test_cmp expect path1
++'
++
++test_expect_success '--stage=all --no-temp is rejected' '
++	rm -f path* .merge_* actual &&
++	test_must_fail git checkout-index --stage=all --no-temp -- path1 2>err &&
++	grep -v "already exists" err &&
++	grep "options .--stage=all. and .--no-temp. cannot be used together" err
++'
++
+ test_expect_success 'checkout some stages/one file to temporary files' '
+ 	rm -f path* .merge_* actual &&
+ 	git checkout-index --stage=all --temp -- path2 >actual &&
+-- 
+2.42.0.567.gc396a4a104
+
