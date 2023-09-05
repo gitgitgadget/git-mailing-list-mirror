@@ -2,184 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D62AAC83F2C
-	for <git@archiver.kernel.org>; Tue,  5 Sep 2023 16:00:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A7F6CA0FF3
+	for <git@archiver.kernel.org>; Tue,  5 Sep 2023 16:00:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233539AbjIEQAM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Sep 2023 12:00:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48212 "EHLO
+        id S233625AbjIEQAO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Sep 2023 12:00:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353682AbjIEHNF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Sep 2023 03:13:05 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EA7CCC2
-        for <git@vger.kernel.org>; Tue,  5 Sep 2023 00:13:02 -0700 (PDT)
-Received: (qmail 13685 invoked by uid 109); 5 Sep 2023 07:13:01 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 05 Sep 2023 07:13:01 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19786 invoked by uid 111); 5 Sep 2023 07:13:02 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 05 Sep 2023 03:13:02 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 5 Sep 2023 03:12:59 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 04/10] checkout-index: delay automatic setting of
- to_tempfile
-Message-ID: <20230905071259.GE199565@coredump.intra.peff.net>
-References: <20230831211637.GA949188@coredump.intra.peff.net>
- <20230831212051.GD949469@coredump.intra.peff.net>
- <c7855b08-46ee-5df0-4b0f-67ea57d84b18@web.de>
+        with ESMTP id S1354869AbjIEPNr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Sep 2023 11:13:47 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E672F18D
+        for <git@vger.kernel.org>; Tue,  5 Sep 2023 08:13:43 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 17D2C1A8B54;
+        Tue,  5 Sep 2023 11:13:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=9P9+gLRmsZYfT9uU1MK/wtg2a8fMIprfNurSKg
+        ATIOs=; b=BezAW04r8EdkQuzHYF2AQtFojEwyhL736MXodfUxDooozRfhvL7ktb
+        BpOu0M1x/0BrmX6HLO04woW+lQmUKNTlD280tD1jxyXGMeU40rXb9BWDm+BneFQx
+        Oxwr65ai/upA713pSeWj7b0pU5CpcSm/U3ozaoAho1WxwTrbG2Cms=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 100941A8B53;
+        Tue,  5 Sep 2023 11:13:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.145.39.59])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 713D61A8B52;
+        Tue,  5 Sep 2023 11:13:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Tao Klerks <tao@klerks.biz>, git <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>
+Subject: Re: Is "bare"ness in the context of multiple worktrees weird?
+ Bitmap error in git gc.
+In-Reply-To: <CAPig+cRJhrGmnBRm2dporcXiRr4SzRmpM2LTMm0S7wo0XbOU9Q@mail.gmail.com>
+        (Eric Sunshine's message of "Tue, 5 Sep 2023 01:43:54 -0400")
+References: <CAPMMpoixKnr4BkKd8jeU+79Edhqtu4R7m8=BX4ZSYKdBHDzK=w@mail.gmail.com>
+        <CAPig+cTeQDMpWQ-zCf6i9H-yhrdCndX6gs67sypuqmHZZcHm7w@mail.gmail.com>
+        <xmqqedjdtoh5.fsf@gitster.g>
+        <CAPig+cRJhrGmnBRm2dporcXiRr4SzRmpM2LTMm0S7wo0XbOU9Q@mail.gmail.com>
+Date:   Tue, 05 Sep 2023 08:13:41 -0700
+Message-ID: <xmqqmsy0slei.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <c7855b08-46ee-5df0-4b0f-67ea57d84b18@web.de>
+Content-Type: text/plain
+X-Pobox-Relay-ID: CCCCDA06-4BFE-11EE-9250-25B3960A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Sep 02, 2023 at 08:20:43AM +0200, René Scharfe wrote:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> Am 31.08.23 um 23:20 schrieb Jeff King:
-> > @@ -269,6 +268,11 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
-> >  		state.base_dir = "";
-> >  	state.base_dir_len = strlen(state.base_dir);
-> >
-> > +	if (to_tempfile < 0)
-> > +		to_tempfile = (checkout_stage == CHECKOUT_ALL);
-> > +	if (!to_tempfile && checkout_stage == CHECKOUT_ALL)
-> > +		die("--stage=all and --no-temp are incompatible");
-> 
-> How about making this message translatable from the start and following
-> the convention from 12909b6b8a (i18n: turn "options are incompatible"
-> into "cannot be used together", 2022-01-05) to reuse the existing
-> translations?
+>> All correct.  The per-worktree part of the repository data does live
+>> in a subdirectory of the ".git" directory and that was probably what
+>> Tao had in mind, though.
+>
+> That could be. I read Tao's explanation as meaning that people do this:
+>
+>     git clone foo.git foo
+>     cd foo
+>     git worktree add bar
+>     git worktree add baz
+>
+> rather than (perhaps) this:
+>
+>     git clone foo.git foo
+>     cd foo
+>     git worktree add ../bar
+>     git worktree add ../baz
 
-Good catch. I forgot that we had standardized some of these. The other
-error messages in the file aren't translated, but I don't think that's
-an intentional choice (even though it is plumbing). Some of them are
-obviously quite old and don't match our usual style (like starting with
-"checkout-index: ").
+Ah, that reading does totally make sense.
 
-Rather than re-send the whole series, I _think_ this is the only patch I
-would change in a re-roll (if you buy me "sure, go ahead and send it on
-top" evasions in my other responses).
+But I am not sure it would lead to "we need to carefully protect the
+primary worktree", because it is rather obvious, especially if you
+bypass "git worktree remove" and use "rm -fr", you would lose
+everybody underneath if you remove the "foo" in the "worktrees are
+subdirectories of the primary" variant in the above examples.
 
-So here's a replacement patch 4 that fixes up the message.
+Even though deriving the worktree(s) from a separate and protected
+bare repositories does protect you from total disaster caused by
+removing "rm -fr" and bypassing "git worktree remove", it still
+should be discouraged, as the per-worktree states left behind in the
+repository interfere with the operations in surviving worktrees.
+Teaching folks not to do "rm -fr" would be the first step to a more
+pleasant end-user experience, I would think.
 
--- >8 --
-Subject: checkout-index: delay automatic setting of to_tempfile
-
-Using --stage=all requires writing to tempfiles, since we cannot put
-multiple stages into a single file. So --stage=all implies --temp.
-
-But we do so by setting to_tempfile in the options callback for --stage,
-rather than after all options have been parsed. This leads to two bugs:
-
-  1. If you run "checkout-index --stage=all --stage=2", this should not
-     imply --temp, but it currently does. The callback cannot just unset
-     to_tempfile when it sees the "2" value, because it no longer knows
-     if its value was from the earlier --stage call, or if the user
-     specified --temp explicitly.
-
-  2. If you run "checkout-index --stage=all --no-temp", the --no-temp
-     will overwrite the earlier implied --temp. But this mode of
-     operation cannot work, and the command will fail with "<path>
-     already exists" when trying to write the higher stages.
-
-We can fix both by lazily setting to_tempfile. We'll make it a tristate,
-with -1 as "not yet given", and have --stage=all enable it only after
-all options are parsed. Likewise, after all options are parsed we can
-detect and reject the bogus "--no-temp" case.
-
-Note that this does technically change the behavior for "--stage=all
---no-temp" for paths which have only one stage present (which
-accidentally worked before, but is now forbidden). But this behavior was
-never intended, and you'd have to go out of your way to try to trigger
-it.
-
-The new tests cover both cases, as well the general "--stage=all implies
---temp", as most of the other tests explicitly say "--temp". Ironically,
-the test "checkout --temp within subdir" is the only one that _doesn't_
-use "--temp", and so was implicitly covering this case. But it seems
-reasonable to have a more explicit test alongside the other related
-ones.
-
-Suggested-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/checkout-index.c       |  9 +++++++--
- t/t2004-checkout-cache-temp.sh | 20 ++++++++++++++++++++
- 2 files changed, 27 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/checkout-index.c b/builtin/checkout-index.c
-index f62f13f2b5..526c210bcb 100644
---- a/builtin/checkout-index.c
-+++ b/builtin/checkout-index.c
-@@ -24,7 +24,7 @@
- static int nul_term_line;
- static int checkout_stage; /* default to checkout stage0 */
- static int ignore_skip_worktree; /* default to 0 */
--static int to_tempfile;
-+static int to_tempfile = -1;
- static char topath[4][TEMPORARY_FILENAME_LENGTH + 1];
- 
- static struct checkout state = CHECKOUT_INIT;
-@@ -196,7 +196,6 @@ static int option_parse_stage(const struct option *opt,
- 	BUG_ON_OPT_NEG(unset);
- 
- 	if (!strcmp(arg, "all")) {
--		to_tempfile = 1;
- 		checkout_stage = CHECKOUT_ALL;
- 	} else {
- 		int ch = arg[0];
-@@ -269,6 +268,12 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
- 		state.base_dir = "";
- 	state.base_dir_len = strlen(state.base_dir);
- 
-+	if (to_tempfile < 0)
-+		to_tempfile = (checkout_stage == CHECKOUT_ALL);
-+	if (!to_tempfile && checkout_stage == CHECKOUT_ALL)
-+		die(_("options '%s' and '%s' cannot be used together"),
-+		    "--stage=all", "--no-temp");
-+
- 	/*
- 	 * when --prefix is specified we do not want to update cache.
- 	 */
-diff --git a/t/t2004-checkout-cache-temp.sh b/t/t2004-checkout-cache-temp.sh
-index b16d69ca4a..45dd1bc858 100755
---- a/t/t2004-checkout-cache-temp.sh
-+++ b/t/t2004-checkout-cache-temp.sh
-@@ -117,6 +117,26 @@ test_expect_success 'checkout all stages/one file to temporary files' '
- 	test $(cat $s3) = tree3path1)
- '
- 
-+test_expect_success '--stage=all implies --temp' '
-+	rm -f path* .merge_* actual &&
-+	git checkout-index --stage=all -- path1 &&
-+	test_path_is_missing path1
-+'
-+
-+test_expect_success 'overriding --stage=all resets implied --temp' '
-+	rm -f path* .merge_* actual &&
-+	git checkout-index --stage=all --stage=2 -- path1 &&
-+	echo tree2path1 >expect &&
-+	test_cmp expect path1
-+'
-+
-+test_expect_success '--stage=all --no-temp is rejected' '
-+	rm -f path* .merge_* actual &&
-+	test_must_fail git checkout-index --stage=all --no-temp -- path1 2>err &&
-+	grep -v "already exists" err &&
-+	grep "options .--stage=all. and .--no-temp. cannot be used together" err
-+'
-+
- test_expect_success 'checkout some stages/one file to temporary files' '
- 	rm -f path* .merge_* actual &&
- 	git checkout-index --stage=all --temp -- path2 >actual &&
--- 
-2.42.0.567.gc396a4a104
+Thanks.
 
