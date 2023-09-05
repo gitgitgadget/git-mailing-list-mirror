@@ -2,143 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D747C83F2C
-	for <git@archiver.kernel.org>; Tue,  5 Sep 2023 16:01:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DBB4CA0FF8
+	for <git@archiver.kernel.org>; Tue,  5 Sep 2023 16:01:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233921AbjIEQAx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Sep 2023 12:00:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48058 "EHLO
+        id S234188AbjIEQAo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Sep 2023 12:00:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353655AbjIEHFS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Sep 2023 03:05:18 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0807E1B4
-        for <git@vger.kernel.org>; Tue,  5 Sep 2023 00:05:14 -0700 (PDT)
-Received: (qmail 13660 invoked by uid 109); 5 Sep 2023 07:05:14 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 05 Sep 2023 07:05:14 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19693 invoked by uid 111); 5 Sep 2023 07:05:15 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 05 Sep 2023 03:05:15 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 5 Sep 2023 03:05:12 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 06/10] parse-options: mark unused "opt" parameter in
- callbacks
-Message-ID: <20230905070512.GC199565@coredump.intra.peff.net>
-References: <20230831211637.GA949188@coredump.intra.peff.net>
- <20230831212128.GF949469@coredump.intra.peff.net>
- <98d1cd21-fb2a-269a-8d0b-f3e050682739@web.de>
+        with ESMTP id S1354393AbjIELSN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Sep 2023 07:18:13 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D636F1AE
+        for <git@vger.kernel.org>; Tue,  5 Sep 2023 04:18:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de;
+ s=s31663417; t=1693912678; x=1694517478; i=johannes.schindelin@gmx.de;
+ bh=MDswNS+zwORLE7YHAWrt5JQDF9JYO7xTuWYxAIk3QPg=;
+ h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+ b=A3KyOrGHMi8w3CjWTwG2SpjptvhjRL+w2JESno6rJRFjaeAC6qs6v8gIvy7eNWpN7NZPbQq
+ 6Wf6oTXQXU+0wGZAbRXbMYjlp1KFBydb/GLwvDIRfUIhVYhVrLmg7+H4LcbgkfREbcfqaO7O3
+ wfJD3QUBfwB460NO6suOM/6kUGNhSuinypmFskZssm1z2JENjU/g+TyDKjzTt6aXpF6uQBhD5
+ JA3D40p6CMgTfyUNshhljLlefMg71quKAwj1sx3ffFZ6jpcAnqz44ULvH43szqIPt5rzC6V7n
+ NQJ1mewbFZzp5xunT+MtDnbf+YoDZH+L2rxWYDX1lQkLX94avp/A==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.214.152]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MQvD5-1qFdnG3Wat-00O3aP; Tue, 05
+ Sep 2023 13:17:57 +0200
+Date:   Tue, 5 Sep 2023 13:17:53 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Stefan Haller <lists@haller-berlin.de>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Glen Choo <chooglen@google.com>
+Subject: Re: [PATCH v3 6/7] rebase --continue: refuse to commit after failed
+ command
+In-Reply-To: <02c28b26-4658-43c8-b1d1-7f1e09bda609@gmail.com>
+Message-ID: <87fbc8c9-f42b-b374-fee1-57c58f5e8fc0@gmx.de>
+References: <pull.1492.v2.git.1682089074.gitgitgadget@gmail.com> <pull.1492.v3.git.1690903412.gitgitgadget@gmail.com> <2ed7cbe5fff2d104a1246783909c6c4b75c559f2.1690903412.git.gitgitgadget@gmail.com> <a5bfea5f-0d0d-f7ed-3f72-37e3db6f5b2c@gmx.de>
+ <02c28b26-4658-43c8-b1d1-7f1e09bda609@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <98d1cd21-fb2a-269a-8d0b-f3e050682739@web.de>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:mDTTxGwAZXj1BgiJxbCOj6mEUrhMv+Y0PgWJxbMFzBQwYXAxEOC
+ RsHzqkx6D8x/t1MxKQeDyHF4h/h0x7sclHXKUgx4Z+KOPsZ0mqQSVNPF1VGyrEFT2AP0mTE
+ Y9DRJJr7vdAiCiYtbzHtC8ibRH9vIHs3red5rE1Cp6w2EiLbPl8T6lkh/K4M+Kv1OR/XBpE
+ MmrtcwSCUZUr2XBFV+naw==
+UI-OutboundReport: notjunk:1;M01:P0:qg8lS8VNyFo=;X1WmcmsrNDJVeGPoLAyN6zDJMjd
+ 6hMPSom51NaOOzzKMKSz3uYlvd5x1E4sd5Cx6o6fYmkUE/d7JOSXpjuYUV23n46urLjeCDISH
+ pXFX2haHKN6t3sWI9bMLRIjFNENX6SL0+XDz4YFmuHueso4OBvRGOy8Z2uG6yqcPcKrRt0mKd
+ PxMnCzTSGAikZn4MVNg5dlEv3NbuHm/BQL/K27j1HKpE+hLkV2/+T49391ttLTC0pVpyssZ3v
+ FsgkDxLY3rntjoFO46faUfMyMVolsYI+DfQDhQlJak5j7+ipqiFfRW2iWHBQ99sUOoNagjmUh
+ FlFWm4FQ7mOWPjHoT6nwAnwTvoMJubhFIA4iDhT8JvxExbgIJRz1H04gJxyjFAiqiEfnorOfz
+ k+6O5kpg9OdizpINkmueK5lR/iGJkbbMZwN7zdpKvveETAw0jLwb51Qm0+pWfvZnD4zvYbFOk
+ vmYE/zv3mRQU5B2Rt34C8t8h9dqeTeMtsIrEkDJoTfOIxSGdmSWsOK+W2v9EIKzkdt4kpVIGe
+ aJcjZEpaBw3tH4w+0MWcJhhIySC6Reg45l5S9oLu4cRrXfWoo5DNKSSTaUx8BQrHLvke9YP9R
+ XySNGPdzDcd61h9RRITCSzMs+7QI9sP/ukHGCSiRtM11vDK2ZYN0M/oPwoOVbxT6+RA8e0tQl
+ 5wZLUa6YCn2HebOfUYJbRe3GAvEpYs7Qe2JC1YsUveEwNrM1v3jNtdG+upi+8pRAvq2UllF8z
+ ND6ZxwH3pHG8id3xYRoAk38+b22/E1WBkIgfBUPcCzFMbk4oumDWxVzdxTYBJSWnRE7wt3cfR
+ r2C2c0OM/RAHkFabc99KIsN1ejrD0eS/IkihKFpB6AiNZ8YQ1JCRtD/2GOVVROGddrmLu2DUO
+ r03oJ5xaUQ0DkfjP7xrq1AIh3RZHgP8/LsDXflqrKRs28gQzaszBGnpHOoNo2DbTu79sKeNjg
+ p1b+5vW1cEfxMHsz18VvX5fxZ2M=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Sep 02, 2023 at 12:12:56PM +0200, René Scharfe wrote:
+Hi Phillip,
 
-> Am 31.08.23 um 23:21 schrieb Jeff King:
-> > The previous commit argued that parse-options callbacks should try to
-> > use opt->value rather than touching globals directly. In some cases,
-> > however, that's awkward to do. Some callbacks touch multiple variables,
-> > or may even just call into an abstracted function that does so.
+On Mon, 4 Sep 2023, Phillip Wood wrote:
+
+> On 23/08/2023 10:01, Johannes Schindelin wrote:
+>
+> > On Tue, 1 Aug 2023, Phillip Wood via GitGitGadget wrote:
 > >
-> > In some of these cases we _could_ convert them by stuffing the multiple
-> > variables into a single struct and passing the struct pointer through
-> > opt->value. But that may make other parts of the code less readable,
-> > as the struct relationship has to be mentioned everywhere.
-> 
-> Does that imply you'd be willing to use other methods?  Let's find out
-> below. :)
-
-Well, I'm not necessarily _opposed_. :) Mostly my cutoff was cases where
-the end result was not obviously and immediately more readable. It is
-not that big a deal to add an UNUSED annotation. My main goal was to use
-the opportunity to check that we aren't papering over an obvious bug.
-
-So for example...
-
-> > diff --git a/builtin/gc.c b/builtin/gc.c
-> > index 369bd43fb2..b842349d86 100644
-> > --- a/builtin/gc.c
-> > +++ b/builtin/gc.c
-> > @@ -1403,7 +1403,7 @@ static void initialize_task_config(int schedule)
-> >  	strbuf_release(&config_name);
-> >  }
+> > > From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> > >
+> > > If a commit cannot be picked because it would overwrite an untracked
+> > > file then "git rebase --continue" should refuse to commit any staged
+> > > changes as the commit was not picked. This is implemented by refusin=
+g to
+> > > commit if the message file is missing. The message file is chosen fo=
+r
+> > > this check because it is only written when "git rebase" stops for th=
+e
+> > > user to resolve merge conflicts.
+> > >
+> > > Existing commands that refuse to commit staged changes when continui=
+ng
+> > > such as a failed "exec" rely on checking for the absence of the auth=
+or
+> > > script in run_git_commit(). This prevents the staged changes from be=
+ing
+> > > committed but prints
+> > >
+> > >      error: could not open '.git/rebase-merge/author-script' for
+> > >      reading
+> > >
+> > > before the message about not being able to commit. This is confusing=
+ to
+> > > users and so checking for the message file instead improves the user
+> > > experience. The existing test for refusing to commit after a failed =
+exec
+> > > is updated to check that we do not print the error message about a
+> > > missing author script anymore.
 > >
-> > -static int task_option_parse(const struct option *opt,
-> > +static int task_option_parse(const struct option *opt UNUSED,
-> 
-> Only the global variable "tasks" seems to be used in here if you don't
-> count the constant "TASK__COUNT", so you could pass it in.  This could
-> also be converted to OPT_STRING_LIST with parsing and duplicate checking
-> done later.
-
-...in many cases things can be simplified by parsing into a string, and
-then validating or acting on the string later. And sometimes that's even
-a better strategy (because it lets the arg parsing handle all the "last
-one wins" logic and we just get the result).
-
-But it can also make the code harder to follow, too, because it's now
-split it into segments (although one is mostly declarative, which is
-nice).
-
-So I generally tried to err on the side of not touching working
-code. Both to avoid breaking it, but also to keep the focus on the goal
-of the series. And I think that applies to a lot of the other cases you
-mentioned below (I won't respond to each; I think some of them could be
-fine, but it also feels like writing and review effort for not much
-gain. I'm not opposed if you want to dig into them, though).
-
-> And I don't understand why the callback returns 1 (PARSE_OPT_NON_OPTION)
-> on error, but that's a different matter.
-
-Yeah, that doesn't make sense at all.
-
-> > -static int clear_decorations_callback(const struct option *opt,
-> > -					    const char *arg, int unset)
-> > +static int clear_decorations_callback(const struct option *opt UNUSED,
-> > +				      const char *arg, int unset)
-> >  {
-> >  	string_list_clear(&decorate_refs_include, 0);
-> >  	string_list_clear(&decorate_refs_exclude, 0);
-> >  	use_default_decoration_filter = 0;
-> >  	return 0;
-> >  }
+> > I am delighted to see an improvement of the user experience!
 > >
-> 
-> Meta: Why do we get seven lines of context in an -U3 patch here?  Did
-> you use --inter-hunk-context?
+> > However, I could imagine that users would still be confused when seein=
+g
+> > the advice about staged changes, even if nothing was staged at all.
+>
+> If nothing is staged then this message wont trigger because is_clean wil=
+l be
+> false.
 
-Yes, I set diff.interhunkcontext=1 in my config (and have for many
-years; I think this is the first time anybody noticed in a patch). My
-rationale is that with "1" the output is never longer, since you save
-the hunk header. It is a little funny in this case, since the two
-changes aren't really connected.
+Ah. I managed to get confused by the first sentence of the commit message
+already. You clearly talk about "any staged changes". As in "*iff* there
+are any staged changes". Which I missed.
 
-> This patch would be better viewed with --function-context to see that
-> the callbacks change multiple variables or do other funky things.  Only
-> doubles the line count.
+A further contributing factor for my misunderstading was the slightly
+convoluted logic where `is_clean` is set to true if there are _not_ any
+uncommitted changes, and then we ask if `is_clean` is _not_ true. Reminds
+me of Smullyan's Knights & Knaves [*1*].
 
-I do sometimes use options like that to make a patch more readable, if I
-notice the difference. I didn't happen to in this case (though I don't
-disagree with you). As a reviewer, I typically apply and run "git show"
-myself if I want to dig more (or just go directly look at the preimage
-in my local repo, of course).
+With your patch, there are now four users of the `is_clean` value, and
+all but one of them ask for the negated value.
 
-> > -static int option_parse_strategy(const struct option *opt,
-> > +static int option_parse_strategy(const struct option *opt UNUSED,
-> 
-> Could be an OPT_STRING_LIST and parsing done later.  Except that
-> --no-strategy does nothing, which is weird.
+It's not really the responsibility of this patch series, but I could
+imagine that it would be nicer to future readers if a patch was added that
+would invert the meaning of that variable and rename it to
+`needs_committing`. At least to me, that would make the intention of the
+code eminently clearer.
 
-Yeah, I think the handling of "unset" is a bug (similar to the xopts one
-fixed earlier).
+Ciao,
+Johannes
 
--Peff
+Footnote *1*: https://en.wikipedia.org/wiki/Knights_and_Knaves
