@@ -2,94 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DFB7DCA0FFD
-	for <git@archiver.kernel.org>; Tue,  5 Sep 2023 16:00:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AFF3C83F2C
+	for <git@archiver.kernel.org>; Tue,  5 Sep 2023 16:00:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233675AbjIEQAW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Sep 2023 12:00:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52380 "EHLO
+        id S233029AbjIEQA3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Sep 2023 12:00:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354841AbjIEO5X (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Sep 2023 10:57:23 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03BA518C
-        for <git@vger.kernel.org>; Tue,  5 Sep 2023 07:57:19 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5429D1B6CEC;
-        Tue,  5 Sep 2023 10:57:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=1OXLlO5frn3Q9T/3Mi8SPAUucHarXLubLOaZSf
-        OJzZ4=; b=q1gbeSoTOr8+azJlf+rVHW5mBQNk/bWU6jhdTPCQ249qC/Ur9dy3gs
-        uOlFhMXR8erAje3pGGjXckOl6wtBBqgTs1+Qq6DFsHquU9YYbwvqWWLQY1tl3kDl
-        EDPJ405fT4qLVrfWM6ys4OHR01KRbaH0bH2C5AwclCsp8wA+dBvyM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4A57F1B6CEB;
-        Tue,  5 Sep 2023 10:57:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.145.39.59])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B01D01B6CEA;
-        Tue,  5 Sep 2023 10:57:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Stefan Haller <lists@haller-berlin.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Glen Choo <chooglen@google.com>
-Subject: Re: [PATCH v3 6/7] rebase --continue: refuse to commit after failed
- command
-In-Reply-To: <87fbc8c9-f42b-b374-fee1-57c58f5e8fc0@gmx.de> (Johannes
-        Schindelin's message of "Tue, 5 Sep 2023 13:17:53 +0200 (CEST)")
-References: <pull.1492.v2.git.1682089074.gitgitgadget@gmail.com>
-        <pull.1492.v3.git.1690903412.gitgitgadget@gmail.com>
-        <2ed7cbe5fff2d104a1246783909c6c4b75c559f2.1690903412.git.gitgitgadget@gmail.com>
-        <a5bfea5f-0d0d-f7ed-3f72-37e3db6f5b2c@gmx.de>
-        <02c28b26-4658-43c8-b1d1-7f1e09bda609@gmail.com>
-        <87fbc8c9-f42b-b374-fee1-57c58f5e8fc0@gmx.de>
-Date:   Tue, 05 Sep 2023 07:57:10 -0700
-Message-ID: <xmqqy1hksm61.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        with ESMTP id S1353705AbjIEHV2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Sep 2023 03:21:28 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81C33A8
+        for <git@vger.kernel.org>; Tue,  5 Sep 2023 00:21:25 -0700 (PDT)
+Received: (qmail 13706 invoked by uid 109); 5 Sep 2023 07:21:24 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 05 Sep 2023 07:21:24 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19858 invoked by uid 111); 5 Sep 2023 07:21:25 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 05 Sep 2023 03:21:25 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 5 Sep 2023 03:21:22 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] grep: use OPT_INTEGER_F for --max-depth
+Message-ID: <20230905072122.GG199565@coredump.intra.peff.net>
+References: <4d2eb736-4f34-18f8-2eb7-20e7f7b8c2f8@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7E450FEA-4BFC-11EE-91A8-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <4d2eb736-4f34-18f8-2eb7-20e7f7b8c2f8@web.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Sat, Sep 02, 2023 at 08:54:54PM +0200, René Scharfe wrote:
 
-> With your patch, there are now four users of the `is_clean` value, and
-> all but one of them ask for the negated value.
+> a91f453f64 (grep: Add --max-depth option., 2009-07-22) added the option
+> --max-depth, defining it using a positional struct option initializer of
+> type OPTION_INTEGER.  It also sets defval to 1 for some reason, but that
+> value would only be used if the flag PARSE_OPT_OPTARG was given.
+> 
+> Use the macro OPT_INTEGER_F instead to standardize the definition and
+> specify only the necessary values.  This also normalizes argh to N_("n")
+> as a side-effect, which is OK.
 
-Excellent observation.  That strongly argues for the flipping of
-polarity, i.e. many people want to know "is it unclean/dirty?".  It
-is funny that the name of the helper function where the value comes
-from, i.e. has_uncommitted_changes(), has the desired polarity.
+This looks correct to me (and an improvement in readability). In
+general, I wonder how many of the results from:
 
-> It's not really the responsibility of this patch series, but I could
-> imagine that it would be nicer to future readers if a patch was added that
-> would invert the meaning of that variable and rename it to
-> `needs_committing`. At least to me, that would make the intention of the
-> code eminently clearer.
+  git grep '{ OPTION'
 
-While I agree, after reading the code, that it would make it easier
-to follow to flip the polarity of the variable, I would advise
-against renaming from state based naming (is it dirty?) to action
-based naming (must we commit?), *if* the variable is checked to
-sometimes see if we has something that we _could_ commit, while some
-other times to see if we _must_ commit before we can let the user
-proceed.
+could be converted to use the macros and end up more readable. There are
+a number of OPTARG ones, which I guess can't use macros. Looks like
+there are a handful of others (mostly for OPT_HIDDEN).
 
-"Does the index hold some changes to be committed?" is better
-question than "Must we commit?" or "Could we commit?" to derive the
-name of this variable from if that is the case, I would think.
-
-
-
-
-
+-Peff
