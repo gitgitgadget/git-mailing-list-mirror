@@ -2,268 +2,227 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C57DBC71153
-	for <git@archiver.kernel.org>; Mon,  4 Sep 2023 20:59:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98346C83F33
+	for <git@archiver.kernel.org>; Tue,  5 Sep 2023 00:26:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239059AbjIDU7a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 Sep 2023 16:59:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55114 "EHLO
+        id S238603AbjIEA01 convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Mon, 4 Sep 2023 20:26:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230261AbjIDU73 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Sep 2023 16:59:29 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8809B1AB
-        for <git@vger.kernel.org>; Mon,  4 Sep 2023 13:59:25 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-401b393ddd2so18067475e9.0
-        for <git@vger.kernel.org>; Mon, 04 Sep 2023 13:59:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1693861164; x=1694465964; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=135WBxx9tCt1INlqNFulgRiqKdeEhwTuJAMMr2x4+dY=;
-        b=sM4XsGeoHRF3bPtp6uoUf/Iy9cCY4Dh/6/cgt2GYjJ0Rg3wK8CeWo4kscJ4943mVI4
-         jG8Gi5nJ+1x34AT6aono+Lfhc4NCg0sPRXdohyGpFqknuEJEHLvA7bqF0swO0+P7xBd2
-         x0xRK3GByiwUfihyv586JKl92rPOR+uEyni24vF3F+rGWm+cb8zNvLLDLchccvUBVkoG
-         CHge2lQRWhiTwxzaZ/v1Yns3gIQorxOFjXDTuThR60gWG7W72JyPkqnoYfkW35XVl0cb
-         ZIiALNEdgp40g0ZqpRoWeq1Hiy9pwRqIucOkV1KoJ4c06JeT+yxF10qrZV/wNspCwy9+
-         4SNA==
+        with ESMTP id S233130AbjIEA00 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Sep 2023 20:26:26 -0400
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 753A7191
+        for <git@vger.kernel.org>; Mon,  4 Sep 2023 17:26:22 -0700 (PDT)
+Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-649c6ea6e72so11828436d6.2
+        for <git@vger.kernel.org>; Mon, 04 Sep 2023 17:26:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693861164; x=1694465964;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=135WBxx9tCt1INlqNFulgRiqKdeEhwTuJAMMr2x4+dY=;
-        b=Re2LbFTN343OS0Yp9uuV2DgLGcTOJellKE0d37BlvT1hmYJd1wmeMC8ADAvFx2XX5U
-         /D0MWgMuIZYhZGTPJgF2WSNNeX5y80cbSiF7o9A+ZgYfq6UA+SPrOW/LgCrC6+4aIwVt
-         6aMTF5IYZrIzp7UEkaGI6gD4OadZKmODNrmjDV4UHCky5/TUm+GEowqDqsawH6ESNuXI
-         phvfxZl94LI/0SPK06Y06MkaSDhkLJ139wKHv7Vb6CcN670jbn+HdDCr7Y+i5Bl7YGqu
-         24ZDClpIraK5E8uW7b6zvgfO6T+fdpqDlhRmFo5uUY7Bdw3GwxygTGmmTItkWzOHT5hp
-         RR5A==
-X-Gm-Message-State: AOJu0YwdM54kMyVt5HrdgmUonyVYsGRQFgiLZD6aP0xJixDnkzKUKQrT
-        PDk83bDN3nXZ3DTzSWM/gYRTfwwX+vY=
-X-Google-Smtp-Source: AGHT+IHE/GbCxvRNaToODfpvi+M7BLgG1BbzeEJuiizN4WLzk2MX5J1zh+3DzoX4eNiv8fOds6YTAg==
-X-Received: by 2002:adf:ed48:0:b0:316:ff0e:81b6 with SMTP id u8-20020adfed48000000b00316ff0e81b6mr7811583wro.32.1693861163624;
-        Mon, 04 Sep 2023 13:59:23 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l16-20020adfe9d0000000b00317e77106dbsm15389788wrn.48.2023.09.04.13.59.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Sep 2023 13:59:23 -0700 (PDT)
-Message-ID: <pull.1570.git.git.1693861162353.gitgitgadget@gmail.com>
-From:   "Konstantin Pereiaslov via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 04 Sep 2023 20:59:22 +0000
-Subject: [PATCH] advice: improve hint for diverging branches.
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20221208; t=1693873581; x=1694478381;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ft+1jCzYvZaHNWZNMjk0xX+POYzT54aYwrlyPIxaUa0=;
+        b=Kaqn2XRVMNZBnY2xsmtIaqd0879yAuK9AFY+R6UdSLXEeuTXQM4mnePfH6HY8GaIwC
+         2J7j3H8q/8imURMQoDXkldseBz1MLfLuZBjoIx965VtVdmrgYcRYzdAZmOuKBRzZi2vD
+         shWseflkAgi997Z7i+8KgLlr1CpAZ6v6A7XKiNcCmCqMC+QkNGXrIB2f6KD/git1ZaBI
+         mxLehXMHaCwdxyv59RwvRu1HTepKmlRiNl5VHnNq21pM3u0Exd2yw0OX87djW8zKKp5P
+         CLtJhzN9ZkIKLyE78DRjvDsscJr6/qKB32v0mF3hsVoEF1V1JcAZsJkpfmYAjvhIwwSf
+         3Bpg==
+X-Gm-Message-State: AOJu0YylFCYo6BuJeKszfNowCUgCHqiu6f6zSaU/jjgQ1tlLz3HL0LoG
+        2S8ZDqBLG++9MEGmn3UpEmQ2J60fsPp7xR4uGwA=
+X-Google-Smtp-Source: AGHT+IGE6GBcCwoQ4qrgitxbNZTkQr/Y6a4P6YJrygC/PiqhTg/lkp66t8zaW857fzNE7cbyZCrWGGyYdCp8SeMsEF4=
+X-Received: by 2002:ad4:5b8f:0:b0:645:df54:cf83 with SMTP id
+ 15-20020ad45b8f000000b00645df54cf83mr12863325qvp.38.1693873581518; Mon, 04
+ Sep 2023 17:26:21 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Konstantin Pereiaslov <perk11@perk11.info>,
-        Konstantin Pereiaslov <perk11@perk11.info>
+References: <CAPMMpoixKnr4BkKd8jeU+79Edhqtu4R7m8=BX4ZSYKdBHDzK=w@mail.gmail.com>
+In-Reply-To: <CAPMMpoixKnr4BkKd8jeU+79Edhqtu4R7m8=BX4ZSYKdBHDzK=w@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 4 Sep 2023 20:26:10 -0400
+Message-ID: <CAPig+cTeQDMpWQ-zCf6i9H-yhrdCndX6gs67sypuqmHZZcHm7w@mail.gmail.com>
+Subject: Re: Is "bare"ness in the context of multiple worktrees weird? Bitmap
+ error in git gc.
+To:     Tao Klerks <tao@klerks.biz>
+Cc:     git <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Konstantin Pereiaslov <perk11@perk11.info>
+On Mon, Sep 4, 2023 at 10:41 AM Tao Klerks <tao@klerks.biz> wrote:
+> I work with a project that often, or typically, benefits from having
+> multiple worktrees where users are working with different versions of
+> the code.
+>
+> Worktrees make particular sense in this project for all the usual
+> reasons, plus the fact that it is a very *large* repo - multiple gigs
+> of repo, and very fast-moving; cloning and fetching less often is
+> nice.
+>
+> One problem that we found users to have, early on when we introduced
+> worktrees, was that it was not obvious to users that there was (or why
+> there was) a "main" worktree, containing the actual ".git" repo, and
+> "subsidiary" worktrees, in the same directory location. Git by default
+> makes worktrees *subfolders* of the initial/main worktree/folder, but
 
-Added a description of what the offered options will do and for pull
-also offered a 3rd option during a pull - a hard reset.
-This option should be helpful for the new users that accidentally
-committed into the wrong branch which is a scenario I saw very
-often.
+This is not accurate. There is no default location for new worktrees;
+git-worktree creates the new worktree at the location specified by the
+user:
 
-The resulting tooltip looks like this for pull:
+    git worktree add [<options>] <path> [<commit>]
 
-hint: Diverging branches can't be fast-forwarded.
-Consider the following options:
-hint:
-hint: To merge remote changes into your branch:
-hint:   git merge --no-ff
-hint:
-hint: To apply your changes on top of remote changes:
-hint:   git rebase
-hint:
-hint: To discard your local changes and apply the remote changes:
-hint:   git reset --hard refs/remotes/upstream/branch-name
-hint:
-hint: Disable this message with "git config advice.diverging false"
+where <path> -- the only mandatory argument -- specifies the location.
 
-There is some danger because it's semi-destructive, but so are
-other options offered if user doesn't know the commands to
-revert back. Additionally, I think "To discard your local changes"
-wording describes the danger clearly enough.
+> we put them alongside each other to make other project tooling be able
+> to treat all worktrees consistently; in daily use there is absolutely
+> no difference between them, in all the "project tooling" there cannot
+> be a practical difference... but if you choose to delete a worktree,
+> and it happens to be the "special" one that contains the repo...
+> you've just lost stuff that you didn't expect to lose (any local
+> branches and stashes, basically).
+>
+> Because worktree use was so useful/widespread/critical on this
+> project, and we already had a custom cloning process that introduced
+> selective refspecs etc, we introduced a special clone topology: the
+> initial clone is a bare repo, and that folder gets a specific clear
+> name (ending in .git). Then we create worktrees attached to that bare
+> repo.
+>
+> Generally speaking, this has worked *very* well: I would recommend it
+> generally as a recognized/supported local-repo-setup. The most
+> important thing that makes this *possible* is the fact that "git
+> rev-parse --is-bare-repository" returns True in the bare repo folder,
+> where the lack of index and HEAD shouldn't bother git, and it returns
+> False in any one of the worktrees. It feels like things were designed
+> to work this way, even though I can find no explicit mention of this
+> topology in the docs.
 
-And for merge I improved the wording and added a description of what
-the commands do:
+It indeed was designed to work this way. It is perfectly legitimate to
+create worktrees attached to a bare repository[1].
 
-hint: Diverging branches can't be fast-forwarded.
-hint: Consider the following options:
-hint:
-hint: To merge changes into your branch:
-hint:   git merge --no-ff
-hint:
-hint: To apply your changes on top:
-hint:   git rebase
-hint:
-hint: Disable this message with "git config advice.diverging false"
+[1]: Support for bare repositories in conjunction with multiple-
+worktrees, however, came after the initial implementation of multiple-
+worktrees. An unfortunate side-effect is that established terminology
+became somewhat confusing. In particular, in a bare repository
+scenario, the term "main worktree" refers to the bare repository, not
+to the "blessed" worktree containing the ".git/" directory (since
+there is no such worktree in this case).
 
-Signed-off-by: Konstantin Pereiaslov <perk11@perk11.info>
----
-    Improve hint for diverging branches.
-    
-    I have seen a lot of developers not know what to do when they try to do
-    a git pull on a master branch with the intention of updating that branch
-    to the latest version, but see an error about branches diverging because
-    they accidentally committed their changes to that branch. They then
-    spend their time resolving conflicts and still not getting the intended
-    result. The suggestion to do a hard reset should be something that helps
-    in this situation.
-    
-    I'm not sure if a new config option needs to be created as technically
-    these are two different advice now. I'm also not sure if "refs/remotes"
-    part of the refspec is necessary, that is what I found the functions in
-    pull.c are returning. I think "upstream/branch-name" should be the same
-    thing, but kept it as is ( git reset --hard
-    refs/remotes/upstream/branch-name) for now. Please feel free to chime
-    in.
+> However, from time to time something weird happens: Today I finally
+> started to understand why I was seeing a crazy GC error about bitmaps,
+> intermittently: It seems to be because "git gc" wants to create
+> bitmaps in bare repos, but can't do so properly when we're in a
+> partial clone... or something like that?
+>
+> EG repro:
+> ```
+> git clone --bare https://github.com/ksylor/ohshitgit dangit_shared.git
+> --filter=blob:none
+> git -C dangit_shared.git worktree add $PWD/dangit_wt3
+> cd dangit_wt3/
+> echo "this is some new unique blob in the repo" > new_blob.txt
+> git add new_blob.txt && git commit -m "new blob"
+> cd ../dangit_shared.git/
+> git gc
+> ```
+>
+> This yields, at the end of the GC run:
+> ```
+> warning: Failed to write bitmap index. Packfile doesn't have full
+> closure (object bf86ed1b2602ac3a8d4724bcdf6707b156673aac is missing)
+> fatal: failed to write bitmap index
+> fatal: failed to run repack
+> ```
+>
+> On the other hand, running "git gc" in one of the worktrees works fine
+> (except you first need to delete a couple of ".tmp-*" files from the
+> "objects/pack" folder, if you already got the error above).
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1570%2Fperk11%2Fdiverging-advice-improvements-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1570/perk11/diverging-advice-improvements-v1
-Pull-Request: https://github.com/git/git/pull/1570
+Worktrees appear to be a red-herring. It's possible to reproduce this
+error without them. For instance:
 
- Documentation/config/advice.txt |  3 ++-
- advice.c                        | 27 +++++++++++++++++++++++----
- advice.h                        |  3 ++-
- builtin/merge.c                 |  2 +-
- builtin/pull.c                  | 20 ++++++++++++++++++--
- 5 files changed, 46 insertions(+), 9 deletions(-)
+    % git clone --bare --filter=blob:none
+https://github.com/ksylor/ohshitgit dangit_shared.git
+    % git clone dangit_shared.git foop
+    % cd foop
+    % echo nothing >nothing
+    % git add nothing
+    % git commit -m nothing
+    fatal: unable to read dbbb0682a7690b62ccf51b2a8648fa71ac671348
+    % git push origin master
+    % cd ../dangit_shared.git
+    % git gc
+    ...
+    warning: Failed to write bitmap index. Packfile doesn't have full
+closure (object bf86ed1b2602ac3a8d4724bcdf6707b156673aac is missing)
+    fatal: failed to write bitmap index
+    fatal: failed to run repack
 
-diff --git a/Documentation/config/advice.txt b/Documentation/config/advice.txt
-index c548a91e676..f3daa232ace 100644
---- a/Documentation/config/advice.txt
-+++ b/Documentation/config/advice.txt
-@@ -137,7 +137,8 @@ advice.*::
- 		is asked to update index entries outside the current sparse
- 		checkout.
- 	diverging::
--		Advice shown when a fast-forward is not possible.
-+		Advice shown when a fast-forward is not possible during merge
-+		or pull operation.
- 	worktreeAddOrphan::
- 		Advice shown when a user tries to create a worktree from an
- 		invalid reference, to instruct how to create a new orphan
-diff --git a/advice.c b/advice.c
-index 50c79443ba7..8fc4fb19932 100644
---- a/advice.c
-+++ b/advice.c
-@@ -220,19 +220,38 @@ void NORETURN die_conclude_merge(void)
- 	die(_("Exiting because of unfinished merge."));
- }
- 
--void NORETURN die_ff_impossible(void)
-+void NORETURN die_ff_impossible_during_merge(void)
- {
- 	advise_if_enabled(ADVICE_DIVERGING,
--		_("Diverging branches can't be fast-forwarded, you need to either:\n"
-+		_("Diverging branches can't be fast-forwarded.\n"
-+		"Consider the following options:\n"
- 		"\n"
-+		"To merge changes into your branch:\n"
- 		"\tgit merge --no-ff\n"
- 		"\n"
--		"or:\n"
--		"\n"
-+		"To apply your changes on top:\n"
- 		"\tgit rebase\n"));
- 	die(_("Not possible to fast-forward, aborting."));
- }
- 
-+void NORETURN die_ff_impossible_during_pull(const char *upstream_branch_spec)
-+{
-+	advise_if_enabled(ADVICE_DIVERGING,
-+			  _("Diverging branches can't be fast-forwarded. "
-+			    "Consider the following options:\n"
-+			    "\n"
-+			    "To merge remote changes into your branch:\n"
-+			    "\tgit merge --no-ff\n"
-+			    "\n"
-+			    "To apply your changes on top of remote changes:\n"
-+			    "\tgit rebase\n"
-+			    "\n"
-+			    "To discard your local changes and apply the remote changes:\n"
-+			    "\tgit reset --hard %s\n"), upstream_branch_spec);
-+	die(_("Not possible to fast-forward, aborting."));
-+}
-+
-+
- void advise_on_updating_sparse_paths(struct string_list *pathspec_list)
- {
- 	struct string_list_item *item;
-diff --git a/advice.h b/advice.h
-index 2affbe14261..f87369a5471 100644
---- a/advice.h
-+++ b/advice.h
-@@ -71,7 +71,8 @@ void advise_if_enabled(enum advice_type type, const char *advice, ...);
- int error_resolve_conflict(const char *me);
- void NORETURN die_resolve_conflict(const char *me);
- void NORETURN die_conclude_merge(void);
--void NORETURN die_ff_impossible(void);
-+void NORETURN die_ff_impossible_during_merge(void);
-+void NORETURN die_ff_impossible_during_pull(const char *upstream_branch_spec);
- void advise_on_updating_sparse_paths(struct string_list *pathspec_list);
- void detach_advice(const char *new_name);
- void advise_on_moving_dirty_path(struct string_list *pathspec_list);
-diff --git a/builtin/merge.c b/builtin/merge.c
-index de68910177f..8358f137f1d 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -1675,7 +1675,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (fast_forward == FF_ONLY)
--		die_ff_impossible();
-+		die_ff_impossible_during_merge();
- 
- 	if (autostash)
- 		create_autostash(the_repository,
-diff --git a/builtin/pull.c b/builtin/pull.c
-index be2b2c9ebc9..51d30e6f918 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -765,6 +765,20 @@ static const char *get_tracking_branch(const char *remote, const char *refspec)
- 	refspec_item_clear(&spec);
- 	return merge_branch;
- }
-+/**
-+ * Returns the branch the pull is performed from.
-+ * If remote is NULL or refspec is NULL, configured upstream remote of the
-+ * current branch is used.
-+ * If refspec is NULL, the current upstream branch is used.
-+ */
-+static const char *get_pull_branch(const char *remote, const char *refspec)
-+{
-+	if (refspec == NULL || remote == NULL) {
-+		return get_upstream_branch(remote);
-+	}
-+
-+	return get_tracking_branch(remote, refspec);
-+}
- 
- /**
-  * Given the repo and refspecs, sets fork_point to the point at which the
-@@ -1112,8 +1126,10 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 
- 	/* ff-only takes precedence over rebase */
- 	if (opt_ff && !strcmp(opt_ff, "--ff-only")) {
--		if (divergent)
--			die_ff_impossible();
-+		if (divergent) {
-+			const char* pull_branch_spec = get_pull_branch(repo, *refspecs);
-+			die_ff_impossible_during_pull(pull_branch_spec);
-+		}
- 		opt_rebase = REBASE_FALSE;
- 	}
- 	/* If no action specified and we can't fast forward, then warn. */
+> I at first thought this was a bug - but as I realized the problematic
+> behavior was tied to the "core.bare" setting (and its expression at
+> runtime through "git rev-parse --is-bare-repository"), it became more
+> obvious that maybe the system could/should be able to make assumptions
+> about the kind of repo that has this "true", and assume there are no
+> local-object-derived non-promisor packfiles (or whatever it is about
+> this example that makes things unhappy).
+>
+> So, I guess I'm confused as to what "core.bare" is supposed to mean:
+> Is it intended to mean "there is no index nor HEAD here, and that's
+> good, don't worry" (in which case my setup is presumably "supported",
+> and the gc behavior is buggy?), or is it intended to mean "this is the
+> kind of repository in which there are no worktrees" (in which case I
+> am abusing the system and get the errors I deserve)?
 
-base-commit: d814540bb75bbd2257f9a6bf59661a84fe8cf3cf
--- 
-gitgitgadget
+The former, meaning that your setup should be supported. Citing
+documentation for `core.bare`:
+
+    If true this repository is assumed to be bare and has no working
+    directory associated with it. If this is the case a number of
+    commands that require a working directory will be disabled, such
+    as git-add(1) or git-merge(1).
+
+On Mon, Sep 4, 2023 at 10:59 AM Tao Klerks <tao@klerks.biz> wrote:
+> I should add that I only recently discovered "git clone
+> --separate-git-dir", which I at first though was a formal expression
+> of this setup... until I understood that the relationship between the
+> "GITDIR" and the worktree that you end up with is not "Bare repo vs
+> worktree", but rather... "orphaned repo / repo that doesn't know about
+> its worktree, vs worktree".
+>
+> It seems, to me, that "my setup" makes a lot more sense than what you
+> end up with when you use "--separate-git-dir", and that the behavior
+> there predates the current "mutual reference" model of
+> worktrees-to-their-repo. If "my" use of "core.bare" in the example
+> above is sound - then should the implementation of
+> "--separate-git-dir" be changed to produce a bare repo with a
+> "worktrees" folder, like you get if you clone bare and add a worktree
+> in two separate steps?
+
+`--separate-git-dir` predates multiple-worktree support by several
+years and is distinct in purpose from --bare and multiple-worktrees
+(in fact, a couple somewhat recent fixes [2,3] were needed to prevent
+--separate-git-dir from breaking worktree administrative data). My
+understand from scanning history is that --separate-git-dir was
+introduced in aid of submodule support and perhaps other use-cases.
+
+[2]: 42264bc841 (init: teach --separate-git-dir to repair linked
+worktrees, 2020-08-31)
+[3]: 59d876ccd6 (init: make --separate-git-dir work from within linked
+worktree, 2020-08-31)
+
+On Mon, Sep 4, 2023 at 11:29 AM Tao Klerks <tao@klerks.biz> wrote:
+> And to confuse matters further, I just stumbled across
+> https://github.com/git/git/blob/master/contrib/workdir/git-new-workdir
+> - I don't understand when you would want to use that vs, again, a bare
+> repo with one or more worktrees properly attached via two-way
+> references, their own indexes, their own reflogs, etc.
+>
+> Is it the case that this contrib script predates the current "git
+> worktree" support?
+
+git-new-workdir predates git-worktree by quite a few years and, as I
+understand it, remains in-tree because it fills a niche not entirely
+filled by git-worktree.
