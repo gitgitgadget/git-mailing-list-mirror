@@ -2,69 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7835ACA101B
-	for <git@archiver.kernel.org>; Tue,  5 Sep 2023 22:02:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0ED1EC83F3E
+	for <git@archiver.kernel.org>; Tue,  5 Sep 2023 22:18:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244811AbjIEWCJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Sep 2023 18:02:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35624 "EHLO
+        id S244652AbjIEWSV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Sep 2023 18:18:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230241AbjIEWCH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Sep 2023 18:02:07 -0400
+        with ESMTP id S229848AbjIEWSU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Sep 2023 18:18:20 -0400
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88513FA
-        for <git@vger.kernel.org>; Tue,  5 Sep 2023 15:02:02 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C15B1F4
+        for <git@vger.kernel.org>; Tue,  5 Sep 2023 15:18:16 -0700 (PDT)
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A17A21B9D72;
-        Tue,  5 Sep 2023 18:02:01 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 18A921B9FB3;
+        Tue,  5 Sep 2023 18:18:16 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=2fYf3OnEkCRNEJ66HF/ZlD0XX6GijnvZq3edHE
-        BpWTQ=; b=rRa/vzZC9aVlkAXWT0mTewOI52yv/we1uNGicSoL8ftOS7GvKe5Z//
-        ezXlBMpx1WkTjUe3aYjEH3CJSn+P+RJnXUZKk5Qw+MSCjAwC74CGbuo5pP1S64R4
-        xI0ULQgBdgIc17MaPBGafSmz33XGXg65b4IDHt3X0vwYgkSyI8OD8=
+        :content-type:content-transfer-encoding; s=sasl; bh=P8U/gKw47SYu
+        iXGsC02PuXqod8gB2m3514YN6XpiCjg=; b=PC3lfIdFKqXlKrA6HUiKhsv1Mlrd
+        uuRQWSfYCRS79r5WoqBX3tv/KScKfIk3vGlD5w/3t4W5hGleiX/vlknjRIz/uU44
+        92eEoOuovjzGZxHefDkqxajCFzGeX+cO+LhjOGa1X73lHlOSAOgMvdbhddt6/Hqd
+        SXQYUJRb1AKfjaI=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2BC1F1B9D71;
-        Tue,  5 Sep 2023 18:02:01 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 119851B9FB2;
+        Tue,  5 Sep 2023 18:18:16 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.145.39.59])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0FEB61B9D70;
-        Tue,  5 Sep 2023 18:01:59 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 789651B9FB1;
+        Tue,  5 Sep 2023 18:18:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Wesley Schwengle <wesleys@opperschaap.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 2/3] builtin/rebase.c: Emit warning when rebasing
- without a forkpoint
-In-Reply-To: <2e1f1d2a-4aec-4b60-bc96-685a27055c06@opperschaap.net> (Wesley
-        Schwengle's message of "Sun, 3 Sep 2023 08:34:54 -0400")
-References: <xmqq1qfiubg5.fsf@gitster.g>
-        <20230902221641.1399624-1-wesleys@opperschaap.net>
-        <20230902221641.1399624-3-wesleys@opperschaap.net>
-        <xmqq4jkckuy7.fsf@gitster.g> <xmqqlednuagl.fsf@gitster.g>
-        <2e1f1d2a-4aec-4b60-bc96-685a27055c06@opperschaap.net>
-Date:   Tue, 05 Sep 2023 15:01:58 -0700
-Message-ID: <xmqqfs3ss2i1.fsf@gitster.g>
+To:     Tao Klerks <tao@klerks.biz>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git <git@vger.kernel.org>
+Subject: Re: Plumbing for mapping from a remote tracking ref to the remote ref?
+In-Reply-To: <CAPMMpojUrfSmpgWVh3TTn_uamPCcyHRQf2R3APSpEjsqujNXvA@mail.gmail.com>
+        (Tao Klerks's message of "Sun, 3 Sep 2023 09:16:00 +0200")
+References: <CAPMMpogUxq59zj+=7UDiURYbydAwvymOqhEWaheT9fkU8HaP4Q@mail.gmail.com>
+        <xmqqilp1znn1.fsf@gitster.g>
+        <nycvar.QRO.7.76.6.2206182358350.349@tvgsbejvaqbjf.bet>
+        <xmqqczf5lgk3.fsf@gitster.g>
+        <CAPMMpojUrfSmpgWVh3TTn_uamPCcyHRQf2R3APSpEjsqujNXvA@mail.gmail.com>
+Date:   Tue, 05 Sep 2023 15:18:14 -0700
+Message-ID: <xmqqpm2wqn6h.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D6827A22-4C37-11EE-937A-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 1BE8AFBC-4C3A-11EE-8387-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Wesley Schwengle <wesleys@opperschaap.net> writes:
+Tao Klerks <tao@klerks.biz> writes:
 
-> I like the idea of the warning, but it could be loud indeed and you'll
-> want to turn it off in that case.
+> On Sun, Jun 19, 2022 at 1:04=E2=80=AFAM Junio C Hamano <gitster@pobox.c=
+om> wrote:
+>>
+>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>>
+>> >>      $ git refmap refs/remotes/somepath/{branch-A,branch-B}
+>> >>      origin refs/heads/branch-A
+>> >>      origin refs/heads/branch-B
+>> >>
+>> >> IOW, you give name(s) of remote-tracking branches and then you get
+>> >> the remote and their ref for these?
+>> >
+>> > Modulo introducing a new top-level command (a subcommand of `git rem=
+ote`
+>> > would make much more sense and make the feature eminently more
+>> > discoverable), and modulo allowing patterns in the ref to match, I a=
+gree.
+>>
+>> "git remote" is primarily about "I have this remote---tell me more
+>> about it", but this query goes in the other direction, and that is
+>> why I threw a non-existing command to solicit alternatives that are
+>> potentially better than "git remote".
+>
+> Thank you for the responses here, and my apologies for not following
+> up (much) earlier.
+> ...
+> Would something like the following be mutually agreeable?
+>
+>        $ git remote origin map-ref
+> refs/remotes/my-favorite-remotes/origin/someref
+>       refs/heads/someref
 
-I tend to think that a single-liner warning would not be too
-intrusive (it might actually be too subtle to be noticed),
-especially given that it is issued only when the fork-point does
-move the target commit from what was given.
+With strainge line wrapping, I cannot quite tell what is the input
+and what is the output, but if you meant that the part up to the
+long-ish refname in the refs/remotes is the command line, and map-ref
+is the new subcommand name in the "git remote" command, i.e.
 
-Giving a shortlog of what is lost in the history does sound like a
-bit too loud, I am afraind, though.
+    $ git remote map-ref origin refs/remotes/my-favorite-remotes/origin/s=
+omeref
+
+is the input, to which the output=20
+
+    refs/heads/someref
+
+is given, I am not sure what its value is.  First of all, the user
+is giving a ref in a hierarchy that is usually used for the remote
+whose name is "my-favorite-remotes".  What made this user _know_
+that the remote reference belongs to "origin"?  Isn't that part of
+what the user may want to _find_ _out_, instead of required to give
+as input?
+
+So, no, I do not think it is agreeable at least not from this end,
+but I may be misunderstanding what you meant to present as your
+design.
+
+I would understand if it were more like
+
+    $ git remote refmap refs/remotes/somepath/{branch-A,branch-B}
+    origin:refs/heads/branch-A refs/remotes/somepath/branch-A
+    origin:refs/heads/branch-B refs/remotes/somepath/branch-B
+
+that is,
+
+ (1) the new subcommand (refmap) takes one or more refs from the
+     command line; they typically are in the refs/remotes hiearchy
+     and each asks which remote's which ref needs to be fetched to
+     update the ref.  Note that the user does *not* need to know
+     which remote the refs will be updated from.
+
+ (2) the subcommand goes through the "remote.*.fetch" configuration
+     items (and its older equivalents in .git/remotes, whose support
+     should come free if you used remote.c API properly) to find
+     what ref from what remote is fetched to update the refs given
+     from the command line.
+
+ (3) the output is "<remote>:<ref-at-remote> <our-remote-tracking-branch>=
+"
+     one line at a time.
+
+Note that this format allows the "two remotes can both update the
+same remote tracking branches we have" arrangement.
+
