@@ -2,83 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A07ACA101D
-	for <git@archiver.kernel.org>; Tue,  5 Sep 2023 22:19:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5E3FCA101A
+	for <git@archiver.kernel.org>; Tue,  5 Sep 2023 22:36:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239218AbjIEWUB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Sep 2023 18:20:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32898 "EHLO
+        id S243037AbjIEWgc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Sep 2023 18:36:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229848AbjIEWUA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Sep 2023 18:20:00 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 939DBFA
-        for <git@vger.kernel.org>; Tue,  5 Sep 2023 15:19:57 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 02B5F1B9FCC;
-        Tue,  5 Sep 2023 18:19:57 -0400 (EDT)
+        with ESMTP id S242263AbjIEWg3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Sep 2023 18:36:29 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF25FEB
+        for <git@vger.kernel.org>; Tue,  5 Sep 2023 15:36:23 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D610B258A2;
+        Tue,  5 Sep 2023 18:36:21 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=TCCpI5L24rQbG6+HPkRxUWOpjMPGhXEwFdQlam
-        LizYM=; b=albpwQhp6pz8Af2ERSv5fUXkGoKda2BDJLP2cqLu0r+duqKjpSEJX/
-        NoxR2GMBZZK0+q0xRNc2KlsjqgTvDc8njbh7SXWStkpfJuKWY2qy39X5IXwQBVkW
-        ZIeYmRIRXfUH7xUeTUyWvdd8CUCCoUmoy0UhcpMRxiOStq+fig9pI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id EDA031B9FCB;
-        Tue,  5 Sep 2023 18:19:56 -0400 (EDT)
+        :content-type:content-transfer-encoding; s=sasl; bh=6ull9o2VAxm9
+        c8zY8JcWDXwlE1QYhYoZuplXyPkt/U8=; b=XZNXVQ0mxeux9XeeUeCyENw+Gkcv
+        SnRTDaxDd2D7Mw0eJjheuNNaQsRjWuGljKXvRt2NfRt6GFTnIw+HZ0ekSFc/mOY3
+        moz2dRuofYSOX2GmbVIrqwiJ6ghZAVfwIwAC8g7WlMehlZqZvh3ciOZEYW1OYLl8
+        /cFOZT9gGWSscCQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id CE6E4258A0;
+        Tue,  5 Sep 2023 18:36:21 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.145.39.59])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5A2921B9FCA;
-        Tue,  5 Sep 2023 18:19:56 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 79BAF2589F;
+        Tue,  5 Sep 2023 18:36:18 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Kristoffer Haugsbakk <code@khaugsbakk.name>, git@vger.kernel.org,
-        Denton Liu <liu.denton@gmail.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 1/3] range-diff: treat notes like `log`
-In-Reply-To: <843bc10e-03ab-b37a-68f7-d6055dc9308c@gmx.de> (Johannes
-        Schindelin's message of "Tue, 5 Sep 2023 12:56:51 +0200 (CEST)")
-References: <cover.1686505920.git.code@khaugsbakk.name>
-        <cover.1693584310.git.code@khaugsbakk.name>
-        <e9a59108311369d8197b9870a8810d5283ec124f.1693584310.git.code@khaugsbakk.name>
-        <94b9535b-8c2a-eb8f-90fb-cd0f998ec57e@gmx.de>
-        <8642763e-d3e7-49c4-b2ea-d5e4bebfbca5@app.fastmail.com>
-        <843bc10e-03ab-b37a-68f7-d6055dc9308c@gmx.de>
-Date:   Tue, 05 Sep 2023 15:19:55 -0700
-Message-ID: <xmqqledkqn3o.fsf@gitster.g>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     Radovan =?utf-8?Q?Halu=C5=A1ka?= <radovan.haluska1@gmail.com>,
+        git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+        William Sprent <williams@unity3d.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: Potential bug in `git checkout --quiet`
+In-Reply-To: <ZPXdeRnLu6oKoVt2@debian.me> (Bagas Sanjaya's message of "Mon, 4
+        Sep 2023 20:36:57 +0700")
+References: <9419E14B-5933-4773-B1BA-899A7DA75D96@gmail.com>
+        <ZPXdeRnLu6oKoVt2@debian.me>
+Date:   Tue, 05 Sep 2023 15:36:17 -0700
+Message-ID: <xmqqh6o8qmce.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5808BB54-4C3A-11EE-B291-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: A16DDA3E-4C3C-11EE-8439-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Bagas Sanjaya <bagasdotme@gmail.com> writes:
 
-> Hi Kristoffer,
+> On Mon, Sep 04, 2023 at 02:56:37PM +0200, Radovan Halu=C5=A1ka wrote:
+>> What did you do before the bug happened? (Steps to reproduce your issu=
+e)
+>>=20
+>> ```
+>> git clone --quiet --branch master --depth 1 --no-checkout --filter blo=
+b:none \
+>>     git@github.com:acatai/Strategy-Card-Game-AI-Competition.git locm-a=
+gents
+>> cd locm-agents
+>> git sparse-checkout set --no-cone
+>> git sparse-checkout add 'contest-2022-08-COG/ByteRL'
+>> git checkout --quiet
+>> ```
+>>=20
+>> What did you expect to happen? (Expected behavior)
+>>=20
+>> I expected to receive no output from any of the commands above.
+>>=20
+>> What happened instead? (Actual behavior)
+>>=20
+>> I received an output from the last command even though the `--quiet` s=
+witch was specified
+>>=20
+>> What's different between what you expected and what actually happened?
+>>=20
+>> This shouldn't have been printed on the screen:
+>>=20
+>> '''
+>> remote: Enumerating objects: 28, done.
+>> remote: Counting objects: 100% (28/28), done.
+>> remote: Compressing objects: 100% (27/27), done.
+>> remote: Total 28 (delta 0), reused 25 (delta 0), pack-reused 0
+>> Receiving objects: 100% (28/28), 31.40 MiB | 4.94 MiB/s, done.
+>> '''
+>>=20
 >
-> On Mon, 4 Sep 2023, Kristoffer Haugsbakk wrote:
->
->> I would like to use your solution instead. Thank you.
->
-> Please do! You're welcome.
->
->> Maybe you could supply a commit message for v3? v3 would then consist of
->> two commits:
->>
->> 1. Your fix
->> 2. Those two tests
->>
->> Or should it be handled in some other way?
->
-> Personally, I'd prefer it if you just squashed the changes into your
-> patch. If you want, I'd be delighted about a Helped-by (or even
-> Co-authored-by) footer, but taking ownership would be fine with me, too.
+> I can reproduce this bug on v2.40.0 using your reproducer above. Yet,
+> `git checkout --quiet` on normal repos (not partial ones) works as
+> expected. Cc'ing people working on sparse-checkout recently.
 
-Sounds very sensible.
+I am not much involved in the lazy clone's on-demand downloading,
+but I am torn between calling this a bug and a feature.
 
-Thanks, both.  Will look forward to seeing an updated series.
+Just like the original reporter "expected to receive no output", for
+a pure Git person like me, I expect to see *no* network activity
+while performing a local operation like "checkout".  And from that
+point of view, "checkout --quiet" telling me that something
+unexpected and unusual (i.e. the operation "checkout" that is
+supposed to be local is lazily downloading blobs and trees from the
+outside world) is happening with the extra output is something I may
+even appreciate.
+
+Having said that, I would not fundamentally oppose if those who want
+to improve the lazy clone feature wants to squelch messages from the
+transport layer while the top-level front end ("checkout" in this case)
+wants to operate quietly.
+
+Thanks for a report.
