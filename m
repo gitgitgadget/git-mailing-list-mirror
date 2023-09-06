@@ -2,155 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A0E40EB8FA5
-	for <git@archiver.kernel.org>; Wed,  6 Sep 2023 04:21:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9872EB8FA5
+	for <git@archiver.kernel.org>; Wed,  6 Sep 2023 05:02:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230132AbjIFEV7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Sep 2023 00:21:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47934 "EHLO
+        id S235520AbjIFFCy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Sep 2023 01:02:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41894 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229482AbjIFEV7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Sep 2023 00:21:59 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C09FB2
-        for <git@vger.kernel.org>; Tue,  5 Sep 2023 21:21:55 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-991c786369cso500484466b.1
-        for <git@vger.kernel.org>; Tue, 05 Sep 2023 21:21:55 -0700 (PDT)
+        with ESMTP id S230330AbjIFFCy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Sep 2023 01:02:54 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 258128E
+        for <git@vger.kernel.org>; Tue,  5 Sep 2023 22:02:50 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-99bf3f59905so492392966b.3
+        for <git@vger.kernel.org>; Tue, 05 Sep 2023 22:02:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks.biz; s=google; t=1693974114; x=1694578914; darn=vger.kernel.org;
+        d=klerks.biz; s=google; t=1693976568; x=1694581368; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=RlfgGxPRjBRTEv3T2hB6Bh/cthv8PSP/fntA6ZEn82Q=;
-        b=D/DkDviJS0Hb2aHVGkFO5HL50ZoJYeZM7sG24HB8EGNyZIWIF61ryL9ohsqDk5J5/r
-         CzTMkNZR2E/ocQ2igb03mwhaXWpIsokbXTuYGrpjfm/1hceTsfqvrf2bN0XPn6jH4hXz
-         ZKLWLJ51Lv0ECwg3aVaZqdzOi2uv01oThdFHk=
+        bh=DEN37f+PgIaXZQ9xPyXahuOXsF/AD44HEI5gTQeR+6U=;
+        b=aOpls86ZAsRfPndYa0xHvw94VDL3auk4TqvDdn0sJPByRyk9MHr+0sdBNOkHF14AeH
+         iURDyOJSpJcnu5V7RIr04cLo1SqupX9Z5FsGpoImtV0zGXiVqpLhrDuqzy1tRDi96FWv
+         DQrrAw/Rr/IApNeKYlXjP9sO72pbXJQbXfSHY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693974114; x=1694578914;
+        d=1e100.net; s=20221208; t=1693976568; x=1694581368;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=RlfgGxPRjBRTEv3T2hB6Bh/cthv8PSP/fntA6ZEn82Q=;
-        b=hoqOlIbwf3ohx3uJp0ifpASrpCscEkMfeRzml21spA53bZXLugSbJIzO8Ees5uk9bf
-         HdIB4wbpAQwg0+YEls9JEsMQDa0j7I4VUMXd5XFsVbv7M2dIssELX4EeKLV4XzTsITKr
-         MSAiB7jfSAK93BK167YA1yzUk8aKUV24J/AZYqM2eOox2VqyMlSUGE/MFb91o1rIeioI
-         V18VtuhiPD/pA+oZg1wDaPbM3XYRTUfvgIGZYySTBBYekGI+eQ70CEm7wpeKB4gxmGT+
-         bf0KAIzZdBrQU/iSQlmg2JzbkKxHWW/hrZT1R88Qwa7cO8NFw8tPe6TGgKnpbi3gM+6V
-         FMxQ==
-X-Gm-Message-State: AOJu0YzHTUCULlC+X5tgUhC12X8Mi1M1mGFMpvnsc3KxQzUptujLA4Vb
-        mrY1XFtcYdyTGwVIdjBANKHdIxpA7eu68oDCp6JE9w==
-X-Google-Smtp-Source: AGHT+IF4F/VHVdf2Pd9PMT1Q7i5wse8vKuwxaqSZiR+tNjabfOhRhqq+oURrt4nbMqYl724hgQGc5Z4wU3MycFtHOeg=
-X-Received: by 2002:a17:906:70d6:b0:9a4:88af:b82 with SMTP id
- g22-20020a17090670d600b009a488af0b82mr1079963ejk.77.1693974113817; Tue, 05
- Sep 2023 21:21:53 -0700 (PDT)
+        bh=DEN37f+PgIaXZQ9xPyXahuOXsF/AD44HEI5gTQeR+6U=;
+        b=b/3t4TxtQOP2DRnmIVnzwEKgvoVWZXGG3BnjQRhwxT1+QIXaZ0OKgsxWb4ybhmTKyc
+         kR4JBO+o/V4Tj7hCbUWu821JKbTOiYWVtMOOAoWyNCxtODyYB+bwTP6hmPlNwaV2k4GN
+         lccrXYo3jIwEIsPa/p0Xt+5uphRfayuBtKatfKvuqPChPDn3YeGd7O6bxm3RNWkuimm9
+         vFrShNenC1DqBGtafnuJBcyq9ViaaS3O7cALS9WY7UiOHHs8t1aQwprNvMG05oAxP+vd
+         MooMoTm8uSo1aYZBUuRHp4d1rVc1lC3PJrFKgnfagzr7VRyiC7XnzDWTRe/ubS/DUlMi
+         6/hg==
+X-Gm-Message-State: AOJu0YxzX7QZM7LXiKMkWXfJNQIgjCW6jBUzEYOoBwKzG/m/fm1Wt+rp
+        1FzM14hRzqRGtGrGoNBXAVtx27ylP/G81X7Hy3S0sFaf3eqjsYbVSgB0LQ==
+X-Google-Smtp-Source: AGHT+IFaD1nOyoMFFBFqbWZRmO70UKYkFwMH96yKTzFP2X53cvPejpc/2aKq4xq20p5guGzke3JR3Nd+3r8jgWGlbss=
+X-Received: by 2002:a17:907:7893:b0:99b:d580:546c with SMTP id
+ ku19-20020a170907789300b0099bd580546cmr1561298ejc.23.1693976568314; Tue, 05
+ Sep 2023 22:02:48 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAPMMpogUxq59zj+=7UDiURYbydAwvymOqhEWaheT9fkU8HaP4Q@mail.gmail.com>
- <xmqqilp1znn1.fsf@gitster.g> <nycvar.QRO.7.76.6.2206182358350.349@tvgsbejvaqbjf.bet>
- <xmqqczf5lgk3.fsf@gitster.g> <CAPMMpojUrfSmpgWVh3TTn_uamPCcyHRQf2R3APSpEjsqujNXvA@mail.gmail.com>
- <xmqqpm2wqn6h.fsf@gitster.g>
-In-Reply-To: <xmqqpm2wqn6h.fsf@gitster.g>
+References: <pull.1535.git.1684830767336.gitgitgadget@gmail.com>
+ <pull.1535.v2.git.1685264889088.gitgitgadget@gmail.com> <999f12b2-38d6-f446-e763-4985116ad37d@gmail.com>
+In-Reply-To: <999f12b2-38d6-f446-e763-4985116ad37d@gmail.com>
 From:   Tao Klerks <tao@klerks.biz>
-Date:   Wed, 6 Sep 2023 06:21:45 +0200
-Message-ID: <CAPMMpoh7=riapMO-91e81MrK-uR+sm7ttgCu8433dNNQU0ZsQw@mail.gmail.com>
-Subject: Re: Plumbing for mapping from a remote tracking ref to the remote ref?
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git <git@vger.kernel.org>
+Date:   Wed, 6 Sep 2023 07:02:39 +0200
+Message-ID: <CAPMMpoj8udDuDferkaRfoKDV6EHMVO6fH3_GE9SUN51VKbwvJA@mail.gmail.com>
+Subject: Re: [PATCH v2] cherry-pick: refuse cherry-pick sequence if index is dirty
+To:     phillip.wood@dunelm.org.uk
+Cc:     Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 6, 2023 at 12:18=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
+On Tue, May 30, 2023 at 4:16=E2=80=AFPM Phillip Wood <phillip.wood123@gmail=
+.com> wrote:
 >
-> Tao Klerks <tao@klerks.biz> writes:
+> Hi Tao
 >
-> > ...
-> > Would something like the following be mutually agreeable?
+> On 28/05/2023 10:08, Tao Klerks via GitGitGadget wrote:
+> > From: Tao Klerks <tao@klerks.biz>
 > >
-> >        $ git remote origin map-ref
-> > refs/remotes/my-favorite-remotes/origin/someref
-> >       refs/heads/someref
+> <SNIP>
 >
-> With strainge line wrapping, I cannot quite tell what is the input
-> and what is the output, but if you meant that the part up to the
-> long-ish refname in the refs/remotes is the command line, and map-ref
-> is the new subcommand name in the "git remote" command, i.e.
->
->     $ git remote map-ref origin refs/remotes/my-favorite-remotes/origin/s=
-omeref
->
-> is the input, to which the output
->
->     refs/heads/someref
->
-> is given,
-
-My apologies: in addition to automatic line wrapping, I also got the
-arg order wrong.
-
-Yes, this is what I meant.
-
-> I am not sure what its value is.  First of all, the user
-> is giving a ref in a hierarchy that is usually used for the remote
-> whose name is "my-favorite-remotes".  What made this user _know_
-> that the remote reference belongs to "origin"?
-
-Understanding that it's dangerous to make assumptions about what's
-typical, I am positing that the user typically knows what remote
-they're working with / looking for stuff in. I would guess that the
-set of repos, in the world, that have multiple remotes with different
-ref path structures, mapped onto the same remote tracking ref
-namespace, is much smaller than the set of repos that have some set of
-refs mapped differently to the standard
-"refs/heads/*:refs/remotes/originname/*" mapping. My "selfish" intent
-was to address the latter, without worrying much about the former.
-
-> Isn't that part of
-> what the user may want to _find_ _out_, instead of required to give
-> as input?
-
-There's certainly value in enabling them to do so!
-
->
-> So, no, I do not think it is agreeable at least not from this end,
-> but I may be misunderstanding what you meant to present as your
-> design.
-
-No misunderstanding. I was unfortunately more concerned with "fitting
-in" with other "git remote" subcommands (which take a remote name)
-than making the most useful functionality.
-
->
-> I would understand if it were more like
->
->     $ git remote refmap refs/remotes/somepath/{branch-A,branch-B}
->     origin:refs/heads/branch-A refs/remotes/somepath/branch-A
->     origin:refs/heads/branch-B refs/remotes/somepath/branch-B
+> I found the changes up to this point a bit confusing. Maybe I've missed
+> something but I don't think they are really related to fixing the bug
+> described in the commit message. As such they're a distraction from the
+> "real" fix.
 >
 
-This is a much better proposal, from my perspective!
+Understood, thanks - *if* I kept them, they should be in a separate
+"prep refactor" commit.
 
-> that is,
+The reason I did all this was just that I needed to build a new
+message that displayed the correct cherry-pick action name - something
+that was, in the existing code, done by repeating the entire advice
+message. I didn't want to do the same, and if I was going add what I
+needed to construct the message more dynamically I figured I should
+update the existing repetition-based approach.
+
 >
->  (1) the new subcommand (refmap) takes one or more refs from the
->      command line; they typically are in the refs/remotes hiearchy
->      and each asks which remote's which ref needs to be fetched to
->      update the ref.  Note that the user does *not* need to know
->      which remote the refs will be updated from.
+> > +     requested_action_name =3D cherry_pick_action_name(requested_actio=
+n);
 >
->  (2) the subcommand goes through the "remote.*.fetch" configuration
->      items (and its older equivalents in .git/remotes, whose support
->      should come free if you used remote.c API properly) to find
->      what ref from what remote is fetched to update the refs given
->      from the command line.
+> We already have the function action_name() so I don't think we need to
+> add cherry_pick_action_name().
+
+The reason I had added a new one was that action_name() also supported
+"REPLAY_INTERACTIVE_REBASE", which should not be an option in the
+codepath that I was refactoring. I wanted to retain the existing
+"defensiveness", but that clearly got in the way of both brevity and
+clarity.
+
+> Also the name of the new function is
+> confusing as it may return "revert".
+
+Yeah, the name was supposed to reflect the context ("cherry-pick logic
+which also covers revert, as opposed to rebase which also uses
+sequencer but is a substantially separate flow"), rather than the
+output value.
+
 >
->  (3) the output is "<remote>:<ref-at-remote> <our-remote-tracking-branch>=
-"
->      one line at a time.
+> > +     if (require_clean_index(r, requested_action_name,
+> > +                                 _("Please commit or stash them."), 1,=
+ 1))
 >
-> Note that this format allows the "two remotes can both update the
-> same remote tracking branches we have" arrangement.
+> How does this interact with "--no-commit"? I think the check that you
+> refer to in the commit message is in do_pick_commit() where we have
 >
+>         if (opts->no_commit) {
+>                 /*
+>                  * We do not intend to commit immediately.  We just want =
+to
+>                  * merge the differences in, so let's compute the tree
+>                  * that represents the "current" state for the merge mach=
+inery
+>                  * to work on.
+>                  */
+>                 if (write_index_as_tree(&head, r->index, r->index_file, 0=
+, NULL))
+>                         return error(_("your index file is unmerged."));
+>         } else {
+>                 unborn =3D repo_get_oid(r, "HEAD", &head);
+>                 /* Do we want to generate a root commit? */
+>                 if (is_pick_or_similar(command) && opts->have_squash_onto=
+ &&
+>                     oideq(&head, &opts->squash_onto)) {
+>                         if (is_fixup(command))
+>                                 return error(_("cannot fixup root commit"=
+));
+>                         flags |=3D CREATE_ROOT_COMMIT;
+>                         unborn =3D 1;
+>                 } else if (unborn)
+>                         oidcpy(&head, the_hash_algo->empty_tree);
+>                 if (index_differs_from(r, unborn ? empty_tree_oid_hex() :=
+ "HEAD",
+>                                        NULL, 0))
+>                         return error_dirty_index(r, opts);
+>         }
+>
+> I think it would be simpler to reuse the existing check by extracting
+> the "else" clause above into a separate function in sequencer.c and call
+> it here guarded by "if (!opts->no_commit)" as well as in that "else"
+> clause in do_pick_commit()
+
+That sounds very plausible.
+
+I will (very belatedly) have a go, and submit another version sometime soon=
+.
+
+Thanks so much for taking the time to review, and my apologies for the
+months-later context revival!
