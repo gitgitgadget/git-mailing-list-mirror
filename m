@@ -2,31 +2,27 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 609BCCCF9F0
-	for <git@archiver.kernel.org>; Wed,  6 Sep 2023 00:02:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84D7FCCF9E9
+	for <git@archiver.kernel.org>; Wed,  6 Sep 2023 00:03:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243515AbjIFADA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Sep 2023 20:03:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58014 "EHLO
+        id S243586AbjIFAD6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Sep 2023 20:03:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236879AbjIFADA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Sep 2023 20:03:00 -0400
-X-Greylist: delayed 409 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 05 Sep 2023 17:02:54 PDT
-Received: from forward203c.mail.yandex.net (forward203c.mail.yandex.net [178.154.239.218])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEFB01AB
-        for <git@vger.kernel.org>; Tue,  5 Sep 2023 17:02:54 -0700 (PDT)
-Received: from forward103b.mail.yandex.net (forward103b.mail.yandex.net [IPv6:2a02:6b8:c02:900:1:45:d181:d103])
-        by forward203c.mail.yandex.net (Yandex) with ESMTP id 6964D62757
-        for <git@vger.kernel.org>; Wed,  6 Sep 2023 02:56:08 +0300 (MSK)
-Received: from mail-nwsmtp-smtp-production-main-84.iva.yp-c.yandex.net (mail-nwsmtp-smtp-production-main-84.iva.yp-c.yandex.net [IPv6:2a02:6b8:c0c:332f:0:640:4ab4:0])
-        by forward103b.mail.yandex.net (Yandex) with ESMTP id 1BF1D60077;
-        Wed,  6 Sep 2023 02:56:03 +0300 (MSK)
-Received: by mail-nwsmtp-smtp-production-main-84.iva.yp-c.yandex.net (smtp/Yandex) with ESMTPSA id xthug44DbOs0-OjWnX2A1;
-        Wed, 06 Sep 2023 02:56:02 +0300
+        with ESMTP id S232504AbjIFAD5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Sep 2023 20:03:57 -0400
+Received: from forward100c.mail.yandex.net (forward100c.mail.yandex.net [178.154.239.211])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC3FD1AB
+        for <git@vger.kernel.org>; Tue,  5 Sep 2023 17:03:53 -0700 (PDT)
+Received: from mail-nwsmtp-smtp-production-main-91.sas.yp-c.yandex.net (mail-nwsmtp-smtp-production-main-91.sas.yp-c.yandex.net [IPv6:2a02:6b8:c08:47a7:0:640:b27a:0])
+        by forward100c.mail.yandex.net (Yandex) with ESMTP id B241D600B9;
+        Wed,  6 Sep 2023 03:03:49 +0300 (MSK)
+Received: by mail-nwsmtp-smtp-production-main-91.sas.yp-c.yandex.net (smtp/Yandex) with ESMTPSA id l3LJme2DeGk0-lBxpCihu;
+        Wed, 06 Sep 2023 03:03:48 +0300
 X-Yandex-Fwd: 1
-Authentication-Results: mail-nwsmtp-smtp-production-main-84.iva.yp-c.yandex.net; dkim=pass
-Message-ID: <e8af1e31-793c-4623-bc97-13b80ac98774@perk11.info>
-Date:   Tue, 5 Sep 2023 18:55:56 -0500
+Authentication-Results: mail-nwsmtp-smtp-production-main-91.sas.yp-c.yandex.net; dkim=pass
+Message-ID: <55aff183-c514-498d-89ce-93654d3cde97@perk11.info>
+Date:   Tue, 5 Sep 2023 19:03:46 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] advice: improve hint for diverging branches.
@@ -143,3 +139,4 @@ On 9/5/23 18:20, Junio C Hamano wrote:
 >>
 >> base-commit: d814540bb75bbd2257f9a6bf59661a84fe8cf3cf
 > Thanks.
+>
