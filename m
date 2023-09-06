@@ -2,107 +2,232 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 55C6DEB8FAD
-	for <git@archiver.kernel.org>; Wed,  6 Sep 2023 07:15:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 929FAEE14A8
+	for <git@archiver.kernel.org>; Wed,  6 Sep 2023 15:23:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231553AbjIFHPP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Sep 2023 03:15:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37406 "EHLO
+        id S242509AbjIFPXD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Sep 2023 11:23:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231483AbjIFHPO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Sep 2023 03:15:14 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CD35CFA
-        for <git@vger.kernel.org>; Wed,  6 Sep 2023 00:15:11 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2bceb02fd2bso50135031fa.1
-        for <git@vger.kernel.org>; Wed, 06 Sep 2023 00:15:11 -0700 (PDT)
+        with ESMTP id S239669AbjIFPXC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Sep 2023 11:23:02 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1E301738
+        for <git@vger.kernel.org>; Wed,  6 Sep 2023 08:22:56 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-50098cc8967so5938647e87.1
+        for <git@vger.kernel.org>; Wed, 06 Sep 2023 08:22:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1693984509; x=1694589309; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=XElkU3Pic70SzNC5a1oiJ1YoBfnCUCgInV5TxHh+PV8=;
-        b=I7bvXaxGWezhflCQ21IM06L0Gsrz/7fpgwZgUOfT7hHp8e1HhRg+O8MoPc9tKxeQs+
-         26ulNqfv/bfND/oCPU144+KZ4PsmYBc+LV+fRcK9ORCiMsbgE87al1Sp3JXddowpwmkO
-         Y1IentAMR5gTCd6iHsxYEyaylE9fNMfXj79FgxBk2SRfM6ntOPt73Jgu7czPe8cIZxfz
-         OqtCowBf54WUFRc4ZkvsT+t8T7yRaQwb20A2VELMXXM6fqiFy8fvzF28Osw4kqUoKAUd
-         nnhpWSsSOfNscvOcwlyqH6Jrr0a1ODK4VcsbVo/OcdF7R2rOgWh2BltG4LYa0CkZmy87
-         Xu+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693984509; x=1694589309;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20221208; t=1694013775; x=1694618575; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=XElkU3Pic70SzNC5a1oiJ1YoBfnCUCgInV5TxHh+PV8=;
-        b=j1D6zBP9hMC88smpNcHMO7p9J9zxbF62Qd7XTZh7RAJJD/f+B7VObddHs4FPjQFhPf
-         0N5mEX64Fu2PWFg314werQ7sNoJvRMAYZ1KE/g/qmV0IjXPPXh8W1Dc6SUy6NGRauZnd
-         Sh3vp2eRKS4zRq2T2033cp12VcI+EA3vAHISN0Isq5GdgYyMPjM/ysp4qlRsOQIL6EmA
-         ENkTojwlKbn86Mv4QuT2P+i0pCY7zWq3TB90lvtzYmlYiuU+dtNpJXWfEqP/0lSPdpl8
-         hiZap8LI9QAqmeY1H5/Y3lpduzBtNXvRYjHbvnT0oqk9S9s+RrYYV6NRBhVN+qVxEgpk
-         5dlw==
-X-Gm-Message-State: AOJu0YxYmijVqQOyW+/IA5UyO3R9cI2DPykWZrt1fu8jQDn/IpCoxOes
-        kOhluphyUD03rIYUBgFE9jw=
-X-Google-Smtp-Source: AGHT+IGt0lxBnM0gNMRf4Lxz71hUhJLvZ0cX7iXm4oLoluRA7yTcmUS3ucGK8Sh5yimb+1E69sG3rA==
-X-Received: by 2002:ac2:464d:0:b0:4ff:a04c:8a5b with SMTP id s13-20020ac2464d000000b004ffa04c8a5bmr1633231lfo.47.1693984509140;
-        Wed, 06 Sep 2023 00:15:09 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id x17-20020ac25dd1000000b004f8555f7aa1sm2649317lfq.52.2023.09.06.00.15.08
+        bh=QSjQn7WT6eXQ8nUYAU03PNN8st5l9hFjKNVa6ZDh1YA=;
+        b=k9jGXZSnZsBaC+brIUG+Z0RjFMLYxy4FcmJkhbLwUbIanWgYiowEqprBViFfEkMt7F
+         vgNg5KiXAMJDNJs4cu5jb0D586Pt4o80/G0riMTp2gvmPPbTgN/ttCT6bGQ4NO5XjKK8
+         WH38+uuKVaSPvx1O1CyCErdPpYfA4p5b/w0bDSWS6sbgm1h+U4qUccZx03TXeX+Pgqhz
+         UqmfyV58p92R5I4vHr22aGR3BzSxBiUdFJt3BRH1PtrBaVk5KaUapJX5vE4aa4SJFU5C
+         NzKdE/1Jj8xiDhtE9oTedb5p6ixrgJU4sdBo56Xa7np3wWcYYwrIccDAKPy1dpfFVeXi
+         PbMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1694013775; x=1694618575;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=QSjQn7WT6eXQ8nUYAU03PNN8st5l9hFjKNVa6ZDh1YA=;
+        b=PWF/P0bH+9ts7OFO9cK2NMWlJBJBcRMij73/5CfpVo1D4DhAZhRGkeKAyVzOBKdKgs
+         z0MLGmLUWTf5QOLXy1susZ02+daX/aIFUYEvpJeELxQkJ2PLkRuAPZ+qrsjSJ6jakrO0
+         IG+RIDA58j091DAJhuP/RKqikkmAFoYCizdBm2tRorC7c7NMd74nIaWIBXkXxXFNctc0
+         fjkGEPd+aURzeoGkWn+khgS7PhJ9Hne2uwLB0vP157FIfE5KEEte4WMPUdcMjp49OrNf
+         IwEiYBaTmtgWelf2XI52lVLFGGHHxzGzYMkYeYLWzaaLrFfOLVjM0rDtAiCQ8VKkMH1C
+         sC6w==
+X-Gm-Message-State: AOJu0YwTcnWosH6GzLhfjZAl1bYIk2o0gCEr+hIto+laWg9va5+L5GZL
+        SPRes8OU0epbzF2YLuQCsKZhUYlaOZM=
+X-Google-Smtp-Source: AGHT+IEl3qO14NgOy/0acyZNhB7KVHH3JlLyZTIvWdP9E3/2aTNcXAaPC8+YCHmKd51S5BX7OYjiEg==
+X-Received: by 2002:a19:7712:0:b0:500:a3be:1ab6 with SMTP id s18-20020a197712000000b00500a3be1ab6mr2265479lfc.6.1694013774307;
+        Wed, 06 Sep 2023 08:22:54 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id bt12-20020a056000080c00b0031433443265sm15055423wrb.53.2023.09.06.08.22.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Sep 2023 00:15:08 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>
-Subject: [PATCH v2 1/1] doc/diff-options: fix link to generating patch section
-References: <87zg20qzhg.fsf@osv.gnss.ru> <xmqq34zsqlr3.fsf@gitster.g>
-Date:   Wed, 06 Sep 2023 10:15:07 +0300
-In-Reply-To: <xmqq34zsqlr3.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-        05 Sep 2023 15:49:04 -0700")
-Message-ID: <87msxzpybo.fsf_-_@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        Wed, 06 Sep 2023 08:22:53 -0700 (PDT)
+Message-ID: <pull.1492.v4.git.1694013771.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1492.v3.git.1690903412.gitgitgadget@gmail.com>
+References: <pull.1492.v3.git.1690903412.gitgitgadget@gmail.com>
+From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 06 Sep 2023 15:22:44 +0000
+Subject: [PATCH v4 0/7] rebase -i: impove handling of failed commands
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Haller <lists@haller-berlin.de>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Glen Choo <chooglen@google.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When formatted as man-page, the section title is rendered
-"GENERATING PATCH TEXT WITH -P" whereas reference still reads
-"Generating patch text with -p", that is inconsistent and makes
-searching harder than it needs to be.
+This series fixes several bugs in the way we handle a commit cannot be
+picked because it would overwrite an untracked file.
 
-Fix this by getting rid of custom reference text.
+ * after a failed pick "git rebase --continue" will happily commit any
+   staged changes even though no commit was picked.
 
-Also, documentation for every command that describes `-p` option by
-including the "diff-options.txt" file does include the
-"diff-generate-patch.txt" file as well (as it should), so the internal
-link is in fact useful for any of them.
+ * the commit of the failed pick is recorded as rewritten even though no
+   commit was picked.
 
-Fix this by getting rid of conditionals around the reference.
+ * the "done" file used by "git status" to show the recently executed
+   commands contains an incorrect entry.
 
-Fixes: ebdc46c242 (docs: link generating patch sections)
-Signed-off-by: Sergey Organov <sorganov@gmail.com>
----
- Documentation/diff-options.txt | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+Thanks to Eric, Glen and Junio for their comments on v2. Here are the
+changes since v2:
 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 9f33f887711d..c07488b123c6 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -22,13 +22,7 @@ ifndef::git-format-patch[]
- -p::
- -u::
- --patch::
--	Generate patch (see section titled
--ifdef::git-log[]
--<<generate_patch_text_with_p, "Generating patch text with -p">>).
--endif::git-log[]
--ifndef::git-log[]
--"Generating patch text with -p").
--endif::git-log[]
-+	Generate patch (see <<generate_patch_text_with_p>>).
- ifdef::git-diff[]
- 	This is the default.
- endif::git-diff[]
+Patch 1 - Reworded the commit message.
+
+Patch 2 - Reworded the commit message, added a test and fixed error message
+pointed out by Glen.
+
+Patch 3 - New cleanup.
+
+Patch 4 - Reworded the commit message, now only increments
+todo_list->current if there is no error.
+
+Patch 5 - Swapped with next patch. Reworded the commit message, stopped
+testing implementation (suggested by Glen). Expanded post-rewrite hook test.
+
+Patch 6 - Reworded the commit message, now uses the message file rather than
+the author script to check if "rebase --continue" should commit staged
+changes. Junio suggested using a separate file for this but I think that
+would end up being more involved as we'd need to be careful about creating
+and removing it.
+
+Patch 7 - Reworded the commit message.
+
+Thanks for the comments on V1, this series has now grown somewhat.
+Previously I was worried that refactoring would change the behavior, but
+having thought about it the current behavior is wrong and should be changed.
+
+Changes since V1:
+
+Rebased onto master to avoid a conflict with
+ab/remove-implicit-use-of-the-repository
+
+ * Patches 1-3 are new preparatory changes
+ * Patches 4 & 5 are new and fix the first two issues listed above.
+ * Patch 6 is the old patch 1 which has been rebased and the commit message
+   reworded. It fixes the last issues listed above.
+
+Phillip Wood (7):
+  rebase -i: move unlink() calls
+  rebase -i: remove patch file after conflict resolution
+  sequencer: use rebase_path_message()
+  sequencer: factor out part of pick_commits()
+  rebase: fix rewritten list for failed pick
+  rebase --continue: refuse to commit after failed command
+  rebase -i: fix adding failed command to the todo list
+
+ sequencer.c                   | 182 ++++++++++++++++++----------------
+ t/t3404-rebase-interactive.sh |  53 +++++++---
+ t/t3418-rebase-continue.sh    |  18 ++++
+ t/t3430-rebase-merges.sh      |  30 ++++--
+ t/t5407-post-rewrite-hook.sh  |  48 +++++++++
+ 5 files changed, 228 insertions(+), 103 deletions(-)
+
+
+base-commit: a80be152923a46f04a06bade7bcc72870e46ca09
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1492%2Fphillipwood%2Frebase-dont-write-done-when-rescheduling-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1492/phillipwood/rebase-dont-write-done-when-rescheduling-v4
+Pull-Request: https://github.com/gitgitgadget/git/pull/1492
+
+Range-diff vs v3:
+
+ 1:  1ab1ad2ef07 ! 1:  ae4f873b3d0 rebase -i: move unlink() calls
+     @@ Metadata
+       ## Commit message ##
+          rebase -i: move unlink() calls
+      
+     -    At the start of each iteration the loop that picks commits removes
+     -    state files from the previous pick. However some of these are only
+     -    written if there are conflicts and so we break out of the loop after
+     -    writing them. Therefore they only need to be removed when the rebase
+     -    continues, not in each iteration.
+     +    At the start of each iteration the loop that picks commits removes the
+     +    state files from the previous pick. However some of these files are only
+     +    written if there are conflicts in which case we exit the loop before the
+     +    end of the loop body. Therefore they only need to be removed when the
+     +    rebase continues, not at the start of each iteration.
+      
+          Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+      
+ 2:  e2a758eb4a5 ! 2:  f540ed1d607 rebase -i: remove patch file after conflict resolution
+     @@ Commit message
+          now used in two different places rebase_path_patch() is added and used
+          to obtain the path for the patch.
+      
+     +    To construct the path write_patch() previously used get_dir() which
+     +    returns different paths depending on whether we're rebasing or
+     +    cherry-picking/reverting. As this function is only called when
+     +    rebasing it is safe to use a hard coded string for the directory
+     +    instead. An assertion is added to make sure we don't starting calling
+     +    this function when cherry-picking in the future.
+     +
+          Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+      
+       ## sequencer.c ##
+     @@ sequencer.c: static GIT_PATH_FUNC(rebase_path_amend, "rebase-merge/amend")
+        * For the post-rewrite hook, we make a list of rewritten commits and
+        * their new sha1s.  The rewritten-pending list keeps the sha1s of
+      @@ sequencer.c: static int make_patch(struct repository *r,
+     + 	char hex[GIT_MAX_HEXSZ + 1];
+     + 	int res = 0;
+     + 
+     ++	if (!is_rebase_i(opts))
+     ++		BUG("make_patch should only be called when rebasing");
+     ++
+     + 	oid_to_hex_r(hex, &commit->object.oid);
+     + 	if (write_message(hex, strlen(hex), rebase_path_stopped_sha(), 1) < 0)
+       		return -1;
+       	res |= write_rebase_head(&commit->object.oid);
+       
+ 3:  8f6c0e40567 ! 3:  818bdaf772d sequencer: use rebase_path_message()
+     @@ Commit message
+          made function to get the path name instead. This was the last
+          remaining use of the strbuf so remove it as well.
+      
+     +    As with the previous patch we now use a hard coded string rather than
+     +    git_dir() when constructing the path. This is safe for the same
+     +    reason (make_patch() is only called when rebasing) and is protected by
+     +    the assertion added in the previous patch.
+     +
+          Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+      
+       ## sequencer.c ##
+ 4:  a1fad70f4b9 = 4:  bd67765a864 sequencer: factor out part of pick_commits()
+ 5:  df401945866 ! 5:  f6f330f7063 rebase: fix rewritten list for failed pick
+     @@ Commit message
+          disabled the user will see the messages from the merge machinery
+          detailing the problem.
+      
+     -    To simplify writing REBASE_HEAD in this case pick_one_commit() is
+     -    modified to avoid duplicating the code that adds the failed command
+     -    back into the todo list.
+     +    The code to add a failed command back into the todo list is duplicated
+     +    between pick_one_commit() and the loop in pick_commits(). Both sites
+     +    print advice about the command being rescheduled, decrement the current
+     +    item and save the todo list. To avoid duplicating this code
+     +    pick_one_commit() is modified to set a flag to indicate that the command
+     +    should be rescheduled in the main loop. This simplifies things as only
+     +    the remaining copy of the code needs to be modified to set REBASE_HEAD
+     +    rather than calling error_with_patch().
+      
+          Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+      
+ 6:  2ed7cbe5fff = 6:  0ca5fccca17 rebase --continue: refuse to commit after failed command
+ 7:  bbe0afde512 = 7:  8d5f6d51e19 rebase -i: fix adding failed command to the todo list
+
 -- 
-2.25.1
-
+gitgitgadget
