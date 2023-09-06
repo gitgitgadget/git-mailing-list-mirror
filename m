@@ -2,159 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9872EB8FA5
-	for <git@archiver.kernel.org>; Wed,  6 Sep 2023 05:02:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 07CD9EB8FAD
+	for <git@archiver.kernel.org>; Wed,  6 Sep 2023 06:02:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235520AbjIFFCy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Sep 2023 01:02:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41894 "EHLO
+        id S241132AbjIFGCx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Sep 2023 02:02:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230330AbjIFFCy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Sep 2023 01:02:54 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 258128E
-        for <git@vger.kernel.org>; Tue,  5 Sep 2023 22:02:50 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-99bf3f59905so492392966b.3
-        for <git@vger.kernel.org>; Tue, 05 Sep 2023 22:02:50 -0700 (PDT)
+        with ESMTP id S230023AbjIFGCx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Sep 2023 02:02:53 -0400
+Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87046CFC
+        for <git@vger.kernel.org>; Tue,  5 Sep 2023 23:02:49 -0700 (PDT)
+Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-58fbfcb8d90so35057137b3.1
+        for <git@vger.kernel.org>; Tue, 05 Sep 2023 23:02:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks.biz; s=google; t=1693976568; x=1694581368; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DEN37f+PgIaXZQ9xPyXahuOXsF/AD44HEI5gTQeR+6U=;
-        b=aOpls86ZAsRfPndYa0xHvw94VDL3auk4TqvDdn0sJPByRyk9MHr+0sdBNOkHF14AeH
-         iURDyOJSpJcnu5V7RIr04cLo1SqupX9Z5FsGpoImtV0zGXiVqpLhrDuqzy1tRDi96FWv
-         DQrrAw/Rr/IApNeKYlXjP9sO72pbXJQbXfSHY=
+        d=google.com; s=20221208; t=1693980168; x=1694584968; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Sl9KhXwcJmtX/eCvWVlJ11En0qCO8zhv8vSHJ3YtxWk=;
+        b=wxH2KnBr8WbhYbCVcB7lTcWskrhVnpWp07yR59z7NvNDb0NhZs/+cfPuJKH+ayBhrR
+         n6kmH7mrWDdu8gSQwNMIIP0SRPZvozH8GV9YZfZmv7cWJTaw737oS0x6mlXiba2SMNmB
+         jWuvykBpkudrvs0wQAblaUr/W78zsInm6jUbqEmGlVyIEfnFuztIzLGPqFvFZ1pTGGKv
+         IQqo6cnJEjxfSR91i0cX36OD3ubBEYo1dBs/AioYrjL7ZTlfzvaxqxazZxXIn7EXT+uh
+         W091BekZn7cedzo5pqUKUuafmZlUx/CmSf4AV1BPqsmyxqOH5uXRafaS0T46eqlnTgph
+         FYUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693976568; x=1694581368;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DEN37f+PgIaXZQ9xPyXahuOXsF/AD44HEI5gTQeR+6U=;
-        b=b/3t4TxtQOP2DRnmIVnzwEKgvoVWZXGG3BnjQRhwxT1+QIXaZ0OKgsxWb4ybhmTKyc
-         kR4JBO+o/V4Tj7hCbUWu821JKbTOiYWVtMOOAoWyNCxtODyYB+bwTP6hmPlNwaV2k4GN
-         lccrXYo3jIwEIsPa/p0Xt+5uphRfayuBtKatfKvuqPChPDn3YeGd7O6bxm3RNWkuimm9
-         vFrShNenC1DqBGtafnuJBcyq9ViaaS3O7cALS9WY7UiOHHs8t1aQwprNvMG05oAxP+vd
-         MooMoTm8uSo1aYZBUuRHp4d1rVc1lC3PJrFKgnfagzr7VRyiC7XnzDWTRe/ubS/DUlMi
-         6/hg==
-X-Gm-Message-State: AOJu0YxzX7QZM7LXiKMkWXfJNQIgjCW6jBUzEYOoBwKzG/m/fm1Wt+rp
-        1FzM14hRzqRGtGrGoNBXAVtx27ylP/G81X7Hy3S0sFaf3eqjsYbVSgB0LQ==
-X-Google-Smtp-Source: AGHT+IFaD1nOyoMFFBFqbWZRmO70UKYkFwMH96yKTzFP2X53cvPejpc/2aKq4xq20p5guGzke3JR3Nd+3r8jgWGlbss=
-X-Received: by 2002:a17:907:7893:b0:99b:d580:546c with SMTP id
- ku19-20020a170907789300b0099bd580546cmr1561298ejc.23.1693976568314; Tue, 05
- Sep 2023 22:02:48 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.1535.git.1684830767336.gitgitgadget@gmail.com>
- <pull.1535.v2.git.1685264889088.gitgitgadget@gmail.com> <999f12b2-38d6-f446-e763-4985116ad37d@gmail.com>
-In-Reply-To: <999f12b2-38d6-f446-e763-4985116ad37d@gmail.com>
-From:   Tao Klerks <tao@klerks.biz>
-Date:   Wed, 6 Sep 2023 07:02:39 +0200
-Message-ID: <CAPMMpoj8udDuDferkaRfoKDV6EHMVO6fH3_GE9SUN51VKbwvJA@mail.gmail.com>
-Subject: Re: [PATCH v2] cherry-pick: refuse cherry-pick sequence if index is dirty
-To:     phillip.wood@dunelm.org.uk
-Cc:     Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+        d=1e100.net; s=20221208; t=1693980168; x=1694584968;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Sl9KhXwcJmtX/eCvWVlJ11En0qCO8zhv8vSHJ3YtxWk=;
+        b=F1SAli6h93R/boY8jUQDRGLS+ptuyTmwnB2DPns0phPmfbYBTtovmmwG/BiCatYKp/
+         VhiuM4ofWclUqXCJNQzX3DLhrLkU/nvbb0PKgyOE1XNbtO+qqWvERQfyS4MZ944rxpgs
+         9PMLS9/Cw5sw6tAjCORdK6lt5KDvS0RL6hE8PK1n71w7uWMUEub+5s4tuRfGsjkgJP6Z
+         UFa9vAsN1jrpkB1FMohHB1ByebP9LC+f4tcgnl78bdKJUI2oMSmfCKCzzetM57T4BqGe
+         JqSK3tcLZ+xJ0YgFRi6ZY2ehBHXf0Duwfo0ySBT9yNP+XyvqUIv9wj6rHYiQHerSW3Ac
+         ZoKw==
+X-Gm-Message-State: AOJu0YyrihskpjSIOGTNdRsCb/lNfK6z0B6PdGJj8+X9Y6lDM52PdwyX
+        opINcQpzdtprx7uA4O9Xm/Md7Aw/ehHI+A==
+X-Google-Smtp-Source: AGHT+IHyqZI3cnBbmi3pS5hbZQxGVAzkJiczn2G/avfH2Bugy4EiiSuvaZVuYIAkAItOZNT2HoNXqtqy44YM1g==
+X-Received: from sokac.sfo.corp.google.com ([2620:15c:11a:202:5a2c:e12e:a0b:b02])
+ (user=sokcevic job=sendgmr) by 2002:a81:af66:0:b0:56d:647:664b with SMTP id
+ x38-20020a81af66000000b0056d0647664bmr427904ywj.5.1693980168795; Tue, 05 Sep
+ 2023 23:02:48 -0700 (PDT)
+Date:   Tue,  5 Sep 2023 23:02:42 -0700
+In-Reply-To: <20230829005606.136615-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20230829005606.136615-1-jonathantanmy@google.com>
+X-Mailer: git-send-email 2.42.0.283.g2d96d420d3-goog
+Message-ID: <20230906060241.944886-2-sokcevic@google.com>
+Subject: [PATCH] [diff-lib] Fix check_removed when fsmonitor is on
+From:   Josip Sokcevic <sokcevic@google.com>
+To:     jonathantanmy@google.com
+Cc:     git@vger.kernel.org, git@jeffhostetler.com,
+        Josip Sokcevic <sokcevic@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 30, 2023 at 4:16=E2=80=AFPM Phillip Wood <phillip.wood123@gmail=
-.com> wrote:
->
-> Hi Tao
->
-> On 28/05/2023 10:08, Tao Klerks via GitGitGadget wrote:
-> > From: Tao Klerks <tao@klerks.biz>
-> >
-> <SNIP>
->
-> I found the changes up to this point a bit confusing. Maybe I've missed
-> something but I don't think they are really related to fixing the bug
-> described in the commit message. As such they're a distraction from the
-> "real" fix.
->
+git-diff-index may return incorrect deleted entries when fsmonitor is used in a
+repository with git submodules. This can be observed on Mac machines, but it
+can affect all other supported platforms too.
 
-Understood, thanks - *if* I kept them, they should be in a separate
-"prep refactor" commit.
+If fsmonitor is used, `stat *st` may not be initialized. Since `lstat` calls
+aren't not desired when fsmonitor is on, skip the entire gitlink check using
+the same condition used to initialize `stat *st`.
+---
+This patch is using jonathantanmy@ test case, which now passes. It's
+possible there are similar edge cases with fsmonitor, so I'll do more
+extensive e2e testing tomorrow.
+ diff-lib.c                   | 2 +-
+ t/t7527-builtin-fsmonitor.sh | 6 ++++++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-The reason I did all this was just that I needed to build a new
-message that displayed the correct cherry-pick action name - something
-that was, in the existing code, done by repeating the entire advice
-message. I didn't want to do the same, and if I was going add what I
-needed to construct the message more dynamically I figured I should
-update the existing repetition-based approach.
+diff --git a/diff-lib.c b/diff-lib.c
+index d8aa777a73..c67aa5ff89 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -46,7 +46,7 @@ static int check_removed(const struct index_state *istate, const struct cache_en
+ 	}
+ 	if (has_symlink_leading_path(ce->name, ce_namelen(ce)))
+ 		return 1;
+-	if (S_ISDIR(st->st_mode)) {
++	if (!(ce->ce_flags & CE_FSMONITOR_VALID) && S_ISDIR(st->st_mode)) {
+ 		struct object_id sub;
+ 
+ 		/*
+diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
+index 0c241d6c14..894a80fbe8 100755
+--- a/t/t7527-builtin-fsmonitor.sh
++++ b/t/t7527-builtin-fsmonitor.sh
+@@ -824,6 +824,10 @@ test_expect_success 'submodule always visited' '
+ 
+ 	create_super super &&
+ 	create_sub sub &&
++	git -C super --no-optional-locks diff-index --name-status HEAD >actual.with &&
++	git -C super --no-optional-locks -c core.fsmonitor=false \
++	    diff-index --name-status HEAD >actual.without &&
++	    test_cmp actual.with actual.without &&
+ 
+ 	git -C super submodule add ../sub ./dir_1/dir_2/sub &&
+ 	git -C super commit -m "add sub" &&
+@@ -837,6 +841,8 @@ test_expect_success 'submodule always visited' '
+ 	# some dirt in the submodule and confirm matching output.
+ 
+ 	# Completely clean status.
++	echo Now running for clean status &&
++
+ 	my_match_and_clean &&
+ 
+ 	# .M S..U
+-- 
+2.42.0.283.g2d96d420d3-goog
 
->
-> > +     requested_action_name =3D cherry_pick_action_name(requested_actio=
-n);
->
-> We already have the function action_name() so I don't think we need to
-> add cherry_pick_action_name().
 
-The reason I had added a new one was that action_name() also supported
-"REPLAY_INTERACTIVE_REBASE", which should not be an option in the
-codepath that I was refactoring. I wanted to retain the existing
-"defensiveness", but that clearly got in the way of both brevity and
-clarity.
-
-> Also the name of the new function is
-> confusing as it may return "revert".
-
-Yeah, the name was supposed to reflect the context ("cherry-pick logic
-which also covers revert, as opposed to rebase which also uses
-sequencer but is a substantially separate flow"), rather than the
-output value.
-
->
-> > +     if (require_clean_index(r, requested_action_name,
-> > +                                 _("Please commit or stash them."), 1,=
- 1))
->
-> How does this interact with "--no-commit"? I think the check that you
-> refer to in the commit message is in do_pick_commit() where we have
->
->         if (opts->no_commit) {
->                 /*
->                  * We do not intend to commit immediately.  We just want =
-to
->                  * merge the differences in, so let's compute the tree
->                  * that represents the "current" state for the merge mach=
-inery
->                  * to work on.
->                  */
->                 if (write_index_as_tree(&head, r->index, r->index_file, 0=
-, NULL))
->                         return error(_("your index file is unmerged."));
->         } else {
->                 unborn =3D repo_get_oid(r, "HEAD", &head);
->                 /* Do we want to generate a root commit? */
->                 if (is_pick_or_similar(command) && opts->have_squash_onto=
- &&
->                     oideq(&head, &opts->squash_onto)) {
->                         if (is_fixup(command))
->                                 return error(_("cannot fixup root commit"=
-));
->                         flags |=3D CREATE_ROOT_COMMIT;
->                         unborn =3D 1;
->                 } else if (unborn)
->                         oidcpy(&head, the_hash_algo->empty_tree);
->                 if (index_differs_from(r, unborn ? empty_tree_oid_hex() :=
- "HEAD",
->                                        NULL, 0))
->                         return error_dirty_index(r, opts);
->         }
->
-> I think it would be simpler to reuse the existing check by extracting
-> the "else" clause above into a separate function in sequencer.c and call
-> it here guarded by "if (!opts->no_commit)" as well as in that "else"
-> clause in do_pick_commit()
-
-That sounds very plausible.
-
-I will (very belatedly) have a go, and submit another version sometime soon=
-.
-
-Thanks so much for taking the time to review, and my apologies for the
-months-later context revival!
