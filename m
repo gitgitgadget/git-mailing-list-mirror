@@ -2,199 +2,194 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 697BEEE14D4
-	for <git@archiver.kernel.org>; Thu,  7 Sep 2023 04:54:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E765EEC8745
+	for <git@archiver.kernel.org>; Thu,  7 Sep 2023 15:24:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234900AbjIGEyK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Sep 2023 00:54:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45384 "EHLO
+        id S234012AbjIGPYH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Sep 2023 11:24:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230329AbjIGEyJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Sep 2023 00:54:09 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 273DB19B5
-        for <git@vger.kernel.org>; Wed,  6 Sep 2023 21:54:05 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4ff8f2630e3so795565e87.1
-        for <git@vger.kernel.org>; Wed, 06 Sep 2023 21:54:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks.biz; s=google; t=1694062443; x=1694667243; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LNOv5XyNxu3kH8K71HCMXje/UY0rEEfi9lLg1dryfY8=;
-        b=Te0ArH2gn8KXl5NycjHHpS1xCi7pew0YucSQhHiwnPvx68FOcoq6Gc2RaRn8H/tMSk
-         QepRM+T8EQPq2sFEX1oo5jz4/ocHy1J0iPkHJNB5HkDqlMwXnsYM0bzjGZ6JGIU+9Amt
-         iT15NDvi3kz3a+/VzgioxNlB4o8SJSux4LqNw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1694062443; x=1694667243;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LNOv5XyNxu3kH8K71HCMXje/UY0rEEfi9lLg1dryfY8=;
-        b=F7cRIitjz1R7haozEamDJ5WLOdrFvlydeJnL2G6x9cSMM5E5AQMD3a5eKc2YWrW9Y4
-         2TIuSyRbDYh9Z+PSC4X/5QAkr9W/omuW0mOGnDRNm3K9G7YkjAPjNMIg2y5PW/7e7gYG
-         E0SPp8VNTlVO9Sya5BJu1JPSZ5987jQj1vkZQjYvcUb51svwUa5aGEM9UmWcxLbc+CDa
-         rEYbhN/buWEuf8/VT2NiqE9Z/QQ7VguLH7Ao9qjKvTqLKZ8igY6Sm7AM0gS3/K8GmPR2
-         4HUHam8OB8u9ZT/9cyGeJ7rlK0xYH52tUuHKIpVxdgNafqn3PRnQZ5RG3bLhxt6NL8sQ
-         DPUg==
-X-Gm-Message-State: AOJu0YwIanONXB8C8bEF9fVKmHV5+2OYlpQTBjtPgCHFapTnbRvUGMgs
-        oErdF+VevLu7yLBMbXyxNs+yjh1UbfvnWJZ9ScOkpCBE0EF3KI191nCcWdMe
-X-Google-Smtp-Source: AGHT+IFooBDTrV8nv5IZyRQMgaXu+kyPpPSu+xa7tukovOLvpWkIq+3pCkAh5Z/efBVin5TvDBuJ0QA0y26jNzwFjKc=
-X-Received: by 2002:a05:6512:5cf:b0:500:bf44:b2b6 with SMTP id
- o15-20020a05651205cf00b00500bf44b2b6mr3072983lfo.45.1694062443161; Wed, 06
- Sep 2023 21:54:03 -0700 (PDT)
+        with ESMTP id S231764AbjIGPVw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Sep 2023 11:21:52 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D0C810F9
+        for <git@vger.kernel.org>; Thu,  7 Sep 2023 08:21:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de;
+ s=s31663417; t=1694100081; x=1694704881; i=johannes.schindelin@gmx.de;
+ bh=WpFu9HXoRWf4F0zScZxELV3clLjKxAtbmYyOyfbI3CQ=;
+ h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+ b=CS2knLva62sEwljepC4Ro6mg7YNK8qvll5mZTnVl0bBneWXp/OdV02jWC0dVBWzTI8B50X2
+ WMWMzT5zFaCD+KwJrUBL8j9Dqs9g+/1HBavOzG26f+RELNVX2bj5RRxmezdalYlLq5KHI6qQw
+ ikFpNtF7Ga5YIPaKdZqNhOebWSNgeFgg4oTxj+aTPDq3b5dtRZqdBGIjhteQ0jAIuXtqxbzlY
+ DcWC8o3zt27nc7JM6TUgs6sbCWeF/JgGLVGYh+cU4Gtt+XojLsOU3OpskbpfbbKickOKw8gaY
+ MJgIJCmuI0GTjgNMaIQVIBBfP0ACxzz7qnEQfyM3n2954Z8+2UPQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([80.151.253.86]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MV67o-1qFUNt0T3u-00S9Li; Thu, 07
+ Sep 2023 13:01:35 +0200
+Date:   Thu, 7 Sep 2023 12:22:45 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     Christian Couder <christian.couder@gmail.com>
+cc:     Elijah Newren <newren@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Patrick Steinhardt <ps@pks.im>, John Cai <johncai86@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 11/14] replay: use standard revision ranges
+In-Reply-To: <CAP8UFD2KMikjJJQ0FGXO1EYYHRNWHH2n70UATU_o61PJ411f2Q@mail.gmail.com>
+Message-ID: <4a648214-2627-c9c0-0be2-5a694e8c3b3c@gmx.de>
+References: <20230407072415.1360068-1-christian.couder@gmail.com> <20230407072415.1360068-12-christian.couder@gmail.com> <8daf2603-2818-9c9d-7a06-6af2872a045a@github.com> <89c78da5-388a-e52b-b20b-e376ac90de14@github.com> <CABPp-BGfG3VeY1gOugzig8PLan1AS66BMWnyFSOsLOy-zqLdXw@mail.gmail.com>
+ <b9732826-5732-0f87-9527-f49c38514fd7@github.com> <CABPp-BG3xNmwbtu+tstLr8bT24rr0gG65ZvD1rEeus_V8OYk=Q@mail.gmail.com> <bbdd3697-bc10-f311-dbef-99917603ce4f@github.com> <CABPp-BH5rLZyjLD91Bn=xThMXHk=q+kGcqPjPDOT0-N4fHfquA@mail.gmail.com>
+ <f5dd91a7-ba11-917a-39e2-2737829558cb@github.com> <CABPp-BFCKrbSZQtRD1MnXrwB91O2YK9ZuGd6BiYQZ2zrpLp+uw@mail.gmail.com> <58f7918f-6ca3-2158-7d9e-bfcd8eb24b0d@github.com> <CABPp-BGRtcBQ_6fkMrTskV9dk71ffycXZ8hEE_RaOrAdza_wLA@mail.gmail.com>
+ <f74fb509-0e1a-9542-d80c-0bec2a1e6740@gmx.de> <CAP8UFD2KMikjJJQ0FGXO1EYYHRNWHH2n70UATU_o61PJ411f2Q@mail.gmail.com>
 MIME-Version: 1.0
-References: <CAPMMpoixKnr4BkKd8jeU+79Edhqtu4R7m8=BX4ZSYKdBHDzK=w@mail.gmail.com>
- <b5833396-7e04-465f-96f6-69d5280fa023@app.fastmail.com> <CAPig+cQoiqeZF52Jr45an+cZF+ZQbHPXtLVn+VmyegjMQaJqCg@mail.gmail.com>
- <2ba66542-9ae2-4b13-ae6b-f37dec6b72c7@app.fastmail.com> <87edjbuugw.fsf@osv.gnss.ru>
- <c0a10738-86ba-4b3a-9e74-2568cc407621@app.fastmail.com> <CAPMMpohgkH3h1zC_Q7O-07gYw8_7mdSsyX7vu1K1u5+CxKUaUQ@mail.gmail.com>
- <xmqqledjm4k2.fsf@gitster.g>
-In-Reply-To: <xmqqledjm4k2.fsf@gitster.g>
-From:   Tao Klerks <tao@klerks.biz>
-Date:   Thu, 7 Sep 2023 06:53:58 +0200
-Message-ID: <CAPMMpojTLswqubRk0Ly3RQqkrnpx_9Hiu_TRK1=ASPbPNz4ApQ@mail.gmail.com>
-Subject: Re: Is "bare"ness in the context of multiple worktrees weird? Bitmap
- error in git gc.
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Kristoffer Haugsbakk <code@khaugsbakk.name>,
-        Sergey Organov <sorganov@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>,
-        git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; BOUNDARY="8323328-867962872-1694080451=:115"
+Content-ID: <bf063906-c8b0-a683-2b73-d710593f7f95@gitforwindows.org>
+X-Provags-ID: V03:K1:+Xf844MRW5Mu5KLinsue7pM+XpsGEFBn4+dVQfh8yWP6fqhjj95
+ q2jM3lBeZjqA0+4VN9Ck78OkWDXDvdVYJgIuIQpXPYmEj9O/ekP+P73GIYVL2VvfWZuUvPB
+ Zm3PvBrkB8QrNy7lZDPkSBUzRXmAcxGj7b3wAd1Usm2czxu6Hw9268pqb8+24ihyBOmbWpE
+ /WGDbrRcQd4GKoIFZE9Bw==
+UI-OutboundReport: notjunk:1;M01:P0:eSpCMe2i1+c=;0UU3DqHoj1YDj2pwl3WwNbd/zwu
+ 9OuQ39M5rt2hsyD7xJ/lglUoGmgCZpBE5c6gmDp3a48zhuC5NwqywCI+PNuj9ac+Rr5v9q/s4
+ lc61UQB56+4QcIDYyLmvv5bHgotbH52NDYmCcPKl9wHfTSSTbrjkaa0mnhNoEb5taNFTyTsBs
+ eBb7wjTdfdRRPOs5ByTW90jdoLLpCeCx5kal1FS71xQh2/u4UVx0kLllN9EM651+msH3GYJsu
+ 4bpdn6iaV6PfmkgNl4gzdPHzGEnseLf8jPYGlBKki0vPi0L2007kd30z4HEZBzPks5OUnDihD
+ Ue5ZcsUBJlTtrL3dNb8qebb8vu/GzQ6iJ/QL8RCfMj1S26RaJgYvsuwhtTGPb1qeGPXg3LGB6
+ 0ifX41Lb0AV/L5DEJh1gjTP1DvskU8xWrm9jZbUM+oIcMhsH8F0R8gl8NbfSVElHAjCtek/hg
+ y3/pjR32+aU5+rNsFLZRFmaPn+vN7mEJamYf69nc6tJi9kxyeu8eUCTiKJ3bUzs6BXaHnLrz1
+ zfMxQNg8qmYb1h4ttSMyzv1daXFtaGm4jlTWJ2XZL5VvU6A1EC0yMfqAiyWXpPL3RMl3q6Xb6
+ NAOPkreAmqSshFCB9Rgb3dHYYbFp1qWZ8Vr7GXmhcwP3YfXXBGjL0FpN8GPFif6OEkIr8i49A
+ 5APTW5cIAI32BwAZVqsyPRlD2gz57Zd8YzRingLwZCQZoMDXKipqEU2EcJVdlHuqqjZxaF16s
+ l88qWIPw+r81LxyAozkaflV0/64r66gbuRxU8Su+TX5KR9LO4vfw7DnAuHIDqhz4UwdT6N4BD
+ ViLMTsQ0VdE8yW3fL5QOeVqQhNfVjcIwxElyMY+SEApKd1FxvJI3dIJuNU2618aLTMbknov+f
+ WV4IaXf8UXvDYW7OGcDUelk78ExOmvcx4Ellqr9H+rgHULOTMnpcWU22qORBUpIrU+zobJrI3
+ zx/KTS9oCw4o5V2YRVpVWJ7gk8E=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 6, 2023 at 10:26=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-867962872-1694080451=:115
+Content-Type: text/plain; CHARSET=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-ID: <f0c0e5ab-4be8-592e-d0fd-ada6cccc828b@gitforwindows.org>
+
+Hi Christian,
+
+On Thu, 7 Sep 2023, Christian Couder wrote:
+
+> On Sun, Sep 3, 2023 at 5:47=E2=80=AFPM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > On Sat, 29 Apr 2023, Elijah Newren wrote:
+> >
+> > > On Mon, Apr 24, 2023 at 8:23=E2=80=AFAM Derrick Stolee <derrickstole=
+e@github.com> wrote:
 >
-> Tao Klerks <tao@klerks.biz> writes:
+> > > > Basically, I'm not super thrilled about exposing options that are
+> > > > unlikely to be valuable to users and instead are more likely to ca=
+use
+> > > > confusion due to changes that won't successfully apply.
+> > >
+> > > Oh, I got thrown by the "right now" portion of your comment; I
+> > > couldn't see how time or future changes would affect anything to mak=
+e
+> > > it less (or more) confusing for users.
+> > >
+> > > Quick clarification, though: while you correctly point out the type =
+of
+> > > confusion the user would experience without my overriding, my
+> > > overriding of rev.reverse (after setup_revisions() returns, not befo=
+re
+> > > it is called) precludes that experience.  The override means none of
+> > > the above happens, and they would instead just wonder why their opti=
+on
+> > > is being ignored.
+> >
+> > FWIW here is my view on the matter: `git replay`, at least in its curr=
+ent
+> > incarnation, is a really low-level tool. As such, I actually do not wa=
+nt
+> > to worry much about protecting users from nonsensical invocations.
+> >
+> > In that light, I would like to see that code rejecting all revision
+> > options except `--diff-algorithm` be dropped. Should we ever decide to=
+ add
+> > a non-low-level mode to `git replay`, we can easily add some user-frie=
+ndly
+> > sanity check of the options then, and only for that non-low-level code=
+.
+> > For now, I feel that it's just complicating things, and `git replay` i=
+s in
+> > the experimental phase anyway.
 >
-> > I like the nomenclature, I like the simple "zero (i.e. bare) or one
-> > inline worktree, zero or more attached worktrees" explanation.
->
-> We have used "main worktree" to refer to the working tree part (plus
-> the repository) of a non-bare repository.  And it makes sense to
-> explain it together with the concept of "worktree", as the primary
-> one is very much special in that it cannot be removed.  You can see
-> that "git worktree remove" would stop you from removing it with an
-> error message:
->
->         fatal: '../there' is a main working tree.
->
-> It probably does not add much value to introduce a new term
-> "inline".  Here is what "git worktree --help" has to say about it.
->
->     A repository has one main worktree (if it's not a bare repository) an=
+> I would be Ok with removing the patch (called "replay: disallow
+> revision specific options and pathspecs")
+> that rejects all revision options and pathspecs if there is a
+> consensus for that.
+
+Well, since you talk about "consensus" and I already made my strong
+preference known, how about you add yours?
+
+> It might not simplify things too much if there is still an exception for
+> `--diff-algorithm` though. Also it's not clear if you are Ok with
+> allowing pathspecs or not.
+
+I want to remove all the rev-list-option-disallowing code. Including the
+pathspec one.
+
+> The idea with disallowing all of them was to later add back those that
+> make sense along with tests and maybe docs to explain them in the
+> context of this command. It was not to disallow them permanently. So I
+> would think the best path forward would be a patch series on top of this
+> one that would revert the patch disallowing these options and maybe
+> pathspecs, and instead allow most of them and document and test things a
+> bit.
+
+I understand that that was the reasoning.
+
+What I would like to suggest is that we should treat `git replay` as a
+low-level (or: "plumbing" in Git Speak) command.
+
+That would allow us to leave the option for stricter command-line
+parameter validation to an _additional_ option, to be added later (or
+never), and to stop worrying about this tool being used in ways that make
+no sense (or make no sense _to us_, _now_).
+
+> > And further, I would even like to see that `--reverse` override go, an=
 d
->     zero or more linked worktrees.
-
-I've definitely changed my mind about "inline", I agree "main" is
-better. I'm not convinced it's the best word we could come up with,
-but if it's well-established, I'm happy with it.
-
-The problem I (now) see with "inline" is that it seems to imply a
-spatial proximity that doesn't necessarily hold true, with
-"--separate-git-dir" or other ways to separate the main worktree from
-its usual "just above the .git directory" location. "Inline" is still
-a reasonable qualification of the main worktree's *metadata* in that
-situation (index, etc), but I think the word would not be sufficiently
-clear/representative overall.
-
+> > turn it into `revs.reverse =3D !revs.reverse` instead. (And yes, I can
+> > easily think of instances where I would have wanted to reverse a serie=
+s of
+> > patches...).
 >
-> I applaud whoever wrote this sentence for packing so much good
-> information in a concise and easy-to-understand description.
+> I think this might deserve docs and tests too,
 
-I also like this sentence, it's basically equivalent to Sergey's sentence a=
-bove.
+I agree.
 
->
-> We can read that (1) a non-bare repository itself is considered
-> its "main worktree", (2) a bare repository, by inference, has no
-> main worktree (otherwise we wouldn't have said "if it's not"), and
-> (3) both bare and non-bare repositories can have linked worktrees
-> (again, otherwise we wouldn't have brought up a bare repository in
-> the description).
->
-> Perhaps we should borrow it to update the glossary, like so?
->
+> so it might want to be part of a separate patch series once the existing
+> one has graduated.
 
-Looks good to me, but that leaves me with a different nitpick: we say
-'One "worktree" consists of a "working tree" and repository metadata,
-most of which are shared among other worktrees of a single repository,
-and some of which are maintained separately per worktree'
+Here, I disagree. This is a bug, from my perspective, and needs to be
+fixed before graduating.
 
-This claims that the *shared metadata* (presumably the refs, the
-branch reflogs, the objects, the config, etc) are *part of the
-worktree* (a worktree "consists of" them and other things). That seems
-like a very strange way to conceive of things, to me.
+> At this point I don't think it's worth delaying this patch series for
+> relatively small issues like this. There are many different ways this
+> new command can be polished and improved. The important thing is that
+> it looks like we all agree that the new command makes sense and should
+> have roughly the basic set of features that Elijah originally
+> implemented, so let's go with this, and then we can improve and
+> iterate on top of this.
 
-I would find it reasonable to state that the main worktree is part of
-the repo - certainly that's now most everyday users would think of it,
-if they were made to think of the worktree concept at all - but not
-that the shared repo metadata is part of the worktree, and especially
-not that the shared repo metadata is part of the attached worktrees.
+If it were for a small issue such as a typo, sure.
 
-I imagine that this weird phrasing intends to allude to the fact that
-a worktree is "broken" without the repository metadata folder that
-contains both its worktree-specific metadata and the shared metadata
-that it depends just as much on... but can we come up with better
-"relationship words here?
+But it is a bug that `--no-reverse` is hard-coded (in a confusing manner
+so because the `reverse` attribute is set), and the
+`--no-reverse`/`--reverse` options are ignored, silently so.
 
-* A repository "has" zero or more worktrees
-* If it "has" a "main" worktree it is not a bare repository, otherwise it i=
-s.
-* It can have any number of "attached" worktrees
+Ciao,
+Johannes
 
-If a repo "has" these worktrees, is it in the sense that I "have" arms
-and legs, and I "consist of" a person with arms and legs and other
-body parts, or is it in the sense that I "have" a lifetime, opinions,
-legal rights, and other things that I have as a consequence of being a
-person, but are not "part of" me?
-
-Similarly, do we have a term for "the directory that contains the
-'refs' and 'objects' folders and stuff", regardless of whether it is
-in fact the entire bare repository, typically with a name other than
-".git", or it is nested in a main worktree in the usual fashion as
-".git", or it is separated (and again, typically differently-named) in
-a "--separate-git-dir" topology? I called it a "repository metadata
-folder" above, but I'm not sure whether there is a correct, succinct
-term for it.
-
-Wrt to the "shared among other worktrees" bit specifically, I agree
-with Sergey that "shared among all" would be clearer, but it's still
-weird, because all of that shared metadata is "inherent to the repo"
-beyond any and all worktrees. If this happens to be a bare repo, and
-we remove all the attached worktrees, the metadata is still just as
-meaningful - so saying that it was "shared among the worktrees", while
-true, seems to be unnecessarily implying a smaller purpose/meaning
-than appropriate.
-
-Sorry to continue nitpicking - I would love to see a clear
-nomenclature and description of these parts and their relationships
-for people (with less git experience) to "get it" more easily.
-
->
->  Documentation/glossary-content.txt | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git c/Documentation/glossary-content.txt w/Documentation/glossary-=
-content.txt
-> index 5a537268e2..d9ba3bab88 100644
-> --- c/Documentation/glossary-content.txt
-> +++ w/Documentation/glossary-content.txt
-> @@ -694,8 +694,8 @@ The most notable example is `HEAD`.
->         plus any local changes that you have made but not yet committed.
->
->  [[def_worktree]]worktree::
-> -       A repository can have zero (i.e. bare repository) or one or
-> -       more worktrees attached to it. One "worktree" consists of a
-> +       A repository has one main worktree (if it's not a bare
-> +       repository) and zero or more linked worktrees.  One "worktree" co=
-nsists of a
->         "working tree" and repository metadata, most of which are
->         shared among other worktrees of a single repository, and
->         some of which are maintained separately per worktree
+--8323328-867962872-1694080451=:115--
