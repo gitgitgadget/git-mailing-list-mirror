@@ -2,107 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC50FEC8742
-	for <git@archiver.kernel.org>; Thu,  7 Sep 2023 17:53:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 87F73EC8726
+	for <git@archiver.kernel.org>; Thu,  7 Sep 2023 18:08:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245656AbjIGRxg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Sep 2023 13:53:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37770 "EHLO
+        id S241866AbjIGSIQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Sep 2023 14:08:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43580 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245620AbjIGRxb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Sep 2023 13:53:31 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C93DE71
-        for <git@vger.kernel.org>; Thu,  7 Sep 2023 10:53:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de;
- s=s31663417; t=1694109179; x=1694713979; i=johannes.schindelin@gmx.de;
- bh=f/wr6oU/TFPb1aTfDBmbwkGGIXnieMUZn7kha/Y3fD0=;
- h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
- b=pU+94/3mJXKW6odQ6zKDv7hJNycY6W+B/N6ozgZJsm1g9Gf5MIRqgE9+XqN31KS0255+1Yj
- NvOArnnrAklxFpExSyxKAURMWF6y7rXhKNYgyi6e2d4mqMtu/rl4wqfJSiUuieX0NaFKMOQIX
- ms07AZivb7ajZUQtbBfHaqyTFg7ebG7Qb6q9TVfgrzrtRno5dnD9blG8pTDkBbz6G3xbwtRqf
- x771hwXy/IMGPVL/fS4Vn/qLq053pIxtiKjVzbvNBbd9l7xwUW7l8lQBl+OPjGp6p2Ib9Y8qV
- jtyP31DGsMZZ+VsPZZLfB0XVewU7KDWXT46C5UPqmxpNEgDNCv7g==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([80.151.253.86]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MrQEn-1pt1bE2Zsd-00oTHi; Thu, 07
- Sep 2023 13:02:47 +0200
-Date:   Thu, 7 Sep 2023 12:24:04 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Christian Couder <christian.couder@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        Elijah Newren <newren@gmail.com>,
-        John Cai <johncai86@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Calvin Wan <calvinwan@google.com>, Toon Claes <toon@iotcl.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v4 11/15] replay: use standard revision ranges
-In-Reply-To: <20230907092521.733746-12-christian.couder@gmail.com>
-Message-ID: <03460733-0219-c648-5757-db1958f8042e@gmx.de>
-References: <20230602102533.876905-1-christian.couder@gmail.com> <20230907092521.733746-1-christian.couder@gmail.com> <20230907092521.733746-12-christian.couder@gmail.com>
+        with ESMTP id S1343819AbjIGSIM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Sep 2023 14:08:12 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB066197
+        for <git@vger.kernel.org>; Thu,  7 Sep 2023 11:07:49 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 849F31A46A0;
+        Thu,  7 Sep 2023 14:07:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=L3Nnqfh3sSY1lcVOmAu2MWf2rXpXgXJptygvM9
+        1uS5o=; b=LRTmo9zBfr6inCFYDyBYGnYL2cuZ3sGH2QNKZOx0MOxfNI2AIgJPm2
+        G4njvq1sN5BdH43wAr9niV4Gvk94I9BuF6OBxoN2vQmTbh+6WxLuFCYcqzwul1Fo
+        MqaUE10A/rh17A7ugpg8FnlWSA8CcWVIO75cMGYeAWZermw3uNlLY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7B10A1A469F;
+        Thu,  7 Sep 2023 14:07:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.145.39.59])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D9DC11A469E;
+        Thu,  7 Sep 2023 14:07:29 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Josip Sokcevic <sokcevic@google.com>
+Cc:     jonathantanmy@google.com, git@vger.kernel.org,
+        git@jeffhostetler.com
+Subject: Re: [PATCH v2] diff-lib: Fix check_removed when fsmonitor is on
+In-Reply-To: <20230907170119.1536694-1-sokcevic@google.com> (Josip Sokcevic's
+        message of "Thu, 7 Sep 2023 10:01:19 -0700")
+References: <20230906203726.1526272-1-jonathantanmy@google.com>
+        <20230907170119.1536694-1-sokcevic@google.com>
+Date:   Thu, 07 Sep 2023 11:07:28 -0700
+Message-ID: <xmqqa5txluvz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:gkbhkjlaj+qrYge29mtQiSzyHRCQxSjOVfDda87ckgbCOY4fj7c
- JdgeQToZ8bqb0cYCKoxZtZMGzTYChGMH76buX6xL/vZwAPsV3wYWjjaPzB8cyhRyEHbfawJ
- St8zDzvrjSKpVJuupfmAitWdKHLrMUKRSwDxeHjONVGo/k2K6/2RHH5Z5iM7+MlodF+FmI5
- 3tuVzqVjd9l/QXA5xWz6A==
-UI-OutboundReport: notjunk:1;M01:P0:IxXIEIU8OcQ=;yq3AfcJzE+SOeb+kfSqEQf8f8xD
- bCMCSm8SOLH37HaRpQoa80ldx8cl44aa0XP6YPjk8WM2TAyEcd47twJncJaHzMnj/TsmpA6Ki
- 7iraGP+Hzm9R1tP6DdgN613UgOoBaxMHZd8fHOo7JUeRLXmKq84ZcDpK25MaGxQconfxgGP30
- QtKw+w4QR1ng3a2QsSri5LcFsClt1KYs1z5IMKHUj5s3di8SUvJy2xNjY/rZMCJML1e/pqV3o
- 1G8QBXMyIFTLl7pO4GzGEH4Cd00gtTQdGQeQ+lDhc9+yM3wUewJOrHjtPc09eyP0NGp8U+Omo
- 5F6PSkiO78+uZQ9KZHoFV4uIfAH3lOZX2fexcdDtRCW43swp0A0vAZ0CY67nL1mn57sK1HLl4
- Mdnfx4PuO7kJIfZnAoGK3DKHMNlZ7VdOyQVBqPrruJQQyj46k06iWiYWhUspfHaFp2BIEjIYU
- UrH/unNuOlfF9I4KpP5lEd8X6P9Q9dTWwJzLYcIdsMuORpYE9Nd8gAbwu+rF/1qGjrXCQiT+I
- ytn24xchWqMUL+gpPgqivSS2VtYKa3NdfU4rPiL5x2wWG6ETXUYM9eFRU2+zlx3GbBicqUgQV
- ozazF/rgU4JtCVaPXOiDXkvSyUJ5VNdvGiVqG8/bGNAAg8uOEZVQUi7OjimKQex8jv4iqotWM
- R6B/S2Fp2+bwsPoMTz/EBASKqzWJqDO5FWG7c8l3MMtUjfFDvZKIcnRRrrLh5mfhn9Q3Jh0Db
- LaxGjyAraVF2UaQZWQVwvURHsCZPUBS1GsRDfgoQqRMQoolfTjgXj9KsOEHhq4Mx2fTpcZN/U
- PgJhXJ+FJa2PAUB/9K5DDpeUdVYEuLt9TQxlA3UcYikHr8/cdNTIrqv5KW8ZOk/Bte2Zunciq
- ZjFsrW0xRSpOqy01cBSHQCXcSgeWkPG6Ixtc3zqrChi0QyqV4iToN1yhZvBMCy/VAtW34EwQj
- coqYp03eYQYKyizopSqJCFjTBsI=
+Content-Type: text/plain
+X-Pobox-Relay-ID: 68DB21FE-4DA9-11EE-BB66-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Christian,
+Josip Sokcevic <sokcevic@google.com> writes:
 
-It is a bit surprising to see the manual page added in _this_ patch, in
-the middle of the series... I can live with it, though.
+> diff --git a/diff-lib.c b/diff-lib.c
+> index d8aa777a73..664613bb1b 100644
+> --- a/diff-lib.c
+> +++ b/diff-lib.c
+> @@ -39,11 +39,22 @@
+>  static int check_removed(const struct index_state *istate, const struct cache_entry *ce, struct stat *st)
+>  {
+>  	assert(is_fsmonitor_refreshed(istate));
 
-On Thu, 7 Sep 2023, Christian Couder wrote:
+Not a problem this patch introduces, but doesn't this call path
 
-> diff --git a/Documentation/git-replay.txt b/Documentation/git-replay.txt
-> new file mode 100644
-> index 0000000000..9a2087b01a
-> --- /dev/null
-> +++ b/Documentation/git-replay.txt
-> @@ -0,0 +1,90 @@
-> +git-replay(1)
-> +=============
-> +
-> +NAME
-> +----
-> +git-replay - Replay commits on a different base, without touching working tree
-> +
-> +
-> +SYNOPSIS
-> +--------
-> +[verse]
-> +'git replay' --onto <newbase> <revision-range>...
+  diff_cache()
+  -> unpack_trees()
+     -> oneway_diff()
+        -> do_oneway_diff()
+           -> show_new_file(), show_modified()
+               -> get_stat_data()
+                  -> check_removed()
 
-We need to make it clear here, already in the SYNOPSIS, that this is
-experimental. Let's add an `(EXPERIMENTAL!)` prefix here.
+violate the assertion?  If so, perhaps we should rewrite it into a
+more explicit "if (...) BUG(...)" that is not compiled away.
 
-> [...]
-> diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
-> new file mode 100755
+> -	if (!(ce->ce_flags & CE_FSMONITOR_VALID) && lstat(ce->name, st) < 0) {
+> -		if (!is_missing_file_error(errno))
+> -			return -1;
+> -		return 1;
+> +	if (ce->ce_flags & CE_FSMONITOR_VALID) {
+> +		/*
+> +		 * Both check_removed() and its callers expect lstat() to have
+> +		 * happened and, in particular, the st_mode field to be set.
+> +		 * Simulate this with the contents of ce.
+> +		 */
+> +		memset(st, 0, sizeof(*st));
 
-Just like the manual page, I would have expected this test to be
-introduced earlier, and not piggy-backed onto one of the handful "let's
-turn fast-rebase into replay" patches.
+It is true that the original, when CE_FSMONITOR_VALID bit is set,
+bypasses lstat() altogether and leaves the contents of st completely
+uninitialized, but this is still way too insufficient, isn't it?
 
-Ciao,
-Johannes
+There are three call sites of the check_removed() function.
+
+ * The first one in run_diff_files() only cares about st.st_mode and
+   other members of the structure are not looked at.  This makes
+   readers wonder if the "st" parameter to check_removed() should
+   become "mode_t *st_mode" to clarify this point, but the primary
+   thing I want to say is that this caller will not mind if we leave
+   other members of st bogus (like 0-bit filled) as long as the mode
+   is set correctly.
+
+ * The second one in run_diff_files() passes the resulting &st to
+   match_stat_with_submodule(), which in turn passes it to
+   ie_match_stat(), which cares about "struct stat" members that are
+   used for quick change detection, like owner, group, mtime.
+   Giving it a bogus st will most likely cause it to report a
+   change.
+
+ * The third one is in get_stat_data().  This also uses the &st to
+   call match_stat_with_submodule(), so it is still totally broken
+   to give it a bogus st, the same way as the second caller above.
+
+> +		st->st_mode = ce->ce_mode;
+
+Does this work correctly when the cache entry points at a gitlink,
+which uses 0160000 that is not a valid st_mode?  I think you'd want
+to use a reverse function of create_ce_mode().
+
+> +	} else {
+> +		if (lstat(ce->name, st) < 0) {
+> +			if (!is_missing_file_error(errno))
+> +				return -1;
+> +			return 1;
+> +		}
+>  	}
+
+At this point, if FSMONITOR_VALID bit is not set, we will always
+perform lstat() and get all the members of st populated properly,
+which is a definite improvement.
+
+While I think this does not make it worse (it is an existing bug
+that the code is broken for a ce with the CE_FSMONITOR_VALID bit
+set), we may want to leave a note that we _know_ the code after this
+patch is still broken.  "Simulate this with ..." -> "Just setting
+st_mode is still insufficient and will break majority of callers".
+
+It may make sense, until we clean it up, to disable the check for
+the FSMONITOR_VALID bit in this codepath and always perform lstat().
+Optimization matters, but computing quickly in order to return an
+incorrect result is optimizing for a wrong thing.  I dunno.
+
+Thanks.
