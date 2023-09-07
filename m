@@ -2,108 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 925D0EC8743
-	for <git@archiver.kernel.org>; Thu,  7 Sep 2023 17:24:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD02EEC8743
+	for <git@archiver.kernel.org>; Thu,  7 Sep 2023 17:25:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240415AbjIGRYE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Sep 2023 13:24:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47580 "EHLO
+        id S231625AbjIGRZO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Sep 2023 13:25:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234587AbjIGRYD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Sep 2023 13:24:03 -0400
-Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A03E41716
-        for <git@vger.kernel.org>; Thu,  7 Sep 2023 10:23:41 -0700 (PDT)
-Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-58d799aa369so14330667b3.0
-        for <git@vger.kernel.org>; Thu, 07 Sep 2023 10:23:41 -0700 (PDT)
+        with ESMTP id S242562AbjIGRZN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Sep 2023 13:25:13 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E1DCB2
+        for <git@vger.kernel.org>; Thu,  7 Sep 2023 10:24:49 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-3fef56f7248so12980595e9.3
+        for <git@vger.kernel.org>; Thu, 07 Sep 2023 10:24:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1694107372; x=1694712172; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=RvvcJZzWpwGYledHiriuTZorS6AOCDZW2vYoe5hhkIw=;
-        b=YvD33ie06UZyC4RO2LXnYVZX4c5uWdA+TBBe0PAihMZ9BdCOWTR+J8ENhtQgHppocy
-         iyHuoJIxuswqJRgGSmXtTTfi0ElXTdW8NtVXeslrvoXMRMd9qg72gJNBdGYulGcAJt4d
-         r19NGX4Zz+VSjX8Gb/WrgPUFbZzbnNOoXl97YZ6ILjHhFbKwFFCITer6h1FrsbagCK5b
-         NvATh/Ti4cykogrO8RmtQZFyoMQc5ZB+kSIkyV2ttW7nLh9sF1YNWzBMNEhTJxCSI4+w
-         aCS1CnInOeEquYQQ9pJim2ZXPqqIE8EryoZh1qU00UwZuam4hTZrMFHjL49VM/pQ9Hiy
-         W2hw==
+        d=gmail.com; s=20221208; t=1694107435; x=1694712235; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OjOFbkb8q2Pa07AlZR+/OvQvqJ19nYTd8Je4qQv9qCw=;
+        b=WQWuiBf1aWYmtP/0jB6wjuCPE3hhZMg4GKDMHA+X+uwggcyoKf/DJH4NGpq6BSONY9
+         MGz1Jna7YE3aCKA+12JqScok0/Z687kOyEw+EByEIc8bT7jw2EgqqP6q/p1arQYSFFD2
+         SOR5dPAh2dZ1tnLfzUfwexPu4tI4DYmczM6thxiE1OH/Y8cSg5NZucPYZE2SJuvT1VHI
+         0DsRqbvFBCW4PLraaJ0ofwKIU3Qd005nN0yzPVL7UG5NyQnoLmU2D0UOZ5M+xu2wYJ8C
+         KFbplM9RdiMdCJaRxo8X+nEwDcObwJBg8dDc0hT9hpWF43YeOSMPUVJfZ58rnysI0kaG
+         WgKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1694107372; x=1694712172;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RvvcJZzWpwGYledHiriuTZorS6AOCDZW2vYoe5hhkIw=;
-        b=atcawg7m/hJC3XYU05d3vqF9kQQSjlpx5UqxdywMGuFOG2cKbL+tjzv4uE84mZJwRb
-         In7s8DSdAcLHD7SmNqOGDU6cVzW1VjppiJl04ph705Onf+SWXKzlUcT1dBVlx9WJ8t/Z
-         fQhxZVEJ10XEih7jpFf3OSn9R3P8a/gWAZqjZuSQoSQQ/S9FvLSqqjWLtteN96dRB8co
-         3sER2Liu74Yh0HLQIGqbvaJn367nZOTU7lIcuURPLO6cLy/tj71GPS2qRFm7V8JQuU+E
-         TySN2d1QE/PsjHtICzpQnP8kEfqdVWMUOt4FYp4fA0D2zEmxk+yxlNsBhKkJh/JOYjME
-         eHiQ==
-X-Gm-Message-State: AOJu0YyNW47/iSek0cXQPMSQZ4s7CFPsqtEChHXhhzYndTxIXaeScIFV
-        uDZUgcidfvsjQveoob7j6YMiSSJMuVArCLmHTuwU
-X-Google-Smtp-Source: AGHT+IH/tQackM2oZTDlXP9/l6X2lvSCTUwy7GnBlCvTbnQMRv6oLOGBnhucjxwyaSOblnZr9vroG2WWwhixlP8bGYnP
-X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:beee:a01:c6a4:f51e])
- (user=jonathantanmy job=sendgmr) by 2002:a81:4001:0:b0:58c:9371:685e with
- SMTP id l1-20020a814001000000b0058c9371685emr6757ywn.5.1694107372201; Thu, 07
- Sep 2023 10:22:52 -0700 (PDT)
-Date:   Thu,  7 Sep 2023 10:22:48 -0700
-In-Reply-To: <20230907170119.1536694-1-sokcevic@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.42.0.283.g2d96d420d3-goog
-Message-ID: <20230907172248.1789451-1-jonathantanmy@google.com>
-Subject: Re: [PATCH v2] diff-lib: Fix check_removed when fsmonitor is on
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Josip Sokcevic <sokcevic@google.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        git@jeffhostetler.com
-Content-Type: text/plain; charset="UTF-8"
+        d=1e100.net; s=20221208; t=1694107435; x=1694712235;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=OjOFbkb8q2Pa07AlZR+/OvQvqJ19nYTd8Je4qQv9qCw=;
+        b=NW6KnzTuSpybY0r2iVCkAhAnCSctBx0gL8FG8IbRTw9J2RvWelF8cFaEoapRQTt4J6
+         qEfzIE1vj2fqnzs3VqiiM7GraobRYfL62HjcIVfFnzmtQoJBvY+sWQBQpOLTzD38DZNj
+         EEcuupYYe1CHT/957f7JVJGt9eKaZDWeoVRZg1jkeNfLVKRrnl+FAqU1g1//LluSleoz
+         t+BWHe0rH8V/2JKqRlYW9nnqlxE/UUqCGkkF/spaxRed2TmVtxxW7FcH3n5vPP9A4Bw1
+         uWYbAC3Wmg+lYEeA3SnSKN6igIx1g1c2TGOKAaaovUDTpsBJRPZeRNUvT1kSKl2rJ/ro
+         fqrA==
+X-Gm-Message-State: AOJu0Ywjp+mslm07/m/4HkTVcyqC3LHtqLPpE/Y5WtL49XZMoYeMB3G9
+        ACEP4x1+IXzFDqTnbeLaHZf3i7XSR2I=
+X-Google-Smtp-Source: AGHT+IG8qtmtLWzncUEP6VB60JOkNOm53TZHbuT/QO6ux7SLyyCgfY1QVvK9SKN54iHqdppEK0cQ5Q==
+X-Received: by 2002:a5d:4a4d:0:b0:317:5eb8:b1c4 with SMTP id v13-20020a5d4a4d000000b003175eb8b1c4mr4311103wrs.2.1694078889596;
+        Thu, 07 Sep 2023 02:28:09 -0700 (PDT)
+Received: from localhost.localdomain ([2001:861:3f04:7ca0:3385:ce2d:69dd:303e])
+        by smtp.gmail.com with ESMTPSA id y8-20020adff148000000b00317c742ca9asm22491522wro.43.2023.09.07.02.27.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 Sep 2023 02:28:08 -0700 (PDT)
+From:   Christian Couder <christian.couder@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Elijah Newren <newren@gmail.com>,
+        John Cai <johncai86@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Calvin Wan <calvinwan@google.com>, Toon Claes <toon@iotcl.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v4 09/15] replay: remove HEAD related sanity check
+Date:   Thu,  7 Sep 2023 11:25:15 +0200
+Message-ID: <20230907092521.733746-10-christian.couder@gmail.com>
+X-Mailer: git-send-email 2.42.0.126.gcf8c984877
+In-Reply-To: <20230907092521.733746-1-christian.couder@gmail.com>
+References: <20230602102533.876905-1-christian.couder@gmail.com>
+ <20230907092521.733746-1-christian.couder@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Josip Sokcevic <sokcevic@google.com> writes:
-> git-diff-index may return incorrect deleted entries when fsmonitor is used in a
-> repository with git submodules. This can be observed on Mac machines, but it
-> can affect all other supported platforms too.
-> 
-> If fsmonitor is used, `stat *st` may not be initialized. Since `lstat` calls
-> aren't not desired when fsmonitor is on, skip the entire gitlink check using
-> the same condition used to initialize `stat *st`.
+From: Elijah Newren <newren@gmail.com>
 
-I think this paragraph is outdated - you'll need to update it to match
-the code in this version.
+We want replay to be a command that can be used on the server side on
+any branch, not just the current one, so we are going to stop updating
+HEAD in a future commit.
 
-> diff --git a/diff-lib.c b/diff-lib.c
-> index d8aa777a73..664613bb1b 100644
-> --- a/diff-lib.c
-> +++ b/diff-lib.c
-> @@ -39,11 +39,22 @@
->  static int check_removed(const struct index_state *istate, const struct cache_entry *ce, struct stat *st)
->  {
->  	assert(is_fsmonitor_refreshed(istate));
-> -	if (!(ce->ce_flags & CE_FSMONITOR_VALID) && lstat(ce->name, st) < 0) {
-> -		if (!is_missing_file_error(errno))
-> -			return -1;
-> -		return 1;
-> +	if (ce->ce_flags & CE_FSMONITOR_VALID) {
-> +		/*
-> +		 * Both check_removed() and its callers expect lstat() to have
-> +		 * happened and, in particular, the st_mode field to be set.
-> +		 * Simulate this with the contents of ce.
-> +		 */
-> +		memset(st, 0, sizeof(*st));
-> +		st->st_mode = ce->ce_mode;
-> +	} else {
-> +		if (lstat(ce->name, st) < 0) {
-> +			if (!is_missing_file_error(errno))
-> +				return -1;
-> +			return 1;
-> +		}
->  	}
-> +
->  	if (has_symlink_leading_path(ce->name, ce_namelen(ce)))
->  		return 1;
->  	if (S_ISDIR(st->st_mode)) {
+A "sanity check" that makes sure we are replaying the current branch
+doesn't make sense anymore. Let's remove it.
 
-I'm on the fence about whether the extra newline is necessary - the "if"
-did get bigger, but the code is clear enough without the newline. I lean
-towards removing it, to avoid cluttering the diff.
+Co-authored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Elijah Newren <newren@gmail.com>
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ builtin/replay.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
+
+diff --git a/builtin/replay.c b/builtin/replay.c
+index b5c854c686..a2636fbdcc 100644
+--- a/builtin/replay.c
++++ b/builtin/replay.c
+@@ -123,7 +123,6 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 	struct commit *onto;
+ 	const char *onto_name = NULL;
+ 	struct commit *last_commit = NULL, *last_picked_commit = NULL;
+-	struct object_id head;
+ 	struct lock_file lock = LOCK_INIT;
+ 	struct strvec rev_walk_args = STRVEC_INIT;
+ 	struct rev_info revs;
+@@ -162,11 +161,6 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 	onto = peel_committish(onto_name);
+ 	strbuf_addf(&branch_name, "refs/heads/%s", argv[2]);
+ 
+-	/* Sanity check */
+-	if (repo_get_oid(the_repository, "HEAD", &head))
+-		die(_("Cannot read HEAD"));
+-	assert(oideq(&onto->object.oid, &head));
+-
+ 	repo_hold_locked_index(the_repository, &lock, LOCK_DIE_ON_ERROR);
+ 	if (repo_read_index(the_repository) < 0)
+ 		BUG("Could not read index");
+@@ -238,7 +232,7 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 			    oid_to_hex(&last_picked_commit->object.oid));
+ 		if (update_ref(reflog_msg.buf, "HEAD",
+ 			       &last_commit->object.oid,
+-			       &head,
++			       &onto->object.oid,
+ 			       REF_NO_DEREF, UPDATE_REFS_MSG_ON_ERR)) {
+ 			error(_("could not update %s"), argv[2]);
+ 			die("Failed to update %s", argv[2]);
+-- 
+2.42.0.126.gcf8c984877
+
