@@ -2,61 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BF1EEC875F
-	for <git@archiver.kernel.org>; Thu,  7 Sep 2023 22:20:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 08486EC875E
+	for <git@archiver.kernel.org>; Thu,  7 Sep 2023 22:20:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241619AbjIGWUf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Sep 2023 18:20:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36756 "EHLO
+        id S241650AbjIGWUh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Sep 2023 18:20:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234773AbjIGWUX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Sep 2023 18:20:23 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9171E1BC7
-        for <git@vger.kernel.org>; Thu,  7 Sep 2023 15:20:19 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id ffacd0b85a97d-307d58b3efbso1294078f8f.0
-        for <git@vger.kernel.org>; Thu, 07 Sep 2023 15:20:19 -0700 (PDT)
+        with ESMTP id S240775AbjIGWUW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Sep 2023 18:20:22 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0B651BDC
+        for <git@vger.kernel.org>; Thu,  7 Sep 2023 15:20:18 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-31c3726cc45so1432268f8f.0
+        for <git@vger.kernel.org>; Thu, 07 Sep 2023 15:20:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1694125218; x=1694730018; darn=vger.kernel.org;
+        d=gmail.com; s=20221208; t=1694125217; x=1694730017; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=YH2eCz+ojYjlC28yymk59q16Hks8uxKTS4lfGNd8zkY=;
-        b=NpycQfuRrkNHpn6jmXQw0WSte39JWGMIxBEJc/ZstMHtW1tUtBSInK2E4d7kGnrtP4
-         ebw9BhSPvkK7DXytb558oExTTT4n3yrXCInw6/RuRFgsnyjY2dqkY3xl6yRFi2YYFDfq
-         8ct7+2+F9fo/x49Pf+V56Iqej2RO3MY2f6t21Ac1lfhIpgYbAra14CXwGdbbbJ1shIqx
-         RkBHBiwgJ4fiKc/TArxg+xQtAPDwkBdgU7KxnN+6QyRRpdHIxZkcZsZdi2xLCLFuFICE
-         S6vAS82PZnCPQhmOkMj/iBv5e+wrnbWxivPrsf8dj4e59C0pBeIgc8CtMsszuvQLc7pL
-         Dj5A==
+        bh=uPRWwjPrGNVx8kgHHVI8q2B/5Y5q8gUqpmGu9/jJZ7U=;
+        b=ZbgL9qhDRSF2Fe/A6I+4Vzv8Ur6NONdol7A4D4XziDek0AkYLnrrTiiaQYgrU6nbHK
+         8JOjwupwFt8Y5xKLyKYDYhFp7tf2wS3+qcS+6h+s8/bqPb+zflWL+HOWB5pO/DiPyDxt
+         h87dTwtRvBFJl46TxhINeiJHfTwqdcm5ZqKSqyt51JGWGk6s442BDxQSD/9K++u+06gC
+         osi40SnNIIS2/AEr4QHTp16JjTii/bUi6U7ce6CDp0F9o/iHjWpJOgALdfje52WqD0FJ
+         /hw2u80JhImUeMDYVj8eA6TMJxnmFy6QOPsjFQICIm94HKb/s1Xqjh3Tjc4fqdtCA+zn
+         /YKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694125218; x=1694730018;
+        d=1e100.net; s=20230601; t=1694125217; x=1694730017;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=YH2eCz+ojYjlC28yymk59q16Hks8uxKTS4lfGNd8zkY=;
-        b=sfUIdw3W1cWitEMe91jg5SQqQpRb4a5BjjlxRtwTMKTyMoBXf5q9pAq42l/XQ//oAX
-         I62XGVL56WM+q7bu5lH6d31N9FcmWuCI5sQkZXU1eBq7H7YQyrrznZwryfF8R4FT0H8g
-         Yiqbj4sk5sCB3eHxZqoy279SQwehnmnhJyJxGgF2guysm7ofOcHHHz1x1bJY8ppse9zk
-         c2/DJ/g9XcRCqwN041U3kgA11zwT8Lcu7VAyWoYYgJdW3QrdYtWLw87nNoeFRtmp71Xb
-         uIQSxBWs4hIpSfPPPhirw3L9iUbsBVdq+HoIyUc1ql3WUfBZ67ja2wg/O8rN0g+yDo8B
-         xYrA==
-X-Gm-Message-State: AOJu0Yw8WWlziUuRFvPoWt3zrRhbZ83ybKZkC1iAZG45JW4kM7vYWcO6
-        FRLlnk72KoBhhNAmpgP2HOWRvu1ywT8=
-X-Google-Smtp-Source: AGHT+IEASm5o7gskwbPLwrdWP4DnPniwIEq5K5UrLqGJgKMu+ho/Y5s+CzIjiqwy75p+lLHBgcaQsQ==
-X-Received: by 2002:a5d:654d:0:b0:319:8dcf:5c00 with SMTP id z13-20020a5d654d000000b003198dcf5c00mr439524wrv.69.1694125217796;
-        Thu, 07 Sep 2023 15:20:17 -0700 (PDT)
+        bh=uPRWwjPrGNVx8kgHHVI8q2B/5Y5q8gUqpmGu9/jJZ7U=;
+        b=MWSZb/4btoY5aFcFi6QswiBJkD+SI725mJfTKLvbii5GxEBM/JhKYZqfXSmR3k9cAc
+         Na/DSyf8/gidKmm77y8NSndRXL1bm44T5cjTTald4V+U+qP8L7gl4Q9W5p008liJ1Y/y
+         JnotW92lC5+wd9hqG/K/EFZBNGZLwi9KvQ41R/ouidmonOeWwRLWZ0RN+MGUbTnXw0of
+         ZgVi5eDlw6elzPcmtFXK5PE+IL7C0MgymmDHJXCtVZO97RreADGpQ1N8P52rTeX2Bz8R
+         syn8+34ULkBKhVuyfubOsd5ORXCaLuELyFyDwkgNpP66cYZ3vNbjFEJQ/zkvTPbpbP5s
+         uCOg==
+X-Gm-Message-State: AOJu0Yy9Rg0ZHeEZR8I/26d1dG86/FwKFUkXNYzTi2TWRqZ71xFxRq8z
+        ZqJP903CXRbRlcN5ypvvdzCffSHjJYo=
+X-Google-Smtp-Source: AGHT+IGGBTd9t37Dvl7h2ZTtTj7ScZkC/+eBaaupCqi1pnl/IO6xXCSa4Gfx1wI3RZpeMLOKCeDRsQ==
+X-Received: by 2002:a5d:4e47:0:b0:313:f45f:74a1 with SMTP id r7-20020a5d4e47000000b00313f45f74a1mr490144wrt.51.1694125216619;
+        Thu, 07 Sep 2023 15:20:16 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l6-20020adff486000000b003180155493esm433076wro.67.2023.09.07.15.20.17
+        by smtp.gmail.com with ESMTPSA id a12-20020a5d456c000000b00317afc7949csm438853wrc.50.2023.09.07.15.20.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Sep 2023 15:20:17 -0700 (PDT)
-Message-ID: <ef6b77016cd50c438fb58d79ffb10f748ddc5244.1694125210.git.gitgitgadget@gmail.com>
+        Thu, 07 Sep 2023 15:20:16 -0700 (PDT)
+Message-ID: <d1780a0127a749902d60249b531869ee9cd1a5f6.1694125210.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1564.v3.git.1694125209.gitgitgadget@gmail.com>
 References: <pull.1564.v2.git.1691702283.gitgitgadget@gmail.com>
         <pull.1564.v3.git.1694125209.gitgitgadget@gmail.com>
 From:   "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 07 Sep 2023 22:20:05 +0000
-Subject: [PATCH v3 09/13] trailer --parse docs: add explanation for its
- usefulness
+Date:   Thu, 07 Sep 2023 22:20:03 +0000
+Subject: [PATCH v3 07/13] trailer --parse help: expose aliased options
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,48 +70,31 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Linus Arver <linusa@google.com>
 
-For users who are skimming the docs to go straight to the individual
-breakdown of each flag, it may not be clear why --parse is a convenience
-alias (without them also looking at the other options that --parse turns
-on). To save them the trouble of looking at the other options (and
-computing what that would mean), describe a summary of the overall
-effect.
+The existing description "set parsing options" is vague, because
+arguably _all_ of the options for interpret-trailers have to do with
+parsing to some degree.
 
-Similarly update the area when we first mention --parse near the top of
-the doc.
+Explain what this flag does to match what is in the docs, namely how
+it is an alias for "--only-trailers --only-input --unfold".
 
 Signed-off-by: Linus Arver <linusa@google.com>
 ---
- Documentation/git-interpret-trailers.txt | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ builtin/interpret-trailers.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
-index 0eea937c30e..2d49445b1c3 100644
---- a/Documentation/git-interpret-trailers.txt
-+++ b/Documentation/git-interpret-trailers.txt
-@@ -31,7 +31,9 @@ the last two lines starting with "Signed-off-by" are trailers.
- 
- This command reads commit messages from either the
- <file> arguments or the standard input if no <file> is specified.
--If `--parse` is specified, the output consists of the parsed trailers.
-+If `--parse` is specified, the output consists of the parsed trailers
-+coming from the input, without influencing them with any command line
-+options or configuration variables.
- Otherwise, this command applies the arguments passed using the
- `--trailer` option, if any, to each input file. The result is emitted on the
- standard output.
-@@ -158,7 +160,10 @@ OPTIONS
- 
- --parse::
- 	A convenience alias for `--only-trailers --only-input
--	--unfold`.
-+	--unfold`. This makes it easier to only see the trailers coming from the
-+	input without influencing them with any command line options or
-+	configuration variables, while also making the output machine-friendly with
-+	--unfold.
- 
- --no-divider::
- 	Do not treat `---` as the end of the commit message. Use this
+diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
+index a7623dbfb2e..5f3e1a38eee 100644
+--- a/builtin/interpret-trailers.c
++++ b/builtin/interpret-trailers.c
+@@ -107,7 +107,7 @@ int cmd_interpret_trailers(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOL(0, "only-trailers", &opts.only_trailers, N_("output only the trailers")),
+ 		OPT_BOOL(0, "only-input", &opts.only_input, N_("do not apply config rules")),
+ 		OPT_BOOL(0, "unfold", &opts.unfold, N_("join whitespace-continued values")),
+-		OPT_CALLBACK_F(0, "parse", &opts, NULL, N_("set parsing options"),
++		OPT_CALLBACK_F(0, "parse", &opts, NULL, N_("alias for --only-trailers --only-input --unfold"),
+ 			PARSE_OPT_NOARG | PARSE_OPT_NONEG, parse_opt_parse),
+ 		OPT_BOOL(0, "no-divider", &opts.no_divider, N_("do not treat \"---\" as the end of input")),
+ 		OPT_CALLBACK(0, "trailer", &trailers, N_("trailer"),
 -- 
 gitgitgadget
 
