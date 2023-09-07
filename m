@@ -2,395 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE9DFEC875E
-	for <git@archiver.kernel.org>; Thu,  7 Sep 2023 22:20:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86069EC875F
+	for <git@archiver.kernel.org>; Thu,  7 Sep 2023 23:09:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241366AbjIGWUm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Sep 2023 18:20:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53806 "EHLO
+        id S236558AbjIGXJX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Sep 2023 19:09:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238877AbjIGWUc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Sep 2023 18:20:32 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAF2A1BF3
-        for <git@vger.kernel.org>; Thu,  7 Sep 2023 15:20:22 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-31c65820134so1293132f8f.1
-        for <git@vger.kernel.org>; Thu, 07 Sep 2023 15:20:22 -0700 (PDT)
+        with ESMTP id S236531AbjIGXJX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Sep 2023 19:09:23 -0400
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B167D1BD3
+        for <git@vger.kernel.org>; Thu,  7 Sep 2023 16:09:00 -0700 (PDT)
+Received: by mail-pj1-x102b.google.com with SMTP id 98e67ed59e1d1-27373f0916dso1245832a91.1
+        for <git@vger.kernel.org>; Thu, 07 Sep 2023 16:09:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1694125221; x=1694730021; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=google.com; s=20221208; t=1694128134; x=1694732934; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fY09o0eIjQAOX4i11ObRwSPzY+XFP7GgwXI2YvGZ6Jg=;
-        b=pozJR5Ine5Lbd8yl5objvS/D+id5rfEoL4x0E8iVKUjEauAmQQ3KcC50qYXN0kzRTx
-         hTJfztMvu1f5ezLXQU19julK7CXOKKNTbUhuRhhR2IEBjwu83lEFIDRa8GU3ojVPHmFI
-         M5rSx5ik3a06oBSQVS41Ddy9E5HVx8qAjrWi0U9HVXwQnHlB0u5xo04HZisk+oPuCmJF
-         ks9o+hF5d3Pg8PVZq7aEKCUjCgBzhNCtPshw7RlCDklEp58NF2q5cDE4MYing61WLaKM
-         +Cb6f+buJXs1kwxYzP/VyU7kajRMAiYsUKGUIjOAqfuAnYJt7Kl7+wQBI8yte2MIu/zI
-         k2UQ==
+        bh=BvuGG8qvpvDOEkoLoV9dl0sw7/l4uJw8mHSfsGgNrB0=;
+        b=NexDSc7jjm+E2a2sYFqVKEhKymisy7dkvL/djtAEIZujVGYjFxV3/GghC7ajdAmLdy
+         TM/aN+/nUGGwuMKjgVh62IresjniWkmR3t+4ffqN8IiAwbVBppcfQWJYWKHJ6aXAelRv
+         MKB2dZL9te8+ZhRvWrwHgoWcd98TI5zq5DX34tgMY+BB8Hhz51vUv4tQCUdL3JqE9Rp1
+         es17xIucDUlAsigEwOxFa6MeZ9sszcsMJCQj1+3la3r84XoO4SVt58YYkM9ASZ4uuB1T
+         nlFtkkNvf4VmZUWsND4yArYENjOszTzQ5wrsFdYlW3Gdmw1lcLkS2iuqKps+drUhYGqs
+         94zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694125221; x=1694730021;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1694128134; x=1694732934;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=fY09o0eIjQAOX4i11ObRwSPzY+XFP7GgwXI2YvGZ6Jg=;
-        b=GOoLBb7LhwCCWc9XR76+BKRmnj/+9x5HDtje23ih1tIi/IcHhxqQzn/pX2fRBo+SCs
-         /ZjUzU1axeejWK2LOzpXstTYgvkaxSYqOYAcLgpkDnm2DwGj6Zw5FezvtlDoe/T0EFMt
-         dtn4oL63T68dO2C2vxvI4IvSHHWUokBDHzli04w0Btk/B6nPP5pkcWQ0Dc9c4Pll07T7
-         99xtUGjLhcdC4XDqjObVQWbdvp++rfWEF93RVEPec2IFhD7H6RQ8ShdVYjByusnkGRn8
-         A9sM/i6ktLo4tFMEBgSsbaFF0H5zjtBQp15Bn2SnWkPrdz1ZtuCevBXLdS6S2R5mR0aQ
-         guQA==
-X-Gm-Message-State: AOJu0Yy82sZ+zeO6xmYvD2B1k9CUZB5BiR2hQOxbyGyaIiVc4+n04tFY
-        T2PRxPLllxTjYFgig3SRdYEdTmK0oOs=
-X-Google-Smtp-Source: AGHT+IHOwANvMGNV7qX0BhQTooBc4kNolddZb0+BAFBh9EVDhbuubagGMhPiqXbn6J5l8ZMoLjIkig==
-X-Received: by 2002:adf:e6cc:0:b0:31a:d6cb:7f9d with SMTP id y12-20020adfe6cc000000b0031ad6cb7f9dmr453886wrm.24.1694125220902;
-        Thu, 07 Sep 2023 15:20:20 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r3-20020a5d4983000000b00317ab75748bsm433268wrq.49.2023.09.07.15.20.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Sep 2023 15:20:20 -0700 (PDT)
-Message-ID: <0b9525db5a0787fdc71834abad9151aa03acc497.1694125210.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1564.v3.git.1694125209.gitgitgadget@gmail.com>
-References: <pull.1564.v2.git.1691702283.gitgitgadget@gmail.com>
-        <pull.1564.v3.git.1694125209.gitgitgadget@gmail.com>
-From:   "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 07 Sep 2023 22:20:09 +0000
-Subject: [PATCH v3 13/13] trailer doc: <token> is a <key> or <keyAlias>, not
- both
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=BvuGG8qvpvDOEkoLoV9dl0sw7/l4uJw8mHSfsGgNrB0=;
+        b=iRYOjawzJ+0ooTPuh3Khzs77fVVw+xs9y5J3dkXRWVbnmJ0L4HZ1kTSUrlrBCbq1W/
+         mQGERx67kd3avQ9cmpbjojzWF6vadrpdZA9JGHJFTZ5Pd9tgwiECktX6Pip3UwX0LoLe
+         XmDGp9a7OFXcK8gPJAmt4y68VYuUZdtdRrSURKMy3j1KU1K9Q79e3suEA+ul2itAn0sw
+         ZRTPd1Jh/g0lZmdg5dCvOUxoosroZrv33LoezRk293qah77fKLA1A6v8du8Uey8W4ZkO
+         VZ4gBladnxpJwhTZubC/BNcBZ52/ZkXi/qgZa81r4sya9PaqtKxExDlcGTaxzxxhjhtZ
+         wDhw==
+X-Gm-Message-State: AOJu0Yy2QqBWQ4TY/FVt4G8/eQls5b7PJZLvL+aaEhtjHFHEgfKqG2xr
+        urQl3xjDdUJ05t+fGzXmOIxbqPnSIshAIeI6Xzy0qQ==
+X-Google-Smtp-Source: AGHT+IGOySzy2U/OpGBIBEdU/yHMFKh0ApqloMQhfmvKmiHgK6wQ3eg8jd854Zi8x8efDOTkH7CrWRL+lLy2aeokYpI=
+X-Received: by 2002:a17:90a:72c4:b0:268:5c3b:6f28 with SMTP id
+ l4-20020a17090a72c400b002685c3b6f28mr1108793pjk.19.1694128133708; Thu, 07 Sep
+ 2023 16:08:53 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Christian Couder <chriscool@tuxfamily.org>,
-        Linus Arver <linusa@google.com>,
-        Linus Arver <linusa@google.com>
+References: <20230906203726.1526272-1-jonathantanmy@google.com>
+ <20230907170119.1536694-1-sokcevic@google.com> <xmqqa5txluvz.fsf@gitster.g>
+In-Reply-To: <xmqqa5txluvz.fsf@gitster.g>
+From:   Josip Sokcevic <sokcevic@google.com>
+Date:   Thu, 7 Sep 2023 16:08:42 -0700
+Message-ID: <CAJiyOigsH=Pac1g_5ztB01uEaCBjefazUpnH5k3ARZ-COm0uLA@mail.gmail.com>
+Subject: Re: [PATCH v2] diff-lib: Fix check_removed when fsmonitor is on
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     jonathantanmy@google.com, git@vger.kernel.org,
+        git@jeffhostetler.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Linus Arver <linusa@google.com>
+On Thu, Sep 7, 2023 at 11:07=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Josip Sokcevic <sokcevic@google.com> writes:
+>
+> > diff --git a/diff-lib.c b/diff-lib.c
+> > index d8aa777a73..664613bb1b 100644
+> > --- a/diff-lib.c
+> > +++ b/diff-lib.c
+> > @@ -39,11 +39,22 @@
+> >  static int check_removed(const struct index_state *istate, const struc=
+t cache_entry *ce, struct stat *st)
+> >  {
+> >       assert(is_fsmonitor_refreshed(istate));
+>
+> Not a problem this patch introduces, but doesn't this call path
+>
+>   diff_cache()
+>   -> unpack_trees()
+>      -> oneway_diff()
+>         -> do_oneway_diff()
+>            -> show_new_file(), show_modified()
+>                -> get_stat_data()
+>                   -> check_removed()
+>
+> violate the assertion?  If so, perhaps we should rewrite it into a
+> more explicit "if (...) BUG(...)" that is not compiled away.
 
-The `--trailer` option takes a "<token>=<value>" argument, for example
+True, I will update it.
 
-    --trailer "Acked-by=Bob"
+>
+> > -     if (!(ce->ce_flags & CE_FSMONITOR_VALID) && lstat(ce->name, st) <=
+ 0) {
+> > -             if (!is_missing_file_error(errno))
+> > -                     return -1;
+> > -             return 1;
+> > +     if (ce->ce_flags & CE_FSMONITOR_VALID) {
+> > +             /*
+> > +              * Both check_removed() and its callers expect lstat() to=
+ have
+> > +              * happened and, in particular, the st_mode field to be s=
+et.
+> > +              * Simulate this with the contents of ce.
+> > +              */
+> > +             memset(st, 0, sizeof(*st));
+>
+> It is true that the original, when CE_FSMONITOR_VALID bit is set,
+> bypasses lstat() altogether and leaves the contents of st completely
+> uninitialized, but this is still way too insufficient, isn't it?
+>
+> There are three call sites of the check_removed() function.
+>
+>  * The first one in run_diff_files() only cares about st.st_mode and
+>    other members of the structure are not looked at.  This makes
+>    readers wonder if the "st" parameter to check_removed() should
+>    become "mode_t *st_mode" to clarify this point, but the primary
+>    thing I want to say is that this caller will not mind if we leave
+>    other members of st bogus (like 0-bit filled) as long as the mode
+>    is set correctly.
+>
+>  * The second one in run_diff_files() passes the resulting &st to
+>    match_stat_with_submodule(), which in turn passes it to
+>    ie_match_stat(), which cares about "struct stat" members that are
+>    used for quick change detection, like owner, group, mtime.
+>    Giving it a bogus st will most likely cause it to report a
+>    change.
+>
+>  * The third one is in get_stat_data().  This also uses the &st to
+>    call match_stat_with_submodule(), so it is still totally broken
+>    to give it a bogus st, the same way as the second caller above.
+>
+> > +             st->st_mode =3D ce->ce_mode;
+>
+> Does this work correctly when the cache entry points at a gitlink,
+> which uses 0160000 that is not a valid st_mode?  I think you'd want
+> to use a reverse function of create_ce_mode().
 
-And in this exampple it is understood that "Acked-by" is the <token>.
-However, the user can use a shorter "ack" string by defining
-configuration like
+I realized this too but after I sent the patch. I don't think we have
+a good way to reverse it, so the best we can do is to guess it. But I
+don't think we should do that. Instead, should we just zero the struct
+and add a TODO? Alternative could be to use a double pointer for stat
+and do more checks in call sites, but I'm not familiar with the
+codebase to how that branching would need to look like.
 
-    git config trailer.ack.key "Acked-by"
+Any preference?
 
-However, in the docs we define the above configuration as
-
-    trailer.<token>.key
-
-so the <token> can mean either the longer "Acked-by" or the shorter
-"ack".
-
-Separate the two meanings of <token> into <key> and <keyAlias>, and
-update the configuration syntax to say "trailer.<keyAlias>.key".
-
-Signed-off-by: Linus Arver <linusa@google.com>
----
- Documentation/git-interpret-trailers.txt | 136 +++++++++++++----------
- builtin/interpret-trailers.c             |   2 +-
- 2 files changed, 77 insertions(+), 61 deletions(-)
-
-diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
-index 25433e1a1ff..418265f044d 100644
---- a/Documentation/git-interpret-trailers.txt
-+++ b/Documentation/git-interpret-trailers.txt
-@@ -9,7 +9,7 @@ SYNOPSIS
- --------
- [verse]
- 'git interpret-trailers' [--in-place] [--trim-empty]
--			[(--trailer <token>[(=|:)<value>])...]
-+			[(--trailer (<key>|<keyAlias>)[(=|:)<value>])...]
- 			[--parse] [<file>...]
- 
- DESCRIPTION
-@@ -53,22 +53,32 @@ are applied to each input and the way any existing trailer in
- the input is changed. They also make it possible to
- automatically add some trailers.
- 
--By default, a '<token>=<value>' or '<token>:<value>' argument given
-+By default, a '<key>=<value>' or '<key>:<value>' argument given
- using `--trailer` will be appended after the existing trailers only if
--the last trailer has a different (<token>, <value>) pair (or if there
--is no existing trailer). The <token> and <value> parts will be trimmed
-+the last trailer has a different (<key>, <value>) pair (or if there
-+is no existing trailer). The <key> and <value> parts will be trimmed
- to remove starting and trailing whitespace, and the resulting trimmed
--<token> and <value> will appear in the output like this:
-+<key> and <value> will appear in the output like this:
- 
- ------------------------------------------------
--token: value
-+key: value
- ------------------------------------------------
- 
--This means that the trimmed <token> and <value> will be separated by
--`': '` (one colon followed by one space). For convenience, the <token> can be a
--shortened string key (e.g., "sign") instead of the full string which should
--appear before the separator on the output (e.g., "Signed-off-by"). This can be
--configured using the 'trailer.<token>.key' configuration variable.
-+This means that the trimmed <key> and <value> will be separated by
-+`': '` (one colon followed by one space).
-+
-+For convenience, a <keyAlias> can be configured to make using `--trailer`
-+shorter to type on the command line. This can be configured using the
-+'trailer.<keyAlias>.key' configuration variable. The <keyAlias> must be a prefix
-+of the full <key> string, although case sensitivity does not matter. For
-+example, if you have
-+
-+------------------------------------------------
-+trailer.sign.key "Signed-off-by: "
-+------------------------------------------------
-+
-+in your configuration, you only need to specify `--trailer="sign: foo"`
-+on the command line instead of `--trailer="Signed-off-by: foo"`.
- 
- By default the new trailer will appear at the end of all the existing
- trailers. If there is no existing trailer, the new trailer will appear
-@@ -85,14 +95,14 @@ non-whitespace lines before a line that starts with '---' (followed by a
- space or the end of the line).
- 
- When reading trailers, there can be no whitespace before or inside the
--<token>, but any number of regular space and tab characters are allowed
--between the <token> and the separator. There can be whitespaces before,
-+<key>, but any number of regular space and tab characters are allowed
-+between the <key> and the separator. There can be whitespaces before,
- inside or after the <value>. The <value> may be split over multiple lines
- with each subsequent line starting with at least one whitespace, like
- the "folding" in RFC 822. Example:
- 
- ------------------------------------------------
--token: This is a very long value, with spaces and
-+key: This is a very long value, with spaces and
-   newlines in it.
- ------------------------------------------------
- 
-@@ -109,8 +119,8 @@ OPTIONS
- 	the whole trailer will be removed from the output.
- 	This applies to existing trailers as well as new trailers.
- 
----trailer <token>[(=|:)<value>]::
--	Specify a (<token>, <value>) pair that should be applied as a
-+--trailer <key>[(=|:)<value>]::
-+	Specify a (<key>, <value>) pair that should be applied as a
- 	trailer to the inputs. See the description of this
- 	command.
- 
-@@ -118,7 +128,7 @@ OPTIONS
- --no-where::
- 	Specify where all new trailers will be added.  A setting
- 	provided with '--where' overrides the `trailer.where` and any
--	applicable `trailer.<token>.where` configuration variables
-+	applicable `trailer.<keyAlias>.where` configuration variables
- 	and applies to all '--trailer' options until the next occurrence of
- 	'--where' or '--no-where'. Upon encountering '--no-where', clear the
- 	effect of any previous use of '--where', such that the relevant configuration
-@@ -128,9 +138,9 @@ OPTIONS
- --if-exists <action>::
- --no-if-exists::
- 	Specify what action will be performed when there is already at
--	least one trailer with the same <token> in the input.  A setting
-+	least one trailer with the same <key> in the input.  A setting
- 	provided with '--if-exists' overrides the `trailer.ifExists` and any
--	applicable `trailer.<token>.ifExists` configuration variables
-+	applicable `trailer.<keyAlias>.ifExists` configuration variables
- 	and applies to all '--trailer' options until the next occurrence of
- 	'--if-exists' or '--no-if-exists'. Upon encountering '--no-if-exists, clear the
- 	effect of any previous use of '--if-exists, such that the relevant configuration
-@@ -140,9 +150,9 @@ OPTIONS
- --if-missing <action>::
- --no-if-missing::
- 	Specify what action will be performed when there is no other
--	trailer with the same <token> in the input.  A setting
-+	trailer with the same <key> in the input.  A setting
- 	provided with '--if-missing' overrides the `trailer.ifMissing` and any
--	applicable `trailer.<token>.ifMissing` configuration variables
-+	applicable `trailer.<keyAlias>.ifMissing` configuration variables
- 	and applies to all '--trailer' options until the next occurrence of
- 	'--if-missing' or '--no-if-missing'. Upon encountering '--no-if-missing,
- 	clear the effect of any previous use of '--if-missing, such that the relevant
-@@ -187,11 +197,11 @@ used when another separator is not specified in the config for this
- trailer.
- +
- For example, if the value for this option is "%=$", then only lines
--using the format '<token><sep><value>' with <sep> containing '%', '='
-+using the format '<key><sep><value>' with <sep> containing '%', '='
- or '$' and then spaces will be considered trailers. And '%' will be
- the default separator used, so by default trailers will appear like:
--'<token>% <value>' (one percent sign and one space will appear between
--the token and the value).
-+'<key>% <value>' (one percent sign and one space will appear between
-+the key and the value).
- 
- trailer.where::
- 	This option tells where a new trailer will be added.
-@@ -205,41 +215,41 @@ If it is `start`, then each new trailer will appear at the start,
- instead of the end, of the existing trailers.
- +
- If it is `after`, then each new trailer will appear just after the
--last trailer with the same <token>.
-+last trailer with the same <key>.
- +
- If it is `before`, then each new trailer will appear just before the
--first trailer with the same <token>.
-+first trailer with the same <key>.
- 
- trailer.ifexists::
- 	This option makes it possible to choose what action will be
- 	performed when there is already at least one trailer with the
--	same <token> in the input.
-+	same <key> in the input.
- +
- The valid values for this option are: `addIfDifferentNeighbor` (this
- is the default), `addIfDifferent`, `add`, `replace` or `doNothing`.
- +
- With `addIfDifferentNeighbor`, a new trailer will be added only if no
--trailer with the same (<token>, <value>) pair is above or below the line
-+trailer with the same (<key>, <value>) pair is above or below the line
- where the new trailer will be added.
- +
- With `addIfDifferent`, a new trailer will be added only if no trailer
--with the same (<token>, <value>) pair is already in the input.
-+with the same (<key>, <value>) pair is already in the input.
- +
- With `add`, a new trailer will be added, even if some trailers with
--the same (<token>, <value>) pair are already in the input.
-+the same (<key>, <value>) pair are already in the input.
- +
--With `replace`, an existing trailer with the same <token> will be
-+With `replace`, an existing trailer with the same <key> will be
- deleted and the new trailer will be added. The deleted trailer will be
--the closest one (with the same <token>) to the place where the new one
-+the closest one (with the same <key>) to the place where the new one
- will be added.
- +
- With `doNothing`, nothing will be done; that is no new trailer will be
--added if there is already one with the same <token> in the input.
-+added if there is already one with the same <key> in the input.
- 
- trailer.ifmissing::
- 	This option makes it possible to choose what action will be
- 	performed when there is not yet any trailer with the same
--	<token> in the input.
-+	<key> in the input.
- +
- The valid values for this option are: `add` (this is the default) and
- `doNothing`.
-@@ -248,34 +258,40 @@ With `add`, a new trailer will be added.
- +
- With `doNothing`, nothing will be done.
- 
--trailer.<token>.key::
--	This `key` will be used instead of <token> in the trailer. At
--	the end of this key, a separator can appear and then some
--	space characters. By default the only valid separator is ':',
--	but this can be changed using the `trailer.separators` config
--	variable.
-+trailer.<keyAlias>.key::
-+	Defines a <keyAlias> for the <key>. The <keyAlias> must be a
-+	prefix (case does not matter) of the <key>. For example, in `git
-+	config trailer.ack.key "Acked-by"` the "Acked-by" is the <key> and
-+	the "ack" is the <keyAlias>. This configuration allows the shorter
-+	`--trailer "ack:..."` invocation on the command line using the "ack"
-+	<keyAlias> instead of the longer `--trailer "Acked-by:..."`.
-++
-+At the end of the <key>, a separator can appear and then some
-+space characters. By default the only valid separator is ':',
-+but this can be changed using the `trailer.separators` config
-+variable.
- +
- If there is a separator in the key, then it overrides the default
- separator when adding the trailer.
- 
--trailer.<token>.where::
-+trailer.<keyAlias>.where::
- 	This option takes the same values as the 'trailer.where'
- 	configuration variable and it overrides what is specified by
--	that option for trailers with the specified <token>.
-+	that option for trailers with the specified <keyAlias>.
- 
--trailer.<token>.ifexists::
-+trailer.<keyAlias>.ifexists::
- 	This option takes the same values as the 'trailer.ifexists'
- 	configuration variable and it overrides what is specified by
--	that option for trailers with the specified <token>.
-+	that option for trailers with the specified <keyAlias>.
- 
--trailer.<token>.ifmissing::
-+trailer.<keyAlias>.ifmissing::
- 	This option takes the same values as the 'trailer.ifmissing'
- 	configuration variable and it overrides what is specified by
--	that option for trailers with the specified <token>.
-+	that option for trailers with the specified <keyAlias>.
- 
--trailer.<token>.command::
--	Deprecated in favor of 'trailer.<token>.cmd'.
--	This option behaves in the same way as 'trailer.<token>.cmd', except
-+trailer.<keyAlias>.command::
-+	Deprecated in favor of 'trailer.<keyAlias>.cmd'.
-+	This option behaves in the same way as 'trailer.<keyAlias>.cmd', except
- 	that it doesn't pass anything as argument to the specified command.
- 	Instead the first occurrence of substring $ARG is replaced by the
- 	<value> that would be passed as argument.
-@@ -283,29 +299,29 @@ trailer.<token>.command::
- Note that $ARG in the user's command is
- only replaced once and that the original way of replacing $ARG is not safe.
- +
--When both 'trailer.<token>.cmd' and 'trailer.<token>.command' are given
--for the same <token>, 'trailer.<token>.cmd' is used and
--'trailer.<token>.command' is ignored.
-+When both 'trailer.<keyAlias>.cmd' and 'trailer.<keyAlias>.command' are given
-+for the same <keyAlias>, 'trailer.<keyAlias>.cmd' is used and
-+'trailer.<keyAlias>.command' is ignored.
- 
--trailer.<token>.cmd::
-+trailer.<keyAlias>.cmd::
- 	This option can be used to specify a shell command that will be called
--	once to automatically add a trailer with the specified <token>, and then
--	called each time a '--trailer <token>=<value>' argument is specified to
-+	once to automatically add a trailer with the specified <keyAlias>, and then
-+	called each time a '--trailer <keyAlias>=<value>' argument is specified to
- 	modify the <value> of the trailer that this option would produce.
- +
- When the specified command is first called to add a trailer
--with the specified <token>, the behavior is as if a special
--'--trailer <token>=<value>' argument was added at the beginning
-+with the specified <keyAlias>, the behavior is as if a special
-+'--trailer <keyAlias>=<value>' argument was added at the beginning
- of the "git interpret-trailers" command, where <value>
- is taken to be the standard output of the command with any
- leading and trailing whitespace trimmed off.
- +
--If some '--trailer <token>=<value>' arguments are also passed
-+If some '--trailer <keyAlias>=<value>' arguments are also passed
- on the command line, the command is called again once for each
--of these arguments with the same <token>. And the <value> part
-+of these arguments with the same <keyAlias>. And the <value> part
- of these arguments, if any, will be passed to the command as its
- first argument. This way the command can produce a <value> computed
--from the <value> passed in the '--trailer <token>=<value>' argument.
-+from the <value> passed in the '--trailer <keyAlias>=<value>' argument.
- 
- EXAMPLES
- --------
-diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
-index 832f86a770a..d2d78fd961f 100644
---- a/builtin/interpret-trailers.c
-+++ b/builtin/interpret-trailers.c
-@@ -14,7 +14,7 @@
- 
- static const char * const git_interpret_trailers_usage[] = {
- 	N_("git interpret-trailers [--in-place] [--trim-empty]\n"
--	   "                       [(--trailer <token>[(=|:)<value>])...]\n"
-+	   "                       [(--trailer (<key>|<keyAlias>)[(=|:)<value>])...]\n"
- 	   "                       [--parse] [<file>...]"),
- 	NULL
- };
--- 
-gitgitgadget
+--=20
+Josip Sokcevic
