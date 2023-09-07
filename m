@@ -2,90 +2,179 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 05BFCEC875D
-	for <git@archiver.kernel.org>; Thu,  7 Sep 2023 21:16:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC0C0EC875B
+	for <git@archiver.kernel.org>; Thu,  7 Sep 2023 21:29:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234318AbjIGVQQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Sep 2023 17:16:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44408 "EHLO
+        id S235111AbjIGV3d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Sep 2023 17:29:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230092AbjIGVQO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Sep 2023 17:16:14 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D002092
-        for <git@vger.kernel.org>; Thu,  7 Sep 2023 14:16:09 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D012D1A5F02;
-        Thu,  7 Sep 2023 17:16:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=fKOD8NHFznYm3Cm05Dv+O4ekkEroi6ATsW5L10
-        uWlDw=; b=MAmolTDYmn0YDgocvNslE/Bmi7pIoEK0lnj+b/uxBo8xFT0FB6xAFL
-        jY8thUxasjQp9tercU2AVDvAfNpYF0CbalgPSAeMLSNvAiHYngr8u8i8DnkahFtE
-        fymuiJWAXzZIy2EaBrjo5Ye3EnmuXymp8UqHFq0nCtiZSNXmzWCrA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C87721A5F01;
-        Thu,  7 Sep 2023 17:16:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.145.39.59])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 317CF1A5EFF;
-        Thu,  7 Sep 2023 17:16:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH] rebase -i: ignore signals when forking subprocesses
-In-Reply-To: <pull.1581.git.1694080982621.gitgitgadget@gmail.com> (Phillip
-        Wood via GitGitGadget's message of "Thu, 07 Sep 2023 10:03:02 +0000")
-References: <pull.1581.git.1694080982621.gitgitgadget@gmail.com>
-Date:   Thu, 07 Sep 2023 14:16:07 -0700
-Message-ID: <xmqq5y4lk7l4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C3189C4A-4DC3-11EE-9D85-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+        with ESMTP id S229754AbjIGV3d (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Sep 2023 17:29:33 -0400
+Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D2891BCD
+        for <git@vger.kernel.org>; Thu,  7 Sep 2023 14:29:29 -0700 (PDT)
+Received: by mail-pg1-x549.google.com with SMTP id 41be03b00d2f7-570428954b9so1891499a12.3
+        for <git@vger.kernel.org>; Thu, 07 Sep 2023 14:29:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1694122169; x=1694726969; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=CE8n768aPtoVtEnyujglg6b3O+wnbv+i6fIgej1d5m4=;
+        b=CVZ5D711xcsF/CTQ3Z/JvEZk66BD7Cg6PyQpiPYGifq3rx9Ph9CFhoAU465ruD1Q9/
+         AyYzhFV6m9ASu4uydOcAkx1+iHA90DxqacrfbW+hddVsh2bNgN20AOhj6EhvfZFs0c0k
+         VprdDzPuL5rYRUfcRiTGAQQvO9xSKh7YqNrIUhGn3FpjKoJFrhHCnWBXju3eI9dlvyea
+         Bg75LIKQtkkYtwgd3Fhgj1jNPR8u9QlvRY5MZxbZI8UpTcUxDeTxjRv6wUQ3G2tufjl3
+         sOonIT3wgpxF6Z1P+3Xmgw/8MvKvKtqmeVADTdMKF3ps/tc2wMosf0qxaLgWOisTAsT5
+         PF6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694122169; x=1694726969;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CE8n768aPtoVtEnyujglg6b3O+wnbv+i6fIgej1d5m4=;
+        b=Tv9P/yVqOuamjh0XZ0Jw8B6t06zaO7EEPjWr3UkdIwKr7B4Rwh0JyNYgJhHP7kdieI
+         x1x0dkbgaJM7GxlVeSS5GDxw0wcA/WVeC7TDGkvFsjcePhIbjPnXSkVzC3B9Lipl5xs1
+         MI4Pljgpnq6ifBp45ViPQ+AA2swDKc2cPCTw510J7r6/8E51f7pIbFnfWJcSzA1obk6V
+         3wUsFEOUaHgFB+VOxckUU6XW+6w5mgLoz4gjzLYzgW3qt/8Sm1PZHdcFiczy1XkAzDVH
+         LRo/DI6BRkQOc7LlAZROe0R+h8K6/6U4Y540MdytHFtPJ1LkDejpQqiNDCRQHZtE8mN5
+         uQQQ==
+X-Gm-Message-State: AOJu0Ywo2ik5/1GZdNiO2dnuB0WHs/5o8VcVN0zIgwdDvIEK+o6BQZ2a
+        Kd0DhSZRAW9XUKgDT8rEYSVPB5r4A9Y=
+X-Google-Smtp-Source: AGHT+IHise8wJfM97LeyI9H8zmyDpDbMkj4HkMpQLK576foI4D4A/KbUp3+myNlVm6v14Ezgf3MHn8Mdbqg=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a63:921e:0:b0:56f:7de9:39f6 with SMTP id
+ o30-20020a63921e000000b0056f7de939f6mr83164pgd.11.1694122169021; Thu, 07 Sep
+ 2023 14:29:29 -0700 (PDT)
+Date:   Thu, 07 Sep 2023 14:29:25 -0700
+In-Reply-To: <ZNcyhUL89WVXOv3F@ugly>
+Mime-Version: 1.0
+References: <ZNYuUh27ByphTH04@ugly> <owly350pfal6.fsf@fine.c.googlers.com> <ZNcyhUL89WVXOv3F@ugly>
+Message-ID: <owlytts5llje.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH v3 2/2] doc: revert: add discussion
+From:   Linus Arver <linusa@google.com>
+To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+First, I apologize for the long delay in my response. I only work on Git
+20% of the time, and that 20% can become 0% due to factors outside my
+control.
 
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
+
+> On Fri, Aug 11, 2023 at 04:00:53PM -0700, Linus Arver wrote:
+>>Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
+>>
+>>> On Thu, Aug 10, 2023 at 02:50:59PM -0700, Linus Arver wrote:
+>>>>Nit: the "doc: revert: add discussion" subject line should probably be more
+>>>>like "revert doc: suggest adding the 'why' behind reverts".
+>>>>
+>>> this is counter to the prevalent "big endian" prefix style, and is in 
+>>> this case really easy to misread.
+>>
+>>I also learned recently that there should just be one colon ":" in the
+>>subject, which is why I suggested "revert doc" as the prefix instead of
+>>"doc: revert: ...".
+>>
+> in what context was this preference expressed?
+
+IIRC, it was from a conversation off-list with the folks at Google's
+Git-core team.
+
+> because here, it's rather counter-productive: most commands are verbs 
+> for obvious reasons, so using that style sets the reader up for 
+> misparsing the subject on first try.
+
+I think the convention for commit titles is
+
+    <prefix>: <action>
+
+so the phrase "revert doc: add discussion", where the <prefix> is
+"revert doc" does not parse any worse than "doc: revert: add
+discussion". That is, the <prefix> is never confused with the <action>
+(they are separated by the colon).
+
+> this could be avoided by quoting 
+> the command, but that looks noisy in the subject.
+> so rather, i'd follow another precedent, 'git-revert.txt: ', which is 
+> unambiguous.
+
+SGTM.
+
+>>> i also intentionally kept the subject generic, because the content 
+>>> covers two matters (the reasoning and the subjects, which is also the 
+>>> reason why this is a separate patch to start with).
+>>
+>>I think the phrase "add discussion" in "doc: revert: add discussion"
+>>doesn't add much value, because your patch's diff is very easy to read
+>>(in that it adds a new DISCUSSION section). I just wanted to replace it
+>>with something more useful that gives more information than
 >
-> If the user presses Ctrl-C to interrupt a program run by a rebase "exec"
-> command then SIGINT will also be sent to the git process running the
-> rebase resulting in it being killed. Fortunately the consequences of
-> this are not severe as all the state necessary to continue the rebase is
-> saved to disc but it would be better to avoid killing git and instead
-> report that the command failed.
+>>just repeat
+>>(somewhat redundantly) what is obvious by looking at the patch.
+>>
+> but ... that's exactly what a subject is supposed to do!
 
-The above made me wonder if we can guarantee that the intention of
-the end-user is always to kill only the external program and not
-"git".  But with or without this change, "git" will stop making
-progress after such a signal (in other words, it is not like killing
-"exec sleep 20" will make "git rebase -i -x 'sleep 20'" to move to
-the next step without complaining), so "ignore signals" is not all
-that harmful as the phrasing makes it sound like.  With the patch,
-we just handle signals that will kill the external programs, and
-their consequences, a bit more gracefully.
+I think the rule of thumb is to explain the goodness of what a commit
+brings, rather than focus on what is literally happening. This is
+because the former is more valuable. So instead of
 
-But that makes me wonder what happens if the external program has
-good reasons to ignore the signal (that is, the program does not die
-when signaled, without misbehaving).  If "git" dies in such a case,
-would it help the overall end-user experience, or would it even
-hurt?  If the latter, then "git" that ignores these interactive
-interrupts would be improvement in both cases (i.e. external
-programs that dies with signals, and those that ignores them).  If
-the former, however, "git" that ignores the signals would be a
-regression.
+    "git-revert.txt: add discussion"
 
-Other than that, the change is well reasoned, I would think.
+you could say
 
-Thanks.
+    "git-revert.txt: advise against default commit message"
 
+and now you don't have to look at the patch to see (roughly) what kind
+of discussion was added.
+
+>>>>Please consider rewording such
+>>>>    subject lines to reflect the reason why the original commit is being
+>>>>    reapplied again.
+>>>>
+>>> the reasoning most likely wouldn't fit into the subject.
+>>
+>>Hence the language "to _reflect_ the reason", because the "reason"
+>>should belong in the commit message body text.
+>>
+> i don't think that's how most people would actually read this.
+> and i still don't see how that instruction could be meaningfully 
+> followed.
+
+OK, you may be right.
+
+>>> also, the original request to explain the reasoning applies 
+>>> transitively, so i don't think it's really necessary to point it out 
+>>> explicitly.
+>>
+>>It may be that a user will think only giving the revert reason in the
+>>body text is enough, while leaving the subject line as is. I wanted to
+>>break this line of thinking by providing additional instructions.
+>>
+> yes, that's the whole intention of this patch. but i don't see how 
+> making it more convoluted than my proposal helps in any way.
+
+Well, even if a review makes something more convoluted, it may generate
+discussion and drive consensus on the better way(s) of doing something.
+I see value in that course of events.
+
+Of course you are free to reject review comments that you truly believe
+are inferior to the approach you've already taken.
+
+But overall, when I see a reviewer's comment on this mailing list, I
+assume they are trying to make my patch better. Similarly when I
+reviewed your patch my intent was to provide actionable feedback to try
+to make it better. I'm sorry if I did not come across that way.
+
+>>This is definitely better. But others in this thread have already
+>>commented that my version looks good (after seeing your version also,
+>>presumably).
+>>
+> well, i'm also an "others" when it comes to your proposal, and i find it 
+> confusing.
+
+I think you did the right thing by responding to my comments, and
+pointing to things you found confusing.
