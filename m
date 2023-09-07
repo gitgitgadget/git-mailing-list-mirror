@@ -2,125 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD02EEC8743
-	for <git@archiver.kernel.org>; Thu,  7 Sep 2023 17:25:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4BE3EC8742
+	for <git@archiver.kernel.org>; Thu,  7 Sep 2023 17:26:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231625AbjIGRZO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Sep 2023 13:25:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39824 "EHLO
+        id S243366AbjIGR0S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Sep 2023 13:26:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242562AbjIGRZN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Sep 2023 13:25:13 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E1DCB2
-        for <git@vger.kernel.org>; Thu,  7 Sep 2023 10:24:49 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-3fef56f7248so12980595e9.3
-        for <git@vger.kernel.org>; Thu, 07 Sep 2023 10:24:49 -0700 (PDT)
+        with ESMTP id S243418AbjIGR0Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Sep 2023 13:26:16 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B9661FD4
+        for <git@vger.kernel.org>; Thu,  7 Sep 2023 10:25:49 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id 5b1f17b1804b1-402be83929eso13540355e9.3
+        for <git@vger.kernel.org>; Thu, 07 Sep 2023 10:25:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1694107435; x=1694712235; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20221208; t=1694107504; x=1694712304; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OjOFbkb8q2Pa07AlZR+/OvQvqJ19nYTd8Je4qQv9qCw=;
-        b=WQWuiBf1aWYmtP/0jB6wjuCPE3hhZMg4GKDMHA+X+uwggcyoKf/DJH4NGpq6BSONY9
-         MGz1Jna7YE3aCKA+12JqScok0/Z687kOyEw+EByEIc8bT7jw2EgqqP6q/p1arQYSFFD2
-         SOR5dPAh2dZ1tnLfzUfwexPu4tI4DYmczM6thxiE1OH/Y8cSg5NZucPYZE2SJuvT1VHI
-         0DsRqbvFBCW4PLraaJ0ofwKIU3Qd005nN0yzPVL7UG5NyQnoLmU2D0UOZ5M+xu2wYJ8C
-         KFbplM9RdiMdCJaRxo8X+nEwDcObwJBg8dDc0hT9hpWF43YeOSMPUVJfZ58rnysI0kaG
-         WgKA==
+        bh=jtRmbGHo5/K7ut6F03yLC1ztLgppW4ZLhf+8bTJJ3Hs=;
+        b=QF5TNR0klC0aMqlz4RAxsD5N7l88R/iHeCByDIadqS1OSUFoCd2xaqsUjwI58Ftdoo
+         Z3BWAPtXrEYlWOPFRKAVLmD86PCoMmWmhX/a6d1jBmKvzmrYOmdFNMZVFw5SSxZT5Fcj
+         zZozXrWuxLMei6bp5ZfyO9ZBL+fEZt+Lw9i4XzMJ1DbB5kI7asjIexyv3c/OFFiOnyV/
+         fXdDXrxRKIeqqYNkaec5hEg7gw8kS9IG3legNa2G8VStuEXIiUEfBgBiqxv7wVIqtAbC
+         0LgJHVVmbeuRrpi7vOEBn62tm0KPnPsNMPt13Le3T3+UFbMC4M0NNiu7WaWCu3E7JK4k
+         dlzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1694107435; x=1694712235;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20221208; t=1694107504; x=1694712304;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=OjOFbkb8q2Pa07AlZR+/OvQvqJ19nYTd8Je4qQv9qCw=;
-        b=NW6KnzTuSpybY0r2iVCkAhAnCSctBx0gL8FG8IbRTw9J2RvWelF8cFaEoapRQTt4J6
-         qEfzIE1vj2fqnzs3VqiiM7GraobRYfL62HjcIVfFnzmtQoJBvY+sWQBQpOLTzD38DZNj
-         EEcuupYYe1CHT/957f7JVJGt9eKaZDWeoVRZg1jkeNfLVKRrnl+FAqU1g1//LluSleoz
-         t+BWHe0rH8V/2JKqRlYW9nnqlxE/UUqCGkkF/spaxRed2TmVtxxW7FcH3n5vPP9A4Bw1
-         uWYbAC3Wmg+lYEeA3SnSKN6igIx1g1c2TGOKAaaovUDTpsBJRPZeRNUvT1kSKl2rJ/ro
-         fqrA==
-X-Gm-Message-State: AOJu0Ywjp+mslm07/m/4HkTVcyqC3LHtqLPpE/Y5WtL49XZMoYeMB3G9
-        ACEP4x1+IXzFDqTnbeLaHZf3i7XSR2I=
-X-Google-Smtp-Source: AGHT+IG8qtmtLWzncUEP6VB60JOkNOm53TZHbuT/QO6ux7SLyyCgfY1QVvK9SKN54iHqdppEK0cQ5Q==
-X-Received: by 2002:a5d:4a4d:0:b0:317:5eb8:b1c4 with SMTP id v13-20020a5d4a4d000000b003175eb8b1c4mr4311103wrs.2.1694078889596;
-        Thu, 07 Sep 2023 02:28:09 -0700 (PDT)
-Received: from localhost.localdomain ([2001:861:3f04:7ca0:3385:ce2d:69dd:303e])
-        by smtp.gmail.com with ESMTPSA id y8-20020adff148000000b00317c742ca9asm22491522wro.43.2023.09.07.02.27.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Sep 2023 02:28:08 -0700 (PDT)
-From:   Christian Couder <christian.couder@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Elijah Newren <newren@gmail.com>,
-        John Cai <johncai86@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Calvin Wan <calvinwan@google.com>, Toon Claes <toon@iotcl.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v4 09/15] replay: remove HEAD related sanity check
-Date:   Thu,  7 Sep 2023 11:25:15 +0200
-Message-ID: <20230907092521.733746-10-christian.couder@gmail.com>
-X-Mailer: git-send-email 2.42.0.126.gcf8c984877
-In-Reply-To: <20230907092521.733746-1-christian.couder@gmail.com>
-References: <20230602102533.876905-1-christian.couder@gmail.com>
- <20230907092521.733746-1-christian.couder@gmail.com>
+        bh=jtRmbGHo5/K7ut6F03yLC1ztLgppW4ZLhf+8bTJJ3Hs=;
+        b=laXqBx2za73HGLBPLIsmDAAk2usyskEsmfipEEw906mbePm7och1E1w562jzOgjbrC
+         bSjjeaxna/Q+2gaY23//YrDt/AW5e+WHBLsI1CUzIeWa5tYfJRfktteYfBfEWMKhmo8J
+         RnifDYCs1QwvJ/uBtEoepqbWcmfueB6Vw5krjfh8hQL5clz47EXPRkqw0vCUkzT4BvOy
+         eJ6BtGgEl7vfQkfsctgzQ0vc9MEUp/TNuXqREUVCrlBTVq+xnB8gQUzZDBnp7OlD9Af2
+         imH59scmNgctTO/QTmAgqQFT2JATlVrMYE95lAmsNsG4LI+yckZ/I8YuwbnToRkyQ26B
+         e+Eg==
+X-Gm-Message-State: AOJu0YxmTSLzDRMwkq0xNwqVsRdMmVH7JTdFxmbuKvbENzxH4/aeIJM3
+        P81FyQT/ggMooe86IN2zORJ2n8kb8pZCsh8LnYhGrxkX
+X-Google-Smtp-Source: AGHT+IEARiXsRa+XFdoo9Xvsl42B3tT79bF46CmQWwLCT1VhdfWdJFLBiGztZlIIRz5otROBTpIa0NYNv3pJY1muStM=
+X-Received: by 2002:a17:906:3117:b0:9a1:c2fe:41d9 with SMTP id
+ 23-20020a170906311700b009a1c2fe41d9mr4042123ejx.47.1694075987673; Thu, 07 Sep
+ 2023 01:39:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230407072415.1360068-1-christian.couder@gmail.com>
+ <20230407072415.1360068-12-christian.couder@gmail.com> <8daf2603-2818-9c9d-7a06-6af2872a045a@github.com>
+ <89c78da5-388a-e52b-b20b-e376ac90de14@github.com> <CABPp-BGfG3VeY1gOugzig8PLan1AS66BMWnyFSOsLOy-zqLdXw@mail.gmail.com>
+ <b9732826-5732-0f87-9527-f49c38514fd7@github.com> <CABPp-BG3xNmwbtu+tstLr8bT24rr0gG65ZvD1rEeus_V8OYk=Q@mail.gmail.com>
+ <bbdd3697-bc10-f311-dbef-99917603ce4f@github.com> <CABPp-BH5rLZyjLD91Bn=xThMXHk=q+kGcqPjPDOT0-N4fHfquA@mail.gmail.com>
+ <f5dd91a7-ba11-917a-39e2-2737829558cb@github.com> <CABPp-BFCKrbSZQtRD1MnXrwB91O2YK9ZuGd6BiYQZ2zrpLp+uw@mail.gmail.com>
+ <58f7918f-6ca3-2158-7d9e-bfcd8eb24b0d@github.com> <CABPp-BGRtcBQ_6fkMrTskV9dk71ffycXZ8hEE_RaOrAdza_wLA@mail.gmail.com>
+ <f74fb509-0e1a-9542-d80c-0bec2a1e6740@gmx.de>
+In-Reply-To: <f74fb509-0e1a-9542-d80c-0bec2a1e6740@gmx.de>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 7 Sep 2023 10:39:36 +0200
+Message-ID: <CAP8UFD2KMikjJJQ0FGXO1EYYHRNWHH2n70UATU_o61PJ411f2Q@mail.gmail.com>
+Subject: Re: [PATCH 11/14] replay: use standard revision ranges
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Patrick Steinhardt <ps@pks.im>, John Cai <johncai86@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+Hi Dscho,
 
-We want replay to be a command that can be used on the server side on
-any branch, not just the current one, so we are going to stop updating
-HEAD in a future commit.
+On Sun, Sep 3, 2023 at 5:47=E2=80=AFPM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Hi Elijah & Stolee,
+>
+> On Sat, 29 Apr 2023, Elijah Newren wrote:
+>
+> > On Mon, Apr 24, 2023 at 8:23=E2=80=AFAM Derrick Stolee <derrickstolee@g=
+ithub.com> wrote:
 
-A "sanity check" that makes sure we are replaying the current branch
-doesn't make sense anymore. Let's remove it.
+> > > Basically, I'm not super thrilled about exposing options that are
+> > > unlikely to be valuable to users and instead are more likely to cause
+> > > confusion due to changes that won't successfully apply.
+> >
+> > Oh, I got thrown by the "right now" portion of your comment; I
+> > couldn't see how time or future changes would affect anything to make
+> > it less (or more) confusing for users.
+> >
+> > Quick clarification, though: while you correctly point out the type of
+> > confusion the user would experience without my overriding, my
+> > overriding of rev.reverse (after setup_revisions() returns, not before
+> > it is called) precludes that experience.  The override means none of
+> > the above happens, and they would instead just wonder why their option
+> > is being ignored.
+>
+> FWIW here is my view on the matter: `git replay`, at least in its current
+> incarnation, is a really low-level tool. As such, I actually do not want
+> to worry much about protecting users from nonsensical invocations.
+>
+> In that light, I would like to see that code rejecting all revision
+> options except `--diff-algorithm` be dropped. Should we ever decide to ad=
+d
+> a non-low-level mode to `git replay`, we can easily add some user-friendl=
+y
+> sanity check of the options then, and only for that non-low-level code.
+> For now, I feel that it's just complicating things, and `git replay` is i=
+n
+> the experimental phase anyway.
 
-Co-authored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Elijah Newren <newren@gmail.com>
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- builtin/replay.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+I would be Ok with removing the patch (called "replay: disallow
+revision specific options and pathspecs")
+that rejects all revision options and pathspecs if there is a
+consensus for that. It might not simplify things too much if there is
+still an exception for `--diff-algorithm` though. Also it's not clear
+if you are Ok with allowing pathspecs or not.
 
-diff --git a/builtin/replay.c b/builtin/replay.c
-index b5c854c686..a2636fbdcc 100644
---- a/builtin/replay.c
-+++ b/builtin/replay.c
-@@ -123,7 +123,6 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 	struct commit *onto;
- 	const char *onto_name = NULL;
- 	struct commit *last_commit = NULL, *last_picked_commit = NULL;
--	struct object_id head;
- 	struct lock_file lock = LOCK_INIT;
- 	struct strvec rev_walk_args = STRVEC_INIT;
- 	struct rev_info revs;
-@@ -162,11 +161,6 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 	onto = peel_committish(onto_name);
- 	strbuf_addf(&branch_name, "refs/heads/%s", argv[2]);
- 
--	/* Sanity check */
--	if (repo_get_oid(the_repository, "HEAD", &head))
--		die(_("Cannot read HEAD"));
--	assert(oideq(&onto->object.oid, &head));
--
- 	repo_hold_locked_index(the_repository, &lock, LOCK_DIE_ON_ERROR);
- 	if (repo_read_index(the_repository) < 0)
- 		BUG("Could not read index");
-@@ -238,7 +232,7 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 			    oid_to_hex(&last_picked_commit->object.oid));
- 		if (update_ref(reflog_msg.buf, "HEAD",
- 			       &last_commit->object.oid,
--			       &head,
-+			       &onto->object.oid,
- 			       REF_NO_DEREF, UPDATE_REFS_MSG_ON_ERR)) {
- 			error(_("could not update %s"), argv[2]);
- 			die("Failed to update %s", argv[2]);
--- 
-2.42.0.126.gcf8c984877
+The idea with disallowing all of them was to later add back those that
+make sense along with tests and maybe docs to explain them in the
+context of this command. It was not to disallow them permanently. So I
+would think the best path forward would be a patch series on top of
+this one that would revert the patch disallowing these options and
+maybe pathspecs, and instead allow most of them and document and test
+things a bit.
 
+> And further, I would even like to see that `--reverse` override go, and
+> turn it into `revs.reverse =3D !revs.reverse` instead. (And yes, I can
+> easily think of instances where I would have wanted to reverse a series o=
+f
+> patches...).
+
+I think this might deserve docs and tests too, so it might want to be
+part of a separate patch series once the existing one has graduated.
+
+At this point I don't think it's worth delaying this patch series for
+relatively small issues like this. There are many different ways this
+new command can be polished and improved. The important thing is that
+it looks like we all agree that the new command makes sense and should
+have roughly the basic set of features that Elijah originally
+implemented, so let's go with this, and then we can improve and
+iterate on top of this.
