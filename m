@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 613B9EC873E
-	for <git@archiver.kernel.org>; Thu,  7 Sep 2023 16:49:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 666EEEC873E
+	for <git@archiver.kernel.org>; Thu,  7 Sep 2023 16:50:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243319AbjIGQth (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Sep 2023 12:49:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50318 "EHLO
+        id S243590AbjIGQur (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Sep 2023 12:50:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243361AbjIGQtf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Sep 2023 12:49:35 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3753B1BC9
-        for <git@vger.kernel.org>; Thu,  7 Sep 2023 09:49:11 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2bd0a5a5abbso20759671fa.0
-        for <git@vger.kernel.org>; Thu, 07 Sep 2023 09:49:11 -0700 (PDT)
+        with ESMTP id S243038AbjIGQuq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Sep 2023 12:50:46 -0400
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F25DD171C
+        for <git@vger.kernel.org>; Thu,  7 Sep 2023 09:50:19 -0700 (PDT)
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-99c3d3c3db9so148532666b.3
+        for <git@vger.kernel.org>; Thu, 07 Sep 2023 09:50:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1694105285; x=1694710085; darn=vger.kernel.org;
+        d=gmail.com; s=20221208; t=1694105027; x=1694709827; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=RLXvhxvAcTubTLZoUT0um1y8VxTvyJPDq+F3ZZGAb2A=;
-        b=GOHv/HMu7z3/tCBb5JYMYTMllllzW5TMDQpZfr2i9iHE14+EqrO6fIWZZhA911I4qi
-         AxLgc6UOHqXGIjZKpyagYOp+17Y+K61/aMajoRSc+Jh01XbiuM6wp6ld4voQf9Sp4Fh4
-         lJPD07FJRzPtJSusLdYnucxc6bVhXvlr8B0on/PrZH0lmoa78PCAOzKX/Wu9h31+XRUv
-         K9Ce0FKp1YgrXaETezaBDHR5EVH3kUoHYrrrTRzqlixAGAY87DTkAtsAQBhGxCFpLoge
-         njkHP/8f8BIArS9bOGNLhOZmyRr7PXyi5p7q6H7EaTvxVWwVjVh9zYu8k6KqG7raMZcH
-         BJqw==
+        bh=CudVLzGFJgo4zZ4d2+8qJM8WR7188itEz7HYc1E4dLE=;
+        b=cPne/t3IFv7HJkS1kPOUyDgb0TPicYbmUbEKOoKw/HV+ZP+994gn9R5B6711ghI/qd
+         16fxUYK9vF2DzbfiaqpxvHP3qgkKOX+s4sj3KCSNoX7xZc3DzpetM1OauQm0Px2UNhGZ
+         AS2fAEt+4GBRddclUPhnnO6JXtNOq61IjyRkxDVf7s+f2Zrbn4vLGaKgiI1ALzFkapU6
+         eJJtf2L0vyalW33/oUGY/Y4C72FJ5rAttB17CCe2WIy1OCB613x5b6LqnHInIXfbf5VY
+         Bn/O3vqKsxShhvik6CN059f4LoC8Kp/dRdtR+8idmNOuUKLIwXFs0NhxN8x8NoVkrTXu
+         dtrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1694105285; x=1694710085;
+        d=1e100.net; s=20221208; t=1694105027; x=1694709827;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=RLXvhxvAcTubTLZoUT0um1y8VxTvyJPDq+F3ZZGAb2A=;
-        b=Pw5fQThuxMuh2fNs97VXscqpTq0IfEz/sFV8sOAD+fzivosnyA6xt1SRLFyv8cz5p8
-         /lA5ldhuGMSGs7R2/DjmBGjQZyoLjjHnNZGmzXOQmoGeHISGFaWbYtEnp3SEkHafP1tO
-         bjSDLuUNO8USZPQHKkKgxXNSMR3PtMP2sZHpuWmHWiFQclP6+CiEJ1pq39witLtPLPv7
-         UrstvuGDYLcmV4+4lZSBquEtiCdsm73B6cE5UYydbRsp+0g+mvszbd5ErmoNsX7UBNbo
-         mbZQ/BsA1CaTM6vU8ygwuukALOZje+xCGfM0W+4BzKnfUX05JB20D5aBOpLfUwnACNlt
-         fS1Q==
-X-Gm-Message-State: AOJu0YzxAbgJvn2WEYRmjxW4e8KF1SVR/YrskURJoTlheQ1/yJx6tcQg
-        I3tH++qNWq2+rKHJ0yyCZQFxAYNrKYA=
-X-Google-Smtp-Source: AGHT+IGAZOilvgLi/Z/EGWtqKTBeWm5+oI8p6m/oHdBIJfZR1QLljx/EmyF2eSmGIDRW4Onab9/rLw==
-X-Received: by 2002:a5d:4a4a:0:b0:31a:d2f9:7372 with SMTP id v10-20020a5d4a4a000000b0031ad2f97372mr4272313wrs.29.1694078771131;
-        Thu, 07 Sep 2023 02:26:11 -0700 (PDT)
+        bh=CudVLzGFJgo4zZ4d2+8qJM8WR7188itEz7HYc1E4dLE=;
+        b=O/N3iykwT1DgRcISCiI5/QSg08O1w5TRCJh1cUWeWUYex80qsiUQ5aqxM7DeYy4x/L
+         ENyxQEXRzRpylZmd3+qrOu9iLSdzYjQ0lnXwGpj1goF5qGhu0gZ1zwxzuvIDgJDVih/I
+         22XAVrx0r44Qe+pSOyIvmZGC+j8ewPscXs8By1qqoao9HnaQv8xVvNa10/dHBDwlF19x
+         XM3rTn+DNZcqz7fONv+UJh91fquXpDlrV3COtYnh9Yxq1iJH9kn1WiY2Rv5XPeOrxUj+
+         TVYTmxc7BR0c8aLCVjEGrSCJU7QcsmCDkjHsCmZZGjv2Su+8om4TIK3oQZ2qH8CDUjqX
+         2EWQ==
+X-Gm-Message-State: AOJu0YyRgnv38zZpr8rNjhD3w5i5v+onzJucykwfKXCq353yOoOIHqli
+        H8t9SIN+uFk3u+aYM57mcC6vsKg0IsQ=
+X-Google-Smtp-Source: AGHT+IFqc7I0JuU8pKNofJPkCjijygPm29THxWJcLstGus38EDysfYwWEGtxUGTIMDdOV2aw15xuAg==
+X-Received: by 2002:adf:f38e:0:b0:315:8a13:ef17 with SMTP id m14-20020adff38e000000b003158a13ef17mr4474149wro.65.1694078935600;
+        Thu, 07 Sep 2023 02:28:55 -0700 (PDT)
 Received: from localhost.localdomain ([2001:861:3f04:7ca0:3385:ce2d:69dd:303e])
-        by smtp.gmail.com with ESMTPSA id y8-20020adff148000000b00317c742ca9asm22491522wro.43.2023.09.07.02.25.56
+        by smtp.gmail.com with ESMTPSA id y8-20020adff148000000b00317c742ca9asm22491522wro.43.2023.09.07.02.28.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Sep 2023 02:26:10 -0700 (PDT)
+        Thu, 07 Sep 2023 02:28:55 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
@@ -58,10 +58,11 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
         Derrick Stolee <stolee@gmail.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         Calvin Wan <calvinwan@google.com>, Toon Claes <toon@iotcl.com>,
+        Christian Couder <christian.couder@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v4 01/15] t6429: remove switching aspects of fast-rebase
-Date:   Thu,  7 Sep 2023 11:25:07 +0200
-Message-ID: <20230907092521.733746-2-christian.couder@gmail.com>
+Subject: [PATCH v4 12/15] replay: disallow revision specific options and pathspecs
+Date:   Thu,  7 Sep 2023 11:25:18 +0200
+Message-ID: <20230907092521.733746-13-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.42.0.126.gcf8c984877
 In-Reply-To: <20230907092521.733746-1-christian.couder@gmail.com>
 References: <20230602102533.876905-1-christian.couder@gmail.com>
@@ -72,132 +73,118 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+A previous commit changed `git replay` to make it accept standard
+revision ranges using the setup_revisions() function. While this is a
+good thing to make this command more standard and more flexible, it has
+the downside of enabling many revision related options accepted and eaten
+by setup_revisions().
 
-At the time t6429 was written, merge-ort was still under development,
-did not have quite as many tests, and certainly was not widely deployed.
-Since t6429 was exercising some codepaths just a little differently, we
-thought having them also test the "merge_switch_to_result()" bits of
-merge-ort was useful even though they weren't intrinsic to the real
-point of these tests.
+Some of these options might make sense, but others, like those
+generating non-contiguous history, might not. Anyway those we might want
+to allow should probably be tested and perhaps documented a bit, which
+could be done in future work.
 
-However, the value provided by doing extra testing of the
-"merge_switch_to_result()" bits has decreased a bit over time, and it's
-actively making it harder to refactor `test-tool fast-rebase` into `git
-replay`, which we are going to do in following commits.  Dispense with
-these bits.
+For now it is just simpler and safer to just disallow all of them, so
+let's do that.
 
-Co-authored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Elijah Newren <newren@gmail.com>
+Other commands, like `git fast-export`, currently allow all these
+revision specific options even though some of them might not make sense,
+as these commands also use setup_revisions() but do not check the
+options that might be passed to this function.
+
+So a way to fix those commands as well as git replay could be to improve
+or refactor the setup_revisions() mechanism to let callers allow and
+disallow options in a relevant way for them. Such improvements are
+outside the scope of this work though.
+
+Pathspecs, which are also accepted and eaten by setup_revisions(), are
+likely to result in disconnected history. That could perhaps be useful,
+but that would need tests and documentation, which can be added in
+future work. So, while at it, let's disallow them too.
+
+Helped-by: Elijah Newren <newren@gmail.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/helper/test-fast-rebase.c              | 9 +--------
- t/t6429-merge-sequence-rename-caching.sh | 9 +++++++--
- 2 files changed, 8 insertions(+), 10 deletions(-)
+ builtin/replay.c         | 26 +++++++++++++++++++++++++-
+ t/t3650-replay-basics.sh | 16 ++++++++++++++++
+ 2 files changed, 41 insertions(+), 1 deletion(-)
 
-diff --git a/t/helper/test-fast-rebase.c b/t/helper/test-fast-rebase.c
-index cac20a72b3..2bfab66b1b 100644
---- a/t/helper/test-fast-rebase.c
-+++ b/t/helper/test-fast-rebase.c
-@@ -194,7 +194,7 @@ int cmd__fast_rebase(int argc, const char **argv)
- 		last_commit = create_commit(result.tree, commit, last_commit);
+diff --git a/builtin/replay.c b/builtin/replay.c
+index de2ddeae3e..60abdaee9e 100644
+--- a/builtin/replay.c
++++ b/builtin/replay.c
+@@ -121,7 +121,7 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 	struct commit *commit;
+ 	struct merge_options merge_opt;
+ 	struct merge_result result;
+-	int ret = 0;
++	int ret = 0, i;
+ 
+ 	const char * const replay_usage[] = {
+ 		N_("git replay --onto <newbase> <revision-range>..."),
+@@ -137,6 +137,20 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 	argc = parse_options(argc, argv, prefix, replay_options, replay_usage,
+ 			     PARSE_OPT_KEEP_ARGV0 | PARSE_OPT_KEEP_UNKNOWN_OPT);
+ 
++	/*
++	 * TODO: For now, we reject any unknown or invalid option,
++	 * including revision related ones, like --not,
++	 * --first-parent, etc that would be allowed and eaten by
++	 * setup_revisions() below. In the future we should definitely
++	 * accept those that make sense and add related tests and doc
++	 * though.
++	 */
++	for (i = 0; i < argc; i++)
++		if (argv[i][0] == '-') {
++			error(_("invalid option: %s"), argv[i]);
++			usage_with_options(replay_usage, replay_options);
++		}
++
+ 	if (!onto_name) {
+ 		error(_("option --onto is mandatory"));
+ 		usage_with_options(replay_usage, replay_options);
+@@ -152,6 +166,16 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 		goto cleanup;
  	}
  
--	merge_switch_to_result(&merge_opt, head_tree, &result, 1, !result.clean);
-+	merge_finalize(&merge_opt, &result);
++	/*
++	 * Reject any pathspec. (They are allowed and eaten by
++	 * setup_revisions() above.) In the future we might accept
++	 * them, after adding related tests and doc though.
++	 */
++	if (revs.prune_data.nr) {
++		error(_("no pathspec is allowed: '%s'"), revs.prune_data.items[0].match);
++		usage_with_options(replay_usage, replay_options);
++	}
++
+ 	/* requirements/overrides for revs */
+ 	revs.reverse = 1;
+ 	revs.sort_order = REV_SORT_IN_GRAPH_ORDER;
+diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
+index a1da4f9ef9..de6e40950e 100755
+--- a/t/t3650-replay-basics.sh
++++ b/t/t3650-replay-basics.sh
+@@ -80,4 +80,20 @@ test_expect_success 'using replay on bare repo to rebase with a conflict' '
+ 	test_expect_code 1 git -C bare replay --onto topic1 B..conflict
+ '
  
- 	if (result.clean < 0)
- 		exit(128);
-@@ -213,9 +213,6 @@ int cmd__fast_rebase(int argc, const char **argv)
- 		}
- 		if (create_symref("HEAD", branch_name.buf, reflog_msg.buf) < 0)
- 			die(_("unable to update HEAD"));
--
--		prime_cache_tree(the_repository, the_repository->index,
--				 result.tree);
- 	} else {
- 		fprintf(stderr, "\nAborting: Hit a conflict.\n");
- 		strbuf_addf(&reflog_msg, "rebase progress up to %s",
-@@ -228,10 +225,6 @@ int cmd__fast_rebase(int argc, const char **argv)
- 			die("Failed to update %s", argv[4]);
- 		}
- 	}
--	if (write_locked_index(&the_index, &lock,
--			       COMMIT_LOCK | SKIP_IF_UNCHANGED))
--		die(_("unable to write %s"), get_index_file());
--
- 	ret = (result.clean == 0);
- cleanup:
- 	strbuf_release(&reflog_msg);
-diff --git a/t/t6429-merge-sequence-rename-caching.sh b/t/t6429-merge-sequence-rename-caching.sh
-index d02fa16614..75d3fd2dba 100755
---- a/t/t6429-merge-sequence-rename-caching.sh
-+++ b/t/t6429-merge-sequence-rename-caching.sh
-@@ -72,6 +72,7 @@ test_expect_success 'caching renames does not preclude finding new ones' '
- 		git switch upstream &&
- 
- 		test-tool fast-rebase --onto HEAD upstream~1 topic &&
-+		git reset --hard topic &&
- 		#git cherry-pick upstream~1..topic
- 
- 		git ls-files >tracked-files &&
-@@ -200,6 +201,7 @@ test_expect_success 'rename same file identically, then reintroduce it' '
- 		export GIT_TRACE2_PERF &&
- 
- 		test-tool fast-rebase --onto HEAD upstream~1 topic &&
-+		git reset --hard topic &&
- 		#git cherry-pick upstream~1..topic &&
- 
- 		git ls-files >tracked &&
-@@ -277,6 +279,7 @@ test_expect_success 'rename same file identically, then add file to old dir' '
- 		export GIT_TRACE2_PERF &&
- 
- 		test-tool fast-rebase --onto HEAD upstream~1 topic &&
-+		git reset --hard topic &&
- 		#git cherry-pick upstream~1..topic &&
- 
- 		git ls-files >tracked &&
-@@ -356,8 +359,6 @@ test_expect_success 'cached dir rename does not prevent noticing later conflict'
- 		test_must_fail test-tool fast-rebase --onto HEAD upstream~1 topic >output &&
- 		#git cherry-pick upstream..topic &&
- 
--		grep CONFLICT..rename/rename output &&
--
- 		grep region_enter.*diffcore_rename trace.output >calls &&
- 		test_line_count = 2 calls
- 	)
-@@ -456,6 +457,7 @@ test_expect_success 'dir rename unneeded, then add new file to old dir' '
- 		export GIT_TRACE2_PERF &&
- 
- 		test-tool fast-rebase --onto HEAD upstream~1 topic &&
-+		git reset --hard topic &&
- 		#git cherry-pick upstream..topic &&
- 
- 		grep region_enter.*diffcore_rename trace.output >calls &&
-@@ -522,6 +524,7 @@ test_expect_success 'dir rename unneeded, then rename existing file into old dir
- 		export GIT_TRACE2_PERF &&
- 
- 		test-tool fast-rebase --onto HEAD upstream~1 topic &&
-+		git reset --hard topic &&
- 		#git cherry-pick upstream..topic &&
- 
- 		grep region_enter.*diffcore_rename trace.output >calls &&
-@@ -624,6 +627,7 @@ test_expect_success 'caching renames only on upstream side, part 1' '
- 		export GIT_TRACE2_PERF &&
- 
- 		test-tool fast-rebase --onto HEAD upstream~1 topic &&
-+		git reset --hard topic &&
- 		#git cherry-pick upstream..topic &&
- 
- 		grep region_enter.*diffcore_rename trace.output >calls &&
-@@ -682,6 +686,7 @@ test_expect_success 'caching renames only on upstream side, part 2' '
- 		export GIT_TRACE2_PERF &&
- 
- 		test-tool fast-rebase --onto HEAD upstream~1 topic &&
-+		git reset --hard topic &&
- 		#git cherry-pick upstream..topic &&
- 
- 		grep region_enter.*diffcore_rename trace.output >calls &&
++test_expect_success 'using replay with (for now) disallowed revision specific option --not' '
++	test_must_fail git replay --onto main topic2 --not topic1
++'
++
++test_expect_success 'using replay on bare repo with (for now) disallowed revision specific option --first-parent' '
++	test_must_fail git -C bare replay --onto main --first-parent topic1..topic2
++'
++
++test_expect_success 'using replay with disallowed pathspec' '
++	test_must_fail git replay --onto main topic1..topic2 A.t
++'
++
++test_expect_success 'using replay on bare repo with disallowed pathspec' '
++	test_must_fail git -C bare replay --onto main topic1..topic2 -- A.t
++'
++
+ test_done
 -- 
 2.42.0.126.gcf8c984877
 
