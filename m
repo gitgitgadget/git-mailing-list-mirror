@@ -2,86 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FE99EC8758
-	for <git@archiver.kernel.org>; Thu,  7 Sep 2023 20:35:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EC67EC875C
+	for <git@archiver.kernel.org>; Thu,  7 Sep 2023 20:40:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238803AbjIGUfG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Sep 2023 16:35:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47044 "EHLO
+        id S239680AbjIGUkj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Sep 2023 16:40:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38544 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233520AbjIGUfE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Sep 2023 16:35:04 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE5AB1BCE
-        for <git@vger.kernel.org>; Thu,  7 Sep 2023 13:34:58 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 92D0F31EA3;
-        Thu,  7 Sep 2023 16:34:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=xKyw1h681iga
-        9wpQXkHGOq1l4hVy4uLneOD4enAsKkU=; b=QJuCKuNQ6c5Nb4GthBS643GWClvv
-        viAiu7n3jTx6K+0DX8ttSovAtgMmjRsSAEuZbsk4odCrpl+Fa1F6vos5XEazToR3
-        Q693YB3zYfICba9ZBjjqW0LDlVO5Td0SL4F2JPs19udYO1kSeY2b5nmwwENWboH6
-        OmSXmukCRoUJ0Bs=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8BD0C31EA2;
-        Thu,  7 Sep 2023 16:34:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.145.39.59])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 15E8C31EA1;
-        Thu,  7 Sep 2023 16:34:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+        with ESMTP id S232763AbjIGUki (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Sep 2023 16:40:38 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B3371BCA
+        for <git@vger.kernel.org>; Thu,  7 Sep 2023 13:40:33 -0700 (PDT)
+Received: (qmail 29052 invoked by uid 109); 7 Sep 2023 20:40:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 07 Sep 2023 20:40:33 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 31180 invoked by uid 111); 7 Sep 2023 20:40:29 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 07 Sep 2023 16:40:29 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 7 Sep 2023 16:40:27 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
 Cc:     Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] grep: reject --no-or
-In-Reply-To: <6aeb0ebe-0fea-ccd3-089a-ee0b5b5baf10@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Thu, 7 Sep 2023 22:20:59 +0200")
-References: <6aeb0ebe-0fea-ccd3-089a-ee0b5b5baf10@web.de>
-Date:   Thu, 07 Sep 2023 13:34:54 -0700
-Message-ID: <xmqqh6o5k9ht.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Subject: Re: [PATCH] grep: use OPT_INTEGER_F for --max-depth
+Message-ID: <20230907204027.GA941945@coredump.intra.peff.net>
+References: <4d2eb736-4f34-18f8-2eb7-20e7f7b8c2f8@web.de>
+ <20230905072122.GG199565@coredump.intra.peff.net>
+ <724641d2-1cba-3768-6008-01e8a1cdca4e@web.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 01014CD8-4DBE-11EE-824E-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <724641d2-1cba-3768-6008-01e8a1cdca4e@web.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+On Thu, Sep 07, 2023 at 10:20:53PM +0200, René Scharfe wrote:
 
-> Since 3e230fa1b2 (grep: use parseopt, 2009-05-07) git grep has been
-> accepting the option --no-or.  It does the same as --or: nothing.
-> That's confusing and unintended.  Forbid negating --or.
+> Am 05.09.23 um 09:21 schrieb Jeff King:
+> > On Sat, Sep 02, 2023 at 08:54:54PM +0200, René Scharfe wrote:
+> >
+> > In general, I wonder how many of the results from:
+> >
+> >   git grep '{ OPTION'
+> >
+> > could be converted to use the macros and end up more readable. There are
+> > a number of OPTARG ones, which I guess can't use macros. Looks like
+> > there are a handful of others (mostly for OPT_HIDDEN).
+> 
+> Indeed, and I have a semantic patch for that, but mostly because the
+> macros allow injecting a type check.
+> 
+> OPTARG would need a new macro to allow specifying the default value.  Or
+> is there a variadic macro trick that we could use?
 
-OK.  It is just a no-op Boolean but that is not a good reason for us
-to be loose.  Will queue.  Thanks.
+Hmm, I had just assumed OPTARG was a lost cause (or we would need an
+"OPTARG" variant of each macro; yuck).
 
->
-> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-> ---
->  builtin/grep.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/builtin/grep.c b/builtin/grep.c
-> index 50e712a184..2a261074f1 100644
-> --- a/builtin/grep.c
-> +++ b/builtin/grep.c
-> @@ -990,7 +990,7 @@ int cmd_grep(int argc, const char **argv, const cha=
-r *prefix)
->  		OPT_CALLBACK_F(0, "and", &opt, NULL,
->  			N_("combine patterns specified with -e"),
->  			PARSE_OPT_NOARG | PARSE_OPT_NONEG, and_callback),
-> -		OPT_BOOL(0, "or", &dummy, ""),
-> +		OPT_BOOL_F(0, "or", &dummy, "", PARSE_OPT_NONEG),
->  		OPT_CALLBACK_F(0, "not", &opt, NULL, "",
->  			PARSE_OPT_NOARG | PARSE_OPT_NONEG, not_callback),
->  		OPT_CALLBACK_F('(', NULL, &opt, NULL, "",
-> --
-> 2.42.0
+I suspect variadic macros could be made to work, but you'd lose some
+compile-time safety. If I say:
+
+  OPT_BOOL('x', NULL, &v, NULL, "turn on x")
+
+now, the compiler will complain about the number of arguments. In a
+variadic world, it silently ignores the final one. I feel like I've made
+this kind of error before (e.g., when switching to/from _F variants, or
+between types).
+
+You'd want some semantic check between what's in flags (i.e., is the
+OPTARG flag set), but I think that's beyond what the compiler itself can
+do (you could probably write a coccinelle rule for it, though).
+
+I think it also squats on the variadic concept for the macro, so that no
+other features can use it. I.e., if you accidentally give _two_ extra
+arguments, I don't know that we can parse them out individually.
+
+So yeah, I think you'd really want a separate macro. The combinations
+start to add up (or multiply up, if you prefer ;) ). They _could_ be
+generated mechanically, I think, as they can all be implemented in terms
+of a master macro that knows about all features:
+
+   #define OPT_BOOL_F(s, l, v, h, f) OPT_BOOL_ALL(s, l, v, h, f, 0)
+   #define OPT_BOOL(s, l, v, h, f) OPT_BOOL_F(s, l, v, h, 0)
+   #define OPT_BOOL_OPTARG_F(s, l, v, h, arg) OPT_BOOL_ALL(s, l, v, h, f | PARSE_OPT_OPTARG, arg)
+   #define OPT_BOOL_OPTARG(s, l, v, h, arg) OPT_BOOL_OPTARG_F(s, l, v, h, 0, arg)
+
+But I'm not sure if cpp is up to that, or if I'd want to see what the
+resulting code looks like.
+
+-Peff
