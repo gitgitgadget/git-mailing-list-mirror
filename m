@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 60285EC875F
-	for <git@archiver.kernel.org>; Thu,  7 Sep 2023 22:20:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 79D08CCFA0A
+	for <git@archiver.kernel.org>; Thu,  7 Sep 2023 22:20:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237501AbjIGWUU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Sep 2023 18:20:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59034 "EHLO
+        id S237730AbjIGWUW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Sep 2023 18:20:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234773AbjIGWUS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Sep 2023 18:20:18 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1806E1BC6
-        for <git@vger.kernel.org>; Thu,  7 Sep 2023 15:20:15 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-401bbfc05fcso16259535e9.3
-        for <git@vger.kernel.org>; Thu, 07 Sep 2023 15:20:15 -0700 (PDT)
+        with ESMTP id S234773AbjIGWUV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Sep 2023 18:20:21 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F3E31BC6
+        for <git@vger.kernel.org>; Thu,  7 Sep 2023 15:20:16 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id ffacd0b85a97d-31aec0a1a8bso936571f8f.0
+        for <git@vger.kernel.org>; Thu, 07 Sep 2023 15:20:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1694125213; x=1694730013; darn=vger.kernel.org;
+        d=gmail.com; s=20221208; t=1694125214; x=1694730014; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=d5C2RUivRPkhjM3FHZHrxtCNM82473MLJmyqe8BS37I=;
-        b=HRQ5n78JbO6+3uZwgM2iWgCvTDQ+5+h7NIkQ/UEbB6u/hl0HAfV5er4j94lnB0YpGt
-         ZISsyLir4nrCO7gf54vL4eSilQ1cXlA9nR4wm8OBMWOHg8BVZq5XrwyxgOSdzO0ql3vD
-         dZCowuHYRv6ho/+2KCHqRgMyYbhgti+6RvFII5hNzZynMNJMlWkycFltPY+t3k02f2Qe
-         AtCExQfcFT1cyQzZ6huf7G8rIYnMLXHdx6HIC72i8pPAk6Pln5R2Vtf8eB+HJzeiz6ce
-         vtkVAICMks8biV0nmpvypFX+7r5B1SWvdfauii9HBu7oif76/XeaFx3p+Z/COiSmNXCi
-         Qrjw==
+        bh=EKPl42RSzL8yMZqcs2H0g2o3zU7uxqKAob5ypQKsfWM=;
+        b=HRakSchlvdd5N49C4oOW89lHSnD3h8le/PsCetDbuJ2l3zJ7+mAJYf2UjjFsg1kQFI
+         j6rAb4A1DC+DHF+BLW/8C5SD5cdvGJSus+MoaXxdmQKlNkDbTSusdvnYOT4UgUyOJ3Do
+         9TNFZ8RXOFp7Pqep2M2mK5QyzmAxxkU9oyGiRdmdNa2dBNElhKhm80Bsdis9IC86JM1g
+         waSfBGHgX8htCdQeuHtcu0UuibAyg50Q9mx2b3+R1y/6zkbs6cfkIZynaMTxKS4oic+H
+         01lraAFZeW1qfOkosLweoWci0+hLYb2yk7q+W0i/C+gP3wLZsLO6ruNAyDaLkicy8s4z
+         xgZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694125213; x=1694730013;
+        d=1e100.net; s=20230601; t=1694125214; x=1694730014;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=d5C2RUivRPkhjM3FHZHrxtCNM82473MLJmyqe8BS37I=;
-        b=CCCzXdS0NWmTSI9P95ZU5CfmWMKcEmZ7YO2mj1BugK9mbtsSe8pu7HpABxXgreS6fU
-         GEenKtGpKPNivL3Pe971tZvA2eoo80pzNfMSL4w1BgYnrPtiF/uqsyrhZLwNxl2YVVYD
-         Lz3NNYG7xYyvEjfILDsF1GUQAiA5GjzQNYG2Dr2Pl+g1aLFQ6ui89RRfghu4kiDuQMOd
-         jt2AKoL6X3AyfhXhtfEVP6IpRAATbZ+4QD9AH68LDSSS2TPk6sxqpMyz12I36p0Qua/G
-         3FtHDdfqSUmQKBbXTEZeuMe1YrO1StHqpBOi9eY7sxbSf4zKu3Wx94T8Emlmpx0NjgTP
-         XGfQ==
-X-Gm-Message-State: AOJu0YxdxfMVPtYiJdxOCtzB6SM/0aQOiMmfTFtfy1QZEO63QaH92N5t
-        NouvzlLFe7aeAmr+Z3+u0+jSMbRzcFs=
-X-Google-Smtp-Source: AGHT+IGRfSJnRUqmM6F4iP7xG7ToPoUynEDMmKSzebxNQ+O6UMdj0g43qIvnomjGcuSzmpO1hIb63w==
-X-Received: by 2002:adf:de02:0:b0:317:727f:3bc7 with SMTP id b2-20020adfde02000000b00317727f3bc7mr462198wrm.17.1694125213312;
-        Thu, 07 Sep 2023 15:20:13 -0700 (PDT)
+        bh=EKPl42RSzL8yMZqcs2H0g2o3zU7uxqKAob5ypQKsfWM=;
+        b=b1zaAAM4QocYk19SZIcr8aa920lh5z64ryY+DNPwbPQ8gHiGXdgm0Um0HeCb6LOGxp
+         5F6WPCl2yN7zYq7Y8dZarsBJisz4UTDKtmlOrG8weqdJJrL1ewjBtD7hR09XQ6r95YNH
+         Ubm5R3j1KKRh5yoj8d6PP+0u31JShPRWhUk/i2LbhPJqh+Gf4YUGEy9lRONwVsWybzH/
+         g9SG2Th4BFdHwGyOc5lU8VUwOjMi/GSPoGCcyTQZ+2eHvcpXLTcDlI9d+5AnqtBnACCE
+         Lh+bvzfXUbbcAuAF9CkhFkN14CPXFvGdlUYx2uXuZsWhzON+7mle87sdSz5CXkGgafLb
+         WmFg==
+X-Gm-Message-State: AOJu0YyeDTC/PjYQ+ZM59INyhPEx7KAc5RLEXkSC2nQkKwgtORjRR9Ib
+        gOV9m6dmwShWpWTuv/MN0khaMxxXiJ4=
+X-Google-Smtp-Source: AGHT+IHK+ZJumksFso5zp2TnCRDDXzbX2APOu1OR14EvFiANYSf+3vqYpEPTzNE54igOPBAl+hfTxA==
+X-Received: by 2002:a5d:4241:0:b0:317:5efa:c46a with SMTP id s1-20020a5d4241000000b003175efac46amr467261wrr.27.1694125214055;
+        Thu, 07 Sep 2023 15:20:14 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a10-20020a5d508a000000b00319756d5b80sm451225wrt.29.2023.09.07.15.20.12
+        by smtp.gmail.com with ESMTPSA id e15-20020a5d65cf000000b0030647449730sm433063wrw.74.2023.09.07.15.20.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Sep 2023 15:20:12 -0700 (PDT)
-Message-ID: <f680e76de847cf88fc4e4d63844829c6b344a697.1694125210.git.gitgitgadget@gmail.com>
+        Thu, 07 Sep 2023 15:20:13 -0700 (PDT)
+Message-ID: <4b5c458ef436c2d208e6d6d0a1f99c65e9a11125.1694125210.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1564.v3.git.1694125209.gitgitgadget@gmail.com>
 References: <pull.1564.v2.git.1691702283.gitgitgadget@gmail.com>
         <pull.1564.v3.git.1694125209.gitgitgadget@gmail.com>
 From:   "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 07 Sep 2023 22:19:58 +0000
-Subject: [PATCH v3 02/13] trailer test description: this tests --where=after,
- not --where=before
+Date:   Thu, 07 Sep 2023 22:19:59 +0000
+Subject: [PATCH v3 03/13] trailer: add tests to check defaulting behavior with
+ --no-* flags
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,24 +71,211 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Linus Arver <linusa@google.com>
 
+While the "--no-where" flag is tested, the "--no-if-exists" and
+"--no-if-missing" flags are not, so add tests for them. But also add
+tests for all "--no-*" flags to check their effects, both when (1) there
+are relevant configuration variables set, and (2) they are not set.
+
 Signed-off-by: Linus Arver <linusa@google.com>
 ---
- t/t7513-interpret-trailers.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/git-interpret-trailers.txt |  14 ++-
+ t/t7513-interpret-trailers.sh            | 130 +++++++++++++++++++++++
+ 2 files changed, 140 insertions(+), 4 deletions(-)
 
+diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
+index 55d89614661..91a4dbc9a72 100644
+--- a/Documentation/git-interpret-trailers.txt
++++ b/Documentation/git-interpret-trailers.txt
+@@ -114,8 +114,10 @@ OPTIONS
+ 	Specify where all new trailers will be added.  A setting
+ 	provided with '--where' overrides all configuration variables
+ 	and applies to all '--trailer' options until the next occurrence of
+-	'--where' or '--no-where'. Possible values are `after`, `before`,
+-	`end` or `start`.
++	'--where' or '--no-where'. Upon encountering '--no-where', clear the
++	effect of any previous use of '--where', such that the relevant configuration
++	variables are no longer overridden. Possible values are `after`,
++	`before`, `end` or `start`.
+ 
+ --if-exists <action>::
+ --no-if-exists::
+@@ -123,7 +125,9 @@ OPTIONS
+ 	least one trailer with the same <token> in the input.  A setting
+ 	provided with '--if-exists' overrides all configuration variables
+ 	and applies to all '--trailer' options until the next occurrence of
+-	'--if-exists' or '--no-if-exists'. Possible actions are `addIfDifferent`,
++	'--if-exists' or '--no-if-exists'. Upon encountering '--no-if-exists, clear the
++	effect of any previous use of '--if-exists, such that the relevant configuration
++	variables are no longer overridden. Possible actions are `addIfDifferent`,
+ 	`addIfDifferentNeighbor`, `add`, `replace` and `doNothing`.
+ 
+ --if-missing <action>::
+@@ -132,7 +136,9 @@ OPTIONS
+ 	trailer with the same <token> in the input.  A setting
+ 	provided with '--if-missing' overrides all configuration variables
+ 	and applies to all '--trailer' options until the next occurrence of
+-	'--if-missing' or '--no-if-missing'. Possible actions are `doNothing`
++	'--if-missing' or '--no-if-missing'. Upon encountering '--no-if-missing,
++	clear the effect of any previous use of '--if-missing, such that the relevant
++	configuration variables are no longer overridden. Possible actions are `doNothing`
+ 	or `add`.
+ 
+ --only-trailers::
 diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
-index 5b31896070a..ed0fc04bd95 100755
+index ed0fc04bd95..832aff06167 100755
 --- a/t/t7513-interpret-trailers.sh
 +++ b/t/t7513-interpret-trailers.sh
-@@ -792,7 +792,7 @@ test_expect_success 'overriding configuration with "--where after"' '
+@@ -812,6 +812,53 @@ test_expect_success 'using "--where after" with "--no-where"' '
  	test_cmp expected actual
  '
  
--test_expect_success 'using "where = before" with "--no-where"' '
-+test_expect_success 'using "--where after" with "--no-where"' '
++# Check whether using "--no-where" clears out only the "--where after", such
++# that we still use the configuration in trailer.where (which is different from
++# the hardcoded default (in WHERE_END) assuming the absence of .gitconfig).
++# Here, the "start" setting of trailer.where is respected, so the new "Acked-by"
++# and "Bug" trailers are placed at the beginning, and not at the end which is
++# the harcoded default.
++test_expect_success 'using "--where after" with "--no-where" defaults to configuration' '
++	test_config trailer.ack.key "Acked-by= " &&
++	test_config trailer.bug.key "Bug #" &&
++	test_config trailer.separators ":=#" &&
++	test_config trailer.where "start" &&
++	cat complex_message_body >expected &&
++	sed -e "s/ Z\$/ /" >>expected <<-\EOF &&
++		Bug #42
++		Acked-by= Peff
++		Fixes: Z
++		Acked-by= Z
++		Reviewed-by: Z
++		Signed-off-by: Z
++	EOF
++	git interpret-trailers --where after --no-where --trailer "ack: Peff" \
++		--trailer "bug: 42" complex_message >actual &&
++	test_cmp expected actual
++'
++
++# The "--where after" will only get respected for the trailer that came
++# immediately after it. For the next trailer (Bug #42), we default to using the
++# hardcoded WHERE_END because we don't have any "trailer.where" or
++# "trailer.bug.where" configured.
++test_expect_success 'using "--no-where" defaults to harcoded default if nothing configured' '
++	test_config trailer.ack.key "Acked-by= " &&
++	test_config trailer.bug.key "Bug #" &&
++	test_config trailer.separators ":=#" &&
++	cat complex_message_body >expected &&
++	sed -e "s/ Z\$/ /" >>expected <<-\EOF &&
++		Fixes: Z
++		Acked-by= Z
++		Acked-by= Peff
++		Reviewed-by: Z
++		Signed-off-by: Z
++		Bug #42
++	EOF
++	git interpret-trailers --where after --trailer "ack: Peff" --no-where \
++		--trailer "bug: 42" complex_message >actual &&
++	test_cmp expected actual
++'
++
+ test_expect_success 'using "where = after"' '
  	test_config trailer.ack.key "Acked-by= " &&
- 	test_config trailer.ack.where "before" &&
- 	test_config trailer.bug.key "Bug #" &&
+ 	test_config trailer.ack.where "after" &&
+@@ -1176,6 +1223,56 @@ test_expect_success 'overriding configuration with "--if-exists replace"' '
+ 	test_cmp expected actual
+ '
+ 
++# "trailer.ifexists" is set to "doNothing", so using "--no-if-exists" defaults
++# to this "doNothing" behavior. So the "Fixes: 53" trailer does not get added.
++test_expect_success 'using "--if-exists replace" with "--no-if-exists" defaults to configuration' '
++	test_config trailer.ifexists "doNothing" &&
++	cat complex_message_body >expected &&
++	sed -e "s/ Z\$/ /" >>expected <<-\EOF &&
++		Fixes: Z
++		Acked-by: Z
++		Reviewed-by: Z
++		Signed-off-by: Z
++	EOF
++	git interpret-trailers --if-exists replace --no-if-exists --trailer "Fixes: 53" \
++		<complex_message >actual &&
++	test_cmp expected actual
++'
++
++# No "ifexists" configuration is set, so using "--no-if-exists" makes it default
++# to addIfDifferentNeighbor. Because we do have a different neighbor "Fixes: 53"
++# (because it got added by overriding with "--if-exists replace" earlier in the
++# arguments list), we add "Signed-off-by: addme".
++test_expect_success 'using "--no-if-exists" defaults to hardcoded default if nothing configured' '
++	cat complex_message_body >expected &&
++	sed -e "s/ Z\$/ /" >>expected <<-\EOF &&
++		Acked-by: Z
++		Reviewed-by: Z
++		Signed-off-by: Z
++		Fixes: 53
++		Signed-off-by: addme
++	EOF
++	git interpret-trailers --if-exists replace --trailer "Fixes: 53" --no-if-exists \
++		--trailer "Signed-off-by: addme" <complex_message >actual &&
++	test_cmp expected actual
++'
++
++# The second "Fixes: 53" trailer is discarded, because the "--no-if-exists" here
++# makes us default to addIfDifferentNeighbor, and we already added the "Fixes:
++# 53" trailer earlier in the argument list.
++test_expect_success 'using "--no-if-exists" defaults to hardcoded default if nothing configured (no addition)' '
++	cat complex_message_body >expected &&
++	sed -e "s/ Z\$/ /" >>expected <<-\EOF &&
++		Acked-by: Z
++		Reviewed-by: Z
++		Signed-off-by: Z
++		Fixes: 53
++	EOF
++	git interpret-trailers --if-exists replace --trailer "Fixes: 53" --no-if-exists \
++		--trailer "Fixes: 53" <complex_message >actual &&
++	test_cmp expected actual
++'
++
+ test_expect_success 'using "ifExists = replace"' '
+ 	test_config trailer.fix.key "Fixes: " &&
+ 	test_config trailer.fix.ifExists "replace" &&
+@@ -1425,6 +1522,39 @@ test_expect_success 'using "ifMissing = doNothing"' '
+ 	test_cmp expected actual
+ '
+ 
++# Ignore the "IgnoredTrailer" because of "--if-missing doNothing", but also
++# ignore the "StillIgnoredTrailer" because we set "trailer.ifMissing" to
++# "doNothing" in configuration.
++test_expect_success 'using "--no-if-missing" defaults to configuration' '
++	test_config trailer.ifMissing "doNothing" &&
++	cat complex_message_body >expected &&
++	sed -e "s/ Z\$/ /" >>expected <<-\EOF &&
++			Fixes: Z
++			Acked-by: Z
++			Reviewed-by: Z
++			Signed-off-by: Z
++	EOF
++	git interpret-trailers --if-missing doNothing --trailer "IgnoredTrailer: ignoreme" --no-if-missing \
++			--trailer "StillIgnoredTrailer: ignoreme" <complex_message >actual &&
++	test_cmp expected actual
++'
++
++# Add the "AddedTrailer" because the "--no-if-missing" clears the "--if-missing
++# doNothing" from earlier in the argument list.
++test_expect_success 'using "--no-if-missing" defaults to hardcoded default if nothing configured' '
++	cat complex_message_body >expected &&
++	sed -e "s/ Z\$/ /" >>expected <<-\EOF &&
++			Fixes: Z
++			Acked-by: Z
++			Reviewed-by: Z
++			Signed-off-by: Z
++			AddedTrailer: addme
++	EOF
++	git interpret-trailers --if-missing doNothing --trailer "IgnoredTrailer: ignoreme" --no-if-missing \
++			--trailer "AddedTrailer: addme" <complex_message >actual &&
++	test_cmp expected actual
++'
++
+ test_expect_success 'default "where" is now "after"' '
+ 	git config trailer.where "after" &&
+ 	test_config trailer.ack.ifExists "add" &&
 -- 
 gitgitgadget
 
