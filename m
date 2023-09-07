@@ -2,145 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4BE3EC8742
-	for <git@archiver.kernel.org>; Thu,  7 Sep 2023 17:26:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C8F4EC8726
+	for <git@archiver.kernel.org>; Thu,  7 Sep 2023 17:41:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243366AbjIGR0S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Sep 2023 13:26:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41354 "EHLO
+        id S241494AbjIGRls (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Sep 2023 13:41:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243418AbjIGR0Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Sep 2023 13:26:16 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B9661FD4
-        for <git@vger.kernel.org>; Thu,  7 Sep 2023 10:25:49 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id 5b1f17b1804b1-402be83929eso13540355e9.3
-        for <git@vger.kernel.org>; Thu, 07 Sep 2023 10:25:49 -0700 (PDT)
+        with ESMTP id S239935AbjIGRlp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Sep 2023 13:41:45 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 938F01710
+        for <git@vger.kernel.org>; Thu,  7 Sep 2023 10:41:18 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-31c3726cc45so1236013f8f.0
+        for <git@vger.kernel.org>; Thu, 07 Sep 2023 10:41:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1694107504; x=1694712304; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jtRmbGHo5/K7ut6F03yLC1ztLgppW4ZLhf+8bTJJ3Hs=;
-        b=QF5TNR0klC0aMqlz4RAxsD5N7l88R/iHeCByDIadqS1OSUFoCd2xaqsUjwI58Ftdoo
-         Z3BWAPtXrEYlWOPFRKAVLmD86PCoMmWmhX/a6d1jBmKvzmrYOmdFNMZVFw5SSxZT5Fcj
-         zZozXrWuxLMei6bp5ZfyO9ZBL+fEZt+Lw9i4XzMJ1DbB5kI7asjIexyv3c/OFFiOnyV/
-         fXdDXrxRKIeqqYNkaec5hEg7gw8kS9IG3legNa2G8VStuEXIiUEfBgBiqxv7wVIqtAbC
-         0LgJHVVmbeuRrpi7vOEBn62tm0KPnPsNMPt13Le3T3+UFbMC4M0NNiu7WaWCu3E7JK4k
-         dlzQ==
+        d=gmail.com; s=20221208; t=1694108454; x=1694713254; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=No+GRFeYLREtfDYEX1YEZUh4HpY0Sm3t94iyoSrvMfw=;
+        b=d9wW/7U7BIruJK6gmOGeXbIZGD2JyhM3Gv4tcWSnFF8GocLcAaQAWdEY/5Ez9B6x/4
+         137mgq7vX+dN8342h9GqEApEozem+nSPr/gd4EVGcsxsJw+5jJHU9eTZQiKFp+aa9WUb
+         qPpqnkMmN/e/LwAW/OPObryWE6zCp+8Gqb2RfpxDs2qBAeJjmDH5yAaQB7cfNkHJUeQW
+         Ua1R99sZ9FxoGBZI5i6HltNapkSv6RbNxvK8kh/HPVkFE96wqV5iDZoTdhMoPCPj47Dk
+         PF/YJ2JbSNlkw3EqqQrWnmMrtlQOJDUzfb+XyoLaf30FAzrKMUtABJBtS3EAwW3dUPGy
+         H66g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1694107504; x=1694712304;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=jtRmbGHo5/K7ut6F03yLC1ztLgppW4ZLhf+8bTJJ3Hs=;
-        b=laXqBx2za73HGLBPLIsmDAAk2usyskEsmfipEEw906mbePm7och1E1w562jzOgjbrC
-         bSjjeaxna/Q+2gaY23//YrDt/AW5e+WHBLsI1CUzIeWa5tYfJRfktteYfBfEWMKhmo8J
-         RnifDYCs1QwvJ/uBtEoepqbWcmfueB6Vw5krjfh8hQL5clz47EXPRkqw0vCUkzT4BvOy
-         eJ6BtGgEl7vfQkfsctgzQ0vc9MEUp/TNuXqREUVCrlBTVq+xnB8gQUzZDBnp7OlD9Af2
-         imH59scmNgctTO/QTmAgqQFT2JATlVrMYE95lAmsNsG4LI+yckZ/I8YuwbnToRkyQ26B
-         e+Eg==
-X-Gm-Message-State: AOJu0YxmTSLzDRMwkq0xNwqVsRdMmVH7JTdFxmbuKvbENzxH4/aeIJM3
-        P81FyQT/ggMooe86IN2zORJ2n8kb8pZCsh8LnYhGrxkX
-X-Google-Smtp-Source: AGHT+IEARiXsRa+XFdoo9Xvsl42B3tT79bF46CmQWwLCT1VhdfWdJFLBiGztZlIIRz5otROBTpIa0NYNv3pJY1muStM=
-X-Received: by 2002:a17:906:3117:b0:9a1:c2fe:41d9 with SMTP id
- 23-20020a170906311700b009a1c2fe41d9mr4042123ejx.47.1694075987673; Thu, 07 Sep
- 2023 01:39:47 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1694108454; x=1694713254;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=No+GRFeYLREtfDYEX1YEZUh4HpY0Sm3t94iyoSrvMfw=;
+        b=f3UcnXz2NwHpRhzNpAFjVMkY5ki5TiN1BhLyfudASwjP0UJbQg3TRTRGKoV64xPR9X
+         UNO9WgTg+UTuRJFNd7ZWWVOJG8M9pVHGDmEQC9smxLKUvGkaOSLGjaxUAdQKXpttg1Vc
+         91oYAwbSa64cOi63GNqmmSIMUdlmfeeQ5f9kfBQJwyZ+AwCQHzCM+9dDqBN0JWhD3TX9
+         cBUf4PCimWotOSKooGjK4ctSlzp6q1oEfySq88QJM5vCeV4UAeFLUsmxVm8M13a1YhB5
+         b9eqZTJT7ZcnK/Ws/KzJAQ5owNG+aGyoJ8uKA1v/d9t/m13xwXPM7YxGnumXJUn4PrRN
+         X1uQ==
+X-Gm-Message-State: AOJu0YxtJE3Uozf+8SW5OI/nTEsShrJkm4/Krpgq4ONvD/ls/Tqu3O7T
+        8rME+mbAPG1I2Ky6MN6Le2y8nKI57Ho=
+X-Google-Smtp-Source: AGHT+IHb8OtxF/95HzToxjzhHdJ8g076CEhsgiy7YzWLMhCZjwnedQAnAtzAQC3HfAzEDxqYWaHkIA==
+X-Received: by 2002:a05:6512:36c7:b0:4f9:51ac:41eb with SMTP id e7-20020a05651236c700b004f951ac41ebmr3334779lfs.16.1694068406242;
+        Wed, 06 Sep 2023 23:33:26 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id d11-20020ac25ecb000000b005008cd93961sm3022908lfq.192.2023.09.06.23.33.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 Sep 2023 23:33:25 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Tao Klerks <tao@klerks.biz>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Kristoffer Haugsbakk <code@khaugsbakk.name>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>,
+        git <git@vger.kernel.org>
+Subject: Re: Is "bare"ness in the context of multiple worktrees weird?
+ Bitmap error in git gc.
+References: <CAPMMpoixKnr4BkKd8jeU+79Edhqtu4R7m8=BX4ZSYKdBHDzK=w@mail.gmail.com>
+        <b5833396-7e04-465f-96f6-69d5280fa023@app.fastmail.com>
+        <CAPig+cQoiqeZF52Jr45an+cZF+ZQbHPXtLVn+VmyegjMQaJqCg@mail.gmail.com>
+        <2ba66542-9ae2-4b13-ae6b-f37dec6b72c7@app.fastmail.com>
+        <87edjbuugw.fsf@osv.gnss.ru>
+        <c0a10738-86ba-4b3a-9e74-2568cc407621@app.fastmail.com>
+        <CAPMMpohgkH3h1zC_Q7O-07gYw8_7mdSsyX7vu1K1u5+CxKUaUQ@mail.gmail.com>
+        <xmqqledjm4k2.fsf@gitster.g>
+        <CAPMMpojTLswqubRk0Ly3RQqkrnpx_9Hiu_TRK1=ASPbPNz4ApQ@mail.gmail.com>
+Date:   Thu, 07 Sep 2023 09:33:24 +0300
+In-Reply-To: <CAPMMpojTLswqubRk0Ly3RQqkrnpx_9Hiu_TRK1=ASPbPNz4ApQ@mail.gmail.com>
+        (Tao Klerks's message of "Thu, 7 Sep 2023 06:53:58 +0200")
+Message-ID: <87h6o6ebm3.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20230407072415.1360068-1-christian.couder@gmail.com>
- <20230407072415.1360068-12-christian.couder@gmail.com> <8daf2603-2818-9c9d-7a06-6af2872a045a@github.com>
- <89c78da5-388a-e52b-b20b-e376ac90de14@github.com> <CABPp-BGfG3VeY1gOugzig8PLan1AS66BMWnyFSOsLOy-zqLdXw@mail.gmail.com>
- <b9732826-5732-0f87-9527-f49c38514fd7@github.com> <CABPp-BG3xNmwbtu+tstLr8bT24rr0gG65ZvD1rEeus_V8OYk=Q@mail.gmail.com>
- <bbdd3697-bc10-f311-dbef-99917603ce4f@github.com> <CABPp-BH5rLZyjLD91Bn=xThMXHk=q+kGcqPjPDOT0-N4fHfquA@mail.gmail.com>
- <f5dd91a7-ba11-917a-39e2-2737829558cb@github.com> <CABPp-BFCKrbSZQtRD1MnXrwB91O2YK9ZuGd6BiYQZ2zrpLp+uw@mail.gmail.com>
- <58f7918f-6ca3-2158-7d9e-bfcd8eb24b0d@github.com> <CABPp-BGRtcBQ_6fkMrTskV9dk71ffycXZ8hEE_RaOrAdza_wLA@mail.gmail.com>
- <f74fb509-0e1a-9542-d80c-0bec2a1e6740@gmx.de>
-In-Reply-To: <f74fb509-0e1a-9542-d80c-0bec2a1e6740@gmx.de>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 7 Sep 2023 10:39:36 +0200
-Message-ID: <CAP8UFD2KMikjJJQ0FGXO1EYYHRNWHH2n70UATU_o61PJ411f2Q@mail.gmail.com>
-Subject: Re: [PATCH 11/14] replay: use standard revision ranges
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Patrick Steinhardt <ps@pks.im>, John Cai <johncai86@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho,
+Tao Klerks <tao@klerks.biz> writes:
 
-On Sun, Sep 3, 2023 at 5:47=E2=80=AFPM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
+> On Wed, Sep 6, 2023 at 10:26 PM Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> Tao Klerks <tao@klerks.biz> writes:
+>>
+>> > I like the nomenclature, I like the simple "zero (i.e. bare) or one
+>> > inline worktree, zero or more attached worktrees" explanation.
+>>
+>> We have used "main worktree" to refer to the working tree part (plus
+>> the repository) of a non-bare repository.  And it makes sense to
+>> explain it together with the concept of "worktree", as the primary
+>> one is very much special in that it cannot be removed.  You can see
+>> that "git worktree remove" would stop you from removing it with an
+>> error message:
+>>
+>>         fatal: '../there' is a main working tree.
+>>
+>> It probably does not add much value to introduce a new term
+>> "inline".  Here is what "git worktree --help" has to say about it.
+>>
+>>     A repository has one main worktree (if it's not a bare repository) and
+>>     zero or more linked worktrees.
 >
-> Hi Elijah & Stolee,
+> I've definitely changed my mind about "inline", I agree "main" is
+> better. I'm not convinced it's the best word we could come up with,
+> but if it's well-established, I'm happy with it.
 >
-> On Sat, 29 Apr 2023, Elijah Newren wrote:
->
-> > On Mon, Apr 24, 2023 at 8:23=E2=80=AFAM Derrick Stolee <derrickstolee@g=
-ithub.com> wrote:
+> The problem I (now) see with "inline" is that it seems to imply a
+> spatial proximity that doesn't necessarily hold true, with
+> "--separate-git-dir" or other ways to separate the main worktree from
+> its usual "just above the .git directory" location. "Inline" is still
+> a reasonable qualification of the main worktree's *metadata* in that
+> situation (index, etc), but I think the word would not be sufficiently
+> clear/representative overall.
 
-> > > Basically, I'm not super thrilled about exposing options that are
-> > > unlikely to be valuable to users and instead are more likely to cause
-> > > confusion due to changes that won't successfully apply.
-> >
-> > Oh, I got thrown by the "right now" portion of your comment; I
-> > couldn't see how time or future changes would affect anything to make
-> > it less (or more) confusing for users.
-> >
-> > Quick clarification, though: while you correctly point out the type of
-> > confusion the user would experience without my overriding, my
-> > overriding of rev.reverse (after setup_revisions() returns, not before
-> > it is called) precludes that experience.  The override means none of
-> > the above happens, and they would instead just wonder why their option
-> > is being ignored.
->
-> FWIW here is my view on the matter: `git replay`, at least in its current
-> incarnation, is a really low-level tool. As such, I actually do not want
-> to worry much about protecting users from nonsensical invocations.
->
-> In that light, I would like to see that code rejecting all revision
-> options except `--diff-algorithm` be dropped. Should we ever decide to ad=
-d
-> a non-low-level mode to `git replay`, we can easily add some user-friendl=
-y
-> sanity check of the options then, and only for that non-low-level code.
-> For now, I feel that it's just complicating things, and `git replay` is i=
-n
-> the experimental phase anyway.
+It's not to argue in favor of "inline", just to clarify: I took it from
+inline-vs-attached as used in e-mail, where "inline" means that you see
+attachment right here, inline with the rest of text.
 
-I would be Ok with removing the patch (called "replay: disallow
-revision specific options and pathspecs")
-that rejects all revision options and pathspecs if there is a
-consensus for that. It might not simplify things too much if there is
-still an exception for `--diff-algorithm` though. Also it's not clear
-if you are Ok with allowing pathspecs or not.
-
-The idea with disallowing all of them was to later add back those that
-make sense along with tests and maybe docs to explain them in the
-context of this command. It was not to disallow them permanently. So I
-would think the best path forward would be a patch series on top of
-this one that would revert the patch disallowing these options and
-maybe pathspecs, and instead allow most of them and document and test
-things a bit.
-
-> And further, I would even like to see that `--reverse` override go, and
-> turn it into `revs.reverse =3D !revs.reverse` instead. (And yes, I can
-> easily think of instances where I would have wanted to reverse a series o=
-f
-> patches...).
-
-I think this might deserve docs and tests too, so it might want to be
-part of a separate patch series once the existing one has graduated.
-
-At this point I don't think it's worth delaying this patch series for
-relatively small issues like this. There are many different ways this
-new command can be polished and improved. The important thing is that
-it looks like we all agree that the new command makes sense and should
-have roughly the basic set of features that Elijah originally
-implemented, so let's go with this, and then we can improve and
-iterate on top of this.
+I also admit I didn't happen to consider --separate-git-dir at the
+time.
