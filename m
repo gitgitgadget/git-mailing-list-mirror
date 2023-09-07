@@ -2,210 +2,243 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C335EC873D
-	for <git@archiver.kernel.org>; Thu,  7 Sep 2023 16:38:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65D17EC8743
+	for <git@archiver.kernel.org>; Thu,  7 Sep 2023 16:40:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241560AbjIGQhl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Sep 2023 12:37:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44242 "EHLO
+        id S241837AbjIGQkC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Sep 2023 12:40:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241495AbjIGQhO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Sep 2023 12:37:14 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D552BE4F
-        for <git@vger.kernel.org>; Thu,  7 Sep 2023 09:28:28 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-501cef42bc9so1921267e87.0
-        for <git@vger.kernel.org>; Thu, 07 Sep 2023 09:28:28 -0700 (PDT)
+        with ESMTP id S242193AbjIGQhn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Sep 2023 12:37:43 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A3044EEC
+        for <git@vger.kernel.org>; Thu,  7 Sep 2023 09:13:59 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-9a5dff9d2d9so138602066b.3
+        for <git@vger.kernel.org>; Thu, 07 Sep 2023 09:13:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1694104046; x=1694708846; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20221208; t=1694103176; x=1694707976; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=qEwUmNrS0BKhHHzzGjTQecxqyzmmDDSLK21otX6KA40=;
-        b=sY3FJCewKE9xzslyHiVZcvhITdQl85NLnj3ZeZPh5oZKxVUat5SqcXHDlr6ppcuR6C
-         JJDQ65tjWcvZLp6zs+oUCYmSrgUtVIP1M27Ewf1/K1aBlQnWLSD7jMlghocoAfk9J/78
-         2fH2dvXX75Jf0lUnh9gtvZGHQ9BBL9XsVvKEUxmIhqfQg3zMDBUW1EpqWGUjzLwRQtH5
-         VANRz0gVDCOYYfBovQ38r0N8LO38Po651MMPzEpUjiaxhsH5B/xo+DDWC7kY7czTXTrx
-         Le5YmP5kTRtm3h3w4TohKXWZqhSiHSSop5tx/O6LcqFKrKvUPnSrqXxFYuItiPbpMXg/
-         yMCg==
+        bh=DUXbk7EYn59HUKKskEjjkbXnrktwTFggMESpCkoQWJs=;
+        b=dURdAJKt/GORIJC66URT2GEfC/4BqkxKSkNY2Z1UIKMF7gX++5x+zluWNABYtUPAr4
+         3wPghedzJ25HWatVKZUXxHqBdX+kqnbFvxfgTANpyqbvAiq980MpTMFK7Dim0a+IakkG
+         96fzAnfk1qeBGju2S7431eLEaSovpouBYekF8RFpJqD0MO9nnXR0Mo+p1PEQtS0ZzXFY
+         8/qs3rrSqOLO0vmBkPjti2haWpRA7JJGbhJzRQ/Zw2QoBwaKR6vzFkuLsifHhGz8eKmd
+         5G7B7zxL+KHToKfTe58zLS8VW+D73sAszeGbF0zffeasEm5ZUV10CmIsszOiFh07wnjz
+         t1EQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1694104046; x=1694708846;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20221208; t=1694103176; x=1694707976;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=qEwUmNrS0BKhHHzzGjTQecxqyzmmDDSLK21otX6KA40=;
-        b=dW3zEcSJRNd5jVcdh9bA5CPzV7kcU8Qyu3Rzq/RdTuhnusPeuQO9lm04tFPzh5VlUx
-         O6jKcPDVoEr3NKVeqfTZfk0w8L9YJNI/QSDINRiQKNtrnhkTZLv4hOLfQDoh1lHEKyFe
-         a5zg/kH79YohdJC5/DpFPkQPJPwQ97STCt0zpUKeAZyqpRPiHdUxwidihFHemEHNcuaM
-         EXMKgP6JQbCtb9E8jAXqq9BnqgRxaMzGWCeTvrM3K8zUOsEbnrKEJ6fNOsZ3Hsbw/iiZ
-         yB+7c/+6EX0bGY7ItyPlaDpnyTYEYwrsIcbYHrJ2R/R9tP1sjFSVxMbPlC1EPqmc1Jdc
-         88jw==
-X-Gm-Message-State: AOJu0Yx6aB2ExKr7TrR7caciM2lT4VGJdJjo7p908OisBxgu7niR6Xwn
-        h8JUrxeSIyX4plTH4ZHRdemzuc4E594=
-X-Google-Smtp-Source: AGHT+IGIK1OO0sELtBe3YN7q0fLVrANzQRhy4A5YtXGiSQw2FeIVGHRTAot9UrwroYbunYBMN9VD7Q==
-X-Received: by 2002:adf:ed8f:0:b0:318:8ad:f9f with SMTP id c15-20020adfed8f000000b0031808ad0f9fmr4274358wro.24.1694078964676;
-        Thu, 07 Sep 2023 02:29:24 -0700 (PDT)
-Received: from localhost.localdomain ([2001:861:3f04:7ca0:3385:ce2d:69dd:303e])
-        by smtp.gmail.com with ESMTPSA id y8-20020adff148000000b00317c742ca9asm22491522wro.43.2023.09.07.02.29.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Sep 2023 02:29:24 -0700 (PDT)
+        bh=DUXbk7EYn59HUKKskEjjkbXnrktwTFggMESpCkoQWJs=;
+        b=D4+uhfEE2EiZizubnRrQPxHpLzKU2IFhva/1aC4q3syIZNNUuaPRJL6u2ez80eDV3C
+         SIc82TprJFINewDjzu4wnAQzi+AswIjfpYpv/kxw+JLptTJZ/W8mpa+Rxq0ymJm+goo5
+         Pw1flxrHIpR2FRfhkq8Md/MSbXPYvnqqvJO83XJzp5Lgywqp4hHmTNDyR5tmFzp81tzu
+         ZdT/Cnn3kpRhy/Xq5clTigV20Lj6WcwrRZyKwAN3+U1UVKEkWA2qGpGbpjYGFuEmj11c
+         zNFCc75mj70YRJWKvo/uyC1VQCFHp9Y+8CsxujuntQAeS3W/Oi6IC0QMKYyWp7zLp0BJ
+         zLSg==
+X-Gm-Message-State: AOJu0YwoA8On7mtOmdQIIEoE23jP9MO98D7sXTuVYzT9c71b6Iq7DKM5
+        N+kia5pqDuuJrsHWFOKJXbwVSnTsI/vRdXgCJLxur/XO
+X-Google-Smtp-Source: AGHT+IF4RgBcY5r981gzxaj3UvbaCR9unV0AKtC9/sFBMhzlDU+3gebrJFcRCSNGw8A/ENyD68HRZnfYSgCuNe4HcHA=
+X-Received: by 2002:a17:906:53cc:b0:9a9:d5e0:5c57 with SMTP id
+ p12-20020a17090653cc00b009a9d5e05c57mr2341990ejo.22.1694075721927; Thu, 07
+ Sep 2023 01:35:21 -0700 (PDT)
+MIME-Version: 1.0
+References: <20230509175347.1714141-1-christian.couder@gmail.com>
+ <20230602102533.876905-1-christian.couder@gmail.com> <20230602102533.876905-14-christian.couder@gmail.com>
+ <87h6qzst8u.fsf@iotcl.com>
+In-Reply-To: <87h6qzst8u.fsf@iotcl.com>
 From:   Christian Couder <christian.couder@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+Date:   Thu, 7 Sep 2023 10:35:09 +0200
+Message-ID: <CAP8UFD0T64UcDLUrbjrR0DvD4DQLuZ==ATk9ewSMkMn+9VhMAg@mail.gmail.com>
+Subject: Re: [PATCH v3 13/15] replay: add --advance or 'cherry-pick' mode
+To:     Toon Claes <toon@iotcl.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Patrick Steinhardt <ps@pks.im>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Elijah Newren <newren@gmail.com>,
         John Cai <johncai86@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
-        Calvin Wan <calvinwan@google.com>, Toon Claes <toon@iotcl.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Calvin Wan <calvinwan@google.com>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v4 14/15] replay: add --contained to rebase contained branches
-Date:   Thu,  7 Sep 2023 11:25:20 +0200
-Message-ID: <20230907092521.733746-15-christian.couder@gmail.com>
-X-Mailer: git-send-email 2.42.0.126.gcf8c984877
-In-Reply-To: <20230907092521.733746-1-christian.couder@gmail.com>
-References: <20230602102533.876905-1-christian.couder@gmail.com>
- <20230907092521.733746-1-christian.couder@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+On Thu, Jun 22, 2023 at 12:09=E2=80=AFPM Toon Claes <toon@iotcl.com> wrote:
+>
+>
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+> > +     /*
+> > +      * When the user specifies e.g.
+> > +      *   git replay origin/main..mybranch
+> > +      *   git replay ^origin/next mybranch1 mybranch2
+>
+> When I'm trying these, I'm getting the error:
+>     error: option --onto or --advance is mandatory
+>
+> In what situation can I omit both --onto and --advance?
 
-Let's add a `--contained` option that can be used along with
-`--onto` to rebase all the branches contained in the <revision-range>
-argument.
+It was possible with version 1 of this series as one of the patches
+allowed the command to guess the base:
 
-Co-authored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Elijah Newren <newren@gmail.com>
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- Documentation/git-replay.txt | 12 +++++++++++-
- builtin/replay.c             | 12 ++++++++++--
- t/t3650-replay-basics.sh     | 29 +++++++++++++++++++++++++++++
- 3 files changed, 50 insertions(+), 3 deletions(-)
+https://lore.kernel.org/git/20230407072415.1360068-13-christian.couder@gmai=
+l.com/
 
-diff --git a/Documentation/git-replay.txt b/Documentation/git-replay.txt
-index 5c5c15237d..b94c39b161 100644
---- a/Documentation/git-replay.txt
-+++ b/Documentation/git-replay.txt
-@@ -9,7 +9,7 @@ git-replay - Replay commits on a different base, without touching working tree
- SYNOPSIS
- --------
- [verse]
--'git replay' (--onto <newbase> | --advance <branch>) <revision-range>...
-+'git replay' ([--contained] --onto <newbase> | --advance <branch>) <revision-range>...
- 
- DESCRIPTION
- -----------
-@@ -93,6 +93,16 @@ top of the exact same new base, they only differ in that the first
- provides instructions to make mybranch point at the new commits and
- the second provides instructions to make target point at them.
- 
-+What if you have a stack of branches, one depending upon another, and
-+you'd really like to rebase the whole set?
-+
-+------------
-+$ git replay --contained --onto origin/main origin/main..tipbranch
-+update refs/heads/branch1 ${NEW_branch1_HASH} ${OLD_branch1_HASH}
-+update refs/heads/branch2 ${NEW_branch2_HASH} ${OLD_branch2_HASH}
-+update refs/heads/tipbranch ${NEW_tipbranch_HASH} ${OLD_tipbranch_HASH}
-+------------
-+
- When calling `git replay`, one does not need to specify a range of
- commits to replay using the syntax `A..B`; any range expression will
- do:
-diff --git a/builtin/replay.c b/builtin/replay.c
-index 6b89964be9..a7d36a639c 100644
---- a/builtin/replay.c
-+++ b/builtin/replay.c
-@@ -258,6 +258,7 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 	const char *advance_name = NULL;
- 	struct commit *onto = NULL;
- 	const char *onto_name = NULL;
-+	int contained = 0;
- 
- 	struct rev_info revs;
- 	struct commit *last_commit = NULL;
-@@ -268,7 +269,7 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 	int ret = 0, i;
- 
- 	const char * const replay_usage[] = {
--		N_("git replay (--onto <newbase> | --advance <branch>) <revision-range>..."),
-+		N_("git replay ([--contained] --onto <newbase> | --advance <branch>) <revision-range>..."),
- 		NULL
- 	};
- 	struct option replay_options[] = {
-@@ -278,6 +279,8 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 		OPT_STRING(0, "onto", &onto_name,
- 			   N_("revision"),
- 			   N_("replay onto given commit")),
-+		OPT_BOOL(0, "contained", &contained,
-+			 N_("advance all branches contained in revision-range")),
- 		OPT_END()
- 	};
- 
-@@ -303,6 +306,10 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 		usage_with_options(replay_usage, replay_options);
- 	}
- 
-+	if (advance_name && contained)
-+		die(_("options '%s' and '%s' cannot be used together"),
-+		    "--advance", "--contained");
-+
- 	repo_init_revisions(the_repository, &revs, prefix);
- 
- 	argc = setup_revisions(argc, argv, &revs, NULL);
-@@ -364,7 +371,8 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 			continue;
- 		while (decoration) {
- 			if (decoration->type == DECORATION_REF_LOCAL &&
--			    strset_contains(update_refs, decoration->name)) {
-+			    (contained || strset_contains(update_refs,
-+							  decoration->name))) {
- 				printf("update %s %s %s\n",
- 				       decoration->name,
- 				       oid_to_hex(&last_commit->object.oid),
-diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
-index 1919f7d5d1..57d2ef9ea4 100755
---- a/t/t3650-replay-basics.sh
-+++ b/t/t3650-replay-basics.sh
-@@ -130,4 +130,33 @@ test_expect_success 'replay fails when both --advance and --onto are omitted' '
- 	test_must_fail git replay topic1..topic2 >result
- '
- 
-+test_expect_success 'using replay to also rebase a contained branch' '
-+	git replay --contained --onto main main..topic3 >result &&
-+
-+	test_line_count = 2 result &&
-+	cut -f 3 -d " " result >new-branch-tips &&
-+
-+	git log --format=%s $(head -n 1 new-branch-tips) >actual &&
-+	test_write_lines F C M L B A >expect &&
-+	test_cmp expect actual &&
-+
-+	git log --format=%s $(tail -n 1 new-branch-tips) >actual &&
-+	test_write_lines H G F C M L B A >expect &&
-+	test_cmp expect actual &&
-+
-+	printf "update refs/heads/topic1 " >expect &&
-+	printf "%s " $(head -n 1 new-branch-tips) >>expect &&
-+	git rev-parse topic1 >>expect &&
-+	printf "update refs/heads/topic3 " >>expect &&
-+	printf "%s " $(tail -n 1 new-branch-tips) >>expect &&
-+	git rev-parse topic3 >>expect &&
-+
-+	test_cmp expect result
-+'
-+
-+test_expect_success 'using replay on bare repo to also rebase a contained branch' '
-+	git -C bare replay --contained --onto main main..topic3 >result-bare &&
-+	test_cmp expect result-bare
-+'
-+
- test_done
--- 
-2.42.0.126.gcf8c984877
+so --onto wasn't needed to specify it.
 
+Comments on that patch said that it might be better to focus on a
+plumbing command first and for that the patch wasn't needed, so I
+removed it in version 2.
+
+> > +static void determine_replay_mode(struct rev_cmdline_info *cmd_info,
+> > +                               const char *onto_name,
+> > +                               const char **advance_name,
+> > +                               struct commit **onto,
+>
+> Would it make sense to call this target?
+
+This is more the new base we are rebasing target branches onto. So if
+we want to change the name, `--base` or `--newbase` would make more
+sense. `git rebase` already has `--onto` though, so, if we want to be
+consistent with it, we should keep `--onto` for this.
+
+> > +                               struct strset **update_refs)
+> > +{
+> > +     struct ref_info rinfo;
+> > +
+> > +     get_ref_information(cmd_info, &rinfo);
+> > +     if (!rinfo.positive_refexprs)
+> > +             die(_("need some commits to replay"));
+> > +     if (onto_name && *advance_name)
+> > +             die(_("--onto and --advance are incompatible"));
+>
+> Do we actually need to disallow this? I mean from git-replay's point of
+> view, there's no technical limitation why can cannot support both modes
+> at once. The update-ref commands in the output will update both target
+> and source branches, but it's not up to us whether that's desired.
+
+I am not sure what you call "target" and "source" branches. Anyway
+here is in simple terms the way the command works:
+
+  1) it takes either `--onto <newbase>` or `--advance <branch>` and
+then one or more <revision-range>,
+  2) it replays all the commits in the <revision-range> onto either
+<newbase> or <branch>,
+  3) in case of `--advance`, it outputs a single command for `git
+update-ref --stdin` to advance <branch> to the last commit that was
+just replayed,
+  4) in case of `--onto`, it outputs a number of commands for `git
+update-ref --stdin` to update the branches in <revision-range> to
+where the tip commits of these branches have been replayed.
+
+So `--advance` is like a cherry-pick, and `--onto` is like a rebase.
+
+It would be possible to do both a rebase onto a branch and a
+cherry-pick of the rebased commits onto that branch, but this is not
+very common and you can achieve the same result by just rebasing and
+then using `git reset` or `git update-ref` to make the branch point to
+the result of the rebase. So I don't see the point of complicating the
+command at this point.
+
+> > +     else if (onto_name) {
+>
+> No need to 'else' here IMHO.
+>
+> > +             *onto =3D peel_committish(onto_name);
+> > +             if (rinfo.positive_refexprs <
+> > +                 strset_get_size(&rinfo.positive_refs))
+> > +                     die(_("all positive revisions given must be refer=
+ences"));
+>
+> I tested this locally with the following command:
+>
+> $ git replay --onto main OID..OID
+>
+> This command didn't give any errors, neither did it return any
+> update-ref lines. I would have expected to hit this die().
+
+Yeah, this might be unexpected.
+
+I tested it too and 'rinfo.positive_refexprs' is 1 while
+'strset_get_size(&rinfo.positive_refs)' is 0 with such a command.
+
+The result does not look wrong though. Above that code there is:
+
+    if (!rinfo.positive_refexprs)
+        die(_("need some commits to replay"));
+
+so it looks like there is at least a check that the revision range
+passed to the command contains positive commits.
+
+It might be possible that users prefer a command that outputs nothing
+when there is nothing to replay instead of erroring out.
+
+> > +     } else if (*advance_name) {
+> > +             struct object_id oid;
+> > +             char *fullname =3D NULL;
+> > +
+> > +             *onto =3D peel_committish(*advance_name);
+> > +             if (repo_dwim_ref(the_repository, *advance_name, strlen(*=
+advance_name),
+> > +                          &oid, &fullname, 0) =3D=3D 1) {
+> > +                     *advance_name =3D fullname;
+> > +             } else {
+> > +                     die(_("argument to --advance must be a reference"=
+));
+> > +             }
+> > +             if (rinfo.positive_refexprs > 1)
+> > +                     die(_("cannot advance target with multiple source=
+ branches because ordering would be ill-defined"));
+>
+> The sources aren't always branches, so I suggest something like:
+>
+> +                       die(_("cannot advance target with multiple source=
+s because ordering would be ill-defined"));
+
+Yeah, that looks reasonable. I have made this change in version 4 I
+will send very soon.
+
+> > +     determine_replay_mode(&revs.cmdline, onto_name, &advance_name,
+> > +                           &onto, &update_refs);
+> > +
+> > +     if (!onto) /* FIXME: Should handle replaying down to root commit =
+*/
+> > +             die("Replaying down to root commit is not supported yet!"=
+);
+>
+> When I was testing locally I tried the following:
+>
+> $ git replay --onto main feature
+>
+> I was expecting this command to find the common ancestor automatically,
+> but instead I got this error. I'm fine if for now the command does not
+> determine the common ancestor yet, but I think we should provide a
+> better error for this scenario.
+
+I agree that it isn't very user friendly. We could indeed try to find
+if there is a common ancestor, and, if that's the case, suggest
+another way to call the command. This is a plumbing command in its
+early stage though for now. So I guess it's Ok to postpone working on
+nicer error messages.
+
+> > +test_expect_success 'using replay on bare repo to perform basic cherry=
+-pick' '
+> > +     git -C bare replay --advance main topic1..topic2 >result-bare &&
+> > +     test_cmp expect result-bare
+> > +'
+> > +
+> >  test_done
+>
+> Shall we add a test case when providing both --onto and --advance? And
+> one that omits both?
+
+Ok, I have made this change in version 4.
