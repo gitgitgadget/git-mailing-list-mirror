@@ -2,79 +2,173 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CBA6EC875D
-	for <git@archiver.kernel.org>; Thu,  7 Sep 2023 22:11:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F270BEC875E
+	for <git@archiver.kernel.org>; Thu,  7 Sep 2023 22:20:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241107AbjIGWLC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Sep 2023 18:11:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46734 "EHLO
+        id S236303AbjIGWUS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Sep 2023 18:20:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240667AbjIGWLB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Sep 2023 18:11:01 -0400
-Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7161F1BC6
-        for <git@vger.kernel.org>; Thu,  7 Sep 2023 15:10:57 -0700 (PDT)
-Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-5925e580f12so14465377b3.3
-        for <git@vger.kernel.org>; Thu, 07 Sep 2023 15:10:57 -0700 (PDT)
+        with ESMTP id S234773AbjIGWUR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Sep 2023 18:20:17 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FCA41BC6
+        for <git@vger.kernel.org>; Thu,  7 Sep 2023 15:20:13 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id ffacd0b85a97d-31c73c21113so1302630f8f.1
+        for <git@vger.kernel.org>; Thu, 07 Sep 2023 15:20:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1694124656; x=1694729456; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=AGBciT0vSARpZzlOrqiS6YZMN8gw/V8MLeIOfJ0agu8=;
-        b=0LqoNC0TZ2Ee99XEbXbYt9epskfnwKsMA01lAUe7x/CtsBamnpJLthCdJ6PyHaouNF
-         XiJNTUsQXvbiHRIqKLHG9URBlxx5+DAaE1//LY8nYZUkRPADP86MX7vklGR8mj9eX76z
-         mED7Esf7FRk6VsocvZFH1vzzkVy7hMmBcAjtg2wl3N5MhKJy4KEZBDp4S0kSzec6aB4Q
-         q7Pjp1lbuwp4TwGTV6FkPAHo6sNi/qCkFSja5vH/B/xg7Lo3x4IW+854cG4b0Jm3tuwQ
-         ViKPRHNEyl8yO4L3Lc08ql47NBJ8DYSLjlDqM+Md4fxJxGbaUOFEweyp/Jj9GOD2pzzt
-         M3sA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694124656; x=1694729456;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20221208; t=1694125211; x=1694730011; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=AGBciT0vSARpZzlOrqiS6YZMN8gw/V8MLeIOfJ0agu8=;
-        b=iR/iBjujaa/XKXdAm2AN9ByWf8GMPYv/QU06MdbJlVwe9+pv9oNzEhhDNn8TQs95XH
-         aVeIAEVjQjqpo+xu4zZ/qQUG8Wb+gAK6lO7r0e7JLp0GIGBY9OQDyK3RXacYJL17itZY
-         xvE40hBICd7NjpkU8qDkMligO2+ZseFRqNg+PmUG0hgvIfnLJt3X7iMd1gkNdGaFomuQ
-         MXVtLeQ7+pZ1YlT4Wrh71DG/NDmYhvq+1TFeyJEESMZU+IKz7f6V+W/cJonAzdGkQs6m
-         7EEBe73qrBVNNnUxlMmRFChp+2fOcU4QwJTVNanMpo96OSoLMhQuO5o0G9sa0qLWiEeC
-         iMnQ==
-X-Gm-Message-State: AOJu0Yy0e9UhguGcLT4Ft2sGyRhaH7R246arfEVHcKnoELSLmmcw/HQ0
-        mhGV/987YLsAN18jy/OdP+wvec3sQMhpCjueOBGwaA==
-X-Google-Smtp-Source: AGHT+IHHRrn0j/ZIw3PSfarZcXcvoINCesrJ9Re0+3IUuZZO4fbrlWZycxh3Ugmk71+REfr7xVmPbg==
-X-Received: by 2002:a0d:c503:0:b0:595:6913:6616 with SMTP id h3-20020a0dc503000000b0059569136616mr1014032ywd.38.1694124655178;
-        Thu, 07 Sep 2023 15:10:55 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id y198-20020a0dd6cf000000b005707fb5110bsm104148ywd.58.2023.09.07.15.10.54
+        bh=oshtEUBu3rInF2GXSqCRg3I7HJsAuUIOhRZKp+I1ML0=;
+        b=Xj+NzkIXv8p3F0KNjT+UYRCH6oCgZLDLMQfPW1PsebGJQwT3aeioHn3Lwfl7NPcsmk
+         KL9LzjHJCzBpBeoRwmEMqlU8HUX5Jj2LTnDZRo1IDu2puZ1AZi/7JSd7NoxOq09QRorw
+         Z63DvjLWwKsrKJT1oUFqirWJXxWeDvU1dq4UZEzaUi3bW5M64X7xc8A07oAt96P0mfE0
+         sgHAYAJA+VIHDyib8+lHXlxfeolg2QryM9Jx2YTV6MfvRzd8Ri5+QynikC8FdAMI8tmq
+         SusWZvt6eMN0hxUe2TXY4oIEbK163juV69Xje8TEC4nXQ0i0FJUP1vOY6E/J4yzXpY/x
+         +muQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694125211; x=1694730011;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=oshtEUBu3rInF2GXSqCRg3I7HJsAuUIOhRZKp+I1ML0=;
+        b=xAytZHrmqDQNlpuRCPpeZGxiGBK9IEldXVqA00Aw0N/3B5tfzdbWQz7M801cjjtXHj
+         23vl189+K8ykWIVAyQWBPF++aHIQylbsBAeQuCdncXQ2ulbpc/hTCsW1YxlXv4oFVcAS
+         6iDxtXFWAcvzDSDIzksyY3pzwexwsZ2tOUiYZuFsYe84rrNuTIJHSMFNu1rdu7tBkVxD
+         iPuMNacJwvoR+HfHEPXuaiVerG5yR6Wvi4lyrXB4oTz3n3Ec48E6YeafdEcBsG6LTX5x
+         pDjXs5gs9weK5R7Xl0pkb14ePg2FzB7RGjW7tgdPD+01S5RN39X7ri61tkVMn1u6chN9
+         Z7qw==
+X-Gm-Message-State: AOJu0YxbONFWcK6Bnnwp3qQTzqtz/b6XxMXtb69Pejj48s6tIYsqVnk7
+        eolxOKZYUruJ1B+WiXvUzoweF8gsTh4=
+X-Google-Smtp-Source: AGHT+IFppOd8Q2MO3g22M4vL0gDELTf3j9luMMVLI5xyjV276Kf/ZhvwdCR3x80G9ztQ7zUuR5IDNg==
+X-Received: by 2002:a5d:53c7:0:b0:314:420c:5ef7 with SMTP id a7-20020a5d53c7000000b00314420c5ef7mr554336wrw.11.1694125211349;
+        Thu, 07 Sep 2023 15:20:11 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id y1-20020adff6c1000000b0031ad2663ed0sm429299wrp.66.2023.09.07.15.20.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Sep 2023 15:10:54 -0700 (PDT)
-Date:   Thu, 7 Sep 2023 18:10:52 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 2/8] builtin/repack.c: extract marking packs for deletion
-Message-ID: <ZPpKbKqJhBJcqyl3@nand.local>
-References: <cover.1693946195.git.me@ttaylorr.com>
- <313537ef68892b15e772eaad8937a4a8c7ebbe61.1693946195.git.me@ttaylorr.com>
- <20230907075931.GB1260718@coredump.intra.peff.net>
+        Thu, 07 Sep 2023 15:20:10 -0700 (PDT)
+Message-ID: <pull.1564.v3.git.1694125209.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1564.v2.git.1691702283.gitgitgadget@gmail.com>
+References: <pull.1564.v2.git.1691702283.gitgitgadget@gmail.com>
+From:   "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 07 Sep 2023 22:19:56 +0000
+Subject: [PATCH v3 00/13] Fixes to trailer test script, help text, and documentation
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20230907075931.GB1260718@coredump.intra.peff.net>
+To:     git@vger.kernel.org
+Cc:     Christian Couder <chriscool@tuxfamily.org>,
+        Linus Arver <linusa@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 07, 2023 at 03:59:31AM -0400, Jeff King wrote:
-> There are really two "factor outs" here: we pull the code from
-> cmd_repack() into a helper, and then the helper is also just a thin
-> wrapper around its "_1" variant. That latter part isn't needed yet, but
-> I can guess from your description that we'll eventually have the main
-> function dispatch to the "_1" helper for lists.
+This series contains various fixes to the trailer code. They pertain to
+fixes to the test script, the command line help text for the
+interpret-trailers builtin, and the documentation.
 
-Yeah... the "_1" variant looks ugly in isolation in this patch, but I
-think makes things cleaner in subsequent patches.
+Patch 1 is the most important as it does cleanups in the tests where we used
+'git config' in a test case without cleaning up that state for the next
+test. This makes the tests self-contained, making it easier to add new tests
+anywhere along the script, without worrying about previously-set implicit
+state. These test cleanups exposed lots of cases where the test cases are
+mutating more configuration state than is necessary to test the specific
+behavior in the test; however such extraneous configurations were not
+cleaned up to make these patches easier to review (again, we are not
+changing any behavior and we are also not changing what the test cases
+themselves purport to do).
 
-Thanks,
-Taylor
+Note that Patch 1 was originally a 22-commit series, but was squashed
+together to make it easier to see the final diff for each test case. You can
+see the 22-commit breakdown at
+https://github.com/listx/git/tree/backup-trailer-22-commit-breakdown
+
+Patch 3 adds some tests to check the behavior of '--no-if-exists' and
+'--no-if-missing', which weren't previously tested. It also adds
+similarly-themed test cases for '--no-where' which only had 1 test case for
+it.
+
+The other patches aren't as important, but are included here because I think
+they are too small to include in a separate series.
+
+
+Updates in v3
+=============
+
+ * Fix t0450 failure due to mismatch between the updated documentation which
+   uses " or " and the help text of the interpret-trailers command.
+
+
+Updates in v2
+=============
+
+ * Many additional patches to fix the help text and docs. No changes to any
+   of the patches touching the actual tests (that is, Patch 1 and 3 have
+   stayed the same, other than a rewording of the commit message for Patch
+   1).
+ * Of these new patches, I think the last one (about <keyAlias>) is the most
+   important as it resolves a longtime ambiguity about what a <token> can
+   be.
+
+Linus Arver (13):
+  trailer tests: make test cases self-contained
+  trailer test description: this tests --where=after, not --where=before
+  trailer: add tests to check defaulting behavior with --no-* flags
+  trailer doc: narrow down scope of --where and related flags
+  trailer: trailer location is a place, not an action
+  trailer --no-divider help: describe usual "---" meaning
+  trailer --parse help: expose aliased options
+  trailer --only-input: prefer "configuration variables" over "rules"
+  trailer --parse docs: add explanation for its usefulness
+  trailer --unfold help: prefer "reformat" over "join"
+  trailer doc: emphasize the effect of configuration variables
+  trailer doc: separator within key suppresses default separator
+  trailer doc: <token> is a <key> or <keyAlias>, not both
+
+ Documentation/git-interpret-trailers.txt | 183 ++++----
+ builtin/interpret-trailers.c             |  12 +-
+ t/t7513-interpret-trailers.sh            | 506 +++++++++++++++++++----
+ 3 files changed, 545 insertions(+), 156 deletions(-)
+
+
+base-commit: 1b0a5129563ebe720330fdc8f5c6843d27641137
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1564%2Flistx%2Ftrailer-fixes-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1564/listx/trailer-fixes-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1564
+
+Range-diff vs v2:
+
+  1:  1623dd000dd =  1:  1623dd000dd trailer tests: make test cases self-contained
+  2:  f680e76de84 =  2:  f680e76de84 trailer test description: this tests --where=after, not --where=before
+  3:  4b5c458ef43 =  3:  4b5c458ef43 trailer: add tests to check defaulting behavior with --no-* flags
+  4:  0df12c5c2dd =  4:  0df12c5c2dd trailer doc: narrow down scope of --where and related flags
+  5:  040766861e2 =  5:  040766861e2 trailer: trailer location is a place, not an action
+  6:  3e58b6f5ea2 =  6:  3e58b6f5ea2 trailer --no-divider help: describe usual "---" meaning
+  7:  d1780a0127a =  7:  d1780a0127a trailer --parse help: expose aliased options
+  8:  5cfff52da8f =  8:  5cfff52da8f trailer --only-input: prefer "configuration variables" over "rules"
+  9:  ef6b77016cd =  9:  ef6b77016cd trailer --parse docs: add explanation for its usefulness
+ 10:  a08d78618ba = 10:  a08d78618ba trailer --unfold help: prefer "reformat" over "join"
+ 11:  4db823ac354 = 11:  4db823ac354 trailer doc: emphasize the effect of configuration variables
+ 12:  66087eaf5bd = 12:  66087eaf5bd trailer doc: separator within key suppresses default separator
+ 13:  7b66cf29d29 ! 13:  0b9525db5a0 trailer doc: <token> is a <key> or <keyAlias>, not both
+     @@ Documentation/git-interpret-trailers.txt: trailer.<token>.command::
+       
+       EXAMPLES
+       --------
+     +
+     + ## builtin/interpret-trailers.c ##
+     +@@
+     + 
+     + static const char * const git_interpret_trailers_usage[] = {
+     + 	N_("git interpret-trailers [--in-place] [--trim-empty]\n"
+     +-	   "                       [(--trailer <token>[(=|:)<value>])...]\n"
+     ++	   "                       [(--trailer (<key>|<keyAlias>)[(=|:)<value>])...]\n"
+     + 	   "                       [--parse] [<file>...]"),
+     + 	NULL
+     + };
+
+-- 
+gitgitgadget
