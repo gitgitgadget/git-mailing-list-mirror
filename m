@@ -2,145 +2,180 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87F73EC8726
-	for <git@archiver.kernel.org>; Thu,  7 Sep 2023 18:08:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 493EBEC874B
+	for <git@archiver.kernel.org>; Thu,  7 Sep 2023 18:08:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241866AbjIGSIQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Sep 2023 14:08:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43580 "EHLO
+        id S1343583AbjIGSIR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Sep 2023 14:08:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343819AbjIGSIM (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1343820AbjIGSIM (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 7 Sep 2023 14:08:12 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB066197
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F13141FF5
         for <git@vger.kernel.org>; Thu,  7 Sep 2023 11:07:49 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 849F31A46A0;
-        Thu,  7 Sep 2023 14:07:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=L3Nnqfh3sSY1lcVOmAu2MWf2rXpXgXJptygvM9
-        1uS5o=; b=LRTmo9zBfr6inCFYDyBYGnYL2cuZ3sGH2QNKZOx0MOxfNI2AIgJPm2
-        G4njvq1sN5BdH43wAr9niV4Gvk94I9BuF6OBxoN2vQmTbh+6WxLuFCYcqzwul1Fo
-        MqaUE10A/rh17A7ugpg8FnlWSA8CcWVIO75cMGYeAWZermw3uNlLY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7B10A1A469F;
-        Thu,  7 Sep 2023 14:07:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.145.39.59])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D9DC11A469E;
-        Thu,  7 Sep 2023 14:07:29 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Josip Sokcevic <sokcevic@google.com>
-Cc:     jonathantanmy@google.com, git@vger.kernel.org,
-        git@jeffhostetler.com
-Subject: Re: [PATCH v2] diff-lib: Fix check_removed when fsmonitor is on
-In-Reply-To: <20230907170119.1536694-1-sokcevic@google.com> (Josip Sokcevic's
-        message of "Thu, 7 Sep 2023 10:01:19 -0700")
-References: <20230906203726.1526272-1-jonathantanmy@google.com>
-        <20230907170119.1536694-1-sokcevic@google.com>
-Date:   Thu, 07 Sep 2023 11:07:28 -0700
-Message-ID: <xmqqa5txluvz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-52a250aa012so1700138a12.3
+        for <git@vger.kernel.org>; Thu, 07 Sep 2023 11:07:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1694110067; x=1694714867; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lv7GiXQdh1VNlUx7vsDCS8ejSwSZoYuJnQcoYwDHgdc=;
+        b=VQY5/RcHUnntvC+sOaumYE+1rB4SrRh0EHfknMMhljPjEMbGpG1AUeU4HkPWsz6NtM
+         70FXrAhqKLtimmeAvYDVcKwztYzpHv8/vGUZXMXqbfdyqRQ7i2BInY4AbEkF8wsQsNa2
+         y+pBJQB9MXngIjCR1BzSCax2D06/gcoFJVJX3C906544yKvNLEc/TsS7LmOXJY9OvKjR
+         3CZQQ06bvehqcAAjq6055MGT2eBaR7Bf5NZ1Z/q7ln8j0aqgpVQToKHaRgGs3dVrhA10
+         ZjM6Qru9Sm9fnxlVtmCVOJ2INcSPdv6Fo9LdgtFN7zYZv128DcA/iAWLawhUHooc/iSv
+         p4ag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694110067; x=1694714867;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=lv7GiXQdh1VNlUx7vsDCS8ejSwSZoYuJnQcoYwDHgdc=;
+        b=tBl3+FHICOMOWI5YM4Lx/KQ5WmmLSVLOrMtZAW8F858/Lf4TeLT07TnwiBfmTiZ4c7
+         Az1MaBewKfi5TBg3npS5qPmn+QcsiqttEh4ewEBrKaPN7CwwlwOSjkuUwLwreH72we+s
+         JH6Ij+E2Y/lIcVh17RkFEKwbY+3/mL/JLzUlBUtaYJzt45fF8xrN8tnCSXmei3wrE0F9
+         qiLcl87Y5DGEVycdWLb8WZXBMg6MNolkGmpNY9zmYNRYDLmfX3K96oB5kDCwpoC6CfxT
+         ry4hBYmXfje39uZmSTqZsayh9VbJj7tQGU6BVU2lx4YcTECQkr/YM58shzOXkVQnnuzk
+         YKTA==
+X-Gm-Message-State: AOJu0YxaMG+UoGIEKWbDwppeZNyV8xbaNLjpr2HV4TWnnpByXHpf86Y+
+        5Dpu4jD1fb45C/LkxoejbdxtHwhZQ+k=
+X-Google-Smtp-Source: AGHT+IHDEISlyeiIkbbgFBBN6yCw5NMFg9CyoPnsTxdqYj3hsoLlEjxBP2SKkHiFQDGjay3djduwhA==
+X-Received: by 2002:a5d:4b87:0:b0:319:6d91:28bf with SMTP id b7-20020a5d4b87000000b003196d9128bfmr3966526wrt.60.1694078830332;
+        Thu, 07 Sep 2023 02:27:10 -0700 (PDT)
+Received: from localhost.localdomain ([2001:861:3f04:7ca0:3385:ce2d:69dd:303e])
+        by smtp.gmail.com with ESMTPSA id y8-20020adff148000000b00317c742ca9asm22491522wro.43.2023.09.07.02.26.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 Sep 2023 02:27:09 -0700 (PDT)
+From:   Christian Couder <christian.couder@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Elijah Newren <newren@gmail.com>,
+        John Cai <johncai86@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Calvin Wan <calvinwan@google.com>, Toon Claes <toon@iotcl.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v4 05/15] replay: introduce pick_regular_commit()
+Date:   Thu,  7 Sep 2023 11:25:11 +0200
+Message-ID: <20230907092521.733746-6-christian.couder@gmail.com>
+X-Mailer: git-send-email 2.42.0.126.gcf8c984877
+In-Reply-To: <20230907092521.733746-1-christian.couder@gmail.com>
+References: <20230602102533.876905-1-christian.couder@gmail.com>
+ <20230907092521.733746-1-christian.couder@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 68DB21FE-4DA9-11EE-BB66-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Josip Sokcevic <sokcevic@google.com> writes:
+From: Elijah Newren <newren@gmail.com>
 
-> diff --git a/diff-lib.c b/diff-lib.c
-> index d8aa777a73..664613bb1b 100644
-> --- a/diff-lib.c
-> +++ b/diff-lib.c
-> @@ -39,11 +39,22 @@
->  static int check_removed(const struct index_state *istate, const struct cache_entry *ce, struct stat *st)
->  {
->  	assert(is_fsmonitor_refreshed(istate));
+Let's refactor the code to handle a regular commit (a commit that is
+neither a root commit nor a merge commit) into a single function instead
+of keeping it inside cmd_replay().
 
-Not a problem this patch introduces, but doesn't this call path
+This is good for separation of concerns, and this will help further work
+in the future to replay merge commits.
 
-  diff_cache()
-  -> unpack_trees()
-     -> oneway_diff()
-        -> do_oneway_diff()
-           -> show_new_file(), show_modified()
-               -> get_stat_data()
-                  -> check_removed()
+Co-authored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Elijah Newren <newren@gmail.com>
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ builtin/replay.c | 54 ++++++++++++++++++++++++++++++------------------
+ 1 file changed, 34 insertions(+), 20 deletions(-)
 
-violate the assertion?  If so, perhaps we should rewrite it into a
-more explicit "if (...) BUG(...)" that is not compiled away.
+diff --git a/builtin/replay.c b/builtin/replay.c
+index f3fdbe48c9..c66888679b 100644
+--- a/builtin/replay.c
++++ b/builtin/replay.c
+@@ -89,6 +89,35 @@ static struct commit *create_commit(struct tree *tree,
+ 	return (struct commit *)obj;
+ }
+ 
++static struct commit *pick_regular_commit(struct commit *pickme,
++					  struct commit *last_commit,
++					  struct merge_options *merge_opt,
++					  struct merge_result *result)
++{
++	struct commit *base;
++	struct tree *pickme_tree, *base_tree;
++
++	base = pickme->parents->item;
++
++	pickme_tree = repo_get_commit_tree(the_repository, pickme);
++	base_tree = repo_get_commit_tree(the_repository, base);
++
++	merge_opt->branch2 = short_commit_name(pickme);
++	merge_opt->ancestor = xstrfmt("parent of %s", merge_opt->branch2);
++
++	merge_incore_nonrecursive(merge_opt,
++				  base_tree,
++				  result->tree,
++				  pickme_tree,
++				  result);
++
++	free((char*)merge_opt->ancestor);
++	merge_opt->ancestor = NULL;
++	if (!result->clean)
++		return NULL;
++	return create_commit(result->tree, pickme, last_commit);
++}
++
+ int cmd_replay(int argc, const char **argv, const char *prefix)
+ {
+ 	struct commit *onto;
+@@ -100,7 +129,7 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 	struct rev_info revs;
+ 	struct commit *commit;
+ 	struct merge_options merge_opt;
+-	struct tree *next_tree, *base_tree, *head_tree;
++	struct tree *head_tree;
+ 	struct merge_result result;
+ 	struct strbuf reflog_msg = STRBUF_INIT;
+ 	struct strbuf branch_name = STRBUF_INIT;
+@@ -175,7 +204,7 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 	result.tree = head_tree;
+ 	last_commit = onto;
+ 	while ((commit = get_revision(&revs))) {
+-		struct commit *base;
++		struct commit *pick;
+ 
+ 		fprintf(stderr, "Rebasing %s...\r",
+ 			oid_to_hex(&commit->object.oid));
+@@ -185,26 +214,11 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 		if (commit->parents->next)
+ 			die(_("replaying merge commits is not supported yet!"));
+ 
+-		base = commit->parents->item;
+-
+-		next_tree = repo_get_commit_tree(the_repository, commit);
+-		base_tree = repo_get_commit_tree(the_repository, base);
+-
+-		merge_opt.branch2 = short_commit_name(commit);
+-		merge_opt.ancestor = xstrfmt("parent of %s", merge_opt.branch2);
+-
+-		merge_incore_nonrecursive(&merge_opt,
+-					  base_tree,
+-					  result.tree,
+-					  next_tree,
+-					  &result);
+-
+-		free((char*)merge_opt.ancestor);
+-		merge_opt.ancestor = NULL;
+-		if (!result.clean)
++		pick = pick_regular_commit(commit, last_commit, &merge_opt, &result);
++		if (!pick)
+ 			break;
++		last_commit = pick;
+ 		last_picked_commit = commit;
+-		last_commit = create_commit(result.tree, commit, last_commit);
+ 	}
+ 
+ 	merge_finalize(&merge_opt, &result);
+-- 
+2.42.0.126.gcf8c984877
 
-> -	if (!(ce->ce_flags & CE_FSMONITOR_VALID) && lstat(ce->name, st) < 0) {
-> -		if (!is_missing_file_error(errno))
-> -			return -1;
-> -		return 1;
-> +	if (ce->ce_flags & CE_FSMONITOR_VALID) {
-> +		/*
-> +		 * Both check_removed() and its callers expect lstat() to have
-> +		 * happened and, in particular, the st_mode field to be set.
-> +		 * Simulate this with the contents of ce.
-> +		 */
-> +		memset(st, 0, sizeof(*st));
-
-It is true that the original, when CE_FSMONITOR_VALID bit is set,
-bypasses lstat() altogether and leaves the contents of st completely
-uninitialized, but this is still way too insufficient, isn't it?
-
-There are three call sites of the check_removed() function.
-
- * The first one in run_diff_files() only cares about st.st_mode and
-   other members of the structure are not looked at.  This makes
-   readers wonder if the "st" parameter to check_removed() should
-   become "mode_t *st_mode" to clarify this point, but the primary
-   thing I want to say is that this caller will not mind if we leave
-   other members of st bogus (like 0-bit filled) as long as the mode
-   is set correctly.
-
- * The second one in run_diff_files() passes the resulting &st to
-   match_stat_with_submodule(), which in turn passes it to
-   ie_match_stat(), which cares about "struct stat" members that are
-   used for quick change detection, like owner, group, mtime.
-   Giving it a bogus st will most likely cause it to report a
-   change.
-
- * The third one is in get_stat_data().  This also uses the &st to
-   call match_stat_with_submodule(), so it is still totally broken
-   to give it a bogus st, the same way as the second caller above.
-
-> +		st->st_mode = ce->ce_mode;
-
-Does this work correctly when the cache entry points at a gitlink,
-which uses 0160000 that is not a valid st_mode?  I think you'd want
-to use a reverse function of create_ce_mode().
-
-> +	} else {
-> +		if (lstat(ce->name, st) < 0) {
-> +			if (!is_missing_file_error(errno))
-> +				return -1;
-> +			return 1;
-> +		}
->  	}
-
-At this point, if FSMONITOR_VALID bit is not set, we will always
-perform lstat() and get all the members of st populated properly,
-which is a definite improvement.
-
-While I think this does not make it worse (it is an existing bug
-that the code is broken for a ce with the CE_FSMONITOR_VALID bit
-set), we may want to leave a note that we _know_ the code after this
-patch is still broken.  "Simulate this with ..." -> "Just setting
-st_mode is still insufficient and will break majority of callers".
-
-It may make sense, until we clean it up, to disable the check for
-the FSMONITOR_VALID bit in this codepath and always perform lstat().
-Optimization matters, but computing quickly in order to return an
-incorrect result is optimizing for a wrong thing.  I dunno.
-
-Thanks.
