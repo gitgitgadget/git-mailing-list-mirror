@@ -2,301 +2,173 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4521EEB56E
-	for <git@archiver.kernel.org>; Fri,  8 Sep 2023 22:55:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F30BEEB570
+	for <git@archiver.kernel.org>; Fri,  8 Sep 2023 23:06:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344185AbjIHWzs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Sep 2023 18:55:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37610 "EHLO
+        id S1344428AbjIHXGb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Sep 2023 19:06:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37528 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245651AbjIHWzr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Sep 2023 18:55:47 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 927491FEA
-        for <git@vger.kernel.org>; Fri,  8 Sep 2023 15:55:42 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id 3f1490d57ef6-d7c676651c7so7023040276.1
-        for <git@vger.kernel.org>; Fri, 08 Sep 2023 15:55:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1694213742; x=1694818542; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=BLzMzKTnzHRqjHFzN3MFvAogyJuSsYDc7Sb4Wjjmnok=;
-        b=Vl/O0nmkzlg6TOHo3FRRYKkVVYjP3rffMukxM2VVYwHLwd2erKyCq+qK1t7rFlsoFU
-         X2vn+XiImjDXgMF0MKu6TrkmNZ23z70usf0xAjBp3H/5v8ujG6rWXw2LHmVW06ig3FFW
-         V/MK43bMjtwsRv8Uy0yCVU0YdRd7ehdTcZiZ10xkbjqybN8xj4lZCe3laA/15iWdjTph
-         UdLIJPrM0dLEcbSA3L2FhEA0HwDyMS27wejTuHYjVxhIzrF6artYwAUlGXG2+LwqQCtS
-         q+DGlHpUKReomy/KagKoK/a6ZCGZYo7LPcZfQ1cmMfMNbbZOW8zZGtOMo/tLhI44jda/
-         hkJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694213742; x=1694818542;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BLzMzKTnzHRqjHFzN3MFvAogyJuSsYDc7Sb4Wjjmnok=;
-        b=f26I0QYDMEDa23egakSFxd/PHRqTN14z/r0vTZ9izTxqwGdXw9Cw3ZuTE4KtOtJoZO
-         brCOA7oSxU7rJT/w5HFaSIT5xKoD3uIEc5NFR+LbQgnz29mP870fIyYBfba9WAqgxqZq
-         KFtNtvnH3Cc2K/pvbchczrnk72Ofx/EYIIshE49z8r33sWs8iKtaGSes45uXrzTEg6aq
-         yOSpRDirS7WHd1QhK9ciaapupkSaUapbkDm13iFfEsSIIqXR1TevG0N+EXGW7oSP1a1D
-         SJhudFnFwdxOMxMQ/WSWeLa4Xtjtad1m9RYuCDqv1m52YtmRULszvyQXCfq7kzpFBeTr
-         7qiA==
-X-Gm-Message-State: AOJu0YxVqg+dXYWuC/zH4Fcy59b/68eoo8g5mbemYHwBMW0TzBM3l8wC
-        EDhsifFxbypc3KAlZ6ixYct8SSU9iqI=
-X-Google-Smtp-Source: AGHT+IH100lC5gsR0B+vrCrHe/o31Ihzr5dCVW9ytbJ9K2WKikYAvakN+jIzy4bkN/54T6HVwm6DodISn58=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a05:6902:1024:b0:d7e:c4af:22d2 with SMTP id
- x4-20020a056902102400b00d7ec4af22d2mr227744ybt.4.1694213741830; Fri, 08 Sep
- 2023 15:55:41 -0700 (PDT)
-Date:   Fri, 08 Sep 2023 15:55:40 -0700
-In-Reply-To: <20230907092521.733746-12-christian.couder@gmail.com>
-Mime-Version: 1.0
-References: <20230602102533.876905-1-christian.couder@gmail.com>
- <20230907092521.733746-1-christian.couder@gmail.com> <20230907092521.733746-12-christian.couder@gmail.com>
-Message-ID: <owlyo7icl1g3.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH v4 11/15] replay: use standard revision ranges
-From:   Linus Arver <linusa@google.com>
-To:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Elijah Newren <newren@gmail.com>,
-        John Cai <johncai86@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Calvin Wan <calvinwan@google.com>, Toon Claes <toon@iotcl.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S235445AbjIHXGa (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Sep 2023 19:06:30 -0400
+Received: from out02.mta.xmission.com (out02.mta.xmission.com [166.70.13.232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B29C1FCA
+        for <git@vger.kernel.org>; Fri,  8 Sep 2023 16:06:25 -0700 (PDT)
+Received: from in02.mta.xmission.com ([166.70.13.52]:38042)
+        by out02.mta.xmission.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.93)
+        (envelope-from <ebiederm@xmission.com>)
+        id 1qekYR-006MTt-J5; Fri, 08 Sep 2023 17:06:23 -0600
+Received: from ip68-227-168-167.om.om.cox.net ([68.227.168.167]:58880 helo=email.froward.int.ebiederm.org.xmission.com)
+        by in02.mta.xmission.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.93)
+        (envelope-from <ebiederm@xmission.com>)
+        id 1qekYQ-009tbT-BP; Fri, 08 Sep 2023 17:06:23 -0600
+From:   "Eric W. Biederman" <ebiederm@xmission.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Date:   Fri, 08 Sep 2023 18:05:52 -0500
+Message-ID: <87sf7ol0z3.fsf@email.froward.int.ebiederm.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-XM-SPF: eid=1qekYQ-009tbT-BP;;;mid=<87sf7ol0z3.fsf@email.froward.int.ebiederm.org>;;;hst=in02.mta.xmission.com;;;ip=68.227.168.167;;;frm=ebiederm@xmission.com;;;spf=pass
+X-XM-AID: U2FsdGVkX1+Xzm+uJR+UxGrozFPkesZMR//ranMOsbc=
+X-SA-Exim-Connect-IP: 68.227.168.167
+X-SA-Exim-Mail-From: ebiederm@xmission.com
+Subject: [RFC][PATCH 0/32] SHA256 and SHA1 interoperability
+X-SA-Exim-Version: 4.2.1 (built Sat, 08 Feb 2020 21:53:50 +0000)
+X-SA-Exim-Scanned: Yes (on in02.mta.xmission.com)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Christian,
 
-I am only reviewing the docs. To assume the mindset of a Git user
-unfamiliar with this command, I purposely did not read the cover letter
-until after this review was done.
+I would like to see the SHA256 transition happen so I started playing
+with the k2204-transition-interop branch of brian m. carlson's tree.
 
-Christian Couder <christian.couder@gmail.com> writes:
+Before I go farther I need to some other folks to look at this and see
+if this is a general direction that the git project can stand.
 
-> [...]
->
-> diff --git a/Documentation/git-replay.txt b/Documentation/git-replay.txt
-> new file mode 100644
-> index 0000000000..9a2087b01a
-> --- /dev/null
-> +++ b/Documentation/git-replay.txt
-> @@ -0,0 +1,90 @@
-> +git-replay(1)
-> +=============
-> +
-> +NAME
-> +----
-> +git-replay - Replay commits on a different base, without touching working tree
+This patchset is not complete it does not implement converting a
+received pack of the compatibility hash into the hash function of the
+repository, nor have I written any automated tests.  Both need to happen
+before this is finalized.
 
-How about using the same language ("new location") as in the DESCRIPTION
-heading? Also, the "without touching working tree" part is incomplete
-because as explained later on, the index and refs are also left alone.
-How about just "safely"?
+That said I think I have working implementations of all of the
+interesting cases.  In particular I have "git index-pack" computing the
+compatibility hash of every object in a pack file, and I can tell you
+the sha256 of every sha1 in the git://git.kernel.org/pub/scm/git/git.git
 
-    git-replay - Replay commits onto a new location, safely
+To get there I have tweaked the transition plan a little.
 
-> +SYNOPSIS
-> +--------
-> +[verse]
-> +'git replay' --onto <newbase> <revision-range>...
-> +
-> +DESCRIPTION
-> +-----------
-> +
-> +Takes a range of commits, and replays them onto a new location.
+So far I have just aimed for code that works, so there is doubtless
+room for improvement.  My hope is that I have implemented enough
+that people can play with this, and that people can see all of the
+weird little details that need to be taken care of to make this work.
 
-OK.
+What do everyone else think?  Does this direction look plausible?
 
-> Does
-> +not touch the working tree or index, and does not update any
-> +references.
+Eric W. Biederman (24):
+      doc hash-file-transition: A map file for mapping between sha1 and sha256
+      doc hash-function-transition: Replace compatObjectFormat with compatMap
+      object-file-convert:  Stubs for converting from one object format to another
+      object-name: Initial support for ^{sha1} and ^{sha256}
+      repository: add a compatibility hash algorithm
+      loose: Compatibilty short name support
+      object-file: Update the loose object map when writing loose objects
+      bulk-checkin: Only accept blobs
+      pack: Communicate the compat_oid through struct pack_idx_entry
+      object-file: Add a compat_oid_in parameter to write_object_file_flags
+      object: Factor out parse_mode out of fast-import and tree-walk into in object.h
+      builtin/cat-file:  Let the oid determine the output algorithm
+      tree-walk: init_tree_desc take an oid to get the hash algorithm
+      object-file: Handle compat objects in check_object_signature
+      builtin/ls-tree: Let the oid determine the output algorithm
+      builtin/pack-objects:  Communicate the compatibility hash through struct pack_idx_entry
+      pack-compat-map:  Add support for .compat files of a packfile
+      object-file-convert: Implement convert_object_file_{begin,step,end}
+      builtin/fast-import: compute compatibility hashs for imported objects
+      builtin/index-pack:  Add a simple oid index
+      builtin/index-pack:  Compute the compatibility hash
+      builtin/index-pack: Make the stack in compute_compat_oid explicit
+      unpack-objects: Update to compute and write the compatibility hashes
+      object-file-convert: Implement repo_submodule_oid_to_algop
 
-How about this version?
+brian m. carlson (8):
+      repository: Implement core.compatMap
+      loose: add a mapping between SHA-1 and SHA-256 for loose objects
+      bulk-checkin: hash object with compatibility algorithm
+      commit: write commits for both hashes
+      cache: add a function to read an OID of a specific algorithm
+      object-file-convert: add a function to convert trees between algorithms
+      object-file-convert: convert commit objects when writing
+      object-file-convert: convert tag commits when writing
 
-    The new commits are created without modifying the working tree,
-    index, or any references.
 
-Also, by "references" we mean the refs in ".git/refs/*". In the
-gitrevisions man page we use the term "refnames" to refer to these bits,
-so maybe "refnames" is better than "references"? The simpler "branches"
-is another option.
+ Documentation/config/core.txt                      |   6 +
+ .../technical/hash-function-transition.txt         |  56 ++-
+ Makefile                                           |   4 +
+ archive.c                                          |   3 +-
+ builtin.h                                          |   1 +
+ builtin/am.c                                       |   6 +-
+ builtin/cat-file.c                                 |   8 +-
+ builtin/checkout.c                                 |   8 +-
+ builtin/clone.c                                    |   2 +-
+ builtin/commit.c                                   |   2 +-
+ builtin/fast-import.c                              | 110 +++--
+ builtin/grep.c                                     |   8 +-
+ builtin/index-pack.c                               | 441 ++++++++++++++++++++-
+ builtin/ls-tree.c                                  |   5 +-
+ builtin/merge.c                                    |   3 +-
+ builtin/pack-objects.c                             |  13 +-
+ builtin/read-tree.c                                |   2 +-
+ builtin/show-compat-map.c                          | 139 +++++++
+ builtin/stash.c                                    |   5 +-
+ builtin/unpack-objects.c                           |  14 +-
+ bulk-checkin.c                                     |  55 ++-
+ bulk-checkin.h                                     |   6 +-
+ cache-tree.c                                       |   4 +-
+ commit.c                                           | 176 +++++---
+ commit.h                                           |   1 +
+ delta-islands.c                                    |   2 +-
+ diff-lib.c                                         |   2 +-
+ fsck.c                                             |   6 +-
+ git.c                                              |   1 +
+ hash-ll.h                                          |   3 +
+ hash.h                                             |   9 +-
+ http-push.c                                        |   2 +-
+ list-objects.c                                     |   2 +-
+ loose.c                                            | 256 ++++++++++++
+ loose.h                                            |  20 +
+ match-trees.c                                      |   4 +-
+ merge-ort.c                                        |  11 +-
+ merge-recursive.c                                  |   2 +-
+ merge.c                                            |   3 +-
+ object-file-convert.c                              | 366 +++++++++++++++++
+ object-file-convert.h                              |  50 +++
+ object-file.c                                      | 197 +++++++--
+ object-name.c                                      |  77 +++-
+ object-store-ll.h                                  |  13 +-
+ object.c                                           |   2 +
+ object.h                                           |  18 +
+ pack-bitmap-write.c                                |   2 +-
+ pack-compat-map.c                                  | 334 ++++++++++++++++
+ pack-compat-map.h                                  |  27 ++
+ pack-write.c                                       | 158 ++++++++
+ pack.h                                             |   1 +
+ packfile.c                                         |  15 +-
+ reflog.c                                           |   2 +-
+ repository.c                                       |  17 +
+ repository.h                                       |   4 +
+ revision.c                                         |   4 +-
+ setup.c                                            |   5 +
+ setup.h                                            |   1 +
+ tree-walk.c                                        |  58 ++-
+ tree-walk.h                                        |   7 +-
+ tree.c                                             |   2 +-
+ walker.c                                           |   2 +-
+ 62 files changed, 2525 insertions(+), 238 deletions(-)
 
-> However, the output of this command is meant to be used
-> +as input to `git update-ref --stdin`, which would update the relevant
-> +branches.
-
-Before we get to this sentence, it would be great to explain why this
-command is useful (what problem does it solve)?
-
-Also, it would help to add "(see OUTPUT section below)" as a
-navigational aid in case some readers are wondering what the output
-looks like (and have not yet gotten to that section).
-
-I've noticed that you're using the phrase "starting point" in the
-OPTIONS section. I think this is better than "location" or "base" (FWIW
-we started using "starting point" in 0a02ca2383 (SubmittingPatches:
-simplify guidance for choosing a starting point, 2023-07-14)).
-
-The following is a version of this section that attempts to address my
-comments above (I've included the other bits already reviewed earlier to
-make it easier to read):
-
-    Takes a range of commits, and replays them onto a new starting
-    point. The new commits are created without modifying the working
-    tree, index, or any branches. If there are branches that point to
-    the commits in <revision-range>, list them in the output with both
-    the original commit hash and the corresponding (replayed) commit
-    hash (see OUTPUT section below) .
-
-    This command is like linkgit:git-rebase[1], but notably does not
-    require a working tree or index. This means you can run this command
-    in a bare repo (useful for server-side environments). And because
-    nothing is modified (only new commits are created), it's like a "dry
-    run" rebase.
-
-    By combining this command with `git update-ref --stdin`, the
-    relevant branches can be updated. That is, the branches that were
-    pointing originally to the commits given in the <revision-range>
-    will be updated to point to the replayed commits. This is similar to
-    the way how `git rebase --update-refs` updates multiple branches in
-    the affected range.
-
-> +THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
-> +
-> +OPTIONS
-> +-------
-> +
-> +--onto <newbase>::
-
-How about 'starting-point' instead of 'newbase'?
-
-> +	Starting point at which to create the new commits.  May be any
-> +	valid commit, and not just an existing branch name.
-
-Add "See linkgit:gitrevisions[7]." at the end?
-
-> +The update-ref command(s) in the output will update the branch(es) in
-> +the revision range to point at the new commits, similar to the way how
-> +`git rebase --update-refs` updates multiple branches in the affected
-> +range.
-
-Ah, good example. I've moved this to my larger example above, so I don't
-think this paragraph is needed here any more (it probably didn't belong
-in OPTIONS anyway).
-
-> +<revision-range>::
-> +	Range of commits to replay; see "Specifying Ranges" in
-> +	linkgit:git-rev-parse.
-
-OK.
-
-> +OUTPUT
-> +------
-> +
-> +When there are no conflicts, the output of this command is usable as
-> +input to `git update-ref --stdin`.
-
-What happens if there are conflicts? Probably good to mention in the
-DISCUSSION section. Some questions you may want to answer for the
-reader:
-
-(1) Is git-replay an all-or-nothing operation? That is, if there are any
-conflicts, is the output always empty (or do we still output those
-branches that *can* be updated without conflicts)?
-
-(2) What is meant by "conflict" for git-replay? Is it the same meaning
-as the case for git-rebase?
-
-For (1), in your cover letter under "# Important limitations" you say
-"No resumability" but I am not sure if this means git-replay will output
-*something* before exiting with an error, or simply nothing at all.
-
-Speaking of the limitations section, perhaps it's worth pointing those
-out under DISCUSSION as well?
-
-> It is basically of the form:
-
-Why "basically"? Are there cases where the output can be different than
-the example given below? If not, then perhaps drop the word "basically"?
-
-> +	update refs/heads/branch1 ${NEW_branch1_HASH} ${OLD_branch1_HASH}
-> +	update refs/heads/branch2 ${NEW_branch2_HASH} ${OLD_branch2_HASH}
-> +	update refs/heads/branch3 ${NEW_branch3_HASH} ${OLD_branch3_HASH}
-> +
-> +where the number of refs updated depends on the arguments passed and
-> +the shape of the history being replayed.
-
-Let's use "number of branches" instead of "number of refs" here to be
-consistent with the language elsewhere.
-
-> +EXIT STATUS
-> +-----------
-> +
-> +For a successful, non-conflicted replay, the exit status is 0.  When
-> +the replay has conflicts, the exit status is 1.
-
-OK.
-
-> If the replay is not
-> +able to complete (or start) due to some kind of error, the exit status
-> +is something other than 0 or 1.
-
-Not sure how useful "due to some kind of error" is here --- presumably
-the inability to replay is always due to some kind of error.
-
-Would it be worth including a brief explanation about why git-replay
-might be unable to complete or start (is this behavior in practice a
-common-enough thing to document here)?
-
-> +EXAMPLES
-> +--------
-> +
-> +To simply rebase mybranch onto target:
-
-Looking at the CLI arguments, I think this phrase should be:
-
-    Replay the commits in `origin/main..mybranch` onto `target`:
-
-> +------------
-> +$ git replay --onto target origin/main..mybranch
-> +update refs/heads/mybranch ${NEW_mybranch_HASH} ${OLD_mybranch_HASH}
-> +------------
-> +
-> +When calling `git replay`, one does not need to specify a range of
-> +commits to replay using the syntax `A..B`; any range expression will
-> +do:
-> +
-> +------------
-> +$ git replay --onto origin/main ^base branch1 branch2 branch3
-
-Instead of `base`, how about `olderbranch`?
-
-> +update refs/heads/branch1 ${NEW_branch1_HASH} ${OLD_branch1_HASH}
-> +update refs/heads/branch2 ${NEW_branch2_HASH} ${OLD_branch2_HASH}
-> +update refs/heads/branch3 ${NEW_branch3_HASH} ${OLD_branch3_HASH}
-> +------------
-> +
-> +This will simultaneously rebase branch1, branch2, and branch3 -- all
-> +commits they have since base, playing them on top of origin/main.
-
-How about
-
-    This will rebase the commits in `branch1`, `branch2`, and `branch3`
-    (excluding those in `base`), preplaying them on top of `origin/main`.
-
-> +These three branches may have commits on top of base that they have in
-> +common, but that does not need to be the case.
-
-s/base/`base`
-
-> +GIT
-> +---
-> +Part of the linkgit:git[1] suite
-
-One question I do have is what happens if you run git-replay twice
-(successfully)? Does the second invocation create another set of (new)
-successfully replayed commits? I ask because I'm interested in informing
-the readers of our docs about any potential pitfalls from abusing this
-command by mistake.
+Eric
