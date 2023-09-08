@@ -2,94 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DC86EEB566
-	for <git@archiver.kernel.org>; Fri,  8 Sep 2023 19:58:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB42DEEB56F
+	for <git@archiver.kernel.org>; Fri,  8 Sep 2023 20:37:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245388AbjIHT6T (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Sep 2023 15:58:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33586 "EHLO
+        id S243137AbjIHUhm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Sep 2023 16:37:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245630AbjIHT6S (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Sep 2023 15:58:18 -0400
-Received: from dcvr.yhbt.net (dcvr.yhbt.net [173.255.242.215])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF76D10FC
-        for <git@vger.kernel.org>; Fri,  8 Sep 2023 12:57:54 -0700 (PDT)
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 70D3A1F55F;
-        Fri,  8 Sep 2023 19:57:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=80x24.org;
-        s=selector1; t=1694203074;
-        bh=lWX7oiCfURhFBhK9FxbCYjUcAYmzlFZY6Kx1GdBNUVg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=0imYa8aMUHGM0lmAOvyKgt5JOZXvaDaqtkWqJyKkF9PwyFQFCAAq9ZJT5qy/gtRB0
-         3WZM0yTgRC1K9rtvC1+3cnIkF78ICJh3n7aJH6BN3TVTRkBHkylCdCawJ2/6vrZbYw
-         JCgb4yZXKWzfLprlQr51fIAelhPZz2gKwZHUTX3U=
-Date:   Fri, 8 Sep 2023 19:57:54 +0000
-From:   Eric Wong <e@80x24.org>
-To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH] start_command: reset disposition of all signals in child
-Message-ID: <20230908195754.M395591@dcvr>
-References: <pull.1582.git.1694167540231.gitgitgadget@gmail.com>
+        with ESMTP id S230014AbjIHUhl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Sep 2023 16:37:41 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECC9B10DF
+        for <git@vger.kernel.org>; Fri,  8 Sep 2023 13:37:20 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B42B83AC7D;
+        Fri,  8 Sep 2023 16:36:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=vK549O1vNmvvMYbnc00ePRdZph1BYoR7nVwTm1
+        3gyj8=; b=IS42uW8MKlZqA1E6mtVG4tJo1pMbaRtgxG9zPffSQkvHlxJJaDOUXY
+        YMyH8t8KrQXAkVZ0gBrFV1vob5FiN+7iBgPtANyDX5AKBzu5YfgTsBfOsu9tKswB
+        b60aeKRcTE7JecAap5HXgIdtE6/Pl4hrmyhLjet3bANm191ASPt1Y=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id AC80B3AC7C;
+        Fri,  8 Sep 2023 16:36:52 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.145.39.59])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 14B983AC7B;
+        Fri,  8 Sep 2023 16:36:49 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Calvin Wan <calvinwan@google.com>
+Cc:     git@vger.kernel.org, nasamuffin@google.com,
+        jonathantanmy@google.com, linusa@google.com,
+        phillip.wood123@gmail.com, vdye@github.com
+Subject: Re: [PATCH v3 0/6] Introduce Git Standard Library
+In-Reply-To: <20230908174134.1026823-1-calvinwan@google.com> (Calvin Wan's
+        message of "Fri, 8 Sep 2023 17:41:34 +0000")
+References: <a0f04bd7-3a1e-b303-fd52-eee2af4d38b3@gmail.com>
+        <20230908174134.1026823-1-calvinwan@google.com>
+Date:   Fri, 08 Sep 2023 13:36:47 -0700
+Message-ID: <xmqqr0n8s8ps.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.1582.git.1694167540231.gitgitgadget@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6F5DB1CA-4E87-11EE-A578-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood via GitGitGadget <gitgitgadget@gmail.com> wrote:
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
-> 
-> In order to avoid invoking a signal handler in the child process between
-> fork() and exec(), start_command() blocks all signals before calling
-> fork and then in the child resets the disposition of all signals that
-> are not ignored to SIG_DFL before unblocking them. The exception for
-> ignored signals seems to been inspired by ruby's process handling[1]
-> based on the misconception that execve() will reset them to
-> SIG_DFL. Unfortunately this is not the case [2] and any signals that are
-> ignored in the parent will default to being ignored by the program
-> executed by start_command().
-> 
-> When git ignores SIGPIPE before forking a child process it is to stop
-> git from being killed if the child exits while git is writing to the
-> child's stdin. We do not want to ignore SIGPIPE in the child. When git
-> ignores SIGINT and SIGQUIT before forking a child process it is to stop
-> git from being killed if the user interrupts the child with Ctrl-C or
-> Ctrl-\ we do not want the child to ignore those signals [3].
-> Fortunately the fix is easy - reset the disposition of all signals
-> regardless of their previous disposition.
-> 
-> [1] https://lore.kernel.org/git/20170413211428.GA5961@whir/
-> 
-> [2] The man page for execve(2) states:
-> 
->         POSIX.1 specifies that the dispositions of any signals that are
-> 	ignored or set to the default are left unchanged.  POSIX.1
-> 	specifies one exception: if SIGCHLD is being ignored, then an
-> 	implementation may leave the disposition unchanged or reset it
-> 	to the default; Linux does the former.
+Calvin Wan <calvinwan@google.com> writes:
 
-Yeah, the old code seems like an error on my part.  Oops :x
+> I have taken this series out of RFC since there weren't any significant
+> concerns with the overall concept and design of this series. This reroll
+> incorporates some smaller changes such as dropping the "push pager
+> dependency" patch in favor of stubbing it out. The main change this
+> reroll cleans up the Makefile rules and stubs, as suggested by
+> Phillip Wood (appreciate the help on this one)!
 
-> diff --git a/run-command.c b/run-command.c
-> index a558042c876..765775a1f42 100644
-> --- a/run-command.c
-> +++ b/run-command.c
-> @@ -823,11 +823,8 @@ fail_pipe:
->  		 * restore default signal handlers here, in case
->  		 * we catch a signal right before execve below
->  		 */
-> -		for (sig = 1; sig < NSIG; sig++) {
-> -			/* ignored signals get reset to SIG_DFL on execve */
-> -			if (signal(sig, SIG_DFL) == SIG_IGN)
-> -				signal(sig, SIG_IGN);
-> -		}
-> +		for (sig = 1; sig < NSIG; sig++)
-> +			signal(sig, SIG_DFL);
+What is your plan for the "config-parse" stuff?  The "create new library"
+step in this series seem to aim for the same goal in a different ways.
 
-Looks good to me and matches what I did in some other (A)GPL-3
-projects, actually.
+> This series has been rebased onto 1fc548b2d6a: The sixth batch
+>
+> Originally this series was built on other patches that have since been
+> merged, which is why the range-diff is shown removing many of them.
 
-Acked-by: Eric Wong <e@80x24.org>
+Good.  Previous rounds did not really attract much interest from the
+public if I recall correctly.  Let's see how well this round fares.
+
+>  Documentation/technical/git-std-lib.txt | 191 ++++++++++++++++++++
+
+It is interesting to see that there is no "std.*lib\.c" in the set
+of source files, or "std.*lib\.a" target in the Makefile.
+
