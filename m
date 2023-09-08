@@ -2,967 +2,709 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F2ADEEB570
-	for <git@archiver.kernel.org>; Fri,  8 Sep 2023 23:31:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B81CEEB570
+	for <git@archiver.kernel.org>; Fri,  8 Sep 2023 23:31:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344066AbjIHXb3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Sep 2023 19:31:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47618 "EHLO
+        id S239379AbjIHXbj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Sep 2023 19:31:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238478AbjIHXb2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Sep 2023 19:31:28 -0400
+        with ESMTP id S245341AbjIHXbh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Sep 2023 19:31:37 -0400
 Received: from out03.mta.xmission.com (out03.mta.xmission.com [166.70.13.233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D27CAE46
-        for <git@vger.kernel.org>; Fri,  8 Sep 2023 16:31:18 -0700 (PDT)
-Received: from in02.mta.xmission.com ([166.70.13.52]:37494)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54FE51FFE
+        for <git@vger.kernel.org>; Fri,  8 Sep 2023 16:31:25 -0700 (PDT)
+Received: from in02.mta.xmission.com ([166.70.13.52]:37380)
         by out03.mta.xmission.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
         (Exim 4.93)
         (envelope-from <ebiederm@xmission.com>)
-        id 1qekeD-00FHSJ-Q9; Fri, 08 Sep 2023 17:12:21 -0600
+        id 1qeke4-00FHJZ-FO; Fri, 08 Sep 2023 17:12:12 -0600
 Received: from ip68-227-168-167.om.om.cox.net ([68.227.168.167]:54328 helo=localhost.localdomain)
         by in02.mta.xmission.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
         (Exim 4.93)
         (envelope-from <ebiederm@xmission.com>)
-        id 1qekeB-009u13-H9; Fri, 08 Sep 2023 17:12:21 -0600
+        id 1qeke1-009u13-Pu; Fri, 08 Sep 2023 17:12:12 -0600
 From:   "Eric W. Biederman" <ebiederm@xmission.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
         "Eric W. Biederman" <ebiederm@xmission.com>
-Date:   Fri,  8 Sep 2023 18:10:42 -0500
-Message-Id: <20230908231049.2035003-25-ebiederm@xmission.com>
+Date:   Fri,  8 Sep 2023 18:10:38 -0500
+Message-Id: <20230908231049.2035003-21-ebiederm@xmission.com>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <87sf7ol0z3.fsf@email.froward.int.ebiederm.org>
 References: <87sf7ol0z3.fsf@email.froward.int.ebiederm.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-XM-SPF: eid=1qekeB-009u13-H9;;;mid=<20230908231049.2035003-25-ebiederm@xmission.com>;;;hst=in02.mta.xmission.com;;;ip=68.227.168.167;;;frm=ebiederm@xmission.com;;;spf=pass
-X-XM-AID: U2FsdGVkX1+QfoEvKjfNPeVzLMTWQpEc7tGBrVWRgxY=
+X-XM-SPF: eid=1qeke1-009u13-Pu;;;mid=<20230908231049.2035003-21-ebiederm@xmission.com>;;;hst=in02.mta.xmission.com;;;ip=68.227.168.167;;;frm=ebiederm@xmission.com;;;spf=pass
+X-XM-AID: U2FsdGVkX18oCVTiYH9Zq+p/uD5FthA0m2048PlADPY=
 X-SA-Exim-Connect-IP: 68.227.168.167
 X-SA-Exim-Mail-From: ebiederm@xmission.com
-Subject: [PATCH 25/32] pack-compat-map:  Add support for .compat files of a packfile
+Subject: [PATCH 21/32] tree-walk: init_tree_desc take an oid to get the hash algorithm
 X-SA-Exim-Version: 4.2.1 (built Sat, 08 Feb 2020 21:53:50 +0000)
 X-SA-Exim-Scanned: Yes (on in02.mta.xmission.com)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-These .compat files hold a bidirectional mapping between the names of
-stored objects between sha1 and sha256.
+To make it possible for git ls-tree to display the tree encoded
+in the hash algorithm of the oid specified to git ls-tree, update
+init_tree_desc to take as a parameter the oid of the tree object.
 
-Care has been taken so that index-pack --verify can be supported to
-validate an existing compat map file is not currupted.
+Update all callers of init_tree_desc and init_tree_desc_gently
+to pass the oid of the tree object.
+
+Use the oid of the tree object to discover the hash algorithm
+of the oid and store that hash algorithm in struct tree_desc.
+
+Use the hash algorithm in decode_tree_entry and
+update_tree_entry_internal to handle reading a tree object encoded in
+a hash algorithm that differs from the repositories hash algorithm.
 
 Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
 ---
- Makefile                  |   2 +
- builtin.h                 |   1 +
- builtin/show-compat-map.c | 139 ++++++++++++++++
- git.c                     |   1 +
- object-file-convert.c     |   7 +
- object-name.c             |  18 ++
- object-store-ll.h         |   6 +
- pack-compat-map.c         | 334 ++++++++++++++++++++++++++++++++++++++
- pack-compat-map.h         |  27 +++
- pack-write.c              | 158 ++++++++++++++++++
- packfile.c                |  12 ++
- 11 files changed, 705 insertions(+)
- create mode 100644 builtin/show-compat-map.c
- create mode 100644 pack-compat-map.c
- create mode 100644 pack-compat-map.h
+ archive.c              |  3 ++-
+ builtin/am.c           |  6 +++---
+ builtin/checkout.c     |  8 +++++---
+ builtin/clone.c        |  2 +-
+ builtin/commit.c       |  2 +-
+ builtin/grep.c         |  8 ++++----
+ builtin/merge.c        |  3 ++-
+ builtin/pack-objects.c |  6 ++++--
+ builtin/read-tree.c    |  2 +-
+ builtin/stash.c        |  5 +++--
+ cache-tree.c           |  2 +-
+ delta-islands.c        |  2 +-
+ diff-lib.c             |  2 +-
+ fsck.c                 |  6 ++++--
+ http-push.c            |  2 +-
+ list-objects.c         |  2 +-
+ match-trees.c          |  4 ++--
+ merge-ort.c            | 11 ++++++-----
+ merge-recursive.c      |  2 +-
+ merge.c                |  3 ++-
+ pack-bitmap-write.c    |  2 +-
+ packfile.c             |  3 ++-
+ reflog.c               |  2 +-
+ revision.c             |  4 ++--
+ tree-walk.c            | 36 +++++++++++++++++++++---------------
+ tree-walk.h            |  7 +++++--
+ tree.c                 |  2 +-
+ walker.c               |  2 +-
+ 28 files changed, 80 insertions(+), 59 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 3c18664def9a..b3f3dbe7bfeb 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1088,6 +1088,7 @@ LIB_OBJS += pack-check.o
- LIB_OBJS += pack-mtimes.o
- LIB_OBJS += pack-objects.o
- LIB_OBJS += pack-revindex.o
-+LIB_OBJS += pack-compat-map.o
- LIB_OBJS += pack-write.o
- LIB_OBJS += packfile.o
- LIB_OBJS += pager.o
-@@ -1299,6 +1300,7 @@ BUILTIN_OBJS += builtin/send-pack.o
- BUILTIN_OBJS += builtin/shortlog.o
- BUILTIN_OBJS += builtin/show-branch.o
- BUILTIN_OBJS += builtin/show-index.o
-+BUILTIN_OBJS += builtin/show-compat-map.o
- BUILTIN_OBJS += builtin/show-ref.o
- BUILTIN_OBJS += builtin/sparse-checkout.o
- BUILTIN_OBJS += builtin/stash.o
-diff --git a/builtin.h b/builtin.h
-index d560baa6618a..25882d281dd2 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -223,6 +223,7 @@ int cmd_shortlog(int argc, const char **argv, const char *prefix);
- int cmd_show(int argc, const char **argv, const char *prefix);
- int cmd_show_branch(int argc, const char **argv, const char *prefix);
- int cmd_show_index(int argc, const char **argv, const char *prefix);
-+int cmd_show_compat_map(int argc, const char **argv, const char *prefix);
- int cmd_sparse_checkout(int argc, const char **argv, const char *prefix);
- int cmd_status(int argc, const char **argv, const char *prefix);
- int cmd_stash(int argc, const char **argv, const char *prefix);
-diff --git a/builtin/show-compat-map.c b/builtin/show-compat-map.c
-new file mode 100644
-index 000000000000..8cc10bdaab61
---- /dev/null
-+++ b/builtin/show-compat-map.c
-@@ -0,0 +1,139 @@
-+#include "builtin.h"
-+#include "gettext.h"
-+#include "hash.h"
-+#include "hex.h"
-+#include "pack.h"
-+#include "parse-options.h"
-+#include "repository.h"
-+
-+static const char *const show_compat_map_usage[] = {
-+	"git show-compat-map [--verbose] ",
-+	NULL
-+};
-+
-+struct pack_compat_map_header {
-+	uint8_t sig[4];
-+	uint8_t version;
-+	uint8_t first_oid_version;
-+	uint8_t second_oid_version;
-+	uint8_t mbz1;
-+	uint32_t nr_objects;
-+	uint8_t first_abbrev_len;
-+	uint8_t mbz2;
-+	uint8_t second_abbrev_len;
-+	uint8_t mbz3;
-+};
-+
-+struct map_entry {
-+	struct object_id oid;
-+	uint32_t index;
-+};
-+
-+static const struct git_hash_algo *from_oid_version(unsigned oid_version)
-+{
-+	if (oid_version == 1) {
-+		return &hash_algos[GIT_HASH_SHA1];
-+	} else if (oid_version == 2) {
-+		return &hash_algos[GIT_HASH_SHA256];
-+	}
-+	die("unknown oid version %u\n", oid_version);
-+}
-+
-+static void read_half_map(struct map_entry *map, unsigned nr,
-+		     const struct git_hash_algo *algo)
-+{
-+	unsigned i;
-+	for (i = 0; i < nr; i++) {
-+		uint32_t index;
-+		if (fread(map[i].oid.hash, algo->rawsz, 1, stdin) != 1)
-+			die("unable to read hash of %s entry %u/%u",
-+			    algo->name, i, nr);
-+		if (fread(&index, 4, 1, stdin) != 1)
-+			die("unable to read index of %s entry %u/%u",
-+			    algo->name, i, nr);
-+		map[i].oid.algo = hash_algo_by_ptr(algo);
-+		map[i].index = ntohl(index);
-+	}
-+}
-+
-+static void print_half_map(const struct map_entry *map,
-+			   unsigned nr)
-+{
-+	unsigned i;
-+	for (i = 0; i < nr; i++) {
-+		printf("%s %"PRIu32"\n",
-+		       oid_to_hex(&map[i].oid),
-+		       map[i].index);
-+	}
-+}
-+
-+static void print_map(const struct map_entry *map,
-+		      const struct map_entry *compat_map,
-+		      unsigned nr)
-+{
-+	unsigned i;
-+	for (i = 0; i < nr; i++) {
-+		printf("%s ",
-+		       oid_to_hex(&map[i].oid));
-+		printf("%s\n",
-+		       oid_to_hex(&compat_map[map[i].index].oid));
-+	}
-+}
-+
-+int cmd_show_compat_map(int argc, const char **argv, const char *prefix)
-+{
-+	const struct git_hash_algo *algo = NULL, *compat = NULL;
-+	unsigned nr;
-+	struct pack_compat_map_header hdr;
-+	struct map_entry *map, *compat_map;
-+	int verbose = 0;
-+	const struct option show_comapt_map_options[] = {
-+		OPT_BOOL(0, "verbose", &verbose,
-+			 N_("print implementation details of the map file")),
-+		OPT_END()
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, show_comapt_map_options,
-+			     show_compat_map_usage, 0);
-+
-+	if (fread(&hdr, sizeof(hdr), 1, stdin) != 1)
-+		die("unable to read header");
-+	if ((hdr.sig[0] != 'C') ||
-+	    (hdr.sig[1] != 'M') ||
-+	    (hdr.sig[2] != 'A') ||
-+	    (hdr.sig[3] != 'P'))
-+		die("Missing map signature");
-+	if (hdr.version != 1)
-+		die("Unknown map version");
-+	if ((hdr.mbz1 != 0) ||
-+	    (hdr.mbz2 != 0) ||
-+	    (hdr.mbz3 != 0))
-+		die("Must be zero fields non-zero");
-+
-+	nr = ntohl(hdr.nr_objects);
-+
-+	algo = from_oid_version(hdr.first_oid_version);
-+	compat = from_oid_version(hdr.second_oid_version);
-+
-+
-+	if (verbose) {
-+		printf("Map v%u for %u objects from %s to %s abbrevs (%u:%u)\n",
-+		       hdr.version,
-+		       nr,
-+		       algo->name, compat->name,
-+		       hdr.first_abbrev_len,
-+		       hdr.second_abbrev_len);
-+	}
-+	ALLOC_ARRAY(map, nr);
-+	ALLOC_ARRAY(compat_map, nr);
-+	read_half_map(map, nr, algo);
-+	read_half_map(compat_map, nr, compat);
-+	if (verbose) {
-+		print_half_map(map, nr);
-+		print_half_map(compat_map, nr);
-+	}
-+	print_map(map, compat_map, nr);
-+	free(compat_map);
-+	free(map);
-+	return 0;
-+}
-diff --git a/git.c b/git.c
-index c67e44dd82d2..bfaeece5ae0e 100644
---- a/git.c
-+++ b/git.c
-@@ -606,6 +606,7 @@ static struct cmd_struct commands[] = {
- 	{ "show", cmd_show, RUN_SETUP },
- 	{ "show-branch", cmd_show_branch, RUN_SETUP },
- 	{ "show-index", cmd_show_index, RUN_SETUP_GENTLY },
-+	{ "show-compat-map", cmd_show_compat_map, RUN_SETUP_GENTLY },
- 	{ "show-ref", cmd_show_ref, RUN_SETUP },
- 	{ "sparse-checkout", cmd_sparse_checkout, RUN_SETUP },
- 	{ "stage", cmd_add, RUN_SETUP | NEED_WORK_TREE },
-diff --git a/object-file-convert.c b/object-file-convert.c
-index d381d3d2ea65..7978aa63dfa9 100644
---- a/object-file-convert.c
-+++ b/object-file-convert.c
-@@ -9,6 +9,7 @@
- #include "loose.h"
- #include "commit.h"
- #include "gpg-interface.h"
-+#include "pack-compat-map.h"
- #include "object-file-convert.h"
+diff --git a/archive.c b/archive.c
+index ca11db185b15..b10269aee7be 100644
+--- a/archive.c
++++ b/archive.c
+@@ -339,7 +339,8 @@ int write_archive_entries(struct archiver_args *args,
+ 		opts.src_index = args->repo->index;
+ 		opts.dst_index = args->repo->index;
+ 		opts.fn = oneway_merge;
+-		init_tree_desc(&t, args->tree->buffer, args->tree->size);
++		init_tree_desc(&t, &args->tree->object.oid,
++			       args->tree->buffer, args->tree->size);
+ 		if (unpack_trees(1, &t, &opts))
+ 			return -1;
+ 		git_attr_set_direction(GIT_ATTR_INDEX);
+diff --git a/builtin/am.c b/builtin/am.c
+index 8bde034fae68..4dfd714b910e 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1991,8 +1991,8 @@ static int fast_forward_to(struct tree *head, struct tree *remote, int reset)
+ 	opts.reset = reset ? UNPACK_RESET_PROTECT_UNTRACKED : 0;
+ 	opts.preserve_ignored = 0; /* FIXME: !overwrite_ignore */
+ 	opts.fn = twoway_merge;
+-	init_tree_desc(&t[0], head->buffer, head->size);
+-	init_tree_desc(&t[1], remote->buffer, remote->size);
++	init_tree_desc(&t[0], &head->object.oid, head->buffer, head->size);
++	init_tree_desc(&t[1], &remote->object.oid, remote->buffer, remote->size);
  
- int repo_oid_to_algop(struct repository *repo, const struct object_id *src,
-@@ -27,6 +28,12 @@ int repo_oid_to_algop(struct repository *repo, const struct object_id *src,
- 		return 0;
+ 	if (unpack_trees(2, t, &opts)) {
+ 		rollback_lock_file(&lock_file);
+@@ -2026,7 +2026,7 @@ static int merge_tree(struct tree *tree)
+ 	opts.dst_index = &the_index;
+ 	opts.merge = 1;
+ 	opts.fn = oneway_merge;
+-	init_tree_desc(&t[0], tree->buffer, tree->size);
++	init_tree_desc(&t[0], &tree->object.oid, tree->buffer, tree->size);
+ 
+ 	if (unpack_trees(1, t, &opts)) {
+ 		rollback_lock_file(&lock_file);
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index f53612f46870..03eff73fd031 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -701,7 +701,7 @@ static int reset_tree(struct tree *tree, const struct checkout_opts *o,
+ 			       info->commit ? &info->commit->object.oid : null_oid(),
+ 			       NULL);
+ 	parse_tree(tree);
+-	init_tree_desc(&tree_desc, tree->buffer, tree->size);
++	init_tree_desc(&tree_desc, &tree->object.oid, tree->buffer, tree->size);
+ 	switch (unpack_trees(1, &tree_desc, &opts)) {
+ 	case -2:
+ 		*writeout_error = 1;
+@@ -815,10 +815,12 @@ static int merge_working_tree(const struct checkout_opts *opts,
+ 			die(_("unable to parse commit %s"),
+ 				oid_to_hex(old_commit_oid));
+ 
+-		init_tree_desc(&trees[0], tree->buffer, tree->size);
++		init_tree_desc(&trees[0], &tree->object.oid,
++			       tree->buffer, tree->size);
+ 		parse_tree(new_tree);
+ 		tree = new_tree;
+-		init_tree_desc(&trees[1], tree->buffer, tree->size);
++		init_tree_desc(&trees[1], &tree->object.oid,
++			       tree->buffer, tree->size);
+ 
+ 		ret = unpack_trees(2, trees, &topts);
+ 		clear_unpack_trees_porcelain(&topts);
+diff --git a/builtin/clone.c b/builtin/clone.c
+index c6357af94989..79ceefb93995 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -737,7 +737,7 @@ static int checkout(int submodule_progress, int filter_submodules)
+ 	if (!tree)
+ 		die(_("unable to parse commit %s"), oid_to_hex(&oid));
+ 	parse_tree(tree);
+-	init_tree_desc(&t, tree->buffer, tree->size);
++	init_tree_desc(&t, &tree->object.oid, tree->buffer, tree->size);
+ 	if (unpack_trees(1, &t, &opts) < 0)
+ 		die(_("unable to checkout working tree"));
+ 
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 7da5f924484d..537319932b65 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -340,7 +340,7 @@ static void create_base_index(const struct commit *current_head)
+ 	if (!tree)
+ 		die(_("failed to unpack HEAD tree object"));
+ 	parse_tree(tree);
+-	init_tree_desc(&t, tree->buffer, tree->size);
++	init_tree_desc(&t, &tree->object.oid, tree->buffer, tree->size);
+ 	if (unpack_trees(1, &t, &opts))
+ 		exit(128); /* We've already reported the error, finish dying */
+ }
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 50e712a18479..0c2b8a376f8e 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -530,7 +530,7 @@ static int grep_submodule(struct grep_opt *opt,
+ 		strbuf_addstr(&base, filename);
+ 		strbuf_addch(&base, '/');
+ 
+-		init_tree_desc(&tree, data, size);
++		init_tree_desc(&tree, oid, data, size);
+ 		hit = grep_tree(&subopt, pathspec, &tree, &base, base.len,
+ 				object_type == OBJ_COMMIT);
+ 		strbuf_release(&base);
+@@ -574,7 +574,7 @@ static int grep_cache(struct grep_opt *opt,
+ 
+ 			data = repo_read_object_file(the_repository, &ce->oid,
+ 						     &type, &size);
+-			init_tree_desc(&tree, data, size);
++			init_tree_desc(&tree, &ce->oid, data, size);
+ 
+ 			hit |= grep_tree(opt, pathspec, &tree, &name, 0, 0);
+ 			strbuf_setlen(&name, name_base_len);
+@@ -670,7 +670,7 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
+ 				    oid_to_hex(&entry.oid));
+ 
+ 			strbuf_addch(base, '/');
+-			init_tree_desc(&sub, data, size);
++			init_tree_desc(&sub, &entry.oid, data, size);
+ 			hit |= grep_tree(opt, pathspec, &sub, base, tn_len,
+ 					 check_attr);
+ 			free(data);
+@@ -714,7 +714,7 @@ static int grep_object(struct grep_opt *opt, const struct pathspec *pathspec,
+ 			strbuf_add(&base, name, len);
+ 			strbuf_addch(&base, ':');
+ 		}
+-		init_tree_desc(&tree, data, size);
++		init_tree_desc(&tree, &obj->oid, data, size);
+ 		hit = grep_tree(opt, pathspec, &tree, &base, base.len,
+ 				obj->type == OBJ_COMMIT);
+ 		strbuf_release(&base);
+diff --git a/builtin/merge.c b/builtin/merge.c
+index de68910177fb..718165d45917 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -704,7 +704,8 @@ static int read_tree_trivial(struct object_id *common, struct object_id *head,
+ 	cache_tree_free(&the_index.cache_tree);
+ 	for (i = 0; i < nr_trees; i++) {
+ 		parse_tree(trees[i]);
+-		init_tree_desc(t+i, trees[i]->buffer, trees[i]->size);
++		init_tree_desc(t+i, &trees[i]->object.oid,
++			       trees[i]->buffer, trees[i]->size);
  	}
- 	if (repo_loose_object_map_oid(repo, dest, to, src)) {
-+		/*
-+		 * It's not in the loose object map, so let's see if it's in a
-+		 * pack.
-+		 */
-+		if (!repo_packed_oid_to_algop(repo, src, to, dest))
-+			return 0;
- 		/*
- 		 * We may have loaded the object map at repo initialization but
- 		 * another process (perhaps upstream of a pipe from us) may have
-diff --git a/object-name.c b/object-name.c
-index ebe87f5c4fdd..d33c82bc96ba 100644
---- a/object-name.c
-+++ b/object-name.c
-@@ -26,6 +26,7 @@
- #include "commit-reach.h"
- #include "date.h"
- #include "object-file-convert.h"
-+#include "pack-compat-map.h"
+ 	if (unpack_trees(nr_trees, t, &opts))
+ 		return -1;
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index d2a162d52804..d34902002656 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1756,7 +1756,8 @@ static void add_pbase_object(struct tree_desc *tree,
+ 			tree = pbase_tree_get(&entry.oid);
+ 			if (!tree)
+ 				return;
+-			init_tree_desc(&sub, tree->tree_data, tree->tree_size);
++			init_tree_desc(&sub, &tree->oid,
++				       tree->tree_data, tree->tree_size);
  
- static int get_oid_oneline(struct repository *r, const char *, struct object_id *, struct commit_list *);
+ 			add_pbase_object(&sub, down, downlen, fullname);
+ 			pbase_tree_put(tree);
+@@ -1816,7 +1817,8 @@ static void add_preferred_base_object(const char *name)
+ 		}
+ 		else {
+ 			struct tree_desc tree;
+-			init_tree_desc(&tree, it->pcache.tree_data, it->pcache.tree_size);
++			init_tree_desc(&tree, &it->pcache.oid,
++				       it->pcache.tree_data, it->pcache.tree_size);
+ 			add_pbase_object(&tree, name, cmplen, name);
+ 		}
+ 	}
+diff --git a/builtin/read-tree.c b/builtin/read-tree.c
+index 1fec702a04fa..24d6d156d3a2 100644
+--- a/builtin/read-tree.c
++++ b/builtin/read-tree.c
+@@ -264,7 +264,7 @@ int cmd_read_tree(int argc, const char **argv, const char *cmd_prefix)
+ 	for (i = 0; i < nr_trees; i++) {
+ 		struct tree *tree = trees[i];
+ 		parse_tree(tree);
+-		init_tree_desc(t+i, tree->buffer, tree->size);
++		init_tree_desc(t+i, &tree->object.oid, tree->buffer, tree->size);
+ 	}
+ 	if (unpack_trees(nr_trees, t, &opts))
+ 		return 128;
+diff --git a/builtin/stash.c b/builtin/stash.c
+index fe64cde9ce30..9ee52af4d28e 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -285,7 +285,7 @@ static int reset_tree(struct object_id *i_tree, int update, int reset)
+ 	if (parse_tree(tree))
+ 		return -1;
  
-@@ -210,6 +211,19 @@ static void find_short_packed_object(struct disambiguate_state *ds)
- 		unique_in_pack(p, ds);
+-	init_tree_desc(t, tree->buffer, tree->size);
++	init_tree_desc(t, &tree->object.oid, tree->buffer, tree->size);
+ 
+ 	opts.head_idx = 1;
+ 	opts.src_index = &the_index;
+@@ -871,7 +871,8 @@ static void diff_include_untracked(const struct stash_info *info, struct diff_op
+ 		tree[i] = parse_tree_indirect(oid[i]);
+ 		if (parse_tree(tree[i]) < 0)
+ 			die(_("failed to parse tree"));
+-		init_tree_desc(&tree_desc[i], tree[i]->buffer, tree[i]->size);
++		init_tree_desc(&tree_desc[i], &tree[i]->object.oid,
++			       tree[i]->buffer, tree[i]->size);
+ 	}
+ 
+ 	unpack_tree_opt.head_idx = -1;
+diff --git a/cache-tree.c b/cache-tree.c
+index ddc7d3d86959..334973a01cee 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -770,7 +770,7 @@ static void prime_cache_tree_rec(struct repository *r,
+ 
+ 	oidcpy(&it->oid, &tree->object.oid);
+ 
+-	init_tree_desc(&desc, tree->buffer, tree->size);
++	init_tree_desc(&desc, &tree->object.oid, tree->buffer, tree->size);
+ 	cnt = 0;
+ 	while (tree_entry(&desc, &entry)) {
+ 		if (!S_ISDIR(entry.mode))
+diff --git a/delta-islands.c b/delta-islands.c
+index 5de5759f3f13..1ff3506b10f2 100644
+--- a/delta-islands.c
++++ b/delta-islands.c
+@@ -289,7 +289,7 @@ void resolve_tree_islands(struct repository *r,
+ 		if (!tree || parse_tree(tree) < 0)
+ 			die(_("bad tree object %s"), oid_to_hex(&ent->idx.oid));
+ 
+-		init_tree_desc(&desc, tree->buffer, tree->size);
++		init_tree_desc(&desc, &tree->object.oid, tree->buffer, tree->size);
+ 		while (tree_entry(&desc, &entry)) {
+ 			struct object *obj;
+ 
+diff --git a/diff-lib.c b/diff-lib.c
+index 6b0c6a7180cc..add323f5628d 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -558,7 +558,7 @@ static int diff_cache(struct rev_info *revs,
+ 	opts.pathspec = &revs->diffopt.pathspec;
+ 	opts.pathspec->recursive = 1;
+ 
+-	init_tree_desc(&t, tree->buffer, tree->size);
++	init_tree_desc(&t, &tree->object.oid, tree->buffer, tree->size);
+ 	return unpack_trees(1, &t, &opts);
  }
  
-+static void find_short_packed_compat_object(struct disambiguate_state *ds)
-+{
-+	struct packed_git *p;
-+
-+	/* Skip, unless compatibility oids are wanted */
-+	if (!ds->algo && (&hash_algos[ds->algo] != ds->repo->compat_hash_algo))
-+		return;
-+
-+	for (p = get_packed_git(ds->repo); p && !ds->ambiguous; p = p->next)
-+		pack_compat_map_each(ds->repo, p, ds->bin_pfx.hash, ds->len,
-+				     match_prefix, ds);
-+}
-+
- static int finish_object_disambiguation(struct disambiguate_state *ds,
- 					struct object_id *oid)
- {
-@@ -581,6 +595,7 @@ static enum get_oid_result get_short_oid(struct repository *r,
+diff --git a/fsck.c b/fsck.c
+index 2b1e348005b7..6b492a48da82 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -313,7 +313,8 @@ static int fsck_walk_tree(struct tree *tree, void *data, struct fsck_options *op
+ 		return -1;
  
- 	find_short_object_filename(&ds);
- 	find_short_packed_object(&ds);
-+	find_short_packed_compat_object(&ds);
- 	status = finish_object_disambiguation(&ds, oid);
+ 	name = fsck_get_object_name(options, &tree->object.oid);
+-	if (init_tree_desc_gently(&desc, tree->buffer, tree->size, 0))
++	if (init_tree_desc_gently(&desc, &tree->object.oid,
++				  tree->buffer, tree->size, 0))
+ 		return -1;
+ 	while (tree_entry_gently(&desc, &entry)) {
+ 		struct object *obj;
+@@ -583,7 +584,8 @@ static int fsck_tree(const struct object_id *tree_oid,
+ 	const char *o_name;
+ 	struct name_stack df_dup_candidates = { NULL };
  
- 	/*
-@@ -592,6 +607,7 @@ static enum get_oid_result get_short_oid(struct repository *r,
- 		reprepare_packed_git(r);
- 		find_short_object_filename(&ds);
- 		find_short_packed_object(&ds);
-+		find_short_packed_compat_object(&ds);
- 		status = finish_object_disambiguation(&ds, oid);
- 	}
+-	if (init_tree_desc_gently(&desc, buffer, size, TREE_DESC_RAW_MODES)) {
++	if (init_tree_desc_gently(&desc, tree_oid, buffer, size,
++				  TREE_DESC_RAW_MODES)) {
+ 		retval += report(options, tree_oid, OBJ_TREE,
+ 				 FSCK_MSG_BAD_TREE,
+ 				 "cannot be parsed as a tree");
+diff --git a/http-push.c b/http-push.c
+index a704f490fdb2..81c35b5e96f7 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -1308,7 +1308,7 @@ static struct object_list **process_tree(struct tree *tree,
+ 	obj->flags |= SEEN;
+ 	p = add_one_object(obj, p);
  
-@@ -659,6 +675,7 @@ int repo_for_each_abbrev(struct repository *r, const char *prefix,
- 	ds.cb_data = &collect;
- 	find_short_object_filename(&ds);
- 	find_short_packed_object(&ds);
-+	find_short_packed_compat_object(&ds);
+-	init_tree_desc(&desc, tree->buffer, tree->size);
++	init_tree_desc(&desc, &tree->object.oid, tree->buffer, tree->size);
  
- 	ret = oid_array_for_each_unique(&collect, fn, cb_data);
- 	oid_array_clear(&collect);
-@@ -871,6 +888,7 @@ int repo_find_unique_abbrev_r(struct repository *r, char *hex,
- 	ds.cb_data = (void *)&mad;
+ 	while (tree_entry(&desc, &entry))
+ 		switch (object_type(entry.mode)) {
+diff --git a/list-objects.c b/list-objects.c
+index e60a6cd5b46e..312335c8a7f2 100644
+--- a/list-objects.c
++++ b/list-objects.c
+@@ -97,7 +97,7 @@ static void process_tree_contents(struct traversal_context *ctx,
+ 	enum interesting match = ctx->revs->diffopt.pathspec.nr == 0 ?
+ 		all_entries_interesting : entry_not_interesting;
  
- 	find_short_object_filename(&ds);
-+	find_short_packed_compat_object(&ds);
- 	(void)finish_object_disambiguation(&ds, &oid_ret);
+-	init_tree_desc(&desc, tree->buffer, tree->size);
++	init_tree_desc(&desc, &tree->object.oid, tree->buffer, tree->size);
  
- 	hex[mad.cur_len] = 0;
-diff --git a/object-store-ll.h b/object-store-ll.h
-index c5f2bb2fc2fe..c37c19ada0c3 100644
---- a/object-store-ll.h
-+++ b/object-store-ll.h
-@@ -135,6 +135,12 @@ struct packed_git {
- 	 */
- 	const uint32_t *mtimes_map;
- 	size_t mtimes_size;
-+
-+	const void *compat_mapping;
-+	size_t compat_mapping_size;
-+	const uint8_t *hash_map;
-+	const uint8_t *compat_hash_map;
-+
- 	/* something like ".git/objects/pack/xxxxx.pack" */
- 	char pack_name[FLEX_ARRAY]; /* more */
- };
-diff --git a/pack-compat-map.c b/pack-compat-map.c
-new file mode 100644
-index 000000000000..3a992095ebe3
---- /dev/null
-+++ b/pack-compat-map.c
-@@ -0,0 +1,334 @@
-+#include "git-compat-util.h"
-+#include "gettext.h"
-+#include "hex.h"
-+#include "hash-ll.h"
-+#include "hash.h"
-+#include "object-store.h"
-+#include "object-file.h"
-+#include "packfile.h"
-+#include "pack-compat-map.h"
-+#include "packfile.h"
-+
-+struct pack_compat_map_header {
-+	uint8_t sig[4];
-+	uint8_t version;
-+	uint8_t first_oid_version;
-+	uint8_t second_oid_version;
-+	uint8_t mbz1;
-+	uint32_t nr_objects;
-+	uint8_t first_abbrev_len;
-+	uint8_t mbz2;
-+	uint8_t second_abbrev_len;
-+	uint8_t mbz3;
-+};
-+
-+static char *pack_compat_map_filename(struct packed_git *p)
-+{
-+	size_t len;
-+	if (!strip_suffix(p->pack_name, ".pack", &len))
-+		BUG("pack_name does not end in .pack");
-+	return xstrfmt("%.*s.compat", (int)len, p->pack_name);
-+}
-+
-+static int oid_version_match(const char *filename,
-+			     unsigned oid_version,
-+			     const struct git_hash_algo *algo)
-+{
-+	const struct git_hash_algo *found = NULL;
-+	int ret = 0;
-+
-+	if (oid_version == 1) {
-+		found = &hash_algos[GIT_HASH_SHA1];
-+	} else if (oid_version == 2) {
-+		found = &hash_algos[GIT_HASH_SHA256];
-+	}
-+	if (found == NULL) {
-+		ret = error(_("compat map file %s hash version %u unknown"),
-+			    filename, oid_version);
-+	}
-+	else if (found != algo) {
-+		ret = error(_("compat map file %s found hash %s expected hash %s"),
-+			    filename, found->name, algo->name);
-+	}
-+	return ret;
-+}
-+
-+
-+static int load_pack_compat_map_file(char *compat_map_file,
-+				     struct repository *repo,
-+				     struct packed_git *p)
-+{
-+	const struct pack_compat_map_header *hdr;
-+	unsigned compat_map_objects = 0;
-+	const uint8_t *data = NULL;
-+	const uint8_t *packs_hash = NULL;
-+	int fd, ret = 0;
-+	struct stat st;
-+	size_t size, map1sz, map2sz, expected_size;
-+
-+	fd = git_open(compat_map_file);
-+
-+	if (fd < 0) {
-+		ret = -1;
-+		goto cleanup;
-+	}
-+	if (fstat(fd, &st)) {
-+		ret = error_errno(_("failed to read %s"), compat_map_file);
-+		goto cleanup;
-+	}
-+
-+	size = xsize_t(st.st_size);
-+
-+	if (size < sizeof(struct pack_compat_map_header)) {
-+		ret = error(_("compat map file %s is too small"), compat_map_file);
-+		goto cleanup;
-+	}
-+
-+	data = xmmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);
-+
-+	hdr = (const struct pack_compat_map_header *)data;
-+	if ((hdr->sig[0] != 'C') ||
-+	    (hdr->sig[1] != 'M') ||
-+	    (hdr->sig[2] != 'A') ||
-+	    (hdr->sig[3] != 'P')) {
-+		ret = error(_("compat map file %s has unknown signature"),
-+			    compat_map_file);
-+		goto cleanup;
-+	}
-+
-+	if (hdr->version != 1) {
-+		ret = error(_("compat map file %s has unsupported version %"PRIu8),
-+			    compat_map_file, hdr->version);
-+		goto cleanup;
-+	}
-+
-+	ret = oid_version_match(compat_map_file, hdr->first_oid_version, repo->hash_algo);
-+	if (ret)
-+		goto cleanup;
-+	ret = oid_version_match(compat_map_file, hdr->second_oid_version, repo->compat_hash_algo);
-+	if (ret)
-+		goto cleanup;
-+	compat_map_objects = ntohl(hdr->nr_objects);
-+	if (compat_map_objects != p->num_objects) {
-+		ret = error(_("compat map file %s number of objects found %u wanted %u"),
-+			    compat_map_file, compat_map_objects, p->num_objects);
-+		goto cleanup;
-+	}
-+
-+	map1sz = st_mult(repo->hash_algo->rawsz + 4, compat_map_objects);
-+	map2sz = st_mult(repo->compat_hash_algo->rawsz + 4, compat_map_objects);
-+
-+	expected_size = sizeof(struct pack_compat_map_header);
-+	expected_size = st_add(expected_size, map1sz);
-+	expected_size = st_add(expected_size, map2sz);
-+	expected_size = st_add(expected_size, 2 * repo->hash_algo->rawsz);
-+
-+	if (size != expected_size) {
-+		ret = error(_("compat map file %s is corrupt size %zu expected %zu objects %u sz1 %zu sz2 %zu"),
-+			    compat_map_file, size, expected_size, compat_map_objects,
-+			    map1sz, map2sz
-+			);
-+		goto cleanup;
-+	}
-+
-+	packs_hash = data + sizeof(struct pack_compat_map_header) + map1sz + map2sz;
-+	if (hashcmp(packs_hash, p->hash)) {
-+		ret = error(_("compat map file %s does not match pack %s\n"),
-+			      compat_map_file, hash_to_hex(p->hash));
-+	}
-+
-+
-+	p->compat_mapping = data;
-+	p->compat_mapping_size = size;
-+
-+	p->hash_map = data + sizeof(struct pack_compat_map_header);
-+	p->compat_hash_map = p->hash_map + map1sz;
-+
-+cleanup:
-+	if (ret) {
-+		if (data) {
-+			munmap((void *)data, size);
-+		}
-+	}
-+	if (fd >= 0)
-+		close(fd);
-+	return ret;
-+}
-+
-+int load_pack_compat_map(struct repository *repo, struct packed_git *p)
-+{
-+	char *compat_map_name = NULL;
-+	int ret = 0;
-+
-+	if (p->compat_mapping)
-+		return ret;	/* already loaded */
-+
-+	if (!repo->compat_hash_algo)
-+		return 1;		/* Nothing to do */
-+
-+	ret = open_pack_index(p);
-+	if (ret < 0)
-+		goto cleanup;
-+
-+	compat_map_name = pack_compat_map_filename(p);
-+	ret = load_pack_compat_map_file(compat_map_name, repo, p);
-+cleanup:
-+	free(compat_map_name);
-+	return ret;
-+}
-+
-+static int keycmp(const unsigned char *a, const unsigned char *b,
-+		  size_t key_hex_size)
-+{
-+	size_t key_byte_size = key_hex_size / 2;
-+	unsigned a_last, b_last, mask = (key_hex_size & 1) ? 0xf0 : 0;
-+	int cmp = memcmp(a, b, key_byte_size);
-+	if (cmp)
-+		return cmp;
-+
-+	a_last = a[key_byte_size] & mask;
-+	b_last = b[key_byte_size] & mask;
-+
-+	if (a_last == b_last)
-+		cmp = 0;
-+	else if (a_last < b_last)
-+		cmp = -1;
-+	else
-+		cmp = 1;
-+
-+	return cmp;
-+}
-+
-+static const uint8_t *bsearch_map(const unsigned char *hash,
-+				  const uint8_t *table, unsigned nr,
-+				  size_t entry_size, size_t key_hex_size)
-+{
-+	uint32_t hi, lo;
-+
-+	hi = nr - 1;
-+	lo = 0;
-+	while (lo < hi) {
-+		unsigned mi = lo + ((hi - lo) / 2);
-+		const unsigned char *entry = table + (mi * entry_size);
-+		int cmp = keycmp(entry, hash, key_hex_size);
-+		if (!cmp)
-+			return entry;
-+		if (cmp > 0)
-+			hi = mi;
-+		else
-+			lo = mi + 1;
-+	}
-+	if (lo == hi) {
-+		const unsigned char *entry = table + (lo * entry_size);
-+		int cmp = keycmp(entry, hash, key_hex_size);
-+		if (!cmp)
-+			return entry;
-+	}
-+	return NULL;
-+}
-+
-+static void map_each(const struct git_hash_algo *compat,
-+		     const unsigned char *prefix, size_t prefix_hexsz,
-+		     const uint8_t *table, unsigned nr, size_t entry_bytes,
-+		     compat_map_iter_t iter, void *data)
-+{
-+	const uint8_t *found, *last = table + (entry_bytes * nr);
-+
-+	found = bsearch_map(prefix, table, nr, entry_bytes, prefix_hexsz);
-+	if (!found)
-+		return;
-+
-+	/* Visit each matching key */
-+	do {
-+		struct object_id oid;
-+
-+		if (keycmp(found, prefix, prefix_hexsz) != 0)
-+			break;
-+
-+		oidread_algop(&oid, found, compat);
-+		if (iter(&oid, data) == CB_BREAK)
-+			break;
-+
-+		found = found + entry_bytes;
-+	} while (found < last);
-+}
-+
-+void pack_compat_map_each(struct repository *repo, struct packed_git *p,
-+			 const unsigned char *prefix, size_t prefix_hexsz,
-+			 compat_map_iter_t iter, void *data)
-+{
-+	const struct git_hash_algo *compat = repo->compat_hash_algo;
-+
-+	if (!p->num_objects ||
-+	    (!p->compat_mapping && load_pack_compat_map(repo, p)))
-+		return;
-+
-+	if (prefix_hexsz > compat->hexsz)
-+		prefix_hexsz = compat->hexsz;
-+
-+	map_each(compat, prefix, prefix_hexsz,
-+		 p->compat_hash_map, p->num_objects, compat->rawsz + 4,
-+		 iter, data);
-+}
-+
-+static int compat_map_to_algop(const struct object_id *src,
-+			       const struct git_hash_algo *to,
-+			       const struct git_hash_algo *from,
-+			       const uint8_t *to_table,
-+			       const uint8_t *from_table,
-+			       unsigned nr,
-+			       struct object_id *dest)
-+{
-+	const uint8_t *found;
-+	uint32_t index;
-+
-+	if (src->algo != hash_algo_by_ptr(from))
-+		return -1;
-+
-+	found = bsearch_map(src->hash,
-+			    from_table, nr,
-+			    from->rawsz + 4,
-+			    from->hexsz);
-+	if (!found)
-+		return -1;
-+
-+	index = ntohl(*(uint32_t *)(found + from->rawsz));
-+	oidread_algop(dest, to_table + index * (to->rawsz + 4), to);
-+	return 0;
-+}
-+
-+static int pack_to_algop(struct repository *repo, struct packed_git *p,
-+			 const struct object_id *src,
-+			 const struct git_hash_algo *to, struct object_id *dest)
-+{
-+	if (!p->compat_mapping && load_pack_compat_map(repo, p))
-+		return -1;
-+
-+	if (to == repo->hash_algo) {
-+		return compat_map_to_algop(src, to, repo->compat_hash_algo,
-+					   p->hash_map,
-+					   p->compat_hash_map,
-+					   p->num_objects, dest);
-+	}
-+	else if (to == repo->compat_hash_algo) {
-+		return compat_map_to_algop(src, to, repo->hash_algo,
-+					   p->compat_hash_map,
-+					   p->hash_map,
-+					   p->num_objects, dest);
-+	}
-+	else
-+		return -1;
-+}
-+
-+int repo_packed_oid_to_algop(struct repository *repo,
-+			     const struct object_id *src,
-+			     const struct git_hash_algo *to,
-+			     struct object_id *dest)
-+{
-+	struct packed_git *p;
-+	for (p = get_packed_git(repo); p; p = p->next) {
-+		if (!pack_to_algop(repo, p, src, to, dest))
-+			return 0;
-+	}
-+	return -1;
-+}
-diff --git a/pack-compat-map.h b/pack-compat-map.h
-new file mode 100644
-index 000000000000..2a4561ffdff6
---- /dev/null
-+++ b/pack-compat-map.h
-@@ -0,0 +1,27 @@
-+#ifndef PACK_COMPAT_MAP_H
-+#define PACK_COMPAT_MAP_H
-+
-+#include "cbtree.h"
-+struct repository;
-+struct packed_git;
-+struct object_id;
-+struct git_hash_algo;
-+struct pack_idx_entry;
-+
-+int load_pack_compat_map(struct repository *repo, struct packed_git *p);
-+
-+typedef enum cb_next (*compat_map_iter_t)(const struct object_id *, void *data);
-+void pack_compat_map_each(struct repository *repo, struct packed_git *p,
-+			 const unsigned char *prefix, size_t prefix_hexsz,
-+			 compat_map_iter_t, void *data);
-+
-+int repo_packed_oid_to_algop(struct repository *repo,
-+			     const struct object_id *src,
-+			     const struct git_hash_algo *to,
-+			     struct object_id *dest);
-+
-+const char *write_compat_map_file(const char *compat_map_name,
-+				  struct pack_idx_entry **objects,
-+				  int nr_objects, const unsigned char *hash);
-+
-+#endif /* PACK_COMPAT_MAP_H */
-diff --git a/pack-write.c b/pack-write.c
-index b19ddf15b284..f22eea964f77 100644
---- a/pack-write.c
-+++ b/pack-write.c
-@@ -12,6 +12,7 @@
- #include "pack-revindex.h"
- #include "path.h"
- #include "strbuf.h"
-+#include "object-file-convert.h"
- 
- void reset_pack_idx_option(struct pack_idx_option *opts)
- {
-@@ -345,6 +346,157 @@ static char *write_mtimes_file(struct packing_data *to_pack,
- 	return mtimes_name;
+ 	while (tree_entry(&desc, &entry)) {
+ 		if (match != all_entries_interesting) {
+diff --git a/match-trees.c b/match-trees.c
+index 0885ac681cd5..3412b6a1401d 100644
+--- a/match-trees.c
++++ b/match-trees.c
+@@ -63,7 +63,7 @@ static void *fill_tree_desc_strict(struct tree_desc *desc,
+ 		die("unable to read tree (%s)", oid_to_hex(hash));
+ 	if (type != OBJ_TREE)
+ 		die("%s is not a tree", oid_to_hex(hash));
+-	init_tree_desc(desc, buffer, size);
++	init_tree_desc(desc, hash, buffer, size);
+ 	return buffer;
  }
  
-+struct map_entry {
-+	const struct pack_idx_entry *idx;
-+	uint32_t oid_index;
-+	uint32_t compat_oid_index;
-+};
-+
-+static int map_oid_cmp(const void *_a, const void *_b)
-+{
-+	struct map_entry *a = *(struct map_entry **)_a;
-+	struct map_entry *b = *(struct map_entry **)_b;
-+	return oidcmp(&a->idx->oid, &b->idx->oid);
-+}
-+
-+static int map_compat_oid_cmp(const void *_a, const void *_b)
-+{
-+	struct map_entry *a = *(struct map_entry **)_a;
-+	struct map_entry *b = *(struct map_entry **)_b;
-+	return oidcmp(&a->idx->compat_oid, &b->idx->compat_oid);
-+}
-+
-+struct pack_compat_map_header {
-+	uint8_t sig[4];
-+	uint8_t version;
-+	uint8_t first_oid_version;
-+	uint8_t second_oid_version;
-+	uint8_t mbz1;
-+	uint32_t nr_objects;
-+	uint8_t first_abbrev_len;
-+	uint8_t mbz2;
-+	uint8_t second_abbrev_len;
-+	uint8_t mbz3;
-+};
-+
-+static inline unsigned last_matching_offset(const struct object_id *a,
-+					    const struct object_id *b,
-+					    const struct git_hash_algo *algop)
-+{
-+	unsigned i;
-+	for (i = 0; i < algop->rawsz; i++)
-+		if (a->hash[i] != b->hash[i])
-+			return i;
-+	/* We should never hit this case. */
-+	return i;
-+}
-+
-+/*
-+ * The *hash contains the pack content hash.
-+ * The objects array is passed in sorted.
-+ */
-+const char *write_compat_map_file(const char *compat_map_name,
-+				  struct pack_idx_entry **objects,
-+				  int nr_objects, const unsigned char *hash)
-+{
-+	struct repository *repo = the_repository;
-+	const struct git_hash_algo *algo = repo->hash_algo;
-+	const struct git_hash_algo *compat = repo->compat_hash_algo;
-+	unsigned short_name_len, compat_short_name_len;
-+	struct hashfile *f;
-+	struct map_entry *map_entries, **map;
-+	struct pack_compat_map_header hdr;
-+	unsigned i;
-+	int fd;
-+
-+	if (!compat || !nr_objects)
-+		return NULL;
-+
-+	ALLOC_ARRAY(map_entries, nr_objects);
-+	ALLOC_ARRAY(map, nr_objects);
-+	short_name_len = 1;
-+	for (i = 0; i < nr_objects; ++i) {
-+		unsigned offset;
-+
-+		map[i] = &map_entries[i];
-+		map_entries[i].idx = objects[i];
-+		if (!objects[i]->compat_oid.algo)
-+			BUG("No mapping from %s to %s\n",
-+			    oid_to_hex(&objects[i]->oid),
-+			    compat->name);
-+
-+		map_entries[i].oid_index = i;
-+		map_entries[i].compat_oid_index = 0;
-+		if (i == 0)
-+			continue;
-+
-+		offset = last_matching_offset(&map_entries[i].idx->oid,
-+					      &map_entries[i - 1].idx->oid,
-+					      algo);
-+		if (offset > short_name_len)
-+			short_name_len = offset;
-+	}
-+	QSORT(map, nr_objects, map_compat_oid_cmp);
-+	compat_short_name_len = 1;
-+	for (i = 0; i < nr_objects; ++i) {
-+		unsigned offset;
-+
-+		map[i]->compat_oid_index = i;
-+
-+		if (i == 0)
-+			continue;
-+
-+		offset = last_matching_offset(&map[i]->idx->compat_oid,
-+					      &map[i - 1]->idx->compat_oid,
-+					      compat);
-+		if (offset > compat_short_name_len)
-+			compat_short_name_len = offset;
-+	}
-+
-+	if (compat_map_name) {
-+		/* Verify an existing compat map file */
-+		f = hashfd_check(compat_map_name);
-+	} else {
-+		struct strbuf tmp_file = STRBUF_INIT;
-+		fd = odb_mkstemp(&tmp_file, "pack/tmp_compat_map_XXXXXX");
-+		compat_map_name = strbuf_detach(&tmp_file, NULL);
-+		f = hashfd(fd, compat_map_name);
-+	}
-+
-+	hdr.sig[0] = 'C';
-+	hdr.sig[1] = 'M';
-+	hdr.sig[2] = 'A';
-+	hdr.sig[3] = 'P';
-+	hdr.version = 1;
-+	hdr.first_oid_version = oid_version(algo);
-+	hdr.second_oid_version = oid_version(compat);
-+	hdr.mbz1 = 0;
-+	hdr.nr_objects = htonl(nr_objects);
-+	hdr.first_abbrev_len = short_name_len;
-+	hdr.mbz2 = 0;
-+	hdr.second_abbrev_len = compat_short_name_len;
-+	hdr.mbz3 = 0;
-+	hashwrite(f, &hdr, sizeof(hdr));
-+
-+	QSORT(map, nr_objects, map_oid_cmp);
-+	for (i = 0; i < nr_objects; i++) {
-+		hashwrite(f, map[i]->idx->oid.hash, algo->rawsz);
-+		hashwrite_be32(f, map[i]->compat_oid_index);
-+	}
-+	QSORT(map, nr_objects, map_compat_oid_cmp);
-+	for (i = 0; i < nr_objects; i++) {
-+		hashwrite(f, map[i]->idx->compat_oid.hash, compat->rawsz);
-+		hashwrite_be32(f, map[i]->oid_index);
-+	}
-+
-+	hashwrite(f, hash, algo->rawsz);
-+	finalize_hashfile(f, NULL, FSYNC_COMPONENT_PACK_METADATA,
-+			  CSUM_HASH_IN_STREAM | CSUM_CLOSE | CSUM_FSYNC);
-+	free(map);
-+	free(map_entries);
-+	return compat_map_name;
-+}
-+
- off_t write_pack_header(struct hashfile *f, uint32_t nr_entries)
- {
- 	struct pack_header hdr;
-@@ -548,6 +700,7 @@ void stage_tmp_packfiles(struct strbuf *name_buffer,
- {
- 	const char *rev_tmp_name = NULL;
- 	char *mtimes_tmp_name = NULL;
-+	const char *compat_map_tmp_name = NULL;
+@@ -194,7 +194,7 @@ static int splice_tree(const struct object_id *oid1, const char *prefix,
+ 	buf = repo_read_object_file(the_repository, oid1, &type, &sz);
+ 	if (!buf)
+ 		die("cannot read tree %s", oid_to_hex(oid1));
+-	init_tree_desc(&desc, buf, sz);
++	init_tree_desc(&desc, oid1, buf, sz);
  
- 	if (adjust_shared_perm(pack_tmp_name))
- 		die_errno("unable to make temporary pack file readable");
-@@ -566,11 +719,16 @@ void stage_tmp_packfiles(struct strbuf *name_buffer,
- 						    hash);
+ 	rewrite_here = NULL;
+ 	while (desc.size) {
+diff --git a/merge-ort.c b/merge-ort.c
+index 8631c997002d..3a5729c91e48 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -1679,9 +1679,10 @@ static int collect_merge_info(struct merge_options *opt,
+ 	parse_tree(merge_base);
+ 	parse_tree(side1);
+ 	parse_tree(side2);
+-	init_tree_desc(t + 0, merge_base->buffer, merge_base->size);
+-	init_tree_desc(t + 1, side1->buffer, side1->size);
+-	init_tree_desc(t + 2, side2->buffer, side2->size);
++	init_tree_desc(t + 0, &merge_base->object.oid,
++		       merge_base->buffer, merge_base->size);
++	init_tree_desc(t + 1, &side1->object.oid, side1->buffer, side1->size);
++	init_tree_desc(t + 2, &side2->object.oid, side2->buffer, side2->size);
+ 
+ 	trace2_region_enter("merge", "traverse_trees", opt->repo);
+ 	ret = traverse_trees(NULL, 3, t, &info);
+@@ -4400,9 +4401,9 @@ static int checkout(struct merge_options *opt,
+ 	unpack_opts.fn = twoway_merge;
+ 	unpack_opts.preserve_ignored = 0; /* FIXME: !opts->overwrite_ignore */
+ 	parse_tree(prev);
+-	init_tree_desc(&trees[0], prev->buffer, prev->size);
++	init_tree_desc(&trees[0], &prev->object.oid, prev->buffer, prev->size);
+ 	parse_tree(next);
+-	init_tree_desc(&trees[1], next->buffer, next->size);
++	init_tree_desc(&trees[1], &next->object.oid, next->buffer, next->size);
+ 
+ 	ret = unpack_trees(2, trees, &unpack_opts);
+ 	clear_unpack_trees_porcelain(&unpack_opts);
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 6a4081bb0f52..93df9eecdd95 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -411,7 +411,7 @@ static inline int merge_detect_rename(struct merge_options *opt)
+ static void init_tree_desc_from_tree(struct tree_desc *desc, struct tree *tree)
+ {
+ 	parse_tree(tree);
+-	init_tree_desc(desc, tree->buffer, tree->size);
++	init_tree_desc(desc, &tree->object.oid, tree->buffer, tree->size);
+ }
+ 
+ static int unpack_trees_start(struct merge_options *opt,
+diff --git a/merge.c b/merge.c
+index b60925459c29..86179c34102d 100644
+--- a/merge.c
++++ b/merge.c
+@@ -81,7 +81,8 @@ int checkout_fast_forward(struct repository *r,
+ 	}
+ 	for (i = 0; i < nr_trees; i++) {
+ 		parse_tree(trees[i]);
+-		init_tree_desc(t+i, trees[i]->buffer, trees[i]->size);
++		init_tree_desc(t+i, &trees[i]->object.oid,
++			       trees[i]->buffer, trees[i]->size);
  	}
  
-+	compat_map_tmp_name = write_compat_map_file(NULL, written_list,
-+						    nr_written, hash);
-+
- 	rename_tmp_packfile(name_buffer, pack_tmp_name, "pack");
- 	if (rev_tmp_name)
- 		rename_tmp_packfile(name_buffer, rev_tmp_name, "rev");
- 	if (mtimes_tmp_name)
- 		rename_tmp_packfile(name_buffer, mtimes_tmp_name, "mtimes");
-+	if (compat_map_tmp_name)
-+		rename_tmp_packfile(name_buffer, compat_map_tmp_name, "compat");
+ 	memset(&opts, 0, sizeof(opts));
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+index f6757c3cbf20..9211e08f0127 100644
+--- a/pack-bitmap-write.c
++++ b/pack-bitmap-write.c
+@@ -366,7 +366,7 @@ static int fill_bitmap_tree(struct bitmap *bitmap,
+ 	if (parse_tree(tree) < 0)
+ 		die("unable to load tree object %s",
+ 		    oid_to_hex(&tree->object.oid));
+-	init_tree_desc(&desc, tree->buffer, tree->size);
++	init_tree_desc(&desc, &tree->object.oid, tree->buffer, tree->size);
  
- 	free((char *)rev_tmp_name);
- 	free(mtimes_tmp_name);
+ 	while (tree_entry(&desc, &entry)) {
+ 		switch (object_type(entry.mode)) {
 diff --git a/packfile.c b/packfile.c
-index 1fae0fcdd9e7..c1a6bd9bc6b3 100644
+index 9cc0a2e37a83..1fae0fcdd9e7 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -349,6 +349,17 @@ static void close_pack_mtimes(struct packed_git *p)
- 	p->mtimes_map = NULL;
+@@ -2250,7 +2250,8 @@ static int add_promisor_object(const struct object_id *oid,
+ 		struct tree *tree = (struct tree *)obj;
+ 		struct tree_desc desc;
+ 		struct name_entry entry;
+-		if (init_tree_desc_gently(&desc, tree->buffer, tree->size, 0))
++		if (init_tree_desc_gently(&desc, &tree->object.oid,
++					  tree->buffer, tree->size, 0))
+ 			/*
+ 			 * Error messages are given when packs are
+ 			 * verified, so do not print any here.
+diff --git a/reflog.c b/reflog.c
+index 9ad50e7d93e4..c6992a19268f 100644
+--- a/reflog.c
++++ b/reflog.c
+@@ -40,7 +40,7 @@ static int tree_is_complete(const struct object_id *oid)
+ 		tree->buffer = data;
+ 		tree->size = size;
+ 	}
+-	init_tree_desc(&desc, tree->buffer, tree->size);
++	init_tree_desc(&desc, &tree->object.oid, tree->buffer, tree->size);
+ 	complete = 1;
+ 	while (tree_entry(&desc, &entry)) {
+ 		if (!repo_has_object_file(the_repository, &entry.oid) ||
+diff --git a/revision.c b/revision.c
+index 2f4c53ea207b..a60dfc23a2a5 100644
+--- a/revision.c
++++ b/revision.c
+@@ -82,7 +82,7 @@ static void mark_tree_contents_uninteresting(struct repository *r,
+ 	if (parse_tree_gently(tree, 1) < 0)
+ 		return;
+ 
+-	init_tree_desc(&desc, tree->buffer, tree->size);
++	init_tree_desc(&desc, &tree->object.oid, tree->buffer, tree->size);
+ 	while (tree_entry(&desc, &entry)) {
+ 		switch (object_type(entry.mode)) {
+ 		case OBJ_TREE:
+@@ -189,7 +189,7 @@ static void add_children_by_path(struct repository *r,
+ 	if (parse_tree_gently(tree, 1) < 0)
+ 		return;
+ 
+-	init_tree_desc(&desc, tree->buffer, tree->size);
++	init_tree_desc(&desc, &tree->object.oid, tree->buffer, tree->size);
+ 	while (tree_entry(&desc, &entry)) {
+ 		switch (object_type(entry.mode)) {
+ 		case OBJ_TREE:
+diff --git a/tree-walk.c b/tree-walk.c
+index 3af50a01c2c7..0b44ec7c75ff 100644
+--- a/tree-walk.c
++++ b/tree-walk.c
+@@ -15,7 +15,7 @@ static int decode_tree_entry(struct tree_desc *desc, const char *buf, unsigned l
+ 	const char *path;
+ 	unsigned int len;
+ 	uint16_t mode;
+-	const unsigned hashsz = the_hash_algo->rawsz;
++	const unsigned hashsz = desc->algo->rawsz;
+ 
+ 	if (size < hashsz + 3 || buf[size - (hashsz + 1)]) {
+ 		strbuf_addstr(err, _("too-short tree object"));
+@@ -37,15 +37,19 @@ static int decode_tree_entry(struct tree_desc *desc, const char *buf, unsigned l
+ 	desc->entry.path = path;
+ 	desc->entry.mode = (desc->flags & TREE_DESC_RAW_MODES) ? mode : canon_mode(mode);
+ 	desc->entry.pathlen = len - 1;
+-	oidread(&desc->entry.oid, (const unsigned char *)path + len);
++	oidread_algop(&desc->entry.oid, (const unsigned char *)path + len,
++		      desc->algo);
+ 
+ 	return 0;
  }
  
-+static void close_pack_compat_map(struct packed_git *p)
-+{
-+	if (!p->compat_mapping)
-+		return;
-+
-+	munmap((void *)p->compat_mapping, p->compat_mapping_size);
-+	p->compat_mapping = NULL;
-+	p->hash_map = NULL;
-+	p->compat_hash_map = NULL;
-+}
-+
- void close_pack(struct packed_git *p)
+-static int init_tree_desc_internal(struct tree_desc *desc, const void *buffer,
+-				   unsigned long size, struct strbuf *err,
++static int init_tree_desc_internal(struct tree_desc *desc,
++				   const struct object_id *oid,
++				   const void *buffer, unsigned long size,
++				   struct strbuf *err,
+ 				   enum tree_desc_flags flags)
  {
- 	close_pack_windows(p);
-@@ -356,6 +367,7 @@ void close_pack(struct packed_git *p)
- 	close_pack_index(p);
- 	close_pack_revindex(p);
- 	close_pack_mtimes(p);
-+	close_pack_compat_map(p);
- 	oidset_clear(&p->bad_objects);
++	desc->algo = (oid && oid->algo) ? &hash_algos[oid->algo] : the_hash_algo;
+ 	desc->buffer = buffer;
+ 	desc->size = size;
+ 	desc->flags = flags;
+@@ -54,19 +58,21 @@ static int init_tree_desc_internal(struct tree_desc *desc, const void *buffer,
+ 	return 0;
  }
+ 
+-void init_tree_desc(struct tree_desc *desc, const void *buffer, unsigned long size)
++void init_tree_desc(struct tree_desc *desc, const struct object_id *tree_oid,
++		    const void *buffer, unsigned long size)
+ {
+ 	struct strbuf err = STRBUF_INIT;
+-	if (init_tree_desc_internal(desc, buffer, size, &err, 0))
++	if (init_tree_desc_internal(desc, tree_oid, buffer, size, &err, 0))
+ 		die("%s", err.buf);
+ 	strbuf_release(&err);
+ }
+ 
+-int init_tree_desc_gently(struct tree_desc *desc, const void *buffer, unsigned long size,
++int init_tree_desc_gently(struct tree_desc *desc, const struct object_id *oid,
++			  const void *buffer, unsigned long size,
+ 			  enum tree_desc_flags flags)
+ {
+ 	struct strbuf err = STRBUF_INIT;
+-	int result = init_tree_desc_internal(desc, buffer, size, &err, flags);
++	int result = init_tree_desc_internal(desc, oid, buffer, size, &err, flags);
+ 	if (result)
+ 		error("%s", err.buf);
+ 	strbuf_release(&err);
+@@ -85,7 +91,7 @@ void *fill_tree_descriptor(struct repository *r,
+ 		if (!buf)
+ 			die("unable to read tree %s", oid_to_hex(oid));
+ 	}
+-	init_tree_desc(desc, buf, size);
++	init_tree_desc(desc, oid, buf, size);
+ 	return buf;
+ }
+ 
+@@ -102,7 +108,7 @@ static void entry_extract(struct tree_desc *t, struct name_entry *a)
+ static int update_tree_entry_internal(struct tree_desc *desc, struct strbuf *err)
+ {
+ 	const void *buf = desc->buffer;
+-	const unsigned char *end = (const unsigned char *)desc->entry.path + desc->entry.pathlen + 1 + the_hash_algo->rawsz;
++	const unsigned char *end = (const unsigned char *)desc->entry.path + desc->entry.pathlen + 1 + desc->algo->rawsz;
+ 	unsigned long size = desc->size;
+ 	unsigned long len = end - (const unsigned char *)buf;
+ 
+@@ -611,7 +617,7 @@ int get_tree_entry(struct repository *r,
+ 		retval = -1;
+ 	} else {
+ 		struct tree_desc t;
+-		init_tree_desc(&t, tree, size);
++		init_tree_desc(&t, tree_oid, tree, size);
+ 		retval = find_tree_entry(r, &t, name, oid, mode);
+ 	}
+ 	free(tree);
+@@ -654,7 +660,7 @@ enum get_oid_result get_tree_entry_follow_symlinks(struct repository *r,
+ 	struct tree_desc t;
+ 	int follows_remaining = GET_TREE_ENTRY_FOLLOW_SYMLINKS_MAX_LINKS;
+ 
+-	init_tree_desc(&t, NULL, 0UL);
++	init_tree_desc(&t, NULL, NULL, 0UL);
+ 	strbuf_addstr(&namebuf, name);
+ 	oidcpy(&current_tree_oid, tree_oid);
+ 
+@@ -690,7 +696,7 @@ enum get_oid_result get_tree_entry_follow_symlinks(struct repository *r,
+ 				goto done;
+ 
+ 			/* descend */
+-			init_tree_desc(&t, tree, size);
++			init_tree_desc(&t, &current_tree_oid, tree, size);
+ 		}
+ 
+ 		/* Handle symlinks to e.g. a//b by removing leading slashes */
+@@ -724,7 +730,7 @@ enum get_oid_result get_tree_entry_follow_symlinks(struct repository *r,
+ 			free(parent->tree);
+ 			parents_nr--;
+ 			parent = &parents[parents_nr - 1];
+-			init_tree_desc(&t, parent->tree, parent->size);
++			init_tree_desc(&t, &parent->oid, parent->tree, parent->size);
+ 			strbuf_remove(&namebuf, 0, remainder ? 3 : 2);
+ 			continue;
+ 		}
+@@ -804,7 +810,7 @@ enum get_oid_result get_tree_entry_follow_symlinks(struct repository *r,
+ 			contents_start = contents;
+ 
+ 			parent = &parents[parents_nr - 1];
+-			init_tree_desc(&t, parent->tree, parent->size);
++			init_tree_desc(&t, &parent->oid, parent->tree, parent->size);
+ 			strbuf_splice(&namebuf, 0, len,
+ 				      contents_start, link_len);
+ 			if (remainder)
+diff --git a/tree-walk.h b/tree-walk.h
+index 74cdceb3fed2..cf54d01019e9 100644
+--- a/tree-walk.h
++++ b/tree-walk.h
+@@ -26,6 +26,7 @@ struct name_entry {
+  * A semi-opaque data structure used to maintain the current state of the walk.
+  */
+ struct tree_desc {
++	const struct git_hash_algo *algo;
+ 	/*
+ 	 * pointer into the memory representation of the tree. It always
+ 	 * points at the current entry being visited.
+@@ -85,9 +86,11 @@ int update_tree_entry_gently(struct tree_desc *);
+  * size parameters are assumed to be the same as the buffer and size
+  * members of `struct tree`.
+  */
+-void init_tree_desc(struct tree_desc *desc, const void *buf, unsigned long size);
++void init_tree_desc(struct tree_desc *desc, const struct object_id *tree_oid,
++		    const void *buf, unsigned long size);
+ 
+-int init_tree_desc_gently(struct tree_desc *desc, const void *buf, unsigned long size,
++int init_tree_desc_gently(struct tree_desc *desc, const struct object_id *oid,
++			  const void *buf, unsigned long size,
+ 			  enum tree_desc_flags flags);
+ 
+ /*
+diff --git a/tree.c b/tree.c
+index c745462f968e..44bcf728f10a 100644
+--- a/tree.c
++++ b/tree.c
+@@ -27,7 +27,7 @@ int read_tree_at(struct repository *r,
+ 	if (parse_tree(tree))
+ 		return -1;
+ 
+-	init_tree_desc(&desc, tree->buffer, tree->size);
++	init_tree_desc(&desc, &tree->object.oid, tree->buffer, tree->size);
+ 
+ 	while (tree_entry(&desc, &entry)) {
+ 		if (retval != all_entries_interesting) {
+diff --git a/walker.c b/walker.c
+index 65002a7220ad..c0fd632d921c 100644
+--- a/walker.c
++++ b/walker.c
+@@ -45,7 +45,7 @@ static int process_tree(struct walker *walker, struct tree *tree)
+ 	if (parse_tree(tree))
+ 		return -1;
+ 
+-	init_tree_desc(&desc, tree->buffer, tree->size);
++	init_tree_desc(&desc, &tree->object.oid, tree->buffer, tree->size);
+ 	while (tree_entry(&desc, &entry)) {
+ 		struct object *obj = NULL;
  
 -- 
 2.41.0
