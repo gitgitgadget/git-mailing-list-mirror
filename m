@@ -2,183 +2,301 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E75A8EEB56E
-	for <git@archiver.kernel.org>; Fri,  8 Sep 2023 22:28:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D4521EEB56E
+	for <git@archiver.kernel.org>; Fri,  8 Sep 2023 22:55:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343494AbjIHW2h (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Sep 2023 18:28:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47072 "EHLO
+        id S1344185AbjIHWzs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Sep 2023 18:55:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229543AbjIHW2g (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Sep 2023 18:28:36 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.3])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D2E01FC6
-        for <git@vger.kernel.org>; Fri,  8 Sep 2023 15:28:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
- s=s29768273; t=1694212101; x=1694816901; i=l.s.r@web.de;
- bh=XDzOrrJKrdq1hu0XxDdTCGssNtaS2POPbN/xTYh8UU0=;
- h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
- b=kPbJe0j1wz21gFcsjQlzpefXBByk8qNYCct+EI0arbxxEkeG/a/1bHQOzr/qaRABJTVtD0j
- qAW+OvZ4HOKRgZ+4P30O5OBdd0q8PEOcG+gAd3DlwZrhU2D/sXnbaFnDTC1jXQqQ2dCJwPm1K
- LDED/YPvC7saV52b43vD+xGYOmjpSTOgD1kS6/I8yC7DQAU86kG1qPRLFrmuuTbYrES1/LiEO
- Bdly8/nffGKiZbjsDT8iZoj414FTuBT9eYfMuYbHueWKHP9yv61EHXtpbPPf6FydM0sUj26j4
- AbX9mMts6ot7xz/MaVOyVXbja06FpUZNn8A/wSrS1oB1FEatIWgQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.151.74]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MZB01-1q9ij62Bt3-00UpnG; Sat, 09
- Sep 2023 00:28:21 +0200
-Message-ID: <cec47733-5b15-6ca7-adaf-7f3216ad178b@web.de>
-Date:   Sat, 9 Sep 2023 00:28:20 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.15.0
-Subject: Re: [PATCH] grep: use OPT_INTEGER_F for --max-depth
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>
-References: <4d2eb736-4f34-18f8-2eb7-20e7f7b8c2f8@web.de>
- <20230905072122.GG199565@coredump.intra.peff.net>
- <724641d2-1cba-3768-6008-01e8a1cdca4e@web.de>
- <20230907204027.GA941945@coredump.intra.peff.net>
-Content-Language: en-US
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <20230907204027.GA941945@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:OqkVatYTKIFo13znealTr+sXRnfHmw/NbCzPEegbxOMo6Lsa9+W
- wq93d8WrmjTXNra6SM032yGHcybThC2J+KNJGJ3pg6vI94bsywzXThAqqitY5KMoXDpo9jM
- 2Pb7WbkJzApIoqPRkgl+hPvIURhaRGH56cIxSd8uehwIn/6xZWd3HJpSzIeKWY7NINGf3it
- ctGXcb1vV59/xxxmyTRAQ==
-UI-OutboundReport: notjunk:1;M01:P0:yeu/FzmLyKU=;bri9u+uDEhxI65WifVB6Kqsi7el
- wpvASj7bDh3+MkYfEu8VUzIuSG5UM83OiJN62XbCYE3HiFeq3DmuaYSRW1yfomEZOd+jUSCqL
- NNgwNptfPl/yMUrdHKFV/i1AlN6CUYWhvmJq6/JOuOspH3sOi/x9cT+Z0+P5r222e4Cq19p5V
- S58lpLmnUBOif90O08WdQbZAe/47Or/H6LPJQYPinidnpOByf8kqG8lSnxuLNf77azkw3qI3V
- Y+X75dJ2RVMNyHmo7Htw7L85ST5DFw326caanYqDmuoS6xNukIBfFboixbYTPQWGDPblva5e6
- qFBED35wXvUv0kOO2VVQw3LVNaeFSWghSa6EHBzZ8kEB/2/Pvhqgaaw2LyBDJuBc2nJrQHBuE
- T9lsyk7bm5sy3clJuXgG/rsIElTFaqbecqihXo46CTZF3BuEhL64M/zUimmPyhfmiLnjoY9xl
- 5j595LSR88Fujh8aQx26FhNEqEMmK9NYJ3AoW4XeS+BnfemVI3DS+W22Wcf0F/KvcRFDz3O5q
- zzsnrtR1YN290TlO7sc/QLEJXNI6vnJpdvYfFEiPLIU6TT2GrR8yfmoHDT01ctCcxHxrly8DF
- z1/3CB5PGRhU5vRXqy29MI+1H3RkABn6FmGHi0IhIeX+tPUyMtplY7TaaXXv4Io3WYQ3nDgBY
- khIBpCxt8u+W2rS4mVfTEt9YxTOsyC3PcOGl8DJ8P+WY6VUseXweTAYPGQwK5cYkFrDayqfxi
- Pi9IjR6oBiSaCYrAPHXgkTwbYxEy2Zue5/fa6ZHk0VC5IJ1DcIF4VKhep+QnQs/foNn6/vJqZ
- yQnKfCu7RN5E8AqQEt3BIz7pUI4Aar9ettOmOcXu1K8L++4j5R+L6jBnfJ6UjhtQXONzjgeJ9
- 8cInJPN6KnDKXtUFFfvHVCXghVn6OwXTbyVYs/iigS7gAdR5RId+N6j5yE2Q/aN68kb6hovDP
- CrzRfQ==
+        with ESMTP id S245651AbjIHWzr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Sep 2023 18:55:47 -0400
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 927491FEA
+        for <git@vger.kernel.org>; Fri,  8 Sep 2023 15:55:42 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id 3f1490d57ef6-d7c676651c7so7023040276.1
+        for <git@vger.kernel.org>; Fri, 08 Sep 2023 15:55:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1694213742; x=1694818542; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=BLzMzKTnzHRqjHFzN3MFvAogyJuSsYDc7Sb4Wjjmnok=;
+        b=Vl/O0nmkzlg6TOHo3FRRYKkVVYjP3rffMukxM2VVYwHLwd2erKyCq+qK1t7rFlsoFU
+         X2vn+XiImjDXgMF0MKu6TrkmNZ23z70usf0xAjBp3H/5v8ujG6rWXw2LHmVW06ig3FFW
+         V/MK43bMjtwsRv8Uy0yCVU0YdRd7ehdTcZiZ10xkbjqybN8xj4lZCe3laA/15iWdjTph
+         UdLIJPrM0dLEcbSA3L2FhEA0HwDyMS27wejTuHYjVxhIzrF6artYwAUlGXG2+LwqQCtS
+         q+DGlHpUKReomy/KagKoK/a6ZCGZYo7LPcZfQ1cmMfMNbbZOW8zZGtOMo/tLhI44jda/
+         hkJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694213742; x=1694818542;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BLzMzKTnzHRqjHFzN3MFvAogyJuSsYDc7Sb4Wjjmnok=;
+        b=f26I0QYDMEDa23egakSFxd/PHRqTN14z/r0vTZ9izTxqwGdXw9Cw3ZuTE4KtOtJoZO
+         brCOA7oSxU7rJT/w5HFaSIT5xKoD3uIEc5NFR+LbQgnz29mP870fIyYBfba9WAqgxqZq
+         KFtNtvnH3Cc2K/pvbchczrnk72Ofx/EYIIshE49z8r33sWs8iKtaGSes45uXrzTEg6aq
+         yOSpRDirS7WHd1QhK9ciaapupkSaUapbkDm13iFfEsSIIqXR1TevG0N+EXGW7oSP1a1D
+         SJhudFnFwdxOMxMQ/WSWeLa4Xtjtad1m9RYuCDqv1m52YtmRULszvyQXCfq7kzpFBeTr
+         7qiA==
+X-Gm-Message-State: AOJu0YxVqg+dXYWuC/zH4Fcy59b/68eoo8g5mbemYHwBMW0TzBM3l8wC
+        EDhsifFxbypc3KAlZ6ixYct8SSU9iqI=
+X-Google-Smtp-Source: AGHT+IH100lC5gsR0B+vrCrHe/o31Ihzr5dCVW9ytbJ9K2WKikYAvakN+jIzy4bkN/54T6HVwm6DodISn58=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a05:6902:1024:b0:d7e:c4af:22d2 with SMTP id
+ x4-20020a056902102400b00d7ec4af22d2mr227744ybt.4.1694213741830; Fri, 08 Sep
+ 2023 15:55:41 -0700 (PDT)
+Date:   Fri, 08 Sep 2023 15:55:40 -0700
+In-Reply-To: <20230907092521.733746-12-christian.couder@gmail.com>
+Mime-Version: 1.0
+References: <20230602102533.876905-1-christian.couder@gmail.com>
+ <20230907092521.733746-1-christian.couder@gmail.com> <20230907092521.733746-12-christian.couder@gmail.com>
+Message-ID: <owlyo7icl1g3.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH v4 11/15] replay: use standard revision ranges
+From:   Linus Arver <linusa@google.com>
+To:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Elijah Newren <newren@gmail.com>,
+        John Cai <johncai86@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Calvin Wan <calvinwan@google.com>, Toon Claes <toon@iotcl.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 07.09.23 um 22:40 schrieb Jeff King:
-> On Thu, Sep 07, 2023 at 10:20:53PM +0200, Ren=C3=A9 Scharfe wrote:
+Hi Christian,
+
+I am only reviewing the docs. To assume the mindset of a Git user
+unfamiliar with this command, I purposely did not read the cover letter
+until after this review was done.
+
+Christian Couder <christian.couder@gmail.com> writes:
+
+> [...]
 >
->> Am 05.09.23 um 09:21 schrieb Jeff King:
->>> On Sat, Sep 02, 2023 at 08:54:54PM +0200, Ren=C3=A9 Scharfe wrote:
->>>
->>> In general, I wonder how many of the results from:
->>>
->>>   git grep '{ OPTION'
->>>
->>> could be converted to use the macros and end up more readable. There a=
-re
->>> a number of OPTARG ones, which I guess can't use macros. Looks like
->>> there are a handful of others (mostly for OPT_HIDDEN).
->>
->> Indeed, and I have a semantic patch for that, but mostly because the
->> macros allow injecting a type check.
->>
->> OPTARG would need a new macro to allow specifying the default value.  O=
-r
->> is there a variadic macro trick that we could use?
->
-> Hmm, I had just assumed OPTARG was a lost cause (or we would need an
-> "OPTARG" variant of each macro; yuck).
+> diff --git a/Documentation/git-replay.txt b/Documentation/git-replay.txt
+> new file mode 100644
+> index 0000000000..9a2087b01a
+> --- /dev/null
+> +++ b/Documentation/git-replay.txt
+> @@ -0,0 +1,90 @@
+> +git-replay(1)
+> +=============
+> +
+> +NAME
+> +----
+> +git-replay - Replay commits on a different base, without touching working tree
 
-Only for OPT_INTEGER and OPT_STRING AFAICS.
+How about using the same language ("new location") as in the DESCRIPTION
+heading? Also, the "without touching working tree" part is incomplete
+because as explained later on, the index and refs are also left alone.
+How about just "safely"?
 
-> I suspect variadic macros could be made to work, but you'd lose some
-> compile-time safety. If I say:
->
->   OPT_BOOL('x', NULL, &v, NULL, "turn on x")
->
-> now, the compiler will complain about the number of arguments. In a
-> variadic world, it silently ignores the final one. I feel like I've made
-> this kind of error before (e.g., when switching to/from _F variants, or
-> between types).
+    git-replay - Replay commits onto a new location, safely
 
-OPT_BOOL has PARSE_OPT_NOARG.  Just saying.
+> +SYNOPSIS
+> +--------
+> +[verse]
+> +'git replay' --onto <newbase> <revision-range>...
+> +
+> +DESCRIPTION
+> +-----------
+> +
+> +Takes a range of commits, and replays them onto a new location.
 
-It's true that a macro that accepts a variable number of arguments would
-accept accidental extra arguments of the right type, but I don't see how
-it would ignore excessive ones.
+OK.
 
-> You'd want some semantic check between what's in flags (i.e., is the
-> OPTARG flag set), but I think that's beyond what the compiler itself can
-> do (you could probably write a coccinelle rule for it, though).
+> Does
+> +not touch the working tree or index, and does not update any
+> +references.
 
-Actually I'd want the macro to set that flag for me.
+How about this version?
 
-> I think it also squats on the variadic concept for the macro, so that no
-> other features can use it. I.e., if you accidentally give _two_ extra
-> arguments, I don't know that we can parse them out individually.
+    The new commits are created without modifying the working tree,
+    index, or any references.
 
-In case of an accident I'd just expect a compiler error.  A cryptic one,
-probably, alas, but no silence.
+Also, by "references" we mean the refs in ".git/refs/*". In the
+gitrevisions man page we use the term "refnames" to refer to these bits,
+so maybe "refnames" is better than "references"? The simpler "branches"
+is another option.
 
-I was thinking more about something like the solutions discussed at
-https://stackoverflow.com/questions/47674663/variable-arguments-inside-a-m=
-acro.
-It allows selecting variants based on argument count.
+> However, the output of this command is meant to be used
+> +as input to `git update-ref --stdin`, which would update the relevant
+> +branches.
 
-That could look like this (untested except on https://godbolt.org/; the
-EVALs are needed for MSVC for some reason):
+Before we get to this sentence, it would be great to explain why this
+command is useful (what problem does it solve)?
 
-#define OPT_INTEGER_FULL(s, l, v, h, f, d) { \
-	.type =3D OPTION_INTEGER, \
-	.short_name =3D (s), \
-	.long_name =3D (l), \
-	.value =3D (v), \
-	.argh =3D N_("n"), \
-	.help =3D (h), \
-	.flags =3D (f), \
-	.defval =3D (d), \
-}
-#define OPT_INTEGER_4(s, l, v, h) \
-	OPT_INTEGER_FULL(s, l, v, h, 0, 0)
-#define OPT_INTEGER_5(s, l, v, h, f) \
-	OPT_INTEGER_FULL(s, l, v, h, f, 0)
-#define OPT_INTEGER_6(s, l, v, h, f, d) \
-	OPT_INTEGER_FULL(s, l, v, h, (f) | PARSE_OPT_OPTARG, d)
-#define EVAL(x) x
-#define SEVENTH(_1, _2, _3, _4, _5, _6, x, ...) x
-#define OPT_INTEGER(...) \
-	EVAL(EVAL(SEVENTH(__VA_ARGS__, OPT_INTEGER_6, OPT_INTEGER_5, OPT_INTEGER_=
-4, 0))(__VA_ARGS__))
+Also, it would help to add "(see OUTPUT section below)" as a
+navigational aid in case some readers are wondering what the output
+looks like (and have not yet gotten to that section).
 
-So OPT_INTEGER(s, l, v, h) would be the same as before.  Add an argument
-and it becomes current OPT_INTEGER_F, add another one and it acts as
-your _OPTARG_F variant.
+I've noticed that you're using the phrase "starting point" in the
+OPTIONS section. I think this is better than "location" or "base" (FWIW
+we started using "starting point" in 0a02ca2383 (SubmittingPatches:
+simplify guidance for choosing a starting point, 2023-07-14)).
 
-> So yeah, I think you'd really want a separate macro. The combinations
-> start to add up (or multiply up, if you prefer ;) ). They _could_ be
-> generated mechanically, I think, as they can all be implemented in terms
-> of a master macro that knows about all features:
->
->    #define OPT_BOOL_F(s, l, v, h, f) OPT_BOOL_ALL(s, l, v, h, f, 0)
->    #define OPT_BOOL(s, l, v, h, f) OPT_BOOL_F(s, l, v, h, 0)
+The following is a version of this section that attempts to address my
+comments above (I've included the other bits already reviewed earlier to
+make it easier to read):
 
-The "f" arg needs to go...
+    Takes a range of commits, and replays them onto a new starting
+    point. The new commits are created without modifying the working
+    tree, index, or any branches. If there are branches that point to
+    the commits in <revision-range>, list them in the output with both
+    the original commit hash and the corresponding (replayed) commit
+    hash (see OUTPUT section below) .
 
->    #define OPT_BOOL_OPTARG_F(s, l, v, h, arg) OPT_BOOL_ALL(s, l, v, h, f=
- | PARSE_OPT_OPTARG, arg)
+    This command is like linkgit:git-rebase[1], but notably does not
+    require a working tree or index. This means you can run this command
+    in a bare repo (useful for server-side environments). And because
+    nothing is modified (only new commits are created), it's like a "dry
+    run" rebase.
 
-... here, possibly.
+    By combining this command with `git update-ref --stdin`, the
+    relevant branches can be updated. That is, the branches that were
+    pointing originally to the commits given in the <revision-range>
+    will be updated to point to the replayed commits. This is similar to
+    the way how `git rebase --update-refs` updates multiple branches in
+    the affected range.
 
->    #define OPT_BOOL_OPTARG(s, l, v, h, arg) OPT_BOOL_OPTARG_F(s, l, v, h=
-, 0, arg)
->
-> But I'm not sure if cpp is up to that, or if I'd want to see what the
-> resulting code looks like.
+> +THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
+> +
+> +OPTIONS
+> +-------
+> +
+> +--onto <newbase>::
 
-You mean having a macro define another macro?  I don't think that's
-possible.
+How about 'starting-point' instead of 'newbase'?
 
-Ren=C3=A9
+> +	Starting point at which to create the new commits.  May be any
+> +	valid commit, and not just an existing branch name.
+
+Add "See linkgit:gitrevisions[7]." at the end?
+
+> +The update-ref command(s) in the output will update the branch(es) in
+> +the revision range to point at the new commits, similar to the way how
+> +`git rebase --update-refs` updates multiple branches in the affected
+> +range.
+
+Ah, good example. I've moved this to my larger example above, so I don't
+think this paragraph is needed here any more (it probably didn't belong
+in OPTIONS anyway).
+
+> +<revision-range>::
+> +	Range of commits to replay; see "Specifying Ranges" in
+> +	linkgit:git-rev-parse.
+
+OK.
+
+> +OUTPUT
+> +------
+> +
+> +When there are no conflicts, the output of this command is usable as
+> +input to `git update-ref --stdin`.
+
+What happens if there are conflicts? Probably good to mention in the
+DISCUSSION section. Some questions you may want to answer for the
+reader:
+
+(1) Is git-replay an all-or-nothing operation? That is, if there are any
+conflicts, is the output always empty (or do we still output those
+branches that *can* be updated without conflicts)?
+
+(2) What is meant by "conflict" for git-replay? Is it the same meaning
+as the case for git-rebase?
+
+For (1), in your cover letter under "# Important limitations" you say
+"No resumability" but I am not sure if this means git-replay will output
+*something* before exiting with an error, or simply nothing at all.
+
+Speaking of the limitations section, perhaps it's worth pointing those
+out under DISCUSSION as well?
+
+> It is basically of the form:
+
+Why "basically"? Are there cases where the output can be different than
+the example given below? If not, then perhaps drop the word "basically"?
+
+> +	update refs/heads/branch1 ${NEW_branch1_HASH} ${OLD_branch1_HASH}
+> +	update refs/heads/branch2 ${NEW_branch2_HASH} ${OLD_branch2_HASH}
+> +	update refs/heads/branch3 ${NEW_branch3_HASH} ${OLD_branch3_HASH}
+> +
+> +where the number of refs updated depends on the arguments passed and
+> +the shape of the history being replayed.
+
+Let's use "number of branches" instead of "number of refs" here to be
+consistent with the language elsewhere.
+
+> +EXIT STATUS
+> +-----------
+> +
+> +For a successful, non-conflicted replay, the exit status is 0.  When
+> +the replay has conflicts, the exit status is 1.
+
+OK.
+
+> If the replay is not
+> +able to complete (or start) due to some kind of error, the exit status
+> +is something other than 0 or 1.
+
+Not sure how useful "due to some kind of error" is here --- presumably
+the inability to replay is always due to some kind of error.
+
+Would it be worth including a brief explanation about why git-replay
+might be unable to complete or start (is this behavior in practice a
+common-enough thing to document here)?
+
+> +EXAMPLES
+> +--------
+> +
+> +To simply rebase mybranch onto target:
+
+Looking at the CLI arguments, I think this phrase should be:
+
+    Replay the commits in `origin/main..mybranch` onto `target`:
+
+> +------------
+> +$ git replay --onto target origin/main..mybranch
+> +update refs/heads/mybranch ${NEW_mybranch_HASH} ${OLD_mybranch_HASH}
+> +------------
+> +
+> +When calling `git replay`, one does not need to specify a range of
+> +commits to replay using the syntax `A..B`; any range expression will
+> +do:
+> +
+> +------------
+> +$ git replay --onto origin/main ^base branch1 branch2 branch3
+
+Instead of `base`, how about `olderbranch`?
+
+> +update refs/heads/branch1 ${NEW_branch1_HASH} ${OLD_branch1_HASH}
+> +update refs/heads/branch2 ${NEW_branch2_HASH} ${OLD_branch2_HASH}
+> +update refs/heads/branch3 ${NEW_branch3_HASH} ${OLD_branch3_HASH}
+> +------------
+> +
+> +This will simultaneously rebase branch1, branch2, and branch3 -- all
+> +commits they have since base, playing them on top of origin/main.
+
+How about
+
+    This will rebase the commits in `branch1`, `branch2`, and `branch3`
+    (excluding those in `base`), preplaying them on top of `origin/main`.
+
+> +These three branches may have commits on top of base that they have in
+> +common, but that does not need to be the case.
+
+s/base/`base`
+
+> +GIT
+> +---
+> +Part of the linkgit:git[1] suite
+
+One question I do have is what happens if you run git-replay twice
+(successfully)? Does the second invocation create another set of (new)
+successfully replayed commits? I ask because I'm interested in informing
+the readers of our docs about any potential pitfalls from abusing this
+command by mistake.
