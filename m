@@ -2,149 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6D8EEE8013
-	for <git@archiver.kernel.org>; Fri,  8 Sep 2023 15:52:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1881EE8018
+	for <git@archiver.kernel.org>; Fri,  8 Sep 2023 15:53:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238520AbjIHPwI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Sep 2023 11:52:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51354 "EHLO
+        id S244226AbjIHPx3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Sep 2023 11:53:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232169AbjIHPwG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Sep 2023 11:52:06 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83FAACCA
-        for <git@vger.kernel.org>; Fri,  8 Sep 2023 08:52:02 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 314E038C89;
-        Fri,  8 Sep 2023 11:52:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=uwnmDF7HS6zJP+lshk6o/3X1KAZ9blbdNaLCep
-        8NmPo=; b=ANpD7kDasPf70WTzUxlH8IfUdFTIhCwwoz4/I38amuQVtWtJPPNaIs
-        AJuubqVvYqGsiamITynXj9x7stirVn7hbscxYkuqhOVcluU7fbhtNRYPkl9JAxDH
-        wKYjIwcJqvbZXM8hY5YXOG1G1O1DZ9q0ebPvJawlMKQZFiAzh2e54=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 29B4038C88;
-        Fri,  8 Sep 2023 11:52:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.145.39.59])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DBD3338C86;
-        Fri,  8 Sep 2023 11:51:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] completion(switch/checkout): treat --track and -t the same
-In-Reply-To: <pull.1584.git.1694176123471.gitgitgadget@gmail.com> (Johannes
-        Schindelin via GitGitGadget's message of "Fri, 08 Sep 2023 12:28:43
-        +0000")
-References: <pull.1584.git.1694176123471.gitgitgadget@gmail.com>
-Date:   Fri, 08 Sep 2023 08:51:57 -0700
-Message-ID: <xmqq1qf8vf1e.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        with ESMTP id S240714AbjIHPx2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Sep 2023 11:53:28 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DB9ACCA
+        for <git@vger.kernel.org>; Fri,  8 Sep 2023 08:53:24 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-31ad779e6b3so2135967f8f.2
+        for <git@vger.kernel.org>; Fri, 08 Sep 2023 08:53:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1694188402; x=1694793202; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=2SsZrDvPgl5biY5W7sVeMX29tJR/40UylX1fqM5yUsE=;
+        b=bp9NI0cH8lpgf4P9Nd0tCZw9MQkmNBpftLQo3PwD00ol0zORBy274lii4nvWedb/3g
+         vkMnz6uHyTbGT2QP6zkzcloXSmVi7BVUOLGYLVO3iLQxjG4mNRe2Ku281Ggd5zXZycVJ
+         7H416HQ3BXyEyuzCf3FKhNWLVa5nXOWKKzH/p83HzlPdtqpR08FoW/jy/MGsrDPoyD4c
+         FHNpPGBpvtwX5KBpBSeboi72bvg2WTdOmWJIURyN6lR6qXVl+d6UVNHiLFl8f/5qDWYv
+         VRwuL0dYIxlqIc8V+z4l+7idLqIPWwjZYPXLPLpIJMXYB7JwUyedgdE7khs0OlnhYyC4
+         COaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694188402; x=1694793202;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2SsZrDvPgl5biY5W7sVeMX29tJR/40UylX1fqM5yUsE=;
+        b=XGSxRSiu1ejt/KLyEN4jc1ueJccoJroJ5hAJqMJlAsOaZLrxXZMgDmF31l53gBz+09
+         R8QVhq6Jxf9oWOa+5DyhQwprAH2iarYgFLQXMxMNUBU66BwX6CN0u1ZAJJ5vhnDuD3IE
+         8lf3ZaP5I+NNpppoUAoOi1IV7BHGnYywOrbIhQWVfNKIAxdrl1syDDKtP3phPNW7Mf0A
+         RFr5ZUXXkX7ZSjfMe9YX3oAN+hAoOoBYt3qE5JeiijTEU2QDTTrjbgZrKrgK41Kg0eH6
+         vjpN+CYbBjgTNB0glJ7zovzfm+7cqHcKcdC/N7xZUdb2GEl7hv6gjk5HioqBBxxS++8U
+         7SvQ==
+X-Gm-Message-State: AOJu0Yw0FvIKYb9hYxrqYC92AbG8oscY9/VFR9qyz8DINmBmuxXhGFv2
+        x58rkXHGHU08qWnuajH33uAHeDp96gT13Q==
+X-Google-Smtp-Source: AGHT+IEfS5W6bAIPyRucn1Ag4eypvT5v3cvUoVz3BF4JE8JDz5EVVTnA7vb2ceghzFinHobxtAmlrQ==
+X-Received: by 2002:adf:e189:0:b0:31a:dc27:dfd with SMTP id az9-20020adfe189000000b0031adc270dfdmr3079751wrb.6.1694188402240;
+        Fri, 08 Sep 2023 08:53:22 -0700 (PDT)
+Received: from [192.168.1.212] ([90.242.223.1])
+        by smtp.gmail.com with ESMTPSA id b13-20020a5d634d000000b0031c5e9c2ed7sm2399854wrw.92.2023.09.08.08.53.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 08 Sep 2023 08:53:21 -0700 (PDT)
+Message-ID: <ba69ab35-3204-4360-a36d-3253680b2479@gmail.com>
+Date:   Fri, 8 Sep 2023 16:53:21 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A4D1A942-4E5F-11EE-984B-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] start_command: reset disposition of all signals in child
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Eric Wong <e@80x24.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <pull.1582.git.1694167540231.gitgitgadget@gmail.com>
+ <xmqqedj8vfht.fsf@gitster.g>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <xmqqedj8vfht.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On 08/09/2023 16:42, Junio C Hamano wrote:
+> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> [3] This is really a work-around for not moving the child into its own
+>>      process group and changing the foreground process group of the
+>>      controlling terminal.
+> 
+> I am puzzled, as I somehow thought that "does the user conceive a
+> subprocess as external and different-from-git entity, or is it
+> merely an implementation detail?  many use of subprocesses in our
+> codebase, it is the latter." from Peff was a good argument against
+> such isolation between spawning "git" and spawned subprocesses.
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> When `git switch --track ` is to be completed, only remote refs are
-> eligible because that is what the `--track` option targets.
+It is and in those cases we do not ignore SIGINT and SIGQUIT in the 
+parent when we fork the subprocess. What I was trying to say is that in 
+the few cases where we do ignore SIGINT and SIGQUIT in the parent when 
+we fork a subprocess we're working round the child being in the same 
+process group at the parent.
 
-OK.  Presumably that is the same for "checkout --track".
+Best Wishes
 
-> And when the short-hand `-t` is used instead, the same _should_ happen.
-
-That sounds sensible.  The code change for _git_checkout() and
-_git_switch() is surprisingly simple ;-)  "-t" was not handled any
-specially at all and fell through to "refs" complation.
-
-> Let's make it so.
-
-Sounds good.
-
-> Note that the bug exists both in the completions of `switch` and
-> `completion`, even if it manifests in slightly different ways: While
-> the completion of `git switch -t ` will not even look at remote refs,
-> the completion of `git checkout -t ` will look at both remote _and_
-> local refs. Both should look only at remote refs.
-
-Correct.
-
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index 133ec92bfae..745dc901fbe 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -1607,7 +1607,7 @@ _git_checkout ()
->  
->  		if [ -n "$(__git_find_on_cmdline "-b -B -d --detach --orphan")" ]; then
->  			__git_complete_refs --mode="refs"
-> -		elif [ -n "$(__git_find_on_cmdline "--track")" ]; then
-> +		elif [ -n "$(__git_find_on_cmdline "-t --track")" ]; then
->  			__git_complete_refs --mode="remote-heads"
->  		else
->  			__git_complete_refs $dwim_opt --mode="refs"
-> @@ -2514,7 +2514,7 @@ _git_switch ()
->  
->  		if [ -n "$(__git_find_on_cmdline "-c -C -d --detach")" ]; then
->  			__git_complete_refs --mode="refs"
-> -		elif [ -n "$(__git_find_on_cmdline "--track")" ]; then
-> +		elif [ -n "$(__git_find_on_cmdline "-t --track")" ]; then
->  			__git_complete_refs --mode="remote-heads"
->  		else
->  			__git_complete_refs $dwim_opt --mode="heads"
-
-The fallback behaviours are different, which was adequately
-described in the proposed log message.  As "switch" does not want to
-auto-detach upon receiving a ref that is not a local branch, while
-"checkout" does, the difference is justifiable.
-
-> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-> index 8835e16e811..df8bc44c285 100755
-> --- a/t/t9902-completion.sh
-> +++ b/t/t9902-completion.sh
-> @@ -1622,14 +1622,22 @@ test_expect_success 'git checkout - with -d, complete only references' '
->  '
->  
->  test_expect_success 'git switch - with --track, complete only remote branches' '
-> -	test_completion "git switch --track " <<-\EOF
-> +:	test_completion "git switch --track " <<-\EOF &&
-> +	other/branch-in-other Z
-> +	other/main-in-other Z
-> +	EOF
-> +	test_completion "git switch -t " <<-\EOF
->  	other/branch-in-other Z
->  	other/main-in-other Z
->  	EOF
->  '
-
-So, this demonstrates that '-t' behaves the same way as '--track'.
-
->  test_expect_success 'git checkout - with --track, complete only remote branches' '
-> -	test_completion "git checkout --track " <<-\EOF
-> +	test_completion "git checkout --track " <<-\EOF &&
-> +	other/branch-in-other Z
-> +	other/main-in-other Z
-> +	EOF
-> +	test_completion "git checkout -t " <<-\EOF
->  	other/branch-in-other Z
->  	other/main-in-other Z
->  	EOF
-
-This is, too.  If we had a test for "-t" without the code fix, we
-would have seen local branches in its output, but now we can see the
-candidates are limited to the remote ones.
-
-Good.
-
-Will queue.  Thanks.
+Phillip
