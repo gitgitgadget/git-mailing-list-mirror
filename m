@@ -2,82 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB2B9EEB565
-	for <git@archiver.kernel.org>; Sat,  9 Sep 2023 00:19:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D378EEB57A
+	for <git@archiver.kernel.org>; Sat,  9 Sep 2023 00:40:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345363AbjIIATT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Sep 2023 20:19:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48726 "EHLO
+        id S1345938AbjIIAkt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Sep 2023 20:40:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243171AbjIIATT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Sep 2023 20:19:19 -0400
+        with ESMTP id S1345811AbjIIAjv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Sep 2023 20:39:51 -0400
 Received: from out03.mta.xmission.com (out03.mta.xmission.com [166.70.13.233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E48A133
-        for <git@vger.kernel.org>; Fri,  8 Sep 2023 17:19:15 -0700 (PDT)
-Received: from in02.mta.xmission.com ([166.70.13.52]:37030)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 742432D44
+        for <git@vger.kernel.org>; Fri,  8 Sep 2023 17:39:16 -0700 (PDT)
+Received: from in02.mta.xmission.com ([166.70.13.52]:37192)
         by out03.mta.xmission.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
         (Exim 4.93)
         (envelope-from <ebiederm@xmission.com>)
-        id 1qekdT-00FHHN-9m; Fri, 08 Sep 2023 17:11:35 -0600
+        id 1qekdl-00FHIL-1z; Fri, 08 Sep 2023 17:11:53 -0600
 Received: from ip68-227-168-167.om.om.cox.net ([68.227.168.167]:54328 helo=localhost.localdomain)
         by in02.mta.xmission.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
         (Exim 4.93)
         (envelope-from <ebiederm@xmission.com>)
-        id 1qekdS-009u13-7Y; Fri, 08 Sep 2023 17:11:34 -0600
+        id 1qekdk-009u13-3N; Fri, 08 Sep 2023 17:11:52 -0600
 From:   "Eric W. Biederman" <ebiederm@xmission.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
         "Eric W. Biederman" <ebiederm@xmission.com>
-Date:   Fri,  8 Sep 2023 18:10:22 -0500
-Message-Id: <20230908231049.2035003-5-ebiederm@xmission.com>
+Date:   Fri,  8 Sep 2023 18:10:30 -0500
+Message-Id: <20230908231049.2035003-13-ebiederm@xmission.com>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <87sf7ol0z3.fsf@email.froward.int.ebiederm.org>
 References: <87sf7ol0z3.fsf@email.froward.int.ebiederm.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-XM-SPF: eid=1qekdS-009u13-7Y;;;mid=<20230908231049.2035003-5-ebiederm@xmission.com>;;;hst=in02.mta.xmission.com;;;ip=68.227.168.167;;;frm=ebiederm@xmission.com;;;spf=pass
-X-XM-AID: U2FsdGVkX196bS0tNajwF/IzzBF9S/OlMhU3CpFLmUA=
+X-XM-SPF: eid=1qekdk-009u13-3N;;;mid=<20230908231049.2035003-13-ebiederm@xmission.com>;;;hst=in02.mta.xmission.com;;;ip=68.227.168.167;;;frm=ebiederm@xmission.com;;;spf=pass
+X-XM-AID: U2FsdGVkX18UggUqgxl2MkhJFTn5zai+9uiPM0Ud96E=
 X-SA-Exim-Connect-IP: 68.227.168.167
 X-SA-Exim-Mail-From: ebiederm@xmission.com
-Subject: [PATCH 05/32] repository: add a compatibility hash algorithm
+Subject: [PATCH 13/32] object-file: Add a compat_oid_in parameter to write_object_file_flags
 X-SA-Exim-Version: 4.2.1 (built Sat, 08 Feb 2020 21:53:50 +0000)
 X-SA-Exim-Scanned: Yes (on in02.mta.xmission.com)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We currently have support for using a full stage 4 SHA-256
-implementation.  However, we'd like to support interoperability with
-SHA-1 repositories as well.  The transition plan anticipates a
-compatibility hash algorithm configuration option that we can use to
-implement support for this.  Let's add an element to the repository
-structure that indicates the compatibility hash algorithm so we can use
-it when we need to consider interoperability between algorithms.
+To create the proper signatures for commit objects both versions of
+the commit object need to be generated and signed.  After that it is
+a waste to throw away the work of generating the compatibility hash
+so update write_object_file_flags to take a compatibility hash input
+parameter that it can use to skip the work of generating the
+compatability hash.
 
-For now, we always set it to NULL, but we'll initialize it differently
-in the future.
+Update the places that don't generate the compatability hash to
+pass NULL so it is easy to tell write_object_file_flags should
+not attempt to use their compatability hash.
 
-Inspired-by: brian m. carlson <sandals@crustytoothpaste.net>
-Signed-off-by: Eric W. Biederman <ebiederm@xmission.com>
+Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
 ---
- repository.h | 3 +++
- 1 file changed, 3 insertions(+)
+ cache-tree.c      | 2 +-
+ object-file.c     | 6 ++++--
+ object-store-ll.h | 4 ++--
+ 3 files changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/repository.h b/repository.h
-index 5f18486f6465..6c4130f0c36e 100644
---- a/repository.h
-+++ b/repository.h
-@@ -160,6 +160,9 @@ struct repository {
- 	/* Repository's current hash algorithm, as serialized on disk. */
- 	const struct git_hash_algo *hash_algo;
+diff --git a/cache-tree.c b/cache-tree.c
+index 641427ed410a..ddc7d3d86959 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -448,7 +448,7 @@ static int update_one(struct cache_tree *it,
+ 		hash_object_file(the_hash_algo, buffer.buf, buffer.len,
+ 				 OBJ_TREE, &it->oid);
+ 	} else if (write_object_file_flags(buffer.buf, buffer.len, OBJ_TREE,
+-					   &it->oid, flags & WRITE_TREE_SILENT
++					   &it->oid, NULL, flags & WRITE_TREE_SILENT
+ 					   ? HASH_SILENT : 0)) {
+ 		strbuf_release(&buffer);
+ 		return -1;
+diff --git a/object-file.c b/object-file.c
+index 6cc4ae1fd957..fd420dd303df 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -2317,7 +2317,7 @@ int stream_loose_object(struct input_stream *in_stream, size_t len,
  
-+	/* Repository's compatibility hash algorithm. */
-+	const struct git_hash_algo *compat_hash_algo;
-+
- 	/* A unique-id for tracing purposes. */
- 	int trace2_repo_id;
+ int write_object_file_flags(const void *buf, unsigned long len,
+ 			    enum object_type type, struct object_id *oid,
+-			    unsigned flags)
++			    struct object_id *compat_oid_in, unsigned flags)
+ {
+ 	struct repository *repo = the_repository;
+ 	const struct git_hash_algo *algo = repo->hash_algo;
+@@ -2328,7 +2328,9 @@ int write_object_file_flags(const void *buf, unsigned long len,
  
+ 	/* Generate compat_oid */
+ 	if (compat) {
+-		if (type == OBJ_BLOB)
++		if (compat_oid_in)
++			oidcpy(&compat_oid, compat_oid_in);
++		else if (type == OBJ_BLOB)
+ 			hash_object_file(compat, buf, len, type, &compat_oid);
+ 		else {
+ 			struct strbuf converted = STRBUF_INIT;
+diff --git a/object-store-ll.h b/object-store-ll.h
+index bc76d6bec80d..c5f2bb2fc2fe 100644
+--- a/object-store-ll.h
++++ b/object-store-ll.h
+@@ -255,11 +255,11 @@ void hash_object_file(const struct git_hash_algo *algo, const void *buf,
+ 
+ int write_object_file_flags(const void *buf, unsigned long len,
+ 			    enum object_type type, struct object_id *oid,
+-			    unsigned flags);
++			    struct object_id *comapt_oid_in, unsigned flags);
+ static inline int write_object_file(const void *buf, unsigned long len,
+ 				    enum object_type type, struct object_id *oid)
+ {
+-	return write_object_file_flags(buf, len, type, oid, 0);
++	return write_object_file_flags(buf, len, type, oid, NULL, 0);
+ }
+ 
+ int write_object_file_literally(const void *buf, unsigned long len,
 -- 
 2.41.0
 
