@@ -2,602 +2,166 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88CFDEEB560
-	for <git@archiver.kernel.org>; Fri,  8 Sep 2023 17:41:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F6FFEEB560
+	for <git@archiver.kernel.org>; Fri,  8 Sep 2023 17:42:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237814AbjIHRlu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Sep 2023 13:41:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45766 "EHLO
+        id S239225AbjIHRm2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Sep 2023 13:42:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233301AbjIHRlt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Sep 2023 13:41:49 -0400
-Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E88A1FC7
-        for <git@vger.kernel.org>; Fri,  8 Sep 2023 10:41:44 -0700 (PDT)
-Received: by mail-pl1-x649.google.com with SMTP id d9443c01a7336-1c35b3c3c66so27984055ad.1
-        for <git@vger.kernel.org>; Fri, 08 Sep 2023 10:41:44 -0700 (PDT)
+        with ESMTP id S233301AbjIHRmZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Sep 2023 13:42:25 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E16BC1FC9
+        for <git@vger.kernel.org>; Fri,  8 Sep 2023 10:42:20 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-98377c5d53eso284185466b.0
+        for <git@vger.kernel.org>; Fri, 08 Sep 2023 10:42:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1694194903; x=1694799703; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Jtqz7+FFGbd5fMPFTdJJUXtIb+wvKOeq4gSspVmXtNU=;
-        b=slimmR3CqbRZFXMBLFgI3DJu1n5wFDICdIYJKw9BjefeHt1ajFIGGCPUqg08AC8OJp
-         tIfSc1Cyn6MJ3c10sj7VHiqsosWNF21YRWCKOJDs7RKdaF6eZLmsR3pEeF3veA/DifOJ
-         xzQ1gJQJ6noYs1IaCpsJ+4DAsxJZMdV18MUjnQf4ccG/IJkkIMXvwRWLDAfbXfWVU4WF
-         m6BUExS6FuEQtR2NAmtzPYtZx4qw9yeeYuRHNFFEyzmDgY4JiIHsvHMV1MTatlEipUF3
-         AYhYNmYZXYn0rDp16XIhM/3wL+Jna+y2ckhD7Nx2upk14W5P35c8bEFkG39S4z6bbPYB
-         HtPQ==
+        d=gmail.com; s=20221208; t=1694194939; x=1694799739; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=WjVfJvqfr/Pfckjht5zG6LB+Gb/+oPAp4uSbVKVao7k=;
+        b=R6TeoI+avL22nBvT3s5GXjE9dzmVMEUV8Y68B0lR+BGCE8D9atTQ7K1R3y8/oeCOV4
+         s/GijIcBoB0ef73KQTQ1RamXwX0HERkZjaiDFjc6HYHLCn1KSUkvGHOD47Mo/rwei6ma
+         E5TxPu17q642W6LqAystgiFydPKXBoEXZyQ64TuGybcxXjEtZkLt9RF8kMN+6Q5saxRe
+         9xVvSgfYzNFonu3V6GqHuEWnbJWf6A356DKX/u8Jxgauujvmltip3fvImF/UUn/uUE+S
+         XqiWLHw3sAq0JSoEjldUywcAty6DbtJrE0/2iAupOPbfbJq75o5MNygv+29tbfg+dJ8N
+         EK6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694194903; x=1694799703;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Jtqz7+FFGbd5fMPFTdJJUXtIb+wvKOeq4gSspVmXtNU=;
-        b=BA8bZ2GJY1cTwL15SqClWvEO2VxIUeAyNvldLi3DU62E60ziyo3LeRy8A9cFYHpsM7
-         eMtngxNS0Q22qE1EpkT480UNDh4qqpIO6XX7DXEoxp+mPOuEbbBnK/TTWBEUi8h8N+ys
-         syN7eOsMCXPBBJSly91aW8/H6MIu3ChquVI/GxsahqzrK/C0JGw07vYR8pyIUEoHEObp
-         yQkQCb8iwqkwO25XYTsoa4XIxtvP1tNRrpquRy7DiWWBH/9YTVQXusQ3bfwsAhplnnM3
-         ohikzhpKCIzBdMfBLHkGzrDnfoMdt1xvvTnsb0Gt3qalL3tRe4D+qzc4awbjDVLfrU+l
-         DJqA==
-X-Gm-Message-State: AOJu0Yz29SWOUEdmi/s65BcTjWUGDZF5B9Uq7f/S07pR5AMIuIgoeIXa
-        XXXm0URUaxT2RoJYTH1yfscJMBv3lHy5tVlIpfhCqQFoNHiKcKjqbOEM2QFIPK7TD95FH6Ela1t
-        yKBKUiUG+mErUXuDTfEJZ3qXK1u34/F//k2aZ8GeaXt2Satb85duZKulQclf8TT2Wmw==
-X-Google-Smtp-Source: AGHT+IGWjsQUcJ6tVmoFcmOcXgO0FhgTxh73UPdfuU/uBhIWMND6fOaa1L/KJppPJYNHtWCvep/zlxXNl1owX+E=
-X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
- (user=calvinwan job=sendgmr) by 2002:a17:902:eb8c:b0:1bb:cdea:d959 with SMTP
- id q12-20020a170902eb8c00b001bbcdead959mr1563985plg.0.1694194903422; Fri, 08
- Sep 2023 10:41:43 -0700 (PDT)
-Date:   Fri,  8 Sep 2023 17:41:34 +0000
-In-Reply-To: <a0f04bd7-3a1e-b303-fd52-eee2af4d38b3@gmail.com>
-Mime-Version: 1.0
-References: <a0f04bd7-3a1e-b303-fd52-eee2af4d38b3@gmail.com>
-X-Mailer: git-send-email 2.42.0.283.g2d96d420d3-goog
-Message-ID: <20230908174134.1026823-1-calvinwan@google.com>
-Subject: [PATCH v3 0/6] Introduce Git Standard Library
-From:   Calvin Wan <calvinwan@google.com>
+        d=1e100.net; s=20230601; t=1694194939; x=1694799739;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=WjVfJvqfr/Pfckjht5zG6LB+Gb/+oPAp4uSbVKVao7k=;
+        b=JweJExYMX/g0Tk9A7eilemZPX2Ve78dlQhPPjXCE4RL0tZWwevIa+IYLdioYDkcQSa
+         BMmK3lWcJtKEwXtSbqShVjL9Vg5OZcMEUgCnF5kYjPm2DcnVqntcek4KsRwDShPs33Z3
+         H1qXbiPU91b2cAdUC+1yN5p7eUmxqY+jQpXNCRN4ahSPeq+yde2jn0r4zmjeSQ46p0PG
+         QvdeNdnkQGYKtd1PsmSPJLRXDkulcm0jB+FejgeMd8oto/97sDGn3tS4EQBhJlYBZkM9
+         wZZGd/zyEhy7rsBO7uaBK2J21+n/QAAaIb4OcR3M95srtR9fss+oMe4vMA2fOtGpKv+s
+         hE2g==
+X-Gm-Message-State: AOJu0Yzl6VIG+FDril7hMc2m5fv327pLb288bHVDrDgImMay1Z/tVJLb
+        POrC6H+ojr77oPiXeJqipwJrQb0XWGaxDbz/
+X-Google-Smtp-Source: AGHT+IFham03nQxTs3xxW4kZNc9AZEO2tvzLr+AX8apCIDFO3FSJUKhLYylO9jMfp24tyDSDPzKikQ==
+X-Received: by 2002:a17:906:7499:b0:9a5:d657:47e5 with SMTP id e25-20020a170906749900b009a5d65747e5mr2187752ejl.49.1694194938816;
+        Fri, 08 Sep 2023 10:42:18 -0700 (PDT)
+Received: from worklaptop.fritz.box ([2a02:2454:56f:c000:b99d:247a:bd05:7cda])
+        by smtp.gmail.com with ESMTPSA id rl9-20020a170907216900b0099cbe71f3b5sm1311184ejb.0.2023.09.08.10.42.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Sep 2023 10:42:18 -0700 (PDT)
+From:   Karthik Nayak <karthik.188@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Calvin Wan <calvinwan@google.com>, nasamuffin@google.com,
-        jonathantanmy@google.com, linusa@google.com,
-        phillip.wood123@gmail.com, vdye@github.com
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH] revision: add `--ignore-missing-links` user option
+Date:   Fri,  8 Sep 2023 19:42:07 +0200
+Message-ID: <20230908174208.249184-1-karthik.188@gmail.com>
+X-Mailer: git-send-email 2.41.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Original cover letter:
-https://lore.kernel.org/git/20230627195251.1973421-1-calvinwan@google.com/
+The revision backend is used by multiple porcelain commands such as
+git-rev-list(1) and git-log(1). The backend currently supports ignoring
+missing links by setting the `ignore_missing_links` bit. This allows the
+revision walk to skip any objects links which are missing.
 
-I have taken this series out of RFC since there weren't any significant
-concerns with the overall concept and design of this series. This reroll
-incorporates some smaller changes such as dropping the "push pager
-dependency" patch in favor of stubbing it out. The main change this
-reroll cleans up the Makefile rules and stubs, as suggested by
-Phillip Wood (appreciate the help on this one)!
+Currently there is no way to use git-rev-list(1) to traverse the objects
+of the main object directory (GIT_OBJECT_DIRECTORY) and print the
+boundary objects when moving from the main object directory to the
+alternate object directories (GIT_ALTERNATE_OBJECT_DIRECTORIES).
 
-This series has been rebased onto 1fc548b2d6a: The sixth batch
+By exposing this new flag `--ignore-missing-links`, users can set the
+required env variables (GIT_OBJECT_DIRECTORY and
+GIT_ALTERNATE_OBJECT_DIRECTORIES) along with the `--boundary` flag to
+find the boundary objects between object directories.
 
-Originally this series was built on other patches that have since been
-merged, which is why the range-diff is shown removing many of them.
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+---
+ Documentation/rev-list-options.txt |  5 ++++
+ revision.c                         |  2 ++
+ t/t6022-rev-list-alternates.sh     | 43 ++++++++++++++++++++++++++++++
+ 3 files changed, 50 insertions(+)
+ create mode 100755 t/t6022-rev-list-alternates.sh
 
-Calvin Wan (6):
-  hex-ll: split out functionality from hex
-  wrapper: remove dependency to Git-specific internal file
-  config: correct bad boolean env value error message
-  parse: create new library for parsing strings and env values
-  git-std-lib: introduce git standard library
-  git-std-lib: add test file to call git-std-lib.a functions
-
- Documentation/technical/git-std-lib.txt | 191 ++++++++++++++++++++
- Makefile                                |  41 ++++-
- attr.c                                  |   2 +-
- color.c                                 |   2 +-
- config.c                                | 173 +-----------------
- config.h                                |  14 +-
- entry.c                                 |   5 +
- entry.h                                 |   6 +
- git-compat-util.h                       |   7 +-
- hex-ll.c                                |  49 +++++
- hex-ll.h                                |  27 +++
- hex.c                                   |  47 -----
- hex.h                                   |  24 +--
- mailinfo.c                              |   2 +-
- pack-objects.c                          |   2 +-
- pack-revindex.c                         |   2 +-
- parse-options.c                         |   3 +-
- parse.c                                 | 182 +++++++++++++++++++
- parse.h                                 |  20 ++
- pathspec.c                              |   2 +-
- preload-index.c                         |   2 +-
- progress.c                              |   2 +-
- prompt.c                                |   2 +-
- rebase.c                                |   2 +-
- strbuf.c                                |   2 +-
- stubs/pager.c                           |   6 +
- stubs/pager.h                           |   6 +
- stubs/trace2.c                          |  27 +++
- symlinks.c                              |   2 +
- t/Makefile                              |   4 +
- t/helper/test-env-helper.c              |   2 +-
- t/stdlib-test.c                         | 231 ++++++++++++++++++++++++
- unpack-trees.c                          |   2 +-
- url.c                                   |   2 +-
- urlmatch.c                              |   2 +-
- wrapper.c                               |   9 +-
- wrapper.h                               |   5 -
- write-or-die.c                          |   2 +-
- 38 files changed, 824 insertions(+), 287 deletions(-)
- create mode 100644 Documentation/technical/git-std-lib.txt
- create mode 100644 hex-ll.c
- create mode 100644 hex-ll.h
- create mode 100644 parse.c
- create mode 100644 parse.h
- create mode 100644 stubs/pager.c
- create mode 100644 stubs/pager.h
- create mode 100644 stubs/trace2.c
- create mode 100644 t/stdlib-test.c
-
-Range-diff against v2:
- 1:  121788f263 <  -:  ---------- strbuf: clarify API boundary
- 2:  5e91404ecd <  -:  ---------- strbuf: clarify dependency
- 3:  5c05f40181 <  -:  ---------- abspath: move related functions to abspath
- 4:  e1addc77e5 <  -:  ---------- credential-store: move related functions to credential-store file
- 5:  62e8c42f59 <  -:  ---------- object-name: move related functions to object-name
- 6:  0abba57acb <  -:  ---------- path: move related function to path
- 7:  d33267a390 <  -:  ---------- strbuf: remove global variable
- 8:  665d2c2089 <  -:  ---------- init-db: document existing bug with core.bare in template config
- 9:  68d0a8ff16 <  -:  ---------- init-db: remove unnecessary global variable
-10:  8c8ec85507 <  -:  ---------- init-db, clone: change unnecessary global into passed parameter
-11:  d555e2b365 <  -:  ---------- setup: adopt shared init-db & clone code
-12:  689a7bc8aa <  -:  ---------- read-cache: move shared commit and ls-files code
-13:  392f8e75b7 <  -:  ---------- add: modify add_files_to_cache() to avoid globals
-14:  49ce237013 <  -:  ---------- read-cache: move shared add/checkout/commit code
-15:  c5d8370d40 <  -:  ---------- statinfo: move stat_{data,validity} functions from cache/read-cache
-16:  90a72b6f86 <  -:  ---------- run-command.h: move declarations for run-command.c from cache.h
-17:  f27516c780 <  -:  ---------- name-hash.h: move declarations for name-hash.c from cache.h
-18:  895c38a050 <  -:  ---------- sparse-index.h: move declarations for sparse-index.c from cache.h
-19:  8678d4ad20 <  -:  ---------- preload-index.h: move declarations for preload-index.c from elsewhere
-20:  4a463abaae <  -:  ---------- diff.h: move declaration for global in diff.c from cache.h
-21:  3440e762c7 <  -:  ---------- merge.h: move declarations for merge.c from cache.h
-22:  e70853e398 <  -:  ---------- repository.h: move declaration of the_index from cache.h
-23:  ccd2014d73 <  -:  ---------- read-cache*.h: move declarations for read-cache.c functions from cache.h
-24:  d3a482afa9 <  -:  ---------- cache.h: remove this no-longer-used header
-25:  eaa087f446 <  -:  ---------- log-tree: replace include of revision.h with simple forward declaration
-26:  5d2b0a9c75 <  -:  ---------- repository: remove unnecessary include of path.h
-27:  250f83014e <  -:  ---------- diff.h: remove unnecessary include of oidset.h
-28:  d0f9913958 <  -:  ---------- list-objects-filter-options.h: remove unneccessary include
-29:  03a2b2a515 <  -:  ---------- builtin.h: remove unneccessary includes
-30:  15edc22d00 <  -:  ---------- git-compat-util.h: remove unneccessary include of wildmatch.h
-31:  e4e1bec8bd <  -:  ---------- merge-ll: rename from ll-merge
-32:  9185495fd0 <  -:  ---------- khash: name the structs that khash declares
-33:  15fb05e453 <  -:  ---------- object-store-ll.h: split this header out of object-store.h
-34:  2608fe4b23 <  -:  ---------- hash-ll, hashmap: move oidhash() to hash-ll
-35:  5e8dc5b574 <  -:  ---------- fsmonitor-ll.h: split this header out of fsmonitor.h
-36:  37d32fc3fd <  -:  ---------- git-compat-util: move strbuf.c funcs to its header
-37:  6ed19d5fe2 <  -:  ---------- git-compat-util: move wrapper.c funcs to its header
-38:  555d1b8942 <  -:  ---------- sane-ctype.h: create header for sane-ctype macros
-39:  72d591e282 <  -:  ---------- kwset: move translation table from ctype
-40:  5d1dc2a118 <  -:  ---------- common.h: move non-compat specific macros and functions
-41:  33e07e552e <  -:  ---------- git-compat-util: move usage.c funcs to its header
-42:  417a8aa733 <  -:  ---------- treewide: remove unnecessary includes for wrapper.h
-43:  65e35d00c1 <  -:  ---------- common: move alloc macros to common.h
-44:  78634bc406 !  1:  2f99eb2ca4 hex-ll: split out functionality from hex
-    @@ hex.h
-     +#include "hex-ll.h"
-      
-      /*
-    -  * Try to read a SHA1 in hexadecimal format from the 40 characters
-    -@@ hex.h: int get_oid_hex(const char *hex, struct object_id *sha1);
-    +  * Try to read a hash (specified by the_hash_algo) in hexadecimal
-    +@@ hex.h: int get_oid_hex(const char *hex, struct object_id *oid);
-      /* Like get_oid_hex, but for an arbitrary hash algorithm. */
-      int get_oid_hex_algop(const char *hex, struct object_id *oid, const struct git_hash_algo *algop);
-      
-45:  21ec1d276e !  2:  7b2d123628 object: move function to object.c
-    @@ Metadata
-     Author: Calvin Wan <calvinwan@google.com>
-     
-      ## Commit message ##
-    -    object: move function to object.c
-    +    wrapper: remove dependency to Git-specific internal file
-     
-    -    While remove_or_warn() is a simple ternary operator to call two other
-    -    wrapper functions, it creates an unnecessary dependency to object.h in
-    -    wrapper.c. Therefore move the function to object.[ch] where the concept
-    -    of GITLINKs is first defined.
-    +    In order for wrapper.c to be built independently as part of a smaller
-    +    library, it cannot have dependencies to other Git specific
-    +    internals. remove_or_warn() creates an unnecessary dependency to
-    +    object.h in wrapper.c. Therefore move the function to entry.[ch] which
-    +    performs changes on the worktree based on the Git-specific file modes in
-    +    the index.
-     
-    - ## object.c ##
-    -@@ object.c: void parsed_object_pool_clear(struct parsed_object_pool *o)
-    - 	FREE_AND_NULL(o->object_state);
-    - 	FREE_AND_NULL(o->shallow_stat);
-    + ## entry.c ##
-    +@@ entry.c: void unlink_entry(const struct cache_entry *ce, const char *super_prefix)
-    + 		return;
-    + 	schedule_dir_for_removal(ce->name, ce_namelen(ce));
-      }
-     +
-     +int remove_or_warn(unsigned int mode, const char *file)
-    @@ object.c: void parsed_object_pool_clear(struct parsed_object_pool *o)
-     +	return S_ISGITLINK(mode) ? rmdir_or_warn(file) : unlink_or_warn(file);
-     +}
-     
-    - ## object.h ##
-    -@@ object.h: void clear_object_flags(unsigned flags);
-    -  */
-    - void repo_clear_commit_marks(struct repository *r, unsigned int flags);
-    + ## entry.h ##
-    +@@ entry.h: int fstat_checkout_output(int fd, const struct checkout *state, struct stat *st)
-    + void update_ce_after_write(const struct checkout *state, struct cache_entry *ce,
-    + 			   struct stat *st);
-      
-     +/*
-     + * Calls the correct function out of {unlink,rmdir}_or_warn based on
-    @@ object.h: void clear_object_flags(unsigned flags);
-     + */
-     +int remove_or_warn(unsigned int mode, const char *path);
-     +
-    - #endif /* OBJECT_H */
-    + #endif /* ENTRY_H */
-     
-      ## wrapper.c ##
-     @@
-46:  41dcf8107c =  3:  b37beb206a config: correct bad boolean env value error message
-47:  3e800a41c4 !  4:  3a827cf45c parse: create new library for parsing strings and env values
-    @@ Commit message
-         config.c, there are other files that only need parsing functionality and
-         not config functionality. By separating out string and environment value
-         parsing from config, those files can instead be dependent on parse,
-    -    which has a much smaller dependency chain than config.
-    +    which has a much smaller dependency chain than config. This ultimately
-    +    allows us to inclue parse.[ch] in an independent library since it
-    +    doesn't have dependencies to Git-specific internals unlike in
-    +    config.[ch].
-     
-         Move general string and env parsing functions from config.[ch] to
-         parse.[ch].
-    @@ config.c: static int git_parse_source(struct config_source *cs, config_fn_t fn,
-     -	return 1;
-     -}
-     -
-    - static int reader_config_name(struct config_reader *reader, const char **out);
-    - static int reader_origin_type(struct config_reader *reader,
-    - 			      enum config_origin_type *type);
-    -@@ config.c: ssize_t git_config_ssize_t(const char *name, const char *value)
-    + NORETURN
-    + static void die_bad_number(const char *name, const char *value,
-    + 			   const struct key_value_info *kvi)
-    +@@ config.c: ssize_t git_config_ssize_t(const char *name, const char *value,
-      	return ret;
-      }
-      
-    @@ config.c: static enum fsync_component parse_fsync_components(const char *var, co
-     -	return -1;
-     -}
-     -
-    - int git_config_bool_or_int(const char *name, const char *value, int *is_bool)
-    + int git_config_bool_or_int(const char *name, const char *value,
-    + 			   const struct key_value_info *kvi, int *is_bool)
-      {
-    - 	int v = git_parse_maybe_bool_text(value);
-     @@ config.c: void git_global_config(char **user_out, char **xdg_out)
-      	*xdg_out = xdg_config;
-      }
-    @@ config.c: void git_global_config(char **user_out, char **xdg_out)
-     
-      ## config.h ##
-     @@
-    - 
-      #include "hashmap.h"
-      #include "string-list.h"
-    + #include "repository.h"
-     -
-     +#include "parse.h"
-      
-48:  7a4a088bc3 <  -:  ---------- date: push pager.h dependency up
-49:  c9002734d0 !  5:  f8e4ac50a0 git-std-lib: introduce git standard library
-    @@ Documentation/technical/git-std-lib.txt (new)
-     +Rationale behind Git Standard Library
-     +================
-     +
-    -+The rationale behind Git Standard Library essentially is the result of
-    -+two observations within the Git codebase: every file includes
-    -+git-compat-util.h which defines functions in a couple of different
-    -+files, and wrapper.c + usage.c have difficult-to-separate circular
-    -+dependencies with each other and other files.
-    ++The rationale behind what's in and what's not in the Git Standard
-    ++Library essentially is the result of two observations within the Git
-    ++codebase: every file includes git-compat-util.h which defines functions
-    ++in a couple of different files, and wrapper.c + usage.c have
-    ++difficult-to-separate circular dependencies with each other and other
-    ++files.
-     +
-     +Ubiquity of git-compat-util.h and circular dependencies
-     +========
-    @@ Documentation/technical/git-std-lib.txt (new)
-     + - low-level git/* files with functions defined in git-compat-util.h
-     +   (ctype.c)
-     + - compat/*
-    -+ - stubbed out dependencies in stubs/ (stubs/repository.c, stubs/trace2.c)
-    ++ - stubbed out dependencies in stubs/ (stubs/pager.c, stubs/trace2.c)
-     +
-     +There are other files that might fit this definition, but that does not
-     +mean it should belong in git-std-lib.a. Those files should start as
-     +their own separate library since any file added to git-std-lib.a loses
-     +its flexibility of being easily swappable.
-     +
-    -+Wrapper.c and usage.c have dependencies on repository and trace2 that are
-    ++Wrapper.c and usage.c have dependencies on pager and trace2 that are
-     +possible to remove at the cost of sacrificing the ability for standard Git
-     +to be able to trace functions in those files and other files in git-std-lib.a.
-     +In order for git-std-lib.a to compile with those dependencies, stubbed out
-    @@ Documentation/technical/git-std-lib.txt (new)
-     +usage.c
-     +utf8.c
-     +wrapper.c
-    -+stubs/repository.c
-    -+stubs/trace2.c
-     +relevant compat/ files
-     +
-    ++When these files are compiled together with the following files (or
-    ++user-provided files that provide the same functions), they form a
-    ++complete library:
-    ++stubs/pager.c
-    ++stubs/trace2.c
-    ++
-     +Pitfalls
-     +================
-     +
-    @@ Makefile: LIB_OBJS += write-or-die.o
-     +LIB_OBJS += utf8.o
-     +LIB_OBJS += wrapper.o
-     +
-    -+ifdef STUB_REPOSITORY
-    -+STUB_OBJS += stubs/repository.o
-    -+endif
-    -+
-     +ifdef STUB_TRACE2
-     +STUB_OBJS += stubs/trace2.o
-     +endif
-     +
-    ++ifdef STUB_PAGER
-    ++STUB_OBJS += stubs/pager.o
-    ++endif
-    ++
-     +LIB_OBJS += $(STUB_OBJS)
-     +endif
-      
-    @@ Makefile: ifdef FSMONITOR_OS_SETTINGS
-      NO_TCLTK = NoThanks
-      endif
-     @@ Makefile: clean: profile-clean coverage-clean cocciclean
-    - 	$(RM) po/git.pot po/git-core.pot
-      	$(RM) git.res
-      	$(RM) $(OBJECTS)
-    + 	$(RM) headless-git.o
-     -	$(RM) $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(REFTABLE_TEST_LIB)
-     +	$(RM) $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(REFTABLE_TEST_LIB) $(STD_LIB_FILE)
-      	$(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) $(OTHER_PROGRAMS)
-    @@ Makefile: $(FUZZ_PROGRAMS): all
-     +### Libified Git rules
-     +
-     +# git-std-lib
-    -+# `make git-std-lib GIT_STD_LIB=YesPlease STUB_REPOSITORY=YesPlease STUB_TRACE2=YesPlease`
-    ++# `make git-std-lib.a GIT_STD_LIB=YesPlease STUB_TRACE2=YesPlease STUB_PAGER=YesPlease`
-     +STD_LIB = git-std-lib.a
-     +
-     +$(STD_LIB): $(LIB_OBJS) $(COMPAT_OBJS) $(STUB_OBJS)
-     +	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
-    -+
-    -+TEMP_HEADERS = temp_headers/
-    -+
-    -+git-std-lib:
-    -+# Move headers to temporary folder and replace them with stubbed headers.
-    -+# After building, move headers and stubbed headers back.
-    -+ifneq ($(STUB_OBJS),)
-    -+	mkdir -p $(TEMP_HEADERS); \
-    -+	for d in $(STUB_OBJS); do \
-    -+		BASE=$${d%.*}; \
-    -+		mv $${BASE##*/}.h $(TEMP_HEADERS)$${BASE##*/}.h; \
-    -+		mv $${BASE}.h $${BASE##*/}.h; \
-    -+	done; \
-    -+	$(MAKE) $(STD_LIB); \
-    -+	for d in $(STUB_OBJS); do \
-    -+		BASE=$${d%.*}; \
-    -+		mv $${BASE##*/}.h $${BASE}.h; \
-    -+		mv $(TEMP_HEADERS)$${BASE##*/}.h $${BASE##*/}.h; \
-    -+	done; \
-    -+	rm -rf temp_headers
-    -+else
-    -+	$(MAKE) $(STD_LIB)
-    -+endif
-     
-      ## git-compat-util.h ##
-     @@ git-compat-util.h: static inline int noop_core_config(const char *var UNUSED,
-    @@ git-compat-util.h: const char *inet_ntop(int af, const void *src, char *dst, siz
-      #endif
-     +#endif
-      
-    - /*
-    -  * Limit size of IO chunks, because huge chunks only cause pain.  OS X
-    -@@ git-compat-util.h: int git_access(const char *path, int mode);
-    - # endif
-    - #endif
-    + static inline size_t st_add(size_t a, size_t b)
-    + {
-    +@@ git-compat-util.h: static inline int is_missing_file_error(int errno_)
-    + 	return (errno_ == ENOENT || errno_ == ENOTDIR);
-    + }
-      
-     +#ifndef GIT_STD_LIB
-      int cmd_main(int, const char **);
-    @@ git-compat-util.h: int git_access(const char *path, int mode);
-      /*
-       * You can mark a stack variable with UNLEAK(var) to avoid it being
-     
-    - ## stubs/repository.c (new) ##
-    + ## stubs/pager.c (new) ##
-     @@
-    -+#include "git-compat-util.h"
-    -+#include "repository.h"
-    ++#include "pager.h"
-     +
-    -+struct repository *the_repository;
-    ++int pager_in_use(void)
-    ++{
-    ++	return 0;
-    ++}
-     
-    - ## stubs/repository.h (new) ##
-    + ## stubs/pager.h (new) ##
-     @@
-    -+#ifndef REPOSITORY_H
-    -+#define REPOSITORY_H
-    ++#ifndef PAGER_H
-    ++#define PAGER_H
-     +
-    -+struct repository { int stub; };
-    ++int pager_in_use(void);
-     +
-    -+extern struct repository *the_repository;
-    -+
-    -+#endif /* REPOSITORY_H */
-    ++#endif /* PAGER_H */
-     
-      ## stubs/trace2.c (new) ##
-     @@
-     +#include "git-compat-util.h"
-     +#include "trace2.h"
-     +
-    ++struct child_process { int stub; };
-    ++struct repository { int stub; };
-    ++struct json_writer { int stub; };
-    ++
-     +void trace2_region_enter_fl(const char *file, int line, const char *category,
-     +			    const char *label, const struct repository *repo, ...) { }
-     +void trace2_region_leave_fl(const char *file, int line, const char *category,
-    @@ stubs/trace2.c (new)
-     +			   const struct repository *repo, const char *key,
-     +			   intmax_t value) { }
-     +int trace2_is_enabled(void) { return 0; }
-    ++void trace2_counter_add(enum trace2_counter_id cid, uint64_t value) { }
-     +void trace2_collect_process_info(enum trace2_process_info_reason reason) { }
-     
-    - ## stubs/trace2.h (new) ##
-    -@@
-    -+#ifndef TRACE2_H
-    -+#define TRACE2_H
-    -+
-    -+struct child_process { int stub; };
-    -+struct repository;
-    -+struct json_writer { int stub; };
-    -+
-    -+void trace2_region_enter_fl(const char *file, int line, const char *category,
-    -+			    const char *label, const struct repository *repo, ...);
-    -+
-    -+#define trace2_region_enter(category, label, repo) \
-    -+	trace2_region_enter_fl(__FILE__, __LINE__, (category), (label), (repo))
-    -+
-    -+void trace2_region_leave_fl(const char *file, int line, const char *category,
-    -+			    const char *label, const struct repository *repo, ...);
-    -+
-    -+#define trace2_region_leave(category, label, repo) \
-    -+	trace2_region_leave_fl(__FILE__, __LINE__, (category), (label), (repo))
-    -+
-    -+void trace2_data_string_fl(const char *file, int line, const char *category,
-    -+			   const struct repository *repo, const char *key,
-    -+			   const char *value);
-    -+
-    -+#define trace2_data_string(category, repo, key, value)                       \
-    -+	trace2_data_string_fl(__FILE__, __LINE__, (category), (repo), (key), \
-    -+			      (value))
-    -+
-    -+void trace2_cmd_ancestry_fl(const char *file, int line, const char **parent_names);
-    -+
-    -+#define trace2_cmd_ancestry(v) trace2_cmd_ancestry_fl(__FILE__, __LINE__, (v))
-    -+
-    -+void trace2_cmd_error_va_fl(const char *file, int line, const char *fmt,
-    -+			    va_list ap);
-    -+
-    -+#define trace2_cmd_error_va(fmt, ap) \
-    -+	trace2_cmd_error_va_fl(__FILE__, __LINE__, (fmt), (ap))
-    -+
-    -+
-    -+void trace2_cmd_name_fl(const char *file, int line, const char *name);
-    -+
-    -+#define trace2_cmd_name(v) trace2_cmd_name_fl(__FILE__, __LINE__, (v))
-    -+
-    -+void trace2_thread_start_fl(const char *file, int line,
-    -+			    const char *thread_base_name);
-    -+
-    -+#define trace2_thread_start(thread_base_name) \
-    -+	trace2_thread_start_fl(__FILE__, __LINE__, (thread_base_name))
-    -+
-    -+void trace2_thread_exit_fl(const char *file, int line);
-    -+
-    -+#define trace2_thread_exit() trace2_thread_exit_fl(__FILE__, __LINE__)
-    -+
-    -+void trace2_data_intmax_fl(const char *file, int line, const char *category,
-    -+			   const struct repository *repo, const char *key,
-    -+			   intmax_t value);
-    -+
-    -+#define trace2_data_intmax(category, repo, key, value)                       \
-    -+	trace2_data_intmax_fl(__FILE__, __LINE__, (category), (repo), (key), \
-    -+			      (value))
-    -+
-    -+enum trace2_process_info_reason {
-    -+	TRACE2_PROCESS_INFO_STARTUP,
-    -+	TRACE2_PROCESS_INFO_EXIT,
-    -+};
-    -+int trace2_is_enabled(void);
-    -+void trace2_collect_process_info(enum trace2_process_info_reason reason);
-    -+
-    -+#endif /* TRACE2_H */
-    -+
-    -
-      ## symlinks.c ##
-     @@ symlinks.c: void invalidate_lstat_cache(void)
-      	reset_lstat_cache(&default_cache);
-    @@ symlinks.c: int lstat_cache_aware_rmdir(const char *path)
-      	return ret;
-      }
-     +#endif
-    +
-    + ## wrapper.c ##
-    +@@
-    + #include "abspath.h"
-    + #include "parse.h"
-    + #include "gettext.h"
-    +-#include "repository.h"
-    + #include "strbuf.h"
-    + #include "trace2.h"
-    + 
-50:  0bead8f980 !  6:  7840e1830a git-std-lib: add test file to call git-std-lib.a functions
-    @@ t/stdlib-test.c (new)
-     +	struct strbuf sb3 = STRBUF_INIT;
-     +	struct string_list list = STRING_LIST_INIT_NODUP;
-     +	char *buf = "foo";
-    -+	struct strbuf_expand_dict_entry dict[] = {
-    -+		{ "foo", NULL, },
-    -+		{ "bar", NULL, },
-    -+	};
-     +	int fd = open("/dev/null", O_RDONLY);
-     +
-     +	fprintf(stderr, "calling strbuf functions\n");
-    @@ t/stdlib-test.c (new)
-     +	strbuf_add_commented_lines(sb, "foo", 3, '#');
-     +	strbuf_commented_addf(sb, '#', "%s", "foo");
-     +	// strbuf_vaddf() called by strbuf_addf()
-    -+	strbuf_expand(sb, "%s", strbuf_expand_literal_cb, NULL);
-    -+	strbuf_expand(sb, "%s", strbuf_expand_dict_cb, &dict);
-    -+	// strbuf_expand_literal_cb() called by strbuf_expand()
-    -+	// strbuf_expand_dict_cb() called by strbuf_expand()
-     +	strbuf_addbuf_percentquote(sb, &sb3);
-     +	strbuf_add_percentencode(sb, "foo", STRBUF_ENCODE_SLASH);
-     +	strbuf_fread(sb, 0, stdin);
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index a4a0cb93b2..a0b48db8a8 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -227,6 +227,11 @@ explicitly.
+ 	Upon seeing an invalid object name in the input, pretend as if
+ 	the bad input was not given.
+ 
++--ignore-missing-links::
++	When an object points to another object that is missing, pretend as if the
++	link did not exist. These missing links are not written to stdout unless
++	the --boundary flag is passed.
++
+ ifndef::git-rev-list[]
+ --bisect::
+ 	Pretend as if the bad bisection ref `refs/bisect/bad`
+diff --git a/revision.c b/revision.c
+index 2f4c53ea20..cbfcbf6e28 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2595,6 +2595,8 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		revs->limited = 1;
+ 	} else if (!strcmp(arg, "--ignore-missing")) {
+ 		revs->ignore_missing = 1;
++	} else if (!strcmp(arg, "--ignore-missing-links")) {
++		revs->ignore_missing_links = 1;
+ 	} else if (opt && opt->allow_exclude_promisor_objects &&
+ 		   !strcmp(arg, "--exclude-promisor-objects")) {
+ 		if (fetch_if_missing)
+diff --git a/t/t6022-rev-list-alternates.sh b/t/t6022-rev-list-alternates.sh
+new file mode 100755
+index 0000000000..626ebb2dce
+--- /dev/null
++++ b/t/t6022-rev-list-alternates.sh
+@@ -0,0 +1,43 @@
++#!/bin/sh
++
++test_description='handling of alternates in rev-list'
++
++TEST_PASSES_SANITIZE_LEAK=true
++. ./test-lib.sh
++
++# We create 5 commits and move them to the alt directory and
++# create 5 more commits which will stay in the main odb.
++test_expect_success 'create repository and alternate directory' '
++	git init main &&
++	test_commit_bulk -C main 5 &&
++	mkdir alt &&
++	mv main/.git/objects/* alt &&
++	GIT_ALTERNATE_OBJECT_DIRECTORIES=$PWD/alt test_commit_bulk --start=6 -C main 5
++'
++
++# When the alternate odb is provided, all commits are listed.
++test_expect_success 'rev-list passes with alternate object directory' '
++	GIT_ALTERNATE_OBJECT_DIRECTORIES=$PWD/alt test_stdout_line_count = 10 git -C main rev-list HEAD
++'
++
++# When the alternate odb is not provided, rev-list fails since the 5th commit's
++# parent is not present in the main odb.
++test_expect_success 'rev-list fails without alternate object directory' '
++	test_must_fail git -C main rev-list HEAD
++'
++
++# With `--ignore-missing-links`, we stop the traversal when we encounter a
++# missing link.
++test_expect_success 'rev-list only prints main odb commits with --ignore-missing-links' '
++	test_stdout_line_count = 5 git -C main rev-list --ignore-missing-links HEAD
++'
++
++# With `--ignore-missing-links` and `--boundary`, we can even print those boundary
++# commits.
++test_expect_success 'rev-list prints boundary commit with --ignore-missing-links' '
++	git -C main rev-list --ignore-missing-links --boundary HEAD >list-output &&
++	test_stdout_line_count = 6 cat list-output &&
++	test_stdout_line_count = 1 cat list-output | grep "^-"
++'
++
++test_done
 -- 
-2.42.0.283.g2d96d420d3-goog
+2.41.0
 
