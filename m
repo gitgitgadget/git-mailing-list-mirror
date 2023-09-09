@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F58DEEB581
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2789EEB57F
 	for <git@archiver.kernel.org>; Sat,  9 Sep 2023 06:16:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241795AbjIIGQe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 9 Sep 2023 02:16:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35886 "EHLO
+        id S241512AbjIIGQg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 9 Sep 2023 02:16:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238426AbjIIGQ3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Sep 2023 02:16:29 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13BDE1BEA
-        for <git@vger.kernel.org>; Fri,  8 Sep 2023 23:16:25 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id ffacd0b85a97d-31c7912416bso2833379f8f.1
-        for <git@vger.kernel.org>; Fri, 08 Sep 2023 23:16:25 -0700 (PDT)
+        with ESMTP id S238338AbjIIGQ2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Sep 2023 02:16:28 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6535B1BC5
+        for <git@vger.kernel.org>; Fri,  8 Sep 2023 23:16:24 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-401d24f1f27so30844245e9.1
+        for <git@vger.kernel.org>; Fri, 08 Sep 2023 23:16:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1694240183; x=1694844983; darn=vger.kernel.org;
+        d=gmail.com; s=20221208; t=1694240182; x=1694844982; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=YK2z70GM8Fp4oC98UaS8TS5iRN8Wgk4+ZVqIY4alM2I=;
-        b=J3vNOhwCgy07upl/fec0V94lZ2NHk/Fi79HToFYo1TZiXwXTEmaAuZ/ERW6x2x7dq1
-         nVmJUbSNmkBOY1BqPF9fNefUdidJJepelStIXwS5R5CmNmfSWPY4Lx3BGsKwuXej8Z60
-         kOYG/Ce45E2p7lesIHf+EDZ47C+pJbRpe5ybHIwlx9B55VJcwq0ViAldLim6prxhYcXE
-         kKRxO20lhVJTQfDV92PLG9Zp01RrK0R2wHrPiU9JYvGvmL2nr45W4WvTu93YSlNkhkgs
-         9qj6f5Xh0jwhKyeuA8LHZEX9hQF6ibKKdD7tyfAgIHlQBC8BYr0SflWuHcJkNyq96gRe
-         8KkA==
+        bh=S9TBO22WdmhUcup4vB+50zpiXLDf7pi6UKvkIeRRTsQ=;
+        b=eCnKfkhnL8VFtCVBhD+A92OpOyN7hWrMN9LjkGbGaZblgf8s2zOpsB+t1Qf0YcRW8A
+         DQ2oyQV3pLiZxbpsAbRRk93ASh8BxdFH2VEsrzjRpofLdEI6YcHf1Iy4DFXj3kvnJ0z8
+         TJEyF/OT7og3c5YYcXRrodbaCE5PUfBIC+WSb8XD/spxot1ysVN9/Ush7TuoQJ6Mosb2
+         XQ7Ln5b08D54EiC7sExgnwPdO38slHzrKKRCl5LYblL8xJBFpWwpF9fNdQCmGOUV179o
+         nZDV5ApYB7M2vr9zxhQt7b3psTLhSKjoDdRTWhq7o/nFbiyLpY5wwHM8HkHkZ7nIG/Tz
+         JTmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694240183; x=1694844983;
+        d=1e100.net; s=20230601; t=1694240182; x=1694844982;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=YK2z70GM8Fp4oC98UaS8TS5iRN8Wgk4+ZVqIY4alM2I=;
-        b=J3OS9Fb7/3c+PhKyno5lvHN8Oc2LciX6dpXWKfHYha+VRdMm41SitRZvHZFMH+uQoi
-         3D7dlZzSRMWnfuk9/4nPe0fkNJ4zJ3/meI1R4GBDVWeTznbR/rDsM5I4Sf+lyzHubOFf
-         DAP9P22Kq09SNAQ+WQs8ZDDSGpvzadNHjTSp36nL2F/KJydcKyiNoWfSIzQpU+u7XvVQ
-         /iv5mIAXSAmojrSQAF5Hct3W5/RhGprSSpH0M+tewNZk0Lj2DDws605q6M5uEbgC+BYQ
-         FA0jhd7dn+Xh6zHj9RIF/a0X+OIop3WuU3StDTgvotuYB2JrE4raHjWKMFJs4I87iE0b
-         ED0Q==
-X-Gm-Message-State: AOJu0YzTkPCka4A2ZgrIar/aL4BDhVafLkgWDgLJ/VrVRiraZ8aXwjKG
-        e+RnxfnDawwfm6/fJ+57/ygIhtFvHGU=
-X-Google-Smtp-Source: AGHT+IGneyhP2tfsfDTsNrrlOcUEgz/RgYKuRxddMVhjy8h7FBtlIaBowOEXp8CoDU5jAbopjS82KA==
-X-Received: by 2002:a5d:42ca:0:b0:31c:6409:df17 with SMTP id t10-20020a5d42ca000000b0031c6409df17mr3450161wrr.41.1694240183372;
-        Fri, 08 Sep 2023 23:16:23 -0700 (PDT)
+        bh=S9TBO22WdmhUcup4vB+50zpiXLDf7pi6UKvkIeRRTsQ=;
+        b=nYa+YlZQz3f1ffl7RrQIhrJo3UCmYxqrr36dmTPMCcJO2iuI6FDqlxD91qC5nfRb4u
+         OgsINCY3TIN4k/yjag5EzPkaq6SUBjOBpsxawydp7EJD6qMMjMGDta6BHmWmaeOH9TkD
+         LjJd758Wa8X/unyaPuo3iEJ4NvQtx6iKwov8qaQDzPh5VEjr52PAaXsy68RyhXazE5FE
+         ydtFXTulT1jD9Ra7hFG4Xvb11YNzGIF07K4twacFuIrIfPiAHN831cxV6fiJ+tE4PU00
+         lY7hMYxhx4NCFYbXuGspkkcXm2KY4bvMu4GsyGwbgRurnWra7wSFpGKlXBL1sXtKFRCg
+         0Uug==
+X-Gm-Message-State: AOJu0Yw5wdVPIzqowfN9tpZ2HakuwwljUyouxn4OLkxHR4IZMMU4Dmgz
+        eV/um9M/e8dZR3ORVgmX9J0PXt7epu8=
+X-Google-Smtp-Source: AGHT+IFwgCEUDH3y9uQIhABHNhegEBgNdIa1Lww/MayM9lAWMGvTHKDk1wSZzSspUDj3vlqrKJq7BQ==
+X-Received: by 2002:a7b:c01a:0:b0:401:d3dd:c3c with SMTP id c26-20020a7bc01a000000b00401d3dd0c3cmr3590582wmb.39.1694240182407;
+        Fri, 08 Sep 2023 23:16:22 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 14-20020a056000154e00b0031f8be5b41bsm825731wry.5.2023.09.08.23.16.22
+        by smtp.gmail.com with ESMTPSA id p11-20020a1c740b000000b003ff013a4fd9sm3701856wmc.7.2023.09.08.23.16.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 08 Sep 2023 23:16:22 -0700 (PDT)
-Message-ID: <0463066ebe0889b72b6a1f6c344f2de127458391.1694240177.git.gitgitgadget@gmail.com>
+Message-ID: <52958c3557c34992df59e9c10f098f457526702c.1694240177.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1563.v2.git.1694240177.gitgitgadget@gmail.com>
 References: <pull.1563.git.1691211879.gitgitgadget@gmail.com>
         <pull.1563.v2.git.1694240177.gitgitgadget@gmail.com>
 From:   "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 09 Sep 2023 06:16:17 +0000
-Subject: [PATCH v2 6/6] trailer: use offsets for trailer_start/trailer_end
+Date:   Sat, 09 Sep 2023 06:16:16 +0000
+Subject: [PATCH v2 5/6] trailer: rename *_DEFAULT enums to *_UNSPECIFIED
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,118 +72,135 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Linus Arver <linusa@google.com>
 
-Previously these fields in the trailer_info struct were of type "const
-char *" and pointed to positions in the input string directly (to the
-start and end positions of the trailer block).
+Do not use *_DEFAULT as a suffix to the enums, because the word
+"default" is overloaded. The following are two examples of the ambiguity
+of the word "default":
 
-Use offsets to make the intended usage less ambiguous. We only need to
-reference the input string in format_trailer_info(), so update that
-function to take a pointer to the input.
+(1) "Default" can mean using the "default" values that are hardcoded
+    in trailer.c as
+
+        default_conf_info.where = WHERE_END;
+        default_conf_info.if_exists = EXISTS_ADD_IF_DIFFERENT_NEIGHBOR;
+        default_conf_info.if_missing = MISSING_ADD;
+
+    in ensure_configured(). These values are referred to as "the
+    default" in the docs for interpret-trailers. These defaults are used
+    if no "trailer.*" configurations are defined.
+
+(2) "Default" can also mean the "trailer.*" configurations themselves,
+    because these configurations are used by "default" (ahead of the
+    hardcoded defaults in (1)) if no command line arguments are
+    provided. This concept of defaulting back to the configurations was
+    introduced in 0ea5292e6b (interpret-trailers: add options for
+    actions, 2017-08-01).
+
+In addition, the corresponding *_DEFAULT values are chosen when the user
+provides the "--no-where", "--no-if-exists", or "--no-if-missing" flags
+on the command line. These "--no-*" flags are used to clear previously
+provided flags of the form "--where", "--if-exists", and "--if-missing".
+Using these "--no-*" flags undoes the specifying of these flags (if
+any), so using the word "UNSPECIFIED" is more natural here.
+
+So instead of using "*_DEFAULT", use "*_UNSPECIFIED" because this
+signals to the reader that the *_UNSPECIFIED value by itself carries no
+meaning (it's a zero value and by itself does not "default" to anything,
+necessitating the need to have some other way of getting to a useful
+value).
 
 Signed-off-by: Linus Arver <linusa@google.com>
 ---
- trailer.c | 17 ++++++++---------
- trailer.h |  7 +++----
- 2 files changed, 11 insertions(+), 13 deletions(-)
+ trailer.c | 17 ++++++++++-------
+ trailer.h |  6 +++---
+ 2 files changed, 13 insertions(+), 10 deletions(-)
 
 diff --git a/trailer.c b/trailer.c
-index 6ad2fbca942..00326720e81 100644
+index f646e484a23..6ad2fbca942 100644
 --- a/trailer.c
 +++ b/trailer.c
-@@ -1055,7 +1055,6 @@ void process_trailers(const char *file,
- 	LIST_HEAD(head);
- 	struct strbuf sb = STRBUF_INIT;
- 	struct trailer_info info;
--	size_t trailer_end;
- 	FILE *outfile = stdout;
- 
- 	ensure_configured();
-@@ -1066,11 +1065,10 @@ void process_trailers(const char *file,
- 		outfile = create_in_place_tempfile(file);
- 
- 	parse_trailers(&info, sb.buf, &head, opts);
--	trailer_end = info.trailer_end - sb.buf;
- 
- 	/* Print the lines before the trailers */
- 	if (!opts->only_trailers)
--		fwrite(sb.buf, 1, info.trailer_start - sb.buf, outfile);
-+		fwrite(sb.buf, 1, info.trailer_start, outfile);
- 
- 	if (!opts->only_trailers && !info.blank_line_before_trailer)
- 		fprintf(outfile, "\n");
-@@ -1092,7 +1090,7 @@ void process_trailers(const char *file,
- 
- 	/* Print the lines after the trailers as is */
- 	if (!opts->only_trailers)
--		fwrite(sb.buf + trailer_end, 1, sb.len - trailer_end, outfile);
-+		fwrite(sb.buf + info.trailer_end, 1, sb.len - info.trailer_end, outfile);
- 
- 	if (opts->in_place)
- 		if (rename_tempfile(&trailers_tempfile, file))
-@@ -1104,7 +1102,7 @@ void process_trailers(const char *file,
- void trailer_info_get(struct trailer_info *info, const char *str,
- 		      const struct process_trailer_options *opts)
+@@ -388,7 +388,7 @@ static void process_trailers_lists(struct list_head *head,
+ int trailer_set_where(enum trailer_where *item, const char *value)
  {
--	int patch_start, trailer_end, trailer_start;
-+	size_t patch_start, trailer_end = 0, trailer_start = 0;
- 	struct strbuf **trailer_lines, **ptr;
- 	char **trailer_strings = NULL;
- 	size_t nr = 0, alloc = 0;
-@@ -1139,8 +1137,8 @@ void trailer_info_get(struct trailer_info *info, const char *str,
- 
- 	info->blank_line_before_trailer = ends_with_blank_line(str,
- 							       trailer_start);
--	info->trailer_start = str + trailer_start;
--	info->trailer_end = str + trailer_end;
-+	info->trailer_start = trailer_start;
-+	info->trailer_end = trailer_end;
- 	info->trailers = trailer_strings;
- 	info->trailer_nr = nr;
- }
-@@ -1155,6 +1153,7 @@ void trailer_info_release(struct trailer_info *info)
- 
- static void format_trailer_info(struct strbuf *out,
- 				const struct trailer_info *info,
-+				const char *msg,
- 				const struct process_trailer_options *opts)
+ 	if (!value)
+-		*item = WHERE_DEFAULT;
++		*item = WHERE_UNSPECIFIED;
+ 	else if (!strcasecmp("after", value))
+ 		*item = WHERE_AFTER;
+ 	else if (!strcasecmp("before", value))
+@@ -405,7 +405,7 @@ int trailer_set_where(enum trailer_where *item, const char *value)
+ int trailer_set_if_exists(enum trailer_if_exists *item, const char *value)
  {
- 	size_t origlen = out->len;
-@@ -1164,7 +1163,7 @@ static void format_trailer_info(struct strbuf *out,
- 	if (!opts->only_trailers && !opts->unfold && !opts->filter &&
- 	    !opts->separator && !opts->key_only && !opts->value_only &&
- 	    !opts->key_value_separator) {
--		strbuf_add(out, info->trailer_start,
-+		strbuf_add(out, msg + info->trailer_start,
- 			   info->trailer_end - info->trailer_start);
+ 	if (!value)
+-		*item = EXISTS_DEFAULT;
++		*item = EXISTS_UNSPECIFIED;
+ 	else if (!strcasecmp("addIfDifferent", value))
+ 		*item = EXISTS_ADD_IF_DIFFERENT;
+ 	else if (!strcasecmp("addIfDifferentNeighbor", value))
+@@ -424,7 +424,7 @@ int trailer_set_if_exists(enum trailer_if_exists *item, const char *value)
+ int trailer_set_if_missing(enum trailer_if_missing *item, const char *value)
+ {
+ 	if (!value)
+-		*item = MISSING_DEFAULT;
++		*item = MISSING_UNSPECIFIED;
+ 	else if (!strcasecmp("doNothing", value))
+ 		*item = MISSING_DO_NOTHING;
+ 	else if (!strcasecmp("add", value))
+@@ -586,7 +586,10 @@ static void ensure_configured(void)
+ 	if (configured)
  		return;
+ 
+-	/* Default config must be setup first */
++	/*
++	 * Default config must be setup first. These defaults are used if there
++	 * are no "trailer.*" or "trailer.<token>.*" options configured.
++	 */
+ 	default_conf_info.where = WHERE_END;
+ 	default_conf_info.if_exists = EXISTS_ADD_IF_DIFFERENT_NEIGHBOR;
+ 	default_conf_info.if_missing = MISSING_ADD;
+@@ -701,11 +704,11 @@ static void add_arg_item(struct list_head *arg_head, char *tok, char *val,
+ 	new_item->value = val;
+ 	duplicate_conf(&new_item->conf, conf);
+ 	if (new_trailer_item) {
+-		if (new_trailer_item->where != WHERE_DEFAULT)
++		if (new_trailer_item->where != WHERE_UNSPECIFIED)
+ 			new_item->conf.where = new_trailer_item->where;
+-		if (new_trailer_item->if_exists != EXISTS_DEFAULT)
++		if (new_trailer_item->if_exists != EXISTS_UNSPECIFIED)
+ 			new_item->conf.if_exists = new_trailer_item->if_exists;
+-		if (new_trailer_item->if_missing != MISSING_DEFAULT)
++		if (new_trailer_item->if_missing != MISSING_UNSPECIFIED)
+ 			new_item->conf.if_missing = new_trailer_item->if_missing;
  	}
-@@ -1219,7 +1218,7 @@ void format_trailers_from_commit(struct strbuf *out, const char *msg,
- 	struct trailer_info info;
- 
- 	trailer_info_get(&info, msg, opts);
--	format_trailer_info(out, &info, opts);
-+	format_trailer_info(out, &info, msg, opts);
- 	trailer_info_release(&info);
- }
- 
+ 	list_add_tail(&new_item->list, arg_head);
 diff --git a/trailer.h b/trailer.h
-index a689d768c79..13fbf0dcd12 100644
+index ab2cd017567..a689d768c79 100644
 --- a/trailer.h
 +++ b/trailer.h
-@@ -37,11 +37,10 @@ struct trailer_info {
- 	int blank_line_before_trailer;
+@@ -5,14 +5,14 @@
+ #include "strbuf.h"
  
- 	/*
--	 * Pointers to the start and end of the trailer block found. If there
--	 * is no trailer block found, these 2 pointers point to the end of the
--	 * input string.
-+	 * Offsets to the trailer block start and end positions in the input
-+	 * string. If no trailer block is found, these are set to 0.
- 	 */
--	const char *trailer_start, *trailer_end;
-+	size_t trailer_start, trailer_end;
- 
- 	/*
- 	 * Array of trailers found.
+ enum trailer_where {
+-	WHERE_DEFAULT,
++	WHERE_UNSPECIFIED,
+ 	WHERE_END,
+ 	WHERE_AFTER,
+ 	WHERE_BEFORE,
+ 	WHERE_START
+ };
+ enum trailer_if_exists {
+-	EXISTS_DEFAULT,
++	EXISTS_UNSPECIFIED,
+ 	EXISTS_ADD_IF_DIFFERENT_NEIGHBOR,
+ 	EXISTS_ADD_IF_DIFFERENT,
+ 	EXISTS_ADD,
+@@ -20,7 +20,7 @@ enum trailer_if_exists {
+ 	EXISTS_DO_NOTHING
+ };
+ enum trailer_if_missing {
+-	MISSING_DEFAULT,
++	MISSING_UNSPECIFIED,
+ 	MISSING_ADD,
+ 	MISSING_DO_NOTHING
+ };
 -- 
 gitgitgadget
+
