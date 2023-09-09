@@ -2,124 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D378EEB57A
-	for <git@archiver.kernel.org>; Sat,  9 Sep 2023 00:40:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EBCD6EEB57F
+	for <git@archiver.kernel.org>; Sat,  9 Sep 2023 05:26:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345938AbjIIAkt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Sep 2023 20:40:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55744 "EHLO
+        id S238473AbjIIF0s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 9 Sep 2023 01:26:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345811AbjIIAjv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Sep 2023 20:39:51 -0400
-Received: from out03.mta.xmission.com (out03.mta.xmission.com [166.70.13.233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 742432D44
-        for <git@vger.kernel.org>; Fri,  8 Sep 2023 17:39:16 -0700 (PDT)
-Received: from in02.mta.xmission.com ([166.70.13.52]:37192)
-        by out03.mta.xmission.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <ebiederm@xmission.com>)
-        id 1qekdl-00FHIL-1z; Fri, 08 Sep 2023 17:11:53 -0600
-Received: from ip68-227-168-167.om.om.cox.net ([68.227.168.167]:54328 helo=localhost.localdomain)
-        by in02.mta.xmission.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <ebiederm@xmission.com>)
-        id 1qekdk-009u13-3N; Fri, 08 Sep 2023 17:11:52 -0600
-From:   "Eric W. Biederman" <ebiederm@xmission.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Eric W. Biederman" <ebiederm@xmission.com>
-Date:   Fri,  8 Sep 2023 18:10:30 -0500
-Message-Id: <20230908231049.2035003-13-ebiederm@xmission.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <87sf7ol0z3.fsf@email.froward.int.ebiederm.org>
-References: <87sf7ol0z3.fsf@email.froward.int.ebiederm.org>
+        with ESMTP id S229925AbjIIF0q (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Sep 2023 01:26:46 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 501B6FE
+        for <git@vger.kernel.org>; Fri,  8 Sep 2023 22:26:43 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E6C2E22483;
+        Sat,  9 Sep 2023 01:26:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=sS9CG5KW3Fb7AFs3vtGa5dv40FLDPJsJICXfWa
+        T5hqY=; b=dMeKkmATVmI/dU69YCry0NTmtqJg82G+2r5KXYE1auCfqxQCPdIQrO
+        6bWLEkcIThS5uZ8vSw2/kbti+gC80NzwJA3GpaTj712yFgPedj8ZpgUmfC5yv672
+        sTFxDjAGoKY7menK1gnL4+c583iKifzhI0wVUtJX1DdV7J5VFwbmI=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DE8E722482;
+        Sat,  9 Sep 2023 01:26:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.145.39.59])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8B00D22481;
+        Sat,  9 Sep 2023 01:26:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Calvin Wan <calvinwan@google.com>
+Cc:     git@vger.kernel.org, nasamuffin@google.com,
+        jonathantanmy@google.com, linusa@google.com,
+        phillip.wood123@gmail.com, vdye@github.com
+Subject: Re: [PATCH v3 6/6] git-std-lib: add test file to call git-std-lib.a
+ functions
+In-Reply-To: <20230908174443.1027716-6-calvinwan@google.com> (Calvin Wan's
+        message of "Fri, 8 Sep 2023 17:44:43 +0000")
+References: <20230908174134.1026823-1-calvinwan@google.com>
+        <20230908174443.1027716-6-calvinwan@google.com>
+Date:   Fri, 08 Sep 2023 22:26:38 -0700
+Message-ID: <xmqqy1hfrk6p.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-XM-SPF: eid=1qekdk-009u13-3N;;;mid=<20230908231049.2035003-13-ebiederm@xmission.com>;;;hst=in02.mta.xmission.com;;;ip=68.227.168.167;;;frm=ebiederm@xmission.com;;;spf=pass
-X-XM-AID: U2FsdGVkX18UggUqgxl2MkhJFTn5zai+9uiPM0Ud96E=
-X-SA-Exim-Connect-IP: 68.227.168.167
-X-SA-Exim-Mail-From: ebiederm@xmission.com
-Subject: [PATCH 13/32] object-file: Add a compat_oid_in parameter to write_object_file_flags
-X-SA-Exim-Version: 4.2.1 (built Sat, 08 Feb 2020 21:53:50 +0000)
-X-SA-Exim-Scanned: Yes (on in02.mta.xmission.com)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 73F8782E-4ED1-11EE-9424-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To create the proper signatures for commit objects both versions of
-the commit object need to be generated and signed.  After that it is
-a waste to throw away the work of generating the compatibility hash
-so update write_object_file_flags to take a compatibility hash input
-parameter that it can use to skip the work of generating the
-compatability hash.
+Calvin Wan <calvinwan@google.com> writes:
 
-Update the places that don't generate the compatability hash to
-pass NULL so it is easy to tell write_object_file_flags should
-not attempt to use their compatability hash.
+> +
+> +test-git-std-lib:
+> +	cc -It -o stdlib-test stdlib-test.c -L. -l:../git-std-lib.a
 
-Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
----
- cache-tree.c      | 2 +-
- object-file.c     | 6 ++++--
- object-store-ll.h | 4 ++--
- 3 files changed, 7 insertions(+), 5 deletions(-)
+Yuck, no.  Try to share as much with the main Makefile one level up.
 
-diff --git a/cache-tree.c b/cache-tree.c
-index 641427ed410a..ddc7d3d86959 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -448,7 +448,7 @@ static int update_one(struct cache_tree *it,
- 		hash_object_file(the_hash_algo, buffer.buf, buffer.len,
- 				 OBJ_TREE, &it->oid);
- 	} else if (write_object_file_flags(buffer.buf, buffer.len, OBJ_TREE,
--					   &it->oid, flags & WRITE_TREE_SILENT
-+					   &it->oid, NULL, flags & WRITE_TREE_SILENT
- 					   ? HASH_SILENT : 0)) {
- 		strbuf_release(&buffer);
- 		return -1;
-diff --git a/object-file.c b/object-file.c
-index 6cc4ae1fd957..fd420dd303df 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -2317,7 +2317,7 @@ int stream_loose_object(struct input_stream *in_stream, size_t len,
- 
- int write_object_file_flags(const void *buf, unsigned long len,
- 			    enum object_type type, struct object_id *oid,
--			    unsigned flags)
-+			    struct object_id *compat_oid_in, unsigned flags)
- {
- 	struct repository *repo = the_repository;
- 	const struct git_hash_algo *algo = repo->hash_algo;
-@@ -2328,7 +2328,9 @@ int write_object_file_flags(const void *buf, unsigned long len,
- 
- 	/* Generate compat_oid */
- 	if (compat) {
--		if (type == OBJ_BLOB)
-+		if (compat_oid_in)
-+			oidcpy(&compat_oid, compat_oid_in);
-+		else if (type == OBJ_BLOB)
- 			hash_object_file(compat, buf, len, type, &compat_oid);
- 		else {
- 			struct strbuf converted = STRBUF_INIT;
-diff --git a/object-store-ll.h b/object-store-ll.h
-index bc76d6bec80d..c5f2bb2fc2fe 100644
---- a/object-store-ll.h
-+++ b/object-store-ll.h
-@@ -255,11 +255,11 @@ void hash_object_file(const struct git_hash_algo *algo, const void *buf,
- 
- int write_object_file_flags(const void *buf, unsigned long len,
- 			    enum object_type type, struct object_id *oid,
--			    unsigned flags);
-+			    struct object_id *comapt_oid_in, unsigned flags);
- static inline int write_object_file(const void *buf, unsigned long len,
- 				    enum object_type type, struct object_id *oid)
- {
--	return write_object_file_flags(buf, len, type, oid, 0);
-+	return write_object_file_flags(buf, len, type, oid, NULL, 0);
- }
- 
- int write_object_file_literally(const void *buf, unsigned long len,
--- 
-2.41.0
+> +	./stdlib-test
+> diff --git a/t/stdlib-test.c b/t/stdlib-test.c
+> new file mode 100644
+> index 0000000000..76fed9ecbf
+> --- /dev/null
+> +++ b/t/stdlib-test.c
+> @@ -0,0 +1,231 @@
+> +#include "../git-compat-util.h"
+> +#include "../abspath.h"
+> +#include "../hex-ll.h"
+> +#include "../parse.h"
+> +#include "../strbuf.h"
+> +#include "../string-list.h"
+
+Use -I.. or something, to match what the main Makefile does, so that
+you do not have to have these "../".  With -I.., you could even say
+
+    #include <hex-ll.h>
+    #include <parse.h>
+
+etc.
+
+
+> +	// skip_to_optional_arg_default(const char *str, const char *prefix,
+> +	// 			 const char **arg, const char *def)
+
+No // comments in this codebase, please.
+
+> +	strbuf_addchars(sb, 1, 1);
+> +	strbuf_addf(sb, "%s", "foo");
+
+https://github.com/git/git/actions/runs/6126669144/job/16631124765#step:4:657
 
