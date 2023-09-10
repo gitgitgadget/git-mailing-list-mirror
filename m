@@ -2,153 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24FB1EC8748
-	for <git@archiver.kernel.org>; Sun, 10 Sep 2023 09:49:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF583EE7FF4
+	for <git@archiver.kernel.org>; Sun, 10 Sep 2023 10:05:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232966AbjIJJrf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 10 Sep 2023 05:47:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49126 "EHLO
+        id S238454AbjIJKA0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 10 Sep 2023 06:00:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230455AbjIJJrd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Sep 2023 05:47:33 -0400
-Received: from mail-oo1-xc2f.google.com (mail-oo1-xc2f.google.com [IPv6:2607:f8b0:4864:20::c2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8C94CC9
-        for <git@vger.kernel.org>; Sun, 10 Sep 2023 02:47:27 -0700 (PDT)
-Received: by mail-oo1-xc2f.google.com with SMTP id 006d021491bc7-573449a364fso2285672eaf.1
-        for <git@vger.kernel.org>; Sun, 10 Sep 2023 02:47:27 -0700 (PDT)
+        with ESMTP id S230455AbjIJKAZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Sep 2023 06:00:25 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C30C7CCD
+        for <git@vger.kernel.org>; Sun, 10 Sep 2023 03:00:20 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-40078c4855fso36917515e9.3
+        for <git@vger.kernel.org>; Sun, 10 Sep 2023 03:00:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1694339247; x=1694944047; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ym6O2cxj3q8PRKo1rF0NgqREVQD6IN7n2Psv70geA30=;
-        b=XMs0zKax33HOrafVPbGhKi6oNUrzoQ/68eaJPqw6iH5OxKYQ/9UIRqgfQ5HqxN7xIP
-         9NzgifkWCXnqaALraastVhuY4STABuaWd84Arkp+z50f+xG964OgEV27EiRTrC6++Bp5
-         4B4tRApYwVNAZdu8xJnN7OkuOknnvYoSHrfgORszynyGsJU6t4fka/zWRPLsD0/V+NDW
-         ccPAukh4CkWeLlDxWUWJXEBrOt2+BRrncglTEupu/MOJjE6TtWpc1iCW6ATsg/LidI+w
-         CZKnuqxAcCqXPKa11o8xB8zBI0WuSROlDxWawd7yGoE3jq0w7kllutiZ8dNCuvLVvlKH
-         b19g==
+        d=gmail.com; s=20221208; t=1694340019; x=1694944819; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=DrwQZ85zK8yAmbmp+V6b+Qbpc7k9COeCA/sUnx49dwQ=;
+        b=MtjWu+PAEZJeBm82nZi4149+3yTkETCfr0bTETxh2DFzqC3BVIXa/VVaOwcmA1UcKN
+         bf1WG0HnulOzobS8gefN6jLqtBm2qpKAug7fQVtxLqJFq5cELJDmK2wK6SeRdMyq7bWx
+         2P77CpTOOpM4ltoLxPcD03rUne3xMqhBCfaxx5DNS5PMg8TmR1ih1fQjFUvd3/qV/6kS
+         hPNfXSiL+Vw91bYD8gmMCp8BKKz935IjTE4mJzrinJFOEUQfmidY6Ayhe1AyUo580bil
+         EPD4DwuHVOKoJgoaRBBQdHyPBPmcpKCUH3CvWWBU5uPQ011rCg6U17TcfmVJ0UpUfZK6
+         DsSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694339247; x=1694944047;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Ym6O2cxj3q8PRKo1rF0NgqREVQD6IN7n2Psv70geA30=;
-        b=FcQrL2hu3G/ZbJyZZwZUT9Miwuy/jat63D+2l+8Ikngk9WWxhBEqKtAaOezOtF0k3n
-         /wS8GyW/gBRvwt7reUTOi9CgYyulamOWsELTo4CE2R0gozISn86ha5ciuNcfhLbh1B/Z
-         WLSEzVAYHlZp6BWZTbrXYsDILEMY2oprjFV/R5mcNrPQLpgy0EnaZbW3AD4Gu9yTjMCf
-         gsbS3Vsly1VKomPbOxPZSLtFqQIQyhFVKYCHhc1Nw2XPC7m/p8HanRulkdqSx+JGVljK
-         aFHq58DjB+adfKx/dUPycfiVnDC5WTn1kGWtKgBnz9JPI+01fPqdlo8Rt0T+CDO7qmto
-         8NUw==
-X-Gm-Message-State: AOJu0Yym7CsSEYo9E6Si1J6acNqOME7uGnqVBJh6jZCsxhtmIDKlrpRs
-        sVQ2TzRn8VR3XoGqpo+0+UvuF1//uvmx8sIxO+MedhtIdiA=
-X-Google-Smtp-Source: AGHT+IEdL/Z8zm4n5g0k9bPtsNCLVLf4DbegEsY2o4L4TFGPD7s36/B447/5+HaeWtWVwBpypLZ+Ogvlrh3UMtnp3Cg=
-X-Received: by 2002:a05:6871:292:b0:1be:f7d8:e7a2 with SMTP id
- i18-20020a056871029200b001bef7d8e7a2mr9272169oae.21.1694339247042; Sun, 10
- Sep 2023 02:47:27 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1694340019; x=1694944819;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DrwQZ85zK8yAmbmp+V6b+Qbpc7k9COeCA/sUnx49dwQ=;
+        b=qkjmvGxgiJoFAgqWxwbi+3ohClVl+5ptt19QAjtyLdXQ//LGOtat9ffYarPy4dXVsp
+         /o2KO1nVxfxGZWQ4TovRp7TY5tHJMuAiuTabKL6IAC1EYNUM+jZf+kdEPTUo4qXjuwQs
+         JuDZu7WBDqFi0PD2GFRJGoxy+rbyTGMPERwhkbERox+2iu1iAlzVQ7GoF8zS+uvYteD8
+         F7zimwLm5N6V1M7/gUSV3goqmdg5DuJaH4hmZtU8jOisaDjbLnkC5wy5yQckq+B2fXTD
+         rbZJa1IAInwhK4yJeQRtupQPucXHr7Pl9aNQ1/b3A0nBFl9aBXai3f4K+HGFRX0KMPKb
+         oscA==
+X-Gm-Message-State: AOJu0YxKxsqMQBh9YygvIfki1DDcM8m66qrWn3ZmEBrLLoYAJB4qwfx/
+        jeoKKLi0XER8AuyiEm1HGPg=
+X-Google-Smtp-Source: AGHT+IFSZWBKt7d8/vsHqt1fOFN4u/yc6+BYkjSbvyB+GMq3OuIMImeAJijDHr12wxdhuXMIisnb9A==
+X-Received: by 2002:a05:600c:22d8:b0:401:bcb4:f128 with SMTP id 24-20020a05600c22d800b00401bcb4f128mr6078737wmg.35.1694340018848;
+        Sun, 10 Sep 2023 03:00:18 -0700 (PDT)
+Received: from [192.168.1.212] ([90.242.223.1])
+        by smtp.gmail.com with ESMTPSA id e15-20020a5d594f000000b00317df42e91dsm6970652wri.4.2023.09.10.03.00.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 10 Sep 2023 03:00:18 -0700 (PDT)
+Message-ID: <fe550a42-4d78-4e57-a0bc-cb558e8ac1ab@gmail.com>
+Date:   Sun, 10 Sep 2023 11:00:17 +0100
 MIME-Version: 1.0
-References: <CAN47KsV0E+XC2F+TVKXnnJnkATRp7eM7=-ZJFyZcoTz9SJmcHQ@mail.gmail.com>
- <ZP2DaQMA_aFvjQiR@debian.me>
-In-Reply-To: <ZP2DaQMA_aFvjQiR@debian.me>
-From:   Max Amelchenko <maxamel2002@gmail.com>
-Date:   Sun, 10 Sep 2023 12:47:14 +0300
-Message-ID: <CAN47KsUe=qicr4wZWd33EV+cciUr8ztP2veoOkcw0JBtvsBGjw@mail.gmail.com>
-Subject: Re: [bug] git clone command leaves orphaned ssh process
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     git@vger.kernel.org,
-        Hideaki Yoshifuji <hideaki.yoshifuji@miraclelinux.com>,
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] diff --no-index: fix -R with stdin
+Content-Language: en-US
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        =?UTF-8?Q?Martin_Storsj=C3=B6?= <martin@martin.st>,
+        git@vger.kernel.org
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
         Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+References: <d42579a0-f438-9b4c-97e4-58724dbe4a4@martin.st>
+ <22fdfa3b-f90e-afcc-667c-705fb7670245@web.de>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <22fdfa3b-f90e-afcc-667c-705fb7670245@web.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Output of first ps aux command:
+On 09/09/2023 23:12, René Scharfe wrote:
+> When -R is given, queue_diff() swaps the mode and name variables of the
+> two files to produce a reverse diff.  1e3f26542a (diff --no-index:
+> support reading from named pipes, 2023-07-05) added variables that
+> indicate whether files are special, i.e named pipes or - for stdin.
+> These new variables were not swapped, though, which broke the handling
+> of stdin with with -R.  Swap them like the other metadata variables.
+> 
+> Reported-by: Martin Storsjö <martin@martin.st>
+> Signed-off-by: René Scharfe <l.s.r@web.de>
+> ---
+> Great bug report, thank you!
 
-bash-4.2# ps aux
+Yes thank you Martin for reporting this and thank you to René for fixing 
+it - I saw the report just before I went to bed and it was already fixed 
+by the time I got up! The patch looks good and thanks for adding a test.
 
-USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+Best Wishes
 
-root         1  0.0  0.0 715708  5144 pts/0    Ssl+ 09:43   0:00
-/usr/local/bin/aws-lambda-rie /var/runtime/bootstrap
+Phillip
 
-root        14  0.1  0.0 114096  3088 pts/1    Ss   09:43   0:00 bash
-
-root       165  0.0  0.0 118296  3392 pts/1    R+   09:45   0:00 ps aux
-
-
-Output of second ps aux command (after running git clone):
-
-bash-4.2# ps aux
-
-USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
-
-root         1  0.0  0.0 715708  5144 pts/0    Ssl+ 09:43   0:00
-/usr/local/bin/aws-lambda-rie /var/runtime/bootstrap
-
-root        14  0.0  0.0 114096  3088 pts/1    Ss   09:43   0:00 bash
-
-root       167  0.5  0.0      0     0 pts/1    Z    09:46   0:00 [ssh] <def=
-unct>
-
-root       168  0.0  0.0 118296  3408 pts/1    R+   09:46   0:00 ps aux
-
-See the added ssh defunct process.
-
-On Sun, Sep 10, 2023 at 11:50=E2=80=AFAM Bagas Sanjaya <bagasdotme@gmail.co=
-m> wrote:
->
-> On Sun, Sep 10, 2023 at 09:38:54AM +0300, Max Amelchenko wrote:
-> > What did you do before the bug happened? (Steps to reproduce your issue=
-)
-> >
-> > Run the command:
-> > ps aux
-> > Observe no ssh processes running on system.
-> >
-> > Run git clone against a non-existent hostname:
-> > git clone -v --depth=3D1 -b 3.23.66
-> > ssh://*****@*****lab-prod.server.sim.cloud/terraform/modules/aws-eks
-> > /tmp/dest
-> > Observe the command fails with:
-> >
-> > Could not resolve hostname *****lab-prod.server.sim.cloud: Name or
-> > service not known
-> >
-> > Run:
-> > ps aux
-> >
-> > Observe a defunct ssh process is left behind.
->
-> On git current master on my system, I got sshd (server) processes instead=
-:
->
-> ```
-> root         835  0.0  0.0  15500  3584 ?        Ss   14:38   0:00 sshd: =
-/usr/sbin/sshd -D [listener] 0 of 10-100 startups
-> 165536      3865  0.0  0.0   8488  1408 ?        Ss   14:39   0:00 sshd: =
-/usr/sbin/sshd -D -e [listener] 0 of 10-100 startups
-> 165536      4039  0.0  0.0  11308  1920 ?        Ss   14:40   0:00 sshd: =
-/usr/bin/sshd -D [listener] 0 of 10-100 startups
-> 165536      4374  0.0  0.0  15404  1920 ?        Ss   14:40   0:00 sshd: =
-/usr/sbin/sshd -D [listener] 0 of 10-100 startups
-> 165536      4399  0.0  0.0  15404  1792 ?        Ss   14:40   0:00 sshd: =
-/usr/sbin/sshd -D [listener] 0 of 10-100 startups
-> 165536      4732  0.0  0.0  15404  2048 ?        Ss   14:41   0:00 sshd: =
-/usr/sbin/sshd -D [listener] 0 of 10-100 startups
-> 165536      4943  0.0  0.0  18004   848 ?        Ss   14:41   0:00 sshd: =
-/usr/sbin/sshd -D [listener] 0 of 10-100 startups
-> bagas       6841  0.0  0.0   7668  1092 ?        Ss   14:43   0:00 /usr/b=
-in/ssh-agent /usr/bin/im-launch /usr/bin/gnome-session
-> bagas       6908  0.0  0.1 162780  5488 ?        Ssl  14:43   0:00 /usr/l=
-ibexec/gcr-ssh-agent /run/user/1000/gcr
->
-> ```
->
-> What is your ps output then?
->
-> Thanks.
->
+>   diff-no-index.c          |  1 +
+>   t/t4053-diff-no-index.sh | 19 +++++++++++++++++++
+>   2 files changed, 20 insertions(+)
+> 
+> diff --git a/diff-no-index.c b/diff-no-index.c
+> index 8aead3e332..e7041b89e3 100644
+> --- a/diff-no-index.c
+> +++ b/diff-no-index.c
+> @@ -232,6 +232,7 @@ static int queue_diff(struct diff_options *o,
+>   		if (o->flags.reverse_diff) {
+>   			SWAP(mode1, mode2);
+>   			SWAP(name1, name2);
+> +			SWAP(special1, special2);
+>   		}
+> 
+>   		d1 = noindex_filespec(name1, mode1, special1);
+> diff --git a/t/t4053-diff-no-index.sh b/t/t4053-diff-no-index.sh
+> index 6781cc9078..5f059f65fc 100755
+> --- a/t/t4053-diff-no-index.sh
+> +++ b/t/t4053-diff-no-index.sh
+> @@ -224,6 +224,25 @@ test_expect_success "diff --no-index treats '-' as stdin" '
+>   	test_must_be_empty actual
+>   '
+> 
+> +test_expect_success "diff --no-index -R treats '-' as stdin" '
+> +	cat >expect <<-EOF &&
+> +	diff --git b/a/1 a/-
+> +	index $(git hash-object --stdin <a/1)..$ZERO_OID 100644
+> +	--- b/a/1
+> +	+++ a/-
+> +	@@ -1 +1 @@
+> +	-1
+> +	+x
+> +	EOF
+> +
+> +	test_write_lines x | test_expect_code 1 \
+> +		git -c core.abbrev=no diff --no-index -R -- - a/1 >actual &&
+> +	test_cmp expect actual &&
+> +
+> +	test_write_lines 1 | git diff --no-index -R -- a/1 - >actual &&
+> +	test_must_be_empty actual
+> +'
+> +
+>   test_expect_success 'diff --no-index refuses to diff stdin and a directory' '
+>   	test_must_fail git diff --no-index -- - a </dev/null 2>err &&
+>   	grep "fatal: cannot compare stdin to a directory" err
 > --
-> An old man doll... just what I always wanted! - Clara
+> 2.42.0
