@@ -2,227 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7085CEE49A4
-	for <git@archiver.kernel.org>; Sun, 10 Sep 2023 22:07:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B683EE49A4
+	for <git@archiver.kernel.org>; Sun, 10 Sep 2023 22:58:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231992AbjIJWHP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 10 Sep 2023 18:07:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57968 "EHLO
+        id S230405AbjIJW6q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 10 Sep 2023 18:58:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231849AbjIJWHL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Sep 2023 18:07:11 -0400
-Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FFC5138
-        for <git@vger.kernel.org>; Sun, 10 Sep 2023 15:07:07 -0700 (PDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailout.nyi.internal (Postfix) with ESMTP id CC68D5C00D0;
-        Sun, 10 Sep 2023 18:07:06 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Sun, 10 Sep 2023 18:07:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-         h=cc:cc:content-transfer-encoding:content-type:content-type
-        :date:date:from:from:in-reply-to:in-reply-to:message-id
-        :mime-version:references:reply-to:sender:subject:subject:to:to;
-         s=fm3; t=1694383626; x=1694470026; bh=a8RwLCV2BXq1BM664JU7okomX
-        4IBNSQENFJoBG56U8w=; b=IMahWWnKbgJ4wC1Z9oR1OEPuPK4ZnYGWupmn7/0na
-        3o0nLeLD62Q5LV/NxrpBiLopzeznqqrWtkOqzweqhA+HnC7fifJrfEXNhBILdoXW
-        6jPmbZ+hivcxOP8Jw3GILPUjLAeIaCeS6UfdHzShyArCXu4g91u5Y0D50BdwE1W6
-        WJK4JimVvZRJ5y6x+k+lqIwdb4H/z2AfGNVd0fzW1SIFRoXAUg7Osm89zTu1qCwe
-        MjZXSFdv/oPSzq3NNjezeXglFyUvFmuzU8a3aPRl7MtledV9noGU6UdY5MrpmfRA
-        93WRwLdJWAke0Z70E3dja3mzWKw5N9cOEg9wPhy5b762g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-transfer-encoding
-        :content-type:content-type:date:date:feedback-id:feedback-id
-        :from:from:in-reply-to:in-reply-to:message-id:mime-version
-        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-        1694383626; x=1694470026; bh=a8RwLCV2BXq1BM664JU7okomX4IBNSQENFJ
-        oBG56U8w=; b=toBqoiDuGPnE7uJiTCX87VTRkHADxCGDWiqkvz1DE0MUp7fJ2Wf
-        t5pUQrh2dPW0WwCZB2Pa+Qg/+vARll5K3yJttrCm9S0XaOuI0Zz0Bl3Z+8Fm4B/N
-        X9V+1VYIcoMwg0HQNGVtTBk5NqTl5N8iWPJ0e0mwCV40U3s8OmyWcPOWi2bMuheA
-        EqumbVGJDVPFtt2+qeLQ8U/7+0SWajl/ch/BGTjGVcjXBzIkoDsWZSdxq4Dqj2Gw
-        UuoL/h1EC2R+Hu7sPE3XSEZErYPYtCJ/3PFz75ABFAYkAPYTEm8VmyXP4ZXwNyVz
-        qXGb6NUqhmHan2VFoq3FahA+2ONlVC9zVrA==
-X-ME-Sender: <xms:Cj7-ZDHqfnKUBTGhZbtiNrMCuCI5AN07kmOQ_yAFrdh9XQqt1rWeTNE>
-    <xme:Cj7-ZAXZk3Es5eRR76qmzA6k0lzh0hG6sgblbktpkpbaFx9lUtCxM4cQh6SaVuUXl
-    HndPg0izw0tEiPdPA>
-X-ME-Received: <xmr:Cj7-ZFI96o7yVEmdXxSso66mfwmeIUwkRnRnf7xOrMsdkSscyJQjd6xBNurNzoFvILdV_oL0b6RbqCc6jPqD_sVk7WW38h6pzC23_xV6GWS1-VzroL5aEFJgbQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrudeifedgtdeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhephffvvefufffkofgjfhggtgfgsehtkeertdertdejnecuhfhrohhmpefmrhhi
-    shhtohhffhgvrhcujfgruhhgshgsrghkkhcuoegtohguvgeskhhhrghughhssggrkhhkrd
-    hnrghmvgeqnecuggftrfgrthhtvghrnhepvefgleevieekgeejieekueevhfelieduvdel
-    geefkeejtdekvedttefgffevtedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:Cj7-ZBE0TzVIVpdKehJuP0JyiZwLP_Cg6xBlpoldFeH49KXRiIKbrg>
-    <xmx:Cj7-ZJU1cNWGH0fYXQYzwDKlVvjDNcC7Ob60hDEfDUwqBR2LEPKJPQ>
-    <xmx:Cj7-ZMNKLc2m5jnkHP4-j4_qV2Zt6WFuMO89miU4aLcaqTj0tDOOww>
-    <xmx:Cj7-ZPzLmt4A2urdFhiD6fwd7VKmDcJya24kU132lUvPUexHIEFGeA>
-Feedback-ID: i2671468f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 10 Sep 2023 18:07:04 -0400 (EDT)
-From:   Kristoffer Haugsbakk <code@khaugsbakk.name>
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Denton Liu <liu.denton@gmail.com>, Jeff King <peff@peff.net>,
-        Kristoffer Haugsbakk <code@khaugsbakk.name>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v3 1/1] range-diff: treat notes like `log`
-Date:   Mon, 11 Sep 2023 00:06:23 +0200
-Message-ID: <a37dfb3748e23b4f5081bc9a3c80a5c546101f1d.1694383248.git.code@khaugsbakk.name>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <cover.1694383247.git.code@khaugsbakk.name>
-References: <cover.1693584310.git.code@khaugsbakk.name> <cover.1694383247.git.code@khaugsbakk.name>
+        with ESMTP id S230387AbjIJW6q (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Sep 2023 18:58:46 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C41F5188
+        for <git@vger.kernel.org>; Sun, 10 Sep 2023 15:58:41 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id ffacd0b85a97d-31f8a05aa24so1591852f8f.1
+        for <git@vger.kernel.org>; Sun, 10 Sep 2023 15:58:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1694386720; x=1694991520; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=9Qe4uwz7z3/07dWaW9ZKJ7IjFUjX+/RorK2AyIz24hI=;
+        b=nzpo5xiOfnx9lQPYueu2KhVrevz5oTpxLDVHBUNd/Oh8750KmLC4+gv2JYQTRIqm1B
+         xODSTOQqGUOtrnJM9Li8PmlydbhiafObJn6b6t7q4NwWxxbD6RGSMj0OGF6JjpXtJCsp
+         4LViOQu8nlmMD6x6LZI8Nz9AdHRZjrKC9JdCHm+1QlPzr3iDEgydqcJmk/LmTd8MYaG4
+         Ic9h/wYFTHU76FiU7LAiQWNN5M8UucXqTUHB+8HE6+O50IZHr2fB5FvZJULoxz4dz2+Y
+         i39M6LGCO6tC4UTjL1+3TkVC8c0CoWVSwQq18YaCTsasDiy1JtaYB81ZTyMKrOLcwlv8
+         hJvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694386720; x=1694991520;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9Qe4uwz7z3/07dWaW9ZKJ7IjFUjX+/RorK2AyIz24hI=;
+        b=tH6EIHAa0ZmMBH93YVdm1erfNCHNwIZEu0XIyDufr+EVuVTOeE5tfIOIn2c3kufLXR
+         6sZS4qWjxfL9bsOECCQ8aXYhNo9dS16llPTOrJhn+g5n5AlxqtABkwEo5Uqe2tg+X7oU
+         J5YCVhs7SH8DGiqHtG9O5Juk86Va29Xhm21eYwOlRY67zE+M5dQs3/QnZ9NKgfKvwtd2
+         k7qdB5pF1wFt0KJ9UPa9YSdC0bZx4pQxtrY8nfiKK3sKEhwVIgvHQDHj3MMQOZAZsA2X
+         yO7lNKLC2d77vw5QJbUKO6dyBY5Pfd43wZrehzs3ZHEJYPN7QYyqlPU73j+vMc3DBlO5
+         yFKQ==
+X-Gm-Message-State: AOJu0YxsCjfp/qsOrU91mIq1chOzFuupAGGZj+2jsZAsiFwFQmxXaNwZ
+        1iJSAkNhXrubG1r4elxO1M7m2ZIRgBo=
+X-Google-Smtp-Source: AGHT+IH7ejnpyx5+oB1cuYe6YxefLv5yVMEIxtz/LH+RTQQbuhlM62OxRBRxIXfKneCMybBuDke/Kg==
+X-Received: by 2002:a5d:65ce:0:b0:319:6d20:49c7 with SMTP id e14-20020a5d65ce000000b003196d2049c7mr6386336wrw.3.1694386719580;
+        Sun, 10 Sep 2023 15:58:39 -0700 (PDT)
+Received: from [192.168.2.52] (203.red-88-14-40.dynamicip.rima-tde.net. [88.14.40.203])
+        by smtp.gmail.com with ESMTPSA id l18-20020adff492000000b0031f729d883asm8308305wro.42.2023.09.10.15.58.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 10 Sep 2023 15:58:39 -0700 (PDT)
+Subject: Re: [PATCH 1/2] test-lib: prevent misuses of --invert-exit-code
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFy?= =?UTF-8?Q?mason?= 
+        <avarab@gmail.com>
+References: <68522960-edda-26d3-ddca-cee63f2d859e@gmail.com>
+ <1a60a1ca-0ef0-ecf5-d0aa-a28d7c148a82@gmail.com>
+ <CAPig+cR+rZ4+Qyfz5YQVMixW0oC65iOzxymwOaUnPqSTVScW7g@mail.gmail.com>
+From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
+Message-ID: <577cc92e-9f21-55a8-7389-5f94b1ae9a98@gmail.com>
+Date:   Mon, 11 Sep 2023 00:58:31 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <CAPig+cR+rZ4+Qyfz5YQVMixW0oC65iOzxymwOaUnPqSTVScW7g@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, `range-diff` shows the default notes if no notes-related
-arguments are given. This is also how `log` behaves. But unlike
-`range-diff`, `log` does *not* show the default notes if
-`--notes=<custom>` are given. In other words, this:
+On 10/9/23 3:59, Eric Sunshine wrote:
+> On Sat, Sep 9, 2023 at 7:08 PM Rubén Justo <rjusto@gmail.com> wrote:
+>> GIT_TEST_PASSING_SANITIZE_LEAK=true and GIT_TEST_SANITIZE_LEAK_LOG=true
+>> use internnlly the --invert-exit-code machinery.  Therefore if the user
+> 
+> s/internnlly/internally/
 
-    git log --notes=custom
+Thanks!
 
-is equivalent to this:
-
-    git log --no-notes --notes=custom
-
-While:
-
-    git range-diff --notes=custom
-
-acts like this:
-
-    git log --notes --notes-custom
-
-This can’t be how the user expects `range-diff` to behave given that the
-man page for `range-diff` under `--[no-]notes[=<ref>]` says:
-
-> This flag is passed to the `git log` program (see git-log(1)) that
-> generates the patches.
-
-This behavior also affects `format-patch` since it uses `range-diff` for
-the cover letter. Unlike `log`, though, `format-patch` is not supposed
-to show the default notes if no notes-related arguments are given.[1]
-But this promise is broken when the range-diff happens to have something
-to say about the changes to the default notes, since that will be shown
-in the cover letter.
-
-Remedy this by only conditionally passing in `--notes` to `range-diff`.
-
-§ Root cause
-
-8cf51561d1e (range-diff: fix a crash in parsing git-log output,
-2020-04-15) added `--notes` in order to deal with a side-effect of
-`--pretty=medium`:
-
-> To fix this explicitly set the output format of the internally executed
-> `git log` with `--pretty=medium`. Because that cancels `--notes`, add
-> explicitly `--notes` at the end.
-
-§ Authors
-
-• Fix by Johannes
-• Tests by Kristoffer
-
-† 1: See e.g. 66b2ed09c2 (Fix "log" family not to be too agressive about
-    showing notes, 2010-01-20).
-
-Co-authored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
- range-diff.c          | 13 +++++++++++--
- t/t3206-range-diff.sh | 28 ++++++++++++++++++++++++++++
- 2 files changed, 39 insertions(+), 2 deletions(-)
-
-diff --git a/range-diff.c b/range-diff.c
-index 2e86063491..fbb81a92cc 100644
---- a/range-diff.c
-+++ b/range-diff.c
-@@ -41,12 +41,20 @@ static int read_patches(const char *range, struct string_list *list,
- 	struct child_process cp = CHILD_PROCESS_INIT;
- 	struct strbuf buf = STRBUF_INIT, contents = STRBUF_INIT;
- 	struct patch_util *util = NULL;
--	int in_header = 1;
-+	int i, implicit_notes_arg = 1, in_header = 1;
- 	char *line, *current_filename = NULL;
- 	ssize_t len;
- 	size_t size;
- 	int ret = -1;
- 
-+	for (i = 0; other_arg && i < other_arg->nr; i++)
-+		if (!strcmp(other_arg->v[i], "--notes") ||
-+		    starts_with(other_arg->v[i], "--notes=") ||
-+		    !strcmp(other_arg->v[i], "--no-notes")) {
-+			implicit_notes_arg = 0;
-+			break;
-+		}
-+
- 	strvec_pushl(&cp.args, "log", "--no-color", "-p", "--no-merges",
- 		     "--reverse", "--date-order", "--decorate=no",
- 		     "--no-prefix", "--submodule=short",
-@@ -60,8 +68,9 @@ static int read_patches(const char *range, struct string_list *list,
- 		     "--output-indicator-context=#",
- 		     "--no-abbrev-commit",
- 		     "--pretty=medium",
--		     "--notes",
- 		     NULL);
-+	if (implicit_notes_arg)
-+		     strvec_push(&cp.args, "--notes");
- 	strvec_push(&cp.args, range);
- 	if (other_arg)
- 		strvec_pushv(&cp.args, other_arg->v);
-diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
-index b5f4d6a653..b33afa1c6a 100755
---- a/t/t3206-range-diff.sh
-+++ b/t/t3206-range-diff.sh
-@@ -662,6 +662,20 @@ test_expect_success 'range-diff with multiple --notes' '
- 	test_cmp expect actual
- '
- 
-+# `range-diff` should act like `log` with regards to notes
-+test_expect_success 'range-diff with --notes=custom does not show default notes' '
-+	git notes add -m "topic note" topic &&
-+	git notes add -m "unmodified note" unmodified &&
-+	git notes --ref=custom add -m "topic note" topic &&
-+	git notes --ref=custom add -m "unmodified note" unmodified &&
-+	test_when_finished git notes remove topic unmodified &&
-+	test_when_finished git notes --ref=custom remove topic unmodified &&
-+	git range-diff --notes=custom main..topic main..unmodified \
-+		>actual &&
-+	! grep "## Notes ##" actual &&
-+	grep "## Notes (custom) ##" actual
-+'
-+
- test_expect_success 'format-patch --range-diff does not compare notes by default' '
- 	git notes add -m "topic note" topic &&
- 	git notes add -m "unmodified note" unmodified &&
-@@ -679,6 +693,20 @@ test_expect_success 'format-patch --range-diff does not compare notes by default
- 	! grep "note" 0000-*
- '
- 
-+test_expect_success 'format-patch --notes=custom --range-diff only compares custom notes' '
-+	git notes add -m "topic note" topic &&
-+	git notes --ref=custom add -m "topic note (custom)" topic &&
-+	git notes add -m "unmodified note" unmodified &&
-+	git notes --ref=custom add -m "unmodified note (custom)" unmodified &&
-+	test_when_finished git notes remove topic unmodified &&
-+	test_when_finished git notes --ref=custom remove topic unmodified &&
-+	git format-patch --notes=custom --cover-letter --range-diff=$prev \
-+		main..unmodified >actual &&
-+	test_when_finished "rm 000?-*" &&
-+	grep "## Notes (custom) ##" 0000-* &&
-+	! grep "## Notes ##" 0000-*
-+'
-+
- test_expect_success 'format-patch --range-diff with --no-notes' '
- 	git notes add -m "topic note" topic &&
- 	git notes add -m "unmodified note" unmodified &&
--- 
-2.42.0
-
+> 
+>> wants to use --invert-exit-code in combination with them, the result
+>> will be confusing.
+>>
+>> For the same reason, we are already using BAIL_OUT if the user tries to
+>> combine GIT_TEST_PASSING_SANITIZE_LEAK=check with --invert-exit-code.
+>>
+>> Let's do the same for GIT_TEST_PASSING_SANITIZE_LEAK=true and
+>> GIT_TEST_SANITIZE_LEAK_LOG=true.
+>>
+>> Signed-off-by: Rubén Justo <rjusto@gmail.com>
