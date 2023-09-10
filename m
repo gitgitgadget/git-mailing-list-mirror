@@ -2,64 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE1DCEE14C3
-	for <git@archiver.kernel.org>; Sun, 10 Sep 2023 02:02:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F0E7EE14C3
+	for <git@archiver.kernel.org>; Sun, 10 Sep 2023 03:20:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244917AbjIJCCk convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Sat, 9 Sep 2023 22:02:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39074 "EHLO
+        id S233924AbjIJDU4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 9 Sep 2023 23:20:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233350AbjIJCCj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Sep 2023 22:02:39 -0400
-Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A94E18F
-        for <git@vger.kernel.org>; Sat,  9 Sep 2023 19:02:36 -0700 (PDT)
-Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-6515d44b562so22020336d6.3
-        for <git@vger.kernel.org>; Sat, 09 Sep 2023 19:02:36 -0700 (PDT)
+        with ESMTP id S229672AbjIJDUy (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Sep 2023 23:20:54 -0400
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5857318F
+        for <git@vger.kernel.org>; Sat,  9 Sep 2023 20:20:50 -0700 (PDT)
+Received: by mail-pl1-x649.google.com with SMTP id d9443c01a7336-1c3ae0043f0so693285ad.0
+        for <git@vger.kernel.org>; Sat, 09 Sep 2023 20:20:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1694316049; x=1694920849; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=GSTjg3X5PNcxiwxPiLpo5zyJItdr/nO05xpfsRihthY=;
+        b=cjmgpaf/593L36HxaiEvD27JSMW3l9Qxff2mzZH1hbg7HRua1EGlp6y1vYjsMigMQW
+         7UPD3JKV0Wg8zO8FjcvVd1wmBpWVqiZedwanE8YV3BMsBnvWE/aV6ZALXFK21oX8t84v
+         fm5S8wZXbnFKZOgJNBAlulxmJ8vrUWVF6/8rBx1yL2JmwDVG3UnqOcdP84GMN4Y+UCLW
+         /HEJmv5NXrLlUqyBYzTlobhPeJJXO01oGdyJUQjaCt82SeIMkFnQnKyYiofbtkxSNT3I
+         azFo8D8K9zVmqhCWKkMkptD035LfgGU5WznP5xS0QdM3LvMolBO0EaVOgT9OKAfkgoYE
+         4A9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694311355; x=1694916155;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=oD/EKpTY/98bHFMGW5nc1ztBoKTtv3T628rmXA65e+Y=;
-        b=QJpNWHgtTvg+9kDdr/uFdkUL/CukKnx8IxhP4z4j2m08ZDf31OZPC++xoZUSFx/n1Y
-         R1pNk091QiyOst/BlQC23PxGRrgBzN9DeXppFamkXaQqUOa4hhXJeKw7Y+jZubKO26A7
-         E4g5rboJCAglucJ59vdIJ9DDyhppGeZxjZti+JGqb1rrQnCLbfumLln/wGJ5aaXu8HbL
-         VEs4wfR8BWO3PZVNDCvH1kiJyHtKanBicr10fBm3MKWNMfUJj+x28B0RhMx4hnqCU6Ti
-         pRNXQJd9alXSNsEfa/YIz7JTGfYMZ2GGGn1flmIxBu0J3STN3xJ9QFOJ0KQ7lsdkkk5E
-         A6lg==
-X-Gm-Message-State: AOJu0Yx9eEXqm4LlCl4/j20VvY8ktwHaqY2GMlqtRv2xsy+Zo+IPEl5N
-        ssotVHyV/Nl+ZfaKLrhoJV4/Y4g1AxSj+38/NyQ=
-X-Google-Smtp-Source: AGHT+IHgmo4y4gblNfpIbjnPMgLFsC1EfmwbpR43RvVrFbCTzT1ZnULyvg/ae4QWTsLZhHtkzJx/cQVe2CTYiv6Vsp4=
-X-Received: by 2002:a0c:8d43:0:b0:63d:2de9:cbbe with SMTP id
- s3-20020a0c8d43000000b0063d2de9cbbemr6211662qvb.20.1694311355214; Sat, 09 Sep
- 2023 19:02:35 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.1585.git.1694274592854.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1585.git.1694274592854.gitgitgadget@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 9 Sep 2023 22:02:24 -0400
-Message-ID: <CAPig+cS2SZqN-viky4OB4hZby7UbbJaBR-vhd=QJoqON7kXuPA@mail.gmail.com>
-Subject: Re: [PATCH] completion: improve doc for complex aliases
-To:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Steffen Prohaska <prohaska@zib.de>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
+        d=1e100.net; s=20230601; t=1694316049; x=1694920849;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=GSTjg3X5PNcxiwxPiLpo5zyJItdr/nO05xpfsRihthY=;
+        b=DVNjB4c5gddle32DX96TUHwW0yLO/eCfJ6I9oRBEWJty06/h79OwAZirEeO85Fyigb
+         4csFGbnxwKJcg5qAHTBHGjHKdWdaTL4GO8Lr+7kcqi+G8bHNeaX7FM1bQ6UcjU1tj4OW
+         FRxZoSa68wE63GRpndTNvgsbMJxoXkeuCT6N2ULdeiJRU9Vrjhdmh+QhZ0UV3XebVlXD
+         7oqFdSXGLlHatIqbo6KaKPjKCHcbl523qhvwVN6tMSMQI+aVmAFIEWCunGMDQ0sE5MTQ
+         4Q1C6Alxv5GtQvzyOiL4njmtVmlAhfcJbWI+XUDSGRc5JA3Bh8eXXsUBYXJ9xf4vZAXE
+         vD7A==
+X-Gm-Message-State: AOJu0YwM5RNaGs+vzMHtsG8/35jRquzhgLBWJYclHkElTgV/FbRn4VgN
+        KFRcmcGcS9sCMsBH+hx4zR0st49ooSk=
+X-Google-Smtp-Source: AGHT+IFy9rlrCJh8xHkrXN1SY/hzLcF7pY0buHPKF/YENSaP4I5B9kqHvZPom8a3iENofgxdIy4CZT5UoN0=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a17:903:32c2:b0:1c2:2485:ad7 with SMTP id
+ i2-20020a17090332c200b001c224850ad7mr2985858plr.4.1694316048883; Sat, 09 Sep
+ 2023 20:20:48 -0700 (PDT)
+Date:   Sat, 09 Sep 2023 20:20:38 -0700
+In-Reply-To: <owlyo7icl1g3.fsf@fine.c.googlers.com>
+Mime-Version: 1.0
+References: <20230602102533.876905-1-christian.couder@gmail.com>
+ <20230907092521.733746-1-christian.couder@gmail.com> <20230907092521.733746-12-christian.couder@gmail.com>
+ <owlyo7icl1g3.fsf@fine.c.googlers.com>
+Message-ID: <owlyledelnnd.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH v4 11/15] replay: use standard revision ranges
+From:   Linus Arver <linusa@google.com>
+To:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Elijah Newren <newren@gmail.com>,
+        John Cai <johncai86@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Calvin Wan <calvinwan@google.com>, Toon Claes <toon@iotcl.com>,
+        Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Sep 9, 2023 at 12:25 PM Philippe Blain via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> The completion code can be told to use a particular completion for
-> aliases that shell out by using ': git <cmd> ;' as the first command of
-> the alias. This only works if <cmd> and the semicolon are separated by a
-> space. The examples have that space but it's not clear if it's just for
-> style or if it's mandatory.
+Linus Arver <linusa@google.com> writes:
+
+>> +update refs/heads/branch1 ${NEW_branch1_HASH} ${OLD_branch1_HASH}
+>> +update refs/heads/branch2 ${NEW_branch2_HASH} ${OLD_branch2_HASH}
+>> +update refs/heads/branch3 ${NEW_branch3_HASH} ${OLD_branch3_HASH}
+>> +------------
+>> +
+>> +This will simultaneously rebase branch1, branch2, and branch3 -- all
+>> +commits they have since base, playing them on top of origin/main.
 >
-> Explicitely mention it.
+> How about
+>
+>     This will rebase the commits in `branch1`, `branch2`, and `branch3`
+>     (excluding those in `base`), preplaying them on top of `origin/main`.
 
-s/Explicitely/Explicitly/
+Oops, I meant "replaying" not "preplaying". But also, perhaps the
+following is simpler?
 
-> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+    This will replay the commits in `branch1`, `branch2`, and `branch3`
+    (excluding those in `base`), on top of `origin/main`.
