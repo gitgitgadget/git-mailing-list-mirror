@@ -2,113 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E9E8EE49A4
-	for <git@archiver.kernel.org>; Sun, 10 Sep 2023 18:20:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C40C3EE49A4
+	for <git@archiver.kernel.org>; Sun, 10 Sep 2023 18:40:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230120AbjIJSUl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 10 Sep 2023 14:20:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36470 "EHLO
+        id S231260AbjIJSkw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 10 Sep 2023 14:40:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236840AbjIJSUl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Sep 2023 14:20:41 -0400
-Received: from out03.mta.xmission.com (out03.mta.xmission.com [166.70.13.233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A1F0CC5
-        for <git@vger.kernel.org>; Sun, 10 Sep 2023 11:20:36 -0700 (PDT)
-Received: from in01.mta.xmission.com ([166.70.13.51]:53236)
-        by out03.mta.xmission.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <ebiederm@xmission.com>)
-        id 1qfP2w-000ATz-Um; Sun, 10 Sep 2023 12:20:35 -0600
-Received: from ip68-227-168-167.om.om.cox.net ([68.227.168.167]:35748 helo=email.froward.int.ebiederm.org.xmission.com)
-        by in01.mta.xmission.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <ebiederm@xmission.com>)
-        id 1qfP2v-003PLu-Ov; Sun, 10 Sep 2023 12:20:34 -0600
-From:   "Eric W. Biederman" <ebiederm@xmission.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-References: <87sf7ol0z3.fsf@email.froward.int.ebiederm.org>
-        <ZP3i9WdpDKlsWuNP@tapette.crustytoothpaste.net>
-Date:   Sun, 10 Sep 2023 13:20:26 -0500
-In-Reply-To: <ZP3i9WdpDKlsWuNP@tapette.crustytoothpaste.net> (brian
-        m. carlson's message of "Sun, 10 Sep 2023 15:38:29 +0000")
-Message-ID: <878r9dgaad.fsf@email.froward.int.ebiederm.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        with ESMTP id S229447AbjIJSkw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Sep 2023 14:40:52 -0400
+Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1E9418F
+        for <git@vger.kernel.org>; Sun, 10 Sep 2023 11:40:47 -0700 (PDT)
+Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-58d70c441d5so36759467b3.2
+        for <git@vger.kernel.org>; Sun, 10 Sep 2023 11:40:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1694371247; x=1694976047; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=WFosfGRqZfNtzrsx2g7VWORvLKnRsCeIdZqXbHjsrjs=;
+        b=TJwF5GtzmjO/Wh//8KPBhTsErTuNr9rlfe7sUGLJU9y0iOZ3QXA2LacDu2Jk4P+Lep
+         4Uu5Q0Bmxor1Hsp76rLRTPj8xhxTlQYis+YotXOJc8t8/2AM+jEAzXjbwbkoImLGNfvM
+         rayVf5UNSp9LWP82jneuTjoF6Eyqo5Q96VTJStp8vtWIDeTWsaWyUTaUzU+ar8drxOcN
+         uYPY91+5Ns2LqBqIil1IpDNVMdam5L6ulg7LPAZuN15O1zkP6tHtfkvOrO/hJyVvfi/z
+         YmQrD5fm1KsrNpqW/CxBNt6oohnmEYmxr/MAFHaMb4uV3vEXrQXsBFGcnoyn6BeeTvyt
+         H3iA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694371247; x=1694976047;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WFosfGRqZfNtzrsx2g7VWORvLKnRsCeIdZqXbHjsrjs=;
+        b=FHS7tW1a/9PWjwT8ESf7HSqTbt6TL560FACvT6UXdkmv+hnsmcGCp2fjsIin3hgT2x
+         YXvSkzem6Jy/2/2tXqg/R7a7a2T8FYi/49kOXwGFXWefMEaF/U60ciYnhYe/4DbOPIjE
+         vwp+lbH0/eWXThhKYV2PmfEy8AVbT9cypKu7ZNQT4kysAgaGW+kOnzP3MAgBVYiayGfZ
+         LqLD3fw8n/1fjyfK2OfdDL6B900KhLKFQTPDbLbxzDZ7BFYzXGgkEvR/oUPGPiHBu5bk
+         uuGIuPIgM4D7H0jxxtR9cxUyHVLmUYnHpzi4vJuYstKuKWDj7/ZuMBoUtPYXUpFkwflx
+         78Lw==
+X-Gm-Message-State: AOJu0YzliB1FCNHGP85uMoMyzhW6mG8YNLFEqOghriDuaLaGQlcod/Fc
+        xQ70WQSUWZ51ckpAsIbJPI1b2lKdlncAmsa0Nu+K8w==
+X-Google-Smtp-Source: AGHT+IFlDXOAOQKjkHw54bCUc6bW17p6cafT0T/LSUloAbNoW6DpIJAqNOgkg9xRn+Rx1kGTxq8N7Q==
+X-Received: by 2002:a0d:d80d:0:b0:584:2ea4:a24b with SMTP id a13-20020a0dd80d000000b005842ea4a24bmr8343209ywe.19.1694371246860;
+        Sun, 10 Sep 2023 11:40:46 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id w3-20020a818603000000b005774338d039sm1538284ywf.96.2023.09.10.11.40.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 10 Sep 2023 11:40:46 -0700 (PDT)
+Date:   Sun, 10 Sep 2023 14:40:45 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] parse-options: add int value pointer to struct option
+Message-ID: <ZP4NrVeqMtFTLEuf@nand.local>
+References: <2d6f3d74-687a-2d40-5c0c-abc396aef80f@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-XM-SPF: eid=1qfP2v-003PLu-Ov;;;mid=<878r9dgaad.fsf@email.froward.int.ebiederm.org>;;;hst=in01.mta.xmission.com;;;ip=68.227.168.167;;;frm=ebiederm@xmission.com;;;spf=pass
-X-XM-AID: U2FsdGVkX18+s83MWArlFyNojCcYMzlBH2QyGmVHjIU=
-X-SA-Exim-Connect-IP: 68.227.168.167
-X-SA-Exim-Mail-From: ebiederm@xmission.com
-Subject: Re: [RFC][PATCH 0/32] SHA256 and SHA1 interoperability
-X-SA-Exim-Version: 4.2.1 (built Sat, 08 Feb 2020 21:53:50 +0000)
-X-SA-Exim-Scanned: Yes (on in01.mta.xmission.com)
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <2d6f3d74-687a-2d40-5c0c-abc396aef80f@web.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On Sat, Sep 09, 2023 at 11:10:36PM +0200, René Scharfe wrote:
+> Add an int pointer, value_int, to struct option to provide a typed value
+> pointer for the various integer options.  It allows type checks at
+> compile time, which is not possible with the void pointer, value.  Its
+> use is optional for now.
 
-> On 2023-09-08 at 23:05:52, Eric W. Biederman wrote:
->> 
->> I would like to see the SHA256 transition happen so I started playing
->> with the k2204-transition-interop branch of brian m. carlson's tree.
->> 
->> Before I go farther I need to some other folks to look at this and see
->> if this is a general direction that the git project can stand.
+This is an interesting direction. I wonder about whether or not you'd
+consider changing the option structure to contain a tagged union type
+that represents some common cases we'd want from a parse-options
+callback, something like:
+
+    struct option {
+        /* ... */
+        union {
+            void *value;
+            int *value_int;
+            /* etc ... */
+        } u;
+        enum option_type t;
+    };
+
+where option_type has some value corresponding to "void *", another for
+"int *", and so on.
+
+Alternatively, perhaps you are thinking that we'd use both the value
+pointer and the value_int pointer to point at potentially different
+values in the same callback. I don't have strong feelings about it, but
+I'd just as soon encourage us to shy away from that approach, since
+assigning a single callback parameter to each function seems more
+organized.
+
+> @@ -109,6 +110,7 @@ static enum parse_opt_result get_value(struct parse_opt_ctx_t *p,
+>  	const char *s, *arg;
+>  	const int unset = flags & OPT_UNSET;
+>  	int err;
+> +	int *value_int = opt->value_int ? opt->value_int : opt->value;
 >
-> I'm really excited to see this and I think it's a great way forward.
-> I've taken a brief look at each patch, and I don't see anything that
-> should be a dealbreaker.  I left a few comments, although I think your
-> mailserver is blocking mine at the moment, so you may not have received
-> them (hopefully you can read them on the list in the interim).
+>  	if (unset && p->opt)
+>  		return error(_("%s takes no value"), optname(opt, flags));
 
-I can.  I will see if I can figure out what is happening with direct
-reception tomorrow.
+Reading this hunk, I wonder whether we even need a type tag (the
+option_type enum above) if each callback knows a priori what type it
+expects. But I think storing them together in a union makes sense to do.
 
-> You may also feel free to simply adjust the commit message for the
-> patches of mine you've modified without needing to document that you've
-> changed them.  I expect that you will have changed them when you submit
-> them, if only to resolve conflicts.  After all, Junio does so all the
-> time.
-
-Thanks.  I was doing my best at striking a balance between giving credit
-where is credit is due, and pointing out the bugs are probably mine.
-
->> This patchset is not complete it does not implement converting a
->> received pack of the compatibility hash into the hash function of the
->> repository, nor have I written any automated tests.  Both need to happen
->> before this is finalized.
->
-> Speaking of tests, one set of tests I had intended to write and think
-> should be written, but had not yet implemented, is tests for
-> round-tripping objects.  That is, the SHA-1 value we get for a revision
-> in a pure SHA-1 repository should obviously be the same as the SHA-1
-> value we get in a SHA-256 repository in interop mode, and we should be
-> able to use the `test_oid_cache` functionality to hard-code the desired
-> objects.  I think it would be also helpful to do this for fixed objects
-> that are doubly-signed (with both algorithms) as well, since that's a
-> tricky edge case that we'll want to avoid breaking.  Other edge cases
-> will include things like merge commits, including octopus merges.
-
-Yes.  I think we can use cat-file to do that.  Have two repositories one
-in each format.  Verify that when cat-file prints out an object given
-the native oid cat-file prints out what was put in.  Similarly verify
-that when cat-file prints out an object given the compatibility oid
-cat-file prints out the expected conversion.  That logic performed in
-both repositories should work.
-
-> But overall, I think this is a great improvement, and I'm very excited
-> to see someone picking up some of this work and moving it forward.
-> Thanks for doing so.
-
-Thanks.
-
-Then next goal is to get enough merged that I can test the round-trip
-conversions.  More than anything else we need to know the conversion
-functionality is solid.
-
-Plus I expect that while 32 patches were important to show the scope of
-the work, but a bit much to fully review and merge all at once.
-
-Eric
+Thanks,
+Taylor
