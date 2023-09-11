@@ -2,204 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 005C9CA0EC4
-	for <git@archiver.kernel.org>; Mon, 11 Sep 2023 21:39:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3BB7CA0EC0
+	for <git@archiver.kernel.org>; Mon, 11 Sep 2023 21:39:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349407AbjIKVd2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Sep 2023 17:33:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44076 "EHLO
+        id S1349421AbjIKVdc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Sep 2023 17:33:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242932AbjIKQfV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Sep 2023 12:35:21 -0400
-Received: from out02.mta.xmission.com (out02.mta.xmission.com [166.70.13.232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED9F1D3
-        for <git@vger.kernel.org>; Mon, 11 Sep 2023 09:35:15 -0700 (PDT)
-Received: from in01.mta.xmission.com ([166.70.13.51]:55018)
-        by out02.mta.xmission.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <ebiederm@xmission.com>)
-        id 1qfjsY-00A9Se-OJ; Mon, 11 Sep 2023 10:35:14 -0600
-Received: from ip68-227-168-167.om.om.cox.net ([68.227.168.167]:39214 helo=email.froward.int.ebiederm.org.xmission.com)
-        by in01.mta.xmission.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <ebiederm@xmission.com>)
-        id 1qfjsX-0052b3-Hx; Mon, 11 Sep 2023 10:35:14 -0600
-From:   "Eric W. Biederman" <ebiederm@xmission.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-References: <87sf7ol0z3.fsf@email.froward.int.ebiederm.org>
-        <20230908231049.2035003-2-ebiederm@xmission.com>
-        <ZP3UCQf+9D/J3wqT@tapette.crustytoothpaste.net>
-        <xmqqy1hdi6hp.fsf@gitster.g>
-Date:   Mon, 11 Sep 2023 11:35:07 -0500
-In-Reply-To: <xmqqy1hdi6hp.fsf@gitster.g> (Junio C. Hamano's message of "Sun,
-        10 Sep 2023 23:11:46 -0700")
-Message-ID: <87sf7kd5xg.fsf_-_@email.froward.int.ebiederm.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        with ESMTP id S243626AbjIKRZK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Sep 2023 13:25:10 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0776CF5
+        for <git@vger.kernel.org>; Mon, 11 Sep 2023 10:25:06 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B60741C1818;
+        Mon, 11 Sep 2023 13:25:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=7vts6AoIpYtd0XDbPaEC6mR4CZn9PBPe934gYB
+        LsjbY=; b=u89fCNbAY/Tr+ezYpph+Od/n3tgQIQRCjHLDvPvEUqgpD6INdxsAyc
+        LzVJtXd5kD8Kjq9on0ikWSYdcPQjo+G0aXpEuRSd3Y1PZWh9xVgXKK3lSyGUo4lz
+        wF7zB+HbIwDfO/gZ0XLdCqEV0AgqKIK6jaQOC9ZIZzn1eWQQ9oiC8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 675D01C1817;
+        Mon, 11 Sep 2023 13:25:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 306011C1816;
+        Mon, 11 Sep 2023 13:25:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Glen Choo <chooglen@google.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Linus Arver <linusa@google.com>
+Subject: Re: [PATCH v2 4/6] trailer: teach find_patch_start about --no-divider
+In-Reply-To: <f5f507c4c6c4514af7dca35e307ca68e72435afb.1694240177.git.gitgitgadget@gmail.com>
+        (Linus Arver via GitGitGadget's message of "Sat, 09 Sep 2023 06:16:15
+        +0000")
+References: <pull.1563.git.1691211879.gitgitgadget@gmail.com>
+        <pull.1563.v2.git.1694240177.gitgitgadget@gmail.com>
+        <f5f507c4c6c4514af7dca35e307ca68e72435afb.1694240177.git.gitgitgadget@gmail.com>
+Date:   Mon, 11 Sep 2023 10:25:01 -0700
+Message-ID: <xmqqv8cgvd02.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-XM-SPF: eid=1qfjsX-0052b3-Hx;;;mid=<87sf7kd5xg.fsf_-_@email.froward.int.ebiederm.org>;;;hst=in01.mta.xmission.com;;;ip=68.227.168.167;;;frm=ebiederm@xmission.com;;;spf=pass
-X-XM-AID: U2FsdGVkX1906cX5uVSF3TBq9q1ZXfFnp4+qpvuIGmQ=
-X-SA-Exim-Connect-IP: 68.227.168.167
-X-SA-Exim-Mail-From: ebiederm@xmission.com
-Subject: [PATCH v2 02/32] doc hash-function-transition: Replace
- compatObjectFormat with mapObjectFormat
-X-SA-Exim-Version: 4.2.1 (built Sat, 08 Feb 2020 21:53:50 +0000)
-X-SA-Exim-Scanned: Yes (on in01.mta.xmission.com)
+X-Pobox-Relay-ID: 249118C4-50C8-11EE-979B-25B3960A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Deeply and fundamentally the plan is to only operate one one hash
-function for the core of git, to use only one hash function for what
-is stored in the repository.
+> From: Linus Arver <linusa@google.com>
+>
+> Currently, find_patch_start only finds the start of the patch part of
+> the input (by looking at the "---" divider) for cases where the
+> "--no-divider" flag has not been provided. If the user provides this
+> flag, we do not rely on find_patch_start at all and just call strlen()
+> directly on the input.
+>
+> Instead, make find_patch_start aware of "--no-divider" and make it
+> handle that case as well. This means we no longer need to call strlen at
+> all and can just rely on the existing code in find_patch_start. By
+> forcing callers to consider this important option, we avoid the kind of
+> mistake described in be3d654343 (commit: pass --no-divider to
+> interpret-trailers, 2023-06-17).
 
-To avoid requring a flag day to transition hash functions for naming
-objects, and to support being able to access objects using legacy object
-names a mapping functionality will be provided.
+OK.  The code pays attention to "---" so making it stop doing so
+when the "--no-*" option is given will make the function responsible
+for finding the beginning of the patch.
 
-We want to provide user facing configuration that is robust enough
-that it can accomodate multiple different scenarios on how git
-evolves and how people use their repositories.
+I wonder if we should rename this function while we are at it,
+though.  When "--no-divider" is given, the expected use case is
+*not* to have a patch at all, and it is dubious that a function
+whose name is find_patch_start() can possibly do anything useful.
 
-There are two different ways it is envisioned to use mapped object
-ids.  The first is to require every object in the repository to have a
-mapping, so that pushes and pulls from repositories using a different
-hash algorithm can work.  The second is to have an incomplete mapping
-of object ids so that old references to objects in emails, commit
-messages, bug trackers and are usable in a read-only manner
-with tools like "git show".
-
-The first way fundamentally needs every object in the repository to
-have a mapping, which requires the repository to be marked incompatible
-for writes fron older versions of git.  Thus the mapObjectFormat option
-is placed in [extensions].
-
-The ext2 family of filesystems has 3 ways of describing new features
-compatible, read-only-compatible, and incompatible.  The current git
-configurtation has compat (any feature mentioned anywhere in the
-configuration outside of [extensions] section), and incompatible (any
-configuration inside of the [extensions] section.  It would be nice to
-have a read-only compatible section for the mandatory mapping
-function.  Would it be worth adding it now so that we have it for
-future extensions?
-
-Having a mapping that is just used in a read-only mode for looking up
-old objects with old object ids will be needed post-transition.  Such
-a mode does not require computing the old hash function or even
-support automatically writing any new mappings.  So it is completely
-safe to enable in a backwards compatible mode.  Fort that let's
-use core.readObjectMap to make it clear the mappings only read.
-
-I have documented that both of the options readObjectMap and
-mapObjectFormat can be specified multiple times if that is needed to
-support the desired configuration of git.
-
-Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
----
-
-Posting this to hopefully move the conversation forward.  Unfortunately
-I need something like this so I can tests so I guess now is the time to
-resolve this detail.
-
- .../technical/hash-function-transition.txt    | 49 ++++++++++++++++---
- 1 file changed, 43 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/technical/hash-function-transition.txt b/Documentation/technical/hash-function-transition.txt
-index 4b937480848a..9f5c672d9ad1 100644
---- a/Documentation/technical/hash-function-transition.txt
-+++ b/Documentation/technical/hash-function-transition.txt
-@@ -149,13 +149,13 @@ Repository format extension
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~
- A SHA-256 repository uses repository format version `1` (see
- Documentation/technical/repository-version.txt) with extensions
--`objectFormat` and `compatObjectFormat`:
-+`objectFormat` and `mapObjectFormat`:
- 
- 	[core]
- 		repositoryFormatVersion = 1
- 	[extensions]
- 		objectFormat = sha256
--		compatObjectFormat = sha1
-+		mapObjectFormat = sha1
- 
- The combination of setting `core.repositoryFormatVersion=1` and
- populating `extensions.*` ensures that all versions of Git later than
-@@ -171,6 +171,43 @@ repository, instead producing an error message.
- 		objectformat
- 		compatobjectformat
- 
-+Configurate for a future hash function transition would be:
-+
-+	[core]
-+		repositoryFormatVersion = 1
-+	[extensions]
-+		objectFormat = futureHash
-+		mapObjectFormat = sha256
-+		mapObjectFormat = sha1
-+
-+Or possibly:
-+
-+	[core]
-+		repositoryFormatVersion = 1
-+		readObjectMap = sha1
-+	[extensions]
-+		objectFormat = futureHash
-+		mapObjectFormat = sha256
-+
-+Or post transition to futureHash:
-+
-+	[core]
-+		repositoryFormatVersion = 1
-+		readObjectMap = sha1
-+		readObjectMap = sha256
-+	[extensions]
-+		objectFormat = futureHash
-+
-+The difference between mapObjectFormat and readObjectMap would be that
-+mapObjectFormat would ask git to read existing maps, but would not ask
-+git to write or create them.  Which is enough to support looking up
-+old oids post transition, when they are only needed to support
-+references in commit logs, bug trackers, emails and the like.
-+
-+Meanwhile with mapObjectFormat set every object in the entire
-+repository would be required to have a bi-directional mapping from the
-+the mapped object format to the repositories storage hash function.
-+
- See the "Transition plan" section below for more details on these
- repository extensions.
- 
-@@ -682,7 +719,7 @@ Some initial steps can be implemented independently of one another:
- - adding support for the PSRC field and safer object pruning
- 
- The first user-visible change is the introduction of the objectFormat
--extension (without compatObjectFormat). This requires:
-+extension. This requires:
- 
- - teaching fsck about this mode of operation
- - using the hash function API (vtable) when computing object names
-@@ -690,7 +727,7 @@ extension (without compatObjectFormat). This requires:
- - rejecting attempts to fetch from or push to an incompatible
-   repository
- 
--Next comes introduction of compatObjectFormat:
-+Next comes introduction of mapObjectFormat:
- 
- - implementing the loose-object-idx
- - translating object names between object formats
-@@ -724,9 +761,9 @@ Over time projects would encourage their users to adopt the "early
- transition" and then "late transition" modes to take advantage of the
- new, more futureproof SHA-256 object names.
- 
--When objectFormat and compatObjectFormat are both set, commands
-+When objectFormat and mapObjectFormat are both set, commands
- generating signatures would generate both SHA-1 and SHA-256 signatures
- by default to support both new and old users.
- 
- In projects using SHA-256 heavily, users could be encouraged to adopt
- the "post-transition" mode to avoid accidentally making implicit use
--- 
-2.41.0
-
+The real purpose of this function is to find the end of the log
+message, isn't it?  And the caller uses the end of the log message
+it found and gives it to find_trailer_start() and find_trailer_end()
+as the upper boundary of the search for the trailer block.
