@@ -2,90 +2,161 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 825D0CA0EC3
-	for <git@archiver.kernel.org>; Tue, 12 Sep 2023 02:08:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DDE8CA0EC3
+	for <git@archiver.kernel.org>; Tue, 12 Sep 2023 02:20:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236974AbjILCIJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Sep 2023 22:08:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36268 "EHLO
+        id S237044AbjILCUG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Sep 2023 22:20:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237913AbjILCC0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Sep 2023 22:02:26 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE3F1179D96
-        for <git@vger.kernel.org>; Mon, 11 Sep 2023 18:33:15 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 05A0C1AC473;
-        Mon, 11 Sep 2023 18:36:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=wt5M41CjmVWOXtnVHzoM8Shv643BZf5yYPYIVZ
-        wMRfg=; b=k6HiWX3g4lZ5ArLkgbEhLGx7XCLkie2XeJaxyp3aJgcBqyae4yZj/p
-        ci3BsjWFedMq1PNFcmWqkkDc82N9kgznWy5QuSC7RaK0e+QOS0cq5sdpER/Orts5
-        5KdgS/RFRwzR5rooDAP5HHffwojKSR2aiICgUZ8xhnjyRy9FnrOv0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id F15151AC472;
-        Mon, 11 Sep 2023 18:36:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
+        with ESMTP id S236997AbjILCTu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Sep 2023 22:19:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 72DF013C117
+        for <git@vger.kernel.org>; Mon, 11 Sep 2023 18:42:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1694482929;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=c/Zg5bG8AHyptuQHjW0u6uz0VOkfQ4YAryyJTQwRvsU=;
+        b=RPnmroUTOsVfxUiSia6uKvps0tHuTaaG6ypXab73zrZUw31NnypDmjhLl5ejbZeQS9tyWg
+        0qkxzMcY8HLX6T7QhhXquuB4SbzJwVnY7qmhsQvcpSgeb6OaIVAFXEk8gNDAfToyA4RkSS
+        1iidCmtph7ojtkrNZ1hODrL8j9skh4U=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-575-RbFngtPMNzejhh7If5tJVg-1; Mon, 11 Sep 2023 19:18:53 -0400
+X-MC-Unique: RbFngtPMNzejhh7If5tJVg-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com [10.11.54.5])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6DC891AC471;
-        Mon, 11 Sep 2023 18:36:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH] t3404-rebase-interactive.sh: fix name of a rewording test
-In-Reply-To: <20230911122108.199207-1-oswald.buddenhagen@gmx.de> (Oswald
-        Buddenhagen's message of "Mon, 11 Sep 2023 14:21:08 +0200")
-References: <20230911122108.199207-1-oswald.buddenhagen@gmx.de>
-Date:   Mon, 11 Sep 2023 15:36:08 -0700
-Message-ID: <xmqqwmwws5gn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 9F2C53C0D858;
+        Mon, 11 Sep 2023 23:18:52 +0000 (UTC)
+Received: from dhcp-27-174.brq.redhat.com (unknown [10.45.224.7])
+        by smtp.corp.redhat.com (Postfix) with SMTP id 123244405A;
+        Mon, 11 Sep 2023 23:18:49 +0000 (UTC)
+Received: by dhcp-27-174.brq.redhat.com (nbSMTP-1.00) for uid 1000
+        oleg@redhat.com; Tue, 12 Sep 2023 01:18:00 +0200 (CEST)
+Date:   Tue, 12 Sep 2023 01:17:56 +0200
+From:   Oleg Nesterov <oleg@redhat.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Calvin Wan <calvinwan@google.com>,
+        Carlo Marcelo Arenas =?iso-8859-1?Q?Bel=F3n?= 
+        <carenas@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Mathias Krause <minipli@grsecurity.net>,
+        =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
+        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/1] git-grep: improve the --show-function behaviour
+Message-ID: <20230911231756.GA2840@redhat.com>
+References: <20230911121126.GA17383@redhat.com>
+ <20230911121211.GA17401@redhat.com>
+ <xmqq34zktk4h.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9A834E0A-50F3-11EE-A505-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqq34zktk4h.fsf@gitster.g>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Scanned-By: MIMEDefang 3.1 on 10.11.54.5
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
-
-> The given test name made no sense to me at all; it seems to be a
-> concatenation of two unrelated things. This was introduced by
-> commit 0c164ae7a ("rebase -i: add another reword test", 20-08-20).
+On 09/11, Junio C Hamano wrote:
 >
-> Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+> Oleg Nesterov <oleg@redhat.com> writes:
 >
-> ---
-> actually, i don't understand what the test even does. shouldn't it, to
-> match the description, actually dirty the tree and verify that the
-> operation fails?
+> > 	$ git grep --untracked -pn xxx TEST.c
+> >
+> > before the patch:
+> >
+> > 	TEST.c=1=void func(void);
+> > 	TEST.c:3:void func1(xxx)
+> > 	TEST.c:5:       use1(xxx);
+> > 	TEST.c:8:void func2(xxx)
+> > 	TEST.c:10:      use2(xxx);
+> >
+> > after the patch:
+> >
+> > 	TEST.c=1=void func(void);
+> > 	TEST.c:3:void func1(xxx)
+> > 	TEST.c=3=void func1(xxx)
+> > 	TEST.c:5:       use1(xxx);
+> > 	TEST.c:8:void func2(xxx)
+> > 	TEST.c=8=void func2(xxx)
+> > 	TEST.c:10:      use2(xxx);
+> >
+> > which looks much better to me.
 >
-> Cc: Phillip Wood <phillip.wood@dunelm.org.uk>
+> The "better" is often subjective.
 
-As a typofix the updated text looks more correct, but the above is a
-very good point, so I'll let Phillip, whose 0c164ae7 (rebase -i: add
-another reword test, 2021-08-20) introduced this test, react first.
+Sure. that is why I added "to me".
 
-Thanks for spotting and fixing.
+> The former is showing what is
+> going on in the TEST.c code very clearly without wasting valuable
+> vertical screen real estate, at least to me.
 
-> ---
->  t/t3404-rebase-interactive.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+very clearly? As you probably understand this is subjective as well.
+But yes, you too added "at least to me" ;)
+
+However, certainly this is not true when you use git-grep in scripts,
+please see 0/1.
+
+> If we want to adopt
+> the proposed behaviour, which I would recommend against, the same
+> patch should update the documentation, which currently says
 >
-> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-> index 96a56aafbe..31ee5bc1f6 100755
-> --- a/t/t3404-rebase-interactive.sh
-> +++ b/t/t3404-rebase-interactive.sh
-> @@ -758,7 +758,7 @@ test_expect_success 'reword' '
->  	git show HEAD~2 | grep "C changed"
->  '
->  
-> -test_expect_success 'no uncommited changes when rewording the todo list is reloaded' '
-> +test_expect_success 'no uncommitted changes when rewording' '
->  	git checkout E &&
->  	test_when_finished "git checkout @{-1}" &&
->  	(
+>     Show the preceding line that contains the function name of the
+>     match, unless the matching line is a function name itself.
+
+And I still don't think this patch changes the documented behaviour.
+See my reply to Rene.
+
+Again, if you do
+
+	./git grep -pn --untracked func1 TEST.c
+
+with this patch applied, the output is still
+
+	TEST.c=1=void func(void);
+	TEST.c:3:void func1(xxx)
+
+which iiuc matches the documentation above.
+
+Now,
+
+	./git grep -pn --untracked xxx TEST.c
+
+adds the additional
+
+	TEST.c=3=void func1(xxx)
+	...
+	TEST.c=8=void func2(xxx)
+
+but how does this contradict with the documentation above?
+
+the matching lines are use1(xxx) and use2(xxx), there are NOT
+"the matching line is a function name itself".
+
+> As René said, I think -p/--show-function is a rather less used
+> option in modern Git where "--function-context", which back in
+> 2944e4e6 did not exist, tend to be a much more useful option,
+
+Well, not to me. And you know, I am a git user too ;)
+
+> but it still is a backward
+> incompatible behaviour change that needs to be handled with care.
+
+And this is what I still don't understand.
+
+> Thanks.
+
+Thanks,
+
+Oleg.
+
