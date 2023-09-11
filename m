@@ -2,141 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1771CA0EC6
-	for <git@archiver.kernel.org>; Mon, 11 Sep 2023 21:38:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4576CA0ED0
+	for <git@archiver.kernel.org>; Mon, 11 Sep 2023 21:38:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348913AbjIKVbm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Sep 2023 17:31:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42454 "EHLO
+        id S1348934AbjIKVbr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Sep 2023 17:31:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244366AbjIKUMK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Sep 2023 16:12:10 -0400
-Received: from mout.web.de (mout.web.de [212.227.17.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C5041A7
-        for <git@vger.kernel.org>; Mon, 11 Sep 2023 13:12:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
- s=s29768273; t=1694463110; x=1695067910; i=l.s.r@web.de;
- bh=BHPO0k22BVPGIoUkho29pNXAHMuKBf7tyL/cUp/MpNw=;
- h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
- b=rHp0olK5bYEp1e7B6b/Q/Yxjz3aTgW5A+VknBx6uRyULLXAwhzHqqgvj9Aqh+6iRzu4ctlr
- PA0UsYGklzavc8Z5tLd2JYZKBOlibQKTIgr0LK4M6j8W62RW7u60FwckAS4eav5vHoaAyvcx5
- amSEfzniHuiGgK4E6gg7i3HUzoW3ewyl3dPlK7Bu1W/W0RK1n8hLlYofXH9JQGjnJh7lMxV6D
- 29PbTfFrfheZKXff1ohrovdw3cvMvzcF0bEOVcmtToqKdN7aDkJpcG/6VxqF5wAS9yj9SfY5i
- ItIVRPw9oUnT9anANoB/1BNPEXEcEWmwcSoHFit0phJrGGj7UdSg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.145.34]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1N4eGT-1peJ1704Fr-011Gjt; Mon, 11
- Sep 2023 22:11:50 +0200
-Message-ID: <e214eb9c-7576-f8f5-ef1d-3828affd47d8@web.de>
-Date:   Mon, 11 Sep 2023 22:11:48 +0200
+        with ESMTP id S244461AbjIKUhO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Sep 2023 16:37:14 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78FD6127
+        for <git@vger.kernel.org>; Mon, 11 Sep 2023 13:37:09 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id 4fb4d7f45d1cf-52f1f1f5125so892a12.1
+        for <git@vger.kernel.org>; Mon, 11 Sep 2023 13:37:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1694464628; x=1695069428; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RB5hDAkzX390hNVe1/oAij/L7aqVH4TmBX55RWudUaA=;
+        b=athwx1h16+PU7GHkW3mAvw5X9IvRsbEMhDl4ud3Da/xRtzwBdAHXOPuJPiexvwDW+c
+         0UqPkLa5MGd0PXJL/nrBXJ0tdfHuu4yNnlJWYLo4yeUXbMc2TDBAmHTlVvMp9aJxZbNE
+         pNI6Dsamv869Wx1O2hFmaJHWX4W1MRwSEZPvKoexdpu57tlsp99NOF8d1Y32C+v/1VJE
+         Ery/nS8LlMQE0sBFSMgJ1Nj/pzN2BH0gdU2DiKNY6nK16Pq6JqbKFgV9ilZ8v6BEIBSD
+         VT1eHsye5ohfiH7RQ+KuWzFhpyIBTHMOaeFYr+95bZaF7tVwQMLtfk3Hft0K13EYDWew
+         Rxyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694464628; x=1695069428;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=RB5hDAkzX390hNVe1/oAij/L7aqVH4TmBX55RWudUaA=;
+        b=UEbZO9d6BNHNgWhG01WZzbznNiwK9hnQO12ki6uSLe0MMq2p0mGeOhkW3VbNrpoH21
+         jclOFBjOSdDFCfVJPBuCiwMTXdl9YAuwdgtCrt+OrsxuRKKGf8/h3R809DOQ5v3dcFdV
+         hcn+2Lr3WRNSedliRmV7lLPSfWL1zQ9m554g8g47ayyzXdUMWHuOkasNmXIefSNN+Wf1
+         dYKwVWJtfSjaV0PzE0b50Ypyb1VC6+/1XD4cI85FtugGek12ATSomVL2T9fw8cWXsUZ2
+         G5LEb6dWNaWOada2YF9nPGDIewlKXBBUp28bTaSqdn2hOZTDf1Phc6CGnkbT/M8+uuxG
+         oxiw==
+X-Gm-Message-State: AOJu0YyOpibhEP1cQ6eKglEwMgCtrGm9N3jy3qyyMlM4BBGoMmFNI6uX
+        OGS1YTSOOh4/0S9SamShucMoGCOm9fUkUI8v8LjywCmct9H8k7rY23PqOw==
+X-Google-Smtp-Source: AGHT+IFNuYksK4ImR/i8Hj3foDI9IghgztSdYvP76xPN3ky3HUQLIzG/XzfqliNq0EOfVA2Q9DZrSY37wIeGLmVCGpo=
+X-Received: by 2002:a50:8713:0:b0:52e:f99a:b5f8 with SMTP id
+ i19-20020a508713000000b0052ef99ab5f8mr5742edb.7.1694464627762; Mon, 11 Sep
+ 2023 13:37:07 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.15.0
-Subject: Re: [PATCH 1/1] git-grep: improve the --show-function behaviour
-To:     Oleg Nesterov <oleg@redhat.com>, Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Calvin Wan <calvinwan@google.com>,
-        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
-        Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Mathias Krause <minipli@grsecurity.net>,
-        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-References: <20230911121126.GA17383@redhat.com>
- <20230911121211.GA17401@redhat.com>
-Content-Language: en-US
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <20230911121211.GA17401@redhat.com>
-Content-Type: text/plain; charset=UTF-8
+References: <ZMATKIaU1A1D0wJg@nand.local> <ZMFfRiTSXcrkzdAJ@nand.local>
+ <CAJoAoZkNRa+WREeXsr6fi-wxk_67mY+RL6WWsViwoPvyCbc5ZQ@mail.gmail.com> <ZMgVMYemepJCqXLs@nand.local>
+In-Reply-To: <ZMgVMYemepJCqXLs@nand.local>
+From:   Emily Shaffer <nasamuffin@google.com>
+Date:   Mon, 11 Sep 2023 13:36:55 -0700
+Message-ID: <CAJoAoZner83_xBnvqp3Ctn97LCkLmkAMo0h-od_Q0grTL5Fx+Q@mail.gmail.com>
+Subject: Re: [ANNOUNCE] Virtual Contributor's Summit 2023
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:gmsh7Mvh17ZeKQIkUNObMQrSRV4rQ8xfcQx4PNvvjyfVsxcYBpO
- yuA0wY5Grd3FiftawxyCP8U8urFyRFlPoBZQFB+jOXIYBPEAuPLGyFq/DhuCVTJ4YtuGOqM
- 1gtqU9zPBIylG8/cdXXO4HuY7zzzHNfzehXLNZ7EIJwfon5sUns9mH8/SF/KBl2+ZedYIAu
- gamihAWsnsq0bLlqgzFzg==
-UI-OutboundReport: notjunk:1;M01:P0:QS7N7fzr2z8=;PzrjZ0xBi+P6+BNeHi8ku5hYwTq
- vF4TBn0WK7Y3VuZv2dspx+Sbi5haRNpIH3fDyjR9Oms6kUiv5ATHa/6datb1iXvKbDVPMyrmn
- RK7WvzeUG+uN3PtmtUEvDvCpsyF7RgINsXGr9GVX+vQrAUd9lq9IrrtZ+oZ/FsaLk11YpJXRb
- BXqyR6NKJQLOLtaINMQXoWRvgrHktgHh/HE8VmxULLP21knQv1FUzKWMoFy7TKagtS22v/bNZ
- LoyDyv6xzsvAS6VzyztRc5es6bC4/bXNzAoRszOVBKakg3avVJujt90SxVp9C5kHab58gIpt+
- vAb3FkLGT7q8JzE6fLlqgFZU50FSDPWGJZjrPed6twrBoREX2xwjnDVf8ChjdApEminrr1Y86
- 2IxdrZmMT6+z/OGwAlJVO6N1piINHlBH0rwCuOF55nOQs2r6ap6nUU223u15EhtkebpZjqcaB
- 2arkpRcRh1Y5IYOWFmzrU7eL5zAhitSqozxmW5icYzuFlKrcsah/aiwCiFzJ737UQZ+NEmHFu
- F+cMAq4WxZ2PTB+xGGmarKcV1pJscXQeKJY9Bc8FNW08tTsnmFEkWvCSXPBT/RmCi8VKB+2W0
- ma5APPwE+CdMR9R82OgO/r9U1X0aEwqsF+olQQxqA2/KUhRyUFt6SkwsdwMCg1qh7VKw6ji/o
- iBbO0JDUoaYXL8YgB8KUIcRQ37o7eVxmezwg2lxm2ytzMG50PKMIAHtNxK+5P8OzwL5qrLNCG
- 8ET3DJ9KpQj8HuB8VAVrLgEQcKzsZXk47wgAafLzWMQUPzWACG14Fr3bGZlrDTiZBMtqoZ0ux
- yIeJENd4Eqj3DALNnjBPv3Vw8IL/Hg+AwDbHCYQUklMaKiaLVPHybeP/K1DxVUc7WCY/cwh1e
- aRk8RbONep5iqaDs+gMwzRfB9Yd/eWWu5vxjnpg54TkgUm3raQSzmf90d/YGuDx7BV8APMzVi
- 795Z8Q==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 11.09.23 um 14:12 schrieb Oleg Nesterov:
-> show_funcname_line() returns when "lno <=3D opt->last_shown" and this
-> is not right in that the ->last_shown line (which matched the pattern)
-> can also have the actual function name we need to report.
+On Mon, Jul 31, 2023 at 1:10=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote=
+:
 >
-> Change this code to check "lno < opt->last_shown". While at it, move
-> this check up to avoid the unnecessary "find the previous bol" loop.
+> On Mon, Jul 31, 2023 at 10:56:35AM -0700, Emily Shaffer wrote:
+> > On Wed, Jul 26, 2023 at 11:00=E2=80=AFAM Taylor Blau <me@ttaylorr.com> =
+wrote:
+> > > >   http://bit.ly/git-contributors-summit-2023
+> >
+> > Since it's virtual this year, my team is considering hosting a "watch
+> > party" in Silicon Valley, to get at least a few folks to be able to
+> > meet face to face, even though we can't travel. Basically, we'd book a
+> > conference room at some Google office, invite local contributors to
+> > come along, and dial into the summit from that room - nothing fancy,
+> > no extra programming, maybe catering.
 >
-> Note that --lno can't underflow, lno=3D=3D0 is not possible in this loop=
-.
->
-> Simple test-case:
->
-> 	$ cat TEST.c
-> 	void func(void);
->
-> 	void func1(xxx)
-> 	{
-> 		use1(xxx);
-> 	}
->
-> 	void func2(xxx)
-> 	{
-> 		use2(xxx);
-> 	}
->
-> 	$ git grep --untracked -pn xxx TEST.c
->
-> before the patch:
->
-> 	TEST.c=3D1=3Dvoid func(void);
-> 	TEST.c:3:void func1(xxx)
-> 	TEST.c:5:       use1(xxx);
-> 	TEST.c:8:void func2(xxx)
-> 	TEST.c:10:      use2(xxx);
->
-> after the patch:
->
-> 	TEST.c=3D1=3Dvoid func(void);
-> 	TEST.c:3:void func1(xxx)
-> 	TEST.c=3D3=3Dvoid func1(xxx)
-> 	TEST.c:5:       use1(xxx);
-> 	TEST.c:8:void func2(xxx)
-> 	TEST.c=3D8=3Dvoid func2(xxx)
-> 	TEST.c:10:      use2(xxx);
->
-> which looks much better to me.
+> Sounds fun, thanks for organizing. I think my only request would be that
+> attendees sign up through the forms linked above, and that we limit
+> attendees to folks who meet the criteria (active Git contributor, or
+> planning on becoming one).
 
-Interesting idea to treat function lines as annotations of matches
-instead of as special context.  Showing lines twice feels wasteful, but
-at least for -p it might be justifiable from that angle.  Wouldn't you
-have to repeat function line 3 before the match in line 8, though?
+Now that we have dates (thanks Taylor!) I'm happy to confirm that
+Google is indeed able to host a "watch party" at one of our offices in
+Sunnyvale (specifics TBD). As Taylor emphasized, we're only able to
+invite people who already meet the criteria he named and have signed
+up on the main sheet. If you are one of those people and haven't
+already gotten in touch with me, please do so, it would be fun to
+spend some in person time :)
 
-The reason for not repeating a matched function line was that it
-doesn't add much information under the assumption that it's easy to
-identify function lines visually.  I assume this still holds, but
-perhaps it doesn't for more complicated languages?
+For those who did already get in touch with me, I'll send details
+without the rest of the list shortly.
 
-I have to admit that I almost never use --show-function, but instead
-use the related --function-context a lot.  So my practical experience
-with the former option is very limited.
-
->  grep.c | 7 +++----
->  1 file changed, 3 insertions(+), 4 deletions(-)
-
-The patch would need to update Documentation/git-grep.txt as well to
-reflect the changed output.
-
-Ren=C3=A9
+Thanks!
+ - Emily
