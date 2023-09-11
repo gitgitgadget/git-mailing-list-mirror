@@ -2,127 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A2A4CA0EC1
-	for <git@archiver.kernel.org>; Mon, 11 Sep 2023 21:38:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CAE4CA0EC3
+	for <git@archiver.kernel.org>; Mon, 11 Sep 2023 21:38:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349027AbjIKVcQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Sep 2023 17:32:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55456 "EHLO
+        id S1349055AbjIKVcW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Sep 2023 17:32:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241344AbjIKPHA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Sep 2023 11:07:00 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12438FA
-        for <git@vger.kernel.org>; Mon, 11 Sep 2023 08:06:56 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-977e0fbd742so571126966b.2
-        for <git@vger.kernel.org>; Mon, 11 Sep 2023 08:06:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1694444814; x=1695049614; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qYQf19dEwr1XOSB/au9CiCd6QyIYuCowppjcB77lfls=;
-        b=fBRWrZXnPX3ixxTQVGocr4jnGvbkBifhqhTgd4M7ZjtjEHjgbzBMsO8Y7DHG8/XLMG
-         94RX5z7J7ZUoTEexiPxqcHHT+kzWbpq1LD6IcCSpofJHreHwniuRSUkgac33dieMMx+4
-         5bdMQTJoaHgl5tYOHE/7ERyi/FGlHYTEYOiZOCTcbsdX3PuuFb7uoKcRSq5gSDl/feAy
-         WVAVQl3oE6NpCH55JEH4/bn9EeT0v6uZDdWAnZ/suppvj5o8hwU/hRYTtlYkgpMtAY7z
-         8DXIQ5IBxxsRA0YXbyk3Xynihf2jX2l1uoOMhA7xalLBkghk+I1X/XDnR0hwjNUYwswl
-         y44Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694444814; x=1695049614;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qYQf19dEwr1XOSB/au9CiCd6QyIYuCowppjcB77lfls=;
-        b=FvxBqcsonn/XyO5dOYkHhs7bOEaMrJSfyVXdbHxXAPpPwCuxbVCRGBhR40F3mjwMPD
-         kY/sVvLLDspKZWvmThSGh52IGkwewUgGZHdfnxBUoqFxfxyPz0fYLrRkVIA2UEPBBNGR
-         OOI3Z1W6BP16zaLswjP4FLFg9HAoon0QTDEbOBK3mOBje3OYeoN4LjiRNkjfvo75H5ks
-         WWC8vfsQLvbdtThmd5d3HxBVR1ILHrtODN11dDJA1fpmnTIPOCvUW/0XvfeM5nE3yJ3V
-         jAhZRVjAewyQ8slgFjjqFS2n10B7P2JKgYGPzS8awoG8Q3hA+OjNMAdYGkRPIfV/Y5Vq
-         l+fw==
-X-Gm-Message-State: AOJu0YwK1EefbWEaNjTaQcIzQJNEbRS8av3nR0eb2JlKnwEHcz+A+Oqd
-        s2Q25mmRZx2p7ln9HP3KYizQSuOnvUc=
-X-Google-Smtp-Source: AGHT+IGiWExqtsuKTdhPu7dcsQoVl4/qbXzpE0rMwG/+nJlCyq42hQF0s4kFOBoecPi3oBXsJME7mQ==
-X-Received: by 2002:a17:907:2cd2:b0:9a5:b8c1:2ce1 with SMTP id hg18-20020a1709072cd200b009a5b8c12ce1mr7933026ejc.31.1694444813981;
-        Mon, 11 Sep 2023 08:06:53 -0700 (PDT)
-Received: from christian-Precision-5550.. ([2a04:cec0:1085:31e2:f2be:e47a:b382:4542])
-        by smtp.gmail.com with ESMTPSA id f5-20020a170906138500b0099cb1a2cab0sm5485617ejc.28.2023.09.11.08.06.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Sep 2023 08:06:53 -0700 (PDT)
-From:   Christian Couder <christian.couder@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, John Cai <johncai86@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        Christian Couder <christian.couder@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v6 5/9] pack-bitmap-write: rebuild using new bitmap when remapping
-Date:   Mon, 11 Sep 2023 17:06:14 +0200
-Message-ID: <20230911150618.129737-6-christian.couder@gmail.com>
-X-Mailer: git-send-email 2.42.0.167.gd6ff314189
-In-Reply-To: <20230911150618.129737-1-christian.couder@gmail.com>
-References: <20230812000011.1227371-1-christian.couder@gmail.com>
- <20230911150618.129737-1-christian.couder@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S244376AbjIKUOl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Sep 2023 16:14:41 -0400
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F72D185
+        for <git@vger.kernel.org>; Mon, 11 Sep 2023 13:14:36 -0700 (PDT)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+        by mailout.nyi.internal (Postfix) with ESMTP id 408675C0183;
+        Mon, 11 Sep 2023 16:14:33 -0400 (EDT)
+Received: from imap49 ([10.202.2.99])
+  by compute6.internal (MEProxy); Mon, 11 Sep 2023 16:14:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+         h=cc:cc:content-transfer-encoding:content-type:content-type
+        :date:date:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to;
+         s=fm3; t=1694463273; x=1694549673; bh=pXWKsmmUfUAimvdY9hgG5zuOT
+        5TmeOnGDnyHY2GsrYk=; b=HKuiISJtWirNPptdXNZ3mhFVMZhiAQZY5tYg/fwtx
+        ihQNtjZMeNzMyWvSdiMU2DolkpW5OW5wK5clFI5fTK4kqLkkLMr5zgtNoIJN4rGR
+        wBqxXEruk5PMRYaHW/GkRM5rgfNX8NnlioTfU2vKPVeQW+OGXRWW/IZ107e9oXSe
+        F3iKrWIp/YbAy7z+QByCS/bPBZ4wRXZwY4BvEvvK7rBqYB8v72hxfp8KirASKoXl
+        pnCbCZ22uUDJDjAorpXzn8UGIgoz8e+mf16kN+jT6zK33FErbClXyQ2SFo+Q/anc
+        k4ahVwr/nbIZIO2gbg0vP0iUG2p+v85I7fqibO7rQfqpQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-transfer-encoding
+        :content-type:content-type:date:date:feedback-id:feedback-id
+        :from:from:in-reply-to:in-reply-to:message-id:mime-version
+        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+        1694463273; x=1694549673; bh=pXWKsmmUfUAimvdY9hgG5zuOT5TmeOnGDny
+        HY2GsrYk=; b=qVt+NotmBHpb/tQxNnGDEDQ0NfhLG7pPBt6wP0DiS6yU4RA/4fi
+        oE5vCv0ELPaYgaz99y2faDI+9XKiM8RAczvh0JnvsAVsuUBPw/3iAp71wq6xDsco
+        5msbdu6wbmaOMdHXEHLIzCPYKT0b56+utTVcXX/IU2GqU3eT+A25k+3lNh8BODT8
+        ++Hd7cgb4FBWpBuB8Cy3QIB1CPAKIuXAshAZKwcz6lM1jBhqZDUDeKHZS2fIlTnj
+        Gi6v8ZyH31Ss7bKhF0HI/WykLu2A0nfjkGaWEEbhQUcsAiKx5YG44sp2Ix17naus
+        CX0POwjkSE3vIuQtPZJIu6S3LCjBUZRsuYg==
+X-ME-Sender: <xms:KXX_ZENeRdedmo8N25RdBlbnbe2ONEGcr_L7117mphSUzjf6xgdU6Fo>
+    <xme:KXX_ZK9w80LDU6naMpRUgamvEoLEtwy02hNQnknCAiNJO_fGyvHaVl0JhwNByck9n
+    fmnJBFep_20Eewhzw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrudeigedgudeggecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpefofgggkfgjfhffhffvvefutgfgsehtqhertderreejnecuhfhrohhmpedf
+    mfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssg
+    grkhhkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepvdeitddvteeltedvtedvieevhefg
+    ieffueejtdduhfdtieegjeehheetheefheevnecuffhomhgrihhnpehgihhthhhusgdrtg
+    homhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegt
+    ohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:KXX_ZLSMmNMBrwoYBxIKhUoDvdXDZWwVDtu2D2Wq6sJ0cm2BygnhKQ>
+    <xmx:KXX_ZMsMMTmsPji9rqt9TZugV_B5_BhDjw6eRbfzmR_UhZurxmvWOw>
+    <xmx:KXX_ZMeYyHwI7sMjgFyoB0C_lN8oxRNcIVrYBUW8R1ZxfzmZuo11dQ>
+    <xmx:KXX_ZIHG8t8QMQsQ7ZBclcIic1y1xzeYs9e-WL_7km2Rf7X7JPgoxw>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id EBC9315A0092; Mon, 11 Sep 2023 16:14:32 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-745-g95dd7bea33-fm-20230905.001-g95dd7bea
+Mime-Version: 1.0
+Message-Id: <568b853a-cf71-4262-86be-7b65cf066d93@app.fastmail.com>
+In-Reply-To: <20230902072035.652549-1-oswald.buddenhagen@gmx.de>
+References: <xmqqsf89e8wz.fsf@gitster.g>
+ <20230902072035.652549-1-oswald.buddenhagen@gmx.de>
+Date:   Mon, 11 Sep 2023 22:12:39 +0200
+From:   "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To:     "Oswald Buddenhagen" <oswald.buddenhagen@gmx.de>
+Cc:     "Junio C Hamano" <gitster@pobox.com>,
+        "Phillip Wood" <phillip.wood123@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v5] sequencer: beautify subject of reverts of reverts
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-`git repack` is about to learn a new `--filter=<filter-spec>` option and
-we will want to check that this option is incompatible with
-`--write-bitmap-index`.
+On Sat, Sep 2, 2023, at 09:20, Oswald Buddenhagen wrote:
+> Instead of generating a silly-looking `Revert "Revert "foo""`, make it
+> a more humane `Reapply "foo"`.
 
-Unfortunately it appears that a test like:
+Congrats on a nice series. It's very =E2=80=9Clean and mean=E2=80=9D=E2=80=
+=94focused, not
+excessive.
 
-test_expect_success '--filter fails with --write-bitmap-index' '
-       test_must_fail \
-               env GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=0 \
-               git -C bare.git repack -a -d --write-bitmap-index --filter=blob:none
-'
+And I think I will remember the phrase =E2=80=9Ctoo nerdy=E2=80=9D for a=
+ while. ;)
 
-sometimes fail because when rebuilding bitmaps, it appears that we are
-reusing existing bitmap information. So instead of detecting that some
-objects are missing and erroring out as it should, the
-`git repack --write-bitmap-index --filter=...` command succeeds.
+Maybe we will get this message template the next time we revert a
+merge.[1]
 
-Let's fix that by making sure we rebuild bitmaps using new bitmaps
-instead of existing ones.
+> If you merge the updated side branch (with D at its tip), none of the
+> changes made in A or B will be in the result, because they were revert=
+ed
+> by W.  That is what Alan saw.
+>
+> [...]
+>
+> In such a situation, you would want to first revert the previous rever=
+t,
+> which would make the history look like this: ...
 
-Helped-by: Taylor Blau <me@ttaylorr.com>
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- pack-bitmap-write.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+=F0=9F=94=97 1: https://github.com/git/git/blob/master/Documentation/how=
+to/revert-a-faulty-merge.txt
 
-diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index f6757c3cbf..f4ecdf8b0e 100644
---- a/pack-bitmap-write.c
-+++ b/pack-bitmap-write.c
-@@ -413,15 +413,19 @@ static int fill_bitmap_commit(struct bb_commit *ent,
- 
- 		if (old_bitmap && mapping) {
- 			struct ewah_bitmap *old = bitmap_for_commit(old_bitmap, c);
-+			struct bitmap *remapped = bitmap_new();
- 			/*
- 			 * If this commit has an old bitmap, then translate that
- 			 * bitmap and add its bits to this one. No need to walk
- 			 * parents or the tree for this commit.
- 			 */
--			if (old && !rebuild_bitmap(mapping, old, ent->bitmap)) {
-+			if (old && !rebuild_bitmap(mapping, old, remapped)) {
-+				bitmap_or(ent->bitmap, remapped);
-+				bitmap_free(remapped);
- 				reused_bitmaps_nr++;
- 				continue;
- 			}
-+			bitmap_free(remapped);
- 		}
- 
- 		/*
--- 
-2.42.0.167.gd6ff314189
+Cheers
 
+--=20
+Kristoffer
