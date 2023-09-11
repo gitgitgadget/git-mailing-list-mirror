@@ -2,117 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 379FBCA0EC8
-	for <git@archiver.kernel.org>; Tue, 12 Sep 2023 02:25:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9D31CA0EC8
+	for <git@archiver.kernel.org>; Tue, 12 Sep 2023 02:38:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236617AbjILCZx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Sep 2023 22:25:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34840 "EHLO
+        id S239591AbjILCiW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Sep 2023 22:38:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51214 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236515AbjILCZm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Sep 2023 22:25:42 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B102C1E2F1
-        for <git@vger.kernel.org>; Mon, 11 Sep 2023 15:07:41 -0700 (PDT)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+        with ESMTP id S239560AbjILCiF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Sep 2023 22:38:05 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86BB973E89
+        for <git@vger.kernel.org>; Mon, 11 Sep 2023 16:06:32 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DBAA938E0C;
+        Mon, 11 Sep 2023 19:02:45 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=RiLGogSq85xNuGM9SpzuIHSW/SeIjtnX7X2inX
+        EZs7k=; b=t3ihdzQah5zi3/VwpFL7b9cXQGvt7ByMPvTRKRpuAI3CyK0oPtrgD+
+        aPlklnkrU2ntTd2qQVwVzKgkSJwvSHVmyfVFjq9nla6t8TzFd9dHCdwAYeaX1w1g
+        BpZ5dm4suJ5h4rGYag4/bee+qQvzEacN6JOM/UVYuKYrJ1qHPrA1s=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D40D338E0B;
+        Mon, 11 Sep 2023 19:02:45 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 159095A225;
-        Mon, 11 Sep 2023 22:05:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1694469931;
-        bh=6ANQE0l8KYbLXaBy3SpYbYoI6bVnWOOU19/EQ+Ja7iI=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=ImItry4qYCk+6NPQalHdzhR2TCItsd6qBoBPllZj0UA2ZUg0dvjMZcG32vpKOfJzE
-         npTgIZt/fKi4ghgaJOjDlnYgWo5B1MzLdQjVHLo74GN4ilwS5ipRqLfH1897TMOZYL
-         Yhh3+oc6bYa66b1u5fXbf0b4pAhiuSmIebbxAK096iTsiKwWy3oDfd9X6NrTUvMgAC
-         I3UXdi0Kxq6hWON0mIB0tE7HZeiFl5N7GPlorxN1AhuAqbxxVC4dUw+XIGhRLJ0765
-         mI3MhuN6YWhUoGPe25A/drrRBV2FxAyQdC/hvhlvRmMVTbRFXtbRNIKzv+eMXjHwIK
-         NWpj/jC+JvLoIOzp7LDG1NZe/tud70P61EC22yMlHGfn7fMg9TnfA9GecUXsx6a96X
-         y6nxC04i5+hXdHNzOJ09LTz72BsdifJS8Li+8ki0e2IjLfmTlbE6y+DT+aDL0I6bDY
-         88p9DbmZSOfKedJyIrFWSTTUeyQypNbvtT4uPm73vSb8EN6ztH7
-Date:   Mon, 11 Sep 2023 22:05:29 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     "Eric W. Biederman" <ebiederm@xmission.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [RFC][PATCH 0/32] SHA256 and SHA1 interoperability
-Message-ID: <ZP+PKa3N1N1PXROM@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Eric W. Biederman" <ebiederm@xmission.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <87sf7ol0z3.fsf@email.froward.int.ebiederm.org>
- <xmqq8r9di5ba.fsf@gitster.g>
- <87cyyoeli0.fsf@email.froward.int.ebiederm.org>
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 58D2C38E0A;
+        Mon, 11 Sep 2023 19:02:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Dragan Simic <dsimic@manjaro.org>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC] New configuration option "diff.statNameWidth"
+In-Reply-To: <261907dbfafc8d7b3b048854b663e82d@manjaro.org> (Dragan Simic's
+        message of "Mon, 11 Sep 2023 20:56:43 +0200")
+References: <eb8f524eca3975f086715ec32a8a1fbb@manjaro.org>
+        <xmqq8r9ommyt.fsf@gitster.g>
+        <72c114086590b9b15a3fdd9e0d6bd67e@manjaro.org>
+        <xmqq4jkcmdaw.fsf@gitster.g>
+        <a879c9c7d3b9bdae9a49f67fbe6316fc@manjaro.org>
+        <261907dbfafc8d7b3b048854b663e82d@manjaro.org>
+Date:   Mon, 11 Sep 2023 16:02:40 -0700
+Message-ID: <xmqqo7i8s48f.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="9wlwHfHdQWXUOkxC"
-Content-Disposition: inline
-In-Reply-To: <87cyyoeli0.fsf@email.froward.int.ebiederm.org>
-User-Agent: Mutt/2.2.9 (2022-11-12)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4FF70166-50F7-11EE-BEF5-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Dragan Simic <dsimic@manjaro.org> writes:
 
---9wlwHfHdQWXUOkxC
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On 2023-09-03 05:43, Dragan Simic wrote:
+>> On 2023-09-03 00:16, Junio C Hamano wrote:
+>>> Having said all the above, once we start seeing the actual patches
+>>> and its sales pitch (aka proposed commit log message), we do guide
+>>> and help polishing the patch into a better shape, so it will not
+>>> be like the contributor has to work in the dark without knowing
+>>> what level of bar their contribution has to pass.
+>> Thanks, everything sounds great and welcoming to the new
+>> contributors,
+>> who of course need to be willing to put in the required amount of
+>> skill and effort.
+>
+> I sent a patch to the git mailing list today, about five hours ago,
+> but it hasn't appeared on the list yet.  Could something be wrong with
+> the mail server(s), as I also received no other messages from the list
+> in the last six hours or so?
 
-On 2023-09-11 at 16:13:27, Eric W. Biederman wrote:
-> Junio, brian for the very warm reception of this, it is very
-> encouraging.
->=20
-> I am not worried about what it will take time to get the changes I
-> posted into the integration.  I had only envisioned them as good enough
-> to get the technical ideas across, and had never envisioned them as
-> being accepted as is.
->=20
-> What I am envisioning as my future directions are:
->=20
-> - Post non controversial cleanups, so they can be merged.
->   (I can only see about 4 of them the most significant is:
->    bulk-checkin: Only accept blobs)
->=20
-> - Sort out the configuration options
->=20
-> - Post the smallest patchset I can that will allow testing the code in
->   object-file-convert.c.  Unfortunately for that I need configuration
->   options to enable the mapping.
->=20
->   In starting to write the tests I have already found a bug in
->   the conversion of tags (an extra newline is added), and I haven't
->   even gotten to testing the tricky bits with signatures.
+It is a high-volume mailing list server and occasional hiccup is
+part of regular life.  Waiting a bit and then poking the postmater
+at vger.kernel.org may be needed from time to time, but I am seeing
+your message on the archive, so it seems "waiting" has worked fine?
 
-I wonder if unit tests are a possibility here now that we're starting to
-use them.  They're not obligatory, of course, but it may be more
-convenient for you if they turn out to be a suitable option.  If not, no
-big deal.
-
-> - Once the object file conversion is tested and is solid work on
->   the more substantial pieces.
->=20
-> Does that sound like a reasonable plan?
-
-Yeah, that seems fine.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---9wlwHfHdQWXUOkxC
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.40 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZP+PKQAKCRB8DEliiIei
-gRPvAQDkSmNrIJVy4klHwKbl07U6wdzyftF4Rw3pcBzkCakFlgEA4S2KsD1KczP6
-soQ60BrYgJ3xIesxOfQiIFwu6U8+Ug4=
-=Fwxt
------END PGP SIGNATURE-----
-
---9wlwHfHdQWXUOkxC--
