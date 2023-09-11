@@ -2,85 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC5CFCA0EC1
-	for <git@archiver.kernel.org>; Mon, 11 Sep 2023 21:38:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BF2E7CA0EC3
+	for <git@archiver.kernel.org>; Mon, 11 Sep 2023 21:38:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349082AbjIKVc1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Sep 2023 17:32:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46056 "EHLO
+        id S1349108AbjIKVch (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Sep 2023 17:32:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244371AbjIKUM3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Sep 2023 16:12:29 -0400
-Received: from mout.web.de (mout.web.de [212.227.17.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41F6C185
-        for <git@vger.kernel.org>; Mon, 11 Sep 2023 13:12:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
- s=s29768273; t=1694463117; x=1695067917; i=l.s.r@web.de;
- bh=vYJCU9aqGTGmbilHV/0a96S17Q2IfczYPtfGcny8dvI=;
- h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
- b=KYJcJ0rhWSvwPkGI9NGHZNTQw27n4c39UWi9Yd48BtSehS1HCiubi6CyOxv4VzOPzjeILJA
- tcj6ScK/TU2ii/M3l5vIEkUNmna1L/WwfvwE7MtayaC0D0ESvgVvNJnYGDqYPjjBs/fRzBO7v
- zF/Cg7ffjMESKE22/JvUK5DcCLtmFddVCMYRvniGNVkIU5qt4/Xw87LJpAzuVq/qnw7b79IeN
- Q7T8FelbLNX1qesc2wVPai0UPBrqRncF7sxFDtTV4Orb93vdg6at2aaPfuGfCb+mkh04pRWlU
- Xqj1umuL6u4qgXsNlKai75V1ycIhquJQEm6F2v5iPGQLPam+ZuUg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.145.34]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MgiXO-1pz1KD0bKm-00hIMs; Mon, 11
- Sep 2023 22:11:57 +0200
-Message-ID: <15530a5f-8d06-24c9-bc2d-e313c895f477@web.de>
-Date:   Mon, 11 Sep 2023 22:11:56 +0200
+        with ESMTP id S243414AbjIKRKm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Sep 2023 13:10:42 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BFC8121
+        for <git@vger.kernel.org>; Mon, 11 Sep 2023 10:10:38 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 48DDB2A209;
+        Mon, 11 Sep 2023 13:10:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=k7sBPFWNUcjrwXMw1y+oePUQnSrrPrcGEiEK93
+        PlKFs=; b=SH8JsKtEUvsuXj4TpckmMD7XRFYkfgpOLM/EUWrMWHRRpjNwVwv13a
+        ZYuFFVxHL9mr47tf6GEmYxyS9RGN6/MLQyDO6LpkWg71om6RGLuLBle8BlgE+P6/
+        LZY3uzIkaktQkREPYgnyWkpI5Bnxmfq+GrsPwBzXvYsttMteTC3uE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 40F332A208;
+        Mon, 11 Sep 2023 13:10:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B8F1E2A207;
+        Mon, 11 Sep 2023 13:10:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Glen Choo <chooglen@google.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Linus Arver <linusa@google.com>
+Subject: Re: [PATCH v2 2/6] trailer: split process_input_file into separate
+ pieces
+In-Reply-To: <c00f4623d0b97cc8ed71ea018e6ecf6e21739b53.1694240177.git.gitgitgadget@gmail.com>
+        (Linus Arver via GitGitGadget's message of "Sat, 09 Sep 2023 06:16:13
+        +0000")
+References: <pull.1563.git.1691211879.gitgitgadget@gmail.com>
+        <pull.1563.v2.git.1694240177.gitgitgadget@gmail.com>
+        <c00f4623d0b97cc8ed71ea018e6ecf6e21739b53.1694240177.git.gitgitgadget@gmail.com>
+Date:   Mon, 11 Sep 2023 10:10:33 -0700
+Message-ID: <xmqq7cowws8m.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.15.0
-Subject: Re: [PATCH 2/2] parse-options: use and require int pointer for
- OPT_CMDMODE
-Content-Language: en-US
-To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>
-References: <2d6f3d74-687a-2d40-5c0c-abc396aef80f@web.de>
- <e6d8a291-03de-cfd3-3813-747fc2cad145@web.de> <ZP2X9roiaeEjzf24@ugly>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <ZP2X9roiaeEjzf24@ugly>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:W5u/xLTaXTCHvGwzJHlLAYZSAUSBWXJSVBtRSozaTHfbF5aZVRt
- I4CrGmWSuP9yvtAauHvujTy0p99tanco3H+oDkOjvrXlpb/NpughKRo738rZaBtmB9DgxZk
- TYB5r9j/p/yp9xTMK81Y8T7n63PuX3PyCYhyTE3/jl0O6bYQVr83Dn3vzcKsDJAzZxoZmGu
- bOd1I6Hi3qqFRIpPy4yMw==
-UI-OutboundReport: notjunk:1;M01:P0:7szLUFFgJwY=;CXroY4Ivncy4wN7yUggb0p52OI1
- eMwdyGnZJdRfesm2s3DqehZGD8nVNRNNsXOflNi2EThJNCu/XTEc5a+fQEE8H5Zl1uv0oTScS
- MuAvnwaGxMXO8pOM5wzj4xH3LYRVgTWTzbSbfsme2WbJTmzdcvd+4rxkeTukAMyWmX8JXn7lx
- /IxB8n+3BadvuHfRWwFRqIsG+XeGLokit7slnIjUNOT2RmJoyyLNQysAKtaJaOdJqZwMb71dX
- 6vocntT77a0Fy2eNd2sNfxiiODV2zQTYWVSe5FKlUirnpy9TVFNXIrsjS+sJ6H8tttYw5tWAA
- rgOJ+ivk59RZeUQVeStJzbXzk5xEh9H+1PBzk5D1ucaVVuEFFMeRihlrkFyB2bLOM3zHliH8v
- j8XZrLLxVStZYzokBGxEg8CAVcY7DKBfLLzR0UtAT5ya6iFWmWJUo+L9Puq+7ZC1kPEfqRSUb
- J+rFnRAvl/ApEYE7ykRDgREN58psytn+BfhjvbQqRE2W1FHiq1Mn0Dp7AVnlyrJCix8RnJkye
- j9cBAIYJn567yoebn53KSnF/lF2OZf2DID/Z1ZfyUAuOGwYGkAuCTDJaSny9RUen2sgmsc+PR
- hng4O86P81M+SaNYtsZ3EuixqNzE8YEtY5euVzSxKfi8fGEtbODDBKh3q+4xHj9WfRRA0kK98
- 8nAZ2dGzPINpSXQadMPReEFmRAGpwthLJd/CmhdJi0dZDUls1+YcihgO1tOacOCDB/x8ttfNn
- hdn8WsT+uG1ropmqqLUSO96NKmVYkOIp4MrynXqztu+HbKS85V7IS4icuSvbcihgjqbKBKxCq
- 9TFPZZ+FLvpjsDK/nWCTKbidfXRPy9TJELRvtN45V1dfmhxD7xUdb55DtmCGaBs4q146mL8Vd
- LyTabMaVqTClbrkknpjOfiyK6f43SIWqZ+a1Kks4Ld4baeXS6QdsuSijghausHM86KcKyIpF1
- cUJTDw==
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1EEDF97A-50C6-11EE-9290-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 10.09.23 um 12:18 schrieb Oswald Buddenhagen:
-> On Sat, Sep 09, 2023 at 11:14:20PM +0200, Ren=C3=A9 Scharfe wrote:
->> Convert the offending OPT_CMDMODE users and use the typed value_int
->> point in the macro's definition to enforce that type for future ones.
->>
-> that defeats -Wswitch[-enum], though.
+"Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-True.  Though I don't fully understand these warnings (why not then
-also warn about if without else?), but taking them away is a bit rude
-to those who care.
+> From: Linus Arver <linusa@google.com>
+>
+> Currently, process_input_file does three things:
+>
+>     (1) parse the input string for trailers,
+>     (2) print text before the trailers, and
+>     (3) calculate the position of the input where the trailers end.
+>
+> Rename this function to parse_trailers(), and make it only do
+> (1). The caller of this function, process_trailers, becomes responsible
+> for (2) and (3). These items belong inside process_trailers because they
+> are both concerned with printing the surrounding text around
+> trailers (which is already one of the immediate concerns of
+> process_trailers).
 
-> the pedantically correct solution would be using setter callbacks.
+Nicely explained and the resulting code reads well.
 
-Or to use an int to point to and then copy into a companion enum
-variable to after parsing, which would be my choice.
-
-Ren=C3=A9
+Thanks.
