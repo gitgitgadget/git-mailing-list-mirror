@@ -2,142 +2,171 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DC8BECA0EC7
-	for <git@archiver.kernel.org>; Tue, 12 Sep 2023 01:41:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4027ECA0EC3
+	for <git@archiver.kernel.org>; Tue, 12 Sep 2023 01:42:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235462AbjILBlX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Sep 2023 21:41:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40556 "EHLO
+        id S235755AbjILBmk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Sep 2023 21:42:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235733AbjILBlG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Sep 2023 21:41:06 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06441A3D3A
-        for <git@vger.kernel.org>; Mon, 11 Sep 2023 18:18:15 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C7EE41AB992;
-        Mon, 11 Sep 2023 17:01:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=POxY6Ixt5m0jB26yBT3objdO4Va5ta/H1FIt8d
-        1GkF0=; b=qFrURggXddUgRGrFFWecE6GdWUMfBUH0M7Nc1nzIwji7TLegcI1N8I
-        RCgZ2rphh7GaAB5RpwbnZO6JjjTDgRaeFyAfKlcHCF/DZ60V9UeSHPos0+spZeiB
-        i0elZCq28EiBig7EBOwIsmIHTyxBv9A8ZoJe8SKsP7lDddRIC8weU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BED9F1AB991;
-        Mon, 11 Sep 2023 17:01:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 235F71AB990;
-        Mon, 11 Sep 2023 17:01:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/2] diff-merges: introduce '-d' option
-In-Reply-To: <20230909125446.142715-3-sorganov@gmail.com> (Sergey Organov's
-        message of "Sat, 9 Sep 2023 15:54:46 +0300")
-References: <20230909125446.142715-1-sorganov@gmail.com>
-        <20230909125446.142715-3-sorganov@gmail.com>
-Date:   Mon, 11 Sep 2023 14:01:15 -0700
-Message-ID: <xmqqtts0tof8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        with ESMTP id S235911AbjILBmV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Sep 2023 21:42:21 -0400
+Received: from out01.mta.xmission.com (out01.mta.xmission.com [166.70.13.231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1A7E8117F
+        for <git@vger.kernel.org>; Mon, 11 Sep 2023 18:18:53 -0700 (PDT)
+Received: from in02.mta.xmission.com ([166.70.13.52]:32880)
+        by out01.mta.xmission.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.93)
+        (envelope-from <ebiederm@xmission.com>)
+        id 1qfqnM-00C1we-5J; Mon, 11 Sep 2023 17:58:20 -0600
+Received: from ip68-227-168-167.om.om.cox.net ([68.227.168.167]:48404 helo=email.froward.int.ebiederm.org.xmission.com)
+        by in02.mta.xmission.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.93)
+        (envelope-from <ebiederm@xmission.com>)
+        id 1qfqnK-00F1xw-Sl; Mon, 11 Sep 2023 17:58:19 -0600
+From:   "Eric W. Biederman" <ebiederm@xmission.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+References: <87sf7ol0z3.fsf@email.froward.int.ebiederm.org>
+        <20230908231049.2035003-2-ebiederm@xmission.com>
+        <ZP3UCQf+9D/J3wqT@tapette.crustytoothpaste.net>
+        <xmqqy1hdi6hp.fsf@gitster.g>
+        <87sf7kd5xg.fsf_-_@email.froward.int.ebiederm.org>
+Date:   Mon, 11 Sep 2023 18:46:19 -0500
+In-Reply-To: <87sf7kd5xg.fsf_-_@email.froward.int.ebiederm.org> (Eric
+        W. Biederman's message of "Mon, 11 Sep 2023 11:35:07 -0500")
+Message-ID: <87ledcb7ec.fsf_-_@email.froward.int.ebiederm.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 590A4A62-50E6-11EE-AAFA-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+X-XM-SPF: eid=1qfqnK-00F1xw-Sl;;;mid=<87ledcb7ec.fsf_-_@email.froward.int.ebiederm.org>;;;hst=in02.mta.xmission.com;;;ip=68.227.168.167;;;frm=ebiederm@xmission.com;;;spf=pass
+X-XM-AID: U2FsdGVkX19m/sIqAlvQL+7+YKX8r/ba6MIGPmKQ0xw=
+X-SA-Exim-Connect-IP: 68.227.168.167
+X-SA-Exim-Mail-From: ebiederm@xmission.com
+Subject: [PATCH v3 02/32] doc hash-function-transition: Augment
+ compatObjectFormat with readCompatMap
+X-SA-Exim-Version: 4.2.1 (built Sat, 08 Feb 2020 21:53:50 +0000)
+X-SA-Exim-Scanned: Yes (on in02.mta.xmission.com)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sergey Organov <sorganov@gmail.com> writes:
 
-> This option provides a shortcut to request diff with respect to first
-> parent for any kind of commit, universally. It's implemented as pure
-> synonym for "--diff-merges=first-parent --patch".
->
-> Signed-off-by: Sergey Organov <sorganov@gmail.com>
-> ---
+Deeply and fundamentally the plan is to only operate one one hash
+function for the core of git, to use only one hash function for what
+is stored in the repository.
 
-Sounds very straight-forward.
+To avoid requring a flag day to transition hash functions for naming
+objects, and to support being able to access objects using legacy object
+names a mapping functionality will be provided.
 
-Given that "--first-parent" in "git log --first-parent -p" already
-defeats "-m" and shows the diff against the first parent only,
-people may find it confusing if "git log -d" does not act as a
-shorthand for that.  From the above and also from the documentation
-update, it is hard to tell if that is what you implemented, or it
-only affects the "diff-merges" part.
+We want to provide user facing configuration that is robust enough
+that it can accomodate multiple different scenarios on how git
+evolves and how people use their repositories.
 
-Other than that, the patch looks quite small and to the point.
+There are two different ways it is envisioned to use mapped object
+ids.  The first is to require every object in the repository to have a
+mapping, so that pushes and pulls from repositories using a different
+hash algorithm can work.  The second is to have an incomplete mapping
+of object ids so that old references to objects in emails, commit
+messages, bug trackers and are usable in a read-only manner
+with tools like "git show".
 
-Thanks.
+The first way fundamentally needs every object in the repository to
+have a mapping, which requires the repository to be marked incompatible
+for writes fron older versions of git.  Thus the compatObjectFormat option
+is placed in [extensions].
 
->  Documentation/diff-options.txt | 4 ++++
->  Documentation/git-log.txt      | 2 +-
->  diff-merges.c                  | 3 +++
->  t/t4013-diff-various.sh        | 8 ++++++++
->  4 files changed, 16 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-> index f93aa3e46a52..d773dafcb10a 100644
-> --- a/Documentation/diff-options.txt
-> +++ b/Documentation/diff-options.txt
-> @@ -51,6 +51,10 @@ ifdef::git-log[]
->  Note: This option not implying `-p` is legacy feature that is
->  preserved for the sake of backward compatibility.
->  
-> +-d::
-> +	Produce diff with respect to first parent.
-> +	Shortcut for '--diff-merges=first-parent -p'.
-> +
->  -c::
->  	Produce combined diff output for merge commits.
->  	Shortcut for '--diff-merges=combined -p'.
-> diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-> index 9b7ec96e767a..59bd74a1a596 100644
-> --- a/Documentation/git-log.txt
-> +++ b/Documentation/git-log.txt
-> @@ -120,7 +120,7 @@ By default, `git log` does not generate any diff output. The options
->  below can be used to show the changes made by each commit.
->  
->  Note that unless one of `--diff-merges` variants (including short
-> -`-m`, `-c`, and `--cc` options) is explicitly given, merge commits
-> +`-d`, `-m`, `-c`, and `--cc` options) is explicitly given, merge commits
->  will not show a diff, even if a diff format like `--patch` is
->  selected, nor will they match search options like `-S`. The exception
->  is when `--first-parent` is in use, in which case `first-parent` is
-> diff --git a/diff-merges.c b/diff-merges.c
-> index ec97616db1df..6eb72e6fc28a 100644
-> --- a/diff-merges.c
-> +++ b/diff-merges.c
-> @@ -125,6 +125,9 @@ int diff_merges_parse_opts(struct rev_info *revs, const char **argv)
->  	if (!suppress_m_parsing && !strcmp(arg, "-m")) {
->  		set_to_default(revs);
->  		revs->merges_need_diff = 0;
-> +	} else if (!strcmp(arg, "-d")) {
-> +		set_first_parent(revs);
-> +		revs->merges_imply_patch = 1;
->  	} else if (!strcmp(arg, "-c")) {
->  		set_combined(revs);
->  		revs->merges_imply_patch = 1;
-> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-> index 5de1d190759f..a07d6eb6dd97 100755
-> --- a/t/t4013-diff-various.sh
-> +++ b/t/t4013-diff-various.sh
-> @@ -473,6 +473,14 @@ test_expect_success 'log --diff-merges=on matches --diff-merges=separate' '
->  	test_cmp expected actual
->  '
->  
-> +test_expect_success 'log -d matches --diff-merges=1 -p' '
-> +	git log --diff-merges=1 -p master >result &&
-> +	process_diffs result >expected &&
-> +	git log -d master >result &&
-> +	process_diffs result >actual &&
-> +	test_cmp expected actual
-> +'
-> +
->  test_expect_success 'deny wrong log.diffMerges config' '
->  	test_config log.diffMerges wrong-value &&
->  	test_expect_code 128 git log
+The ext2 family of filesystems has 3 ways of describing new features
+compatible, read-only-compatible, and incompatible.  The current git
+configurtation has compat (any feature mentioned anywhere in the
+configuration outside of [extensions] section), and incompatible (any
+configuration inside of the [extensions] section.  It would be nice to
+have a read-only compatible section for the mandatory mapping
+function.  Would it be worth adding it now so that we have it for
+future extensions?
+
+Having a mapping that is just used in a read-only mode for looking up
+old objects with old object ids will be needed post-transition.  Such
+a mode does not require computing the old hash function or even
+support automatically writing any new mappings.  So it is completely
+safe to enable in a backwards compatible mode.  Fort that let's
+use core.readCompatMap to make it clear the mappings only read.
+
+I have documented that both of the options readCompatMap and
+compatObjectFormat can be specified multiple times if that is needed to
+support the desired configuration of git.
+
+Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
+---
+
+My v2 version was just silly.  Changing the name of the option in
+the [extensions] section made practical sense.  It was just me being
+contrary for no good reason.  I still think we should have an additional
+option for reading old hashes and to document that we expect multiple of
+these.
+
+So here is my proposal for extending the documentation along those
+lines.
+
+Additionally just accepting the existing option name means I am not
+bottlenecked for writing tests convert_object_file which is the
+important part right now.
+
+My apologies for all of the noise.
+
+ .../technical/hash-function-transition.txt    | 37 +++++++++++++++++++
+ 1 file changed, 37 insertions(+)
+
+diff --git a/Documentation/technical/hash-function-transition.txt b/Documentation/technical/hash-function-transition.txt
+index 4b937480848a..26dfc3138b3b 100644
+--- a/Documentation/technical/hash-function-transition.txt
++++ b/Documentation/technical/hash-function-transition.txt
+@@ -171,6 +171,43 @@ repository, instead producing an error message.
+ 		objectformat
+ 		compatobjectformat
+ 
++Configurate for a future hash function transition would be:
++
++	[core]
++		repositoryFormatVersion = 1
++	[extensions]
++		objectFormat = futureHash
++		compatObjectFormat = sha256
++		compatObjectFormat = sha1
++
++Or possibly:
++
++	[core]
++		repositoryFormatVersion = 1
++		readCompatMap = sha1
++	[extensions]
++		objectFormat = futureHash
++		compatObjectFormat = sha256
++
++Or post transition to futureHash:
++
++	[core]
++		repositoryFormatVersion = 1
++		readCompatMap = sha1
++		readComaptMap = sha256
++	[extensions]
++		objectFormat = futureHash
++
++The difference between compatObjectFormat and readCompatMap would be that
++compatObjectFormat would ask git to read existing maps, but would not ask
++git to write or create them.  Which is enough to support looking up
++old oids post transition, when they are only needed to support
++references in commit logs, bug trackers, emails and the like.
++
++Meanwhile with compatObjectFormat set every object in the entire
++repository would be required to have a bi-directional mapping from the
++the mapped object format to the repositories storage hash function.
++
+ See the "Transition plan" section below for more details on these
+ repository extensions.
+ 
+-- 
+2.41.0
+
