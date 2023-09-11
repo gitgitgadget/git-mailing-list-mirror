@@ -2,250 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3330CA0EC1
-	for <git@archiver.kernel.org>; Mon, 11 Sep 2023 21:39:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 249F5CA0EC8
+	for <git@archiver.kernel.org>; Mon, 11 Sep 2023 21:39:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349398AbjIKVd1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Sep 2023 17:33:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52628 "EHLO
+        id S1349413AbjIKVda (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Sep 2023 17:33:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241358AbjIKPHI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Sep 2023 11:07:08 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0E25FA
-        for <git@vger.kernel.org>; Mon, 11 Sep 2023 08:07:02 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-99357737980so568776266b.2
-        for <git@vger.kernel.org>; Mon, 11 Sep 2023 08:07:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1694444821; x=1695049621; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7jTqGBy8+r7tHRc+wqddUrpZxQufCgwHdZ5VD4Unzzw=;
-        b=se26rCBxpTTY49T3LE6S7i/pTJLGkD1fKCDisQWpnREZzEQPVvtYNQsV0w4yFnd7N0
-         Rxy0O3NRPNoE4BeLGI6VquJmOrvoX3B7dvQSXtCyEepAP2lhCiOliY92N4onMSHapb4s
-         DheBj43JD9WBj8S21731qQla2NkP0PkJQcRrLGG1eRlZiuTQ5DujnHPKEKGHlOvEnXFR
-         Gz9KNVDmtfek5ljNG1C52+S9z6ZIey7GHpkG8Gix30h1Yddgl9CmeKKZAN2mrVEY1oPC
-         qShA9HlDcEqJyx/4R4ERMlYoNqtZcZ+cOoSvuAPYuWG+kGAy1kwtYc1Ziik7rUf0Viqy
-         mILA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694444821; x=1695049621;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7jTqGBy8+r7tHRc+wqddUrpZxQufCgwHdZ5VD4Unzzw=;
-        b=FFNQ451Tkn0KI2VttHS/cuoiNB1/D/+jl7cHAmx/bSey3PYEDa0SLUllCfYhFFOk1y
-         8WcEjKoos5+oZwOCfzLIAhjvTXcrdECJe4UoYU4VGDzfFkoU6nzyIqg6HZV9Wd1xxeyF
-         fH8LybFTlD9hZEXkIUuXQOJG7WHlSSJDlXhFtAB+Pwb/CeDYXltmnZrTyeP5EaeBeTI7
-         VZJQuLfAJAxwXue6yx7uh+cCIAzsw+lDIGyd52lx/sXiF2U9H4dQGSDe72EvKw9z6wHM
-         XPjJbxJPCcBsHCRNZ6Bm9adqn1NiySNyFf1/i+uLuKWaulsyHdBv2V/PEmYbwSDkoSBn
-         p8Aw==
-X-Gm-Message-State: AOJu0Yx2w63RaYiOG5cM/QNKMmHUilVUFTwFStOcq0OvMg0uXC9YqSk1
-        kSB+JZ7h6UO8GCkZB/c4dTsh5u3ubSY=
-X-Google-Smtp-Source: AGHT+IGgSFXGk7zgxZXvTRYZ/MoH4tbeEedHHNRgVTd1P/V4+vqNMifc5pGWuGJZHAS6IXknS1AZeQ==
-X-Received: by 2002:a17:906:7499:b0:9a2:200:b68d with SMTP id e25-20020a170906749900b009a20200b68dmr8835754ejl.0.1694444820632;
-        Mon, 11 Sep 2023 08:07:00 -0700 (PDT)
-Received: from christian-Precision-5550.. ([2a04:cec0:1085:31e2:f2be:e47a:b382:4542])
-        by smtp.gmail.com with ESMTPSA id f5-20020a170906138500b0099cb1a2cab0sm5485617ejc.28.2023.09.11.08.06.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Sep 2023 08:07:00 -0700 (PDT)
-From:   Christian Couder <christian.couder@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, John Cai <johncai86@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        Christian Couder <christian.couder@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v6 8/9] repack: implement `--filter-to` for storing filtered out objects
-Date:   Mon, 11 Sep 2023 17:06:17 +0200
-Message-ID: <20230911150618.129737-9-christian.couder@gmail.com>
-X-Mailer: git-send-email 2.42.0.167.gd6ff314189
-In-Reply-To: <20230911150618.129737-1-christian.couder@gmail.com>
-References: <20230812000011.1227371-1-christian.couder@gmail.com>
- <20230911150618.129737-1-christian.couder@gmail.com>
+        with ESMTP id S244368AbjIKUMM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Sep 2023 16:12:12 -0400
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 701B2185
+        for <git@vger.kernel.org>; Mon, 11 Sep 2023 13:12:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+ s=s29768273; t=1694463121; x=1695067921; i=l.s.r@web.de;
+ bh=2jc68L3rufhtOYe5S4/Rcm/Frh8Eepn74aAsxneQ6UM=;
+ h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=usp9GvqcW7XbH22/2DN4ZgqxQicj7VCYbdgfG8CX/E8LehEZ8KLXb6q6uvumQzM1/vDr2+8
+ gAfO+bPimnqphbn0VN5pEYH812FZ14sSzAqp5K0WfyC2Q7AKV+WLQponi8IJeuB27DKFXm5gb
+ ANd9QKdQdvvJ6O/dyTYvrgB/jBlnNxMdtRMcy3AZZbN05WuoLJVK+OCACAAjJUJq8GOe9Wihm
+ frzZ+Jy2kR0Gc2085F2YSs9TFrpWBdJjTX6okYYsfrWqwskbZ7lt8OUBZf2Xqect0RDASIQDo
+ 5EEJOmzYoQXvUc/5Uc6uEZapg7gAN1kz3iCl8VekpeIh/od82xZw==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.145.34]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MidDR-1q0OEZ3iGV-00fkpA; Mon, 11
+ Sep 2023 22:12:00 +0200
+Message-ID: <683efb6d-dc41-51ff-f048-7a23ee955e00@web.de>
+Date:   Mon, 11 Sep 2023 22:12:00 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.15.0
+Subject: Re: [PATCH 1/2] parse-options: add int value pointer to struct option
+Content-Language: en-US
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>
+References: <2d6f3d74-687a-2d40-5c0c-abc396aef80f@web.de>
+ <ZP4NrVeqMtFTLEuf@nand.local>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <ZP4NrVeqMtFTLEuf@nand.local>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:YDfo3X59V1fGdn1hq+ovcDgEWCGXCpIOSIIEeEF0hM0miDH3k5E
+ MCKG8Tw/sP2isL3aW6L1NG13ICUTF+JG4B7mN9TW3r+I/amTM6gsrp7um0dlnuUlG2cC1sZ
+ PGo+OBsx2iVgOiUO4cLXeuuaif8nABxtVSxvAMlUd6zeddRbDKyJLTbuxWaKakfH5C4LmLk
+ YtHTLsrQaEiDmEe3UPOMw==
+UI-OutboundReport: notjunk:1;M01:P0:MtulBREWyTc=;I4unFgJwSA/AKchuxBdq7NTyFgg
+ k3ydlb9xlabTddgLsNuVpJiZj/y4S+V0lOQFrz2om2J/tyzdbuEBx/DzCcpuO5U3mOw826IDc
+ 2iHBNH66/YWR1/wRnNJxpkQ83ssSTEPzeNDQ9iN7ug9vKFB2PtFP/O4ivKWDPRhfNfZfbKqMM
+ Sf674tlMU4wtOBpXtoWvaBz0xCe+GTGyvwS5eIFFDJpM1djde2GyvI8Xd5ns5v77LUgH8DCTX
+ YnJFwgRtmxW8KueQbmqFECuIPeYmhF6UTCrKh0SIytNmEk2+6HRP8QnetVczHi7XYStNKt/HT
+ Hec0hV+WVuXVIV1Q/8b796k6eztgSGz4jRC1odmWvlAbR38M4GfjAcSF7AtuCgQsgxGkZ051Z
+ nBeBTXngu/BY5L1LjOEGYasHgeAsBaQWLyWmjlS0lxuc2Qmk12TPeGz4GbANSl6verAW57Qy2
+ 956oMGRv8XKyxfADa5TBdBEL8OUnezlCSpGd/YaVIqaRQuPcoAaShkEHMUmH+LiUBlDAnOFkz
+ eX/xWbjPy4129vVsyaBZfkuvVfv4uuzNT4zMhfq/3lbMcGFSlOCTHzEVDuBtPuuHHSHHWYqWt
+ q5qejxHI8x7w1jZmia3CTiVqyuSXkLdrgQ0vjmtVNggSfXCkqTTXKqMqWZgPz+uTBXyy4szDJ
+ hYNE31BcmiXrTDAIOVWQfY+053w2Txg+360W/scmGCAIzLTAz4k9QT+I5hCucPCzj59tdlIKJ
+ zvaAdoc9cVeV38gcRxSQbd1fwgSLC5FlTpPmLrt0j4fyuQbfJi8aLxXcCAGWNJdsvQBR9dVQF
+ OBemglrxaZPpwD4GLibnGRSX/JV7aiNUm0t6PeK5KGWXgW7OnJC7Yib2qCj2u89Sj1BrBESQh
+ Sknh48h/Z6i6kVlnOwFHgOfEHpoZESVgAxNK0h6tDaQYLP12fqVJLwh7gdQgwWRXMUtOGPJBG
+ smzlwNL/3lve+PzrhV9yoPbx8Tw=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A previous commit has implemented `git repack --filter=<filter-spec>` to
-allow users to filter out some objects from the main pack and move them
-into a new different pack.
+Am 10.09.23 um 20:40 schrieb Taylor Blau:
+> On Sat, Sep 09, 2023 at 11:10:36PM +0200, Ren=C3=A9 Scharfe wrote:
+>> Add an int pointer, value_int, to struct option to provide a typed valu=
+e
+>> pointer for the various integer options.  It allows type checks at
+>> compile time, which is not possible with the void pointer, value.  Its
+>> use is optional for now.
+>
+> This is an interesting direction. I wonder about whether or not you'd
+> consider changing the option structure to contain a tagged union type
+> that represents some common cases we'd want from a parse-options
+> callback, something like:
+>
+>     struct option {
+>         /* ... */
+>         union {
+>             void *value;
+>             int *value_int;
+>             /* etc ... */
+>         } u;
+>         enum option_type t;
+>     };
+>
+> where option_type has some value corresponding to "void *", another for
+> "int *", and so on.
 
-It would be nice if this new different pack could be created in a
-different directory than the regular pack. This would make it possible
-to move large blobs into a pack on a different kind of storage, for
-example cheaper storage.
+In a hand-made struct option this would only provide a very limited form
+of type safety.  It reduces the number of incorrect types to choose from
+from basically infinity to a handful, but still allows pointing the
+union e.g. to an int for an option that takes a long or a string without
+any compiler warning or error.
 
-Even in a different directory, this pack can be accessible if, for
-example, the Git alternates mechanism is used to point to it. In fact
-not using the Git alternates mechanism can corrupt a repo as the
-generated pack containing the filtered objects might not be accessible
-from the repo any more. So setting up the Git alternates mechanism
-should be done before using this feature if the user wants the repo to
-be fully usable while this feature is used.
+Convenience macros like OPT_CMDMODE could use the union to provide a
+type safe interface, though, true.  This might suffice for our purposes.
 
-In some cases, like when a repo has just been cloned or when there is no
-other activity in the repo, it's Ok to setup the Git alternates
-mechanism afterwards though. It's also Ok to just inspect the generated
-packfile containing the filtered objects and then just move it into the
-'.git/objects/pack/' directory manually. That's why it's not necessary
-for this command to check that the Git alternates mechanism has been
-already setup.
+> Alternatively, perhaps you are thinking that we'd use both the value
+> pointer and the value_int pointer to point at potentially different
+> values in the same callback. I don't have strong feelings about it, but
+> I'd just as soon encourage us to shy away from that approach, since
+> assigning a single callback parameter to each function seems more
+> organized.
 
-While at it, as an example to show that `--filter` and `--filter-to`
-work well with other options, let's also add a test to check that these
-options work well with `--max-pack-size`.
+Right, we only need one active value pointer per option.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- Documentation/git-repack.txt | 11 +++++++
- builtin/repack.c             | 10 +++++-
- t/t7700-repack.sh            | 62 ++++++++++++++++++++++++++++++++++++
- 3 files changed, 82 insertions(+), 1 deletion(-)
+>> @@ -109,6 +110,7 @@ static enum parse_opt_result get_value(struct parse=
+_opt_ctx_t *p,
+>>  	const char *s, *arg;
+>>  	const int unset =3D flags & OPT_UNSET;
+>>  	int err;
+>> +	int *value_int =3D opt->value_int ? opt->value_int : opt->value;
+>>
+>>  	if (unset && p->opt)
+>>  		return error(_("%s takes no value"), optname(opt, flags));
+>
+> Reading this hunk, I wonder whether we even need a type tag (the
+> option_type enum above) if each callback knows a priori what type it
+> expects. But I think storing them together in a union makes sense to do.
 
-diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
-index 6d5bec7716..8545a32667 100644
---- a/Documentation/git-repack.txt
-+++ b/Documentation/git-repack.txt
-@@ -155,6 +155,17 @@ depth is 4095.
- 	a single packfile containing all the objects. See
- 	linkgit:git-rev-list[1] for valid `<filter-spec>` forms.
- 
-+--filter-to=<dir>::
-+	Write the pack containing filtered out objects to the
-+	directory `<dir>`. Only useful with `--filter`. This can be
-+	used for putting the pack on a separate object directory that
-+	is accessed through the Git alternates mechanism. **WARNING:**
-+	If the packfile containing the filtered out objects is not
-+	accessible, the repo can become corrupt as it might not be
-+	possible to access the objects in that packfile. See the
-+	`objects` and `objects/info/alternates` sections of
-+	linkgit:gitrepository-layout[5].
-+
- -b::
- --write-bitmap-index::
- 	Write a reachability bitmap index as part of the repack. This
-diff --git a/builtin/repack.c b/builtin/repack.c
-index ac70698a41..e0e1b52cf0 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -867,6 +867,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	int write_midx = 0;
- 	const char *cruft_expiration = NULL;
- 	const char *expire_to = NULL;
-+	const char *filter_to = NULL;
- 
- 	struct option builtin_repack_options[] = {
- 		OPT_BIT('a', NULL, &pack_everything,
-@@ -919,6 +920,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 			   N_("write a multi-pack index of the resulting packs")),
- 		OPT_STRING(0, "expire-to", &expire_to, N_("dir"),
- 			   N_("pack prefix to store a pack containing pruned objects")),
-+		OPT_STRING(0, "filter-to", &filter_to, N_("dir"),
-+			   N_("pack prefix to store a pack containing filtered out objects")),
- 		OPT_END()
- 	};
- 
-@@ -1067,6 +1070,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	if (po_args.filter_options.choice)
- 		strvec_pushf(&cmd.args, "--filter=%s",
- 			     expand_list_objects_filter_spec(&po_args.filter_options));
-+	else if (filter_to)
-+		die(_("option '%s' can only be used along with '%s'"), "--filter-to", "--filter");
- 
- 	if (geometry.split_factor)
- 		cmd.in = -1;
-@@ -1157,8 +1162,11 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (po_args.filter_options.choice) {
-+		if (!filter_to)
-+			filter_to = packtmp;
-+
- 		ret = write_filtered_pack(&po_args,
--					  packtmp,
-+					  filter_to,
- 					  find_pack_prefix(packdir, packtmp),
- 					  &keep_pack_list,
- 					  &names,
-diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-index 39e89445fd..48e92aa6f7 100755
---- a/t/t7700-repack.sh
-+++ b/t/t7700-repack.sh
-@@ -462,6 +462,68 @@ test_expect_success '--filter works with --pack-kept-objects and .keep packs' '
- 	)
- '
- 
-+test_expect_success '--filter-to stores filtered out objects' '
-+	git -C bare.git repack -a -d &&
-+	test_stdout_line_count = 1 ls bare.git/objects/pack/*.pack &&
-+
-+	git init --bare filtered.git &&
-+	git -C bare.git -c repack.writebitmaps=false repack -a -d \
-+		--filter=blob:none \
-+		--filter-to=../filtered.git/objects/pack/pack &&
-+	test_stdout_line_count = 1 ls bare.git/objects/pack/pack-*.pack &&
-+	test_stdout_line_count = 1 ls filtered.git/objects/pack/pack-*.pack &&
-+
-+	commit_pack=$(test-tool -C bare.git find-pack -c 1 HEAD) &&
-+	blob_pack=$(test-tool -C bare.git find-pack -c 0 HEAD:file1) &&
-+	blob_hash=$(git -C bare.git rev-parse HEAD:file1) &&
-+	test -n "$blob_hash" &&
-+	blob_pack=$(test-tool -C filtered.git find-pack -c 1 $blob_hash) &&
-+
-+	echo $(pwd)/filtered.git/objects >bare.git/objects/info/alternates &&
-+	blob_pack=$(test-tool -C bare.git find-pack -c 1 HEAD:file1) &&
-+	blob_content=$(git -C bare.git show $blob_hash) &&
-+	test "$blob_content" = "content1"
-+'
-+
-+test_expect_success '--filter works with --max-pack-size' '
-+	rm -rf filtered.git &&
-+	git init --bare filtered.git &&
-+	git init max-pack-size &&
-+	(
-+		cd max-pack-size &&
-+		test_commit base &&
-+		# two blobs which exceed the maximum pack size
-+		test-tool genrandom foo 1048576 >foo &&
-+		git hash-object -w foo &&
-+		test-tool genrandom bar 1048576 >bar &&
-+		git hash-object -w bar &&
-+		git add foo bar &&
-+		git commit -m "adding foo and bar"
-+	) &&
-+	git clone --no-local --bare max-pack-size max-pack-size.git &&
-+	(
-+		cd max-pack-size.git &&
-+		git -c repack.writebitmaps=false repack -a -d --filter=blob:none \
-+			--max-pack-size=1M \
-+			--filter-to=../filtered.git/objects/pack/pack &&
-+		echo $(cd .. && pwd)/filtered.git/objects >objects/info/alternates &&
-+
-+		# Check that the 3 blobs are in different packfiles in filtered.git
-+		test_stdout_line_count = 3 ls ../filtered.git/objects/pack/pack-*.pack &&
-+		test_stdout_line_count = 1 ls objects/pack/pack-*.pack &&
-+		foo_pack=$(test-tool find-pack -c 1 HEAD:foo) &&
-+		bar_pack=$(test-tool find-pack -c 1 HEAD:bar) &&
-+		base_pack=$(test-tool find-pack -c 1 HEAD:base.t) &&
-+		test "$foo_pack" != "$bar_pack" &&
-+		test "$foo_pack" != "$base_pack" &&
-+		test "$bar_pack" != "$base_pack" &&
-+		for pack in "$foo_pack" "$bar_pack" "$base_pack"
-+		do
-+			case "$foo_pack" in */filtered.git/objects/pack/*) true ;; *) return 1 ;; esac
-+		done
-+	)
-+'
-+
- objdir=.git/objects
- midx=$objdir/pack/multi-pack-index
- 
--- 
-2.42.0.167.gd6ff314189
+Yes, option types (OPTION_INTEGER etc.) already imply a pointer type,
+no additional tag needed.
 
+Ren=C3=A9
