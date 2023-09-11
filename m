@@ -2,100 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B8BB0EE7FF4
-	for <git@archiver.kernel.org>; Mon, 11 Sep 2023 04:23:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F26EBEE57DF
+	for <git@archiver.kernel.org>; Mon, 11 Sep 2023 05:23:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232432AbjIKERr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Sep 2023 00:17:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38500 "EHLO
+        id S233843AbjIKFXS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Sep 2023 01:23:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230124AbjIKERo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Sep 2023 00:17:44 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A43D6FE
-        for <git@vger.kernel.org>; Sun, 10 Sep 2023 21:17:35 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id 5614622812f47-3ab7fb1172cso797404b6e.3
-        for <git@vger.kernel.org>; Sun, 10 Sep 2023 21:17:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1694405854; x=1695010654; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=FbeHlgyGeM5Echgl0CAc0AGHzG9GLTnLmWyDWGAeG+E=;
-        b=Dtz00Tt9QJ8DyQxgBm8X2UNDVJqPYP7DWpXq4le56tds24wY5KUqE+cdCAr3UdwgN9
-         vue/okrTRGHC+okPC5fth1QrQP0TsgbpaJTt9S/oLtwxa9A6J5yrvLlKKqdoNnFWT2wk
-         bmxLc1kaE7rJb28Bbk7Yo1lAdX8lYqcD4YCszsGG8jRk1Uihl4uN1KJF2Q4lBtkwVYrx
-         kWuOvDATN9lXZnPNxR/PljleF1ejNqKN2hRFZ71XE4rcUytXLIXWYXQNmKpJlKE7cMw9
-         xZZmRZ2OF+IL6dmaN6TP7+GfsVqDIL6fpaF78dy42KmvfCMYozCJCwudaIWzFs0PM5lZ
-         HkXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694405854; x=1695010654;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FbeHlgyGeM5Echgl0CAc0AGHzG9GLTnLmWyDWGAeG+E=;
-        b=Wa704TlZcEoz1uPkf6KNQr9zzhprwFljqT0wM1e0azJj++yRtfbF+n2hJKGNdsy2Nx
-         bwzW1J5D7f5/nH+ZXF9d91SIHMz25/tOqLiMqCCjNdMgyvUp3DFq3uOiQ8zQqelgeIFo
-         /G/hXboXiL/8Uikf9VWtNzW6uqgDVHXikuSwZnbl1VxEMP8W39j04V21yW1RsRkTYNsv
-         YkBJmk5dGHDOK5/e/cGmP0er1H5TnWV3UrOzKe13iwpGCmL7gQ3pfyC7HaVLfDj05J8b
-         c7msVf75OxD930UqAxM8F5cWlwa4nosbVo617F4tcLINhRW13lF2TGlurFTfpUCXrGYP
-         KslA==
-X-Gm-Message-State: AOJu0YwJx55bpNabsRmR5atsUUSXvkmsbjCF1Q2WijtV0H+oyF2EkT2L
-        2makmdMNwHMX/zvYd+oHSnE2wFBWDy1x32fz+TpEcQc89g==
-X-Google-Smtp-Source: AGHT+IFIElMryrjXt1wTtD64tQCh3/POJVN8Vdb3iPXONHbt3fcSv8S/cRhj69VBKaFW3Df+oUNFTWPN6HtJtW6C0b4=
-X-Received: by 2002:a05:6808:1795:b0:3a7:550c:635d with SMTP id
- bg21-20020a056808179500b003a7550c635dmr10312974oib.56.1694405853906; Sun, 10
- Sep 2023 21:17:33 -0700 (PDT)
+        with ESMTP id S229446AbjIKFXR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Sep 2023 01:23:17 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D8FF1AE
+        for <git@vger.kernel.org>; Sun, 10 Sep 2023 22:23:12 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A2EFC1BD3B5;
+        Mon, 11 Sep 2023 01:23:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=6KB+haWmWBlblrwsA0yy4uRYL3caPCMCuC/SIH
+        QT2Ng=; b=DyP1Ko7ZHPI40FFLmZDMGHQh2HPAMYg4TAcZZEBytiopY9DgYWfFzf
+        V9Hh8VwexM6f2wYk88fCrdzkVpcHMvABBKlv5Hebv4KIuwx9viE3vNPXuIB7P2ot
+        jJrQOh+HuMv9NjNpyxRC4FK154GLupUR3zcOk+kP6zuRt9MZzX7cI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 972021BD3B4;
+        Mon, 11 Sep 2023 01:23:03 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E99011BD3B3;
+        Mon, 11 Sep 2023 01:23:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Yawar Amin <yawar.amin@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Idea: indirect authorship info
+In-Reply-To: <CAJbYVJJUVUPNPpGAMGZKVWxYu2PiOf_16kzts009qpeLwoim+g@mail.gmail.com>
+        (Yawar Amin's message of "Mon, 11 Sep 2023 00:17:21 -0400")
+References: <CAJbYVJJUVUPNPpGAMGZKVWxYu2PiOf_16kzts009qpeLwoim+g@mail.gmail.com>
+Date:   Sun, 10 Sep 2023 22:23:01 -0700
+Message-ID: <xmqq7coxjnbe.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-From:   Yawar Amin <yawar.amin@gmail.com>
-Date:   Mon, 11 Sep 2023 00:17:21 -0400
-Message-ID: <CAJbYVJJUVUPNPpGAMGZKVWxYu2PiOf_16kzts009qpeLwoim+g@mail.gmail.com>
-Subject: Idea: indirect authorship info
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 47AF74AA-5063-11EE-8CA6-25B3960A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Yawar Amin <yawar.amin@gmail.com> writes:
 
-I have an idea about enabling management of authorship info in a git repo, to
-make it easier to manage and potentially remove author/committer/tagger PII (in
-the context of GDPR), without having to change any commit history/SHAs.
-Apologies if this has been brought up before, but I failed to find anything
-relevant from some quick searches:
+> Apologies if this has been brought up before, but I failed to find anything
+> relevant from some quick searches:
+>
+> - https://lore.kernel.org/git/?q=indirect+authors
+> - https://lore.kernel.org/git/?q=authors+file
+> - https://lore.kernel.org/git/?q=people+file
 
-- https://lore.kernel.org/git/?q=indirect+authors
-- https://lore.kernel.org/git/?q=authors+file
-- https://lore.kernel.org/git/?q=people+file
+Try "mailmap+deadname".  You essentially reinvented these earlier
+proposals, except that they reused the existing ".mailmap"
+mechanism, and how the key is chosen.
 
-Potential use cases:
+While I do not think of any reason why the desire to achieve the end
+goal of these efforts is bad, some parts of your design (and other
+proposals) need rethinking.
 
-- Someone requests that their names and email addresses be removed from a public
-  repo's history under GDPR Right to be Forgotten (although, based on [1], it's
-  not clear if projects could be forced to do honour RTBF or not)
-- Someone requests that their legal name change be reflected in a public repo
+Projects often need to know and show who did what for legal reasons.
+Imagine an old commit needs to be shown to document who made the
+contribution to the project.  An in-tree ".mailmap" file can give
+adequate guarantee that the anatomized commit author name the commit
+carries documents who it the really is in the ".mailmap" file
+recorded in the tree of that partcular commit, even if some
+contributors who stopped contributing and asked to go back to
+anonymity have disappeared from that file.  But they may still
+appear if you did "git log -p .mailmap", which would meet the needs
+of these projects, but it means that you cannot be forgotten and
+have to live with the consequences of what you did in the past.  On
+the other hand, if there is no in-tree ".mailmap" (or "people")
+file, it brings up many questions.  It becomes unclear who will keep
+track of the latest version. There needs a way to guarantee that the
+entries still in the mapping file can be used to verify the claim
+that some person did a particular commit.  Of course, as long as it
+is distributed to project participants for communication ("hey you
+worked on this feature 6 months ago; can you answer a few
+questions?") and verification ("yes, this commit was done by this
+person who was not affiliated with company X in any way. how do you
+substantiate your claim that this project stole it from the
+company?")  purposes, somebody will bound to make and keep copies,
+which means that you cannot become truly anonymous, after making
+yourself known.
 
-I am interested in hearing your thoughts on this basic idea:
+As to the choice of the anonymous key used as a stand-in value for
+the author and the committer identity, using something that is not
+deterministic (like uuid) is not a good idea.  If the name/address
+are hashed with some algorithm that is cryptographically secure and
+is one-way, it would probably suffice both for anonymity purposes
+(as you need to "reverse" such a hash to get to the real author) and
+allows easy verification (if you need to "prove" that an anonymised
+author 9f5d8e44edfb7e1aa4dcf34acc3b4d643f83e1b6 recorded in the
+commit object is an author with a known name/address, you can feed
+that name/address to the hash function and if it hashes to the same
+value, that claim is as good as having the name/address directly
+recorded in the commit object.
 
-- On committing/tagging/creating a note, the identity of the author is not saved
-  in the commit etc. object itself but in a separate file e.g. `.git/people`:
-  `d0efaf97-e18a-4197-b2c0-61c05efec75e <-> Yawar Amin <yawar.amin@gmail.com>`
-- Instead of the real identity of the author, a pointer to the `people` file
-  entry is stored e.g. `Author: d0efaf97-e18a-4197-b2c0-61c05efec75e`
-- If an entry for the person already exists in the `people` file, it is reused
-- When syncing with a remote repo, new entries in the `people` file are synced
-  along with other objects (in an append-only manner, not editing existing
-  entries)
-- Git uses the `people` file to cross-reference and fill in authorship
-  info when it renders commit etc. objects like in `git log`, `git show` etc.
-- If git can't find the authorship info in the `people` file it renders some
-  appropriate default e.g. `(Unknown)`
 
-Project owners (with write access to the hosted repo) are able to edit and push
-changes to the `people` file. In this way they can fulfill change requests like
-the ones I mentioned above.
-
-Regards,
-
-Yawar
-
-[1] https://www.dataprotection.ie/en/individuals/know-your-rights/right-erasure-articles-17-19-gdpr
