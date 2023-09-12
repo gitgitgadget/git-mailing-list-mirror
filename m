@@ -2,105 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49518EE3F08
-	for <git@archiver.kernel.org>; Tue, 12 Sep 2023 17:30:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 748A0EE3F08
+	for <git@archiver.kernel.org>; Tue, 12 Sep 2023 17:32:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236614AbjILRaj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Sep 2023 13:30:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41002 "EHLO
+        id S233765AbjILRc1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Sep 2023 13:32:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234884AbjILRah (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Sep 2023 13:30:37 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E07CF10E9
-        for <git@vger.kernel.org>; Tue, 12 Sep 2023 10:30:32 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-401b3ea0656so62607185e9.0
-        for <git@vger.kernel.org>; Tue, 12 Sep 2023 10:30:32 -0700 (PDT)
+        with ESMTP id S231201AbjILRc0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Sep 2023 13:32:26 -0400
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92BA710D9
+        for <git@vger.kernel.org>; Tue, 12 Sep 2023 10:32:22 -0700 (PDT)
+Received: by mail-qk1-x734.google.com with SMTP id af79cd13be357-76ef653af2eso363464485a.0
+        for <git@vger.kernel.org>; Tue, 12 Sep 2023 10:32:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1694539831; x=1695144631; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SCEE7bxn8DL/IYEyVMPx1uPofEtxbqkzxdOTcvbruZI=;
-        b=Nrd0RT9RQ7q3Q7M7fr7YNFwU9mhOqeybjcfKC9dyekv8vXhmacDqa+v/HChrrCdYvt
-         E/oX/2KoEETr7/+9W5PzHrmvKTLpd+h2JxmTBHOvvLM5YrnH2GzvVMGpvOh79aFJjoHC
-         4nUIgFkInFTT+2RCpu4GE4DhrYQ7vGOSL5Fj6KUFiejyojrlzteEqm269TLaZpfbSHeL
-         u4IvU1TYeyQzc52lxqkKeKwRzPmify+PnAv5g9hLJPXlLCxnQrwitcOXcBVBN7KFs/ur
-         yAko/jngFckxzBVAlLySaR/+318/kvp980ZT5tZGIEW3gc2HzIzgiBpaT9BZTQiSiOTa
-         va3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694539831; x=1695144631;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=gmail.com; s=20221208; t=1694539941; x=1695144741; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:to:subject:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=SCEE7bxn8DL/IYEyVMPx1uPofEtxbqkzxdOTcvbruZI=;
-        b=jsDYuWxQO/kb8/6OD1h1ioR1EUHrzlscXIvvyciXasYIGZKk7lc3zTal+baymjbi7E
-         4Z+tHFJVvKwt4oXdRiOHjPyEHw/IxCY2XFHx8AerN3pEvQRIy89cUaU2r9VL43nSD8+9
-         BmRDQHwsJ2Z9VEW9aJCzqKWootlux7pnVROi6jIqhboXRlagnCwZes07+U52OIbNm8+K
-         vtpk0NLOnRRMptyWQo61ocbvzpK20KMIHR0huyk5dY6AFmU6PI94ccjfY4yrjdafTtRB
-         RAvGAjW8Z1sROiVUSn9HZaQevTA5zZ/I9q61kbi6TkfFA22ZpitIq6liIN2kwwU6yuDa
-         ipPA==
-X-Gm-Message-State: AOJu0YwKtv8Ews01hp4t4orUclmxvO3EZXnjEW/A5j9iOjCg88D5dS2P
-        fUwyUUXssY/GLKOsMsEGHFmrkhiP0ZY=
-X-Google-Smtp-Source: AGHT+IH81WVZUgVHtWfQwT0SDDzp5AdVF0NvXpECXNKkd6rhbKMPDzi/NRL4fwliZqzF6eI4fhk1jA==
-X-Received: by 2002:a7b:cd1a:0:b0:402:f5c4:2e5a with SMTP id f26-20020a7bcd1a000000b00402f5c42e5amr68652wmj.37.1694539830722;
-        Tue, 12 Sep 2023 10:30:30 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n17-20020a1c7211000000b003fe1630a8f0sm16550247wmc.24.2023.09.12.10.30.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Sep 2023 10:30:30 -0700 (PDT)
-Message-ID: <9cb33c20294e096f5345fb1ea9d80a23e899ae6f.1694539827.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1583.v2.git.1694539827.gitgitgadget@gmail.com>
-References: <pull.1583.git.1694108551683.gitgitgadget@gmail.com>
-        <pull.1583.v2.git.1694539827.gitgitgadget@gmail.com>
-From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 12 Sep 2023 17:30:27 +0000
-Subject: [PATCH v2 2/2] completion: commit: complete trailers tokens more
- robustly
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=hfN7ksgK8L+FcANc5zKOKn45yfSx1YgGbAM8DCz0UdY=;
+        b=khnFjUUvFwLf55puNmo/PQrKrzJhwfTkpGxncQDJDcfrDOXNYy6ly++tMTRDtvbiuH
+         jTbYzqSihmN7RPVVbuN9XwwalnRp58EhQOBgIKxpiNL0lmkl17Bd9DnCMYBsjakNQIoR
+         aCqYjAoQeP/59WUNlpKTktn1moyyJRTASwCpA1NrOk9nBxeGQEjxQEg6wimKUDzhnor7
+         1iTRynLV37rWAs9VlxV+h24IB8+ELvxTb+U5vhJpPWZ6S+h5jA47IWfBnuy9JIQlMSUr
+         pfNLC1TjyVEUycGAyk1SBnJ5giVE2qhJcSyAsA3hsALKYxMTfvmPwg5+FjZsBrKBr9UU
+         Smmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694539941; x=1695144741;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:to:subject
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hfN7ksgK8L+FcANc5zKOKn45yfSx1YgGbAM8DCz0UdY=;
+        b=Q5is+e01WxEDOe0+qpIzKbedE5KUBXHXaAVhj+h325CfA8eU93C4oHaaer200xUqKz
+         EMLi7YbeGI9ssyF02M9Kb8uAPGxWzVkROd3ci9gDbqfYRKcnBUr2NtWONLel+Lv6m6JL
+         kaXmdgnNCgAQ6QDSqZCJZ1R8JouoGD6SsKE9UWn8IZaQFsmnRr9MzRVyGIK28/PS6zec
+         PP6/IhzDtXyEn2eLXZZxqnvxxLuPGI5qVIkVnA/NPxTImMB8E7JjMnptoYlrvvGm4e/Z
+         xI6tSSm5f/3PTeAUThY96MrugfJFNQaG6rnwCelt6joMdTrNp3u2FXF3RhMzjjfDwuHg
+         p/+g==
+X-Gm-Message-State: AOJu0Yw3GMAkjGhr9KOVI5RF+vmS9pswsQb0sVKxSa5cweDECnGhDhrN
+        +cEBaaMwDP8jhbPnxASNc2DmVKMZguU=
+X-Google-Smtp-Source: AGHT+IFPzAO0sEvaJHw2HfpYJU0JRZRWHB5BK9uKCI/Ql8fFEHfQ+JT8FidDTws80E/JzCdwo1iIMA==
+X-Received: by 2002:a05:620a:21d9:b0:76e:f272:1dd7 with SMTP id h25-20020a05620a21d900b0076ef2721dd7mr102156qka.24.1694539941471;
+        Tue, 12 Sep 2023 10:32:21 -0700 (PDT)
+Received: from ?IPv6:2606:6d00:15:e8c7:303c:b6ab:a53b:5695? ([2606:6d00:15:e8c7:303c:b6ab:a53b:5695])
+        by smtp.gmail.com with ESMTPSA id k7-20020a05620a142700b0076c89639526sm3319763qkj.93.2023.09.12.10.32.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 12 Sep 2023 10:32:19 -0700 (PDT)
+Subject: Re: What's cooking in git.git (Sep 2023, #04; Tue, 12)
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqpm2npbwy.fsf@gitster.g>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <2579735c-d0cd-d159-8cdb-3348c808b9ef@gmail.com>
+Date:   Tue, 12 Sep 2023 13:32:17 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     ZheNing Hu <adlternative@gmail.com>,
-        Martin =?UTF-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
+In-Reply-To: <xmqqpm2npbwy.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Philippe Blain <levraiphilippeblain@gmail.com>
+Hi Junio,
 
-In the previous commit, we added support for completing configured
-trailer tokens in 'git commit --trailer'.
-
-Make the implementation more robust by:
-
-- using '__git' instead of plain 'git', as the rest of the completion
-  script does
-- using a stricter pattern for --get-regexp to avoid false hits
-- using 'cut' and 'rev' instead of 'awk' to account for tokens including
-  dots.
-
-Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
----
- contrib/completion/git-completion.bash | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index b5eb75aadc5..c23465886e0 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1679,7 +1679,7 @@ __git_untracked_file_modes="all no normal"
+Le 2023-09-12 à 12:57, Junio C Hamano a écrit :
  
- __git_trailer_tokens ()
- {
--	git config --name-only --get-regexp trailer.\*.key | awk -F. '{print $2}'
-+	__git config --name-only --get-regexp '^trailer\..*\.key$' | cut -d. -f 2- | rev | cut -d. -f2- | rev
- }
+> * pb/completion-aliases-doc (2023-09-11) 1 commit
+>  - completion: improve doc for complex aliases
+> 
+>  Clarify how "alias.foo = : git cmd ; aliased-command-string" should
+>  be spelled with necessary whitespaces around punctuation marks to
+>  work.
+> 
+>  Will merge to 'next'.
+>  source: <pull.1585.git.1694274592854.gitgitgadget@gmail.com> 
+
+Thanks, I just sent a v2 so let's make sure this is what you merge:
+<pull.1585.v2.git.1694538135853.gitgitgadget@gmail.com>
  
- _git_commit ()
--- 
-gitgitgadget
+> * pb/complete-commit-trailers (2023-09-07) 1 commit
+>   (merged to 'next' on 2023-09-08 at 842587016d)
+>  + completion: commit: complete configured trailer tokens
+> 
+>  The command-line complation support (in contrib/) learned to
+>  complete "git commit --trailer=" for possible trailer keys.
+> 
+>  Will merge to 'master'.
+>  source: <pull.1583.git.1694108551683.gitgitgadget@gmail.com>
+> 
+
+I've incorporate Martin's suggestions so let's wait to merge my v2 
+instead:
+<pull.1583.v2.git.1694539827.gitgitgadget@gmail.com>
