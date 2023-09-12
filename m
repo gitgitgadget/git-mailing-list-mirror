@@ -2,217 +2,191 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BD0BECA0ECA
-	for <git@archiver.kernel.org>; Tue, 12 Sep 2023 13:36:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DA5FCA0EDB
+	for <git@archiver.kernel.org>; Tue, 12 Sep 2023 13:53:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235576AbjILNgi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Sep 2023 09:36:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46576 "EHLO
+        id S235220AbjILNxf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Sep 2023 09:53:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40852 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235539AbjILNgh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Sep 2023 09:36:37 -0400
-Received: from out02.mta.xmission.com (out02.mta.xmission.com [166.70.13.232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 439FB10D2
-        for <git@vger.kernel.org>; Tue, 12 Sep 2023 06:36:33 -0700 (PDT)
-Received: from in02.mta.xmission.com ([166.70.13.52]:46888)
-        by out02.mta.xmission.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <ebiederm@xmission.com>)
-        id 1qg3Z8-00BeGE-Ni; Tue, 12 Sep 2023 07:36:30 -0600
-Received: from ip68-227-168-167.om.om.cox.net ([68.227.168.167]:48548 helo=email.froward.int.ebiederm.org.xmission.com)
-        by in02.mta.xmission.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <ebiederm@xmission.com>)
-        id 1qg3Z7-00G1WP-4d; Tue, 12 Sep 2023 07:36:30 -0600
-From:   "Eric W. Biederman" <ebiederm@xmission.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-References: <87sf7ol0z3.fsf@email.froward.int.ebiederm.org>
-        <20230908231049.2035003-1-ebiederm@xmission.com>
-        <ZP+tTFK3Ly4sqlsq@tapette.crustytoothpaste.net>
-Date:   Tue, 12 Sep 2023 08:36:22 -0500
-In-Reply-To: <ZP+tTFK3Ly4sqlsq@tapette.crustytoothpaste.net> (brian
-        m. carlson's message of "Tue, 12 Sep 2023 00:14:04 +0000")
-Message-ID: <87zg1r1pk9.fsf@email.froward.int.ebiederm.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        with ESMTP id S235813AbjILNx0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Sep 2023 09:53:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 09E2810CE
+        for <git@vger.kernel.org>; Tue, 12 Sep 2023 06:52:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1694526755;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=Zs3sipXaUv8hiEf8Ux+sNtFTAq+A8dEElUhshJTogfw=;
+        b=A7YA3SYFiEZ9TwNf4loVaXo2LUMBQu8wMiF0js9Q5YvnN5BT2aaJfnBWkXyC9G/qyO0VFI
+        P3pSebCixj/uqCRh+CbEaQ1w5NgVnRhfxY3SmqYLJwfAkmo4LT0rhdzAXAFpsXMVtDzPWn
+        PniWEoRX+kl1SrtqLIVXfo8TBsVYjDs=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-392-iqFvn95aOZW_oIEZOmiznQ-1; Tue, 12 Sep 2023 09:52:27 -0400
+X-MC-Unique: iqFvn95aOZW_oIEZOmiznQ-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com [10.11.54.4])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 62EA8916FA4;
+        Tue, 12 Sep 2023 13:52:23 +0000 (UTC)
+Received: from dhcp-27-174.brq.redhat.com (unknown [10.45.225.195])
+        by smtp.corp.redhat.com (Postfix) with SMTP id 650F22026D68;
+        Tue, 12 Sep 2023 13:52:17 +0000 (UTC)
+Received: by dhcp-27-174.brq.redhat.com (nbSMTP-1.00) for uid 1000
+        oleg@redhat.com; Tue, 12 Sep 2023 15:51:31 +0200 (CEST)
+Date:   Tue, 12 Sep 2023 15:51:24 +0200
+From:   Oleg Nesterov <oleg@redhat.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Calvin Wan <calvinwan@google.com>,
+        Carlo Marcelo Arenas =?iso-8859-1?Q?Bel=F3n?= 
+        <carenas@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Mathias Krause <minipli@grsecurity.net>,
+        =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
+        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        Alexey Gladkov <legion@kernel.org>
+Subject: Re: [PATCH 1/1] git-grep: improve the --show-function behaviour
+Message-ID: <20230912135124.GA11315@redhat.com>
+References: <20230911121126.GA17383@redhat.com>
+ <20230911121211.GA17401@redhat.com>
+ <xmqq34zktk4h.fsf@gitster.g>
+ <20230911231756.GA2840@redhat.com>
+ <20230912130429.GA9982@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-XM-SPF: eid=1qg3Z7-00G1WP-4d;;;mid=<87zg1r1pk9.fsf@email.froward.int.ebiederm.org>;;;hst=in02.mta.xmission.com;;;ip=68.227.168.167;;;frm=ebiederm@xmission.com;;;spf=pass
-X-XM-AID: U2FsdGVkX1+a/zynWj7WKKM0mhJ2X0V5CatTeY1/g5E=
-X-SA-Exim-Connect-IP: 68.227.168.167
-X-SA-Exim-Mail-From: ebiederm@xmission.com
-Subject: Re: [PATCH 01/32] doc hash-file-transition: A map file for mapping
- between sha1 and sha256
-X-SA-Exim-Version: 4.2.1 (built Sat, 08 Feb 2020 21:53:50 +0000)
-X-SA-Exim-Scanned: Yes (on in02.mta.xmission.com)
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230912130429.GA9982@redhat.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Scanned-By: MIMEDefang 3.1 on 10.11.54.4
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
-
-> On 2023-09-08 at 23:10:18, Eric W. Biederman wrote:
->> The v3 pack index file as documented has a lot of complexity making it
->> difficult to implement correctly.  I worked with bryan's preliminary
->> implementation and it took several passes to get the bugs out.
->> 
->> The complexity also requires multiple table look-ups to find all of
->> the information that is needed to translate from one kind of oid to
->> another.  Which can't be good for cache locality.
->> 
->> Even worse coming up with a new index file version requires making
->> changes that have the potentialy to break anything that uses the index
->> of a pack file.
->> 
->> Instead of continuing to deal with the chance of braking things
->> besides the oid mapping functionality, the additional complexity in
->> the file format, and worry if the performance would be reasonable I
->> stripped down the problem to it's fundamental complexity and came up
->> with a file format that is exactly about mapping one kind of oid to
->> another, and only supports two kinds of oids.
->> 
->> Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
->> ---
->>  .../technical/hash-function-transition.txt    | 40 +++++++++++++++++++
->>  1 file changed, 40 insertions(+)
->> 
->> diff --git a/Documentation/technical/hash-function-transition.txt b/Documentation/technical/hash-function-transition.txt
->> index ed574810891c..4b937480848a 100644
->> --- a/Documentation/technical/hash-function-transition.txt
->> +++ b/Documentation/technical/hash-function-transition.txt
->> @@ -209,6 +209,46 @@ format described in linkgit:gitformat-pack[5], just like
->>  today. The content that is compressed and stored uses SHA-256 content
->>  instead of SHA-1 content.
->>  
->> +Per Pack Mapping Table
->> +~~~~~~~~~~~~~~~~~~~~~~
->> +A pack compat map file (.compat) files have the following format:
->> +
->> +HEADER:
->> +	4-byte signature:
->> +	    The signature is: {'C', 'M', 'A', 'P'}
->> +	1-byte version number:
->> +	    Git only writes or recognizes version 1.
->> +	1-byte First Object Id Version
->> +	    We infer the length of object IDs (OIDs) from this value:
->> +		1 => SHA-1
->> +		2 => SHA-256
+On 09/12, Oleg Nesterov wrote:
 >
-> One thing I forgot to mention here, is that we have 32-bit format IDs
-> for these in the structure, so we should use them here and below.  These
-> are GIT_SHA1_FORMAT_ID and GIT_SHA256_FORMAT_ID.
+> René, Junio,
 >
-> Not that I would encourage distributing such software, but it makes it
-> much easier for people to experiment with additional hash algorithms (in
-> terms of performance, etc.) if we make the space a little sparser.
-
-Unfortunately that ship has already sailed. If you look at pack reverse
-indices, pack mtime files, multi-pack-index files, they all use an
-oid_version field.  So to experiment with a new hash function a new
-number has to be picked.
-
-The only use I can find of your 4 byte format_id's is in the reftable
-code.
-
-Using a 4 byte magic number in this case also conflicts with basic
-simplicity.  With a one byte field I can specify it easily, and read it
-back with no special tools, and understand what it means at a glance.
-
-I admit I can only understand what a oid version field means at a glance
-because the variation of object id's is low, but that is fundamental.
-We require global agreement on names.  Fundamentally git can not
-support many object id transitions.  Names are just too expensive.
-
-When I come to how the map file is specified a single byte has real
-advantages.  A single byte never needs byte swapping.  So it won't
-be misread.  Using a single byte for each format allows me to
-keep the header for the file at 16 bytes.  Which guarantees good
-alignment of everything in the file without having to be clever.
-
-All of this is for a file that is strictly local and the entire function
-of the bytes is a sanity check to make certain that something weird is
-not going on, or to assist recover if something bad happens.
-
-So in this case I don't see any additional agility provided by longer
-names helping.
-
->> +	1-byte Second Object Id Version
->> +	    We infer the length of object IDs (OIDs) from this value:
->> +		1 => SHA-1
->> +		2 => SHA-256
+> I don't like the fact we can't understand each other ;) Could you
+> please explain why do you think this patch should update the docs?
 >
-> In your new patch for the next part, you consider that there might be
-> multiple compatibility hash algorithms.  I had anticipated only one at
-> a time in my series, but I'm not opposed to multiple if you want to
-> support that.
+> Please forget about my patch for the moment. Lets start from the very
+> beginning:
 >
-> However, here you're making the assumption that there are only two.  If
-> you want to support multiple values, we need to explicitly consider that
-> both here (where we need a count of object ID version and multiple
-> tables, one for each algorithm), and in the follow-up series.
+> 	-p::
+> 	--show-function::
+> 		Show the preceding line that contains the function name of
+> 		the match, unless the matching line is a function name itself.
 >
-> I had not considered more than two algorithms because it substantially
-> complicates the code and requires us to develop n*(n-1) tables, but I'm
-> not the one volunteering to do most of the work here, so I'll defer to
-> your preference.  (I do intend to send a patch or two, though.)
+> and in my opinion, it is the current behaviour that doesn't match the
+> documentation.
 >
-> It's also possible we could be somewhat provident and define the on-disk
-> formats for multiple algorithms and then punt on the code until later if
-> you prefer that.
+> -------------------------------------------------------------------------
+>
+> 	$ cat TEST1.c
+> 	void func1()
+> 	{
+> 	}
+> 	void func2()
+> 	{
+> 	}
+>
+> 	$ git grep --untracked -pn func2 TEST1.c
+> 	TEST1.c=1=void func1()
+> 	TEST1.c:4:void func2()
+>
+> in this case the matching line is "void func2()" and it is also a function
+> name itself, in this case git-grep should not show "=void func1()" which is
+> "the preceding line that contains the function name of the match.
+>
+> But it does. So perhaps git-grep needs another change, something like
+>
+> 	if (match_funcname(opt, gs, bol, end_of_line(...)))
+> 		return;
+>
+> at the start of show_funcname_line(), but my patch does not change this
+> behaviour.
+>
+> --------------------------------------------------------------------------
+>
+> 	$ cat TEST2.c
+> 	void func(xxx)
+> 	{
+> 		use(xxx);
+> 	}
+>
+> 	$ git grep --untracked -pn xxx TEST2.c
+> 	TEST2.c:1:void func(xxx)
+> 	TEST2.c:3:      use(xxx)
+>
+> the 2nd match is use(xxx) and it is not a function name itself, in this
+> case git-grep should "Show the preceding line that contains the function
+> name of the match.
+>
+> But it doesn't. To me, this behaviour looks as
+>
+> 		Show the preceding line that contains the function name of
+> 		the match, unless the _PREVIOUS_ matching line is a function
+> 		name itself.
+>
+> Now, with my patch we have
+>
+> 	$ ./git grep --untracked -pn xxx TEST2.c
+> 	TEST2.c:1:void func(xxx)
+> 	TEST2.c=1=void func(xxx)
+> 	TEST2.c:3:      use(xxx);
+>
+> and unless I am totatlly confused this does match the documentation.
 
-In the long term I anticipate people disabling compatObjectFormat and
-switching to readCompatMap so they still have access to their old
-objects by their original names, but they don't have the over head
-of computing a compatibility hash.
+So, just in case, please see V2 below. In my opinion it _fixes_ the
+current behaviour. With this patch
 
-In a world where there is a transition to futureHash I anticipate
-the files associated with an old pack looking something like:
-pack-abcdefg.compat12
-pack-abcdefg.compat32
+	$ ./git grep --untracked -pn func2 TEST1.c
+	TEST1.c:4:void func2()
 
-For a repository still using hash version sha256 for storage, with a
-mapping to some sha1 names, and a mapping of everything to new
-names for compatibility with futureHash.
+	$ ./git grep --untracked -pn xxx TEST2.c
+	TEST2.c:1:void func(xxx)
+	TEST2.c=1=void func(xxx)
+	TEST2.c:3:      use(xxx);
 
-After transitioning to the futureHash those files would look like:
-pack-abcdefg.compat13
-pack-abcdefg.compat23
+Or I am totally confused?
 
-I deeply and fundamentally care about having some way to look up
-old names because I do that all of the time.
+Oleg.
+---
 
-In my work on the linux-kernel I have found myself frequently digging
-into old issues.  I have on my hard drive tglx's git import of the
-old bitkeeper tree.  I also have an import of all of the old kernel
-releases into git from before the code was stored in bitkeeper.  I find
-myself actually using all of those trees when digging into issues.
-
-So I think the idea that we will ever be able to get rid of the mapping
-for old converted repositories is unlikely.  We have entirely too many
-references out there.
-
-Which means that for every hash format conversion a repository goes
-through I am going to have another collection of old names.
-
-
-I don't honestly anticipate ever needing to have multiple
-compatObjectFormat entries specified for a single repository.  I do
-agree that if we are going to worry about forward and backward
-compatibility we should be robust and have a configuration file syntax
-that can handle the possibility.
-
-I do very much anticipate needing to have multiple readCompatMap
-entries, and pretty much only using them in get_short_oid in
-object-name.c.  It will make the loop in find_short_packed_compat_object
-a little longer but that is about all that will need to be implemented
-and maintained long term.
-
-
-I view this compat map format a lot like the loose objects.  It is
-simple and good enough to get us started.  If it turns out we need
-to optimize it's simplicity means all of the interfaces in the code
-to use it have already been built, and we can just concentrate on
-optimizing.
-
-Eric
+diff --git a/grep.c b/grep.c
+index 0904d55b24..c240c4bfa1 100644
+--- a/grep.c
++++ b/grep.c
+@@ -1347,15 +1347,19 @@ static int match_funcname(struct grep_opt *opt, struct grep_source *gs,
+ static void show_funcname_line(struct grep_opt *opt, struct grep_source *gs,
+ 			       const char *bol, unsigned lno)
+ {
++	unsigned long left = bol - gs->buf;
++
++	if (match_funcname(opt, gs, bol, end_of_line(bol, &left)))
++		return;
++
+ 	while (bol > gs->buf) {
+ 		const char *eol = --bol;
+ 
++		if (--lno < opt->last_shown)
++			break;
++
+ 		while (bol > gs->buf && bol[-1] != '\n')
+ 			bol--;
+-		lno--;
+-
+-		if (lno <= opt->last_shown)
+-			break;
+ 
+ 		if (match_funcname(opt, gs, bol, eol)) {
+ 			show_line(opt, bol, eol, gs->name, lno, 0, '=');
 
