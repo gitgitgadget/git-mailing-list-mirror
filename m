@@ -2,87 +2,179 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2E6FEE3F09
-	for <git@archiver.kernel.org>; Tue, 12 Sep 2023 18:30:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65703EE3F0D
+	for <git@archiver.kernel.org>; Tue, 12 Sep 2023 19:01:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232721AbjILSat (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Sep 2023 14:30:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45110 "EHLO
+        id S236798AbjILTBY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Sep 2023 15:01:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231542AbjILSas (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Sep 2023 14:30:48 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F8D6189
-        for <git@vger.kernel.org>; Tue, 12 Sep 2023 11:30:44 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-403012f27e1so40142705e9.1
-        for <git@vger.kernel.org>; Tue, 12 Sep 2023 11:30:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1694543442; x=1695148242; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:reply-to:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Z4E5IH8S+x7gPfG1Ufe+82CGpjxKlB4Jmqf/kNkKe2g=;
-        b=bOjT8wqw3yAO30kzHm4QOhtP/9qjmcmRXdv5tRNcVhJAhZEbm3G+/n4ZkdiWIQUO+R
-         RhjHceBV/6/QSDdbci6q1n9Ay1kf3ffDN1y3PbNiK0NR0A4HAhtOJDFVP03X/BtVofAL
-         1/MnB/P1z8WzRrUeSGNlADEI/6N/j7jnwovLfr90no/sP+m7fJzduJmcBK4mFUgX4oVW
-         aM71FWaPjHMorS+KaGGRlmtpH5wJSjqZY70rB4QydNc2eE4TuU5uNXZ3Zhi7HozjRGDf
-         Ue2/fJQ0Qzfk9+AK+/oQ83RcSlVu1cn+bnSe1YeyB4cZUCDlX00zdKdQRu4x3by0QnCw
-         ouvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694543442; x=1695148242;
-        h=content-transfer-encoding:in-reply-to:from:reply-to:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Z4E5IH8S+x7gPfG1Ufe+82CGpjxKlB4Jmqf/kNkKe2g=;
-        b=WtaMFPgkROoEloeRjaN0Lxb+vzXaLH7vvltmSRf7EwwC11qrXmn/a1UdQwCqbsBaJ4
-         Gp05MVhXQcYmHijDPvK/COHVVIZvX+nkj5MVXc8dWZysVfQva/xiYLdjRSBDLkpQNXfS
-         wjPlb2KJGSY+EvuWB3vV3OhhFhg4xaIpXed8ssLsRWRFAMaHvggTEo4QGP4h3s3UdgUG
-         Nj5/hHeWmc74MdQUGj84p3NjsIk9m5ij7Oas+jaaJy4nGVSEnjwwVAuG7H1qfDWGwA30
-         tc5YMbhznOX65mxPttPqedYBliP9xN75b1XIKMZZL3AjRcOesz1nozhb0lIw2J43Ctgo
-         dLbg==
-X-Gm-Message-State: AOJu0Yxhas3jDTBKsag4jBwnI2IM2coou/OjfQ/CgUshktooiKNYi8oi
-        qf+zadIO5ecb2HgjE8XiAtNwQkqzrCnSsw==
-X-Google-Smtp-Source: AGHT+IH6rgMw0pOgjgEXCXelB/E5xK+4+Ow7nEe0YCh4HbrZfUpRv96q8F5vJDoUENeHo3bhMFg+xA==
-X-Received: by 2002:adf:ed86:0:b0:31c:887f:82f3 with SMTP id c6-20020adfed86000000b0031c887f82f3mr290399wro.40.1694543442239;
-        Tue, 12 Sep 2023 11:30:42 -0700 (PDT)
-Received: from [192.168.1.212] ([90.242.223.1])
-        by smtp.gmail.com with ESMTPSA id g9-20020adff409000000b0031c79de4d8bsm13411578wro.106.2023.09.12.11.30.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Sep 2023 11:30:41 -0700 (PDT)
-Message-ID: <12c956ea-330d-4441-937f-7885ab519e26@gmail.com>
-Date:   Tue, 12 Sep 2023 19:30:41 +0100
+        with ESMTP id S237509AbjILTBT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Sep 2023 15:01:19 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5318EE6
+        for <git@vger.kernel.org>; Tue, 12 Sep 2023 12:01:15 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9B8B119B9A8;
+        Tue, 12 Sep 2023 15:01:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=A71aOfN7Ec8BqOv8878QhwjRX7sQD4fOYr1be/
+        WvEY4=; b=t3Bqg1gPT+l+LHs0EDktE7BDfdKU034OvAaORu6qC8x6Qcmbr6ws67
+        EzJqw8G5+nnLFedFH81bXsUQrXXH4O/jxGCOBiYtsZHv4fhlY1xCmubc2lf5BoMi
+        npgV+UnCTJmlSCy1fxGcERpY4IefgqSOHBL16DioauAZ2jxzS5HbM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8F80F19B9A7;
+        Tue, 12 Sep 2023 15:01:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EDD2B19B9A6;
+        Tue, 12 Sep 2023 15:01:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Linus Arver <linusa@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 2/3] update-index: add --show-index-version
+In-Reply-To: <owlybke8kkcf.fsf@fine.c.googlers.com> (Linus Arver's message of
+        "Mon, 11 Sep 2023 22:54:08 -0700")
+References: <20230818233729.2766281-1-gitster@pobox.com>
+        <20230818233729.2766281-3-gitster@pobox.com>
+        <owlybke8kkcf.fsf@fine.c.googlers.com>
+Date:   Tue, 12 Sep 2023 12:01:12 -0700
+Message-ID: <xmqqbke7nrlz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: What's cooking in git.git (Sep 2023, #04; Tue, 12)
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqpm2npbwy.fsf@gitster.g>
-Reply-To: phillip.wood@dunelm.org.uk
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqqpm2npbwy.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: BE9FA2E2-519E-11EE-BEF6-25B3960A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/09/2023 17:57, Junio C Hamano wrote:
-> * pw/rebase-sigint (2023-09-07) 1 commit
->   - rebase -i: ignore signals when forking subprocesses
-> 
->   If the commit log editor or other external programs (spawned via
->   "exec" insn in the todo list) receive internactive signal during
->   "git rebase -i", it caused not just the spawned program but the
->   "Git" process that spawned them, which is often not what the end
->   user intended.  "git" learned to ignore SIGINT and SIGQUIT while
->   waiting for these subprocesses.
-> 
->   Will merge to 'next'?
->   source: <pull.1581.git.1694080982621.gitgitgadget@gmail.com>
+Linus Arver <linusa@google.com> writes:
 
-This needs a re-roll to stop it ignoring signals in the child c.f. 
-<376d3ea0-a3eb-4b25-8bf2-ca40c4699e26@gmail.com>
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> "git update-index --version N" is used to set the index format
+>
+> s/--version/--index-version
 
-Thanks
+Good eyes.
 
-Phillip
+>> +	`git add -N`.  With `--verbose` option, also reports the
+>
+> How about
+>
+>     `git add -N`.  With `--verbose`, also report the
+
+Yup, that is much better.
+
+>>  		OPT_INTEGER(0, "index-version", &preferred_index_format,
+>>  			N_("write index in this format")),
+>> +		OPT_SET_INT(0, "show-index-version", &preferred_index_format,
+>> +			    N_("show index format version"), -1),
+>
+> How about
+>
+>     "show on-disk index format version"
+
+OK.  The entry before that says "write" and it makes it clear enough
+that it is talking about the "on-disk" thing, hence "write index" is
+sufficient.  The readers, who do not know the "format version"
+matters only on-disk and does not matter once the index data gets
+slurped into memory, would benefit with "on-disk index" here.  I
+will also take your "show" -> "report" suggestion.
+
+>> diff --git a/t/t2107-update-index-basic.sh b/t/t2107-update-index-basic.sh
+>> index 89b285fa3a..c78d1e9396 100755
+>> --- a/t/t2107-update-index-basic.sh
+>> +++ b/t/t2107-update-index-basic.sh
+>> @@ -111,4 +111,20 @@ test_expect_success '--chmod=+x and chmod=-x in the same argument list' '
+>>  	test_cmp expect actual
+>>  '
+>>
+>> +test_expect_success '--index-version' '
+>> +	git commit --allow-empty -m snap &&
+>> +	git reset --hard &&
+>
+> Not sure why this "git reset --hard" is needed here --- is it to clear
+> out state from previous test cases? If so, perhaps it's better to run
+> this as the very first command in this test case?
+>
+> But this also makes me wonder why "git commit --allow-empty -m snap" is
+> even necessary (if we already have a git repo)?
+
+There is no commit yet in this repository at this point, which means
+that "reset --hard [HEAD]" cannot be the first command.  There are
+newly added paths in the index, some of which are further modified
+in the working tree.  Creating a snapshot commit will record what is
+in the index, and a hard reset will make the contents of the working
+tree match exactly what was in the index, reverting the modification
+made to some paths in the working tree.
+
+Having said that, we may further want to tighten these "clean the
+slate" steps for later tests (read on).
+
+>> +	git update-index --index-version 2 >actual &&
+>> +	test_must_be_empty actual &&
+>
+> Before we do "--index-version 2", it may be desirable to run the
+> "--show-index-version" flag first to see what we have before modifying
+> it with "2".
+
+That was what I specifically wanted to avoid.  I am not interested
+in testing what the default version of the day is.  The only thing
+this invocation cares about is to (try to) use the version 2; it
+will be detected as a failure if the next show-index-version
+reported something else ...
+
+>> +	git update-index --show-index-version >actual &&
+>> +	echo 2 >expect &&
+>> +	test_cmp expect actual &&
+
+... which is checked here.
+
+>> +	git update-index --index-version 4 --verbose >actual &&
+>> +	echo "index-version: was 2, set to 4" >expect &&
+>> +	test_cmp expect actual
+
+And how a transition is reported with --verbose is tested here.
+
+>> +'
+>
+> How about adding this check below to check what happens if the newly-set
+> version is the same as the existing version?
+>
+>         git update-index --index-version 4 --verbose >actual &&
+>         echo "index-version: was 4, set to 4" >expect &&
+>         test_cmp expect actual
+>
+> And also how about a similar check, but for downgrading from a higher
+> version number to a lower one?
+>
+>         git update-index --index-version 2 --verbose >actual &&
+>         echo "index-version: was 4, set to 2" >expect &&
+>         test_cmp expect actual
+
+I assumed that the flipping between versions without --verbose had
+adequate coverage and the tests this patch adds were solely about
+reporting with the "--verbose" option.  It seems there is no such
+test coverage, so these may want to be added.  Perhaps we should
+flip from 2 to 4 _without_ verbose and make sure we are still silent
+as well.
+
+Testing downgrading an index with unspecified [*] contents from 3
+(or higher) to 2 would be unwise, as such a conversion may or may
+not work depending on the contents.  I will tighten the "clean the
+slate" steps and add downgrades to the list, as the initial "try to
+set to 2" may not even work with unknown contents in the index.
+
+Thanks.
+
+
+[Footnote] 
+
+* This is in a very late part of the test script and the state
+  previous tests left us will change over time.
