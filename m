@@ -2,55 +2,55 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44CD4CA0EC3
-	for <git@archiver.kernel.org>; Tue, 12 Sep 2023 05:00:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0F52CA0EC3
+	for <git@archiver.kernel.org>; Tue, 12 Sep 2023 05:54:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230512AbjILFA7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Sep 2023 01:00:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43816 "EHLO
+        id S229460AbjILFyO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Sep 2023 01:54:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230506AbjILFAq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Sep 2023 01:00:46 -0400
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57DE830C1
-        for <git@vger.kernel.org>; Mon, 11 Sep 2023 21:57:12 -0700 (PDT)
-Received: by mail-pg1-x549.google.com with SMTP id 41be03b00d2f7-5704127d08cso5571039a12.1
-        for <git@vger.kernel.org>; Mon, 11 Sep 2023 21:57:12 -0700 (PDT)
+        with ESMTP id S229445AbjILFyO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Sep 2023 01:54:14 -0400
+Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43115E73
+        for <git@vger.kernel.org>; Mon, 11 Sep 2023 22:54:10 -0700 (PDT)
+Received: by mail-pj1-x1049.google.com with SMTP id 98e67ed59e1d1-26d50941f68so7689119a91.1
+        for <git@vger.kernel.org>; Mon, 11 Sep 2023 22:54:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1694494632; x=1695099432; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1694498050; x=1695102850; darn=vger.kernel.org;
         h=to:from:subject:message-id:references:mime-version:in-reply-to:date
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=SJWJJxbp5m4HLOfJfgy7hOEA9P2JtVrJQNJNYVvTKnE=;
-        b=YHuls9gCQ/S3IsIVpB3JVBvdIzgYzeiCIQldcqVEKCCRUQ457gd0Cr0/OlpXlIvYqa
-         jRrTrv04e7KWgw6o7rZ61d266NzWPXw6MyIlX5aY9FKwLtbhGaMDi5wgwqsQ4ehJToPP
-         R6QbHAKoWdMvDitEqMHfcy7GkPha1SGFK2IIE4jjVDaQJgE+0CRkNWdnyIdOGydmitGu
-         dVuod4GAhf3oXwqeJwqizMQ0xfG7oYJz8N+D1AZfa6vUULHtWLp1YVqNbfrCSFcVhkwt
-         0bezxIk8FerpPi5Va6izK6pMvgVRl3K85R5bHLehn7Hf7wp8Hy6zzYZ8paZQvFApLA1d
-         STBA==
+        bh=xqfc4tYa0BbkKf5fsN/u0ujeH/LK35wZnMITuJPe3UQ=;
+        b=nWQBW4L21hIDJUotOi46PIYlNSqbR64aJ3bnKnUZkSQarWMjhU/QK5A9oMl8OuSq2+
+         /GVEwyHgstYXrSazk4lVeYKjEAGExV4ZYJqzZkk5QBnYdeCWQNRSnMUJSgWWcDsFpSP9
+         JlXFM0ukcN7p24y3YFyh1pnNOXqxT6+NWZygC/wTFoCNSMKl8NEiIypVyOYwirPUP2bh
+         Ao3eAaPi8gZ1ktGBjEVX36sCOT1gCqaiuQG0rNnFVd/10/wUVnAgfOsITxGjI9yc1Z61
+         FAIZ6gy8DyWbTG+sdpbYYVNsaSQ/xHoRB6UY4Ew5KavilSundx5v7UFrH0rmX3A9Nmau
+         qMwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694494632; x=1695099432;
+        d=1e100.net; s=20230601; t=1694498050; x=1695102850;
         h=to:from:subject:message-id:references:mime-version:in-reply-to:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SJWJJxbp5m4HLOfJfgy7hOEA9P2JtVrJQNJNYVvTKnE=;
-        b=H8Zb7UZNXJHOVaRluaDLA43X9BZ32GsFK7NZy7Lu9tN402Wm8N3mUMPge2Uc3ohDb4
-         LAxh88XlXyYqFlnN6BF4YmP1++UYIDx+7mpbPy5ncBK6yvzg/YgWEYxVV3S9QyahA/wQ
-         7Yru44B83+zEU1a02rJ9hqT/Z910UGtCPyC8Pwo6Xfi6m+WA/X7YvYfn9CkjM4/qXhMK
-         4dJZdlkzcMNHE7VQ0XFDrHcxqLcBLuQZIM4CUHNM77aMCELPoLjKM7I7Gv5gdSJ98jXl
-         f8AHvQImjcWwK+5DcYsA6WlMrUz74G83jWRta8SL0TBW0DLb5mn7Ss+uq9/Uycwz3jpg
-         KDMg==
-X-Gm-Message-State: AOJu0YwUbp5pL9kD4b0zRphe8j+9wxXRbAeh0es/56uka273HXWOoj61
-        xoSt+noLjfanamFuPSUofpmYeMx40AQ=
-X-Google-Smtp-Source: AGHT+IGyaKzyXTY24fI1Sx0PXv3aEQxzFBeJyyjC5N9pq0mh4X/jG7XwvFjwft20m5/gM2yHoFWx/58Nt44=
+        bh=xqfc4tYa0BbkKf5fsN/u0ujeH/LK35wZnMITuJPe3UQ=;
+        b=fNYoF7Yi2O8YdA5mWD+Fke3HTZLt6o8IiWsxEXq9kMS3QhvF6PTwnJvzrxBrPaFQIL
+         EH9IPj/TMciWO13e1Ofs1pIYA9rAs2hPyIsq2JtxJgaBp2iOmqL7ZwfL3P/aH3/d3U+p
+         jnfUOMLx4FYv3WgpTQmdRq1pawdwnaEP7K8q3mATB1FKPjK6yFZpbTIxnVblsXWE/LKX
+         31QsdqFGs2RCCZvRTfQQQ3OHk8qtRF9k5FDBMH+46mbfNjbsuvC/6t85fqC4MEpHwUFA
+         bgrzg7qWWtZXkiy6hkvVj5gAFCJpmtP37/v/byn7IjfGWNga8J6XgMRJMhxDCSQMyhgA
+         JuAA==
+X-Gm-Message-State: AOJu0YzczDeWO/pOa3iNnTh5coxAODSuOrQbT70I7nDnpoHPmwFJBOnC
+        IHXrurzwcK9yJjw8qiKVSEF9/3/1Y6M=
+X-Google-Smtp-Source: AGHT+IHQTiJ87N6cb918sKPf8yuFsKqPxydamXE7VbuZKhhIATz8lsM9mveJZSXLME5rI5ePmrPSjLbzEOw=
 X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a05:6a02:91c:b0:577:464f:143e with SMTP id
- ck28-20020a056a02091c00b00577464f143emr385627pgb.2.1694494631827; Mon, 11 Sep
- 2023 21:57:11 -0700 (PDT)
-Date:   Mon, 11 Sep 2023 21:57:10 -0700
-In-Reply-To: <20230818233729.2766281-2-gitster@pobox.com>
+ (user=linusa job=sendgmr) by 2002:a17:902:f689:b0:1c3:c127:537 with SMTP id
+ l9-20020a170902f68900b001c3c1270537mr1487593plg.12.1694498049769; Mon, 11 Sep
+ 2023 22:54:09 -0700 (PDT)
+Date:   Mon, 11 Sep 2023 22:54:08 -0700
+In-Reply-To: <20230818233729.2766281-3-gitster@pobox.com>
 Mime-Version: 1.0
-References: <20230818233729.2766281-1-gitster@pobox.com> <20230818233729.2766281-2-gitster@pobox.com>
-Message-ID: <owlyfs3kkmzd.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH v2 1/3] update-index doc: v4 is OK with JGit and libgit2
+References: <20230818233729.2766281-1-gitster@pobox.com> <20230818233729.2766281-3-gitster@pobox.com>
+Message-ID: <owlybke8kkcf.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH v2 2/3] update-index: add --show-index-version
 From:   Linus Arver <linusa@google.com>
 To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
@@ -60,22 +60,167 @@ X-Mailing-List: git@vger.kernel.org
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> [...]
+> "git update-index --version N" is used to set the index format
+
+s/--version/--index-version
+
+> version to a specific version, but there was no way to query the
+> current version used in the on-disk index file.
+>
+> Teach the command a new "--show-index-version" option, and also
+> teach the "--index-version N" option to report what the version was
+> when run with the "--verbose" option.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  Documentation/git-update-index.txt |  6 +++++-
+>  builtin/update-index.c             | 19 +++++++++++++------
+>  t/t2107-update-index-basic.sh      | 16 ++++++++++++++++
+>  3 files changed, 34 insertions(+), 7 deletions(-)
+>
 > diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
-> index f4bb9c5daf..a367f8d65a 100644
+> index a367f8d65a..3f204891ce 100644
 > --- a/Documentation/git-update-index.txt
 > +++ b/Documentation/git-update-index.txt
-> @@ -166,9 +166,11 @@ you will need to handle the situation manually.
+> @@ -162,7 +162,8 @@ you will need to handle the situation manually.
+>  	Write the resulting index out in the named on-disk format version.
+>  	Supported versions are 2, 3 and 4. The current default version is 2
+>  	or 3, depending on whether extra features are used, such as
+> -	`git add -N`.
+> +	`git add -N`.  With `--verbose` option, also reports the
+
+How about
+
+    `git add -N`.  With `--verbose`, also report the
+
+> +	version the index file uses before and after this command.
 >  +
 >  Version 4 performs a simple pathname compression that reduces index
 >  size by 30%-50% on large repositories, which results in faster load
-> -time. Version 4 is relatively young (first released in 1.8.0 in
-> -October 2012). Other Git implementations such as JGit and libgit2
-> -may not support it yet.
-> +time.  Git supports it since version 1.8.0, released in October 2012,
-> +and support for it was added to libgit2 in 2016 and to JGit in 2020.
-> +Older editions of this manual page called it "relatively young", but
+> @@ -171,6 +172,9 @@ and support for it was added to libgit2 in 2016 and to JGit in 2020.
+>  Older editions of this manual page called it "relatively young", but
+>  it should be considered mature technology these days.
+>
+> +--show-index-version::
+> +	Report the index format version used by the on-disk index file.
+> +	See `--index-version` above.
 
-Nit: s/editions/versions because typically "edition" means a version of
-physically published text (such as books). Also I don't think we use the
-word "edition" anywhere else in our codebase.
+Looks good.
+
+>  -z::
+>  	Only meaningful with `--stdin` or `--index-info`; paths are
+> diff --git a/builtin/update-index.c b/builtin/update-index.c
+> index 5fab9ad2ec..e713e2a04c 100644
+> --- a/builtin/update-index.c
+> +++ b/builtin/update-index.c
+> @@ -1089,6 +1089,8 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+>  			resolve_undo_clear_callback),
+>  		OPT_INTEGER(0, "index-version", &preferred_index_format,
+>  			N_("write index in this format")),
+> +		OPT_SET_INT(0, "show-index-version", &preferred_index_format,
+> +			    N_("show index format version"), -1),
+
+How about
+
+    "show on-disk index format version"
+
+for the help text? Also "report" may be preferable instead of "show" for
+consistency with the manpage.
+
+Also, I think it would be easier to read if we didn't overload
+preferred_index_format here and instead used a new variable (perhaps named
+"show_index_format").
+
+And I just realized that we are now using not only "show" and "report"
+interchangeably in this patch, but also "format" and "version" ---
+it would be nice to clean up as #leftoverbits.
+
+>  		OPT_BOOL(0, "split-index", &split_index,
+>  			N_("enable or disable split index")),
+>  		OPT_BOOL(0, "untracked-cache", &untracked_cache,
+> @@ -1181,15 +1183,20 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+>
+>  	getline_fn = nul_term_line ? strbuf_getline_nul : strbuf_getline_lf;
+>  	if (preferred_index_format) {
+> -		if (preferred_index_format < INDEX_FORMAT_LB ||
+> -		    INDEX_FORMAT_UB < preferred_index_format)
+> +		if (preferred_index_format < 0) {
+> +			printf(_("%d\n"), the_index.version);
+> +		} else if (preferred_index_format < INDEX_FORMAT_LB ||
+> +			   INDEX_FORMAT_UB < preferred_index_format) {
+>  			die("index-version %d not in range: %d..%d",
+>  			    preferred_index_format,
+>  			    INDEX_FORMAT_LB, INDEX_FORMAT_UB);
+> -
+> -		if (the_index.version != preferred_index_format)
+> -			the_index.cache_changed |= SOMETHING_CHANGED;
+> -		the_index.version = preferred_index_format;
+> +		} else {
+> +			if (the_index.version != preferred_index_format)
+> +				the_index.cache_changed |= SOMETHING_CHANGED;
+> +			report(_("index-version: was %d, set to %d"),
+> +			       the_index.version, preferred_index_format);
+> +			the_index.version = preferred_index_format;
+> +		}
+>  	}
+
+Looks good. But if you decide to use a new variable like
+"show_index_format" as suggested above, you might want to refactor this
+out to a separate function. Then you could obviously do away with the
+chained if/else and replace them with early returns, which would be
+easier to read.
+
+>  	if (read_from_stdin) {
+> diff --git a/t/t2107-update-index-basic.sh b/t/t2107-update-index-basic.sh
+> index 89b285fa3a..c78d1e9396 100755
+> --- a/t/t2107-update-index-basic.sh
+> +++ b/t/t2107-update-index-basic.sh
+> @@ -111,4 +111,20 @@ test_expect_success '--chmod=+x and chmod=-x in the same argument list' '
+>  	test_cmp expect actual
+>  '
+>
+> +test_expect_success '--index-version' '
+> +	git commit --allow-empty -m snap &&
+> +	git reset --hard &&
+
+Not sure why this "git reset --hard" is needed here --- is it to clear
+out state from previous test cases? If so, perhaps it's better to run
+this as the very first command in this test case?
+
+But this also makes me wonder why "git commit --allow-empty -m snap" is
+even necessary (if we already have a git repo)?
+
+> +	git update-index --index-version 2 >actual &&
+> +	test_must_be_empty actual &&
+
+Before we do "--index-version 2", it may be desirable to run the
+"--show-index-version" flag first to see what we have before modifying
+it with "2".
+
+> +	git update-index --show-index-version >actual &&
+> +	echo 2 >expect &&
+> +	test_cmp expect actual &&
+> +
+> +	git update-index --index-version 4 --verbose >actual &&
+> +	echo "index-version: was 2, set to 4" >expect &&
+> +	test_cmp expect actual
+> +'
+
+How about adding this check below to check what happens if the newly-set
+version is the same as the existing version?
+
+        git update-index --index-version 4 --verbose >actual &&
+        echo "index-version: was 4, set to 4" >expect &&
+        test_cmp expect actual
+
+And also how about a similar check, but for downgrading from a higher
+version number to a lower one?
+
+        git update-index --index-version 2 --verbose >actual &&
+        echo "index-version: was 4, set to 2" >expect &&
+        test_cmp expect actual
+
+> +
+>  test_done
+> --
+> 2.42.0-rc2-7-gf9972720e9
