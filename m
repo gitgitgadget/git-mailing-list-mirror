@@ -2,87 +2,161 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0702CA0EC6
-	for <git@archiver.kernel.org>; Tue, 12 Sep 2023 00:28:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 691A2CA0EC7
+	for <git@archiver.kernel.org>; Tue, 12 Sep 2023 00:45:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230147AbjILA2w (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Sep 2023 20:28:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38428 "EHLO
+        id S232484AbjILApT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Sep 2023 20:45:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59294 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229889AbjILA2v (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Sep 2023 20:28:51 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 667EACC7
-        for <git@vger.kernel.org>; Mon, 11 Sep 2023 17:26:41 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9368738FC7;
-        Mon, 11 Sep 2023 19:31:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=FVAw6e5lRGdZTyJCx4tqPuKL9dwyr9DZaLtvb9
-        sRkDE=; b=FVMWd1ZX7/AQvEK1MMNhDrLABWlUQ5UzA4Fzd1MaX0ZF2juGnT7O5p
-        /Yy4mF7SD/o6SHqDXb2AFf7rsfm/tVjNYk7KrUP5zBTs3os+apCoK56E8DLZUZuH
-        GmgxUGlhHjhV5brzxVLqcYgru1dAr9Xw2FCL/9TA6HGuP+GCF2kXY=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8BF5F38FC6;
-        Mon, 11 Sep 2023 19:31:11 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        with ESMTP id S231622AbjILApA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Sep 2023 20:45:00 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9BED18832D
+        for <git@vger.kernel.org>; Mon, 11 Sep 2023 17:40:27 -0700 (PDT)
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 1307838FC5;
-        Mon, 11 Sep 2023 19:31:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Roger Light <roger@atchoo.org>
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: Commit dates on conflict markers
-In-Reply-To: <CAH7zdydYgSf+21GB70=gRhEcupv4e1ix==7LWCeQYgpD-1Rcmw@mail.gmail.com>
-        (Roger Light's message of "Mon, 11 Sep 2023 22:02:47 +0100")
-References: <CAH7zdydYgSf+21GB70=gRhEcupv4e1ix==7LWCeQYgpD-1Rcmw@mail.gmail.com>
-Date:   Mon, 11 Sep 2023 16:31:06 -0700
-Message-ID: <xmqq8r9cs2x1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 649625A2FC;
+        Tue, 12 Sep 2023 00:14:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1694477646;
+        bh=HKhsEakvP4q1aDN0xvLi6Xkj4b6tYcJ0FTLndwb2ajw=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=tb5hrILb1XM0utPlih2d8H+8G/meQUJrf70N2pZAHtOlADFrzR8OeZiWIStsyzAw1
+         GMBb7icregOqNonoO397wU9uIZ9OGrueMDyx5UgtXCnpzOHXV9m4X/KEKJQSO24L25
+         njmtmGiQWpbnGjcDIrBjkSfQ76YTA0e9FBzzCNCKtU3zSjrpKhYcsd2zAdSBcP3FBp
+         SPykk3r5Sn0v9g0HvcCLj8dTbZ85jvDzlwvKYycAsEqVss+W8EKIYYXPMiiAMRNoZD
+         Y8j5NyNb06LMi+3feeQDl9NffKyES49t7X2O7aRbpjvRxCsaJ/Xs6qwW8BAdjuiPGW
+         w8NuScb0Q7gP6bCxwX8giFxrH4xmgfPOUcR/p40voZwVKuDIpZBAXiqAZLKVvIlEim
+         6Sxa43pjyLLwGtSkb6HNWFHVOvL2iL9Jq9DC/li1pp6LhrQQwG2/I7hSnbltTYfCBO
+         fRVw6xQZmBiYXiXNR0kpzg66kkmihVQazLCKqf82pntwgSXsoQm
+Date:   Tue, 12 Sep 2023 00:14:04 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     "Eric W. Biederman" <ebiederm@xmission.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 01/32] doc hash-file-transition: A map file for mapping
+ between sha1 and sha256
+Message-ID: <ZP+tTFK3Ly4sqlsq@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "Eric W. Biederman" <ebiederm@xmission.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+References: <87sf7ol0z3.fsf@email.froward.int.ebiederm.org>
+ <20230908231049.2035003-1-ebiederm@xmission.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 48A662AE-50FB-11EE-95D4-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="rjcfCrq67vkdNjGZ"
+Content-Disposition: inline
+In-Reply-To: <20230908231049.2035003-1-ebiederm@xmission.com>
+User-Agent: Mutt/2.2.9 (2022-11-12)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Roger Light <roger@atchoo.org> writes:
 
-> When I carry out a merge with conflicts, it's not always clear when
-> resolving the conflicts which is the correct part of code to use. I
-> sometimes use git blame to guide me as to the age of the different
-> chunks of code and hence what to choose.
->
-> I was wondering if there might be a way to help include that sort of
-> information directly into the conflict.
->
-> If you had a single line conflict it would be straightforward to
-> display by including the date the line was last modified alongside the
-> conflict marker:
->
-> <<<<<<< HEAD date:yesterday
-> print("please")
-> ======= date:10 years ago
-> print("help")
-> >>>>>>> main
->
-> With a more realistic change with multiple lines and context from
-> different commits, it's not immediately obvious to me that it's
-> possible to do in a way that isn't completely horrible.
+--rjcfCrq67vkdNjGZ
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Our conflict marker lines do get human readable labels but the
-format used by merge_3way() both in merge-ort and merge-recursive
-backends is hardcoded to be <branchname> ':' <pathname> and it is
-sufficient to let you tell which commit involved in the merge and
-which path in that commit the contents came from.
+On 2023-09-08 at 23:10:18, Eric W. Biederman wrote:
+> The v3 pack index file as documented has a lot of complexity making it
+> difficult to implement correctly.  I worked with bryan's preliminary
+> implementation and it took several passes to get the bugs out.
+>=20
+> The complexity also requires multiple table look-ups to find all of
+> the information that is needed to translate from one kind of oid to
+> another.  Which can't be good for cache locality.
+>=20
+> Even worse coming up with a new index file version requires making
+> changes that have the potentialy to break anything that uses the index
+> of a pack file.
+>=20
+> Instead of continuing to deal with the chance of braking things
+> besides the oid mapping functionality, the additional complexity in
+> the file format, and worry if the performance would be reasonable I
+> stripped down the problem to it's fundamental complexity and came up
+> with a file format that is exactly about mapping one kind of oid to
+> another, and only supports two kinds of oids.
+>=20
+> Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
+> ---
+>  .../technical/hash-function-transition.txt    | 40 +++++++++++++++++++
+>  1 file changed, 40 insertions(+)
+>=20
+> diff --git a/Documentation/technical/hash-function-transition.txt b/Docum=
+entation/technical/hash-function-transition.txt
+> index ed574810891c..4b937480848a 100644
+> --- a/Documentation/technical/hash-function-transition.txt
+> +++ b/Documentation/technical/hash-function-transition.txt
+> @@ -209,6 +209,46 @@ format described in linkgit:gitformat-pack[5], just =
+like
+>  today. The content that is compressed and stored uses SHA-256 content
+>  instead of SHA-1 content.
+> =20
+> +Per Pack Mapping Table
+> +~~~~~~~~~~~~~~~~~~~~~~
+> +A pack compat map file (.compat) files have the following format:
+> +
+> +HEADER:
+> +	4-byte signature:
+> +	    The signature is: {'C', 'M', 'A', 'P'}
+> +	1-byte version number:
+> +	    Git only writes or recognizes version 1.
+> +	1-byte First Object Id Version
+> +	    We infer the length of object IDs (OIDs) from this value:
+> +		1 =3D> SHA-1
+> +		2 =3D> SHA-256
 
-A change that only shows the commit date without allowing end user
-configuration will *not* be worth doing, but allowing them to use
-placeholders like '%h %s' in "git log --format='%h %s'" (check
-pretty.c for the catalog) would be a good exercise; it should not
-take somebody with an ultra-deep knowledge of how the code works.
+One thing I forgot to mention here, is that we have 32-bit format IDs
+for these in the structure, so we should use them here and below.  These
+are GIT_SHA1_FORMAT_ID and GIT_SHA256_FORMAT_ID.
+
+Not that I would encourage distributing such software, but it makes it
+much easier for people to experiment with additional hash algorithms (in
+terms of performance, etc.) if we make the space a little sparser.
+
+> +	1-byte Second Object Id Version
+> +	    We infer the length of object IDs (OIDs) from this value:
+> +		1 =3D> SHA-1
+> +		2 =3D> SHA-256
+
+In your new patch for the next part, you consider that there might be
+multiple compatibility hash algorithms.  I had anticipated only one at
+a time in my series, but I'm not opposed to multiple if you want to
+support that.
+
+However, here you're making the assumption that there are only two.  If
+you want to support multiple values, we need to explicitly consider that
+both here (where we need a count of object ID version and multiple
+tables, one for each algorithm), and in the follow-up series.
+
+I had not considered more than two algorithms because it substantially
+complicates the code and requires us to develop n*(n-1) tables, but I'm
+not the one volunteering to do most of the work here, so I'll defer to
+your preference.  (I do intend to send a patch or two, though.)
+
+It's also possible we could be somewhat provident and define the on-disk
+formats for multiple algorithms and then punt on the code until later if
+you prefer that.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--rjcfCrq67vkdNjGZ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.40 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZP+tTAAKCRB8DEliiIei
+gQ+UAQDFg6LVbhsSARz9h48C3Prrcj9YTh79htVv5r/C6A3F5wD/cWlMZO0KCKAZ
+AFV0z+nIaMEMMEoqoCB2sk21FQ+YlAI=
+=l9QZ
+-----END PGP SIGNATURE-----
+
+--rjcfCrq67vkdNjGZ--
