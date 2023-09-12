@@ -2,111 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86C84CA0EC7
-	for <git@archiver.kernel.org>; Tue, 12 Sep 2023 00:58:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C00CCA0EC7
+	for <git@archiver.kernel.org>; Tue, 12 Sep 2023 01:13:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232210AbjILA64 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Sep 2023 20:58:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55102 "EHLO
+        id S233834AbjILBOB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Sep 2023 21:14:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232079AbjILA6w (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Sep 2023 20:58:52 -0400
-Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7C6D1817BC
-        for <git@vger.kernel.org>; Mon, 11 Sep 2023 17:52:00 -0700 (PDT)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id BB1733200992;
-        Mon, 11 Sep 2023 20:40:52 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Mon, 11 Sep 2023 20:40:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=schrab.com; h=cc
-        :cc:content-type:content-type:date:date:from:from:in-reply-to
-        :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm3; t=1694479252; x=1694565652; bh=hk
-        2ny3Ia4LQ2JmMF/vCmIpKlpTcXJMyWVwV8hT/VjNE=; b=dWbgUIVDAmYs/E/QVx
-        EocxhcM0CskrcBwh/ApLp8ZapQL1KKMkfwKqTHYVGM72rqNMD2sWCQ6DtBJj8dRR
-        TwXiSat6O+mjjx52cvhRBE9gyLkZaR2Ad7h3WbigTNaCORf6WI3yXGfvLpkULpSw
-        cps8qLbp+4JUqNlCsQpXAx6tuQzqaN11m8Cx9GZxTjviaBcl1oCNrv0RZKqW/7D/
-        7ysr13VeuUz/wSoTZp1/YCH08bjcDOvuPGihLIsbCJgxL3b4kq+majGVm5E/RP5S
-        qjowZig3Hlo0ogA7WekPf+0aAx5O8rbitfzZwactdj6PTrzCjSreNTX/IBAM2PE2
-        8meg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:content-type:date:date
-        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm1; t=1694479252; x=1694565652; bh=hk2ny3Ia4LQ2J
-        mMF/vCmIpKlpTcXJMyWVwV8hT/VjNE=; b=pBheURKeDZKMOjDgfxHtKxi5e1drf
-        YjXUD2tY0wGFbCkfGTmePqMcUENH/CUZBIe7xfDzbDwjMDZvbbm/39GtLiTPFzI6
-        R2JOFxYFlEnbFlqHwLDDYoJDxUluZIo3u1S7PxvMu3byMGk18ddTKB/hBqflngAz
-        aGwR2NUaJ8dhA6a2lRj0Y+z9ePH3ZoxUH0OoDuE+VMZ5jSJiFT0NyJLd7NPoD7FI
-        tQVDV+/BLuyK4HdLX0+SYDKBdExE+K/7pR2wptmEmQzAt1AG5PwngJgoscjwISgh
-        Brvw0BNgb1SR1VBLPj4O00ytlcrfWWY+zlwPL8rMXJVWJnRLzzfFjh4IQ==
-X-ME-Sender: <xms:lLP_ZNBa7wp7WcCtgZIkzNgWnfaCQ8k5afOtNDMDZ0swWV0YhVArVw>
-    <xme:lLP_ZLimNhNr5eh8rjE0hlAtoOpf-J4pU8hnufhcAXcQbolVuPCY8VQi-jfN7GoAa
-    vgxNaYWippCN_wo6XA>
-X-ME-Received: <xmr:lLP_ZImkDoF9EK2M6Ckq0q1prfa42QqnIfFWmTKB1u-fO8uTySLriMS24U6xQ6gTNQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrudeihedgfeeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheptegrrhho
-    nhcuufgthhhrrggsuceorggrrhhonhesshgthhhrrggsrdgtohhmqeenucggtffrrghtth
-    gvrhhnpefhtdefvdeivdfhieehueeuteelveekhedvuedvhfffgefhieevgeekudevgeet
-    ueenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrrg
-    hrohhnsehstghhrhgrsgdrtghomh
-X-ME-Proxy: <xmx:lLP_ZHyQPtz6CATF0ZM2g9cP2L8nS9nDv58s3dR2EszlChEBiQ4VKQ>
-    <xmx:lLP_ZCSxBvNDag5QcyxIwd510uJiIUoI0u6L5MaT-l-FnmZVjLik-g>
-    <xmx:lLP_ZKZgFoPhB4RVYHj3z3OPKmu4n6CJl1Poq4BQ8EGwa4KuFx11Sg>
-    <xmx:lLP_ZIM9d2ehYnhcLGmWgmyfaCXc5oVoFdYeVuyyc5vb40Gd5IVbcA>
-Feedback-ID: i1fd14616:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 Sep 2023 20:40:51 -0400 (EDT)
-Date:   Mon, 11 Sep 2023 20:40:49 -0400
-From:   Aaron Schrab <aaron@schrab.com>
-To:     Max Amelchenko <maxamel2002@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>, git@vger.kernel.org,
-        Hideaki Yoshifuji <hideaki.yoshifuji@miraclelinux.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [bug] git clone command leaves orphaned ssh process
-Message-ID: <20230912T004049Z.jiWw7xuK7fiT@pug.qqx.org>
-Mail-Followup-To: Max Amelchenko <maxamel2002@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, Bagas Sanjaya <bagasdotme@gmail.com>,
-        git@vger.kernel.org,
-        Hideaki Yoshifuji <hideaki.yoshifuji@miraclelinux.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <CAN47KsV0E+XC2F+TVKXnnJnkATRp7eM7=-ZJFyZcoTz9SJmcHQ@mail.gmail.com>
- <ZP2DaQMA_aFvjQiR@debian.me>
- <CAN47KsUe=qicr4wZWd33EV+cciUr8ztP2veoOkcw0JBtvsBGjw@mail.gmail.com>
- <ZP4PO+HkbsbuKact@nand.local>
- <CAN47KsX5cpo5oD7PAwAQzjR4oocST6uSkJe2SzAYPxxqy7dGtg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <CAN47KsX5cpo5oD7PAwAQzjR4oocST6uSkJe2SzAYPxxqy7dGtg@mail.gmail.com>
+        with ESMTP id S233406AbjILBNt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Sep 2023 21:13:49 -0400
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D37B1AF0D5
+        for <git@vger.kernel.org>; Mon, 11 Sep 2023 18:05:29 -0700 (PDT)
+Received: by mail-pf1-x44a.google.com with SMTP id d2e1a72fcca58-68faf559913so2817215b3a.0
+        for <git@vger.kernel.org>; Mon, 11 Sep 2023 18:05:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1694480655; x=1695085455; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=HYf8n4QJuFH0KNqHGAgsz6yNwlGunyav3q2WZA1qPtI=;
+        b=S8feB6OxwmvHav8MH0ikEN4hmQjEDed/xDkaCxZW1yb9CiWWZxOZALgitE6+RfsooB
+         TGvh4KsgEkEy3ecCXP90foGQgxwXcrxPWVUbPrykhNv9J3/HPV2ZV+g2n+Fw0OgegIye
+         JGiMrjQ+1EAGXyzigIl66KB3OnsIqeZw2OVP96Zz+XWEjkYsbvlLzLTTDwf9+rDNma9u
+         gAgn8uAUUC/n7m4TfG7f2yowXlA7X7PPa4pQy+J5BBOEKX2qXZA+j1Kk+6p5K3rKRv6+
+         KKhhXrCfItLZtfRt+tRhwEMmqho8Bu7zNNl3Q5H657WKj65lKfgjCUjb+4pBMZ2yMglD
+         rU6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694480655; x=1695085455;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=HYf8n4QJuFH0KNqHGAgsz6yNwlGunyav3q2WZA1qPtI=;
+        b=VZnwj5sd6FUqXBiKKxbO3nji8q1p4hbPdIPenz+fQmJInXqqScA3LDj2D8EH1F9drm
+         DhLwNmzX8d0FdQOsp7YZXEg4/OzpCtdhjKhRRS7tmtz03D6PovZFO56dTZjNesbeyrS0
+         vDLPxp6CIQTIILYUcbzUvVPgVngUV0vtQH7ZDyTAqhsNCLTLEn71ENmQmzHR4JsjyGKs
+         19u31iHC8f6Or/pppVNSwc7fiLc/Lb2wczEG+r0z16VvUaQTTzHK5CPh7pIBoFvAPolo
+         TXFK0nZJnjy/4mSPNN9J0Pdqdojjg1WjYcUz7qJyOJBKYgK774NnFjzfHPMVKoehEsg4
+         wQHw==
+X-Gm-Message-State: AOJu0Yz8Duy5glD3JWu8qthWOSSMsCJ8gqkpcipF3+3tB1nGTxB9GP8j
+        UnLvMv62ar4wmLnvY/vMQ8HMJ3CTfyg=
+X-Google-Smtp-Source: AGHT+IHj6hKhNkrzk5YQvPFgjU8+reJdzRXHobt1hGKiANiKAx/8xeY1ktRvSc2Kdx7tBSg2EMa38ptZgAg=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a05:6a00:2c87:b0:68e:3053:14b9 with SMTP id
+ ef7-20020a056a002c8700b0068e305314b9mr339335pfb.2.1694480655538; Mon, 11 Sep
+ 2023 18:04:15 -0700 (PDT)
+Date:   Mon, 11 Sep 2023 18:04:13 -0700
+In-Reply-To: <pull.1585.git.1694274592854.gitgitgadget@gmail.com>
+Mime-Version: 1.0
+References: <pull.1585.git.1694274592854.gitgitgadget@gmail.com>
+Message-ID: <owlyil8gkxrm.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH] completion: improve doc for complex aliases
+From:   Linus Arver <linusa@google.com>
+To:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Steffen Prohaska <prohaska@zib.de>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-At 13:11 +0300 11 Sep 2023, Max Amelchenko <maxamel2002@gmail.com> wrote:
->Maybe it's connected also to the underlying infrastructure? We are
->getting this in AWS lambda jobs and we're hitting a system limit of
->max processes because of it.
+Hi Philippe,
 
-Running as a lambda, or in a container, could definitely be why you're 
-seeing a difference. Normally when a process is orphaned it gets adopted 
-by `init` (PID 1), and that will take care of cleaning up after orphaned 
-zombie processes.
+"Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-But most of the time containers just run the configured process 
-directly, without an init process. That leaves nothing to clean orphan 
-processes.
+> From: Philippe Blain <levraiphilippeblain@gmail.com>
+>
+> The completion code can be told to use a particular completion for
+> aliases that shell out by using ': git <cmd> ;' as the first command of
+> the alias. This only works if <cmd> and the semicolon are separated by a
+> space. The examples have that space but it's not clear if it's just for
+> style or if it's mandatory.
+>
+> Explicitely mention it.
 
-Although for that to really be a problem, would require hitting that max 
-process limit inside a single container invocation. Of course since 
-containers usually aren't meant to be spawning a lot of processes, that 
-limit might be a lot lower than on a normal system.
+It would be even more helpful if you explain _why_ it is mandatory in
+the commit message. Is there some Bash-specific behavior or something
+else going on here?
 
-I know that Docker provides a way to include an init process in the 
-started container (`docker run --init`), but I don't think that AWS 
-Lambda does.
+If you are unable to explain why, then as an alternative you could
+explain the error or buggy behavior (any error messages encountered, for
+example) you observe on your system when you do not use the space (which
+is corrected by applying the suggestion you are adding in this patch).
+
+Thanks!
