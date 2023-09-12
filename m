@@ -2,140 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2008DCA0EC9
-	for <git@archiver.kernel.org>; Tue, 12 Sep 2023 04:27:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 31A13CA0ED3
+	for <git@archiver.kernel.org>; Tue, 12 Sep 2023 04:33:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231853AbjILE1z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Sep 2023 00:27:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32798 "EHLO
+        id S229731AbjILEdv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Sep 2023 00:33:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233746AbjILE1h (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Sep 2023 00:27:37 -0400
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F06858658
-        for <git@vger.kernel.org>; Mon, 11 Sep 2023 19:11:30 -0700 (PDT)
+        with ESMTP id S229710AbjILEdu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Sep 2023 00:33:50 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03757BC
+        for <git@vger.kernel.org>; Mon, 11 Sep 2023 21:33:46 -0700 (PDT)
+Received: (qmail 13886 invoked by uid 109); 12 Sep 2023 04:33:46 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Sep 2023 04:33:46 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15293 invoked by uid 111); 12 Sep 2023 04:33:47 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Sep 2023 00:33:47 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 12 Sep 2023 00:33:45 -0400
+From:   Jeff King <peff@peff.net>
+To:     Aaron Schrab <aaron@schrab.com>
+Cc:     Max Amelchenko <maxamel2002@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>, git@vger.kernel.org,
+        Hideaki Yoshifuji <hideaki.yoshifuji@miraclelinux.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [bug] git clone command leaves orphaned ssh process
+Message-ID: <20230912043345.GA1623696@coredump.intra.peff.net>
+References: <CAN47KsV0E+XC2F+TVKXnnJnkATRp7eM7=-ZJFyZcoTz9SJmcHQ@mail.gmail.com>
+ <ZP2DaQMA_aFvjQiR@debian.me>
+ <CAN47KsUe=qicr4wZWd33EV+cciUr8ztP2veoOkcw0JBtvsBGjw@mail.gmail.com>
+ <ZP4PO+HkbsbuKact@nand.local>
+ <CAN47KsX5cpo5oD7PAwAQzjR4oocST6uSkJe2SzAYPxxqy7dGtg@mail.gmail.com>
+ <20230912T004049Z.jiWw7xuK7fiT@pug.qqx.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-        t=1694484688;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=7GfU7I/rBO/wWKRc94jOr513qUb2F+RBF6Kz1quH0f4=;
-        b=C0jfbL7A7/Rl1ZzHuHOWhR5t3iwDunmCIlWHTDqsiH3ckKXYRUM/8pt+wQUsiLJmAXCFHP
-        qXWgdiDYFMAlNvE8I8uI1MiEnrVd+E8qv9qtshNH6Xw2CHMdvF8DFUrVyZosHZ5g6h4evi
-        /Fttl8xu2FKt3IiofJdqVXwYux6jjx819NpBuk2xqpSjTrGloRhbORvEkh+pI/bIy82xJN
-        ctUuev7Od84Q5j2laWh1cdQp0oCZe1+dZXCbIsRgn2bWERuhhTc9XmUVq8LiupYBr6P2eE
-        nOfJWKWNQjoUSN/0ijX+Q1ADkw/NzGLvwmcJokY4NaIH21jxpoCBPDmOqIQLiA==
-Date:   Tue, 12 Sep 2023 04:11:28 +0200
-From:   Dragan Simic <dsimic@manjaro.org>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] diff --stat: add config option to limit filename width
-In-Reply-To: <xmqqil8gs3s0.fsf@gitster.g>
-References: <87badb12f040d1c66cd9b89074d3de5015a45983.1694446743.git.dsimic@manjaro.org>
- <xmqqil8gs3s0.fsf@gitster.g>
-Message-ID: <487bd30e5a4cdcea8697393eb36ce3f3@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-        auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20230912T004049Z.jiWw7xuK7fiT@pug.qqx.org>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2023-09-12 01:12, Junio C Hamano wrote:
-> Dragan Simic <dsimic@manjaro.org> writes:
+On Mon, Sep 11, 2023 at 08:40:49PM -0400, Aaron Schrab wrote:
+
+> At 13:11 +0300 11 Sep 2023, Max Amelchenko <maxamel2002@gmail.com> wrote:
+> > Maybe it's connected also to the underlying infrastructure? We are
+> > getting this in AWS lambda jobs and we're hitting a system limit of
+> > max processes because of it.
 > 
->> Add new configuration option diff.statNameWidth=<width> that is 
->> equivalent
->> to the command-line option --stat-name-width=<width>, but it is 
->> ignored
->> by format-patch.  This follows the logic established by the already
->> existing configuration option diff.statGraphWidth=<width>.
->> 
->> Limiting the widths of names and graphs in the --stat output makes 
->> sense
->> for interactive work on wide terminals with many columns, hence the 
->> support
->> for these configuration options.  They don't affect format-patch 
->> because
->> it already adheres to the traditional 80-column standard.
->> 
->> Update the documentation and add more tests to cover new configuration
->> option diff.statNameWidth=<width>.  While there, perform a few minor 
->> code
->> and whitespace cleanups here and there, as spotted.
->> 
->> Signed-off-by: Dragan Simic <dsimic@manjaro.org>
->> ---
+> Running as a lambda, or in a container, could definitely be why you're
+> seeing a difference. Normally when a process is orphaned it gets adopted by
+> `init` (PID 1), and that will take care of cleaning up after orphaned zombie
+> processes.
 > 
-> The stat lines have <width> (the entire display width),
-> <graph-width> (what appears after '|') and <name-width> (what
-> appears before '|'), so I would worry about letting users specify
-> all three to contradictory values, if there weren't an existing
-> command line option already.  But of course there already is a
-> command line option, so somebody more clever than me must have
-> thought about how to deal with such an impossible settings, and
-> adding a configuration variable to specify the same impossible
-> settings to the system would not make things worse.
+> But most of the time containers just run the configured process directly,
+> without an init process. That leaves nothing to clean orphan processes.
 
-Good point, but we're actually fine with adding diff.statNameWidth as a 
-new configuration option, because the real troubles with contradictory 
-configuration values might arise if we ever add diff.statWidth later.  
-However, we should still be fine at that point, because the code in 
-diff.c, starting around the line #2730, performs a reasonable amount of 
-sanity checks and value adjustments.
+Yeah, that seems like the culprit. If the clone finishes successfully,
+we do end up in finish_connect(), where we wait() for the process. But
+if we exit early (in this case, ssh bails and we get EOF on the pipe
+reading from it), then we may call die() and exit immediately.
 
-If we ever add diff.statWidth later, a good thing to do would be to emit 
-warnings from the above-mentioned code in diff.c if it actually performs 
-the adjustments, to make the users aware of the contradictory values.  I 
-might even have a look at that separately, if you're fine with adding 
-such warnings.
+We _could_ take special care to add every spawned process to a global
+list, set up handlers via atexit() and signal(), and then reap the
+processes. But traditionally it's not a big deal to exit with un-reaped
+children, and this is the responsibility of init. I'm not sure it makes
+sense for Git to basically reimplement that catch-all (and of course we
+cannot even do it reliably if we are killed by certain signals).
 
->>  Documentation/config/diff.txt  |  4 ++++
->>  Documentation/diff-options.txt | 17 +++++++-------
->>  builtin/diff.c                 |  1 +
->>  builtin/log.c                  |  1 +
->>  builtin/merge.c                |  1 +
->>  builtin/rebase.c               |  1 +
+> Although for that to really be a problem, would require hitting that max
+> process limit inside a single container invocation. Of course since
+> containers usually aren't meant to be spawning a lot of processes, that
+> limit might be a lot lower than on a normal system.
 > 
-> Someday, as a follow-up after the dust from this topic settles, we
-> would probably want to look at how these rev.diffopt.* members are
-> initialized and refactor the common code out to a helper.  It would
-> allow us to instead of doing this ...
+> I know that Docker provides a way to include an init process in the started
+> container (`docker run --init`), but I don't think that AWS Lambda does.
 
-Another good point.  If you agree, I'd prefer to have my patch accepted 
-and merged as-is, after which I'll have a look into unifying the 
-initialization of the rev.diffopt.* members.  Such an approach should, 
-in general, also be better in case any regressions are detected at some 
-point in the future.
+I don't know anything about Lambda, but if you are running arbitrary
+commands, then it seems like you could insert something like this:
 
-I'll also have a look into the NEEDSWORK note in diff.c that asks for 
-using utf8_strnwidth() to calculate the display width of line_prefix.  I 
-already had a brief look at that, and it seems that it leaves enough 
-space for some rather nice related code cleanups.
+  https://github.com/krallin/tini
 
->>  	/* Set up defaults that will apply to both no-index and regular 
->> diffs. */
->>  	rev.diffopt.stat_width = -1;
->> +	rev.diffopt.stat_name_width = -1;
->>  	rev.diffopt.stat_graph_width = -1;
->>  	rev.diffopt.flags.allow_external = 1;
->>  	rev.diffopt.flags.allow_textconv = 1;
-> 
-> ... in many places, do so in a single place in the helper function,
-> and these places will just call the helper:
-> 
-> 	std_graph_options(&rev.diffopt);
-> 
-> I do not know offhand if "stat graph options related members" is a
-> good line to draw, or there are other things that are common outside
-> these .stat_foo members.  If the latter and the helper function will
-> initialize the members other than the stat-graph settings, its name
-> obviously needs a bit more thought, but you get the idae.
+into the mix. I much prefer that to teaching Git to try to do the same
+thing in-process.
 
-Sure, I'm willing to have a detailed look into all that, as I already 
-described above.
+-Peff
