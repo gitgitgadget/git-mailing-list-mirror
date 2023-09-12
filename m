@@ -2,73 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26BB0CA0ECA
-	for <git@archiver.kernel.org>; Tue, 12 Sep 2023 08:40:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 088B7CA0ECA
+	for <git@archiver.kernel.org>; Tue, 12 Sep 2023 08:57:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232879AbjILIkk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Sep 2023 04:40:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50056 "EHLO
+        id S233045AbjILI50 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Sep 2023 04:57:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232889AbjILIke (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Sep 2023 04:40:34 -0400
+        with ESMTP id S232287AbjILI5Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Sep 2023 04:57:25 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6BD910CE
-        for <git@vger.kernel.org>; Tue, 12 Sep 2023 01:40:30 -0700 (PDT)
-Received: (qmail 14606 invoked by uid 109); 12 Sep 2023 08:40:30 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F89BAA
+        for <git@vger.kernel.org>; Tue, 12 Sep 2023 01:57:21 -0700 (PDT)
+Received: (qmail 14624 invoked by uid 109); 12 Sep 2023 08:57:20 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Sep 2023 08:40:30 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Sep 2023 08:57:20 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16851 invoked by uid 111); 12 Sep 2023 08:40:32 -0000
+Received: (qmail 16924 invoked by uid 111); 12 Sep 2023 08:57:23 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Sep 2023 04:40:32 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Sep 2023 04:57:23 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 12 Sep 2023 04:40:29 -0400
+Date:   Tue, 12 Sep 2023 04:57:20 -0400
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] parse-options: use and require int pointer for
- OPT_CMDMODE
-Message-ID: <20230912084029.GD1630538@coredump.intra.peff.net>
-References: <2d6f3d74-687a-2d40-5c0c-abc396aef80f@web.de>
- <e6d8a291-03de-cfd3-3813-747fc2cad145@web.de>
- <ZP2X9roiaeEjzf24@ugly>
- <15530a5f-8d06-24c9-bc2d-e313c895f477@web.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Roger Light <roger@atchoo.org>, git@vger.kernel.org,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: Commit dates on conflict markers
+Message-ID: <20230912085720.GE1630538@coredump.intra.peff.net>
+References: <CAH7zdydYgSf+21GB70=gRhEcupv4e1ix==7LWCeQYgpD-1Rcmw@mail.gmail.com>
+ <xmqq8r9cs2x1.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <15530a5f-8d06-24c9-bc2d-e313c895f477@web.de>
+In-Reply-To: <xmqq8r9cs2x1.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 11, 2023 at 10:11:56PM +0200, René Scharfe wrote:
+On Mon, Sep 11, 2023 at 04:31:06PM -0700, Junio C Hamano wrote:
 
-> Am 10.09.23 um 12:18 schrieb Oswald Buddenhagen:
-> > On Sat, Sep 09, 2023 at 11:14:20PM +0200, René Scharfe wrote:
-> >> Convert the offending OPT_CMDMODE users and use the typed value_int
-> >> point in the macro's definition to enforce that type for future ones.
-> >>
-> > that defeats -Wswitch[-enum], though.
-> 
-> True.  Though I don't fully understand these warnings (why not then
-> also warn about if without else?), but taking them away is a bit rude
-> to those who care.
+> A change that only shows the commit date without allowing end user
+> configuration will *not* be worth doing, but allowing them to use
+> placeholders like '%h %s' in "git log --format='%h %s'" (check
+> pretty.c for the catalog) would be a good exercise; it should not
+> take somebody with an ultra-deep knowledge of how the code works.
 
-I think losing warnings is unfortunate, but it's just one example.
-We're losing the type information completely from the values. That might
-be of use to the compiler (both for -Wswitch, but also for code
-generation in general). But it is also of use to human readers, who see
-that "foo" is of type "enum bar" and know what it's supposed to contain.
+FWIW, I had the same thought. But I wasn't quite sure where we even set
+these strings, so here are a few thoughts for anybody who wants to work
+on it:
 
-> > the pedantically correct solution would be using setter callbacks.
-> 
-> Or to use an int to point to and then copy into a companion enum
-> variable to after parsing, which would be my choice.
+  - the relevant strings are passed in to ll_merge(); you can grep for
+    callers and see that there are a number of strings which end up here
+    (based on what info we actually have).
 
-Yeah, I had the same thought. I'm just not sure how to do that in a way
-that isn't a pain for the callers.
+    The most interesting one to start with is probably the call in
+    merge_3way() of merge-ort.c.
+
+  - there we have three object_ids, "o", "a", and "b" representing the
+    three sides. But these are just blobs. We have strings "ancestor",
+    "branch1", and "branch2" in merge_options, but we would probably not
+    want to re-resolve those names. So probably some extra fields need
+    to go into merge_options.
+
+  - I'm not sure if each of those endpoints is always a commit. For a
+    regular merge, they would be. But in a recursive merge, we'd
+    sometimes create an intermediate virtual tree. So we'd need to
+    handle the case that there is no commit (and either fall back to a
+    more vanilla string, or make a fake commit with reasonable details).
+
+  - The current labels are based on the "original" ref names (which I
+    think are really "what was handed to merge"; so it might be
+    "master~13" etc) along with the blob path (if it is not the same for
+    both endpoints). So you'd want more than just passing the format
+    string to format_commit_message(). You would want an extra
+    placeholder to represent those values (either ref and pathname
+    individually, or possibly a single placeholder for "ref and maybe
+    pathname if it's interesting").
+
+    The least-bad way to do that is perhaps to expand the format twice:
+    once for the special placeholder (quoting any "%" found in the
+    filename, etc), and then feeding the whole result to the
+    pretty-print formatter.
+
+I was hoping this might be only a few-line change, but I actually think
+it's a bit more complicated than that. But still maybe not _too_ bad.
 
 -Peff
