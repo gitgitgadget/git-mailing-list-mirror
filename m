@@ -2,108 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F9ADCA0EC3
-	for <git@archiver.kernel.org>; Tue, 12 Sep 2023 12:13:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C6A38CA0EC3
+	for <git@archiver.kernel.org>; Tue, 12 Sep 2023 13:08:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234985AbjILMNS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Sep 2023 08:13:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55912 "EHLO
+        id S235081AbjILNIH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Sep 2023 09:08:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234832AbjILMNS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Sep 2023 08:13:18 -0400
-Received: from mail-qv1-xf34.google.com (mail-qv1-xf34.google.com [IPv6:2607:f8b0:4864:20::f34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D248C10D2
-        for <git@vger.kernel.org>; Tue, 12 Sep 2023 05:13:13 -0700 (PDT)
-Received: by mail-qv1-xf34.google.com with SMTP id 6a1803df08f44-64bd231c95cso31886736d6.1
-        for <git@vger.kernel.org>; Tue, 12 Sep 2023 05:13:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1694520793; x=1695125593; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Cy4eFJqQqqkpAKB97dt21OnUMJCiYxzxA5kUMWaV9xk=;
-        b=gDa1HlM6vbzJKZYwgJK18oF9kyTtpHDOhT+Lt7BiX1yDsUvvRp2lB6pQzTpz0WIZyA
-         ZkhWyAh6cbFuNDmDe5fOkuYdOI2ldSr0qQNBWdghnKj+WH9KU1GSvXZ5aElkiEyFefjr
-         8NvtWaTzrUXca0JZyb54Wg8ceXXFI+auSD6bpDyOx6arnC1jULWUSe9iApbOe2bZCFJ+
-         vUWtGHT0m2D7fq9oBmZ44maIYD4LmA8FmlrpQiMM80CiFYGrUJytn2ZMaGzWUW+bLLjL
-         JyoNRZM12pfvO9N/TeqW0S7Vu1xzPrkl1AZakNkhLn5UAUc8D7P10QFN/3RewB8jcMPG
-         gOcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694520793; x=1695125593;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Cy4eFJqQqqkpAKB97dt21OnUMJCiYxzxA5kUMWaV9xk=;
-        b=TvNqkHDea4lt2AYRqHc9A0VkMXTFdUIHxYVo94jQKde64dPC5XcNqQ/lJ4GadI1tnW
-         /y/LmrhiHiGvlaViqBA7GuWJ7Zix7ZWtZCOyy9Je3+TMOFR3Q+qltxJktW5Iu5P3S4dS
-         eUI8mdjmIokIVNLak4t445cRCcrU0iXkgo2exR6okTFvxh+chmyzsjXm7KqKZx//ANy4
-         +J2uqvNMQP6RMcxDG5ZBPqTSZ6Lt70K+iC0auxdojDYvQ9EuPu75h73ggQQ6S2iwagOE
-         xaBQxDsx7e5MrrZZp9bXLpx2klVQN7euhmKfRleMLR2T11G3cqtif0/6L33kNkRzVrmE
-         XzmA==
-X-Gm-Message-State: AOJu0Yy9cZx3yNxAntf3aRIBEsyRyGl8Ri/SR9jG/MLLr0Iqt3t8cHA9
-        xUCZoPd9Dk232XLuf1/qbkE=
-X-Google-Smtp-Source: AGHT+IHuEI0x0j1pS+WojDXDH4dvTaCsEVLTygZ+ZFsIIxDANLsYEIj8/h3hw3Wf+5SHeywfpnZfiQ==
-X-Received: by 2002:ad4:42b0:0:b0:655:d6ff:891f with SMTP id e16-20020ad442b0000000b00655d6ff891fmr9020747qvr.60.1694520792878;
-        Tue, 12 Sep 2023 05:13:12 -0700 (PDT)
-Received: from ?IPv6:2606:6d00:15:e8c7:b51a:6c64:3ea6:f949? ([2606:6d00:15:e8c7:b51a:6c64:3ea6:f949])
-        by smtp.gmail.com with ESMTPSA id b4-20020a0cb3c4000000b00655935bca82sm3677615qvf.134.2023.09.12.05.13.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Sep 2023 05:13:12 -0700 (PDT)
-Subject: Re: [PATCH] completion: improve doc for complex aliases
-To:     Linus Arver <linusa@google.com>,
-        Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Steffen Prohaska <prohaska@zib.de>
-References: <pull.1585.git.1694274592854.gitgitgadget@gmail.com>
- <owlyil8gkxrm.fsf@fine.c.googlers.com>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <c84c75cc-a7e2-ae29-71d0-ea41a61a2d23@gmail.com>
-Date:   Tue, 12 Sep 2023 08:13:22 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        with ESMTP id S232646AbjILNIG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Sep 2023 09:08:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 996B710DC
+        for <git@vger.kernel.org>; Tue, 12 Sep 2023 06:05:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1694523935;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=Qp4BLtu/MGBtUsbt2EqPJKxBe17gnwX6gsLZW05FqeE=;
+        b=Wdl6uOG0JXNjptX9VFPwK16ySePX/Qqvc3JF/0ISwHxTOmJYi6LLUYI47rr3fGUx4NJqxG
+        t8XNzXmuhF03/izroJmaqeC1TM7skU4KJav10B+oFVw3Nu6IGZ+dLY8z2Slj7srNKlciWd
+        t1sbjPcEUnbftOV8ZD3XORIN7PCP/bs=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-641-7XoxBDiwO92bE5oh9YK4NA-1; Tue, 12 Sep 2023 09:05:29 -0400
+X-MC-Unique: 7XoxBDiwO92bE5oh9YK4NA-1
+Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com [10.11.54.1])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2A7BF3814E83;
+        Tue, 12 Sep 2023 13:05:29 +0000 (UTC)
+Received: from dhcp-27-174.brq.redhat.com (unknown [10.45.225.195])
+        by smtp.corp.redhat.com (Postfix) with SMTP id E476A40C2064;
+        Tue, 12 Sep 2023 13:05:23 +0000 (UTC)
+Received: by dhcp-27-174.brq.redhat.com (nbSMTP-1.00) for uid 1000
+        oleg@redhat.com; Tue, 12 Sep 2023 15:04:36 +0200 (CEST)
+Date:   Tue, 12 Sep 2023 15:04:29 +0200
+From:   Oleg Nesterov <oleg@redhat.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Calvin Wan <calvinwan@google.com>,
+        Carlo Marcelo Arenas =?iso-8859-1?Q?Bel=F3n?= 
+        <carenas@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Mathias Krause <minipli@grsecurity.net>,
+        =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
+        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        Alexey Gladkov <legion@kernel.org>
+Subject: Re: [PATCH 1/1] git-grep: improve the --show-function behaviour
+Message-ID: <20230912130429.GA9982@redhat.com>
+References: <20230911121126.GA17383@redhat.com>
+ <20230911121211.GA17401@redhat.com>
+ <xmqq34zktk4h.fsf@gitster.g>
+ <20230911231756.GA2840@redhat.com>
 MIME-Version: 1.0
-In-Reply-To: <owlyil8gkxrm.fsf@fine.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230911231756.GA2840@redhat.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Scanned-By: MIMEDefang 3.1 on 10.11.54.1
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Linus,
+Ren�, Junio,
 
-Le 2023-09-11 à 21:04, Linus Arver a écrit :
-> Hi Philippe,
-> 
-> "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> From: Philippe Blain <levraiphilippeblain@gmail.com>
->>
->> The completion code can be told to use a particular completion for
->> aliases that shell out by using ': git <cmd> ;' as the first command of
->> the alias. This only works if <cmd> and the semicolon are separated by a
->> space. The examples have that space but it's not clear if it's just for
->> style or if it's mandatory.
->>
->> Explicitely mention it.
-> 
-> It would be even more helpful if you explain _why_ it is mandatory in
-> the commit message. Is there some Bash-specific behavior or something
-> else going on here?
-> 
-> If you are unable to explain why, then as an alternative you could
-> explain the error or buggy behavior (any error messages encountered, for
-> example) you observe on your system when you do not use the space (which
-> is corrected by applying the suggestion you are adding in this patch).
+I don't like the fact we can't understand each other ;) Could you
+please explain why do you think this patch should update the docs?
 
-Yeah, I guess I did not investigate why it did not work without the space,
-it would be more complete if I did.
+Please forget about my patch for the moment. Lets start from the very
+beginning:
 
-There's no error message though, it just does not work without the space 
-(as I wrote in the commit message) in the sense that it won't suggest completion
-for the git command '<cmd>'.
+	-p::
+	--show-function::
+		Show the preceding line that contains the function name of
+		the match, unless the matching line is a function name itself.
 
-I'll investigate and update the commit message.
+and in my opinion, it is the current behaviour that doesn't match the
+documentation.
 
-Thanks,
-Philippe.
+-------------------------------------------------------------------------
+
+	$ cat TEST1.c
+	void func1()
+	{
+	}
+	void func2()
+	{
+	}
+
+	$ git grep --untracked -pn func2 TEST1.c
+	TEST1.c=1=void func1()
+	TEST1.c:4:void func2()
+
+in this case the matching line is "void func2()" and it is also a function
+name itself, in this case git-grep should not show "=void func1()" which is
+"the preceding line that contains the function name of the match.
+
+But it does. So perhaps git-grep needs another change, something like
+
+	if (match_funcname(opt, gs, bol, end_of_line(...)))
+		return;
+
+at the start of show_funcname_line(), but my patch does not change this
+behaviour.
+
+--------------------------------------------------------------------------
+
+	$ cat TEST2.c
+	void func(xxx)
+	{
+		use(xxx);
+	}
+
+	$ git grep --untracked -pn xxx TEST2.c
+	TEST2.c:1:void func(xxx)
+	TEST2.c:3:      use(xxx)
+
+the 2nd match is use(xxx) and it is not a function name itself, in this
+case git-grep should "Show the preceding line that contains the function
+name of the match.
+
+But it doesn't. To me, this behaviour looks as
+
+		Show the preceding line that contains the function name of
+		the match, unless the _PREVIOUS_ matching line is a function
+		name itself.
+
+Now, with my patch we have
+
+	$ ./git grep --untracked -pn xxx TEST2.c
+	TEST2.c:1:void func(xxx)
+	TEST2.c=1=void func(xxx)
+	TEST2.c:3:      use(xxx);
+
+and unless I am totatlly confused this does match the documentation.
+
+Oleg.
+
