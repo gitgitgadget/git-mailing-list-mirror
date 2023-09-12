@@ -2,71 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BF7F0CA0ED2
-	for <git@archiver.kernel.org>; Tue, 12 Sep 2023 17:11:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 42885CA0ED2
+	for <git@archiver.kernel.org>; Tue, 12 Sep 2023 17:14:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236966AbjILRLw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Sep 2023 13:11:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47706 "EHLO
+        id S236658AbjILROY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Sep 2023 13:14:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236994AbjILRLt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Sep 2023 13:11:49 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F01721702
-        for <git@vger.kernel.org>; Tue, 12 Sep 2023 10:11:45 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9D4713F312;
-        Tue, 12 Sep 2023 13:11:45 -0400 (EDT)
+        with ESMTP id S236653AbjILROV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Sep 2023 13:14:21 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9BE210D9
+        for <git@vger.kernel.org>; Tue, 12 Sep 2023 10:14:17 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 81D8319AC30;
+        Tue, 12 Sep 2023 13:14:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=cJbcCO8JmeCQOfiCmsuS7QPosmIvoV6BmlZArY
-        V5QOs=; b=q2KVwEWCwqmEVOv10qi0JOD+B++0+KztDdeJMF6JqI+us8Qvxf8Mo8
-        nDdM+RTqbLtW2CxPiyveYNr5anzAI79NGoYuNKZobzX6bqtPlPsWynBRiJecOqyK
-        WW/30io5s6MwaIuICg+gbFa2UKIC7Bx12HnVAffnW57jeFtyAlTrE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 946483F311;
-        Tue, 12 Sep 2023 13:11:45 -0400 (EDT)
+        :content-type; s=sasl; bh=XE54N0xTEKhD0SAufGSCaIdLq1MilPLBT/10Gj
+        9qSeg=; b=Tam0GicwvlPyVqULMv2MaF8Dy2wpi6Al2feZEJZXfB9f791qRDUNFx
+        CrCJfh6FL2MPuozaL4UV2O59b69DCGaH4zFVfOiEf5dPkX+Ck8vdj71knxi50jE5
+        O42CncL9L7nATIHWPzv0XaeSKDuxYy/Ek1+GWeaAO51ODY1n6VSEY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7A66919AC2F;
+        Tue, 12 Sep 2023 13:14:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.153.120])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 19E4C3F310;
-        Tue, 12 Sep 2023 13:11:42 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D742719AC2E;
+        Tue, 12 Sep 2023 13:14:14 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Dragan Simic <dsimic@manjaro.org>
+To:     Linus Arver <linusa@google.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] diff --stat: add config option to limit filename width
-In-Reply-To: <487bd30e5a4cdcea8697393eb36ce3f3@manjaro.org> (Dragan Simic's
-        message of "Tue, 12 Sep 2023 04:11:28 +0200")
-References: <87badb12f040d1c66cd9b89074d3de5015a45983.1694446743.git.dsimic@manjaro.org>
-        <xmqqil8gs3s0.fsf@gitster.g>
-        <487bd30e5a4cdcea8697393eb36ce3f3@manjaro.org>
-Date:   Tue, 12 Sep 2023 10:11:40 -0700
-Message-ID: <xmqqbke7pb8z.fsf@gitster.g>
+Subject: Re: [PATCH v2 1/3] update-index doc: v4 is OK with JGit and libgit2
+In-Reply-To: <owlyfs3kkmzd.fsf@fine.c.googlers.com> (Linus Arver's message of
+        "Mon, 11 Sep 2023 21:57:10 -0700")
+References: <20230818233729.2766281-1-gitster@pobox.com>
+        <20230818233729.2766281-2-gitster@pobox.com>
+        <owlyfs3kkmzd.fsf@fine.c.googlers.com>
+Date:   Tue, 12 Sep 2023 10:14:13 -0700
+Message-ID: <xmqq7covpb4q.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 717C1F5E-518F-11EE-B492-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: CC8C50D0-518F-11EE-A693-25B3960A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dragan Simic <dsimic@manjaro.org> writes:
+Linus Arver <linusa@google.com> writes:
 
->> Someday, as a follow-up after the dust from this topic settles, we
->> would probably want to look at how these rev.diffopt.* members are
->> initialized and refactor the common code out to a helper.  It would
->> allow us to instead of doing this ...
+> Junio C Hamano <gitster@pobox.com> writes:
+> ...
+>> +Older editions of this manual page called it "relatively young", but
 >
-> Another good point.  If you agree, I'd prefer to have my patch
-> accepted and merged as-is, ...
+> Nit: s/editions/versions because typically "edition" means a version of
+> physically published text (such as books).
 
-That is exactly what I meant by "follow-up after the dust settles".
+This text belonging to the manual, that was exactly the reason why I
+used that word, but ...
 
-All of the "we should probably do this and that in the future" are
-called #leftoverbits comments.  Food for thought, something people
-can use to find inspiration for areas they may want to work on, that
-has no impact to how "complete" the current patch being discussed
-is.
+> Also I don't think we use the
+> word "edition" anywhere else in our codebase.
+
+... I think "version" is just fine.  Will fix.
+
+Thanks.
