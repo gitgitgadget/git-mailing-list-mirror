@@ -2,193 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 797C4CA0ECE
-	for <git@archiver.kernel.org>; Tue, 12 Sep 2023 07:37:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FC98CA0EC3
+	for <git@archiver.kernel.org>; Tue, 12 Sep 2023 07:52:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231710AbjILHhU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Sep 2023 03:37:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45598 "EHLO
+        id S232030AbjILHwR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Sep 2023 03:52:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231698AbjILHhS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Sep 2023 03:37:18 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C7E3E79
-        for <git@vger.kernel.org>; Tue, 12 Sep 2023 00:37:13 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-501cba1ec0aso8714535e87.2
-        for <git@vger.kernel.org>; Tue, 12 Sep 2023 00:37:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1694504231; x=1695109031; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=pwvoRGxW8N6+jOHTuH6nIlOSZMGzurEaM3fk8wptu8c=;
-        b=fEJZYpkg00cWZmyin5zgQuJcZ1sqms0+usErnymvsTBb7Y2/1kRzrFM/rJ5nN1Dhu9
-         lNa03wX39v47WZCwtCry1vuoNcm3pYZcTLMIg4+Wp8P12NCPBKjtRCTd0sw5PDF/ynup
-         7Ou+UM8iLdoy29p7GoofeZ1fMOpQefpn0mK6toPysjo3EjhClHbyRPuy0yyFyZoREzr0
-         a0CbvnOAzGc7CSwPSUI1dych4FzXWg1mSupyRwdoulapXAREZEl8mH5ZpgeTowNSQtZD
-         KLDT0b4IyjlGBXbWGBdkJLUWacoTK3s4cu2ZwQ5UiqLqQywdm5Vw9aE/+ECQNY0PP6En
-         RKoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694504231; x=1695109031;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pwvoRGxW8N6+jOHTuH6nIlOSZMGzurEaM3fk8wptu8c=;
-        b=QWrLCpy2CdKDX37URfMDza0JLICK1J/R+FNC1q3L2GHAvk2YOBT3VF/k4DOJfPMMbm
-         4E+WIBhKoX/RiAssltiz68JM9GNRVtHvOT9PoZi4r5ioiUsn4v0WsRNuIIIUxzu/ycnO
-         V0SY6hZ0aBkXmzUp75tBcQX+36+Gd/0LzbAh1oAxRwMk3XDScESFaC3RBiprlo7a9imi
-         vDmis4hIsWI/z4PJ43rdmXmJgMRDk5wSbyKQFYCwxT5swqPSDPImF1VrqK4xaS6ydUd7
-         Bdto+NxcvAwlRO0o0/tVwDS9ApEdeUbU1EYAfOWVrM7u2ULQn8CrUYwJub+SR2t+hSkV
-         yPaA==
-X-Gm-Message-State: AOJu0Ywkmu5ADJLBI+oszY11cfiH3ES9raqL4UJZ77zuIIF9c6dpY9z/
-        NDZzl6TOTS6lh4erxFzTIFrk4xkOWOI=
-X-Google-Smtp-Source: AGHT+IF3ioxbTl/pGaMkegGrDIUq7xSharrCWF/rOyVgE+SIbo9fr5OThWxFTSnc2IXh7ClTQIl7rQ==
-X-Received: by 2002:a05:6512:3602:b0:500:ba68:2344 with SMTP id f2-20020a056512360200b00500ba682344mr8474668lfs.20.1694504230774;
-        Tue, 12 Sep 2023 00:37:10 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id d15-20020ac24c8f000000b00501c022163dsm1639911lfl.222.2023.09.12.00.37.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Sep 2023 00:37:10 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/2] diff-merges: improve --diff-merges documentation
-References: <20230909125446.142715-1-sorganov@gmail.com>
-        <20230909125446.142715-2-sorganov@gmail.com>
-        <xmqqfs3ktnvo.fsf@gitster.g>
-Date:   Tue, 12 Sep 2023 10:37:09 +0300
-In-Reply-To: <xmqqfs3ktnvo.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-        11 Sep 2023 14:12:59 -0700")
-Message-ID: <87ttrzhmfu.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        with ESMTP id S231912AbjILHvw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Sep 2023 03:51:52 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6866F10C4
+        for <git@vger.kernel.org>; Tue, 12 Sep 2023 00:51:48 -0700 (PDT)
+Received: (qmail 14098 invoked by uid 109); 12 Sep 2023 07:51:47 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Sep 2023 07:51:47 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16615 invoked by uid 111); 12 Sep 2023 07:51:47 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Sep 2023 03:51:47 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 12 Sep 2023 03:51:45 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] grep: use OPT_INTEGER_F for --max-depth
+Message-ID: <20230912075145.GA1630538@coredump.intra.peff.net>
+References: <4d2eb736-4f34-18f8-2eb7-20e7f7b8c2f8@web.de>
+ <20230905072122.GG199565@coredump.intra.peff.net>
+ <724641d2-1cba-3768-6008-01e8a1cdca4e@web.de>
+ <20230907204027.GA941945@coredump.intra.peff.net>
+ <cec47733-5b15-6ca7-adaf-7f3216ad178b@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <cec47733-5b15-6ca7-adaf-7f3216ad178b@web.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Sat, Sep 09, 2023 at 12:28:20AM +0200, René Scharfe wrote:
 
-> Sergey Organov <sorganov@gmail.com> writes:
->
->>  ifdef::git-log[]
->> ---diff-merges=(off|none|on|first-parent|1|separate|m|combined|c|dense-combined|cc|remerge|r)::
->> +-m::
->> +	Show diffs for merge commits in the default format. This is
->> +	similar to '--diff-merges=on' (which see) except `-m` will
->> +	produce no output unless `-p` is given as well.
->> ++
->> +Note: This option not implying `-p` is legacy feature that is
->> +preserved for the sake of backward compatibility.
->
-> It is more like that `-p` does not imply `-m` (which used to mean
-> "consider showing the comparison between parent(s) and the child,
-> even for merge commits"), even though newer options like `-c`,
-> `--cc` and others do imply `-m` (simply because they do not make
-> much sense if they are not allowed to work on merges) that may make
-> new people confused.
+> >> OPTARG would need a new macro to allow specifying the default value.  Or
+> >> is there a variadic macro trick that we could use?
+> >
+> > Hmm, I had just assumed OPTARG was a lost cause (or we would need an
+> > "OPTARG" variant of each macro; yuck).
+> 
+> Only for OPT_INTEGER and OPT_STRING AFAICS.
 
-No, neither --cc nor -c imply -m.
+True, my use of BOOL was obviously dumb, as it wouldn't have arguments.
+But in theory anything that takes an argument could have an OPTARG
+variant. So that would include special stuff like OPT_EXPIRY_DATE,
+OPT_FILENAME, and so on. Though I would not be surprised if we currently
+only use it for string/integer.
 
--m is documented to produce very specific output that is neither -c nor
---cc, and it's indeed how it works.
+> It's true that a macro that accepts a variable number of arguments would
+> accept accidental extra arguments of the right type, but I don't see how
+> it would ignore excessive ones.
 
--c and --cc imply -p, not -m, and it has been documented for ages
-already, and it's indeed how it works, and that's what corresponding
-commits that added the features claim.
+The macro itself wouldn't notice, but I guess the generated code would
+probably complain about getting "(foo,bar)" as the initializer, if you
+really sent to many.
 
-Overall, --cc, -c, and --remerge-diff all imply -p, whereas -m does not.
-This is simple fact.
+But I was more worried about an error where you accidentally give an
+extra argument. Right now that's an error, but would it be quietly
+shifted into the OPTARG slot?
 
-So I feel we need to document why -m doesn't imply -p as other similar
-options do.
+> > You'd want some semantic check between what's in flags (i.e., is the
+> > OPTARG flag set), but I think that's beyond what the compiler itself can
+> > do (you could probably write a coccinelle rule for it, though).
+> 
+> Actually I'd want the macro to set that flag for me.
 
-> If `-p` implied `-m` (or if `-m` implied
-> `-p`), it would also have been utterly confusing and useless for
-> human consumption.
+For a dedicated OPT_STRING_OPTARG(), I'd agree. For OPT_STRING() that
+uses varargs, I'm more on the fence (because of the cross-checking
+above; now we are getting into "accidentally adding a parameter is
+quietly accepted" territory).
 
-Fortunately, -p does not imply -m, but if -m implied -p, similar to --cc
-and -c, it'd be rather very natural, and thus people keep asking why
-it's not the case.
+I dunno. Maybe saving some keystrokes is worth it, but having to say
+both OPTARG _and_ provide the extra argument makes things less subtle.
 
-> In either case, unless the reason why `-p` does not imply `-m`
-> unlike others is explained, I do not think the note adds that much
-> value.  I'd suggest dropping it.
+> I was thinking more about something like the solutions discussed at
+> https://stackoverflow.com/questions/47674663/variable-arguments-inside-a-macro.
+> It allows selecting variants based on argument count.
+> [...]
+> So OPT_INTEGER(s, l, v, h) would be the same as before.  Add an argument
+> and it becomes current OPT_INTEGER_F, add another one and it acts as
+> your _OPTARG_F variant.
 
--p does not imply others. It's others (--cc, etc.) that imply -p.
+Ah, yeah, I've seen something like this before. I do think it would
+work as you're suggesting. I'm just not sure if being verbose and
+explicit is better than trying to be clever here.
 
-The problem being solved is that we periodically get (valid) questions
-why -m does not behave similar to -c and --cc, and now --remerge-diff.
-
->
->>  --no-diff-merges::
->> +	Synonym for '--diff-merges=off'.
->> +
->> +--diff-merges=<format>::
->>  	Specify diff format to be used for merge commits. Default is
->> -	{diff-merges-default} unless `--first-parent` is in use, in which case
->> -	`first-parent` is the default.
->> +	{diff-merges-default} unless `--first-parent` is in use, in
->> +	which case `first-parent` is the default.
->>  +
->> +The following formats are supported:
->> ++
->> +--
->> +off, none::
->>  	Disable output of diffs for merge commits. Useful to override
->>  	implied value.
->>  +
->> +on, m::
->> +	Make diff output for merge commits to be shown in the default
->> +	format. The default format could be changed using
->>  	`log.diffMerges` configuration parameter, which default value
->>  	is `separate`.
->>  +
->> +first-parent, 1::
->> +	Show full diff with respect to first parent. This is the same
->> +	format as `--patch` produces for non-merge commits.
->>  +
->> +separate::
->> +	Show full diff with respect to each of parents.
->> +	Separate log entry and diff is generated for each parent.
->>  +
->> +remerge, r::
->> +	Remerge two-parent merge commits to create a temporary tree
->> +	object--potentially containing files with conflict markers
->> +	and such.  A diff is then shown between that temporary tree
->> +	and the actual merge commit.
->>  +
->>  The output emitted when this option is used is subject to change, and
->>  so is its interaction with other options (unless explicitly
->>  documented).
->>  +
->> +combined, c::
->> +	Show differences from each of the parents to the merge
->> +	result simultaneously instead of showing pairwise diff between
->> +	a parent and the result one at a time. Furthermore, it lists
->> +	only files which were modified from all parents.
->>  +
->> +dense-combined, cc::
->> +	Further compress output produced by `--diff-merges=combined`
->> +	by omitting uninteresting hunks whose contents in the parents
->> +	have only two variants and the merge result picks one of them
->> +	without modification.
->> +--
->
-> Looks reasonable, even though I didn't quite see much problem with
-> the original.
-
-The original --diff-merge=... line was so long it didn't fit, especially
-after "remerge" has been added, and also was hard to grok.
-
-> If we were shuffling the sections like this patch, I
-> wonder if moving combined/dense-combined a bit higher (perhaps
-> before the "remerge") may make more sense, though (the ordering
-> would simply become "simpler to more involved").
-
-I kept original order, but I agree combined/dense-combined fit better
-above remerge.
-
-I'll change the order in re-roll.
-
-Thanks,
--- Sergey Organov
+-Peff
