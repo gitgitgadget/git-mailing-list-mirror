@@ -2,191 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DA5FCA0EDB
-	for <git@archiver.kernel.org>; Tue, 12 Sep 2023 13:53:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 455E2CA0EEC
+	for <git@archiver.kernel.org>; Tue, 12 Sep 2023 14:33:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235220AbjILNxf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Sep 2023 09:53:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40852 "EHLO
+        id S236013AbjILOeA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Sep 2023 10:34:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235813AbjILNx0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Sep 2023 09:53:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 09E2810CE
-        for <git@vger.kernel.org>; Tue, 12 Sep 2023 06:52:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1694526755;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=Zs3sipXaUv8hiEf8Ux+sNtFTAq+A8dEElUhshJTogfw=;
-        b=A7YA3SYFiEZ9TwNf4loVaXo2LUMBQu8wMiF0js9Q5YvnN5BT2aaJfnBWkXyC9G/qyO0VFI
-        P3pSebCixj/uqCRh+CbEaQ1w5NgVnRhfxY3SmqYLJwfAkmo4LT0rhdzAXAFpsXMVtDzPWn
-        PniWEoRX+kl1SrtqLIVXfo8TBsVYjDs=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-392-iqFvn95aOZW_oIEZOmiznQ-1; Tue, 12 Sep 2023 09:52:27 -0400
-X-MC-Unique: iqFvn95aOZW_oIEZOmiznQ-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com [10.11.54.4])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 62EA8916FA4;
-        Tue, 12 Sep 2023 13:52:23 +0000 (UTC)
-Received: from dhcp-27-174.brq.redhat.com (unknown [10.45.225.195])
-        by smtp.corp.redhat.com (Postfix) with SMTP id 650F22026D68;
-        Tue, 12 Sep 2023 13:52:17 +0000 (UTC)
-Received: by dhcp-27-174.brq.redhat.com (nbSMTP-1.00) for uid 1000
-        oleg@redhat.com; Tue, 12 Sep 2023 15:51:31 +0200 (CEST)
-Date:   Tue, 12 Sep 2023 15:51:24 +0200
-From:   Oleg Nesterov <oleg@redhat.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Calvin Wan <calvinwan@google.com>,
-        Carlo Marcelo Arenas =?iso-8859-1?Q?Bel=F3n?= 
-        <carenas@gmail.com>, Elijah Newren <newren@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Mathias Krause <minipli@grsecurity.net>,
-        =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
-        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        Alexey Gladkov <legion@kernel.org>
-Subject: Re: [PATCH 1/1] git-grep: improve the --show-function behaviour
-Message-ID: <20230912135124.GA11315@redhat.com>
-References: <20230911121126.GA17383@redhat.com>
- <20230911121211.GA17401@redhat.com>
- <xmqq34zktk4h.fsf@gitster.g>
- <20230911231756.GA2840@redhat.com>
- <20230912130429.GA9982@redhat.com>
+        with ESMTP id S235969AbjILOd6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Sep 2023 10:33:58 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 349E310D
+        for <git@vger.kernel.org>; Tue, 12 Sep 2023 07:33:54 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-50091b91a83so9362448e87.3
+        for <git@vger.kernel.org>; Tue, 12 Sep 2023 07:33:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1694529232; x=1695134032; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=854HS/6ej6pA7KHe13zy6edfcYbLJHrvTgA8SvxDdaI=;
+        b=sFcRmdWz1XUHO4ucotnlMmpM5hXLp+siVx99gDpruCVif85FiNeSUHkZLnwrwTLSQU
+         5Ng3HKSweGNjmKSu0sw904Bvs/wPk5x+zqMFUm4IExi2+KMOnRPL6BEG0dI4/+kh76ql
+         D1c9bZUAikfalFMScK3mq3wrDiQ1s7wMpGTkjukT7VwJMf12FT2Apf+hsm32GOhr7kkY
+         wdki0wooxsHsgrxiO/L4Z4RxTuN3ils4jod1dzZWNCeJrGjEjr7v0hoCSm//karLAxn8
+         QpCA3nwRBsn0utEavEYxrvIxuT5MOQ5InghVsKlEE2X4GHrdzuUVu9KufMRiiXQC2PcB
+         1lHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694529232; x=1695134032;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=854HS/6ej6pA7KHe13zy6edfcYbLJHrvTgA8SvxDdaI=;
+        b=hJu48VviiI0LrwCKZ58Kb89pz6mZ0hpqrj65dodjQDhpICW8KvOKwdnaEXo3YLAdMT
+         LieIWP4Wu9yTawxi1+vX06XabUn70pxr8OZVGYHswUxHUZfSKx9hQSaU5w0cOMu8zxFl
+         dVLBLu2FFuFt+1a4LhhCkzxrFT9xubWOvCOfEVnCG7a5bnknxC7to4ya2xzEADQR8du9
+         31rY/wa07bHQOfCTNwbP86F0dTLewhgOvkZO8jdjXimj7dzqDvxGXsxDj9dMWpqj3+UQ
+         wQ19ee2O6zjsig0dI7tsxBBu5SkQdu8c6XrYjz8zWLR8bQKu+ZZr7XPWLCWdt2z2GJhS
+         n0Lg==
+X-Gm-Message-State: AOJu0Yz4K1C2KUf/9H2gA3aqDPw8OZz9tajeYnQrzlF3lzfT4xv65qYr
+        glFUY7B5a5dTVr6vaK/0fyQ90CBoa25o69YILsWEMgML8FKQMA==
+X-Google-Smtp-Source: AGHT+IEgY57Df97AfSP2EULNbylRtGi/YqsJUzYCEJpadHrN1TaY5CBbKN35lQv1qVsyHplBL+UrLApWe/OFJLMWh0U=
+X-Received: by 2002:a05:6512:3d09:b0:4fb:89b3:3373 with SMTP id
+ d9-20020a0565123d0900b004fb89b33373mr13109954lfv.43.1694529232031; Tue, 12
+ Sep 2023 07:33:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230912130429.GA9982@redhat.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Scanned-By: MIMEDefang 3.1 on 10.11.54.4
+References: <CAH7zdydYgSf+21GB70=gRhEcupv4e1ix==7LWCeQYgpD-1Rcmw@mail.gmail.com>
+ <xmqq8r9cs2x1.fsf@gitster.g>
+In-Reply-To: <xmqq8r9cs2x1.fsf@gitster.g>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 12 Sep 2023 07:33:39 -0700
+Message-ID: <CABPp-BE-4ewkDjkR++iyY2K=-T5cBGTk5cRbCqBE3F02tFkxug@mail.gmail.com>
+Subject: Re: Commit dates on conflict markers
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Roger Light <roger@atchoo.org>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/12, Oleg Nesterov wrote:
+On Mon, Sep 11, 2023 at 4:31=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> René, Junio,
+> Roger Light <roger@atchoo.org> writes:
 >
-> I don't like the fact we can't understand each other ;) Could you
-> please explain why do you think this patch should update the docs?
+> > When I carry out a merge with conflicts, it's not always clear when
+> > resolving the conflicts which is the correct part of code to use. I
+> > sometimes use git blame to guide me as to the age of the different
+> > chunks of code and hence what to choose.
+> >
+> > I was wondering if there might be a way to help include that sort of
+> > information directly into the conflict.
+> >
+> > If you had a single line conflict it would be straightforward to
+> > display by including the date the line was last modified alongside the
+> > conflict marker:
+> >
+> > <<<<<<< HEAD date:yesterday
+> > print("please")
+> > =3D=3D=3D=3D=3D=3D=3D date:10 years ago
+> > print("help")
+> > >>>>>>> main
+> >
+> > With a more realistic change with multiple lines and context from
+> > different commits, it's not immediately obvious to me that it's
+> > possible to do in a way that isn't completely horrible.
 >
-> Please forget about my patch for the moment. Lets start from the very
-> beginning:
+> Our conflict marker lines do get human readable labels but the
+> format used by merge_3way() both in merge-ort and merge-recursive
+> backends is hardcoded to be <branchname> ':' <pathname> and it is
+> sufficient to let you tell which commit involved in the merge and
+> which path in that commit the contents came from.
 >
-> 	-p::
-> 	--show-function::
-> 		Show the preceding line that contains the function name of
-> 		the match, unless the matching line is a function name itself.
->
-> and in my opinion, it is the current behaviour that doesn't match the
-> documentation.
->
-> -------------------------------------------------------------------------
->
-> 	$ cat TEST1.c
-> 	void func1()
-> 	{
-> 	}
-> 	void func2()
-> 	{
-> 	}
->
-> 	$ git grep --untracked -pn func2 TEST1.c
-> 	TEST1.c=1=void func1()
-> 	TEST1.c:4:void func2()
->
-> in this case the matching line is "void func2()" and it is also a function
-> name itself, in this case git-grep should not show "=void func1()" which is
-> "the preceding line that contains the function name of the match.
->
-> But it does. So perhaps git-grep needs another change, something like
->
-> 	if (match_funcname(opt, gs, bol, end_of_line(...)))
-> 		return;
->
-> at the start of show_funcname_line(), but my patch does not change this
-> behaviour.
->
-> --------------------------------------------------------------------------
->
-> 	$ cat TEST2.c
-> 	void func(xxx)
-> 	{
-> 		use(xxx);
-> 	}
->
-> 	$ git grep --untracked -pn xxx TEST2.c
-> 	TEST2.c:1:void func(xxx)
-> 	TEST2.c:3:      use(xxx)
->
-> the 2nd match is use(xxx) and it is not a function name itself, in this
-> case git-grep should "Show the preceding line that contains the function
-> name of the match.
->
-> But it doesn't. To me, this behaviour looks as
->
-> 		Show the preceding line that contains the function name of
-> 		the match, unless the _PREVIOUS_ matching line is a function
-> 		name itself.
->
-> Now, with my patch we have
->
-> 	$ ./git grep --untracked -pn xxx TEST2.c
-> 	TEST2.c:1:void func(xxx)
-> 	TEST2.c=1=void func(xxx)
-> 	TEST2.c:3:      use(xxx);
->
-> and unless I am totatlly confused this does match the documentation.
+> A change that only shows the commit date without allowing end user
+> configuration will *not* be worth doing, but allowing them to use
+> placeholders like '%h %s' in "git log --format=3D'%h %s'" (check
+> pretty.c for the catalog) would be a good exercise; it should not
+> take somebody with an ultra-deep knowledge of how the code works.
 
-So, just in case, please see V2 below. In my opinion it _fixes_ the
-current behaviour. With this patch
+Generalizing conflict marker annotations to use other hints may make
+sense, but I am not sure that "date" is a good example or reason to
+generalize it, for three reasons:
 
-	$ ./git grep --untracked -pn func2 TEST1.c
-	TEST1.c:4:void func2()
+  * [No date] Virtual merge bases from recursive merges do not have a
+date to associate with them.  Do we just make one up?  Average the
+range of dates of the commits being merged to create the virtual merge
+base?
+  * [Wrong date(s)] The date Roger probably wants is the date when the
+conflicting text was introduced to the given side of history, not the
+date of the tip of that branch.  merge-ort is pretty fundamentally a
+three-way merge algorithm, meaning it only ever uses the merge-base
+and the two branch tips.  I don't want to see that changed either;
+other than for computing the merge base, I'm very skeptical of any
+movement to make merge-ort depend upon any intermediate commit(s).
+Such changes would likely be better placed in an entirely new merge
+algorithm, but then you have to write an entirely new merge algorithm,
+which is decidedly non-trivial.
+  * [Too many dates] What if the conflict region had two lines on one
+side and each line was added on different dates -- what then to
+display for the date for that side of history?  The earliest?  The
+latest?  Some kind of weighted average?  Feels like a bug report
+generator to me.
 
-	$ ./git grep --untracked -pn xxx TEST2.c
-	TEST2.c:1:void func(xxx)
-	TEST2.c=1=void func(xxx)
-	TEST2.c:3:      use(xxx);
-
-Or I am totally confused?
-
-Oleg.
----
-
-diff --git a/grep.c b/grep.c
-index 0904d55b24..c240c4bfa1 100644
---- a/grep.c
-+++ b/grep.c
-@@ -1347,15 +1347,19 @@ static int match_funcname(struct grep_opt *opt, struct grep_source *gs,
- static void show_funcname_line(struct grep_opt *opt, struct grep_source *gs,
- 			       const char *bol, unsigned lno)
- {
-+	unsigned long left = bol - gs->buf;
-+
-+	if (match_funcname(opt, gs, bol, end_of_line(bol, &left)))
-+		return;
-+
- 	while (bol > gs->buf) {
- 		const char *eol = --bol;
- 
-+		if (--lno < opt->last_shown)
-+			break;
-+
- 		while (bol > gs->buf && bol[-1] != '\n')
- 			bol--;
--		lno--;
--
--		if (lno <= opt->last_shown)
--			break;
- 
- 		if (match_funcname(opt, gs, bol, eol)) {
- 			show_line(opt, bol, eol, gs->name, lno, 0, '=');
-
+So, if we generalize conflict marker annotations, we probably ought to
+omit "date" from the new possibilities.
