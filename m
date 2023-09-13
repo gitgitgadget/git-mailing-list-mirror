@@ -2,109 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F67ECA5534
-	for <git@archiver.kernel.org>; Wed, 13 Sep 2023 10:16:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4A17EDEC71
+	for <git@archiver.kernel.org>; Wed, 13 Sep 2023 15:17:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239646AbjIMKQv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Sep 2023 06:16:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48716 "EHLO
+        id S241659AbjIMPR1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Sep 2023 11:17:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239650AbjIMKQr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Sep 2023 06:16:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 8A09019A9
-        for <git@vger.kernel.org>; Wed, 13 Sep 2023 03:15:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1694600157;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=8BR7E6seLAbN07grR/lHqW2KJnvdYBY8u7BKvTAG54w=;
-        b=AGgcZL6dvNu9tumg9vDhTULt8gG/V7fMUCOGTHyriYJN3VKREG5tBy7D1tsXKNyNrYiCT/
-        FwuYxk93u4Lf633q2N4lkEFgp7c5dzlKE0VP+PkP1T/F0vT1D6jFypc4E7M78oBHKsMtBn
-        IlHurcUgNjSLtQIlE5tPaA0ru6Aw8yE=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-562-B5_c2ygIOeOqu4tAQDIIZQ-1; Wed, 13 Sep 2023 06:15:56 -0400
-X-MC-Unique: B5_c2ygIOeOqu4tAQDIIZQ-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com [10.11.54.5])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mimecast-mx02.redhat.com (Postfix) with ESMTPS id F403981652C;
-        Wed, 13 Sep 2023 10:15:55 +0000 (UTC)
-Received: from dhcp-27-174.brq.redhat.com (unknown [10.45.225.76])
-        by smtp.corp.redhat.com (Postfix) with SMTP id D5CFE6468B;
-        Wed, 13 Sep 2023 10:15:54 +0000 (UTC)
-Received: by dhcp-27-174.brq.redhat.com (nbSMTP-1.00) for uid 1000
-        oleg@redhat.com; Wed, 13 Sep 2023 12:15:03 +0200 (CEST)
-Date:   Wed, 13 Sep 2023 12:15:01 +0200
-From:   Oleg Nesterov <oleg@redhat.com>
-To:     =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Alexey Gladkov <legion@kernel.org>
-Subject: Re: [PATCH 1/1] git-grep: improve the --show-function behaviour
-Message-ID: <20230913101501.GC535@redhat.com>
-References: <20230911121126.GA17383@redhat.com>
- <20230911121211.GA17401@redhat.com>
- <xmqq34zktk4h.fsf@gitster.g>
- <20230911231756.GA2840@redhat.com>
- <20230912130429.GA9982@redhat.com>
- <20230912135124.GA11315@redhat.com>
- <df05f761-c498-6930-bfd8-265f7e23d8ee@web.de>
+        with ESMTP id S241336AbjIMPQz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Sep 2023 11:16:55 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D58EB9
+        for <git@vger.kernel.org>; Wed, 13 Sep 2023 08:16:50 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-402cc6b8bedso78791915e9.1
+        for <git@vger.kernel.org>; Wed, 13 Sep 2023 08:16:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1694618209; x=1695223009; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=E3r/YVLe9Si5qkdxha3HdUMQYETsH5Nue+D1TXkAL38=;
+        b=HgZRtCOFcOm3EmcHvSnJvsTxypSKj+ZzF1zt2Ire48Y2WHOco26eyicTVXJYXXPHty
+         ZOPZkMGuOQVuSjUb+Rz2RerRJfQ7JN0b3n633Q2zlWpzRAV//7C1xpgfoKUdBOKsZfl7
+         tDxA4RVV9xkHUqG7MvtDf8yzD/ebw2JZPKr4/dkqZ4C4wrI5WR5Ev+O79qq5OmFe2euL
+         QGUxri4L6bsRWs3xHu0XcuvVqtbnnBX58Y6BoB9+Pv1jH1AzD5QXDpMPDBpqcoXc4EhD
+         WVPopWliIHVUn4F5F+xyOga3ordXzZPeFNuU0hbeMs40sU476ui9uZBz0ozyVMWoc6qe
+         I1kQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694618209; x=1695223009;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=E3r/YVLe9Si5qkdxha3HdUMQYETsH5Nue+D1TXkAL38=;
+        b=RE9dAqPDFZ9ADEoXSL9OYRv/yC+1aCw81oiZLVZd5ItZem4bmWQ8NohCZLk1jt95NG
+         usAvI7x3TrkJ7jyMM49PcOZp8WCY6jiSFJcujMOKsTj2gAE7dT8+ywhdmDfz9+PL7tu+
+         BFbdwD67C0bcdCX1tsMKhECmbRz/z6biwiak+ArAvgbSp1xqLegfhIsxr9nds7uFRUcC
+         1uC1J9Q5D89rRX0eYIMmsw6nOt/UWWz66fztjkhtrL9unL8KAYztHNjB9SFquNOqhGmi
+         zAT5G3B0SVvAERDn1b8iOJguYYKRExvgch2LYt16hmrEaUg1dxMsdPfuvhXHRzNb5l1g
+         Tz1g==
+X-Gm-Message-State: AOJu0YwBHVCCMmvM5x7SIUYOP7Co6sWOh4AJ9mCQl6CB0Ua4gYRVyH1v
+        vl8x3DrDTOGGRqpgXP9E8p5HlKoxv7zCAQ==
+X-Google-Smtp-Source: AGHT+IEw6YZJVFNloYfef4FrRXYzU44iXWYX8bGPToG/BKHwt6D6msbeOVUoxPyAmyQZZKrg40hllw==
+X-Received: by 2002:adf:ebc8:0:b0:31a:e6c2:770d with SMTP id v8-20020adfebc8000000b0031ae6c2770dmr2354299wrn.36.1694618208779;
+        Wed, 13 Sep 2023 08:16:48 -0700 (PDT)
+Received: from [192.168.1.212] ([90.242.223.1])
+        by smtp.gmail.com with ESMTPSA id d13-20020adff84d000000b00317909f9985sm15728733wrq.113.2023.09.13.08.16.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Sep 2023 08:16:48 -0700 (PDT)
+Message-ID: <59b423e9-d99e-4817-8a33-c50419593740@gmail.com>
+Date:   Wed, 13 Sep 2023 16:16:48 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <df05f761-c498-6930-bfd8-265f7e23d8ee@web.de>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Scanned-By: MIMEDefang 3.1 on 10.11.54.5
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 0/2] replacing ci/config/allow-ref with a repo variable
+Content-Language: en-US
+To:     Jeff King <peff@peff.net>, phillip.wood@dunelm.org.uk
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20230830194919.GA1709446@coredump.intra.peff.net>
+ <8624fc43-ab42-442b-a141-851fc35dd24f@gmail.com>
+ <20230901173214.GA1947546@coredump.intra.peff.net>
+ <d3d1109b-3a1f-4e8b-be8d-6581d45f1b81@gmail.com>
+ <20230905072444.GH199565@coredump.intra.peff.net>
+ <fcdc682b-cf6c-4db9-9970-be136f48de58@gmail.com>
+ <20230911093616.GA1605460@coredump.intra.peff.net>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20230911093616.GA1605460@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/12, René Scharfe wrote:
->
-> >> So perhaps git-grep needs another change, something like
-> >>
-> >> 	if (match_funcname(opt, gs, bol, end_of_line(...)))
-> >> 		return;
-> >>
-> >> at the start of show_funcname_line(), but my patch does not change this
-> >> behaviour.
->
-> Yes, to make it match the documentation it would need something like
-> that.  (Though I'd add a match_funcname() call before the
-> show_funcname_line() call in grep_source_1() instead, as it already has
-> the eol value.)
+Hi Peff
 
-Yes, I too thought about this. Except I thought that it makes sense to
-pass the additional "unsigned eol" argument to show_funcname_line().
-But in any case show_pre_context() will need to calculate eol.
+On 11/09/2023 10:36, Jeff King wrote:
+> On Thu, Sep 07, 2023 at 11:04:33AM +0100, Phillip Wood wrote:
+> Looking at the ci-config branch of phillipwood/git.git, I see this in
+> your allow-refs:
+> 
+>        refs/heads/main|refs/heads/master|refs/heads/maint|refs/heads/next|refs/heads/seen|refs/tags/gitgui-*|refs/tags/pr-[0-9]*|refs/tags/v[1-9].*)
+> 
+> So you do use multiple prefixes, though all in refs/tags/.  Do you
+> actually push tags for which you do want to run CI,
 
-However this is just a minor detail, I am fine either way.
+Yes, but not very often - I could probably just reject all tags and 
+start the CI manually when I want it (assuming that's an option). Thanks 
+for digging into the various options, it sounds like it is possible so 
+long as we don't want multiple prefixes.
 
-> > So, just in case, please see V2 below. In my opinion it _fixes_ the
-> > current behaviour. With this patch
-> >
-> > 	$ ./git grep --untracked -pn func2 TEST1.c
-> > 	TEST1.c:4:void func2()
->
-> Indeed that matches the letter of the documentation.
->
-> > 	$ ./git grep --untracked -pn xxx TEST2.c
-> > 	TEST2.c:1:void func(xxx)
-> > 	TEST2.c=1=void func(xxx)
-> > 	TEST2.c:3:      use(xxx);
->
-> That one as well.
+Aside: what I'd really like is to be able to set an environment variable 
+when I push to skip or force the CI
 
-So. Can I assume you agree with my patch ? ;)
+	GITHUB_SKIP_CI=1 git push github ...
 
-> No, I think the documentation is wrong.
+but that would require support from the git client, the protocol and the 
+server.
 
-Well, to me it looks good, but only after this patch.
+Best Wishes
 
-Oleg.
-
+Phillip
