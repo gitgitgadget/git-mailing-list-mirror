@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BF109EE020A
-	for <git@archiver.kernel.org>; Wed, 13 Sep 2023 19:17:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F0C9EE020A
+	for <git@archiver.kernel.org>; Wed, 13 Sep 2023 19:18:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232119AbjIMTR7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Sep 2023 15:17:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36668 "EHLO
+        id S232206AbjIMTSD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Sep 2023 15:18:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232157AbjIMTR5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Sep 2023 15:17:57 -0400
+        with ESMTP id S232157AbjIMTSA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Sep 2023 15:18:00 -0400
 Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6F3B170F
-        for <git@vger.kernel.org>; Wed, 13 Sep 2023 12:17:53 -0700 (PDT)
-Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-5925e580f12so1855137b3.3
-        for <git@vger.kernel.org>; Wed, 13 Sep 2023 12:17:53 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F01D19A0
+        for <git@vger.kernel.org>; Wed, 13 Sep 2023 12:17:56 -0700 (PDT)
+Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-58caaedb20bso1845087b3.1
+        for <git@vger.kernel.org>; Wed, 13 Sep 2023 12:17:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1694632673; x=1695237473; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1694632675; x=1695237475; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=RApe70Ddk4aFbpYXvaraueGlEryEzeF7P3fitACvKPI=;
-        b=HiWSmG+/iOWOZjSQb7hX4MeQ2wwpiQIcAFDdS0cA3YUsGO6V/kmxB7Xg9YbFQHwiKq
-         uglvXe0euDxgenkO2s2nTGes9fV7HC7u0CR1KzXMnaTCDUbtdAoNBPXWfiywsgZFCPye
-         CZoDeBZ0GcxzE4PgA6Ml1J3VMZDnQrHgXvSol5+nrgYIjuNLEPHHyTBRVuzdvS7xhTpq
-         EE4z3RK+EujPcZFZOuQtK4zjEutNM1D2Kk4sC3iV1CZqy/zXJ7Ce01OwukKq5X7JHolO
-         gSUQ/lXZrG3qIzp6K5oM0rBGaHENvSsNGgYzpGCalRa4DaQ9VgR7BQPXDsF1DXiMh+82
-         1gAQ==
+        bh=0pkvMCa8t/uiE70KS12CZYizlDGkE14cjyVfvFeYCAk=;
+        b=Ucce+UsiVUW5e2AIeEihTqrcDYPufI3J2epNLWZAN00U/dozudZSgsYInaHc1E4kZl
+         i1hdvvZnemFI6HP7a7nnU9G89Pk5HgLo9VMqfsfk3F1QLA3BT96oR2Q/0gGoTyAU/mWZ
+         BTRgog6v3QSq1ufRmmVkMriQk6STMvr+4/kHeoj8xCQmpR0mYD80NtsRmANMoH6H5eV+
+         5BO1N8hqJF4DWn64aAV5pkKsm7daMM7fQTOJcxgElv2WwNAcqUITqFtXJAjBPF+N9gew
+         oYe6XnkjLyw5X+Z9HUVmhnCq3FVw9SwCBT+QVxlYRFjuHAZpeotkkpM/jb3zWOTvKzA+
+         WGJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694632673; x=1695237473;
+        d=1e100.net; s=20230601; t=1694632675; x=1695237475;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=RApe70Ddk4aFbpYXvaraueGlEryEzeF7P3fitACvKPI=;
-        b=fjoQpxbwVHiSjDRRMabUrzGepYAnOOby6mGQKfz9VafoxihNBfPQp0h7BFbLIwyZkj
-         hD2PBx61QujVIXlIDJ0xlJOmGVdZN0z6gD06oM+c7rDew4IVea8B7utRWpASt4s/ZMC2
-         8XvRFloXDen0+GwITLGrhAVCkf6l/qJFFsHhRmwD2h2kQBep2R99IsMQ99PNZHs0UVcd
-         HMF7U5TkOCM43qLbPJk6B+RQfS625z3WkDCufKQigQdSjVPeA/AGuV4le9CXetjCnK+2
-         2SI0ksfprJAHRobTPSXKSgBe0DNLVG4Ulql8AKSaVWfoqQ3IT/mr96FWjhspfXi+WUXo
-         67uw==
-X-Gm-Message-State: AOJu0YwGDsFdamW5EcibR1ZjFXrDzv10pHaTVb8qy7AmdxvunFy7vT53
-        BSr0zuqr/n7NAPYjyUO3gXVsD6vBXmOCxYfs0dLdbQ==
-X-Google-Smtp-Source: AGHT+IExVRO1+kzMUDoUuFIlx4XcBPDvavcE13W0hqKp7T4w3n6JiufAbMQZ93vA9b4zBgfJHaC3Pw==
-X-Received: by 2002:a81:6c50:0:b0:583:af98:6fb3 with SMTP id h77-20020a816c50000000b00583af986fb3mr3182566ywc.15.1694632672797;
-        Wed, 13 Sep 2023 12:17:52 -0700 (PDT)
+        bh=0pkvMCa8t/uiE70KS12CZYizlDGkE14cjyVfvFeYCAk=;
+        b=QJ9QeOkXoZZT4KZUiaL97wPuDMbhXxj4h7nIFVT8OBTV5Q54f6o7pCb3Z2MFJS1iJ1
+         niIv9lh1wPOpeSUN6NhSD9lf3M6djcfD1dCWShOrGgjoC38+fgVOix1OiwNeEk0fRtyt
+         dd8yOi0mAhTGfwueilIHtj4A7Clc6p2rWjGwbdQLmtEpwOxhpXgIyinf3fZd/cBpNKr5
+         1sUXBWHsN3vKYLzM2UMKF8WBa3lH+IsGrZG7lUv4ClFE1lH/O03jOFQ+4RxCoUlwdUUy
+         trPopXm88sdBy19wY+DsOLtIG4CHgB+BZLDsmKPVCzprbbgWgOI2ozQWUFzYAWLtblp2
+         Wl2Q==
+X-Gm-Message-State: AOJu0YyoqIJEKaHV/qR9ZgIdRWuq/QYQrtaWqxIK0SwkVePI3SRU+i+O
+        SrqjK+iZlfQnRkZMfSsPpyhovS6sMO0QZ+wfEFp/cg==
+X-Google-Smtp-Source: AGHT+IHbXUs0qChBm9B2FskdIjruGSR428qIroSaMDNtLcFvN7mdoDRCitbiPkE5Tj4d+IGyuF2ejQ==
+X-Received: by 2002:a25:b288:0:b0:d81:817c:580 with SMTP id k8-20020a25b288000000b00d81817c0580mr830708ybj.25.1694632675602;
+        Wed, 13 Sep 2023 12:17:55 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id m128-20020a0de386000000b005837b48d16csm3297712ywe.84.2023.09.13.12.17.52
+        by smtp.gmail.com with ESMTPSA id 4-20020a251104000000b00d7ba4c5e31fsm2879661ybr.39.2023.09.13.12.17.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Sep 2023 12:17:52 -0700 (PDT)
-Date:   Wed, 13 Sep 2023 15:17:51 -0400
+        Wed, 13 Sep 2023 12:17:55 -0700 (PDT)
+Date:   Wed, 13 Sep 2023 15:17:54 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 4/8] builtin/repack.c: extract redundant pack cleanup for
- existing packs
-Message-ID: <82057de4cf3cbba67eb2cbbd8199909ed2108b82.1694632644.git.me@ttaylorr.com>
+Subject: [PATCH v2 5/8] builtin/repack.c: extract
+ `has_existing_non_kept_packs()`
+Message-ID: <f4f7b4c08f682b5ebca474e8c1d51d31a2da76b8.1694632644.git.me@ttaylorr.com>
 References: <cover.1693946195.git.me@ttaylorr.com>
  <cover.1694632644.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -66,101 +66,62 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To remove redundant packs at the end of a repacking operation, Git uses
-its `remove_redundant_pack()` function in a loop over the set of
-pre-existing, non-kept packs.
+When there is:
 
-In a later commit, we will split this list into two, one for
-pre-existing cruft pack(s), and another for non-cruft pack(s). Prepare
-for this by factoring out the routine to loop over and delete redundant
-packs into its own function.
+  - at least one pre-existing packfile (which is not marked as kept),
+  - repacking with the `-d` flag, and
+  - not doing a cruft repack
 
-Instead of calling `remove_redundant_pack()` directly, we now will call
-`remove_redundant_existing_packs()`, which itself dispatches a call to
-`remove_redundant_packs_1()`. Note that the geometric repacking code
-will still call `remove_redundant_pack()` directly, but see the previous
-commit for more details.
+, then we pass a handful of additional options to the inner
+`pack-objects` process, like `--unpack-unreachable`,
+`--keep-unreachable`, and `--pack-loose-unreachable`, in addition to
+marking any packs we just wrote for promisor remotes as kept in-core
+(with `--keep-pack`, as opposed to the presence of a ".keep" file on
+disk).
 
-Having `remove_redundant_packs_1()` exist as a separate function may
-seem like overkill in this patch. However, a later patch will call
-`remove_redundant_packs_1()` once over two separate lists, so this
-refactoring sets us up for that.
+Because we store both cruft and non-cruft packs together in the same
+`existing.non_kept_packs` list, it suffices to check its `nr` member to
+see if it is zero or not.
+
+But a following change will store cruft- and non-cruft packs separately,
+meaning this check would break as a result. Prepare for this by
+extracting this part of the check into a new helper function called
+`has_existing_non_kept_packs()`.
+
+This patch does not introduce any functional changes, but prepares us to
+make a more isolated change in a subsequent patch.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/repack.c | 45 ++++++++++++++++++++++++++++-----------------
- 1 file changed, 28 insertions(+), 17 deletions(-)
+ builtin/repack.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/builtin/repack.c b/builtin/repack.c
-index 71366811e9..b5fb14c017 100644
+index b5fb14c017..9ebc2e774b 100644
 --- a/builtin/repack.c
 +++ b/builtin/repack.c
-@@ -135,6 +135,33 @@ static void mark_packs_for_deletion(struct existing_packs *existing,
- 	mark_packs_for_deletion_1(names, &existing->non_kept_packs);
+@@ -105,6 +105,11 @@ struct existing_packs {
+ 	.non_kept_packs = STRING_LIST_INIT_DUP, \
  }
  
-+static void remove_redundant_pack(const char *dir_name, const char *base_name)
++static int has_existing_non_kept_packs(const struct existing_packs *existing)
 +{
-+	struct strbuf buf = STRBUF_INIT;
-+	struct multi_pack_index *m = get_local_multi_pack_index(the_repository);
-+	strbuf_addf(&buf, "%s.pack", base_name);
-+	if (m && midx_contains_pack(m, buf.buf))
-+		clear_midx_file(the_repository);
-+	strbuf_insertf(&buf, 0, "%s/", dir_name);
-+	unlink_pack_path(buf.buf, 1);
-+	strbuf_release(&buf);
++	return existing->non_kept_packs.nr;
 +}
 +
-+static void remove_redundant_packs_1(struct string_list *packs)
-+{
-+	struct string_list_item *item;
-+	for_each_string_list_item(item, packs) {
-+		if (!((uintptr_t)item->util & DELETE_PACK))
-+			continue;
-+		remove_redundant_pack(packdir, item->string);
-+	}
-+}
-+
-+static void remove_redundant_existing_packs(struct existing_packs *existing)
-+{
-+	remove_redundant_packs_1(&existing->non_kept_packs);
-+}
-+
- static void existing_packs_release(struct existing_packs *existing)
+ static void mark_packs_for_deletion_1(struct string_list *names,
+ 				      struct string_list *list)
  {
- 	string_list_clear(&existing->kept_packs, 0);
-@@ -184,18 +211,6 @@ static void collect_pack_filenames(struct existing_packs *existing,
- 	strbuf_release(&buf);
- }
+@@ -1047,7 +1052,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	if (pack_everything & ALL_INTO_ONE) {
+ 		repack_promisor_objects(&po_args, &names);
  
--static void remove_redundant_pack(const char *dir_name, const char *base_name)
--{
--	struct strbuf buf = STRBUF_INIT;
--	struct multi_pack_index *m = get_local_multi_pack_index(the_repository);
--	strbuf_addf(&buf, "%s.pack", base_name);
--	if (m && midx_contains_pack(m, buf.buf))
--		clear_midx_file(the_repository);
--	strbuf_insertf(&buf, 0, "%s/", dir_name);
--	unlink_pack_path(buf.buf, 1);
--	strbuf_release(&buf);
--}
--
- static void prepare_pack_objects(struct child_process *cmd,
- 				 const struct pack_objects_args *args,
- 				 const char *out)
-@@ -1222,11 +1237,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 
- 	if (delete_redundant) {
- 		int opts = 0;
--		for_each_string_list_item(item, &existing.non_kept_packs) {
--			if (!((uintptr_t)item->util & DELETE_PACK))
--				continue;
--			remove_redundant_pack(packdir, item->string);
--		}
-+		remove_redundant_existing_packs(&existing);
- 
- 		if (geometry.split_factor)
- 			geometry_remove_redundant_packs(&geometry, &names,
+-		if (existing.non_kept_packs.nr && delete_redundant &&
++		if (has_existing_non_kept_packs(&existing) &&
++		    delete_redundant &&
+ 		    !(pack_everything & PACK_CRUFT)) {
+ 			for_each_string_list_item(item, &names) {
+ 				strvec_pushf(&cmd.args, "--keep-pack=%s-%s.pack",
 -- 
 2.42.0.166.g68748eb9c8
 
