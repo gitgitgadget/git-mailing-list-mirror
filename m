@@ -2,139 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 764CBEDE9A0
-	for <git@archiver.kernel.org>; Thu, 14 Sep 2023 10:34:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10F40EDE9A1
+	for <git@archiver.kernel.org>; Thu, 14 Sep 2023 10:49:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237287AbjINKeI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Sep 2023 06:34:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54362 "EHLO
+        id S232865AbjINKte (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Sep 2023 06:49:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237015AbjINKeH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Sep 2023 06:34:07 -0400
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49C381BF0
-        for <git@vger.kernel.org>; Thu, 14 Sep 2023 03:34:03 -0700 (PDT)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id E665C5C07D1;
-        Thu, 14 Sep 2023 06:34:00 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Thu, 14 Sep 2023 06:34:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-        :content-type:content-type:date:date:from:from:in-reply-to
-        :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm2; t=1694687640; x=1694774040; bh=V7
-        hI62GjM6r5H55rHYoG1TuuHvntXvltGr2wprDXhiQ=; b=ltMsEiw7xfwCTT7NAa
-        DRMx+n+i0Xnq15lel1nztOb4xckFVQyzETAyvqwPowYf+kzGlsSwRHonZ3BNOt5H
-        jZMsi4rxvAwOjjUfpGtfVJ9ljdZI0AH8K88ueOvUiysDbToZu3Qig7wky2gC+NP7
-        mnAflJaEgFZhKBYi1oi1B4JsTTz1HuFxYUAF6WlDtPm5ZLlM6Mkq0Xx2I8wGKYmL
-        u8k2x7MPVfuU0vmcsqtA//t46ZzG9QjNbCF8khhTTWdKc+IdzXWXdhh+2cdo7n/8
-        bzJe+nuM7u2/ulhV+Sczm5wxw8QATw7evWtl/E1m6CDFRDh2DDPgSHrkyTatKGx0
-        dylg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:content-type:date:date
-        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm2; t=1694687640; x=1694774040; bh=V7hI62GjM6r5H
-        55rHYoG1TuuHvntXvltGr2wprDXhiQ=; b=KByCM9lJ0R4o1kEYUZh2++APxEwMD
-        GDtORkp7jrhyPdqvZYDcXyOtbaviEhUI4vnQ+N/mbs6cEYmfrcbf+g8XKI8vE1EL
-        3kvCLr1JC+QZTiWbrZgXsiFUFgG7QICN2FYNgXFfUfTTH09uHIzOo9YsbAbNso5x
-        7/eqB0VPbf33BSRXJhwGhB2OPxm5FGHzNJ6vOHiZMUKm89uA1iPmQi9CXLUzuoGn
-        Q+LFUfPkgA2FDWOisi7oL/fylvAtKfwfRupoYv5AaogoCzyvr9WQCZGJzEKCjBkd
-        i3I8c6lLfBxz+t4j9rBidXFKuiQ81tazC1VV8Yk4X/S1oPkFwPicuDuMA==
-X-ME-Sender: <xms:mOECZVsV7Ma8Ao0YwM2uxR7OJfNma8E3aPps-0VEu9HOLFVvtAXqxg>
-    <xme:mOECZef1jq8MEvUUv4PaRz-oFdpRQS4-u-IczsgUHPhzO3d323n09fdB3hcPCLo_K
-    5tffeRtpb0V7AIY1A>
-X-ME-Received: <xmr:mOECZYyVICs4WKQNlsL2Zdusq47kfBWLId0j8WTTg6T3Q63RbslhpgUkeAhifEcQeQkxdteu_v1EgfI0eo4XwQRWW8CERbqXxO2hK_uoP2KltA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrudejtddgvdekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:mOECZcPgLi1gsGETZ7phyuL-zhpo-BSWx3eALgNeE7rxap8aV6dLYA>
-    <xmx:mOECZV-p7OTrWzekV9-IWzF2H6VRpcAOZHgmK2RyMz9Gmo_ZbIthSw>
-    <xmx:mOECZcUTah-xcRXncTFa8AbuxbLPyIL_zYuchbqqKQi7MQX5WBhs0A>
-    <xmx:mOECZQZNFQvW9ihJLqvv_cBkiU3CH7lLNXQuUS-OMazrF_cUk4c0rA>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 14 Sep 2023 06:33:59 -0400 (EDT)
-Received: by vm-mail (OpenSMTPD) with ESMTPSA id 65dc2679 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Thu, 14 Sep 2023 10:33:40 +0000 (UTC)
-Date:   Thu, 14 Sep 2023 12:33:39 +0200
-From:   Patrick Steinhardt <ps@pks.im>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
-        git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v2 0/8] repack: refactor pack snapshot-ing logic
-Message-ID: <ZQLhg43mCVF3-vjp@tanuki>
-References: <cover.1693946195.git.me@ttaylorr.com>
- <cover.1694632644.git.me@ttaylorr.com>
- <xmqqa5tpluyj.fsf@gitster.g>
- <20230914000750.GA1709736@coredump.intra.peff.net>
+        with ESMTP id S232234AbjINKtd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Sep 2023 06:49:33 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C59A51FCE
+        for <git@vger.kernel.org>; Thu, 14 Sep 2023 03:49:28 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-307d58b3efbso705720f8f.0
+        for <git@vger.kernel.org>; Thu, 14 Sep 2023 03:49:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1694688567; x=1695293367; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=gKmKcesYVKl5Q8lESATslYcF0FweW0naMZ+dst0oxQo=;
+        b=Q3pNeviyBh3bMLsiCFz5DaIT3EsNz+LHyesBSAB9YlmySd/bGTabhcfd15twKyDtMv
+         SuKyBh/LT76FeM4tCBepJehcbrLvPEeCsO3GfrG9PsNjKl7VSlZb8Y5YvuU8grpMUeYr
+         opgh7Xt4YHmx9GEJz2dWJFqFJeQPpCYL0Yxc3ZrKp/oBAk/kUYy3eRjrTME27tSlwj/L
+         fcM2dpR9J7//zJ+BDnwPHpt1PaAwsh0zyw/cFzSTkdxC4uXl5AdwUuBhuzdB3n6w5OgH
+         mLlxG9LqHvsPH5fjqdXQL4jxnKJICmSXy7o2dZvFnkavZdVPI4YH0NrgUrBvxil5UQWo
+         HlhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694688567; x=1695293367;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gKmKcesYVKl5Q8lESATslYcF0FweW0naMZ+dst0oxQo=;
+        b=C4VHB+1Qnb87Ao7GIMcc8kHDFKnIcDBFV4vIKHT8bPfAaL4YmEaGKHkkPnLoBzRryA
+         9fbIyhitdGEAo602OdHY4uq0EbsPOnGdbBoY6F0cquNoVtMEEvUvXHvxJDtIjQx8Ln2a
+         53BIqVeTcJ4pncfxPIll8B4Ny40Uj4EKWtN1qd7DoB7HQm8oyKPFitW9EGQonk0r8JGe
+         O1CyVBpmkjSrKCgiGQ5FjT0/zL57wowSFBfJVFpXy+gMUmWNEvnAi51jTSjKYKUxyguX
+         H3JGnoZFmJsVKXK28NRZr41j62yN8vYrjP5o6HXwMU5emeCr6CfWvV0d3hzOdZab9XJ4
+         zrSw==
+X-Gm-Message-State: AOJu0Yzz1kbSWAfIEVagGNdmZvH6hX5wXrNM7ccYywV/cq6XVkpgrkLi
+        aTba/rcU1+6rlii7+2TkrUM=
+X-Google-Smtp-Source: AGHT+IF5o7/bowcayyUYHBdrYgpuDqnoFtLZYHQ/QJvGIzYB0aqZXoOEy2G8jyZXQz/sgMRLDIuzqA==
+X-Received: by 2002:a5d:4950:0:b0:31a:e6c2:7705 with SMTP id r16-20020a5d4950000000b0031ae6c27705mr4047663wrs.50.1694688566958;
+        Thu, 14 Sep 2023 03:49:26 -0700 (PDT)
+Received: from [192.168.1.212] ([90.242.223.1])
+        by smtp.gmail.com with ESMTPSA id t3-20020a5d5343000000b00317ab75748bsm1438118wrv.49.2023.09.14.03.49.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 14 Sep 2023 03:49:26 -0700 (PDT)
+Message-ID: <9f59df48-77be-485b-9208-6e2082af5963@gmail.com>
+Date:   Thu, 14 Sep 2023 11:49:25 +0100
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="K/Gn6AZvSMXTs9S1"
-Content-Disposition: inline
-In-Reply-To: <20230914000750.GA1709736@coredump.intra.peff.net>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 0/2] replacing ci/config/allow-ref with a repo variable
+Content-Language: en-US
+To:     Jeff King <peff@peff.net>, phillip.wood@dunelm.org.uk
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20230830194919.GA1709446@coredump.intra.peff.net>
+ <8624fc43-ab42-442b-a141-851fc35dd24f@gmail.com>
+ <20230901173214.GA1947546@coredump.intra.peff.net>
+ <d3d1109b-3a1f-4e8b-be8d-6581d45f1b81@gmail.com>
+ <20230905072444.GH199565@coredump.intra.peff.net>
+ <fcdc682b-cf6c-4db9-9970-be136f48de58@gmail.com>
+ <20230911093616.GA1605460@coredump.intra.peff.net>
+ <59b423e9-d99e-4817-8a33-c50419593740@gmail.com>
+ <20230914003010.GA1709842@coredump.intra.peff.net>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20230914003010.GA1709842@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 14/09/2023 01:30, Jeff King wrote:
+> On Wed, Sep 13, 2023 at 04:16:48PM +0100, Phillip Wood wrote:
+> We can do the loop-unroll thing if we really want to support multiple
+> prefixes, but if you're OK with it, let's try the single-prefix way and
+> see if anybody runs into problems (I'm still convinced there's only a
+> few of us using this stuff anyway). I'm hesitant to do the unroll just
+> because it requires picking a maximum value, with a bizarre failure if
+> you happen to have 4 prefixes or whatever.
 
---K/Gn6AZvSMXTs9S1
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Lets start with a single-prefix and see if anyone complains
 
-On Wed, Sep 13, 2023 at 08:07:50PM -0400, Jeff King wrote:
-> On Wed, Sep 13, 2023 at 12:44:04PM -0700, Junio C Hamano wrote:
->=20
-> > Taylor Blau <me@ttaylorr.com> writes:
-> >=20
-> > > Here is a small reroll of my series to clean up some of the internals=
- of
-> > > 'git repack' used to track the set of existing packs.
-> > >
-> > > Much is unchanged from the last round, save for some additional clean=
--up
-> > > on how we handle the '->util' field for each pack's string_list_item =
-in
-> > > response to very helpful review from those CC'd.
-> >=20
-> > The change to [7/8] was as expected and looking good.  Let's see if
-> > we see additional reviews from others, plan to declare victory and
-> > merge it to 'next' by early next week at the latest, if not sooner.
->=20
-> This looks great to me. The motivation in the revised patch 7 is much
-> easier to follow, and the end result is much nicer to read. :)
->=20
-> -Peff
+>> Aside: what I'd really like is to be able to set an environment variable
+>> when I push to skip or force the CI
+>>
+>> 	GITHUB_SKIP_CI=1 git push github ...
+>>
+>> but that would require support from the git client, the protocol and the
+>> server.
+> 
+> We have the necessary bits at the protocol: push-options. But it's up to
+> the server-side hooks to decide which ones are meaningful and to do
+> something useful with them. It looks like GitLab supports:
+> 
+>    git push -o ci.skip=1 ...
 
-Agreed, the patch series loogs good to me now. Thanks!
+Oh I didn't know about that
 
-Patrick
+> but I don't think GitHub respects any equivalent option.
 
---K/Gn6AZvSMXTs9S1
-Content-Type: application/pgp-signature; name="signature.asc"
+That's a shame
 
------BEGIN PGP SIGNATURE-----
+Best Wishes
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmUC4X0ACgkQVbJhu7ck
-PpRBag//cz7hct7PDkB6AOpAbK+U/BYS+/mmAy/t+Ukl/FkpoR/Tw9BDgPoyaBQ8
-JrmubC8FBBwg1WzWrPP8b71gI3Li/2lGDtr5WQOKul5ipo6fmoWAvPykfCxrKmsl
-Wme3KBoJGFD3AmJ7drEZC7qVA3EvnmB2l+scYt7U4u3EtbB8Zs7sL7rV6aLPF/jt
-TpLqGo2J4WMdwiUVj3uQrhxEhvvclStfCPDpr6RAcb5J4hmGuEohS676CX8zr+eT
-crne/sep9s93gvBEvs/9U7mow2WdcYlFQ6yeI/4cjQJ0Zza0lCdusAdq181fM2jd
-YUIahSzk3g/5ImdodAGrQukVWn681Lib+gw3uJ9ao0c2lofkQr2gKkiMW2Ol75YT
-RtKDNQgBJcB6H4ROL+yko9V0rjsFcNiIA+0A4WaZS+T9WR92PqsKBJs3yY6MA2IU
-+oKpsc81FuJV3BOAKpcYTr78KKRyl2Hu4GSkS0o7Heq0eJXZO790/+df5FzHJJVK
-g4nzphQ3Wk4zRMX0oECwaGUBZUNrZqCTtLXg8Lr9B24Z9+F/YE9Z6gmgWnEFeQjJ
-MjOSQ8saWH8M5ITOp+5Zcvxif7Oe2MOva3cgZrk2LhrxCLsQf2a0A825XGx3PANm
-/9ElEkzvZs/09SbNOgagy3WJT1RN4zBDv4j5ybjSJPYYWmh3LLU=
-=hLvR
------END PGP SIGNATURE-----
-
---K/Gn6AZvSMXTs9S1--
+Phillip
