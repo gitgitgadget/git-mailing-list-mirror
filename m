@@ -2,87 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C7C1EE021C
-	for <git@archiver.kernel.org>; Thu, 14 Sep 2023 03:16:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 130F2EE021B
+	for <git@archiver.kernel.org>; Thu, 14 Sep 2023 03:18:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234381AbjINDQh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Sep 2023 23:16:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38586 "EHLO
+        id S233831AbjINDTB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Sep 2023 23:19:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234231AbjINDQc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Sep 2023 23:16:32 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FA131BE2
-        for <git@vger.kernel.org>; Wed, 13 Sep 2023 20:16:26 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 75E401EE50;
-        Wed, 13 Sep 2023 23:16:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=LDyb2U7VRLlSo8UMcjzVgnPyJfhkXyeH/Zp+FJ
-        2UIDE=; b=kQeuuM6p3xoGxdXxz5eT2DDE4UnIzjfyuJRYdODcN89bwJf2lxkpl7
-        W6dcv6P0GDf7L0cjE+vXKxhOw134mVUiARlst/9j5KITRF3NHbqVqlv+YoSelezg
-        Ih+RvOBis4c0Jyu3w3/H8qX3LmjtmnyMZnkpIG7bbDtpRGAerrT+k=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6F0841EE4F;
-        Wed, 13 Sep 2023 23:16:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 05B9D1EE4E;
-        Wed, 13 Sep 2023 23:16:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Linus Arver <linusa@google.com>
-Cc:     Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v2 5/6] trailer: rename *_DEFAULT enums to *_UNSPECIFIED
-In-Reply-To: <owlyzg1pjx2f.fsf@fine.c.googlers.com> (Linus Arver's message of
-        "Wed, 13 Sep 2023 19:41:28 -0700")
+        with ESMTP id S234743AbjINDSm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Sep 2023 23:18:42 -0400
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73D982119
+        for <git@vger.kernel.org>; Wed, 13 Sep 2023 20:18:27 -0700 (PDT)
+Received: by mail-pl1-x649.google.com with SMTP id d9443c01a7336-1c1fe87fc29so4562275ad.0
+        for <git@vger.kernel.org>; Wed, 13 Sep 2023 20:18:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1694661507; x=1695266307; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=cWx946erer/49jcliWifiBx4JpSVTufjjSRFkib3uMU=;
+        b=x4TC/P62dsFnaSkEmu7M43n+VUkssqVXJ49dsFbXGRx1uiJqIqIWIkUsxbWamj+2TW
+         Q69Jmm6P+lTOT0U+Ks8mLTUjmn58npXRKkyoeIt6RJ0bbvZDIkbVXAmYZtqzFf/Fp0AO
+         v3A8mlvagfZoCEYcrIXZY9n898Yxl4c25F/9CZGyXe2Vh4jrnx0qCq1ecDBSnhEIM5XR
+         iNk8X+RZqeGLdSgOE/WqearyJqupTjYevsNX2kBG+zX8IUkRz7mhEqvDLbz4ppO9Ujpt
+         yWIOQ0uW/53obvJb36/aSBSjn7Dcr2wI23YbAQt+CqhBI29Aj/Hg67MS3UaEGGtplWJY
+         H8Pg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694661507; x=1695266307;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cWx946erer/49jcliWifiBx4JpSVTufjjSRFkib3uMU=;
+        b=MMrBVfviujTfkkY/cLr+ptg6YD9ZKZxhbALpM9VGADvluIk2txcqJFEtGj9YLYOKQA
+         slI2kwrrzzuB586Nf+OF/ZUG5+9CsHbVJMJVTGfItYv4d4DgnpxRM+FDq8SmbRFcdvzT
+         UWtt1w4dmdHE7Wv+8JQYrY9DmzVGLXTi6Y8QKGZu8OTI66WTLIkZMHDKci5iItZGqCza
+         SIcTDDtx4O4QGEqFyQw0zO0walIwQRozZVgip5bjG7st0y0CDzoQt7SqkMEElfQi8CHR
+         3FNAl0prwTbxqA7SrfdZ/orwp538iLmpc5WMhmGlnSfklYWA+1sMAmMLGcOh+MvvGdkR
+         U2pA==
+X-Gm-Message-State: AOJu0Yxpl0lKSmh0YmRFR+MbX6XWm+uk1aNCW5i2dSzzbTVxrLdXKkUz
+        wemHpQ5r/3MQFyOOBaXRHYnK+4Ct8IU=
+X-Google-Smtp-Source: AGHT+IHEJ1DlbUEvcCHK7+20MwMWcf+uYdzM9TXenGEy6be5lf9uemNas5sOve3Z4DZW0lvT3eEr1Abm3yk=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a17:902:e551:b0:1c3:a4f2:7c85 with SMTP id
+ n17-20020a170902e55100b001c3a4f27c85mr213978plf.6.1694661506945; Wed, 13 Sep
+ 2023 20:18:26 -0700 (PDT)
+Date:   Wed, 13 Sep 2023 20:18:25 -0700
+In-Reply-To: <owly5y4dlfcg.fsf@fine.c.googlers.com>
+Mime-Version: 1.0
 References: <pull.1563.git.1691211879.gitgitgadget@gmail.com>
-        <pull.1563.v2.git.1694240177.gitgitgadget@gmail.com>
-        <52958c3557c34992df59e9c10f098f457526702c.1694240177.git.gitgitgadget@gmail.com>
-        <xmqqr0n4v8ul.fsf@gitster.g> <owlyzg1pjx2f.fsf@fine.c.googlers.com>
-Date:   Wed, 13 Sep 2023 20:16:21 -0700
-Message-ID: <xmqq1qf1la0q.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 15032320-52AD-11EE-89B8-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ <pull.1563.v2.git.1694240177.gitgitgadget@gmail.com> <0463066ebe0889b72b6a1f6c344f2de127458391.1694240177.git.gitgitgadget@gmail.com>
+ <xmqqmsxsv8ik.fsf@gitster.g> <owly5y4dlfcg.fsf@fine.c.googlers.com>
+Message-ID: <owlywmwtjvcu.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH v2 6/6] trailer: use offsets for trailer_start/trailer_end
+From:   Linus Arver <linusa@google.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Glen Choo <glencbz@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Linus Arver <linusa@google.com> writes:
 
->> It gets tempting to initialize a variable to the default and arrange
->> the rest of the system so that the variable set to the default
->> triggers the default activity.  Such an obvious solution however
->> cannot be used when (1) being left unspecified to use the default
->> value and (2) explicitly set by the user to a value that happens to
->> be the same as the default have to behave differently.  I am not
->> sure if that applies to the trailers system, though.
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >>
->> Thanks.
+>>> From: Linus Arver <linusa@google.com>
+>>>
+>>> Previously these fields in the trailer_info struct were of type "const
+>>> char *" and pointed to positions in the input string directly (to the
+>>> start and end positions of the trailer block).
+>>>
+>>> Use offsets to make the intended usage less ambiguous. We only need to
+>>> reference the input string in format_trailer_info(), so update that
+>>> function to take a pointer to the input.
+>>
+>> Hmm, I am not sure if this is an improvement.  If the underlying
+>> buffer can be reallocated (to grow), the approach to use the offsets
+>> certainly is easier to deal with, as they will stay valid even after
+>> such a reallocation.  But you lose the obvious sentinel value NULL
+>> that can mean something special
 >
-> I get the feeling that you wrote the "Such an obvious ... differently"
-> sentence after writing the last sentence in that paragraph, because when
-> you say
+> True.
 >
->     I am not
->     sure if that applies to the trailers system, though.
->
-> I read the "that" (emphasis added) in there as referring to the solution
-> described in the first sentence, and not the conditions (1) and (2) you
-> enumerated. IOW, you are OK with this patch.
+>> and have to make the readers aware
+>> of the local convention you happened to have picked with a comment
+>> like ...
+>>
+>>> Signed-off-by: Linus Arver <linusa@google.com>
+>>> ---
+>>>  trailer.c | 17 ++++++++---------
+>>>  trailer.h |  7 +++----
+>>>  2 files changed, 11 insertions(+), 13 deletions(-)
+>>> ...
+>>>  	/*
+>>> -	 * Pointers to the start and end of the trailer block found. If there
+>>> -	 * is no trailer block found, these 2 pointers point to the end of the
+>>> -	 * input string.
+>>> +	 * Offsets to the trailer block start and end positions in the input
+>>> +	 * string. If no trailer block is found, these are set to 0.
+>>>  	 */
 
-"that" refers to "the reason not to use such an obvious solution".
-I do not know if trailer subsystem wants to treat "left unspecified"
-and "set to the value that happens to be the same as the default" in
-a different way.  If it does want to do so, then I do not see a
-strong reason not to use the "obvious solution".
+I've just realized that the new comment "If no trailer block is found,
+these are set to 0" is perhaps not always true in the current version
+of this patch. This is because this patch did a mechanical type
+conversion of the old fields from "const char *" to "size_t", and we
+still run
 
-Thanks.
+    trailer_end = find_trailer_end(str, trailer_search_boundary);
+    trailer_start = find_trailer_start(str, trailer_end);
+
+inside trailer_info_get() (not visible in the patch context lines). I
+will update this patch to make the comment "If no trailer block is found,
+these are set to 0" true.
