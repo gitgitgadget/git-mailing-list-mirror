@@ -2,69 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 518F6EDE99E
-	for <git@archiver.kernel.org>; Thu, 14 Sep 2023 09:56:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A273EDE99C
+	for <git@archiver.kernel.org>; Thu, 14 Sep 2023 10:04:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237340AbjINJ4I (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Sep 2023 05:56:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52432 "EHLO
+        id S237848AbjINKE2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Sep 2023 06:04:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55872 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233151AbjINJ4H (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Sep 2023 05:56:07 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C99CE0
-        for <git@vger.kernel.org>; Thu, 14 Sep 2023 02:56:03 -0700 (PDT)
-Received: (qmail 27362 invoked by uid 109); 14 Sep 2023 09:56:02 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 14 Sep 2023 09:56:02 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 21437 invoked by uid 111); 14 Sep 2023 09:56:04 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 14 Sep 2023 05:56:04 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 14 Sep 2023 05:56:01 -0400
-From:   Jeff King <peff@peff.net>
-To:     phillip.wood@dunelm.org.uk
-Cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rebase -i: ignore signals when forking subprocesses
-Message-ID: <20230914095601.GE2254894@coredump.intra.peff.net>
-References: <pull.1581.git.1694080982621.gitgitgadget@gmail.com>
- <20230907210638.GB941945@coredump.intra.peff.net>
- <9ba22d4b-3cbe-4d4a-8dba-bc3781e82222@gmail.com>
-MIME-Version: 1.0
+        with ESMTP id S237510AbjINKE1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Sep 2023 06:04:27 -0400
+X-Greylist: delayed 577 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 14 Sep 2023 03:04:23 PDT
+Received: from st43p00im-ztdg10073201.me.com (st43p00im-ztdg10073201.me.com [17.58.63.177])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2591A1BE3
+        for <git@vger.kernel.org>; Thu, 14 Sep 2023 03:04:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mpbell.io; s=sig1;
+        t=1694685284; bh=YP7CYmDPOx6MylvJpZQqQKNS4jpbkKXPY+kZknqI/YI=;
+        h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To;
+        b=LduVkzWAnM9eSI/04dHCPXWJ4D08Y1Po5TgsdC8GUDz0jlo1wyK+ibTvTQx6yibVM
+         WKuZevm1vcEFHGtH/sQHP8+MTv9XqM6o/DA9J7a4B8X/3TzNp5luj/r/x8PCOrEnJ6
+         8O1nTFhAXhTP9o7iCzglLFgEIhsLYPi2Hw+njt2SebLKyxj3D6kqTIlfiv1q7mQ1+K
+         gWSq/T69fNM8+SHsv3tpB/QYrKFG/sIB+Y+B1B7qYUYv4MeQUkDuaX1th0f75kD7Ux
+         vqI/HUE9k5UScSwQQFKqD+A2Kjct6sG8xkXHWgxUwY+k5DgH1abP+vJ9gPCYHW1sj+
+         LKjHqOQxwTqnw==
+Received: from smtpclient.apple (st43p00im-dlb-asmtp-mailmevip.me.com [17.42.251.41])
+        by st43p00im-ztdg10073201.me.com (Postfix) with ESMTPSA id 8A9C49A003D
+        for <git@vger.kernel.org>; Thu, 14 Sep 2023 09:54:43 +0000 (UTC)
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <9ba22d4b-3cbe-4d4a-8dba-bc3781e82222@gmail.com>
+Content-Transfer-Encoding: quoted-printable
+From:   Blake Campbell <bc@mpbell.io>
+Mime-Version: 1.0 (1.0)
+Date:   Thu, 14 Sep 2023 10:54:30 +0100
+Subject: skip-worktree autostash on pull 
+Message-Id: <AB6A85F5-3E76-4462-931E-AD76E0066C37@mpbell.io>
+To:     git@vger.kernel.org
+X-Mailer: iPhone Mail (20G81)
+X-Proofpoint-GUID: AcKBkCrKsRkBydDOEDnfDc7XLNYoOldS
+X-Proofpoint-ORIG-GUID: AcKBkCrKsRkBydDOEDnfDc7XLNYoOldS
+X-Proofpoint-Virus-Version: =?UTF-8?Q?vendor=3Dfsecure_engine=3D1.1.170-22c6f66c430a71ce266a39bfe25bc?=
+ =?UTF-8?Q?2903e8d5c8f:6.0.138,18.0.572,17.0.605.474.0000000_definitions?=
+ =?UTF-8?Q?=3D2020-02-14=5F11:2020-02-14=5F02,2020-02-14=5F11,2020-01-23?=
+ =?UTF-8?Q?=5F02_signatures=3D0?=
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 mlxlogscore=454
+ malwarescore=0 mlxscore=0 adultscore=0 phishscore=0 clxscore=1030
+ bulkscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2309140083
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 08, 2023 at 10:59:06AM +0100, Phillip Wood wrote:
+Hi all - I use update-index --skip-worktree on some config files that I chan=
+ge locally and don=E2=80=99t want to commit, but every time I pull from the r=
+emote I have to go through a process of no-skip-worktree, stash, pull, stash=
+ pop, then skip-worktree again, which is all a bit tedious! Ideally some swi=
+tch like --autostash for git pull would be really useful. Does anyone know i=
+f something like that exists?=20
 
-> Do we want a whole new session? As I understand it to launch a foreground
-> job shells put the child in its own process group and then call tcsetpgrp()
-> to change the foreground process group of the controlling terminal to that
-> of the child. I agree that would be a better way of doing things on unix.
-
-One thing I am not clear on is the convention on who does the process
-group and controlling terminal setup. Should Git do it to say "I am
-handing off control of the terminal to the editor that I am spawning"?
-Or should the editor say "I am an editor which has a user interface that
-takes over the terminal; I will control it while I am running".
-
-The latter makes much more sense to me, as Git cannot know how the
-editor plans to behave. But as I understand it, this kind of job control
-stuff is implemented by the calling shell, which does the tcsetpgrp()
-call.
-
-So I dunno. It sounds to me like the "right" thing here is making Git
-more shell-like in handing control to a program (like the editor) that
-we expect to be in the foreground of the terminal. As opposed to the
-"ignore SIGINT temporarily" thing which feels more like band-aid. But
-I'm wary of getting into a rabbit hole of portability headaches and
-weird corners of Unix terminal-handling conventions.
-
--Peff
+Thanks!
+Blake.=20
