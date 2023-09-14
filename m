@@ -2,95 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39BFFEEAA71
-	for <git@archiver.kernel.org>; Thu, 14 Sep 2023 20:26:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1089EEAA71
+	for <git@archiver.kernel.org>; Thu, 14 Sep 2023 21:37:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229501AbjINU0F (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Sep 2023 16:26:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49164 "EHLO
+        id S229654AbjINVhP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Sep 2023 17:37:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229473AbjINU0F (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Sep 2023 16:26:05 -0400
-Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3613E26B2
-        for <git@vger.kernel.org>; Thu, 14 Sep 2023 13:26:01 -0700 (PDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-        by mailout.west.internal (Postfix) with ESMTP id 7310C3200413;
-        Thu, 14 Sep 2023 16:25:58 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
-  by compute6.internal (MEProxy); Thu, 14 Sep 2023 16:25:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-         h=cc:cc:content-type:content-type:date:date:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to; s=fm1; t=1694723157; x=
-        1694809557; bh=dr4slInlyAIjKFyANht5OyYxC+Md1IQD7R+PJtu8w/w=; b=l
-        kfWugG59VHzG9UQCGG3STQP7h+rmbTe8dumqnWuE7yQL+7wiGLl7qo2g5C2SUDJK
-        RQBhUa3NkF8Kbp2BBgzZV0Pr/nF25TWO3y82XEVyFXBlvhvIYHgqqxvg4wYwFsdJ
-        873rTbAQQUh8/+/yRxzLWQdEKlGM7WJdtRJ3yoFXFdb4OrUz19BA2ZSED6YPk5GO
-        uOi8Iskq35PdqFyqAXKe1mAAbCDrP2mcgGjNPf/Ho6DauYEePU9dYfUquMtWdGKW
-        bpt4BKHbyxbdeaL9nm2YI0JqbZMzMMxccvQ9+zal3XJe7lwv3JJev9e/1Sz9CoHz
-        39I0cwhzmRJ7WD7L5LqsQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:content-type:date:date
-        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm2; t=1694723157; x=1694809557; bh=dr4slInlyAIjK
-        FyANht5OyYxC+Md1IQD7R+PJtu8w/w=; b=jdtk5+c9WitmGrATSJyeP6MCtpL3/
-        DqcqF4sKyDD5z/0ajnNL+4PsANGCy051q4U3PLIvGiCvo7zhXwMq7wqnR5D4U/3l
-        6xdljPpnOBZUf3P91rBMQkaA4uc0klpt9YXw1WyH23Bf7V11LTUv4Ow6tmT1O1oU
-        eT2h1T0UuRMGmiGU4RwRMkBgr+WfWMGT9Y4Obx4oe6nhk+R6+6BIOFOopGo8MEzU
-        8d9Jd81Sr66HnxPBlImRpCynOC8M2hOX8auEyFy0zGkXe+2IbUAJRfxB+Ulv453P
-        2Qcegx5huYy6r7MmQaIRgh5bd1Rb50Kmyk7UZJu7JPN4ZzeYbDcbTCvMw==
-X-ME-Sender: <xms:VWwDZT4Bw9ihe_RwDFbldjVFJvbmhl4NmQTaEZOV6Rrqb0tWgHJG2J8>
-    <xme:VWwDZY5XQ69GJX2Tk9-1IkrTL5jK0e1otJngOTuFTb3tENRqGiAe67KzFijrtvFeF
-    Xis6votQHQDmrSlSg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrudejtddgudegiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdfm
-    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
-    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedtkedtjeeiffelteffheeiheeufffg
-    heelueeftdejkeeufffgiefhgeekffffueenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:VWwDZacznvKdgEky_9ktJe3S-Ah60_pVqV9OKMLd43mtJc9-JkJz3Q>
-    <xmx:VWwDZUJ0myTEVcUIwhLuXNui8EyATp-YXVIMfMR4z-cMaXyXlCyARg>
-    <xmx:VWwDZXKQv-XxU-q60o5J55daorRs-gVtUvJzgXr7TchMzesy3lN1kg>
-    <xmx:VWwDZeV5rQP0El9QV5mvMYbXWEUkoi6fSDFtdOu2PJ5hMl9qPIDUBA>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id B4CAF15A0092; Thu, 14 Sep 2023 16:25:57 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-745-g95dd7bea33-fm-20230905.001-g95dd7bea
-Mime-Version: 1.0
-Message-Id: <c7d1e196-9521-45a7-b41c-80499f19f546@app.fastmail.com>
-In-Reply-To: <dd2958c5-58bf-86dd-b666-9033259a8e1a@gmx.de>
-References: <cover.1693584310.git.code@khaugsbakk.name>
- <cover.1694383247.git.code@khaugsbakk.name>
- <a37dfb3748e23b4f5081bc9a3c80a5c546101f1d.1694383248.git.code@khaugsbakk.name>
- <xmqqzg1strgx.fsf@gitster.g> <dd2958c5-58bf-86dd-b666-9033259a8e1a@gmx.de>
-Date:   Thu, 14 Sep 2023 22:25:37 +0200
-From:   "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, "Denton Liu" <liu.denton@gmail.com>,
-        "Jeff King" <peff@peff.net>, "Junio C Hamano" <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/1] range-diff: treat notes like `log`
-Content-Type: text/plain
+        with ESMTP id S229472AbjINVhO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Sep 2023 17:37:14 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA0C52705
+        for <git@vger.kernel.org>; Thu, 14 Sep 2023 14:37:10 -0700 (PDT)
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id BB9EE5A225;
+        Thu, 14 Sep 2023 21:37:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1694727429;
+        bh=O0EubOP8s+P2L2G5vWJSixOQKyNcsf0nudhKIrHAFVg=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=RThs7tC66RZqjmF5tWG0ekfLyPD232TNs20s0tDIUGOVG/naZzB8eTKylSoEqmD0D
+         ixmbS/lJU7lCv39ztlAptHJPRIRYsEFv5aEimEELWAWBilHaDHPOQ7zeZDwSyIBszh
+         J+LWkaeG9F5736JnNg7Mmngkt8ZFFGHNTxAXI5MnfDYPyihwgGzPg+JHoA+1qbIrBZ
+         m0eHEELv4Hir1QRLYwfqIlMv87yD5H9+XLZn37Rwa0iKxDJulzJvFrDm8cLFKCPvra
+         OPtexiJlbB9Qrr+1Z7o5SlzZ8SLcxzJTJ5kTHi+GSQ+prN7MZuPfU8JJ/bCvQtHV1R
+         uKZ3/d7iNF7nwzoJTDFQ1BHVfpwR56zsUCMDPiSy3Hsv13V8uLmdRJDKRK3ThxPziL
+         5Mp3Ax6OMPRYB0h34Q5YtjsViYP/j+ZC32BAPwWLmh4yWC8lk15dQFwrwhopJFuLJW
+         UlzgOgT6+d1jGl4+torf62WAGaL4MLm7LPELqede6em8vwB/EnU
+Date:   Thu, 14 Sep 2023 21:37:07 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Blake Campbell <bc@mpbell.io>
+Cc:     git@vger.kernel.org
+Subject: Re: skip-worktree autostash on pull
+Message-ID: <ZQN9Azt/K28WLfqH@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Blake Campbell <bc@mpbell.io>, git@vger.kernel.org
+References: <AB6A85F5-3E76-4462-931E-AD76E0066C37@mpbell.io>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="iUbctHyipH5f/Jop"
+Content-Disposition: inline
+In-Reply-To: <AB6A85F5-3E76-4462-931E-AD76E0066C37@mpbell.io>
+User-Agent: Mutt/2.2.9 (2022-11-12)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 14, 2023, at 10:29, Johannes Schindelin wrote:
->> [...]
->
-> Right, `-G --notes` is a good argument to rethink this.
->
-> A much more surgical way to address the issue at hand might be this
-> (Kristoffer, what do you think? It's missing documentation for the
-> newly-introduced `--show-notes-by-default` option, but you get the idea):
 
-Looks good to me. It seems like an explicit argument is the only way to
-make this work.
+--iUbctHyipH5f/Jop
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--- 
-Kristoffer Haugsbakk
+On 2023-09-14 at 09:54:30, Blake Campbell wrote:
+> Hi all - I use update-index --skip-worktree on some config files that
+> I change locally and don=E2=80=99t want to commit, but every time I pull =
+=66rom
+> the remote I have to go through a process of no-skip-worktree, stash,
+> pull, stash pop, then skip-worktree again, which is all a bit tedious!
+> Ideally some switch like --autostash for git pull would be really
+> useful. Does anyone know if something like that exists?=20
+
+The Git FAQ[0] outlines that, as you've noticed, skip-worktree doesn't
+work for ignoring changes to tracked files:
+
+  Git doesn=E2=80=99t provide a way to do this. The reason is that if Git n=
+eeds
+  to overwrite this file, such as during a checkout, it doesn=E2=80=99t know
+  whether the changes to the file are precious and should be kept, or
+  whether they are irrelevant and can safely be destroyed. Therefore, it
+  has to take the safe route and always preserve them.
+
+  It=E2=80=99s tempting to try to use certain features of git update-index,
+  namely the assume-unchanged and skip-worktree bits, but these don=E2=80=
+=99t
+  work properly for this purpose and shouldn=E2=80=99t be used this way.
+
+If you take the advice in the FAQ, then the config files won't be
+tracked and you won't have this problem:
+
+  If your goal is to modify a configuration file, it can often be
+  helpful to have a file checked into the repository which is a template
+  or set of defaults which can then be copied alongside and modified as
+  appropriate. This second, modified file is usually ignored to prevent
+  accidentally committing it.
+
+Your particular case is one of many reasons we suggest this approach.
+There is in fact an --autostash argument in git pull, as well as git
+rebase, both of which work as you might expect, but in general they
+still won't work properly with --skip-worktree and given the FAQ entry
+above, we wouldn't add support for that in the option.
+
+[0] https://git-scm.com/docs/gitfaq#ignore-tracked-files
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--iUbctHyipH5f/Jop
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.40 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZQN9AgAKCRB8DEliiIei
+gYarAQDJQdn1VzZc8mfue1B8xKepD6GbxVYd2aSX9pbTL0ewpwD/fkfWmGLP84ss
+iQr6fkRffl9zDMAAVJRf9R2O/D+gVQk=
+=cRYT
+-----END PGP SIGNATURE-----
+
+--iUbctHyipH5f/Jop--
