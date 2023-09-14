@@ -2,94 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1746EEAA7A
-	for <git@archiver.kernel.org>; Thu, 14 Sep 2023 22:17:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 24C24EEAA7A
+	for <git@archiver.kernel.org>; Thu, 14 Sep 2023 22:33:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230372AbjINWRy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Sep 2023 18:17:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40358 "EHLO
+        id S229934AbjINWdd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Sep 2023 18:33:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230376AbjINWRo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Sep 2023 18:17:44 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2D0530D2
-        for <git@vger.kernel.org>; Thu, 14 Sep 2023 15:17:33 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1E83D1C6F9B;
-        Thu, 14 Sep 2023 18:17:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=YSvgom48+yL66sOvMWN/b6mninQXkV15o5EEue
-        Jg5jM=; b=hgGlKgrAJyr5YM7Mx4KAqiEG831Q65iCVjn3CFeCqDW8p80BMqR2gS
-        YVENTe2XnkkJeIEeTxwpmJLN2eVR29ADLwoR92crkLvvmJ6Bxr32V8fqmHyGduF0
-        uCxueexJatXXii2aySLYstnf9oEAR+p+IfMeTm/ObGQGeT3rr9ta0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 163D41C6F9A;
-        Thu, 14 Sep 2023 18:17:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 66A0A1C6F99;
-        Thu, 14 Sep 2023 18:17:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/2] diff-merges: introduce '-d' option
-In-Reply-To: <87o7i7hler.fsf@osv.gnss.ru> (Sergey Organov's message of "Tue,
-        12 Sep 2023 10:59:24 +0300")
-References: <20230909125446.142715-1-sorganov@gmail.com>
-        <20230909125446.142715-3-sorganov@gmail.com>
-        <xmqqtts0tof8.fsf@gitster.g> <87o7i7hler.fsf@osv.gnss.ru>
-Date:   Thu, 14 Sep 2023 15:17:31 -0700
-Message-ID: <xmqqled8h01w.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7FF3A278-534C-11EE-859C-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+        with ESMTP id S229499AbjINWdc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Sep 2023 18:33:32 -0400
+Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 004692100
+        for <git@vger.kernel.org>; Thu, 14 Sep 2023 15:33:27 -0700 (PDT)
+Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-59b52554914so20146447b3.0
+        for <git@vger.kernel.org>; Thu, 14 Sep 2023 15:33:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1694730807; x=1695335607; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=DQrYRHCEFM5XRYa0ZEIHQ8Rp0MX/YkWEuHUYHD3hmK4=;
+        b=uAdgZHvz93uRhcA5UVkoPpokp5NdZnepifTO0eLYseSUrIJmXX79eNT0NCqHXpeAeq
+         QugjtYY44Zor96AaFoowS4rQSUoezm+wdz4pGD54ssZ9Yp8Z9XHyOmM66yzXMzAtTU3p
+         6rewLZo28ZlljzFNfhBbB+FYylfh0j9UHYHbrNLC48UIHxNEXIcmWnEgHqtxIaCpkvWu
+         tcVWygtI9Qc1+Iz13BvKEaAR7Q3ih1/8mlYAqBs+UcYkn/wnfWsaoSZPJ5HqxXAtLCEf
+         P3cXdF773bNFR2fP53WQiX6/umXZQKy206IPqN28pvQ8tEKHPza0SskLFBXrhhQhEYnS
+         bDCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694730807; x=1695335607;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DQrYRHCEFM5XRYa0ZEIHQ8Rp0MX/YkWEuHUYHD3hmK4=;
+        b=QNDLurrcCfwr8/qsvw8puJDkSlLs0Q/b15yIHjzqu69mMT91HEG8WJlB2TVGjL+xM/
+         dHZCQQK0yszQPudW5I/vw548K4qbjupgBhfdtLI2qZyxZ2SotUMSKxNq5ff5rXeA0TTB
+         gKKmAShmxNjW4yvpo+CZZMItXn0fb9WmoRea1sDnoNZRMr+lHdoXsrhntEPPXgd1C3Su
+         uJmcV36wTSgWGUhn2+rZKAg/BxZAGH1D0bbN2Ub6IOMEw6f07cohUkw/p7I5rAPw/wlO
+         vSAOCmCF3kyXrRv8dPj/bebGGQat67j+6jxviIbMCLqJc45PMAwCa7G9Wy2Y+0gdAw79
+         l7iw==
+X-Gm-Message-State: AOJu0Yw1VJpm8zIAvqv23VnBJUG14Mdd7x+xZTVnfTAcSiE5MHHNde7r
+        /zRMPKtaiNdON4xaTas+UlViNtvkFYU=
+X-Google-Smtp-Source: AGHT+IFktJ4B1hqAx2JPSaLdTe31281JhcwusLEuKNWKQsYOhcOVLHmV+T/DtkeQUKafeXrB4HpkL690IlQ=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a81:ad0d:0:b0:59b:e97e:f7d7 with SMTP id
+ l13-20020a81ad0d000000b0059be97ef7d7mr1390ywh.1.1694730807232; Thu, 14 Sep
+ 2023 15:33:27 -0700 (PDT)
+Date:   Thu, 14 Sep 2023 15:33:25 -0700
+In-Reply-To: <pull.1585.v2.git.1694538135853.gitgitgadget@gmail.com>
+Mime-Version: 1.0
+References: <pull.1585.git.1694274592854.gitgitgadget@gmail.com> <pull.1585.v2.git.1694538135853.gitgitgadget@gmail.com>
+Message-ID: <owlymsxojsga.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH v2] completion: improve doc for complex aliases
+From:   Linus Arver <linusa@google.com>
+To:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Steffen Prohaska <prohaska@zib.de>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sergey Organov <sorganov@gmail.com> writes:
+"Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
->> Sounds very straight-forward.
->>
->> Given that "--first-parent" in "git log --first-parent -p" already
->> defeats "-m" and shows the diff against the first parent only,
->> people may find it confusing if "git log -d" does not act as a
->> shorthand for that.
+> From: Philippe Blain <levraiphilippeblain@gmail.com>
 >
-> It doesn't, and I believe it's a good thing, as primary function of
-> --first-parent is to change history traversal rules, and if -d did that,
-> it would be extremely confusing.
+> The completion code can be told to use a particular completion for
+> aliases that shell out by using ': git <cmd> ;' as the first command of
+> the alias. This only works if <cmd> and the semicolon are separated by a
+> space, since if the space is missing __git_aliased_command returns (for
+> example) 'checkout;' instead of just 'checkout', and then
+> __git_complete_command fails to find a completion for 'checkout;'.
+>
+> The examples have that space but it's not clear if it's just for
+> style or if it's mandatory. Explicitly mention it.
+>
+> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+> ---
+>     completion: improve doc for complex aliases
+>     
+>     Changes since v1:
+>     
+>      * fixed the typo pointed out by Eric
+>      * added an explanation of why the space is mandatory, as suggested by
+>        Linus
+>
 
-I am not sure about that.
+Thanks for the investigation. The commit message reads much better now.
 
-> Also, --first-parent is correctly documented as implying
-> --diff-merges=first-parent, not as defeating -m.
+This LGTM, but I think Junio's review comments [1] are worth
+considering. I'll respond there also.
 
-Yes, exactly.  That makes me even more convinced that the intuitive
-behaviour, when we say "we have this great short-hand option that
-lets your 'git log' to do the first-parent thing with patch output",
-is to do the first-parent traversal _and_ show first-parent patches.
-
-"-d" is documented as a short-hand for "--diff-merges=first-parent
---patch" and not for "--first-parent --patch", so the behaviour may
-correctly match documentation, but that does not make the documented
-behaviour an intuitive one.  And a behaviour that is not intuitive
-is confusing.
-
-> If we read resulting documentation with a fresh eye, -d is similar to
-> --cc, and -c, just producing yet another kind of output, so I think all
-> this fits together quite nicely and shouldn't cause confusion.
-
-Another thing is that showing first-parent patch for merges while
-letting the traversal also visit the second-parent chain is not as
-useful an option as it could be, even though it is not so bad as the
-original "-m -p" that also showed second-parent patch for merges as
-well.  People would have to say "log --first-parent -p" to get the
-first-parent traversal with first-parent patch output, and they
-would not behefit from having "-d".
+[1] https://lore.kernel.org/git/xmqqo7i6khxv.fsf@gitster.g/#t 
