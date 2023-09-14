@@ -2,78 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D158EDE99E
-	for <git@archiver.kernel.org>; Thu, 14 Sep 2023 09:43:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 518F6EDE99E
+	for <git@archiver.kernel.org>; Thu, 14 Sep 2023 09:56:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237847AbjINJnU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Sep 2023 05:43:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35404 "EHLO
+        id S237340AbjINJ4I (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Sep 2023 05:56:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237853AbjINJnB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Sep 2023 05:43:01 -0400
+        with ESMTP id S233151AbjINJ4H (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Sep 2023 05:56:07 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DFAF2712
-        for <git@vger.kernel.org>; Thu, 14 Sep 2023 02:40:05 -0700 (PDT)
-Received: (qmail 27339 invoked by uid 109); 14 Sep 2023 09:40:05 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C99CE0
+        for <git@vger.kernel.org>; Thu, 14 Sep 2023 02:56:03 -0700 (PDT)
+Received: (qmail 27362 invoked by uid 109); 14 Sep 2023 09:56:02 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 14 Sep 2023 09:40:05 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 14 Sep 2023 09:56:02 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 21334 invoked by uid 111); 14 Sep 2023 09:40:07 -0000
+Received: (qmail 21437 invoked by uid 111); 14 Sep 2023 09:56:04 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 14 Sep 2023 05:40:07 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 14 Sep 2023 05:56:04 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 14 Sep 2023 05:40:04 -0400
+Date:   Thu, 14 Sep 2023 05:56:01 -0400
 From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>
-Subject: [PATCH 4/4] merge-ort: drop unused "opt" parameter from
- merge_check_renames_reusable()
-Message-ID: <20230914094004.GD2254894@coredump.intra.peff.net>
-References: <20230914093409.GA2254811@coredump.intra.peff.net>
+To:     phillip.wood@dunelm.org.uk
+Cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] rebase -i: ignore signals when forking subprocesses
+Message-ID: <20230914095601.GE2254894@coredump.intra.peff.net>
+References: <pull.1581.git.1694080982621.gitgitgadget@gmail.com>
+ <20230907210638.GB941945@coredump.intra.peff.net>
+ <9ba22d4b-3cbe-4d4a-8dba-bc3781e82222@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230914093409.GA2254811@coredump.intra.peff.net>
+In-Reply-To: <9ba22d4b-3cbe-4d4a-8dba-bc3781e82222@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The merge_options parameter has never been used since the function was
-introduced in 64aceb6d73 (merge-ort: add code to check for whether
-cached renames can be reused, 2021-05-20). In theory some merge options
-might impact our decisions here, but that has never been the case so
-far.
+On Fri, Sep 08, 2023 at 10:59:06AM +0100, Phillip Wood wrote:
 
-Let's drop it to appease -Wunused-parameter; it would be easy to add
-back later if we need to (there is only one caller).
+> Do we want a whole new session? As I understand it to launch a foreground
+> job shells put the child in its own process group and then call tcsetpgrp()
+> to change the foreground process group of the controlling terminal to that
+> of the child. I agree that would be a better way of doing things on unix.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- merge-ort.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+One thing I am not clear on is the convention on who does the process
+group and controlling terminal setup. Should Git do it to say "I am
+handing off control of the terminal to the editor that I am spawning"?
+Or should the editor say "I am an editor which has a user interface that
+takes over the terminal; I will control it while I am running".
 
-diff --git a/merge-ort.c b/merge-ort.c
-index 20eefd9b5e..3953c9f745 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -4880,8 +4880,7 @@ static void merge_start(struct merge_options *opt, struct merge_result *result)
- 	trace2_region_leave("merge", "allocate/init", opt->repo);
- }
- 
--static void merge_check_renames_reusable(struct merge_options *opt,
--					 struct merge_result *result,
-+static void merge_check_renames_reusable(struct merge_result *result,
- 					 struct tree *merge_base,
- 					 struct tree *side1,
- 					 struct tree *side2)
-@@ -5083,7 +5082,7 @@ void merge_incore_nonrecursive(struct merge_options *opt,
- 
- 	trace2_region_enter("merge", "merge_start", opt->repo);
- 	assert(opt->ancestor != NULL);
--	merge_check_renames_reusable(opt, result, merge_base, side1, side2);
-+	merge_check_renames_reusable(result, merge_base, side1, side2);
- 	merge_start(opt, result);
- 	/*
- 	 * Record the trees used in this merge, so if there's a next merge in
--- 
-2.42.0.628.g8a27295885
+The latter makes much more sense to me, as Git cannot know how the
+editor plans to behave. But as I understand it, this kind of job control
+stuff is implemented by the calling shell, which does the tcsetpgrp()
+call.
+
+So I dunno. It sounds to me like the "right" thing here is making Git
+more shell-like in handing control to a program (like the editor) that
+we expect to be in the foreground of the terminal. As opposed to the
+"ignore SIGINT temporarily" thing which feels more like band-aid. But
+I'm wary of getting into a rabbit hole of portability headaches and
+weird corners of Unix terminal-handling conventions.
+
+-Peff
