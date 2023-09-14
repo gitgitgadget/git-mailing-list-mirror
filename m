@@ -2,105 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6068CEEAA6A
-	for <git@archiver.kernel.org>; Thu, 14 Sep 2023 19:57:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39BFFEEAA71
+	for <git@archiver.kernel.org>; Thu, 14 Sep 2023 20:26:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229942AbjINT5h (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Sep 2023 15:57:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44438 "EHLO
+        id S229501AbjINU0F (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Sep 2023 16:26:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49164 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229603AbjINT5g (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Sep 2023 15:57:36 -0400
-Received: from out02.mta.xmission.com (out02.mta.xmission.com [166.70.13.232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5BF926B8
-        for <git@vger.kernel.org>; Thu, 14 Sep 2023 12:57:32 -0700 (PDT)
-Received: from in02.mta.xmission.com ([166.70.13.52]:41346)
-        by out02.mta.xmission.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <ebiederm@xmission.com>)
-        id 1qgsSx-00Gboc-Lt; Thu, 14 Sep 2023 13:57:31 -0600
-Received: from ip68-227-168-167.om.om.cox.net ([68.227.168.167]:34154 helo=email.froward.int.ebiederm.org.xmission.com)
-        by in02.mta.xmission.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <ebiederm@xmission.com>)
-        id 1qgsSw-003zxa-1z; Thu, 14 Sep 2023 13:57:31 -0600
-From:   "Eric W. Biederman" <ebiederm@xmission.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-References: <87sf7ol0z3.fsf@email.froward.int.ebiederm.org>
-        <xmqq8r9di5ba.fsf@gitster.g>
-        <87cyyoeli0.fsf@email.froward.int.ebiederm.org>
-        <xmqqil8fqs6o.fsf@gitster.g>
-Date:   Thu, 14 Sep 2023 14:57:22 -0500
-In-Reply-To: <xmqqil8fqs6o.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-        12 Sep 2023 09:20:31 -0700")
-Message-ID: <871qf0wmsd.fsf@email.froward.int.ebiederm.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
-MIME-Version: 1.0
+        with ESMTP id S229473AbjINU0F (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Sep 2023 16:26:05 -0400
+Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3613E26B2
+        for <git@vger.kernel.org>; Thu, 14 Sep 2023 13:26:01 -0700 (PDT)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+        by mailout.west.internal (Postfix) with ESMTP id 7310C3200413;
+        Thu, 14 Sep 2023 16:25:58 -0400 (EDT)
+Received: from imap49 ([10.202.2.99])
+  by compute6.internal (MEProxy); Thu, 14 Sep 2023 16:25:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+         h=cc:cc:content-type:content-type:date:date:from:from
+        :in-reply-to:in-reply-to:message-id:mime-version:references
+        :reply-to:sender:subject:subject:to:to; s=fm1; t=1694723157; x=
+        1694809557; bh=dr4slInlyAIjKFyANht5OyYxC+Md1IQD7R+PJtu8w/w=; b=l
+        kfWugG59VHzG9UQCGG3STQP7h+rmbTe8dumqnWuE7yQL+7wiGLl7qo2g5C2SUDJK
+        RQBhUa3NkF8Kbp2BBgzZV0Pr/nF25TWO3y82XEVyFXBlvhvIYHgqqxvg4wYwFsdJ
+        873rTbAQQUh8/+/yRxzLWQdEKlGM7WJdtRJ3yoFXFdb4OrUz19BA2ZSED6YPk5GO
+        uOi8Iskq35PdqFyqAXKe1mAAbCDrP2mcgGjNPf/Ho6DauYEePU9dYfUquMtWdGKW
+        bpt4BKHbyxbdeaL9nm2YI0JqbZMzMMxccvQ9+zal3XJe7lwv3JJev9e/1Sz9CoHz
+        39I0cwhzmRJ7WD7L5LqsQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:content-type:date:date
+        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm2; t=1694723157; x=1694809557; bh=dr4slInlyAIjK
+        FyANht5OyYxC+Md1IQD7R+PJtu8w/w=; b=jdtk5+c9WitmGrATSJyeP6MCtpL3/
+        DqcqF4sKyDD5z/0ajnNL+4PsANGCy051q4U3PLIvGiCvo7zhXwMq7wqnR5D4U/3l
+        6xdljPpnOBZUf3P91rBMQkaA4uc0klpt9YXw1WyH23Bf7V11LTUv4Ow6tmT1O1oU
+        eT2h1T0UuRMGmiGU4RwRMkBgr+WfWMGT9Y4Obx4oe6nhk+R6+6BIOFOopGo8MEzU
+        8d9Jd81Sr66HnxPBlImRpCynOC8M2hOX8auEyFy0zGkXe+2IbUAJRfxB+Ulv453P
+        2Qcegx5huYy6r7MmQaIRgh5bd1Rb50Kmyk7UZJu7JPN4ZzeYbDcbTCvMw==
+X-ME-Sender: <xms:VWwDZT4Bw9ihe_RwDFbldjVFJvbmhl4NmQTaEZOV6Rrqb0tWgHJG2J8>
+    <xme:VWwDZY5XQ69GJX2Tk9-1IkrTL5jK0e1otJngOTuFTb3tENRqGiAe67KzFijrtvFeF
+    Xis6votQHQDmrSlSg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrudejtddgudegiecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdfm
+    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
+    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedtkedtjeeiffelteffheeiheeufffg
+    heelueeftdejkeeufffgiefhgeekffffueenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:VWwDZacznvKdgEky_9ktJe3S-Ah60_pVqV9OKMLd43mtJc9-JkJz3Q>
+    <xmx:VWwDZUJ0myTEVcUIwhLuXNui8EyATp-YXVIMfMR4z-cMaXyXlCyARg>
+    <xmx:VWwDZXKQv-XxU-q60o5J55daorRs-gVtUvJzgXr7TchMzesy3lN1kg>
+    <xmx:VWwDZeV5rQP0El9QV5mvMYbXWEUkoi6fSDFtdOu2PJ5hMl9qPIDUBA>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id B4CAF15A0092; Thu, 14 Sep 2023 16:25:57 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-745-g95dd7bea33-fm-20230905.001-g95dd7bea
+Mime-Version: 1.0
+Message-Id: <c7d1e196-9521-45a7-b41c-80499f19f546@app.fastmail.com>
+In-Reply-To: <dd2958c5-58bf-86dd-b666-9033259a8e1a@gmx.de>
+References: <cover.1693584310.git.code@khaugsbakk.name>
+ <cover.1694383247.git.code@khaugsbakk.name>
+ <a37dfb3748e23b4f5081bc9a3c80a5c546101f1d.1694383248.git.code@khaugsbakk.name>
+ <xmqqzg1strgx.fsf@gitster.g> <dd2958c5-58bf-86dd-b666-9033259a8e1a@gmx.de>
+Date:   Thu, 14 Sep 2023 22:25:37 +0200
+From:   "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, "Denton Liu" <liu.denton@gmail.com>,
+        "Jeff King" <peff@peff.net>, "Junio C Hamano" <gitster@pobox.com>
+Subject: Re: [PATCH v3 1/1] range-diff: treat notes like `log`
 Content-Type: text/plain
-X-XM-SPF: eid=1qgsSw-003zxa-1z;;;mid=<871qf0wmsd.fsf@email.froward.int.ebiederm.org>;;;hst=in02.mta.xmission.com;;;ip=68.227.168.167;;;frm=ebiederm@xmission.com;;;spf=pass
-X-XM-AID: U2FsdGVkX1+Kgyz8dVTh46I6G/Mj2QuGUmT3NWCzZ3s=
-X-SA-Exim-Connect-IP: 68.227.168.167
-X-SA-Exim-Mail-From: ebiederm@xmission.com
-Subject: Re: [RFC][PATCH 0/32] SHA256 and SHA1 interoperability
-X-SA-Exim-Version: 4.2.1 (built Sat, 08 Feb 2020 21:53:50 +0000)
-X-SA-Exim-Scanned: Yes (on in02.mta.xmission.com)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> "Eric W. Biederman" <ebiederm@xmission.com> writes:
+On Thu, Sep 14, 2023, at 10:29, Johannes Schindelin wrote:
+>> [...]
 >
->> I am not worried about what it will take time to get the changes I
->> posted into the integration.  I had only envisioned them as good enough
->> to get the technical ideas across, and had never envisioned them as
->> being accepted as is.
+> Right, `-G --notes` is a good argument to rethink this.
 >
-> Ah, no worries.  By "integration" I did not mean "patches considered
-> perfect, they are accepted, and are now part of the Git codebase".
->
-> All that happens when the patches become part of the 'master'
-> branch, but before that, patches that prove testable and worthy of
-> getting tested will be merged to the 'next' branch and spend about a
-> week there.  What I meant to refer to is a step _before_ that, i.e.
-> before the patches probe to be testable.  New patches first appear
-> on the 'seen' branch that merges "everything else" to see the
-> interaction with all the topics "in flight" (i.e.  not yet in
-> 'master').  The 'seen' branch is reassembled from the latest
-> iteration of the patches twice of thrice per day, and some patches
-> are merged to 'next' and down to 'master', these "merging to prepare
-> 'master', 'next' and 'seen' branches for publishing" was what I
-> meant by "integration".  In short, being queued on 'seen' does not
-> mean all that much.  It gives project participants an easy access to
-> view how topics look in the larger picture, potentially interacting
-> with other topics in flight, but the patches in there can be
-> replaced wholesale or even dropped if they do not turn out to be
-> desirable.
->
-> I resolved textual conflicts and also compiler detectable semantic
-> conflicts (e.g. some in-flight topics may have added callsites to a
-> function your topic changes the function sigunature, or vice versa)
-> to the point that the result compiles while merging this topic to
-> 'seen', but tests are broken the big time, it seems, even though the
-> topic by itself seems to pass the tests standalone.
+> A much more surgical way to address the issue at hand might be this
+> (Kristoffer, what do you think? It's missing documentation for the
+> newly-introduced `--show-notes-by-default` option, but you get the idea):
 
-That the tests are broken is very unfortunate.
+Looks good to me. It seems like an explicit argument is the only way to
+make this work.
 
-I took at look at What's cooking in git.git and I did not see my topic
-mentioned.  So I presume I would have to perform the test merge myself
-to have a sense of what the conflicts were.
-
-Is there a time when in flight topics is low?  I had a hunch that basing
-my work on a brand new release would achieve that but I saw a lot of
-topics in your "What's cooking" email.
-
-I am just trying to figure out a good plan to deal with conflicts,
-because the bugs need to be hunted down.
-
-Eric
-
-
-
+-- 
+Kristoffer Haugsbakk
