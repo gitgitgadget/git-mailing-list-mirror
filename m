@@ -2,94 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24C24EEAA7A
-	for <git@archiver.kernel.org>; Thu, 14 Sep 2023 22:33:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2599FEEAA7C
+	for <git@archiver.kernel.org>; Thu, 14 Sep 2023 22:39:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229934AbjINWdd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Sep 2023 18:33:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59838 "EHLO
+        id S229499AbjINWja (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Sep 2023 18:39:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229499AbjINWdc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Sep 2023 18:33:32 -0400
-Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 004692100
-        for <git@vger.kernel.org>; Thu, 14 Sep 2023 15:33:27 -0700 (PDT)
-Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-59b52554914so20146447b3.0
-        for <git@vger.kernel.org>; Thu, 14 Sep 2023 15:33:27 -0700 (PDT)
+        with ESMTP id S229958AbjINWj2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Sep 2023 18:39:28 -0400
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFC11270B
+        for <git@vger.kernel.org>; Thu, 14 Sep 2023 15:39:24 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id 98e67ed59e1d1-26b44247123so1197353a91.2
+        for <git@vger.kernel.org>; Thu, 14 Sep 2023 15:39:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1694730807; x=1695335607; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=DQrYRHCEFM5XRYa0ZEIHQ8Rp0MX/YkWEuHUYHD3hmK4=;
-        b=uAdgZHvz93uRhcA5UVkoPpokp5NdZnepifTO0eLYseSUrIJmXX79eNT0NCqHXpeAeq
-         QugjtYY44Zor96AaFoowS4rQSUoezm+wdz4pGD54ssZ9Yp8Z9XHyOmM66yzXMzAtTU3p
-         6rewLZo28ZlljzFNfhBbB+FYylfh0j9UHYHbrNLC48UIHxNEXIcmWnEgHqtxIaCpkvWu
-         tcVWygtI9Qc1+Iz13BvKEaAR7Q3ih1/8mlYAqBs+UcYkn/wnfWsaoSZPJ5HqxXAtLCEf
-         P3cXdF773bNFR2fP53WQiX6/umXZQKy206IPqN28pvQ8tEKHPza0SskLFBXrhhQhEYnS
-         bDCA==
+        d=google.com; s=20230601; t=1694731164; x=1695335964; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZHZS3B9jTeV+IYVts2Ry7S6HacRLQ1ta68E4ydyCqdA=;
+        b=eWWsQ7qS1E9zSkXWcU8RxKrfVNiYTi6JBnTBnaBjJ+lY9Phn2V15DdPZHhuFx3+Ir8
+         WFBRRwob101kfzwuboAWxJrVPZNs8Mh3r1Zfy2a52SkZfMEmTFQ8WzT+oumpz5VbQTOI
+         LYTr61dM6syIdjH7t9W1EZeXJI+x1wtHPb0wwXN4iJTX/xqT6l9axkFpYfpBi9Vo5pSY
+         FhOZE88z2wJjpJaUWFulUAttKsGrfM3xSUbbJxOxNzbqIi4Fmm/ColbKIhyeol29i+Sd
+         KJH5b0yUmb8vfdGLUEFv0KtFWJj74KOn9wW8/rSUJQaYMFqj71QiIMzZFutqc8po9tOn
+         ZS1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694730807; x=1695335607;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DQrYRHCEFM5XRYa0ZEIHQ8Rp0MX/YkWEuHUYHD3hmK4=;
-        b=QNDLurrcCfwr8/qsvw8puJDkSlLs0Q/b15yIHjzqu69mMT91HEG8WJlB2TVGjL+xM/
-         dHZCQQK0yszQPudW5I/vw548K4qbjupgBhfdtLI2qZyxZ2SotUMSKxNq5ff5rXeA0TTB
-         gKKmAShmxNjW4yvpo+CZZMItXn0fb9WmoRea1sDnoNZRMr+lHdoXsrhntEPPXgd1C3Su
-         uJmcV36wTSgWGUhn2+rZKAg/BxZAGH1D0bbN2Ub6IOMEw6f07cohUkw/p7I5rAPw/wlO
-         vSAOCmCF3kyXrRv8dPj/bebGGQat67j+6jxviIbMCLqJc45PMAwCa7G9Wy2Y+0gdAw79
-         l7iw==
-X-Gm-Message-State: AOJu0Yw1VJpm8zIAvqv23VnBJUG14Mdd7x+xZTVnfTAcSiE5MHHNde7r
-        /zRMPKtaiNdON4xaTas+UlViNtvkFYU=
-X-Google-Smtp-Source: AGHT+IFktJ4B1hqAx2JPSaLdTe31281JhcwusLEuKNWKQsYOhcOVLHmV+T/DtkeQUKafeXrB4HpkL690IlQ=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a81:ad0d:0:b0:59b:e97e:f7d7 with SMTP id
- l13-20020a81ad0d000000b0059be97ef7d7mr1390ywh.1.1694730807232; Thu, 14 Sep
- 2023 15:33:27 -0700 (PDT)
-Date:   Thu, 14 Sep 2023 15:33:25 -0700
-In-Reply-To: <pull.1585.v2.git.1694538135853.gitgitgadget@gmail.com>
-Mime-Version: 1.0
-References: <pull.1585.git.1694274592854.gitgitgadget@gmail.com> <pull.1585.v2.git.1694538135853.gitgitgadget@gmail.com>
-Message-ID: <owlymsxojsga.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH v2] completion: improve doc for complex aliases
-From:   Linus Arver <linusa@google.com>
-To:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Steffen Prohaska <prohaska@zib.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
+        d=1e100.net; s=20230601; t=1694731164; x=1695335964;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZHZS3B9jTeV+IYVts2Ry7S6HacRLQ1ta68E4ydyCqdA=;
+        b=RGdndT4ky0/heRuRQD4ro9Mjs74s97Xemw9HyXc2B50wqC2gpHD8+/JU/PRk+3F80M
+         0YWNzuktDaoPGo3VVQyRPvW188fNrTHs6MnQ2Fq8S6DX0iW2p4s9WOmFbiGnzBviI2RA
+         KsQ5vSWpS+THhmqy/1eGovbQJcKvFWdSPLJxHHWqC42UlywOwb5a20PM+tvYUit4aRm4
+         zDxg98kvYAkeCCIUJWCk6rRdBqWSoaqSWHyHdOtKTlkADiungat0vG3tkl7OAeVMKva6
+         9s/SBvbz7RipuIZg6mxthk/ZfxtucpCBYEzoh3QSuSr5al3k54VYjPSN0fJksLtm/YzC
+         Ledw==
+X-Gm-Message-State: AOJu0YyQ8D3N1SbpguAzEwA0XhyyzrOtibafo0n+X/GSKUNMYqJl5C38
+        i8W+8+4CYYD/HSM+gFF247EZdQwEqMVtXbMuTPvYGjgBEbaaUeXiM7hlFQ==
+X-Google-Smtp-Source: AGHT+IE73EwYM+4+ePHkpBJSQjYzLYIq+dKuFV8/QDzivueGLhvBwkCQ0RyTfx91Um+OPg0jnpJGC2VpyzDR6g5jfqc=
+X-Received: by 2002:a17:90a:8a89:b0:274:7be1:f1ce with SMTP id
+ x9-20020a17090a8a8900b002747be1f1cemr2550923pjn.23.1694731164158; Thu, 14 Sep
+ 2023 15:39:24 -0700 (PDT)
+MIME-Version: 1.0
+References: <20230906060241.944886-2-sokcevic@google.com> <20230911170901.49050-2-sokcevic@google.com>
+ <xmqqsf7ks4nn.fsf@gitster.g> <CAJiyOijMvqK184wFgoXFyX5kmURkX3k2OmuiBpArikj26iHpMA@mail.gmail.com>
+ <xmqqfs3jpbg2.fsf@gitster.g>
+In-Reply-To: <xmqqfs3jpbg2.fsf@gitster.g>
+From:   Josip Sokcevic <sokcevic@google.com>
+Date:   Thu, 14 Sep 2023 15:39:13 -0700
+Message-ID: <CAJiyOiidpD5eNvxVV8rZP7Xej4_8bBfgTOG75T8PVsmvwya3hg@mail.gmail.com>
+Subject: Re: [PATCH v3] diff-lib: Fix check_removed when fsmonitor is on
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     jonathantanmy@google.com, git@vger.kernel.org,
+        git@jeffhostetler.com
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> From: Philippe Blain <levraiphilippeblain@gmail.com>
+On Tue, Sep 12, 2023 at 10:07=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
+ wrote:
+> It seems to be entirely doable, even though the stench from the
+> abstraction layer violation may be horrible.
 >
-> The completion code can be told to use a particular completion for
-> aliases that shell out by using ': git <cmd> ;' as the first command of
-> the alias. This only works if <cmd> and the semicolon are separated by a
-> space, since if the space is missing __git_aliased_command returns (for
-> example) 'checkout;' instead of just 'checkout', and then
-> __git_complete_command fails to find a completion for 'checkout;'.
+> ie_match_stat(), which is called by match_stat_with_submodule(),
+> does pay attention to CE_FSMONITOR_VALID bit, so none of the members
+> of struct stat matters when the bit is set.  But the bit is not set,
+> all members that fill_stat_data() and ce_match_stat_basic() care
+> about do matter.  Other code that follows callers of check_removed()
+> do care about at least .st_mode member, and I suspect that in the
+> current code .st_mode is the only member that gets looked at.
 >
-> The examples have that space but it's not clear if it's just for
-> style or if it's mandatory. Explicitly mention it.
->
-> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
-> ---
->     completion: improve doc for complex aliases
->     
->     Changes since v1:
->     
->      * fixed the typo pointed out by Eric
->      * added an explanation of why the space is mandatory, as suggested by
->        Linus
->
+> So after all, I think your original "fix" was correct, but it took
+> us some time to figure out why it was, which means we would want to
+> explain it in the log message for developers who would want to touch
+> the same area in the future.
 
-Thanks for the investigation. The commit message reads much better now.
+I finished testing this - after my original fix and after running all
+tests, I can confirm that `st_mode` of `struct stat` is indeed not
+consumed if CE_FSMONITOR_VALID is set. But, it's fragile and likely to
+cause problems in the future. Your approach of constructing `struct
+stat` based on `struct cache_entry` is the way to go.
 
-This LGTM, but I think Junio's review comments [1] are worth
-considering. I'll respond there also.
+I see you created a new set of patches in a separate thread, so I'll
+start those tests and report back there.
 
-[1] https://lore.kernel.org/git/xmqqo7i6khxv.fsf@gitster.g/#t 
+Thanks!
+
+--=20
+Josip Sokcevic
