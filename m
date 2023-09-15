@@ -2,169 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 357BFCD37AE
-	for <git@archiver.kernel.org>; Fri, 15 Sep 2023 21:13:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2914CD37AF
+	for <git@archiver.kernel.org>; Fri, 15 Sep 2023 23:18:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237987AbjIOVMh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Sep 2023 17:12:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38064 "EHLO
+        id S237925AbjIOXRw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Sep 2023 19:17:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238019AbjIOVMP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Sep 2023 17:12:15 -0400
-Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBD76A1
-        for <git@vger.kernel.org>; Fri, 15 Sep 2023 14:12:07 -0700 (PDT)
-Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-59b5a586da6so49741107b3.1
-        for <git@vger.kernel.org>; Fri, 15 Sep 2023 14:12:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1694812327; x=1695417127; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=sbBdoRX5Sybn+8t+C552i/nkx6EzTsYCvw5wweMwi+s=;
-        b=Yp1ZqykZyLHGILddfzBBluBFmJ6K3Mo74GcrELNX5GGhpsBsIqI4TkYc29JS5s4Evw
-         Q8t8feGaPbTQ62Xe+fpOQGIomJr9zqPXBLPJJmymQ0b9Ups+OSZDLhyz8hAnlq+6GrXY
-         9LzCOe+pGY+hz8V1WdOsrQz9Q/yKgE5QJ7ptx4+UEoU9pZ/mJaX0zyZ7DbpKOL0Ey2U8
-         lH5iWS2TAJRS3NAK3HbEk61z9Me6+4ewQyenw+LZMgBXgHFVP4LjaSEn5Z7Hdb2n02iB
-         pOe7VlwY6fPmOWgj4eicBFU0hOQ7ZWq9sIAAL1PaXOZDQLsDvubr/uDjqXa4tgh13mH1
-         gIPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694812327; x=1695417127;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sbBdoRX5Sybn+8t+C552i/nkx6EzTsYCvw5wweMwi+s=;
-        b=lFcGoMG2x/jPFHD0ZQ6oVEyXhxM+y/QoM2fOjrCAg0pgfwLXJC8IUVmTvR/INzcyC6
-         bafFOydLwGgTVpBVd7k7igbr0KUHDfrfPTv+ckMbKjRCjHc1yoDRqX29DMUrGP9I9+2l
-         3AYIwfCsnI+xLLHO0+ifxGr5Xs1FS+sdjOV72jCrJd5QROwyj27Oc6P7f8TGzES6NmxX
-         mHG4zHr6Ew3NMnpZ4u4jFH1jhCKsAmYijRWHtHGO244KXjJ7XVdUhXgr/5COg1TjNj+Z
-         iyFlbpfJF6GZw6bNK/TPZXzLbVaBQSNpUFE8/ZiOFPs+Q4iHyj4FqVu6MrTXCp2qGceK
-         qtoA==
-X-Gm-Message-State: AOJu0Yx83OqVk9Ho9Fycc0VkO6z0nn9capiij9OWjqqJmFuEiTRZCmUo
-        PPxoHIR6ATvnmVO5sI+5IBxlULm52s8=
-X-Google-Smtp-Source: AGHT+IHVexsKWfAcqXtbQQNUlr8ZMuW+7TghCkoG9c6fYU2XhGEQ5Dxp2gR89kwgyvqJkzEBMQaLJs3gy6Q=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a05:690c:290b:b0:59b:b0b1:d75a with SMTP id
- eg11-20020a05690c290b00b0059bb0b1d75amr172167ywb.4.1694812327215; Fri, 15 Sep
- 2023 14:12:07 -0700 (PDT)
-Date:   Fri, 15 Sep 2023 14:12:00 -0700
-In-Reply-To: <xmqqh6nvfi2p.fsf@gitster.g>
-Mime-Version: 1.0
-References: <226cc3ed753ee809a77ac7bfe958add7a4363390.1694661788.git.dsimic@manjaro.org>
- <xmqqzg1oinq1.fsf@gitster.g> <owlyedj0jok7.fsf@fine.c.googlers.com> <xmqqh6nvfi2p.fsf@gitster.g>
-Message-ID: <owlya5tnjg4f.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH] doc: pull: improve rebase=false documentation
-From:   Linus Arver <linusa@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Dragan Simic <dsimic@manjaro.org>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S237971AbjIOXRW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Sep 2023 19:17:22 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A28121BCD
+        for <git@vger.kernel.org>; Fri, 15 Sep 2023 16:17:16 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A40091A2501;
+        Fri, 15 Sep 2023 19:17:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=sfJYyP0TBkPmia/b3kQPz4J32Hh34dRKeIjjNF
+        QIXLo=; b=pmZEkBIS+Y0wvFkM0lftfNT6dC2cw+lhCZJ3giBkH42EMptLYcfew7
+        1HX93LO3epxdxaKlsM/S3+K4VkTgDiUKqT5FdZjCrNo7WI03Wt2GK567LiudpCOJ
+        32OW3gF80gXaIYLqrHKPuISgfgBPoarbiSK1HKewALEGS032vJ5a4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9C12D1A2500;
+        Fri, 15 Sep 2023 19:17:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1A86D1A24FF;
+        Fri, 15 Sep 2023 19:17:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Caleb Hill via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Caleb Hill <hillcaleb@protonmail.com>,
+        Caleb Hill <chill389cc@gmail.com>
+Subject: Re: [PATCH] docs: fix "without do cleaning" typo
+In-Reply-To: <pull.1572.git.git.1694800409471.gitgitgadget@gmail.com> (Caleb
+        Hill via GitGitGadget's message of "Fri, 15 Sep 2023 17:53:29 +0000")
+References: <pull.1572.git.git.1694800409471.gitgitgadget@gmail.com>
+Date:   Fri, 15 Sep 2023 16:17:13 -0700
+Message-ID: <xmqqzg1nc9hi.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 01D0099A-541E-11EE-9C10-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+"Caleb Hill via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Linus Arver <linusa@google.com> writes:
+> From: Caleb Hill <chill389cc@gmail.com>
 >
->> Aside: interestingly, there appears to be a "--no-rebase" option that
->> means "--rebase=false" (see cd67e4d46b (Teach 'git pull' about --rebase,
->> 2007-11-28)):
->>
->>        --no-rebase
->>            This is shorthand for --rebase=false.
->> ...
->> How about adding something like this instead as the very first paragraph
->> for this flag?
->>
->>     Supplying "--rebase" defaults to "--rebase=true". Running git-pull
->>     without arguments implies "--rebase=false", unless relevant
->>     configuration variables have been set otherwise.
+> This pr fixes a typo I noticed today while reading documentation here:
+> https://git-scm.com/docs/git-clean#Documentation/git-clean.txt-quit
 >
-> Phrase nit.
->
-> 	$ git pull origin
->
-> does run the command with arguments.
+> Signed-off-by: Caleb Hill <chill389cc@gmail.com>
+> ---
+>     docs: fix "without do cleaning" typo
+>     
+>     This pr fixes a simple typo I noticed today while reading documentation
+>     here:
+>     https://git-scm.com/docs/git-clean#Documentation/git-clean.txt-quit
 
-Ah, good catch.
+Thanks; I'll reword the proposed log message a bit and queue.
 
-> What you mean is "running
-> git-pull without any --rebase arguments implies --no-rebase",
+> diff --git a/Documentation/git-clean.txt b/Documentation/git-clean.txt
+> index 160d08b86bb..5e1a3d5148c 100644
+> --- a/Documentation/git-clean.txt
+> +++ b/Documentation/git-clean.txt
+> @@ -127,7 +127,7 @@ ask each::
+>  
+>  quit::
+>  
+> -  This lets you quit without do cleaning.
+> +  This lets you quit without doing any cleaning.
 
-Right (modulo your "--rebase arguments" -> "--rebase option" correction
-in your follow-up email).
+"without cleaning" would probably mean the same thing and a tad
+shorter, but let's use what you wrote as-is.
 
-> but
-> that is saying "not giving --rebase=<any> and not giving --rebase
-> means not rebasing", which makes my head spin.
-
-Me too.
-
-> "--no-rebase" as a command line option does have use to defeat
-> configured pull.rebase that is not set to "false"
-
-Yes, I noticed this too after digging around a bit more after I sent my
-message. Thanks for clarifying for the record.
-
-> and allowing
-> "pull.rebase" to be set to "false" does have use to defeat settings
-> for the same variable made by lower-precedence configuration file.
-
-Indeed! I did not think of this. IOW, Git can be configured in
-multiple places (the "pull.rebase" setting in ~/.gitconfig can be
-overridden by the same config in ~/myrepo/.git/config).
-
-> "--rebase=false" does not have any reason to exist, except for
-> making the repertoire of "--rebase=<kind>" to be complete.
-
-Agreed. In a sense, the docs for "--rebase=false" should say that it is
-a synonym for "--no-rebase" (because "--no-rebase" came first,
-historically), and not the other way around (that "--no-rebase" is
-shorthand for "--rebase=false").
-
-> So, I am still not sure if saying "'git pull' (no other arguments
-> and no configuration) is equivalent to 'git pull --rebase=false'"
-> adds much value.
-
-Fair point. That is, there are so many gotchas and "edge case"-like
-behaviors to consider here, so the statement "'git pull' (no other arguments
-and no configuration) is equivalent to 'git pull --rebase=false'" is an
-oversimplification that can be misleading. I agree.
-
-> If --no-rebase and --rebase=false are explained in terms of why
-> these options that specify such an unnatural action (after all, you
-> say "do this" or "do it this way", but do not usually have to say
-> "do not do it that way") need to exist.
->
-> If I were writing this patch, I would rearrange the existing text
-> like so:
->
->  * Update the description of "--no-rebase" *NOT* to depend on
->    --rebase=false.  Instead move it higher and say
->
->    - The default for "git pull" is to "merge" the other history into
->      your history, but optionally you can "rebase" your history on
->      top of the other history.
->
->    - There are configuration variables (pull.rebase and
->      branch.<name>.rebase) that trigger the optional behaviour, and
->      when you set it, your "git pull" would "rebase".
->
->    - The "--no-rebase" option is to defeat such configuration to
->      tell the command to "merge" for this particular invocation.
->
->  * Update the description of "--rebase=<kind>" and move the
->    paragraph that begins with "When false" to the end, something
->    like:
->
->    - `--rebase` alone is equivalent to `--rebase=true`.
->    - When set to 'merges'...
->    - When set to 'interactive'...
->    - See `pull.rebase`, ..., if you want to make `git pull` always
->      rebase your history on top of theirs, instead of merging their
->      history to yours.
->    - `--rebase=false` is synonym to `--no-rebase`.
-
-I think this captures the finer details while still preserving the
-spirit of Dragan's original patch, so SGTM.
-
-@Dragan if you are OK with doing the (much more substantial) change as
-suggested, please do. Thanks!
+Thanks.
