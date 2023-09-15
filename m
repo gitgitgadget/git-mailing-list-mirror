@@ -2,180 +2,166 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4636FEEAA7A
-	for <git@archiver.kernel.org>; Thu, 14 Sep 2023 23:58:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9313CEEAA7D
+	for <git@archiver.kernel.org>; Fri, 15 Sep 2023 00:10:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230353AbjINX7C (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Sep 2023 19:59:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52686 "EHLO
+        id S230153AbjIOAKZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Sep 2023 20:10:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229499AbjINX7B (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Sep 2023 19:59:01 -0400
-Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70E291FD6
-        for <git@vger.kernel.org>; Thu, 14 Sep 2023 16:58:57 -0700 (PDT)
-Received: by mail-pl1-x649.google.com with SMTP id d9443c01a7336-1c3fa9a27ffso15391475ad.0
-        for <git@vger.kernel.org>; Thu, 14 Sep 2023 16:58:57 -0700 (PDT)
+        with ESMTP id S230020AbjIOAKX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Sep 2023 20:10:23 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BDBE2100
+        for <git@vger.kernel.org>; Thu, 14 Sep 2023 17:10:19 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-40475103519so10601755e9.0
+        for <git@vger.kernel.org>; Thu, 14 Sep 2023 17:10:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1694735937; x=1695340737; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=27AmqoboAX+eZQOcIk8JHw1Fh5jy280r9BrMGWjfRp4=;
-        b=EzwkhBkyoPCy7ueISpqAbNGMOPtMlgLiIDSZDrXc74PlKwl7NIsNRWrVwRCNRhnSu/
-         ahi59U0Z6JwO85HDa9xv+93TukuwcfsWwrqtyUSKRTHXHVYn0o4lxIhp3YWwpop15tLE
-         ZV16PSSXFzUTV3z0n+erp5zpqZRj01UcnUMM+m4B8fpqVPpjAgroCOlphjkEB2wm2QHH
-         L2izkLtLUJZ0lak/CU3OERPlnguMghSTHlfT3kIlqLlJfBi+n9C84k2+k4NW4WgKbvop
-         sTPqDY71b4lRlvIe0UP6IPLP6Iyr7auBgUpexnwfRHn2Mn4a/B1bno5f98pYn7xJLkpy
-         BdRg==
+        d=gmail.com; s=20221208; t=1694736618; x=1695341418; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=OgRT15t90N4osUh6/U8/wKTb8O7KBxFwsNY9cKCY4xo=;
+        b=mH3IXxAYmxyutc8jjYKgOMVg28q3RPdZFN3bPZ3ibhx7LVtvZ0SuZnENGrwcBPNkyw
+         oYUYjRhqWYap/vX0xxT4AwBQ7g1B3Zzumklc0hWkOk1/hoTMu7iCf66NRD+E3jwYpyay
+         str+BdSj9gjs9d4oQo9HhLrxcWJcbJxsKB1mtW3CkIfVYpI0hLPAmx4Ph7Q+OnoX5233
+         MnOFewfJXMy3rrnUqa0/t6ZC+023yHPcO07e4SIS9pvOR+bZOGQHaC9bHgYqSMYATF/2
+         P6ews6krOu33+trNWQ0qgK519BKiy97dy1sNZ8axbFjE0XjQmZQTSHtaiHwRK+0aEP9w
+         rUVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694735937; x=1695340737;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=27AmqoboAX+eZQOcIk8JHw1Fh5jy280r9BrMGWjfRp4=;
-        b=O8KHwRxC/tFiNUnbsoONdjC25MLmR0bLGXcv0oHxXKeFPvJcqhJB+cxzkXBLtQ5azj
-         q5RYk45R96meSkSWleq9whjiGBQIjAfCslt8Kjr2GbzHPXDEIpnhQ/wjAKe0wob/BBeD
-         8poJbcd6z6MmkEWPXn1ULCnjg9fAMlCKWWMHjgw4lyFnQ+uuyFvcwJrdL9vzUTicnCIe
-         MGlFJv19jbdVeUi9YZeCCjb9DpM03s7TmCJjsLKcuTlmhnXkNp45k2yZA0NaD2CgoG60
-         GFTsllYripCUjGR/PjSv82i1axWoKqpYTmnVAMUU7Tc8f5Ua9RTqXuDltt7MD94+JWF3
-         p3Og==
-X-Gm-Message-State: AOJu0YzZy8AJ8Jg0+q7LOy9P94KCFLtSHnb/TOWRrzI9w1huDRPdOPrq
-        ExL0VZjFeqZ53fdadPX4vsXuUaLmvVM=
-X-Google-Smtp-Source: AGHT+IG03tRFmKB8Lf5s8pRU+WrrvdVHGnCnOOaOYrqlDLSA8aNxaT5Z8Z4Eza19YdZYgDtG+VNNgL/YgGE=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a17:903:1c5:b0:1bc:4c3d:eb08 with SMTP id
- e5-20020a17090301c500b001bc4c3deb08mr2415plh.8.1694735936905; Thu, 14 Sep
- 2023 16:58:56 -0700 (PDT)
-Date:   Thu, 14 Sep 2023 16:57:28 -0700
-In-Reply-To: <xmqqzg1oinq1.fsf@gitster.g>
-Mime-Version: 1.0
-References: <226cc3ed753ee809a77ac7bfe958add7a4363390.1694661788.git.dsimic@manjaro.org>
- <xmqqzg1oinq1.fsf@gitster.g>
-Message-ID: <owlyedj0jok7.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH] doc: pull: improve rebase=false documentation
-From:   Linus Arver <linusa@google.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Dragan Simic <dsimic@manjaro.org>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        d=1e100.net; s=20230601; t=1694736618; x=1695341418;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OgRT15t90N4osUh6/U8/wKTb8O7KBxFwsNY9cKCY4xo=;
+        b=nRwQtSWuwyYkv3dUPVwUUlb4nWftm7nKER6qsnkdq6V9THtpAr9sIC6vwqPXAaJ5Ke
+         Ss6eXZP28AtqErnCZQIFA+GJyPp81cAhEg/UNslzaDYQziuBNUNiCNXE+nH+DpKisGQt
+         /iiBOsUxO68mlad7G75/+2zDsTibQwcoDkLixpDkZOrx9PW5NLzBjrQGxCM1f8ioyA8B
+         hgP1ioFTzy9hXQVMr1GIIF8D347WuS1YgzFIzQoYkHksmdIvo2v0T0R0e8SexKKrfR/q
+         qYNHAIWH2/5MchgQcuU2uoNnBMsZe3QVREXOZSV10+4F7ToBT656jsnDwft7fyS1sRk6
+         aCWQ==
+X-Gm-Message-State: AOJu0YxDvoY2seOTUQdTNqohgKzOSiOD7FJS7gBGvX2uJ9aLpDMe9YS4
+        ad55dOVOkCQiHrbjpxb4i6aFjibqUJA=
+X-Google-Smtp-Source: AGHT+IEebbkfz4oTeWDtEhUggjjPtd6kPikJvgK4Z0T9APxrWGCnwrGvU0cttLleEADgIHV7sSQfsw==
+X-Received: by 2002:a05:600c:3647:b0:401:cc0f:f866 with SMTP id y7-20020a05600c364700b00401cc0ff866mr249826wmq.12.1694736617486;
+        Thu, 14 Sep 2023 17:10:17 -0700 (PDT)
+Received: from [192.168.2.52] (203.red-88-14-40.dynamicip.rima-tde.net. [88.14.40.203])
+        by smtp.gmail.com with ESMTPSA id f21-20020a7bcd15000000b003fe24441e23sm3197229wmj.24.2023.09.14.17.10.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 14 Sep 2023 17:10:17 -0700 (PDT)
+Subject: Re: [PATCH 1/2] test-lib: prevent misuses of --invert-exit-code
+To:     Jeff King <peff@peff.net>
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFy?= =?UTF-8?Q?mason?= 
+        <avarab@gmail.com>
+References: <68522960-edda-26d3-ddca-cee63f2d859e@gmail.com>
+ <1a60a1ca-0ef0-ecf5-d0aa-a28d7c148a82@gmail.com>
+ <20230912083528.GC1630538@coredump.intra.peff.net>
+From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
+Message-ID: <0d0e903f-aa3e-964d-7935-ceaae04a413e@gmail.com>
+Date:   Fri, 15 Sep 2023 02:10:12 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
+MIME-Version: 1.0
+In-Reply-To: <20230912083528.GC1630538@coredump.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 12-sep-2023 04:35:28, Jeff King wrote:
+> On Sun, Sep 10, 2023 at 01:08:11AM +0200, Rubén Justo wrote:
+> 
+> > GIT_TEST_PASSING_SANITIZE_LEAK=true and GIT_TEST_SANITIZE_LEAK_LOG=true
+> > use internnlly the --invert-exit-code machinery.  Therefore if the user
+> > wants to use --invert-exit-code in combination with them, the result
+> > will be confusing.
+> > 
+> > For the same reason, we are already using BAIL_OUT if the user tries to
+> > combine GIT_TEST_PASSING_SANITIZE_LEAK=check with --invert-exit-code.
+> > 
+> > Let's do the same for GIT_TEST_PASSING_SANITIZE_LEAK=true and
+> > GIT_TEST_SANITIZE_LEAK_LOG=true.
+> 
+> OK, so we are trying to find a case where the user is triggering
+> --invert-exit-code themselves and complaining. But in the code...
+> 
+> > @@ -1557,15 +1557,25 @@ then
+> >  			say "in GIT_TEST_PASSING_SANITIZE_LEAK=check mode, setting --invert-exit-code for TEST_PASSES_SANITIZE_LEAK != true"
+> >  			invert_exit_code=t
+> >  		fi
+> > -	elif test -z "$passes_sanitize_leak" &&
+> > -	     test_bool_env GIT_TEST_PASSING_SANITIZE_LEAK false
+> > +	elif test_bool_env GIT_TEST_PASSING_SANITIZE_LEAK false
+> >  	then
+> > -		skip_all="skipping $this_test under GIT_TEST_PASSING_SANITIZE_LEAK=true"
+> > -		test_done
+> > +		if test -n "$invert_exit_code"
+> > +		then
+> > +			BAIL_OUT "cannot use --invert-exit-code under GIT_TEST_PASSING_SANITIZE_LEAK=true"
+> > +		elif test -z "$passes_sanitize_leak"
+> > +		then
+> > +			skip_all="skipping $this_test under GIT_TEST_PASSING_SANITIZE_LEAK=true"
+> > +			test_done
+> > +		fi
+> >  	fi
+> 
+> You can see at the top of the context that we will set
+> invert_exit_code=t ourselves, which will then complain here:
+> 
+> >  	if test_bool_env GIT_TEST_SANITIZE_LEAK_LOG false
+> >  	then
+> > +		if test -n "$invert_exit_code"
+> > +		then
+> > +			BAIL_OUT "cannot use --invert-exit-code and GIT_TEST_SANITIZE_LEAK_LOG=true"
+> > +		fi
+> > +
+> >  		if ! mkdir -p "$TEST_RESULTS_SAN_DIR"
+> >  		then
+> >  			BAIL_OUT "cannot create $TEST_RESULTS_SAN_DIR"
+> 
+> That varible-set in the earlier context is from running in "check" mode.
+> So:
+> 
+>   make GIT_TEST_PASSING_SANITIZE_LEAK=check GIT_TEST_SANITIZE_LEAK_LOG=true
+> 
+> will now always fail. But this is the main way you'd want to run it
+> (enabling the leak log catches more stuff, and the log-check function
+> you touch in patch 2 already covers check mode).
+> 
+> So I think you'd have to hoist your check above the if/else for setting
+> up PASSING_SANITIZE_LEAK modes.
 
-> Dragan Simic <dsimic@manjaro.org> writes:
->
->> Mention in the documentation that --rebase defaults to false.
->
-> I am not quite sure if this is an improvement, though.
->
-> It is true that, if you do not have any of your own funny
-> configuration, your "git pull" will *not* rebase.  
->
-> But that is "if you do not give the --rebase option, you do not
-> trigger the rebase action".  Which is quite natural, but it is
-> different from what you wrote above, isn't it?
->
-> When people say "the default for `--rebase` is false", they mean
-> this:
->
->     I can say "git pull --rebase=<kind>" to specify how my current
->     branch is rebased on top of the upstream.  But if I do not
->     specify the <kind>, i.e. "git pull --rebase", the command will
->     act as if I gave 'false' as the <kind>.
->
-> At least, I would think that is what the word "default" means.
->
-> And I would be surprised if the "default" in that sense is 'false';
-> isn't the default <kind> 'true' --- meaning "perform the plain
-> vanilla 'git rebase'", unless you explicitly asked for 'merges',
-> 'interactive' or 'false'?
->
-> After the context of the hunk your patch touches, there is a
-> description on `pull.rebase`.  Down there, if you do not set
-> `pull.rebase` or `branch.<name>.rebase` for the current branch at
-> all, the system acts as if you had `false` for these variables.  In
-> other words, the default for these variables is `false`, meaning "do
-> not rebase, just merge".  But the default option argument for the
-> `--rebase` option given without argument would not be `false`, I
-> would think.
+Arrg, sorry.  You're right.
 
-I think there are two reasonable interpretations of the word "default"
-here.
+This was part of the series by mistake.  Please, discard it.
 
-(1) "git pull": This is equivalent to "git pull --rebase=false". So one
-could say that "git pull" defaults to "--rebase=false".
+In my tree, I have a previous commit with:
 
-(2) "git pull --rebase": This is equivalent to "git pull --rebase=true".
-So one could say that the "--rebase" flag (when it is used as "--rebase"
-without the "=..." part) defaults to "--rebase=true".
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 87cfea9e9a..46b8a76e9c 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -1556,7 +1556,6 @@ then
+                if test -z "$passes_sanitize_leak"
+                then
+                        say "in GIT_TEST_PASSING_SANITIZE_LEAK=check mode, setting --invert-exit-code for TEST_PASSES_SANITIZE_LEAK != true"
+-                       invert_exit_code=t
+                fi
+        elif test_bool_env GIT_TEST_PASSING_SANITIZE_LEAK false
+        then
 
-I assume Dragan was thinking of only the meaning in (1). The alternate
-meaning of (2) which you brought up makes sense too.
+that is part of an unsent attempt to make:
 
-I think both flavors of "default" are reasonable interpretations because
-most (if not all) Git users will start out with (1) in mind as they get
-familiar with how "git pull" works without any flags (i.e., the
-"default" git-pull behavior). Eventually they'll learn about (2) and
-realize how the <kind> defaults to "true" with the "--rebase" flag.
+  $ make SANITIZE=leak T=t7510-signed-commit.sh GIT_TEST_PASSING_SANITIZE_LEAK=check test
+ 
+not to suggest, when GPG is missing, that t7510-signed-commit.sh is a
+candidate to be marked as leak-free.  Which is distracting to me.
 
-Aside: interestingly, there appears to be a "--no-rebase" option that
-means "--rebase=false" (see cd67e4d46b (Teach 'git pull' about --rebase,
-2007-11-28)):
+However I was not satisfied with the solution and discarded it.  But
+unfortunately not entirely.  Sorry. 
 
-       --no-rebase
-           This is shorthand for --rebase=false.
-
->> Signed-off-by: Dragan Simic <dsimic@manjaro.org>
->> ---
->>  Documentation/git-pull.txt | 3 ++-
->>  1 file changed, 2 insertions(+), 1 deletion(-)
->>
->> diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
->> index 0e14f8b5b2..d28790388e 100644
->> --- a/Documentation/git-pull.txt
->> +++ b/Documentation/git-pull.txt
->> @@ -116,7 +116,8 @@ When set to `merges`, rebase using `git rebase --rebase-merges` so that
->>  the local merge commits are included in the rebase (see
->>  linkgit:git-rebase[1] for details).
->>  +
->> -When false, merge the upstream branch into the current branch.
->> +When false, merge the upstream branch into the current branch. This is
->> +the default.
->>  +
->>  When `interactive`, enable the interactive mode of rebase.
->>  +
-
-For reference here is a more complete view of the docs for this flag:
-
-    -r::
-    --rebase[=false|true|merges|interactive]::
-        When true, rebase the current branch on top of the upstream
-        branch after fetching. If there is a remote-tracking branch
-        corresponding to the upstream branch and the upstream branch
-        was rebased since last fetched, the rebase uses that information
-        to avoid rebasing non-local changes.
-    +
-    When set to `merges`, rebase using `git rebase --rebase-merges` so that
-    the local merge commits are included in the rebase (see
-    linkgit:git-rebase[1] for details).
-    +
-    When false, merge the upstream branch into the current branch.
-    +
-    When `interactive`, enable the interactive mode of rebase.
-    +
-    See `pull.rebase`, `branch.<name>.rebase` and `branch.autoSetupRebase` in
-    linkgit:git-config[1] if you want to make `git pull` always use
-    `--rebase` instead of merging.
-
-How about adding something like this instead as the very first paragraph
-for this flag?
-
-    Supplying "--rebase" defaults to "--rebase=true". Running git-pull
-    without arguments implies "--rebase=false", unless relevant
-    configuration variables have been set otherwise.
-
-This way, we can discuss what "true" and "false" mean first to get these
-two flavors of "defaults" sorted out (perhaps also mentioning
---no-rebase while we're at it). Then we can discuss the other <kind>
-values like "merges" and "interactive".
+> 
+> -Peff
