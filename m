@@ -2,98 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FA16EED61A
-	for <git@archiver.kernel.org>; Fri, 15 Sep 2023 17:16:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CEB9EED619
+	for <git@archiver.kernel.org>; Fri, 15 Sep 2023 17:25:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234441AbjIORPr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Sep 2023 13:15:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60124 "EHLO
+        id S235656AbjIORZZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Sep 2023 13:25:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235522AbjIORP3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Sep 2023 13:15:29 -0400
+        with ESMTP id S235732AbjIORYy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Sep 2023 13:24:54 -0400
 Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E59DE7F
-        for <git@vger.kernel.org>; Fri, 15 Sep 2023 10:15:24 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58D4B10F7
+        for <git@vger.kernel.org>; Fri, 15 Sep 2023 10:24:49 -0700 (PDT)
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id D3F732C873;
-        Fri, 15 Sep 2023 13:15:23 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 099242C8ED;
+        Fri, 15 Sep 2023 13:24:49 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=fuLh6hgSkRvpQ7vCJ3JpOhb7hvNMNexoy/YUU4
-        Ym0tk=; b=h4kXYw0R2mdWrwSYgheQmCRqmkx1U/mkcmPXxhQkuo50CHjOZKaUgN
-        lxFbcwXObYm4C4F1r5PN8gduZa/ka+T6iW3pLePOMF1AUX4W2nHrVxTjW8P4tg8V
-        KHZpeWv6D3uDuoBtWthouaGRbW+PE7NnZ54jT7d3kzI1EhETCI1qo=
+        :content-type; s=sasl; bh=DRHkGxs+PnmmsILcC0c5BZO5BuCsrwhV0zy4fG
+        OS5OA=; b=ETylpTj7ehC5Gb06xBARgkdXWXlMabmBXSN0a8SreVqsIyGRHdU4sO
+        EOncVzl+3FhZPiv/4Wn/9qqQ3IQC1liT/uV8+7UxCVICsa5a58k5xU5RsbnFJ8zn
+        NN3bS6IqGZq/l0IzF4aTQ639VU+AAUM2G2qDw1FvfCZXV0zKtnNu8=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id CBAE72C872;
-        Fri, 15 Sep 2023 13:15:23 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 00F862C8EC;
+        Fri, 15 Sep 2023 13:24:49 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.153.120])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9C85D2C871;
-        Fri, 15 Sep 2023 13:15:19 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0B3FC2C8EB;
+        Fri, 15 Sep 2023 13:24:45 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Mark Levedahl <mlevedahl@gmail.com>
-Cc:     git@vger.kernel.org, johannes.schindelin@gmx.de,
-        me@yadavpratyush.com
-Subject: Re: BUG: git-gui no longer executes hook scripts
-In-Reply-To: <xmqqa5tngynh.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-        15 Sep 2023 10:00:02 -0700")
-References: <bd510f6d-6613-413b-6d64-c3d2fd01d8a9@gmail.com>
-        <xmqqa5tngynh.fsf@gitster.g>
-Date:   Fri, 15 Sep 2023 10:15:18 -0700
-Message-ID: <xmqq5y4bgxy1.fsf@gitster.g>
+To:     Sergey Organov <sorganov@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/2] diff-merges: introduce '-d' option
+In-Reply-To: <87y1h8wbpo.fsf@osv.gnss.ru> (Sergey Organov's message of "Fri,
+        15 Sep 2023 02:56:35 +0300")
+References: <20230909125446.142715-1-sorganov@gmail.com>
+        <20230909125446.142715-3-sorganov@gmail.com>
+        <xmqqtts0tof8.fsf@gitster.g> <87o7i7hler.fsf@osv.gnss.ru>
+        <xmqqled8h01w.fsf@gitster.g> <87y1h8wbpo.fsf@osv.gnss.ru>
+Date:   Fri, 15 Sep 2023 10:24:43 -0700
+Message-ID: <xmqqzg1nfixw.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 7262D99A-53EB-11EE-AB8D-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: C364E90E-53EC-11EE-85DA-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Sergey Organov <sorganov@gmail.com> writes:
 
-> Shouldn't this "is it absolute" check with "$cmd" also check if $cmd
-> has either forward or backward slash in it?
->
-> Checking the use of _which with fixed arguments, it is used to spawn
-> git, gitk, nice, sh; and _which finding where they appear on the
-> search path does sound sane.  But _which does not seem to have the "if
-> given a command with directory separator, the search path does not
-> matter.  The caller means it is relative to the $cwd" logic at all,
-> so it seems it is the callers responsibility to make sure it does
-> not pass things like ".git/hooks/pre-commit" to it.
+> I don't see why desire to look at diff-to-first-parent on "side"
+> branches is any different from desire to look at them on "primary"
+> branch
 
-In other words, something along this line may go in the right
-direction (I no longer speak Tcl, and this is done with manual in
-one hand, while typing with the other hand).
+Yeah, but that is not what I meant.  The above argues for why
+"--diff-merges=first-parent" should exist independently from the
+"--first-parent" traversal *and* display option.  I am not saying
+it should not exist.
 
- git-gui.sh | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+But I view that the desire to look at any commits and its changes on
+the "side" branch at all *is* at odds with the wish to look at
+first-parent change for merge commits.  Once you decide to look at
+first-parent change for a merge commit, then every change you see
+for each commit on the "side" branch, whether it is shown as
+first-parent diff or N pairwise diffs, is what you have already seen
+in the change in the merge commit, because "git log" goes newer to
+older, and the commits on the side branches appear after the merge
+that brings them to the mainline.
 
-diff --git c/git-gui.sh w/git-gui.sh
-index 8bc8892c40..45d8f48b39 100755
---- c/git-gui/git-gui.sh
-+++ w/git-gui/git-gui.sh
-@@ -119,11 +119,15 @@ proc sanitize_command_line {command_line from_index} {
- 	while {$i < [llength $command_line]} {
- 		set cmd [lindex $command_line $i]
- 		if {[file pathtype $cmd] ne "absolute"} {
--			set fullpath [_which $cmd]
--			if {$fullpath eq ""} {
--				throw {NOT-FOUND} "$cmd not found in PATH"
-+			if {1 < [llength [file split $cmd]]]} {
-+			    set cmdpath [_which $cmd]
-+			    if {$cmdpath eq ""} {
-+				    throw {NOT-FOUND} "$cmd not found in PATH"
-+			    }
-+			} else {
-+				set cmdpath $cmd
- 			}
--			lset command_line $i $fullpath
-+			lset command_line $i $cmdpath
- 		}
- 
- 		# handle piped commands, e.g. `exec A | B`
+Making "log -d" mean "log --diff-merges=first-parent --patch" lets
+that less useful combination ("show first-parent patches but
+traverse side branches as well") squat on the short and sweet "-d"
+that could be used for more useful "log --first-parent --patch",
+which would also be more common and intuitive to users, and that is
+what I suspect will become problematic in the longer run.
+
+Thanks.
+
