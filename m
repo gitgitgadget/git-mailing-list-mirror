@@ -2,68 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7112CD37B2
-	for <git@archiver.kernel.org>; Sat, 16 Sep 2023 03:56:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9865C46CA1
+	for <git@archiver.kernel.org>; Sat, 16 Sep 2023 04:05:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235037AbjIPD41 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Sep 2023 23:56:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40738 "EHLO
+        id S235620AbjIPEFc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 16 Sep 2023 00:05:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231312AbjIPDz7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Sep 2023 23:55:59 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE23BB0
-        for <git@vger.kernel.org>; Fri, 15 Sep 2023 20:55:53 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2b974031aeaso45494101fa.0
-        for <git@vger.kernel.org>; Fri, 15 Sep 2023 20:55:53 -0700 (PDT)
+        with ESMTP id S231942AbjIPEFK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Sep 2023 00:05:10 -0400
+Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com [IPv6:2607:f8b0:4864:20::f2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2CD31BCF
+        for <git@vger.kernel.org>; Fri, 15 Sep 2023 21:05:04 -0700 (PDT)
+Received: by mail-qv1-xf2a.google.com with SMTP id 6a1803df08f44-656351b6d74so6541536d6.0
+        for <git@vger.kernel.org>; Fri, 15 Sep 2023 21:05:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1694836552; x=1695441352; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1694837103; x=1695441903; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3OUVesfcM21W9bWEWhaQNIWO7bltbGprsMIrAFChJ3M=;
-        b=J5n/1eqaT+qAE18QQtpPxaS+kJGB6vFCdux7Zi967lST0CXmuGZteoSiWbRcvg8Iuu
-         HWXsZOc3bs5mavtFZDf3C6MuTvyG/wVKxh1LAeij0YouhJ9d5KFjJFqQl7PaSmn+fpSl
-         X7ncBOneu4khy047xYU+genycofU1zq5ZQh9RfxILjvMLGyEzqylKCHoz11Y34SrFqIw
-         OBy7BU2tfsVnq6UmI2JfkRoXCzXidcp7mddiLRePx6b1RxT/3vYrZ8HuHzg7k4iNHyCp
-         7DdYMPxs/zJajNi/0UyREw0rO9KwCOwEc2FEu4lGynwsjqXy3agjRZ8szsARxhyyun09
-         NJqg==
+        bh=0lnlfg3THNzMs3CpaiBA+qHuZNV0zUEB80vjnsiV4fc=;
+        b=cBFu30Fns2FiRUMVdSV5+TjuzmDHRmd3Upg9F/d1VEdgExqHHVh0dfQ3wPSns9w9/X
+         AdammJxNlnFhvyhflSuLaTb5dkIfn+nACWq8NNezMYa+9gzTXgLXLzZG/f6h0R6Fvgsw
+         24fdL3PG5VP5btc2r3WT26fhsQSK2z/PxEdkih3ls/Ab6pZPZS03I/lFgQGaGlA3HXbh
+         Oo3uxQXjNKLdiDVQJJMvmQoAhozzx3UMMC4YAN7ypourzzCRUr7Q32quO+AuN52833wc
+         h5bH9/eVZl9qtkzbMtNofuXbHY8cfp/vYww/Q/xipKO0mupMp3TLYQPz2UuEvFcQN+JL
+         gmEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694836552; x=1695441352;
+        d=1e100.net; s=20230601; t=1694837103; x=1695441903;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=3OUVesfcM21W9bWEWhaQNIWO7bltbGprsMIrAFChJ3M=;
-        b=tfPJT9dTjKl051FQhp11xSB6Cz8Z3LAUWX0KQAxyj9ycf8yrf3YPXWoM4rsY2DjhnL
-         rVapy4b/+VujZ9JEuZUnLYoD8JyWC2W8/xEevE8WHDRy8pMOdKZHswPH9sBFCiLlPPWD
-         1IPFFigVa2r7ICLsWwjgq0vTSDc7Re7wUmPlolgDELhRAlut2bhMl5SQtehs7YGpw+52
-         HsnI6m/vrtyPQSrDKlOOfgH4h9EIJH0494e1k9uJG8aVxgOpALNNZ10dqaycnPrBg8Z1
-         YAGPvAT7rYRi3o6Nowmct4tSd1msT8opquEGtm/BZG0XQiS+g376h8aSRYRuXXyPV+vJ
-         Vh8w==
-X-Gm-Message-State: AOJu0YwV1WcmxcTU9o6KA1q4JAAp5CqnVKv87SpatCeKXMit/+KzU9KH
-        Dx0BozsH2jft07BfBurVGE/ihAXyy119aNAQ/ZSdhVLholQ=
-X-Google-Smtp-Source: AGHT+IECz/+yB99OMOV4B6LY9/Y/3Ax1e9tEbiMMGoOCYDhzY8dP/0ldnI9sg1+76TwXCl1j16KfMJtyrB4nUBRD+mE=
-X-Received: by 2002:a2e:a178:0:b0:2ba:6519:c50f with SMTP id
- u24-20020a2ea178000000b002ba6519c50fmr2995304ljl.52.1694836551819; Fri, 15
- Sep 2023 20:55:51 -0700 (PDT)
+        bh=0lnlfg3THNzMs3CpaiBA+qHuZNV0zUEB80vjnsiV4fc=;
+        b=onAmzcEt5xBMdITm/YPsHV3bxA4HiAFuEjEJstxoCO52TbvlvTztkO3QAbuNXZaCbE
+         cgA+Y02MKDbdDbrk4Y1oafv3b2zhAi0DfHtIzPMelnI7vq81pmLFwePSZeVk6a+cZYSB
+         v1DDkgHu9aLxNy85QnhxBaSa1NT3UJ2Rbh7TGQqKgntAAWYX8EfhZM8kOIPoaB1xsv3W
+         ZahtQr5d73SqDrZkmD6Evoehh5xxtWa7iCi//PRFYFYQvgjo+Kg0j8rZZf5E2teA1qzY
+         MAaQTslOs7rK5XxmGcN/q6ffOEUDUYkNl8+QWMntgASWlILuK06iBXSdhTn0JycSgdH5
+         7d8w==
+X-Gm-Message-State: AOJu0YylarHglmouobWysiedGx+RRVKvQBoY3JsnQ67ZWe82o1tVHwSj
+        uptM4iMsxTNr5q9pnq1eopKLqxwfJRHk4JlSI8lfBh1ip90=
+X-Google-Smtp-Source: AGHT+IFU3zfIDJ8GrTQ4yMc/gF4gPDo/7Cs5U6RGhQVdPqVJdXQNIIClhJuYHoLa0/l3IBll+Quf/KgcYj7I+IuTc9Y=
+X-Received: by 2002:a0c:e14b:0:b0:64c:1937:716c with SMTP id
+ c11-20020a0ce14b000000b0064c1937716cmr3693505qvl.55.1694837103513; Fri, 15
+ Sep 2023 21:05:03 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.1565.v3.git.1694830462463.gitgitgadget@gmail.com> <pull.1565.v4.git.1694836025469.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1565.v4.git.1694836025469.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 15 Sep 2023 20:55:38 -0700
-Message-ID: <CABPp-BGLdKMLL96XdF2bEppa-jbWFbC4m0AtSHPb-okavj3e=w@mail.gmail.com>
+From:   =?UTF-8?B?5ZSQ5a6H5aWV?= <winglovet@gmail.com>
+Date:   Sat, 16 Sep 2023 12:04:51 +0800
+Message-ID: <CAFWsj_W-p7kqJbCApZXjGv6Ja0xLjdgVZLVhetwLSiZr-sJA8A@mail.gmail.com>
 Subject: Re: [PATCH v4] merge-tree: add -X strategy option
 To:     Izzy via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Tang Yuyi <winglovet@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Thanks, what we want to do is to compare two patchsets' diff while
+providing capabilities like normal commit diff.
+The existing range-diff command provide an effective solution, however:
+* The output isn't suitable for machine processing
+* The command take's number of commits and commit messages into count,
+while what we really want is merely the content diff
+* The command doesn't support features like word diff, ignoring
+whitespace changes, etc
+So what comes to our mind is to simulate user behavior. We first merge
+the old patchset into the new patchset's base commit, then use the
+merge result to diff against the new patchset's source commit.
+By doing this, the diff introduced between two patchsets' bases won't
+be shown. Thus we get the 'real diff' between two patchsets.
+In the first step, we use git-merge-tree to produce the merge result
+since its performance's better than git-merge.
+However, sometimes there's conflict between the new patchset's base
+and the old patchset's source.So we need automatic conflict resolving
+- only use content from 'their' side specifically.
+Hope that makes sense.
 
-On Fri, Sep 15, 2023 at 8:47=E2=80=AFPM Izzy via GitGitGadget
+On Sat, Sep 16, 2023 at 11:47=E2=80=AFAM Izzy via GitGitGadget
 <gitgitgadget@gmail.com> wrote:
 >
 > From: Tang Yuyi <winglovet@gmail.com>
@@ -93,9 +111,7 @@ WingT%2Fmerge_tree_allow_strategy_option-v4
 sult such
 >      -    as automatically solve conflicts.
 >      +    as automatically resolving conflicts.
-
-Thanks for fixing this part of what I pointed out in the review.
-
+>
 >           Signed-off-by: Tang Yuyi <winglovet@gmail.com>
 >
 >
@@ -221,6 +237,16 @@ s' '
 > +       git rev-parse HEAD^{tree} > expected &&
 > +
 > +    git merge-tree -X ours side1 side4 > actual &&
-
-Please fix the problems in these last two lines as pointed out in both
-of my last two reviews.
+> +
+> +       test_cmp expected actual
+> +'
+> +
+>  test_expect_success 'Barf on misspelled option, with exit code other tha=
+n 0 or 1' '
+>         # Mis-spell with single "s" instead of double "s"
+>         test_expect_code 129 git merge-tree --write-tree --mesages FOOBAR=
+ side1 side2 2>expect &&
+>
+> base-commit: ac83bc5054c2ac489166072334b4147ce6d0fccb
+> --
+> gitgitgadget
