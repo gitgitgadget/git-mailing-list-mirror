@@ -2,116 +2,266 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75CD8CD37B1
-	for <git@archiver.kernel.org>; Sat, 16 Sep 2023 03:10:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3418DCD37B0
+	for <git@archiver.kernel.org>; Sat, 16 Sep 2023 03:17:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232867AbjIPDKN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Sep 2023 23:10:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53172 "EHLO
+        id S234135AbjIPDRM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Sep 2023 23:17:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230304AbjIPDJz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Sep 2023 23:09:55 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 702661BDA
-        for <git@vger.kernel.org>; Fri, 15 Sep 2023 20:09:50 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-50305abe5f0so69763e87.2
-        for <git@vger.kernel.org>; Fri, 15 Sep 2023 20:09:50 -0700 (PDT)
+        with ESMTP id S231564AbjIPDQz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Sep 2023 23:16:55 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E5B119E
+        for <git@vger.kernel.org>; Fri, 15 Sep 2023 20:16:49 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-503012f4e71so282596e87.0
+        for <git@vger.kernel.org>; Fri, 15 Sep 2023 20:16:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1694833789; x=1695438589; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1694834208; x=1695439008; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=89/eg6E0CJ+1pqL2r8zcZVUl3Y7ccx3MrpaibYpHZhk=;
-        b=MtpVZrOSU/Hzt8YBpfy1SPtFng9r0DmlOI6fnVFWEtkafShAHdef6wG4VfkslacENh
-         BZMxUuVYRcNp1inxY8s1V/CLhg7deDpBjZPWfEdmPo7dGQZKzX9YfukYh6sL85fVNU0M
-         fF4I+Ku/5w+FZS2GmrqQ/ojm9Hm+wLeg6EOiZ5OhI596EslGp9S3eocmerl4d9Ma+VNB
-         AV93zGF6zCj84dJK2M6QzYj6rsyezyPRyJnLXLzchmSyiDHZ0nZXUbfPhUDADU1LlTcg
-         ijDv1Owz/u5aMDTBt293xqQ2I98w+fy+4Cs7W3wYjCQpbbRRWpSRqEP3eWGZjweNxjV2
-         dF8Q==
+        bh=8Qqo+/pQN9J68q6O8ahPJrnY8uGp8nr6Q+auGxMvRNQ=;
+        b=FgfKm066bI1zpZKgaBjhVYzOknsNHHQReC/3kUg7oR3P34q69NNcMaG9k9DNb4mVRf
+         0decdWaEeMiXfjY3GTZXSpw9Rj1bvqGSTadbFEd2H//VlRv0DWl8G3oEoGjPo8uqw1XI
+         ZUYBcjEDA3Xbo8Y/FAr4DPmKUJY6gqC1/S4tk/U/1je0kEJu2XlSTIbDe/cGe35oT1Dn
+         p3VTLRyuSU82SnpfQ1yUPxg/UcTs9U8sUEtny/DTt/S7wRgndh9IflrYbAhc3Zh6D/6t
+         Iyxc3iTctPcJuSYL6CwlHKFKRTcqitXSbr8Df6wLTJ0mOXw/oTW6EK7fnxfNlF+s8AVG
+         aeaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694833789; x=1695438589;
+        d=1e100.net; s=20230601; t=1694834208; x=1695439008;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=89/eg6E0CJ+1pqL2r8zcZVUl3Y7ccx3MrpaibYpHZhk=;
-        b=VM91GLh0bppkLmG1wCS4Ss0Xvf/C+OGr/Gvg+NrqW5KXYncwrrTB+hZcangZyYBf+u
-         m8s4vqWy2xIEFCqtmYqKf0fAj2AGaOz/fr0AFP8T8x8rfHt00jePUIozRTPG5GTTuuny
-         fkGYYEbQWuFTx/EHT7B+rWNcQ/kbGS9zmiNSBUKnIFVVLUjIlUgH5mZsgFzYa+uqj6oH
-         y2mOWcEtK5puPHPgcyi4zFVNzTmNVhP6QkmgZQbrZ0ltDd7Nanz2+cT5FquIo2tC4iRR
-         Hza0hWLX4sX+o4QBdOuTCe2EQhQnWl+fihFO+K+TbBBcAXsElIvRrsEDmH0KzFKdpQMK
-         XH0g==
-X-Gm-Message-State: AOJu0YxdfDeSMTKDhFCd+wulL2eLOhJfjUNOz2+dSx9lnVaxggkZVvxp
-        krDaK17QODJwY2PC9r/I+/kgbq57Xpe0iNRyIEjQhICmHjw=
-X-Google-Smtp-Source: AGHT+IHGACjafWKcSyW9Z52w+zGX+HxHQJyGKjXM4fQb9Q1qYvO5qyFtG3k7SsaCQRmKdCIq7m+iY6MdNKQfkGQ7w6E=
-X-Received: by 2002:a19:5f16:0:b0:501:be3d:8a46 with SMTP id
- t22-20020a195f16000000b00501be3d8a46mr2691314lfb.26.1694833788429; Fri, 15
- Sep 2023 20:09:48 -0700 (PDT)
+        bh=8Qqo+/pQN9J68q6O8ahPJrnY8uGp8nr6Q+auGxMvRNQ=;
+        b=coNs5ghlUmmcwrqkaZ4Zp4ScKa6dVT3btTJDkGqzhRQE6Uay/F+OlLHAmF7t4OYkE7
+         pkEK6BIIQrugI2FEZUjY6Pz4/lvAtuCzwpnJkIdIYv3XQV/oofoZ3iTqUZIowc5fdZX0
+         sNayWbjmPeD1rDSRkmKf/ej1pWoSGSKV8gFmz9At9YFNdo1qVTYxz25B8XpMvAj/t+Tq
+         RiI7erPs2Ly1KQwuCtp2EohKIEnHDJo8+SDZYE+LXkj4WBXQ8lwGFjPjlXXouczpZuDp
+         Jt5pulUgKH2bZFSCiBBvAMk8xUxEATn9i1/jPPtfN9HoKx/dFmi08yrIGBJ95SGxsIj4
+         937w==
+X-Gm-Message-State: AOJu0Yz9iXtg4anaHKk9AcJfZVhopbJobF2LdrtKYBw+JjZgmsUuaKRS
+        e0Q/tG0oc6hb6bIulWAK6bBAOd3Dg+TZEK0RxcZEjoX3y0c=
+X-Google-Smtp-Source: AGHT+IGq5l2wD3b8cjSOBJi4IbGDl5xdkDO+9PbEOl8xC6fyYujNPhPjeKHDkpwPi5KcrkaIPGUKxWqLe8IhqMDkE7M=
+X-Received: by 2002:a05:6512:2396:b0:500:bf44:b2b3 with SMTP id
+ c22-20020a056512239600b00500bf44b2b3mr1529799lfv.21.1694834207559; Fri, 15
+ Sep 2023 20:16:47 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230914093409.GA2254811@coredump.intra.peff.net> <20230914094004.GD2254894@coredump.intra.peff.net>
-In-Reply-To: <20230914094004.GD2254894@coredump.intra.peff.net>
+References: <pull.1565.v2.git.1691818386345.gitgitgadget@gmail.com> <pull.1565.v3.git.1694830462463.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1565.v3.git.1694830462463.gitgitgadget@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 15 Sep 2023 20:09:00 -0700
-Message-ID: <CABPp-BEi1CSXEE=-dDi_bhtSsGeVWtivfT-jQP+hjWdv4agq=Q@mail.gmail.com>
-Subject: Re: [PATCH 4/4] merge-ort: drop unused "opt" parameter from merge_check_renames_reusable()
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
+Date:   Fri, 15 Sep 2023 20:16:00 -0700
+Message-ID: <CABPp-BGo2UUJKm39Ljs+-Usf1F02sTej3phr84i8wiUSf_FB=Q@mail.gmail.com>
+Subject: Re: [PATCH v3] merge-tree: add -X strategy option
+To:     Izzy via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Tang Yuyi <winglovet@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 14, 2023 at 2:40=E2=80=AFAM Jeff King <peff@peff.net> wrote:
+Hi,
+
+On Fri, Sep 15, 2023 at 7:14=E2=80=AFPM Izzy via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> The merge_options parameter has never been used since the function was
-> introduced in 64aceb6d73 (merge-ort: add code to check for whether
-> cached renames can be reused, 2021-05-20). In theory some merge options
-> might impact our decisions here, but that has never been the case so
-> far.
+> From: Tang Yuyi <winglovet@gmail.com>
+>
+> Add merge strategy option to produce more customizable merge result such
+> as automatically solve conflicts.
 
-Yeah, it was used in some preliminary versions of the code while I was
-developing the new algorithm, but there were lots of changes between
-when I started working on merge-ort and when it was finally ready to
-submit for review.  I must have just overlooked that this parameter
-was no longer needed.  Thanks for catching and cleaning up.
+s/solve/resolving/
 
-> Let's drop it to appease -Wunused-parameter; it would be easy to add
-> back later if we need to (there is only one caller).
+I think "solve" should be "solving" here, except that "solve" isn't
+really the right word.  It's not solving (figuring out) anything, it's
+using a big hammer to make the problem just go away.  So, I think
+"resolving" is a better choice.
 
-Yep, makes sense.
-
-
-> Signed-off-by: Jeff King <peff@peff.net>
+> Signed-off-by: Tang Yuyi <winglovet@gmail.com>
 > ---
->  merge-ort.c | 5 ++---
->  1 file changed, 2 insertions(+), 3 deletions(-)
+>     merge-tree: add -X strategy option
 >
-> diff --git a/merge-ort.c b/merge-ort.c
-> index 20eefd9b5e..3953c9f745 100644
-> --- a/merge-ort.c
-> +++ b/merge-ort.c
-> @@ -4880,8 +4880,7 @@ static void merge_start(struct merge_options *opt, =
-struct merge_result *result)
->         trace2_region_leave("merge", "allocate/init", opt->repo);
+>     Change-Id: I16be592262d13cebcff8726eb043f7ecdb313b76
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1565%2F=
+WingT%2Fmerge_tree_allow_strategy_option-v3
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1565/WingT=
+/merge_tree_allow_strategy_option-v3
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1565
+>
+> Range-diff vs v2:
+>
+>  1:  7d53d08381e ! 1:  d64a774fa7c merge-tree: add -X strategy option
+>      @@
+>        ## Metadata ##
+>      -Author: winglovet <winglovet@gmail.com>
+>      +Author: Tang Yuyi <winglovet@gmail.com>
+>
+>        ## Commit message ##
+>           merge-tree: add -X strategy option
+>      @@ Commit message
+>           Add merge strategy option to produce more customizable merge re=
+sult such
+>           as automatically solve conflicts.
+>
+>      -    Signed-off-by: winglovet <winglovet@gmail.com>
+>      +    Signed-off-by: Tang Yuyi <winglovet@gmail.com>
+>
+>        ## builtin/merge-tree.c ##
+>       @@
+>      @@ t/t4301-merge-tree-write-tree.sh: test_expect_success 'Content me=
+rge and a few c
+>         test_cmp expect actual
+>        '
+>
+>      -+test_expect_success 'Auto resolve conflicts by "ours" stragety opt=
+ion' '
+>      ++test_expect_success 'Auto resolve conflicts by "ours" strategy opt=
+ion' '
+>       + git checkout side1^0 &&
+>       +
+>       + # make sure merge conflict exists
+>
+>
+>  builtin/merge-tree.c             | 24 ++++++++++++++++++++++++
+>  t/t4301-merge-tree-write-tree.sh | 23 +++++++++++++++++++++++
+>  2 files changed, 47 insertions(+)
+>
+> diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
+> index 0de42aecf4b..2ec6ec0d39a 100644
+> --- a/builtin/merge-tree.c
+> +++ b/builtin/merge-tree.c
+> @@ -19,6 +19,8 @@
+>  #include "tree.h"
+>  #include "config.h"
+>
+> +static const char **xopts;
+> +static size_t xopts_nr, xopts_alloc;
+>  static int line_termination =3D '\n';
+>
+>  struct merge_list {
+> @@ -414,6 +416,7 @@ struct merge_tree_options {
+>         int show_messages;
+>         int name_only;
+>         int use_stdin;
+> +       struct merge_options merge_options;
+>  };
+>
+>  static int real_merge(struct merge_tree_options *o,
+> @@ -439,6 +442,8 @@ static int real_merge(struct merge_tree_options *o,
+>
+>         init_merge_options(&opt, the_repository);
+>
+> +       opt.recursive_variant =3D o->merge_options.recursive_variant;
+> +
+>         opt.show_rename_progress =3D 0;
+>
+>         opt.branch1 =3D branch1;
+> @@ -510,6 +515,17 @@ static int real_merge(struct merge_tree_options *o,
+>         return !result.clean; /* result.clean < 0 handled above */
 >  }
 >
-> -static void merge_check_renames_reusable(struct merge_options *opt,
-> -                                        struct merge_result *result,
-> +static void merge_check_renames_reusable(struct merge_result *result,
->                                          struct tree *merge_base,
->                                          struct tree *side1,
->                                          struct tree *side2)
-> @@ -5083,7 +5082,7 @@ void merge_incore_nonrecursive(struct merge_options=
- *opt,
+> +static int option_parse_x(const struct option *opt,
+> +                         const char *arg, int unset)
+> +{
+> +       if (unset)
+> +               return 0;
+> +
+> +       ALLOC_GROW(xopts, xopts_nr + 1, xopts_alloc);
+> +       xopts[xopts_nr++] =3D xstrdup(arg);
+> +       return 0;
+> +}
+> +
+>  int cmd_merge_tree(int argc, const char **argv, const char *prefix)
+>  {
+>         struct merge_tree_options o =3D { .show_messages =3D -1 };
+> @@ -548,6 +564,10 @@ int cmd_merge_tree(int argc, const char **argv, cons=
+t char *prefix)
+>                            &merge_base,
+>                            N_("commit"),
+>                            N_("specify a merge-base for the merge")),
+> +               OPT_CALLBACK('X', "strategy-option", &xopts,
+> +                       N_("option=3Dvalue"),
+> +                       N_("option for selected merge strategy"),
+> +                       option_parse_x),
+>                 OPT_END()
+>         };
 >
->         trace2_region_enter("merge", "merge_start", opt->repo);
->         assert(opt->ancestor !=3D NULL);
-> -       merge_check_renames_reusable(opt, result, merge_base, side1, side=
-2);
-> +       merge_check_renames_reusable(result, merge_base, side1, side2);
->         merge_start(opt, result);
->         /*
->          * Record the trees used in this merge, so if there's a next merg=
-e in
-> --
-> 2.42.0.628.g8a27295885
+> @@ -556,6 +576,10 @@ int cmd_merge_tree(int argc, const char **argv, cons=
+t char *prefix)
+>         argc =3D parse_options(argc, argv, prefix, mt_options,
+>                              merge_tree_usage, PARSE_OPT_STOP_AT_NON_OPTI=
+ON);
+>
+> +       for (int x =3D 0; x < xopts_nr; x++)
+> +               if (parse_merge_opt(&o.merge_options, xopts[x]))
+> +                       die(_("unknown strategy option: -X%s"), xopts[x])=
+;
+> +
+>         /* Handle --stdin */
+>         if (o.use_stdin) {
+>                 struct strbuf buf =3D STRBUF_INIT;
+> diff --git a/t/t4301-merge-tree-write-tree.sh b/t/t4301-merge-tree-write-=
+tree.sh
+> index 250f721795b..4125bb101ec 100755
+> --- a/t/t4301-merge-tree-write-tree.sh
+> +++ b/t/t4301-merge-tree-write-tree.sh
+> @@ -22,6 +22,7 @@ test_expect_success setup '
+>         git branch side1 &&
+>         git branch side2 &&
+>         git branch side3 &&
+> +       git branch side4 &&
+>
+>         git checkout side1 &&
+>         test_write_lines 1 2 3 4 5 6 >numbers &&
+> @@ -46,6 +47,13 @@ test_expect_success setup '
+>         test_tick &&
+>         git commit -m rename-numbers &&
+>
+> +       git checkout side4 &&
+> +       test_write_lines 0 1 2 3 4 5 >numbers &&
+> +       echo yo >greeting &&
+> +       git add numbers greeting &&
+> +       test_tick &&
+> +       git commit -m other-content-modifications &&
+> +
+>         git switch --orphan unrelated &&
+>         >something-else &&
+>         git add something-else &&
+> @@ -97,6 +105,21 @@ test_expect_success 'Content merge and a few conflict=
+s' '
+>         test_cmp expect actual
+>  '
+>
+> +test_expect_success 'Auto resolve conflicts by "ours" strategy option' '
+> +       git checkout side1^0 &&
+> +
+> +       # make sure merge conflict exists
+> +       test_must_fail git merge side4 &&
+> +       git merge --abort &&
+> +
+> +       git merge -X ours side4 &&
+> +       git rev-parse HEAD^{tree} > expected &&
+> +
+> +    git merge-tree -X ours side1 side4 > actual &&
+
+Multiple style problems still here from V2:
+  * There should be no space between the redirection operator ('>')
+and the filename following it.
+  * You have indented most lines with tabs, but the line just above
+this one with 4 spaces.
+
+
+> +
+> +       test_cmp expected actual
+> +'
+> +
+>  test_expect_success 'Barf on misspelled option, with exit code other tha=
+n 0 or 1' '
+>         # Mis-spell with single "s" instead of double "s"
+>         test_expect_code 129 git merge-tree --write-tree --mesages FOOBAR=
+ side1 side2 2>expect &&
+>
+> base-commit: ac83bc5054c2ac489166072334b4147ce6d0fccb
