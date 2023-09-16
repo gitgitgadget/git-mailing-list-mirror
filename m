@@ -2,153 +2,238 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BF3CCD37B3
-	for <git@archiver.kernel.org>; Sat, 16 Sep 2023 02:10:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68B88CD37B0
+	for <git@archiver.kernel.org>; Sat, 16 Sep 2023 02:15:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238098AbjIPCKO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Sep 2023 22:10:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59772 "EHLO
+        id S234023AbjIPCPC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Sep 2023 22:15:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233997AbjIPCJs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Sep 2023 22:09:48 -0400
-Received: from mail.manjaro.org (mail.manjaro.org [IPv6:2a01:4f8:c0c:51f3::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D69B1BF2
-        for <git@vger.kernel.org>; Fri, 15 Sep 2023 19:09:42 -0700 (PDT)
+        with ESMTP id S238126AbjIPCOd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Sep 2023 22:14:33 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D99E1FCE
+        for <git@vger.kernel.org>; Fri, 15 Sep 2023 19:14:26 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-402cc6b8bedso31571115e9.1
+        for <git@vger.kernel.org>; Fri, 15 Sep 2023 19:14:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1694830465; x=1695435265; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VWBVBcpY1yqVG7XPGdnKaUzUzfvMNTXzTD9iw6ofSz8=;
+        b=gsfIFncr6G21wuw55fvl1BKIzE7xDFk7H6y36hPvqFoCjx8N8uXkqEfr7QuEsY8tNa
+         PiRenfRFUjFVIHqLOD2ZpOq/Q7YIAWQaZZ7zyu0bwS6cX8qnkCWz5YxtLtygNU2Iczme
+         bHHMIaOHF3CarIN7W7+yE4ZfyCHFyGMrFPPPGIq7sX0WxDm+CzTgYNrHjMaRg2GQqTKX
+         wAmzAngReJWaZT8VIvIGVd3vGpivxnGJ0U7UcjGGFUnPfn8T9VmFbL8xE5zPkqMHDfbt
+         27Qx0Fvvzv91DTd2ivzEJc+hBSdbwG8VAnYOuGLOXYYKG4mE4N0LeHQ7B7FOEiFmAWg+
+         FZMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694830465; x=1695435265;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=VWBVBcpY1yqVG7XPGdnKaUzUzfvMNTXzTD9iw6ofSz8=;
+        b=nY7aqbC67g+dIBDZOy1iDpRgo3C7ycfg7cFnV54jGtCv8Q6fDN0OLDcx6m8rAE5l4w
+         mus9HVYgK4mcHBa8lqcJN4vb/HVe0vOp8EjD9zyUzQXfWRm6xFkyPXauDUHf9kmITH6z
+         /xsjHTrtgmz8/9Ad5Ogzv6MxlPSCDMRX4+DDj/BqRak4PCMEsG1WFE21bZJhjwucguWp
+         JhXGLng8/2wbyMwXPeELEEREO4dFsirR7cCV+PxSJ24M11Pj17/7OpXCVl+hoWY+6CN/
+         0nOMH9aNpgWcjvXzqjyaxn2NNz7q1LQPQlgT8LLtMd+I7nN6dwiApPxeUSzgb8EOwROU
+         76dQ==
+X-Gm-Message-State: AOJu0YyortqnIkpvrzNGN4fRTJDGE28k9rm80Yf21zZKHq1S/ovcI2YZ
+        hENG8qGY8k9RbCoCYFLSds693qRGQ0g=
+X-Google-Smtp-Source: AGHT+IHgwKhbmnNquKkm74vBE6LFe8+nbyTG+viwqaFU9Vo1WKJKKzzTPlXml/oaIohJtAX7qyfK3Q==
+X-Received: by 2002:adf:a209:0:b0:320:254:b874 with SMTP id p9-20020adfa209000000b003200254b874mr73166wra.11.1694830464385;
+        Fri, 15 Sep 2023 19:14:24 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id fg5-20020a056402548500b00530aae2d5bfsm752715edb.9.2023.09.15.19.14.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 15 Sep 2023 19:14:24 -0700 (PDT)
+Message-ID: <pull.1565.v3.git.1694830462463.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1565.v2.git.1691818386345.gitgitgadget@gmail.com>
+References: <pull.1565.v2.git.1691818386345.gitgitgadget@gmail.com>
+From:   "Izzy via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 16 Sep 2023 02:14:22 +0000
+Subject: [PATCH v3] merge-tree: add -X strategy option
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-        t=1694830180;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=QQkPj4ma1Vj4er2SoTr4eJOjnKZVInmVEUeMynEIW88=;
-        b=BQinGRG2wtB5gKArFNmdMCmThTSL+x095sYJZYO0qVe3ttdaJASNWAtXJ8vMWRyCo75lHd
-        SshRhn5oyBeSI+0LtOxlXGzh9aYfQRQm7q9z7n9ULP8L/sP1CaIBPlOC4Gd/LpsZA7nkeq
-        JQazj8LMTG0n3RPg0uFRVkTQkGKv9bUaZhbrLsQsSNdOb9znksZxU8b2t/Iv9/copwvuWk
-        hwzjEPQVBdlk05Glb5ZwmeLMO9Yzh124Z4BL6AM5lS5EnGoDlYlDDRZyu2QKSBUzS3dadd
-        /V07mc4Yr3HhuDhiodpP67CPvjAPhm6ImN/jwqw8zdD3xk4I9HPQiReklSHZ8A==
-Date:   Sat, 16 Sep 2023 04:09:39 +0200
-From:   Dragan Simic <dsimic@manjaro.org>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] diff --stat: add config option to limit filename width
-In-Reply-To: <487bd30e5a4cdcea8697393eb36ce3f3@manjaro.org>
-References: <87badb12f040d1c66cd9b89074d3de5015a45983.1694446743.git.dsimic@manjaro.org>
- <xmqqil8gs3s0.fsf@gitster.g> <487bd30e5a4cdcea8697393eb36ce3f3@manjaro.org>
-Message-ID: <7aceb7db8d3f4b569564ffd9d1e2e368@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-        auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>, Izzy <winglovet@gmail.com>,
+        Tang Yuyi <winglovet@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2023-09-12 04:11, Dragan Simic wrote:
-> On 2023-09-12 01:12, Junio C Hamano wrote:
->> Dragan Simic <dsimic@manjaro.org> writes:
->> 
->>> Add new configuration option diff.statNameWidth=<width> that is 
->>> equivalent
->>> to the command-line option --stat-name-width=<width>, but it is 
->>> ignored
->>> by format-patch.  This follows the logic established by the already
->>> existing configuration option diff.statGraphWidth=<width>.
->>> 
->>> Limiting the widths of names and graphs in the --stat output makes 
->>> sense
->>> for interactive work on wide terminals with many columns, hence the 
->>> support
->>> for these configuration options.  They don't affect format-patch 
->>> because
->>> it already adheres to the traditional 80-column standard.
->>> 
->>> Update the documentation and add more tests to cover new 
->>> configuration
->>> option diff.statNameWidth=<width>.  While there, perform a few minor 
->>> code
->>> and whitespace cleanups here and there, as spotted.
->>> 
->>> Signed-off-by: Dragan Simic <dsimic@manjaro.org>
->>> ---
->> 
->> The stat lines have <width> (the entire display width),
->> <graph-width> (what appears after '|') and <name-width> (what
->> appears before '|'), so I would worry about letting users specify
->> all three to contradictory values, if there weren't an existing
->> command line option already.  But of course there already is a
->> command line option, so somebody more clever than me must have
->> thought about how to deal with such an impossible settings, and
->> adding a configuration variable to specify the same impossible
->> settings to the system would not make things worse.
-> 
-> Good point, but we're actually fine with adding diff.statNameWidth as
-> a new configuration option, because the real troubles with
-> contradictory configuration values might arise if we ever add
-> diff.statWidth later.  However, we should still be fine at that point,
-> because the code in diff.c, starting around the line #2730, performs a
-> reasonable amount of sanity checks and value adjustments.
-> 
-> If we ever add diff.statWidth later, a good thing to do would be to
-> emit warnings from the above-mentioned code in diff.c if it actually
-> performs the adjustments, to make the users aware of the contradictory
-> values.  I might even have a look at that separately, if you're fine
-> with adding such warnings.
+From: Tang Yuyi <winglovet@gmail.com>
 
-Just checking, do you want me to perform any improvements to this patch, 
-so you can have it pulled into one of your trees?
+Add merge strategy option to produce more customizable merge result such
+as automatically solve conflicts.
 
-I'll start working on a patch that adds the above-mentioned warnings, 
-but having those implemented properly and hashed out will surely take a 
-fair amount of time.  However, those warnings should be quite usable, if 
-you agree, although they're not critical at the moment.
+Signed-off-by: Tang Yuyi <winglovet@gmail.com>
+---
+    merge-tree: add -X strategy option
+    
+    Change-Id: I16be592262d13cebcff8726eb043f7ecdb313b76
 
->>>  Documentation/config/diff.txt  |  4 ++++
->>>  Documentation/diff-options.txt | 17 +++++++-------
->>>  builtin/diff.c                 |  1 +
->>>  builtin/log.c                  |  1 +
->>>  builtin/merge.c                |  1 +
->>>  builtin/rebase.c               |  1 +
->> 
->> Someday, as a follow-up after the dust from this topic settles, we
->> would probably want to look at how these rev.diffopt.* members are
->> initialized and refactor the common code out to a helper.  It would
->> allow us to instead of doing this ...
-> 
-> Another good point.  If you agree, I'd prefer to have my patch
-> accepted and merged as-is, after which I'll have a look into unifying
-> the initialization of the rev.diffopt.* members.  Such an approach
-> should, in general, also be better in case any regressions are
-> detected at some point in the future.
-> 
-> I'll also have a look into the NEEDSWORK note in diff.c that asks for
-> using utf8_strnwidth() to calculate the display width of line_prefix.
-> I already had a brief look at that, and it seems that it leaves enough
-> space for some rather nice related code cleanups.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1565%2FWingT%2Fmerge_tree_allow_strategy_option-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1565/WingT/merge_tree_allow_strategy_option-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1565
 
-I'll also start working on these patches in the next few days, which 
-should result in some rather nice code cleanups, AFAICT so far.
+Range-diff vs v2:
 
->>>  	/* Set up defaults that will apply to both no-index and regular 
->>> diffs. */
->>>  	rev.diffopt.stat_width = -1;
->>> +	rev.diffopt.stat_name_width = -1;
->>>  	rev.diffopt.stat_graph_width = -1;
->>>  	rev.diffopt.flags.allow_external = 1;
->>>  	rev.diffopt.flags.allow_textconv = 1;
->> 
->> ... in many places, do so in a single place in the helper function,
->> and these places will just call the helper:
->> 
->> 	std_graph_options(&rev.diffopt);
->> 
->> I do not know offhand if "stat graph options related members" is a
->> good line to draw, or there are other things that are common outside
->> these .stat_foo members.  If the latter and the helper function will
->> initialize the members other than the stat-graph settings, its name
->> obviously needs a bit more thought, but you get the idae.
-> 
-> Sure, I'm willing to have a detailed look into all that, as I already
-> described above.
+ 1:  7d53d08381e ! 1:  d64a774fa7c merge-tree: add -X strategy option
+     @@
+       ## Metadata ##
+     -Author: winglovet <winglovet@gmail.com>
+     +Author: Tang Yuyi <winglovet@gmail.com>
+      
+       ## Commit message ##
+          merge-tree: add -X strategy option
+     @@ Commit message
+          Add merge strategy option to produce more customizable merge result such
+          as automatically solve conflicts.
+      
+     -    Signed-off-by: winglovet <winglovet@gmail.com>
+     +    Signed-off-by: Tang Yuyi <winglovet@gmail.com>
+      
+       ## builtin/merge-tree.c ##
+      @@
+     @@ t/t4301-merge-tree-write-tree.sh: test_expect_success 'Content merge and a few c
+       	test_cmp expect actual
+       '
+       
+     -+test_expect_success 'Auto resolve conflicts by "ours" stragety option' '
+     ++test_expect_success 'Auto resolve conflicts by "ours" strategy option' '
+      +	git checkout side1^0 &&
+      +
+      +	# make sure merge conflict exists
+
+
+ builtin/merge-tree.c             | 24 ++++++++++++++++++++++++
+ t/t4301-merge-tree-write-tree.sh | 23 +++++++++++++++++++++++
+ 2 files changed, 47 insertions(+)
+
+diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
+index 0de42aecf4b..2ec6ec0d39a 100644
+--- a/builtin/merge-tree.c
++++ b/builtin/merge-tree.c
+@@ -19,6 +19,8 @@
+ #include "tree.h"
+ #include "config.h"
+ 
++static const char **xopts;
++static size_t xopts_nr, xopts_alloc;
+ static int line_termination = '\n';
+ 
+ struct merge_list {
+@@ -414,6 +416,7 @@ struct merge_tree_options {
+ 	int show_messages;
+ 	int name_only;
+ 	int use_stdin;
++	struct merge_options merge_options;
+ };
+ 
+ static int real_merge(struct merge_tree_options *o,
+@@ -439,6 +442,8 @@ static int real_merge(struct merge_tree_options *o,
+ 
+ 	init_merge_options(&opt, the_repository);
+ 
++	opt.recursive_variant = o->merge_options.recursive_variant;
++
+ 	opt.show_rename_progress = 0;
+ 
+ 	opt.branch1 = branch1;
+@@ -510,6 +515,17 @@ static int real_merge(struct merge_tree_options *o,
+ 	return !result.clean; /* result.clean < 0 handled above */
+ }
+ 
++static int option_parse_x(const struct option *opt,
++			  const char *arg, int unset)
++{
++	if (unset)
++		return 0;
++
++	ALLOC_GROW(xopts, xopts_nr + 1, xopts_alloc);
++	xopts[xopts_nr++] = xstrdup(arg);
++	return 0;
++}
++
+ int cmd_merge_tree(int argc, const char **argv, const char *prefix)
+ {
+ 	struct merge_tree_options o = { .show_messages = -1 };
+@@ -548,6 +564,10 @@ int cmd_merge_tree(int argc, const char **argv, const char *prefix)
+ 			   &merge_base,
+ 			   N_("commit"),
+ 			   N_("specify a merge-base for the merge")),
++		OPT_CALLBACK('X', "strategy-option", &xopts,
++			N_("option=value"),
++			N_("option for selected merge strategy"),
++			option_parse_x),
+ 		OPT_END()
+ 	};
+ 
+@@ -556,6 +576,10 @@ int cmd_merge_tree(int argc, const char **argv, const char *prefix)
+ 	argc = parse_options(argc, argv, prefix, mt_options,
+ 			     merge_tree_usage, PARSE_OPT_STOP_AT_NON_OPTION);
+ 
++	for (int x = 0; x < xopts_nr; x++)
++		if (parse_merge_opt(&o.merge_options, xopts[x]))
++			die(_("unknown strategy option: -X%s"), xopts[x]);
++
+ 	/* Handle --stdin */
+ 	if (o.use_stdin) {
+ 		struct strbuf buf = STRBUF_INIT;
+diff --git a/t/t4301-merge-tree-write-tree.sh b/t/t4301-merge-tree-write-tree.sh
+index 250f721795b..4125bb101ec 100755
+--- a/t/t4301-merge-tree-write-tree.sh
++++ b/t/t4301-merge-tree-write-tree.sh
+@@ -22,6 +22,7 @@ test_expect_success setup '
+ 	git branch side1 &&
+ 	git branch side2 &&
+ 	git branch side3 &&
++	git branch side4 &&
+ 
+ 	git checkout side1 &&
+ 	test_write_lines 1 2 3 4 5 6 >numbers &&
+@@ -46,6 +47,13 @@ test_expect_success setup '
+ 	test_tick &&
+ 	git commit -m rename-numbers &&
+ 
++	git checkout side4 &&
++	test_write_lines 0 1 2 3 4 5 >numbers &&
++	echo yo >greeting &&
++	git add numbers greeting &&
++	test_tick &&
++	git commit -m other-content-modifications &&
++
+ 	git switch --orphan unrelated &&
+ 	>something-else &&
+ 	git add something-else &&
+@@ -97,6 +105,21 @@ test_expect_success 'Content merge and a few conflicts' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'Auto resolve conflicts by "ours" strategy option' '
++	git checkout side1^0 &&
++
++	# make sure merge conflict exists
++	test_must_fail git merge side4 &&
++	git merge --abort &&
++
++	git merge -X ours side4 &&
++	git rev-parse HEAD^{tree} > expected &&
++
++    git merge-tree -X ours side1 side4 > actual &&
++
++	test_cmp expected actual
++'
++
+ test_expect_success 'Barf on misspelled option, with exit code other than 0 or 1' '
+ 	# Mis-spell with single "s" instead of double "s"
+ 	test_expect_code 129 git merge-tree --write-tree --mesages FOOBAR side1 side2 2>expect &&
+
+base-commit: ac83bc5054c2ac489166072334b4147ce6d0fccb
+-- 
+gitgitgadget
