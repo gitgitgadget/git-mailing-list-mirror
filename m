@@ -2,262 +2,256 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F895CD37B0
-	for <git@archiver.kernel.org>; Sat, 16 Sep 2023 02:27:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A0BCCD37B0
+	for <git@archiver.kernel.org>; Sat, 16 Sep 2023 02:55:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238641AbjIPC1T (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Sep 2023 22:27:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55504 "EHLO
+        id S237072AbjIPCzR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Sep 2023 22:55:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238659AbjIPC1K (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Sep 2023 22:27:10 -0400
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D6D91BF2
-        for <git@vger.kernel.org>; Fri, 15 Sep 2023 19:27:01 -0700 (PDT)
-Received: by mail-oi1-x22e.google.com with SMTP id 5614622812f47-3a81154c5f5so1675892b6e.1
-        for <git@vger.kernel.org>; Fri, 15 Sep 2023 19:27:01 -0700 (PDT)
+        with ESMTP id S236585AbjIPCyt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Sep 2023 22:54:49 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6824D1BD3
+        for <git@vger.kernel.org>; Fri, 15 Sep 2023 19:54:43 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-502fd1e1dd8so741299e87.1
+        for <git@vger.kernel.org>; Fri, 15 Sep 2023 19:54:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1694831221; x=1695436021; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1694832881; x=1695437681; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=KL8TFfbwDJcZQveWOOEcOZpuNPT32LnQLk8iHljdv6Y=;
-        b=ZtVe8CvUJr22YIpJpFROdmerWIbB18WhryswdyYvSDpnv21fCQ+jWmVrVAkp3WrOJ4
-         iodOq6DD9M0mLBwUI7VMNxcMgkbPdRJl52E/qUBESdV8NbHeK+lxfQRTRLzkXgXm3HQR
-         yjs0f9kanhqhKLCaMuMnREsQ4PpVuHwiObAV15xGEUnrS2f0SitIUGK+vVJF0+/TqO+y
-         1Q3AY9v4v0Rs08D4a4Ly2HHJU3sYOukcFrTPkF0rXDMYEZBr9x0s9wszEyTe1Zs5+m6y
-         8hYEnje2V1l1psgGNKWRZujSO9dc9Vy51qi270pQ0awNZ7CdpqEMpUP6L7M1QKIJM+bh
-         f1dA==
+        bh=gPAUy0CrYq28cwKlrVkyMqjCJAnFKEV1iL0pC1uxrR0=;
+        b=U6Btyc6qWe6MCa2PErqKbnXxAV33Oz8Uc8aLsWyJdCeayiw9OPSbq0XxVChzi7wxSY
+         qNaYhd6ZbJVBQLAAlXhpfpHx8O/aMW6XUDXMRmY2NZHIzAJFUPFCPHMuwvXv+cDNJDMY
+         6SF7zRSJpRtgDLe3+IqCZUwipUzsyZFULoxnwXzNGTKG8ObA8yb5LypvohXQolUdWX2T
+         GAgamkH+blEJe/FOYwRBvdsv4USRxzdqf9GdN6OBgHBfUnCIaBGCPUQCjw0k8Ow1uYMB
+         0mDr//1mH6ZkKuVqyJ8sJ61zDCnUhmnvT6om1B6UckUSmL8QBRDdf5AWjJRYdsy8ftqm
+         fM4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694831221; x=1695436021;
+        d=1e100.net; s=20230601; t=1694832881; x=1695437681;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=KL8TFfbwDJcZQveWOOEcOZpuNPT32LnQLk8iHljdv6Y=;
-        b=Uc6NtvZmLTbnjj8OaFtKxgjBqPtSoLxik0e+wExrFlpwYQ2pQ1LhEDovmewoZPo728
-         XzcsOJqZ0Vt9woi347SRQJu7ecHaQUt6KEaR7dvKPuUvuhIjDz9ASnKWyLXv/fDI/VW/
-         UNyQ8Oqe/GR4jVtuN8dRSyqNQQJYZAZJYetFbIUqwGlTGBVFn0/+M4mGwHMxn2yYvTDM
-         exila4l88U8oNQKDrhB3ef5NVo7XNidBV3MHvXqFUw9tBTkiZy9ViHg4gh4+PManFiEo
-         ieE10+QaZ8YUI8jO28VWFrI0KIh+KGISOiBNC++hQqmIdJXsv3aRj6rgQPK0cfSZFmWf
-         y5iw==
-X-Gm-Message-State: AOJu0YxFOqx7LlPwkqChC5gRbJkaJYDprx0w7czDIDC9VpsgTISwzlJp
-        QDbqD9NMVWPaxcc/Rje6ZKIF5YpXURFtNfpD1gSlZbLj
-X-Google-Smtp-Source: AGHT+IHz/qTPQWwBav8ON5pmSQyZ1fAadJ9MvYQLQteXAV0JBuxQEflXG4+KuAU3z7z3YxCMwJCAEmRiyjN6thlBz2c=
-X-Received: by 2002:a05:6808:64c:b0:3a7:36f9:51aa with SMTP id
- z12-20020a056808064c00b003a736f951aamr2949557oih.17.1694831220852; Fri, 15
- Sep 2023 19:27:00 -0700 (PDT)
+        bh=gPAUy0CrYq28cwKlrVkyMqjCJAnFKEV1iL0pC1uxrR0=;
+        b=HANzJI7tuuo1Ov+djuBc2yOgbi1AwlNaq2Tt7JGoxEesN3S29fUDYV5Syz2kJCaTht
+         UpGaKq9bjbzUblBRHwCHZH+vfKgXeMDJ/e8C7gpYyIi0K1tSwwwj/2qEKBckeCMuG/5f
+         DauethBN8qmNWEo/WJ7IOaBLaz12/YARm+65kcCO64PNhMdB41D9CXsGJedoI1doMP3v
+         75ntbMFvbQ6SZnibknCN0iTj96/nOO5yIGBTeljqyo2alswRKwCUw1bvNo2HuRIrqFKv
+         uq6KMo9eDWiT6XX3tZPGr4CqkC9B1lesklbUoqdDkziqpsPvccv/Khem7TLjSchYIhvk
+         l/uA==
+X-Gm-Message-State: AOJu0YyK9xESHBpQ/OrNEs/sY/ZHg7E/GtBfBYtHYoCfaCtEHEhizwxO
+        C3u4dXgnyftliKxb7z0c/WPCpSLalRsolqY53mYfPND7kAw=
+X-Google-Smtp-Source: AGHT+IEfralokTl+lGEdRc+LmdFRlxrZsnTDt+ZmO65418GMH+uyGcjBklg+8702t30AU3E1ssq0nyDUfiGw2ZNWgWk=
+X-Received: by 2002:a19:5517:0:b0:500:9704:3c9 with SMTP id
+ n23-20020a195517000000b00500970403c9mr2944807lfe.26.1694832881238; Fri, 15
+ Sep 2023 19:54:41 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1565.v2.git.1691818386345.gitgitgadget@gmail.com> <pull.1565.v3.git.1694830462463.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1565.v3.git.1694830462463.gitgitgadget@gmail.com>
-From:   =?UTF-8?B?5ZSQ5a6H5aWV?= <winglovet@gmail.com>
-Date:   Sat, 16 Sep 2023 10:26:49 +0800
-Message-ID: <CAFWsj_UeK-5uyCtBfLYeRZXRMdAD_eFassxEo6FvgeVzmwqLNQ@mail.gmail.com>
-Subject: Re: [PATCH v3] merge-tree: add -X strategy option
-To:     Izzy via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+References: <20230914093409.GA2254811@coredump.intra.peff.net> <20230914093948.GA2254894@coredump.intra.peff.net>
+In-Reply-To: <20230914093948.GA2254894@coredump.intra.peff.net>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 15 Sep 2023 19:54:28 -0700
+Message-ID: <CABPp-BEhgZB3Q5VKTznOFwt2+Ptcf6ffyJSbXXnmoa_4_zRAVg@mail.gmail.com>
+Subject: Re: [PATCH 1/4] merge-ort: drop custom err() function
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for your advice!
-I've fixed those blocking issues.
-However, regarding the global variable issue, I'm not familiar with C
-and git code and don't know how to solve this. I think perhaps we need
-something like closure to parse opt into a local variable?
-Our usecase is to achieve something like 'range-diff', we first use
-merge-tree to merge new patchset's base commit with old patchset's
-source commit, then use the merge result to diff against new
-patchset's source commit. So we only need to make sure conflict's are
-handled automatically, leaving other diff features to the second step.
+On Thu, Sep 14, 2023 at 2:39=E2=80=AFAM Jeff King <peff@peff.net> wrote:
+>
+> The merge-ort code has an err() function, but it's really just error()
+> in disguise. It differs in two ways:
+>
+>   1. It takes a "struct merge_options" argument. But the function
+>      completely ignores it! We can simply remove it.
 
+Oops, when I simplified the err() function copied from
+merge-recursive.c in one way, I failed to notice that it enabled
+further simplifications.
 
-On Sat, Sep 16, 2023 at 10:14=E2=80=AFAM Izzy via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+>   2. It formats the error string into a strbuf, prepending "error: ",
+>      and then feeds the result into error(). But this is wrong! The
+>      error() function already adds the prefix, so we end up with:
 >
-> From: Tang Yuyi <winglovet@gmail.com>
+>         error: error: Failed to execute internal merge
+
+...and the same problem can be found in merge-recursive.c's err() function.
+
+Not sure what current opinions on whether we should bother fixing
+those up.  I do intend on nuking merge-recursive.c, but I obviously
+haven't had much Git time this year.
+
+> So let's just drop this function entirely and call error() directly, as
+> the functions are otherwise identical (note that they both always return
+> -1).
 >
-> Add merge strategy option to produce more customizable merge result such
-> as automatically solve conflicts.
->
-> Signed-off-by: Tang Yuyi <winglovet@gmail.com>
+> Presumably nobody noticed the bogus messages because they are quite hard
+> to trigger (they are mostly internal errors reading and writing
+> objects). However, one easy trigger is a custom merge driver which dies
+> by signal; we have a test already here, but we were not checking the
+> contents of stderr.
+
+Thanks for catching this.
+
+> Signed-off-by: Jeff King <peff@peff.net>
 > ---
->     merge-tree: add -X strategy option
+> A few of these messages starts with capital letters, which is unlike our
+> usual error message style. I didn't clean that up here. We could do so
+> on top,
+
+There are two of these.  In my defense, they were copied verbatim from
+merge-recursive.c.  And I, um, never noticed the problem over there
+before copying.  Or after.
+
+> but I actually wonder if some of these ought to be using
+> path_msg() and continuing instead, to give output closer to other
+> conflict or error cases (e.g., conflicts caused by missing submodule
+> objects). But I dunno. I guess these are all more clearly "woah,
+> something is totally wrong" that we do not expect to happen, so it
+> probably isn't a big deal to just abort.
+
+Yeah, all callers of err()/error() are for things that should never
+happen regardless of repository contents and should result in an
+instant abort, whereas anything calling path_msg() is a conflict or
+informational message that is expected for various kinds of repository
+data -- these messages are accumulated and later shown.
+
+Another distinction is that any call to path_msg() is associated to a
+very specific path (or a few specific paths in special cases like
+renames or add/add with conflict modes), whereas none of the calls to
+err()/error() have a specific path they are about.  This serves a few
+purposes:
+  * We've had reports before that users get confused when there are
+multiple conflict messages about a path and they do not occur
+together.  The structure of the merge machinery is such that it often
+has to process conflicts by type and then by path, rather than by path
+and then by type.  If a merge has many conflicts, processing by type
+and then by path, combined with printing as you go, naturally results
+in cases where there are multiple conflict type messages for a single
+path, but the messages are separated by dozens or hundreds of lines of
+conflict messages about other paths.  By accumulating and printing
+later, at print time we can sort based on path and provide nicer
+output (though renames and such might still cause some separation of
+related messages).
+  * Accumulating and printing conflict & informational messages later
+is also more friendly for use by other tools such as merge-tree or
+rebase that may want to only conditionally print the messages or even
+operate on the structured data (the specific paths and conflict types
+recorded with them) in some special way.  Dscho and I talked about
+that for his webby-merge-ui-for-github tool he was working on.
+
+Anyway, long story short is that I think continuing to use error()
+instead of path_msg() or something else makes sense here.  The capital
+to lowercase cleanups make sense; we could even #leftoverbits for that
+piece.
+
+
+>  merge-ort.c           | 28 +++++-----------------------
+>  t/t6406-merge-attr.sh |  3 ++-
+>  2 files changed, 7 insertions(+), 24 deletions(-)
 >
->     Change-Id: I16be592262d13cebcff8726eb043f7ecdb313b76
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1565%2F=
-WingT%2Fmerge_tree_allow_strategy_option-v3
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1565/WingT=
-/merge_tree_allow_strategy_option-v3
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1565
->
-> Range-diff vs v2:
->
->  1:  7d53d08381e ! 1:  d64a774fa7c merge-tree: add -X strategy option
->      @@
->        ## Metadata ##
->      -Author: winglovet <winglovet@gmail.com>
->      +Author: Tang Yuyi <winglovet@gmail.com>
->
->        ## Commit message ##
->           merge-tree: add -X strategy option
->      @@ Commit message
->           Add merge strategy option to produce more customizable merge re=
-sult such
->           as automatically solve conflicts.
->
->      -    Signed-off-by: winglovet <winglovet@gmail.com>
->      +    Signed-off-by: Tang Yuyi <winglovet@gmail.com>
->
->        ## builtin/merge-tree.c ##
->       @@
->      @@ t/t4301-merge-tree-write-tree.sh: test_expect_success 'Content me=
-rge and a few c
->         test_cmp expect actual
->        '
->
->      -+test_expect_success 'Auto resolve conflicts by "ours" stragety opt=
-ion' '
->      ++test_expect_success 'Auto resolve conflicts by "ours" strategy opt=
-ion' '
->       + git checkout side1^0 &&
->       +
->       + # make sure merge conflict exists
->
->
->  builtin/merge-tree.c             | 24 ++++++++++++++++++++++++
->  t/t4301-merge-tree-write-tree.sh | 23 +++++++++++++++++++++++
->  2 files changed, 47 insertions(+)
->
-> diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-> index 0de42aecf4b..2ec6ec0d39a 100644
-> --- a/builtin/merge-tree.c
-> +++ b/builtin/merge-tree.c
-> @@ -19,6 +19,8 @@
->  #include "tree.h"
->  #include "config.h"
->
-> +static const char **xopts;
-> +static size_t xopts_nr, xopts_alloc;
->  static int line_termination =3D '\n';
->
->  struct merge_list {
-> @@ -414,6 +416,7 @@ struct merge_tree_options {
->         int show_messages;
->         int name_only;
->         int use_stdin;
-> +       struct merge_options merge_options;
->  };
->
->  static int real_merge(struct merge_tree_options *o,
-> @@ -439,6 +442,8 @@ static int real_merge(struct merge_tree_options *o,
->
->         init_merge_options(&opt, the_repository);
->
-> +       opt.recursive_variant =3D o->merge_options.recursive_variant;
-> +
->         opt.show_rename_progress =3D 0;
->
->         opt.branch1 =3D branch1;
-> @@ -510,6 +515,17 @@ static int real_merge(struct merge_tree_options *o,
->         return !result.clean; /* result.clean < 0 handled above */
+> diff --git a/merge-ort.c b/merge-ort.c
+> index 8631c99700..027ecc7f78 100644
+> --- a/merge-ort.c
+> +++ b/merge-ort.c
+> @@ -721,23 +721,6 @@ static void clear_or_reinit_internal_opts(struct mer=
+ge_options_internal *opti,
+>         renames->callback_data_nr =3D renames->callback_data_alloc =3D 0;
 >  }
 >
-> +static int option_parse_x(const struct option *opt,
-> +                         const char *arg, int unset)
-> +{
-> +       if (unset)
-> +               return 0;
-> +
-> +       ALLOC_GROW(xopts, xopts_nr + 1, xopts_alloc);
-> +       xopts[xopts_nr++] =3D xstrdup(arg);
-> +       return 0;
-> +}
-> +
->  int cmd_merge_tree(int argc, const char **argv, const char *prefix)
->  {
->         struct merge_tree_options o =3D { .show_messages =3D -1 };
-> @@ -548,6 +564,10 @@ int cmd_merge_tree(int argc, const char **argv, cons=
-t char *prefix)
->                            &merge_base,
->                            N_("commit"),
->                            N_("specify a merge-base for the merge")),
-> +               OPT_CALLBACK('X', "strategy-option", &xopts,
-> +                       N_("option=3Dvalue"),
-> +                       N_("option for selected merge strategy"),
-> +                       option_parse_x),
->                 OPT_END()
->         };
+> -__attribute__((format (printf, 2, 3)))
+> -static int err(struct merge_options *opt, const char *err, ...)
+> -{
+> -       va_list params;
+> -       struct strbuf sb =3D STRBUF_INIT;
+> -
+> -       strbuf_addstr(&sb, "error: ");
+> -       va_start(params, err);
+> -       strbuf_vaddf(&sb, err, params);
+> -       va_end(params);
+> -
+> -       error("%s", sb.buf);
+> -       strbuf_release(&sb);
+> -
+> -       return -1;
+> -}
+> -
+>  static void format_commit(struct strbuf *sb,
+>                           int indent,
+>                           struct repository *repo,
+> @@ -2122,13 +2105,12 @@ static int handle_content_merge(struct merge_opti=
+ons *opt,
+>                                           &result_buf);
 >
-> @@ -556,6 +576,10 @@ int cmd_merge_tree(int argc, const char **argv, cons=
-t char *prefix)
->         argc =3D parse_options(argc, argv, prefix, mt_options,
->                              merge_tree_usage, PARSE_OPT_STOP_AT_NON_OPTI=
-ON);
+>                 if ((merge_status < 0) || !result_buf.ptr)
+> -                       ret =3D err(opt, _("Failed to execute internal me=
+rge"));
+> +                       ret =3D error(_("Failed to execute internal merge=
+"));
 >
-> +       for (int x =3D 0; x < xopts_nr; x++)
-> +               if (parse_merge_opt(&o.merge_options, xopts[x]))
-> +                       die(_("unknown strategy option: -X%s"), xopts[x])=
+>                 if (!ret &&
+>                     write_object_file(result_buf.ptr, result_buf.size,
+>                                       OBJ_BLOB, &result->oid))
+> -                       ret =3D err(opt, _("Unable to add %s to database"=
+),
+> -                                 path);
+> +                       ret =3D error(_("Unable to add %s to database"), =
+path);
+>
+>                 free(result_buf.ptr);
+>                 if (ret)
+> @@ -3518,10 +3500,10 @@ static int read_oid_strbuf(struct merge_options *=
+opt,
+>         unsigned long size;
+>         buf =3D repo_read_object_file(the_repository, oid, &type, &size);
+>         if (!buf)
+> -               return err(opt, _("cannot read object %s"), oid_to_hex(oi=
+d));
+> +               return error(_("cannot read object %s"), oid_to_hex(oid))=
 ;
-> +
->         /* Handle --stdin */
->         if (o.use_stdin) {
->                 struct strbuf buf =3D STRBUF_INIT;
-> diff --git a/t/t4301-merge-tree-write-tree.sh b/t/t4301-merge-tree-write-=
-tree.sh
-> index 250f721795b..4125bb101ec 100755
-> --- a/t/t4301-merge-tree-write-tree.sh
-> +++ b/t/t4301-merge-tree-write-tree.sh
-> @@ -22,6 +22,7 @@ test_expect_success setup '
->         git branch side1 &&
->         git branch side2 &&
->         git branch side3 &&
-> +       git branch side4 &&
+>         if (type !=3D OBJ_BLOB) {
+>                 free(buf);
+> -               return err(opt, _("object %s is not a blob"), oid_to_hex(=
+oid));
+> +               return error(_("object %s is not a blob"), oid_to_hex(oid=
+));
+>         }
+>         strbuf_attach(dst, buf, size, size + 1);
+>         return 0;
+> @@ -4973,7 +4955,7 @@ static void merge_ort_nonrecursive_internal(struct =
+merge_options *opt,
+>                  * TRANSLATORS: The %s arguments are: 1) tree hash of a m=
+erge
+>                  * base, and 2-3) the trees for the two trees we're mergi=
+ng.
+>                  */
+> -               err(opt, _("collecting merge info failed for trees %s, %s=
+, %s"),
+> +               error(_("collecting merge info failed for trees %s, %s, %=
+s"),
+>                     oid_to_hex(&merge_base->object.oid),
+>                     oid_to_hex(&side1->object.oid),
+>                     oid_to_hex(&side2->object.oid));
+> diff --git a/t/t6406-merge-attr.sh b/t/t6406-merge-attr.sh
+> index 9677180a5b..05ad13b23e 100755
+> --- a/t/t6406-merge-attr.sh
+> +++ b/t/t6406-merge-attr.sh
+> @@ -179,7 +179,8 @@ test_expect_success !WINDOWS 'custom merge driver tha=
+t is killed with a signal'
 >
->         git checkout side1 &&
->         test_write_lines 1 2 3 4 5 6 >numbers &&
-> @@ -46,6 +47,13 @@ test_expect_success setup '
->         test_tick &&
->         git commit -m rename-numbers &&
->
-> +       git checkout side4 &&
-> +       test_write_lines 0 1 2 3 4 5 >numbers &&
-> +       echo yo >greeting &&
-> +       git add numbers greeting &&
-> +       test_tick &&
-> +       git commit -m other-content-modifications &&
-> +
->         git switch --orphan unrelated &&
->         >something-else &&
->         git add something-else &&
-> @@ -97,6 +105,21 @@ test_expect_success 'Content merge and a few conflict=
-s' '
->         test_cmp expect actual
->  '
->
-> +test_expect_success 'Auto resolve conflicts by "ours" strategy option' '
-> +       git checkout side1^0 &&
-> +
-> +       # make sure merge conflict exists
-> +       test_must_fail git merge side4 &&
-> +       git merge --abort &&
-> +
-> +       git merge -X ours side4 &&
-> +       git rev-parse HEAD^{tree} > expected &&
-> +
-> +    git merge-tree -X ours side1 side4 > actual &&
-> +
-> +       test_cmp expected actual
-> +'
-> +
->  test_expect_success 'Barf on misspelled option, with exit code other tha=
-n 0 or 1' '
->         # Mis-spell with single "s" instead of double "s"
->         test_expect_code 129 git merge-tree --write-tree --mesages FOOBAR=
- side1 side2 2>expect &&
->
-> base-commit: ac83bc5054c2ac489166072334b4147ce6d0fccb
+>         >./please-abort &&
+>         echo "* merge=3Dcustom" >.gitattributes &&
+> -       test_must_fail git merge main &&
+> +       test_must_fail git merge main 2>err &&
+> +       grep "^error: Failed to execute internal merge" err &&
+>         git ls-files -u >output &&
+>         git diff --name-only HEAD >>output &&
+>         test_must_be_empty output
 > --
-> gitgitgadget
+> 2.42.0.628.g8a27295885
+
+Thanks for fixing this up.
