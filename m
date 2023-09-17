@@ -2,168 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D5E2CD37B4
-	for <git@archiver.kernel.org>; Sun, 17 Sep 2023 13:25:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98B53CD37B4
+	for <git@archiver.kernel.org>; Sun, 17 Sep 2023 16:46:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233333AbjIQNVa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 17 Sep 2023 09:21:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33854 "EHLO
+        id S235491AbjIQQq2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 17 Sep 2023 12:46:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233784AbjIQNV2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Sep 2023 09:21:28 -0400
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE21412F
-        for <git@vger.kernel.org>; Sun, 17 Sep 2023 06:21:23 -0700 (PDT)
-Received: by mail-pl1-x636.google.com with SMTP id d9443c01a7336-1c39a4f14bcso34394815ad.3
-        for <git@vger.kernel.org>; Sun, 17 Sep 2023 06:21:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1694956883; x=1695561683; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=IO3I9A2vOCdAiKhNR2/Xj55vbzv9rv11NF4hinSRE4E=;
-        b=apCjwiLCjVPmF8otHoR9CivyAPtr6Eya4fMLUqd973h5FF4CIrPAVct7v4RXTd4tcN
-         0kVsImQqXucqqX02HBk9t0KzCJTDUJ4zD8xp4XG6ILfGBX06RoHjU5CxAKzI8bCyP+nX
-         m/bhVgH/3pofM0xjV62E1kWnOw0pR4MfmgzsgWMfMxT3P38PoSoKiLWL2YekrTQ9Xd00
-         1DNjJDZBLLh9VYdUhFNEZhs/qKIgFugl/MiwFfphrsP4Uf8lDcy3hwkLVaO2BwaK/g2O
-         5BzxPLJzX2UX3FUB1hP3+5wyzFsEeQ0WANeAWmbS7alkDyhK8k3xyaY2GPvBfBYcsMs4
-         MdUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694956883; x=1695561683;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IO3I9A2vOCdAiKhNR2/Xj55vbzv9rv11NF4hinSRE4E=;
-        b=DdzMs729AyD144wuA3m0txZiRKttmM2PzY4P9+vuZZk1xbQgiBoEdbsIs/Thv+lqlo
-         HsiTxLDJL3eVFMLholMA8izEElRuV1ExQGfMJ/O86Y19K7JvtUT3A0eu4Bc3sdYvFJdp
-         e92BORzNbK740Q7DJjOcpU4uXTmyP0UZEDVvzKL/LNifKyWPMMDRAZ/s6GZ3Dspo+FjN
-         0r8j4Q89Oa7e3JW0BvwaKvZlqLg9LyRl8MT4TMd2H8jUnZMnFTf7zm6z6f9bcTE+gmi+
-         9x784ZVp7kRI6fU9KIux3PV/sdY4Kxl2c5PqJGnsfqFhoMUD3HQfQM6KqidD1NKHthRj
-         saPQ==
-X-Gm-Message-State: AOJu0YxXY+lJXMJrJw/ySAWwTjk3OcqKU30QpQeyk2Qy+Lj8ToKqEmBy
-        wC8k+tKmEku6tLNkHvvDhmc=
-X-Google-Smtp-Source: AGHT+IHSyTbRsmPt5iCWqnVYR4rwVO+29i9SzDSKqOtJ+LRW/4lzJD/5SuWmyoNdgqDaKhrkBRCIGA==
-X-Received: by 2002:a17:903:22cc:b0:1c4:13f:9dd3 with SMTP id y12-20020a17090322cc00b001c4013f9dd3mr8812070plg.62.1694956883204;
-        Sun, 17 Sep 2023 06:21:23 -0700 (PDT)
-Received: from debian.me ([103.124.138.83])
-        by smtp.gmail.com with ESMTPSA id n6-20020a170902968600b001bdcde49bc3sm6580955plp.119.2023.09.17.06.21.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 17 Sep 2023 06:21:22 -0700 (PDT)
-Received: by debian.me (Postfix, from userid 1000)
-        id A1D8D8A3C179; Sun, 17 Sep 2023 20:21:18 +0700 (WIB)
-Date:   Sun, 17 Sep 2023 20:21:18 +0700
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-To:     Javier Mora <cousteaulecommandant@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Cc:     Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] `git push` sends unnecessary objects
-Message-ID: <ZQb9Thxa5X-Fo5mj@debian.me>
-References: <CAH1-q0iV+E73RrUDA8jcoFgNEfQDNwRnX5P5Z7r3Qj3GESV_7g@mail.gmail.com>
+        with ESMTP id S236318AbjIQQqO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Sep 2023 12:46:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 778A2132
+        for <git@vger.kernel.org>; Sun, 17 Sep 2023 09:45:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1694969120;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=W+Y+MI7oe+8bNKc0gZFUxl5PHTXzUq8URl7GIeSZPRg=;
+        b=F/cItwymP8sfaApRN4GPKZQMIwwYk553I3/PHZnDxOJAZzztIhCazedsabglhhR8KYJ34T
+        5lbpHpxC7HxVH9zh8QPW57e/2dCKckz4MSoyY8RDxjnePr5GBnPa5XJVwD6F4nmaMJL6lz
+        YSQNjI017BDoEaYqnsvy3lWT+IFDb/k=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-553-WzgBdVseMnOEMIX0IBv6XA-1; Sun, 17 Sep 2023 12:45:14 -0400
+X-MC-Unique: WzgBdVseMnOEMIX0IBv6XA-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com [10.11.54.4])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 02CAF945920;
+        Sun, 17 Sep 2023 16:45:14 +0000 (UTC)
+Received: from dhcp-27-174.brq.redhat.com (unknown [10.45.224.42])
+        by smtp.corp.redhat.com (Postfix) with SMTP id BD88A2027047;
+        Sun, 17 Sep 2023 16:45:12 +0000 (UTC)
+Received: by dhcp-27-174.brq.redhat.com (nbSMTP-1.00) for uid 1000
+        oleg@redhat.com; Sun, 17 Sep 2023 18:44:21 +0200 (CEST)
+Date:   Sun, 17 Sep 2023 18:44:18 +0200
+From:   Oleg Nesterov <oleg@redhat.com>
+To:     =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Alexey Gladkov <legion@kernel.org>
+Subject: Re: [PATCH 1/1] git-grep: improve the --show-function behaviour
+Message-ID: <20230917164418.GA20932@redhat.com>
+References: <20230911121126.GA17383@redhat.com>
+ <20230911121211.GA17401@redhat.com>
+ <xmqq34zktk4h.fsf@gitster.g>
+ <20230911231756.GA2840@redhat.com>
+ <20230912130429.GA9982@redhat.com>
+ <20230912135124.GA11315@redhat.com>
+ <df05f761-c498-6930-bfd8-265f7e23d8ee@web.de>
+ <xmqq1qf2lxrm.fsf@gitster.g>
+ <20230913094638.GA535@redhat.com>
+ <9203cd46-6a81-38e4-f191-da0b51e238c1@web.de>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="GTo949nLYpNz+6Lh"
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <CAH1-q0iV+E73RrUDA8jcoFgNEfQDNwRnX5P5Z7r3Qj3GESV_7g@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <9203cd46-6a81-38e4-f191-da0b51e238c1@web.de>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Scanned-By: MIMEDefang 3.1 on 10.11.54.4
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+René, sorry for late reply,
 
---GTo949nLYpNz+6Lh
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 09/14, René Scharfe wrote:
+>
+> Am 13.09.23 um 11:46 schrieb Oleg Nesterov:
+> >
+> > I have another opinion. To me the 2nd "=..." marker does help to
+> > understand the hit location. But this doesn't matter.
+>
+> You see it as another layer of information, as an annotation, an
+> additional line containing meta-information.  I saw them as context
+> lines, i.e. lines from the original file shown in the original order
+> without duplication, like - lines, with the only place for meta-
+> information being the marker character itself.
 
-On Wed, Sep 13, 2023 at 11:59:35PM +0100, Javier Mora wrote:
-> I came across this issue accidentally when trying to move a directory
-> containing a very large file, and deleting another file in that
-> directory while I was at it.
-> It seems to be caused by `pack.useSparse=3Dtrue` being the default since
-> v2.27 (which I found out after spending quite a while manually
-> bisecting and compiling git since I noticed that this didn't happen in
-> v2.25; commit de3a864 introduces this regression).
->=20
-> * Expected:
->     Pushing a commit that moves a file without modifying it shouldn't
-> require sending a blob object for that file, since the remote server
-> already has that blob object.
-> * Observed:
->     Pushing a commit that moves a directory containing a file and also
-> adds/deletes other files in that directory will for some reason also
-> send blobs for all the files in that directory, even the ones that
-> were already in the remote.
-> * Consequences:
->     This has a very big impact in push times for very small commits
-> that just move around files, if those files are very big (I had this
-> happen with a >100MB file over a problematic connection... yikes!)
-> * Note:
->     The commit introducing the regression does warn about possible
-> scenarios involving a special arrangement of exact copies across
-> directories, but these are not "copies", I just moved a file, which
-> seems like a rather common operation.
->=20
-> Code snippet for reproduction:
-> ```
-> mkdir TEST_git
-> cd TEST_git
->=20
-> mkdir -p local remote/origin.git
-> cd remote/origin.git
-> git init --bare
-> cd ../../local
-> git init
-> git remote add origin file://"${PWD%/*}"/remote/origin.git
->=20
-> mkdir zig
-> for i in a b c d e; do
->     dd if=3D/dev/urandom of=3Dzig/"$i" bs=3D1M count=3D1
-> done
-> git add .
-> git commit -m 'Add big files'
-> git push -u origin master
-> #>> Writing objects: 100% (8/8), 5.00 MiB | 13.27 MiB/s, done.
-> #^ makes sense: 1 commit + 2 trees (/ and /zig) + 5 files =3D 8;
-> #  5 MiB in total for the 5x 1 MiB binary files
->=20
-> git mv zig zag
-> git commit -m 'Move zig'
-> git push
-> #>> Writing objects: 100% (2/2), 233 bytes | 233.00 KiB/s, done.
-> #^ makes sense: 1 commit + 1 tree (/ renames /zig to /zag) =3D 2;
-> #  a,b,c,d,e objects already in remote
->=20
-> git mv zag zog
-> touch zog/f
-> git add zog/f
-> git commit -m 'For great justice'
-> git push
-> #>> Writing objects: 100% (9/9), 5.00 MiB | 24.63 MiB/s, done.
-> #^ It re-uploaded the 5x 1 MiB blobs
-> #  even though remote already had them.
-> ```
->=20
-> Note that the latter doesn't happen if I use `git -c pack.useSparse=3Dfal=
-se push`.
+Yes,
 
-I can reproduce this regression on v2.42.0 (self-compiled) on my Debian
-testing system.
+> > But without my patch, in this case I get
+> >
+> > 	TEST.c                      1                          void func1(struct pid *);
+> > 	TEST.c                      3                          void func2(struct pid *pid)
+> > 	TEST.c                      5                          use1(pid);
+> > 	TEST.c                      8                          void func3(struct pid *pid)
+> > 	TEST.c                     10                          use2(pid);
+> >
+> > because the output from git-grep
+> >
+> > 	$ git grep --untracked -pn pid TEST.c
+> > 	TEST.c:1:void func1(struct pid *);
+> > 	TEST.c:3:void func2(struct pid *pid)
+> > 	TEST.c:5:       use1(pid);
+> > 	TEST.c:8:void func3(struct pid *pid)
+> > 	TEST.c:10:      use2(pid);
+> >
+> > doesn't have the "=..." markers at all.
+>
+> Sure, that's a problem.  You could easily check whether a match is also
+> a function line according to the default heuristic
 
-Cc'ing Derrick and Junio.
+Yes, but...
 
-Thanks for the report!
+> there are some impressive regexes in userdiff.c
+> and the script would have to figure out which language the file is
+> configured to be for Git in the first place.
 
---=20
-An old man doll... just what I always wanted! - Clara
+Yes, and this is what I'd like to avoid, I do not want to duplicate the
+builtin_drivers[] logic.
 
---GTo949nLYpNz+6Lh
-Content-Type: application/pgp-signature; name="signature.asc"
+> > in my editor without this patch, I get
+> >
+> > 	kernel/sys.c              224 sys_setpriority          struct pid *pgrp;
 
------BEGIN PGP SIGNATURE-----
+[...snip...]
 
-iHUEABYKAB0WIQQZO/gRNchuWgPJR+Z7tWyQc2rTCAUCZQb9SQAKCRB7tWyQc2rT
-CFX5AP991BfviEuy/ospufMDvNbWujI6Xwt8dHASymjrmx0t6QD9EJktFUXZdCCB
-8/ulvPrIxvmIQgLXp+22yvTxKLiHlQ0=
-=/dYm
------END PGP SIGNATURE-----
+> Well, your script turns "SYSCALL_DEFINE3(setpriority, [...]" into
+> "sys_setpriority" etc., so it is already knows a lot about function lines.
 
---GTo949nLYpNz+6Lh--
+No, not a lot ;)
+
+But yes sure, I can adapt this script to the current behaviour. In fact I
+can even change it to not use "-p", the script can read the file backwards
+itself (but of course I'd prefer to not do this).
+
+Nevermind. Thanks for discussion. If I can't convince maintainers - lets
+forget this patch. Although I will probably keep it (and another one I
+had from the very begginning) for myself, it works for me.
+
+> Can we use two markers, i.e. both : and =?  No idea what that might break.
+
+...
+
+> So with the patch below this would look like this:
+
+...
+
+> kernel/sys.c#1073#SYSCALL_DEFINE2(setpgid, pid_t, pid, pid_t, pgid)
+
+This works for me too. So please CC me if you ever push this change ;)
+
+Thanks,
+
+Oleg.
+
