@@ -2,151 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 98B53CD37B4
-	for <git@archiver.kernel.org>; Sun, 17 Sep 2023 16:46:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 901C5CD13D8
+	for <git@archiver.kernel.org>; Sun, 17 Sep 2023 19:23:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235491AbjIQQq2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 17 Sep 2023 12:46:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49346 "EHLO
+        id S239201AbjIQTXL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 17 Sep 2023 15:23:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236318AbjIQQqO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Sep 2023 12:46:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 778A2132
-        for <git@vger.kernel.org>; Sun, 17 Sep 2023 09:45:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1694969120;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=W+Y+MI7oe+8bNKc0gZFUxl5PHTXzUq8URl7GIeSZPRg=;
-        b=F/cItwymP8sfaApRN4GPKZQMIwwYk553I3/PHZnDxOJAZzztIhCazedsabglhhR8KYJ34T
-        5lbpHpxC7HxVH9zh8QPW57e/2dCKckz4MSoyY8RDxjnePr5GBnPa5XJVwD6F4nmaMJL6lz
-        YSQNjI017BDoEaYqnsvy3lWT+IFDb/k=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-553-WzgBdVseMnOEMIX0IBv6XA-1; Sun, 17 Sep 2023 12:45:14 -0400
-X-MC-Unique: WzgBdVseMnOEMIX0IBv6XA-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com [10.11.54.4])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 02CAF945920;
-        Sun, 17 Sep 2023 16:45:14 +0000 (UTC)
-Received: from dhcp-27-174.brq.redhat.com (unknown [10.45.224.42])
-        by smtp.corp.redhat.com (Postfix) with SMTP id BD88A2027047;
-        Sun, 17 Sep 2023 16:45:12 +0000 (UTC)
-Received: by dhcp-27-174.brq.redhat.com (nbSMTP-1.00) for uid 1000
-        oleg@redhat.com; Sun, 17 Sep 2023 18:44:21 +0200 (CEST)
-Date:   Sun, 17 Sep 2023 18:44:18 +0200
-From:   Oleg Nesterov <oleg@redhat.com>
-To:     =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Alexey Gladkov <legion@kernel.org>
-Subject: Re: [PATCH 1/1] git-grep: improve the --show-function behaviour
-Message-ID: <20230917164418.GA20932@redhat.com>
-References: <20230911121126.GA17383@redhat.com>
- <20230911121211.GA17401@redhat.com>
- <xmqq34zktk4h.fsf@gitster.g>
- <20230911231756.GA2840@redhat.com>
- <20230912130429.GA9982@redhat.com>
- <20230912135124.GA11315@redhat.com>
- <df05f761-c498-6930-bfd8-265f7e23d8ee@web.de>
- <xmqq1qf2lxrm.fsf@gitster.g>
- <20230913094638.GA535@redhat.com>
- <9203cd46-6a81-38e4-f191-da0b51e238c1@web.de>
+        with ESMTP id S239474AbjIQTWq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Sep 2023 15:22:46 -0400
+Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38AC3DB
+        for <git@vger.kernel.org>; Sun, 17 Sep 2023 12:22:41 -0700 (PDT)
+Received: by mail-qt1-x82c.google.com with SMTP id d75a77b69052e-412989e3b7bso26335571cf.1
+        for <git@vger.kernel.org>; Sun, 17 Sep 2023 12:22:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1694978560; x=1695583360; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+bbPJEkPXQlUrv7/WIoHvsHshDcP3W0u2pazUmQn9/s=;
+        b=BSpsBJsDlC6OKUJ0BG4USQRY5KdAOtr6NXSXjQfFMiKieSs4aqESQgamyCy4Ige32T
+         HpWH/uzlfTGWI11j0ob5u1S/Qe4E48/NiynHk+8g9WbRBBy2haiJeIgSNcFf/UUhUkLU
+         Rkf2Q9E7WvTxwlz3MHd+2W3CnxXj0xhCHlAZ2LDRti2glnNz7NRBQ75/x46lTcB8VNNx
+         nNnJE1dUPbZc/x75H3pt1823bnITVcIGiG+reE0FjoQhpKkZz/xi7QYYMfUKkPi2UFCb
+         o95vspQ0cv8VJ2fNO5CHltsLkhQ3FxYXMJN9ky/Z1JW4Ud03ftmEqyxdd8ULkO7v3Njv
+         4yaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694978560; x=1695583360;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+bbPJEkPXQlUrv7/WIoHvsHshDcP3W0u2pazUmQn9/s=;
+        b=t3bWV++9v7S3ZedXTjjuJ+fpPztw6UhHPysPVniJ6m2vzxgj5E3geHhSXbA/sw43hX
+         raJXpWnk5aLSMelnkJfRGMTebWV94c3fYfM7GGtM0L8MHdlTw/o5dc/5g9dJ7p7wJFnd
+         xPqM1K17zEZ5pbdEMVFYRXF7Ee9jvedXQVRTR7StVkz/jDVloHADKRSVnWHMwTvJIJKd
+         DWnLvALtVW1WSQwI/aphVW4YACbaY8NFypOPXXx+aM1+xIoGO9kW06QGbdCdhdE2wb3x
+         JMh/Sj+oZnAvj4pf631nbgjrmFUKKo8zHtyPjbzV7qfg21N+YWEbWtW+DzEgdQefYbdX
+         zyTA==
+X-Gm-Message-State: AOJu0YxoFrrLK+UJ2/QLZAg+HSEOk9wFh8bEQcKgpopeaDjYhtDBZRv8
+        ub4UMqAflbsPLioqQhcJ7K0=
+X-Google-Smtp-Source: AGHT+IEUNyphxmywsYBXC6eEuwKfd1Saxq8s6PHzNSR1NgKY+dQfMcC0xMqGS5kp9rFMFYtnRbPeQA==
+X-Received: by 2002:a05:622a:8d:b0:417:8eb5:2780 with SMTP id o13-20020a05622a008d00b004178eb52780mr9692304qtw.18.1694978560316;
+        Sun, 17 Sep 2023 12:22:40 -0700 (PDT)
+Received: from ?IPV6:2600:4040:266f:b900::387? ([2600:4040:266f:b900::387])
+        by smtp.gmail.com with ESMTPSA id fu32-20020a05622a5da000b00407906a4c6fsm2526683qtb.71.2023.09.17.12.22.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 17 Sep 2023 12:22:40 -0700 (PDT)
+Message-ID: <fa876f80-02dc-2c04-0db3-bf3f6269b427@gmail.com>
+Date:   Sun, 17 Sep 2023 15:22:39 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <9203cd46-6a81-38e4-f191-da0b51e238c1@web.de>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Scanned-By: MIMEDefang 3.1 on 10.11.54.4
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v2] git-gui - re-enable use of hook scripts
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     johannes.schindelin@gmx.de, me@yadavpratyush.com,
+        git@vger.kernel.org
+References: <xmqqy1h6auy7.fsf@gitster.g>
+ <20230916210131.78593-1-mlevedahl@gmail.com> <xmqqy1h5aisw.fsf@gitster.g>
+From:   Mark Levedahl <mlevedahl@gmail.com>
+In-Reply-To: <xmqqy1h5aisw.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-René, sorry for late reply,
 
-On 09/14, René Scharfe wrote:
+On 9/16/23 17:51, Junio C Hamano wrote:
 >
-> Am 13.09.23 um 11:46 schrieb Oleg Nesterov:
-> >
-> > I have another opinion. To me the 2nd "=..." marker does help to
-> > understand the hit location. But this doesn't matter.
+> Nice.  Now we need to find a replacement maintainer for Git-gui ;-)
+> In the meantime, I can queue this patch on top of what I updated
+> git-gui part the last time with and merge it in.
 >
-> You see it as another layer of information, as an annotation, an
-> additional line containing meta-information.  I saw them as context
-> lines, i.e. lines from the original file shown in the original order
-> without duplication, like - lines, with the only place for meta-
-> information being the marker character itself.
+> Thanks.
 
-Yes,
+Thank you for help on this too. I retired some time ago, and stopped 
+using git much a decade ago. My popping up on the list was inspired by 
+cleaning out an old laptop and finding some old patches I thought would 
+be useful, especially as I'd helped Shawn create some of that old 
+git-gui/Cygwin code. My interest is unlikely to endure so I'm definitely 
+not a good candidate to maintain git-gui.
 
-> > But without my patch, in this case I get
-> >
-> > 	TEST.c                      1                          void func1(struct pid *);
-> > 	TEST.c                      3                          void func2(struct pid *pid)
-> > 	TEST.c                      5                          use1(pid);
-> > 	TEST.c                      8                          void func3(struct pid *pid)
-> > 	TEST.c                     10                          use2(pid);
-> >
-> > because the output from git-grep
-> >
-> > 	$ git grep --untracked -pn pid TEST.c
-> > 	TEST.c:1:void func1(struct pid *);
-> > 	TEST.c:3:void func2(struct pid *pid)
-> > 	TEST.c:5:       use1(pid);
-> > 	TEST.c:8:void func3(struct pid *pid)
-> > 	TEST.c:10:      use2(pid);
-> >
-> > doesn't have the "=..." markers at all.
->
-> Sure, that's a problem.  You could easily check whether a match is also
-> a function line according to the default heuristic
+On this hook execution problem, looking further, I find using git-hook 
+run will fix some other issues in git-gui's hook handling, and that 
+would actually also patch around the problem we just fixed. So, another 
+patch follows, the commit message presumes the one fixing relative path 
+search remains. I would suggest keeping the one fixing the relative path 
+search regardless.
 
-Yes, but...
-
-> there are some impressive regexes in userdiff.c
-> and the script would have to figure out which language the file is
-> configured to be for Git in the first place.
-
-Yes, and this is what I'd like to avoid, I do not want to duplicate the
-builtin_drivers[] logic.
-
-> > in my editor without this patch, I get
-> >
-> > 	kernel/sys.c              224 sys_setpriority          struct pid *pgrp;
-
-[...snip...]
-
-> Well, your script turns "SYSCALL_DEFINE3(setpriority, [...]" into
-> "sys_setpriority" etc., so it is already knows a lot about function lines.
-
-No, not a lot ;)
-
-But yes sure, I can adapt this script to the current behaviour. In fact I
-can even change it to not use "-p", the script can read the file backwards
-itself (but of course I'd prefer to not do this).
-
-Nevermind. Thanks for discussion. If I can't convince maintainers - lets
-forget this patch. Although I will probably keep it (and another one I
-had from the very begginning) for myself, it works for me.
-
-> Can we use two markers, i.e. both : and =?  No idea what that might break.
-
-...
-
-> So with the patch below this would look like this:
-
-...
-
-> kernel/sys.c#1073#SYSCALL_DEFINE2(setpgid, pid_t, pid, pid_t, pgid)
-
-This works for me too. So please CC me if you ever push this change ;)
-
-Thanks,
-
-Oleg.
+Mark
 
