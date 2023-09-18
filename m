@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 225B1C46CA1
-	for <git@archiver.kernel.org>; Mon, 18 Sep 2023 20:54:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1E12CD37B0
+	for <git@archiver.kernel.org>; Mon, 18 Sep 2023 20:54:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230038AbjIRUyp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Sep 2023 16:54:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53576 "EHLO
+        id S229771AbjIRUyq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Sep 2023 16:54:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229999AbjIRUyk (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230000AbjIRUyk (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 18 Sep 2023 16:54:40 -0400
 Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21E3F8E
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6430D111
         for <git@vger.kernel.org>; Mon, 18 Sep 2023 13:54:35 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-401b5516104so53428325e9.2
+Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-401b393ddd2so56412635e9.0
         for <git@vger.kernel.org>; Mon, 18 Sep 2023 13:54:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1695070473; x=1695675273; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=eWVgy3TCCF3l/JJt+MfR17FAOgB5+dYGh0iwW3wP6N4=;
-        b=jJB7zvpkx3oIRadmXU8hI5eV/4f8Mu6nD7nl+87/Ch1BM/RyOLcjZKEcm7aCedaOOi
-         iDqmEPF0GuPEwfIbvgVsV2G6hjd77aODY3W+TzGEKGm8KK3TD9Q2SqfxLhvXnbFgWlyG
-         OrfbuHq05i55K51oLW4WslJyuZb8YTN4gm/8LpPIH1L+UjJheH8K+T7+0gFGErRUyku5
-         AHV9lY+MpKQeiOiOQegdVd20Dwaqy9FW3nCbXIk11bryeXpLgqHet/sQicqxcQxerubr
-         4YUOQCMZioTREItZckp4sD9q8M6XURsN+tZ33KIur6hnjeXO4gpLu1xLIKIHitQ/QQeh
-         wdVw==
+        bh=504cxXwL03Ag40A4Pc/uIlsTRsHlyA+4I9I/EJ5xJ+0=;
+        b=O1/Ghx2fnIpkpkCbBKxoHa6ocJ5y/bF4ALxoBsqN8CjUUpvd0cIYoxSjsTWw3BzH9A
+         sUSZFWhYBRAoveb6iVPe/ooj6zx/sb30dS9+SZXSDYLBCepPl4QL4T8HAejAs4QFKd2r
+         zUwaU4m0qo0ffL2JIpKFJRwztRoxCYS3ri3jiYvEj2x5jPqzpRldKSlYKczF/Vf2Qp0g
+         e53rrcSNLWh7MetdQgoyQWnZFvKNEosc3s0RTormLdcffNDBMnEOVE8LrR/FzeKP0bCy
+         zp+W41j6B6tqziK4C1rMagm1C7qGunw3wtUedef28HLjTbb4MX4gaQcbGvk7EoXj7jB9
+         BiBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1695070473; x=1695675273;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=eWVgy3TCCF3l/JJt+MfR17FAOgB5+dYGh0iwW3wP6N4=;
-        b=kH/cW+bF3OCiqp95qDreAXImf5RGwRFo+nmg/JiKeDzSYnMep1V4jZq22XtzArmUZj
-         pZ4jf70KHx/FIb7Di11ALia5t6bhemgDAM21bbwsJaIjzVNqhTE7yQeuOAVVECVwXiPm
-         MqcmhUcPeIc6gsEGPxPF76GTDccBW5AYLzXqO6EJ18M3LqVNpbU8VixrzqJCt0YNalMO
-         yv4YILCeKiz4Na7dCg8NBkjLARcr+WWi5E3GZP5XnSXCScd0te7ljaxv054m25P0rF4K
-         hX+5z0a6ZmX1y1mEGwPW2pCT/F+7fdpqIb2gdtM+2V9MFd+oUwLxrFo3ffldSrT/nPw9
-         PjBg==
-X-Gm-Message-State: AOJu0YxN+VlbTv9JwrMr8diALEAheyxf9JaSjDTCLELPY9/l70sKqF8N
-        tFt5wBTBZ+4z/XBSWM8/YnqzgGLGJak=
-X-Google-Smtp-Source: AGHT+IE5SGxft1DkADjloHw2JoVY7cG5nIrvxQo0fgObrnhxWRA7oEv18IO0XPlFqAtAH1aYVeeTfw==
-X-Received: by 2002:a05:600c:1d9a:b0:404:f9c1:d5d7 with SMTP id p26-20020a05600c1d9a00b00404f9c1d5d7mr6546297wms.25.1695070473153;
+        bh=504cxXwL03Ag40A4Pc/uIlsTRsHlyA+4I9I/EJ5xJ+0=;
+        b=A3rEoCvPJ+/0nvr+yER9DWM3+eda1WeONbgH5zE06MvvV3W4fd3ybEc9BtDACIQaWR
+         7E7W5xKvjCbQiRauPCLhKkgQ/lMveOnQWvRZzscPiCaXMvWS0VAvoKMuQjgvzXEgeWkV
+         hUr5qWPM0yxEzMirC5FYWjH4v2yCAguCKPfiov2So+DFZqXQ6Hfr5ou+enJ/qqsg35oR
+         5lMDM0Ew/tEQyaBP4IZNHQ75LO8wVz9smYl8/sCKIU7Xr3GKphaDTEV+6Q9ICOxoMykA
+         w3PMYdWbaH90bE4nyopipX2UTJeXZH9djrjV+YvEVPrJQ8UWm5TmT5TpLrwR3mwMmoAm
+         OmqA==
+X-Gm-Message-State: AOJu0Yx6hbzdAK8gwibi7T61A9SedPo8Vt+HeB82wO7AjTQFxRdZPGbp
+        6FKTeQ8UI8yNPH1z+YGBYg71AmLr07k=
+X-Google-Smtp-Source: AGHT+IEmFZ8q8YIUTBh4kvvFSBsaKId2TTXyO4IluVIaIaEbhHqBB3uV2h2TWt2UQEZu81RACYsbzw==
+X-Received: by 2002:a1c:f204:0:b0:401:4c61:90ac with SMTP id s4-20020a1cf204000000b004014c6190acmr9454609wmc.11.1695070473684;
         Mon, 18 Sep 2023 13:54:33 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m10-20020a7bce0a000000b003fee53feab5sm13441291wmc.10.2023.09.18.13.54.32
+        by smtp.gmail.com with ESMTPSA id u17-20020a05600c00d100b003fe0a0e03fcsm16239148wmm.12.2023.09.18.13.54.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Sep 2023 13:54:32 -0700 (PDT)
-Message-ID: <41228df1b469d9a79f3278fe8c1ca37082600669.1695070468.git.gitgitgadget@gmail.com>
+        Mon, 18 Sep 2023 13:54:33 -0700 (PDT)
+Message-ID: <003d44e9f0d73efae887d6b61ebdffb3c4e0904f.1695070468.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1579.v2.git.1695070468.gitgitgadget@gmail.com>
 References: <pull.1579.git.1693462532.gitgitgadget@gmail.com>
         <pull.1579.v2.git.1695070468.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 18 Sep 2023 20:54:27 +0000
-Subject: [PATCH v2 6/7] cmake: use test names instead of full paths
+Date:   Mon, 18 Sep 2023 20:54:28 +0000
+Subject: [PATCH v2 7/7] cmake: handle also unit tests
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,47 +70,36 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The primary purpose of Git's CMake definition is to allow developing Git
-in Visual Studio. As part of that, the CTest feature allows running
-individual test scripts conveniently in Visual Studio's Test Explorer.
+The unit tests should also be available e.g. in Visual Studio's Test
+Explorer when configuring Git's source code via CMake.
 
-However, this Test Explorer's design targets object-oriented languages
-and therefore expects the test names in the form
-`<namespace>.<class>.<testname>`. And since we specify the full path
-of the test scripts instead, including the ugly `/.././t/` part, these
-dots confuse the Test Explorer and it uses a large part of the path as
-"namespace".
-
-Let's just use `t.<name>` instead. This still adds an ugly "Empty
-Namespace" layer by default, but at least the ugly absolute path is now
-gone.
-
+Suggested-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/buildsystems/CMakeLists.txt | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ contrib/buildsystems/CMakeLists.txt | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index ad197ea433f..ff1a8cc348f 100644
+index ff1a8cc348f..35d451856a0 100644
 --- a/contrib/buildsystems/CMakeLists.txt
 +++ b/contrib/buildsystems/CMakeLists.txt
-@@ -1106,13 +1106,14 @@ file(GLOB test_scripts "${CMAKE_SOURCE_DIR}/t/t[0-9]*.sh")
- 
- #test
- foreach(tsh ${test_scripts})
--	add_test(NAME ${tsh}
-+	string(REGEX REPLACE ".*/(.*)\\.sh" "\\1" test_name ${tsh})
-+	add_test(NAME "t.${test_name}"
- 		COMMAND ${SH_EXE} ${tsh} --no-bin-wrappers --no-chain-lint -vx
- 		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/t)
+@@ -981,6 +981,17 @@ foreach(unit_test ${unit_test_PROGRAMS})
+ 			PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/t/unit-tests)
+ 	endif()
+ 	list(APPEND PROGRAMS_BUILT "${unit_test}")
++
++	# t-basic intentionally fails tests, to validate the unit-test infrastructure.
++	# Therefore, it should only be run as part of t0080, which verifies that it
++	# fails only in the expected ways.
++	#
++	# All other unit tests should be run.
++	if(NOT ${unit_test} STREQUAL "t-basic")
++		add_test(NAME "unit-tests.${unit_test}"
++			COMMAND "./${unit_test}"
++			WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/t/unit-tests)
++	endif()
  endforeach()
  
- # This test script takes an extremely long time and is known to time out even
- # on fast machines because it requires in excess of one hour to run
--set_tests_properties("${CMAKE_SOURCE_DIR}/t/t7112-reset-submodule.sh" PROPERTIES TIMEOUT 4000)
-+set_tests_properties("t.t7112-reset-submodule" PROPERTIES TIMEOUT 4000)
- 
- endif()#BUILD_TESTING
+ #test-tool
 -- 
 gitgitgadget
-
