@@ -2,95 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BEE43CD54AB
-	for <git@archiver.kernel.org>; Tue, 19 Sep 2023 09:12:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE27ACD54AB
+	for <git@archiver.kernel.org>; Tue, 19 Sep 2023 09:41:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231246AbjISJMr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Sep 2023 05:12:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52604 "EHLO
+        id S231261AbjISJlG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Sep 2023 05:41:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231222AbjISJMq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Sep 2023 05:12:46 -0400
-Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAF48DA
-        for <git@vger.kernel.org>; Tue, 19 Sep 2023 02:12:40 -0700 (PDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-        by mailout.nyi.internal (Postfix) with ESMTP id 684245C0250;
-        Tue, 19 Sep 2023 05:12:37 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
-  by compute6.internal (MEProxy); Tue, 19 Sep 2023 05:12:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-         h=cc:cc:content-type:content-type:date:date:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to; s=fm1; t=1695114757; x=
-        1695201157; bh=fm6VamaFiayE9wx5bl//wU+8tiyatCH5jsv+HeG19eE=; b=g
-        af+/NWgZT7eyEfo872Tdm7UsEYx1+wPl/VEHcmD7wdnQhqoGU7wxYGXdvs8wMbo2
-        iLd0/rw/SlWiXRObexM8icGGrMrxREVR41yTQqBOAyopLIpqXq+UqcFqn/r2l76L
-        qfjZa10xz4790iSqM/DgkHxD4aLXbR1dPd2GpUIeJfcNRV2nPlSgPWE++NsKDVlj
-        CphJCBwr6cdbWYNO7ASdfzwrodIPZC4cFUzfJUTLyzqDfb2hsebQvvYX70ZTO3F0
-        mjzM6X/oq7QS1CN7kU60LQzBaui92OX7OEc4zoJuhJ27jso3icXmmvdNuvIy8cZw
-        7Si/9j0p8jaBXbHlx0hWA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:content-type:date:date
-        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm2; t=1695114757; x=1695201157; bh=fm6VamaFiayE9
-        wx5bl//wU+8tiyatCH5jsv+HeG19eE=; b=IF3nvgN6+wTypL/JMDp8PcdksLz+W
-        JgmxTDvoRHXlneSsgtdoR0oLdnKC4+CR3xiC5KftjIMT6grwv3oT6i73G/vSm8Qo
-        smwpWTPNhX4CLS8//J5JopbBQsc8J+YWDkX2tJwjYlCx/GyByBF73Bq2/Qs8evO5
-        NZGU4GOoGzq6X1Tta1RogiUFuYeAa0JQEG7ULD2B0W7lwYxyyePDgaGb5SvEp7bl
-        5icvbaUGxR9DbKIY8YQVZDeCshN0+sUaG5+ejp6BDZF1xE5TZtWAJ5658YFEb33p
-        IlfZAX3B2FElRbN/zhLG/00gz8fzsmVltIB0UtdH5BYkx1FHiHhCYsF2w==
-X-ME-Sender: <xms:BWYJZTiMRzgr41mpVe79kcfZmCvsVInFQ4hmBqrSdDHOdNziPaERXgU>
-    <xme:BWYJZQAgB1pTcH5ABJewk2bbm75vK9HCthjUnDJMbWtQwKCL1pNPHXzGhX8K9jDDg
-    dtY5xIFJDql9t-fxg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrudektddgudefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedfmfhr
-    ihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssggrkh
-    hkrdhnrghmvgeqnecuggftrfgrthhtvghrnheptdektdejieffleetffehieehueffgfeh
-    leeufedtjeekueffgfeihfegkeffffeunecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:BWYJZTH4KDNz_PgBANQie4VddVpM4ZpLEuBIRbl9ad8gmH5CN2m1VA>
-    <xmx:BWYJZQQffSc8WJVzuhun1IDQBM97niU5xbHzVNDlxTO5ZrnhF8XsoQ>
-    <xmx:BWYJZQyRF4amFsP-8yTfgUtOQl0FLkHNyi25FVESaQSLuhZwa2n0Ig>
-    <xmx:BWYJZb8zpxM0tIMp1NZVIJrkYTmc1nDsjeZj3H4vEQbgc4LtI9gwUg>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id 1B36D15A0091; Tue, 19 Sep 2023 05:12:37 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-761-gece9e40c48-fm-20230913.001-gece9e40c
+        with ESMTP id S231422AbjISJlD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Sep 2023 05:41:03 -0400
+Received: from bluemchen.kde.org (bluemchen.kde.org [IPv6:2001:470:142:8::100])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95285EA
+        for <git@vger.kernel.org>; Tue, 19 Sep 2023 02:40:57 -0700 (PDT)
+Received: from ugly.fritz.box (localhost [127.0.0.1])
+        by bluemchen.kde.org (Postfix) with ESMTP id 99107242F0;
+        Tue, 19 Sep 2023 05:40:54 -0400 (EDT)
+Received: by ugly.fritz.box (masqmail 0.3.6-dev, from userid 1000)
+        id 1qiXDy-l19-00; Tue, 19 Sep 2023 11:40:54 +0200
+Date:   Tue, 19 Sep 2023 11:40:54 +0200
+From:   Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+To:     =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] parse-options: use and require int pointer for
+ OPT_CMDMODE
+Message-ID: <ZQlspgfu7yDW0oTN@ugly>
+References: <2d6f3d74-687a-2d40-5c0c-abc396aef80f@web.de>
+ <e6d8a291-03de-cfd3-3813-747fc2cad145@web.de>
 MIME-Version: 1.0
-Message-Id: <69e8d116-05eb-4b16-aa5d-62da1ff818cc@app.fastmail.com>
-In-Reply-To: <xmqqled3hsip.fsf@gitster.g>
-References: <cover.1693584310.git.code@khaugsbakk.name>
- <cover.1694383247.git.code@khaugsbakk.name>
- <a37dfb3748e23b4f5081bc9a3c80a5c546101f1d.1694383248.git.code@khaugsbakk.name>
- <xmqqzg1strgx.fsf@gitster.g> <dd2958c5-58bf-86dd-b666-9033259a8e1a@gmx.de>
- <c7d1e196-9521-45a7-b41c-80499f19f546@app.fastmail.com>
- <xmqqled3hsip.fsf@gitster.g>
-Date:   Tue, 19 Sep 2023 11:12:16 +0200
-From:   "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To:     "Junio C Hamano" <gitster@pobox.com>
-Cc:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, "Denton Liu" <liu.denton@gmail.com>,
-        "Jeff King" <peff@peff.net>
-Subject: Re: [PATCH v3 1/1] range-diff: treat notes like `log`
-Content-Type: text/plain
+Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <e6d8a291-03de-cfd3-3813-747fc2cad145@web.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 19, 2023, at 03:16, Junio C Hamano wrote:
-> Will one of you tie the loose ends?
+On Sat, Sep 09, 2023 at 11:14:20PM +0200, René Scharfe wrote:
+>Some uses of OPT_CMDMODE provide a pointer to an enum.  It is
+>dereferenced as an int pointer in parse-options.c::get_value().  These
+>two types are incompatible, though
 >
-> Thanks.
+s/are/may be/ - c.f. https://en.cppreference.com/w/c/language/enum
 
-I will this afternoon (CEST).
+>-- the storage size of an enum can vary between platforms.
+>
+here's a completely different perspective:
+this is merely a theoretical problem, right? gcc for example won't 
+actually use non-ints unless -fshort-enums is supplied. so how about 
+simply adding a (configure) test to ensure that there is actually no 
+problem, and calling it a day?
 
-Cheers
+regards
 
--- 
-Kristoffer Haugsbakk
