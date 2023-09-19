@@ -2,164 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4141CCE79A9
-	for <git@archiver.kernel.org>; Tue, 19 Sep 2023 18:32:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB422CE79A9
+	for <git@archiver.kernel.org>; Tue, 19 Sep 2023 19:27:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232066AbjISScK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Sep 2023 14:32:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37572 "EHLO
+        id S232400AbjIST1k (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Sep 2023 15:27:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232078AbjISScJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Sep 2023 14:32:09 -0400
-Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3500690
-        for <git@vger.kernel.org>; Tue, 19 Sep 2023 11:32:03 -0700 (PDT)
-Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-59bcd927b45so62858217b3.1
-        for <git@vger.kernel.org>; Tue, 19 Sep 2023 11:32:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1695148322; x=1695753122; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=3GqVXSIG60BnvJotqxJTvPbY0yyB0VMtMev4Bsqf4kc=;
-        b=raEZr/IC9y0v+kAmjZypppl6/Iqr8Q3hC29wL1prRrWioQpj5NCB+0/hMk7Ug/bVgC
-         kV2bR0qucWddCcNVD3KoU84CVVTPQqh5bC1gjSaTlAmyj+ccmCkjZj2ecpsDVMm0o0pV
-         Fh2qlbvzTCrgc0VeUS3OReV1IQWE9xQGYFZXEAAwQtRKfR5a4pq3CPcLGsJFpIS5ypub
-         UL5KHbVOXuugArVW3rsDuIvliOu18UH0izjJQN2N6xhLW13Dq9TrULIu45iB8uteVC62
-         BN8nFKS6Cf9JGID4CaaROUEJfhPQ/rp3npH1jgZ3B+hskY0ZdgyZaPodHjs/2FPNWqIS
-         r2Dw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695148322; x=1695753122;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3GqVXSIG60BnvJotqxJTvPbY0yyB0VMtMev4Bsqf4kc=;
-        b=ENlXPG/2n6ReLfrytNif01k3aeIgcibefiTyZFyCCwVQXHbL40B/FHwmXZxoWttoqi
-         NxLNVs+iN0EiPe4vlheki3rLtJOTy+zhxaJi14gYUnRI9yE8u4l7uPol6n9rjCRM/X5k
-         gMmgQk1Pz2653LEruC0c7IBA0/UUb8uOV93P0M6i0EXKLjWr5Zq/fgTxmDMiII6LzHjd
-         3Q6Km5tBe5AjsBeBiM4uxdnTwPKNshVi7rAydxcYgSAPNtZygx8p/VTBVTACGhKjySKz
-         iNb4drkh0AltxKB9eOVPQOt6ITb+xDjxPJKKMBnOLqSOMc7wEFR0l/dMShLwQLIWNexd
-         9FLg==
-X-Gm-Message-State: AOJu0Yw62BbpMVYq8KWmyDI/B1l+EnqcKBceTT1tmS4GypZuBc/4AKmX
-        MOJQHfCkXV0klDEgM9eBH85Di16cC2efX/7sqvTX0A==
-X-Google-Smtp-Source: AGHT+IFL9cSsQIzbMGXDhlsabi+MqPQvpaXC49JUE83PXLvugw6K1CdP58k+EjwQ/fp/hXUVXu+p2A==
-X-Received: by 2002:a25:8051:0:b0:d7a:d628:f69d with SMTP id a17-20020a258051000000b00d7ad628f69dmr456138ybn.32.1695148321203;
-        Tue, 19 Sep 2023 11:32:01 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id n193-20020a25d6ca000000b00d1dd5c6c035sm2978789ybg.62.2023.09.19.11.32.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Sep 2023 11:32:00 -0700 (PDT)
-Date:   Tue, 19 Sep 2023 14:32:00 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Sep 2023, #05; Fri, 15)
-Message-ID: <ZQnpIBR4hEbOLCwP@nand.local>
-References: <xmqqmsxmdhdw.fsf@gitster.g>
+        with ESMTP id S231921AbjIST1j (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Sep 2023 15:27:39 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E0A29D
+        for <git@vger.kernel.org>; Tue, 19 Sep 2023 12:27:33 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CCAD619B4E6;
+        Tue, 19 Sep 2023 15:27:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=f/3/zOff+QS+
+        dxgkCecV1eBU8OPu5S6lCfO6WkO3DF8=; b=Rv/43q4fRe5aSqwZtZ1B/og/pgMb
+        CQ+7NV8+QWg4icTlCqX7EHSOn6rPWzA9iQ8whFaRIAM+q4KAlwZBijl9NAHNXLm5
+        gaJisPZDHgP1qi+RuSIoXsOxUWR850JUEROZwNyRhzaOINfc13cGAz0hi5Z2P8G8
+        AczHUTPsipttvPM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C4D4B19B4E5;
+        Tue, 19 Sep 2023 15:27:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0B49A19B4E4;
+        Tue, 19 Sep 2023 15:27:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kristoffer Haugsbakk <code@khaugsbakk.name>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Denton Liu <liu.denton@gmail.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v4 1/1] range-diff: treat notes like `log`
+In-Reply-To: <244e102cc4693bb6291e03cffea6df05cdb29df3.1695144790.git.code@khaugsbakk.name>
+        (Kristoffer Haugsbakk's message of "Tue, 19 Sep 2023 20:05:32 +0200")
+References: <cover.1694383247.git.code@khaugsbakk.name>
+        <cover.1695144790.git.code@khaugsbakk.name>
+        <244e102cc4693bb6291e03cffea6df05cdb29df3.1695144790.git.code@khaugsbakk.name>
+Date:   Tue, 19 Sep 2023 12:27:30 -0700
+Message-ID: <xmqqled2ezfh.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqmsxmdhdw.fsf@gitster.g>
+X-Pobox-Relay-ID: 941EFAC0-5722-11EE-8E8D-25B3960A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 15, 2023 at 06:41:15PM -0700, Junio C Hamano wrote:
-> * tb/repack-existing-packs-cleanup (2023-09-13) 8 commits
->   (merged to 'next' on 2023-09-14 at bb8065e89c)
->  + builtin/repack.c: extract common cruft pack loop
->  + builtin/repack.c: avoid directly inspecting "util"
->  + builtin/repack.c: store existing cruft packs separately
->  + builtin/repack.c: extract `has_existing_non_kept_packs()`
->  + builtin/repack.c: extract redundant pack cleanup for existing packs
->  + builtin/repack.c: extract redundant pack cleanup for --geometric
->  + builtin/repack.c: extract marking packs for deletion
->  + builtin/repack.c: extract structure to store existing packs
+Kristoffer Haugsbakk <code@khaugsbakk.name> writes:
+
+> Currently, `range-diff` shows the default notes if no notes-related
+> arguments are given. This is also how `log` behaves. But unlike
+> `range-diff`, `log` does *not* show the default notes if
+> `--notes=3D<custom>` are given. In other words, this:
 >
->  The code to keep track of existing packs in the repository while
->  repacking has been refactored.
+>     git log --notes=3Dcustom
 >
->  Will merge to 'master'.
->  source: <cover.1694632644.git.me@ttaylorr.com>
-
-Nice, I'm happy to see that this is moving along. Thanks, everybody, for
-participating in the review :-). It's very nice to have a second set of
-eyes when touching the repack machinery.
-
-> * cc/repack-sift-filtered-objects-to-separate-pack (2023-09-11) 9 commits
->  . gc: add `gc.repackFilterTo` config option
->  . repack: implement `--filter-to` for storing filtered out objects
->  . gc: add `gc.repackFilter` config option
->  . repack: add `--filter=<filter-spec>` option
->  . pack-bitmap-write: rebuild using new bitmap when remapping
->  . repack: refactor finding pack prefix
->  . repack: refactor finishing pack-objects command
->  . t/helper: add 'find-pack' test-tool
->  . pack-objects: allow `--filter` without `--stdout`
+> is equivalent to this:
 >
->  "git repack" machinery learns to pay attention to the "--filter="
->  option.
+>     git log --no-notes --notes=3Dcustom
 >
->  May need to wait until tb/repack-existing-packs-cleanup stablizes.
->  source: <20230911150618.129737-1-christian.couder@gmail.com>
-
-I sent Christian a draft of what I think the conflict resolution should
-look like when rebasing on top of tb/repack-existing-packs-cleanup [1].
-
-I've looked over all but one of the previous rounds, and have seen the
-most recent round and am happy with the result. So I think that this
-could go in relatively quickly following merging the above.
-
-I have a couple of other repacking-related topics that are in my queue,
-but I've been holding off on sending them until Christian's series has
-stabilized. They are:
-
-  - tb/cruft-max-size (git@github.com:ttaylorr/git.git)
-  - tb/cruft-preferred-inference (git@github.com:ttaylorr/git.git)
-
-The former is on the list at [2], and needs a bit of work before
-queueing again. The latter isn't on the list, but fixes a performance
-bug where it is possible in rare circumstances to select the cruft pack
-as preferred when generating a MIDX bitmap during repacking.
-
-The second isn't crucial to get in any time soon, but I would love to
-get it off of my queue before we start cutting pre-releases. At this
-rate, I doubt it will be a problem.
-
-[1]: https://lore.kernel.org/git/ZQNKkn0YYLUyN5Ih@nand.local/
-[2]: https://lore.kernel.org/git/cover.1694123506.git.me@ttaylorr.com/
-
-> * tb/path-filter-fix (2023-08-30) 15 commits
->  - bloom: introduce `deinit_bloom_filters()`
->  - commit-graph: reuse existing Bloom filters where possible
->  - object.h: fix mis-aligned flag bits table
->  - commit-graph: drop unnecessary `graph_read_bloom_data_context`
->  - commit-graph.c: unconditionally load Bloom filters
->  - t/t4216-log-bloom.sh: harden `test_bloom_filters_not_used()`
->  - bloom: prepare to discard incompatible Bloom filters
->  - bloom: annotate filters with hash version
->  - commit-graph: new filter ver. that fixes murmur3
->  - repo-settings: introduce commitgraph.changedPathsVersion
->  - t4216: test changed path filters with high bit paths
->  - t/helper/test-read-graph: implement `bloom-filters` mode
->  - bloom.h: make `load_bloom_filter_from_graph()` public
->  - t/helper/test-read-graph.c: extract `dump_graph_info()`
->  - gitformat-commit-graph: describe version 2 of BDAT
+> While:
 >
->  The Bloom filter used for path limited history traversal was broken
->  on systems whose "char" is unsigned; update the implementation and
->  bump the format version to 2.
+>     git range-diff --notes=3Dcustom
 >
->  Needs more work.
->  cf. <20230830200218.GA5147@szeder.dev>
->  source: <cover.1693413637.git.jonathantanmy@google.com>
+> acts like this:
+>
+>     git log --notes --notes-custom
+>
+> This can=E2=80=99t be how the user expects `range-diff` to behave given=
+ that the
+> man page for `range-diff` under `--[no-]notes[=3D<ref>]` says:
+>
+>> This flag is passed to the `git log` program (see git-log(1)) that
+>> generates the patches.
+>
+> This behavior also affects `format-patch` since it uses `range-diff` fo=
+r
+> the cover letter. Unlike `log`, though, `format-patch` is not supposed
+> to show the default notes if no notes-related arguments are given.[1]
+> But this promise is broken when the range-diff happens to have somethin=
+g
+> to say about the changes to the default notes, since that will be shown
+> in the cover letter.
+>
+> Remedy this by introducing `--show-notes-by-default` that `range-diff` =
+can
+> use to tell the `log` subprocess what to do.
 
-I think that Jonathan's most recent round of this is ready to get merged
-up, cf. [3]. The outstanding issue you note in
-<20230830200218.GA5147@szeder.dev> can be addressed separately, I
-believe. To that end, I have a RFC-level patch proposed here [4].
+Very well described.  I think the rest of the proposed log message
+is redundant now we have quite a good write-up above.
 
-[3]: https://lore.kernel.org/git/xmqqo7io8gmo.fsf@gitster.g/
-[4]: https://lore.kernel.org/git/ZQnmTXUO94%2FQy8mq@nand.local/
+>  ifndef::git-rev-list[]
+> +--show-notes-by-default::
+> +	Show the default notes (see `--notes`) unless subsequent arguments
+> +	are used to display specific notes.
+> +
+>  --notes[=3D<ref>]::
+>  	Show the notes (see linkgit:git-notes[1]) that annotate the
+>  	commit, when showing the commit log message.  This is the default
 
-Thanks,
-Taylor
+I think the new entry should come after the description of `--notes`,
+which is the primary option around the "notes" feature.
+
+In the description, I think "subsequent" is misphrased.  It makes it
+sound as if
+
+    $ git log --show-notes-by-default --notes=3Damlog
+
+would stop showing the notes from the default notes tree (because
+the notes from the .git/refs/notes/amlog is explicitly asked for),
+while
+
+    $ git log --notes=3Damlog --show-notes-by-default
+
+would show both the default and the custom notes, which is not what
+the code does, I think, in this hunk:
+
+> @@ -3054,6 +3056,11 @@ int setup_revisions(int argc, const char **argv,=
+ struct rev_info *revs, struct s
+>  	if (revs->expand_tabs_in_log < 0)
+>  		revs->expand_tabs_in_log =3D revs->expand_tabs_in_log_default;
+> =20
+> +	if (!revs->show_notes_given && revs->show_notes_by_default) {
+> +		enable_default_display_notes(&revs->notes_opt, &revs->show_notes);
+> +		revs->show_notes_given =3D 1;
+> +	}
+> +
+>  	return left;
+>  }
+
+Other than the above minor nits, looks very good.
+
+Thanks.
+
