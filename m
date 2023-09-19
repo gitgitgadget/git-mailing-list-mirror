@@ -2,78 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 488D6CE79A9
-	for <git@archiver.kernel.org>; Tue, 19 Sep 2023 18:06:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B11EDCE79AA
+	for <git@archiver.kernel.org>; Tue, 19 Sep 2023 18:06:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232156AbjISSGT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Sep 2023 14:06:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45584 "EHLO
+        id S232250AbjISSGV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Sep 2023 14:06:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231929AbjISSGR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Sep 2023 14:06:17 -0400
+        with ESMTP id S232199AbjISSGT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Sep 2023 14:06:19 -0400
 Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AED7197
-        for <git@vger.kernel.org>; Tue, 19 Sep 2023 11:06:10 -0700 (PDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.west.internal (Postfix) with ESMTP id 17B48320094E;
-        Tue, 19 Sep 2023 14:06:08 -0400 (EDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A697BC
+        for <git@vger.kernel.org>; Tue, 19 Sep 2023 11:06:12 -0700 (PDT)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+        by mailout.west.internal (Postfix) with ESMTP id 0142E320069B;
+        Tue, 19 Sep 2023 14:06:10 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Tue, 19 Sep 2023 14:06:08 -0400
+  by compute6.internal (MEProxy); Tue, 19 Sep 2023 14:06:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
          h=cc:cc:content-transfer-encoding:content-type:content-type
         :date:date:from:from:in-reply-to:in-reply-to:message-id
         :mime-version:references:reply-to:sender:subject:subject:to:to;
-         s=fm1; t=1695146767; x=1695233167; bh=UeriJcc+dnyy51IaMyGkH3m3F
-        ZseQI3ijy/8wNuzLbE=; b=HNamohrEG6R6xGuwN8Iikqqs+M7PhOm3ayWUl1/Ib
-        QqdvOVg0t8ckDbVF3SMgCW0FTH02SnfMdXGYFtAPQywWfAMFFG2p1Ofgmrme5JwC
-        tqvCrcd4mnWehC1lRCuLEFG//ID9/OLaQYuOZXiZSxLW/DbTbRB3ca866JGN0FQX
-        tgF07i7XmzGWrJkFF5D1buFbODL6OGr8qCrPghQaEMuH1zgKJC5KKrl4IxRo5+Rm
-        VZda2pQtnuLoYxQKF/cwbAftDqHACFFhe82CdwevJuYlooT3puY8rRGTaZhFrRi1
-        h0aArsAoSFkbn88TJVXz5K96kYEz3X/mVeyp8J3+GF2Mw==
+         s=fm1; t=1695146770; x=1695233170; bh=h2EiliZuIjb6TFRKCZZOy89DE
+        celXtI5sy0HAkLJSqc=; b=oX0S94SiWZ66LQIQ3YujkjOO61k6JTq0+gcALM7eC
+        +BGUZMp68KC3yE7vu8bR6HJcUTJs0yNvedRBnGH1I4tjTFkH5w1RVOhaXryXc47V
+        JkGf7oYpuf2DmFyPh1Stx0lFx0i7IRdp62ZNlC0ehYvsbMVOxh47F1jo6+eYF6ik
+        s9GWUL3taz167k5ks3jEq+QvDlClkBO6J37Q3KOQZak4KvxsYUzfgiTFRmXLfboA
+        Y8jaja/6nCTYjwcuXVW7T/L2cJJ9Znxi1PxI1r7ZtDeWicptcVwwB1YMe4aVRd/v
+        3y+0/C4QZw7XGT8bChZor1rqqHlvSDNTZdiOVyscJB7CA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-transfer-encoding
         :content-type:content-type:date:date:feedback-id:feedback-id
         :from:from:in-reply-to:in-reply-to:message-id:mime-version
         :references:reply-to:sender:subject:subject:to:to:x-me-proxy
         :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-        1695146767; x=1695233167; bh=UeriJcc+dnyy51IaMyGkH3m3FZseQI3ijy/
-        8wNuzLbE=; b=HtoxgwNttHUatW8OdYbRuCJwGp4+jaRkZPMEpYLQKUQ/Kp7LYZ8
-        WuMRDlq5vC7tUuNK1/yfV1pJpWh0yWn82fdLBmRo2yQrKp8PSG39ZMV1p3z4gSMB
-        pyRFh6O7IXqKzMmNvOQIq1gKSfLeadu405OySbNG5O3flAWxb4tNfPftTnRNM10z
-        bvay6ZehIeHT4Vvx5QhSg20i4iaenQDwzgmSySPVbjh/iiNrdt0I4k/1D3HGCpvW
-        Cz5I9haI2aYOlCG/uLpVjRy4FXFFEVVAtbtzTQW1LjuRIbVEenhN414taO6NRK6G
-        NXEH0Wt23QTKsI+cuCXyDE9ZxxsxQCFcBpw==
-X-ME-Sender: <xms:D-MJZeaabR1TFZ8nc3I4k6vMds4C0gzpTdL4wLUVbmaPvXPkuvFlUf8>
-    <xme:D-MJZRa004jb2HEA5OAHSmxdUSxMJvLHBYkmmKoVU-hH8LiKG549vRSaN9spVhjly
-    2XiwBUG6T6S5xIzvA>
-X-ME-Received: <xmr:D-MJZY_Jl4XxtbMDDnx1EieuljcFsBnJ91Yk6LW3ZNlCnjaRrpvw9Y6HQQa_mHONPpq4cFOvDRewYG7bS25rKEhru2gQZpmjfuag1rLzbA>
+        1695146770; x=1695233170; bh=h2EiliZuIjb6TFRKCZZOy89DEcelXtI5sy0
+        HAkLJSqc=; b=duDYrUXgFFceDjipebIoGQMBFOLa9itrx6nxljNeBCyhEyukDCF
+        gOnlhpwp23CkaH+wfmDA25D76F3oWXkQC5S44ZTBE7OsesekRGogN/+gtA9xBZpW
+        jg4d+RbrEJDJTUMa7ZuUN82ewfXloAq7drj/dfs6LDM6PpwBuM5HbnjBbONY3FoJ
+        9U7Oy+/cCoVjmSFzcgJ4x+9f+NDid6MgK7gKAQk2PCe03ZU2nEU1sWIeQRmj7Vqa
+        lQBS9GSpKS4EcAav4Xvjkl8srGPvooDYGgqKAn2SWNlC+o9XjjR8/qYRQgjEIVgu
+        jNu4+JrgFafN2EoXYnTspIIJvP4ceN7lrdg==
+X-ME-Sender: <xms:EuMJZbwUWdDdSzMAhHHsJcwsO2gcR2s6-8kuDPjO48G530gHKFRpVOc>
+    <xme:EuMJZTTY1CuCGVAjEoR58iGtRmwMNffGMEx5EpYUIUD8Uz6Y5kWhbLtn8ugP4F_VM
+    3ISfxGBdv602fABiA>
+X-ME-Received: <xmr:EuMJZVUeL0N_VXNgd2IsqDCPuEFky-9dxi19WaTtWsYKOndjMmyzpiy8iZl4MHxbZsQVM3bzwJKszPgWr5eyMlKmabWJbM1JzgTRv3Hjng>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrudekuddgkeelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhephffvvefufffkofgjfhggtgfgsehtkeertdertdejnecuhfhrohhmpefmrhhi
     shhtohhffhgvrhcujfgruhhgshgsrghkkhcuoegtohguvgeskhhhrghughhssggrkhhkrd
-    hnrghmvgeqnecuggftrfgrthhtvghrnhepfffhgfdutddttdfhieelvdetudefgfejleef
-    ueeikeeugfeftdduiedvhfevgfetnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghdpgh
-    hithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghi
-    lhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:D-MJZQq4bldmHEeKoiSGhdsctS1sHfs6hg4Oi9gmB-cnXKMVUdY47A>
-    <xmx:D-MJZZoc-UTcGvooK1_icNAgG0pVsZaiYHPJ4dllQzgYDTx6kq7tUQ>
-    <xmx:D-MJZeQloph3RaYJh5MjuJBbYitdRUAGC5KTcYGoPyENZXo-vjHbUg>
-    <xmx:D-MJZQXkC146nD8wJ6dmIBWRn_fImtlq4vhxccrYep3N0W9vH1MqPg>
+    hnrghmvgeqnecuggftrfgrthhtvghrnhepvefgleevieekgeejieekueevhfelieduvdel
+    geefkeejtdekvedttefgffevtedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
+X-ME-Proxy: <xmx:EuMJZVi0j-GPseqIznPYTRTTwS0N-kePlat_9xin6ZZhrpmg0DS4CA>
+    <xmx:EuMJZdCdmvPDdmkuJy4kPEvvjp1PvB_DRwrqhd_PyHXzHIfY68KVaA>
+    <xmx:EuMJZeKtRP8A2yGef2oA8fuMNvg0hRuo_j9rm6Nxr_WBWfhOETSfsA>
+    <xmx:EuMJZY9NRDd0YNKe_xo-7T-sb-JSIJWiLfb2bxCRgz9nyGEsN3Brsg>
 Feedback-ID: i2671468f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 19 Sep 2023 14:06:06 -0400 (EDT)
+ 19 Sep 2023 14:06:08 -0400 (EDT)
 From:   Kristoffer Haugsbakk <code@khaugsbakk.name>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         Denton Liu <liu.denton@gmail.com>, Jeff King <peff@peff.net>,
-        Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: [PATCH v4 0/1] range-diff: treat notes like `log`
-Date:   Tue, 19 Sep 2023 20:05:31 +0200
-Message-ID: <cover.1695144790.git.code@khaugsbakk.name>
+        Kristoffer Haugsbakk <code@khaugsbakk.name>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH v4 1/1] range-diff: treat notes like `log`
+Date:   Tue, 19 Sep 2023 20:05:32 +0200
+Message-ID: <244e102cc4693bb6291e03cffea6df05cdb29df3.1695144790.git.code@khaugsbakk.name>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <cover.1694383247.git.code@khaugsbakk.name>
-References: <cover.1694383247.git.code@khaugsbakk.name>
+In-Reply-To: <cover.1695144790.git.code@khaugsbakk.name>
+References: <cover.1694383247.git.code@khaugsbakk.name> <cover.1695144790.git.code@khaugsbakk.name>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,77 +81,62 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi
-
-Same cover letter up until but not including “Changes ...”.
-
-Cheers
-
-🙛 🙙
-
 Currently, `range-diff` shows the default notes if no notes-related
 arguments are given. This is also how `log` behaves. But unlike
 `range-diff`, `log` does *not* show the default notes if
-`--notes=<custom>` are given.
+`--notes=<custom>` are given. In other words, this:
 
-These changes are supposed to make `format-range` behave like `log` with
-regards to notes.
+    git log --notes=custom
 
-These changes also fixes an issue with notes being shared in the cover
-letter via `range-diff`, and that’s really the main motivation for
-making these changes.
+is equivalent to this:
 
-§ How `log` works
+    git log --no-notes --notes=custom
 
-`log` shows the default notes if no notes arguments are given. But if
-you give it specific notes to show then it forgets about the default
-notes. Further, there is the convenience `--notes` option which will
-show the default notes again. These options are cumulative. For example:
+While:
 
-    git log --notes --notes=custom
+    git range-diff --notes=custom
 
-Will show the default notes as well as the `custom` notes.
+acts like this:
 
-See discussion in: https://lore.kernel.org/git/20110329143357.GA10771@sigill.intra.peff.net/
+    git log --notes --notes-custom
 
-§ How `range-format` works
+This can’t be how the user expects `range-diff` to behave given that the
+man page for `range-diff` under `--[no-]notes[=<ref>]` says:
 
-`range-format` passes `--notes` to `log`, which means that it does not
-have the default behavior of `log` (forget the default logs if you say
-e.g. `--notes=custom`). However, the man page says that (under
-`--[no-]notes[=<ref>]`):
+> This flag is passed to the `git log` program (see git-log(1)) that
+> generates the patches.
 
-> This flag is passed to the git log program (see git-log(1)) that generates the patches.
+This behavior also affects `format-patch` since it uses `range-diff` for
+the cover letter. Unlike `log`, though, `format-patch` is not supposed
+to show the default notes if no notes-related arguments are given.[1]
+But this promise is broken when the range-diff happens to have something
+to say about the changes to the default notes, since that will be shown
+in the cover letter.
 
-This makes me (at least) think that `range-format` is supposed to work
-just like `log` with regards to notes.
+Remedy this by introducing `--show-notes-by-default` that `range-diff` can
+use to tell the `log` subprocess what to do.
 
-§ `format-patch` and the difference between showing and sharing
+§ Root cause
 
-`format-patch` has a different default: it shows no notes. This makes
-sense in my opinion since `format-patch` is meant to be used to share
-changes with others, and you might be surprised if your notes (which
-might have only been notes to yourself) are sent out in your emails
-(keep in mind that notes refs are *not* pushed by default).
+8cf51561d1e (range-diff: fix a crash in parsing git-log output,
+2020-04-15) added `--notes` in order to deal with a side-effect of
+`--pretty=medium`:
 
-But the slightly faulty behavior of `range-diff` bleeds through to
-`format-patch` since the latter calls the former; if you have default
-notes they can be shared in the range-diff on the cover letter, even
-though `format-patch` isn’t supposed to show them.
+> To fix this explicitly set the output format of the internally executed
+> `git log` with `--pretty=medium`. Because that cancels `--notes`, add
+> explicitly `--notes` at the end.
 
-§ Changes since version 3
+§ Authors
 
-Dscho [rewrote] the fix: introduce a new option to pass to `git log`.
+• Fix by Johannes
+• Tests by Kristoffer
 
-🔗 rewrote: https://lore.kernel.org/git/dd2958c5-58bf-86dd-b666-9033259a8e1a@gmx.de/
+† 1: See e.g. 66b2ed09c2 (Fix "log" family not to be too agressive about
+    showing notes, 2010-01-20).
 
-§ CI (WIP)
-
-https://github.com/LemmingAvalanche/git/actions/runs/6238806624
-
-Kristoffer Haugsbakk (1):
-  range-diff: treat notes like `log`
-
+Co-authored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+---
  Documentation/pretty-options.txt |  4 ++++
  range-diff.c                     |  2 +-
  revision.c                       |  7 +++++++
@@ -159,104 +144,117 @@ Kristoffer Haugsbakk (1):
  t/t3206-range-diff.sh            | 28 ++++++++++++++++++++++++++++
  5 files changed, 41 insertions(+), 1 deletion(-)
 
-Range-diff against v3:
-1:  a37dfb3748 ! 1:  244e102cc4 range-diff: treat notes like `log`
-    @@ Commit message
-         to say about the changes to the default notes, since that will be shown
-         in the cover letter.
-
-    -    Remedy this by only conditionally passing in `--notes` to `range-diff`.
-    +    Remedy this by introducing `--show-notes-by-default` that `range-diff` can
-    +    use to tell the `log` subprocess what to do.
-
-         § Root cause
-
-    @@ Commit message
-         Co-authored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-
-    - ## range-diff.c ##
-    -@@ range-diff.c: static int read_patches(const char *range, struct string_list *list,
-    - 	struct child_process cp = CHILD_PROCESS_INIT;
-    - 	struct strbuf buf = STRBUF_INIT, contents = STRBUF_INIT;
-    - 	struct patch_util *util = NULL;
-    --	int in_header = 1;
-    -+	int i, implicit_notes_arg = 1, in_header = 1;
-    - 	char *line, *current_filename = NULL;
-    - 	ssize_t len;
-    - 	size_t size;
-    - 	int ret = -1;
-    + ## Documentation/pretty-options.txt ##
-    +@@ Documentation/pretty-options.txt: message by 4 spaces (i.e.  'medium', which is the default, 'full',
-    + and 'fuller').
-
-    -+	for (i = 0; other_arg && i < other_arg->nr; i++)
-    -+		if (!strcmp(other_arg->v[i], "--notes") ||
-    -+		    starts_with(other_arg->v[i], "--notes=") ||
-    -+		    !strcmp(other_arg->v[i], "--no-notes")) {
-    -+			implicit_notes_arg = 0;
-    -+			break;
-    -+		}
-    + ifndef::git-rev-list[]
-    ++--show-notes-by-default::
-    ++	Show the default notes (see `--notes`) unless subsequent arguments
-    ++	are used to display specific notes.
-     +
-    - 	strvec_pushl(&cp.args, "log", "--no-color", "-p", "--no-merges",
-    - 		     "--reverse", "--date-order", "--decorate=no",
-    - 		     "--no-prefix", "--submodule=short",
-    + --notes[=<ref>]::
-    + 	Show the notes (see linkgit:git-notes[1]) that annotate the
-    + 	commit, when showing the commit log message.  This is the default
-    +
-    + ## range-diff.c ##
-     @@ range-diff.c: static int read_patches(const char *range, struct string_list *list,
-      		     "--output-indicator-context=#",
-      		     "--no-abbrev-commit",
-      		     "--pretty=medium",
-     -		     "--notes",
-    ++		     "--show-notes-by-default",
-      		     NULL);
-    -+	if (implicit_notes_arg)
-    -+		     strvec_push(&cp.args, "--notes");
-      	strvec_push(&cp.args, range);
-      	if (other_arg)
-    - 		strvec_pushv(&cp.args, other_arg->v);
-    +
-    + ## revision.c ##
-    +@@ revision.c: static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
-    + 		revs->break_bar = xstrdup(optarg);
-    + 		revs->track_linear = 1;
-    + 		revs->track_first_time = 1;
-    ++	} else if (!strcmp(arg, "--show-notes-by-default")) {
-    ++		revs->show_notes_by_default = 1;
-    + 	} else if (skip_prefix(arg, "--show-notes=", &optarg) ||
-    + 		   skip_prefix(arg, "--notes=", &optarg)) {
-    + 		if (starts_with(arg, "--show-notes=") &&
-    +@@ revision.c: int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
-    + 	if (revs->expand_tabs_in_log < 0)
-    + 		revs->expand_tabs_in_log = revs->expand_tabs_in_log_default;
-    +
-    ++	if (!revs->show_notes_given && revs->show_notes_by_default) {
-    ++		enable_default_display_notes(&revs->notes_opt, &revs->show_notes);
-    ++		revs->show_notes_given = 1;
-    ++	}
-    ++
-    + 	return left;
-    + }
-    +
-    +
-    + ## revision.h ##
-    +@@ revision.h: struct rev_info {
-    + 			shown_dashes:1,
-    + 			show_merge:1,
-    + 			show_notes_given:1,
-    ++			show_notes_by_default:1,
-    + 			show_signature:1,
-    + 			pretty_given:1,
-    + 			abbrev_commit:1,
-
-      ## t/t3206-range-diff.sh ##
-     @@ t/t3206-range-diff.sh: test_expect_success 'range-diff with multiple --notes' '
---
+diff --git a/Documentation/pretty-options.txt b/Documentation/pretty-options.txt
+index dc685be363..dcd501ee50 100644
+--- a/Documentation/pretty-options.txt
++++ b/Documentation/pretty-options.txt
+@@ -59,6 +59,10 @@ message by 4 spaces (i.e.  'medium', which is the default, 'full',
+ and 'fuller').
+ 
+ ifndef::git-rev-list[]
++--show-notes-by-default::
++	Show the default notes (see `--notes`) unless subsequent arguments
++	are used to display specific notes.
++
+ --notes[=<ref>]::
+ 	Show the notes (see linkgit:git-notes[1]) that annotate the
+ 	commit, when showing the commit log message.  This is the default
+diff --git a/range-diff.c b/range-diff.c
+index 2e86063491..56f6870ff9 100644
+--- a/range-diff.c
++++ b/range-diff.c
+@@ -60,7 +60,7 @@ static int read_patches(const char *range, struct string_list *list,
+ 		     "--output-indicator-context=#",
+ 		     "--no-abbrev-commit",
+ 		     "--pretty=medium",
+-		     "--notes",
++		     "--show-notes-by-default",
+ 		     NULL);
+ 	strvec_push(&cp.args, range);
+ 	if (other_arg)
+diff --git a/revision.c b/revision.c
+index 2f4c53ea20..49d385257a 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2484,6 +2484,8 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		revs->break_bar = xstrdup(optarg);
+ 		revs->track_linear = 1;
+ 		revs->track_first_time = 1;
++	} else if (!strcmp(arg, "--show-notes-by-default")) {
++		revs->show_notes_by_default = 1;
+ 	} else if (skip_prefix(arg, "--show-notes=", &optarg) ||
+ 		   skip_prefix(arg, "--notes=", &optarg)) {
+ 		if (starts_with(arg, "--show-notes=") &&
+@@ -3054,6 +3056,11 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ 	if (revs->expand_tabs_in_log < 0)
+ 		revs->expand_tabs_in_log = revs->expand_tabs_in_log_default;
+ 
++	if (!revs->show_notes_given && revs->show_notes_by_default) {
++		enable_default_display_notes(&revs->notes_opt, &revs->show_notes);
++		revs->show_notes_given = 1;
++	}
++
+ 	return left;
+ }
+ 
+diff --git a/revision.h b/revision.h
+index 82ab400139..50091bbd13 100644
+--- a/revision.h
++++ b/revision.h
+@@ -253,6 +253,7 @@ struct rev_info {
+ 			shown_dashes:1,
+ 			show_merge:1,
+ 			show_notes_given:1,
++			show_notes_by_default:1,
+ 			show_signature:1,
+ 			pretty_given:1,
+ 			abbrev_commit:1,
+diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+index b5f4d6a653..b33afa1c6a 100755
+--- a/t/t3206-range-diff.sh
++++ b/t/t3206-range-diff.sh
+@@ -662,6 +662,20 @@ test_expect_success 'range-diff with multiple --notes' '
+ 	test_cmp expect actual
+ '
+ 
++# `range-diff` should act like `log` with regards to notes
++test_expect_success 'range-diff with --notes=custom does not show default notes' '
++	git notes add -m "topic note" topic &&
++	git notes add -m "unmodified note" unmodified &&
++	git notes --ref=custom add -m "topic note" topic &&
++	git notes --ref=custom add -m "unmodified note" unmodified &&
++	test_when_finished git notes remove topic unmodified &&
++	test_when_finished git notes --ref=custom remove topic unmodified &&
++	git range-diff --notes=custom main..topic main..unmodified \
++		>actual &&
++	! grep "## Notes ##" actual &&
++	grep "## Notes (custom) ##" actual
++'
++
+ test_expect_success 'format-patch --range-diff does not compare notes by default' '
+ 	git notes add -m "topic note" topic &&
+ 	git notes add -m "unmodified note" unmodified &&
+@@ -679,6 +693,20 @@ test_expect_success 'format-patch --range-diff does not compare notes by default
+ 	! grep "note" 0000-*
+ '
+ 
++test_expect_success 'format-patch --notes=custom --range-diff only compares custom notes' '
++	git notes add -m "topic note" topic &&
++	git notes --ref=custom add -m "topic note (custom)" topic &&
++	git notes add -m "unmodified note" unmodified &&
++	git notes --ref=custom add -m "unmodified note (custom)" unmodified &&
++	test_when_finished git notes remove topic unmodified &&
++	test_when_finished git notes --ref=custom remove topic unmodified &&
++	git format-patch --notes=custom --cover-letter --range-diff=$prev \
++		main..unmodified >actual &&
++	test_when_finished "rm 000?-*" &&
++	grep "## Notes (custom) ##" 0000-* &&
++	! grep "## Notes ##" 0000-*
++'
++
+ test_expect_success 'format-patch --range-diff with --no-notes' '
+ 	git notes add -m "topic note" topic &&
+ 	git notes add -m "unmodified note" unmodified &&
+-- 
 2.42.0
+
