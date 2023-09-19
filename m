@@ -2,101 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC60ACE79A9
-	for <git@archiver.kernel.org>; Tue, 19 Sep 2023 15:52:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63EE1CE79A9
+	for <git@archiver.kernel.org>; Tue, 19 Sep 2023 16:38:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232051AbjISPwV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Sep 2023 11:52:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54106 "EHLO
+        id S231666AbjISQid (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Sep 2023 12:38:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231608AbjISPwU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Sep 2023 11:52:20 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C17A893
-        for <git@vger.kernel.org>; Tue, 19 Sep 2023 08:52:13 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-52a49a42353so7259484a12.2
-        for <git@vger.kernel.org>; Tue, 19 Sep 2023 08:52:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1695138732; x=1695743532; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MbBsFPnKjpS/AcXE9gFzj70cDtMUF2ZSFo380uPnYQ4=;
-        b=X9wJDaQzAp9+g4rb00ezHwAuVBJ6HETvykuSvgzZzWsWzkxi4DDAmcwifI9f1rJoaK
-         x2HwCKuXYi6JcxMxrft8pgbA63K/w3ON/XHpn+c/3mNENnbP3RqH36Bum1/59cpRtxdJ
-         CuWuehkoHIm9FC2YhW62OUUkYK+wos1mij2zXki8yzMlJq1M+qRweDbK6Mfg/Yi2vsl1
-         WEhdACj3RBuXDiWGE/8uoPuWr4llpGCgRx1SBkZ17rTPM1nlxh9/7LbcauPDU2DsifWF
-         gN+I78s0yw46dEVhz7/1LW80vn3Oiwz4WVZ/Y3lKNascjEgw0YEv4h7ZdO+NjmpKoYBi
-         JpCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695138732; x=1695743532;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=MbBsFPnKjpS/AcXE9gFzj70cDtMUF2ZSFo380uPnYQ4=;
-        b=ZmLlWHbBlMmLfz4/tUg0Xq7T6uKp3JP8C08+La6an9VxPDRmCYK2KsQKKDb74ctJhp
-         eno5wSAgmA4eQY75BAnbZgZ1NLTM3Gbf836KB2PC049qbu8L+e6cmya3AbTLytyeOtro
-         AsM1po1O8ZWvmuFNf7XTUI0G8SYd+ApOsx/gHa3P3RfyDfA7cpAJI53a75JS7r5Q2OIX
-         JK/8VrqT1o1s2pLfIEB+YQwrUnkdUPIq6/437T8KH+yGzqZj18vDs5cAu88W8YCvOp06
-         vKdMTH/yHHI0WduDDsJuqHdW46V6yPj95jJPJd8Clkpxpe7TVQlwnqbgc6lFRKrYpAO+
-         cHMQ==
-X-Gm-Message-State: AOJu0YxCrFXfJQpxUS8UmfIoh3LeVCdTD79QqCpn9hjXRmcHejOxABCm
-        /S3EFhwL4v/Sjj+hWp/Rn1qugl1NsU9b2PepDKWNxg==
-X-Google-Smtp-Source: AGHT+IH8NPNuh12vIPJxBLRt7x+ixSKbUX99S7fVidJqNoN+Ap56nKQe0IiNwwSyZBAXJf3t6PyUVWXAr4Xgexb0XFU=
-X-Received: by 2002:a17:906:3146:b0:9a1:cbe4:d033 with SMTP id
- e6-20020a170906314600b009a1cbe4d033mr10667606eje.53.1695138732077; Tue, 19
- Sep 2023 08:52:12 -0700 (PDT)
+        with ESMTP id S230203AbjISQic (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Sep 2023 12:38:32 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6CE6D6
+        for <git@vger.kernel.org>; Tue, 19 Sep 2023 09:38:26 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5FEE62CFD8;
+        Tue, 19 Sep 2023 12:38:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=SePhkDsrdQHbz6YNs7B3bzHbw1zOlnFrFBIUre
+        CvEQg=; b=sIE3hTSgUu201lcYzayBEnAWUw8o96NQr8x52p9PZjWj11UxhykV6D
+        rJjZP0cc4L0l7daat5zalfsuSmRQveOydH2McDeKh1rXJPxI7N9YUBoXXKCIGB3Q
+        iVQNEYRlPaAEZF12QNOtpS40hmU6zXgKW+hnP3w39PTCYYAu/9eoU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 580732CFD7;
+        Tue, 19 Sep 2023 12:38:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C31582CFD6;
+        Tue, 19 Sep 2023 12:38:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Sergey Organov <sorganov@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/2] diff-merges: improve --diff-merges documentation
+In-Reply-To: <87v8c7mp1j.fsf@osv.gnss.ru> (Sergey Organov's message of "Mon,
+        18 Sep 2023 19:20:08 +0300")
+References: <20230909125446.142715-1-sorganov@gmail.com>
+        <20230909125446.142715-2-sorganov@gmail.com>
+        <xmqqfs3ktnvo.fsf@gitster.g> <87ttrzhmfu.fsf@osv.gnss.ru>
+        <xmqqcyymly5m.fsf@gitster.g> <87v8c7mp1j.fsf@osv.gnss.ru>
+Date:   Tue, 19 Sep 2023 09:38:19 -0700
+Message-ID: <xmqqh6nqgltw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <pull.1574.git.git.1695059978.gitgitgadget@gmail.com>
- <dea0fbb139a82fe449a7edab6a8f445ce763d0c0.1695059978.git.gitgitgadget@gmail.com>
- <xmqqa5tjje0y.fsf@gitster.g>
-In-Reply-To: <xmqqa5tjje0y.fsf@gitster.g>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Tue, 19 Sep 2023 17:52:00 +0200
-Message-ID: <CAFQ2z_O-s-NT+DfxTSSuTq1Z6J0LZz8X8cFTPoOohfqX2rM-yw@mail.gmail.com>
-Subject: Re: [PATCH 1/3] refs: push lock management into packed backend
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: F180E718-570A-11EE-8D8E-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 19, 2023 at 12:46=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
- wrote:
-> This looks a bit more convoluted than necessary.  Is it the same as
+Sergey Organov <sorganov@gmail.com> writes:
+
+> Junio C Hamano <gitster@pobox.com> writes:
 >
->         if (refs->be->transaction_begin &&
->             refs->be->transaction_begin(refs, tr, err))
->                 FREE_AND_NULL(tr);
-
-Changed this in the next version.
-
-> > +                     /* TODO: leaks on error path. */
-> > +                     ref_transaction_free(packed_transaction);
-> > +                     packed_transaction =3D NULL;
-> > +                     backend_data->packed_transaction =3D NULL;
-> > +             } else {
+>> I was only trying to help you polish the text you added to explain
+>> what you called the "legacy feature" to reflect the reason behind
+>> that legacy.  As you obviously were not there back then when I made
+>> "--cc" imply "-m" while keeping "-p" not to imply "-m".
 >
-> If it were just a matter of flipping the early return and freeing of
-> the transaction before going to clean-up, then that would have been
-> less effort than leaving the TODO: comment.  What other things are
-> needed to plug this leak?
+> Your help is appreciated, yet unfortunately I still can't figure how to
+> improve the text based on your advice.
 
-you're not missing something. I didn't have enough time yesterday to
-look into all the details.
+If I were doing this patch, I would start from something like this:
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
+-m::
+	By default, comparisons between parent commits and the child
+	commit are not shown for merge commits, but with the `-m`
+	option, `git log` can be told to show comparisons for merges
+	in chosen formats (e.g. `--raw`, `-p`, `--stat`).  When
+	output formats (e.g. `--cc`) that are specifically designed
+	to show better comparisons for merges are given, this option
+	is implied; in other words, you do not have to say e.g. `git
+	log -m --cc`.  `git log --cc` suffices.
 
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
 
-Registergericht und -nummer: Hamburg, HRB 86891
+The rest is a tangent that is not related to the above.  I suspect
+that this also applies to newer `--remerge-diff`, as it also targets
+to show merges better than the original "pairwise patches" that were
+largely useless, but the right way to view what `--cc` and other
+formats do for non-merge commits is *not* to think that they "imply"
+`-p`.  It is more like that the output from these formats on
+non-merge commits happen to be identical to what `-p` would produce.
+You could say that the "magic" these options know to show merge
+commits better degenerates to what `-p` gives when applied to
+non-merge commits.
 
-Sitz der Gesellschaft: Hamburg
+Another way to look at it is that `--cc` and friends, even though
+they are meant as improvements for showing merges over "-m -p" that
+gives human-unreadable pair-wise diffs, do not imply "--merges"
+(i.e. show only merge commits)---hence they have to show something
+for non-merge commits.  Because output formats for all of them were
+modeled loosely [*] after "-p" output, we happened to pick it as the
+format they fall back to when they are not showing comparisons for
+merge commits.
 
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Liana Sebastian
+
+[Footnote]
+
+ * Here, `-p` roughly means "what GNU patch and `git apply` take".
+   Output from `-c` and `--cc` on merge commits do not qualify, but
+   they are loosely modeled after it.
