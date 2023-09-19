@@ -2,84 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C88DCE79A9
-	for <git@archiver.kernel.org>; Tue, 19 Sep 2023 21:25:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C50BCE79AD
+	for <git@archiver.kernel.org>; Tue, 19 Sep 2023 22:14:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233351AbjISVZR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Sep 2023 17:25:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57438 "EHLO
+        id S233519AbjISWOc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Sep 2023 18:14:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229945AbjISVZR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Sep 2023 17:25:17 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE790BF
-        for <git@vger.kernel.org>; Tue, 19 Sep 2023 14:25:10 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5F6182DA32;
-        Tue, 19 Sep 2023 17:25:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=RXHhJipcwMLKDwP0MRPPhcYV3qQfdItkmZuEzD
-        McZsA=; b=W9JUOKSAdmqkjCzJ7D0H13jyK5ekQO/T34g22m5XR9OklOVusqec7/
-        GGlH59m/wiqKMgJPM8NuVNYJiSHdVRF5jqRUYWjD6iOrjNqFuFhtzrQ57cSCW1Lf
-        zJfqNa3xeL6Tdkyi0t80bhZV6ayHWpHxsexRbcoSqz2zt4T0IrdXw=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 29B542DA31;
-        Tue, 19 Sep 2023 17:25:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B00562DA30;
-        Tue, 19 Sep 2023 17:25:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Linus Arver <linusa@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Sep 2023, #05; Fri, 15)
-In-Reply-To: <owly7comj5ll.fsf@fine.c.googlers.com> (Linus Arver's message of
-        "Tue, 19 Sep 2023 13:00:38 -0700")
-References: <xmqqmsxmdhdw.fsf@gitster.g>
-        <owly7comj5ll.fsf@fine.c.googlers.com>
-Date:   Tue, 19 Sep 2023 14:25:04 -0700
-Message-ID: <xmqq34z9g8jz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 00704796-5733-11EE-A18E-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+        with ESMTP id S233489AbjISWOa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Sep 2023 18:14:30 -0400
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3A96F5
+        for <git@vger.kernel.org>; Tue, 19 Sep 2023 15:13:40 -0700 (PDT)
+Received: by mail-yb1-xb4a.google.com with SMTP id 3f1490d57ef6-d81c02bf2beso4820777276.2
+        for <git@vger.kernel.org>; Tue, 19 Sep 2023 15:13:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1695161620; x=1695766420; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=qu76Z2RZiqArPHy9LupMU2CWA64nk07OmRJSoxU2ig0=;
+        b=jvn7LRtEi2/AcaYvBffgl560BoWu0KMlOjr9r7gkU6T0Ob5hI92jfjIbQk4LB6W68W
+         Ddit/djUXv3zGr3i9tvZ4BQdi4b47fUzXOJSwUKf3ePHaxrYdgAA4BvCb3UzNcnT9erz
+         sjfPhmPupI6xmOJ4D+BdETVJ5x/qkUCTUYQyIizt/iDY0Dm4ZaldGJkbLcadVxolHbNT
+         0szTxqxhlaeoiGdOEyS2k+HVkZ1BriO8/9psa6BF0QOiCOZfg9zLH6Ns48sWtkt1sbcJ
+         OtyL44P6zSQXwbqcrYKGREIKoEfK3W+P9TRxvZ2LgAwpLtICnHCTcP5v6V0gSQwfY21R
+         EgHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695161620; x=1695766420;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qu76Z2RZiqArPHy9LupMU2CWA64nk07OmRJSoxU2ig0=;
+        b=rgse0SacO4vJwgC/uOUNK3f440nUGuYCLTyStFHbJg44WpraocvMWqK8P6pLDeLfT+
+         ByNXYDk1UIBQuoCkG7IG5sNIg+vll9iw8JHgTc7TC31V7pVLb841BhgJdvlkdVPV2hus
+         rmpQK7ZORaHmmjSa9mrqTuSqafA3nODnoF0zrA8ZUdo2F529qW7pPSZ46/+8UL6RzHQG
+         ZPp/6NDPH/GPFuk3AQ8SL1YVuRWQ7jtq6CM42A38Udx+G7mr+fQ1kr1xbesoJjsfRZNS
+         zP4xlpW3cC7XIHrCQQZpo7HYEod8rTFNfuLzr/Q7Tn90BRCeOEXWQsSwFFoqHVYJKNOw
+         Dz/Q==
+X-Gm-Message-State: AOJu0Yzf93vOgAcCJUgyKxR1aHOqIOBABBAFCpN4vb5chQK4puAdq0h5
+        RQBDXcgolwd3AxmKNlzexPjvtk+oy/0JIgnbtsN/
+X-Google-Smtp-Source: AGHT+IGtYKqkyfF5mblFNaVgynITGGRUoCmSOAssvyrPQ6u9a/cRmqG8HkRJGXpXPeuNSwK+O4GGCfQKQkDfsW/bcW3D
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:def5:f709:d6a:7375])
+ (user=jonathantanmy job=sendgmr) by 2002:a25:ce8b:0:b0:d81:503e:2824 with
+ SMTP id x133-20020a25ce8b000000b00d81503e2824mr11660ybe.10.1695161619815;
+ Tue, 19 Sep 2023 15:13:39 -0700 (PDT)
+Date:   Tue, 19 Sep 2023 15:13:37 -0700
+In-Reply-To: <040766861e21afe5f686299560677e429be11844.1694125210.git.gitgitgadget@gmail.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.42.0.459.ge4e396fd5e-goog
+Message-ID: <20230919221337.2177936-1-jonathantanmy@google.com>
+Subject: Re: [PATCH v3 05/13] trailer: trailer location is a place, not an action
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Linus Arver <linusa@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Linus Arver <linusa@google.com> writes:
+"Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> From: Linus Arver <linusa@google.com>
+> 
+> Fix the help text to say "placement" instead of "action" because the
+> values are placements, not actions.
+> 
+> While we're at it, tweak the documentation to say "placements" instead
+> of "values", similar to how the existing language for "--if-exists" uses
+> the word "action" to describe both the syntax (with the phrase
+> "--if-exists <action>") and the possible values (with the phrase
+> "possible actions").
+> 
+> Signed-off-by: Linus Arver <linusa@google.com>
+> ---
+>  Documentation/git-interpret-trailers.txt | 2 +-
+>  builtin/interpret-trailers.c             | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
+> index 72f5bdb652f..b5284c3d33f 100644
+> --- a/Documentation/git-interpret-trailers.txt
+> +++ b/Documentation/git-interpret-trailers.txt
+> @@ -117,7 +117,7 @@ OPTIONS
+>  	and applies to all '--trailer' options until the next occurrence of
+>  	'--where' or '--no-where'. Upon encountering '--no-where', clear the
+>  	effect of any previous use of '--where', such that the relevant configuration
+> -	variables are no longer overridden. Possible values are `after`,
+> +	variables are no longer overridden. Possible placements are `after`,
+>  	`before`, `end` or `start`.
+>  
+>  --if-exists <action>::
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> [Cooking]
->>
->> [...]
->>
->> * la/trailer-cleanups (2023-09-11) 6 commits
->>   (merged to 'next' on 2023-09-12 at 779c4a097a)
->>  + trailer: use offsets for trailer_start/trailer_end
->>  + trailer: rename *_DEFAULT enums to *_UNSPECIFIED
->>  + trailer: teach find_patch_start about --no-divider
->>  + trailer: split process_command_line_args into separate functions
->>  + trailer: split process_input_file into separate pieces
->>  + trailer: separate public from internal portion of trailer_iterator
->>
->>  Code clean-up.
->>
->>  Will merge to 'master'.
->>  source: <pull.1563.v2.git.1694240177.gitgitgadget@gmail.com>
->
-> This isn't ready yet (still need to reroll).
-
-Whoa, wait.  I wasn't aware of any more comments that needed
-addressing.  Whatever improvements you have in mind, if they are
-minor, letting the above graduate (they have been in 'next' for a
-week without anybody complaining) and doing them as a follow-up
-series would be sensible, I would think.
-
-Thanks.
+Not shown in the diff as printed in this email, but this option is
+indeed documented with "<placement>". Up to and including this patch
+makes sense.
+ 
