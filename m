@@ -2,138 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02FCFCE79A9
-	for <git@archiver.kernel.org>; Tue, 19 Sep 2023 19:53:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 584C8CE79A8
+	for <git@archiver.kernel.org>; Tue, 19 Sep 2023 20:00:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232400AbjISTxE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Sep 2023 15:53:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34760 "EHLO
+        id S232717AbjISUAv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Sep 2023 16:00:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232036AbjISTxD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Sep 2023 15:53:03 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF3E0E1
-        for <git@vger.kernel.org>; Tue, 19 Sep 2023 12:52:56 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-5033918c09eso488303e87.2
-        for <git@vger.kernel.org>; Tue, 19 Sep 2023 12:52:56 -0700 (PDT)
+        with ESMTP id S233127AbjISUAr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Sep 2023 16:00:47 -0400
+Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A7949D
+        for <git@vger.kernel.org>; Tue, 19 Sep 2023 13:00:41 -0700 (PDT)
+Received: by mail-pl1-x64a.google.com with SMTP id d9443c01a7336-1bf6e47b5efso50065805ad.2
+        for <git@vger.kernel.org>; Tue, 19 Sep 2023 13:00:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695153175; x=1695757975; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=lswYXfLTe+XYoOFpAqIo7D6l+Vax+DZ5i+29ThZ8+Pg=;
-        b=J+W5YkO1dfY/zXoFzGkV3AuARwYQIsF1Icmfo5Slkdn/8B2ysDTvzxcGLH3svmmyZb
-         6mpsx9iUTpwyXnOPmZmhBLXOhfU9CXl8RqHwp7rrvzQxkASxlgGwXj6ds7QF6B+5MVSg
-         B6HiKsHL8DFcBLTBC9JlPASFVyAdlePiXwAROR8W6PJMK/EHXkgnmv2RGC/6dEwaGTDx
-         XM5357Dd0bstUBw5AhYRsKbCDT3sAUds73jLxdwsmgZP3EhOX4dapPbfeTFHUifQY66V
-         UVJIYeGLjydXI5YEU0te/0NZH+oPTdN0axyiSkCFsuOQ53Og9ez8zCRm+kgmvWIAoP/t
-         K72A==
+        d=google.com; s=20230601; t=1695153641; x=1695758441; darn=vger.kernel.org;
+        h=to:from:subject:message-id:references:mime-version:in-reply-to:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jmRWr6WiSoRCUhhenZjVuCVKqdOOE3L4/s5NdbEYGA8=;
+        b=HC0gUiAP8wbC76ZXJeuIEfBBI6SwEBmJ5QJsPTPAcYxvUnM3ULZf+RN0bMuwiepSMC
+         +KVQeBTajNyLZCQAd9Hb6SUbTfvdKlFLwqrnWsfN8VH2Yt4zN58+Rt+nga3FtU3dpUyn
+         KJRWstZ5EgSvqUb2w49qbQhhIKikb+go6WldMURbQJRc/XIWr+3opbqFWdndX19QtqI3
+         6k/8sb+XJi6nfXwKX024qabG7o7KO27N0IdtomBQRr3+JQq9CGRYAAYqzPUNCp5/F0zY
+         YDVzlRyg2qRKyeUght6Qgh0t2fI9UEghAw1dk53AJSguq/hsiTU/58A4McdvKIMl1fIv
+         rJwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695153175; x=1695757975;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lswYXfLTe+XYoOFpAqIo7D6l+Vax+DZ5i+29ThZ8+Pg=;
-        b=Saenyn2ChicG5quzyhNXUALiSUkmiI0qdX/94HH7CdW34reL1mAdhNVjBcPv87NyFm
-         tnPxsiH4OhN6NgvTuBmtMv8YhfSN+H4oUAAOruQ6dJqAzr9nO9612fqCmtsbRIEOlRXY
-         b6edGlJFHNkKCKYfafmf+zhfdfkYW8NGIAWjavYqP8iYqwkKu4YDWZUXX+riLQgDAoIG
-         /o8AZDVTyw6jLVSkn0h0WPetq2WHuh0DpdTNAKlHhOiBQPFCksn/LlxUVkRs1z8/SqYd
-         MnnxmwM8jAg5rPwvMUaAu3IgX50Wbh/U0i1xOpEFCk1j1a/DfeNgxHuCnGv6ZvpdSwIR
-         G4xg==
-X-Gm-Message-State: AOJu0Yx4ikvlzud+poiyaFRwQqsxdKD6UF5N82TQGzeM6b//VZf70gVU
-        gNqhx2rew1s3BJXrZhERvU2RpaTbmEI=
-X-Google-Smtp-Source: AGHT+IEtdKlGj5Kd3zuFD615yj3rcrXxLB4O0u6oWo/z43sLBICvMt+96KDII8AVaMJvBMiFqf8/kg==
-X-Received: by 2002:a05:6512:44c:b0:500:a5af:86a4 with SMTP id y12-20020a056512044c00b00500a5af86a4mr466015lfk.43.1695153174327;
-        Tue, 19 Sep 2023 12:52:54 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id t4-20020ac243a4000000b0050096cc3ba1sm2401648lfl.255.2023.09.19.12.52.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Sep 2023 12:52:53 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/2] diff-merges: improve --diff-merges documentation
-References: <20230909125446.142715-1-sorganov@gmail.com>
-        <20230909125446.142715-2-sorganov@gmail.com>
-        <xmqqfs3ktnvo.fsf@gitster.g> <87ttrzhmfu.fsf@osv.gnss.ru>
-        <xmqqcyymly5m.fsf@gitster.g> <87v8c7mp1j.fsf@osv.gnss.ru>
-        <xmqqh6nqgltw.fsf@gitster.g>
-Date:   Tue, 19 Sep 2023 22:52:53 +0300
-In-Reply-To: <xmqqh6nqgltw.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-        19 Sep 2023 09:38:19 -0700")
-Message-ID: <87il86q6sq.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        d=1e100.net; s=20230601; t=1695153641; x=1695758441;
+        h=to:from:subject:message-id:references:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jmRWr6WiSoRCUhhenZjVuCVKqdOOE3L4/s5NdbEYGA8=;
+        b=xDND8o2C0UqI5w5cC0uDEXaBs1zfvKKFWh0If/tajxUyV9d9Q5EynQ6+BbUNrGY3hB
+         TfrI+ZX1GZsOfhZyAzzlTPGVFjin3O8C8VGGYWIXf0H/UoobYOtUHNLEno907aH12K6y
+         MLL2wF7sz1zkAQEtoVw2HRQHAA2KyN9/Z4zvQE3seVt3EzBveTW66LRVuSVgtp0BdTd6
+         kY0RmSDbhSXd6sVhB0nMrrbGcTgDpBRrcZol0k4eqXEhvoSjqP94ctyy4BehLx5X64dY
+         3KJ/PWsayWEOz4P3i7kpKsvEWmAlVJZ1c299SO4NaEofVWzEgeuvqP1RgwqY/gXDMQqg
+         78QA==
+X-Gm-Message-State: AOJu0YwT/HO7rWOQuQsmNgtFQTT/aviRRanFu8Mv9Xtf1W8LsbI/xsM4
+        86mCK5j+zS+BCFG5Glxdhl9pwdbkqe4=
+X-Google-Smtp-Source: AGHT+IE6+tA+yrvG0zf1C1ZXmkHYHqdPYF6wrnHFGev2O2OrmQZbAfY8/n+NgOgiM6o60uCRMWu5EXTC8CE=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a17:902:f545:b0:1c3:e2eb:f7ba with SMTP id
+ h5-20020a170902f54500b001c3e2ebf7bamr4330plf.13.1695153641006; Tue, 19 Sep
+ 2023 13:00:41 -0700 (PDT)
+Date:   Tue, 19 Sep 2023 13:00:38 -0700
+In-Reply-To: <xmqqmsxmdhdw.fsf@gitster.g>
+Mime-Version: 1.0
+References: <xmqqmsxmdhdw.fsf@gitster.g>
+Message-ID: <owly7comj5ll.fsf@fine.c.googlers.com>
+Subject: Re: What's cooking in git.git (Sep 2023, #05; Fri, 15)
+From:   Linus Arver <linusa@google.com>
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> Sergey Organov <sorganov@gmail.com> writes:
+> [Cooking]
 >
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>> I was only trying to help you polish the text you added to explain
->>> what you called the "legacy feature" to reflect the reason behind
->>> that legacy.  As you obviously were not there back then when I made
->>> "--cc" imply "-m" while keeping "-p" not to imply "-m".
->>
->> Your help is appreciated, yet unfortunately I still can't figure how to
->> improve the text based on your advice.
+> [...]
 >
-> If I were doing this patch, I would start from something like this:
+> * la/trailer-cleanups (2023-09-11) 6 commits
+>   (merged to 'next' on 2023-09-12 at 779c4a097a)
+>  + trailer: use offsets for trailer_start/trailer_end
+>  + trailer: rename *_DEFAULT enums to *_UNSPECIFIED
+>  + trailer: teach find_patch_start about --no-divider
+>  + trailer: split process_command_line_args into separate functions
+>  + trailer: split process_input_file into separate pieces
+>  + trailer: separate public from internal portion of trailer_iterator
 >
-> -m::
-> 	By default, comparisons between parent commits and the child
-> 	commit are not shown for merge commits, but with the `-m`
-> 	option, `git log` can be told to show comparisons for merges
-> 	in chosen formats (e.g. `--raw`, `-p`, `--stat`).  When
-> 	output formats (e.g. `--cc`) that are specifically designed
-> 	to show better comparisons for merges are given, this option
-> 	is implied; in other words, you do not have to say e.g. `git
-> 	log -m --cc`.  `git log --cc` suffices.
-
-Well, to me this piece looks much harder to understand than current Git
-documentation, and then seemingly contradicts current Git behavior and
-implementation, as "log --cc -m" is not the same as "log --cc" in the
-current Git (so we can't say that --cc implies -m), and "log -m --cc" is
-the same as "log --cc" due to absolutely different reason: -m and --cc
-are mutually exclusive options, so the last one simply takes precedence.
-
-In the current Git, as documented, -m just produces separate diff with
-respect to every parent. Simple and straightforward. Users don't need to
-learn about --cc, -c, --raw, --stat... to figure what -m does and if
-it's what they need. Unfortunately they still need to learn about -p,
-but I'm already done trying to promote this simple change.
-
+>  Code clean-up.
 >
-> The rest is a tangent that is not related to the above.  I suspect
-> that this also applies to newer `--remerge-diff`, as it also targets
-> to show merges better than the original "pairwise patches" that were
-> largely useless, but the right way to view what `--cc` and other
-> formats do for non-merge commits is *not* to think that they "imply"
-> `-p`.  It is more like that the output from these formats on
-> non-merge commits happen to be identical to what `-p` would produce.
-> You could say that the "magic" these options know to show merge
-> commits better degenerates to what `-p` gives when applied to
-> non-merge commits.
+>  Will merge to 'master'.
+>  source: <pull.1563.v2.git.1694240177.gitgitgadget@gmail.com>
+
+This isn't ready yet (still need to reroll).
+
+> [...]
 >
-> Another way to look at it is that `--cc` and friends, even though
-> they are meant as improvements for showing merges over "-m -p" that
-> gives human-unreadable pair-wise diffs, do not imply "--merges"
-> (i.e. show only merge commits)---hence they have to show something
-> for non-merge commits.  Because output formats for all of them were
-> modeled loosely [*] after "-p" output, we happened to pick it as the
-> format they fall back to when they are not showing comparisons for
-> merge commits.
+> * la/trailer-test-and-doc-updates (2023-09-07) 13 commits
+>  - trailer doc: <token> is a <key> or <keyAlias>, not both
+>  - trailer doc: separator within key suppresses default separator
+>  - trailer doc: emphasize the effect of configuration variables
+>  - trailer --unfold help: prefer "reformat" over "join"
+>  - trailer --parse docs: add explanation for its usefulness
+>  - trailer --only-input: prefer "configuration variables" over "rules"
+>  - trailer --parse help: expose aliased options
+>  - trailer --no-divider help: describe usual "---" meaning
+>  - trailer: trailer location is a place, not an action
+>  - trailer doc: narrow down scope of --where and related flags
+>  - trailer: add tests to check defaulting behavior with --no-* flags
+>  - trailer test description: this tests --where=after, not --where=before
+>  - trailer tests: make test cases self-contained
+>
+>  Test coverage for trailers has been improved.
+>  source: <pull.1564.v3.git.1694125209.gitgitgadget@gmail.com>
 
-I admit you are very creative producing these views,, but currently
-these options just imply -p. Simple to understand, useful, works.
-
-Overall, as you don't like my simple clarification, and I don't like the
-direction(s) you propose, I figure I rather withdraw the part of patch
-causing contention in the re-roll.
-
-Thanks,
--- Sergey Organov
+Did you forget to add "Need more reviews"? Not sure what the status is
+for the overall series (modulo your targetd comments for some of the
+patches).
