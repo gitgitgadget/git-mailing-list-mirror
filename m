@@ -2,128 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 907B3CE79A8
-	for <git@archiver.kernel.org>; Tue, 19 Sep 2023 17:19:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F2A3CE79A8
+	for <git@archiver.kernel.org>; Tue, 19 Sep 2023 17:48:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231840AbjISRTG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Sep 2023 13:19:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52406 "EHLO
+        id S232084AbjISRsX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Sep 2023 13:48:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58528 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229969AbjISRTF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Sep 2023 13:19:05 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEE429F
-        for <git@vger.kernel.org>; Tue, 19 Sep 2023 10:18:59 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 011A02C6F1;
-        Tue, 19 Sep 2023 13:18:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=TrG0b0ip4tPidpi+PUiELIu/YTv1JQB5olnxvY
-        q2eSQ=; b=Zo0vafRTYZU0oCihxw9AHFfrmIKu9ebuqxc3umw1uXlfGd6K7hR8aL
-        JjEYSYo7WUTC1aiAxtUd+pjyMvtvwtZ12+b83UqptVAPmxxjkI8rMKr+jgV+nygw
-        dC1tq0xe32B1ZbPoIAqXsw9StPp/6w54+ZW9SQOVY62A/5p9DLCv4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id ECF002C6F0;
-        Tue, 19 Sep 2023 13:18:58 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7D7FC2C6EE;
-        Tue, 19 Sep 2023 13:18:54 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jiang Xin <worldhello.net@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: Re: [PATCH 1/2] transport-helper: no connection restriction in
- connect_helper
-In-Reply-To: <20230919064156.13892-1-worldhello.net@gmail.com> (Jiang Xin's
-        message of "Tue, 19 Sep 2023 14:41:55 +0800")
-References: <20230919064156.13892-1-worldhello.net@gmail.com>
-Date:   Tue, 19 Sep 2023 10:18:52 -0700
-Message-ID: <xmqqy1h2f5dv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        with ESMTP id S232078AbjISRsW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Sep 2023 13:48:22 -0400
+Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4F169E
+        for <git@vger.kernel.org>; Tue, 19 Sep 2023 10:48:15 -0700 (PDT)
+Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-59bc97d7b3dso743857b3.1
+        for <git@vger.kernel.org>; Tue, 19 Sep 2023 10:48:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1695145695; x=1695750495; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=NHI+584R95bYBD1BTCcgY0T2N8HUa0wmIFwNAkRrFg4=;
+        b=Ph9h5307Z90CCU1zB5or6zujMI59igcoePea2/8+XD2WNnN97MFDnLaPTbxEW3Dngl
+         UogVdt8wNAxwAXNhCRSwdI5GS3toU3Jygl0OKgD+YXzkrBTFU402Z1EymmzufpyLNgYM
+         Rn18FCasxUs2Op48JAuDGiWl7vQV8jfA19DjzBRBfTOQl5FCdxSjkfGYqzdI6Up1baeC
+         koviaxROrk/5gwPE3DkOX4qVpfOjeJVUD9qxMrnggGX+JyJGyRZaNjElg85TVKGAVov+
+         t4UyZImQDQpmsNkuthjC3bljo0B9ATP0mZQ+r9JPA+nCK2I0P5BAWDEyI0DMzVrjSFBJ
+         yBmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695145695; x=1695750495;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NHI+584R95bYBD1BTCcgY0T2N8HUa0wmIFwNAkRrFg4=;
+        b=nhaz5MqBZRo/dWaR1CPmeuX2VtJ4iLZku25FRyqYMhAaJLE67F+v4uMFFynXS7XEo+
+         bvZwUmllFWpYYMzZw5Oqsr7r1+vqbQvdgbBdUgvkq8ISlPBjE0a3Kada0n7KIaPMSrcg
+         +LPbxcLfGoenp5Wadkn326CjJJUe1NBxUarjvpCoWaJMx4GoyQtEgog7kc8CxZKGzEus
+         hZFYcfIyWEeeuxVd9YyVpnnlJKMAROvNltD9qGPKNeWJyHR2MAoLhxLGvZWboZXnEULj
+         mlDr2RKjw83gvwCdmP4K6fQ+e0zW4mIRHFJ08Q+KD11p4Gvq1rBFVmEgCvxeYsh5z6hQ
+         83ng==
+X-Gm-Message-State: AOJu0YwVHQ24afNHzS9aPxd/Btll1P8CYcspGK2WHk8TvVPlpXFe7myO
+        fW+YAJ4pM7LHrR6BhuLU7qo/BA==
+X-Google-Smtp-Source: AGHT+IEm8Ln/Xh8xmv9V8XPkDHy0VODlkUdN4IMIg9BDSdgAbsbELv7G1xYFsVJNWkI8yvKMvZGIZg==
+X-Received: by 2002:a0d:d749:0:b0:583:8c61:de8 with SMTP id z70-20020a0dd749000000b005838c610de8mr466756ywd.16.1695145694818;
+        Tue, 19 Sep 2023 10:48:14 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id g4-20020a815204000000b005897fd75c80sm3320827ywb.78.2023.09.19.10.48.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 Sep 2023 10:48:14 -0700 (PDT)
+Date:   Tue, 19 Sep 2023 13:48:13 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     mark via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, mark <870355373@qq.com>,
+        wangsirun <wangsirun@zhidaoauto.com>,
+        Jeff Hostetler <jeffhostetler@github.com>
+Subject: Re: [PATCH] fix: check parameters in json-write.c
+Message-ID: <ZQne3ThSw6HVmNJc@nand.local>
+References: <pull.1576.git.git.1695124498925.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9C1CCFCA-5710-11EE-924F-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <pull.1576.git.git.1695124498925.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+[+cc Jeff Hostetler]
 
-> From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+On Tue, Sep 19, 2023 at 11:54:58AM +0000, mark via GitGitGadget wrote:
+> diff --git a/json-writer.c b/json-writer.c
+> index 005c820aa42..23ba7046e5d 100644
+> --- a/json-writer.c
+> +++ b/json-writer.c
+> @@ -20,6 +20,11 @@ static void append_quoted_string(struct strbuf *out, const char *in)
+>  {
+>  	unsigned char c;
 >
-> For protocol-v2, "stateless-connection" can be used to establish a
-> stateless connection between the client and the server, but trying to
-> establish http connection by calling "transport->vtable->connect" will
-> fail. This restriction was first introduced in commit b236752a87
-> (Support remote archive from all smart transports, 2009-12-09) by
-> adding a limitation in the "connect_helper()" function.
+> +	if (!in || !*in) {
+> +		strbuf_addstr(out, "\"\"");
+> +		return;
+> +	}
 
-The above description may not be technically wrong per-se, but I
-found it confusing.  The ".connect method must be defined" you are
-removing was added back when there was no "stateless" variant of the
-connection initiation.  Many codepaths added by that patch did "if
-.connect is there, call it, but otherwise die()" and I think the
-code you were removing was added as a safety valve, not a limitation
-or restriction.  Later, process_connect_service() learned to handle
-the .stateless_connect bit as a fallback for transports without
-.connect method defined, and the commit added that feature, edc9caf7
-(transport-helper: introduce stateless-connect, 2018-03-15), forgot
-that the caller did not allow this fallback.
+From reading the implementation of append_quoted_string(), I think that
+the case where "in" is the empty string is already covered. IOW, doing
+something like:
 
-	When b236752a (Support remote archive from all smart
-	transports, 2009-12-09) added "remote archive" support for
-	"smart transports", it was for transport that supports the
-	.connect method.  connect_helper() function protected itself
-	from getting called for a transport without the method
-	before calling process_connect_service(), which did not work
-	wuth such a transport.
+    struct strbuf buf = STRBUF_INIT;
+    append_quoted_string(&out, "");
+    warning("'%s'", buf.buf);
 
-	Later, edc9caf7 (transport-helper: introduce
-	stateless-connect, 2018-03-15) added a way for a transport
-	without the .connect method to establish a "stateless"
-	connection in protocol-v2, process_connect_service() was
-	taught to handle the "stateless" connection, making the old
-	safety valve in its caller that insisted that .connect
-	method must be defined too strict, and forgot to loosen it.
+would print out something like:
 
-or something along that line would have been easire to follow, at
-least to me.
+    warning: '""'
 
-> Remove the restriction in the "connect_helper()" function and use the
-> logic in the "process_connect_service()" function to check the protocol
-> version and service name. By this way, we can make a connection and do
-> something useful. E.g., in a later commit, implements remote archive
-> for a repository over HTTP protocol.
+as expected. Handling a NULL "in" argument is new behavior, but I am not
+sure if it is appropriate to coerce a NULL input into the empty string.
+I've CC'd the author of this code, whose opinion I trust more than my
+own here.
 
-OK.  
-
-b236752a87 was to allow "remote archive from all smart transports",
-but unfortunately HTTP was not among "smart transports".  This
-series is to update smart HTTP transport (aka "stateless") to also
-support it?  Interesting.
-
-> Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-> ---
->  transport-helper.c | 2 --
->  1 file changed, 2 deletions(-)
->
-> diff --git a/transport-helper.c b/transport-helper.c
-> index 49811ef176..2e127d24a5 100644
-> --- a/transport-helper.c
-> +++ b/transport-helper.c
-> @@ -662,8 +662,6 @@ static int connect_helper(struct transport *transport, const char *name,
->  
->  	/* Get_helper so connect is inited. */
->  	get_helper(transport);
-> -	if (!data->connect)
-> -		die(_("operation not supported by protocol"));
->  
->  	if (!process_connect_service(transport, name, exec))
->  		die(_("can't connect to subservice %s"), name);
+Thanks,
+Taylor
