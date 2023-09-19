@@ -2,149 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3628CD3437
-	for <git@archiver.kernel.org>; Tue, 19 Sep 2023 04:44:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A658CD343F
+	for <git@archiver.kernel.org>; Tue, 19 Sep 2023 06:42:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231417AbjISEoY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Sep 2023 00:44:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53774 "EHLO
+        id S231533AbjISGmK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Sep 2023 02:42:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229534AbjISEoX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Sep 2023 00:44:23 -0400
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 197518F
-        for <git@vger.kernel.org>; Mon, 18 Sep 2023 21:44:18 -0700 (PDT)
-Received: by mail-pf1-x42a.google.com with SMTP id d2e1a72fcca58-68fdd5c1bbbso3739920b3a.1
-        for <git@vger.kernel.org>; Mon, 18 Sep 2023 21:44:18 -0700 (PDT)
+        with ESMTP id S229510AbjISGmI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Sep 2023 02:42:08 -0400
+Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF714102
+        for <git@vger.kernel.org>; Mon, 18 Sep 2023 23:42:02 -0700 (PDT)
+Received: by mail-pl1-x62b.google.com with SMTP id d9443c01a7336-1c1ff5b741cso49738495ad.2
+        for <git@vger.kernel.org>; Mon, 18 Sep 2023 23:42:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695098657; x=1695703457; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=OWz9UuSnaU4fiLIgk/V7ZXJ+WjbZWt8OvAQJeZ0cV00=;
-        b=m1b9VGvb3oc/8PRRPB3V/pk6vIz6AmpDqHa22V7/xXzns5kJIY/VlOvg4+S6j5Jgi7
-         oFfowIhQOxkQQ3JiFQMW93XekxfdA0eVo3qyw0ua0hmwqLMnLbkuI0FcGJtIsJQs6xlK
-         WiZAfXlPYC2UVsM6EsxLfBJCqNXEuCijrao9/Mu48iB0uI3eD9rPQqZCkcjTbT7rCzst
-         Hxi08qAydDaZoTe6IYl4fzw0lmHq/tYOiVGwiGZERDFLS3g1GU6Z8Pf0zXcLKzLRWPxr
-         Q2o/kb5mLes1MWWM9k1kPaBoYiBIQy7lh/GRNzbJoHNozsYF+uhD+6Q0G2i39iYbXDTJ
-         C9Gw==
+        d=gmail.com; s=20230601; t=1695105722; x=1695710522; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=b8AbktxMritALT3hoKVw0k6JBaAnVOtK6zmtWZEZmis=;
+        b=BHOouDxEFWYUcyHrg4DVbsbEZQjl6Z5SDX4qIebDs2gWmEj/sbXmRpcWefFue8gTTE
+         ZIQ5a/MlkSc7YpnPLIbPCeq5NcyO10icmV1PUU3CjRR9uEfxHrCNmCGy8yL2NkQa/Xm0
+         YQ4c+VfyaSLjT06ojPnI3YWWkM7HOAt1jEQ25w/b8XbTzSgy3e0tNZGoMnmrv9MRc7XT
+         OuCueJ19n/N8dFoIBj3Uobkgn419Uj9G5W+1lwn60HBEtQ2/KG3YCZEAL54vZsmXCFC6
+         bIF57Zu71EwyCoaPaKn608W5gP3C++ueCtmmLMNR2FYltapkR//65s+4nddS6TR8KToU
+         K0hA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695098657; x=1695703457;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OWz9UuSnaU4fiLIgk/V7ZXJ+WjbZWt8OvAQJeZ0cV00=;
-        b=Mg82e1PbENyXffmlfbkdodvOHHxzWoN9Wnzjl6NcwRgmkBSkmf6ysZ3NwzGJhU3K4Z
-         0D4gzb8s0MAIekufhCfRFwwWpTw2RGtF+Egmy0G7ESUJweU/lONzuvTTewj5JJk6yIxI
-         GtMzKiwYVICnADS3xYKW66FYeSGd81Q0VtSu60I2Msesyz8uPzQjb47xMznDhsRMmPf+
-         GYWSFi9z6JI4T727t0l55uCJEPRW+y64CkiG3qehzcaNyPEOcRQLhs7lZuguyRoHW3Qx
-         Oqpws4wYpacRGjXiSxEHHjn6dJQU+UnQqKv7zUpEecp3HP+pjX5fggKy9OKBsNGQn0aX
-         JV3g==
-X-Gm-Message-State: AOJu0YwCEl33kZDbTSBP8kXg1moNsMbHZG58qcKGJLxuN/pVBxeURF7P
-        ig2RoS9Atmo6E+oGgE83Q0g=
-X-Google-Smtp-Source: AGHT+IFJEEjig013z37R98GsXVjQorrAIHnrAxYZ8QqvHertInxvf+zumwmbtBFBEn3RCwOIt27www==
-X-Received: by 2002:aa7:868d:0:b0:68e:2c2a:aa1d with SMTP id d13-20020aa7868d000000b0068e2c2aaa1dmr1785246pfo.11.1695098657405;
-        Mon, 18 Sep 2023 21:44:17 -0700 (PDT)
-Received: from debian.me ([103.124.138.83])
-        by smtp.gmail.com with ESMTPSA id c16-20020aa78e10000000b00682669dc19bsm7803382pfr.201.2023.09.18.21.44.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Sep 2023 21:44:16 -0700 (PDT)
-Received: by debian.me (Postfix, from userid 1000)
-        id 735EB81B96CD; Tue, 19 Sep 2023 11:44:14 +0700 (WIB)
-Date:   Tue, 19 Sep 2023 11:44:14 +0700
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-To:     Michael Strawbridge <michael.strawbridge@amd.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Luben Tuikov <luben.tuikov@amd.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Emily Shaffer <nasamuffin@google.com>,
-        Doug Anderson <dianders@chromium.org>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [REGRESSION] uninitialized value $address in git send-email
-Message-ID: <ZQknHjKdGZV3vJpV@debian.me>
-References: <ZQhI5fMhDE82awpE@debian.me>
- <8fcd6d2a-2c16-adf9-da1f-6b9d6fdcc87a@amd.com>
+        d=1e100.net; s=20230601; t=1695105722; x=1695710522;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=b8AbktxMritALT3hoKVw0k6JBaAnVOtK6zmtWZEZmis=;
+        b=pIfWQBMEYdSpyA2rN8DJIlzq07UpEkVOmmL6MkGs1R2W9BTuE6LiYUBjKh3KNiWAZl
+         IxNsMCrodM8bSNPQVajY1KqdPjuRJ+dMsaOBwe6x5xDeeC9lQ+9W9618VAuB8tCNmBY1
+         ldleRIOrUN22caWejVO3eEa3eE6q1hap80apfonMN3mzcyI1uiSzIlh6ZVA8BZUyv7sF
+         4K3izWhXF5p1Cbubm9X4L6WGXof86NxCdPdpwUp+8r/LfBnx+ktAxp9Yh6staKmKcoxV
+         I8AMB6QWusIvp/9QXzxxDS0We67nUGljlgwvrFehsqAqkg+DhgsOXqNj+vRK0tD9FmO6
+         kSYg==
+X-Gm-Message-State: AOJu0YyrMM2ghCuAl3P2ZJsDfKOFooqoOAQCuwRt5vznWDiEaAviPjHQ
+        EPRcTYWavscPq0Dtazijxkt1eGfNHS0=
+X-Google-Smtp-Source: AGHT+IEnMm9e6bkaITnlYPmta0BlPqO/tSQ8QLSihL8iMie3ZlHPmw71PamjTAad4ntz/C0Bda4mew==
+X-Received: by 2002:a17:903:26c7:b0:1bf:8779:e03f with SMTP id jg7-20020a17090326c700b001bf8779e03fmr10309121plb.68.1695105721855;
+        Mon, 18 Sep 2023 23:42:01 -0700 (PDT)
+Received: from tigtog-proxy.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
+        by smtp.gmail.com with ESMTPSA id d7-20020a170902cec700b001b89891bfc4sm5286495plg.199.2023.09.18.23.42.00
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 18 Sep 2023 23:42:01 -0700 (PDT)
+From:   Jiang Xin <worldhello.net@gmail.com>
+To:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: [PATCH 1/2] transport-helper: no connection restriction in connect_helper
+Date:   Tue, 19 Sep 2023 14:41:55 +0800
+Message-Id: <20230919064156.13892-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.32.0.rc3
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="JWm9GDNqPXLF7usH"
-Content-Disposition: inline
-In-Reply-To: <8fcd6d2a-2c16-adf9-da1f-6b9d6fdcc87a@amd.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
---JWm9GDNqPXLF7usH
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+For protocol-v2, "stateless-connection" can be used to establish a
+stateless connection between the client and the server, but trying to
+establish http connection by calling "transport->vtable->connect" will
+fail. This restriction was first introduced in commit b236752a87
+(Support remote archive from all smart transports, 2009-12-09) by
+adding a limitation in the "connect_helper()" function.
 
-On Mon, Sep 18, 2023 at 04:26:44PM -0400, Michael Strawbridge wrote:
-> Hi,
->=20
-> Author of a8022c5f7b67 (send-email: expose header information to
-> git-send-email's sendemail-validate hook, 2023-04-19) here.
->=20
-> On 2023-09-18 08:56, Bagas Sanjaya wrote:
-> > I triggered this issue on patch series with cover letter. To reproduce:
-> >
-> > 1. Clone git.git repo, then branch off:
-> >
-> >    ```
-> >    $ git clone https://github.com/git/git.git && cd git
-> >    $ git checkout -b test
-> >    ```
-> >
-> > 2. Make two dummy signed-off commits:
-> >
-> >    ```
-> >    $ echo test > test && git add test && git commit -s -m "test"
-> >    $ echo "test test" >> test && git commit -a -s -m "test test"
-> >    ```
-> >
-> > 3. Generate patch series:
-> >
-> >    ```
-> >    $ mkdir /tmp/test
-> >    $ git format-patch -o /tmp/test --cover-letter main
-> >    ```
-> >
-> > 4. Send the series to dummy address:
-> >
-> >    ```
-> >    $ git send-email --to=3D"pi <pi@pi>" /tmp/test/*.patch
-> >    ```
->=20
-> I tried to repro this today on my side.=C2=A0 I can repro the error when
-> using the address "pi <pi@pi>" but that's not a valid email address and
-> so one would expect it to fail in the extract_valid_address_or_die
-> function with the error that you mention.=C2=A0 As soon as I make the add=
-ress
-> valid like "pi <pi@pi.com>", git send-email no longer complains.
->=20
-> In your original case, are you trying to send email to an invalid email
-> address?=C2=A0 Is it an alias by chance?
+Remove the restriction in the "connect_helper()" function and use the
+logic in the "process_connect_service()" function to check the protocol
+version and service name. By this way, we can make a connection and do
+something useful. E.g., in a later commit, implements remote archive
+for a repository over HTTP protocol.
 
-I triggered this regression when I passed multiple addresses separated by c=
-omma
-(like `--to=3D"foo <foo@acme.com>,bar <bar@acme.com>"`, but somehow I manag=
-ed to
-reduce the trigger to one address only (in this case, "pi <pi@pi.com>"). As=
- for
-multiple addresses part, let me know if I should post another regression
-report.
+Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+---
+ transport-helper.c | 2 --
+ 1 file changed, 2 deletions(-)
 
---=20
-An old man doll... just what I always wanted! - Clara
+diff --git a/transport-helper.c b/transport-helper.c
+index 49811ef176..2e127d24a5 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -662,8 +662,6 @@ static int connect_helper(struct transport *transport, const char *name,
+ 
+ 	/* Get_helper so connect is inited. */
+ 	get_helper(transport);
+-	if (!data->connect)
+-		die(_("operation not supported by protocol"));
+ 
+ 	if (!process_connect_service(transport, name, exec))
+ 		die(_("can't connect to subservice %s"), name);
+-- 
+2.40.1.49.g40e13c3520.dirty
 
---JWm9GDNqPXLF7usH
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQQZO/gRNchuWgPJR+Z7tWyQc2rTCAUCZQknEQAKCRB7tWyQc2rT
-CIw2AP95pHliLH1kUEw40Gv7vJ6V/Es6LiW1v5F1E43MhWscVgEAmqlv4wnAUlmN
-kAhHp9Rtb1GSe7bvFbzw+YB1f9mUcQY=
-=nQ1R
------END PGP SIGNATURE-----
-
---JWm9GDNqPXLF7usH--
