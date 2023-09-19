@@ -2,98 +2,244 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C50BCE79AD
-	for <git@archiver.kernel.org>; Tue, 19 Sep 2023 22:14:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05ED3CE79A9
+	for <git@archiver.kernel.org>; Tue, 19 Sep 2023 22:15:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233519AbjISWOc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Sep 2023 18:14:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43328 "EHLO
+        id S233703AbjISWP4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Sep 2023 18:15:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233489AbjISWOa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Sep 2023 18:14:30 -0400
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3A96F5
-        for <git@vger.kernel.org>; Tue, 19 Sep 2023 15:13:40 -0700 (PDT)
-Received: by mail-yb1-xb4a.google.com with SMTP id 3f1490d57ef6-d81c02bf2beso4820777276.2
-        for <git@vger.kernel.org>; Tue, 19 Sep 2023 15:13:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1695161620; x=1695766420; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=qu76Z2RZiqArPHy9LupMU2CWA64nk07OmRJSoxU2ig0=;
-        b=jvn7LRtEi2/AcaYvBffgl560BoWu0KMlOjr9r7gkU6T0Ob5hI92jfjIbQk4LB6W68W
-         Ddit/djUXv3zGr3i9tvZ4BQdi4b47fUzXOJSwUKf3ePHaxrYdgAA4BvCb3UzNcnT9erz
-         sjfPhmPupI6xmOJ4D+BdETVJ5x/qkUCTUYQyIizt/iDY0Dm4ZaldGJkbLcadVxolHbNT
-         0szTxqxhlaeoiGdOEyS2k+HVkZ1BriO8/9psa6BF0QOiCOZfg9zLH6Ns48sWtkt1sbcJ
-         OtyL44P6zSQXwbqcrYKGREIKoEfK3W+P9TRxvZ2LgAwpLtICnHCTcP5v6V0gSQwfY21R
-         EgHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695161620; x=1695766420;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qu76Z2RZiqArPHy9LupMU2CWA64nk07OmRJSoxU2ig0=;
-        b=rgse0SacO4vJwgC/uOUNK3f440nUGuYCLTyStFHbJg44WpraocvMWqK8P6pLDeLfT+
-         ByNXYDk1UIBQuoCkG7IG5sNIg+vll9iw8JHgTc7TC31V7pVLb841BhgJdvlkdVPV2hus
-         rmpQK7ZORaHmmjSa9mrqTuSqafA3nODnoF0zrA8ZUdo2F529qW7pPSZ46/+8UL6RzHQG
-         ZPp/6NDPH/GPFuk3AQ8SL1YVuRWQ7jtq6CM42A38Udx+G7mr+fQ1kr1xbesoJjsfRZNS
-         zP4xlpW3cC7XIHrCQQZpo7HYEod8rTFNfuLzr/Q7Tn90BRCeOEXWQsSwFFoqHVYJKNOw
-         Dz/Q==
-X-Gm-Message-State: AOJu0Yzf93vOgAcCJUgyKxR1aHOqIOBABBAFCpN4vb5chQK4puAdq0h5
-        RQBDXcgolwd3AxmKNlzexPjvtk+oy/0JIgnbtsN/
-X-Google-Smtp-Source: AGHT+IGtYKqkyfF5mblFNaVgynITGGRUoCmSOAssvyrPQ6u9a/cRmqG8HkRJGXpXPeuNSwK+O4GGCfQKQkDfsW/bcW3D
-X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:def5:f709:d6a:7375])
- (user=jonathantanmy job=sendgmr) by 2002:a25:ce8b:0:b0:d81:503e:2824 with
- SMTP id x133-20020a25ce8b000000b00d81503e2824mr11660ybe.10.1695161619815;
- Tue, 19 Sep 2023 15:13:39 -0700 (PDT)
-Date:   Tue, 19 Sep 2023 15:13:37 -0700
-In-Reply-To: <040766861e21afe5f686299560677e429be11844.1694125210.git.gitgitgadget@gmail.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.42.0.459.ge4e396fd5e-goog
-Message-ID: <20230919221337.2177936-1-jonathantanmy@google.com>
-Subject: Re: [PATCH v3 05/13] trailer: trailer location is a place, not an action
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Linus Arver <linusa@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S233550AbjISWPy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Sep 2023 18:15:54 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4ADFF1
+        for <git@vger.kernel.org>; Tue, 19 Sep 2023 15:15:38 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5EADA2DDA0;
+        Tue, 19 Sep 2023 18:15:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=Zt/m0BENZGMv+1Z5WiPsS+YoglNZIBIQODFlzX
+        9mbrM=; b=NYYuxQfLStBnscMxFPYNYE4SQHTecheTxnmEG3pZnlSYl+lQ7Jrz+Z
+        aPnQ/cJoM21f8xHcVl5OFW/+pygs3RRG22Wd8SZBvOc0zzjUXegoxedJVX/S2EAH
+        YmAx2w+dIeX/yruKRkRmhCLk/IxOihoxEMH1jhOlbAiqEZ2q/MwmQ=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 57ABD2DD9F;
+        Tue, 19 Sep 2023 18:15:38 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EF7D52DD9E;
+        Tue, 19 Sep 2023 18:15:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Eric W. Biederman" <ebiederm@xmission.com>
+Cc:     <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] bulk-checkin: Only accept blobs
+In-Reply-To: <87fs39vppo.fsf@email.froward.int.ebiederm.org> (Eric
+        W. Biederman's message of "Tue, 19 Sep 2023 16:05:23 -0500")
+References: <87fs39vppo.fsf@email.froward.int.ebiederm.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+Date:   Tue, 19 Sep 2023 15:15:33 -0700
+Message-ID: <xmqqttrperne.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0E04A652-573A-11EE-8DFF-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> From: Linus Arver <linusa@google.com>
-> 
-> Fix the help text to say "placement" instead of "action" because the
-> values are placements, not actions.
-> 
-> While we're at it, tweak the documentation to say "placements" instead
-> of "values", similar to how the existing language for "--if-exists" uses
-> the word "action" to describe both the syntax (with the phrase
-> "--if-exists <action>") and the possible values (with the phrase
-> "possible actions").
-> 
-> Signed-off-by: Linus Arver <linusa@google.com>
-> ---
->  Documentation/git-interpret-trailers.txt | 2 +-
->  builtin/interpret-trailers.c             | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
-> index 72f5bdb652f..b5284c3d33f 100644
-> --- a/Documentation/git-interpret-trailers.txt
-> +++ b/Documentation/git-interpret-trailers.txt
-> @@ -117,7 +117,7 @@ OPTIONS
->  	and applies to all '--trailer' options until the next occurrence of
->  	'--where' or '--no-where'. Upon encountering '--no-where', clear the
->  	effect of any previous use of '--where', such that the relevant configuration
-> -	variables are no longer overridden. Possible values are `after`,
-> +	variables are no longer overridden. Possible placements are `after`,
->  	`before`, `end` or `start`.
->  
->  --if-exists <action>::
+"Eric W. Biederman" <ebiederm@xmission.com> writes:
 
-Not shown in the diff as printed in this email, but this option is
-indeed documented with "<placement>". Up to and including this patch
-makes sense.
- 
+> Subject: Re: [PATCH] bulk-checkin: Only accept blobs
+
+s/Only/only/;
+
+> As the code is written today bulk_checkin only accepts blobs.  When
+> dealing with multiple hash algorithms it is necessary to distinguish
+> between blobs and object types that have embedded oids.  For object
+> that embed oids a completely new object needs to be generated to
+> compute the compatibility hash on.  For blobs however all that is
+> needed is to compute the compatibility hash on the same blob as the
+> storage hash.
+
+All of the above is understandable, but ...
+
+> As the code will need the compatiblity hash from a bulk checkin, remove
+> support for a bulk checkin of anything except blobs.
+
+... I am not sure what the first half of this sentence is saying.
+Do you mean something like:
+
+    The function takes "enum object_type" and pretends that it could
+    stream trees and commits, if we wanted to interoperate with
+    multiple hash algorithms, there are a lot more information than
+    just the contents and object type needed.  A tree object needs
+    "compatibility hash" (i.e. the hash computed for the other hash
+    functions) for objects the tree contains, a commit object
+    likewise needs "compatibility hash" for its tree and its parent
+    commits.  IOW, the existing interface into the functions this
+    patch touches is way too narrow to be useful for object types
+    other than blobs.
+
+perhaps?  I agree with the conclusion that the functions on the
+callchain involved in the bulk-checkin feature can safely be
+limited to handle blobs in the current code (and I have my reasons
+to think why it is not regressing the interface), but it makes me
+feel uneasy that I am not quite sure what your reasoning is.
+
+>
+> Inspired-by: brian m. carlson <sandals@crustytoothpaste.net>
+> Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
+> ---
+>
+> Apologies to anyone who has seen this before.  The last time I sent
+> this patch out it seems to have disappeared into a black hole so
+> I am trying again.
+
+I do not know if vger is dropping your messages, but I haven't seen
+this on https://lore.kernel.org/git/ archive, so I'll quote from the
+message I am responding to everything without omitting anything, to
+let others who may find out about this patch via my response.
+
+Thanks.
+
+
+>  bulk-checkin.c | 35 +++++++++++++++++------------------
+>  bulk-checkin.h |  6 +++---
+>  object-file.c  | 12 ++++++------
+>  3 files changed, 26 insertions(+), 27 deletions(-)
+>
+> diff --git a/bulk-checkin.c b/bulk-checkin.c
+> index 73bff3a23d27..223562b4e748 100644
+> --- a/bulk-checkin.c
+> +++ b/bulk-checkin.c
+> @@ -155,10 +155,10 @@ static int already_written(struct bulk_checkin_packfile *state, struct object_id
+>   * status before calling us just in case we ask it to call us again
+>   * with a new pack.
+>   */
+> -static int stream_to_pack(struct bulk_checkin_packfile *state,
+> -			  git_hash_ctx *ctx, off_t *already_hashed_to,
+> -			  int fd, size_t size, enum object_type type,
+> -			  const char *path, unsigned flags)
+> +static int stream_blob_to_pack(struct bulk_checkin_packfile *state,
+> +			       git_hash_ctx *ctx, off_t *already_hashed_to,
+> +			       int fd, size_t size, const char *path,
+> +			       unsigned flags)
+>  {
+>  	git_zstream s;
+>  	unsigned char ibuf[16384];
+> @@ -170,7 +170,7 @@ static int stream_to_pack(struct bulk_checkin_packfile *state,
+>  
+>  	git_deflate_init(&s, pack_compression_level);
+>  
+> -	hdrlen = encode_in_pack_object_header(obuf, sizeof(obuf), type, size);
+> +	hdrlen = encode_in_pack_object_header(obuf, sizeof(obuf), OBJ_BLOB, size);
+>  	s.next_out = obuf + hdrlen;
+>  	s.avail_out = sizeof(obuf) - hdrlen;
+>  
+> @@ -247,11 +247,10 @@ static void prepare_to_stream(struct bulk_checkin_packfile *state,
+>  		die_errno("unable to write pack header");
+>  }
+>  
+> -static int deflate_to_pack(struct bulk_checkin_packfile *state,
+> -			   struct object_id *result_oid,
+> -			   int fd, size_t size,
+> -			   enum object_type type, const char *path,
+> -			   unsigned flags)
+> +static int deflate_blob_to_pack(struct bulk_checkin_packfile *state,
+> +				struct object_id *result_oid,
+> +				int fd, size_t size,
+> +				const char *path, unsigned flags)
+>  {
+>  	off_t seekback, already_hashed_to;
+>  	git_hash_ctx ctx;
+> @@ -265,7 +264,7 @@ static int deflate_to_pack(struct bulk_checkin_packfile *state,
+>  		return error("cannot find the current offset");
+>  
+>  	header_len = format_object_header((char *)obuf, sizeof(obuf),
+> -					  type, size);
+> +					  OBJ_BLOB, size);
+>  	the_hash_algo->init_fn(&ctx);
+>  	the_hash_algo->update_fn(&ctx, obuf, header_len);
+>  
+> @@ -282,8 +281,8 @@ static int deflate_to_pack(struct bulk_checkin_packfile *state,
+>  			idx->offset = state->offset;
+>  			crc32_begin(state->f);
+>  		}
+> -		if (!stream_to_pack(state, &ctx, &already_hashed_to,
+> -				    fd, size, type, path, flags))
+> +		if (!stream_blob_to_pack(state, &ctx, &already_hashed_to,
+> +					 fd, size, path, flags))
+>  			break;
+>  		/*
+>  		 * Writing this object to the current pack will make
+> @@ -350,12 +349,12 @@ void fsync_loose_object_bulk_checkin(int fd, const char *filename)
+>  	}
+>  }
+>  
+> -int index_bulk_checkin(struct object_id *oid,
+> -		       int fd, size_t size, enum object_type type,
+> -		       const char *path, unsigned flags)
+> +int index_blob_bulk_checkin(struct object_id *oid,
+> +			    int fd, size_t size,
+> +			    const char *path, unsigned flags)
+>  {
+> -	int status = deflate_to_pack(&bulk_checkin_packfile, oid, fd, size, type,
+> -				     path, flags);
+> +	int status = deflate_blob_to_pack(&bulk_checkin_packfile, oid, fd, size,
+> +					  path, flags);
+>  	if (!odb_transaction_nesting)
+>  		flush_bulk_checkin_packfile(&bulk_checkin_packfile);
+>  	return status;
+> diff --git a/bulk-checkin.h b/bulk-checkin.h
+> index 48fe9a6e9171..aa7286a7b3e1 100644
+> --- a/bulk-checkin.h
+> +++ b/bulk-checkin.h
+> @@ -9,9 +9,9 @@
+>  void prepare_loose_object_bulk_checkin(void);
+>  void fsync_loose_object_bulk_checkin(int fd, const char *filename);
+>  
+> -int index_bulk_checkin(struct object_id *oid,
+> -		       int fd, size_t size, enum object_type type,
+> -		       const char *path, unsigned flags);
+> +int index_blob_bulk_checkin(struct object_id *oid,
+> +			    int fd, size_t size,
+> +			    const char *path, unsigned flags);
+>  
+>  /*
+>   * Tell the object database to optimize for adding
+> diff --git a/object-file.c b/object-file.c
+> index 7dc0c4bfbba8..7c7afe579364 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -2446,11 +2446,11 @@ static int index_core(struct index_state *istate,
+>   * binary blobs, they generally do not want to get any conversion, and
+>   * callers should avoid this code path when filters are requested.
+>   */
+> -static int index_stream(struct object_id *oid, int fd, size_t size,
+> -			enum object_type type, const char *path,
+> -			unsigned flags)
+> +static int index_blob_stream(struct object_id *oid, int fd, size_t size,
+> +			     const char *path,
+> +			     unsigned flags)
+>  {
+> -	return index_bulk_checkin(oid, fd, size, type, path, flags);
+> +	return index_blob_bulk_checkin(oid, fd, size, path, flags);
+>  }
+>  
+>  int index_fd(struct index_state *istate, struct object_id *oid,
+> @@ -2472,8 +2472,8 @@ int index_fd(struct index_state *istate, struct object_id *oid,
+>  		ret = index_core(istate, oid, fd, xsize_t(st->st_size),
+>  				 type, path, flags);
+>  	else
+> -		ret = index_stream(oid, fd, xsize_t(st->st_size), type, path,
+> -				   flags);
+> +		ret = index_blob_stream(oid, fd, xsize_t(st->st_size), path,
+> +					flags);
+>  	close(fd);
+>  	return ret;
+>  }
