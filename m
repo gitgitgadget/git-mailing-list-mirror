@@ -2,76 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C7FCCD342F
-	for <git@archiver.kernel.org>; Tue, 19 Sep 2023 01:16:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E63ACD342E
+	for <git@archiver.kernel.org>; Tue, 19 Sep 2023 01:27:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230377AbjISBQY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Sep 2023 21:16:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33452 "EHLO
+        id S230405AbjISB1Q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Sep 2023 21:27:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229508AbjISBQX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Sep 2023 21:16:23 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46220107
-        for <git@vger.kernel.org>; Mon, 18 Sep 2023 18:16:17 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 63A5D1C1241;
-        Mon, 18 Sep 2023 21:16:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=9Ak5hJB324nwLQJHngC79N0aUCWqTlc27j9KPk
-        H82TU=; b=PwIqY7Z8xVPAGWfjUOhUHNRSQxZv6JHfsmmYu/vwrp0ATErSDnfLBN
-        V40qKZc3ij97Z9ymQiqaxD3CJMNvZJ3axPmbaaSbAcelzn3O7S6ztY1YFpEng8HH
-        dnnX3txM+PHMLlSfPoFGDcqPFK3CShFUJ3viXhYGvGspR+0y6LElw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5C5ED1C1240;
-        Mon, 18 Sep 2023 21:16:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C129D1C123F;
-        Mon, 18 Sep 2023 21:16:15 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-Cc:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, "Denton Liu" <liu.denton@gmail.com>,
-        "Jeff King" <peff@peff.net>
-Subject: Re: [PATCH v3 1/1] range-diff: treat notes like `log`
-In-Reply-To: <c7d1e196-9521-45a7-b41c-80499f19f546@app.fastmail.com>
-        (Kristoffer Haugsbakk's message of "Thu, 14 Sep 2023 22:25:37 +0200")
-References: <cover.1693584310.git.code@khaugsbakk.name>
-        <cover.1694383247.git.code@khaugsbakk.name>
-        <a37dfb3748e23b4f5081bc9a3c80a5c546101f1d.1694383248.git.code@khaugsbakk.name>
-        <xmqqzg1strgx.fsf@gitster.g>
-        <dd2958c5-58bf-86dd-b666-9033259a8e1a@gmx.de>
-        <c7d1e196-9521-45a7-b41c-80499f19f546@app.fastmail.com>
-Date:   Mon, 18 Sep 2023 18:16:14 -0700
-Message-ID: <xmqqled3hsip.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        with ESMTP id S229534AbjISB1P (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Sep 2023 21:27:15 -0400
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B59B103
+        for <git@vger.kernel.org>; Mon, 18 Sep 2023 18:27:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 213B634C-568A-11EE-BACA-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+        t=1695086827;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=2hdl5BDbwgqGbaWzWhIduK83VJt6cWQPAqwZ5qXxFhs=;
+        b=u1+aqdueTsj87H4XO6vxczuWh2c3W3m7BjOp4Wj6s1SzHt02xa6gk5w8YD+88F+UabOmOJ
+        7m4XPVQTSqWwOf7Nrz6IfXdDqPOwG1P9G+/zbdRsmdCuFl0ZYUM6H3BoNTFIcvPvNRpJIt
+        b1ibDGJ8DRrBJBfzDFhWuaWJc72XZqEHqfh15UjjutsnXo3USrCnGh85G+Ow7XIMxDzTK4
+        z9E5yTrEs85VEW8fN4Vy2JCzsE4IcmXWhzqeYmiD+sJ9Lei1ycelEwE8G8XiGBpL62uDbM
+        8kyJMc8EWMLiZXbLtAH3ueJErwqVSYV5kXnlTPbvmEKqJeM4aoXE0XQE4Ta3nA==
+Date:   Tue, 19 Sep 2023 03:27:07 +0200
+From:   Dragan Simic <dsimic@manjaro.org>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] diff --stat: add config option to limit filename width
+In-Reply-To: <xmqqttrrl9m2.fsf@gitster.g>
+References: <87badb12f040d1c66cd9b89074d3de5015a45983.1694446743.git.dsimic@manjaro.org>
+ <xmqqil8gs3s0.fsf@gitster.g> <487bd30e5a4cdcea8697393eb36ce3f3@manjaro.org>
+ <7aceb7db8d3f4b569564ffd9d1e2e368@manjaro.org> <xmqqttrrl9m2.fsf@gitster.g>
+Message-ID: <7da6c725af777a4859a99a679ac6ac32@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+        auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Kristoffer Haugsbakk" <code@khaugsbakk.name> writes:
+On 2023-09-18 18:38, Junio C Hamano wrote:
+> Dragan Simic <dsimic@manjaro.org> writes:
+> 
+>> Just checking, do you want me to perform any improvements to this
+>> patch, so you can have it pulled into one of your trees?
+> 
+> I do not think of any outstanding issues I spotted on this change.
+> Thanks for pinging.
 
-> On Thu, Sep 14, 2023, at 10:29, Johannes Schindelin wrote:
->>> [...]
->>
->> Right, `-G --notes` is a good argument to rethink this.
->>
->> A much more surgical way to address the issue at hand might be this
->> (Kristoffer, what do you think? It's missing documentation for the
->> newly-introduced `--show-notes-by-default` option, but you get the idea):
->
-> Looks good to me. It seems like an explicit argument is the only way to
-> make this work.
-
-Will one of you tie the loose ends?
-
-Thanks.
+Great, thanks.
