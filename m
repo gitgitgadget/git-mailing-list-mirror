@@ -2,219 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B742CE79DE
-	for <git@archiver.kernel.org>; Wed, 20 Sep 2023 15:03:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BBFBC00E86
+	for <git@archiver.kernel.org>; Wed, 20 Sep 2023 15:30:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235343AbjITPDE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Sep 2023 11:03:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59808 "EHLO
+        id S235241AbjITPaT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Sep 2023 11:30:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235203AbjITPDA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Sep 2023 11:03:00 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 309519F
-        for <git@vger.kernel.org>; Wed, 20 Sep 2023 08:02:53 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2b9c907bc68so116429721fa.2
-        for <git@vger.kernel.org>; Wed, 20 Sep 2023 08:02:53 -0700 (PDT)
+        with ESMTP id S235398AbjITPaR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Sep 2023 11:30:17 -0400
+Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76D4FA9
+        for <git@vger.kernel.org>; Wed, 20 Sep 2023 08:30:11 -0700 (PDT)
+Received: by mail-qv1-xf29.google.com with SMTP id 6a1803df08f44-6586739cfeeso7409146d6.1
+        for <git@vger.kernel.org>; Wed, 20 Sep 2023 08:30:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695222171; x=1695826971; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wwULGC8BAfLATKKheQRRpOJp8nqzM2A6Zm3K6cZnB8o=;
-        b=BYSKMuBWQoN/6AD/kPbv0zHlM0CpPLG3SRixDbgPVQ2Ui5eSdRZ26aWrY9wUCaOe0B
-         ezPIMkeLrXjXGgjVcIx3Ec5uAR2ryxGfSNeDTwV/ojjJVlrfPoSKYpzrKT1G/E72xGjz
-         c2QUzA2H6UWzndkwIipn+m7a8fSW/brZQcg30B910J/s0Znh/9rHLiWmJn6FJ5PTyHxw
-         DcZJBMPNISzo3GmOODPirWT9WbofUoJMLeBnil/5QWef5R5ovElE20qStJfw8yBspNOt
-         AomBvgwEMRbk152zggSniX4h2Q0czCxVAkWNzSJFLeMVxHhcJRDi+3K1lrZ7RP9U7qdV
-         GGMA==
+        d=gmail.com; s=20230601; t=1695223810; x=1695828610; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UFRauuxYy07kZPN/lYYY0I7brlqJ5iGXLLQG2jMgNDM=;
+        b=fnhRu05Xd93txb0X2neEDUmZ6GcnHM8o04AIEecmWg4Ra43QUE6i9tfjdIZmb5LF/b
+         qp/aw6/NPPL5Sl2bTgSKPaGuqUCCRFuW28M0gU7/anFmFDZ2/cje5uSs+l9T4daqDlc+
+         d4fSxQdf6YIUeNDiV8aTbMGklv6PI/l1axfUW4w620kXSygnxBzCqTnDpy2rYZqiJKW2
+         IwDdVWRrif6LyUr7EMIDfGQWaFutwpsjASiB9v03HqgNRiuJZBYjUaLC+EmqKs2E9zRE
+         A38KwmoQLt8vMdQhCrv/t5WBttjijc8edzbp0j3wGgjYnINWeaY9Ccc28rlUBbQlTuUX
+         O1Gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695222171; x=1695826971;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wwULGC8BAfLATKKheQRRpOJp8nqzM2A6Zm3K6cZnB8o=;
-        b=XI3zIp93BbyXZS+8FPbdFYHVsFiX1Nr60dMNRrQ0PcAKQG1GuFmly/pVkH5ap6wzOl
-         2gxmUmmL4m0CwON9WA4xlObPNS4rS3/ebXsfGhGlS2kUyDdbfq0KYbDgAsVa92HQYDQo
-         X7vaHhueMMhVRZfloo3yEbm1JmR3maanIbmSDvgU64NNZJRDxRdEOdTQ8m+t0M/1xPZL
-         TUJJbouuQNWmnQuJTYZ8hxNT0tCJ+SvvGwFwpgcmBq0U1Cfn27Fu60Lva4xX/uAc6vDS
-         x+ohF6vUzFGgsSSyXgM22+fimgCqB2ett2p6fuYH69BktbcTnm4QQUP2UEJp1xcz/oXW
-         c2vA==
-X-Gm-Message-State: AOJu0YxfTNVqISJLSqmpN3akFTZGtFx5TUC7rqchIisvgL1ToPsRk5Sf
-        gZ9UeNz+r6BDTcFgyG09bxvHjALjOds=
-X-Google-Smtp-Source: AGHT+IGON2X5t1VoJFOyjqmRrBN2mj3iud2027kHwtt/KehhKSmz7kYi6mqQmrY7PIOxxxBCVy+Bcw==
-X-Received: by 2002:a19:7711:0:b0:500:9d4a:89ff with SMTP id s17-20020a197711000000b005009d4a89ffmr2154944lfc.62.1695222171271;
-        Wed, 20 Sep 2023 08:02:51 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id q12-20020ac25a0c000000b004f37bd02a89sm2701741lfn.287.2023.09.20.08.02.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Sep 2023 08:02:50 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Sergey Organov <sorganov@gmail.com>
-Subject: [PATCH v2 1/2] diff-merges: improve --diff-merges documentation
-Date:   Wed, 20 Sep 2023 18:02:43 +0300
-Message-Id: <20230920150244.171772-2-sorganov@gmail.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20230920150244.171772-1-sorganov@gmail.com>
-References: <20230909125446.142715-1-sorganov@gmail.com>
- <20230920150244.171772-1-sorganov@gmail.com>
+        d=1e100.net; s=20230601; t=1695223810; x=1695828610;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UFRauuxYy07kZPN/lYYY0I7brlqJ5iGXLLQG2jMgNDM=;
+        b=pB9j26TI0GEnyEmMfQam+kRhFbj8hWm+QwjSDSFeK+BUrwwtxttz7U3b5wpzGP3quF
+         gbESpKUV5nGtuXcb6iAUGn4PRg9/uf3/CoNE4Dyb4xyBb5uyy2DE4g6SFqFrP1MqV6R8
+         aNbGwP700sk/7iGsDTnF60JLRFS8g5Q3Kn5QZO/h7tM3MUJDSN02T3GMPy4V4aQOQQRC
+         IytlIf7KBAJtObIQPIiRsgDisEFZhu+xh6lWYr9+BuRvE9TIceWHXpj1DqjiP/ISVMHH
+         whkFzK0moXjq5QFmDZ4mjq59DnwEHGyatFdG9JXK/YEb3DXSCZaLylLuCIdl5obp4kIn
+         ZP3g==
+X-Gm-Message-State: AOJu0YzISOQRp5o8KyKSCsVd/Y2m/1Zu4TdZcUTHD8oPpv3IHm0vh/OU
+        OKn2kjpDS5Mw7MlUP6aR/JM=
+X-Google-Smtp-Source: AGHT+IEfte2Q8bbGjfZrbWV098/Plc1C5/X+Vt+latBvayDJJaXD+7dFjib+mXrqN6kPoGz+c5G6gQ==
+X-Received: by 2002:ad4:42b4:0:b0:649:8f20:552e with SMTP id e20-20020ad442b4000000b006498f20552emr2553277qvr.62.1695223810382;
+        Wed, 20 Sep 2023 08:30:10 -0700 (PDT)
+Received: from ?IPV6:2600:4040:266f:b900::387? ([2600:4040:266f:b900::387])
+        by smtp.gmail.com with ESMTPSA id j14-20020a0cf50e000000b0065862497fd2sm1347430qvm.22.2023.09.20.08.30.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 Sep 2023 08:30:09 -0700 (PDT)
+Message-ID: <573c6dc5-2102-cb65-8f71-dea37fff0c9b@gmail.com>
+Date:   Wed, 20 Sep 2023 11:30:08 -0400
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH] git-gui - use git-hook, honor core.hooksPath
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     gitster@pobox.com, johannes.schindelin@gmx.de, git@vger.kernel.org
+References: <fa876f80-02dc-2c04-0db3-bf3f6269b427@gmail.com>
+ <20230917192431.101775-1-mlevedahl@gmail.com>
+ <mafs01qetq9kk.fsf@yadavpratyush.com>
+Content-Language: en-US
+From:   Mark Levedahl <mlevedahl@gmail.com>
+In-Reply-To: <mafs01qetq9kk.fsf@yadavpratyush.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-* Put descriptions of convenience shortcuts first, so they are the
-  first things reader observes rather than lengthy detailed stuff.
 
-* Get rid of very long line containing all the --diff-merges formats
-  by replacing them with <format>, and putting each supported format
-  on its own line.
+On 9/20/23 09:05, Pratyush Yadav wrote:
+> In the past, git-gui has tried to keep backward compatibility with all
+> versions of Git, not just the latest ones. v2.36 is relatively new and
+> this code would not work for anyone using an older version of Git.
+>
+> I have largely followed this practice for all the code I have written
+> but I am not sure if it is a good idea to insist on it -- especially if
+> it would end up adding some more complexity. I would be interested to
+> hear what other people think about this.
+>
+I am not aware of any distribution (Linux, g4w, Mac) shipping anything 
+except the git-gui in Junio's tree, which is specific to the git-core 
+version, and the git-gui packages require (or are a part of) the same 
+version git-core package: no cross-version compatibility of git 
+components is assumed. Certainly, folks rolling their own can pull from 
+upstream git-gui, but they take the risk of incompatibility with an 
+outdated git. Other tools in Junio's tree have already made the switch 
+to git-hook (send-email, git-p4) even though they are usually packaged 
+separately from git-core, but also version locked to matching git-core.
 
-Signed-off-by: Sergey Organov <sorganov@gmail.com>
----
- Documentation/diff-options.txt | 98 ++++++++++++++++++----------------
- Documentation/git-log.txt      |  2 +-
- 2 files changed, 54 insertions(+), 46 deletions(-)
+Updating git-gui's hook execution to match git internals would be more 
+complex than what I implemented or what was there before.  For instance, 
+I never looked at what git-hook's g4w compatibility code uses to test if 
+a hook is present and executable, it wouldn't surprise me to find 
+git-gui was missing something there, but who wants to bother? Also, the 
+commit language surrounding addition of git-hook is strongly suggestive 
+of other changes in configuration coming, meaning more changes to hook 
+execution code would be needed that are avoided by using git-hook. Note: 
+I have one more patch to send, removing yet another work-around for 
+early Cygwin tcl/tk, as more evidence of how many years it takes to 
+clean some of this stuff out and the difficulty of keeping git-gui up to 
+date.
 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 9f33f887711d..8035210c1418 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -43,66 +43,74 @@ endif::git-diff[]
- endif::git-format-patch[]
- 
- ifdef::git-log[]
----diff-merges=(off|none|on|first-parent|1|separate|m|combined|c|dense-combined|cc|remerge|r)::
-+-m::
-+	Show diffs for merge commits in the default format. This is
-+	similar to '--diff-merges=on' (which see) except `-m` will
-+	produce no output unless `-p` is given as well.
-+
-+-c::
-+	Produce combined diff output for merge commits.
-+	Shortcut for '--diff-merges=combined -p'.
-+
-+--cc::
-+	Produce dense combined diff output for merge commits.
-+	Shortcut for '--diff-merges=dense-combined -p'.
-+
-+--remerge-diff::
-+	Produce diff against re-merge.
-+	Shortcut for '--diff-merges=remerge -p'.
-+
- --no-diff-merges::
-+	Synonym for '--diff-merges=off'.
-+
-+--diff-merges=<format>::
- 	Specify diff format to be used for merge commits. Default is
--	{diff-merges-default} unless `--first-parent` is in use, in which case
--	`first-parent` is the default.
-+	{diff-merges-default} unless `--first-parent` is in use, in
-+	which case `first-parent` is the default.
- +
----diff-merges=(off|none):::
----no-diff-merges:::
-+The following formats are supported:
-++
-+--
-+off, none::
- 	Disable output of diffs for merge commits. Useful to override
- 	implied value.
- +
----diff-merges=on:::
----diff-merges=m:::
---m:::
--	This option makes diff output for merge commits to be shown in
--	the default format. `-m` will produce the output only if `-p`
--	is given as well. The default format could be changed using
-+on, m::
-+	Make diff output for merge commits to be shown in the default
-+	format. The default format could be changed using
- 	`log.diffMerges` configuration parameter, which default value
- 	is `separate`.
- +
----diff-merges=first-parent:::
----diff-merges=1:::
--	This option makes merge commits show the full diff with
--	respect to the first parent only.
-+first-parent, 1::
-+	Show full diff with respect to first parent. This is the same
-+	format as `--patch` produces for non-merge commits.
- +
----diff-merges=separate:::
--	This makes merge commits show the full diff with respect to
--	each of the parents. Separate log entry and diff is generated
--	for each parent.
-+separate::
-+	Show full diff with respect to each of parents.
-+	Separate log entry and diff is generated for each parent.
- +
----diff-merges=remerge:::
----diff-merges=r:::
----remerge-diff:::
--	With this option, two-parent merge commits are remerged to
--	create a temporary tree object -- potentially containing files
--	with conflict markers and such.  A diff is then shown between
--	that temporary tree and the actual merge commit.
-+combined, c::
-+	Show differences from each of the parents to the merge
-+	result simultaneously instead of showing pairwise diff between
-+	a parent and the result one at a time. Furthermore, it lists
-+	only files which were modified from all parents.
-++
-+dense-combined, cc::
-+	Further compress output produced by `--diff-merges=combined`
-+	by omitting uninteresting hunks whose contents in the parents
-+	have only two variants and the merge result picks one of them
-+	without modification.
-++
-+remerge, r::
-+	Remerge two-parent merge commits to create a temporary tree
-+	object--potentially containing files with conflict markers
-+	and such.  A diff is then shown between that temporary tree
-+	and the actual merge commit.
- +
- The output emitted when this option is used is subject to change, and
- so is its interaction with other options (unless explicitly
- documented).
--+
----diff-merges=combined:::
----diff-merges=c:::
---c:::
--	With this option, diff output for a merge commit shows the
--	differences from each of the parents to the merge result
--	simultaneously instead of showing pairwise diff between a
--	parent and the result one at a time. Furthermore, it lists
--	only files which were modified from all parents. `-c` implies
--	`-p`.
--+
----diff-merges=dense-combined:::
----diff-merges=cc:::
----cc:::
--	With this option the output produced by
--	`--diff-merges=combined` is further compressed by omitting
--	uninteresting hunks whose contents in the parents have only
--	two variants and the merge result picks one of them without
--	modification.  `--cc` implies `-p`.
-+--
- 
- --combined-all-paths::
- 	This flag causes combined diffs (used for merge commits) to
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index 2a66cf888074..9b7ec96e767a 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -124,7 +124,7 @@ Note that unless one of `--diff-merges` variants (including short
- will not show a diff, even if a diff format like `--patch` is
- selected, nor will they match search options like `-S`. The exception
- is when `--first-parent` is in use, in which case `first-parent` is
--the default format.
-+the default format for merge commits.
- 
- :git-log: 1
- :diff-merges-default: `off`
--- 
-2.25.1
+I had considered the above when creating the patch, and I believe what I 
+did is the right approach.
+
+Mark
 
