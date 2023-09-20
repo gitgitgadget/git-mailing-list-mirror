@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44D05C00454
-	for <git@archiver.kernel.org>; Wed, 20 Sep 2023 15:02:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B742CE79DE
+	for <git@archiver.kernel.org>; Wed, 20 Sep 2023 15:03:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235331AbjITPDC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Sep 2023 11:03:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59826 "EHLO
+        id S235343AbjITPDE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Sep 2023 11:03:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235217AbjITPDA (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S235203AbjITPDA (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 20 Sep 2023 11:03:00 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66BC8A9
-        for <git@vger.kernel.org>; Wed, 20 Sep 2023 08:02:54 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-50307acd445so6862917e87.0
-        for <git@vger.kernel.org>; Wed, 20 Sep 2023 08:02:54 -0700 (PDT)
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 309519F
+        for <git@vger.kernel.org>; Wed, 20 Sep 2023 08:02:53 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2b9c907bc68so116429721fa.2
+        for <git@vger.kernel.org>; Wed, 20 Sep 2023 08:02:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695222172; x=1695826972; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1695222171; x=1695826971; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=pP4w3Oxz4rxyFace+/ZmI4kvPP53bAC/w/sfylrAsWE=;
-        b=SO7SI/Ze7pnJsoVEwM8WHhZgGDeIXhZENkRXcRXcgyMfXD0SLzO6uzwY/4C7VeyxH3
-         Y1HE//XRhJF6jv7Zij1hjCfgROyWQFPKBU6ZWV8hRCKbKJCN661pbzOz43jykUmInTYU
-         SUKlqcv612Qp6vBqWKGc6Kr0UgTGIm6Dlb5i/4YOEZq7vgcd0V2x5tcEzc04XntT0Bhs
-         12MN/gCaQiQLHMpB0C+v18vGnoFwZ+8eFW49+MT6N62Pq23hDkivrG0Oe1f60fJ0AuF1
-         BOCj3dZ3LZuwbAZ9Sy/8eyfMgIioE5zBklGdJ+vy9P5gxnANhG9jhasbMSTQtOkpJJpM
-         1y+g==
+        bh=wwULGC8BAfLATKKheQRRpOJp8nqzM2A6Zm3K6cZnB8o=;
+        b=BYSKMuBWQoN/6AD/kPbv0zHlM0CpPLG3SRixDbgPVQ2Ui5eSdRZ26aWrY9wUCaOe0B
+         ezPIMkeLrXjXGgjVcIx3Ec5uAR2ryxGfSNeDTwV/ojjJVlrfPoSKYpzrKT1G/E72xGjz
+         c2QUzA2H6UWzndkwIipn+m7a8fSW/brZQcg30B910J/s0Znh/9rHLiWmJn6FJ5PTyHxw
+         DcZJBMPNISzo3GmOODPirWT9WbofUoJMLeBnil/5QWef5R5ovElE20qStJfw8yBspNOt
+         AomBvgwEMRbk152zggSniX4h2Q0czCxVAkWNzSJFLeMVxHhcJRDi+3K1lrZ7RP9U7qdV
+         GGMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695222172; x=1695826972;
+        d=1e100.net; s=20230601; t=1695222171; x=1695826971;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=pP4w3Oxz4rxyFace+/ZmI4kvPP53bAC/w/sfylrAsWE=;
-        b=BiUqBJARl10kbzYexlHT3188jj0GxUZVDtfdLyGogKL16oFzvfMYallSte+xtVDmHz
-         kXhkqRkJ2mmhiqRSz3+HHYXWsUdYS5Nub4cbROBMsLXz6kOaVDeTDBvKAfOhIfec4u+I
-         FIiLA2l/8gGmuxn66LaK7xYd/f428w/PCtnq/UMgb1KzZ+pTrxF4E5c6UVOWmye/msu0
-         QF9+JouUejsXE/tvFMJGU+5/RjiTxGZjDBB5fKI4CEUDJM3InwEN6Tljgn0A3OPZ6HHi
-         1iQlBpiL+w0mImJ8D77RrBn1M6j29b8VhV3mGT1juxceLpMFdO8IujZs9Om/eFy8Qyr0
-         SFBw==
-X-Gm-Message-State: AOJu0YwW7fcNcf7NgiBHh7S0voth2591HZ9SXTagPbtvix9dvWH6ySmL
-        JttAEk0c5tFi2K2iEzh/WsY=
-X-Google-Smtp-Source: AGHT+IHcbW8ZpdoFlOOIJh8CmJNDqSDq/XRN0oeKOyBu3yhs/fKFfi5pgNlpEzH58rjunLvKFPsqSw==
-X-Received: by 2002:a05:6512:114f:b0:503:2e6:6862 with SMTP id m15-20020a056512114f00b0050302e66862mr3376184lfg.32.1695222172364;
-        Wed, 20 Sep 2023 08:02:52 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id q12-20020ac25a0c000000b004f37bd02a89sm2701741lfn.287.2023.09.20.08.02.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=wwULGC8BAfLATKKheQRRpOJp8nqzM2A6Zm3K6cZnB8o=;
+        b=XI3zIp93BbyXZS+8FPbdFYHVsFiX1Nr60dMNRrQ0PcAKQG1GuFmly/pVkH5ap6wzOl
+         2gxmUmmL4m0CwON9WA4xlObPNS4rS3/ebXsfGhGlS2kUyDdbfq0KYbDgAsVa92HQYDQo
+         X7vaHhueMMhVRZfloo3yEbm1JmR3maanIbmSDvgU64NNZJRDxRdEOdTQ8m+t0M/1xPZL
+         TUJJbouuQNWmnQuJTYZ8hxNT0tCJ+SvvGwFwpgcmBq0U1Cfn27Fu60Lva4xX/uAc6vDS
+         x+ohF6vUzFGgsSSyXgM22+fimgCqB2ett2p6fuYH69BktbcTnm4QQUP2UEJp1xcz/oXW
+         c2vA==
+X-Gm-Message-State: AOJu0YxfTNVqISJLSqmpN3akFTZGtFx5TUC7rqchIisvgL1ToPsRk5Sf
+        gZ9UeNz+r6BDTcFgyG09bxvHjALjOds=
+X-Google-Smtp-Source: AGHT+IGON2X5t1VoJFOyjqmRrBN2mj3iud2027kHwtt/KehhKSmz7kYi6mqQmrY7PIOxxxBCVy+Bcw==
+X-Received: by 2002:a19:7711:0:b0:500:9d4a:89ff with SMTP id s17-20020a197711000000b005009d4a89ffmr2154944lfc.62.1695222171271;
         Wed, 20 Sep 2023 08:02:51 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id q12-20020ac25a0c000000b004f37bd02a89sm2701741lfn.287.2023.09.20.08.02.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 20 Sep 2023 08:02:50 -0700 (PDT)
 From:   Sergey Organov <sorganov@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, Sergey Organov <sorganov@gmail.com>
-Subject: [PATCH v2 2/2] diff-merges: introduce '-d' option
-Date:   Wed, 20 Sep 2023 18:02:44 +0300
-Message-Id: <20230920150244.171772-3-sorganov@gmail.com>
+Subject: [PATCH v2 1/2] diff-merges: improve --diff-merges documentation
+Date:   Wed, 20 Sep 2023 18:02:43 +0300
+Message-Id: <20230920150244.171772-2-sorganov@gmail.com>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20230920150244.171772-1-sorganov@gmail.com>
 References: <20230909125446.142715-1-sorganov@gmail.com>
@@ -65,79 +65,156 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This option provides a shortcut to request diff with respect to first
-parent for any kind of commit, universally. It's implemented as pure
-synonym for "--diff-merges=first-parent --patch".
+* Put descriptions of convenience shortcuts first, so they are the
+  first things reader observes rather than lengthy detailed stuff.
+
+* Get rid of very long line containing all the --diff-merges formats
+  by replacing them with <format>, and putting each supported format
+  on its own line.
 
 Signed-off-by: Sergey Organov <sorganov@gmail.com>
 ---
- Documentation/diff-options.txt | 4 ++++
- Documentation/git-log.txt      | 2 +-
- diff-merges.c                  | 3 +++
- t/t4013-diff-various.sh        | 8 ++++++++
- 4 files changed, 16 insertions(+), 1 deletion(-)
+ Documentation/diff-options.txt | 98 ++++++++++++++++++----------------
+ Documentation/git-log.txt      |  2 +-
+ 2 files changed, 54 insertions(+), 46 deletions(-)
 
 diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 8035210c1418..19bb78ff6652 100644
+index 9f33f887711d..8035210c1418 100644
 --- a/Documentation/diff-options.txt
 +++ b/Documentation/diff-options.txt
-@@ -48,6 +48,10 @@ ifdef::git-log[]
- 	similar to '--diff-merges=on' (which see) except `-m` will
- 	produce no output unless `-p` is given as well.
+@@ -43,66 +43,74 @@ endif::git-diff[]
+ endif::git-format-patch[]
  
-+-d::
-+	Produce diff with respect to first parent.
-+	Shortcut for '--diff-merges=first-parent -p'.
+ ifdef::git-log[]
+---diff-merges=(off|none|on|first-parent|1|separate|m|combined|c|dense-combined|cc|remerge|r)::
++-m::
++	Show diffs for merge commits in the default format. This is
++	similar to '--diff-merges=on' (which see) except `-m` will
++	produce no output unless `-p` is given as well.
 +
- -c::
- 	Produce combined diff output for merge commits.
- 	Shortcut for '--diff-merges=combined -p'.
++-c::
++	Produce combined diff output for merge commits.
++	Shortcut for '--diff-merges=combined -p'.
++
++--cc::
++	Produce dense combined diff output for merge commits.
++	Shortcut for '--diff-merges=dense-combined -p'.
++
++--remerge-diff::
++	Produce diff against re-merge.
++	Shortcut for '--diff-merges=remerge -p'.
++
+ --no-diff-merges::
++	Synonym for '--diff-merges=off'.
++
++--diff-merges=<format>::
+ 	Specify diff format to be used for merge commits. Default is
+-	{diff-merges-default} unless `--first-parent` is in use, in which case
+-	`first-parent` is the default.
++	{diff-merges-default} unless `--first-parent` is in use, in
++	which case `first-parent` is the default.
+ +
+---diff-merges=(off|none):::
+---no-diff-merges:::
++The following formats are supported:
+++
++--
++off, none::
+ 	Disable output of diffs for merge commits. Useful to override
+ 	implied value.
+ +
+---diff-merges=on:::
+---diff-merges=m:::
+--m:::
+-	This option makes diff output for merge commits to be shown in
+-	the default format. `-m` will produce the output only if `-p`
+-	is given as well. The default format could be changed using
++on, m::
++	Make diff output for merge commits to be shown in the default
++	format. The default format could be changed using
+ 	`log.diffMerges` configuration parameter, which default value
+ 	is `separate`.
+ +
+---diff-merges=first-parent:::
+---diff-merges=1:::
+-	This option makes merge commits show the full diff with
+-	respect to the first parent only.
++first-parent, 1::
++	Show full diff with respect to first parent. This is the same
++	format as `--patch` produces for non-merge commits.
+ +
+---diff-merges=separate:::
+-	This makes merge commits show the full diff with respect to
+-	each of the parents. Separate log entry and diff is generated
+-	for each parent.
++separate::
++	Show full diff with respect to each of parents.
++	Separate log entry and diff is generated for each parent.
+ +
+---diff-merges=remerge:::
+---diff-merges=r:::
+---remerge-diff:::
+-	With this option, two-parent merge commits are remerged to
+-	create a temporary tree object -- potentially containing files
+-	with conflict markers and such.  A diff is then shown between
+-	that temporary tree and the actual merge commit.
++combined, c::
++	Show differences from each of the parents to the merge
++	result simultaneously instead of showing pairwise diff between
++	a parent and the result one at a time. Furthermore, it lists
++	only files which were modified from all parents.
+++
++dense-combined, cc::
++	Further compress output produced by `--diff-merges=combined`
++	by omitting uninteresting hunks whose contents in the parents
++	have only two variants and the merge result picks one of them
++	without modification.
+++
++remerge, r::
++	Remerge two-parent merge commits to create a temporary tree
++	object--potentially containing files with conflict markers
++	and such.  A diff is then shown between that temporary tree
++	and the actual merge commit.
+ +
+ The output emitted when this option is used is subject to change, and
+ so is its interaction with other options (unless explicitly
+ documented).
+-+
+---diff-merges=combined:::
+---diff-merges=c:::
+--c:::
+-	With this option, diff output for a merge commit shows the
+-	differences from each of the parents to the merge result
+-	simultaneously instead of showing pairwise diff between a
+-	parent and the result one at a time. Furthermore, it lists
+-	only files which were modified from all parents. `-c` implies
+-	`-p`.
+-+
+---diff-merges=dense-combined:::
+---diff-merges=cc:::
+---cc:::
+-	With this option the output produced by
+-	`--diff-merges=combined` is further compressed by omitting
+-	uninteresting hunks whose contents in the parents have only
+-	two variants and the merge result picks one of them without
+-	modification.  `--cc` implies `-p`.
++--
+ 
+ --combined-all-paths::
+ 	This flag causes combined diffs (used for merge commits) to
 diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index 9b7ec96e767a..59bd74a1a596 100644
+index 2a66cf888074..9b7ec96e767a 100644
 --- a/Documentation/git-log.txt
 +++ b/Documentation/git-log.txt
-@@ -120,7 +120,7 @@ By default, `git log` does not generate any diff output. The options
- below can be used to show the changes made by each commit.
- 
- Note that unless one of `--diff-merges` variants (including short
--`-m`, `-c`, and `--cc` options) is explicitly given, merge commits
-+`-d`, `-m`, `-c`, and `--cc` options) is explicitly given, merge commits
+@@ -124,7 +124,7 @@ Note that unless one of `--diff-merges` variants (including short
  will not show a diff, even if a diff format like `--patch` is
  selected, nor will they match search options like `-S`. The exception
  is when `--first-parent` is in use, in which case `first-parent` is
-diff --git a/diff-merges.c b/diff-merges.c
-index ec97616db1df..6eb72e6fc28a 100644
---- a/diff-merges.c
-+++ b/diff-merges.c
-@@ -125,6 +125,9 @@ int diff_merges_parse_opts(struct rev_info *revs, const char **argv)
- 	if (!suppress_m_parsing && !strcmp(arg, "-m")) {
- 		set_to_default(revs);
- 		revs->merges_need_diff = 0;
-+	} else if (!strcmp(arg, "-d")) {
-+		set_first_parent(revs);
-+		revs->merges_imply_patch = 1;
- 	} else if (!strcmp(arg, "-c")) {
- 		set_combined(revs);
- 		revs->merges_imply_patch = 1;
-diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index 5de1d190759f..a07d6eb6dd97 100755
---- a/t/t4013-diff-various.sh
-+++ b/t/t4013-diff-various.sh
-@@ -473,6 +473,14 @@ test_expect_success 'log --diff-merges=on matches --diff-merges=separate' '
- 	test_cmp expected actual
- '
+-the default format.
++the default format for merge commits.
  
-+test_expect_success 'log -d matches --diff-merges=1 -p' '
-+	git log --diff-merges=1 -p master >result &&
-+	process_diffs result >expected &&
-+	git log -d master >result &&
-+	process_diffs result >actual &&
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'deny wrong log.diffMerges config' '
- 	test_config log.diffMerges wrong-value &&
- 	test_expect_code 128 git log
+ :git-log: 1
+ :diff-merges-default: `off`
 -- 
 2.25.1
 
