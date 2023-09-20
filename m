@@ -2,114 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 32D24CE79A8
-	for <git@archiver.kernel.org>; Wed, 20 Sep 2023 00:20:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56AFBCE79A9
+	for <git@archiver.kernel.org>; Wed, 20 Sep 2023 00:29:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230010AbjITAUk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Sep 2023 20:20:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49386 "EHLO
+        id S230466AbjITA3G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Sep 2023 20:29:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229534AbjITAUj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Sep 2023 20:20:39 -0400
-Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 353E49D
-        for <git@vger.kernel.org>; Tue, 19 Sep 2023 17:20:34 -0700 (PDT)
-Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-59c0d329a8bso44294337b3.1
-        for <git@vger.kernel.org>; Tue, 19 Sep 2023 17:20:34 -0700 (PDT)
+        with ESMTP id S229534AbjITA3F (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Sep 2023 20:29:05 -0400
+Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B22CEAB
+        for <git@vger.kernel.org>; Tue, 19 Sep 2023 17:28:59 -0700 (PDT)
+Received: by mail-io1-xd2a.google.com with SMTP id ca18e2360f4ac-79275d86bc3so239357239f.0
+        for <git@vger.kernel.org>; Tue, 19 Sep 2023 17:28:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695169233; x=1695774033; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ylXYo+qMAwl7U49hWhN3p3QM6ccQc8H0eMZqGafXy0Y=;
-        b=iKvXEgUya6Xfb4kZI9vK5SaG3JYbdD+7vHwmmZj1TW0ADC4H/9tuLdZY3kvLkkl5Ys
-         EbCMR381+udB7Rs3ywkrUyfT+y8h19FPSiNMfgInV6GvEkkm2E8i9Z7qjQO81xx4uwSD
-         +fYuKnsg5VseihDntZSulskIirN66CFNE0zgAN+jlO2v/UtR7M19HXUwPyXmNkTIlzL2
-         gTg5Moi37ggb6vlAxiCQ1Z7af7L1LQ7hSNim3w1v6GM8GPeWKoXilBiObW6qx65+Uan/
-         WRaFM8H6QPSGq8ffyiDzUY+vnU7dfcAPbuxbh2Wtt8N5Sd729/GRJWdQ64EjFJFLdmtS
-         LwTw==
+        d=gmail.com; s=20230601; t=1695169738; x=1695774538; darn=vger.kernel.org;
+        h=mime-version:message-id:date:user-agent:references:in-reply-to
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=htIr+CjmI/KqnxxK2xpHzmLlsDA7+64u6Ii9z/5B2VY=;
+        b=bu3AGA8QTv+gNa1NyTdP5pVa7oYjVn2cRzivNTTIpqRTVU3DqNgvayU93HhAqJ2vQq
+         mSBGYRrAzvzNIIy81t6uoFgiTk5NETCgLQPaN9bfvliT8uZCAaogJQ4xH1wiJHU0mv5/
+         d+ZF6arOas/D4qIe+mM1s9hNDD+uw+490rwWK9O3xdpNPwzIRnEAyLxcQpdT5QN9pkzz
+         k9JEK80Vf7KUqqJPCVdGbVxLwTkUEdxpbFDu6LBD+NfckzrTehF3QYSxemwaCMVaqWX1
+         S7itBON+AsTN2L2+ZS9fNFR0FUHO+4+K2fybbxKryrMu3NYIS205lXysS90nopd/SOwR
+         JI9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695169233; x=1695774033;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ylXYo+qMAwl7U49hWhN3p3QM6ccQc8H0eMZqGafXy0Y=;
-        b=eTzl7mCGP2mSUXnDrCYHIyHzyejcxg0Yj+H648SpZd2V3pLwzcQXnvr1AzeCN3Kn+4
-         ma2Lgcj1xa06dvXqTOHm9BkDmG0eLxmlJTXe43O1/jMblvrmM3p7sRFalB32ECrb3xiq
-         3qY4vXjHUzqEb5yRipQ7WA39X6yh2xkk6ouAvgeeesn8eAojpdFerJMEzvLFYxGTKCOf
-         fUEWnj7Hf/wUBElOc7lI5UtUDYpF/98dsiWv2Sh5rbndtLchsSBsnejD66cMWlTsD89B
-         5z5UE0ju3hM5Ag2P/dAwVnfuEoIE+0JA3NqcLlUdVRprMHBx7eCdO4Px/3Ixag0L+sd9
-         ubhw==
-X-Gm-Message-State: AOJu0YzycdHSUXuBmh+IvKD6Oa01IWMJ4j5uvyPK3r3RcwL7Gcv3Qwsw
-        9j0iRQoJY9GY5UW4D+NqTR7OU1MIZp546EqYL1Y=
-X-Google-Smtp-Source: AGHT+IH05R8OcRbYGgXMIK2vGuQILoqtIzMfqRyDvscjSKP3hDhw8SMZgEW9ntdOMpWdbVoIKvhbPlJQIHVyCbdepvo=
-X-Received: by 2002:a0d:c385:0:b0:59b:cff1:a8eb with SMTP id
- f127-20020a0dc385000000b0059bcff1a8ebmr1113910ywd.34.1695169233312; Tue, 19
- Sep 2023 17:20:33 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230919064156.13892-1-worldhello.net@gmail.com> <xmqqy1h2f5dv.fsf@gitster.g>
-In-Reply-To: <xmqqy1h2f5dv.fsf@gitster.g>
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Wed, 20 Sep 2023 08:20:20 +0800
-Message-ID: <CANYiYbFKaiHS5PQSjB9V6dWLCP=wiJJRNLK=v=x1_mTLXBft=A@mail.gmail.com>
-Subject: Re: [PATCH 1/2] transport-helper: no connection restriction in connect_helper
+        d=1e100.net; s=20230601; t=1695169738; x=1695774538;
+        h=mime-version:message-id:date:user-agent:references:in-reply-to
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=htIr+CjmI/KqnxxK2xpHzmLlsDA7+64u6Ii9z/5B2VY=;
+        b=Y2Elq7ngjRhXwijPAIhfNOX8eQv2CQBTcsBUtRIsI7kFT5APstGx/NhLayrkHN7hku
+         ID8L64rOafiKKjyj5Uqdzu2wqJWZoCCKV7zg7v1n4veKy1mjAant2yM7FuIxGg2EXPNR
+         fwTzANLxx5PVvB7SFbeWgdAqc/esyJJ/WxisI4q4l6vbc/ft6uyVqYMge0YbRlGReDHa
+         t9M0fHMp0vQm8w79K6Io7ZSiD59xGMVKa6oAgWFKzj3CckRrXbj9m/7Z95Ofu//KKxHP
+         BLwR7Mr+N/5Dpo+oUU5zpzui99LlA07qYAEKrDJ8nWFanLt9+zB5VA36JpDDorm//wmY
+         yzEQ==
+X-Gm-Message-State: AOJu0YyZs4hjXiqiYZWIukiHnOikixSEP6SJv2Tfpsg8Be3LnigaSLVK
+        ryx4ITdrwgyBW+qfNYyjvzQ6kds5R7k=
+X-Google-Smtp-Source: AGHT+IH4N5QS5pFs7lvtDvHnHnz1R4A9pFuCtqNBybmwrpgeqUJXYYbU3BldJmVMbBbuOublEwP+tg==
+X-Received: by 2002:a05:6e02:4c9:b0:349:8a8b:70ca with SMTP id f9-20020a056e0204c900b003498a8b70camr1236203ils.14.1695169738512;
+        Tue, 19 Sep 2023 17:28:58 -0700 (PDT)
+Received: from gmail.froward.int.ebiederm.org.gmail.com (ip68-227-168-167.om.om.cox.net. [68.227.168.167])
+        by smtp.gmail.com with ESMTPSA id p6-20020a92c106000000b0034ff48f2db3sm1391978ile.48.2023.09.19.17.28.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 Sep 2023 17:28:58 -0700 (PDT)
+From:   "Eric W. Biederman" <ebiederm@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-        Brandon Williams <bwilliams.eng@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc:     <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: [PATCH] bulk-checkin: Only accept blobs
+In-Reply-To: <87a5thrak6.fsf@email.froward.int.ebiederm.org> (Eric
+        W. Biederman's message of "Tue, 19 Sep 2023 18:46:17 -0500")
+References: <87a5thrak6.fsf@email.froward.int.ebiederm.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+Date:   Tue, 19 Sep 2023 19:28:56 -0500
+Message-ID: <87pm2d8z7b.fsf@gmail.froward.int.ebiederm.org>
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 20, 2023 at 1:19=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Jiang Xin <worldhello.net@gmail.com> writes:
->
-> > From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-> >
-> > For protocol-v2, "stateless-connection" can be used to establish a
-> > stateless connection between the client and the server, but trying to
-> > establish http connection by calling "transport->vtable->connect" will
-> > fail. This restriction was first introduced in commit b236752a87
-> > (Support remote archive from all smart transports, 2009-12-09) by
-> > adding a limitation in the "connect_helper()" function.
->
-> The above description may not be technically wrong per-se, but I
-> found it confusing.  The ".connect method must be defined" you are
-> removing was added back when there was no "stateless" variant of the
-> connection initiation.  Many codepaths added by that patch did "if
-> .connect is there, call it, but otherwise die()" and I think the
-> code you were removing was added as a safety valve, not a limitation
-> or restriction.  Later, process_connect_service() learned to handle
-> the .stateless_connect bit as a fallback for transports without
-> .connect method defined, and the commit added that feature, edc9caf7
-> (transport-helper: introduce stateless-connect, 2018-03-15), forgot
-> that the caller did not allow this fallback.
->
->         When b236752a (Support remote archive from all smart
->         transports, 2009-12-09) added "remote archive" support for
->         "smart transports", it was for transport that supports the
->         .connect method.  connect_helper() function protected itself
->         from getting called for a transport without the method
->         before calling process_connect_service(), which did not work
->         wuth such a transport.
->
->         Later, edc9caf7 (transport-helper: introduce
->         stateless-connect, 2018-03-15) added a way for a transport
->         without the .connect method to establish a "stateless"
->         connection in protocol-v2, process_connect_service() was
->         taught to handle the "stateless" connection, making the old
->         safety valve in its caller that insisted that .connect
->         method must be defined too strict, and forgot to loosen it.
->
-> or something along that line would have been easire to follow, at
-> least to me.
->
+Junio C Hamano <gitster@pobox.com> writes:
 
-These explanations are very clear and helpful, thank you.
+> "Eric W. Biederman" <ebiederm@xmission.com> writes:
+>
+>> Subject: Re: [PATCH] bulk-checkin: Only accept blobs
+>
+> s/Only/only/;
+>
+>> As the code is written today bulk_checkin only accepts blobs.  When
+>> dealing with multiple hash algorithms it is necessary to distinguish
+>> between blobs and object types that have embedded oids.  For object
+>> that embed oids a completely new object needs to be generated to
+>> compute the compatibility hash on.  For blobs however all that is
+>> needed is to compute the compatibility hash on the same blob as the
+>> storage hash.
+>
+> All of the above is understandable, but ...
+>
+>> As the code will need the compatiblity hash from a bulk checkin, remove
+>> support for a bulk checkin of anything except blobs.
+>
+> ... I am not sure what the first half of this sentence is saying.
 
---
-Jiang Xin
+I mean the code will need to compute both the SHA-1 and the SHA-256
+oid of the object being checked in.
+
+What I left implied is that for blobs this is straight forward because
+the object header and content are the same in both cases, and we just
+need calls from the compatible hash algorithm to allow computing both
+SHA-1 and SHA-256 simultaneously.
+
+For commits, trees, and tags the entire objects must be walked before
+the size of the compatible object is known.  The size of the compatible
+object appears in the compatible object header.  Which means that for
+commits, trees, and tags their compatible object must be computed
+before their compatible hash can be computed.
+
+Computing all of that in two passes is not what streaming interface
+is about.
+
+> Do you mean something like:
+>
+>     The function takes "enum object_type" and pretends that it could
+>     stream trees and commits, if we wanted to interoperate with
+>     multiple hash algorithms, there are a lot more information than
+>     just the contents and object type needed.  A tree object needs
+>     "compatibility hash" (i.e. the hash computed for the other hash
+>     functions) for objects the tree contains, a commit object
+>     likewise needs "compatibility hash" for its tree and its parent
+>     commits.  IOW, the existing interface into the functions this
+>     patch touches is way too narrow to be useful for object types
+>     other than blobs.
+>
+> perhaps?  I agree with the conclusion that the functions on the
+> callchain involved in the bulk-checkin feature can safely be
+> limited to handle blobs in the current code (and I have my reasons
+> to think why it is not regressing the interface), but it makes me
+> feel uneasy that I am not quite sure what your reasoning is.
+
+The interface is wide enough, as we can safely assume that all
+objects a commit, tag, or tree would refer to already have both
+their SHA-1 and SHA-256 oid computed.
+
+The problem is that it would take a 2 passes over a tree, commit, or tag
+object to compute both it's SHA-1 oid and it's SHA-256 oid.
+
+>>
+>> Inspired-by: brian m. carlson <sandals@crustytoothpaste.net>
+>> Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
+>> ---
+>>
+>> Apologies to anyone who has seen this before.  The last time I sent
+>> this patch out it seems to have disappeared into a black hole so
+>> I am trying again.
+>
+> I do not know if vger is dropping your messages, but I haven't seen
+> this on https://lore.kernel.org/git/ archive, so I'll quote from the
+> message I am responding to everything without omitting anything, to
+> let others who may find out about this patch via my response.
+
+I don't see the messages at vger either.  So I am going to try this
+conversation from my gmail address and see how well that works.
+
+Eric
