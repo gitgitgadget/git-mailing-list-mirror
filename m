@@ -2,86 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AF48CE79CE
-	for <git@archiver.kernel.org>; Wed, 20 Sep 2023 11:35:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C236CE79D4
+	for <git@archiver.kernel.org>; Wed, 20 Sep 2023 12:25:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234330AbjITLfX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Sep 2023 07:35:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48170 "EHLO
+        id S235767AbjITMZW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Sep 2023 08:25:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234463AbjITLfU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Sep 2023 07:35:20 -0400
-Received: from mout.web.de (mout.web.de [212.227.17.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11296B0
-        for <git@vger.kernel.org>; Wed, 20 Sep 2023 04:35:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
- t=1695209697; x=1695814497; i=l.s.r@web.de;
- bh=fXYFS9DdYUfCCzC11apJjSV0ksSdS7+z9c2FrJ6MwmY=;
- h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
- b=SA7maeEHyC2z2cVVWPgAMQTRmq9MlCoXL0jtU7mWPs62i4HueUl/miVyNoV7b0YowREPnLa+7Ho
- lxdL0ob9Ze88gGklw2g2EzSk9U73q+hC1fBEaXx5XrbbqvHBoPSe/CuEwxiJCAUQdknj19EIcFDa2
- lH/X2HXFQSY/+e76sjm9p9ogLJkl10A4fykNbQJT5wGFq/hVt9DnfX/YUN39Xgaw5/LAFrQu5vZGI
- h+mcD8Wr3/rzvyBXs4fDziXHTZYEZpt19q9RV1pBgfz8FLG8iOiu+5CDAIGOSHDqkgp18h+1lrDfp
- LqhJ/mQiF5aPX7dpFbKc23nSXMH65k6pjfvg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.147.159]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MpU1u-1rU68L1iKy-00pl9Q; Wed, 20
- Sep 2023 13:34:57 +0200
-Message-ID: <daf41377-95ef-43ff-b4ce-a544a469a246@web.de>
-Date:   Wed, 20 Sep 2023 13:34:56 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] parse-options: add int value pointer to struct option
-Content-Language: en-US
+        with ESMTP id S235890AbjITMY7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Sep 2023 08:24:59 -0400
+Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8A19B4
+        for <git@vger.kernel.org>; Wed, 20 Sep 2023 05:24:52 -0700 (PDT)
+Received: by mail-il1-x12e.google.com with SMTP id e9e14a558f8ab-34fdc6209c6so12265025ab.3
+        for <git@vger.kernel.org>; Wed, 20 Sep 2023 05:24:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1695212692; x=1695817492; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+DZB5n414KqGwhvIyFHwLF93GDzNAfyb6fAVD/l3KXY=;
+        b=Lix8EniU6qkeuz7LaBekgUdZxN/MaBYXJBYcfevG9v0+Y/Iruwc5xHlXqU6Ids1bLP
+         qP/9QBx/vmo2hSH4FV0gmhyKmb+hG+XpzlORU9NEvUXy+3v1IwNWUeLo0CZ0jldt2FAe
+         9cP6dWn6Hup9SBy4pJAOWVlEW11Z7SYMMRVAlj/u+V6csA5k0gMZIUDgd7UzBNoo1xn/
+         zFZGTcYgIqys4B+HbrTL22/8M53+4st/E7KH5NuW2WFJe0YQ/YHnhl/hOUzgCK/dF1NJ
+         eNw8/ujKVR8i1FxQaiHSPw8gpVIfvhe1bSKmRBGo62ZQSZMgQfMGh7KdbZZC3+rHqU35
+         Txeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695212692; x=1695817492;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+DZB5n414KqGwhvIyFHwLF93GDzNAfyb6fAVD/l3KXY=;
+        b=BNix7phfm6nI0VFZ1jA7ZWdYml66Jh7VSumFKzAjriXB+htdqGEo5zFGQ5TPOv3YT0
+         LlQcTVrqHOR4mrcW3ZI6PnPvZg3xbqkTs6TwrwQ17VodRPUE+6XJv+OTPOJrw0Uwi1kz
+         OVz+nzVweP64dv6r6udP2qRmZWn/F9afnIBQtikC+3c4NqMOIzic1PY0ZwBQaVWUmA1c
+         jZqG0sU1DiQaHP59KU2r5DXuvREV8gLBYQVJ+X4248bl2sCOMSdLEZmerx5F6lN9RARk
+         /xslST39B7jVAcWWCBR4nTwIhSAqD/62s86daBHPYFTNIuLTG+szp3MyS0c90Sg0zVM+
+         4kZw==
+X-Gm-Message-State: AOJu0YzoiO1kbRXl63QdBOFcOIasTvb6bXnOymczXLRv8igKn5C8dwkF
+        rYRgvWeUvfGCT74gXKyhEWQddOJnXv0=
+X-Google-Smtp-Source: AGHT+IGoKwxTuVeEdKKChd0IR16B+CGL0K1ZXWIgeVRtJ/vWw0a6Ns7d60o5y+VveEfLuebmKtdCzA==
+X-Received: by 2002:a92:c267:0:b0:34f:9f1b:554c with SMTP id h7-20020a92c267000000b0034f9f1b554cmr3487345ild.5.1695212691715;
+        Wed, 20 Sep 2023 05:24:51 -0700 (PDT)
+Received: from gmail.froward.int.ebiederm.org.gmail.com (ip68-227-168-167.om.om.cox.net. [68.227.168.167])
+        by smtp.gmail.com with ESMTPSA id o3-20020a056e02068300b0034fda29890asm2613727ils.10.2023.09.20.05.24.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 20 Sep 2023 05:24:51 -0700 (PDT)
+From:   "Eric W. Biederman" <ebiederm@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, Git List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>
-References: <2d6f3d74-687a-2d40-5c0c-abc396aef80f@web.de>
- <ZP4NrVeqMtFTLEuf@nand.local> <xmqq7cowv7pm.fsf@gitster.g>
- <2349e897-9e0d-4341-86fc-9da117a1eb48@web.de> <xmqq5y47mp58.fsf@gitster.g>
-From:   =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqq5y47mp58.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:ak9st2Sq76YOgCDX7IqYt/euzXT0Of820Xt4mrWdPkt0CXliR9W
- eAv8c1igOK7qu7fzhFKrQiLqD6GqnYsHvfvpI8BpbcujSGYFt9dVjs7Yhd9fxBpV1cGqAmF
- rDAfL2k4HCeQowDjl60y0UVIHNJsCv7AA5XJ3MyOKGD4MxxMmm1iMCKCgGbT0X7luGzfKfY
- 1qU9M9FLoVotNau8XN+/Q==
-UI-OutboundReport: notjunk:1;M01:P0:VwA1UPAd+0U=;aT5TA7dDlKLFQkkgq0a/3btUX9Y
- SczjwIBMcXNVaZaX1M6Ddg6NynaiVrTksvj8zurmk9hPtrDhO+AwUlaL0g9uRNwsfTWQERCOI
- jnyEi7DA1mOeWJCVzo9OizxQjiQ2UEJsESbQqzfsUQb/5t4L6UIQlBB4kKERetVZnXm4WI/CG
- nzGsnGT+Cqn52bHjZT6OuF8IbbQdYAEHs+mebv5CBVNJ91ddohIqnlr4fcrcMz4T1Ewjjj7Xs
- GnGnVlWKS3HDV5D40e7FJ9x8rtAiO8nLQxrvO3PqksvBHlSHmBo5Qv9hUMooJrUdzqlJqv1FH
- EY5H+Z0Ype8pQUeBFDIz0hUlVBPczKrGbJ/8/KtB6qq6ZWHpO/62iOovvT0HnvhRlzldbKBAV
- 2aBWS0Y889xcDYkwl57sK4ROvtldMlwrc56TSv0ExmfGv1gpBgd7fVbXRu1Z7bu2eCDAyyp4b
- d5lwG4EcgOFD1U3hHGTS6uiMr/HURzR3SWsQEZ2uzd+78mDHOcWy4/Xh42Tj9KGOHL276HBhH
- YQKo7fC9B8ql0aOptatfZFIqKNjYc+LygHOxNLSq//YyCnPTgLaqT1lNrHK9WHic1LfnU77JG
- P1+p02u4Quv8RJPN4cBww+QaTAsXzTuYt3+g4BKcmCAHEfBi1hScyHlfWotfnh3nhtiRoRQT4
- T4+7IDRyqP9ftCWfQw9lOGerpJcCeQDa6EpeHWlM+J/PnTzj4WItKqw1NwM8f7QtN+pO2tMtC
- L3j2VESyqeK+8nMh/ai8aGUS0g30SsB7uO08o2Spn3fIZOkYc1iP0tqib3/BR6RjpD7TCHE8i
- DZiDEwJJcuKHO+EPZEXjfllNhT21E7PX+McAxOOni3m/ziRKAdxR50zGa2K0fL2yxOAJki4RU
- ca/al0ZjGtNXqU8yJ2ahDKt25YSCm8802HI7uAt+suI8V0bNmE42RT6FCoaKHkiURqhi+AK8C
- kKhGONA2awXUncreMjv0lRzP9d8=
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        <git@vger.kernel.org>
+Subject: Re: [PATCH v2] bulk-checkin: only support blobs in index_bulk_checkin
+References: <878r918ps3.fsf@gmail.froward.int.ebiederm.org>
+        <xmqqr0mtcosy.fsf@gitster.g>
+Date:   Wed, 20 Sep 2023 07:24:49 -0500
+In-Reply-To: <xmqqr0mtcosy.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+        19 Sep 2023 23:59:57 -0700")
+Message-ID: <87zg1h58xa.fsf@gmail.froward.int.ebiederm.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 18.09.23 um 18:17 schrieb Junio C Hamano:
-> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
->
->> It reduces the memory footprint, but only slightly.  Saving a few bytes
->> for objects with less than a hundred instances total doesn't seem worth
->> the downsides.
->
-> It makes it impossible to use the both at the same time, which is a
-> bigger (than reduced memory) advantage.  Otherwise, we would be
-> tempted to consider that having "void *value" and "int value_int"
-> next to each other and allow them to coexist may be a good solution
-> for a narrow corner case (please see at the end of the message you
-> are responding to).
+Junio C Hamano <gitster@pobox.com> writes:
 
-Good point.  The patch adds a check to parse_options_check() to prevent
-double use, which adds some runtime overhead and doesn't fully remove
-the temptation.
+> "Eric W. Biederman" <ebiederm@gmail.com> writes:
+>
+>> As far as I can tell this extra pass defeats most of the purpose of
+>> streaming, and it is much easier to implement with in memory buffers.
+>
+> The purpose of streaming being the ability to hash and compute the
+> object name without having to hold the entirety of the object, I am
+> not sure the above is a good argument.  You can run multiple passes
+> by streaming the same data twice if you needed to, and how much
+> easier the implementation may become if you can assume that you can
+> hold everything in-core, what you cannot fit in-core would not fit
+> in-core, so ...
 
-Ren=C3=A9
+Yes this wording needs to be clarified.
+
+If streaming to handle objects that don't fit in memory is the purpose,
+I agree there are slow multi-pass ways to deal with trees, commits and
+tags.
+
+If writing directly to the pack is the purpose, using an in-core
+buffer for trees, commits, and tags is better.
+
+I will put on the wording on the back burner and see what I come up
+with.
+
+>> So if it is needed to write commits, trees, and tags directly to pack
+>> files writing a separate function to do the would be needed.
+>
+> But I am OK with this conclusion.  As the way to compute the
+> fallback hashes for different types of objects are very different,
+> compared to a single-hash world where as long as you come up with a
+> serialization you have only a single way to hash and name the
+> object.  We would end up having separate helper functions per target
+> type anyway, even if we kept a single entry point function like
+> index_stream().  The single entry point function will only be used
+> to just dispatch to type specific ones, so renaming what we have today
+> and making it clear they are for "blobs" does make sense.
+
+Good.  I am glad I am able to step back and successfully explain the
+whys of things.
+
+Eric
+
