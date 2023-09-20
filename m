@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EFC6CE79D0
-	for <git@archiver.kernel.org>; Wed, 20 Sep 2023 13:02:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D64DFCE79CE
+	for <git@archiver.kernel.org>; Wed, 20 Sep 2023 13:03:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236047AbjITNDB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Sep 2023 09:03:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43086 "EHLO
+        id S235291AbjITNDG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Sep 2023 09:03:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235291AbjITNC7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Sep 2023 09:02:59 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F9F5AB
-        for <git@vger.kernel.org>; Wed, 20 Sep 2023 06:02:53 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-4050bd2e33aso34477935e9.2
-        for <git@vger.kernel.org>; Wed, 20 Sep 2023 06:02:52 -0700 (PDT)
+        with ESMTP id S235430AbjITNDB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Sep 2023 09:03:01 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FFB992
+        for <git@vger.kernel.org>; Wed, 20 Sep 2023 06:02:55 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-4051f8e1ba0so10286325e9.1
+        for <git@vger.kernel.org>; Wed, 20 Sep 2023 06:02:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695214971; x=1695819771; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1695214973; x=1695819773; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Sx4pAg2r7pkgYgatgoXWRbqkikXadcTJuE8EVrZn++4=;
-        b=cQeWeBM1SRL/RaEp5pQwpY0pIqWIlFrOnecs7w9UMdYTN03GMBaOXkeOW0fQ7sFB1r
-         R0iB/oq8PkD24cwZdpRgGYvnnGTuRHKSzseNltd+Y+1w9ZKR4fFH/Wqn9lK4Tk5DU0fb
-         ExxeyEiOuboPlyH9K+IjhraucX/ZXr8BKKU+JoyeH3LXNyQt55e6r4umLFPb+NPC8EHe
-         qq1I3S6p2JTZm7CAGiV6H+60g53Y6EZV2vvI0wHwYl0+S7zQMsuDUZSNTnejwzAJjGuP
-         MMnQ7DJkeUNb2S+DlNxd56AXI98P2ysZAigvuOUd/Y4kkk7lc8XdEELbcSkqfqp0yDYr
-         BdZg==
+        bh=Np2dYf0WO4fHqgkBJzDV6cHKAMI95yduZgkBP3OUP00=;
+        b=IyiWlFeqVrDtdIbJGz51xE4crZWbiretle4VTKgvrDZkbIBVVS3EF3+UfedGQJArho
+         hWntucKgjQNJFFNqJTB9K8Hv5wJ+mrys0Sh8IxQTHaqDSpJnT20F4JYTl6U1yad0fahj
+         2Kcs53UXBWmja9PhuCzeyFJvYLJK42SwtxUnM9AMBPPEQIr2Zl2F8hT/H0J6iLUDMXZl
+         VlToDB8CP4LEsKfF+l56+B8/F5hyQBnvBsz2BRTUz3vKpz5fyt8MHl7ri41TyiByKQYC
+         CYQCW/IuF2Uv0JrtDm9IniIzjisRh+nhhrETKMCPN1axp6qI/PK0zywww/hbWKu7t9UJ
+         6TCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695214971; x=1695819771;
+        d=1e100.net; s=20230601; t=1695214973; x=1695819773;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Sx4pAg2r7pkgYgatgoXWRbqkikXadcTJuE8EVrZn++4=;
-        b=LP59KN7Vc82rciZfwaUZbebrSjtxql7G+QAVZbrTwcZpLWri1mMrJwFxzS5cbnlr8j
-         l3bfiiQ7BOPbMKCG8ANSy+2uoxetITXTZtxs/3sk1G5klyX1/5SEWHlq9At5UXT+UFaB
-         5TG9+EfIcxWOhncPcmbVTtVrZsOLJDyG3O+4d80LqDArT3TO0FoncObmjRkHtysobKw1
-         aG9jhW1Ou1IHbB2GH6XuSfp2F7E3BxsKEP2/S9wSYQ3pEgBa0wL40TVh/Rho0cMBQUiP
-         pxS3ZGr+sDlBX4FS79XorasG3IL7GAZmc8JPF/KIypzR4nbBxUH3htAxn89ylx7ISRGu
-         vEJQ==
-X-Gm-Message-State: AOJu0YyHKiK6pqjSzY3IwLy0PzoOsiuKItRkS6fxSjjo9lcfcbih2+q9
-        p/O/GlOti9KRIEBMSmfsBvEWvRN2HTU=
-X-Google-Smtp-Source: AGHT+IGxtPGXBI1vBG3gMwi1pNpHxeNwaw2hFcHpcgpxwb9w2hIbQ9f3KjQM8O7KroOlXSxlKUaK2g==
-X-Received: by 2002:a7b:c45a:0:b0:402:ea96:c09a with SMTP id l26-20020a7bc45a000000b00402ea96c09amr2324338wmi.16.1695214971088;
+        bh=Np2dYf0WO4fHqgkBJzDV6cHKAMI95yduZgkBP3OUP00=;
+        b=nzQhb0/yWggkmdn/26SaNn48STRG07+5ESNtBpVR8Fs8DItnS9/suDKrrjb59Jux47
+         sE6zNRJs+M5L/GIXIIiVGCX8SDr+g63lIBerlny77eygfboJ7hpMlAA5yXJXz4R3PWuR
+         iWcY9UnMuYCqER1rRwF2A3jAX/rLQ7bx4g7LC2MlpvsfoJ3pKinrlbfEfN67UIlYfLCg
+         aW4XSe3f9AGBLLXu7z+Zg1ym7UgbtwtW6pJRAfmmkfDlUxBbW0PONK0477q3Vbi+sBnx
+         +X3dPzm7nyQ0l4JcpKc+zAQoR1MBVVUP25WZ4ul+GWLJoceyIZlbpHTTHg/6o9Upqg1c
+         p6/w==
+X-Gm-Message-State: AOJu0YyZ1aJDCmYGSu587QguB2FqMz7423uIxohy7ISNXrpwNVswxQso
+        0Rx2XRxdqrlxtaRFRWagwRPkksGZqiA=
+X-Google-Smtp-Source: AGHT+IFhfn5Zqeelm5loWFg7nAe/849OqJ5hDdx4svqijnh9pBXy/Vr9xQ5vxjdvWFjbUsAEekGRvw==
+X-Received: by 2002:a05:600c:2194:b0:3f9:b244:c294 with SMTP id e20-20020a05600c219400b003f9b244c294mr2261387wme.35.1695214971997;
         Wed, 20 Sep 2023 06:02:51 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u1-20020a05600c00c100b003fe0a0e03fcsm1920827wmm.12.2023.09.20.06.02.50
+        by smtp.gmail.com with ESMTPSA id w11-20020a5d608b000000b0031ad5fb5a0fsm10184926wrt.58.2023.09.20.06.02.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Sep 2023 06:02:50 -0700 (PDT)
-Message-ID: <e99f3d2005633921299d4ee47f8c05b6f7e9391b.1695214968.git.gitgitgadget@gmail.com>
+        Wed, 20 Sep 2023 06:02:51 -0700 (PDT)
+Message-ID: <9a459259330515d5b127e141c007ebc01d124428.1695214968.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1574.v2.git.git.1695214968.gitgitgadget@gmail.com>
 References: <pull.1574.git.git.1695059978.gitgitgadget@gmail.com>
         <pull.1574.v2.git.git.1695214968.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 20 Sep 2023 13:02:43 +0000
-Subject: [PATCH v2 1/6] refs: construct transaction using a _begin callback
+Date:   Wed, 20 Sep 2023 13:02:44 +0000
+Subject: [PATCH v2 2/6] refs: wrap transaction in a debug-specific transaction
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,137 +70,164 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-This prepares for taking locks on constructing the transaction.
+This ensures that all transaction methods are properly printed. This is
+needed because the callbacks are called as
+transaction->ref_store->backend->$CALLBACK.
+
+Originally, there was a hacky workaround which overwrote
+transaction->ref_store before passing it into the non-debug prepare()
+callback. This would print something for the prepare function, but not
+for abort/finish functions.
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- refs.c                | 8 +++-----
- refs/debug.c          | 8 ++++++++
- refs/files-backend.c  | 8 ++++++++
- refs/packed-backend.c | 9 +++++++++
- refs/refs-internal.h  | 4 ++++
- 5 files changed, 32 insertions(+), 5 deletions(-)
+ refs/debug.c | 83 +++++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 59 insertions(+), 24 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index fcae5dddc60..f7ba3e56284 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1129,11 +1129,9 @@ int read_ref_at(struct ref_store *refs, const char *refname,
- struct ref_transaction *ref_store_transaction_begin(struct ref_store *refs,
- 						    struct strbuf *err)
- {
--	struct ref_transaction *tr;
--	assert(err);
--
--	CALLOC_ARRAY(tr, 1);
--	tr->ref_store = refs;
-+	struct ref_transaction *tr = refs->be->transaction_begin(refs, err);
-+	if (tr)
-+		tr->ref_store = refs;
+diff --git a/refs/debug.c b/refs/debug.c
+index 95fb3eb4430..30509da4b89 100644
+--- a/refs/debug.c
++++ b/refs/debug.c
+@@ -43,25 +43,18 @@ static int debug_init_db(struct ref_store *refs, struct strbuf *err)
+ 
+ static struct ref_transaction *debug_transaction_begin(struct ref_store *ref_store,
+ 						       struct strbuf *err) {
++	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
+ 	struct ref_transaction *tr;
++	struct ref_transaction *sub_tr = ref_store_transaction_begin(drefs->refs, err);
++	trace_printf_key(&trace_refs, "transaction_begin: %s\n", err->buf);
++	if (!sub_tr) {
++		return NULL;
++	}
+ 	CALLOC_ARRAY(tr, 1);
++	tr->backend_data = sub_tr;
  	return tr;
  }
  
-diff --git a/refs/debug.c b/refs/debug.c
-index b7ffc4ce67e..95fb3eb4430 100644
---- a/refs/debug.c
-+++ b/refs/debug.c
-@@ -41,6 +41,13 @@ static int debug_init_db(struct ref_store *refs, struct strbuf *err)
+-static int debug_transaction_prepare(struct ref_store *refs,
+-				     struct ref_transaction *transaction,
+-				     struct strbuf *err)
+-{
+-	struct debug_ref_store *drefs = (struct debug_ref_store *)refs;
+-	int res;
+-	transaction->ref_store = drefs->refs;
+-	res = drefs->refs->be->transaction_prepare(drefs->refs, transaction,
+-						   err);
+-	trace_printf_key(&trace_refs, "transaction_prepare: %d \"%s\"\n", res,
+-			 err->buf);
+-	return res;
+-}
+-
+ static void print_update(int i, const char *refname,
+ 			 const struct object_id *old_oid,
+ 			 const struct object_id *new_oid, unsigned int flags,
+@@ -77,20 +70,59 @@ static void print_update(int i, const char *refname,
+ 	type &= 0xf; /* see refs.h REF_* */
+ 	flags &= REF_HAVE_NEW | REF_HAVE_OLD | REF_NO_DEREF |
+ 		REF_FORCE_CREATE_REFLOG;
+-	trace_printf_key(&trace_refs, "%d: %s %s -> %s (F=0x%x, T=0x%x) \"%s\"\n", i, refname,
++	trace_printf_key(&trace_refs, "  %d: '%s' %s -> %s (F=0x%x, T=0x%x) \"%s\"\n", i, refname,
+ 		o, n, flags, type, msg);
+ }
+ 
+-static void print_transaction(struct ref_transaction *transaction)
++static void print_transaction(struct ref_transaction *transaction,
++			      const char *action,
++			      int res, struct strbuf *err)
+ {
+ 	int i;
+-	trace_printf_key(&trace_refs, "transaction {\n");
++	trace_printf_key(&trace_refs, "transaction %s {\n", action);
+ 	for (i = 0; i < transaction->nr; i++) {
+ 		struct ref_update *u = transaction->updates[i];
+ 		print_update(i, u->refname, &u->old_oid, &u->new_oid, u->flags,
+ 			     u->type, u->msg);
+ 	}
+-	trace_printf_key(&trace_refs, "}\n");
++	trace_printf_key(&trace_refs, "}: %d '%s'\n", res, err->buf);
++}
++
++static void copy_update(struct ref_update *dst,
++			struct ref_update *src) {
++	/* dst->refname is const char; can't assign structs */
++	dst->new_oid = src->new_oid;
++	dst->old_oid = src->old_oid;
++	dst->flags = src->flags;
++	dst->backend_data = NULL;
++	dst->type = src->type;
++	dst->msg = xstrdup(src->msg);
++	dst->parent_update = NULL;
++	/* refname is done as part of FLEX_ALLOC_STR. */
++}
++
++static int debug_transaction_prepare(struct ref_store *refs,
++				     struct ref_transaction *transaction,
++				     struct strbuf *err)
++{
++	struct debug_ref_store *drefs = (struct debug_ref_store *)refs;
++	struct ref_transaction *sub_transaction = transaction->backend_data;
++	int res;
++	int i;
++
++	ALLOC_GROW(sub_transaction->updates, transaction->nr, sub_transaction->alloc);
++	for (i = 0;  i < transaction->nr; i++) {
++		struct ref_update *up = transaction->updates[i];
++		struct ref_update *sub_up;
++		FLEX_ALLOC_STR(sub_up, refname, up->refname);
++		copy_update(sub_up, up);
++		sub_transaction->updates[i] = sub_up;
++	}
++	sub_transaction->nr = transaction->nr;
++	res = drefs->refs->be->transaction_prepare(drefs->refs, sub_transaction,
++						   err);
++	print_transaction(sub_transaction, "prepare", res, err);
++	return res;
+ }
+ 
+ static int debug_transaction_finish(struct ref_store *refs,
+@@ -98,12 +130,11 @@ static int debug_transaction_finish(struct ref_store *refs,
+ 				    struct strbuf *err)
+ {
+ 	struct debug_ref_store *drefs = (struct debug_ref_store *)refs;
++	struct ref_transaction *sub_transaction = transaction->backend_data;
+ 	int res;
+-	transaction->ref_store = drefs->refs;
+-	res = drefs->refs->be->transaction_finish(drefs->refs, transaction,
++	res = drefs->refs->be->transaction_finish(drefs->refs, sub_transaction,
+ 						  err);
+-	print_transaction(transaction);
+-	trace_printf_key(&trace_refs, "finish: %d\n", res);
++	print_transaction(sub_transaction, "finish", res, err);
  	return res;
  }
  
-+static struct ref_transaction *debug_transaction_begin(struct ref_store *ref_store,
-+						       struct strbuf *err) {
-+	struct ref_transaction *tr;
-+	CALLOC_ARRAY(tr, 1);
-+	return tr;
-+}
-+
- static int debug_transaction_prepare(struct ref_store *refs,
- 				     struct ref_transaction *transaction,
- 				     struct strbuf *err)
-@@ -451,6 +458,7 @@ struct ref_storage_be refs_be_debug = {
- 	 * has a function we should also have a wrapper for it here.
- 	 * Test the output with "GIT_TRACE_REFS=1".
- 	 */
-+	.transaction_begin = debug_transaction_begin,
- 	.transaction_prepare = debug_transaction_prepare,
- 	.transaction_finish = debug_transaction_finish,
- 	.transaction_abort = debug_transaction_abort,
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 341354182bb..d83eea8b408 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -2681,6 +2681,13 @@ static void files_transaction_cleanup(struct files_ref_store *refs,
- 	transaction->state = REF_TRANSACTION_CLOSED;
+@@ -112,9 +143,11 @@ static int debug_transaction_abort(struct ref_store *refs,
+ 				   struct strbuf *err)
+ {
+ 	struct debug_ref_store *drefs = (struct debug_ref_store *)refs;
++	struct ref_transaction *sub_transaction = transaction->backend_data;
+ 	int res;
+ 	transaction->ref_store = drefs->refs;
+-	res = drefs->refs->be->transaction_abort(drefs->refs, transaction, err);
++	res = drefs->refs->be->transaction_abort(drefs->refs, sub_transaction, err);
++	print_transaction(sub_transaction, "abort", res, err);
+ 	return res;
  }
  
-+static struct ref_transaction *files_transaction_begin(struct ref_store *ref_store,
-+						       struct strbuf *err) {
-+	struct ref_transaction *tr;
-+	CALLOC_ARRAY(tr, 1);
-+	return tr;
-+}
-+
- static int files_transaction_prepare(struct ref_store *ref_store,
- 				     struct ref_transaction *transaction,
- 				     struct strbuf *err)
-@@ -3297,6 +3304,7 @@ struct ref_storage_be refs_be_files = {
- 	.name = "files",
- 	.init = files_ref_store_create,
- 	.init_db = files_init_db,
-+	.transaction_begin = files_transaction_begin,
- 	.transaction_prepare = files_transaction_prepare,
- 	.transaction_finish = files_transaction_finish,
- 	.transaction_abort = files_transaction_abort,
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 59c78d7941f..4f5b1025605 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -1580,6 +1580,14 @@ static void packed_transaction_cleanup(struct packed_ref_store *refs,
- 	transaction->state = REF_TRANSACTION_CLOSED;
+@@ -123,10 +156,12 @@ static int debug_initial_transaction_commit(struct ref_store *refs,
+ 					    struct strbuf *err)
+ {
+ 	struct debug_ref_store *drefs = (struct debug_ref_store *)refs;
++	struct ref_transaction *sub_transaction = transaction->backend_data;
+ 	int res;
+ 	transaction->ref_store = drefs->refs;
+ 	res = drefs->refs->be->initial_transaction_commit(drefs->refs,
+-							  transaction, err);
++							  sub_transaction, err);
++	print_transaction(sub_transaction, "commit", res, err);
+ 	return res;
  }
  
-+
-+static struct ref_transaction *packed_transaction_begin(struct ref_store *ref_store,
-+							struct strbuf *err) {
-+	struct ref_transaction *tr;
-+	CALLOC_ARRAY(tr, 1);
-+	return tr;
-+}
-+
- static int packed_transaction_prepare(struct ref_store *ref_store,
- 				      struct ref_transaction *transaction,
- 				      struct strbuf *err)
-@@ -1758,6 +1766,7 @@ struct ref_storage_be refs_be_packed = {
- 	.name = "packed",
- 	.init = packed_ref_store_create,
- 	.init_db = packed_init_db,
-+	.transaction_begin = packed_transaction_begin,
- 	.transaction_prepare = packed_transaction_prepare,
- 	.transaction_finish = packed_transaction_finish,
- 	.transaction_abort = packed_transaction_abort,
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 9db8aec4da8..0a15e8a2ac8 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -531,6 +531,9 @@ typedef struct ref_store *ref_store_init_fn(struct repository *repo,
- 
- typedef int ref_init_db_fn(struct ref_store *refs, struct strbuf *err);
- 
-+typedef struct ref_transaction *ref_transaction_begin_fn(struct ref_store *refs,
-+							 struct strbuf *err);
-+
- typedef int ref_transaction_prepare_fn(struct ref_store *refs,
- 				       struct ref_transaction *transaction,
- 				       struct strbuf *err);
-@@ -670,6 +673,7 @@ struct ref_storage_be {
- 	ref_store_init_fn *init;
- 	ref_init_db_fn *init_db;
- 
-+	ref_transaction_begin_fn *transaction_begin;
- 	ref_transaction_prepare_fn *transaction_prepare;
- 	ref_transaction_finish_fn *transaction_finish;
- 	ref_transaction_abort_fn *transaction_abort;
 -- 
 gitgitgadget
 
