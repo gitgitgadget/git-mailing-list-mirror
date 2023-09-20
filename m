@@ -2,162 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C34ABC04FFE
-	for <git@archiver.kernel.org>; Wed, 20 Sep 2023 21:08:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ABC65CD4935
+	for <git@archiver.kernel.org>; Wed, 20 Sep 2023 22:56:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229566AbjITVIr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Sep 2023 17:08:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55364 "EHLO
+        id S229615AbjITW4k (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Sep 2023 18:56:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41148 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230150AbjITVIo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Sep 2023 17:08:44 -0400
-Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D69EC6
-        for <git@vger.kernel.org>; Wed, 20 Sep 2023 14:08:36 -0700 (PDT)
-Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-59c4ec85ea9so4113107b3.0
-        for <git@vger.kernel.org>; Wed, 20 Sep 2023 14:08:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1695244115; x=1695848915; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=CdAKOYVjUEPSpotRLSfP9L9mULSgkw8wQtRtWIGEXFg=;
-        b=13ZSWlQdtc6gBczTC5tqYsY8OHJHPGtQK+KXKPGpHUWMk0icTYTfLhpVnkZptJrixs
-         9BWZu3rYrfIZqpjwmlml2XYcbCZ9gEIwH7Ac7GUcbfwm4gDLIl1ZJiZXro7FGyqfnon0
-         h49GQmsblfnBKq+ze0FNPm883fFWiYLRHOf8GrTYmDXFuNw/QeDAvNptuojUy2Z10DJE
-         oJm0Kg6xuB1J0MCxsVZ//hmzeOuFmTMbozHJ+PX2WKxcONvgsaz7qs9LmOwaKmVcejg3
-         XNl7WAoEwne8Cc+ZWQuEaCz5P47Ni6Gz6K4eJCAcCqtzXQsMSrcDrLBUsPrav9gz6Lwr
-         LXXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695244115; x=1695848915;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CdAKOYVjUEPSpotRLSfP9L9mULSgkw8wQtRtWIGEXFg=;
-        b=N5uPtc0fF83qH9+bnJ4zKPktbGLC2ziM8va4NJqOxbH1zVqzmNp8P7u1o4y0tqdQlr
-         i7dxGdkUCP0xp/53fzzwUmlwnPQgU95/FN21lkChgdUYMlhpEHqR8Llm9B9b08mgd/ii
-         kRujvAaOdYj7MEh/PcWwnjl8RydwQXToRWvcK5iPh6W0VqJJi/Mcl9vSX7uzDsONaj4f
-         0h2yuYfezfDzuaGzi5CII5/Ell4FW5B3atyRBWHFHCgrwscpTRF1OsUG+bTz2DLHfvgI
-         m/ztWQhoEm8aBbBbsiPg60F6zFMwVlhfHCGr9BRNAAVRpJQGdnGAHvSlAiSeZ961m04y
-         rbIQ==
-X-Gm-Message-State: AOJu0Yyno2/jyMp9YehHOgVAbasC93+C04Gud0MNLfBOSYzDqiGEOOIH
-        XWBG/u0V4rq77G8Q6D4zTznode3sIi+0Re0r5/IW
-X-Google-Smtp-Source: AGHT+IGKee9oxwNlfViVWr1cpz7yDyLn4D7FvTN7JfY2OplPUI4Yyu7isTzgEkZ/DsDoMXuw00bKwf4oVzA56vn+wN+A
-X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:4930:c3d9:5d10:5fbd])
- (user=jonathantanmy job=sendgmr) by 2002:a81:b602:0:b0:592:7bc7:b304 with
- SMTP id u2-20020a81b602000000b005927bc7b304mr56443ywh.8.1695244115515; Wed,
- 20 Sep 2023 14:08:35 -0700 (PDT)
-Date:   Wed, 20 Sep 2023 14:08:32 -0700
-In-Reply-To: <20230919071956.14015-1-worldhello.net@gmail.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.42.0.459.ge4e396fd5e-goog
-Message-ID: <20230920210832.2305886-1-jonathantanmy@google.com>
-Subject: Re: [PATCH] pkt-line: do not chomp EOL for sideband progress info
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Jiang Xin <worldhello.net@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S229468AbjITW4j (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Sep 2023 18:56:39 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA23DAB
+        for <git@vger.kernel.org>; Wed, 20 Sep 2023 15:56:33 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 93D7A19BCA;
+        Wed, 20 Sep 2023 18:56:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=7Aqkt7GMtx2F9ao8uaP9NROAIgSmLxqhdAxAKb
+        dedg8=; b=Ir9D0xYe+YR+S/4QRgad4TkAl8UnTmv90MQxQscZDwjKFRPAMMfdiv
+        r69vTUtAWk9YVna5mjv3UvL6n5283QjUczIaaZi+oH3VUnBGQCvYbL4ZvSsbk+wz
+        ffLygx4ERrQtn78f8XDyzFLxyGHRgXZlzvY7Ra8/kpEc9l0eFl00w=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8C68619BC9;
+        Wed, 20 Sep 2023 18:56:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2AB8119BC8;
+        Wed, 20 Sep 2023 18:56:30 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kousik Sanagavarapu <five231003@gmail.com>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>
+Subject: Re: [PATCH 1/2] t/t6300: introduce test_bad_atom()
+In-Reply-To: <20230920191654.6133-2-five231003@gmail.com> (Kousik
+        Sanagavarapu's message of "Thu, 21 Sep 2023 00:35:41 +0530")
+References: <20230920191654.6133-1-five231003@gmail.com>
+        <20230920191654.6133-2-five231003@gmail.com>
+Date:   Wed, 20 Sep 2023 15:56:28 -0700
+Message-ID: <xmqqy1h078tf.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: EFD7476E-5808-11EE-AA9F-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jiang Xin <worldhello.net@gmail.com> writes:
-> From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-> 
-> In the protocol negotiation stage, we need to turn on the flag
-> "PACKET_READ_CHOMP_NEWLINE" to chomp EOL for each packet line from
-> client or server. But when receiving data and progress information
-> using sideband, we will turn off the flag "PACKET_READ_CHOMP_NEWLINE"
-> to prevent mangling EOLs from data and progress information.
-> 
-> When both the server and the client support "sideband-all" capability,
-> we have a dilemma that EOLs in negotiation packets should be trimmed,
-> but EOLs in progress infomation should be leaved as is.
-> 
-> Move the logic of chomping EOLs from "packet_read_with_status()" to
-> "packet_reader_read()" can resolve this dilemma.
-> 
-> Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Kousik Sanagavarapu <five231003@gmail.com> writes:
 
-I think the summary is that when we use the struct packet_reader with
-sideband and newline chomping, we want the chomping to occur only on
-sideband 1, but the current code also chomps on sidebands 2 and 3 (3
-is for fatal errors so it doesn't matter as much, but for 2, it really
-matters).
-
-This makes sense to fix.
-
-As for how this is fixed, one issue is that we now have 2 places in
-which newlines can be chomped (in packet_read_with_status() and with
-this patch, packet_reader_read()). The issue is that we need to check
-the sideband indicator before we chomp, and packet_read_with_status()
-only knows how to chomp. So we either teach packet_read_with_status()
-how to sideband, or tell packet_read_with_status() not to chomp and
-chomp it ourselves (like in this patch).
-
-Of the two, I would prefer it if packet_read_with_status() was taught
-how to sideband - as it is, packet_read_with_status() is used 3 times
-in pkt-line.c and 1 time in remote-curl.c, and 2 of those times (in
-pkt-line.c) are used with sideband. Doing this does not only solve the
-problem here, but reduces code duplication.
-
-Having said that, let me look at the code anyway.
-
-> @@ -597,12 +597,18 @@ void packet_reader_init(struct packet_reader *reader, int fd,
->  enum packet_read_status packet_reader_read(struct packet_reader *reader)
->  {
->  	struct strbuf scratch = STRBUF_INIT;
-> +	int options = reader->options;
+> Introduce a new function "test_bad_atom()", which is similar to
+> "test_atom()" but should be used to check whether the correct error
+> message is shown on stderr.
+>
+> Like "test_atom()", the new function takes three arguments. The three
+> arguments specify the ref, the format and the expected error message
+> respectively, with an optional fourth argument for tweaking
+> "test_expect_*" (which is by default "success").
+>
+> Mentored-by: Christian Couder <christian.couder@gmail.com>
+> Mentored-by: Hariom Verma <hariom18599@gmail.com>
+> Signed-off-by: Kousik Sanagavarapu <five231003@gmail.com>
+> ---
+>  t/t6300-for-each-ref.sh | 20 ++++++++++++++++++++
+>  1 file changed, 20 insertions(+)
+>
+> diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+> index 7b943fd34c..15b4622f57 100755
+> --- a/t/t6300-for-each-ref.sh
+> +++ b/t/t6300-for-each-ref.sh
+> @@ -267,6 +267,26 @@ test_expect_success 'arguments to %(objectname:short=) must be positive integers
+>  	test_must_fail git for-each-ref --format="%(objectname:short=foo)"
+>  '
 >  
->  	if (reader->line_peeked) {
->  		reader->line_peeked = 0;
->  		return reader->status;
->  	}
->  
-> +	/* Do not chomp newlines for sideband progress and error messages */
-> +	if (reader->use_sideband && options & PACKET_READ_CHOMP_NEWLINE) {
-> +		options &= ~PACKET_READ_CHOMP_NEWLINE;
-> +	}
+> +test_bad_atom() {
+
+Style: have SP on both sides of "()".
+
+> +	case "$1" in
+> +	head) ref=refs/heads/main ;;
+> +	 tag) ref=refs/tags/testtag ;;
+> +	 sym) ref=refs/heads/sym ;;
+> +	   *) ref=$1 ;;
+> +	esac
+
+Somehow this indirection makes the two examples we see below harder
+to understand.  Why shouldn't we just write the full refname on th
+command line of test_bad_atom?  That would make it crystal clear
+which ref each test works on.  It does not help that both 'head' and
+'sym' refer to a local branch (if the former referred to .git/HEAD
+or .git/remotes/origin/HEAD it may have been an excellent choice of
+the name, but that is not what is going on).
+
+> +	printf '%s\n' "$3">expect
+
+Style: need SP before (but not after) '>'.
+
+> +	test_expect_${4:-success} $PREREQ "err basic atom: $1 $2" "
+> +		test_must_fail git for-each-ref --format='%($2)' $ref 2>actual &&
+> +		test_cmp expect actual
+> +	"
+
+It is error prone to have the executable part of test_expect_{success,failure}
+inside a pair of double quotes and have $variable interpolated
+_before_ even the arguments to test_expect_{success,failure} are
+formed.  It is much more preferrable to write
+
+	test_bad_atom () {
+		ref=$1 format=$2
+		printf '%s\n' "$3" >expect
+		$test_do=test_expect_${4:-success}
+
+		$test_do $PREREQ "err basic atom: $ref $format" '
+			test_must_fail git for-each-ref \
+				--format="%($format)" "$ref" 2>error &&
+			test_cmp expect error
+		'
+	}
+
+This is primarily because you cannot control what is in "$2" to
+ensure the correctness of the test we see above locally (i.e. if
+your caller has a single-quote in "$2", the shell script you create
+for running test_expect_{success,failure} would be syntactically
+incorrect).  By enclosing the executable part inside a pair of
+single quotes, and having the $variables interpolated when that
+executable part is `eval`ed when test_expect_{success,failure} runs,
+you will avoid such problems, and those reading the above can locally
+know that you are aware of and correctly avoiding such problems.
+
+I guess three among four problems I just pointed out you blindly
+copied from test_atom.  But let's not spread badness (preliminary
+clean-up to existing badness would be welcome instead).
+
+> +}
 > +
-
-This needs a better explanation (than what's in the comment), I think.
-What this code is doing is disabling chomping because we have code that
-conditionally does it later.
-
->  	/*
->  	 * Consume all progress packets until a primary payload packet is
->  	 * received
-> @@ -615,7 +621,7 @@ enum packet_read_status packet_reader_read(struct packet_reader *reader)
->  							 reader->buffer,
->  							 reader->buffer_size,
->  							 &reader->pktlen,
-> -							 reader->options);
-> +							 options);
-
-OK, we're using our own custom options that may have
-PACKET_READ_CHOMP_NEWLINE unset.
-
-> @@ -624,12 +630,19 @@ enum packet_read_status packet_reader_read(struct packet_reader *reader)
->  			break;
->  	}
->  
-> -	if (reader->status == PACKET_READ_NORMAL)
-> +	if (reader->status == PACKET_READ_NORMAL) {
->  		/* Skip the sideband designator if sideband is used */
->  		reader->line = reader->use_sideband ?
->  			reader->buffer + 1 : reader->buffer;
-> -	else
+> +test_bad_atom head 'authoremail:foo' \
+> +	'fatal: unrecognized %(authoremail) argument: foo'
 > +
-> +		if ((reader->options & PACKET_READ_CHOMP_NEWLINE) &&
-> +		    reader->buffer[reader->pktlen - 1] == '\n') {
-> +			reader->buffer[reader->pktlen - 1] = 0;
-> +			reader->pktlen--;
-> +		}
+> +test_bad_atom tag 'taggeremail:localpart trim' \
+> +	'fatal: unrecognized %(taggeremail) argument:  trim'
 
-When we reach here, we have skipped all sideband-2 pkt-lines, so
-unconditionally chomping it here is good. Might be better if there was
-also a check that use_sideband is set, just for symmetry with the code
-near the start of this function.
+It is strange to see double SP before 'trim' in this error message.
+Are we etching a code mistake in stone here?  Wouldn't the error
+message say "...argument: localpart trim" instead, perhaps?
 
-
+>  test_date () {
+>  	f=$1 &&
+>  	committer_date=$2 &&
