@@ -2,244 +2,242 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A648E7D0A4
-	for <git@archiver.kernel.org>; Thu, 21 Sep 2023 18:37:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6087E7D0A4
+	for <git@archiver.kernel.org>; Thu, 21 Sep 2023 18:55:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230289AbjIUShQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Sep 2023 14:37:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35306 "EHLO
+        id S230389AbjIUSzU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Sep 2023 14:55:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59164 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229643AbjIUSgj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Sep 2023 14:36:39 -0400
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D932DAFCF
-        for <git@vger.kernel.org>; Thu, 21 Sep 2023 11:32:17 -0700 (PDT)
-Received: by mail-pj1-x1030.google.com with SMTP id 98e67ed59e1d1-2745cd2ba68so864378a91.0
-        for <git@vger.kernel.org>; Thu, 21 Sep 2023 11:32:17 -0700 (PDT)
+        with ESMTP id S230370AbjIUSzH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Sep 2023 14:55:07 -0400
+Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95969EE06B
+        for <git@vger.kernel.org>; Thu, 21 Sep 2023 11:45:15 -0700 (PDT)
+Received: by mail-yb1-xb33.google.com with SMTP id 3f1490d57ef6-d8168d08bebso1632985276.0
+        for <git@vger.kernel.org>; Thu, 21 Sep 2023 11:45:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695321137; x=1695925937; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tQwEhoXwkNM1xogF7s92J5dXgQxN6KWwoJHU7VdJ9iw=;
-        b=XpcImMOeGB7PKfwGf4WkMSSbhq+dVuhU9RvjLsjRYextZl/XwjGCrA+5yZI/V6eiNE
-         GfON1mbyunHwws49CjdM3LUWCivItGd91tb7Ki8yJtP2xBXlGBdNXK0aGWKX9YDPNdgs
-         p+xRuZSuL6OnDhn+lPAsYaWNrOwYwHz+YD0lMIdf4vIsM+7TCEmOaUG3dnMdaxGTOJ2O
-         ffihzHfBkO38iO3iX/7005FDQI0K8i7gdSLbx6m3BBAo5BRQKxefpDtfr8OwukQ0cF9n
-         xMsi/PbJy/qsnGWtYDK4camL61XnUMRDJ+Y3e8scXhyqv3YDcFv8eYhPZMR7Wud8tcrH
-         AP3A==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1695321914; x=1695926714; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=f/1tR3ObxYB6UmXXEQqMimGnV6jv1OnHVHb7TMWwqg8=;
+        b=iarCYTTfYDDZVD+l1d8Lo7Bw1r53lzGnNp404XxF6byKUPkHvFmUiJiLRDOrf8LmUQ
+         hjbCpU6ygOhXxwMyWDBoXHWUmmhFcdqHnhZB4yxhRN58SRJelg9aYDpF7oQMYPam78x+
+         ndDH6aJspjo0Luru04seAByCOs0g7cfWn5Be9naghXSO9xb/rHit2PW+ZPCGHLj91Hd3
+         GfOuBRN+C39izSyu9fuNf+1kq4sPp4rE0iD2WV0VQruTudL2hQCEHviYB7lmFJqKPROJ
+         iKqKcPzypPmf9egx8BHKVbkrLEWkccEMoknzNlPtbDRAM9c8zto7XpqAZfzpHBZ4udk5
+         +lNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695321137; x=1695925937;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tQwEhoXwkNM1xogF7s92J5dXgQxN6KWwoJHU7VdJ9iw=;
-        b=aaf3iOjmQ+3gkiP6b0V9xLoZzAgRp1rSA1rkvYSik11xlBUpQbyr2d8DFKSuYA6xxc
-         ABP3lG7JcqeD+jj2vHRjuwNT4xHevuVujlWMpIWAKEFreHorol+ft/PD8Y4vwdqb/Nfh
-         ZN32tkPOdYDq/x+Sjc0z4oc3ckxN9VzM/nIjJ71L6IpNy3wYwPd8vSnn1XHETnWjnaGK
-         mY/UprkhAoJVW5Zy5M8VPMHqzp/bkXRtEAJTvn0gbzAmKYhzD233JkBgzT8j/e+adOqI
-         eDNO2+b+zMlEd4Y1lsQjvJJLT54JNQxvtM26nIg9bkiraG5U2ZbhEPyYPhfVP9T7TAnu
-         9Prg==
-X-Gm-Message-State: AOJu0YwRiHRM7Zs035rZ+9krNj93LAHXbOGQsH2oUU8hOeAyBH8u6TfC
-        GmffDhBK9tsR0XKlEI84gBGWMMXnxAe7rOFmBNlnhm+qZz6fag==
-X-Google-Smtp-Source: AGHT+IF75R1LiYHdF6HepdPtcgZpSuukRLRmT2cYbOXwUZlMN5ntKLM34/BR6kKsOE/uynYpr7L12y2x2STehrwgeYg=
-X-Received: by 2002:a05:6870:e0cf:b0:1d0:c7c8:323e with SMTP id
- a15-20020a056870e0cf00b001d0c7c8323emr5214291oab.35.1695293616981; Thu, 21
- Sep 2023 03:53:36 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1695321914; x=1695926714;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=f/1tR3ObxYB6UmXXEQqMimGnV6jv1OnHVHb7TMWwqg8=;
+        b=prrFzbXTxvZeOiOb5CBqS8G7ayFYem7iRG5EbgHQ5QXc91kK3Uw4Xm7BovMbox+B4k
+         XLQ2Vaw+dXZ3JPUX73AObpUFqFkbPzEASZBwbqSXiDqyCS6Kts/T55MRpCCZ7bmsU9GL
+         Lwl3+OvpEGhxmJphXaz+CeTX8ESLaPeijbsswzDVVIeSJc6R9HIjRz31E+9o2ZpHEINg
+         cSkVxMUFSRTO/yZGUKFUhMwYIO8R5YBrs+SMQtTJvV+jlO9tdvo//aGkv3E69q2SSps+
+         XgReXrvzeZ9T+p37qk8Jwe07TH/Q7P0/+OPH6OhsAXwuQkJc2IJ+xexztnWbbYrN3+pH
+         oSbg==
+X-Gm-Message-State: AOJu0YyNfvrUYBJv4a8NWuVKh0W+13HNTpFwLqTPCHkX53N5Ak7mB2pO
+        kxKjrgCd6sR56hLX/hWxbBfr1Q==
+X-Google-Smtp-Source: AGHT+IFtQ/oI7mNDuMsyovra9vN3k8ojWItPVlwrnuF790hjdcRb0KNlI51D9gCgmF5ivHVp8O/DTQ==
+X-Received: by 2002:a81:a1d6:0:b0:59b:51d9:1d6e with SMTP id y205-20020a81a1d6000000b0059b51d91d6emr6688938ywg.6.1695321914587;
+        Thu, 21 Sep 2023 11:45:14 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id g143-20020a815295000000b005897fd75c80sm465438ywb.78.2023.09.21.11.45.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Sep 2023 11:45:14 -0700 (PDT)
+Date:   Thu, 21 Sep 2023 14:45:13 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH] revision: make pseudo-opt flags read via stdin behave
+ consistently
+Message-ID: <ZQyPOScCKhHeZNrr@nand.local>
+References: <b93d4c8c23552abab64084b62f27944e7e192c0c.1695290733.git.ps@pks.im>
 MIME-Version: 1.0
-References: <20230915083415.263187-1-knayak@gitlab.com> <20230920104507.21664-1-karthik.188@gmail.com>
- <xmqqh6noc13c.fsf@gitster.g>
-In-Reply-To: <xmqqh6noc13c.fsf@gitster.g>
-From:   Karthik Nayak <karthik.188@gmail.com>
-Date:   Thu, 21 Sep 2023 12:53:11 +0200
-Message-ID: <CAOLa=ZT_DVw4Na-rj4mk2ULkrqDyVP2_cOpgdLozFjn3RJbTvg@mail.gmail.com>
-Subject: Re: [PATCH v4] revision: add `--ignore-missing-links` user option
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, me@ttaylorr.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <b93d4c8c23552abab64084b62f27944e7e192c0c.1695290733.git.ps@pks.im>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 20, 2023 at 5:32=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
+On Thu, Sep 21, 2023 at 12:05:57PM +0200, Patrick Steinhardt wrote:
+> When reading revisions from stdin via git-rev-list(1)'s `--stdin` option
+> then these revisions never honor flags like `--not` which have been
+> passed on the command line. Thus, an invocation like e.g. `git rev-list
+> --all --not --stdin` will not treat all revisions read from stdin as
+> uninteresting. While this behaviour may be surprising to a user, it's
+> been this way ever since it has been introduced via 42cabc341c4 (Teach
+> rev-list an option to read revs from the standard input., 2006-09-05).
+
+I'm not sure I agree that `--all --not --stdin` marking the tips given
+on stdin as uninteresting would be surprising to users. It feels like
+`--stdin` introduces its own "scope" that `--not` should apply to.
+
+I might be biased or looking at this differently than how other users
+might, but `--all --not --stdin` reads like "traverse everything except
+what I give you over stdin", and deviating from that behavior feels more
+surprising than not.
+
+Either way, since this comes from as far back as 42cabc341c4, I think
+that we're stuck with this behavior one way or the other ;-).
+
+> With that said, in c40f0b7877 (revision: handle pseudo-opts in `--stdin`
+> mode, 2023-06-15) we have introduced a new mode to read pseudo opts from
+> standard input where this behaviour is a lot more confusing. If you pass
+> `--not` via stdin, it will:
 >
-> There needs an explanation of interaction with --missing=3D<action>
-> option here, no?  "--missing=3Dallow-any" and "--missing=3Dprint" are
-> sensible choices, I presume.  The former allows the traversal to
-> proceed, as you described in one of your responses.  Also with
-> "--missing=3Dprint", the user can more directly find out which are the
-> missing objects, even without using the "--boundary" that requires
-> them to sift between missing objects and the objects that are truly
-> on boundary.
+>     - Influence subsequent revisions or pseudo-options passed on the
+>       command line.
+
+I agree here that this behavior is legitimately surprising and should
+probably be considered a bug.
+
+>     - Influence pseudo-options passed via standard input.
 >
-> Here is my attempt:
+>     - _Not_ influence normal revisions passed via standard input.
 >
->         --ignore-missing-links::
->                 During traversal, if an object that is referenced does no=
-t
->                 exist, instead of dying of a repository corruption, allow
->                 `--missing=3D<missing-action>` to decide what to do.
->         +
->         `--missing=3Dprint` will make the command print a list of missing
->         objects, prefixed with a "?" character.
->         +
->         `--missing=3Dallow-any` will make the command proceed without doi=
-ng
->         anything special.  Used with `--boundary`, output these missing
->         objects mixed with the commits on the edge of revision ranges,
->         prefixed with a "-" character.
+> This behaviour is extremely inconsistent and bound to cause confusion.
 >
-> It might make sense to add
+> While it would be nice to retroactively change the behaviour for how
+> `--not` and `--stdin` behave together, chances are quite high that this
+> would break existing scripts that expect the current behaviour that has
+> been around for many years by now. This is thus not really a viable
+> option to explore to fix the inconsistency.
 >
->         +
->         Use of this option with other 'missing-action' may probably not
->         give useful behaviour.
+> Instead, we change the behaviour of how pseudo-opts read via standard
+> input influence the flags such that the effect is fully localized. With
+> this change, when reading `--not` via standard input, it will:
 >
-> at the end, but it may not be useful to the readers to say "we allow
-> even more extra flexibility but haven't thought through what good
-> they would do".
+>     - _Not_ influence subsequent revisions or pseudo-options passed on
+>       the command line, which is a change in behaviour.
 >
-
-I was thinking about this, but mostly didn't do this, because the
-interaction with `--missing`
-is only for non-commit objects. Because for missing commits,
-`--ignore-missing-links` skips
-the commit and the value of `--missing` doesn't make any difference.
-
-It's only for non-commit objects that `--missing` comes into play. So
-perhaps change the current
-explanation to:
-
---ignore-missing-links::
-       During traversal, if a commit that is referenced does not
-       exist, instead of dying of a repository corruption, pretend as
-       if the commit itself does not exist. Running the command
-       with the `--boundary` option makes these missing commits,
-       together with the commits on the edge of revision ranges
-       (i.e. true boundary objects), appear on the output, prefixed
-       with '-'.
-
-This way `--ignore-missing-links` is specific to commits, combining
-this with `--missing=3D...` for
-non-commit objects is left to the user. What do you think?
-
-> > +# With `--ignore-missing-links`, we stop the traversal when we encount=
-er a
-> > +# missing link. The boundary commit is not listed as we haven't used t=
-he
-> > +# `--boundary` options.
-> > +test_expect_success 'rev-list only prints main odb commits with --igno=
-re-missing-links' '
-> > +     hide_alternates &&
-> > +
-> > +     git -C alt rev-list --objects --no-object-names \
-> > +             --ignore-missing-links --missing=3Dallow-any HEAD >actual=
-.raw &&
-> > +     git -C alt cat-file  --batch-check=3D"%(objectname)" \
-> > +             --batch-all-objects >expect.raw &&
-> > +
-> > +     sort actual.raw >actual &&
-> > +     sort expect.raw >expect &&
-> > +     test_cmp expect actual
-> > +'
+>     - Influence pseudo-options passed via standard input.
 >
-> This gives a good baseline.  "--missing=3Dprint" without "--boundary"
-> may have more obvious use cases, but is there a practical use case
-> for the output from an invocation with "--missing=3Dallow-any" without
-> "--boundary"?  Just being curious if I am missing something obvious.
+>     - Influence normal revisions passed via standard input, which is a
+>       change in behaviour.
+
+These all same very sane to me. Let's read on...
+
+> Thus, all flags read via standard input are fully self-contained to that
+> standard input, only.
 >
+> While this is a breaking change as well, the behaviour has only been
+> recently introduced with Git v2.42.0. Furthermore, the current behaviour
+> can be regarded as a simple bug. With that in mind it feels like the
+> right thing to do retroactively change it and make the behaviour sane.
 
-Not really, but it's easier to build up the testing, here without
-boundary we can
-use cat-file to test all objects (commits and others) that are output
-by rev-list.
+I agree. I am not so sympathetic to scripts that rely on this behavior,
+which feels like it is obviously broken.
 
-Then we can build on top of this in the next test, where we can also ensure=
- that
-boundary commits are printed. This however is very simplistic, as
-you've mentioned.
-There could be other objects and we don't really check.
-
-> Perhaps add another test that uses "--missing=3Dprint" instead, and
-> check that the "? missing" output matches what we expect to be
-> missing?  The same comment applies to the other test that uses
-> "--missing=3Dallow-any" without "--boundary" we see later.
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> Reported-by: Christian Couder <christian.couder@gmail.com>
+> ---
+>  Documentation/rev-list-options.txt |  6 +++++-
+>  revision.c                         | 10 +++++-----
+>  t/t6017-rev-list-stdin.sh          | 21 +++++++++++++++++++++
+>  3 files changed, 31 insertions(+), 6 deletions(-)
 >
+> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+> index a4a0cb93b2..9bf13bac53 100644
+> --- a/Documentation/rev-list-options.txt
+> +++ b/Documentation/rev-list-options.txt
+> @@ -151,6 +151,8 @@ endif::git-log[]
+>  --not::
+>  	Reverses the meaning of the '{caret}' prefix (or lack thereof)
+>  	for all following revision specifiers, up to the next `--not`.
+> +	When used on the command line before --stdin, the revisions passed
+> +	through stdin will not be affected by it.
 
-Sure, we can add that too!
+Hmmph. This seems to change the behavior introduced by 42cabc341c4. Am I
+reading this correctly that tips on stdin with '--not --stdin' would not
+be marked as UNINTERESTING?
 
-> > +# With `--ignore-missing-links` and `--boundary`, we can even print th=
-ose boundary
-> > +# commits.
-> > +test_expect_success 'rev-list prints boundary commit with --ignore-mis=
-sing-links' '
-> > +     git -C alt rev-list --ignore-missing-links --boundary HEAD >got &=
-&
-> > +     grep "^-$(git rev-parse HEAD)" got
-> > +'
+(Reading this back, there are a lot of double-negatives in what I just
+wrote making it confusing for me at least. What I'm getting at here is
+that I think `--not --stdin` should mark tips given via stdin as
+UNINTERESTING).
+
+>  --all::
+>  	Pretend as if all the refs in `refs/`, along with `HEAD`, are
+> @@ -240,7 +242,9 @@ endif::git-rev-list[]
+>  	them from standard input as well. This accepts commits and
+>  	pseudo-options like `--all` and `--glob=`. When a `--` separator
+>  	is seen, the following input is treated as paths and used to
+> -	limit the result.
+> +	limit the result. Flags like `--not` which are read via standard input
+> +	are only respected for arguments passed in the same way and will not
+> +	influence any subsequent command line arguments.
 >
-> This makes sure what we expect to appear in 'got' actually is in
-> 'got', but we should also make sure 'got' does not have anything
-> unexpected.
+>  ifdef::git-rev-list[]
+>  --quiet::
+> diff --git a/revision.c b/revision.c
+> index 2f4c53ea20..a1f573ca06 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -2788,13 +2788,13 @@ static int handle_revision_pseudo_opt(struct rev_info *revs,
+>  }
 >
+>  static void read_revisions_from_stdin(struct rev_info *revs,
+> -				      struct strvec *prune,
+> -				      int *flags)
+> +				      struct strvec *prune)
+>  {
+>  	struct strbuf sb;
+>  	int seen_dashdash = 0;
+>  	int seen_end_of_options = 0;
+>  	int save_warning;
+> +	int flags = 0;
 
-Yeah, I can add that in too.
+OK, I think this confirms my assumption that the `--not` in `--not
+--stdin` does not propagate across to the input given over stdin. I am
+not sure that we are safely able to change that behavior.
 
-> > +test_expect_success "setup for rev-list --ignore-missing-links with mi=
-ssing objects" '
-> > +     show_alternates &&
-> > +     test_commit -C alt 11
-> > +'
-> > +
-> > +for obj in "HEAD^{tree}" "HEAD:11.t"
-> > +do
-> > +     # The `--ignore-missing-links` option should ensure that git-rev-=
-list(1)
-> > +     # doesn't fail when used alongside `--objects` when a tree/blob i=
-s
-> > +     # missing.
-> > +     test_expect_success "rev-list --ignore-missing-links with missing=
- $type" '
-> > +             oid=3D"$(git -C alt rev-parse $obj)" &&
-> > +             path=3D"alt/.git/objects/$(test_oid_to_path $oid)" &&
-> > +
-> > +             mv "$path" "$path.hidden" &&
-> > +             test_when_finished "mv $path.hidden $path" &&
->
-> In the first iteration, we check without the tree object and we only
-> ensure that removed tree does not appear in the output---but we know
-> the blob that is referenced by that removed tree will not appear in
-> the output, either, don't we?  Don't we want to check that, too?
->
-> In the second iteration, we have resurrected the tree but removed
-> the blob that is referenced by the tree, so we would not see that
-> blob in the output, which makes sense.
->
+I wonder if we could instead do something like:
 
-I was implementing this change and just realized that for missing
-trees, show_object() is
-never called (that is --missing=3Dprint has no effect).
+  - inherit the current set of psuedo-opts when processing input over
+    `--stdin`
+  - allow pseudo-opts within the context of `--stdin` arbitrarily
+  - prevent those psuedo-opts applied while processing `--stdin` from
+    leaking over to subsequent command-line arguments.
 
-That means we only call show_object() when there is a missing blob.
+Here's one approach for doing that, where we make a copy of the current
+set of flags when calling `read_revisions_from_stdin()` instead of
+passing a pointer to the global state.
 
-So this effectively means:
-1. missing commits: --ignore-missing-links works, --missing=3D... has no ef=
-fect
-2. missing trees:      --ignore-missing-links works, --missing=3D... has no=
- effect
-3. missing blobs:      --ignore-missing-links works in conjunction
-with --missing=3D...
+--- 8< ---
+diff --git a/revision.c b/revision.c
+index a1f573ca06..d8dad35d52 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2788,13 +2788,13 @@ static int handle_revision_pseudo_opt(struct rev_info *revs,
+ }
 
-I now think it does make even more sense to hardcode the skipping of
-`finish_object__ma` this way
-we can state that `--ignore-missing-links` and `--missing` are
-incompatible, wherein `--ignore-missing-links`
-ignores any missing object (irrelevant of type) and `--missing` is
-used to specifically handle missing blobs
-and provides options.
+ static void read_revisions_from_stdin(struct rev_info *revs,
+-				      struct strvec *prune)
++				      struct strvec *prune,
++				      int flags)
+ {
+ 	struct strbuf sb;
+ 	int seen_dashdash = 0;
+ 	int seen_end_of_options = 0;
+ 	int save_warning;
+-	int flags = 0;
 
-This is also how currently `--boundary` and `--missing=3Dprint` is
-specific to commits and blobs respectively.
-What do you think?
+ 	save_warning = warn_on_object_refname_ambiguity;
+ 	warn_on_object_refname_ambiguity = 0;
+@@ -2906,7 +2906,8 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ 				}
+ 				if (revs->read_from_stdin++)
+ 					die("--stdin given twice?");
+-				read_revisions_from_stdin(revs, &prune_data);
++				read_revisions_from_stdin(revs, &prune_data,
++							  flags);
+ 				continue;
+ 			}
+--- >8 ---
+
+Thanks,
