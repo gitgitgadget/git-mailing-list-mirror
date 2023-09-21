@@ -2,132 +2,172 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BA76BE7D0A6
-	for <git@archiver.kernel.org>; Thu, 21 Sep 2023 19:56:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB682E7D0A2
+	for <git@archiver.kernel.org>; Thu, 21 Sep 2023 20:01:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231267AbjIUT4V (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Sep 2023 15:56:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45136 "EHLO
+        id S231527AbjIUUBR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Sep 2023 16:01:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230264AbjIUT4G (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Sep 2023 15:56:06 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2F6FB0A1F
-        for <git@vger.kernel.org>; Thu, 21 Sep 2023 12:04:17 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 50FBF1ED17;
-        Thu, 21 Sep 2023 15:04:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=TjoFjr9BouNOKFzSP81/H0U+Y8KwJOsowx8Mak
-        YozKg=; b=qT0pf6gmHtW2pwYpClK16gNWw61Twf2wTxPjJO87C0r4nFtr9pGmWU
-        bPp4QFHtZTjc2KNhMdCDAwrJeQLwU0VOqvzmI/82DGRnYTS/2YBiNDari1TIUsMa
-        zx4jSu8rMGeLqoiwA0xtgThMmxfSJliQKV5yIhz7UtfTHcULj8Zvk=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 491B21ED16;
-        Thu, 21 Sep 2023 15:04:16 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C77671ED13;
-        Thu, 21 Sep 2023 15:04:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH] revision: make pseudo-opt flags read via stdin behave
- consistently
-In-Reply-To: <b93d4c8c23552abab64084b62f27944e7e192c0c.1695290733.git.ps@pks.im>
-        (Patrick Steinhardt's message of "Thu, 21 Sep 2023 12:05:57 +0200")
-References: <b93d4c8c23552abab64084b62f27944e7e192c0c.1695290733.git.ps@pks.im>
-Date:   Thu, 21 Sep 2023 12:04:11 -0700
-Message-ID: <xmqqmsxf5owk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        with ESMTP id S229831AbjIUUAm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Sep 2023 16:00:42 -0400
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47535AE245
+        for <git@vger.kernel.org>; Thu, 21 Sep 2023 11:58:08 -0700 (PDT)
+Received: by mail-pl1-x631.google.com with SMTP id d9443c01a7336-1c09673b006so10849745ad.1
+        for <git@vger.kernel.org>; Thu, 21 Sep 2023 11:58:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1695322687; x=1695927487; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=7BlYXzXwfXH7TH2OeXPpQqBbuKBUFZWdur3uSR6Ksss=;
+        b=G29JygHUlhdUpvEAumaDTXhW2HIJTMRo6WD2957z8r16S8UQ0xBfQ6UGneDQARGUpH
+         IG+/BqyEx+dSAMKdGRQXsp6ivc+myxml6sBlc9YGvopzX0en7XtkfltEVXOaQFrUD8y4
+         1D27Ngo7BDQSRb6QHN9sD8r25DlWpNWUJ3LdK0lnRaZrRdWx6YrbATBiToHv6/tRKucE
+         syvKz9my52xLe5KhVKSQ5/QfnwpvapZiy/SPqJK++Q8RyTVzIuz95/+Zp2WKRdN2Gcbq
+         ac/FLUoEYKJDptCkug2GU17NI8OL49gHqNdzFGS/zKyInlUPMJNklBo8nm8f7W5LOljf
+         /YBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695322687; x=1695927487;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7BlYXzXwfXH7TH2OeXPpQqBbuKBUFZWdur3uSR6Ksss=;
+        b=guRmj2fb/1ffj7jvPXdec6lzoIbXqqT9cC+mtNkNlrvYdSwJmj0gIS1DlHf/UkeP2Q
+         kyaqeivZtkPHT87NaPm/EY+AWTBPQZXGGw3KzxaZSxhojux9iHg3XGufPQoXvmO6Tj4M
+         8kW3ksZnIbWIyTpuV52xy+uQRoDCWAsC46KBsVzEvbo5de4IvJizUheOqJX4U+aAokyo
+         vdjLWhvjO+OPcH8JkGeJc+BWMc1j5rDBNHYVJfzEeG3HByUmCahx4v+NwlSgoIU1fiCG
+         /Qgd1I495wnlDhP+DA4y4rqprDV4ibGGnTFWoeqIQoaMP4nKNLQGLEGwwJ93aCwoxRpP
+         ovyQ==
+X-Gm-Message-State: AOJu0YyvEHja2aNLr4GiL/ZzI8X5gYosOCCyVrMEHLoBX/7vIHmmaYeF
+        awfKaD1kYfRApLx/YksHSzM=
+X-Google-Smtp-Source: AGHT+IFY+x/yn92PSkx329jpsMpJbGD3a7oDZSYg0UEMLrmJWo9Ab1FXM22pX7jeqPG7m/DMyo4/0Q==
+X-Received: by 2002:a17:902:7443:b0:1c4:4462:f1bd with SMTP id e3-20020a170902744300b001c44462f1bdmr5688361plt.35.1695322687253;
+        Thu, 21 Sep 2023 11:58:07 -0700 (PDT)
+Received: from five231003 ([49.37.156.130])
+        by smtp.gmail.com with ESMTPSA id n11-20020a170902d2cb00b001c1f4edfb9csm1868853plc.173.2023.09.21.11.58.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Sep 2023 11:58:06 -0700 (PDT)
+Date:   Fri, 22 Sep 2023 00:27:46 +0530
+From:   Kousik Sanagavarapu <five231003@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>
+Subject: Re: [PATCH 1/2] t/t6300: introduce test_bad_atom()
+Message-ID: <ZQySKnKEirmhXN-U@five231003>
+References: <20230920191654.6133-1-five231003@gmail.com>
+ <20230920191654.6133-2-five231003@gmail.com>
+ <xmqqy1h078tf.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A6F0A9BA-58B1-11EE-9B4D-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqy1h078tf.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patrick Steinhardt <ps@pks.im> writes:
+Sorry for the late reply.
 
-> Instead, we change the behaviour of how pseudo-opts read via standard
-> input influence the flags such that the effect is fully localized. With
-> this change, when reading `--not` via standard input, it will:
+On Wed, Sep 20, 2023 at 03:56:28PM -0700, Junio C Hamano wrote:
+> Kousik Sanagavarapu <five231003@gmail.com> writes:
+> 
+> > Introduce a new function "test_bad_atom()", which is similar to
+> > "test_atom()" but should be used to check whether the correct error
+> > message is shown on stderr.
+> >
+> > Like "test_atom()", the new function takes three arguments. The three
+> > arguments specify the ref, the format and the expected error message
+> > respectively, with an optional fourth argument for tweaking
+> > "test_expect_*" (which is by default "success").
+> >
+> > Mentored-by: Christian Couder <christian.couder@gmail.com>
+> > Mentored-by: Hariom Verma <hariom18599@gmail.com>
+> > Signed-off-by: Kousik Sanagavarapu <five231003@gmail.com>
+> > ---
+> >  t/t6300-for-each-ref.sh | 20 ++++++++++++++++++++
+> >  1 file changed, 20 insertions(+)
+> >
+> > diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+> > index 7b943fd34c..15b4622f57 100755
+> > --- a/t/t6300-for-each-ref.sh
+> > +++ b/t/t6300-for-each-ref.sh
+> > @@ -267,6 +267,26 @@ test_expect_success 'arguments to %(objectname:short=) must be positive integers
+> >  	test_must_fail git for-each-ref --format="%(objectname:short=foo)"
+> >  '
+> >  
+> > +test_bad_atom() {
+> 
+> Style: have SP on both sides of "()".
+> 
+> [...]
 >
->     - _Not_ influence subsequent revisions or pseudo-options passed on
->       the command line, which is a change in behaviour.
->
->     - Influence pseudo-options passed via standard input.
->
->     - Influence normal revisions passed via standard input, which is a
->       change in behaviour.
->
-> Thus, all flags read via standard input are fully self-contained to that
-> standard input, only.
+> > +	printf '%s\n' "$3">expect
+> 
+> Style: need SP before (but not after) '>'.
 
-I have to wonder what the most natural expectation by end-users be,
-when "cmd --opt1 --stdin --opt3 arg2" is run and its stdin is fed
-"--opt2 arg1".  One interpretation may be to act as if "--stdin" on
-the command line is replaced with what was read, but taken literally
-that would make "cmd --opt1 --opt2 arg1 --opt3 arg2" that does not
-make sense (i.e. options must come before arguments).  We could
-declare "--stdin is replaced by options read from there, and
-non-options read from the standard input are handled separately",
-but then it could be argued "cmd --opt1 --opt2 --opt3 arg2 arg1"
-and "cmd --opt1 --opt2 --opt3 arg1 arg2" are equally plausible.
+I'll make these style changes, they slipped by.
 
-So in a sense, "what is read from --stdin is self contained" may be
-the easiest to explain position to take.
+> > +	test_expect_${4:-success} $PREREQ "err basic atom: $1 $2" "
+> > +		test_must_fail git for-each-ref --format='%($2)' $ref 2>actual &&
+> > +		test_cmp expect actual
+> > +	"
+> 
+> It is error prone to have the executable part of test_expect_{success,failure}
+> inside a pair of double quotes and have $variable interpolated
+> _before_ even the arguments to test_expect_{success,failure} are
+> formed.  It is much more preferrable to write
+> 
+> 	test_bad_atom () {
+> 		ref=$1 format=$2
+> 		printf '%s\n' "$3" >expect
+> 		$test_do=test_expect_${4:-success}
+> 
+> 		$test_do $PREREQ "err basic atom: $ref $format" '
+> 			test_must_fail git for-each-ref \
+> 				--format="%($format)" "$ref" 2>error &&
+> 			test_cmp expect error
+> 		'
+> 	}
+> 
+> This is primarily because you cannot control what is in "$2" to
+> ensure the correctness of the test we see above locally (i.e. if
+> your caller has a single-quote in "$2", the shell script you create
+> for running test_expect_{success,failure} would be syntactically
+> incorrect).  By enclosing the executable part inside a pair of
+> single quotes, and having the $variables interpolated when that
+> executable part is `eval`ed when test_expect_{success,failure} runs,
+> you will avoid such problems, and those reading the above can locally
+> know that you are aware of and correctly avoiding such problems.
 
-> While this is a breaking change as well, the behaviour has only been
-> recently introduced with Git v2.42.0. Furthermore, the current behaviour
-> can be regarded as a simple bug. With that in mind it feels like the
-> right thing to do retroactively change it and make the behaviour sane.
+I see.
 
-While I also appreciate your cautious approach to consider the risk
-that this "fix" may have negative consequence, I tend to agree that
-the behaviour is simply buggy and deserves to be fixed on the
-'maint' track.
+> I guess three among four problems I just pointed out you blindly
+> copied from test_atom.  But let's not spread badness (preliminary
+> clean-up to existing badness would be welcome instead).
 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> Reported-by: Christian Couder <christian.couder@gmail.com>
-> ---
->  Documentation/rev-list-options.txt |  6 +++++-
->  revision.c                         | 10 +++++-----
->  t/t6017-rev-list-stdin.sh          | 21 +++++++++++++++++++++
->  3 files changed, 31 insertions(+), 6 deletions(-)
->
-> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-> index a4a0cb93b2..9bf13bac53 100644
-> --- a/Documentation/rev-list-options.txt
-> +++ b/Documentation/rev-list-options.txt
-> @@ -151,6 +151,8 @@ endif::git-log[]
->  --not::
->  	Reverses the meaning of the '{caret}' prefix (or lack thereof)
->  	for all following revision specifiers, up to the next `--not`.
-> +	When used on the command line before --stdin, the revisions passed
-> +	through stdin will not be affected by it.
+Yeah, I had copied it from test_atom. Although I didn't realize that it
+was bad to implement test_bad_atom the way I did. Thanks for such a nice
+explanation. So I guess we can include the test_atom cleanup in this
+series?
 
-Do we also need to say "when read from --stdin, the revisions passed
-on the command line are not affected" as well?  I know you have it
-where you explian "--stdin" in the next hunk, but since you are
-adding one-half of the interaction, it may be less confusing to also
-mention the other half at the same time.
+> > +}
+> > +
+> > +test_bad_atom head 'authoremail:foo' \
+> > +	'fatal: unrecognized %(authoremail) argument: foo'
+> > +
+> > +test_bad_atom tag 'taggeremail:localpart trim' \
+> > +	'fatal: unrecognized %(taggeremail) argument:  trim'
+> 
+> It is strange to see double SP before 'trim' in this error message.
+> Are we etching a code mistake in stone here?  Wouldn't the error
+> message say "...argument: localpart trim" instead, perhaps?
+> 
+> >  test_date () {
+> >  	f=$1 &&
+> >  	committer_date=$2 &&
 
-> @@ -240,7 +242,9 @@ endif::git-rev-list[]
->  	them from standard input as well. This accepts commits and
->  	pseudo-options like `--all` and `--glob=`. When a `--` separator
->  	is seen, the following input is treated as paths and used to
-> -	limit the result.
-> +	limit the result. Flags like `--not` which are read via standard input
-> +	are only respected for arguments passed in the same way and will not
-> +	influence any subsequent command line arguments.
+So I read the the other replies and it seems that it indeed hides a
+breakage and yeah I hadn't tested PATCH 1/2 independently. I'll change
+this too.
 
-Other than that, looking good, and the changes to the code look all
-sensible.
-
-Thanks.
+Thanks
