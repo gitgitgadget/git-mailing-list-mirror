@@ -2,119 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B218BE7D0AA
-	for <git@archiver.kernel.org>; Thu, 21 Sep 2023 20:51:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB5DBE7D0AA
+	for <git@archiver.kernel.org>; Thu, 21 Sep 2023 21:20:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232682AbjIUUvM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Sep 2023 16:51:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40198 "EHLO
+        id S229843AbjIUVU6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Sep 2023 17:20:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232627AbjIUUu5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Sep 2023 16:50:57 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83C498C621
-        for <git@vger.kernel.org>; Thu, 21 Sep 2023 10:42:28 -0700 (PDT)
-Received: (qmail 20274 invoked by uid 109); 21 Sep 2023 04:15:46 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 21 Sep 2023 04:15:46 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3624 invoked by uid 111); 21 Sep 2023 04:15:48 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 21 Sep 2023 00:15:48 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 21 Sep 2023 00:15:45 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH] attr: attr.allowInvalidSource config to allow invalid
- revision
-Message-ID: <20230921041545.GA2338791@coredump.intra.peff.net>
-References: <pull.1577.git.git.1695218431033.gitgitgadget@gmail.com>
- <xmqqfs38akx5.fsf@gitster.g>
+        with ESMTP id S232607AbjIUVT0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Sep 2023 17:19:26 -0400
+Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C87C63166C
+        for <git@vger.kernel.org>; Thu, 21 Sep 2023 13:46:17 -0700 (PDT)
+Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-59b5484fbe6so17615347b3.1
+        for <git@vger.kernel.org>; Thu, 21 Sep 2023 13:46:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1695329177; x=1695933977; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=EbdftIVkS/8lc8VNXHtzx1+gKFf9dCK5GyRfd/Z9t50=;
+        b=w4l4UGboa3A8bry4TcHUQ62lNATNTKXwP5TneV4un1MAn3jnZjUMd0W0U5BHHOxTqI
+         SIuFnjZRhf/AX4/W8EHsgpSIVkH6+ckYmO7785e02Tk4g7iJAkP66LhS8R08bEIlsf5E
+         iNptKOlLe3sOi9O7k6Vymf9rBoFvhTA78qoqaTiah+yzKOv3AWtmrpJRZ12TXrwZa3C3
+         m4ugAgorRmvRzd9yMAymAcyAoAPuRMfPyJ97tac1seivJx2XGcyozErdOEm5EsYtikHb
+         KwYQpjMljR53O5ksoSzH5TSWh3ivUQxZZBcWg7oiyV3WhEW+q/5nRr5ZmTENz6utgt0P
+         g1yw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695329177; x=1695933977;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EbdftIVkS/8lc8VNXHtzx1+gKFf9dCK5GyRfd/Z9t50=;
+        b=XAKZ4fc98v56kAlqO7pBG4zbY3uMZX0udAkgiYJsUUbaReMTvZK4QAF2UVLbM02bhQ
+         w70UJ05bE6V3TVYQOMQf4cyeYBaXkdwXFyLwhwpNyihS93zOmOnejm6aFbzDRVxRCA2N
+         dW88P2b+QQT8CZ8HhLyqsSZbNe58cgQp4WRv942NziDUUoWiyCrza9onksTsFWolRana
+         RfsxEW4wix7s6Bwn3pR020u8792rq+9Ghq9GpvUVYcY5AXho6yaDJbFTiKHw4mZYm8My
+         LQopKgCrSoct9b24smUw58Pxvko/t20Rl4KXSRGtjM1900kfUgHI78iKCMVqCf3F5GD6
+         IykA==
+X-Gm-Message-State: AOJu0YySdP4kNKPXQfxUD5MHNRXxvdBt0rsBU5zctRzCW7Nn2pXB1BWy
+        bhW89gew6CgExm+EUZP1BpBKkg==
+X-Google-Smtp-Source: AGHT+IHHX6iHp9qAPkXrqgXeM1sp43BV5UrS4FCoK3LaaSfepjYOYdJ9Bm5gXrvWtSPo+/AHTm7Atw==
+X-Received: by 2002:a81:bf43:0:b0:57a:cf8:5b4 with SMTP id s3-20020a81bf43000000b0057a0cf805b4mr5797636ywk.51.1695329176931;
+        Thu, 21 Sep 2023 13:46:16 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id a128-20020a0df186000000b0057736c436f1sm517276ywf.141.2023.09.21.13.46.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Sep 2023 13:46:16 -0700 (PDT)
+Date:   Thu, 21 Sep 2023 16:46:14 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, git@vger.kernel.org,
+        Hariom verma <hariom18599@gmail.com>,
+        Victoria Dye <vdye@github.com>
+Subject: Re: Git in Outreachy? (December, 2023)
+Message-ID: <ZQyrllWhLDebWCG0@nand.local>
+References: <ZNwhVOggObU7aVTr@nand.local>
+ <CAP8UFD2Yw1XazomxEj0QB20FoaxkO16t_xgRurtnqCCOuhX-eQ@mail.gmail.com>
+ <2c31a3d4-59f7-d036-0c6b-5fd62cc7a2fa@gmail.com>
+ <ZOZSo7vJztHcvb4W@nand.local>
+ <435a2aa3-59f8-d2bc-f653-4f93d86b9c31@gmail.com>
+ <ZO4wxU1ilpa6/3EW@nand.local>
+ <CAP8UFD2CGf8efBHquS=LJP8uQ5ivuDryqGz96PZ81oDtrNgNXw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqfs38akx5.fsf@gitster.g>
+In-Reply-To: <CAP8UFD2CGf8efBHquS=LJP8uQ5ivuDryqGz96PZ81oDtrNgNXw@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 20, 2023 at 09:06:46AM -0700, Junio C Hamano wrote:
+On Tue, Aug 29, 2023 at 10:38:45PM +0200, Christian Couder wrote:
+> By the way, Kaartic, do you still want to be an org admin? And Taylor
+> are you Ok with Kaartic being an org admin?
 
-> > With empty repositories however, HEAD does not point to a valid treeish,
-> > causing Git to die. This means we would need to check for a valid
-> > treeish each time.
-> 
-> Naturally.
-> 
-> > To avoid this, let's add a configuration that allows
-> > Git to simply ignore --attr-source if it does not resolve to a valid
-> > tree.
-> 
-> Not convincing at all as to the reason why we want to do anything
-> "to avoid this".  "git log" in a repository whose HEAD does not
-> point to a valid treeish.  "git blame" dies with "no such ref:
-> HEAD".  An empty repository (more precisely, an unborn history)
-> needs special casing if you want to present it if you do not want to
-> spew underlying error messages to the end users *anyway*.  It is
-> unclear why seeing what commit the HEAD pointer points at (or which
-> branch it points at for that matter) is *an* *extra* and *otherwise*
-> *unnecessary* overhead that need to be avoided.
+Sorry that this dropped off of my queue. FWIW, no issues from me.
 
-In an empty repository, "git log" will die anyway. So I think the more
-interesting case is "I have a repository with stuff in it, but HEAD
-points to an unborn branch". So:
-
-  git --attr-source=HEAD diff foo^ foo
-
-And there you really are saying "if there are attributes in HEAD, use
-them; otherwise, don't worry about it". This is exactly what we do with
-mailmap.blob: in a bare repository it is set to HEAD by default, but if
-HEAD does not resolve, we just ignore it (just like a HEAD that does not
-contain a .mailmap file). And those match the non-bare cases, where we'd
-read those files from the working tree instead.
-
-So I think the same notion applies here. You want to be able to point it
-at HEAD by default, but if there is no HEAD, that is the same as if HEAD
-simply did not contain any attributes. If we had attr.blob, that is
-exactly how I would expect it to work.
-
-My gut feeling is that --attr-source should do the same, and just
-quietly ignore a ref that does not resolve. But I think an argument can
-be made that because the caller explicitly gave us a ref, they expect it
-to work (and that would catch misspellings, etc). Like:
-
-  git --attr-source=my-barnch diff foo^ foo
-
-So I'm OK with not changing that behavior.
-
-But what is weird about this patch is that we are using a config option
-to change how a command-line option is interpreted. If the idea is that
-some invocations care about the validity of the source and some do not,
-then the config option is much too blunt. It is set once long ago, but
-it can't distinguish between times you care about invalid sources and
-times you don't.
-
-It would make much more sense to me to have another command-line option,
-like:
-
-  git --attr-source=HEAD --allow-invalid-attr-source
-
-Obviously that is horrible to type, but I think the point is that you'd
-only do this from a script anyway (because it's those automated cases
-where you want to say "use HEAD only if it exists").
-
-If there were an attr.blob config option and it complained about an
-invalid HEAD, _then_ I think attr.allowInvalidSource might make sense
-(though again, I would just argue for switching the behavior by
-default). And I really think attr.blob is a better match for what GitLab
-is trying to do here, because it is set once and applies to all
-commands, rather than having to teach every invocation to pass it
-(though I guess maybe they use it as an environment variable).
-
-Of course I would think that, as the person who solved GitHub's exact
-same problem for mailmap by adding mailmap.blob. So you may ingest the
-appropriate grain of salt. :)
-
--Peff
+Thanks,
+Taylor
