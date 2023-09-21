@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BE0BE7D0AE
-	for <git@archiver.kernel.org>; Thu, 21 Sep 2023 21:40:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 81D3BE7D0AE
+	for <git@archiver.kernel.org>; Thu, 21 Sep 2023 21:40:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229643AbjIUVkW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Sep 2023 17:40:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48060 "EHLO
+        id S229826AbjIUVk0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Sep 2023 17:40:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232905AbjIUVjz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Sep 2023 17:39:55 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2C84659C
-        for <git@vger.kernel.org>; Thu, 21 Sep 2023 14:17:29 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id 3f1490d57ef6-d81503de9c9so1830928276.3
-        for <git@vger.kernel.org>; Thu, 21 Sep 2023 14:17:29 -0700 (PDT)
+        with ESMTP id S232895AbjIUVjy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Sep 2023 17:39:54 -0400
+Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 112461710
+        for <git@vger.kernel.org>; Thu, 21 Sep 2023 14:17:32 -0700 (PDT)
+Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-59e8ebc0376so19560867b3.2
+        for <git@vger.kernel.org>; Thu, 21 Sep 2023 14:17:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1695331048; x=1695935848; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1695331051; x=1695935851; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=xVuWW6EObRI/np9K8ufVTzo2sCqTpDUmXNFLbqi639U=;
-        b=hrCDZ2I4Z/hcxO/rZy9oLRxYYj8mcfOmkqSiXA1+W6HVWGyMGwGW5jHrUYtGiWdMg1
-         g41DnohNDB7sg444FrBgU4NNRzcVI4MBToz8xNpG/fXNdS3i/BCC8g/7c5zolgVEBRhx
-         5UNmjlff9jJCU7j3QkfO8/6A/+XGy12Qqbncd53ObFE4+xwVnEMJcnoKuiByjFujkxUv
-         2H2ue+2NnNtm9yTpLc1Cw850Ldb1zpbOTOCwXZwfdulB5uJCwJdkDd6b5h1li5Sre3gm
-         3g1Prmpg7ZQQBPxwObc9zZy7ZlF8Je+Ay3lj0IR+W+A+/R171GyFShS/ytozt/+U6tJm
-         7ovg==
+        bh=6aHOle8N+he/kHuUZwZ5XD2ABLllxD2ea+pqnpp9t2c=;
+        b=qkKPtMqGFJeP87Cpdl+yEmZdKgn7jVTXk3wLHSAAKJNH1GFo0pIiCHZEbQS3yJ0ObU
+         4CdAs7aHpSlTje73xXheUGxUSXXdykk733RtZlqui74Fjw8uJjETRoci7UWK099Z2eHi
+         Q8TeRi0H2fvElB+95+R586gHfTSYBj2lU3u0qc4i1gJsJHdT2vAJvDyzHOZE/L/ZJrqd
+         nzhrnUS1rgqrA37xa4AC66mFPlNzWJFssUCMGSmEambzAmDuTgqUGpUqT8+LTqBIl+Ve
+         +UwUfDj9PNFw6a3wQ66pGwiZ75NPzHAocpwD5riU+PSt5VVxcjJNYrHggZBXD/3nUhFY
+         zaYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695331048; x=1695935848;
+        d=1e100.net; s=20230601; t=1695331051; x=1695935851;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xVuWW6EObRI/np9K8ufVTzo2sCqTpDUmXNFLbqi639U=;
-        b=Rl//qXj028G8+49qWrR7BAXMQGrQ2X8abbdOl19otbaIGaFfaM8Q4lASFvKAhE9amR
-         BWLgiR+To5GcG6snZqUM+4vpgaZeBtAwuYjRxVlhQBm1wP0Sr1qDa/cPjRnMn3GExP6t
-         ywyRvp2NmFH0nF9S3F+35e/lULPXbtx5DN9iE83tU2tVIxBreurlNhBg47DQLS6+h9RH
-         osA80kCLHQM9mdVP8YTshFX9kMNCxuccPepJn/qrNuB+RI6vsV1ej5XpqBPtQIVKFBYo
-         u401GJ6sNtmdsXG2tgPhvy0uHInapsKtQ8JJwGKPq2UXngYvCnlUcWHnMOPZNKcne1V3
-         kZxg==
-X-Gm-Message-State: AOJu0YzRB7E7BtFtpAN/hPoHaSzHrSyaM/Sp/Hby37OXu1odS0vPos/q
-        I2sKMd3AlKrkfe5wvJHTpxRO0NIpLYTc2EsYN5Jo22GyeCTnNR8fGYuxDksz+3QHG8n6mBi4ylT
-        iAZnQUsI/4DgrXrhS0JtyGej/fcd6qkNJCgwmBko1YG60eGmFxmJNX9JSFwKElcE=
-X-Google-Smtp-Source: AGHT+IEqoheuVCbDmKUNBngwCGhYpNrlJKUJxn8N4qwsQ9a9mJ3u83xsFB34OJjEhPdQ1HT+SSN7ySlBaYkPoA==
+        bh=6aHOle8N+he/kHuUZwZ5XD2ABLllxD2ea+pqnpp9t2c=;
+        b=E9zzf4Xa6LMmIMsA+Mpl1FplrqDjDT+o3Hk+Oe/MD5RMIVQ9rbFPTLMSYLh3u3LbAw
+         dgBGCejpWyf63IAI8C9Yy4TbG0qDOM1JJgcgNqwYzNeEFGgoPHHgR+V4O4xm8732o4VQ
+         ZTn2+KgqK1/4dgNMGZLQP69syJVb3Hskt3pzVN42tRHTcC5iiLe38wZZeNq++SvU+F6N
+         kJPe5P/0v7Tsy8t6CYAq8tImCXQW8Hfa9DWJmw+ZforAcO4qzDAUvYRHIE0cfiCyQsfy
+         Z+w1mmIOpdwLeKBEfZZVd4hwWcPD51tpXFz7NqKkLw/ekn/H0OD5AxKOJCB7NWe0ndXW
+         hpQQ==
+X-Gm-Message-State: AOJu0YzD1EAqZQKm1R3V5TeOPAnRFdZ+zw1F2jzO0CeVmOBSDCEp6GLk
+        VJPdLNUKURDtA4lM4cwx/EHzymMfLbe92hBBt754J/1khse5tU2KlQl8NIfsnAGcdD6XRuSB7xT
+        urmnrqWoyx7FXLuI6ft41l4VBavh9cwRdUI+18FSMVNLv2SNPKO0wz7EtThsi/Ac=
+X-Google-Smtp-Source: AGHT+IH1DJ90q+ylBjL9+WYagZFUDIy0Qq4Cnx4mZoD9Ipq/IY/LzAXKqvhkq4sXX21jY25n924dJozMSddP4g==
 X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2d3:204:828c:91e1:20c5:c8f])
- (user=steadmon job=sendgmr) by 2002:a25:5053:0:b0:d7f:8e0a:4b3f with SMTP id
- e80-20020a255053000000b00d7f8e0a4b3fmr86900ybb.3.1695331048677; Thu, 21 Sep
- 2023 14:17:28 -0700 (PDT)
-Date:   Thu, 21 Sep 2023 14:17:20 -0700
+ (user=steadmon job=sendgmr) by 2002:a81:a94a:0:b0:59b:ccba:1249 with SMTP id
+ g71-20020a81a94a000000b0059bccba1249mr114618ywh.10.1695331051152; Thu, 21 Sep
+ 2023 14:17:31 -0700 (PDT)
+Date:   Thu, 21 Sep 2023 14:17:21 -0700
 In-Reply-To: <cover.1695330852.git.steadmon@google.com>
 Mime-Version: 1.0
 References: <pull.1551.git.git.1689891436.gitgitgadget@gmail.com> <cover.1695330852.git.steadmon@google.com>
 X-Mailer: git-send-email 2.42.0.515.g380fc7ccd1-goog
-Message-ID: <fa55b7836f112cb7c7ab9b80e745b9969421c768.1695330852.git.steadmon@google.com>
-Subject: [PATCH v3 1/5] config: split out config_parse_options
+Message-ID: <8a1463c223497fca2fd3f11a54db5d7e52d1d08a.1695330852.git.steadmon@google.com>
+Subject: [PATCH v3 2/5] config: split do_event() into start and flush operations
 From:   Josh Steadmon <steadmon@google.com>
 To:     git@vger.kernel.org
 Cc:     jonathantanmy@google.com, calvinwan@google.com, glencbz@gmail.com,
@@ -62,189 +62,99 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Glen Choo <chooglen@google.com>
+When handling config-parsing events, the current do_event() handler is a
+bit confusing; calling it with a specific event type records the initial
+offset where the event occurred, and runs the supplied callback against
+the previous event (whose end offset is now known).
 
-"struct config_options" is a disjoint set of options used by the config
-parser (e.g. event listeners) and options used by config_with_options()
-(e.g. to handle includes, choose which config files to parse). Split
-parser-only options into config_parse_options.
+Split this operation into "start_event" and "flush_event" functions.
+Then reimplement "do_event" (preserving the original behavior) using the
+newly split functions.
 
-Signed-off-by: Glen Choo <chooglen@google.com>
+In a later change, we can use these building blocks to also handle
+"immediate" events, where we want to run the callback without having to
+calculate an end offset for the event.
+
 Signed-off-by: Josh Steadmon <steadmon@google.com>
 ---
- bundle-uri.c |  2 +-
- config.c     | 14 +++++++-------
- config.h     | 37 ++++++++++++++++++++-----------------
- fsck.c       |  2 +-
- 4 files changed, 29 insertions(+), 26 deletions(-)
+ config.c | 50 ++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 36 insertions(+), 14 deletions(-)
 
-diff --git a/bundle-uri.c b/bundle-uri.c
-index 4b5c49b93d..f93ca6a486 100644
---- a/bundle-uri.c
-+++ b/bundle-uri.c
-@@ -237,7 +237,7 @@ int bundle_uri_parse_config_format(const char *uri,
- 				   struct bundle_list *list)
- {
- 	int result;
--	struct config_options opts = {
-+	struct config_parse_options opts = {
- 		.error_action = CONFIG_ERROR_ERROR,
- 	};
- 
 diff --git a/config.c b/config.c
-index 85c5f35132..1518f70fc2 100644
+index 1518f70fc2..ff138500a2 100644
 --- a/config.c
 +++ b/config.c
-@@ -982,7 +982,7 @@ static int get_base_var(struct config_source *cs, struct strbuf *name)
- struct parse_event_data {
- 	enum config_event_t previous_type;
- 	size_t previous_offset;
--	const struct config_options *opts;
-+	const struct config_parse_options *opts;
+@@ -985,19 +985,11 @@ struct parse_event_data {
+ 	const struct config_parse_options *opts;
  };
  
- static int do_event(struct config_source *cs, enum config_event_t type,
-@@ -1030,7 +1030,7 @@ static void kvi_from_source(struct config_source *cs,
- 
- static int git_parse_source(struct config_source *cs, config_fn_t fn,
- 			    struct key_value_info *kvi, void *data,
--			    const struct config_options *opts)
-+			    const struct config_parse_options *opts)
+-static int do_event(struct config_source *cs, enum config_event_t type,
+-		    struct parse_event_data *data)
++static size_t get_corrected_offset(struct config_source *cs,
++				   enum config_event_t type)
  {
- 	int comment = 0;
- 	size_t baselen = 0;
-@@ -1967,7 +1967,7 @@ int git_default_config(const char *var, const char *value,
-  */
- static int do_config_from(struct config_source *top, config_fn_t fn,
- 			  void *data, enum config_scope scope,
--			  const struct config_options *opts)
-+			  const struct config_parse_options *opts)
- {
- 	struct key_value_info kvi = KVI_INIT;
- 	int ret;
-@@ -1992,7 +1992,7 @@ static int do_config_from_file(config_fn_t fn,
- 			       const enum config_origin_type origin_type,
- 			       const char *name, const char *path, FILE *f,
- 			       void *data, enum config_scope scope,
--			       const struct config_options *opts)
-+			       const struct config_parse_options *opts)
- {
- 	struct config_source top = CONFIG_SOURCE_INIT;
- 	int ret;
-@@ -2021,7 +2021,7 @@ static int git_config_from_stdin(config_fn_t fn, void *data,
- 
- int git_config_from_file_with_options(config_fn_t fn, const char *filename,
- 				      void *data, enum config_scope scope,
--				      const struct config_options *opts)
-+				      const struct config_parse_options *opts)
- {
- 	int ret = -1;
- 	FILE *f;
-@@ -2047,7 +2047,7 @@ int git_config_from_mem(config_fn_t fn,
- 			const enum config_origin_type origin_type,
- 			const char *name, const char *buf, size_t len,
- 			void *data, enum config_scope scope,
--			const struct config_options *opts)
-+			const struct config_parse_options *opts)
- {
- 	struct config_source top = CONFIG_SOURCE_INIT;
- 
-@@ -3380,7 +3380,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 		struct stat st;
- 		size_t copy_begin, copy_end;
- 		int i, new_line = 0;
--		struct config_options opts;
-+		struct config_parse_options opts;
- 
- 		if (!value_pattern)
- 			store.value_pattern = NULL;
-diff --git a/config.h b/config.h
-index 6332d74904..2537516446 100644
---- a/config.h
-+++ b/config.h
-@@ -85,6 +85,21 @@ typedef int (*config_parser_event_fn_t)(enum config_event_t type,
- 					struct config_source *cs,
- 					void *event_fn_data);
- 
-+struct config_parse_options {
-+	enum config_error_action {
-+		CONFIG_ERROR_UNSET = 0, /* use source-specific default */
-+		CONFIG_ERROR_DIE, /* die() on error */
-+		CONFIG_ERROR_ERROR, /* error() on error, return -1 */
-+		CONFIG_ERROR_SILENT, /* return -1 */
-+	} error_action;
-+	/*
-+	 * event_fn and event_fn_data are for internal use only. Handles events
-+	 * emitted by the config parser.
-+	 */
-+	config_parser_event_fn_t event_fn;
-+	void *event_fn_data;
-+};
-+
- struct config_options {
- 	unsigned int respect_includes : 1;
- 	unsigned int ignore_repo : 1;
-@@ -92,6 +107,9 @@ struct config_options {
- 	unsigned int ignore_cmdline : 1;
- 	unsigned int system_gently : 1;
- 
-+	const char *commondir;
-+	const char *git_dir;
-+	struct config_parse_options parse_options;
- 	/*
- 	 * For internal use. Include all includeif.hasremoteurl paths without
- 	 * checking if the repo has that remote URL, and when doing so, verify
-@@ -99,21 +117,6 @@ struct config_options {
- 	 * themselves.
- 	 */
- 	unsigned int unconditional_remote_url : 1;
+-	size_t offset;
 -
--	const char *commondir;
--	const char *git_dir;
--	/*
--	 * event_fn and event_fn_data are for internal use only. Handles events
--	 * emitted by the config parser.
--	 */
--	config_parser_event_fn_t event_fn;
--	void *event_fn_data;
--	enum config_error_action {
--		CONFIG_ERROR_UNSET = 0, /* use source-specific default */
--		CONFIG_ERROR_DIE, /* die() on error */
--		CONFIG_ERROR_ERROR, /* error() on error, return -1 */
--		CONFIG_ERROR_SILENT, /* return -1 */
--	} error_action;
- };
+-	if (!data->opts || !data->opts->event_fn)
+-		return 0;
+-
+-	if (type == CONFIG_EVENT_WHITESPACE &&
+-	    data->previous_type == type)
+-		return 0;
++	size_t offset = cs->do_ftell(cs);
  
- /* Config source metadata for a given config key-value pair */
-@@ -178,13 +181,13 @@ int git_config_from_file(config_fn_t fn, const char *, void *);
+-	offset = cs->do_ftell(cs);
+ 	/*
+ 	 * At EOF, the parser always "inserts" an extra '\n', therefore
+ 	 * the end offset of the event is the current file position, otherwise
+@@ -1005,14 +997,44 @@ static int do_event(struct config_source *cs, enum config_event_t type,
+ 	 */
+ 	if (type != CONFIG_EVENT_EOF)
+ 		offset--;
++	return offset;
++}
++
++static void start_event(struct config_source *cs, enum config_event_t type,
++		       struct parse_event_data *data)
++{
++	data->previous_type = type;
++	data->previous_offset = get_corrected_offset(cs, type);
++}
++
++static int flush_event(struct config_source *cs, enum config_event_t type,
++		       struct parse_event_data *data)
++{
++	if (!data->opts || !data->opts->event_fn)
++		return 0;
++
++	if (type == CONFIG_EVENT_WHITESPACE &&
++	    data->previous_type == type)
++		return 0;
  
- int git_config_from_file_with_options(config_fn_t fn, const char *,
- 				      void *, enum config_scope,
--				      const struct config_options *);
-+				      const struct config_parse_options *);
- int git_config_from_mem(config_fn_t fn,
- 			const enum config_origin_type,
- 			const char *name,
- 			const char *buf, size_t len,
- 			void *data, enum config_scope scope,
--			const struct config_options *opts);
-+			const struct config_parse_options *opts);
- int git_config_from_blob_oid(config_fn_t fn, const char *name,
- 			     struct repository *repo,
- 			     const struct object_id *oid, void *data,
-diff --git a/fsck.c b/fsck.c
-index 3be86616c5..522ee1c18a 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -1219,7 +1219,7 @@ static int fsck_blob(const struct object_id *oid, const char *buf,
- 		return 0;
+ 	if (data->previous_type != CONFIG_EVENT_EOF &&
+ 	    data->opts->event_fn(data->previous_type, data->previous_offset,
+-				 offset, cs, data->opts->event_fn_data) < 0)
++				 get_corrected_offset(cs, type), cs,
++				 data->opts->event_fn_data) < 0)
+ 		return -1;
  
- 	if (oidset_contains(&options->gitmodules_found, oid)) {
--		struct config_options config_opts = { 0 };
-+		struct config_parse_options config_opts = { 0 };
- 		struct fsck_gitmodules_data data;
+-	data->previous_type = type;
+-	data->previous_offset = offset;
++	return 1;
++}
++
++static int do_event(struct config_source *cs, enum config_event_t type,
++		    struct parse_event_data *data)
++{
++	int maybe_ret;
++
++	if ((maybe_ret = flush_event(cs, type, data)) < 1)
++		return maybe_ret;
++
++	start_event(cs, type, data);
  
- 		oidset_insert(&options->gitmodules_done, oid);
+ 	return 0;
+ }
 -- 
 2.42.0.515.g380fc7ccd1-goog
 
