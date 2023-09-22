@@ -2,81 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA2D8CE7A81
-	for <git@archiver.kernel.org>; Fri, 22 Sep 2023 21:31:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39FDECE7A86
+	for <git@archiver.kernel.org>; Fri, 22 Sep 2023 21:34:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229808AbjIVVbx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Sep 2023 17:31:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46992 "EHLO
+        id S229989AbjIVVec convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Fri, 22 Sep 2023 17:34:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230211AbjIVVbk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Sep 2023 17:31:40 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62E72199B
-        for <git@vger.kernel.org>; Fri, 22 Sep 2023 14:31:09 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-50337b43ee6so4647749e87.3
-        for <git@vger.kernel.org>; Fri, 22 Sep 2023 14:31:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695418265; x=1696023065; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=xrhCFcW/GaEUaMvoR4tqQygbfsB9HddLfdIeQiF5UQk=;
-        b=aaynuEsgpUr4YCw6OV05t5SCM0N1ixRryvAn8Uvt6uz1U2vamCXd1UoxpiPyOrNLh/
-         ykMMFgHXxHtZetty6wYC0a28EsRnTuHnmJmcfhh/H9+VUe2wmXqxFQZislqx/f9oOOBS
-         PZFb1TK7ZAeWAM5cRhQ4/seYFlJ5iuFkk6AWYI8Tyw/81Vwfrio/NTQV8z7Zmkobmpaw
-         Mw657/4NusEU9a0U7KErfo+xy21j/4IR9AmZjHIyg3DsvVsAKogZARVfDTxq5SkELUGq
-         IzWU16IhGQISTDEibiGkH33tQkOVYSrofl3zVixKVoLR6x2XnWCtwhHkpIjlFiTsB2R4
-         UpWA==
+        with ESMTP id S229953AbjIVVeb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Sep 2023 17:34:31 -0400
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA0BCCA
+        for <git@vger.kernel.org>; Fri, 22 Sep 2023 14:34:25 -0700 (PDT)
+Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-65628b1181cso13751766d6.1
+        for <git@vger.kernel.org>; Fri, 22 Sep 2023 14:34:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695418265; x=1696023065;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xrhCFcW/GaEUaMvoR4tqQygbfsB9HddLfdIeQiF5UQk=;
-        b=jiIJ4dXjbWXUtYYjRQGxcy8wzebQsgFxMCPyBd33t3zfaoc1NDKpqy19F+7LSD7D5n
-         wff8jVlNPO0MkRrGuxryODhDT9p6hDXuWoHgEM13n/PDDm0z4ncreue8KHL1wG7TEjPP
-         pY2q6ekTPmuGz3pFAgcmJSKaU5vWqOOTIaLyfj2Wp2QYxJIsQ7/Kz3L2vFj+ZCpR/FCH
-         C6Wtcln5Piwou7YU4OwUtn6vOSFoBa+bN6kvhZs6Am3RJcIc0iv7pBhYKvVb4LSJrlTA
-         YpI4Eufbuy9ZJCJqQ4s+OxN8HyPJCLK1zT5/iT6Sbq27x4saSuZS/SelDzKzL9Jitijl
-         2BnA==
-X-Gm-Message-State: AOJu0YzMDAI1xBvhMVuTulwB2d98djwnPRV3Se1U5hvTkEIK/6Y0APq/
-        Q/nj1IHo5EHg8sW7IBznxC5ifMPOd6BhLYAUDJ0=
-X-Google-Smtp-Source: AGHT+IFTGFicdoOgTFRflOvlTpzxG9wUJgM1aKppx2p0jxMOCWJOJxmMe0NBPk0Ozf8IiJx8uNIcf5RNl2iIfs1Fxz4=
-X-Received: by 2002:ac2:4da8:0:b0:4f8:7781:9870 with SMTP id
- h8-20020ac24da8000000b004f877819870mr399923lfe.60.1695418264969; Fri, 22 Sep
- 2023 14:31:04 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1695418465; x=1696023265;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=PazJ5sLJKoaJ+FJ/PEyazGAAKSer3WUPIoych5jmTZE=;
+        b=rmL6x6GA42fiA5eTZ9KB0GwLFirxpiorR8FQRaJRH0dz8n0Tzvmx4D1/oZVKFX92eC
+         IGlasXK4MKCZYQ6KcfW1qPbFKHTSh/4TpJKVGxn79JmlUL42ZXvg1v3p7ORz4J4L+8us
+         NjbhdlUq0wcmuR2ujOzbqVB/P6zuGh1l2AyEuj/iL7OkNdF9zj36zd97e8+FUJE2/LYx
+         s9nH85FHNvZWD4uEkqtE0V6duyermWDZFukxv3Az4yrKjcOl3alsiiLuoIQRdoj6+KLJ
+         kaQvogto3+7ZfMUO0tEEojDOFmZeLq9N3H1AVcwXL7scoy8QuqgM3RZHzCD6adsu8gNj
+         tdjg==
+X-Gm-Message-State: AOJu0YwJCJxz6HF3+hLGVuqocUDnY4LfmSjL8OSOyk1kRyLaLmwTmVTT
+        4Rv0EB9Uxm6b6zwc+UZwN0sMn5GyMDuzli9OQ40=
+X-Google-Smtp-Source: AGHT+IHd5u08q24hwy7bh3sfw/tYtGurhfGZ2ckRxXB/ivfxjw877lTIFn70FrTHFbVnMWy3xzBSJAbIbRlVE5r8sv4=
+X-Received: by 2002:ad4:5cec:0:b0:655:f784:9d25 with SMTP id
+ iv12-20020ad45cec000000b00655f7849d25mr670767qvb.59.1695418464910; Fri, 22
+ Sep 2023 14:34:24 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.1589.git.1695392027.gitgitgadget@gmail.com>
  <f9f3f4af1c8889eb69f777a322348afc53feeca2.1695392028.git.gitgitgadget@gmail.com>
- <CAPig+cRc49GCr+z+LA65VFS8RTaOEkKe8KszQOUhFPxZGQ_QmQ@mail.gmail.com>
-In-Reply-To: <CAPig+cRc49GCr+z+LA65VFS8RTaOEkKe8KszQOUhFPxZGQ_QmQ@mail.gmail.com>
-From:   Josh Soref <jsoref@gmail.com>
-Date:   Fri, 22 Sep 2023 17:30:53 -0400
-Message-ID: <CACZqfqC_UwSPfn0f9L4TfkYDGU64t_en6=7wYMsnxA9fB2rSjw@mail.gmail.com>
+ <CAPig+cRc49GCr+z+LA65VFS8RTaOEkKe8KszQOUhFPxZGQ_QmQ@mail.gmail.com> <CACZqfqC_UwSPfn0f9L4TfkYDGU64t_en6=7wYMsnxA9fB2rSjw@mail.gmail.com>
+In-Reply-To: <CACZqfqC_UwSPfn0f9L4TfkYDGU64t_en6=7wYMsnxA9fB2rSjw@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 22 Sep 2023 17:34:14 -0400
+Message-ID: <CAPig+cT7G2G-PQ05cSAxLLoZPbz4eyHjPxUjMWhDB5ondyD0sA@mail.gmail.com>
 Subject: Re: [PATCH 2/4] doc: update links to current pages
-To:     Eric Sunshine <sunshine@sunshineco.com>
+To:     Josh Soref <jsoref@gmail.com>
 Cc:     Josh Soref via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine wrote:
-> > doc: update links to current pages
-> > @@ -4,7 +4,7 @@
-> > - * [2] http://json.org/
-> > + * [2] https://www.json.org/
+On Fri, Sep 22, 2023 at 5:31 PM Josh Soref <jsoref@gmail.com> wrote:
+> Eric Sunshine wrote:
+> > > - * [2] http://json.org/
+> > > + * [2] https://www.json.org/
+> >
+> > Not sure why this change is needed considering that the simpler
+> > s/http/https/ seems sufficient.
 >
-> Not sure why this change is needed considering that the simpler
-> s/http/https/ seems sufficient.
+> This is because that's their preference:
+>
+> ```sh
+> % curl -s http://json.org/|grep REFRESH
+> <meta HTTP-EQUIV="REFRESH" content="0;
+> url=https://www.JSON.org/json-en.html"></head>
+> ```
+>
+> It's somewhat traditional to respect sites' self-identification.
 
-This is because that's their preference:
-
-```sh
-% curl -s http://json.org/|grep REFRESH
-<meta HTTP-EQUIV="REFRESH" content="0;
-url=https://www.JSON.org/json-en.html"></head>
-```
-
-It's somewhat traditional to respect sites' self-identification.
+It might be worth calling that out in the commit message of both
+patches if you happen to reroll so other reviewers understand the
+motivation. (That said, on its own, it's probably not worth a reroll.)
