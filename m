@@ -2,60 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B482CE7ABB
-	for <git@archiver.kernel.org>; Fri, 22 Sep 2023 19:50:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AD650CE7AB7
+	for <git@archiver.kernel.org>; Fri, 22 Sep 2023 19:51:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232437AbjIVTvD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Sep 2023 15:51:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38354 "EHLO
+        id S232460AbjIVTvF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Sep 2023 15:51:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231866AbjIVTu5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Sep 2023 15:50:57 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 785ED1A5
+        with ESMTP id S232083AbjIVTvA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Sep 2023 15:51:00 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C49C119B
         for <git@vger.kernel.org>; Fri, 22 Sep 2023 12:50:51 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-31c5cac3ae2so2595421f8f.3
+Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-4054f790190so4682635e9.2
         for <git@vger.kernel.org>; Fri, 22 Sep 2023 12:50:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1695412250; x=1696017050; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PmgqWi7Cs5VukM9Vh3fswTlGXwbBtsWGyteqiqH/Gdg=;
-        b=guI8NbHXuo4SAbktQgbfAw356lbedAlZLv6MT0aEroab7qN26LXT0wGvIQIgoHzS4h
-         nQYBbLcnRCEFW81ZDLPlGEbDsBqNOZGRQonejr/pLPE5mGorZxzRg/1DXvM96kjotYlJ
-         MQqBVueHwZnyLZXRDXphY+ivh0Qv7rzQA8SoU9Eo4z8pt6js5oSxAQR0YIQ36PY1Qnx2
-         1fA4enKXMY5L0a5lX/bQJrfuf83KSHIzD+bTEuVbXh+xSCpSORzFGNvCy/6rRXPdHte0
-         0jjLRCmG/M+x/Su6UBVFxZ3wAOz0bO5gjtKlxQyLqvNzudyvJ8h4T4kWv2j9P/jQZKa6
-         oSZQ==
+        bh=fRKoNjL6jWlrxhawWelEmzgUZflZ7tZTbZMWzcAmXJQ=;
+        b=l2cUOdOu4lSH7FzjmfnjacGmyDSvRoWuYKsJAHCvBW7dk/F48gqTOL60mvOK+1CY8h
+         due+7LmuM++jTAN70THJJv007QPEuJZ7x8uxGt9RqjCSpqCWM+bJNBMUjezfVEoEcHPU
+         fojpAFXkh9i/VDEAT9xPpeSFlE+WLqYKk2T1QqTlkOnXOpi8PuDgLQY3Or4aqi/Qhvsi
+         0W2Zf2raR3ZyCe1vyOY01rNbEuwpYwSIZXko6CxBqUrgJT/xoTl1Cn9n0iTG4QrDwf1V
+         VtQpHdW3QHJLRaUQzm2hqrx7d5jwy6DLo0ie+UkEEKIjzZ0GLanp89cuEOukVz6Olkx5
+         A1LQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1695412250; x=1696017050;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=PmgqWi7Cs5VukM9Vh3fswTlGXwbBtsWGyteqiqH/Gdg=;
-        b=d+c4LmBuilPaBVgg1lt9F9CGxuj84IFL12hPK7K9uNpcT+4BkEjsAFMN7ByWEKS8IJ
-         6cAl+kW2M7f5GNx3GI58uO2mAQDY9mSMPyqS5dYIuNdN98f25Kbz4Clxc/PLe6peTY0S
-         NqZ7N0NNEMBwIv9/jzTEXe8/gfaJHFKk980+6ZTH3KyNEKy1C6h62XonRUMIbH/DSiQh
-         4cE2N1yoGY9NsyiFDgSX+q/Qpro75MwAVSmJU7w1ZAP8/+VgpvLm1ysqqzeLqIqc8Q8t
-         fpV77Zwax30DiKh1lu2eWAkNS7ZvlXZhoTIYNZRBKfWacHgpmwysGbIMzePQZ2HbzxaH
-         5WWA==
-X-Gm-Message-State: AOJu0Yxf6Dczv+5YOs6rCF1kkGpJ48flxyMfDqn/MzvHmuGRcZtlHyiG
-        WXFX/LhlHlxs2qSaSmELJyZCT3U+W5E=
-X-Google-Smtp-Source: AGHT+IGfn3Iea6vjy7I5uGpKs1/2d43+xoyLaWCytEbSU+7r1AGdSid2tGIqaF8W5XeYv5mWkRMW0Q==
-X-Received: by 2002:a5d:4011:0:b0:320:371:afbf with SMTP id n17-20020a5d4011000000b003200371afbfmr650423wrp.10.1695412249413;
+        bh=fRKoNjL6jWlrxhawWelEmzgUZflZ7tZTbZMWzcAmXJQ=;
+        b=KFx5w77KleBmB2zlW5R1Vr99uTd6Vb80mcCsgFM2FWMZAGR9WRtIyvm1jLzuVzqwJZ
+         Ks+XAVTvB8jch3mzcT3tcAfqmowkQgIdQHuZ7rGzAZpKh3y42YLbj5EDzzFvXwT4mYGK
+         TKpbFTv68FGIOx+74VU3NdSwuuzDgskqB7ntm7nh+IQ3ASbd6Xow7Nij/x3ZndLs4uxS
+         lPmAfg6uppooA2EjzbjCZysHT4i7ltlbsHeuNciie7dKfj/KLZyIyqrNMvfqWHCr/Iuq
+         Z9zgQgJXgzevVoCmZzLOyygkG6CA4WXCBSgRX+/t5NGo7iRoKD/EZqENdQy6V1/QpRL2
+         Hc4A==
+X-Gm-Message-State: AOJu0Yx0DOxjnw6Pb494QJeEi5g4BeU7PekR6c91O97Pj/RnfGTZTDit
+        wY6gXjTDQrNV0hIZGk9e9Pif3lTnLkw=
+X-Google-Smtp-Source: AGHT+IGDKmmq2m1cEqm6ZAHRffpqlmbNhKqOHnyF+DWiNmEdmL//B/xFRzBKShl5QF/TSNHYUCHWIw==
+X-Received: by 2002:a5d:49c1:0:b0:31f:fa1d:898 with SMTP id t1-20020a5d49c1000000b0031ffa1d0898mr499954wrs.47.1695412249971;
         Fri, 22 Sep 2023 12:50:49 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p2-20020a5d68c2000000b0031431fb40fasm5197699wrw.89.2023.09.22.12.50.49
+        by smtp.gmail.com with ESMTPSA id a8-20020a056000100800b003197efd1e7bsm5141739wrx.114.2023.09.22.12.50.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 22 Sep 2023 12:50:49 -0700 (PDT)
-Message-ID: <47186a09b24522bacf459006330fd469766072f2.1695412245.git.gitgitgadget@gmail.com>
+Message-ID: <da52cec42e1a64221a7daa958f841ab5e5bd304e.1695412245.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1563.v3.git.1695412245.gitgitgadget@gmail.com>
 References: <pull.1563.v2.git.1694240177.gitgitgadget@gmail.com>
         <pull.1563.v3.git.1695412245.gitgitgadget@gmail.com>
 From:   "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 22 Sep 2023 19:50:40 +0000
-Subject: [PATCH v3 4/9] trailer: rename *_DEFAULT enums to *_UNSPECIFIED
+Date:   Fri, 22 Sep 2023 19:50:41 +0000
+Subject: [PATCH v3 5/9] commit: ignore_non_trailer computes number of bytes to
+ ignore
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,135 +73,89 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Linus Arver <linusa@google.com>
 
-Do not use *_DEFAULT as a suffix to the enums, because the word
-"default" is overloaded. The following are two examples of the ambiguity
-of the word "default":
+ignore_non_trailer() returns the _number of bytes_ that should be
+ignored from the end of the log message. It does not by itself "ignore"
+anything.
 
-(1) "Default" can mean using the "default" values that are hardcoded
-    in trailer.c as
-
-        default_conf_info.where = WHERE_END;
-        default_conf_info.if_exists = EXISTS_ADD_IF_DIFFERENT_NEIGHBOR;
-        default_conf_info.if_missing = MISSING_ADD;
-
-    in ensure_configured(). These values are referred to as "the
-    default" in the docs for interpret-trailers. These defaults are used
-    if no "trailer.*" configurations are defined.
-
-(2) "Default" can also mean the "trailer.*" configurations themselves,
-    because these configurations are used by "default" (ahead of the
-    hardcoded defaults in (1)) if no command line arguments are
-    provided. This concept of defaulting back to the configurations was
-    introduced in 0ea5292e6b (interpret-trailers: add options for
-    actions, 2017-08-01).
-
-In addition, the corresponding *_DEFAULT values are chosen when the user
-provides the "--no-where", "--no-if-exists", or "--no-if-missing" flags
-on the command line. These "--no-*" flags are used to clear previously
-provided flags of the form "--where", "--if-exists", and "--if-missing".
-Using these "--no-*" flags undoes the specifying of these flags (if
-any), so using the word "UNSPECIFIED" is more natural here.
-
-So instead of using "*_DEFAULT", use "*_UNSPECIFIED" because this
-signals to the reader that the *_UNSPECIFIED value by itself carries no
-meaning (it's a zero value and by itself does not "default" to anything,
-necessitating the need to have some other way of getting to a useful
-value).
+Rename this function to remove the leading "ignore" verb, to sound more
+like a quantity than an action.
 
 Signed-off-by: Linus Arver <linusa@google.com>
 ---
- trailer.c | 17 ++++++++++-------
- trailer.h |  6 +++---
- 2 files changed, 13 insertions(+), 10 deletions(-)
+ builtin/commit.c | 2 +-
+ builtin/merge.c  | 2 +-
+ commit.c         | 2 +-
+ commit.h         | 4 ++--
+ trailer.c        | 2 +-
+ 5 files changed, 6 insertions(+), 6 deletions(-)
 
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 7da5f924484..d1785d32db1 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -900,7 +900,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 		strbuf_stripspace(&sb, '\0');
+ 
+ 	if (signoff)
+-		append_signoff(&sb, ignore_non_trailer(sb.buf, sb.len), 0);
++		append_signoff(&sb, ignored_log_message_bytes(sb.buf, sb.len), 0);
+ 
+ 	if (fwrite(sb.buf, 1, sb.len, s->fp) < sb.len)
+ 		die_errno(_("could not write commit template"));
+diff --git a/builtin/merge.c b/builtin/merge.c
+index de68910177f..6cbbebca13d 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -891,7 +891,7 @@ static void prepare_to_commit(struct commit_list *remoteheads)
+ 				_(no_scissors_editor_comment), comment_line_char);
+ 	}
+ 	if (signoff)
+-		append_signoff(&msg, ignore_non_trailer(msg.buf, msg.len), 0);
++		append_signoff(&msg, ignored_log_message_bytes(msg.buf, msg.len), 0);
+ 	write_merge_heads(remoteheads);
+ 	write_file_buf(git_path_merge_msg(the_repository), msg.buf, msg.len);
+ 	if (run_commit_hook(0 < option_edit, get_index_file(), NULL,
+diff --git a/commit.c b/commit.c
+index b3223478bc2..4440fbabb83 100644
+--- a/commit.c
++++ b/commit.c
+@@ -1769,7 +1769,7 @@ const char *find_commit_header(const char *msg, const char *key, size_t *out_len
+  * Returns the number of bytes from the tail to ignore, to be fed as
+  * the second parameter to append_signoff().
+  */
+-size_t ignore_non_trailer(const char *buf, size_t len)
++size_t ignored_log_message_bytes(const char *buf, size_t len)
+ {
+ 	size_t boc = 0;
+ 	size_t bol = 0;
+diff --git a/commit.h b/commit.h
+index 28928833c54..1cc872f225f 100644
+--- a/commit.h
++++ b/commit.h
+@@ -294,8 +294,8 @@ const char *find_header_mem(const char *msg, size_t len,
+ const char *find_commit_header(const char *msg, const char *key,
+ 			       size_t *out_len);
+ 
+-/* Find the end of the log message, the right place for a new trailer. */
+-size_t ignore_non_trailer(const char *buf, size_t len);
++/* Find the number of bytes to ignore from the end of a log message. */
++size_t ignored_log_message_bytes(const char *buf, size_t len);
+ 
+ typedef int (*each_mergetag_fn)(struct commit *commit, struct commit_extra_header *extra,
+ 				void *cb_data);
 diff --git a/trailer.c b/trailer.c
-index b6de5d9cb2d..0b66effceb5 100644
+index 0b66effceb5..185b3e2707f 100644
 --- a/trailer.c
 +++ b/trailer.c
-@@ -388,7 +388,7 @@ static void process_trailers_lists(struct list_head *head,
- int trailer_set_where(enum trailer_where *item, const char *value)
+@@ -931,7 +931,7 @@ continue_outer_loop:
+ /* Return the position of the end of the trailers. */
+ static size_t find_trailer_end(const char *buf, size_t len)
  {
- 	if (!value)
--		*item = WHERE_DEFAULT;
-+		*item = WHERE_UNSPECIFIED;
- 	else if (!strcasecmp("after", value))
- 		*item = WHERE_AFTER;
- 	else if (!strcasecmp("before", value))
-@@ -405,7 +405,7 @@ int trailer_set_where(enum trailer_where *item, const char *value)
- int trailer_set_if_exists(enum trailer_if_exists *item, const char *value)
- {
- 	if (!value)
--		*item = EXISTS_DEFAULT;
-+		*item = EXISTS_UNSPECIFIED;
- 	else if (!strcasecmp("addIfDifferent", value))
- 		*item = EXISTS_ADD_IF_DIFFERENT;
- 	else if (!strcasecmp("addIfDifferentNeighbor", value))
-@@ -424,7 +424,7 @@ int trailer_set_if_exists(enum trailer_if_exists *item, const char *value)
- int trailer_set_if_missing(enum trailer_if_missing *item, const char *value)
- {
- 	if (!value)
--		*item = MISSING_DEFAULT;
-+		*item = MISSING_UNSPECIFIED;
- 	else if (!strcasecmp("doNothing", value))
- 		*item = MISSING_DO_NOTHING;
- 	else if (!strcasecmp("add", value))
-@@ -586,7 +586,10 @@ static void ensure_configured(void)
- 	if (configured)
- 		return;
+-	return len - ignore_non_trailer(buf, len);
++	return len - ignored_log_message_bytes(buf, len);
+ }
  
--	/* Default config must be setup first */
-+	/*
-+	 * Default config must be setup first. These defaults are used if there
-+	 * are no "trailer.*" or "trailer.<token>.*" options configured.
-+	 */
- 	default_conf_info.where = WHERE_END;
- 	default_conf_info.if_exists = EXISTS_ADD_IF_DIFFERENT_NEIGHBOR;
- 	default_conf_info.if_missing = MISSING_ADD;
-@@ -701,11 +704,11 @@ static void add_arg_item(struct list_head *arg_head, char *tok, char *val,
- 	new_item->value = val;
- 	duplicate_conf(&new_item->conf, conf);
- 	if (new_trailer_item) {
--		if (new_trailer_item->where != WHERE_DEFAULT)
-+		if (new_trailer_item->where != WHERE_UNSPECIFIED)
- 			new_item->conf.where = new_trailer_item->where;
--		if (new_trailer_item->if_exists != EXISTS_DEFAULT)
-+		if (new_trailer_item->if_exists != EXISTS_UNSPECIFIED)
- 			new_item->conf.if_exists = new_trailer_item->if_exists;
--		if (new_trailer_item->if_missing != MISSING_DEFAULT)
-+		if (new_trailer_item->if_missing != MISSING_UNSPECIFIED)
- 			new_item->conf.if_missing = new_trailer_item->if_missing;
- 	}
- 	list_add_tail(&new_item->list, arg_head);
-diff --git a/trailer.h b/trailer.h
-index ab2cd017567..a689d768c79 100644
---- a/trailer.h
-+++ b/trailer.h
-@@ -5,14 +5,14 @@
- #include "strbuf.h"
- 
- enum trailer_where {
--	WHERE_DEFAULT,
-+	WHERE_UNSPECIFIED,
- 	WHERE_END,
- 	WHERE_AFTER,
- 	WHERE_BEFORE,
- 	WHERE_START
- };
- enum trailer_if_exists {
--	EXISTS_DEFAULT,
-+	EXISTS_UNSPECIFIED,
- 	EXISTS_ADD_IF_DIFFERENT_NEIGHBOR,
- 	EXISTS_ADD_IF_DIFFERENT,
- 	EXISTS_ADD,
-@@ -20,7 +20,7 @@ enum trailer_if_exists {
- 	EXISTS_DO_NOTHING
- };
- enum trailer_if_missing {
--	MISSING_DEFAULT,
-+	MISSING_UNSPECIFIED,
- 	MISSING_ADD,
- 	MISSING_DO_NOTHING
- };
+ static int ends_with_blank_line(const char *buf, size_t len)
 -- 
 gitgitgadget
 
