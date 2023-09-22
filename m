@@ -2,62 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B77F9CD4859
-	for <git@archiver.kernel.org>; Fri, 22 Sep 2023 19:27:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A910CE7AB7
+	for <git@archiver.kernel.org>; Fri, 22 Sep 2023 19:48:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233435AbjIVT1Q convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Fri, 22 Sep 2023 15:27:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38090 "EHLO
+        id S231339AbjIVTsb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Sep 2023 15:48:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229590AbjIVT1Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Sep 2023 15:27:16 -0400
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C0DBA3
-        for <git@vger.kernel.org>; Fri, 22 Sep 2023 12:27:10 -0700 (PDT)
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
-        (authenticated bits=0)
-        by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 38MJOPZT1919026
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 22 Sep 2023 19:24:25 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     "'Ben Boeckel'" <ben.boeckel@kitware.com>
-Cc:     "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>
-References: <ZNffWAgldUZdpQcr@farprobe> <ZQ21NsLmp+xQU5g+@farprobe> <02d701d9ed6f$abcb4b00$0361e100$@nexbridge.com> <ZQ3GAJ/AHsM9e9a6@farprobe> <02e701d9ed78$436b3c60$ca41b520$@nexbridge.com> <xmqqediq2j0g.fsf@gitster.g> <032d01d9ed80$5e569670$1b03c350$@nexbridge.com> <ZQ3ggxA7KOysXrba@farprobe> <033201d9ed85$991c6af0$cb5540d0$@nexbridge.com> <ZQ3leoLhljc+P5wP@farprobe>
-In-Reply-To: <ZQ3leoLhljc+P5wP@farprobe>
-Subject: RE: [BUG] `git describe` doesn't traverse the graph in topological order
-Date:   Fri, 22 Sep 2023 15:27:01 -0400
-Organization: Nexbridge Inc.
-Message-ID: <033c01d9ed8a$c6916f30$53b44d90$@nexbridge.com>
+        with ESMTP id S229495AbjIVTsa (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Sep 2023 15:48:30 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20D4AB9
+        for <git@vger.kernel.org>; Fri, 22 Sep 2023 12:48:23 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8A8171B0C49;
+        Fri, 22 Sep 2023 15:48:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=n/v6SijmAx1SDr7txQfi6TyOGP95VkjdM9PlD7
+        FPt0E=; b=q5idWlvKfd97oBG/H49ijGVlVvJuT4dhqHr+WIu5uEEU86qs9z2qUp
+        JAxhCYafW7Te5ebbR7wFrWLxA8qt/Rjeb258VKkgPe/d3N5zM+zrpHSFDRtZqUCh
+        44uQkt/F9qubnRZ0iH0ZaAFUdmHqIHYqHaq6B9nKl6MF/MDObFm+g=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 81E531B0C48;
+        Fri, 22 Sep 2023 15:48:20 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EBF081B0C47;
+        Fri, 22 Sep 2023 15:48:19 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Linus Arver <linusa@google.com>
+Cc:     Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v2 5/6] trailer: rename *_DEFAULT enums to *_UNSPECIFIED
+In-Reply-To: <owly8r8yt6cr.fsf@fine.c.googlers.com> (Linus Arver's message of
+        "Fri, 22 Sep 2023 11:23:16 -0700")
+References: <pull.1563.git.1691211879.gitgitgadget@gmail.com>
+        <pull.1563.v2.git.1694240177.gitgitgadget@gmail.com>
+        <52958c3557c34992df59e9c10f098f457526702c.1694240177.git.gitgitgadget@gmail.com>
+        <xmqqr0n4v8ul.fsf@gitster.g> <owlyzg1pjx2f.fsf@fine.c.googlers.com>
+        <xmqq1qf1la0q.fsf@gitster.g> <owly8r8yt6cr.fsf@fine.c.googlers.com>
+Date:   Fri, 22 Sep 2023 12:48:18 -0700
+Message-ID: <xmqqil820z25.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQMniK2C5ueFGaecrAkj2WziqqcqsgIDXfPaAV8c8ysBL0/7iQKiZtYXAnm84MABE+XlegDThaDjAeynnB4CTDNPdq0NkXJQ
+Content-Type: text/plain
+X-Pobox-Relay-ID: FB2DBCA0-5980-11EE-AE33-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Friday, September 22, 2023 3:06 PM, Ben Boeckel wrote:
->On Fri, Sep 22, 2023 at 14:49:58 -0400, rsbecker@nexbridge.com wrote:
->> On Friday, September 22, 2023 2:44 PM, Ben Boeckel wrote:
->> >Yes. It is explained that the commit date stored is only to 1 second
->> >granularity. Since the commits are stored in commit-date, an equal
->> >commit date ends up "twisting" the history and traversing some ancestors of
->commits before the commits themsevles.
->> >This loses the "seen" bit tracking that is done and ends up labeling
->> >way more commits as "not part of" ancestors. By sleeping for a
->> >second, the commit dates can be totally ordered reliably.
->>
->> This is going to be awkward to resolve as time_t only resolves
->> (portably) to 1 second intervals. I still would prefer the resolution
->> to be path-based rather than time-based.
->
->I certainly agree, but I'm not sure of the best way of doing that. Do we create/load a
->commit graph and use that for resolving insertion order into the commit heap?
+Linus Arver <linusa@google.com> writes:
 
-I actually thought it worked that way. This may end up in a bigger change than fixing the issue because --first-parent does not appear to be sufficient to resolve the correct tag from your graph. My thought on using multiple commitish values to do that may help, but implementing that could lead to an O(n*m) scan (n=max commit tree width, m=depth to tag), plus a commitish hash lookup.
+> ... I prefer the
+> WHERE_UNSPECIFIED as in this patch because the WHERE_DEFAULT is
+> ambiguous on its own (i.e., WHERE_DEFAULT could mean that we either use
+> the default value WHERE_END in default_conf_info, or it could mean that
+> we fall back to the configuration variables (where it could be something
+> else)).
 
+Yup.  "Turning something that is left UNSPECIFIED after command line
+options and configuration files are processed into the hardcoded
+DEFAULT" is one mental model that is easy to explain.
+
+I however am not sure if it is easier than "Setting something to
+hardcoded DEFAULT before command line options and configuration
+files are allowed to tweak it, and if nobody touches it, then it
+gets the hardcoded DEFAULT value in the end", which is another valid
+mental model, though.  If both can be used, I'd personally prefer
+the latter, and reserve the "UNSPECIFIED to DEFAULT" pattern to
+signal that we are dealing with a case where the simpler pattern
+without UNSPECIFIED cannot solve.
+
+The simpler pattern would not work, when the default is defined
+depending on a larger context.  Imagine we have two Boolean
+variables, A and B, where A defaults to false, and B defaults to
+some value derived from the value of A (say, opposite of A).
+
+In the most natural implementation, you'd initialize A to false and
+B to unspecified, let command line options and configuration
+variables to set them to true or false, and after all that, you do
+not have to tweak A's value (it will be left to false that is the
+default unless the user or the configuration gave an explicit
+value), but you need to check if B is left unspecified and tweak it
+to true or false using the final value of A.
+
+For a variable with such a need like B, we cannot avoid having
+"unspecified".  If you initialize it to false (or true), after the
+command line and the configuration files are read and you find B is
+set to false (or true), you cannot tell if the user or the
+configuration explicitly set B to false (or true), in which case you
+do not want to futz with its value based on what is in A, or it is
+false (or true) only because nobody touched it, in which case you
+need to compute its value based on what is in A.
+
+And that is why I asked if we need to special case "the user did not
+touch and the variable is left untouched" in the trailer subsystem.
+
+Thanks.
