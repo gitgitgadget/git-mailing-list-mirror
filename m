@@ -2,122 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E0CBCD4844
-	for <git@archiver.kernel.org>; Fri, 22 Sep 2023 16:44:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 549C7CD4846
+	for <git@archiver.kernel.org>; Fri, 22 Sep 2023 16:51:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232674AbjIVQoW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Sep 2023 12:44:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58024 "EHLO
+        id S229614AbjIVQvW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Sep 2023 12:51:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229831AbjIVQoV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Sep 2023 12:44:21 -0400
-Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E185BA1
-        for <git@vger.kernel.org>; Fri, 22 Sep 2023 09:44:15 -0700 (PDT)
-Received: by mail-yb1-xb32.google.com with SMTP id 3f1490d57ef6-d77ad095f13so2786457276.2
-        for <git@vger.kernel.org>; Fri, 22 Sep 2023 09:44:15 -0700 (PDT)
+        with ESMTP id S229583AbjIVQvV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Sep 2023 12:51:21 -0400
+Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DCC0114
+        for <git@vger.kernel.org>; Fri, 22 Sep 2023 09:51:15 -0700 (PDT)
+Received: by mail-qk1-x72f.google.com with SMTP id af79cd13be357-770ef334b4fso140537285a.1
+        for <git@vger.kernel.org>; Fri, 22 Sep 2023 09:51:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695401055; x=1696005855; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=H5U+PrwaKUNQ232kHEiR0b/YEG0wS6UMiBCI6a7cQM8=;
-        b=VonAqzS4uqMDUvHAC+cPesAhVKaOjbIPB4oNjTjDpJe1L8xXEvQZE0MGwVvs/2KwE8
-         atLKiJ62PmXqbfOHNiU+4NJI1/GfqQ4cNkEBj0WZ6YTvdIR7qI0OeBKJHE2OqfR0cj1+
-         P+hmwhhHYyej/NR4suLtcxo3zMOo20VZzMjM1xdbWkgT/3v6Dq3pB+r44lKoPeMN9h98
-         5GSozgr50a+Qv/ZQXr/Pj8Arxg3cNl9iuK0oqKslmREzRmVhZ5EOPgM+dldLuCF4IP1Z
-         epT8CTSvBSFiYpf4fPCcR7byjqF/4rHPm001lxWkctzUMApPvhTF9diMAanPpr+et4pN
-         BULQ==
+        d=kitware.com; s=google; t=1695401474; x=1696006274; darn=vger.kernel.org;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GMNgPJcIyRmrL59F/0B2w1gF2HcSkOyRurmXEjBY45o=;
+        b=BOYJYcn7oht7EpLoiuGPRWHmQclpX0feauKRZWgX8QphwSzUVSRIAWHRIrnYHODHQm
+         4z8l8OZb0zwaG+pS/vbK2YiUK4U/DFz8VCY4z3BOa+S4GyXW2l84+SX03XtY0Dh533Ma
+         MDqXMB7747RkvwWnUzUbYQpUupU180O1iZP6o=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695401055; x=1696005855;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=H5U+PrwaKUNQ232kHEiR0b/YEG0wS6UMiBCI6a7cQM8=;
-        b=an/LfTkSJF3p8Cms1h9i9t8n4qhUc/IyqXF8OOf1h9qBm2tzS/cA4zNRXB0h1wZ9M8
-         1gpPu+pgv/HXA9UyvxstaTY00sABHKyTjT8yRo5INVMRqyHluL6h1dZ3LHlSjEMy6WKS
-         noFIgI9A60pu0H15vmUX5tzdriSVIjdZE+Q1Mwu8ro2Rr/kdR0JKTUUA94yhVRXLehK2
-         lqj7ylRPrF3Wf5S1ypyUg7JjIwa6Ub/Q/s0dFWWYLVW1gl0OQ0C6zfClEYiFxY/o56rv
-         cp+UjcfAzVIUsfLqMh2ZmXu/cRnXjFtQ73AiMEy9N+VaJUGLHwC5RisM375r42dOsKFY
-         YM7g==
-X-Gm-Message-State: AOJu0YwQ5V2xhqrBU9WUKJUR6Pd6jE0hgIakfPDfj2MC77VvELdDT6UG
-        cBP6nOHqklMUk74r4N0B83ZDT4x1qYs=
-X-Google-Smtp-Source: AGHT+IHHgUo7D4kreUBa5GRiCD+2mdJY7imn8x0NHkmA+wZLOxsNDXh6J4vEjHD0q60/yVVbtVvj7g==
-X-Received: by 2002:a5b:b0e:0:b0:d7e:8603:abc6 with SMTP id z14-20020a5b0b0e000000b00d7e8603abc6mr9065818ybp.5.1695401054970;
-        Fri, 22 Sep 2023 09:44:14 -0700 (PDT)
-Received: from markl5i.lan ([2600:4040:266f:b900::387])
-        by smtp.gmail.com with ESMTPSA id fc11-20020ad44f2b000000b0065ae23ef077sm591198qvb.126.2023.09.22.09.44.14
+        d=1e100.net; s=20230601; t=1695401474; x=1696006274;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=GMNgPJcIyRmrL59F/0B2w1gF2HcSkOyRurmXEjBY45o=;
+        b=FbNOhBYo7Ga0XUcZPKfQcFyCTNFyX4j5rgrJbE4nyeZDAs4/C4Nmf+Kkkeo+3Qfy/o
+         GLLwN+yknHq4NPe4SxBCpSpruc1lc3OBb/qVknTIZcsa3A2nkf+MfJtbIELVx3FOSCgW
+         6plxeEDmVztoDyaXVc6r9edHKoy/75gF6LcjeVlfA2hLfi9nmErjQYn4YkvF7Cr8uL2s
+         aaCjybKGWeDMcyO3+TX14GxWnLyfas9eheYL3WsaFnnudIolH6U5jt/i2SjJ5Uuip7j8
+         UfOA5zPTLVbTVXMREC0obECuSECIqjHj9zNDOukgkYTaJu4yiQScMrDg95vSoNE+Dsoy
+         h2nQ==
+X-Gm-Message-State: AOJu0Yw0K01qylb00CB5PJGQ4OL9EkfNBE91mFqErKN1Hkls+wsLwMH1
+        3XtcR0q0AnDju/MgNXFOy7x9IkAyZICliYSaYmWbrw==
+X-Google-Smtp-Source: AGHT+IFlqgAhukYFHYxyVI+WGfYPtxxYfBrPZV7RUyaZWD2HlXn+IC5W4EmH8O/tWgUOLgjg3Ytuyg==
+X-Received: by 2002:a05:620a:2489:b0:76c:a952:c70f with SMTP id i9-20020a05620a248900b0076ca952c70fmr313654qkn.35.1695401474422;
+        Fri, 22 Sep 2023 09:51:14 -0700 (PDT)
+Received: from localhost (cpe-142-105-146-128.nycap.res.rr.com. [142.105.146.128])
+        by smtp.gmail.com with ESMTPSA id l7-20020a05620a0c0700b0077414748e92sm912946qki.96.2023.09.22.09.51.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Sep 2023 09:44:14 -0700 (PDT)
-From:   Mark Levedahl <mlevedahl@gmail.com>
-To:     git@vger.kernel.org
-Cc:     me@yadavpratyush.com,
-        "Mark Levedahl Date: Tue, 19 Sep 2023" <mlevedahl@gmail.com>
-Subject: [PATCH] git-gui - simplify _open_stdout_stderr
-Date:   Fri, 22 Sep 2023 12:44:12 -0400
-Message-ID: <20230922164412.130504-1-mlevedahl@gmail.com>
-X-Mailer: git-send-email 2.41.0.99.19
+        Fri, 22 Sep 2023 09:51:13 -0700 (PDT)
+Date:   Fri, 22 Sep 2023 12:51:12 -0400
+From:   'Ben Boeckel' <ben.boeckel@kitware.com>
+To:     rsbecker@nexbridge.com
+Cc:     git@vger.kernel.org
+Subject: Re: [BUG] `git describe` doesn't traverse the graph in topological
+ order
+Message-ID: <ZQ3GAJ/AHsM9e9a6@farprobe>
+References: <ZNffWAgldUZdpQcr@farprobe>
+ <ZQ21NsLmp+xQU5g+@farprobe>
+ <02d701d9ed6f$abcb4b00$0361e100$@nexbridge.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <02d701d9ed6f$abcb4b00$0361e100$@nexbridge.com>
+User-Agent: Mutt/2.2.9 (2022-11-12)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Mark Levedahl Date: Tue, 19 Sep 2023" <mlevedahl@gmail.com>
+On Fri, Sep 22, 2023 at 12:13:00 -0400, rsbecker@nexbridge.com wrote:
+> On Friday, September 22, 2023 11:40 AM, Ben Boeckel wrote:
+> >On Sat, Aug 12, 2023 at 15:36:56 -0400, Ben Boeckel wrote:
+> >> I found an issue where `git describe` doesn't find a "closer" tag than
+> >> another tag as the correct one to base the description off of. I have
+> >> a reproducer, but I'll first give details of the real world issue.
+> >
+> >Bump. Can anyone provide guidance as to what the best solution to this might be?
+> 
+> Can you provide details? `git describe` is sensitive to --first-parent
+> and whether the tag has annotations.
 
-Since b792230 ("git-gui: Show a progress meter for checking out files",
-2007-07-08), git-gui includes a workaround for Tcl that does not support
-using 2>@1 to redirect stderr to stdout. Tcl added such support in
-8.4.7, released in 2004, while the later 8.4.14 still predated git-gui.
-But, Cygwin was stuck on an 8.4.1 Tcl variant until 2011, hence the need
-for this workaround. Commit 7145c65 recently removed much other specific
-code for that obsolete Cygwin Tcl/Tk, but missed this piece.
+I provided more details and a reproducer in the original email:
 
-Also, Tcl since 8.5 explicitly supports 2>@1 across all platforms, and
-git-gui requires Tcl >= 8.5, further evidence the workaround is
-obsolete.  (I did test that 2>@1 works as-expected on current Linux,
-Cygwin, and Git For Windows Tcl packages).
+    https://lore.kernel.org/git/ZNffWAgldUZdpQcr@farprobe/T/#u
 
-Remove the workaround and exploit concat's documented capability to
-handle both scalar and list arguments, leaving a much simpler function.
-This eliminates any question that cmd might be executed twice.
+Thanks,
 
-Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
----
- git-gui.sh | 21 ++-------------------
- 1 file changed, 2 insertions(+), 19 deletions(-)
-
-diff --git a/git-gui.sh b/git-gui.sh
-index 8bc8892..a5d008d 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -583,25 +583,8 @@ proc git {args} {
- 
- proc _open_stdout_stderr {cmd} {
- 	_trace_exec $cmd
--	if {[catch {
--			set fd [open [concat [list | ] $cmd] r]
--		} err]} {
--		if {   [lindex $cmd end] eq {2>@1}
--		    && $err eq {can not find channel named "1"}
--			} {
--			# Older versions of Tcl 8.4 don't have this 2>@1 IO
--			# redirect operator.  Fallback to |& cat for those.
--			# The command was not actually started, so its safe
--			# to try to start it a second time.
--			#
--			set fd [open [concat \
--				[list | ] \
--				[lrange $cmd 0 end-1] \
--				[list |& cat] \
--				] r]
--		} else {
--			error $err
--		}
-+	if {[catch {set fd [open [concat | $cmd] r]} err]} {
-+		error $err
- 	}
- 	fconfigure $fd -eofchar {}
- 	return $fd
--- 
-2.41.0.99.19
-
+--Ben
