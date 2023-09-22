@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EBF3FCD4F59
-	for <git@archiver.kernel.org>; Fri, 22 Sep 2023 10:42:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 556FCCD4F49
+	for <git@archiver.kernel.org>; Fri, 22 Sep 2023 10:42:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233434AbjIVKmW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Sep 2023 06:42:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38532 "EHLO
+        id S233438AbjIVKmY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Sep 2023 06:42:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229664AbjIVKmQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Sep 2023 06:42:16 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD2B5AC
-        for <git@vger.kernel.org>; Fri, 22 Sep 2023 03:42:07 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id 5b1f17b1804b1-40537481094so15191005e9.0
-        for <git@vger.kernel.org>; Fri, 22 Sep 2023 03:42:07 -0700 (PDT)
+        with ESMTP id S233411AbjIVKmR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Sep 2023 06:42:17 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1FA6C2
+        for <git@vger.kernel.org>; Fri, 22 Sep 2023 03:42:09 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id ffacd0b85a97d-3214d4ecd39so1797102f8f.1
+        for <git@vger.kernel.org>; Fri, 22 Sep 2023 03:42:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695379326; x=1695984126; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1695379328; x=1695984128; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=eiJu0GvhbeYoe+FlgfBkkMNR1uBcKt9DGPcwDrnOKtY=;
-        b=c7RXDY/DpiDqmzlIiRMovM/I+a4ZYB6FezR5rmqRvU5BXHYl0P+ctQ+8lYw+bSYXsC
-         Y/aQBH5lfK0EojMPqvxdP3FhvE8X9MHsIXKhHfR0lMNo5+j+OX/IwFsLljipO08tOm7P
-         RUTV9hxQfTsQ6FLztQ02GVAVakCozvLxjvH+TjBNAAtbD5oyombbsRDphNqG/aceXZ39
-         jm2EIimLemuim+14XwDoJ86PtP0udwxq/mr6x6hyIPGSKE7sKGzbkWaSPpvDgjyaGA3+
-         nm/re7t+PqCEjucO8r/+HpSiY09zXO6i9OljfhzRHB/Y5GmLjO5S5a4zkiRKuxB4/8hl
-         IqzA==
+        bh=bA5cfszGtYv0OuO2RVRJESFemcwfQHB3A1NAIX4e30w=;
+        b=TbDB/s4T3ZhyiIYgM4kCAUyCC5ReFa6DID6Oe+aZ+fJ4eOz/23HX/M3d1G6hb/FrZG
+         eTiD3GOSsEjM16S0ORkcyP720KY5p610yRO4KEG5FFF57IPPQxDeZd5c+lSzYFMoHKkl
+         kv2F2so+j33vb00m/mIZOzYps84KUxHfzLuFAjo/aRMdtHo6+8BTUnSn37cKdRZZUtJ3
+         x0XUl9IVG7/t8nE1Ha3zmZpPgsKDgWhw3j0RrCYqfO2dS+LcPrjpfGIYOLnQi6cdT3AX
+         0P6ANBtFTN4dnZuia6MGZ6UyAxVfFC6+1L+k3GMi8XsDGx8zinfEPSF7EWcwWUnP5PJi
+         Zy2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695379326; x=1695984126;
+        d=1e100.net; s=20230601; t=1695379328; x=1695984128;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=eiJu0GvhbeYoe+FlgfBkkMNR1uBcKt9DGPcwDrnOKtY=;
-        b=LFSf0kmN5fIP0/ZSEo1c8LNI8T/oeB+YFVyK/uKZOMbwrCYw84mNQPN0WzhIz1ckso
-         M/GA8EsB3OIwlM7DdR/MTIRQBqHt0R/zM3CDNtc3nGn38+4ztAynFtVxOcffopPeAZKS
-         W5J4QyUe+5PFgE+XM3zRvMrcG1v1a69HeJAnasKRan/apcWHw2DWGHD3FLQJLmaFx7Mv
-         qUl4lRDzbwu2fsRiTNjB74YXrnBz2MUCY8cXuXNyrh/aiwHEyRQEG8jc9/HhPG6roOE/
-         M6r3LB1aEZPq+2ZnJ8LaatFRjXXfz6CtFlQqR4L8MvN3i/7h+GHccq2PRokxOIlH8Pw8
-         ZbUg==
-X-Gm-Message-State: AOJu0YzTwcu01P/pi6OfFZNy3tUGke7MI0NQ9uOqV6gHCTRiAVTJywoH
-        32bXpYVu0j7ciE7K/YX6xsdaVb6LO/4=
-X-Google-Smtp-Source: AGHT+IEYvX71NvdSQi36VPXnu36aWyx1CMki4TXv8PH88UwbasHfaMr6/lKCwz/e6tWyE5G9oNeDag==
-X-Received: by 2002:a7b:c011:0:b0:3fe:e842:60a0 with SMTP id c17-20020a7bc011000000b003fee84260a0mr7022850wmb.31.1695379325545;
-        Fri, 22 Sep 2023 03:42:05 -0700 (PDT)
+        bh=bA5cfszGtYv0OuO2RVRJESFemcwfQHB3A1NAIX4e30w=;
+        b=ip8Dlk20Kh7c8b3UYJR+NbEmOB+DBqqvwnJJzmDX3QfKKUoNAMmbb9qwF1kKvU6CE4
+         x7I5aaQprc69YtEfxNMxVCaAvs1JZD0RcCA4nYG+rTITylWoPuWX5BuP4xVRdGPw6aBt
+         Uo9eLcBIWuI3g9utvFu90C3B8hOAg5aXICktlxDbpC9IJx+QK1XBaNNyuQZkrR4Fb9UP
+         rgDFoLUtIT3U8eZQiCG80PwrwZJ2kZQvIiOVBBKV+n+m+Z138yu0i69Fvoa9cXs7NqZt
+         3UU3dKyXYsxXPNeYFpg7iLdDkcsQIXQA3efxBW+UL/UdK84Iio4ObUmKl6/zE3BbhNPe
+         o3Rw==
+X-Gm-Message-State: AOJu0YxsBPg4L/dKoPCqDEYlBXRCQPPT7FWLbfO993HdDhnMfPF8ztCl
+        FVlOVwgRNknWVpgWx9ujjNADvm8AJWY=
+X-Google-Smtp-Source: AGHT+IHsD2jMYiyMFPjFUjFFpT5SBYFBb8Eh+jbA+32CUdJ7NQUlO/CwxqR0UKx4ltYIP+pcqu00CQ==
+X-Received: by 2002:adf:f091:0:b0:320:67:5580 with SMTP id n17-20020adff091000000b0032000675580mr7325008wro.5.1695379327696;
+        Fri, 22 Sep 2023 03:42:07 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a21-20020a05600c2d5500b004053e9276easm1259040wmg.32.2023.09.22.03.42.05
+        by smtp.gmail.com with ESMTPSA id p14-20020adfe60e000000b003197b85bad2sm4140882wrm.79.2023.09.22.03.42.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Sep 2023 03:42:05 -0700 (PDT)
-Message-ID: <8cb92968c5ebd38f328ed325ddf7f2e531dc9190.1695379323.git.gitgitgadget@gmail.com>
+        Fri, 22 Sep 2023 03:42:07 -0700 (PDT)
+Message-ID: <14cdefff08244f9b5e2ee1fa2a78cfd3e58c14d2.1695379323.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1588.git.1695379323.gitgitgadget@gmail.com>
 References: <pull.1588.git.1695379323.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 22 Sep 2023 10:41:58 +0000
-Subject: [PATCH 1/6] ci: add a GitHub workflow to submit Coverity scans
+Date:   Fri, 22 Sep 2023 10:42:01 +0000
+Subject: [PATCH 4/6] coverity: support building on Windows
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,109 +68,115 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Coverity is a static analysis tool that detects and generates reports on
-various security and code quality issues.
+By adding the repository variable `ENABLE_COVERITY_SCAN_ON_OS` with a
+value, say, `["windows-latest"]`, this GitHub workflow now runs on
+Windows, allowing to analyze Windows-specific issues.
 
-It is particularly useful when diagnosing memory safety issues which may
-be used as part of exploiting a security vulnerability.
-
-Coverity's website provides a service that accepts "builds" (which
-contains the object files generated during a standard build as well as a
-database generated by Coverity's scan tool).
-
-Let's add a GitHub workflow to automate all of this. To avoid running it
-without appropriate Coverity configuration (e.g. the token required to
-use Coverity's services), the job only runs when the repository variable
-"ENABLE_COVERITY_SCAN_FOR_BRANCHES" has been configured accordingly (see
-https://docs.github.com/en/actions/learn-github-actions/variables for
-details how to configure repository variables): It is expected to be a
-valid JSON array of branch strings, e.g. `["main", "next"]`.
-
-In addition, this workflow requires two repository secrets:
-
-- COVERITY_SCAN_EMAIL: the email to send the report to, and
-
-- COVERITY_SCAN_TOKEN: the Coverity token (look in the Project Settings
-  tab of your Coverity project).
-
-Note: The initial version of this patch used
-`vapier/coverity-scan-action` to benefit from that Action's caching of
-the Coverity tool, which is rather large. Sadly, that Action only
-supports Linux, and we want to have the option of building on Windows,
-too. Besides, in the meantime Coverity requires `cov-configure` to be
-runantime, and that Action was not adjusted accordingly, i.e. it seems
-not to be maintained actively. Therefore it would seem prudent to
-implement the steps manually instead of using that Action.
-
-Initial-patch-by: Taylor Blau <me@ttaylorr.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- .github/workflows/coverity.yml | 56 ++++++++++++++++++++++++++++++++++
- 1 file changed, 56 insertions(+)
- create mode 100644 .github/workflows/coverity.yml
+ .github/workflows/coverity.yml | 56 ++++++++++++++++++++++++++++++----
+ 1 file changed, 50 insertions(+), 6 deletions(-)
 
 diff --git a/.github/workflows/coverity.yml b/.github/workflows/coverity.yml
-new file mode 100644
-index 00000000000..24408f6282c
---- /dev/null
+index 8aac00bb20f..70ba3f97c18 100644
+--- a/.github/workflows/coverity.yml
 +++ b/.github/workflows/coverity.yml
-@@ -0,0 +1,56 @@
-+name: Coverity
-+
-+# This GitHub workflow automates submitting builds to Coverity Scan. To enable it,
-+# set the repository variable `ENABLE_COVERITY_SCAN_FOR_BRANCHES` (for details, see
-+# https://docs.github.com/en/actions/learn-github-actions/variables) to a JSON
-+# string array containing the names of the branches for which the workflow should be
-+# run, e.g. `["main", "next"]`.
+@@ -12,31 +12,61 @@ name: Coverity
+ # email to which the Coverity reports should be sent and the latter can be
+ # obtained from the Project Settings tab of the Coverity project).
+ #
++# The workflow runs on `ubuntu-latest` by default. This can be overridden by setting
++# the repository variable `ENABLE_COVERITY_SCAN_ON_OS` to a JSON string array specifying
++# the operating systems, e.g. `["ubuntu-latest", "windows-latest"]`.
 +#
-+# In addition, two repository secrets must be set (for details how to add secrets, see
-+# https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
-+# `COVERITY_SCAN_EMAIL` and `COVERITY_SCAN_TOKEN`. The former specifies the
-+# email to which the Coverity reports should be sent and the latter can be
-+# obtained from the Project Settings tab of the Coverity project).
+ # By default, the builds are submitted to the Coverity project `git`. To override this,
+ # set the repository variable `COVERITY_PROJECT`.
+ 
+ on:
+   push:
+ 
++defaults:
++  run:
++    shell: bash
 +
-+on:
-+  push:
-+
-+jobs:
-+  coverity:
-+    if: contains(fromJSON(vars.ENABLE_COVERITY_SCAN_FOR_BRANCHES || '[""]'), github.ref_name)
-+    runs-on: ubuntu-latest
-+    env:
-+      COVERITY_PROJECT: git
-+      COVERITY_LANGUAGE: cxx
-+      COVERITY_PLATFORM: linux64
-+    steps:
-+      - uses: actions/checkout@v3
-+      - run: ci/install-dependencies.sh
-+        env:
-+          runs_on_pool: ubuntu-latest
-+
-+      - name: download the Coverity Build Tool (${{ env.COVERITY_LANGUAGE }} / ${{ env.COVERITY_PLATFORM}})
-+        run: |
-+          curl https://scan.coverity.com/download/$COVERITY_LANGUAGE/$COVERITY_PLATFORM \
-+            --no-progress-meter \
-+            --output $RUNNER_TEMP/cov-analysis.tgz \
-+            --data "token=${{ secrets.COVERITY_SCAN_TOKEN }}&project=$COVERITY_PROJECT"
-+      - name: extract the Coverity Build Tool
-+        run: |
-+          mkdir $RUNNER_TEMP/cov-analysis &&
-+          tar -xzf $RUNNER_TEMP/cov-analysis.tgz --strip 1 -C $RUNNER_TEMP/cov-analysis
-+      - name: build with cov-build
-+        run: |
-+          export PATH="$RUNNER_TEMP/cov-analysis/bin:$PATH" &&
-+          cov-configure --gcc &&
-+          cov-build --dir cov-int make -j$(nproc)
-+      - name: package the build
-+        run: tar -czvf cov-int.tgz cov-int
-+      - name: submit the build to Coverity Scan
-+        run: |
-+          curl \
-+            --form token="${{ secrets.COVERITY_SCAN_TOKEN }}" \
-+            --form email="${{ secrets.COVERITY_SCAN_EMAIL }}" \
-+            --form file=@cov-int.tgz \
-+            --form version="${{ github.sha }}" \
-+            "https://scan.coverity.com/builds?project=$COVERITY_PROJECT"
+ jobs:
+   coverity:
+     if: contains(fromJSON(vars.ENABLE_COVERITY_SCAN_FOR_BRANCHES || '[""]'), github.ref_name)
+-    runs-on: ubuntu-latest
++    strategy:
++      matrix:
++        os: ${{ fromJSON(vars.ENABLE_COVERITY_SCAN_ON_OS || '["ubuntu-latest"]') }}
++    runs-on: ${{ matrix.os }}
+     env:
+       COVERITY_PROJECT: ${{ vars.COVERITY_PROJECT || 'git' }}
+       COVERITY_LANGUAGE: cxx
+-      COVERITY_PLATFORM: linux64
+     steps:
+       - uses: actions/checkout@v3
++      - name: install minimal Git for Windows SDK
++        if: contains(matrix.os, 'windows')
++        uses: git-for-windows/setup-git-for-windows-sdk@v1
+       - run: ci/install-dependencies.sh
++        if: contains(matrix.os, 'ubuntu')
+         env:
+-          runs_on_pool: ubuntu-latest
++          runs_on_pool: ${{ matrix.os }}
+ 
+       # The Coverity site says the tool is usually updated twice yearly, so the
+       # MD5 of download can be used to determine whether there's been an update.
+       - name: get the Coverity Build Tool hash
+         id: lookup
+         run: |
++          case "${{ matrix.os }}" in
++          *windows*)
++            COVERITY_PLATFORM=win64
++            COVERITY_TOOL_FILENAME=cov-analysis.zip
++            ;;
++          *ubuntu*)
++            COVERITY_PLATFORM=linux64
++            COVERITY_TOOL_FILENAME=cov-analysis.tgz
++            ;;
++          *)
++            echo '::error::unhandled OS ${{ matrix.os }}' >&2
++            exit 1
++            ;;
++          esac
++          echo "COVERITY_PLATFORM=$COVERITY_PLATFORM" >>$GITHUB_ENV
++          echo "COVERITY_TOOL_FILENAME=$COVERITY_TOOL_FILENAME" >>$GITHUB_ENV
+           MD5=$(curl https://scan.coverity.com/download/$COVERITY_LANGUAGE/$COVERITY_PLATFORM \
+                    --data "token=${{ secrets.COVERITY_SCAN_TOKEN }}&project=$COVERITY_PROJECT&md5=1")
+           echo "hash=$MD5" >>$GITHUB_OUTPUT
+@@ -54,13 +84,27 @@ jobs:
+         run: |
+           curl https://scan.coverity.com/download/$COVERITY_LANGUAGE/$COVERITY_PLATFORM \
+             --no-progress-meter \
+-            --output $RUNNER_TEMP/cov-analysis.tgz \
++            --output $RUNNER_TEMP/$COVERITY_TOOL_FILENAME \
+             --data "token=${{ secrets.COVERITY_SCAN_TOKEN }}&project=$COVERITY_PROJECT"
+       - name: extract the Coverity Build Tool
+         if: steps.cache.outputs.cache-hit != 'true'
+         run: |
+-          mkdir $RUNNER_TEMP/cov-analysis &&
+-          tar -xzf $RUNNER_TEMP/cov-analysis.tgz --strip 1 -C $RUNNER_TEMP/cov-analysis
++          case "$COVERITY_TOOL_FILENAME" in
++          *.tgz)
++            mkdir $RUNNER_TEMP/cov-analysis &&
++            tar -xzf $RUNNER_TEMP/$COVERITY_TOOL_FILENAME --strip 1 -C $RUNNER_TEMP/cov-analysis
++            ;;
++          *.zip)
++            cd $RUNNER_TEMP &&
++            mkdir cov-analysis-tmp &&
++            unzip -d cov-analysis-tmp $COVERITY_TOOL_FILENAME &&
++            mv cov-analysis-tmp/* cov-analysis
++            ;;
++          *)
++            echo "::error::unhandled archive type: $COVERITY_TOOL_FILENAME" >&2
++            exit 1
++            ;;
++          esac
+       - name: cache the Coverity Build Tool
+         if: steps.cache.outputs.cache-hit != 'true'
+         uses: actions/cache/save@v3
 -- 
 gitgitgadget
 
