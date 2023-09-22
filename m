@@ -2,52 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FA37CD4840
-	for <git@archiver.kernel.org>; Fri, 22 Sep 2023 16:13:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B453BCD4844
+	for <git@archiver.kernel.org>; Fri, 22 Sep 2023 16:25:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230250AbjIVQNQ convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Fri, 22 Sep 2023 12:13:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36218 "EHLO
+        id S231976AbjIVQZe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Sep 2023 12:25:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229534AbjIVQNP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Sep 2023 12:13:15 -0400
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F93D99
-        for <git@vger.kernel.org>; Fri, 22 Sep 2023 09:13:09 -0700 (PDT)
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
-        (authenticated bits=0)
-        by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 38MGAOiS1868723
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 22 Sep 2023 16:10:24 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     "'Ben Boeckel'" <ben.boeckel@kitware.com>, <git@vger.kernel.org>
-References: <ZNffWAgldUZdpQcr@farprobe> <ZQ21NsLmp+xQU5g+@farprobe>
-In-Reply-To: <ZQ21NsLmp+xQU5g+@farprobe>
-Subject: RE: [BUG] `git describe` doesn't traverse the graph in topological order
-Date:   Fri, 22 Sep 2023 12:13:00 -0400
-Organization: Nexbridge Inc.
-Message-ID: <02d701d9ed6f$abcb4b00$0361e100$@nexbridge.com>
+        with ESMTP id S229623AbjIVQZc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Sep 2023 12:25:32 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A96A196
+        for <git@vger.kernel.org>; Fri, 22 Sep 2023 09:25:25 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-4018af103bcso18735665e9.1
+        for <git@vger.kernel.org>; Fri, 22 Sep 2023 09:25:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1695399923; x=1696004723; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pys9+tEDxwEjgme2QQ0WrgcfztLuUcj+ia8Vlxq0hWc=;
+        b=GuXdaPQbsowUxqLHDZiIMDKqKi7EgueCDiSMRIdbRD9rnpLisyIXqgE8Jy2gzJXvuW
+         QuoyTyEOkg7mTF5gG/fIESJNPJ3thMYXS9CRc10WFOAPGUyEfQKfjnG2+ykzvvWUu+FR
+         SCiPWhjMbm9oTmT1PICmHu8UP6zXyPxCze8eMuPGWP7D9l87IoUMWxU7dLf5G3t9k4md
+         HeRXx5shbIHJ10p5aAK2yLCuvg7aIMsHtDR9YUBA8hz8b3heXAXmn6zcKGHPRhoZAZdP
+         hoVjXv9l/KFCb+8OZisb8xGg1jC1L+8jiZY45KR5t2hmiqFX9kceoVAqac6toO6ML3kq
+         hU+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695399923; x=1696004723;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pys9+tEDxwEjgme2QQ0WrgcfztLuUcj+ia8Vlxq0hWc=;
+        b=jkVN8ab1RE6uqr+EiiAAGZGOqpF6yXd2ZRUKiQHICdXdT8CekhcTtGF7IHIap4xhKM
+         TSD3mCU//odaD8iuQHeRAhdxQ97CHZx58Q2McN18bySZvuERXCZZvapR35hABEH7imPj
+         SBPV2wL6imFC0/I0TuVG9/Co4IyZsd3EK1dCL38zAbfIH1fhEGwubvlop3uJ5BhL1qMx
+         UllDBJyDat8n6pULSP99Atytb2TwNcAmDA8saJm6lXJ3KyDTmi3XMp2JVY0kNQ8wZy4G
+         2+Fa8b0AqeQy+UQOrKMGkTC0nss0/kECN2Ie3CnkPbLG2cmy2lYxNJC0bs4nJee0Sfy/
+         Cq4A==
+X-Gm-Message-State: AOJu0Yx+UivJ+/YY0MKWv5FKFD/1wyfSjfMJKhWCiS8LfuQsHCGHT2jF
+        5lQjqICdc/aEEgsR7TXSb72hUJz5HVo=
+X-Google-Smtp-Source: AGHT+IGZxFnxAhHgGCzjL4H0YuwDgs6Jm0jXocG/UvWo+i40j0ts+QCvhUkbJOI5Cp197ZzooFz2Xg==
+X-Received: by 2002:a05:600c:22c9:b0:3fe:da37:d59 with SMTP id 9-20020a05600c22c900b003feda370d59mr153653wmg.4.1695399923272;
+        Fri, 22 Sep 2023 09:25:23 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id z12-20020a5d654c000000b00317f29ad113sm4809682wrv.32.2023.09.22.09.25.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Sep 2023 09:25:22 -0700 (PDT)
+Message-ID: <d6811daf7cf7f1460877307575e4cbc363ae851a.1695399920.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1587.v2.git.1695399920.gitgitgadget@gmail.com>
+References: <pull.1587.git.1695067516192.gitgitgadget@gmail.com>
+        <pull.1587.v2.git.1695399920.gitgitgadget@gmail.com>
+From:   "Zach FettersMoore via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 22 Sep 2023 16:25:20 +0000
+Subject: [PATCH v2 2/2] subtree: changing location of commit ignore processing
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQMniK2C5ueFGaecrAkj2WziqqcqsgIDXfParXuyqtA=
+To:     git@vger.kernel.org
+Cc:     Zach FettersMoore <zach.fetters@apollographql.com>,
+        Zach FettersMoore <zach.fetters@apollographql.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Friday, September 22, 2023 11:40 AM, Ben Boeckel wrote:
->On Sat, Aug 12, 2023 at 15:36:56 -0400, Ben Boeckel wrote:
->> I found an issue where `git describe` doesn't find a "closer" tag than
->> another tag as the correct one to base the description off of. I have
->> a reproducer, but I'll first give details of the real world issue.
->
->Bump. Can anyone provide guidance as to what the best solution to this might be?
+From: Zach FettersMoore <zach.fetters@apollographql.com>
 
-Can you provide details? `git describe` is sensitive to --first-parent and whether the tag has annotations.
---Randall
+Based on feedback from original commit:
 
+-Updated the location of check whether a commit should
+be ignored during split processing
+
+-Updated code to better fit coding guidelines
+
+Signed-off-by: Zach FettersMoore <zach.fetters@apollographql.com>
+---
+ contrib/subtree/git-subtree.sh | 30 ++++++++++++++++++++----------
+ 1 file changed, 20 insertions(+), 10 deletions(-)
+
+diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+index e9250dfb019..e69991a9d80 100755
+--- a/contrib/subtree/git-subtree.sh
++++ b/contrib/subtree/git-subtree.sh
+@@ -778,11 +778,13 @@ ensure_valid_ref_format () {
+ 		die "fatal: '$1' does not look like a ref"
+ }
+ 
+-# Usage: check if a commit from another subtree should be ignored from processing for splits
+-should_ignore_subtree_commit () {
+-  if [ "$(git log -1 --grep="git-subtree-dir:" $1)" ]
++# Usage: check if a commit from another subtree should be
++# ignored from processing for splits
++should_ignore_subtree_split_commit () {
++  if test -n "$(git log -1 --grep="git-subtree-dir:" $1)"
+   then
+-    if [[ -z "$(git log -1 --grep="git-subtree-mainline:" $1)" && -z "$(git log -1 --grep="git-subtree-dir: $dir$" $1)" ]]
++    if test -z "$(git log -1 --grep="git-subtree-mainline:" $1)" &&
++			test -z "$(git log -1 --grep="git-subtree-dir: $arg_prefix$" $1)"
+     then
+       return 0
+     fi
+@@ -796,11 +798,6 @@ process_split_commit () {
+ 	local rev="$1"
+ 	local parents="$2"
+ 
+-    if should_ignore_subtree_commit $rev
+-    then
+-	    return
+-    fi
+-
+ 	if test $indent -eq 0
+ 	then
+ 		revcount=$(($revcount + 1))
+@@ -980,7 +977,20 @@ cmd_split () {
+ 	eval "$grl" |
+ 	while read rev parents
+ 	do
+-		process_split_commit "$rev" "$parents"
++		if should_ignore_subtree_split_commit "$rev"
++		then
++			continue
++		fi
++		parsedParents=''
++		for parent in $parents
++		do
++			should_ignore_subtree_split_commit "$parent"
++			if test $? -eq 1
++			then
++				parsedParents+="$parent "
++			fi
++		done
++		process_split_commit "$rev" "$parsedParents"
+ 	done || exit $?
+ 
+ 	latest_new=$(cache_get latest_new) || exit $?
+-- 
+gitgitgadget
