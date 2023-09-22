@@ -2,79 +2,189 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F791CD484B
-	for <git@archiver.kernel.org>; Fri, 22 Sep 2023 17:53:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26DF6CD484D
+	for <git@archiver.kernel.org>; Fri, 22 Sep 2023 17:54:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233489AbjIVRxj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Sep 2023 13:53:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45888 "EHLO
+        id S233803AbjIVRyG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Sep 2023 13:54:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233701AbjIVRxL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Sep 2023 13:53:11 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DD84CED
-        for <git@vger.kernel.org>; Fri, 22 Sep 2023 10:52:06 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 19FA51BAAE9;
-        Fri, 22 Sep 2023 13:52:03 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=kVuPz3hV0kbxY2+G/648Gk2yHS5WhT7p3HwgZo
-        PhhEM=; b=iqrnN0QCiiR+rv7BanVrKffQkv5UvxnPpIF/YUQH27jKdGktxRzefN
-        aUKO/tHMCmY5nPnq/+c0URgpS9gNNb9/dfOusZ0T9nDVEmt7pvLABDW4loobwwf0
-        F6rtEIhnYrTrc6m7yGZDJYcY6psspgPHKQtyrveqXv4F7HKBmpzY4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id F35911BAAE8;
-        Fri, 22 Sep 2023 13:52:02 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 872D21BAAE4;
-        Fri, 22 Sep 2023 13:52:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     <rsbecker@nexbridge.com>
-Cc:     "'Ben Boeckel'" <ben.boeckel@kitware.com>, <git@vger.kernel.org>
-Subject: Re: [BUG] `git describe` doesn't traverse the graph in topological
- order
-In-Reply-To: <02e701d9ed78$436b3c60$ca41b520$@nexbridge.com>
-        (rsbecker@nexbridge.com's message of "Fri, 22 Sep 2023 13:14:30
-        -0400")
-References: <ZNffWAgldUZdpQcr@farprobe> <ZQ21NsLmp+xQU5g+@farprobe>
-        <02d701d9ed6f$abcb4b00$0361e100$@nexbridge.com>
-        <ZQ3GAJ/AHsM9e9a6@farprobe>
-        <02e701d9ed78$436b3c60$ca41b520$@nexbridge.com>
-Date:   Fri, 22 Sep 2023 10:51:59 -0700
-Message-ID: <xmqqediq2j0g.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        with ESMTP id S233778AbjIVRxi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Sep 2023 13:53:38 -0400
+Received: from mail.manjaro.org (mail.manjaro.org [IPv6:2a01:4f8:c0c:51f3::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35565212F
+        for <git@vger.kernel.org>; Fri, 22 Sep 2023 10:52:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BBBD4C44-5970-11EE-8687-25B3960A682E-77302942!pb-smtp2.pobox.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+        t=1695405135;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=JQOol8P54SjT1w6kX0tzsjX6JjbbACYb0GpMMf422ns=;
+        b=WOzWx78LxAvY65/E1AiOPNYXipmL90b3zsQCDmxesMaR7ES8PaJNBjhmkmw6NJGN9kV0yt
+        1hNe4R0KGqn6wH1pcrA8JhnARPSE5cllNuBamSjpq7uUYU3w05I9DpbJXxn6GNTd+/zBXm
+        BWGiVUNzDgHgvUjQAgTLaKPQl9BxWFRqozGTrJnQLgrzvMywTs8QRRUPML74tFhEIDyqSX
+        mR/0TL2wwpfOXxTpDQQEs/botwyp1kywJqscYBYg+f0cN2WNxB3xozTNKQHJJRbGlaetBE
+        P1u9X9lnLTH2iGS1oTRP7AnO7UnJwv4Qat9t4oY2SzffZIB4HbaZvkXJce1Yhg==
+Date:   Fri, 22 Sep 2023 19:52:14 +0200
+From:   Dragan Simic <dsimic@manjaro.org>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] diff --stat: set the width defaults in a helper function
+In-Reply-To: <xmqqjzsi2l7r.fsf@gitster.g>
+References: <166396f0a98e248fc3d1236757632c5d648ddc0b.1695364961.git.dsimic@manjaro.org>
+ <xmqqjzsi2l7r.fsf@gitster.g>
+Message-ID: <fc9ba2f7a8080f7fd669dd8f718876bc@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+        auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-<rsbecker@nexbridge.com> writes:
+On 2023-09-22 19:04, Junio C Hamano wrote:
+> Dragan Simic <dsimic@manjaro.org> writes:
+> 
+>> Extract the commonly used initialization of the --stat-width=<width>,
+>> --stat-name-width=<width> and --stat-graph-with=<width> parameters to 
+>> the
+>> internal default values into a helper function, to avoid repeating the 
+>> same
+>> initialization code in a few places.
+> 
+> Thanks.
+> 
+> If this is only about settings related to controlling widths of
+> various elements on diffstat lines, isn't the "std" in name a bit
+> too broad, though?  init_diffstat_widths(&rev.diffopt) or something
+> like that might be a better fit.  I dunno if it is a huge deal,
+> though.
 
-> There appears to be a merge at 446120fd88 which brings v9.3.0.rc0 closer to HEAD than v9.3.0.rc1.
+Makes sense to me, init_diffstat_widths(&rev.diffopt) fits better and 
+it's more descriptive.  I'm a big fan of using self-descriptive naming, 
+but originally I wanted to follow the already present naming scheme, so 
+I'm glad to see that you asked for a more descriptive function name.
 
-I didn't look at the actual graph but let me say I trust you ;-)
+>> Add a couple of tests to additionally cover existing configuration 
+>> options
+>> diff.statNameWidth=<width> and diff.statGraphWidth=<width> when used 
+>> by
+>> git-merge to generate --stat outputs.  This closes the gap in the 
+>> tests that
+>> existed previously for the --stat tests, reducing the chances for 
+>> having
+>> any regressions introduced by this commit.
+> 
+> Nice.
 
-I wonder if there should be an obvious "explain why you gave this
-name" mode added to the command, though.  The command should be able
-to say "The closest path from HEAD to any tag is via this, that, and
-that commit, which is N hops to tag T0", and from there, the user
-should be able to say "Oh, I thought T1 was closer, let me try again
-to describe HEAD, limiting the candidate only to T1" and run the
-command in that mode, which should be able to say "The closest path
-from HEAD to any tag that is allowed as a candidate is via these
-commits, which is M hops to tag T1".  And if M is smaller than N,
-then that may deserve to trigger a bug report (but as you said,
-there are rules like preferring annotated over unannotated tags
-involved, so it may not as straight-forward as comparing the two
-integer hop counts).
+Thanks.
 
-Thanks for digging.
+>> While there, perform a bunch of small wording improvements and some 
+>> minor
+>> code cleanups in the improved unit test, as spotted, to make it a bit 
+>> neater
+>> and to improve its test-level consistency.
+> 
+> Alright.  The last category of changes need somebody else to review
+> them in addition to myself, as I expect that it would be somewhat
+> subjective and I tend to be change-averse.
+> 
+> The code changes all looked sensible.
+> 
+>> diff --git a/t/t4052-stat-output.sh b/t/t4052-stat-output.sh
+>> index beb2ec2a55..aa947d93cf 100755
+>> --- a/t/t4052-stat-output.sh
+>> +++ b/t/t4052-stat-output.sh
+>> @@ -12,32 +12,31 @@ TEST_PASSES_SANITIZE_LEAK=true
+>>  . ./test-lib.sh
+>>  . "$TEST_DIRECTORY"/lib-terminal.sh
+>> 
+>> -# 120 character name
+>> -name=aaaaaaaaaa
+>> -name=$name$name$name$name$name$name$name$name$name$name$name$name
+>> +# 120-character name
+>> +printf -v name 'a%.0s' {1..120}
+> 
+> This is a totally unnecessary and unacceptable change.  "-v name"
+> may be available in the built-in variant found in bash, but you
+> would likely find that it is missing from other shells.  {1..120} is
+> also a bash-ism.
 
+Makes sense to stick with the simpler variant, which won't cause 
+compatibility issues.
+
+> And because we are still calling the result a "name" (not
+> "filename") ...
+> 
+>>  cat >expect72 <<-'EOF'
+>>   ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1 
+>> +
+>>  EOF
+>> -test_expect_success "format-patch: small change with long name gives 
+>> more space to the name" '
+>> +test_expect_success "format-patch: small change with long filename 
+>> gives more space to the filename" '
+> 
+> ... I do not see the point of this change (and similar ones in the
+> rest of the patch).  Even the configuration is called statNameWidth
+> and not statFileNameWidth.  In the context of the tests that check
+> "stat-output" (that is in the filename of this script), we should be
+> able to use "name" consistently without causing any confusion, as it
+> is unlikely to be mistaken with other kinds of "name".
+
+On second thought, I agree that sticking with just "name" is better in 
+this test.
+
+>> -test_expect_success "format-patch --cover-letter ignores COLUMNS (big 
+>> change)" '
+>> +test_expect_success "format-patch --cover-letter ignores COLUMNS 
+>> envvar with big change" '
+> 
+> Not wrong per-se, but I wonder if it is necessary to stress that
+> COLUMNS is an environment variable that tells the programs how wide
+> a terminal they are showing their output.  A usual shell variable
+> would not affect the "git" process it runs, and COLUMNS without any
+> dot in it cannot be our configuration variable, so even without deep
+> knowledge of tradition, I thought it would be rather obvious.
+
+On second thought, I agree that using just "COLUMN" suffices while also 
+being more compact.
+
+> Same comment for "statNameWidth config"; with fewer number of bytes,
+> it would be more descriptive to say "diff.statNameWidth".
+
+Oh, nice catch!  Makes sense.
+
+>> -	test_expect_success "$cmd --stat-graph-width with big change" '
+>> +	test_expect_success "$cmd --stat-graph-width=width with big change" 
+>> '
+>>  		git $cmd $args --stat-graph-width=26 >output &&
+> 
+> This may be a good change, especially if there are tests that feed
+> different parameters and if it helps clarifying which variant is
+> tested, e.g. "--stat=<width>,<name-width>" vs "--stat=<width>".
+> 
+> Ah, wait, "--stat-graph-width" always takes a single value, so the
+> above justification does not quite apply.  But still, it is not
+> making it worse, and because there is another test that is labeled
+> with "--stat-width=width", being consistent with it has value.
+
+Yes, I think that the improved consistency outweights the slight 
+redundancy.
+
+> OK.
+> 
+>> -	test_expect_success "$cmd --stat-graph-width --graph with big 
+>> change" '
+>> +	test_expect_success "$cmd --stat-graph-width=width --graph with big 
+>> change" '
+> 
+> Ditto.
+> 
+> Thanks.
+
+Thanks, I'll prepare and send v2 of the patch, based on your feedback.
