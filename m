@@ -2,37 +2,37 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87AE6CE7A81
-	for <git@archiver.kernel.org>; Fri, 22 Sep 2023 22:21:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF7B5CE7A81
+	for <git@archiver.kernel.org>; Fri, 22 Sep 2023 22:23:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230062AbjIVWVp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Sep 2023 18:21:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59558 "EHLO
+        id S229888AbjIVWXk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Sep 2023 18:23:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229469AbjIVWVo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Sep 2023 18:21:44 -0400
+        with ESMTP id S229877AbjIVWXk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Sep 2023 18:23:40 -0400
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D84619A
-        for <git@vger.kernel.org>; Fri, 22 Sep 2023 15:21:37 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 162201AC
+        for <git@vger.kernel.org>; Fri, 22 Sep 2023 15:23:32 -0700 (PDT)
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C87D81B1E2C;
-        Fri, 22 Sep 2023 18:21:36 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 748A21B1E44;
+        Fri, 22 Sep 2023 18:23:31 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=JjyQPIZ1vVcRrjq4Z3Uz4dvgp6BDzojPwkDo30
-        HScog=; b=BTbZRgBOm8v053SAcjwBhp0n0SePDiwLSNLSJbVwAzSSm2b3/NPy/p
-        i5DHwtj3dxgcCI1G8giYd4+TAcz7sc7hUw1ROsgn+e9B11c70iUlosFc0+B1ohcT
-        /XjC4k3N4gE8b1/djO7q0+qHVMiSIX8vxSFfo1fB+uObieMOB/1c0=
+        :content-type; s=sasl; bh=3KOaE1aUMo4H8SUJy4rMBcoIdNe2mKTeNEfEso
+        Bk2k8=; b=pbeJLyxwOTEL8pHsdD+8cmPaT7cBG9M8xcBnhZZZyPdfjgR/s1T9vk
+        oSIuwoJdEKMk+8kpuy7pNXOpPolody5SVei/ByZIjNhGWMHe5GCrKHRDWdYm5IEe
+        gieXcbz/2NEdUmtVBZ49d7I3LPxxvFqgaBYuvrCCEdipH1QpkAXvc=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C0CB21B1E2B;
-        Fri, 22 Sep 2023 18:21:36 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6DA6A1B1E43;
+        Fri, 22 Sep 2023 18:23:31 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.153.120])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2D7641B1E2A;
-        Fri, 22 Sep 2023 18:21:36 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C7D3A1B1E42;
+        Fri, 22 Sep 2023 18:23:30 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "Josh Soref via GitGitGadget" <gitgitgadget@gmail.com>
@@ -43,13 +43,13 @@ In-Reply-To: <f9f3f4af1c8889eb69f777a322348afc53feeca2.1695392028.git.gitgitgadg
         +0000")
 References: <pull.1589.git.1695392027.gitgitgadget@gmail.com>
         <f9f3f4af1c8889eb69f777a322348afc53feeca2.1695392028.git.gitgitgadget@gmail.com>
-Importance: high
-Date:   Fri, 22 Sep 2023 15:21:35 -0700
-Message-ID: <xmqqttrlyhlc.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
+Importance: high
+Date:   Fri, 22 Sep 2023 15:23:29 -0700
+Message-ID: <xmqqr0mpyhi6.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 648DE6F6-5996-11EE-B33D-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: A8E0B0A4-5996-11EE-85FD-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -174,83 +174,6 @@ Likewise.
 >  of source, in order to include a fix in the reverse http proxy:
 >  https://code.google.com/p/go/source/detail?r=a615b796570a2cd8591884767a7d67ede74f6648
 
-This is an interesting one.  code.google.com is no longer tehre
+This is an interesting one.  code.google.com is no longer there and
+the updated URL seems to be at https://github.com/golang/go somewhere.
 
-> diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-> index 1d6102e0674..4a11d590b68 100755
-> --- a/git-gui/git-gui.sh
-> +++ b/git-gui/git-gui.sh
-> @@ -2390,7 +2390,7 @@ proc do_quit {{rc {1}}} {
->  	set ret_code $rc
->  
->  	# Briefly enable send again, working around Tk bug
-> -	# http://sourceforge.net/tracker/?func=detail&atid=112997&aid=1821174&group_id=12997
-> +	# https://sourceforge.net/p/tktoolkit/bugs/2343/
->  	tk appname [appname]
->  
->  	destroy .
-> diff --git a/gitk-git/gitk b/gitk-git/gitk
-> index 1db46977df0..7a087f123d7 100755
-> --- a/gitk-git/gitk
-> +++ b/gitk-git/gitk
-> @@ -12472,7 +12472,7 @@ if {[tk windowingsystem] eq "aqua"} {
->  
->  catch {
->      # follow the XDG base directory specification by default. See
-> -    # http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
-> +    # https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
->      if {[info exists env(XDG_CONFIG_HOME)] && $env(XDG_CONFIG_HOME) ne ""} {
->          # XDG_CONFIG_HOME environment variable is set
->          set config_file [file join $env(XDG_CONFIG_HOME) git gitk]
-> diff --git a/gitweb/static/js/lib/common-lib.js b/gitweb/static/js/lib/common-lib.js
-> index 17b1796496d..99e3eb8c3d9 100644
-> --- a/gitweb/static/js/lib/common-lib.js
-> +++ b/gitweb/static/js/lib/common-lib.js
-> @@ -137,7 +137,7 @@ function addCssRule(selector, style) {
->   *   http://www.dustindiaz.com/getelementsbyclass/
->   *   https://stackoverflow.com/questions/1818865/do-we-have-getelementsbyclassname-in-javascript
->   *
-> - * See also http://ejohn.org/blog/getelementsbyclassname-speed-comparison/
-> + * See also https://johnresig.com/blog/getelementsbyclassname-speed-comparison/
->   *
->   * @param {String} class: name of _single_ class to find
->   * @param {String} [taghint] limit search to given tags
-> diff --git a/http.c b/http.c
-> index e138b4b96fb..33c6011e8d8 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -1877,7 +1877,7 @@ static void write_accept_language(struct strbuf *buf)
->  	 * MAX_DECIMAL_PLACES must not be larger than 3. If it is larger than
->  	 * that, q-value will be smaller than 0.001, the minimum q-value the
->  	 * HTTP specification allows. See
-> -	 * http://tools.ietf.org/html/rfc7231#section-5.3.1 for q-value.
-> +	 * https://datatracker.ietf.org/doc/html/rfc7231#section-5.3.1 for q-value.
->  	 */
->  	const int MAX_DECIMAL_PLACES = 3;
->  	const int MAX_LANGUAGE_TAGS = 1000;
-> diff --git a/imap-send.c b/imap-send.c
-> index 3b2077e39b2..448ca64c052 100644
-> --- a/imap-send.c
-> +++ b/imap-send.c
-> @@ -860,7 +860,7 @@ static void imap_close_store(struct imap_store *ctx)
->  
->  /*
->   * hexchar() and cram() functions are based on the code from the isync
-> - * project (http://isync.sf.net/).
-> + * project (https://isync.sourceforge.io/).
->   */
->  static char hexchar(unsigned int b)
->  {
-> diff --git a/json-writer.h b/json-writer.h
-> index de140e54c98..04413bd1afd 100644
-> --- a/json-writer.h
-> +++ b/json-writer.h
-> @@ -4,7 +4,7 @@
->  /*
->   * JSON data structures are defined at:
->   * [1] https://www.ietf.org/rfc/rfc7159.txt
-> - * [2] http://json.org/
-> + * [2] https://www.json.org/
->   *
->   * The JSON-writer API allows one to build JSON data structures using a
->   * simple wrapper around a "struct strbuf" buffer.  It is intended as a
