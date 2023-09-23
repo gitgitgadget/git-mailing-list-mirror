@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B94A1CE7A88
-	for <git@archiver.kernel.org>; Sat, 23 Sep 2023 15:22:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 28E9DCE7A88
+	for <git@archiver.kernel.org>; Sat, 23 Sep 2023 15:22:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231910AbjIWPWQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 Sep 2023 11:22:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42712 "EHLO
+        id S231953AbjIWPWW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 Sep 2023 11:22:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231853AbjIWPWN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Sep 2023 11:22:13 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA270A9
-        for <git@vger.kernel.org>; Sat, 23 Sep 2023 08:22:07 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id d2e1a72fcca58-692c02adeefso615908b3a.3
-        for <git@vger.kernel.org>; Sat, 23 Sep 2023 08:22:07 -0700 (PDT)
+        with ESMTP id S231950AbjIWPWP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Sep 2023 11:22:15 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73B8FA9
+        for <git@vger.kernel.org>; Sat, 23 Sep 2023 08:22:09 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id d2e1a72fcca58-68fe2470d81so3511834b3a.1
+        for <git@vger.kernel.org>; Sat, 23 Sep 2023 08:22:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695482526; x=1696087326; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1695482528; x=1696087328; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=oVLallzDkOOn/QVapkE5m3n1syzHG35ySXXdojkDgfM=;
-        b=TsX55qL5CvH8pjFKhlsUDrwe8Cnk5vl4hfHvbM9cuiiSVbYba1L9eHMj8IzrVBw9XS
-         JhZZ8v4D16vyN4L6Iy1GsAjvW6Crc9MHiZl7VFD6Y6whSOm8tYYGbTFMeZpqRIN5KnnF
-         DKiaXjhkxNdIpA6arpV0+41xbQK55Q4fTfjIid1S5ZVfrwE24THW92hHkTtgV2RWozig
-         RSOoqUVUsS513fxLfsmez5DNb27uSRU23rl01txjiajGjAQjOBELEeF+UJPzZw6gAhT4
-         +2Itet+NJBVMhyY56ktw7IlETuS1LSUH7eMFXhkYSzttXXeC0EHxBr85TMcNF4MxtDN3
-         /WvQ==
+        bh=ueFLlkQl4l4O5xgips18o5j3rK/wmwYQU3cjOOOSRBE=;
+        b=crVwBQMxFvmZBp5jKBN7tg1tqdNHL3kx6q8ZiqAIRoJUs4AHFlAV1Np4/br/Qpgn74
+         HfQVDOpx/OBLMR/5w64pLxreEfp+d8woFarNxxM6OOXGakS2qn1cRBGzqVAJmS/ZAJqu
+         ncj0zPf0Ynse+YTvZ8XElHjJMy7cuMsdZfoSQmxcPBESMEkGvCm0Mvix++sZKF/zeOAd
+         b7boWT09m7+qK83t/LSyKOQV4eIOP/cy49swoItCe0V/Ob9UQD5AdJi4igPs2feh2POK
+         RcpQH+NxYu9tEGrsutAjK1ILyT330TJu6JonnJ7qrus5c/ogqi9Y9aE1GzmXQWH9YYtf
+         YTvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695482526; x=1696087326;
+        d=1e100.net; s=20230601; t=1695482528; x=1696087328;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=oVLallzDkOOn/QVapkE5m3n1syzHG35ySXXdojkDgfM=;
-        b=pjOlNijgJ61Z3/hflFxxikU+oh/e4hN1xS+oHyId2TJU0lWCNMInXzN5amgjEkcXKW
-         z7WJjsF63gE+3DUTyfhszPFuoNW5RAplkNUvVH09SwrPN3lwEGk2pW5OCWoc5ZdyKOdB
-         JQAySa7PkHTzzwV0BTMRJWJHyUcdnSrjfwL3P8B388lpQe8GqNzHzd6U6gfj/XkBm5nL
-         /rKTSLzISN4HUNfgTcDdmlCmzcEV6Z3KYPNcMZhf/LEK+19U0cTka6VkCyL8Q3KuhRp4
-         u8Y14qwApgg5GhvVImcOxvpqsVmJgrprUucsqiga1BVCue9gp/QllwJ6AaN9yK1JAy0D
-         f7kg==
-X-Gm-Message-State: AOJu0YxXeXGLpRij62o+BwOw1ryI2IYZGE2eSamyzsRhL5XFglEni/pH
-        rWslZHDwWXFCBdgku/tHtiVK0PUtfS0=
-X-Google-Smtp-Source: AGHT+IHQObb8l1pGHfxdkcw5k7ZCuknyMvNLGdxkC5YhbvWOEim3ty5qUom0WPUe2c1rqgfZqowIlQ==
-X-Received: by 2002:a05:6a00:1a0e:b0:68b:e6e0:5047 with SMTP id g14-20020a056a001a0e00b0068be6e05047mr2017405pfv.14.1695482526446;
-        Sat, 23 Sep 2023 08:22:06 -0700 (PDT)
+        bh=ueFLlkQl4l4O5xgips18o5j3rK/wmwYQU3cjOOOSRBE=;
+        b=owxpo/YW2uP6ySiTlO6tQxCKPmlHMoB758mOOFPT2kpwAZxL5suSzXto8TT6u8rTyD
+         wWcU6aMf+tLLL5yK2ghyqoWSdO4h0td0lFIagfV8jERTRKsKTSaRhEQV9pvO9mVqnzwC
+         WcjAJhFuLOQ4NkdVMBPZNrRgQqOkPVh87IPz2nopXdopc/GExHCcNcpx8I4e6PyIvZ0W
+         JnaEVxg5FjTd9ytUtENsqmN1EcSf1B3RacrzT8yo8h72zN+JSnH/0x884zBC/tmnxmnJ
+         1ENTMJamOU9LFa0fG1d8QuSLS2TUF3kdWel8n8H5+Ye3b3poW1ThHoS2P8pcR6bsszYu
+         gIRw==
+X-Gm-Message-State: AOJu0YykrHMqe4brVr3cHNs0ulqGHf7pSUfoHT8Tww1dmtlL56RxGmoB
+        IqgwkNu5cQO2DwzSEFGcccM2iuy5Z7g=
+X-Google-Smtp-Source: AGHT+IEB0FrcDQoPak6YBBhssF2erZ9bWPK15Nwe0vp/6ZLdUqq7ncPis19GxX00IwFQ8mvWozrOKw==
+X-Received: by 2002:a05:6a21:627:b0:15a:4f5d:df64 with SMTP id ll39-20020a056a21062700b0015a4f5ddf64mr2384181pzb.56.1695482528604;
+        Sat, 23 Sep 2023 08:22:08 -0700 (PDT)
 Received: from tigtog-proxy.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id a20-20020a056a001d1400b00692acfc4b3csm3084310pfx.136.2023.09.23.08.22.05
+        by smtp.gmail.com with ESMTPSA id a20-20020a056a001d1400b00692acfc4b3csm3084310pfx.136.2023.09.23.08.22.06
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 23 Sep 2023 08:22:05 -0700 (PDT)
+        Sat, 23 Sep 2023 08:22:07 -0700 (PDT)
 From:   Jiang Xin <worldhello.net@gmail.com>
 To:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Brandon Williams <bwilliams.eng@gmail.com>,
         Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
 Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v2 1/3] transport-helper: no connection restriction in connect_helper
-Date:   Sat, 23 Sep 2023 23:21:59 +0800
-Message-Id: <20230923152201.14741-2-worldhello.net@gmail.com>
+Subject: [PATCH v2 2/3] transport-helper: run do_take_over in connect_helper
+Date:   Sat, 23 Sep 2023 23:22:00 +0800
+Message-Id: <20230923152201.14741-3-worldhello.net@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc3
 In-Reply-To: <xmqqy1h2f5dv.fsf@gitster.g>
 References: <xmqqy1h2f5dv.fsf@gitster.g>
@@ -68,47 +68,37 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-When commit b236752a (Support remote archive from all smart transports,
-2009-12-09) added "remote archive" support for "smart transports", it
-was for transport that supports the ".connect" method. The
-"connect_helper()" function protected itself from getting called for a
-transport without the method before calling process_connect_service(),
-which did not work with such a transport.
+After successfully connecting to the smart transport by calling
+"process_connect_service()" in "connect_helper()", run "do_take_over()"
+to replace the old vtable with a new one which has methods ready for
+the smart transport connection.
 
-Later, commit edc9caf7 (transport-helper: introduce stateless-connect,
-2018-03-15) added a way for a transport without the ".connect" method
-to establish a "stateless" connection in protocol-v2, which
-process_connect_service() was taught to handle the "stateless"
-connection, making the old safety valve in its caller that insisted
-that ".connect" method must be defined too strict, and forgot to loosen
-it.
+The subsequent commit introduces remote archive for a stateless-rpc
+connection. But without running "do_take_over()", it may fail to call
+"transport_disconnect()" in "run_remote_archiver()" of
+"builtin/archive.c". This is because for a stateless connection or a
+service like "git-upload-pack-archive", the remote helper may receive a
+SIGPIPE signal and exit early. To have a graceful disconnect method by
+calling "do_take_over()" will solve this issue.
 
-Remove the restriction in the "connect_helper()" function and give the
-function "process_connect_service()" the opportunity to establish a
-connection using ".connect" or ".stateless_connect" for protocol v2. So
-we can connect with a stateless-rpc and do something useful. E.g., in a
-later commit, implements remote archive for a repository over HTTP
-protocol.
-
-Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 ---
- transport-helper.c | 2 --
- 1 file changed, 2 deletions(-)
+ transport-helper.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/transport-helper.c b/transport-helper.c
-index 49811ef176..2e127d24a5 100644
+index 2e127d24a5..3c8802b7a3 100644
 --- a/transport-helper.c
 +++ b/transport-helper.c
-@@ -662,8 +662,6 @@ static int connect_helper(struct transport *transport, const char *name,
+@@ -668,6 +668,8 @@ static int connect_helper(struct transport *transport, const char *name,
  
- 	/* Get_helper so connect is inited. */
- 	get_helper(transport);
--	if (!data->connect)
--		die(_("operation not supported by protocol"));
+ 	fd[0] = data->helper->out;
+ 	fd[1] = data->helper->in;
++
++	do_take_over(transport);
+ 	return 0;
+ }
  
- 	if (!process_connect_service(transport, name, exec))
- 		die(_("can't connect to subservice %s"), name);
 -- 
 2.40.1.50.gf560bcc116.dirty
 
