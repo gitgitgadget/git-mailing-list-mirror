@@ -2,77 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51B30CE7A8B
-	for <git@archiver.kernel.org>; Sat, 23 Sep 2023 12:37:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A569CE7A88
+	for <git@archiver.kernel.org>; Sat, 23 Sep 2023 13:06:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231410AbjIWMcp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 Sep 2023 08:32:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39368 "EHLO
+        id S231656AbjIWNGT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 Sep 2023 09:06:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231313AbjIWMco (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Sep 2023 08:32:44 -0400
-Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC8C8127
-        for <git@vger.kernel.org>; Sat, 23 Sep 2023 05:32:38 -0700 (PDT)
-Received: by mail-qk1-x72b.google.com with SMTP id af79cd13be357-7740c520847so219739885a.2
-        for <git@vger.kernel.org>; Sat, 23 Sep 2023 05:32:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kitware.com; s=google; t=1695472358; x=1696077158; darn=vger.kernel.org;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pHzgAumK5f1tSEbwCruunAzvwCWPW1FKuyahR//M4iw=;
-        b=fHtXNmihs2/WvTOATqaMXCONt1oM9Z4Pn0MZsnXkzTYh7+JNJm/bsmIilfTQHMmwE4
-         GfIplwWLASgridzUe77OxdczHg3+fkx7dNneIgHY1MTT4sdXd52lUkRL8yaE9kmL/q6P
-         BpSbPjrIk/1NUob+dwndN9KdqWWKQjWeeRweQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695472358; x=1696077158;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pHzgAumK5f1tSEbwCruunAzvwCWPW1FKuyahR//M4iw=;
-        b=Af5GHRVRJUh4zIaas4Fb7880KbzJQYsLV6C+uZ3LJF4UyNnc1GUHqSBGqYpJAnzVN+
-         3Uh6xyfNm5oecTsOWSfrlDU13CrSssgUtGJuoYP+P6ydKivQy51WIOA47lZdQ/7NN42f
-         zZrYByWj8FwSKuPU2eFhw9SWNNG6zVjziPDLWdloW1ofGwMVzy9FYKc9LsN632d5hbtJ
-         B6bN6fED36PPrbjveJsx5qg186FzKOvKgtPMFCisxKWCu+PHxLVU/dpDW7mhZZ/ZS8t1
-         7VBcpc9nT4V1TPMPvIwO0ahKV57i1UkPzdx8nVVyjs/ztwwK8l/DIWEmyaecK5fCPCRr
-         MeOw==
-X-Gm-Message-State: AOJu0YyVJSjKTmWFcuzAiyurISPcYTWd62zv/bpL7drz/b4X1kGZ0NOE
-        ElZUWrhbxfCHX6XIxxxOs3lDmJLctWlCwpWfstssSg==
-X-Google-Smtp-Source: AGHT+IFjBJkuVrHMNJUz9CmTpS0V+nxumsB0LL93ZpRQek0i4dFBHSKeNmdHPqmxrECtHU7gXx3krw==
-X-Received: by 2002:a05:620a:2f2:b0:770:fc39:25e4 with SMTP id a18-20020a05620a02f200b00770fc3925e4mr1953281qko.45.1695472357843;
-        Sat, 23 Sep 2023 05:32:37 -0700 (PDT)
-Received: from localhost (cpe-142-105-146-128.nycap.res.rr.com. [142.105.146.128])
-        by smtp.gmail.com with ESMTPSA id s3-20020a05620a16a300b0076daaccb7f7sm452018qkj.135.2023.09.23.05.32.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 23 Sep 2023 05:32:37 -0700 (PDT)
-Date:   Sat, 23 Sep 2023 08:32:36 -0400
-From:   'Ben Boeckel' <ben.boeckel@kitware.com>
-To:     rsbecker@nexbridge.com
-Cc:     git@vger.kernel.org
-Subject: Re: [BUG] `git describe` doesn't traverse the graph in topological
- order
-Message-ID: <ZQ7a5FOHGNuHFif1@farprobe>
-References: <ZNffWAgldUZdpQcr@farprobe>
- <ZQ21NsLmp+xQU5g+@farprobe>
- <02d701d9ed6f$abcb4b00$0361e100$@nexbridge.com>
- <ZQ3GAJ/AHsM9e9a6@farprobe>
- <02e701d9ed78$436b3c60$ca41b520$@nexbridge.com>
+        with ESMTP id S231494AbjIWNGS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Sep 2023 09:06:18 -0400
+X-Greylist: delayed 478 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 23 Sep 2023 06:06:12 PDT
+Received: from thor.hardeman.nu (thor.hardeman.nu [IPv6:2a01:4f8:c0c:bb23::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 048FB11D
+        for <git@vger.kernel.org>; Sat, 23 Sep 2023 06:06:11 -0700 (PDT)
+Received: from webmail.hardeman.nu (thor.hardeman.nu [IPv6:2a01:4f8:c0c:bb23::1])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: david@hardeman.nu)
+        by thor.hardeman.nu (Postfix) with ESMTPSA id 4Rt8M553gyzFpvL
+        for <git@vger.kernel.org>; Sat, 23 Sep 2023 14:58:09 +0200 (CEST)
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=hardeman.nu;
+        s=202308-ed25519; t=1695473889;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=jDw1xRYpYVGDvNFp01KLJIWvLnGtc1L9IH+EUpkPggQ=;
+        b=84uOrLCRMRWHuA34ZhCVKv7hB2L5//tKWcv1htnOYiv95jC8b3C8glMRkCYSrI8murDDw+
+        dQabXsVHHyQ51MCg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hardeman.nu; s=202308-rsa;
+        t=1695473889;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=jDw1xRYpYVGDvNFp01KLJIWvLnGtc1L9IH+EUpkPggQ=;
+        b=Hyre/3lUNy0VbskhQyUeYfZzGF7m7M4bcf0NxDKy6NxbMwEamMheNAgbItsdkn79XzOhe+
+        1yzLOEsf+UWBN1eMiGsr6tihJUJuyF8szALXQ98xl/cFlajijuouz0mHKquux8hVlF6yAl
+        ZL8zTNhaUx4AleEEIGVa6GE4gYdJEPigK6EnMY4DnwfKWqwZsaA2ciIaNCir219pvRMONL
+        NwtP3IhCu8sZ/ZU/SNRjWAca9Czan2pEznnZ3GE7fsN9rtunyk+nY1Ux1jJSgXQZ0vJRJP
+        AAV4RG9lqp4lfr0cedYqVIlXEZruFNU97pyaE8LwofSRVvMGYBdAgNcWA3NqjQ==
+Authentication-Results: ORIGINATING;
+        auth=pass smtp.auth=david@hardeman.nu smtp.mailfrom=david@hardeman.nu
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <02e701d9ed78$436b3c60$ca41b520$@nexbridge.com>
-User-Agent: Mutt/2.2.9 (2022-11-12)
+Date:   Sat, 23 Sep 2023 12:58:09 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+From:   "=?utf-8?B?RGF2aWQgSMOkcmRlbWFu?=" <david@hardeman.nu>
+Message-ID: <bb757ebd66b5ac4c81d62b01d5cff2f75250090d@hardeman.nu>
+TLS-Required: No
+Subject: Issues with git clone over HTTP/2 and closed connections
+To:     git@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 22, 2023 at 13:14:30 -0400, rsbecker@nexbridge.com wrote:
-> There appears to be a merge at 446120fd88 which brings v9.3.0.rc0
-> closer to HEAD than v9.3.0.rc1.
+Hi,
 
-I'll also note that `.rc0` was added as a fix for the situation of
-`.rc1` not being found properly. Without that, it finds `v9.2.6` as the
-"closest" tag.
+I just tried to clone a repo from a server over HTTPS, which failed with =
+a message like this:
 
---Ben
+  error:  (curl_result =3D 55, http_code =3D 0, sha1 =3D <XYZ>
+  error: Unable to find <XYZ> under https://example.com/myrepo.git
+  Fetching objects: 20790, done.
+  Cannot obtain needed tree <XYZ>
+  while processing commit <ABC>
+  error: fetch failed.
+
+Every time I retried cloning, <XYZ> and <ABC> changed, but the error mess=
+age was the same.
+
+By running "GIT_CURL_VERBOSE=3D1 git clone https://example.com/myrepo.git=
+", I noticed that:
+
+  a) HTTP/2 was being used; and
+  b) just before the error the server returned a GOAWAY [1]:
+     "=3D=3D Info: received GOAWAY, error=3D0, last_stream=3D1999"
+
+On the client side I'm using Debian Unstable (libcurl 8.3.0, git 2.40.1),=
+ and the server is running Debian Stable (nginx 1.22.1-9).
+
+nginx will, by default, close HTTP/2 connections after "http2_max_request=
+s", (default: 1000, i.e. 1999 streams, note that the error message above =
+says last_stream=3D1999) and it seems that it is using GOAWAY to do so, w=
+hich seems to confuse git/libcurl.
+
+And sure enough, after running "git config --global http.version HTTP/1.1=
+" on the client and trying again, the "git clone" was successful (I'm gue=
+ssing I could/should also bump http2_max_requests on the server).
+
+From what I understand, git should close the connection, try to open a ne=
+w one and resume the clone operation before erroring out (because the GOA=
+WAY message could mean anything).
+
+Is this a known bug and is it something that would need to be fixed in li=
+bcurl or in git?
+
+Cheers,
+David
+
+PS. Not subscribed, please CC: me on any replies.
+
+[1] https://www.rfc-editor.org/rfc/rfc7540#section-6.8
+[2] http://nginx.org/en/docs/http/ngx_http_v2_module.html#http2_max_reque=
+sts
