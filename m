@@ -2,101 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A31DCE7A8A
-	for <git@archiver.kernel.org>; Sun, 24 Sep 2023 03:38:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D335FCE7A88
+	for <git@archiver.kernel.org>; Sun, 24 Sep 2023 04:25:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229889AbjIXDgl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 Sep 2023 23:36:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33192 "EHLO
+        id S229498AbjIXDuc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 Sep 2023 23:50:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229888AbjIXDgj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Sep 2023 23:36:39 -0400
+        with ESMTP id S229437AbjIXDub (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Sep 2023 23:50:31 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59D4910A
-        for <git@vger.kernel.org>; Sat, 23 Sep 2023 20:36:27 -0700 (PDT)
-Received: (qmail 17345 invoked by uid 109); 24 Sep 2023 03:36:26 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DB61109
+        for <git@vger.kernel.org>; Sat, 23 Sep 2023 20:50:24 -0700 (PDT)
+Received: (qmail 17374 invoked by uid 109); 24 Sep 2023 03:50:23 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 24 Sep 2023 03:36:26 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 24 Sep 2023 03:50:23 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32642 invoked by uid 111); 24 Sep 2023 03:36:28 -0000
+Received: (qmail 32729 invoked by uid 111); 24 Sep 2023 03:50:25 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 23 Sep 2023 23:36:28 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 23 Sep 2023 23:50:25 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Sat, 23 Sep 2023 23:36:25 -0400
+Date:   Sat, 23 Sep 2023 23:50:22 -0400
 From:   Jeff King <peff@peff.net>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     Michael Strawbridge <michael.strawbridge@amd.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Luben Tuikov <luben.tuikov@amd.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [REGRESSION] uninitialized value $address in git send-email when
- given multiple recipients separated by commas
-Message-ID: <20230924033625.GA1492190@coredump.intra.peff.net>
-References: <ZQ1eGzqfyoeeTBUq@debian.me>
+To:     David =?utf-8?B?SMOkcmRlbWFu?= <david@hardeman.nu>
+Cc:     git@vger.kernel.org
+Subject: Re: Issues with git clone over HTTP/2 and closed connections
+Message-ID: <20230924035022.GA1503477@coredump.intra.peff.net>
+References: <bb757ebd66b5ac4c81d62b01d5cff2f75250090d@hardeman.nu>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZQ1eGzqfyoeeTBUq@debian.me>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <bb757ebd66b5ac4c81d62b01d5cff2f75250090d@hardeman.nu>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 22, 2023 at 04:27:55PM +0700, Bagas Sanjaya wrote:
+On Sat, Sep 23, 2023 at 12:58:09PM +0000, David Härdeman wrote:
 
-> To reproduce this regression:
-
-I couldn't reproduce the problem here.
-
-I had to modify your instructions slightly:
-
-> 1. Clone git.git repo, then branch off:
+> By running "GIT_CURL_VERBOSE=1 git clone https://example.com/myrepo.git", I noticed that:
 > 
->    ```
->    $ git clone https://github.com/git/git.git && cd git
->    $ git checkout -b test
->    ```
+>   a) HTTP/2 was being used; and
+>   b) just before the error the server returned a GOAWAY [1]:
+>      "== Info: received GOAWAY, error=0, last_stream=1999"
 > 
-> 2. Make two dummy signed-off commits:
+> On the client side I'm using Debian Unstable (libcurl 8.3.0, git
+> 2.40.1), and the server is running Debian Stable (nginx 1.22.1-9).
 > 
->    ```
->    $ echo test > test && git add test && git commit -s -m "test"
->    $ echo "test test" >> test && git commit -a -s -m "test test"
->    ```
-
-This all worked.
-
-> 3. Generate patch series:
+> nginx will, by default, close HTTP/2 connections after
+> "http2_max_requests", (default: 1000, i.e. 1999 streams, note that the
+> error message above says last_stream=1999) and it seems that it is
+> using GOAWAY to do so, which seems to confuse git/libcurl.
 > 
->    ```
->    $ mkdir /tmp/test
->    $ git format-patch -o /tmp/test --cover-letter main
->    ```
+> And sure enough, after running "git config --global http.version
+> HTTP/1.1" on the client and trying again, the "git clone" was
+> successful (I'm guessing I could/should also bump http2_max_requests
+> on the server).
 
-This should be s/main/master/, since the git.git repo from step 1 does
-not have a "main" branch.
+Thanks for a detailed report. Your analysis all makes sense to me.
 
-> 4. Send the series to dummy address:
+> From what I understand, git should close the connection, try to open a
+> new one and resume the clone operation before erroring out (because
+> the GOAWAY message could mean anything).
 > 
->    ```
->    $ git send-email --to="foo <foo@acme.com>,bar <bar@acme.com>" /tmp/test/*.patch
->    ```
+> Is this a known bug and is it something that would need to be fixed in
+> libcurl or in git?
 
-This did not produce an error for me. I switched out acme.com for some
-addresses I control, and confirmed that the mail was all delivered fine.
+I don't think we've heard of such a problem before with Git. I don't
+know enough about GOAWAY to comment on the correct behavior, but this is
+almost certainly a curl issue, not a Git one. All of the connection
+handling, reuse, etc, is happening invisibly at the curl layer.
 
-Your report also mentions a validation hook, so I tried installing one
-like:
+It's probably worth poking around libcurl's issue tracker. This seems
+like it might be related:
 
-	cat >.git/hooks/sendemail-validate <<-\EOF
-	#!/bin/sh
-	echo >&2 running validate hook
-	exit 0
-	EOF
-	chmod +x .git/hooks/sendemail-validate
+  https://github.com/curl/curl/issues/11859
 
-and confirmed that the hook runs (three times, as expected). But still
-no error. I'm using v2.41.0 to test against.
+And one final comment: 2000 is a lot of requests for one clone. That
+plus the error you are seeing from Git makes me think you're using the
+"dumb" http protocol (i.e., your webserver is not set up to run the
+server side of Git's smart protocol, so it is just serving files
+blindly).
+
+I don't know if using it is intentional or not. But the smart protocol
+is much more efficient, and in general I would expect it to have fewer
+corner cases (none of the major forges allow dumb-http at all).
+
+You can find more details on setting it up in "git help http-backend".
+
+If you do want to keep using the dumb protocol, consider running "git
+gc" on the server side repository. 2000 requests implies you have many
+loose objects, which could be served much more efficiently as a single
+pack.
 
 -Peff
