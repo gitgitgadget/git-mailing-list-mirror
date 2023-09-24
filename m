@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B8FDCE7A8B
-	for <git@archiver.kernel.org>; Sun, 24 Sep 2023 23:37:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F665CE7A8B
+	for <git@archiver.kernel.org>; Sun, 24 Sep 2023 23:39:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229832AbjIXXhS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 24 Sep 2023 19:37:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39086 "EHLO
+        id S229498AbjIXXjv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 24 Sep 2023 19:39:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229480AbjIXXhR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Sep 2023 19:37:17 -0400
-Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8120BDA
-        for <git@vger.kernel.org>; Sun, 24 Sep 2023 16:37:11 -0700 (PDT)
-Received: by mail-yb1-xb2f.google.com with SMTP id 3f1490d57ef6-d8162698f0dso6401586276.0
-        for <git@vger.kernel.org>; Sun, 24 Sep 2023 16:37:11 -0700 (PDT)
+        with ESMTP id S229480AbjIXXjv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Sep 2023 19:39:51 -0400
+Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A354E8
+        for <git@vger.kernel.org>; Sun, 24 Sep 2023 16:39:45 -0700 (PDT)
+Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-59f6e6b7600so12636647b3.3
+        for <git@vger.kernel.org>; Sun, 24 Sep 2023 16:39:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695598630; x=1696203430; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1695598784; x=1696203584; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WoyuqHu/Ay2i890chxE5slm3kf5GAUFjd7zWSENNdJo=;
-        b=QhQQe3Ait004SqJn6+UYzMGaO+eoGs1vnOy7DEFuQ5LKwW8VEFcrKpSVfRN73C4bQf
-         QsxvhBlqDTx2e3PvkAJCBCxKcIf0peTQv3xPW7PUp7RzPok5+zq0N1yJB5cETBycvGu0
-         VdcWacpodBaCL7dGQv4zJwa6uu94xu/WXu/CnuaVbbNDMKYQK7NwPq3lyqKBOoIg8BU2
-         FYduTNB4gA81Lp6hTczmYih2O1VrHtvCrhmpAbg9PQnTqUpCYXSH7+5ihUihFIXBpU5E
-         GjeRNruAhASh1ToJYY7knhIHoVxDbEPvFUnPpqmERKvM39/iuqFnhXLR2zHTk2Of+vPJ
-         JuJg==
+        bh=F+pMJUjfsA78LlfxhNPIq1PNpmaP03L1A0s5S7w5PKo=;
+        b=XgvnWzN2n1DJwYxqY3f/kYzmPte+YTn8huZG8hZYzViek2XL6xANIKVTIFZdceALWG
+         6QAgmW78Irn2FjTNG9us/XQ0D301XRxIKmijmrY2dQcRuLsSOnuBiR81ujmr5W2S0tLg
+         B1OP729ANVDoHiXipv84vn94kZF4pOqMgj0Mf4qjM90lCVLxivavwli7Why22O4VtUld
+         j4A4vHLNoN48xnHcbquV9lWW/phz0xNdW4Nw4h8AtjFEkCRRQ2mSD+0LrjIt90jooQ+E
+         PMyVwu8OqrzLRWgsTF8fPFVklpHdkopEv+ITJdZPd1g00FdcJMlYwoPt/IAbJlgpCqyv
+         QYXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695598630; x=1696203430;
+        d=1e100.net; s=20230601; t=1695598784; x=1696203584;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WoyuqHu/Ay2i890chxE5slm3kf5GAUFjd7zWSENNdJo=;
-        b=ppZDuXUE2TGA95j3BysoawPV4PKsw3BfuX15xk9ZI94IttBlB7JoOlHI47x4EGF8ln
-         UwrW/m+FPk+o8dsSOc3BdK1nuN5pSJSVw1IB1kCSRvgEM7WSkHXW88Irdd/KjV60DpIO
-         uIBZeVAUlWYbZH5makTcytcuUKYxGbqLaJj4dZHbByR4Rs7rRwB53V3Rk6oh7hEDp72K
-         W/wsTUtGDBla7vnH2319Jq2YvtCHLlBBT7cgc8LVPan72W7ywpNsPvTOfqc0QdVkxsZG
-         xpyiiuDdzX0a3VpXqoXZmANBF4tCdB4DsoROdgqPehEjXAwkstS8qmhZThqZr36BBUG5
-         5QpQ==
-X-Gm-Message-State: AOJu0Yx4IzK4bA14AMfASwjP0YHzh2ZJ0H452RwcbGE3CmFcHMDVlITr
-        CY26HSODWmiFqsKh//bfXOiGBDnBdF9DkkinZgM=
-X-Google-Smtp-Source: AGHT+IG6Z0Px2hvb+JwMFlaWLvob/dG6nwcmG+jgHCq8juizeh/M5hzUbzPZWF9AyNLUt6BhMZDlP7gyKED8e11yilI=
-X-Received: by 2002:a81:ae64:0:b0:59f:5367:81d3 with SMTP id
- g36-20020a81ae64000000b0059f536781d3mr3457257ywk.11.1695598630672; Sun, 24
- Sep 2023 16:37:10 -0700 (PDT)
+        bh=F+pMJUjfsA78LlfxhNPIq1PNpmaP03L1A0s5S7w5PKo=;
+        b=fz4JYYPtSvIbHy/hzHIRbJyIAP8oD4ICwKi2rVv+ij9++uaMM9AxftpE4VIh0cgypa
+         dafGRRvH/gvVTAPERm3n0UsZa0Glx05H7NyoDnqkY3bpJr9Fq5zi68dzdCh+6aZzHZtE
+         BLKa3sz0u6e7J9K+ApLs6fGXUCXe5rP9v+2FYEdwP7IdvZYCwflPtoIaZcXV0fN0QVHS
+         qrHZpyEPToiq2cVnCqlflkgPp4bYk+f5X80oprIUErXIrZQtjdiRlWuisMkW5aQsl5HD
+         VtUyKWRaXRdEit7N/mkHlWRIlbON+D2tHz5BIGsx01/tMugLrlXv3xkd8NHcjoBTTERn
+         n3QQ==
+X-Gm-Message-State: AOJu0Yz+kX3affwNHQuuCAgi+EK9UXSKHd4qwzM4MQ2OVfnGnIPCMw1h
+        gdyw+leU9yD+CJuzHo9H6ZZcLyiWSC/7P7Kmf8o=
+X-Google-Smtp-Source: AGHT+IGAetnEFLmJHGxw29ByBWZfHDrkFfzU+d524Bvy5msYxBPQTkQbwccgpBdqVMi8UOU8jS0iQXuanKPeV5wEqx8=
+X-Received: by 2002:a0d:f085:0:b0:593:47ff:bd7 with SMTP id
+ z127-20020a0df085000000b0059347ff0bd7mr4474491ywe.46.1695598784315; Sun, 24
+ Sep 2023 16:39:44 -0700 (PDT)
 MIME-Version: 1.0
 References: <xmqqy1h2f5dv.fsf@gitster.g> <20230923152201.14741-4-worldhello.net@gmail.com>
- <f4877c36-ff26-4f81-b5dd-63c929ba30c9@gmail.com>
-In-Reply-To: <f4877c36-ff26-4f81-b5dd-63c929ba30c9@gmail.com>
+ <CAPig+cTRByz10ySknTxPB2yVJf5Snz29LNRq5MtPk2MF3nMziQ@mail.gmail.com>
+In-Reply-To: <CAPig+cTRByz10ySknTxPB2yVJf5Snz29LNRq5MtPk2MF3nMziQ@mail.gmail.com>
 From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Mon, 25 Sep 2023 07:36:59 +0800
-Message-ID: <CANYiYbHjk4CX4Uswn4sX-tH3e22uLSHk_4bwjqVO=9MWcfoHnw@mail.gmail.com>
+Date:   Mon, 25 Sep 2023 07:39:33 +0800
+Message-ID: <CANYiYbFkG+CvrNFBkdNewZs7ADROVsjd051SDQsU0zVq8eBhew@mail.gmail.com>
 Subject: Re: [PATCH v2 3/3] archive: support remote archive from stateless transport
-To:     phillip.wood@dunelm.org.uk
+To:     Eric Sunshine <sunshine@sunshineco.com>
 Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Brandon Williams <bwilliams.eng@gmail.com>,
         Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
@@ -65,69 +65,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 24, 2023 at 9:41=E2=80=AFPM Phillip Wood <phillip.wood123@gmail=
-.com> wrote:
+On Sun, Sep 24, 2023 at 2:52=E2=80=AFPM Eric Sunshine <sunshine@sunshineco.=
+com> wrote:
 >
-> On 23/09/2023 16:22, Jiang Xin wrote:
-> > From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-> >
+> On Sat, Sep 23, 2023 at 11:22=E2=80=AFAM Jiang Xin <worldhello.net@gmail.=
+com> wrote:
 > > Even though we can establish a stateless connection, we still cannot
 > > archive the remote repository using a stateless HTTP protocol. Try the
 > > following steps to make it work.
-> >
-> >   1. Add support for "git-upload-archive" service in "http-backend".
-> >
-> >   2. Use the URL ".../info/refs?service=3Dgit-upload-pack" to detect th=
-e
-> >      protocol version, instead of use the "git-upload-archive" service.
-> >
-> >   3. "git-archive" does not expect to see protocol version and
-> >      capabilities when connecting to remote-helper, so do not send them
-> >      in "remote-curl.c" for the "git-upload-archive" service.
->
-> I'm not familiar enough with the server side of git to comment on
-> whether this patch is a good idea, but I did notice one C language issue
-> below.
->
-> >   static struct string_list *get_parameters(void)
+> > [...]
+> > Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+> > ---
+> > diff --git a/http-backend.c b/http-backend.c
 > > @@ -639,10 +640,19 @@ static void check_content_type(struct strbuf *hdr=
 , const char *accepted_type)
+> > -       const char *argv[] =3D {NULL, "--stateless-rpc", ".", NULL};
+> > +       const char *argv[4];
 > >
-> >   static void service_rpc(struct strbuf *hdr, char *service_name)
-> >   {
-> > -     const char *argv[] =3D {NULL, "--stateless-rpc", ".", NULL};
-
-For the original implementation, the first NULL is used as a
-placeholder, and will be initialized somewhere below.
-
-> In the pre-image argv[0] is initialized to NULL
+> > +       if (!strcmp(service_name, "git-upload-archive")) {
+> > +               argv[1] =3D ".";
+> > +               argv[2] =3D NULL;
+> > +       } else {
+> > +               argv[1] =3D "--stateless-rpc";
+> > +               argv[2] =3D ".";
+> > +               argv[3] =3D NULL;
+> > +       }
 >
-> > +     const char *argv[4];
+> It may not be worth a reroll, but since you're touching this code
+> anyhow, these days we'd use `strvec` for this:
 >
-> In the post-image argv is not initialized and the first element is not
-> set in the code below.
->
-> >       struct rpc_service *svc =3D select_service(hdr, service_name);
-> >       struct strbuf buf =3D STRBUF_INIT;
-> >
-> > +     if (!strcmp(service_name, "git-upload-archive")) {
-> > +             argv[1] =3D ".";
-> > +             argv[2] =3D NULL;
-> > +     } else {
-> > +             argv[1] =3D "--stateless-rpc";
-> > +             argv[2] =3D ".";
-> > +             argv[3] =3D NULL;
-> > +     }
+>     struct strvec argv =3D STRVEC_INIT;
+>     if (strcmp(service_name, "git-upload-archive"))
+>         strvec_push(&argv, "--stateless-rpc");
+>     strvec_push(&argv, ".");
 
-It will be initialized in the code further below, see http-backend.c:668.
+Good suggestion, I'll queue this up as part of next reroll.
 
-        argv[0] =3D svc->name;
-        run_service(argv, svc->buffer_input);
-        strbuf_release(&buf);
-
-Anyway, I will rewrite these code in reroll v3 to follow Eric's suggestion.
-
-> Best Wishes
->
-> Phillip
->
+--
+Jiang Xin
