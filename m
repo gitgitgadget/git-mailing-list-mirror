@@ -2,90 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F443CD54BE
-	for <git@archiver.kernel.org>; Mon, 25 Sep 2023 20:05:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BB22CE79A1
+	for <git@archiver.kernel.org>; Mon, 25 Sep 2023 21:11:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233109AbjIYUFU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Sep 2023 16:05:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52308 "EHLO
+        id S233389AbjIYVL0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Sep 2023 17:11:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229481AbjIYUFT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Sep 2023 16:05:19 -0400
-Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF4BA10C
-        for <git@vger.kernel.org>; Mon, 25 Sep 2023 13:05:12 -0700 (PDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-        by mailout.nyi.internal (Postfix) with ESMTP id 263EF5C273E;
-        Mon, 25 Sep 2023 16:05:12 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
-  by compute6.internal (MEProxy); Mon, 25 Sep 2023 16:05:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-         h=cc:cc:content-type:content-type:date:date:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to; s=fm1; t=1695672312; x=
-        1695758712; bh=pj4NSi9OTRCblIUG4CRywF1Wh2Wh3TJy7t+q6jshziQ=; b=X
-        rGTcr8MdZkjl/K7dK9DBAHgkIWcQUxJPyphc0iUlwJhmp96rCDFXHASMYYYtx/3X
-        TahEdwvwL5fzX0GCDJMppF6B6/p2LDL8zRutazOs+At/V1HMiMcAHyp00NO8o1mJ
-        yU0FXOd5PlkFr9pbwPwNhrNR4LqtbH4XZF+Tc0/why6kH3gewZLKiMR6otgDmWw8
-        D9ecX18CMkcA1LjKBj7SylNzxFnpkyKnRzhSDtR+Ce4OqWEWR7x4Qypw1Qcjosys
-        sSjgjxmASgzRQrlDok+iSqQCsg7nTNeanF4ofj2KYGau9ceaK0CNSdd8E8sJGDy0
-        nhGBQAxrv+Uf1iNaSr/Hw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:content-type:date:date
-        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm2; t=1695672312; x=1695758712; bh=pj4NSi9OTRCbl
-        IUG4CRywF1Wh2Wh3TJy7t+q6jshziQ=; b=lePoYHayoKUL8bxUyS9wQf8GXkvQF
-        HxVyrbUIQ13CpasP2ZIHD1IHT07qSZ7NDi9Eov+2+hMMETyfjCAfr4Ez/p+pIZkw
-        m7WgQm167H71a/LCiqicn+F63D663sWjy8QN1UlayRLrTb0hbbpwDmJtuKf1emie
-        STyQ81JgvcszslEvMPcuQl5ggq9jxaxPdab3t2IqaCa7ry4jbI/U9rHG2Xp318GK
-        u3KarO9OJORY085zsCvrX3BP8dnWnSIVzRPsFBk+6aBFPekQAEqJpel0+tLrD6Dj
-        oZk4kCpGiO7l0BXbAvjyqraBEj7RzIPG5TEhJ/5bJAEoCsg5Qhsz/DLwg==
-X-ME-Sender: <xms:9-cRZXXXKsJNmJtGtvxMe7cV4NuCq7BgQDhl8E-T5v0dFwcBv-V1has>
-    <xme:9-cRZfn2oofLP7YYWUXYgW4L4JcQcTjIZpu3MAbTsygXzSl1N4s7TWcxWS5RSL8ai
-    IGhzoAB67Cl57WRtA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrudelgedgudegfecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdfm
-    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
-    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedtkedtjeeiffelteffheeiheeufffg
-    heelueeftdejkeeufffgiefhgeekffffueenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:-OcRZTY2M73w3GOcPsfp05MiFP1fe-6apDmBCIp_9dXjD5siJiHcPA>
-    <xmx:-OcRZSUFLqRxypDtngdCSzvjRl5nikz3sbdRNqF0oRgqfzCeupnwYA>
-    <xmx:-OcRZRkzl1BfCDoE4vj7c6MS_FyBgXfPhytJAD-WMUeDph52BPycHw>
-    <xmx:-OcRZRuw0JNoefwX7T0tmHFZ0ZoDgr4yz7fhKJNiM_1Eyx6XX6WNXQ>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id D6D6E15A0091; Mon, 25 Sep 2023 16:05:11 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-957-ga1ccdb4cff-fm-20230919.001-ga1ccdb4c
+        with ESMTP id S233386AbjIYVLZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Sep 2023 17:11:25 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B786109
+        for <git@vger.kernel.org>; Mon, 25 Sep 2023 14:11:19 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 642571CB5BE;
+        Mon, 25 Sep 2023 17:11:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=41lQIci0EJ/tDVqeqFrcXrkXFzMf9D0arAqGRq
+        701Ac=; b=BGsYUNN6HzwVDL/rjbQNYo0TswCN7d2VIJx6vIdshaNxxEPTYpC028
+        +Cid0J3IdQRdVz5BxT8T/jiL+J//gVj+2DSAEu24Md99KL9wwVt3LtTiIH0y01KK
+        Dst106Rw4mj3KcCZUxRMnHm94YXToPyCCa1QedF3M0VOiKwCCF3IE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5B5421CB5BD;
+        Mon, 25 Sep 2023 17:11:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BB44A1CB5BC;
+        Mon, 25 Sep 2023 17:11:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jiang Xin <worldhello.net@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Brandon Williams <bwilliams.eng@gmail.com>,
+        Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: Re: [PATCH v2 1/3] transport-helper: no connection restriction in
+ connect_helper
+In-Reply-To: <20230923152201.14741-2-worldhello.net@gmail.com> (Jiang Xin's
+        message of "Sat, 23 Sep 2023 23:21:59 +0800")
+References: <xmqqy1h2f5dv.fsf@gitster.g>
+        <20230923152201.14741-2-worldhello.net@gmail.com>
+Date:   Mon, 25 Sep 2023 14:11:16 -0700
+Message-ID: <xmqqjzserma3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Message-Id: <f3081838-ca50-4a7d-b2fc-6f0f1f1364a8@app.fastmail.com>
-In-Reply-To: <pull.950.git.1695391818917.gitgitgadget@gmail.com>
-References: <pull.950.git.1695391818917.gitgitgadget@gmail.com>
-Date:   Mon, 25 Sep 2023 22:04:50 +0200
-From:   "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To:     "Josh Soref via GitGitGadget" <gitgitgadget@gmail.com>,
-        "Josh Soref" <jsoref@gmail.com>
-Cc:     git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>
-Subject: Re: [PATCH] pretty-formats.txt: fix whitespace
 Content-Type: text/plain
+X-Pobox-Relay-ID: 116AEFF6-5BE8-11EE-8659-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 22, 2023, at 16:10, Josh Soref via GitGitGadget wrote:
-> From: Josh Soref <jsoref@gmail.com>
+Jiang Xin <worldhello.net@gmail.com> writes:
+
+> Remove the restriction in the "connect_helper()" function and give the
+> function "process_connect_service()" the opportunity to establish a
+> connection using ".connect" or ".stateless_connect" for protocol v2. So
+> we can connect with a stateless-rpc and do something useful. E.g., in a
+> later commit, implements remote archive for a repository over HTTP
+> protocol.
+
+OK.  Given that process_connect_service() does this:
+
+	if (data->connect) {
+		strbuf_addf(&cmdbuf, "connect %s\n", name);
+		ret = run_connect(transport, &cmdbuf);
+	} else if (data->stateless_connect &&
+		   (get_protocol_version_config() == protocol_v2) &&
+		   (!strcmp("git-upload-pack", name) ||
+		    !strcmp("git-upload-archive", name))) {
+		strbuf_addf(&cmdbuf, "stateless-connect %s\n", name);
+		ret = run_connect(transport, &cmdbuf);
+		if (ret)
+			transport->stateless_rpc = 1;
+	}
+
+in the spirit of the original "safety valve", it becomes tempting to
+suggest we make sure at least .connect or .stateless_connect exists
+in the transport to be safe, but then we will need to keep the logic
+of safety valve in connect_helper() and the actual dispatching in
+process_connect_service() in sync, which is a maintenance burden.
+
+It however makes me wonder if we should add
+
+	else
+		die(_("operation not supported by protocol"));
+
+at the end of the "if/else if" cascade in process_connect_service(),
+so that callers that end up following this callpath with a transport
+that defines neither would be caught.
+
+Other than that, the patch is as good as the previous round, and the
+explanation is vastly easier to understand.
+
+Thanks.
+
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+> ---
+>  transport-helper.c | 2 --
+>  1 file changed, 2 deletions(-)
 >
-> * two spaces after periods for sentences
-
-Where's the two-spacing convention documented? I didn't find it in
-`CodingGuidelines` or `SubmittingPatches`.
-
-Thanks
-
--- 
-Kristoffer Haugsbakk
+> diff --git a/transport-helper.c b/transport-helper.c
+> index 49811ef176..2e127d24a5 100644
+> --- a/transport-helper.c
+> +++ b/transport-helper.c
+> @@ -662,8 +662,6 @@ static int connect_helper(struct transport *transport, const char *name,
+>  
+>  	/* Get_helper so connect is inited. */
+>  	get_helper(transport);
+> -	if (!data->connect)
+> -		die(_("operation not supported by protocol"));
+>  
+>  	if (!process_connect_service(transport, name, exec))
+>  		die(_("can't connect to subservice %s"), name);
