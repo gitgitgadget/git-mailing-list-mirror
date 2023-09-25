@@ -2,84 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EB6CCE79A1
-	for <git@archiver.kernel.org>; Mon, 25 Sep 2023 19:11:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FF6CCD54BF
+	for <git@archiver.kernel.org>; Mon, 25 Sep 2023 19:14:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233132AbjIYTLM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Sep 2023 15:11:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32888 "EHLO
+        id S233045AbjIYTON (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Sep 2023 15:14:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229481AbjIYTLL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Sep 2023 15:11:11 -0400
-X-Greylist: delayed 231 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 25 Sep 2023 12:11:02 PDT
-Received: from mail-gateway-shared12.cyon.net (mail-gateway-shared12.cyon.net [194.126.200.65])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7A7D95
-        for <git@vger.kernel.org>; Mon, 25 Sep 2023 12:11:02 -0700 (PDT)
-Received: from s019.cyon.net ([149.126.4.28])
-        by mail-gateway-shared12.cyon.net with esmtpsa (TLS1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim)
-        (envelope-from <bb@drbeat.li>)
-        id 1qkqvE-0001pA-1p
-        for git@vger.kernel.org;
-        Mon, 25 Sep 2023 21:07:09 +0200
-Received: from [10.20.10.230] (port=29484 helo=mail.cyon.ch)
-        by s019.cyon.net with esmtpa (Exim 4.96)
-        (envelope-from <bb@drbeat.li>)
-        id 1qkqvD-00AbKa-1E;
-        Mon, 25 Sep 2023 21:07:07 +0200
-Received: by drbeat.li (Postfix, from userid 1000)
-        id E5347180107; Mon, 25 Sep 2023 21:07:06 +0200 (CEST)
-From:   Beat Bolli <dev+git@drbeat.li>
-To:     git@vger.kernel.org
-Cc:     Beat Bolli <dev+git@drbeat.li>
-Subject: [PATCH] unicode: update the width tables to Unicode 15.1
-Date:   Mon, 25 Sep 2023 21:07:04 +0200
-Message-Id: <20230925190704.157731-1-dev+git@drbeat.li>
-X-Mailer: git-send-email 2.35.1.720.g215f5dbbfb
+        with ESMTP id S231730AbjIYTOL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Sep 2023 15:14:11 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69A48B8
+        for <git@vger.kernel.org>; Mon, 25 Sep 2023 12:14:05 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 14287220FF;
+        Mon, 25 Sep 2023 15:14:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=vJHRNKr+eMOdeYasrd/aEldkBuOOJH6t59xoAo
+        bAhm0=; b=NLNJNtGAVoNl452uvdre9nVb8IHzuKeprvCXyEV+ZhX3KUeuZ+L+2n
+        jO5mQKn87Zg4SK+ITVElRSKhNUkQ16AzGQkQj0VMRf6FV6wzZMeIlpGVy+UyPCm6
+        exONHC/5tFbVDkwMpHf4yVglQFfCCBRLvEa4SjlGk04aJhi/VZ1Jw=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0C0DC220FE;
+        Mon, 25 Sep 2023 15:14:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B422B220FC;
+        Mon, 25 Sep 2023 15:14:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v7 0/9] Repack objects into separate packfiles based on
+ a filter
+In-Reply-To: <20230925152517.803579-1-christian.couder@gmail.com> (Christian
+        Couder's message of "Mon, 25 Sep 2023 17:25:08 +0200")
+References: <20230911150618.129737-1-christian.couder@gmail.com>
+        <20230925152517.803579-1-christian.couder@gmail.com>
+Date:   Mon, 25 Sep 2023 12:14:00 -0700
+Message-ID: <xmqqy1gurrpj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - s019.cyon.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - drbeat.li
-X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
-X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
+Content-Type: text/plain
+X-Pobox-Relay-ID: AF9E4EFE-5BD7-11EE-AFB9-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Unicode 15.1 has been announced on 2023-09-12 [0], so update the
-character width tables to the new version.
+Christian Couder <christian.couder@gmail.com> writes:
 
-[0] http://blog.unicode.org/2023/09/announcing-unicode-standard-version-151.html
+> # Changes since version 6
+>
+> Thanks to Junio who reviewed or commented on versions 1, 2, 3, 4 and
+> 5, and to Taylor who reviewed or commented on version 1, 3, 4, 5 and
+> 6!  Thanks also to Robert Coup who participated in the discussions
+> related to version 2 and Peff who participated in the discussions
+> related to version 4. There are only the following changes since
+> version 6:
+>
+> - This series has been rebased on top of bcb6cae296 (The twelfth
+>   batch, 2023-09-22) to fix conflicts with a `builtin/repack.c`
+>   refactoring patch series called tb/repack-existing-packs-cleanup by
+>   Taylor Blau that recently graduated to 'master':
+>
+> 	https://lore.kernel.org/git/cover.1694632644.git.me@ttaylorr.com/
+> 	https://lore.kernel.org/git/xmqqil81wqkx.fsf@gitster.g/
+>
+> - Patch 6/9 (repack: add `--filter=<filter-spec>` option) has been
+>   reworked to apply on top of the above mentioned patch series.
+>   Taylor even posted the fixup patch to apply to this series so that
+>   it works well on top of his series:
+>   
+>     https://lore.kernel.org/git/ZQNKkn0YYLUyN5Ih@nand.local/
 
-Signed-off-by: Beat Bolli <dev+git@drbeat.li>
----
- unicode-width.h | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+Thanks, both, for working well together.
 
-diff --git a/unicode-width.h b/unicode-width.h
-index e15fb0455b..be5bf8c4f2 100644
---- a/unicode-width.h
-+++ b/unicode-width.h
-@@ -396,14 +396,13 @@ static const struct interval double_width[] = {
- { 0x2E80, 0x2E99 },
- { 0x2E9B, 0x2EF3 },
- { 0x2F00, 0x2FD5 },
--{ 0x2FF0, 0x2FFB },
--{ 0x3000, 0x303E },
-+{ 0x2FF0, 0x303E },
- { 0x3041, 0x3096 },
- { 0x3099, 0x30FF },
- { 0x3105, 0x312F },
- { 0x3131, 0x318E },
- { 0x3190, 0x31E3 },
--{ 0x31F0, 0x321E },
-+{ 0x31EF, 0x321E },
- { 0x3220, 0x3247 },
- { 0x3250, 0x4DBF },
- { 0x4E00, 0xA48C },
--- 
-2.40.1
+Will replace and merge to 'seen'.  Let's see others supporting the
+change to chime in, and get it merged to 'next' soonish.  I gave a
+quick cursory look and changes to rebuild on the "existing packs
+cleanup" topic all looked sensible.
+
 
