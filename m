@@ -2,143 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C857CE7A99
-	for <git@archiver.kernel.org>; Mon, 25 Sep 2023 00:34:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4B8DCE7A91
+	for <git@archiver.kernel.org>; Mon, 25 Sep 2023 01:05:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230122AbjIYAZc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 24 Sep 2023 20:25:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46446 "EHLO
+        id S231149AbjIYBFX convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Sun, 24 Sep 2023 21:05:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229475AbjIYAZb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Sep 2023 20:25:31 -0400
-Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D925AC4
-        for <git@vger.kernel.org>; Sun, 24 Sep 2023 17:25:24 -0700 (PDT)
-Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-59f4db9e11eso33258927b3.0
-        for <git@vger.kernel.org>; Sun, 24 Sep 2023 17:25:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695601524; x=1696206324; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QtYaD53chqE4/Q3/Um9VixiZ1A5g89ABvEj+ukcNwXE=;
-        b=kEce4w7uQHTCR2gAb4C4SHm2N8krAV89//Bbs5eBC6gRq8YtAa08tFgbJR9U49DslJ
-         JxIX/7Ca8UA+Una8PUDt8f796XtoIu18RW1ZPzjKmktDgl9tgADVEyNOXuPOQhsnIj7G
-         q34+Yj+jVST9kFj6iuomxleej7s79XhC1UQSa/sHPyZK7fzCoBI5RBuX8mo1meTJf+/h
-         crXUxkqMwCG5BlaUBnB1yABkvfWSqLWdUJI9IUhxRoltWTJ/MSenZvGHyEe3qPf9yCEh
-         pWEOG1/M11qR3pqp6eH/t/cYQ0oOW57hfwdIUU9+oca0NwMB5gur5NFyWkVD33mwBh7B
-         BTzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695601524; x=1696206324;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QtYaD53chqE4/Q3/Um9VixiZ1A5g89ABvEj+ukcNwXE=;
-        b=qLHeAweIi5W5j/3EV4GGcZMkikYMi9vzUTM+m4Zhf4S/+68AE5QPb0UBa8dUFh8/Ck
-         R4PxroSyxmExdKqQI2ri6nTRQRFNQgVF7DvZtXWRqorSZoMmRnijoSFcz86YTfBO9vZ2
-         UAuTXUPR7Hou5iVvuzP8V0l8Pd4qdqdDjt8Wb6DsQX23a8zlqGwZ5Xf9H6SgTsG51bb6
-         XosicmjzXvECn3DGHKueLHqCf/dVHVllIYyaL4bQlrA2WdDl5HDREWAd720DjWf2WuQ+
-         7SnBuHcy0I5NqnH584m7OteXlgNOMFcKU0dF/W1g5MjCCJBbIyT+RvN0xE8t1SQBjcOd
-         j37A==
-X-Gm-Message-State: AOJu0YyJ0vpF+wAoothlT29tYEX/Gcd+1+8PxpaPM7Op1w74N6Wy1nQr
-        wu6qTLFy/hKvg+xQxvzIN1QLkxwnxhj+BrbmUAE=
-X-Google-Smtp-Source: AGHT+IGQpr3f0f8tW7b0jWWki+kv+Eb6n6FkOb9Kk8TA8GmZwtbV645dh4OVqUzlwMcYN74memWSlA8ld3/Fej9a9Po=
-X-Received: by 2002:a0d:f2c7:0:b0:58c:b845:e4d6 with SMTP id
- b190-20020a0df2c7000000b0058cb845e4d6mr4702153ywf.4.1695601523971; Sun, 24
- Sep 2023 17:25:23 -0700 (PDT)
+        with ESMTP id S229514AbjIYBFW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Sep 2023 21:05:22 -0400
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC5A3FB
+        for <git@vger.kernel.org>; Sun, 24 Sep 2023 18:05:15 -0700 (PDT)
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
+        (authenticated bits=0)
+        by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 38P12BPw2430670
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 25 Sep 2023 01:02:11 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From:   <rsbecker@nexbridge.com>
+To:     "'Jiang Xin'" <worldhello.net@gmail.com>
+Cc:     "'Eric Sunshine'" <sunshine@sunshineco.com>,
+        "'Git List'" <git@vger.kernel.org>,
+        "'Junio C Hamano'" <gitster@pobox.com>,
+        "'Brandon Williams'" <bwilliams.eng@gmail.com>,
+        "'Ilari Liusvaara'" <ilari.liusvaara@elisanet.fi>,
+        "'Jiang Xin'" <zhiyou.jx@alibaba-inc.com>
+References: <xmqqy1h2f5dv.fsf@gitster.g> <20230923152201.14741-4-worldhello.net@gmail.com> <CAPig+cTRByz10ySknTxPB2yVJf5Snz29LNRq5MtPk2MF3nMziQ@mail.gmail.com> <CANYiYbFkG+CvrNFBkdNewZs7ADROVsjd051SDQsU0zVq8eBhew@mail.gmail.com> <007601d9ef43$00731690$015943b0$@nexbridge.com> <CANYiYbGf4U2_UG674GqfauNPg+TgOtzRT=xCJ=x0gHM+TcrNpQ@mail.gmail.com>
+In-Reply-To: <CANYiYbGf4U2_UG674GqfauNPg+TgOtzRT=xCJ=x0gHM+TcrNpQ@mail.gmail.com>
+Subject: RE: [PATCH v2 3/3] archive: support remote archive from stateless transport
+Date:   Sun, 24 Sep 2023 21:04:49 -0400
+Organization: Nexbridge Inc.
+Message-ID: <007b01d9ef4c$4c4e8eb0$e4ebac10$@nexbridge.com>
 MIME-Version: 1.0
-References: <20230919071956.14015-1-worldhello.net@gmail.com> <20230920210832.2305886-1-jonathantanmy@google.com>
-In-Reply-To: <20230920210832.2305886-1-jonathantanmy@google.com>
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Mon, 25 Sep 2023 08:25:12 +0800
-Message-ID: <CANYiYbF+Xmk4rCNLMJe+i_CFafg8=QU5vbXWNUZbOVsDLTe5QQ@mail.gmail.com>
-Subject: Re: [PATCH] pkt-line: do not chomp EOL for sideband progress info
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQJtBuME2K9dYgfYpOTrEuwe32qH0AIwuGadAjQqHuYB+FVLcAERTBLbAZizWaKuvFDYsA==
+Content-Language: en-ca
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 21, 2023 at 5:08=E2=80=AFAM Jonathan Tan <jonathantanmy@google.=
-com> wrote:
+On Sunday, September 24, 2023 8:16 PM, Jiang Xin wrote:
+>On Mon, Sep 25, 2023 at 7:58 AM <rsbecker@nexbridge.com> wrote:
+>>
+>> On Sunday, September 24, 2023 7:40 PM, Jiang Xin wrote:
+>> >On Sun, Sep 24, 2023 at 2:52 PM Eric Sunshine
+>> ><sunshine@sunshineco.com>
+>> >wrote:
+>> >>
+>> >> On Sat, Sep 23, 2023 at 11:22 AM Jiang Xin <worldhello.net@gmail.com>
+>wrote:
+>> >> > Even though we can establish a stateless connection, we still
+>> >> > cannot archive the remote repository using a stateless HTTP
+>> >> > protocol. Try the following steps to make it work.
+>> >> > [...]
+>> >> > Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+>> >> > ---
+>> >> > diff --git a/http-backend.c b/http-backend.c @@ -639,10 +640,19
+>> >> > @@ static void check_content_type(struct strbuf *hdr, const char
+>*accepted_type)
+>> >> > -       const char *argv[] = {NULL, "--stateless-rpc", ".", NULL};
+>> >> > +       const char *argv[4];
+>> >> >
+>> >> > +       if (!strcmp(service_name, "git-upload-archive")) {
+>> >> > +               argv[1] = ".";
+>> >> > +               argv[2] = NULL;
+>> >> > +       } else {
+>> >> > +               argv[1] = "--stateless-rpc";
+>> >> > +               argv[2] = ".";
+>> >> > +               argv[3] = NULL;
+>> >> > +       }
+>> >>
+>> >> It may not be worth a reroll, but since you're touching this code
+>> >> anyhow, these days we'd use `strvec` for this:
+>> >>
+>> >>     struct strvec argv = STRVEC_INIT;
+>> >>     if (strcmp(service_name, "git-upload-archive"))
+>> >>         strvec_push(&argv, "--stateless-rpc");
+>> >>     strvec_push(&argv, ".");
+>> >
+>> >Good suggestion, I'll queue this up as part of next reroll.
+>>
+>> Which test covers this change?
 >
-> Jiang Xin <worldhello.net@gmail.com> writes:
-> > From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-> >
-> > In the protocol negotiation stage, we need to turn on the flag
-> > "PACKET_READ_CHOMP_NEWLINE" to chomp EOL for each packet line from
-> > client or server. But when receiving data and progress information
-> > using sideband, we will turn off the flag "PACKET_READ_CHOMP_NEWLINE"
-> > to prevent mangling EOLs from data and progress information.
-> >
-> > When both the server and the client support "sideband-all" capability,
-> > we have a dilemma that EOLs in negotiation packets should be trimmed,
-> > but EOLs in progress infomation should be leaved as is.
-> >
-> > Move the logic of chomping EOLs from "packet_read_with_status()" to
-> > "packet_reader_read()" can resolve this dilemma.
-> >
-> > Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
->
-> I think the summary is that when we use the struct packet_reader with
-> sideband and newline chomping, we want the chomping to occur only on
-> sideband 1, but the current code also chomps on sidebands 2 and 3 (3
-> is for fatal errors so it doesn't matter as much, but for 2, it really
-> matters).
->
-> This makes sense to fix.
->
-> As for how this is fixed, one issue is that we now have 2 places in
-> which newlines can be chomped (in packet_read_with_status() and with
-> this patch, packet_reader_read()). The issue is that we need to check
-> the sideband indicator before we chomp, and packet_read_with_status()
-> only knows how to chomp. So we either teach packet_read_with_status()
-> how to sideband, or tell packet_read_with_status() not to chomp and
-> chomp it ourselves (like in this patch).
->
-> Of the two, I would prefer it if packet_read_with_status() was taught
-> how to sideband - as it is, packet_read_with_status() is used 3 times
-> in pkt-line.c and 1 time in remote-curl.c, and 2 of those times (in
-> pkt-line.c) are used with sideband. Doing this does not only solve the
-> problem here, but reduces code duplication.
+>See: https://lore.kernel.org/git/20230923152201.14741-4-
+>worldhello.net@gmail.com/#Z31t:t5003-archive-zip.sh
 
-Yes, there are two places we can choose to fix. My first instinct is
-that changes on packet_reader_read will have less impact. I will new
-implementation in next reroll.
+Thanks. That is what I needed. Looking forward to the merge.
+--Randall
 
-> > @@ -624,12 +630,19 @@ enum packet_read_status packet_reader_read(struct=
- packet_reader *reader)
-> >                       break;
-> >       }
-> >
-> > -     if (reader->status =3D=3D PACKET_READ_NORMAL)
-> > +     if (reader->status =3D=3D PACKET_READ_NORMAL) {
-> >               /* Skip the sideband designator if sideband is used */
-> >               reader->line =3D reader->use_sideband ?
-> >                       reader->buffer + 1 : reader->buffer;
-> > -     else
-> > +
-> > +             if ((reader->options & PACKET_READ_CHOMP_NEWLINE) &&
-> > +                 reader->buffer[reader->pktlen - 1] =3D=3D '\n') {
-> > +                     reader->buffer[reader->pktlen - 1] =3D 0;
-> > +                     reader->pktlen--;
-> > +             }
->
-> When we reach here, we have skipped all sideband-2 pkt-lines, so
-> unconditionally chomping it here is good. Might be better if there was
-> also a check that use_sideband is set, just for symmetry with the code
-> near the start of this function.
->
-
-You find my bug. Without checking the use_sideband flag, two
-consecutive EOLwill be removed.
-
-BTW, the new reroll is not coming as fast as I planned, because when I
-adding new test cases, I find another issue in pkt-line. I will fix
-these two issues in this series.
-
---
-Jiang Xin
