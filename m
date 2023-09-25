@@ -2,50 +2,50 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 134D3CD54BF
-	for <git@archiver.kernel.org>; Mon, 25 Sep 2023 19:29:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F443CD54BE
+	for <git@archiver.kernel.org>; Mon, 25 Sep 2023 20:05:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231730AbjIYT3m (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Sep 2023 15:29:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44780 "EHLO
+        id S233109AbjIYUFU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Sep 2023 16:05:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229481AbjIYT3l (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Sep 2023 15:29:41 -0400
+        with ESMTP id S229481AbjIYUFT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Sep 2023 16:05:19 -0400
 Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF9AA101
-        for <git@vger.kernel.org>; Mon, 25 Sep 2023 12:29:34 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF4BA10C
+        for <git@vger.kernel.org>; Mon, 25 Sep 2023 13:05:12 -0700 (PDT)
 Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-        by mailout.nyi.internal (Postfix) with ESMTP id 48FA85C2773;
-        Mon, 25 Sep 2023 15:29:34 -0400 (EDT)
+        by mailout.nyi.internal (Postfix) with ESMTP id 263EF5C273E;
+        Mon, 25 Sep 2023 16:05:12 -0400 (EDT)
 Received: from imap49 ([10.202.2.99])
-  by compute6.internal (MEProxy); Mon, 25 Sep 2023 15:29:34 -0400
+  by compute6.internal (MEProxy); Mon, 25 Sep 2023 16:05:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
          h=cc:cc:content-type:content-type:date:date:from:from
         :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to; s=fm1; t=1695670174; x=
-        1695756574; bh=syzQuJFxyIOvorMkuwX7l4bHFCnbUFMhXabDfWnloRo=; b=H
-        5CDVpzETiUF4N6gd08cOtGP2wXcXTlRyy1Hw+MY5pyzs52gsQHGYuoJ55ALdMjlr
-        MBjTicjd0G2gdn7OrQeZheXhCJmRVwvHx8vO0UwPJkyKRV+lqBfAYbSCLNwHC0w9
-        4sxA9bkW9GvuebLTKJRebySAzXsAi4vKmfWWTCB4m/wFlqOs9zptMecq7auJ9QAs
-        te6VX8wNoL/69uWydswd8Ltlu4NNGFy1ua4A2eQ/3xryIDdU0tnDLtY/OfyQNJRP
-        P+3ITsUzw2e2LIvV3Jmm5qObzVjsT36lwR7u4E+h9zSekTo9/9NWbgHZadX7GvBj
-        5p2inbGOR+oEQCsnaQ9qA==
+        :reply-to:sender:subject:subject:to:to; s=fm1; t=1695672312; x=
+        1695758712; bh=pj4NSi9OTRCblIUG4CRywF1Wh2Wh3TJy7t+q6jshziQ=; b=X
+        rGTcr8MdZkjl/K7dK9DBAHgkIWcQUxJPyphc0iUlwJhmp96rCDFXHASMYYYtx/3X
+        TahEdwvwL5fzX0GCDJMppF6B6/p2LDL8zRutazOs+At/V1HMiMcAHyp00NO8o1mJ
+        yU0FXOd5PlkFr9pbwPwNhrNR4LqtbH4XZF+Tc0/why6kH3gewZLKiMR6otgDmWw8
+        D9ecX18CMkcA1LjKBj7SylNzxFnpkyKnRzhSDtR+Ce4OqWEWR7x4Qypw1Qcjosys
+        sSjgjxmASgzRQrlDok+iSqQCsg7nTNeanF4ofj2KYGau9ceaK0CNSdd8E8sJGDy0
+        nhGBQAxrv+Uf1iNaSr/Hw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-type:content-type:date:date
         :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
         :message-id:mime-version:references:reply-to:sender:subject
         :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm2; t=1695670174; x=1695756574; bh=syzQuJFxyIOvo
-        rMkuwX7l4bHFCnbUFMhXabDfWnloRo=; b=Fu+j7cx/2/tDRC7tVQY1dztRNel2B
-        Hg41S29whbqECP1lnoMlgiSVIuGKNncr7rwiH9ASkMr4lgBUByy264nTUU4HMKzm
-        BNofqM10mRqiaTN2vIIRoYNClyFx5BxI3af6N75qiWD8Q9qhBJ8kMzTFKhs7ELZc
-        yyMcbCeRQIEMTEnTKPiikPYbmd35J4nTDy+dcYK+thWdpzOVhg2e2FG7fdAr0hn7
-        BhyaWCxOFdixDkKUulmNRtkKGQQGU9hH3Lf94UL8ZTjUx0EJYcJq/m4VMLPNUZH0
-        CtZB7OYyXAKzO5JdTuAiqFN980AaIM76uCUYqFwfXFbliEj///C7SYNFw==
-X-ME-Sender: <xms:nt8RZaLLLzapQNThE_sTn0uZfnr8l4CMxLs_Zmk4SiyFZakRn1_f3Ds>
-    <xme:nt8RZSJcm4APF4ft-8MF1BJ4fINTXP8_hmTpERaqXmh9YREHMv7urp_ju33eBBq7n
-    hv-1g9QGGsk-EDOqA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrudelgedgudefiecutefuodetggdotefrod
+        :x-sasl-enc; s=fm2; t=1695672312; x=1695758712; bh=pj4NSi9OTRCbl
+        IUG4CRywF1Wh2Wh3TJy7t+q6jshziQ=; b=lePoYHayoKUL8bxUyS9wQf8GXkvQF
+        HxVyrbUIQ13CpasP2ZIHD1IHT07qSZ7NDi9Eov+2+hMMETyfjCAfr4Ez/p+pIZkw
+        m7WgQm167H71a/LCiqicn+F63D663sWjy8QN1UlayRLrTb0hbbpwDmJtuKf1emie
+        STyQ81JgvcszslEvMPcuQl5ggq9jxaxPdab3t2IqaCa7ry4jbI/U9rHG2Xp318GK
+        u3KarO9OJORY085zsCvrX3BP8dnWnSIVzRPsFBk+6aBFPekQAEqJpel0+tLrD6Dj
+        oZk4kCpGiO7l0BXbAvjyqraBEj7RzIPG5TEhJ/5bJAEoCsg5Qhsz/DLwg==
+X-ME-Sender: <xms:9-cRZXXXKsJNmJtGtvxMe7cV4NuCq7BgQDhl8E-T5v0dFwcBv-V1has>
+    <xme:9-cRZfn2oofLP7YYWUXYgW4L4JcQcTjIZpu3MAbTsygXzSl1N4s7TWcxWS5RSL8ai
+    IGhzoAB67Cl57WRtA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrudelgedgudegfecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
     enucfjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdfm
@@ -53,41 +53,39 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrudelgedgudefiecutefuodetgg
     hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedtkedtjeeiffelteffheeiheeufffg
     heelueeftdejkeeufffgiefhgeekffffueenucevlhhushhtvghrufhiiigvpedtnecurf
     grrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:nt8RZasepbmZh1UdUUk7An7mbWJb5bWcndFMXRRpUYBrRaKEVfJcxA>
-    <xmx:nt8RZfYcYzkwXK5zzr1-A_NJbaOFvg9VsBCzg71NkgVldxcJM5TL7A>
-    <xmx:nt8RZRYdRL5pqmrIinfT3CXRpAV884ueCvaWFZ_WPu6FarylgPkxgw>
-    <xmx:nt8RZVHObGab0BT6Oe4XGoF-GeNEofaKAIggFage67Bty5dmGg52dA>
+X-ME-Proxy: <xmx:-OcRZTY2M73w3GOcPsfp05MiFP1fe-6apDmBCIp_9dXjD5siJiHcPA>
+    <xmx:-OcRZSUFLqRxypDtngdCSzvjRl5nikz3sbdRNqF0oRgqfzCeupnwYA>
+    <xmx:-OcRZRkzl1BfCDoE4vj7c6MS_FyBgXfPhytJAD-WMUeDph52BPycHw>
+    <xmx:-OcRZRuw0JNoefwX7T0tmHFZ0ZoDgr4yz7fhKJNiM_1Eyx6XX6WNXQ>
 Feedback-ID: i2671468f:Fastmail
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id EDFF015A0092; Mon, 25 Sep 2023 15:29:33 -0400 (EDT)
+        id D6D6E15A0091; Mon, 25 Sep 2023 16:05:11 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.9.0-alpha0-957-ga1ccdb4cff-fm-20230919.001-ga1ccdb4c
 MIME-Version: 1.0
-Message-Id: <b2089384-4e1c-4956-ad57-0969151a09a6@app.fastmail.com>
-In-Reply-To: <xmqq7coet6vm.fsf@gitster.g>
-References: <xmqq1qg9qmyq.fsf@gitster.g>
- <20230821170720.577820-1-oswald.buddenhagen@gmx.de>
- <a1920050-bedc-49d4-840d-350b8fd3c003@app.fastmail.com>
- <xmqq7coet6vm.fsf@gitster.g>
-Date:   Mon, 25 Sep 2023 21:29:13 +0200
+Message-Id: <f3081838-ca50-4a7d-b2fc-6f0f1f1364a8@app.fastmail.com>
+In-Reply-To: <pull.950.git.1695391818917.gitgitgadget@gmail.com>
+References: <pull.950.git.1695391818917.gitgitgadget@gmail.com>
+Date:   Mon, 25 Sep 2023 22:04:50 +0200
 From:   "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To:     "Junio C Hamano" <gitster@pobox.com>
-Cc:     "Oswald Buddenhagen" <oswald.buddenhagen@gmx.de>,
-        "Jeff King" <peff@peff.net>, "Taylor Blau" <me@ttaylorr.com>,
-        "Derrick Stolee" <derrickstolee@github.com>, git@vger.kernel.org
-Subject: Re: [PATCH v3] format-patch: add --description-file option
+To:     "Josh Soref via GitGitGadget" <gitgitgadget@gmail.com>,
+        "Josh Soref" <jsoref@gmail.com>
+Cc:     git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>
+Subject: Re: [PATCH] pretty-formats.txt: fix whitespace
 Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 25, 2023, at 21:01, Junio C Hamano wrote:
-> Thanks for a positive feedback.  The changes is already in 'master'
-> since the beginning of this month or so and its way to be part of
-> the next release, I believe.
+On Fri, Sep 22, 2023, at 16:10, Josh Soref via GitGitGadget wrote:
+> From: Josh Soref <jsoref@gmail.com>
+>
+> * two spaces after periods for sentences
 
-Yes, I tested it yesterday and it works (in conjunction with
-`--cover-from-description=subject`) exactly like I want it to. :D
+Where's the two-spacing convention documented? I didn't find it in
+`CodingGuidelines` or `SubmittingPatches`.
+
+Thanks
 
 -- 
 Kristoffer Haugsbakk
