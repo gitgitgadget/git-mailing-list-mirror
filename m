@@ -2,66 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1168ACE7A95
-	for <git@archiver.kernel.org>; Mon, 25 Sep 2023 11:21:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32694CE7A94
+	for <git@archiver.kernel.org>; Mon, 25 Sep 2023 11:51:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231162AbjIYLVK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Sep 2023 07:21:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51654 "EHLO
+        id S230260AbjIYLvP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Sep 2023 07:51:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56992 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230460AbjIYLU6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Sep 2023 07:20:58 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2932ADA
-        for <git@vger.kernel.org>; Mon, 25 Sep 2023 04:20:49 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-31dcf18f9e2so5934957f8f.0
-        for <git@vger.kernel.org>; Mon, 25 Sep 2023 04:20:49 -0700 (PDT)
+        with ESMTP id S229456AbjIYLvO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Sep 2023 07:51:14 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68982103
+        for <git@vger.kernel.org>; Mon, 25 Sep 2023 04:51:07 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id ffacd0b85a97d-31f737b8b69so5251344f8f.3
+        for <git@vger.kernel.org>; Mon, 25 Sep 2023 04:51:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695640847; x=1696245647; darn=vger.kernel.org;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+        d=gmail.com; s=20230601; t=1695642665; x=1696247465; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=CDyY9qQi7KqDWV5dNj7AbYxVuBY39f/ATbDI8z43VBk=;
-        b=KtkBfW8Qr1QDBeRuYwewlkvvfaj6k1ijRrqdCvatk0A7uvdJlTWm+T+qK7Im3SwO4m
-         sQBGiszuNZAjgIOc6h1q5f0i18WhKX8V3AeX7q1hg/QCO3JEHRUGbqHO+DQWxAMz3hFP
-         68wyhOA5v92q+oxJNtiF0bwSedzP5rYc463VDOsNerIamaqrgrx1czxtOHxJnhI6I6T/
-         6ySwOchNnZC84qsNz7Y8mDh29g4yV6QdK6NLSv03u1kNcOiG6jP+SmVFc4j3BJyp15vo
-         dxxPpgkXB1K0iwNjfY3f4UvwOoeGEMLrg0HZIXukf/RvIgq+01bD5YUgriS/gjhnwN49
-         OFvQ==
+        bh=c9CAKxJ/+D445dVI3YYXX+qm/DxlOx8hlzwKEMuHP9w=;
+        b=gTv0FYG2k4GPp9FjtSbthZrtJWjzzMS7oA6EVYPIGAC9drPVZUh7pB9+41fXcDpzYs
+         JfZqzR13cCN+qEPOAh7tzqjHFgiCnD1wscFeJM3Navzs8n6AlPKSfMbJEoo+x3Epuj5L
+         hCvR8ElWsravcjupchsYEsR3eWWqwZSZLTetLtZkzu8exGt5rlUeil+bMH7dGTpCePAQ
+         T0X8tckGSzSZDP9tS7BF7lrtx6Oj3vqJIUHfRPqXahyFTAAHiqOZi29Lz9XqBPb/tlGR
+         0GStRYSqSWXcH5Npf4KeUeLzPpucsnRkcngdYzwsflJIce0e2b/oi2ukzKx9XtyjY8hG
+         fFtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695640847; x=1696245647;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+        d=1e100.net; s=20230601; t=1695642665; x=1696247465;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=CDyY9qQi7KqDWV5dNj7AbYxVuBY39f/ATbDI8z43VBk=;
-        b=qnBcu59/eGLWA0eSVekQbd+DUQNfOdTpt+AKkBjeeTQc5v8lZOFzPT6L2Ctqoyexxr
-         +mGIa9F5shbeHSx1SFwXBaK//o62Fa4KxBFYwWh3xW4Sn9bFHfdv4RsNTcakiw7ZI6XF
-         uVwgHbDG8AZoNqWV9k4lV3VUWpQISzCsSThg6pT1ikaEsfC+5fHYW7fFUAe0sg29OmEf
-         av++K8iBUpl/QXkMcbP8LKIsinnx8m/KeH6wPMM/uT5F5O2oO7kH9AUZF/QCnjhRdM9e
-         Bra92QKhC/leSVsp5wQO4d0NnHTTOK9ILnATnHRu/B2pwvPRJDChH/b+J/68zekTF1Qu
-         taEA==
-X-Gm-Message-State: AOJu0YzASIeUT5ONEDPjkgrChaJvYN2MuViJQakRSDq+xGca9kpy8qeq
-        QdcKVdIv9ZHrtrb7NPQjrixWlZpWbXU=
-X-Google-Smtp-Source: AGHT+IHH6SJKV/AFGVuowLZKjITFi4H/WfGToQ1hfqITrlTcXVcj8pPsYdP4SK9e5vZYRrncJO54/Q==
-X-Received: by 2002:adf:cd81:0:b0:314:12c:4322 with SMTP id q1-20020adfcd81000000b00314012c4322mr5775161wrj.4.1695640847438;
-        Mon, 25 Sep 2023 04:20:47 -0700 (PDT)
+        bh=c9CAKxJ/+D445dVI3YYXX+qm/DxlOx8hlzwKEMuHP9w=;
+        b=Uh645qlhX3vsbZtGtlbRCv6MSuIToPScaOioG8He2g5RldlsHsSF9hwdZcbm9wBT9N
+         L8Kc+WFoYO9nAM5h7emORStt25OVOqBbfO3OCrR9z7XdsU5jixQBIbcrou3JjojfyoYI
+         6LbJeU9JwXoKcQYvT1c2OJay3V9H+MtD20kDho+K+jpid+/FDsiA2AhMwwYV1ltd1P7e
+         NlWtpknRy1zO6WwTx2CrbvsV1up2L6R7P3wcjWVtPPv4gnFB8gJdca6agBpNk5lFl3DH
+         VHrblhaqhh4V+AwOsYrTUZZNX4zViG/vwLBqSP75j82fPlOxs0OU7O3kNEx4F/eDLJan
+         vOnw==
+X-Gm-Message-State: AOJu0YwT8Q9TI/Q4bSEnuuObPMkliV9MiDRZG7BRAJEG2ucu0xz7R6o6
+        Ac9RtmuXjxOd/R7TGnew9QowS7P2NL8=
+X-Google-Smtp-Source: AGHT+IE9XF8l9mxrdZS/8cRXWYa1DlTw1FNTpsB/3aZfBQUHUihGUwOawuaT7rp4Ie1TnB3tv5lrFQ==
+X-Received: by 2002:adf:e4ce:0:b0:321:6414:5869 with SMTP id v14-20020adfe4ce000000b0032164145869mr6787862wrm.58.1695642665637;
+        Mon, 25 Sep 2023 04:51:05 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l16-20020a5d4bd0000000b003216a068d2csm11575453wrt.24.2023.09.25.04.20.46
+        by smtp.gmail.com with ESMTPSA id s13-20020a5d424d000000b0031f729d883asm11655219wrr.42.2023.09.25.04.51.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Sep 2023 04:20:47 -0700 (PDT)
-Message-ID: <0a2d08b91e56aba19e02cd43a55d4c74c40cfe71.1695640837.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1579.v3.git.1695640836.gitgitgadget@gmail.com>
-References: <pull.1579.v2.git.1695070468.gitgitgadget@gmail.com>
-        <pull.1579.v3.git.1695640836.gitgitgadget@gmail.com>
+        Mon, 25 Sep 2023 04:51:05 -0700 (PDT)
+Message-ID: <ea85e3512335b5cbf52a3bb2c37ff1c15c04a1a6.1695642662.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1588.v2.git.1695642662.gitgitgadget@gmail.com>
+References: <pull.1588.git.1695379323.gitgitgadget@gmail.com>
+        <pull.1588.v2.git.1695642662.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 25 Sep 2023 11:20:35 +0000
-Subject: [PATCH v3 6/7] cmake: use test names instead of full paths
-MIME-Version: 1.0
+Date:   Mon, 25 Sep 2023 11:50:59 +0000
+Subject: [PATCH v2 3/6] coverity: allow overriding the Coverity project
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
+MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+Cc:     Jeff King <peff@peff.net>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
@@ -70,55 +70,45 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The primary purpose of Git's CMake definition is to allow developing Git
-in Visual Studio. As part of that, the CTest feature allows running
-individual test scripts conveniently in Visual Studio's Test Explorer.
+By default, the builds are submitted to the `git` project at
+https://scan.coverity.com/projects/git.
 
-However, this Test Explorer's design targets object-oriented languages
-and therefore expects the test names in the form
-`<namespace>.<class>.<testname>`. And since we specify the full path
-of the test scripts instead, including the ugly `/.././t/` part, these
-dots confuse the Test Explorer and it uses a large part of the path as
-"namespace".
+The Git for Windows project would like to use this workflow, too,
+though, and needs the builds to be submitted to the `git-for-windows`
+Coverity project.
 
-Let's just use `t.suite.<name>` instead. This presents the tests in
-Visual Studio's Test Explorer in the following form by default (i.e.
-unless the user changes the view via the "Group by" menu):
-
-	◢ ◈ git
-	 ◢ ◈ t
-	  ◢ ◈ suite
-	     ◈ t0000-basic
-	     ◈ t0001-init
-	     ◈ t0002-gitfile
-	     [...]
+To that end, allow configuring the Coverity project name via the
+repository variable, you guessed it, `COVERITY_PROJECT`. The default if
+that variable is not configured or has an empty value is still `git`.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/buildsystems/CMakeLists.txt | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ .github/workflows/coverity.yml | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index ad197ea433f..5e0c237dfd4 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -1106,13 +1106,14 @@ file(GLOB test_scripts "${CMAKE_SOURCE_DIR}/t/t[0-9]*.sh")
+diff --git a/.github/workflows/coverity.yml b/.github/workflows/coverity.yml
+index 4bc1572f040..55a3a8f5acf 100644
+--- a/.github/workflows/coverity.yml
++++ b/.github/workflows/coverity.yml
+@@ -11,6 +11,9 @@ name: Coverity
+ # `COVERITY_SCAN_EMAIL` and `COVERITY_SCAN_TOKEN`. The former specifies the
+ # email to which the Coverity reports should be sent and the latter can be
+ # obtained from the Project Settings tab of the Coverity project).
++#
++# By default, the builds are submitted to the Coverity project `git`. To override this,
++# set the repository variable `COVERITY_PROJECT`.
  
- #test
- foreach(tsh ${test_scripts})
--	add_test(NAME ${tsh}
-+	string(REGEX REPLACE ".*/(.*)\\.sh" "\\1" test_name ${tsh})
-+	add_test(NAME "t.suite.${test_name}"
- 		COMMAND ${SH_EXE} ${tsh} --no-bin-wrappers --no-chain-lint -vx
- 		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/t)
- endforeach()
- 
- # This test script takes an extremely long time and is known to time out even
- # on fast machines because it requires in excess of one hour to run
--set_tests_properties("${CMAKE_SOURCE_DIR}/t/t7112-reset-submodule.sh" PROPERTIES TIMEOUT 4000)
-+set_tests_properties("t.suite.t7112-reset-submodule" PROPERTIES TIMEOUT 4000)
- 
- endif()#BUILD_TESTING
+ on:
+   push:
+@@ -20,7 +23,7 @@ jobs:
+     if: contains(fromJSON(vars.ENABLE_COVERITY_SCAN_FOR_BRANCHES || '[""]'), github.ref_name)
+     runs-on: ubuntu-latest
+     env:
+-      COVERITY_PROJECT: git
++      COVERITY_PROJECT: ${{ vars.COVERITY_PROJECT || 'git' }}
+       COVERITY_LANGUAGE: cxx
+       COVERITY_PLATFORM: linux64
+     steps:
 -- 
 gitgitgadget
 
