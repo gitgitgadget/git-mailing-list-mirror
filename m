@@ -2,514 +2,299 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B87FCE7AB1
-	for <git@archiver.kernel.org>; Mon, 25 Sep 2023 17:51:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BFBBDCE7AB4
+	for <git@archiver.kernel.org>; Mon, 25 Sep 2023 18:01:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231294AbjIYRvW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Sep 2023 13:51:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51580 "EHLO
+        id S232546AbjIYSBf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Sep 2023 14:01:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58320 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230347AbjIYRvU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Sep 2023 13:51:20 -0400
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B09C101
-        for <git@vger.kernel.org>; Mon, 25 Sep 2023 10:51:12 -0700 (PDT)
-Received: by mail-pg1-x535.google.com with SMTP id 41be03b00d2f7-5789de5c677so4475377a12.3
-        for <git@vger.kernel.org>; Mon, 25 Sep 2023 10:51:12 -0700 (PDT)
+        with ESMTP id S229735AbjIYSB2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Sep 2023 14:01:28 -0400
+Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 533E99B
+        for <git@vger.kernel.org>; Mon, 25 Sep 2023 11:01:21 -0700 (PDT)
+Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-59f57ad6126so46105157b3.3
+        for <git@vger.kernel.org>; Mon, 25 Sep 2023 11:01:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695664272; x=1696269072; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=20JrfF5Rq2YDa8kuPhsPAwMs/inW5PWw9f09fCJQsMk=;
-        b=QTkRe5amnIvhKZINbFLJCHLMSYdLGrkyF6qTDHnP5kH8ZEtevzOesP/a00VwJuIrhX
-         4cvIZOirfb7DBO2ZsEvstZ6KILBWcyN+TeTbd5SIGu0oZcvyu5cSS+8z+KfYx8Iu1rH+
-         NY9g1QBH8qj/U6O+m3yAAri6FtKTxbKgeLxtgYaFa+28VNA1vJv+eI285YG1MB+fR34J
-         05o1+eFtcWmBN72hoWeylAH3zh+Qf0Y3DoUej4VTkpQjWqebDo5h8OlE7V6v/WkTa44N
-         o3mVN/THU87QPK3rBuol8jzG7lZ5zwVVslMnmnJ+ZrFQ2E0onAa1/e/6BsZP64A/f5Rf
-         Pkaw==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1695664880; x=1696269680; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=PMEN5FLoyf/2CqGYlcdjQ+4UmXL5KfdtrfZ5IglHWo4=;
+        b=YI8TDHDEmqc6CYV1XwR1+ZTt6H91zm/J6LV8ZVmRPuzPJ112BIW6pnn1WU5I3f9LXB
+         6ajOaTRzaRPqeaKs3OVuVsVzCFQD4OqE+eusAJXyL3/tXKknOQd3IyToq8MBBR4aPAy8
+         edzI8kfTkb0eiCbZAJQ+xwTVuxZi6MJR60Hm/1oURznIyaGxWQocQALTpLuOdNjDk5nO
+         cB3V9nqvNJc8f9Bsjpgdwuq6GtbbVtolQBCFelmjBftGw/SSygHmdfqHaEj1g+qiwOzZ
+         2Stc4fK5PFmuBXylG8eNTANC1jKNvPaVmMG9YRkeDbuhvSw2ocCJHJ4EOnFC89BcuGFw
+         HHxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695664272; x=1696269072;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=20JrfF5Rq2YDa8kuPhsPAwMs/inW5PWw9f09fCJQsMk=;
-        b=Jkrry9RywAnXVFL2oUUgaAJcP8/pqHT9cpMqwWTd0k0gGPEf+RQbrVR5qwKO4AaVRu
-         4mIH8mPimQiqca1Va+SCs4z1WoF9MXUcBOUXt8G1KIB3wwEquLm0IM4u0tZMDaBwMpxj
-         nvhZKKnp2Pjv9hn/bZWHbSoobg1/3eG062fiAwvPmKBoovO+5DDSMXKRilOs+9EEN0jO
-         2BFUBqDTQZA+tShc3MtkmSNL59YkA7QzuTNWBlCWBls32kZbx8PTk+9JdjOSP13yUrDW
-         YDekimON2bkd7Kx74kWrWuSi/2EKyDIz6OB4iLUetU9EY7iU544xCnUuWXj9M7TjElMs
-         PsLg==
-X-Gm-Message-State: AOJu0Yyiu8dGuuHSMsXK9oZJ6yMf2rpZypPxNlPqVeVkgU0WHlcGWyAK
-        Pyeb1RAK/dHuyfJKv24hMKiKuapEUYg=
-X-Google-Smtp-Source: AGHT+IFslqPPZ2KCSzyloYxF7l+rygXdSeLmPe+G+i75xRTMtii0W/i+7a7SET9jXjMDv8FgTvdBDQ==
-X-Received: by 2002:a17:90a:728e:b0:274:6503:26d with SMTP id e14-20020a17090a728e00b002746503026dmr4888082pjg.33.1695664271522;
-        Mon, 25 Sep 2023 10:51:11 -0700 (PDT)
-Received: from fivlite-virtual-machine.localdomain ([49.37.157.220])
-        by smtp.gmail.com with ESMTPSA id gw7-20020a17090b0a4700b00273f65fa424sm8417874pjb.8.2023.09.25.10.51.09
+        d=1e100.net; s=20230601; t=1695664880; x=1696269680;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PMEN5FLoyf/2CqGYlcdjQ+4UmXL5KfdtrfZ5IglHWo4=;
+        b=cfT8jSBSLyd/SvCtN70Ore5uRrMmAt6VvKD/JXBqHlnt95hhjERQOXg+A4NoW/zmdW
+         3FpBkLN/bpsoekSTGm+JEQj8le7L/2if+Ky2gj49uwIM4WPThUrHWaqOzHfbJCW1aSPF
+         gF7W1Fqbn3nWFo2Px69/3u5bzJ73aEhzEb/1sqDKsbQVkazzq+X4GAJpikapl3NZYDWp
+         eCSja3ltAcMTLMqZe+zP0TVQxUHLIJwdH1sA2S2mQp8CfIqb2AVVVI5fhHyxEFQTT+UI
+         NnVCvyYV59rUf0S59sKzMxP/jv/b9C6H1BWB3E/Jhjd6e/ZMheXi0dFFCUwPL5PQ71cB
+         +B1Q==
+X-Gm-Message-State: AOJu0Yx2f0iFEJz+ztSYrydbQPfSVH3n744/e+9ncz2M/rvvAYG1jaiV
+        dJokhh3DwcJ8ehHsdAHzWNnC3+G2JUn2UlwEIqs8NQ==
+X-Google-Smtp-Source: AGHT+IFYZeVlnnw1Q6RTCy7i/tdF2Hf553p04D6zSh20o2fi2pSt6019U1/MQaUYYYEGq2NS2Fhx2g==
+X-Received: by 2002:a05:690c:ecd:b0:59f:7f04:61b0 with SMTP id cs13-20020a05690c0ecd00b0059f7f0461b0mr4019191ywb.21.1695664880369;
+        Mon, 25 Sep 2023 11:01:20 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id bx6-20020a05690c080600b005928d602f44sm1354746ywb.31.2023.09.25.11.01.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Sep 2023 10:51:11 -0700 (PDT)
-From:   Kousik Sanagavarapu <five231003@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Kousik Sanagavarapu <five231003@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>
-Subject: [PATCH v2 3/3] ref-filter: add mailmap support
-Date:   Mon, 25 Sep 2023 23:13:10 +0530
-Message-ID: <20230925175050.3498-4-five231003@gmail.com>
-X-Mailer: git-send-email 2.42.0.273.ge948a9aaf4
-In-Reply-To: <20230925175050.3498-1-five231003@gmail.com>
-References: <20230920191654.6133-1-five231003@gmail.com>
- <20230925175050.3498-1-five231003@gmail.com>
+        Mon, 25 Sep 2023 11:01:20 -0700 (PDT)
+Date:   Mon, 25 Sep 2023 14:01:19 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH 2/2] builtin/repack.c: implement support for
+ `--cruft-max-size`
+Message-ID: <ZRHK7+2Ta6U4CXuL@nand.local>
+References: <cover.1694123506.git.me@ttaylorr.com>
+ <7e4e42e1aacf2111f04a933c0725a8c81769f8d6.1694123506.git.me@ttaylorr.com>
+ <xmqqtts5wnwn.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqtts5wnwn.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add mailmap support to ref-filter formats which are similar in
-pretty. This support is such that the following pretty placeholders are
-equivalent to the new ref-filter atoms:
+On Thu, Sep 07, 2023 at 04:42:48PM -0700, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+>
+> > This all works, but can be costly from an I/O-perspective when a
+> > repository has either (a) many unreachable objects, (b) prunes objects
+> > relatively infrequently/never, or (c) both.
+>
+> I can certainly understand (a).  If we need to write a lot of
+> objects into the craft pack, among which many of them are already in
+> the previous generation of craft pack, we would be copying bits from
+> the old to the new craft pack, and having to do so for many objects
+> would involve expensive I/O.  But not (b).  Whether we prune objects
+> infrequently or we do so very often, as long as the number and
+> on-disk size of objects that has to go into craft packs are the
+> same, wouldn't the cost of I/O pretty much the same?  IOW, (b) does
+> not have much to do with how repacking is costly I/O wise, except
+> that it is a contributing factor to make (a) worse, which is the
+> real cause of the I/O cost.
 
-	%aN = authorname:mailmap
-	%cN = committername:mailmap
+Yeah, (b) on its own isn't enough to cost us a significant amount of I/O
+overhead. (b) definitely exacerbates (a) if we are repacking relatively
+frequently. I'll clarify in the patch notes.
 
-	%aE = authoremail:mailmap
-	%aL = authoremail:mailmap,localpart
-	%cE = committeremail:mailmap
-	%cL = committeremail:mailmap,localpart
+> > This limits the I/O churn up to a quadratic function of the value
+> > specified by the `--cruft-max-size` option, instead of behaving
+> > quadratically in the number of total unreachable objects.
+>
+> ... I do not quite see how you would limit the I/O churn.
 
-Additionally, mailmap can also be used with ":trim" option for email by
-doing something like "authoremail:mailmap,trim".
+In the above (elided here for brevity) response, you are correct: the
+idea is that once a cruft pack has grown to whatever threshold you set
+via `--cruft-max-size`, it is effectively frozen, preventing you from
+incurring the same I/O churn from it in the future.
 
-The above also applies for the "tagger" atom, that is,
-"taggername:mailmap", "taggeremail:mailmap", "taggeremail:mailmap,trim"
-and "taggername:mailmap,localpart".
+> > When pruning unreachable objects, we bypass the new paths which combine
+>
+> "paths" here refers to...?  code paths, I guess?
 
-The functionality of ":trim" and ":localpart" remains the same. That is,
-":trim" gives the email, but without the angle brackets and ":localpart"
-gives the part of the email before the '@' character (if such a
-character is not found then we directly grab everything between the
-angle brackets).
+Yep.
 
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Hariom Verma <hariom18599@gmail.com>
-Signed-off-by: Kousik Sanagavarapu <five231003@gmail.com>
----
- Documentation/git-for-each-ref.txt |   6 +-
- ref-filter.c                       | 152 ++++++++++++++++++++++-------
- t/t6300-for-each-ref.sh            |  85 +++++++++++++++-
- 3 files changed, 206 insertions(+), 37 deletions(-)
+> > +gc.cruftMaxSize::
+> > +	Limit the size of new cruft packs when repacking. When
+> > +	specified in addition to `--cruft-max-size`, the command line
+> > +	option takes priority. See the `--cruft-max-size` option of
+> > +	linkgit:git-repack[1].
+>
+> Hmph.
+>
+> I am reasonably sure that I will mix the name up and call it
+> gc.maxCruftSize in my configuration file and scratch my head
+> wondering why it is not working.
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index 11b2bc3121..e86d5700dd 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -303,7 +303,11 @@ Fields that have name-email-date tuple as its value (`author`,
- and `date` to extract the named component.  For email fields (`authoremail`,
- `committeremail` and `taggeremail`), `:trim` can be appended to get the email
- without angle brackets, and `:localpart` to get the part before the `@` symbol
--out of the trimmed email.
-+out of the trimmed email. In addition to these, the `:mailmap` option and the
-+corresponding `:mailmap,trim` and `:mailmap,localpart` can be used (order does
-+not matter) to get values of the name and email according to the .mailmap file
-+or according to the file set in the mailmap.file or mailmap.blob configuration
-+variable (see linkgit:gitmailmap[5]).
- 
- The raw data in an object is `raw`.
- 
-diff --git a/ref-filter.c b/ref-filter.c
-index fae9f4b8ed..e4d3510e28 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -13,6 +13,8 @@
- #include "oid-array.h"
- #include "repository.h"
- #include "commit.h"
-+#include "mailmap.h"
-+#include "ident.h"
- #include "remote.h"
- #include "color.h"
- #include "tag.h"
-@@ -215,8 +217,16 @@ static struct used_atom {
- 		struct {
- 			enum { O_SIZE, O_SIZE_DISK } option;
- 		} objectsize;
--		struct email_option {
--			enum { EO_RAW, EO_TRIM, EO_LOCALPART } option;
-+		struct {
-+			enum { N_RAW, N_MAILMAP } option;
-+		} name_option;
-+		struct {
-+			enum {
-+				EO_RAW = 0,
-+				EO_TRIM = 1<<0,
-+				EO_LOCALPART = 1<<1,
-+				EO_MAILMAP = 1<<2,
-+			} option;
- 		} email_option;
- 		struct {
- 			enum { S_BARE, S_GRADE, S_SIGNER, S_KEY,
-@@ -720,21 +730,55 @@ static int oid_atom_parser(struct ref_format *format UNUSED,
- 	return 0;
- }
- 
--static int person_email_atom_parser(struct ref_format *format UNUSED,
--				    struct used_atom *atom,
--				    const char *arg, struct strbuf *err)
-+static int person_name_atom_parser(struct ref_format *format UNUSED,
-+				   struct used_atom *atom,
-+				   const char *arg, struct strbuf *err)
- {
- 	if (!arg)
--		atom->u.email_option.option = EO_RAW;
--	else if (!strcmp(arg, "trim"))
--		atom->u.email_option.option = EO_TRIM;
--	else if (!strcmp(arg, "localpart"))
--		atom->u.email_option.option = EO_LOCALPART;
-+		atom->u.name_option.option = N_RAW;
-+	else if (!strcmp(arg, "mailmap"))
-+		atom->u.name_option.option = N_MAILMAP;
- 	else
- 		return err_bad_arg(err, atom->name, arg);
- 	return 0;
- }
- 
-+static int email_atom_option_parser(struct used_atom *atom,
-+				    const char **arg, struct strbuf *err)
-+{
-+	if (!*arg)
-+		return EO_RAW;
-+	if (skip_prefix(*arg, "trim", arg))
-+		return EO_TRIM;
-+	if (skip_prefix(*arg, "localpart", arg))
-+		return EO_LOCALPART;
-+	if (skip_prefix(*arg, "mailmap", arg))
-+		return EO_MAILMAP;
-+	return -1;
-+}
-+
-+static int person_email_atom_parser(struct ref_format *format UNUSED,
-+				    struct used_atom *atom,
-+				    const char *arg, struct strbuf *err)
-+{
-+	for (;;) {
-+		int opt = email_atom_option_parser(atom, &arg, err);
-+		const char *bad_arg = arg;
-+
-+		if (opt < 0)
-+			return err_bad_arg(err, atom->name, bad_arg);
-+		atom->u.email_option.option |= opt;
-+
-+		if (!arg || !*arg)
-+			break;
-+		if (*arg == ',')
-+			arg++;
-+		else
-+			return err_bad_arg(err, atom->name, bad_arg);
-+	}
-+	return 0;
-+}
-+
- static int refname_atom_parser(struct ref_format *format UNUSED,
- 			       struct used_atom *atom,
- 			       const char *arg, struct strbuf *err)
-@@ -877,15 +921,15 @@ static struct {
- 	[ATOM_TYPE] = { "type", SOURCE_OBJ },
- 	[ATOM_TAG] = { "tag", SOURCE_OBJ },
- 	[ATOM_AUTHOR] = { "author", SOURCE_OBJ },
--	[ATOM_AUTHORNAME] = { "authorname", SOURCE_OBJ },
-+	[ATOM_AUTHORNAME] = { "authorname", SOURCE_OBJ, FIELD_STR, person_name_atom_parser },
- 	[ATOM_AUTHOREMAIL] = { "authoremail", SOURCE_OBJ, FIELD_STR, person_email_atom_parser },
- 	[ATOM_AUTHORDATE] = { "authordate", SOURCE_OBJ, FIELD_TIME },
- 	[ATOM_COMMITTER] = { "committer", SOURCE_OBJ },
--	[ATOM_COMMITTERNAME] = { "committername", SOURCE_OBJ },
-+	[ATOM_COMMITTERNAME] = { "committername", SOURCE_OBJ, FIELD_STR, person_name_atom_parser },
- 	[ATOM_COMMITTEREMAIL] = { "committeremail", SOURCE_OBJ, FIELD_STR, person_email_atom_parser },
- 	[ATOM_COMMITTERDATE] = { "committerdate", SOURCE_OBJ, FIELD_TIME },
- 	[ATOM_TAGGER] = { "tagger", SOURCE_OBJ },
--	[ATOM_TAGGERNAME] = { "taggername", SOURCE_OBJ },
-+	[ATOM_TAGGERNAME] = { "taggername", SOURCE_OBJ, FIELD_STR, person_name_atom_parser },
- 	[ATOM_TAGGEREMAIL] = { "taggeremail", SOURCE_OBJ, FIELD_STR, person_email_atom_parser },
- 	[ATOM_TAGGERDATE] = { "taggerdate", SOURCE_OBJ, FIELD_TIME },
- 	[ATOM_CREATOR] = { "creator", SOURCE_OBJ },
-@@ -1486,32 +1530,49 @@ static const char *copy_name(const char *buf)
- 	return xstrdup("");
- }
- 
-+static const char *find_end_of_email(const char *email, int opt)
-+{
-+	const char *eoemail;
-+
-+	if (opt & EO_LOCALPART) {
-+		eoemail = strchr(email, '@');
-+		if (eoemail)
-+			return eoemail;
-+		return strchr(email, '>');
-+	}
-+
-+	if (opt & EO_TRIM)
-+		return strchr(email, '>');
-+
-+	/*
-+	 * The option here is either the raw email option or the raw
-+	 * mailmap option (that is EO_RAW or EO_MAILMAP). In such cases,
-+	 * we directly grab the whole email including the closing
-+	 * angle brackets.
-+	 *
-+	 * If EO_MAILMAP was set with any other option (that is either
-+	 * EO_TRIM or EO_LOCALPART), we already grab the end of email
-+	 * above.
-+	 */
-+	eoemail = strchr(email, '>');
-+	if (eoemail)
-+		eoemail++;
-+	return eoemail;
-+}
-+
- static const char *copy_email(const char *buf, struct used_atom *atom)
- {
- 	const char *email = strchr(buf, '<');
- 	const char *eoemail;
-+	int opt = atom->u.email_option.option;
-+
- 	if (!email)
- 		return xstrdup("");
--	switch (atom->u.email_option.option) {
--	case EO_RAW:
--		eoemail = strchr(email, '>');
--		if (eoemail)
--			eoemail++;
--		break;
--	case EO_TRIM:
--		email++;
--		eoemail = strchr(email, '>');
--		break;
--	case EO_LOCALPART:
-+
-+	if (opt & (EO_LOCALPART | EO_TRIM))
- 		email++;
--		eoemail = strchr(email, '@');
--		if (!eoemail)
--			eoemail = strchr(email, '>');
--		break;
--	default:
--		BUG("unknown email option");
--	}
- 
-+	eoemail = find_end_of_email(email, opt);
- 	if (!eoemail)
- 		return xstrdup("");
- 	return xmemdupz(email, eoemail - email);
-@@ -1572,16 +1633,23 @@ static void grab_date(const char *buf, struct atom_value *v, const char *atomnam
- 	v->value = 0;
- }
- 
-+static struct string_list mailmap = STRING_LIST_INIT_NODUP;
-+
- /* See grab_values */
- static void grab_person(const char *who, struct atom_value *val, int deref, void *buf)
- {
- 	int i;
- 	int wholen = strlen(who);
- 	const char *wholine = NULL;
-+	const char *headers[] = { "author ", "committer ",
-+				  "tagger ", NULL };
- 
- 	for (i = 0; i < used_atom_cnt; i++) {
--		const char *name = used_atom[i].name;
-+		struct used_atom *atom = &used_atom[i];
-+		const char *name = atom->name;
- 		struct atom_value *v = &val[i];
-+		struct strbuf mailmap_buf = STRBUF_INIT;
-+
- 		if (!!deref != (*name == '*'))
- 			continue;
- 		if (deref)
-@@ -1589,22 +1657,36 @@ static void grab_person(const char *who, struct atom_value *val, int deref, void
- 		if (strncmp(who, name, wholen))
- 			continue;
- 		if (name[wholen] != 0 &&
--		    strcmp(name + wholen, "name") &&
-+		    !starts_with(name + wholen, "name") &&
- 		    !starts_with(name + wholen, "email") &&
- 		    !starts_with(name + wholen, "date"))
- 			continue;
--		if (!wholine)
-+
-+		if ((starts_with(name + wholen, "name") &&
-+		    (atom->u.name_option.option == N_MAILMAP)) ||
-+		    (starts_with(name + wholen, "email") &&
-+		    (atom->u.email_option.option & EO_MAILMAP))) {
-+			if (!mailmap.items)
-+				read_mailmap(&mailmap);
-+			strbuf_addstr(&mailmap_buf, buf);
-+			apply_mailmap_to_header(&mailmap_buf, headers, &mailmap);
-+			wholine = find_wholine(who, wholen, mailmap_buf.buf);
-+		} else {
- 			wholine = find_wholine(who, wholen, buf);
-+		}
-+
- 		if (!wholine)
- 			return; /* no point looking for it */
- 		if (name[wholen] == 0)
- 			v->s = copy_line(wholine);
--		else if (!strcmp(name + wholen, "name"))
-+		else if (starts_with(name + wholen, "name"))
- 			v->s = copy_name(wholine);
- 		else if (starts_with(name + wholen, "email"))
- 			v->s = copy_email(wholine, &used_atom[i]);
- 		else if (starts_with(name + wholen, "date"))
- 			grab_date(wholine, v, name);
-+
-+		strbuf_release(&mailmap_buf);
- 	}
- 
- 	/*
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index e4ec2926d6..00a060df0b 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -25,6 +25,13 @@ test_expect_success setup '
- 	disklen sha1:138
- 	disklen sha256:154
- 	EOF
-+
-+	# setup .mailmap
-+	cat >.mailmap <<-EOF &&
-+	A Thor <athor@example.com> A U Thor <author@example.com>
-+	C Mitter <cmitter@example.com> C O Mitter <committer@example.com>
-+	EOF
-+
- 	setdate_and_increment &&
- 	echo "Using $datestamp" > one &&
- 	git add one &&
-@@ -145,15 +152,31 @@ test_atom head '*objectname' ''
- test_atom head '*objecttype' ''
- test_atom head author 'A U Thor <author@example.com> 1151968724 +0200'
- test_atom head authorname 'A U Thor'
-+test_atom head authorname:mailmap 'A Thor'
- test_atom head authoremail '<author@example.com>'
- test_atom head authoremail:trim 'author@example.com'
- test_atom head authoremail:localpart 'author'
-+test_atom head authoremail:trim,localpart 'author'
-+test_atom head authoremail:mailmap '<athor@example.com>'
-+test_atom head authoremail:mailmap,trim 'athor@example.com'
-+test_atom head authoremail:trim,mailmap 'athor@example.com'
-+test_atom head authoremail:mailmap,localpart 'athor'
-+test_atom head authoremail:localpart,mailmap 'athor'
-+test_atom head authoremail:mailmap,trim,localpart,mailmap,trim 'athor'
- test_atom head authordate 'Tue Jul 4 01:18:44 2006 +0200'
- test_atom head committer 'C O Mitter <committer@example.com> 1151968723 +0200'
- test_atom head committername 'C O Mitter'
-+test_atom head committername:mailmap 'C Mitter'
- test_atom head committeremail '<committer@example.com>'
- test_atom head committeremail:trim 'committer@example.com'
- test_atom head committeremail:localpart 'committer'
-+test_atom head committeremail:localpart,trim 'committer'
-+test_atom head committeremail:mailmap '<cmitter@example.com>'
-+test_atom head committeremail:mailmap,trim 'cmitter@example.com'
-+test_atom head committeremail:trim,mailmap 'cmitter@example.com'
-+test_atom head committeremail:mailmap,localpart 'cmitter'
-+test_atom head committeremail:localpart,mailmap 'cmitter'
-+test_atom head committeremail:trim,mailmap,trim,trim,localpart 'cmitter'
- test_atom head committerdate 'Tue Jul 4 01:18:43 2006 +0200'
- test_atom head tag ''
- test_atom head tagger ''
-@@ -203,22 +226,46 @@ test_atom tag '*objectname' $(git rev-parse refs/tags/testtag^{})
- test_atom tag '*objecttype' 'commit'
- test_atom tag author ''
- test_atom tag authorname ''
-+test_atom tag authorname:mailmap ''
- test_atom tag authoremail ''
- test_atom tag authoremail:trim ''
- test_atom tag authoremail:localpart ''
-+test_atom tag authoremail:trim,localpart ''
-+test_atom tag authoremail:mailmap ''
-+test_atom tag authoremail:mailmap,trim ''
-+test_atom tag authoremail:trim,mailmap ''
-+test_atom tag authoremail:mailmap,localpart ''
-+test_atom tag authoremail:localpart,mailmap ''
-+test_atom tag authoremail:mailmap,trim,localpart,mailmap,trim ''
- test_atom tag authordate ''
- test_atom tag committer ''
- test_atom tag committername ''
-+test_atom tag committername:mailmap ''
- test_atom tag committeremail ''
- test_atom tag committeremail:trim ''
- test_atom tag committeremail:localpart ''
-+test_atom tag committeremail:localpart,trim ''
-+test_atom tag committeremail:mailmap ''
-+test_atom tag committeremail:mailmap,trim ''
-+test_atom tag committeremail:trim,mailmap ''
-+test_atom tag committeremail:mailmap,localpart ''
-+test_atom tag committeremail:localpart,mailmap ''
-+test_atom tag committeremail:trim,mailmap,trim,trim,localpart ''
- test_atom tag committerdate ''
- test_atom tag tag 'testtag'
- test_atom tag tagger 'C O Mitter <committer@example.com> 1151968725 +0200'
- test_atom tag taggername 'C O Mitter'
-+test_atom tag taggername:mailmap 'C Mitter'
- test_atom tag taggeremail '<committer@example.com>'
- test_atom tag taggeremail:trim 'committer@example.com'
- test_atom tag taggeremail:localpart 'committer'
-+test_atom tag taggeremail:trim,localpart 'committer'
-+test_atom tag taggeremail:mailmap '<cmitter@example.com>'
-+test_atom tag taggeremail:mailmap,trim 'cmitter@example.com'
-+test_atom tag taggeremail:trim,mailmap 'cmitter@example.com'
-+test_atom tag taggeremail:mailmap,localpart 'cmitter'
-+test_atom tag taggeremail:localpart,mailmap 'cmitter'
-+test_atom tag taggeremail:trim,mailmap,trim,localpart,localpart 'cmitter'
- test_atom tag taggerdate 'Tue Jul 4 01:18:45 2006 +0200'
- test_atom tag creator 'C O Mitter <committer@example.com> 1151968725 +0200'
- test_atom tag creatordate 'Tue Jul 4 01:18:45 2006 +0200'
-@@ -292,8 +339,44 @@ test_bad_atom () {
- test_bad_atom head 'authoremail:foo' \
- 	'fatal: unrecognized %(authoremail) argument: foo'
- 
-+test_bad_atom head 'authoremail:mailmap,trim,bar' \
-+	'fatal: unrecognized %(authoremail) argument: bar'
-+
-+test_bad_atom head 'authoremail:trim,' \
-+	'fatal: unrecognized %(authoremail) argument: '
-+
-+test_bad_atom head 'authoremail:mailmaptrim' \
-+	'fatal: unrecognized %(authoremail) argument: trim'
-+
-+test_bad_atom head 'committeremail: ' \
-+	'fatal: unrecognized %(committeremail) argument:  '
-+
-+test_bad_atom head 'committeremail: trim,foo' \
-+	'fatal: unrecognized %(committeremail) argument:  trim,foo'
-+
-+test_bad_atom head 'committeremail:mailmap,localpart ' \
-+	'fatal: unrecognized %(committeremail) argument:  '
-+
-+test_bad_atom head 'committeremail:trim_localpart' \
-+	'fatal: unrecognized %(committeremail) argument: _localpart'
-+
-+test_bad_atom head 'committeremail:localpart,,,trim' \
-+	'fatal: unrecognized %(committeremail) argument: ,,trim'
-+
-+test_bad_atom tag 'taggeremail:mailmap,trim, foo ' \
-+	'fatal: unrecognized %(taggeremail) argument:  foo '
-+
-+test_bad_atom tag 'taggeremail:trim,localpart,' \
-+	'fatal: unrecognized %(taggeremail) argument: '
-+
-+test_bad_atom tag 'taggeremail:mailmap;localpart trim' \
-+	'fatal: unrecognized %(taggeremail) argument: ;localpart trim'
-+
- test_bad_atom tag 'taggeremail:localpart trim' \
--	'fatal: unrecognized %(taggeremail) argument: localpart trim'
-+	'fatal: unrecognized %(taggeremail) argument:  trim'
-+
-+test_bad_atom tag 'taggeremail:mailmap,mailmap,trim,qux,localpart,trim' \
-+	'fatal: unrecognized %(taggeremail) argument: qux,localpart,trim'
- 
- test_date () {
- 	f=$1 &&
--- 
-2.42.0.273.ge948a9aaf4
+I have no strong preference for either "gc.cruftMaxSize" or
+"gc.maxCruftSize" (or anything else, really), so long as we are
+consistent with the command-line option.
 
+> > diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
+> > index 90806fd26a..8a90d684a7 100644
+> > --- a/Documentation/git-gc.txt
+> > +++ b/Documentation/git-gc.txt
+> > @@ -59,6 +59,13 @@ be performed as well.
+> >  	cruft pack instead of storing them as loose objects. `--cruft`
+> >  	is on by default.
+> >
+> > +--cruft-max-size=<n>::
+> > +	When packing unreachable objects into a cruft pack, limit the
+> > +	size of new cruft packs to be at most `<n>`. Overrides any
+> > +	value specified via the `gc.cruftMaxSize` configuration. See
+> > +	the `--cruft-max-size` option of linkgit:git-repack[1] for
+> > +	more.
+>
+> At least this side giving --max-cruft-size=<n> (which I think is a
+> lot more natural word order) would cause parse-options to give an
+> error, so it won't risk mistakes go silently unnoticed.
+
+Yeah, that's compelling. I'm convinced ;-).
+
+> > diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
+> > index 4017157949..23fd203d79 100644
+> > --- a/Documentation/git-repack.txt
+> > +++ b/Documentation/git-repack.txt
+> > @@ -74,6 +74,15 @@ to the new separate pack will be written.
+> >  	immediately instead of waiting for the next `git gc` invocation.
+> >  	Only useful with `--cruft -d`.
+> >
+> > +--cruft-max-size=<n>::
+> > +	Repack cruft objects into packs as large as `<n>` before
+> > +	creating new packs. As long as there are enough cruft packs
+> > +	smaller than `<n>`, repacking will cause a new cruft pack to
+> > +	be created containing objects from any combined cruft packs,
+> > +	along with any new unreachable objects. Cruft packs larger
+> > +	than `<n>` will not be modified. Only useful with `--cruft
+> > +	-d`.
+>
+> Here, the missing fourth point I pointed out above is mentioned,
+> which is good.
+>
+> Describe the unit for <n> (I am assuming that is counted in bytes,
+> honoring the human-friendly suffix, like 100M).
+
+Yep, thanks.
+
+> There may be some "interesting" behaviour around the size boundary,
+> no?  If you pack too many objects, your resulting size may slightly
+> bust <n> and you will get a complaint, but by fixing that "bug", you
+> will always stop short of filling the whole <n> bytes in the
+> produced packfiles, and they will not be excempt from rewriting
+> (becuase they are not "larger than <n>"), which defeats the point of
+> this patch.
+
+Yeah, the boundary conditions are definitely the most interesting part
+of this patch IMHO. When packing with `--max-cruft-size`, we still do
+cap the pack size of the resulting pack, so any excess spills over into
+the next pack.
+
+> Describe that <n> is a threshold that we stop soon after passing to
+> explicitly allow us to go beyond it would solve the above problem, I
+> would presume.
+
+I am not sure I understand what you're getting at here.
+
+> > diff --git a/builtin/gc.c b/builtin/gc.c
+> > index 1f53b66c7b..b6640abd35 100644
+> > --- a/builtin/gc.c
+> > +++ b/builtin/gc.c
+> > @@ -52,6 +52,7 @@ static const char * const builtin_gc_usage[] = {
+> >  static int pack_refs = 1;
+> >  static int prune_reflogs = 1;
+> >  static int cruft_packs = 1;
+> > +static char *cruft_max_size;
+>
+> I do not think this type is a good idea.
+
+Yeah, I marked this as a string because we don't ourselves do anything
+with it in 'gc', and instead just immediately pass it down to 'repack'.
+We could parse it ourselves and catch any malformed arguments earlier,
+though, which sounds worthwhile to me.
+
+> > diff --git a/builtin/repack.c b/builtin/repack.c
+> > index 44cb261371..56e7f5f43d 100644
+> > --- a/builtin/repack.c
+> > +++ b/builtin/repack.c
+> > @@ -26,6 +26,9 @@
+> >  #define LOOSEN_UNREACHABLE 2
+> >  #define PACK_CRUFT 4
+> >
+> > +#define DELETE_PACK ((void*)(uintptr_t)1)
+> > +#define RETAIN_PACK ((uintptr_t)(1<<1))
+>
+> Shouldn't these look more similar?  That is
+>
+> 	((void *)(uintptr_t)(1<<0))
+> 	((void *)(uintptr_t)(1<<1))
+
+Yeah, these have been shored up from some helpful review on the repack
+internals cleanup series I posted earlier.
+
+> > +		if (existing_cruft_nr >= existing->cruft_packs.nr)
+> > +			BUG("too many cruft packs (found %"PRIuMAX", but knew "
+> > +			    "of %"PRIuMAX")",
+>
+> Is that a BUG() that somehow miscounted the packs, or can it be a
+> runtime error that may happen when a "git push" is pushing new
+> objects into the repository, creating a new pack we did not know
+> about?  Something like the latter should not be marked a BUG(), but
+
+This would be the former. We load the set of packs at the beginning of a
+repack operation from collect_pack_filenames() via a call to
+get_all_packs(). So the set won't change between our view of it in
+collect_pack_filenames() and collapse_small_cruft_packs(). IOW, we
+should expect to see as many cruft packs as we saw in
+collect_pack_filenames(), and any difference there would indeed be a
+BUG().
+
+> > +			    (uintmax_t)existing_cruft_nr + 1,
+> > +			    (uintmax_t)existing->cruft_packs.nr);
+> > +		existing_cruft[existing_cruft_nr++] = p;
+> > +	}
+> > +
+> > +	QSORT(existing_cruft, existing_cruft_nr, existing_cruft_pack_cmp);
+>
+> We use the simplest "from smaller ones to larger ones, combine one
+> by one together until the result gets large enough", which would not
+> give us the best packing, but it is OK because it is not our goal to
+> solve knapsack problem here, I presume?
+
+Exactly. Whatever spill-over we generate (if any) will be the seed of
+the next "generation" of cruft packs, which are allowed to grow and
+accumulate until they themselves reach the size threshold, at which
+point the process starts itself over again.
+
+> > +	for (i = 0; i < existing_cruft_nr; i++) {
+> > +		off_t proposed;
+> > +
+> > +		p = existing_cruft[i];
+> > +		proposed = st_add(total_size, p->pack_size);
+> > +
+> > +		if (proposed <= max_size) {
+> > +			total_size = proposed;
+> > +			fprintf(in, "-%s\n", pack_basename(p));
+> > +		} else {
+> > +			retain_cruft_pack(existing, p);
+> > +			fprintf(in, "%s\n", pack_basename(p));
+> > +		}
+> > +	}
+>
+> This is exactly what I talked about the possibly funny behaviour
+> around the boundary earlier, but it may be even worse.  This time,
+> we may decide that a pack with size <n-epsilon> is to be retained,
+> only because the pack that came next in the existing list happened
+> to be larger than epsilon, but next time around, it may not be the
+> case (i.e. our pack may be smaller than epsilon, the next one in the
+> current round may be larger than epsilon, but before we repack the
+> next time, a new pack that is slightly smaller than epsilon that is
+> larger than our pack may have been created---now our pack will be
+> combined with it), so the algorithm to choose which ones are kept
+> does not depend on the pack itself alone but also depends on its
+> surroundings.
+
+If I understand your comment correctly, that behavior is as-designed. We
+try to grow cruft packs by combining other cruft packs that are not yet
+frozen, and I think that is going to be dependent on the entire set of
+packs rather than the characteristic of any one pack.
+
+An alternative approach might be to combine *all* cruft packs smaller
+than some threshold, and let any spill-over get handled by pack-objects
+with its --max-pack-size option. I do not have a strong preference
+between the two.
+
+Thanks,
+Taylor
