@@ -2,93 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FF6CCD54BF
-	for <git@archiver.kernel.org>; Mon, 25 Sep 2023 19:14:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 134D3CD54BF
+	for <git@archiver.kernel.org>; Mon, 25 Sep 2023 19:29:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233045AbjIYTON (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Sep 2023 15:14:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33848 "EHLO
+        id S231730AbjIYT3m (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Sep 2023 15:29:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231730AbjIYTOL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Sep 2023 15:14:11 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69A48B8
-        for <git@vger.kernel.org>; Mon, 25 Sep 2023 12:14:05 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 14287220FF;
-        Mon, 25 Sep 2023 15:14:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=vJHRNKr+eMOdeYasrd/aEldkBuOOJH6t59xoAo
-        bAhm0=; b=NLNJNtGAVoNl452uvdre9nVb8IHzuKeprvCXyEV+ZhX3KUeuZ+L+2n
-        jO5mQKn87Zg4SK+ITVElRSKhNUkQ16AzGQkQj0VMRf6FV6wzZMeIlpGVy+UyPCm6
-        exONHC/5tFbVDkwMpHf4yVglQFfCCBRLvEa4SjlGk04aJhi/VZ1Jw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0C0DC220FE;
-        Mon, 25 Sep 2023 15:14:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B422B220FC;
-        Mon, 25 Sep 2023 15:14:01 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v7 0/9] Repack objects into separate packfiles based on
- a filter
-In-Reply-To: <20230925152517.803579-1-christian.couder@gmail.com> (Christian
-        Couder's message of "Mon, 25 Sep 2023 17:25:08 +0200")
-References: <20230911150618.129737-1-christian.couder@gmail.com>
-        <20230925152517.803579-1-christian.couder@gmail.com>
-Date:   Mon, 25 Sep 2023 12:14:00 -0700
-Message-ID: <xmqqy1gurrpj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        with ESMTP id S229481AbjIYT3l (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Sep 2023 15:29:41 -0400
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF9AA101
+        for <git@vger.kernel.org>; Mon, 25 Sep 2023 12:29:34 -0700 (PDT)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+        by mailout.nyi.internal (Postfix) with ESMTP id 48FA85C2773;
+        Mon, 25 Sep 2023 15:29:34 -0400 (EDT)
+Received: from imap49 ([10.202.2.99])
+  by compute6.internal (MEProxy); Mon, 25 Sep 2023 15:29:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+         h=cc:cc:content-type:content-type:date:date:from:from
+        :in-reply-to:in-reply-to:message-id:mime-version:references
+        :reply-to:sender:subject:subject:to:to; s=fm1; t=1695670174; x=
+        1695756574; bh=syzQuJFxyIOvorMkuwX7l4bHFCnbUFMhXabDfWnloRo=; b=H
+        5CDVpzETiUF4N6gd08cOtGP2wXcXTlRyy1Hw+MY5pyzs52gsQHGYuoJ55ALdMjlr
+        MBjTicjd0G2gdn7OrQeZheXhCJmRVwvHx8vO0UwPJkyKRV+lqBfAYbSCLNwHC0w9
+        4sxA9bkW9GvuebLTKJRebySAzXsAi4vKmfWWTCB4m/wFlqOs9zptMecq7auJ9QAs
+        te6VX8wNoL/69uWydswd8Ltlu4NNGFy1ua4A2eQ/3xryIDdU0tnDLtY/OfyQNJRP
+        P+3ITsUzw2e2LIvV3Jmm5qObzVjsT36lwR7u4E+h9zSekTo9/9NWbgHZadX7GvBj
+        5p2inbGOR+oEQCsnaQ9qA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:content-type:date:date
+        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm2; t=1695670174; x=1695756574; bh=syzQuJFxyIOvo
+        rMkuwX7l4bHFCnbUFMhXabDfWnloRo=; b=Fu+j7cx/2/tDRC7tVQY1dztRNel2B
+        Hg41S29whbqECP1lnoMlgiSVIuGKNncr7rwiH9ASkMr4lgBUByy264nTUU4HMKzm
+        BNofqM10mRqiaTN2vIIRoYNClyFx5BxI3af6N75qiWD8Q9qhBJ8kMzTFKhs7ELZc
+        yyMcbCeRQIEMTEnTKPiikPYbmd35J4nTDy+dcYK+thWdpzOVhg2e2FG7fdAr0hn7
+        BhyaWCxOFdixDkKUulmNRtkKGQQGU9hH3Lf94UL8ZTjUx0EJYcJq/m4VMLPNUZH0
+        CtZB7OYyXAKzO5JdTuAiqFN980AaIM76uCUYqFwfXFbliEj///C7SYNFw==
+X-ME-Sender: <xms:nt8RZaLLLzapQNThE_sTn0uZfnr8l4CMxLs_Zmk4SiyFZakRn1_f3Ds>
+    <xme:nt8RZSJcm4APF4ft-8MF1BJ4fINTXP8_hmTpERaqXmh9YREHMv7urp_ju33eBBq7n
+    hv-1g9QGGsk-EDOqA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrudelgedgudefiecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdfm
+    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
+    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedtkedtjeeiffelteffheeiheeufffg
+    heelueeftdejkeeufffgiefhgeekffffueenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:nt8RZasepbmZh1UdUUk7An7mbWJb5bWcndFMXRRpUYBrRaKEVfJcxA>
+    <xmx:nt8RZfYcYzkwXK5zzr1-A_NJbaOFvg9VsBCzg71NkgVldxcJM5TL7A>
+    <xmx:nt8RZRYdRL5pqmrIinfT3CXRpAV884ueCvaWFZ_WPu6FarylgPkxgw>
+    <xmx:nt8RZVHObGab0BT6Oe4XGoF-GeNEofaKAIggFage67Bty5dmGg52dA>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id EDFF015A0092; Mon, 25 Sep 2023 15:29:33 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-957-ga1ccdb4cff-fm-20230919.001-ga1ccdb4c
 MIME-Version: 1.0
+Message-Id: <b2089384-4e1c-4956-ad57-0969151a09a6@app.fastmail.com>
+In-Reply-To: <xmqq7coet6vm.fsf@gitster.g>
+References: <xmqq1qg9qmyq.fsf@gitster.g>
+ <20230821170720.577820-1-oswald.buddenhagen@gmx.de>
+ <a1920050-bedc-49d4-840d-350b8fd3c003@app.fastmail.com>
+ <xmqq7coet6vm.fsf@gitster.g>
+Date:   Mon, 25 Sep 2023 21:29:13 +0200
+From:   "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To:     "Junio C Hamano" <gitster@pobox.com>
+Cc:     "Oswald Buddenhagen" <oswald.buddenhagen@gmx.de>,
+        "Jeff King" <peff@peff.net>, "Taylor Blau" <me@ttaylorr.com>,
+        "Derrick Stolee" <derrickstolee@github.com>, git@vger.kernel.org
+Subject: Re: [PATCH v3] format-patch: add --description-file option
 Content-Type: text/plain
-X-Pobox-Relay-ID: AF9E4EFE-5BD7-11EE-AFB9-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+On Mon, Sep 25, 2023, at 21:01, Junio C Hamano wrote:
+> Thanks for a positive feedback.  The changes is already in 'master'
+> since the beginning of this month or so and its way to be part of
+> the next release, I believe.
 
-> # Changes since version 6
->
-> Thanks to Junio who reviewed or commented on versions 1, 2, 3, 4 and
-> 5, and to Taylor who reviewed or commented on version 1, 3, 4, 5 and
-> 6!  Thanks also to Robert Coup who participated in the discussions
-> related to version 2 and Peff who participated in the discussions
-> related to version 4. There are only the following changes since
-> version 6:
->
-> - This series has been rebased on top of bcb6cae296 (The twelfth
->   batch, 2023-09-22) to fix conflicts with a `builtin/repack.c`
->   refactoring patch series called tb/repack-existing-packs-cleanup by
->   Taylor Blau that recently graduated to 'master':
->
-> 	https://lore.kernel.org/git/cover.1694632644.git.me@ttaylorr.com/
-> 	https://lore.kernel.org/git/xmqqil81wqkx.fsf@gitster.g/
->
-> - Patch 6/9 (repack: add `--filter=<filter-spec>` option) has been
->   reworked to apply on top of the above mentioned patch series.
->   Taylor even posted the fixup patch to apply to this series so that
->   it works well on top of his series:
->   
->     https://lore.kernel.org/git/ZQNKkn0YYLUyN5Ih@nand.local/
+Yes, I tested it yesterday and it works (in conjunction with
+`--cover-from-description=subject`) exactly like I want it to. :D
 
-Thanks, both, for working well together.
-
-Will replace and merge to 'seen'.  Let's see others supporting the
-change to chime in, and get it merged to 'next' soonish.  I gave a
-quick cursory look and changes to rebuild on the "existing packs
-cleanup" topic all looked sensible.
-
-
+-- 
+Kristoffer Haugsbakk
