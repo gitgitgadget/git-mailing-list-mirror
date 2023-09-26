@@ -2,142 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0BCCE7F120
-	for <git@archiver.kernel.org>; Tue, 26 Sep 2023 20:05:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F78CE7F140
+	for <git@archiver.kernel.org>; Tue, 26 Sep 2023 22:46:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235825AbjIZUFn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Sep 2023 16:05:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37740 "EHLO
+        id S231702AbjIZWp6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Sep 2023 18:45:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235810AbjIZUFl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Sep 2023 16:05:41 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EBBAD6
-        for <git@vger.kernel.org>; Tue, 26 Sep 2023 13:05:34 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-50307acd445so15364978e87.0
-        for <git@vger.kernel.org>; Tue, 26 Sep 2023 13:05:34 -0700 (PDT)
+        with ESMTP id S231646AbjIZWn4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Sep 2023 18:43:56 -0400
+Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9137C7DBF
+        for <git@vger.kernel.org>; Tue, 26 Sep 2023 14:20:43 -0700 (PDT)
+Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-59f67676065so116420977b3.0
+        for <git@vger.kernel.org>; Tue, 26 Sep 2023 14:20:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695758732; x=1696363532; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=v3ljssu3uahjkzzIB2X85IqA14funSRKbfkvyu5YI/o=;
-        b=cv/50hSc9yBUm8pekcDYe6Q+RQjqo0hV4QqY17ixi3TPpmLS986fF5Z30QVxLf6lPu
-         7BieHzOZOZUmXfnw+voGLith8P9XzVKh9/4pE9srBdDYrCNI/xjF5VKY1XNCCObJbHSz
-         yRMgGZk82C9YrA6VB5A6dP8tHP6hJ4U4hyNw+Qhpj2PwspRuINHqGEN2cHf7JCGaiod1
-         RdBENEfhHGbFMVDb2qR4bAaVnuySaJmUECeVEPpHjhjkKo3ay+pUJAVWcRP0wMpp1nqV
-         YLoUwGSAqF6gWwp93n3YOAADq869gKqXPzYxw+BK+KIRIwHyJqRvvWpr5xqJoHgOF1WB
-         qw2w==
+        d=google.com; s=20230601; t=1695763243; x=1696368043; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=wgk4X0iTp1s/T8O82xzkEUKTA77pqTGNBS5klGv8/9k=;
+        b=zMxOii+URbowYrcxN87OdrgLrdlyHlD2O5PWm6+itp1mruFGW5zvl8O4jSpHbGiin4
+         v6P0NHnj08RmH3pvclPuMheXMoQVPyixJOGVmmX/Uk+pbNAOc/iXi2uWOiTOAPJLCrxg
+         yHwNhUi/Z8Fv9Gg1FieSs5inR3W8Yg3EWNM94GcGsHl6Fh3ghqTLBpDim4JqwWTe0szH
+         fc1VR/qxGrT+b+KN4yfvCWBIoQCQVz9qHnW28uiZGLjsH8zqefTyugJwnmR6tzx8MNk0
+         fIet4qUxhhBzPeoUujR5rZsFZcbyrgmF+z0shwOdxy9RLYhoDxGyUGx6Qw5IltwFkuPU
+         KfKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695758732; x=1696363532;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=v3ljssu3uahjkzzIB2X85IqA14funSRKbfkvyu5YI/o=;
-        b=TV2ATh/HCy/HXiJpweIWpefErDUHqQpsVoeQDZXOIqZIk969v4jdC5EOdMROlz7/IX
-         EQb99qXM2jbHD/oMLZOMbtBSKiimURxIU+HU9ojbeFtkf2VInMU++jMiqv2hUXf5Kcob
-         n3B1NLTPCvKLwvGtsoT4fCovn3UxKJybo+M9O57/xsmM4QQdwG3cdJpizMcAabUZDtRL
-         Ix0azfF8Bkky5c91FU8EJYj93S0PW5Bjo0UCI0GHnmUe07d4+tDiX7pgTTbdp0RPC+LF
-         jmt+4SaBelyMWX9C1EjNCVFXc37wp+0clyX6Tajw4OBQUt+97i62EZv0lszvDqdSgfnx
-         ZZ6Q==
-X-Gm-Message-State: AOJu0YzrZtcbQndWlS7tVJGb7b1qXiGRL85bT4pnxkZeyMXX+wOv4FQZ
-        HswMKrG7xjbLfEszwvZ+lLg3n3ZdM7c=
-X-Google-Smtp-Source: AGHT+IFdLRZTSiiZDrgMFzphhKu+n/q+MlGe0rKPVrFOH1ESeHcgxRw87bEs1Aen0nj9jPfqkvgwbQ==
-X-Received: by 2002:a05:6512:3d93:b0:500:94c5:6e06 with SMTP id k19-20020a0565123d9300b0050094c56e06mr11709814lfv.56.1695758731826;
-        Tue, 26 Sep 2023 13:05:31 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id d6-20020ac241c6000000b004ff8f448343sm2297017lfi.33.2023.09.26.13.05.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Sep 2023 13:05:31 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/2] diff-merges: introduce '-d' option
-References: <20230909125446.142715-1-sorganov@gmail.com>
-        <20230909125446.142715-3-sorganov@gmail.com>
-        <xmqqtts0tof8.fsf@gitster.g> <87o7i7hler.fsf@osv.gnss.ru>
-        <xmqqled8h01w.fsf@gitster.g> <87y1h8wbpo.fsf@osv.gnss.ru>
-        <xmqqzg1nfixw.fsf@gitster.g> <87ttrudkw9.fsf@osv.gnss.ru>
-        <xmqqjzsdps0h.fsf@gitster.g> <87bkdpl2yx.fsf@osv.gnss.ru>
-        <xmqqa5t8ooaj.fsf@gitster.g>
-Date:   Tue, 26 Sep 2023 23:05:30 +0300
-In-Reply-To: <xmqqa5t8ooaj.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-        26 Sep 2023 10:08:20 -0700")
-Message-ID: <87o7hok8dx.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        d=1e100.net; s=20230601; t=1695763243; x=1696368043;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wgk4X0iTp1s/T8O82xzkEUKTA77pqTGNBS5klGv8/9k=;
+        b=w2PM3Eyg5DekbH1KVmCpTmAdTs740eaL+zfoKnfAZ0BbZKXLNlx7+QmhGQ8wAM8p8N
+         vR7uUNrbX/V8cmW+N3ksJZgqiQm3SgAkFvMT0Cc2qVDQmRr93GWueSazapY2VDdtNSYm
+         FF1Ktp/FxpFR9BDmCh5wdn2y5flaVjwYKd2P5DdniXb0j8CFpPfA31Z1GqKDCn1qZz6O
+         ZkrniEPMeAJnssNuLPPmFMBP2I1qcrf4MVTMGt7vxmdZ6uNjTJJA7dXhQSvqKEP3JRvE
+         HQWSsxf46nk32N7yVlo/LQKOJiQYco/4aF6mUHnJImSZUfIkeJ1K1BIc9ewgLL4Yr0m9
+         TPxA==
+X-Gm-Message-State: AOJu0Yx2GDfqx2rjbIRWWE+/mYrgVS7epE1ieAG+o4FAbTv7eUZ7aqw2
+        hUJsAWqw6bm6HEpSVlGE8HH3/i+1Ew4=
+X-Google-Smtp-Source: AGHT+IF9R2VCYzvCKqWrjXPnhArSCDozZI/NPK7d2jAEfeTJPIgHDY3DZnKpzvdOL4qpgD0ipoPAN8WL9fk=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a81:b727:0:b0:59b:eb4d:21f2 with SMTP id
+ v39-20020a81b727000000b0059beb4d21f2mr2091ywh.4.1695763242772; Tue, 26 Sep
+ 2023 14:20:42 -0700 (PDT)
+Date:   Tue, 26 Sep 2023 14:20:26 -0700
+In-Reply-To: <CACZqfqC3HWOuveQdbpVEEO5KOwmnugvUmm6M0WpVu2MtUopm-w@mail.gmail.com>
+Mime-Version: 1.0
+References: <pull.950.git.1695391818917.gitgitgadget@gmail.com>
+ <xmqqsf75zxbv.fsf@gitster.g> <CACZqfqCVsv-ZaSRWt_ejMn5f_U_1E2h7wsCgUg_50A+KHzOgkA@mail.gmail.com>
+ <owlypm24sr6n.fsf@fine.c.googlers.com> <CACZqfqC3HWOuveQdbpVEEO5KOwmnugvUmm6M0WpVu2MtUopm-w@mail.gmail.com>
+Message-ID: <owlymsx8skbp.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH] pretty-formats.txt: fix whitespace
+From:   Linus Arver <linusa@google.com>
+To:     Josh Soref <jsoref@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Josh Soref via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Josh Soref <jsoref@gmail.com> writes:
 
-> Sergey Organov <sorganov@gmail.com> writes:
+> Linus Arver wrote:
+>> FWIW we already have some guidelines about what is acceptable for doc
+>> patches in SubmittingPatches:
+>>
+>>     We currently have a liberal mixture of US and UK English norms for
+>>     spelling and grammar, which is somewhat unfortunate.  A huge patch that
+>>     touches the files all over the place only to correct the inconsistency
+>>     is not welcome, though.  Potential clashes with other changes that can
+>>     result from such a patch are not worth it.  We prefer to gradually
+>>     reconcile the inconsistencies in favor of US English, with small and
+>>     easily digestible patches, as a side effect of doing some other real
+>>     work in the vicinity (e.g. rewriting a paragraph for clarity, while
+>>     turning en_UK spelling to en_US).  Obvious typographical fixes are much
+>>     more welcomed ("teh -> "the"), preferably submitted as independent
+>>     patches separate from other documentation changes.
+>>
+>> and both the 2-space vs 1-space and comma changes seem to fall into the
+>> "not welcome" category.
 >
->> No need to ask for a new option, as the behavior you describe is already
->> there, and is spelled "git log --diff-merges=first-parent"
->> (--diff-merges=1 for short).
+> Ok, then, I think at this point I'll abandon this PR.
 >
-> Ah, that changes things.
+> I could probably find the time to justify rewriting one paragraph in
+> this single file to try to abide by the requirements, but it doesn't
+> seem worth it.
 
-Only a tiny bit, unfortunately, as I'm still struggling to finally
-convince you (((
+The change to make a paragraph read better (fixes to awkward wording,
+for example) are very much appreciated and would be good as a follow-up
+patch in its own right.
 
->
-> Making "--diff-merges=<how>" only about the presentation of merge
-> commits, requiring a separate "-p" for single-parent commits [*],
-> does make the life for those in the "merges are the only interesting
-> things" camp a lot easier, exactly because the lack of "-p" can be
-> used to say "I am not interested in chanages by single-parent
-> commits".
->
-> 	Side note: I personally think it is a design mistake of
-> 	--diff-merges=<how> (e.g., --cc and --diff-merges=cc do not
-> 	behave the same way) but that is a different story, and it
-> 	is way too late now anyway to "fix" or change.
+> I'm sorry I wasted everyone's time.
 
-        Side note: This has been considered and agreed upon when
-        --diff-merges= options were introduced, and as far as I recall,
-        at that time you explicitly agreed it might be useful to be able
-        to get output only for merge commits.
-
-        --cc is a simple alias for "--diff-merges=cc --patch" nowadays,
-        so yes, they do behave differently, and that's by design. Dunno
-        see any design mistake here, as we get all useful variations of
-        behavior with a straightforward design, more frequent use-cases
-        served by shorter options. Looks fine.
-
->
-> So "-d" that stands for "--diff-merges=first-parent -p" makes the
-> more useful (to those who think "merges are the only interesting
-> things", which I do not belong to) "--diff-merges=first-parent"
-> (without "-p") less useful.  And the combination is not useful for
-> those of us who find individual patches plus tweaks by merges
-> (either --cc or --remerge-diff) are the way to look at the history.
-
-Yes, you have your --cc, -c, and --remerge-diff (that I'd call something
-like --rd probably, but anyway). Could I please have my simple,
-straightforward, mnemonic, and terribly useful "-d" as well?
-
-In other words, will I finally be faced with "if you need it, do it
-yourself" argument? ;)
-
-> I still do not think that we want to give a short-and-sweet single
-> letter option for such a combination.
-
-I have very simple desire: convenient way to tell Git to show me diff to
-the first parent for merge commits, as that's the thing I need 99% of
-times when I do request diff output at all. That's exactly what I'd have
-seen as changes when I was about to commit the merge as well, similar to
-any other commit. It's so natural that I can't figure why it looks so
-damn rare or unusual to you, and that it makes you argue so hard against
--d, especially when -p, -c, --cc, or even -m, are already there?
-
-I do sympathize your desire to be careful about short options, but what
-reservation for "-d" do you still have in mind? It seems that it was
-just waiting for me to come and finally bring it to life with the best
-meaning possible. How long should I wait for it to remain unused to
-finally be able to make use of it?
-
-Thanks,
--- Sergey Organov
+Please don't let this experience deter you from considering future
+contributions to our documentation. Thanks.
