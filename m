@@ -2,88 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C599E7E653
-	for <git@archiver.kernel.org>; Tue, 26 Sep 2023 17:08:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A627E7E657
+	for <git@archiver.kernel.org>; Tue, 26 Sep 2023 17:18:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229809AbjIZRIe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Sep 2023 13:08:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57698 "EHLO
+        id S229809AbjIZRSe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Sep 2023 13:18:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229570AbjIZRIb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Sep 2023 13:08:31 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00B9AE5
-        for <git@vger.kernel.org>; Tue, 26 Sep 2023 10:08:22 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5E7BC19BA62;
-        Tue, 26 Sep 2023 13:08:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=Rp/ViTLBuGyY+/N7w1SAFTqCD4HGfi4kLqXDMq
-        g9kh8=; b=SNBxSXz4ij47en+A9FkznwZJtgZviPMXbT4eGrjnH99NUyQzbT+Wh7
-        fJQCTtJgomlw1WJe7NL4T2aoPqvCM+0Y/h9YcXnn1vsHLUPSuwwZvQX2tZBEklVO
-        Yk2i/QC5RTKAZg8JVRleSrCWItt8x87TQEUO9/KbnVTykmxrpR3GU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 563B219BA60;
-        Tue, 26 Sep 2023 13:08:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8301B19BA5F;
-        Tue, 26 Sep 2023 13:08:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/2] diff-merges: introduce '-d' option
-In-Reply-To: <87bkdpl2yx.fsf@osv.gnss.ru> (Sergey Organov's message of "Tue,
-        26 Sep 2023 12:04:54 +0300")
-References: <20230909125446.142715-1-sorganov@gmail.com>
-        <20230909125446.142715-3-sorganov@gmail.com>
-        <xmqqtts0tof8.fsf@gitster.g> <87o7i7hler.fsf@osv.gnss.ru>
-        <xmqqled8h01w.fsf@gitster.g> <87y1h8wbpo.fsf@osv.gnss.ru>
-        <xmqqzg1nfixw.fsf@gitster.g> <87ttrudkw9.fsf@osv.gnss.ru>
-        <xmqqjzsdps0h.fsf@gitster.g> <87bkdpl2yx.fsf@osv.gnss.ru>
-Date:   Tue, 26 Sep 2023 10:08:20 -0700
-Message-ID: <xmqqa5t8ooaj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        with ESMTP id S229570AbjIZRSd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Sep 2023 13:18:33 -0400
+Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8572ACE
+        for <git@vger.kernel.org>; Tue, 26 Sep 2023 10:18:27 -0700 (PDT)
+Received: by mail-pf1-x435.google.com with SMTP id d2e1a72fcca58-690bf8fdd1aso7290850b3a.2
+        for <git@vger.kernel.org>; Tue, 26 Sep 2023 10:18:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google; t=1695748707; x=1696353507; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Ad7BKjB04KYSBzkNMaoVSzJTkjaKqhoqeVDyavYc5dY=;
+        b=MTyUBmot42HIVve1uzNuKODHzVOLfs5E2ZdKisIJmWj8ukabOYqe+pKkFeIwfp2zof
+         h5vD09R7iV0SyguHN7OmKJtEWvXGqt8dOgQ7Br1erC33BBDmLAPlbBYTlodyNBOX5v69
+         vCU1TIKxxnFQVyZGyzOKrDaVfzGxb67okonSV1PRLb9XaXgvAyWnKb1CkuXM5FRC7Dc5
+         lYprcSbThYoj3NWot8ONLMZ8k0TwcRuGC/NTAurubUCRtXeli7Do4bV2JEe0i/4HvjXE
+         ZeaypA4Wyz+XE+IWGKt4QPJyv/GEzvEhc/wz+y8aMb31ilXoClQjcK6Oqb7rCkqgBWbD
+         YXUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695748707; x=1696353507;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ad7BKjB04KYSBzkNMaoVSzJTkjaKqhoqeVDyavYc5dY=;
+        b=m9Z0Trr7PCh2vogbZSkzkaml6VTJwNF+bLShV/XwBQA1YdNQBFLv2rFsudq0KmmcSL
+         HuzgCXaAKmQGM2jgRo3ZaM197bQBvjKk+1WVJDRcjNfYoIWQDWcbssudmx96LZOFAjtp
+         2/SGXQQ3fUSu62IlgTAJJo/Oc9eHW37F9daEIcNwO9+v2NaLoMEsjP7CfxJNIEMhJIi6
+         m6H39AJloNbooWMc7TjTCo1kCnJ1bhxqFQHY40IuS0ueETY4a7ap/XDbGaYUMGOdUYkY
+         cSeZl717NCJaE8nllVgirVp0qW2ufzbNSBJZyF5nKi3W0qvnsT+n9jes56gZC2eAWaOS
+         +Saw==
+X-Gm-Message-State: AOJu0YwamZv6lngSQSKITYw4rJ4U7XZe9fIkZ7XeRN5JyqtHMvOcmZcp
+        LIO9rbZK4aqPbjGRGhnBC5h6
+X-Google-Smtp-Source: AGHT+IGYqO8qtqf9H93VDSzN2Umjnri5AHrRMwI3tgyuY6O1a1hsC5kuD5ckzmXHrZIJVwAhpszQiQ==
+X-Received: by 2002:a05:6a21:3e07:b0:157:609f:6057 with SMTP id bk7-20020a056a213e0700b00157609f6057mr7771218pzc.27.1695748706849;
+        Tue, 26 Sep 2023 10:18:26 -0700 (PDT)
+Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
+        by smtp.gmail.com with ESMTPSA id jw18-20020a170903279200b001adf6b21c77sm11291023plb.107.2023.09.26.10.18.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 26 Sep 2023 10:18:26 -0700 (PDT)
+Message-ID: <1c12ac0a-5e45-bb27-c452-250ffd4b9320@github.com>
+Date:   Tue, 26 Sep 2023 10:18:24 -0700
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4BB8B74A-5C8F-11EE-B224-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.15.1
+Subject: Re: Projects for the next Outreachy round
+To:     Christian Couder <christian.couder@gmail.com>,
+        git <git@vger.kernel.org>,
+        Kousik Sanagavarapu <five231003@gmail.com>,
+        Shuqi Liang <cheskaqiqi@gmail.com>
+Cc:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Hariom verma <hariom18599@gmail.com>
+References: <CAP8UFD1bsez-eMis5yH7Esds+LkhMnj0qTUMFPL1tRuDv2fiPw@mail.gmail.com>
+Content-Language: en-US
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <CAP8UFD1bsez-eMis5yH7Esds+LkhMnj0qTUMFPL1tRuDv2fiPw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sergey Organov <sorganov@gmail.com> writes:
+Christian Couder wrote:
+> About the "More Sparse Index Integrations" Shuqi worked on, mentored
+> by Victoria, I am likely not the best person to mentor it, but I think
+> I could manage. It would be nice though if I got an idea about what
+> should be done next and how much work is left in general in this area.
+> (Shuqi's GSoC final report at
+> https://cheskaqiqi.github.io/2023/08/22/Final/ doesn't talk much about
+> this.) Perhaps even if Shuqi is continuing to work on the project,
+> there is still work that could be done in parallel on other commands
+> than the ones he is working on.
 
-> No need to ask for a new option, as the behavior you describe is already
-> there, and is spelled "git log --diff-merges=first-parent"
-> (--diff-merges=1 for short).
+To be honest, I'd recommend against using "More Sparse Index Integrations"
+as a project again - I was actually going to suggest "retiring" the project
+after this past GSoC term. The remaining commands are all fairly complex, to
+the point that they'd be challenging even for someone that's done a lot of
+sparse index work.
 
-Ah, that changes things.  
+All that said, if someone is *really* interested in this project, you might
+be able to get it to work. You'll probably want to limit the scope to one
+command and make sure there's a strong emphasis placed on testing. Sparse
+index integrations can introduce a lot of subtle bugs (e.g. the one Shuqi
+found in 'diff' [1]), and a buggy command is worse for users than lacking
+sparse index compatibility.
 
-Making "--diff-merges=<how>" only about the presentation of merge
-commits, requiring a separate "-p" for single-parent commits [*],
-does make the life for those in the "merges are the only interesting
-things" camp a lot easier, exactly because the lack of "-p" can be
-used to say "I am not interested in chanages by single-parent
-commits".
+I hope that helps!
+- Victoria
 
-	Side note: I personally think it is a design mistake of
-	--diff-merges=<how> (e.g., --cc and --diff-merges=cc do not
-	behave the same way) but that is a different story, and it
-	is way too late now anyway to "fix" or change.
+[1] https://lore.kernel.org/git/20230811142211.4547-3-cheskaqiqi@gmail.com/
 
-So "-d" that stands for "--diff-merges=first-parent -p" makes the
-more useful (to those who think "merges are the only interesting
-things", which I do not belong to) "--diff-merges=first-parent"
-(without "-p") less useful.  And the combination is not useful for
-those of us who find individual patches plus tweaks by merges
-(either --cc or --remerge-diff) are the way to look at the history.
+> 
+> Sorry for the late request, but please let me know soon about this.
+> 
+> Thanks,
+> Christian.
 
-I still do not think that we want to give a short-and-sweet single
-letter option for such a combination.
-
-Thanks for clarification.
