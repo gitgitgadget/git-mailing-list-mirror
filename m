@@ -2,59 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4F6DEE14D8
-	for <git@archiver.kernel.org>; Tue, 26 Sep 2023 06:23:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51437E8181F
+	for <git@archiver.kernel.org>; Tue, 26 Sep 2023 06:23:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233786AbjIZGXI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Sep 2023 02:23:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40402 "EHLO
+        id S233792AbjIZGXK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Sep 2023 02:23:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40424 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233710AbjIZGXE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Sep 2023 02:23:04 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FBC8E6
-        for <git@vger.kernel.org>; Mon, 25 Sep 2023 23:22:57 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2b9338e4695so133130241fa.2
-        for <git@vger.kernel.org>; Mon, 25 Sep 2023 23:22:56 -0700 (PDT)
+        with ESMTP id S233749AbjIZGXG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Sep 2023 02:23:06 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA48ADF
+        for <git@vger.kernel.org>; Mon, 25 Sep 2023 23:22:58 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2c131ddfc95so123918701fa.0
+        for <git@vger.kernel.org>; Mon, 25 Sep 2023 23:22:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695709375; x=1696314175; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1695709377; x=1696314177; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ceA0TI3jP9gOpFTmi76WbT/7/j3QjlLxAcPW0ad0NOY=;
-        b=IwJACPaxGs85USuZkhmdmUp3+sx3WhCcqmxKpSt2VGMvmuQ1Vr3MXo1aS0f2iciaXo
-         vMMqJ20RWI/RgJs89+7SsHzb98dC1y9RI7ZdcgGpvzeyUXELBoXUJqAbl6koJPIbpaLP
-         j4Z4AXUZM6Eoi0iIUZajHsFZaAbHGwNhlqjLgMXKfAaXNRE39dlsP2ku8IZ6HRmZWRnh
-         wEpZy0zER8MfNwVGu4P3Wih8yYACP1gRtS0eybxv2pU1TQiw4lxMWRxZiN60aLA1C1c5
-         Gkrjhnmw9doVpLd//1QycuRpUId+QUXg2+3Hb5xuP9OVEnoqUGg7KjKLybyDETP0x328
-         o2tw==
+        bh=+rwbg0EHFrct7ZzWHjVPCjko4EDWAGutEr1RanG0Sgg=;
+        b=PMTJorQ3v+jev8ChsqcfgWymfMoDS5mgVJoWtNt/ONNcqQCSSmjh3FT/dM17VELLUt
+         3Jy4zCvdV07H20mnIogkcYs9WzH6E0Pjb6cd/CXUDvrHp0StRuljpR+0yQMxsvxXRJFd
+         2cxvBcmJKpLoRHW3NKk4+v/+ZXd3tRZ7+/Ti/RWyl76yUXsj/fQVfQoxT1GxWUQExA8J
+         ZX3dEwTtIe2PmcHMWIUUHf+1IxuBft3bSGINMjZ6phssoH9ivMiFI2sRKDcbytAFiFym
+         YoIjNcQxnK+e/rZu7Ct+aCx7MRqGQzoRk+5mfeWUzDgmTKRjLzujEgVFNc716U8WllSl
+         PPkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695709375; x=1696314175;
+        d=1e100.net; s=20230601; t=1695709377; x=1696314177;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ceA0TI3jP9gOpFTmi76WbT/7/j3QjlLxAcPW0ad0NOY=;
-        b=J/CNRZyZ8WntEax5Ra4CSjXmDBZG30QA8jPVBTKyAXJzH4bE6ByZ5NOXAJPwbKRb6H
-         bliomg7E2JEoHHEsJAeuXkpmGarR1WAi3SneiyfKJRBGQrmvVVj4e/ndPkyCdpacIlXc
-         V9wslnb319/iTYH1PTbOY664xEW+l3eDj9tMsUj3rp9+FFTV7L8KQ5yXcUADplJ6EB/W
-         H/lTjcYoi8lV+GIo7RP+4jaG96G5UmtWt98AvEBVq8ZPaqg944WWGjGxngeE5UUgKCuz
-         JAt2i2557vzUAnm/04Tunx6ekVHnzbAC41hREVmRRMmsIRHLOV5yFAzYTCGXzsQ/DUE2
-         +9dA==
-X-Gm-Message-State: AOJu0YzP0PQXzP7QrckuD30rf+QmEkOAqMad8w1oTSbyFdYt0CzLt+d7
-        JJkVHhf2SRk5HfbzDIiPSQ8+BCrASW0=
-X-Google-Smtp-Source: AGHT+IGl39TagpcdrCP9gA/Aa1ZjfNBozKouAEEPqZUD4cyWb7YJ7pmFA2HqhI/fwIGSECPFLK0VeQ==
-X-Received: by 2002:a05:6512:b0a:b0:4fb:9fa7:dcda with SMTP id w10-20020a0565120b0a00b004fb9fa7dcdamr8780694lfu.26.1695709374699;
-        Mon, 25 Sep 2023 23:22:54 -0700 (PDT)
+        bh=+rwbg0EHFrct7ZzWHjVPCjko4EDWAGutEr1RanG0Sgg=;
+        b=VK6dp1OlqYIVQIIQZ57h3fNxp+IUynhGAZ7OtyMaQh3BgA6NrT+NYbTnm5TEhX+1aX
+         8iJ0wpao9WBk/UVTPhd+StUu+f/ns1Ow0QfqG3axLEPs/MijmpDosOwH/YvjRnQU6mfi
+         2oYpucnM7BcMtjbcbOO3Iz6xquI6HMPmz5Ja3IMql5UeZE0prCO9Jpm2Q7UIkW3w6kam
+         Y0BDL67/IdZTWvcJWL9D4W2Td8hbBnAF7VnYmO75JmlmcjCQviOhM8FMgjkliPBlYnr5
+         DmnHWpnG2VlkD38rgUodJ4ZVDmgYbSnbCaTN1x3RZeahjsGm7S2Cp+9G0pF2og9uLYeU
+         JULg==
+X-Gm-Message-State: AOJu0YyIPbO/1gBVdVziRbbQfUeTQVC+TnVZxOa1cBXJ5S6hIe30ffV4
+        1Z/Kiun6qzO1WI9Pkw/bCfFD4cxMpFE=
+X-Google-Smtp-Source: AGHT+IHYRCMSU73w4CFmx/r4UBYAKdpbJIJqQvXD6J7MdyWU1BJk6Rl+Ca94kOP37ju9wi2ZUg0zRw==
+X-Received: by 2002:a2e:b7d4:0:b0:2c0:d06:9e65 with SMTP id p20-20020a2eb7d4000000b002c00d069e65mr6637619ljo.8.1695709376865;
+        Mon, 25 Sep 2023 23:22:56 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k28-20020ac2457c000000b00501c673e776sm2101348lfm.45.2023.09.25.23.22.54
+        by smtp.gmail.com with ESMTPSA id n3-20020a2e9043000000b002bbacc6c523sm2549587ljg.49.2023.09.25.23.22.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Sep 2023 23:22:54 -0700 (PDT)
-Message-ID: <pull.1563.v4.git.1695709372.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1563.v3.git.1695412245.gitgitgadget@gmail.com>
+        Mon, 25 Sep 2023 23:22:56 -0700 (PDT)
+Message-ID: <c904caba7e17b6f2784933e9f18634ea66f28537.1695709372.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1563.v4.git.1695709372.gitgitgadget@gmail.com>
 References: <pull.1563.v3.git.1695412245.gitgitgadget@gmail.com>
+        <pull.1563.v4.git.1695709372.gitgitgadget@gmail.com>
 From:   "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 26 Sep 2023 06:22:48 +0000
-Subject: [PATCH v4 0/4] Trailer readability cleanups
+Date:   Tue, 26 Sep 2023 06:22:50 +0000
+Subject: [PATCH v4 2/4] trailer: find the end of the log message
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -63,105 +64,155 @@ To:     git@vger.kernel.org
 Cc:     Glen Choo <glencbz@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>,
         Phillip Wood <phillip.wood123@gmail.com>,
+        Linus Arver <linusa@google.com>,
         Linus Arver <linusa@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-These patches were created while digging into the trailer code to better
-understand how it works, in preparation for making the trailer.{c,h} files
-as small as possible to make them available as a library for external users.
-This series was originally created as part of [1], but are sent here
-separately because the changes here are arguably more subjective in nature.
+From: Linus Arver <linusa@google.com>
 
-These patches do not add or change any features. Instead, their goal is to
-make the code easier to understand for new contributors (like myself), by
-making various cleanups and improvements. Ultimately, my hope is that with
-such cleanups, we are better positioned to make larger changes (especially
-the broader libification effort, as in "Introduce Git Standard Library"
-[2]).
+Previously, trailer_info_get() computed the trailer block end position
+by
 
+(1) checking for the opts->no_divider flag and optionally calling
+    find_patch_start() to find the "patch start" location (patch_start), and
+(2) calling find_trailer_end() to find the end of the trailer block
+    using patch_start as a guide, saving the return value into
+    "trailer_end".
 
-Updates in v4
-=============
+The logic in (1) was awkward because the variable "patch_start" is
+misleading if there is no patch in the input. The logic in (2) was
+misleading because it could be the case that no trailers are in the
+input (yet we are setting a "trailer_end" variable before even searching
+for trailers, which happens later in find_trailer_start()). The name
+"find_trailer_end" was misleading because that function did not look for
+any trailer block itself --- instead it just computed the end position
+of the log message in the input where the end of the trailer block (if
+it exists) would be (because trailer blocks must always come after the
+end of the log message).
 
- * The first 3 patches in v3 were merged into 'master'. Necessarily, those 3
-   patches have been dropped.
- * Patch 4 in v3 ("trailer: rename *_DEFAULT enums to *_UNSPECIFIED") has
-   been dropped, as well as Patch 9 in v3 ("trailer: make stack variable
-   names match field names"). These were dropped to simplify this series for
-   what I think is the more immediate, important change (see next bullet
-   point).
- * Patches 5-8 in v3 are the only ones remaining in this series. They still
-   solely deal with --no-divider and trailer block start/end cleanups.
+Combine the logic in (1) and (2) together into find_patch_start() by
+renaming it to find_end_of_log_message(). The end of the log message is
+the starting point which find_trailer_start() needs to start searching
+backward to parse individual trailers (if any).
 
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Linus Arver <linusa@google.com>
+---
+ trailer.c | 61 ++++++++++++++++++++++++++++++++++---------------------
+ 1 file changed, 38 insertions(+), 23 deletions(-)
 
-Updates in v3
-=============
-
- * Patches 4 and 6 (--no-divider and trailer block start/end cleanups) have
-   been reorganized to Patches 5-8. This ended up touching commit.c in a
-   minor way, but otherwise all of the changes here are cleanups and do not
-   change any behavior.
-
-
-Updates in v2
-=============
-
- * Patch 1: Drop the use of a #define. Instead just use an anonymous struct
-   named internal.
- * Patch 2: Don't free info out parameter inside parse_trailers(). Instead
-   free it from the caller, process_trailers(). Update comment in
-   parse_trailers().
- * Patch 3: Reword commit message.
- * Patch 4: Mention be3d654343 (commit: pass --no-divider to
-   interpret-trailers, 2023-06-17) in commit message.
- * Added Patch 6 to make trailer_info use offsets for trailer_start and
-   trailer_end (thanks to Glen Choo for the suggestion).
-
-[1]
-https://lore.kernel.org/git/pull.1564.git.1691210737.gitgitgadget@gmail.com/T/#mb044012670663d8eb7a548924bbcc933bef116de
-[2]
-https://lore.kernel.org/git/20230627195251.1973421-1-calvinwan@google.com/
-[3]
-https://lore.kernel.org/git/pull.1149.git.1677143700.gitgitgadget@gmail.com/
-[4]
-https://lore.kernel.org/git/6b4cb31b17077181a311ca87e82464a1e2ad67dd.1686797630.git.gitgitgadget@gmail.com/
-[5]
-https://lore.kernel.org/git/pull.1563.git.1691211879.gitgitgadget@gmail.com/T/#m0131f9829c35d8e0103ffa88f07d8e0e43dd732c
-
-Linus Arver (4):
-  commit: ignore_non_trailer computes number of bytes to ignore
-  trailer: find the end of the log message
-  trailer: use offsets for trailer_start/trailer_end
-  trailer: only use trailer_block_* variables if trailers were found
-
- builtin/commit.c |   2 +-
- builtin/merge.c  |   2 +-
- commit.c         |   2 +-
- commit.h         |   4 +-
- sequencer.c      |   2 +-
- trailer.c        | 105 ++++++++++++++++++++++++++++++-----------------
- trailer.h        |  15 ++++---
- 7 files changed, 83 insertions(+), 49 deletions(-)
-
-
-base-commit: bcb6cae2966cc407ca1afc77413b3ef11103c175
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1563%2Flistx%2Ftrailer-libification-prep-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1563/listx/trailer-libification-prep-v4
-Pull-Request: https://github.com/gitgitgadget/git/pull/1563
-
-Range-diff vs v3:
-
-  1:  4f116d2550f <  -:  ----------- trailer: separate public from internal portion of trailer_iterator
-  2:  c00f4623d0b <  -:  ----------- trailer: split process_input_file into separate pieces
-  3:  f78c2345fad <  -:  ----------- trailer: split process_command_line_args into separate functions
-  4:  47186a09b24 <  -:  ----------- trailer: rename *_DEFAULT enums to *_UNSPECIFIED
-  5:  da52cec42e1 =  1:  4ce5cf77005 commit: ignore_non_trailer computes number of bytes to ignore
-  6:  ab8a6ced143 =  2:  c904caba7e1 trailer: find the end of the log message
-  7:  091805eb7d9 =  3:  796e47c1e5f trailer: use offsets for trailer_start/trailer_end
-  8:  1762f78a613 =  4:  64e1bd4e4be trailer: only use trailer_block_* variables if trailers were found
-  9:  a784c45ed71 <  -:  ----------- trailer: make stack variable names match field names
-
+diff --git a/trailer.c b/trailer.c
+index 3c54b38a85a..96cb285a4ea 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -809,21 +809,47 @@ static ssize_t last_line(const char *buf, size_t len)
+ }
+ 
+ /*
+- * Return the position of the start of the patch or the length of str if there
+- * is no patch in the message.
++ * Find the end of the log message as an offset from the start of the input
++ * (where callers of this function are interested in looking for a trailers
++ * block in the same input). We have to consider two categories of content that
++ * can come at the end of the input which we want to ignore (because they don't
++ * belong in the log message):
++ *
++ * (1) the "patch part" which begins with a "---" divider and has patch
++ * information (like the output of git-format-patch), and
++ *
++ * (2) any trailing comment lines, blank lines like in the output of "git
++ * commit -v", or stuff below the "cut" (scissor) line.
++ *
++ * As a formula, the situation looks like this:
++ *
++ *     INPUT = LOG MESSAGE + IGNORED
++ *
++ * where IGNORED can be either of the two categories described above. It may be
++ * that there is nothing to ignore. Now it may be the case that the LOG MESSAGE
++ * contains a trailer block, but that's not the concern of this function.
+  */
+-static size_t find_patch_start(const char *str)
++static size_t find_end_of_log_message(const char *input, int no_divider)
+ {
++	size_t end;
++
+ 	const char *s;
+ 
+-	for (s = str; *s; s = next_line(s)) {
++	/* Assume the naive end of the input is already what we want. */
++	end = strlen(input);
++
++	/* Optionally skip over any patch part ("---" line and below). */
++	for (s = input; *s; s = next_line(s)) {
+ 		const char *v;
+ 
+-		if (skip_prefix(s, "---", &v) && isspace(*v))
+-			return s - str;
++		if (!no_divider && skip_prefix(s, "---", &v) && isspace(*v)) {
++			end = s - input;
++			break;
++		}
+ 	}
+ 
+-	return s - str;
++	/* Skip over other ignorable bits. */
++	return end - ignored_log_message_bytes(input, end);
+ }
+ 
+ /*
+@@ -925,12 +951,6 @@ continue_outer_loop:
+ 	return len;
+ }
+ 
+-/* Return the position of the end of the trailers. */
+-static size_t find_trailer_end(const char *buf, size_t len)
+-{
+-	return len - ignored_log_message_bytes(buf, len);
+-}
+-
+ static int ends_with_blank_line(const char *buf, size_t len)
+ {
+ 	ssize_t ll = last_line(buf, len);
+@@ -1101,7 +1121,7 @@ void process_trailers(const char *file,
+ void trailer_info_get(struct trailer_info *info, const char *str,
+ 		      const struct process_trailer_options *opts)
+ {
+-	int patch_start, trailer_end, trailer_start;
++	int end_of_log_message, trailer_start;
+ 	struct strbuf **trailer_lines, **ptr;
+ 	char **trailer_strings = NULL;
+ 	size_t nr = 0, alloc = 0;
+@@ -1109,16 +1129,11 @@ void trailer_info_get(struct trailer_info *info, const char *str,
+ 
+ 	ensure_configured();
+ 
+-	if (opts->no_divider)
+-		patch_start = strlen(str);
+-	else
+-		patch_start = find_patch_start(str);
+-
+-	trailer_end = find_trailer_end(str, patch_start);
+-	trailer_start = find_trailer_start(str, trailer_end);
++	end_of_log_message = find_end_of_log_message(str, opts->no_divider);
++	trailer_start = find_trailer_start(str, end_of_log_message);
+ 
+ 	trailer_lines = strbuf_split_buf(str + trailer_start,
+-					 trailer_end - trailer_start,
++					 end_of_log_message - trailer_start,
+ 					 '\n',
+ 					 0);
+ 	for (ptr = trailer_lines; *ptr; ptr++) {
+@@ -1141,7 +1156,7 @@ void trailer_info_get(struct trailer_info *info, const char *str,
+ 	info->blank_line_before_trailer = ends_with_blank_line(str,
+ 							       trailer_start);
+ 	info->trailer_start = str + trailer_start;
+-	info->trailer_end = str + trailer_end;
++	info->trailer_end = str + end_of_log_message;
+ 	info->trailers = trailer_strings;
+ 	info->trailer_nr = nr;
+ }
 -- 
 gitgitgadget
+
