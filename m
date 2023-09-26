@@ -2,81 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E28CE7E64E
-	for <git@archiver.kernel.org>; Tue, 26 Sep 2023 16:39:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63AA0E7E650
+	for <git@archiver.kernel.org>; Tue, 26 Sep 2023 16:42:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235283AbjIZQjy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Sep 2023 12:39:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55694 "EHLO
+        id S235372AbjIZQmv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Sep 2023 12:42:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235313AbjIZQjx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Sep 2023 12:39:53 -0400
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F597199
-        for <git@vger.kernel.org>; Tue, 26 Sep 2023 09:39:47 -0700 (PDT)
-Received: by mail-pl1-x634.google.com with SMTP id d9443c01a7336-1c47309a8ccso75768875ad.1
-        for <git@vger.kernel.org>; Tue, 26 Sep 2023 09:39:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695746387; x=1696351187; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=JfZN6J5VCknNT+Q9zcGLlxsWDxVudiXzN2mRrKLLWfE=;
-        b=Tdm+hH4AFglL2REInp6OG9Oc2EcqA58GGoKS95IyyiQKsctp7DR7LWXCKVN+IcHDPN
-         Qr/KmyoH/3atxtu1cBOaQYy6Ixi7HET5X7pKxZYzmtbKSXhRhotr3rjH37FmX/at8WWS
-         HDFyvRQO5DkB0Fu9rGI/GPPChUtT2ZsNkxDSLqFwAxYz5O7zDmJEOufjRuWaqWC6NC6y
-         OfE+s/N3EWobPggtR1lfEYo3tBC4sfYPf7TKryrReNWFXTZ19GX+fo4E2sdkPf2CQ1Gd
-         MxesX2i89QLf2zyve5H9v9RITniw2HLQkxmhVhgpsCojCd4YtxU4S6xzzWMI6wg7xqAz
-         nkqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695746387; x=1696351187;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JfZN6J5VCknNT+Q9zcGLlxsWDxVudiXzN2mRrKLLWfE=;
-        b=lMUs+MDpITR6mMl5WmlnQkB8MYM+upG7OFi7T0jFofocJypybopX2+CXYbSS46B66x
-         uDnEubapkKp6pzCyTa74rKQl2ITZMQJQXZnqaCjeDd323k53GqgbEUQ4J2fEeZM1W3Y/
-         /uJVs4g1jkGWXCbesFPxuHd7acyyZ0tuOvEkX49by26v1Nspy2Wn9jGWD8/ZynM4CVWE
-         B0/HxbVWF4C5Cn6BR5Uw5VxEMdBYdt0ik7ip/NwAaDZh6pXOI/ijy1YMu2PyRB2HPdoE
-         ZWLHgh1z4b2DKfSil5gA+3+y1DgXOAQko7n+8U/vksLd0RhymNYt+AM95mb1RUW8JVbZ
-         LJbw==
-X-Gm-Message-State: AOJu0YzyMgbLR29wF6Ko8a8SOmxCEPrlIhvxOLnXRqlD92zqjCOBaFSL
-        Q2Wq8sdppK9SCmlc42aU1A0=
-X-Google-Smtp-Source: AGHT+IHQw/i5LQo6sUIFdJOXl0P1jg+NLcEyH50JSjlooP3H00KeMbl9XVEcVcuZTYbkc/jPl7Wfyg==
-X-Received: by 2002:a17:90a:a514:b0:277:7810:ac74 with SMTP id a20-20020a17090aa51400b002777810ac74mr4927121pjq.10.1695746386580;
-        Tue, 26 Sep 2023 09:39:46 -0700 (PDT)
-Received: from five231003 ([49.37.158.138])
-        by smtp.gmail.com with ESMTPSA id 25-20020a17090a031900b00274bbfc34c8sm13023881pje.16.2023.09.26.09.39.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Sep 2023 09:39:46 -0700 (PDT)
-Date:   Tue, 26 Sep 2023 22:09:33 +0530
-From:   Kousik Sanagavarapu <five231003@gmail.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>, Shuqi Liang <cheskaqiqi@gmail.com>,
-        Victoria Dye <vdye@github.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Hariom verma <hariom18599@gmail.com>
-Subject: Re: Projects for the next Outreachy round
-Message-ID: <ZRMJRVl16gBEElGZ@five231003>
-References: <CAP8UFD1bsez-eMis5yH7Esds+LkhMnj0qTUMFPL1tRuDv2fiPw@mail.gmail.com>
+        with ESMTP id S235387AbjIZQms (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Sep 2023 12:42:48 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72A79BF
+        for <git@vger.kernel.org>; Tue, 26 Sep 2023 09:42:37 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4B70119B5D2;
+        Tue, 26 Sep 2023 12:42:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=S1eUHV+RZF5A/OYLTmv6KNXYYBWa1ZPalQRs/B
+        zk7p4=; b=qvj6i+R6wDs9yZ9aKR+CjBstRklzjGB74vibwgZkIlKvpNyWrB0V2d
+        XgsuVJUDPkiVXdbyITwItLoF17Uw5MePZvuZEtePm8BKt4k5f8DrwAy2BaxfqBTF
+        mAZi9FovanTnVBdovnMVu5M3/dL8xYz1mrEwbI4S2oriJvn09Xgn4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 41AD519B5D0;
+        Tue, 26 Sep 2023 12:42:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A27BC19B5CF;
+        Tue, 26 Sep 2023 12:42:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Josh Soref <jsoref@gmail.com>
+Cc:     Kristoffer Haugsbakk <code@khaugsbakk.name>,
+        Josh Soref via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] pretty-formats.txt: fix whitespace
+In-Reply-To: <CACZqfqCfvWASMPMxRpRuAUQPcprcB4RHxxke_qTZ3bFGLf3T8Q@mail.gmail.com>
+        (Josh Soref's message of "Mon, 25 Sep 2023 22:51:03 -0400")
+References: <pull.950.git.1695391818917.gitgitgadget@gmail.com>
+        <f3081838-ca50-4a7d-b2fc-6f0f1f1364a8@app.fastmail.com>
+        <CACZqfqCfvWASMPMxRpRuAUQPcprcB4RHxxke_qTZ3bFGLf3T8Q@mail.gmail.com>
+Date:   Tue, 26 Sep 2023 09:42:34 -0700
+Message-ID: <xmqqo7hoophh.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAP8UFD1bsez-eMis5yH7Esds+LkhMnj0qTUMFPL1tRuDv2fiPw@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: B24F27F4-5C8B-11EE-A299-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Josh Soref <jsoref@gmail.com> writes:
 
-On Tue, Sep 26, 2023 at 04:48:12PM +0200, Christian Couder wrote:
-> By the way, congrats to Shuqi and
-> Kousik for successfully completing their projects!
+> As it (IMO) takes effort (admittedly trivial, and quite likely
+> habitual) to insert a second space, I assume that this was a desired
+> thing and the one space was the aberration, hence the patch went in
+> favor of two spaces.
+
+Back in typewriter days, people were taught to leave two spaces
+after a full stop, because on monospace output it was easier to read
+that way.  Then the desktop publishing software came and people were
+encouraged to leave the appearance up to the software.
+
+So to old timers who have already been trained to type two spaces
+after a sentence, it takes more effort not to type the space bar
+twice.
+
+But as I said already, I personally feel that the consistency
+guidelines around this area should be:
+
+ (1) it would be nice if a new document does not use mixed style, but
+
+ (2) it is not worth the patch noise only to "fix" them one way or
+     the other.
+
+Here "patch noise" does not primarily mean the effort a producer of
+such a patch spends making sure what they did is correct.  The cost
+of making sure unrelated mistakes do not slip into the codebase and
+documentation without being noticed is much higher for such a patch
+that ought to be a mechanical conversion.
 
 Thanks.
-
-> So Shuqi and Kousik, please tell us if you would like to continue
-> working on your projects or if it's Ok if we propose them for
-> Outreachy.
-
-I would like to continue working on the project and hopefully complete
-the duplication of the remaining pretty formats into ref-fitler.
