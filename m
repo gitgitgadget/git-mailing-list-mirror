@@ -2,117 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BAB4E7F145
-	for <git@archiver.kernel.org>; Tue, 26 Sep 2023 22:52:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E36BBE7F14B
+	for <git@archiver.kernel.org>; Wed, 27 Sep 2023 00:44:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232095AbjIZWwC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Sep 2023 18:52:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37576 "EHLO
+        id S229867AbjI0Aon (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Sep 2023 20:44:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231748AbjIZWuA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Sep 2023 18:50:00 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF33723113
-        for <git@vger.kernel.org>; Tue, 26 Sep 2023 15:05:26 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8E5E22C68D;
-        Tue, 26 Sep 2023 17:48:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=BnL58fLp60k4zXUFkqOMZ2OpbGcARPU3eowwRJ
-        qe9nI=; b=DW+WjdtAINFThrB8d9eJggMccm6b0vhAw8oUEy+fauX3UcltkhVBvH
-        HrLO3gaXcSWoFKffXq0M9FQmA8hLaih5+EQsJFKbEdQKQLq0jrrGcl/gIf0ghS4w
-        sY2jprp+gHGQTqqk61pgBUabOuczOnU15qrSoHDGkZB4AiJbLyA9s=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 86C0D2C68C;
-        Tue, 26 Sep 2023 17:48:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 262CE2C68B;
-        Tue, 26 Sep 2023 17:48:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Eric W. Biederman" <ebiederm@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        <git@vger.kernel.org>
-Subject: Re: [PATCH v3] bulk-checkin: only support blobs in index_bulk_checkin
-In-Reply-To: <87msx99b9o.fsf_-_@gmail.froward.int.ebiederm.org> (Eric
-        W. Biederman's message of "Tue, 26 Sep 2023 10:58:43 -0500")
-References: <878r918ps3.fsf@gmail.froward.int.ebiederm.org>
-        <xmqqr0mtcosy.fsf@gitster.g>
-        <87zg1h58xa.fsf@gmail.froward.int.ebiederm.org>
-        <87msx99b9o.fsf_-_@gmail.froward.int.ebiederm.org>
-Date:   Tue, 26 Sep 2023 14:48:31 -0700
-Message-ID: <xmqqmsx8mwr4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        with ESMTP id S233835AbjI0Aml (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Sep 2023 20:42:41 -0400
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C0E583C0
+        for <git@vger.kernel.org>; Tue, 26 Sep 2023 16:57:53 -0700 (PDT)
+Received: by mail-pj1-x102b.google.com with SMTP id 98e67ed59e1d1-27763d36661so3790093a91.3
+        for <git@vger.kernel.org>; Tue, 26 Sep 2023 16:57:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1695772673; x=1696377473; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=2RyniuIFTkJ1Ap5ypLkry8ImhOE/2TxRwEm92imIJCs=;
+        b=ZqIa9+YdvzkcYgJwS658qthpuiAIDbR05KzFEt+U3sjgj5F9VL8JPbMeeORPtKwfWP
+         wu79GC5Wx96alOL5/yMqC1oOoIhU7MQ5wKNmbduAjNFpStbRrU6tCzac/h7gRFQ2Achq
+         pKa9rIJxkvT2J+A6prGWZh7LZeu7H3TDHrS92wVBVLXcn7tD1VJ5ALeUqhS5VSiOKdx2
+         3fiauQ9bkAXnWHvQ7oYrNSOIi9dwZOmKrjHYmD8lFyxdd2gxk+cDvv2DEt/DO1j9K5Lh
+         rM1TZGlCTmGUI4AYF8S79rnQGpqAUWfnoXZ4sGT0J+WR6k3A0fGyhzjTDgLXtKfBuizQ
+         U4Jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695772673; x=1696377473;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2RyniuIFTkJ1Ap5ypLkry8ImhOE/2TxRwEm92imIJCs=;
+        b=I0Gzh3xfFMekYjp0IjEczP8+AfQvg6RKavkIMKZQqkpd7kMUU4IHpDizEsbNl4kXGw
+         Ru6kDp0oznjrXS61zb0ofK62xW1KuL8J7IcJd0EpVl4OKu63emMHnh+jWX5XFQMJO+E+
+         FWRY4OqTM/Of71RnSX24rQUi0e0Y/1Ym4fRORli255pd5Uch0HRaO08RMc8Sfk8ynfFL
+         rF2bEpvMsGDdzjCyvBE+KoDDmGZBZFfYjETNsgA2TqltKS9cCJQ3JnRaHuwJXnCAlcsd
+         qur4kcWtFEhBg1m+lfWdV5ZuhgSfnbp6IarKaHLFtG7FeYAxUw/HGIMU34Br2oJpvrLr
+         MymQ==
+X-Gm-Message-State: AOJu0YyMjkQHwWbvStUfYl+q59oH8lkpkKgb27iKFT4PvtzqgvFGIRYT
+        ExcyK5+WGKf4mgIpYHy1q3k=
+X-Google-Smtp-Source: AGHT+IG7fpGxzyhwSSIafNG3w1OF1HBYHb5pzAeQJLerZ++yEvrmnLfgaDcTmv/rJp92OTneLI1fxQ==
+X-Received: by 2002:a17:90a:7106:b0:267:70a8:abff with SMTP id h6-20020a17090a710600b0026770a8abffmr230174pjk.29.1695772672735;
+        Tue, 26 Sep 2023 16:57:52 -0700 (PDT)
+Received: from debian.me ([103.124.138.83])
+        by smtp.gmail.com with ESMTPSA id c18-20020a17090ab29200b0025023726fc4sm12214347pjr.26.2023.09.26.16.57.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Sep 2023 16:57:51 -0700 (PDT)
+Received: by debian.me (Postfix, from userid 1000)
+        id 48FCE8212DDC; Wed, 27 Sep 2023 06:57:47 +0700 (WIB)
+Date:   Wed, 27 Sep 2023 06:57:46 +0700
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+To:     Yaroslav Halchenko <yoh@onerussian.com>,
+        Git Mailing List <git@vger.kernel.org>
+Cc:     Isaac To <isaac.chun.to@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-retry tool or git.retry config (built-in implementation)?
+Message-ID: <ZRNv-n_VlIDPX0oi@debian.me>
+References: <ZRMLNyHXoWOj6K-l@bilena>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 703A9256-5CB6-11EE-AFC5-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="pqdEmhxkmNsPqzlr"
+Content-Disposition: inline
+In-Reply-To: <ZRMLNyHXoWOj6K-l@bilena>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Eric W. Biederman" <ebiederm@gmail.com> writes:
 
-> As the code is written today index_bulk_checkin only accepts blobs.
-> Remove the enum object_type parameter and rename index_bulk_checkin to
-> index_blob_bulk_checkin, index_stream to index_blob_stream,
-> deflate_to_pack to deflate_blob_to_pack, stream_to_pack to
-> stream_blob_to_pack, to make this explicit.
->
-> Not supporting commits, tags, or trees has no downside as it is not
-> currently supported now, and commits, tags, and trees being smaller by
-> design do not have the problem that the problem that index_bulk_checkin
-> was built to solve.
->
-> Before we start adding code to support the hash function transition
-> supporting additional objects types in index_bulk_checkin has no real
-> additional cost, just an extra function parameter to know what the
-> object type is.  Once we begin the hash function transition this is not
-> the case.
->
-> The hash function transition document specifies that a repository with
-> compatObjectFormat enabled will compute and store both the SHA-1 and
-> SHA-256 hash of every object in the repository.
->
-> What makes this a challenge is that it is not just an additional hash
-> over the same object.  Instead the hash function transition document
-> specifies that the compatibility hash (specified with
-> compatObjectFormat) be computed over the equivalent object that another
-> git repository whose storage hash (specified with objectFormat) would
-> store.  When comparing equivalent repositories built with different
-> storage hash functions, the oids embedded in objects used to refer to
-> other objects differ and the location of signatures within objects
-> differ.
->
-> As blob objects have neither oids referring to other objects nor stored
-> signatures their storage hash and their compatibility hash are computed
-> over the same object.
->
-> The other kinds of objects: trees, commits, and tags, all store oids
-> referring to other objects.  Signatures are stored in commit and tag
-> objects.  As oids and the tags to store signatures are not the same size
-> in repositories built with different storage hashes the size of the
-> equivalent objects are also different.
->
-> A version of index_bulk_checkin that supports more than just blobs when
-> computing both the SHA-1 and the SHA-256 of every object added would
-> need a different, and more expensive structure.  The structure is more
-> expensive because it would be required to temporarily buffering the
-> equivalent object the compatibility hash needs to be computed over.
->
-> A temporary object is needed, because before a hash over an object can
-> computed it's object header needs to be computed.  One of the members of
-> the object header is the entire size of the object.  To know the size of
-> an equivalent object an entire pass over the original object needs to be
-> made, as trees, commits, and tags are composed of a variable number of
-> variable sized pieces.  Unfortunately there is no formula to compute the
-> size of an equivalent object from just the size of the original object.
->
-> Avoid all of those future complications by limiting index_bulk_checkin
-> to only work on blobs.
+--pqdEmhxkmNsPqzlr
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks.  Will queue.
+On Tue, Sep 26, 2023 at 12:47:51PM -0400, Yaroslav Halchenko wrote:
+> Dear Git Gurus,
+>=20
+> In DataLad (https://datalad.org) we are doing lots of automated cloning,
+> fetching etc as part of our CI etc jobs.  Once in a while git operations
+> fail [see e.g. 1], and beg us to retry but we need to know when to
+> do so, and not do it upon every failed git invocation since some
+> failures could be legit (repository is gone). While looking how others
+> solve it we found
+> https://stackoverflow.com/questions/35014012/git-retry-if-http-request-fa=
+iled
+> which pointed to tools like git-retry and later part of
+> https://chromium.googlesource.com/infra/infra/+/HEAD/go/src/infra/tools/g=
+it/retry_regexp.go
+> which serve as a collection of regexes to be on lookout for to retry.
+>=20
+> Would that be the "best" strategy currently? =20
+
+Looking at the actual git_retry.py script [1], it really just wraps
+actual Git commands. IMO, git-retry(1) shell script as you mentioned
+only calls the python version, which adds another level of indirection
+(why not doing it in pure shell?).
+
+AFAIK, to solve the retrying problem, we need to have a way to tell
+transport backend (curl/ssh) to resume transfer from the faulty point.
+
+>=20
+> As regex matching might eventually break whenever `git` changes
+> anything in the output messages, I wondered if there could be a more
+> robust internal implementation in git itself?  Similarly git-annex has
+> annex.retry config setting which sets the count of retries for
+> "retriable" operations. =20
+
+Do you use porcelain interfaces instead of plumbing ones?
+
+Thanks.
+
+[1]: https://chromium.googlesource.com/chromium/tools/depot_tools.git/+/01d=
+2cde990f22d409e74e239de7e4d347102d6f6/git_retry.py
+
+--=20
+An old man doll... just what I always wanted! - Clara
+
+--pqdEmhxkmNsPqzlr
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQQZO/gRNchuWgPJR+Z7tWyQc2rTCAUCZRNv9AAKCRB7tWyQc2rT
+COnnAQCgouz/it5XXa8yFRDH2A+JBbcBL84TaEvHKtEwZ1TczwEAxn9qpN+ti3qJ
+STvmxeN5VJ2v6gx2pBuWyb5UhUYQ1wg=
+=GeQb
+-----END PGP SIGNATURE-----
+
+--pqdEmhxkmNsPqzlr--
