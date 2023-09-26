@@ -2,87 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63AA0E7E650
-	for <git@archiver.kernel.org>; Tue, 26 Sep 2023 16:42:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2A6BE7E652
+	for <git@archiver.kernel.org>; Tue, 26 Sep 2023 16:50:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235372AbjIZQmv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Sep 2023 12:42:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53020 "EHLO
+        id S234564AbjIZQup (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Sep 2023 12:50:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235387AbjIZQms (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Sep 2023 12:42:48 -0400
+        with ESMTP id S229629AbjIZQuo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Sep 2023 12:50:44 -0400
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72A79BF
-        for <git@vger.kernel.org>; Tue, 26 Sep 2023 09:42:37 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40B00E5
+        for <git@vger.kernel.org>; Tue, 26 Sep 2023 09:50:38 -0700 (PDT)
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4B70119B5D2;
-        Tue, 26 Sep 2023 12:42:36 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A292519B856;
+        Tue, 26 Sep 2023 12:50:37 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=S1eUHV+RZF5A/OYLTmv6KNXYYBWa1ZPalQRs/B
-        zk7p4=; b=qvj6i+R6wDs9yZ9aKR+CjBstRklzjGB74vibwgZkIlKvpNyWrB0V2d
-        XgsuVJUDPkiVXdbyITwItLoF17Uw5MePZvuZEtePm8BKt4k5f8DrwAy2BaxfqBTF
-        mAZi9FovanTnVBdovnMVu5M3/dL8xYz1mrEwbI4S2oriJvn09Xgn4=
+        :content-type; s=sasl; bh=Vd7+xidPwnW3Ih02JuQ0grBS3brcShBjLI7vQc
+        N9wxs=; b=STwKxexe3iL3eoXy8HbPUj3assFrYwk2aWLtJ9Y4YehKcuVKCeySDf
+        Vzo+2bTLFi9uRoIH8Vh5bu19tVvmzSmD8ICaTMC9SxZvjREBK944PxSkTvB6YFa+
+        aX8AWFDL51y2kxLaVveZFIfprORobWGT1Zbqx8wKrj+AKe1+mC00U=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 41AD519B5D0;
-        Tue, 26 Sep 2023 12:42:36 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9A66A19B855;
+        Tue, 26 Sep 2023 12:50:37 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.153.120])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A27BC19B5CF;
-        Tue, 26 Sep 2023 12:42:35 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 138B319B854;
+        Tue, 26 Sep 2023 12:50:37 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Josh Soref <jsoref@gmail.com>
-Cc:     Kristoffer Haugsbakk <code@khaugsbakk.name>,
-        Josh Soref via GitGitGadget <gitgitgadget@gmail.com>,
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Subject: Re: [PATCH] pretty-formats.txt: fix whitespace
-In-Reply-To: <CACZqfqCfvWASMPMxRpRuAUQPcprcB4RHxxke_qTZ3bFGLf3T8Q@mail.gmail.com>
-        (Josh Soref's message of "Mon, 25 Sep 2023 22:51:03 -0400")
-References: <pull.950.git.1695391818917.gitgitgadget@gmail.com>
-        <f3081838-ca50-4a7d-b2fc-6f0f1f1364a8@app.fastmail.com>
-        <CACZqfqCfvWASMPMxRpRuAUQPcprcB4RHxxke_qTZ3bFGLf3T8Q@mail.gmail.com>
-Date:   Tue, 26 Sep 2023 09:42:34 -0700
-Message-ID: <xmqqo7hoophh.fsf@gitster.g>
+Subject: Re: [PATCH 3/6] coverity: allow overriding the Coverity project
+In-Reply-To: <20230926143933.GA1897653@coredump.intra.peff.net> (Jeff King's
+        message of "Tue, 26 Sep 2023 10:39:33 -0400")
+References: <pull.1588.git.1695379323.gitgitgadget@gmail.com>
+        <6c1c82862814f40a408231cb249fb4b653276b52.1695379323.git.gitgitgadget@gmail.com>
+        <20230923070019.GD1469941@coredump.intra.peff.net>
+        <a839daf1-9e32-96f8-4eab-7c845e128488@gmx.de>
+        <20230925121157.GB1623701@coredump.intra.peff.net>
+        <4e0f404e-0c49-b085-c35d-be53b0381402@gmx.de>
+        <xmqq4jjhow3h.fsf@gitster.g>
+        <20230926143933.GA1897653@coredump.intra.peff.net>
+Date:   Tue, 26 Sep 2023 09:50:36 -0700
+Message-ID: <xmqqh6ngop43.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: B24F27F4-5C8B-11EE-A299-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: D1419344-5C8C-11EE-938C-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Josh Soref <jsoref@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> As it (IMO) takes effort (admittedly trivial, and quite likely
-> habitual) to insert a second space, I assume that this was a desired
-> thing and the one space was the aberration, hence the patch went in
-> favor of two spaces.
+> On Tue, Sep 26, 2023 at 07:19:46AM -0700, Junio C Hamano wrote:
+>
+>> At the same time, it would be one less thing they need to tweak
+>> before starting to use it, and if there are two or more users to do
+>> so, it would already have paid off.  Developers typically outnumber
+>> projects they work on.
+>> 
+>> I also have to wonder if it might make it more obvious what is going
+>> on if you made the default to $user/$fork and have the project
+>> override it, which hopefully may make it easier to find out what
+>> they need to do for those who want to override it to a different
+>> value to suit their need?
+>
+> Yeah, that was my thinking (and what I had been proposing).
+>
+> But I really think it probably doesn't matter that much either way. I
+> would not be surprised if there are zero developers who use this,
+> because of the setup on the coverity side, and the fact that the results
+> are not always immediately actionable.
+>
+> Even I, who has been running coverity on my local fork for a few years,
+> will probably just switch to using the git.git run and occasionally
+> looking at the results (that creates an extra headache because somebody
+> has to grant acess to the git.git run results to interested parties, but
+> it's also a one-time setup thing).
 
-Back in typewriter days, people were taught to leave two spaces
-after a full stop, because on monospace output it was easier to read
-that way.  Then the desktop publishing software came and people were
-encouraged to leave the appearance up to the software.
+Sure.  
 
-So to old timers who have already been trained to type two spaces
-after a sentence, it takes more effort not to type the space bar
-twice.
-
-But as I said already, I personally feel that the consistency
-guidelines around this area should be:
-
- (1) it would be nice if a new document does not use mixed style, but
-
- (2) it is not worth the patch noise only to "fix" them one way or
-     the other.
-
-Here "patch noise" does not primarily mean the effort a producer of
-such a patch spends making sure what they did is correct.  The cost
-of making sure unrelated mistakes do not slip into the codebase and
-documentation without being noticed is much higher for such a patch
-that ought to be a mechanical conversion.
+I do not care too much either way, and in a situation like this
+where the design decision does not have a crucial longer-term impact
+either way exactly because it is a one-time thing for any user,
+whoever has invested their work on should have the final say.
 
 Thanks.
