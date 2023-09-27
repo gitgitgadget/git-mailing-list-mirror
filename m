@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 556D5E82CCC
-	for <git@archiver.kernel.org>; Wed, 27 Sep 2023 19:56:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80830E82CCE
+	for <git@archiver.kernel.org>; Wed, 27 Sep 2023 19:56:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229761AbjI0T4A (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Sep 2023 15:56:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55384 "EHLO
+        id S229765AbjI0T4C (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Sep 2023 15:56:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229664AbjI0Tz4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Sep 2023 15:55:56 -0400
-Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82DBC11D
-        for <git@vger.kernel.org>; Wed, 27 Sep 2023 12:55:53 -0700 (PDT)
-Received: by mail-io1-xd32.google.com with SMTP id ca18e2360f4ac-79f915e5b47so408188439f.2
-        for <git@vger.kernel.org>; Wed, 27 Sep 2023 12:55:53 -0700 (PDT)
+        with ESMTP id S229721AbjI0Tz5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Sep 2023 15:55:57 -0400
+Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40476CC
+        for <git@vger.kernel.org>; Wed, 27 Sep 2023 12:55:55 -0700 (PDT)
+Received: by mail-io1-xd2f.google.com with SMTP id ca18e2360f4ac-79f909071c3so407928539f.0
+        for <git@vger.kernel.org>; Wed, 27 Sep 2023 12:55:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695844553; x=1696449353; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1695844554; x=1696449354; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+g7ptA90ca7LQhvrnO2UwzibPbMQdF9Tu/x7XmFUxR0=;
-        b=i1VSSjTuv4iJhifPmuc1gWzqU1/RB7cMIiJRT6cXNlDYz+elhCkODLEEUvueaZakZZ
-         io7ByZGduwLO7S3xBzk8l0xiyyv7zmBZJs4vyeyl0KPgAXE9J4nZiEX41UfBLcT1e95I
-         lBB0WAVEBGJTsQpI6YVf+6om+i3KzFYZjZGun3gWNJ6WTBBxUQ6CELovA9BcnXMsSeNZ
-         v2xQtf1iovvhf6I4vT94MD3QYEpGMq/jzaDDgfqF5YW4Q9VDd3G3WBkLzsvvIuYI4E6A
-         avfy8mxEHrQ9tqTMrWKJUi303NzX7yo0uro2LS95O3oU5ArbugJTuRun+yyjB4OAzjaz
-         Mmng==
+        bh=h4LK71V82XDfAsC4icL5Dk5UxaffRPCmxGntq7sDdQE=;
+        b=cFzrnMXrc7DZXf0xdAzdNyMswFOqmGwboHjpfTBDlM3bQz3RPnk3Ma8DeUj6xmIW8w
+         FsZ9HZONWqhFEjXJiIptyeqezWwlLdd9T9rqN7kkLFxyFwXfrXfNCs02mdWuokDn6uOv
+         MNMP71iBUtqyGBFNuh/WSGeAKqlSEaka0kR9+IAiLRfQhTkSRanRQ7VUGC5tH3ODZJyf
+         /8BhYAHGbYanE5Ru24sgl4+wkvgosZTxhKT9bHsZIhxnHpXAfuSVsK7STpefI7ceaFXN
+         TRfen+eQnkdjg/BfVz3mhplnrhcwbodeWqPM9TzTZMdmfrVS5lEIoTeNZp5aDjDPXaWo
+         haHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695844553; x=1696449353;
+        d=1e100.net; s=20230601; t=1695844554; x=1696449354;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=+g7ptA90ca7LQhvrnO2UwzibPbMQdF9Tu/x7XmFUxR0=;
-        b=DNZFG71u5s7YnElr9rLFvB8Wr++9ye2MrFL1ufYaMb7wnKl71ojFwghHxhyHLrbSB/
-         4+P+vSwg+/9KfKG9w9Bh0fYBTyskw3V24trVPrKNGgl4SPM5UYQBooX1l4dJxBRJjjuQ
-         rurJpJ4Ma7F5D60qQb2tR+5bYH8Tsmo5ULo2dOLv72fMuZuTCXiEAUt6ykxAzHBVZYHV
-         1w74m33XfMiwoWz0RxgOOcRb5RGOFlk7gG5RX3YFXsiHJ+KCw8ufSanOm5JvSgMwWSP9
-         UkNH11PjrQ8M7oBxy5UZsF63HumtaZVAPn6vz5r7L/ItGUbqtBvVmbuwgTzY+MM8WSvC
-         0lrQ==
-X-Gm-Message-State: AOJu0YwABhVKuwyMWzXhs07Z/m5c08VlfDdQl/dUVh8NIE62HrOSv0hw
-        uFYW6KPKXY52W4cJna6bMzk=
-X-Google-Smtp-Source: AGHT+IGxE4yDV6wSykql2N9/0Fl0+NIiuVR80j7DnQt6bcv0AzQGabouIYoIfQczGlACBw7lGT1nZw==
-X-Received: by 2002:a6b:f012:0:b0:798:312a:5403 with SMTP id w18-20020a6bf012000000b00798312a5403mr3617269ioc.19.1695844552886;
-        Wed, 27 Sep 2023 12:55:52 -0700 (PDT)
+        bh=h4LK71V82XDfAsC4icL5Dk5UxaffRPCmxGntq7sDdQE=;
+        b=dn0gg/kMgVCX1xgrQZcuPxwgv8cr0nLFHlsk5uqPY0PfiaFI6ywuVFtPBhG6LkyMUB
+         gGtXOGuIBw8zPCz/QxJhM37h+jOnBeFGuEJCp5JZysy/CAPUfXwlExjTuYjsqP847cWy
+         kiYxJA5y8tw7Uyfvo4eIHw9TsosWH7+mDDEnUoSuoEfzZahfCnwOJsodWFVgZcBXB5Vw
+         ulhYeo463A0LaAM+qRXinSC7GJWRZGJukrKdKg4ebgjW8L/FjIIiH3VwNg6eE3t4+OCo
+         PmH3OPjhkiAB0IWKAsRAo1NDWRsKfUMSVjzj+92XjzQah8phAMouapeGpZuNjHQbbIjp
+         7RDw==
+X-Gm-Message-State: AOJu0Yw5JoVIkkt8sOq5DZ+2laSHnjau7aX0Qd7Vu/kRIdKEkQWkHf42
+        1iGGQV861fL4cSBE6+YTIEA=
+X-Google-Smtp-Source: AGHT+IHVr4sGDUvTJpmhO6IVmxTD6lLESM6TPujoDLBnnRBAC85/l48X0Q+eqtchMEKrAkeHrqygdg==
+X-Received: by 2002:a6b:7301:0:b0:785:ca70:46a2 with SMTP id e1-20020a6b7301000000b00785ca7046a2mr3565772ioh.4.1695844554569;
+        Wed, 27 Sep 2023 12:55:54 -0700 (PDT)
 Received: from localhost.localdomain (ip68-227-168-167.om.om.cox.net. [68.227.168.167])
-        by smtp.gmail.com with ESMTPSA id o23-20020a6b5a17000000b007836c7e8dccsm2935628iob.17.2023.09.27.12.55.52
+        by smtp.gmail.com with ESMTPSA id o23-20020a6b5a17000000b007836c7e8dccsm2935628iob.17.2023.09.27.12.55.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Sep 2023 12:55:52 -0700 (PDT)
+        Wed, 27 Sep 2023 12:55:54 -0700 (PDT)
 From:   "Eric W. Biederman" <ebiederm@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Eric W. Biederman" <ebiederm@xmission.com>
-Subject: [PATCH 03/30] object-names: Support input of oids in any supported hash
-Date:   Wed, 27 Sep 2023 14:55:10 -0500
-Message-Id: <20230927195537.1682-3-ebiederm@gmail.com>
+        "Eric W . Biederman" <ebiederm@xmission.com>
+Subject: [PATCH 05/30] loose: add a mapping between SHA-1 and SHA-256 for loose objects
+Date:   Wed, 27 Sep 2023 14:55:12 -0500
+Message-Id: <20230927195537.1682-5-ebiederm@gmail.com>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <87jzsbjt0a.fsf@gmail.froward.int.ebiederm.org>
 References: <87jzsbjt0a.fsf@gmail.froward.int.ebiederm.org>
@@ -66,268 +66,414 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Eric W. Biederman" <ebiederm@xmission.com>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
 
-Support short oids encoded in any algorithm, while ensuring enough of
-the oid is specified to disambiguate between all of the oids in the
-repository encoded in any algorithm.
+As part of the transition plan, we'd like to add a file in the .git
+directory that maps loose objects between SHA-1 and SHA-256.  Let's
+implement the specification in the transition plan and store this data
+on a per-repository basis in struct repository.
 
-By default have the code continue to only accept oids specified in the
-storage hash algorithm of the repository, but when something is
-ambiguous display all of the possible oids from any oid encoding.
-
-A new flag is added GET_OID_HASH_ANY that when supplied causes the
-code to accept oids specified in any hash algorithm, and to return the
-oids that were resolved.
-
-This implements the functionality that allows both SHA-1 and SHA-256
-object names, from the "Object names on the command line" section of
-the hash function transition document.
-
-Care is taken in get_short_oid so that when the result is ambiguous
-the output remains the same of GIT_OID_HASH_ANY was not supplied.
-If GET_OID_HASH_ANY was supplied objects of any hash algorithm
-that match the prefix are displayed.
-
-This required updating repo_for_each_abbrev to give it a parameter
-so that it knows to look at all hash algorithms.
-
-Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+Signed-off-by: Eric W. Biederman <ebiederm@xmission.com>
 ---
- builtin/rev-parse.c |  2 +-
- hash-ll.h           |  1 +
- object-name.c       | 49 +++++++++++++++++++++++++++++++++++----------
- object-name.h       |  3 ++-
- 4 files changed, 42 insertions(+), 13 deletions(-)
+ Makefile              |   1 +
+ loose.c               | 245 ++++++++++++++++++++++++++++++++++++++++++
+ loose.h               |  22 ++++
+ object-file-convert.c |  14 ++-
+ object-store-ll.h     |   3 +
+ object.c              |   2 +
+ repository.c          |   6 ++
+ 7 files changed, 292 insertions(+), 1 deletion(-)
+ create mode 100644 loose.c
+ create mode 100644 loose.h
 
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index fde8861ca4e0..43e96765400c 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -882,7 +882,7 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 				continue;
- 			}
- 			if (skip_prefix(arg, "--disambiguate=", &arg)) {
--				repo_for_each_abbrev(the_repository, arg,
-+				repo_for_each_abbrev(the_repository, arg, the_hash_algo,
- 						     show_abbrev, NULL);
- 				continue;
- 			}
-diff --git a/hash-ll.h b/hash-ll.h
-index 10d84cc20888..2cfde63ae1cf 100644
---- a/hash-ll.h
-+++ b/hash-ll.h
-@@ -145,6 +145,7 @@ struct object_id {
- #define GET_OID_RECORD_PATH     0200
- #define GET_OID_ONLY_TO_DIE    04000
- #define GET_OID_REQUIRE_PATH  010000
-+#define GET_OID_HASH_ANY      020000
- 
- #define GET_OID_DISAMBIGUATORS \
- 	(GET_OID_COMMIT | GET_OID_COMMITTISH | \
-diff --git a/object-name.c b/object-name.c
-index 0bfa29dbbfe9..976b7106821b 100644
---- a/object-name.c
-+++ b/object-name.c
-@@ -25,6 +25,7 @@
- #include "midx.h"
- #include "commit-reach.h"
- #include "date.h"
-+#include "object-file-convert.h"
- 
- static int get_oid_oneline(struct repository *r, const char *, struct object_id *, struct commit_list *);
- 
-@@ -49,6 +50,7 @@ struct disambiguate_state {
- 
- static void update_candidates(struct disambiguate_state *ds, const struct object_id *current)
- {
-+	/* The hash algorithm of the current has already been filtered */
- 	if (ds->always_call_fn) {
- 		ds->ambiguous = ds->fn(ds->repo, current, ds->cb_data) ? 1 : 0;
- 		return;
-@@ -134,6 +136,8 @@ static void unique_in_midx(struct multi_pack_index *m,
- {
- 	uint32_t num, i, first = 0;
- 	const struct object_id *current = NULL;
-+	int len = ds->len > ds->repo->hash_algo->hexsz ?
-+		ds->repo->hash_algo->hexsz : ds->len;
- 	num = m->num_objects;
- 
- 	if (!num)
-@@ -149,7 +153,7 @@ static void unique_in_midx(struct multi_pack_index *m,
- 	for (i = first; i < num && !ds->ambiguous; i++) {
- 		struct object_id oid;
- 		current = nth_midxed_object_oid(&oid, m, i);
--		if (!match_hash(ds->len, ds->bin_pfx.hash, current->hash))
-+		if (!match_hash(len, ds->bin_pfx.hash, current->hash))
- 			break;
- 		update_candidates(ds, current);
- 	}
-@@ -159,6 +163,8 @@ static void unique_in_pack(struct packed_git *p,
- 			   struct disambiguate_state *ds)
- {
- 	uint32_t num, i, first = 0;
-+	int len = ds->len > ds->repo->hash_algo->hexsz ?
-+		ds->repo->hash_algo->hexsz : ds->len;
- 
- 	if (p->multi_pack_index)
- 		return;
-@@ -177,7 +183,7 @@ static void unique_in_pack(struct packed_git *p,
- 	for (i = first; i < num && !ds->ambiguous; i++) {
- 		struct object_id oid;
- 		nth_packed_object_id(&oid, p, i);
--		if (!match_hash(ds->len, ds->bin_pfx.hash, oid.hash))
-+		if (!match_hash(len, ds->bin_pfx.hash, oid.hash))
- 			break;
- 		update_candidates(ds, &oid);
- 	}
-@@ -188,6 +194,10 @@ static void find_short_packed_object(struct disambiguate_state *ds)
- 	struct multi_pack_index *m;
- 	struct packed_git *p;
- 
-+	/* Skip, unless oids from the storage hash algorithm are wanted */
-+	if (ds->bin_pfx.algo && (&hash_algos[ds->bin_pfx.algo] != ds->repo->hash_algo))
+diff --git a/Makefile b/Makefile
+index f7e824f25cda..3c18664def9a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1053,6 +1053,7 @@ LIB_OBJS += list-objects-filter.o
+ LIB_OBJS += list-objects.o
+ LIB_OBJS += lockfile.o
+ LIB_OBJS += log-tree.o
++LIB_OBJS += loose.o
+ LIB_OBJS += ls-refs.o
+ LIB_OBJS += mailinfo.o
+ LIB_OBJS += mailmap.o
+diff --git a/loose.c b/loose.c
+new file mode 100644
+index 000000000000..28d11593b2ea
+--- /dev/null
++++ b/loose.c
+@@ -0,0 +1,245 @@
++#include "git-compat-util.h"
++#include "hash.h"
++#include "path.h"
++#include "object-store.h"
++#include "hex.h"
++#include "wrapper.h"
++#include "gettext.h"
++#include "loose.h"
++#include "lockfile.h"
++
++static const char *loose_object_header = "# loose-object-idx\n";
++
++static inline int should_use_loose_object_map(struct repository *repo)
++{
++	return repo->compat_hash_algo && repo->gitdir;
++}
++
++void loose_object_map_init(struct loose_object_map **map)
++{
++	struct loose_object_map *m;
++	m = xmalloc(sizeof(**map));
++	m->to_compat = kh_init_oid_map();
++	m->to_storage = kh_init_oid_map();
++	*map = m;
++}
++
++static int insert_oid_pair(kh_oid_map_t *map, const struct object_id *key, const struct object_id *value)
++{
++	khiter_t pos;
++	int ret;
++	struct object_id *stored;
++
++	pos = kh_put_oid_map(map, *key, &ret);
++
++	/* This item already exists in the map. */
++	if (ret == 0)
++		return 0;
++
++	stored = xmalloc(sizeof(*stored));
++	oidcpy(stored, value);
++	kh_value(map, pos) = stored;
++	return 1;
++}
++
++static int load_one_loose_object_map(struct repository *repo, struct object_directory *dir)
++{
++	struct strbuf buf = STRBUF_INIT, path = STRBUF_INIT;
++	FILE *fp;
++
++	if (!dir->loose_map)
++		loose_object_map_init(&dir->loose_map);
++
++	insert_oid_pair(dir->loose_map->to_compat, repo->hash_algo->empty_tree, repo->compat_hash_algo->empty_tree);
++	insert_oid_pair(dir->loose_map->to_storage, repo->compat_hash_algo->empty_tree, repo->hash_algo->empty_tree);
++
++	insert_oid_pair(dir->loose_map->to_compat, repo->hash_algo->empty_blob, repo->compat_hash_algo->empty_blob);
++	insert_oid_pair(dir->loose_map->to_storage, repo->compat_hash_algo->empty_blob, repo->hash_algo->empty_blob);
++
++	insert_oid_pair(dir->loose_map->to_compat, repo->hash_algo->null_oid, repo->compat_hash_algo->null_oid);
++	insert_oid_pair(dir->loose_map->to_storage, repo->compat_hash_algo->null_oid, repo->hash_algo->null_oid);
++
++	strbuf_git_common_path(&path, repo, "objects/loose-object-idx");
++	fp = fopen(path.buf, "rb");
++	if (!fp)
++		return 0;
++
++	errno = 0;
++	if (strbuf_getwholeline(&buf, fp, '\n') || strcmp(buf.buf, loose_object_header))
++		goto err;
++	while (!strbuf_getline_lf(&buf, fp)) {
++		const char *p;
++		struct object_id oid, compat_oid;
++		if (parse_oid_hex_algop(buf.buf, &oid, &p, repo->hash_algo) ||
++		    *p++ != ' ' ||
++		    parse_oid_hex_algop(p, &compat_oid, &p, repo->compat_hash_algo) ||
++		    p != buf.buf + buf.len)
++			goto err;
++		insert_oid_pair(dir->loose_map->to_compat, &oid, &compat_oid);
++		insert_oid_pair(dir->loose_map->to_storage, &compat_oid, &oid);
++	}
++
++	strbuf_release(&buf);
++	strbuf_release(&path);
++	return errno ? -1 : 0;
++err:
++	strbuf_release(&buf);
++	strbuf_release(&path);
++	return -1;
++}
++
++int repo_read_loose_object_map(struct repository *repo)
++{
++	struct object_directory *dir;
++
++	if (!should_use_loose_object_map(repo))
++		return 0;
++
++	prepare_alt_odb(repo);
++
++	for (dir = repo->objects->odb; dir; dir = dir->next) {
++		if (load_one_loose_object_map(repo, dir) < 0) {
++			return -1;
++		}
++	}
++	return 0;
++}
++
++int repo_write_loose_object_map(struct repository *repo)
++{
++	kh_oid_map_t *map = repo->objects->odb->loose_map->to_compat;
++	struct lock_file lock;
++	int fd;
++	khiter_t iter;
++	struct strbuf buf = STRBUF_INIT, path = STRBUF_INIT;
++
++	if (!should_use_loose_object_map(repo))
++		return 0;
++
++	strbuf_git_common_path(&path, repo, "objects/loose-object-idx");
++	fd = hold_lock_file_for_update_timeout(&lock, path.buf, LOCK_DIE_ON_ERROR, -1);
++	iter = kh_begin(map);
++	if (write_in_full(fd, loose_object_header, strlen(loose_object_header)) < 0)
++		goto errout;
++
++	for (; iter != kh_end(map); iter++) {
++		if (kh_exist(map, iter)) {
++			if (oideq(&kh_key(map, iter), the_hash_algo->empty_tree) ||
++			    oideq(&kh_key(map, iter), the_hash_algo->empty_blob))
++				continue;
++			strbuf_addf(&buf, "%s %s\n", oid_to_hex(&kh_key(map, iter)), oid_to_hex(kh_value(map, iter)));
++			if (write_in_full(fd, buf.buf, buf.len) < 0)
++				goto errout;
++			strbuf_reset(&buf);
++		}
++	}
++	strbuf_release(&buf);
++	if (commit_lock_file(&lock) < 0) {
++		error_errno(_("could not write loose object index %s"), path.buf);
++		strbuf_release(&path);
++		return -1;
++	}
++	strbuf_release(&path);
++	return 0;
++errout:
++	rollback_lock_file(&lock);
++	strbuf_release(&buf);
++	error_errno(_("failed to write loose object index %s\n"), path.buf);
++	strbuf_release(&path);
++	return -1;
++}
++
++static int write_one_object(struct repository *repo, const struct object_id *oid,
++			    const struct object_id *compat_oid)
++{
++	struct lock_file lock;
++	int fd;
++	struct stat st;
++	struct strbuf buf = STRBUF_INIT, path = STRBUF_INIT;
++
++	strbuf_git_common_path(&path, repo, "objects/loose-object-idx");
++	hold_lock_file_for_update_timeout(&lock, path.buf, LOCK_DIE_ON_ERROR, -1);
++
++	fd = open(path.buf, O_WRONLY | O_CREAT | O_APPEND, 0666);
++	if (fd < 0)
++		goto errout;
++	if (fstat(fd, &st) < 0)
++		goto errout;
++	if (!st.st_size && write_in_full(fd, loose_object_header, strlen(loose_object_header)) < 0)
++		goto errout;
++
++	strbuf_addf(&buf, "%s %s\n", oid_to_hex(oid), oid_to_hex(compat_oid));
++	if (write_in_full(fd, buf.buf, buf.len) < 0)
++		goto errout;
++	if (close(fd))
++		goto errout;
++	adjust_shared_perm(path.buf);
++	rollback_lock_file(&lock);
++	strbuf_release(&buf);
++	strbuf_release(&path);
++	return 0;
++errout:
++	error_errno(_("failed to write loose object index %s\n"), path.buf);
++	close(fd);
++	rollback_lock_file(&lock);
++	strbuf_release(&buf);
++	strbuf_release(&path);
++	return -1;
++}
++
++int repo_add_loose_object_map(struct repository *repo, const struct object_id *oid,
++			      const struct object_id *compat_oid)
++{
++	int inserted = 0;
++
++	if (!should_use_loose_object_map(repo))
++		return 0;
++
++	inserted |= insert_oid_pair(repo->objects->odb->loose_map->to_compat, oid, compat_oid);
++	inserted |= insert_oid_pair(repo->objects->odb->loose_map->to_storage, compat_oid, oid);
++	if (inserted)
++		return write_one_object(repo, oid, compat_oid);
++	return 0;
++}
++
++int repo_loose_object_map_oid(struct repository *repo,
++			      const struct object_id *src,
++			      const struct git_hash_algo *to,
++			      struct object_id *dest)
++
++{
++	struct object_directory *dir;
++	kh_oid_map_t *map;
++	khiter_t pos;
++
++	for (dir = repo->objects->odb; dir; dir = dir->next) {
++		struct loose_object_map *loose_map = dir->loose_map;
++		if (!loose_map)
++			continue;
++		map = (to == repo->compat_hash_algo) ?
++			loose_map->to_compat :
++			loose_map->to_storage;
++		pos = kh_get_oid_map(map, *src);
++		if (pos < kh_end(map)) {
++			oidcpy(dest, kh_value(map, pos));
++			return 0;
++		}
++	}
++	return -1;
++}
++
++void loose_object_map_clear(struct loose_object_map **map)
++{
++	struct loose_object_map *m = *map;
++	struct object_id *oid;
++
++	if (!m)
 +		return;
 +
- 	for (m = get_multi_pack_index(ds->repo); m && !ds->ambiguous;
- 	     m = m->next)
- 		unique_in_midx(m, ds);
-@@ -326,11 +336,12 @@ int set_disambiguate_hint_config(const char *var, const char *value)
++	kh_foreach_value(m->to_compat, oid, free(oid));
++	kh_foreach_value(m->to_storage, oid, free(oid));
++	kh_destroy_oid_map(m->to_compat);
++	kh_destroy_oid_map(m->to_storage);
++	free(m);
++	*map = NULL;
++}
+diff --git a/loose.h b/loose.h
+new file mode 100644
+index 000000000000..2c2957072c5f
+--- /dev/null
++++ b/loose.h
+@@ -0,0 +1,22 @@
++#ifndef LOOSE_H
++#define LOOSE_H
++
++#include "khash.h"
++
++struct loose_object_map {
++	kh_oid_map_t *to_compat;
++	kh_oid_map_t *to_storage;
++};
++
++void loose_object_map_init(struct loose_object_map **map);
++void loose_object_map_clear(struct loose_object_map **map);
++int repo_loose_object_map_oid(struct repository *repo,
++			      const struct object_id *src,
++			      const struct git_hash_algo *dest_algo,
++			      struct object_id *dest);
++int repo_add_loose_object_map(struct repository *repo, const struct object_id *oid,
++			      const struct object_id *compat_oid);
++int repo_read_loose_object_map(struct repository *repo);
++int repo_write_loose_object_map(struct repository *repo);
++
++#endif
+diff --git a/object-file-convert.c b/object-file-convert.c
+index ba3e18f6af44..4d62ed192bf0 100644
+--- a/object-file-convert.c
++++ b/object-file-convert.c
+@@ -4,6 +4,7 @@
+ #include "repository.h"
+ #include "hash-ll.h"
+ #include "object.h"
++#include "loose.h"
+ #include "object-file-convert.h"
  
- static int init_object_disambiguation(struct repository *r,
- 				      const char *name, int len,
-+				      const struct git_hash_algo *algo,
- 				      struct disambiguate_state *ds)
- {
- 	int i;
- 
--	if (len < MINIMUM_ABBREV || len > the_hash_algo->hexsz)
-+	if (len < MINIMUM_ABBREV || len > GIT_MAX_HEXSZ)
- 		return -1;
- 
- 	memset(ds, 0, sizeof(*ds));
-@@ -357,6 +368,7 @@ static int init_object_disambiguation(struct repository *r,
- 	ds->len = len;
- 	ds->hex_pfx[len] = '\0';
- 	ds->repo = r;
-+	ds->bin_pfx.algo = algo ? hash_algo_by_ptr(algo) : GIT_HASH_UNKNOWN;
- 	prepare_alt_odb(r);
- 	return 0;
- }
-@@ -491,9 +503,10 @@ static int repo_collect_ambiguous(struct repository *r UNUSED,
- 	return collect_ambiguous(oid, data);
- }
- 
--static int sort_ambiguous(const void *a, const void *b, void *ctx)
-+static int sort_ambiguous(const void *va, const void *vb, void *ctx)
- {
- 	struct repository *sort_ambiguous_repo = ctx;
-+	const struct object_id *a = va, *b = vb;
- 	int a_type = oid_object_info(sort_ambiguous_repo, a, NULL);
- 	int b_type = oid_object_info(sort_ambiguous_repo, b, NULL);
- 	int a_type_sort;
-@@ -503,8 +516,13 @@ static int sort_ambiguous(const void *a, const void *b, void *ctx)
- 	 * Sorts by hash within the same object type, just as
- 	 * oid_array_for_each_unique() would do.
- 	 */
--	if (a_type == b_type)
--		return oidcmp(a, b);
-+	if (a_type == b_type) {
-+		/* Is the hash algorithm the same? */
-+		if (a->algo == b->algo)
-+			return oidcmp(a, b);
-+		else
-+			return a->algo > b->algo ? 1 : -1;
+ int repo_oid_to_algop(struct repository *repo, const struct object_id *src,
+@@ -21,7 +22,18 @@ int repo_oid_to_algop(struct repository *repo, const struct object_id *src,
+ 			oidcpy(dest, src);
+ 		return 0;
+ 	}
+-	return -1;
++	if (repo_loose_object_map_oid(repo, src, to, dest)) {
++		/*
++		 * We may have loaded the object map at repo initialization but
++		 * another process (perhaps upstream of a pipe from us) may have
++		 * written a new object into the map.  If the object is missing,
++		 * let's reload the map to see if the object has appeared.
++		 */
++		repo_read_loose_object_map(repo);
++		if (repo_loose_object_map_oid(repo, src, to, dest))
++			return -1;
 +	}
- 
- 	/*
- 	 * Between object types show tags, then commits, and finally
-@@ -533,8 +551,12 @@ static enum get_oid_result get_short_oid(struct repository *r,
- 	int status;
- 	struct disambiguate_state ds;
- 	int quietly = !!(flags & GET_OID_QUIETLY);
-+	const struct git_hash_algo *algo = r->hash_algo;
-+
-+	if (flags & GET_OID_HASH_ANY)
-+		algo = NULL;
- 
--	if (init_object_disambiguation(r, name, len, &ds) < 0)
-+	if (init_object_disambiguation(r, name, len, algo, &ds) < 0)
- 		return -1;
- 
- 	if (HAS_MULTI_BITS(flags & GET_OID_DISAMBIGUATORS))
-@@ -553,6 +575,7 @@ static enum get_oid_result get_short_oid(struct repository *r,
- 	else
- 		ds.fn = default_disambiguate_hint;
- 
-+
- 	find_short_object_filename(&ds);
- 	find_short_packed_object(&ds);
- 	status = finish_object_disambiguation(&ds, oid);
-@@ -588,7 +611,7 @@ static enum get_oid_result get_short_oid(struct repository *r,
- 		if (!ds.ambiguous)
- 			ds.fn = NULL;
- 
--		repo_for_each_abbrev(r, ds.hex_pfx, collect_ambiguous, &collect);
-+		repo_for_each_abbrev(r, ds.hex_pfx, algo, collect_ambiguous, &collect);
- 		sort_ambiguous_oid_array(r, &collect);
- 
- 		if (oid_array_for_each(&collect, show_ambiguous_object, &out))
-@@ -610,15 +633,17 @@ static enum get_oid_result get_short_oid(struct repository *r,
++	return 0;
  }
  
- int repo_for_each_abbrev(struct repository *r, const char *prefix,
-+			 const struct git_hash_algo *algo,
- 			 each_abbrev_fn fn, void *cb_data)
+ int convert_object_file(struct strbuf *outbuf,
+diff --git a/object-store-ll.h b/object-store-ll.h
+index 26a3895c821c..bc76d6bec80d 100644
+--- a/object-store-ll.h
++++ b/object-store-ll.h
+@@ -26,6 +26,9 @@ struct object_directory {
+ 	uint32_t loose_objects_subdir_seen[8]; /* 256 bits */
+ 	struct oidtree *loose_objects_cache;
+ 
++	/* Map between object IDs for loose objects. */
++	struct loose_object_map *loose_map;
++
+ 	/*
+ 	 * This is a temporary object store created by the tmp_objdir
+ 	 * facility. Disable ref updates since the objects in the store
+diff --git a/object.c b/object.c
+index 2c61e4c86217..186a0a47c0fb 100644
+--- a/object.c
++++ b/object.c
+@@ -13,6 +13,7 @@
+ #include "alloc.h"
+ #include "packfile.h"
+ #include "commit-graph.h"
++#include "loose.h"
+ 
+ unsigned int get_max_object_index(void)
  {
- 	struct oid_array collect = OID_ARRAY_INIT;
- 	struct disambiguate_state ds;
- 	int ret;
- 
--	if (init_object_disambiguation(r, prefix, strlen(prefix), &ds) < 0)
-+	if (init_object_disambiguation(r, prefix, strlen(prefix), algo, &ds) < 0)
- 		return -1;
- 
-+	ds.bin_pfx.algo = GIT_HASH_UNKNOWN;
- 	ds.always_call_fn = 1;
- 	ds.fn = repo_collect_ambiguous;
- 	ds.cb_data = &collect;
-@@ -787,10 +812,12 @@ void strbuf_add_unique_abbrev(struct strbuf *sb, const struct object_id *oid,
- int repo_find_unique_abbrev_r(struct repository *r, char *hex,
- 			      const struct object_id *oid, int len)
+@@ -540,6 +541,7 @@ void free_object_directory(struct object_directory *odb)
  {
-+	const struct git_hash_algo *algo =
-+		oid->algo ? &hash_algos[oid->algo] : r->hash_algo;
- 	struct disambiguate_state ds;
- 	struct min_abbrev_data mad;
- 	struct object_id oid_ret;
--	const unsigned hexsz = r->hash_algo->hexsz;
-+	const unsigned hexsz = algo->hexsz;
+ 	free(odb->path);
+ 	odb_clear_loose_cache(odb);
++	loose_object_map_clear(&odb->loose_map);
+ 	free(odb);
+ }
  
- 	if (len < 0) {
- 		unsigned long count = repo_approximate_object_count(r);
-@@ -826,7 +853,7 @@ int repo_find_unique_abbrev_r(struct repository *r, char *hex,
+diff --git a/repository.c b/repository.c
+index 80252b79e93e..6214f61cf4e7 100644
+--- a/repository.c
++++ b/repository.c
+@@ -14,6 +14,7 @@
+ #include "read-cache-ll.h"
+ #include "remote.h"
+ #include "setup.h"
++#include "loose.h"
+ #include "submodule-config.h"
+ #include "sparse-index.h"
+ #include "trace2.h"
+@@ -109,6 +110,8 @@ void repo_set_compat_hash_algo(struct repository *repo, int algo)
+ 	if (hash_algo_by_ptr(repo->hash_algo) == algo)
+ 		BUG("hash_algo and compat_hash_algo match");
+ 	repo->compat_hash_algo = algo ? &hash_algos[algo] : NULL;
++	if (repo->compat_hash_algo)
++		repo_read_loose_object_map(repo);
+ }
  
- 	find_abbrev_len_packed(&mad);
+ /*
+@@ -201,6 +204,9 @@ int repo_init(struct repository *repo,
+ 	if (worktree)
+ 		repo_set_worktree(repo, worktree);
  
--	if (init_object_disambiguation(r, hex, mad.cur_len, &ds) < 0)
-+	if (init_object_disambiguation(r, hex, mad.cur_len, algo, &ds) < 0)
- 		return -1;
- 
- 	ds.fn = repo_extend_abbrev_len;
-diff --git a/object-name.h b/object-name.h
-index 9ae522307148..064ddc97d1fe 100644
---- a/object-name.h
-+++ b/object-name.h
-@@ -67,7 +67,8 @@ enum get_oid_result get_oid_with_context(struct repository *repo, const char *st
- 
- 
- typedef int each_abbrev_fn(const struct object_id *oid, void *);
--int repo_for_each_abbrev(struct repository *r, const char *prefix, each_abbrev_fn, void *);
-+int repo_for_each_abbrev(struct repository *r, const char *prefix,
-+			 const struct git_hash_algo *algo, each_abbrev_fn, void *);
- 
- int set_disambiguate_hint_config(const char *var, const char *value);
++	if (repo->compat_hash_algo)
++		repo_read_loose_object_map(repo);
++
+ 	clear_repository_format(&format);
+ 	return 0;
  
 -- 
 2.41.0
