@@ -2,100 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B41AE80A93
-	for <git@archiver.kernel.org>; Wed, 27 Sep 2023 06:33:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C994E810DB
+	for <git@archiver.kernel.org>; Wed, 27 Sep 2023 12:42:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229884AbjI0Gdk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Sep 2023 02:33:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37730 "EHLO
+        id S231705AbjI0Mm3 convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Wed, 27 Sep 2023 08:42:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229807AbjI0Gdg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Sep 2023 02:33:36 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC86D121
-        for <git@vger.kernel.org>; Tue, 26 Sep 2023 23:33:28 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2c17d8745b6so30084871fa.1
-        for <git@vger.kernel.org>; Tue, 26 Sep 2023 23:33:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695796407; x=1696401207; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VQQMXlDIpme0mReUHAG2elCUbq35jax/j5Jkuayug4k=;
-        b=PXqbbINgKF8SJSiKuKqBJkwQLrnKWAqzNf+MVmhJQOP616xQ08jG+Cck7aau0r+zVh
-         ZhzxVHkZCFp4EapSX9M4mr7GjJF7yOwVw1UlR8lNqYQelOCWQoY92+1bFk3JO14D11rM
-         3OXmtWLhOkhNtvF87nREKE141cqQkYzr4lqgA1jNLf05rrzljV8/7WNEvbtiwxCfhPNd
-         ygd41Eo8Z5rtumXj04OEr2AF7bh4cVCWxZdRuz1uj5H3csCYF6dt4AhVYMtwSM2CzEYS
-         4vVhg1vCXQaQFXFoUtMJXZ/pP/N5AgEdK4w26d/pl10eMS1x/gyZb5/7FWhOC4s6RR3w
-         2aVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695796407; x=1696401207;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VQQMXlDIpme0mReUHAG2elCUbq35jax/j5Jkuayug4k=;
-        b=ck+cggWrNe+0ixmdswaFPYxXuUStamaIBajbEsUDKs5eXM+x7AUIwlwJ4iAZ47eVj2
-         IXNtKJebisYWhtaJAk+Rb1+tRkFNfUmzL2H2Sq7W+Lx2dLA4zjO9TOmWn891NfRAjLsn
-         kHpmSOsR3+eE92dj0w3U8vquryEkqAdfI83wPKDHmYzXXy0dXac6GsHp3OPD8BngjjYp
-         j3rieNv8wCz4oQl+7IdeGyNWYXslV4B0pU4hQxj6311z7B1GnMMzuT5KSKjY1lQ1iHMu
-         ccGcdWYMOCGxbR7zFbXBA9u59Ds2hdZdPZYwEgIDsjzT3Q3bEy3kgRp9ywkq0GG7JToc
-         /FCA==
-X-Gm-Message-State: AOJu0Ywn7w84njnO/63H2cW58gXlanp9y/IRP+YhMGIcZs7snvxIleDL
-        M5OTQK4sl90EhKTIF5hf1PK+DK88MEF58ON1cmya315ds80=
-X-Google-Smtp-Source: AGHT+IEwU3+l9CSQ4LRA+8P2oGw5OSsFtdq1jscIcURpX0y6/FpFvk2rIuud7lrq+delCLyYv9AR/TLJ6CKJV++QXk4=
-X-Received: by 2002:ac2:5236:0:b0:4f8:75cf:fdd7 with SMTP id
- i22-20020ac25236000000b004f875cffdd7mr877939lfl.22.1695796406579; Tue, 26 Sep
- 2023 23:33:26 -0700 (PDT)
+        with ESMTP id S231758AbjI0Mm0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Sep 2023 08:42:26 -0400
+Received: from smtp.onerussian.com (washoe.dartmouth.edu [129.170.30.229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CF3013A
+        for <git@vger.kernel.org>; Wed, 27 Sep 2023 05:42:20 -0700 (PDT)
+Received: from c-73-69-87-143.hsd1.nh.comcast.net ([73.69.87.143] helo=localhost)
+        by smtp.onerussian.com with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <yoh@onerussian.com>)
+        id 1qlTru-0006AN-BH; Wed, 27 Sep 2023 08:42:18 -0400
+Date:   Wed, 27 Sep 2023 08:42:17 -0400
+From:   Yaroslav Halchenko <yoh@onerussian.com>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Isaac To <isaac.chun.to@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Message-ID: <ZRQjKYBLwNg42xAd@bilena>
+References: <ZRMLNyHXoWOj6K-l@bilena>
+ <ZRNv-n_VlIDPX0oi@debian.me>
 MIME-Version: 1.0
-References: <CAP8UFD1bsez-eMis5yH7Esds+LkhMnj0qTUMFPL1tRuDv2fiPw@mail.gmail.com>
- <CAMO4yUEws6CmBH+rYynnGGsX067iJRgyQwVxa2b4mkYwnV_u+A@mail.gmail.com>
-In-Reply-To: <CAMO4yUEws6CmBH+rYynnGGsX067iJRgyQwVxa2b4mkYwnV_u+A@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 27 Sep 2023 08:33:13 +0200
-Message-ID: <CAP8UFD1fZk8qMHWfavBpnywQ2LHqJZEz7MuZOXsF37tPifdsQQ@mail.gmail.com>
-Subject: Re: Projects for the next Outreachy round
-To:     Shuqi Liang <cheskaqiqi@gmail.com>
-Cc:     git@vger.kernel.org, Victoria Dye <vdye@github.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Hariom verma <hariom18599@gmail.com>, nasamuffin@google.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8BIT
+In-Reply-To: <ZRNv-n_VlIDPX0oi@debian.me>
+X-URL:  http://www.oneukrainian.com
+X-Image-Url: http://www.oneukrainian.com/img/yoh.png
+X-PGP-Key: http://www.oneukrainian.com/gpg-yoh.asc
+X-fingerprint: C5B9 05F0 E8D9 FD96 68FF  366F A2DE 2350 62DA 33FA
+X-SA-Exim-Connect-IP: 73.69.87.143
+X-SA-Exim-Rcpt-To: bagasdotme@gmail.com, git@vger.kernel.org, isaac.chun.to@gmail.com, gitster@pobox.com
+X-SA-Exim-Mail-From: yoh@onerussian.com
+Subject: Re: git-retry tool or git.retry config (built-in implementation)?
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on smtp.onerussian.com)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Shuqi,
 
-On Wed, Sep 27, 2023 at 5:30=E2=80=AFAM Shuqi Liang <cheskaqiqi@gmail.com> =
-wrote:
+On Wed, 27 Sep 2023, Bagas Sanjaya wrote:
 
-> Hi  Christian,
->
-> I'm afraid I won't have sufficient time to take on the remaining
-> commands in the upcoming school year. I'd like to leave those for other
-> contributors who are interested.
+> On Tue, Sep 26, 2023 at 12:47:51PM -0400, Yaroslav Halchenko wrote:
+> > Dear Git Gurus,
 
-Sure, no worries. As per Victoria's suggestion, I will not propose
-this as a project for the upcoming Outreachy round though.
+> > In DataLad (https://datalad.org) we are doing lots of automated cloning,
+> > fetching etc as part of our CI etc jobs.  Once in a while git operations
+> > fail [see e.g. 1], and beg us to retry but we need to know when to
+> > do so, and not do it upon every failed git invocation since some
+> > failures could be legit (repository is gone). While looking how others
+> > solve it we found
+> > https://stackoverflow.com/questions/35014012/git-retry-if-http-request-failed
+> > which pointed to tools like git-retry and later part of
+> > https://chromium.googlesource.com/infra/infra/+/HEAD/go/src/infra/tools/git/retry_regexp.go
+> > which serve as a collection of regexes to be on lookout for to retry.
 
-> Sorry for not providing more details in my final report. In 2023 ideas[1]
-> git write-tree, git diff-files, git diff-tree, git worktree have all
-> been successfully
-> implemented with sparse index integration.There are some remaining
-> issues in git check-attr related to diffs.[2][3]
->
-> Two other commands on the list are being worked on by Raghul:
-> 'git describe' has been successfully integrated, 'git diff-index'
-> still need more work. The remaining commands on the list have not been
-> started on.
->
-> [1]https://git.github.io/SoC-2023-Ideas/
-> [2]https://lore.kernel.org/git/20230811142211.4547-3-cheskaqiqi@gmail.com=
-/
-> [3]https://cheskaqiqi.github.io/2023/08/20/Week9-10/
+> > Would that be the "best" strategy currently?  
 
-Thanks for this information! The details will be useful to
-contributors interested in this.
+> Looking at the actual git_retry.py script [1], it really just wraps
+> actual Git commands. IMO, git-retry(1) shell script as you mentioned
+> only calls the python version, which adds another level of indirection
+> (why not doing it in pure shell?).
 
-Best,
-Christian.
+My guess would be that it is just easier to code in Python usually for
+such cases with a "registry" of hits etc.  But why not just to strip .py
+from python script which has shebang already and not require bash
+wrapper at all? ;)
+
+> AFAIK, to solve the retrying problem, we need to have a way to tell
+> transport backend (curl/ssh) to resume transfer from the faulty point.
+
+some times it seems not even getting connected (https) entirely and that
+(?) leading to error in the caller above, e.g. from
+https://github.com/datalad/datalad/issues/7485#issuecomment-1735619755
+
+error: Failed to connect to datasets-tests.datalad.org port 443 after 8291 ms: Couldn't connect to server (curl_result = 28, http_code = 0, sha1 = 3980af8de56946a10ff5c48879e5d6025965d936)\nerror: Unable to find 3980af8de56946a10ff5c48879e5d6025965d936 under ...
+
+
+> > As regex matching might eventually break whenever `git` changes
+> > anything in the output messages, I wondered if there could be a more
+> > robust internal implementation in git itself?  Similarly git-annex has
+> > annex.retry config setting which sets the count of retries for
+> > "retriable" operations.  
+
+> Do you use porcelain interfaces instead of plumbing ones?
+
+I would say -- a "mix". 
+
+-- 
+Yaroslav O. Halchenko
+Center for Open Neuroscience     http://centerforopenneuroscience.org
+Dartmouth College, 419 Moore Hall, Hinman Box 6207, Hanover, NH 03755
+WWW:   http://www.linkedin.com/in/yarik        
+
