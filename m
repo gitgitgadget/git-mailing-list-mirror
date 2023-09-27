@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71C14E82CCD
-	for <git@archiver.kernel.org>; Wed, 27 Sep 2023 19:55:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B39D9E82CCE
+	for <git@archiver.kernel.org>; Wed, 27 Sep 2023 19:55:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229736AbjI0Tz6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S229747AbjI0Tz6 (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 27 Sep 2023 15:55:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57692 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229592AbjI0Tzz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Sep 2023 15:55:55 -0400
-Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0257114
-        for <git@vger.kernel.org>; Wed, 27 Sep 2023 12:55:52 -0700 (PDT)
-Received: by mail-io1-xd2a.google.com with SMTP id ca18e2360f4ac-79fb70402a7so294042739f.0
-        for <git@vger.kernel.org>; Wed, 27 Sep 2023 12:55:52 -0700 (PDT)
+        with ESMTP id S229595AbjI0Tz4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Sep 2023 15:55:56 -0400
+Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5917F11F
+        for <git@vger.kernel.org>; Wed, 27 Sep 2023 12:55:54 -0700 (PDT)
+Received: by mail-io1-xd2f.google.com with SMTP id ca18e2360f4ac-79f95cd15dfso382728039f.0
+        for <git@vger.kernel.org>; Wed, 27 Sep 2023 12:55:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695844552; x=1696449352; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1695844553; x=1696449353; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gKRqigMmBJjt+jVVA0IpgumX4pWEUQkfZwHO4CKzSaU=;
-        b=SdAzkteXgf4kb3EYLSAztXqgTenz7Y04NYOk89UHTqvjz1Xyp4pQLGRbEhp5aoCf3o
-         ZJbfcuZURILb5j3Y/d1ZPvZM2900OUwYHaJ8miyaifAbo/2YWjy/3ta+c0EtRBLC45FH
-         akPZODOPAYLx/gOjuz46hqC9rIjLqVkxfbmtNKfFKgskmOaVLFsbFJtgjBYRbQmO3yES
-         elw/ArO4IZ1USy3R0O9ZOK678nwKWJOfzPPqe8IIyMNu244XginrzfljAIy6yFRsr2Ea
-         +Iam2EHQ+bA05hxV7GsKTrWCVjJCT4FUTDzUknsjv+1M5UWhIMlt7tkrpieXhzp2nqZU
-         ndew==
+        bh=sXaGbPC9QegDS+5xxfdJtEA4+TpWeLkpFBb18S/QmhA=;
+        b=IvS8KVryFHvbdOB28DrOPjDX3mxTKDzM0jj166yGoU9XxshDEtLxFdWVadr+IbeHO1
+         Wn6aG+kEuPE4cTPSgnvqSUBSg8n/3PDl6+VL/0NJ/TZvVWI92PQDfk2o44Xnpl/KLjzX
+         rvmgbqEhXkiCNOhjqOBrSUMqXlEnKzeEn2pKy33J+FwPweYYeckM03zeRTxxTWClClV5
+         DO+lNtELRoahr0OT8AXEkt0qxD4kddaAz/o3QCtYLePFKViNd9pEPiNmPEL0saAJ8LBg
+         BZarijM20a4AUtuNi0oR0w6elHPEUjCUEsThK1vzEb9JIgwXjO6oZQaJh7iPLWzJ/iyK
+         JEiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695844552; x=1696449352;
+        d=1e100.net; s=20230601; t=1695844553; x=1696449353;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=gKRqigMmBJjt+jVVA0IpgumX4pWEUQkfZwHO4CKzSaU=;
-        b=kr/ClcDMIEPTztbPIlvIuu3mIntFA21RE9Y6vNItXLRPXJdwlwRQJljpBnnu2RTkhZ
-         bkIBr8xIwqA9bJXBlQNNzigPQCNZMZN8j4058M6CQAnCnWhg4unfdD1niil8tE3sEQUd
-         QYRwf4jWTwQZmjD1LOWn+0x1vgyYEYz1MMofq62hT6KQD8lhmKDQRSdy/xFPUrleL9Hh
-         6Hq0Z1k/Vu189VlgWUpQJR3cUZeOGIqf4EbUBZ3rW1TDfN/1kk1xd2ICJGl0SRoM3UtP
-         1YCng0vfLFQ4emzld7hSm9ePsxUYPBCEG4SybEhGBUYqrwUOJsmnDPFbQFtUGkKNEp3j
-         NA+A==
-X-Gm-Message-State: AOJu0YwjhEafA9D1aPeepTw75WZWndaUKiGT2kjaMUYMsZXFL/g0oETV
-        preW9sH6iuHckXqbhqopUV4=
-X-Google-Smtp-Source: AGHT+IFeS2lbywd2eWZoIlw8tJnWosFjWhuwGNOTsS9MenJFgHMpv5VfqZoLuypLm+WlXJOpxoysvg==
-X-Received: by 2002:a6b:ea0a:0:b0:79f:9574:b93c with SMTP id m10-20020a6bea0a000000b0079f9574b93cmr2949717ioc.0.1695844552031;
-        Wed, 27 Sep 2023 12:55:52 -0700 (PDT)
+        bh=sXaGbPC9QegDS+5xxfdJtEA4+TpWeLkpFBb18S/QmhA=;
+        b=a//s2YdAHCzVBG6TAIMXIhA4DUzUDc5cQzIUKrrvJ9uqaH80b4O4pkszXx2TjyuO2Y
+         p0MTiz6Ptdnuu1lIaIy150vTE9Y8s8lbU7FWb9Y1crZbstj1KOA912Cm9oLXrctY49wR
+         na5gCn4j3OCeVnjI05I4OY6i9Z5XQbjMlSm4YxCpBWU65zHEHiWvFjMk0XDjEvST+6p/
+         ffw0ju+fiH/HEHnKg7lhcs/WJ/BJU5AnK01u1dqIxphIWW63DYXgQMABSRzf+dvpoFxm
+         QCn8KzuDV7GmQRs7KD3AORbhg9FwK7EJJNheiVHJwyJmZZNr8e+OZPHHvm4UK/BTiBm+
+         7OmA==
+X-Gm-Message-State: AOJu0Yzs4jpLYYuJDBlC0wnP8gEuwg9zj68BtTM4WgVCcJlhpSRLvaVh
+        KaYRTE1Kyk9FVj4JC68pCEM/+DgFLYZdLw==
+X-Google-Smtp-Source: AGHT+IGYkugShUH6OcuzqyfbNmSKCnPslRTRvynNdT7dgFX/DFAZh50njCQ7SUNCdBzoNnVCj1hvOA==
+X-Received: by 2002:a5e:8705:0:b0:79f:a25b:51c with SMTP id y5-20020a5e8705000000b0079fa25b051cmr3394919ioj.11.1695844553672;
+        Wed, 27 Sep 2023 12:55:53 -0700 (PDT)
 Received: from localhost.localdomain (ip68-227-168-167.om.om.cox.net. [68.227.168.167])
-        by smtp.gmail.com with ESMTPSA id o23-20020a6b5a17000000b007836c7e8dccsm2935628iob.17.2023.09.27.12.55.51
+        by smtp.gmail.com with ESMTPSA id o23-20020a6b5a17000000b007836c7e8dccsm2935628iob.17.2023.09.27.12.55.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Sep 2023 12:55:51 -0700 (PDT)
+        Wed, 27 Sep 2023 12:55:53 -0700 (PDT)
 From:   "Eric W. Biederman" <ebiederm@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
         "Eric W. Biederman" <ebiederm@xmission.com>
-Subject: [PATCH 02/30] oid-array: Teach oid-array to handle multiple kinds of oids
-Date:   Wed, 27 Sep 2023 14:55:09 -0500
-Message-Id: <20230927195537.1682-2-ebiederm@gmail.com>
+Subject: [PATCH 04/30] repository: add a compatibility hash algorithm
+Date:   Wed, 27 Sep 2023 14:55:11 -0500
+Message-Id: <20230927195537.1682-4-ebiederm@gmail.com>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <87jzsbjt0a.fsf@gmail.froward.int.ebiederm.org>
 References: <87jzsbjt0a.fsf@gmail.froward.int.ebiederm.org>
@@ -68,52 +68,100 @@ X-Mailing-List: git@vger.kernel.org
 
 From: "Eric W. Biederman" <ebiederm@xmission.com>
 
-While looking at how to handle input of both SHA-1 and SHA-256 oids in
-get_oid_with_context, I realized that the oid_array in
-repo_for_each_abbrev might have more than one kind of oid stored in it
-simulataneously.
+We currently have support for using a full stage 4 SHA-256
+implementation.  However, we'd like to support interoperability with
+SHA-1 repositories as well.  The transition plan anticipates a
+compatibility hash algorithm configuration option that we can use to
+implement support for this.  Let's add an element to the repository
+structure that indicates the compatibility hash algorithm so we can use
+it when we need to consider interoperability between algorithms.
 
-Update to oid_array_append to ensure that oids added to an oid array
-always have an algorithm set.
+Add a helper function repo_set_compat_hash_algo that takes a
+compatibility hash algorithm and sets "repo->compat_hash_algo".  If
+GIT_HASH_UNKNOWN is passed as the compatibilty hash algorithm
+"repo->compat_hash_algo" is set to NULL.
 
-Update void_hashcmp to first verify two oids use the same hash algorithm
-before comparing them to each other.
+For now, the code always results in "repo->compat_hash_algo" always
+being set to NULL, but that will change once a configuration option
+is added.
 
-With that oid-array should be safe to use with differnt kinds of
-oids simultaneously.
-
-Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
+Inspired-by: brian m. carlson <sandals@crustytoothpaste.net>
+Signed-off-by: Eric W. Biederman <ebiederm@xmission.com>
 ---
- oid-array.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ repository.c | 8 ++++++++
+ repository.h | 4 ++++
+ setup.c      | 3 +++
+ 3 files changed, 15 insertions(+)
 
-diff --git a/oid-array.c b/oid-array.c
-index 8e4717746c31..1f36651754ed 100644
---- a/oid-array.c
-+++ b/oid-array.c
-@@ -6,12 +6,20 @@ void oid_array_append(struct oid_array *array, const struct object_id *oid)
- {
- 	ALLOC_GROW(array->oid, array->nr + 1, array->alloc);
- 	oidcpy(&array->oid[array->nr++], oid);
-+	if (!oid->algo)
-+		oid_set_algo(&array->oid[array->nr - 1], the_hash_algo);
- 	array->sorted = 0;
+diff --git a/repository.c b/repository.c
+index a7679ceeaa45..80252b79e93e 100644
+--- a/repository.c
++++ b/repository.c
+@@ -104,6 +104,13 @@ void repo_set_hash_algo(struct repository *repo, int hash_algo)
+ 	repo->hash_algo = &hash_algos[hash_algo];
  }
  
--static int void_hashcmp(const void *a, const void *b)
-+static int void_hashcmp(const void *va, const void *vb)
- {
--	return oidcmp(a, b);
-+	const struct object_id *a = va, *b = vb;
-+	int ret;
-+	if (a->algo == b->algo)
-+		ret = oidcmp(a, b);
-+	else
-+		ret = a->algo > b->algo ? 1 : -1;
-+	return ret;
- }
++void repo_set_compat_hash_algo(struct repository *repo, int algo)
++{
++	if (hash_algo_by_ptr(repo->hash_algo) == algo)
++		BUG("hash_algo and compat_hash_algo match");
++	repo->compat_hash_algo = algo ? &hash_algos[algo] : NULL;
++}
++
+ /*
+  * Attempt to resolve and set the provided 'gitdir' for repository 'repo'.
+  * Return 0 upon success and a non-zero value upon failure.
+@@ -184,6 +191,7 @@ int repo_init(struct repository *repo,
+ 		goto error;
  
- void oid_array_sort(struct oid_array *array)
+ 	repo_set_hash_algo(repo, format.hash_algo);
++	repo_set_compat_hash_algo(repo, GIT_HASH_UNKNOWN);
+ 	repo->repository_format_worktree_config = format.worktree_config;
+ 
+ 	/* take ownership of format.partial_clone */
+diff --git a/repository.h b/repository.h
+index 5f18486f6465..bf3fc601cc53 100644
+--- a/repository.h
++++ b/repository.h
+@@ -160,6 +160,9 @@ struct repository {
+ 	/* Repository's current hash algorithm, as serialized on disk. */
+ 	const struct git_hash_algo *hash_algo;
+ 
++	/* Repository's compatibility hash algorithm. */
++	const struct git_hash_algo *compat_hash_algo;
++
+ 	/* A unique-id for tracing purposes. */
+ 	int trace2_repo_id;
+ 
+@@ -199,6 +202,7 @@ void repo_set_gitdir(struct repository *repo, const char *root,
+ 		     const struct set_gitdir_args *extra_args);
+ void repo_set_worktree(struct repository *repo, const char *path);
+ void repo_set_hash_algo(struct repository *repo, int algo);
++void repo_set_compat_hash_algo(struct repository *repo, int compat_algo);
+ void initialize_the_repository(void);
+ RESULT_MUST_BE_USED
+ int repo_init(struct repository *r, const char *gitdir, const char *worktree);
+diff --git a/setup.c b/setup.c
+index ef9f79b8885e..deb5a33fe9e1 100644
+--- a/setup.c
++++ b/setup.c
+@@ -1572,6 +1572,8 @@ const char *setup_git_directory_gently(int *nongit_ok)
+ 		}
+ 		if (startup_info->have_repository) {
+ 			repo_set_hash_algo(the_repository, repo_fmt.hash_algo);
++			repo_set_compat_hash_algo(the_repository,
++						  GIT_HASH_UNKNOWN);
+ 			the_repository->repository_format_worktree_config =
+ 				repo_fmt.worktree_config;
+ 			/* take ownership of repo_fmt.partial_clone */
+@@ -1665,6 +1667,7 @@ void check_repository_format(struct repository_format *fmt)
+ 	check_repository_format_gently(get_git_dir(), fmt, NULL);
+ 	startup_info->have_repository = 1;
+ 	repo_set_hash_algo(the_repository, fmt->hash_algo);
++	repo_set_compat_hash_algo(the_repository, GIT_HASH_UNKNOWN);
+ 	the_repository->repository_format_worktree_config =
+ 		fmt->worktree_config;
+ 	the_repository->repository_format_partial_clone =
 -- 
 2.41.0
 
