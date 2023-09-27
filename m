@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 56167E82CCC
-	for <git@archiver.kernel.org>; Wed, 27 Sep 2023 19:56:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CFB8DE82CCE
+	for <git@archiver.kernel.org>; Wed, 27 Sep 2023 19:56:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229847AbjI0T4h (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Sep 2023 15:56:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35876 "EHLO
+        id S229938AbjI0T4j (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Sep 2023 15:56:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229831AbjI0T4R (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Sep 2023 15:56:17 -0400
+        with ESMTP id S229842AbjI0T4S (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Sep 2023 15:56:18 -0400
 Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C8271BB
-        for <git@vger.kernel.org>; Wed, 27 Sep 2023 12:56:04 -0700 (PDT)
-Received: by mail-io1-xd2a.google.com with SMTP id ca18e2360f4ac-79faba5fe12so325523239f.3
-        for <git@vger.kernel.org>; Wed, 27 Sep 2023 12:56:04 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48E55CC7
+        for <git@vger.kernel.org>; Wed, 27 Sep 2023 12:56:05 -0700 (PDT)
+Received: by mail-io1-xd2a.google.com with SMTP id ca18e2360f4ac-79fa425855cso347637739f.2
+        for <git@vger.kernel.org>; Wed, 27 Sep 2023 12:56:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1695844564; x=1696449364; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=LVMkft9MkWAd0VHZsoOdepZnaQ7p0NDdLzvbL/PLqXc=;
-        b=QZbZ2yDCUCoz73IL5BarJpQbDfM9u8/rtmpQIxLZqhfG4A79AbzF3FxwGKt0UsqwYr
-         dIESJyP/lGIowvIL6dOc1OSjoLz5NvYms31v0v3HZPpipHVWutzm63f9lz4LE9ppwvpH
-         qmDZduVXJApH3NdQTxOC3z1+fU2bPW2HYUt3vg1lEU6mMgxL5Ot62s/HZRZgfZdDdl9h
-         doMMCNIWosqHck3/Azv2r4QKfXKg00QJ20WNXE/rsw/7eyXSFPKse5nF23yxdnfWJv6h
-         iPeCaMPkwjQaIOEJxhkMimOiuLxQlboEqbmJoAcyu/1B7TreNlYLxh3k47Mlaec1qPcv
-         dGdA==
+        bh=bhSn7P7v6ympvS94OsSp5itQ+Qg0o5Mo0tjhO0FEJvw=;
+        b=HuZstK91NMmVGB2CG1oMa/6BAC2Ug8cOXmL09RsEzRu3R56R2GqnFORm+Bxl13GMER
+         cmDmdAhWAGnsc/ttdNUBkbZdw5earXjvF1qozPf0/QpvNQNL5GGt51177iAPNlcknqPH
+         KXLVtVG+8Hu6sjPuf8LKPljGghmF326beLgGXMNkLbMC61FFKACiY2HugcCYTyVoejzS
+         Jl6CylbjHU5+3SxlwfibQQMrLs/uwuiGJwvbyOPPeilbnAH/Vsr9R0HpCFt6Ka6ikpFo
+         WFULZgErwigkJiMqY9eS51ysd2BjoVDHtpsv3dTE9kiSnF+b2QE9MZgS69wonehvzlLI
+         jp1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1695844564; x=1696449364;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=LVMkft9MkWAd0VHZsoOdepZnaQ7p0NDdLzvbL/PLqXc=;
-        b=wU6/4aBJgl2yBDsR0Q3o3CMBxd6GWVXjd46nRo1sWCQUy623SCEUGsT7dRXcjHMopJ
-         MNvdQh5VHlEvo8LDs2pE9a4iy9zRB64q0OZzVehwGKKiCiud1kr9i24ps+t/sRowHltK
-         ykHePSPv6zEvlwLlw3QRXBXySyK5a6EwnPi9qDS8PbarMEKDjpmiSn1e6sTLDxSYIcVs
-         vr1RTBjR7ZMthZd0dA73qxGxteCWrW+bROHixygJgMjl8a1LzY9T3xPludQIwbfXX6bG
-         lh2epoo4u+nTPeCTRt/DoHSG/6NVu4LSSMKO3qVeCf3wdAJhIrsPWZ0hQugXZOowzuMR
-         cWhw==
-X-Gm-Message-State: AOJu0YwI59PhX3yQZ9h10fae7nlSyIktoaxJl/iIdfqHdD/RlBDehOyA
-        r090/bv/+9Vn6itiJFsgjRk=
-X-Google-Smtp-Source: AGHT+IHXPI3jbS0CLal6t5sXxErHbsNbhv6v1hlZsvA8fl0euiGUQXyqtktofb7rjr9KnhYaaIBJCw==
-X-Received: by 2002:a6b:cf10:0:b0:790:6629:b222 with SMTP id o16-20020a6bcf10000000b007906629b222mr2696930ioa.5.1695844563891;
-        Wed, 27 Sep 2023 12:56:03 -0700 (PDT)
+        bh=bhSn7P7v6ympvS94OsSp5itQ+Qg0o5Mo0tjhO0FEJvw=;
+        b=f/2jhy8ZW+agqPTHJrfy0B4GhKjfG9wcFkcZM0nBc3TezvLegv0Os3F2adguW/axJu
+         772BD+yGy+Wok8IycmavklFXAeqbaZb4ZAQJZUJA5eHg3f4qoz7eFbKdtgPJ6K71l1SF
+         37cZ7jSg+AFFWs40eVz8reTk3wgf8S47TYKi+CissSd78qxMeo4QQZifQsCh2uY3U8qk
+         mFmfvi2/daj7nVm+OGctbobo9ZivD/X9qMGSfJZVSATBNthFE5aWKU5GbIQnAbgjq2NK
+         H+ILJz8NY9v1OqtIYAkjq09aAa+XpvV389JTr+DzyuCdp8RwQ2QQHdpEIS9VsnkXWj4r
+         slNQ==
+X-Gm-Message-State: AOJu0YyAmTAUITiVr6BGTzAGDEvEIM4yuO1ruAHrE7NzhBfHeyCNiyj1
+        kpIhUDwHfSvN4XC//1ldt4nYToKcxHU=
+X-Google-Smtp-Source: AGHT+IEf1cCnoOZ+2HhXUsSxk1Ja2qcS4BWUYFM2AeqSHgmwpOJ/zm5W5coK3BgRtC8FgB30elQKNA==
+X-Received: by 2002:a6b:fe14:0:b0:787:4b5f:b6cf with SMTP id x20-20020a6bfe14000000b007874b5fb6cfmr3115877ioh.5.1695844564559;
+        Wed, 27 Sep 2023 12:56:04 -0700 (PDT)
 Received: from localhost.localdomain (ip68-227-168-167.om.om.cox.net. [68.227.168.167])
         by smtp.gmail.com with ESMTPSA id o23-20020a6b5a17000000b007836c7e8dccsm2935628iob.17.2023.09.27.12.56.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Sep 2023 12:56:03 -0700 (PDT)
+        Wed, 27 Sep 2023 12:56:04 -0700 (PDT)
 From:   "Eric W. Biederman" <ebiederm@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Eric W . Biederman" <ebiederm@xmission.com>
-Subject: [PATCH 18/30] object-file-convert: convert commit objects when writing
-Date:   Wed, 27 Sep 2023 14:55:25 -0500
-Message-Id: <20230927195537.1682-18-ebiederm@gmail.com>
+        "Eric W. Biederman" <ebiederm@xmission.com>
+Subject: [PATCH 19/30] object-file-convert: Convert commits that embed signed tags
+Date:   Wed, 27 Sep 2023 14:55:26 -0500
+Message-Id: <20230927195537.1682-19-ebiederm@gmail.com>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <87jzsbjt0a.fsf@gmail.froward.int.ebiederm.org>
 References: <87jzsbjt0a.fsf@gmail.froward.int.ebiederm.org>
@@ -66,94 +66,154 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
+From: "Eric W. Biederman" <ebiederm@xmission.com>
 
-When writing a commit object in a repository with both SHA-1 and
-SHA-256, we'll need to convert our commit objects so that we can write
-the hash values for both into the repository.  To do so, let's add a
-function to convert commit objects.
+As mentioned in the hash function transition plan commit mergetag
+lines need to be handled.  The commit mergetag lines embed an entire
+tag object in a commit object.
 
-Read the commit object and map the tree value and any of the parent
-values, and copy the rest of the commit through unmodified.  Note that
-we don't need to modify the signature headers, because they are the
-same under both algorithms.
+Keep the implementation sane if not fast by unembedding the tag
+object, converting the tag object, and embedding the new tag object,
+in the new commit object.
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+In the long run I don't expect any other approach is maintainable, as
+tag objects may be extended in ways that require additional
+translation.
+
+To keep the implementation of convert_commit_object maintainable I
+have modified convert_commit_object to process the lines in any order,
+and to fail on unknown lines.  We can't know ahead of time if a new
+line might embed something that needs translation or not so it is
+better to fail and require the code to be updated instead of silently
+mistranslating objects.
+
 Signed-off-by: Eric W. Biederman <ebiederm@xmission.com>
 ---
- object-file-convert.c | 46 ++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 45 insertions(+), 1 deletion(-)
+ object-file-convert.c | 104 +++++++++++++++++++++++++++++++++---------
+ 1 file changed, 82 insertions(+), 22 deletions(-)
 
 diff --git a/object-file-convert.c b/object-file-convert.c
-index 822be9d0fdb8..f53e14e5a170 100644
+index f53e14e5a170..8ede9889a7ab 100644
 --- a/object-file-convert.c
 +++ b/object-file-convert.c
-@@ -136,6 +136,48 @@ static int convert_tag_object(struct strbuf *out,
+@@ -146,35 +146,95 @@ static int convert_commit_object(struct strbuf *out,
+ 	const int tree_entry_len = from->hexsz + 5;
+ 	const int parent_entry_len = from->hexsz + 7;
+ 	struct object_id oid, mapped_oid;
+-	const char *p;
++	const char *p, *eol;
+ 
+ 	tail += size;
+-	if (tail <= bufptr + tree_entry_len + 1 || memcmp(bufptr, "tree ", 5) ||
+-			bufptr[tree_entry_len] != '\n')
+-		return error("bogus commit object");
+-	if (parse_oid_hex_algop(bufptr + 5, &oid, &p, from) < 0)
+-		return error("bad tree pointer");
+ 
+-	if (repo_oid_to_algop(the_repository, &oid, to, &mapped_oid))
+-		return error("unable to map tree %s in commit object",
+-			     oid_to_hex(&oid));
+-	strbuf_addf(out, "tree %s\n", oid_to_hex(&mapped_oid));
+-	bufptr = p + 1;
++	while ((bufptr < tail) && (*bufptr != '\n')) {
++		eol = memchr(bufptr, '\n', tail - bufptr);
++		if (!eol)
++			return error(_("bad %s in commit"), "line");
++
++		if (((bufptr + 5) < eol) && !memcmp(bufptr, "tree ", 5))
++		{
++			if (((bufptr + tree_entry_len) != eol) ||
++			    parse_oid_hex_algop(bufptr + 5, &oid, &p, from) ||
++			    (p != eol))
++				return error(_("bad %s in commit"), "tree");
++
++			if (repo_oid_to_algop(the_repository, &oid, to, &mapped_oid))
++				return error(_("unable to map %s %s in commit object"),
++					     "tree", oid_to_hex(&oid));
++			strbuf_addf(out, "tree %s\n", oid_to_hex(&mapped_oid));
++		}
++		else if (((bufptr + 7) < eol) && !memcmp(bufptr, "parent ", 7))
++		{
++			if (((bufptr + parent_entry_len) != eol) ||
++			    parse_oid_hex_algop(bufptr + 7, &oid, &p, from) ||
++			    (p != eol))
++				return error(_("bad %s in commit"), "parent");
+ 
+-	while (bufptr + parent_entry_len < tail && !memcmp(bufptr, "parent ", 7)) {
+-		if (tail <= bufptr + parent_entry_len + 1 ||
+-		    parse_oid_hex_algop(bufptr + 7, &oid, &p, from) ||
+-		    *p != '\n')
+-			return error("bad parents in commit");
++			if (repo_oid_to_algop(the_repository, &oid, to, &mapped_oid))
++				return error(_("unable to map %s %s in commit object"),
++					     "parent", oid_to_hex(&oid));
+ 
+-		if (repo_oid_to_algop(the_repository, &oid, to, &mapped_oid))
+-			return error("unable to map parent %s in commit object",
+-				     oid_to_hex(&oid));
++			strbuf_addf(out, "parent %s\n", oid_to_hex(&mapped_oid));
++		}
++		else if (((bufptr + 9) < eol) && !memcmp(bufptr, "mergetag ", 9))
++		{
++			struct strbuf tag = STRBUF_INIT, new_tag = STRBUF_INIT;
+ 
+-		strbuf_addf(out, "parent %s\n", oid_to_hex(&mapped_oid));
+-		bufptr = p + 1;
++			/* Recover the tag object from the mergetag */
++			strbuf_add(&tag, bufptr + 9, (eol - (bufptr + 9)) + 1);
++
++			bufptr = eol + 1;
++			while ((bufptr < tail) && (*bufptr == ' ')) {
++				eol = memchr(bufptr, '\n', tail - bufptr);
++				if (!eol) {
++					strbuf_release(&tag);
++					return error(_("bad %s in commit"), "mergetag continuation");
++				}
++				strbuf_add(&tag, bufptr + 1, (eol - (bufptr + 1)) + 1);
++				bufptr = eol + 1;
++			}
++
++			/* Compute the new tag object */
++			if (convert_tag_object(&new_tag, from, to, tag.buf, tag.len)) {
++				strbuf_release(&tag);
++				strbuf_release(&new_tag);
++				return -1;
++			}
++
++			/* Write the new mergetag */
++			strbuf_addstr(out, "mergetag");
++			strbuf_add_lines(out, " ", new_tag.buf, new_tag.len);
++			strbuf_release(&tag);
++			strbuf_release(&new_tag);
++		}
++		else if (((bufptr + 7) < tail) && !memcmp(bufptr, "author ", 7))
++			strbuf_add(out, bufptr, (eol - bufptr) + 1);
++		else if (((bufptr + 10) < tail) && !memcmp(bufptr, "committer ", 10))
++			strbuf_add(out, bufptr, (eol - bufptr) + 1);
++		else if (((bufptr + 9) < tail) && !memcmp(bufptr, "encoding ", 9))
++			strbuf_add(out, bufptr, (eol - bufptr) + 1);
++		else if (((bufptr + 6) < tail) && !memcmp(bufptr, "gpgsig", 6))
++			strbuf_add(out, bufptr, (eol - bufptr) + 1);
++		else {
++			/* Unknown line fail it might embed an oid */
++			return -1;
++		}
++		/* Consume any trailing continuation lines */
++		bufptr = eol + 1;
++		while ((bufptr < tail) && (*bufptr == ' ')) {
++			eol = memchr(bufptr, '\n', tail - bufptr);
++			if (!eol)
++				return error(_("bad %s in commit"), "continuation");
++			strbuf_add(out, bufptr, (eol - bufptr) + 1);
++			bufptr = eol + 1;
++		}
+ 	}
+-	strbuf_add(out, bufptr, tail - bufptr);
++	if (bufptr < tail)
++		strbuf_add(out, bufptr, tail - bufptr);
  	return 0;
  }
  
-+static int convert_commit_object(struct strbuf *out,
-+				 const struct git_hash_algo *from,
-+				 const struct git_hash_algo *to,
-+				 const char *buffer, size_t size)
-+{
-+	const char *tail = buffer;
-+	const char *bufptr = buffer;
-+	const int tree_entry_len = from->hexsz + 5;
-+	const int parent_entry_len = from->hexsz + 7;
-+	struct object_id oid, mapped_oid;
-+	const char *p;
-+
-+	tail += size;
-+	if (tail <= bufptr + tree_entry_len + 1 || memcmp(bufptr, "tree ", 5) ||
-+			bufptr[tree_entry_len] != '\n')
-+		return error("bogus commit object");
-+	if (parse_oid_hex_algop(bufptr + 5, &oid, &p, from) < 0)
-+		return error("bad tree pointer");
-+
-+	if (repo_oid_to_algop(the_repository, &oid, to, &mapped_oid))
-+		return error("unable to map tree %s in commit object",
-+			     oid_to_hex(&oid));
-+	strbuf_addf(out, "tree %s\n", oid_to_hex(&mapped_oid));
-+	bufptr = p + 1;
-+
-+	while (bufptr + parent_entry_len < tail && !memcmp(bufptr, "parent ", 7)) {
-+		if (tail <= bufptr + parent_entry_len + 1 ||
-+		    parse_oid_hex_algop(bufptr + 7, &oid, &p, from) ||
-+		    *p != '\n')
-+			return error("bad parents in commit");
-+
-+		if (repo_oid_to_algop(the_repository, &oid, to, &mapped_oid))
-+			return error("unable to map parent %s in commit object",
-+				     oid_to_hex(&oid));
-+
-+		strbuf_addf(out, "parent %s\n", oid_to_hex(&mapped_oid));
-+		bufptr = p + 1;
-+	}
-+	strbuf_add(out, bufptr, tail - bufptr);
-+	return 0;
-+}
-+
- int convert_object_file(struct strbuf *outbuf,
- 			const struct git_hash_algo *from,
- 			const struct git_hash_algo *to,
-@@ -150,13 +192,15 @@ int convert_object_file(struct strbuf *outbuf,
- 		die("Refusing noop object file conversion");
- 
- 	switch (type) {
-+	case OBJ_COMMIT:
-+		ret = convert_commit_object(outbuf, from, to, buf, len);
-+		break;
- 	case OBJ_TREE:
- 		ret = convert_tree_object(outbuf, from, to, buf, len);
- 		break;
- 	case OBJ_TAG:
- 		ret = convert_tag_object(outbuf, from, to, buf, len);
- 		break;
--	case OBJ_COMMIT:
- 	default:
- 		/* Not implemented yet, so fail. */
- 		ret = -1;
 -- 
 2.41.0
 
