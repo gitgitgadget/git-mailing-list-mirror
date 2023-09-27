@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2576EE82CCD
-	for <git@archiver.kernel.org>; Wed, 27 Sep 2023 19:56:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3540E82CCE
+	for <git@archiver.kernel.org>; Wed, 27 Sep 2023 19:56:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229800AbjI0T4P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Sep 2023 15:56:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50360 "EHLO
+        id S229770AbjI0T4V (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Sep 2023 15:56:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229802AbjI0T4H (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229807AbjI0T4H (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 27 Sep 2023 15:56:07 -0400
-Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72560194
-        for <git@vger.kernel.org>; Wed, 27 Sep 2023 12:56:00 -0700 (PDT)
-Received: by mail-io1-xd33.google.com with SMTP id ca18e2360f4ac-79f9acc857cso368633339f.2
-        for <git@vger.kernel.org>; Wed, 27 Sep 2023 12:56:00 -0700 (PDT)
+Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09F651A8
+        for <git@vger.kernel.org>; Wed, 27 Sep 2023 12:56:01 -0700 (PDT)
+Received: by mail-io1-xd2e.google.com with SMTP id ca18e2360f4ac-79fa5d9f3a2so345792439f.3
+        for <git@vger.kernel.org>; Wed, 27 Sep 2023 12:56:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695844560; x=1696449360; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1695844561; x=1696449361; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WkhLsqo78Srsesp5Qst5wXtDzgDVzwUYy+O/4Wvj/rI=;
-        b=MucLKlWE9wzdmO/8g1QmHYK5EHCAixSH+RqGehUzcRNAk+ARTXRpIzw2dRXRoBXgGY
-         6PzzN/GmDAnE3fkjvsQBy0NzrmnLyY6t9FC9BDHk6FWtz4o0kNd8siXxfo/3HTFBSZDF
-         wrGgz944YHVI6/Kr2oVNBWTKfnNZqKub/G3TDFI7XecNuDxf7QN4G3f3ZSg46G7AUjWe
-         ArKaOaYsnMkoYEtW5ydTaBV6S97QP69YYviy3mCWgdOPtHofIUc8tvnV82CEv52G/gvp
-         HuQL+u3oYtLpxBIOnfoUHOTUTy7LukMGKWLNm80H3US1B0zKPZ6aYmeIBiphWHDiF466
-         bkPA==
+        bh=FkazeKVM1RtP9Z70mx3eJTcTbac/plstEPcnoAezcv4=;
+        b=CqNlzW8ZWz3V+7uyb9MjjtFfIUIBy8gVyc5QIofae8VHUNVS+MN8lJzyZFj8yCkoT2
+         iDdz8Zd5dZUAMNhKKiuuM+lG5YkC/deIcpEZIZzNrSl+ElksIYBmjsS1LRh0Fugofrtn
+         OeQ54NtYAG5Dpa01wIeOMxqnNP30TEO2xAvq2tMlWKwAW1BQ0qwXyv/E5+lSQCeWTVET
+         NekitbqY6zGI1wPaBF+taE3NbkCRVQ5E2QxazNG+/lXy1o/T9kcmKKdwBUEGHSnrdJEp
+         ci6XWy6wN26yBKWuy6UZwkxNcMAGrx8DbqM4lNvGVkyiqKREcP2emuY4DP+Xa8elf2Fm
+         317A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695844560; x=1696449360;
+        d=1e100.net; s=20230601; t=1695844561; x=1696449361;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WkhLsqo78Srsesp5Qst5wXtDzgDVzwUYy+O/4Wvj/rI=;
-        b=PMPHcfahLq1MYeY2DigsqT1Q8fG5yIFyi5A60LzM9P7g6Q1o15Uw90Ikox4xs1uu+8
-         71kqsNNHV+U6/5LVt7SdJXsuyFY7K3ueUBPOE1lT1Z7JDOx7e3IE8ukXuSsmZNJC647E
-         iw8rNMQ8u0T4nveVc5fOEoU9UAHwFVa0R8HrtxYHTDVaRHgI8LVAMtmzHTlSo8oyfjod
-         J/hVoPtWV5JE7kxMpsuyr9JOy0GhBamHPyuXUPOllsC7VpzZgx1byVq2k10M/Nw2BCK7
-         YUDwAnWNE4Cszi+y6E5csEnoT4rApiOqNODHjH5OrRqJqekeO7MwJWrpmXrE1NcB4iN1
-         0gbQ==
-X-Gm-Message-State: AOJu0YwTq1hO9+XB1HoLBbExyeWYck651A62wmRMy5iB+aPmFbjdbPWg
-        w5y2JUbxjc5Evjop8InB9wk=
-X-Google-Smtp-Source: AGHT+IFnu5LD9rgA6y3mSKl/XdJ8FdaKzOEDT1sv7Sl8R/RQ7zTP+o5ngjJEQlWFDzOaYU+E4dwGVA==
-X-Received: by 2002:a6b:4902:0:b0:780:d76c:b640 with SMTP id u2-20020a6b4902000000b00780d76cb640mr2966545iob.9.1695844559802;
-        Wed, 27 Sep 2023 12:55:59 -0700 (PDT)
+        bh=FkazeKVM1RtP9Z70mx3eJTcTbac/plstEPcnoAezcv4=;
+        b=fd5eEB7knNo/clvZcArIkTOAFq5WMTXZ7HXcmn6Z34GwHl72z0S9XI2NR1+U73gvWy
+         m+72u3wIvRjW1NvR5fg6BBPitM+Mgc8PCr9z9rcqP3h5F4JZuSbewhDrRTtk33COM4he
+         AQ/N+wLwTGN85/ty9c0Z3bgRvkRdc9Mptugbgs6gBGWILa2GsFFGgW1qT6TsP7EM7m5I
+         ltcgqz5/4nIs77X3iviRamXdRwVaRvCZPITykoqgV80mIpbv688SqPHjYUeSEdHxyGXY
+         8kmTfiM+SlOzI/HIMt3ZDli88ksBfJAh5GWRM2BDas9KAvef2NQNHR7OZwMHSgZW7wbQ
+         nArg==
+X-Gm-Message-State: AOJu0YyOVVkyHyRmShSgYs46p5H6QG2WPZR2ymSGPtNF0CUcBAFNj2FQ
+        S1MteQm5dOluWpWknk6mmYY=
+X-Google-Smtp-Source: AGHT+IE7J/P/XkNeI/Xa6OOD8qbn/3pl5ygyfNPL9ZNV1vDBKQKOyd4MygSxmB4mY0uFSEiBZb6NtQ==
+X-Received: by 2002:a6b:fe14:0:b0:787:4b5f:b6cf with SMTP id x20-20020a6bfe14000000b007874b5fb6cfmr3115763ioh.5.1695844561172;
+        Wed, 27 Sep 2023 12:56:01 -0700 (PDT)
 Received: from localhost.localdomain (ip68-227-168-167.om.om.cox.net. [68.227.168.167])
-        by smtp.gmail.com with ESMTPSA id o23-20020a6b5a17000000b007836c7e8dccsm2935628iob.17.2023.09.27.12.55.59
+        by smtp.gmail.com with ESMTPSA id o23-20020a6b5a17000000b007836c7e8dccsm2935628iob.17.2023.09.27.12.56.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Sep 2023 12:55:59 -0700 (PDT)
+        Wed, 27 Sep 2023 12:56:00 -0700 (PDT)
 From:   "Eric W. Biederman" <ebiederm@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
         "Eric W. Biederman" <ebiederm@xmission.com>
-Subject: [PATCH 12/30] tag: sign both hashes
-Date:   Wed, 27 Sep 2023 14:55:19 -0500
-Message-Id: <20230927195537.1682-12-ebiederm@gmail.com>
+Subject: [PATCH 14/30] object: Factor out parse_mode out of fast-import and tree-walk into in object.h
+Date:   Wed, 27 Sep 2023 14:55:21 -0500
+Message-Id: <20230927195537.1682-14-ebiederm@gmail.com>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <87jzsbjt0a.fsf@gmail.froward.int.ebiederm.org>
 References: <87jzsbjt0a.fsf@gmail.froward.int.ebiederm.org>
@@ -68,99 +68,145 @@ X-Mailing-List: git@vger.kernel.org
 
 From: "Eric W. Biederman" <ebiederm@xmission.com>
 
-When we write a tag the object oid is specific to the hash algorithm.
+builtin/fast-import.c and tree-walk.c have almost identical version of
+get_mode.  The two functions started out the same but have diverged
+slightly.  The version in fast-import changed mode to a uint16_t to
+save memory.  The version in tree-walk started erroring if no mode was
+present.
 
-This matters when a tag is signed.  The hash transition plan calls for
-signatures on both the sha1 form and the sha256 form of the object,
-and for both of those signatures to live in the tag object.
+As far as I can tell both of these changes are valid for both of the
+callers, so add the both changes and place the common parsing helper
+in object.h
 
-To generate tag object with multiple signatures, first compute the
-unsigned form of the tag, and then if the tag is being signed compute
-the unsigned form of the tag with the compatibilityr hash.  Then
-compute compute the signatures of both buffers.
+Rename the helper from get_mode to parse_mode so it does not
+conflict with another helper named get_mode in diff-no-index.c
 
-Once the signatures are computed add them to both buffers.  This
-allows computing the compatibility hash in do_sign, saving
-write_object_file the expense of recomputing the compatibility tag
-just to compute it's hash.
+This will be used shortly in a new helper decode_tree_entry_raw
+which is used to compute cmpatibility objects as part of
+the sha256 transition.
 
-Signed-off-by: Eric W. Biederman <ebiederm@xmission.com>
+Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
 ---
- builtin/tag.c | 45 +++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 41 insertions(+), 4 deletions(-)
+ builtin/fast-import.c | 18 ++----------------
+ object.h              | 18 ++++++++++++++++++
+ tree-walk.c           | 22 +++-------------------
+ 3 files changed, 23 insertions(+), 35 deletions(-)
 
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 3918eacbb57b..8c4bc28952c2 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -28,6 +28,7 @@
- #include "ref-filter.h"
- #include "date.h"
- #include "write-or-die.h"
-+#include "object-file-convert.h"
- 
- static const char * const git_tag_usage[] = {
- 	N_("git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>] [-e]\n"
-@@ -174,9 +175,43 @@ static int verify_tag(const char *name, const char *ref UNUSED,
- 	return 0;
+diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+index 4dbb10aff3da..2c645fcfbe3f 100644
+--- a/builtin/fast-import.c
++++ b/builtin/fast-import.c
+@@ -1235,20 +1235,6 @@ static void *gfi_unpack_entry(
+ 	return unpack_entry(the_repository, p, oe->idx.offset, &type, sizep);
  }
  
--static int do_sign(struct strbuf *buffer)
-+static int do_sign(struct strbuf *buffer, struct object_id **compat_oid,
-+		   struct object_id *compat_oid_buf)
+-static const char *get_mode(const char *str, uint16_t *modep)
+-{
+-	unsigned char c;
+-	uint16_t mode = 0;
+-
+-	while ((c = *str++) != ' ') {
+-		if (c < '0' || c > '7')
+-			return NULL;
+-		mode = (mode << 3) + (c - '0');
+-	}
+-	*modep = mode;
+-	return str;
+-}
+-
+ static void load_tree(struct tree_entry *root)
  {
--	return sign_buffer(buffer, buffer, get_signing_key());
-+	const struct git_hash_algo *compat = the_repository->compat_hash_algo;
-+	struct strbuf sig = STRBUF_INIT, compat_sig = STRBUF_INIT;
-+	struct strbuf compat_buf = STRBUF_INIT;
-+	const char *keyid = get_signing_key();
-+	int ret = -1;
+ 	struct object_id *oid = &root->versions[1].oid;
+@@ -1286,7 +1272,7 @@ static void load_tree(struct tree_entry *root)
+ 		t->entries[t->entry_count++] = e;
+ 
+ 		e->tree = NULL;
+-		c = get_mode(c, &e->versions[1].mode);
++		c = parse_mode(c, &e->versions[1].mode);
+ 		if (!c)
+ 			die("Corrupt mode in %s", oid_to_hex(oid));
+ 		e->versions[0].mode = e->versions[1].mode;
+@@ -2275,7 +2261,7 @@ static void file_change_m(const char *p, struct branch *b)
+ 	struct object_id oid;
+ 	uint16_t mode, inline_data = 0;
+ 
+-	p = get_mode(p, &mode);
++	p = parse_mode(p, &mode);
+ 	if (!p)
+ 		die("Corrupt mode: %s", command_buf.buf);
+ 	switch (mode) {
+diff --git a/object.h b/object.h
+index 114d45954d08..70c8d4ae63dc 100644
+--- a/object.h
++++ b/object.h
+@@ -190,6 +190,24 @@ void *create_object(struct repository *r, const struct object_id *oid, void *obj
+ 
+ void *object_as_type(struct object *obj, enum object_type type, int quiet);
+ 
 +
-+	if (sign_buffer(buffer, &sig, keyid))
-+		return -1;
++static inline const char *parse_mode(const char *str, uint16_t *modep)
++{
++	unsigned char c;
++	unsigned int mode = 0;
 +
-+	if (compat) {
-+		const struct git_hash_algo *algo = the_repository->hash_algo;
++	if (*str == ' ')
++		return NULL;
 +
-+		if (convert_object_file(&compat_buf, algo, compat,
-+					buffer->buf, buffer->len, OBJ_TAG, 1))
-+			goto out;
-+		if (sign_buffer(&compat_buf, &compat_sig, keyid))
-+			goto out;
-+		add_header_signature(&compat_buf, &sig, algo);
-+		strbuf_addbuf(&compat_buf, &compat_sig);
-+		hash_object_file(compat, compat_buf.buf, compat_buf.len,
-+				 OBJ_TAG, compat_oid_buf);
-+		*compat_oid = compat_oid_buf;
++	while ((c = *str++) != ' ') {
++		if (c < '0' || c > '7')
++			return NULL;
++		mode = (mode << 3) + (c - '0');
 +	}
++	*modep = mode;
++	return str;
++}
 +
-+	if (compat_sig.len)
-+		add_header_signature(buffer, &compat_sig, compat);
-+
-+	strbuf_addbuf(buffer, &sig);
-+	ret = 0;
-+out:
-+	strbuf_release(&sig);
-+	strbuf_release(&compat_sig);
-+	strbuf_release(&compat_buf);
-+	return ret;
- }
+ /*
+  * Returns the object, having parsed it to find out what it is.
+  *
+diff --git a/tree-walk.c b/tree-walk.c
+index 29ead71be173..3af50a01c2c7 100644
+--- a/tree-walk.c
++++ b/tree-walk.c
+@@ -10,27 +10,11 @@
+ #include "pathspec.h"
+ #include "json-writer.h"
  
- static const char tag_template[] =
-@@ -249,9 +284,11 @@ static void write_tag_body(int fd, const struct object_id *oid)
- 
- static int build_tag_object(struct strbuf *buf, int sign, struct object_id *result)
+-static const char *get_mode(const char *str, unsigned int *modep)
+-{
+-	unsigned char c;
+-	unsigned int mode = 0;
+-
+-	if (*str == ' ')
+-		return NULL;
+-
+-	while ((c = *str++) != ' ') {
+-		if (c < '0' || c > '7')
+-			return NULL;
+-		mode = (mode << 3) + (c - '0');
+-	}
+-	*modep = mode;
+-	return str;
+-}
+-
+ static int decode_tree_entry(struct tree_desc *desc, const char *buf, unsigned long size, struct strbuf *err)
  {
--	if (sign && do_sign(buf) < 0)
-+	struct object_id *compat_oid = NULL, compat_oid_buf;
-+	if (sign && do_sign(buf, &compat_oid, &compat_oid_buf) < 0)
- 		return error(_("unable to sign the tag"));
--	if (write_object_file(buf->buf, buf->len, OBJ_TAG, result) < 0)
-+	if (write_object_file_flags(buf->buf, buf->len, OBJ_TAG, result,
-+				    compat_oid, 0) < 0)
- 		return error(_("unable to write tag file"));
- 	return 0;
- }
+ 	const char *path;
+-	unsigned int mode, len;
++	unsigned int len;
++	uint16_t mode;
+ 	const unsigned hashsz = the_hash_algo->rawsz;
+ 
+ 	if (size < hashsz + 3 || buf[size - (hashsz + 1)]) {
+@@ -38,7 +22,7 @@ static int decode_tree_entry(struct tree_desc *desc, const char *buf, unsigned l
+ 		return -1;
+ 	}
+ 
+-	path = get_mode(buf, &mode);
++	path = parse_mode(buf, &mode);
+ 	if (!path) {
+ 		strbuf_addstr(err, _("malformed mode in tree entry"));
+ 		return -1;
 -- 
 2.41.0
 
