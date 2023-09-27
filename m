@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 829E7E82CCC
-	for <git@archiver.kernel.org>; Wed, 27 Sep 2023 19:55:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71C14E82CCD
+	for <git@archiver.kernel.org>; Wed, 27 Sep 2023 19:55:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229719AbjI0Tz4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Sep 2023 15:55:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57678 "EHLO
+        id S229736AbjI0Tz6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Sep 2023 15:55:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229464AbjI0Tzy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Sep 2023 15:55:54 -0400
-Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B27B10E
+        with ESMTP id S229592AbjI0Tzz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Sep 2023 15:55:55 -0400
+Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0257114
         for <git@vger.kernel.org>; Wed, 27 Sep 2023 12:55:52 -0700 (PDT)
-Received: by mail-io1-xd35.google.com with SMTP id ca18e2360f4ac-79fca042ec0so242141839f.3
+Received: by mail-io1-xd2a.google.com with SMTP id ca18e2360f4ac-79fb70402a7so294042739f.0
         for <git@vger.kernel.org>; Wed, 27 Sep 2023 12:55:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695844551; x=1696449351; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1695844552; x=1696449352; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=qOgoZtsJ9EsnKCpmBsoG93+BKGzH8VZ6zQpfUKUiUoY=;
-        b=jiSighZQGZl/BV4RzURYZccU920bXzxt2rbY1VlATydozAk77Xv0hj8Q8qBXxn0OAF
-         rsE/QQIkArghIIW7WaEXTMfrFzCKxRnRY7VA6kiMzScybY8kIMtAozLRJQyqFH3cMTR9
-         1efjnplSWLF6YBx1su6f6//bsZ5Y3izTFw0ufyPbBTxQe02nBCq7y5T2ppu3w4zuh2BB
-         ZifU7Uw8reK68RO+Khol+DUclBIt6xU9H56nzQPpkUvA/Tb3BuonAYZrizMt/y9ilBo4
-         rZhi2/mxM0gpi0K3npkazvmOl1253bCFMZUBx9cWYGMNFCPfOLov1aSCXlGMWmcsQNz2
-         zLWA==
+        bh=gKRqigMmBJjt+jVVA0IpgumX4pWEUQkfZwHO4CKzSaU=;
+        b=SdAzkteXgf4kb3EYLSAztXqgTenz7Y04NYOk89UHTqvjz1Xyp4pQLGRbEhp5aoCf3o
+         ZJbfcuZURILb5j3Y/d1ZPvZM2900OUwYHaJ8miyaifAbo/2YWjy/3ta+c0EtRBLC45FH
+         akPZODOPAYLx/gOjuz46hqC9rIjLqVkxfbmtNKfFKgskmOaVLFsbFJtgjBYRbQmO3yES
+         elw/ArO4IZ1USy3R0O9ZOK678nwKWJOfzPPqe8IIyMNu244XginrzfljAIy6yFRsr2Ea
+         +Iam2EHQ+bA05hxV7GsKTrWCVjJCT4FUTDzUknsjv+1M5UWhIMlt7tkrpieXhzp2nqZU
+         ndew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695844551; x=1696449351;
+        d=1e100.net; s=20230601; t=1695844552; x=1696449352;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=qOgoZtsJ9EsnKCpmBsoG93+BKGzH8VZ6zQpfUKUiUoY=;
-        b=mxlNJZTV55bt9OCCIV/96mKxFZ92LQ25ZvI2FtW6DsDPWC6pOIA3BQlAubTnjU5yif
-         xD3ufx9ZpLyhdKOO/p/2yhWl0SApwnSMtKlWwo2TlU4MD4uRvjnhHkxNvP/ygzSbqPZW
-         lkxVwY3+GKA4eAC52EXEwB19nuWo3MtDbmgj+XA2yQUWLrNCrrO8p49/XEgztlq4QtaZ
-         jqfrOcArR2t6cc6kgAWiiP63Z/D3BRJ3/+hYNiWls+Z0DggX8wLw6AnEMHWOJOIkfe4Q
-         JZrnfkMiv0BoCg/NzkSkz9fHmMUz9Tv+azlafbvHVyHyYUlS+3pdF9E23YMcWthjNyEC
-         iyjQ==
-X-Gm-Message-State: AOJu0YyKpAfaVGJFO+kDvy8wH4gnpA8myKpL+k667eQ1XrtQYGUM8aAM
-        aWUDsEqDWsOrqHMJ8pWYuSdLr58Mlo9k3g==
-X-Google-Smtp-Source: AGHT+IFxTMT0GqSJOfsHhgvqMSeLWW0Ec8grjyLWQdMrtEXSFnXDi+uSD9wZkZbmJ/zwfXj2KFE9aw==
-X-Received: by 2002:a6b:fd05:0:b0:79f:ce11:c1b0 with SMTP id c5-20020a6bfd05000000b0079fce11c1b0mr3376613ioi.6.1695844551344;
-        Wed, 27 Sep 2023 12:55:51 -0700 (PDT)
+        bh=gKRqigMmBJjt+jVVA0IpgumX4pWEUQkfZwHO4CKzSaU=;
+        b=kr/ClcDMIEPTztbPIlvIuu3mIntFA21RE9Y6vNItXLRPXJdwlwRQJljpBnnu2RTkhZ
+         bkIBr8xIwqA9bJXBlQNNzigPQCNZMZN8j4058M6CQAnCnWhg4unfdD1niil8tE3sEQUd
+         QYRwf4jWTwQZmjD1LOWn+0x1vgyYEYz1MMofq62hT6KQD8lhmKDQRSdy/xFPUrleL9Hh
+         6Hq0Z1k/Vu189VlgWUpQJR3cUZeOGIqf4EbUBZ3rW1TDfN/1kk1xd2ICJGl0SRoM3UtP
+         1YCng0vfLFQ4emzld7hSm9ePsxUYPBCEG4SybEhGBUYqrwUOJsmnDPFbQFtUGkKNEp3j
+         NA+A==
+X-Gm-Message-State: AOJu0YwjhEafA9D1aPeepTw75WZWndaUKiGT2kjaMUYMsZXFL/g0oETV
+        preW9sH6iuHckXqbhqopUV4=
+X-Google-Smtp-Source: AGHT+IFeS2lbywd2eWZoIlw8tJnWosFjWhuwGNOTsS9MenJFgHMpv5VfqZoLuypLm+WlXJOpxoysvg==
+X-Received: by 2002:a6b:ea0a:0:b0:79f:9574:b93c with SMTP id m10-20020a6bea0a000000b0079f9574b93cmr2949717ioc.0.1695844552031;
+        Wed, 27 Sep 2023 12:55:52 -0700 (PDT)
 Received: from localhost.localdomain (ip68-227-168-167.om.om.cox.net. [68.227.168.167])
-        by smtp.gmail.com with ESMTPSA id o23-20020a6b5a17000000b007836c7e8dccsm2935628iob.17.2023.09.27.12.55.50
+        by smtp.gmail.com with ESMTPSA id o23-20020a6b5a17000000b007836c7e8dccsm2935628iob.17.2023.09.27.12.55.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Sep 2023 12:55:50 -0700 (PDT)
+        Wed, 27 Sep 2023 12:55:51 -0700 (PDT)
 From:   "Eric W. Biederman" <ebiederm@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
         "Eric W. Biederman" <ebiederm@xmission.com>
-Subject: [PATCH 01/30] object-file-convert: Stubs for converting from one object format to another
-Date:   Wed, 27 Sep 2023 14:55:08 -0500
-Message-Id: <20230927195537.1682-1-ebiederm@gmail.com>
+Subject: [PATCH 02/30] oid-array: Teach oid-array to handle multiple kinds of oids
+Date:   Wed, 27 Sep 2023 14:55:09 -0500
+Message-Id: <20230927195537.1682-2-ebiederm@gmail.com>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <87jzsbjt0a.fsf@gmail.froward.int.ebiederm.org>
 References: <87jzsbjt0a.fsf@gmail.froward.int.ebiederm.org>
@@ -68,144 +68,52 @@ X-Mailing-List: git@vger.kernel.org
 
 From: "Eric W. Biederman" <ebiederm@xmission.com>
 
-Two basic functions are provided:
-- convert_object_file Takes an object file it's type and hash algorithm
-  and converts it into the equivalent object file that would
-  have been generated with hash algorithm "to".
+While looking at how to handle input of both SHA-1 and SHA-256 oids in
+get_oid_with_context, I realized that the oid_array in
+repo_for_each_abbrev might have more than one kind of oid stored in it
+simulataneously.
 
-  For blob objects there is no converstion to be done and it is an
-  error to use this function on them.
+Update to oid_array_append to ensure that oids added to an oid array
+always have an algorithm set.
 
-  For commit, tree, and tag objects embedded oids are replaced by the
-  oids of the objects they refer to with those objects and their
-  object ids reencoded in with the hash algorithm "to".  Signatures
-  are rearranged so that they remain valid after the object has
-  been reencoded.
+Update void_hashcmp to first verify two oids use the same hash algorithm
+before comparing them to each other.
 
-- repo_oid_to_algop which takes an oid that refers to an object file
-  and returns the oid of the equavalent object file generated
-  with the target hash algorithm.
-
-The pair of files object-file-convert.c and object-file-convert.h are
-introduced to hold as much of this logic as possible to keep this
-conversion logic cleanly separated from everything else and in the
-hopes that someday the code will be clean enough git can support
-compiling out support for sha1 and the various conversion functions.
+With that oid-array should be safe to use with differnt kinds of
+oids simultaneously.
 
 Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
 ---
- Makefile              |  1 +
- object-file-convert.c | 57 +++++++++++++++++++++++++++++++++++++++++++
- object-file-convert.h | 24 ++++++++++++++++++
- 3 files changed, 82 insertions(+)
- create mode 100644 object-file-convert.c
- create mode 100644 object-file-convert.h
+ oid-array.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 577630936535..f7e824f25cda 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1073,6 +1073,7 @@ LIB_OBJS += notes-cache.o
- LIB_OBJS += notes-merge.o
- LIB_OBJS += notes-utils.o
- LIB_OBJS += notes.o
-+LIB_OBJS += object-file-convert.o
- LIB_OBJS += object-file.o
- LIB_OBJS += object-name.o
- LIB_OBJS += object.o
-diff --git a/object-file-convert.c b/object-file-convert.c
-new file mode 100644
-index 000000000000..ba3e18f6af44
---- /dev/null
-+++ b/object-file-convert.c
-@@ -0,0 +1,57 @@
-+#include "git-compat-util.h"
-+#include "gettext.h"
-+#include "strbuf.h"
-+#include "repository.h"
-+#include "hash-ll.h"
-+#include "object.h"
-+#include "object-file-convert.h"
-+
-+int repo_oid_to_algop(struct repository *repo, const struct object_id *src,
-+		      const struct git_hash_algo *to, struct object_id *dest)
-+{
-+	/*
-+	 * If the source alogirthm is not set, then we're using the
-+	 * default hash algorithm for that object.
-+	 */
-+	const struct git_hash_algo *from =
-+		src->algo ? &hash_algos[src->algo] : repo->hash_algo;
-+
-+	if (from == to) {
-+		if (src != dest)
-+			oidcpy(dest, src);
-+		return 0;
-+	}
-+	return -1;
-+}
-+
-+int convert_object_file(struct strbuf *outbuf,
-+			const struct git_hash_algo *from,
-+			const struct git_hash_algo *to,
-+			const void *buf, size_t len,
-+			enum object_type type,
-+			int gentle)
-+{
+diff --git a/oid-array.c b/oid-array.c
+index 8e4717746c31..1f36651754ed 100644
+--- a/oid-array.c
++++ b/oid-array.c
+@@ -6,12 +6,20 @@ void oid_array_append(struct oid_array *array, const struct object_id *oid)
+ {
+ 	ALLOC_GROW(array->oid, array->nr + 1, array->alloc);
+ 	oidcpy(&array->oid[array->nr++], oid);
++	if (!oid->algo)
++		oid_set_algo(&array->oid[array->nr - 1], the_hash_algo);
+ 	array->sorted = 0;
+ }
+ 
+-static int void_hashcmp(const void *a, const void *b)
++static int void_hashcmp(const void *va, const void *vb)
+ {
+-	return oidcmp(a, b);
++	const struct object_id *a = va, *b = vb;
 +	int ret;
-+
-+	/* Don't call this function when no conversion is necessary */
-+	if ((from == to) || (type == OBJ_BLOB))
-+		die("Refusing noop object file conversion");
-+
-+	switch (type) {
-+	case OBJ_COMMIT:
-+	case OBJ_TREE:
-+	case OBJ_TAG:
-+	default:
-+		/* Not implemented yet, so fail. */
-+		ret = -1;
-+		break;
-+	}
-+	if (!ret)
-+		return 0;
-+	if (gentle) {
-+		strbuf_release(outbuf);
-+		return ret;
-+	}
-+	die(_("Failed to convert object from %s to %s"),
-+		from->name, to->name);
-+}
-diff --git a/object-file-convert.h b/object-file-convert.h
-new file mode 100644
-index 000000000000..a4f802aa8eea
---- /dev/null
-+++ b/object-file-convert.h
-@@ -0,0 +1,24 @@
-+#ifndef OBJECT_CONVERT_H
-+#define OBJECT_CONVERT_H
-+
-+struct repository;
-+struct object_id;
-+struct git_hash_algo;
-+struct strbuf;
-+#include "object.h"
-+
-+int repo_oid_to_algop(struct repository *repo, const struct object_id *src,
-+		      const struct git_hash_algo *to, struct object_id *dest);
-+
-+/*
-+ * Convert an object file from one hash algorithm to another algorithm.
-+ * Return -1 on failure, 0 on success.
-+ */
-+int convert_object_file(struct strbuf *outbuf,
-+			const struct git_hash_algo *from,
-+			const struct git_hash_algo *to,
-+			const void *buf, size_t len,
-+			enum object_type type,
-+			int gentle);
-+
-+#endif /* OBJECT_CONVERT_H */
++	if (a->algo == b->algo)
++		ret = oidcmp(a, b);
++	else
++		ret = a->algo > b->algo ? 1 : -1;
++	return ret;
+ }
+ 
+ void oid_array_sort(struct oid_array *array)
 -- 
 2.41.0
 
