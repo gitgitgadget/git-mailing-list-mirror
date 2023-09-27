@@ -2,499 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BFB4E82CCE
-	for <git@archiver.kernel.org>; Wed, 27 Sep 2023 19:57:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 223B6E82CCC
+	for <git@archiver.kernel.org>; Wed, 27 Sep 2023 19:57:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229920AbjI0T5G (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Sep 2023 15:57:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43996 "EHLO
+        id S230000AbjI0T5h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Sep 2023 15:57:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229810AbjI0T4f (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Sep 2023 15:56:35 -0400
-Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7D7ECFB
-        for <git@vger.kernel.org>; Wed, 27 Sep 2023 12:56:13 -0700 (PDT)
-Received: by mail-io1-xd2f.google.com with SMTP id ca18e2360f4ac-79fe612beabso130146939f.3
-        for <git@vger.kernel.org>; Wed, 27 Sep 2023 12:56:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695844573; x=1696449373; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hQxjE9pH8qvGJyZahDG9JSV3KWmgPfFjKYyYvy3ZImg=;
-        b=HkfPLV+UAB7rPu3UPIZnfwbMnsT1uSu8uOC85q4vDUkSfICC51DsRBaDoxAdeq7kzk
-         DOw3btti4TxlIxMvjVVIUt6xWr0+ZLN09P0mhnpukv/cy79kuAR64MEaDC9FMsB6vepF
-         t63pTrI827M5q31uwLCpmE1WSO4JtrkIj0kC69Vr+soMuUJVYgNSD3S7gJ9ZcH/tn8uC
-         SG5MHdt6wiPYllF6QmdOVudF0v9t9uVlD/xMP/27HsbC+ODmMLY7pprAfdxqxAQ/MxhO
-         pT8GA0Zs180wlnzZaIzdBNYpaN2jlCcoKB5xEQwFHKZPM66AM6nHnDNm5jYvg9+TY62S
-         Z1Yg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695844573; x=1696449373;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hQxjE9pH8qvGJyZahDG9JSV3KWmgPfFjKYyYvy3ZImg=;
-        b=nJ1vt8/gS30QeNvsK+39Gpwz1N18WCUdf8X8Qxqe3kRgTJfLpKcim8PtFN2hzkcHyI
-         hH+vVXeLNg/zeNLyyJr5a4zBym9imTkifKtFpTlo+lc9XxUlNfkUuLrNpod41xcrYew7
-         LszmuZasmGMgbkwg1jGTto292781ofAtenLn9r7UXeKAnyUoYQ5sQT4mTxHducGZQF36
-         Ystz29iOu+22//5EWP4TFYn9hODTdca45xF77aclbfBgNc5RS9Bg0CKMx+qqPG6f0xi2
-         84fvBrWTZtM4+ir0kG6TQ2jVJj72bTL08MbZU8757hEw1hUQO+NtVasYm6b4DsWtPgAK
-         vxtA==
-X-Gm-Message-State: AOJu0Yy+3VJpEsEhXIbV33wtazpYyR/4RbUfx6qOWa6/eW+Fr5bvAeLy
-        fSqdv/tNxiBZSDg3gwmIZW82DUwPkCc=
-X-Google-Smtp-Source: AGHT+IFLMW32L3+sOAMe/wRxk05M1cWLdPBZMJK9+v4w9cb7SM2DWBsMuY3rbcKQDRBQy3i04en8Bg==
-X-Received: by 2002:a6b:dd14:0:b0:784:314f:8d68 with SMTP id f20-20020a6bdd14000000b00784314f8d68mr3037146ioc.1.1695844572935;
-        Wed, 27 Sep 2023 12:56:12 -0700 (PDT)
-Received: from localhost.localdomain (ip68-227-168-167.om.om.cox.net. [68.227.168.167])
-        by smtp.gmail.com with ESMTPSA id o23-20020a6b5a17000000b007836c7e8dccsm2935628iob.17.2023.09.27.12.56.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Sep 2023 12:56:12 -0700 (PDT)
-From:   "Eric W. Biederman" <ebiederm@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Eric W. Biederman" <ebiederm@xmission.com>
-Subject: [PATCH 30/30] t1016-compatObjectFormat: Add tests to verify the conversion between objects
-Date:   Wed, 27 Sep 2023 14:55:37 -0500
-Message-Id: <20230927195537.1682-30-ebiederm@gmail.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <87jzsbjt0a.fsf@gmail.froward.int.ebiederm.org>
-References: <87jzsbjt0a.fsf@gmail.froward.int.ebiederm.org>
+        with ESMTP id S229995AbjI0T5X (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Sep 2023 15:57:23 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44CD41993
+        for <git@vger.kernel.org>; Wed, 27 Sep 2023 12:56:45 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 75E7A204DC;
+        Wed, 27 Sep 2023 15:56:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=VCXGRgzQC0Rk7QxtvNHeGOPdNx/yhF4K+EbfWN
+        4vgps=; b=lZXZp4ay5Y5kz0UeYEhYlFAtjYT++Un9f92KEPjQyZbHVD6GuI6gqa
+        8O1wMtu3J6PalbKjTyIY0+gFtKXdWH+AGSS26AbSNcEdFTyt9sM57q6GUCDiwrnJ
+        XnwveXDblQzodLtuEo9bK12w2lcEwN6d5iFbWB6+aJdrXT/FLIwjY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6E352204DB;
+        Wed, 27 Sep 2023 15:56:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0F2A5204DA;
+        Wed, 27 Sep 2023 15:56:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Eric W. Biederman" <ebiederm@gmail.com>
+Cc:     <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] setup: Only allow extenions.objectFormat to be
+ specified once
+In-Reply-To: <87r0mjn4ly.fsf@gmail.froward.int.ebiederm.org> (Eric
+        W. Biederman's message of "Wed, 27 Sep 2023 08:11:05 -0500")
+References: <87h6ngapqb.fsf@gmail.froward.int.ebiederm.org>
+        <xmqqr0mkmx9b.fsf@gitster.g>
+        <87r0mjn4ly.fsf@gmail.froward.int.ebiederm.org>
+Date:   Wed, 27 Sep 2023 12:56:39 -0700
+Message-ID: <xmqqwmwbl79k.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: F9EB8B18-5D6F-11EE-A516-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Eric W. Biederman" <ebiederm@xmission.com>
+"Eric W. Biederman" <ebiederm@gmail.com> writes:
 
-For now my strategy is simple.  Create two identical repositories one
-in each format.  Use fixed timestamps. Verify the dynamically computed
-compatibility objects from one repository match the objects stored in
-the other repository.
+> For me the fundamental question is if we allow multiples compatibility
+> hashes or historical hashes how do we specify them?  Have the option
+> appear more than once?  A comma separated list?
 
-A general limitation of this strategy is that the git when generating
-signed tags and commits with compatObjectFormat enabled will generate
-a signature for both formats.  To overcome this limitation I have
-added "test-tool delete-gpgsig" that when fed an signed commit or tag
-with two signatures deletes one of the signatures.
+As you found out, we tend to use both, but the former does look more
+natural to me.
 
-With that in place I can have "git commit" and  "git tag" generate
-signed objects, have my tool delete one, and feed the new object
-into "git hash-object" to create the kinds of commits and tags
-git without compatObjectFormat enabled will generate.
+The "usual" pros and cons [*] involve how easy it is to override the
+settings given by more general low-priority configuration files with
+more specific high-priority configuration files, and does not apply
+to the extensions.* stuff that are by definition repository
+specific.
 
-Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
----
- Makefile                      |   1 +
- t/helper/test-delete-gpgsig.c |  62 ++++++++
- t/helper/test-tool.c          |   1 +
- t/helper/test-tool.h          |   1 +
- t/t1016-compatObjectFormat.sh | 280 ++++++++++++++++++++++++++++++++++
- t/t1016/gpg                   |   2 +
- 6 files changed, 347 insertions(+)
- create mode 100644 t/helper/test-delete-gpgsig.c
- create mode 100755 t/t1016-compatObjectFormat.sh
- create mode 100755 t/t1016/gpg
 
-diff --git a/Makefile b/Makefile
-index 3c18664def9a..3e4444fb9ab2 100644
---- a/Makefile
-+++ b/Makefile
-@@ -790,6 +790,7 @@ TEST_BUILTINS_OBJS += test-crontab.o
- TEST_BUILTINS_OBJS += test-csprng.o
- TEST_BUILTINS_OBJS += test-ctype.o
- TEST_BUILTINS_OBJS += test-date.o
-+TEST_BUILTINS_OBJS += test-delete-gpgsig.o
- TEST_BUILTINS_OBJS += test-delta.o
- TEST_BUILTINS_OBJS += test-dir-iterator.o
- TEST_BUILTINS_OBJS += test-drop-caches.o
-diff --git a/t/helper/test-delete-gpgsig.c b/t/helper/test-delete-gpgsig.c
-new file mode 100644
-index 000000000000..e36831af03f6
---- /dev/null
-+++ b/t/helper/test-delete-gpgsig.c
-@@ -0,0 +1,62 @@
-+#include "test-tool.h"
-+#include "gpg-interface.h"
-+#include "strbuf.h"
-+
-+
-+int cmd__delete_gpgsig(int argc, const char **argv)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	const char *pattern = "gpgsig";
-+	const char *bufptr, *tail, *eol;
-+	int deleting = 0;
-+	size_t plen;
-+
-+	if (argc >= 2) {
-+		pattern = argv[1];
-+		argv++;
-+		argc--;
-+	}
-+
-+	plen = strlen(pattern);
-+	strbuf_read(&buf, 0, 0);
-+
-+	if (!strcmp(pattern, "trailer")) {
-+		size_t payload_size = parse_signed_buffer(buf.buf, buf.len);
-+		fwrite(buf.buf, 1, payload_size, stdout);
-+		fflush(stdout);
-+		return 0;
-+	}
-+
-+	bufptr = buf.buf;
-+	tail = bufptr + buf.len;
-+
-+	while (bufptr < tail) {
-+		/* Find the end of the line */
-+		eol = memchr(bufptr, '\n', tail - bufptr);
-+		if (!eol)
-+			eol = tail;
-+
-+		/* Drop continuation lines */
-+		if (deleting && (bufptr < eol) && (bufptr[0] == ' ')) {
-+			bufptr = eol + 1;
-+			continue;
-+		}
-+		deleting = 0;
-+
-+		/* Does the line match the prefix? */
-+		if (((bufptr + plen) < eol) &&
-+		    !memcmp(bufptr, pattern, plen) &&
-+		    (bufptr[plen] == ' ')) {
-+			deleting = 1;
-+			bufptr = eol + 1;
-+			continue;
-+		}
-+
-+		/* Print all other lines */
-+		fwrite(bufptr, 1, (eol - bufptr) + 1, stdout);
-+		bufptr = eol + 1;
-+	}
-+	fflush(stdout);
-+
-+	return 0;
-+}
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index abe8a785eb65..8b6c84f202d6 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -21,6 +21,7 @@ static struct test_cmd cmds[] = {
- 	{ "csprng", cmd__csprng },
- 	{ "ctype", cmd__ctype },
- 	{ "date", cmd__date },
-+	{ "delete-gpgsig", cmd__delete_gpgsig },
- 	{ "delta", cmd__delta },
- 	{ "dir-iterator", cmd__dir_iterator },
- 	{ "drop-caches", cmd__drop_caches },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index ea2672436c9a..76baaece35b9 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -15,6 +15,7 @@ int cmd__csprng(int argc, const char **argv);
- int cmd__ctype(int argc, const char **argv);
- int cmd__date(int argc, const char **argv);
- int cmd__delta(int argc, const char **argv);
-+int cmd__delete_gpgsig(int argc, const char **argv);
- int cmd__dir_iterator(int argc, const char **argv);
- int cmd__drop_caches(int argc, const char **argv);
- int cmd__dump_cache_tree(int argc, const char **argv);
-diff --git a/t/t1016-compatObjectFormat.sh b/t/t1016-compatObjectFormat.sh
-new file mode 100755
-index 000000000000..bb558a1d562a
---- /dev/null
-+++ b/t/t1016-compatObjectFormat.sh
-@@ -0,0 +1,280 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2023 Eric Biederman
-+#
-+
-+test_description='Test how well compatObjectFormat works'
-+
-+. ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-gpg.sh
-+
-+# All of the follow variables must be defined in the environment:
-+# GIT_AUTHOR_NAME
-+# GIT_AUTHOR_EMAIL
-+# GIT_AUTHOR_DATE
-+# GIT_COMMITTER_NAME
-+# GIT_COMMITTER_EMAIL
-+# GIT_COMMITTER_DATE
-+#
-+# The test relies on these variables being set so that the two
-+# different commits in two different repositories encoded with two
-+# different hash functions result in the same content in the commits.
-+# This means that when the commit is translated between hash functions
-+# the commit is identical to the commit in the other repository.
-+
-+compat_hash () {
-+    case "$1" in
-+    "sha1")
-+	echo "sha256"
-+	;;
-+    "sha256")
-+	echo "sha1"
-+	;;
-+    esac
-+}
-+
-+hello_oid () {
-+    case "$1" in
-+    "sha1")
-+	echo "$hello_sha1_oid"
-+	;;
-+    "sha256")
-+	echo "$hello_sha256_oid"
-+	;;
-+    esac
-+}
-+
-+tree_oid () {
-+    case "$1" in
-+    "sha1")
-+	echo "$tree_sha1_oid"
-+	;;
-+    "sha256")
-+	echo "$tree_sha256_oid"
-+	;;
-+    esac
-+}
-+
-+commit_oid () {
-+    case "$1" in
-+    "sha1")
-+	echo "$commit_sha1_oid"
-+	;;
-+    "sha256")
-+	echo "$commit_sha256_oid"
-+	;;
-+    esac
-+}
-+
-+commit2_oid () {
-+    case "$1" in
-+    "sha1")
-+	echo "$commit2_sha1_oid"
-+	;;
-+    "sha256")
-+	echo "$commit2_sha256_oid"
-+	;;
-+    esac
-+}
-+
-+del_sigcommit () {
-+    local delete=$1
-+
-+    if test "$delete" = "sha256" ; then
-+	local pattern="gpgsig-sha256"
-+    else
-+	local pattern="gpgsig"
-+    fi
-+    test-tool delete-gpgsig "$pattern"
-+}
-+
-+
-+del_sigtag () {
-+    local storage=$1
-+    local delete=$2
-+
-+    if test "$storage" = "$delete" ; then
-+	local pattern="trailer"
-+    elif test "$storage" = "sha256" ; then
-+	local pattern="gpgsig"
-+    else
-+	local pattern="gpgsig-sha256"
-+    fi
-+    test-tool delete-gpgsig "$pattern"
-+}
-+
-+base=$(pwd)
-+for hash in sha1 sha256
-+do
-+	cd "$base"
-+	mkdir -p repo-$hash
-+	cd repo-$hash
-+
-+	test_expect_success "setup $hash repository" '
-+		git init --object-format=$hash &&
-+		git config core.repositoryformatversion 1 &&
-+		git config extensions.objectformat $hash &&
-+		git config extensions.compatobjectformat $(compat_hash $hash) &&
-+		git config gpg.program $TEST_DIRECTORY/t1016/gpg &&
-+		echo "Hellow World!" > hello &&
-+		eval hello_${hash}_oid=$(git hash-object hello) &&
-+		git update-index --add hello &&
-+		git commit -m "Initial commit" &&
-+		eval commit_${hash}_oid=$(git rev-parse HEAD) &&
-+		eval tree_${hash}_oid=$(git rev-parse HEAD^{tree})
-+	'
-+	test_expect_success "create a $hash  tagged blob" '
-+		git tag --no-sign -m "This is a tag" hellotag $(hello_oid $hash) &&
-+		eval hellotag_${hash}_oid=$(git rev-parse hellotag)
-+	'
-+	test_expect_success "create a $hash tagged tree" '
-+		git tag --no-sign -m "This is a tag" treetag $(tree_oid $hash) &&
-+		eval treetag_${hash}_oid=$(git rev-parse treetag)
-+	'
-+	test_expect_success "create a $hash tagged commit" '
-+		git tag --no-sign -m "This is a tag" committag $(commit_oid $hash) &&
-+		eval committag_${hash}_oid=$(git rev-parse committag)
-+	'
-+	test_expect_success GPG2 "create a $hash signed commit" '
-+		git commit --gpg-sign --allow-empty -m "This is a signed commit" &&
-+		eval signedcommit_${hash}_oid=$(git rev-parse HEAD)
-+	'
-+	test_expect_success GPG2 "create a $hash signed tag" '
-+		git tag -s -m "This is a signed tag" signedtag HEAD &&
-+		eval signedtag_${hash}_oid=$(git rev-parse signedtag)
-+	'
-+	test_expect_success "create a $hash branch" '
-+		git checkout -b branch $(commit_oid $hash) &&
-+		echo "More more more give me more!" > more &&
-+		eval more_${hash}_oid=$(git hash-object more) &&
-+		echo "Another and another and another" > another &&
-+		eval another_${hash}_oid=$(git hash-object another) &&
-+		git update-index --add more another &&
-+		git commit -m "Add more files!" &&
-+		eval commit2_${hash}_oid=$(git rev-parse HEAD) &&
-+		eval tree2_${hash}_oid=$(git rev-parse HEAD^{tree})
-+	'
-+	test_expect_success GPG2 "create another $hash signed tag" '
-+		git tag -s -m "This is another signed tag" signedtag2 $(commit2_oid $hash) &&
-+		eval signedtag2_${hash}_oid=$(git rev-parse signedtag2)
-+	'
-+	test_expect_success GPG2 "merge the $hash branches together" '
-+		git merge -S -m "merge some signed tags together" signedtag signedtag2 &&
-+		eval signedcommit2_${hash}_oid=$(git rev-parse HEAD)
-+	'
-+	test_expect_success GPG2 "create additional $hash signed commits" '
-+		git commit --gpg-sign --allow-empty -m "This is an additional signed commit" &&
-+		git cat-file commit HEAD | del_sigcommit sha256 > "../${hash}_signedcommit3" &&
-+		git cat-file commit HEAD | del_sigcommit sha1 > "../${hash}_signedcommit4" &&
-+		eval signedcommit3_${hash}_oid=$(git hash-object -t commit -w ../${hash}_signedcommit3) &&
-+		eval signedcommit4_${hash}_oid=$(git hash-object -t commit -w ../${hash}_signedcommit4)
-+	'
-+	test_expect_success GPG2 "create additional $hash signed tags" '
-+		git tag -s -m "This is an additional signed tag" signedtag34 HEAD &&
-+		git cat-file tag signedtag34 | del_sigtag "${hash}" sha256 > ../${hash}_signedtag3 &&
-+		git cat-file tag signedtag34 | del_sigtag "${hash}" sha1 > ../${hash}_signedtag4 &&
-+		eval signedtag3_${hash}_oid=$(git hash-object -t tag -w ../${hash}_signedtag3) &&
-+		eval signedtag4_${hash}_oid=$(git hash-object -t tag -w ../${hash}_signedtag4)
-+	'
-+done
-+cd "$base"
-+
-+compare_oids () {
-+    test "$#" = 5 && { local PREREQ=$1; shift; } || PREREQ=
-+    local type="$1"
-+    local name="$2"
-+    local sha1_oid="$3"
-+    local sha256_oid="$4"
-+
-+    echo ${sha1_oid} > ${name}_sha1_expected
-+    echo ${sha256_oid} > ${name}_sha256_expected
-+    echo ${type} > ${name}_type_expected
-+
-+    git --git-dir=repo-sha1/.git rev-parse --output-object-format=sha256 ${sha1_oid} > ${name}_sha1_sha256_found
-+    git --git-dir=repo-sha256/.git rev-parse --output-object-format=sha1 ${sha256_oid} > ${name}_sha256_sha1_found
-+    local sha1_sha256_oid=$(cat ${name}_sha1_sha256_found)
-+    local sha256_sha1_oid=$(cat ${name}_sha256_sha1_found)
-+
-+    test_expect_success $PREREQ "Verify ${type} ${name}'s sha1 oid" '
-+	git --git-dir=repo-sha256/.git rev-parse --output-object-format=sha1 ${sha256_oid} > ${name}_sha1 &&
-+	test_cmp ${name}_sha1 ${name}_sha1_expected
-+'
-+
-+    test_expect_success $PREREQ "Verify ${type} ${name}'s sha256 oid" '
-+	git --git-dir=repo-sha1/.git rev-parse --output-object-format=sha256 ${sha1_oid} > ${name}_sha256 &&
-+	test_cmp ${name}_sha256 ${name}_sha256_expected
-+'
-+
-+    test_expect_success $PREREQ "Verify ${name}'s sha1 type" '
-+	git --git-dir=repo-sha1/.git cat-file -t ${sha1_oid} > ${name}_type1 &&
-+	git --git-dir=repo-sha256/.git cat-file -t ${sha256_sha1_oid} > ${name}_type2 &&
-+	test_cmp ${name}_type1 ${name}_type2 &&
-+	test_cmp ${name}_type1 ${name}_type_expected
-+'
-+
-+    test_expect_success $PREREQ "Verify ${name}'s sha256 type" '
-+	git --git-dir=repo-sha256/.git cat-file -t ${sha256_oid} > ${name}_type3 &&
-+	git --git-dir=repo-sha1/.git cat-file -t ${sha1_sha256_oid} > ${name}_type4 &&
-+	test_cmp ${name}_type3 ${name}_type4 &&
-+	test_cmp ${name}_type3 ${name}_type_expected
-+'
-+
-+    test_expect_success $PREREQ "Verify ${name}'s sha1 size" '
-+	git --git-dir=repo-sha1/.git cat-file -s ${sha1_oid} > ${name}_size1 &&
-+	git --git-dir=repo-sha256/.git cat-file -s ${sha256_sha1_oid} > ${name}_size2 &&
-+	test_cmp ${name}_size1 ${name}_size2
-+'
-+
-+    test_expect_success $PREREQ "Verify ${name}'s sha256 size" '
-+	git --git-dir=repo-sha256/.git cat-file -s ${sha256_oid} > ${name}_size3 &&
-+	git --git-dir=repo-sha1/.git cat-file -s ${sha1_sha256_oid} > ${name}_size4 &&
-+	test_cmp ${name}_size3 ${name}_size4
-+'
-+
-+    test_expect_success $PREREQ "Verify ${name}'s sha1 pretty content" '
-+	git --git-dir=repo-sha1/.git cat-file -p ${sha1_oid} > ${name}_content1 &&
-+	git --git-dir=repo-sha256/.git cat-file -p ${sha256_sha1_oid} > ${name}_content2 &&
-+	test_cmp ${name}_content1 ${name}_content2
-+'
-+
-+    test_expect_success $PREREQ "Verify ${name}'s sha256 pretty content" '
-+	git --git-dir=repo-sha256/.git cat-file -p ${sha256_oid} > ${name}_content3 &&
-+	git --git-dir=repo-sha1/.git cat-file -p ${sha1_sha256_oid} > ${name}_content4 &&
-+	test_cmp ${name}_content3 ${name}_content4
-+'
-+
-+    test_expect_success $PREREQ "Verify ${name}'s sha1 content" '
-+	git --git-dir=repo-sha1/.git cat-file ${type} ${sha1_oid} > ${name}_content5 &&
-+	git --git-dir=repo-sha256/.git cat-file ${type} ${sha256_sha1_oid} > ${name}_content6 &&
-+	test_cmp ${name}_content5 ${name}_content6
-+'
-+
-+    test_expect_success $PREREQ "Verify ${name}'s sha256 content" '
-+	git --git-dir=repo-sha256/.git cat-file ${type} ${sha256_oid} > ${name}_content7 &&
-+	git --git-dir=repo-sha1/.git cat-file ${type} ${sha1_sha256_oid} > ${name}_content8 &&
-+	test_cmp ${name}_content7 ${name}_content8
-+'
-+
-+}
-+
-+compare_oids 'blob' hello "$hello_sha1_oid" "$hello_sha256_oid"
-+compare_oids 'tree' tree "$tree_sha1_oid" "$tree_sha256_oid"
-+compare_oids 'commit' commit "$commit_sha1_oid" "$commit_sha256_oid"
-+compare_oids GPG2 'commit' signedcommit "$signedcommit_sha1_oid" "$signedcommit_sha256_oid"
-+compare_oids 'tag' hellotag "$hellotag_sha1_oid" "$hellotag_sha256_oid"
-+compare_oids 'tag' treetag "$treetag_sha1_oid" "$treetag_sha256_oid"
-+compare_oids 'tag' committag "$committag_sha1_oid" "$committag_sha256_oid"
-+compare_oids GPG2 'tag' signedtag "$signedtag_sha1_oid" "$signedtag_sha256_oid"
-+
-+compare_oids 'blob' more "$more_sha1_oid" "$more_sha256_oid"
-+compare_oids 'blob' another "$another_sha1_oid" "$another_sha256_oid"
-+compare_oids 'tree' tree2 "$tree2_sha1_oid" "$tree2_sha256_oid"
-+compare_oids 'commit' commit2 "$commit2_sha1_oid" "$commit2_sha256_oid"
-+compare_oids GPG2 'tag' signedtag2 "$signedtag2_sha1_oid" "$signedtag2_sha256_oid"
-+compare_oids GPG2 'commit' signedcommit2 "$signedcommit2_sha1_oid" "$signedcommit2_sha256_oid"
-+compare_oids GPG2 'commit' signedcommit3 "$signedcommit3_sha1_oid" "$signedcommit3_sha256_oid"
-+compare_oids GPG2 'commit' signedcommit4 "$signedcommit4_sha1_oid" "$signedcommit4_sha256_oid"
-+compare_oids GPG2 'tag' signedtag3 "$signedtag3_sha1_oid" "$signedtag3_sha256_oid"
-+compare_oids GPG2 'tag' signedtag4 "$signedtag4_sha1_oid" "$signedtag4_sha256_oid"
-+
-+test_done
-diff --git a/t/t1016/gpg b/t/t1016/gpg
-new file mode 100755
-index 000000000000..2601cb18a5b3
---- /dev/null
-+++ b/t/t1016/gpg
-@@ -0,0 +1,2 @@
-+#!/bin/sh
-+exec gpg --faked-system-time "20230918T154812" "$@"
--- 
-2.41.0
+[Footnote]
+
+As I said, this does not apply to the topic of this discussion, but
+just for completeness:
+
+ * comma separated list allows overriding everything that was said
+   earlier wholesale; there is no ambiguity, which is a plus, but
+   there is no incremental updates, which may be a minus when
+   flexibility is desired.
+
+ * multi-valued configuration variable allows incremental additions,
+   but ad-hoc syntax needs to be invented if incremental
+   subtractions or clearing the slate to start from scratch is
+   needed.
 
