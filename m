@@ -2,69 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ACED0E82CCD
-	for <git@archiver.kernel.org>; Wed, 27 Sep 2023 20:06:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B06EBE82CCF
+	for <git@archiver.kernel.org>; Wed, 27 Sep 2023 20:13:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229839AbjI0UGq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Sep 2023 16:06:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45092 "EHLO
+        id S229789AbjI0UNi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Sep 2023 16:13:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229664AbjI0UGp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Sep 2023 16:06:45 -0400
-Received: from mail-il1-x133.google.com (mail-il1-x133.google.com [IPv6:2607:f8b0:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B164011D
-        for <git@vger.kernel.org>; Wed, 27 Sep 2023 13:06:42 -0700 (PDT)
-Received: by mail-il1-x133.google.com with SMTP id e9e14a558f8ab-3514bf96fd2so19408075ab.0
-        for <git@vger.kernel.org>; Wed, 27 Sep 2023 13:06:42 -0700 (PDT)
+        with ESMTP id S229664AbjI0UNh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Sep 2023 16:13:37 -0400
+Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C309F10E
+        for <git@vger.kernel.org>; Wed, 27 Sep 2023 13:13:35 -0700 (PDT)
+Received: by mail-io1-xd31.google.com with SMTP id ca18e2360f4ac-7927f24140eso413290439f.2
+        for <git@vger.kernel.org>; Wed, 27 Sep 2023 13:13:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695845202; x=1696450002; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1695845615; x=1696450415; darn=vger.kernel.org;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=m4HmIlLymTdAvxTuhETBvtWB4sC/GIkRBv1xIehrtMg=;
-        b=fV1M7/2dRQZhWReVaA4FiRLIGGYRNPk23hhfjQ6fvTWwPrCzqWA+kF7CxNc9hDMZtY
-         LogXzvVpfDQdOr0aAAACir09GfbG3pinCS9PhFKsILxeNPTDRA3jw4ggxvWSOLG/lVMy
-         6VQgwBdTHFvZTktHyDb+2w0XAEn25DsAK0imWW/BgB81PwYWuxrayRqGP/mYv+rh/bxh
-         0AhhpsMJBX8vSktd43DYpStrupEuf8JViexcM1s4YLhqopaRYm0dgiCVtpI47z6G2QH6
-         I2fsmmwFu3AMNunBnanAm5aAiu41hep6OADRzhCR3S/Su3T1uIO2gOXpNvQXEkMO06qt
-         s8MA==
+        bh=vWjgv64PifzqZIXie0Tq5/56PwQh7fBla0xQUr+CoiM=;
+        b=kfgCL/p8jePmvcv2A+fyPmiyPLtDYP/6ryc+ZoDp+M6j36eYIjUCw5XewLhAleYj7w
+         T8yFzcFxWy366NwsobDyJkEFe9JhNMe9GPT1+rXmfZgWX+V9Y8BmnHiHZUJi0BedHSRZ
+         NE8IzkIBw6jrjujqxQCo2gLHJnAd93uif1ai2TGKWn4E0MOXKT5Bni6RoRGMpb1MMMp1
+         uMTro6RvYnW+nj1VtocGuXcbQIJ+gXButGcldYC08Iw+8OiMx5aNJtilMKCuCwStRzZd
+         nE1Zr6SeQainpF6c7OH+hc0DxTkcUzkjVpJVK1sP1abTaCzNeRugi8ROjH64SSUXvwGd
+         dvqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695845202; x=1696450002;
+        d=1e100.net; s=20230601; t=1695845615; x=1696450415;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=m4HmIlLymTdAvxTuhETBvtWB4sC/GIkRBv1xIehrtMg=;
-        b=as8fs2lTotx9ZO+xDDMQBwUAHnxGv2V+g0xkW+loHUe/L4Lx9R8FUKqOqZG5VhH68J
-         ac6NHpXpdBVifKMAmho5wQGJTpMyQQ57ohB8ECRW2tFjd6FG8tVPDNUhKAris0xpLxB6
-         /U456vetIT/P0tEQYoSWgDQkzOBOqrXTKQ9ODWePRMEQfxNL2yPlDWFGuj7m/OUP1LqV
-         sSbTgy+AqSwWOAEIYVemWvcJEMrC1WfOx+nrnNGxKKc/tM5c4X3yPL1r7tWmMOKmx8jR
-         KpmkEZ4y0fiLosmQ+bRt0Z7vVx061ZtMwVWBb0QCyca22HoBpcJrhWvbwfppV4/mvniH
-         c1cg==
-X-Gm-Message-State: AOJu0YzMQtRBY9qUQVZDFfVm/oPABrHbdlGm8dPWptsDBxi2/o71g0l4
-        I/ma7z7IeogERG/yLEIgvqYYr0e37BNdFQ==
-X-Google-Smtp-Source: AGHT+IELp1CAs7Pf3kWBlXOwgrv2LNanTeFDkAEaYJZ813Os1Ur40GVBsJw6JTk7u0yNdCmbr97lMQ==
-X-Received: by 2002:a92:ca46:0:b0:34d:ec9c:7321 with SMTP id q6-20020a92ca46000000b0034dec9c7321mr3746701ilo.3.1695845201873;
-        Wed, 27 Sep 2023 13:06:41 -0700 (PDT)
+        bh=vWjgv64PifzqZIXie0Tq5/56PwQh7fBla0xQUr+CoiM=;
+        b=Y+QLoGlu8DRBlxLvqDUJsq/dTDZqC5iz7tArTDU4gZnhxRftB52iMIG2aT69LZ/WLV
+         47sRsOInxFFQPe4Ip9HbqEftZ11j7KHrsntibu8ysfqMQ04GI3aTM36L1XyFFiVs6nKp
+         Gxj6cM/2NkUgMwALMF6+7yg0M6w6hOxzsvVS47A0QmT6a3tUdn0aunAgPN3jOd0ELeXJ
+         uOUfs2IFUKltUXXVt8Y7KcktGlDz+gTlGnN8hspgZQul3GHxmeGjRF28VOz4ouprVcfb
+         QbqtJAUiry1C6P8PMdOezjm9VMeHhgA0Ase50EfRwRkDWzZIhglWx3zCD4YBaNr68TtW
+         rnkw==
+X-Gm-Message-State: AOJu0Yw3HodP8UZHa11PXlHlASORbwQz3r25ECY/18QixH82KFx8dQGL
+        piBSEGNwqYDQ9+CBOdHn28IkpzAwf5pPlA==
+X-Google-Smtp-Source: AGHT+IHIlQNFlY58YSXNzEoZRqtmz4epaTXI/qLEVc1TOkSTL4MSev86hK+9aTvdM2PoylowugTp5Q==
+X-Received: by 2002:a05:6602:274d:b0:790:c259:4ee5 with SMTP id b13-20020a056602274d00b00790c2594ee5mr2940512ioe.8.1695845614954;
+        Wed, 27 Sep 2023 13:13:34 -0700 (PDT)
 Received: from gmail.froward.int.ebiederm.org.gmail.com (ip68-227-168-167.om.om.cox.net. [68.227.168.167])
-        by smtp.gmail.com with ESMTPSA id b17-20020a05663801b100b00439fa6ff6a9sm4089170jaq.70.2023.09.27.13.06.41
+        by smtp.gmail.com with ESMTPSA id z197-20020a6bc9ce000000b0079fa1a7cd36sm3680597iof.30.2023.09.27.13.13.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Sep 2023 13:06:41 -0700 (PDT)
+        Wed, 27 Sep 2023 13:13:34 -0700 (PDT)
 From:   "Eric W. Biederman" <ebiederm@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Elijah Newren <newren@gmail.com>, git@vger.kernel.org
+        git@vger.kernel.org
 Subject: Re: [PATCH v3] bulk-checkin: only support blobs in index_bulk_checkin
 References: <878r918ps3.fsf@gmail.froward.int.ebiederm.org>
         <xmqqr0mtcosy.fsf@gitster.g>
         <87zg1h58xa.fsf@gmail.froward.int.ebiederm.org>
         <87msx99b9o.fsf_-_@gmail.froward.int.ebiederm.org>
         <xmqqmsx8mwr4.fsf@gitster.g> <ZROHrSmmZOIE6bl9@nand.local>
-        <xmqqil7wmf50.fsf@gitster.g> <ZRQ9aSeu/wpJERuV@nand.local>
-        <xmqq7cobmvjt.fsf@gitster.g>
-Date:   Wed, 27 Sep 2023 15:06:40 -0500
-In-Reply-To: <xmqq7cobmvjt.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-        27 Sep 2023 09:26:46 -0700")
-Message-ID: <87a5t7js8f.fsf@gmail.froward.int.ebiederm.org>
+Date:   Wed, 27 Sep 2023 15:13:33 -0500
+In-Reply-To: <ZROHrSmmZOIE6bl9@nand.local> (Taylor Blau's message of "Tue, 26
+        Sep 2023 21:38:53 -0400")
+Message-ID: <87pm23idci.fsf@gmail.froward.int.ebiederm.org>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -72,35 +70,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Taylor Blau <me@ttaylorr.com> writes:
 
-> Taylor Blau <me@ttaylorr.com> writes:
+> On Tue, Sep 26, 2023 at 02:48:31PM -0700, Junio C Hamano wrote:
+>> > Avoid all of those future complications by limiting index_bulk_checkin
+>> > to only work on blobs.
+>>
+>> Thanks.  Will queue.
 >
->> I am not sure that I follow. If we have an address in memory from which
->> we want to stream raw bytes directly to the packfile, that should work
->> for all objects regardless of type, no?
+> Hmm. I wonder if retaining some flexibility in the bulk-checkin
+> mechanism may be worthwhile. We discussed at the Contributor's
+> Summit[^1] today that the bulk-checkin system may be a good fit for
+> packing any blobs/trees created by `merge-tree` or `replay` instead of
+> writing them out as loose objects.
 >
-> For a single hash world, yes.  For keeping track of "the other hash"
-> and correspondence, you need to (1) interpret the contents of the
-> object (e.g., if you received a tree contents for SHA-1 repository,
-> you'd need to split them into tree entries and know which parts of
-> the bytestream are SHA-1 hashes of the tree contebnts), (2) come
-> up with the corresponding tree contents in the SHA-256 world (you
-> should be able to do that now you know SHA-1 names of the objects
-> directly referred to by the tree) and hash that using SHA-256, and
-> (3) remember the SHA-1 and the SHA-256 name correspondence of the
-> tree object you just hashed, in addition to the usual (4) hashing
-> the contents using SHA-1 hash algorithm without caring what the byte
-> stream represents.
+> Being able to write trees in addition to blobs is definitely important
+> there, so we may want to wait on merging this down until that direction
+> solidifies a bit more. (FWIW, I started working on that today and hope
+> to have patches on the list in the next day or two).
+>
+> Alternatively, if there is an urgency to merge these down, we can always
+> come back to it in the future and revert it if need be. Either way
+> :-).
 
-If it helps I just posted a patchset that implements what it takes
-to deal with objects small enough to live in-core.
+There are two things that index_bulk_checkin does.
+- Handle objects that are too large to fit into a memory
+- Place objects immediately in a pack.
 
-You can read object-file-convert.c to see what it takes to generate
-an object in the other hash function world.
+Do I read things correctly that you want to take an object that is small
+enough to fit into memory, and to immediately into a pack?
 
-The exercise for the reader is how to apply this to objects that
-are too large to fit in memory.
+If so you essentially want write_object_file that directly writes to a
+pack?
+
+A version of write_object_file that that directly writes to a pack is
+much easier than the chunking that index_bulk_checkin does.
+
+Perhaps your version could be called index_pack_checkin?
 
 Eric
-
