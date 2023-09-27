@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3C94E82CCE
-	for <git@archiver.kernel.org>; Wed, 27 Sep 2023 19:57:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 788A6E82CCF
+	for <git@archiver.kernel.org>; Wed, 27 Sep 2023 19:57:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229831AbjI0T5A (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Sep 2023 15:57:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35934 "EHLO
+        id S229863AbjI0T5D (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Sep 2023 15:57:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229836AbjI0T4f (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229922AbjI0T4f (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 27 Sep 2023 15:56:35 -0400
-Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DE4A1AD
-        for <git@vger.kernel.org>; Wed, 27 Sep 2023 12:56:09 -0700 (PDT)
-Received: by mail-io1-xd34.google.com with SMTP id ca18e2360f4ac-79fa425855cso347642239f.2
-        for <git@vger.kernel.org>; Wed, 27 Sep 2023 12:56:09 -0700 (PDT)
+Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07766CF3
+        for <git@vger.kernel.org>; Wed, 27 Sep 2023 12:56:13 -0700 (PDT)
+Received: by mail-io1-xd33.google.com with SMTP id ca18e2360f4ac-76c64da0e46so425681439f.0
+        for <git@vger.kernel.org>; Wed, 27 Sep 2023 12:56:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695844568; x=1696449368; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1695844572; x=1696449372; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ctOzb5UNmN2By2/XBixPoWkARfwfWfm6uJO9oRBQccg=;
-        b=JTGt5Vqz4F3of2nNW0/xtgFBUUcYQ+Hy5Ep6UEpdIFTTIHrHERQap3wjLM7bgTJYC9
-         Q7yBm2ytWoLCc+8vpzfvXYkNIrsCZZenuNgaSrqGYtYbr5J2QJS4T8kB55TV9d9S429H
-         7SqWEAoJUhr2rfG5UnWJQyEz96i0NW6HkfnY4zfd4KppemWtWoo5SAeQCHE6wSnfQpr6
-         waHZb2xqWxBeNw0z8oDX5ODc+3ffeyHLoSZDXu+t7Rd0o0O7Ecp6YA3MstsA5NT28vyh
-         b33PpVy3cXvqRdrbDMsADKwL1p1MEVVk53w11Mi+RmSK42zASrbLUCGDdz87R9mlM95/
-         PUjA==
+        bh=iIp5xN1/FiLxLp7U+weLwdU6T91ZE64ygxLvw8ASvC4=;
+        b=LN4Zqw5iGpx+OswWuyi5J0ACnb9+4wS28GNb12ZEks+ek3IeVP6+N7i1Zhak3NYvF/
+         i+/ynCJ2jv6Yzi5p6ATi3U9xuppVtE8Vex4staXxm9AOTwrPrV7XFGOPgWmclA/fJazh
+         hPT+L7X8pYTW4d9rbTgyAoGwMok5JeKgix/RYexlAR8Tr6/bjtS3BXM14d2AqaGUTqFj
+         7oaQOvlxg5V9OTIpT0DTSjoV2Che4gPqc4/c2iLUazg58bjkRBYSlFUU+fHBRO9/KI6B
+         JmDz5t+D0ewzOS8aZJRcPlPn/0xtGmRKnkSIPTJJ4t2V3a3ICwXf7Vfzh75zwxi91J+h
+         nTDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695844568; x=1696449368;
+        d=1e100.net; s=20230601; t=1695844572; x=1696449372;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ctOzb5UNmN2By2/XBixPoWkARfwfWfm6uJO9oRBQccg=;
-        b=c/KQbokMs7vvoPL0cyZ83wXxLfQltTpMF5OahlSWL9lTH/Kp15sXVZf7X5K7dSUkHr
-         Wn2ZrVzT5B0vNhoiDhcuWZXedarNySE/vbNUWYgfGdJz7XAPcrfoFe+dQqNNSfHMT8oF
-         EMx8Q1anNtFzaL7t5Mk7nVQ0CcTM91vLlL+t99vPbwUV7P0iCNvZhCmZT7xU7tSMl2HC
-         tKlNwCLCx2wOmKYZLZwYeEILiAVf1kv/7A92idHgbxxWpceX6V57me6K1iyhEYiFwVqQ
-         4nkYGaRaGT4ZBPAxnhRRV+x6XEXI5j+7YYzSiwk/lRIuYg9JJYoQhn21oz+TLXMr+AM1
-         YvgQ==
-X-Gm-Message-State: AOJu0YxjpW3e2e3JtwJaV9dvSZSvQT0+d/XVmoz30JbwdQaaFS6JKpGh
-        Q2Ng4Hq1ajUfRY0WQn1WpJiAQPOWkPw=
-X-Google-Smtp-Source: AGHT+IEQjvgJMwmqXs06iFfZ4uTBPNchwNfMehIfY4qcM8Oxpr+S4WDkr9LErD2Y3d6RSewMrV8OcA==
-X-Received: by 2002:a5e:8912:0:b0:792:72b8:b8a with SMTP id k18-20020a5e8912000000b0079272b80b8amr3100381ioj.18.1695844568197;
-        Wed, 27 Sep 2023 12:56:08 -0700 (PDT)
+        bh=iIp5xN1/FiLxLp7U+weLwdU6T91ZE64ygxLvw8ASvC4=;
+        b=RXCcyQKRq/3VEuL6rMTMAg+52dWvGq1gllz5lx+PLQJqkP0qGD9IOl/wOexVG84Tmz
+         j7TGIZCxSbgeDg2eoBOS0rqOxhT6483JuMprXvpc5oPXnscwCA22C+juniRpesRlQCB+
+         47BuoHIygqTsCy84nkwTffUb+kfq3ej7Yt4AHT18+fTWUTuOG4S4WGxy4uYi5SNo/wRT
+         C8IsJgIwaehmaGpXijefPk9uKdEOSqWCNwGJTlgKUEBji6RFdBZQzhdWQWMoeZES4JBg
+         Bg5YsJ+xLdZKcZCjBZ0TUoDkSsZK2zurR6+jCgKFuNfMhY1ezRfKujllZsLMBOcuoo0f
+         lglA==
+X-Gm-Message-State: AOJu0YzP2ukwvagx5/etRFpN/W4cz48xJcpJi+hzRYn2AjuDFDjbTZTp
+        VwfZxc4dt2FrksZ7pezZKXo=
+X-Google-Smtp-Source: AGHT+IFpu+Ghc/pWTm3/4DUfrfKzBQByIbKemQ5HIMzZYUrGUyaHBZnQMVmFd1VBlK/ycPzIPtuH+Q==
+X-Received: by 2002:a6b:d90f:0:b0:799:36c2:fa49 with SMTP id r15-20020a6bd90f000000b0079936c2fa49mr3014365ioc.15.1695844572225;
+        Wed, 27 Sep 2023 12:56:12 -0700 (PDT)
 Received: from localhost.localdomain (ip68-227-168-167.om.om.cox.net. [68.227.168.167])
-        by smtp.gmail.com with ESMTPSA id o23-20020a6b5a17000000b007836c7e8dccsm2935628iob.17.2023.09.27.12.56.07
+        by smtp.gmail.com with ESMTPSA id o23-20020a6b5a17000000b007836c7e8dccsm2935628iob.17.2023.09.27.12.56.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Sep 2023 12:56:07 -0700 (PDT)
+        Wed, 27 Sep 2023 12:56:11 -0700 (PDT)
 From:   "Eric W. Biederman" <ebiederm@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
         "Eric W. Biederman" <ebiederm@xmission.com>
-Subject: [PATCH 24/30] tree-walk: init_tree_desc take an oid to get the hash algorithm
-Date:   Wed, 27 Sep 2023 14:55:31 -0500
-Message-Id: <20230927195537.1682-24-ebiederm@gmail.com>
+Subject: [PATCH 29/30] t1006: Test oid compatibility with cat-file
+Date:   Wed, 27 Sep 2023 14:55:36 -0500
+Message-Id: <20230927195537.1682-29-ebiederm@gmail.com>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <87jzsbjt0a.fsf@gmail.froward.int.ebiederm.org>
 References: <87jzsbjt0a.fsf@gmail.froward.int.ebiederm.org>
@@ -68,665 +68,417 @@ X-Mailing-List: git@vger.kernel.org
 
 From: "Eric W. Biederman" <ebiederm@xmission.com>
 
-To make it possible for git ls-tree to display the tree encoded
-in the hash algorithm of the oid specified to git ls-tree, update
-init_tree_desc to take as a parameter the oid of the tree object.
-
-Update all callers of init_tree_desc and init_tree_desc_gently
-to pass the oid of the tree object.
-
-Use the oid of the tree object to discover the hash algorithm
-of the oid and store that hash algorithm in struct tree_desc.
-
-Use the hash algorithm in decode_tree_entry and
-update_tree_entry_internal to handle reading a tree object encoded in
-a hash algorithm that differs from the repositories hash algorithm.
+Update the existing tests that are oid based to test that cat-file
+works correctly with the normal oid and the compat_oid.
 
 Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
 ---
- archive.c              |  3 ++-
- builtin/am.c           |  6 +++---
- builtin/checkout.c     |  8 +++++---
- builtin/clone.c        |  2 +-
- builtin/commit.c       |  2 +-
- builtin/grep.c         |  8 ++++----
- builtin/merge.c        |  3 ++-
- builtin/pack-objects.c |  6 ++++--
- builtin/read-tree.c    |  2 +-
- builtin/stash.c        |  5 +++--
- cache-tree.c           |  2 +-
- delta-islands.c        |  2 +-
- diff-lib.c             |  2 +-
- fsck.c                 |  6 ++++--
- http-push.c            |  2 +-
- list-objects.c         |  2 +-
- match-trees.c          |  4 ++--
- merge-ort.c            | 11 ++++++-----
- merge-recursive.c      |  2 +-
- merge.c                |  3 ++-
- pack-bitmap-write.c    |  2 +-
- packfile.c             |  3 ++-
- reflog.c               |  2 +-
- revision.c             |  4 ++--
- tree-walk.c            | 36 +++++++++++++++++++++---------------
- tree-walk.h            |  7 +++++--
- tree.c                 |  2 +-
- walker.c               |  2 +-
- 28 files changed, 80 insertions(+), 59 deletions(-)
+ t/t1006-cat-file.sh | 251 +++++++++++++++++++++++++++-----------------
+ 1 file changed, 154 insertions(+), 97 deletions(-)
 
-diff --git a/archive.c b/archive.c
-index ca11db185b15..b10269aee7be 100644
---- a/archive.c
-+++ b/archive.c
-@@ -339,7 +339,8 @@ int write_archive_entries(struct archiver_args *args,
- 		opts.src_index = args->repo->index;
- 		opts.dst_index = args->repo->index;
- 		opts.fn = oneway_merge;
--		init_tree_desc(&t, args->tree->buffer, args->tree->size);
-+		init_tree_desc(&t, &args->tree->object.oid,
-+			       args->tree->buffer, args->tree->size);
- 		if (unpack_trees(1, &t, &opts))
- 			return -1;
- 		git_attr_set_direction(GIT_ATTR_INDEX);
-diff --git a/builtin/am.c b/builtin/am.c
-index 8bde034fae68..4dfd714b910e 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1991,8 +1991,8 @@ static int fast_forward_to(struct tree *head, struct tree *remote, int reset)
- 	opts.reset = reset ? UNPACK_RESET_PROTECT_UNTRACKED : 0;
- 	opts.preserve_ignored = 0; /* FIXME: !overwrite_ignore */
- 	opts.fn = twoway_merge;
--	init_tree_desc(&t[0], head->buffer, head->size);
--	init_tree_desc(&t[1], remote->buffer, remote->size);
-+	init_tree_desc(&t[0], &head->object.oid, head->buffer, head->size);
-+	init_tree_desc(&t[1], &remote->object.oid, remote->buffer, remote->size);
+diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
+index 9b018b538950..23d3d37283bb 100755
+--- a/t/t1006-cat-file.sh
++++ b/t/t1006-cat-file.sh
+@@ -236,27 +236,38 @@ hello_size=$(strlen "$hello_content")
+ hello_oid=$(echo_without_newline "$hello_content" | git hash-object --stdin)
  
- 	if (unpack_trees(2, t, &opts)) {
- 		rollback_lock_file(&lock_file);
-@@ -2026,7 +2026,7 @@ static int merge_tree(struct tree *tree)
- 	opts.dst_index = &the_index;
- 	opts.merge = 1;
- 	opts.fn = oneway_merge;
--	init_tree_desc(&t[0], tree->buffer, tree->size);
-+	init_tree_desc(&t[0], &tree->object.oid, tree->buffer, tree->size);
+ test_expect_success "setup" '
++	git config core.repositoryformatversion 1 &&
++	git config extensions.objectformat $test_hash_algo &&
++	git config extensions.compatobjectformat $test_compat_hash_algo &&
+ 	echo_without_newline "$hello_content" > hello &&
+ 	git update-index --add hello
+ '
  
- 	if (unpack_trees(1, t, &opts)) {
- 		rollback_lock_file(&lock_file);
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index f53612f46870..03eff73fd031 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -701,7 +701,7 @@ static int reset_tree(struct tree *tree, const struct checkout_opts *o,
- 			       info->commit ? &info->commit->object.oid : null_oid(),
- 			       NULL);
- 	parse_tree(tree);
--	init_tree_desc(&tree_desc, tree->buffer, tree->size);
-+	init_tree_desc(&tree_desc, &tree->object.oid, tree->buffer, tree->size);
- 	switch (unpack_trees(1, &tree_desc, &opts)) {
- 	case -2:
- 		*writeout_error = 1;
-@@ -815,10 +815,12 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 			die(_("unable to parse commit %s"),
- 				oid_to_hex(old_commit_oid));
+-run_tests 'blob' $hello_oid $hello_size "$hello_content" "$hello_content"
++run_blob_tests () {
++    oid=$1
  
--		init_tree_desc(&trees[0], tree->buffer, tree->size);
-+		init_tree_desc(&trees[0], &tree->object.oid,
-+			       tree->buffer, tree->size);
- 		parse_tree(new_tree);
- 		tree = new_tree;
--		init_tree_desc(&trees[1], tree->buffer, tree->size);
-+		init_tree_desc(&trees[1], &tree->object.oid,
-+			       tree->buffer, tree->size);
+-test_expect_success '--batch-command --buffer with flush for blob info' '
+-	echo "$hello_oid blob $hello_size" >expect &&
+-	test_write_lines "info $hello_oid" "flush" |
++    run_tests 'blob' $oid $hello_size "$hello_content" "$hello_content"
++
++    test_expect_success '--batch-command --buffer with flush for blob info' '
++	echo "$oid blob $hello_size" >expect &&
++	test_write_lines "info $oid" "flush" |
+ 	GIT_TEST_CAT_FILE_NO_FLUSH_ON_EXIT=1 \
+ 	git cat-file --batch-command --buffer >actual &&
+ 	test_cmp expect actual
+-'
++    '
  
- 		ret = unpack_trees(2, trees, &topts);
- 		clear_unpack_trees_porcelain(&topts);
-diff --git a/builtin/clone.c b/builtin/clone.c
-index c6357af94989..79ceefb93995 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -737,7 +737,7 @@ static int checkout(int submodule_progress, int filter_submodules)
- 	if (!tree)
- 		die(_("unable to parse commit %s"), oid_to_hex(&oid));
- 	parse_tree(tree);
--	init_tree_desc(&t, tree->buffer, tree->size);
-+	init_tree_desc(&t, &tree->object.oid, tree->buffer, tree->size);
- 	if (unpack_trees(1, &t, &opts) < 0)
- 		die(_("unable to checkout working tree"));
+-test_expect_success '--batch-command --buffer without flush for blob info' '
++    test_expect_success '--batch-command --buffer without flush for blob info' '
+ 	touch output &&
+-	test_write_lines "info $hello_oid" |
++	test_write_lines "info $oid" |
+ 	GIT_TEST_CAT_FILE_NO_FLUSH_ON_EXIT=1 \
+ 	git cat-file --batch-command --buffer >>output &&
+ 	test_must_be_empty output
+-'
++    '
++}
++
++hello_compat_oid=$(git rev-parse --output-object-format=$test_compat_hash_algo $hello_oid)
++run_blob_tests $hello_oid
++run_blob_tests $hello_compat_oid
  
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 7da5f924484d..537319932b65 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -340,7 +340,7 @@ static void create_base_index(const struct commit *current_head)
- 	if (!tree)
- 		die(_("failed to unpack HEAD tree object"));
- 	parse_tree(tree);
--	init_tree_desc(&t, tree->buffer, tree->size);
-+	init_tree_desc(&t, &tree->object.oid, tree->buffer, tree->size);
- 	if (unpack_trees(1, &t, &opts))
- 		exit(128); /* We've already reported the error, finish dying */
- }
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 50e712a18479..0c2b8a376f8e 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -530,7 +530,7 @@ static int grep_submodule(struct grep_opt *opt,
- 		strbuf_addstr(&base, filename);
- 		strbuf_addch(&base, '/');
+ test_expect_success '--batch-check without %(rest) considers whole line' '
+ 	echo "$hello_oid blob $hello_size" >expect &&
+@@ -267,35 +278,58 @@ test_expect_success '--batch-check without %(rest) considers whole line' '
+ '
  
--		init_tree_desc(&tree, data, size);
-+		init_tree_desc(&tree, oid, data, size);
- 		hit = grep_tree(&subopt, pathspec, &tree, &base, base.len,
- 				object_type == OBJ_COMMIT);
- 		strbuf_release(&base);
-@@ -574,7 +574,7 @@ static int grep_cache(struct grep_opt *opt,
+ tree_oid=$(git write-tree)
++tree_compat_oid=$(git rev-parse --output-object-format=$test_compat_hash_algo $tree_oid)
+ tree_size=$(($(test_oid rawsz) + 13))
++tree_compat_size=$(($(test_oid --hash=compat rawsz) + 13))
+ tree_pretty_content="100644 blob $hello_oid	hello${LF}"
++tree_compat_pretty_content="100644 blob $hello_compat_oid	hello${LF}"
  
- 			data = repo_read_object_file(the_repository, &ce->oid,
- 						     &type, &size);
--			init_tree_desc(&tree, data, size);
-+			init_tree_desc(&tree, &ce->oid, data, size);
+ run_tests 'tree' $tree_oid $tree_size "" "$tree_pretty_content"
++run_tests 'tree' $tree_compat_oid $tree_compat_size "" "$tree_compat_pretty_content"
  
- 			hit |= grep_tree(opt, pathspec, &tree, &name, 0, 0);
- 			strbuf_setlen(&name, name_base_len);
-@@ -670,7 +670,7 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
- 				    oid_to_hex(&entry.oid));
+ commit_message="Initial commit"
+ commit_oid=$(echo_without_newline "$commit_message" | git commit-tree $tree_oid)
++commit_compat_oid=$(git rev-parse --output-object-format=$test_compat_hash_algo $commit_oid)
+ commit_size=$(($(test_oid hexsz) + 137))
++commit_compat_size=$(($(test_oid --hash=compat hexsz) + 137))
+ commit_content="tree $tree_oid
+ author $GIT_AUTHOR_NAME <$GIT_AUTHOR_EMAIL> $GIT_AUTHOR_DATE
+ committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
  
- 			strbuf_addch(base, '/');
--			init_tree_desc(&sub, data, size);
-+			init_tree_desc(&sub, &entry.oid, data, size);
- 			hit |= grep_tree(opt, pathspec, &sub, base, tn_len,
- 					 check_attr);
- 			free(data);
-@@ -714,7 +714,7 @@ static int grep_object(struct grep_opt *opt, const struct pathspec *pathspec,
- 			strbuf_add(&base, name, len);
- 			strbuf_addch(&base, ':');
- 		}
--		init_tree_desc(&tree, data, size);
-+		init_tree_desc(&tree, &obj->oid, data, size);
- 		hit = grep_tree(opt, pathspec, &tree, &base, base.len,
- 				obj->type == OBJ_COMMIT);
- 		strbuf_release(&base);
-diff --git a/builtin/merge.c b/builtin/merge.c
-index de68910177fb..718165d45917 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -704,7 +704,8 @@ static int read_tree_trivial(struct object_id *common, struct object_id *head,
- 	cache_tree_free(&the_index.cache_tree);
- 	for (i = 0; i < nr_trees; i++) {
- 		parse_tree(trees[i]);
--		init_tree_desc(t+i, trees[i]->buffer, trees[i]->size);
-+		init_tree_desc(t+i, &trees[i]->object.oid,
-+			       trees[i]->buffer, trees[i]->size);
- 	}
- 	if (unpack_trees(nr_trees, t, &opts))
- 		return -1;
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index d2a162d52804..d34902002656 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -1756,7 +1756,8 @@ static void add_pbase_object(struct tree_desc *tree,
- 			tree = pbase_tree_get(&entry.oid);
- 			if (!tree)
- 				return;
--			init_tree_desc(&sub, tree->tree_data, tree->tree_size);
-+			init_tree_desc(&sub, &tree->oid,
-+				       tree->tree_data, tree->tree_size);
+ $commit_message"
  
- 			add_pbase_object(&sub, down, downlen, fullname);
- 			pbase_tree_put(tree);
-@@ -1816,7 +1817,8 @@ static void add_preferred_base_object(const char *name)
- 		}
- 		else {
- 			struct tree_desc tree;
--			init_tree_desc(&tree, it->pcache.tree_data, it->pcache.tree_size);
-+			init_tree_desc(&tree, &it->pcache.oid,
-+				       it->pcache.tree_data, it->pcache.tree_size);
- 			add_pbase_object(&tree, name, cmplen, name);
- 		}
- 	}
-diff --git a/builtin/read-tree.c b/builtin/read-tree.c
-index 1fec702a04fa..24d6d156d3a2 100644
---- a/builtin/read-tree.c
-+++ b/builtin/read-tree.c
-@@ -264,7 +264,7 @@ int cmd_read_tree(int argc, const char **argv, const char *cmd_prefix)
- 	for (i = 0; i < nr_trees; i++) {
- 		struct tree *tree = trees[i];
- 		parse_tree(tree);
--		init_tree_desc(t+i, tree->buffer, tree->size);
-+		init_tree_desc(t+i, &tree->object.oid, tree->buffer, tree->size);
- 	}
- 	if (unpack_trees(nr_trees, t, &opts))
- 		return 128;
-diff --git a/builtin/stash.c b/builtin/stash.c
-index fe64cde9ce30..9ee52af4d28e 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -285,7 +285,7 @@ static int reset_tree(struct object_id *i_tree, int update, int reset)
- 	if (parse_tree(tree))
- 		return -1;
++commit_compat_content="tree $tree_compat_oid
++author $GIT_AUTHOR_NAME <$GIT_AUTHOR_EMAIL> $GIT_AUTHOR_DATE
++committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++
++$commit_message"
++
+ run_tests 'commit' $commit_oid $commit_size "$commit_content" "$commit_content"
++run_tests 'commit' $commit_compat_oid $commit_compat_size "$commit_compat_content" "$commit_compat_content"
  
--	init_tree_desc(t, tree->buffer, tree->size);
-+	init_tree_desc(t, &tree->object.oid, tree->buffer, tree->size);
+-tag_header_without_timestamp="object $hello_oid
+-type blob
++tag_header_without_oid="type blob
+ tag hellotag
+ tagger $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>"
++tag_header_without_timestamp="object $hello_oid
++$tag_header_without_oid"
++tag_compat_header_without_timestamp="object $hello_compat_oid
++$tag_header_without_oid"
+ tag_description="This is a tag"
+ tag_content="$tag_header_without_timestamp 0 +0000
  
- 	opts.head_idx = 1;
- 	opts.src_index = &the_index;
-@@ -871,7 +871,8 @@ static void diff_include_untracked(const struct stash_info *info, struct diff_op
- 		tree[i] = parse_tree_indirect(oid[i]);
- 		if (parse_tree(tree[i]) < 0)
- 			die(_("failed to parse tree"));
--		init_tree_desc(&tree_desc[i], tree[i]->buffer, tree[i]->size);
-+		init_tree_desc(&tree_desc[i], &tree[i]->object.oid,
-+			       tree[i]->buffer, tree[i]->size);
- 	}
++$tag_description"
++tag_compat_content="$tag_compat_header_without_timestamp 0 +0000
++
+ $tag_description"
  
- 	unpack_tree_opt.head_idx = -1;
-diff --git a/cache-tree.c b/cache-tree.c
-index ddc7d3d86959..334973a01cee 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -770,7 +770,7 @@ static void prime_cache_tree_rec(struct repository *r,
+ tag_oid=$(echo_without_newline "$tag_content" | git hash-object -t tag --stdin -w)
+ tag_size=$(strlen "$tag_content")
  
- 	oidcpy(&it->oid, &tree->object.oid);
++tag_compat_oid=$(git rev-parse --output-object-format=$test_compat_hash_algo $tag_oid)
++tag_compat_size=$(strlen "$tag_compat_content")
++
+ run_tests 'tag' $tag_oid $tag_size "$tag_content" "$tag_content"
++run_tests 'tag' $tag_compat_oid $tag_compat_size "$tag_compat_content" "$tag_compat_content"
  
--	init_tree_desc(&desc, tree->buffer, tree->size);
-+	init_tree_desc(&desc, &tree->object.oid, tree->buffer, tree->size);
- 	cnt = 0;
- 	while (tree_entry(&desc, &entry)) {
- 		if (!S_ISDIR(entry.mode))
-diff --git a/delta-islands.c b/delta-islands.c
-index 5de5759f3f13..1ff3506b10f2 100644
---- a/delta-islands.c
-+++ b/delta-islands.c
-@@ -289,7 +289,7 @@ void resolve_tree_islands(struct repository *r,
- 		if (!tree || parse_tree(tree) < 0)
- 			die(_("bad tree object %s"), oid_to_hex(&ent->idx.oid));
+ test_expect_success "Reach a blob from a tag pointing to it" '
+ 	echo_without_newline "$hello_content" >expect &&
+@@ -303,37 +337,43 @@ test_expect_success "Reach a blob from a tag pointing to it" '
+ 	test_cmp expect actual
+ '
  
--		init_tree_desc(&desc, tree->buffer, tree->size);
-+		init_tree_desc(&desc, &tree->object.oid, tree->buffer, tree->size);
- 		while (tree_entry(&desc, &entry)) {
- 			struct object *obj;
+-for batch in batch batch-check batch-command
++for oid in $hello_oid $hello_compat_oid
+ do
+-    for opt in t s e p
++    for batch in batch batch-check batch-command
+     do
++	for opt in t s e p
++	do
+ 	test_expect_success "Passing -$opt with --$batch fails" '
+-	    test_must_fail git cat-file --$batch -$opt $hello_oid
++	    test_must_fail git cat-file --$batch -$opt $oid
+ 	'
  
-diff --git a/diff-lib.c b/diff-lib.c
-index 6b0c6a7180cc..add323f5628d 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -558,7 +558,7 @@ static int diff_cache(struct rev_info *revs,
- 	opts.pathspec = &revs->diffopt.pathspec;
- 	opts.pathspec->recursive = 1;
+ 	test_expect_success "Passing --$batch with -$opt fails" '
+-	    test_must_fail git cat-file -$opt --$batch $hello_oid
++	    test_must_fail git cat-file -$opt --$batch $oid
+ 	'
+-    done
++	done
  
--	init_tree_desc(&t, tree->buffer, tree->size);
-+	init_tree_desc(&t, &tree->object.oid, tree->buffer, tree->size);
- 	return unpack_trees(1, &t, &opts);
- }
+-    test_expect_success "Passing <type> with --$batch fails" '
+-	test_must_fail git cat-file --$batch blob $hello_oid
+-    '
++	test_expect_success "Passing <type> with --$batch fails" '
++	test_must_fail git cat-file --$batch blob $oid
++	'
  
-diff --git a/fsck.c b/fsck.c
-index 2b1e348005b7..6b492a48da82 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -313,7 +313,8 @@ static int fsck_walk_tree(struct tree *tree, void *data, struct fsck_options *op
- 		return -1;
+-    test_expect_success "Passing --$batch with <type> fails" '
+-	test_must_fail git cat-file blob --$batch $hello_oid
+-    '
++	test_expect_success "Passing --$batch with <type> fails" '
++	test_must_fail git cat-file blob --$batch $oid
++	'
  
- 	name = fsck_get_object_name(options, &tree->object.oid);
--	if (init_tree_desc_gently(&desc, tree->buffer, tree->size, 0))
-+	if (init_tree_desc_gently(&desc, &tree->object.oid,
-+				  tree->buffer, tree->size, 0))
- 		return -1;
- 	while (tree_entry_gently(&desc, &entry)) {
- 		struct object *obj;
-@@ -583,7 +584,8 @@ static int fsck_tree(const struct object_id *tree_oid,
- 	const char *o_name;
- 	struct name_stack df_dup_candidates = { NULL };
+-    test_expect_success "Passing oid with --$batch fails" '
+-	test_must_fail git cat-file --$batch $hello_oid
+-    '
++	test_expect_success "Passing oid with --$batch fails" '
++	test_must_fail git cat-file --$batch $oid
++	'
++    done
+ done
  
--	if (init_tree_desc_gently(&desc, buffer, size, TREE_DESC_RAW_MODES)) {
-+	if (init_tree_desc_gently(&desc, tree_oid, buffer, size,
-+				  TREE_DESC_RAW_MODES)) {
- 		retval += report(options, tree_oid, OBJ_TREE,
- 				 FSCK_MSG_BAD_TREE,
- 				 "cannot be parsed as a tree");
-diff --git a/http-push.c b/http-push.c
-index a704f490fdb2..81c35b5e96f7 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -1308,7 +1308,7 @@ static struct object_list **process_tree(struct tree *tree,
- 	obj->flags |= SEEN;
- 	p = add_one_object(obj, p);
+-for opt in t s e p
++for oid in $hello_oid $hello_compat_oid
+ do
+-    test_expect_success "Passing -$opt with --follow-symlinks fails" '
+-	    test_must_fail git cat-file --follow-symlinks -$opt $hello_oid
++    for opt in t s e p
++    do
++	test_expect_success "Passing -$opt with --follow-symlinks fails" '
++	    test_must_fail git cat-file --follow-symlinks -$opt $oid
+ 	'
++    done
+ done
  
--	init_tree_desc(&desc, tree->buffer, tree->size);
-+	init_tree_desc(&desc, &tree->object.oid, tree->buffer, tree->size);
+ test_expect_success "--batch-check for a non-existent named object" '
+@@ -386,112 +426,102 @@ test_expect_success 'empty --batch-check notices missing object' '
+ 	test_cmp expect actual
+ '
  
- 	while (tree_entry(&desc, &entry))
- 		switch (object_type(entry.mode)) {
-diff --git a/list-objects.c b/list-objects.c
-index e60a6cd5b46e..312335c8a7f2 100644
---- a/list-objects.c
-+++ b/list-objects.c
-@@ -97,7 +97,7 @@ static void process_tree_contents(struct traversal_context *ctx,
- 	enum interesting match = ctx->revs->diffopt.pathspec.nr == 0 ?
- 		all_entries_interesting : entry_not_interesting;
+-batch_input="$hello_oid
+-$commit_oid
+-$tag_oid
++batch_tests () {
++    boid=$1
++    loid=$2
++    lsize=$3
++    coid=$4
++    csize=$5
++    ccontent=$6
++    toid=$7
++    tsize=$8
++    tcontent=$9
++
++    batch_input="$boid
++$coid
++$toid
+ deadbeef
  
--	init_tree_desc(&desc, tree->buffer, tree->size);
-+	init_tree_desc(&desc, &tree->object.oid, tree->buffer, tree->size);
+ "
  
- 	while (tree_entry(&desc, &entry)) {
- 		if (match != all_entries_interesting) {
-diff --git a/match-trees.c b/match-trees.c
-index 0885ac681cd5..3412b6a1401d 100644
---- a/match-trees.c
-+++ b/match-trees.c
-@@ -63,7 +63,7 @@ static void *fill_tree_desc_strict(struct tree_desc *desc,
- 		die("unable to read tree (%s)", oid_to_hex(hash));
- 	if (type != OBJ_TREE)
- 		die("%s is not a tree", oid_to_hex(hash));
--	init_tree_desc(desc, buffer, size);
-+	init_tree_desc(desc, hash, buffer, size);
- 	return buffer;
- }
+-printf "%s\0" \
+-	"$hello_oid blob $hello_size" \
++    printf "%s\0" \
++	"$boid blob $hello_size" \
+ 	"$hello_content" \
+-	"$commit_oid commit $commit_size" \
+-	"$commit_content" \
+-	"$tag_oid tag $tag_size" \
+-	"$tag_content" \
++	"$coid commit $csize" \
++	"$ccontent" \
++	"$toid tag $tsize" \
++	"$tcontent" \
+ 	"deadbeef missing" \
+ 	" missing" >batch_output
  
-@@ -194,7 +194,7 @@ static int splice_tree(const struct object_id *oid1, const char *prefix,
- 	buf = repo_read_object_file(the_repository, oid1, &type, &sz);
- 	if (!buf)
- 		die("cannot read tree %s", oid_to_hex(oid1));
--	init_tree_desc(&desc, buf, sz);
-+	init_tree_desc(&desc, oid1, buf, sz);
+-test_expect_success '--batch with multiple oids gives correct format' '
++    test_expect_success '--batch with multiple oids gives correct format' '
+ 	tr "\0" "\n" <batch_output >expect &&
+ 	echo_without_newline "$batch_input" >in &&
+ 	git cat-file --batch <in >actual &&
+ 	test_cmp expect actual
+-'
++    '
  
- 	rewrite_here = NULL;
- 	while (desc.size) {
-diff --git a/merge-ort.c b/merge-ort.c
-index 8631c997002d..3a5729c91e48 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -1679,9 +1679,10 @@ static int collect_merge_info(struct merge_options *opt,
- 	parse_tree(merge_base);
- 	parse_tree(side1);
- 	parse_tree(side2);
--	init_tree_desc(t + 0, merge_base->buffer, merge_base->size);
--	init_tree_desc(t + 1, side1->buffer, side1->size);
--	init_tree_desc(t + 2, side2->buffer, side2->size);
-+	init_tree_desc(t + 0, &merge_base->object.oid,
-+		       merge_base->buffer, merge_base->size);
-+	init_tree_desc(t + 1, &side1->object.oid, side1->buffer, side1->size);
-+	init_tree_desc(t + 2, &side2->object.oid, side2->buffer, side2->size);
+-test_expect_success '--batch, -z with multiple oids gives correct format' '
++    test_expect_success '--batch, -z with multiple oids gives correct format' '
+ 	echo_without_newline_nul "$batch_input" >in &&
+ 	tr "\0" "\n" <batch_output >expect &&
+ 	git cat-file --batch -z <in >actual &&
+ 	test_cmp expect actual
+-'
++    '
  
- 	trace2_region_enter("merge", "traverse_trees", opt->repo);
- 	ret = traverse_trees(NULL, 3, t, &info);
-@@ -4400,9 +4401,9 @@ static int checkout(struct merge_options *opt,
- 	unpack_opts.fn = twoway_merge;
- 	unpack_opts.preserve_ignored = 0; /* FIXME: !opts->overwrite_ignore */
- 	parse_tree(prev);
--	init_tree_desc(&trees[0], prev->buffer, prev->size);
-+	init_tree_desc(&trees[0], &prev->object.oid, prev->buffer, prev->size);
- 	parse_tree(next);
--	init_tree_desc(&trees[1], next->buffer, next->size);
-+	init_tree_desc(&trees[1], &next->object.oid, next->buffer, next->size);
+-test_expect_success '--batch, -Z with multiple oids gives correct format' '
++    test_expect_success '--batch, -Z with multiple oids gives correct format' '
+ 	echo_without_newline_nul "$batch_input" >in &&
+ 	git cat-file --batch -Z <in >actual &&
+ 	test_cmp batch_output actual
+-'
++    '
  
- 	ret = unpack_trees(2, trees, &unpack_opts);
- 	clear_unpack_trees_porcelain(&unpack_opts);
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 6a4081bb0f52..93df9eecdd95 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -411,7 +411,7 @@ static inline int merge_detect_rename(struct merge_options *opt)
- static void init_tree_desc_from_tree(struct tree_desc *desc, struct tree *tree)
- {
- 	parse_tree(tree);
--	init_tree_desc(desc, tree->buffer, tree->size);
-+	init_tree_desc(desc, &tree->object.oid, tree->buffer, tree->size);
- }
+-batch_check_input="$hello_oid
+-$tree_oid
+-$commit_oid
+-$tag_oid
++batch_check_input="$boid
++$loid
++$coid
++$toid
+ deadbeef
  
- static int unpack_trees_start(struct merge_options *opt,
-diff --git a/merge.c b/merge.c
-index b60925459c29..86179c34102d 100644
---- a/merge.c
-+++ b/merge.c
-@@ -81,7 +81,8 @@ int checkout_fast_forward(struct repository *r,
- 	}
- 	for (i = 0; i < nr_trees; i++) {
- 		parse_tree(trees[i]);
--		init_tree_desc(t+i, trees[i]->buffer, trees[i]->size);
-+		init_tree_desc(t+i, &trees[i]->object.oid,
-+			       trees[i]->buffer, trees[i]->size);
- 	}
+ "
  
- 	memset(&opts, 0, sizeof(opts));
-diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index f6757c3cbf20..9211e08f0127 100644
---- a/pack-bitmap-write.c
-+++ b/pack-bitmap-write.c
-@@ -366,7 +366,7 @@ static int fill_bitmap_tree(struct bitmap *bitmap,
- 	if (parse_tree(tree) < 0)
- 		die("unable to load tree object %s",
- 		    oid_to_hex(&tree->object.oid));
--	init_tree_desc(&desc, tree->buffer, tree->size);
-+	init_tree_desc(&desc, &tree->object.oid, tree->buffer, tree->size);
+-printf "%s\0" \
+-	"$hello_oid blob $hello_size" \
+-	"$tree_oid tree $tree_size" \
+-	"$commit_oid commit $commit_size" \
+-	"$tag_oid tag $tag_size" \
++    printf "%s\0" \
++	"$boid blob $hello_size" \
++	"$loid tree $lsize" \
++	"$coid commit $csize" \
++	"$toid tag $tsize" \
+ 	"deadbeef missing" \
+ 	" missing" >batch_check_output
  
- 	while (tree_entry(&desc, &entry)) {
- 		switch (object_type(entry.mode)) {
-diff --git a/packfile.c b/packfile.c
-index 9cc0a2e37a83..1fae0fcdd9e7 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -2250,7 +2250,8 @@ static int add_promisor_object(const struct object_id *oid,
- 		struct tree *tree = (struct tree *)obj;
- 		struct tree_desc desc;
- 		struct name_entry entry;
--		if (init_tree_desc_gently(&desc, tree->buffer, tree->size, 0))
-+		if (init_tree_desc_gently(&desc, &tree->object.oid,
-+					  tree->buffer, tree->size, 0))
- 			/*
- 			 * Error messages are given when packs are
- 			 * verified, so do not print any here.
-diff --git a/reflog.c b/reflog.c
-index 9ad50e7d93e4..c6992a19268f 100644
---- a/reflog.c
-+++ b/reflog.c
-@@ -40,7 +40,7 @@ static int tree_is_complete(const struct object_id *oid)
- 		tree->buffer = data;
- 		tree->size = size;
- 	}
--	init_tree_desc(&desc, tree->buffer, tree->size);
-+	init_tree_desc(&desc, &tree->object.oid, tree->buffer, tree->size);
- 	complete = 1;
- 	while (tree_entry(&desc, &entry)) {
- 		if (!repo_has_object_file(the_repository, &entry.oid) ||
-diff --git a/revision.c b/revision.c
-index 2f4c53ea207b..a60dfc23a2a5 100644
---- a/revision.c
-+++ b/revision.c
-@@ -82,7 +82,7 @@ static void mark_tree_contents_uninteresting(struct repository *r,
- 	if (parse_tree_gently(tree, 1) < 0)
- 		return;
+-test_expect_success "--batch-check with multiple oids gives correct format" '
++    test_expect_success "--batch-check with multiple oids gives correct format" '
+ 	tr "\0" "\n" <batch_check_output >expect &&
+ 	echo_without_newline "$batch_check_input" >in &&
+ 	git cat-file --batch-check <in >actual &&
+ 	test_cmp expect actual
+-'
++    '
  
--	init_tree_desc(&desc, tree->buffer, tree->size);
-+	init_tree_desc(&desc, &tree->object.oid, tree->buffer, tree->size);
- 	while (tree_entry(&desc, &entry)) {
- 		switch (object_type(entry.mode)) {
- 		case OBJ_TREE:
-@@ -189,7 +189,7 @@ static void add_children_by_path(struct repository *r,
- 	if (parse_tree_gently(tree, 1) < 0)
- 		return;
+-test_expect_success "--batch-check, -z with multiple oids gives correct format" '
++    test_expect_success "--batch-check, -z with multiple oids gives correct format" '
+ 	tr "\0" "\n" <batch_check_output >expect &&
+ 	echo_without_newline_nul "$batch_check_input" >in &&
+ 	git cat-file --batch-check -z <in >actual &&
+ 	test_cmp expect actual
+-'
++    '
  
--	init_tree_desc(&desc, tree->buffer, tree->size);
-+	init_tree_desc(&desc, &tree->object.oid, tree->buffer, tree->size);
- 	while (tree_entry(&desc, &entry)) {
- 		switch (object_type(entry.mode)) {
- 		case OBJ_TREE:
-diff --git a/tree-walk.c b/tree-walk.c
-index 3af50a01c2c7..0b44ec7c75ff 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -15,7 +15,7 @@ static int decode_tree_entry(struct tree_desc *desc, const char *buf, unsigned l
- 	const char *path;
- 	unsigned int len;
- 	uint16_t mode;
--	const unsigned hashsz = the_hash_algo->rawsz;
-+	const unsigned hashsz = desc->algo->rawsz;
+-test_expect_success "--batch-check, -Z with multiple oids gives correct format" '
++    test_expect_success "--batch-check, -Z with multiple oids gives correct format" '
+ 	echo_without_newline_nul "$batch_check_input" >in &&
+ 	git cat-file --batch-check -Z <in >actual &&
+ 	test_cmp batch_check_output actual
+-'
+-
+-test_expect_success FUNNYNAMES 'setup with newline in input' '
+-	touch -- "newline${LF}embedded" &&
+-	git add -- "newline${LF}embedded" &&
+-	git commit -m "file with newline embedded" &&
+-	test_tick &&
+-
+-	printf "HEAD:newline${LF}embedded" >in
+-'
+-
+-test_expect_success FUNNYNAMES '--batch-check, -z with newline in input' '
+-	git cat-file --batch-check -z <in >actual &&
+-	echo "$(git rev-parse "HEAD:newline${LF}embedded") blob 0" >expect &&
+-	test_cmp expect actual
+-'
+-
+-test_expect_success FUNNYNAMES '--batch-check, -Z with newline in input' '
+-	git cat-file --batch-check -Z <in >actual &&
+-	printf "%s\0" "$(git rev-parse "HEAD:newline${LF}embedded") blob 0" >expect &&
+-	test_cmp expect actual
+-'
++    '
  
- 	if (size < hashsz + 3 || buf[size - (hashsz + 1)]) {
- 		strbuf_addstr(err, _("too-short tree object"));
-@@ -37,15 +37,19 @@ static int decode_tree_entry(struct tree_desc *desc, const char *buf, unsigned l
- 	desc->entry.path = path;
- 	desc->entry.mode = (desc->flags & TREE_DESC_RAW_MODES) ? mode : canon_mode(mode);
- 	desc->entry.pathlen = len - 1;
--	oidread(&desc->entry.oid, (const unsigned char *)path + len);
-+	oidread_algop(&desc->entry.oid, (const unsigned char *)path + len,
-+		      desc->algo);
+-batch_command_multiple_info="info $hello_oid
+-info $tree_oid
+-info $commit_oid
+-info $tag_oid
++batch_command_multiple_info="info $boid
++info $loid
++info $coid
++info $toid
+ info deadbeef"
  
- 	return 0;
- }
+-test_expect_success '--batch-command with multiple info calls gives correct format' '
++    test_expect_success '--batch-command with multiple info calls gives correct format' '
+ 	cat >expect <<-EOF &&
+-	$hello_oid blob $hello_size
+-	$tree_oid tree $tree_size
+-	$commit_oid commit $commit_size
+-	$tag_oid tag $tag_size
++	$boid blob $hello_size
++	$loid tree $lsize
++	$coid commit $csize
++	$toid tag $tsize
+ 	deadbeef missing
+ 	EOF
  
--static int init_tree_desc_internal(struct tree_desc *desc, const void *buffer,
--				   unsigned long size, struct strbuf *err,
-+static int init_tree_desc_internal(struct tree_desc *desc,
-+				   const struct object_id *oid,
-+				   const void *buffer, unsigned long size,
-+				   struct strbuf *err,
- 				   enum tree_desc_flags flags)
- {
-+	desc->algo = (oid && oid->algo) ? &hash_algos[oid->algo] : the_hash_algo;
- 	desc->buffer = buffer;
- 	desc->size = size;
- 	desc->flags = flags;
-@@ -54,19 +58,21 @@ static int init_tree_desc_internal(struct tree_desc *desc, const void *buffer,
- 	return 0;
- }
+@@ -510,22 +540,22 @@ test_expect_success '--batch-command with multiple info calls gives correct form
+ 	git cat-file --batch-command --buffer -Z <in >actual &&
  
--void init_tree_desc(struct tree_desc *desc, const void *buffer, unsigned long size)
-+void init_tree_desc(struct tree_desc *desc, const struct object_id *tree_oid,
-+		    const void *buffer, unsigned long size)
- {
- 	struct strbuf err = STRBUF_INIT;
--	if (init_tree_desc_internal(desc, buffer, size, &err, 0))
-+	if (init_tree_desc_internal(desc, tree_oid, buffer, size, &err, 0))
- 		die("%s", err.buf);
- 	strbuf_release(&err);
- }
+ 	test_cmp expect_nul actual
+-'
++    '
  
--int init_tree_desc_gently(struct tree_desc *desc, const void *buffer, unsigned long size,
-+int init_tree_desc_gently(struct tree_desc *desc, const struct object_id *oid,
-+			  const void *buffer, unsigned long size,
- 			  enum tree_desc_flags flags)
- {
- 	struct strbuf err = STRBUF_INIT;
--	int result = init_tree_desc_internal(desc, buffer, size, &err, flags);
-+	int result = init_tree_desc_internal(desc, oid, buffer, size, &err, flags);
- 	if (result)
- 		error("%s", err.buf);
- 	strbuf_release(&err);
-@@ -85,7 +91,7 @@ void *fill_tree_descriptor(struct repository *r,
- 		if (!buf)
- 			die("unable to read tree %s", oid_to_hex(oid));
- 	}
--	init_tree_desc(desc, buf, size);
-+	init_tree_desc(desc, oid, buf, size);
- 	return buf;
- }
+-batch_command_multiple_contents="contents $hello_oid
+-contents $commit_oid
+-contents $tag_oid
++batch_command_multiple_contents="contents $boid
++contents $coid
++contents $toid
+ contents deadbeef
+ flush"
  
-@@ -102,7 +108,7 @@ static void entry_extract(struct tree_desc *t, struct name_entry *a)
- static int update_tree_entry_internal(struct tree_desc *desc, struct strbuf *err)
- {
- 	const void *buf = desc->buffer;
--	const unsigned char *end = (const unsigned char *)desc->entry.path + desc->entry.pathlen + 1 + the_hash_algo->rawsz;
-+	const unsigned char *end = (const unsigned char *)desc->entry.path + desc->entry.pathlen + 1 + desc->algo->rawsz;
- 	unsigned long size = desc->size;
- 	unsigned long len = end - (const unsigned char *)buf;
+-test_expect_success '--batch-command with multiple command calls gives correct format' '
++    test_expect_success '--batch-command with multiple command calls gives correct format' '
+ 	printf "%s\0" \
+-		"$hello_oid blob $hello_size" \
++		"$boid blob $hello_size" \
+ 		"$hello_content" \
+-		"$commit_oid commit $commit_size" \
+-		"$commit_content" \
+-		"$tag_oid tag $tag_size" \
+-		"$tag_content" \
++		"$coid commit $csize" \
++		"$ccontent" \
++		"$toid tag $tsize" \
++		"$tcontent" \
+ 		"deadbeef missing" >expect_nul &&
+ 	tr "\0" "\n" <expect_nul >expect &&
  
-@@ -611,7 +617,7 @@ int get_tree_entry(struct repository *r,
- 		retval = -1;
- 	} else {
- 		struct tree_desc t;
--		init_tree_desc(&t, tree, size);
-+		init_tree_desc(&t, tree_oid, tree, size);
- 		retval = find_tree_entry(r, &t, name, oid, mode);
- 	}
- 	free(tree);
-@@ -654,7 +660,7 @@ enum get_oid_result get_tree_entry_follow_symlinks(struct repository *r,
- 	struct tree_desc t;
- 	int follows_remaining = GET_TREE_ENTRY_FOLLOW_SYMLINKS_MAX_LINKS;
+@@ -543,6 +573,33 @@ test_expect_success '--batch-command with multiple command calls gives correct f
+ 	git cat-file --batch-command --buffer -Z <in >actual &&
  
--	init_tree_desc(&t, NULL, 0UL);
-+	init_tree_desc(&t, NULL, NULL, 0UL);
- 	strbuf_addstr(&namebuf, name);
- 	oidcpy(&current_tree_oid, tree_oid);
+ 	test_cmp expect_nul actual
++    '
++
++}
++
++batch_tests $hello_oid $tree_oid $tree_size $commit_oid $commit_size "$commit_content" $tag_oid $tag_size "$tag_content"
++batch_tests $hello_compat_oid $tree_compat_oid $tree_compat_size $commit_compat_oid $commit_compat_size "$commit_compat_content" $tag_compat_oid $tag_compat_size "$tag_compat_content"
++
++
++test_expect_success FUNNYNAMES 'setup with newline in input' '
++	touch -- "newline${LF}embedded" &&
++	git add -- "newline${LF}embedded" &&
++	git commit -m "file with newline embedded" &&
++	test_tick &&
++
++	printf "HEAD:newline${LF}embedded" >in
++'
++
++test_expect_success FUNNYNAMES '--batch-check, -z with newline in input' '
++	git cat-file --batch-check -z <in >actual &&
++	echo "$(git rev-parse "HEAD:newline${LF}embedded") blob 0" >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success FUNNYNAMES '--batch-check, -Z with newline in input' '
++	git cat-file --batch-check -Z <in >actual &&
++	printf "%s\0" "$(git rev-parse "HEAD:newline${LF}embedded") blob 0" >expect &&
++	test_cmp expect actual
+ '
  
-@@ -690,7 +696,7 @@ enum get_oid_result get_tree_entry_follow_symlinks(struct repository *r,
- 				goto done;
- 
- 			/* descend */
--			init_tree_desc(&t, tree, size);
-+			init_tree_desc(&t, &current_tree_oid, tree, size);
- 		}
- 
- 		/* Handle symlinks to e.g. a//b by removing leading slashes */
-@@ -724,7 +730,7 @@ enum get_oid_result get_tree_entry_follow_symlinks(struct repository *r,
- 			free(parent->tree);
- 			parents_nr--;
- 			parent = &parents[parents_nr - 1];
--			init_tree_desc(&t, parent->tree, parent->size);
-+			init_tree_desc(&t, &parent->oid, parent->tree, parent->size);
- 			strbuf_remove(&namebuf, 0, remainder ? 3 : 2);
- 			continue;
- 		}
-@@ -804,7 +810,7 @@ enum get_oid_result get_tree_entry_follow_symlinks(struct repository *r,
- 			contents_start = contents;
- 
- 			parent = &parents[parents_nr - 1];
--			init_tree_desc(&t, parent->tree, parent->size);
-+			init_tree_desc(&t, &parent->oid, parent->tree, parent->size);
- 			strbuf_splice(&namebuf, 0, len,
- 				      contents_start, link_len);
- 			if (remainder)
-diff --git a/tree-walk.h b/tree-walk.h
-index 74cdceb3fed2..cf54d01019e9 100644
---- a/tree-walk.h
-+++ b/tree-walk.h
-@@ -26,6 +26,7 @@ struct name_entry {
-  * A semi-opaque data structure used to maintain the current state of the walk.
-  */
- struct tree_desc {
-+	const struct git_hash_algo *algo;
- 	/*
- 	 * pointer into the memory representation of the tree. It always
- 	 * points at the current entry being visited.
-@@ -85,9 +86,11 @@ int update_tree_entry_gently(struct tree_desc *);
-  * size parameters are assumed to be the same as the buffer and size
-  * members of `struct tree`.
-  */
--void init_tree_desc(struct tree_desc *desc, const void *buf, unsigned long size);
-+void init_tree_desc(struct tree_desc *desc, const struct object_id *tree_oid,
-+		    const void *buf, unsigned long size);
- 
--int init_tree_desc_gently(struct tree_desc *desc, const void *buf, unsigned long size,
-+int init_tree_desc_gently(struct tree_desc *desc, const struct object_id *oid,
-+			  const void *buf, unsigned long size,
- 			  enum tree_desc_flags flags);
- 
- /*
-diff --git a/tree.c b/tree.c
-index c745462f968e..44bcf728f10a 100644
---- a/tree.c
-+++ b/tree.c
-@@ -27,7 +27,7 @@ int read_tree_at(struct repository *r,
- 	if (parse_tree(tree))
- 		return -1;
- 
--	init_tree_desc(&desc, tree->buffer, tree->size);
-+	init_tree_desc(&desc, &tree->object.oid, tree->buffer, tree->size);
- 
- 	while (tree_entry(&desc, &entry)) {
- 		if (retval != all_entries_interesting) {
-diff --git a/walker.c b/walker.c
-index 65002a7220ad..c0fd632d921c 100644
---- a/walker.c
-+++ b/walker.c
-@@ -45,7 +45,7 @@ static int process_tree(struct walker *walker, struct tree *tree)
- 	if (parse_tree(tree))
- 		return -1;
- 
--	init_tree_desc(&desc, tree->buffer, tree->size);
-+	init_tree_desc(&desc, &tree->object.oid, tree->buffer, tree->size);
- 	while (tree_entry(&desc, &entry)) {
- 		struct object *obj = NULL;
- 
+ test_expect_success 'setup blobs which are likely to delta' '
 -- 
 2.41.0
 
