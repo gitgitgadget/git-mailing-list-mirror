@@ -2,46 +2,46 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96ECDE7F14F
-	for <git@archiver.kernel.org>; Wed, 27 Sep 2023 23:20:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EC80E7F14F
+	for <git@archiver.kernel.org>; Wed, 27 Sep 2023 23:30:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229949AbjI0XUl convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Wed, 27 Sep 2023 19:20:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58204 "EHLO
+        id S229464AbjI0XaI convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Wed, 27 Sep 2023 19:30:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229464AbjI0XUl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Sep 2023 19:20:41 -0400
-Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A244102
-        for <git@vger.kernel.org>; Wed, 27 Sep 2023 16:20:39 -0700 (PDT)
-Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-64cca551ae2so70726836d6.0
-        for <git@vger.kernel.org>; Wed, 27 Sep 2023 16:20:39 -0700 (PDT)
+        with ESMTP id S229445AbjI0XaH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Sep 2023 19:30:07 -0400
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0422F5
+        for <git@vger.kernel.org>; Wed, 27 Sep 2023 16:30:05 -0700 (PDT)
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-65b08bbd8b1so48202136d6.2
+        for <git@vger.kernel.org>; Wed, 27 Sep 2023 16:30:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695856838; x=1696461638;
+        d=1e100.net; s=20230601; t=1695857405; x=1696462205;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=jKCANqwPPMXEYj0lMnol/5P087UUDJvWF63xvCp0GSU=;
-        b=B3E81y+YiLh68StGIwtioQAhHpxvgVpIaO/mTQjzyFwoM+xFurbJb0fAmrTbV/IP6O
-         3ZQSr3d858vXzzkLjhzBzOfioi4dKBqBKTCm03GW8CS5eK7e7WAJMnAke4tn3CCGZzI3
-         l1nQ1ju2pdtbvzf6EzbemDoMgwWZ+0Th/RT1zk6wpS8ojCAEtg/RwCtISOmch/yLJ2rK
-         mEdlte5nnh2cr3OnxJtP9hDXkqe59Z5SLcuizmzC6/z6csIlHSPCz5xyO8aSigFQiwIm
-         ocQIQAFFRsX4lqyGRUHWMyQ5d+Ga4o4Q3II8yC8mARQgnCsBqFyW3kXVzaU2sGYcPhee
-         lr5A==
-X-Gm-Message-State: AOJu0YyvtH1E+6T9lSSH/Fvv6Pp+oQajQNF9tZkJSdr1UwhhRT3xeyZp
-        RiYYfmWNoaUFIBd2D2FFMvITQ0Xqisp5BPZkeAQ=
-X-Google-Smtp-Source: AGHT+IExfd3cs7OfICZ0b308SSyt8WjeFSlh279TzTcOPFBk0Om9Vf10XkYFXF5Q9tH93EsdOVuv2c9d45gyxT0law8=
-X-Received: by 2002:a05:6214:1a11:b0:64f:6199:a8e with SMTP id
- fh17-20020a0562141a1100b0064f61990a8emr3780042qvb.23.1695856838542; Wed, 27
- Sep 2023 16:20:38 -0700 (PDT)
+        bh=Bgjk9qV5KBAkhwnVvQd6Ak9M6oaI8ptuHK2cPC4Eqak=;
+        b=qN5wBxtzRcTgjcaG36X1d06rGsx2d127wGXD/00giJ3fDfN+FedNA9eEdc4Dt2nJqI
+         eV70T8wTFlkjK+2T56/I3dD2LdL4ZH6MQbh6Mn66MlVDhoaD6TEs4fF1t6H9sbm1lzAD
+         mSmo+KRJywd+Ck11fuzGLIAT1fAtb2yOqAEWTrvW/IX+Ve5sFXJKy8y0W/ZlYrIPG90i
+         mfso4TNXdTK85LWufZg+rZs8Du0jGg5ssNsCg0UruTqf1CNJEtU0J1VNzED+/33ZHfzN
+         SNUNFPwGw0tQbabTtIVr7aUuGnR7DhBu+VgOvL5RnUKIsJuvXQAitEyiVF7vKO5eSymC
+         +4EA==
+X-Gm-Message-State: AOJu0YzFpUWJe7RqDZ+W/McH87sOSB/CNVO7Ig0oeRcrK9myfSwLNv2Y
+        ZIrl3x0QnrllMYdU2MLn+vGo53hNkYCx7PFd080=
+X-Google-Smtp-Source: AGHT+IH28efrwj5JTjx987YOOQyLLGqrn255PDWVUuM0pYezf+J9rdJRJl1E+rbDiEPzocU4p67nNMOeUDS0sqdOkVU=
+X-Received: by 2002:a0c:f3cb:0:b0:65b:1468:8210 with SMTP id
+ f11-20020a0cf3cb000000b0065b14688210mr3556141qvm.23.1695857404676; Wed, 27
+ Sep 2023 16:30:04 -0700 (PDT)
 MIME-Version: 1.0
-References: <87jzsbjt0a.fsf@gmail.froward.int.ebiederm.org> <20230927195537.1682-2-ebiederm@gmail.com>
-In-Reply-To: <20230927195537.1682-2-ebiederm@gmail.com>
+References: <87jzsbjt0a.fsf@gmail.froward.int.ebiederm.org> <20230927195537.1682-3-ebiederm@gmail.com>
+In-Reply-To: <20230927195537.1682-3-ebiederm@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 27 Sep 2023 19:20:27 -0400
-Message-ID: <CAPig+cR5mGZ7-4t1YBW-=j3FyWGvBRBN7eogQb1BYiw8QM1UKA@mail.gmail.com>
-Subject: Re: [PATCH 02/30] oid-array: Teach oid-array to handle multiple kinds
- of oids
+Date:   Wed, 27 Sep 2023 19:29:53 -0400
+Message-ID: <CAPig+cRHBxPZYQ5XYA5Un7LeS21NgqxZGg=Q8D+aQckrw9Ymtg@mail.gmail.com>
+Subject: Re: [PATCH 03/30] object-names: Support input of oids in any
+ supported hash
 To:     "Eric W. Biederman" <ebiederm@gmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
@@ -52,23 +52,63 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 27, 2023 at 3:55 PM Eric W. Biederman <ebiederm@gmail.com> wrote:
-> While looking at how to handle input of both SHA-1 and SHA-256 oids in
-> get_oid_with_context, I realized that the oid_array in
-> repo_for_each_abbrev might have more than one kind of oid stored in it
-> simulataneously.
-
-s/simulataneously/simultaneously/
-
-> Update to oid_array_append to ensure that oids added to an oid array
-> always have an algorithm set.
+On Wed, Sep 27, 2023 at 3:56 PM Eric W. Biederman <ebiederm@gmail.com> wrote:
+> Support short oids encoded in any algorithm, while ensuring enough of
+> the oid is specified to disambiguate between all of the oids in the
+> repository encoded in any algorithm.
 >
-> Update void_hashcmp to first verify two oids use the same hash algorithm
-> before comparing them to each other.
+> By default have the code continue to only accept oids specified in the
+> storage hash algorithm of the repository, but when something is
+> ambiguous display all of the possible oids from any oid encoding.
 >
-> With that oid-array should be safe to use with differnt kinds of
-> oids simultaneously.
+> A new flag is added GET_OID_HASH_ANY that when supplied causes the
+> code to accept oids specified in any hash algorithm, and to return the
+> oids that were resolved.
+>
+> This implements the functionality that allows both SHA-1 and SHA-256
+> object names, from the "Object names on the command line" section of
+> the hash function transition document.
+>
+> Care is taken in get_short_oid so that when the result is ambiguous
+> the output remains the same of GIT_OID_HASH_ANY was not supplied.
 
-s/differnt/different/
+s/of/as if/
 
+> If GET_OID_HASH_ANY was supplied objects of any hash algorithm
+> that match the prefix are displayed.
+>
+> This required updating repo_for_each_abbrev to give it a parameter
+> so that it knows to look at all hash algorithms.
+>
 > Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
+> ---
+> diff --git a/object-name.c b/object-name.c
+> @@ -49,6 +50,7 @@ struct disambiguate_state {
+>  static void update_candidates(struct disambiguate_state *ds, const struct object_id *current)
+>  {
+> +       /* The hash algorithm of the current has already been filtered */
+
+Is there a word missing after "current"?
+
+> @@ -503,8 +516,13 @@ static int sort_ambiguous(const void *a, const void *b, void *ctx)
+> -       if (a_type == b_type)
+> -               return oidcmp(a, b);
+> +       if (a_type == b_type) {
+> +               /* Is the hash algorithm the same? */
+> +               if (a->algo == b->algo)
+> +                       return oidcmp(a, b);
+> +               else
+> +                       return a->algo > b->algo ? 1 : -1;
+> +       }
+
+Nit: unnecessary comment ("Is the hash algorithm...") is merely
+repeating what the code itself already says clearly enough
+
+> @@ -553,6 +575,7 @@ static enum get_oid_result get_short_oid(struct repository *r,
+>         else
+>                 ds.fn = default_disambiguate_hint;
+>
+> +
+>         find_short_object_filename(&ds);
+
+Nit: unnecessary new blank line
