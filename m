@@ -2,34 +2,33 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6562BCE7AFE
-	for <git@archiver.kernel.org>; Thu, 28 Sep 2023 04:38:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1266CE7AFB
+	for <git@archiver.kernel.org>; Thu, 28 Sep 2023 04:38:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230115AbjI1EiW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Sep 2023 00:38:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47818 "EHLO
+        id S230127AbjI1Eiw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Sep 2023 00:38:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46688 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230089AbjI1EiV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Sep 2023 00:38:21 -0400
+        with ESMTP id S229472AbjI1Eiv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Sep 2023 00:38:51 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A60F180
-        for <git@vger.kernel.org>; Wed, 27 Sep 2023 21:38:19 -0700 (PDT)
-Received: (qmail 3679 invoked by uid 109); 28 Sep 2023 04:38:19 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77C59121
+        for <git@vger.kernel.org>; Wed, 27 Sep 2023 21:38:48 -0700 (PDT)
+Received: (qmail 3690 invoked by uid 109); 28 Sep 2023 04:38:48 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 28 Sep 2023 04:38:19 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 28 Sep 2023 04:38:48 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9656 invoked by uid 111); 28 Sep 2023 04:38:20 -0000
+Received: (qmail 9663 invoked by uid 111); 28 Sep 2023 04:38:49 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 28 Sep 2023 00:38:20 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 28 Sep 2023 00:38:49 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 28 Sep 2023 00:38:17 -0400
+Date:   Thu, 28 Sep 2023 00:38:47 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Taylor Blau <me@ttaylorr.com>,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH v2 2/6] commit-graph: check mixed generation validation when
- loading chain file
-Message-ID: <20230928043817.GB58367@coredump.intra.peff.net>
+Subject: [PATCH v2 3/6] t5324: harmonize sha1/sha256 graph chain corruption
+Message-ID: <20230928043847.GC58367@coredump.intra.peff.net>
 References: <20230928043746.GB57926@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -39,118 +38,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In read_commit_graph_one(), we call validate_mixed_generation_chain()
-after loading the graph. Even though we don't check the return value,
-this has the side effect of clearing the read_generation_data flag,
-which is important when working with mixed generation numbers.
+In t5324.20, we corrupt a hex character 60 bytes into the graph chain
+file. Since the file consists of two hash identifiers, one per line, the
+corruption differs between sha1 and sha256. In a sha1 repository, the
+corruption is on the second line, and in a sha256 repository, it is on
+the first.
 
-But doing this in load_commit_graph_chain_fd_st() makes more sense:
+We should of course detect the problem with either line. But as the next
+few patches will show (and fix), that is not the case (in fact, we
+currently do not exit non-zero for either line!). And while at the end
+of our series we'll catch all errors, our intermediate states will have
+differing behavior between the two hashes.
 
-  1. We are calling it even when we did not load a chain at all, which
-     is pointless (you cannot have mixed generations in a single file).
-
-  2. For now, all callers load the graph via read_commit_graph_one().
-     But the point of factoring out the open/load in the previous commit
-     was to let "commit-graph verify" call them separately. So it needs
-     to trigger this function as part of the load.
-
-     Without this patch, the mixed-generation tests in t5324 would start
-     failing on "git commit-graph verify" calls, once we switch to using
-     a separate open/load call there.
+Let's make sure we test corruption of both the first and second lines,
+and do so consistently with either hash by choosing offsets which are
+always in the first hash (30 bytes) or in the second (70).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-Same as v1.
+In v2 we are now testing both first and second lines, instead of just
+the first.
 
- commit-graph.c | 54 +++++++++++++++++++++++++-------------------------
- 1 file changed, 27 insertions(+), 27 deletions(-)
+ t/t5324-split-commit-graph.sh | 25 ++++++++++++++++++++-----
+ 1 file changed, 20 insertions(+), 5 deletions(-)
 
-diff --git a/commit-graph.c b/commit-graph.c
-index 12cdd9af8e..8b29c6de24 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -473,6 +473,31 @@ static struct commit_graph *load_commit_graph_v1(struct repository *r,
- 	return g;
- }
+diff --git a/t/t5324-split-commit-graph.sh b/t/t5324-split-commit-graph.sh
+index 36c4141e67..a9b2428b56 100755
+--- a/t/t5324-split-commit-graph.sh
++++ b/t/t5324-split-commit-graph.sh
+@@ -312,15 +312,30 @@ test_expect_success 'warn on base graph chunk incorrect' '
+ 	)
+ '
  
-+/*
-+ * returns 1 if and only if all graphs in the chain have
-+ * corrected commit dates stored in the generation_data chunk.
-+ */
-+static int validate_mixed_generation_chain(struct commit_graph *g)
-+{
-+	int read_generation_data = 1;
-+	struct commit_graph *p = g;
+-test_expect_success 'verify after commit-graph-chain corruption' '
+-	git clone --no-hardlinks . verify-chain &&
++test_expect_success 'verify after commit-graph-chain corruption (base)' '
++	git clone --no-hardlinks . verify-chain-base &&
+ 	(
+-		cd verify-chain &&
+-		corrupt_file "$graphdir/commit-graph-chain" 60 "G" &&
++		cd verify-chain-base &&
++		corrupt_file "$graphdir/commit-graph-chain" 30 "G" &&
+ 		git commit-graph verify 2>test_err &&
+ 		grep -v "^+" test_err >err &&
+ 		test_i18ngrep "invalid commit-graph chain" err &&
+-		corrupt_file "$graphdir/commit-graph-chain" 60 "A" &&
++		corrupt_file "$graphdir/commit-graph-chain" 30 "A" &&
++		git commit-graph verify 2>test_err &&
++		grep -v "^+" test_err >err &&
++		test_i18ngrep "unable to find all commit-graph files" err
++	)
++'
 +
-+	while (read_generation_data && p) {
-+		read_generation_data = p->read_generation_data;
-+		p = p->base_graph;
-+	}
-+
-+	if (read_generation_data)
-+		return 1;
-+
-+	while (g) {
-+		g->read_generation_data = 0;
-+		g = g->base_graph;
-+	}
-+
-+	return 0;
-+}
-+
- static int add_graph_to_chain(struct commit_graph *g,
- 			      struct commit_graph *chain,
- 			      struct object_id *oids,
-@@ -581,6 +606,8 @@ struct commit_graph *load_commit_graph_chain_fd_st(struct repository *r,
- 		}
- 	}
- 
-+	validate_mixed_generation_chain(graph_chain);
-+
- 	free(oids);
- 	fclose(fp);
- 	strbuf_release(&line);
-@@ -605,31 +632,6 @@ static struct commit_graph *load_commit_graph_chain(struct repository *r,
- 	return g;
- }
- 
--/*
-- * returns 1 if and only if all graphs in the chain have
-- * corrected commit dates stored in the generation_data chunk.
-- */
--static int validate_mixed_generation_chain(struct commit_graph *g)
--{
--	int read_generation_data = 1;
--	struct commit_graph *p = g;
--
--	while (read_generation_data && p) {
--		read_generation_data = p->read_generation_data;
--		p = p->base_graph;
--	}
--
--	if (read_generation_data)
--		return 1;
--
--	while (g) {
--		g->read_generation_data = 0;
--		g = g->base_graph;
--	}
--
--	return 0;
--}
--
- struct commit_graph *read_commit_graph_one(struct repository *r,
- 					   struct object_directory *odb)
- {
-@@ -638,8 +640,6 @@ struct commit_graph *read_commit_graph_one(struct repository *r,
- 	if (!g)
- 		g = load_commit_graph_chain(r, odb);
- 
--	validate_mixed_generation_chain(g);
--
- 	return g;
- }
- 
++test_expect_success 'verify after commit-graph-chain corruption (tip)' '
++	git clone --no-hardlinks . verify-chain-tip &&
++	(
++		cd verify-chain-tip &&
++		corrupt_file "$graphdir/commit-graph-chain" 70 "G" &&
++		git commit-graph verify 2>test_err &&
++		grep -v "^+" test_err >err &&
++		test_i18ngrep "invalid commit-graph chain" err &&
++		corrupt_file "$graphdir/commit-graph-chain" 70 "A" &&
+ 		git commit-graph verify 2>test_err &&
+ 		grep -v "^+" test_err >err &&
+ 		test_i18ngrep "unable to find all commit-graph files" err
 -- 
 2.42.0.773.ga6e30199be
 
