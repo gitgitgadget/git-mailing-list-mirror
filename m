@@ -2,60 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A1E8E71D33
-	for <git@archiver.kernel.org>; Fri, 29 Sep 2023 20:33:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EC38E728F3
+	for <git@archiver.kernel.org>; Fri, 29 Sep 2023 20:33:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233490AbjI2UdO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Sep 2023 16:33:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55884 "EHLO
+        id S233516AbjI2UdP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Sep 2023 16:33:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232985AbjI2UdM (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S233326AbjI2UdM (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 29 Sep 2023 16:33:12 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E67A1B0
-        for <git@vger.kernel.org>; Fri, 29 Sep 2023 13:33:05 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-406609df1a6so7938375e9.3
-        for <git@vger.kernel.org>; Fri, 29 Sep 2023 13:33:05 -0700 (PDT)
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A820E1A7
+        for <git@vger.kernel.org>; Fri, 29 Sep 2023 13:33:04 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id ffacd0b85a97d-313e742a787so698224f8f.1
+        for <git@vger.kernel.org>; Fri, 29 Sep 2023 13:33:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696019584; x=1696624384; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1696019583; x=1696624383; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fdC+bsPVckJYi/Zh4cZeAa88NrJBCRi7MTAopCnpxcc=;
-        b=cD2frsXM1vK7x0cqewkZI6yMEEDKz/PfgK8a4eHHlBaYkgCkUl21an9Eolse8xcj+x
-         Q/e0J/LRsyARbfy74JpDC1mAx8Ca4Vjtfsi1/3hmRJB35NfB8Ds47/Ptv4Rf3qA75X3a
-         dIViEQrIGu4Zab4Rlcfgp4tKJ+u72VsOSh4aY0A/yuT0JV6+gWI5b40Lu79mTOnpSowY
-         2o1BI4TomSjMDI8LRZcvp43WcOs9gROMsJDd9ga4cI4jW6Mg2PDBebw8zmqtmUNTwewx
-         40nPaqdvCR4Z6OtdUun6lJXL2D54EvqnL9K+BmLusaF00DwP9dHySOT8rq//cKGSZFo4
-         t/dA==
+        bh=cIKts4cb5kww+LIXIC0MjPHkyCv31eTVCAT99h/vYX8=;
+        b=V7ruh0jH9zQRZd6GB1JWL7Im+1kWLdzzhKxfW9SKI8sNcFZl1cyITPsIzSFGzIDncY
+         +aFrPN3rfTgi//C0yDr+xvmo3jqLv+q0ysXYIpRKtijfTvfTMArNzZlUz4ly/GICvY3n
+         Mg6oHpNpLsAWZAYBCG8bTXAFUjzQyNAVXJ9fJDpxr4egFS9indK8EA5s3q0piR1XXgw+
+         syBf+bAVYWm3PolZnJF3vtwUBTI7rp/ZPb1nfNDyCEDf8u0eyea+YONjNzx+R23E2wN7
+         kDZcPBtZizU+m9ja//0ftxQZF46Kx/d3z/82OpLNm2ECf+WIzxjnukPC04uYWeVq/+kE
+         RnoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696019584; x=1696624384;
+        d=1e100.net; s=20230601; t=1696019583; x=1696624383;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=fdC+bsPVckJYi/Zh4cZeAa88NrJBCRi7MTAopCnpxcc=;
-        b=uIMpNUwbYt07y1Ud78SlbPe9KNd1LOVK1WS/u7yx4fXFYDzMbj6EzAKm4WUsekMBJn
-         Mc6Ho66BjWu6vuFmlRa1lllki8zc9rG8vfKNZpDXKpqcgJUmDDR6XO01SgZ2PdlDH8gu
-         mJKqMIcfMbaSIk4/5afNb4uG7fKpNMQfNK+bzg8zkMnHSD3ctMUOzj/Oe1q/Wk7iejhS
-         rIJayCNi2e5qLxgShDtdyHHHTH0QeecAHhx/2JT3ydG/TYZRd+bO+Ml1MQceXcCB/qyp
-         eSGsbrs4FJF34HmYLy3xvxxVs3JeS+5pjcn+/U9qPfUs9spuV712RQQDt2OT1h3JD2cd
-         GOqA==
-X-Gm-Message-State: AOJu0YyYMCav5n92MJxU+o/QVb/jJ6muMXxOKMW3hVvrsplPw852N7JW
-        2gy840KciZo18Af79R+8bjK23i3fJzo=
-X-Google-Smtp-Source: AGHT+IE+eFuLXJFC0U03cSXIFUnDPm2jSm6/73cxum9d0hf28Uv79Dz5qZ8tY1jIBslDGrswB0RC6w==
-X-Received: by 2002:a7b:c397:0:b0:3fe:3004:1ffd with SMTP id s23-20020a7bc397000000b003fe30041ffdmr4700571wmj.4.1696019583799;
-        Fri, 29 Sep 2023 13:33:03 -0700 (PDT)
+        bh=cIKts4cb5kww+LIXIC0MjPHkyCv31eTVCAT99h/vYX8=;
+        b=ku61ITsqIyYpfhd0d/SMxrk0f+sub4lwAGPa/6/cT/DDAvOUx96jDxd8See+XVEdoC
+         HuV0BOIDH8PesuRpSva3pMm8gIGI8TA4dD2saoflJei/eh1+NjFDk8+NH/Zwg92vJd21
+         IZmbfAiWESDrhXQFkIz66AaOTOODL1dKHFKHz3I0smJGqcHYC9G6fM+ZyxuyJPF/HKo+
+         X8deaX5ItRMdU6Cha40EoVmapvNKedL/wxLZNPmbXyO+zgU9ZC3pTOCDkScga0PBXMtM
+         zPuQS1cYsRrOUvUeCp1g1nGcurmyghjZfjALrOmgkLDlpfYUmGM2xumBMxisZVRcpTKN
+         ltcw==
+X-Gm-Message-State: AOJu0YxWgqH/1XAxXeGxIu2wz2UV9E0U17oNikpOcGATitUpjUP6c643
+        Bf0N3T1mYKetG9iqy09sVWA5YyQ2Dz0=
+X-Google-Smtp-Source: AGHT+IGfhXmhodzBVJfmMSpuZbANCt0119v9kGWpAVgFvPvfA9o7ucOgKpJXM6Yz3J9GSaBGjYoXVw==
+X-Received: by 2002:a5d:67cd:0:b0:31f:d50e:a14f with SMTP id n13-20020a5d67cd000000b0031fd50ea14fmr4508522wrw.10.1696019582631;
+        Fri, 29 Sep 2023 13:33:02 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x16-20020a05600c2a5000b003fe23b10fdfsm2124219wme.36.2023.09.29.13.33.03
+        by smtp.gmail.com with ESMTPSA id m4-20020adff384000000b00321673de0d7sm6795482wro.25.2023.09.29.13.33.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Sep 2023 13:33:03 -0700 (PDT)
-Message-ID: <eff8bfcc04278eeae658ffbff8317f822edb9b20.1696019580.git.gitgitgadget@gmail.com>
+        Fri, 29 Sep 2023 13:33:02 -0700 (PDT)
+Message-ID: <43175154a82ea04eec995f1d47771881a981bda6.1696019580.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1587.v3.git.1696019580.gitgitgadget@gmail.com>
 References: <pull.1587.v2.git.1695399920.gitgitgadget@gmail.com>
         <pull.1587.v3.git.1696019580.gitgitgadget@gmail.com>
 From:   "Zach FettersMoore via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 29 Sep 2023 20:33:00 +0000
-Subject: [PATCH v3 3/3] subtree: adding test to validate fix
+Date:   Fri, 29 Sep 2023 20:32:58 +0000
+Subject: [PATCH v3 1/3] subtree: fix split processing with multiple subtrees
+ present
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,83 +70,87 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Zach FettersMoore <zach.fetters@apollographql.com>
 
-Adding a test to validate that the proposed fix
-solves the issue.
+When there are multiple subtrees present in a repository and they are
+all using 'git subtree split', the 'split' command can take a
+significant (and constantly growing) amount of time to run even when
+using the '--rejoin' flag. This is due to the fact that when processing
+commits to determine the last known split to start from when looking
+for changes, if there has been a split/merge done from another subtree
+there will be 2 split commits, one mainline and one subtree, for the
+second subtree that are part of the processing. The non-mainline
+subtree split commit will cause the processing to always need to search
+the entire history of the given subtree as part of its processing even
+though those commits are totally irrelevant to the current subtree
+split being run.
 
-The test accomplishes this by checking the output
-of the split command to ensure the output from
-the progress of 'process_split_commit' function
-that represents the 'extracount' of commits
-processed does not increment.
+In the diagram below, 'M' represents the mainline repo branch, 'A'
+represents one subtree, and 'B' represents another. M3 and B1 represent
+a split commit for subtree B that was created from commit M4. M2 and A1
+represent a split commit made from subtree A that was also created
+based on changes back to and including M4. M1 represents new changes to
+the repo, in this scenario if you try to run a 'git subtree split
+--rejoin' for subtree B, commits M1, M2, and A1, will be included in
+the processing of changes for the new split commit since the last
+split/rejoin for subtree B was at M3. The issue is that by having A1
+included in this processing the command ends up needing to processing
+every commit down tree A even though none of that is needed or relevant
+to the current command and result.
 
-This was tested against the original functionality
-to show the test failed, and then with this fix
-to show the test passes.
+M1
+ |	  \	  \
+M2	   |	   |
+ |     	  A1	   |
+M3	   |	   |
+ |	   |	  B1
+M4	   |	   |
 
-This illustrated that when using multiple subtrees,
-A and B, when doing a split on subtree B, the
-processing does not traverse the entire history
-of subtree A which is unnecessary and would cause
-the 'extracount' of processed commits to climb
-based on the number of commits in the history of
-subtree A.
+So this commit makes a change to the processing of commits for the split
+command in order to ignore non-mainline commits from other subtrees such
+as A1 in the diagram by adding a new function
+'should_ignore_subtree_commit' which is called during
+'process_split_commit'. This allows the split/rejoin processing to still
+function as expected but removes all of the unnecessary processing that
+takes place currently which greatly inflates the processing time.
 
 Signed-off-by: Zach FettersMoore <zach.fetters@apollographql.com>
 ---
- contrib/subtree/t/t7900-subtree.sh | 41 ++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+ contrib/subtree/git-subtree.sh | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
-index 49a21dd7c9c..57c12e9f924 100755
---- a/contrib/subtree/t/t7900-subtree.sh
-+++ b/contrib/subtree/t/t7900-subtree.sh
-@@ -385,6 +385,47 @@ test_expect_success 'split sub dir/ with --rejoin' '
- 	)
- '
+diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+index e0c5d3b0de6..e9250dfb019 100755
+--- a/contrib/subtree/git-subtree.sh
++++ b/contrib/subtree/git-subtree.sh
+@@ -778,12 +778,29 @@ ensure_valid_ref_format () {
+ 		die "fatal: '$1' does not look like a ref"
+ }
  
-+test_expect_success 'split with multiple subtrees' '
-+	subtree_test_create_repo "$test_count" &&
-+	subtree_test_create_repo "$test_count/subA" &&
-+	subtree_test_create_repo "$test_count/subB" &&
-+	test_create_commit "$test_count" main1 &&
-+	test_create_commit "$test_count/subA" subA1 &&
-+	test_create_commit "$test_count/subA" subA2 &&
-+	test_create_commit "$test_count/subA" subA3 &&
-+	test_create_commit "$test_count/subB" subB1 &&
-+	(
-+		cd "$test_count" &&
-+		git fetch ./subA HEAD &&
-+		git subtree add --prefix=subADir FETCH_HEAD
-+	) &&
-+	(
-+		cd "$test_count" &&
-+		git fetch ./subB HEAD &&
-+		git subtree add --prefix=subBDir FETCH_HEAD
-+	) &&
-+	test_create_commit "$test_count" subADir/main-subA1 &&
-+	test_create_commit "$test_count" subBDir/main-subB1 &&
-+	(
-+		cd "$test_count" &&
-+		git subtree split --prefix=subADir --squash --rejoin -m "Sub A Split 1"
-+	) &&
-+	(
-+		cd "$test_count" &&
-+		git subtree split --prefix=subBDir --squash --rejoin -m "Sub B Split 1"
-+	) &&
-+	test_create_commit "$test_count" subADir/main-subA2 &&
-+	test_create_commit "$test_count" subBDir/main-subB2 &&
-+	(
-+		cd "$test_count" &&
-+		git subtree split --prefix=subADir --squash --rejoin -m "Sub A Split 2"
-+	) &&
-+	(
-+		cd "$test_count" &&
-+		test "$(git subtree split --prefix=subBDir --squash --rejoin -d -m "Sub B Split 1" 2>&1 | grep -w "\[1\]")" = ""
-+	)
-+'
++# Usage: check if a commit from another subtree should be ignored from processing for splits
++should_ignore_subtree_commit () {
++  if [ "$(git log -1 --grep="git-subtree-dir:" $1)" ]
++  then
++    if [[ -z "$(git log -1 --grep="git-subtree-mainline:" $1)" && -z "$(git log -1 --grep="git-subtree-dir: $dir$" $1)" ]]
++    then
++      return 0
++    fi
++  fi
++  return 1
++}
 +
- test_expect_success 'split sub dir/ with --rejoin from scratch' '
- 	subtree_test_create_repo "$test_count" &&
- 	test_create_commit "$test_count" main1 &&
+ # Usage: process_split_commit REV PARENTS
+ process_split_commit () {
+ 	assert test $# = 2
+ 	local rev="$1"
+ 	local parents="$2"
+ 
++    if should_ignore_subtree_commit $rev
++    then
++	    return
++    fi
++
+ 	if test $indent -eq 0
+ 	then
+ 		revcount=$(($revcount + 1))
 -- 
 gitgitgadget
+
