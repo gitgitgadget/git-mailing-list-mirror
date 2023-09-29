@@ -2,58 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 05E81E743FF
-	for <git@archiver.kernel.org>; Fri, 29 Sep 2023 21:21:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 48B72E71D58
+	for <git@archiver.kernel.org>; Fri, 29 Sep 2023 21:21:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233838AbjI2VVM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Sep 2023 17:21:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34754 "EHLO
+        id S233812AbjI2VVN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Sep 2023 17:21:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233602AbjI2VVF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Sep 2023 17:21:05 -0400
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 158B21AE
-        for <git@vger.kernel.org>; Fri, 29 Sep 2023 14:21:04 -0700 (PDT)
-Received: by mail-yb1-xb4a.google.com with SMTP id 3f1490d57ef6-d86766bba9fso18340722276.1
-        for <git@vger.kernel.org>; Fri, 29 Sep 2023 14:21:04 -0700 (PDT)
+        with ESMTP id S233824AbjI2VVJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Sep 2023 17:21:09 -0400
+Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D7BE1B2
+        for <git@vger.kernel.org>; Fri, 29 Sep 2023 14:21:06 -0700 (PDT)
+Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-5a23ad271d7so18047867b3.1
+        for <git@vger.kernel.org>; Fri, 29 Sep 2023 14:21:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1696022463; x=1696627263; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1696022465; x=1696627265; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=kckG2mDj4W61beRJrtNjk81pTQaRrpVtXZrSgI57tD0=;
-        b=aOrx9q+v4LLjyoK04/tQ2O2wNxCfG3i/UyMoMpB0trAGrLDraL8PXvSvw2EY2IZiQN
-         CuIdofBWUv7nd6nTM8c30RO5j55pJFS7ICXMeKJkepkI/g3Y9sPqPvNvIq2nvQ7xN7VI
-         4VfSxfjT+q9nxYqVbWaI4scYSL61h401QBcZJF702JW+9GohkhBjsf3lVNd19gIs3gJ1
-         pLEszAVrSr4Kk+D4MaEqsRV8loQ8r2F3Afz8KTaqF8CIR1kT6KKb5F65h1dJe91NAdhB
-         oYuWc8nCUdVPLu8YgtHXZ6ZVJas75ZWdgU3g01/e48b3qJ0BFxtxVjO9V8hoSK10vOvK
-         SiUA==
+        bh=mEffPqyvowslcO6VHdJaUVRI4J1WS8XMbMC+rLlH2eM=;
+        b=niF865BphCe5DL9WBdtCJb+Q/WTYxGsdKoftWJSMpefxpXvbWKEBk9N5nRVK49IOKX
+         nOaZAYP33ZMOs3tmq9tKAcS3pRTAoVFITI0hapKeo4Wa2RX67MJlyQJR2I7CQKyWO6gI
+         pBRcgxBtCtUmPqAGO6w/wOPRgCIYkZbGM7dhpdxCw3799QGf9Turcv2/RzVcQRX/wTT/
+         vuLrmTYw5adjwojaWtYGhf1FvgV20uaXEA2/Q/IjrhojQOSrvgFBM1WPXPGEoE56urSH
+         ojQJwvGavOJ1Vs9R6bJpgCSftTvJLuVIZYp2IwIhEcS6aoAce2C5I45QR8MjPTecq8QS
+         Rcfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696022463; x=1696627263;
+        d=1e100.net; s=20230601; t=1696022465; x=1696627265;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kckG2mDj4W61beRJrtNjk81pTQaRrpVtXZrSgI57tD0=;
-        b=hwDz3mIkvp01au5SnjrWeFoLFWFVk+GT0XcJpaI7MP54M9hnMws97LYy3X1xOebn3v
-         c/1sdyUzXZIagFzxziPUOUVI76V6Xal5DQnQMel11B8v2wNiaSF+0P4nVruCG/5nRD+n
-         uwI6G2QDqBAefGCO2PQSk01CWMKSUjcVsLf8JfpUT07uFLzQBTdhXwm+8p2K2vKVzfZh
-         gKHXXcrMnNk4HOXO1UyzlqitwmkT4VAQ0mbmOyL2TgmFAzx+P/7yJFxUOY1g0UpqjnR/
-         W2seV2A2wO6RY9/gEG6Pl/1gQG4k+6ffIs8/hPS1jGxSbgHTbkgyo+1ltywPcQzPRpwB
-         O0JQ==
-X-Gm-Message-State: AOJu0Yw06Yz1MIoR8UMyCMwIuKKMAmvgQ7J5fB4fSsX35kAF1EzkMqGp
-        C3looeMQxmdKf8KAAoS7h8CGk/2yKdhKlEdOZ/jZUliDG0AGtl+z0KDiKA0YTxjy/npMHb8np0J
-        tH66hiugpEFKUBE5lin+VxK3S2N1C7LzEZLbNb5wBNwQJ9Y7lX5yHEEDNl0eOn71U+QpVvGQu+F
-        eA
-X-Google-Smtp-Source: AGHT+IF7lVWJwyUXsNqxAovppY3HdVfg5vQ05xDN7ON4srTYW5e9mpUSicUeWL9PiclG6CIjG0ZfukGioWCJmBbjckQa
+        bh=mEffPqyvowslcO6VHdJaUVRI4J1WS8XMbMC+rLlH2eM=;
+        b=IRJpGTX/hxHvJvWP8X4MQjIBwwVAOdlTP5T6YmhxqOMF4ts3Vf1lLFGtBPbiRcAjmc
+         OTWJlHa8KkvQiixvWgB6z/KI6kKAX4cmW3L/7seAXJ/zxEqDdXaqo8E6D1gkwjaMz3by
+         UF1mzJmpdBXdnlKjqgg4o/ERAMXoSKUA8twS7lnysLl0GiHqSMd/O6Dh+aj2iWRymHdy
+         ZUCteGmA58HS4veh6mKd9YUhhBZGH81k2iywsZI93gvu+wjg6j3Cu+f0bMjPswfW6vPX
+         KSTNkZejGotnFfqVM0+/twHggZfYdVKRcOoGZwjACELIxLSGfyyYF+Yi8L8kNIBX2mOS
+         xHFA==
+X-Gm-Message-State: AOJu0Yy8kOgn6TjnkjZhSWZb1404FsvW4ZswIevexPa23wiGJgBCxAux
+        T42JTLJ4TZ5tf/UAsKBHY2Bt+oDJwKwtZWUGP1BgVlNB11szJVOEtAu49EHPve9NRZ2JSZflFJn
+        UHd2oDnobixZO4K2WxTp/TdZmSIBQmHMs0CdgAViQRlnAtHVbVUGkZoJUFcOcpfcywlGQbPkB9G
+        rz
+X-Google-Smtp-Source: AGHT+IFDjdhKF8G67vh5fmxqFfyNlIHFkasQ+WvIlAuN+eRUFC7P2261anFJhVeR4fRYDsEy5jdaLw75nYQ7AI6MnMLm
 X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:b708:8deb:d032:67cf])
- (user=jonathantanmy job=sendgmr) by 2002:a25:dd8:0:b0:d86:5500:7dba with SMTP
- id 207-20020a250dd8000000b00d8655007dbamr83203ybn.13.1696022463250; Fri, 29
- Sep 2023 14:21:03 -0700 (PDT)
-Date:   Fri, 29 Sep 2023 14:20:50 -0700
+ (user=jonathantanmy job=sendgmr) by 2002:a81:4004:0:b0:595:5cf0:a9b0 with
+ SMTP id l4-20020a814004000000b005955cf0a9b0mr88456ywn.9.1696022465205; Fri,
+ 29 Sep 2023 14:21:05 -0700 (PDT)
+Date:   Fri, 29 Sep 2023 14:20:51 -0700
 In-Reply-To: <cover.1696021277.git.jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <20230627195251.1973421-1-calvinwan@google.com> <cover.1696021277.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.42.0.582.g8ccd20d70d-goog
-Message-ID: <e4c20a81f93e2a4e2ad65920920ead690b162e25.1696021277.git.jonathantanmy@google.com>
-Subject: [PATCH v4 3/4] config: correct bad boolean env value error message
+Message-ID: <5d9f0b3de08ab8541482b9b640db06b6d3000b86.1696021277.git.jonathantanmy@google.com>
+Subject: [PATCH v4 4/4] parse: separate out parsing functions from config.h
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Calvin Wan <calvinwan@google.com>, phillip.wood123@gmail.com,
@@ -66,31 +66,533 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Calvin Wan <calvinwan@google.com>
 
-An incorrectly defined boolean environment value would result in the
-following error message:
+The files config.{h,c} contain functions that have to do with parsing,
+but not config.
 
-bad boolean config value '%s' for '%s'
-
-This is a misnomer since environment value != config value. Instead of
-calling git_config_bool() to parse the environment value, mimic the
-functionality inside of git_config_bool() but with the correct error
-message.
+In order to further reduce all-in-one headers, separate out functions in
+config.c that do not operate on config into its own file, parse.h,
+and update the include directives in the .c files that need only such
+functions accordingly.
 
 Signed-off-by: Calvin Wan <calvinwan@google.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- config.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ Makefile                   |   1 +
+ attr.c                     |   2 +-
+ config.c                   | 180 +-----------------------------------
+ config.h                   |  14 +--
+ pack-objects.c             |   2 +-
+ pack-revindex.c            |   2 +-
+ parse-options.c            |   3 +-
+ parse.c                    | 182 +++++++++++++++++++++++++++++++++++++
+ parse.h                    |  20 ++++
+ pathspec.c                 |   2 +-
+ preload-index.c            |   2 +-
+ progress.c                 |   2 +-
+ prompt.c                   |   2 +-
+ rebase.c                   |   2 +-
+ t/helper/test-env-helper.c |   2 +-
+ unpack-trees.c             |   2 +-
+ wrapper.c                  |   2 +-
+ write-or-die.c             |   2 +-
+ 18 files changed, 219 insertions(+), 205 deletions(-)
+ create mode 100644 parse.c
+ create mode 100644 parse.h
 
+diff --git a/Makefile b/Makefile
+index 861e643708..9226c719a0 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1091,6 +1091,7 @@ LIB_OBJS += pack-write.o
+ LIB_OBJS += packfile.o
+ LIB_OBJS += pager.o
+ LIB_OBJS += parallel-checkout.o
++LIB_OBJS += parse.o
+ LIB_OBJS += parse-options-cb.o
+ LIB_OBJS += parse-options.o
+ LIB_OBJS += patch-delta.o
+diff --git a/attr.c b/attr.c
+index 71c84fbcf8..3c0b4fb3d9 100644
+--- a/attr.c
++++ b/attr.c
+@@ -7,7 +7,7 @@
+  */
+ 
+ #include "git-compat-util.h"
+-#include "config.h"
++#include "parse.h"
+ #include "environment.h"
+ #include "exec-cmd.h"
+ #include "attr.h"
 diff --git a/config.c b/config.c
-index 3846a37be9..7dde0aaa02 100644
+index 7dde0aaa02..c7bc21a25d 100644
 --- a/config.c
 +++ b/config.c
-@@ -2133,7 +2133,14 @@ void git_global_config(char **user_out, char **xdg_out)
- int git_env_bool(const char *k, int def)
+@@ -11,6 +11,7 @@
+ #include "date.h"
+ #include "branch.h"
+ #include "config.h"
++#include "parse.h"
+ #include "convert.h"
+ #include "environment.h"
+ #include "gettext.h"
+@@ -1165,129 +1166,6 @@ static int git_parse_source(struct config_source *cs, config_fn_t fn,
+ 	return error_return;
+ }
+ 
+-static uintmax_t get_unit_factor(const char *end)
+-{
+-	if (!*end)
+-		return 1;
+-	else if (!strcasecmp(end, "k"))
+-		return 1024;
+-	else if (!strcasecmp(end, "m"))
+-		return 1024 * 1024;
+-	else if (!strcasecmp(end, "g"))
+-		return 1024 * 1024 * 1024;
+-	return 0;
+-}
+-
+-static int git_parse_signed(const char *value, intmax_t *ret, intmax_t max)
+-{
+-	if (value && *value) {
+-		char *end;
+-		intmax_t val;
+-		intmax_t factor;
+-
+-		if (max < 0)
+-			BUG("max must be a positive integer");
+-
+-		errno = 0;
+-		val = strtoimax(value, &end, 0);
+-		if (errno == ERANGE)
+-			return 0;
+-		if (end == value) {
+-			errno = EINVAL;
+-			return 0;
+-		}
+-		factor = get_unit_factor(end);
+-		if (!factor) {
+-			errno = EINVAL;
+-			return 0;
+-		}
+-		if ((val < 0 && -max / factor > val) ||
+-		    (val > 0 && max / factor < val)) {
+-			errno = ERANGE;
+-			return 0;
+-		}
+-		val *= factor;
+-		*ret = val;
+-		return 1;
+-	}
+-	errno = EINVAL;
+-	return 0;
+-}
+-
+-static int git_parse_unsigned(const char *value, uintmax_t *ret, uintmax_t max)
+-{
+-	if (value && *value) {
+-		char *end;
+-		uintmax_t val;
+-		uintmax_t factor;
+-
+-		/* negative values would be accepted by strtoumax */
+-		if (strchr(value, '-')) {
+-			errno = EINVAL;
+-			return 0;
+-		}
+-		errno = 0;
+-		val = strtoumax(value, &end, 0);
+-		if (errno == ERANGE)
+-			return 0;
+-		if (end == value) {
+-			errno = EINVAL;
+-			return 0;
+-		}
+-		factor = get_unit_factor(end);
+-		if (!factor) {
+-			errno = EINVAL;
+-			return 0;
+-		}
+-		if (unsigned_mult_overflows(factor, val) ||
+-		    factor * val > max) {
+-			errno = ERANGE;
+-			return 0;
+-		}
+-		val *= factor;
+-		*ret = val;
+-		return 1;
+-	}
+-	errno = EINVAL;
+-	return 0;
+-}
+-
+-int git_parse_int(const char *value, int *ret)
+-{
+-	intmax_t tmp;
+-	if (!git_parse_signed(value, &tmp, maximum_signed_value_of_type(int)))
+-		return 0;
+-	*ret = tmp;
+-	return 1;
+-}
+-
+-static int git_parse_int64(const char *value, int64_t *ret)
+-{
+-	intmax_t tmp;
+-	if (!git_parse_signed(value, &tmp, maximum_signed_value_of_type(int64_t)))
+-		return 0;
+-	*ret = tmp;
+-	return 1;
+-}
+-
+-int git_parse_ulong(const char *value, unsigned long *ret)
+-{
+-	uintmax_t tmp;
+-	if (!git_parse_unsigned(value, &tmp, maximum_unsigned_value_of_type(long)))
+-		return 0;
+-	*ret = tmp;
+-	return 1;
+-}
+-
+-int git_parse_ssize_t(const char *value, ssize_t *ret)
+-{
+-	intmax_t tmp;
+-	if (!git_parse_signed(value, &tmp, maximum_signed_value_of_type(ssize_t)))
+-		return 0;
+-	*ret = tmp;
+-	return 1;
+-}
+-
+ NORETURN
+ static void die_bad_number(const char *name, const char *value,
+ 			   const struct key_value_info *kvi)
+@@ -1363,23 +1241,6 @@ ssize_t git_config_ssize_t(const char *name, const char *value,
+ 	return ret;
+ }
+ 
+-static int git_parse_maybe_bool_text(const char *value)
+-{
+-	if (!value)
+-		return 1;
+-	if (!*value)
+-		return 0;
+-	if (!strcasecmp(value, "true")
+-	    || !strcasecmp(value, "yes")
+-	    || !strcasecmp(value, "on"))
+-		return 1;
+-	if (!strcasecmp(value, "false")
+-	    || !strcasecmp(value, "no")
+-	    || !strcasecmp(value, "off"))
+-		return 0;
+-	return -1;
+-}
+-
+ static const struct fsync_component_name {
+ 	const char *name;
+ 	enum fsync_component component_bits;
+@@ -1454,16 +1315,6 @@ static enum fsync_component parse_fsync_components(const char *var, const char *
+ 	return (current & ~negative) | positive;
+ }
+ 
+-int git_parse_maybe_bool(const char *value)
+-{
+-	int v = git_parse_maybe_bool_text(value);
+-	if (0 <= v)
+-		return v;
+-	if (git_parse_int(value, &v))
+-		return !!v;
+-	return -1;
+-}
+-
+ int git_config_bool_or_int(const char *name, const char *value,
+ 			   const struct key_value_info *kvi, int *is_bool)
  {
- 	const char *v = getenv(k);
--	return v ? git_config_bool(k, v) : def;
+@@ -2126,35 +1977,6 @@ void git_global_config(char **user_out, char **xdg_out)
+ 	*xdg_out = xdg_config;
+ }
+ 
+-/*
+- * Parse environment variable 'k' as a boolean (in various
+- * possible spellings); if missing, use the default value 'def'.
+- */
+-int git_env_bool(const char *k, int def)
+-{
+-	const char *v = getenv(k);
+-	int val;
+-	if (!v)
+-		return def;
+-	val = git_parse_maybe_bool(v);
+-	if (val < 0)
+-		die(_("bad boolean environment value '%s' for '%s'"),
+-		    v, k);
+-	return val;
+-}
+-
+-/*
+- * Parse environment variable 'k' as ulong with possibly a unit
+- * suffix; if missing, use the default value 'val'.
+- */
+-unsigned long git_env_ulong(const char *k, unsigned long val)
+-{
+-	const char *v = getenv(k);
+-	if (v && !git_parse_ulong(v, &val))
+-		die(_("failed to parse %s"), k);
+-	return val;
+-}
+-
+ int git_config_system(void)
+ {
+ 	return !git_env_bool("GIT_CONFIG_NOSYSTEM", 0);
+diff --git a/config.h b/config.h
+index 6332d74904..14f881ecfa 100644
+--- a/config.h
++++ b/config.h
+@@ -4,7 +4,7 @@
+ #include "hashmap.h"
+ #include "string-list.h"
+ #include "repository.h"
+-
++#include "parse.h"
+ 
+ /**
+  * The config API gives callers a way to access Git configuration files
+@@ -243,16 +243,6 @@ int config_with_options(config_fn_t fn, void *,
+  * The following helper functions aid in parsing string values
+  */
+ 
+-int git_parse_ssize_t(const char *, ssize_t *);
+-int git_parse_ulong(const char *, unsigned long *);
+-int git_parse_int(const char *value, int *ret);
+-
+-/**
+- * Same as `git_config_bool`, except that it returns -1 on error rather
+- * than dying.
+- */
+-int git_parse_maybe_bool(const char *);
+-
+ /**
+  * Parse the string to an integer, including unit factors. Dies on error;
+  * otherwise, returns the parsed result.
+@@ -385,8 +375,6 @@ int git_config_rename_section(const char *, const char *);
+ int git_config_rename_section_in_file(const char *, const char *, const char *);
+ int git_config_copy_section(const char *, const char *);
+ int git_config_copy_section_in_file(const char *, const char *, const char *);
+-int git_env_bool(const char *, int);
+-unsigned long git_env_ulong(const char *, unsigned long);
+ int git_config_system(void);
+ int config_error_nonbool(const char *);
+ #if defined(__GNUC__)
+diff --git a/pack-objects.c b/pack-objects.c
+index 1b8052bece..f403ca6986 100644
+--- a/pack-objects.c
++++ b/pack-objects.c
+@@ -3,7 +3,7 @@
+ #include "pack.h"
+ #include "pack-objects.h"
+ #include "packfile.h"
+-#include "config.h"
++#include "parse.h"
+ 
+ static uint32_t locate_object_entry_hash(struct packing_data *pdata,
+ 					 const struct object_id *oid,
+diff --git a/pack-revindex.c b/pack-revindex.c
+index 7fffcad912..a01a2a4640 100644
+--- a/pack-revindex.c
++++ b/pack-revindex.c
+@@ -6,7 +6,7 @@
+ #include "packfile.h"
+ #include "strbuf.h"
+ #include "trace2.h"
+-#include "config.h"
++#include "parse.h"
+ #include "midx.h"
+ #include "csum-file.h"
+ 
+diff --git a/parse-options.c b/parse-options.c
+index e8e076c3a6..093eaf2db8 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -1,11 +1,12 @@
+ #include "git-compat-util.h"
+ #include "parse-options.h"
+ #include "abspath.h"
+-#include "config.h"
++#include "parse.h"
+ #include "commit.h"
+ #include "color.h"
+ #include "gettext.h"
+ #include "strbuf.h"
++#include "string-list.h"
+ #include "utf8.h"
+ 
+ static int disallow_abbreviated_options;
+diff --git a/parse.c b/parse.c
+new file mode 100644
+index 0000000000..42d691a0fb
+--- /dev/null
++++ b/parse.c
+@@ -0,0 +1,182 @@
++#include "git-compat-util.h"
++#include "gettext.h"
++#include "parse.h"
++
++static uintmax_t get_unit_factor(const char *end)
++{
++	if (!*end)
++		return 1;
++	else if (!strcasecmp(end, "k"))
++		return 1024;
++	else if (!strcasecmp(end, "m"))
++		return 1024 * 1024;
++	else if (!strcasecmp(end, "g"))
++		return 1024 * 1024 * 1024;
++	return 0;
++}
++
++int git_parse_signed(const char *value, intmax_t *ret, intmax_t max)
++{
++	if (value && *value) {
++		char *end;
++		intmax_t val;
++		intmax_t factor;
++
++		if (max < 0)
++			BUG("max must be a positive integer");
++
++		errno = 0;
++		val = strtoimax(value, &end, 0);
++		if (errno == ERANGE)
++			return 0;
++		if (end == value) {
++			errno = EINVAL;
++			return 0;
++		}
++		factor = get_unit_factor(end);
++		if (!factor) {
++			errno = EINVAL;
++			return 0;
++		}
++		if ((val < 0 && -max / factor > val) ||
++		    (val > 0 && max / factor < val)) {
++			errno = ERANGE;
++			return 0;
++		}
++		val *= factor;
++		*ret = val;
++		return 1;
++	}
++	errno = EINVAL;
++	return 0;
++}
++
++static int git_parse_unsigned(const char *value, uintmax_t *ret, uintmax_t max)
++{
++	if (value && *value) {
++		char *end;
++		uintmax_t val;
++		uintmax_t factor;
++
++		/* negative values would be accepted by strtoumax */
++		if (strchr(value, '-')) {
++			errno = EINVAL;
++			return 0;
++		}
++		errno = 0;
++		val = strtoumax(value, &end, 0);
++		if (errno == ERANGE)
++			return 0;
++		if (end == value) {
++			errno = EINVAL;
++			return 0;
++		}
++		factor = get_unit_factor(end);
++		if (!factor) {
++			errno = EINVAL;
++			return 0;
++		}
++		if (unsigned_mult_overflows(factor, val) ||
++		    factor * val > max) {
++			errno = ERANGE;
++			return 0;
++		}
++		val *= factor;
++		*ret = val;
++		return 1;
++	}
++	errno = EINVAL;
++	return 0;
++}
++
++int git_parse_int(const char *value, int *ret)
++{
++	intmax_t tmp;
++	if (!git_parse_signed(value, &tmp, maximum_signed_value_of_type(int)))
++		return 0;
++	*ret = tmp;
++	return 1;
++}
++
++int git_parse_int64(const char *value, int64_t *ret)
++{
++	intmax_t tmp;
++	if (!git_parse_signed(value, &tmp, maximum_signed_value_of_type(int64_t)))
++		return 0;
++	*ret = tmp;
++	return 1;
++}
++
++int git_parse_ulong(const char *value, unsigned long *ret)
++{
++	uintmax_t tmp;
++	if (!git_parse_unsigned(value, &tmp, maximum_unsigned_value_of_type(long)))
++		return 0;
++	*ret = tmp;
++	return 1;
++}
++
++int git_parse_ssize_t(const char *value, ssize_t *ret)
++{
++	intmax_t tmp;
++	if (!git_parse_signed(value, &tmp, maximum_signed_value_of_type(ssize_t)))
++		return 0;
++	*ret = tmp;
++	return 1;
++}
++
++int git_parse_maybe_bool_text(const char *value)
++{
++	if (!value)
++		return 1;
++	if (!*value)
++		return 0;
++	if (!strcasecmp(value, "true")
++	    || !strcasecmp(value, "yes")
++	    || !strcasecmp(value, "on"))
++		return 1;
++	if (!strcasecmp(value, "false")
++	    || !strcasecmp(value, "no")
++	    || !strcasecmp(value, "off"))
++		return 0;
++	return -1;
++}
++
++int git_parse_maybe_bool(const char *value)
++{
++	int v = git_parse_maybe_bool_text(value);
++	if (0 <= v)
++		return v;
++	if (git_parse_int(value, &v))
++		return !!v;
++	return -1;
++}
++
++/*
++ * Parse environment variable 'k' as a boolean (in various
++ * possible spellings); if missing, use the default value 'def'.
++ */
++int git_env_bool(const char *k, int def)
++{
++	const char *v = getenv(k);
 +	int val;
 +	if (!v)
 +		return def;
@@ -99,9 +601,154 @@ index 3846a37be9..7dde0aaa02 100644
 +		die(_("bad boolean environment value '%s' for '%s'"),
 +		    v, k);
 +	return val;
- }
++}
++
++/*
++ * Parse environment variable 'k' as ulong with possibly a unit
++ * suffix; if missing, use the default value 'val'.
++ */
++unsigned long git_env_ulong(const char *k, unsigned long val)
++{
++	const char *v = getenv(k);
++	if (v && !git_parse_ulong(v, &val))
++		die(_("failed to parse %s"), k);
++	return val;
++}
+diff --git a/parse.h b/parse.h
+new file mode 100644
+index 0000000000..07d2193d69
+--- /dev/null
++++ b/parse.h
+@@ -0,0 +1,20 @@
++#ifndef PARSE_H
++#define PARSE_H
++
++int git_parse_signed(const char *value, intmax_t *ret, intmax_t max);
++int git_parse_ssize_t(const char *, ssize_t *);
++int git_parse_ulong(const char *, unsigned long *);
++int git_parse_int(const char *value, int *ret);
++int git_parse_int64(const char *value, int64_t *ret);
++
++/**
++ * Same as `git_config_bool`, except that it returns -1 on error rather
++ * than dying.
++ */
++int git_parse_maybe_bool(const char *);
++int git_parse_maybe_bool_text(const char *value);
++
++int git_env_bool(const char *, int);
++unsigned long git_env_ulong(const char *, unsigned long);
++
++#endif /* PARSE_H */
+diff --git a/pathspec.c b/pathspec.c
+index 3a3a5724c4..7f88f1c02b 100644
+--- a/pathspec.c
++++ b/pathspec.c
+@@ -1,6 +1,6 @@
+ #include "git-compat-util.h"
+ #include "abspath.h"
+-#include "config.h"
++#include "parse.h"
+ #include "dir.h"
+ #include "environment.h"
+ #include "gettext.h"
+diff --git a/preload-index.c b/preload-index.c
+index e44530c80c..63fd35d64b 100644
+--- a/preload-index.c
++++ b/preload-index.c
+@@ -7,7 +7,7 @@
+ #include "environment.h"
+ #include "fsmonitor.h"
+ #include "gettext.h"
+-#include "config.h"
++#include "parse.h"
+ #include "preload-index.h"
+ #include "progress.h"
+ #include "read-cache.h"
+diff --git a/progress.c b/progress.c
+index f695798aca..c83cb60bf1 100644
+--- a/progress.c
++++ b/progress.c
+@@ -17,7 +17,7 @@
+ #include "trace.h"
+ #include "trace2.h"
+ #include "utf8.h"
+-#include "config.h"
++#include "parse.h"
+ 
+ #define TP_IDX_MAX      8
+ 
+diff --git a/prompt.c b/prompt.c
+index 3baa33f63d..8935fe4dfb 100644
+--- a/prompt.c
++++ b/prompt.c
+@@ -1,5 +1,5 @@
+ #include "git-compat-util.h"
+-#include "config.h"
++#include "parse.h"
+ #include "environment.h"
+ #include "run-command.h"
+ #include "strbuf.h"
+diff --git a/rebase.c b/rebase.c
+index 17a570f1ff..69a1822da3 100644
+--- a/rebase.c
++++ b/rebase.c
+@@ -1,6 +1,6 @@
+ #include "git-compat-util.h"
+ #include "rebase.h"
+-#include "config.h"
++#include "parse.h"
+ #include "gettext.h"
  
  /*
+diff --git a/t/helper/test-env-helper.c b/t/helper/test-env-helper.c
+index 66c88b8ff3..1c486888a4 100644
+--- a/t/helper/test-env-helper.c
++++ b/t/helper/test-env-helper.c
+@@ -1,5 +1,5 @@
+ #include "test-tool.h"
+-#include "config.h"
++#include "parse.h"
+ #include "parse-options.h"
+ 
+ static char const * const env__helper_usage[] = {
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 87517364dc..761562a96e 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -2,7 +2,7 @@
+ #include "advice.h"
+ #include "strvec.h"
+ #include "repository.h"
+-#include "config.h"
++#include "parse.h"
+ #include "dir.h"
+ #include "environment.h"
+ #include "gettext.h"
+diff --git a/wrapper.c b/wrapper.c
+index 453a20ed99..7da15a56da 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -3,7 +3,7 @@
+  */
+ #include "git-compat-util.h"
+ #include "abspath.h"
+-#include "config.h"
++#include "parse.h"
+ #include "gettext.h"
+ #include "repository.h"
+ #include "strbuf.h"
+diff --git a/write-or-die.c b/write-or-die.c
+index d8355c0c3e..42a2dc73cd 100644
+--- a/write-or-die.c
++++ b/write-or-die.c
+@@ -1,5 +1,5 @@
+ #include "git-compat-util.h"
+-#include "config.h"
++#include "parse.h"
+ #include "run-command.h"
+ #include "write-or-die.h"
+ 
 -- 
 2.42.0.582.g8ccd20d70d-goog
 
