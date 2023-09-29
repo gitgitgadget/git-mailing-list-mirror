@@ -2,58 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0593E743F0
-	for <git@archiver.kernel.org>; Fri, 29 Sep 2023 21:21:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AC39E71D58
+	for <git@archiver.kernel.org>; Fri, 29 Sep 2023 21:21:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233828AbjI2VVJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Sep 2023 17:21:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34730 "EHLO
+        id S233749AbjI2VVK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Sep 2023 17:21:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229545AbjI2VVD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Sep 2023 17:21:03 -0400
+        with ESMTP id S233540AbjI2VVE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Sep 2023 17:21:04 -0400
 Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE6B71AA
-        for <git@vger.kernel.org>; Fri, 29 Sep 2023 14:21:00 -0700 (PDT)
-Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-59f8134eb83so187077437b3.2
-        for <git@vger.kernel.org>; Fri, 29 Sep 2023 14:21:00 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C5A41AB
+        for <git@vger.kernel.org>; Fri, 29 Sep 2023 14:21:02 -0700 (PDT)
+Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-5a1f12cf1ddso22808497b3.0
+        for <git@vger.kernel.org>; Fri, 29 Sep 2023 14:21:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1696022460; x=1696627260; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1696022461; x=1696627261; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=dSqK0HweFHjWdsnPW0bdmckN6lsXfMyrTavCbIKCkBw=;
-        b=JImwSZB/VpRWn/i60mZfn8uF8mq56/bCDH+0qBKqcJjPa4I/XsZsDiKkBWVZ+bSrIf
-         hvJlT05jDzV0/H1lEoNisgUZCtkm9u723HQwu49boJY6plrWurdwL54Ud3NL4QhTmeMG
-         CLfisUylr6A1MKl9vPXm5L6QQ/MlSXFOgH/brqLoAi9iEhD36ymZwrSBbBoLeoQg22vs
-         elqt32WWoOiUSfnsSl1wpa5NTUyfGvGGYnRRjfkpzk66gEel8lNojaOdavSDfXF/G3lT
-         JoBWHOhAd1DjTkqLpp4D7p3GF/KvzsEkUW5WkLolwgp9yq72wKkBNLph7JJJfjHVsBdE
-         LZcw==
+        bh=6rwYe4h6Z9Jg1gIRfLKp95ZvmJDBSMmUEcRxwVtc2KY=;
+        b=Ojk7u9a3CjOuoa3HaRwB/28J27V0bYvjLKHh7AFHPvlOx6EaMLWEokU75LJEmDKXDq
+         gDa8cIfz65vx0MdMjmcnLWgXVN86cr9lq3sHb33lcsCJwCBiP2OALB2F/V2ernNJsk4h
+         PljOE36kqHobwHGoAe/91izrtbr0XW5a9yGsY00SAvcULtS6meF5pvROJzhiWttgheAf
+         yQMBqeYbmgs4XydVy7Ew+XGdWYMAd11cXulCGdkF3xECXSITWbEmEcKlzV6n7hP6BYFj
+         NFJ+VBP6zO/auy35+yd0KnLbTaT16w9xbmHnhXhqq+YoaEYYFmoy59KFzrOQRYeAri5X
+         kYpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696022460; x=1696627260;
+        d=1e100.net; s=20230601; t=1696022461; x=1696627261;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dSqK0HweFHjWdsnPW0bdmckN6lsXfMyrTavCbIKCkBw=;
-        b=EKA1vQEAIzpP77nUltzgc87JQfNv4/4pkCR5qB19ZSyd7ynp0NfJtzoh9QUTs9DRma
-         8kUn/wg8tittfb23DXY2xzsDW2AsVOpv940mvZW3W+nuoDyw6NJVSh+L4nYiUSMBV3GE
-         UFVNiAUC2YItQHHw14LjiQAbu2gW4ahK9mBZukSGlii1nNjnT9KBz81sxarlgCOptIwR
-         1U2mzwpw+sfmNwBo0boo4iyEwPzZ4on1SkYick1iZNPrPLSqfRwdjPmYy/QIjWuENhGR
-         Waisrtu1LayUYMyoOKtr5wynGoLVULfbMK7aPjXVGsizt6lxhWxzMbdjJB3jlc1uh2J2
-         bpQA==
-X-Gm-Message-State: AOJu0Yy8wGePdoxXHdjk6JXpKd+GGPI8IaBI3kyDjjHwrfXsDnimlZ8A
-        3it/Pe09TbirnQQVRvFIcPEB+Oj10MSdCANndDfe2I/i05q+5ZDZ2U4aa2v/evJylovz5DN3aF4
-        oh1WD1r4skI3O7ekOu5x+QNK7uTUq32zjlhMJoZROuBKKIPa8F+NdQ8u4bUa7fyxdW3m4RcqEqO
-        qk
-X-Google-Smtp-Source: AGHT+IEbJV1VezkcZub8ipGi5MENaibZrUlZhuna/fYB+cTIc6A1+r4W35RSPaU8RvlLu6jrvUNZdEQn+wVoUR6J/876
+        bh=6rwYe4h6Z9Jg1gIRfLKp95ZvmJDBSMmUEcRxwVtc2KY=;
+        b=Nl/bx6kQGL4yrUiC6v+2hWy5YRRa9m7xlqTHxRSIJxjZw/62lR4/6GobSPLCmSyDq3
+         J4VcMD19Zpmsym7FJ7SlsoaM6fKAkj4uasDOpz7IUKCnbMeJXOK/FtzxWp/3poIiiM7z
+         0/jr/88LH6CYfsTTtjaoNdjMg5bXA/3z9LsAO8VWbEw/9LGRB9sA2AnPx4l1aESdslXm
+         mQ8BR/k0YISbGUbMxd4GlSteKTzaaBNMp85bkCrpQRkk2wj6h9Og3QPAMUw/D9mLz+sh
+         D//VjH/ZZAeDJyr7l0I8LTx2uDC4w7W6qgktetTclv0JYofT7bmQTcBln4vzQDXt0m1j
+         cZDA==
+X-Gm-Message-State: AOJu0YxOOpNnNj6LjWpTQJ+SNJ4LMe6BhCLhI0fIuTbawmiAwMH6g6C3
+        HeQxZfA5DKw36IcBt/oGD/EVz0TQS2BLFOMPfH1wfPsZ+WobNUAvS1QBjhKxEQmVeDLsVexiBXq
+        CaVG0AtwSbL39MttM5IqEV5Etj3S2IpoErYF9vKt5D0RQr5c56zO/1T5NI2bK5tqstuA2Nqq6yB
+        no
+X-Google-Smtp-Source: AGHT+IFghsh+N2dPVLjrHT65YwSaScv++Fp0CI9NtgjpMf/3nFFuE+rET8ADOKxaFzmp9ZyU7FLTUmOkYydTv3E7W8cq
 X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:b708:8deb:d032:67cf])
- (user=jonathantanmy job=sendgmr) by 2002:a25:5042:0:b0:d89:47d6:b4fa with
- SMTP id e63-20020a255042000000b00d8947d6b4famr79683ybb.13.1696022459473; Fri,
- 29 Sep 2023 14:20:59 -0700 (PDT)
-Date:   Fri, 29 Sep 2023 14:20:48 -0700
+ (user=jonathantanmy job=sendgmr) by 2002:a81:9982:0:b0:59f:4c14:ac5e with
+ SMTP id q124-20020a819982000000b0059f4c14ac5emr120874ywg.2.1696022461415;
+ Fri, 29 Sep 2023 14:21:01 -0700 (PDT)
+Date:   Fri, 29 Sep 2023 14:20:49 -0700
 In-Reply-To: <cover.1696021277.git.jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <20230627195251.1973421-1-calvinwan@google.com> <cover.1696021277.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.42.0.582.g8ccd20d70d-goog
-Message-ID: <02ecc00e9c7226c9eeb960cc49c8c03dcb182a38.1696021277.git.jonathantanmy@google.com>
-Subject: [PATCH v4 1/4] hex-ll: separate out non-hash-algo functions
+Message-ID: <c9e7cd78576527571fd70b953e340b5bdd196221.1696021277.git.jonathantanmy@google.com>
+Subject: [PATCH v4 2/4] wrapper: reduce scope of remove_or_warn()
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Calvin Wan <calvinwan@google.com>, phillip.wood123@gmail.com,
@@ -66,289 +66,92 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Calvin Wan <calvinwan@google.com>
 
-In order to further reduce all-in-one headers, separate out functions in
-hex.h that do not operate on object hashes into its own file, hex-ll.h,
-and update the include directives in the .c files that need only such
-functions accordingly.
+remove_or_warn() is only used by entry.c and apply.c, but it is
+currently declared and defined in wrapper.{h,c}, so it has a scope much
+greater than it needs. This needlessly large scope also causes wrapper.c
+to need to include object.h, when this file is largely unconcerned with
+Git objects.
+
+Move remove_or_warn() to entry.{h,c}. The file apply.c still has access
+to it, since it already includes entry.h for another reason.
 
 Signed-off-by: Calvin Wan <calvinwan@google.com>
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- Makefile   |  1 +
- color.c    |  2 +-
- hex-ll.c   | 49 +++++++++++++++++++++++++++++++++++++++++++++++++
- hex-ll.h   | 27 +++++++++++++++++++++++++++
- hex.c      | 47 -----------------------------------------------
- hex.h      | 24 +-----------------------
- mailinfo.c |  2 +-
- strbuf.c   |  2 +-
- url.c      |  2 +-
- urlmatch.c |  2 +-
- 10 files changed, 83 insertions(+), 75 deletions(-)
- create mode 100644 hex-ll.c
- create mode 100644 hex-ll.h
+ entry.c   | 5 +++++
+ entry.h   | 6 ++++++
+ wrapper.c | 6 ------
+ wrapper.h | 5 -----
+ 4 files changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 5776309365..861e643708 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1040,6 +1040,7 @@ LIB_OBJS += hash-lookup.o
- LIB_OBJS += hashmap.o
- LIB_OBJS += help.o
- LIB_OBJS += hex.o
-+LIB_OBJS += hex-ll.o
- LIB_OBJS += hook.o
- LIB_OBJS += ident.o
- LIB_OBJS += json-writer.o
-diff --git a/color.c b/color.c
-index b24b19566b..f663c06ac4 100644
---- a/color.c
-+++ b/color.c
-@@ -3,7 +3,7 @@
- #include "color.h"
- #include "editor.h"
- #include "gettext.h"
--#include "hex.h"
-+#include "hex-ll.h"
- #include "pager.h"
- #include "strbuf.h"
+diff --git a/entry.c b/entry.c
+index 43767f9043..076e97eb89 100644
+--- a/entry.c
++++ b/entry.c
+@@ -581,3 +581,8 @@ void unlink_entry(const struct cache_entry *ce, const char *super_prefix)
+ 		return;
+ 	schedule_dir_for_removal(ce->name, ce_namelen(ce));
+ }
++
++int remove_or_warn(unsigned int mode, const char *file)
++{
++	return S_ISGITLINK(mode) ? rmdir_or_warn(file) : unlink_or_warn(file);
++}
+diff --git a/entry.h b/entry.h
+index 7329f918a9..ca3ed35bc0 100644
+--- a/entry.h
++++ b/entry.h
+@@ -62,4 +62,10 @@ int fstat_checkout_output(int fd, const struct checkout *state, struct stat *st)
+ void update_ce_after_write(const struct checkout *state, struct cache_entry *ce,
+ 			   struct stat *st);
  
-diff --git a/hex-ll.c b/hex-ll.c
-new file mode 100644
-index 0000000000..4d7ece1de5
---- /dev/null
-+++ b/hex-ll.c
-@@ -0,0 +1,49 @@
-+#include "git-compat-util.h"
-+#include "hex-ll.h"
-+
-+const signed char hexval_table[256] = {
-+	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 00-07 */
-+	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 08-0f */
-+	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 10-17 */
-+	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 18-1f */
-+	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 20-27 */
-+	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 28-2f */
-+	  0,  1,  2,  3,  4,  5,  6,  7,		/* 30-37 */
-+	  8,  9, -1, -1, -1, -1, -1, -1,		/* 38-3f */
-+	 -1, 10, 11, 12, 13, 14, 15, -1,		/* 40-47 */
-+	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 48-4f */
-+	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 50-57 */
-+	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 58-5f */
-+	 -1, 10, 11, 12, 13, 14, 15, -1,		/* 60-67 */
-+	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 68-67 */
-+	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 70-77 */
-+	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 78-7f */
-+	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 80-87 */
-+	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 88-8f */
-+	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 90-97 */
-+	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 98-9f */
-+	 -1, -1, -1, -1, -1, -1, -1, -1,		/* a0-a7 */
-+	 -1, -1, -1, -1, -1, -1, -1, -1,		/* a8-af */
-+	 -1, -1, -1, -1, -1, -1, -1, -1,		/* b0-b7 */
-+	 -1, -1, -1, -1, -1, -1, -1, -1,		/* b8-bf */
-+	 -1, -1, -1, -1, -1, -1, -1, -1,		/* c0-c7 */
-+	 -1, -1, -1, -1, -1, -1, -1, -1,		/* c8-cf */
-+	 -1, -1, -1, -1, -1, -1, -1, -1,		/* d0-d7 */
-+	 -1, -1, -1, -1, -1, -1, -1, -1,		/* d8-df */
-+	 -1, -1, -1, -1, -1, -1, -1, -1,		/* e0-e7 */
-+	 -1, -1, -1, -1, -1, -1, -1, -1,		/* e8-ef */
-+	 -1, -1, -1, -1, -1, -1, -1, -1,		/* f0-f7 */
-+	 -1, -1, -1, -1, -1, -1, -1, -1,		/* f8-ff */
-+};
-+
-+int hex_to_bytes(unsigned char *binary, const char *hex, size_t len)
-+{
-+	for (; len; len--, hex += 2) {
-+		unsigned int val = (hexval(hex[0]) << 4) | hexval(hex[1]);
-+
-+		if (val & ~0xff)
-+			return -1;
-+		*binary++ = val;
-+	}
-+	return 0;
-+}
-diff --git a/hex-ll.h b/hex-ll.h
-new file mode 100644
-index 0000000000..a381fa8556
---- /dev/null
-+++ b/hex-ll.h
-@@ -0,0 +1,27 @@
-+#ifndef HEX_LL_H
-+#define HEX_LL_H
-+
-+extern const signed char hexval_table[256];
-+static inline unsigned int hexval(unsigned char c)
-+{
-+	return hexval_table[c];
-+}
-+
 +/*
-+ * Convert two consecutive hexadecimal digits into a char.  Return a
-+ * negative value on error.  Don't run over the end of short strings.
++ * Calls the correct function out of {unlink,rmdir}_or_warn based on
++ * the supplied file mode.
 + */
-+static inline int hex2chr(const char *s)
-+{
-+	unsigned int val = hexval(s[0]);
-+	return (val & ~0xf) ? val : (val << 4) | hexval(s[1]);
-+}
++int remove_or_warn(unsigned int mode, const char *path);
 +
-+/*
-+ * Read `len` pairs of hexadecimal digits from `hex` and write the
-+ * values to `binary` as `len` bytes. Return 0 on success, or -1 if
-+ * the input does not consist of hex digits).
-+ */
-+int hex_to_bytes(unsigned char *binary, const char *hex, size_t len);
-+
-+#endif
-diff --git a/hex.c b/hex.c
-index 01f17fe5c9..d42262bdca 100644
---- a/hex.c
-+++ b/hex.c
-@@ -2,53 +2,6 @@
- #include "hash.h"
- #include "hex.h"
- 
--const signed char hexval_table[256] = {
--	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 00-07 */
--	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 08-0f */
--	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 10-17 */
--	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 18-1f */
--	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 20-27 */
--	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 28-2f */
--	  0,  1,  2,  3,  4,  5,  6,  7,		/* 30-37 */
--	  8,  9, -1, -1, -1, -1, -1, -1,		/* 38-3f */
--	 -1, 10, 11, 12, 13, 14, 15, -1,		/* 40-47 */
--	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 48-4f */
--	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 50-57 */
--	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 58-5f */
--	 -1, 10, 11, 12, 13, 14, 15, -1,		/* 60-67 */
--	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 68-67 */
--	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 70-77 */
--	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 78-7f */
--	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 80-87 */
--	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 88-8f */
--	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 90-97 */
--	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 98-9f */
--	 -1, -1, -1, -1, -1, -1, -1, -1,		/* a0-a7 */
--	 -1, -1, -1, -1, -1, -1, -1, -1,		/* a8-af */
--	 -1, -1, -1, -1, -1, -1, -1, -1,		/* b0-b7 */
--	 -1, -1, -1, -1, -1, -1, -1, -1,		/* b8-bf */
--	 -1, -1, -1, -1, -1, -1, -1, -1,		/* c0-c7 */
--	 -1, -1, -1, -1, -1, -1, -1, -1,		/* c8-cf */
--	 -1, -1, -1, -1, -1, -1, -1, -1,		/* d0-d7 */
--	 -1, -1, -1, -1, -1, -1, -1, -1,		/* d8-df */
--	 -1, -1, -1, -1, -1, -1, -1, -1,		/* e0-e7 */
--	 -1, -1, -1, -1, -1, -1, -1, -1,		/* e8-ef */
--	 -1, -1, -1, -1, -1, -1, -1, -1,		/* f0-f7 */
--	 -1, -1, -1, -1, -1, -1, -1, -1,		/* f8-ff */
--};
--
--int hex_to_bytes(unsigned char *binary, const char *hex, size_t len)
--{
--	for (; len; len--, hex += 2) {
--		unsigned int val = (hexval(hex[0]) << 4) | hexval(hex[1]);
--
--		if (val & ~0xff)
--			return -1;
--		*binary++ = val;
--	}
--	return 0;
--}
--
- static int get_hash_hex_algop(const char *hex, unsigned char *hash,
- 			      const struct git_hash_algo *algop)
- {
-diff --git a/hex.h b/hex.h
-index 87abf66602..e0b83f776f 100644
---- a/hex.h
-+++ b/hex.h
-@@ -2,22 +2,7 @@
- #define HEX_H
- 
- #include "hash-ll.h"
--
--extern const signed char hexval_table[256];
--static inline unsigned int hexval(unsigned char c)
--{
--	return hexval_table[c];
--}
--
--/*
-- * Convert two consecutive hexadecimal digits into a char.  Return a
-- * negative value on error.  Don't run over the end of short strings.
-- */
--static inline int hex2chr(const char *s)
--{
--	unsigned int val = hexval(s[0]);
--	return (val & ~0xf) ? val : (val << 4) | hexval(s[1]);
--}
-+#include "hex-ll.h"
- 
- /*
-  * Try to read a hash (specified by the_hash_algo) in hexadecimal
-@@ -34,13 +19,6 @@ int get_oid_hex(const char *hex, struct object_id *oid);
- /* Like get_oid_hex, but for an arbitrary hash algorithm. */
- int get_oid_hex_algop(const char *hex, struct object_id *oid, const struct git_hash_algo *algop);
- 
--/*
-- * Read `len` pairs of hexadecimal digits from `hex` and write the
-- * values to `binary` as `len` bytes. Return 0 on success, or -1 if
-- * the input does not consist of hex digits).
-- */
--int hex_to_bytes(unsigned char *binary, const char *hex, size_t len);
--
- /*
-  * Convert a binary hash in "unsigned char []" or an object name in
-  * "struct object_id *" to its hex equivalent. The `_r` variant is reentrant,
-diff --git a/mailinfo.c b/mailinfo.c
-index 931505363c..a07d2da16d 100644
---- a/mailinfo.c
-+++ b/mailinfo.c
-@@ -1,7 +1,7 @@
- #include "git-compat-util.h"
+ #endif /* ENTRY_H */
+diff --git a/wrapper.c b/wrapper.c
+index 48065c4f53..453a20ed99 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -5,7 +5,6 @@
+ #include "abspath.h"
  #include "config.h"
  #include "gettext.h"
--#include "hex.h"
-+#include "hex-ll.h"
- #include "utf8.h"
+-#include "object.h"
+ #include "repository.h"
  #include "strbuf.h"
- #include "mailinfo.h"
-diff --git a/strbuf.c b/strbuf.c
-index 4c9ac6dc5e..7827178d8e 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -1,6 +1,6 @@
- #include "git-compat-util.h"
- #include "gettext.h"
--#include "hex.h"
-+#include "hex-ll.h"
- #include "strbuf.h"
- #include "string-list.h"
- #include "utf8.h"
-diff --git a/url.c b/url.c
-index 2e1a9f6fee..282b12495a 100644
---- a/url.c
-+++ b/url.c
-@@ -1,5 +1,5 @@
- #include "git-compat-util.h"
--#include "hex.h"
-+#include "hex-ll.h"
- #include "strbuf.h"
- #include "url.h"
+ #include "trace2.h"
+@@ -632,11 +631,6 @@ int rmdir_or_warn(const char *file)
+ 	return warn_if_unremovable("rmdir", file, rmdir(file));
+ }
  
-diff --git a/urlmatch.c b/urlmatch.c
-index 1c45f23adf..1d0254abac 100644
---- a/urlmatch.c
-+++ b/urlmatch.c
-@@ -1,6 +1,6 @@
- #include "git-compat-util.h"
- #include "gettext.h"
--#include "hex.h"
-+#include "hex-ll.h"
- #include "strbuf.h"
- #include "urlmatch.h"
+-int remove_or_warn(unsigned int mode, const char *file)
+-{
+-	return S_ISGITLINK(mode) ? rmdir_or_warn(file) : unlink_or_warn(file);
+-}
+-
+ static int access_error_is_ok(int err, unsigned flag)
+ {
+ 	return (is_missing_file_error(err) ||
+diff --git a/wrapper.h b/wrapper.h
+index 79c7321bb3..1b2b047ea0 100644
+--- a/wrapper.h
++++ b/wrapper.h
+@@ -106,11 +106,6 @@ int unlink_or_msg(const char *file, struct strbuf *err);
+  * not exist.
+  */
+ int rmdir_or_warn(const char *path);
+-/*
+- * Calls the correct function out of {unlink,rmdir}_or_warn based on
+- * the supplied file mode.
+- */
+-int remove_or_warn(unsigned int mode, const char *path);
  
+ /*
+  * Call access(2), but warn for any error except "missing file"
 -- 
 2.42.0.582.g8ccd20d70d-goog
 
