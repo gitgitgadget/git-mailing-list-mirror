@@ -2,144 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E84CE78495
-	for <git@archiver.kernel.org>; Sun,  1 Oct 2023 22:03:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19432E7849C
+	for <git@archiver.kernel.org>; Sun,  1 Oct 2023 23:56:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234055AbjJAWDx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 1 Oct 2023 18:03:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41830 "EHLO
+        id S234245AbjJAXwL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 1 Oct 2023 19:52:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229557AbjJAWDx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Oct 2023 18:03:53 -0400
-Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35F0AC9
-        for <git@vger.kernel.org>; Sun,  1 Oct 2023 15:03:50 -0700 (PDT)
-Received: by mail-yb1-xb2b.google.com with SMTP id 3f1490d57ef6-d84d883c1b6so3351171276.0
-        for <git@vger.kernel.org>; Sun, 01 Oct 2023 15:03:50 -0700 (PDT)
+        with ESMTP id S229476AbjJAXwK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Oct 2023 19:52:10 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68447C6
+        for <git@vger.kernel.org>; Sun,  1 Oct 2023 16:52:08 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-99357737980so2200655066b.2
+        for <git@vger.kernel.org>; Sun, 01 Oct 2023 16:52:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696197829; x=1696802629; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1696204324; x=1696809124; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=poLSVI60S9Fnxq1RqOYB2shG9vEqVK5ObWcgXpkuE4Q=;
-        b=QcVyYwHLZs3XThgPPAESb0z0zieIFlbx5NMVl8H+z3dYEEX4UgayFWxUJRjfAnEvh9
-         zz6DeH5b34wpihohiQav9A8BZAfHU3Q4Z41bC+vMYtiIRP+eNQpV7LbRVbXDvxGT4CEL
-         9Q4bOUPQaIWivZbBr2zl5HBV/72cIxRzICEY+vDzw08d5Zf9grE8rMjZhM6Z9Tn0gPo2
-         OpH/PcUC+g32lHhDBp5AZIQb3vs0Nt9PB+so38fNGNscHhGpMTrU5vCweMdAuNcPyv94
-         pBEes/BGrNPTbQF3H3jokmjDBrhyiuNgCjnAZAl0gh7qjPl9YjDcNvqmeRiVT02OOFss
-         16Tg==
+        bh=aIy9rijFTFA3P8OS2RuJVxl5katO0evgWVReZ4tov8E=;
+        b=AX2buGZ78YROXxYg3CnuirknCad3DL/rQYUd+O8s1/8XNsGxU+0jyTsWrMTtfaqKAt
+         HopDVaZTrG+xKLqMEX8wpVIlbjaEJw7KcDL9ddv6K5X71nmuUpOq2vsgrfLeX3ZI+VgL
+         k/CaGMdSVoa3dpNi9TR2kUkcVoUjTwhmB++WHGZkkWQI2k6NcqOzH1jFkYdLhWCRFPMC
+         6ORWitW2TD0mhAKCPPLyRRFs2dt1yPbaf/YUJPwBmN9qr6iXxJkgBc4k8TIRBttJ2v+M
+         m6DUfr9zT2in+dUjcJi1LMfnSH/VRq0WgePIevbCeOH2vdAlWpKKTaYBbUHdl6AAXL+I
+         ltcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696197829; x=1696802629;
+        d=1e100.net; s=20230601; t=1696204324; x=1696809124;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=poLSVI60S9Fnxq1RqOYB2shG9vEqVK5ObWcgXpkuE4Q=;
-        b=U5mFFxBNwYbCfGLOPov6aIbaK6v8aX8csus4opnAyiuM34WyIy7/kibLz8ncqsJg+r
-         1eZwIkKChEsJZJg4PdFkwN+pFjNb6K1ZXsnp0II6N75DxdYykuAhGLrjSEIbhzMBgIVm
-         LroZRLEEOtFWyt1AUSeTN7nDmI1Jti8OmH1ptUwZAsyQ57AExbODYMltsaJ3RiJtQXOd
-         Z4BqAuBpCT3RWVAX329L4c7GKMxkfuenYXaLmxcCddZrKDIUN055st9MoLp5MTu3mMI1
-         /le0SsYJPjQY3HMJx8qc3ZgcxWD1dxzlmk23aA8dzn4E4/1CGd5xnpRINbk1ANFrMj6e
-         nsSA==
-X-Gm-Message-State: AOJu0Yxk+n8bVo4BVmOOWWNzR6ptT4N2J3Y5XRYWfLUzZQl1ldqPS+om
-        CrgyH9NiGQhOj7IDU6N3hog/s/ix71zd2XwGjno=
-X-Google-Smtp-Source: AGHT+IH9NGY6hywpTd0vAOijTP/RTSvGY9zulqre1L1KLRVNRq1m6qSc4QbWSsjNZJEYy53rzrQxth+/LxRlM0rhaE8=
-X-Received: by 2002:a25:688b:0:b0:d89:c969:beee with SMTP id
- d133-20020a25688b000000b00d89c969beeemr13392830ybc.1.1696197829266; Sun, 01
- Oct 2023 15:03:49 -0700 (PDT)
+        bh=aIy9rijFTFA3P8OS2RuJVxl5katO0evgWVReZ4tov8E=;
+        b=B6YGZHPCz6la9thdp/YCY2xuNfOu8SDdl3qS/OQ94lF8eaKQYYC55x+0lz9jO3Xsau
+         GNwexP6/FKhRPKXrakX1QqfyJvcq5HvczIddE6vc7mvDb/YqIn8w2xblWR4RY7I0EE2O
+         8JtO40SKHYy6L93om3v0TFASi9gaPjoyaJbvh7adZRE2qHy3oQtYvrI2tGgn5WSEq3Ig
+         WFJYEOTtaQVCMQsoNaLV4NUa03xWjhAb+SjAfVJhSzVTuILSGWipSopNW5TLmhrs+hsb
+         oN7z7800O/Qx02d+/gbv5rlde+0Nfl3c5BbvU742L8Xc2ruIhvQHl0DSatgPOSeBiA6P
+         xqzA==
+X-Gm-Message-State: AOJu0YzeGe8DgY8nhHcFAPvltAImw39WHDtFFO0qtuXxGOGlazL9hRp+
+        wKB+0Z2zDmj4FG1D57WwzM7CdFwsm8yDLxNnrUM=
+X-Google-Smtp-Source: AGHT+IE0QLLkbaG7R44Wrlc58+7nkH0MP17fZ4JiSQmmXnG44Ft6MPdzd0ac7hXHN84WZkugEa/PAGhhqcmBtOOElc8=
+X-Received: by 2002:a17:906:225c:b0:9a1:cfd5:1f3a with SMTP id
+ 28-20020a170906225c00b009a1cfd51f3amr10212331ejr.13.1696204324387; Sun, 01
+ Oct 2023 16:52:04 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAL3By--HowOL1ffKBPfmwnfUdJd4KXcnkpS2BgkbO=9E2WnHKw@mail.gmail.com>
- <xmqqo7hjfumj.fsf@gitster.g>
-In-Reply-To: <xmqqo7hjfumj.fsf@gitster.g>
-From:   Jesse Hopkins <jesse.hops@gmail.com>
-Date:   Sun, 1 Oct 2023 16:03:29 -0600
-Message-ID: <CAL3By-_jrYDenCc8HSrtnR3cZD19z7bvwVOOoO4XG+6aNFxyeQ@mail.gmail.com>
-Subject: Re: Possible to update-ref remote repository?
+References: <pull.1591.git.1696193527923.gitgitgadget@gmail.com> <xmqq7co6f1le.fsf@gitster.g>
+In-Reply-To: <xmqq7co6f1le.fsf@gitster.g>
+From:   Javier Mora <cousteaulecommandant@gmail.com>
+Date:   Mon, 2 Oct 2023 00:51:53 +0100
+Message-ID: <CAH1-q0g+xdb_mUi0sXrQjF4nkX1Nkpops_V1e86qACLxs1uPqg@mail.gmail.com>
+Subject: Re: [PATCH] git-status.txt: fix minor asciidoc format issue
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
+Cc:     cousteau via GitGitGadget <gitgitgadget@gmail.com>,
+        Josh Soref <jsoref@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for the reply.  Would you be able to point me to some
-breadcrumbs for the "required protocol messages"?  I might try to
-tinker in some spare time.
+Yeah, I saw that right after I submitted my patch :(
+Only problem is that that patch doesn't use the same formatting as the
+rest of the document (uses a code block / preformatted text instead of
+a list as other options in the document do) so my version of the patch
+is just a minor cosmetic improvement now.  (In any case, the result is
+quite similar in the plain text manpage version; the change is more
+noticeable in the HTML version though.)
 
-FWIW, I had put something like this together a while back using
-Gitolite hosting (a dedicated SSH command similar to Gitolite's
-symbolic-ref command:
-https://github.com/sitaramc/gitolite/blob/master/src/commands/symbolic-ref)=
-.
+If you're still interested in the "format as a list" issue and it
+makes things easier to you, I can submit a merge of both commits
+(fixing the merge conflict).
 
-Our org is using Gitlab now, and I have been able to put some
-functionality together using the Gitlab API's, but it's quite ugly,
-and was hoping that maybe there was an intrinsic git protocol
-solution, which seems there could be, but somewhere past trivial and
-before impossible.
-
--Jesse
-
-On Sat, Sep 30, 2023 at 11:17=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
- wrote:
+El dom, 1 oct 2023 a las 22:57, Junio C Hamano (<gitster@pobox.com>) escrib=
+i=C3=B3:
 >
-> Jesse Hopkins <jesse.hops@gmail.com> writes:
+> "cousteau via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> > Wondering if it's possible to do the equivalent of the update-ref
-> > command remotely.  Or I guess another way of putting it would be to
-> > git-push to a remote repository without needing a local clone of the
-> > repo.
+> > From: Javier Mora <cousteaulecommandant@gmail.com>
 > >
-> > Trying do something like:
-> >
-> > git push <remote-repo-url>  <sha1>:refs/heads/mybranchtoupdate
-> >
-> > where I know that <sha1> already exists on the remote.  I'd like to
-> > avoid the need to clone a local copy of the repo.  Wondering if there
-> > might be some plumbing command(s) that could accomplish this?
+> > The paragraph below the list of short option combinations
+> > isn't correctly formatted, making the result hard to read.
 >
-> There is no such command shipped with Git.  I do not think anybody
-> ever proposed to add such a feature, as it won't be generally useful
-> in contexts other than one-shot surgery.
+> In <pull.1590.git.1695392082207.gitgitgadget@gmail.com>, Josh fixed
+> this issue a bit differently but in the same spirit, and the fix in
+> 38a15f47 (Documentation/git-status: add missing line breaks,
+> 2023-09-22) is about to hit the 'master' branch.
 >
-> But that is different from that it is impossible to do.  At the
-> protocol level, as long as the receiving end is convinced that such
-> a push, which does not transfer any object but proposes to update a
-> ref to a new value, does not corrupt the resulting repository state
-> after acceptingit, the receiving end does not care if the sending
-> end has what object, or even any repository---the receiving end
-> cannot even know what the sending end actually has.
+> Thanks.
 >
-> The devil however is in the details of ensuring the "as long as the
-> receiving end is convinced" part.  If you know that an object whose
-> object name is X is sitting at the tip of branch A at the remote,
-> and you try to update the tip of branch B to the same object, it is
-> likely [*] that the remote would notice that such an update after
-> receiving no new objects is safe.  But if the object X is not
-> sitting at the tip of any branch or ref (it may be a few commits
-> behind an existing ref, or it may be dangling ahead of all refs), it
-> would depend on how the receiving end determines that it has object
-> chains necessary to complete the new DAG that has X.  The official
-> versions of Git client historically have done a thorough job in
-> check_connected() to even discover fully connected object chains
-> that allows us to resurrect such a dangling tip of a DAG, but we
-> cannot complain if third-party Git implementations misses less
-> obvious cases.
+> [Reference]
 >
-> Having said all that, writing a specialized "push lookalike" that
-> sends the required protocol message that would have been spewed by a
-> real "git push" client operating in the right environment (i.e., it
-> has a repository that is a good clone of the receiving repository at
-> the <remote-repo-url>, the receiving repository has <sha1> and all
-> the objects that are reachable from it, refs/heads/mybranchtoupdate
-> points at a commit that is an ancestor of <sha1> right now) should
-> not be brain surgery, and with such a program you can
->
->  $ git-push-empty <remote-repo-url> <sha1>:refs/heads/mybranchtoupdate
->
-> and fool the receiving end to do what you want it to do, as it
-> cannot tell if it is talking to a real "git push" client or to your
-> "push-empty" program from what is coming over the wire.
->
->
+> * https://lore.kernel.org/git/pull.1590.git.1695392082207.gitgitgadget@gm=
+ail.com/
 >
