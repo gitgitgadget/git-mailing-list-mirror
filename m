@@ -2,72 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DA5DE784A7
-	for <git@archiver.kernel.org>; Mon,  2 Oct 2023 03:08:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34BCFE784BD
+	for <git@archiver.kernel.org>; Mon,  2 Oct 2023 15:15:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234639AbjJBDGH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 1 Oct 2023 23:06:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42914 "EHLO
+        id S237945AbjJBPPV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Oct 2023 11:15:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229935AbjJBDGF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Oct 2023 23:06:05 -0400
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44C00C4
-        for <git@vger.kernel.org>; Sun,  1 Oct 2023 20:06:02 -0700 (PDT)
-Received: by mail-pl1-x636.google.com with SMTP id d9443c01a7336-1bd9b4f8e0eso120352255ad.1
-        for <git@vger.kernel.org>; Sun, 01 Oct 2023 20:06:02 -0700 (PDT)
+        with ESMTP id S237774AbjJBPPU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Oct 2023 11:15:20 -0400
+Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4D96B8
+        for <git@vger.kernel.org>; Mon,  2 Oct 2023 08:15:17 -0700 (PDT)
+Received: by mail-qt1-x82c.google.com with SMTP id d75a77b69052e-419787a43ebso26494221cf.1
+        for <git@vger.kernel.org>; Mon, 02 Oct 2023 08:15:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696215962; x=1696820762; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=R5fCXBvCy+JgkMxfYp8KUk4djrEV+yEOTvzQgHIvY/A=;
-        b=YDcoNNABohxtIHJp9fOKfrkMjmggFGDZozTBTTc6TrDbQBPy5Q54C7DOssndF/xI+E
-         APUtnKL7Ph3xcdZeFwrfP/gQV55uNEAb32mYcITuog73SVoZNKEuH5TkbSgHTKs79ucL
-         gA7EfKj1g97RWOtxM08+5Vt+EihAGmUAYTbh2mO2G8pVvscrEzex9LnLFS5FJS/IAnqP
-         pVAGkAXqSekWHV4ukaPaRCVSxJQCQlj9q6Gm0zwPhM6M2x8ZSqopMDNNeO84jJvRbx0M
-         LazWtu//KrP5wL5GiyROF/S5u8UIZWblncisV4f6uvOlh57jj0oSbkEcMIXa7q810V9b
-         3Uow==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1696259716; x=1696864516; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Mquz/Sn+AwnFRs4k8+kD2bR0NPntbe0cwo41mPERFq8=;
+        b=aZ5aYftGaGrQ0ycmH1rXaEvTASfDIfnI3T3kfPnpLLxNyE/GEIsEeB7BW/d4Hco6bE
+         +3nLzlCjpKrKz3bGDaT/ENFjEwi3nuaS6IlcrDct+JmojH1cmbh2Io9lpW2nFyeOVIcN
+         7Aho9acSjOA9ukqoa6V3M5s98mz/jyKoJLPjGyPQwsBAZXbVikUsR81tEtD5yYpeTxFj
+         HbshtJimOWzMARL72+egHATgwDcpQMs6Hp99IKvV1GtYpDhNBurzGt0Uq9iEG9v2sExn
+         uFBvgib051OH2jmstSdYNGQ9+TvSlkoA5EV6IKw/c56CadhCkAjg5X9cjlgM2AXevkFk
+         Jz1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696215962; x=1696820762;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=R5fCXBvCy+JgkMxfYp8KUk4djrEV+yEOTvzQgHIvY/A=;
-        b=TVOT2wabHKIbOUoMZLv59ICMInfLuzlm+PXIIdIkwqiKFBaQlhSkVMj7Q08p0AMkWK
-         R8sfc4pA1Io8D8xYrUR6WTz4vEcaaYJkSzg7Sy15q+8UrNCuaM0UVKpxnDjKVn72w+I6
-         UUqTy6w71RgU8IveWiiQVe82Pe62fCzq0E3ANthHWaC5GpBre/ie3o+GsdMx/+933JKv
-         EnJy88L3JGmVxnZCZLty49EyiouritDXeMpEM4DIKp6FM+T7J4hYaLHcClT3xJ/fO7jG
-         DgEiKyMtinw2grTTtAtDtEuCwNGSol5bZd611iLg2xoWiCZ1laWws6B9Nah2qpSCATDa
-         OPwg==
-X-Gm-Message-State: AOJu0Yx3LEtEPfleikVMIOY7m+VGiSIHUSiymv4qtWhjMkq4t2LtVaXl
-        Y/v/fKc5PGrXgfxB/Caq+zc1ScVOjYw=
-X-Google-Smtp-Source: AGHT+IHCw8oWm+f2ddUjJ5wrLgP87dH1fUr4fVpCb+UFYLsWkF7TodG9s1OxgbgWZ6/OVt7VnvDkKw==
-X-Received: by 2002:a17:902:d3c7:b0:1bb:f1d9:432e with SMTP id w7-20020a170902d3c700b001bbf1d9432emr7284708plb.37.1696215961603;
-        Sun, 01 Oct 2023 20:06:01 -0700 (PDT)
-Received: from Carlos-MacBook-Pro-2.local ([135.180.175.200])
-        by smtp.gmail.com with ESMTPSA id c24-20020a170902b69800b001bb1f0605b2sm20790631pls.214.2023.10.01.20.06.00
+        d=1e100.net; s=20230601; t=1696259716; x=1696864516;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Mquz/Sn+AwnFRs4k8+kD2bR0NPntbe0cwo41mPERFq8=;
+        b=Gj6fUqmujPInTNx/JDh4TYBjygKn5ZyFRIrGlgYiRuojwTzOv9Uwal8m9ScylfIn8n
+         AezZtlHUYR+k41XLhdEAMAPvHtC2+Jds9ggWthZPJP9BlWcd1Op4LlDXCj1RJ7LYG2f1
+         Q5ef8dyWJAkikoEtvb0OrKo8ElLXe318TWwOrqY2NH+lO7y/KfpY27xb8+L7aimDCvuG
+         brZml348LJ29fsUJwNgzl62ScLDlY/zn03y4I/zn8zX3m2b6J19pwAfU9WVXLgzh3nM8
+         uKW2YeCcZCaBgThnUEO81Cli9V3u5ReHetSMwiqgVeMuvxgwNDbmlkir8+85NgDt8FSv
+         z+sg==
+X-Gm-Message-State: AOJu0YwjSjrcMQtdITHCBz+U5JrL8i0eyxf1BVcqQ7TTlpvlv8nLwBdH
+        QJxILf3nYp4cl5GzEiMEJZx1caxgLbUOoKSvzEFV4w==
+X-Google-Smtp-Source: AGHT+IGPNi9TS4ffYOocVYPKZMYm36zDppPdIDvz9wBvUG0dqRs3D69PzlDo+IorWm/IFzx+OSnOqA==
+X-Received: by 2002:a05:622a:509:b0:418:164f:2365 with SMTP id l9-20020a05622a050900b00418164f2365mr15757049qtx.62.1696259716536;
+        Mon, 02 Oct 2023 08:15:16 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id b10-20020ac86bca000000b004198ac8be74sm1576072qtt.65.2023.10.02.08.15.15
+        for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Oct 2023 20:06:01 -0700 (PDT)
-Date:   Sun, 1 Oct 2023 20:05:59 -0700
-From:   Carlo Marcelo Arenas =?us-ascii?Q?Bel'on?= <carenas@gmail.com>
-To:     Benjamin Hiller <benhiller@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git grep performance regression on macOS
-Message-ID: <dw26ovefqhtvpdxdrj6rlzmosi5wg2avhsurh452jku3vf2ox3@fjkysuygd4ej>
-References: <CAPWWTaDE5559vA1qa0zhBid_ep9ht+PxPSDS5YC7Dk0NN8sp9A@mail.gmail.com>
+        Mon, 02 Oct 2023 08:15:15 -0700 (PDT)
+Date:   Mon, 2 Oct 2023 11:15:14 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Subject: Notes from the Git Contributor's Summit, 2023
+Message-ID: <ZRregi3JJXFs4Msb@nand.local>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAPWWTaDE5559vA1qa0zhBid_ep9ht+PxPSDS5YC7Dk0NN8sp9A@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 29, 2023 at 04:56:19PM -0700, Benjamin Hiller wrote:
-> 
-> git grep -E "(A3T[A-Z0-9]|AKIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}|(\"|')?(AWS|aws|Aws)?_?(SECRET|secret|Secret)?_?(ACCESS|access|Access)?_?(KEY|key|Key)(\"|')?\s*(:|=>|=)\s*(\"|')?[A-Za-z0-9/\+=]{40}(\"|')?|(\"|')?(AWS|aws|Aws)?_?(ACCOUNT|account|Account)_?(ID|id|Id)?(\"|')?\s*(:|=>|=)\s*(\"|')?[0-9]{4}\-?[0-9]{4}\-?[0-9]{4}(\"|')?"
+It was great to see folks virtually last week at the Contributor's
+Summit!
 
-changing this code to use `git grep -P` instead will make it at least 7x
-faster even if you have a pcre2 library without JIT.
+I took a couple of days off at the end of last week, but polished up the
+notes we took during the Contributor's Summit to share with the list.
 
-Carlo
+The notes are available (as read-only) in Google Docs, too, for folks
+who prefer to view them there are the following link:
+
+    https://docs.google.com/document/d/1GKoYtVhpdr_N2BAonYsxVTpPToP1CgCS9um0K7Gx9gQ
+
+At the Contributor's Summit, we discussed the following topics:
+
+  - Welcome / Conservancy Update (Taylor Blau)
+  - Next-gen reference backends (Patrick Steinhardt)
+  - Libification Goals and Progress (Emily Shaffer)
+  - Designing a Makefile for multiple libraries (Calvin Wan)
+  - Scaling Git from a forge's perspective (Taylor Blau)
+  - Replacing git LFS using multiple promisor remotes (Christian Couder)
+  - Clarifying backwards compatibility and when we break it (Emily Shaffer)
+  - Authentication to new hosts without setup (M Hickford)
+  - Update on jj, including at Google (Martin von Zweigbergk)
+  - Code churn and cleanups (Calvin Wan)
+  - Project management practices (Emily Shaffer)
+  - Improving new contrib onboarding (Jonathan Nieder)
+
+The list of all topics proposed (and the number of votes they received)
+are here:
+
+    https://docs.google.com/spreadsheets/d/1EnhmTeEqRBlEI2pMAO3oZ4rO1xEwBzYp2vS4CMtvge8
+
+I'll send the broken-out notes for each topic in a response to this
+message for posterity, and so folks can continue the discussion on the
+list.
+
+Like last year, if you have any feedback on how the Contributor's Summit
+went (especially as it relates to the virtual format we had this year),
+please feel free to share it with me here, or off-list.
+
+I hope to see everybody in person next year!
+
+Thanks,
+Taylor
