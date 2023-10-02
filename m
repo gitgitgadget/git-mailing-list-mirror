@@ -2,62 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0687DE784A6
-	for <git@archiver.kernel.org>; Mon,  2 Oct 2023 02:40:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72B06E784A8
+	for <git@archiver.kernel.org>; Mon,  2 Oct 2023 02:40:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235432AbjJBCk5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 1 Oct 2023 22:40:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41302 "EHLO
+        id S235438AbjJBCk7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 1 Oct 2023 22:40:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235418AbjJBCkv (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S235394AbjJBCkv (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 1 Oct 2023 22:40:51 -0400
-Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5B25E3
-        for <git@vger.kernel.org>; Sun,  1 Oct 2023 19:40:47 -0700 (PDT)
-Received: by mail-io1-xd36.google.com with SMTP id ca18e2360f4ac-79fa416b7ffso519952239f.2
-        for <git@vger.kernel.org>; Sun, 01 Oct 2023 19:40:47 -0700 (PDT)
+Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 165F8C9
+        for <git@vger.kernel.org>; Sun,  1 Oct 2023 19:40:49 -0700 (PDT)
+Received: by mail-io1-xd31.google.com with SMTP id ca18e2360f4ac-77acb04309dso577447939f.2
+        for <git@vger.kernel.org>; Sun, 01 Oct 2023 19:40:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696214447; x=1696819247; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1696214448; x=1696819248; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Dt5KEv9KVtgQEbQQg9gC/QBXXLffLz2k9RehcgzxHR8=;
-        b=XkUlqTYJTwypwybwm2GSJ895fYSCifPLCrRUK0/6/n3yAVtDtSqMZq5PU6UVIHuPpu
-         xw0Fu0YrWNlpX3/JxEAHTLUa+ibnSM8RFUAAc++96b9l4/S+jl3GT9+rfUQX1Oj6IAQI
-         HfJ2oyAdCGyKnqgvNvtBEP2HbRnso7121dCU9J87t50GCncarkyFrvcb+9Rkll4Zc/Pj
-         z0EFtFkOKa6m0ulLJpXIpvnkq8qUv1jtP4qUhM8M4lP7kVYYlIciWHqAFVddx52VRg3z
-         mDo7zlvoQBtucvlWZFIxyr3z1Pzp/PGG1tzYXKsNBZ+D+vXsW1gmH1B1xfbH+LwBe5Zp
-         2m2g==
+        bh=xfjtdZNXP497JCb5qMkab/9O6Ztt2eBtpACMqwRx5iQ=;
+        b=CdCYAb5L/xGYa1ZnfdEvTavafRAMNT+1WvOIlVnIvg8iiP0LG8oJFYydwVuVTzRaQL
+         xNKUmQPkKnrHgua7OwFzE5qdxKTKezOY5I6LjhVDtR3q3MJSYCZ1w/T6jXluX8dyteMi
+         20ulhm0DiDowxxdue5qvqQru4mCf5LlQ33b8p0jp/3xjtjuIdSmymhzfGWlEhH8M6OOo
+         SVR5Rpt8XEhOA+4/5Gplxok4rrXlm0Fdd9nSyUr9VverJTrPJq+vSKEjf3GStqS6xmLP
+         wvpWNrKuoFNL7DX7SywmC1YSsRDpnmvF4x4P+do5z4PL/7ESlbCTW6ljbaRJtG+kILUu
+         nFEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696214447; x=1696819247;
+        d=1e100.net; s=20230601; t=1696214448; x=1696819248;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Dt5KEv9KVtgQEbQQg9gC/QBXXLffLz2k9RehcgzxHR8=;
-        b=Mdu3/nYhdc1pAChpxDMYfSrdzPWbbiCgvRzuOzm+3TfXsuxa/eQt8asA089+WIXyUI
-         Z/6EMWlTylkdV+TZTGtrnbmA6lQOJgAzcx6OXg6lE2pGSc+zYigvpCk/GRyVQ21R5mF/
-         nJnoIbtiLfoa/yjIx3Azgtz2iE8WAtg/dSmWtOpvhfrY6+iAzEK2fRGWiE4HinbFki2E
-         +LNmN3bBjrffDXlSSA2qqeHVOetXXRDa/oegdHK46dRcttwUlr8ciEi641ZoRZWh/Pht
-         Ui55loy1Y9/h9lC5rpD+MhGVQgdtH4FbB53WqByCuoIt5sy9/eNev4jp0RgBmMqgfR4g
-         ViDw==
-X-Gm-Message-State: AOJu0Yx5ZUkDVDnKlBfQoDoKFaWLAqHAtfRS9A+mN0dHOJjezoHgQnGj
-        3SSHcE68c94qM8uLO8Etbo0=
-X-Google-Smtp-Source: AGHT+IEAUz9L+2YaVdcjE8wC3JlKClYb+PmL3chWUcqlFuZdNWE6lcdbpEA1TfipbxFYdAxVpkcdcw==
-X-Received: by 2002:a6b:6618:0:b0:790:a010:4c42 with SMTP id a24-20020a6b6618000000b00790a0104c42mr10485046ioc.13.1696214446716;
-        Sun, 01 Oct 2023 19:40:46 -0700 (PDT)
+        bh=xfjtdZNXP497JCb5qMkab/9O6Ztt2eBtpACMqwRx5iQ=;
+        b=fD695Xkk44q4xCzBe6hFZsl9MfkTLW1yjXmLJVIhXt+wWq5s1SIM9393usHLYObP/J
+         6XVYPFVwO6bYmfvFJyxZnOcDmgwHCPVDXElAqfUaK3nM8eriTM/BV/sNRNeQvkTpw8Y6
+         IqDYsQ7PIe0xCAOrcd3bl5ON5InjKzHT9kUJt11Ch6nvauzy5sRnZLVUr0w6YDZ1ERBL
+         SdrZE9oowyCEehsWZb7cbQ5oV3L1GnAqvRkDvlASZdFxr0U8GDdQD/WRPzaZAbOubTuN
+         8qxIEAlaP24UXp3MkwPRBXcdZy55CwoOR1ojiZQavjoGx0jkG6XTOsI9EXbbaMm51DYE
+         P3wg==
+X-Gm-Message-State: AOJu0YyJxOPsr7Pl83TwF5UR/eA5sh/qsP+vcBpd13dgLKLazEabWlqG
+        XM/2cYaMdbnTuQfc0yNrRhg=
+X-Google-Smtp-Source: AGHT+IEHxOF8b6LjGyAo7DZGKmTz/fE1dDy3tyUzJaSLnGTQwjT+j3ihlTYsW0/v2QUkHKC/fYNUWg==
+X-Received: by 2002:a5e:c019:0:b0:79f:9edb:6e2d with SMTP id u25-20020a5ec019000000b0079f9edb6e2dmr11353695iol.18.1696214448406;
+        Sun, 01 Oct 2023 19:40:48 -0700 (PDT)
 Received: from localhost.localdomain (ip68-227-168-167.om.om.cox.net. [68.227.168.167])
-        by smtp.gmail.com with ESMTPSA id v6-20020a056602058600b0079f9f7a2565sm6346113iox.38.2023.10.01.19.40.45
+        by smtp.gmail.com with ESMTPSA id v6-20020a056602058600b0079f9f7a2565sm6346113iox.38.2023.10.01.19.40.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Oct 2023 19:40:46 -0700 (PDT)
+        Sun, 01 Oct 2023 19:40:48 -0700 (PDT)
 From:   "Eric W. Biederman" <ebiederm@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
         "Eric W. Biederman" <ebiederm@xmission.com>
-Subject: [PATCH v2 08/30] object-file: add a compat_oid_in parameter to write_object_file_flags
-Date:   Sun,  1 Oct 2023 21:40:12 -0500
-Message-Id: <20231002024034.2611-8-ebiederm@gmail.com>
+Subject: [PATCH v2 10/30] commit: convert mergetag before computing the signature of a commit
+Date:   Sun,  1 Oct 2023 21:40:14 -0500
+Message-Id: <20231002024034.2611-10-ebiederm@gmail.com>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <878r8l929e.fsf@gmail.froward.int.ebiederm.org>
 References: <878r8l929e.fsf@gmail.froward.int.ebiederm.org>
@@ -69,79 +69,90 @@ X-Mailing-List: git@vger.kernel.org
 
 From: "Eric W. Biederman" <ebiederm@xmission.com>
 
-To create the proper signatures for commit objects both versions of
-the commit object need to be generated and signed.  After that it is
-a waste to throw away the work of generating the compatibility hash
-so update write_object_file_flags to take a compatibility hash input
-parameter that it can use to skip the work of generating the
-compatability hash.
+It so happens that commit mergetag lines embed a tag object.  So to
+compute the compatible signature of a commit object that has mergetag
+lines the compatible embedded tag must be computed first.
 
-Update the places that don't generate the compatability hash to
-pass NULL so it is easy to tell write_object_file_flags should
-not attempt to use their compatability hash.
+Implement this by duplicating and converting the commit extra headers
+into the compatible version of the commit extra headers, that need
+to be passed to commit_tree_extended.
 
-Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
+To handle merge tags only the compatible extra headers need to be
+computed.
+
+Signed-off-by: Eric W. Biederman <ebiederm@xmission.com>
 ---
- cache-tree.c      | 2 +-
- object-file.c     | 6 ++++--
- object-store-ll.h | 4 ++--
- 3 files changed, 7 insertions(+), 5 deletions(-)
+ commit.c | 42 +++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 41 insertions(+), 1 deletion(-)
 
-diff --git a/cache-tree.c b/cache-tree.c
-index 641427ed410a..ddc7d3d86959 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -448,7 +448,7 @@ static int update_one(struct cache_tree *it,
- 		hash_object_file(the_hash_algo, buffer.buf, buffer.len,
- 				 OBJ_TREE, &it->oid);
- 	} else if (write_object_file_flags(buffer.buf, buffer.len, OBJ_TREE,
--					   &it->oid, flags & WRITE_TREE_SILENT
-+					   &it->oid, NULL, flags & WRITE_TREE_SILENT
- 					   ? HASH_SILENT : 0)) {
- 		strbuf_release(&buffer);
- 		return -1;
-diff --git a/object-file.c b/object-file.c
-index 4e55f475b3b4..820810a5f4b3 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -2235,7 +2235,7 @@ int stream_loose_object(struct input_stream *in_stream, size_t len,
- 
- int write_object_file_flags(const void *buf, unsigned long len,
- 			    enum object_type type, struct object_id *oid,
--			    unsigned flags)
-+			    struct object_id *compat_oid_in, unsigned flags)
- {
- 	struct repository *repo = the_repository;
- 	const struct git_hash_algo *algo = repo->hash_algo;
-@@ -2246,7 +2246,9 @@ int write_object_file_flags(const void *buf, unsigned long len,
- 
- 	/* Generate compat_oid */
- 	if (compat) {
--		if (type == OBJ_BLOB)
-+		if (compat_oid_in)
-+			oidcpy(&compat_oid, compat_oid_in);
-+		else if (type == OBJ_BLOB)
- 			hash_object_file(compat, buf, len, type, &compat_oid);
- 		else {
- 			struct strbuf converted = STRBUF_INIT;
-diff --git a/object-store-ll.h b/object-store-ll.h
-index bc76d6bec80d..c5f2bb2fc2fe 100644
---- a/object-store-ll.h
-+++ b/object-store-ll.h
-@@ -255,11 +255,11 @@ void hash_object_file(const struct git_hash_algo *algo, const void *buf,
- 
- int write_object_file_flags(const void *buf, unsigned long len,
- 			    enum object_type type, struct object_id *oid,
--			    unsigned flags);
-+			    struct object_id *comapt_oid_in, unsigned flags);
- static inline int write_object_file(const void *buf, unsigned long len,
- 				    enum object_type type, struct object_id *oid)
- {
--	return write_object_file_flags(buf, len, type, oid, 0);
-+	return write_object_file_flags(buf, len, type, oid, NULL, 0);
+diff --git a/commit.c b/commit.c
+index 6765f3a82b9d..913e015966b4 100644
+--- a/commit.c
++++ b/commit.c
+@@ -1355,6 +1355,39 @@ void append_merge_tag_headers(struct commit_list *parents,
+ 	}
  }
  
- int write_object_file_literally(const void *buf, unsigned long len,
++static int convert_commit_extra_headers(struct commit_extra_header *orig,
++					struct commit_extra_header **result)
++{
++	const struct git_hash_algo *compat = the_repository->compat_hash_algo;
++	const struct git_hash_algo *algo = the_repository->hash_algo;
++	struct commit_extra_header *extra = NULL, **tail = &extra;
++	struct strbuf out = STRBUF_INIT;
++	while (orig) {
++		struct commit_extra_header *new;
++		CALLOC_ARRAY(new, 1);
++		if (!strcmp(orig->key, "mergetag")) {
++			if (convert_object_file(&out, algo, compat,
++						orig->value, orig->len,
++						OBJ_TAG, 1)) {
++				free(new);
++				free_commit_extra_headers(extra);
++				return -1;
++			}
++			new->key = xstrdup("mergetag");
++			new->value = strbuf_detach(&out, &new->len);
++		} else {
++			new->key = xstrdup(orig->key);
++			new->len = orig->len;
++			new->value = xmemdupz(orig->value, orig->len);
++		}
++		*tail = new;
++		tail = &new->next;
++		orig = orig->next;
++	}
++	*result = extra;
++	return 0;
++}
++
+ static void add_extra_header(struct strbuf *buffer,
+ 			     struct commit_extra_header *extra)
+ {
+@@ -1679,6 +1712,7 @@ int commit_tree_extended(const char *msg, size_t msg_len,
+ 		goto out;
+ 	}
+ 	if (r->compat_hash_algo) {
++		struct commit_extra_header *compat_extra = NULL;
+ 		struct object_id mapped_tree;
+ 		struct object_id *mapped_parents;
+ 
+@@ -1695,8 +1729,14 @@ int commit_tree_extended(const char *msg, size_t msg_len,
+ 				free(mapped_parents);
+ 				goto out;
+ 			}
++		if (convert_commit_extra_headers(extra, &compat_extra)) {
++			result = -1;
++			free(mapped_parents);
++			goto out;
++		}
+ 		write_commit_tree(&compat_buffer, msg, msg_len, &mapped_tree,
+-				  mapped_parents, nparents, author, committer, extra);
++				  mapped_parents, nparents, author, committer, compat_extra);
++		free_commit_extra_headers(compat_extra);
+ 		free(mapped_parents);
+ 
+ 		if (sign_commit && sign_commit_to_strbuf(&compat_sig, &compat_buffer, sign_commit)) {
 -- 
 2.41.0
 
