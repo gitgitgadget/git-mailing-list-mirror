@@ -2,97 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48A80E784BD
-	for <git@archiver.kernel.org>; Mon,  2 Oct 2023 15:17:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99843E784BD
+	for <git@archiver.kernel.org>; Mon,  2 Oct 2023 15:17:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238001AbjJBPR2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Oct 2023 11:17:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46838 "EHLO
+        id S238006AbjJBPRz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Oct 2023 11:17:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237627AbjJBPR0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Oct 2023 11:17:26 -0400
-Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DDA790
-        for <git@vger.kernel.org>; Mon,  2 Oct 2023 08:17:23 -0700 (PDT)
-Received: by mail-qk1-x731.google.com with SMTP id af79cd13be357-7741b18a06aso1080472985a.1
-        for <git@vger.kernel.org>; Mon, 02 Oct 2023 08:17:23 -0700 (PDT)
+        with ESMTP id S238023AbjJBPRx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Oct 2023 11:17:53 -0400
+Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 623EA127
+        for <git@vger.kernel.org>; Mon,  2 Oct 2023 08:17:50 -0700 (PDT)
+Received: by mail-qk1-x735.google.com with SMTP id af79cd13be357-77428e40f71so877456885a.1
+        for <git@vger.kernel.org>; Mon, 02 Oct 2023 08:17:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1696259842; x=1696864642; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=R/JrzZBN1Z5E/OkB7RIAN9dOewloh1E1K7ijouojC1E=;
-        b=CJ2uXUi4jOmrPu8kKodxMZW5JQkXNlOQZ0r0oZjjY3vzCFYo6h6RsNT1nYnT3ZbviT
-         nj4/JbcK6xP0l9lhYdh44C2DnFcl4QE4q0BMsbCjwnhZYhlP2r1jy5/PXp2rdNvXAiC0
-         e5M+nNJr1c8Ta5sd5eylEI2rBKeYibLjkFF1le7KA+98Hbb4f3uK1NFCCY9QDoASAim5
-         3PhDt0nlQCFOig11/3hI0M61pmw3u6mwgNXIup5uFI/nGpnjQ3GqWl3pcI4Av5/8td9T
-         cbfNFk+5HiXG5rXyOUGTDka4rycTeiCGDVCAlNdmYVFqf60ggdOixP4Rytl3S7VpCjjN
-         uBUg==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1696259869; x=1696864669; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=UuSmfyTl0OILDH3RXOoKwcd/F7wiXVk3kT4HSu35nso=;
+        b=VlKOeiZHrjAo/NUcEHmQnFGkVUurS19CalfKgv3Iv29ACwebsqDdhfxS/L0EpsbB79
+         DV6Ow/UIjttaZ9dIvAikva/RQRjeg0YB1O22glnmEonG94dVaj1L6Q9UR32CdIHl/VHj
+         zBbhIh2LLSydulfjTwr2+LLETuT6OEolMUo+yJxapNz8G7AGaHolq98UT0HtH6AijZg6
+         /R05Qe8/QU7s8A8hQxXAxVh16VbkiRoxN/nfP0wC3kmOaRQnhQfLlY8Tb6GK27AYXFuH
+         hbYvst/feUYMgs08VbZKjHea8xh4ley5ytIxEPydmiAYf8M7euhMYrTkGqxVhcDIZa+6
+         xc1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696259842; x=1696864642;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=R/JrzZBN1Z5E/OkB7RIAN9dOewloh1E1K7ijouojC1E=;
-        b=Ra3Z8JBiDfwIm6g2vnkKaz7OCMxS9qmFvEljkPdUh5vQAMt3SeIaiTYh0SQuHTOme0
-         Q1m8Nrwz6arfao/SO9DkzAONAL73lmKlT208J+0djcEK8Izv6GI41+ycaShDHs12SSFE
-         SeAIPP4lgJm2qb3Vai86treZvGaCIMl4fNYaikVsWm8qlXugnEVN2p0hao9ItA/of8WP
-         P2HIjsyU0NzWWvn7h8AwyQypevi2J0k2xYs/grz07e6YmusCctuJDbP3OuaYMELovL2D
-         I0DW6mZLTJjKimHNkD4RL7g77+DFw2HTkSbDH4ZG/HeQ5gsf7uv79JufPSBsT8sfJGBt
-         LW6w==
-X-Gm-Message-State: AOJu0YwtlVJMiWy78tIRA3IX9V304jvZsqZfovgGtWa/gPF0klX58EWD
-        TyhYZrBrQnX1aN2e50IlxMMJKKq3MuRecAHHEYnw7A==
-X-Google-Smtp-Source: AGHT+IGIE1JKYC+O3niLOEvcoYozu+adm8AZI3OQbaZHEmpV+0/DCyHYuCRwoGDS1mWB/kay0kWGrQ==
-X-Received: by 2002:a0c:dd90:0:b0:63d:3bea:f663 with SMTP id v16-20020a0cdd90000000b0063d3beaf663mr12569335qvk.47.1696259842316;
-        Mon, 02 Oct 2023 08:17:22 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1696259869; x=1696864669;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UuSmfyTl0OILDH3RXOoKwcd/F7wiXVk3kT4HSu35nso=;
+        b=c/uz/T1C2brwSJDPhB4kmKQTvu2taVo066nwFHtKtLT0wdWq6Wbfk1cnOg9ZZTmhZK
+         vp46AbTme9wqwKtSGoQvwR0pZBZJRp1wiK1+jhVt/uDi6tffRd463WK4uCuWfUxN3GSl
+         o+HQW1WLfoq6qrp42vFVlfM2unkR4Yy1E+AB6UI4136En+y4VOLEsX3PODwcXpuxVF/3
+         auzWu4T99FpXUdsqfEuQYopsYKRe3rTk6dPoMDZ2YwLTPegLvMf8BDqpKDrScfm5OwDA
+         8Ks2aj4qYUlNu3cz0S8DnyWkxaLzy9xkXefmZnLKQSFKtQV+6S2dR8c+Iy8LFaW/wRn0
+         /k8g==
+X-Gm-Message-State: AOJu0YxT1e28Nm3xxQnG1m71ZuRzdgchOwZacs4q6bfBkWZXRDUa35WX
+        kLhx8I7JrCOiYttV1CHlxpS/oMBikfnNqWAc1rtu7A==
+X-Google-Smtp-Source: AGHT+IHCGu9KjXvLxktKCvmIKK+Ek8yy0e6Cdx4QY+ho+AUaEvP480ADTBsrgc9eXSTbKpVRUwOaSA==
+X-Received: by 2002:a05:620a:2490:b0:772:63d9:5264 with SMTP id i16-20020a05620a249000b0077263d95264mr14185857qkn.59.1696259869262;
+        Mon, 02 Oct 2023 08:17:49 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id h16-20020a05620a10b000b0076f19b9e96fsm3291142qkk.107.2023.10.02.08.17.21
+        by smtp.gmail.com with ESMTPSA id j28-20020a05620a147c00b007743671a41fsm5651080qkl.72.2023.10.02.08.17.48
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Oct 2023 08:17:22 -0700 (PDT)
-Date:   Mon, 2 Oct 2023 11:17:21 -0400
+        Mon, 02 Oct 2023 08:17:49 -0700 (PDT)
+Date:   Mon, 2 Oct 2023 11:17:48 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
-Subject: [TOPIC 0/12] Welcome / Conservancy Update
-Message-ID: <ZRrfAdX0eNutTSOy@nand.local>
+Subject: [TOPIC 1/12] Next-gen reference backends
+Message-ID: <ZRrfHJYDEfdNO4Ma@nand.local>
 References: <ZRregi3JJXFs4Msb@nand.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <ZRregi3JJXFs4Msb@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-(Presenter: Taylor Blau, Notetaker: Keanen Wold)
+(Presenter: Patrick Steinhardt, Notetaker: Karthik Nayak)
 
-* Software Freedom Conservancy status report
-* We have about $89k in the Git project account (up ~$20k from last year)
-   * Biggest expense is Heroku - Fusion has been covering the bill
-      * There's on and off work on porting from a Rails app to a static site:
-        https://github.com/git/git-scm.com/issues/942
-   * Dan Moore from FusionAuth has been providing donations
-   * Ideally we are able to move away from using Heroku, but in the meantime
-     we'll have coverage either from (a) FusionAuth, or (b) Heroku's new
-     open-source credit system
-* We have more money than we have plans for, we're looking for ideas[a] on how
-  to spend this money such as funding people to visit our conferences and
-  sponsoring students to learn more about Git
-* Trademark considerations for people using "Git" in their product names
-   * We do have general council and are trying to think more about what the Git
-     trademark means
-   * Question - are there other conservancy products who have trademark issues
-      * They hold all trademarks for their projects
-      * Git has had the most problems with people/products using Git in their
-        name
-      * They reach out with letters, etc. and have not had to take legal action
-        in most cases
-   * Question - how do we enforce the rules when we have GitHub and GitLab?
-      * The trademark has exemptions for Hub and Lab
-      * We need to hold the line for the trademark for new companies, etc. using
-        the name otherwise we lose our leverage to protect the name
-   * Question - have the trademark ‘offenses' been growing?
-      * It's been pretty stable
-      * We're looking to be fair
-   * Additional questions can be sent to Pono
+* Summary: There have been multiple proposals for reference backends on the
+  mailing list. Trying to converge to one solution.
+* Problem: At GitLab we have certain repos with large amounts of references.
+  Some repos have multi-million refs which causes scalability issues.
+   * Current files backend uses a combination of loose files and packed-refs.
+   * Deletion performance is bad.
+   * Reference lookups are slow.
+   * Storage space is also large.
+   * There are some patches which improved the situation. e.g. skip-list for
+     packed-refs by Taylor.
+   * Atomic updates are currently not possible.
+   * This is not an issue only faced by GitLab
+* Two solutions proposed:
+   * Reftables: Originally implemented by JGit (Shawn Pearce, 2017)
+      * Google was storing the data in a table with one ref per row. This data
+        was encrypted, which changes the ordering.
+      * This led to realizing the ref storage itself was not optimal, so based
+        on existing solutions at Google there was a proposal by Shawn and was
+        implemented in JGit.
+      * This solved the ref storage problem at Google.
+      * The implementation in JGit by adoption was low because of compatibility
+        requirement with CGit.
+      * New patch series submitted which swaps out the packed-refs with
+        ref-tables while keeping the existing file based loose-refs.
+   * Incremental take on reference backend (aka. packed-refs v2) by Derrick
+      * Uses pre-existing infrastructure in the git project. Makes it a more
+        natural extension.
+      * First part was to support a multi backend structure
+      * Second part was packed references v2 in the Git project
+* Question: How do we take it forward from here.
+   * Emily: If the existing backend exists as a library. Might be easier to
+     replace and experiment with.
+      * Jeff: A lot of work in that direction has already been landed. But there
+        is still some bleed of the implementation in other parts of the code.
+        Might be messy to cleanup.
+      * Patrick: Different implementations by different hosting providers with
+        different requirements might cause issues for clients.[b]
+   * Deletion performance is not the only issue faced (at GitLab) there are also
+     deadlocks faced around this.
+   * brian: If you have a large number of remote tracking refs you face the same
+     perf issues.
+   * Patrick: Any preference of which solution to go forward. GitLab is
+     interested to pick this up and mostly going forward with reftables.
+   * Reftables does support tombstoning, should solve the problem with multiple
+     deletions.
+      * There is still a problem with refs being a prefix of other refs.
+   * Is there a world where loose refs are removed completely and replaced with
+     reftables.
+      * Debugging is much easier with loose refs, reftables is binary
+        formatting. Might need additional tooling here. This is already proved
+        to be working at Google.
