@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 076BFE748F8
-	for <git@archiver.kernel.org>; Mon,  2 Oct 2023 16:55:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ECED5E748FB
+	for <git@archiver.kernel.org>; Mon,  2 Oct 2023 16:55:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238380AbjJBQzn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Oct 2023 12:55:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56484 "EHLO
+        id S238398AbjJBQzo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Oct 2023 12:55:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238398AbjJBQze (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Oct 2023 12:55:34 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C81EB3
-        for <git@vger.kernel.org>; Mon,  2 Oct 2023 09:55:31 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id 4fb4d7f45d1cf-533df112914so18000928a12.0
-        for <git@vger.kernel.org>; Mon, 02 Oct 2023 09:55:31 -0700 (PDT)
+        with ESMTP id S238536AbjJBQzg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Oct 2023 12:55:36 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 708DEB4
+        for <git@vger.kernel.org>; Mon,  2 Oct 2023 09:55:32 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id 4fb4d7f45d1cf-523100882f2so21998345a12.2
+        for <git@vger.kernel.org>; Mon, 02 Oct 2023 09:55:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696265729; x=1696870529; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1696265730; x=1696870530; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=m6QHRWDp7bquaIBXN4OjkivgJWCDnWcW10iYJcceakk=;
-        b=GgyhJhEJdXN/7EcBcoCLg4zg1AtX8dVxbmfou/CIQ6Ajeu2F1pBuyolyOO7XC0ujU8
-         1pQ2llrvRO++UbdthTkZWQ7qdvfBgqaoiGYxKA/IW4H+EcnNxQNhmBD2iRkwm3fhWyBn
-         /PaF25le6WC4+9k2gGlzmAIPhUmOEwG4J0wPzBcK6gSZLKhaEIlmd6Oywfnznbivy2wI
-         T6S1zKH9Cm+8tQobDnTy7FQ6CB6hssfI4du/JIay9TyDcAQqnL3sFOg5tc2SdzeGhMZq
-         hu+O/Ei8+ftZOc5YZN+/1+5C8qkBCyn4S5u1IiBnQiMyiU8hWimaXAGkB5w7suHt6nDF
-         l+qw==
+        bh=V1B2Pw8ZjowFSiZyo7tIrTx5e8fItBlrmtuqIKFxK4k=;
+        b=XGc38AgQBTRcFfG8YqsCU89cZu3/lJKdiBaUgOdu1fEn9FBswqFNz7DphzjftRSbZf
+         ob3y/IALU7IoNxa1Fmhr42nOW8C1CC1f/LrUsSU42zZsDfsnUatDih4ThGbXq94EhVj4
+         d/I1UDB1z0Qj0RA6pOS0hrBawpoCXmKUj+W21DJCaOsSgG3ssgsqGqOOcTZ34aJqeZHD
+         oxW00rVK4hCkuQ9qN9ua9Nm/qQDEJu4DsPd/4Pzfv4SuP2SpiPc54iQGb7tgF0hfgsQO
+         gBgWhxE81g8UQths1zRqyaJAvhoNkfFdOCiRws7LxmQ3+YKLU0RIT9MBMXwEpssG+e1g
+         bXbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696265729; x=1696870529;
+        d=1e100.net; s=20230601; t=1696265730; x=1696870530;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=m6QHRWDp7bquaIBXN4OjkivgJWCDnWcW10iYJcceakk=;
-        b=WbUtIpK/TmaHh/MZYtPAnyGb2eAWt/YZMJPoI0Z3QMrTVr9srROomEtfOmRTLYrPTd
-         8CUW+lipwjsRfRsRQQ3/biyFP22VaSRtoVeoSyqz5FYtPr7vsdMb6yZdQ2afVIO5uGYf
-         BZQPPHJyeLNYL3d+gMhWKG1f600DTG+A1jfjBEz2s010ylDr/63yLxwrqVD/Wuas59ss
-         PBDzWKO+86RTUSeWuKi1qJxyjvE6J37tEEeLI99//AW8Hbza+GyQXPXSlhT7FYdxcz/6
-         ECuEZysBEmcB2N+GLz9ZJevdoT5ExD5hg2wQ51r+7OYqwCQB6UjAKWmDL4zf89DGsUHc
-         JTJg==
-X-Gm-Message-State: AOJu0Yye/E20YITj7lc9ZsP11TV66w2WW4IlQtk/T8OAifruJ43Ax+3z
-        /+XiIlqZajp68KKJUY5eC9Ju8qytXoFeIQ==
-X-Google-Smtp-Source: AGHT+IGpOah46Ab5n+efUPiXIAW21Sx15Xh9StcS1T7mELhnvQxEMbriqj+AarMu3uj9yRtVeLhfPQ==
-X-Received: by 2002:aa7:d451:0:b0:536:24ff:74ff with SMTP id q17-20020aa7d451000000b0053624ff74ffmr11427127edr.5.1696265729200;
-        Mon, 02 Oct 2023 09:55:29 -0700 (PDT)
+        bh=V1B2Pw8ZjowFSiZyo7tIrTx5e8fItBlrmtuqIKFxK4k=;
+        b=xI6Y5jhjVtQkLHpGwA6RYbNrzfQUnxbnrveaQ/U6bNIR957i54ypTKn23HKpB7eftH
+         oT4JiiLotMbYS5jG3y8AThbQib3yYqNXdL20/75h4r/BdDkEGk3WAQFG6YTQ3FX3m9IM
+         aJH97CQXf5jUTmP23MFb39ahc7cRIXP+8p70vY0HEoBCzVVawbZuHDvGzMtWQOH4Zysy
+         c9XIKARRrqAMhA8lQL7Y1HFuSH0yiI118QJ2suJ6ih/MAi1xFMqoAMvC9zalQkhccRQE
+         EsnPGX8D2P3L/62gTYj5SrTAQMjENwb5wdF9LADPW38P3RtQxOdt2vwr6OmUfbUO23Ib
+         getQ==
+X-Gm-Message-State: AOJu0YznNAD8AwPq9uk9kEUX0tFr/Hb5pUtzY9fqE8vLg9VR9aOOBqaf
+        SZCJ+f00IUeiiEInztf4Qr0MDm9dpZz5VQ==
+X-Google-Smtp-Source: AGHT+IGhAHNWaSB57idyAJFedPU5KUkVJa+iojnkUZ1NBFwti0uPeOBftd+AOiRWw/L5TXziJKlVdA==
+X-Received: by 2002:aa7:c301:0:b0:51e:2e39:9003 with SMTP id l1-20020aa7c301000000b0051e2e399003mr9678450edq.40.1696265730331;
+        Mon, 02 Oct 2023 09:55:30 -0700 (PDT)
 Received: from christian-Precision-5550.. ([2a04:cec0:c027:f1d4:d825:fbf4:9197:5c9f])
-        by smtp.gmail.com with ESMTPSA id er15-20020a056402448f00b00533c844e337sm12762364edb.85.2023.10.02.09.55.28
+        by smtp.gmail.com with ESMTPSA id er15-20020a056402448f00b00533c844e337sm12762364edb.85.2023.10.02.09.55.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Oct 2023 09:55:28 -0700 (PDT)
+        Mon, 02 Oct 2023 09:55:29 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, John Cai <johncai86@gmail.com>,
@@ -57,11 +57,10 @@ Cc:     Junio C Hamano <gitster@pobox.com>, John Cai <johncai86@gmail.com>,
         Taylor Blau <me@ttaylorr.com>,
         Derrick Stolee <stolee@gmail.com>,
         Patrick Steinhardt <ps@pks.im>,
-        Christian Couder <christian.couder@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v8 2/9] t/helper: add 'find-pack' test-tool
-Date:   Mon,  2 Oct 2023 18:54:57 +0200
-Message-ID: <20231002165504.1325153-3-christian.couder@gmail.com>
+        Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH v8 3/9] repack: refactor finishing pack-objects command
+Date:   Mon,  2 Oct 2023 18:54:58 +0200
+Message-ID: <20231002165504.1325153-4-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.42.0.305.g5bfd918c90
 In-Reply-To: <20231002165504.1325153-1-christian.couder@gmail.com>
 References: <20230925152517.803579-1-christian.couder@gmail.com>
@@ -72,206 +71,130 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a following commit, we will make it possible to separate objects in
-different packfiles depending on a filter.
+Create a new finish_pack_objects_cmd() to refactor duplicated code
+that handles reading the packfile names from the output of a
+`git pack-objects` command and putting it into a string_list, as well as
+calling finish_command().
 
-To make sure that the right objects are in the right packs, let's add a
-new test-tool that can display which packfile(s) a given object is in.
+While at it, beautify a code comment a bit in the new function.
 
-Let's also make it possible to check if a given object is in the
-expected number of packfiles with a `--check-count <n>` option.
-
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org
 ---
- Makefile                  |  1 +
- t/helper/test-find-pack.c | 50 ++++++++++++++++++++++++
- t/helper/test-tool.c      |  1 +
- t/helper/test-tool.h      |  1 +
- t/t0081-find-pack.sh      | 82 +++++++++++++++++++++++++++++++++++++++
- 5 files changed, 135 insertions(+)
- create mode 100644 t/helper/test-find-pack.c
- create mode 100755 t/t0081-find-pack.sh
+ builtin/repack.c | 70 +++++++++++++++++++++++-------------------------
+ 1 file changed, 33 insertions(+), 37 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 003e63b792..f267034d23 100644
---- a/Makefile
-+++ b/Makefile
-@@ -800,6 +800,7 @@ TEST_BUILTINS_OBJS += test-dump-untracked-cache.o
- TEST_BUILTINS_OBJS += test-env-helper.o
- TEST_BUILTINS_OBJS += test-example-decorate.o
- TEST_BUILTINS_OBJS += test-fast-rebase.o
-+TEST_BUILTINS_OBJS += test-find-pack.o
- TEST_BUILTINS_OBJS += test-fsmonitor-client.o
- TEST_BUILTINS_OBJS += test-genrandom.o
- TEST_BUILTINS_OBJS += test-genzeros.o
-diff --git a/t/helper/test-find-pack.c b/t/helper/test-find-pack.c
-new file mode 100644
-index 0000000000..e8bd793e58
---- /dev/null
-+++ b/t/helper/test-find-pack.c
-@@ -0,0 +1,50 @@
-+#include "test-tool.h"
-+#include "object-name.h"
-+#include "object-store.h"
-+#include "packfile.h"
-+#include "parse-options.h"
-+#include "setup.h"
-+
-+/*
-+ * Display the path(s), one per line, of the packfile(s) containing
-+ * the given object.
-+ *
-+ * If '--check-count <n>' is passed, then error out if the number of
-+ * packfiles containing the object is not <n>.
-+ */
-+
-+static const char *find_pack_usage[] = {
-+	"test-tool find-pack [--check-count <n>] <object>",
-+	NULL
-+};
-+
-+int cmd__find_pack(int argc, const char **argv)
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 529e13120d..d0ab55c0d9 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -806,6 +806,36 @@ static void remove_redundant_bitmaps(struct string_list *include,
+ 	strbuf_release(&path);
+ }
+ 
++static int finish_pack_objects_cmd(struct child_process *cmd,
++				   struct string_list *names,
++				   int local)
 +{
-+	struct object_id oid;
-+	struct packed_git *p;
-+	int count = -1, actual_count = 0;
-+	const char *prefix = setup_git_directory();
++	FILE *out;
++	struct strbuf line = STRBUF_INIT;
 +
-+	struct option options[] = {
-+		OPT_INTEGER('c', "check-count", &count, "expected number of packs"),
-+		OPT_END(),
-+	};
++	out = xfdopen(cmd->out, "r");
++	while (strbuf_getline_lf(&line, out) != EOF) {
++		struct string_list_item *item;
 +
-+	argc = parse_options(argc, argv, prefix, options, find_pack_usage, 0);
-+	if (argc != 1)
-+		usage(find_pack_usage[0]);
-+
-+	if (repo_get_oid(the_repository, argv[0], &oid))
-+		die("cannot parse %s as an object name", argv[0]);
-+
-+	for (p = get_all_packs(the_repository); p; p = p->next)
-+		if (find_pack_entry_one(oid.hash, p)) {
-+			printf("%s\n", p->pack_name);
-+			actual_count++;
++		if (line.len != the_hash_algo->hexsz)
++			die(_("repack: Expecting full hex object ID lines only "
++			      "from pack-objects."));
++		/*
++		 * Avoid putting packs written outside of the repository in the
++		 * list of names.
++		 */
++		if (local) {
++			item = string_list_append(names, line.buf);
++			item->util = populate_pack_exts(line.buf);
 +		}
++	}
++	fclose(out);
 +
-+	if (count > -1 && count != actual_count)
-+		die("bad packfile count %d instead of %d", actual_count, count);
++	strbuf_release(&line);
 +
-+	return 0;
++	return finish_command(cmd);
 +}
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index 621ac3dd10..9010ac6de7 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -31,6 +31,7 @@ static struct test_cmd cmds[] = {
- 	{ "env-helper", cmd__env_helper },
- 	{ "example-decorate", cmd__example_decorate },
- 	{ "fast-rebase", cmd__fast_rebase },
-+	{ "find-pack", cmd__find_pack },
- 	{ "fsmonitor-client", cmd__fsmonitor_client },
- 	{ "genrandom", cmd__genrandom },
- 	{ "genzeros", cmd__genzeros },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index a641c3a81d..f134f96b97 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -25,6 +25,7 @@ int cmd__dump_reftable(int argc, const char **argv);
- int cmd__env_helper(int argc, const char **argv);
- int cmd__example_decorate(int argc, const char **argv);
- int cmd__fast_rebase(int argc, const char **argv);
-+int cmd__find_pack(int argc, const char **argv);
- int cmd__fsmonitor_client(int argc, const char **argv);
- int cmd__genrandom(int argc, const char **argv);
- int cmd__genzeros(int argc, const char **argv);
-diff --git a/t/t0081-find-pack.sh b/t/t0081-find-pack.sh
-new file mode 100755
-index 0000000000..67b11216a3
---- /dev/null
-+++ b/t/t0081-find-pack.sh
-@@ -0,0 +1,82 @@
-+#!/bin/sh
 +
-+test_description='test `test-tool find-pack`'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	test_commit one &&
-+	test_commit two &&
-+	test_commit three &&
-+	test_commit four &&
-+	test_commit five
-+'
-+
-+test_expect_success 'repack everything into a single packfile' '
-+	git repack -a -d --no-write-bitmap-index &&
-+
-+	head_commit_pack=$(test-tool find-pack HEAD) &&
-+	head_tree_pack=$(test-tool find-pack HEAD^{tree}) &&
-+	one_pack=$(test-tool find-pack HEAD:one.t) &&
-+	three_pack=$(test-tool find-pack HEAD:three.t) &&
-+	old_commit_pack=$(test-tool find-pack HEAD~4) &&
-+
-+	test-tool find-pack --check-count 1 HEAD &&
-+	test-tool find-pack --check-count=1 HEAD^{tree} &&
-+	! test-tool find-pack --check-count=0 HEAD:one.t &&
-+	! test-tool find-pack -c 2 HEAD:one.t &&
-+	test-tool find-pack -c 1 HEAD:three.t &&
-+
-+	# Packfile exists at the right path
-+	case "$head_commit_pack" in
-+		".git/objects/pack/pack-"*".pack") true ;;
-+		*) false ;;
-+	esac &&
-+	test -f "$head_commit_pack" &&
-+
-+	# Everything is in the same pack
-+	test "$head_commit_pack" = "$head_tree_pack" &&
-+	test "$head_commit_pack" = "$one_pack" &&
-+	test "$head_commit_pack" = "$three_pack" &&
-+	test "$head_commit_pack" = "$old_commit_pack"
-+'
-+
-+test_expect_success 'add more packfiles' '
-+	git rev-parse HEAD^{tree} HEAD:two.t HEAD:four.t >objects &&
-+	git pack-objects .git/objects/pack/mypackname1 >packhash1 <objects &&
-+
-+	git rev-parse HEAD~ HEAD~^{tree} HEAD:five.t >objects &&
-+	git pack-objects .git/objects/pack/mypackname2 >packhash2 <objects &&
-+
-+	head_commit_pack=$(test-tool find-pack HEAD) &&
-+
-+	# HEAD^{tree} is in 2 packfiles
-+	test-tool find-pack HEAD^{tree} >head_tree_packs &&
-+	grep "$head_commit_pack" head_tree_packs &&
-+	grep mypackname1 head_tree_packs &&
-+	! grep mypackname2 head_tree_packs &&
-+	test-tool find-pack --check-count 2 HEAD^{tree} &&
-+	! test-tool find-pack --check-count 1 HEAD^{tree} &&
-+
-+	# HEAD:five.t is also in 2 packfiles
-+	test-tool find-pack HEAD:five.t >five_packs &&
-+	grep "$head_commit_pack" five_packs &&
-+	! grep mypackname1 five_packs &&
-+	grep mypackname2 five_packs &&
-+	test-tool find-pack -c 2 HEAD:five.t &&
-+	! test-tool find-pack --check-count=0 HEAD:five.t
-+'
-+
-+test_expect_success 'add more commits (as loose objects)' '
-+	test_commit six &&
-+	test_commit seven &&
-+
-+	test -z "$(test-tool find-pack HEAD)" &&
-+	test -z "$(test-tool find-pack HEAD:six.t)" &&
-+	test-tool find-pack --check-count 0 HEAD &&
-+	test-tool find-pack -c 0 HEAD:six.t &&
-+	! test-tool find-pack -c 1 HEAD:seven.t
-+'
-+
-+test_done
+ static int write_cruft_pack(const struct pack_objects_args *args,
+ 			    const char *destination,
+ 			    const char *pack_prefix,
+@@ -814,9 +844,8 @@ static int write_cruft_pack(const struct pack_objects_args *args,
+ 			    struct existing_packs *existing)
+ {
+ 	struct child_process cmd = CHILD_PROCESS_INIT;
+-	struct strbuf line = STRBUF_INIT;
+ 	struct string_list_item *item;
+-	FILE *in, *out;
++	FILE *in;
+ 	int ret;
+ 	const char *scratch;
+ 	int local = skip_prefix(destination, packdir, &scratch);
+@@ -861,27 +890,7 @@ static int write_cruft_pack(const struct pack_objects_args *args,
+ 		fprintf(in, "%s.pack\n", item->string);
+ 	fclose(in);
+ 
+-	out = xfdopen(cmd.out, "r");
+-	while (strbuf_getline_lf(&line, out) != EOF) {
+-		struct string_list_item *item;
+-
+-		if (line.len != the_hash_algo->hexsz)
+-			die(_("repack: Expecting full hex object ID lines only "
+-			      "from pack-objects."));
+-		/*
+-		 * avoid putting packs written outside of the repository in the
+-		 * list of names
+-		 */
+-		if (local) {
+-			item = string_list_append(names, line.buf);
+-			item->util = populate_pack_exts(line.buf);
+-		}
+-	}
+-	fclose(out);
+-
+-	strbuf_release(&line);
+-
+-	return finish_command(&cmd);
++	return finish_pack_objects_cmd(&cmd, names, local);
+ }
+ 
+ int cmd_repack(int argc, const char **argv, const char *prefix)
+@@ -891,10 +900,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	struct string_list names = STRING_LIST_INIT_DUP;
+ 	struct existing_packs existing = EXISTING_PACKS_INIT;
+ 	struct pack_geometry geometry = { 0 };
+-	struct strbuf line = STRBUF_INIT;
+ 	struct tempfile *refs_snapshot = NULL;
+ 	int i, ext, ret;
+-	FILE *out;
+ 	int show_progress;
+ 
+ 	/* variables to be filled by option parsing */
+@@ -1124,18 +1131,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 		fclose(in);
+ 	}
+ 
+-	out = xfdopen(cmd.out, "r");
+-	while (strbuf_getline_lf(&line, out) != EOF) {
+-		struct string_list_item *item;
+-
+-		if (line.len != the_hash_algo->hexsz)
+-			die(_("repack: Expecting full hex object ID lines only from pack-objects."));
+-		item = string_list_append(&names, line.buf);
+-		item->util = populate_pack_exts(item->string);
+-	}
+-	strbuf_release(&line);
+-	fclose(out);
+-	ret = finish_command(&cmd);
++	ret = finish_pack_objects_cmd(&cmd, &names, 1);
+ 	if (ret)
+ 		goto cleanup;
+ 
 -- 
 2.42.0.305.g5bfd918c90
 
