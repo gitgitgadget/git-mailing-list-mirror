@@ -2,62 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D247E784A6
-	for <git@archiver.kernel.org>; Mon,  2 Oct 2023 02:41:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 197FBE784A6
+	for <git@archiver.kernel.org>; Mon,  2 Oct 2023 02:41:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235582AbjJBClt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 1 Oct 2023 22:41:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58598 "EHLO
+        id S235426AbjJBClv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 1 Oct 2023 22:41:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35564 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235466AbjJBClQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Oct 2023 22:41:16 -0400
-Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2C67CD3
-        for <git@vger.kernel.org>; Sun,  1 Oct 2023 19:41:01 -0700 (PDT)
-Received: by mail-io1-xd2a.google.com with SMTP id ca18e2360f4ac-7a25040faffso218163039f.1
-        for <git@vger.kernel.org>; Sun, 01 Oct 2023 19:41:01 -0700 (PDT)
+        with ESMTP id S235459AbjJBCl3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Oct 2023 22:41:29 -0400
+Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8BD3CD9
+        for <git@vger.kernel.org>; Sun,  1 Oct 2023 19:41:02 -0700 (PDT)
+Received: by mail-io1-xd2e.google.com with SMTP id ca18e2360f4ac-79fe612beabso285194339f.3
+        for <git@vger.kernel.org>; Sun, 01 Oct 2023 19:41:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696214461; x=1696819261; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1696214462; x=1696819262; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=trUwtva8DMZBzugwmwLMA6mftWeVdjTvb5jeyEQmyuY=;
-        b=WxoVLWjh4e/PjtSkvyvPbomK32TDMUjCk7EOuKSdMq/DoQ01iIDk5/NeO9SnvXR7ZU
-         Xa3J4aPlX4UE6+Sd3JrExlPkmwel1MesrMq0OP8t8aXx8OS3GtdvnOfE4IECyS8JXg0R
-         FnEEzH2Kw9MDrCNR9TxPpelawGsySJPct7PTH/2fv5+GV0F7I5p2R6GC9yU7oL3M609D
-         jWj2P8g/sb/g2AZxsUy58IL5/vQf0CCU6rS4O3uXc+ikpP5Zw2TqLqlbYF0jy7CgLwx0
-         v5aVN6C6QgQXCmuH7d8C3CKddmbvyO0vGxG8URU1VKAkD6J+vvgH8au7NjD3bnH30B72
-         Jx8Q==
+        bh=bH2hzoWai8vH7Zjh0kf9Emav2ZMVmyeQiZtNTadsv4M=;
+        b=lASEcsrNuT4hGZb3nIUzcE4YEcwJxX9o6ceBa89bpPNCBX7C8Mge/HNFFJxJn8wUsO
+         RK4jelrF4vFKOgutPbxn5UkUuJPPx7PooeFr21XO3Kwn8JjnTQY4y/bsQ75dGUlzZ76s
+         27basMjKCFH34+fDgb17OqJxqKXHSNvcHZ6YOpOfI6QAk7wijK9MlndH4v0UZ3HI2S0z
+         twy6pr1Kh1JEYyXy9tF8RrEatHYmk0to6J/Tqp8tp1hs0tfeLif0o229teT/NrcctSoD
+         rVRxlcHElilVoRQt2kWVFpuCEqibvlLOENAJgKslknj57FiBTHNvD5g6XTylZvQTvbI6
+         /nmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696214461; x=1696819261;
+        d=1e100.net; s=20230601; t=1696214462; x=1696819262;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=trUwtva8DMZBzugwmwLMA6mftWeVdjTvb5jeyEQmyuY=;
-        b=WvAr8wyCtzJJFW87Fd2uKBuIpwWzMoZy+VV3BfBuEmhiD+W5lPdRE9LLIZBxMyUW2f
-         0rCe5zGO3+CuUF3aepFXG1qdKrOnwr0vdIPFh3DrnipW8b1Z6aFbapGFQyYXppPzg1QE
-         U47QIxIs7K7xKdEnq3nkCEYxCNRZ0JJFILp6uRyhBucIjEjWC7xOgy8dJdiiBynuANGn
-         w4sQuBA1TvRmVhYoj12rEVwlGbJJscHYuYzfJRiqkOA1GasJ/iX+RT6yFhSNPZcHtWgN
-         taLqdxiTRTH36ExGG0Md+d9xv2HZ0S0dZOyDlyo6EvwDB38wyt51rcyPlh08NJPk7lID
-         ujqA==
-X-Gm-Message-State: AOJu0YwfEp3Kyu8I+hJsg5yifXL26JfQBK34N+FWA1rTsfSXRgzrpQX+
-        0XSP0DesY0n+XdXutNKyX/U=
-X-Google-Smtp-Source: AGHT+IHwfAdZdPXr5Nxxh6qNndh5pzsr+NItSFjxe4jDbO7IRY5c/Z8h2YQlV7ct4aKa0opan7r/VA==
-X-Received: by 2002:a6b:610a:0:b0:79f:a0c2:4b85 with SMTP id v10-20020a6b610a000000b0079fa0c24b85mr10368357iob.20.1696214461195;
-        Sun, 01 Oct 2023 19:41:01 -0700 (PDT)
+        bh=bH2hzoWai8vH7Zjh0kf9Emav2ZMVmyeQiZtNTadsv4M=;
+        b=I3FdlKyXn8vGTVRLNLhF8RipsanfD0OUnn3xlDog0ZVCbT1m/XIy95kDp00V0YkdF3
+         AthjdO7pfEdC/5UoV59Rp5D4Zprm8taXF8AjKVH2fdBVZrkD2S1jXrNZcMQXZbFA3hYk
+         tDxUtwufHfrS2iedg6BAs4mS6xKW5Rxvcptt+x9c80TSW5vcy4vliNwYNFjDCwmLGuiu
+         9vc3kM8eYDjpJPWXn6eO5LDxjWJqwFGrcLOEgNBCGldYNIlGCLxqf1zKa3C1DpKz8zES
+         YQN6GYcpJyc4+UxhK/RFa4NzzctIDbWF+3RjTArchulCBHCarDX6Be5cALRgoJOsfD6K
+         20fg==
+X-Gm-Message-State: AOJu0YwRl8xE9b2Do791wY7euAy5iXrMB8CYNko8G4MELMzYCMHnOgX/
+        VacYiGU2BAOfrM0vXoOkzoY=
+X-Google-Smtp-Source: AGHT+IEwJdTV/uujbwpgJGjS9gG1Zq6HGmBjhfqI7Pj7Z9XYdRfcCKUwKGNAP7cH1OTRMv8u8cBgKw==
+X-Received: by 2002:a5e:891a:0:b0:794:e11c:d8c3 with SMTP id k26-20020a5e891a000000b00794e11cd8c3mr11482632ioj.16.1696214462207;
+        Sun, 01 Oct 2023 19:41:02 -0700 (PDT)
 Received: from localhost.localdomain (ip68-227-168-167.om.om.cox.net. [68.227.168.167])
-        by smtp.gmail.com with ESMTPSA id v6-20020a056602058600b0079f9f7a2565sm6346113iox.38.2023.10.01.19.41.00
+        by smtp.gmail.com with ESMTPSA id v6-20020a056602058600b0079f9f7a2565sm6346113iox.38.2023.10.01.19.41.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Oct 2023 19:41:00 -0700 (PDT)
+        Sun, 01 Oct 2023 19:41:01 -0700 (PDT)
 From:   "Eric W. Biederman" <ebiederm@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
         "Eric W. Biederman" <ebiederm@xmission.com>
-Subject: [PATCH v2 25/30] object-file: handle compat objects in check_object_signature
-Date:   Sun,  1 Oct 2023 21:40:29 -0500
-Message-Id: <20231002024034.2611-25-ebiederm@gmail.com>
+Subject: [PATCH v2 26/30] builtin/ls-tree: let the oid determine the output algorithm
+Date:   Sun,  1 Oct 2023 21:40:30 -0500
+Message-Id: <20231002024034.2611-26-ebiederm@gmail.com>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <878r8l929e.fsf@gmail.froward.int.ebiederm.org>
 References: <878r8l929e.fsf@gmail.froward.int.ebiederm.org>
@@ -69,35 +69,45 @@ X-Mailing-List: git@vger.kernel.org
 
 From: "Eric W. Biederman" <ebiederm@xmission.com>
 
-Update check_object_signature to find the hash algorithm the exising
-signature uses, and to use the same hash algorithm when recomputing it
-to check the signature is valid.
+Update cmd_ls_tree to call get_oid_with_context and pass
+GET_OID_HASH_ANY instead of calling the simpler repo_get_oid.
 
-This will be useful when teaching git ls-tree to display objects
-encoded with the compat hash algorithm.
+This implments in ls-tree the behavior that asking to display a sha1
+hash displays the corrresponding sha1 encoded object and asking to
+display a sha256 hash displayes the corresponding sha256 encoded
+object.
+
+This is useful for testing the conversion of an object to an
+equivlanet object encoded with a different hash function.
 
 Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
 ---
- object-file.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ builtin/ls-tree.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/object-file.c b/object-file.c
-index b2d43d009898..5fa4b14baee0 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -1094,9 +1094,11 @@ int check_object_signature(struct repository *r, const struct object_id *oid,
- 			   void *buf, unsigned long size,
- 			   enum object_type type)
- {
-+	const struct git_hash_algo *algo =
-+		oid->algo ? &hash_algos[oid->algo] : r->hash_algo;
- 	struct object_id real_oid;
+diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
+index f558db5f3b80..71281ab705b6 100644
+--- a/builtin/ls-tree.c
++++ b/builtin/ls-tree.c
+@@ -376,6 +376,7 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
+ 		OPT_END()
+ 	};
+ 	struct ls_tree_cmdmode_to_fmt *m2f = ls_tree_cmdmode_format;
++	struct object_context obj_context;
+ 	int ret;
  
--	hash_object_file(r->hash_algo, buf, size, type, &real_oid);
-+	hash_object_file(algo, buf, size, type, &real_oid);
+ 	git_config(git_default_config, NULL);
+@@ -407,7 +408,9 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
+ 			ls_tree_usage, ls_tree_options);
+ 	if (argc < 1)
+ 		usage_with_options(ls_tree_usage, ls_tree_options);
+-	if (repo_get_oid(the_repository, argv[0], &oid))
++	if (get_oid_with_context(the_repository, argv[0],
++				 GET_OID_HASH_ANY, &oid,
++				 &obj_context))
+ 		die("Not a valid object name %s", argv[0]);
  
- 	return !oideq(oid, &real_oid) ? -1 : 0;
- }
+ 	/*
 -- 
 2.41.0
 
