@@ -2,104 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34BCFE784BD
-	for <git@archiver.kernel.org>; Mon,  2 Oct 2023 15:15:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 48A80E784BD
+	for <git@archiver.kernel.org>; Mon,  2 Oct 2023 15:17:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237945AbjJBPPV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Oct 2023 11:15:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48328 "EHLO
+        id S238001AbjJBPR2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Oct 2023 11:17:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237774AbjJBPPU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Oct 2023 11:15:20 -0400
-Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4D96B8
-        for <git@vger.kernel.org>; Mon,  2 Oct 2023 08:15:17 -0700 (PDT)
-Received: by mail-qt1-x82c.google.com with SMTP id d75a77b69052e-419787a43ebso26494221cf.1
-        for <git@vger.kernel.org>; Mon, 02 Oct 2023 08:15:17 -0700 (PDT)
+        with ESMTP id S237627AbjJBPR0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Oct 2023 11:17:26 -0400
+Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DDA790
+        for <git@vger.kernel.org>; Mon,  2 Oct 2023 08:17:23 -0700 (PDT)
+Received: by mail-qk1-x731.google.com with SMTP id af79cd13be357-7741b18a06aso1080472985a.1
+        for <git@vger.kernel.org>; Mon, 02 Oct 2023 08:17:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1696259716; x=1696864516; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Mquz/Sn+AwnFRs4k8+kD2bR0NPntbe0cwo41mPERFq8=;
-        b=aZ5aYftGaGrQ0ycmH1rXaEvTASfDIfnI3T3kfPnpLLxNyE/GEIsEeB7BW/d4Hco6bE
-         +3nLzlCjpKrKz3bGDaT/ENFjEwi3nuaS6IlcrDct+JmojH1cmbh2Io9lpW2nFyeOVIcN
-         7Aho9acSjOA9ukqoa6V3M5s98mz/jyKoJLPjGyPQwsBAZXbVikUsR81tEtD5yYpeTxFj
-         HbshtJimOWzMARL72+egHATgwDcpQMs6Hp99IKvV1GtYpDhNBurzGt0Uq9iEG9v2sExn
-         uFBvgib051OH2jmstSdYNGQ9+TvSlkoA5EV6IKw/c56CadhCkAjg5X9cjlgM2AXevkFk
-         Jz1Q==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1696259842; x=1696864642; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=R/JrzZBN1Z5E/OkB7RIAN9dOewloh1E1K7ijouojC1E=;
+        b=CJ2uXUi4jOmrPu8kKodxMZW5JQkXNlOQZ0r0oZjjY3vzCFYo6h6RsNT1nYnT3ZbviT
+         nj4/JbcK6xP0l9lhYdh44C2DnFcl4QE4q0BMsbCjwnhZYhlP2r1jy5/PXp2rdNvXAiC0
+         e5M+nNJr1c8Ta5sd5eylEI2rBKeYibLjkFF1le7KA+98Hbb4f3uK1NFCCY9QDoASAim5
+         3PhDt0nlQCFOig11/3hI0M61pmw3u6mwgNXIup5uFI/nGpnjQ3GqWl3pcI4Av5/8td9T
+         cbfNFk+5HiXG5rXyOUGTDka4rycTeiCGDVCAlNdmYVFqf60ggdOixP4Rytl3S7VpCjjN
+         uBUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696259716; x=1696864516;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
+        d=1e100.net; s=20230601; t=1696259842; x=1696864642;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Mquz/Sn+AwnFRs4k8+kD2bR0NPntbe0cwo41mPERFq8=;
-        b=Gj6fUqmujPInTNx/JDh4TYBjygKn5ZyFRIrGlgYiRuojwTzOv9Uwal8m9ScylfIn8n
-         AezZtlHUYR+k41XLhdEAMAPvHtC2+Jds9ggWthZPJP9BlWcd1Op4LlDXCj1RJ7LYG2f1
-         Q5ef8dyWJAkikoEtvb0OrKo8ElLXe318TWwOrqY2NH+lO7y/KfpY27xb8+L7aimDCvuG
-         brZml348LJ29fsUJwNgzl62ScLDlY/zn03y4I/zn8zX3m2b6J19pwAfU9WVXLgzh3nM8
-         uKW2YeCcZCaBgThnUEO81Cli9V3u5ReHetSMwiqgVeMuvxgwNDbmlkir8+85NgDt8FSv
-         z+sg==
-X-Gm-Message-State: AOJu0YwjSjrcMQtdITHCBz+U5JrL8i0eyxf1BVcqQ7TTlpvlv8nLwBdH
-        QJxILf3nYp4cl5GzEiMEJZx1caxgLbUOoKSvzEFV4w==
-X-Google-Smtp-Source: AGHT+IGPNi9TS4ffYOocVYPKZMYm36zDppPdIDvz9wBvUG0dqRs3D69PzlDo+IorWm/IFzx+OSnOqA==
-X-Received: by 2002:a05:622a:509:b0:418:164f:2365 with SMTP id l9-20020a05622a050900b00418164f2365mr15757049qtx.62.1696259716536;
-        Mon, 02 Oct 2023 08:15:16 -0700 (PDT)
+        bh=R/JrzZBN1Z5E/OkB7RIAN9dOewloh1E1K7ijouojC1E=;
+        b=Ra3Z8JBiDfwIm6g2vnkKaz7OCMxS9qmFvEljkPdUh5vQAMt3SeIaiTYh0SQuHTOme0
+         Q1m8Nrwz6arfao/SO9DkzAONAL73lmKlT208J+0djcEK8Izv6GI41+ycaShDHs12SSFE
+         SeAIPP4lgJm2qb3Vai86treZvGaCIMl4fNYaikVsWm8qlXugnEVN2p0hao9ItA/of8WP
+         P2HIjsyU0NzWWvn7h8AwyQypevi2J0k2xYs/grz07e6YmusCctuJDbP3OuaYMELovL2D
+         I0DW6mZLTJjKimHNkD4RL7g77+DFw2HTkSbDH4ZG/HeQ5gsf7uv79JufPSBsT8sfJGBt
+         LW6w==
+X-Gm-Message-State: AOJu0YwtlVJMiWy78tIRA3IX9V304jvZsqZfovgGtWa/gPF0klX58EWD
+        TyhYZrBrQnX1aN2e50IlxMMJKKq3MuRecAHHEYnw7A==
+X-Google-Smtp-Source: AGHT+IGIE1JKYC+O3niLOEvcoYozu+adm8AZI3OQbaZHEmpV+0/DCyHYuCRwoGDS1mWB/kay0kWGrQ==
+X-Received: by 2002:a0c:dd90:0:b0:63d:3bea:f663 with SMTP id v16-20020a0cdd90000000b0063d3beaf663mr12569335qvk.47.1696259842316;
+        Mon, 02 Oct 2023 08:17:22 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id b10-20020ac86bca000000b004198ac8be74sm1576072qtt.65.2023.10.02.08.15.15
+        by smtp.gmail.com with ESMTPSA id h16-20020a05620a10b000b0076f19b9e96fsm3291142qkk.107.2023.10.02.08.17.21
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Oct 2023 08:15:15 -0700 (PDT)
-Date:   Mon, 2 Oct 2023 11:15:14 -0400
+        Mon, 02 Oct 2023 08:17:22 -0700 (PDT)
+Date:   Mon, 2 Oct 2023 11:17:21 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
-Subject: Notes from the Git Contributor's Summit, 2023
-Message-ID: <ZRregi3JJXFs4Msb@nand.local>
+Subject: [TOPIC 0/12] Welcome / Conservancy Update
+Message-ID: <ZRrfAdX0eNutTSOy@nand.local>
+References: <ZRregi3JJXFs4Msb@nand.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZRregi3JJXFs4Msb@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It was great to see folks virtually last week at the Contributor's
-Summit!
+(Presenter: Taylor Blau, Notetaker: Keanen Wold)
 
-I took a couple of days off at the end of last week, but polished up the
-notes we took during the Contributor's Summit to share with the list.
-
-The notes are available (as read-only) in Google Docs, too, for folks
-who prefer to view them there are the following link:
-
-    https://docs.google.com/document/d/1GKoYtVhpdr_N2BAonYsxVTpPToP1CgCS9um0K7Gx9gQ
-
-At the Contributor's Summit, we discussed the following topics:
-
-  - Welcome / Conservancy Update (Taylor Blau)
-  - Next-gen reference backends (Patrick Steinhardt)
-  - Libification Goals and Progress (Emily Shaffer)
-  - Designing a Makefile for multiple libraries (Calvin Wan)
-  - Scaling Git from a forge's perspective (Taylor Blau)
-  - Replacing git LFS using multiple promisor remotes (Christian Couder)
-  - Clarifying backwards compatibility and when we break it (Emily Shaffer)
-  - Authentication to new hosts without setup (M Hickford)
-  - Update on jj, including at Google (Martin von Zweigbergk)
-  - Code churn and cleanups (Calvin Wan)
-  - Project management practices (Emily Shaffer)
-  - Improving new contrib onboarding (Jonathan Nieder)
-
-The list of all topics proposed (and the number of votes they received)
-are here:
-
-    https://docs.google.com/spreadsheets/d/1EnhmTeEqRBlEI2pMAO3oZ4rO1xEwBzYp2vS4CMtvge8
-
-I'll send the broken-out notes for each topic in a response to this
-message for posterity, and so folks can continue the discussion on the
-list.
-
-Like last year, if you have any feedback on how the Contributor's Summit
-went (especially as it relates to the virtual format we had this year),
-please feel free to share it with me here, or off-list.
-
-I hope to see everybody in person next year!
-
-Thanks,
-Taylor
+* Software Freedom Conservancy status report
+* We have about $89k in the Git project account (up ~$20k from last year)
+   * Biggest expense is Heroku - Fusion has been covering the bill
+      * There's on and off work on porting from a Rails app to a static site:
+        https://github.com/git/git-scm.com/issues/942
+   * Dan Moore from FusionAuth has been providing donations
+   * Ideally we are able to move away from using Heroku, but in the meantime
+     we'll have coverage either from (a) FusionAuth, or (b) Heroku's new
+     open-source credit system
+* We have more money than we have plans for, we're looking for ideas[a] on how
+  to spend this money such as funding people to visit our conferences and
+  sponsoring students to learn more about Git
+* Trademark considerations for people using "Git" in their product names
+   * We do have general council and are trying to think more about what the Git
+     trademark means
+   * Question - are there other conservancy products who have trademark issues
+      * They hold all trademarks for their projects
+      * Git has had the most problems with people/products using Git in their
+        name
+      * They reach out with letters, etc. and have not had to take legal action
+        in most cases
+   * Question - how do we enforce the rules when we have GitHub and GitLab?
+      * The trademark has exemptions for Hub and Lab
+      * We need to hold the line for the trademark for new companies, etc. using
+        the name otherwise we lose our leverage to protect the name
+   * Question - have the trademark ‘offenses' been growing?
+      * It's been pretty stable
+      * We're looking to be fair
+   * Additional questions can be sent to Pono
