@@ -2,79 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB8DDE8FDAF
-	for <git@archiver.kernel.org>; Tue,  3 Oct 2023 20:20:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D7CCE8FDB2
+	for <git@archiver.kernel.org>; Tue,  3 Oct 2023 20:25:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241060AbjJCUUf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Oct 2023 16:20:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39392 "EHLO
+        id S240724AbjJCUZK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Oct 2023 16:25:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241046AbjJCUUe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Oct 2023 16:20:34 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A187AAC
-        for <git@vger.kernel.org>; Tue,  3 Oct 2023 13:20:30 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 58D7A1B866A;
-        Tue,  3 Oct 2023 16:20:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=Vg/RjTZ1Kx4yWfa6IUGrHGtPPhtwg4Nbpnmatr
-        yfQd0=; b=dWvnCAHEVP4sHY/MgL/lb2G1t/2c4fC8//2xCNoKQ79bOJWXsL+vA0
-        4TQ6j7Zf1Cmwfo4p1+eaU26qGawsdNi29uVmYmfVMAqXDOHojuTNcGzgLWcAEPTH
-        fC9Nha3WpyE+Ez/jP9Krh7lORH25L8q9hYwr73njLflCBrytyXAVw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4FB871B8669;
-        Tue,  3 Oct 2023 16:20:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.165.85])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B7FE11B8668;
-        Tue,  3 Oct 2023 16:20:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH] builtin/repack.c: avoid making cruft packs preferred
-In-Reply-To: <ZRxBlrjyuBmJnx3p@nand.local> (Taylor Blau's message of "Tue, 3
-        Oct 2023 12:30:14 -0400")
-References: <19d9aae08eab05c6b5dda4c2090236b1c3f62998.1696349955.git.me@ttaylorr.com>
-        <ZRxBlrjyuBmJnx3p@nand.local>
-Date:   Tue, 03 Oct 2023 13:20:24 -0700
-Message-ID: <xmqqa5szzcdz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        with ESMTP id S231582AbjJCUZJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Oct 2023 16:25:09 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53FC9A7
+        for <git@vger.kernel.org>; Tue,  3 Oct 2023 13:25:06 -0700 (PDT)
+Received: (qmail 14841 invoked by uid 109); 3 Oct 2023 20:25:05 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 03 Oct 2023 20:25:05 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14892 invoked by uid 111); 3 Oct 2023 20:25:06 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 03 Oct 2023 16:25:06 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 3 Oct 2023 16:25:04 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Subject: [PATCH 0/10] some commit-graph leak fixes
+Message-ID: <20231003202504.GA7697@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4A2D8B58-622A-11EE-A158-25B3960A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+I noticed while working on the jk/commit-graph-verify-fix topic that
+free_commit_graph() leaks any slices of a commit-graph-chain except for
+the first. I naively hoped that fixing that would make t5324 leak-free,
+but it turns out there were a number of other leaks, so I fixed those,
+too. A couple of them were in the merge code, which in turn means a
+bunch of new test scripts are now leak-free.
 
-> On Tue, Oct 03, 2023 at 12:27:51PM -0400, Taylor Blau wrote:
->> I've had this sitting in my patch queue for a while now. It's a
->> non-critical performance fix that avoids the repack/MIDX machinery from
->> ever choosing a cruft pack as preferred when writing a MIDX bitmap
->> without a given --preferred-pack.
->>
->> There is no correctness issue here, but choosing a pack with few/no
->> reachable objects means that our pack reuse mechanism will rarely kick
->> in, resulting in performance degradation.
->>
->>  builtin/repack.c        | 47 ++++++++++++++++++++++++++++++++++++++++-
->>  t/t7704-repack-cruft.sh | 39 ++++++++++++++++++++++++++++++++++
->>  2 files changed, 85 insertions(+), 1 deletion(-)
->
-> Oops, I should have mentioned that this is meant to be applied on top of
-> 'tb/multi-cruft-pack' to reduce the conflict resolution burden. Sorry
-> about that.
+Even though I saw the problem on that other topic, there's no dependency
+here; this series can be applied directly to master (or possibly even
+maint, though I didn't try).
 
-Sorry, but I do not follow.  tb/multi-cruft-pack was merged to
-'master' at c0b5d46d (Documentation/gitformat-pack.txt: drop mixed
-version section, 2023-08-28) but back then t7704 did not exist.  Do
-you mean the other topic in-flight from you about max-cruft-size?
+  [01/10]: t6700: mark test as leak-free
+  [02/10]: commit-reach: free temporary list in get_octopus_merge_bases()
+  [03/10]: merge: free result of repo_get_merge_bases()
+  [04/10]: commit-graph: move slab-clearing to close_commit_graph()
+  [05/10]: commit-graph: free all elements of graph chain
+  [06/10]: commit-graph: delay base_graph assignment in add_graph_to_chain()
+  [07/10]: commit-graph: free graph struct that was not added to chain
+  [08/10]: commit-graph: free write-context entries before overwriting
+  [09/10]: commit-graph: free write-context base_graph_name during cleanup
+  [10/10]: commit-graph: clear oidset after finishing write
 
+ builtin/commit-graph.c             |  1 +
+ builtin/merge.c                    |  5 +++-
+ commit-graph.c                     | 40 ++++++++++++++----------------
+ commit-reach.c                     |  1 +
+ t/t4214-log-graph-octopus.sh       |  1 +
+ t/t4215-log-skewed-merges.sh       |  1 +
+ t/t5324-split-commit-graph.sh      |  2 ++
+ t/t5328-commit-graph-64bit-time.sh |  2 ++
+ t/t5521-pull-options.sh            |  1 +
+ t/t6009-rev-list-parent.sh         |  1 +
+ t/t6416-recursive-corner-cases.sh  |  1 +
+ t/t6433-merge-toplevel.sh          |  1 +
+ t/t6437-submodule-merge.sh         |  1 +
+ t/t6700-tree-depth.sh              |  2 ++
+ t/t7602-merge-octopus-many.sh      |  1 +
+ t/t7603-merge-reduce-heads.sh      |  1 +
+ t/t7607-merge-state.sh             |  1 +
+ t/t7608-merge-messages.sh          |  1 +
+ 18 files changed, 42 insertions(+), 22 deletions(-)
+
+-Peff
