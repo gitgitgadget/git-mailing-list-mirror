@@ -2,75 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CAEBE75459
-	for <git@archiver.kernel.org>; Tue,  3 Oct 2023 18:42:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ADE2FE7545F
+	for <git@archiver.kernel.org>; Tue,  3 Oct 2023 18:51:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231932AbjJCSmh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Oct 2023 14:42:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48298 "EHLO
+        id S240847AbjJCSvF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Oct 2023 14:51:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50514 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231467AbjJCSmg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Oct 2023 14:42:36 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 656D995
-        for <git@vger.kernel.org>; Tue,  3 Oct 2023 11:42:33 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 24C0A1B7A85;
-        Tue,  3 Oct 2023 14:42:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=wptoCW3v/0Lq
-        m0GgRIGwIwKh3nRRCm0EWePSpXCjwNc=; b=UGCJam7RR5ZAnznDMzbhiXQqUowy
-        Yi/DRloWRHbkDRC3NUNKbmokfHvXbLjPqlZ29lTnw+DwMynz4eD5E/2BzYosFvFn
-        hodLfEeU1jPRHWZ0dZSqvax1mkxI2mb8DGROhvLOvEsW8wn35Aqk+tMxjPcF4V1N
-        Z01Wufg04HT+eEE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1A9621B7A84;
-        Tue,  3 Oct 2023 14:42:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.165.85])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7F35C1B7A83;
-        Tue,  3 Oct 2023 14:42:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     ach.lumap@gmail.com, git@vger.kernel.org,
-        christian.couder@gmail.com
-Subject: Re: [PATCH 1/1] t2400: avoid using pipes
-In-Reply-To: <CAPig+cSkZ_brRh_ijFRgz3sP9ou5se9-xeRg=C+cV3c3-v3Wtg@mail.gmail.com>
-        (Eric Sunshine's message of "Tue, 3 Oct 2023 14:01:13 -0400")
-References: <20231003174853.1732-1-ach.lumap@gmail.com>
-        <20231003174853.1732-2-ach.lumap@gmail.com>
-        <CAPig+cSkZ_brRh_ijFRgz3sP9ou5se9-xeRg=C+cV3c3-v3Wtg@mail.gmail.com>
-Date:   Tue, 03 Oct 2023 11:42:30 -0700
-Message-ID: <xmqqr0mbzgx5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        with ESMTP id S232021AbjJCSvE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Oct 2023 14:51:04 -0400
+Received: from mail.archlinux.org (mail.archlinux.org [95.216.189.61])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 281D3AB
+        for <git@vger.kernel.org>; Tue,  3 Oct 2023 11:50:58 -0700 (PDT)
+From:   "Jan Alexander Steffens (heftig)" <heftig@archlinux.org>
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=archlinux.org;
+        s=dkim-ed25519; t=1696359054;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=vAHSdsBzvo+OGcxgFxIjioDOevni9pbvU+ny/i+HTSg=;
+        b=DNCbrXt+8MLfnq6HetImsin8f7XCULcdYnL40kUXbtUfYTIKgtQ3p7ih0mNM39RODkl0q9
+        qzLxxKDSrgWs77DQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=archlinux.org;
+        s=dkim-rsa; t=1696359054;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=vAHSdsBzvo+OGcxgFxIjioDOevni9pbvU+ny/i+HTSg=;
+        b=XBtj+Oi2SCAvg8RLbf2lyunawFQKO5H3piu4FhGWU9i+EyV6yG7931GEDhd0a1auAUAdd0
+        K/yshvsObCx6Be0cynfrq36RN6i22r5cY83HpyibTVyQ/A+0jClfLPbWh6FupLCmi4KIbU
+        2CbY69Fe1adQeba+4YVRgFr7G/yoa62d3KRz3olg9sTxbPLfwa6ZrQ1q6SZzDVRbsetdqu
+        5+sBlnlSdR9hrdzyLJbE+WAgHWnNHL7/ffYdt7Qenv5S3h5BHxrYq7tlWvIaxdlNcSxAAK
+        Zdtv/nTmiyCozlk3qkcCrGJIwudqLQYs/DMSQVQytpTeeoIcksBBaeV44ordUFRztJEsuZ
+        NDktF4j42Y639HFd0i9LSvAIq/xdtLDkwh19PJOZUHQFuOGwa9Ky7/0pwaJXljTC4SThhf
+        wCD/1z7pE2Lymu43S7Z0+xgMGX8VC0f3Oz/F2inNOZM7+p4yTqaAK1fbxnrjzAO05Pe55K
+        a1+Yj573xudElY/ANXW76Kyvmd3UGFh8dXVqdSRdSUnnb5QA5eVHEkGznPy4aKEV5fJQM/
+        zDR8mGupDp9jSUXjCtZ7BLbPX8Vl+DXYGpPznCWoyInW9jtP2xkH9oWhnSdz7OIMwb00J0
+        Ilgv4gB+0DxyYNvj7TqvNyK0tZ69NVqMP/IyXvHjr390q8R77paBU=
+Authentication-Results: mail.archlinux.org;
+        auth=pass smtp.auth=heftig smtp.mailfrom=heftig@archlinux.org
+To:     git@vger.kernel.org
+Cc:     "Jan Alexander Steffens (heftig)" <heftig@archlinux.org>
+Subject: [PATCH 2/6] submodule--helper: return error from set-url when modifying failed
+Date:   Tue,  3 Oct 2023 20:50:43 +0200
+Message-ID: <20231003185047.2697995-2-heftig@archlinux.org>
+X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20231003185047.2697995-1-heftig@archlinux.org>
+References: <0a0a157f88321d25fdb0be771a454b3410a449f3.camel@archlinux.org>
+ <20231003185047.2697995-1-heftig@archlinux.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 9C44552E-621C-11EE-844D-25B3960A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+set-branch will return an error when setting the config fails so I don't
+see why set-url shouldn't. Also skip the sync in this case.
 
-> On Tue, Oct 3, 2023 at 1:49=E2=80=AFPM <ach.lumap@gmail.com> wrote:
->> t2400: avoid using pipes
->
-> Pipes themselves are not necessarily problematic, and there are many
-> places in the test suite where they are legitimately used. Rather...
-> ...
-> readers of `git log --oneline` (or other such commands), a better
-> subject for the patch might be:
->
->     t2400: avoid losing Git exit code
->
-> That minor comment aside (which is probably not worth a reroll), the
-> commit message properly explains why this change is desirable and the
-> patch itself looks good.
+Signed-off-by: Jan Alexander Steffens (heftig) <heftig@archlinux.org>
+---
+ builtin/submodule--helper.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-Thanks for writing and reviewing.  Will queue.
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index f376466a5e..e2175083a6 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -2890,39 +2890,41 @@ static int absorb_git_dirs(int argc, const char **argv, const char *prefix)
+ 
+ static int module_set_url(int argc, const char **argv, const char *prefix)
+ {
+-	int quiet = 0;
++	int quiet = 0, ret;
+ 	const char *newurl;
+ 	const char *path;
+ 	char *config_name;
+ 	struct option options[] = {
+ 		OPT__QUIET(&quiet, N_("suppress output for setting url of a submodule")),
+ 		OPT_END()
+ 	};
+ 	const char *const usage[] = {
+ 		N_("git submodule set-url [--quiet] <path> <newurl>"),
+ 		NULL
+ 	};
+ 	const struct submodule *sub;
+ 
+ 	argc = parse_options(argc, argv, prefix, options, usage, 0);
+ 
+ 	if (argc != 2 || !(path = argv[0]) || !(newurl = argv[1]))
+ 		usage_with_options(usage, options);
+ 
+ 	sub = submodule_from_path(the_repository, null_oid(), path);
+ 
+ 	if (!sub)
+ 		die(_("no submodule mapping found in .gitmodules for path '%s'"),
+ 		    path);
+ 
+ 	config_name = xstrfmt("submodule.%s.url", sub->name);
+-	config_set_in_gitmodules_file_gently(config_name, newurl);
++	ret = config_set_in_gitmodules_file_gently(config_name, newurl);
+ 
+-	repo_read_gitmodules (the_repository, 0);
+-	sync_submodule(sub->path, prefix, NULL, quiet ? OPT_QUIET : 0);
++	if (!ret) {
++		repo_read_gitmodules(the_repository, 0);
++		sync_submodule(sub->path, prefix, NULL, quiet ? OPT_QUIET : 0);
++	}
+ 
+ 	free(config_name);
+-	return 0;
++	return !!ret;
+ }
+ 
+ static int module_set_branch(int argc, const char **argv, const char *prefix)
+-- 
+2.42.0
+
