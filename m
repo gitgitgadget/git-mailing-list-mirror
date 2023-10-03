@@ -2,135 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93EBCE7AD78
-	for <git@archiver.kernel.org>; Tue,  3 Oct 2023 16:33:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6721BE7AD76
+	for <git@archiver.kernel.org>; Tue,  3 Oct 2023 16:33:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240591AbjJCQdc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Oct 2023 12:33:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51286 "EHLO
+        id S240586AbjJCQdt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Oct 2023 12:33:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240572AbjJCQda (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Oct 2023 12:33:30 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 558B6C6
-        for <git@vger.kernel.org>; Tue,  3 Oct 2023 09:33:26 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-40566f8a093so11156385e9.3
-        for <git@vger.kernel.org>; Tue, 03 Oct 2023 09:33:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696350804; x=1696955604; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bmCFfUx8/KKT6gl7JSh7Kkgcne7xjtvOpnCULvmu74I=;
-        b=fsYsaB+XQyhERAgXUx139kn7u4cnakghZkppYHLkX3MhgrVfoZeU+j7I9mRBJL8akd
-         Ia9g4XMt+SFws1C8kWUWBKC4bgUDiPZYWIVKxNIZZWyJ53xSWVfXxuOOEOSBBNyi0XYX
-         aJSrWn0z4bP7xHsjRHz504NamzJY9L410+m9aGDpjXQn5E33OUIpktlnEElfX2pp8BtG
-         DsqGYgt+WU10GLxsxkQu5qYyPLFSBh9ZZVnxtvzYt/myqsv4PvhO8ZTxLTATTZgnZ9fM
-         fgui6xpJ4DMQ+vObaM3AeJOi0Hz6SI+vRlrBXec+ofTxUYL9WfqM/O+9d/Juk4LgR/Hs
-         7l5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696350804; x=1696955604;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bmCFfUx8/KKT6gl7JSh7Kkgcne7xjtvOpnCULvmu74I=;
-        b=mNgNVKioJFywGia8aPtSz2vRD4IdW3IPaS+EpBszFnKlAYluh18oFTy8dCc2ZwixZ9
-         3JY68d1gqFDkg20/leMiyhiXxwUaifbJ3HCevVCMp7Vms27zWggNG8vG0nQTimBuQSYg
-         YzOOjEqR2o4CVl731oW9REfWOUpxm1jYdGS4vvP4zWpN+/P2pRdtvsvvkGNxpLPJLVxQ
-         Ufy1c7NQOxon4aHeNHH3NG99N3ObGXQUR2BStmWEnLMQZygGCZ3yBkZfwh/hRBxVxlEy
-         9+vRBdMgoKpOGOyXQORYPEnBFE6dpGc9aWjysS6S5gOiLBtdNCgTQYlkW/zzqhuMw6RW
-         u75w==
-X-Gm-Message-State: AOJu0YxCWTbcMlBojqwMxOwVSuSyaeUrtzhHgPbAsbRFFZYiIEmeujn5
-        3XtkUDU1Y0rFdLsOjzkgvjdPMr7ijqE=
-X-Google-Smtp-Source: AGHT+IHBKShKb38Y63MjDXtEIDveDQqf4SF+uB1ewWrMI9AwZli9/x5PKD9ThGEvhCV0VHH7GgCs5w==
-X-Received: by 2002:a05:600c:2146:b0:405:458d:d54 with SMTP id v6-20020a05600c214600b00405458d0d54mr14134401wml.33.1696350804006;
-        Tue, 03 Oct 2023 09:33:24 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o6-20020a05600c378600b00405ee9dc69esm9800726wmr.18.2023.10.03.09.33.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Oct 2023 09:33:23 -0700 (PDT)
-Message-ID: <pull.1591.v2.git.1696350802820.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1591.git.1696193527923.gitgitgadget@gmail.com>
-References: <pull.1591.git.1696193527923.gitgitgadget@gmail.com>
-From:   "cousteau via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 03 Oct 2023 16:33:22 +0000
-Subject: [PATCH v2] git-status.txt: fix minor asciidoc format issue
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S240373AbjJCQds (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Oct 2023 12:33:48 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4161E91
+        for <git@vger.kernel.org>; Tue,  3 Oct 2023 09:33:46 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D4E362CB90;
+        Tue,  3 Oct 2023 12:33:45 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=DpkKv780+mHhaTc3pWBDqPTEjqVR+ODA3yP6R6
+        Fwk6U=; b=rD/0N1QD1uwIg7T8Ek6L/KNoin8kBxueVneJFiprzIpcXuhfJNzi2s
+        Nitjyw1hxqLdiuVoEu0A+cBWlVlxonHt7CK2svAd+SEjGFPlcQhgv60fns6HR3wJ
+        wrmp1z/0EpTeBN6DSO9ddVotxVgXp/Xa1C+Zfr3bEOo8RhzCWUf9k=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id CEAF02CB8F;
+        Tue,  3 Oct 2023 12:33:45 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 658422CB8E;
+        Tue,  3 Oct 2023 12:33:42 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Sergey Organov <sorganov@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Oct 2023, #01; Mon, 2)
+In-Reply-To: <871qecgpg1.fsf@osv.gnss.ru> (Sergey Organov's message of "Tue,
+        03 Oct 2023 10:01:02 +0300")
+References: <xmqqedic35u4.fsf@gitster.g> <871qecgpg1.fsf@osv.gnss.ru>
+Date:   Tue, 03 Oct 2023 09:33:40 -0700
+Message-ID: <xmqq34yr3btn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Javier Mora <cousteaulecommandant@gmail.com>,
-        cousteau <cousteaulecommandant@gmail.com>,
-        Javier Mora <cousteaulecommandant@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9D5BF21C-620A-11EE-905A-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Javier Mora <cousteaulecommandant@gmail.com>
+Sergey Organov <sorganov@gmail.com> writes:
 
-The paragraph below the list of short option combinations
-isn't correctly formatted, making the result hard to read.
+> I believe I've addressed this in details in my reply here:
+> <87o7hok8dx.fsf@osv.gnss.ru>, and got no further objections from you
+> since then, so I figure I'd ask to finally let the patch in.
 
-Signed-off-by: Javier Mora <cousteaulecommandant@gmail.com>
----
-    git-status.txt: minor asciidoc format correction
-    
-    The paragraph below the list of short option combinations was hard to
-    read; turns out it wasn't correctly formatted in asciidoc.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1591%2Fcousteaulecommandant%2Fman-git-status-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1591/cousteaulecommandant/man-git-status-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1591
-
-Range-diff vs v1:
-
- 1:  b3c97ca9e0f ! 1:  811885a275f git-status.txt: fix minor asciidoc format issue
-     @@ Commit message
-      
-       ## Documentation/git-status.txt ##
-      @@ Documentation/git-status.txt: U           U    unmerged, both modified
-     - ....
-       
-       Submodules have more state and instead report
-     + 
-      -		M    the submodule has a different HEAD than
-      -		     recorded in the index
-      -		m    the submodule has modified content
-      -		?    the submodule has untracked files
-     -+
-      +* 'M' = the submodule has a different HEAD than recorded in the index
-      +* 'm' = the submodule has modified content
-      +* '?' = the submodule has untracked files
-     -+
-     + 
-       since modified content or untracked files in a submodule cannot be added
-       via `git add` in the superproject to prepare a commit.
-     - 
-
-
- Documentation/git-status.txt | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
-index b27d127b5e2..48f46eb2047 100644
---- a/Documentation/git-status.txt
-+++ b/Documentation/git-status.txt
-@@ -246,10 +246,9 @@ U           U    unmerged, both modified
- 
- Submodules have more state and instead report
- 
--		M    the submodule has a different HEAD than
--		     recorded in the index
--		m    the submodule has modified content
--		?    the submodule has untracked files
-+* 'M' = the submodule has a different HEAD than recorded in the index
-+* 'm' = the submodule has modified content
-+* '?' = the submodule has untracked files
- 
- since modified content or untracked files in a submodule cannot be added
- via `git add` in the superproject to prepare a commit.
-
-base-commit: d0e8084c65cbf949038ae4cc344ac2c2efd77415
--- 
-gitgitgadget
+You need to know that no response does not mean no objection.  You
+repeated why the less useful combination is what you want, but that
+does not mean the combination deserves to squat on short-and-sweet
+'d' and prevent others from coming up with a better use for it.
