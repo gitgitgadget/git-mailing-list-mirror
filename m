@@ -2,84 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CAF6EE75458
-	for <git@archiver.kernel.org>; Tue,  3 Oct 2023 17:59:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C269DE7AD59
+	for <git@archiver.kernel.org>; Tue,  3 Oct 2023 18:00:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231444AbjJCR74 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Oct 2023 13:59:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55780 "EHLO
+        id S231438AbjJCSAs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Oct 2023 14:00:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231230AbjJCR74 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Oct 2023 13:59:56 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE30A8E
-        for <git@vger.kernel.org>; Tue,  3 Oct 2023 10:59:50 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-5042bfb4fe9so1441189e87.1
-        for <git@vger.kernel.org>; Tue, 03 Oct 2023 10:59:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696355989; x=1696960789; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=HrKjZVJDxWbJYfdq88/aPAcxVhD/bZnulhf4svRHIIg=;
-        b=jHKUch3K0BYHufDABxyLehPcK7P8yzM388LRun/EcUKSHIj7JOJcSYHN2vfzNg/Z/S
-         ZQG0Xtn57esNp72RXNXTRt9SrJtczCH06Bczz9pswyC/yWmlqvCo0iEBB04u8sfthIS8
-         nBtD3MZOS3Bw0orxHGDIlXzOmzbU+RdZxgka8yCAdTK+KjbSNRECEsihcxisCcMXwqTb
-         waUgHlrp4dLxPjFzqmr+1YYBQk8yv+BWthcTlftkSAGwglE9XC6Oda+Qpya4kSPYE441
-         QtwjXoe1Iu+dF0TsrCwx4chdsSRmdNusCilocI45jzoTq6gw2I5ZVgVgoStQT8ZUfGR1
-         enxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696355989; x=1696960789;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HrKjZVJDxWbJYfdq88/aPAcxVhD/bZnulhf4svRHIIg=;
-        b=XVnJltdmj3eGKmksGEidqPJ35LcKfYUV8BigCAaohDnOP00d+fs90b3i//0mM6CJSP
-         ZO1OPkamKW9rxdAKrIs6aK9d5MBLGPo+RAgmShv/2INpczpvmD0sWkIEDKdgUnNcCBXI
-         Oz8FX9R5i0mT/Scn4VfgffoAaRGir2WVgWJ9ASh2cLqcu/relT3gXUVcWLEcihUiUh/E
-         5tOUyzUQfLaeaeY8aIGRpzzieB7d8SnoDkrP1/k+l03ZbVqg4tMgQOs9FXxpikEvImgu
-         v28StvEkP9j6TEKXRBE3nfUHNvkQ3ZURnjwdJrtiIdTiuWProh1g5KaoWFBW7A71KA4v
-         Lrog==
-X-Gm-Message-State: AOJu0YxaPsEWnMXan46QXXvA/ALbzXEgo1D6Mtnc3nDk4mxZRV4wuE20
-        wnp4fJ9Y9KtKNho0wb6iUK5o4dLyjbw=
-X-Google-Smtp-Source: AGHT+IE488jtqghu2p/vPi+L0xm4KVh3FDPd4nSf9ha9O82s5WmducC6lq5mGQNxOWWK8HkzF5Y4jA==
-X-Received: by 2002:a05:6512:32cb:b0:500:9a67:d40e with SMTP id f11-20020a05651232cb00b005009a67d40emr16052273lfg.60.1696355988332;
-        Tue, 03 Oct 2023 10:59:48 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id x5-20020ac24885000000b005030c533843sm269489lfc.154.2023.10.03.10.59.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Oct 2023 10:59:47 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Oct 2023, #01; Mon, 2)
-References: <xmqqedic35u4.fsf@gitster.g> <871qecgpg1.fsf@osv.gnss.ru>
-        <xmqq34yr3btn.fsf@gitster.g>
-Date:   Tue, 03 Oct 2023 20:59:46 +0300
-In-Reply-To: <xmqq34yr3btn.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-        03 Oct 2023 09:33:40 -0700")
-Message-ID: <874jj7lh7x.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        with ESMTP id S231622AbjJCSAr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Oct 2023 14:00:47 -0400
+Received: from mout.web.de (mout.web.de [212.227.17.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6518DAC
+        for <git@vger.kernel.org>; Tue,  3 Oct 2023 11:00:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+ t=1696356040; x=1696960840; i=l.s.r@web.de;
+ bh=7Xgpp8AfEQK37+l1BvJuycnYaCV5oM/q48Z1VL+GGVQ=;
+ h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=AoidBxVnu3m/c5msmTzZv0cik2G/TK3hE4i5bnY6u9Vch3ZviIFYf9pDImZ2kaIzAUMWDhOf8zc
+ hl4d7ZpRV7F3PJ5C37f/jb3NZ6QXl9rXZq24UVxvCetbWcYPW5m0H6H1GP3tWWqtiNufq05S87IP3
+ NK7QrpFAUuOfRIevFN8C/MFkPrDMV42BTEmunKpzDM75vslRqFqax9wlPTHbcqlqwLJjKedEfxfFu
+ KYVz9J/mxAYV0A0qdzmm43zau/ns8Wu8vGuyjW80Ro4IQIzU46Z1OyT3Teagi3JrhVZRGFdLc7xOp
+ 78N2FWeltQBvnX5VvtsNbtxfHmQtoFnwOuvg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.147.159]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MEUW8-1qqVf8394s-00GEPY; Tue, 03
+ Oct 2023 20:00:40 +0200
+Message-ID: <77c42646-2fa6-426f-934e-63b71d6355ad@web.de>
+Date:   Tue, 3 Oct 2023 20:00:40 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] parse-options: drop unused parse_opt_ctx_t member
+Content-Language: en-US
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>
+References: <ebcaa9e1-d306-4c93-adec-3f35d7040531@web.de>
+ <CAPig+cRZ_KzyjWjm-G2qn+t-QA_=CL-tMvTSyZBKrmiHK3RQrg@mail.gmail.com>
+From:   =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <CAPig+cRZ_KzyjWjm-G2qn+t-QA_=CL-tMvTSyZBKrmiHK3RQrg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:LFZfTDsSCGO2ZAIy3tTTPkj+AEX8n19EJo0e9eD6qUgUVLKlAdf
+ Ewp34SnRjYVWYDtAdznmW1lAuNKOtYnfqQ2jwNCFABbEYuMcKT14RfCKiZiGQ3Qk2mKHjh/
+ zRWD3L8tRkyQoi09xWHYbxEwTlNajqQ462ZJrrdqFzjiwi2ScklDOulqfWyD1+r73QFyrDl
+ g/AeN+4TakrnxD63cfNYw==
+UI-OutboundReport: notjunk:1;M01:P0:mPRd5gxa95E=;Szg2HIT9psIK0Ipsh/kSAxHJOh4
+ nEwABOwzjoET/q6j58voNO/+495cUi/uA7GEMM/xEkY2PhGnMHyTAxlt9fx0jkb+VOqNwqiAg
+ QJ3KDCyEX09ZSueSs6MwGKaDeBDqSoC4hfFlr6rwn29foRx6dzFDwCyKQ4EVhIasyIiYfL6XX
+ e1CNQpzUXU75gsSuyWI3IQYcvk1Of45YWLecRbN6DR65b+IxuhDUP5kvunpDmwSgGwSYY4ZAg
+ KfgcxABW1bFF7NHJwgTLvHew28ibyUafAcUX6Uay6gIzzMneG5XhbcRja2cQaBJzHg/rYo33D
+ LihaVQbl050dccKyu19BcrJSH1q9CFknu5lRzYB4jpOj8fOtWIlhRTp2p6lel595l7ErihzZG
+ MlZj909SFCw5B+kInJCYiPPng++updwZ/qNJ6ykANjv908/il19985eAuvhy+0gaHlL3gTkGl
+ gQpQMde7dnzbsBqsllft/VDpiIFagIMCoA2/qrgkvdKHiCCXKMCfKXD0iA6z/QUiseGqdTSD+
+ b9zMSZpG484hZwyUckdAda5eOjGOKA7t2SEaXx5ZhHmzrnJXFtM6YxTKsPQofzicWbPE3WU5F
+ W8VdVsOMlHA+L6QYwSONRjpVr9GSOH1djyz4jogXjcjR6ChmIwYENBIOBx8DxeUiLfkgjI2SA
+ mRoYT0fBWyDMIhe2w7fxzcgcyj7b+ltLn/NNf02Aj+/s/MNGddwObhGwJovIqfarJ43iStyIU
+ AHRqW0AgYYLZJcieFrnZIHXNuomVeyo7xplse9XwIsJwcHsO5kseontk4maYcIeq0VT/L8vks
+ g+f5c0OTOrpgC5HO1lZceFFY8IBK3jXzRQjY2BaPRBvXeJ/viYPq+K+llgURnRDQfsVwY0H4j
+ 4XmG+Cjjp6O9EGk3UamDEazELIg9xjeFGBmjM9dpiuWb5Z8icenhrXRK02N0E87KDZ/ikRgOC
+ MobvhA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Sergey Organov <sorganov@gmail.com> writes:
+Am 03.10.23 um 19:38 schrieb Eric Sunshine:
+> On Tue, Oct 3, 2023 at 4:55=E2=80=AFAM Ren=C3=A9 Scharfe <l.s.r@web.de> =
+wrote:
+>> 5c387428f1 (parse-options: don't emit "ambiguous option" for aliases,
+>> 2019-04-29) added "updated_options" to struct parse_opt_ctx_t, but it
+>> has never been used.  Remove it.
+>> ---
 >
->> I believe I've addressed this in details in my reply here:
->> <87o7hok8dx.fsf@osv.gnss.ru>, and got no further objections from you
->> since then, so I figure I'd ask to finally let the patch in.
->
-> You need to know that no response does not mean no objection.  You
-> repeated why the less useful combination is what you want, but that
-> does not mean the combination deserves to squat on short-and-sweet
-> 'd' and prevent others from coming up with a better use for it.
+> Missing sign-off.
 
-Yep, but I've asked what's better use for -d than "get me diff"? Do you
-really have an idea?
+Oops, thanks for catching that.  Technically not necessary, I guess,
+since the patch is trivial, but here it is:
 
-Thanks,
--- Sergey Organov
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
