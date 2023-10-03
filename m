@@ -2,78 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF2A2E7AD57
-	for <git@archiver.kernel.org>; Tue,  3 Oct 2023 14:30:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D42AE7AD76
+	for <git@archiver.kernel.org>; Tue,  3 Oct 2023 16:15:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240095AbjJCOae (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Oct 2023 10:30:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49564 "EHLO
+        id S239218AbjJCQPS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Oct 2023 12:15:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240060AbjJCOad (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Oct 2023 10:30:33 -0400
-Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com [IPv6:2607:f8b0:4864:20::1042])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0787A3
-        for <git@vger.kernel.org>; Tue,  3 Oct 2023 07:30:30 -0700 (PDT)
-Received: by mail-pj1-x1042.google.com with SMTP id 98e67ed59e1d1-27736c2a731so694620a91.3
-        for <git@vger.kernel.org>; Tue, 03 Oct 2023 07:30:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696343430; x=1696948230; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=YERPgnlGDSAOvvqGASI1tt6mi3S4cTK2dwJGDgB0EIA=;
-        b=kw0vQ83IphhnpMAgk+fonbZKac0cIlh25f8wsbdgE5bqr5yJZyh3geUbZEOxaCnbg+
-         KVmHS3qOKEJLfXImPgocTnQ/de/g8iJK2sWx7uxIdLbiPkAH0nBQMAMvVF4WbXbEyldS
-         oClcTTywsDdUE2zRUunH020+a+TjMxP4kzKEtIRNcu6kx+hf8LKp4qlxxGce4ntpy/El
-         Gh6MUgiWiIHAi0fvZZ9ebuuw8AWW3rIwMvpZQwwq4VWXts1FxIf7OxFSoIBl1ZG60qCG
-         Cj3wDXkJdmUaZBUpoGYnmDXfnB7zwttEUAp3nVN6tDT5vPPOTEryfjmTnPsxZT+gZd3y
-         Vlaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696343430; x=1696948230;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=YERPgnlGDSAOvvqGASI1tt6mi3S4cTK2dwJGDgB0EIA=;
-        b=RTJ7RcW2MC1VVAE9iReDTrdYvi4V7vs9sRn0AWVTcJcftmmm7+zf53GAPlT7UUxmxh
-         7PEupjLCDm+tBvq+Q6O2iJElWazXrjDOY6NXxBXM1tF1FjGZKPFpPylBF/qt4rVyb6J0
-         ADIgzsyKZeeTvlHHz5y14tHKVXDBgzQRxHfEWb347mCLm++VXdS+NEIT76t42egLLEP4
-         P8t9iU4xPmlueluegil1J0XqBXf+CKaf58MaufBFxYWPgOIHIYNRBr4MF4SPoNyRy0wC
-         25z4tX+GukJ0JxibeIidAcdjBL1OuiwrQihcegl+E06d+iiOjDQGOqwEuvxcGS44XFZo
-         liEw==
-X-Gm-Message-State: AOJu0Yy12ee5DOaoevH8ltAbS7d+37av8Jkz0PrwVHZbAHFIzAxEYUAc
-        WAtAdqO5DrHo9UFqGG+JQCn5hZIKiBMKyBqchYhl9BeC4PZjP7NfWlOe5nAJuWQ=
-X-Google-Smtp-Source: AGHT+IEICx6MW4SeSD1u3P+9xWYzCTLaTDHMgaSvQcsLFA1t3NEfK3por6nIL0Nh0ET58pqJYLgJkrGAaknio+ZFaPM=
-X-Received: by 2002:a17:90a:740a:b0:274:3a86:4c10 with SMTP id
- a10-20020a17090a740a00b002743a864c10mr12833978pjg.29.1696343429904; Tue, 03
- Oct 2023 07:30:29 -0700 (PDT)
+        with ESMTP id S231464AbjJCQPR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Oct 2023 12:15:17 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 458BAA9
+        for <git@vger.kernel.org>; Tue,  3 Oct 2023 09:15:14 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id DAFBD2A489;
+        Tue,  3 Oct 2023 12:15:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=PQq8XtAlavU116qqKp/Jf2mNIUUpCkatzRwg91
+        eWDVU=; b=kpW/Zpcny/rfqvWiF8d+dDEG3S8wiQ3+4LPI4un668x3IH/YDQrEQN
+        1lzqz26AMEbxA7mROY0ig4Kd4QoEA4YOXD6HYoHxUVQsKSjXBpw/12eX2GlJC0my
+        V+UPBKIbZUzZLP/vZpd65LRLeoAOxZgGg1f7gy6hbjyBeUw5favAs=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D47D62A488;
+        Tue,  3 Oct 2023 12:15:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DD6DE2A487;
+        Tue,  3 Oct 2023 12:15:09 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Wong <e@80x24.org>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+Subject: Re: batch-command wishlist [was: [TOPIC 02/12] Libification Goals
+ and Progress]
+In-Reply-To: <20231003005251.M353509@dcvr> (Eric Wong's message of "Tue, 3 Oct
+        2023 00:52:51 +0000")
+References: <20231003005251.M353509@dcvr>
+Date:   Tue, 03 Oct 2023 09:15:07 -0700
+Message-ID: <xmqq7co33cok.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-From:   Luma <ach.lumap@gmail.com>
-Date:   Tue, 3 Oct 2023 15:30:18 +0100
-Message-ID: <CAFR+8DynAJ7eieMYUrezoNii5tzARNbESFxRCcT4w6okS5FZDg@mail.gmail.com>
-Subject: [Outreachy] Move existing tests to a unit testing framework
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0640698C-6208-11EE-991F-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi;
-My name is Luma, and  I wanted to take a moment to introduce myself
-and share some
-insights on an essential aspect of  avoiding pipes in git related
-commands in test scripts.
+Eric Wong <e@80x24.org> writes:
 
-I am an outreachy applicant for the December 2023 cohort and look
-forward to learning from you.
+> Taylor Blau <me@ttaylorr.com> wrote:
+>> * (Jonathan Tan) back to process isolation: is the short lifetime of the process
+>>   important?
+>> * (Taylor Blau) seems like an impossible goal to be able to do multi-command
+>>   executions in a single process, the code is just not designed for it.
+>
+> -- Split out from https://lore.kernel.org/git/ZRrfN2lbg14IOLiK@nand.local/
+> Thanks for posting in an accessible format for non-JS/video users.
+>
+>> * (Junio) is anybody using the `git cat-file --batch-command` mode that switches
+>>   between batch and batch-check.
 
-One common practice in shell scripting is the use of pipes (|) to
-chain multiple commands together.
- While pipes are incredibly versatile and useful, excessive use of
-them can lead to script complexity.
-I plan to avoid overusing pipes in test scripts by: leveraging command
-options, using temporary files
-and using functions and variables to break down complex pipelines.
+This is not exactly what I asked about---I was asking about the use
+of the "a long living process serves many requests" pattern ;-)
 
-If you have any questions on pipes, I'm always here to learn and share
-knowledge.
+> But it would be nice if --batch-command grew more functionality:
+>
+> * ability to add/remove alternates
+> * ability to specify a preferred alternate for a lookup[1]
+> * detect unlinked packs/removed repos
 
-Best regards,
-Luma.
+To the third you would also want to notice an updated index, too.
+
+> Not sure if cat-file is the place for it, but a persistent
+> process to deal with:
+>
+> * `git config -f FILENAME ...' (especially --get-urlmatch --type=FOO)
+> * approxidate parsing for other tools[2]
+>
+> Would also be nice...
+
+"git daemon" ;-)?
