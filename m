@@ -2,18 +2,18 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7679CE776C4
-	for <git@archiver.kernel.org>; Tue,  3 Oct 2023 18:51:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C34C3E75459
+	for <git@archiver.kernel.org>; Tue,  3 Oct 2023 18:51:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240843AbjJCSvK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Oct 2023 14:51:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50550 "EHLO
+        id S240860AbjJCSvM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Oct 2023 14:51:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50580 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240811AbjJCSvE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Oct 2023 14:51:04 -0400
+        with ESMTP id S240805AbjJCSvG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Oct 2023 14:51:06 -0400
 Received: from mail.archlinux.org (mail.archlinux.org [95.216.189.61])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28E5EB8
-        for <git@vger.kernel.org>; Tue,  3 Oct 2023 11:50:58 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB217B0
+        for <git@vger.kernel.org>; Tue,  3 Oct 2023 11:51:03 -0700 (PDT)
 From:   "Jan Alexander Steffens (heftig)" <heftig@archlinux.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=archlinux.org;
         s=dkim-rsa; t=1696359055;
@@ -21,33 +21,33 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=archlinux.org;
          to:to:cc:cc:mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=pvyT4RBKoDVaoynRlsQgeP8TyOF8pMx6dBxEAHOzq1Y=;
-        b=JnyMG+gD59aXnh/fzI+9iJle2F66Ut0VVVzfBMV8gMx5fX1Xzj8XJjdKoH7kxm0qaLaVga
-        WhdU4oAhv3pgE/A7sD2KYiU9JDn1l7JtaSWeSj+trN3NfT4S/IY/grfpwXLIhi8yQQtYjg
-        ycbU5gox4QneNcS7m4ddEBbahvbTcR41s1s6U0tPBE9DRpn1FX60MKukGNIlw1iVv1WZdg
-        4+YybSfcHcZZLgBdVjZjFF/3DyzItahtGGUXOGFxOXVyrKJz5p9l6l6XWdjaTQ0nCEzOFq
-        zS5QBhxG7JIQvKlojln9YYSDN4t7IQUrYxfMktCzVLYSNVw8F9NrXIJNJQR40oh86WC1ls
-        pbe4lE2m3zL+ThJQesiFR/fgJRZy5+8faiCf/cPvZydjSp1KcWKAzoR5og3jQxCK5LRGHe
-        0AByRorhyORHSzeIrDKXSUnkVbSkJbbod14S38ItIgoGbhbKDiJV0o8lJx8RQP1aojE9G1
-        ZmHjKhnye58TAWB34PRt2TkfQiBE7MsbFHYzkDRdDhRAGxtPM/3UXd7FpVTQ3GStS8L7zH
-        DkgzQpGhx8iCxrHSv8b6IvgMZ6vBzyUaFjvRvzoXQQ/7+8YgVbJ0XZ3u3rivc8vr8OaCwc
-        E3AgwrRkCqmLuctlIZ3JNnne8R4djBNYfAX0vOoCajyGGfySkjGJ4=
+        bh=zzKwc3oVfjU8sGsm6fRmVT8/bFjzFbmqeWDjaielQtg=;
+        b=0aOK0Dzd0JNF7eMR7vuxqnvUJfGhsyPCzed4lG+AgjRrPyErQ+tSU77wHTgV+jZEc7/dXb
+        K/XLhpaaD+ANeYVveUe2gLH29zx2TSFGwlbIccpGLOSxCXar/CqLYRN3bG/yFNDza7Oy1d
+        wsBKz2vjrDMBLqOPJnpdrqPsJE1MXWeDMLRw32EeIH3nYd1gydFJSSo1NzFHPYt4pZQN0A
+        OlmKI9MXcLyiJKh0PoO1FUdOJmbXsp1eErFHCqDq9DXnDJ/R4S6s/wjiG4FMeqUF29Z2eU
+        62dngoZgG0u0NkIoTSudP7E3v2AMqNPjTfN1+S+pbqZhb3uMMjxsBTizTLrYgJxA5z8Cc2
+        hvlFwYfXcWLT/zqVepuy8VHnmq7SBa/fnSfaGwI3L5JGcletBCjzewUL3uvqewsnI8QsvE
+        ErAt4CdCI8xynS2h1VlRYqQlNWxp5AmAEsj7c7NcOsZLa6r4/Z+w6kJv8drWjcfCAKdwoi
+        c0FyI78XU3RXGxZJaXsA0MGMdTBGY4KfAs5YOWPYbUTYcemVcMehFNaUJa5z36+CJeLpkf
+        i1BDzAVm7r4puo6DFPioKFq2i5ToTaRhEQGK5oHXqumihJXmrt50JdfuQCkqG8nAz/lk1t
+        bhW8g3QvB6+j7UCjQRdqizeLInjNQktURovF6st75lYrwk8MZGlZE=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=archlinux.org;
         s=dkim-ed25519; t=1696359055;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=pvyT4RBKoDVaoynRlsQgeP8TyOF8pMx6dBxEAHOzq1Y=;
-        b=kgZTCRDFjJa/qeXVAyfT7QFS0MOsIcNaNmmfADXu5Jd3l2vTOzx1xvkyNono0hhH+hDynV
-        XQONzrb0lprkBpBQ==
+        bh=zzKwc3oVfjU8sGsm6fRmVT8/bFjzFbmqeWDjaielQtg=;
+        b=knj6J/3upcWudGG6OfJgHz9rOZiZkXhyfjqVBoocCbvYsc5F+CbvMMx8tf03NlUiOXjt1f
+        xuLm8lXi6F6TGmDg==
 Authentication-Results: mail.archlinux.org;
         auth=pass smtp.auth=heftig smtp.mailfrom=heftig@archlinux.org
 To:     git@vger.kernel.org
 Cc:     "Jan Alexander Steffens (heftig)" <heftig@archlinux.org>
-Subject: [PATCH 3/6] t7419: Actually test the branch switching
-Date:   Tue,  3 Oct 2023 20:50:44 +0200
-Message-ID: <20231003185047.2697995-3-heftig@archlinux.org>
+Subject: [PATCH 6/6] t7420: Test that we correctly handle renamed submodules
+Date:   Tue,  3 Oct 2023 20:50:47 +0200
+Message-ID: <20231003185047.2697995-6-heftig@archlinux.org>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231003185047.2697995-1-heftig@archlinux.org>
 References: <0a0a157f88321d25fdb0be771a454b3410a449f3.camel@archlinux.org>
@@ -58,100 +58,78 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The submodule repo the test set up had the 'topic' branch checked out,
-meaning the repo's default branch (HEAD) is the 'topic' branch.
-
-The following tests then pretended to switch between the default branch
-and the 'topic' branch. This was papered over by continually adding
-commits to the 'topic' branch and checking if the submodule gets updated
-to this new commit.
-
-Return the submodule repo to the 'main' branch after setup so we can
-actually test the switching behavior.
+Create a second submodule with a name that differs from its path. Test
+that calling set-url modifies the correct .gitmodules entries. Make sure
+we don't create a section named after the path instead of the name.
 
 Signed-off-by: Jan Alexander Steffens (heftig) <heftig@archlinux.org>
 ---
- t/t7419-submodule-set-branch.sh | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ t/t7420-submodule-set-url.sh | 26 ++++++++++++++++++++++++--
+ 1 file changed, 24 insertions(+), 2 deletions(-)
 
-diff --git a/t/t7419-submodule-set-branch.sh b/t/t7419-submodule-set-branch.sh
-index 232065504c..5ac16d0eb7 100755
---- a/t/t7419-submodule-set-branch.sh
-+++ b/t/t7419-submodule-set-branch.sh
-@@ -11,23 +11,28 @@ as expected.
- 
- TEST_PASSES_SANITIZE_LEAK=true
- TEST_NO_CREATE_REPO=1
-+
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+
- . ./test-lib.sh
- 
- test_expect_success 'setup' '
- 	git config --global protocol.file.allow always
- '
- 
- test_expect_success 'submodule config cache setup' '
- 	mkdir submodule &&
- 	(cd submodule &&
- 		git init &&
- 		echo a >a &&
- 		git add . &&
- 		git commit -ma &&
- 		git checkout -b topic &&
- 		echo b >a &&
- 		git add . &&
--		git commit -mb
-+		git commit -mb &&
-+		git checkout main
+diff --git a/t/t7420-submodule-set-url.sh b/t/t7420-submodule-set-url.sh
+index aa63d806fe..bf7f15ee79 100755
+--- a/t/t7420-submodule-set-url.sh
++++ b/t/t7420-submodule-set-url.sh
+@@ -25,34 +25,56 @@ test_expect_success 'submodule config cache setup' '
+ 		git add file &&
+ 		git commit -ma
  	) &&
++	mkdir namedsubmodule &&
++	(
++		cd namedsubmodule &&
++		git init &&
++		echo 1 >file &&
++		git add file &&
++		git commit -m1
++	) &&
  	mkdir super &&
- 	(cd super &&
-@@ -57,41 +62,38 @@ test_expect_success 'test submodule set-branch --branch' '
- '
- 
- test_expect_success 'test submodule set-branch --default' '
--	test_commit -C submodule c &&
- 	(cd super &&
- 		git submodule set-branch --default submodule &&
- 		! grep branch .gitmodules &&
- 		git submodule update --remote &&
- 		cat <<-\EOF >expect &&
--		c
-+		a
- 		EOF
- 		git -C submodule show -s --pretty=%s >actual &&
- 		test_cmp expect actual
+ 	(
+ 		cd super &&
+ 		git init &&
+ 		git submodule add ../submodule &&
+-		git commit -m "add submodule"
++		git submodule add --name thename ../namedsubmodule thepath &&
++		git commit -m "add submodules"
  	)
  '
  
- test_expect_success 'test submodule set-branch -b' '
--	test_commit -C submodule b &&
- 	(cd super &&
- 		git submodule set-branch -b topic submodule &&
- 		grep "branch = topic" .gitmodules &&
- 		git submodule update --remote &&
- 		cat <<-\EOF >expect &&
- 		b
- 		EOF
- 		git -C submodule show -s --pretty=%s >actual &&
- 		test_cmp expect actual
- 	)
+ test_expect_success 'test submodule set-url' '
+-	# add a commit and move the submodule (change the url)
++	# add commits and move the submodules (change the urls)
+ 	(
+ 		cd submodule &&
+ 		echo b >>file &&
+ 		git add file &&
+ 		git commit -mb
+ 	) &&
+ 	mv submodule newsubmodule &&
+ 
++	(
++		cd namedsubmodule &&
++		echo 2 >>file &&
++		git add file &&
++		git commit -m2
++	) &&
++	mv namedsubmodule newnamedsubmodule &&
++
+ 	git -C newsubmodule show >expect &&
++	git -C newnamedsubmodule show >>expect &&
+ 	(
+ 		cd super &&
+ 		test_must_fail git submodule update --remote &&
+ 		git submodule set-url submodule ../newsubmodule &&
+ 		test_cmp_config ../newsubmodule -f .gitmodules submodule.submodule.url &&
++		git submodule set-url thepath ../newnamedsubmodule &&
++		test_cmp_config ../newnamedsubmodule -f .gitmodules submodule.thename.url &&
++		test_cmp_config "" -f .gitmodules --default "" submodule.thepath.url &&
+ 		git submodule update --remote
+ 	) &&
+ 	git -C super/submodule show >actual &&
++	git -C super/thepath show >>actual &&
+ 	test_cmp expect actual
  '
  
- test_expect_success 'test submodule set-branch -d' '
--	test_commit -C submodule d &&
- 	(cd super &&
- 		git submodule set-branch -d submodule &&
- 		! grep branch .gitmodules &&
- 		git submodule update --remote &&
- 		cat <<-\EOF >expect &&
--		d
-+		a
- 		EOF
- 		git -C submodule show -s --pretty=%s >actual &&
- 		test_cmp expect actual
 -- 
 2.42.0
 
