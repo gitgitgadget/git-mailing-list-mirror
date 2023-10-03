@@ -2,104 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23FCCE74903
-	for <git@archiver.kernel.org>; Tue,  3 Oct 2023 17:49:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA591E75455
+	for <git@archiver.kernel.org>; Tue,  3 Oct 2023 17:54:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240689AbjJCRtq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Oct 2023 13:49:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41284 "EHLO
+        id S240697AbjJCRym (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Oct 2023 13:54:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232089AbjJCRtq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Oct 2023 13:49:46 -0400
-Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36ECAAD
-        for <git@vger.kernel.org>; Tue,  3 Oct 2023 10:49:42 -0700 (PDT)
-Received: by mail-ed1-x542.google.com with SMTP id 4fb4d7f45d1cf-53627feca49so2025196a12.1
-        for <git@vger.kernel.org>; Tue, 03 Oct 2023 10:49:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696355380; x=1696960180; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rPjk3AaUt4+5jpswYw3DlJARhDhWJwT+fuoyV122gBY=;
-        b=MAUy4wZGP8Ewvjl5LITyKOlF603r6o2zPogXTW3faXAibVVa+txlow8CeFE9XRdMpx
-         WXMfQiQDwJIdPq0p8fmMQkSvMrw4uSzVmo6sZ1uho8RgRL57b9wi5tOc/gJstXllK4vz
-         KUY/50R++AwnAksXmam29AbzEQ0wP8jnvoqptuX43hUzRm9L3wEDroy9OjOByXZpkGtC
-         m5wJ5o5sA3AALaPDnL/aGsTCZ585sShO5a6lzDtuIU8xIGI/GqdISKxdf/GDUgNPChvi
-         KhdHt+ZFUKgVPb4Qu/wRiLQ4c36s6lnvrBDwmSadrrkgZbovMG0dUqjxhYamIxzLuUjb
-         Npgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696355380; x=1696960180;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=rPjk3AaUt4+5jpswYw3DlJARhDhWJwT+fuoyV122gBY=;
-        b=crgn47OBkm6KxvQliC4Jz0x5OMqZqa23C9t9i7rYkfsue1JczkT4Hyu2cCs5grK0TK
-         gZMtiSs4G/H4RwXyyRl1Gb4xdcAp0s2oNYW/5MkQXkSWhhnglJCvWRQcSH4kopEZvaaY
-         mH+vqu9bxH2H+cprPnNVyoIgq5R8N+fhY6vjiTE/ZvVb2Uo0ZbNJaLJ86LPF9gR0H730
-         JowLFMwwF6CeE+BJzWKT2CCqVMKdotcBlfaiHMQ/xUvyz7o/+DzYs9YidHbAY+SELz4A
-         l078Y+0r3a/AyCtDhCJ94L8eRb//1ZnXuZJ5nSh0ao4Fda/bhtV5BX6lAayjoPfd1Qja
-         +r9Q==
-X-Gm-Message-State: AOJu0Ywy1eKJHZofcuszK9j3FR9gi6uwFc3FyY4izqR8YxhNbJ9m0/KR
-        yxbI2E1InQgeauLQJU/7RTeIDSzEX/x4/edCuUv5Cs6N
-X-Google-Smtp-Source: AGHT+IGvzRHCPdsKbPHalLDnWXxweCBogXAIlbsebghfJwbJbYsVtOCaYf44Pd+8DFu+iSYKKcqDJw==
-X-Received: by 2002:aa7:d699:0:b0:525:440a:616a with SMTP id d25-20020aa7d699000000b00525440a616amr13524178edr.20.1696355380182;
-        Tue, 03 Oct 2023 10:49:40 -0700 (PDT)
-Received: from localhost.localdomain ([129.0.78.163])
-        by smtp.gmail.com with ESMTPSA id bf26-20020a0564021a5a00b00536e03f62bcsm1186604edb.59.2023.10.03.10.49.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Oct 2023 10:49:39 -0700 (PDT)
-From:   ach.lumap@gmail.com
-To:     git@vger.kernel.org
-Cc:     christian.couder@gmail.com, achluma <ach.lumap@gmail.com>
-Subject: [PATCH 1/1] t2400: avoid using pipes
-Date:   Tue,  3 Oct 2023 18:48:53 +0100
-Message-ID: <20231003174853.1732-2-ach.lumap@gmail.com>
-X-Mailer: git-send-email 2.41.0.windows.1
-In-Reply-To: <20231003174853.1732-1-ach.lumap@gmail.com>
-References: <20231003174853.1732-1-ach.lumap@gmail.com>
+        with ESMTP id S231782AbjJCRyl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Oct 2023 13:54:41 -0400
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44D5C8E
+        for <git@vger.kernel.org>; Tue,  3 Oct 2023 10:54:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+ t=1696355669; x=1696960469; i=l.s.r@web.de;
+ bh=YWtenAT+qzdIMv25YpPvgKqpzl4e8BlH8gLJcNX2rdE=;
+ h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=u0v3Mqvqr1UxCKCmCr5Xu6uKzxplWwi38HKvp9Hwt0ZCLzBaKLC/VISdCpUTuSFnIoSQbBkgc4q
+ Sshw/YV2myZWaxSSq1hjQJSSv8+N2R2yKqD5HlvkjhhPvv2eMlXaVEzwQklz4jQBEYHVEJ97gi9pY
+ hoNylbj6XI8M3WCgwYWOFwEOJ95GgimgTCBd7ssi1o/icBx9HdvhmB6vvP279T2zCq5+sg25t6bUo
+ z0T0ZB7fql4VudLOW/bjWLIXhIcstWkJCI46/aYLKyd2qCnBizCAWJH6SWce1HDbzimszb0HJ8OKF
+ ss8odVOGx2RRg3eUbg6U4ad6o0OT9e+gew7Q==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.147.159]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mx0Ij-1rYom60I6V-00y72w; Tue, 03
+ Oct 2023 19:54:29 +0200
+Message-ID: <88cb2db8-e5cb-470a-8060-7a1b898c91f9@web.de>
+Date:   Tue, 3 Oct 2023 19:54:28 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] parse-options: use and require int pointer for
+ OPT_CMDMODE
+Content-Language: en-US
+To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>
+References: <2d6f3d74-687a-2d40-5c0c-abc396aef80f@web.de>
+ <e6d8a291-03de-cfd3-3813-747fc2cad145@web.de> <ZQlspgfu7yDW0oTN@ugly>
+ <f778bc6f-dbe1-4df6-95ff-c9e9f36a3cc9@web.de> <ZQwdsfh1GQX0IOQs@ugly>
+ <d9defed8-4e7e-4b84-be3d-57155d973320@web.de> <ZRvhEWHWn4nDynD0@ugly>
+From:   =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <ZRvhEWHWn4nDynD0@ugly>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:3AZtLjLqmqEFbV86fwF/iqeWM09LVJHa5pz6qJvZJiZl/EJHpx5
+ 2ST+dGc8Ti+RrdG74nkn8Mlc0v2CDvKKlix3YDAkS8T4KHYeIidZ6Ds2rdnwP0sd6NOn1o3
+ i2MOc22tLnNcJLEDWo4g7ry3VdjoRF3sAdyHtAmV3awzf4gezGazMlnO4No2XGqEFD4k/rx
+ Lb2T6J+O5cS8GXyjlijiw==
+UI-OutboundReport: notjunk:1;M01:P0:ZUEiCECpw1I=;o8bQyAVKd9o3CSfQQDxHXT2GkPt
+ fVrsdvTboQrb02+85i6VQt798e+g+UwelemdDxrZku5/MtlkI9ua1rHzkgkO+PYCrwRvmxray
+ eP+tzfmSYOHqXuLgbs1azo/7gcwkW0ki5jTzexX6/F8BoI0AUdLD4T06D72CbyO9FZbqGaggZ
+ rSb/o+FutbakV86bYS1us3Mr/zHEZuxhpoNAZoRO+jsa/QijHBw7Xgh8ml4jDM5tSQZwELzW9
+ uI5GAmlHTatx2FKiFJQHTB42KJ9GgQbhHpmkPFH0QorIbNFd8ucrvEvhB2kZ+2/+igX5LvJyd
+ DWGGss2C7xupsZ9Jar2scG9eF0cw4uuSCAtuR774KhJ+D8rwfJ1yARINH75DJAMCDB0qV7Iw4
+ DkG05n96ONk+4fNA+kBcfr98Iz8HJ7Sr7ECTtOXCiXhdGS9S/o4pEATT0Xu7i9FbKJz87xELg
+ ldClZSrBNlPOoDOR3iPIP/QBJ3EI4VBdKjIhbhsTlWcTqtfTt/vVHrXQJRyt0pWlpkxLMtEjS
+ ZXQuC17UiB1fezbrdRTDhttBnj6hFYMnKWTj+rLKQx0ie+dvw1p5sCf1ZjL9wVQPZfSQYMVAg
+ XbWOXWdKckvbfDim4jnLNYXkA/SH9vYaPjtpjhwB+K1HSqkR0j7fKrzRl6FMRulEcU27al8lI
+ LoivirAC/z701YP/EGT0WxNyAodfvInjcZOwaNEe4Z3i43EmU3AuA7D11bTC4BgTFjw/okIij
+ pssnbQ0VauQYE05jI/FTl9pAbifpaiPrTeIYRFnmDOtE2UzEvB2l16optmznXWIOy1mc2u6tH
+ 0nowkj1woaLXAjbaUzGCS4eZfzMlpprachYb1CA9o5Hk49kIvYQJ05Gn8MsaYQtkqfrE7l++z
+ tEVq7SUyBwf5WKnGArXQ3IujXs7srfP5m9j4k8qhTI95MIwWoB159AjCrBiv93q3+Gl0CnuAm
+ HNQdow==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: achluma <ach.lumap@gmail.com>
+Am 03.10.23 um 11:38 schrieb Oswald Buddenhagen:
+> On Tue, Oct 03, 2023 at 10:49:12AM +0200, Ren=C3=A9 Scharfe wrote:
+>> Am 21.09.23 um 12:40 schrieb Oswald Buddenhagen:
+>>> On Wed, Sep 20, 2023 at 10:18:10AM +0200, Ren=C3=A9 Scharfe wrote:
+>>>> If we base it on type size then we're making assumptions that
+>>>> I find hard to justify.
+>>>>
+>>> the only one i can think of is signedness. i think this can be
+>>> safely ignored as long as we use only small positive integers.
+>>
+>> I don't fully understand the pointer-sign warning, so I'm not
+>> confident enough to silence it.
+>>
+> in theory, differently signed integers may have completely different
+> binary representations. but afaik, that only ever mattered for
+> negative numbers. and c++20 actually codifies two's complement, which
+> was the de-facto standard for decades already. so in practice it just
+> means that we may be assigning a value that is outside the range of
+> the actual type. but small positive values are compatible between
+> signed and unsiged types.
 
-The exit code of the preceding command in a pipe is disregarded,
-so it's advisable to refrain from relying on it. Instead, by
-saving the output of a Git command to a file, we gain the
-ability to examine the exit codes of both commands separately.
+C++ is not relevant for Git, but C23 is going to to stop supporting
+binary representations other than two's complement as well.
 
-Signed-off-by: achluma <ach.lumap@gmail.com>
----
- t/t2400-worktree-add.sh | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+Still I don't feel comfortable overriding compiler warnings for
+something pedestrian as a command line parser.  No idea what other
+assumptions are made in compilers around enums.  I'd rather honor
+the warnings and avoid any forcing or trickery if possible.  Or at
+least leave that to more capable hands.
 
-diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-index df4aff7825..7ead05bb98 100755
---- a/t/t2400-worktree-add.sh
-+++ b/t/t2400-worktree-add.sh
-@@ -468,7 +468,8 @@ test_expect_success 'put a worktree under rebase' '
- 		cd under-rebase &&
- 		set_fake_editor &&
- 		FAKE_LINES="edit 1" git rebase -i HEAD^ &&
--		git worktree list | grep "under-rebase.*detached HEAD"
-+		git worktree list >actual && 
-+		grep "under-rebase.*detached HEAD" actual
- 	)
- '
- 
-@@ -509,7 +510,8 @@ test_expect_success 'checkout a branch under bisect' '
- 		git bisect start &&
- 		git bisect bad &&
- 		git bisect good HEAD~2 &&
--		git worktree list | grep "under-bisect.*detached HEAD" &&
-+		git worktree list >actual && 
-+		grep "under-bisect.*detached HEAD" actual &&
- 		test_must_fail git worktree add new-bisect under-bisect &&
- 		! test -d new-bisect
- 	)
--- 
-2.41.0.windows.1
-
+Ren=C3=A9
