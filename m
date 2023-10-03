@@ -2,79 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C269DE7AD59
-	for <git@archiver.kernel.org>; Tue,  3 Oct 2023 18:00:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D246E75458
+	for <git@archiver.kernel.org>; Tue,  3 Oct 2023 18:01:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231438AbjJCSAs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Oct 2023 14:00:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52792 "EHLO
+        id S231845AbjJCSBe convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Tue, 3 Oct 2023 14:01:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231622AbjJCSAr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Oct 2023 14:00:47 -0400
-Received: from mout.web.de (mout.web.de [212.227.17.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6518DAC
-        for <git@vger.kernel.org>; Tue,  3 Oct 2023 11:00:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
- t=1696356040; x=1696960840; i=l.s.r@web.de;
- bh=7Xgpp8AfEQK37+l1BvJuycnYaCV5oM/q48Z1VL+GGVQ=;
- h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
- b=AoidBxVnu3m/c5msmTzZv0cik2G/TK3hE4i5bnY6u9Vch3ZviIFYf9pDImZ2kaIzAUMWDhOf8zc
- hl4d7ZpRV7F3PJ5C37f/jb3NZ6QXl9rXZq24UVxvCetbWcYPW5m0H6H1GP3tWWqtiNufq05S87IP3
- NK7QrpFAUuOfRIevFN8C/MFkPrDMV42BTEmunKpzDM75vslRqFqax9wlPTHbcqlqwLJjKedEfxfFu
- KYVz9J/mxAYV0A0qdzmm43zau/ns8Wu8vGuyjW80Ro4IQIzU46Z1OyT3Teagi3JrhVZRGFdLc7xOp
- 78N2FWeltQBvnX5VvtsNbtxfHmQtoFnwOuvg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.147.159]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MEUW8-1qqVf8394s-00GEPY; Tue, 03
- Oct 2023 20:00:40 +0200
-Message-ID: <77c42646-2fa6-426f-934e-63b71d6355ad@web.de>
-Date:   Tue, 3 Oct 2023 20:00:40 +0200
+        with ESMTP id S232089AbjJCSB2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Oct 2023 14:01:28 -0400
+Received: from mail-ua1-f43.google.com (mail-ua1-f43.google.com [209.85.222.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D36D83
+        for <git@vger.kernel.org>; Tue,  3 Oct 2023 11:01:25 -0700 (PDT)
+Received: by mail-ua1-f43.google.com with SMTP id a1e0cc1a2514c-7b2ca45d5cfso564680241.1
+        for <git@vger.kernel.org>; Tue, 03 Oct 2023 11:01:25 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696356084; x=1696960884;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=0pgMSoTlktW1r6i7d3kUHtYOeB4IbENZEHQ8h2EBR3c=;
+        b=X4tTWgLmCctHlbGZoYhF9qIADrj3sZWXBUij1ow6/QQLDsY/LFBMIhaEKQ30Qwll0g
+         vm1dZHoLo+z0kqfBwt1J0Uyx3QMotXYY45REOn/wPIIdwtUTnejDnAEtgSLNruX/B2xy
+         BcLZ7sPelpS/YP6FTkS4gtpoTgoXY86+LXpxuwRlOk+K/yuoP2/U6TBIN/n4K0FMIPP6
+         OcFnU0byjj0LjZjz1VJ8hxFWm/XpE1QEZdLD5gfgeBTSDwImgmsCYSVUYITDrWA1PePw
+         RVogrpWf1RANRtdwM+a0ENT1T70hwtEySmI+yioRJ5V5baTOYR0W2VMEBqMKvNgz97QL
+         k0cQ==
+X-Gm-Message-State: AOJu0Yx82v4cjyYW1rofi03k5Mv1slZ476RoVq9C/FIYzpUVHw8k9ZW4
+        st9Omdqe390p8DY05KvZUB9e45HsGm28vjLA4eM=
+X-Google-Smtp-Source: AGHT+IHeiGSvHADv5qn+R18PmrHJj0I/R60Kg1L+3ktN10XzspPd0TPjACL1bOHYYks+ZLz5qTlxKj+89hQA7ltxQMw=
+X-Received: by 2002:a67:ce04:0:b0:44e:d6c3:51d6 with SMTP id
+ s4-20020a67ce04000000b0044ed6c351d6mr104919vsl.14.1696356084056; Tue, 03 Oct
+ 2023 11:01:24 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] parse-options: drop unused parse_opt_ctx_t member
-Content-Language: en-US
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>
-References: <ebcaa9e1-d306-4c93-adec-3f35d7040531@web.de>
- <CAPig+cRZ_KzyjWjm-G2qn+t-QA_=CL-tMvTSyZBKrmiHK3RQrg@mail.gmail.com>
-From:   =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <CAPig+cRZ_KzyjWjm-G2qn+t-QA_=CL-tMvTSyZBKrmiHK3RQrg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:LFZfTDsSCGO2ZAIy3tTTPkj+AEX8n19EJo0e9eD6qUgUVLKlAdf
- Ewp34SnRjYVWYDtAdznmW1lAuNKOtYnfqQ2jwNCFABbEYuMcKT14RfCKiZiGQ3Qk2mKHjh/
- zRWD3L8tRkyQoi09xWHYbxEwTlNajqQ462ZJrrdqFzjiwi2ScklDOulqfWyD1+r73QFyrDl
- g/AeN+4TakrnxD63cfNYw==
-UI-OutboundReport: notjunk:1;M01:P0:mPRd5gxa95E=;Szg2HIT9psIK0Ipsh/kSAxHJOh4
- nEwABOwzjoET/q6j58voNO/+495cUi/uA7GEMM/xEkY2PhGnMHyTAxlt9fx0jkb+VOqNwqiAg
- QJ3KDCyEX09ZSueSs6MwGKaDeBDqSoC4hfFlr6rwn29foRx6dzFDwCyKQ4EVhIasyIiYfL6XX
- e1CNQpzUXU75gsSuyWI3IQYcvk1Of45YWLecRbN6DR65b+IxuhDUP5kvunpDmwSgGwSYY4ZAg
- KfgcxABW1bFF7NHJwgTLvHew28ibyUafAcUX6Uay6gIzzMneG5XhbcRja2cQaBJzHg/rYo33D
- LihaVQbl050dccKyu19BcrJSH1q9CFknu5lRzYB4jpOj8fOtWIlhRTp2p6lel595l7ErihzZG
- MlZj909SFCw5B+kInJCYiPPng++updwZ/qNJ6ykANjv908/il19985eAuvhy+0gaHlL3gTkGl
- gQpQMde7dnzbsBqsllft/VDpiIFagIMCoA2/qrgkvdKHiCCXKMCfKXD0iA6z/QUiseGqdTSD+
- b9zMSZpG484hZwyUckdAda5eOjGOKA7t2SEaXx5ZhHmzrnJXFtM6YxTKsPQofzicWbPE3WU5F
- W8VdVsOMlHA+L6QYwSONRjpVr9GSOH1djyz4jogXjcjR6ChmIwYENBIOBx8DxeUiLfkgjI2SA
- mRoYT0fBWyDMIhe2w7fxzcgcyj7b+ltLn/NNf02Aj+/s/MNGddwObhGwJovIqfarJ43iStyIU
- AHRqW0AgYYLZJcieFrnZIHXNuomVeyo7xplse9XwIsJwcHsO5kseontk4maYcIeq0VT/L8vks
- g+f5c0OTOrpgC5HO1lZceFFY8IBK3jXzRQjY2BaPRBvXeJ/viYPq+K+llgURnRDQfsVwY0H4j
- 4XmG+Cjjp6O9EGk3UamDEazELIg9xjeFGBmjM9dpiuWb5Z8icenhrXRK02N0E87KDZ/ikRgOC
- MobvhA==
+References: <20231003174853.1732-1-ach.lumap@gmail.com> <20231003174853.1732-2-ach.lumap@gmail.com>
+In-Reply-To: <20231003174853.1732-2-ach.lumap@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 3 Oct 2023 14:01:13 -0400
+Message-ID: <CAPig+cSkZ_brRh_ijFRgz3sP9ou5se9-xeRg=C+cV3c3-v3Wtg@mail.gmail.com>
+Subject: Re: [PATCH 1/1] t2400: avoid using pipes
+To:     ach.lumap@gmail.com
+Cc:     git@vger.kernel.org, christian.couder@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 03.10.23 um 19:38 schrieb Eric Sunshine:
-> On Tue, Oct 3, 2023 at 4:55=E2=80=AFAM Ren=C3=A9 Scharfe <l.s.r@web.de> =
-wrote:
->> 5c387428f1 (parse-options: don't emit "ambiguous option" for aliases,
->> 2019-04-29) added "updated_options" to struct parse_opt_ctx_t, but it
->> has never been used.  Remove it.
->> ---
+On Tue, Oct 3, 2023 at 1:49 PM <ach.lumap@gmail.com> wrote:
+> t2400: avoid using pipes
+
+Pipes themselves are not necessarily problematic, and there are many
+places in the test suite where they are legitimately used. Rather...
+
+> The exit code of the preceding command in a pipe is disregarded,
+> so it's advisable to refrain from relying on it. Instead, by
+> saving the output of a Git command to a file, we gain the
+> ability to examine the exit codes of both commands separately.
+
+... as you correctly explain here, we don't want to lose the exit code
+from the Git command. Thus, if you want to convey more information to
+readers of `git log --oneline` (or other such commands), a better
+subject for the patch might be:
+
+    t2400: avoid losing Git exit code
+
+That minor comment aside (which is probably not worth a reroll), the
+commit message properly explains why this change is desirable and the
+patch itself looks good.
+
+> Signed-off-by: achluma <ach.lumap@gmail.com>
+> ---
+> diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
+> @@ -468,7 +468,8 @@ test_expect_success 'put a worktree under rebase' '
+>                 cd under-rebase &&
+>                 set_fake_editor &&
+>                 FAKE_LINES="edit 1" git rebase -i HEAD^ &&
+> -               git worktree list | grep "under-rebase.*detached HEAD"
+> +               git worktree list >actual &&
+
+Thanks for following the style guideline and omitting whitespace
+between the redirection operator and the destination file.
+
+> +               grep "under-rebase.*detached HEAD" actual
+>         )
+>  '
 >
-> Missing sign-off.
-
-Oops, thanks for catching that.  Technically not necessary, I guess,
-since the patch is trivial, but here it is:
-
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+> @@ -509,7 +510,8 @@ test_expect_success 'checkout a branch under bisect' '
+>                 git bisect start &&
+>                 git bisect bad &&
+>                 git bisect good HEAD~2 &&
+> -               git worktree list | grep "under-bisect.*detached HEAD" &&
+> +               git worktree list >actual &&
+> +               grep "under-bisect.*detached HEAD" actual &&
+>                 test_must_fail git worktree add new-bisect under-bisect &&
+>                 ! test -d new-bisect
+>         )
