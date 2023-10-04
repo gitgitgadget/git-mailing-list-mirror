@@ -2,81 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4467CE7C4EF
-	for <git@archiver.kernel.org>; Wed,  4 Oct 2023 19:58:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BD29E7C4F0
+	for <git@archiver.kernel.org>; Wed,  4 Oct 2023 20:05:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243791AbjJDT6x (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Oct 2023 15:58:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41874 "EHLO
+        id S233353AbjJDUFm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Oct 2023 16:05:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233082AbjJDT6w (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Oct 2023 15:58:52 -0400
+        with ESMTP id S232968AbjJDUFl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Oct 2023 16:05:41 -0400
 Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D6FCA6
-        for <git@vger.kernel.org>; Wed,  4 Oct 2023 12:58:49 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 856C9AB
+        for <git@vger.kernel.org>; Wed,  4 Oct 2023 13:05:38 -0700 (PDT)
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id EF082348AB;
-        Wed,  4 Oct 2023 15:58:48 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 350BA349EF;
+        Wed,  4 Oct 2023 16:05:38 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=+36HgnKp/DcP5ICqECyAqS0vZ9PbgE3H+b+JNB
-        TAmBc=; b=TtJwsFxHD3b8z0em2b4SKLEFFfdZHXlM5rXpSdxfQmLwKx3wzsd202
-        S73QGZvMqE6lxzp2svUibbA4S8DpF+OEmUMWZdEdhbHwj8B0v8wk7VPG9k2zGfUR
-        PIfulICIOdIZbXAwOo3XnJwuM6oAuIGCl98drn9z5nYglMjAD4390=
+        :content-type:content-transfer-encoding; s=sasl; bh=5HMnMuT6QsTR
+        09ATeslIbZO4isLxd4DOO/gd7bsXluo=; b=Pnjk/ZLXIZfyUdpwdidjN4RhZivp
+        FKnzEZbgeqt05OirXg5FXS4TjkRsIJWBiohw+9phRloecAA5fhucCbdv0fEZ53B5
+        RXy8wCV4b63g7tVGBpbDDlRfWhvdZFqwdZW4Wu3uj2asnQhjBXmjkptq+dPNXL2m
+        JnTDGAHb1z7Pw80=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E7E31348AA;
-        Wed,  4 Oct 2023 15:58:48 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2D02B349E0;
+        Wed,  4 Oct 2023 16:05:38 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.165.85])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8739C348A7;
-        Wed,  4 Oct 2023 15:58:45 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B8B8F349DE;
+        Wed,  4 Oct 2023 16:05:34 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH v2 1/2] attr: add attr.tree for setting the treeish to
- read attributes from
-In-Reply-To: <446bce03a96836f35f94e9ef8548cf4a2b041ba8.1696443502.git.gitgitgadget@gmail.com>
-        (John Cai via GitGitGadget's message of "Wed, 04 Oct 2023 18:18:20
-        +0000")
-References: <pull.1577.git.git.1695218431033.gitgitgadget@gmail.com>
-        <pull.1577.v2.git.git.1696443502.gitgitgadget@gmail.com>
-        <446bce03a96836f35f94e9ef8548cf4a2b041ba8.1696443502.git.gitgitgadget@gmail.com>
-Date:   Wed, 04 Oct 2023 12:58:43 -0700
-Message-ID: <xmqqfs2qp3bg.fsf@gitster.g>
+To:     Jiang Xin <worldhello.net@gmail.com>
+Cc:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
+        Git List <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: Re: [PATCH v2 3/3] pkt-line: do not chomp newlines for sideband
+ messages
+In-Reply-To: <CANYiYbHp-3YuSPHnR8gjS40UJLrJV5FPzqd_BtjyR8TAALhfRQ@mail.gmail.com>
+        (Jiang Xin's message of "Wed, 4 Oct 2023 21:02:25 +0800")
+References: <CANYiYbF+Xmk4rCNLMJe+i_CFafg8=QU5vbXWNUZbOVsDLTe5QQ@mail.gmail.com>
+        <20230925154144.15213-3-worldhello.net@gmail.com>
+        <xmqqa5t9rkft.fsf@gitster.g> <ZRKax7Me5uIHKHoC@ugly>
+        <CANYiYbHp-3YuSPHnR8gjS40UJLrJV5FPzqd_BtjyR8TAALhfRQ@mail.gmail.com>
+Date:   Wed, 04 Oct 2023 13:05:33 -0700
+Message-ID: <xmqqa5syp302.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6D036B72-62F0-11EE-BAB2-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 60EB700E-62F1-11EE-940E-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-> From: John Cai <johncai86@gmail.com>
+> On Tue, Sep 26, 2023 at 4:48=E2=80=AFPM Oswald Buddenhagen
+> <oswald.buddenhagen@gmx.de> wrote:
+>>
+>> >Jiang Xin <worldhello.net@gmail.com> writes:
+>> >
+>> >> +++ b/pkt-line.c
+>> >> @@ -462,8 +462,33 @@ enum packet_read_status packet_read_with_statu=
+s(int fd, char **src_buffer,
+>> >>      }
+>> >> +                    case 2:
+>> >> +                            /* fallthrough */
+>> >> +                    case 3:
+>> >
+>> while not entirely unprecedented, it's unnecessary and even
+>> counter-productive to annotate directly adjacent cases with fallthroug=
+h.
 >
-> 44451a2e5e (attr: teach "--attr-source=<tree>" global option to "git",
-> 2023-05-06) provided the ability to pass in a treeish as the attr
-> source. In the context of serving Git repositories as bare repos like we
-> do at GitLab however, it would be easier to point --attr-source to HEAD
-> for all commands by setting it once.
+> I see in "blame.c" there are directly adjacent cases like below. I
+> will remove the fallthrough statement.
 >
-> Add a new config attr.tree that allows this.
+>         case 'A':
+>         case 'T':
+>                 /* Did not exist in parent, or type changed */
+>                 break;
 
-Hmph, I wonder if we want to go all the way to emulate how the
-mailmap.blob was done, including
+Yeah, it is far clearer to understand if it is written without the
+"fallthru" comment between the cases and instead a comment that
+explains both cases after them (exactly like the example you found
+in "blame.c").  When we want "fallthru" comment is if we had some
+processing specific to the earlier case ('A' or '2') that is not
+done in the later case ('T' or '3'), in which case we may want to
+explicitly say we did not forget to "break" by adding the "fallthru"
+comment.  But it does not apply here.
 
- - Default the value of attr.tree to HEAD in a bare repository;
-
- - Notice but ignore errors if the attr.tree does not point at a
-   tree object, and pretend as if attr.tree specified an empty tree;
-
-which does not seem to be in this patch.  With such a change,
-probably we do not even need [2/2] of the series, perhaps?
-
+Thanks.
 
