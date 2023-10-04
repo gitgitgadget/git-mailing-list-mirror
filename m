@@ -2,99 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CBA8E8FDBF
-	for <git@archiver.kernel.org>; Wed,  4 Oct 2023 01:13:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 797B3E8FDC4
+	for <git@archiver.kernel.org>; Wed,  4 Oct 2023 01:21:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239343AbjJDBNq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Oct 2023 21:13:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47702 "EHLO
+        id S239527AbjJDBVG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Oct 2023 21:21:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232262AbjJDBNp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Oct 2023 21:13:45 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07EA4AF
-        for <git@vger.kernel.org>; Tue,  3 Oct 2023 18:13:41 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9EAAC2DF47;
-        Tue,  3 Oct 2023 21:13:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=VamEpLy48whJ7POq4gPoskveJrljmbxnS5mLNh
-        xwu9g=; b=ueXN0choUfFOWB5CEGvTCmQTsBalNH8L0z5eax2ypGWwtKqLkUpo8b
-        sgiT/Kds1FyMZmLVDCm/4ANtbbzwW6lneVJSFzoePmuiGrGzFyfFXhkrFwKg/qB9
-        BO3OT/ZpNwBri+ibaoIWSjo9QAoGe7kPBrI9L9YldNQRGIj9aJE4g=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 979DC2DF46;
-        Tue,  3 Oct 2023 21:13:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.165.85])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 352BF2DF42;
-        Tue,  3 Oct 2023 21:13:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jesse Hopkins <jesse.hops@gmail.com>, git@vger.kernel.org
-Subject: Re: Possible to update-ref remote repository?
-In-Reply-To: <20231003200018.GB1562@coredump.intra.peff.net> (Jeff King's
-        message of "Tue, 3 Oct 2023 16:00:18 -0400")
-References: <CAL3By--HowOL1ffKBPfmwnfUdJd4KXcnkpS2BgkbO=9E2WnHKw@mail.gmail.com>
-        <xmqqo7hjfumj.fsf@gitster.g>
-        <CAL3By-_jrYDenCc8HSrtnR3cZD19z7bvwVOOoO4XG+6aNFxyeQ@mail.gmail.com>
-        <20231003200018.GB1562@coredump.intra.peff.net>
-Date:   Tue, 03 Oct 2023 18:13:36 -0700
-Message-ID: <xmqqil7ntcjj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        with ESMTP id S239688AbjJDBU5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Oct 2023 21:20:57 -0400
+Received: from out01.mta.xmission.com (out01.mta.xmission.com [166.70.13.231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 336B4B7
+        for <git@vger.kernel.org>; Tue,  3 Oct 2023 18:20:54 -0700 (PDT)
+Received: from in01.mta.xmission.com ([166.70.13.51]:44804)
+        by out01.mta.xmission.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.93)
+        (envelope-from <ebiederm@xmission.com>)
+        id 1qnqZH-00GFFI-6x; Tue, 03 Oct 2023 19:20:51 -0600
+Received: from ip68-227-168-167.om.om.cox.net ([68.227.168.167]:42902 helo=email.froward.int.ebiederm.org.xmission.com)
+        by in01.mta.xmission.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.93)
+        (envelope-from <ebiederm@xmission.com>)
+        id 1qnqZG-001iaB-2H; Tue, 03 Oct 2023 19:20:50 -0600
+From:   "Eric W. Biederman" <ebiederm@xmission.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, "Eric W. Biederman" <ebiederm@gmail.com>
+References: <xmqqedic35u4.fsf@gitster.g>
+Date:   Tue, 03 Oct 2023 20:20:24 -0500
+In-Reply-To: <xmqqedic35u4.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+        02 Oct 2023 17:30:43 -0700")
+Message-ID: <875y3n4207.fsf@email.froward.int.ebiederm.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 3F8197E8-6253-11EE-8260-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+X-XM-SPF: eid=1qnqZG-001iaB-2H;;;mid=<875y3n4207.fsf@email.froward.int.ebiederm.org>;;;hst=in01.mta.xmission.com;;;ip=68.227.168.167;;;frm=ebiederm@xmission.com;;;spf=pass
+X-XM-AID: U2FsdGVkX18BkgQ7r/mt6OE58U0EBjOcqdJ9f1Gu+lQ=
+X-SA-Exim-Connect-IP: 68.227.168.167
+X-SA-Exim-Mail-From: ebiederm@xmission.com
+Subject: Re: What's cooking in git.git (Oct 2023, #01; Mon, 2)
+X-SA-Exim-Version: 4.2.1 (built Sat, 08 Feb 2020 21:53:50 +0000)
+X-SA-Exim-Scanned: Yes (on in01.mta.xmission.com)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> All that said, I do think it might be reasonable for git-push to support
-> this directly.
+> * eb/hash-transition (2023-10-02) 30 commits
+>  - t1016-compatObjectFormat: add tests to verify the conversion between objects
+>  - t1006: test oid compatibility with cat-file
+>  - t1006: rename sha1 to oid
+>  - test-lib: compute the compatibility hash so tests may use it
+>  - builtin/ls-tree: let the oid determine the output algorithm
+>  - object-file: handle compat objects in check_object_signature
+>  - tree-walk: init_tree_desc take an oid to get the hash algorithm
+>  - builtin/cat-file: let the oid determine the output algorithm
+>  - rev-parse: add an --output-object-format parameter
+>  - repository: implement extensions.compatObjectFormat
+>  - object-file: update object_info_extended to reencode objects
+>  - object-file-convert: convert commits that embed signed tags
+>  - object-file-convert: convert commit objects when writing
+>  - object-file-convert: don't leak when converting tag objects
+>  - object-file-convert: convert tag objects when writing
+>  - object-file-convert: add a function to convert trees between algorithms
+>  - object: factor out parse_mode out of fast-import and tree-walk into in object.h
+>  - cache: add a function to read an OID of a specific algorithm
+>  - tag: sign both hashes
+>  - commit: export add_header_signature to support handling signatures on tags
+>  - commit: convert mergetag before computing the signature of a commit
+>  - commit: write commits for both hashes
+>  - object-file: add a compat_oid_in parameter to write_object_file_flags
+>  - object-file: update the loose object map when writing loose objects
+>  - loose: compatibilty short name support
+>  - loose: add a mapping between SHA-1 and SHA-256 for loose objects
+>  - repository: add a compatibility hash algorithm
+>  - object-names: support input of oids in any supported hash
+>  - oid-array: teach oid-array to handle multiple kinds of oids
+>  - object-file-convert: stubs for converting from one object format to another
+>
+>  Teach a repository to work with both SHA-1 and SHA-256 hash algorithms.
+>
+>  Breaks a few CI jobs when merged to 'seen'.
+>  cf. <xmqqbkdmjbkp.fsf@gitster.g>
 
-Yup.  It certainly is simpler if you can leverage existing helpers.
+I see that you have picked up the v2 version.  Thank you.
 
-It will become even simpler in a reasonably modularlized world that
-hopefully may materialize before we all retire ;-).  I am hoping
-that some of the folks who are interested in and talking about
-libification can be fooled into doing the necessary work to
-introduce proper abstraction, in addition to whatever they are
-doing.
+I pushed v2 out precisely because it contains fixes that should have
+fixed all of the CI breakages.
 
-Wouldn't it be great if you can have an in-core repository object,
-that knows what its object store is, has an index_state object that
-is tied to that object store, has a reference database whose values
-point into the object store, and if you can choose and mix these
-repository components' implementations?  If done right, parts of the
-above set of components can be replaced with mock implementations
-that are in-core only.
+I am not really familiar with github but looking at the recent CI runs
+it appears since v2 landed the seen branch has been building cleanly.
 
-To run "git push --repoint-only there 01beef23:master", you should
-be able to start your process totally outside an repository, yet
-create an in-core-only repository instance with an in-core-only
-object store instance, and because you took the object name to push
-on the command line, your in-core object store can "lie" to a call
-"create an in-core object for this SHA-1" by returning a fake
-in-core commit object, and your in-core-only ref database has that
-commit pointed at by some ref.  Then because higher level "client"
-code to walk revisions, enumerate refs, etc., would all implement
-what they need to do by calling vtable of these in-core objects, you
-can do the "repoint-only" push without being in any repository, as
-such an implementation would not touch any filesystem (you can then
-plug in different implementation of object store etc., and even make
-them perform reasonably well if you manage to do the abstraction
-right).
+I haven't misread something have I?
 
-But that would probably be at least 6 months away, even if we had a
-handful of competent developers totally dedicated to the effort
-without any distraction, which I do not know how likely it is to
-happen.
+I just don't want people to avoid reviewing it because it is that huge
+patchset that causes problems in seen.
+
+Eric
 
 
