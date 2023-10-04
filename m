@@ -2,104 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 640CFE936EB
-	for <git@archiver.kernel.org>; Wed,  4 Oct 2023 22:14:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BA34E936ED
+	for <git@archiver.kernel.org>; Wed,  4 Oct 2023 23:45:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237347AbjJDWO6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Oct 2023 18:14:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57942 "EHLO
+        id S233820AbjJDXpl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Oct 2023 19:45:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238265AbjJDWOr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Oct 2023 18:14:47 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B3B31FCB
-        for <git@vger.kernel.org>; Wed,  4 Oct 2023 15:13:46 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-50435a9f800so417517e87.2
-        for <git@vger.kernel.org>; Wed, 04 Oct 2023 15:13:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696457603; x=1697062403; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=jUmL/zpGEZnUiSa+Trc18HyYD3fLdRe+Mz/te9yejbY=;
-        b=G4rQE9G6nAPz7IQgG3iAhYG/dJojnCrJWPrdtAQg3iHAegnlS/agoPmWYzPIyLR1U1
-         C4dv1F2Vnx5dkgIGKEbUFMGLveoD2gOiN7eU/sbH5KMZTG2xUlxwzAd/KiNEQKYBqVZY
-         +PwKwkO6fw5BEdA8nG4C+8tJR6lCyoegtLv9+7bKK5w9oy/XikmIwMhZ4UnlHia9sDkD
-         FoB62K0b5IJVfBa9LH7xpJEB8i2cYJoEGQgv7HWmO5iQ/2ePfOzr8y+5ZEvxAiOoBoPH
-         rlKnvJtXjcn6/023358mD2nzjT+j1IfJK8ywV+/eMcHOJNdvkODdXVvhey3UCQRe13jz
-         4sbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696457603; x=1697062403;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=jUmL/zpGEZnUiSa+Trc18HyYD3fLdRe+Mz/te9yejbY=;
-        b=GoXs8qYKGS5Rm7Cxqt+OwN5AyAD3g9YtbjhWImJm1UrRZfnDz+s5Rqwsgu+GIk+4S1
-         ndKS5slFfJDSTQ3NrwlexHon9JWABwgHDoAv99wdn/cS3Ekj3eN8ZYSxhsnMJemna8s6
-         cDEVVoMWxSZO/wUzrJzr7y8hR+zyij/DVzmMbHzSvJCTbhOLbBcLcdlxEqq8lor5LgtJ
-         pM5QxL1KeM8zIsFaoSD1VDh7zJjrkdoYUVaqQnslStw+BjYVKZGWr2tvOpCi1IKhQcRz
-         xUXRz9Oo21M3OV7EDBOLipg8NgYg86yQ+OllGSyfAfCsB+eApmVJrgZEDYGtWbc+ME4a
-         035Q==
-X-Gm-Message-State: AOJu0YzZ2YYo7KdmLZxWpc1IishnpnVaHMUOnGKkX58NL0PMPjZ/HrvQ
-        kNoGWD8nZptj1bTKL5gkIEHnJP9Pn8g=
-X-Google-Smtp-Source: AGHT+IHsBftYJ9VUz2IRfDNw9dkJAyDMNdaT3rhONcboa8rqtnEUoxjjnFmG09xYLjFy+KCCOnKY9A==
-X-Received: by 2002:a05:6512:38c7:b0:500:daec:280a with SMTP id p7-20020a05651238c700b00500daec280amr2496832lft.2.1696457603206;
-        Wed, 04 Oct 2023 15:13:23 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id z18-20020ac25df2000000b005008c11ca6dsm30485lfq.184.2023.10.04.15.13.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Oct 2023 15:13:22 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH v3 1/3] diff-merges: improve --diff-merges documentation
-References: <20230909125446.142715-1-sorganov@gmail.com>
-        <20231004214558.210339-1-sorganov@gmail.com>
-        <20231004214558.210339-2-sorganov@gmail.com>
-        <CAPig+cT63L2+XmDRKw4Pc+iDmUL+UFcyummOcOtS+3wYaNbFvg@mail.gmail.com>
-Date:   Thu, 05 Oct 2023 01:13:21 +0300
-In-Reply-To: <CAPig+cT63L2+XmDRKw4Pc+iDmUL+UFcyummOcOtS+3wYaNbFvg@mail.gmail.com>
-        (Eric Sunshine's message of "Wed, 4 Oct 2023 18:02:26 -0400")
-Message-ID: <87r0madoji.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        with ESMTP id S229824AbjJDXpk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Oct 2023 19:45:40 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFA00C0
+        for <git@vger.kernel.org>; Wed,  4 Oct 2023 16:45:35 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 09B301A427A;
+        Wed,  4 Oct 2023 19:45:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=sbOE2ER9XskDr1weW6qwVNiDmR0saSYxPL8jEA
+        YhV90=; b=Ua64+3wqsB1mOWVWeINK9imOFdSSwHGVAq6FARzFqCqKsa1WNJy5Hf
+        9fvc+xbjlyr+R1W6Ohp9KryjzVi7d3/fXuGtSalxXBhqD56JPbhRtxM9/GlJqift
+        93JOOmP2PJURE82yRqo6j1DT/BZvjiIjwEPoB2OA2nvB66zkST/kA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 018FD1A4278;
+        Wed,  4 Oct 2023 19:45:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6414C1A4277;
+        Wed,  4 Oct 2023 19:45:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "John Cai via GitGitGadget" <gitgitgadget@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH v2 1/2] attr: add attr.tree for setting the treeish to
+ read attributes from
+In-Reply-To: <446bce03a96836f35f94e9ef8548cf4a2b041ba8.1696443502.git.gitgitgadget@gmail.com>
+        (John Cai via GitGitGadget's message of "Wed, 04 Oct 2023 18:18:20
+        +0000")
+References: <pull.1577.git.git.1695218431033.gitgitgadget@gmail.com>
+        <pull.1577.v2.git.git.1696443502.gitgitgadget@gmail.com>
+        <446bce03a96836f35f94e9ef8548cf4a2b041ba8.1696443502.git.gitgitgadget@gmail.com>
+Date:   Wed, 04 Oct 2023 16:45:33 -0700
+Message-ID: <xmqqv8bmlzoi.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1C866E7C-6310-11EE-95E0-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+[jc: JTan CC'ed as he seems to have took over the polishing of
+b1bda751 (parse: separate out parsing functions from config.h,
+2023-09-29)]
 
-> On Wed, Oct 4, 2023 at 5:51 PM Sergey Organov <sorganov@gmail.com> wrote:
->> * Put descriptions of convenience shortcuts first, so they are the
->>   first things reader observes rather than lengthy detailed stuff.
->>
->> * Get rid of very long line containing all the --diff-merges formats
->>   by replacing them with <format>, and putting each supported format
->>   on its own line.
->>
->> Signed-off-by: Sergey Organov <sorganov@gmail.com>
->> ---
->> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
->> @@ -43,66 +43,74 @@ endif::git-diff[]
->> +-m::
->> +       Show diffs for merge commits in the default format. This is
->> +       similar to '--diff-merges=on' (which see) except `-m` will
->> +       produce no output unless `-p` is given as well.
->
-> I'm having difficulty grasping the parenthetical "(which see)" comment.
+"John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I believe it's translated full form of q.v., see:
+> diff --git a/attr.c b/attr.c
+> index 71c84fbcf86..bb0d54eb967 100644
+> --- a/attr.c
+> +++ b/attr.c
+> @@ -1205,6 +1205,13 @@ static void compute_default_attr_source(struct object_id *attr_source)
+>  	if (!default_attr_source_tree_object_name)
+>  		default_attr_source_tree_object_name = getenv(GIT_ATTR_SOURCE_ENVIRONMENT);
+>  
+> +	if (!default_attr_source_tree_object_name) {
+> +		char *attr_tree;
+> +
+> +		if (!git_config_get_string("attr.tree", &attr_tree))
+> +			default_attr_source_tree_object_name = attr_tree;
+> +	}
+> +
+>  	if (!default_attr_source_tree_object_name || !is_null_oid(attr_source))
+>  		return;
 
-https://en.wikipedia.org/wiki/List_of_Latin_abbreviations
+As this adds a new call to git_config_get_string(), which will only
+be available by including <config.h>, a merge-fix into 'seen' of
+this topic needs to revert what b1bda751 (parse: separate out
+parsing functions from config.h, 2023-09-29) did, which made this
+file include only <parse.h>.
 
-"q.v.
- quod vide
- "which see"
+As this configuration variable was invented to improve the way the
+attribute source tree is supported by emulating how mailmap.blob is
+done, it deserves a bit of comparison.
 
-Imperative, used after a term or phrase that should be looked up
-elsewhere in the current document or book."
+The way mailmap.c does this is not have any code that reads or
+parses configuration in mailmap.c (which is a rather library-ish
+place), and leaves it up to callers to pre-populate the global
+variable git_mailmap_blob with config.c:git_default_config().  That
+way, they do not need to include <config.h> (nor <parse.h>) that is
+closer to the UI layer.  I am wondering why we are not doing the
+same, and instead making an ad-hoc call to git_config_get_string()
+in this code, and if it is a good direction to move the codebase to
+(in which case we may want to make sure that the same pattern is
+followed in other places).
 
-HTH,
--- Sergey Organov
+Folks interested in libification, as to the direction of that
+effort, what's your plan on where to draw a line between "library"
+and "userland"?  Should library-ish code be allowed to call
+git_config_anything()?  I somehow suspect that it might be cleaner
+if they didn't, and instead have the user of the "attr" module to
+supply the necessary values from outside.
+
+On the other hand, once the part we have historically called
+"config" API gets a reasonably solid abstraction so that they become
+pluggable and replaceable, random ad-hoc calls from library code
+outside the "config" library code may not be a huge problem, as long
+as we plumb the necessary object handles around (so "attr" library
+would need to be told which "config" backend is in use, probably in
+the form of a struct that holds the various states in to replace
+the current use of globals, plus a vtable to point at
+implementations of the "config" service, and git_config_get_string()
+call in such a truly libified world would grab the value of the named
+variable transparently from whichever "config" backend is currently
+in use).
+
+Anyway, I think I wiggled this patch into 'seen' so I'll push out
+today's integration result shortly.
+
