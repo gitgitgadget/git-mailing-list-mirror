@@ -2,151 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8E24E8FDC3
-	for <git@archiver.kernel.org>; Wed,  4 Oct 2023 01:10:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CBA8E8FDBF
+	for <git@archiver.kernel.org>; Wed,  4 Oct 2023 01:13:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232566AbjJDBKz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Oct 2023 21:10:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51750 "EHLO
+        id S239343AbjJDBNq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Oct 2023 21:13:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232262AbjJDBKz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Oct 2023 21:10:55 -0400
+        with ESMTP id S232262AbjJDBNp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Oct 2023 21:13:45 -0400
 Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C851AAF
-        for <git@vger.kernel.org>; Tue,  3 Oct 2023 18:10:49 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07EA4AF
+        for <git@vger.kernel.org>; Tue,  3 Oct 2023 18:13:41 -0700 (PDT)
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 364762DF27;
-        Tue,  3 Oct 2023 21:10:48 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9EAAC2DF47;
+        Tue,  3 Oct 2023 21:13:41 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=gq6bzIbIBShGyQU1/f7tJUymq3apHNISM+JoQ0
-        EYQf8=; b=tKkSibJunLEPOor3INGQz/nA0xVZ2Oyj8zY1Sk7g9DNKNRIrho4/gA
-        aO3dA/ZNJtI89Clw+xTmcqzDqc5GY7CrVtjJR7IWjJbIZoMJCILkcxgyHkoVm02o
-        AIL+rHyYLkEwjJ14+QHRLGUHG6M6pA5HCl5FlIZm9w8VvylHOmWsE=
+        :content-type; s=sasl; bh=VamEpLy48whJ7POq4gPoskveJrljmbxnS5mLNh
+        xwu9g=; b=ueXN0choUfFOWB5CEGvTCmQTsBalNH8L0z5eax2ypGWwtKqLkUpo8b
+        sgiT/Kds1FyMZmLVDCm/4ANtbbzwW6lneVJSFzoePmuiGrGzFyfFXhkrFwKg/qB9
+        BO3OT/ZpNwBri+ibaoIWSjo9QAoGe7kPBrI9L9YldNQRGIj9aJE4g=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 21AFB2DF26;
-        Tue,  3 Oct 2023 21:10:48 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 979DC2DF46;
+        Tue,  3 Oct 2023 21:13:41 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.165.85])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9BD9D2DF25;
-        Tue,  3 Oct 2023 21:10:44 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 352BF2DF42;
+        Tue,  3 Oct 2023 21:13:38 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Jan Alexander Steffens (heftig)" <heftig@archlinux.org>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/6] submodule--helper: use submodule_from_path in
- set-{url,branch}
-In-Reply-To: <20231003185047.2697995-1-heftig@archlinux.org> (Jan Alexander
-        Steffens's message of "Tue, 3 Oct 2023 20:50:42 +0200")
-References: <0a0a157f88321d25fdb0be771a454b3410a449f3.camel@archlinux.org>
-        <20231003185047.2697995-1-heftig@archlinux.org>
-Date:   Tue, 03 Oct 2023 18:10:43 -0700
-Message-ID: <xmqqmswztcoc.fsf@gitster.g>
+To:     Jeff King <peff@peff.net>
+Cc:     Jesse Hopkins <jesse.hops@gmail.com>, git@vger.kernel.org
+Subject: Re: Possible to update-ref remote repository?
+In-Reply-To: <20231003200018.GB1562@coredump.intra.peff.net> (Jeff King's
+        message of "Tue, 3 Oct 2023 16:00:18 -0400")
+References: <CAL3By--HowOL1ffKBPfmwnfUdJd4KXcnkpS2BgkbO=9E2WnHKw@mail.gmail.com>
+        <xmqqo7hjfumj.fsf@gitster.g>
+        <CAL3By-_jrYDenCc8HSrtnR3cZD19z7bvwVOOoO4XG+6aNFxyeQ@mail.gmail.com>
+        <20231003200018.GB1562@coredump.intra.peff.net>
+Date:   Tue, 03 Oct 2023 18:13:36 -0700
+Message-ID: <xmqqil7ntcjj.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: D80B5FE0-6252-11EE-B223-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 3F8197E8-6253-11EE-8260-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Jan Alexander Steffens (heftig)" <heftig@archlinux.org> writes:
+Jeff King <peff@peff.net> writes:
 
-> The commands need a path to a submodule but treated it as the name when
-> modifying the .gitmodules file, leading to confusion when a submodule's
-> name does not match its path.
+> All that said, I do think it might be reasonable for git-push to support
+> this directly.
 
-Thanks for noticing and fixing this common mix-up.
+Yup.  It certainly is simpler if you can leverage existing helpers.
 
-> Because calling submodule_from_path initializes the submodule cache, we
-> need to manually trigger a reread before syncing, as the cache is
-> missing the config change we just made.
+It will become even simpler in a reasonably modularlized world that
+hopefully may materialize before we all retire ;-).  I am hoping
+that some of the folks who are interested in and talking about
+libification can be fooled into doing the necessary work to
+introduce proper abstraction, in addition to whatever they are
+doing.
 
-> Signed-off-by: Jan Alexander Steffens (heftig) <heftig@archlinux.org>
+Wouldn't it be great if you can have an in-core repository object,
+that knows what its object store is, has an index_state object that
+is tied to that object store, has a reference database whose values
+point into the object store, and if you can choose and mix these
+repository components' implementations?  If done right, parts of the
+above set of components can be replaced with mock implementations
+that are in-core only.
 
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index f6871efd95..f376466a5e 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -2902,19 +2902,26 @@ static int module_set_url(int argc, const char **argv, const char *prefix)
->  		N_("git submodule set-url [--quiet] <path> <newurl>"),
->  		NULL
->  	};
-> +	const struct submodule *sub;
->  
->  	argc = parse_options(argc, argv, prefix, options, usage, 0);
->  
->  	if (argc != 2 || !(path = argv[0]) || !(newurl = argv[1]))
->  		usage_with_options(usage, options);
->  
-> -	config_name = xstrfmt("submodule.%s.url", path);
-> +	sub = submodule_from_path(the_repository, null_oid(), path);
->  
-> +	if (!sub)
-> +		die(_("no submodule mapping found in .gitmodules for path '%s'"),
-> +		    path);
-> +
-> +	config_name = xstrfmt("submodule.%s.url", sub->name);
+To run "git push --repoint-only there 01beef23:master", you should
+be able to start your process totally outside an repository, yet
+create an in-core-only repository instance with an in-core-only
+object store instance, and because you took the object name to push
+on the command line, your in-core object store can "lie" to a call
+"create an in-core object for this SHA-1" by returning a fake
+in-core commit object, and your in-core-only ref database has that
+commit pointed at by some ref.  Then because higher level "client"
+code to walk revisions, enumerate refs, etc., would all implement
+what they need to do by calling vtable of these in-core objects, you
+can do the "repoint-only" push without being in any repository, as
+such an implementation would not touch any filesystem (you can then
+plug in different implementation of object store etc., and even make
+them perform reasonably well if you manage to do the abstraction
+right).
 
-Looks correct.
+But that would probably be at least 6 months away, even if we had a
+handful of competent developers totally dedicated to the effort
+without any distraction, which I do not know how likely it is to
+happen.
 
->  	config_set_in_gitmodules_file_gently(config_name, newurl);
-> -	sync_submodule(path, prefix, NULL, quiet ? OPT_QUIET : 0);
-> +
-> +	repo_read_gitmodules (the_repository, 0);
-
-Style.  No extra space between function name and "(".
-
-But more importantly, is this sufficient?  repo_read_gitmodules()
-does not seem to clear the cache and build its contents from scratch
-(as submodule_cache_check_init() bypasses itself upon second call).
-
-The code is correct because submodule-config.c::config_from() does
-set .overwrite to true, so submodule.name.url would be overwritten
-to the new value, I think, but somebody else who is more familiar
-with the recent submodule code may want to sanity check my analysis.
-
-> +	sync_submodule(sub->path, prefix, NULL, quiet ? OPT_QUIET : 0);
-
-Is the use of "sub" still safe here?  
-
-I think it is safe as repo_read_gitmodules() did not rebuild the
-in-core cache from scratch but did selective overwrite, so the
-in-core instance "sub" is still valid, but again somebody else who
-is more familiar with the recent submodule code may want to sanity
-check.
-
-> @@ -2942,19 +2949,26 @@ static int module_set_branch(int argc, const char **argv, const char *prefix)
->  		N_("git submodule set-branch [-q|--quiet] (-b|--branch) <branch> <path>"),
->  		NULL
->  	};
-> +	const struct submodule *sub;
->  
->  	argc = parse_options(argc, argv, prefix, options, usage, 0);
->  
->  	if (!opt_branch && !opt_default)
->  		die(_("--branch or --default required"));
->  
->  	if (opt_branch && opt_default)
->  		die(_("options '%s' and '%s' cannot be used together"), "--branch", "--default");
->  
->  	if (argc != 1 || !(path = argv[0]))
->  		usage_with_options(usage, options);
->  
-> -	config_name = xstrfmt("submodule.%s.branch", path);
-> +	sub = submodule_from_path(the_repository, null_oid(), path);
-> +
-> +	if (!sub)
-> +		die(_("no submodule mapping found in .gitmodules for path '%s'"),
-> +		    path);
-> +
-> +	config_name = xstrfmt("submodule.%s.branch", sub->name);
->  	ret = config_set_in_gitmodules_file_gently(config_name, opt_branch);
-
-This side happens not to require re-reading of gitmodules file,
-because, unlike the URL helper, we do not care what we have in the
-in-core cache is stale.  It is correct but feels a bit brittle.
 
