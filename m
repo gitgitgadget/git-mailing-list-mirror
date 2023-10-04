@@ -2,138 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33FA1E7B5F1
-	for <git@archiver.kernel.org>; Wed,  4 Oct 2023 11:18:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3684E7B60F
+	for <git@archiver.kernel.org>; Wed,  4 Oct 2023 13:02:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242215AbjJDLSK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Oct 2023 07:18:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60418 "EHLO
+        id S242387AbjJDNCo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Oct 2023 09:02:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242212AbjJDLSJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Oct 2023 07:18:09 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A1F8D8
-        for <git@vger.kernel.org>; Wed,  4 Oct 2023 04:18:04 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2c12fc235fbso10279911fa.0
-        for <git@vger.kernel.org>; Wed, 04 Oct 2023 04:18:04 -0700 (PDT)
+        with ESMTP id S233028AbjJDNCn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Oct 2023 09:02:43 -0400
+Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91D3D98
+        for <git@vger.kernel.org>; Wed,  4 Oct 2023 06:02:39 -0700 (PDT)
+Received: by mail-yb1-xb31.google.com with SMTP id 3f1490d57ef6-d8198ca891fso2153712276.1
+        for <git@vger.kernel.org>; Wed, 04 Oct 2023 06:02:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696418282; x=1697023082; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=W/PMtYA3TwVz2Yqt4E2skLcsRymoYCrZLGF8BH+Q488=;
-        b=EvwuPM0GIr3CQtleoqBG/xDfy441+/Thuh1PEr5GCe4W8xLItnxG7jAM3c/GfgUvlj
-         SUy7Du4ZALUz3pFI/A1eS/L+FHWLuQU4Q7WTjkJFLUDLWB14gRkbo1emG/k5anKbI2D5
-         x7GeRLjoBDhBuiNSg0s53kOLQP7PxsWiOwMYcY/8b07BuEaKfYnOMV8y+Yw/C4ZpisuQ
-         EPBo3lZQwrp8IoyF6F+MfgIxoXlc1t4YYMZLPVDNc0SjabmpAUUAYDFKGvPMCIhqhW3J
-         WrGY809BtXLkhmagjHJ4rSKTWBMWBtKKLLvgzxO1QGj9Jpxs9oY0EHRuqwpgfqkSvBCY
-         EztA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696418282; x=1697023082;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1696424559; x=1697029359; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=W/PMtYA3TwVz2Yqt4E2skLcsRymoYCrZLGF8BH+Q488=;
-        b=TAI2uNvPjYAB1hpHb/c9gS2C3jPpxJfv8JFEs8nCho6masDzhK+qR9m6zmEpdgZK83
-         IoXKwbuCeO07sj0rPT+PG/PEZVJ4FxKbmEwFkB2jByM5CjjoE/7qQSYQ48JN/s8srp0/
-         xacVZntT+sgyCdpU9IQSLaL+er4br/H0GHhxLe8ShK3062J6bOCHzteM6t/G+F8aLMYC
-         qhjTDVD55boWXM2XMkPkqe3WfK1W/iA2xGMXO1sakQmB2BZMI/nrIRocNWnl8DKJv7yz
-         LATY9nshH10J7gCxS3Mecz2Knu+1tU3zHUWQruijjoVeF7nPAEfFtH4R9PSAWo7DPUtV
-         s+XQ==
-X-Gm-Message-State: AOJu0Yw8oZ01xubDgAgocbm8GJ+X9by4U8EcAdTCOrAB7grZ464XhB0n
-        8It2lYfes3j+SUnx2jZhdGCXezHHtszTnQ==
-X-Google-Smtp-Source: AGHT+IE8YXbOCqrWLpccK5Sqjau8H0ckFsu5uUIhn5JkLT7RjdFVTNf52tamnkLrlyMUOQzwe47Nuw==
-X-Received: by 2002:a2e:9385:0:b0:2bd:1804:29ee with SMTP id g5-20020a2e9385000000b002bd180429eemr1639868ljh.18.1696418281904;
-        Wed, 04 Oct 2023 04:18:01 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id f19-20020a2e3813000000b002c182a942f1sm639734lja.139.2023.10.04.04.18.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Oct 2023 04:18:01 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Oct 2023, #01; Mon, 2)
-References: <xmqqedic35u4.fsf@gitster.g> <871qecgpg1.fsf@osv.gnss.ru>
-        <xmqq34yr3btn.fsf@gitster.g> <874jj7lh7x.fsf@osv.gnss.ru>
-        <xmqqo7hessro.fsf@gitster.g>
-Date:   Wed, 04 Oct 2023 14:18:00 +0300
-In-Reply-To: <xmqqo7hessro.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-        04 Oct 2023 01:20:43 -0700")
-Message-ID: <871qeay6tz.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        bh=dtvRlzUGKCeBIRi6rumpIE4MgEt7E1JgFxqMfkXm80o=;
+        b=N9Gq/IKdY7cuym/gXY1chg3nrQfTDXs6beUesbnZpLrh5vFEj1KCyNu0WSzhLQVXJI
+         Nh1x01QcPj+aErZIMR6a8TQUvsXnPQMh9iMKmzqDiGZ8sqryxntsEEfwco4oYlhwSQg7
+         sw/jktkIMYlVpnYmwECxFSWKVXXMccDLDZfboeSSEPIvqT5Rigf7nG+RrTjyFGcVIV/c
+         8hYLOYz5lsmbwUIkE8O28R4+k35UsNzpN01NcWmcszBlKlz5YlvBqfaTtMpHEWS8sHPT
+         3lVfFjcEhEsd4fen+BpyFy5lt3Hj73i40AGmZ3BtG1uDq69FXd1y+XrDqhHM6/eKjZ5Y
+         4ADw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696424559; x=1697029359;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=dtvRlzUGKCeBIRi6rumpIE4MgEt7E1JgFxqMfkXm80o=;
+        b=a/IQW+gPNhiugT1EgM6vWVxbhWtq98cyRYyQ8C7G4eZlVhNAKHxwCba4nGmQlQpQbt
+         aPsk6QK5dCWnSqKh3/kqbbaTGgPDP9QMnChGBrkaxQBj5YPOJAAv6MyAavFzoXiK1OtN
+         33kXjVaSYti84cBlu7jtIaJhYf4VlfLSXgO/oK1HUDDJf8kBTTGP3gRc5Q4ecVQAEg/E
+         +vhHako5Sh7SyxX3/wDUt4xuOPDPv17XyvZEq/ivtKYlxcp1/HRUlpfHwtkNLhrLJ35m
+         jLn8+H3lwo+FGfbTrIA5Fr3WAG0JE2M8cp3Y9pBQxU3/Hyky847F7xtQiP0RPdSbXZE+
+         YKww==
+X-Gm-Message-State: AOJu0Yxb9K831P+kVTg4fuTu/lUva3eFAw69SErx/uHP2cphVJqc9tzl
+        Tu4528W2O8Jsy6ztoh4QbwwDYJ6UfFH1TDlE94E04lgN5yI=
+X-Google-Smtp-Source: AGHT+IE+IpukUY4e0g+IEgJ4x+bOquHyQAl7nyWULaQ2My/r9ZeaETFJpS1APBGa7G9xNcAMMYFo1DasHVu0+cRq8XI=
+X-Received: by 2002:a5b:285:0:b0:d7b:9d44:7574 with SMTP id
+ x5-20020a5b0285000000b00d7b9d447574mr1756131ybl.64.1696424558701; Wed, 04 Oct
+ 2023 06:02:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CANYiYbF+Xmk4rCNLMJe+i_CFafg8=QU5vbXWNUZbOVsDLTe5QQ@mail.gmail.com>
+ <20230925154144.15213-3-worldhello.net@gmail.com> <xmqqa5t9rkft.fsf@gitster.g>
+ <ZRKax7Me5uIHKHoC@ugly>
+In-Reply-To: <ZRKax7Me5uIHKHoC@ugly>
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Wed, 4 Oct 2023 21:02:25 +0800
+Message-ID: <CANYiYbHp-3YuSPHnR8gjS40UJLrJV5FPzqd_BtjyR8TAALhfRQ@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] pkt-line: do not chomp newlines for sideband messages
+To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Sergey Organov <sorganov@gmail.com> writes:
+On Tue, Sep 26, 2023 at 4:48=E2=80=AFPM Oswald Buddenhagen
+<oswald.buddenhagen@gmx.de> wrote:
 >
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>> Sergey Organov <sorganov@gmail.com> writes:
->>>
->>>> I believe I've addressed this in details in my reply here:
->>>> <87o7hok8dx.fsf@osv.gnss.ru>, and got no further objections from you
->>>> since then, so I figure I'd ask to finally let the patch in.
->>>
->>> You need to know that no response does not mean no objection.  You
->>> repeated why the less useful combination is what you want, but that
->>> does not mean the combination deserves to squat on short-and-sweet
->>> 'd' and prevent others from coming up with a better use for it.
->>
->> Yep, but I've asked what's better use for -d than "get me diff"? Do you
->> really have an idea?
->
-> The primary point is to leave it open for future developers.
+> >Jiang Xin <worldhello.net@gmail.com> writes:
+> >
+> >> +++ b/pkt-line.c
+> >> @@ -462,8 +462,33 @@ enum packet_read_status packet_read_with_status(i=
+nt fd, char **src_buffer,
+> >>      }
+> >> +                    case 2:
+> >> +                            /* fallthrough */
+> >> +                    case 3:
+> >
+> while not entirely unprecedented, it's unnecessary and even
+> counter-productive to annotate directly adjacent cases with fallthrough.
 
-Well, I'm not actually convinced it's justified in this particular case,
-but I'll re-roll with another option name, even though I suspect this
-will leave short-and-sweet '-d' unused for yet another 18 years.
+I see in "blame.c" there are directly adjacent cases like below. I
+will remove the fallthrough statement.
 
-Just for better understanding: does it mean that *any* addition of
-one-letter option is prohibited from any existing Git command? Cause it
-definitely sounds this way.
+        case 'A':
+        case 'T':
+                /* Did not exist in parent, or type changed */
+                break;
 
-And while we are at it, is it allowed to have "long" one-letter options,
-e.g., "--d"?
-
->
-> If I have to pick a candidate for "get me diff" that is the most
-> useful among those currently are available, it is "give patches to
-> all single-parent commit, and show tricky conflict resolution part
-> only for merge commits".
-
-I'm afraid you need to pick a candidate that will be natural for '-d',
-not just most useful output for your workflows, whatever it happens to
-be.
-
-> Before "--remerge-diff" was invented, my answer would have been "give
-> patches to all single-parent commit, and show combined diff in the
-> compact form for merge commits", aka "git log --cc".
-
-And this is already there as well, or do you suggest
-
--d == --remerge-diff ?
--d == --cc ?
-
-> Even though we did not know if a better output presentation for merge
-> commits would be coming, we did not let it squat on any
-> short-and-sweet single letter synonym.
-
-Except -m and -c, and when "better" actually came where "better" means
-basic functionality that should *better* have been there from the very
-beginning, you argue against it.
-
-And then, as in your view diff is not the best presentation for merge
-commits, the best will have nothing to do with diff anyway, and so won't
-be using '-d' with 99.99% probability.
-
-Then, hopefully, somebody sometime will agree that we can finally use -d
-for what it fits best: diff, plain old simple diff.
-
-Overall, please expect a re-roll with another option name.
-
-Thanks,
--- Sergey Organov
+Thanks.
