@@ -2,86 +2,165 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62B69E7C4E2
-	for <git@archiver.kernel.org>; Wed,  4 Oct 2023 16:56:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03D14E7C4E5
+	for <git@archiver.kernel.org>; Wed,  4 Oct 2023 17:01:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243445AbjJDQ4T (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Oct 2023 12:56:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49392 "EHLO
+        id S243481AbjJDRBv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Oct 2023 13:01:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233437AbjJDQ4S (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Oct 2023 12:56:18 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 119CD9B
-        for <git@vger.kernel.org>; Wed,  4 Oct 2023 09:56:15 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3E088334F4;
-        Wed,  4 Oct 2023 12:56:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=z+EXuGAYQXBe+b6Qiezn4+RbyU4qpgnmxcZHTQ
-        TRyoM=; b=oiP8Rl6DPibmiCSPWgpVUECxVe2LJlzOsKbR3peWV3Bl4lXB85TAGA
-        OP6m+DmlIyQTLSlkxCvojsfCjiO6EiBrQGzTWGC3hcDrOs5a+wINYjZS0ecyGO4d
-        EfY5lFQx1Deg+cWjESPIZg02tXkSPlCDPdeqvsoDZWU9vSkWF8ekU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 37158334F3;
-        Wed,  4 Oct 2023 12:56:14 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.165.85])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B263D334EF;
-        Wed,  4 Oct 2023 12:56:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "cousteau via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Javier Mora <cousteaulecommandant@gmail.com>
-Subject: Re: [PATCH v3] git-status.txt: fix minor asciidoc format issue
-In-Reply-To: <pull.1591.v3.git.1696386165616.gitgitgadget@gmail.com> (cousteau
-        via GitGitGadget's message of "Wed, 04 Oct 2023 02:22:45 +0000")
-References: <pull.1591.v2.git.1696350802820.gitgitgadget@gmail.com>
-        <pull.1591.v3.git.1696386165616.gitgitgadget@gmail.com>
-Date:   Wed, 04 Oct 2023 09:56:08 -0700
-Message-ID: <xmqqa5syqqc7.fsf@gitster.g>
+        with ESMTP id S233437AbjJDRBv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Oct 2023 13:01:51 -0400
+Received: from mail.smrk.net (mail.smrk.net [45.76.87.244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 037CD95
+        for <git@vger.kernel.org>; Wed,  4 Oct 2023 10:01:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=smrk.net; s=20221002;
+        t=1696438900;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=Q017Ars1eM9i/JU59KGBUcMOOKPgyecPGdmo5nPTCD8=;
+        b=W2PLB6egwOOR4ijONesWt+MARvEL/2c+h8AhzJJCOqdRo/VlSrsF/y/S94dDfZbqX8UKYQ
+        J26p4K5+rn3kC2/oIQDWzaOWUkQIBvbpQQmGTZaIxt92CHnygpAL+DqXsi7WnRHjRCRfER
+        kzymu7R75Z0xVpCVNLE6dHh6rQmKGvUx+mDkWwy3hOHlXYaCItSYb2a8f5bp53bkmosw6o
+        /ltLPLU8CllsoYWrH7IXIkVURASlJncxJNHNirnUNYKtjGwqB1sVqaWxch/pAbzUJmBbyt
+        GCm9Gq2BW+Sadly2nbE9g/EBTsi8Dg29PC9zzVESHk/EwKJWF37jUa4cth3EbA==
+Received: from localhost (<unknown> [192.168.5.2])
+        by smrk (OpenSMTPD) with ESMTPSA id 9bbcc755 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Wed, 4 Oct 2023 19:01:40 +0200 (CEST)
+From:   =?utf-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@smrk.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] test-lib: make sure TEST_DIRECTORY has no trailing slash
+In-Reply-To: <xmqqbkdes6lf.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
+        04 Oct 2023 09:19:40 -0700")
+References: <20231003082323.3002663-1-stepnem@smrk.net>
+        <xmqqwmw3wgeo.fsf@gitster.g> <xmqqjzs3wer0.fsf@gitster.g>
+        <20231004113413+0200.161419-stepnem@smrk.net>
+        <xmqqbkdes6lf.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
+Date:   Wed, 04 Oct 2023 19:01:40 +0200
+Message-ID: <20231004190140+0200.740775-stepnem@smrk.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EAD57A32-62D6-11EE-BEAE-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"cousteau via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Wed, 04 Oct 2023 09:19:40 -0700
+Junio C. Hamano wrote:
 
-> From: Javier Mora <cousteaulecommandant@gmail.com>
+> =C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec <stepnem@smrk.net> writes:
 >
-> The list of additional XY values for submodules in short format
-> isn't formatted consistently with the rest of the document.
-> Format as list for consistency.
+>> Yes, actually, AFAICT just $(cd . && pwd) fixes things (and saves a few
+>> syscalls), and I agree this is a much better approach than my naive fix.
 >
-> Signed-off-by: Javier Mora <cousteaulecommandant@gmail.com>
-> ---
-> ...
-> diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
-> index b27d127b5e2..48f46eb2047 100644
-> --- a/Documentation/git-status.txt
-> +++ b/Documentation/git-status.txt
-> @@ -246,10 +246,9 @@ U           U    unmerged, both modified
->  
->  Submodules have more state and instead report
->  
-> -		M    the submodule has a different HEAD than
-> -		     recorded in the index
-> -		m    the submodule has modified content
-> -		?    the submodule has untracked files
-> +* 'M' = the submodule has a different HEAD than recorded in the index
-> +* 'm' = the submodule has modified content
-> +* '?' = the submodule has untracked files
->  
->  since modified content or untracked files in a submodule cannot be added
->  via `git add` in the superproject to prepare a commit.
+> Actually I was still being silly.  We sometimes do
 >
-> base-commit: d0e8084c65cbf949038ae4cc344ac2c2efd77415
+> 	val=3D$(cd there && do something there)
+>
+> so that we can get the output from a command in a different
+> directory _without_ having to move our current directory.  But the
+> point of this current topic is that we _need_ to convince the shell
+> that the path to our current directory is a canonical one without
+> trailing slash, so my silly 'cd "$(pwd)/."' (or your "cd .") should
+> be done outside the command expansion, or the canonicalized $PWD will
+> only appear inside the $() and the next reference to $(pwd) or $PWD
+> in the test script will still give the path with the trailing slash,
+> that is textually different from $TEST_DIRECTORY.
+>
+> I wonder if this works better for you.  We would be sure that $PWD
+> and $TEST_DIRECTORY (when the latter is not imported from the
+> environment) are the same, so "your cwd that does not end with /t
+> and has a trailing slash after it" would be gone.  Any $PWD or $(pwd)
+> the tests refer to later in the step will also lack the unwanted
+> trailing slash.   As long as "cd ." is sufficient to cause the shell
+> reexamine and canonicalize the $PWD, that is.
+>
+> Thanks.
+>
+>  t/test-lib.sh | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
+>
+> diff --git c/t/test-lib.sh w/t/test-lib.sh
+> index 1656c9eed0..a7045e028c 100644
+> --- c/t/test-lib.sh
+> +++ w/t/test-lib.sh
+> @@ -19,6 +19,11 @@
+>  # t/ subdirectory and are run in 'trash directory' subdirectory.
+>  if test -z "$TEST_DIRECTORY"
+>  then
+> +	# It is reported that some shells spawned in tricky ways can
+> +	# give $PWD with a trailing slash. An explicit chdir hopefully
+> +	# would wake them out of their hallucination.
+> +	cd .
+> +
+>  	# ensure that TEST_DIRECTORY is an absolute path so that it
+>  	# is valid even if the current working directory is changed
+>  	TEST_DIRECTORY=3D$(pwd)
+> @@ -626,7 +631,6 @@ fi
+>  # Protect ourselves from common misconfiguration to export
+>  # CDPATH into the environment
+>  unset CDPATH
+> -
+>  unset GREP_OPTIONS
+>  unset UNZIP
 
-Perfect.  Thanks.
+Yes, this is even simpler and more obvious, although for some reason,
+the subshell version works just as well, i.e., with just
+TEST_DIRECTORY=3D$(cd . && pwd) (no cd in the parent) in test-lib.sh and
+
+cat <<EOF >./tslash.sh
+#!/bin/sh
+test_description=3D'yada yada'
+
+. ./test-lib.sh
+
+test_expect_success 'check TEST_DIRECTORY for trailing slash' '
+        echo "$TEST_DIRECTORY" &&
+        test "$TEST_DIRECTORY" =3D "${TEST_DIRECTORY%/}"
+'
+
+test_done
+EOF
+
+I get
+
+; echo ${TEST_DIRECTORY-unset}
+unset
+; pwd
+/home/stepnem/src/git/t/
+; echo $PWD
+/home/stepnem/src/git/t/
+; sh ./tslash.sh -v
+Initialized empty Git repository in /home/stepnem/src/git/t/trash directory=
+.tslash/.git/
+expecting success of slash.1 'check TEST_DIRECTORY for trailing slash':
+        echo "$TEST_DIRECTORY" &&
+        test "$TEST_DIRECTORY" =3D "${TEST_DIRECTORY%/}"
+
+/home/stepnem/src/git/t
+ok 1 - check TEST_DIRECTORY for trailing slash
+
+# passed all 1 test(s)
+1..1
+; pwd
+/home/stepnem/src/git/t/
+; echo $PWD
+/home/stepnem/src/git/t/
+
+[and, needless to say, reverting the changes still triggers the panic:
+; sh ./tslash.sh
+PANIC: Running in a /home/stepnem/src/git/t/ that doesn't end in '/t'?
+]
+
+Go figure...
+
+In any case, for what it's worth, any of your versions is
+Tested-by: =C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec <stepnem@smrk.net>
+
+Thanks,
+
+  =C5=A0t=C4=9Bp=C3=A1n
