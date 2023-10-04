@@ -2,164 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6043BE7C4D0
-	for <git@archiver.kernel.org>; Wed,  4 Oct 2023 15:22:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9E37E7C4CE
+	for <git@archiver.kernel.org>; Wed,  4 Oct 2023 15:39:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243213AbjJDPWC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Oct 2023 11:22:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45310 "EHLO
+        id S242928AbjJDPjC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Oct 2023 11:39:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243163AbjJDPVy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Oct 2023 11:21:54 -0400
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2073FD8
-        for <git@vger.kernel.org>; Wed,  4 Oct 2023 08:21:49 -0700 (PDT)
-Received: by mail-pl1-x630.google.com with SMTP id d9443c01a7336-1c3f97f2239so18020065ad.0
-        for <git@vger.kernel.org>; Wed, 04 Oct 2023 08:21:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696432908; x=1697037708; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ROQ9UozEZPA2+mJSw4EWiQmxaUtdl4B3V+VnwxyVx5A=;
-        b=nL4jg7+KfSjSJ5j4aFKJ6eIt5YBTRhDhEUPWzJP/2FK6bEdXT3CZweUWddB7fepS0T
-         tzRB0psYbs0Yccyh+tEs9RTcC45yj+hHcxCLLu2ur78Exti9oowvkCppU/rCsY6JT7N8
-         AT23f5XuwiTfJQkBM11HNzB3s+5N46VJMK1vsvFeTEwffYIeGsdEAHjKNmh+bL7pJO9H
-         684+4RF9Qx+lcdWaGfvzDrtro3ilc3neIS2pNlbmcKyG6afO7PpTK9RFiaiTbd/DYtg9
-         WG9Zf+rtz1CFvdQffRRNycisoeNzbFpd22K3SpLpSr8bHivxIlvfGO4qbnj3SaGcJAPm
-         R7Aw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696432908; x=1697037708;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ROQ9UozEZPA2+mJSw4EWiQmxaUtdl4B3V+VnwxyVx5A=;
-        b=sBuLAXgTlh1YkLoXwGCd5TQHg6T2exUC1cSCPB6Yof1i2K2qRzHe3YkC8Ew5gEIEcw
-         lA0C16vqZAkWcbHM/ylZNU2HtafQjBgi5QJVeqcSzO5M7MhiRJ8P2Q75Nays7QbdK+m/
-         TN8oaR24ZWZr1VlRLRXU97AlYC+5wtKZAWWD1BNIE4fewj9eR2ZLFtTutsG2a4gFGxsH
-         8e9zjdBNHnMTclfEo193nuFhBtGNtwa+zOmx7bLF211JcaHWA7pMUNyb8pDxcXyKacwx
-         xYhCYNCghweYC9Ah05tIsgAzPhOpug44u7H9o9FvhgG05E2dpW0m31lAClydYPS1pxLj
-         Z40g==
-X-Gm-Message-State: AOJu0Yzt899PbYIcZOD4vXp/8r0NQReV6iJGlEa34l1/wpmDrXF/uQSg
-        OwAAcInQ4goB7a+9z75qQXmnAuA8O1Y=
-X-Google-Smtp-Source: AGHT+IGdsgaz87+GogLPKSjrIaBHK8e7q1VGuTdnNHylRnilZGVzYLhjpDNNHkBPjQY5P2ScxgVMAw==
-X-Received: by 2002:a17:902:e811:b0:1b8:8af0:416f with SMTP id u17-20020a170902e81100b001b88af0416fmr3162723plg.1.1696432908411;
-        Wed, 04 Oct 2023 08:21:48 -0700 (PDT)
-Received: from tigtog-proxy.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id c11-20020a170903234b00b001c5f0fe64c2sm3838199plh.56.2023.10.04.08.21.47
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 04 Oct 2023 08:21:48 -0700 (PDT)
-From:   Jiang Xin <worldhello.net@gmail.com>
-To:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v3 2/4] transport-helper: call do_take_over() in process_connect
-Date:   Wed,  4 Oct 2023 23:21:41 +0800
-Message-Id: <e3dc18caa91bd16d95dc7c2bbd0e6eceedefe636.1696432594.git.zhiyou.jx@alibaba-inc.com>
-X-Mailer: git-send-email 2.32.0.rc3
-In-Reply-To: <cover.1696432593.git.zhiyou.jx@alibaba-inc.com>
-References: <xmqqil7yq6ms.fsf@gitster.g> <cover.1696432593.git.zhiyou.jx@alibaba-inc.com>
+        with ESMTP id S233825AbjJDPjB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Oct 2023 11:39:01 -0400
+Received: from out01.mta.xmission.com (out01.mta.xmission.com [166.70.13.231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F6B2C6
+        for <git@vger.kernel.org>; Wed,  4 Oct 2023 08:38:57 -0700 (PDT)
+Received: from in02.mta.xmission.com ([166.70.13.52]:56148)
+        by out01.mta.xmission.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.93)
+        (envelope-from <ebiederm@xmission.com>)
+        id 1qo3xf-00HKh4-Ph; Wed, 04 Oct 2023 09:38:55 -0600
+Received: from ip68-227-168-167.om.om.cox.net ([68.227.168.167]:56586 helo=email.froward.int.ebiederm.org.xmission.com)
+        by in02.mta.xmission.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.93)
+        (envelope-from <ebiederm@xmission.com>)
+        id 1qo3xe-009r35-NI; Wed, 04 Oct 2023 09:38:55 -0600
+From:   "Eric W. Biederman" <ebiederm@xmission.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+References: <20231003202504.GA7697@coredump.intra.peff.net>
+        <878r8j2mu1.fsf@email.froward.int.ebiederm.org>
+        <20231004132132.GC607079@coredump.intra.peff.net>
+        <871qea31xf.fsf@email.froward.int.ebiederm.org>
+        <20231004144734.GA1143669@coredump.intra.peff.net>
+Date:   Wed, 04 Oct 2023 10:38:47 -0500
+In-Reply-To: <20231004144734.GA1143669@coredump.intra.peff.net> (Jeff King's
+        message of "Wed, 4 Oct 2023 10:47:34 -0400")
+Message-ID: <87o7he1jp4.fsf@email.froward.int.ebiederm.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-XM-SPF: eid=1qo3xe-009r35-NI;;;mid=<87o7he1jp4.fsf@email.froward.int.ebiederm.org>;;;hst=in02.mta.xmission.com;;;ip=68.227.168.167;;;frm=ebiederm@xmission.com;;;spf=pass
+X-XM-AID: U2FsdGVkX185DV/dOpW2vD0koV1MDph7tEOyRzJ+xOs=
+X-SA-Exim-Connect-IP: 68.227.168.167
+X-SA-Exim-Mail-From: ebiederm@xmission.com
+Subject: Re: Is SANITIZE=leak make test unreliable for anyone else?
+X-SA-Exim-Version: 4.2.1 (built Sat, 08 Feb 2020 21:53:50 +0000)
+X-SA-Exim-Scanned: Yes (on in02.mta.xmission.com)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Jeff King <peff@peff.net> writes:
 
-The existing pattern among all callers of process_connect() seems to be
+> On Wed, Oct 04, 2023 at 09:19:40AM -0500, Eric W. Biederman wrote:
+>
+>> What I see on a random failure looks like:
+>> 
+>> > make -C t/ all
+>> > make[1]: Entering directory '/home/user/projects/git/git/t'
+>> > rm -f -r 'test-results'
+>> > GIT_TEST_EXT_CHAIN_LINT=0 && export GIT_TEST_EXT_CHAIN_LINT && make aggregate-results-and-cleanup
+>> > make[2]: Entering directory '/home/user/projects/git/git/t'
+>> > *** t0000-basic.sh ***
+>> > Segmentation fault
+>> > error: test_bool_env requires bool values both for $GIT_TEST_PASSING_SANITIZE_LEAK and for the default fallback
+>> 
+>> Which doesn't sound like anything you have described so I am guessing it
+>> is something with my environment I need to track down.
+>
+> No, that seems different entirely. You'll have to figure out which
+> program is segfaulting and why (if you can see it in a script besides
+> t0000 you're probably better off, as that one is a maze of
+> tests-within-tests, since it is testing the test-harness itself).
+>
+> Although the "error" you see maybe implies that it is failing early on
+> in test-lib.sh, when we are calling "test-tool env-helper". If that is
+> segfaulting there is probably something very wrong with your build.
 
-        if (process_connect(...)) {
-                do_take_over();
-                ... dispatch to the underlying method ...
-        }
-        ... otherwise implement the fallback ...
+Just to document what I am seeing it appears to be some odd interaction
+with address space randomization.
 
-where the return value from process_connect() is the return value of the
-call it makes to process_connect_service().
+If I run my make as: "setarch --addr-no-randomize make test"
 
-It is safe to make a refactor by moving the call of do_take_over()
-into the function process_connect().
+I don't see coredumps any more.
 
-Suggested-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
----
- transport-helper.c | 22 +++++++++-------------
- 1 file changed, 9 insertions(+), 13 deletions(-)
+Now to dig a deeper and see if I can figure out what about address space
+randomization is making things break.
 
-diff --git a/transport-helper.c b/transport-helper.c
-index 2e127d24a5..51088cc03a 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -645,6 +645,7 @@ static int process_connect(struct transport *transport,
- 	struct helper_data *data = transport->data;
- 	const char *name;
- 	const char *exec;
-+	int ret;
- 
- 	name = for_push ? "git-receive-pack" : "git-upload-pack";
- 	if (for_push)
-@@ -652,7 +653,10 @@ static int process_connect(struct transport *transport,
- 	else
- 		exec = data->transport_options.uploadpack;
- 
--	return process_connect_service(transport, name, exec);
-+	ret = process_connect_service(transport, name, exec);
-+	if (ret)
-+		do_take_over(transport);
-+	return ret;
- }
- 
- static int connect_helper(struct transport *transport, const char *name,
-@@ -682,10 +686,8 @@ static int fetch_refs(struct transport *transport,
- 
- 	get_helper(transport);
- 
--	if (process_connect(transport, 0)) {
--		do_take_over(transport);
-+	if (process_connect(transport, 0))
- 		return transport->vtable->fetch_refs(transport, nr_heads, to_fetch);
--	}
- 
- 	/*
- 	 * If we reach here, then the server, the client, and/or the transport
-@@ -1142,10 +1144,8 @@ static int push_refs(struct transport *transport,
- {
- 	struct helper_data *data = transport->data;
- 
--	if (process_connect(transport, 1)) {
--		do_take_over(transport);
-+	if (process_connect(transport, 1))
- 		return transport->vtable->push_refs(transport, remote_refs, flags);
--	}
- 
- 	if (!remote_refs) {
- 		fprintf(stderr,
-@@ -1186,11 +1186,9 @@ static struct ref *get_refs_list(struct transport *transport, int for_push,
- {
- 	get_helper(transport);
- 
--	if (process_connect(transport, for_push)) {
--		do_take_over(transport);
-+	if (process_connect(transport, for_push))
- 		return transport->vtable->get_refs_list(transport, for_push,
- 							transport_options);
--	}
- 
- 	return get_refs_list_using_list(transport, for_push);
- }
-@@ -1274,10 +1272,8 @@ static int get_bundle_uri(struct transport *transport)
- {
- 	get_helper(transport);
- 
--	if (process_connect(transport, 0)) {
--		do_take_over(transport);
-+	if (process_connect(transport, 0))
- 		return transport->vtable->get_bundle_uri(transport);
--	}
- 
- 	return -1;
- }
--- 
-2.40.1.50.gf560bcc116.dirty
 
+Eric
