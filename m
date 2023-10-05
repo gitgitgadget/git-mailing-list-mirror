@@ -2,193 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F417DE9271C
-	for <git@archiver.kernel.org>; Thu,  5 Oct 2023 17:43:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C4C3E9271B
+	for <git@archiver.kernel.org>; Thu,  5 Oct 2023 17:44:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231337AbjJERni (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Oct 2023 13:43:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38018 "EHLO
+        id S231218AbjJERoV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Oct 2023 13:44:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230304AbjJERnN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Oct 2023 13:43:13 -0400
-Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7014F1708
-        for <git@vger.kernel.org>; Thu,  5 Oct 2023 10:35:18 -0700 (PDT)
-Received: by mail-qv1-xf2e.google.com with SMTP id 6a1803df08f44-65d5a6230fcso6484736d6.0
-        for <git@vger.kernel.org>; Thu, 05 Oct 2023 10:35:18 -0700 (PDT)
+        with ESMTP id S231417AbjJERnr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Oct 2023 13:43:47 -0400
+Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2545C9E
+        for <git@vger.kernel.org>; Thu,  5 Oct 2023 10:42:50 -0700 (PDT)
+Received: by mail-qt1-x830.google.com with SMTP id d75a77b69052e-419787a43ebso7097191cf.1
+        for <git@vger.kernel.org>; Thu, 05 Oct 2023 10:42:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1696527317; x=1697132117; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1696527769; x=1697132569; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=JptqxVquyR1k5fuoK46ZLo8Yw6CwKIA7FpEisIFlaKs=;
-        b=XJHUL+7THah410x0uwvj4fzYYSVKNk0YRB8Hsln3cMqG+z5AMOJeMM1XtWx8wqrtBY
-         MVvObfjoO9ciq1mGPCJ7WynEDUp+8lSqjQTr+IA2GkDHbaRpPs5V5cTtx6jDsJeYQ8XB
-         yvAwfeHU4EYO0jxpRs+Ilhf0KDiJVZsMlljQORZlGRvwTS8KwqkEXI9Es44mDqfgSVE2
-         0tIa6JDPlWP7GAOwgpRc9SjavqIgfVMbYgAW/wES5Cbv8362Y9Om3W9tkHO80Ks9k9/s
-         BtI6s9HX3NcyD5oPpt+S0DisrOuazyjTO8izNAlSI1hVlr4lyXamo02CwJ5Jx6OkKOwH
-         L+gA==
+        bh=Gq6a8oMrNaZwUQppLZ/r+jid2JZDWlJeU77xlpR9Y68=;
+        b=w4bL9yEoh7Dk4ziyXbLoCzHlKdPgTpCbyR3NO2fzNVh0Whvw9WdztmL1xMqivNJtM4
+         Ru9kFLF8Wokir185Y9j/O7Bjc2PRL/BrCdxIpdzT94n/A2jtjoDSlniTxA1LdY7EL2K9
+         07Yxngepagn9em8YX3mU1nvKWk9r/7sw1t/ui9N/J+b3QGHqyGvfFwjYkOQG7G19DHNr
+         xYiybSAO/bljKqm3cLXPPmUB52R7XbbXhwRLlBXDdqj5fxYgb40d8R0DxWI4v+aXMUmz
+         8jXcUZxo2mFf9zJHBUGAAHCW+QIWuESrMnbf4WBFxm9jspOBCy5zctMR8VqwkyXA1PMh
+         1CuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696527317; x=1697132117;
+        d=1e100.net; s=20230601; t=1696527769; x=1697132569;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=JptqxVquyR1k5fuoK46ZLo8Yw6CwKIA7FpEisIFlaKs=;
-        b=ZuSZoYPXbVvSxlwmIq7uZQkmjUQbbaCmRB27bjqzfSGykAIXfPlwPGnKoNRW3lMcJO
-         F8ezLZBGsihml9ykMOArJ9aLL/cbOHbDFW3M5jtA7YG2BRATyBNb6K4xJ0ZbgPIoXfwV
-         LtfFN3OFSqcjqLx8OsCHovRqwH3pyYtczjLSKXuCHEb3R/vULE7dqqD+Dt9vUHP9uiIX
-         3CuFdrbdF43/07rAwcpgT7GmNItZKBUxPQFxCmNPCZzAbMInblksmpzDwFlnbSPxHP6E
-         2w3YJ6HYps+L0IYXYv1NLCF9P0TgdrmZkb1zCJdjZ1H600BcOHglG/+R2zUaZTEMGoJN
-         i4pg==
-X-Gm-Message-State: AOJu0YwzAf+FmKmbQrwVgJGcC1BbsGq1e6KSKdPsU/aAueUF73z5utvl
-        65ZahJ83d/A39IVBIPn8xN7D/Q==
-X-Google-Smtp-Source: AGHT+IH+6m/SdUumiBf6QCR/0ky4fTvbj10vhC66w6ZjEOqTypNmv3zuU8J2XbNE6oApIlXVUGeMyA==
-X-Received: by 2002:a0c:e383:0:b0:65d:31e:b80f with SMTP id a3-20020a0ce383000000b0065d031eb80fmr7117031qvl.35.1696527317396;
-        Thu, 05 Oct 2023 10:35:17 -0700 (PDT)
+        bh=Gq6a8oMrNaZwUQppLZ/r+jid2JZDWlJeU77xlpR9Y68=;
+        b=Z/WLtcj3jE7K/9vlBf1cdkuUAFjrJXbY/M6tBrrPTyxdoWyNJgySS+FHMy/1iyXyDN
+         IZ85S98EzCScRD6nJ6zlvM3jIqaVs7jD4+7bwMJwCOTd5l5U8S4JwZjo5Ovn8bLE7wq2
+         mWwJYvZM5I5J7lOU8a+11iqDllAoF5+1g+Rk4pkNfzu+8RRYgxP1ZnmbPPjO/B63Ns79
+         x7vLgptsTNopRMsTEq5ctkgJ+dBCjRruN8saXH0+MpdvZLU70j4BpuJfCgCuu63MA0J4
+         QzRVQdf5Bdg40oUXiFxQXHi0cudqH34Z2yfxAPbS+IyKzLXhrm/yAH72SfBja9dSq7j1
+         YaPg==
+X-Gm-Message-State: AOJu0YzU4oAPpUCclrFCpWkXdsW1KkA0jXAtghQ1tAkP/uoCygeJU9C3
+        tgh8fqw8Mbax2GB3hVE9RKsxRw==
+X-Google-Smtp-Source: AGHT+IHFpgdXVs8Ajysh10gs48f0ETxS7Hn32jfUbX6srARgOhz4nyjQe43x2QqV3lmubnSYJLKwCw==
+X-Received: by 2002:a0c:ab06:0:b0:64a:a5f8:6314 with SMTP id h6-20020a0cab06000000b0064aa5f86314mr5744161qvb.0.1696527769178;
+        Thu, 05 Oct 2023 10:42:49 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id x17-20020a0ce251000000b00655ec7bbfd0sm660134qvl.7.2023.10.05.10.35.16
+        by smtp.gmail.com with ESMTPSA id s13-20020a0ce30d000000b0065b0d2f9121sm656654qvl.68.2023.10.05.10.42.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Oct 2023 10:35:17 -0700 (PDT)
-Date:   Thu, 5 Oct 2023 13:35:15 -0400
+        Thu, 05 Oct 2023 10:42:48 -0700 (PDT)
+Date:   Thu, 5 Oct 2023 13:42:48 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 3/3] builtin/repack.c: implement support for
- `--max-cruft-size`
-Message-ID: <ZR7z0/tStMSjBkFR@nand.local>
-References: <cover.1694123506.git.me@ttaylorr.com>
- <cover.1696293862.git.me@ttaylorr.com>
- <e7beb2060dad648ec5c3fa8984e432ee243ae012.1696293862.git.me@ttaylorr.com>
- <ZR6nKzflu_18JnoG@tanuki>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 04/10] commit-graph: move slab-clearing to
+ close_commit_graph()
+Message-ID: <ZR71mMhMMvEpVidN@nand.local>
+References: <20231003202504.GA7697@coredump.intra.peff.net>
+ <20231003202752.GD7812@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZR6nKzflu_18JnoG@tanuki>
+In-Reply-To: <20231003202752.GD7812@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 05, 2023 at 02:08:11PM +0200, Patrick Steinhardt wrote:
-> On Mon, Oct 02, 2023 at 08:44:32PM -0400, Taylor Blau wrote:
-> [snip]
-> > diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
-> > index 90806fd26a..fa0541b416 100644
-> > --- a/Documentation/git-gc.txt
-> > +++ b/Documentation/git-gc.txt
-> > @@ -59,6 +59,13 @@ be performed as well.
-> >  	cruft pack instead of storing them as loose objects. `--cruft`
-> >  	is on by default.
-> >
-> > +--max-cruft-size=<n>::
-> > +	When packing unreachable objects into a cruft pack, limit the
-> > +	size of new cruft packs to be at most `<n>`. Overrides any
+On Tue, Oct 03, 2023 at 04:27:52PM -0400, Jeff King wrote:
+> When closing and freeing a commit-graph, the main entry point is
+> close_commit_graph(), which then uses close_commit_graph_one() to
+> recurse through the base_graph links and free each one.
 >
-> We should probably mention the unit here, which is bytes.
+> Commit 957ba814bf (commit-graph: when closing the graph, also release
+> the slab, 2021-09-08) put the call to clear the slab into the recursive
+> function, but this is pointless: there's only a single global slab
+> variable. It works OK in practice because clearing the slab is
+> idempotent, but it makes the code harder to reason about and refactor.
 
-Perhaps, though I'm OK with omitting it in the name of brevity, but only
-since we link off to the relevant section in the git-repack(1)
-documentation (which does include the units there).
-
-> > +static void collapse_small_cruft_packs(FILE *in, size_t max_size,
-> > +				       struct existing_packs *existing)
-> > +{
-> > +	struct packed_git **existing_cruft, *p;
-> > +	struct strbuf buf = STRBUF_INIT;
-> > +	size_t total_size = 0;
-> > +	size_t existing_cruft_nr = 0;
-> > +	size_t i;
-> > +
-> > +	ALLOC_ARRAY(existing_cruft, existing->cruft_packs.nr);
-> > +
-> > +	for (p = get_all_packs(the_repository); p; p = p->next) {
-> > +		if (!(p->is_cruft && p->pack_local))
-> > +			continue;
-> > +
-> > +		strbuf_reset(&buf);
-> > +		strbuf_addstr(&buf, pack_basename(p));
-> > +		strbuf_strip_suffix(&buf, ".pack");
-> > +
-> > +		if (!string_list_has_string(&existing->cruft_packs, buf.buf))
-> > +			continue;
-> > +
-> > +		if (existing_cruft_nr >= existing->cruft_packs.nr)
-> > +			BUG("too many cruft packs (found %"PRIuMAX", but knew "
-> > +			    "of %"PRIuMAX")",
-> > +			    (uintmax_t)existing_cruft_nr + 1,
-> > +			    (uintmax_t)existing->cruft_packs.nr);
-> > +		existing_cruft[existing_cruft_nr++] = p;
-> > +	}
-> > +
-> > +	QSORT(existing_cruft, existing_cruft_nr, existing_cruft_pack_cmp);
-> > +
-> > +	for (i = 0; i < existing_cruft_nr; i++) {
-> > +		size_t proposed;
-> > +
-> > +		p = existing_cruft[i];
-> > +		proposed = st_add(total_size, p->pack_size);
-> > +
-> > +		if (proposed <= max_size) {
-> > +			total_size = proposed;
-> > +			fprintf(in, "-%s\n", pack_basename(p));
-> > +		} else {
-> > +			retain_cruft_pack(existing, p);
-> > +			fprintf(in, "%s\n", pack_basename(p));
-> > +		}
-> > +	}
-> > +
-> > +	for (i = 0; i < existing->non_kept_packs.nr; i++)
-> > +		fprintf(in, "-%s.pack\n",
-> > +			existing->non_kept_packs.items[i].string);
->
-> As far as I can see, the non-kept packs are passed to
-> git-pack-objects(1) both in the cases where we do collapse small cruft
-> packs and where we don't. Is there any particular reason why we handle
-> those in both code paths separately instead of merging that logic? Is
-> the ordering of packfiles important here?
-
-No particularly good reason. The ordering isn't important, and you could do something like this:
-
---- 8< ---
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 04770b15fe..6e17fc3f51 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -905,10 +905,6 @@ static void collapse_small_cruft_packs(FILE *in, size_t max_size,
- 		}
- 	}
-
--	for (i = 0; i < existing->non_kept_packs.nr; i++)
--		fprintf(in, "-%s.pack\n",
--			existing->non_kept_packs.items[i].string);
--
- 	strbuf_release(&buf);
- }
-
-@@ -959,14 +955,13 @@ static int write_cruft_pack(const struct pack_objects_args *args,
- 	in = xfdopen(cmd.in, "w");
- 	for_each_string_list_item(item, names)
- 		fprintf(in, "%s-%s.pack\n", pack_prefix, item->string);
--	if (args->max_pack_size && !cruft_expiration) {
-+	if (args->max_pack_size && !cruft_expiration)
- 		collapse_small_cruft_packs(in, args->max_pack_size, existing);
--	} else {
--		for_each_string_list_item(item, &existing->non_kept_packs)
--			fprintf(in, "-%s.pack\n", item->string);
-+	else
- 		for_each_string_list_item(item, &existing->cruft_packs)
- 			fprintf(in, "-%s.pack\n", item->string);
--	}
-+	for_each_string_list_item(item, &existing->non_kept_packs)
-+		fprintf(in, "-%s.pack\n", item->string);
- 	for_each_string_list_item(item, &existing->kept_packs)
- 		fprintf(in, "%s.pack\n", item->string);
- 	fclose(in);
---- >8 ---
-
-But I think that having a small amount of duplication is a fair price to
-pay for being able to see the whole input given to pack-objects outlined
-in a single function.
+Well reasoned and explained, this change makes perfect sense to me.
 
 Thanks,
 Taylor
