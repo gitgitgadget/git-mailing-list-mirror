@@ -2,121 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E56ACE92FC0
-	for <git@archiver.kernel.org>; Thu,  5 Oct 2023 21:45:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 170F1E92FC8
+	for <git@archiver.kernel.org>; Thu,  5 Oct 2023 21:47:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229905AbjJEVpl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Oct 2023 17:45:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39062 "EHLO
+        id S231828AbjJEVrd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Oct 2023 17:47:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229714AbjJEVpj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Oct 2023 17:45:39 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3DC095
-        for <git@vger.kernel.org>; Thu,  5 Oct 2023 14:45:36 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4F1971AE1D0;
-        Thu,  5 Oct 2023 17:45:36 -0400 (EDT)
+        with ESMTP id S229714AbjJEVrc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Oct 2023 17:47:32 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5BFE95
+        for <git@vger.kernel.org>; Thu,  5 Oct 2023 14:47:31 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9768E37BFA;
+        Thu,  5 Oct 2023 17:47:29 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=KI6WKvqe1tqAPF6xS6+yMM1s2+gbjpvSmiOzaP
-        VctBA=; b=bPevLq80Rel9+CJVe9Rc0yNVava4gOXQ6FmP/qUQAuZ4lliYfjCS1h
-        eNKR61fmFInBOQyaqhxVVsmjL3X2NE3ifBZDVZgqLoXtvEnYnfvFntNvyc7CU5xy
-        pQ4pZ983IuRLcCzT0HeSLDqjyCQKmDCFXPTV9LBpKNc+24TNYiWdw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 46C7A1AE1CF;
-        Thu,  5 Oct 2023 17:45:36 -0400 (EDT)
+        :content-type; s=sasl; bh=1DJm8WUExzZb18Ox6c5UeFWpeVbEEeoJp844s2
+        BnZNQ=; b=eh4BNNVf4vr7z/fU7yyFIXFVrQk7fTx7HCsQ+oyFC58dFT2ARduma4
+        Umt/Ls8Xcn00588XhjI2ADcbIPLFpmk/Ouu09cExwrs25c2/Fc4N+j86nOlLocXE
+        27cMS0rd5m000gnl4hLZ7WTWdBtGeNFTFhX+Id3/nSfOnMH/GGudo=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 910AA37BF9;
+        Thu,  5 Oct 2023 17:47:29 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.165.85])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A9F451AE1CE;
-        Thu,  5 Oct 2023 17:45:35 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2AB2237BF6;
+        Thu,  5 Oct 2023 17:47:26 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Sergey Organov <sorganov@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3 2/3] diff-merges: introduce '--dd' option
-In-Reply-To: <20231004214558.210339-3-sorganov@gmail.com> (Sergey Organov's
-        message of "Thu, 5 Oct 2023 00:45:57 +0300")
-References: <20230909125446.142715-1-sorganov@gmail.com>
-        <20231004214558.210339-1-sorganov@gmail.com>
-        <20231004214558.210339-3-sorganov@gmail.com>
-Date:   Thu, 05 Oct 2023 14:45:33 -0700
-Message-ID: <xmqqr0m8eoaq.fsf@gitster.g>
+Subject: Re: What's cooking in git.git (Oct 2023, #01; Mon, 2)
+In-Reply-To: <87lecgeqfu.fsf@osv.gnss.ru> (Sergey Organov's message of "Thu,
+        05 Oct 2023 23:59:17 +0300")
+References: <xmqqedic35u4.fsf@gitster.g> <871qecgpg1.fsf@osv.gnss.ru>
+        <xmqq34yr3btn.fsf@gitster.g> <874jj7lh7x.fsf@osv.gnss.ru>
+        <xmqqo7hessro.fsf@gitster.g> <871qeay6tz.fsf@osv.gnss.ru>
+        <xmqqjzs1mkma.fsf@gitster.g> <87lecgeqfu.fsf@osv.gnss.ru>
+Date:   Thu, 05 Oct 2023 14:47:24 -0700
+Message-ID: <xmqqh6n4eo7n.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 842B9DAA-63C8-11EE-900C-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: C6053BAA-63C8-11EE-B2FF-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Sergey Organov <sorganov@gmail.com> writes:
 
-> This option provides a shortcut to request diff with respect to first
-> parent for any kind of commit, universally. It's implemented as pure
-> synonym for "--diff-merges=first-parent --patch".
+> Overall, as an example, I'd understand if you had deflected the patch
+> with "let's rather use -d for '--decorate=short', or '--date=relative'",
+> or something like that, but you don't, leaving me uncertain about your
+> actual worries and intentions.
 
-That explains what the patch does, but it does not tell us why it is
-useful [*].
+Oh, I would be very much more sympathetic if somebody wanted to make
+a short-and-sweet single-letter option to stand for "--first-parent
+-p", if they come with the "first-parent chain is special---it is
+the trunk history of the development" world view.  And the resulting
+behaviour would be "give me the diffs" in their world view, so I
+would understand if they wanted to use "-d" for such an operation.
 
-> NOTE: originally proposed as '-d', and renamed to '--dd' due to Junio
-> request to keep "short-and-sweet" '-d' reserved for other uses.
+However, to folks who do not subscribe to "the first parent chain is
+the trunk history" world view, "give me the diffs" is not an
+explanation of the resulting behaviour, because in "-d" there is no
+trace of hint that it is also about first-parent traversal.  
 
-The note is not grammatical, and more importantly, readers of "git
-log" 6 months down the road would not care.  I'd rather not see it
-in the proposed log message.  It is suitable material to place after
-the three-dash line, or in the cover letter for the iteration.
+So "-d" may not be a perfect fit for it, either.  But at least it is
+based on a more consistent world view, I would think, than
+"--diff-merges=1 -p", whose behaviour becomes unexplainable when it
+hits "reverse" merges in a world where the first parent chain is not
+necessarily the trunk.
 
-> diff --git a/diff-merges.c b/diff-merges.c
-> index ec97616db1df..45507588a279 100644
-> --- a/diff-merges.c
-> +++ b/diff-merges.c
-> @@ -131,6 +131,9 @@ int diff_merges_parse_opts(struct rev_info *revs, const char **argv)
->  	} else if (!strcmp(arg, "--cc")) {
->  		set_dense_combined(revs);
->  		revs->merges_imply_patch = 1;
-> +	} else if (!strcmp(arg, "--dd")) {
-> +		set_first_parent(revs);
-> +		revs->merges_imply_patch = 1;
-
-Quite straight-forward as expected.  I do not think "--dd" clicks
-for many people as "first parent diffs all over", though.
-
->  	} else if (!strcmp(arg, "--remerge-diff")) {
->  		set_remerge_diff(revs);
->  		revs->merges_imply_patch = 1;
-> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-> index 5de1d190759f..4b474808311e 100755
-> --- a/t/t4013-diff-various.sh
-> +++ b/t/t4013-diff-various.sh
-> @@ -473,6 +473,14 @@ test_expect_success 'log --diff-merges=on matches --diff-merges=separate' '
->  	test_cmp expected actual
->  '
->  
-> +test_expect_success 'log --dd matches --diff-merges=1 -p' '
-> +	git log --diff-merges=1 -p master >result &&
-> +	process_diffs result >expected &&
-> +	git log --dd master >result &&
-> +	process_diffs result >actual &&
-> +	test_cmp expected actual
-> +'
-> +
->  test_expect_success 'deny wrong log.diffMerges config' '
->  	test_config log.diffMerges wrong-value &&
->  	test_expect_code 128 git log
-
-Looking good.
+Anyway, I've tentatively queued the "--dd" round.  Naming is hard,
+I cannot tell what "dd" stards for, and I suspect no user can X-<.
 
 Thanks.
-
-
-[Footnote]
-
-* As I said elsewhere, I do not think it is a good idea to encourage
-  users' to adopt a screwed-up worldview in which first parent is
-  special but not special, and does the wrong thing for reverse
-  merges.  If the option were short-hand for "--first-parent -p",
-  at least I would be more sympathetic.
