@@ -2,124 +2,175 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E17B2E9272C
-	for <git@archiver.kernel.org>; Thu,  5 Oct 2023 14:43:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4530AE92730
+	for <git@archiver.kernel.org>; Thu,  5 Oct 2023 14:43:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237302AbjJEOnJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Oct 2023 10:43:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33408 "EHLO
+        id S238194AbjJEOnL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Oct 2023 10:43:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234105AbjJEOha (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Oct 2023 10:37:30 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 128724E352
-        for <git@vger.kernel.org>; Thu,  5 Oct 2023 07:03:15 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 224061A8C52;
-        Thu,  5 Oct 2023 06:25:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=/tOKOrfYttQjsR7SD7huJZ1HBjeah1VczsvE3x
-        qxfmE=; b=Z7GQY5RlG6crj54X+YBvIZ/1GADwp9kezraBHaQh2Atg4Ll7tIAemH
-        79F9vJgKnEwodiOG0nSM+Qvj4Ja3Z962oPSyzM/2lzYENoIR4bApEWLlipLi7HfO
-        eSHZy6GZk5Wo5wKnao0bZqUQbEiKvzGL8ZxDife5cCk1Boa3WG4Ho=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 193671A8C51;
-        Thu,  5 Oct 2023 06:25:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.165.85])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7FC701A8C50;
-        Thu,  5 Oct 2023 06:25:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Oct 2023, #01; Mon, 2)
-In-Reply-To: <871qeay6tz.fsf@osv.gnss.ru> (Sergey Organov's message of "Wed,
-        04 Oct 2023 14:18:00 +0300")
-References: <xmqqedic35u4.fsf@gitster.g> <871qecgpg1.fsf@osv.gnss.ru>
-        <xmqq34yr3btn.fsf@gitster.g> <874jj7lh7x.fsf@osv.gnss.ru>
-        <xmqqo7hessro.fsf@gitster.g> <871qeay6tz.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-Date:   Thu, 05 Oct 2023 03:25:33 -0700
-Message-ID: <xmqqjzs1mkma.fsf@gitster.g>
+        with ESMTP id S235215AbjJEOiP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Oct 2023 10:38:15 -0400
+Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7023E4F6F4
+        for <git@vger.kernel.org>; Thu,  5 Oct 2023 07:02:53 -0700 (PDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.west.internal (Postfix) with ESMTP id 961E13200BDC;
+        Thu,  5 Oct 2023 07:31:09 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute3.internal (MEProxy); Thu, 05 Oct 2023 07:31:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+        :content-type:content-type:date:date:from:from:in-reply-to
+        :in-reply-to:message-id:mime-version:references:reply-to:sender
+        :subject:subject:to:to; s=fm2; t=1696505469; x=1696591869; bh=0B
+        S//cm37MbPv5qhC5yqegpah1S+NmxTYbdHLBHQOOs=; b=Crj8hxhxJsDkVHufEO
+        e0Gya/qCIUSkv65OcmxRuh3u4v4IVRnXMH2uihR88ucDzRD4wnfSdyrELsVn6Df8
+        baSVtS0xGdSn4K6p7k3sT7NKA7Q9vNE8SDl7jzmDW+Zg5+RsJnv69YCVUIVythyj
+        mwWzRjsd+OtxmDZ1hjvj452KBRZNkYrF/OM4glFdQGKWo2liZIZcI8rUNcM8nh8b
+        gq9Wy6ThCF8yz7PvRdLVVd8bvWNLoR/Chlu+Y1FNQKekoNYt2lLARHEZ8YIHvedH
+        620ErtKOfkNKZzgKfdbewWVEjXP4VU6KT/Y8FPSSzbBTQRhCxqkhxLP8SzVlVTZw
+        i3Dg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:content-type:date:date
+        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm2; t=1696505469; x=1696591869; bh=0BS//cm37MbPv
+        5qhC5yqegpah1S+NmxTYbdHLBHQOOs=; b=ZWgxZ/jg7o/mmlLWWuuGhaX+isCUh
+        jewP0iDcx2ecia9Oad0Uf1YWWV9JEdZX7T+kyyoaGNL3Z+2Trgc22WUah+E9FqYs
+        eNoteNWQi3CfJ6SqnP1096irr3hnbdPeq/RwoLNq0zx/mzfDxmoi6HBGVcispnbf
+        f1xCNIcEg+IFukLs+/V8XWUHxKd5+xBaxstJoELaFJg4mfRpnHTKkr3n1VgyYlMo
+        XDi4UZN2SpUaI9rba7IEJQZKX3GBHdJghU6HYTy9r3r5317r2q6ft/DX31tjUCIe
+        pt4v3RMg0niXDE08O4jpY2NjgOHR+C4A0Ro4VgLrFlQZvZSA+y5yMvEjg==
+X-ME-Sender: <xms:fJ4eZbKINLTcuhOTfVaskzFEzBajuqI43zGlKd5hXMVZkWVEywgUZQ>
+    <xme:fJ4eZfI7PJV7UXk8-Tm3k-7TtFqBaeXiRPKP-OX7rjGkaECxHeTC9_9YOUA0z-Tpn
+    6vZha6tqG8Fox2yyw>
+X-ME-Received: <xmr:fJ4eZTtK-b7zBKLuCE69vrKPsnA4k9JoJDTICzzoBQaXEUHPNKbtu6p8pKu5RI1yjnbeSKAAo4ejXW-PNTBXpTqNKTT1O4iJ5lFK-z6h_-Pekg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrgeeggdefkecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhm
+X-ME-Proxy: <xmx:fJ4eZUYJHSa5LjOiNEtcZrImaSOspK_bwwIlNecLcf7BFoCFfHyRMg>
+    <xmx:fJ4eZSabfc3a1_6hI7ivV2sMKRAGeW_lv87Wtqrlvm6LL5rM5NnJWA>
+    <xmx:fJ4eZYDPzdNemf4TuSdUfAWznQWnYxcU-BqrCkFUTE8-AMkZLg7rtg>
+    <xmx:fZ4eZSGlkITya1qnb6nlpPKB1zNgMI1zgLG5Z7zyKwh3cbn8_HEBcA>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 5 Oct 2023 07:31:07 -0400 (EDT)
+Received: by vm-mail (OpenSMTPD) with ESMTPSA id 209b7f77 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Thu, 5 Oct 2023 11:31:04 +0000 (UTC)
+Date:   Thu, 5 Oct 2023 13:31:02 +0200
+From:   Patrick Steinhardt <ps@pks.im>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 2/3] builtin/repack.c: parse `--max-pack-size` with
+ OPT_MAGNITUDE
+Message-ID: <ZR6ednOcuK6qizch@tanuki>
+References: <cover.1694123506.git.me@ttaylorr.com>
+ <cover.1696293862.git.me@ttaylorr.com>
+ <9ec999882d790aa770aba8c0916b9260661af9be.1696293862.git.me@ttaylorr.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 84C6954E-6369-11EE-8839-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="DNLWcAMEG0eoKHvn"
+Content-Disposition: inline
+In-Reply-To: <9ec999882d790aa770aba8c0916b9260661af9be.1696293862.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sergey Organov <sorganov@gmail.com> writes:
 
-> Just for better understanding: does it mean that *any* addition of
-> one-letter option is prohibited from any existing Git command? Cause it
-> definitely sounds this way.
+--DNLWcAMEG0eoKHvn
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-No, we just prefer to think twice before giving short-and-sweet
-single letter option to a feature that is not proven useful, and
-during the discussion it has become rather clear that the proposed
-combination of options goes against helping normal Git users by
-forcing them to read an aggregated and redundant patch for a merge
-when they already see patches for individual commits on the side
-branch that was merged.
+On Mon, Oct 02, 2023 at 08:44:29PM -0400, Taylor Blau wrote:
+> The repack builtin takes a `--max-pack-size` command-line argument which
+> it uses to feed into any of the pack-objects children that it may spawn
+> when generating a new pack.
+>=20
+> This option is parsed with OPT_STRING, meaning that we'll accept
+> anything as input, punting on more fine-grained validation until we get
+> down into pack-objects.
+>=20
+> This is fine, but it's wasteful to spend an entire sub-process just to
+> figure out that one of its option is bogus. Instead, parse the value of
+> `--max-pack-size` with OPT_MAGNITUDE in 'git repack', and then pass the
+> knonw-good result down to pack-objects.
 
->> If I have to pick a candidate for "get me diff" that is the most
->> useful among those currently are available, it is "give patches to
->> all single-parent commit, and show tricky conflict resolution part
->> only for merge commits".
->
-> I'm afraid you need to pick a candidate that will be natural for '-d',
-> not just most useful output for your workflows, whatever it happens to
-> be.
+Tiny nit: s/knonw/known.
 
-Literal match to word "diff" does not necessarily mean it is useful,
-and short-and-sweet single-letter option name is primarily about
-letting users reach useful features with minimum typing [*1*], so you
-cannot avoid "most useful" being a large part of the equation.
+Other than that this patch looks good to me.
 
-I am wondering if we can have a generalized "personal command option
-alias" mechanism implemented.  Then you can give '-[a-z]'[*2*] to
-whatever combination you like without affecting others by only
-futzing with your $HOME/.gitconfig file.
+Patrick
 
+> Suggested-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Taylor Blau <me@ttaylorr.com>
+> ---
+>  builtin/repack.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>=20
+> diff --git a/builtin/repack.c b/builtin/repack.c
+> index 529e13120d..8a5bbb9cba 100644
+> --- a/builtin/repack.c
+> +++ b/builtin/repack.c
+> @@ -51,7 +51,7 @@ struct pack_objects_args {
+>  	const char *window_memory;
+>  	const char *depth;
+>  	const char *threads;
+> -	const char *max_pack_size;
+> +	unsigned long max_pack_size;
+>  	int no_reuse_delta;
+>  	int no_reuse_object;
+>  	int quiet;
+> @@ -242,7 +242,7 @@ static void prepare_pack_objects(struct child_process=
+ *cmd,
+>  	if (args->threads)
+>  		strvec_pushf(&cmd->args, "--threads=3D%s", args->threads);
+>  	if (args->max_pack_size)
+> -		strvec_pushf(&cmd->args, "--max-pack-size=3D%s", args->max_pack_size);
+> +		strvec_pushf(&cmd->args, "--max-pack-size=3D%lu", args->max_pack_size);
+>  	if (args->no_reuse_delta)
+>  		strvec_pushf(&cmd->args, "--no-reuse-delta");
+>  	if (args->no_reuse_object)
+> @@ -946,7 +946,7 @@ int cmd_repack(int argc, const char **argv, const cha=
+r *prefix)
+>  				N_("limits the maximum delta depth")),
+>  		OPT_STRING(0, "threads", &po_args.threads, N_("n"),
+>  				N_("limits the maximum number of threads")),
+> -		OPT_STRING(0, "max-pack-size", &po_args.max_pack_size, N_("bytes"),
+> +		OPT_MAGNITUDE(0, "max-pack-size", &po_args.max_pack_size,
+>  				N_("maximum size of each packfile")),
+>  		OPT_BOOL(0, "pack-kept-objects", &pack_kept_objects,
+>  				N_("repack objects in packs marked with .keep")),
+> --=20
+> 2.42.0.310.g9604b54f73.dirty
+>=20
 
-[Footnote]
+--DNLWcAMEG0eoKHvn
+Content-Type: application/pgp-signature; name="signature.asc"
 
- *1* ...or if we are mimicking options of an existing external
-     commmand, we need to match them, but in this case it does not
-     apply.
+-----BEGIN PGP SIGNATURE-----
 
- *2* If we were to do this for real, it may make sense to carve out
-     option namespace so that end-user aliases cannot overlap with
-     official set of options.  For example, if you can never get a
-     string that matches "^-![a-z]$" recognised as an official
-     command line option by our parsers, then '-!' followed by a
-     single letter would be a good candidate for our "personal
-     command option alias" to work with, and '-!d' might be
-     something you want to use your personal option alias, without
-     having to worry about a later version of Git using the option
-     officially for something else.
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmUennYACgkQVbJhu7ck
+PpQB0Q/+LJSmcRZn8m9LtQOCrj2/1JVXGu2h9xycx2+knFN+Zmt+jRgU+eLq/2t3
+dZISWjyE1thbZpX0mwNZqCLlXkP3v8/EJVRe62DXteTZ963F+W0WZWVjk1DLgGNC
+4bBpYSVrs/LQBEtntY6V27w2LLgaSptW7LuRDr+0lYQVdX9yxavPu9whmesl27jX
+1J5mcDPd3fOg9rocSsLrP7TtNiaCDmIKUMDZqJEbBPNco7cxDqBbfIvfI6DMCFP9
+PlPluQOaaYI8Q7RybjVwseqHiVa5Ya5ekIPAXYWPSw2/YPV0mfuzKmxSQFPxbIE1
+29GpjxShibm3n3yrbuyUIRGMNPE2p6m6uTIkg3ueu0H+WkpTmokrVnf73108bEbI
+BcsDBXknjXV/4j/jXSB5kP+SPP3rH3ZKOwqNY2KIb4nLIcWjjDTS2n+ae495l/Aj
+xDBtbHWIqFNNxuOP6nA4aKuJUijvUgwrmKSVMJCG50slkdmIxHkc6jTe70JxyYri
+UzXUvnE2XhAr7h0nuHIWjMYW/BuBxjWXBICdB5qhWdX2rTkcUdzCsNr/wvzTV/7V
+8ayR7aXb2B++CBUMwfsNTaCnHb10eXTIMHj+scvZ8JdqdbPxXX5zV6ysvUjD+SzL
+XBxpSWCf7RGEN+RBTiylGiOjoNHozdqetLowULWxEfDtjYv84+c=
+=Z8qK
+-----END PGP SIGNATURE-----
 
-     Another thing that need to be considered when designing such a
-     "command option alias" feature is how to express the set of
-     commands an alias applies to, as some underlying commands may
-     share the same set of options.  For example, having to say
-
-	optionAlias.bisect.1 = --first-parent
-	optionAlias.blame.1 = --first-parent
-	optionAlias.log.1 = --first-parent
-
-     is a bit too cumbersome to allow me to say "git bisect -!1",
-     "git blame -!1", and "git log -!1".  But I am not offhand sure
-     if a much simpler
-
-	optionAlias.1 = --first-parent
-
-     is sufficient.  "git commit -!1" would expand into "git commit
-     --first-parent" and would give you an error with the usage
-     message, which may not be too bad.  I dunno.
-
+--DNLWcAMEG0eoKHvn--
