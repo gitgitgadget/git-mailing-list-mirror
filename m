@@ -2,111 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80632E92725
-	for <git@archiver.kernel.org>; Thu,  5 Oct 2023 18:15:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 920A0E92726
+	for <git@archiver.kernel.org>; Thu,  5 Oct 2023 18:44:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231879AbjJESOw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Oct 2023 14:14:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44694 "EHLO
+        id S231240AbjJESoP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Oct 2023 14:44:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232228AbjJESOl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Oct 2023 14:14:41 -0400
-Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A307493
-        for <git@vger.kernel.org>; Thu,  5 Oct 2023 11:14:40 -0700 (PDT)
-Received: by mail-qt1-x82a.google.com with SMTP id d75a77b69052e-41811e7ac3dso6642461cf.2
-        for <git@vger.kernel.org>; Thu, 05 Oct 2023 11:14:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1696529680; x=1697134480; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=0GxGxFefI6YzCdqHbX8Q6Z/guxogi+Rnh4lBUdcbGrc=;
-        b=056e1Y447as2oKxSO2wgPoCGFqRlTLR01pDHOIGtnqnC9EW6LB2MBOR3cc+6PWf8Au
-         sAtvT7o0+46OVQXhJtwHtnaCXopUmBqFO7ON4vO1Pka+jbs5eBCujujmdg0h/fzrocJU
-         iH2Q3y/f/04THXwfvuaCnytbKHe/+hQgvjiMePDTaVZTqs5Sp8toomsyRzyhPRM7bDCv
-         vAxIAx3yZbM1EZlqqVNeANOWZIRICQu6gr+KcxuIDqtu47B/iisAqGluMiJDUaqpy8AJ
-         XFBqAgYpQ2EAhTzfYjmZ9XfirYzXEm+7ihKWOXpyWJmT4zvka34WK1Uf+jQG5FwbbbPd
-         YdzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696529680; x=1697134480;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0GxGxFefI6YzCdqHbX8Q6Z/guxogi+Rnh4lBUdcbGrc=;
-        b=tZD+kRk6gkbeUd53FwvepzakMJcUufWRk/XLJDmk0UB8al3lKRhMxxuIPFk+hI8R6P
-         CyaPy9eixZTMywK3jiolyAYcnPF+IlDn0iTkYgxqI8NAJhvKk+KGfdJ3/eSUTO5OLtOT
-         2yOybNWhboaM1AJN8lZsEQODEfawfl+iSZbXZ4K1Xr+4wGjLk9WeuIuH/LSuDd03/IE7
-         Ww4N8hLkXXgQ14O8z4ThsOP7m8VTLVLBMFGssXXqIj1W2mnq9W0V6IjgIkK4z1Ke/KqC
-         bh0PzDQFhVTlICi4BLORQNp1sDtZhJTWkGntbxRnWWwKzoH8pK5drdwNLKM0ZrSBcszF
-         Y16Q==
-X-Gm-Message-State: AOJu0YyV8Uo62/ZcNAIurMWK9jAgiDSOeIVMBnskY9KTn+uxE75ss4Vw
-        nyFEZKTE7H+BBsRx087qCkGuoA==
-X-Google-Smtp-Source: AGHT+IGraCI7Bd96TQbq38uK9eadbfxjZ7JyGTdwbMXPSC4tyqsT6vEX6EGSWmggPf1JQ1f/CeFO/w==
-X-Received: by 2002:a05:622a:1887:b0:412:2f98:2b9b with SMTP id v7-20020a05622a188700b004122f982b9bmr7008685qtc.8.1696529679626;
-        Thu, 05 Oct 2023 11:14:39 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 8-20020ac85648000000b00419792c1be7sm655405qtt.30.2023.10.05.11.14.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Oct 2023 11:14:39 -0700 (PDT)
-Date:   Thu, 5 Oct 2023 14:14:38 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "Eric W. Biederman" <ebiederm@xmission.com>, git@vger.kernel.org,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH 25/32] pack-compat-map:  Add support for .compat files of
- a packfile
-Message-ID: <ZR79DqE91z+6+ZSd@nand.local>
-References: <87sf7ol0z3.fsf@email.froward.int.ebiederm.org>
- <20230908231049.2035003-25-ebiederm@xmission.com>
- <xmqqfs3li5ly.fsf@gitster.g>
+        with ESMTP id S229975AbjJESoN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Oct 2023 14:44:13 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19C5993
+        for <git@vger.kernel.org>; Thu,  5 Oct 2023 11:44:12 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id AF9581CECC;
+        Thu,  5 Oct 2023 14:44:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=tXOj6FsCdKvoDqTUDkkekAggSTnp8eoGFQnqC2
+        FzV3I=; b=Fb7q2FUqtTMvnRmoztOb31bnxlY3K2wJQT03CAVoIkmzMYJWgyY908
+        7onsNtKnsvgYU+o5exXe/5PQlT4EMYce6c28UWib9qpsisc7ofsG0N9gpWUrb1du
+        TB7dOf6GsnV8sYqg4n28qTIgCdhG7E9m03YLL4LtbTDWL4X8XaF7o=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A81B31CECB;
+        Thu,  5 Oct 2023 14:44:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 485131CEC6;
+        Thu,  5 Oct 2023 14:44:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: js/ci-coverity, was Re: What's cooking in git.git (Oct 2023,
+ #02; Wed, 4)
+In-Reply-To: <20231005170859.GB975921@coredump.intra.peff.net> (Jeff King's
+        message of "Thu, 5 Oct 2023 13:08:59 -0400")
+References: <xmqqpm1ulzoh.fsf@gitster.g>
+        <20231005170859.GB975921@coredump.intra.peff.net>
+Date:   Thu, 05 Oct 2023 11:44:05 -0700
+Message-ID: <xmqqh6n4j4ei.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqfs3li5ly.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2A2D2CB0-63AF-11EE-90FB-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 10, 2023 at 11:30:49PM -0700, Junio C Hamano wrote:
-> "Eric W. Biederman" <ebiederm@xmission.com> writes:
+Jeff King <peff@peff.net> writes:
+
+> On Wed, Oct 04, 2023 at 04:45:34PM -0700, Junio C Hamano wrote:
 >
-> > diff --git a/pack-write.c b/pack-write.c
-> > index b19ddf15b284..f22eea964f77 100644
-> > --- a/pack-write.c
-> > +++ b/pack-write.c
-> > @@ -12,6 +12,7 @@
-> >  #include "pack-revindex.h"
-> >  #include "path.h"
-> >  #include "strbuf.h"
-> > +#include "object-file-convert.h"
-> > ...
-> > +/*
-> > + * The *hash contains the pack content hash.
-> > + * The objects array is passed in sorted.
-> > + */
-> > +const char *write_compat_map_file(const char *compat_map_name,
-> > +				  struct pack_idx_entry **objects,
-> > +				  int nr_objects, const unsigned char *hash)
+>> * js/ci-coverity (2023-09-25) 7 commits
+>>  - SQUASH???
+>>  - coverity: detect and report when the token or project is incorrect
+>>  - coverity: allow running on macOS
+>>  - coverity: support building on Windows
+>>  - coverity: allow overriding the Coverity project
+>>  - coverity: cache the Coverity Build Tool
+>>  - ci: add a GitHub workflow to submit Coverity scans
+>> 
+>>  GitHub CI workflow has learned to trigger Coverity check.
+>> 
+>>  Looking good.
+>>  source: <pull.1588.v2.git.1695642662.gitgitgadget@gmail.com>
 >
-> Include "pack-compat-map.h"; otherwise the compiler would complain
-> for missing prototypes.
+> I think that has been sitting at "Looking good" for a few iterations.
+> IMHO it is ready to progress, with the SQUASH applied on the final
+> patch.
 
-Likewise this is missing an entry in the .gitignore:
-
---- >8 ---
-diff --git a/.gitignore b/.gitignore
-index 5e56e471b3..7f5a93a6f6 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -152,6 +152,7 @@
- /git-shortlog
- /git-show
- /git-show-branch
-+/git-show-compat-map
- /git-show-index
- /git-show-ref
- /git-sparse-checkout
---- 8< ---
-
-Thanks,
-Taylor
+Ah, yes, unless I use some magic phrase (like "Will merge to" or
+"Expecting") there in the report, entries tend to be left in the
+noise.  Thanks for noticing and pinging.  Very much appreciated.
