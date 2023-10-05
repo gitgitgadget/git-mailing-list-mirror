@@ -2,69 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3244EE92FCB
-	for <git@archiver.kernel.org>; Thu,  5 Oct 2023 22:21:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D6CAE92FC9
+	for <git@archiver.kernel.org>; Thu,  5 Oct 2023 22:42:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231383AbjJEWVf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Oct 2023 18:21:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58252 "EHLO
+        id S231862AbjJEWmg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Oct 2023 18:42:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229530AbjJEWVd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Oct 2023 18:21:33 -0400
-Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCFF095
-        for <git@vger.kernel.org>; Thu,  5 Oct 2023 15:21:32 -0700 (PDT)
-Received: by mail-yb1-xb30.google.com with SMTP id 3f1490d57ef6-d81d09d883dso1763490276.0
-        for <git@vger.kernel.org>; Thu, 05 Oct 2023 15:21:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696544491; x=1697149291; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=JPZH0KWmVOAuw1zYCQQJ1g4qlJduGAoPKposQs/zGMM=;
-        b=O7ST6zhVRteZcR2TOryDG0uD2dqEt6wWALWU2rzd3Ya0Hgr4eaHndkRdJ46xBpkPQ2
-         beYTbxnW4U9c0KCfroLsZhYdMJetiY31dyIhc9cYiKfO/MuarCqJBFT7ujYrYBtAHl+y
-         NQV7imdUhSSSLZG7wr3id9bFevY8FdZb6Or2Lj827FffnCawLRuza0PdLX5e6G5Q27TU
-         E+z0mgI448bLp/fDJUB9QtWPXIbdIuiXgOyBntx0WfEXV6mhfDq8abam8oSO0SdLKn/L
-         pI2Dy62Gbd53xtwEptTqV9UXLskSlzYQGz3K1R603xw/EgoJkHQj6FqOfCzm95a5kxbG
-         /VQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696544491; x=1697149291;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=JPZH0KWmVOAuw1zYCQQJ1g4qlJduGAoPKposQs/zGMM=;
-        b=DqgrbrPEGoYd/qjLs75SJyAnAIU4kIwT70mtZiAXxc/r9popTlIQtYhtuV2bLxzDGM
-         LZDBsPqqgOhdF12A3DABRyOBUoOaAIFjy3/qk/wFA9PrHAa9d0FUSK1UoqLPwKhxlHTP
-         j3ubmHJ4nR+ME6uf0S8OFOBRv5PRB/R8se2RVzB6+mjozANSkbNySRjNjEO6VmseKair
-         u1fSn7DBc7BFbwlh7hQMf+3/RHv55m/GTU95khv8EAy/66fsxx1HudxUO7FUcrXv7/K1
-         ip8reIhfxSBOytOESa51f3KVVrz7OPs/7rpRYkq997byp4T1fjaiOr7aYDxotIa8TMCR
-         Omnw==
-X-Gm-Message-State: AOJu0Yx5JKOdN4iixws+kvrsuL2NNnubp1uuLJyd282ksWMTDkQAV61z
-        cKJPqrEUh9eHDopmS9aXY0W35C0yRqH0mU4VJxikUr6cUAl8diw=
-X-Google-Smtp-Source: AGHT+IFHhmCeBrPv8W0vSFaV3BK0wOWJLZNfVy5zxyfcxPXyoV0KlTko74Z4W+qmX/wLCHYOFJi0sCtzEHL2nt7LJe4=
-X-Received: by 2002:a5b:94d:0:b0:d0d:102c:78a8 with SMTP id
- x13-20020a5b094d000000b00d0d102c78a8mr6224962ybq.31.1696544491405; Thu, 05
- Oct 2023 15:21:31 -0700 (PDT)
+        with ESMTP id S231891AbjJEWme (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Oct 2023 18:42:34 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2823DB
+        for <git@vger.kernel.org>; Thu,  5 Oct 2023 15:42:33 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C291D1AEBC5;
+        Thu,  5 Oct 2023 18:42:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=pI8MdTVG+TDndhI4F28d4/aZVnMmtmOOC8cRcy
+        /B9j8=; b=G5A53RQIBSzhzqly8j1ZQiZTo9RoJsWjG80WesAElcpWHjAf64Gnz+
+        V42QbGybks+xFrmbtrBN0xThP4hE8b4lMj8rA1ALPpdoTGIkzY3eBv5uWDiFCHqC
+        HgJkAD/yzletUfSKWKoDZZgF/HKA32Z5djR7xWN2lCm9YsOfFuZA0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B92BD1AEBC4;
+        Thu,  5 Oct 2023 18:42:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 27F461AEBC3;
+        Thu,  5 Oct 2023 18:42:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, Naomi Ibe <naomi.ibeh69@gmail.com>
+Subject: Re: How To Pick And Work On A Microproject
+In-Reply-To: <CACS=G2z84_-WkWa-BnK8bNNqb9z_o37BC3-kb_NkrjzAL=r4Sg@mail.gmail.com>
+        (Naomi Ibe's message of "Thu, 5 Oct 2023 23:14:50 +0100")
+References: <CACS=G2z84_-WkWa-BnK8bNNqb9z_o37BC3-kb_NkrjzAL=r4Sg@mail.gmail.com>
+Date:   Thu, 05 Oct 2023 15:42:30 -0700
+Message-ID: <xmqq7co0elnt.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-From:   Naomi Ibe <naomi.ibeh69@gmail.com>
-Date:   Thu, 5 Oct 2023 23:17:56 +0100
-Message-ID: <CACS=G2z24ws_HA68Ev=rssjCCorn=R4fU8LuzMsMw+8Q-PXBcQ@mail.gmail.com>
-Subject: [OUTREACHY] How To Pick And Work On A Microproject
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 788B0E74-63D0-11EE-A787-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I have gone through this link
-https://git.github.io/General-Microproject-Information/  and I am not
-really clear with it especially this line
-"Select a microproject and check that it has not yet been taken or
-discussed by searching the mailing list. Public Inbox is your friend."
- On the mailing list I see messages with the [PATCH] keyword in front
-of them, am I expected to pick one and reply to it? How do I reply
-directly under the thread which contains the issue? Please, how do I
-find the issue on the Git repository? I checked the repo and could not
-find the "issues" section also .
-Please HELP!!! Any explanations would be very much appreciated, as I
-would prefer to start working on it as early as possible.
-Thank you
+Naomi Ibe <naomi.ibeh69@gmail.com> writes:
+
+> "Select a microproject and check that it has not yet been taken or
+> discussed by searching the mailing list. Public Inbox is your friend."
+
+Yeah, that is VERY unfriendly.  There is no mention on the pool of
+microproject ideas from which you can "select" here.  I wonder if
+some HTML link is missing in the sentence (i.e., clicking a word
+leading to a page that lists what you can select from), or it has
+always been like this.
+
+Later in the same document, I see
+
+    How to find other ideas for microprojects
+
+    First check the specific page(s) or information about Git
+    microprojects related to your program that should have been
+    published on this site or on the GSoC or Outreachy site. But then
+    still read on everything below!
+
+which is much more realistic, as long as the "specific page(s)" are
+well curated (which I have no idea myself, as I have never been in
+the mentoring pool).  Naomi, have you checked and found such a page
+on Outreachy site?
+
+Then it goes on to suggest finding a bug report, but I tend to think
+that fixing them is way oversized to be a good microproject.
+
+
+And finally it gives a casual mention of good+first+issue, which is
+probably the closest to what _should_ be listed as the first place
+to try (sorry, I however do not know how well the list is curated,
+either, but from a cursory look it looks legit).
+
+https://github.com/gitgitgadget/git/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22
+
+There also is a mention of #leftoverbits in the document, but by its
+nature, they can easily become stale or irrelevant, and they tend to
+be more real issues, and I would expect them to be unnecessarily
+harder than what dip-your-toe-in-the-water-and-say-hello
+microprojects need to be.
