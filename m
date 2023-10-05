@@ -2,112 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 769F6E9270B
-	for <git@archiver.kernel.org>; Thu,  5 Oct 2023 14:25:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C582E92702
+	for <git@archiver.kernel.org>; Thu,  5 Oct 2023 14:29:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234128AbjJEOZ1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Oct 2023 10:25:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38496 "EHLO
+        id S233858AbjJEO3I (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Oct 2023 10:29:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231906AbjJEOXh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Oct 2023 10:23:37 -0400
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF682768B
-        for <git@vger.kernel.org>; Thu,  5 Oct 2023 00:11:42 -0700 (PDT)
-Received: by mail-pf1-x42a.google.com with SMTP id d2e1a72fcca58-690b7cb71aeso538092b3a.0
-        for <git@vger.kernel.org>; Thu, 05 Oct 2023 00:11:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696489902; x=1697094702; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=jqDwfNI603jx7zFqckgWroISo8H1HYm067y3jA6R7SE=;
-        b=LQ89AgmJJeWbHwDkmaooI8tbT4YbOKvO+EVmxUplbbWAFcto/6D+nftQoN/CLjg3/9
-         8hlhz0ZLZVow0Nl5t127dGO/7snSKKaOyR3k6FhalYdA1HjHd7dUQsWE3HLaMl4cQdA9
-         75BkT/STmnbc2EK81qv39jfmdw9SiBRftrSsIfdiGEjl6mwmRgGAMtifjcgNTk9EaOO0
-         ec73IAT9QBB43oHwJBSefqnkOiT0xEpIoNnxa316bAFbp0C3QWb8t+8+mdF6wDhw9XZJ
-         D9Vszk9aYmJm5OcvCtsniT8T8TcM5ZK9hIhFU9kuEXUgKeUQxdFC3NSwSyrThnbcC7ps
-         P2xw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696489902; x=1697094702;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=jqDwfNI603jx7zFqckgWroISo8H1HYm067y3jA6R7SE=;
-        b=oVqZnzASF+hM5ie1ER9rCV+vKB6oz2FuxECT4ieQT4LWT5Xyu+xKnpkMcxxE4J9hmy
-         AIdWauXRw4xX3AwRrunv/+7FEDNR0O0jIFp0IhQCSt8vbf0/ARzndhdBoGRyJjioF0mu
-         idMqlVggk5EBoKAhWWUl6Fe3jNOxOT+5DLO/iyrqsJZmUJRA8wThY+H7UgIKqY5COEeZ
-         klH0epp+LNSv6/3JOm65AFDTyOwu5ZMBju+o/VCQ3WcVDTItzbGcu91MrNsPsWG/Izg+
-         z2Ij0ytIzyBTvek59VlPkLHMBQXlt79NA+rr+M3VTO92ORzbLsE7EHSOQD4jkci2CetW
-         PCtw==
-X-Gm-Message-State: AOJu0YwYZVPs06YZEzGaeNFEtSTYNE3KboR+mMiml8h4gpK4YefuRuBv
-        iDbQ5rkM+QnhjPXzjIAbLYaklQDmI1k=
-X-Google-Smtp-Source: AGHT+IF7LtlynCKDlnn2kTHE7ExdzfkPvNmOYmiyvpJv489MakI0CAxpkkrQHIDPSLApbtSXCl0q5A==
-X-Received: by 2002:a05:6a00:a1b:b0:68f:cbd3:5b01 with SMTP id p27-20020a056a000a1b00b0068fcbd35b01mr883292pfh.13.1696489901764;
-        Thu, 05 Oct 2023 00:11:41 -0700 (PDT)
-Received: from localhost.localdomain ([2405:201:6805:207c:11d5:b720:d5d4:b9ba])
-        by smtp.gmail.com with ESMTPSA id x27-20020a056a00271b00b006934704bf56sm669730pfv.64.2023.10.05.00.11.39
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 05 Oct 2023 00:11:41 -0700 (PDT)
-From:   Vinayak Dev <vinayakdev.sci@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Vinayak Dev <vinayakdev.sci@gmail.com>
-Subject: [PATCH] t4014: replace "test -f" with "test_path_is_file"
-Date:   Thu,  5 Oct 2023 12:41:34 +0530
-Message-ID: <20231005071134.43747-1-vinayakdev.sci@gmail.com>
-X-Mailer: git-send-email 2.41.0
+        with ESMTP id S234072AbjJEO1L (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Oct 2023 10:27:11 -0400
+Received: from mail.smrk.net (mail.smrk.net [IPv6:2001:19f0:6c01:2788:5400:4ff:fe27:adaa])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE4C424871
+        for <git@vger.kernel.org>; Thu,  5 Oct 2023 04:20:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=smrk.net; s=20221002;
+        t=1696504793;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=TyySmyxJFX9OoTIomsGEpyCYdxyKKJiX7lkMPqweBUo=;
+        b=Yfeeaq6dvP0v3glJDAqh9oui2m7ZU+W+oSAwr25aRZQ70zaB6076stVeqV6QhRnyMM1dRM
+        8Ex7ULcIh/T0/1xZmsbmAUnoQLxKndeygJ7iN3/+F1b4vNJt5wZ9T00VPIWp21xvnKCeK2
+        +qud7Ip4SulgthtqCk1LHCcF4ruCPqDVnWpkERkoK6Qd6dsjbh4SY4gVx9kFzUVWFMbZKn
+        xtadxM1kJkkYQtRVsRzlIXMRKZBFKj14uNMTCj2XWuGtSSNxLfIa1qOKBd3GbdftqHB26x
+        AxTbDGU3EeU5eoVagruJnmnLOnkd/na+8jAgRIKDPcoZWfLbTuMsGyPtxhd8Fw==
+Received: from localhost (<unknown> [192.168.5.2])
+        by smrk (OpenSMTPD) with ESMTPSA id 9e887e9c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Thu, 5 Oct 2023 13:19:53 +0200 (CEST)
+From:   =?utf-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@smrk.net>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, avarab@gmail.com
+Subject: Re: [PATCH] doc/cat-file: clarify description regarding various
+ command forms
+In-Reply-To: <20231003200659.GC1562@coredump.intra.peff.net> (Jeff King's
+        message of "Tue, 3 Oct 2023 16:06:59 -0400")
+References: <20231003082513.3003520-1-stepnem@smrk.net>
+        <20231003200659.GC1562@coredump.intra.peff.net>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+Date:   Thu, 05 Oct 2023 13:20:18 +0200
+Message-ID: <20231005132018+0200.47596-stepnem@smrk.net>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Vinayak Dev <vinayakdev.sci@gmail.com>
+On Tue, 3 Oct 2023 16:06:59 -0400
+Jeff King wrote:
 
-Many tests in the codebase use test -[e|f|d].. commands
-to check for various conditions. However, the test command
-upon failure simply exits with a non-zero exit code(usually 1).
-Therefore, replace instances of "test -f" from t/t4014-format-patch.sh
-with the function test_path_is_file() defined in t/test-lib-functions.sh
-that exits with a debugging-friendly diagnostic message upon failure.
+>>  DESCRIPTION
+>>  -----------
+>> -In its first form, the command provides the content or the type of an o=
+bject in
+>> +This command can operate in two modes, depending on whether an option f=
+rom
+>> +the `--batch` family is specified.
+>> +
+>> +In non-batch mode, the command provides the content or the type of an o=
+bject in
+>>  the repository. The type is required unless `-t` or `-p` is used to fin=
+d the
+>>  object type, or `-s` is used to find the object size, or `--textconv` or
+>>  `--filters` is used (which imply type "blob").
+>
+> The existing text here is already a bit vague, considering the number of
+> operations it covers (like "-e", for example, which is not showing "the
+> content or the type" at all). But that is not new in your patch, and it
+> is maybe even OK to be a bit vague here, and let the OPTIONS section
+> cover the specifics.
 
-Signed-off-by: Vinayak Dev <vinayakdev.sci@gmail.com>
----
- t/t4014-format-patch.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+So how about we just butcher the DESCRIPTION completely; after all, the
+information it gives is not quite correct (other than what you already
+mentioned, e.g., -e is omitted in the "type not required" part; one is
+left to wonder what <format> refers to: you have to go read the OPTIONS
+and BATCH OUTPUT sections anyway), and the correct parts only duplicate
+information given in the following sections, providing opportunities to
+become out of date when the command and its documentation evolve:
 
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 0a4ab36c3a..5f7d0836d6 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -763,7 +763,7 @@ test_expect_success 'format-patch from a subdirectory (1)' '
- 		false
- 		;;
- 	esac &&
--	test -f "$filename"
-+	test_path_is_file "$filename"
- '
- 
- test_expect_success 'format-patch from a subdirectory (2)' '
-@@ -782,7 +782,7 @@ test_expect_success 'format-patch from a subdirectory (2)' '
- 		;;
- 	esac &&
- 	basename=$(expr "$filename" : ".*/\(.*\)") &&
--	test -f "sub/$basename"
-+	test_path_is_file "sub/$basename"
- '
- 
- test_expect_success 'format-patch from a subdirectory (3)' '
-@@ -794,7 +794,7 @@ test_expect_success 'format-patch from a subdirectory (3)' '
- 		git format-patch -1 -o "$TRASH_DIRECTORY"
- 	) &&
- 	basename=$(expr "$filename" : ".*/\(.*\)") &&
--	test -f "$basename"
-+	test_path_is_file "$basename"
- '
- 
- test_expect_success 'format-patch --in-reply-to' '
+Changes (if we agree this is the way to go, I'll also update the --help
+output):
+  synopsis:
+    - move the (--textconv | --filters) form before --batch, closer
+      to the other non-batch forms
+    - cosmetics: swap -t and -s, --filters and --textconv (sort
+      alphabetically)
+  description:
+    - reformulate, omit vague/imprecise information better
+      provided in the detailed options list
 
-base-commit: d0e8084c65cbf949038ae4cc344ac2c2efd77415
--- 
-2.41.0
+SYNOPSIS
+    git cat-file <type> <object>
+    git cat-file (-e | -p) <object>
+    git cat-file (-s | -t) [--allow-unknown-type] <object>
+    git cat-file (--filters | --textconv)
+                 [<rev>:<path|tree-ish> | --path=3D<path|tree-ish> <rev>]
+    git cat-file (--batch | --batch-check | --batch-command) [--batch-all-o=
+bjects]
+                 [--buffer] [--follow-symlinks] [--unordered]
+                 [--filters | --textconv] [-Z]
 
+DESCRIPTION
+    This command can operate in two modes, depending on whether an
+    option from the --batch family is specified.
+
+    In non-batch mode, the command provides information on an object
+    named on the command line.
+
+    In batch mode, arguments are read from standard input.
+
+[That's all for a summary, read the following sections for details.]
+
+>> -In the second form, a list of objects (separated by linefeeds) is provi=
+ded on
+>> +In batch mode, a list of objects (separated by linefeeds) is provided on
+>>  stdin, and the SHA-1, type, and size of each object is printed on stdou=
+t. The
+>>  output format can be overridden using the optional `<format>` argument.=
+ If
+>>  either `--textconv` or `--filters` was specified, the input is expected=
+ to
+>
+> I think this got a bit inaccurate with "--batch-command", which is a
+> whole different mode itself compared to --batch and --batch-check. I
+> don't think your patch is really making anything worse, but arguably
+> there are three "major modes" here.
+
+This is not obvious to me (the "three major modes" part).  AIUI it's
+still mainly a batch (read from stdin) vs. non-batch (args on command
+line) dichotomy.  The details differ (just args vs. command + args), but
+so does e.g. -e differ in providing information via exit code rather
+than stdout.
+
+(But please note I'm not trying to pose as an expert here: this all
+started with me coming to git-cat-file(1) to _learn_ about cat-file
+and finding the description more than a little confusing.)
+
+--=20
+=C5=A0t=C4=9Bp=C3=A1n
