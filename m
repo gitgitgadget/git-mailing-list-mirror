@@ -2,84 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 340B5E94139
-	for <git@archiver.kernel.org>; Fri,  6 Oct 2023 22:35:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 148F0E94139
+	for <git@archiver.kernel.org>; Fri,  6 Oct 2023 22:45:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233696AbjJFWfc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Oct 2023 18:35:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49066 "EHLO
+        id S233692AbjJFWpV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Oct 2023 18:45:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233473AbjJFWfb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Oct 2023 18:35:31 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED7BA83
-        for <git@vger.kernel.org>; Fri,  6 Oct 2023 15:35:30 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 77F9C1DD75;
-        Fri,  6 Oct 2023 18:35:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=GEJoA32UhEh/FRosNQDxxQHhcw0oA7aLp+hhF5
-        oCZ50=; b=sAGqucWiAGxLNx9BiS958WcJo/goRM6wmtfdcxa1KtLzS2okUjK7wZ
-        XZq2nZzAx/hDFgAkUe+avAmjT+KNyKMaLJC0a64GKBfV9zBzPhX0FQFVq+zxvxLR
-        FpMJeDKZuTegqffUx8+YbR1h9Z6vSXZ0r0cGoiKWL1cDZWOlj/TyM=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6F3541DD74;
-        Fri,  6 Oct 2023 18:35:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.165.85])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E6A4B1DD73;
-        Fri,  6 Oct 2023 18:35:26 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-        "Eric W. Biederman" <ebiederm@gmail.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 7/7] builtin/merge-tree.c: implement support for
- `--write-pack`
-In-Reply-To: <e96921014557edb41dd73d93a8c3cf6cfaf0c719.1696629697.git.me@ttaylorr.com>
-        (Taylor Blau's message of "Fri, 6 Oct 2023 18:02:07 -0400")
-References: <cover.1696629697.git.me@ttaylorr.com>
-        <e96921014557edb41dd73d93a8c3cf6cfaf0c719.1696629697.git.me@ttaylorr.com>
-Date:   Fri, 06 Oct 2023 15:35:25 -0700
-Message-ID: <xmqqil7j751u.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        with ESMTP id S233801AbjJFWpU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Oct 2023 18:45:20 -0400
+Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94267CF
+        for <git@vger.kernel.org>; Fri,  6 Oct 2023 15:45:14 -0700 (PDT)
+Received: by mail-yb1-xb2a.google.com with SMTP id 3f1490d57ef6-d894b8b9b7cso2390734276.1
+        for <git@vger.kernel.org>; Fri, 06 Oct 2023 15:45:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1696632313; x=1697237113; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=lmH1W3jpUf3VPdjFq48jK+/HQIijHD19FoYmx7cCRvc=;
+        b=HGR+s9bwaGhr8ECur/G8AbiQxbVkVKS01KQWiX3ftrs0lWDh2TY0KX36sHzHokPcx9
+         nN1Ca/QffohSAXSPtq4gkWeDdAQVlt6fA+3ZhaEgWiVYPf3ICk/yOa/kELr6Qp08gpY6
+         9JzF0UIj/46cRm4Qh7HC8gspwZyYjRsnfQavH2mr//TUWQnsh4YWAQKG8kv2ZdRhprLB
+         nKxcyZTNYAbIh3odJjI49VZdE/jMfcGV6/c0dLBl8w3z/obgRrApx+1sOL3M/Hi1e10k
+         w07Z2E/lkOKPRcRvXXvkNmYamMo4jAJ8SqYrATGvtS/8T3ke+iByqr9QUX5/xeN7C/hh
+         Cx8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696632313; x=1697237113;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=lmH1W3jpUf3VPdjFq48jK+/HQIijHD19FoYmx7cCRvc=;
+        b=TafSdzT2N+S0iE+1IDWS1MP8w1Q5EJDOBfw1MQZHRglRudoYzFFqBuy1PeOYSuIwJX
+         bzNA3cQMFtLp8HZohtNP8WPcBp/JQB+2yYMXsnBcKb0/D+kiMescea1l8rKwZ5xLJb6J
+         onm1k2nSuygDlq/mddOEXGIZ4J7MLlLXeR/BW7y4twk/m698oyOPN/JhOUT3PF4mN4QV
+         YEZo+KaTNJV6F4B2mGAZIH/+1Gp9DOS+zYtioikyQV1WpciN3CbFkaqvswWrhIgVhPsJ
+         nVx1zxPgjEUZcahuKRjChcFjbgQs4gRxBzyrpEiM12QhDWjWKl7acLT9E3iCWjZ4G2QF
+         3/Ig==
+X-Gm-Message-State: AOJu0YwKz42XO/kpDfS9BwOzfJjgzU5V5NFBd1YmAfJuXYmYl9nd7Zrz
+        XfjFcbc/DPCdP/eJgsK8Uys4eTIAXCDUqXkf8S4O89UY/epf0+k=
+X-Google-Smtp-Source: AGHT+IFn/rBK2xWEjkeMcWL545Y6aUDWWSrnKB8snT6uIhuAyyEQFfR0pWyWfzuUc+5SSrcLs/+QtAZJ5NX5bB9OzCo=
+X-Received: by 2002:a25:a287:0:b0:d66:b73a:8356 with SMTP id
+ c7-20020a25a287000000b00d66b73a8356mr4714013ybi.14.1696632313148; Fri, 06 Oct
+ 2023 15:45:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A581ABEA-6498-11EE-9530-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+From:   Naomi Ibe <naomi.ibeh69@gmail.com>
+Date:   Fri, 6 Oct 2023 23:41:35 +0100
+Message-ID: <CACS=G2zsJxP+NWuosZyrFGctJptHNYTrULErRo_Ns41KeMuMqA@mail.gmail.com>
+Subject: [OUTREACHY] Permission To Work On Tasks
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+So I went through this link
+https://github.com/gitgitgadget/git/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22
+ and I found two issues that interest me.
 
-> When using merge-tree often within a repository[^1], it is possible to
-> generate a relatively large number of loose objects, which can result in
-> degraded performance, and inode exhaustion in extreme cases.
+First issue is here https://github.com/gitgitgadget/git/issues/635 ,
+involving changing the "die()" error msg outputs to all lowercase. I
+found a few files here https://github.com/git/git/tree/master/builtin
+where the "die()" error msg had some uppercase in them (add.c in lines
+185, 203, 205, 211 and 571) (branch.c in lines 521, 525, 581, 597,
+599, 627, 629, 643, 650, 652, 776, 926, 954 and 968). If I'm allowed
+to work on this issue, how many files should I edit? The last closed
+issues related to this issue had edited five files.
 
-Well, be it "git merge-tree" or "git merge", new loose objects tend
-to accumulate until "gc" kicks in, so it is not a new problem for
-mere mortals, is it?
-
-As one "interesting" use case of "merge-tree" is for a Git hosting
-site with bare repositories to offer trial merges, without which
-majority of the object their repositories acquire would have been in
-packs pushed by their users, "Gee, loose objects consume many inodes
-in exchange for easier selective pruning" becomes an issue, right?
-
-Just like it hurts performance to have too many loose object files,
-presumably it would also hurt performance to keep too many packs,
-each came from such a trial merge.  Do we have a "gc" story offered
-for these packs created by the new feature?  E.g., "once merge-tree
-is done creating a trial merge, we can discard the objects created
-in the pack, because we never expose new objects in the pack to the
-outside, processes running simultaneously, so instead closing the
-new packfile by calling flush_bulk_checkin_packfile(), we can safely
-unlink the temporary pack.  We do not even need to spend cycles to
-run a gc that requires cycles to enumerate what is still reachable",
-or something like that?
-
-Thanks.
+Second issue is this https://github.com/gitgitgadget/git/issues/302 .
+Is it still available to be worked on? I notice it was opened in 2019
