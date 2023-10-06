@@ -2,71 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 148F0E94139
-	for <git@archiver.kernel.org>; Fri,  6 Oct 2023 22:45:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 79A61E94139
+	for <git@archiver.kernel.org>; Fri,  6 Oct 2023 22:57:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233692AbjJFWpV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Oct 2023 18:45:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34406 "EHLO
+        id S233779AbjJFW5P (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Oct 2023 18:57:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60072 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233801AbjJFWpU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Oct 2023 18:45:20 -0400
-Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94267CF
-        for <git@vger.kernel.org>; Fri,  6 Oct 2023 15:45:14 -0700 (PDT)
-Received: by mail-yb1-xb2a.google.com with SMTP id 3f1490d57ef6-d894b8b9b7cso2390734276.1
-        for <git@vger.kernel.org>; Fri, 06 Oct 2023 15:45:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696632313; x=1697237113; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=lmH1W3jpUf3VPdjFq48jK+/HQIijHD19FoYmx7cCRvc=;
-        b=HGR+s9bwaGhr8ECur/G8AbiQxbVkVKS01KQWiX3ftrs0lWDh2TY0KX36sHzHokPcx9
-         nN1Ca/QffohSAXSPtq4gkWeDdAQVlt6fA+3ZhaEgWiVYPf3ICk/yOa/kELr6Qp08gpY6
-         9JzF0UIj/46cRm4Qh7HC8gspwZyYjRsnfQavH2mr//TUWQnsh4YWAQKG8kv2ZdRhprLB
-         nKxcyZTNYAbIh3odJjI49VZdE/jMfcGV6/c0dLBl8w3z/obgRrApx+1sOL3M/Hi1e10k
-         w07Z2E/lkOKPRcRvXXvkNmYamMo4jAJ8SqYrATGvtS/8T3ke+iByqr9QUX5/xeN7C/hh
-         Cx8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696632313; x=1697237113;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=lmH1W3jpUf3VPdjFq48jK+/HQIijHD19FoYmx7cCRvc=;
-        b=TafSdzT2N+S0iE+1IDWS1MP8w1Q5EJDOBfw1MQZHRglRudoYzFFqBuy1PeOYSuIwJX
-         bzNA3cQMFtLp8HZohtNP8WPcBp/JQB+2yYMXsnBcKb0/D+kiMescea1l8rKwZ5xLJb6J
-         onm1k2nSuygDlq/mddOEXGIZ4J7MLlLXeR/BW7y4twk/m698oyOPN/JhOUT3PF4mN4QV
-         YEZo+KaTNJV6F4B2mGAZIH/+1Gp9DOS+zYtioikyQV1WpciN3CbFkaqvswWrhIgVhPsJ
-         nVx1zxPgjEUZcahuKRjChcFjbgQs4gRxBzyrpEiM12QhDWjWKl7acLT9E3iCWjZ4G2QF
-         3/Ig==
-X-Gm-Message-State: AOJu0YwKz42XO/kpDfS9BwOzfJjgzU5V5NFBd1YmAfJuXYmYl9nd7Zrz
-        XfjFcbc/DPCdP/eJgsK8Uys4eTIAXCDUqXkf8S4O89UY/epf0+k=
-X-Google-Smtp-Source: AGHT+IFn/rBK2xWEjkeMcWL545Y6aUDWWSrnKB8snT6uIhuAyyEQFfR0pWyWfzuUc+5SSrcLs/+QtAZJ5NX5bB9OzCo=
-X-Received: by 2002:a25:a287:0:b0:d66:b73a:8356 with SMTP id
- c7-20020a25a287000000b00d66b73a8356mr4714013ybi.14.1696632313148; Fri, 06 Oct
- 2023 15:45:13 -0700 (PDT)
-MIME-Version: 1.0
-From:   Naomi Ibe <naomi.ibeh69@gmail.com>
-Date:   Fri, 6 Oct 2023 23:41:35 +0100
-Message-ID: <CACS=G2zsJxP+NWuosZyrFGctJptHNYTrULErRo_Ns41KeMuMqA@mail.gmail.com>
-Subject: [OUTREACHY] Permission To Work On Tasks
+        with ESMTP id S233863AbjJFW5O (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Oct 2023 18:57:14 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA429F7
+        for <git@vger.kernel.org>; Fri,  6 Oct 2023 15:57:06 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id F3C111B9B1C;
+        Fri,  6 Oct 2023 18:57:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+        :subject:date:message-id:mime-version:content-type; s=sasl; bh=5
+        9TrKDE5lm43v+xIik97PoPdkuseSIbHgsf2xKqzaR0=; b=Xsb+YPqLH8kpn40e/
+        m7QRD6SW3I9MQGgH9BsaeTkSit46Cn9VjmEf9MZJEW2bee2fcYs/sM33+RExKuiM
+        zA4EF+fWHDEblntwrlNYSrIjcTHIGjen9LGTF54MK/n/ViF6WdseQhGTekb1D/8S
+        EC6aUpqpdWR31GkKtNGfOGAUwI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DB8FF1B9B1B;
+        Fri,  6 Oct 2023 18:57:05 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E0A1C1B9B1A;
+        Fri,  6 Oct 2023 18:57:04 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Subject: [PATCH] doc: update list archive reference to use lore.kernel.org
+Date:   Fri, 06 Oct 2023 15:57:03 -0700
+Message-ID: <xmqq7cnz741s.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: AB298CB8-649B-11EE-B584-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-So I went through this link
-https://github.com/gitgitgadget/git/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22
- and I found two issues that interest me.
+No disrespect to other mailing list archives, but the local part of
+their URLs will become pretty much meaningless once the archives go
+out of service, and we learned the lesson hard way when $gmane
+stopped serving.
 
-First issue is here https://github.com/gitgitgadget/git/issues/635 ,
-involving changing the "die()" error msg outputs to all lowercase. I
-found a few files here https://github.com/git/git/tree/master/builtin
-where the "die()" error msg had some uppercase in them (add.c in lines
-185, 203, 205, 211 and 571) (branch.c in lines 521, 525, 581, 597,
-599, 627, 629, 643, 650, 652, 776, 926, 954 and 968). If I'm allowed
-to work on this issue, how many files should I edit? The last closed
-issues related to this issue had edited five files.
+Let's point into https://lore.kernel.org/ for an article that can be
+found there, because the local part of the URL has the Message-Id:
+that can be used to find the same message in other archives, even if
+lore goes down.
 
-Second issue is this https://github.com/gitgitgadget/git/issues/302 .
-Is it still available to be worked on? I notice it was opened in 2019
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+
+ Documentation/CodingGuidelines | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index 65af8d82ce..71afc5b259 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -24,7 +24,7 @@ code.  For Git in general, a few rough rules are:
+ 
+    "Once it _is_ in the tree, it's not really worth the patch noise to
+    go and fix it up."
+-   Cf. http://lkml.iu.edu/hypermail/linux/kernel/1001.3/01069.html
++   Cf. https://lore.kernel.org/all/20100126160632.3bdbe172.akpm@linux-foundation.org/
+ 
+  - Log messages to explain your changes are as important as the
+    changes themselves.  Clearly written code and in-code comments
+-- 
+2.42.0-325-g3a06386e31
+
