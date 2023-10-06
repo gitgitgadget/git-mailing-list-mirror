@@ -2,119 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C42B6E94101
-	for <git@archiver.kernel.org>; Fri,  6 Oct 2023 18:55:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 15262E94100
+	for <git@archiver.kernel.org>; Fri,  6 Oct 2023 19:03:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233461AbjJFSzD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Oct 2023 14:55:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42310 "EHLO
+        id S233277AbjJFTD0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Oct 2023 15:03:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233332AbjJFSyo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Oct 2023 14:54:44 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D3B8197
-        for <git@vger.kernel.org>; Fri,  6 Oct 2023 11:53:25 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2bb9a063f26so29653361fa.2
-        for <git@vger.kernel.org>; Fri, 06 Oct 2023 11:53:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696618403; x=1697223203; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=F0QqPpKV5ge44P1w7Uc3moqarlvU/mj5PrzSgCUjjeQ=;
-        b=eulbEi7SGcVDSenPmzcUoNEbzS3pvTnX+87Ld5GFfQHxYrAGdR+QRMH2HDc0uHMAJb
-         CMA4R4k0j4bIyb06Ff3tIkHAOcID6ZQy9L5J0eRR6pQVYyZxfqkKsgd3R1RTUBvLNr5Z
-         HBW4OQ16yRrwrt3PKFSVmaTG+VjVycb7AD8RklfIiIBl+AlCVByjS5301ZRb96msLYsA
-         6VGMCoeoBfg4XxE7kTBefm4OPympOHc81PlWeXTIDGfiDARQEI6z9udSSnVpnf/GRLo9
-         +sBN1UbnUCxLjRSlrC4IQifIQEX5lMusHPliBwNUmgs6jNi9A/88Kjs0sLelLOF+VDhC
-         afBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696618403; x=1697223203;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=F0QqPpKV5ge44P1w7Uc3moqarlvU/mj5PrzSgCUjjeQ=;
-        b=tbTgjKO7LsQaDVA9oKxPoH8KmM896EPgGK1mVRMckrOkACCX7bkcqlhOry5TGr9UK4
-         vYF+vALElt+XkfDLH706C08UxuwBe8aVfbZCLnJaP5A7EnNdfO46cmL8mLw3Gf5QZajz
-         EYlit3A8mhrFfyqI0RBAc2mf2BHGXtkTDjFMW97EsvH5b01ToB1oaF2upErzmjTcPWOV
-         k+vNDcUbt4wmY5/kucHQdNGPXBTkgmgDdw6aN+XJ52ibrEo6ZZjQ9aQIQI9cl53m7p2Q
-         o5KJB3wvnKtwx1Ho+v+w5oLaYgja72rzRsCb5GQG5L/gANY4yzq9K5uYoaTOgaB5b28j
-         msvA==
-X-Gm-Message-State: AOJu0YxKS3yHjP4knfdHYz0GQWbHItDNhJu9mmQZ4n7TJ2vkL307JX3i
-        ptqS7gKXFa97fHr1cq2BgOy1hyK08Ew=
-X-Google-Smtp-Source: AGHT+IGEU5kH+vYJFp//zRkk4Qui8C5XoqvERk6X7NmEeYljcj2Rh1ND9D1zifR2tAjIGLqWbpsTRQ==
-X-Received: by 2002:a2e:9882:0:b0:2bd:f8:1b6a with SMTP id b2-20020a2e9882000000b002bd00f81b6amr6900710ljj.36.1696618402857;
-        Fri, 06 Oct 2023 11:53:22 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id x2-20020a2e8802000000b002bce38190a3sm887925ljh.34.2023.10.06.11.53.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Oct 2023 11:53:22 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3 3/3] completion: complete '--dd'
-References: <20230909125446.142715-1-sorganov@gmail.com>
-        <20231004214558.210339-1-sorganov@gmail.com>
-        <20231004214558.210339-4-sorganov@gmail.com>
-        <xmqqlecgeoan.fsf@gitster.g>
-Date:   Fri, 06 Oct 2023 21:53:21 +0300
-In-Reply-To: <xmqqlecgeoan.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-        05 Oct 2023 14:45:36 -0700")
-Message-ID: <87v8bjpopq.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        with ESMTP id S232789AbjJFTDZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Oct 2023 15:03:25 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 460A895
+        for <git@vger.kernel.org>; Fri,  6 Oct 2023 12:03:24 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 93CD41AEF4C;
+        Fri,  6 Oct 2023 15:03:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=eNEUYQrtiw2t
+        JrcUK+arjwPb1l46PFuOjhIBdU5pLdA=; b=dTpEKC8XTqn6RqwMZ2eovidd9ENP
+        FjxocIhYlWi88/aGtvfZi9z3BVIJbnDkA+RdjwFyJaIEpQnBidl+dir1yP4HCpFs
+        KmJ7niz17gkRrIogX6Z1f26qADGdV/P0dpURgSxIAia0SBA3VA2W3uVP5Nuiycb0
+        c/8oOc0fTrv2KBs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8A5E91AEF4B;
+        Fri,  6 Oct 2023 15:03:23 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F19AC1AEF4A;
+        Fri,  6 Oct 2023 15:03:22 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, Naomi Ibe <naomi.ibeh69@gmail.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Subject: Re: How To Pick And Work On A Microproject
+In-Reply-To: <CAP8UFD1cd5YZqAxYbYUMNkAYJLLGjBpNe_NK5nVq3eLxxSDzEQ@mail.gmail.com>
+        (Christian Couder's message of "Fri, 6 Oct 2023 11:02:01 +0200")
+References: <CACS=G2z84_-WkWa-BnK8bNNqb9z_o37BC3-kb_NkrjzAL=r4Sg@mail.gmail.com>
+        <xmqq7co0elnt.fsf@gitster.g>
+        <CAP8UFD1cd5YZqAxYbYUMNkAYJLLGjBpNe_NK5nVq3eLxxSDzEQ@mail.gmail.com>
+Date:   Fri, 06 Oct 2023 12:03:21 -0700
+Message-ID: <xmqq1qe7a806.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 05706C58-647B-11EE-82D3-25B3960A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> Sergey Organov <sorganov@gmail.com> writes:
+> I am not sure how others feel about this, but I think it would be
+> better in the future to not have to prepare such pages, and to just
+> have a section with a number of examples of good microprojects on this
+> https://git.github.io/General-Microproject-Information/ page. It will
+> be easier to update this section when we know about other good ideas
+> or better ideas, or when we want to remove an idea that we don't
+> consider good anymore, or just update an idea.
+
+If we have curated one-stop shop for microproject candidates to make
+it easy to find them, it would be a vast improvement over the status
+quo.  The easier for us to update the contents of the list, the
+better for participants.  Having only one place that we need to look
+at is one way to do so, and the general microproject information
+page would be the best place to host it.  I like it.
+
+>> Then it goes on to suggest finding a bug report, but I tend to think
+>> that fixing them is way oversized to be a good microproject.
 >
->> '--dd' only makes sense for 'git log' and 'git show', so add it to
->> __git_log_show_options which is referenced in the completion for these
->> two commands.
->>
->> Signed-off-by: Sergey Organov <sorganov@gmail.com>
->> ---
->>  contrib/completion/git-completion.bash | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
->> index 133ec92bfae7..ca4fa39f3ff8 100644
->> --- a/contrib/completion/git-completion.bash
->> +++ b/contrib/completion/git-completion.bash
->> @@ -2042,7 +2042,7 @@ __git_log_shortlog_options="
->>  "
->>  # Options accepted by log and show
->>  __git_log_show_options="
->> -	--diff-merges --diff-merges= --no-diff-merges --remerge-diff
->> +	--diff-merges --diff-merges= --no-diff-merges --dd --remerge-diff
->>  "
->>  
->>  __git_diff_merges_opts="off none on first-parent 1 separate m combined c dense-combined cc remerge r"
+> I agree that it's oversized for most bugs. I have just added the
+> following paragraph at the end of this "Searching for bug reports"
+> subsection:
 >
-> Quite straight-forward.  I am kind of surprised that we do not have
-> to list "--cc" here.  Perhaps it is so short and common that people
-> do not need completion help?
->
-> But that is not a new problem caused by this series, so it is OK.
->
-> Unless "--cc" gets completed without being listed here, using some
-> automation like the "--git-completion-helper" option, in which case
-> we may want to see if we can remove all of the above and complete
-> them the same way as "--cc" gets completed.  I didn't check.
+> "Also some bugs are difficult to understand and require too much or
+> too difficult work for a microproject, so don=E2=80=99t spend too much =
+time on
+> them if it appears that they might not be simple to fix, and don=E2=80=99=
+t
+> hesitate to ask on the mailing list if they are a good microproject."
 
-I checked, though with rather old 2.25.1 running on my Ubuntu, and it
-is not completed.
+Would that be better, or would it be simpler to gut the whole
+paragraph about bug reports?  This is "how to pick a microproject",
+not "how to pick your main project to work on during your mentoring
+program".
 
-I think that it's still a good idea to add --cc to completions, so that
-it's there in the suggested completion list, for the sake of
-discoverability. That's why I bothered to add --dd to the completions.
+Unlike #leftoverbits that sometimes cover trivial but boring style
+normalization and easy refactoring of code into helper functions, I
+have never seen a bug report on the list that may make a good
+microproject.  If we were to add a curated list of microproject idea
+on the general microproject information page, it probably is better
+to remove these mentions of bugreports and #leftoverbits, so that
+readers will not get distracted.  "Don't hesitate to ask" so that
+they may try to tackle more challenging one, if they wish, is a good
+thing to say nevertheless.
 
-Thanks,
--- Sergey Organov
-
-
->
-> Thanks.
+Thanks.
