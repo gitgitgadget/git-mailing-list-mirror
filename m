@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D5C4E94134
-	for <git@archiver.kernel.org>; Fri,  6 Oct 2023 22:02:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84FE7E94133
+	for <git@archiver.kernel.org>; Fri,  6 Oct 2023 22:02:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233603AbjJFWCD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Oct 2023 18:02:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39588 "EHLO
+        id S233630AbjJFWCF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Oct 2023 18:02:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233614AbjJFWCA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Oct 2023 18:02:00 -0400
-Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40F52CE
-        for <git@vger.kernel.org>; Fri,  6 Oct 2023 15:01:58 -0700 (PDT)
-Received: by mail-qk1-x734.google.com with SMTP id af79cd13be357-7740cf93901so155894385a.2
-        for <git@vger.kernel.org>; Fri, 06 Oct 2023 15:01:58 -0700 (PDT)
+        with ESMTP id S233545AbjJFWCC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Oct 2023 18:02:02 -0400
+Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09B8DC6
+        for <git@vger.kernel.org>; Fri,  6 Oct 2023 15:02:01 -0700 (PDT)
+Received: by mail-qk1-x72c.google.com with SMTP id af79cd13be357-7741c5bac51so164523585a.1
+        for <git@vger.kernel.org>; Fri, 06 Oct 2023 15:02:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1696629717; x=1697234517; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1696629720; x=1697234520; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=+mW8hc27WncfN/IxezQKjo6JZB6oeTpfnoy0nHgvO/A=;
-        b=oC1foAKlbf4CJXUyzifElT6sQp083KBHo75PyQoGDY/eDZvrjgiNeuIIpIEKVjXf0K
-         GrfjvBMTTfUNLvyxb20GEEMqt+D5ZSj6R16c1jUId3H6oCzTMWgq8G9Wzf+wooNcEYaU
-         RxKqW01o7pVLL8WHp3TKnS8M6cSK8TkHZPh2tk+y2qap8xt+aQ8fqWUGe8i+mCZ1cjMO
-         gi2pYYCJcVotq3iP4h5SktlQnhk+HuacvlHw1CZi7lnQJhNTwxfW6lpowT41cpBEaXmc
-         o28BSmo2oTBoAIoSDf/Xda1fLF44tMkDcDcEjrk9bWrSocnKK6olsWTUk+pl4iPoNDkW
-         stZw==
+        bh=PEfiUoaCsKtEaNT9T49KMG0BkYQOfIczSGf0JPJ2QGE=;
+        b=mGSpu1CSra9+IrOTwNVjmUvxV1IvOePEtSQfoUELfv0s3oPoPHLAjwNJu8pSx+Jipc
+         HqP6yH4tvDYDiZ1peCNz/dK8Y748g1ZEyis0xYomh3KlYRqejgkaN9aGWjz278nAulWR
+         ZMmxlgyqEDng0aJpBfcDLMaOVdAzNlv2KSrhJPiGjbCVzG7OnsPI9W6wjUl5k4DsqRhA
+         ejtLtNSfUlo6TjNblcoF15yIFpw/nbQseJhaNiKql642X/jkIsF5KFsAkOC8CXjXXG3J
+         iWvw8Fw2VucWVca0Fro5Mz7gg0YywUWcvslInhwLjlfUBLSVy5ELtx+KJCtUuUs4Sc64
+         W3QA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696629717; x=1697234517;
+        d=1e100.net; s=20230601; t=1696629720; x=1697234520;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+mW8hc27WncfN/IxezQKjo6JZB6oeTpfnoy0nHgvO/A=;
-        b=bZfAzBcTHzJcMHfmyLQ9IthlwSr6EqB830ol/9bYdanZP7ECq0dpYiKoGgX2+5fz71
-         ZIUWqB1vXx6a62JHAuOI83hk1DDWW85LwPWSlovT4BMuQZEsWkBLHqhAPVJSNzrqcEK+
-         zo4K+6KoqYBuRvxTz2qDNn+8jZ6we+eMS0qT/Mli15+a7N3qB/mNR+bGxh0l7g8DFzup
-         8uLj3GqGtNV3URbbzeb4DlN25f4SI+S6LQNf3IgdvuN0SfX2HNRZ07T0JDSNuKRY9HSi
-         jCH8mnlcNG4gFOXrw7SfVCsJIInRbn8y1RWDmbMMrbMrTuxxygmZmvncVuqZCh0esUcj
-         efdA==
-X-Gm-Message-State: AOJu0YxwnSdepdA+VKJsF/toJo20uzip2mkhqrU/RuhctLV+9wqj8vyA
-        ENBnWAV6EfZ6KGfUG+MqXGAq3ppIaNO+i2GKC43w3w==
-X-Google-Smtp-Source: AGHT+IGGozNCBk5COK95F+HFuw+s8OR1reqdUWDQCaqUJqIXPQXWvAfbsJ5W8GeCQcj1i/SuH0Mvig==
-X-Received: by 2002:a05:620a:3949:b0:772:4706:99c0 with SMTP id qs9-20020a05620a394900b00772470699c0mr10181212qkn.26.1696629717138;
-        Fri, 06 Oct 2023 15:01:57 -0700 (PDT)
+        bh=PEfiUoaCsKtEaNT9T49KMG0BkYQOfIczSGf0JPJ2QGE=;
+        b=rzkEeoSg543YVsLjjRr5yk45B/XSzAXrt0ZtzkaWBOMBaelaTYZvIWCSg3PjWJVILA
+         E9P6jbTBubP1/nj9yOUcynV0osSsfIi9utQ+q1/0NTuSEP5reqWk1Oo8IDXxP7LyJ5pc
+         q83IKhjUlCzWjheeZt0jXmjNd4N682gPAh0fWhZQqQ5UlpL0vr9KFQ+53VbWTIBFX8gO
+         PEF2FTVTy4j+0IaeT2m5JYRVuIalQh1HIGfybOggZiJfBxxfJjWkLqU8MpwHxa5d931y
+         u7fO2815ZOOFEFU+G7OE5KU0ilxVA8uH3s+JGfps2jcq51tKRkRIQWSyJzBXeJuaHbpX
+         ZuEw==
+X-Gm-Message-State: AOJu0Ywbv/MWDyv+3g2wGdmhaW8DtJEly7aJzImNwE904IJfSUQ7NIqd
+        YNen/OB9YCVqtEOciGV48YlH9OaaBLKwUJXzrNhP1A==
+X-Google-Smtp-Source: AGHT+IGsqz/allKA+wGYUWuXOBNE+h72I/uQHIZ1LHFkao4YMjYIblnNJ+7DzUOfUpqRw+OkVY10nA==
+X-Received: by 2002:a05:620a:444c:b0:775:9bc3:c492 with SMTP id w12-20020a05620a444c00b007759bc3c492mr12217442qkp.7.1696629719875;
+        Fri, 06 Oct 2023 15:01:59 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id o24-20020a05620a111800b0075ca4cd03d4sm1611094qkk.64.2023.10.06.15.01.56
+        by smtp.gmail.com with ESMTPSA id v9-20020ae9e309000000b0076d25b11b62sm1615988qkf.38.2023.10.06.15.01.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Oct 2023 15:01:56 -0700 (PDT)
-Date:   Fri, 6 Oct 2023 18:01:55 -0400
+        Fri, 06 Oct 2023 15:01:59 -0700 (PDT)
+Date:   Fri, 6 Oct 2023 18:01:58 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Elijah Newren <newren@gmail.com>,
         "Eric W. Biederman" <ebiederm@gmail.com>,
         Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/7] bulk-checkin: factor out `truncate_checkpoint()`
-Message-ID: <f392ed2211d6d0d2dc99941f7fb44dcd978affb5.1696629697.git.me@ttaylorr.com>
+Subject: [PATCH 4/7] bulk-checkin: factor our `finalize_checkpoint()`
+Message-ID: <9c6ca564adf297e77e3304ef06692b8c82cddfd6.1696629697.git.me@ttaylorr.com>
 References: <cover.1696629697.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -65,59 +65,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a similar spirit as previous commits, factor our the routine to
-truncate a bulk-checkin packfile when writing past the pack size limit.
+In a similar spirit as previous commits, factor out the routine to
+finalize the just-written object from the bulk-checkin mechanism.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- bulk-checkin.c | 27 +++++++++++++++++----------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ bulk-checkin.c | 41 +++++++++++++++++++++++++----------------
+ 1 file changed, 25 insertions(+), 16 deletions(-)
 
 diff --git a/bulk-checkin.c b/bulk-checkin.c
-index 377c41f3ad..2dae8be461 100644
+index 2dae8be461..a9497fcb28 100644
 --- a/bulk-checkin.c
 +++ b/bulk-checkin.c
-@@ -273,6 +273,22 @@ static void prepare_checkpoint(struct bulk_checkin_packfile *state,
- 	}
+@@ -289,6 +289,30 @@ static void truncate_checkpoint(struct bulk_checkin_packfile *state,
+ 	flush_bulk_checkin_packfile(state);
  }
  
-+static void truncate_checkpoint(struct bulk_checkin_packfile *state,
++static void finalize_checkpoint(struct bulk_checkin_packfile *state,
++				git_hash_ctx *ctx,
 +				struct hashfile_checkpoint *checkpoint,
-+				struct pack_idx_entry *idx)
++				struct pack_idx_entry *idx,
++				struct object_id *result_oid)
 +{
-+	/*
-+	 * Writing this object to the current pack will make
-+	 * it too big; we need to truncate it, start a new
-+	 * pack, and write into it.
-+	 */
++	the_hash_algo->final_oid_fn(result_oid, ctx);
 +	if (!idx)
-+		BUG("should not happen");
-+	hashfile_truncate(state->f, checkpoint);
-+	state->offset = checkpoint->offset;
-+	flush_bulk_checkin_packfile(state);
++		return;
++
++	idx->crc32 = crc32_end(state->f);
++	if (already_written(state, result_oid)) {
++		hashfile_truncate(state->f, checkpoint);
++		state->offset = checkpoint->offset;
++		free(idx);
++	} else {
++		oidcpy(&idx->oid, result_oid);
++		ALLOC_GROW(state->written,
++			   state->nr_written + 1,
++			   state->alloc_written);
++		state->written[state->nr_written++] = idx;
++	}
 +}
 +
  static int deflate_blob_to_pack(struct bulk_checkin_packfile *state,
  				struct object_id *result_oid,
  				int fd, size_t size,
-@@ -300,16 +316,7 @@ static int deflate_blob_to_pack(struct bulk_checkin_packfile *state,
- 		if (!stream_blob_to_pack(state, &ctx, &already_hashed_to,
- 					 fd, size, path, flags))
- 			break;
--		/*
--		 * Writing this object to the current pack will make
--		 * it too big; we need to truncate it, start a new
--		 * pack, and write into it.
--		 */
--		if (!idx)
--			BUG("should not happen");
--		hashfile_truncate(state->f, &checkpoint);
--		state->offset = checkpoint.offset;
--		flush_bulk_checkin_packfile(state);
-+		truncate_checkpoint(state, &checkpoint, idx);
+@@ -320,22 +344,7 @@ static int deflate_blob_to_pack(struct bulk_checkin_packfile *state,
  		if (lseek(fd, seekback, SEEK_SET) == (off_t) -1)
  			return error("cannot seek back");
  	}
+-	the_hash_algo->final_oid_fn(result_oid, &ctx);
+-	if (!idx)
+-		return 0;
+-
+-	idx->crc32 = crc32_end(state->f);
+-	if (already_written(state, result_oid)) {
+-		hashfile_truncate(state->f, &checkpoint);
+-		state->offset = checkpoint.offset;
+-		free(idx);
+-	} else {
+-		oidcpy(&idx->oid, result_oid);
+-		ALLOC_GROW(state->written,
+-			   state->nr_written + 1,
+-			   state->alloc_written);
+-		state->written[state->nr_written++] = idx;
+-	}
++	finalize_checkpoint(state, &ctx, &checkpoint, idx, result_oid);
+ 	return 0;
+ }
+ 
 -- 
 2.42.0.8.g7a7e1e881e.dirty
 
