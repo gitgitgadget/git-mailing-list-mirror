@@ -2,104 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15262E94100
-	for <git@archiver.kernel.org>; Fri,  6 Oct 2023 19:03:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D1A1E94100
+	for <git@archiver.kernel.org>; Fri,  6 Oct 2023 19:09:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233277AbjJFTD0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Oct 2023 15:03:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36864 "EHLO
+        id S233318AbjJFTJz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Oct 2023 15:09:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232789AbjJFTDZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Oct 2023 15:03:25 -0400
+        with ESMTP id S232789AbjJFTJy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Oct 2023 15:09:54 -0400
 Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 460A895
-        for <git@vger.kernel.org>; Fri,  6 Oct 2023 12:03:24 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 093AE95
+        for <git@vger.kernel.org>; Fri,  6 Oct 2023 12:09:54 -0700 (PDT)
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 93CD41AEF4C;
-        Fri,  6 Oct 2023 15:03:23 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AFC351AF016;
+        Fri,  6 Oct 2023 15:09:53 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=eNEUYQrtiw2t
-        JrcUK+arjwPb1l46PFuOjhIBdU5pLdA=; b=dTpEKC8XTqn6RqwMZ2eovidd9ENP
-        FjxocIhYlWi88/aGtvfZi9z3BVIJbnDkA+RdjwFyJaIEpQnBidl+dir1yP4HCpFs
-        KmJ7niz17gkRrIogX6Z1f26qADGdV/P0dpURgSxIAia0SBA3VA2W3uVP5Nuiycb0
-        c/8oOc0fTrv2KBs=
+        :content-type; s=sasl; bh=khUecw6pJ8vw3qVHCPHrhHn5tmU+AwtE0Dyx7y
+        0FYkc=; b=tTwJwDD/P/CyybivkJZk1hyK5v6xCt9gZXVLYQNXQt9peEa7FHubBu
+        M8pn77m5FWS02Xh84dano3uR5DgZpXMkD4D3W/+WoOLZtEYu8amBh8r8fAOidPVa
+        ZBl2qRNk3eI4KzBx+0gKL0AFtDi5aQ4lhBSfl3KUya+wn4zmWYSik=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8A5E91AEF4B;
-        Fri,  6 Oct 2023 15:03:23 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A6E581AF015;
+        Fri,  6 Oct 2023 15:09:53 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.165.85])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F19AC1AEF4A;
-        Fri,  6 Oct 2023 15:03:22 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 16E241AF014;
+        Fri,  6 Oct 2023 15:09:53 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Naomi Ibe <naomi.ibeh69@gmail.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Subject: Re: How To Pick And Work On A Microproject
-In-Reply-To: <CAP8UFD1cd5YZqAxYbYUMNkAYJLLGjBpNe_NK5nVq3eLxxSDzEQ@mail.gmail.com>
-        (Christian Couder's message of "Fri, 6 Oct 2023 11:02:01 +0200")
-References: <CACS=G2z84_-WkWa-BnK8bNNqb9z_o37BC3-kb_NkrjzAL=r4Sg@mail.gmail.com>
-        <xmqq7co0elnt.fsf@gitster.g>
-        <CAP8UFD1cd5YZqAxYbYUMNkAYJLLGjBpNe_NK5nVq3eLxxSDzEQ@mail.gmail.com>
-Date:   Fri, 06 Oct 2023 12:03:21 -0700
-Message-ID: <xmqq1qe7a806.fsf@gitster.g>
+To:     "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Victoria Dye <vdye@github.com>
+Subject: Re: [PATCH 0/4] Performance improvement & cleanup in loose ref
+ iteration
+In-Reply-To: <pull.1594.git.1696615769.gitgitgadget@gmail.com> (Victoria Dye
+        via GitGitGadget's message of "Fri, 06 Oct 2023 18:09:25 +0000")
+References: <pull.1594.git.1696615769.gitgitgadget@gmail.com>
+Date:   Fri, 06 Oct 2023 12:09:51 -0700
+Message-ID: <xmqqwmvz8t4w.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 05706C58-647B-11EE-82D3-25B3960A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: EDF651FE-647B-11EE-A7C7-25B3960A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+"Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> I am not sure how others feel about this, but I think it would be
-> better in the future to not have to prepare such pages, and to just
-> have a section with a number of examples of good microprojects on this
-> https://git.github.io/General-Microproject-Information/ page. It will
-> be easier to update this section when we know about other good ideas
-> or better ideas, or when we want to remove an idea that we don't
-> consider good anymore, or just update an idea.
-
-If we have curated one-stop shop for microproject candidates to make
-it easy to find them, it would be a vast improvement over the status
-quo.  The easier for us to update the contents of the list, the
-better for participants.  Having only one place that we need to look
-at is one way to do so, and the general microproject information
-page would be the best place to host it.  I like it.
-
->> Then it goes on to suggest finding a bug report, but I tend to think
->> that fixing them is way oversized to be a good microproject.
+> While investigating ref iteration performance in builtins like
+> 'for-each-ref' and 'show-ref', I found two small improvement opportunities.
 >
-> I agree that it's oversized for most bugs. I have just added the
-> following paragraph at the end of this "Searching for bug reports"
-> subsection:
+> The first patch tweaks the logic around prefix matching in
+> 'cache_ref_iterator_advance' so that we correctly skip refs that do not
+> actually match a given prefix. The unnecessary iteration doesn't seem to be
+> causing any bugs in the ref iteration commands that I've tested, but it
+> doesn't hurt to be more precise (and it helps with some other patches I'm
+> working on ;) ).
 >
-> "Also some bugs are difficult to understand and require too much or
-> too difficult work for a microproject, so don=E2=80=99t spend too much =
-time on
-> them if it appears that they might not be simple to fix, and don=E2=80=99=
-t
-> hesitate to ask on the mailing list if they are a good microproject."
+> The next three patches update how 'loose_fill_ref_dir' determines the type
+> of ref cache entry to create (directory or regular). On platforms that
+> include d_type information in 'struct dirent' (as far as I can tell, all
+> except NonStop & certain versions of Cygwin), this allows us to skip calling
+> 'stat'. In ad-hoc testing, this improved performance of 'git for-each-ref'
+> by about 20%.
 
-Would that be better, or would it be simpler to gut the whole
-paragraph about bug reports?  This is "how to pick a microproject",
-not "how to pick your main project to work on during your mentoring
-program".
+Yay.  That is a very obvious one, once it is pointed out.  Thanks
+for noticing and improving.  Looking forward to reading the patches
+themselves.
 
-Unlike #leftoverbits that sometimes cover trivial but boring style
-normalization and easy refactoring of code into helper functions, I
-have never seen a bug report on the list that may make a good
-microproject.  If we were to add a curated list of microproject idea
-on the general microproject information page, it probably is better
-to remove these mentions of bugreports and #leftoverbits, so that
-readers will not get distracted.  "Don't hesitate to ask" so that
-they may try to tackle more challenging one, if they wish, is a good
-thing to say nevertheless.
-
-Thanks.
