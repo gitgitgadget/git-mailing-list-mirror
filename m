@@ -2,185 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FD7DE94131
-	for <git@archiver.kernel.org>; Fri,  6 Oct 2023 22:00:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AFA9CE94134
+	for <git@archiver.kernel.org>; Fri,  6 Oct 2023 22:01:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233346AbjJFWAZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Oct 2023 18:00:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42832 "EHLO
+        id S233397AbjJFWBv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Oct 2023 18:01:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233248AbjJFWAX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Oct 2023 18:00:23 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 932A2BE
-        for <git@vger.kernel.org>; Fri,  6 Oct 2023 15:00:22 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3F76A27EA6;
-        Fri,  6 Oct 2023 18:00:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=1GzNxSBEMtXs1Ykg5Y9Jv8RbbbMu2f8Q3f8Vbl
-        u7i1M=; b=wSQHN0Cvkes+zhq3zqGDov9fqjmPH5ex1/+few2G6yV0sTxp3LeRZq
-        YoQKs9CbggUkaR8m1eAevuiJ0qRqX/lPRbYefIdIr+6rkvYA92rP1eeKxJcSzfcP
-        RJ0Eeqe49hdfiOl9ATzFylfQnU3SwQSEuDf1FWWAtAEKy7bPAgVbs=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 38E6527EA5;
-        Fri,  6 Oct 2023 18:00:22 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.165.85])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id AE22F27EA2;
-        Fri,  6 Oct 2023 18:00:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Victoria Dye <vdye@github.com>
-Subject: Re: [PATCH 2/4] dir.[ch]: expose 'get_dtype'
-In-Reply-To: <24014010ea350a2ea8676b6560ca1d60838c56ef.1696615769.git.gitgitgadget@gmail.com>
-        (Victoria Dye via GitGitGadget's message of "Fri, 06 Oct 2023 18:09:27
-        +0000")
-References: <pull.1594.git.1696615769.gitgitgadget@gmail.com>
-        <24014010ea350a2ea8676b6560ca1d60838c56ef.1696615769.git.gitgitgadget@gmail.com>
-Date:   Fri, 06 Oct 2023 15:00:17 -0700
-Message-ID: <xmqq1qe78l8u.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        with ESMTP id S233248AbjJFWBu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Oct 2023 18:01:50 -0400
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E44C8BD
+        for <git@vger.kernel.org>; Fri,  6 Oct 2023 15:01:48 -0700 (PDT)
+Received: by mail-qk1-x730.google.com with SMTP id af79cd13be357-776f84c6cc7so66319885a.2
+        for <git@vger.kernel.org>; Fri, 06 Oct 2023 15:01:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1696629708; x=1697234508; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9OD7IFcUB2zj1tB8vAzCkpHwOQ3WEtGWMMjfWW6VvUo=;
+        b=Wv2b0NZwfD9wUkV5gGjDdrW9/kZNTQka8MMo7WaqPHMLgGzVgVGjRbwKYvfA8dMDUt
+         HH50+ZFRXxa4RZpdgd1FufCN1C5RrQbZ/9DqPvEYM1hgpV5pR/kDbppRcSbHd3gjPWQ3
+         1EPhi5iF141wOXWIysOI/fiuIOfM0JQDGISgIFvq0aiRKAPWczSiBkJBBo+NiJXKPUuv
+         8JePmZXdVxtfxv9sGeLycd67Mv5q2Ql86BoEntjcOK3pYPH1erI9oV/rKxFfbo1Os79K
+         TjFPMpQ+xIlrnWIlFHRJ/U/yVMOHTnGbNWUStnvwW/IKjLF3gCfzCaEpB4AnzPTyfNJ3
+         ZL8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696629708; x=1697234508;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9OD7IFcUB2zj1tB8vAzCkpHwOQ3WEtGWMMjfWW6VvUo=;
+        b=pi/UEG9GVP+6Nqdzfnj8DoKOvVUp4uvDaZk3Fb+fXQkdAEKyOXWdKjPZDQoyK+XNUi
+         /cqS0kbBJCwUEcR/+L83YBJs4Gq+BjCJHAyplX9PJ2/YMLztvIdxtwe6lv0LVDP8L6SE
+         DxWjSmuofYlAuvPSfax9ZmrT7ZZQ3kB3fXhD64zIol7Nc1vVl6ft6aFbE/aNBoM4+Oh8
+         y/anlNTfP/so3RJRgKApsh5VoZIZkExJyNMFgH4IoUPJ1GbMDXQE6g6wTLyU9z0KP+n8
+         X9bXLu7kOOGDLeNdAwmLTAlsd4p5noUPf8KKO5XeI9Bcl8fiG1QIeUQ5VKcOuNWv1IJI
+         DQnw==
+X-Gm-Message-State: AOJu0Yy8K9GeZw8EOPNnzdUVsdn56S+xlygwZ6n1bdJpKttN0fFeHm7p
+        38ZA10raQhc9f+wiC0nlKtgZGrRhaNp52atMJv605Q==
+X-Google-Smtp-Source: AGHT+IFwGpoUhcvwpEcBRhJTPRJl5BZmgqTDgVOPjzY/OVj3By+nT5yvpXtAjLFfOaVLoGFLinx/CA==
+X-Received: by 2002:a05:620a:4402:b0:76e:ef9e:9e59 with SMTP id v2-20020a05620a440200b0076eef9e9e59mr13082586qkp.4.1696629707857;
+        Fri, 06 Oct 2023 15:01:47 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id k27-20020a05620a143b00b007742c6823a3sm1606351qkj.108.2023.10.06.15.01.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Oct 2023 15:01:47 -0700 (PDT)
+Date:   Fri, 6 Oct 2023 18:01:39 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>,
+        "Eric W. Biederman" <ebiederm@gmail.com>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/7] merge-ort: implement support for packing objects together
+Message-ID: <cover.1696629697.git.me@ttaylorr.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BCE69E44-6493-11EE-9A02-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com> writes:
+(Based on the tip of 'eb/limit-bulk-checkin-to-blobs'.)
 
-> From: Victoria Dye <vdye@github.com>
->
-> Move 'get_dtype()' from 'diagnose.c' to 'dir.c' and add its declaration to
-> 'dir.h' so that it is accessible to callers in other files. The function and
-> its documentation are moved verbatim except for a small addition to the
-> description clarifying what the 'path' arg represents.
->
-> Signed-off-by: Victoria Dye <vdye@github.com>
-> ---
->  diagnose.c | 36 ------------------------------------
->  dir.c      | 28 ++++++++++++++++++++++++++++
->  dir.h      | 11 +++++++++++
->  3 files changed, 39 insertions(+), 36 deletions(-)
+This series implements support for a new merge-tree option,
+`--write-pack`, which causes any newly-written objects to be packed
+together instead of being stored individually as loose.
 
-OK.  diagnose.c should still have access to the function as it
-includes <dir.h>, and to anybody that includes <dir.h> and sees the
-declaration of get_dtype(), DT_FOO should be visible because <dir.h>
-includes <statinfo.h> that has fallback definition of DT_FOO.
+The motivating use-case behind these changes is to better support
+repositories who invoke merge-tree frequently, generating a potentially
+large number of loose objects, resulting in a possible adverse effect on
+performance.
 
-Looking simple and straight-forward.
+The majority of the changes here are preparatory to refactor common
+routines out of the bulk-checkin machinery to prepare for indexing
+different types of objects whose contents can be held in-core.
 
+Also worth noting is the relative ease this series can be adapted to
+support the $NEW_HASH interop work in 'eb/hash-transition-rfc'. For more
+details on the relatively small number of changes necessary to make that
+work, see the log message of the second-to-last patch.
 
-> diff --git a/diagnose.c b/diagnose.c
-> index 8430064000b..fc4d344bd63 100644
-> --- a/diagnose.c
-> +++ b/diagnose.c
-> @@ -71,42 +71,6 @@ static int dir_file_stats(struct object_directory *object_dir, void *data)
->  	return 0;
->  }
->  
-> -/*
-> - * Get the d_type of a dirent. If the d_type is unknown, derive it from
-> - * stat.st_mode.
-> - *
-> - * Note that 'path' is assumed to have a trailing slash. It is also modified
-> - * in-place during the execution of the function, but is then reverted to its
-> - * original value before returning.
-> - */
-> -static unsigned char get_dtype(struct dirent *e, struct strbuf *path)
-> -{
-> -	struct stat st;
-> -	unsigned char dtype = DTYPE(e);
-> -	size_t base_path_len;
-> -
-> -	if (dtype != DT_UNKNOWN)
-> -		return dtype;
-> -
-> -	/* d_type unknown in dirent, try to fall back on lstat results */
-> -	base_path_len = path->len;
-> -	strbuf_addstr(path, e->d_name);
-> -	if (lstat(path->buf, &st))
-> -		goto cleanup;
-> -
-> -	/* determine d_type from st_mode */
-> -	if (S_ISREG(st.st_mode))
-> -		dtype = DT_REG;
-> -	else if (S_ISDIR(st.st_mode))
-> -		dtype = DT_DIR;
-> -	else if (S_ISLNK(st.st_mode))
-> -		dtype = DT_LNK;
-> -
-> -cleanup:
-> -	strbuf_setlen(path, base_path_len);
-> -	return dtype;
-> -}
-> -
->  static int count_files(struct strbuf *path)
->  {
->  	DIR *dir = opendir(path->buf);
-> diff --git a/dir.c b/dir.c
-> index 8486e4d56ff..5e01af3a25e 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -2235,6 +2235,34 @@ static int get_index_dtype(struct index_state *istate,
->  	return DT_UNKNOWN;
->  }
->  
-> +unsigned char get_dtype(struct dirent *e, struct strbuf *path)
-> +{
-> +	struct stat st;
-> +	unsigned char dtype = DTYPE(e);
-> +	size_t base_path_len;
-> +
-> +	if (dtype != DT_UNKNOWN)
-> +		return dtype;
-> +
-> +	/* d_type unknown in dirent, try to fall back on lstat results */
-> +	base_path_len = path->len;
-> +	strbuf_addstr(path, e->d_name);
-> +	if (lstat(path->buf, &st))
-> +		goto cleanup;
-> +
-> +	/* determine d_type from st_mode */
-> +	if (S_ISREG(st.st_mode))
-> +		dtype = DT_REG;
-> +	else if (S_ISDIR(st.st_mode))
-> +		dtype = DT_DIR;
-> +	else if (S_ISLNK(st.st_mode))
-> +		dtype = DT_LNK;
-> +
-> +cleanup:
-> +	strbuf_setlen(path, base_path_len);
-> +	return dtype;
-> +}
-> +
->  static int resolve_dtype(int dtype, struct index_state *istate,
->  			 const char *path, int len)
->  {
-> diff --git a/dir.h b/dir.h
-> index ad06682fd54..28c630ce806 100644
-> --- a/dir.h
-> +++ b/dir.h
-> @@ -363,6 +363,17 @@ struct dir_struct {
->  
->  struct dirent *readdir_skip_dot_and_dotdot(DIR *dirp);
->  
-> +/*
-> + * Get the d_type of a dirent. If the d_type is unknown, derive it from
-> + * stat.st_mode using the path to the dirent's containing directory (path) and
-> + * the name of the dirent itself.
-> + *
-> + * Note that 'path' is assumed to have a trailing slash. It is also modified
-> + * in-place during the execution of the function, but is then reverted to its
-> + * original value before returning.
-> + */
-> +unsigned char get_dtype(struct dirent *e, struct strbuf *path);
-> +
->  /*Count the number of slashes for string s*/
->  int count_slashes(const char *s);
+Thanks in advance for your review!
+
+Taylor Blau (7):
+  bulk-checkin: factor out `format_object_header_hash()`
+  bulk-checkin: factor out `prepare_checkpoint()`
+  bulk-checkin: factor out `truncate_checkpoint()`
+  bulk-checkin: factor our `finalize_checkpoint()`
+  bulk-checkin: introduce `index_blob_bulk_checkin_incore()`
+  bulk-checkin: introduce `index_tree_bulk_checkin_incore()`
+  builtin/merge-tree.c: implement support for `--write-pack`
+
+ Documentation/git-merge-tree.txt |   4 +
+ builtin/merge-tree.c             |   5 +
+ bulk-checkin.c                   | 249 ++++++++++++++++++++++++++-----
+ bulk-checkin.h                   |   8 +
+ merge-ort.c                      |  43 ++++--
+ merge-recursive.h                |   1 +
+ t/t4301-merge-tree-write-tree.sh |  93 ++++++++++++
+ 7 files changed, 355 insertions(+), 48 deletions(-)
+
+-- 
+2.42.0.8.g7a7e1e881e.dirty
