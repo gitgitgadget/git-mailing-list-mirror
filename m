@@ -2,96 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F896E81E1E
-	for <git@archiver.kernel.org>; Fri,  6 Oct 2023 17:18:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F43AE81E1B
+	for <git@archiver.kernel.org>; Fri,  6 Oct 2023 17:20:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232766AbjJFRSV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Oct 2023 13:18:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54996 "EHLO
+        id S232636AbjJFRUd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Oct 2023 13:20:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229900AbjJFRSU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Oct 2023 13:18:20 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC4EEAD
-        for <git@vger.kernel.org>; Fri,  6 Oct 2023 10:18:18 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2c012232792so29020091fa.0
-        for <git@vger.kernel.org>; Fri, 06 Oct 2023 10:18:18 -0700 (PDT)
+        with ESMTP id S229900AbjJFRUa (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Oct 2023 13:20:30 -0400
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4A3CBF
+        for <git@vger.kernel.org>; Fri,  6 Oct 2023 10:20:25 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id 3f1490d57ef6-d81646fcf3eso3331542276.0
+        for <git@vger.kernel.org>; Fri, 06 Oct 2023 10:20:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696612697; x=1697217497; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=0b57ZukO1rZUBXYoJMN+rU7pm5QiCmzxm21V5ytH+oA=;
-        b=bkvPcdlIyTJ5Fh4w4/PDyNRy9JZS7h3RxEVQilRGb7rhoDdKLXfQcii6gUE9JV/Tpy
-         21CoWnKVHmcoKLc90nW0P39+hR7VnVvd8T6Rz3Z0wiZbHBQ0NV/RX7AUh5KUkQ9yB7rv
-         C1w15IexwCOsD5Exx8f9pxr8JI+PKiDs9jE7WlcAW8j0jw8EcSzCN1WtUX3N90IuRJnq
-         r9oDR1agEeM2csva3koUVJGbfow9hbBTkyIhCJAzI+dKj+cD0uMG0vCaoq+X44/VdBix
-         kzru64Sh2V4Uj+UqI8ifT6bdPOjCVP543QQnaPHMZE1rPfA8lFwSMpOg+zeVprEFcy7T
-         xUEg==
+        d=google.com; s=20230601; t=1696612825; x=1697217625; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=meyAnGDbuQpvOhJOtRP8HhGqbeZluh8ATZLfycX9KPM=;
+        b=Lf1BJ7WKgrdE5evZOKCY5EGtKdaJaafgJ/hZGaYK6wT2/BkpRqR2reIR6y8liAXKGP
+         xk/8yIHsiMnyzojdvMchdeySPepfZyq7L5Zq2iU2ZpJbL4WeUpoOEw/0q+LvY0n14GiG
+         SjG8/xFBEhKCeEAX7SAdLF6CFhXnbStsOHZ/t43LtAaqW7/l0amqVch9aIS8GKyWmPue
+         4xvLNfvMosEVMiq5ICyrXdTTZJK3HIgcOKrDNL2OywL9oAXtZAxh2lS6JfOty77KhAXH
+         0qCC4z+FByS1ZMEPN9qQDhhNs7CTxxjf6a93XBcUTCyaYowgCv9muiYAZgJZaqS/5xzG
+         9CcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696612697; x=1697217497;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0b57ZukO1rZUBXYoJMN+rU7pm5QiCmzxm21V5ytH+oA=;
-        b=bzAWE8iyIIDILjCA2zLB5ER8iHlrkZSM6rbwWrUVfxsVetbwWeN4BhRkHx7VdUJFfr
-         AxUyyioPzwNfJZvuDgLIbBwYN74wX1JAzXJ+RC8GAji/lUxBOHsHZYk/bHNQNEXXvlfj
-         rb53xhuEUz5F7zSoOovJy2IL5jakYd2Tr1HklHBoH9GE1kJ7R2/df32OqBTC4XZ5gAXp
-         ej3YAaaasK9OhHY3iOcV1difIkMcXwgfpb81Tdc7vcwaK1IaNk/ey8748hZqDZJKaXxX
-         h59cXLukqp8U2M9aokI1DKUB0ivGjyi3romoL8TQmFzwyck8O4+QRH0eCJnUpCIWYwM+
-         ZXEA==
-X-Gm-Message-State: AOJu0Yx16Dj6hLf7ng3l9VFcil1lBsAce2iHaYi5DjHQKX7gsZgoL1pI
-        llWKhYCcZ3J7P6MpUFIkldj26/cbyDA=
-X-Google-Smtp-Source: AGHT+IES1f1bPV9oq4QIsFGT8se7NLdrIJfdrwdZhXMcTSRarKgKvfVE3GcPJ40jQ0y5DLb9492xjQ==
-X-Received: by 2002:ac2:4bcf:0:b0:502:cc8d:f206 with SMTP id o15-20020ac24bcf000000b00502cc8df206mr7666122lfq.23.1696612696763;
-        Fri, 06 Oct 2023 10:18:16 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id g2-20020a2e9cc2000000b002c00e475e23sm858897ljj.131.2023.10.06.10.18.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Oct 2023 10:18:16 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
+        d=1e100.net; s=20230601; t=1696612825; x=1697217625;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=meyAnGDbuQpvOhJOtRP8HhGqbeZluh8ATZLfycX9KPM=;
+        b=cLy6Y6iVwA2tmI/Lr3EaAxL0dps3YwMGe1n9M73JQhuSGw4qrgakhUtzc9Vk1EhNVc
+         eTtJ9I0Eq7H4Sz+j1fxOpamJ94egwQo2IaOtprQl4QlSvcWv4I+4JdJF7O69UepIw4ZZ
+         3+gsCFA21wxUoFS3+OZ73ViZLQl7L6IFLfY2dL8e+QeETAA5+gRDXXAURG4Y6fIcVyf1
+         q75HcIHq46roxUHUtRoU8mVfMb2ObaLgvwbk5OJUs6flYW0L20XzuRo121JgJmf6OJhr
+         LJureQN4qWiLoXp7K5mb98lZgptZFhJ1ovX8qgvV9gwyKZtCUmm0JKex63UnJKYuXG5k
+         ua/Q==
+X-Gm-Message-State: AOJu0Yz0AiGsxW3yPbP0Ymhka8LTcq1sV43j2NKPYSftkJGFQBll9vLr
+        2Iy+zCwXlCfgNPXtmvA5lSEZb7qQ2B/o110zi63w
+X-Google-Smtp-Source: AGHT+IHFoBIxT36pHNyZcLEcu3mCoeotdqV2Re/LOSyZE6PvGw6S+YrxOXjrz60YTc8ytHdMpfJxWcR2G+AEP+1cokhP
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:3bbe:7224:c3d6:1ff1])
+ (user=jonathantanmy job=sendgmr) by 2002:a05:6902:180e:b0:d77:984e:c770 with
+ SMTP id cf14-20020a056902180e00b00d77984ec770mr150658ybb.5.1696612824877;
+ Fri, 06 Oct 2023 10:20:24 -0700 (PDT)
+Date:   Fri,  6 Oct 2023 10:20:22 -0700
+In-Reply-To: <xmqqv8bmlzoi.fsf@gitster.g>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.42.0.609.gbb76f46606-goog
+Message-ID: <20231006172022.1153171-1-jonathantanmy@google.com>
+Subject: Re: [PATCH v2 1/2] attr: add attr.tree for setting the treeish to
+ read attributes from
+From:   Jonathan Tan <jonathantanmy@google.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3 1/3] diff-merges: improve --diff-merges documentation
-References: <20230909125446.142715-1-sorganov@gmail.com>
-        <20231004214558.210339-1-sorganov@gmail.com>
-        <20231004214558.210339-2-sorganov@gmail.com>
-        <xmqq34yog3ux.fsf@gitster.g>
-Date:   Fri, 06 Oct 2023 20:18:15 +0300
-In-Reply-To: <xmqq34yog3ux.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-        05 Oct 2023 14:24:06 -0700")
-Message-ID: <87mswvr7oo.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        John Cai <johncai86@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Junio C Hamano <gitster@pobox.com> writes:
+> As this adds a new call to git_config_get_string(), which will only
+> be available by including <config.h>, a merge-fix into 'seen' of
+> this topic needs to revert what b1bda751 (parse: separate out
+> parsing functions from config.h, 2023-09-29) did, which made this
+> file include only <parse.h>.
+> 
+> As this configuration variable was invented to improve the way the
+> attribute source tree is supported by emulating how mailmap.blob is
+> done, it deserves a bit of comparison.
+> 
+> The way mailmap.c does this is not have any code that reads or
+> parses configuration in mailmap.c (which is a rather library-ish
+> place), and leaves it up to callers to pre-populate the global
+> variable git_mailmap_blob with config.c:git_default_config().  That
+> way, they do not need to include <config.h> (nor <parse.h>) that is
+> closer to the UI layer.  I am wondering why we are not doing the
+> same, and instead making an ad-hoc call to git_config_get_string()
+> in this code, and if it is a good direction to move the codebase to
+> (in which case we may want to make sure that the same pattern is
+> followed in other places).
+> 
+> Folks interested in libification, as to the direction of that
+> effort, what's your plan on where to draw a line between "library"
+> and "userland"?  Should library-ish code be allowed to call
+> git_config_anything()?  I somehow suspect that it might be cleaner
+> if they didn't, and instead have the user of the "attr" module to
+> supply the necessary values from outside.
 
-> Sergey Organov <sorganov@gmail.com> writes:
+I think that ideally library-ish code shouldn't be allowed to call
+config, yes. However I think what's practical would be for libraries
+that use very few config variables to get the necessary values from
+outside, and libraries that use many config variables (e.g. fetch, if it
+becomes a library) to call config.
 
-[...]
+> On the other hand, once the part we have historically called
+> "config" API gets a reasonably solid abstraction so that they become
+> pluggable and replaceable, random ad-hoc calls from library code
+> outside the "config" library code may not be a huge problem, as long
+> as we plumb the necessary object handles around (so "attr" library
+> would need to be told which "config" backend is in use, probably in
+> the form of a struct that holds the various states in to replace
+> the current use of globals, plus a vtable to point at
+> implementations of the "config" service, and git_config_get_string()
+> call in such a truly libified world would grab the value of the named
+> variable transparently from whichever "config" backend is currently
+> in use).
 
->>  --no-diff-merges::
->> +	Synonym for '--diff-merges=off'.
->> +
->> +--diff-merges=<format>::
->>  	Specify diff format to be used for merge commits. Default is
->> -	{diff-merges-default} unless `--first-parent` is in use, in which case
->> -	`first-parent` is the default.
->> +	{diff-merges-default} unless `--first-parent` is in use, in
->> +	which case `first-parent` is the default.
->
-> This reads well.
->
-> In the longer term, "--diff-merge=first-parent" that is used without
-> first-parent traversal should be discouraged and be deprecated, I
-> think, but that is a separate story [*].
-
-I fail to see why useful harmless feature is to be deprecated. I believe
-users are pretty capable to decide if they need it by themselves,
-without our guidance.
-
-Thanks,
--- Sergey Organov
+This is true, but if we were ever to use the attr library elsewhere
+(whether in the git.git repo itself to unit test this library, or
+in another software project), we would need to supply a mock/stub of
+config. If attr uses very few config variables, I think it's clearer if
+it takes in the information from outside.
