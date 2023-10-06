@@ -2,80 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79A61E94139
-	for <git@archiver.kernel.org>; Fri,  6 Oct 2023 22:57:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AF52E94136
+	for <git@archiver.kernel.org>; Fri,  6 Oct 2023 22:58:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233779AbjJFW5P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Oct 2023 18:57:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60072 "EHLO
+        id S233796AbjJFW6g (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Oct 2023 18:58:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233863AbjJFW5O (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Oct 2023 18:57:14 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA429F7
-        for <git@vger.kernel.org>; Fri,  6 Oct 2023 15:57:06 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id F3C111B9B1C;
-        Fri,  6 Oct 2023 18:57:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-        :subject:date:message-id:mime-version:content-type; s=sasl; bh=5
-        9TrKDE5lm43v+xIik97PoPdkuseSIbHgsf2xKqzaR0=; b=Xsb+YPqLH8kpn40e/
-        m7QRD6SW3I9MQGgH9BsaeTkSit46Cn9VjmEf9MZJEW2bee2fcYs/sM33+RExKuiM
-        zA4EF+fWHDEblntwrlNYSrIjcTHIGjen9LGTF54MK/n/ViF6WdseQhGTekb1D/8S
-        EC6aUpqpdWR31GkKtNGfOGAUwI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DB8FF1B9B1B;
-        Fri,  6 Oct 2023 18:57:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.165.85])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E0A1C1B9B1A;
-        Fri,  6 Oct 2023 18:57:04 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Subject: [PATCH] doc: update list archive reference to use lore.kernel.org
-Date:   Fri, 06 Oct 2023 15:57:03 -0700
-Message-ID: <xmqq7cnz741s.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        with ESMTP id S233568AbjJFW6g (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Oct 2023 18:58:36 -0400
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC58993
+        for <git@vger.kernel.org>; Fri,  6 Oct 2023 15:58:34 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id d9443c01a7336-1c88b46710bso13796945ad.1
+        for <git@vger.kernel.org>; Fri, 06 Oct 2023 15:58:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1696633114; x=1697237914; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=P1uoDgCMCVGZTEw8WFjOAJlHfrAksr7KvGmurNt/q1M=;
+        b=ZOLPGAfAG//McLpki09yDCHVAVfdqcNriF655RRhZsbqFlS2xRbFEtoMOE7DLJ6L2s
+         4164gIZy+PMxKPVWfGCxOXbkiUrSsrd9RGfU5GlqRzjcm1aSv+E7IJ2hSmD42eHjcPn1
+         z1kSDmDbxOuawlUdkR8uVnh4UfsYQULBQ+4qqRmcDgmDgTdpYaIGHcIlSWnKvCdLIZ52
+         dhLU3zPmMxo1qIZlXEa1jzDwusAThT7MHOM2Qi8mmo1EjIL4LAAsAJkG/8JsgBikWPdm
+         9FR91V5ySi+btkn6G8PdRFGzfm2o0yFXw4xoYjEPkOV3Q4FBc7vb7L1BBn1IVg7S2E8i
+         BTGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696633114; x=1697237914;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=P1uoDgCMCVGZTEw8WFjOAJlHfrAksr7KvGmurNt/q1M=;
+        b=kCz4fgOf9ice7fu2PNm+6K7D+hKVfQCYAfB8fqgxZgRlaPtuA+bTZVnjayYVTKyUbm
+         9a1gKDlUWEXwgDeEso24n3wTtH1Z6j9vKVMU6eOm1xlYY60MwVaEypdkx6LvlSw5h8jG
+         siw2ZraEyVAiIFTfAXwtTI2KfZWJULPH0A8Wxuxol/+wB2BiMqd6Z2HdbLwBzrPBUJXP
+         zyuLxPdVOAceUEkoJkyhIYSWnws5ETwqQBLR4l4rY6VDLBeWNWEHwcyvU4OD/vrsJQjF
+         /pO1Cf9hq4SkGWDdFttARd15nfqCe6OqYeyrYvixGYjaHy7UtuEtBbgVBZV7PY93a/iC
+         5CeQ==
+X-Gm-Message-State: AOJu0YwvHP3g7127la9KP64xMgEAjFCgocES5SB4dsvFK3cQ+FTX3E1m
+        P0ngfCV7o4fislnklo35NXn1AQ==
+X-Google-Smtp-Source: AGHT+IExX6DQlx51pOusBqohMcCP34fAbLKfLE2g5zRnWkJkZksBqkr5Wg2UxrBnoM6l9TTseDV0Xw==
+X-Received: by 2002:a17:903:234e:b0:1c6:1fc3:6857 with SMTP id c14-20020a170903234e00b001c61fc36857mr11547120plh.27.1696633114160;
+        Fri, 06 Oct 2023 15:58:34 -0700 (PDT)
+Received: from google.com ([2620:15c:2d3:204:41d5:64ab:795d:9f3c])
+        by smtp.gmail.com with ESMTPSA id b8-20020a170902d50800b001b81a97860asm4439727plg.27.2023.10.06.15.58.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Oct 2023 15:58:33 -0700 (PDT)
+Date:   Fri, 6 Oct 2023 15:58:28 -0700
+From:   Josh Steadmon <steadmon@google.com>
+To:     phillip.wood@dunelm.org.uk
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        linusa@google.com, calvinwan@google.com, rsbecker@nexbridge.com
+Subject: Re: [PATCH v7 2/3] unit tests: add TAP unit test framework
+Message-ID: <ZSCRFNkzXZb3fBaU@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        phillip.wood@dunelm.org.uk, Junio C Hamano <gitster@pobox.com>,
+        git@vger.kernel.org, linusa@google.com, calvinwan@google.com,
+        rsbecker@nexbridge.com
+References: <0169ce6fb9ccafc089b74ae406db0d1a8ff8ac65.1688165272.git.steadmon@google.com>
+ <cover.1692297001.git.steadmon@google.com>
+ <3cc98d4045eeda6e8cc24914802edc16d367fba0.1692297001.git.steadmon@google.com>
+ <xmqq350hw6n7.fsf@gitster.g>
+ <xmqqa5te0y9r.fsf@gitster.g>
+ <0b6de919-8dbf-454f-807b-5abb64388cb7@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AB298CB8-649B-11EE-B584-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0b6de919-8dbf-454f-807b-5abb64388cb7@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-No disrespect to other mailing list archives, but the local part of
-their URLs will become pretty much meaningless once the archives go
-out of service, and we learned the lesson hard way when $gmane
-stopped serving.
+On 2023.09.24 14:57, phillip.wood123@gmail.com wrote:
+> On 22/09/2023 21:05, Junio C Hamano wrote:
+> > Any thought on the "polarity" of the return values from the
+> > assertion?  I still find it confusing and hard to follow.
+> 
+> When I was writing this I was torn between whether to follow our usual
+> convention of returning zero for success and minus one for failure or to
+> return one for success and zero for failure. In the end I decided to go with
+> the former but I tend to agree with you that the latter would be easier to
+> understand.
 
-Let's point into https://lore.kernel.org/ for an article that can be
-found there, because the local part of the URL has the Message-Id:
-that can be used to find the same message in other archives, even if
-lore goes down.
+Agreed. V8 will switch to 0 for failure and 1 for success for the TEST,
+TEST_TODO, and check macros.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
 
- Documentation/CodingGuidelines | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+> > > > +test_expect_success 'TAP output from unit tests' '
+> > > > [...]
+> > > > +	ok 19 - test with no checks returns -1
+> > > > +	1..19
+> > > > +	EOF
+> > > 
+> > > Presumably t-basic will serve as a catalog of check_* functions and
+> > > the test binary, together with this test piece, will keep growing as
+> > > we gain features in the unit tests infrastructure.  I wonder how
+> > > maintainable the above is, though.  When we acquire new test, we
+> > > would need to renumber.  What if multiple developers add new
+> > > features to the catalog at the same time?
+> 
+> I think we could just add new tests to the end so we'd only need to change
+> the "1..19" line. That will become a source of merge conflicts if multiple
+> developers add new features at the same time though. Having several unit
+> test programs called from separate tests in t0080 might help with that.
 
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index 65af8d82ce..71afc5b259 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -24,7 +24,7 @@ code.  For Git in general, a few rough rules are:
- 
-    "Once it _is_ in the tree, it's not really worth the patch noise to
-    go and fix it up."
--   Cf. http://lkml.iu.edu/hypermail/linux/kernel/1001.3/01069.html
-+   Cf. https://lore.kernel.org/all/20100126160632.3bdbe172.akpm@linux-foundation.org/
- 
-  - Log messages to explain your changes are as important as the
-    changes themselves.  Clearly written code and in-code comments
--- 
-2.42.0-325-g3a06386e31
+My hope is that test-lib.c will not have to grow too extensively after
+this series; that said, it's already been a pain to have to adjust the
+t0080 expected text several times just during development of this
+series. I'll look into splitting this into several "meta-tests", but I'm
+not sure I'll get to it for V8 yet.
 
+
+> > > > diff --git a/t/unit-tests/.gitignore b/t/unit-tests/.gitignore
+> > > > new file mode 100644
+> > > > index 0000000000..e292d58348
+> > > > --- /dev/null
+> > > > +++ b/t/unit-tests/.gitignore
+> > > > @@ -0,0 +1,2 @@
+> > > > +/t-basic
+> > > > +/t-strbuf
+> > > 
+> > > Also, can we come up with some naming convention so that we do not
+> > > have to keep adding to this file every time we add a new test
+> > > script?
+> 
+> Perhaps we should put the unit test binaries in a separate directory so we
+> can just add that directory to .gitignore.
+
+Sounds good to me.
