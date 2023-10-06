@@ -2,64 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77295E81E1F
-	for <git@archiver.kernel.org>; Fri,  6 Oct 2023 18:43:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C42B6E94101
+	for <git@archiver.kernel.org>; Fri,  6 Oct 2023 18:55:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233103AbjJFSnA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Oct 2023 14:43:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39914 "EHLO
+        id S233461AbjJFSzD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Oct 2023 14:55:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230415AbjJFSnA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Oct 2023 14:43:00 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAD01C2
-        for <git@vger.kernel.org>; Fri,  6 Oct 2023 11:42:58 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-5043a01ee20so3020644e87.0
-        for <git@vger.kernel.org>; Fri, 06 Oct 2023 11:42:58 -0700 (PDT)
+        with ESMTP id S233332AbjJFSyo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Oct 2023 14:54:44 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D3B8197
+        for <git@vger.kernel.org>; Fri,  6 Oct 2023 11:53:25 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2bb9a063f26so29653361fa.2
+        for <git@vger.kernel.org>; Fri, 06 Oct 2023 11:53:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696617777; x=1697222577; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1696618403; x=1697223203; darn=vger.kernel.org;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=7Z+l+TdR8dBwni8oo0X2RjVa0EPrOeWNoM1UIna814Q=;
-        b=lm01nf03Dhze7Yn6OnUJzSucyMX/GM8sOfpXASqvVvOq123nj0sM+pHvOHBxBenV6t
-         FM4xuhYHASuEqm1Ck8aMV9+vnGATv8L5/kjBX5fQEUlzil8M+TyG16TaGjcVXWyK04Z4
-         qdtXf/wHQST4C1orrxgrxzj2xZ5LwBAdI3vTJt77HtFoMEXbVkQ1rx0RNrzULVHDl/sx
-         f1pTEbvCaXr8P7F67ETj23zXDYNJ6Gmfn8qXhd+H0CoO24TKXKaZP44G4rJXiTAXnlZo
-         2CJxKa0kGbrDAVObCRQU9I1FjmZimHoQEi7s0ibuzpFtqJI0sSpB7WrQLb/0zzmcXOzC
-         Crng==
+        bh=F0QqPpKV5ge44P1w7Uc3moqarlvU/mj5PrzSgCUjjeQ=;
+        b=eulbEi7SGcVDSenPmzcUoNEbzS3pvTnX+87Ld5GFfQHxYrAGdR+QRMH2HDc0uHMAJb
+         CMA4R4k0j4bIyb06Ff3tIkHAOcID6ZQy9L5J0eRR6pQVYyZxfqkKsgd3R1RTUBvLNr5Z
+         HBW4OQ16yRrwrt3PKFSVmaTG+VjVycb7AD8RklfIiIBl+AlCVByjS5301ZRb96msLYsA
+         6VGMCoeoBfg4XxE7kTBefm4OPympOHc81PlWeXTIDGfiDARQEI6z9udSSnVpnf/GRLo9
+         +sBN1UbnUCxLjRSlrC4IQifIQEX5lMusHPliBwNUmgs6jNi9A/88Kjs0sLelLOF+VDhC
+         afBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696617777; x=1697222577;
+        d=1e100.net; s=20230601; t=1696618403; x=1697223203;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7Z+l+TdR8dBwni8oo0X2RjVa0EPrOeWNoM1UIna814Q=;
-        b=hAOUzszkle9dKDKdmQG12hd6A8fqBpApx3UVPWN7cvcQM8RDzt2EApx+ZykEEnHB7q
-         YzPxx8fyp0wAze3AnjoGFcsiz/cBU/PWMYE+kYD/YHUTZ4YJ667nyvS0pNNOBZM7Fsqa
-         mnqowL6lrBYyUy+5NvnMAYgqtgOwaa9mpjilhmEQTqhypOwURAoyE5aR/k/jS2cjcMWm
-         0iV0A+mT9yzGnN9HqfWNYrvlPWK4DhKnEZlgLxlc6rL6eDXRHG0tnpwvEL3ZRtuJZTB7
-         MA6F4veTBP3Szahfh0X4bu97cVoEsjgeaSxTZuZZJe+ldpdjL0F1kx3/h51Actl6/MZl
-         ZYAQ==
-X-Gm-Message-State: AOJu0YyVBAtf2yZw5ppPdntNKC9sWwUDhAo1lG6DiSGStZs2kLO0EmHP
-        oTZW7xmosp1k44Ha8EC/0mn/Zu/dm9E=
-X-Google-Smtp-Source: AGHT+IH5kqUS94Ml3ZFXVdJIaGx+zkDt35feNGzKdkN0cGVlOd7Gds6KOHwGKp6rT+nVlcRn9vWefw==
-X-Received: by 2002:a05:6512:2085:b0:503:1d46:6f29 with SMTP id t5-20020a056512208500b005031d466f29mr6182146lfr.37.1696617776521;
-        Fri, 06 Oct 2023 11:42:56 -0700 (PDT)
+        bh=F0QqPpKV5ge44P1w7Uc3moqarlvU/mj5PrzSgCUjjeQ=;
+        b=tbTgjKO7LsQaDVA9oKxPoH8KmM896EPgGK1mVRMckrOkACCX7bkcqlhOry5TGr9UK4
+         vYF+vALElt+XkfDLH706C08UxuwBe8aVfbZCLnJaP5A7EnNdfO46cmL8mLw3Gf5QZajz
+         EYlit3A8mhrFfyqI0RBAc2mf2BHGXtkTDjFMW97EsvH5b01ToB1oaF2upErzmjTcPWOV
+         k+vNDcUbt4wmY5/kucHQdNGPXBTkgmgDdw6aN+XJ52ibrEo6ZZjQ9aQIQI9cl53m7p2Q
+         o5KJB3wvnKtwx1Ho+v+w5oLaYgja72rzRsCb5GQG5L/gANY4yzq9K5uYoaTOgaB5b28j
+         msvA==
+X-Gm-Message-State: AOJu0YxKS3yHjP4knfdHYz0GQWbHItDNhJu9mmQZ4n7TJ2vkL307JX3i
+        ptqS7gKXFa97fHr1cq2BgOy1hyK08Ew=
+X-Google-Smtp-Source: AGHT+IGEU5kH+vYJFp//zRkk4Qui8C5XoqvERk6X7NmEeYljcj2Rh1ND9D1zifR2tAjIGLqWbpsTRQ==
+X-Received: by 2002:a2e:9882:0:b0:2bd:f8:1b6a with SMTP id b2-20020a2e9882000000b002bd00f81b6amr6900710ljj.36.1696618402857;
+        Fri, 06 Oct 2023 11:53:22 -0700 (PDT)
 Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id o16-20020ac24950000000b004ff8e79bc75sm398238lfi.285.2023.10.06.11.42.55
+        by smtp.gmail.com with ESMTPSA id x2-20020a2e8802000000b002bce38190a3sm887925ljh.34.2023.10.06.11.53.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Oct 2023 11:42:55 -0700 (PDT)
+        Fri, 06 Oct 2023 11:53:22 -0700 (PDT)
 From:   Sergey Organov <sorganov@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3 1/3] diff-merges: improve --diff-merges documentation
+Subject: Re: [PATCH v3 3/3] completion: complete '--dd'
 References: <20230909125446.142715-1-sorganov@gmail.com>
         <20231004214558.210339-1-sorganov@gmail.com>
-        <20231004214558.210339-2-sorganov@gmail.com>
-        <xmqq34yog3ux.fsf@gitster.g>
-Date:   Fri, 06 Oct 2023 21:42:55 +0300
-In-Reply-To: <xmqq34yog3ux.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-        05 Oct 2023 14:24:06 -0700")
-Message-ID: <871qe7r3rk.fsf@osv.gnss.ru>
+        <20231004214558.210339-4-sorganov@gmail.com>
+        <xmqqlecgeoan.fsf@gitster.g>
+Date:   Fri, 06 Oct 2023 21:53:21 +0300
+In-Reply-To: <xmqqlecgeoan.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+        05 Oct 2023 14:45:36 -0700")
+Message-ID: <87v8bjpopq.fsf@osv.gnss.ru>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,22 +70,51 @@ X-Mailing-List: git@vger.kernel.org
 Junio C Hamano <gitster@pobox.com> writes:
 
 > Sergey Organov <sorganov@gmail.com> writes:
-
-[...]
-
->> +on, m::
->> +	Make diff output for merge commits to be shown in the default
->> +	format. The default format could be changed using
->>  	`log.diffMerges` configuration parameter, which default value
->>  	is `separate`.
 >
-> The original is already wrong so these are not problems this patch
-> introduces, but
+>> '--dd' only makes sense for 'git log' and 'git show', so add it to
+>> __git_log_show_options which is referenced in the completion for these
+>> two commands.
+>>
+>> Signed-off-by: Sergey Organov <sorganov@gmail.com>
+>> ---
+>>  contrib/completion/git-completion.bash | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+>> index 133ec92bfae7..ca4fa39f3ff8 100644
+>> --- a/contrib/completion/git-completion.bash
+>> +++ b/contrib/completion/git-completion.bash
+>> @@ -2042,7 +2042,7 @@ __git_log_shortlog_options="
+>>  "
+>>  # Options accepted by log and show
+>>  __git_log_show_options="
+>> -	--diff-merges --diff-merges= --no-diff-merges --remerge-diff
+>> +	--diff-merges --diff-merges= --no-diff-merges --dd --remerge-diff
+>>  "
+>>  
+>>  __git_diff_merges_opts="off none on first-parent 1 separate m combined c dense-combined cc remerge r"
 >
->  - "configuration variable" is how we refer to these entities.
->  - "which default value" -> "whose default value".
+> Quite straight-forward.  I am kind of surprised that we do not have
+> to list "--cc" here.  Perhaps it is so short and common that people
+> do not need completion help?
+>
+> But that is not a new problem caused by this series, so it is OK.
+>
+> Unless "--cc" gets completed without being listed here, using some
+> automation like the "--git-completion-helper" option, in which case
+> we may want to see if we can remove all of the above and complete
+> them the same way as "--cc" gets completed.  I didn't check.
 
-Added this amendment to the patch.
+I checked, though with rather old 2.25.1 running on my Ubuntu, and it
+is not completed.
+
+I think that it's still a good idea to add --cc to completions, so that
+it's there in the suggested completion list, for the sake of
+discoverability. That's why I bothered to add --dd to the completions.
 
 Thanks,
 -- Sergey Organov
+
+
+>
+> Thanks.
