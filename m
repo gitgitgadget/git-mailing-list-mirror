@@ -2,132 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AF52E94136
-	for <git@archiver.kernel.org>; Fri,  6 Oct 2023 22:58:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BDE7DE94136
+	for <git@archiver.kernel.org>; Fri,  6 Oct 2023 23:02:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233796AbjJFW6g (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Oct 2023 18:58:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47816 "EHLO
+        id S233862AbjJFXCP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Oct 2023 19:02:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233568AbjJFW6g (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Oct 2023 18:58:36 -0400
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC58993
-        for <git@vger.kernel.org>; Fri,  6 Oct 2023 15:58:34 -0700 (PDT)
-Received: by mail-pl1-x62f.google.com with SMTP id d9443c01a7336-1c88b46710bso13796945ad.1
-        for <git@vger.kernel.org>; Fri, 06 Oct 2023 15:58:34 -0700 (PDT)
+        with ESMTP id S233818AbjJFXCO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Oct 2023 19:02:14 -0400
+Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C55EB9F
+        for <git@vger.kernel.org>; Fri,  6 Oct 2023 16:02:10 -0700 (PDT)
+Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-5a2478862dbso33087077b3.2
+        for <git@vger.kernel.org>; Fri, 06 Oct 2023 16:02:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1696633114; x=1697237914; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=P1uoDgCMCVGZTEw8WFjOAJlHfrAksr7KvGmurNt/q1M=;
-        b=ZOLPGAfAG//McLpki09yDCHVAVfdqcNriF655RRhZsbqFlS2xRbFEtoMOE7DLJ6L2s
-         4164gIZy+PMxKPVWfGCxOXbkiUrSsrd9RGfU5GlqRzjcm1aSv+E7IJ2hSmD42eHjcPn1
-         z1kSDmDbxOuawlUdkR8uVnh4UfsYQULBQ+4qqRmcDgmDgTdpYaIGHcIlSWnKvCdLIZ52
-         dhLU3zPmMxo1qIZlXEa1jzDwusAThT7MHOM2Qi8mmo1EjIL4LAAsAJkG/8JsgBikWPdm
-         9FR91V5ySi+btkn6G8PdRFGzfm2o0yFXw4xoYjEPkOV3Q4FBc7vb7L1BBn1IVg7S2E8i
-         BTGg==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1696633330; x=1697238130; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=thr2hdkD2X2EqcVUI8qWjWe2eVqVMUxUrell/3n/do4=;
+        b=ZoY5dOQawSo4Q9DfuPh9qA8Ri4u+D2laC+1xRYpPnuN7SNaoyDlsE6VJVJYRkeo4rE
+         zyFXXPeccBhUNLoXralnCfEJ8O9Idh6owP9AN8TcPOcWpOHDDkBdpPOLMO1HtgFjP5n5
+         MpcWZVgFNLGCCAiCrrLYAdzkezNa08zftnUJoKvwPDciHMOqxel1dzjH5f+T1mhp2FnI
+         KQeZWB5kNqqse9TeRAE5M7p5cjGjPjWtjTQ44L9CpBCz8szIuas21shZecF1DqRcny3+
+         kESfRUoRbahOrIeogcRseYbaKrhw6BZOu4weywJJASr+/iWqhgtGnsb7wBBdqHaZoWZk
+         LWOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696633114; x=1697237914;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=P1uoDgCMCVGZTEw8WFjOAJlHfrAksr7KvGmurNt/q1M=;
-        b=kCz4fgOf9ice7fu2PNm+6K7D+hKVfQCYAfB8fqgxZgRlaPtuA+bTZVnjayYVTKyUbm
-         9a1gKDlUWEXwgDeEso24n3wTtH1Z6j9vKVMU6eOm1xlYY60MwVaEypdkx6LvlSw5h8jG
-         siw2ZraEyVAiIFTfAXwtTI2KfZWJULPH0A8Wxuxol/+wB2BiMqd6Z2HdbLwBzrPBUJXP
-         zyuLxPdVOAceUEkoJkyhIYSWnws5ETwqQBLR4l4rY6VDLBeWNWEHwcyvU4OD/vrsJQjF
-         /pO1Cf9hq4SkGWDdFttARd15nfqCe6OqYeyrYvixGYjaHy7UtuEtBbgVBZV7PY93a/iC
-         5CeQ==
-X-Gm-Message-State: AOJu0YwvHP3g7127la9KP64xMgEAjFCgocES5SB4dsvFK3cQ+FTX3E1m
-        P0ngfCV7o4fislnklo35NXn1AQ==
-X-Google-Smtp-Source: AGHT+IExX6DQlx51pOusBqohMcCP34fAbLKfLE2g5zRnWkJkZksBqkr5Wg2UxrBnoM6l9TTseDV0Xw==
-X-Received: by 2002:a17:903:234e:b0:1c6:1fc3:6857 with SMTP id c14-20020a170903234e00b001c61fc36857mr11547120plh.27.1696633114160;
-        Fri, 06 Oct 2023 15:58:34 -0700 (PDT)
-Received: from google.com ([2620:15c:2d3:204:41d5:64ab:795d:9f3c])
-        by smtp.gmail.com with ESMTPSA id b8-20020a170902d50800b001b81a97860asm4439727plg.27.2023.10.06.15.58.32
+        d=1e100.net; s=20230601; t=1696633330; x=1697238130;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=thr2hdkD2X2EqcVUI8qWjWe2eVqVMUxUrell/3n/do4=;
+        b=BLthX/JuTEVuNAzWHtyYOl3VNcilF/PdBKklJ2jeaa3uWPdRDJQieBm4+mDzh2/KI3
+         BfYa4OWRwg8gHrb2CzQ46GEQU/BhzTkMWVUr1qcJGSkXoKnhCHSeY9g6dgLleChLVjb3
+         ibCr4r2F/ud8jjB6k7eT4OT1Su+YiJf8s5SjI68HfJH1iyvonvInkLObRz6q9ERRbsLs
+         M2GB02gqDz4+QTmqhu/fg690XA6uvXwHXtcgl+ZBgI7tin/13oSFREvJuESCG1S6f2vE
+         XYqIl34z29/QV9r8rMIIAJrZRtB2x4r36VF+Ay7SvcfwUaZug3sfvbmMd0ga7Htmv1BC
+         yXOg==
+X-Gm-Message-State: AOJu0YxVeVIo+CKWDMcTkV2xWeXkO7FEb/zKiwcuE8mHjWzQJw0fJfy3
+        BzUAxEX9ou7fKE5FGkt8VpJ5DQ==
+X-Google-Smtp-Source: AGHT+IHvv5d/38JwvcqkPlJOUtFbMP5ebdHX1X+zJ1hRKwY0ppki75W1ckQWaaNpIDaS/QF2X1FPYg==
+X-Received: by 2002:a0d:d690:0:b0:59b:eb64:bcc5 with SMTP id y138-20020a0dd690000000b0059beb64bcc5mr10318398ywd.8.1696633329935;
+        Fri, 06 Oct 2023 16:02:09 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id d1-20020ac851c1000000b004197d6d97c4sm1611490qtn.24.2023.10.06.16.02.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Oct 2023 15:58:33 -0700 (PDT)
-Date:   Fri, 6 Oct 2023 15:58:28 -0700
-From:   Josh Steadmon <steadmon@google.com>
-To:     phillip.wood@dunelm.org.uk
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        linusa@google.com, calvinwan@google.com, rsbecker@nexbridge.com
-Subject: Re: [PATCH v7 2/3] unit tests: add TAP unit test framework
-Message-ID: <ZSCRFNkzXZb3fBaU@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-        phillip.wood@dunelm.org.uk, Junio C Hamano <gitster@pobox.com>,
-        git@vger.kernel.org, linusa@google.com, calvinwan@google.com,
-        rsbecker@nexbridge.com
-References: <0169ce6fb9ccafc089b74ae406db0d1a8ff8ac65.1688165272.git.steadmon@google.com>
- <cover.1692297001.git.steadmon@google.com>
- <3cc98d4045eeda6e8cc24914802edc16d367fba0.1692297001.git.steadmon@google.com>
- <xmqq350hw6n7.fsf@gitster.g>
- <xmqqa5te0y9r.fsf@gitster.g>
- <0b6de919-8dbf-454f-807b-5abb64388cb7@gmail.com>
+        Fri, 06 Oct 2023 16:02:09 -0700 (PDT)
+Date:   Fri, 6 Oct 2023 19:02:05 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+        "Eric W. Biederman" <ebiederm@gmail.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 7/7] builtin/merge-tree.c: implement support for
+ `--write-pack`
+Message-ID: <ZSCR7e6KKqFv8mZk@nand.local>
+References: <cover.1696629697.git.me@ttaylorr.com>
+ <e96921014557edb41dd73d93a8c3cf6cfaf0c719.1696629697.git.me@ttaylorr.com>
+ <xmqqil7j751u.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <0b6de919-8dbf-454f-807b-5abb64388cb7@gmail.com>
+In-Reply-To: <xmqqil7j751u.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2023.09.24 14:57, phillip.wood123@gmail.com wrote:
-> On 22/09/2023 21:05, Junio C Hamano wrote:
-> > Any thought on the "polarity" of the return values from the
-> > assertion?  I still find it confusing and hard to follow.
-> 
-> When I was writing this I was torn between whether to follow our usual
-> convention of returning zero for success and minus one for failure or to
-> return one for success and zero for failure. In the end I decided to go with
-> the former but I tend to agree with you that the latter would be easier to
-> understand.
+On Fri, Oct 06, 2023 at 03:35:25PM -0700, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+>
+> > When using merge-tree often within a repository[^1], it is possible to
+> > generate a relatively large number of loose objects, which can result in
+> > degraded performance, and inode exhaustion in extreme cases.
+>
+> Well, be it "git merge-tree" or "git merge", new loose objects tend
+> to accumulate until "gc" kicks in, so it is not a new problem for
+> mere mortals, is it?
 
-Agreed. V8 will switch to 0 for failure and 1 for success for the TEST,
-TEST_TODO, and check macros.
+Yeah, I would definitely suspect that this is more of an issue for
+forges than individual Git users.
 
+> As one "interesting" use case of "merge-tree" is for a Git hosting
+> site with bare repositories to offer trial merges, without which
+> majority of the object their repositories acquire would have been in
+> packs pushed by their users, "Gee, loose objects consume many inodes
+> in exchange for easier selective pruning" becomes an issue, right?
 
-> > > > +test_expect_success 'TAP output from unit tests' '
-> > > > [...]
-> > > > +	ok 19 - test with no checks returns -1
-> > > > +	1..19
-> > > > +	EOF
-> > > 
-> > > Presumably t-basic will serve as a catalog of check_* functions and
-> > > the test binary, together with this test piece, will keep growing as
-> > > we gain features in the unit tests infrastructure.  I wonder how
-> > > maintainable the above is, though.  When we acquire new test, we
-> > > would need to renumber.  What if multiple developers add new
-> > > features to the catalog at the same time?
-> 
-> I think we could just add new tests to the end so we'd only need to change
-> the "1..19" line. That will become a source of merge conflicts if multiple
-> developers add new features at the same time though. Having several unit
-> test programs called from separate tests in t0080 might help with that.
+Right.
 
-My hope is that test-lib.c will not have to grow too extensively after
-this series; that said, it's already been a pain to have to adjust the
-t0080 expected text several times just during development of this
-series. I'll look into splitting this into several "meta-tests", but I'm
-not sure I'll get to it for V8 yet.
+> Just like it hurts performance to have too many loose object files,
+> presumably it would also hurt performance to keep too many packs,
+> each came from such a trial merge.  Do we have a "gc" story offered
+> for these packs created by the new feature?  E.g., "once merge-tree
+> is done creating a trial merge, we can discard the objects created
+> in the pack, because we never expose new objects in the pack to the
+> outside, processes running simultaneously, so instead closing the
+> new packfile by calling flush_bulk_checkin_packfile(), we can safely
+> unlink the temporary pack.  We do not even need to spend cycles to
+> run a gc that requires cycles to enumerate what is still reachable",
+> or something like that?
 
+I know Johannes worked on something like this recently. IIRC, it
+effectively does something like:
 
-> > > > diff --git a/t/unit-tests/.gitignore b/t/unit-tests/.gitignore
-> > > > new file mode 100644
-> > > > index 0000000000..e292d58348
-> > > > --- /dev/null
-> > > > +++ b/t/unit-tests/.gitignore
-> > > > @@ -0,0 +1,2 @@
-> > > > +/t-basic
-> > > > +/t-strbuf
-> > > 
-> > > Also, can we come up with some naming convention so that we do not
-> > > have to keep adding to this file every time we add a new test
-> > > script?
-> 
-> Perhaps we should put the unit test binaries in a separate directory so we
-> can just add that directory to .gitignore.
+    struct tmp_objdir *tmp_objdir = tmp_objdir_create(...);
+    tmp_objdir_replace_primary_odb(tmp_objdir, 1);
 
-Sounds good to me.
+at the beginning of a merge operation, and:
+
+    tmp_objdir_discard_objects(tmp_objdir);
+
+at the end. I haven't followed that work off-list very closely, but it
+is only possible for GitHub to discard certain niche kinds of
+merges/rebases, since in general we make the objects created during test
+merges available via refs/pull/N/{merge,rebase}.
+
+I think that like anything, this is a trade-off. Having lots of packs
+can be a performance hindrance just like having lots of loose objects.
+But since we can represent more objects with fewer inodes when packed,
+storing those objects together in a pack is preferable when (a) you're
+doing lots of test-merges, and (b) you want to keep those objects
+around, e.g., because they are reachable.
+
+Thanks,
+Taylor
