@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F15E7E81E1B
-	for <git@archiver.kernel.org>; Fri,  6 Oct 2023 18:09:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 669FEE81E1B
+	for <git@archiver.kernel.org>; Fri,  6 Oct 2023 18:09:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233231AbjJFSJj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Oct 2023 14:09:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45504 "EHLO
+        id S233262AbjJFSJr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Oct 2023 14:09:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233088AbjJFSJf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Oct 2023 14:09:35 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63264C5
-        for <git@vger.kernel.org>; Fri,  6 Oct 2023 11:09:33 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-3296b87aa13so699273f8f.3
-        for <git@vger.kernel.org>; Fri, 06 Oct 2023 11:09:33 -0700 (PDT)
+        with ESMTP id S233217AbjJFSJg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Oct 2023 14:09:36 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE9FDBE
+        for <git@vger.kernel.org>; Fri,  6 Oct 2023 11:09:34 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-406609df1a6so23007665e9.3
+        for <git@vger.kernel.org>; Fri, 06 Oct 2023 11:09:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696615771; x=1697220571; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1696615773; x=1697220573; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Iv1i8EjSJYpO2KpYpS3Fztg/+oxg0kh/zvWm6sZWwF8=;
-        b=R34t9chTclhB/o2f+CnW0M2IVmAW2SEUftnvhncDI5YgZ0roPGi5bc8kI+CRRpcweK
-         cvbKWdH0FDGnX6Rwb6JDeInrjyN7m7kaoDztWm8IJSV9MTXSPp4y5hORdjP1gRwiNlo4
-         Y3EWoNapl+yx/ucsXvOtyOrkaxsr4bdwnMNRVTBRW8kAequlMOoU4ZbuYtEqacf2Ia1T
-         y9rAUOj/RG6AcuFAlBgqtDJC4EbdQ1ZqXf6h4OjjqizoSJ4ARirZkxxHaczbLz11tJJC
-         AK2Gu0Ym0902n3AD5R6Ec89T7FSgED/5RO0c9H9Bg+fw3V9jUMUxjs0HLJBt5QGwv8+i
-         XQWw==
+        bh=S8lb0sSJAykOh6wTINS3XM4I3mJvJdoxlXy2HbkrBHY=;
+        b=Q+5ojLEvpSw+cx5N1QCCdbdeIqq3sks9MXNlZr9vipuj26JWAa0eG+yeUhtBUzw3XV
+         SIZxzfpw1eaxkUq33MK6hupAoxmA0yi/7BG8D1AP4pkv1phk4o8t9gHEf89wYmPMY0GB
+         pZEzEK81EKAwyA91Kk85MWPswUSglQZf7CS8WLVG9zZ37mt9bUIGaYgM5K1URUaMLB0i
+         xEsb2b1J/y4re13iu+iREyLDjBlCQvwzzheYaxLme/eoWzEcjVaZjgrc/xuKbhYfjzft
+         o8qizRUHTAUfNLlkRSHmXlB1P1fnnusaI/gH5RiubokMjUDsEXKmkCvouHBJA8KmoF3h
+         l0+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696615771; x=1697220571;
+        d=1e100.net; s=20230601; t=1696615773; x=1697220573;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Iv1i8EjSJYpO2KpYpS3Fztg/+oxg0kh/zvWm6sZWwF8=;
-        b=QP1FoUVTe4YC7NPto3SuiOXl/yBusF+3L80Z4wa4dv5V7dx/yv0Ut5uCNLqdaHTZ/i
-         1JxaFqGQpHCM4DZJZ1HfNWOwePfjCcGAtZ1KFPOlcBVkI2HYiXXIv5v/qFJtIzm1csAj
-         Q1h6UsGjJa859QNyvxF7afRux6uNKReDGiEQMDKaxhH/ZsDFSmqezuNp83HECGzXCuD1
-         +iK3qeWh6pIkzboqBQ+OFVq13sTtJhZDATxScXBaKfErp9n+0U5OSz3TekYdCDkeWaFT
-         kEvIcngxkko0uDLmtjU/2EPPR4Y57501zRXGv1/exfBO2Z0XevUWNAprFSFjNoRTCbY1
-         qQNA==
-X-Gm-Message-State: AOJu0YxdBQLN9zoxCC3FOVNTIu81g5LJRBosty2MDv095f/BXNr2Pj5/
-        g+HlMV+cZx7zyK8g8ix7LjqYeiDiSHY=
-X-Google-Smtp-Source: AGHT+IE3gyAUQS41ywWnQwZvMhYDDfSQh9HFEHwyaIUA7X27jh+HMaOhx4aRv9nxDmoAuBg96NAT4Q==
-X-Received: by 2002:a5d:69d0:0:b0:31f:fa61:961d with SMTP id s16-20020a5d69d0000000b0031ffa61961dmr8819268wrw.63.1696615771374;
-        Fri, 06 Oct 2023 11:09:31 -0700 (PDT)
+        bh=S8lb0sSJAykOh6wTINS3XM4I3mJvJdoxlXy2HbkrBHY=;
+        b=wkLS2I+HeEELY06hV1BtOIZk+FrnnG0+cXZLc2Ybo6nsUVorpXtZv0EPJLHonLLEA7
+         uMz2l2Jrl2oJ6aemFHuE2Cf/nzT0Wuq9/czTvmFDuw9XMGHxU2Hr2cQ2UHKj+pp9OT05
+         F4nEaQAl9EBJKO/R9yIXSN66UsVAjMGnWnk2LGdrfuCZc7VlVbwgyXkVqfrckvpVhclS
+         I1TSZmCwR50nXUwmeq9764NnUBiclWXL/ntlz2Bh96JdR8KoqRFzBQfm8rLXH3LqiF0U
+         QKVEMAF06F60GZ71hoTfEnK1V/mjJcsgGhselpA6GB2+nChOwl6iqY2AH2sNpivIuEed
+         esZg==
+X-Gm-Message-State: AOJu0YwA2BKZ9IaZz+8h4QnspjlAMYLHtTo4W/3cZ0HloErUDVAMaHZ2
+        XgDpDpPb9HZqsfw/20HeVPT22wv3MsQ=
+X-Google-Smtp-Source: AGHT+IHkNSSG4UiC902yMb4i9wyEzMeOztYdFvQ/dRwx3i2Tj8UgNuaV2ug+Vn++zT/KbMdvDdes+g==
+X-Received: by 2002:a7b:ce89:0:b0:404:f9c1:d5d7 with SMTP id q9-20020a7bce89000000b00404f9c1d5d7mr7985612wmj.25.1696615772680;
+        Fri, 06 Oct 2023 11:09:32 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x11-20020adff0cb000000b00323293bd023sm2186506wro.6.2023.10.06.11.09.30
+        by smtp.gmail.com with ESMTPSA id j31-20020a05600c1c1f00b004068e09a70bsm4127449wms.31.2023.10.06.11.09.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Oct 2023 11:09:31 -0700 (PDT)
-Message-ID: <24014010ea350a2ea8676b6560ca1d60838c56ef.1696615769.git.gitgitgadget@gmail.com>
+        Fri, 06 Oct 2023 11:09:32 -0700 (PDT)
+Message-ID: <e193a45318244d9f8b05dfe2fb1ce57f6a4f6428.1696615769.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1594.git.1696615769.gitgitgadget@gmail.com>
 References: <pull.1594.git.1696615769.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 06 Oct 2023 18:09:27 +0000
-Subject: [PATCH 2/4] dir.[ch]: expose 'get_dtype'
+Date:   Fri, 06 Oct 2023 18:09:29 +0000
+Subject: [PATCH 4/4] files-backend.c: avoid stat in 'loose_fill_ref_dir'
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,126 +67,97 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Victoria Dye <vdye@github.com>
 
-Move 'get_dtype()' from 'diagnose.c' to 'dir.c' and add its declaration to
-'dir.h' so that it is accessible to callers in other files. The function and
-its documentation are moved verbatim except for a small addition to the
-description clarifying what the 'path' arg represents.
+Modify the 'readdir' loop in 'loose_fill_ref_dir' to, rather than 'stat' a
+file to determine whether it is a directory or not, use 'get_dtype'.
+
+Currently, the loop uses 'stat' to determine whether each dirent is a
+directory itself or not in order to construct the appropriate ref cache
+entry. If 'stat' fails (returning a negative value), the dirent is silently
+skipped; otherwise, 'S_ISDIR(st.st_mode)' is used to check whether the entry
+is a directory.
+
+On platforms that include an entry's d_type in in the 'dirent' struct, this
+extra 'stat' check is redundant. We can use the 'get_dtype' method to
+extract this information on platforms that support it (i.e. where
+NO_D_TYPE_IN_DIRENT is unset), and derive it with 'stat' on platforms that
+don't. Because 'stat' is an expensive call, this confers a
+modest-but-noticeable performance improvement when iterating over large
+numbers of refs (approximately 20% speedup in 'git for-each-ref' in a 30k
+ref repo).
+
+Unlike other existing usage of 'get_dtype', the 'follow_symlinks' arg is set
+to 1 to replicate the existing handling of symlink dirents. This
+unfortunately requires calling 'stat' on the associated entry regardless of
+platform, but symlinks in the loose ref store are highly unlikely since
+they'd need to be created manually by a user.
+
+Note that this patch also changes the condition for skipping creation of a
+ref entry from "when 'stat' fails" to "when the d_type is anything other
+than DT_REG or DT_DIR". If a dirent's d_type is DT_UNKNOWN (either because
+the platform doesn't support d_type in dirents or some other reason) or
+DT_LNK, 'get_dtype' will try to derive the underlying type with 'stat'. If
+the 'stat' fails, the d_type will remain 'DT_UNKNOWN' and dirent will be
+skipped. However, it will also be skipped if it is any other valid d_type
+(e.g. DT_FIFO for named pipes, DT_LNK for a nested symlink). Git does not
+handle these properly anyway, so we can safely constrain accepted types to
+directories and regular files.
 
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- diagnose.c | 36 ------------------------------------
- dir.c      | 28 ++++++++++++++++++++++++++++
- dir.h      | 11 +++++++++++
- 3 files changed, 39 insertions(+), 36 deletions(-)
+ refs/files-backend.c | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
 
-diff --git a/diagnose.c b/diagnose.c
-index 8430064000b..fc4d344bd63 100644
---- a/diagnose.c
-+++ b/diagnose.c
-@@ -71,42 +71,6 @@ static int dir_file_stats(struct object_directory *object_dir, void *data)
- 	return 0;
- }
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 341354182bb..db5c0c7a724 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -246,10 +246,8 @@ static void loose_fill_ref_dir(struct ref_store *ref_store,
+ 	int dirnamelen = strlen(dirname);
+ 	struct strbuf refname;
+ 	struct strbuf path = STRBUF_INIT;
+-	size_t path_baselen;
  
--/*
-- * Get the d_type of a dirent. If the d_type is unknown, derive it from
-- * stat.st_mode.
-- *
-- * Note that 'path' is assumed to have a trailing slash. It is also modified
-- * in-place during the execution of the function, but is then reverted to its
-- * original value before returning.
-- */
--static unsigned char get_dtype(struct dirent *e, struct strbuf *path)
--{
--	struct stat st;
--	unsigned char dtype = DTYPE(e);
--	size_t base_path_len;
--
--	if (dtype != DT_UNKNOWN)
--		return dtype;
--
--	/* d_type unknown in dirent, try to fall back on lstat results */
--	base_path_len = path->len;
--	strbuf_addstr(path, e->d_name);
--	if (lstat(path->buf, &st))
--		goto cleanup;
--
--	/* determine d_type from st_mode */
--	if (S_ISREG(st.st_mode))
--		dtype = DT_REG;
--	else if (S_ISDIR(st.st_mode))
--		dtype = DT_DIR;
--	else if (S_ISLNK(st.st_mode))
--		dtype = DT_LNK;
--
--cleanup:
--	strbuf_setlen(path, base_path_len);
--	return dtype;
--}
--
- static int count_files(struct strbuf *path)
- {
- 	DIR *dir = opendir(path->buf);
-diff --git a/dir.c b/dir.c
-index 8486e4d56ff..5e01af3a25e 100644
---- a/dir.c
-+++ b/dir.c
-@@ -2235,6 +2235,34 @@ static int get_index_dtype(struct index_state *istate,
- 	return DT_UNKNOWN;
- }
+ 	files_ref_path(refs, &path, dirname);
+-	path_baselen = path.len;
  
-+unsigned char get_dtype(struct dirent *e, struct strbuf *path)
-+{
-+	struct stat st;
-+	unsigned char dtype = DTYPE(e);
-+	size_t base_path_len;
-+
-+	if (dtype != DT_UNKNOWN)
-+		return dtype;
-+
-+	/* d_type unknown in dirent, try to fall back on lstat results */
-+	base_path_len = path->len;
-+	strbuf_addstr(path, e->d_name);
-+	if (lstat(path->buf, &st))
-+		goto cleanup;
-+
-+	/* determine d_type from st_mode */
-+	if (S_ISREG(st.st_mode))
-+		dtype = DT_REG;
-+	else if (S_ISDIR(st.st_mode))
-+		dtype = DT_DIR;
-+	else if (S_ISLNK(st.st_mode))
-+		dtype = DT_LNK;
-+
-+cleanup:
-+	strbuf_setlen(path, base_path_len);
-+	return dtype;
-+}
-+
- static int resolve_dtype(int dtype, struct index_state *istate,
- 			 const char *path, int len)
- {
-diff --git a/dir.h b/dir.h
-index ad06682fd54..28c630ce806 100644
---- a/dir.h
-+++ b/dir.h
-@@ -363,6 +363,17 @@ struct dir_struct {
+ 	d = opendir(path.buf);
+ 	if (!d) {
+@@ -262,23 +260,22 @@ static void loose_fill_ref_dir(struct ref_store *ref_store,
  
- struct dirent *readdir_skip_dot_and_dotdot(DIR *dirp);
+ 	while ((de = readdir(d)) != NULL) {
+ 		struct object_id oid;
+-		struct stat st;
+ 		int flag;
++		unsigned char dtype;
  
-+/*
-+ * Get the d_type of a dirent. If the d_type is unknown, derive it from
-+ * stat.st_mode using the path to the dirent's containing directory (path) and
-+ * the name of the dirent itself.
-+ *
-+ * Note that 'path' is assumed to have a trailing slash. It is also modified
-+ * in-place during the execution of the function, but is then reverted to its
-+ * original value before returning.
-+ */
-+unsigned char get_dtype(struct dirent *e, struct strbuf *path);
+ 		if (de->d_name[0] == '.')
+ 			continue;
+ 		if (ends_with(de->d_name, ".lock"))
+ 			continue;
+ 		strbuf_addstr(&refname, de->d_name);
+-		strbuf_addstr(&path, de->d_name);
+-		if (stat(path.buf, &st) < 0) {
+-			; /* silently ignore */
+-		} else if (S_ISDIR(st.st_mode)) {
 +
- /*Count the number of slashes for string s*/
- int count_slashes(const char *s);
- 
++		dtype = get_dtype(de, &path, 1);
++		if (dtype == DT_DIR) {
+ 			strbuf_addch(&refname, '/');
+ 			add_entry_to_dir(dir,
+ 					 create_dir_entry(dir->cache, refname.buf,
+ 							  refname.len));
+-		} else {
++		} else if (dtype == DT_REG) {
+ 			if (!refs_resolve_ref_unsafe(&refs->base,
+ 						     refname.buf,
+ 						     RESOLVE_REF_READING,
+@@ -308,7 +305,6 @@ static void loose_fill_ref_dir(struct ref_store *ref_store,
+ 					 create_ref_entry(refname.buf, &oid, flag));
+ 		}
+ 		strbuf_setlen(&refname, dirnamelen);
+-		strbuf_setlen(&path, path_baselen);
+ 	}
+ 	strbuf_release(&refname);
+ 	strbuf_release(&path);
 -- 
 gitgitgadget
-
