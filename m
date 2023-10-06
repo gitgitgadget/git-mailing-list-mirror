@@ -2,379 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04D46E94134
-	for <git@archiver.kernel.org>; Fri,  6 Oct 2023 22:02:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98D45E94133
+	for <git@archiver.kernel.org>; Fri,  6 Oct 2023 22:12:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233796AbjJFWCW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Oct 2023 18:02:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56720 "EHLO
+        id S233559AbjJFWMe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Oct 2023 18:12:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233737AbjJFWCO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Oct 2023 18:02:14 -0400
-Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78C8BFC
-        for <git@vger.kernel.org>; Fri,  6 Oct 2023 15:02:09 -0700 (PDT)
-Received: by mail-qv1-xf2e.google.com with SMTP id 6a1803df08f44-65af7e20f39so14759886d6.2
-        for <git@vger.kernel.org>; Fri, 06 Oct 2023 15:02:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1696629728; x=1697234528; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZyJEdYz9SRHk5dZnA9eeyinw6ZZg9KpLSBbH4bdIA7Q=;
-        b=Kzg4c+c/DCcTEN50Ho99uzW2HaC2BlWnV/aksamVV4xivisBmt4CJ3o4qwjpkm8/qX
-         fshF4Q7Ukv4CayIgisYPqEl4A4yKoltUuGDEvGZF1PdhM0/sGRNEC97weG0rkkunMAS4
-         qGpFjKaKZDhAxvagMqIIj835t9K64i3zeyakgK1RGGTh0LzZ0M0KXa+sUHynXfWATM46
-         0cITaJCCKVlYdNnNje+eMLunpd/u4o0HSPoDwtvlNbI39+vMTyDBFt1obgaLgtjMfcag
-         lSymBL6s4GC0Ru2NROVBTrVfwaiEqgOs1dAmEUaE0X0fEBsWyf6W5xNpIP0flbmK1ugo
-         ddDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696629728; x=1697234528;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZyJEdYz9SRHk5dZnA9eeyinw6ZZg9KpLSBbH4bdIA7Q=;
-        b=JpaQcH50BaDevs17nxf9QIAs4AP1pQ/cPnx0rMNcyrU2r8ziSDZQPcuFO/oQ0kIsux
-         hSbI4U2WgSMCC0QPsstvZDBrf9fuIMbUbXqb2vGusdTrvyrSMXK6r8ZOZCPB2vKP/8T6
-         FwY5ug4rsl5K2juy63idRbrSMPxFJIQF+yLys3ardDmLuA+kut4lx3lXDBV5MA6+Ae2F
-         FyJS10bFhLC96u6+llIQVqmxNBL/1EuhPloWglskWlMvFhmgFhejQ0YTCS7tPhBIT4p/
-         S9CkxbBxEseEzXYbRn08Hc0q7GyjQyLwAzO5qKOLwHkRMrr1458d5cm/fmK2iHrDFLSA
-         NdTg==
-X-Gm-Message-State: AOJu0Ywvd/TlX5aLEscDCtndpShHgjvAsKoXUjsKf8O8+IVfS5o5rFvv
-        jvXk9tySDS8hgZpuTClR3IllXfhxVjqf11chUHpK9g==
-X-Google-Smtp-Source: AGHT+IHwHKa3zNdMWBI0qr+FoXyehUdhg3dBvBy9M5UYUwnlSvre42M/jPhR/KtXXvS81N5ucm2ffw==
-X-Received: by 2002:a05:6214:5585:b0:668:ef6a:7664 with SMTP id mi5-20020a056214558500b00668ef6a7664mr9370900qvb.33.1696629728342;
-        Fri, 06 Oct 2023 15:02:08 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id c26-20020a0ca9da000000b0065b079366a7sm1729405qvb.114.2023.10.06.15.02.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Oct 2023 15:02:08 -0700 (PDT)
-Date:   Fri, 6 Oct 2023 18:02:07 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>,
-        "Eric W. Biederman" <ebiederm@gmail.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 7/7] builtin/merge-tree.c: implement support for
- `--write-pack`
-Message-ID: <e96921014557edb41dd73d93a8c3cf6cfaf0c719.1696629697.git.me@ttaylorr.com>
-References: <cover.1696629697.git.me@ttaylorr.com>
+        with ESMTP id S233397AbjJFWMd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Oct 2023 18:12:33 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D295BD
+        for <git@vger.kernel.org>; Fri,  6 Oct 2023 15:12:32 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BDB861B05B9;
+        Fri,  6 Oct 2023 18:12:28 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=bTnMD2NrUjaC1277wHyG5CC/LquydOPZhbFVOr
+        W9LVI=; b=o2VutNBYoIlyDGe00n8YA1vJYOfFufpV7TmOjhW8RB2+PNmbgbXM3a
+        WJO6AjfqnNi5v7h5bGGp4TqZL67T9p2RO7PwikhX2LXSBNLO5uhnV0JGXVHLcfTu
+        wrNPc+8NRKTb1NdcSB3NJl27wY/GuG92vtdbuGJtdP3QoMOYHeep4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B59F71B05B8;
+        Fri,  6 Oct 2023 18:12:28 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1DE481B05B6;
+        Fri,  6 Oct 2023 18:12:28 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Victoria Dye <vdye@github.com>
+Subject: Re: [PATCH 4/4] files-backend.c: avoid stat in 'loose_fill_ref_dir'
+In-Reply-To: <e193a45318244d9f8b05dfe2fb1ce57f6a4f6428.1696615769.git.gitgitgadget@gmail.com>
+        (Victoria Dye via GitGitGadget's message of "Fri, 06 Oct 2023 18:09:29
+        +0000")
+References: <pull.1594.git.1696615769.gitgitgadget@gmail.com>
+        <e193a45318244d9f8b05dfe2fb1ce57f6a4f6428.1696615769.git.gitgitgadget@gmail.com>
+Date:   Fri, 06 Oct 2023 15:12:26 -0700
+Message-ID: <xmqqttr37645.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1696629697.git.me@ttaylorr.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6FA9F1A6-6495-11EE-8A8F-25B3960A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When using merge-tree often within a repository[^1], it is possible to
-generate a relatively large number of loose objects, which can result in
-degraded performance, and inode exhaustion in extreme cases.
+"Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Building on the functionality introduced in previous commits, the
-bulk-checkin machinery now has support to write arbitrary blob and tree
-objects which are small enough to be held in-core. We can use this to
-write any blob/tree objects generated by ORT into a separate pack
-instead of writing them out individually as loose.
+> Unlike other existing usage of 'get_dtype', the 'follow_symlinks' arg is set
+> to 1 to replicate the existing handling of symlink dirents. This
+> unfortunately requires calling 'stat' on the associated entry regardless of
+> platform, but symlinks in the loose ref store are highly unlikely since
+> they'd need to be created manually by a user.
 
-This functionality is gated behind a new `--write-pack` option to
-`merge-tree` that works with the (non-deprecated) `--write-tree` mode.
+Yeek.  I wonder what breaks if we do not do this follow_symlinks()
+part, i.e., either just replace stat() with lstat() in the original
+without any of these four patches (which would be simple to figure
+out what breaks), or omit [3/4] and let get_dtype() yield DT_LNK.
 
-The implementation is relatively straightforward. There are two spots
-within the ORT mechanism where we call `write_object_file()`, one for
-content differences within blobs, and another to assemble any new trees
-necessary to construct the merge. In each of those locations,
-conditionally replace calls to `write_object_file()` with
-`index_blob_bulk_checkin_incore()` or `index_tree_bulk_checkin_incore()`
-depending on which kind of object we are writing.
+It seems that it comes from a7e66ae3 ([PATCH] Make do_each_ref()
+follow symlinks., 2005-08-16), and just like I commented on there in
+its log message back then, I still doubt that following a symbolic
+link is a great idea here in this codepath.
 
-The only remaining task is to begin and end the transaction necessary to
-initialize the bulk-checkin machinery, and move any new pack(s) it
-created into the main object store.
+But optimization without behaviour change is a good way to ensure
+that optimization does not introduce new bugs, and because keeping
+the historical behaviour like the patches [3/4] and this patch does
+is more work (meaning: if it proves unnecessary to dereference
+symbolic links, we can remove code instead of having to write new
+code to support the new behaviour), let's take the series as-is, and
+defer it to future developers to further clean-up the semantics.
 
-[^1]: Such is the case at GitHub, where we run presumptive "test merges"
-  on open pull requests to see whether or not we can light up the merge
-  button green depending on whether or not the presumptive merge was
-  conflicted.
+> Note that this patch also changes the condition for skipping creation of a
+> ref entry from "when 'stat' fails" to "when the d_type is anything other
+> than DT_REG or DT_DIR". If a dirent's d_type is DT_UNKNOWN (either because
+> the platform doesn't support d_type in dirents or some other reason) or
+> DT_LNK, 'get_dtype' will try to derive the underlying type with 'stat'. If
+> the 'stat' fails, the d_type will remain 'DT_UNKNOWN' and dirent will be
+> skipped. However, it will also be skipped if it is any other valid d_type
+> (e.g. DT_FIFO for named pipes, DT_LNK for a nested symlink). Git does not
+> handle these properly anyway, so we can safely constrain accepted types to
+> directories and regular files.
 
-  This is done in response to a number of user-initiated events,
-  including viewing an open pull request whose last test merge is stale
-  with respect to the current base and tip of the pull request. As a
-  result, merge-tree can be run very frequently on large, active
-  repositories.
+Sounds good.
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- Documentation/git-merge-tree.txt |  4 ++
- builtin/merge-tree.c             |  5 ++
- merge-ort.c                      | 43 +++++++++++----
- merge-recursive.h                |  1 +
- t/t4301-merge-tree-write-tree.sh | 93 ++++++++++++++++++++++++++++++++
- 5 files changed, 136 insertions(+), 10 deletions(-)
+> Signed-off-by: Victoria Dye <vdye@github.com>
+> ---
+>  refs/files-backend.c | 14 +++++---------
+>  1 file changed, 5 insertions(+), 9 deletions(-)
 
-diff --git a/Documentation/git-merge-tree.txt b/Documentation/git-merge-tree.txt
-index ffc4fbf7e8..9d37609ef1 100644
---- a/Documentation/git-merge-tree.txt
-+++ b/Documentation/git-merge-tree.txt
-@@ -69,6 +69,10 @@ OPTIONS
- 	specify a merge-base for the merge, and specifying multiple bases is
- 	currently not supported. This option is incompatible with `--stdin`.
- 
-+--write-pack::
-+	Write any new objects into a separate packfile instead of as
-+	individual loose objects.
-+
- [[OUTPUT]]
- OUTPUT
- ------
-diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-index 0de42aecf4..672ebd4c54 100644
---- a/builtin/merge-tree.c
-+++ b/builtin/merge-tree.c
-@@ -18,6 +18,7 @@
- #include "quote.h"
- #include "tree.h"
- #include "config.h"
-+#include "bulk-checkin.h"
- 
- static int line_termination = '\n';
- 
-@@ -414,6 +415,7 @@ struct merge_tree_options {
- 	int show_messages;
- 	int name_only;
- 	int use_stdin;
-+	int write_pack;
- };
- 
- static int real_merge(struct merge_tree_options *o,
-@@ -440,6 +442,7 @@ static int real_merge(struct merge_tree_options *o,
- 	init_merge_options(&opt, the_repository);
- 
- 	opt.show_rename_progress = 0;
-+	opt.write_pack = o->write_pack;
- 
- 	opt.branch1 = branch1;
- 	opt.branch2 = branch2;
-@@ -548,6 +551,8 @@ int cmd_merge_tree(int argc, const char **argv, const char *prefix)
- 			   &merge_base,
- 			   N_("commit"),
- 			   N_("specify a merge-base for the merge")),
-+		OPT_BOOL(0, "write-pack", &o.write_pack,
-+			 N_("write new objects to a pack instead of as loose")),
- 		OPT_END()
- 	};
- 
-diff --git a/merge-ort.c b/merge-ort.c
-index 8631c99700..85d8c5c6b3 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -48,6 +48,7 @@
- #include "tree.h"
- #include "unpack-trees.h"
- #include "xdiff-interface.h"
-+#include "bulk-checkin.h"
- 
- /*
-  * We have many arrays of size 3.  Whenever we have such an array, the
-@@ -2124,11 +2125,19 @@ static int handle_content_merge(struct merge_options *opt,
- 		if ((merge_status < 0) || !result_buf.ptr)
- 			ret = err(opt, _("Failed to execute internal merge"));
- 
--		if (!ret &&
--		    write_object_file(result_buf.ptr, result_buf.size,
--				      OBJ_BLOB, &result->oid))
--			ret = err(opt, _("Unable to add %s to database"),
--				  path);
-+		if (!ret) {
-+			ret = opt->write_pack
-+				? index_blob_bulk_checkin_incore(&result->oid,
-+								 result_buf.ptr,
-+								 result_buf.size,
-+								 path, 1)
-+				: write_object_file(result_buf.ptr,
-+						    result_buf.size,
-+						    OBJ_BLOB, &result->oid);
-+			if (ret)
-+				ret = err(opt, _("Unable to add %s to database"),
-+					  path);
-+		}
- 
- 		free(result_buf.ptr);
- 		if (ret)
-@@ -3618,7 +3627,8 @@ static int tree_entry_order(const void *a_, const void *b_)
- 				 b->string, strlen(b->string), bmi->result.mode);
- }
- 
--static int write_tree(struct object_id *result_oid,
-+static int write_tree(struct merge_options *opt,
-+		      struct object_id *result_oid,
- 		      struct string_list *versions,
- 		      unsigned int offset,
- 		      size_t hash_size)
-@@ -3652,8 +3662,14 @@ static int write_tree(struct object_id *result_oid,
- 	}
- 
- 	/* Write this object file out, and record in result_oid */
--	if (write_object_file(buf.buf, buf.len, OBJ_TREE, result_oid))
-+	ret = opt->write_pack
-+		? index_tree_bulk_checkin_incore(result_oid,
-+						 buf.buf, buf.len, "", 1)
-+		: write_object_file(buf.buf, buf.len, OBJ_TREE, result_oid);
-+
-+	if (ret)
- 		ret = -1;
-+
- 	strbuf_release(&buf);
- 	return ret;
- }
-@@ -3818,8 +3834,8 @@ static int write_completed_directory(struct merge_options *opt,
- 		 */
- 		dir_info->is_null = 0;
- 		dir_info->result.mode = S_IFDIR;
--		if (write_tree(&dir_info->result.oid, &info->versions, offset,
--			       opt->repo->hash_algo->rawsz) < 0)
-+		if (write_tree(opt, &dir_info->result.oid, &info->versions,
-+			       offset, opt->repo->hash_algo->rawsz) < 0)
- 			ret = -1;
- 	}
- 
-@@ -4353,9 +4369,13 @@ static int process_entries(struct merge_options *opt,
- 		fflush(stdout);
- 		BUG("dir_metadata accounting completely off; shouldn't happen");
- 	}
--	if (write_tree(result_oid, &dir_metadata.versions, 0,
-+	if (write_tree(opt, result_oid, &dir_metadata.versions, 0,
- 		       opt->repo->hash_algo->rawsz) < 0)
- 		ret = -1;
-+
-+	if (opt->write_pack)
-+		end_odb_transaction();
-+
- cleanup:
- 	string_list_clear(&plist, 0);
- 	string_list_clear(&dir_metadata.versions, 0);
-@@ -4899,6 +4919,9 @@ static void merge_start(struct merge_options *opt, struct merge_result *result)
- 	 */
- 	strmap_init(&opt->priv->conflicts);
- 
-+	if (opt->write_pack)
-+		begin_odb_transaction();
-+
- 	trace2_region_leave("merge", "allocate/init", opt->repo);
- }
- 
-diff --git a/merge-recursive.h b/merge-recursive.h
-index b88000e3c2..156e160876 100644
---- a/merge-recursive.h
-+++ b/merge-recursive.h
-@@ -48,6 +48,7 @@ struct merge_options {
- 	unsigned renormalize : 1;
- 	unsigned record_conflict_msgs_as_headers : 1;
- 	const char *msg_header_prefix;
-+	unsigned write_pack : 1;
- 
- 	/* internal fields used by the implementation */
- 	struct merge_options_internal *priv;
-diff --git a/t/t4301-merge-tree-write-tree.sh b/t/t4301-merge-tree-write-tree.sh
-index 250f721795..2d81ff4de5 100755
---- a/t/t4301-merge-tree-write-tree.sh
-+++ b/t/t4301-merge-tree-write-tree.sh
-@@ -922,4 +922,97 @@ test_expect_success 'check the input format when --stdin is passed' '
- 	test_cmp expect actual
- '
- 
-+packdir=".git/objects/pack"
-+
-+test_expect_success 'merge-tree can pack its result with --write-pack' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+
-+	# base has lines [3, 4, 5]
-+	#   - side adds to the beginning, resulting in [1, 2, 3, 4, 5]
-+	#   - other adds to the end, resulting in [3, 4, 5, 6, 7]
-+	#
-+	# merging the two should result in a new blob object containing
-+	# [1, 2, 3, 4, 5, 6, 7], along with a new tree.
-+	test_commit -C repo base file "$(test_seq 3 5)" &&
-+	git -C repo branch -M main &&
-+	git -C repo checkout -b side main &&
-+	test_commit -C repo side file "$(test_seq 1 5)" &&
-+	git -C repo checkout -b other main &&
-+	test_commit -C repo other file "$(test_seq 3 7)" &&
-+
-+	find repo/$packdir -type f -name "pack-*.idx" >packs.before &&
-+	tree="$(git -C repo merge-tree --write-pack \
-+		refs/tags/side refs/tags/other)" &&
-+	blob="$(git -C repo rev-parse $tree:file)" &&
-+	find repo/$packdir -type f -name "pack-*.idx" >packs.after &&
-+
-+	test_must_be_empty packs.before &&
-+	test_line_count = 1 packs.after &&
-+
-+	git show-index <$(cat packs.after) >objects &&
-+	test_line_count = 2 objects &&
-+	grep "^[1-9][0-9]* $tree" objects &&
-+	grep "^[1-9][0-9]* $blob" objects
-+'
-+
-+test_expect_success 'merge-tree can write multiple packs with --write-pack' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+
-+		git config pack.packSizeLimit 512 &&
-+
-+		test_seq 512 >f &&
-+
-+		# "f" contains roughly ~2,000 bytes.
-+		#
-+		# Each side ("foo" and "bar") adds a small amount of data at the
-+		# beginning and end of "base", respectively.
-+		git add f &&
-+		test_tick &&
-+		git commit -m base &&
-+		git branch -M main &&
-+
-+		git checkout -b foo main &&
-+		{
-+			echo foo && cat f
-+		} >f.tmp &&
-+		mv f.tmp f &&
-+		git add f &&
-+		test_tick &&
-+		git commit -m foo &&
-+
-+		git checkout -b bar main &&
-+		echo bar >>f &&
-+		git add f &&
-+		test_tick &&
-+		git commit -m bar &&
-+
-+		find $packdir -type f -name "pack-*.idx" >packs.before &&
-+		# Merging either side should result in a new object which is
-+		# larger than 1M, thus the result should be split into two
-+		# separate packs.
-+		tree="$(git merge-tree --write-pack \
-+			refs/heads/foo refs/heads/bar)" &&
-+		blob="$(git rev-parse $tree:f)" &&
-+		find $packdir -type f -name "pack-*.idx" >packs.after &&
-+
-+		test_must_be_empty packs.before &&
-+		test_line_count = 2 packs.after &&
-+		for idx in $(cat packs.after)
-+		do
-+			git show-index <$idx || return 1
-+		done >objects &&
-+
-+		# The resulting set of packs should contain one copy of both
-+		# objects, each in a separate pack.
-+		test_line_count = 2 objects &&
-+		grep "^[1-9][0-9]* $tree" objects &&
-+		grep "^[1-9][0-9]* $blob" objects
-+
-+	)
-+'
-+
- test_done
--- 
-2.42.0.8.g7a7e1e881e.dirty
+Thanks.
+
