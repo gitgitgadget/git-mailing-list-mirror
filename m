@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D749E94134
-	for <git@archiver.kernel.org>; Fri,  6 Oct 2023 22:01:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72C37E94133
+	for <git@archiver.kernel.org>; Fri,  6 Oct 2023 22:02:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233530AbjJFWBy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Oct 2023 18:01:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53702 "EHLO
+        id S233594AbjJFWB7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Oct 2023 18:01:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233248AbjJFWBx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Oct 2023 18:01:53 -0400
-Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52D77BD
-        for <git@vger.kernel.org>; Fri,  6 Oct 2023 15:01:52 -0700 (PDT)
-Received: by mail-qk1-x72d.google.com with SMTP id af79cd13be357-7740c8509c8so163496385a.3
-        for <git@vger.kernel.org>; Fri, 06 Oct 2023 15:01:52 -0700 (PDT)
+        with ESMTP id S233473AbjJFWB4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Oct 2023 18:01:56 -0400
+Received: from mail-qv1-xf2d.google.com (mail-qv1-xf2d.google.com [IPv6:2607:f8b0:4864:20::f2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BB28BF
+        for <git@vger.kernel.org>; Fri,  6 Oct 2023 15:01:55 -0700 (PDT)
+Received: by mail-qv1-xf2d.google.com with SMTP id 6a1803df08f44-65b0c9fb673so13711416d6.1
+        for <git@vger.kernel.org>; Fri, 06 Oct 2023 15:01:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1696629711; x=1697234511; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1696629714; x=1697234514; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=x2mVs/HGyl66PZJ1g77jzYqsJ5AKC++VawlUe5Kc/y8=;
-        b=uW05FIG+y6nKEISnUAgCRMCxJg5UTWctT8UsqMJsgcG89999oonmlkpiNjJDU4ZDcY
-         T6oU/Wp0CvqnkyMxGVCQvnUX+upnZbmQXQ8FcbzJXFg3l3RtqyGaHMUNotNRPSHNNrdY
-         Nr9d/xse88Y97+KcbmSkO3TLZIYezWSZIlrioNc0X2Z39AYQ+3bP0RLRnj9Yj8NAXq1e
-         pIi/mwNowoBgrECbJG5k52fGLmFoUjxL/Qn97S6EIKxFX145FDo6y3UgU4FoeMf8de8G
-         BAl5pUx78wlPgy+jDFLM2exBptp/KEx4gBapJ+DKQr8Q1+JHj1WzuHQmnB7ZMNmcFVP9
-         yG+w==
+        bh=3eTbKEnYSDWnQAp/MCV495EbAoblSj6tsRoXYxx8eTA=;
+        b=CbQV3v2LImOnbb4/HwA2Z1ci3z86EWmGIT3+VhuDWBnN/ZMZ3LPugQOmGShyopSSOx
+         FeO6Vr4rQBNOAoP9NnZfU8eUW/zpcza4dJYLBdfr1svp7q4lZ7KzLkRhkzOrwmniGuz6
+         OqFE1xkrFiX67cn1dQfybiVi9JYctG+X5EeBvWXAUZwsw0gz1Kgc4U4klQW4fCPcfE10
+         FmA8LqnbtyhRJrXxhCeVF7euT8A2ben01clQS5PpEfm+RyDjTQzJnoyzRWjCz4bvai4d
+         MyhxXU77ztphbZP5YKj/EUxSeVCYjiX2Zjr43CISL8ZfO6XD5b1jvcj6Kq2NnpuaHkib
+         h0bA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696629711; x=1697234511;
+        d=1e100.net; s=20230601; t=1696629714; x=1697234514;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=x2mVs/HGyl66PZJ1g77jzYqsJ5AKC++VawlUe5Kc/y8=;
-        b=VmUS09niq2QDyAGj5xIDuc8D+xVwALue6+RCB506g/rp6RighvnLrmesu6fiy4AscA
-         TSKBuMh2gqsmd9kZnAQ0yE+GP1Za+uS54JmANsuGS6fIRGegzmxpmO8qeEtFwAQ1+fsw
-         Q+NGEZ1cKrvxrBLleh9JyBx7E7RsUbpkmwJB0NsImF+uGJ8aK2wuxfO7omtFtfgwwyAz
-         2HkBDtYEaaSFaj3MKvCbwhg23dTluuCU21m4dKFTddIKjClre6fwdjSsS011oq16xqCu
-         atKsZSAUZ0kR5FMfAgZ1eo0tVeqRrQiwwOaq5Q4PdEnbjGBXFnXrEyD1FhvhkgfrkVSk
-         v+Uw==
-X-Gm-Message-State: AOJu0YwKyyZOtx4agqihS9m2HFk+mieYZ3+OYb7u8cGs3xWg2ZB68bgq
-        cy2muMkMjy0d3VWD5X89BTkrKtbnodLJVh6lZFAFVw==
-X-Google-Smtp-Source: AGHT+IEA8oPNUvgREcd5dEjQV2YzgHq2UvdzJKm6/PR0khKlp6FjaaUG3Z6srcLyKhlry599ZSciWw==
-X-Received: by 2002:a05:620a:3915:b0:76d:a00b:84f8 with SMTP id qr21-20020a05620a391500b0076da00b84f8mr10946707qkn.57.1696629711199;
-        Fri, 06 Oct 2023 15:01:51 -0700 (PDT)
+        bh=3eTbKEnYSDWnQAp/MCV495EbAoblSj6tsRoXYxx8eTA=;
+        b=OrHbRuKXF08qjeWINtuqgPEq7y5DGmkz9sWuiYRb8R59DoOVCAJGi92Lx9+mzPb617
+         +bRPw9vZbJzE/6Tfc/khku+BtbTx6HUykJdUhrd6lHWhX3HVBTuj+OgW1X9JRYu0wf9T
+         /skeG14N8eRECvA68RWULGuERiWXmzLuIILUwfRuD6mrX/jLLhA4GudCW/6JembmuGXc
+         6qywT2JYKFEpzSgSSk9ZvtupUn55WeVfSMcBzATzeMC0y1sXAqyUKstv6MOe+7hujfE2
+         1Fz2lsdxHmfP47Ea5QJOfeRfnmnlWrwbQ8/jrqpP9WyGIJpcrX9WPPdWOy31ScOMzkiZ
+         d7Tg==
+X-Gm-Message-State: AOJu0Yz4SJeEu7xX0WnaIpwFn0sNNiPwkdgOqJKz/b+6seaRkb6FVgOn
+        BViyFjwcSnbxMmfuFVI2E2ZBhqMmvwvZjXB5FugYFA==
+X-Google-Smtp-Source: AGHT+IFhhPL5IeOT6a5P+Z2xa2DHMP9QDtH06CpfxceSJGthVYFR33I6/BUPcUab6s6RPNubtu21oA==
+X-Received: by 2002:a0c:dd90:0:b0:65b:177b:a430 with SMTP id v16-20020a0cdd90000000b0065b177ba430mr9894044qvk.47.1696629714281;
+        Fri, 06 Oct 2023 15:01:54 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id o16-20020ae9f510000000b00765aa3ffa07sm1614058qkg.98.2023.10.06.15.01.50
+        by smtp.gmail.com with ESMTPSA id x20-20020a0cda14000000b0064f53943626sm1697966qvj.89.2023.10.06.15.01.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Oct 2023 15:01:50 -0700 (PDT)
-Date:   Fri, 6 Oct 2023 18:01:50 -0400
+        Fri, 06 Oct 2023 15:01:54 -0700 (PDT)
+Date:   Fri, 6 Oct 2023 18:01:53 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Elijah Newren <newren@gmail.com>,
         "Eric W. Biederman" <ebiederm@gmail.com>,
         Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 1/7] bulk-checkin: factor out `format_object_header_hash()`
-Message-ID: <37f407281596dd596e49c847c35fdf163977b479.1696629697.git.me@ttaylorr.com>
+Subject: [PATCH 2/7] bulk-checkin: factor out `prepare_checkpoint()`
+Message-ID: <9cc1f3014abe7fec997a99b6ac93d8ebb5455fa6.1696629697.git.me@ttaylorr.com>
 References: <cover.1696629697.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -65,20 +65,9 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Before deflating a blob into a pack, the bulk-checkin mechanism prepares
-the pack object header by calling `format_object_header()`, and writing
-into a scratch buffer, the contents of which eventually makes its way
-into the pack.
-
-Future commits will add support for deflating multiple kinds of objects
-into a pack, and will likewise need to perform a similar operation as
-below.
-
-This is a mostly straightforward extraction, with one notable exception.
-Instead of hard-coding `the_hash_algo`, pass it in to the new function
-as an argument. This isn't strictly necessary for our immediate purposes
-here, but will prove useful in the future if/when the bulk-checkin
-mechanism grows support for the hash transition plan.
+In a similar spirit as the previous commit, factor out the routine to
+prepare streaming into a bulk-checkin pack into its own function. Unlike
+the previous patch, this is a verbatim copy and paste.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
@@ -86,50 +75,43 @@ Signed-off-by: Taylor Blau <me@ttaylorr.com>
  1 file changed, 14 insertions(+), 6 deletions(-)
 
 diff --git a/bulk-checkin.c b/bulk-checkin.c
-index 223562b4e7..0aac3dfe31 100644
+index 0aac3dfe31..377c41f3ad 100644
 --- a/bulk-checkin.c
 +++ b/bulk-checkin.c
-@@ -247,6 +247,19 @@ static void prepare_to_stream(struct bulk_checkin_packfile *state,
- 		die_errno("unable to write pack header");
+@@ -260,6 +260,19 @@ static void format_object_header_hash(const struct git_hash_algo *algop,
+ 	algop->update_fn(ctx, header, header_len);
  }
  
-+static void format_object_header_hash(const struct git_hash_algo *algop,
-+				      git_hash_ctx *ctx, enum object_type type,
-+				      size_t size)
++static void prepare_checkpoint(struct bulk_checkin_packfile *state,
++			       struct hashfile_checkpoint *checkpoint,
++			       struct pack_idx_entry *idx,
++			       unsigned flags)
 +{
-+	unsigned char header[16384];
-+	unsigned header_len = format_object_header((char *)header,
-+						   sizeof(header),
-+						   type, size);
-+
-+	algop->init_fn(ctx);
-+	algop->update_fn(ctx, header, header_len);
++	prepare_to_stream(state, flags);
++	if (idx) {
++		hashfile_checkpoint(state->f, checkpoint);
++		idx->offset = state->offset;
++		crc32_begin(state->f);
++	}
 +}
 +
  static int deflate_blob_to_pack(struct bulk_checkin_packfile *state,
  				struct object_id *result_oid,
  				int fd, size_t size,
-@@ -254,8 +267,6 @@ static int deflate_blob_to_pack(struct bulk_checkin_packfile *state,
- {
- 	off_t seekback, already_hashed_to;
- 	git_hash_ctx ctx;
--	unsigned char obuf[16384];
--	unsigned header_len;
- 	struct hashfile_checkpoint checkpoint = {0};
- 	struct pack_idx_entry *idx = NULL;
+@@ -283,12 +296,7 @@ static int deflate_blob_to_pack(struct bulk_checkin_packfile *state,
+ 	already_hashed_to = 0;
  
-@@ -263,10 +274,7 @@ static int deflate_blob_to_pack(struct bulk_checkin_packfile *state,
- 	if (seekback == (off_t) -1)
- 		return error("cannot find the current offset");
- 
--	header_len = format_object_header((char *)obuf, sizeof(obuf),
--					  OBJ_BLOB, size);
--	the_hash_algo->init_fn(&ctx);
--	the_hash_algo->update_fn(&ctx, obuf, header_len);
-+	format_object_header_hash(the_hash_algo, &ctx, OBJ_BLOB, size);
- 
- 	/* Note: idx is non-NULL when we are writing */
- 	if ((flags & HASH_WRITE_OBJECT) != 0)
+ 	while (1) {
+-		prepare_to_stream(state, flags);
+-		if (idx) {
+-			hashfile_checkpoint(state->f, &checkpoint);
+-			idx->offset = state->offset;
+-			crc32_begin(state->f);
+-		}
++		prepare_checkpoint(state, &checkpoint, idx, flags);
+ 		if (!stream_blob_to_pack(state, &ctx, &already_hashed_to,
+ 					 fd, size, path, flags))
+ 			break;
 -- 
 2.42.0.8.g7a7e1e881e.dirty
 
