@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2DCAE81E1F
-	for <git@archiver.kernel.org>; Fri,  6 Oct 2023 18:09:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F15E7E81E1B
+	for <git@archiver.kernel.org>; Fri,  6 Oct 2023 18:09:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233224AbjJFSJh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Oct 2023 14:09:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45510 "EHLO
+        id S233231AbjJFSJj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Oct 2023 14:09:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233194AbjJFSJf (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S233088AbjJFSJf (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 6 Oct 2023 14:09:35 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB406C6
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63264C5
         for <git@vger.kernel.org>; Fri,  6 Oct 2023 11:09:33 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-4056ce55e7eso21864205e9.2
+Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-3296b87aa13so699273f8f.3
         for <git@vger.kernel.org>; Fri, 06 Oct 2023 11:09:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696615772; x=1697220572; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1696615771; x=1697220571; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=jyh/4l751L4Gup0iCJkdEhHSFXi9sz+WZTkvrl4T8Hc=;
-        b=im5BYKYj2qKAjFhUWCjjtVBz3u8lgrtHQ4CqCGpTOr4cujH0Cl6l0egamtggWx1Dc0
-         MNySYozkklH+2YiUZPEgH7wBEZJ+cBQUVBZG32EKwj0L9byW/aao4vf7p/Imr6yJH5t9
-         l7A2e9ACaTrKXQq37nsPCRbTV4YXVsWDzbtpOZlToFOEbAoUZrlGAKLaEWj+oZjDAZUe
-         mUzs3nUanwOkrNDTGYCZcYT/GPxpvthkc6jP+OpqlRHNrBI341kpbrtJyu92p97rk/bG
-         yX9DRvzW+w4d9NOuQehrm61HnnoikT9JfrujBKRTNadSItc5TJtSQZSJU3PlznCGC8Lm
-         Ybgg==
+        bh=Iv1i8EjSJYpO2KpYpS3Fztg/+oxg0kh/zvWm6sZWwF8=;
+        b=R34t9chTclhB/o2f+CnW0M2IVmAW2SEUftnvhncDI5YgZ0roPGi5bc8kI+CRRpcweK
+         cvbKWdH0FDGnX6Rwb6JDeInrjyN7m7kaoDztWm8IJSV9MTXSPp4y5hORdjP1gRwiNlo4
+         Y3EWoNapl+yx/ucsXvOtyOrkaxsr4bdwnMNRVTBRW8kAequlMOoU4ZbuYtEqacf2Ia1T
+         y9rAUOj/RG6AcuFAlBgqtDJC4EbdQ1ZqXf6h4OjjqizoSJ4ARirZkxxHaczbLz11tJJC
+         AK2Gu0Ym0902n3AD5R6Ec89T7FSgED/5RO0c9H9Bg+fw3V9jUMUxjs0HLJBt5QGwv8+i
+         XQWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696615772; x=1697220572;
+        d=1e100.net; s=20230601; t=1696615771; x=1697220571;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=jyh/4l751L4Gup0iCJkdEhHSFXi9sz+WZTkvrl4T8Hc=;
-        b=AduIZvUarpos0ci+wBltlOXh8Q2Tb1FBv9QDK/+25QPgMknRVaV5L9DxNQ1RV0tKBc
-         1mkL0DQGPXsfJSvCTP7swU8hy8INLbkgMS4BuFQmE4c00d9N0DVfeQh6Dl58BFYA3DRR
-         3W6ju9SDmFPe7VY/WDAqwQtBcbqVQ9kDcOCNo174PQ3auPh0S1y6HL+lva70m+DRq6jk
-         cosqY3MSwOspUFiibXlpZYyg0cmYwLLmXt/YqXuB4RhODGcU0Jb4XC3VlCc1C11OpH/r
-         qAgFtcGS8J3kYMl3XyQLVVUqyJJbwQa4Eqxh2TkbUIRazd4jr3iB2n8fn8jUYC+y1zsX
-         +4tg==
-X-Gm-Message-State: AOJu0Yyxsb/S2yWVq5yfKIPEygUugLKGKloft7aT8n1G6hG/3GLqjV3+
-        iY95jptiztQPvmnIQoAllvNDI3W46b0=
-X-Google-Smtp-Source: AGHT+IH5Ijf52L3ZYpYOiDg+gDCR6er2v5wIhyYC3boj5Emrb/00FLqVLbG9A5z0oBkrua57Yu+gaQ==
-X-Received: by 2002:a05:600c:2050:b0:405:40c6:2ba4 with SMTP id p16-20020a05600c205000b0040540c62ba4mr7801177wmg.5.1696615771948;
+        bh=Iv1i8EjSJYpO2KpYpS3Fztg/+oxg0kh/zvWm6sZWwF8=;
+        b=QP1FoUVTe4YC7NPto3SuiOXl/yBusF+3L80Z4wa4dv5V7dx/yv0Ut5uCNLqdaHTZ/i
+         1JxaFqGQpHCM4DZJZ1HfNWOwePfjCcGAtZ1KFPOlcBVkI2HYiXXIv5v/qFJtIzm1csAj
+         Q1h6UsGjJa859QNyvxF7afRux6uNKReDGiEQMDKaxhH/ZsDFSmqezuNp83HECGzXCuD1
+         +iK3qeWh6pIkzboqBQ+OFVq13sTtJhZDATxScXBaKfErp9n+0U5OSz3TekYdCDkeWaFT
+         kEvIcngxkko0uDLmtjU/2EPPR4Y57501zRXGv1/exfBO2Z0XevUWNAprFSFjNoRTCbY1
+         qQNA==
+X-Gm-Message-State: AOJu0YxdBQLN9zoxCC3FOVNTIu81g5LJRBosty2MDv095f/BXNr2Pj5/
+        g+HlMV+cZx7zyK8g8ix7LjqYeiDiSHY=
+X-Google-Smtp-Source: AGHT+IE3gyAUQS41ywWnQwZvMhYDDfSQh9HFEHwyaIUA7X27jh+HMaOhx4aRv9nxDmoAuBg96NAT4Q==
+X-Received: by 2002:a5d:69d0:0:b0:31f:fa61:961d with SMTP id s16-20020a5d69d0000000b0031ffa61961dmr8819268wrw.63.1696615771374;
         Fri, 06 Oct 2023 11:09:31 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e24-20020a05600c219800b004013797efb6sm6497653wme.9.2023.10.06.11.09.31
+        by smtp.gmail.com with ESMTPSA id x11-20020adff0cb000000b00323293bd023sm2186506wro.6.2023.10.06.11.09.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 06 Oct 2023 11:09:31 -0700 (PDT)
-Message-ID: <a382d2ba652a1ac9b0e39552558fb69a4e2aad5e.1696615769.git.gitgitgadget@gmail.com>
+Message-ID: <24014010ea350a2ea8676b6560ca1d60838c56ef.1696615769.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1594.git.1696615769.gitgitgadget@gmail.com>
 References: <pull.1594.git.1696615769.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 06 Oct 2023 18:09:28 +0000
-Subject: [PATCH 3/4] dir.[ch]: add 'follow_symlink' arg to 'get_dtype'
+Date:   Fri, 06 Oct 2023 18:09:27 +0000
+Subject: [PATCH 2/4] dir.[ch]: expose 'get_dtype'
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,109 +67,126 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Victoria Dye <vdye@github.com>
 
-Add a 'follow_symlink' boolean option to 'get_type()'. If 'follow_symlink'
-is enabled, DT_LNK (in addition to DT_UNKNOWN) d_types triggers the
-stat-based d_type resolution, using 'stat' instead of 'lstat' to get the
-type of the followed symlink. Note that symlinks are not followed
-recursively, so a symlink pointing to another symlink will still resolve to
-DT_LNK.
-
-Update callers in 'diagnose.c' to specify 'follow_symlink = 0' to preserve
-current behavior.
+Move 'get_dtype()' from 'diagnose.c' to 'dir.c' and add its declaration to
+'dir.h' so that it is accessible to callers in other files. The function and
+its documentation are moved verbatim except for a small addition to the
+description clarifying what the 'path' arg represents.
 
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- diagnose.c |  6 +++---
- dir.c      | 13 +++++++++----
- dir.h      |  7 ++++++-
- 3 files changed, 18 insertions(+), 8 deletions(-)
+ diagnose.c | 36 ------------------------------------
+ dir.c      | 28 ++++++++++++++++++++++++++++
+ dir.h      | 11 +++++++++++
+ 3 files changed, 39 insertions(+), 36 deletions(-)
 
 diff --git a/diagnose.c b/diagnose.c
-index fc4d344bd63..4d096c857f1 100644
+index 8430064000b..fc4d344bd63 100644
 --- a/diagnose.c
 +++ b/diagnose.c
-@@ -81,7 +81,7 @@ static int count_files(struct strbuf *path)
- 		return 0;
+@@ -71,42 +71,6 @@ static int dir_file_stats(struct object_directory *object_dir, void *data)
+ 	return 0;
+ }
  
- 	while ((e = readdir_skip_dot_and_dotdot(dir)) != NULL)
--		if (get_dtype(e, path) == DT_REG)
-+		if (get_dtype(e, path, 0) == DT_REG)
- 			count++;
- 
- 	closedir(dir);
-@@ -110,7 +110,7 @@ static void loose_objs_stats(struct strbuf *buf, const char *path)
- 	base_path_len = count_path.len;
- 
- 	while ((e = readdir_skip_dot_and_dotdot(dir)) != NULL)
--		if (get_dtype(e, &count_path) == DT_DIR &&
-+		if (get_dtype(e, &count_path, 0) == DT_DIR &&
- 		    strlen(e->d_name) == 2 &&
- 		    !hex_to_bytes(&c, e->d_name, 1)) {
- 			strbuf_setlen(&count_path, base_path_len);
-@@ -155,7 +155,7 @@ static int add_directory_to_archiver(struct strvec *archiver_args,
- 
- 		strbuf_add_absolute_path(&abspath, at_root ? "." : path);
- 		strbuf_addch(&abspath, '/');
--		dtype = get_dtype(e, &abspath);
-+		dtype = get_dtype(e, &abspath, 0);
- 
- 		strbuf_setlen(&buf, len);
- 		strbuf_addstr(&buf, e->d_name);
+-/*
+- * Get the d_type of a dirent. If the d_type is unknown, derive it from
+- * stat.st_mode.
+- *
+- * Note that 'path' is assumed to have a trailing slash. It is also modified
+- * in-place during the execution of the function, but is then reverted to its
+- * original value before returning.
+- */
+-static unsigned char get_dtype(struct dirent *e, struct strbuf *path)
+-{
+-	struct stat st;
+-	unsigned char dtype = DTYPE(e);
+-	size_t base_path_len;
+-
+-	if (dtype != DT_UNKNOWN)
+-		return dtype;
+-
+-	/* d_type unknown in dirent, try to fall back on lstat results */
+-	base_path_len = path->len;
+-	strbuf_addstr(path, e->d_name);
+-	if (lstat(path->buf, &st))
+-		goto cleanup;
+-
+-	/* determine d_type from st_mode */
+-	if (S_ISREG(st.st_mode))
+-		dtype = DT_REG;
+-	else if (S_ISDIR(st.st_mode))
+-		dtype = DT_DIR;
+-	else if (S_ISLNK(st.st_mode))
+-		dtype = DT_LNK;
+-
+-cleanup:
+-	strbuf_setlen(path, base_path_len);
+-	return dtype;
+-}
+-
+ static int count_files(struct strbuf *path)
+ {
+ 	DIR *dir = opendir(path->buf);
 diff --git a/dir.c b/dir.c
-index 5e01af3a25e..16fdb03f2a5 100644
+index 8486e4d56ff..5e01af3a25e 100644
 --- a/dir.c
 +++ b/dir.c
-@@ -2235,19 +2235,24 @@ static int get_index_dtype(struct index_state *istate,
+@@ -2235,6 +2235,34 @@ static int get_index_dtype(struct index_state *istate,
  	return DT_UNKNOWN;
  }
  
--unsigned char get_dtype(struct dirent *e, struct strbuf *path)
-+unsigned char get_dtype(struct dirent *e, struct strbuf *path,
-+			int follow_symlink)
++unsigned char get_dtype(struct dirent *e, struct strbuf *path)
++{
++	struct stat st;
++	unsigned char dtype = DTYPE(e);
++	size_t base_path_len;
++
++	if (dtype != DT_UNKNOWN)
++		return dtype;
++
++	/* d_type unknown in dirent, try to fall back on lstat results */
++	base_path_len = path->len;
++	strbuf_addstr(path, e->d_name);
++	if (lstat(path->buf, &st))
++		goto cleanup;
++
++	/* determine d_type from st_mode */
++	if (S_ISREG(st.st_mode))
++		dtype = DT_REG;
++	else if (S_ISDIR(st.st_mode))
++		dtype = DT_DIR;
++	else if (S_ISLNK(st.st_mode))
++		dtype = DT_LNK;
++
++cleanup:
++	strbuf_setlen(path, base_path_len);
++	return dtype;
++}
++
+ static int resolve_dtype(int dtype, struct index_state *istate,
+ 			 const char *path, int len)
  {
- 	struct stat st;
- 	unsigned char dtype = DTYPE(e);
- 	size_t base_path_len;
- 
--	if (dtype != DT_UNKNOWN)
-+	if (dtype != DT_UNKNOWN && !(follow_symlink && dtype == DT_LNK))
- 		return dtype;
- 
--	/* d_type unknown in dirent, try to fall back on lstat results */
-+	/*
-+	 * d_type unknown or unfollowed symlink, try to fall back on [l]stat
-+	 * results. If [l]stat fails, explicitly set DT_UNKNOWN.
-+	 */
- 	base_path_len = path->len;
- 	strbuf_addstr(path, e->d_name);
--	if (lstat(path->buf, &st))
-+	if ((follow_symlink && stat(path->buf, &st)) ||
-+	    (!follow_symlink && lstat(path->buf, &st)))
- 		goto cleanup;
- 
- 	/* determine d_type from st_mode */
 diff --git a/dir.h b/dir.h
-index 28c630ce806..98aa85fcc0e 100644
+index ad06682fd54..28c630ce806 100644
 --- a/dir.h
 +++ b/dir.h
-@@ -368,11 +368,16 @@ struct dirent *readdir_skip_dot_and_dotdot(DIR *dirp);
-  * stat.st_mode using the path to the dirent's containing directory (path) and
-  * the name of the dirent itself.
-  *
-+ * If 'follow_symlink' is 1, this function will attempt to follow DT_LNK types
-+ * using 'stat'. Links are *not* followed recursively, so a symlink pointing
-+ * to another symlink will still resolve to 'DT_LNK'.
-+ *
-  * Note that 'path' is assumed to have a trailing slash. It is also modified
-  * in-place during the execution of the function, but is then reverted to its
-  * original value before returning.
-  */
--unsigned char get_dtype(struct dirent *e, struct strbuf *path);
-+unsigned char get_dtype(struct dirent *e, struct strbuf *path,
-+			int follow_symlink);
+@@ -363,6 +363,17 @@ struct dir_struct {
  
+ struct dirent *readdir_skip_dot_and_dotdot(DIR *dirp);
+ 
++/*
++ * Get the d_type of a dirent. If the d_type is unknown, derive it from
++ * stat.st_mode using the path to the dirent's containing directory (path) and
++ * the name of the dirent itself.
++ *
++ * Note that 'path' is assumed to have a trailing slash. It is also modified
++ * in-place during the execution of the function, but is then reverted to its
++ * original value before returning.
++ */
++unsigned char get_dtype(struct dirent *e, struct strbuf *path);
++
  /*Count the number of slashes for string s*/
  int count_slashes(const char *s);
+ 
 -- 
 gitgitgadget
 
