@@ -2,117 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F43AE81E1B
-	for <git@archiver.kernel.org>; Fri,  6 Oct 2023 17:20:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 87463E81E1B
+	for <git@archiver.kernel.org>; Fri,  6 Oct 2023 18:01:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232636AbjJFRUd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Oct 2023 13:20:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33934 "EHLO
+        id S233144AbjJFSBs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Oct 2023 14:01:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229900AbjJFRUa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Oct 2023 13:20:30 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4A3CBF
-        for <git@vger.kernel.org>; Fri,  6 Oct 2023 10:20:25 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id 3f1490d57ef6-d81646fcf3eso3331542276.0
-        for <git@vger.kernel.org>; Fri, 06 Oct 2023 10:20:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1696612825; x=1697217625; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=meyAnGDbuQpvOhJOtRP8HhGqbeZluh8ATZLfycX9KPM=;
-        b=Lf1BJ7WKgrdE5evZOKCY5EGtKdaJaafgJ/hZGaYK6wT2/BkpRqR2reIR6y8liAXKGP
-         xk/8yIHsiMnyzojdvMchdeySPepfZyq7L5Zq2iU2ZpJbL4WeUpoOEw/0q+LvY0n14GiG
-         SjG8/xFBEhKCeEAX7SAdLF6CFhXnbStsOHZ/t43LtAaqW7/l0amqVch9aIS8GKyWmPue
-         4xvLNfvMosEVMiq5ICyrXdTTZJK3HIgcOKrDNL2OywL9oAXtZAxh2lS6JfOty77KhAXH
-         0qCC4z+FByS1ZMEPN9qQDhhNs7CTxxjf6a93XBcUTCyaYowgCv9muiYAZgJZaqS/5xzG
-         9CcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696612825; x=1697217625;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=meyAnGDbuQpvOhJOtRP8HhGqbeZluh8ATZLfycX9KPM=;
-        b=cLy6Y6iVwA2tmI/Lr3EaAxL0dps3YwMGe1n9M73JQhuSGw4qrgakhUtzc9Vk1EhNVc
-         eTtJ9I0Eq7H4Sz+j1fxOpamJ94egwQo2IaOtprQl4QlSvcWv4I+4JdJF7O69UepIw4ZZ
-         3+gsCFA21wxUoFS3+OZ73ViZLQl7L6IFLfY2dL8e+QeETAA5+gRDXXAURG4Y6fIcVyf1
-         q75HcIHq46roxUHUtRoU8mVfMb2ObaLgvwbk5OJUs6flYW0L20XzuRo121JgJmf6OJhr
-         LJureQN4qWiLoXp7K5mb98lZgptZFhJ1ovX8qgvV9gwyKZtCUmm0JKex63UnJKYuXG5k
-         ua/Q==
-X-Gm-Message-State: AOJu0Yz0AiGsxW3yPbP0Ymhka8LTcq1sV43j2NKPYSftkJGFQBll9vLr
-        2Iy+zCwXlCfgNPXtmvA5lSEZb7qQ2B/o110zi63w
-X-Google-Smtp-Source: AGHT+IHFoBIxT36pHNyZcLEcu3mCoeotdqV2Re/LOSyZE6PvGw6S+YrxOXjrz60YTc8ytHdMpfJxWcR2G+AEP+1cokhP
-X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:3bbe:7224:c3d6:1ff1])
- (user=jonathantanmy job=sendgmr) by 2002:a05:6902:180e:b0:d77:984e:c770 with
- SMTP id cf14-20020a056902180e00b00d77984ec770mr150658ybb.5.1696612824877;
- Fri, 06 Oct 2023 10:20:24 -0700 (PDT)
-Date:   Fri,  6 Oct 2023 10:20:22 -0700
-In-Reply-To: <xmqqv8bmlzoi.fsf@gitster.g>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.42.0.609.gbb76f46606-goog
-Message-ID: <20231006172022.1153171-1-jonathantanmy@google.com>
-Subject: Re: [PATCH v2 1/2] attr: add attr.tree for setting the treeish to
- read attributes from
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        John Cai <johncai86@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S233145AbjJFSBq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Oct 2023 14:01:46 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51C3DDB
+        for <git@vger.kernel.org>; Fri,  6 Oct 2023 11:01:45 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 71C17266FC;
+        Fri,  6 Oct 2023 14:01:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=/3HxOV8PMpUgU0/WnjSMzZi8HdPu0APP5Y87lq
+        fvRLY=; b=DzS9116fhD96ttQWx9CeZOdWKjcnqcMbiB1LSMHM73t3+hdq4C3l3a
+        CrFnMRaXoMcsY+Wu5F7QHce6n99BrDhBrY3jt/7mLAPpn1msef6IBXEaZM3zicRg
+        XfmTpxJ341wHX1pJoNBnNMaSVNhemD0/4cy2p9XNEZ2xXY+Fx2ZiY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 69BD2266FB;
+        Fri,  6 Oct 2023 14:01:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E85CD266FA;
+        Fri,  6 Oct 2023 14:01:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Sergey Organov <sorganov@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v3 1/3] diff-merges: improve --diff-merges documentation
+In-Reply-To: <CABPp-BFsrt0zS3NHsVAyOSW6vGioe8Z-iN2M3_JNBpP2fWVq9g@mail.gmail.com>
+        (Elijah Newren's message of "Fri, 6 Oct 2023 07:41:51 -0700")
+References: <20230909125446.142715-1-sorganov@gmail.com>
+        <20231004214558.210339-1-sorganov@gmail.com>
+        <20231004214558.210339-2-sorganov@gmail.com>
+        <xmqq34yog3ux.fsf@gitster.g>
+        <CABPp-BFsrt0zS3NHsVAyOSW6vGioe8Z-iN2M3_JNBpP2fWVq9g@mail.gmail.com>
+Date:   Fri, 06 Oct 2023 11:01:39 -0700
+Message-ID: <xmqq7cnzaav0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 66DA2028-6472-11EE-B61D-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-> As this adds a new call to git_config_get_string(), which will only
-> be available by including <config.h>, a merge-fix into 'seen' of
-> this topic needs to revert what b1bda751 (parse: separate out
-> parsing functions from config.h, 2023-09-29) did, which made this
-> file include only <parse.h>.
-> 
-> As this configuration variable was invented to improve the way the
-> attribute source tree is supported by emulating how mailmap.blob is
-> done, it deserves a bit of comparison.
-> 
-> The way mailmap.c does this is not have any code that reads or
-> parses configuration in mailmap.c (which is a rather library-ish
-> place), and leaves it up to callers to pre-populate the global
-> variable git_mailmap_blob with config.c:git_default_config().  That
-> way, they do not need to include <config.h> (nor <parse.h>) that is
-> closer to the UI layer.  I am wondering why we are not doing the
-> same, and instead making an ad-hoc call to git_config_get_string()
-> in this code, and if it is a good direction to move the codebase to
-> (in which case we may want to make sure that the same pattern is
-> followed in other places).
-> 
-> Folks interested in libification, as to the direction of that
-> effort, what's your plan on where to draw a line between "library"
-> and "userland"?  Should library-ish code be allowed to call
-> git_config_anything()?  I somehow suspect that it might be cleaner
-> if they didn't, and instead have the user of the "attr" module to
-> supply the necessary values from outside.
+Elijah Newren <newren@gmail.com> writes:
 
-I think that ideally library-ish code shouldn't be allowed to call
-config, yes. However I think what's practical would be for libraries
-that use very few config variables to get the necessary values from
-outside, and libraries that use many config variables (e.g. fetch, if it
-becomes a library) to call config.
+>> > +--cc::
+>> > +     Produce dense combined diff output for merge commits.
+>> > +     Shortcut for '--diff-merges=dense-combined -p'.
+>>
+>> Good.
+>>
+>> > +--remerge-diff::
+>> > +     Produce diff against re-merge.
+>> > +     Shortcut for '--diff-merges=remerge -p'.
+>> ...
+> Perhaps:
+>
+> Produce remerge-diff output for merge commits, in order to show how
+> conflicts were resolved.
 
-> On the other hand, once the part we have historically called
-> "config" API gets a reasonably solid abstraction so that they become
-> pluggable and replaceable, random ad-hoc calls from library code
-> outside the "config" library code may not be a huge problem, as long
-> as we plumb the necessary object handles around (so "attr" library
-> would need to be told which "config" backend is in use, probably in
-> the form of a struct that holds the various states in to replace
-> the current use of globals, plus a vtable to point at
-> implementations of the "config" service, and git_config_get_string()
-> call in such a truly libified world would grab the value of the named
-> variable transparently from whichever "config" backend is currently
-> in use).
+I do not mind it, but then I'd prefer to see ", in order to show
+how" also in the description of "--cc" and "-c" for consistency.
 
-This is true, but if we were ever to use the attr library elsewhere
-(whether in the git.git repo itself to unit test this library, or
-in another software project), we would need to supply a mock/stub of
-config. If attr uses very few config variables, I think it's clearer if
-it takes in the information from outside.
+A succinct way to say what they do may be hard to come by, but I
+think of them showing places that did not have obvious natural
+resolution.
+
+>     For a two-parent merge commit, a merge of these two commits is
+>     retried to create a temporary tree object, potentially containing
+>     files with conflict markers.  A diff is then shown between that
+>     temporary tree and the actual merge commit.  This has the effect
+>     of showing whether and how both semantic and textual conflicts
+>     were resolved by the user (i.e. what changes the user made after
+>     running 'git merge' and before finally committing).
+
+Yes, and because we do not have a back reference from here to the
+description for "--remerge-diff" we saw earlier, we'd need the "in
+order to" you suggested earlier there, too.
+
+>> Either way, it makes readers wonder what happens to merges with more
+>> than 2 parents (octopus merges).  It is not a new problem and this
+>> topic should not attempt to fix it.
+>
+> We could add:
+>
+> For octopus merges (merges with more than two parents), currently
+> only shows a warning about skipping such commits.
+>
+> if wanted.
+>
+> But perhaps I've distracted too much from Sergey's topic, and I should
+> submit these wording tweaks as a patch on top?  I'm fine either way.
+
+The primary purpose of polishing during a review cycle should be to
+help the original contributor to express what they wanted to express
+better, so talking about octopus behaviour, which wasn't covered in
+the original nor the patch under review, can be left out to avoid
+extending the scope of the topic further.
+
+But everything else you said in the message I am responding to falls
+into the scope of the "improving existing documentation for various
+merge presentation modes" topic, I would think, and they are more or
+less usable verbatim, so it would not be too much of a burden to
+make sure they are used in the next iteration.
+
+Thanks for a review, and thanks Sergey for streamlining the
+documentation around here.
+
+
