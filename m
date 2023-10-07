@@ -2,163 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A18B8E9413E
-	for <git@archiver.kernel.org>; Sat,  7 Oct 2023 01:50:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FF96E9413E
+	for <git@archiver.kernel.org>; Sat,  7 Oct 2023 03:07:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234044AbjJGBuX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Oct 2023 21:50:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51444 "EHLO
+        id S234100AbjJGDH1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Oct 2023 23:07:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233040AbjJGBuW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Oct 2023 21:50:22 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56C93B6
-        for <git@vger.kernel.org>; Fri,  6 Oct 2023 18:50:19 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B93A11B1C46;
-        Fri,  6 Oct 2023 21:50:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=uJMPLOebvX8DdMxsuxu/ql5hVn23OH+YubXLUb
-        mRl/c=; b=Y5FUSuQfK4qZU+6HColiE3mmNHbb1f1Z+BLcdi2CmVYRneLqPpDSdS
-        8VU647RNhZS2rRNItLybSrVN9v0VDVjfmh/HDzDA8QnsMEjGm5OQJQ3KsRSVR1Dn
-        Nn8NJlpd8DjrHFjhL4/N0ApngaUTgQdFmVSHTlozcQfbIrr777Q8E=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B09FF1B1C45;
-        Fri,  6 Oct 2023 21:50:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1966C1B1C43;
-        Fri,  6 Oct 2023 21:50:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Sergey Organov <sorganov@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v3 1/3] diff-merges: improve --diff-merges documentation
-In-Reply-To: <CABPp-BGxVnhnmoajWyqY_gMvQ42W5S6VX5EOXq3PW=GLVQwe0g@mail.gmail.com>
-        (Elijah Newren's message of "Fri, 6 Oct 2023 18:31:00 -0700")
-References: <20230909125446.142715-1-sorganov@gmail.com>
-        <20231004214558.210339-1-sorganov@gmail.com>
-        <20231004214558.210339-2-sorganov@gmail.com>
-        <xmqq34yog3ux.fsf@gitster.g>
-        <CABPp-BFsrt0zS3NHsVAyOSW6vGioe8Z-iN2M3_JNBpP2fWVq9g@mail.gmail.com>
-        <xmqq7cnzaav0.fsf@gitster.g>
-        <CABPp-BGxVnhnmoajWyqY_gMvQ42W5S6VX5EOXq3PW=GLVQwe0g@mail.gmail.com>
-Date:   Fri, 06 Oct 2023 18:50:16 -0700
-Message-ID: <xmqqjzrz5hgn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        with ESMTP id S234059AbjJGDHZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Oct 2023 23:07:25 -0400
+Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8310BD
+        for <git@vger.kernel.org>; Fri,  6 Oct 2023 20:07:24 -0700 (PDT)
+Received: by mail-io1-xd2f.google.com with SMTP id ca18e2360f4ac-7a2bfd584f0so122640939f.0
+        for <git@vger.kernel.org>; Fri, 06 Oct 2023 20:07:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1696648044; x=1697252844; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=qcDfHGRAxA6aVWEJLkp0TzZ3Vh5ys4Y5Rep69kMWFnc=;
+        b=VZk5bN5OQwHhjmhp/0DChUtWkfbPtvqR6yM10cKLv76aeXasmuscMlMwTJVEjHMf6x
+         6WzOeuzxUfnaE+Ve+gIa5UzbZiByiAHozgC4HDKjf8iu8+jT8y6CEbzrmQB9GAePjWWp
+         gRVS/azQ7rIx5qpoXYrsj+P6kUVnfasJdPsEX93DRIF36yoPOnxYf65wH4F6PzbPnlRA
+         PNtwbp2ZkXBJKL7SoS3jzR/AdXmCzUojtfGokJ0YiOcvG8/yM8s5W/ZpuCmJwylXRLO5
+         gbLfK9rO2HsLUAqraHm6iFhn/Z9owO0EQpdBe1CL497SGq1I6CovGccPpzjiuVgeWcmz
+         8vpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696648044; x=1697252844;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qcDfHGRAxA6aVWEJLkp0TzZ3Vh5ys4Y5Rep69kMWFnc=;
+        b=nv1WFajJqAA05QX9Af+Bmm6FOy+HYeAOY42D17SM3Ed00KsJO4hYkjtCMmdOYH+UFX
+         +x7AUZ1nQC/om4THX9VxBObCyDIEYpYURYZCEaApAxyqV7sB6TtdsWAUDs/if5On/uCm
+         u8Zh8AWejs08BrA3S96QUC0yFwuGJVf3L9fNvffRPaKka4TtgqPUPWlLZKJ+Fo5lA17r
+         OAuEWpf+dCLjVzitbOHkYh+ZAXa5G0SYTUCDYo1GLB6c4SuNAVVvSvlGyr3JGMXvDg2O
+         Ps35JDYwMNRDxZTebwKRrhUph95kb47AIRVVO/ewlJlDaSf7NavzGBFYtcRJ2mlVlwM6
+         FLEA==
+X-Gm-Message-State: AOJu0Yy1sAdzepgtTNEaugyJWTYW+ovIC/qkYZEoR58TTNmrsR06aXRf
+        q+FL2T1KHpH8kHUCwpg0fIg=
+X-Google-Smtp-Source: AGHT+IGIad/NS65j2Cp5xaGNlMwaZKYRaCtSFIhhGSA1CeLRQVXT+SxGw2XuVlk6aRevVhrgx8AQrg==
+X-Received: by 2002:a05:6e02:1ba6:b0:349:7832:5d8 with SMTP id n6-20020a056e021ba600b00349783205d8mr12627591ili.5.1696648043932;
+        Fri, 06 Oct 2023 20:07:23 -0700 (PDT)
+Received: from ?IPv6:::1? ([2600:8804:1503:bcfa:98e2:7dce:b0a1:7462])
+        by smtp.gmail.com with ESMTPSA id w14-20020a92d2ce000000b003513de0eae9sm1468830ilg.24.2023.10.06.20.07.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 06 Oct 2023 20:07:23 -0700 (PDT)
+Date:   Fri, 06 Oct 2023 22:07:20 -0500
+From:   Eric Biederman <ebiederm@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+CC:     Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_6/7=5D_bulk-checkin=3A_introdu?= =?US-ASCII?Q?ce_=60index=5Ftree=5Fbulk=5Fcheckin=5Fincore=28=29=60?=
+User-Agent: K-9 Mail for Android
+In-Reply-To: <cb0f79cabb7921ab7e334ad8a467ae84853bbd39.1696629697.git.me@ttaylorr.com>
+References: <cover.1696629697.git.me@ttaylorr.com> <cb0f79cabb7921ab7e334ad8a467ae84853bbd39.1696629697.git.me@ttaylorr.com>
+Message-ID: <E81727B0-A523-4A45-A606-61442357291D@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DDFAFE3E-64B3-11EE-8A22-25B3960A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
-
-> In my opinion, --remerge-diff does this better; wouldn't we want a
-> rationale where these particular modes shine?  Is that a non-empty
-> set?  (It may well be, but to me, --cc was never worse than -c while
-> often being better, and likewise, --remerge-diff is never worse than
-> --cc while often being better, at least on anything I had thought to
-> use any of these for.  Maybe there are other usecases for -c and --cc
-> I'm just not thinking of?)
-
-Between -c and --cc, I do not think there is anything that makes us
-favor -c over --cc.  While the algorithm to decide which hunks out
-of -c's output to omit was being polished, comparison with -c served
-a good way to give baseline, but once --cc has become solid, I do
-not think I've used -c myself.
-
-I personally find that a very trivial merge resolution is far easier
-to read with --cc than --remerge-diff, the latter being way too
-verbose.
-
-Also, --cc and -c should work inside a read-only repository where
-you only have read access to.  If remerge needs to write some
-objects to the repository, then you'd need some hack to give a
-writable object store overlay via the alternate odb mechanism, or
-something, right?
 
 
-$ git show --oneline --cc -U1 9fde277c338
-9fde277c33 Merge branch 'cc/git-replay' into seen
+On October 6, 2023 5:02:04 PM CDT, Taylor Blau <me@ttaylorr=2Ecom> wrote:
+>
+>Within `deflate_tree_to_pack_incore()`, the changes should be limited
+>to something like:
+>
+>    if (the_repository->compat_hash_algo) {
+>      struct strbuf converted =3D STRBUF_INIT;
+>      if (convert_object_file(&compat_obj,
+>                              the_repository->hash_algo,
+>                              the_repository->compat_hash_algo, =2E=2E=2E=
+) < 0)
+>        die(=2E=2E=2E);
+>
+>      format_object_header_hash(the_repository->compat_hash_algo,
+>                                OBJ_TREE, size);
+>
+>      strbuf_release(&converted);
+>    }
+>
+>, assuming related changes throughout the rest of the bulk-checkin
+>machinery necessary to update the hash of the converted object, which
+>are likewise minimal in size=2E
 
-diff --cc Makefile
-index cf60c16deb,05a504dc28..c581c1ddba
---- a/Makefile
-+++ b/Makefile
-@@@ -803,4 -801,2 +803,3 @@@ TEST_BUILTINS_OBJS += test-env-helper.
-  TEST_BUILTINS_OBJS += test-example-decorate.o
-- TEST_BUILTINS_OBJS += test-fast-rebase.o
- +TEST_BUILTINS_OBJS += test-find-pack.o
-  TEST_BUILTINS_OBJS += test-fsmonitor-client.o
-diff --cc t/helper/test-tool.c
-index 9010ac6de7,9ca1586de7..77b1d7c15d
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@@ -32,4 -32,2 +32,3 @@@ static struct test_cmd cmds[] = 
-  	{ "example-decorate", cmd__example_decorate },
-- 	{ "fast-rebase", cmd__fast_rebase },
- +	{ "find-pack", cmd__find_pack },
-  	{ "fsmonitor-client", cmd__fsmonitor_client },
-diff --cc t/helper/test-tool.h
-index f134f96b97,a03bbfc6b2..5deeca66fe
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@@ -26,4 -26,2 +26,3 @@@ int cmd__env_helper(int argc, const cha
-  int cmd__example_decorate(int argc, const char **argv);
-- int cmd__fast_rebase(int argc, const char **argv);
- +int cmd__find_pack(int argc, const char **argv);
-  int cmd__fsmonitor_client(int argc, const char **argv);
-$ git show --oneline --remerge-diff -U1 9fde277c338
-9fde277c33 Merge branch 'cc/git-replay' into seen
-diff --git a/Makefile b/Makefile
-remerge CONFLICT (content): Merge conflict in Makefile
-index 987c8e3569..c581c1ddba 100644
---- a/Makefile
-+++ b/Makefile
-@@ -803,9 +803,3 @@ TEST_BUILTINS_OBJS += test-env-helper.o
- TEST_BUILTINS_OBJS += test-example-decorate.o
--<<<<<<< 0fd7a144c5 (Merge branch 'js/doc-unit-tests-with-cmake' into seen)
--TEST_BUILTINS_OBJS += test-fast-rebase.o
- TEST_BUILTINS_OBJS += test-find-pack.o
--||||||| 1fc548b2d6
--TEST_BUILTINS_OBJS += test-fast-rebase.o
--=======
-->>>>>>> 0b853ad4db (replay: stop assuming replayed branches do not diverge)
- TEST_BUILTINS_OBJS += test-fsmonitor-client.o
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-remerge CONFLICT (content): Merge conflict in t/helper/test-tool.c
-index 87a9794564..77b1d7c15d 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -32,9 +32,3 @@ static struct test_cmd cmds[] = {
- 	{ "example-decorate", cmd__example_decorate },
--<<<<<<< 0fd7a144c5 (Merge branch 'js/doc-unit-tests-with-cmake' into seen)
--	{ "fast-rebase", cmd__fast_rebase },
- 	{ "find-pack", cmd__find_pack },
--||||||| 1fc548b2d6
--	{ "fast-rebase", cmd__fast_rebase },
--=======
-->>>>>>> 0b853ad4db (replay: stop assuming replayed branches do not diverge)
- 	{ "fsmonitor-client", cmd__fsmonitor_client },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-remerge CONFLICT (content): Merge conflict in t/helper/test-tool.h
-index e8abf4c42f..5deeca66fe 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -26,9 +26,3 @@ int cmd__env_helper(int argc, const char **argv);
- int cmd__example_decorate(int argc, const char **argv);
--<<<<<<< 0fd7a144c5 (Merge branch 'js/doc-unit-tests-with-cmake' into seen)
--int cmd__fast_rebase(int argc, const char **argv);
- int cmd__find_pack(int argc, const char **argv);
--||||||| 1fc548b2d6
--int cmd__fast_rebase(int argc, const char **argv);
--=======
-->>>>>>> 0b853ad4db (replay: stop assuming replayed branches do not diverge)
- int cmd__fsmonitor_client(int argc, const char **argv);
+So this is close=2E   Just in case someone wants to
+go down this path I want to point out that
+the converted object need to have the compat hash computed over it=2E
 
+Which means that the strbuf_release in your example comes a bit early=2E
+
+
+Eric
