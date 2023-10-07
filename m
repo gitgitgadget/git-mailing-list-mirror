@@ -2,119 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D14A8E9413D
-	for <git@archiver.kernel.org>; Sat,  7 Oct 2023 01:07:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB29CE94139
+	for <git@archiver.kernel.org>; Sat,  7 Oct 2023 01:32:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233989AbjJGBH7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Oct 2023 21:07:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55512 "EHLO
+        id S234025AbjJGBc2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Oct 2023 21:32:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233822AbjJGBH6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Oct 2023 21:07:58 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2AF4BF
-        for <git@vger.kernel.org>; Fri,  6 Oct 2023 18:07:56 -0700 (PDT)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id AEFF85AF6C;
-        Sat,  7 Oct 2023 01:07:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1696640875;
-        bh=yumXsLkaG+pG429b9mWdKyKjIDeteSnw90+76gzKEsc=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=Eg2SsiMYOCL2YvhH194gBAOBU9R6Umkl4jLVZGeMoD0opgmhos4j/nUMpOwCL3G2v
-         4npeC7fccJzimIE6ml0bhYar6OoNJfkQtrt+cM5MDGLTim1nkCv3+N2TPWJjSyKS1g
-         xGGPqoG+1C6UakLhFUkTXB9FR4CUcmYKe8uD5ngiVQycWxgo6YhbFSVoN7GKkLhF3Z
-         1tiTUyySeNOEQdkUFxk3Pdj5UxbtljPTLpET3ysbaXmw8KYfLKiJ9Uegyox9hVdxbO
-         MZDoyjD4g00HMzAF9z3P4fSwIAVrCPAcX8sjUkqjD1e2gNPvDuK/J5V+7NjZ11hD/y
-         E67Z5DpL7HFip6y0Hqbs8bFPxTeQbaIFtsUai+By8Bl8Ym8gERkhGtPjEkvrJC8wup
-         MAZKxc7+pQcPYjSvpIJ67e/xPO2VLnPQjLer0rR8paZqPQXJ6J9ebdbryP02wX5CC4
-         2eXPQIgcWrQWv2LbH6czXhTqcijDryO5oQ6pVy1v+MJCuR14moa
-Date:   Sat, 7 Oct 2023 01:07:53 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     "Rolland Swing (Insight Global LLC)" <v-roswing@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Anthony Chuang <anchuang@microsoft.com>
-Subject: Re: Microsoft Smart App Control - Git - git-bash.exe File Unsigned
-Message-ID: <ZSCvaWuPJ1peZ3KF@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Rolland Swing (Insight Global LLC)" <v-roswing@microsoft.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Anthony Chuang <anchuang@microsoft.com>
-References: <SJ1PR21MB36990080CCBC0BB415261D82E3CAA@SJ1PR21MB3699.namprd21.prod.outlook.com>
- <SJ1PR21MB3699CA030DE035CA42582AF5E3CAA@SJ1PR21MB3699.namprd21.prod.outlook.com>
- <SJ1PR21MB369933C2C879EAD0D5EAFBD1E3CAA@SJ1PR21MB3699.namprd21.prod.outlook.com>
+        with ESMTP id S233942AbjJGBc1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Oct 2023 21:32:27 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72CAFB6
+        for <git@vger.kernel.org>; Fri,  6 Oct 2023 18:32:25 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-50444e756deso3608775e87.0
+        for <git@vger.kernel.org>; Fri, 06 Oct 2023 18:32:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1696642344; x=1697247144; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CfjdcVpic+2pvXqlIre7fGrapyzLe77Y81xYJxN9Hs4=;
+        b=d3MGdmZQSrMx/uikO7ojC99Olpjd5PE4zkpL6QWIOBeANoBNhppbjtp7BxOKvhOA8a
+         FEQYsWCHhFXpXIh+GhJRmpoSo7yG2AIaLkh7xC+U0nn5BOD75FYizhkxFMX8oHliZFvU
+         UugYbbsJkTaLUPqPmv3o60Wkbvhh/6Gp7Vkfyh4ZAQAIrjQIeDyjqANQZeYaLjj9Ew7e
+         t/N3wtrA4EbGZ9HpnVK0jO5DxEpX8CdsOvRkB7NJuJ8BYZOyT6SaKrPSopuGYaeMdjXj
+         L9zA0frG0GBs8YNVTQdIJi7v5RKNjbePUUYkaFc28ZbP8Gv1hoY1uqCev+WlcOhprt17
+         R3jQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696642344; x=1697247144;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=CfjdcVpic+2pvXqlIre7fGrapyzLe77Y81xYJxN9Hs4=;
+        b=ZhvimYsjnnWoxwaDuWIWPjI/L32do5JEMeXTrWKYF4pSRjqNWKkAjHG88GbXbmC4UX
+         A4rAJfefKST+PfSSHKxaCkUQs6b9jOakiX45jgVRdA9Vr+4K7RcSm3L52zpZLISm49Gq
+         SJMnVcH+eOwJrdeYu/sLaZSGK4r/e6t0T/pwd6tJdw2J7BWXHc7VsOcVeVjfiFYTJFKd
+         LrV/SwO1kJO5mjPvW+tPOCtTZvxmyLNe8jB3IzwkP7mu5fegCEchXGNRNo3cbNtJ3+nR
+         mNF1WmAqTuUxV9K6u22eA0QarSnttt1k6tHgVwnSDsVHSsKBa+bIYFenik04CTCLY6qM
+         PclA==
+X-Gm-Message-State: AOJu0YxUsBtUybTxjxcH8Y1hio9pqGhbG4tZS1Fg4E8soE+NiDRBRXfs
+        LXJA0l0x9mB93NxyFgdQqnKHrd3bPzayPLPUaVs=
+X-Google-Smtp-Source: AGHT+IHU7xCfRSFka+bjr6GKsjIeaUWElKWEQgQ00f0vLI1KmCXMcDF0SGlrYUWjyL6lmzJG9YY+wwMmA01uFPJzMyY=
+X-Received: by 2002:a05:6512:250c:b0:503:55c:7999 with SMTP id
+ be12-20020a056512250c00b00503055c7999mr10591721lfb.34.1696642343383; Fri, 06
+ Oct 2023 18:32:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="hTHqFk2yG07Cq/GJ"
-Content-Disposition: inline
-In-Reply-To: <SJ1PR21MB369933C2C879EAD0D5EAFBD1E3CAA@SJ1PR21MB3699.namprd21.prod.outlook.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
+References: <20230909125446.142715-1-sorganov@gmail.com> <20231004214558.210339-1-sorganov@gmail.com>
+ <20231004214558.210339-2-sorganov@gmail.com> <xmqq34yog3ux.fsf@gitster.g>
+ <CABPp-BFsrt0zS3NHsVAyOSW6vGioe8Z-iN2M3_JNBpP2fWVq9g@mail.gmail.com> <xmqq7cnzaav0.fsf@gitster.g>
+In-Reply-To: <xmqq7cnzaav0.fsf@gitster.g>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 6 Oct 2023 18:31:00 -0700
+Message-ID: <CABPp-BGxVnhnmoajWyqY_gMvQ42W5S6VX5EOXq3PW=GLVQwe0g@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] diff-merges: improve --diff-merges documentation
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Sergey Organov <sorganov@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Oct 6, 2023 at 11:01=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Elijah Newren <newren@gmail.com> writes:
+>
+> >> > +--cc::
+> >> > +     Produce dense combined diff output for merge commits.
+> >> > +     Shortcut for '--diff-merges=3Ddense-combined -p'.
+> >>
+> >> Good.
+> >>
+> >> > +--remerge-diff::
+> >> > +     Produce diff against re-merge.
+> >> > +     Shortcut for '--diff-merges=3Dremerge -p'.
+> >> ...
+> > Perhaps:
+> >
+> > Produce remerge-diff output for merge commits, in order to show how
+> > conflicts were resolved.
+>
+> I do not mind it, but then I'd prefer to see ", in order to show
+> how" also in the description of "--cc" and "-c" for consistency.
 
---hTHqFk2yG07Cq/GJ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The problem is it's really hard for me to come up with an answer to
+that, in part because...
 
-On 2023-10-05 at 20:41:39, Rolland Swing (Insight Global LLC) wrote:
-> Hi Git Team,
+> A succinct way to say what they do may be hard to come by, but I
+> think of them showing places that did not have obvious natural
+> resolution.
 
-Hey,
-
-> We're part of the Microsoft team that owns Smart App Control (https://lea=
-rn.microsoft.com/en-us/windows/apps/develop/smart-app-control/overview), wh=
-ich requires applications to sign all of their executable files (exe, dll, =
-msi, tmp, and a few other file formats).
-> =C2=A0
-> We found during internal testing and/or from user feedback that your app,=
- git-bash.exe, is not correctly signed.=20
->=20
-> Block Event:=C2=A0=C2=A0 FileName: \Device\HarddiskVolume7\Program Files\=
-Git\git-bash.exe
-> =C2=A0 Calling Process: \Device\HarddiskVolume7\Windows\explorer.exe
-> =C2=A0 Sha256 Hash: 42F2E685686FB6356A195709AF912C7B9D424466BD7C6D69258AA=
-DA5E80AC3C2=C2=A0
-
-The Git project doesn't distribute any binaries at all.  We distribute
-only source code.  Many distributors compile these to produce binaries.
-
-The project you are probably thinking of is Git for Windows, which,
-while related, is a separate project.  They do indeed distribute
-binaries, and this looks like a binary that's theirs.  If you'd like to
-contact them, you can use their issue tracker
-(https://github.com/git-for-windows/git/issues) to inquire.
-
-However, I will note that a cursory search there found
-https://github.com/git-for-windows/git/issues/798, where the maintainer
-points out that there are over 400 exe files and 250 dll files, which
-would make signing them all excessively burdensome.  I expect the
-upcoming requirements for HSM-backed keys for Windows code signing may
-make that even slower and more burdensome.  That being said, perhaps
-with automation, the maintainer may feel differently than they did in
-2016, so it might be worth asking again.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---hTHqFk2yG07Cq/GJ
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.40 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZSCvaQAKCRB8DEliiIei
-gTjGAP9i9vJdzqiV6UmeTgRD3PVwKybNdI/g6HVSEzw/y+Z5xAD9HGPqqaeDo5bC
-YOFjtd8FM6zlBEf9S0hm4h86KhrXtQQ=
-=dLaW
------END PGP SIGNATURE-----
-
---hTHqFk2yG07Cq/GJ--
+In my opinion, --remerge-diff does this better; wouldn't we want a
+rationale where these particular modes shine?  Is that a non-empty
+set?  (It may well be, but to me, --cc was never worse than -c while
+often being better, and likewise, --remerge-diff is never worse than
+--cc while often being better, at least on anything I had thought to
+use any of these for.  Maybe there are other usecases for -c and --cc
+I'm just not thinking of?)
