@@ -2,113 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD6CAE95A67
-	for <git@archiver.kernel.org>; Sun,  8 Oct 2023 17:34:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83BC0E95A8E
+	for <git@archiver.kernel.org>; Sun,  8 Oct 2023 20:23:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233002AbjJHRez (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Oct 2023 13:34:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47520 "EHLO
+        id S1344708AbjJHUXk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 8 Oct 2023 16:23:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231167AbjJHRey (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Oct 2023 13:34:54 -0400
-Received: from mout.web.de (mout.web.de [212.227.17.12])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4BDFB6
-        for <git@vger.kernel.org>; Sun,  8 Oct 2023 10:34:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
- t=1696786486; x=1697391286; i=l.s.r@web.de;
- bh=bzSIYOJq/9cMedFvOtaBdVPh3HvD2MAiNUM3wlo+WZk=;
- h=X-UI-Sender-Class:Date:From:Subject:To:References:In-Reply-To;
- b=nuWHYbGLi8j+KbXdUxFswbhxnwA7JK7apOx1BLfT2QgHbOAoTKIsyYfKMXKBN5GHddkFRK6wlEF
- +7fcQIOO23M1pLBc0kF5/PMbHm3Q9OUmTwJ70bCkYejktnuWAx8O7HY81bhOkYrn2+N9/FFnKhgvC
- Y/MKYoQQs17k7GmX7q/un7E0PtwbepxaH6KzPsaSzbce4m4O2UB/JjuyOY2uWUamG/OP0xdVlF3nO
- 4uWUyGD40dYOhmOi16F3wK4JmhGLWXFglkwoxOYWf8uPskhrmp6UAgmoUXX2Ev5qfNTjFgaifdBzX
- hepyilOF21Ro4/sOZBbieHmou1domr2/aoJA==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.147.159]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MXXN7-1r5gAk3gSd-00YiXL; Sun, 08
- Oct 2023 19:34:45 +0200
-Message-ID: <4014e490-c6c1-453d-b0ed-645220e3e614@web.de>
-Date:   Sun, 8 Oct 2023 19:34:45 +0200
+        with ESMTP id S1344638AbjJHUXe (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Oct 2023 16:23:34 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 028E2C6
+        for <git@vger.kernel.org>; Sun,  8 Oct 2023 13:23:31 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-40566f89f6eso38410955e9.3
+        for <git@vger.kernel.org>; Sun, 08 Oct 2023 13:23:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1696796610; x=1697401410; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=jmKpAgiUJ17JJ2ylcf4L3FukYW0wVxPVM8m6LFOV3v8=;
+        b=GgNY1yIlKdPX+2eOHm14iS7HQz+FmbbI7rz6c/PtzA77odSEqB0lyZ3yyzi4O5/VW+
+         vdKAew+dfAUSXwPZVBFeBf0nZ//heyy7REn9io8t52N8GVcHZ51PLoLpFli+EouSWRPd
+         Rf4diXlHU5OzrP89u2+7C1sKgdvtdC9sA6LEcCNvLoAg8Qcse1FNgdSdZL3jQ1mAOKie
+         SBykIPaGzVG+fwsc8ILq/sg4toaQkJIVUPrLZeYXHMh/UaJi0+qMykErHwXnTdeU7kqw
+         Z+JO38ys611hyTe22ktImEXcXimw8pUIryQimQZAu8NZaQW6UGXsWuNZwIV5XFN2D2cS
+         fAFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696796610; x=1697401410;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jmKpAgiUJ17JJ2ylcf4L3FukYW0wVxPVM8m6LFOV3v8=;
+        b=vz06WKL26w7kfM+Ts0WfUQF8M52kLtd9KRA9UDf21d1zGh89ON7Yl7+IkUlSfjB1Yq
+         EM0x5ZP/nfXsYGB5+Zov+PyDynMbFi/ZmFDTP3qcjR+Ig4wvM10ejO4jMeKwmmBW1meM
+         kQ75VsSNNO1zL63aGR579NUnwHnqdU7TViuPYKagCZ3xI/8fQLUfPi96cVo+8b6aDrkW
+         da/mgcc8C+C7i5cbc5iZR2Cx5ZC3vDJimhlKDdF821sTeQFfzM6BBs2vD4zdCB8xM6vY
+         JB3cYxqQ7uWMxHoFdJTRcQ8jrs65SwnDhjgeJbTvbWyY1CUwCz1hA/dP77iSTYIqQhfn
+         j9jA==
+X-Gm-Message-State: AOJu0Yw7fwWaCKmFWCKhFZNsg8MK+l/U4SG+w0qkjErqUC+vfpXjForl
+        lQHMfarUPq7IVvHg37Pp4lGf+AMXBEE=
+X-Google-Smtp-Source: AGHT+IFy8JvDSwiCHfuchMlw86gW+8dEAHPZeEnpYmYvk2vp+fmSXSqfeOREhNfhvxQhtcavuBJsAw==
+X-Received: by 2002:a05:600c:4709:b0:406:84a0:bc87 with SMTP id v9-20020a05600c470900b0040684a0bc87mr11534351wmo.15.1696796609983;
+        Sun, 08 Oct 2023 13:23:29 -0700 (PDT)
+Received: from localhost.localdomain (cpc105060-sgyl40-2-0-cust995.18-2.cable.virginm.net. [81.111.15.228])
+        by smtp.gmail.com with ESMTPSA id 15-20020a05600c028f00b004065d67c3c9sm9339190wmk.8.2023.10.08.13.23.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 08 Oct 2023 13:23:29 -0700 (PDT)
+From:   Andy Koppe <andy.koppe@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Andy Koppe <andy.koppe@gmail.com>
+Subject: [PATCH] pretty: fix ref filtering for %(decorate) formats
+Date:   Sun,  8 Oct 2023 21:23:07 +0100
+Message-ID: <20231008202307.1568477-1-andy.koppe@gmail.com>
+X-Mailer: git-send-email 2.42.GIT
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From:   =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Subject: Re: What's cooking in git.git (Oct 2023, #03; Fri, 6)
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqh6n24zf1.fsf@gitster.g>
-X-Mozilla-News-Host: news://lore.kernel.org
-Content-Language: en-US
-In-Reply-To: <xmqqh6n24zf1.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:hd0uUCJGlMDOe05sqTJFjgm+2qRTLNJtJUnvqirwgcLdvgX6tjW
- hUwgAkTqjAJcOp7I176J0vfB+RkltpMrb61Y20WQV92JQycR0ELzKBBwyAdKwBJPwpsHu/c
- +STaJsxJn9cFTxyOHjFBZnFrrtM/D8D9D+XPp7+fiz+vFZEuZNB3NzqaptJ16qyU1o6Li8P
- cdmv2F4dTqYCs7guLlOVg==
-UI-OutboundReport: notjunk:1;M01:P0:TDdUo/gZ/YQ=;P2P9pNYZYafua49RsjQATq8/Bgs
- bsmQsnkZvld5ld/DXSEfkqwAnRtwP9BmTvr873EhNdhG/vHaLFQWGcr8sjqg2JDM/djiuX2wG
- HoqGFEtNMLYx+D8cFN5bEydA8b0yHTSh9PSgMDfvIQZeUjBuXsZUiphyHcshOdbDgnA+z0BdU
- sBLrBqaro1dMY8NmDjc/jAVYlutTt6I7IQTYYI2M521Nb6/h8lvtKDPDKGxwzJzKLrWHvMXmm
- UJtlTHXpIQAWWxIuAzX7hbahrNMzUDK1l1kXYTNamQWoA0r9KjQozdGhLaLy/ttMNCt08N1LL
- o+Iucu5Xud2hZiUvZPEiaIRXdhc7pDO+PhzQhhAqQSgTR/kRgKLc+0m3PyRJ0fH3vVXsaxrYY
- ck9y7lElQ2LlTPftVF7qp7wRISGfD6zo/SS6K2J0JrrF4F6PiBozYUKIT5GBad7VxRGs3BnXi
- Q7YNEHN33zhkFOjoJeNK+ZjFGuFZi5bjlLG9QJNyAwMx92c4XK8s2VXDiMI+DkXe0+iGAsrCu
- rwvrEP1Qh8Lb6rHy0zFPafXFq1y2gEFyf/4QiOIVlk5C+IEulykEKN4aIlc4gZWYK8Sxt7Qbn
- rtKGBhyApIuf0jR+Yx7S70pHBfVtTr2ky+FBTufEmODlop1MD9xo72+ymWtMoT43hlfsGm3rM
- QJkkevMUNn3MMZ2SFdl6bpauIDbZ80USB+QkRY5Sp+gvKOwuTn7ejmWxRyG9Bi6zQBFwUR9W8
- k4n0RWsibcRBxYv442oDvors5LMP+ttbetbRtMWMEBkf3xGhjr6DhL4h09LAn4d/XSjiHPzL8
- 0NmM9wvOGMQEx0WnM6vLZRt++ZniYvIh6Dk57Tamv3pLx6lq/NZBEaa2NSuZzQ2uqOkVYAgJ8
- lCO43s6/BGqODnUb6ZV5aXWiZwGSkd0Q4SIVzKzOA75utxp7HtZPeRK3VASpN3qtFBkur/wUV
- v1M1cg==
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 07.10.23 um 10:20 schrieb Junio C Hamano:
-> * rs/parse-options-value-int (2023-09-18) 2 commits
->  - parse-options: use and require int pointer for OPT_CMDMODE
->  - parse-options: add int value pointer to struct option
->
->  A bit of type safety for the "value" pointer used in the
->  parse-options API.
->
->  What's the status of this thing?
->  source: <e6d8a291-03de-cfd3-3813-747fc2cad145@web.de>
+Mark pretty formats containing "%(decorate" as requiring decoration in
+userformat_find_requirements(), same as "%d" and "%D".
 
-tl;dr: Feel free to drop this topic if it's in the way.
+Without this, cmd_log_init_finish() didn't invoke load_ref_decorations()
+with the decoration_filter it puts together, and hence filtering options
+such as --decorate-refs were quietly ignored.
 
-I think the added _int variables are defensible, but the mode_int member
-added to struct resume_mode in builtin/am.c is too ugly.  Extending
-OPT_CMDMODE to support arguments would allow getting rid of the struct
-altogether and is probably a good idea anyway.  It's surprisingly hard
-to get right, though -- just discovered that the interference detection
-is only working half of the time in the current code, and we can't have
-that, can we?
+Amend one of the %(decorate) checks in t4205-log-pretty-formats.sh to
+test this.
 
-   # a OPT_CMDMODE option
-   $ t/helper/test-tool parse-options --mode1 | grep integer
-   integer: 1
+Signed-off-by: Andy Koppe <andy.koppe@gmail.com>
+---
+ pretty.c                      | 4 ++++
+ t/t4205-log-pretty-formats.sh | 6 +++---
+ 2 files changed, 7 insertions(+), 3 deletions(-)
 
-   # something else setting the same variable
-   $ % t/helper/test-tool parse-options --set23 | grep integer
-   integer: 23
+diff --git a/pretty.c b/pretty.c
+index 7f3abb676c..cf964b060c 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1961,6 +1961,10 @@ void userformat_find_requirements(const char *fmt, struct userformat_want *w)
+ 		case 'D':
+ 			w->decorate = 1;
+ 			break;
++		case '(':
++			if (starts_with(fmt + 1, "decorate"))
++				w->decorate = 1;
++			break;
+ 		}
+ 	}
+ }
+diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
+index 16626e4fe9..5aabc9f7d8 100755
+--- a/t/t4205-log-pretty-formats.sh
++++ b/t/t4205-log-pretty-formats.sh
+@@ -590,9 +590,9 @@ test_expect_success 'pretty format %decorate' '
+ 	git log --format="%(decorate:prefix=,suffix=)" -1 >actual2 &&
+ 	test_cmp expect2 actual2 &&
+ 
+-	echo "[ HEAD -> foo; tag: bar; qux ]" >expect3 &&
+-	git log --format="%(decorate:prefix=[ ,suffix= ],separator=%x3B )" \
+-		-1 >actual3 &&
++	echo "[ bar; qux; foo ]" >expect3 &&
++	git log --format="%(decorate:prefix=[ ,suffix= ],separator=%x3B ,tag=)" \
++		--decorate-refs=refs/ -1 >actual3 &&
+ 	test_cmp expect3 actual3 &&
+ 
+ 	# Try with a typo (in "separator"), in which case the placeholder should
+-- 
+2.42.GIT
 
-   # combined use is flagged if the OPT_CMDMODE option comes last
-   $ t/helper/test-tool parse-options --set23 --mode1
-   error: option `mode1' : incompatible with something else
-
-   # ... but not the other way around
-   $ t/helper/test-tool parse-options --mode1 --set23 | grep integer
-   integer: 23
-
-Anyway, I'll get there eventually and present a nicely shaven yak -- or
-give up and focus on the original topic.
-
-https://lore.kernel.org/git/6cb09270-04b9-456e-8d7e-97137e56e9e2@web.de/
-detects and handles the same type mismatch by adding a level of
-abstraction (getters and setters).  That way is more general and adds
-more overhead compared to the _int variant.  A fair comparison requires
-argument support in OPT_CMDMODE, though, I think.
-
-I don't mind removing this topic from seen for now; it's not ready, yet.
-
-Ren=C3=A9
