@@ -2,129 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92360E95A67
-	for <git@archiver.kernel.org>; Sun,  8 Oct 2023 14:35:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C544E95A82
+	for <git@archiver.kernel.org>; Sun,  8 Oct 2023 14:37:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232280AbjJHOfa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Oct 2023 10:35:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33126 "EHLO
+        id S1344520AbjJHOh5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 8 Oct 2023 10:37:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230082AbjJHOf3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Oct 2023 10:35:29 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CE9FAB
-        for <git@vger.kernel.org>; Sun,  8 Oct 2023 07:35:27 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-99bdcade7fbso638083666b.1
-        for <git@vger.kernel.org>; Sun, 08 Oct 2023 07:35:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696775725; x=1697380525; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=lIQzpUiuQxmBT3Z3GzjZJnVMGYdwo75Zj70Bl2Aw+hM=;
-        b=kbayHaUtqIgVqQHkVvlmR3pvMLGTtXMM/oLLvTaReannKhFJwqErxpoczss6WsKYc4
-         zeUmc1Fgl3rFUZ0bmxkcpmzCm5CaA6GaLAF3xDTi4X2Ln2dnSjTuRNrVMcYU/i/ek74y
-         qA94kug4PlKm1rF9Z6WpHDfePndSsZofUtNldmrlckHd/AAVoP+yF0l2WWJ6rPCcoIn5
-         QXi4XwI0cALzU15eQdGeycVI6lcVC08qyRGQYPr0gCAbNPz40PzxyuE37MWj2sTEYdWH
-         7/JkBBUX53ZKzkXu8/UN7XsZUlpCqWHDOFOobgm/D3Y3W+H9pnDI82Hqdop6my9cEJp0
-         hZnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696775725; x=1697380525;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lIQzpUiuQxmBT3Z3GzjZJnVMGYdwo75Zj70Bl2Aw+hM=;
-        b=lw+IxZt3BnYjn2mEu2+7QBB2fxoHhHX5UzeLujAPopg4vHrVHwhs/3PskLCsfCa5vn
-         NkAX72X52JSyAqt+8x3z0yfKto4mr9hoBkwzXsOF7r7+VqIzO6LaWiEPenXrFuTPsFwS
-         5d5cTqBm1fSZ8A01HwJp6tPyBgaco2Rt9PMe+KCrwxUiRl+6GMqq69yCDWfbv0LjtM4k
-         FJyn0VQfmG4IH6JEF2uOsCIa7AAQApz2s9QXs1PSgelwXdPD+NlRvK4AZwefivz51RJT
-         pri0w5TitVJLII3vZSZ+qZ53JkPkVeErL2oDysx6i6I54uVDtsxCfMv0i/ZkMN8/NWFJ
-         /Pjw==
-X-Gm-Message-State: AOJu0YzV+6s1A6P9pQQ5VQDITMYBtn5vU8H4IkU0v520sznnx+wSdmZg
-        xXR9WckvJkeNJ4oMrUDLFno=
-X-Google-Smtp-Source: AGHT+IFqx5lIdLhAxQB0hrMYgyV87CnOMppmd8XcA9NARmLojbM4UkXR0vDnaOKg2UcmL/2zZBy83g==
-X-Received: by 2002:a17:906:30ca:b0:9b2:b7f2:bc7b with SMTP id b10-20020a17090630ca00b009b2b7f2bc7bmr11292298ejb.37.1696775725276;
-        Sun, 08 Oct 2023 07:35:25 -0700 (PDT)
-Received: from localhost (94-21-146-30.pool.digikabel.hu. [94.21.146.30])
-        by smtp.gmail.com with ESMTPSA id lf8-20020a170906ae4800b009b27d4153c0sm5672788ejb.178.2023.10.08.07.35.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Oct 2023 07:35:24 -0700 (PDT)
-Date:   Sun, 8 Oct 2023 16:35:23 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 07/15] commit-graph: new filter ver. that fixes murmur3
-Message-ID: <20231008143523.GA18858@szeder.dev>
-References: <20230830200218.GA5147@szeder.dev>
- <20230901205616.3572722-1-jonathantanmy@google.com>
- <ZRIRtlbsYadg7EUx@nand.local>
+        with ESMTP id S234341AbjJHOh4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Oct 2023 10:37:56 -0400
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1ECDA4
+        for <git@vger.kernel.org>; Sun,  8 Oct 2023 07:37:54 -0700 (PDT)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.nyi.internal (Postfix) with ESMTP id AA24D5C025E;
+        Sun,  8 Oct 2023 10:37:52 -0400 (EDT)
+Received: from imap50 ([10.202.2.100])
+  by compute1.internal (MEProxy); Sun, 08 Oct 2023 10:37:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+         h=cc:cc:content-transfer-encoding:content-type:content-type
+        :date:date:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to;
+         s=fm1; t=1696775872; x=1696862272; bh=bGfPAYkbPoKZpHX6M3K7+6E9N
+        dCJukFIQJZAJm+i/6U=; b=mXGN595/j+q8DuLvL7HyTjjOIII76r0Ywh4THpohP
+        DtxE160tLjNO79w8eF4Yp4tr5P1F3imZmKEq/MGNvOXGnDpRi17fgJQMEXVv4QhL
+        spq5J3vPAmBPbGsdWbeuz4Ws7E44TZtAJ6BJsICvvsEmm6PC6Ef2mx9FG63fNuWd
+        LjsPPjhmXrU2dwi7yopLg9en/ARa/cMh+yPIBFfj5nnu6WTNbIGOwkgMIjp2fGIm
+        sQn8Hizi7OeBBh07TkP550a7IzneH7qunLZbm2r9hS5+WhPUnZuP5dGlU5Bt6oVp
+        xw9ednHQIw906clZiDBC7S0MpNlGCB55H/R70ll87lc3A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-transfer-encoding
+        :content-type:content-type:date:date:feedback-id:feedback-id
+        :from:from:in-reply-to:in-reply-to:message-id:mime-version
+        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+        1696775872; x=1696862272; bh=bGfPAYkbPoKZpHX6M3K7+6E9NdCJukFIQJZ
+        AJm+i/6U=; b=AElndfiwec9hpEdPnXbDVoGGGGmeDNebIqfCxziec/l0Z/OFGGw
+        iGHx/5sotGOgQTH5RXTPNU+r+mG9ep5+jMN1Z+kkXisx/d2dah1AQY+ZdIwL694q
+        HYEJFAStOVLiaIwy7xrp70XjtaKbKkb1OYPVo+4VYHKB1hlsbUqKQz9lndkqo2sq
+        p9v9v5liXLRAIU5/4VrssEvyKCnzPnEILCgGTORsgRsQg0wxsS4c/wekSFXDel1+
+        AnLb+Vmsq49JA9RdPh4tEF3QqW7B5I851Cd3KaFfE4OnRQqzlRGBflzQR+bzajmf
+        GGQBn+pZ2XfgxIjS7SFHo90mnrdgM0nXX5A==
+X-ME-Sender: <xms:wL4iZVkOj0nxhaoRZaRf7rRUnaDnzS73955wiZiTr8nTGUGYXUuSCUQ>
+    <xme:wL4iZQ0uz4gA4XERrUTiRQ3qTmuuGGkL36xQh9DVrU5eZ39pznmKluyE67w6pwmxO
+    eesJInO52PHjQRqug>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrhedugdejlecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkjghffffhvfevufgtgfesth
+    hqredtreerjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdf
+    uceotghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpe
+    dvveehiedufeehffdvteeuveekhefhleeigfektdeifeduteeuheeufeetffefudenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskh
+    hhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:wL4iZbqh8hSxDewAhFjolV_k_7nUd95SjW4p9Cp752CsJPMqdgB1uQ>
+    <xmx:wL4iZVlk95Ci1yLmE9OZE4fGNC4du6qpqLnKOYwCCDol4MLYsoaJqA>
+    <xmx:wL4iZT10zemTwz1R-zawjtN4ZZQBnL922mbKxhGv94lmmi4vF6uIjg>
+    <xmx:wL4iZQ986HM0UfyRnABa5d20UFUs4_Kee6YZTHYG8Z7LV1MlgKdk4A>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id 690551700089; Sun,  8 Oct 2023 10:37:52 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-958-g1b1b911df8-fm-20230927.002-g1b1b911d
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZRIRtlbsYadg7EUx@nand.local>
+Message-Id: <e1d1c573-28ee-44f4-bd90-3fad445a2dca@app.fastmail.com>
+In-Reply-To: <pull.1585.git.git.1696774217058.gitgitgadget@gmail.com>
+References: <pull.1585.git.git.1696774217058.gitgitgadget@gmail.com>
+Date:   Sun, 08 Oct 2023 16:37:13 +0200
+From:   "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To:     "Josh Soref" <gitgitgadget@gmail.com>
+Cc:     =?UTF-8?Q?=E8=AC=9D=E8=87=B4=E9=82=A6_=28XIE_Zhibang=29?= 
+        <Yeking@Red54.com>, git@vger.kernel.org
+Subject: Re: [PATCH] doc: correct the 50 characters soft limit (+)
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 25, 2023 at 07:03:18PM -0400, Taylor Blau wrote:
-> On Fri, Sep 01, 2023 at 01:56:15PM -0700, Jonathan Tan wrote:
-> > > > My original design (up to patch 7 in this patch set) defends against
-> > > > this by taking the very first version detected and rejecting every
-> > > > other version, and Taylor's subsequent design reads every version, but
-> > > > annotates filters with its version. So I think we're covered.
-> > >
-> > > In the meantime I adapted the test cases from the above linked message
-> > > to write commit-graph layers with different Bloom filter versions, and
-> > > it does fail, because commits from the bottom commit-graph layer are
-> > > omitted from the revision walk's output.  And the test case doesn't
-> > > even need a middle layer without modified path Bloom filters to "hide"
-> > > the different version in the bottom layer.  Merging the layers seems
-> > > to work, though.
-> >
-> > For what it's worth, your test case below (with test_expect_success
-> > instead of test_expect_failure) passes with my original design. With the
-> > full patch set, it does fail, but for what it's worth, I did spot this,
-> > providing an incomplete solution [1] and then a complete one [2]. Your
-> > test case passes if I also include the following:
-> >
-> >   diff --git a/bloom.c b/bloom.c
-> >   index ff131893cd..1bafd62a4e 100644
-> >   --- a/bloom.c
-> >   +++ b/bloom.c
-> >   @@ -344,6 +344,10 @@ struct bloom_filter *get_bloom_filter(struct repository *r, struct commit *c)
-> >
-> >           prepare_repo_settings(r);
-> >           hash_version = r->settings.commit_graph_changed_paths_version;
-> >   +       if (hash_version == -1) {
-> >   +               struct bloom_filter_settings *s = get_bloom_filter_settings(r);
-> >   +               hash_version = (s && s->hash_version == 2) ? 2 : 1;
-> >   +       }
-> >
-> >           if (!(hash_version == -1 || hash_version == filter->version))
-> >                   return NULL; /* unusable filter */
-> >
-> > [1] https://lore.kernel.org/git/20230824222051.2320003-1-jonathantanmy@google.com/
-> > [2] https://lore.kernel.org/git/20230829220432.558674-1-jonathantanmy@google.com/
-> 
-> Hmm. I am confused -- are you saying that this series breaks existing
-> functionality, or merely does not patch an existing breakage? I *think*
-> that it's the latter,
+Hi =E8=AC=9D=E8=87=B4=E9=82=A6
 
-It's neither: the new functionality added in this series is broken.
+On Sun, Oct 8, 2023, at 16:10, =E8=AC=9D=E8=87=B4=E9=82=A6 (XIE Zhibang)=
+ via GitGitGadget wrote:
+> This is an addition to commit c2c349a15c0430a2ef9f858d69d095a00693379c
+> ("doc: correct the 50 characters soft limit").
 
-> since this test case fails identically on master,
-> but I am not sure.
+I think the =E2=80=9Creference=E2=80=9D format is nice:
 
-Not sure what test you are referring to.  My test demonstrating the
-breakage succeeds when adaped to master, because master doesn't
-understand the commitgraph.changedPathsVersion=2 setting, and keeps
-writing v1 Bloom filter chunks instead, so all commit-graphs layers
-contain the same version.
+    c2c349a15c (doc: correct the 50 characters soft limit, 2023-09-28)
 
-> If my understanding is correct, I think that patching this would involve
-> annotating each Bloom filter with a pointer to the bloom_filter_settings
-> it was written with, and then using those settings when querying it.
+See `Documentation/SubmittingPatches` at `commit-reference`.
 
-In general we are better off when we don't write Bloom filter chunks
-with different settings in the first place.
-
+--=20
+Kristoffer Haugsbakk
