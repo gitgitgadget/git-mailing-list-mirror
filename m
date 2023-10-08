@@ -2,113 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83BC0E95A8E
-	for <git@archiver.kernel.org>; Sun,  8 Oct 2023 20:23:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 862B1E95A67
+	for <git@archiver.kernel.org>; Sun,  8 Oct 2023 20:35:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344708AbjJHUXk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Oct 2023 16:23:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37366 "EHLO
+        id S232589AbjJHUfQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 8 Oct 2023 16:35:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344638AbjJHUXe (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Oct 2023 16:23:34 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 028E2C6
-        for <git@vger.kernel.org>; Sun,  8 Oct 2023 13:23:31 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-40566f89f6eso38410955e9.3
-        for <git@vger.kernel.org>; Sun, 08 Oct 2023 13:23:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696796610; x=1697401410; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=jmKpAgiUJ17JJ2ylcf4L3FukYW0wVxPVM8m6LFOV3v8=;
-        b=GgNY1yIlKdPX+2eOHm14iS7HQz+FmbbI7rz6c/PtzA77odSEqB0lyZ3yyzi4O5/VW+
-         vdKAew+dfAUSXwPZVBFeBf0nZ//heyy7REn9io8t52N8GVcHZ51PLoLpFli+EouSWRPd
-         Rf4diXlHU5OzrP89u2+7C1sKgdvtdC9sA6LEcCNvLoAg8Qcse1FNgdSdZL3jQ1mAOKie
-         SBykIPaGzVG+fwsc8ILq/sg4toaQkJIVUPrLZeYXHMh/UaJi0+qMykErHwXnTdeU7kqw
-         Z+JO38ys611hyTe22ktImEXcXimw8pUIryQimQZAu8NZaQW6UGXsWuNZwIV5XFN2D2cS
-         fAFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696796610; x=1697401410;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=jmKpAgiUJ17JJ2ylcf4L3FukYW0wVxPVM8m6LFOV3v8=;
-        b=vz06WKL26w7kfM+Ts0WfUQF8M52kLtd9KRA9UDf21d1zGh89ON7Yl7+IkUlSfjB1Yq
-         EM0x5ZP/nfXsYGB5+Zov+PyDynMbFi/ZmFDTP3qcjR+Ig4wvM10ejO4jMeKwmmBW1meM
-         kQ75VsSNNO1zL63aGR579NUnwHnqdU7TViuPYKagCZ3xI/8fQLUfPi96cVo+8b6aDrkW
-         da/mgcc8C+C7i5cbc5iZR2Cx5ZC3vDJimhlKDdF821sTeQFfzM6BBs2vD4zdCB8xM6vY
-         JB3cYxqQ7uWMxHoFdJTRcQ8jrs65SwnDhjgeJbTvbWyY1CUwCz1hA/dP77iSTYIqQhfn
-         j9jA==
-X-Gm-Message-State: AOJu0Yw7fwWaCKmFWCKhFZNsg8MK+l/U4SG+w0qkjErqUC+vfpXjForl
-        lQHMfarUPq7IVvHg37Pp4lGf+AMXBEE=
-X-Google-Smtp-Source: AGHT+IFy8JvDSwiCHfuchMlw86gW+8dEAHPZeEnpYmYvk2vp+fmSXSqfeOREhNfhvxQhtcavuBJsAw==
-X-Received: by 2002:a05:600c:4709:b0:406:84a0:bc87 with SMTP id v9-20020a05600c470900b0040684a0bc87mr11534351wmo.15.1696796609983;
-        Sun, 08 Oct 2023 13:23:29 -0700 (PDT)
-Received: from localhost.localdomain (cpc105060-sgyl40-2-0-cust995.18-2.cable.virginm.net. [81.111.15.228])
-        by smtp.gmail.com with ESMTPSA id 15-20020a05600c028f00b004065d67c3c9sm9339190wmk.8.2023.10.08.13.23.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Oct 2023 13:23:29 -0700 (PDT)
-From:   Andy Koppe <andy.koppe@gmail.com>
+        with ESMTP id S229945AbjJHUfQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Oct 2023 16:35:16 -0400
+X-Greylist: delayed 457 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 08 Oct 2023 13:35:13 PDT
+Received: from mail.d-paulus.de (elara.d-paulus.de [IPv6:2a03:4000:21:11c::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40F21AC
+        for <git@vger.kernel.org>; Sun,  8 Oct 2023 13:35:13 -0700 (PDT)
+Received: from d-paulus.de (unknown [IPv6:2a02:168:7af0:1::9f9])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+        (No client certificate requested)
+        by mail.d-paulus.de (Postfix) with ESMTPSA id E94557E62CC
+        for <git@vger.kernel.org>; Sun,  8 Oct 2023 22:27:31 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dominik-paulus.ch;
+        s=mail; t=1696796852;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:mime-version:mime-version:content-type:content-type;
+        bh=K9eNypRGdZRxYWWRLLwubd6WZ/cyAASDROvjHnyip/Y=;
+        b=aPvCquefNeXZ3ClLLGqkNe+y8zkt8TipVgFsfE8Q2hDt/fkoVPvjt82V1b/N3dS3m54Qwh
+        83iR57NcZkGPe6zPVK7S+YBOpDLJPMo6DBuH1DHqCD5L6WzarkqFJJb40/KFbp886fIzln
+        lZiINDbx0J7+IgpZVWae57tRzowChjk=
+Date:   Sun, 8 Oct 2023 22:27:30 +0200
+From:   Dominik Paulus <git-bugreport@dominik-paulus.ch>
 To:     git@vger.kernel.org
-Cc:     Andy Koppe <andy.koppe@gmail.com>
-Subject: [PATCH] pretty: fix ref filtering for %(decorate) formats
-Date:   Sun,  8 Oct 2023 21:23:07 +0100
-Message-ID: <20231008202307.1568477-1-andy.koppe@gmail.com>
-X-Mailer: git-send-email 2.42.GIT
+Subject: Bug: 'git diff' crashes on corrupted repository
+Message-ID: <wawqkhikp5ga4b6talc4zug7mgzwdf36yyc5jqontk6v3zcryy@ds5iqwuj2omw>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mark pretty formats containing "%(decorate" as requiring decoration in
-userformat_find_requirements(), same as "%d" and "%D".
+What did you do before the bug happened?
+I have a git repository which is stored in a 'Seafile' shared folder[0]. As I
+noticed, 'Seafile' seems to not correctly sync hidden files/dotfiles, so after
+modifying the git repository on one host, the ".git" directory in the Seafile
+replica on the other host is inconsistent: Specifically, it seems to be
+missing a subset of the files in '.git/objects'.
+'git fsck' complains about various missing blobs, dangling commits, dangling
+trees, broken links, and notably also "error: HEAD: invalid sha1 pointer
+[...]".
 
-Without this, cmd_log_init_finish() didn't invoke load_ref_decorations()
-with the decoration_filter it puts together, and hence filtering options
-such as --decorate-refs were quietly ignored.
+On this - obviously corrupted - repository, most git commands report "fatal:
+bad object HEAD". In contrast, 'git diff' crashes:
 
-Amend one of the %(decorate) checks in t4205-log-pretty-formats.sh to
-test this.
+$ git status
+fatal: bad object HEAD
+$ git log
+fatal: bad object HEAD
+$ git diff
+Segmentation fault (core dumped)
+$
 
-Signed-off-by: Andy Koppe <andy.koppe@gmail.com>
----
- pretty.c                      | 4 ++++
- t/t4205-log-pretty-formats.sh | 6 +++---
- 2 files changed, 7 insertions(+), 3 deletions(-)
+This is the stacktrace for this crash (gdb output):
 
-diff --git a/pretty.c b/pretty.c
-index 7f3abb676c..cf964b060c 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1961,6 +1961,10 @@ void userformat_find_requirements(const char *fmt, struct userformat_want *w)
- 		case 'D':
- 			w->decorate = 1;
- 			break;
-+		case '(':
-+			if (starts_with(fmt + 1, "decorate"))
-+				w->decorate = 1;
-+			break;
- 		}
- 	}
- }
-diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-index 16626e4fe9..5aabc9f7d8 100755
---- a/t/t4205-log-pretty-formats.sh
-+++ b/t/t4205-log-pretty-formats.sh
-@@ -590,9 +590,9 @@ test_expect_success 'pretty format %decorate' '
- 	git log --format="%(decorate:prefix=,suffix=)" -1 >actual2 &&
- 	test_cmp expect2 actual2 &&
- 
--	echo "[ HEAD -> foo; tag: bar; qux ]" >expect3 &&
--	git log --format="%(decorate:prefix=[ ,suffix= ],separator=%x3B )" \
--		-1 >actual3 &&
-+	echo "[ bar; qux; foo ]" >expect3 &&
-+	git log --format="%(decorate:prefix=[ ,suffix= ],separator=%x3B ,tag=)" \
-+		--decorate-refs=refs/ -1 >actual3 &&
- 	test_cmp expect3 actual3 &&
- 
- 	# Try with a typo (in "separator"), in which case the placeholder should
--- 
-2.42.GIT
+-----
+Starting program: /usr/bin/git diff
+Downloading separate debug info for system-supplied DSO at 0x7ffff7fc8000
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/usr/lib/libthread_db.so.1".
+[Detaching after fork from child process 16789]
 
+Program received signal SIGSEGV, Segmentation fault.
+0x00005555556ff6ac in diff_add_if_missing (r=0x555555966ac0 <the_repo>, to_fetch=0x7fffffffce10, filespec=0x555555975)
+    at /usr/src/debug/git/git-2.42.0/diff.c:6895
+6895		if (filespec && filespec->oid_valid &&
+(gdb) bt
+#0  0x00005555556ff6ac in diff_add_if_missing (r=0x555555966ac0 <the_repo>, to_fetch=0x7fffffffce10, filespec=0x555555975)
+    at /usr/src/debug/git/git-2.42.0/diff.c:6895
+#1  0x00005555556ff7aa in diff_queued_diff_prefetch (repository=0x555555966ac0 <the_repo>)
+    at /usr/src/debug/git/git-2.42.0/diff.c:6911
+#2  0x00005555556f5e74 in diff_populate_filespec (r=0x555555966ac0 <the_repo>, s=0x555555977660, options=0x7fffffffcfe0)
+    at /usr/src/debug/git/git-2.42.0/diff.c:4184
+#3  0x00005555556fee70 in diff_filespec_check_stat_unmatch (r=0x555555966ac0 <the_repo>, p=p@entry=0x5555559755e0)
+    at /usr/src/debug/git/git-2.42.0/diff.c:6839
+#4  0x0000555555709560 in diffcore_skip_stat_unmatch (diffopt=0x7fffffffdb20) at /usr/src/debug/git/git-2.42.0/diff.c:6857
+#5  diffcore_std (options=<optimized out>) at /usr/src/debug/git/git-2.42.0/diff.c:6946
+#6  0x00005555556ee59c in run_diff_files (revs=<optimized out>, option=<optimized out>)
+    at /usr/src/debug/git/git-2.42.0/diff-lib.c:272
+#7  0x00005555555ba95b in builtin_diff_files (argv=<optimized out>, argc=<optimized out>, revs=<optimized out>)
+    at builtin/diff.c:293
+#8  cmd_diff (argc=1, argv=0x7fffffffe7a0, prefix=<optimized out>) at builtin/diff.c:586
+#9  0x00005555555767f4 in run_builtin (argv=0x7fffffffe7a0, argc=1, p=0x555555938db0 <commands.lto_priv+816>)
+    at /usr/src/debug/git/git-2.42.0/git.c:469
+#10 handle_builtin (argc=1, argv=0x7fffffffe7a0) at /usr/src/debug/git/git-2.42.0/git.c:723
+#11 0x0000555555576dab in run_argv (argcp=0x7fffffffe4ec, argv=0x7fffffffe510) at /usr/src/debug/git/git-2.42.0/git.c:787
+#12 0x00005555555727e3 in cmd_main (argv=<optimized out>, argc=<optimized out>) at /usr/src/debug/git/git-2.42.0/git.c:922
+#13 main (argc=<optimized out>, argv=<optimized out>) at /usr/src/debug/git/git-2.42.0/common-main.c:62
+(gdb) print filespec->oid_valid
+Cannot access memory at address 0x555555975
+(gdb)
+-----
+
+
+What did you expect to happen?
+'git diff' should not crash/perform invalid memory accesses on a corrupted repository.
+
+
+[System Info]
+git version:
+git version 2.42.0
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 6.5.5-arch1-1 #1 SMP PREEMPT_DYNAMIC Sat, 23 Sep 2023 22:55:13 +0000 x86_64
+compiler info: gnuc: 13.2
+libc info: glibc: 2.38
+$SHELL (typically, interactive shell): /bin/bash
+
+
+[Enabled Hooks]
+
+
+
+[0] I'm aware that this is a bad idea in the first place and a red flag about
+the underlying workflow :).
