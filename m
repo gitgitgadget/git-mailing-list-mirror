@@ -2,146 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63F40E95A82
-	for <git@archiver.kernel.org>; Sun,  8 Oct 2023 14:10:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92360E95A67
+	for <git@archiver.kernel.org>; Sun,  8 Oct 2023 14:35:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344865AbjJHOKY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Oct 2023 10:10:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35670 "EHLO
+        id S232280AbjJHOfa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 8 Oct 2023 10:35:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344830AbjJHOKX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Oct 2023 10:10:23 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41FD199
-        for <git@vger.kernel.org>; Sun,  8 Oct 2023 07:10:20 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-40666aa674fso34927495e9.0
-        for <git@vger.kernel.org>; Sun, 08 Oct 2023 07:10:20 -0700 (PDT)
+        with ESMTP id S230082AbjJHOf3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Oct 2023 10:35:29 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CE9FAB
+        for <git@vger.kernel.org>; Sun,  8 Oct 2023 07:35:27 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-99bdcade7fbso638083666b.1
+        for <git@vger.kernel.org>; Sun, 08 Oct 2023 07:35:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696774218; x=1697379018; darn=vger.kernel.org;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Kss0oTQiitzXn8ALqzsQGUcB0ZXKdfrt6tRcJr72QEI=;
-        b=TWrI28fD8KVqFg1brbqtyKIzOvbH6NVzUWJ4OV+bF3EWfP5Rb7Kk3RAPByi0KAmdUB
-         2wcA1RuB5sN79nRUQK5/ccCWR7wfagQKiKk8GjO/GlDLWMYVP0tutjUK9jZr1oAjKp4w
-         jo2Ku0nq78UPKioFe2Dtwwj0YSOaVvk6aEOKhvBJX8H977TCwRc6xuXa408/RPQ5YcSU
-         /Tflc84nM5FmBEacsihbsVnVfWzNt373H4hktkjQoKzbwaOv/x1gfRiQAlwZuUBQe63E
-         kjfLJ+6Uwt3JSx/ZRotOcsIFwKl4lrbZn62vywwxMt8ECR4RqracK7PvY+1MkKN0S7df
-         pBOQ==
+        d=gmail.com; s=20230601; t=1696775725; x=1697380525; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=lIQzpUiuQxmBT3Z3GzjZJnVMGYdwo75Zj70Bl2Aw+hM=;
+        b=kbayHaUtqIgVqQHkVvlmR3pvMLGTtXMM/oLLvTaReannKhFJwqErxpoczss6WsKYc4
+         zeUmc1Fgl3rFUZ0bmxkcpmzCm5CaA6GaLAF3xDTi4X2Ln2dnSjTuRNrVMcYU/i/ek74y
+         qA94kug4PlKm1rF9Z6WpHDfePndSsZofUtNldmrlckHd/AAVoP+yF0l2WWJ6rPCcoIn5
+         QXi4XwI0cALzU15eQdGeycVI6lcVC08qyRGQYPr0gCAbNPz40PzxyuE37MWj2sTEYdWH
+         7/JkBBUX53ZKzkXu8/UN7XsZUlpCqWHDOFOobgm/D3Y3W+H9pnDI82Hqdop6my9cEJp0
+         hZnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696774218; x=1697379018;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Kss0oTQiitzXn8ALqzsQGUcB0ZXKdfrt6tRcJr72QEI=;
-        b=fb/27ux7s12NR+rweRh2YY9qlIepvutL/bXU/4fTW20CM2mCcQu3tf1YqLJUwOj0le
-         0TpStAI/CBTJi3LswLeWnJCRxLe/5skqrR2mXU+YY0pgKZYAcY2nm+w6UMfqWY/JWt3I
-         Pn8DjloKID/e2wRcffdEsH5QWjwFRExZrYbjMjXKQDrGjqaHLqV4xfTW+QK7pU2khzi2
-         yEtXIogZd0uX/I79BsBK+sHTmFLwH/fiPjcWhfjhY3FYV4GTXALg+3Jfp3jPVnWZkDyp
-         GlrPk8nTBElbIEqT61muAGrBqlDbKNrNoEztGbaNeG2H45BJ7GnT3JufVUVyJKxo1sBp
-         u9Rg==
-X-Gm-Message-State: AOJu0YyuLqrw7hFCym3JYff/ej8GZEYkMbiuQUS4BWTtzw6zjGLfWu0P
-        gClpnf9zzeUGJlXuwNFV++EyBUK5OT4=
-X-Google-Smtp-Source: AGHT+IHczoVGs0kbaQoeQBu74adKh6BWvnipQyQd4a63nIc4NMAE1ZGlyjGDz1Tix0T2XsSnuZVdJg==
-X-Received: by 2002:a05:600c:2303:b0:402:ee9e:ed98 with SMTP id 3-20020a05600c230300b00402ee9eed98mr12109810wmo.34.1696774218055;
-        Sun, 08 Oct 2023 07:10:18 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e14-20020adffd0e000000b00315af025098sm6974507wrr.46.2023.10.08.07.10.17
+        d=1e100.net; s=20230601; t=1696775725; x=1697380525;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lIQzpUiuQxmBT3Z3GzjZJnVMGYdwo75Zj70Bl2Aw+hM=;
+        b=lw+IxZt3BnYjn2mEu2+7QBB2fxoHhHX5UzeLujAPopg4vHrVHwhs/3PskLCsfCa5vn
+         NkAX72X52JSyAqt+8x3z0yfKto4mr9hoBkwzXsOF7r7+VqIzO6LaWiEPenXrFuTPsFwS
+         5d5cTqBm1fSZ8A01HwJp6tPyBgaco2Rt9PMe+KCrwxUiRl+6GMqq69yCDWfbv0LjtM4k
+         FJyn0VQfmG4IH6JEF2uOsCIa7AAQApz2s9QXs1PSgelwXdPD+NlRvK4AZwefivz51RJT
+         pri0w5TitVJLII3vZSZ+qZ53JkPkVeErL2oDysx6i6I54uVDtsxCfMv0i/ZkMN8/NWFJ
+         /Pjw==
+X-Gm-Message-State: AOJu0YzV+6s1A6P9pQQ5VQDITMYBtn5vU8H4IkU0v520sznnx+wSdmZg
+        xXR9WckvJkeNJ4oMrUDLFno=
+X-Google-Smtp-Source: AGHT+IFqx5lIdLhAxQB0hrMYgyV87CnOMppmd8XcA9NARmLojbM4UkXR0vDnaOKg2UcmL/2zZBy83g==
+X-Received: by 2002:a17:906:30ca:b0:9b2:b7f2:bc7b with SMTP id b10-20020a17090630ca00b009b2b7f2bc7bmr11292298ejb.37.1696775725276;
+        Sun, 08 Oct 2023 07:35:25 -0700 (PDT)
+Received: from localhost (94-21-146-30.pool.digikabel.hu. [94.21.146.30])
+        by smtp.gmail.com with ESMTPSA id lf8-20020a170906ae4800b009b27d4153c0sm5672788ejb.178.2023.10.08.07.35.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Oct 2023 07:10:17 -0700 (PDT)
-Message-ID: <pull.1585.git.git.1696774217058.gitgitgadget@gmail.com>
-From:   "=?UTF-8?Q?=E8=AC=9D=E8=87=B4=E9=82=A6?= (XIE Zhibang) via GitGitGadget" 
-        <gitgitgadget@gmail.com>
-Date:   Sun, 08 Oct 2023 14:10:16 +0000
-Subject: [PATCH] doc: correct the 50 characters soft limit (+)
+        Sun, 08 Oct 2023 07:35:24 -0700 (PDT)
+Date:   Sun, 8 Oct 2023 16:35:23 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 07/15] commit-graph: new filter ver. that fixes murmur3
+Message-ID: <20231008143523.GA18858@szeder.dev>
+References: <20230830200218.GA5147@szeder.dev>
+ <20230901205616.3572722-1-jonathantanmy@google.com>
+ <ZRIRtlbsYadg7EUx@nand.local>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     "=?UTF-8?Q?=E8=AC=9D=E8=87=B4=E9=82=A6?= (XIE Zhibang)" 
-        <Yeking@Red54.com>,
-        =?UTF-8?q?=E8=B0=A2=E8=87=B4=E9=82=A6=20=28XIE=20Zhibang=29?= 
-        <Yeking@Red54.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ZRIRtlbsYadg7EUx@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: =?UTF-8?q?=E8=B0=A2=E8=87=B4=E9=82=A6=20=28XIE=20Zhibang=29?=
- <Yeking@Red54.com>
+On Mon, Sep 25, 2023 at 07:03:18PM -0400, Taylor Blau wrote:
+> On Fri, Sep 01, 2023 at 01:56:15PM -0700, Jonathan Tan wrote:
+> > > > My original design (up to patch 7 in this patch set) defends against
+> > > > this by taking the very first version detected and rejecting every
+> > > > other version, and Taylor's subsequent design reads every version, but
+> > > > annotates filters with its version. So I think we're covered.
+> > >
+> > > In the meantime I adapted the test cases from the above linked message
+> > > to write commit-graph layers with different Bloom filter versions, and
+> > > it does fail, because commits from the bottom commit-graph layer are
+> > > omitted from the revision walk's output.  And the test case doesn't
+> > > even need a middle layer without modified path Bloom filters to "hide"
+> > > the different version in the bottom layer.  Merging the layers seems
+> > > to work, though.
+> >
+> > For what it's worth, your test case below (with test_expect_success
+> > instead of test_expect_failure) passes with my original design. With the
+> > full patch set, it does fail, but for what it's worth, I did spot this,
+> > providing an incomplete solution [1] and then a complete one [2]. Your
+> > test case passes if I also include the following:
+> >
+> >   diff --git a/bloom.c b/bloom.c
+> >   index ff131893cd..1bafd62a4e 100644
+> >   --- a/bloom.c
+> >   +++ b/bloom.c
+> >   @@ -344,6 +344,10 @@ struct bloom_filter *get_bloom_filter(struct repository *r, struct commit *c)
+> >
+> >           prepare_repo_settings(r);
+> >           hash_version = r->settings.commit_graph_changed_paths_version;
+> >   +       if (hash_version == -1) {
+> >   +               struct bloom_filter_settings *s = get_bloom_filter_settings(r);
+> >   +               hash_version = (s && s->hash_version == 2) ? 2 : 1;
+> >   +       }
+> >
+> >           if (!(hash_version == -1 || hash_version == filter->version))
+> >                   return NULL; /* unusable filter */
+> >
+> > [1] https://lore.kernel.org/git/20230824222051.2320003-1-jonathantanmy@google.com/
+> > [2] https://lore.kernel.org/git/20230829220432.558674-1-jonathantanmy@google.com/
+> 
+> Hmm. I am confused -- are you saying that this series breaks existing
+> functionality, or merely does not patch an existing breakage? I *think*
+> that it's the latter,
 
-The soft limit of the first line of the commit message should be
-"no more than 50 characters" or "50 characters or less", but not
-"less than 50 character".
+It's neither: the new functionality added in this series is broken.
 
-This is an addition to commit c2c349a15c0430a2ef9f858d69d095a00693379c
-("doc: correct the 50 characters soft limit").
+> since this test case fails identically on master,
+> but I am not sure.
 
-Signed-off-by: 谢致邦 (XIE Zhibang) <Yeking@Red54.com>
----
-    doc: correct the 50 characters soft limit (+)
-    
-    The soft limit of the first line of the commit message should be "no
-    more than 50 characters" or "50 characters or less", but not "less than
-    50 character".
-    
-    This is an addition to commit c2c349a15c0430a2ef9f858d69d095a00693379c
-    ("doc: correct the 50 characters soft limit").
+Not sure what test you are referring to.  My test demonstrating the
+breakage succeeds when adaped to master, because master doesn't
+understand the commitgraph.changedPathsVersion=2 setting, and keeps
+writing v1 Bloom filter chunks instead, so all commit-graphs layers
+contain the same version.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1585%2FRed54%2Fdoc-patch-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1585/Red54/doc-patch-v1
-Pull-Request: https://github.com/git/git/pull/1585
+> If my understanding is correct, I think that patching this would involve
+> annotating each Bloom filter with a pointer to the bloom_filter_settings
+> it was written with, and then using those settings when querying it.
 
- Documentation/gittutorial.txt | 8 ++++----
- Documentation/user-manual.txt | 2 +-
- po/README.md                  | 2 +-
- 3 files changed, 6 insertions(+), 6 deletions(-)
+In general we are better off when we don't write Bloom filter chunks
+with different settings in the first place.
 
-diff --git a/Documentation/gittutorial.txt b/Documentation/gittutorial.txt
-index c7cadd8aaf1..47594087880 100644
---- a/Documentation/gittutorial.txt
-+++ b/Documentation/gittutorial.txt
-@@ -137,10 +137,10 @@ which will automatically notice any modified (but not new) files, add
- them to the index, and commit, all in one step.
- 
- A note on commit messages: Though not required, it's a good idea to
--begin the commit message with a single short (less than 50 character)
--line summarizing the change, followed by a blank line and then a more
--thorough description. The text up to the first blank line in a commit
--message is treated as the commit title, and that title is used
-+begin the commit message with a single short (no more than 50
-+characters) line summarizing the change, followed by a blank line and
-+then a more thorough description. The text up to the first blank line in
-+a commit message is treated as the commit title, and that title is used
- throughout Git.  For example, linkgit:git-format-patch[1] turns a
- commit into email, and it uses the title on the Subject line and the
- rest of the commit in the body.
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index 4281396093d..d8dbe6b56d4 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -1122,7 +1122,7 @@ choosing "Stage Hunk For Commit").
- === Creating good commit messages
- 
- Though not required, it's a good idea to begin the commit message
--with a single short (less than 50 character) line summarizing the
-+with a single short (no more than 50 characters) line summarizing the
- change, followed by a blank line and then a more thorough
- description.  The text up to the first blank line in a commit
- message is treated as the commit title, and that title is used
-diff --git a/po/README.md b/po/README.md
-index 3e4f897d935..ec08aa24add 100644
---- a/po/README.md
-+++ b/po/README.md
-@@ -412,7 +412,7 @@ There are some conventions that l10n contributors must follow:
- - Do not use non-ASCII characters in the subject of a commit.
- 
- - The length of commit subject (first line of the commit log) should
--  be less than 50 characters, and the length of other lines of the
-+  be no more than 50 characters, and the length of other lines of the
-   commit log should be no more than 72 characters.
- 
- - Add "Signed-off-by" trailer to your commit log, like other commits
-
-base-commit: 3a06386e314565108ad56a9bdb8f7b80ac52fb69
--- 
-gitgitgadget
