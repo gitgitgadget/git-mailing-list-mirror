@@ -2,90 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A200FE95A67
-	for <git@archiver.kernel.org>; Sun,  8 Oct 2023 10:50:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63F40E95A82
+	for <git@archiver.kernel.org>; Sun,  8 Oct 2023 14:10:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344621AbjJHKub (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Oct 2023 06:50:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58676 "EHLO
+        id S1344865AbjJHOKY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 8 Oct 2023 10:10:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344660AbjJHKu2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Oct 2023 06:50:28 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BA51BA
-        for <git@vger.kernel.org>; Sun,  8 Oct 2023 03:50:20 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-5335725cf84so6469044a12.2
-        for <git@vger.kernel.org>; Sun, 08 Oct 2023 03:50:20 -0700 (PDT)
+        with ESMTP id S1344830AbjJHOKX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Oct 2023 10:10:23 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41FD199
+        for <git@vger.kernel.org>; Sun,  8 Oct 2023 07:10:20 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-40666aa674fso34927495e9.0
+        for <git@vger.kernel.org>; Sun, 08 Oct 2023 07:10:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696762218; x=1697367018; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=e8sZ6J9Yeund4w7KUEaQOQ6dZNr2wt8UyCXQhxEHy58=;
-        b=doXlucw9XvUvMdC2Ehe6l1UAm3CYXe2g2XX0HOB0Rcoq+DuzcPDaq6HwlWJHNuIyGJ
-         4TTVEDnjvY31Ay5dMQGBsKYYRO5sti88M57Pwa/6SGLBV24uxnCNVgEZwa4gqsnaxb4E
-         el2YRcQBG85CM8NO6OVKNX+Pfnoqvi+JYijNp2FXXOCv6aYRc9RSfkiJS0Dg39cnnYIP
-         xkDi4FXMChmZOnrV9vxiNkh4jYBFq9wIe60MVfFTmfV5/5Ts4Y8YYbH5s101bPWbnp5T
-         3nn0jcSCYvOdYuUQ8urTCUnu2TvAzCwcJJX+Ctsu6/5k2KeH0CldjW1TWaEnE3l99M2c
-         aJHg==
+        d=gmail.com; s=20230601; t=1696774218; x=1697379018; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=Kss0oTQiitzXn8ALqzsQGUcB0ZXKdfrt6tRcJr72QEI=;
+        b=TWrI28fD8KVqFg1brbqtyKIzOvbH6NVzUWJ4OV+bF3EWfP5Rb7Kk3RAPByi0KAmdUB
+         2wcA1RuB5sN79nRUQK5/ccCWR7wfagQKiKk8GjO/GlDLWMYVP0tutjUK9jZr1oAjKp4w
+         jo2Ku0nq78UPKioFe2Dtwwj0YSOaVvk6aEOKhvBJX8H977TCwRc6xuXa408/RPQ5YcSU
+         /Tflc84nM5FmBEacsihbsVnVfWzNt373H4hktkjQoKzbwaOv/x1gfRiQAlwZuUBQe63E
+         kjfLJ+6Uwt3JSx/ZRotOcsIFwKl4lrbZn62vywwxMt8ECR4RqracK7PvY+1MkKN0S7df
+         pBOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696762218; x=1697367018;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=e8sZ6J9Yeund4w7KUEaQOQ6dZNr2wt8UyCXQhxEHy58=;
-        b=pjK3C9qL8SNQuhPdzxRG3fsLyZdbLqt7dGY3S7TA+ZQvF99yfmEh8qIyUOt+6pLzCu
-         LpMHtEIfNpxW2PZLwAENMQ+qoJDvNVSYj91OCtlkthRj774Wuiia03MvyhErVyywfhd1
-         dKu6+wnZqpgmrPRc8O/5//vKgWeND9kW8/RS2wEnOk4ducm8+/MY7bW+IRa/JfJwmcuz
-         ivcyPcZOiSLLTu2oCnXqiXjwuJ5zmUyYbQMalCUoIHveUHyztK//lE0ji0G4JZp9VS6Q
-         oHXR5k7ol/C+OZhDPcBHZkE0Q3zHqtXAPLRKH8MVZHe4LCQKIqeBbd00S9w6bmOPGEIV
-         y1pQ==
-X-Gm-Message-State: AOJu0YyZVcRTJbkE6YcO+9XCgC9GYGiwRShIn8LbBO0Xmfa6qpxhsJkJ
-        Hf1VRk02wVt372uNqcJXUn8EAV2Hek5H+MnnjYGIugw/zVQI7A==
-X-Google-Smtp-Source: AGHT+IG8yu2lCTPO1ymzl8XfTP+mOa5DCM+/klySA4I4HdBJW9oCw5MZOPBdQ7C13hk345Djn1XI9EuSo1MVwhT1WCo=
-X-Received: by 2002:a17:906:73d3:b0:9b8:df8e:cbda with SMTP id
- n19-20020a17090673d300b009b8df8ecbdamr10437651ejl.59.1696762218301; Sun, 08
- Oct 2023 03:50:18 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1696774218; x=1697379018;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Kss0oTQiitzXn8ALqzsQGUcB0ZXKdfrt6tRcJr72QEI=;
+        b=fb/27ux7s12NR+rweRh2YY9qlIepvutL/bXU/4fTW20CM2mCcQu3tf1YqLJUwOj0le
+         0TpStAI/CBTJi3LswLeWnJCRxLe/5skqrR2mXU+YY0pgKZYAcY2nm+w6UMfqWY/JWt3I
+         Pn8DjloKID/e2wRcffdEsH5QWjwFRExZrYbjMjXKQDrGjqaHLqV4xfTW+QK7pU2khzi2
+         yEtXIogZd0uX/I79BsBK+sHTmFLwH/fiPjcWhfjhY3FYV4GTXALg+3Jfp3jPVnWZkDyp
+         GlrPk8nTBElbIEqT61muAGrBqlDbKNrNoEztGbaNeG2H45BJ7GnT3JufVUVyJKxo1sBp
+         u9Rg==
+X-Gm-Message-State: AOJu0YyuLqrw7hFCym3JYff/ej8GZEYkMbiuQUS4BWTtzw6zjGLfWu0P
+        gClpnf9zzeUGJlXuwNFV++EyBUK5OT4=
+X-Google-Smtp-Source: AGHT+IHczoVGs0kbaQoeQBu74adKh6BWvnipQyQd4a63nIc4NMAE1ZGlyjGDz1Tix0T2XsSnuZVdJg==
+X-Received: by 2002:a05:600c:2303:b0:402:ee9e:ed98 with SMTP id 3-20020a05600c230300b00402ee9eed98mr12109810wmo.34.1696774218055;
+        Sun, 08 Oct 2023 07:10:18 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id e14-20020adffd0e000000b00315af025098sm6974507wrr.46.2023.10.08.07.10.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 08 Oct 2023 07:10:17 -0700 (PDT)
+Message-ID: <pull.1585.git.git.1696774217058.gitgitgadget@gmail.com>
+From:   "=?UTF-8?Q?=E8=AC=9D=E8=87=B4=E9=82=A6?= (XIE Zhibang) via GitGitGadget" 
+        <gitgitgadget@gmail.com>
+Date:   Sun, 08 Oct 2023 14:10:16 +0000
+Subject: [PATCH] doc: correct the 50 characters soft limit (+)
 MIME-Version: 1.0
-References: <CAJHH8bHBA4emP2DkDEzcXncT4K5zEN-pCS+7jjer4R1_kkCkFA@mail.gmail.com>
- <CAP8UFD0mMi2JkvqMdf2mfUw2gA0Sog42ks3umMgsG5k_+W75xg@mail.gmail.com> <CAJHH8bE4QWR1gCgH5mG8qaa5Dq19L25y3VyRxAc3+PQn93oEbA@mail.gmail.com>
-In-Reply-To: <CAJHH8bE4QWR1gCgH5mG8qaa5Dq19L25y3VyRxAc3+PQn93oEbA@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sun, 8 Oct 2023 12:50:05 +0200
-Message-ID: <CAP8UFD3WzgADiy07uLGpj23r3jrUnYh_Wdsc1N8ZoaAHQPDZag@mail.gmail.com>
-Subject: Re: [Outreachy] Introduction and Interest in Contributing to the Git Community
-To:     Isoken Ibizugbe <isokenjune@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     "=?UTF-8?Q?=E8=AC=9D=E8=87=B4=E9=82=A6?= (XIE Zhibang)" 
+        <Yeking@Red54.com>,
+        =?UTF-8?q?=E8=B0=A2=E8=87=B4=E9=82=A6=20=28XIE=20Zhibang=29?= 
+        <Yeking@Red54.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Oct 7, 2023 at 12:26=E2=80=AFPM Isoken Ibizugbe <isokenjune@gmail.c=
-om> wrote:
->
-> Good day,
-> I am interested in working on this issue
-> https://github.com/gitgitgadget/git/issues/1555 as a micro project. Is
-> it worth doing and appropriate for a micro project?
+From: =?UTF-8?q?=E8=B0=A2=E8=87=B4=E9=82=A6=20=28XIE=20Zhibang=29?=
+ <Yeking@Red54.com>
 
-(I have added Dscho, alias Johannes Schindelin, in Cc as he might know
-more about this.)
+The soft limit of the first line of the commit message should be
+"no more than 50 characters" or "50 characters or less", but not
+"less than 50 character".
 
-I think it's worth doing, but I am not sure, as I think it might
-generate regressions for a low number of users who might rely on
-core.fileMode for some special use cases. (Not sure we would want to
-support such hypothetical use cases though.)
+This is an addition to commit c2c349a15c0430a2ef9f858d69d095a00693379c
+("doc: correct the 50 characters soft limit").
 
-Also it's not so simple to implement, you will have to dig a bit in
-the code, and not just implement it, but likely also write tests for
-it. So it's definitely significantly more complex than a simple "test
-cleanup" micro-project. I might overlook things too.
+Signed-off-by: 谢致邦 (XIE Zhibang) <Yeking@Red54.com>
+---
+    doc: correct the 50 characters soft limit (+)
+    
+    The soft limit of the first line of the commit message should be "no
+    more than 50 characters" or "50 characters or less", but not "less than
+    50 character".
+    
+    This is an addition to commit c2c349a15c0430a2ef9f858d69d095a00693379c
+    ("doc: correct the 50 characters soft limit").
 
-But if you feel like it suits your skills well and are not afraid with
-something a bit complex, I would think that you can go for it.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1585%2FRed54%2Fdoc-patch-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1585/Red54/doc-patch-v1
+Pull-Request: https://github.com/git/git/pull/1585
 
-Best,
-Christian.
+ Documentation/gittutorial.txt | 8 ++++----
+ Documentation/user-manual.txt | 2 +-
+ po/README.md                  | 2 +-
+ 3 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/gittutorial.txt b/Documentation/gittutorial.txt
+index c7cadd8aaf1..47594087880 100644
+--- a/Documentation/gittutorial.txt
++++ b/Documentation/gittutorial.txt
+@@ -137,10 +137,10 @@ which will automatically notice any modified (but not new) files, add
+ them to the index, and commit, all in one step.
+ 
+ A note on commit messages: Though not required, it's a good idea to
+-begin the commit message with a single short (less than 50 character)
+-line summarizing the change, followed by a blank line and then a more
+-thorough description. The text up to the first blank line in a commit
+-message is treated as the commit title, and that title is used
++begin the commit message with a single short (no more than 50
++characters) line summarizing the change, followed by a blank line and
++then a more thorough description. The text up to the first blank line in
++a commit message is treated as the commit title, and that title is used
+ throughout Git.  For example, linkgit:git-format-patch[1] turns a
+ commit into email, and it uses the title on the Subject line and the
+ rest of the commit in the body.
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index 4281396093d..d8dbe6b56d4 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -1122,7 +1122,7 @@ choosing "Stage Hunk For Commit").
+ === Creating good commit messages
+ 
+ Though not required, it's a good idea to begin the commit message
+-with a single short (less than 50 character) line summarizing the
++with a single short (no more than 50 characters) line summarizing the
+ change, followed by a blank line and then a more thorough
+ description.  The text up to the first blank line in a commit
+ message is treated as the commit title, and that title is used
+diff --git a/po/README.md b/po/README.md
+index 3e4f897d935..ec08aa24add 100644
+--- a/po/README.md
++++ b/po/README.md
+@@ -412,7 +412,7 @@ There are some conventions that l10n contributors must follow:
+ - Do not use non-ASCII characters in the subject of a commit.
+ 
+ - The length of commit subject (first line of the commit log) should
+-  be less than 50 characters, and the length of other lines of the
++  be no more than 50 characters, and the length of other lines of the
+   commit log should be no more than 72 characters.
+ 
+ - Add "Signed-off-by" trailer to your commit log, like other commits
+
+base-commit: 3a06386e314565108ad56a9bdb8f7b80ac52fb69
+-- 
+gitgitgadget
