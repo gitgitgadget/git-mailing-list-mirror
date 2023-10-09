@@ -2,102 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5FAECD6114
-	for <git@archiver.kernel.org>; Mon,  9 Oct 2023 18:14:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2814BCD611A
+	for <git@archiver.kernel.org>; Mon,  9 Oct 2023 18:15:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377501AbjJISOE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Oct 2023 14:14:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37368 "EHLO
+        id S1377511AbjJISPL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Oct 2023 14:15:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377093AbjJISOD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Oct 2023 14:14:03 -0400
-Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 701D69C
-        for <git@vger.kernel.org>; Mon,  9 Oct 2023 11:14:02 -0700 (PDT)
-Received: by mail-qk1-x734.google.com with SMTP id af79cd13be357-777252c396bso5945985a.2
-        for <git@vger.kernel.org>; Mon, 09 Oct 2023 11:14:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1696875241; x=1697480041; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=yP3lu7W3ARHedxIIUoJwtRG/om4cSn8I6G/iPBB2Oe8=;
-        b=slq6UqZEEKnZJwNdam5bbiqBNnBw3bVqF+V/fuB0GRWY6ff/IKd5+ol9OSsOjSf/Nn
-         hTSUOstOg/XFUdc0U2+KgLeAm4xeggVEFIptGQ68vFf7FSllsG7C5uxpUcnL7pyu0IN6
-         /Wa01d6p3B5zLXlzwz7ERF6lvrLpxefOTw/SAn+YFCeWwUUpCHYT/QgajUDmzOY07aCq
-         srTd6HWEl9yNqRN+2a1AWarsMRoLoDVVdjIM1ko36lVpPyQB3yRFsgH09A7SqgkptyG/
-         8M8J5wjfY3pqMnFg/BxzlGxX5C7y15xiuCjO02fbB13xXqPFYZgCanjBxEIs0aXT6TKo
-         L1Aw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696875241; x=1697480041;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yP3lu7W3ARHedxIIUoJwtRG/om4cSn8I6G/iPBB2Oe8=;
-        b=kJx6bc81PYJbZWWbm8LVZX3dhvcdhJXr2O7dSsAJapfKUApsjUrttOYvnflPSPvDzh
-         Dj5YPNLUpgf4xgR+VeQYyEUgmZem4Z7HSRp0PhSFCPZkeCDh91+tebQOe9VV9CK4M9ib
-         UdPTMtwGx0wSK2ykG59f0uv75rTCFAcdzjnAsd5L7umQ5cwlcuV+d1ZcwhHJ5xGZErrC
-         S/3a4U4mI0Ui26MW7TihL0yIWZUpE8H/Av7aXD09ygR/UQf/umgJQTH/bI4ELRwUaNxE
-         6m4FFJ4KLQTJ6y9r971gCFtLkPCvjuZUKYzazHI+mxt4T6k4vNSqWTkgHJsQpZrTX9sG
-         xakQ==
-X-Gm-Message-State: AOJu0YzQSB6vZl48QLLXNf90vCG7HuS2xY4INxG5I46y2mVCdPxCn3Of
-        GzsDWDIbsXNF3JnfYY1g/vA2nIv/7g2+ozZqfj+UVQ==
-X-Google-Smtp-Source: AGHT+IGVjeLy5AxWYpZcFfHMhrDco7sztkvFbze0V5FJNQHzqUdGjOHdr+QBxaFVpIXAOia9HlycBw==
-X-Received: by 2002:a05:620a:372a:b0:774:2cba:b33e with SMTP id de42-20020a05620a372a00b007742cbab33emr18496197qkb.20.1696875241530;
-        Mon, 09 Oct 2023 11:14:01 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id a1-20020a05620a124100b00767b0c35c15sm3687973qkl.91.2023.10.09.11.14.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Oct 2023 11:14:01 -0700 (PDT)
-Date:   Mon, 9 Oct 2023 14:13:56 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Oct 2023, #03; Fri, 6)
-Message-ID: <ZSRC5IaKoXPpTFnq@nand.local>
-References: <xmqqh6n24zf1.fsf@gitster.g>
- <ZSQnVnK0k3bdk5zX@nand.local>
- <xmqqfs2j1xdo.fsf@gitster.g>
+        with ESMTP id S1377444AbjJISPK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Oct 2023 14:15:10 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29926A3
+        for <git@vger.kernel.org>; Mon,  9 Oct 2023 11:15:09 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8D3DC1BAA5D;
+        Mon,  9 Oct 2023 14:15:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=atySR9fcc1txeSB5FDt7E2xZUgoK0N8HxGyyRC
+        jAA0o=; b=BinqMmzYUBlb0fZXu8EC8EmjjwczfzFiDIcDhZu5Var8JU943fs9+P
+        eHa4SF0Vea4QGLFXGHZWI8N1fxdQM+ysnHyEBt/DcxzzctrpxUjUYC5FHtsyayyh
+        IPxqIK7E693QNdhqMiXNq+70iQs0qb4ioOZnNam9JqVpmjkDJ5g1w=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 82FB01BAA5B;
+        Mon,  9 Oct 2023 14:15:08 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9AD751BAA59;
+        Mon,  9 Oct 2023 14:15:07 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Victoria Dye <vdye@github.com>
+Cc:     Patrick Steinhardt <ps@pks.im>,
+        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/4] ref-cache.c: fix prefix matching in ref iteration
+In-Reply-To: <3585d72f-9f06-d190-ad5a-bec6db3f647f@github.com> (Victoria Dye's
+        message of "Mon, 9 Oct 2023 09:21:53 -0700")
+References: <pull.1594.git.1696615769.gitgitgadget@gmail.com>
+        <59276a5b3fd1fd3b25db73e096cf0e834af2d4f9.1696615769.git.gitgitgadget@gmail.com>
+        <xmqqfs2n8lnn.fsf@gitster.g> <ZSPQLjJwq-7SjsDT@tanuki>
+        <3585d72f-9f06-d190-ad5a-bec6db3f647f@github.com>
+Date:   Mon, 09 Oct 2023 11:15:06 -0700
+Message-ID: <xmqqa5sr1x3p.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqfs2j1xdo.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID: C6ED2780-66CF-11EE-B78E-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 09, 2023 at 11:09:07AM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
+Victoria Dye <vdye@github.com> writes:
+
+> I originally operated on the assumption that it was the first case, which is
+> why I didn't include a test in this patch. Commands like 'for-each-ref',
+> 'show-ref', etc. either use an empty prefix or a directory prefix with a
+> trailing slash, which won't trigger this issue.
+
+Ah, yes, I didn't mention it but I suspected as such (i.e. the code
+is structured in such a way that this broken implementation does not
+matter to the current callers).
+
+> I encountered the problem
+> while working on a builtin that filtered refs by a user-specified prefix -
+> the results included refs that should not have been matched, which led me to
+> this fix.
+
+OK, perfectly understandable.
+
+> Scanning through the codebase again, though, I do see a way to replicate the
+> issue:
 >
-> > On Sat, Oct 07, 2023 at 01:20:02AM -0700, Junio C Hamano wrote:
-> >> * tb/repack-max-cruft-size (2023-10-05) 4 commits
-> >>   (merged to 'next' on 2023-10-06 at b3ca6df3b9)
-> >>  + builtin/repack.c: avoid making cruft packs preferred
-> >>  + builtin/repack.c: implement support for `--max-cruft-size`
-> >>  + builtin/repack.c: parse `--max-pack-size` with OPT_MAGNITUDE
-> >>  + t7700: split cruft-related tests to t7704
-> >>
-> >>  "git repack" learned "--max-cruft-size" to prevent cruft packs from
-> >>  growing without bounds.
-> >>
-> >>  Will merge to 'master'.
-> >>  source: <cover.1696293862.git.me@ttaylorr.com>
-> >>  source: <035393935108d02aaf8927189b05102f4f74f340.1696370003.git.me@ttaylorr.com>
-> >
-> > Thanks. On a semi-related note, did you want to pick up my patch in
-> >
-> >   https://lore.kernel.org/git/035393935108d02aaf8927189b05102f4f74f340.1696370003.git.me@ttaylorr.com/
-> >
-> > ? That should address a performance bug that occurs when a repository
-> > (incorrectly) chooses a cruft pack as its preferred pack source when
-> > writing a MIDX bitmap, significantly impeding the pack-reuse mechanism.
+> $ git update-ref refs/bisect/b HEAD
+> $ git rev-parse --abbrev-ref --bisect
+> refs/bisect/b
 >
-> Isn't that in the above list already as b3ca6df3b9^2?
+> Because 'rev-parse --bisect' uses the "refs/bisect/bad" prefix (no trailing
+> slash) and does no additional filtering in its 'for_each_fullref_in'
+> callback, refs like "refs/bisect/b" and "refs/bisect/ba" are (incorrectly)
+> matched. I'll re-roll with the added test.
 
-Oops, duh. I hadn't expected you to group that patch in with the rest of
-tb/repack-max-cruft-size.
-
-I'll put on my glasses the next time before suggesting you dropped one
-of my patches on the floor... ;-)
-
-Thanks,
-Taylor
+Good find.  Thanks!
