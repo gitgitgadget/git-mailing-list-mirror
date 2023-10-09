@@ -2,82 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28956E95A8E
-	for <git@archiver.kernel.org>; Mon,  9 Oct 2023 01:46:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 743EBE95A8E
+	for <git@archiver.kernel.org>; Mon,  9 Oct 2023 07:28:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344793AbjJIBog (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Oct 2023 21:44:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39704 "EHLO
+        id S1345388AbjJIH2F (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Oct 2023 03:28:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344670AbjJIBof (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Oct 2023 21:44:35 -0400
-Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5086A3
-        for <git@vger.kernel.org>; Sun,  8 Oct 2023 18:44:34 -0700 (PDT)
-Received: by mail-qt1-x831.google.com with SMTP id d75a77b69052e-4181e268447so27724071cf.1
-        for <git@vger.kernel.org>; Sun, 08 Oct 2023 18:44:34 -0700 (PDT)
+        with ESMTP id S232625AbjJIH2E (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Oct 2023 03:28:04 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CED1A6
+        for <git@vger.kernel.org>; Mon,  9 Oct 2023 00:28:03 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-9b1ebc80d0aso719077966b.0
+        for <git@vger.kernel.org>; Mon, 09 Oct 2023 00:28:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1696815874; x=1697420674; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ss20mEOUPP2u3w2n3l0H8mcPzojqrsxAVPxgZK3mMkM=;
-        b=MUdeb65ChJ2Ftc+Ja2qqhzsLWFE7E9c+1TFmIMx824O9P0GwG2Fpbffzt/Jn/Fq26M
-         J3i34Vwgo7Rng3id9tmicviNIT4yK3yeLOnL+D1ZnF+PvsOiX1F5TATcOX76IAffBum2
-         Os7EvL1hMWGzM5PaXee3tARIkUGftvJ63yMXhssSX+y3MW5xE+4NRiHNdm/p5KgW80hb
-         JyU3bfT8oejYh2180vUMxHRxdMdyXwehjNsjwtJeYoeNTpqVuqNo8GbUXhr8qfFx1znw
-         vz4Qix+johOkSws+LsHHnVL0dD7IGQ7Q56tiUq0Nmam41AUmweibudCNsWP9Tk74AFV4
-         8HhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696815874; x=1697420674;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1696836481; x=1697441281; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ss20mEOUPP2u3w2n3l0H8mcPzojqrsxAVPxgZK3mMkM=;
-        b=GqfMEbcTu3O62CeAV41HhuSRB0GX+t9UlAlETG8V7r6hrN8Wl/now+BWNjbqXFDl0f
-         4q9soBzU7ZtSQm8DNe5uZs3ThPsbHpU7rWI7MGKU08ySBi1ZWVOgTxUl4ImFsTcAAfQb
-         IHf2O1b9lP/fVVoB/tNtissdE0upfXXW2NL9r6yhLIjnCVfeqpz0LfbajHY8PG0hP2Yc
-         CGhsnV7mBJBfsBcu2Zq6y0TfhJ8PctPJDLKDcAERuoEjAuLCTzpnGQe+I2+sVmQ5JNSQ
-         vLMbrw2k16vJktRZnSfovI2dj/fYKvt8E079da62LpWpZ34P+Ckox8QTG7R5wywnSDFs
-         qCow==
-X-Gm-Message-State: AOJu0Yx/nwad9LvYzx1bBmH7k8MCF6A3358TBWqiggyh19yOdEtY5HMb
-        qs0hcrngcOmE1x45qKKppQrnfQ==
-X-Google-Smtp-Source: AGHT+IEUkhwyRwkWda2b+8yud27Fm9iwILp3vrF08z1CzFXSXdEDtzLCPVeztvZc333ghy7HuhIC0A==
-X-Received: by 2002:a05:622a:c3:b0:40d:4c6:bcf9 with SMTP id p3-20020a05622a00c300b0040d04c6bcf9mr17297120qtw.7.1696815873934;
-        Sun, 08 Oct 2023 18:44:33 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id jr5-20020a05622a800500b00417f330026bsm3287158qtb.49.2023.10.08.18.44.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Oct 2023 18:44:33 -0700 (PDT)
-Date:   Sun, 8 Oct 2023 21:44:32 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 00/25] Documentation fixes
-Message-ID: <ZSNbALj63zjzOURN@nand.local>
-References: <pull.1595.git.1696747527.gitgitgadget@gmail.com>
+        bh=4jDOHHu3WUa9oMhx9HQzlwofcMBDTQP619qho3Tr2y4=;
+        b=RL+uqDaRSA3BhxfrHUCkHgPUgdU5l4NGWS3v+kpeWZK5JJL3a5pSiOjtcAWMbQ29Js
+         hbVEQquK2e4gcPOgLUQSVZaXwe8aaDSMxmIywZa0HqXTUuhY7atDrvQ9jDxU25ugYWss
+         N5Di8N3/r831hnuTKUkbdq4B44AJwlJ3zGqwcAfv4fW9tkhADlKxg/ysCFPAL5/9fVs4
+         QTWf3Xe+7lQnAxSSALeuQaae4v1Jj6n0LTZ36bhIV92FdrLDZIMTPZbjRbh5XuWGv2t+
+         sCYGR8wNsI3l87b6oF1rSgT5+V30ka6qzsOi6BAbVgE9zLXQm/Dg+fVWqHRev4I6LCg/
+         Ixeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696836481; x=1697441281;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=4jDOHHu3WUa9oMhx9HQzlwofcMBDTQP619qho3Tr2y4=;
+        b=E1sP8gWkMbRhdz6Mp+8rbcNJ0o1+TDg3aITm8RwkmHf5qF4KIoTiy6XgOvzbtnY+vF
+         ITgp214c07KW4mzsMawo/oJ1s9Oj8l9vfldNzhARMzN95Zb2myz/0pfw9WqLQ8a9T/Qr
+         zUdkkbEXT2ruvXdLEafWFzmqGnWzAl190OI/CNyTAUCp16BimLn4K7vmNx5NmPT7mzO2
+         mT0tJYjEpCIGR91Oqg3CPoar09ywGHR2FDGNSP5Q/WNSl4MUYEf/XVNK3JEFQ4c33iAX
+         +HV0/l3/SvfmcD8GkQxSg9hanna3q0t2/V6Ycvc/F8zX3uBAftVtRwfp+DV2HF/6h/JK
+         F7kw==
+X-Gm-Message-State: AOJu0YyGA/e1UkHa/hHRzCGTv2s840s0SeT05l7GWHZuhZc8geqlCzRc
+        3+3TwsDb2yB9YDKD1GiwCGdqjB5xQHyZ5tNQPwYEoPN/VN1QRw==
+X-Google-Smtp-Source: AGHT+IEdRhRIEoC5gybHBZ6iSy2gMiKUog2QGG6AW1+YV8q2NFDIMfegdD5Q8Ft2KhK+rMqguGx+t1elKWbW1StQHSM=
+X-Received: by 2002:a17:907:b609:b0:9af:6bb:6c54 with SMTP id
+ vl9-20020a170907b60900b009af06bb6c54mr11177077ejc.26.1696836481399; Mon, 09
+ Oct 2023 00:28:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.1595.git.1696747527.gitgitgadget@gmail.com>
+References: <20231009011652.1791-1-naomi.ibeh69@gmail.com>
+In-Reply-To: <20231009011652.1791-1-naomi.ibeh69@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 9 Oct 2023 09:27:49 +0200
+Message-ID: <CAP8UFD35DBBwQ1Mgc+NGVoh1ReLncAz9OJF3Yj++FFrESw8rtw@mail.gmail.com>
+Subject: Re: [PATCH 1/1] [OUTREACHY] Fixed add.c file to conform to guidelines
+ when using die() listed in issue #635
+To:     Naomi Ibe <naomi.ibeh69@gmail.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Oct 08, 2023 at 06:45:02AM +0000, Elijah Newren via GitGitGadget wrote:
-> It turns out that AI is pretty good at making small fixes to documentation;
-> certainly not perfect, but it provides quite good signal. Unfortunately,
-> there is a lot to sift through. Some points about my strategy:
+On Mon, Oct 9, 2023 at 3:17=E2=80=AFAM Naomi Ibe <naomi.ibeh69@gmail.com> w=
+rote:
+>
+> From: Naomi <naomi.ibeh69@gmail.com>
 
-Quite interesting ;-).
+First the subject should start, after "[PATCH 1/1][Outreachy]", with
+the area of the code you are changing followed by ":", so here "add:"
+(no need for ".c").
 
-I'm curious to learn a little bit more about your
-strategy beyond what you wrote:
+Also even if the subject gives a lot of information already, it's
+better to use the body of the commit message to give a bit more
+context and details. For example here either the subject or the body
+of the commit message should say which specific guideline(s) the patch
+is enforcing.
 
-  - What tool did you use? ChatGPT? Something home-grown?
-  - (Assuming this was generated by some sort of LLM): what did you
-    prompt it with?
-  - What was the output format: the edited text in its entirety, or a
-    patch that can be applied on top?
+> Signed-off-by: Naomi Ibe <naomi.ibeh69@gmail.com>
+> ---
+>  builtin/add.c | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
+>
 
-Thanks,
-Taylor
+Otherwise the patch looks good to me.
+
+Thanks!
