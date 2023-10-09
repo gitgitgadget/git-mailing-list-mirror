@@ -2,76 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F2BACD6105
-	for <git@archiver.kernel.org>; Mon,  9 Oct 2023 16:35:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BD75CD610B
+	for <git@archiver.kernel.org>; Mon,  9 Oct 2023 16:46:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377245AbjJIQfU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Oct 2023 12:35:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47950 "EHLO
+        id S1377303AbjJIQqk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Oct 2023 12:46:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33158 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377235AbjJIQfR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Oct 2023 12:35:17 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F11E099
-        for <git@vger.kernel.org>; Mon,  9 Oct 2023 09:35:15 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E39B529496;
-        Mon,  9 Oct 2023 12:35:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=KEO7mVgF2j7D
-        xeqJo8W4H1uoowXolFlD9zo4Wb7IOMM=; b=b/mjEBBDJ8kRxoXNPnUusyZdbABp
-        qFamILFKECJL4IGtIgydUmcCDDUPrhMcqe6JAYS2u+a93FAaatainAm6B0O8zf3B
-        6rO3bFDHWE8B8PVKnVKUZZ/PzUnmmklYiCDxTTj6+FSZhpghhfPKxAa2nKik2fQs
-        56U0NGaKNHJzuY0=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id DCDB829495;
-        Mon,  9 Oct 2023 12:35:12 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 1FD3529494;
-        Mon,  9 Oct 2023 12:35:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Oct 2023, #03; Fri, 6)
-In-Reply-To: <4014e490-c6c1-453d-b0ed-645220e3e614@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Sun, 8 Oct 2023 19:34:45 +0200")
-References: <xmqqh6n24zf1.fsf@gitster.g>
-        <4014e490-c6c1-453d-b0ed-645220e3e614@web.de>
-Date:   Mon, 09 Oct 2023 09:35:07 -0700
-Message-ID: <xmqqcyxn3gas.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        with ESMTP id S1377245AbjJIQqi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Oct 2023 12:46:38 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 004DE9C
+        for <git@vger.kernel.org>; Mon,  9 Oct 2023 09:46:36 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2b9c907bc68so53013751fa.2
+        for <git@vger.kernel.org>; Mon, 09 Oct 2023 09:46:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1696869994; x=1697474794; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2IVZuuVKKB7nZd7gaIwNNl6KhxFY43Y1PYWzf683FQU=;
+        b=YHk4yKqykn8m0O0iUku8v5gp3MnLje+FspWs2ue4gNbs0Wtrc0q+jseMvWvQVQGIMr
+         WDGtBwlf4W7GRLxIk8sKwchugMv7ujbFE4FxRtyzFMFSCVGwdM9qXv988ff8OuC+46X3
+         f+gBWbR7xWsapswWPn+HLMPZb0wfDVvON1kiX08/Z4jW72jeQ17wWb92oVVilDiKo01h
+         WLl9+kKyqRjtnaPjY+HL6xmekkMPrsPWbhQ7gLgL3P+F1FIy39gaM8LlDF8Ev6U+Q56V
+         bNySMKj0/QguTRd9Gs2FxCh5kQK/O+6NzipLo/n/4ozhEk6pEjVOcQK/s7cAHj3DdaSP
+         TLjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696869994; x=1697474794;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=2IVZuuVKKB7nZd7gaIwNNl6KhxFY43Y1PYWzf683FQU=;
+        b=isXF7cvmajwq8XRQ55fmyzYK0+3086Kn9Lcv+qnUBDH8mj22LoZMjE313+S1UKMBgg
+         ymtdZHl/Qgp8gSJwpdVz+GBGzoORF/mbnjtB0l/Th1wJ1Abx+Rdu7Rue2KCM2rSgrmlk
+         oVh1n3js2+qpE2dCIW86KD09yzkGdq03r7r82azNFQA9u7a9eFqnQG0LfwwfrcwUMlbN
+         dlLUbZV8UIeYPDdqlAiuhnikVLIIr/G5O+oAtHjMZyKt07wzx3lQAMsf8TF/drMI28AO
+         M/e1UNdQyKqfS04/QpO96iDw8XV6VaJyVeMwWlkQpq/0+nh/Ns8poaSCJK2HSOXaUK21
+         Cpuw==
+X-Gm-Message-State: AOJu0Yy0ge569hvFTnwstAHqmNL8MwVuKlHT5FWkteCMT+FiNUA/DzoO
+        b2zogG/+ssZ+w2VzOsSXb3OeILPYnidihWuZpAHKD+7DOx+W0g==
+X-Google-Smtp-Source: AGHT+IFgjePJlOz8JYVyTtvhHtTzzwmeJYQbjW5yitWHq2Rm3KcxMbOrg/oq+usJosi+z18Nm4ecyDW5oK+J/BEc2dI=
+X-Received: by 2002:a2e:7006:0:b0:2c0:2ab7:9aae with SMTP id
+ l6-20020a2e7006000000b002c02ab79aaemr12686029ljc.11.1696869993781; Mon, 09
+ Oct 2023 09:46:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: CF86050A-66C1-11EE-A0BC-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+References: <pull.1595.git.1696747527.gitgitgadget@gmail.com> <ZSNbALj63zjzOURN@nand.local>
+In-Reply-To: <ZSNbALj63zjzOURN@nand.local>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 9 Oct 2023 09:46:21 -0700
+Message-ID: <CABPp-BGsg8CnX1EXpeTwtQzEBPA3ZoTmLKGa1d7TqAg4aAB3EA@mail.gmail.com>
+Subject: Re: [PATCH 00/25] Documentation fixes
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+On Sun, Oct 8, 2023 at 6:44=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote:
+>
+> On Sun, Oct 08, 2023 at 06:45:02AM +0000, Elijah Newren via GitGitGadget =
+wrote:
+> > It turns out that AI is pretty good at making small fixes to documentat=
+ion;
+> > certainly not perfect, but it provides quite good signal. Unfortunately=
+,
+> > there is a lot to sift through. Some points about my strategy:
+>
+> Quite interesting ;-).
+>
+> I'm curious to learn a little bit more about your
+> strategy beyond what you wrote:
+>
+>   - What tool did you use? ChatGPT? Something home-grown?
 
-> Am 07.10.23 um 10:20 schrieb Junio C Hamano:
->> * rs/parse-options-value-int (2023-09-18) 2 commits
->>  - parse-options: use and require int pointer for OPT_CMDMODE
->>  - parse-options: add int value pointer to struct option
->> ...
-> I don't mind removing this topic from seen for now; it's not ready, yet=
-.
+A mixture of gpt-4 and gpt-4-32k (I would have just used gpt-4, but
+trying to give it a full file blows the token limit on several of
+Git's documentation files).
 
-After seeing the discussion moved to giving a more type safe enum
-support and then somehow convesation seemed to have petered out, I
-was wondering if we figured out the problem space enough to see an
-updated version with well defined scope and good problem
-description.  I do not mind keeping it on 'seen', especially if
-these two early steps are not expected to change.  It is not like
-they are causing any maintenance burden.
+Also, it was sent to an internally hosted instance.  On this internal
+instance, it seemed to require passing the
+api-version=3D2023-03-15-preview parameter.  I don't really know what
+that parameter means, but I suspect it might have been some
+6-months-ish old version of gpt-4?
 
-Thanks.
+>   - (Assuming this was generated by some sort of LLM): what did you
+>     prompt it with?
 
+Note that it was exactly one file per prompt, which was as follows:
+
+"""
+For the asciidoc file below, are there any typos, grammatical errors,
+or wording problems?  If so, please highlight them along with proposed
+corrections:
+
+--------------------
+${FILE_CONTENTS}
+"""
+
+If I had to do it over, I'd be much more explicit about the output
+format.  Probably, "Please respond by outputting the full file, with
+any corrections included.  If there are no corrections, simply output
+the original file as-is." which would allow me to simply diff the
+output and look at the changes.
+
+Also, I would probably specify that "The ascii doc file starts three
+lines below, just after the line of dashes", hoping that would help it
+avoid sometimes presuming that the dashes were part of the file.
+
+>   - What was the output format: the edited text in its entirety, or a
+>     patch that can be applied on top?
+
+My wording was unfortunately vague, so I sometimes got human prose
+instructing me with a change to make, sometimes I got a bulleted list
+in the form "${old_text} -> ${new_text}", but most of the time it
+printed the file (or a subset thereof) with corrections.  I also had
+all the output concatenated into one large file, which made it "fun"
+to work through all the changes.  Even when diffing files, I manually
+applied any changes I saw to the actual file (which did risk
+introducing new typos, and missing some of the corrections, but did
+ensure I reviewed everything).
+
+Also, not only did I get different output formats, but there were many
+times the file was cut off at some point.  I sometimes assumed that
+just meant there were no changes outside that region, but there were
+times where there was only one change and it had given me hundreds of
+lines of context around it before it cut off, so it did leave me with
+the feeling it might have only processed or responded to part of the
+file.
+
+There were also several times where the changes it suggested were a
+no-op, making me wonder if it just failed or something -- I looked at
+it really closely (including sometimes piping the output through xxd,
+and thus once noticed a change of tab-after-period to
+space-after-period), but when it was responding with human prose and
+said something like "Change the sentence that reads '${old_version}'
+-> '${old_version}', it made me wonder if something just went haywire
+with the LLM and I should retry.
+
+However, despite the above issues making me think there are more
+documentation issues to be found with an LLM, I didn't re-check any
+files unless I got an error with no output (e.g. excessive number of
+tokens, or I've hit rate limits on using the API).  I didn't bother,
+because the firehose of changes it provided me even without those
+caveats was far more than enough to deal with.
