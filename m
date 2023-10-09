@@ -2,118 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AECD0E95A9F
-	for <git@archiver.kernel.org>; Mon,  9 Oct 2023 16:08:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02C4ECD6101
+	for <git@archiver.kernel.org>; Mon,  9 Oct 2023 16:16:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377129AbjJIQIh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Oct 2023 12:08:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47294 "EHLO
+        id S1377153AbjJIQQ1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Oct 2023 12:16:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51176 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377014AbjJIQIg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Oct 2023 12:08:36 -0400
+        with ESMTP id S1377121AbjJIQQZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Oct 2023 12:16:25 -0400
 Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1EE991
-        for <git@vger.kernel.org>; Mon,  9 Oct 2023 09:08:34 -0700 (PDT)
-Received: by mail-qt1-x82b.google.com with SMTP id d75a77b69052e-41820eecff2so30395001cf.1
-        for <git@vger.kernel.org>; Mon, 09 Oct 2023 09:08:34 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA2AF9E
+        for <git@vger.kernel.org>; Mon,  9 Oct 2023 09:16:24 -0700 (PDT)
+Received: by mail-qt1-x82b.google.com with SMTP id d75a77b69052e-4197310af61so32247151cf.3
+        for <git@vger.kernel.org>; Mon, 09 Oct 2023 09:16:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1696867714; x=1697472514; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1696868184; x=1697472984; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=uBuOe1RmXnhEjNtCAN730DgOisgZomahcDvVxEqLDr8=;
-        b=pgcwQLwHsjc7GPCTr4Hw7b+SZyVN8ex53c+rkPge9hD6c0ALQOXw2pJdmx8d7bZAng
-         6sg+FBkNacDoFBw4S3E32dNfxdQ2uLLdVUIiybHL6HYbbjM25jiz2WGJpKX3IGv3EXHX
-         J7KtB07bOCcVj1RiZL9CbB1GTj2Wnd0aLI/5iJxYjt8ghJAdKI+ScoxyihPFH9Z64wdv
-         fMnCKffTI99E1cCGsnQlVC6JptzulGsHEl66Foy/DY1tgt8GIUG14xnPTNTkchp6+Qgy
-         8mGd4Jh7jo+xgKxiDsSobmjMzN6hvpUlq7h5yl2Ko1cdOVTN1rmLPuqLhs5hwGdKOiHe
-         rtpg==
+        bh=7DbkjGN4gH5tOrRztuDfokyhQI9eyp4sZLdbKG6Chbw=;
+        b=gr8VMv6WJ2T26bYsR7gKjUdusiiqnCeWeVIeVS3EN5duBYzph6XPh62jJHHRx8iacH
+         2wZiYkTlTMewdCCsAVsr/Ip57VE2T/OE++dQkDePfTCcfRH8o93ZTrdzG56BSGclYJQp
+         y/geOq80M8VFY9ygZh2cv4ympEMpiYv1mr0g89UKtc+fV02e1livYnLwO+xIVbBpfE7p
+         d5JLS5piY1XH1upWfH2bsxc/KHNf2jop0A5sn8HJufyDFakFX1eBD/RwLjK59mVpjbnT
+         c9C0mZ7BqmLOKzpaE7uirBXwLXe9+uQbJuDg1DqtpiCSEnJvl8dqXeht0cPER60L5xh3
+         GGrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696867714; x=1697472514;
+        d=1e100.net; s=20230601; t=1696868184; x=1697472984;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=uBuOe1RmXnhEjNtCAN730DgOisgZomahcDvVxEqLDr8=;
-        b=jtX0SIJtLCbxTKA6cXL0NhyPGT5CqSpYt+1urZgXFoUqDGMyPlTGzlBfF8MZHXzbxn
-         PpcTmwO18Xa0y3vkymXuqpxnL/2djA/Zh48ynTmsP0v9Q3BPuq4kmCyj35A5c9l4iJis
-         WTUV+bo3akagqrX/f0Cx8OImPl6QC3eKtD6gA5DbXZ4OQ3RcaN5TkdFOmYEdj79y2btD
-         jwgN/Hd0S1pAwwFWzm066B+gny0PkcJ4wmu1JpLy3gfGIJFt6n7ubXlcTVmYY3WsOZxU
-         WIzOOMyhlRwZBfQpy5e7GaBJ3BU7TiY7qQE2BAqRm2J6gObbphcMMjUW/KkRRGhoNOIu
-         I0zA==
-X-Gm-Message-State: AOJu0YwwMHfV/otpRmrkMntITx+nwGQamSNHpeG2gLiwWNEwSf0MX82V
-        mi0j1EphCJyt0Quwm/RnR33gdA==
-X-Google-Smtp-Source: AGHT+IFHM0ewWbvsNSK5vlnuJ9AiyyZRA0e6dLJLhvhf4Xv2wt9gEoIgp5rgcqdQd8wuNgzX5sVr4A==
-X-Received: by 2002:ac8:5992:0:b0:417:a01e:e39 with SMTP id e18-20020ac85992000000b00417a01e0e39mr19150900qte.63.1696867713729;
-        Mon, 09 Oct 2023 09:08:33 -0700 (PDT)
+        bh=7DbkjGN4gH5tOrRztuDfokyhQI9eyp4sZLdbKG6Chbw=;
+        b=a1b6gzHe1A5wuZ1jvYWR4FJ6CHx3qhO52D9nODdoiI1mBo3q0tMl/USp5X3ZqKlaau
+         y2MqdrASUpc1CN27RwjyYlzdNKhhb2OE8FtOAwh8UfuF5XVtFdQl62ppW+/ZaucDHHiy
+         17vkaxRe0XygC7pJINFysgTWMsQS8ZehUocoVARV8EeBxjQGeZwWU1+GNxwuA/rjJZ5N
+         itD+1qpGYp0QJkgfzLtIZ+wCfVYAxmo0XX00GP5YfQrYA2dIQ+Ps05bExhdvdzo/DaAf
+         nho0sqKq566ASDYWUefJa3C+I0SJWIxqdCD29Rr99bcha255j2rh+Gd9Qy7FeEnPB3T0
+         ZUUw==
+X-Gm-Message-State: AOJu0YyUbdSN6Z+GlXDmlViEXT8Vjlabra6SPK2uMfyvzK3napzpBFi0
+        Tgnl5wQ2qtM9EpJcPwcVUDlREujSFD3WxBtIna3OmA==
+X-Google-Smtp-Source: AGHT+IFQSXwZlqvdpskH5wxAX6MnF2cHHdsKYpmOuzV+HMR3S7KTZKywzmtxsne+qkAxOXby6lZynQ==
+X-Received: by 2002:ac8:7e96:0:b0:405:37fd:be80 with SMTP id w22-20020ac87e96000000b0040537fdbe80mr19995833qtj.28.1696868183887;
+        Mon, 09 Oct 2023 09:16:23 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id o12-20020ac8698c000000b004179e79069asm3760527qtq.21.2023.10.09.09.08.33
+        by smtp.gmail.com with ESMTPSA id 8-20020ac85648000000b00419792c1be7sm3796113qtt.30.2023.10.09.09.16.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Oct 2023 09:08:33 -0700 (PDT)
-Date:   Mon, 9 Oct 2023 12:08:32 -0400
+        Mon, 09 Oct 2023 09:16:23 -0700 (PDT)
+Date:   Mon, 9 Oct 2023 12:16:22 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Elijah Newren <newren@gmail.com>,
-        "Eric W. Biederman" <ebiederm@gmail.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 7/7] builtin/merge-tree.c: implement support for
- `--write-pack`
-Message-ID: <ZSQlgLDv+MrYmSp8@nand.local>
-References: <cover.1696629697.git.me@ttaylorr.com>
- <e96921014557edb41dd73d93a8c3cf6cfaf0c719.1696629697.git.me@ttaylorr.com>
- <xmqqil7j751u.fsf@gitster.g>
- <ZSCR7e6KKqFv8mZk@nand.local>
- <ZSPb1OYRrQSUugtg@tanuki>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Oct 2023, #03; Fri, 6)
+Message-ID: <ZSQnVnK0k3bdk5zX@nand.local>
+References: <xmqqh6n24zf1.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZSPb1OYRrQSUugtg@tanuki>
+In-Reply-To: <xmqqh6n24zf1.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 09, 2023 at 12:54:12PM +0200, Patrick Steinhardt wrote:
-> In Gitaly, we usually set up quarantine directories for all operations
-> that create objects. This allows us to discard any newly written objects
-> in case either the RPC call gets cancelled or in case our access checks
-> determine that the change should not be allowed. The logic is rather
-> simple:
+On Sat, Oct 07, 2023 at 01:20:02AM -0700, Junio C Hamano wrote:
+> * tb/repack-max-cruft-size (2023-10-05) 4 commits
+>   (merged to 'next' on 2023-10-06 at b3ca6df3b9)
+>  + builtin/repack.c: avoid making cruft packs preferred
+>  + builtin/repack.c: implement support for `--max-cruft-size`
+>  + builtin/repack.c: parse `--max-pack-size` with OPT_MAGNITUDE
+>  + t7700: split cruft-related tests to t7704
 >
->     1. Create a new temporary directory.
+>  "git repack" learned "--max-cruft-size" to prevent cruft packs from
+>  growing without bounds.
 >
->     2. Set up the new temporary directory as main object database via
->        the `GIT_OBJECT_DIRECTORY` environment variable.
->
->     3. Set up the main repository's object database via the
->        `GIT_ALTERNATE_OBJECT_DIRECTORIES` environment variable.
+>  Will merge to 'master'.
+>  source: <cover.1696293862.git.me@ttaylorr.com>
+>  source: <035393935108d02aaf8927189b05102f4f74f340.1696370003.git.me@ttaylorr.com>
 
-Is there a reason not to run Git in the quarantine environment and list
-the main repository as an alternate via $GIT_DIR/objects/info/alternates
-instead of the GIT_ALTERNATE_OBJECT_DIRECTORIES environment variable?
+Thanks. On a semi-related note, did you want to pick up my patch in
 
->     4. Execute Git commands that write objects with these environment
->        variables set up. The new objects will end up neatly contained in
->        the temporary directory.
->
->     5. Once done, either discard the temporary object database or
->        migrate objects into the main object daatabase.
+  https://lore.kernel.org/git/035393935108d02aaf8927189b05102f4f74f340.1696370003.git.me@ttaylorr.com/
 
-Interesting. I'm curious why you don't use the builtin tmp_objdir
-mechanism in Git itself. Do you need to run more than one command in the
-quarantine environment? If so, that makes sense that you'd want to have
-a scratch repository that lasts beyond the lifetime of a single process.
-
-> I wonder whether this would be a viable approach for you, as well.
-
-I think that the main problem that we are trying to solve with this
-series is creating a potentially large number of loose objects. I think
-that you could do something like what you propose above, with a 'git
-repacks -adk' before moving its objects over back to the main repository.
-
-But since we're working in a single process only when doing a merge-tree
-operation, I think it is probably more expedient to write the pack's
-bytes directly.
-
-> Patrick
-
+? That should address a performance bug that occurs when a repository
+(incorrectly) chooses a cruft pack as its preferred pack source when
+writing a MIDX bitmap, significantly impeding the pack-reuse mechanism.
 
 Thanks,
 Taylor
