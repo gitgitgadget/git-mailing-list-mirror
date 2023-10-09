@@ -2,213 +2,219 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37F0ACD613C
-	for <git@archiver.kernel.org>; Mon,  9 Oct 2023 21:49:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 412D4CD613F
+	for <git@archiver.kernel.org>; Mon,  9 Oct 2023 21:59:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378789AbjJIVtU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Oct 2023 17:49:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44882 "EHLO
+        id S1378848AbjJIV7D (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Oct 2023 17:59:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377858AbjJIVtT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Oct 2023 17:49:19 -0400
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8259799
-        for <git@vger.kernel.org>; Mon,  9 Oct 2023 14:49:17 -0700 (PDT)
-Received: by mail-pf1-x42f.google.com with SMTP id d2e1a72fcca58-690bccb0d8aso3825317b3a.0
-        for <git@vger.kernel.org>; Mon, 09 Oct 2023 14:49:17 -0700 (PDT)
+        with ESMTP id S1378789AbjJIV7B (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Oct 2023 17:59:01 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE71199
+        for <git@vger.kernel.org>; Mon,  9 Oct 2023 14:58:59 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-405497850dbso46907415e9.0
+        for <git@vger.kernel.org>; Mon, 09 Oct 2023 14:58:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1696888157; x=1697492957; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=o/H2hvTSiaZupqdJKEFrYAfDICTsztiJ4m83oyJLB3c=;
-        b=ZLo+Mbk9o4lss+GRiq1iL99pAqxR+QJxXTfDofMY7SEnAvkP3ZQM4QDiaMTuzth0tH
-         jv7/fbR+ibgu4My9jMcS9RMbaLw76mHmaQqbS7k0d1JXMsR9TwUpXPl9Et3ET2JhOHeC
-         aBAdmotDLdsLkeznScHgvscsYxVk/jS5i83gjEQPorXRP4uunDutcM+XDA6s1xnVOtTg
-         aF/jJPeHrZfafLxTseey5WlyMFYR0QBd+9GnhAa01znlAUY9vvY5tgspYL2HkNRo3N7a
-         Z5sWNYxcVmy56Pqg1A/+6YrhZ7LBn9/lV8EcRnbIgNPHGWndvvdZig5VOND1NOTCvlTo
-         zGRA==
+        d=gmail.com; s=20230601; t=1696888738; x=1697493538; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=s11bODZEakhGdR+zOZGuYd5a5ILcB4q914ODA4acxOA=;
+        b=aJKNQcmGj4z88mmZRTLWgdAra11plg1VNmU2Dd1DJREqNzZhwW8TKWYADafJ9HHm2s
+         znuCQb5MklfRzNRGmZqwfp1ShBcgPqZE+zRHdmFy+pyrlspbRnzUwC0BOUCC5F4tid+w
+         narTrshGotAtqKBSfo1boK+osSr4TmVDMXmmZYhvWhC0C+QGtjdMVv/yPr73S2cZX0yO
+         k0JlvvDM946QZXzyEWze5iRQcuUNCkNi1hypWlCFuLErx8sqGwlzq24MO0thV6nop6+6
+         P3fHYrOJaX3FebyOQljk8j3wId7Ix453dU8L7XKNUW7j6CaVPbkBht2oZNV1p7dOtCrZ
+         v2Vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696888157; x=1697492957;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=o/H2hvTSiaZupqdJKEFrYAfDICTsztiJ4m83oyJLB3c=;
-        b=Uf0VAvF2y0iAyrDHWIr/lgnoc82JuSoshWsbQnLz3zTgqkqZ0oqR3Y16ozFnexT5bF
-         SupeWBhawABbctmn7bDOyedmblhwYvorN8AF2eqNnxxwPudsiMABojldILFSKZbvoq8c
-         dSmadP6yfqKshKG8XDBGeeIKk8+KfXT9qp0DZenqCQxFpClW2HmILwT7lhOYBnJNlrES
-         PBf4clHisdSvPwt/0bKb3rzVUFWDRyyMnxveEPv8CTwLu5+llgRZtYg5zCi3Hnhakm9E
-         3D85GZeZ7/NN6yHUtql7yzxWS2g5wbyVdOMPo5uK6NFI7Y945kh6jAT2d2o+svmp/vJU
-         sgIA==
-X-Gm-Message-State: AOJu0YwBWSRI+XVVxT2ndSlhmxj2DNCzss/mLpIjh7UzcDPzXRZqWo4i
-        TItnGHS4oKNBAsgTZN1iGNyGWIGccKDYLkdxTQ==
-X-Google-Smtp-Source: AGHT+IGXLO8Z8ABP46LWWvxzHYXv+5WUlBZqDqzhSV9bddZwAwkhtnmZOTUlH4yInXdij7x+wqgOGw==
-X-Received: by 2002:a05:6a20:3ca5:b0:13d:d5bd:7593 with SMTP id b37-20020a056a203ca500b0013dd5bd7593mr15478867pzj.12.1696888156830;
-        Mon, 09 Oct 2023 14:49:16 -0700 (PDT)
-Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
-        by smtp.gmail.com with ESMTPSA id d25-20020aa78699000000b0068790c41ca2sm6837682pfo.27.2023.10.09.14.49.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Oct 2023 14:49:16 -0700 (PDT)
-Message-ID: <28ae03f5-7091-d3f3-8a70-56aba6639640@github.com>
-Date:   Mon, 9 Oct 2023 14:49:14 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.15.1
-Subject: Re: [PATCH 0/4] Performance improvement & cleanup in loose ref
- iteration
-Content-Language: en-US
-To:     Patrick Steinhardt <ps@pks.im>,
-        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org
+        d=1e100.net; s=20230601; t=1696888738; x=1697493538;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=s11bODZEakhGdR+zOZGuYd5a5ILcB4q914ODA4acxOA=;
+        b=GQ7/wFx79bYA/sYLsIsIEk9hbCE5UB9cvE1d7hdyO7REXWhTFjz6I+a1Fa4FyIEeuJ
+         0Z5oHct4Hd7OBYEywuLFHwvJ+gL3P1N0KGzv5HBtf7ILu5YW+Gx2IL6QGdoX0dkm+usR
+         I9iqxYZVV4IyCpTQS2Un6nlN9G8Rb1EGfWzPcz9KtKCCNf+gl+UvE8dC1NPz6YV+Nt7F
+         V3g1GQLWblfOLXemuCneijCBZoMO3KhUET+CYhXL1Hl7+JY/ucbiIU2u/SPfHLGAytMl
+         oVvRpvB54GTxUvy/2CoKsXSmlpv37fcQdPFW+PUPmXMXwXWF16xmCK0/UrE9/15U1cUv
+         GGow==
+X-Gm-Message-State: AOJu0YyZivoaRaeWUVSjWIXHih5Tx96uy1Rf24IPoqBomUXMEGtV2QLc
+        ssULJXgluGzF385jBCAWSS4iMwoJ79k=
+X-Google-Smtp-Source: AGHT+IFkWrWF0ds2Yt0KJq57CQogAmfQlcJ/nf/zjGlAikZOgWkuMp/8zcSoOq9i4XSxwxiEZAAycA==
+X-Received: by 2002:a5d:50c8:0:b0:321:677d:98b0 with SMTP id f8-20020a5d50c8000000b00321677d98b0mr15546069wrt.11.1696888737587;
+        Mon, 09 Oct 2023 14:58:57 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id g7-20020adfe407000000b003232d122dbfsm10757587wrm.66.2023.10.09.14.58.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Oct 2023 14:58:57 -0700 (PDT)
+Message-ID: <pull.1594.v2.git.1696888736.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1594.git.1696615769.gitgitgadget@gmail.com>
 References: <pull.1594.git.1696615769.gitgitgadget@gmail.com>
- <ZSPQI2gkLOSdNWLu@tanuki>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <ZSPQI2gkLOSdNWLu@tanuki>
+From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 09 Oct 2023 21:58:52 +0000
+Subject: [PATCH v2 0/4] Performance improvement & cleanup in loose ref iteration
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Patrick Steinhardt <ps@pks.im>, Victoria Dye <vdye@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patrick Steinhardt wrote:
-> On Fri, Oct 06, 2023 at 06:09:25PM +0000, Victoria Dye via GitGitGadget wrote:
->> While investigating ref iteration performance in builtins like
->> 'for-each-ref' and 'show-ref', I found two small improvement opportunities.
->>
->> The first patch tweaks the logic around prefix matching in
->> 'cache_ref_iterator_advance' so that we correctly skip refs that do not
->> actually match a given prefix. The unnecessary iteration doesn't seem to be
->> causing any bugs in the ref iteration commands that I've tested, but it
->> doesn't hurt to be more precise (and it helps with some other patches I'm
->> working on ;) ).
->>
->> The next three patches update how 'loose_fill_ref_dir' determines the type
->> of ref cache entry to create (directory or regular). On platforms that
->> include d_type information in 'struct dirent' (as far as I can tell, all
->> except NonStop & certain versions of Cygwin), this allows us to skip calling
->> 'stat'. In ad-hoc testing, this improved performance of 'git for-each-ref'
->> by about 20%.
-> 
-> I've done a small set of benchmarks with my usual test repositories,
-> which is linux.git with a bunch of references added. The repository
-> comes in four sizes:
-> 
-> - small: 50k references
-> - medium: 500k references
-> - high:  1.1m references
-> - huge: 12m references
-> 
-> Unfortunately, I couldn't really reproduce the performance improvements.
-> In fact, the new version runs consistently a tiny bit slower than the
-> old version:
-> 
->     # Old version, which is 3a06386e31 (The fifteenth batch, 2023-10-04).
-> 
->     Benchmark 1: git for-each-ref (revision=old,refcount=small)
->       Time (mean ± σ):     135.5 ms ±   1.2 ms    [User: 76.4 ms, System: 59.0 ms]
->       Range (min … max):   134.8 ms … 136.9 ms    3 runs
-> 
->     Benchmark 2: git for-each-ref (revision=old,refcount=medium)
->       Time (mean ± σ):     822.7 ms ±   2.2 ms    [User: 697.4 ms, System: 125.1 ms]
->       Range (min … max):   821.1 ms … 825.2 ms    3 runs
-> 
->     Benchmark 3: git for-each-ref (revision=old,refcount=high)
->       Time (mean ± σ):      1.960 s ±  0.015 s    [User: 1.702 s, System: 0.257 s]
->       Range (min … max):    1.944 s …  1.973 s    3 runs
-> 
->     # New version, which is your tip.
-> 
->     Benchmark 4: git for-each-ref (revision=old,refcount=huge)
->       Time (mean ± σ):     16.815 s ±  0.054 s    [User: 15.091 s, System: 1.722 s]
->       Range (min … max):   16.760 s … 16.869 s    3 runs
-> 
->     Benchmark 5: git for-each-ref (revision=new,refcount=small)
->       Time (mean ± σ):     136.0 ms ±   0.2 ms    [User: 78.8 ms, System: 57.1 ms]
->       Range (min … max):   135.8 ms … 136.2 ms    3 runs
-> 
->     Benchmark 6: git for-each-ref (revision=new,refcount=medium)
->       Time (mean ± σ):     830.4 ms ±  21.2 ms    [User: 691.3 ms, System: 138.7 ms]
->       Range (min … max):   814.2 ms … 854.5 ms    3 runs
-> 
->     Benchmark 7: git for-each-ref (revision=new,refcount=high)
->       Time (mean ± σ):      1.966 s ±  0.013 s    [User: 1.717 s, System: 0.249 s]
->       Range (min … max):    1.952 s …  1.978 s    3 runs
-> 
->     Benchmark 8: git for-each-ref (revision=new,refcount=huge)
->       Time (mean ± σ):     16.945 s ±  0.037 s    [User: 15.182 s, System: 1.760 s]
->       Range (min … max):   16.910 s … 16.983 s    3 runs
-> 
->     Summary
->       git for-each-ref (revision=old,refcount=small) ran
->         1.00 ± 0.01 times faster than git for-each-ref (revision=new,refcount=small)
->         6.07 ± 0.06 times faster than git for-each-ref (revision=old,refcount=medium)
->         6.13 ± 0.17 times faster than git for-each-ref (revision=new,refcount=medium)
->        14.46 ± 0.17 times faster than git for-each-ref (revision=old,refcount=high)
->        14.51 ± 0.16 times faster than git for-each-ref (revision=new,refcount=high)
->       124.09 ± 1.15 times faster than git for-each-ref (revision=old,refcount=huge)
->       125.05 ± 1.12 times faster than git for-each-ref (revision=new,refcount=huge)
-> 
-> The performance regression isn't all that concerning, but it makes me
-> wonder why I see things becoming slower rather than faster. My guess is
-> that this is because all my test repositories are well-packed and don't
-> have a lot of loose references. But I just wanted to confirm how you
-> benchmarked your change and what the underlying shape of your test repo
-> was.
+While investigating ref iteration performance in builtins like
+'for-each-ref' and 'show-ref', I found two small improvement opportunities.
 
-I ran my benchmark on my (Intel) Mac with a test repository (single commit,
-one file) containing:
+The first patch tweaks the logic around prefix matching in
+'cache_ref_iterator_advance' so that we correctly skip refs that do not
+actually match a given prefix. The unnecessary iteration doesn't seem to be
+causing any bugs in the ref iteration commands that I've tested, but it
+doesn't hurt to be more precise (and it helps with some other patches I'm
+working on ;) ).
 
-- 10k refs/heads/ references
-- 10k refs/tags/ references
-- 10k refs/special/ references 
+The next three patches update how 'loose_fill_ref_dir' determines the type
+of ref cache entry to create (directory or regular). On platforms that
+include d_type information in 'struct dirent' (as far as I can tell, all
+except NonStop & certain versions of Cygwin), this allows us to skip calling
+'stat'. Benchmarking against repos with various quantities of loose refs
+indicates a 5-8% speedup from these changes [1].
 
-All refs in the repository are loose. My Mac has historically been somewhat
-slow and inconsistent when it comes to perf testing, though, so I re-ran the
-benchmark a bit more formally on an Ubuntu VM (3 warmup iterations followed
-by at least 10 iterations per test):
 
----
+Changes since V1
+================
 
-Benchmark 1: git for-each-ref (revision=old,refcount=3k)
-  Time (mean ± σ):      40.6 ms ±   3.9 ms    [User: 13.2 ms, System: 27.1 ms]
-  Range (min … max):    37.2 ms …  59.1 ms    76 runs
- 
-  Warning: Statistical outliers were detected. Consider re-running this benchmark on a quiet system without any interferences from other programs. It might help to use the '--warmup' or '--prepare' options.
- 
-Benchmark 2: git for-each-ref (revision=new,refcount=3k)
-  Time (mean ± σ):      38.7 ms ±   4.4 ms    [User: 13.8 ms, System: 24.5 ms]
-  Range (min … max):    35.1 ms …  57.2 ms    71 runs
- 
-  Warning: Statistical outliers were detected. Consider re-running this benchmark on a quiet system without any interferences from other programs. It might help to use the '--warmup' or '--prepare' options.
- 
-Benchmark 3: git for-each-ref (revision=old,refcount=30k)
-  Time (mean ± σ):     419.4 ms ±  43.9 ms    [User: 136.4 ms, System: 274.1 ms]
-  Range (min … max):   385.1 ms … 528.7 ms    10 runs
- 
-Benchmark 4: git for-each-ref (revision=new,refcount=30k)
-  Time (mean ± σ):     390.4 ms ±  27.2 ms    [User: 133.1 ms, System: 251.6 ms]
-  Range (min … max):   360.3 ms … 447.6 ms    10 runs
- 
-Benchmark 5: git for-each-ref (revision=old,refcount=300k)
-  Time (mean ± σ):      4.171 s ±  0.052 s    [User: 1.400 s, System: 2.715 s]
-  Range (min … max):    4.118 s …  4.283 s    10 runs
- 
-Benchmark 6: git for-each-ref (revision=new,refcount=300k)
-  Time (mean ± σ):      3.939 s ±  0.054 s    [User: 1.403 s, System: 2.466 s]
-  Range (min … max):    3.858 s …  4.026 s    10 runs
- 
-Summary
-  'git for-each-ref (revision=new,refcount=3k)' ran
-    1.05 ± 0.16 times faster than 'git for-each-ref (revision=old,refcount=3k)'
-   10.08 ± 1.34 times faster than 'git for-each-ref (revision=new,refcount=30k)'
-   10.83 ± 1.67 times faster than 'git for-each-ref (revision=old,refcount=30k)'
-  101.68 ± 11.63 times faster than 'git for-each-ref (revision=new,refcount=300k)'
-  107.67 ± 12.30 times faster than 'git for-each-ref (revision=old,refcount=300k)'
+ * Added tests in patch 1 to demonstrate the bugfix
 
----
+Thanks!
 
-So it's not the 20% speedup I saw on my local test repo (it's more like
-5-8%), but there does appear to be a consistent improvement. As for your
-results, the changes in this series shouldn't affect packed ref operations,
-and the difference between old & new doesn't seem to indicate a regression. 
+ * Victoria
 
+[1]
+https://lore.kernel.org/git/28ae03f5-7091-d3f3-8a70-56aba6639640@github.com/
+
+Victoria Dye (4):
+  ref-cache.c: fix prefix matching in ref iteration
+  dir.[ch]: expose 'get_dtype'
+  dir.[ch]: add 'follow_symlink' arg to 'get_dtype'
+  files-backend.c: avoid stat in 'loose_fill_ref_dir'
+
+ diagnose.c                    | 42 +++--------------------------------
+ dir.c                         | 33 +++++++++++++++++++++++++++
+ dir.h                         | 16 +++++++++++++
+ refs/files-backend.c          | 14 +++++-------
+ refs/ref-cache.c              |  3 ++-
+ t/t1500-rev-parse.sh          | 23 +++++++++++++++++++
+ t/t4205-log-pretty-formats.sh | 30 +++++++++++++++++++++++++
+ 7 files changed, 112 insertions(+), 49 deletions(-)
+
+
+base-commit: 3a06386e314565108ad56a9bdb8f7b80ac52fb69
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1594%2Fvdye%2Fvdye%2Fref-iteration-cleanup-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1594/vdye/vdye/ref-iteration-cleanup-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1594
+
+Range-diff vs v1:
+
+ 1:  59276a5b3fd ! 1:  402176246ea ref-cache.c: fix prefix matching in ref iteration
+     @@ Commit message
+          'create_dir_entry' explicitly calls out the trailing slash requirement, so
+          this is a safe assumption to make.
+      
+     +    This bug generally doesn't have any user-facing impact, since it requires:
+     +
+     +    1. using a non-empty prefix without a trailing slash in an iteration like
+     +       'for_each_fullref_in',
+     +    2. the callback to said iteration not reapplying the original filter (as
+     +       for-each-ref does) to ensure unmatched refs are skipped, and
+     +    3. the repository having one or more refs that match part of, but not all
+     +       of, the prefix.
+     +
+     +    However, there are some niche scenarios that meet those criteria
+     +    (specifically, 'rev-parse --bisect' and '(log|show|shortlog) --bisect'). Add
+     +    tests covering those cases to demonstrate the fix in this patch.
+     +
+          Signed-off-by: Victoria Dye <vdye@github.com>
+      
+       ## refs/ref-cache.c ##
+     @@ refs/ref-cache.c: static int cache_ref_iterator_advance(struct ref_iterator *ref
+       				continue;
+       		} else {
+       			entry_prefix_state = level->prefix_state;
+     +
+     + ## t/t1500-rev-parse.sh ##
+     +@@ t/t1500-rev-parse.sh: test_expect_success 'rev-parse --since= unsqueezed ordering' '
+     + 	test_cmp expect actual
+     + '
+     + 
+     ++test_expect_success 'rev-parse --bisect includes bad, excludes good' '
+     ++	test_commit_bulk 6 &&
+     ++
+     ++	git update-ref refs/bisect/bad-1 HEAD~1 &&
+     ++	git update-ref refs/bisect/b HEAD~2 &&
+     ++	git update-ref refs/bisect/bad-3 HEAD~3 &&
+     ++	git update-ref refs/bisect/good-3 HEAD~3 &&
+     ++	git update-ref refs/bisect/bad-4 HEAD~4 &&
+     ++	git update-ref refs/bisect/go HEAD~4 &&
+     ++
+     ++	# Note: refs/bisect/b and refs/bisect/go should be ignored because they
+     ++	# do not match the refs/bisect/bad or refs/bisect/good prefixes.
+     ++	cat >expect <<-EOF &&
+     ++	refs/bisect/bad-1
+     ++	refs/bisect/bad-3
+     ++	refs/bisect/bad-4
+     ++	^refs/bisect/good-3
+     ++	EOF
+     ++
+     ++	git rev-parse --symbolic-full-name --bisect >actual &&
+     ++	test_cmp expect actual
+     ++'
+     ++
+     + test_done
+     +
+     + ## t/t4205-log-pretty-formats.sh ##
+     +@@ t/t4205-log-pretty-formats.sh: test_expect_success '%S in git log --format works with other placeholders (part
+     + 	test_cmp expect actual
+     + '
+     + 
+     ++test_expect_success 'setup more commits for %S with --bisect' '
+     ++	test_commit four &&
+     ++	test_commit five &&
+     ++
+     ++	head1=$(git rev-parse --verify HEAD~0) &&
+     ++	head2=$(git rev-parse --verify HEAD~1) &&
+     ++	head3=$(git rev-parse --verify HEAD~2) &&
+     ++	head4=$(git rev-parse --verify HEAD~3)
+     ++'
+     ++
+     ++test_expect_success '%S with --bisect labels commits with refs/bisect/bad ref' '
+     ++	git update-ref refs/bisect/bad-$head1 $head1 &&
+     ++	git update-ref refs/bisect/go $head1 &&
+     ++	git update-ref refs/bisect/bad-$head2 $head2 &&
+     ++	git update-ref refs/bisect/b $head3 &&
+     ++	git update-ref refs/bisect/bad-$head4 $head4 &&
+     ++	git update-ref refs/bisect/good-$head4 $head4 &&
+     ++
+     ++	# We expect to see the range of commits betwee refs/bisect/good-$head4
+     ++	# and refs/bisect/bad-$head1. The "source" ref is the nearest bisect ref
+     ++	# from which the commit is reachable.
+     ++	cat >expect <<-EOF &&
+     ++	$head1 refs/bisect/bad-$head1
+     ++	$head2 refs/bisect/bad-$head2
+     ++	$head3 refs/bisect/bad-$head2
+     ++	EOF
+     ++	git log --bisect --format="%H %S" >actual &&
+     ++	test_cmp expect actual
+     ++'
+     ++
+     + test_expect_success 'log --pretty=reference' '
+     + 	git log --pretty="tformat:%h (%s, %as)" >expect &&
+     + 	git log --pretty=reference >actual &&
+ 2:  24014010ea3 = 2:  172538b5e30 dir.[ch]: expose 'get_dtype'
+ 3:  a382d2ba652 = 3:  295ca94003b dir.[ch]: add 'follow_symlink' arg to 'get_dtype'
+ 4:  e193a453182 = 4:  e89501cb51f files-backend.c: avoid stat in 'loose_fill_ref_dir'
+
+-- 
+gitgitgadget
