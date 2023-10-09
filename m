@@ -2,129 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46236E95A9C
-	for <git@archiver.kernel.org>; Mon,  9 Oct 2023 23:35:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B5EAE95A8D
+	for <git@archiver.kernel.org>; Mon,  9 Oct 2023 23:50:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1379061AbjJIXfR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Oct 2023 19:35:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57026 "EHLO
+        id S1378992AbjJIXuz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Oct 2023 19:50:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46072 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379038AbjJIXfQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Oct 2023 19:35:16 -0400
-Received: from mout-p-201.mailbox.org (mout-p-201.mailbox.org [IPv6:2001:67c:2050:0:465::201])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86D6A9D
-        for <git@vger.kernel.org>; Mon,  9 Oct 2023 16:35:13 -0700 (PDT)
-Received: from smtp1.mailbox.org (smtp1.mailbox.org [IPv6:2001:67c:2050:b231:465::1])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        with ESMTP id S1377918AbjJIXuw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Oct 2023 19:50:52 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1ACD39D
+        for <git@vger.kernel.org>; Mon,  9 Oct 2023 16:50:50 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 715BB2C49D;
+        Mon,  9 Oct 2023 19:50:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=Mcw2UA4aXbZHIttZ0r860FakIp4KFUULyjvSrQ
+        lbZDM=; b=iwjpvdxMsIWFUO14pwfonqAMtS0bnJbHrgW6fsb08083K5P1sm5ZUu
+        KXXu8vyujmXzMD6WKzyBxYjWjQxDM2BK9WKFOByohGZndlg9cjb7ocvI0fJAJ+sD
+        6+zSq8qUhT1Kk4ji1U1ExOx6qtc/ux8yEQtA4uIo/MWpUb+B9OVkQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 69B602C49C;
+        Mon,  9 Oct 2023 19:50:50 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mout-p-201.mailbox.org (Postfix) with ESMTPS id 4S4Fkg60Bnz9snY;
-        Tue, 10 Oct 2023 01:35:07 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hsal.es; s=MBO0001;
-        t=1696894507;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=ezzO0xe3JSClqveT5b0ioxz8R3VpCy3UM8ZEnoWM1Fc=;
-        b=wE/6Tx+ggwPI8W8XrsWc4/6s/M1jjIdLYSuBRq3ZirKrwpnyj9PEGAHeRnBu7fGgr0VKpC
-        CD7WIipJuYs7kD0TZf/pJPBKAf8jx+0NER04SKVKElNPk+BqSyxaada+PVlCY0lAFxnVIJ
-        GnXehDrg2mNB86gGaeuMvYYKXXjtAC9T0tzDZU03RBUvf2Bfz/sxdcYT1VM6yAXMtxOz21
-        ZnFZI881Smwk174tUc/jFD9jopLiqScnwOZghgk7/0jUSnM9a+iRAaDbqA8CLJj7kugexr
-        K4JlQHWC6B0cy4TmEqo2MrUJUZULF/Fn1cH1oWyb8NGxmvrGbgkNk0VvZ13pvQ==
-From:   Hugo Sales <hugo@hsal.es>
-To:     git@vger.kernel.org
-Cc:     Hugo Sales <hugo@hsal.es>
-Subject: [PATCH 1/3] mv: Add -p option to create parent directories
-Date:   Tue, 10 Oct 2023 00:34:56 +0100
-Message-ID: <20231009233458.1371351-2-hugo@hsal.es>
-In-Reply-To: <20231009233458.1371351-1-hugo@hsal.es>
-References: <20231009233458.1371351-1-hugo@hsal.es>
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 491C32C49A;
+        Mon,  9 Oct 2023 19:50:45 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Josh Steadmon <steadmon@google.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, phillip.wood123@gmail.com, linusa@google.com,
+        calvinwan@google.com, rsbecker@nexbridge.com
+Subject: Re: [PATCH v8 0/3] Add unit test framework and project plan
+In-Reply-To: <cover.1696889529.git.steadmon@google.com> (Josh Steadmon's
+        message of "Mon, 9 Oct 2023 15:21:19 -0700")
+References: <0169ce6fb9ccafc089b74ae406db0d1a8ff8ac65.1688165272.git.steadmon@google.com>
+        <cover.1696889529.git.steadmon@google.com>
+Date:   Mon, 09 Oct 2023 16:50:43 -0700
+Message-ID: <xmqqh6mzwe24.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 4S4Fkg60Bnz9snY
+Content-Type: text/plain
+X-Pobox-Relay-ID: A9E55C82-66FE-11EE-A192-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Inspired by "mkdir -p", this patch allows specifying a "-p" or
-"--parents" flag which will create all non-existent directories in the
-destination path before renaming the file.
+Josh Steadmon <steadmon@google.com> writes:
 
-This allows the user to not have to run two commands to move files to a
-new directory.
+> Changes in v8:
+> - Flipped return values for TEST, TEST_TODO, and check_* macros &
+>   functions. This makes it easier to reason about control flow for
+>   patterns like:
+>     if (check(some_condition)) { ... }
+> - Moved unit test binaries to t/unit-tests/bin to simplify .gitignore
+>   patterns.
+> - Removed testing of some strbuf implementation details in t-strbuf.c
+>
+>
+> Josh Steadmon (2):
+>   unit tests: Add a project plan document
+>   ci: run unit tests in CI
+>
+> Phillip Wood (1):
+>   unit tests: add TAP unit test framework
 
-Signed-off-by: Hugo Sales <hugo@hsal.es>
----
- builtin/mv.c | 27 ++++++++++++++++++---------
- 1 file changed, 18 insertions(+), 9 deletions(-)
+Thank you, all.
 
-diff --git a/builtin/mv.c b/builtin/mv.c
-index c596515ad0..5d64d86179 100644
---- a/builtin/mv.c
-+++ b/builtin/mv.c
-@@ -168,7 +168,7 @@ static int empty_dir_has_sparse_contents(const char *name)
- int cmd_mv(int argc, const char **argv, const char *prefix)
- {
- 	int i, flags, gitmodules_modified = 0;
--	int verbose = 0, show_only = 0, force = 0, ignore_errors = 0, ignore_sparse = 0;
-+	int verbose = 0, show_only = 0, force = 0, ignore_errors = 0, ignore_sparse = 0, create_parents = 0;
- 	struct option builtin_mv_options[] = {
- 		OPT__VERBOSE(&verbose, N_("be verbose")),
- 		OPT__DRY_RUN(&show_only, N_("dry run")),
-@@ -176,6 +176,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 			   PARSE_OPT_NOCOMPLETE),
- 		OPT_BOOL('k', NULL, &ignore_errors, N_("skip move/rename errors")),
- 		OPT_BOOL(0, "sparse", &ignore_sparse, N_("allow updating entries outside of the sparse-checkout cone")),
-+		OPT_BOOL('p', "parents", &create_parents, N_("create missing parent directories")),
- 		OPT_END(),
- 	};
- 	const char **source, **destination, **dest_path, **submodule_gitfile;
-@@ -220,8 +221,8 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 	if (dest_path[0][0] == '\0')
- 		/* special case: "." was normalized to "" */
- 		destination = internal_prefix_pathspec(dest_path[0], argv, argc, DUP_BASENAME);
--	else if (!lstat(dest_path[0], &st) &&
--			S_ISDIR(st.st_mode)) {
-+	else if (create_parents ||
-+		 (!lstat(dest_path[0], &st) && S_ISDIR(st.st_mode))) {
- 		destination = internal_prefix_pathspec(dst_w_slash, argv, argc, DUP_BASENAME);
- 	} else {
- 		if (!path_in_sparse_checkout(dst_w_slash, &the_index) &&
-@@ -381,7 +382,8 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 			bad = _("multiple sources for the same target");
- 			goto act_on_entry;
- 		}
--		if (is_dir_sep(dst[strlen(dst) - 1])) {
-+
-+		if (!create_parents && is_dir_sep(dst[strlen(dst) - 1])) {
- 			bad = _("destination directory does not exist");
- 			goto act_on_entry;
- 		}
-@@ -459,11 +461,18 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 		if (show_only)
- 			continue;
- 		if (!(mode & (INDEX | SPARSE | SKIP_WORKTREE_DIR)) &&
--		    !(dst_mode & (SKIP_WORKTREE_DIR | SPARSE)) &&
--		    rename(src, dst) < 0) {
--			if (ignore_errors)
--				continue;
--			die_errno(_("renaming '%s' failed"), src);
-+		    !(dst_mode & (SKIP_WORKTREE_DIR | SPARSE))) {
-+			if (create_parents && safe_create_leading_directories_const(dst) < 0) {
-+				if (ignore_errors)
-+					continue;
-+				die_errno(_("creating parent directories for '%s' failed"), dst);
-+			}
-+
-+			if (rename(src, dst) < 0) {
-+				if (ignore_errors)
-+					continue;
-+				die_errno(_("renaming '%s' failed"), src);
-+			}
- 		}
- 		if (submodule_gitfile[i]) {
- 			if (!update_path_in_gitmodules(src, dst))
--- 
-2.42.0
+The other topic to adjust for cmake by Dscho builds on this topic,
+and it needs to be rebased on this updated round.  I think I did so
+correctly, but because I use neither cmake or Windows, the result is
+not even compile tested.  Sanity checking the result is very much
+appreciated when I push out the result of today's integration cycle.
+
+$ git log --oneline --first-parent --decorate master..js/doc-unit-tests-with-cmake
+d0773c1331 (js/doc-unit-tests-with-cmake) cmake: handle also unit tests
+192de6de57 cmake: use test names instead of full paths
+e1d97bc4df cmake: fix typo in variable name
+e07499b8a7 artifacts-tar: when including `.dll` files, don't forget the unit-tests
+11264f8f42 unit-tests: do show relative file paths
+6c76c5b32d unit-tests: do not mistake `.pdb` files for being executable
+295af2ef26 cmake: also build unit tests
+31c2361349 (js/doc-unit-tests) ci: run unit tests in CI
+3a47942530 unit tests: add TAP unit test framework
+eeea7d763a unit tests: add a project plan document
 
