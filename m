@@ -2,91 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6647E95A91
-	for <git@archiver.kernel.org>; Mon,  9 Oct 2023 08:23:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 761B3E95A91
+	for <git@archiver.kernel.org>; Mon,  9 Oct 2023 08:37:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234401AbjJIIXK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Oct 2023 04:23:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45904 "EHLO
+        id S234465AbjJIIg7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Oct 2023 04:36:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49618 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234375AbjJIIXJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Oct 2023 04:23:09 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2E6DAC
-        for <git@vger.kernel.org>; Mon,  9 Oct 2023 01:23:07 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-99c3c8adb27so714466466b.1
-        for <git@vger.kernel.org>; Mon, 09 Oct 2023 01:23:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696839786; x=1697444586; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qj/Ew085kwpdeWDXyoWnpq0lcxtRXIsWqZJ4Q7q0fUk=;
-        b=Bj2/VDTPffxr7jMXBjuDNHH18dqd3uZf5S3T+rM0HGqWkwtXO4lRsS5XgOqXKhXj33
-         cagpCTfgvpXbJIIP9blpubkosgTor3E8OR31/PZ5m5Qy1Zbo2F82PGwzVnRZVqKRS/P3
-         CzVohO5icaOiUmZdronju1zzY68l5vbscwzXhKiP8JIM+t0ZPPN96CTyvZ+EHUltO9p7
-         y3MBDgk0AzQjcQIbMrWhcfAqMwXvAik+H+0VBQYdIDRxGY5biF069QTBaZMGxqaaKDtL
-         HNx3tZO/Y/ahRIYkYSSe4LMC6II1DEmzHgBgFeIuBChrv3nWL4KER9r3NfBSIs8omud3
-         fnTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696839786; x=1697444586;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qj/Ew085kwpdeWDXyoWnpq0lcxtRXIsWqZJ4Q7q0fUk=;
-        b=I4mXtbxs4vanwuYU6RV5p+gLNC2QUbCG4jlEPeiDrLYbR/iHFDLrdaEvx3iRVumbrB
-         t3kny5GMIQaw5l29TrCyLxrLYjiRW7d9LXbTxmlyACBVyfbSrdcvdCYQz0Ld7At8eCje
-         YcqpZwWyjmDA4+bIIJXD/4vu4yNhqGhc0dAhtAOjFDZlOvFQfISl+A0kumH7kFDbYb4j
-         Rtbzu44ajF/E/sWGenSQjBETvHga8WZ9drFNtsVBiEs543rEknNW/M7IL2gEWmAgMN0Y
-         S4ajTOR+bGoZ6aaOosDWWYzM2priOoqXOXUV+FBzqODdpRACINdkOJp2g6XuaCuFjVFZ
-         xJDA==
-X-Gm-Message-State: AOJu0Yx4MpP7+hOeIDDDqnUoWGr/18YALTXhEwSdIMYg+vvq4+GCh9k2
-        O6Js7hmnTC/BIRU2OPvnBwpM+8BMPrjBGizzSY8=
-X-Google-Smtp-Source: AGHT+IGjhkVrW9CUg91q0Ve3bWREbTLAwbJvKMHmZiJ0EzWDf4Vh7tOR0H/7QY1yptZZnBDjBmsn34S8TiSDwr23Ffw=
-X-Received: by 2002:a17:907:1dd8:b0:9ba:13f1:5a6f with SMTP id
- og24-20020a1709071dd800b009ba13f15a6fmr3038219ejc.75.1696839785900; Mon, 09
- Oct 2023 01:23:05 -0700 (PDT)
+        with ESMTP id S234407AbjJIIg5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Oct 2023 04:36:57 -0400
+Received: from mail.smrk.net (mail.smrk.net [45.76.87.244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D2009F
+        for <git@vger.kernel.org>; Mon,  9 Oct 2023 01:36:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=smrk.net; s=20221002;
+        t=1696840611;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=ZUv4gP6umIYCBj2w5FjfjF20you7TAZUEqyMAALmQHI=;
+        b=O6EnAiJKwRMEZHR2g/LiDGLh3IxHD1K6P2qwByEg9Nct4BmNntIH5VpxjNOMoQS4EgMo0K
+        LHpKPVhpqXMU3oKs+DhqlM2B3t3XOAlHOppzLbovH2uDOaRYqiVkcpQuY2JE1ftpsMdPda
+        bAyprCWPvhQfgJIJjAdbF6/q3MQhyO3IgF5ijaG3TqVQTVUharfgkTrMInZIlUC5vnTOT/
+        sSFR7Wh5bsa33OqUXAtFJ/T0NIVmije5XK6xsuavmx4BW1shMuhTw7x/K9wm42Pn24D+rY
+        ssTy6KaiIF7TsFv22W0gaaDaCoqJqyESOSKrDkYa7MSyhrBFLBBfZHRh+BFpzQ==
+Received: from localhost (<unknown> [192.168.5.2])
+        by smrk (OpenSMTPD) with ESMTPSA id 71ecb0bb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Mon, 9 Oct 2023 10:36:51 +0200 (CEST)
+From:   =?utf-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@smrk.net>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, avarab@gmail.com
+Subject: Re: [PATCH] doc/cat-file: clarify description regarding various
+ command forms
+In-Reply-To: <20231005210125.GA981206@coredump.intra.peff.net> (Jeff King's
+        message of "Thu, 5 Oct 2023 17:01:25 -0400")
+References: <20231003082513.3003520-1-stepnem@smrk.net>
+        <20231003200659.GC1562@coredump.intra.peff.net>
+        <20231005132018+0200.47596-stepnem@smrk.net>
+        <20231005171827.GC975921@coredump.intra.peff.net>
+        <20231005194852+0200.262756-stepnem@smrk.net>
+        <20231005210125.GA981206@coredump.intra.peff.net>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+Date:   Mon, 09 Oct 2023 10:36:51 +0200
+Message-ID: <20231009103651+0200.580831-stepnem@smrk.net>
 MIME-Version: 1.0
-References: <20231009011652.1791-1-naomi.ibeh69@gmail.com> <CAP8UFD35DBBwQ1Mgc+NGVoh1ReLncAz9OJF3Yj++FFrESw8rtw@mail.gmail.com>
- <CACS=G2zcU+o6av=CQy7WAG7DZmNEERcPqB_W3Cmub4w25V3K4g@mail.gmail.com>
-In-Reply-To: <CACS=G2zcU+o6av=CQy7WAG7DZmNEERcPqB_W3Cmub4w25V3K4g@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 9 Oct 2023 10:22:53 +0200
-Message-ID: <CAP8UFD2hCPh2cVZ_xUeJU0OLw9RzJwGiT9TperzRyYwcw4uvPQ@mail.gmail.com>
-Subject: Re: [PATCH 1/1] [OUTREACHY] Fixed add.c file to conform to guidelines
- when using die() listed in issue #635
-To:     Naomi Ibe <naomi.ibeh69@gmail.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 9, 2023 at 9:57=E2=80=AFAM Naomi Ibe <naomi.ibeh69@gmail.com> w=
-rote:
+On Thu, 5 Oct 2023 17:01:25 -0400
+Jeff King wrote:
+
+> On Thu, Oct 05, 2023 at 07:48:52PM +0200, =C5=A0t=C4=9Bp=C3=A1n N=C4=9Bme=
+c wrote:
 >
-> Thank you very much for the feedback Christian, I'd definitely keep
-> this in mind the next time I'm creating/sending a patch.
+>> > Yeah, I think that is a big improvement over the status quo. I might
+>> > also be worth starting with a single-sentence overview of what is comm=
+on
+>> > to both modes. Something like:
+>> >
+>> >   Output the contents or details of one or more objects. [...]
+>>=20
+>> I thought about that when proposing the rewrite, but feel that it would
+>> again just duplicate what's said elsewhere, in this case even before,
+>> not after, in the very first line of the man page:
+>>=20
+>>     git-cat-file - Provide content or type and size information for
+>>     repository objects
+>
+> Ah, true, I was thinking that the DESCRIPTION section would be the first
+> thing users would read, but I didn't notice the headline. I agree that
+> what it says is probably sufficient (though arguably "type and size" is
+> slightly inaccurate there; I said "details" in my proposed text but
+> maybe that is too vague).
 
-Great!
+We could also leave the NAME vague(r) and put an additional sentence at
+the beginning of DESCRIPTION:
 
-> You also said asides working on my commit message, the patch looks
-> good,
+NAME
+    git-cat-file - Provide contents or details of repository objects
 
-Yeah, but first others might find some issues in the patch itself,
-also, as I say elsewhere, I think it's worth it for you to send a
-version 2 of the patch that fixes the commit message issues I pointed
-out.
+SYNOPSIS
+    [...]
 
-> but as I'm applying to Outreachy, I need to send in my proof of
-> contribution as a link of a task I worked on.
-> Would sending a link of the mailing list , with the url of this patch
-> I just worked on suffice?Something like this :
-> https://public-inbox.org/git/20231009011652.1791-1-naomi.ibeh69@gmail.com=
-/T/#u
-> I ask because since I used patches to send to Git , I have no pull
-> request link to submit.
+DESCRIPTION
+    Output the contents or other properties such as size, type or delta
+    information of one or more objects.
 
-Yeah, links to the emails you sent in a mailing list archive (Public
-Inbox or lore.kernel.org/git) are fine.
+    The command can operate [...]
+
+--=20
+=C5=A0t=C4=9Bp=C3=A1n
