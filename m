@@ -2,88 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2814BCD611A
-	for <git@archiver.kernel.org>; Mon,  9 Oct 2023 18:15:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6035ECD611D
+	for <git@archiver.kernel.org>; Mon,  9 Oct 2023 18:17:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377511AbjJISPL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Oct 2023 14:15:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48722 "EHLO
+        id S1377059AbjJISR6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Oct 2023 14:17:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377444AbjJISPK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Oct 2023 14:15:10 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29926A3
-        for <git@vger.kernel.org>; Mon,  9 Oct 2023 11:15:09 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8D3DC1BAA5D;
-        Mon,  9 Oct 2023 14:15:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=atySR9fcc1txeSB5FDt7E2xZUgoK0N8HxGyyRC
-        jAA0o=; b=BinqMmzYUBlb0fZXu8EC8EmjjwczfzFiDIcDhZu5Var8JU943fs9+P
-        eHa4SF0Vea4QGLFXGHZWI8N1fxdQM+ysnHyEBt/DcxzzctrpxUjUYC5FHtsyayyh
-        IPxqIK7E693QNdhqMiXNq+70iQs0qb4ioOZnNam9JqVpmjkDJ5g1w=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 82FB01BAA5B;
-        Mon,  9 Oct 2023 14:15:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9AD751BAA59;
-        Mon,  9 Oct 2023 14:15:07 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Victoria Dye <vdye@github.com>
-Cc:     Patrick Steinhardt <ps@pks.im>,
-        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/4] ref-cache.c: fix prefix matching in ref iteration
-In-Reply-To: <3585d72f-9f06-d190-ad5a-bec6db3f647f@github.com> (Victoria Dye's
-        message of "Mon, 9 Oct 2023 09:21:53 -0700")
-References: <pull.1594.git.1696615769.gitgitgadget@gmail.com>
-        <59276a5b3fd1fd3b25db73e096cf0e834af2d4f9.1696615769.git.gitgitgadget@gmail.com>
-        <xmqqfs2n8lnn.fsf@gitster.g> <ZSPQLjJwq-7SjsDT@tanuki>
-        <3585d72f-9f06-d190-ad5a-bec6db3f647f@github.com>
-Date:   Mon, 09 Oct 2023 11:15:06 -0700
-Message-ID: <xmqqa5sr1x3p.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        with ESMTP id S233250AbjJISR5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Oct 2023 14:17:57 -0400
+Received: from mail-qv1-xf35.google.com (mail-qv1-xf35.google.com [IPv6:2607:f8b0:4864:20::f35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE9D09C
+        for <git@vger.kernel.org>; Mon,  9 Oct 2023 11:17:56 -0700 (PDT)
+Received: by mail-qv1-xf35.google.com with SMTP id 6a1803df08f44-65b0557ec77so28440096d6.0
+        for <git@vger.kernel.org>; Mon, 09 Oct 2023 11:17:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1696875476; x=1697480276; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=rE2wb3K+g3hZWa0NISVYUty7XFg3ypp7A45k3bhADvw=;
+        b=rHLnvldkZBBzZehVDCDG9ENTZMOFiRP7yJda9zfO8Yk/300GfO7bYOh/2S2AYmlRBd
+         LvlGA6GvWBuch7Mj3XPbff9P+xrJsU113/BhBOdaKSkcw7cqe8g6XIVMf/OzQ6Cvwvjr
+         HHSQD8NQo1WfVWCgsRvs8u2d8PtIjPNKYujqjwgNmzwxuxQ/cpJ9MLmkRPWDNvk/j/kc
+         yKT6UFTqFc6IggFLDl33yS1xeikjC/AsbrZm1y6RDmVS33rXvOhH9RLwQtezAD5kETBn
+         bzU4fmTIJF5PwlUVuzBNvyA8/MK2ajpyZKVzBj+Vehu5Qb0UedNT4du2ezZv1GOYclaO
+         3gEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696875476; x=1697480276;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rE2wb3K+g3hZWa0NISVYUty7XFg3ypp7A45k3bhADvw=;
+        b=P/5oPiQeYR9vwhXw8jn/Tc1DshcwncMTnck6scTH5Ldqv22dViahbF17yNeIxagBnI
+         lpvcLd+QRDOg0WhIUEEQUYno61hjTLOdjw1Rh23C1gaqOfV8N0jpDu7AoGoTidjgHHWh
+         rOsKwJa0EpVH8PvrSfd2uOmFJAmTuDM+riYSO0N/nN3LCqfLHmmeZuBADuwFZNIOf/mq
+         ArM/CH7RBrDsh3NMVz9TQSTuFl8DDvfhVxExrRy1zvk+InFSeBpCw6Pqe8Ow+tT1vZrC
+         qDLR30yjMVSt75fNOREs43kfz8Pptw5Q60Ek+m7MeIXTrSBMDCqIF1Zkw1NFNVcurtKR
+         gz7Q==
+X-Gm-Message-State: AOJu0YzXaWz7/lHpQSu7vFZUKmEnXkJ/Db4VL0RhNsL3lY3W+lDW7Lw3
+        DFWXxKL/pl52A7/8tCXJKpGlcw==
+X-Google-Smtp-Source: AGHT+IFiYs9YOza29Jf6gM0X3uAnKs21ADCtOqNkVmfbfgewc3p4GfVpN7YHBizQq1+elwJ/Ngtwmg==
+X-Received: by 2002:a0c:b38f:0:b0:66c:ed5a:ca8e with SMTP id t15-20020a0cb38f000000b0066ced5aca8emr258929qve.46.1696875475799;
+        Mon, 09 Oct 2023 11:17:55 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id i1-20020a0cf381000000b0064f43efc844sm4019096qvk.32.2023.10.09.11.17.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Oct 2023 11:17:55 -0700 (PDT)
+Date:   Mon, 9 Oct 2023 14:17:54 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 07/15] commit-graph: new filter ver. that fixes murmur3
+Message-ID: <ZSRD0tK3bk67aDw4@nand.local>
+References: <20230830200218.GA5147@szeder.dev>
+ <20230901205616.3572722-1-jonathantanmy@google.com>
+ <ZRIRtlbsYadg7EUx@nand.local>
+ <20231008143523.GA18858@szeder.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C6ED2780-66CF-11EE-B78E-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20231008143523.GA18858@szeder.dev>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Victoria Dye <vdye@github.com> writes:
-
-> I originally operated on the assumption that it was the first case, which is
-> why I didn't include a test in this patch. Commands like 'for-each-ref',
-> 'show-ref', etc. either use an empty prefix or a directory prefix with a
-> trailing slash, which won't trigger this issue.
-
-Ah, yes, I didn't mention it but I suspected as such (i.e. the code
-is structured in such a way that this broken implementation does not
-matter to the current callers).
-
-> I encountered the problem
-> while working on a builtin that filtered refs by a user-specified prefix -
-> the results included refs that should not have been matched, which led me to
-> this fix.
-
-OK, perfectly understandable.
-
-> Scanning through the codebase again, though, I do see a way to replicate the
-> issue:
+On Sun, Oct 08, 2023 at 04:35:23PM +0200, SZEDER Gábor wrote:
+> > Hmm. I am confused -- are you saying that this series breaks existing
+> > functionality, or merely does not patch an existing breakage? I *think*
+> > that it's the latter,
 >
-> $ git update-ref refs/bisect/b HEAD
-> $ git rev-parse --abbrev-ref --bisect
-> refs/bisect/b
+> It's neither: the new functionality added in this series is broken.
 >
-> Because 'rev-parse --bisect' uses the "refs/bisect/bad" prefix (no trailing
-> slash) and does no additional filtering in its 'for_each_fullref_in'
-> callback, refs like "refs/bisect/b" and "refs/bisect/ba" are (incorrectly)
-> matched. I'll re-roll with the added test.
+> > since this test case fails identically on master,
+> > but I am not sure.
+>
+> Not sure what test you are referring to.  My test demonstrating the
+> breakage succeeds when adaped to master, because master doesn't
+> understand the commitgraph.changedPathsVersion=2 setting, and keeps
+> writing v1 Bloom filter chunks instead, so all commit-graphs layers
+> contain the same version.
 
-Good find.  Thanks!
+I was referring to the test you sent back in:
+
+    https://public-inbox.org/git/20201015132147.GB24954@szeder.dev/
+
+but I think that I should have been looking at the one you sent more
+recently in:
+
+    https://lore.kernel.org/git/20230830200218.GA5147@szeder.dev/
+
+Thanks,
+Taylor
