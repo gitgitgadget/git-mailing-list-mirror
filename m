@@ -2,75 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 25CF8CD6131
-	for <git@archiver.kernel.org>; Mon,  9 Oct 2023 20:02:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C83FCD612F
+	for <git@archiver.kernel.org>; Mon,  9 Oct 2023 20:21:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378512AbjJIUCx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Oct 2023 16:02:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54804 "EHLO
+        id S1378591AbjJIUVy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Oct 2023 16:21:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378490AbjJIUCx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Oct 2023 16:02:53 -0400
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45594F4
-        for <git@vger.kernel.org>; Mon,  9 Oct 2023 13:02:47 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C82EC1A12B0;
-        Mon,  9 Oct 2023 16:02:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=q2hctMKfAqnf
-        058WXR/2krfFywdtPjxGr7z8BNegdZA=; b=kC6b24xckGusVfJBZxtWQxhX4lN/
-        EHW5ew2cgy0CwuD5dSbloojOTjfhoPec1v0/6N4tXdnpyhvXYHVlKHdSuTrZkxWe
-        d9mfmECOyybBXrS7CehT7tJs0kQs5zeDXCLnH4h+UPdtpsihP6H9BInwGrVW8s72
-        ghHR1MhaGSrQWWs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BE54B1A12AD;
-        Mon,  9 Oct 2023 16:02:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 186A41A12AB;
-        Mon,  9 Oct 2023 16:02:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@smrk.net>,
-        git@vger.kernel.org, avarab@gmail.com
-Subject: Re: [PATCH] doc/cat-file: make synopsis and description less confusing
-In-Reply-To: <20231009183352.GA3270793@coredump.intra.peff.net> (Jeff King's
-        message of "Mon, 9 Oct 2023 14:33:52 -0400")
-References: <20231009155603.GA3251575@coredump.intra.peff.net>
-        <20231009175604.2361700-1-stepnem@smrk.net>
-        <20231009183352.GA3270793@coredump.intra.peff.net>
-Date:   Mon, 09 Oct 2023 13:02:44 -0700
-Message-ID: <xmqqil7fy36j.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        with ESMTP id S234540AbjJIUVw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Oct 2023 16:21:52 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CD5694
+        for <git@vger.kernel.org>; Mon,  9 Oct 2023 13:21:51 -0700 (PDT)
+Received: (qmail 24037 invoked by uid 109); 9 Oct 2023 20:21:50 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 09 Oct 2023 20:21:50 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 18101 invoked by uid 111); 9 Oct 2023 20:21:51 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 09 Oct 2023 16:21:51 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 9 Oct 2023 16:21:49 -0400
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        "Eric W. Biederman" <ebiederm@gmail.com>
+Subject: Re: [PATCH 7/7] builtin/merge-tree.c: implement support for
+ `--write-pack`
+Message-ID: <20231009202149.GA3281325@coredump.intra.peff.net>
+References: <cover.1696629697.git.me@ttaylorr.com>
+ <e96921014557edb41dd73d93a8c3cf6cfaf0c719.1696629697.git.me@ttaylorr.com>
+ <xmqqil7j751u.fsf@gitster.g>
+ <ZSCR7e6KKqFv8mZk@nand.local>
+ <CABPp-BE+mJ4e==fWNqUNi5RVkoui_xeZN+axnM6vBykDqAzHiA@mail.gmail.com>
+ <ZSLS9G1lHruig48a@nand.local>
+ <20231008173329.GA1557002@coredump.intra.peff.net>
+ <ZSNZZrWyCqRH+0Bd@nand.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D07593B4-66DE-11EE-9218-25B3960A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <ZSNZZrWyCqRH+0Bd@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Sun, Oct 08, 2023 at 09:37:42PM -0400, Taylor Blau wrote:
 
-> On Mon, Oct 09, 2023 at 07:56:04PM +0200, =C5=A0t=C4=9Bp=C3=A1n N=C4=9B=
-mec wrote:
->
->> > Yup, that is a good suggestion. Do you want to wrap all of this
->> > discussion up as a patch?
->>=20
->> Certainly, here it is.  I just wanted to hash out some of the details
->> first and found the plain text more fit for that purpose.
->
-> This looks good to me. Thanks for taking the time to collect and fix al=
-l
-> of the issues.
->
-> -Peff
+> Very interesting, thanks for running (and documenting!) this experiment.
+> I'm mostly with you that it probably doesn't make a huge difference in
+> practice here.
+> 
+> One thing that I'm not entirely clear on is how we'd treat objects that
+> could be good delta candidates for each other between two packs. For
+> instance, if I write a tree corresponding to the merge between two
+> branches, it's likely that the resulting tree would be a good delta
+> candidate against either of the trees at the tips of those two refs.
+> 
+> But we won't pack those trees (the ones at the tips of the refs) in the
+> same pack as the tree containing their merge. If we later on tried to
+> repack, would we evaluate the tip trees as possible delta candidates
+> against the merged tree? Or would we look at the merged tree, realize it
+> isn't delta'd with anything, and then not attempt to find any
+> candidates?
 
-Thanks, both.  Will take a look.
+When we repack (either all-into-one, or in a geometric roll-up), we
+should consider those trees as candidates. The only deltas we don't
+consider are:
+
+  - if something is already a delta in a pack, then we will usually
+    reuse that delta verbatim (so you might get fooled by a mediocre
+    delta and not go to the trouble to search again. But I don't think
+    that applies here; there is no other tree in your new pack to make
+    such a mediocre delta from, and anyway you are skipping deltas
+    entirely)
+
+  - if two objects are in the same pack but there's no delta
+    relationship, the try_delta() heuristics will skip them immediately
+    (under the assumption that we tried during the last repack and
+    didn't find anything good).
+
+So yes, if you had a big old pack with the original trees, and then a
+new pack with the merge result, we should try to delta the new merge
+result tree against the others, just as we would if it were loose.
+
+> > I was going to suggest the same thing. ;) Unfortunately it's a bit
+> > tricky to do as we have no room in the file format for an optional flag.
+> > You'd have to add a ".mediocre-delta" file or something.
+> 
+> Yeah, I figured that we'd add a new ".baddeltas" file or something. (As
+> an aside, we probably should have an optional flags section in the .pack
+> format, since we seem to have a lot of optional pack extensions: .rev,
+> .bitmap, .keep, .promisor, etc.)
+
+Yes, though since packv2 is the on-the-wire format, it's very hard to
+change now. It might be easier to put an annotation into the .idx file.
+
+-Peff
