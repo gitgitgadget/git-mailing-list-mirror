@@ -2,32 +2,32 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F1E52CD612F
-	for <git@archiver.kernel.org>; Mon,  9 Oct 2023 21:05:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5179DCD6137
+	for <git@archiver.kernel.org>; Mon,  9 Oct 2023 21:05:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378649AbjJIVFx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Oct 2023 17:05:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46308 "EHLO
+        id S1378633AbjJIVF4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Oct 2023 17:05:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378603AbjJIVFr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Oct 2023 17:05:47 -0400
+        with ESMTP id S1378151AbjJIVFs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Oct 2023 17:05:48 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BF21D8
-        for <git@vger.kernel.org>; Mon,  9 Oct 2023 14:05:39 -0700 (PDT)
-Received: (qmail 24417 invoked by uid 109); 9 Oct 2023 21:05:39 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E33FFF1
+        for <git@vger.kernel.org>; Mon,  9 Oct 2023 14:05:42 -0700 (PDT)
+Received: (qmail 24424 invoked by uid 109); 9 Oct 2023 21:05:42 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 09 Oct 2023 21:05:39 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 09 Oct 2023 21:05:42 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18610 invoked by uid 111); 9 Oct 2023 21:05:41 -0000
+Received: (qmail 18614 invoked by uid 111); 9 Oct 2023 21:05:44 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 09 Oct 2023 17:05:41 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 09 Oct 2023 17:05:44 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Mon, 9 Oct 2023 17:05:38 -0400
+Date:   Mon, 9 Oct 2023 17:05:41 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH 13/20] commit-graph: detect out-of-bounds extra-edges pointers
-Message-ID: <20231009210538.GM3282181@coredump.intra.peff.net>
+Subject: [PATCH 14/20] commit-graph: bounds-check base graphs chunk
+Message-ID: <20231009210541.GN3282181@coredump.intra.peff.net>
 References: <20231009205544.GA3281950@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -37,136 +37,106 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If an entry in a commit-graph file has more than 2 parents, the
-fixed-size parent fields instead point to an offset within an "extra
-edges" chunk. We blindly follow these, assuming that the chunk is
-present and sufficiently large; this can lead to an out-of-bounds read
-for a corrupt or malicious file.
+When we are loading a commit-graph chain, we check that each slice of the
+chain points to the appropriate set of base graphs via its BASE chunk.
+But since we don't record the size of the chunk, we may access
+out-of-bounds memory if the file is corrupted.
 
-We can fix this by recording the size of the chunk and adding a
-bounds-check in fill_commit_in_graph(). There are a few tricky bits:
+Since we know the number of entries we expect to find (based on the
+position within the commit-graph-chain file), we can just check the size
+up front.
 
-  1. We'll switch from working with a pointer to an offset. This makes
-     some corner cases just fall out naturally:
+In theory this would also let us drop the st_mult() call a few lines
+later when we actually access the memory, since we know that the
+computed offset will fit in a size_t. But because the operands
+"g->hash_len" and "n" have types "unsigned char" and "int", we'd have to
+cast to size_t first. Leaving the st_mult() does that cast, and makes it
+more obvious that we don't have an overflow problem.
 
-      a. If we did not find an EDGE chunk at all, our size will
-         correctly be zero (so everything is "out of bounds").
-
-      b. Comparing "size / 4" lets us make sure we have at least 4 bytes
-         to read, and we never compute a pointer more than one element
-         past the end of the array (computing a larger pointer is
-         probably OK in practice, but is technically undefined
-         behavior).
-
-      c. The current code casts to "uint32_t *". Replacing it with an
-         offset avoids any comparison between different types of pointer
-         (since the chunk is stored as "unsigned char *").
-
-  2. This is the first case in which fill_commit_in_graph() may return
-     anything but success. We need to make sure to roll back the
-     "parsed" flag (and any parents we might have added before running
-     out of buffer) so that the caller can cleanly fall back to
-     loading the commit object itself.
-
-     It's a little non-trivial to do this, and we might benefit from
-     factoring it out. But we can wait on that until we actually see a
-     second case where we return an error.
-
-As a bonus, this lets us drop the st_mult() call. Since we've already
-done a bounds check, we know there won't be any integer overflow (it
-would imply our buffer is larger than a size_t can hold).
-
-The included test does not actually segfault before this patch (though
-you could construct a case where it does). Instead, it reads garbage
-from the next chunk which results in it complaining about a bogus parent
-id. This is sufficient for our needs, though (we care that the fallback
-succeeds, and that stderr mentions the out-of-bounds read).
+Note that the test does not actually segfault before this patch, since
+it just reads garbage from the chunk after BASE (and indeed, it even
+rejects the file because that garbage does not have the expected hash
+value). You could construct a file with BASE at the end that did
+segfault, but corrupting the existing one is easy, and we can check
+stderr for the expected message.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- commit-graph.c          | 20 ++++++++++++++------
- commit-graph.h          |  1 +
- t/t5318-commit-graph.sh |  8 ++++++++
- 3 files changed, 23 insertions(+), 6 deletions(-)
+ commit-graph.c                |  8 +++++++-
+ commit-graph.h                |  1 +
+ t/t5324-split-commit-graph.sh | 14 ++++++++++++++
+ 3 files changed, 22 insertions(+), 1 deletion(-)
 
 diff --git a/commit-graph.c b/commit-graph.c
-index 9b80bbd75b..e4860841fc 100644
+index e4860841fc..4377b547c8 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -433,7 +433,8 @@ struct commit_graph *parse_commit_graph(struct repo_settings *s,
- 	read_chunk(cf, GRAPH_CHUNKID_OIDFANOUT, graph_read_oid_fanout, graph);
- 	read_chunk(cf, GRAPH_CHUNKID_OIDLOOKUP, graph_read_oid_lookup, graph);
+@@ -435,7 +435,8 @@ struct commit_graph *parse_commit_graph(struct repo_settings *s,
  	read_chunk(cf, GRAPH_CHUNKID_DATA, graph_read_commit_data, graph);
--	pair_chunk_unsafe(cf, GRAPH_CHUNKID_EXTRAEDGES, &graph->chunk_extra_edges);
-+	pair_chunk(cf, GRAPH_CHUNKID_EXTRAEDGES, &graph->chunk_extra_edges,
-+		   &graph->chunk_extra_edges_size);
- 	pair_chunk_unsafe(cf, GRAPH_CHUNKID_BASE, &graph->chunk_base_graphs);
+ 	pair_chunk(cf, GRAPH_CHUNKID_EXTRAEDGES, &graph->chunk_extra_edges,
+ 		   &graph->chunk_extra_edges_size);
+-	pair_chunk_unsafe(cf, GRAPH_CHUNKID_BASE, &graph->chunk_base_graphs);
++	pair_chunk(cf, GRAPH_CHUNKID_BASE, &graph->chunk_base_graphs,
++		   &graph->chunk_base_graphs_size);
  
  	if (s->commit_graph_generation_version >= 2) {
-@@ -899,7 +900,7 @@ static int fill_commit_in_graph(struct repository *r,
- 				struct commit_graph *g, uint32_t pos)
- {
- 	uint32_t edge_value;
--	uint32_t *parent_data_ptr;
-+	uint32_t parent_data_pos;
- 	struct commit_list **pptr;
- 	const unsigned char *commit_data;
- 	uint32_t lex_index;
-@@ -931,14 +932,21 @@ static int fill_commit_in_graph(struct repository *r,
- 		return 1;
+ 		pair_chunk_unsafe(cf, GRAPH_CHUNKID_GENERATION_DATA,
+@@ -546,6 +547,11 @@ static int add_graph_to_chain(struct commit_graph *g,
+ 		return 0;
  	}
  
--	parent_data_ptr = (uint32_t*)(g->chunk_extra_edges +
--			  st_mult(4, edge_value & GRAPH_EDGE_LAST_MASK));
-+	parent_data_pos = edge_value & GRAPH_EDGE_LAST_MASK;
- 	do {
--		edge_value = get_be32(parent_data_ptr);
-+		if (g->chunk_extra_edges_size / sizeof(uint32_t) <= parent_data_pos) {
-+			error("commit-graph extra-edges pointer out of bounds");
-+			free_commit_list(item->parents);
-+			item->parents = NULL;
-+			item->object.parsed = 0;
-+			return 0;
-+		}
-+		edge_value = get_be32(g->chunk_extra_edges +
-+				      sizeof(uint32_t) * parent_data_pos);
- 		pptr = insert_parent_or_die(r, g,
- 					    edge_value & GRAPH_EDGE_LAST_MASK,
- 					    pptr);
--		parent_data_ptr++;
-+		parent_data_pos++;
- 	} while (!(edge_value & GRAPH_LAST_EDGE));
++	if (g->chunk_base_graphs_size / g->hash_len < n) {
++		warning(_("commit-graph base graphs chunk is too small"));
++		return 0;
++	}
++
+ 	while (n) {
+ 		n--;
  
- 	return 1;
 diff --git a/commit-graph.h b/commit-graph.h
-index 20ada7e891..1f8a9de4fb 100644
+index 1f8a9de4fb..e4248ea05d 100644
 --- a/commit-graph.h
 +++ b/commit-graph.h
-@@ -95,6 +95,7 @@ struct commit_graph {
- 	const unsigned char *chunk_generation_data;
- 	const unsigned char *chunk_generation_data_overflow;
+@@ -97,6 +97,7 @@ struct commit_graph {
  	const unsigned char *chunk_extra_edges;
-+	size_t chunk_extra_edges_size;
+ 	size_t chunk_extra_edges_size;
  	const unsigned char *chunk_base_graphs;
++	size_t chunk_base_graphs_size;
  	const unsigned char *chunk_bloom_indexes;
  	const unsigned char *chunk_bloom_data;
-diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index 492460157d..05bafcfe5f 100755
---- a/t/t5318-commit-graph.sh
-+++ b/t/t5318-commit-graph.sh
-@@ -879,4 +879,12 @@ test_expect_success 'reader notices too-small commit data chunk' '
- 	test_cmp expect.err err
+ 
+diff --git a/t/t5324-split-commit-graph.sh b/t/t5324-split-commit-graph.sh
+index 55b5765e2d..3c8482d073 100755
+--- a/t/t5324-split-commit-graph.sh
++++ b/t/t5324-split-commit-graph.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='split commit graph'
+ . ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-chunk.sh
+ 
+ GIT_TEST_COMMIT_GRAPH=0
+ GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS=0
+@@ -398,6 +399,19 @@ test_expect_success 'verify across alternates' '
+ 	)
  '
  
-+test_expect_success 'reader notices out-of-bounds extra edge' '
-+	check_corrupt_chunk EDGE clear &&
-+	cat >expect.err <<-\EOF &&
-+	error: commit-graph extra-edges pointer out of bounds
-+	EOF
-+	test_cmp expect.err err
++test_expect_success 'reader bounds-checks base-graph chunk' '
++	git clone --no-hardlinks . corrupt-base-chunk &&
++	(
++		cd corrupt-base-chunk &&
++		tip_file=$graphdir/graph-$(tail -n 1 $graphdir/commit-graph-chain).graph &&
++		corrupt_chunk_file "$tip_file" BASE clear 01020304 &&
++		git -c core.commitGraph=false log >expect.out &&
++		git -c core.commitGraph=true log >out 2>err &&
++		test_cmp expect.out out &&
++		grep "commit-graph base graphs chunk is too small" err
++	)
 +'
 +
- test_done
+ test_expect_success 'add octopus merge' '
+ 	git reset --hard commits/10 &&
+ 	git merge commits/3 commits/4 &&
 -- 
 2.42.0.884.g35e1fe1a6a
 
