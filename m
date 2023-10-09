@@ -2,92 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E2CECD612F
-	for <git@archiver.kernel.org>; Mon,  9 Oct 2023 21:06:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A7F3CD612F
+	for <git@archiver.kernel.org>; Mon,  9 Oct 2023 21:07:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378647AbjJIVGm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Oct 2023 17:06:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51516 "EHLO
+        id S1378136AbjJIVHj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Oct 2023 17:07:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378711AbjJIVGN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Oct 2023 17:06:13 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87ECF18A
-        for <git@vger.kernel.org>; Mon,  9 Oct 2023 14:06:02 -0700 (PDT)
-Received: (qmail 24486 invoked by uid 109); 9 Oct 2023 21:06:02 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 09 Oct 2023 21:06:02 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18638 invoked by uid 111); 9 Oct 2023 21:06:03 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 09 Oct 2023 17:06:03 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 9 Oct 2023 17:06:01 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH 20/20] chunk-format: drop pair_chunk_unsafe()
-Message-ID: <20231009210601.GT3282181@coredump.intra.peff.net>
-References: <20231009205544.GA3281950@coredump.intra.peff.net>
+        with ESMTP id S233286AbjJIVHi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Oct 2023 17:07:38 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CD50A3
+        for <git@vger.kernel.org>; Mon,  9 Oct 2023 14:07:37 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 67F341BBE76;
+        Mon,  9 Oct 2023 17:07:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=Z7m+FWroq4cLojlPz+MDKsg4mKrrNp2mRDYJ81
+        DzEXY=; b=WPu4wOGD3nd3IPLcAuts8K+YPJ3og+eYLSs2tQIBeaGle9zR3La7KD
+        NMFDLhuFcOawwYKpIPZddxcNTTKU7c2BOMXUXbHXsVtjtlgEkRFzmo0IrpotkaF9
+        Gnu7Bo1HABh70Ku2+TkERNJ6bPHOOPeKjbgN5wjOQowi7PLGt4ePA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5E72A1BBE75;
+        Mon,  9 Oct 2023 17:07:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CA77D1BBE74;
+        Mon,  9 Oct 2023 17:07:35 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Oct 2023, #03; Fri, 6)
+In-Reply-To: <ZSRC5IaKoXPpTFnq@nand.local> (Taylor Blau's message of "Mon, 9
+        Oct 2023 14:13:56 -0400")
+References: <xmqqh6n24zf1.fsf@gitster.g> <ZSQnVnK0k3bdk5zX@nand.local>
+        <xmqqfs2j1xdo.fsf@gitster.g> <ZSRC5IaKoXPpTFnq@nand.local>
+Date:   Mon, 09 Oct 2023 14:07:34 -0700
+Message-ID: <xmqqedi3y06h.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20231009205544.GA3281950@coredump.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: DEEA435A-66E7-11EE-8144-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There are no callers left, and we don't want anybody to add new ones (they
-should use the not-unsafe version instead). So let's drop the function.
+Taylor Blau <me@ttaylorr.com> writes:
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- chunk-format.c |  8 --------
- chunk-format.h | 13 -------------
- 2 files changed, 21 deletions(-)
+>> > Thanks. On a semi-related note, did you want to pick up my patch in
+>> >
+>> >   https://lore.kernel.org/git/035393935108d02aaf8927189b05102f4f74f340.1696370003.git.me@ttaylorr.com/
+>> >
+>> > ? That should address a performance bug that occurs when a repository
+>> > (incorrectly) chooses a cruft pack as its preferred pack source when
+>> > writing a MIDX bitmap, significantly impeding the pack-reuse mechanism.
+>>
+>> Isn't that in the above list already as b3ca6df3b9^2?
+>
+> Oops, duh. I hadn't expected you to group that patch in with the rest of
+> tb/repack-max-cruft-size.
 
-diff --git a/chunk-format.c b/chunk-format.c
-index 09ef86afa6..cdc7f39b70 100644
---- a/chunk-format.c
-+++ b/chunk-format.c
-@@ -184,14 +184,6 @@ int pair_chunk(struct chunkfile *cf,
- 	return read_chunk(cf, chunk_id, pair_chunk_fn, &pcd);
- }
- 
--int pair_chunk_unsafe(struct chunkfile *cf,
--		      uint32_t chunk_id,
--		      const unsigned char **p)
--{
--	size_t dummy;
--	return pair_chunk(cf, chunk_id, p, &dummy);
--}
--
- int read_chunk(struct chunkfile *cf,
- 	       uint32_t chunk_id,
- 	       chunk_read_fn fn,
-diff --git a/chunk-format.h b/chunk-format.h
-index d608b8135c..14b76180ef 100644
---- a/chunk-format.h
-+++ b/chunk-format.h
-@@ -54,19 +54,6 @@ int pair_chunk(struct chunkfile *cf,
- 	       const unsigned char **p,
- 	       size_t *size);
- 
--/*
-- * Unsafe version of pair_chunk; it does not return the size,
-- * meaning that the caller cannot possibly be careful about
-- * reading out of bounds from the mapped memory.
-- *
-- * No new callers should use this function, and old callers should
-- * be audited and migrated over to using the regular pair_chunk()
-- * function.
-- */
--int pair_chunk_unsafe(struct chunkfile *cf,
--		      uint32_t chunk_id,
--		      const unsigned char **p);
--
- typedef int (*chunk_read_fn)(const unsigned char *chunk_start,
- 			     size_t chunk_size, void *data);
- /*
--- 
-2.42.0.884.g35e1fe1a6a
+Heh, as you said, isn't it at least semi-related ;-)?
