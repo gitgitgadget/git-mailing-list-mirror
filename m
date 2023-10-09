@@ -2,196 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E517AE95A8E
-	for <git@archiver.kernel.org>; Mon,  9 Oct 2023 11:00:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A9CEE95A8E
+	for <git@archiver.kernel.org>; Mon,  9 Oct 2023 13:21:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346136AbjJILAA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Oct 2023 07:00:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58414 "EHLO
+        id S1376382AbjJINVN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Oct 2023 09:21:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346110AbjJIK77 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Oct 2023 06:59:59 -0400
-Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B4E599
-        for <git@vger.kernel.org>; Mon,  9 Oct 2023 03:59:58 -0700 (PDT)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-        by mailout.west.internal (Postfix) with ESMTP id 8152F3200953;
-        Mon,  9 Oct 2023 06:54:18 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Mon, 09 Oct 2023 06:54:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-        :content-type:content-type:date:date:from:from:in-reply-to
-        :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm2; t=1696848858; x=1696935258; bh=1d
-        YMWYq+6gb+VsmkSgQmG4MHcKunAw/uPftu9qUHzIs=; b=GSKoHMX2N3reARlYgp
-        iK+rKpLmiALXutv1M2dld7Z1ftbp/oOhRyxmD5RxKeqog2TqRFjto88Z/NfqZphM
-        gsu4kQWBPZHdrx7l+LMCCqA0Jh+alq+ghrUUbi2SAT1UUMupV5LRZFOug54ABVoL
-        12x9RokuAg09v34AagK9QuujcfYemiSP0yIfly6r+f7Qq9mRq59nBnFx3OmEOKyN
-        I2z5Xd06sWm0NAkz7HkW5Z/fbltxep5pKklUBncNMbo8OP6TcQ09uGlUiUQ8mTrK
-        Hg5IFbRHeENVJhu6/pR2DccE5Eorp6RYo+02ltvD/eJo0z2fg/We2BkDwUKB5BLz
-        d+Dg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:content-type:date:date
-        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm2; t=1696848858; x=1696935258; bh=1dYMWYq+6gb+V
-        smkSgQmG4MHcKunAw/uPftu9qUHzIs=; b=S9ORtOQYVZViE98P0S1ZGAU0leF5q
-        YHeG8xZMkUMhSlE7SV5tP0qozgfykwkVR6Buc7M5f9JS68osYUo9p6AUy60KGnxL
-        6IRk7aEygyPUAafOaz17impREZskpM/axxH5iT6WClVQzfvOcJ9U8xvxrCiDo3nq
-        ZhINfBd8n4ChXh1T1N3lC6yfY6nIUrRwaPbwXDTWXvojUbzULY+vH95rOyJTUeo/
-        +vRpIAk0hfmXZ9U2lRwAWfUJsMd5VDoE4+ezjCzr3v8YpzvoQEBerLg3h/LMnjrn
-        urPlKA3TdyGRXZmRs5JzTRap2+MAi5vCQhZVGfyoYZckVl4KU9Oa3847A==
-X-ME-Sender: <xms:2dsjZTDhJD065fpvWHZtcIUAXF5y9bk2VZxteICekP3QI5ffokYY3w>
-    <xme:2dsjZZgdO6vbgYhDzLzhPWOipzg1HDWnXYMqe4C5Uqq9ULF9C6nyTgq2XnvyZY7a7
-    mw2HMu9-5upilI7Ew>
-X-ME-Received: <xmr:2dsjZemBQhT7UyWeo4QDaGr9zSQd3LjOFjRy7ldSWrMeTYIVXOGsIiQtfeQWHC8FGfSYv6_3H5h8-9SaeZo6YcZvMTUtYw_-wK0epABkbMTgyg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrheefgdefgecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhm
-X-ME-Proxy: <xmx:2dsjZVwSuHbc6mK7cOhgR0-A4r0so_a2Xbya3Vhh7xAVtbYzp18U_w>
-    <xmx:2dsjZYQ98t2YkpsALJnbA6PnpyCI7hLLGJ2AQmx4iRR6V4NQ_7UH9w>
-    <xmx:2dsjZYZl_9HYKpBRHWT1m6v6HpDrpyiVzbM7pV-xWLn7ZVEE2iMg_A>
-    <xmx:2tsjZeOcQiWZN8tBy5uROrKj23NIoTTB5WLZj8ebkQe7tEYSLyE74Q>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Oct 2023 06:54:16 -0400 (EDT)
-Received: by vm-mail (OpenSMTPD) with ESMTPSA id 3a68eeaa (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Mon, 9 Oct 2023 10:54:13 +0000 (UTC)
-Date:   Mon, 9 Oct 2023 12:54:12 +0200
-From:   Patrick Steinhardt <ps@pks.im>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Elijah Newren <newren@gmail.com>,
-        "Eric W. Biederman" <ebiederm@gmail.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 7/7] builtin/merge-tree.c: implement support for
- `--write-pack`
-Message-ID: <ZSPb1OYRrQSUugtg@tanuki>
-References: <cover.1696629697.git.me@ttaylorr.com>
- <e96921014557edb41dd73d93a8c3cf6cfaf0c719.1696629697.git.me@ttaylorr.com>
- <xmqqil7j751u.fsf@gitster.g>
- <ZSCR7e6KKqFv8mZk@nand.local>
+        with ESMTP id S1376376AbjJINVJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Oct 2023 09:21:09 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BD4E91
+        for <git@vger.kernel.org>; Mon,  9 Oct 2023 06:21:05 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-9ba081173a3so399723066b.1
+        for <git@vger.kernel.org>; Mon, 09 Oct 2023 06:21:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1696857662; x=1697462462; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lN9aVFIm0GU1VTMU43WKqTcz55+JGLS9Ykd57qQjLyI=;
+        b=XU7f3u6x4nyeBWIl9S3W3iVf3NxA9HIN/9G7DOBJEEL3HqE8yWX+5WPxbu+rNeM/sC
+         Vl2SG562kCGYLQNcrsHLu1bxq9sJIIhj9eRRspdLKA8qkKJjg03PXdabXIeIyH7eUq/l
+         kp/iOiJ0OWKMan91entoNShbKhWwYDNvnT7kfSB4j5KBhLWXwktK6uw2vVFK0JEx7Y0t
+         Ex0BsPMaaFd9iuchfOkJJb/zeUQhNplvt8TzbvH/PPvkhG/uF6Wu3KdTO0wPHyMP+2td
+         MdoxgKazKWC61Hb7Pdj0my3PMiwc2EylPswqbR9wCRnTFTdBdijLT7dcptYMUlYaA4yI
+         r9tQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696857662; x=1697462462;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=lN9aVFIm0GU1VTMU43WKqTcz55+JGLS9Ykd57qQjLyI=;
+        b=aDILRNH9Gx9Wyo3iHUFTkit4I/zu/RvIRGb0fzcZ4bQPoeob+dEbUcwpiOKg/TcLdm
+         QrHy1VzqET+U8d1e9T7cJLDGrjdCnVRzzWReMYjW0f+gFfmpALkv/Vi7jZFYp4aLz5qq
+         ILZuOrTnQ3FTWVU0xv7XzW32JZKj93/v786zl1nwcf1hu7GbHAzbUg4bnrLGCZ4Ocpn8
+         Y0nEpAImAKEBalCu/lp4CLtvWqy2wleZHsqNc4bfDdBg0QU4rpkAp2hIidubM9cMFWSr
+         zxWzRbzw2StsVpMhYz550syjJwSdPknIY508FOhGIxRSa+2vQMioefydHHJjkxPA25Xn
+         Ac6w==
+X-Gm-Message-State: AOJu0YxYZo/0uJpgxOt+J1YA3hD6XpJCqyUTo1rg8R41Zevq5HFtXVTB
+        /jQhGvReppQzBawseiShr9e9DeJJZvI=
+X-Google-Smtp-Source: AGHT+IEHWOIea+7NzrSN8DZNAji6rxywW6AlEGIiTLJtVHE5Tcaad9eCsaFjuKrX0ZoxY8ZU270tkg==
+X-Received: by 2002:a17:906:53da:b0:9b2:6c37:22ee with SMTP id p26-20020a17090653da00b009b26c3722eemr13886047ejo.21.1696857661630;
+        Mon, 09 Oct 2023 06:21:01 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a4-20020a05600c224400b003fe2b081661sm13515531wmm.30.2023.10.09.06.21.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Oct 2023 06:21:01 -0700 (PDT)
+Message-ID: <pull.1583.v3.git.git.1696857660374.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1583.v2.git.git.1696781998420.gitgitgadget@gmail.com>
+References: <pull.1583.v2.git.git.1696781998420.gitgitgadget@gmail.com>
+From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 09 Oct 2023 13:21:00 +0000
+Subject: [PATCH v3] merge-ort: initialize repo in index state
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="FwvH0pmd6f6kzSxM"
-Content-Disposition: inline
-In-Reply-To: <ZSCR7e6KKqFv8mZk@nand.local>
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>, John Cai <johncai86@gmail.com>,
+        John Cai <johncai86@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: John Cai <johncai86@gmail.com>
 
---FwvH0pmd6f6kzSxM
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+initialize_attr_index() does not initialize the repo member of
+attr_index. Starting in 44451a2e5e (attr: teach "--attr-source=<tree>"
+global option to "git", 2023-05-06), this became a problem because
+istate->repo gets passed down the call chain starting in
+git_check_attr(). This gets passed all the way down to
+replace_refs_enabled(), which segfaults when accessing r->gitdir.
 
-On Fri, Oct 06, 2023 at 07:02:05PM -0400, Taylor Blau wrote:
-> On Fri, Oct 06, 2023 at 03:35:25PM -0700, Junio C Hamano wrote:
-> > Taylor Blau <me@ttaylorr.com> writes:
-> >
-> > > When using merge-tree often within a repository[^1], it is possible to
-> > > generate a relatively large number of loose objects, which can result=
- in
-> > > degraded performance, and inode exhaustion in extreme cases.
-> >
-> > Well, be it "git merge-tree" or "git merge", new loose objects tend
-> > to accumulate until "gc" kicks in, so it is not a new problem for
-> > mere mortals, is it?
->=20
-> Yeah, I would definitely suspect that this is more of an issue for
-> forges than individual Git users.
->=20
-> > As one "interesting" use case of "merge-tree" is for a Git hosting
-> > site with bare repositories to offer trial merges, without which
-> > majority of the object their repositories acquire would have been in
-> > packs pushed by their users, "Gee, loose objects consume many inodes
-> > in exchange for easier selective pruning" becomes an issue, right?
->=20
-> Right.
->=20
-> > Just like it hurts performance to have too many loose object files,
-> > presumably it would also hurt performance to keep too many packs,
-> > each came from such a trial merge.  Do we have a "gc" story offered
-> > for these packs created by the new feature?  E.g., "once merge-tree
-> > is done creating a trial merge, we can discard the objects created
-> > in the pack, because we never expose new objects in the pack to the
-> > outside, processes running simultaneously, so instead closing the
-> > new packfile by calling flush_bulk_checkin_packfile(), we can safely
-> > unlink the temporary pack.  We do not even need to spend cycles to
-> > run a gc that requires cycles to enumerate what is still reachable",
-> > or something like that?
->=20
-> I know Johannes worked on something like this recently. IIRC, it
-> effectively does something like:
->=20
->     struct tmp_objdir *tmp_objdir =3D tmp_objdir_create(...);
->     tmp_objdir_replace_primary_odb(tmp_objdir, 1);
->=20
-> at the beginning of a merge operation, and:
->=20
->     tmp_objdir_discard_objects(tmp_objdir);
->=20
-> at the end. I haven't followed that work off-list very closely, but it
-> is only possible for GitHub to discard certain niche kinds of
-> merges/rebases, since in general we make the objects created during test
-> merges available via refs/pull/N/{merge,rebase}.
->=20
-> I think that like anything, this is a trade-off. Having lots of packs
-> can be a performance hindrance just like having lots of loose objects.
-> But since we can represent more objects with fewer inodes when packed,
-> storing those objects together in a pack is preferable when (a) you're
-> doing lots of test-merges, and (b) you want to keep those objects
-> around, e.g., because they are reachable.
+Fix this by initializing the repository in the index state.
 
-In Gitaly, we usually set up quarantine directories for all operations
-that create objects. This allows us to discard any newly written objects
-in case either the RPC call gets cancelled or in case our access checks
-determine that the change should not be allowed. The logic is rather
-simple:
+Signed-off-by: John Cai <johncai86@gmail.com>
+Helped-by: Christian Couder <christian.couder@gmail.com>
+---
+    merge-ort: initialize repo in index state
+    
+    initialize_attr_index() does not initialize the repo member of
+    attr_index. Starting in 44451a2e5e (attr: teach "--attr-source=" global
+    option to "git", 2023-05-06), this became a problem because istate->repo
+    gets passed down the call chain starting in git_check_attr(). This gets
+    passed all the way down to replace_refs_enabled(), which segfaults when
+    accessing r->gitdir.
+    
+    Fix this by initializing the repository in the index state.
+    
+    Changes since V2:
+    
+     * fixed test by using printf instead of echo
+    
+    Changes since v1:
+    
+     * using opt->repo to avoid hardcoding another the_repository
+     * clarified test
 
-    1. Create a new temporary directory.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1583%2Fjohn-cai%2Fjc%2Fpopulate-repo-when-init-attr-index-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1583/john-cai/jc/populate-repo-when-init-attr-index-v3
+Pull-Request: https://github.com/git/git/pull/1583
 
-    2. Set up the new temporary directory as main object database via
-       the `GIT_OBJECT_DIRECTORY` environment variable.
+Range-diff vs v2:
 
-    3. Set up the main repository's object database via the
-       `GIT_ALTERNATE_OBJECT_DIRECTORIES` environment variable.
+ 1:  e178236064a ! 1:  792b01fa616 merge-ort: initialize repo in index state
+     @@ t/t4300-merge-tree.sh: EXPECTED
+      +		git checkout @{-1} &&
+      +		tree=$(git --attr-source=gitattributes merge-tree --write-tree \
+      +		--merge-base "$base" --end-of-options "$source" "$merge") &&
+     -+		echo "foo\nbar\nbaz" >expect &&
+     ++		printf "foo\nbar\nbaz\n" >expect &&
+      +		git cat-file -p "$tree:file1" >actual &&
+      +		test_cmp expect actual
+      +	)
 
-    4. Execute Git commands that write objects with these environment
-       variables set up. The new objects will end up neatly contained in
-       the temporary directory.
 
-    5. Once done, either discard the temporary object database or
-       migrate objects into the main object daatabase.
+ merge-ort.c           |  1 +
+ t/t4300-merge-tree.sh | 27 +++++++++++++++++++++++++++
+ 2 files changed, 28 insertions(+)
 
-I wonder whether this would be a viable approach for you, as well.
+diff --git a/merge-ort.c b/merge-ort.c
+index 7857ce9fbd1..36537256613 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -1902,6 +1902,7 @@ static void initialize_attr_index(struct merge_options *opt)
+ 	struct index_state *attr_index = &opt->priv->attr_index;
+ 	struct cache_entry *ce;
+ 
++	attr_index->repo = opt->repo;
+ 	attr_index->initialized = 1;
+ 
+ 	if (!opt->renormalize)
+diff --git a/t/t4300-merge-tree.sh b/t/t4300-merge-tree.sh
+index 57c4f26e461..c3a03e54187 100755
+--- a/t/t4300-merge-tree.sh
++++ b/t/t4300-merge-tree.sh
+@@ -86,6 +86,33 @@ EXPECTED
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success '3-way merge with --attr-source' '
++	test_when_finished rm -rf 3-way &&
++	git init 3-way &&
++	(
++		cd 3-way &&
++		test_commit initial file1 foo &&
++		base=$(git rev-parse HEAD) &&
++		git checkout -b brancha &&
++		echo bar >>file1 &&
++		git commit -am "adding bar" &&
++		source=$(git rev-parse HEAD) &&
++		git checkout @{-1} &&
++		git checkout -b branchb &&
++		echo baz >>file1 &&
++		git commit -am "adding baz" &&
++		merge=$(git rev-parse HEAD) &&
++		git checkout -b gitattributes &&
++		test_commit "gitattributes" .gitattributes "file1 merge=union" &&
++		git checkout @{-1} &&
++		tree=$(git --attr-source=gitattributes merge-tree --write-tree \
++		--merge-base "$base" --end-of-options "$source" "$merge") &&
++		printf "foo\nbar\nbaz\n" >expect &&
++		git cat-file -p "$tree:file1" >actual &&
++		test_cmp expect actual
++	)
++'
++
+ test_expect_success 'file change A, B (same)' '
+ 	git reset --hard initial &&
+ 	test_commit "change-a-b-same-A" "initial-file" "AAA" &&
 
-Patrick
-
---FwvH0pmd6f6kzSxM
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmUj29MACgkQVbJhu7ck
-PpSUmRAAkRZ+vosMA5mTOfjfx3LCisTXMYHONGg8NMAhT7Ii22cKLK3PhvlVzJUy
-QnaeSV5iPoglbsKFRG0t1K18c3X3Aff+0sPocDggXd/SXE7deNlC74PFMxZS3MOI
-X1/k9ggJgY93EeE7sv58DYalFoByEupnLwFH0cPUm4fPqt+5pFZ2/nqUtXv/ntUN
-EUExkc6F0GxnZv/dZLXxhso0lGu2m0sdfySWDDwVJNbto/96fO+lShX9spv3TYDj
-qPegkf01S6mhANFbHoEcxEGwQGvJxmBuyavpDVGYU5uq9r9g+JTUaLLarTlk5y27
-jQpGUXuGKgjV9y9q93zLq+w7cd7AN2CyDgZBv5WcYb2iR6Ls15/nAzf3CPlZ0gNi
-1DctNNRXaA/5C+iR0ueYg9o6q4pGk1Whc0/ObUHEyWMsWpfcIqzloibvzNlLGXdN
-doRroE50UvXITtF+rbYsAwJqEXg1wP6qpV/VfWcIdKnWwpynLQFN5YXn9UMDMd30
-vbUrqYkqoRKLhf+XEAUaGclj5jVB5uPOFr0MT1mSMR6afj9ULV9kLY6ba/y7JtiB
-XP007mbnUhmKjx9DgSQe/yd5+cIYR1qCELQCUsunJAL8ZRomwtJ953HFsHdcRXRQ
-oVnjg8RXBjSWqMcc8pjRCsKsv3SrS+TwZaiIoi1acKJV429DMGQ=
-=spA4
------END PGP SIGNATURE-----
-
---FwvH0pmd6f6kzSxM--
+base-commit: 493f4622739e9b64f24b465b21aa85870dd9dc09
+-- 
+gitgitgadget
