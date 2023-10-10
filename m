@@ -2,99 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90E7DCD80DB
-	for <git@archiver.kernel.org>; Tue, 10 Oct 2023 14:10:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1882CD8C9E
+	for <git@archiver.kernel.org>; Tue, 10 Oct 2023 14:58:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232604AbjJJOKp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Oct 2023 10:10:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49680 "EHLO
+        id S233262AbjJJO60 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Oct 2023 10:58:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34710 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232455AbjJJOKo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Oct 2023 10:10:44 -0400
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B6BDA9
-        for <git@vger.kernel.org>; Tue, 10 Oct 2023 07:10:42 -0700 (PDT)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id 6A1FC5C01F1;
-        Tue, 10 Oct 2023 10:10:41 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Tue, 10 Oct 2023 10:10:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        joshtriplett.org; h=cc:cc:content-type:content-type:date:date
-        :from:from:in-reply-to:in-reply-to:message-id:mime-version
-        :references:reply-to:sender:subject:subject:to:to; s=fm1; t=
-        1696947041; x=1697033441; bh=Tt0BsYA65dQ2WB7is9hudrEXBfeHJW9hD0R
-        X5mZ+F9Q=; b=NaYBhhF9dliIdMUQxoZ+wHFa/8nyxnBChxprIYvI+NXnqsTLENe
-        FA3S9MT3Fp4wvxX07Ijxaqg19JWPGglNlvjn6iljFWZIR/jymLzwlOxwMyjO/GMS
-        dMqrNm1lp6ob2xRY7+vtDtkX/yPuikiADnSUpOGr4P8vGD9IBnWNhz/b3J6d204b
-        Qj4T5H3LneGIdbpB3ahl2EjxHED87V2d2Rm8LZPBpblC7gTpyHvtDZwHg2DKoDF6
-        3nCsYgMllInYDC6sN7Hft+KhuFyuY0f+k5DFCwublD0qnmxPXcWxMQlsfxtsxpTc
-        j7SWcOfyKtK4olp3K2fz5Ls72Xw839pcN9w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:content-type:date:date
-        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm2; t=1696947041; x=1697033441; bh=Tt0BsYA65dQ2W
-        B7is9hudrEXBfeHJW9hD0RX5mZ+F9Q=; b=SroXP28LaIGEt6oCOyiBRqxv11LJ1
-        pHGEKQfCnAufEzhTlGdM9iCLf9ZcIGQiq3KyAA5haIZitiWr9gJC2O2VXQhW1XEP
-        KWSjDRuvhGOOnQP9wqnnW/TjoOLKhgkuFa5EkE+UoaWryaf8VSLsHPBx5vc0RLmw
-        srDmFukiw8ONfOiydVUVycHZdRGI2qdPumuOr8wYz9gv25Ln/cXsGirNdiyj6xFT
-        aOFH6ci6QnYbMJWgedr+r0HENMYdLNk5Kv1t9LF8Ow3p2QvogON9Nv8l52OYyM9V
-        RPO4HekkaGR9Rz6jJVADHcCpxxDDvdanFHapGecr23Ylh2wFj95LEoAgw==
-X-ME-Sender: <xms:YVslZRkAtpgCiJGhxMYYOF8G9CJ4bZjeNprGHGgQcKviPlpXsCBt4A>
-    <xme:YVslZc2clpZi5uv7ZgvrcfZFmnjKaaXVy1nl6dpGB0RyVIqiyTwpIqbATbht8khv8
-    HP7XCrhM2wWR1KdoeI>
-X-ME-Received: <xmr:YVslZXpJXbmKnKDBEzDdQb70_KXRqxJ4ylfjkOv-QQjWvbbFkfElezWtOpfK9w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrheehgdejvdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeflohhshhcu
-    vfhrihhplhgvthhtuceojhhoshhhsehjohhshhhtrhhiphhlvghtthdrohhrgheqnecugg
-    ftrfgrthhtvghrnhepudeigeehieejuedvtedufeevtdejfeegueefgffhkefgleefteet
-    ledvtdfftefgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
-    homhepjhhoshhhsehjohhshhhtrhhiphhlvghtthdrohhrgh
-X-ME-Proxy: <xmx:YVslZRlRF4oWhVdO3yoMWOtUQysoUMa1j5B-a5CA2rWP_tw6zpW0AQ>
-    <xmx:YVslZf3BGWw7GP5P0qdNoZEE6J53YopXAEec44kTTAdu0YzKTgCgqA>
-    <xmx:YVslZQuDY-fO3jJ2ctmk96jHYDrbCLKn_qNlWWI6eCAlKxLLAsDMog>
-    <xmx:YVslZY8GVKMGR8VZE_ksV48mXbVZF6HOxQn6zkjN4UU3eUtyGqqzcg>
-Feedback-ID: i83e94755:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 10 Oct 2023 10:10:39 -0400 (EDT)
-Date:   Tue, 10 Oct 2023 22:10:25 +0800
-From:   Josh Triplett <josh@joshtriplett.org>
-To:     Kristoffer Haugsbakk <code@khaugsbakk.name>
-Cc:     Sebastian Thiel <sebastian.thiel@icloud.com>, git@vger.kernel.org
-Subject: Re: [RFC] Define "precious" attribute and support it in `git clean`
-Message-ID: <ZSVbUSRUQlNy0bj-@localhost>
-References: <79901E6C-9839-4AB2-9360-9EBCA1AAE549@icloud.com>
- <98387b86-1732-42bc-9ac5-d64a6617b2db@app.fastmail.com>
+        with ESMTP id S233254AbjJJO6Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Oct 2023 10:58:25 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 064E5CC
+        for <git@vger.kernel.org>; Tue, 10 Oct 2023 07:58:24 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-534694a9f26so32423a12.1
+        for <git@vger.kernel.org>; Tue, 10 Oct 2023 07:58:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1696949902; x=1697554702; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Dm59/v1Vlv2AJEO8Ytb3MWvek5YVPZBM9jzWVgUB11Y=;
+        b=3VT/PyoBcxwqVMaxJBibSkihbQkVorKtmA9u7xel9jAfbi0NsmEAFyrb6b9f7a2ZiW
+         dpNvjgsd8XWJ22oD8H5Im1WAZUKUmFWpXTjAerq66A/+9KvDnyxAOJYpU/LW2EvEaEqP
+         ghFBy41XSYd+h2MAO73KxeL6jhkCk9Whdm4rqEDJgpz7PXuzqqOqJ4x7SGi1id7jJG4Z
+         Lgp0IKvKHniUnAXJTxgR7WiYwU4q7ZpFjEZzqD07Swt2074/Eyjcfw5qMN/NQSk+4kAT
+         xwHAZsK8fdP35CCUUgbccr3a/1AkdnYTUtBNHKwh7LYSHdcdqbIaYZB0b9Oi679trf5z
+         pqZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696949902; x=1697554702;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Dm59/v1Vlv2AJEO8Ytb3MWvek5YVPZBM9jzWVgUB11Y=;
+        b=m+BiOlgcFGlJvJVF1g1663VOMjI4aWCqkGaLKTnCqf1AHFAo3dMpmRYlJNs+FXn1S7
+         uwb6qrzXiWkSkasTeCWUHcVOelDFIc8fIGlGgeqnaghxfunsEC7aYwOox3SXhTohvglU
+         5yh4CPsSqIyg4w549xJSQGWRc1kAVCTTsUiTXuQ0FbkgTGkRWwwp9kGTBt43q690n45B
+         4HJjHPi1AiduQmd/pma5yHfMR5COzcPLfaX+5bDXoJFpigxbuvWGpGLwX6qjHlIwlEYM
+         LF94ZVlSoIQjsw6JuASnK2v0elWhwkJLKRX+PDZ9kV0Mpy22Ah9esNrNdvffQjtU5I0D
+         FhPw==
+X-Gm-Message-State: AOJu0Yzgl5irg9n+u+1y95n5EGT2tVvBh/qU11fMsZzOliifHheYcont
+        aekeaJy0rN/49eBnpTpPDJvtXGWDb+xzkIBgWIcRww==
+X-Google-Smtp-Source: AGHT+IHqF83gARLG72Aj/fAfxBOqRcaFeE5HV31Ci9XQL7RDTyIuMsMzyrATPXUeGPAX2EJ/KIEvlJnU09a5qPuEJRw=
+X-Received: by 2002:a50:c051:0:b0:538:1d3a:d704 with SMTP id
+ u17-20020a50c051000000b005381d3ad704mr552229edd.1.1696949902339; Tue, 10 Oct
+ 2023 07:58:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <98387b86-1732-42bc-9ac5-d64a6617b2db@app.fastmail.com>
+References: <20230909125446.142715-1-sorganov@gmail.com> <20231004214558.210339-1-sorganov@gmail.com>
+ <20231004214558.210339-2-sorganov@gmail.com> <xmqq34yog3ux.fsf@gitster.g>
+ <CABPp-BFsrt0zS3NHsVAyOSW6vGioe8Z-iN2M3_JNBpP2fWVq9g@mail.gmail.com> <xmqqo7h7urgd.fsf@gitster.g>
+In-Reply-To: <xmqqo7h7urgd.fsf@gitster.g>
+From:   Emily Shaffer <nasamuffin@google.com>
+Date:   Tue, 10 Oct 2023 07:58:06 -0700
+Message-ID: <CAJoAoZk+RjPWrSUyTLoP_La216Se_tgvBpri-zOZntFzUh4_1g@mail.gmail.com>
+Subject: Re: [silly] worldview documents?
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Elijah Newren <newren@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 10, 2023 at 03:38:51PM +0200, Kristoffer Haugsbakk wrote:
-> Hi Sebastian
-> 
-> On Tue, Oct 10, 2023, at 14:37, Sebastian Thiel wrote:
-> > This highlights precious files by calling them out, but doesn't change the
-> > behaviour of existing flags.  Instead, the new flag `-p` is added which lets
-> > `git clean` spare precious files.
-> 
-> Why can't `clean` preserve precious files by default? And then delete them
-> as well with something like `--no-keep-precious`? Is there some backwards
-> compatibility concern?
+On Mon, Oct 9, 2023 at 7:44=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
+>
+> Elijah Newren <newren@gmail.com> writes:
+>
+> >> [Footnote]
+> >> ...
+> >
+> > Thanks for writing this up.  In the past, I didn't know how to put
+> > into words why I didn't particularly care for this mode.  You explain
+> > it rather well.
+>
+> I am glad it helped non-zero number of people.
+>
+> It probably owes big to my failing, but because we strongly view it
+> a virtue not to be opinionated, we have many discrete tools and
+> features that can be used in combination to support a workflow well,
+> even when some of these tools and features are not useful for a
+> different workflow.  It indeed is a good thing to be flexible and to
+> support different workflows well, and we tend not to single out a
+> workflow among many and advocate it, but because our documentation
+> lacks description of major possible workflows, what their underlying
+> philosophies and their strengths are, how some of our tools and
+> features support them, and why some others are not good fit.  Being
+> given a toolbox with too many tools without being taught how they
+> are to be used together and for what purpose may be a fun puzzle to
+> figure out for tinkerers, but when you have a problem to solve and
+> tinkering is not your main focus, which is true for most people, it
+> is not fun.
+>
+> In short, in pursuit of not to be opinionated, we fail to give the
+> readers best current practices.  The first place to start rectifying
+> it might be to have some write-ups for various major workflows and
+> the worldview behind them.
 
-While I'd love for it to default to that and require an extra option to
-clean away precious files, I'd expect that that would break people's
-workflows and finger memory. If someone expects `git clean -x -d -f` to
-clean away everything, including `.config`, and then it leaves some
-files in place, that seems likely to cause problems. (Leaving aside that
-it might break scripted workflows.)
+I completely agree with you. The #1 conversation I have with friends
+who are new to Git is figuring out which of the major workflows they
+should use, and what are the drawbacks and benefits. And how to
+diagnose based on the existing commit history, review tool in use, etc
+which one is used by their peers. Having this documented somewhere -
+maybe in Pro Git book, maybe in manpage - would be hugely useful. I
+could envision a diagram of a sample commit history, and "if it
+already looks like this or you want it to look like this, your
+workflow should be blah" and finally a list of some drawbacks,
+benefits, and warnings about what to avoid in that workflow. Plus,
+perhaps, many shout-outs to `git reflog` for fixing when you
+misunderstood and made a mess. (that's the #2 conversation I have :) )
 
-It seems safer to keep the existing behavior for existing options, and
-add a new option for "remove everything except precious files".
+> The importance given to first-parenthood
+> offers two quite different worldviews that affects the choice of
+> tools (e.g. "merge --no-ff", "checkout origin/master && merge mine
+> && branch -f mine" aka "reverse merge").
+>
+> I suspect that this also relates to your "would --cc be totally
+> unnecessary now we have --remerge-diff?" as well.  What kind of
+> conflicts are interesting highly depends on what you are looking
+> for, which in turn is influenced by the workflow employed by the
+> project and what role you are playing in it.
