@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 55201CD8CB4
-	for <git@archiver.kernel.org>; Tue, 10 Oct 2023 20:34:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A720CD8CB7
+	for <git@archiver.kernel.org>; Tue, 10 Oct 2023 20:34:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343768AbjJJUeU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Oct 2023 16:34:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56096 "EHLO
+        id S234411AbjJJUeV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Oct 2023 16:34:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344150AbjJJUeE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Oct 2023 16:34:04 -0400
-Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69343B0
-        for <git@vger.kernel.org>; Tue, 10 Oct 2023 13:33:58 -0700 (PDT)
-Received: by mail-qt1-x829.google.com with SMTP id d75a77b69052e-4195fddd6d7so2497121cf.0
-        for <git@vger.kernel.org>; Tue, 10 Oct 2023 13:33:58 -0700 (PDT)
+        with ESMTP id S1344178AbjJJUeF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Oct 2023 16:34:05 -0400
+Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A78E8C6
+        for <git@vger.kernel.org>; Tue, 10 Oct 2023 13:34:01 -0700 (PDT)
+Received: by mail-qt1-x82a.google.com with SMTP id d75a77b69052e-417f872fb94so43021841cf.0
+        for <git@vger.kernel.org>; Tue, 10 Oct 2023 13:34:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1696970037; x=1697574837; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1696970040; x=1697574840; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=vky+ZwHmD3rWBOf6rqDZIiCrZcxnIkK2Pg5TwQcxMGM=;
-        b=ShZs/IJWVnk+WiSuVdzK1E3HGq4oub/n2ZBzKf6WIRNRp0GqMqzfggA2TwyCmrRxuC
-         RlE7iSN16yVcT1hXkQcz5R8UL0OVyLR9M6AFATr91Z7TAlTjzGTtk6PwvBlYO5t/nAL6
-         dDH6L1yxOo8wSjHcw0gnOvk3+9sNqUruPbiwlIUSdbwYug86i1sg+Qwb9Q+fvO/h8sEA
-         ZGb3EYea5p3MMw1xz/53vk59C+uZbg6GTXZzobgqSf2LzlBB6pMNUHVp+nhHKxlLbLPt
-         kdvLK7ljEuBnFiTzodf0fGj+x73WP0XwpvZ7q+1QyszsgIkTQXURu8ipacwRZwftSt6W
-         xFNA==
+        bh=8ypW6Fo5acSQYVAcI+hiGciE9kVHJqjoj87AiDRIe7Q=;
+        b=bcshmg4qSQHGP6EYQMlvEiitlVkbWouOsitT40beNVrm62dDXd7ryPulZo+oKgFjd1
+         Fnoa/2DNP1atuvSQyHmsrMusHvjFLtMZ6RVXYuVzdruvqwimOXGXMF1/qqF5C9gXhiiB
+         Y5WuXcSmTVwBIFDRf4srHhnAGmCM2Tc/cf7n7PXBRTOylaFzloKEDFAkhQHG2l2dS4Ns
+         odlT3t+1HuTbqyI4aZVD8VEbObsTfm/Xput4hBZ2kfuiIP2wRhKi5zGac9jpDEroKZic
+         HjfrucYwkmRJW4o6YdTErXTwHwtDwsVljOYxYzixvn2ab4PfBY09eYprmTbJ8bRKaJkF
+         V1Bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696970037; x=1697574837;
+        d=1e100.net; s=20230601; t=1696970040; x=1697574840;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vky+ZwHmD3rWBOf6rqDZIiCrZcxnIkK2Pg5TwQcxMGM=;
-        b=TN+GNyhWEwhxhqOQVPqwqcqDTNmseCmHtgJDLwCq1mMc83baYz7VAFQGKg06PK67Ic
-         gDnmGBCNZQeuHxS3OVTiyyM9NXeosu3C2BSsP2gHPgg/8Nqvut76/W4BGdou9bO/G+Dc
-         SBTpm81imxPqJRr0LfM8LN8Ww6huorOQxwySopAX4JR07jrZkaiWH8R6aPEWPzR5h1Bn
-         c3rTR5eVhwckI6IzBSPw1Zd4IvUIsP+WumVL4rrUI+SaTqweuapXi03FKfVPXZO9lqhz
-         xwkYLIKAiWVRlgdA4KctWyywlcrgrTk8IR2vXfnyyZsdAZwLHUYHZuiHDM5w4DTR/TQ6
-         U4LA==
-X-Gm-Message-State: AOJu0YzQUjrvLpSyN3psSNYu9sbzNt11D3nWeNYRYatTZ6NtQASLqf2i
-        rxUkV934BEXc3ryWoZnWTiuy2Rigr3YRaI33Vp+Aqw==
-X-Google-Smtp-Source: AGHT+IF5srpGevBBOjhs2H0ODTZ+os1UaZXggwQBwKGIwNscsXY0yMOnVYZ3jtfKAFckLX9HyWks5Q==
-X-Received: by 2002:a05:622a:10f:b0:403:a662:a3c1 with SMTP id u15-20020a05622a010f00b00403a662a3c1mr22923360qtw.29.1696970037211;
-        Tue, 10 Oct 2023 13:33:57 -0700 (PDT)
+        bh=8ypW6Fo5acSQYVAcI+hiGciE9kVHJqjoj87AiDRIe7Q=;
+        b=Pv/EoRILZuZQ/44mjBUVKLTc+3cKGL4GM7phasUrdKEekrTNTcJcZAsi543ghU/LOb
+         yv26l5LHK/cy9mbAXdn1NcgFupi5EyLpRuLI4hT7F42XQ7ArCLoBoIBsV2uHGmXYlEiF
+         E+Wk9Jg6SrJsBv1FfozzyIqNAcn0Fd8gkVVBgCgyk1r6/fVzv49WhZx6v0g14YDgB6qN
+         33SytpYAaAdknrRFesBS847dgD9vBkMYB99ZZtQqVXX067+eqOuoUGmVhLBqXMXxCjBS
+         bARFOWPsjGUSh1g6y+/ua599qFemz2H2tb8GuaTDv0FOu/iCoVquE7u6ok6FmmG5z7cr
+         6LWA==
+X-Gm-Message-State: AOJu0YzkDnHnBPEiQeSt35YmhYNEmY4FGxDhWi44+OybyPgzq6Cm06lH
+        k51aF7Q9MuHShzpkQf3qy4F+SOng6/1JzQs0YVKMlQ==
+X-Google-Smtp-Source: AGHT+IETD5tu7JLnakpFFHgyStz+AapPtqoDkh9FgC66W4VEWWvObJEIM1osz2yJ3BaAiyfBHg3iDg==
+X-Received: by 2002:ac8:5e4c:0:b0:413:5e4d:bf40 with SMTP id i12-20020ac85e4c000000b004135e4dbf40mr20916509qtx.68.1696970040611;
+        Tue, 10 Oct 2023 13:34:00 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id o20-20020ac86d14000000b0041950c7f6d8sm4719147qtt.60.2023.10.10.13.33.56
+        by smtp.gmail.com with ESMTPSA id e1-20020ac81301000000b0040331a24f16sm4767114qtj.3.2023.10.10.13.34.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Oct 2023 13:33:56 -0700 (PDT)
-Date:   Tue, 10 Oct 2023 16:33:55 -0400
+        Tue, 10 Oct 2023 13:34:00 -0700 (PDT)
+Date:   Tue, 10 Oct 2023 16:33:59 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>,
         Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: [PATCH v3 12/17] bloom: prepare to discard incompatible Bloom filters
-Message-ID: <2ba10a4b4b890d3c75f128a972a93889edc4f60e.1696969994.git.me@ttaylorr.com>
+Subject: [PATCH v3 13/17] commit-graph.c: unconditionally load Bloom filters
+Message-ID: <09d8669c3a074e7a2ace9d650a345244b2362f7e.1696969994.git.me@ttaylorr.com>
 References: <cover.1692654233.git.me@ttaylorr.com>
  <cover.1696969994.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -67,105 +67,83 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Callers use the inline `get_bloom_filter()` implementation as a thin
-wrapper around `get_or_compute_bloom_filter()`. The former calls the
-latter with a value of "0" for `compute_if_not_present`, making
-`get_bloom_filter()` the default read-only path for fetching an existing
-Bloom filter.
+In 9e4df4da07 (commit-graph: new filter ver. that fixes murmur3,
+2023-08-01), we began ignoring the Bloom data ("BDAT") chunk for
+commit-graphs whose Bloom filters were computed using a hash version
+incompatible with the value of `commitGraph.changedPathVersion`.
 
-Callers expect the value returned from `get_bloom_filter()` is usable,
-that is that it's compatible with the configured value corresponding to
-`commitGraph.changedPathsVersion`.
+Now that the Bloom API has been hardened to discard these incompatible
+filters (with the exception of low-level APIs), we can safely load these
+Bloom filters unconditionally.
 
-This is OK, since the commit-graph machinery only initializes its BDAT
-chunk (thereby enabling it to service Bloom filter queries) when the
-Bloom filter hash_version is compatible with our settings. So any value
-returned by `get_bloom_filter()` is trivially useable.
+We no longer want to return early from `graph_read_bloom_data()`, and
+similarly do not want to set the bloom_settings' `hash_version` field as
+a side-effect. The latter is because we want to wait until we know which
+Bloom settings we're using (either the defaults, from the GIT_TEST
+variables, or from the previous commit-graph layer) before deciding what
+hash_version to use.
 
-However, subsequent commits will load the BDAT chunk even when the Bloom
-filters are built with incompatible hash versions. Prepare to handle
-this by teaching `get_bloom_filter()` to discard filters that are
-incompatible with the configured hash version.
+If we detect an existing BDAT chunk, we'll infer the rest of the
+settings (e.g., number of hashes, bits per entry, and maximum number of
+changed paths) from the earlier graph layer. The hash_version will be
+inferred from the previous layer as well, unless one has already been
+specified via configuration.
 
-Callers who wish to read incompatible filters (e.g., for upgrading
-filters from v1 to v2) may use the lower level routine,
-`get_or_compute_bloom_filter()`.
+Once all of that is done, we normalize the value of the hash_version to
+either "1" or "2".
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- bloom.c | 20 +++++++++++++++++++-
- bloom.h | 20 ++++++++++++++++++--
- 2 files changed, 37 insertions(+), 3 deletions(-)
+ commit-graph.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/bloom.c b/bloom.c
-index 9b6a30f6f6..739fa093ba 100644
---- a/bloom.c
-+++ b/bloom.c
-@@ -250,6 +250,23 @@ static void init_truncated_large_filter(struct bloom_filter *filter,
- 	filter->version = version;
- }
+diff --git a/commit-graph.c b/commit-graph.c
+index db623afd09..fa3b58e762 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -327,12 +327,6 @@ static int graph_read_bloom_data(const unsigned char *chunk_start,
+ 	uint32_t hash_version;
+ 	hash_version = get_be32(chunk_start);
  
-+struct bloom_filter *get_bloom_filter(struct repository *r, struct commit *c)
-+{
-+	struct bloom_filter *filter;
-+	int hash_version;
+-	if (*c->commit_graph_changed_paths_version == -1) {
+-		*c->commit_graph_changed_paths_version = hash_version;
+-	} else if (hash_version != *c->commit_graph_changed_paths_version) {
+-		return 0;
+-	}
+-
+ 	g->chunk_bloom_data = chunk_start;
+ 	g->bloom_filter_settings = xmalloc(sizeof(struct bloom_filter_settings));
+ 	g->bloom_filter_settings->hash_version = hash_version;
+@@ -2473,8 +2467,7 @@ int write_commit_graph(struct object_directory *odb,
+ 	ctx->write_generation_data = (get_configured_generation_version(r) == 2);
+ 	ctx->num_generation_data_overflows = 0;
+ 
+-	bloom_settings.hash_version = r->settings.commit_graph_changed_paths_version == 2
+-		? 2 : 1;
++	bloom_settings.hash_version = r->settings.commit_graph_changed_paths_version;
+ 	bloom_settings.bits_per_entry = git_env_ulong("GIT_TEST_BLOOM_SETTINGS_BITS_PER_ENTRY",
+ 						      bloom_settings.bits_per_entry);
+ 	bloom_settings.num_hashes = git_env_ulong("GIT_TEST_BLOOM_SETTINGS_NUM_HASHES",
+@@ -2506,10 +2499,18 @@ int write_commit_graph(struct object_directory *odb,
+ 		/* We have changed-paths already. Keep them in the next graph */
+ 		if (g && g->bloom_filter_settings) {
+ 			ctx->changed_paths = 1;
+-			ctx->bloom_settings = g->bloom_filter_settings;
 +
-+	filter = get_or_compute_bloom_filter(r, c, 0, NULL, NULL);
-+	if (!filter)
-+		return NULL;
-+
-+	prepare_repo_settings(r);
-+	hash_version = r->settings.commit_graph_changed_paths_version;
-+
-+	if (!(hash_version == -1 || hash_version == filter->version))
-+		return NULL; /* unusable filter */
-+	return filter;
-+}
-+
- struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
- 						 struct commit *c,
- 						 int compute_if_not_present,
-@@ -275,7 +292,8 @@ struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
- 						     filter, graph_pos);
++			/* don't propagate the hash_version unless unspecified */
++			if (bloom_settings.hash_version == -1)
++				bloom_settings.hash_version = g->bloom_filter_settings->hash_version;
++			bloom_settings.bits_per_entry = g->bloom_filter_settings->bits_per_entry;
++			bloom_settings.num_hashes = g->bloom_filter_settings->num_hashes;
++			bloom_settings.max_changed_paths = g->bloom_filter_settings->max_changed_paths;
+ 		}
  	}
  
--	if (filter->data && filter->len)
-+	if ((filter->data && filter->len) &&
-+	    (!settings || settings->hash_version == filter->version))
- 		return filter;
- 	if (!compute_if_not_present)
- 		return NULL;
-diff --git a/bloom.h b/bloom.h
-index 330a140520..bfe389e29c 100644
---- a/bloom.h
-+++ b/bloom.h
-@@ -110,8 +110,24 @@ struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
- 						 const struct bloom_filter_settings *settings,
- 						 enum bloom_filter_computed *computed);
++	bloom_settings.hash_version = bloom_settings.hash_version == 2 ? 2 : 1;
++
+ 	if (ctx->split) {
+ 		struct commit_graph *g = ctx->r->objects->commit_graph;
  
--#define get_bloom_filter(r, c) get_or_compute_bloom_filter( \
--	(r), (c), 0, NULL, NULL)
-+/*
-+ * Find the Bloom filter associated with the given commit "c".
-+ *
-+ * If any of the following are true
-+ *
-+ *   - the repository does not have a commit-graph, or
-+ *   - the repository disables reading from the commit-graph, or
-+ *   - the given commit does not have a Bloom filter computed, or
-+ *   - there is a Bloom filter for commit "c", but it cannot be read
-+ *     because the filter uses an incompatible version of murmur3
-+ *
-+ * , then `get_bloom_filter()` will return NULL. Otherwise, the corresponding
-+ * Bloom filter will be returned.
-+ *
-+ * For callers who wish to inspect Bloom filters with incompatible hash
-+ * versions, use get_or_compute_bloom_filter().
-+ */
-+struct bloom_filter *get_bloom_filter(struct repository *r, struct commit *c);
- 
- int bloom_filter_contains(const struct bloom_filter *filter,
- 			  const struct bloom_key *key,
 -- 
 2.42.0.342.g8bb3a896ee
 
