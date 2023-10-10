@@ -2,98 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BF81CD8CAE
-	for <git@archiver.kernel.org>; Tue, 10 Oct 2023 17:49:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A860DCD8CAC
+	for <git@archiver.kernel.org>; Tue, 10 Oct 2023 17:58:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233489AbjJJRtf convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Tue, 10 Oct 2023 13:49:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54856 "EHLO
+        id S1343506AbjJJR6t (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Oct 2023 13:58:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43164 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231130AbjJJRte (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Oct 2023 13:49:34 -0400
-Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD17B99
-        for <git@vger.kernel.org>; Tue, 10 Oct 2023 10:49:32 -0700 (PDT)
-Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-65b0c9fb673so31772246d6.1
-        for <git@vger.kernel.org>; Tue, 10 Oct 2023 10:49:32 -0700 (PDT)
+        with ESMTP id S233489AbjJJR6s (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Oct 2023 13:58:48 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1D98B4
+        for <git@vger.kernel.org>; Tue, 10 Oct 2023 10:58:46 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-405361bb9f7so55297725e9.2
+        for <git@vger.kernel.org>; Tue, 10 Oct 2023 10:58:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1696960725; x=1697565525; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=CbZmWTb2LhVLjr0/zISTN1sxe0OQI8uYXVM7QhY1fsk=;
+        b=kGtV+7bmmHBkJPosD2E3wUQ4OoJPh2UNBxvtEbYmHtpTpLkZ8T8lhq7SnMBxPL5ucW
+         0RRXMOtYvJJ2fGRpzMWAa/Z0w0veMEnc4OJknKrsRNEsQnQgieJQko2hp7tujwjmVK5z
+         LVnkX8HXrmwTEllH8WSlPZ/xdS8h6Wx1C5da4YiNl3o+zynuoXa+6oc1EZ0tRd9G2W+D
+         KCHnx5NaZA8OUgzwmh/y8vNPyVkIA+Tq9M2l+33k+qxDBlYD368zIkbq0w+yxHjrSf96
+         4+thMLEzaCpsk7X88Alw0ErDLz6e5gXgXCrViIZDIGvGDNt8xoqglRKF5I0dcNUsU4i1
+         uakg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696960172; x=1697564972;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Txc5VTQ7EtPqvmYXfHF+/0LkoW+uuxnenJR+xgP3N/s=;
-        b=dThfcu/HsgZqIUo6JsyS0kX4+9rw8idCEQJ3UTYPETAwJSY5iaWxfcNBzoTiZCc9GJ
-         vdCGOYT+Bmh+ouvGxU6M5CjSQXgxAAeCuFthM4mmjtp6L7GpLa4FiU1WfROVyitvuLt1
-         f3VmmrZX1s+vysDs7EOncULHWhayfzs6uJWKDCnmDP806LxBpwzDtdPzkKDTuGrlJ9YE
-         EniuC8vShMer+D/k2/tExoT6f4J7XWwXUGGjYkVS2eQ28Z/++YFUR27dPWFBPg4ZbYgO
-         UXR0wJmBqMMBtxpppcdVJujfVgfDRvdFqT4VesijYDRTYv5VmwfQhw21q3+h/Ic1ZUQK
-         DAcg==
-X-Gm-Message-State: AOJu0YxkzFYe2xLYhALTDbhXhTaWQ0dWeQoH9JQA2WOL8xg/BfnU7BcF
-        +Unes2fA//nehTMG78fEqaP4tloMrp2nUrGSbME43S2KvNE=
-X-Google-Smtp-Source: AGHT+IEhhEf7Wq8U39Jl3NOa8XVlJo11VVpFuIKgmJvAFc5iDOunTxA9AJx5JhMzshno+J/BssjEK836PJYDm1Ik+RU=
-X-Received: by 2002:ad4:4527:0:b0:65a:f67e:13a5 with SMTP id
- l7-20020ad44527000000b0065af67e13a5mr17980679qvu.59.1696960171756; Tue, 10
- Oct 2023 10:49:31 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1696960725; x=1697565525;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CbZmWTb2LhVLjr0/zISTN1sxe0OQI8uYXVM7QhY1fsk=;
+        b=Ht19b2LtLUBBJ9xCZ1tmXt7k/TR4ejuEQQC5iGIMxOvKdm7M8AOqA/FWXZY71wAcrx
+         l5bbKjwC1gLyXDHGQCiH436wHkLuWF3fHpSTho+a6EKP7gVnGS7xNwNuFAJKN4kxNgQf
+         jQ3M0zxi6iG0N8zFHVwA7D8FMouMKX+xBHhMmxVFaXHsr8AKS1ImF/EjJaWbXFH8Aqax
+         7OnKQe+cYVl395xA2O63zAHQSEHz7Bw5N2nD4x9VJmmnqWBDTnJwFMqvBiDTo9GDtwtB
+         i+vwoCqjCgIE0YeM/+SVjWcaBwhi4oix4j/lyfuc4bIwsX7eY3n5ZDXOxstjkvGBe4K8
+         FSQg==
+X-Gm-Message-State: AOJu0Yxt/ZZzEr5UfqmZa7YdYAgM2VAk7tQJFnpU/MdwIGMyoXv9kXjY
+        QsbJ4Hh6W31Ez28lAiv1z/Sf2bNO99c=
+X-Google-Smtp-Source: AGHT+IHLbasFEtg8EsU6RzjtAqT4OF1NdtRh9DV32LiSr1mPWAJBXIpQk6M+moDmLVA8hYJsf3txIA==
+X-Received: by 2002:a05:600c:2195:b0:406:53aa:7a5f with SMTP id e21-20020a05600c219500b0040653aa7a5fmr17223988wme.10.1696960724723;
+        Tue, 10 Oct 2023 10:58:44 -0700 (PDT)
+Received: from [192.168.1.101] ([90.242.223.1])
+        by smtp.googlemail.com with ESMTPSA id t24-20020a7bc3d8000000b004042dbb8925sm17060249wmj.38.2023.10.10.10.58.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Oct 2023 10:58:44 -0700 (PDT)
+Message-ID: <87c16c09-784f-4818-9231-8023fc2c5a02@gmail.com>
+Date:   Tue, 10 Oct 2023 18:58:43 +0100
 MIME-Version: 1.0
-References: <985ac850eb6e60ae76601acc8bfbcd56f99348b4.1696935657.git.ps@pks.im>
-In-Reply-To: <985ac850eb6e60ae76601acc8bfbcd56f99348b4.1696935657.git.ps@pks.im>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 10 Oct 2023 13:49:20 -0400
-Message-ID: <CAPig+cTK4=w0+DnS025WbBDmV_wX-v3UkpcmEPhgSq6+-iaqJg@mail.gmail.com>
-Subject: Re: [PATCH] doc/git-worktree: mention "refs/rewritten" as
- per-worktree refs
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v4 4/4] parse: separate out parsing functions from
+ config.h
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, Calvin Wan <calvinwan@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20231010174348.2150150-1-jonathantanmy@google.com>
+Content-Language: en-US
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20231010174348.2150150-1-jonathantanmy@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 10, 2023 at 7:01 AM Patrick Steinhardt <ps@pks.im> wrote:
-> Some references are special in the context of worktrees as they are
-> considered to be per-worktree instead of shared across all of the
-> worktrees. Most importantly, this includes "refs/worktree/" that have
-> explicitly been designed such that users can create per-woorktree refs.
+On 10/10/2023 18:43, Jonathan Tan wrote:
+> phillip.wood123@gmail.com writes:
+>> Hi Jonathan
+>>
+>> On 29/09/2023 22:20, Jonathan Tan wrote:
+>>> diff --git a/parse.h b/parse.h
+>>> new file mode 100644
+>>> index 0000000000..07d2193d69
+>>> --- /dev/null
+>>> +++ b/parse.h
+>>> @@ -0,0 +1,20 @@
+>>> +#ifndef PARSE_H
+>>> +#define PARSE_H
+>>> +
+>>> +int git_parse_signed(const char *value, intmax_t *ret, intmax_t max);
+>>
+>> Previously this function was private to config.c, now it needs to be
+>> public because it is still called by
+>> git_config_get_expiry_date_in_days(). As this is essentially an internal
+>> helper for git_parse_int() and friends it is a bit unfortunate that it
+>> is now public. Perhaps we should change
+>> git_config_get_expiry_date_in_days() to call git_parse_int() instead.
+>> Then we can keep git_parse_signed() and git_parse_unsigned() private to
+>> parse.c.
+> 
+> It could be argued also that it fits in with the rest of
+> the parsing functions - this one parses intmax, and we have
+> others of various signedness and size.
 
-s/woorktree/worktree/
+This one differs from the others because it expects the caller to pass a 
+maximum value, the intmax_t equivalent to git_parse_int() would be
 
-> But there are also special references that have an associated meaning
-> like "refs/bisect/", which is used to track state of git-bisect(1).
->
-> These special per-worktree references are documented in git-worktree(1),
-> but one instance is missing. In a9be29c9817 (sequencer: make refs
-> generated by the `label` command worktree-local, 2018-04-25), we have
-> converted "refs/rewritten/" to be a per-worktree reference as well.
-> These references are used by our sequencer infrastructure to generate
-> labels for rebased commits. So in order to allow for multiple concurrent
-> rebases to happen in different worktrees, these references need to be
-> tracked per worktree.
->
-> We forgot to update our documentation to mention these new per-worktree
-> references, which is fixed by this patch.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
-> diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-> @@ -286,7 +286,8 @@ rules and how to access refs of one worktree from another.
->  In general, all pseudo refs are per-worktree and all refs starting with
->  `refs/` are shared. Pseudo refs are ones like `HEAD` which are directly
->  under `$GIT_DIR` instead of inside `$GIT_DIR/refs`. There are exceptions,
-> -however: refs inside `refs/bisect` and `refs/worktree` are not shared.
-> +however: refs inside `refs/bisect`, `refs/worktree` and `refs/rewritten` are
-> +not shared.
+int git_parse_intmax(const char*, intmax_t*);
 
-To simplify future maintenance, eventually we might want to turn this
-into a bulleted list, but that doesn't necessarily have to be done by
-this patch, which is fine as-is.
+We now expose git_parse_int64() which covers a similar case.
 
-> @@ -363,8 +364,8 @@ linked worktree `git rev-parse --git-path HEAD` returns
->  `$GIT_COMMON_DIR` and returns `/path/main/.git/refs/heads/master`,
-> -since refs are shared across all worktrees, except `refs/bisect` and
-> -`refs/worktree`.
-> +since refs are shared across all worktrees, except `refs/bisect`,
-> +`refs/worktree` and `refs/rewritten`.
+> I'm open to changing
+> git_config_get_expiry_date_in_days() too, though...we probably don't
+> need so many days.
 
-Ditto.
+Indeed, the existing code passes maximum_signed_value_of_type(int) as 
+the third argument to limit it to INT_MAX already.
+
+>>> +/**
+>>> + * Same as `git_config_bool`, except that it returns -1 on error rather
+>>> + * than dying.
+>>> + */
+>>> +int git_parse_maybe_bool(const char *);
+>>> +int git_parse_maybe_bool_text(const char *value);
+>>
+>> This used to be private to config.c and now has callers in parse.c and
+>> config.c. We should make it clear that non-config code is likely to want
+>> git_parse_maybe_bool() rather than this function.
+>>
+>> Best Wishes
+>>
+>> Phillip
+> 
+> The difference between these 2 functions here is that bool_text supports
+> only the textual forms (used, for example, in git_config_bool_or_int()
+> which accepts both boolean strings and integers), which might be useful
+> elsewhere too. But it could be better documented, yes.
+> 
+> Looking at "What's Cooking", this series is about to be merged to
+> master. We could hold off merging that, but I think we don't need to
+> - it could be argued that git_parse_maybe_bool_text() could be better
+> documented, but even if we wrote it from scratch, I would probably put
+> the extra documentation in its own patch anyway (so one patch for moving
+> the code, and another for adding documentation).
+
+I agree it's not worth re-rolling just to add some documentation here.
+
+Best Wishes
+
+Phillip
