@@ -2,70 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2484BCD6134
-	for <git@archiver.kernel.org>; Tue, 10 Oct 2023 10:00:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98A14CD691F
+	for <git@archiver.kernel.org>; Tue, 10 Oct 2023 10:06:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230470AbjJJKAX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Oct 2023 06:00:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52880 "EHLO
+        id S230128AbjJJKGE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Oct 2023 06:06:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230230AbjJJKAU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Oct 2023 06:00:20 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44AC19F
-        for <git@vger.kernel.org>; Tue, 10 Oct 2023 03:00:18 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-4066241289bso51110005e9.0
-        for <git@vger.kernel.org>; Tue, 10 Oct 2023 03:00:18 -0700 (PDT)
+        with ESMTP id S229499AbjJJKGD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Oct 2023 06:06:03 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3713D93
+        for <git@vger.kernel.org>; Tue, 10 Oct 2023 03:06:01 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-50437c618b4so6855237e87.2
+        for <git@vger.kernel.org>; Tue, 10 Oct 2023 03:06:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696932016; x=1697536816; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1696932359; x=1697537159; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:from:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=bRltVjAUKRafJ94gSGd5WPf8MB19q7507kEZVyH8G+o=;
-        b=MjBKqQ32BzzR1d1rtjSLQIAh4VEAXp9OyVlQXA0Hh1iZSSlidq4Nshx5id47vQ5U9r
-         otBHZ+HEysjpAS6ue09AXDiJVjK1eRA0bBGQJu58gT6qcUNhBRyAa/nxkUxbvlVmlU6a
-         tn+ArLhbevRVZLPPHD/K7d/D5hgPBKeZyEsMzprMZ3CPWRLiu+5rM6CGnG4p+2pH4xdr
-         OQ6so4d9r4PNidVDlA+HWY1j+xEYFlaGRRjOuNG0l5ehSFGxKaIa/zB0kkMv0az3I9Zl
-         YzdW/3dYgTqhySRZFiYkSEWMuf5MIkD397WVq7RfuA3E35wTZmP4PzcL11xazOnxQdpB
-         P8Sw==
+        bh=d5h4T0xg/LhKvDpi7qQbXU47bGwLvdcbK6AkPszbja0=;
+        b=Ixxb7HVxzE7iA72LIFK3lVCH6seMWYt0Cv8TSAiKyK3RylDTK9hBpWR+vOZxPRIKY0
+         3ME1Hiu7utnwEw42boHWu9pq7r2ujN1n8W3i5oaH6IAxAx1BzF6uoqyBr9LeiVN7Y6tn
+         qPPcOakYSPSaYdXU0le1CIwp+6wDRDLgXSd1Uflz/xmK2yv0gmTuMYCXhQQE9wneIACl
+         7xANxYS6rRTmjoU/CYR6h4yuopYE+I4kUqsVtTkN5qQKbV9HBXkO0whvEDcMnMBfyuDf
+         YRkgWhsMnWKXmALLJ3VoHvoFLdC5Yug/vGb4Zb8gKF0mpvB25NxamMNg+khsO38H1Dau
+         oeGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696932016; x=1697536816;
+        d=1e100.net; s=20230601; t=1696932359; x=1697537159;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:from:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=bRltVjAUKRafJ94gSGd5WPf8MB19q7507kEZVyH8G+o=;
-        b=ENJZVkof6lh5DHS4zf73vNpOUVLwkOgPv9XJ3YPPJrrrX+L11/4LtM1HNSIhrio6Oo
-         TaHC4YshZZ8r/5JbDwsGMj0IdaftG2DGOpC2st35gR/uHkMHK5EFr3N6t5eEug6UmLuj
-         DKLWIHxx0M5kh7jSaqyjyQhrKYRXqb3OKHRsiEF+QyL/79kHCK+TUkzDUBOj9G7rWNty
-         ULNKu/qjhrR8P4uMkDT8DEYDtpzVnAYxFjHgFQwLwm2qmNbCjyUgmPvnDtwktitBBAHo
-         vmxNU+IuSn9lvP8Y07YGCGdRSRtkuftXKzhN/DaJ8lU6RaRsbagatkjZDF+R9ESb6H3R
-         xNYQ==
-X-Gm-Message-State: AOJu0YzzEOC7PVcBp/L0tIg3viwIc81hKlgtrlelC2KtHvpEk0Hhp3o3
-        Kq1pm852QzGMO2t4six741s=
-X-Google-Smtp-Source: AGHT+IFG7qBaBT8cKWiRokkbVE1cXUHdwcVXD6HV8T057g4fOWPvN5fuqACOhZNqXcqW/7QFPFn3Jw==
-X-Received: by 2002:a05:600c:259:b0:401:b204:3b8d with SMTP id 25-20020a05600c025900b00401b2043b8dmr16888435wmj.27.1696932016288;
-        Tue, 10 Oct 2023 03:00:16 -0700 (PDT)
+        bh=d5h4T0xg/LhKvDpi7qQbXU47bGwLvdcbK6AkPszbja0=;
+        b=LlAvjr3bq2vR4htpQRqHcOPeT8cb/RgiFk8gwT1ZvCbOKEwq163P6V9NAprwf7NzUF
+         VeQHl1UX6XDnrMRf26GYIK/8nIp/HxGuV/d33M3ZQedV02fh128FnoJpcKrzqOUWtJrd
+         sDhfWQjIxTgGISkFTTvTuuq0UADQE2Quzw0q1DiAb5Ebu4Y8dPDk/DQC8lbFuVYbxK/c
+         5U51qKip9IEuEASIjKx3TYeeJuriowlO7dN8mreHg7IkruoTEoPYlrhLdd4+j+R/Ara4
+         fN+Mpq+CPX2cflE9+8XRoW0btNfhi685z5HY0azzLmPbqmo1xTsaa6gWdOQR1nLFGkgf
+         0z7A==
+X-Gm-Message-State: AOJu0Yx5/cbcIIAriDBdktiNP08UxssEcF9LEY9HlL1tHO8C/YHSOoDB
+        TCHGz8wyOy3uULeax4V7yIRLTZ4ZJEw=
+X-Google-Smtp-Source: AGHT+IGC4NI7QO2y4LWbA5KKAzYw7FPq4yuYE9TU1bTs6QU8y4zP95XHlizFFH3FxJFJIWAym0ayxA==
+X-Received: by 2002:a05:6512:250c:b0:503:1b83:e352 with SMTP id be12-20020a056512250c00b005031b83e352mr18341473lfb.52.1696932359045;
+        Tue, 10 Oct 2023 03:05:59 -0700 (PDT)
 Received: from [192.168.1.212] ([90.242.223.1])
-        by smtp.gmail.com with ESMTPSA id l2-20020a5d4802000000b0031fe0576460sm12205991wrq.11.2023.10.10.03.00.15
+        by smtp.gmail.com with ESMTPSA id e26-20020adfa45a000000b003143c9beeaesm206198wra.44.2023.10.10.03.05.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Oct 2023 03:00:16 -0700 (PDT)
-Message-ID: <1de0a6f3-e223-4e84-a6d2-51d9b51a02f6@gmail.com>
-Date:   Tue, 10 Oct 2023 11:00:15 +0100
+        Tue, 10 Oct 2023 03:05:58 -0700 (PDT)
+Message-ID: <4670774d-a899-492c-9b36-98ee243c8d4d@gmail.com>
+Date:   Tue, 10 Oct 2023 11:05:58 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From:   phillip.wood123@gmail.com
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 4/4] parse: separate out parsing functions from
- config.h
+Subject: Re: [PATCH v4 0/4] Preliminary patches before git-std-lib
 Content-Language: en-US
 To:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
 Cc:     Calvin Wan <calvinwan@google.com>,
         Junio C Hamano <gitster@pobox.com>
 References: <20230627195251.1973421-1-calvinwan@google.com>
  <cover.1696021277.git.jonathantanmy@google.com>
- <5d9f0b3de08ab8541482b9b640db06b6d3000b86.1696021277.git.jonathantanmy@google.com>
-In-Reply-To: <5d9f0b3de08ab8541482b9b640db06b6d3000b86.1696021277.git.jonathantanmy@google.com>
+In-Reply-To: <cover.1696021277.git.jonathantanmy@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
@@ -75,44 +73,34 @@ X-Mailing-List: git@vger.kernel.org
 Hi Jonathan
 
 On 29/09/2023 22:20, Jonathan Tan wrote:
-> diff --git a/parse.h b/parse.h
-> new file mode 100644
-> index 0000000000..07d2193d69
-> --- /dev/null
-> +++ b/parse.h
-> @@ -0,0 +1,20 @@
-> +#ifndef PARSE_H
-> +#define PARSE_H
-> +
-> +int git_parse_signed(const char *value, intmax_t *ret, intmax_t max);
+> Calvin will be away for a few weeks and I'll be handling the git-std-lib
+> effort in the meantime. My goals will be:
+> 
+> - Get the preliminary patches in Calvin's patch set (patches 1-4) merged
+> first.
+> 
+> - Updating patches 5-6 based on reviewer feedback (including my
+> feedback). I have several aims including reducing or eliminating the
+> need for the GIT_STD_LIB preprocessor variable, and making stubs a test-
+> only concern (I think Phillip has some similar ideas [1] but I haven't
+> looked at their repo on GitHub yet).
 
-Previously this function was private to config.c, now it needs to be 
-public because it is still called by 
-git_config_get_expiry_date_in_days(). As this is essentially an internal 
-helper for git_parse_int() and friends it is a bit unfortunate that it 
-is now public. Perhaps we should change 
-git_config_get_expiry_date_in_days() to call git_parse_int() instead.
-Then we can keep git_parse_signed() and git_parse_unsigned() private to 
-parse.c.
+It sounds like we're thinking along similar lines, do feel free get in 
+touch on or off the list if you want to ask anything about those patches 
+I pushed to github.
 
-> +int git_parse_ssize_t(const char *, ssize_t *);
-> +int git_parse_ulong(const char *, unsigned long *);
-> +int git_parse_int(const char *value, int *ret);
-> +int git_parse_int64(const char *value, int64_t *ret);
+> [1] https://lore.kernel.org/git/98f3edcf-7f37-45ff-abd2-c0038d4e0589@gmail.com/
+> 
+> This patch set is in service of the first goal. Because the libification
+> patches are no longer included in this patch set, I have rewritten the
+> commit messages to justify the patches in terms of code organization.
+> There are no changes in the code itself. Also, I have retained Calvin's
+> name as the author.
 
-This was previously private but I think it makes sense for it to be 
-publicly available.
-
-> +/**
-> + * Same as `git_config_bool`, except that it returns -1 on error rather
-> + * than dying.
-> + */
-> +int git_parse_maybe_bool(const char *);
-> +int git_parse_maybe_bool_text(const char *value);
-
-This used to be private to config.c and now has callers in parse.c and 
-config.c. We should make it clear that non-config code is likely to want 
-git_parse_maybe_bool() rather than this function.
+I agree it makes sense to get the preliminary patches merged on their 
+own. I think the argument that they reduce the scope of includes is a 
+reasonable justification on its own. I've left a couple of comments but 
+they're looking pretty good.
 
 Best Wishes
 
