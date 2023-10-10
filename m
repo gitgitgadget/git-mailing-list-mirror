@@ -2,167 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2672CD8CA2
-	for <git@archiver.kernel.org>; Tue, 10 Oct 2023 15:20:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1BA1CD8CA6
+	for <git@archiver.kernel.org>; Tue, 10 Oct 2023 16:13:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231911AbjJJPUG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Oct 2023 11:20:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40430 "EHLO
+        id S233781AbjJJQNp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Oct 2023 12:13:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231279AbjJJPUE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Oct 2023 11:20:04 -0400
-Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37A32A7
-        for <git@vger.kernel.org>; Tue, 10 Oct 2023 08:20:02 -0700 (PDT)
-Received: by mail-yb1-xb2d.google.com with SMTP id 3f1490d57ef6-d9a516b015cso1083142276.2
-        for <git@vger.kernel.org>; Tue, 10 Oct 2023 08:20:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696951201; x=1697556001; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0xZ35rMOcSgROfd9iA+c1DQjtHqGaQa41aPQVahLqSM=;
-        b=Q490OnPwQC6N3YAZnlt7XaUmmEuHZ/+ViZ79VL2iZxgMJexscEh2PkZEF+pD1lI6si
-         G53F3SbeDg5w6u++/GyhUKTAtRKI8EaQPNYTSJnzsYsuRGI4E/xGBYH0WRGpZEMBjeJM
-         38SLVUHsbvIkbDLCo4XUhc+NYYqfLCLvVZNpu7DG18IFPReXbGjRQg89sFTpGHzmgG7L
-         expMu0n+ZHR/JWaSrhlGVMz/jMpPR1sMPX6IEYsx8JizZAjSrACi9U1q4eX/SNN6UauN
-         GAfcC3TCNF5l0ZCwC4K/IU92irRd7DpxDUP72Wrvxjaqf/ceh4NMIgQ5APZQMffJ6ghN
-         LlXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696951201; x=1697556001;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0xZ35rMOcSgROfd9iA+c1DQjtHqGaQa41aPQVahLqSM=;
-        b=pPgwdfsJnNNmkl7XmecVri9Xje3D1ZT2K+/W0o1JuWc1pm6CVtJYGoEyCvX2QUhnP8
-         cjvmWMYZNPQDqjiChUsNpKg1r01VabdoFF/fwcGO8gv/gR/GworsBHI549iTypsfamVi
-         MmWJxYnlhmUDeIvVOJIj6ZrzCvGhqsWRd5Gcv1qXdznDSW7alQ3JPRLRviQJogYAveCh
-         4hGsf9PodrZ/Yvx1wCrHgAOz+UQNLLJSbq3bWkRIABNYBE4CK2jsLRXLQrknRXhCaXDb
-         IuKDxK8YLDAvGBsG+pdVcNZ3voOirsG8lS8yfrddZ5ul1QkSzX/RehHchQrI0iSr/0w4
-         zfew==
-X-Gm-Message-State: AOJu0YzIE2UAyI6kjf+deB/pmVbWhgfgaQzDraLURJYRxBM4GcCvyZq5
-        7qBzEujTHoO7aAG+OmGQcMI13oc0xW0m4nIq8g==
-X-Google-Smtp-Source: AGHT+IHXXfe3sU/IZRsRJdLlPm82PEtSPsZVsFRicBC8DR2p6A8IBJbC0nUgIElXFGEjdwyFqe6BtG5sWXeUTVvxwSw=
-X-Received: by 2002:a25:db8e:0:b0:d9a:60c8:c5ff with SMTP id
- g136-20020a25db8e000000b00d9a60c8c5ffmr1958795ybf.65.1696951201206; Tue, 10
- Oct 2023 08:20:01 -0700 (PDT)
+        with ESMTP id S233689AbjJJQNn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Oct 2023 12:13:43 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A60CCCA
+        for <git@vger.kernel.org>; Tue, 10 Oct 2023 09:13:41 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0187431FCA;
+        Tue, 10 Oct 2023 12:13:41 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=PmkYbroUbaICc49mWs4IdE+umPxkLynYDmY61A
+        cneMc=; b=Y7IPRzouXPh1J+F7oJXAncQOkWo8Cob067lowHD0HHZ/pCL7wvlOl4
+        cZdc2VOMBi2RCxR9WGwT/utHiotqg2SLYAOu8A34ZEyPGWUxhX9iVyOcMK1pz3Ny
+        Mxfrut6OrfXl2PoMrTD3krPgxDHMgXz0IxlvF8WxCk1mETlFy/rco=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id EE2CA31FC9;
+        Tue, 10 Oct 2023 12:13:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6A31631FC5;
+        Tue, 10 Oct 2023 12:13:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     phillip.wood123@gmail.com
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        Calvin Wan <calvinwan@google.com>
+Subject: Re: [PATCH v4 2/4] wrapper: reduce scope of remove_or_warn()
+In-Reply-To: <066b3162-6a81-45d7-b164-17b74e6c92dc@gmail.com> (phillip's
+        message of "Tue, 10 Oct 2023 10:59:38 +0100")
+References: <20230627195251.1973421-1-calvinwan@google.com>
+        <cover.1696021277.git.jonathantanmy@google.com>
+        <c9e7cd78576527571fd70b953e340b5bdd196221.1696021277.git.jonathantanmy@google.com>
+        <066b3162-6a81-45d7-b164-17b74e6c92dc@gmail.com>
+Date:   Tue, 10 Oct 2023 09:13:34 -0700
+Message-ID: <xmqqjzruv4k1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20231009011546.509-1-naomi.ibeh69@gmail.com> <xmqqlecbzl5e.fsf@gitster.g>
-In-Reply-To: <xmqqlecbzl5e.fsf@gitster.g>
-From:   Naomi Ibe <naomi.ibeh69@gmail.com>
-Date:   Tue, 10 Oct 2023 16:19:46 +0100
-Message-ID: <CACS=G2yUGGJwD05KOFZK+AV3TSNDvDEfC=pFRsLwKX_-dgt+gA@mail.gmail.com>
-Subject: Re: [PATCH 1/1] [OUTREACHY] Fixed add.c file to conform to guidelines
- when using die() listed in issue #635
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: F76E365C-6787-11EE-A33B-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you very much! I'd definitely make those changes on my next patch.
-Should I begin work on version 2 or should I still wait for additional
-input on the version 1?
+phillip.wood123@gmail.com writes:
 
-On Mon, Oct 9, 2023 at 7:49=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
+> Hi Jonathan
 >
-> Naomi Ibe <naomi.ibeh69@gmail.com> writes:
+> On 29/09/2023 22:20, Jonathan Tan wrote:
+>> From: Calvin Wan <calvinwan@google.com>
+>> remove_or_warn() is only used by entry.c and apply.c, but it is
+>> currently declared and defined in wrapper.{h,c}, so it has a scope much
+>> greater than it needs. This needlessly large scope also causes wrapper.c
+>> to need to include object.h, when this file is largely unconcerned with
+>> Git objects.
+>> Move remove_or_warn() to entry.{h,c}. The file apply.c still has
+>> access
+>> to it, since it already includes entry.h for another reason.
 >
-> > Subject: Re: [PATCH 1/1] [OUTREACHY] Fixed add.c file to conform to gui=
-delines when using d
+> This looks good. On a related note wrapper.c includes repository.h but
+> does use anything declared in that header.
 >
-> Subject: [OUTREACHY][PATCH 1/1] builtin/add.c: clean up die() messages
+> Best Wishes
 >
-> > From: Naomi <naomi.ibeh69@gmail.com>
->
-> The name and address on this line come from your commit object,
-> which in turn would have came from your configuration.  You have
->
->     [user]
->         name =3D Naomi
->         email =3D naomi.ibeh69@gmail.com
->
-> somewhere in your configuration file, perhaps in $HOME/.gitconfig or
-> somewhere.  When contributiong to this project, you want that "name"
-> line to also include your family name, as it should match what you
-> write on your Signed-off-by: line.  A focused way to do so without
-> affecting your author identity for other projects is to add
->
->     [user]
->         name =3D Naomi Ibe
->
-> in .git/config of the repository that you use to contribute to this
-> project, e.g.,
->
->     $ cd ... to the working tree of your clone of git you work in ...
->     $ git config user.name "Naomi Ibe"
->
-> The space above your Sign off is to fill the details you omitted on
-> the title of the message (which would say something about "conform
-> to guidelines" or "clean up" without mentioning what rule the
-> original violates), making the whole thing something like:
->
->     builtin/add.c: clean up die() messages
->
->     As described in the CodingGuidelines document, a single line
->     message given to die() and its friends should not capitalize its
->     first word, and should not add full-stop at the end.
->
->     Signed-off-by: ...
->
-> > Signed-off-by: Naomi Ibe <naomi.ibeh69@gmail.com>
-> > ---
-> >  builtin/add.c | 10 +++++-----
-> >  1 file changed, 5 insertions(+), 5 deletions(-)
->
-> Thanks.  Otherwise the patch looks good.
->
-> >
-> > diff --git a/builtin/add.c b/builtin/add.c
-> > index c27254a5cd..5126d2ede3 100644
-> > --- a/builtin/add.c
-> > +++ b/builtin/add.c
-> > @@ -182,7 +182,7 @@ static int edit_patch(int argc, const char **argv, =
-const char *prefix)
-> >       git_config(git_diff_basic_config, NULL); /* no "diff" UI options =
-*/
-> >
-> >       if (repo_read_index(the_repository) < 0)
-> > -             die(_("Could not read the index"));
-> > +             die(_("could not read the index"));
-> >
-> >       repo_init_revisions(the_repository, &rev, prefix);
-> >       rev.diffopt.context =3D 7;
-> > @@ -200,15 +200,15 @@ static int edit_patch(int argc, const char **argv=
-, const char *prefix)
-> >               die(_("editing patch failed"));
-> >
-> >       if (stat(file, &st))
-> > -             die_errno(_("Could not stat '%s'"), file);
-> > +             die_errno(_("could not stat '%s'"), file);
-> >       if (!st.st_size)
-> > -             die(_("Empty patch. Aborted."));
-> > +             die(_("empty patch. aborted"));
-> >
-> >       child.git_cmd =3D 1;
-> >       strvec_pushl(&child.args, "apply", "--recount", "--cached", file,
-> >                    NULL);
-> >       if (run_command(&child))
-> > -             die(_("Could not apply '%s'"), file);
-> > +             die(_("could not apply '%s'"), file);
-> >
-> >       unlink(file);
-> >       free(file);
-> > @@ -568,7 +568,7 @@ int cmd_add(int argc, const char **argv, const char=
- *prefix)
-> >  finish:
-> >       if (write_locked_index(&the_index, &lock_file,
-> >                              COMMIT_LOCK | SKIP_IF_UNCHANGED))
-> > -             die(_("Unable to write new index file"));
-> > +             die(_("unable to write new index file"));
-> >
-> >       dir_clear(&dir);
-> >       clear_pathspec(&pathspec);
+> Phillip
+
+Thanks for a review.  I just checked 'master', 'next', and 'seen'
+and in all '#include <repository.h>' can safely be dropped from
+there, it seems.  It may be too trivial even for a microproject,
+but nevertheless a nice clean-up.
+
