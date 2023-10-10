@@ -2,61 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE89ECD8CB4
-	for <git@archiver.kernel.org>; Tue, 10 Oct 2023 20:33:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D120CD8CB6
+	for <git@archiver.kernel.org>; Tue, 10 Oct 2023 20:33:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234284AbjJJUdm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Oct 2023 16:33:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60690 "EHLO
+        id S234416AbjJJUdo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Oct 2023 16:33:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234393AbjJJUde (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Oct 2023 16:33:34 -0400
-Received: from mail-qv1-xf36.google.com (mail-qv1-xf36.google.com [IPv6:2607:f8b0:4864:20::f36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E0F594
-        for <git@vger.kernel.org>; Tue, 10 Oct 2023 13:33:32 -0700 (PDT)
-Received: by mail-qv1-xf36.google.com with SMTP id 6a1803df08f44-65b07651b97so37442076d6.1
-        for <git@vger.kernel.org>; Tue, 10 Oct 2023 13:33:32 -0700 (PDT)
+        with ESMTP id S234483AbjJJUdh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Oct 2023 16:33:37 -0400
+Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFD66CA
+        for <git@vger.kernel.org>; Tue, 10 Oct 2023 13:33:35 -0700 (PDT)
+Received: by mail-qk1-x733.google.com with SMTP id af79cd13be357-77574c2cffdso24862385a.0
+        for <git@vger.kernel.org>; Tue, 10 Oct 2023 13:33:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1696970011; x=1697574811; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1696970014; x=1697574814; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=M8raC1pwRNPDQkT90yACQAJIG2zJj06sfDjsWA9vqOU=;
-        b=sJT0KNgHZyV1JglWBV/ah8JdjZLFtkui2F5mzG6Vmaa9twFrgZYeyGODly27YHz/15
-         CG1ofPIyHvaz4DhIp4+wjsIUEyY6+mOrRJKSImtUO4R5NSOkPBSpaDT3AzxxUa6/rmjj
-         kSzwHWu9/zFdjdjvr7lqcIK5+KI5zDlHPF6itxIPv6jEnustaRtdFLMOfKC8MQ7q0c10
-         MaqrEKvTYvSO0ZD8zCPHwf94rwvN3Zah2KQFjvz3fUCYHjz1q5XH5qUTGHNYtQ+Q4wgE
-         4QSjZYIXLdKUlOwTptjtO5vKX8wpGVIOPD/JZQ9kIyVTi+RqHcwRp7up8DNEjGf5IQ5d
-         A7Hw==
+        bh=HrhldJ5BiV5CHevI9UjIhPIAgr48MFPlcVr2jUR0coQ=;
+        b=ttdlZTDDL5ovJdsJ1FU5HYSLnI64X4ua97gG63/c69oBEsNwH+FU5FswbY3tMfhmYK
+         rZj4Wr61R4iKqOG9jQONZIBif670QT0YRR+Ws83suvZi87ZWyT84iolHdcyBfC7t/Z/Q
+         B6vW2r1WZ205Lr665SL3OB/8ibiaP8NpVeICYXU9CFlzEALka2MAqzgrXurUVIIqnr0K
+         ULvNtLUVWjyDmRqkO+ZN/IZwZFsvqXdsbx4VGgWC2wYsPNDQOze2IQRPjIyNydNUzuj8
+         nAbJj2bffiCW1EoRhA0iTfy1+z1LjaAOhDU7iiEHOlnVl6lIzppQW8640L3C2Ft8PXPX
+         YXEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696970011; x=1697574811;
+        d=1e100.net; s=20230601; t=1696970014; x=1697574814;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=M8raC1pwRNPDQkT90yACQAJIG2zJj06sfDjsWA9vqOU=;
-        b=GQRBhOsBVFfPQVhLf6M2sUrCDZ9SYsfor5MIDcLjYFog7toi/xSeHR+NUHF+GoHqRi
-         7dHzCLZys3YEPDQLACSboXnrZdC8HZzM4EcQxvu9ThCnBNo/Ow5n3puDpPkGjSuwShxK
-         aUTTg1Ijyxug6QwjJmzjNHy1Y8B5im3G9Myg8RyyIvgCyLuZzlyqpy3W3xG8ItJ2VntE
-         gjTG1ueF+XWri9OKu6dkZfUkgJAlQMhgGZM7rLK9G59jdqARepKvrBNf6dIXOa0bZ4qV
-         YWho8Rhm4gWJOUw5TxizqTi8YrXa+YMxg4+RowmTgzO9fExeZs+c7uLnxBzqcKTaLJk7
-         6A5A==
-X-Gm-Message-State: AOJu0YxqscSuqEsg0JdhuWuxifdry+pWL9vcz/qiX3o8pMWcyp52Lt8c
-        BpmfkJKAGJ/UIBOBWjKbFZhoFa9EE9YSURQH5rmMNQ==
-X-Google-Smtp-Source: AGHT+IH7Cifs0+Hq0a6X63OCrwl/LJQORO4UNZdn2RYGFul2FO3j+nPKqM43xJDPdbgLPTG7k0jh5g==
-X-Received: by 2002:a05:6214:104d:b0:658:3a12:9949 with SMTP id l13-20020a056214104d00b006583a129949mr20366515qvr.53.1696970011429;
-        Tue, 10 Oct 2023 13:33:31 -0700 (PDT)
+        bh=HrhldJ5BiV5CHevI9UjIhPIAgr48MFPlcVr2jUR0coQ=;
+        b=P79Ujf8vksExWObdhwKMWCe4bH2DlJ6boqjyDdx9p2HPX1UyDBom+uWq5VnGCcutzH
+         TMlwjcDwIxVtHZYqBg97i0VaorQftqSUe84VErRYoRU4w4EUmGCVxeC1KzYlG++EOshz
+         cFUuDzlME+E1NFjf+ZlZYFKISoB5TSLocx08vH9tCOXg+KZ+aqJ48TOTxQdAISEuvCki
+         aX2MkPqcPcvVspRcMHnx39SvlfiJGVBnmlzUsAkip6ehCotD9h8qLu1YexscUGDcprDt
+         col5I5o4V44grZMwwwTc4kD1ssh9jDhNTF6/I11RvXoxwGpfkQlHVzpcsou+0zwtA9+D
+         PH4Q==
+X-Gm-Message-State: AOJu0YxVz1xATkIjRMeg1Cv8FiDOJ/F8706EKfG7cvD7EIgYg6V9yQNJ
+        YTxs/rYpVk7QuyOFFkscjn2zpM34egQPxhGJOBTQxg==
+X-Google-Smtp-Source: AGHT+IGQClRCTwmQGRSXBHJbh41t9mXyvwWrvGiX76vsZZNTOdRypzHweC2NuqXHIQZjCmW+9xWaqQ==
+X-Received: by 2002:a05:620a:2956:b0:765:734b:1792 with SMTP id n22-20020a05620a295600b00765734b1792mr22399786qkp.23.1696970014639;
+        Tue, 10 Oct 2023 13:33:34 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id ct5-20020a056214178500b0066cf09f5ba9sm942231qvb.131.2023.10.10.13.33.31
+        by smtp.gmail.com with ESMTPSA id z26-20020ae9c11a000000b0076ca9f79e1fsm4617602qki.46.2023.10.10.13.33.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Oct 2023 13:33:31 -0700 (PDT)
-Date:   Tue, 10 Oct 2023 16:33:30 -0400
+        Tue, 10 Oct 2023 13:33:34 -0700 (PDT)
+Date:   Tue, 10 Oct 2023 16:33:33 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>,
         Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: [PATCH v3 04/17] gitformat-commit-graph: describe version 2 of BDAT
-Message-ID: <17703ed89ae9a60a26161682ce1c5a468d4ab3e0.1696969994.git.me@ttaylorr.com>
+Subject: [PATCH v3 05/17] t/helper/test-read-graph.c: extract
+ `dump_graph_info()`
+Message-ID: <94552abf455c6d341a0811333ae4edb4a8cea259.1696969994.git.me@ttaylorr.com>
 References: <cover.1692654233.git.me@ttaylorr.com>
  <cover.1696969994.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -67,42 +68,68 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jonathan Tan <jonathantanmy@google.com>
+Prepare for the 'read-graph' test helper to perform other tasks besides
+dumping high-level information about the commit-graph by extracting its
+main routine into a separate function.
 
-The code change to Git to support version 2 will be done in subsequent
-commits.
-
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Documentation/gitformat-commit-graph.txt | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ t/helper/test-read-graph.c | 31 ++++++++++++++++++-------------
+ 1 file changed, 18 insertions(+), 13 deletions(-)
 
-diff --git a/Documentation/gitformat-commit-graph.txt b/Documentation/gitformat-commit-graph.txt
-index 31cad585e2..3e906e8030 100644
---- a/Documentation/gitformat-commit-graph.txt
-+++ b/Documentation/gitformat-commit-graph.txt
-@@ -142,13 +142,16 @@ All multi-byte numbers are in network byte order.
+diff --git a/t/helper/test-read-graph.c b/t/helper/test-read-graph.c
+index 8c7a83f578..3375392f6c 100644
+--- a/t/helper/test-read-graph.c
++++ b/t/helper/test-read-graph.c
+@@ -5,20 +5,8 @@
+ #include "bloom.h"
+ #include "setup.h"
  
- ==== Bloom Filter Data (ID: {'B', 'D', 'A', 'T'}) [Optional]
-     * It starts with header consisting of three unsigned 32-bit integers:
--      - Version of the hash algorithm being used. We currently only support
--	value 1 which corresponds to the 32-bit version of the murmur3 hash
-+      - Version of the hash algorithm being used. We currently support
-+	value 2 which corresponds to the 32-bit version of the murmur3 hash
- 	implemented exactly as described in
- 	https://en.wikipedia.org/wiki/MurmurHash#Algorithm and the double
- 	hashing technique using seed values 0x293ae76f and 0x7e646e2 as
- 	described in https://doi.org/10.1007/978-3-540-30494-4_26 "Bloom Filters
--	in Probabilistic Verification"
-+	in Probabilistic Verification". Version 1 Bloom filters have a bug that appears
-+	when char is signed and the repository has path names that have characters >=
-+	0x80; Git supports reading and writing them, but this ability will be removed
-+	in a future version of Git.
-       - The number of times a path is hashed and hence the number of bit positions
- 	      that cumulatively determine whether a file is present in the commit.
-       - The minimum number of bits 'b' per entry in the Bloom filter. If the filter
+-int cmd__read_graph(int argc UNUSED, const char **argv UNUSED)
++static void dump_graph_info(struct commit_graph *graph)
+ {
+-	struct commit_graph *graph = NULL;
+-	struct object_directory *odb;
+-
+-	setup_git_directory();
+-	odb = the_repository->objects->odb;
+-
+-	prepare_repo_settings(the_repository);
+-
+-	graph = read_commit_graph_one(the_repository, odb);
+-	if (!graph)
+-		return 1;
+-
+ 	printf("header: %08x %d %d %d %d\n",
+ 		ntohl(*(uint32_t*)graph->data),
+ 		*(unsigned char*)(graph->data + 4),
+@@ -57,6 +45,23 @@ int cmd__read_graph(int argc UNUSED, const char **argv UNUSED)
+ 	if (graph->topo_levels)
+ 		printf(" topo_levels");
+ 	printf("\n");
++}
++
++int cmd__read_graph(int argc UNUSED, const char **argv UNUSED)
++{
++	struct commit_graph *graph = NULL;
++	struct object_directory *odb;
++
++	setup_git_directory();
++	odb = the_repository->objects->odb;
++
++	prepare_repo_settings(the_repository);
++
++	graph = read_commit_graph_one(the_repository, odb);
++	if (!graph)
++		return 1;
++
++	dump_graph_info(graph);
+ 
+ 	UNLEAK(graph);
+ 
 -- 
 2.42.0.342.g8bb3a896ee
 
