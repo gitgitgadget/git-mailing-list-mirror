@@ -2,61 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AEB66CD68E8
-	for <git@archiver.kernel.org>; Tue, 10 Oct 2023 08:57:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 31119CD691F
+	for <git@archiver.kernel.org>; Tue, 10 Oct 2023 09:59:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229559AbjJJI5t (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Oct 2023 04:57:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46518 "EHLO
+        id S230430AbjJJJ7q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Oct 2023 05:59:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229463AbjJJI5s (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Oct 2023 04:57:48 -0400
-Received: from bluemchen.kde.org (unknown [IPv6:2001:470:142:8::100])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7553A9
-        for <git@vger.kernel.org>; Tue, 10 Oct 2023 01:57:45 -0700 (PDT)
-Received: from ugly.fritz.box (localhost [127.0.0.1])
-        by bluemchen.kde.org (Postfix) with ESMTP id 5703823F29;
-        Tue, 10 Oct 2023 04:57:29 -0400 (EDT)
-Received: by ugly.fritz.box (masqmail 0.3.6-dev, from userid 1000)
-        id 1qq8YT-ENp-00; Tue, 10 Oct 2023 10:57:29 +0200
-Date:   Tue, 10 Oct 2023 10:57:29 +0200
-From:   Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git@vger.kernel.org, phillip.wood123@gmail.com, linusa@google.com,
-        calvinwan@google.com, gitster@pobox.com, rsbecker@nexbridge.com
-Subject: Re: [PATCH v8 1/3] unit tests: Add a project plan document
-Message-ID: <ZSUR+YdzqNTSB0XC@ugly>
-References: <0169ce6fb9ccafc089b74ae406db0d1a8ff8ac65.1688165272.git.steadmon@google.com>
- <cover.1696889529.git.steadmon@google.com>
- <81c5148a1267b8f9ce432a950340f0fa16b4d773.1696889530.git.steadmon@google.com>
+        with ESMTP id S230423AbjJJJ7o (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Oct 2023 05:59:44 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F138399
+        for <git@vger.kernel.org>; Tue, 10 Oct 2023 02:59:41 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-32799639a2aso5334522f8f.3
+        for <git@vger.kernel.org>; Tue, 10 Oct 2023 02:59:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1696931980; x=1697536780; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=FWbSgc0ZUlMzyn7LuoRa6qxJ33d/SNGyD8BHk23f6Y8=;
+        b=nVkAwux0lfZ+1+D6jcS3oz1JvIssE44PGpPi+0TuOhrkcWe73vte5oHACya9K1qJR0
+         Uuy3omD9qAIpqUdCGLOJnZbziidKQp5xpYKuAnaGNbgX8VKnNy15qA4/q61simS1fg8+
+         1MNTqwMolldiS5L7qBbc2kQvb9pJ9C+1dxyN1OtWmoIITVaviBCDhMOIJu5Zq7gOBpFG
+         H8zNx6uBulRWV6m758D9vxM9zPPLO4336YHHgDMaS48N2o1KyW65h4qBc/xYWwm0BL0y
+         rX0NfQlES32Q62BA9LKukhnDrsFYnvkic3s0HP2h+Bo9eo/UbwdTcxpe+gbPBI7mANCy
+         O0gQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696931980; x=1697536780;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FWbSgc0ZUlMzyn7LuoRa6qxJ33d/SNGyD8BHk23f6Y8=;
+        b=HVi3/tXwLKM5lCBko+kmrFD6FNMMGoS+yD7/b47uvMZqs/MslvP6DP+lAdfNj0S3ob
+         TwIwRT59wAsE+9SxqJoFQN38f6e5OVpn4eZaDfo08HbjyBFN1Q7Vd+Q64rQUHB+bxOG7
+         QFQoGDgMwXziU3qb7vSa5eCpLHSH9UBWhjx2FTBf3I0PBYtZ2uLPRXMt6ci0cXHzN6Ri
+         YJBmBMhCqMEnuYJQMlqu7aQUsNDieACE9CE+JSp6Tw0B6iOwo7QUYtGY5auXG4VUZeBZ
+         d7m6o9dJgFy252wYRdUkNWxi90z1MOo+rg/hqayOeM2PShr2YV0sopGgNSb65xNluqiJ
+         3vcg==
+X-Gm-Message-State: AOJu0YwYT17P+fDnLoQB++yDrc7TUxaZXHqpiXAtsQ1+1lPr7nanmtfe
+        Gvjotdi/LbCh7/GopaNSh4s=
+X-Google-Smtp-Source: AGHT+IE6QvzNSEQQu+fxLBwYMY1+L8f9tT2cshMirulLg6fJL7YRbFvYBxTU1B1AqmrZyjeCtvbyfQ==
+X-Received: by 2002:adf:ec82:0:b0:322:db93:41ab with SMTP id z2-20020adfec82000000b00322db9341abmr15786726wrn.0.1696931980222;
+        Tue, 10 Oct 2023 02:59:40 -0700 (PDT)
+Received: from [192.168.1.212] ([90.242.223.1])
+        by smtp.gmail.com with ESMTPSA id l2-20020a5d4802000000b0031fe0576460sm12205991wrq.11.2023.10.10.02.59.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Oct 2023 02:59:39 -0700 (PDT)
+Message-ID: <066b3162-6a81-45d7-b164-17b74e6c92dc@gmail.com>
+Date:   Tue, 10 Oct 2023 10:59:38 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <81c5148a1267b8f9ce432a950340f0fa16b4d773.1696889530.git.steadmon@google.com>
+User-Agent: Mozilla Thunderbird
+From:   phillip.wood123@gmail.com
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v4 2/4] wrapper: reduce scope of remove_or_warn()
+Content-Language: en-US
+To:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Cc:     Calvin Wan <calvinwan@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20230627195251.1973421-1-calvinwan@google.com>
+ <cover.1696021277.git.jonathantanmy@google.com>
+ <c9e7cd78576527571fd70b953e340b5bdd196221.1696021277.git.jonathantanmy@google.com>
+In-Reply-To: <c9e7cd78576527571fd70b953e340b5bdd196221.1696021277.git.jonathantanmy@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 09, 2023 at 03:21:20PM -0700, Josh Steadmon wrote:
->+=== Comparison
->+
->+[format="csv",options="header",width="33%"]
->+|=====
->+Framework,"<<license,License>>","<<vendorable-or-ubiquitous,Vendorable or ubiquitous>>","<<maintainable-extensible,Maintainable / extensible>>","<<major-platform-support,Major platform support>>","<<tap-support,TAP support>>","<<diagnostic-output,Diagnostic output>>","<<runtime--skippable-tests,Runtime- skippable tests>>","<<parallel-execution,Parallel execution>>","<<mock-support,Mock support>>","<<signal-error-handling,Signal & error handling>>","<<project-kloc,Project KLOC>>","<<adoption,Adoption>>"
->
-the redundancy seems unnecessary; asciidoc should automatically use each 
-target's section title as the xreflabel.
+Hi Jonathan
 
->+https://lore.kernel.org/git/c902a166-98ce-afba-93f2-ea6027557176@gmail.com/[Custom Git impl.],[lime-background]#GPL v2#,[lime-background]#True#,[lime-background]#True#,[lime-background]#True#,[lime-background]#True#,[lime-background]#True#,[lime-background]#True#,[red-background]#False#,[red-background]#False#,[red-background]#False#,1,0
->+https://github.com/silentbicycle/greatest[Greatest],[lime-background]#ISC#,[lime-background]#True#,[yellow-background]#Partial#,[lime-background]#True#,[yellow-background]#Partial#,[lime-background]#True#,[lime-background]#True#,[red-background]#False#,[red-background]#False#,[red-background]#False#,3,1400
->+https://github.com/Snaipe/Criterion[Criterion],[lime-background]#MIT#,[red-background]#False#,[yellow-background]#Partial#,[lime-background]#True#,[lime-background]#True#,[lime-background]#True#,[lime-background]#True#,[lime-background]#True#,[red-background]#False#,[lime-background]#True#,19,1800
->+https://github.com/rra/c-tap-harness/[C TAP],[lime-background]#Expat#,[lime-background]#True#,[yellow-background]#Partial#,[yellow-background]#Partial#,[lime-background]#True#,[red-background]#False#,[lime-background]#True#,[red-background]#False#,[red-background]#False#,[red-background]#False#,4,33
->+https://libcheck.github.io/check/[Check],[lime-background]#LGPL v2.1#,[red-background]#False#,[yellow-background]#Partial#,[lime-background]#True#,[lime-background]#True#,[lime-background]#True#,[red-background]#False#,[red-background]#False#,[red-background]#False#,[lime-background]#True#,17,973
->+|=====
->+
-i find this totally unreadable in its raw form.
-consider user-defined document-attributes for specific cell contents.
-externalizing the urls would probably help as well (i'm not sure how to 
-do that best).
+On 29/09/2023 22:20, Jonathan Tan wrote:
+> From: Calvin Wan <calvinwan@google.com>
+> 
+> remove_or_warn() is only used by entry.c and apply.c, but it is
+> currently declared and defined in wrapper.{h,c}, so it has a scope much
+> greater than it needs. This needlessly large scope also causes wrapper.c
+> to need to include object.h, when this file is largely unconcerned with
+> Git objects.
+> 
+> Move remove_or_warn() to entry.{h,c}. The file apply.c still has access
+> to it, since it already includes entry.h for another reason.
 
-regards
+This looks good. On a related note wrapper.c includes repository.h but 
+does use anything declared in that header.
+
+Best Wishes
+
+Phillip
