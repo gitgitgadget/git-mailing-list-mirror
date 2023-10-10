@@ -2,106 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 98A14CD691F
-	for <git@archiver.kernel.org>; Tue, 10 Oct 2023 10:06:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FD30CD80A4
+	for <git@archiver.kernel.org>; Tue, 10 Oct 2023 11:01:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230128AbjJJKGE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Oct 2023 06:06:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43884 "EHLO
+        id S229958AbjJJLBk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Oct 2023 07:01:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229499AbjJJKGD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Oct 2023 06:06:03 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3713D93
-        for <git@vger.kernel.org>; Tue, 10 Oct 2023 03:06:01 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-50437c618b4so6855237e87.2
-        for <git@vger.kernel.org>; Tue, 10 Oct 2023 03:06:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696932359; x=1697537159; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=d5h4T0xg/LhKvDpi7qQbXU47bGwLvdcbK6AkPszbja0=;
-        b=Ixxb7HVxzE7iA72LIFK3lVCH6seMWYt0Cv8TSAiKyK3RylDTK9hBpWR+vOZxPRIKY0
-         3ME1Hiu7utnwEw42boHWu9pq7r2ujN1n8W3i5oaH6IAxAx1BzF6uoqyBr9LeiVN7Y6tn
-         qPPcOakYSPSaYdXU0le1CIwp+6wDRDLgXSd1Uflz/xmK2yv0gmTuMYCXhQQE9wneIACl
-         7xANxYS6rRTmjoU/CYR6h4yuopYE+I4kUqsVtTkN5qQKbV9HBXkO0whvEDcMnMBfyuDf
-         YRkgWhsMnWKXmALLJ3VoHvoFLdC5Yug/vGb4Zb8gKF0mpvB25NxamMNg+khsO38H1Dau
-         oeGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696932359; x=1697537159;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=d5h4T0xg/LhKvDpi7qQbXU47bGwLvdcbK6AkPszbja0=;
-        b=LlAvjr3bq2vR4htpQRqHcOPeT8cb/RgiFk8gwT1ZvCbOKEwq163P6V9NAprwf7NzUF
-         VeQHl1UX6XDnrMRf26GYIK/8nIp/HxGuV/d33M3ZQedV02fh128FnoJpcKrzqOUWtJrd
-         sDhfWQjIxTgGISkFTTvTuuq0UADQE2Quzw0q1DiAb5Ebu4Y8dPDk/DQC8lbFuVYbxK/c
-         5U51qKip9IEuEASIjKx3TYeeJuriowlO7dN8mreHg7IkruoTEoPYlrhLdd4+j+R/Ara4
-         fN+Mpq+CPX2cflE9+8XRoW0btNfhi685z5HY0azzLmPbqmo1xTsaa6gWdOQR1nLFGkgf
-         0z7A==
-X-Gm-Message-State: AOJu0Yx5/cbcIIAriDBdktiNP08UxssEcF9LEY9HlL1tHO8C/YHSOoDB
-        TCHGz8wyOy3uULeax4V7yIRLTZ4ZJEw=
-X-Google-Smtp-Source: AGHT+IGC4NI7QO2y4LWbA5KKAzYw7FPq4yuYE9TU1bTs6QU8y4zP95XHlizFFH3FxJFJIWAym0ayxA==
-X-Received: by 2002:a05:6512:250c:b0:503:1b83:e352 with SMTP id be12-20020a056512250c00b005031b83e352mr18341473lfb.52.1696932359045;
-        Tue, 10 Oct 2023 03:05:59 -0700 (PDT)
-Received: from [192.168.1.212] ([90.242.223.1])
-        by smtp.gmail.com with ESMTPSA id e26-20020adfa45a000000b003143c9beeaesm206198wra.44.2023.10.10.03.05.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Oct 2023 03:05:58 -0700 (PDT)
-Message-ID: <4670774d-a899-492c-9b36-98ee243c8d4d@gmail.com>
-Date:   Tue, 10 Oct 2023 11:05:58 +0100
+        with ESMTP id S229541AbjJJLBi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Oct 2023 07:01:38 -0400
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 017F194
+        for <git@vger.kernel.org>; Tue, 10 Oct 2023 04:01:35 -0700 (PDT)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+        by mailout.nyi.internal (Postfix) with ESMTP id 5B3175C0266;
+        Tue, 10 Oct 2023 07:01:33 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute5.internal (MEProxy); Tue, 10 Oct 2023 07:01:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+        :content-type:content-type:date:date:from:from:in-reply-to
+        :message-id:mime-version:reply-to:sender:subject:subject:to:to;
+         s=fm2; t=1696935693; x=1697022093; bh=8VgQhYRSrWg2F+BjQoc6Xn9wp
+        b7HDIey92WmXZoA8Ks=; b=rKOnpZXAGxepm+h0L2cMIABskRDNL+R7KkFEapGQM
+        VGOQpwtfFoOOTzVSTqXRLvfeYZPidGttBh7tU9of1S5f5tkv9JqBg/mIGSxO1Xka
+        SBQvxxcemw6hwIRpNv6DFAaRTJf/G9KekpteWK6VTuT6mKH8e7aewxs6xb1eL1Aq
+        R0yYLz+dOsQoEqNYqul+CUoQS76LLzwtOTMGxhxAkliygf80YBZWk6NVrJVimlPD
+        3ifVLT6MuHA0YV3A7PdBJvxuYGA2nZyvngk6LPvxmoBEwalbtd5RAXXMVlZ2dAKh
+        fTQYgpyt9RgLJ+3v+w8tudT1Qz9rZrjwyKVyy4jUU/KQQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:content-type:date:date
+        :feedback-id:feedback-id:from:from:in-reply-to:message-id
+        :mime-version:reply-to:sender:subject:subject:to:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+        1696935693; x=1697022093; bh=8VgQhYRSrWg2F+BjQoc6Xn9wpb7HDIey92W
+        mXZoA8Ks=; b=V3L058wwpIMdAdqdNJ6LS0k2RJwzjiiQwDKF4hW6RIW10DKLrwa
+        Ps+mJKCZM4nM+FFv8mHW476dwfRhTRyNIHwRvcy0etn8bFVnusRx377vl80FTTo+
+        xnFMm62r0xKF3zTqZFR+Uz1tn7tUzTrrttjxiya02Q0G/OWTK3jWC6ghZlcRuvy6
+        1szNK2gElXclKjQY1DHPe/rGP4jsbZAgctgb8fTwL8KPrHSyBLs9rNtX+J5J2Btg
+        gfyef81dN/rPSjBS1wpLcQJb03S3us5ba6tNwIY6vmw/a4XjDMrP64q4lbgpiJ++
+        Os+7yvhoadwtEAjxVYB0E2MM06nRiZm9M7g==
+X-ME-Sender: <xms:DC8lZUZfSxf7byspqBpEHM5tbJwQ8Gv4bmFGlkh28fglb-FrC5ptew>
+    <xme:DC8lZfaQLnPrzhTAolvrhfrZPpqlc6lErhSfpgOwm_Vlg9_W4oYXdQwENr_XvhNfF
+    C43LCe8p4vxpsMBNQ>
+X-ME-Received: <xmr:DC8lZe8UOc-Dj2GRoxxWaE54je72sswjik0P3id5gYu7aVANngW85vfGhifQnCTfKCDQQihuoVnNABjI8niR1bQVJyTxPOffnuV_9J3bRPnXDOPZ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrheehgdeffecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvvefukfggtggusehgtderredttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    eugfeutdeuieehteelveegudejkeejheeljeejhffhgffhvefgkeeukeejtdeijeenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhm
+X-ME-Proxy: <xmx:DC8lZeoPVFexmv6SjKXdnD5D5CHB8VkfOPlB7XfGC_oy7HlewCeTVQ>
+    <xmx:DC8lZfrGEonyK3ncjxmKVSGePfBlADw6H4WJpBHgjCZlcjv3x2ejRg>
+    <xmx:DC8lZcTwIfcWF9AzA5rQcM4aahjDaVIbhcyFCObbJ2Fib0KVfwUR8g>
+    <xmx:DS8lZeRANMqnWk0cy6BVgvn9iNhyPmFNKjzCYAeuLROUS3vRN1dMeQ>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 10 Oct 2023 07:01:31 -0400 (EDT)
+Received: by vm-mail (OpenSMTPD) with ESMTPSA id e90df579 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Tue, 10 Oct 2023 11:01:28 +0000 (UTC)
+Date:   Tue, 10 Oct 2023 13:01:26 +0200
+From:   Patrick Steinhardt <ps@pks.im>
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] doc/git-worktree: mention "refs/rewritten" as per-worktree
+ refs
+Message-ID: <985ac850eb6e60ae76601acc8bfbcd56f99348b4.1696935657.git.ps@pks.im>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From:   phillip.wood123@gmail.com
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 0/4] Preliminary patches before git-std-lib
-Content-Language: en-US
-To:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Cc:     Calvin Wan <calvinwan@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20230627195251.1973421-1-calvinwan@google.com>
- <cover.1696021277.git.jonathantanmy@google.com>
-In-Reply-To: <cover.1696021277.git.jonathantanmy@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="UGaUHjYvw7qi7lVn"
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan
 
-On 29/09/2023 22:20, Jonathan Tan wrote:
-> Calvin will be away for a few weeks and I'll be handling the git-std-lib
-> effort in the meantime. My goals will be:
-> 
-> - Get the preliminary patches in Calvin's patch set (patches 1-4) merged
-> first.
-> 
-> - Updating patches 5-6 based on reviewer feedback (including my
-> feedback). I have several aims including reducing or eliminating the
-> need for the GIT_STD_LIB preprocessor variable, and making stubs a test-
-> only concern (I think Phillip has some similar ideas [1] but I haven't
-> looked at their repo on GitHub yet).
+--UGaUHjYvw7qi7lVn
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-It sounds like we're thinking along similar lines, do feel free get in 
-touch on or off the list if you want to ask anything about those patches 
-I pushed to github.
+Some references are special in the context of worktrees as they are
+considered to be per-worktree instead of shared across all of the
+worktrees. Most importantly, this includes "refs/worktree/" that have
+explicitly been designed such that users can create per-woorktree refs.
+But there are also special references that have an associated meaning
+like "refs/bisect/", which is used to track state of git-bisect(1).
 
-> [1] https://lore.kernel.org/git/98f3edcf-7f37-45ff-abd2-c0038d4e0589@gmail.com/
-> 
-> This patch set is in service of the first goal. Because the libification
-> patches are no longer included in this patch set, I have rewritten the
-> commit messages to justify the patches in terms of code organization.
-> There are no changes in the code itself. Also, I have retained Calvin's
-> name as the author.
+These special per-worktree references are documented in git-worktree(1),
+but one instance is missing. In a9be29c9817 (sequencer: make refs
+generated by the `label` command worktree-local, 2018-04-25), we have
+converted "refs/rewritten/" to be a per-worktree reference as well.
+These references are used by our sequencer infrastructure to generate
+labels for rebased commits. So in order to allow for multiple concurrent
+rebases to happen in different worktrees, these references need to be
+tracked per worktree.
 
-I agree it makes sense to get the preliminary patches merged on their 
-own. I think the argument that they reduce the scope of includes is a 
-reasonable justification on its own. I've left a couple of comments but 
-they're looking pretty good.
+We forgot to update our documentation to mention these new per-worktree
+references, which is fixed by this patch.
 
-Best Wishes
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ Documentation/git-worktree.txt | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-Phillip
+diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+index a4fbf5e838..93d76f5d66 100644
+--- a/Documentation/git-worktree.txt
++++ b/Documentation/git-worktree.txt
+@@ -286,7 +286,8 @@ rules and how to access refs of one worktree from anoth=
+er.
+ In general, all pseudo refs are per-worktree and all refs starting with
+ `refs/` are shared. Pseudo refs are ones like `HEAD` which are directly
+ under `$GIT_DIR` instead of inside `$GIT_DIR/refs`. There are exceptions,
+-however: refs inside `refs/bisect` and `refs/worktree` are not shared.
++however: refs inside `refs/bisect`, `refs/worktree` and `refs/rewritten` a=
+re
++not shared.
+=20
+ Refs that are per-worktree can still be accessed from another worktree via
+ two special paths, `main-worktree` and `worktrees`. The former gives
+@@ -363,8 +364,8 @@ linked worktree `git rev-parse --git-path HEAD` returns
+ `/path/other/test-next/.git/HEAD` or `/path/main/.git/HEAD`) while `git
+ rev-parse --git-path refs/heads/master` uses
+ `$GIT_COMMON_DIR` and returns `/path/main/.git/refs/heads/master`,
+-since refs are shared across all worktrees, except `refs/bisect` and
+-`refs/worktree`.
++since refs are shared across all worktrees, except `refs/bisect`,
++`refs/worktree` and `refs/rewritten`.
+=20
+ See linkgit:gitrepository-layout[5] for more information. The rule of
+ thumb is do not make any assumption about whether a path belongs to
+--=20
+2.42.0
+
+
+--UGaUHjYvw7qi7lVn
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmUlLwYACgkQVbJhu7ck
+PpSzsBAAkWmyFwNiQgoCKNZptMWpny3YZj3MUShjPuaj2kHmfzOFIM4i6y5Mvjus
+fsKuFGsHmdACzZqlnhodBurFef7QWUNUHnu0oWGpj0WCwfPEeVsBPERfIbHXMPub
+kAh1SUxACRbYK7ng0jG5n/LbolqhQ8rexDcVCfZNPMmW3pPxlATt9+41NY7MVl8v
+BCq0EWDJ1MeN9Vmh/LIyzeyfsJrd9mbPd/Q7Nzpx3hYMRfjFAmyLofqigdolekvC
+gX2dbGLDSR0qIeCXWggQKfTeM1OWXPA0OKjgRjA9v6ACXP96b/QQrwxEUEdMN/8m
+e+2aLz5uNPrsGyB47mpMEv8bd4rxcH/cZsbgGYEdQ/58F4hJ5luj6MId/G1nqMD+
+ania4yXprY96x/9HQ9kil/uk1iom8XyP+KKBhjWC2f3YbjoAF4SMl2VhEcob1Pbq
+6Y1xAA0cXfTSYUP1ZNMUMfEjyPz4AzKEYUp/at5BoeQ47emNvntwfTSMXPO/2k6f
+AHbdCD+9/ZRNJPIlBRa4bVDmmm2QUCwEHSuuc+tB60bz5aH7yrW0AMALRRk70XX5
+dYFQz84XX2DBPC+I3KMNMk05lzh1/OnNJHXqWu9WpCPsnhFG+37o574iYGOPjX4h
+Ix6Nt1Q5AlJIq/FUpjX5xg9v95Fy3vOdqTIK24UfYV1wfpwEv/U=
+=xIyC
+-----END PGP SIGNATURE-----
+
+--UGaUHjYvw7qi7lVn--
