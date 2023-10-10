@@ -2,119 +2,205 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72F4ACD80C0
-	for <git@archiver.kernel.org>; Tue, 10 Oct 2023 12:44:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F420CD80C0
+	for <git@archiver.kernel.org>; Tue, 10 Oct 2023 12:47:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231932AbjJJMox (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Oct 2023 08:44:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41978 "EHLO
+        id S230107AbjJJMrU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Oct 2023 08:47:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231894AbjJJMov (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Oct 2023 08:44:51 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B638B7
-        for <git@vger.kernel.org>; Tue, 10 Oct 2023 05:44:49 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-9a6190af24aso974594266b.0
-        for <git@vger.kernel.org>; Tue, 10 Oct 2023 05:44:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696941888; x=1697546688; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=d7iZH9Cz+Pxj8KR1PqM5szmLlr8yDmJO62UZyqBXnbQ=;
-        b=Vxxt9DhkonNRszE7vuWXzG4tLaQLzK/IGSlvqeun9UbCm7T55P55M1dMvfB6W7+EM0
-         UTT6Ch9kV4Tg39iAB2/PiCXJWkwM8Mon2rX9sBLPMLDXW/dmERNhfJcdGdFi6n3WscDC
-         p62NbInuUWJn1CGIQCebiIMpZXoOUynTMh2rPwRxDhzmYTwqdPqeWk6NXBsM/ftkiC8n
-         GaosEYHfjMzG/K5OlHc9j0I1+0WP0QJiyjIBsZWwfWFgs5UAzf8m9cYJVe+WJSNqXcmm
-         OvEQH/uQYMAr3HEIXeIBptilbgwbIDzTFKQCxyr9jmHhsDiDKLNaZE/POwUBhuHA/j4J
-         FbXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696941888; x=1697546688;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=d7iZH9Cz+Pxj8KR1PqM5szmLlr8yDmJO62UZyqBXnbQ=;
-        b=BPq1a0IUxsQUjQ6DeULINrP9AWdLW04L5S+3kWyUmgRDlGPSxM9jtanoSw5nED+r4t
-         xtPu2GQdy9uGBtAHDLuojSHKUitrUs5RqjFEfB5mN4mnAjdVwZrtbSyue6xG5Kk/5f7M
-         QnQVOM22YEnhscwo18I3uVo9IXVtzOXdYZ4eKJ5CUyhIRpYBta7BtfJlErPUhdlceYtX
-         ZOaXFLn4t2qOO1r9KbtQiXncv3e4KeKwG8kd7meHd1XB2wHYC184H1/IaTG19463I2qA
-         hLw1jzE9WSvvqH009i7YPUymQQYNb46Sc14vSRefCpXOHYaiu6rvKVTsRckGsgJ7uiis
-         Tx2Q==
-X-Gm-Message-State: AOJu0YwQuIfJsC/UcQicpl77/uPafgRychOmK/ZNv/8Mmf5gcEWRqYwc
-        Ptlm4DGqIckhDj8Q3qVN0UFBAUNqsH23ZwznkZo=
-X-Google-Smtp-Source: AGHT+IHCqelNRfBGQkPlzYKqgQboxYCbVZszLrYDrG+EnKnfNrjdbJkPM7aD8JLPpT9E0sNC4mZJa7zKvBv/yMVBRKY=
-X-Received: by 2002:a17:906:530b:b0:9a2:1e03:1573 with SMTP id
- h11-20020a170906530b00b009a21e031573mr17721100ejo.65.1696941887911; Tue, 10
- Oct 2023 05:44:47 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230509175347.1714141-1-christian.couder@gmail.com>
- <20230602102533.876905-1-christian.couder@gmail.com> <20230602102533.876905-12-christian.couder@gmail.com>
- <87legbsths.fsf@iotcl.com> <CAP8UFD1_67rNke1y-GV7qX46GXQkNJzw7fXfK=kkUjc-jb5S_g@mail.gmail.com>
- <f412f62bf830b38a296b59ac3470099a@manjaro.org>
-In-Reply-To: <f412f62bf830b38a296b59ac3470099a@manjaro.org>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Tue, 10 Oct 2023 14:44:35 +0200
-Message-ID: <CAP8UFD213MwZmBuK0At5r0O8tHYDnxRTkw9AHak9RwDBdVVq_A@mail.gmail.com>
-Subject: Re: [PATCH v3 11/15] replay: use standard revision ranges
-To:     Dragan Simic <dsimic@manjaro.org>
-Cc:     Toon Claes <toon@iotcl.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Elijah Newren <newren@gmail.com>,
-        John Cai <johncai86@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Calvin Wan <calvinwan@google.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S229508AbjJJMrS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Oct 2023 08:47:18 -0400
+X-Greylist: delayed 566 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 10 Oct 2023 05:47:16 PDT
+Received: from st43p00im-ztbu10063601.me.com (st43p00im-ztbu10063601.me.com [17.58.63.174])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D92A9B0
+        for <git@vger.kernel.org>; Tue, 10 Oct 2023 05:47:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
+        s=1a1hai; t=1696941468;
+        bh=IDE84O+2Un1sHi/WakN/gdWK4wYJ/dPcw7Dlz5Z2XHo=;
+        h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To;
+        b=jl6XvPKYXOiS00hTvCgAl1ez0mCMXC94qNqTwxjk4Gmcsco3UNo3lax2Dp+tBTqY0
+         fkjC05dbc1p97N3eij1J2wCjla7PhjjqUC/m9bV7IOQIsXJhKO7W+DdO17s65Mjyog
+         jP7PqiGLE4RdPG1gz0ZkP1XLdxtLSFy06+TjnDrFSn6ha1e+Udr7ZHOeXDEmPfrrsk
+         qt2euZVeVce5/UKgChQw/hQOKUWcygDE5W0tIbpazQ41K2fHVWsrvGrRpqDs21JFLA
+         JsA0LPA2YJ+Uso9qaxfdZD7YfuE6yv+6AyrKAIMSU6uridOdUv9/B6BacqPv4gGGa1
+         mEqVInOQXcYgQ==
+Received: from smtpclient.apple (st43p00im-dlb-asmtp-mailmevip.me.com [17.42.251.41])
+        by st43p00im-ztbu10063601.me.com (Postfix) with ESMTPSA id DFA108C0352;
+        Tue, 10 Oct 2023 12:37:47 +0000 (UTC)
+From:   Sebastian Thiel <sebastian.thiel@icloud.com>
+Content-Type: text/plain;
+        charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.100.2.1.4\))
+Subject: [RFC] Define "precious" attribute and support it in `git clean`
+Message-Id: <79901E6C-9839-4AB2-9360-9EBCA1AAE549@icloud.com>
+Date:   Tue, 10 Oct 2023 14:37:36 +0200
+Cc:     Josh Triplett <josh@joshtriplett.org>
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3774.100.2.1.4)
+X-Proofpoint-GUID: bUFCDwowCSmyukfs5lUQ-Jt8-uoFsprg
+X-Proofpoint-ORIG-GUID: bUFCDwowCSmyukfs5lUQ-Jt8-uoFsprg
+X-Proofpoint-Virus-Version: =?UTF-8?Q?vendor=3Dfsecure_engine=3D1.1.170-22c6f66c430a71ce266a39bfe25bc?=
+ =?UTF-8?Q?2903e8d5c8f:6.0.591,18.0.957,17.0.605.474.0000000_definitions?=
+ =?UTF-8?Q?=3D2023-07-31=5F15:2023-07-31=5F02,2023-07-31=5F15,2020-01-23?=
+ =?UTF-8?Q?=5F02_signatures=3D0?=
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0 suspectscore=0
+ mlxlogscore=999 adultscore=0 phishscore=0 mlxscore=0 spamscore=0
+ bulkscore=0 clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2310100091
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 7, 2023 at 11:02=E2=80=AFPM Dragan Simic <dsimic@manjaro.org> w=
-rote:
->
-> On 2023-09-07 10:32, Christian Couder wrote:
-> > On Thu, Jun 22, 2023 at 12:03=E2=80=AFPM Toon Claes <toon@iotcl.com> wr=
-ote:
-> >>
-> >> Christian Couder <christian.couder@gmail.com> writes:
-> >>
-> >> > +DESCRIPTION
-> >> > +-----------
-> >> > +
-> >> > +Takes a range of commits, and replays them onto a new location.  Do=
-es
-> >> > +not touch the working tree or index, and does not update any
-> >> > +references.  However, the output of this command is meant to be use=
-d
-> >>
-> >> Small suggestion here:
-> >>
-> >> Takes a range of commits, and replays them onto a new location.  Does
-> >> neither touch the working tree nor index, and does not update any
-> >> references.
-> >
-> > I am not a native speaker, so I am not sure what's best here. I find
-> > your suggestion a bit less clear though, so until a native speaker
-> > agrees with it or maybe finds something even better, I prefer to leave
-> > it as-is.
->
-> I'm also not a native English speaker, but I spent about 2.5 years
-> contributing a whole lot to English Wikipedia, so I'd dare to say I've
-> honed my English skills rather well.  Thus, here's my take on this:
->
->      Takes a range of commits and replays them onto a new location.
->      Leaves the working tree and the index untouched, and updates no
->      references.  The output of this command is to be used...
->
-> This is written in a concise yet slightly imperative way, which should
-> be suitable for the purpose.  I hope you agree.
+[Note: I'm collaborating with Josh Triplett (CCed) on the design.]
 
-I agree and I like it, so I have changed it to the above in version 5
-I just sent.
+I'd like to propose adding a new standard gitattribute "precious".  I've
+included proposed documentation at the end of this mail, and I'm happy =
+to write
+the code.  I wanted to get feedback on the concept first.
 
-Thanks!
+What's a 'precious' file?
+
+"Precious" files are files that are specific to a user or local =
+configuration
+and thus not tracked by Git.  As such, a user spent time to create or =
+generate
+them, and to tune them to fit their needs.  They are typically also =
+ignored by
+`git` due to `.gitignore` configuration, preventing them to be tracked =
+by
+accident.
+
+This proposal suggests to make them known to Git using git-attributes so =
+that
+`git clean` can be taught to treat them with care.
+
+Example: A Linux Kernel .config file
+
+Users can mark the `.config` file as 'precious' using `.gitattributes`:
+
+    /.config precious
+
+When checking which ignored files `git clean -nx` would remove, we would =
+see
+the following.
+
+    Would remove precious .config
+    Would remove scripts/basic/.fixdep.cmd
+    Would remove scripts/basic/fixdep
+    Would remove scripts/kconfig/.conf.cmd
+
+
+This highlights precious files by calling them out, but doesn't change =
+the
+behaviour of existing flags.  Instead, the new flag `-p` is added which =
+lets
+`git clean` spare precious files.
+
+Thus `git clean -np` would print:
+
+    Would remove scripts/basic/.fixdep.cmd
+    Would remove scripts/basic/fixdep
+    Would remove scripts/kconfig/.conf.cmd
+
+The precious file is not part of the set of files to be removed anymore.
+
+`git clean -[n|f] -xp` will fail with an error indicating that `-x` and =
+`-p`
+are mutually exclusive.  The hope is that people can replace some of =
+their
+usage of `-x` with `-p` to preserve precious files, while continuing to =
+use
+`-x` if they want a completely clean working directory.
+
+Additional Benefits
+
+`git clean -fdp` can now be used to restore the user's directory to a =
+pristine
+post-clone state while keeping all files and directories the project or =
+user
+identifies as precious.  There is less fear of accidentally deleting =
+files
+which are required for local development or otherwise represent a time
+investment.
+
+Example: A precious IDE configuration directory.
+
+To keep IDE configuration, one can also mark entire directories - the =
+following
+could go into a user-specific gitattributes file denoted by the
+`core.attributesFile` configuration.
+
+    /.idea/** precious
+
+With this attributes file in place, `git clean -ndx` would produce the
+following output...
+
+    Would remove .DS_Store
+    Would remove precious .idea/
+
+...while `git clean -ndp` would look like this:
+
+    Would remove .DS_Store
+
+Here's a patch showing what the documentation could look like.  Happy to =
+write
+the corresponding code.
+
+---
+diff --git a/Documentation/git-clean.txt b/Documentation/git-clean.txt
+index 5e1a3d5148..5b2eab6573 100644
+--- a/Documentation/git-clean.txt
++++ b/Documentation/git-clean.txt
+@@ -60,6 +60,10 @@ OPTIONS
+ 	Use the given exclude pattern in addition to the standard ignore =
+rules
+ 	(see linkgit:gitignore[5]).
+=20
++-p::
++	Remove ignored files as well (like `-x`), but preserve =
+"precious"
++	files (see linkgit:gitattributes[5]).
++
+ -x::
+ 	Don't use the standard ignore rules (see linkgit:gitignore[5]), =
+but
+ 	still use the ignore rules given with `-e` options from the =
+command
+diff --git a/Documentation/gitattributes.txt =
+b/Documentation/gitattributes.txt
+index 6deb89a296..f68aadc3c2 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -1248,6 +1248,20 @@ If this attribute is not set or has an invalid =
+value, the value of the
+ (See linkgit:git-config[1]).
+=20
+=20
++Preserving precious files
++~~~~~~~~~~~~~~~~~~~~~~~~~
++
++`precious`
++^^^^^^^^^^
++
++A file marked as `precious` will be preserved when running =
+linkgit:git-clean[1]
++with the `-p` option. Use this attribute for files such as a Linux =
+kernel
++`.config` file, which are not tracked by git because they contain =
+user-specific
++or build-specific configuration, but which contain valuable information =
+that a
++user spent time and effort to create.
++
++
++
+ USING MACRO ATTRIBUTES
+ ----------------------
+=20
+
+What do you think?
+
+Thanks for your feedback,
+Sebastian=
