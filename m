@@ -2,99 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12533CDB465
-	for <git@archiver.kernel.org>; Wed, 11 Oct 2023 23:01:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 43377CDB46E
+	for <git@archiver.kernel.org>; Wed, 11 Oct 2023 23:05:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233803AbjJKXBK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Oct 2023 19:01:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33788 "EHLO
+        id S233769AbjJKXF1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Oct 2023 19:05:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233397AbjJKXBJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Oct 2023 19:01:09 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14B4CA9
-        for <git@vger.kernel.org>; Wed, 11 Oct 2023 16:01:07 -0700 (PDT)
-Received: (qmail 20415 invoked by uid 109); 11 Oct 2023 23:01:07 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 11 Oct 2023 23:01:07 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11162 invoked by uid 111); 11 Oct 2023 23:01:09 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 11 Oct 2023 19:01:09 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 11 Oct 2023 19:01:06 -0400
-From:   Jeff King <peff@peff.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 04/20] commit-graph: check size of oid fanout chunk
-Message-ID: <20231011230106.GH518221@coredump.intra.peff.net>
-References: <20231009205544.GA3281950@coredump.intra.peff.net>
- <20231009205951.GD3282181@coredump.intra.peff.net>
- <ZSXnZXglgbfK3VYd@nand.local>
+        with ESMTP id S233473AbjJKXF0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Oct 2023 19:05:26 -0400
+Received: from bluemchen.kde.org (bluemchen.kde.org [209.51.188.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6629A4
+        for <git@vger.kernel.org>; Wed, 11 Oct 2023 16:05:23 -0700 (PDT)
+Received: from ugly.fritz.box (localhost [127.0.0.1])
+        by bluemchen.kde.org (Postfix) with ESMTP id 88EC324170;
+        Wed, 11 Oct 2023 19:05:19 -0400 (EDT)
+Received: by ugly.fritz.box (masqmail 0.3.6-dev, from userid 1000)
+        id 1qqiGV-Y0P-00; Thu, 12 Oct 2023 01:05:19 +0200
+Date:   Thu, 12 Oct 2023 01:05:19 +0200
+From:   Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+To:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
+        phillip.wood123@gmail.com, linusa@google.com, calvinwan@google.com,
+        gitster@pobox.com, rsbecker@nexbridge.com
+Subject: Re: [PATCH v8 1/3] unit tests: Add a project plan document
+Message-ID: <ZScqLzGiDPZvLh2k@ugly>
+References: <0169ce6fb9ccafc089b74ae406db0d1a8ff8ac65.1688165272.git.steadmon@google.com>
+ <cover.1696889529.git.steadmon@google.com>
+ <81c5148a1267b8f9ce432a950340f0fa16b4d773.1696889530.git.steadmon@google.com>
+ <ZSUR+YdzqNTSB0XC@ugly>
+ <ZScQG5QHznMEGzhC@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <ZSXnZXglgbfK3VYd@nand.local>
+In-Reply-To: <ZScQG5QHznMEGzhC@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 10, 2023 at 08:08:05PM -0400, Taylor Blau wrote:
+On Wed, Oct 11, 2023 at 02:14:03PM -0700, Josh Steadmon wrote:
+>On 2023.10.10 10:57, Oswald Buddenhagen wrote:
+>> On Mon, Oct 09, 2023 at 03:21:20PM -0700, Josh Steadmon wrote:
+>> > +=== Comparison
+>> > +
+>> > +[format="csv",options="header",width="33%"]
+>> > +|=====
+>> > +Framework,"<<license,License>>","<<vendorable-or-ubiquitous,Vendorable or ubiquitous>>","<<maintainable-extensible,Maintainable / extensible>>","<<major-platform-support,Major platform support>>","<<tap-support,TAP support>>","<<diagnostic-output,Diagnostic output>>","<<runtime--skippable-tests,Runtime- skippable tests>>","<<parallel-execution,Parallel execution>>","<<mock-support,Mock support>>","<<signal-error-handling,Signal & error handling>>","<<project-kloc,Project KLOC>>","<<adoption,Adoption>>"
+>> > 
+>> the redundancy seems unnecessary; asciidoc should automatically use each
+>> target's section title as the xreflabel.
+>
+>Hmm, this doesn't seem to work for me. It only renders as
+>"[anchor-label]".
+>
+i thought
+https://docs.asciidoctor.org/asciidoc/latest/attributes/id/#customize-automatic-xreftext 
+is pretty clear about it, though. maybe the actual tooling uses an older 
+version of the spec? or is buggy? or the placement of the titles is 
+incorrect? or this applies to different links or targets only? or am i 
+misreading something? or ...?
 
-> Nice. This makes sense and seems like an obvious improvement over the
-> existing code.
-> 
-> I wonder how common this pattern is. We have read_chunk() which is for
-> handling more complex scenarios than this. But the safe version of
-> pair_chunk() really just wants to check that the size of the chunk is as
-> expected and assign the location in the mmap to some pointer.
-
-Sometimes yes, sometimes no. For fixed-size ones like this, that's
-sufficient. For others we have to record the size and use it for later
-bounds-checking. IIRC it's about 50/50 between the two.
-
-> Do you think it would be worth changing pair_chunk() to take an expected
-> size_t and handle this generically? I.e. have a version of
-> chunk-format::pair_chunk_fn() that looks something like:
-> 
->     static int pair_chunk_fn(const unsigned char *chunk_start,
->                              size_t chunk_size, void *data)
->     {
->         const unsigned char **p = data;
->         if (chunk_size != data->size)
->             return -1;
->         *p = chunk_start;
->         return 0;
->     }
-> 
-> and then our call here would be:
-> 
->   if (pair_chunk(cf, GRAPH_CHUNKID_OIDFANOUT,
->                  (const unsigned char **)&graph->chunk_oid_fanout,
->                  256 * sizeof(uint32_t)) < 0)
->       return error("commit-graph oid fanout chunk is wrong size");
-> 
-> I dunno. It's hard to have a more concrete recomendation without having
-> read the rest of the series. So it's possible that this is just complete
-> nonsense ;-). But my hunch is that there are a number of callers that
-> would benefit from having this built in.
-
-I don't think it's nonsense, and I do think other callers would benefit.
-On the other hand, I kind of like the notion that there is a complete
-validation callback for each of these chunks. Even though it just checks
-the size for now, it could handle other things. In the case of OIDF, for
-example, we can check whether the entries are monotonic. It's just that
-we happen to do those checks elsewhere.
-
-Hmm, actually, looking at that again, I think I may have missed a case
-in patch 6. For pack .idx files, we check the fanout table when they are
-loaded. And patch 6 adds the same for commit-graph files. I thought midx
-files were handled the same .idx, but looking at it again, I only see
-the monotonicity check in the "multi-pack-index verify" code paths. So
-it might need the same treatment.
-
-I'm not sure how I missed that (I started by making a corrupted midx
-first and couldn't get it to fail, which is when I discovered the
-existing checks, but maybe I am mixing up .idx and midx in my memory).
-
--Peff
+regards
