@@ -2,803 +2,368 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE9E3CD98E0
-	for <git@archiver.kernel.org>; Wed, 11 Oct 2023 01:32:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1F2ACD98E5
+	for <git@archiver.kernel.org>; Wed, 11 Oct 2023 02:19:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344619AbjJKBc3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Oct 2023 21:32:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37330 "EHLO
+        id S1344820AbjJKCTv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Oct 2023 22:19:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344546AbjJKBc2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Oct 2023 21:32:28 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59BA3DD
-        for <git@vger.kernel.org>; Tue, 10 Oct 2023 18:32:22 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id DCD8B35B76;
-        Tue, 10 Oct 2023 21:32:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-        :subject:date:message-id:mime-version:content-type; s=sasl; bh=T
-        wiLlCqYtCsr7GE0MDVHMAMwp6KzRHwu+NQj/515IIs=; b=cMW0UjxKg2FMvbGwb
-        PB/j4sxZmhTCSGS4DCfSCx92Uk9di1/ns7wCFcEUYONgxfv/GNV5TFAOkNpORFnc
-        +WaSUrxBqny+PsrmTL5HMa8949T003bns/mnFHdz7VAbdmHYY9OZ7E8A4MU/x3hJ
-        YswtQ3D2aG7ZBNvpeZ4+v97KtE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D64B535B75;
-        Tue, 10 Oct 2023 21:32:21 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5D4AA35B74;
-        Tue, 10 Oct 2023 21:32:18 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Subject: What's cooking in git.git (Oct 2023, #04; Tue, 10)
-X-master-at: aab89be2eb6ca51eefeb8c8066f673f447058856
-X-next-at: 989b7e0362472e4b4bd6a089ca4d4971fbf74bb7
-Date:   Tue, 10 Oct 2023 18:32:16 -0700
-Message-ID: <xmqqwmvuosf3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        with ESMTP id S1344769AbjJKCTt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Oct 2023 22:19:49 -0400
+Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C63BB94
+        for <git@vger.kernel.org>; Tue, 10 Oct 2023 19:19:47 -0700 (PDT)
+Received: by mail-qv1-xf2f.google.com with SMTP id 6a1803df08f44-65b093b97d2so10447496d6.0
+        for <git@vger.kernel.org>; Tue, 10 Oct 2023 19:19:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1696990787; x=1697595587; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZubbHgvI7Ra81ZWCd9rhiafaTNwftUjdXg59bExdj+4=;
+        b=RzEvpEjXaNgG1fsyUiUKwom0qVtTXesmMTZnf1nxj7DOeoijl+vV3A3OyN2/h5vrYs
+         TLXSndlfJSVaWSi2HqYknxSLOqXvIX8M/PHptOLGvwlTHUtoyUdSPwPwY5/f2+PxUEq2
+         VgF2ghpz8dHXHDNc0SHt/+gJfGuW/RqYanQceNCvuVS0rQzTekRTMD3Hx8/Ot6EtGkvP
+         mXGdUGkphuLj/9NmKDXHsFdTiPp9h2BAfB0XZXZcWQWYCu8HtjtO5KOu5Ahr9JQMfET7
+         ZcjnI5oZWcyZ8+Gcf6kNmerjcSg+TL/+fWWlnHD/RWnwRxoSeLaAJilWZsXxxjqZBExt
+         f1HA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696990787; x=1697595587;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZubbHgvI7Ra81ZWCd9rhiafaTNwftUjdXg59bExdj+4=;
+        b=NfhNKrbzo9pxnRwZdwfdRmHfnF5B7/zDy+pLvwLN88B6BcePfwKl/fY5T48E+VuJMd
+         GNZ4kkvop+zPxk+oa7t5NFmz/h6aBUMVLr+GJ5l29l4LN/7OM1ZD0kOOpIrFVMYMTyW4
+         tltqISMDQWe5JsBnFAe3s/sH32fKA3tvx+nclaL3TqDQ4NM3usrNNsuhLXM7LZVVSQV0
+         +0H6E1+mMv7bKGv+FvgcfF53NsDw/idVWGDMMZiS/alXaR6+zu2VqrgiHIZZR02m7OgE
+         s/s5DH6tgghFei+6A7TpUdSvm5eBFk7ZII79UhRyFLRnkcqWN3Zcqd2tSYUiK+zKa8Th
+         jEJw==
+X-Gm-Message-State: AOJu0YzDRTx2WVw4ycJl8jJN3JfWG7p9QNc7qZ35Pdginp4rpMTjYISz
+        rnULZVy/OIbfaaiasno2UR8=
+X-Google-Smtp-Source: AGHT+IH0MFd9s9w2EgOM65MM4qnXn5KKF7AESgGZDuFzdyVcZrxTBiZF+iSQcuKQMjEixdi3nqj/wg==
+X-Received: by 2002:a05:620a:3949:b0:775:8fab:8c6d with SMTP id qs9-20020a05620a394900b007758fab8c6dmr20648210qkn.1.1696990786636;
+        Tue, 10 Oct 2023 19:19:46 -0700 (PDT)
+Received: from [192.168.1.240] (ool-4570b665.dyn.optonline.net. [69.112.182.101])
+        by smtp.gmail.com with ESMTPSA id s17-20020a05620a031100b00767177a5bebsm4793794qkm.56.2023.10.10.19.19.45
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 10 Oct 2023 19:19:46 -0700 (PDT)
+From:   John Cai <johncai86@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v3 2/2] attr: add attr.tree for setting the treeish to read attributes from
+Date:   Tue, 10 Oct 2023 22:19:45 -0400
+X-Mailer: MailMate (1.14r5852)
+Message-ID: <2A3060D0-C551-47F6-B27A-049B52B3E0F3@gmail.com>
+In-Reply-To: <xmqqfs2iqg4k.fsf@gitster.g>
+References: <pull.1577.v2.git.git.1696443502.gitgitgadget@gmail.com>
+ <pull.1577.v3.git.git.1696967380.gitgitgadget@gmail.com>
+ <dadb822da99772cd277417f564cf672f65d1cc24.1696967380.git.gitgitgadget@gmail.com>
+ <xmqqfs2iqg4k.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 04116520-67D6-11EE-8B90-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Here are the topics that have been cooking in my tree.  Commits
-prefixed with '+' are in 'next' (being in 'next' is a sign that a
-topic is stable enough to be used and are candidate to be in a
-future release).  Commits prefixed with '-' are only in 'seen', and
-aren't considered "accepted" at all and may be annotated with an URL
-to a message that raises issues but they are no means exhaustive.  A
-topic without enough support may be discarded after a long period of
-no activity (of course they can be resubmit when new interests
-arise).
-
-Copies of the source code to Git live in many repositories, and the
-following is a list of the ones I push into or their mirrors.  Some
-repositories have only a subset of branches.
-
-With maint, master, next, seen, todo:
-
-	git://git.kernel.org/pub/scm/git/git.git/
-	git://repo.or.cz/alt-git.git/
-	https://kernel.googlesource.com/pub/scm/git/git/
-	https://github.com/git/git/
-	https://gitlab.com/git-vcs/git/
-
-With all the integration branches and topics broken out:
-
-	https://github.com/gitster/git/
-
-Even though the preformatted documentation in HTML and man format
-are not sources, they are published in these repositories for
-convenience (replace "htmldocs" with "manpages" for the manual
-pages):
-
-	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
-	https://github.com/gitster/git-htmldocs.git/
-
-Release tarballs are available at:
-
-	https://www.kernel.org/pub/software/scm/git/
-
---------------------------------------------------
-[Graduated to 'master']
-
-* cc/repack-sift-filtered-objects-to-separate-pack (2023-10-02) 9 commits
-  (merged to 'next' on 2023-10-03 at e5a4824609)
- + gc: add `gc.repackFilterTo` config option
- + repack: implement `--filter-to` for storing filtered out objects
- + gc: add `gc.repackFilter` config option
- + repack: add `--filter=<filter-spec>` option
- + pack-bitmap-write: rebuild using new bitmap when remapping
- + repack: refactor finding pack prefix
- + repack: refactor finishing pack-objects command
- + t/helper: add 'find-pack' test-tool
- + pack-objects: allow `--filter` without `--stdout`
-
- "git repack" machinery learns to pay attention to the "--filter="
- option.
- cf. <ZRsknb4NxNHTR21E@nand.local>
- source: <20231002165504.1325153-1-christian.couder@gmail.com>
-
-
-* cw/prelim-cleanup (2023-09-29) 4 commits
-  (merged to 'next' on 2023-10-03 at 5985929612)
- + parse: separate out parsing functions from config.h
- + config: correct bad boolean env value error message
- + wrapper: reduce scope of remove_or_warn()
- + hex-ll: separate out non-hash-algo functions
-
- Shuffle some bits across headers and sources to prepare for
- libification effort.
- source: <cover.1696021277.git.jonathantanmy@google.com>
-
-
-* ds/init-diffstat-width (2023-09-29) 1 commit
-  (merged to 'next' on 2023-10-03 at 18383ac895)
- + diff --stat: set the width defaults in a helper function
-
- Code clean-up.
- source: <d45d1dac1a20699e370905b88b6fd0ec296751e7.1695441501.git.dsimic@manjaro.org>
-
-
-* eb/limit-bulk-checkin-to-blobs (2023-09-26) 1 commit
-  (merged to 'next' on 2023-10-02 at 89c9c95966)
- + bulk-checkin: only support blobs in index_bulk_checkin
-
- The "streaming" interface used for bulk-checkin codepath has been
- narrowed to take only blob objects for now, with no real loss of
- functionality.
- source: <87msx99b9o.fsf_-_@gmail.froward.int.ebiederm.org>
-
---------------------------------------------------
-[New Topics]
-
-* ak/pretty-decorate-more-fix (2023-10-09) 1 commit
- - pretty: fix ref filtering for %(decorate) formats
-
- Unlike "git log --pretty=%D", "git log --pretty="%(decorate)" did
- not auto-initialize the decoration subsystem, which has been
- corrected.
-
- Will merge to 'next'?
- source: <20231008202307.1568477-1-andy.koppe@gmail.com>
-
-
-* en/docfixes (2023-10-09) 25 commits
- - documentation: add missing parenthesis
- - documentation: add missing quotes
- - documentation: add missing fullstops
- - documentation: add some commas where they are helpful
- - documentation: fix whitespace issues
- - documentation: fix capitalization
- - documentation: fix punctuation
- - documentation: use clearer prepositions
- - documentation: add missing hyphens
- - documentation: remove unnecessary hyphens
- - documentation: add missing article
- - documentation: fix choice of article
- - documentation: whitespace is already generally plural
- - documentation: fix singular vs. plural
- - documentation: fix verb vs. noun
- - documentation: fix adjective vs. noun
- - documentation: fix verb tense
- - documentation: employ consistent verb tense for a list
- - documentation: fix subject/verb agreement
- - documentation: remove extraneous words
- - documentation: add missing words
- - documentation: fix apostrophe usage
- - documentation: fix typos
- - documentation: fix small error
- - documentation: wording improvements
-
- Documentation typo and grammo fixes.
-
- Needs review.
- source: <pull.1595.git.1696747527.gitgitgadget@gmail.com>
-
-
-* kn/rev-list-missing-fix (2023-10-09) 3 commits
- - rev-list: add commit object support in `--missing` option
- - rev-list: move `show_commit()` to the bottom
- - revision: rename bit to `do_not_die_on_missing_objects`
-
- "git rev-list --missing" did not work for missing commit objects,
- which has been corrected.
-
- Needs review.
- source: <20231009105528.17777-1-karthik.188@gmail.com>
-
-
-* sn/cat-file-doc-update (2023-10-09) 1 commit
-  (merged to 'next' on 2023-10-10 at 6719ba7bd4)
- + doc/cat-file: make synopsis and description less confusing
-
- "git cat-file" documentation updates.
-
- Will merge to 'master'.
- source: <20231009175604.2361700-1-stepnem@smrk.net>
-
-
-* xz/commit-title-soft-limit-doc (2023-10-09) 1 commit
-  (merged to 'next' on 2023-10-10 at 0bf3d9ed51)
- + doc: correct the 50 characters soft limit (+)
-
- Doc update.
-
- Will merge to 'master'.
- source: <pull.1585.v2.git.git.1696778367151.gitgitgadget@gmail.com>
-
-
-* jk/chunk-bounds (2023-10-09) 20 commits
-  (merged to 'next' on 2023-10-10 at 21139603ce)
- + chunk-format: drop pair_chunk_unsafe()
- + commit-graph: detect out-of-order BIDX offsets
- + commit-graph: check bounds when accessing BIDX chunk
- + commit-graph: check bounds when accessing BDAT chunk
- + commit-graph: bounds-check generation overflow chunk
- + commit-graph: check size of generations chunk
- + commit-graph: bounds-check base graphs chunk
- + commit-graph: detect out-of-bounds extra-edges pointers
- + commit-graph: check size of commit data chunk
- + midx: check size of revindex chunk
- + midx: bounds-check large offset chunk
- + midx: check size of object offset chunk
- + midx: enforce chunk alignment on reading
- + midx: check size of pack names chunk
- + commit-graph: check consistency of fanout table
- + midx: check size of oid lookup chunk
- + commit-graph: check size of oid fanout chunk
- + midx: stop ignoring malformed oid fanout chunk
- + t: add library for munging chunk-format files
- + chunk-format: note that pair_chunk() is unsafe
-
- The codepaths that read "chunk" formatted files have been corrected
- to pay attention to the chunk size and notice broken files.
-
- Will merge to 'master'.
- source: <20231009205544.GA3281950@coredump.intra.peff.net>
-
-
-* ps/rewritten-is-per-worktree-doc (2023-10-10) 1 commit
- - doc/git-worktree: mention "refs/rewritten" as per-worktree refs
-
- Doc update.
-
- Will merge to 'next'.
- source: <985ac850eb6e60ae76601acc8bfbcd56f99348b4.1696935657.git.ps@pks.im>
-
---------------------------------------------------
-[Stalled]
-
-* tb/path-filter-fix (2023-08-30) 15 commits
- - bloom: introduce `deinit_bloom_filters()`
- - commit-graph: reuse existing Bloom filters where possible
- - object.h: fix mis-aligned flag bits table
- - commit-graph: drop unnecessary `graph_read_bloom_data_context`
- - commit-graph.c: unconditionally load Bloom filters
- - t/t4216-log-bloom.sh: harden `test_bloom_filters_not_used()`
- - bloom: prepare to discard incompatible Bloom filters
- - bloom: annotate filters with hash version
- - commit-graph: new filter ver. that fixes murmur3
- - repo-settings: introduce commitgraph.changedPathsVersion
- - t4216: test changed path filters with high bit paths
- - t/helper/test-read-graph: implement `bloom-filters` mode
- - bloom.h: make `load_bloom_filter_from_graph()` public
- - t/helper/test-read-graph.c: extract `dump_graph_info()`
- - gitformat-commit-graph: describe version 2 of BDAT
-
- The Bloom filter used for path limited history traversal was broken
- on systems whose "char" is unsigned; update the implementation and
- bump the format version to 2.
-
- Reroll exists, not picked up yet.
- cf. <20230830200218.GA5147@szeder.dev>
- cf. <20230901205616.3572722-1-jonathantanmy@google.com>
- cf. <20230924195900.GA1156862@szeder.dev>
- cf. <20231008143523.GA18858@szeder.dev>
- source: <cover.1693413637.git.jonathantanmy@google.com>
-
-
-* pw/rebase-sigint (2023-09-07) 1 commit
- - rebase -i: ignore signals when forking subprocesses
-
- If the commit log editor or other external programs (spawned via
- "exec" insn in the todo list) receive internactive signal during
- "git rebase -i", it caused not just the spawned program but the
- "Git" process that spawned them, which is often not what the end
- user intended.  "git" learned to ignore SIGINT and SIGQUIT while
- waiting for these subprocesses.
-
- Expecting a reroll.
- cf. <12c956ea-330d-4441-937f-7885ab519e26@gmail.com>
- source: <pull.1581.git.1694080982621.gitgitgadget@gmail.com>
-
-
-* tk/cherry-pick-sequence-requires-clean-worktree (2023-06-01) 1 commit
- - cherry-pick: refuse cherry-pick sequence if index is dirty
-
- "git cherry-pick A" that replays a single commit stopped before
- clobbering local modification, but "git cherry-pick A..B" did not,
- which has been corrected.
-
- Expecting a reroll.
- cf. <999f12b2-38d6-f446-e763-4985116ad37d@gmail.com>
- source: <pull.1535.v2.git.1685264889088.gitgitgadget@gmail.com>
-
-
-* jc/diff-cached-fsmonitor-fix (2023-09-15) 3 commits
- - diff-lib: fix check_removed() when fsmonitor is active
- - Merge branch 'jc/fake-lstat' into jc/diff-cached-fsmonitor-fix
- - Merge branch 'js/diff-cached-fsmonitor-fix' into jc/diff-cached-fsmonitor-fix
- (this branch uses jc/fake-lstat.)
-
- The optimization based on fsmonitor in the "diff --cached"
- codepath is resurrected with the "fake-lstat" introduced earlier.
-
- It is unknown if the optimization is worth resurrecting, but in case...
- source: <xmqqr0n0h0tw.fsf@gitster.g>
-
---------------------------------------------------
-[Cooking]
-
-* jc/merge-ort-attr-index-fix (2023-10-09) 1 commit
-  (merged to 'next' on 2023-10-10 at b139b87502)
- + merge-ort: initialize repo in index state
-
- Fix "git merge-tree" to stop segfaulting when the --attr-source
- option is used.
-
- Will merge to 'master'.
- source: <pull.1583.v3.git.git.1696857660374.gitgitgadget@gmail.com>
-
-
-* jk/decoration-and-other-leak-fixes (2023-10-05) 3 commits
-  (merged to 'next' on 2023-10-06 at 5fc05c94dc)
- + daemon: free listen_addr before returning
- + revision: clear decoration structs during release_revisions()
- + decorate: add clear_decoration() function
-
- Leakfix.
-
- Will merge to 'master'.
- source: <20231005212802.GA982892@coredump.intra.peff.net>
-
-
-* sn/typo-grammo-phraso-fixes (2023-10-05) 5 commits
- - t/README: fix multi-prerequisite example
- - doc/gitk: s/sticked/stuck/
- - git-jump: admit to passing merge mode args to ls-files
- - doc/diff-options: improve wording of the log.diffMerges mention
- - doc: fix some typos, grammar and wording issues
-
- Many typos, ungrammatical sentences and wrong phrasing have been
- fixed.
-
- Needs review.
- source: <20231003082107.3002173-1-stepnem@smrk.net>
-
-
-* so/diff-merges-dd (2023-10-09) 3 commits
- - completion: complete '--dd'
- - diff-merges: introduce '--dd' option
- - diff-merges: improve --diff-merges documentation
-
- "git log" and friends learned "--dd" that is a short-hand for
- "--diff-merges=first-parent -p".
-
- Will merge to 'next'?
- source: <20231009160535.236523-1-sorganov@gmail.com>
-
-
-* vd/loose-ref-iteration-optimization (2023-10-09) 4 commits
- - files-backend.c: avoid stat in 'loose_fill_ref_dir'
- - dir.[ch]: add 'follow_symlink' arg to 'get_dtype'
- - dir.[ch]: expose 'get_dtype'
- - ref-cache.c: fix prefix matching in ref iteration
-
- The code to iterate over loose references have been optimized to
- reduce the number of lstat() system calls.
-
- Will merge to 'next'?
- source: <pull.1594.v2.git.1696888736.gitgitgadget@gmail.com>
-
-
-* jc/update-list-references-to-lore (2023-10-06) 1 commit
- - doc: update list archive reference to use lore.kernel.org
-
- Doc update.
-
- Needs review.
- source: <xmqq7cnz741s.fsf@gitster.g>
-
-
-* cc/git-replay (2023-10-10) 14 commits
- - replay: stop assuming replayed branches do not diverge
- - replay: add --contained to rebase contained branches
- - replay: add --advance or 'cherry-pick' mode
- - replay: use standard revision ranges
- - replay: make it a minimal server side command
- - replay: remove HEAD related sanity check
- - replay: remove progress and info output
- - replay: add an important FIXME comment about gpg signing
- - replay: change rev walking options
- - replay: introduce pick_regular_commit()
- - replay: die() instead of failing assert()
- - replay: start using parse_options API
- - replay: introduce new builtin
- - t6429: remove switching aspects of fast-rebase
-
- Introduce "git replay", a tool meant on the server side without
- working tree to recreate a history.
- source: <20231010123847.2777056-1-christian.couder@gmail.com>
-
-
-* jk/commit-graph-leak-fixes (2023-10-03) 10 commits
-  (merged to 'next' on 2023-10-06 at 5d202ef8b9)
- + commit-graph: clear oidset after finishing write
- + commit-graph: free write-context base_graph_name during cleanup
- + commit-graph: free write-context entries before overwriting
- + commit-graph: free graph struct that was not added to chain
- + commit-graph: delay base_graph assignment in add_graph_to_chain()
- + commit-graph: free all elements of graph chain
- + commit-graph: move slab-clearing to close_commit_graph()
- + merge: free result of repo_get_merge_bases()
- + commit-reach: free temporary list in get_octopus_merge_bases()
- + t6700: mark test as leak-free
-
- Leakfix.
-
- Will merge to 'master'.
- source: <20231003202504.GA7697@coredump.intra.peff.net>
-
-
-* jm/git-status-submodule-states-docfix (2023-10-04) 1 commit
-  (merged to 'next' on 2023-10-04 at 520b7711a4)
- + git-status.txt: fix minor asciidoc format issue
-
- Docfix.
-
- Will merge to 'master'.
- source: <pull.1591.v3.git.1696386165616.gitgitgadget@gmail.com>
-
-
-* rs/parse-opt-ctx-cleanup (2023-10-03) 1 commit
-  (merged to 'next' on 2023-10-04 at d5d0a2ce3b)
- + parse-options: drop unused parse_opt_ctx_t member
-
- Code clean-up.
-
- Will merge to 'master'.
- source: <ebcaa9e1-d306-4c93-adec-3f35d7040531@web.de>
-
-
-* tb/repack-max-cruft-size (2023-10-09) 5 commits
-  (merged to 'next' on 2023-10-09 at 38f039e880)
- + repack: free existing_cruft array after use
-  (merged to 'next' on 2023-10-06 at b3ca6df3b9)
- + builtin/repack.c: avoid making cruft packs preferred
- + builtin/repack.c: implement support for `--max-cruft-size`
- + builtin/repack.c: parse `--max-pack-size` with OPT_MAGNITUDE
- + t7700: split cruft-related tests to t7704
-
- "git repack" learned "--max-cruft-size" to prevent cruft packs from
- growing without bounds.
-
- Will merge to 'master'.
- source: <cover.1696293862.git.me@ttaylorr.com>
- source: <20231007172031.GA1524950@coredump.intra.peff.net>
- source: <035393935108d02aaf8927189b05102f4f74f340.1696370003.git.me@ttaylorr.com>
-
-
-* ak/color-decorate-symbols (2023-10-03) 1 commit
- - decorate: add color.decorate.symbols config option
-
- A new config for coloring.
-
- Needs review.
- source: <20231003205442.22963-1-andy.koppe@gmail.com>
-
-
-* jc/attr-tree-config (2023-10-04) 2 commits
- - attr: add attr.allowInvalidSource config to allow invalid revision
- - attr: add attr.tree for setting the treeish to read attributes from
-
- The attribute subsystem learned to honor `attr.tree` configuration
- that specifies which tree to read the .gitattributes files from.
-
- Reroll exists, but not picked up (a review sent).
- source: <pull.1577.v2.git.git.1696443502.gitgitgadget@gmail.com>
-
-
-* js/submodule-fix-misuse-of-path-and-name (2023-10-03) 6 commits
-  (merged to 'next' on 2023-10-06 at 1054b6e752)
- + t7420: test that we correctly handle renamed submodules
- + t7419: test that we correctly handle renamed submodules
- + t7419, t7420: use test_cmp_config instead of grepping .gitmodules
- + t7419: actually test the branch switching
- + submodule--helper: return error from set-url when modifying failed
- + submodule--helper: use submodule_from_path in set-{url,branch}
-
- In .gitmodules files, submodules are keyed by their names, and the
- path to the submodule whose name is $name is specified by the
- submodule.$name.path variable.  There were a few codepaths that
- mixed the name and path up when consulting the submodule database,
- which have been corrected.  It took long for these bugs to be found
- as the name of a submodule initially is the same as its path, and
- the problem does not surface until it is moved to a different path,
- which apparently happens very rarely.
-
- Will merge to 'master'.
- source: <0a0a157f88321d25fdb0be771a454b3410a449f3.camel@archlinux.org>
-
-
-* ar/diff-index-merge-base-fix (2023-10-02) 1 commit
-  (merged to 'next' on 2023-10-06 at 0ff4dfc0e1)
- + diff: fix --merge-base with annotated tags
-
- "git diff --merge-base X other args..." insisted that X must be a
- commit and errored out when given an annotated tag that peels to a
- commit, but we only need it to be a committish.  This has been
- corrected.
-
- Will merge to 'master'.
- source: <20231001151845.3621551-1-hi@alyssa.is>
-
-
-* js/update-urls-in-doc-and-comment (2023-09-26) 4 commits
- - doc: refer to internet archive
- - doc: update links for andre-simon.de
- - doc: update links to current pages
- - doc: switch links to https
-
- Stale URLs have been updated to their current counterparts (or
- archive.org) and HTTP links are replaced with working HTTPS links.
-
- Needs review.
- source: <pull.1589.v2.git.1695553041.gitgitgadget@gmail.com>
-
-
-* la/trailer-cleanups (2023-09-26) 4 commits
- - trailer: only use trailer_block_* variables if trailers were found
- - trailer: use offsets for trailer_start/trailer_end
- - trailer: find the end of the log message
- - commit: ignore_non_trailer computes number of bytes to ignore
-
- Code clean-up.
-
- Needs review.
- source: <pull.1563.v4.git.1695709372.gitgitgadget@gmail.com>
-
-
-* eb/hash-transition (2023-10-02) 30 commits
- - t1016-compatObjectFormat: add tests to verify the conversion between objects
- - t1006: test oid compatibility with cat-file
- - t1006: rename sha1 to oid
- - test-lib: compute the compatibility hash so tests may use it
- - builtin/ls-tree: let the oid determine the output algorithm
- - object-file: handle compat objects in check_object_signature
- - tree-walk: init_tree_desc take an oid to get the hash algorithm
- - builtin/cat-file: let the oid determine the output algorithm
- - rev-parse: add an --output-object-format parameter
- - repository: implement extensions.compatObjectFormat
- - object-file: update object_info_extended to reencode objects
- - object-file-convert: convert commits that embed signed tags
- - object-file-convert: convert commit objects when writing
- - object-file-convert: don't leak when converting tag objects
- - object-file-convert: convert tag objects when writing
- - object-file-convert: add a function to convert trees between algorithms
- - object: factor out parse_mode out of fast-import and tree-walk into in object.h
- - cache: add a function to read an OID of a specific algorithm
- - tag: sign both hashes
- - commit: export add_header_signature to support handling signatures on tags
- - commit: convert mergetag before computing the signature of a commit
- - commit: write commits for both hashes
- - object-file: add a compat_oid_in parameter to write_object_file_flags
- - object-file: update the loose object map when writing loose objects
- - loose: compatibilty short name support
- - loose: add a mapping between SHA-1 and SHA-256 for loose objects
- - repository: add a compatibility hash algorithm
- - object-names: support input of oids in any supported hash
- - oid-array: teach oid-array to handle multiple kinds of oids
- - object-file-convert: stubs for converting from one object format to another
-
- Teach a repository to work with both SHA-1 and SHA-256 hash algorithms.
-
- Needs review.
- source: <878r8l929e.fsf@gmail.froward.int.ebiederm.org>
-
-
-* jx/remote-archive-over-smart-http (2023-10-04) 4 commits
- - archive: support remote archive from stateless transport
- - transport-helper: call do_take_over() in connect_helper
- - transport-helper: call do_take_over() in process_connect
- - transport-helper: no connection restriction in connect_helper
-
- "git archive --remote=<remote>" learned to talk over the smart
- http (aka stateless) transport.
-
- Needs review.
- source: <cover.1696432593.git.zhiyou.jx@alibaba-inc.com>
-
-
-* jx/sideband-chomp-newline-fix (2023-10-04) 3 commits
- - pkt-line: do not chomp newlines for sideband messages
- - pkt-line: memorize sideband fragment in reader
- - test-pkt-line: add option parser for unpack-sideband
-
- Sideband demultiplexer fixes.
-
- Needs review.
- source: <cover.1696425168.git.zhiyou.jx@alibaba-inc.com>
-
-
-* ty/merge-tree-strategy-options (2023-09-25) 1 commit
-  (merged to 'next' on 2023-09-29 at aa65b54416)
- + merge-tree: add -X strategy option
-
- "git merge-tree" learned to take strategy backend specific options
- via the "-X" option, like "git merge" does.
-
- Hold.  There is an unwanted structure copying going on.
- cf. <a482d047-dd40-436d-8daa-0c74780af11f@gmail.com>
- source: <pull.1565.v6.git.1695522222723.gitgitgadget@gmail.com>
-
-
-* js/ci-coverity (2023-10-05) 6 commits
-  (merged to 'next' on 2023-10-05 at 253788f0d1)
- + coverity: detect and report when the token or project is incorrect
- + coverity: allow running on macOS
- + coverity: support building on Windows
- + coverity: allow overriding the Coverity project
- + coverity: cache the Coverity Build Tool
- + ci: add a GitHub workflow to submit Coverity scans
-
- GitHub CI workflow has learned to trigger Coverity check.
-
- Will merge to 'master'.
- source: <pull.1588.v2.git.1695642662.gitgitgadget@gmail.com>
-
-
-* js/config-parse (2023-09-21) 5 commits
- - config-parse: split library out of config.[c|h]
- - config.c: accept config_parse_options in git_config_from_stdin
- - config: report config parse errors using cb
- - config: split do_event() into start and flush operations
- - config: split out config_parse_options
-
- The parsing routines for the configuration files have been split
- into a separate file.
-
- Needs review.
- source: <cover.1695330852.git.steadmon@google.com>
-
-
-* jc/fake-lstat (2023-09-15) 1 commit
- - cache: add fake_lstat()
- (this branch is used by jc/diff-cached-fsmonitor-fix.)
-
- A new helper to let us pretend that we called lstat() when we know
- our cache_entry is up-to-date via fsmonitor.
-
- Needs review.
- source: <xmqqcyykig1l.fsf@gitster.g>
-
-
-* rs/parse-options-value-int (2023-09-18) 2 commits
- - parse-options: use and require int pointer for OPT_CMDMODE
- - parse-options: add int value pointer to struct option
-
- A bit of type safety for the "value" pointer used in the
- parse-options API.
-
- Not ready yet.
- cf. <4014e490-c6c1-453d-b0ed-645220e3e614@web.de>
- source: <e6d8a291-03de-cfd3-3813-747fc2cad145@web.de>
-
-
-* la/trailer-test-and-doc-updates (2023-09-07) 13 commits
-  (merged to 'next' on 2023-10-06 at 69fef35819)
- + trailer doc: <token> is a <key> or <keyAlias>, not both
- + trailer doc: separator within key suppresses default separator
- + trailer doc: emphasize the effect of configuration variables
- + trailer --unfold help: prefer "reformat" over "join"
- + trailer --parse docs: add explanation for its usefulness
- + trailer --only-input: prefer "configuration variables" over "rules"
- + trailer --parse help: expose aliased options
- + trailer --no-divider help: describe usual "---" meaning
- + trailer: trailer location is a place, not an action
- + trailer doc: narrow down scope of --where and related flags
- + trailer: add tests to check defaulting behavior with --no-* flags
- + trailer test description: this tests --where=after, not --where=before
- + trailer tests: make test cases self-contained
-
- Test coverage for trailers has been improved.
-
- Will merge to 'master'.
- source: <pull.1564.v3.git.1694125209.gitgitgadget@gmail.com>
-
-
-* js/doc-unit-tests (2023-10-09) 3 commits
- - ci: run unit tests in CI
- - unit tests: add TAP unit test framework
- - unit tests: add a project plan document
- (this branch is used by js/doc-unit-tests-with-cmake.)
-
- Process to add some form of low-level unit tests has started.
-
- Will merge to 'next'?
- source: <cover.1696889529.git.steadmon@google.com>
-
-
-* js/doc-unit-tests-with-cmake (2023-10-09) 7 commits
- - cmake: handle also unit tests
- - cmake: use test names instead of full paths
- - cmake: fix typo in variable name
- - artifacts-tar: when including `.dll` files, don't forget the unit-tests
- - unit-tests: do show relative file paths
- - unit-tests: do not mistake `.pdb` files for being executable
- - cmake: also build unit tests
- (this branch uses js/doc-unit-tests.)
-
- Update the base topic to work with CMake builds.
-
- Needs review.
- source: <pull.1579.v3.git.1695640836.gitgitgadget@gmail.com>
-
-
-* jc/rerere-cleanup (2023-08-25) 4 commits
- - rerere: modernize use of empty strbuf
- - rerere: try_merge() should use LL_MERGE_ERROR when it means an error
- - rerere: fix comment on handle_file() helper
- - rerere: simplify check_one_conflict() helper function
-
- Code clean-up.
-
- Not ready to be reviewed yet.
- source: <20230824205456.1231371-1-gitster@pobox.com>
-
-
-* rj/status-bisect-while-rebase (2023-08-01) 1 commit
- - status: fix branch shown when not only bisecting
-
- "git status" is taught to show both the branch being bisected and
- being rebased when both are in effect at the same time.
-
- Needs review.
- cf. <xmqqtttia3vn.fsf@gitster.g>
- source: <48745298-f12b-8efb-4e48-90d2c22a8349@gmail.com>
-
---------------------------------------------------
-[Discarded]
-
-* tb/ci-coverity (2023-09-21) 1 commit
- . .github/workflows: add coverity action
-
- GitHub CI workflow has learned to trigger Coverity check.
-
- Superseded by the js/ci-coverity topic.
- source: <b23951c569660e1891a7fb3ad2c2ea1952897bd7.1695332105.git.me@ttaylorr.com>
-
-
-* cw/git-std-lib (2023-09-11) 7 commits
- . SQUASH???
- . git-std-lib: add test file to call git-std-lib.a functions
- . git-std-lib: introduce git standard library
- . parse: create new library for parsing strings and env values
- . config: correct bad boolean env value error message
- . wrapper: remove dependency to Git-specific internal file
- . hex-ll: split out functionality from hex
-
- Another libification effort.
-
- Superseded by the cw/prelim-cleanup topic.
- cf. <xmqqy1hfrk6p.fsf@gitster.g>
- cf. <20230915183927.1597414-1-jonathantanmy@google.com>
- source: <20230908174134.1026823-1-calvinwan@google.com>
-
-
-* so/diff-merges-d (2023-09-11) 2 commits
- - diff-merges: introduce '-d' option
- - diff-merges: improve --diff-merges documentation
-
- Superseded by the so/diff-merges-dd topic.
- source: <20230909125446.142715-1-sorganov@gmail.com>
-
-
-* kn/rev-list-ignore-missing-links (2023-09-20) 1 commit
- . revision: add `--ignore-missing-links` user option
-
- Surface the .ignore_missing_links bit that stops the revision
- traversal from stopping and dying when encountering a missing
- object to a new command line option of "git rev-list", so that the
- objects that are required but are missing can be enumerated.
-
- Superseded by kn/rev-list-missing-fix
- source: <20230920104507.21664-1-karthik.188@gmail.com>
+Hi Junio,
+
+On 10 Oct 2023, at 18:14, Junio C Hamano wrote:
+
+> "John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+>> From: John Cai <johncai86@gmail.com>
+>>
+>> 44451a2 (attr: teach "--attr-source=3D<tree>" global option to "git",
+>> 2023-05-06) provided the ability to pass in a treeish as the attr
+>> source. In the context of serving Git repositories as bare repos like =
+we
+>> do at GitLab however, it would be easier to point --attr-source to HEA=
+D
+>> for all commands by setting it once.
+>>
+>> Add a new config attr.tree that allows this.
+>>
+>> Signed-off-by: John Cai <johncai86@gmail.com>
+>> ---
+>>  Documentation/config.txt      |  2 ++
+>>  Documentation/config/attr.txt |  5 +++
+>>  attr.c                        |  7 ++++
+>>  attr.h                        |  2 ++
+>>  config.c                      | 14 ++++++++
+>>  t/t0003-attributes.sh         | 62 ++++++++++++++++++++++++++++++++++=
++
+>>  6 files changed, 92 insertions(+)
+>>  create mode 100644 Documentation/config/attr.txt
+>>
+>> diff --git a/Documentation/config.txt b/Documentation/config.txt
+>> index 229b63a454c..b1891c2b5af 100644
+>> --- a/Documentation/config.txt
+>> +++ b/Documentation/config.txt
+>> @@ -371,6 +371,8 @@ other popular tools, and describe them in your doc=
+umentation.
+>>
+>>  include::config/advice.txt[]
+>>
+>> +include::config/attr.txt[]
+>> +
+>>  include::config/core.txt[]
+>>
+>>  include::config/add.txt[]
+>> diff --git a/Documentation/config/attr.txt b/Documentation/config/attr=
+=2Etxt
+>> new file mode 100644
+>> index 00000000000..be882523f8b
+>> --- /dev/null
+>> +++ b/Documentation/config/attr.txt
+>> @@ -0,0 +1,5 @@
+>> +attr.tree:
+>> +	A <tree-ish> to read gitattributes from instead of the worktree. See=
+
+>> +	linkgit:gitattributes[5]. If `attr.tree` does not resolve to a valid=
+ tree,
+>> +	treat it as an empty tree. --attr-source and GIT_ATTR_SOURCE take
+>> +	precedence over attr.tree.
+>
+> Properly typeset `--attr-source` and `GIT_ATTR_SOURCE`.
+>
+> A quick "git grep" in Documentation/config/*.txt tells me that
+> nobody refers to an object type like <tree-ish>.  Imitate what this
+> was modeled after, namely Documentation/config/mailmap.txt, which
+> says just
+>
+> 	... a reference to a blob in the repository.
+>
+> without any half mark-up.
+
+sounds good
+
+>
+> More importantly, the description makes one wonder what the
+> precedence rule between these two (the general rule would be for
+> command line parameter to override environment, if I recall
+> correctly).
+
+yes, that should be the case.
+
+>
+> I think the enumeration header usually is followed by double-colons
+> among Documentation/config/*.txt files.  Let's be consistent.
+>
+> In the context of this expression, "worktree" is a wrong noun to
+> use---the term of art refers to an instance of "working tree",
+> together with some "per worktree" administrative files inside .git/
+> directory.  On the other hand, "working tree" refers to the "files
+> meant to be visible to build tools and editors part of the non-bare
+> repository", which is what you want to use here.
+>
+> attr.tree::
+> 	A tree object to read the attributes from, instead of the
+> 	`.gitattributes` file in the working tree.  In a bare
+> 	repository, this defaults to HEAD:.gitattributes".  If a
+> 	given value does not resolve to a valid tree object, an
+> 	empty tree is used instead.  When `GIT_ATTR_SOURCE`
+> 	environment variable or `--attr-source` command line option
+> 	is used, this configuration variable has no effect.
+>
+> or something along that line, perhaps.
+
+sounds good to me, thanks
+
+>
+>> diff --git a/attr.c b/attr.c
+>> index bf2ea1626a6..0ae6852d12b 100644
+>> --- a/attr.c
+>> +++ b/attr.c
+>> @@ -24,6 +24,8 @@
+>>  #include "tree-walk.h"
+>>  #include "object-name.h"
+>>
+>> +const char *git_attr_tree;
+>> +
+>>  const char git_attr__true[] =3D "(builtin)true";
+>>  const char git_attr__false[] =3D "\0(builtin)false";
+>>  static const char git_attr__unknown[] =3D "(builtin)unknown";
+>> @@ -1206,6 +1208,11 @@ static void compute_default_attr_source(struct =
+object_id *attr_source)
+>>  	if (!default_attr_source_tree_object_name)
+>>  		default_attr_source_tree_object_name =3D getenv(GIT_ATTR_SOURCE_ENV=
+IRONMENT);
+>>
+>> +	if (!default_attr_source_tree_object_name) {
+>> +		default_attr_source_tree_object_name =3D git_attr_tree;
+>> +		ignore_bad_attr_tree =3D 1;
+>> +	}
+>
+> As long as "attr.tree" was read by calling git_default_attr_config()
+> before we come here, git_attr_tree is not NULL and we allow bad attr
+> tree in default_attr_source_tree_object_name.  But stepping back a
+> bit, even if "attr.tree" is unspecified, i.e., git_attr_tree is
+> NULL, we set ignore_bad_attr_tree to true here.
+>
+> What it means is that after the above if() statement, if
+> default_attr_source_tree_object_name is still NULL, we know that
+> ignore_bad_attr_tree is already set to true.
+>
+>>  	if (!default_attr_source_tree_object_name &&
+>>  	    startup_info->have_repository &&
+>>  	    is_bare_repository()) {
+>
+> So would it make more sense to remove the assignment to the same
+> variable we made in [1/2] around here (not seen in the post
+> context)?
+>
+> Alternatively, even though it makes the code a bit more verbose, the
+> logic might become clearer if you wrote the "assign from the config"
+> part like so:
+>
+> 	if (!default_attr_source_tree_object_name && git_attr_tree) {
+>         	default_attr_source_tree_object_name =3D git_attr_tree;
+> 		ignore_bad_attr_tree =3D 1;
+> 	}
+>
+> It would leave more flexibility to the code around here.  You could
+> for example add code that assigns a different value, a tree object
+> that is required to exist, to default_attr_source_tree_object_name
+> after this point, for example, without having to wonder what the
+> "current" value of ignore_bad_attr_tree is.
+
+good point--I think this logic is easier to follow.
+
+>
+>> +static int git_default_attr_config(const char *var, const char *value=
+)
+>> +{
+>> +	if (!strcmp(var, "attr.tree"))
+>> +		return git_config_string(&git_attr_tree, var, value);
+>> +
+>> +	/* Add other attribute related config variables here and to
+>> +	   Documentation/config/attr.txt. */
+>
+> 	/*
+> 	 * Our multi-line comments should look
+>          * more like this; opening slash-asterisk
+> 	 * and closing asterisk-slash sit on a line
+> 	 * on its own.
+> 	 */
+>
+>> @@ -342,6 +346,46 @@ test_expect_success 'bare repository: check that =
+=2Egitattribute is ignored' '
+>>  	)
+>>  '
+>>
+>> +bad_attr_source_err=3D"fatal: bad --attr-source or GIT_ATTR_SOURCE"
+>
+> Not a fault of this two-patch series, but we probably should refine
+> this error reporting so that the reader can tell which one is being
+> complained about, and optionally what the offending value was.
+>
+>
+>> +test_expect_success 'attr.tree when HEAD is unborn' '
+>> +	test_when_finished rm -rf empty &&
+>> +	git init empty &&
+>> +	(
+>> +		cd empty &&
+>> +		echo $bad_attr_source_err >expect_err &&
+>
+> Let's not rely on words in the error message split with exactly one
+> whitespace each and instead quote the variable properly.  I.e.,
+>
+> 		echo "$bad_attr_source_err" >expect_err &&
+>
+> But this is not even used, as we do not expect it to fail.  Perhaps
+> remove it altogether?
+>
+>> +		echo "f/path: test: unspecified" >expect &&
+>> +		git -c attr.tree=3DHEAD check-attr test -- f/path >actual 2>err &&
+>> +		test_must_be_empty err &&
+>> +		test_cmp expect actual
+>> +	)
+>> +'
+>> +
+>> +test_expect_success 'attr.tree points to non-existing ref' '
+>> +	test_when_finished rm -rf empty &&
+>> +	git init empty &&
+>> +	(
+>> +		cd empty &&
+>> +		echo $bad_attr_source_err >expect_err &&
+>
+> Ditto.
+>
+>> +		echo "f/path: test: unspecified" >expect &&
+>> +		git -c attr.tree=3Drefs/does/not/exist check-attr test -- f/path >a=
+ctual 2>err &&
+>> +		test_must_be_empty err &&
+>> +		test_cmp expect actual
+>> +	)
+>> +'
+>> +
+>> +test_expect_success 'bad attr source defaults to reading .gitattribut=
+es file' '
+>> +	test_when_finished rm -rf empty &&
+>> +	git init empty &&
+>> +	(
+>> +		cd empty &&
+>> +		echo "f/path test=3Dval" >.gitattributes &&
+>> +		echo "f/path: test: val" >expect &&
+>> +		git -c attr.tree=3DHEAD check-attr test -- f/path >actual 2>err &&
+>> +		test_must_be_empty err &&
+>> +		test_cmp expect actual
+>> +	)
+>> +'
+>
+> In other words, with the additional tests, we do not check error
+> cases (which may be perfectly OK, if they are covered by existing
+> tests).  A bit curious.
+
+Just checked and it does seem like we don't have a test case that covers =
+the
+error case. Will add in the next version.
+
+>
+>> @@ -356,6 +400,24 @@ test_expect_success 'bare repo defaults to readin=
+g .gitattributes from HEAD' '
+>>  	test_cmp expect actual
+>>  '
+>>
+>> +test_expect_success '--attr-source and GIT_ATTR_SOURCE take precedenc=
+e over attr.tree' '
+>
+> Do we want to ensure which one takes precedence between the command
+> line option and the environment?  It's not like the one that is
+> given the last takes effect.
+
+yeah, might as well.
+
+>
+>> +	test_when_finished rm -rf empty &&
+>> +	git init empty &&
+>> +	(
+>> +		cd empty &&
+>> +		git checkout -b attr-source &&
+>> +		test_commit "val1" .gitattributes "f/path test=3Dval1" &&
+>> +		git checkout -b attr-tree &&
+>> +		test_commit "val2" .gitattributes "f/path test=3Dval2" &&
+>> +		git checkout attr-source &&
+>> +		echo "f/path: test: val1" >expect &&
+>> +		git -c attr.tree=3Dattr-tree --attr-source=3Dattr-source check-attr=
+ test -- f/path >actual &&
+>> +		test_cmp expect actual &&
+>> +		GIT_ATTR_SOURCE=3Dattr-source git -c attr.tree=3Dattr-tree check-at=
+tr test -- f/path >actual &&
+>> +		test_cmp expect actual
+>> +	)
+>> +'
+>> +
+>>  test_expect_success 'bare repository: with --source' '
+>>  	(
+>>  		cd bare.git &&
+>
+> Other than that, looking great.  Thanks.
+
+thanks!
+John
