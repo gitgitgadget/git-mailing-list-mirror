@@ -2,101 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B1AFCDB47E
-	for <git@archiver.kernel.org>; Wed, 11 Oct 2023 22:27:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F334DCDB47E
+	for <git@archiver.kernel.org>; Wed, 11 Oct 2023 22:27:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235161AbjJKW1C convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Wed, 11 Oct 2023 18:27:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37846 "EHLO
+        id S1344605AbjJKW1d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Oct 2023 18:27:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231927AbjJKW1B (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Oct 2023 18:27:01 -0400
-Received: from bird.elm.relay.mailchannels.net (bird.elm.relay.mailchannels.net [23.83.212.17])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8667D91
-        for <git@vger.kernel.org>; Wed, 11 Oct 2023 15:27:00 -0700 (PDT)
-X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-        by relay.mailchannels.net (Postfix) with ESMTP id 0358854117E;
-        Wed, 11 Oct 2023 22:27:00 +0000 (UTC)
-Received: from cpanel-007-fra.hostingww.com (unknown [127.0.0.6])
-        (Authenticated sender: instrampxe0y3a)
-        by relay.mailchannels.net (Postfix) with ESMTPA id 31890541140;
-        Wed, 11 Oct 2023 22:26:59 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1697063219; a=rsa-sha256;
-        cv=none;
-        b=wKAHIdEVULZEL2k/TSA3D31eX8ndXPuKBN16V8pIlKUM+0ytHzfFkjnvDCyp5+Yxxxu4wJ
-        LzopP7Kw0OiRF9hbYx3mwkiUPb5AwEYp7FkMmPEP5iK7vfK4dILmV/zbNnGef9TGCJpa1s
-        jF8H+S5MYa+hoj2JHW8vIJmXFf27GZ93s0krX/vGutdHMEHzSLtW8/Gmf14NbmKc3ed/ZF
-        HjtEGrsqeYnPdCZ/zrgKozTwvC+Tul98i7y6HPHgsF05aojIVsG4yReKdKIb6DoSbU4ayU
-        Z1gF8Z/KlzXaKHDVEirMIz9dJekbgCICzxoE9MQKuvdiRMLfDJlxdB/njCXorg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net;
-        s=arc-2022; t=1697063219;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=0R+cMMJkb2wErAtghcx37sQ2zsXIx/OBr1rF/QJTtgQ=;
-        b=6JxPVoX+Wj94pw3VNRAwDuwapaEjuOu2Af3soqOX/OTbxfs9IgnG6bvwMXy39ZAYP5A1mT
-        LNt9rZZbP7xAcm3dy+wVaMvlP/5zne+kR++fOL4Llbn3TGasVE59mAm2dNYzhs9gL1t0bE
-        2Aoayz3BhNlVRzes1hSnbNQEX3A4T0CoQETtXUySDwbKJU74PzHQ2UfwGGQLgnhBojwhxo
-        b9RdGAX0D3ASE+o4H57u3NhzuS/tIVWV7UpIl5lvzwr+kqbCUhGcxi/zLNLK0FdjWvUMIE
-        EfgUCkpmr5tk7Pxsc5IsMUz+YYiHdomx/txjOn9QVOmBTl/SpTQG72L5t8MejQ==
-ARC-Authentication-Results: i=1;
-        rspamd-7c449d4847-8zxv2;
-        auth=pass smtp.auth=instrampxe0y3a smtp.mailfrom=calestyo@scientia.org
-X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: instrampxe0y3a|x-authuser|calestyo@scientia.org
-X-MailChannels-Auth-Id: instrampxe0y3a
-X-Eyes-Cellar: 7bf8f6117bdd9764_1697063219861_3965503484
-X-MC-Loop-Signature: 1697063219861:83432213
-X-MC-Ingress-Time: 1697063219861
-Received: from cpanel-007-fra.hostingww.com (cpanel-007-fra.hostingww.com
- [3.69.87.180])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384)
-        by 100.103.131.218 (trex/6.9.1);
-        Wed, 11 Oct 2023 22:26:59 +0000
-Received: from p5090f4db.dip0.t-ipconnect.de ([80.144.244.219]:59214 helo=heisenberg.fritz.box)
-        by cpanel-007-fra.hostingww.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.96)
-        (envelope-from <calestyo@scientia.org>)
-        id 1qqhfK-0006sh-1s;
-        Wed, 11 Oct 2023 22:26:57 +0000
-Message-ID: <0c10c4b95f2a947a5d569a2c3d51fcb02b35e81d.camel@scientia.org>
-Subject: Re: why does git set X in LESS env var?
-From:   Christoph Anton Mitterer <calestyo@scientia.org>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Date:   Thu, 12 Oct 2023 00:26:52 +0200
-In-Reply-To: <xmqqa5sokdd3.fsf@gitster.g>
-References: <3a2c362c019338ca7408b7a3bc5715b535d15b8a.camel@scientia.org>
-         <xmqqa5sokdd3.fsf@gitster.g>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-User-Agent: Evolution 3.50.0-1 
+        with ESMTP id S233582AbjJKW1c (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Oct 2023 18:27:32 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23CE691
+        for <git@vger.kernel.org>; Wed, 11 Oct 2023 15:27:30 -0700 (PDT)
+Received: (qmail 20182 invoked by uid 109); 11 Oct 2023 22:27:30 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 11 Oct 2023 22:27:30 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 10887 invoked by uid 111); 11 Oct 2023 22:27:31 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 11 Oct 2023 18:27:31 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 11 Oct 2023 18:27:28 -0400
+From:   Jeff King <peff@peff.net>
+To:     Robert Coup via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Robert Coup <robert@coup.net.nz>
+Subject: Re: [PATCH] upload-pack: add tracing for fetches
+Message-ID: <20231011222728.GC518221@coredump.intra.peff.net>
+References: <pull.1598.git.1697040242703.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-X-AuthUser: calestyo@scientia.org
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <pull.1598.git.1697040242703.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 2023-10-11 at 15:23 -0700, Junio C Hamano wrote:
-> I think that was the reason we added it back in 2005.  In any case,
-> asking "why" is not a useful use of anybody's time, because it is
-> very unlikely to change in the official version we ship, and because
-> it is so easy for any individual who does not like it to drop by
-> exporting the $LESS environment variable.
+On Wed, Oct 11, 2023 at 04:04:02PM +0000, Robert Coup via GitGitGadget wrote:
 
+> Improve this by emitting a Trace2 JSON event from upload-pack with
+> summary information on the contents of a fetch request.
+> 
+> * haves, wants, and want-ref counts can help determine (broadly) between
+>   fetches and clones, and the use of single-branch, etc.
+> * shallow clone depth, tip counts, and deepening options.
+> * any partial clone filter type.
 
-Well the other commit I've mentioned kinda read as if it was thought
-that either X or both F and X were needed for the effect to exit less
-immediately if the output is too short ("F and X because
-> sometimes the output Git pipes to less is short").
+I think this is a reasonable thing to have. I see Taylor left a more
+detailed review, but I did notice one thing...
 
-So I thought maybe that was intended, and the no-clear was just a side-
-effect no one ever really thought about.
+> +static void trace2_fetch_info(struct upload_pack_data *data)
+> +{
+> +	struct json_writer jw = JSON_WRITER_INIT;
+> +
+> +	jw_object_begin(&jw, 0);
+> +	{
+> +		jw_object_intmax(&jw, "haves", data->haves.nr);
+> +		jw_object_intmax(&jw, "wants", data->want_obj.nr);
+> +		jw_object_intmax(&jw, "want-refs", data->wanted_refs.nr);
+> +		jw_object_intmax(&jw, "depth", data->depth);
+> +		jw_object_intmax(&jw, "shallows", data->shallows.nr);
+> +		jw_object_bool(&jw, "deepen-since", data->deepen_since);
+> +		jw_object_intmax(&jw, "deepen-not", data->deepen_not.nr);
+> +		jw_object_bool(&jw, "deepen-relative", data->deepen_relative);
+> +		if (data->filter_options.choice)
+> +			jw_object_string(&jw, "filter", list_object_filter_config_name(data->filter_options.choice));
+> +		else
+> +			jw_object_null(&jw, "filter");
+> +	}
+> +	jw_end(&jw);
+> +
+> +	trace2_data_json("upload-pack", the_repository, "fetch-info", &jw);
+> +
+> +	jw_release(&jw);
+> +}
 
+Generating the json output isn't entirely trivial (and certainly
+involves allocations), but we throw it away unused if tracing isn't
+enabled. Maybe we'd want something like:
 
-Anyway, thanks,
-Chris.
+  if (!trace2_is_enabled())
+          return;
+
+at the top of the function? It looks like other callers of
+jw_object_begin() have a similar issue, and this is probably premature
+optimization to some degree. It just feels like it should be easy for
+tracing to be zero-cost (beyond a single conditional) when it's
+disabled.
+
+-Peff
