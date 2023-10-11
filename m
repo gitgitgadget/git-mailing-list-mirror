@@ -2,112 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DA26C41513
-	for <git@archiver.kernel.org>; Wed, 11 Oct 2023 20:44:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01500CDB47E
+	for <git@archiver.kernel.org>; Wed, 11 Oct 2023 21:14:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376384AbjJKUoM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Oct 2023 16:44:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60612 "EHLO
+        id S233422AbjJKVOL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Oct 2023 17:14:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235233AbjJKUoK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Oct 2023 16:44:10 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8962290
-        for <git@vger.kernel.org>; Wed, 11 Oct 2023 13:44:09 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 045CD1C600;
-        Wed, 11 Oct 2023 16:44:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=WAc5OcLCotCeGBb4B2ZMj8q8TX76IcCG00SQe6
-        SHxMs=; b=P2OJ4C7sv0EwVjQLmxsxvgoKm5ILpTgXf7l4hyywGMUvfDRygK66bx
-        LmCudlPBQiR7UR+UdjxAZV98wRfWxHZmvEogAvT4rc36mLVNcywUFz4a3XITNJ2C
-        9JmhWkcn4ub/WHjeOPSZnXdjZ/VunP4MpdrVPX0eaM+/p8VrVNaBg=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id F08C01C5FF;
-        Wed, 11 Oct 2023 16:44:08 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 32FE71C5FE;
-        Wed, 11 Oct 2023 16:44:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Erik Cervin Edin <erik@cervined.in>
-Subject: [PATCH] stash: be careful what we store
-In-Reply-To: <xmqqzg0pnmv5.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-        11 Oct 2023 09:29:50 -0700")
-References: <CA+JQ7M_effxh9BSOhF67N+rsvBVTULe0dWZzp-kq1yOiDq3+hQ@mail.gmail.com>
-        <xmqqzg0pnmv5.fsf@gitster.g>
-Date:   Wed, 11 Oct 2023 13:44:03 -0700
-Message-ID: <xmqqbkd4lwj0.fsf_-_@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        with ESMTP id S231912AbjJKVOK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Oct 2023 17:14:10 -0400
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C5C890
+        for <git@vger.kernel.org>; Wed, 11 Oct 2023 14:14:09 -0700 (PDT)
+Received: by mail-pl1-x62e.google.com with SMTP id d9443c01a7336-1bf55a81eeaso2361775ad.0
+        for <git@vger.kernel.org>; Wed, 11 Oct 2023 14:14:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1697058849; x=1697663649; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=9nBn+wts5MjevDeiqFM3h4RTebNPK1LF1RGl7RAAKZ8=;
+        b=biJjbCj0a3R5iNS4Ys5V8QZrVZOxAf9EpYNXs/wjUKAwIumLV7os8c9PZU+r+t6rf4
+         kswcx3XrthrTugfghVQ8OWyctDWKHzVAdS3d4AMb3/MQWiXYlt0POkPOyCCrlzKqs7Io
+         zk5lNw7oWSXHgK6rFyOgX5KA466MLJ+6iTDk38WZlDLliUhk62OaxLl+lFHhHXnWDYuB
+         Qzp2Gz5zbnutfefp+lT8vC/rBxkBHeDfMKw+s4e5J1qLfGvXpQ5bEwYFf67KwY2deCeq
+         yC9klcU5rJJqb/u0PtwYQ7yzSaJh6VLaZfJKolXzm2W+T1RJWkJQwtZgClZFL23MNcnr
+         o+uQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697058849; x=1697663649;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9nBn+wts5MjevDeiqFM3h4RTebNPK1LF1RGl7RAAKZ8=;
+        b=j95cBtzx58x/1flNsg37I6W2u2KsNRlu9OX0tt1oRFDpiwbDPWyT26OprXVv/L1H+U
+         InEGc+wGr8swyKsDVZS07pbJWj6WL3+VZ8vxyAL1obd6txVICDSh2kiORpDJGyOw1zxV
+         vIwKYTM/6c+ofalqUwTY3TgGU6Ry2jXNpJz+I5z/jhwCBCdTdBpB/CsrfX8xU38We5Jq
+         QAHHZt7a8SgbXuG+9RF89Sd8CLh3oWIEuck4VaAR6l+9lQ23pmk3RbRtXZZuMvkUVFiI
+         SlL1cwJScweHOthKKabnX8cgQif9QwmnJEmFHvldF7J2g0H8ztMUsOq2ap7NKZ8ICpgd
+         /wQA==
+X-Gm-Message-State: AOJu0YyDUXNpKz4ihtk7wXNcziO6hJOx5tgsx6XLk0hlF0iowJ+7Wt9/
+        hD23HnJMib2I3DrqH38xSGEWHQ==
+X-Google-Smtp-Source: AGHT+IFGv/BdJrzXvBvZ1mqAPivUpyCeMGrgxrxWfwcwdWTPbBnO7uma7Rar/p173XknYCa+D3eW+A==
+X-Received: by 2002:a17:902:d507:b0:1c8:a68e:7fc with SMTP id b7-20020a170902d50700b001c8a68e07fcmr10822336plg.53.1697058848828;
+        Wed, 11 Oct 2023 14:14:08 -0700 (PDT)
+Received: from google.com ([2620:15c:2d3:204:9014:3d3a:f5c5:3ebf])
+        by smtp.gmail.com with ESMTPSA id 13-20020a170902c20d00b001c61073b064sm299488pll.69.2023.10.11.14.14.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Oct 2023 14:14:08 -0700 (PDT)
+Date:   Wed, 11 Oct 2023 14:14:03 -0700
+From:   Josh Steadmon <steadmon@google.com>
+To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Cc:     git@vger.kernel.org, phillip.wood123@gmail.com, linusa@google.com,
+        calvinwan@google.com, gitster@pobox.com, rsbecker@nexbridge.com
+Subject: Re: [PATCH v8 1/3] unit tests: Add a project plan document
+Message-ID: <ZScQG5QHznMEGzhC@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        Oswald Buddenhagen <oswald.buddenhagen@gmx.de>, git@vger.kernel.org,
+        phillip.wood123@gmail.com, linusa@google.com, calvinwan@google.com,
+        gitster@pobox.com, rsbecker@nexbridge.com
+References: <0169ce6fb9ccafc089b74ae406db0d1a8ff8ac65.1688165272.git.steadmon@google.com>
+ <cover.1696889529.git.steadmon@google.com>
+ <81c5148a1267b8f9ce432a950340f0fa16b4d773.1696889530.git.steadmon@google.com>
+ <ZSUR+YdzqNTSB0XC@ugly>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EAF25CBA-6876-11EE-923A-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZSUR+YdzqNTSB0XC@ugly>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"git stash store" is meant to store what "git stash create"
-produces, as these two are implementation details of the end-user
-facing "git stash save" command.  Even though it is clearly
-documented as such, users would try silly things like "git stash
-store HEAD" to render their stash unusable.
+On 2023.10.10 10:57, Oswald Buddenhagen wrote:
+> On Mon, Oct 09, 2023 at 03:21:20PM -0700, Josh Steadmon wrote:
+> > +=== Comparison
+> > +
+> > +[format="csv",options="header",width="33%"]
+> > +|=====
+> > +Framework,"<<license,License>>","<<vendorable-or-ubiquitous,Vendorable or ubiquitous>>","<<maintainable-extensible,Maintainable / extensible>>","<<major-platform-support,Major platform support>>","<<tap-support,TAP support>>","<<diagnostic-output,Diagnostic output>>","<<runtime--skippable-tests,Runtime- skippable tests>>","<<parallel-execution,Parallel execution>>","<<mock-support,Mock support>>","<<signal-error-handling,Signal & error handling>>","<<project-kloc,Project KLOC>>","<<adoption,Adoption>>"
+> > 
+> the redundancy seems unnecessary; asciidoc should automatically use each
+> target's section title as the xreflabel.
 
-Worse yet, because "git stash drop" does not allow such a stash
-entry to be removed, "git stash clear" would be the only way to
-recover from such a mishap.  Reuse the logic that allows "drop" to
-refrain from working on such a stash entry to teach "store" to avoid
-storing an object that is not a stash entry in the first place.
+Hmm, this doesn't seem to work for me. It only renders as
+"[anchor-label]".
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-  > It may be just the matter of doing something silly like this.
-  > Not even compile tested, but hopefully it is sufficient to
-  > convey the idea.
 
-  Now it is at least compile-tested.
+> > +https://lore.kernel.org/git/c902a166-98ce-afba-93f2-ea6027557176@gmail.com/[Custom Git impl.],[lime-background]#GPL v2#,[lime-background]#True#,[lime-background]#True#,[lime-background]#True#,[lime-background]#True#,[lime-background]#True#,[lime-background]#True#,[red-background]#False#,[red-background]#False#,[red-background]#False#,1,0
+> > +https://github.com/silentbicycle/greatest[Greatest],[lime-background]#ISC#,[lime-background]#True#,[yellow-background]#Partial#,[lime-background]#True#,[yellow-background]#Partial#,[lime-background]#True#,[lime-background]#True#,[red-background]#False#,[red-background]#False#,[red-background]#False#,3,1400
+> > +https://github.com/Snaipe/Criterion[Criterion],[lime-background]#MIT#,[red-background]#False#,[yellow-background]#Partial#,[lime-background]#True#,[lime-background]#True#,[lime-background]#True#,[lime-background]#True#,[lime-background]#True#,[red-background]#False#,[lime-background]#True#,19,1800
+> > +https://github.com/rra/c-tap-harness/[C TAP],[lime-background]#Expat#,[lime-background]#True#,[yellow-background]#Partial#,[yellow-background]#Partial#,[lime-background]#True#,[red-background]#False#,[lime-background]#True#,[red-background]#False#,[red-background]#False#,[red-background]#False#,4,33
+> > +https://libcheck.github.io/check/[Check],[lime-background]#LGPL v2.1#,[red-background]#False#,[yellow-background]#Partial#,[lime-background]#True#,[lime-background]#True#,[lime-background]#True#,[red-background]#False#,[red-background]#False#,[red-background]#False#,[lime-background]#True#,17,973
+> > +|=====
+> > +
+> i find this totally unreadable in its raw form.
+> consider user-defined document-attributes for specific cell contents.
+> externalizing the urls would probably help as well (i'm not sure how to do
+> that best).
 
- builtin/stash.c  | 6 ++++++
- t/t3903-stash.sh | 4 ++++
- 2 files changed, 10 insertions(+)
-
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 3a4f9fd566..8073ef4019 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -977,6 +977,12 @@ static int show_stash(int argc, const char **argv, const char *prefix)
- static int do_store_stash(const struct object_id *w_commit, const char *stash_msg,
- 			  int quiet)
- {
-+	struct stash_info info;
-+	char revision[GIT_MAX_HEXSZ];
-+
-+	oid_to_hex_r(revision, w_commit);
-+	assert_stash_like(&info, revision);
-+
- 	if (!stash_msg)
- 		stash_msg = "Created via \"git stash store\".";
- 
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index 376cc8f4ab..35c8569aea 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -931,6 +931,10 @@ test_expect_success 'store called with invalid commit' '
- 	test_must_fail git stash store foo
- '
- 
-+test_expect_success 'store called with non-stash commit' '
-+	test_must_fail git stash store HEAD
-+'
-+
- test_expect_success 'store updates stash ref and reflog' '
- 	git stash clear &&
- 	git reset --hard &&
--- 
-2.42.0-345-gaab89be2eb
-
+Ah yeah, user-defined attributes definitely cleans this up quite a bit.
+Thanks for the tip!
