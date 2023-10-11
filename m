@@ -2,72 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22AF4CDB465
-	for <git@archiver.kernel.org>; Wed, 11 Oct 2023 23:31:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DFEACDB465
+	for <git@archiver.kernel.org>; Wed, 11 Oct 2023 23:35:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233804AbjJKXbZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Oct 2023 19:31:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38380 "EHLO
+        id S233849AbjJKXfx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Oct 2023 19:35:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233397AbjJKXbY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Oct 2023 19:31:24 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 222569E
-        for <git@vger.kernel.org>; Wed, 11 Oct 2023 16:31:23 -0700 (PDT)
-Received: (qmail 20728 invoked by uid 109); 11 Oct 2023 23:31:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 11 Oct 2023 23:31:23 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11362 invoked by uid 111); 11 Oct 2023 23:31:24 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 11 Oct 2023 19:31:24 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 11 Oct 2023 19:31:21 -0400
-From:   Jeff King <peff@peff.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/20] bounds-checks for chunk-based files
-Message-ID: <20231011233121.GN518221@coredump.intra.peff.net>
-References: <20231009205544.GA3281950@coredump.intra.peff.net>
- <ZSb1QAaLX+xcZK4a@nand.local>
+        with ESMTP id S233739AbjJKXfw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Oct 2023 19:35:52 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C4139E
+        for <git@vger.kernel.org>; Wed, 11 Oct 2023 16:35:47 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1E5381D7B9;
+        Wed, 11 Oct 2023 19:35:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=ea+NAkjv95fcuSxb6RtvVFvZqZw602zhMvoeYs
+        dzX+I=; b=E3IeUHzj0HYDtzgzK5JU5oC3kpSpDPZp8nx4BfPp9UC6CepC/urXF8
+        cY/eikm6Bd2ZwIEMR0/eoM/rs+T5WYRy2qIfwhYJY4RoEJYO+wr0QKKZS/ZrHbxO
+        UMOcNb+EL1Wgdi39E23n/b4+JUQr1bPR0QUZAlyiJ7qy72s3+tjUs=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 16DD31D7B8;
+        Wed, 11 Oct 2023 19:35:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 42D651D7B7;
+        Wed, 11 Oct 2023 19:35:36 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Richard Kerry <richard.kerry@eviden.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [RFC] Define "precious" attribute and support it in `git clean`
+In-Reply-To: <AS8PR02MB73027943EE0A30DD8DAAD4639CCCA@AS8PR02MB7302.eurprd02.prod.outlook.com>
+        (Richard Kerry's message of "Wed, 11 Oct 2023 10:06:25 +0000")
+References: <79901E6C-9839-4AB2-9360-9EBCA1AAE549@icloud.com>
+        <xmqqttqytnqb.fsf@gitster.g>
+        <AS8PR02MB73027943EE0A30DD8DAAD4639CCCA@AS8PR02MB7302.eurprd02.prod.outlook.com>
+Date:   Wed, 11 Oct 2023 16:35:34 -0700
+Message-ID: <xmqqmswoivg9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZSb1QAaLX+xcZK4a@nand.local>
+Content-Type: text/plain
+X-Pobox-Relay-ID: E0E60038-688E-11EE-93B4-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 11, 2023 at 03:19:28PM -0400, Taylor Blau wrote:
+Richard Kerry <richard.kerry@eviden.com> writes:
 
-> I reviewed this carefully (well, except for the new Perl script, for
-> obvious[^1] reasons ;-)).
-> 
-> Everything mostly looks good to me, though I
-> had a handful of review comments throughout. Many of them are trivial
-> (e.g. a number of warning() and error() strings should be marked for
-> translation, etc.), but a couple of them I think are worth looking at.
+> An option might be to state, in config, whether a project, or
+> everything, should be managed on the basis of "all untracked files
+> are precious" or "files may be explicitly marked precious", or, as
+> now, "nothing is precious".
 
-Thanks for taking a look. I think it may make sense to come back on top
-and adjust a few of the commit messages, along with adding a few
-st_mult() overflow checks that you suggest.
+I do not think there is any need to have a separate "all or none"
+option.  We do not have to make things more complicated than
+necessary.
 
-> Most notably, I think that by the end of the series, I was convinced
-> that having some kind of 'pair_chunk_expectsz()' or similar would be
-> useful and eliminate a good chunk of the boilerplate you have to write
-> to check the chunk size against an expected value when using
-> read_chunk().
-
-This I'm less convinced by. In fact, I _almost_ just dropped
-pair_chunk() entirely. Adding an out-parameter for the size at least
-forces the caller to consider what to do with the size. But really, I
-think the right mindset is "we should be sanity-checking this chunk as
-we load it". And having a callback, even if it is a little bit of
-boilerplate, helps set that frame of mind.
-
-I dunno. Maybe that is all just programmer pseudo-psychology. But I also
-don't like that about half the calls to pair_chunk() can't do a size
-check (so we need two functions, or to make the "expect" parameter
-optional).
-
--Peff
+If all untracked files are precious, a user should be able to say so
+with an entry that matches all paths "*" to mark them precious, and
+nothing more needs to be done.  By default nothing is ignored and
+nothing is precious, until you start marking paths with .gitignore
+entries.
