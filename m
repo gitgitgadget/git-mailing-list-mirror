@@ -2,105 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06A2CCD6E59
-	for <git@archiver.kernel.org>; Wed, 11 Oct 2023 10:37:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78025CD6E63
+	for <git@archiver.kernel.org>; Wed, 11 Oct 2023 12:33:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231426AbjJKKhi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Oct 2023 06:37:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34790 "EHLO
+        id S232124AbjJKMd3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Oct 2023 08:33:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229750AbjJKKhg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Oct 2023 06:37:36 -0400
-Received: from mail-oa1-x32.google.com (mail-oa1-x32.google.com [IPv6:2001:4860:4864:20::32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 453E698
-        for <git@vger.kernel.org>; Wed, 11 Oct 2023 03:37:35 -0700 (PDT)
-Received: by mail-oa1-x32.google.com with SMTP id 586e51a60fabf-1dcfb2a3282so4569219fac.2
-        for <git@vger.kernel.org>; Wed, 11 Oct 2023 03:37:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697020654; x=1697625454; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=w9WZfNFO07OhrASA8oGiODBLZZim49iDDXTYeRrmKhY=;
-        b=PhSHXLyZKWqKA/sLZYLytakvhlD7pOakCzfqar/JsLWqR7PbkIdQp1B2rrStOb1804
-         e90iinwoJsRp/GbD/mV3UzYfJD/MZHxrVSZIiK1Uc1OnfDEljaMH4fEkQOJvgIXfEowa
-         k/t7+rmu1nUwFytxtQg4Hjr/xsSSKIrJCNkCYqK16RYbSOGXCdozaQsB6uyZ7+4H2lXW
-         9cf4wH7qdU1AN+OSzgtQA+itmI+pYNoeRTTonqW1qk1n/hcmE8xjVMWichmTuWfjfhEs
-         CsaRLEhrweRrUfjtDah/R0CbvX00Qyv6ZwU8ioBftC/liT42wbnYeLEzWx+T+ADG37wu
-         T4ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697020654; x=1697625454;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=w9WZfNFO07OhrASA8oGiODBLZZim49iDDXTYeRrmKhY=;
-        b=c3H2kqh1xYIRofPcvlxFN0kFEaDz2IlGSKR2FBC0nB9jFjpRlnewu92mmxiMbQH8hF
-         Gogl9JSllU17ynv0ac0N4v95ITOPEYH+3wT8TIHPQQ7yQtQnn2WPFV7ZPqszAsr9CwQ2
-         ttoUyg+IPwmvFYB2f3D2R8xzywhP2HiX/9AHxNFemw6XgG3dUolnVWbw2ge0oRYNt/oP
-         nUKkIRCPtLP9UQ/1vVv4/sJB3TFaRyiYMWCpuQvHEXnmm6MSB45Emw7nU5P0V3qsDUNb
-         /+zPZlZUso6KYWtbXEk0WxVCP32V/mrGGLVPfagoEOBs7bBb5jS/qyow0pR0Oo2roFXn
-         rNsA==
-X-Gm-Message-State: AOJu0YwcNANcAeescdrz5XKg05ndERORtVegkT8w4qur4kJxDcRKNDXq
-        t2F+bQsxtOOAUmQsjxu6SQUsj5Bk0+rxoanXvos=
-X-Google-Smtp-Source: AGHT+IHtQqI8Vjb5w4V/PzVNrPPH/dhy/dTQLjXx5bzRsSNRSGOuLfE6pueVaWv4kC+wOMGQPXFN1SPrREeZKWmJdoc=
-X-Received: by 2002:a05:6870:1682:b0:1d0:f5bd:6fe with SMTP id
- j2-20020a056870168200b001d0f5bd06femr25677515oae.50.1697020649773; Wed, 11
- Oct 2023 03:37:29 -0700 (PDT)
-MIME-Version: 1.0
-References: <20231009105528.17777-1-karthik.188@gmail.com> <ZSTs3BUVtaI9QIoA@tanuki>
- <xmqqil7etndo.fsf@gitster.g>
-In-Reply-To: <xmqqil7etndo.fsf@gitster.g>
-From:   Karthik Nayak <karthik.188@gmail.com>
-Date:   Wed, 11 Oct 2023 12:37:03 +0200
-Message-ID: <CAOLa=ZSbd_E+DAkhuGrUpfHkxaje3jrH9-fEDyctAPFExKnj9A@mail.gmail.com>
-Subject: Re: [PATCH 0/3] rev-list: add support for commits in `--missing`
+        with ESMTP id S232115AbjJKMd2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Oct 2023 08:33:28 -0400
+X-Greylist: delayed 133095 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 11 Oct 2023 05:33:25 PDT
+Received: from mout-p-202.mailbox.org (mout-p-202.mailbox.org [IPv6:2001:67c:2050:0:465::202])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17B6E9E
+        for <git@vger.kernel.org>; Wed, 11 Oct 2023 05:33:25 -0700 (PDT)
+Received: from smtp202.mailbox.org (smtp202.mailbox.org [IPv6:2001:67c:2050:b231:465::202])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        by mout-p-202.mailbox.org (Postfix) with ESMTPS id 4S5By86D82z9sr8;
+        Wed, 11 Oct 2023 14:33:20 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hsal.es; s=MBO0001;
+        t=1697027600;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=v+zAtu5HjARHu/ccEVGF4MTMnkHbtsio16BqPx2297k=;
+        b=HHoK4Ds1yBlMxt+7taOFXxFF6Sr6j8zqx4Vnf+GdC77OgFlHjvQNUbwNzkMaQcZqDua+5Y
+        ktM7p36ckkD+t5zyejbp1bsnF0BvorffR1U8/oG2vZfSVd7cC2jFPZdL0tWHzqsLy5k01z
+        gxVAmLMyuVJIfaF+XRVQ1EnSpRNKW7jOEUUoAcqlVlQAMhqk58omNAOi0IGvqTj8xvLPqJ
+        Ye9UBSjEFXvRUda7zsx0gm85sYREXpniA4SPD/xJQO4KKpe80NCVYlvQVh2x7j8l919KZf
+        ijj0mTYDCMBujMuT++wuiRywOB8kbJOoCU4F5ECagHq9reF/kHvlZnFKb8rcAw==
+Date:   Wed, 11 Oct 2023 13:33:19 +0100 (WEST)
+From:   Hugo Sales <hugo@hsal.es>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+Message-ID: <1384513657.119681.1697027599941@office.mailbox.org>
+In-Reply-To: <xmqq1qe3wbt1.fsf@gitster.g>
+References: <20231009233458.1371351-1-hugo@hsal.es>
+ <xmqq1qe3wbt1.fsf@gitster.g>
+Subject: Re: [PATCH 0/3] Add `-p' option to `git-mv', inspired by `mkdir'
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+Importance: Normal
+X-Rspamd-Queue-Id: 4S5By86D82z9sr8
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 10, 2023 at 7:09=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Patrick Steinhardt <ps@pks.im> writes:
->
-> > I had already reviewed the patches internally at GitLab, so for what
-> > it's worth please feel free to add my Reviewed-by.
->
-> Great.  It seems that 'seen' with this series fails to pass the
-> tests, though.
->
-> https://github.com/git/git/actions/runs/6462854176/job/17545104753
+> On 10/10/2023 12:39 AM GMT Junio C Hamano <gitster@pobox.com> wrote:
+> 
+> Is there a reason why somebody benefits by us retaining the current
+> behaviour, where
+> 
+>     $ git mv file no/such/dir/yet/file
+> 
+> fails with "No such file or directory", and they are forced to say
+> either
+> 
+>     $ mkdir -p no/such/dir/yet
+>     $ git mv file no/such/dir/yet/file
+> 
+> or
+> 
+>     $ git mv -p file no/such/dir/yet/file
 
-Seems like this is because of commit-graph being enabled, I think the
-best thing to do here
-would be to disable the commit graph of these tests.
+Somewhat, as it could be a typo, so if you actually want to create a new folder, you have to be explicit. I wouldn't be opposed to removing the need for the flag, but if we did, I think we should warn the user that a new directory was created.
 
-This should do:
+> Imagine there is no "no" directory (so nothing under it
+> exists), and you did this (you do have a regular file "file").
+> 
+>     $ git mv [-p] file no/such/dir/yet
+> 
+> What should happen?  Would we do the equivalent of
+> 
+>     $ mkdir -p no/such/dir && git mv file no/such/dir/yet
+> 
+> or are we doing
+> 
+>     $ mkdir -p no/such/dir/yet && git mv file no/such/dir/yet/file
+> 
+> Both are plausible, and "mkdir -p" does not have such a nasty
+> ambiguity.  That is what makes me unsure about the new feature
+> (again, either with required "-p" or with implied "-p").
 
-    diff --git a/t/t6022-rev-list-missing.sh b/t/t6022-rev-list-missing.sh
-    index bbff66e4fc..39a8402682 100755
-    --- a/t/t6022-rev-list-missing.sh
-    +++ b/t/t6022-rev-list-missing.sh
-    @@ -5,6 +5,11 @@ test_description=3D'handling of missing objects in rev=
--list'
-     TEST_PASSES_SANITIZE_LEAK=3Dtrue
-     . ./test-lib.sh
+I think the ambiguity is resolved by the inclusion of lack thereof of a trailing `/`. This is what the implementation already does, too, before this patch. So
 
-    +# Disable writing the commit graph as the tests depend on making parti=
-cular
-    +# commits hidden, the graph is created before that and rev-list
-would default
-    +# to using the commit graph in such instances.
-    +GIT_TEST_COMMIT_GRAPH=3D0
-    +
-     # We setup the repository with two commits, this way HEAD is always
-     # available and we can hide commit 1.
-     test_expect_success 'create repository and alternate directory' '
+     $ git mv [-p] file no/such/dir/yet
 
-Thanks for reporting. I'll wait for a day or two (for reviews) and
-will add this to the second version
-of this series.
+would be the same as
+
+     $ mkdir -p no/such/dir && git mv file no/such/dir/yet
+
+and
+
+     $ git mv [-p] file no/such/dir/yet/
+
+would be the same as
+
+     $ mkdir -p no/such/dir/yet && git mv file no/such/dir/yet/
+
+Moving `file` to `no/such/dir/yet/file`
+
+Thanks for the feedback,
+Hugo
+
+P.S. Apologies for the duplicated email, Junio, I did a Reply instead of a Reply All
