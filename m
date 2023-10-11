@@ -2,360 +2,163 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 851D8CDB47E
-	for <git@archiver.kernel.org>; Wed, 11 Oct 2023 20:20:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 41B03CDB482
+	for <git@archiver.kernel.org>; Wed, 11 Oct 2023 20:22:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233417AbjJKUUO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Oct 2023 16:20:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43458 "EHLO
+        id S1376315AbjJKUWa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Oct 2023 16:22:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231226AbjJKUUN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Oct 2023 16:20:13 -0400
-Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E14290
-        for <git@vger.kernel.org>; Wed, 11 Oct 2023 13:20:11 -0700 (PDT)
-Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-5a7cf717bacso3594907b3.1
-        for <git@vger.kernel.org>; Wed, 11 Oct 2023 13:20:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1697055610; x=1697660410; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3TC6pt8tnhK/qnA5U61BIEFQRRFy91ddW6vCUthqgIs=;
-        b=RzF4VCalrAaV5vQJxKeLZb7d9Skymh9vhL7XSWqvK19Ec4yCCO9DwXdRCuu8N+xdi7
-         rI0BWGALhjsE+izdeNJQ34T0h1ZaDOtuZw+lowsR75gBQA4fCS3k2zOeUPeKeCIf+bUH
-         fvB3EICNwtXGVW0XWONxYSXefwfTorbvkASY7O1AvefTC+X5UMvync4Q9IQwOtn/lEnt
-         3BKa03h6yQd8TlFMOQrLXDD+kvJtqZAlouvtffrdkEWEVv1DNVWRh6yqdRGj/PPpcGCh
-         xbu4qe6v1C29Dzv+2i3lT7L3tDprw8HbxzRsWqUaoR06tLuy5pqttMTLKwNCdK4zSi68
-         asdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697055610; x=1697660410;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=3TC6pt8tnhK/qnA5U61BIEFQRRFy91ddW6vCUthqgIs=;
-        b=jjAIuntSqKXu182vvHrLQ/twl6oXZqjOr+n98x9cAObFGLZDEPGa3RBjSVuVDB+0LA
-         JlLkNfrBpXzr8aPzE/4hEZOi/E2c6xpCdYrVe0W79KN+VF3/gzj1uk50+LMaW7Hca6FK
-         fxGmjOuf+5dmV7Ya4Tnp1fR2IIzps4fRu5ZCDxCauldwPCAQcq4SBRj2NdHeIT8VR6Ln
-         4RIwAff77yoz5lDC++o2loEQFGsu+Wya6dqq2Ebs0CP8MBeAiw1xqWYznmBlhlZ6KwiK
-         7S5bt1Q9CFE45x89eAlnUzQIW2EXxHN9/1kvpI2vkbASwYtu0cPEBxtjGytu7G0nEJJl
-         4qCw==
-X-Gm-Message-State: AOJu0Yyml9gaTZUHYUpJfAi/EE4PvI4Zb/khV/iplGX89XY4QQK4Jfh7
-        eQgTPvr0Cs1x2bt3FIbQicqNGN0PbBdx
-X-Google-Smtp-Source: AGHT+IGUIHuJp/5JFd6zlG+JLFm7OEZQGKiTwBbk2wDbsdymJUws58cr5lQZmFVt6IB2+2TFVd8XsS5EnTTY
-X-Received: from jojwang1.c.googlers.com ([fda3:e722:ac3:cc00:2b:7d90:c0a8:3b1d])
- (user=jojwang job=sendgmr) by 2002:a0d:ec0f:0:b0:59b:f138:c835 with SMTP id
- q15-20020a0dec0f000000b0059bf138c835mr419425ywn.5.1697055610651; Wed, 11 Oct
- 2023 13:20:10 -0700 (PDT)
-Date:   Wed, 11 Oct 2023 20:20:07 +0000
-In-Reply-To: <xmqqbkda4ubp.fsf@gitster.g>
-Mime-Version: 1.0
-References: <xmqqbkda4ubp.fsf@gitster.g>
-X-Mailer: git-send-email 2.42.0.609.gbb76f46606-goog
-Message-ID: <20231011202008.609921-1-jojwang@google.com>
-Subject: [PATCH 1/1] add: enable attr pathspec magic
-From:   Joanna Wang <jojwang@google.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, jojwang@google.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S235143AbjJKUW1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Oct 2023 16:22:27 -0400
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2088.outbound.protection.outlook.com [40.107.237.88])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DB8F90
+        for <git@vger.kernel.org>; Wed, 11 Oct 2023 13:22:25 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Cv0SxhlJKVsDo2R294vMnbIri36pWJrR+l1bCBD9ecS76FG1lmaZ883QosEciOw4I+2OgZ36GsLUPIOj/7DZndLjRZTwD1npF3XQTednZ5ll8/lc1w4hRKo4hEfBPYXDZdkd90KeVmX2KOAuabwhgccFBflGZh7vKy2J5aNa8e8iAjGySFzH/+G9G4XSyHz+sS4y6p9ChH657J3zekPdqyO/g6DfySrBoHZXDvwc9mfCZp7+ypJu8E5NmUsrePuWuIJyxmfvNsjWIkmSDT0JWuIM05vYRwd6c1eyrxDrrCRh8aM/a/Jg2XxGrZfjQinsQbujBfNgHTE2KwpHfNz0vQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=1ss5YeIQUv043S2phVqXszoOdrEKQmKF7d95G2Qaxaw=;
+ b=RntiflJBSk0kC/KqH3cd6sgslytAzbVbifFUZ02AiBpTCyDHVRmRifH1YW/oEHi2hGv3pKU6hbRSk2SCCUU/EjEWR60u4fBO96g2HVejTJnwvLvugVcXK+IWCCkbbKdrAQjs+vVjoTZQYku1m+BEpEp8xIw+mZRtrlKIhuBqVW4VcKk4//6x0J1pVSeKR+VSVQhWf0EHsl5fyOtKsvmxUvzHWFW4+qXTotzgpZE/agrvUD8XG6MSG81GaeyaQnwgQccIHxYGuuhcZ133+ujhW6th0VM//Swt5F73i4iks3Ysq6i+kpEi2axhj1MFjs4FMTJHBvPR6PKUAf7Nncnu2A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=1ss5YeIQUv043S2phVqXszoOdrEKQmKF7d95G2Qaxaw=;
+ b=3Sry0g1TRBa+fk3jMOxSAKWRjGy2S0MgFaRZkVqmfLJMVlffUW4Y/UkCWvSLFi/YLoICvPscW1+agbedCLPuPxNg9PvV7t1n9qfROhz+YrQ+XsFQkK2qVyq94uCqmUnfyJSAhvRQqGCtlq/MlJ4P3gl2cfnAAr+8czyGgosFN1s=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from DM6PR12MB4356.namprd12.prod.outlook.com (2603:10b6:5:2aa::8) by
+ SA0PR12MB4544.namprd12.prod.outlook.com (2603:10b6:806:70::21) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6863.38; Wed, 11 Oct 2023 20:22:22 +0000
+Received: from DM6PR12MB4356.namprd12.prod.outlook.com
+ ([fe80::1cfd:3535:273a:8097]) by DM6PR12MB4356.namprd12.prod.outlook.com
+ ([fe80::1cfd:3535:273a:8097%7]) with mapi id 15.20.6863.040; Wed, 11 Oct 2023
+ 20:22:22 +0000
+Message-ID: <7e2c92ff-b42c-4b3f-a509-9d0785448262@amd.com>
+Date:   Wed, 11 Oct 2023 16:22:18 -0400
+User-Agent: Mozilla Thunderbird
+Subject: [PATCH] send-email: move process_address_list earlier to avoid,
+ uninitialized address error
+Content-Language: en-US
+From:   Michael Strawbridge <michael.strawbridge@amd.com>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>, Jeff King <peff@peff.net>,
+        Todd Zullinger <tmz@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Luben Tuikov <luben.tuikov@amd.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Git Mailing List <git@vger.kernel.org>
+References: <ZQ1eGzqfyoeeTBUq@debian.me>
+ <20230924033625.GA1492190@coredump.intra.peff.net>
+ <ZRE6q8dHPFRIQezX@debian.me>
+ <20230925080010.GA1534025@coredump.intra.peff.net>
+ <ZRGdvRQuj4zllGnm@pobox.com>
+ <20230925161748.GA2149383@coredump.intra.peff.net>
+ <ZSal-mQIZAUBaq6g@debian.me> <95b9e5d5-ab07-48a6-b972-af5348f653be@amd.com>
+In-Reply-To: <95b9e5d5-ab07-48a6-b972-af5348f653be@amd.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: SN7PR04CA0029.namprd04.prod.outlook.com
+ (2603:10b6:806:f2::34) To DM6PR12MB4356.namprd12.prod.outlook.com
+ (2603:10b6:5:2aa::8)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM6PR12MB4356:EE_|SA0PR12MB4544:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1df648b6-e637-4bf8-89dd-08dbca97c68d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: dHA9/cj6gjSgzdKBGkD26fB/Ag4KctiHWbDCrR8Nisya1pD6YIiQuHg+ZkXymIj+QXqeoXubrG9xHprs1T9Sdnk04RKFg+7jzw9vxckPaZn5yQI/ilhJ0I4YY2ix79sNZm6wQepHh9ERSz0qO/+TGB2t24K9EqfHRX+ze/u9IrKesmrlswwsBLz8yf2KM7PuYFeNUQCkKYMlhJpPE9Ao74v/sQqx+1CS2PYyK6mrD8QrKmy3d6PjiY98JbpbMmJnMWr2lpX2OjSH7DuiVV0cWqTAsr3xS7gkT6wJq1xco3LypwS5+rT2ChP7MqtMw5WAHxjKrwInSX1idEcQG83blVeTS3GAhph0sV1tJD6hwD4XCFOB63c0LiEntnPjZdjL8vD9YakEU22w8uMW5rl7fQGZmCXECanT9dQkv+u7vjR3FvWaG5GMkpjzztKRDKVRjwUmJ4/nU/Q0AwNHsUO8u+rE87p76EdiKaZZcesYfzmmpfzuTjd6rXCFTS8irdOovpt5B91WXIqbvM4rthIubcoWxwRp/EEsMC0hqV2yyQ+C/uyQs3UF4vMZ0FtVAwLePcC55RHrdL9uMB+zDT33izHML6txCkZKBKjK+LG/pJNFHCv67CyNb77Qu+lC/i4w8Mk9796cZ2+XDm9NAp79sg==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4356.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(346002)(366004)(396003)(136003)(39860400002)(376002)(230922051799003)(1800799009)(186009)(64100799003)(451199024)(31686004)(6512007)(86362001)(36756003)(31696002)(38100700002)(66556008)(44832011)(83380400001)(6666004)(6486002)(478600001)(8936002)(6506007)(8676002)(316002)(4326008)(41300700001)(26005)(2906002)(66946007)(2616005)(66476007)(110136005)(5660300002)(54906003)(45980500001)(43740500002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Q0R0bHN5VEszT3ZRZTErcmZtaEhUNEF4MU9zNjVHL2thMEovNWdiY0IvTWp1?=
+ =?utf-8?B?U0V0R1JjdGs5UVArUnpVUmM5WVRrUWdLOCtDSUQ2M1NiWk5MbSsvdXFMZHNw?=
+ =?utf-8?B?NEI3d2tyeW5NVzFZTGdoZVJtdDQ3d0pHS2JCR0w4MkcvSHBvYVVqd0xnVk0z?=
+ =?utf-8?B?S1NnYlBhWk1qZ21BQlNxeVFORHNmdW9HMG50amZCUk5PTUJaWjFYczduY1VS?=
+ =?utf-8?B?MDVyKzlKRGovRDNPSzJmbzU5TjhYbEVwdXdzbWxmbzlQQks1MTlqVUhwd2g5?=
+ =?utf-8?B?VDQ5dzc1di9QL2RyNXVNYzlINGRCMTY3K0UrazVDTUw0OGE3SjRJOWhKbzhT?=
+ =?utf-8?B?bCtYdjJoNVR4cEU4YmdOd0ZVekdnb0lDTlk4UU1SS09nTFdlUWZ2WExRU241?=
+ =?utf-8?B?MTIwQWhyUWxOdDc0K1NmaXVKUHE0NllIWW5yazR0RWM4L09hcmNrUUhQZkN0?=
+ =?utf-8?B?OFhtUDBTRlRJSjhKdXYvcHhuYU0rbHhWOEVLVE4zbmdUT2ZVb2l3MGI0WUh4?=
+ =?utf-8?B?V1hkZmJSY2luQVlLRnpOWWFRS2RadVl2UjVoVFVqNE9yYkhFZkJtcWppTFJP?=
+ =?utf-8?B?MklyV3hyTytoNStuK01yVFBRWkJUWlJ5VG9iQk02V0pzVmZ4SXNxN2dkN3ZX?=
+ =?utf-8?B?S29CUVl5dTRyWFMvT0tXcGhzUWZPMlFrZStjVkpQdGljOXZrZVdMblZnMW1r?=
+ =?utf-8?B?eGV4WXVpbGdBYUROQjIwWkRlR1VsdHdROHh6eDBKbEZZKzJmQjI5WXJFQlB5?=
+ =?utf-8?B?bCtHakh1bDFZeVBjTkgza2pxci9OZEdlM2pFakllbkxaOUZDajFCZDZVbXZl?=
+ =?utf-8?B?R3JPekRjaU9nT1oycWhVa2ZqY3JuaGpibzR2VHFHOVlZS2hySjd3WDN2MXVm?=
+ =?utf-8?B?bE4wN0tXWU8vUElqZFZ0NmdjTHdyTjNMb3ZEb3V1ZTAvWGNRTTJvK2N3NWZ4?=
+ =?utf-8?B?anJWZ2lBUzJZMTE4dFRnVGdpMVVYbGJLWlEzN08xODRaWkhjTm1rNWF4anla?=
+ =?utf-8?B?QXlHaFVncVRnUmNhUE9oSkx0a05iSnY5dE0rZk5DeWlyOHlYU3QzSlkwRTRY?=
+ =?utf-8?B?Z21mUXBUYU04cDVaeDM4SDRDTXZCZFB5d0l2Mmw5dEROUDlEVUhwTVVLSTBs?=
+ =?utf-8?B?VzZWbS9meFlUMU1rRE5KbDNTRHBZNFp1ZVZINHVISkExRXl6V3JkR08vbUsx?=
+ =?utf-8?B?aXFjb1oyWnlBUTMrNG9PbVNpZjdFbC85Z1Z6RDRyUk1kcVlKZTFkcUwrRjZ1?=
+ =?utf-8?B?OFNkUnZPRjdzU284WnNycjJacUhmMWF4dTJ3L3Urb3F2Y0w4K0RWQm45ZlJC?=
+ =?utf-8?B?QXNiWVYzU2hWOG1ZVFIvUDNiaVMzM1hQVGVyYnZsMUNnTHF5STVxU0tRbUlK?=
+ =?utf-8?B?UUhHWWkwZzQvWnk3eEYyUFhVOTN0c1B4U01XL3hTNjRNcTZLYm1yLy9ZKzFJ?=
+ =?utf-8?B?S2lQMkhwdkR0bEVIamRpRk1PTThQSWZVNFN1V0VTME9UbnREd2lCUXh0ZFQ0?=
+ =?utf-8?B?eVRpbGFTMGdMcWxZOHlSeUJnWmY0dGNwbnY4MTA2SUdlOWlWZXdsVGQ2TVZj?=
+ =?utf-8?B?a2N5Y09rQnBMYTNDYzZxVjZVYnRUVXhLN0dZekgzYkJvbUZ0V1dpTG5JWG5X?=
+ =?utf-8?B?NTVLT3ZZYStqSWNzODNFcVZ1TU1rUEg2UDdQVzlubUZ2a0pKRVkwVFpER2Er?=
+ =?utf-8?B?cjdMYzRLS1dIYXRGeVRVN1lqZVNMRVpkZTVyRG45YnBHSzRYMng4aDRGNU5x?=
+ =?utf-8?B?YjZDMUdEN20zbkQ0b080TjlBdy9BejVXcnhwemtVV1RvTmlQZ3NYR0U1V3VG?=
+ =?utf-8?B?eS8vM3JzbkRhbENjSU45Z3Q5dVo1NTJueDNzczQ2TjRONjc2dk5OWEdpZi9q?=
+ =?utf-8?B?TWRCOWg0dXFiaEM2dEI1WjdIaXUwSTljM2FDUFVFQnJadzdjZ0N1dVJwYTRw?=
+ =?utf-8?B?UzEvYVFNTVhobWNSaVAxdEZ1OGZqenh5eTkwY3djdjRBbC9XL095VnExOHUr?=
+ =?utf-8?B?KzNnK0xqRi83cTM1TnErWStTNjBvWGN4N3hsVlFpM0Z0L3VkTjB0VCtIM1Nq?=
+ =?utf-8?B?NkF1RGxRMk40dFdGWXR4a1NzS20zem5QaDNaRTB4a0JpeUk2ZWxpd0s1OVR6?=
+ =?utf-8?Q?MhUMVzWBmOIW7cdsQoCjVtJYn?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1df648b6-e637-4bf8-89dd-08dbca97c68d
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4356.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Oct 2023 20:22:22.5083
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: IowyLx8wT2HJe9s/kN4y1ZiLd9MQhEmohIDuom1wqztWP3RSTTqi30Z3ze0HndtpqhySqI2PYLJOLTO+boGhBg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR12MB4544
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This lets users limit added files or exclude files based on file
-attributes. For example, the chromium project would like to use
-this like "git add --all ':(exclude,attr:submodule)'", as submodules
-are managed in a unique way and often results in submodule changes
-that users do not want in their commits.
-
-This does not change any attr magic implementation. It is only adding
-attr as an allowed pathspec in git-add, which was previously
-blocked by GUARD_PATHSPEC and a pathspec mask in parse_pathspec()).
-
-With this patch, attr is supported. It is possible that when the attr
-pathspec feature was first added in
-b0db704652 (pathspec: allow querying for attributes, 2017-03-13),
-"PATHSPEC_ATTR" was just unintentionally left out of a few
-GUARD_PATHSPEC() invocations. Later, to get a more user-friendly error
-message when attr was used with git-add, PATHSPEC_ATTR was added as a
-mask to git-add's invocation of parse_pathspec()
-84d938b732 (add: do not accept pathspec magic 'attr', 2018-09-18).
-
-git-stash which goes through the same GUARD_PATHSPEC(), currently
-does not work with attr.
-https://lore.kernel.org/git/CAMmZTi-0QKtj7Q=3DsbC5qhipGsQxJFOY-Qkk1jfkRYwfF=
-5FcUVg@mail.gmail.com/T/#u
-So a PATHSPEC_ATTR mask has been added to its parse_pathspec and
-parse_pathspec_file().
-
-Signed-off-by: Joanna Wang <jojwang@google.com>
+Move processing of email address lists before the sendemail-validate
+hook code.  This fixes email address validation errors when the optional
+perl module Email::Valid is installed and multiple addresses are passed
+in on a single to/cc argument like --to=foo@example.com,bar@example.com.
 ---
+ git-send-email.perl | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-> Do you know what exactly is not ready, so that perhaps others can
-> help figuring out how to make it ready for the attr magic?
-I have filed a bug which describes what I have found:
-https://lore.kernel.org/git/CAMmZTi-0QKtj7Q=3DsbC5qhipGsQxJFOY-Qkk1jfkRYwfF=
-5FcUVg@mail.gmail.com/T/#u
-
-> Why this reindent?
-Fixed
-
-> There is a typo here.
-Fixed
-
-
- builtin/add.c                  |   7 ++-
- builtin/stash.c                |   7 ++-
- dir.c                          |   3 +-
- t/t6135-pathspec-with-attrs.sh | 106 +++++++++++++++++++++++++++++++--
- 4 files changed, 112 insertions(+), 11 deletions(-)
-
-diff --git a/builtin/add.c b/builtin/add.c
-index c27254a5cd..2de83964a3 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -424,7 +424,7 @@ int cmd_add(int argc, const char **argv, const char *pr=
-efix)
- 	 * Check the "pathspec '%s' did not match any files" block
- 	 * below before enabling new magic.
- 	 */
--	parse_pathspec(&pathspec, PATHSPEC_ATTR,
-+	parse_pathspec(&pathspec, 0,
- 		       PATHSPEC_PREFER_FULL |
- 		       PATHSPEC_SYMLINK_LEADING_PATH,
- 		       prefix, argv);
-@@ -433,7 +433,7 @@ int cmd_add(int argc, const char **argv, const char *pr=
-efix)
- 		if (pathspec.nr)
- 			die(_("'%s' and pathspec arguments cannot be used together"), "--pathsp=
-ec-from-file");
-=20
--		parse_pathspec_file(&pathspec, PATHSPEC_ATTR,
-+		parse_pathspec_file(&pathspec, 0,
- 				    PATHSPEC_PREFER_FULL |
- 				    PATHSPEC_SYMLINK_LEADING_PATH,
- 				    prefix, pathspec_from_file, pathspec_file_nul);
-@@ -504,7 +504,8 @@ int cmd_add(int argc, const char **argv, const char *pr=
-efix)
- 			       PATHSPEC_LITERAL |
- 			       PATHSPEC_GLOB |
- 			       PATHSPEC_ICASE |
--			       PATHSPEC_EXCLUDE);
-+			       PATHSPEC_EXCLUDE |
-+			       PATHSPEC_ATTR);
-=20
- 		for (i =3D 0; i < pathspec.nr; i++) {
- 			const char *path =3D pathspec.items[i].match;
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 1ad496985a..af1b3a7146 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -1760,7 +1760,10 @@ static int push_stash(int argc, const char **argv, c=
-onst char *prefix,
- 		}
- 	}
-=20
--	parse_pathspec(&ps, 0, PATHSPEC_PREFER_FULL | PATHSPEC_PREFIX_ORIGIN,
-+        // For parse_pathspec() and parse_pathspec_file() below, PATHSPEC_=
-ATTR is blocked for git stash
-+        // because the magic attr does not get properly parsed when the PA=
-THSPEC_PREFIX_ORIGIN flag is
-+        // used, resulting in incorrect file filtering for attr.
-+	parse_pathspec(&ps, PATHSPEC_ATTR, PATHSPEC_PREFER_FULL | PATHSPEC_PREFIX=
-_ORIGIN,
- 		       prefix, argv);
-=20
- 	if (pathspec_from_file) {
-@@ -1773,7 +1776,7 @@ static int push_stash(int argc, const char **argv, co=
-nst char *prefix,
- 		if (ps.nr)
- 			die(_("'%s' and pathspec arguments cannot be used together"), "--pathsp=
-ec-from-file");
-=20
--		parse_pathspec_file(&ps, 0,
-+		parse_pathspec_file(&ps, PATHSPEC_ATTR,
- 				    PATHSPEC_PREFER_FULL | PATHSPEC_PREFIX_ORIGIN,
- 				    prefix, pathspec_from_file, pathspec_file_nul);
- 	} else if (pathspec_file_nul) {
-diff --git a/dir.c b/dir.c
-index 8486e4d56f..ee3f3777df 100644
---- a/dir.c
-+++ b/dir.c
-@@ -2179,7 +2179,8 @@ static int exclude_matches_pathspec(const char *path,=
- int pathlen,
- 		       PATHSPEC_LITERAL |
- 		       PATHSPEC_GLOB |
- 		       PATHSPEC_ICASE |
--		       PATHSPEC_EXCLUDE);
-+		       PATHSPEC_EXCLUDE |
-+		       PATHSPEC_ATTR);
-=20
- 	for (i =3D 0; i < pathspec->nr; i++) {
- 		const struct pathspec_item *item =3D &pathspec->items[i];
-diff --git a/t/t6135-pathspec-with-attrs.sh b/t/t6135-pathspec-with-attrs.s=
-h
-index f70c395e75..403ee5e6b6 100755
---- a/t/t6135-pathspec-with-attrs.sh
-+++ b/t/t6135-pathspec-with-attrs.sh
-@@ -64,12 +64,24 @@ test_expect_success 'setup .gitattributes' '
- 	fileSetLabel label
- 	fileValue label=3Dfoo
- 	fileWrongLabel label=E2=98=BA
-+	newFileA* labelA
-+	newFileB* labelB
- 	EOF
- 	echo fileSetLabel label1 >sub/.gitattributes &&
- 	git add .gitattributes sub/.gitattributes &&
- 	git commit -m "add attributes"
- '
-=20
-+test_expect_success 'setup .gitignore' '
-+	cat <<-\EOF >.gitignore &&
-+	actual
-+	expect
-+	pathspec_file
-+	EOF
-+	git add .gitignore &&
-+	git commit -m "add gitignore"
-+'
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 288ea1ae80..cfd80c9d8b 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -799,6 +799,10 @@ sub is_format_patch_arg {
+ 
+ $time = time - scalar $#files;
+ 
++@initial_to = process_address_list(@initial_to);
++@initial_cc = process_address_list(@initial_cc);
++@initial_bcc = process_address_list(@initial_bcc);
 +
- test_expect_success 'check specific set attr' '
- 	cat <<-\EOF >expect &&
- 	fileSetLabel
-@@ -150,6 +162,7 @@ test_expect_success 'check specific value attr (2)' '
- test_expect_success 'check unspecified attr' '
- 	cat <<-\EOF >expect &&
- 	.gitattributes
-+	.gitignore
- 	fileA
- 	fileAB
- 	fileAC
-@@ -175,6 +188,7 @@ test_expect_success 'check unspecified attr' '
- test_expect_success 'check unspecified attr (2)' '
- 	cat <<-\EOF >expect &&
- 	HEAD:.gitattributes
-+	HEAD:.gitignore
- 	HEAD:fileA
- 	HEAD:fileAB
- 	HEAD:fileAC
-@@ -200,6 +214,7 @@ test_expect_success 'check unspecified attr (2)' '
- test_expect_success 'check multiple unspecified attr' '
- 	cat <<-\EOF >expect &&
- 	.gitattributes
-+	.gitignore
- 	fileC
- 	fileNoLabel
- 	fileWrongLabel
-@@ -239,16 +254,97 @@ test_expect_success 'fail on multiple attr specifiers=
- in one pathspec item' '
- 	test_i18ngrep "Only one" actual
- '
-=20
--test_expect_success 'fail if attr magic is used places not implemented' '
-+test_expect_success 'fail if attr magic is used in places not implemented'=
- '
- 	# The main purpose of this test is to check that we actually fail
- 	# when you attempt to use attr magic in commands that do not implement
--	# attr magic. This test does not advocate git-add to stay that way,
--	# though, but git-add is convenient as it has its own internal pathspec
--	# parsing.
--	test_must_fail git add ":(attr:labelB)" 2>actual &&
-+	# attr magic. This test does not advocate stash push to stay that way.
-+	# When you teach the command to grok the pathspec, you need to find
-+	# another command to replace it for the test.
-+	test_must_fail git stash push ":(attr:labelB)" 2>actual &&
-+	test_i18ngrep "magic not supported" actual
-+'
-+
-+test_expect_success 'fail if attr magic is used in --pathspec-from-file wh=
-en not implemented' '
-+	# This is like the test above but for attr magic passed in via --pathspec=
--from-file.
-+	cat <<-\EOF >pathspec_file &&
-+	:(attr:labelB)
-+	EOF
-+	test_must_fail git stash push --pathspec-from-file=3Dpathspec_file 2>actu=
-al &&
- 	test_i18ngrep "magic not supported" actual
- '
-=20
-+test_expect_success 'check that attr magic works for git add --all' '
-+	cat <<-\EOF >expect &&
-+	sub/newFileA-foo
-+	EOF
-+	>sub/newFileA-foo &&
-+	>sub/newFileB-foo &&
-+	git add --all ":(exclude,attr:labelB)" &&
-+	git diff --name-only --cached >actual &&
-+	git restore -W -S . &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'check that attr magic works for git add -u' '
-+	cat <<-\EOF >expect &&
-+	sub/fileA
-+	EOF
-+	>sub/newFileA-foo &&
-+	>sub/newFileB-foo &&
-+	>sub/fileA &&
-+	>sub/fileB &&
-+	git add -u ":(exclude,attr:labelB)" &&
-+	git diff --name-only --cached  >actual &&
-+	git restore -S -W . && rm sub/new* &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'check that attr magic works for git add <path>' '
-+	cat <<-\EOF >expect &&
-+	fileA
-+	fileB
-+	sub/fileA
-+	EOF
-+	>fileA &&
-+	>fileB &&
-+	>sub/fileA &&
-+	>sub/fileB &&
-+	git add ":(exclude,attr:labelB)sub/*" &&
-+	git diff --name-only --cached >actual &&
-+	git restore -S -W . &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'check that attr magic works for git -add .' '
-+	cat <<-\EOF >expect &&
-+	sub/fileA
-+	EOF
-+	>fileA &&
-+	>fileB &&
-+	>sub/fileA &&
-+	>sub/fileB &&
-+	cd sub &&
-+	git add . ":(exclude,attr:labelB)" &&
-+	cd .. &&
-+	git diff --name-only --cached >actual &&
-+	git restore -S -W . &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'check that attr magic works for git add --pathspec-fr=
-om-file' '
-+	cat <<-\EOF >pathspec_file &&
-+	:(exclude,attr:labelB)
-+	EOF
-+	cat <<-\EOF >expect &&
-+	sub/newFileA-foo
-+	EOF
-+	>sub/newFileA-foo &&
-+	>sub/newFileB-foo &&
-+	git add --all --pathspec-from-file=3Dpathspec_file &&
-+	git diff --name-only --cached >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'abort on giving invalid label on the command line' '
- 	test_must_fail git ls-files . ":(attr:=E2=98=BA)"
- '
---=20
-2.42.0.609.gbb76f46606-goog
-
+ if ($validate) {
+        # FIFOs can only be read once, exclude them from validation.
+        my @real_files = ();
+@@ -1099,10 +1103,6 @@ sub expand_one_alias {
+        return $aliases{$alias} ? expand_aliases(@{$aliases{$alias}}) : $alias;
+ }
+ 
+-@initial_to = process_address_list(@initial_to);
+-@initial_cc = process_address_list(@initial_cc);
+-@initial_bcc = process_address_list(@initial_bcc);
+-
+ if ($thread && !defined $initial_in_reply_to && $prompting) {
+        $initial_in_reply_to = ask(
+                __("Message-ID to be used as In-Reply-To for the first email (if any)? "),
+-- 
+2.34.1
