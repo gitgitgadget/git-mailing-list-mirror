@@ -2,128 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36F3ACDB47E
-	for <git@archiver.kernel.org>; Wed, 11 Oct 2023 22:37:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90A28CDB47E
+	for <git@archiver.kernel.org>; Wed, 11 Oct 2023 22:40:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235216AbjJKWht (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Oct 2023 18:37:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57912 "EHLO
+        id S1376394AbjJKWkH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Oct 2023 18:40:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53622 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235229AbjJKWhp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Oct 2023 18:37:45 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8BB9E3
-        for <git@vger.kernel.org>; Wed, 11 Oct 2023 15:37:41 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0AB761CDD4F;
-        Wed, 11 Oct 2023 18:37:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=lwUqtTHYzKKxpy6qCdnKcRx0D4Vt7kgzL59hPi
-        LxKTw=; b=gJzIpDvdtjJLzeuiTde8AIsGI2B6YkQfnnttjVWB2q8o6+Sd699WxD
-        LtAqAFtbIn4EUrj8Lx6Fe2TQZoF5koaDagvN3QmVfOAiFcnDzsiRX1MNm79tWo6n
-        CD3WKcAo60/ZfVUR+hZ0kF+tpJXa4jyTlNUJ9l6YzhXWMUy2MK57U=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 00B711CDD4E;
-        Wed, 11 Oct 2023 18:37:41 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 649FE1CDD4B;
-        Wed, 11 Oct 2023 18:37:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Michael Strawbridge <michael.strawbridge@amd.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Todd Zullinger <tmz@pobox.com>,
-        Luben Tuikov <luben.tuikov@amd.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] send-email: move process_address_list earlier to avoid,
- uninitialized address error
-In-Reply-To: <20231011221844.GB518221@coredump.intra.peff.net> (Jeff King's
-        message of "Wed, 11 Oct 2023 18:18:44 -0400")
-References: <ZQ1eGzqfyoeeTBUq@debian.me>
-        <20230924033625.GA1492190@coredump.intra.peff.net>
-        <ZRE6q8dHPFRIQezX@debian.me>
-        <20230925080010.GA1534025@coredump.intra.peff.net>
-        <ZRGdvRQuj4zllGnm@pobox.com>
-        <20230925161748.GA2149383@coredump.intra.peff.net>
-        <ZSal-mQIZAUBaq6g@debian.me>
-        <95b9e5d5-ab07-48a6-b972-af5348f653be@amd.com>
-        <7e2c92ff-b42c-4b3f-a509-9d0785448262@amd.com>
-        <xmqq1qe0lui2.fsf@gitster.g>
-        <20231011221844.GB518221@coredump.intra.peff.net>
-Date:   Wed, 11 Oct 2023 15:37:39 -0700
-Message-ID: <xmqqzg0oiy4s.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        with ESMTP id S235186AbjJKWkF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Oct 2023 18:40:05 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 466A0A9
+        for <git@vger.kernel.org>; Wed, 11 Oct 2023 15:40:04 -0700 (PDT)
+Received: (qmail 20227 invoked by uid 109); 11 Oct 2023 22:40:04 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 11 Oct 2023 22:40:04 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11012 invoked by uid 111); 11 Oct 2023 22:40:05 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 11 Oct 2023 18:40:05 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 11 Oct 2023 18:40:02 -0400
+From:   Jeff King <peff@peff.net>
+To:     Richard Kerry <richard.kerry@eviden.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [RFC] Define "precious" attribute and support it in `git clean`
+Message-ID: <20231011224002.GD518221@coredump.intra.peff.net>
+References: <79901E6C-9839-4AB2-9360-9EBCA1AAE549@icloud.com>
+ <xmqqttqytnqb.fsf@gitster.g>
+ <AS8PR02MB73027943EE0A30DD8DAAD4639CCCA@AS8PR02MB7302.eurprd02.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C91FECBE-6886-11EE-BB4F-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <AS8PR02MB73027943EE0A30DD8DAAD4639CCCA@AS8PR02MB7302.eurprd02.prod.outlook.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Wed, Oct 11, 2023 at 10:06:25AM +0000, Richard Kerry wrote:
 
-> Which of course implies that we're not (and cannot) validate what
-> they're typing at this step, but I think that's OK because we feed it
-> through extract_valid_address_or_die().
+> The version of CVS that I used to use, CVSNT, was a lot more careful
+> about the user's files than Git is inclined to be.
+> If CVSNT, while doing an Update, came across a non-tracked file that
+> was in the way of something that it wanted to write, then the Update
+> would be aborted showing a list of any files that were "in the way".
+> The user could then rename/delete them or redo the Update with a
+> "force" parameter to indicate that such items could be overwritten.
+> Git has tended to take an approach of "if it's important it'll be
+> tracked by Git - anything else can be trashed with impunity.".  Over
+> the years people have been caught out by this and lost work.  It may
+> well be that in a Linux development world anything other than tracked
+> source files can be summarily deleted, but in a wider world, like
+> Windows, or environments that are not software development, or that
+> need special files lying around, this is not always an entirely
+> reasonable approach.
 
-OK, let's queue it then.
+I'm not sure if you are just skipping the details of ".gitignore" here,
+but to be clear, blowing away untracked files is _not_ Git's default
+behavior.
 
-> IOW, I think there are actually two distinct validation steps
-> hidden here:
->
->   1. We want to validate that the patch files we were fed are OK.
->
->   2. We want to validate that the addresses, etc, fed by the user are
->      OK.
->
-> And after Michael's original patch, we are accidentally hitting some of
-> that validation code for (2) while doing (1).
+For example:
 
-> This is actually a weird split if you think about it. We are feeding to
-> the validate hook in (1), so surely it would want to see the full set of
-> inputs from the user, too? Which argues for pushing the "if ($validate)"
-> down as you suggest. And then either:
->
->   a. We accept that the user experience is a little worse if validation
->      fails after the user typed.
->
->   b. We split (1) into "early" validation that just checks if the files
->      are OK, but doesn't call the hook. And then later on we do the full
->      validation.
->
-> I don't have a strong opinion myself (I don't even use send-email
-> myself, and if I did, I'd probably mostly be feeding it with "--to" etc
-> on the command line, rather than interactively).
+  [sample repo with established history]
+  $ git init
+  $ echo content >base
+  $ git add base
+  $ git commit -m base
 
-I am not affected, either, and do not have a strong opinion either
-way.  As long as the end-user input is validated separately, it
-would be OK, but if the end-user supplied validation hook cares
-about what addresses the messages are going to be sent to, not
-knowing the set of recipients mean the validation hook is not
-getting the whole picture, which does smell bad.
+  [one branch touches some-file]
+  $ git checkout -b side-branch
+  $ echo whatever >some-file
+  $ git add some-file
+  $ git commit -m 'add some-file'
 
-On the other hand, I am not sure what is wrong with "after the user
-typed", actually.  As you said, anybody sane would be using --to (or
-an equivalent configuration variable in the repository) to send
-their patches to the project address instead of typing, and to them
-it is not a problem.  After getting the recipient address from the
-end user, the validation may fail due to a wrong address, in which
-case it is a good thing.  If the validation failed due to wrong
-contents of the patch (perhaps it included a change to the file with
-trade secret that appeared in the context lines), as long as the
-reason why the validation hook rejected the patches is clear enough
-(e.g., "it's the patches, not the recipients"), such "a rejection
-after typing" would be only once per a patch series, so it does not
-sound too bad, either.
+  [but back on master/main, it is untracked]
+  $ git checkout main
+  $ echo precious >some-file
 
-But perhaps I am not seeing the reason why "fail after the user typed"
-is so disliked and being unnecessarily unsympathetic.  I dunno.
+  [an operation that tries to overwrite the untracked file will fail]
+  $ git checkout side-branch
+  $ git checkout side-branch
+  error: The following untracked working tree files would be overwritten by checkout:
+	some-file
+  Please move or remove them before you switch branches.
+  Aborting
 
+  [providing --force will obliterate it]
+  $ git checkout --force side-branch
+  Switched to branch 'side-branch'
+
+The issue that people sometimes find with Git is when the user has
+explicitly listed a file in ".gitignore", Git takes that to mean it
+should never be tracked _and_ it is not precious. But people sometimes
+want a way to say "this should never be tracked, but keep treating it as
+precious in the usual way".
+
+From the description above it might sound like Git's current behavior is
+conflating two orthogonal things, but if you switched the default
+behavior of .gitignore'd files to treat them as precious, you will find
+lots of cases that are annoying. E.g., if a file is generated by some
+parts of history and tracked in others, you'd have to use --force to
+move between them to overwrite the generated version.
+
+-Peff
