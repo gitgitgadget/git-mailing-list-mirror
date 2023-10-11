@@ -2,85 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D90CBCDB47F
-	for <git@archiver.kernel.org>; Wed, 11 Oct 2023 19:16:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F56ACDB47E
+	for <git@archiver.kernel.org>; Wed, 11 Oct 2023 19:19:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233273AbjJKTQ3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Oct 2023 15:16:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51954 "EHLO
+        id S233282AbjJKTTe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Oct 2023 15:19:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232224AbjJKTQ2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Oct 2023 15:16:28 -0400
-Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DECEA90
-        for <git@vger.kernel.org>; Wed, 11 Oct 2023 12:16:26 -0700 (PDT)
-Received: by mail-qk1-x72a.google.com with SMTP id af79cd13be357-77063481352so114137485a.1
-        for <git@vger.kernel.org>; Wed, 11 Oct 2023 12:16:26 -0700 (PDT)
+        with ESMTP id S233159AbjJKTTd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Oct 2023 15:19:33 -0400
+Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DF7690
+        for <git@vger.kernel.org>; Wed, 11 Oct 2023 12:19:31 -0700 (PDT)
+Received: by mail-qt1-x831.google.com with SMTP id d75a77b69052e-41954a3e282so1209111cf.2
+        for <git@vger.kernel.org>; Wed, 11 Oct 2023 12:19:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1697051786; x=1697656586; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1697051970; x=1697656770; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=BfHQ8LwXoVYICN/O79+J7d4FFpv5+8du/kzMNIVkis0=;
-        b=tWqSvdE4H8Xu2pm7wZXwY5lZHC05z/9CyeRUN8kG/N12rCdn9v1NuFg8d8z4XPgmv7
-         qqed4zELB+MbUC+KVRe9fqejZipjzBmCkTf0QUmU32IkXR2ES+xrWSR1/lsw+GZP9DRi
-         FICL6YMCSgi4wA37IncIQPM09SbSktxTC9CCEx8r5JOl2fi/SFfok3RTTxeWnfnCPxUS
-         MoMzKrn2lgEy1Gqs9ltD3trhPjjFEiM/UWtkRMF/wVe9UIYCMk6c3f9L6mbjvWVD6GZ/
-         8uieJamfbuPgBwnGOXgTnxIyDGEQ+tvl1PRbwctiC1sTXLEHX63StW5wKhhp5LMfAt5v
-         DFOg==
+        bh=YdZlkvDo/E/xnXcQ/EOhqrsDQ38PAiqjWBGOjDI5riU=;
+        b=C6jf5qzTSKWPzYG0+UJT/Is4apWoaH2rruwt9xIFzDZd+wtQgWZoRcNo7Kk30xUyNE
+         Io0XigAwV7nwqDy/kAClmqK9bU7JYBDRnoxXJ1aBd48NghAQ1HIQYDQk68QM2ldZ7DpE
+         i/IOLxT08YPv5USDTcQn8zwgiGlmQEV6vvmH3rpm0V+7YTmAh7yoasUHz+hEeMu3Ik17
+         fvbKJ3pKlFE1j8rAOl8ZftEQmdSQRiuq42bmBe6Byeeh0/0gURKDRjdvw83dOu1M2wuF
+         3IDWbb299yZroKUkAng0hT0Yp1YYUBkbG8TLOwjs016pcOZE5o1t9QAX9lhGusc+a8g9
+         RJhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697051786; x=1697656586;
+        d=1e100.net; s=20230601; t=1697051970; x=1697656770;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=BfHQ8LwXoVYICN/O79+J7d4FFpv5+8du/kzMNIVkis0=;
-        b=RDYQ1r6qiDFYWu9mwTGlEA8B+Bqc1cFTIBbKRFtLl2jYvI8KwWX9dwWTN/GGfv6waN
-         X7ceMw87yZKC2skp+4KEtnLrSWgsXSHhAszSN7psUZsoKYgZfi8NPo13RejH4oA+geUU
-         rcVxmF076DSIsBiw51gl4A+hxXBhjVjd+Ku95wcbkf+AX/wUxa2KZ4ujAdBnZ3ECAIbX
-         IgIcCYhzAJnhyiu/AWeDMHJo+pfRXgKgsZQ0jp7Bivlrv3guCwoYsvuiPde+zZGlcdWm
-         0bZ42pOzr+Od4c8e1fAIxjhXKrC19N7JbxcGRHzu89OJKmxdxDZqECyzhFS78KN8Ct/Q
-         1Chw==
-X-Gm-Message-State: AOJu0Yzen/XsuwAXU7mp+CdAsh0Gj5aOu8DcToGdMP+aWynQ3IyRqbcE
-        EkQLt6BIV/WR/xo8Gnq9iQLZG7/uyFeE6TuyfSIzjQ==
-X-Google-Smtp-Source: AGHT+IFgRRMDv9rBE+2wf1rWfL/Bsbf37zoHO8RN5PJsCzhMhdaLaCCtIQsrT/CIas9uCU/z2HAkrg==
-X-Received: by 2002:a05:620a:2802:b0:774:364c:4e36 with SMTP id f2-20020a05620a280200b00774364c4e36mr25959793qkp.37.1697051786000;
-        Wed, 11 Oct 2023 12:16:26 -0700 (PDT)
+        bh=YdZlkvDo/E/xnXcQ/EOhqrsDQ38PAiqjWBGOjDI5riU=;
+        b=YBW7ok+h82ZAeWtrrV4vJBz9rw7lPlL0idOc7jwgb05UPKr2QcjKv6wFCklfgI54nU
+         bgXJ7hJWt+TXDfgRw5zDSVaPxAZQs9LQLjZ5IYlNKMgSjcixRGlVu4BpboNNIJ/MXCyZ
+         3huHfSNB6UnKfttRBrxySDxFQlLmODCBUY3WNud/ur5e3/cGQUZZ+Ab5JQZ73I6+2X1y
+         fDwAS0Ir02Ah5ag28uosCVY4wU6cZgPXrSwn/fflgazS92aFnX8qOlgUfgoZ45Rrg6bX
+         DNkeEL93AZl/JWdxt9BrH9aCa5+sVYsgiYqn0Trt2kg4ycq+ZDrXSDM/xM3acIMq5pig
+         1lSQ==
+X-Gm-Message-State: AOJu0Ywdm6TBgOC/0hNgRWQT3MzjNjJLvT715AeHJuHmLiwRgNJLk6P3
+        GARY7qWXtTYBx07Ya+CtBHJwy1/HyKe0cwDo6+FhSQ==
+X-Google-Smtp-Source: AGHT+IF1dUfmQREvZr5sZ83iO8zOZ0Tr8qdYF/3HSRVhj4en5Kc22FeNyctPTgJ5UedjKog9rvDRBg==
+X-Received: by 2002:ac8:7d0d:0:b0:419:658e:ab1e with SMTP id g13-20020ac87d0d000000b00419658eab1emr23465466qtb.60.1697051970421;
+        Wed, 11 Oct 2023 12:19:30 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id p10-20020ac8408a000000b004181f542bcbsm5553390qtl.11.2023.10.11.12.16.25
+        by smtp.gmail.com with ESMTPSA id g26-20020ac870da000000b00400a99b8b38sm5540280qtp.78.2023.10.11.12.19.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Oct 2023 12:16:25 -0700 (PDT)
-Date:   Wed, 11 Oct 2023 15:16:24 -0400
+        Wed, 11 Oct 2023 12:19:30 -0700 (PDT)
+Date:   Wed, 11 Oct 2023 15:19:28 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     Jeff King <peff@peff.net>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 19/20] commit-graph: detect out-of-order BIDX offsets
-Message-ID: <ZSb0iCFxYL3nymvJ@nand.local>
+Subject: Re: [PATCH 0/20] bounds-checks for chunk-based files
+Message-ID: <ZSb1QAaLX+xcZK4a@nand.local>
 References: <20231009205544.GA3281950@coredump.intra.peff.net>
- <20231009210556.GS3282181@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20231009210556.GS3282181@coredump.intra.peff.net>
+In-Reply-To: <20231009205544.GA3281950@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 09, 2023 at 05:05:56PM -0400, Jeff King wrote:
-> diff --git a/bloom.c b/bloom.c
-> index 61abad7f8c..1474aa19fa 100644
-> --- a/bloom.c
-> +++ b/bloom.c
-> @@ -75,6 +75,16 @@ static int load_bloom_filter_from_graph(struct commit_graph *g,
->  	    check_bloom_offset(g, lex_pos - 1, start_index) < 0)
->  		return 0;
->
-> +	if (end_index < start_index) {
-> +		warning("ignoring decreasing changed-path index offsets"
-> +			" (%"PRIuMAX" > %"PRIuMAX") for positions"
-> +			" %"PRIuMAX" and %"PRIuMAX" of %s",
+On Mon, Oct 09, 2023 at 04:55:44PM -0400, Jeff King wrote:
+>  bloom.c                            |  34 +++++++++
+>  chunk-format.c                     |  24 ++++--
+>  chunk-format.h                     |   9 ++-
+>  commit-graph.c                     | 119 ++++++++++++++++++++++++-----
+>  commit-graph.h                     |   4 +
+>  midx.c                             |  68 +++++++++++++----
+>  midx.h                             |   3 +
+>  pack-revindex.c                    |  13 +++-
+>  t/lib-chunk.sh                     |  17 +++++
+>  t/lib-chunk/corrupt-chunk-file.pl  |  66 ++++++++++++++++
+>  t/t4216-log-bloom.sh               |  50 ++++++++++++
+>  t/t5318-commit-graph.sh            |  76 +++++++++++++++++-
+>  t/t5319-multi-pack-index.sh        | 102 ++++++++++++++++++++++++-
+>  t/t5324-split-commit-graph.sh      |  20 ++++-
+>  t/t5328-commit-graph-64bit-time.sh |  10 +++
+>  15 files changed, 568 insertions(+), 47 deletions(-)
+>  create mode 100644 t/lib-chunk.sh
+>  create mode 100644 t/lib-chunk/corrupt-chunk-file.pl
 
-Should this be marked for translation?
+I reviewed this carefully (well, except for the new Perl script, for
+obvious[^1] reasons ;-)).
 
-Otherwise this LGTM.
+Everything mostly looks good to me, though I
+had a handful of review comments throughout. Many of them are trivial
+(e.g. a number of warning() and error() strings should be marked for
+translation, etc.), but a couple of them I think are worth looking at.
+
+Most notably, I think that by the end of the series, I was convinced
+that having some kind of 'pair_chunk_expectsz()' or similar would be
+useful and eliminate a good chunk of the boilerplate you have to write
+to check the chunk size against an expected value when using
+read_chunk().
+
+Otherwise, this looks great. I appreciate the care you took in finding
+and fixing these issues, as well as thoroughly documenting the process
+(and the security implications, or lack thereof). Thanks for working on
+this!
 
 Thanks,
 Taylor
+
+[^1]: That I may be the world's least competent Perl programmer.
