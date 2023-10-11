@@ -2,113 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 738D2CDB482
-	for <git@archiver.kernel.org>; Wed, 11 Oct 2023 21:27:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1402CDB47E
+	for <git@archiver.kernel.org>; Wed, 11 Oct 2023 21:32:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233465AbjJKV17 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Oct 2023 17:27:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50400 "EHLO
+        id S233616AbjJKVcQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Oct 2023 17:32:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233133AbjJKV16 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Oct 2023 17:27:58 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4F1490
-        for <git@vger.kernel.org>; Wed, 11 Oct 2023 14:27:55 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 43FA131AF0;
-        Wed, 11 Oct 2023 17:27:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=HLO8YQvc3CcainMxAz9yM1ZzQEyqA17IQtG3Dv
-        SPmxw=; b=cGlFdD3lkwGRsGxiofBRnTU/oCnT+tEgedv641DPqOUpO8g+Kr6FzU
-        gHlzOp4g3DYgEIZ02wKAZwdKq/HgSjTFbxAPHZ2ooDfSQG1Mf6aNRADV7Dv6J3rk
-        LnNX3iEw/MOdd9xmZg7fAYkj3vR6oDNgyT0Ce5IRO/4LGxG7vMPns=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3BCA331AEF;
-        Wed, 11 Oct 2023 17:27:55 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6F11131AEE;
-        Wed, 11 Oct 2023 17:27:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael Strawbridge <michael.strawbridge@amd.com>
-Cc:     Bagas Sanjaya <bagasdotme@gmail.com>, Jeff King <peff@peff.net>,
-        Todd Zullinger <tmz@pobox.com>,
-        Luben Tuikov <luben.tuikov@amd.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] send-email: move process_address_list earlier to avoid,
- uninitialized address error
-In-Reply-To: <7e2c92ff-b42c-4b3f-a509-9d0785448262@amd.com> (Michael
-        Strawbridge's message of "Wed, 11 Oct 2023 16:22:18 -0400")
-References: <ZQ1eGzqfyoeeTBUq@debian.me>
-        <20230924033625.GA1492190@coredump.intra.peff.net>
-        <ZRE6q8dHPFRIQezX@debian.me>
-        <20230925080010.GA1534025@coredump.intra.peff.net>
-        <ZRGdvRQuj4zllGnm@pobox.com>
-        <20230925161748.GA2149383@coredump.intra.peff.net>
-        <ZSal-mQIZAUBaq6g@debian.me>
-        <95b9e5d5-ab07-48a6-b972-af5348f653be@amd.com>
-        <7e2c92ff-b42c-4b3f-a509-9d0785448262@amd.com>
-Date:   Wed, 11 Oct 2023 14:27:49 -0700
-Message-ID: <xmqq1qe0lui2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        with ESMTP id S233582AbjJKVcQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Oct 2023 17:32:16 -0400
+Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85F1B9E
+        for <git@vger.kernel.org>; Wed, 11 Oct 2023 14:32:14 -0700 (PDT)
+Received: by mail-qt1-x831.google.com with SMTP id d75a77b69052e-41808baf6abso1920251cf.3
+        for <git@vger.kernel.org>; Wed, 11 Oct 2023 14:32:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1697059933; x=1697664733; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=O0xoCjcIMHfWQAiSqAbU9i8yhY2Iyomi1Lj0YM5yf7c=;
+        b=KIaDMJ81a957e99RDvtDPMCyQtD/5kxvHQVQ6kPppZLOEJxRlNPRu6gLsju85IWFyI
+         70nNWtm7DCH9YsawTvErJQ8btO0xd4iA3ztVfuWQn7eKEpls8dr+mfdSr7ROwHf9o+IN
+         P8lN3jl/g1DhF/twSSRPgxXO/4FnBSKu5QID80TVDYm9dlEhEvEfBFKyM71foNigEUZe
+         FhN81Q0K/Pn/kCBLJ1xQ70oX0WgAV7uOPEepvolBNLlQtrSMPVJVpnQebBcsDokbNAZj
+         LI7yNgmKihv+Iky6mPP5iDOPJ9kpNWq2VKLn6Zi6abW83tTnjS/wJPTXnrT9XloWgWGg
+         InSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697059933; x=1697664733;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=O0xoCjcIMHfWQAiSqAbU9i8yhY2Iyomi1Lj0YM5yf7c=;
+        b=F7lXpGaHhYpG5SQSGHbBLAnEBaYb5panVVXZNgKRMlXDf431GyhOqtSJhhKfjHm+t7
+         YqPnXNzCQ4yo0QrJgtOeNtv10C9iB62Avm8qQCCH3Ze73QA+QSyOHdZGJiCEG+94Dy54
+         Zd8YknQpRFPxCEob4VpC7BnDAQN3leQ3feGDweoq5ankqVGLWYwGlqgH3ZzZgthXme6M
+         GDwpaCL9brDEn+iTw9OTRIvZK7uj0xLYWvfKAPzPdwPWeovgdW/o/v82VUGlwqkQ+L9h
+         yleBf3owNcLqKcdGedZZJqqRyGJY9BHptJf7i1Ppz46HcnzUHiH6Hy5beSsZIzPl5YX6
+         d2sA==
+X-Gm-Message-State: AOJu0YwXcQGSJZhxiaAvXTq9nLRUXDosPr7R+CpFabkA3k28X6kDs73n
+        HCZnG/T+OpkoBeKtoy9jmm6mCFJAuFvr8SCXgyCngA==
+X-Google-Smtp-Source: AGHT+IGmaydQS1F9Ki8KwX0Yx1JtjFOUhpxajFygIKkTBtChYm6ovuffs9BDlDSQeMK2BCAKPFdA2w==
+X-Received: by 2002:a05:622a:1811:b0:417:934e:ade with SMTP id t17-20020a05622a181100b00417934e0ademr28411083qtc.15.1697059933672;
+        Wed, 11 Oct 2023 14:32:13 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id k24-20020ac84758000000b004199f47ccdbsm5662080qtp.51.2023.10.11.14.32.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Oct 2023 14:32:12 -0700 (PDT)
+Date:   Wed, 11 Oct 2023 17:32:10 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Robert Coup via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Robert Coup <robert@coup.net.nz>
+Subject: Re: [PATCH] upload-pack: add tracing for fetches
+Message-ID: <ZScUWrj6CQTg05HL@nand.local>
+References: <pull.1598.git.1697040242703.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 084FE038-687D-11EE-A8E0-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <pull.1598.git.1697040242703.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael Strawbridge <michael.strawbridge@amd.com> writes:
+On Wed, Oct 11, 2023 at 04:04:02PM +0000, Robert Coup via GitGitGadget wrote:
+> From: Robert Coup <robert@coup.net.nz>
+>
+> Information on how users are accessing hosted repositories can be
+> helpful to server operators. For example, being able to broadly
+> differentiate between fetches and initial clones; the use of shallow
+> repository features; or partial clone filters.
 
-> @@ -799,6 +799,10 @@ sub is_format_patch_arg {
->  
->  $time = time - scalar $#files;
->  
-> +@initial_to = process_address_list(@initial_to);
-> +@initial_cc = process_address_list(@initial_cc);
-> +@initial_bcc = process_address_list(@initial_bcc);
-> +
+Indeed. One of the custom patches that GitHub is carrying in its private
+fork is something similar to this that dumps information from
+upload-pack into a custom logging system specific to GitHub (called
+"sockstat", in case anybody was curious).
 
-This does not look OK.  If we trace how @initial_to gets its value,
+I suspect that we would still live with that patch because we depend on
+some of the custom logging infrastructure provided by sockstat, but this
+is definitely a good direction to be pursuing for git.git nonetheless.
 
- - it first gets its value from @getopt_to and @config_to
-
- - if that is empty, and there is no $to_cmd, the end-user is
-   interactively asked.
-
- - then process_address_list() is applied.
-
-But this patch just swapped the second one and the third one, so
-process_address_list() does not process what the end-user gave
-interactively, no?
-
->  if ($validate) {
->         # FIFOs can only be read once, exclude them from validation.
->         my @real_files = ();
-
-It almost feels like what need to move is not the setting of these
-address lists, but the code that calls int validation callchain that
-needs access to these address lists---the block that begins with the
-above "if ($validate) {" needs to move below ...
-
-> @@ -1099,10 +1103,6 @@ sub expand_one_alias {
->         return $aliases{$alias} ? expand_aliases(@{$aliases{$alias}}) : $alias;
+> @@ -1552,6 +1553,32 @@ static int parse_have(const char *line, struct oid_array *haves)
+>  	return 0;
 >  }
->  
-> -@initial_to = process_address_list(@initial_to);
-> -@initial_cc = process_address_list(@initial_cc);
-> -@initial_bcc = process_address_list(@initial_bcc);
-> -
+>
+> +static void trace2_fetch_info(struct upload_pack_data *data)
+> +{
+> +	struct json_writer jw = JSON_WRITER_INIT;
+> +
+> +	jw_object_begin(&jw, 0);
+> +	{
 
-... this point, or something, perhaps?
+Is there a reason that we have a separate scope here? I think we may
+want to drop this as unnecessary, but it's entirely possible that I'm
+missing something here...
 
->  if ($thread && !defined $initial_in_reply_to && $prompting) {
->         $initial_in_reply_to = ask(
->                 __("Message-ID to be used as In-Reply-To for the first email (if any)? "),
+> +		jw_object_intmax(&jw, "haves", data->haves.nr);
+> +		jw_object_intmax(&jw, "wants", data->want_obj.nr);
+> +		jw_object_intmax(&jw, "want-refs", data->wanted_refs.nr);
+> +		jw_object_intmax(&jw, "depth", data->depth);
+> +		jw_object_intmax(&jw, "shallows", data->shallows.nr);
+> +		jw_object_bool(&jw, "deepen-since", data->deepen_since);
+> +		jw_object_intmax(&jw, "deepen-not", data->deepen_not.nr);
+> +		jw_object_bool(&jw, "deepen-relative", data->deepen_relative);
+> +		if (data->filter_options.choice)
+> +			jw_object_string(&jw, "filter", list_object_filter_config_name(data->filter_options.choice));
+
+I'm pretty sure that list_object_filter_config_name() returns characters
+that are safe for JSON-encoding, and/or that jw_object_string() does any
+quoting beforehand, but worth checking nonetheless.
+
+> +		else
+> +			jw_object_null(&jw, "filter");
+
+These all seem like useful things to have.
+
+Thanks,
+Taylor
