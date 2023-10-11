@@ -2,97 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46240CD8C9D
-	for <git@archiver.kernel.org>; Wed, 11 Oct 2023 08:43:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C031CD6E40
+	for <git@archiver.kernel.org>; Wed, 11 Oct 2023 08:47:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345518AbjJKInO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Oct 2023 04:43:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48626 "EHLO
+        id S230351AbjJKIrh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Oct 2023 04:47:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345529AbjJKInL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Oct 2023 04:43:11 -0400
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95A97C6
-        for <git@vger.kernel.org>; Wed, 11 Oct 2023 01:43:09 -0700 (PDT)
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-9b98a699f45so1106832666b.3
-        for <git@vger.kernel.org>; Wed, 11 Oct 2023 01:43:09 -0700 (PDT)
+        with ESMTP id S230256AbjJKIrg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Oct 2023 04:47:36 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49F589E
+        for <git@vger.kernel.org>; Wed, 11 Oct 2023 01:47:33 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-9ad810be221so1108003766b.2
+        for <git@vger.kernel.org>; Wed, 11 Oct 2023 01:47:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1697014052; x=1697618852; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=J4M0EZ6ubS8G+Tf5b2lTmlqnTsaR1UMW3NSG73yDWeQ=;
+        b=DGWNugsvVKo4JzjX46ZDGRESh/+F5o+hxoTMvOizD16Fu2GvFKLgq0aUe7NXrPkQwu
+         j93C6bkM74DeqBYusuWQRwPXqmazWxWuLGaVTHgctHp/XEdIIsEZE7gWS2DFzULRJ7Td
+         JhI+MUKPOD0gvPvfPXwAtJ7H1VSAoSRjCSTfeKz13Xqs2kAGF8NIbuch8qpfhZ8YoJuV
+         x2qIrk3/srcS1B66XyIZhUIBGASaCziTp/609Srh8/8+y4uWHiNpzGxMB6l1C34wM1rX
+         UFGxkjSaM3ZuLG2/QAigSn579ROTxASezjvgKUt1q3wegzVTCbUkmyN1pHNZcKsEz0lI
+         F/4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697013788; x=1697618588;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7pJSHafMKa4AuB78D9L/YVPHC7IO0WF1MGGyGjy6Btk=;
-        b=KHn1R4mjCEhbGwx7ZjD1jcOM0QxIGEMKunOuOGYFA3trsfXVf4ouEJuzJ4ORr90HV7
-         hd4nwl/aLB5wPpe4leog4IwUgZeAuM0OrMOj/cv661Wv+EjEX3TGoZ+HqU3EFmMF9eL7
-         5CnTzufNFGaomgUH+evfPepO2VE2jU0F9CQrMmaUzQF4NkM3AKHMo9NsGvZaKHKU4nPl
-         WQkj2I01Jss5AyzBj54v1Fv6tetpSMMiA9H/3xAtwnV/W1mdztOqYMkd5HoATLigVinv
-         oGxignStLGJkAi9HNoYwlPVEH0Qa1pKiJypjTPNuWbZcUztDCiWIFLJyOFaN+EnUj7+H
-         lTtw==
-X-Gm-Message-State: AOJu0Yy/Tw3FpxkXbUDAfK1xFJtxO/vIhy2SvDdHeLuUQGWi10jhglDV
-        7wcGtwnnINipN6VSisSBNpwiSWRqgpV/vhQGKk/Fs2M/vDc=
-X-Google-Smtp-Source: AGHT+IEYGQ9CphtD/o5lW2zp8mdlxL6E4ZLkI8uXnr8mcv3DVp360AY4tmxBMD/Wdy3rbQ1H2vZElRYEa/flCw9tQ9Y=
-X-Received: by 2002:a17:907:77c9:b0:9b2:6d09:847c with SMTP id
- kz9-20020a17090777c900b009b26d09847cmr16656364ejc.10.1697013787688; Wed, 11
- Oct 2023 01:43:07 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1697014052; x=1697618852;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=J4M0EZ6ubS8G+Tf5b2lTmlqnTsaR1UMW3NSG73yDWeQ=;
+        b=nlK+AP5G3ali4GNGl0jb5nb5ISweu9QedwxiED+1Ep3kOJjLv7yBsB8FJxUFApxWdY
+         TWLjePHlxclNKjDpUhGpBp/WMYgt2vj1OcMtJOxZuIdTMGvyMS10Q5XlPriR/WpyKMqU
+         CCa9PbVGSOl1qrAV/tYFi1Yhgz/m112wGkPtSexx0FR6VESU/tmL62JovhY31P8VaqPV
+         30rMbEGazyDcAgwsnj7rPNZlBEHtprNJBLb+7zvifrs/5NsBH0gwdwJ4ju2oj/wuwzdd
+         W2WaDDEWkrEGg4rjrswHrKoiJ0S+uCdvnOqyB7iVQAf/DaW7gUajhSQdg8h9CjTn9BpV
+         qNUA==
+X-Gm-Message-State: AOJu0Yxrs48ELNzevosH/eij20fCtufKtuSZnYFgLtfK41gE7WwmCtnr
+        yMfPGnuX4tRYU3aFlZvoBZmCRsU9HGgDuLUXrWvZI84/C/iNVQ==
+X-Google-Smtp-Source: AGHT+IEUiqs7CWDUXStIzQfshv4IM2G1HBj5YDKikaOb2smIEU9i4JYDcvII9di8dLVV4aYVxknEFyEOBdgZqkOs+C8=
+X-Received: by 2002:a17:906:518f:b0:9a5:c4c0:2d8a with SMTP id
+ y15-20020a170906518f00b009a5c4c02d8amr16139486ejk.24.1697014051316; Wed, 11
+ Oct 2023 01:47:31 -0700 (PDT)
 MIME-Version: 1.0
-From:   Erik Cervin Edin <erik@cervined.in>
-Date:   Wed, 11 Oct 2023 10:42:31 +0200
-Message-ID: <CA+JQ7M_effxh9BSOhF67N+rsvBVTULe0dWZzp-kq1yOiDq3+hQ@mail.gmail.com>
-Subject: Bug: git stash store can create stash entries that can't be dropped
-To:     Git Mailing List <git@vger.kernel.org>
+References: <CAJHH8bHBA4emP2DkDEzcXncT4K5zEN-pCS+7jjer4R1_kkCkFA@mail.gmail.com>
+ <CAP8UFD0mMi2JkvqMdf2mfUw2gA0Sog42ks3umMgsG5k_+W75xg@mail.gmail.com>
+ <CAJHH8bE4QWR1gCgH5mG8qaa5Dq19L25y3VyRxAc3+PQn93oEbA@mail.gmail.com>
+ <CAP8UFD3WzgADiy07uLGpj23r3jrUnYh_Wdsc1N8ZoaAHQPDZag@mail.gmail.com>
+ <CAJHH8bEa=xE_xNdbW4rDJQQ9dacAuFQseajdtBmGnZ1bDxZsxQ@mail.gmail.com>
+ <CAP8UFD3RV-70RG6H86+7E-ZKrqhfgFRfRQdMc6DLGMXPAEf31Q@mail.gmail.com> <CAJHH8bFLqs7B5UaCFZv+P8yS2zeXLoKoV6YTUB_xFcG8ZLn_WA@mail.gmail.com>
+In-Reply-To: <CAJHH8bFLqs7B5UaCFZv+P8yS2zeXLoKoV6YTUB_xFcG8ZLn_WA@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 11 Oct 2023 10:47:19 +0200
+Message-ID: <CAP8UFD1f2o2mmK1kBug52WE+PXOzhhPCi8y-jELkF2J+VZos5w@mail.gmail.com>
+Subject: Re: [Outreachy] Introduction and Interest in Contributing to the Git Community
+To:     Isoken Ibizugbe <isokenjune@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+Hi Isoken,
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+On Wed, Oct 11, 2023 at 7:48=E2=80=AFAM Isoken Ibizugbe <isokenjune@gmail.c=
+om> wrote:
+>
+> Hi Christian,
+>
+> I hope you're doing well. I did some research,
 
-  git stash store HEAD && git stash drop
+Nice that you did some research and are mentioning it.
 
-What did you expect to happen? (Expected behavior)
+However please reply inline instead of top-posting (see
+https://en.wikipedia.org/wiki/Posting_style). On
+https://git.github.io/General-Microproject-Information/ there is a
+section called "Some conventions and tips" which has a "Reply inline"
+subsection about this.
 
-To either fail storing HEAD or the ability to drop the stash entry, even if it
-wasn't created using
-  git stash create
+> but unfortunately, I
+> couldn't find any clear documentation stating that setup tests should
+> be renamed.
 
-What happened instead? (Actual behavior)
+Ok, so it's indeed better to find something else to work on.
 
-A stash entry is created that cannot be dropped, because it's not
-stash-like commit.
+> However, I did find another issue that I think I could
+> work on - 'Amend error messages and prompts of various (sub)commands
+> #635'. Should I go on with it?
 
-  git stash drop
-  fatal: 'refs/stash@{0}' is not a stash-like commit
+Yeah, I think it's a good idea to work on this. See this discussion
+thread where we give advice to Naomi about improving error messages as
+microproject:
 
-What's different between what you expected and what actually happened?
+https://lore.kernel.org/git/CACS=3DG2zsJxP+NWuosZyrFGctJptHNYTrULErRo_Ns41K=
+eMuMqA@mail.gmail.com/#r
 
-A corrupt entry is added to the stash and it cannot be removed, expect probably
-  git stash clear
-
-Anything else you want to add:
-
-Any guidance in modifying the stash reflog so that I can remove the stash entry
-manually, or other suggestions are appreciated.
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.42.0
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27
-02:56:13 UTC 2023 x86_64
-compiler info: gnuc: 11.4
-libc info: glibc: 2.35
-$SHELL (typically, interactive shell): /bin/bash
-
-
-[Enabled Hooks]
-pre-commit
+Thanks,
+Christian.
