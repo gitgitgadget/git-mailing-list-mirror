@@ -2,70 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DFEACDB465
-	for <git@archiver.kernel.org>; Wed, 11 Oct 2023 23:35:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9ED84CDB465
+	for <git@archiver.kernel.org>; Wed, 11 Oct 2023 23:41:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233849AbjJKXfx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Oct 2023 19:35:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34892 "EHLO
+        id S233850AbjJKXlf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Oct 2023 19:41:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233739AbjJKXfw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Oct 2023 19:35:52 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C4139E
-        for <git@vger.kernel.org>; Wed, 11 Oct 2023 16:35:47 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1E5381D7B9;
-        Wed, 11 Oct 2023 19:35:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=ea+NAkjv95fcuSxb6RtvVFvZqZw602zhMvoeYs
-        dzX+I=; b=E3IeUHzj0HYDtzgzK5JU5oC3kpSpDPZp8nx4BfPp9UC6CepC/urXF8
-        cY/eikm6Bd2ZwIEMR0/eoM/rs+T5WYRy2qIfwhYJY4RoEJYO+wr0QKKZS/ZrHbxO
-        UMOcNb+EL1Wgdi39E23n/b4+JUQr1bPR0QUZAlyiJ7qy72s3+tjUs=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 16DD31D7B8;
-        Wed, 11 Oct 2023 19:35:40 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 42D651D7B7;
-        Wed, 11 Oct 2023 19:35:36 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Richard Kerry <richard.kerry@eviden.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [RFC] Define "precious" attribute and support it in `git clean`
-In-Reply-To: <AS8PR02MB73027943EE0A30DD8DAAD4639CCCA@AS8PR02MB7302.eurprd02.prod.outlook.com>
-        (Richard Kerry's message of "Wed, 11 Oct 2023 10:06:25 +0000")
-References: <79901E6C-9839-4AB2-9360-9EBCA1AAE549@icloud.com>
-        <xmqqttqytnqb.fsf@gitster.g>
-        <AS8PR02MB73027943EE0A30DD8DAAD4639CCCA@AS8PR02MB7302.eurprd02.prod.outlook.com>
-Date:   Wed, 11 Oct 2023 16:35:34 -0700
-Message-ID: <xmqqmswoivg9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        with ESMTP id S233277AbjJKXle (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Oct 2023 19:41:34 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6E3BA9
+        for <git@vger.kernel.org>; Wed, 11 Oct 2023 16:41:32 -0700 (PDT)
+Received: (qmail 20769 invoked by uid 109); 11 Oct 2023 23:41:32 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 11 Oct 2023 23:41:32 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11420 invoked by uid 111); 11 Oct 2023 23:41:34 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 11 Oct 2023 19:41:34 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 11 Oct 2023 19:41:31 -0400
+From:   Jeff King <peff@peff.net>
+To:     matthew sporleder <msporleder@gmail.com>
+Cc:     Fabian Stelzer <fs@gigacodes.de>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: gpg.ssh.defaultKeyCommand docs bug?
+Message-ID: <20231011234131.GO518221@coredump.intra.peff.net>
+References: <CAHKF-AvUxH1Ar3Xijjb4_8N+_kssPHZVHqQSAE9kDGRfTYHyxw@mail.gmail.com>
+ <20231009204341.GB3281325@coredump.intra.peff.net>
+ <CAHKF-AsjY_P6mbAs7KWcgL39KbLbu9OE9XiLabghhTn-f0ybzQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E0E60038-688E-11EE-93B4-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAHKF-AsjY_P6mbAs7KWcgL39KbLbu9OE9XiLabghhTn-f0ybzQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Richard Kerry <richard.kerry@eviden.com> writes:
+On Wed, Oct 11, 2023 at 02:16:27PM -0400, matthew sporleder wrote:
 
-> An option might be to state, in config, whether a project, or
-> everything, should be managed on the basis of "all untracked files
-> are precious" or "files may be explicitly marked precious", or, as
-> now, "nothing is precious".
+> It gave very confusing errors!
+> 
+> key::ssh-rsa ABC123 me@localhost (no new line)
+> error: Load key "....: invalid format?
 
-I do not think there is any need to have a separate "all or none"
-option.  We do not have to make things more complicated than
-necessary.
+It's hard to say without seeing the whole output, but I suspect this is
+actually coming from ssh, not Git. We just dump the output into a
+tempfile and feed it to "ssh-keygen -f".
 
-If all untracked files are precious, a user should be able to say so
-with an entry that matches all paths "*" to mark them precious, and
-nothing more needs to be done.  By default nothing is ignored and
-nothing is precious, until you start marking paths with .gitignore
-entries.
+Though I'd think we would see the same issue with user.signingKey in
+that case.
+
+So I'm not sure what's going on here (I haven't set up ssh signing to
+play with yet).
+
+> key::ABC123 (yes new line)
+> error: Couldn't load public key ...: No such file or directory?
+
+That one makes sense to me. The "ssh-rsa" part is important, because
+without it, ssh-keygen has no idea what format it is in.
+
+> key::ssh-rsa ABC123 me@localhost (yes new line)
+> works, I think
+
+This is the recommended format.
+
+> ssh-rsa ABC123 me@localhost (yes new line)
+> works (the script I provided)
+
+And this is the historical one.
+
+So I don't think the documentation is _wrong_ here, but I agree that it
+is a bit on the confusing side (especially understanding that "key::"
+came later, and that raw "ssh-rsa" is deprecated, which is only
+mentioned in user.signingKey, not gpg.ssh.defaultKeyCommand.
+
+And I'm still not sure what's going on with your no-new-line example,
+which I'd have expected to work.
+
+-Peff
