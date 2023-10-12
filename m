@@ -2,92 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D517CDB47E
-	for <git@archiver.kernel.org>; Thu, 12 Oct 2023 17:49:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 199EDCDB47E
+	for <git@archiver.kernel.org>; Thu, 12 Oct 2023 17:59:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1379618AbjJLRta convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Thu, 12 Oct 2023 13:49:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42142 "EHLO
+        id S1442040AbjJLR7B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Oct 2023 13:59:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379549AbjJLRt3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Oct 2023 13:49:29 -0400
-Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE881B8
-        for <git@vger.kernel.org>; Thu, 12 Oct 2023 10:49:27 -0700 (PDT)
-Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-d9a5adc8cefso1402060276.0
-        for <git@vger.kernel.org>; Thu, 12 Oct 2023 10:49:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697132967; x=1697737767;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QoOAcvg9GKD7xHHgtLpjGuiibdySPR6IAdbFxRwZmnU=;
-        b=XJwnBLs8kcpfs/BCNBuKdyz+/iVLVSKLvUNedgbtT+yBwomRKhdStvxJ3x1LzdGTUh
-         6WoqN5czGcfhgEB5i7lEq+XXgM51HAmTO6+YCLiiDA6dbkYKhWEjnUFkXDEt/nQCt8Uz
-         dVuiE8j/CE/Zg1Gd2qhQCbtNjne1UL1B0b9r7Eg/gaPeoraGgY+KgWwgFbrKrjoCKgqF
-         0H4UtPi9MVn9va8ZvGLnpVbTcRB9vE703/EJpnzRGlJEEZfJC2CuqFIMlGo+7y7C0uLZ
-         XBM1p097LCZm0CT0h7Sfk6cfjhnMLFw20yQcfU2zPw/ucP2bJoxAbJUd4wQS4sNef9Ew
-         EoNg==
-X-Gm-Message-State: AOJu0YzjCwX75k+xVEAocvfuPy1HXpJdjkb+3beFVGUaAU3tOohqiNEu
-        +Pl2pCXCb2+ZTVYvz0T9DDV2wQvuKYx+v7qYbD8=
-X-Google-Smtp-Source: AGHT+IGMVf/uznFMTfAEuLqiHh5b7FCqDNFcISqLunOnjnR21aGRNE16DlVtRKmgYPy7JWR8/bo5M4G1hAWFC8JskUc=
-X-Received: by 2002:a25:2d20:0:b0:d9a:6259:5461 with SMTP id
- t32-20020a252d20000000b00d9a62595461mr7536356ybt.38.1697132964840; Thu, 12
- Oct 2023 10:49:24 -0700 (PDT)
-MIME-Version: 1.0
-References: <20231012160930.330618-1-sandals@crustytoothpaste.net> <20231012160930.330618-2-sandals@crustytoothpaste.net>
-In-Reply-To: <20231012160930.330618-2-sandals@crustytoothpaste.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 12 Oct 2023 13:49:13 -0400
-Message-ID: <CAPig+cSUvyCS-NOYOoJAmg7LGyU5Dqky5HyS-QTNW1QoHj-0bA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] t: add a test helper to truncate files
+        with ESMTP id S1379688AbjJLR6w (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Oct 2023 13:58:52 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC7F4BB
+        for <git@vger.kernel.org>; Thu, 12 Oct 2023 10:58:50 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E32DD3917A;
+        Thu, 12 Oct 2023 13:58:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=g8XnqeLro+04ZpLECjeBf7nNWfmA0HZCvE0Q+l
+        ljQ4k=; b=iJhKlc1J0OBAXFczk2dCEAMnWPa5ITfexg8YzI1Accbqmrdf3cZCQn
+        laTeJ0+Exb7fK9cgJf4O6K0BuTKsYEKalRSOC+TBgB+15Y9JONlrVTHbepBov5gA
+        jDUlDzarvHqjgQQNqCzTJakrRB4KTMZNuJQAVz8ZtfX7yUtNVaVdw=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id DB0A739179;
+        Thu, 12 Oct 2023 13:58:47 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 75BAD39178;
+        Thu, 12 Oct 2023 13:58:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>,
+Cc:     <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
         Jason Hatton <jhatton@globalfinishing.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Subject: Re: [PATCH v2 2/2] Prevent git from rehashing 4GiB files
+In-Reply-To: <20231012160930.330618-3-sandals@crustytoothpaste.net> (brian
+        m. carlson's message of "Thu, 12 Oct 2023 16:09:30 +0000")
+References: <20231012160930.330618-1-sandals@crustytoothpaste.net>
+        <20231012160930.330618-3-sandals@crustytoothpaste.net>
+Date:   Thu, 12 Oct 2023 10:58:42 -0700
+Message-ID: <xmqqpm1jn2nh.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: FC25845A-6928-11EE-9B2E-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 12, 2023 at 12:10 PM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> In a future commit, we're going to work with some large files which will
-> be at least 4 GiB in size.  To take advantage of the sparseness
-> functionality on most Unix systems and avoid running the system out of
-> disk, it would be convenient to use truncate(2) to simply create a
-> sparse file of sufficient size.
->
-> However, the GNU truncate(1) utility isn't portable, so let's write a
-> tiny test helper that does the work for us.
->
-> Signed-off-by: brian m. carlson <bk2204@github.com>
-> ---
-> diff --git a/t/helper/test-truncate.c b/t/helper/test-truncate.c
-> @@ -0,0 +1,27 @@
-> +int cmd__truncate(int argc, const char **argv)
-> +{
-> +       char *p = NULL;
-> +       uintmax_t sz = 0;
-> +       int fd = -1;
-> +
-> +       if (argc != 3)
-> +               die("expected filename and size");
-> +
-> +       sz = strtoumax(argv[2], &p, 0);
-> +       if (*p)
-> +               die("invalid size");
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-Do you want to check 'errno' here, as well (probably before the '*p' check)?
+> An example would be to have a 2^32 sized file in the index of
+> patched git. Patched git would save the file as 2^31 in the cache.
+> An unpatched git would very much see the file has changed in size
+> and force it to rehash the file, which is safe.
 
-Or is that being too defensive for a 'test-tool' command?
+The reason why this is "safe" is because an older Git will would
+keep rehashing whether 2^31 or 0 is stored as its sd_size, so the
+change is not making things worse?  With older git, "git diff-files"
+will report that such a file is not up to date, and then the user
+will refresh the index, which will store 0 as its sd_file, so
+tentatively "git status" may give a wrong information, but we
+probalby do not care?  Is that how the reasoning goes?
 
-> +       fd = open(argv[1], O_WRONLY | O_CREAT, 0600);
-> +       if (fd < 0)
-> +               die_errno("failed to open file %s", argv[1]);
+> +/*
+> + * Munge st_size into an unsigned int.
+> + */
+> +static unsigned int munge_st_size(off_t st_size) {
+> +	unsigned int sd_size = st_size;
 > +
-> +       if (ftruncate(fd, (off_t) sz) < 0)
-> +               die_errno("failed to truncate file");
-> +       return 0;
+> +	/*
+> +	 * If the file is an exact multiple of 4 GiB, modify the value so it
+> +	 * doesn't get marked as racily clean (zero).
+> +	 */
+> +	if (!sd_size && st_size)
+> +		return 0x80000000;
+> +	else
+> +		return sd_size;
 > +}
+
+This assumes typeof(sd_size) aka "unsigned int" is always 32-bit,
+which does not sound reasonable.  Reference to 4GiB, 2^32 and 2^31
+in the code and the proposed commit log message need to be qualified
+with "on a platform whose uint is 32-bit" or something, or better
+yet, phrased in a way that is agnostic to the integer size.  At
+the very least, the hardcoded 0x80000000 needs to be rethought, I
+am afraid.
+
+Other than that, the workaround for the racy-git avoidance code does
+sound good.  I actually wonder if we should always use 1 regardless
+of integer size.
+
