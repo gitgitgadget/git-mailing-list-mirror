@@ -1,120 +1,126 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E3DB3E473
-	for <git@vger.kernel.org>; Thu, 12 Oct 2023 21:09:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1395234CE2
+	for <git@vger.kernel.org>; Thu, 12 Oct 2023 21:15:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="n1kU9SS/"
-Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A314E1
-	for <git@vger.kernel.org>; Thu, 12 Oct 2023 14:09:34 -0700 (PDT)
-Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-5a7c93507d5so16899597b3.2
-        for <git@vger.kernel.org>; Thu, 12 Oct 2023 14:09:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1697144973; x=1697749773; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZcLh9qbfjxTXEYzJQLtfphbDYwtd321Gp2hF8Gr1cMg=;
-        b=n1kU9SS/BLxfJQ0zYJ8mh6DiS2OxnGrJo38rlTEJzlD9kh7wTJm8JF6GD11/ILMFGr
-         5XURTDF9qdfWQFwNYPCzfrnj3ik+X/33q9E0YRJf2pEiNuETS3WufGP0Vm5SUG+H5dxc
-         exnUJewwNGhgKFD0/cp4XozJgPq/nGZVyOoFaRGcvOdSOgVErCUkkaNMuaz6yRt172dJ
-         Sbqa2ZrCCl68aITkeGjawSjtt34SEdOVQnFruJJo4pmuiU5m/tODyNbD4F7LKCKznFPx
-         aKJ26xlPXqcINw2XnJTH6uMhgDPYENlP/dHqgHXbbwUi+Mk2YXUA//rtG6gsS9BYdZZ2
-         DJ9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697144973; x=1697749773;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZcLh9qbfjxTXEYzJQLtfphbDYwtd321Gp2hF8Gr1cMg=;
-        b=AIb0gO8ffsgZ4owUrQvcdqAsiH5T/uyCz1e/H9JHbM//VMUnNDe5OQs/NtK0rVk/zn
-         /K71ZyYO+3AP19B/qeDOSkURwjkUJalb+f7YTY6wxm5SgvFTdAUEUfN5b2L8L5/35UKK
-         s8To29hVKNBJvgRJ+/SCOcUjWgiJNm5Iq6ueb3uglVXU4phxNqjGrRFDuhctcbjPVhnq
-         94y41eZzTmLD2YJHIJd0G715Dbbfl9hAkbG0RrTdx+wipE1m+CPW38Y68nB9elA2OfrX
-         91mFPMYRZsRS+7x8oBQ9McxaHgPG5ROqxLCRj+6m708wH97IOxU7Z+Pl+3hIkRlyb7uk
-         2LXw==
-X-Gm-Message-State: AOJu0YyIz2qiPSIHvhqHuoaOvUfQhxQ71HDOxIiAEBM/lbfEjAetj7Ud
-	AsyzVGhtBx4EpjgeEi1+dr4EG5AX+FFBJtx5ibsv9w==
-X-Google-Smtp-Source: AGHT+IHyyorpLaBFED0awuhNF3K9YiP6iIt4LiimAM8TLhxFpxfcawqSEmXTFKKGP0rnhcXJWqFAdA==
-X-Received: by 2002:a25:b34c:0:b0:d9a:5666:7ab5 with SMTP id k12-20020a25b34c000000b00d9a56667ab5mr9029411ybg.10.1697144973082;
-        Thu, 12 Oct 2023 14:09:33 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id m15-20020ae9e70f000000b007671b599cf5sm94231qka.40.2023.10.12.14.09.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Oct 2023 14:09:32 -0700 (PDT)
-Date: Thu, 12 Oct 2023 17:09:31 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] Documentation/gitformat-pack.txt: fix incorrect MIDX
- documentation
-Message-ID: <af2742e05dff48c4ba0a9f36d58bcbfc052dca40.1697144959.git.me@ttaylorr.com>
-References: <cover.1697144959.git.me@ttaylorr.com>
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="agcDkc6b"
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BECFA9D
+	for <git@vger.kernel.org>; Thu, 12 Oct 2023 14:15:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1697144959.git.me@ttaylorr.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-	autolearn_force=no version=3.4.6
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1697145307;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=oJBwqkcEkURGTyms5VIABY6Sh6GCyin2H8r4DeY2Hi0=;
+	b=agcDkc6bVsvvqFLp9WLYMUbPIiEEVHtIdMo5rfzkXpVk82ZdiXTRl+V5DzlQpX0OTS0IO7
+	Jthy7AWk/2rYpBv0/jQewBeYcblkLiXwcmPEAje/otVx4Z0gg/2WiH/yaLYEg8B3tnKLBG
+	8c48YJTihpjvsyY8NeiTGwkCu6iwaBpxsCfk1LTB93Pc4RB0XnTt5gEXHQg5k7Gf1iJ+Gf
+	9n6Warsprgh+SkxajJTCmgR7WkCnj8Fz6IH3YxRjFZ9z3WXsLcV4NVT5wM8Dd3pOc2LO98
+	GjFa5I98THwUCz1oYrMI8JQ0lWKPQE6MJ4TJoqS/WfxnO+w4NZs0ldn3lqhMYg==
+Date: Thu, 12 Oct 2023 23:15:07 +0200
+From: Dragan Simic <dsimic@manjaro.org>
+To: Christoph Anton Mitterer <calestyo@scientia.org>
+Cc: git@vger.kernel.org
+Subject: Re: why does git set X in LESS env var?
+In-Reply-To: <e1e187ca3d970c18e1a11d51ff93b6cb212bcbaa.camel@scientia.org>
+References: <3a2c362c019338ca7408b7a3bc5715b535d15b8a.camel@scientia.org>
+ <xmqqa5sokdd3.fsf@gitster.g>
+ <0c10c4b95f2a947a5d569a2c3d51fcb02b35e81d.camel@scientia.org>
+ <eadc03fc56d530ea31790f8a4b47a16e@manjaro.org>
+ <ec43820562198de078db7df54d0338edf1f333ea.camel@scientia.org>
+ <6457310b8ca0e7d3b288a3bbbe264012@manjaro.org>
+ <fbb3c2bf1c832f0f16cb913da6b862dd313359ef.camel@scientia.org>
+ <ace230a469fabbbbceb38cc884a40b4c@manjaro.org>
+ <8f3bec2752f4c2d3ebdd29d20910a4a94f75f608.camel@scientia.org>
+ <23cc509bfb433e19c7683c97314e4ac8@manjaro.org>
+ <2f3ef5568ed19ac5bdcd23f84ddfb13dc6901043.camel@scientia.org>
+ <161b9584c6c9a004c01bda98cea4f1f8@manjaro.org>
+ <e1e187ca3d970c18e1a11d51ff93b6cb212bcbaa.camel@scientia.org>
+Message-ID: <31b6f4a2b88cc3a2cfa908f82f4f2302@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 	lindbergh.monkeyblade.net
 
-Back in 32f3c541e3 (multi-pack-index: write pack names in chunk, 2018-07-12)
-the MIDX's "Packfile Names" (or "PNAM", for short) chunk was described
-as containing an array of string entries. e0d1bcf825 notes that this is
-the only chunk in the MIDX format's specification that is not guaranteed
-to be 4-byte aligned, and so should be placed last.
+On 2023-10-12 22:23, Christoph Anton Mitterer wrote:
+> On Thu, 2023-10-12 at 07:46 +0200, Dragan Simic wrote:
+>> Let me repeat that the messed up output you're experiencing isn't 
+>> normal
+>> and has nothing to do with the arguments passed to less(1).  That's a
+>> separate issue of the terminal emulator(s) you're using, or in issue 
+>> of
+>> your specific environment, and should be debugged and addressed as a
+>> separate issue.
+> 
+> As I've told you before it happens at least in gnome-terminal (and thus
+> presumably and VTE based terminal), xterm, xfce4-terminal and konsole
+> (all current versions of Debian unstable)... with less as of Debian
+> unstable as well as 643.
+> 
+> That affects at least on major distro, and there's a good chance that
+> it affects any other distro based on Debian (*buntu, etc.).
+> 
+> I further tried on SLES 15 with both gnome-terminal 3.42.2 and xterm
+> 330 as well as less 530.
+> 
+> Even tried with the terminal emulator started via env -i and only TERM
+> set manually.
+> 
+> *All* cases affected by the same problem I've described before.
+> 
+> Same with the command you've used in your follow-up post, here a video
+> of it in HD:
+> https://youtu.be/MsxtQgrKM50
 
-This isn't quite accurate: the entries within the PNAM chunk are not
-guaranteed to be aligned since they are arbitrary strings, but the
-chunk itself is aligned since the ending is padded with NUL bytes.
+Ah, I can finally see what are you talking about...  Thank you very much 
+for all the testing you've performed and for supplying this screen 
+recording!  I can confirm that my environment is also affected, but for 
+some reason I haven't observed it this way before.
 
-That external padding has always been there since 32f3c541e3 via
-midx.c::write_midx_pack_names(), which ended with:
+Huh, that's really worrisome and I'm willing to help you with debugging 
+and fixing this issue.  Please, let me perform some debugging and 
+digging around, and I'll come back to you with some further insights,
 
-    i = MIDX_CHUNK_ALIGNMENT - (written % MIDX_CHUNK_ALIGNMENT)
-    if (i < MIDX_CHUNK_ALIGNMENT) {
-      unsigned char padding[MIDX_CHUNK_ALIGNMENT];
-      memset(padding, 0, sizeof(padding))
-      hashwrite(f, padding, i);
-      written += i;
-    }
+>> To me, having inconsistent displaying of the short and long outputs
+>> is simply not acceptable.
+> 
+> Which is fine - and as I've said: I personally also tend to prefer it
+> like that - but even if the above would be just some bug (which however
+> seems to affect all systems I could test on a short notice, except
+> yours)... one can IMO still not generally say whether on or the other
+> behaviour is generally accepted to be the better one.
+> 
+> Even if output may be just chopped of and thus ambiguously incomplete,
+> some people may still prefer to have rather no output at all.
 
-In fact, 32f3c541e3's log message itself describes the chunk in its
-first paragraph with:
+Those people, just as anyone else, can use $PAGER or $GIT_PAGER to 
+configure the pagination the way they like it.  In the end, that's also 
+what I do in my environment.
 
-    Since filenames are not well structured, add padding to keep good
-    alignment in later chunks.
+>> Perhaps something is wrong with your specific environment, because
+>> I see no other reason for this issue.
+> 
+> Well may be, but seems unlikely from my PoV, given that I've now tested
+> even on other distros and systems not under my control.
+> 
+> Anyway... I think this got a bit too off-topic here :-D
 
-So these have always been externally aligned. Correct the corresponding
-part of our documentation to reflect that.
-
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- Documentation/gitformat-pack.txt | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/gitformat-pack.txt b/Documentation/gitformat-pack.txt
-index d7153962d4..54000c9412 100644
---- a/Documentation/gitformat-pack.txt
-+++ b/Documentation/gitformat-pack.txt
-@@ -392,8 +392,9 @@ CHUNK DATA:
- 	Packfile Names (ID: {'P', 'N', 'A', 'M'})
- 	    Stores the packfile names as concatenated, NUL-terminated strings.
- 	    Packfiles must be listed in lexicographic order for fast lookups by
--	    name. This is the only chunk not guaranteed to be a multiple of four
--	    bytes in length, so should be the last chunk for alignment reasons.
-+	    name. Individual entries in this chunk are not guarenteed to be
-+	    aligned. The chunk is externally padded with zeros to align
-+	    remaining chunks.
- 
- 	OID Fanout (ID: {'O', 'I', 'D', 'F'})
- 	    The ith entry, F[i], stores the number of OIDs with first
--- 
-2.42.0.349.gf0c1128f8b.dirty
+Well, yes and no.  This scrolling-related issue is obviously affecting 
+numerous git users, which makes it quite relevant for git as a project.  
+Of course, not directly relevant, but indirectly, yes.
