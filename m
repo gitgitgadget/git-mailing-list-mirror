@@ -2,222 +2,165 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F324BCDB47E
-	for <git@archiver.kernel.org>; Thu, 12 Oct 2023 10:55:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 15F95CDB46E
+	for <git@archiver.kernel.org>; Thu, 12 Oct 2023 11:04:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347143AbjJLKzj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Oct 2023 06:55:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57468 "EHLO
+        id S1378020AbjJLLEj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Oct 2023 07:04:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57288 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347140AbjJLKzh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Oct 2023 06:55:37 -0400
-Received: from st43p00im-ztfb10061701.me.com (st43p00im-ztfb10061701.me.com [17.58.63.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32049D3
-        for <git@vger.kernel.org>; Thu, 12 Oct 2023 03:55:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
-        s=1a1hai; t=1697108132;
-        bh=JJt9GFQITEnWHulqlDcIK5Xb3knTRgkXijG98fy0X28=;
-        h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To;
-        b=DOaUmrq6K1cMWrM+5GBIq6V+fSGSQVSnfHJg9eQOvzvUm7HMcs22hUvsf1pc8+GoM
-         IRQbvR2FFQEpeBiA4DFJSL+G8OcWkvfq9ZJJQi71weLr35fadqDW6387KqGt32h3Tw
-         zm5OofjmlpRS/K8o0eVsz8AuCje5oY7DeNrnj622IrQaOhMO6JItW6e9uX4WaaKwm9
-         GxlqSgkKde/juSMWZtDyPYM5jTt+3Ox8sZzjB8Mk3ygoM+8NdVqkpQrlFwuAaOUiNp
-         vaYBorOygxJJam/EPGZwOewVOyZ53iluAfYE+IkBtaOHwd7qW7sXV9x2OC2NE3/yWX
-         IBQvmfJZz/vqA==
-Received: from smtpclient.apple (st43p00im-dlb-asmtp-mailmevip.me.com [17.42.251.41])
-        by st43p00im-ztfb10061701.me.com (Postfix) with ESMTPSA id ACC8F2E02DE;
-        Thu, 12 Oct 2023 10:55:31 +0000 (UTC)
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.100.2.1.4\))
-Subject: Re: [RFC] Define "precious" attribute and support it in `git clean`
-From:   Sebastian Thiel <sebastian.thiel@icloud.com>
-In-Reply-To: <xmqqttqytnqb.fsf@gitster.g>
-Date:   Thu, 12 Oct 2023 12:55:19 +0200
-Cc:     git@vger.kernel.org, Josh Triplett <josh@joshtriplett.org>,
-        Kristoffer Haugsbakk <code@khaugsbakk.name>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <0E44CB2C-57F2-4075-95BE-60FBFDD3CEE2@icloud.com>
-References: <79901E6C-9839-4AB2-9360-9EBCA1AAE549@icloud.com>
- <xmqqttqytnqb.fsf@gitster.g>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3774.100.2.1.4)
-X-Proofpoint-ORIG-GUID: XQqWqHDD2LevMimqeHkbvYF2lX-ENDQu
-X-Proofpoint-GUID: XQqWqHDD2LevMimqeHkbvYF2lX-ENDQu
-X-Proofpoint-Virus-Version: =?UTF-8?Q?vendor=3Dfsecure_engine=3D1.1.170-22c6f66c430a71ce266a39bfe25bc?=
- =?UTF-8?Q?2903e8d5c8f:6.0.573,18.0.957,17.0.605.474.0000000_definitions?=
- =?UTF-8?Q?=3D2023-05-18=5F15:2023-05-17=5F02,2023-05-18=5F15,2020-01-23?=
- =?UTF-8?Q?=5F02_signatures=3D0?=
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0 mlxlogscore=999
- malwarescore=0 suspectscore=0 clxscore=1011 adultscore=0 spamscore=0
- mlxscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2310120088
+        with ESMTP id S1347185AbjJLLEg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Oct 2023 07:04:36 -0400
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B95FD9
+        for <git@vger.kernel.org>; Thu, 12 Oct 2023 04:04:30 -0700 (PDT)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.nyi.internal (Postfix) with ESMTP id A41BD5C03DE;
+        Thu, 12 Oct 2023 07:04:27 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Thu, 12 Oct 2023 07:04:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+        :content-type:content-type:date:date:from:from:in-reply-to
+        :in-reply-to:message-id:mime-version:references:reply-to:sender
+        :subject:subject:to:to; s=fm2; t=1697108667; x=1697195067; bh=5o
+        UTTFayqh1EomIuDcVi1vGk+Z2CcUp70l3W5YFs8Lk=; b=GYtbM2GaK4Not+c5JI
+        L0XfsdBrGZp74GnIjI5fBB3Q65d2+hPmxNGqT1z7dk19q2/2pN5oxUTl/qOH1pXQ
+        OJ44UwqGAKcW8Wnc/Mmm9QMY8Eh5v6N2yFN8TC2MaQCYxxfnJrVEn9++KFgOq2ZC
+        1BL533wPF3hlOgEhGA0n+43lkOAEiwPh3PZyPrk07Bom/e/r1M6ydZ0cDy549dWg
+        R78GF/TbRpXmD2VxN6/ccJp9nLsUYyMpoWA/Ul2uPBXMUIC1MTV1icVBKQrbG6Bj
+        Fc/GM4vFgdlwQyf4/1fRCqns8BdQ+U1oz8B7SnO3KpfD8pr6x0+28GfIUCW0k94E
+        9cZQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:content-type:date:date
+        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm2; t=1697108667; x=1697195067; bh=5oUTTFayqh1Eo
+        mIuDcVi1vGk+Z2CcUp70l3W5YFs8Lk=; b=pxeYlOHEXnWW9QT7uoD9djRSlSC3z
+        WtF03qwcnDLnPnmDZ2hpIGpHOYWkQ46IYL8jyQagAewb24oc73NMbth9oFWlDgX/
+        aUJFYbrrDyBw8Sj/FCK/rrwEMURgdB/huRMzEI+SXvY1VnWah47pQR096gQdVw6f
+        qPZo67MCh1S42OGtT5yGZPwClOBmmzq0+DauS8g6PqyqmhDlkdXO9RdJTwjcBwZw
+        /c61BjpnbVLv0oMhs+hecRsth3inDUeRbjvwjkf0o0XuzPHl8kkRyhgYwdHyLPgw
+        /1qNw8MmDztf1+qa/hOwPAs3Ug80Wprn1oalmA42DZsVeEsGel0xT1a2A==
+X-ME-Sender: <xms:u9InZVRFEsW0cFrQG6i9xj0sROp-ahn6FrfyS9w9BSgoRnIlLra3Og>
+    <xme:u9InZewYd1xGknFE64Q53kw-qGey44X3Eg0dI9TGsniy59NeMGcRDJ-Ak9aPlyxrW
+    EauSIDDgodKcsNGNg>
+X-ME-Received: <xmr:u9InZa38CfjNwkC47ZlbHCKCLRWntfQO3vTLwMGvtKEig9QI-wP-QI3r0NKH6sKtsqaWVLfGpaf8Om4WGLBU1RiW9CyMWWra7QViV3V2Kuuq>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedriedtgdefhecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeetueevhffhudefvdegieeuieelgedthfegfedtueevjeejtdfgjeehudejuedtuden
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhm
+X-ME-Proxy: <xmx:u9InZdBvo8_uxsdBgy1Db-V_r8HXtnWJBwB8-mkKJyEsWlZsQZsRbA>
+    <xmx:u9InZeg_D-__yxbIUqcmAsY3bA6p8OcRLCiwR-UfHPo-K-PCVtw0kQ>
+    <xmx:u9InZRpCrxfQaV3LXmFqiGd-dHitaR6z3QreBsXReq315ByrdmvapQ>
+    <xmx:u9InZSal6rr3PCESAzwwFSNPfyNhXJ_yhypmRumhqlhYADha_XUb3A>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 12 Oct 2023 07:04:26 -0400 (EDT)
+Received: by vm-mail (OpenSMTPD) with ESMTPSA id 6d498745 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Thu, 12 Oct 2023 11:04:24 +0000 (UTC)
+Date:   Thu, 12 Oct 2023 13:04:23 +0200
+From:   Patrick Steinhardt <ps@pks.im>
+To:     Karthik Nayak <karthik.188@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH 0/3] rev-list: add support for commits in `--missing`
+Message-ID: <ZSfSt4tXx8sE68Bn@tanuki>
+References: <20231009105528.17777-1-karthik.188@gmail.com>
+ <ZSTs3BUVtaI9QIoA@tanuki>
+ <xmqqil7etndo.fsf@gitster.g>
+ <CAOLa=ZSbd_E+DAkhuGrUpfHkxaje3jrH9-fEDyctAPFExKnj9A@mail.gmail.com>
+ <xmqqbkd5nlq0.fsf@gitster.g>
+ <CAOLa=ZQxNX4oGtqrgLyKenC_D8M=9q0sFJVmo4fyjSPtgw315Q@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="qbNH1ecBcc9Sv8JS"
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZQxNX4oGtqrgLyKenC_D8M=9q0sFJVmo4fyjSPtgw315Q@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I liked the idea too see precious files as sub-class of ignored files, =
-and
-investigated possibilities on how to achieve that while keeping the =
-overall
-effort low and remove any potential for backwards-incompatibility as =
-well.
 
-Currently, `.gitignore` files only contain one pattern per line, which
-optionally may be prefixed with `!` to negate it. This can be escaped =
-with `\!`
-- and that's it.
+--qbNH1ecBcc9Sv8JS
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Parsing patterns that way makes for simple parsing without a need for
-quoting.
+On Thu, Oct 12, 2023 at 12:44:27PM +0200, Karthik Nayak wrote:
+> On Wed, Oct 11, 2023 at 6:54=E2=80=AFPM Junio C Hamano <gitster@pobox.com=
+> wrote:
+> >
+> > Karthik Nayak <karthik.188@gmail.com> writes:
+> >
+> > > Seems like this is because of commit-graph being enabled, I think
+> > > the best thing to do here would be to disable the commit graph of
+> > > these tests.
+> >
+> > If the CI uncovered that the new code is broken and does not work
+> > with commit-graph, wouldn't the above a totally wrong approach to
+> > correct it?  If the updated logic cannot work correctly when
+> > commit-graph covers the history you intentionally break, shouldn't
+> > the code, when the feature that is incompatible with commit-graph is
+> > triggered, disable the commit-graph?  I am assuming that the new
+> > feature is meant to be used to recover from a corrupt repository,
+> > and if it does not work well when commit-graph knows (now stale
+> > after repository corruption) more about the objects that are corrupt
+> > in the object store, we do want to disable commit-graph.  After all,
+> > commit-graph is a secondary information that is supposed to be
+> > recoverable from the primary data that is what is in the object
+> > store.  Disabling commit-graph in the test means you are telling the
+> > end-users "do not use commit-graph if you want to use this feature",
+> > which sounds like a wrong thing to do.
+>=20
+> I agree with what you're saying. Disabling writing the commit-graph for
+> only the test doesn't serve the real usage. To ensure that the feature sh=
+ould
+> work with corrupt repositories with stale commit-graph, I'm thinking of
+> disabling the commit-graph whenever the `--missing` option is used. The
+> commit graph already provides an API for this, so it should be simple to =
+do.
+>=20
+> Thanks!
 
-### What about a `$` syntax in `.gitignore` files?
+Wouldn't this have the potential to significantly regress performance
+for all those preexisting users of the `--missing` option? The commit
+graph is quite an important optimization nowadays, and especially in
+commands where we potentially walk a lot of commits (like we may do
+here) it can result in queries that are orders of magnitudes faster.
 
-I looked into adding a new prefix, `$` to indicate the following path is
-precious or=E2=80=A6 valuable. It can be escaped with `\$` just like =
-`\!`.=20
+If we were introducing a new option then I think this would be an
+acceptable tradeoff as we could still fix the performance issue in
+another iteration. But we don't and instead aim to change the meaning of
+`--missing` which may already have users out there. Seen in that light
+it does not seem sensible to me to just disable the graph for them.
 
-Doing so has the advantage that older `git` versions simply take the
-declaration as literal and would now exclude `$.config`, for example, =
-whereas
-newer `git` versions will consider them precious.
+Did you figure out what exactly the root cause of this functional
+regression is? If so, can we address that root cause instead?
 
-There is some potential for accidentally excluding files that previously
-were untracked with older versions of git, but I'd think chances are =
-low.
+Patrick
 
-#### Example: Linux kernel
+--qbNH1ecBcc9Sv8JS
+Content-Type: application/pgp-signature; name="signature.asc"
 
-`.config` is ignored via `.gitignore:=20
+-----BEGIN PGP SIGNATURE-----
 
-    .*
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmUn0rIACgkQVbJhu7ck
+PpRjgg/7B4nyngyTufs/eDZ0zM2FuWFH2NEnK+l3MMCeC8Z92F98NBSXAsf2GiIz
+ty+DXuJEba2s4StqzDHhC6v/sr4/sMvd9t+FwDFhMtpFDchjyS8AJUwK5b+a1rs3
+rBB2PSPDQp1Jd9XFitttn1cyhgR5AtkxkfiKeX0SFa9ppAXqAJFQEJk3Jh361U0E
+pu4rOUqMeDSN81VfHJsXIJrd1aB2HiH+2Dh5JJt6bTfWjjTWqu89ziXY0o4G/bbD
+O1Uxxih89MjJobJ1YndoH+OF2LePeo2cDJe2nLMlGTGV9XPk42qSOUCHl9v27rM7
+US71ZeHsGXW7yXMzKkuXx9VBQ541IsGHkqcwRfAxzHLuSLXi7Fv/Jfuh4XdmmXY0
+8WwS7AOq4StiSIFm67GkItut08lAjcFwrMjAZEpu2GywYsx5nWeNssV9a3c0eFYc
+zQmn5u7iDjeYIBojIO9eUaKntvJacBzasnKr+0FQUzyatKVeacOhqk30UdjkjDMW
+xKzrM135VXLszGhAPseKvco9uH08JrAHo/xd1bAlASaUSqHDQZzPK3yvhaWVt7Mm
+r0xWjJsYMzjNuPnE/qYkS4rWt5rhJKFzy1BP3xDVFwqCOxJRxlNpXTS3PYc+HvP4
+TzJnNctDBDO3on4ey//lAiamzQ74mIqw/ZsH97ZQj+YH19+3ZEg=
+=QoWr
+-----END PGP SIGNATURE-----
 
-*Unfortunately*, users can't just add a local `.git/info/exclude` file =
-with
-`$.config` in it and expect `.config` to be considered precious as the =
-pattern
-search order will search this last as it's part of the exclude-globals. =
-The
-same is true for per-user git-ignore files. This means that any git =
-would
-have the `.*` pattern match before the `$.config` pattern, and stop =
-right there
-concluding that it's expendable, instead of precious. This is how users =
-can
-expect `.gitignore` files to work, and this is how `!negations` work as =
-well -
-the negation has to come after the actual exclusion to be effective.
-
-Thus, to make this work, projects that ship the `.gitignore` files would =
-*have
-to add patterns* that make certain files precious.
-
-Alternatively, users have to specify gitignore-overrides on the =
-command-line,
-but not all commands (if any except for `git check-ignore`) support =
-that.
-
-In the case of `git clean` one can already pass `--exclude=3Dpattern`, =
-but if
-that's needed one doesn't need syntax for precious files in the first =
-place.
-
-**This makes the $precious syntax useful only for projects who chose to =
-opt in,
-but makes overrides for users near impossible**.
-
-Such opted-in projects would produce `.gitignore` files like these:
-
-    .*
-    $.config
-
-Note that due to the way ignore patterns are searched, the following =
-would
-consider `.config` trackable, not precious:
-
-    .*
-    $.config
-    !.config
-
-It's up the maintainer of the repository to configure their .gitignore =
-files
-correctly, so nothing new either.
-
-#### Benefits
-
-* simple implementation, fast
-* backwards compatible
-
-#### Disadvantages
-
-* cannot easily be overridden by the user as part of their local =
-settings.
-* needs repository-buy-in to be useful
-* $file could clash with the file '$file' and cause older git  to ignore =
-it
-
-### What about a `precious` attribute?
-
-The search of `.gitattributes` works differently which makes it possible =
-for
-users to set attributes on any file or folder easily using their local =
-files.
-Using attributes has the added benefit of being extensible as one can =
-start out
-with:
-
-```gitattributes
-.config precious
-```
-
-and optionally continue with=E2=80=A6
-
-```gitattributes
-.config precious=3Dinput
-kernel precious=3Doutput
-```
-
-=E2=80=A6to further classify kinds of precious files, probably for their =
-personal use.
-Please note that currently pathspecs can't be used to filter by =
-attribute
-for files that are igonred and untracked or I couldn't figure out how.
-That even makes sense as it wasn't considered a use-case yet.
-
-
-#### Benefits
-
-* backwards compatible
-* easily extendable with 'tags' or sub-classes of precious files using =
-the
-  assignment syntax.
-* overridable with user's local files
-
-#### Disadvantages
-
-* any 'exclude' query now also needs a .gitattribute query to support =
-precious
-  files (and it's not easy to optimize unless there is a flag to turn =
-precious
-  file support on or off)
-* `precious` might be in use by some repos which now gains a possibly =
-different
-  meaning in `git` as well.
-
-### Conclusion
-
-Weighing advantages and disadvantages of both approaches makes me prefer =
-the
-`.gitignore` extension. The `.gitattributes` version of it *could* also =
-be
-implemented on top of it at a later date. However, it should be gated =
-behind a
-configuration flag so users who need it as they want local overrides
-can opt-in. Then they also pay for the feature which for most =
-repositories=20
-won't be an issue in the first place.
-
-All this seems a bit too good to be true, and I hope you can show where
-it wouldn't work or which dangers or possible issues haven't been
-mentioned yet.
-
+--qbNH1ecBcc9Sv8JS--
