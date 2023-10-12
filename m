@@ -2,79 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0716CDB46E
-	for <git@archiver.kernel.org>; Thu, 12 Oct 2023 06:57:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD7CCCDB46E
+	for <git@archiver.kernel.org>; Thu, 12 Oct 2023 07:28:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377518AbjJLG5Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Oct 2023 02:57:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38736 "EHLO
+        id S1347114AbjJLH20 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Oct 2023 03:28:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347080AbjJLG5X (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Oct 2023 02:57:23 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A44A94
-        for <git@vger.kernel.org>; Wed, 11 Oct 2023 23:57:22 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-40666aa674fso6687665e9.0
-        for <git@vger.kernel.org>; Wed, 11 Oct 2023 23:57:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697093841; x=1697698641; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wCWGuQd8NL5wdJiH4y+8lxiohdKBvk/KAw5ZD0HC3z0=;
-        b=cuEOzkcfOQnZk2YCjtzosbdetot0uFYD8TTqJNGCVb8H2Yqr/+/rd5rqFc5IAj/MUZ
-         iENAhSqhh8KA3sb/pTlkpEe8DBgkPT4R/W+mUp0lcWWi0mxYocfcVBpIX7UhdQmqKvZR
-         cuFMq0AFPitP4EF5fKGZBnIPuG3FWknpXIa8Q9+hGLgp906PwxknnES0fYoj/c6X4jcA
-         8rtFqQjQJPTS3ESmwP3ily5mt7GXBlsIIsmQEeo+FuJH+FkguuarIunrepOa7yt1EaB4
-         pDUo1uJwiPCM4uxHJMffkNy6CTMXJicQS5QVeyjInG9N4sRM+Y+zmEnCxODbgOfF8J1w
-         ygpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697093841; x=1697698641;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wCWGuQd8NL5wdJiH4y+8lxiohdKBvk/KAw5ZD0HC3z0=;
-        b=dqeb/lMHV+lNjakkPXrXzulsGx0kbxaKH/lqsOlvnq2/I/jVKZN8HdjdKNztRWS2ZW
-         kZj/0fOrWMRS3EoNFNnPByOPnOWYX2Eu6/2Jvtj+9ghWgrFO2w0eyOwlgr/R2wCSo+iT
-         MWJ0JOHoSa4PGLIE7rgi0/1vwJU2rYfD43LU74QafxxsRVd419BrBbyqE8dnE5ojKg/u
-         OgAP6PsZrqLoEwSlL9XgU5z/WFL1GMMRUBAAGPGVB6KL0H/Wpj72xLlrRs43eJrFBOpD
-         eD5Es6yNMfps8+SmQR+bgQaOQCd7xqWTLndSF3YwLN4VagYOJm9rEgFEQl5e/mcpOsNh
-         bm2g==
-X-Gm-Message-State: AOJu0YyJvPpz7xzMvNpJ7y/r0mcwvdwTTH/UztBAHWFwtg6Njo1gWNES
-        Dl9ouFxae4WTVOx/orp9FpK8hY6TsUFR
-X-Google-Smtp-Source: AGHT+IFRvZDHVON+5V7uupEgzGsamKPNLAsWX/Xi87K18qE+eqtK5eWfV11XtxgAqWGgxtChff0eiw==
-X-Received: by 2002:a1c:7212:0:b0:401:bdd7:499d with SMTP id n18-20020a1c7212000000b00401bdd7499dmr21138709wmc.25.1697093840667;
-        Wed, 11 Oct 2023 23:57:20 -0700 (PDT)
-Received: from dorcaslitunya-virtual-machine ([105.163.2.146])
-        by smtp.gmail.com with ESMTPSA id v6-20020adff686000000b0031980294e9fsm17252497wrp.116.2023.10.11.23.57.19
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Oct 2023 23:57:20 -0700 (PDT)
-Date:   Thu, 12 Oct 2023 09:57:17 +0300
-From:   Dorcas Litunya <anonolitunya@gmail.com>
-To:     git@vger.kernel.org
-Subject: [Outreachy]Introduction and Problem while installing Git
-Message-ID: <ZSeYzdx07Cj67lR4@dorcaslitunya-virtual-machine>
+        with ESMTP id S234125AbjJLH2Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Oct 2023 03:28:25 -0400
+Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BFAD90
+        for <git@vger.kernel.org>; Thu, 12 Oct 2023 00:28:22 -0700 (PDT)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.west.internal (Postfix) with ESMTP id 420F532009AA;
+        Thu, 12 Oct 2023 03:28:20 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Thu, 12 Oct 2023 03:28:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=emailplus.org;
+         h=cc:content-transfer-encoding:content-type:content-type:date
+        :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+        :references:reply-to:sender:subject:subject:to:to; s=fm2; t=
+        1697095699; x=1697182099; bh=ubaU9p1JOaN4PjVR99IPG+BRxIc1kIo0+M6
+        kIdubRQc=; b=Q8LOaCQsHFOJDldLSzZXEenssxocliiOCHpgFXPXqImVkARygz5
+        t7SCS1WAlrptR1v8EPfpc+ProyWjq8Mbzpjo61G3R1Brt8u/IpIvXl5o5vjzWYoF
+        mp43DgzUnBFKBnLI5ry9qNXzRhcnQVski2Do9uBUvxi+sTleqfDG0RP3ku212Rzr
+        vdHBunkV2hqNLUZe+9/X3apeBt/GvL3LtI16wQ6btYMf5yZYlT4ad/SjrqTn1ghS
+        Y7o1XEACIVXjNCfG6xm9RFpw3N3isdf6EdZbr/rsPfeH6hycuQu12GsG6QCqWlTV
+        6GaXWiz43ZWKu8qlqGEE4rcDa6OcnIOMfBA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:content-type
+        :content-type:date:date:feedback-id:feedback-id:from:from
+        :in-reply-to:in-reply-to:message-id:mime-version:references
+        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1697095699; x=
+        1697182099; bh=ubaU9p1JOaN4PjVR99IPG+BRxIc1kIo0+M6kIdubRQc=; b=U
+        B7Rifoo7B5DRugoX0BweeAO7PfMtO78xa3VuCXZBCBjDGZ9LJwwvbITjvhYu17iw
+        0aNdDmVg3ZmgiBkaIlWumvSDtFt4TAZFTKv2P/T09SwxT+Lv+QaTcvNVpEZQceRo
+        MYMRbrdNuVLsJAcymz7BZ298r4d01oDuXE+ZiWYtpi4T+tmD1O/sjEPis3tyPi9H
+        fv0Q1hng7PnvFHfY8D2totbCjbM5pORGeD6fbbtqdgaVkkrTSol1NPk1E1cLqHUx
+        vLljYw3IFn3D8+/4pZK2oKfFUrSQXUC0apjFqOMvoTq1XqYb6kel2rJ8WxOVqowr
+        EBF1mwp6q1E6GjBsFGVKg==
+X-ME-Sender: <xms:E6AnZWeFezbpC8EbeMKu6We-wLWHz5dj-zCiYZEMcwM0SAj6nLhFTQ>
+    <xme:E6AnZQNzXMF5CnQGaxI_t5bBR3odIyrECebbyVpfnJ2tzE6bdsNsOyZ1KzUNQdI7q
+    hg1b1dFHk-c0zMg>
+X-ME-Received: <xmr:E6AnZXgC1vvQGSZ1T8EM16YMmIHjGKQYKpnWfpOjYt8XLSCBTu1s5hQoMTyxtliFv1d_>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrheelgdduudeiucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepkfffgggfuffvfhfhjggtgfesthejredttdefjeenucfhrhhomhepuegvnhhs
+    ohhnucfouhhithgvuceosggvnhhsohhnpghmuhhithgvsegvmhgrihhlphhluhhsrdhorh
+    hgqeenucggtffrrghtthgvrhhnpeetveettdegfedvgfevtdetvdefgfejudfhvedufeek
+    vedtvedvgeekueetfeelteenucffohhmrghinheptghurhhlrdhsvgenucevlhhushhtvg
+    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegsvghnshhonhgpmhhuihht
+    vgesvghmrghilhhplhhushdrohhrgh
+X-ME-Proxy: <xmx:E6AnZT9J2hsikhYyXyg39L1EsQEC1amn03NHPmPgMO0w0jCJXGbCiA>
+    <xmx:E6AnZSuOF17P8fcFjpD_5a-15pfYGg3pck9_UCoJ0PQ2Jl2wTNZUsg>
+    <xmx:E6AnZaHGTBRXHKpMS9RisP-tjJftNA_-JPfq1Y3GmbF4kl2dpb4F9g>
+    <xmx:E6AnZY32w221aJeQtDMlaobLKq8wj984SkeRsmETEoU6V39Aw_YrOg>
+Feedback-ID: ic1e8415a:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 12 Oct 2023 03:28:17 -0400 (EDT)
+Message-ID: <4c5fef38-a671-dd6b-4b10-a531e1ae254a@emailplus.org>
+Date:   Thu, 12 Oct 2023 10:28:12 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [Outreachy]Introduction and Problem while installing Git
+To:     Dorcas Litunya <anonolitunya@gmail.com>, git@vger.kernel.org
+References: <ZSeYzdx07Cj67lR4@dorcaslitunya-virtual-machine>
+Content-Language: en-US
+From:   Benson Muite <benson_muite@emailplus.org>
+In-Reply-To: <ZSeYzdx07Cj67lR4@dorcaslitunya-virtual-machine>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello everyone,
-My name is Dorcas Litunya. I am excited to contribute to the git
-community, I am a first time contributor through the Outreachy program.
-I am excited to learn and grow through this project. I am currently
-installing Git and I have been faced with this error once I run the make
-command:
-In file included from http.c:2:
-git-curl-compat.h:3:10: fatal error: curl/curl.h: No such file or directory
-    3 | #include <curl/curl.h>
-      |          ^~~~~~~~~~~~~
-compilation terminated.
-make: *** [Makefile:2718: http.o] Error 1
-
-Any assistance on what the possible problem could be will be highly
-appreciated.
-
-Kind regards,
-Dorcas
+On 10/12/23 09:57, Dorcas Litunya wrote:
+> Hello everyone,
+> My name is Dorcas Litunya. I am excited to contribute to the git
+> community, I am a first time contributor through the Outreachy program.
+> I am excited to learn and grow through this project. I am currently
+> installing Git and I have been faced with this error once I run the make
+> command:
+> In file included from http.c:2:
+> git-curl-compat.h:3:10: fatal error: curl/curl.h: No such file or directory
+>     3 | #include <curl/curl.h>
+>       |          ^~~~~~~~~~~~~
+You will need to have curl libraries and development headers.
+https://curl.se/libcurl/
+You maybe able to get these from a package manager, for example on Ubuntu
+sudo apt-get install curl-dev
+Fedora
+sudo dnf install libcurl-devel
