@@ -2,87 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86D80CDB46E
-	for <git@archiver.kernel.org>; Thu, 12 Oct 2023 12:01:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3B6ECDB46E
+	for <git@archiver.kernel.org>; Thu, 12 Oct 2023 12:38:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378413AbjJLMBK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Oct 2023 08:01:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55674 "EHLO
+        id S1343875AbjJLMim (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Oct 2023 08:38:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235758AbjJLMAy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Oct 2023 08:00:54 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68902189
-        for <git@vger.kernel.org>; Thu, 12 Oct 2023 05:00:39 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id 4fb4d7f45d1cf-53e16f076b3so818310a12.0
-        for <git@vger.kernel.org>; Thu, 12 Oct 2023 05:00:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697112037; x=1697716837; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=8PjuD/xY8VzOHHLn0pCzzg4elk67gjn3mb/bJ2QEYUE=;
-        b=Xp7Yev3oGh/Sdvz1zdETcK4o9eh8sOlBifuv0kvUd77lu31Q9zw47dTgx4WNogWPy6
-         GZxKfa3KuB3btb7W0hw7uxcF+2p/eAR6oxD7dtwr5b1j+L3YHyEc1d1JPPSjQoBD7Ok0
-         6EO0/N6zWu93RXDuOUqpHSGQV0521kxJKSOsr4sJnwVHKkZjaZeVrhpZB3xmi1cLbcr7
-         QK1llfarQS8zroGDBx4XJn7/8yzfWxOCouN6zZydaMqAkbe/D4QC79+s3px2DHljmyKx
-         ZgDhwGtTpud2gJR73c+vAXpQdEjADWQpBsqqCSsL5smu3SQONDx/EztkgLq5I8ybvJ4X
-         JMWQ==
+        with ESMTP id S233496AbjJLMik (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Oct 2023 08:38:40 -0400
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF7E8B8
+        for <git@vger.kernel.org>; Thu, 12 Oct 2023 05:38:38 -0700 (PDT)
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-99c3c8adb27so144860866b.1
+        for <git@vger.kernel.org>; Thu, 12 Oct 2023 05:38:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697112037; x=1697716837;
+        d=1e100.net; s=20230601; t=1697114317; x=1697719117;
         h=to:subject:message-id:date:from:mime-version:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=8PjuD/xY8VzOHHLn0pCzzg4elk67gjn3mb/bJ2QEYUE=;
-        b=LbEB1EiohQ52Pe2EFp9NAkAhNYcv6rDDQOO3jndr93SM+nArBJ4UgiUSuCyd/chOGJ
-         ff5kfmEvlBC3Zjc6mf+UAL+ANjfjI2A5Xes++L3vf3wOA3c9JpyOiKvJAt6SIeHS6VII
-         bLgnvXIDEyD3YZFHn00lHXGdUzilo53cTcQs7zDb2+F1LIPaMf3jS5cbAjh7A7tRCU65
-         fijPQpagE7UMhuPpkUWyr1mI/xKCS26WUZwKfuqAsXGYUsFExvwqALMQtFNRq5nFbP7w
-         ozIRUDiPa1MJGYX8brQzySXoXBAOBCmVth2NEfIJddTUheUQN8ii6Mjl2AH3zPA6VlQX
-         UsXg==
-X-Gm-Message-State: AOJu0YytXoG7Y7skj5+76xFCuZ1osxXVnwJWXaRwvH+RcztVIzDN11hm
-        Iw9bmU7FHQIzv8mrc+npez5Pgr4MwgDH7esWILtHME8HtQydziiT
-X-Google-Smtp-Source: AGHT+IGn6dLl8iIOqaVRGr7AABUmbJQUI1vgdQV8djn3UE9J27NLztJGUR30kXtePaCANEZN8rsLBKLau7eb42kibgk=
-X-Received: by 2002:a05:6402:2744:b0:536:c20:12d7 with SMTP id
- z4-20020a056402274400b005360c2012d7mr19090686edd.7.1697112037006; Thu, 12 Oct
- 2023 05:00:37 -0700 (PDT)
+        bh=R8e8+RYCDE4nOGPRhOJh2lHdSTDX3dr1t93PxjN1T1Q=;
+        b=n39VWlxih1KmhxMfstGelziVJIqof1JniR4PLFZiwgoiOqcmNn4JjfV58XxtKIQyqb
+         rirD8xZZbsRjMTrNk1Md+f6VCkVagT8p4WWWeRkUtRFk6Owr3iR5QJnL8BRAZ4oBfFMO
+         2Dz5kBcjmou1cYpun0tQ0p0x6DdMGaAl+Odh385f4nkrHAwOTKUd/qh7iRjlXlO2ZUN7
+         uQBeZqu/3477x7zxUjv9FS1vuma6KS65TD98D7j9lKdVuWgmDZjj3r5orp2XUngoEJ9m
+         J+WBpqZOjF1IVHTxJJop2JB6al52T3zfp5WnyHBmITfCbKsMNSvw22/3bG2u5eOQLvsb
+         dzzQ==
+X-Gm-Message-State: AOJu0YwylLfuWSzc9JuiZiyt/b2VMPgGKy0rJodc0tBuODkSkePpaYPz
+        S+EL7+dGTWVkSAA1NzfXA+BRmL7gJKYHCRnI5u6N37N1K8Q=
+X-Google-Smtp-Source: AGHT+IFCE6UKSh+VHBBOx5HfKxZOkGbHj5UVwV6nubXy15Utx8DVPuHEzMwNEbWYK8yamV5XsJVkfTiedXfNfxiRJQQ=
+X-Received: by 2002:a17:906:220f:b0:9ba:fb9:d334 with SMTP id
+ s15-20020a170906220f00b009ba0fb9d334mr13484093ejs.13.1697114316805; Thu, 12
+ Oct 2023 05:38:36 -0700 (PDT)
 MIME-Version: 1.0
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Thu, 12 Oct 2023 20:00:25 +0800
-Message-ID: <CAOLTT8RzcENBx9NKffHReVKJAho89TCO7W2SPBX8sb2tEU84Gw@mail.gmail.com>
-Subject: How to combine multiple commit diffs?
-To:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+From:   Erik Cervin Edin <erik@cervined.in>
+Date:   Thu, 12 Oct 2023 14:38:00 +0200
+Message-ID: <CA+JQ7M_htKUv5=GRQEUqWmJrQmFQNfZkPjr8n12CU6x0Khr4dw@mail.gmail.com>
+Subject: Bug: Git grep -f reads the filename relative to the repository root
+To:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-Our company wants to design a "small-batch" code review feature.
-Simply put, this "small-batch" means being able to treat multiple
-related commits within a MergeRequest as an independent "small" code
-review.
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-Let me give you an example: We have five commits: A1, B, A2, C, A3.
-Among them, A1, A2, and A3 are multiple commits for the same feature.
-So when the user selects these commits, the page will return a
-"combine diff" that combines them together.
+In the Git repository, I ran
 
-A1       B A2 A3 C
-*--------*----*-----*-------* (branch)
- \ A1'        \ A2'  \ A3'
-  *------------*------*------- (small branch code review)
+    echo tig > pattern-file &&
+        echo git > xdiff/pattern-file &&
+        cd xdfiff &&
+        git grep -f pattern-file
 
-This may seem similar to cherry-picking a few commits from a pile of
-commits, but in fact, we do not expect to actually perform
-cherry-picking.
+What did you expect to happen? (Expected behavior)
 
-Do you have any suggestions on how we can merge a few commits together
-and display the diff? The only reference we have is the non-open
-source platform, JetBrains Space CodeReview, they support selecting
-multiple commits for CodeReview. [1], .
+Git grep -f to read the pattern-file, in the xdiff directory and
+search for lines matching `git` in the xdiff directory.
 
-[1]: https://www.jetbrains.com/help/space/review-code.html#code-review-example
+What happened instead? (Actual behavior)
 
-Thanks,
---
-ZheNing Hu
+Git grep -f reads the filename, relative to the Git root and searches
+for lines matching `tig` in the xdiff directory.
+
+What's different between what you expected and what actually happened?
+
+The file that Git grep uses for patterns is read relative to the root
+of the Git repository, and not the current directory.
+
+Anything else you want to add:
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.42.0
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 5.15.90.1-microsoft-standard-WSL2 #1 SMP Fri Jan 27
+02:56:13 UTC 2023 x86_64
+compiler info: gnuc: 11.4
+libc info: glibc: 2.35
+$SHELL (typically, interactive shell): /bin/bash
