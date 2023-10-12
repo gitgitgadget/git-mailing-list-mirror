@@ -2,98 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD7CCCDB46E
-	for <git@archiver.kernel.org>; Thu, 12 Oct 2023 07:28:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C40BCDB46E
+	for <git@archiver.kernel.org>; Thu, 12 Oct 2023 07:45:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347114AbjJLH20 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Oct 2023 03:28:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38502 "EHLO
+        id S1343700AbjJLHpe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Oct 2023 03:45:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234125AbjJLH2Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Oct 2023 03:28:25 -0400
+        with ESMTP id S1343632AbjJLHpd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Oct 2023 03:45:33 -0400
 Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BFAD90
-        for <git@vger.kernel.org>; Thu, 12 Oct 2023 00:28:22 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38CA290
+        for <git@vger.kernel.org>; Thu, 12 Oct 2023 00:45:31 -0700 (PDT)
 Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id 420F532009AA;
-        Thu, 12 Oct 2023 03:28:20 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Thu, 12 Oct 2023 03:28:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=emailplus.org;
-         h=cc:content-transfer-encoding:content-type:content-type:date
-        :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-        :references:reply-to:sender:subject:subject:to:to; s=fm2; t=
-        1697095699; x=1697182099; bh=ubaU9p1JOaN4PjVR99IPG+BRxIc1kIo0+M6
-        kIdubRQc=; b=Q8LOaCQsHFOJDldLSzZXEenssxocliiOCHpgFXPXqImVkARygz5
-        t7SCS1WAlrptR1v8EPfpc+ProyWjq8Mbzpjo61G3R1Brt8u/IpIvXl5o5vjzWYoF
-        mp43DgzUnBFKBnLI5ry9qNXzRhcnQVski2Do9uBUvxi+sTleqfDG0RP3ku212Rzr
-        vdHBunkV2hqNLUZe+9/X3apeBt/GvL3LtI16wQ6btYMf5yZYlT4ad/SjrqTn1ghS
-        Y7o1XEACIVXjNCfG6xm9RFpw3N3isdf6EdZbr/rsPfeH6hycuQu12GsG6QCqWlTV
-        6GaXWiz43ZWKu8qlqGEE4rcDa6OcnIOMfBA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:content-type
-        :content-type:date:date:feedback-id:feedback-id:from:from
+        by mailout.west.internal (Postfix) with ESMTP id 7E01032009F5;
+        Thu, 12 Oct 2023 03:45:30 -0400 (EDT)
+Received: from imap49 ([10.202.2.99])
+  by compute1.internal (MEProxy); Thu, 12 Oct 2023 03:45:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+         h=cc:cc:content-type:content-type:date:date:from:from
         :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1697095699; x=
-        1697182099; bh=ubaU9p1JOaN4PjVR99IPG+BRxIc1kIo0+M6kIdubRQc=; b=U
-        B7Rifoo7B5DRugoX0BweeAO7PfMtO78xa3VuCXZBCBjDGZ9LJwwvbITjvhYu17iw
-        0aNdDmVg3ZmgiBkaIlWumvSDtFt4TAZFTKv2P/T09SwxT+Lv+QaTcvNVpEZQceRo
-        MYMRbrdNuVLsJAcymz7BZ298r4d01oDuXE+ZiWYtpi4T+tmD1O/sjEPis3tyPi9H
-        fv0Q1hng7PnvFHfY8D2totbCjbM5pORGeD6fbbtqdgaVkkrTSol1NPk1E1cLqHUx
-        vLljYw3IFn3D8+/4pZK2oKfFUrSQXUC0apjFqOMvoTq1XqYb6kel2rJ8WxOVqowr
-        EBF1mwp6q1E6GjBsFGVKg==
-X-ME-Sender: <xms:E6AnZWeFezbpC8EbeMKu6We-wLWHz5dj-zCiYZEMcwM0SAj6nLhFTQ>
-    <xme:E6AnZQNzXMF5CnQGaxI_t5bBR3odIyrECebbyVpfnJ2tzE6bdsNsOyZ1KzUNQdI7q
-    hg1b1dFHk-c0zMg>
-X-ME-Received: <xmr:E6AnZXgC1vvQGSZ1T8EM16YMmIHjGKQYKpnWfpOjYt8XLSCBTu1s5hQoMTyxtliFv1d_>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrheelgdduudeiucetufdoteggodetrfdotf
+        :reply-to:sender:subject:subject:to:to; s=fm1; t=1697096730; x=
+        1697183130; bh=Nw1hJaxXSd0CNc0fJs5iz9lQYSMW/gVlL/ll7ssj3d0=; b=O
+        a6CB2ylCCvuwYLzN5lGcRW8ucvcsM/t2PUkJve0MchWjL1JQJ04zYJ/l+ZBVHalX
+        up5h8J1HOT830ztGQEuMqQINLN2iPhu+TfeP55AlaD2ong9LN+Sk2z/RjpW5p9sm
+        nPlIjE9UZb3qg2ep2LUeMphlYCz2ckCti+IBox1XswGiLa5G6PCYp3JiAePAlZvc
+        IwI14Y0SRDuJDAuWGypclnKuBxfL4yyVrM37/WXTmQmzBbN9P2f8gw3vK4StxJZS
+        SsX+Y/JmFDECx7RmvQp9RLKbtUMd2f0y3Kj5/sdyFsvEWwYXt2wgrpZTrj8zlMqN
+        IfTzF/09LHRMHnG9kWX6A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:content-type:date:date
+        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm2; t=1697096730; x=1697183130; bh=Nw1hJaxXSd0CN
+        c0fJs5iz9lQYSMW/gVlL/ll7ssj3d0=; b=jkX3yOKP1f+WhnTMbESpKtZVNC97k
+        /sGQNs0SpghiHjuS+DDvdaFCVBs2KndqcdNKr6LU58l+gqjuVcCgIQ6FFXdQi2Lr
+        5Pjww9LSraZC5I2fC849OImsfdeHWBZWuth9yamocMKh6gkl/qXQAmH5iKfuwRL7
+        FEIlwBoxSPOrmpzwyZbULGPZEc6C5CqJVeum3ZaR66gfT4WSdlBb0jZGIX8EHwpY
+        fpTbq7gt09nW1EDD+JMxwR7y5KlDGfHTSBSZSXm5f9/cEhWyhmgYzYxUw4QLioSj
+        9EmRHNp0IMmEDnJv1MSJMAdpB8BZiBBRXkKymjWC6Izk41bexrcSqA6Xw==
+X-ME-Sender: <xms:GaQnZQn8x0dPLWjHU_JmTIzDFbBeZSf9Jg-WFmRijLbf29il_UuChwM>
+    <xme:GaQnZf2B2KqYIFHViD4W1pUYA6y0OFTroAAzZ2mOxQ6MB4ZJGitnfpTTei_EptRD9
+    DXOxfXxilfshkHoWw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrheelgdduvddtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepkfffgggfuffvfhfhjggtgfesthejredttdefjeenucfhrhhomhepuegvnhhs
-    ohhnucfouhhithgvuceosggvnhhsohhnpghmuhhithgvsegvmhgrihhlphhluhhsrdhorh
-    hgqeenucggtffrrghtthgvrhhnpeetveettdegfedvgfevtdetvdefgfejudfhvedufeek
-    vedtvedvgeekueetfeelteenucffohhmrghinheptghurhhlrdhsvgenucevlhhushhtvg
-    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegsvghnshhonhgpmhhuihht
-    vgesvghmrghilhhplhhushdrohhrgh
-X-ME-Proxy: <xmx:E6AnZT9J2hsikhYyXyg39L1EsQEC1amn03NHPmPgMO0w0jCJXGbCiA>
-    <xmx:E6AnZSuOF17P8fcFjpD_5a-15pfYGg3pck9_UCoJ0PQ2Jl2wTNZUsg>
-    <xmx:E6AnZaHGTBRXHKpMS9RisP-tjJftNA_-JPfq1Y3GmbF4kl2dpb4F9g>
-    <xmx:E6AnZY32w221aJeQtDMlaobLKq8wj984SkeRsmETEoU6V39Aw_YrOg>
-Feedback-ID: ic1e8415a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Oct 2023 03:28:17 -0400 (EDT)
-Message-ID: <4c5fef38-a671-dd6b-4b10-a531e1ae254a@emailplus.org>
-Date:   Thu, 12 Oct 2023 10:28:12 +0300
+    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedfmfhr
+    ihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssggrkh
+    hkrdhnrghmvgeqnecuggftrfgrthhtvghrnheptdektdejieffleetffehieehueffgfeh
+    leeufedtjeekueffgfeihfegkeffffeunecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
+X-ME-Proxy: <xmx:GaQnZer-lHWn901B7aNDcyabfHjF0wtdv95IghB3o72JkOcbJCNFSw>
+    <xmx:GaQnZckxEh72ujU0NNm1ljd5i1UrwRDRcsTBowMPDIMhvsrZ1oBjsw>
+    <xmx:GaQnZe2MCZbbdEgQWW1it7DwmiohkBvQc6vMbpn73zGp5LunkG2S0A>
+    <xmx:GqQnZT9Ppwj_StbLGfJTGaAyYpx-3oQDTkzu-Cq-K0SUdO1GDnpqlA>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id B7A4715A0091; Thu, 12 Oct 2023 03:45:29 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-1019-ged83ad8595-fm-20231002.001-ged83ad85
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [Outreachy]Introduction and Problem while installing Git
-To:     Dorcas Litunya <anonolitunya@gmail.com>, git@vger.kernel.org
+Message-Id: <724ff75e-1557-4d87-85a6-a3a58d41af1f@app.fastmail.com>
+In-Reply-To: <4c5fef38-a671-dd6b-4b10-a531e1ae254a@emailplus.org>
 References: <ZSeYzdx07Cj67lR4@dorcaslitunya-virtual-machine>
-Content-Language: en-US
-From:   Benson Muite <benson_muite@emailplus.org>
-In-Reply-To: <ZSeYzdx07Cj67lR4@dorcaslitunya-virtual-machine>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+ <4c5fef38-a671-dd6b-4b10-a531e1ae254a@emailplus.org>
+Date:   Thu, 12 Oct 2023 09:43:55 +0200
+From:   "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To:     "Benson Muite" <benson_muite@emailplus.org>
+Cc:     "Dorcas Litunya" <anonolitunya@gmail.com>, git@vger.kernel.org
+Subject: Re: [Outreachy]Introduction and Problem while installing Git
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/12/23 09:57, Dorcas Litunya wrote:
-> Hello everyone,
-> My name is Dorcas Litunya. I am excited to contribute to the git
-> community, I am a first time contributor through the Outreachy program.
-> I am excited to learn and grow through this project. I am currently
-> installing Git and I have been faced with this error once I run the make
-> command:
-> In file included from http.c:2:
-> git-curl-compat.h:3:10: fatal error: curl/curl.h: No such file or directory
->     3 | #include <curl/curl.h>
->       |          ^~~~~~~~~~~~~
-You will need to have curl libraries and development headers.
-https://curl.se/libcurl/
-You maybe able to get these from a package manager, for example on Ubuntu
-sudo apt-get install curl-dev
-Fedora
-sudo dnf install libcurl-devel
+On Thu, Oct 12, 2023, at 09:28, Benson Muite wrote:
+> You maybe able to get these from a package manager, for example on Ubuntu
+> sudo apt-get install curl-dev
+
+This didn't work for me on Ubuntu 22.04. I tried the OpenSSL variant which
+worked.
+
+    sudo apt-get install libcurl4-openssl-dev
+
+Now I can drop `NO_CURL=true`.
+
+Thanks :)
+
+-- 
+Kristoffer Haugsbakk
