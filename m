@@ -1,96 +1,71 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC4823B7BB
-	for <git@vger.kernel.org>; Thu, 12 Oct 2023 20:46:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655403D3AC
+	for <git@vger.kernel.org>; Thu, 12 Oct 2023 20:46:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="dl5tFIVb"
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94B6CA9
-	for <git@vger.kernel.org>; Thu, 12 Oct 2023 13:46:26 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-536ef8a7dcdso4195a12.0
-        for <git@vger.kernel.org>; Thu, 12 Oct 2023 13:46:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1697143585; x=1697748385; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zLYuX+CID4UyHzjwHh34GB13OQDZ5eKzjp3x9r7PTSY=;
-        b=dl5tFIVbv7tP2pQjN6+Nkd23u/eQoivos+r/D8dwRNZkLHSOwfYb61vxt6qK1Y2wtB
-         uSZfM/bdJemXDYCf+ZAzO2dN7ve0fZ4PdEnPzitjEAro/w+GbHqZNEx9MQBQwLicohLR
-         YTkFEn0diQesyqBPjntNWN1sBeXiRpzPYPjbVnsxKqEgFBqaDKeHuginYkycvTxArIFy
-         xBKmE2/WavgMZDjQcMpKgGEutg7eRH5UB8OvseL/ZGlPqinkomRq9zZ7KjZplzc0szIV
-         b515FzSCs1fL/go8Be/t29CNYJABYOBxiw04BtyvNpY+mxwS0iKCll81eYbpWCQXZEvo
-         cVOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697143585; x=1697748385;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zLYuX+CID4UyHzjwHh34GB13OQDZ5eKzjp3x9r7PTSY=;
-        b=PLVbCG64YdepftTMsuw7Z5DxjUUFJwAsjhY1BiEdNt/A87a+ZaUXSwD16ZMQWL8Lsl
-         HX/bjEsqJ4MGJO9+9IkYRX216bMkrJ9+l4pxRdP3gucsKoFJdchNBEL1wwqLW0rp4n5L
-         tzDWah1dMLfBe/awOlWOi7s4SF9YWEcN3b9dOiJaTrksmmG4zUaG8Dc7xGJaaDX6yp6c
-         DOJ3kOh39hyt7VvGWiHLzz+B7xgAIIL5ooNxNK73z47um/MxdpS7+X4My2TXjdX7aGeN
-         HQS0/gpmxow1HrxbD84HSGnf6GM6vp6fYahjawtCrdb9vUu0iTXRho558AOJweQw7F4K
-         EQYQ==
-X-Gm-Message-State: AOJu0YyOfMgOo9fdypiMC2U7meZK5nTcNVHOcROChLce3/2UF5iW6H7R
-	TKMymYh3P42dKH5KOASBSpjh0FF/J5eVRLJs/vRuzwzzo6ErJHntpm/bYw==
-X-Google-Smtp-Source: AGHT+IEN+eoYK5t9MgMoVtyaGhPUydNV8XRDyeJNob32E4yP/ja2R2s8nId73qmyeysHdemoVoRAZH5Kcbqco4j2hG4=
-X-Received: by 2002:a50:d602:0:b0:525:573c:643b with SMTP id
- x2-20020a50d602000000b00525573c643bmr1288edi.7.1697143584935; Thu, 12 Oct
- 2023 13:46:24 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HHfdzJaV"
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7AD7BE
+	for <git@vger.kernel.org>; Thu, 12 Oct 2023 13:46:40 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 36A061C066B;
+	Thu, 12 Oct 2023 16:46:40 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=Qw/pMxVnaYcDsZzl9kmBjLVgj6i6v0AFPcE+1i
+	w/6eE=; b=HHfdzJaVQWogQD3q1yD1NUaOU7m70Q68GcLn2MwShzW11R2wnG5Oum
+	H99oG1c57y1+oimmdYridrYPSbsMpuDJkPxEQt47erruiMFFHmz19ooLXp7uesEC
+	zxaUu0zofuf2PDiegWB4Px0pXbsJbOq3pmQGADqG+kU4eZlGdRrYg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2A0C31C0668;
+	Thu, 12 Oct 2023 16:46:40 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 580C21C0667;
+	Thu, 12 Oct 2023 16:46:39 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: git@vger.kernel.org
+Subject: Re: This list is being migrated to new infrastructure (no action
+ required)
+In-Reply-To: <20231012-magnifier-decipher-4493ec@meerkat> (Konstantin
+	Ryabitsev's message of "Thu, 12 Oct 2023 16:40:38 -0400")
+References: <20231012-party-legwarmer-551ab7@meerkat>
+	<20231012-magnifier-decipher-4493ec@meerkat>
+Date: Thu, 12 Oct 2023 13:46:38 -0700
+Message-ID: <xmqqcyxj6029.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231012185308.GB6241@kitsune.suse.cz>
-In-Reply-To: <20231012185308.GB6241@kitsune.suse.cz>
-From: Emily Shaffer <nasamuffin@google.com>
-Date: Thu, 12 Oct 2023 13:46:09 -0700
-Message-ID: <CAJoAoZ=MrjjfH6Noganejey0bAaB=d+jH_rXAqbscPG8E0m3Pw@mail.gmail.com>
-Subject: Re: -q option for git to suppress informational messages?
-To: =?UTF-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-17.1 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-	RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL,
-	USER_IN_DEF_SPF_WL autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 713E8B3A-6940-11EE-8F3B-25B3960A682E-77302942!pb-smtp2.pobox.com
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 	lindbergh.monkeyblade.net
 
-On Thu, Oct 12, 2023 at 11:53=E2=80=AFAM Michal Such=C3=A1nek <msuchanek@su=
-se.de> wrote:
->
-> Hello,
->
-> when using git in scripts I find that many git commands insist on
-> printing informational messages, and the only way to avoid this is to
-> sent the output to /dev/null.
+Konstantin Ryabitsev <konstantin@linuxfoundation.org> writes:
 
-Michal, you might want to investigate further whether there is a
-plumbing-specific command that meets the needs you're concerned about
-instead. Those commands will not have additional human-facing output,
-and have a stronger guarantee around backwards-compatibility than the
-human-facing commands do.
+> On Thu, Oct 12, 2023 at 04:30:54PM -0400, Konstantin Ryabitsev wrote:
+>> This list is being migrated to the new vger infrastructure. This should be a
+>> fully transparent process and you don't need to change anything about how you
+>> participate with the list or how you receive mail.
+>> 
+>> There will be a brief delay with archives on lore.kernel.org. I will follow up
+>> once the archive migration has been completed.
+>
+> This work is completed now. If you think something isn't working right, please
+> report it to helpdesk@kernel.org.
 
-Commands which count as "plumbing" can be located in `git help git` in
-the full list of subcommands; if you're not sure what alternative to
-use, I think you can feel free to describe what you're trying to do
-here and get advice on which plumbing commands to use instead of
-porcelain ones.
-
->
-> While some select commands support the -q option to suppres
-> informational messages many don't.
->
-> Since there was recenly some discussion of problems that newcomers could
-> work on I suppose this could be added to the list if not there already.
->
-> Thanks
->
-> Michal
+Thanks!
