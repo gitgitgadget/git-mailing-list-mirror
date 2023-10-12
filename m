@@ -1,126 +1,168 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1395234CE2
-	for <git@vger.kernel.org>; Thu, 12 Oct 2023 21:15:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="agcDkc6b"
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BECFA9D
-	for <git@vger.kernel.org>; Thu, 12 Oct 2023 14:15:09 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 010673E46D
+	for <git@vger.kernel.org>; Thu, 12 Oct 2023 21:49:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+Received: from snail.cherry.relay.mailchannels.net (snail.cherry.relay.mailchannels.net [23.83.223.170])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 385BDC0
+	for <git@vger.kernel.org>; Thu, 12 Oct 2023 14:49:12 -0700 (PDT)
+X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id 0BE0790137E;
+	Thu, 12 Oct 2023 21:49:11 +0000 (UTC)
+Received: from cpanel-007-fra.hostingww.com (unknown [127.0.0.6])
+	(Authenticated sender: instrampxe0y3a)
+	by relay.mailchannels.net (Postfix) with ESMTPA id 2C746902545;
+	Thu, 12 Oct 2023 21:49:10 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1697147350; a=rsa-sha256;
+	cv=none;
+	b=8anJ1xVMle85hBgTgrFTlkGzXwyTqfKwF/obAYJGwhEETa//jAvd77Cn8O/0cjUr68J9f2
+	WkEHmPQGp39v7KyV/XiAeZYeMbgDLrc/NrQIEW4VCbDN3yBk7pl3rN5vWfhg7/VQCOp2VS
+	2WfM39D3iS2oNkBGsORsqDcuv7R6QKbZdl5hjAL0j5rbwUhHa7xU2tngO/hL27MiJzCTK1
+	6nZ6O8iBnZvNHPqDmiiB/lTqyraJVm/vMW+7R/zDFjcLHXwvZK68PhXjJIhEK8bwpFnxDQ
+	CB5ocdgnmMJNOF1X1l0qy0dYJJ1dmt3jx85z2RUKdZn6W94O57NNsR+F8TOqUw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1697147350;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=F9DqQnz0ouX1V4GCgFIuwRichjsDp2l13XUD/yfh+kU=;
+	b=P6HM2MtgS57jHcbZiNQnGulkCP4nSq6f8CnebTYKXBGY7o0bji9cEPYL8Uf/68Cnqn0nIk
+	beyeHoN32cvJ7mpoeOkqUcGeM8BHquaQNk5KtaMnqfbyEcphjzs60kWXJ+M9Yf8SPfUAg5
+	mvB4ZDWQpyS8V/KufZhFTlOHmp7KrDrzDqr2jXGpe02l3+v0K5+FzV0zup5MEdNBPcrV7P
+	eAxmcdmAd6T+tHKcogS3r5oM1ew1BCkSXsUsBzmdozZbb0huitJgEnPsXmA6nZXx68fd8M
+	htVl5PUE4OuiMXXewbqqZtW3MXJrfzwWgQBT4Fj56prkNmie19Kp9PKNWtN8MQ==
+ARC-Authentication-Results: i=1;
+	rspamd-554cd65b86-7d2zq;
+	auth=pass smtp.auth=instrampxe0y3a smtp.mailfrom=calestyo@scientia.org
+X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
+X-MC-Relay: Neutral
+X-MC-Copy: stored-urls
+X-MailChannels-SenderId: instrampxe0y3a|x-authuser|calestyo@scientia.org
+X-MailChannels-Auth-Id: instrampxe0y3a
+X-Relation-Well-Made: 391b6670791bf3e7_1697147350808_3575386518
+X-MC-Loop-Signature: 1697147350808:1239264491
+X-MC-Ingress-Time: 1697147350808
+Received: from cpanel-007-fra.hostingww.com (cpanel-007-fra.hostingww.com
+ [3.69.87.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384)
+	by 100.117.92.208 (trex/6.9.1);
+	Thu, 12 Oct 2023 21:49:10 +0000
+Received: from p5090f4db.dip0.t-ipconnect.de ([80.144.244.219]:48748 helo=heisenberg.fritz.box)
+	by cpanel-007-fra.hostingww.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <calestyo@scientia.org>)
+	id 1qr3YH-0003RP-0m;
+	Thu, 12 Oct 2023 21:49:08 +0000
+Message-ID: <c6cd3133573d5ade6d02b5da1051853a4b3885e1.camel@scientia.org>
+Subject: Re: why does git set X in LESS env var?
+From: Christoph Anton Mitterer <calestyo@scientia.org>
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: git@vger.kernel.org
+Date: Thu, 12 Oct 2023 23:48:57 +0200
+In-Reply-To: <31b6f4a2b88cc3a2cfa908f82f4f2302@manjaro.org>
+References: <3a2c362c019338ca7408b7a3bc5715b535d15b8a.camel@scientia.org>
+	 <xmqqa5sokdd3.fsf@gitster.g>
+	 <0c10c4b95f2a947a5d569a2c3d51fcb02b35e81d.camel@scientia.org>
+	 <eadc03fc56d530ea31790f8a4b47a16e@manjaro.org>
+	 <ec43820562198de078db7df54d0338edf1f333ea.camel@scientia.org>
+	 <6457310b8ca0e7d3b288a3bbbe264012@manjaro.org>
+	 <fbb3c2bf1c832f0f16cb913da6b862dd313359ef.camel@scientia.org>
+	 <ace230a469fabbbbceb38cc884a40b4c@manjaro.org>
+	 <8f3bec2752f4c2d3ebdd29d20910a4a94f75f608.camel@scientia.org>
+	 <23cc509bfb433e19c7683c97314e4ac8@manjaro.org>
+	 <2f3ef5568ed19ac5bdcd23f84ddfb13dc6901043.camel@scientia.org>
+	 <161b9584c6c9a004c01bda98cea4f1f8@manjaro.org>
+	 <e1e187ca3d970c18e1a11d51ff93b6cb212bcbaa.camel@scientia.org>
+	 <31b6f4a2b88cc3a2cfa908f82f4f2302@manjaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.50.0-1 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1697145307;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=oJBwqkcEkURGTyms5VIABY6Sh6GCyin2H8r4DeY2Hi0=;
-	b=agcDkc6bVsvvqFLp9WLYMUbPIiEEVHtIdMo5rfzkXpVk82ZdiXTRl+V5DzlQpX0OTS0IO7
-	Jthy7AWk/2rYpBv0/jQewBeYcblkLiXwcmPEAje/otVx4Z0gg/2WiH/yaLYEg8B3tnKLBG
-	8c48YJTihpjvsyY8NeiTGwkCu6iwaBpxsCfk1LTB93Pc4RB0XnTt5gEXHQg5k7Gf1iJ+Gf
-	9n6Warsprgh+SkxajJTCmgR7WkCnj8Fz6IH3YxRjFZ9z3WXsLcV4NVT5wM8Dd3pOc2LO98
-	GjFa5I98THwUCz1oYrMI8JQ0lWKPQE6MJ4TJoqS/WfxnO+w4NZs0ldn3lqhMYg==
-Date: Thu, 12 Oct 2023 23:15:07 +0200
-From: Dragan Simic <dsimic@manjaro.org>
-To: Christoph Anton Mitterer <calestyo@scientia.org>
-Cc: git@vger.kernel.org
-Subject: Re: why does git set X in LESS env var?
-In-Reply-To: <e1e187ca3d970c18e1a11d51ff93b6cb212bcbaa.camel@scientia.org>
-References: <3a2c362c019338ca7408b7a3bc5715b535d15b8a.camel@scientia.org>
- <xmqqa5sokdd3.fsf@gitster.g>
- <0c10c4b95f2a947a5d569a2c3d51fcb02b35e81d.camel@scientia.org>
- <eadc03fc56d530ea31790f8a4b47a16e@manjaro.org>
- <ec43820562198de078db7df54d0338edf1f333ea.camel@scientia.org>
- <6457310b8ca0e7d3b288a3bbbe264012@manjaro.org>
- <fbb3c2bf1c832f0f16cb913da6b862dd313359ef.camel@scientia.org>
- <ace230a469fabbbbceb38cc884a40b4c@manjaro.org>
- <8f3bec2752f4c2d3ebdd29d20910a4a94f75f608.camel@scientia.org>
- <23cc509bfb433e19c7683c97314e4ac8@manjaro.org>
- <2f3ef5568ed19ac5bdcd23f84ddfb13dc6901043.camel@scientia.org>
- <161b9584c6c9a004c01bda98cea4f1f8@manjaro.org>
- <e1e187ca3d970c18e1a11d51ff93b6cb212bcbaa.camel@scientia.org>
-Message-ID: <31b6f4a2b88cc3a2cfa908f82f4f2302@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+X-AuthUser: calestyo@scientia.org
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+	RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS
 	autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 	lindbergh.monkeyblade.net
 
-On 2023-10-12 22:23, Christoph Anton Mitterer wrote:
-> On Thu, 2023-10-12 at 07:46 +0200, Dragan Simic wrote:
->> Let me repeat that the messed up output you're experiencing isn't 
->> normal
->> and has nothing to do with the arguments passed to less(1).  That's a
->> separate issue of the terminal emulator(s) you're using, or in issue 
->> of
->> your specific environment, and should be debugged and addressed as a
->> separate issue.
-> 
-> As I've told you before it happens at least in gnome-terminal (and thus
-> presumably and VTE based terminal), xterm, xfce4-terminal and konsole
-> (all current versions of Debian unstable)... with less as of Debian
-> unstable as well as 643.
-> 
-> That affects at least on major distro, and there's a good chance that
-> it affects any other distro based on Debian (*buntu, etc.).
-> 
-> I further tried on SLES 15 with both gnome-terminal 3.42.2 and xterm
-> 330 as well as less 530.
-> 
-> Even tried with the terminal emulator started via env -i and only TERM
-> set manually.
-> 
-> *All* cases affected by the same problem I've described before.
-> 
-> Same with the command you've used in your follow-up post, here a video
-> of it in HD:
-> https://youtu.be/MsxtQgrKM50
+On Thu, 2023-10-12 at 23:15 +0200, Dragan Simic wrote:
+>=20
+> Ah, I can finally see what are you talking about...=C2=A0 Thank you very
+> much=20
+> for all the testing you've performed and for supplying this screen=20
+> recording!=C2=A0 I can confirm that my environment is also affected, but
+> for=20
+> some reason I haven't observed it this way before.
 
-Ah, I can finally see what are you talking about...  Thank you very much 
-for all the testing you've performed and for supplying this screen 
-recording!  I can confirm that my environment is also affected, but for 
-some reason I haven't observed it this way before.
+Well... perhaps because it's not really "easy" to spot unless one
+carefully reads through the lines (which I guess, one does not that
+often in the terminal "history").
 
-Huh, that's really worrisome and I'm willing to help you with debugging 
-and fixing this issue.  Please, let me perform some debugging and 
-digging around, and I'll come back to you with some further insights,
+Have a look at my ticket at less, especially:
+https://github.com/gwsw/less/issues/445#issuecomment-1758887183
 
->> To me, having inconsistent displaying of the short and long outputs
->> is simply not acceptable.
-> 
-> Which is fine - and as I've said: I personally also tend to prefer it
-> like that - but even if the above would be just some bug (which however
-> seems to affect all systems I could test on a short notice, except
-> yours)... one can IMO still not generally say whether on or the other
-> behaviour is generally accepted to be the better one.
-> 
-> Even if output may be just chopped of and thus ambiguously incomplete,
-> some people may still prefer to have rather no output at all.
+Where it was confirmed that the issue I describe might happen (and I
+guess is non-fixable?
 
-Those people, just as anyone else, can use $PAGER or $GIT_PAGER to 
-configure the pagination the way they like it.  In the end, that's also 
-what I do in my environment.
+The whole issue also contains an explanation on why scrolling doesn't
+work when -X is used (but --mouse is not) on VTE terminals (and maybe
+others, though not xterm).
+And it's basically not "fixable" but simply "by design".
 
->> Perhaps something is wrong with your specific environment, because
->> I see no other reason for this issue.
-> 
-> Well may be, but seems unlikely from my PoV, given that I've now tested
-> even on other distros and systems not under my control.
-> 
-> Anyway... I think this got a bit too off-topic here :-D
 
-Well, yes and no.  This scrolling-related issue is obviously affecting 
-numerous git users, which makes it quite relevant for git as a project.  
-Of course, not directly relevant, but indirectly, yes.
+> Huh, that's really worrisome and I'm willing to help you with
+> debugging=20
+> and fixing this issue.=C2=A0 Please, let me perform some debugging and=
+=20
+> digging around, and I'll come back to you with some further insights,
+
+Well, my assumption (though I'm really not a terminal expert) would be
+that it's not fixable... because less would somehow make sure that
+everything it prints (in the alt screen buffer) is properly
+concatenated in the the regular one.
+
+
+less upstream made some suggestions:
+https://github.com/gwsw/less/issues/445#issuecomment-1759986293
+
+One would be to change the terminfo entry, which I guess is not really
+feasible as a general solution.
+
+The other would be less=E2=80=99 --redraw-on-quit option.
+
+
+Maybe that would be an even better solution for git?
+AFAICS, we could have -F, the VTE mouse scrolling out of the box, plus
+(via that option) the final screen buffer of less printed when exiting.
+
+Would give some context (what one did in the pager, where one was) on
+the regular screen buffer, but (presumably) avoid that mess up... and
+perhaps even prevent unneeded pages of output from the pager, if one
+scrolled down a lot, which maybe aren't even needed?
+
+
+(Also note, that less` upstream calls `-X` "a risky flag" ;-) )
+
+
+> Those people, just as anyone else, can use $PAGER or $GIT_PAGER to=20
+> configure the pagination the way they like it.=C2=A0 In the end, that's
+> also=20
+> what I do in my environment.
+
+Sure... all I said, that (IMO) in the case of `-X` it's not like with
+`-R` but rater like with `-S`... i.e. neither mode has more right to be
+the default than the other.
+
+
+
+Cheers,
+Chris.
