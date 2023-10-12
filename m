@@ -2,99 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0019CDB46E
-	for <git@archiver.kernel.org>; Thu, 12 Oct 2023 03:59:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03051CDB46E
+	for <git@archiver.kernel.org>; Thu, 12 Oct 2023 05:30:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377491AbjJLD7S convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Wed, 11 Oct 2023 23:59:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55580 "EHLO
+        id S1376867AbjJLFaw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Oct 2023 01:30:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235316AbjJLD6k (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Oct 2023 23:58:40 -0400
-X-Greylist: delayed 16709 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 11 Oct 2023 20:55:01 PDT
-Received: from snail.cherry.relay.mailchannels.net (snail.cherry.relay.mailchannels.net [23.83.223.170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 842C644B7
-        for <git@vger.kernel.org>; Wed, 11 Oct 2023 20:55:00 -0700 (PDT)
-X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-        by relay.mailchannels.net (Postfix) with ESMTP id 12EE854198F;
-        Thu, 12 Oct 2023 03:54:59 +0000 (UTC)
-Received: from cpanel-007-fra.hostingww.com (unknown [127.0.0.6])
-        (Authenticated sender: instrampxe0y3a)
-        by relay.mailchannels.net (Postfix) with ESMTPA id 11A555419CC;
-        Thu, 12 Oct 2023 03:54:57 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1697082898; a=rsa-sha256;
-        cv=none;
-        b=H/QWmssmBI90VbEKCU5hqKDfRUEmgTR/Wx274vc2bHiQ4urFNkJvxManE6xdixess7MdlX
-        KcCDXCEr1bozquZw3jdAUAm7UH9/DlH82296kiTMWCbKwpFLXl7q79L5d0v2s6qGR3znsP
-        Z5mvB85QEA/BNUz3ZUSMMUd8pOrx/zRZsGrMxKCMYjYhOEwYd+RKZdBGUUemeKqmnOvY7G
-        9dgnpq7oVr2XDX8q3XQVGlMPIZfwzkku4mB7qIUmEdVN9kY0+JxQ/yBQJBesjmK72Xv9Rd
-        Ogeo7xIqM58hkfhc8NA6gmT+LWZetjC3SrdowdIZ9Jen1euT+Sh3VcGs7phR3w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net;
-        s=arc-2022; t=1697082898;
+        with ESMTP id S233879AbjJLFav (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Oct 2023 01:30:51 -0400
+Received: from mail.manjaro.org (mail.manjaro.org [IPv6:2a01:4f8:c0c:51f3::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FAC590
+        for <git@vger.kernel.org>; Wed, 11 Oct 2023 22:30:50 -0700 (PDT)
+MIME-Version: 1.0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+        t=1697088648;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:content-type:content-type:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=cReTyK+LMYVu9PBfj7QmWESSXEixmJppstflFPDN+6s=;
-        b=f2lYgiubu8CdaK43SMSukeFLwz5ETkbO3RRiIDaopU8IbmriAbFEXjCJpOWVcjDJJPKOE/
-        M4UzSjM3hd+BxV9zkVhSJ3CkL2iu2iiZXMdRij0bKl77HjtAtwSszdzMTorTUClIz4eSs6
-        CJntMDPRFFD4UVYn10athOnZmol9b0ncQuup0RtcY2fIfSQPVXv6InXAzrbAzzSHNlIWyv
-        IvA1XwbLttn6tNo6dgd8gWY9o6Giy1HnkZLZtu7dn/T05Bee7V0TEf8ragevTrfoEhb+EI
-        tTBwKh49Yv++Pvq5EMCGOT12YM4lgBvUgx2sDymy0u1CYiYBMHJbGvyg6QhGXg==
-ARC-Authentication-Results: i=1;
-        rspamd-7c449d4847-scqwv;
-        auth=pass smtp.auth=instrampxe0y3a smtp.mailfrom=calestyo@scientia.org
-X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
-X-MC-Relay: Neutral
-X-MC-Copy: stored-urls
-X-MailChannels-SenderId: instrampxe0y3a|x-authuser|calestyo@scientia.org
-X-MailChannels-Auth-Id: instrampxe0y3a
-X-Callous-Cold: 4f2ad535102ef7a3_1697082898910_1609382689
-X-MC-Loop-Signature: 1697082898910:1332750759
-X-MC-Ingress-Time: 1697082898910
-Received: from cpanel-007-fra.hostingww.com (cpanel-007-fra.hostingww.com
- [3.69.87.180])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384)
-        by 100.102.135.46 (trex/6.9.1);
-        Thu, 12 Oct 2023 03:54:58 +0000
-Received: from p5090f4db.dip0.t-ipconnect.de ([80.144.244.219]:46408 helo=heisenberg.fritz.box)
-        by cpanel-007-fra.hostingww.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.96)
-        (envelope-from <calestyo@scientia.org>)
-        id 1qqmmj-00084l-2M;
-        Thu, 12 Oct 2023 03:54:56 +0000
-Message-ID: <07bf5744c7d123635740c62a940999e089339fa4.camel@scientia.org>
+        bh=nrx5tH1KlYUHJk8VHqfvldbSLh454DztyrQv3pVpa9A=;
+        b=LNpnYZmsdjW/SdA0AAm0WzfrhWacbgB6k1rgyXv4J4/rOkmu3SyI7NpO77/eD+okEp2Elb
+        fNlvfzhGWkhlpsJFCzFtDMSkT62qyMgfVg1i8q6E2j9AWn5uLLrECtVAx0mPAbTY76K7rM
+        WgG+TxNHSXyV7MaiAXAgOpU3xwCY4xId2loDmjWjG0hYg/uoU5IQNS04oPr42t5P6nb7IY
+        LJH2aWFryLWjuPx1Clc389gItGsh5oAJtpU//yCIT0vd9xHl0dHKXfIjvPc+7ANpJvvvBG
+        l2JhgcsrEdAklRuX5kvJetlgIzauyjuOGYBpwp+lk/wXBgI5O4Ndcg2HEH1Lwg==
+Date:   Thu, 12 Oct 2023 07:30:47 +0200
+From:   Dragan Simic <dsimic@manjaro.org>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>,
+        Christoph Anton Mitterer <calestyo@scientia.org>,
+        git@vger.kernel.org
 Subject: Re: why does git set X in LESS env var?
-From:   Christoph Anton Mitterer <calestyo@scientia.org>
-To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Date:   Thu, 12 Oct 2023 05:54:51 +0200
-In-Reply-To: <20231012000416.GA520855@coredump.intra.peff.net>
+In-Reply-To: <xmqqh6mwipqi.fsf@gitster.g>
 References: <3a2c362c019338ca7408b7a3bc5715b535d15b8a.camel@scientia.org>
-         <xmqqa5sokdd3.fsf@gitster.g>
-         <20231012000416.GA520855@coredump.intra.peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-User-Agent: Evolution 3.50.0-1 
-MIME-Version: 1.0
-X-AuthUser: calestyo@scientia.org
+ <xmqqa5sokdd3.fsf@gitster.g>
+ <20231012000416.GA520855@coredump.intra.peff.net>
+ <xmqqh6mwipqi.fsf@gitster.g>
+Message-ID: <3946c06e90604a92ad0dddf787729668@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+        auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey.
+On 2023-10-12 03:39, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+>> ... Digging into the history and
+>> the changelog, this note is in "changes between less versions 487 and
+>> 530":
+>> 
+>>   Don't output terminal init sequence if using -F and file fits on one
+>>   screen.
+> 
+> ;-)
+> 
+> That is really a good one to dig out.  So in short, X was needed
+> because we wanted to use F, and we could drop it if everybody is
+> using recent versions of less, but the default to use FX at the same
+> time gives us the same behaviour between both newer and older
+> versions of less.
 
-Just noted that the popular bat utility apparently also uses -X to make
--F work (but also mention that this break scrolling).
+Please note that dropping "-X" and leaving "-F" would actually introduce 
+the inconsistency that I already mentioned.  To reiterate, short outputs 
+would then remain displayed on screen, while long outputs would 
+disappear after exiting less(1).  I don't think that's the desired 
+behavior.
 
-But it seem they have a check, an if less is version 530 or newer they
-don't set -X.
-
-https://github.com/sharkdp/bat#using-a-different-pager
-
-Could be a way to go for git.
-
-Cheers,
-Chris.
+>> ... And as you say, if there are people who really
+>> care about their LESS options, it is easy for them to override it.
+> 
+> Yup.  I really like the discovery of that changelog entry.
+> 
+> Thanks.
