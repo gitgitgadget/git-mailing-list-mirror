@@ -2,86 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FE68CDB46E
-	for <git@archiver.kernel.org>; Thu, 12 Oct 2023 17:21:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89EF1CDB47E
+	for <git@archiver.kernel.org>; Thu, 12 Oct 2023 17:30:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347340AbjJLRVc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Oct 2023 13:21:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60626 "EHLO
+        id S1344120AbjJLRal (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Oct 2023 13:30:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379590AbjJLRV1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Oct 2023 13:21:27 -0400
-X-Greylist: delayed 2391 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 12 Oct 2023 10:21:25 PDT
-Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B9E8B8
-        for <git@vger.kernel.org>; Thu, 12 Oct 2023 10:21:24 -0700 (PDT)
-Received: from bsmtp3.bon.at (unknown [192.168.181.108])
-        by bsmtp5.bon.at (Postfix) with ESMTPS id 4S5wQ274Lsz5tvj
-        for <git@vger.kernel.org>; Thu, 12 Oct 2023 18:41:30 +0200 (CEST)
-Received: from [192.168.0.106] (unknown [93.83.142.38])
-        by bsmtp3.bon.at (Postfix) with ESMTPSA id 4S5wPy1tZhz5tlC;
-        Thu, 12 Oct 2023 18:41:26 +0200 (CEST)
-Message-ID: <22688989-1b51-4989-b92d-5a5891ec9265@kdbg.org>
-Date:   Thu, 12 Oct 2023 18:41:25 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: How to combine multiple commit diffs?
-To:     ZheNing Hu <adlternative@gmail.com>
-References: <CAOLTT8RzcENBx9NKffHReVKJAho89TCO7W2SPBX8sb2tEU84Gw@mail.gmail.com>
-Content-Language: en-US
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <CAOLTT8RzcENBx9NKffHReVKJAho89TCO7W2SPBX8sb2tEU84Gw@mail.gmail.com>
+        with ESMTP id S1344091AbjJLRaj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Oct 2023 13:30:39 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C86610B
+        for <git@vger.kernel.org>; Thu, 12 Oct 2023 10:30:38 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-53db1fbee70so2165214a12.2
+        for <git@vger.kernel.org>; Thu, 12 Oct 2023 10:30:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1697131836; x=1697736636; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=xrPsLKpDHViYgK2LpEXW5S8foewhICn3wIwZ/giA0sM=;
+        b=KlDbtHCe/UpICGf9tpXQWwzBLL4zAYnSjiKJ/XowkMgHt7ArABTuG4c9FogRF86hu0
+         /C/KXlqwE4jfWq2z+rXFd8rC6JQPROneNgXdXD72R+LLbzC9bTKkri+OMDkkrdkFcP6H
+         56XWm3Ctwg+bOZ8Az+NlAysYJOtjZ3syZlox4XudOGwr1xszASFjDuBv4OLwOaaQLmev
+         v53XwNaK6sElwDkrD/69kWqIRTBops0H6zXz77TgqulJjXSkYt6Zu5eyTYf21cERwT7G
+         7Dp2p6t3yMGUL3SyedXAnXXFugPannwgSrm0KVHFbK3eHcY2OIzhMq3VpiRZGKUiS8V7
+         76Ng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697131836; x=1697736636;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xrPsLKpDHViYgK2LpEXW5S8foewhICn3wIwZ/giA0sM=;
+        b=Bk3MutqCba7DyrKyrRfvKfOcgoEuu4T377plseH43U3rIvo4QNHpM85jAa98djK8FS
+         iouUFl5R6SlCKMCrOWYAVQqRL8ypc6usntCvVLOnLQFTJa5FtjPpeYz1cZlOtw4CUWti
+         CZ0oeQAKwtIbc0lrcx+GJlyPl1svp2vdMYmH82RNps/Lnd9p4ut7tk+LSRkIHS9MDy3r
+         JHeeDGOi5qLjkSxp6XlJERCFm/3QGfpCT5JXQ34tm6AQhDpVTpcsqRocKnN///uPL59l
+         pfDsvAhcv4arL26UmATxQSkbvCPZwWh0rO/+T3glBDBVxvDYWbHnYAlMQhAvYufhD3bD
+         MFvw==
+X-Gm-Message-State: AOJu0YwMmSjKXGwgKLjSwmdvIL/vhTeVbfykHhrjMr7jsIdw5hUSqTXu
+        kpfffakB710C4fG9IsZabE6shw3HG9U=
+X-Google-Smtp-Source: AGHT+IHJ+LbXxyDnozNX0Gx3LdlySvZkuNDaVw3qcFnEUmMkNfGGNu0MolDuo4LuXH67ETYQ9ijy9g==
+X-Received: by 2002:a05:6402:5192:b0:53e:2c49:8041 with SMTP id q18-20020a056402519200b0053e2c498041mr1116632edd.8.1697131836170;
+        Thu, 12 Oct 2023 10:30:36 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id bd19-20020a056402207300b0053e31113ff7sm165061edb.94.2023.10.12.10.30.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Oct 2023 10:30:34 -0700 (PDT)
+Message-ID: <pull.1592.git.1697131834003.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 12 Oct 2023 17:30:33 +0000
+Subject: [PATCH] mailmap: change primary address for Derrick Stolee
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <stolee@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[For general support questions, please address only the mailing list.
-It's not necessary to bother the maintainer personally. Though, I'll not
-remove him from Cc, yet, as to comply with this ML's etiquette.]
+From: Derrick Stolee <stolee@gmail.com>
 
-Am 12.10.23 um 14:00 schrieb ZheNing Hu:
-> Hi everyone,
-> 
-> Our company wants to design a "small-batch" code review feature.
-> Simply put, this "small-batch" means being able to treat multiple
-> related commits within a MergeRequest as an independent "small" code
-> review.
-> 
-> Let me give you an example: We have five commits: A1, B, A2, C, A3.
-> Among them, A1, A2, and A3 are multiple commits for the same feature.
-> So when the user selects these commits, the page will return a
-> "combine diff" that combines them together.
-> 
-> A1       B A2 A3 C
-> *--------*----*-----*-------* (branch)
->  \ A1'        \ A2'  \ A3'
->   *------------*------*------- (small branch code review)
-> 
-> This may seem similar to cherry-picking a few commits from a pile of
-> commits, but in fact, we do not expect to actually perform
-> cherry-picking.
-> 
-> Do you have any suggestions on how we can merge a few commits together
-> and display the diff? The only reference we have is the non-open
-> source platform, JetBrains Space CodeReview, they support selecting
-> multiple commits for CodeReview. [1], .
+The previous primary address is no longer valid.
 
+Signed-off-by: Derrick Stolee <stolee@gmail.com>
+---
+    mailmap: change primary address for Derrick Stolee
 
-Take a step back. Then ask: What are the consequences of the review?
-What if the result is: the feature is perfect, we want it merged,
-however, we cannot, because we do not want commit B. What if the result
-is the opposite? You need B, but you can't merge it because the feature
-is not ready, yet?
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1592%2Fderrickstolee%2Fmailmap-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1592/derrickstolee/mailmap-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1592
 
-You are looking for a technical workaround for a non-optimal workflow.
-If A1,A2,A3 are a feature on their own, they, and only they, should be
-in their own feature branch.
+ .mailmap | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-So, I would say, the best solution is to reorder the commits in a better
-manageable order. You do know about git rebase --interactive, don't you?
+diff --git a/.mailmap b/.mailmap
+index dc31d70b8c1..82129be449f 100644
+--- a/.mailmap
++++ b/.mailmap
+@@ -59,9 +59,9 @@ David Reiss <dreiss@facebook.com> <dreiss@dreiss-vmware.(none)>
+ David S. Miller <davem@davemloft.net>
+ David Turner <novalis@novalis.org> <dturner@twopensource.com>
+ David Turner <novalis@novalis.org> <dturner@twosigma.com>
+-Derrick Stolee <derrickstolee@github.com> <stolee@gmail.com>
+-Derrick Stolee <derrickstolee@github.com> Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+-Derrick Stolee <derrickstolee@github.com> <dstolee@microsoft.com>
++Derrick Stolee <stolee@gmail.com> <derrickstolee@github.com>
++Derrick Stolee <stolee@gmail.com> Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
++Derrick Stolee <stolee@gmail.com> <dstolee@microsoft.com>
+ Deskin Miller <deskinm@umich.edu>
+ Đoàn Trần Công Danh <congdanhqx@gmail.com> Doan Tran Cong Danh
+ Dirk Süsserott <newsletter@dirk.my1.cc>
 
--- Hannes
-
+base-commit: bcb6cae2966cc407ca1afc77413b3ef11103c175
+-- 
+gitgitgadget
