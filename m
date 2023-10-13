@@ -1,135 +1,67 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 266B823751
-	for <git@vger.kernel.org>; Fri, 13 Oct 2023 19:49:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0718E1428A
+	for <git@vger.kernel.org>; Fri, 13 Oct 2023 20:13:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="t/aLGkWU"
-Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F869AD
-	for <git@vger.kernel.org>; Fri, 13 Oct 2023 12:49:57 -0700 (PDT)
-Received: by mail-qt1-x829.google.com with SMTP id d75a77b69052e-4180f5c51f8so20427071cf.1
-        for <git@vger.kernel.org>; Fri, 13 Oct 2023 12:49:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1697226596; x=1697831396; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=eWntybEDA82HpS3Iu/Dazvc0MTocHv2y6i0TdOe1UyY=;
-        b=t/aLGkWUiBEfyr3RlCgkqlqSL7Q28WaLgvbGwDl+HRPWYQZUH1Cr1XQhY7x5z0ZxcV
-         q+2znUbgzXuMJ2SZi04G27oP1R/BjruTexGGeSnw4mFLOyP3nb5Im94mV1tf2EK2KmLY
-         YD9JOAmrHn74gU9vEoweOOM19ffGCf0jgA1nBthiw8jTZ5Wu2us1AS/iWq/y0gEAVyKF
-         qieVPwdSpUe+/qR+SdM0q2BN+VvUfVygNZl6ezkAb0Q8Ikp8D+lnrgbhkumDOAkYQQrs
-         eN90BaU3vkH8HfF+HQSoexaV3BOJO8f409S56xC9J2liMAU4APRNuDR2Mb9pdLR1PBOl
-         B9gw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697226596; x=1697831396;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eWntybEDA82HpS3Iu/Dazvc0MTocHv2y6i0TdOe1UyY=;
-        b=AocZYlgNEszNh+RHLs9V/T+yEQ5LbKnx3E2exQRohJANgL2qWL+nk7ZFgpPC692heG
-         oD4JHNx4lBDUVwGkcPFnxDcMzoQ5hEgQztS7++NfX3i60S2Y+bNnoSKUyp+jIY3rOI4W
-         aolYZUOmrXjqjpgUnFc9XO8yYz4uqYrRxW6oORgVimmbJmtK8z9EIf1XanA0yJsd3WU2
-         dgVIy/Axpcrfe9dxF9yTFOc0vgq/Bj4Bc05RnSVxog5mzEIKOee3PM3rx4nz85vRp1qn
-         tpEVa2tGaWfb6vPdYncFMEM7KI5dhj1AAMwm8rYI4XHWs99T0M7zWXlGbjoBDCg43bEd
-         7MqQ==
-X-Gm-Message-State: AOJu0YzxqK1IJuBbcFixe+J/VgX15Zr/qy9XkbiU1sESyL7hjm1vvSM2
-	3scPH6GxjLIY3JdzdS6yuBJP8SEZQ2WvEQDRfNc7Jg==
-X-Google-Smtp-Source: AGHT+IHR3SOp4pnFsgLhgotZ/dPKGIjyVx1ck3Y6lBYIkZvX+0Zvfqa04IBWUkTqLTfv1smWkRle+w==
-X-Received: by 2002:a05:622a:353:b0:403:abf5:6865 with SMTP id r19-20020a05622a035300b00403abf56865mr1448710qtw.18.1697226596152;
-        Fri, 13 Oct 2023 12:49:56 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id k13-20020ac8478d000000b0041991642c62sm843335qtq.73.2023.10.13.12.49.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Oct 2023 12:49:55 -0700 (PDT)
-Date: Fri, 13 Oct 2023 15:49:54 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 5/8] commit-graph: read `BIDX` chunk with
- `pair_chunk_expect()`
-Message-ID: <ZSmfYtkOjqwqtbzz@nand.local>
-References: <20231009205544.GA3281950@coredump.intra.peff.net>
- <cover.1697225110.git.me@ttaylorr.com>
- <45cac29403e63483951f7766c6da3c022c68d9f0.1697225110.git.me@ttaylorr.com>
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="t0cH8bPM"
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3687FB7
+	for <git@vger.kernel.org>; Fri, 13 Oct 2023 13:13:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <45cac29403e63483951f7766c6da3c022c68d9f0.1697225110.git.me@ttaylorr.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-	autolearn_force=no version=3.4.6
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1697227978;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=aLDa1VU6sX3zrukVOBB19BNH6lBVcU1C0UGmTTwth2c=;
+	b=t0cH8bPMU9+3H4BtiWtFCTqP+fgphhlTis0bY+mgX0OjPhuiQgFhg7vSRvd7GMvsq3wj6W
+	ny8R/TuArUqyjpabPJhMOK9d3rWI1Npy6OSUDP+KncV4zqeoYUBTYV0ddU2Lx9YOyYolAe
+	zh/UM/mAJe+2Tz0UykPb9zEFVZnVeAnaZmYmLlpQc25cjkCfcFcc1nMNEFKjhFNwcmq+yh
+	SYKGdrmw+j5W82uI9zRolqmULa7agItGxmLZe9tW5MdwuC8jclBP7pBHQNk7NynKzgneVI
+	5kVBYjT2EnC3Z44GAkVSEDW/+kkxJ+ZOb+67y+PDrP/4bnU+spWa2okoV6e1zQ==
+Date: Fri, 13 Oct 2023 22:12:57 +0200
+From: Dragan Simic <dsimic@manjaro.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>, Christoph Anton Mitterer
+ <calestyo@scientia.org>, git@vger.kernel.org
+Subject: Re: why does git set X in LESS env var?
+In-Reply-To: <xmqqr0lzhkzk.fsf@gitster.g>
+References: <3a2c362c019338ca7408b7a3bc5715b535d15b8a.camel@scientia.org>
+ <xmqqa5sokdd3.fsf@gitster.g>
+ <20231012000416.GA520855@coredump.intra.peff.net>
+ <xmqqh6mwipqi.fsf@gitster.g> <3946c06e90604a92ad0dddf787729668@manjaro.org>
+ <xmqqr0lzhkzk.fsf@gitster.g>
+Message-ID: <a831af51b6fb46b5d6fcd9768a7fb52d@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 	lindbergh.monkeyblade.net
 
-On Fri, Oct 13, 2023 at 03:25:30PM -0400, Taylor Blau wrote:
-> Perform an identical conversion as in previous commits to read the BIDX
-> chunk.
->
-> Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> ---
->  commit-graph.c | 18 ++++--------------
->  1 file changed, 4 insertions(+), 14 deletions(-)
+On 2023-10-12 18:19, Junio C Hamano wrote:
+> Dragan Simic <dsimic@manjaro.org> writes:
+> 
+>> Please note that dropping "-X" and leaving "-F" would actually
+>> introduce the inconsistency that I already mentioned.  To reiterate,
+>> short outputs would then remain displayed on screen, while long
+>> outputs would disappear after exiting less(1).
+> 
+> Good point.
 
-Oops. This fails t4216 because it changes the warning() message, which I
-thought I excluded from this patch :-<.
-
-Here is a replacement that passes the test. I can reroll the entire
-"series" if we decide that this is a worthwhile direction to go in:
-
---- 8< ---
-
-Subject: [PATCH] commit-graph: read `BIDX` chunk with `pair_chunk_expect()`
-
-Perform an identical conversion as in previous commits to read the BIDX
-chunk.
-
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- commit-graph.c | 18 ++++--------------
- 1 file changed, 4 insertions(+), 14 deletions(-)
-
-diff --git a/commit-graph.c b/commit-graph.c
-index 0fab99f5dd..66c2e628d8 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -330,18 +330,6 @@ static int graph_read_oid_lookup(const unsigned char *chunk_start,
- 	return 0;
- }
-
--static int graph_read_bloom_index(const unsigned char *chunk_start,
--				  size_t chunk_size, void *data)
--{
--	struct commit_graph *g = data;
--	if (chunk_size != g->num_commits * 4) {
--		warning("commit-graph changed-path index chunk is too small");
--		return -1;
--	}
--	g->chunk_bloom_indexes = chunk_start;
--	return 0;
--}
--
- static int graph_read_bloom_data(const unsigned char *chunk_start,
- 				  size_t chunk_size, void *data)
- {
-@@ -461,8 +449,10 @@ struct commit_graph *parse_commit_graph(struct repo_settings *s,
- 	}
-
- 	if (s->commit_graph_read_changed_paths) {
--		read_chunk(cf, GRAPH_CHUNKID_BLOOMINDEXES,
--			   graph_read_bloom_index, graph);
-+		if (pair_chunk_expect(cf, GRAPH_CHUNKID_BLOOMINDEXES,
-+				      &graph->chunk_bloom_indexes,
-+				      st_mult(graph->num_commits, 4)) == -1)
-+			warning(_("commit-graph changed-path index chunk is too small"));
- 		read_chunk(cf, GRAPH_CHUNKID_BLOOMDATA,
- 			   graph_read_bloom_data, graph);
- 	}
---
-2.38.0.16.g393fd4c6db
-
+I've been thinking about this, and a rather elegant, backward-compatible 
+solution is possible, but it requires some improvements to be made to 
+less(1) first.  I'll reach out to the author of less(1) and propose that 
+new feature, and I'll let you know his opinion about it.
