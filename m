@@ -1,220 +1,216 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF09415E8A
-	for <git@vger.kernel.org>; Fri, 13 Oct 2023 12:37:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZyY67RQj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YIzmFzlT"
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC3CBA9
-	for <git@vger.kernel.org>; Fri, 13 Oct 2023 05:37:43 -0700 (PDT)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailout.west.internal (Postfix) with ESMTP id 5A11F32009FB;
-	Fri, 13 Oct 2023 08:37:40 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Fri, 13 Oct 2023 08:37:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm2; t=1697200659; x=1697287059; bh=Dw
-	yElQdLXsOdeluKZPDvx6w7ahP3Gfnt8sPcWslcKuw=; b=ZyY67RQj1ifiybXtet
-	hHuX4l5PYXbJILR10Tv4eUnz7Ip7PaBlKqLi7HSZW8Bk0H8dtqmdhoSHxo6tCNbZ
-	4LqO3nspn+bMZqshp1vrNKeWzXUkmPwgbtkpyC4r4IhDZQ2vCy74elXI8z/o8/1b
-	vU6379fKVrjevm1kJu+a11QjA6gnw2glbzFJCN6dn9P8C536ThbEpnDDgvjrt9zP
-	TN1G8+SGp5Kl41a6U7RtSlKAZN/hpmf9lrNhPBTMgjfOHH4X9q/pHXySJ34B4jTc
-	LbdJt6IRVgLcS0F71rgJv4SnW5V0cAVyQ+vrblZHhPRAAcotfiH8sF6k5szomMk3
-	IwZA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm2; t=1697200659; x=1697287059; bh=DwyElQdLXsOde
-	luKZPDvx6w7ahP3Gfnt8sPcWslcKuw=; b=YIzmFzlTzXbQDRtV42Jv8JVQs5Ndc
-	SqP3WBXmzg59pniCfriMMWrnqaE1Tbbww0yT9mZRnvRLKYvBMggHNtUSGv05oKel
-	mjraFaN0pua4mRdLjPlhJI5uA6D4Jporm2NVw6/0uaHMK7lzC2oazqf1dsXA/t7V
-	mJPfBpxtO8Hmp7Z4+x3vIW3R9aIvPTzxu0IlShXRd9n+dpSEQ2M0olXRfJKos5Og
-	WoafX58bhdVhrm6B6Fa/8esA2abLm1ig5x9z2wMhwDfTD8+wFjuMBBaKiSpE90O2
-	y6cZIpnoWrGuWo6lR2ySbownjMJ/2R+Vd2GUB67XDiKaSgzEUkph4XGLA==
-X-ME-Sender: <xms:EzopZcJ6-UXGuv_ZrhHIKt2oP78Ipv8vNjJXKV3uikGL4qXnSWpSkQ>
-    <xme:EzopZcKsUZ7czk8SrhhOuu9dPaOEoVB_vTWrulrIRxnQf_qP_FObDliEB8dLuE-2F
-    jlvH2TGdk1JwYxi5A>
-X-ME-Received: <xmr:EzopZcsyNUBvRa1xvSX-TBOjSug2RPS2XoaV5q_8YLLnRpqHR291gY5m-o6ugpAheDN3iztIyGRPka7k2i1a7Hu_WZJJi9ND7fwXH_O3Z_Z7iJE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrieefgdefudcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhm
-X-ME-Proxy: <xmx:EzopZZZuUETNjUWFSITqs-8nNSVdLZD_vx1hoaLK6XteoiBDbzTyXw>
-    <xmx:EzopZTaeJZy3VWi_gRDTcfkpXhThKiKQc389bp2yF6Kb3NfNHzQCuw>
-    <xmx:EzopZVB913a1CaA4dMKG56UmP6OZlbXmSeZ3ZAMgDIySy-UOcWnqVQ>
-    <xmx:EzopZSn8taK2xIPAFcik-leP18aKyNLUz-U5J6aITFDklQq-6xbM0w>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Oct 2023 08:37:38 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 830fe830 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 13 Oct 2023 12:37:36 +0000 (UTC)
-Date: Fri, 13 Oct 2023 14:37:35 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH] commit: detect commits that exist in commit-graph but not in
- the ODB
-Message-ID: <b0bf576c51a706367a758b8e30eca37edb9c2734.1697200576.git.ps@pks.im>
-References: <ZSkCGS3JPEQ71dOF@tanuki>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A614C15EB1
+	for <git@vger.kernel.org>; Fri, 13 Oct 2023 13:46:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+Received: from bee.birch.relay.mailchannels.net (bee.birch.relay.mailchannels.net [23.83.209.14])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DC1FCF
+	for <git@vger.kernel.org>; Fri, 13 Oct 2023 06:46:08 -0700 (PDT)
+X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id 7D55D9013BC;
+	Fri, 13 Oct 2023 13:46:07 +0000 (UTC)
+Received: from cpanel-007-fra.hostingww.com (unknown [127.0.0.6])
+	(Authenticated sender: instrampxe0y3a)
+	by relay.mailchannels.net (Postfix) with ESMTPA id 42AB5901520;
+	Fri, 13 Oct 2023 13:46:05 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1697204765; a=rsa-sha256;
+	cv=none;
+	b=0bBxhSeBrXFYqOweb0dtXzRm+0GJ4CaWLXnVpZsEOE5NhPY2waBrG0SHWKjzmWc1PRDw+c
+	5zln5Kk5FWyQ+zDAWkwKLcuTcVV8z2xuqzwsVfuqHn7B7OV9liB/EXLbUUqctosRlKk4E+
+	TgXofLiSW0+PFpcqtAG1kE4c7a2bxFhBRWctE/Md6ikqCTqIiOMHVpCLH9pJL+LqmxdQE8
+	2eaIcamkpkcQVElPb8Pbn1H3f6uCzSsjpuoJe3a5BN/RMaqXr6HpCx2Jo45gTwUeeVbhXQ
+	oh5vV4Pc4x06rvd+Y9s6Ecut9BY0F8BLzUnxpRXckBiI1k7yemnViPLJRCU0+w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1697204765;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=8CBTCckAFv/BU30ffPz9rxwduo6TUm+7DzgHWHB/nqM=;
+	b=zVpt1dQPxOgnjijatRrQwvWF6940I1yiTqysTLMiuqa1p3atMymTpcoaMbcBPr8M/HKVis
+	P4tpx7AAdYR14dt72lcGJiggcNzgKiPX9br5Gt7OwPSPhiXdVB6sVf4HJFplHA45YsqW9r
+	exJBK0xpupGcnumomf2hH2lvpz0+UCFBZz+QgS+OCB6piHKVUE+vOtda4ukRwSJ/ziYhoc
+	ur58FPv1f+QzMmpXwQbdZZa7xTflL6RKnI4NDMRtSUR/M++GJHTn+rYUTZyvh1yKnAkAR2
+	bhcT9JTsqGZOULbcbbYxRXCyAvo4zcoGKEfTJ8245A0sC1/VjSkjSjOZShoCtg==
+ARC-Authentication-Results: i=1;
+	rspamd-554cd65b86-bfdxl;
+	auth=pass smtp.auth=instrampxe0y3a smtp.mailfrom=calestyo@scientia.org
+X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: instrampxe0y3a|x-authuser|calestyo@scientia.org
+X-MailChannels-Auth-Id: instrampxe0y3a
+X-Cure-Bubble: 2d33693346e58026_1697204765916_136467
+X-MC-Loop-Signature: 1697204765915:510076813
+X-MC-Ingress-Time: 1697204765915
+Received: from cpanel-007-fra.hostingww.com (cpanel-007-fra.hostingww.com
+ [3.69.87.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384)
+	by 100.126.222.25 (trex/6.9.1);
+	Fri, 13 Oct 2023 13:46:05 +0000
+Received: from p5090f4db.dip0.t-ipconnect.de ([80.144.244.219]:39260 helo=heisenberg.fritz.box)
+	by cpanel-007-fra.hostingww.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <calestyo@scientia.org>)
+	id 1qrIUL-0003IL-0u;
+	Fri, 13 Oct 2023 13:46:03 +0000
+Message-ID: <48ff9c2ac262cec32ab4681e8417413488278294.camel@scientia.org>
+Subject: Re: why does git set X in LESS env var?
+From: Christoph Anton Mitterer <calestyo@scientia.org>
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: git@vger.kernel.org
+Date: Fri, 13 Oct 2023 15:45:58 +0200
+In-Reply-To: <6d673c1bdae41236e95e3a9fca853731@manjaro.org>
+References: <3a2c362c019338ca7408b7a3bc5715b535d15b8a.camel@scientia.org>
+	 <xmqqa5sokdd3.fsf@gitster.g>
+	 <0c10c4b95f2a947a5d569a2c3d51fcb02b35e81d.camel@scientia.org>
+	 <eadc03fc56d530ea31790f8a4b47a16e@manjaro.org>
+	 <ec43820562198de078db7df54d0338edf1f333ea.camel@scientia.org>
+	 <6457310b8ca0e7d3b288a3bbbe264012@manjaro.org>
+	 <fbb3c2bf1c832f0f16cb913da6b862dd313359ef.camel@scientia.org>
+	 <ace230a469fabbbbceb38cc884a40b4c@manjaro.org>
+	 <8f3bec2752f4c2d3ebdd29d20910a4a94f75f608.camel@scientia.org>
+	 <23cc509bfb433e19c7683c97314e4ac8@manjaro.org>
+	 <2f3ef5568ed19ac5bdcd23f84ddfb13dc6901043.camel@scientia.org>
+	 <161b9584c6c9a004c01bda98cea4f1f8@manjaro.org>
+	 <e1e187ca3d970c18e1a11d51ff93b6cb212bcbaa.camel@scientia.org>
+	 <31b6f4a2b88cc3a2cfa908f82f4f2302@manjaro.org>
+	 <c6cd3133573d5ade6d02b5da1051853a4b3885e1.camel@scientia.org>
+	 <60f1922b12a6ef304ffa36c334348e34@manjaro.org>
+	 <ec91ff19cca3d881d4746208744663c650ebd250.camel@scientia.org>
+	 <6d673c1bdae41236e95e3a9fca853731@manjaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.50.0-1 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="K6vEJ84LU30PsE27"
-Content-Disposition: inline
-In-Reply-To: <ZSkCGS3JPEQ71dOF@tanuki>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-	SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-AuthUser: calestyo@scientia.org
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
+	RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 	lindbergh.monkeyblade.net
 
-
---K6vEJ84LU30PsE27
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Commit graphs can become stale and contain references to commits that do
-not exist in the object database anymore. Theoretically, this can lead
-to a scenario where we are able to successfully look up any such commit
-via the commit graph even though such a lookup would fail if done via
-the object database directly.
-
-As the commit graph is mostly intended as a sort of cache to speed up
-parsing of commits we do not want to have diverging behaviour in a
-repository with and a repository without commit graphs, no matter
-whether they are stale or not. As commits are otherwise immutable, the
-only thing that we really need to care about is thus the presence or
-absence of a commit.
-
-To address potentially stale commit data that may exist in the graph,
-our `lookup_commit_in_graph()` function will check for the commit's
-existence in both the commit graph, but also in the object database. So
-even if we were able to look up the commit's data in the graph, we would
-still pretend as if the commit didn't exist if it is missing in the
-object database.
-
-We don't have the same safety net in `parse_commit_in_graph_one()`
-though. This function is mostly used internally in "commit-graph.c"
-itself to validate the commit graph, and this usage is fine. We do
-expose its functionality via `parse_commit_in_graph()` though, which
-gets called by `repo_parse_commit_internal()`, and that function is in
-turn used in many places in our codebase.
-
-For all I can see this function is never used to directly turn an object
-ID into a commit object without additional safety checks before or after
-this lookup. What it is being used for though is to walk history via the
-parent chain of commits. So when commits in the parent chain of a graph
-walk are missing it is possible that we wouldn't notice if that missing
-commit was part of the commit graph. Thus, a query like `git rev-parse
-HEAD~2` can succeed even if the intermittent commit is missing.
-
-It's unclear whether there are additional ways in which such stale
-commit graphs can lead to problems. In any case, it feels like this is a
-bigger bug waiting to happen when we gain additional direct or indirect
-callers of `repo_parse_commit_internal()`. So let's fix the inconsistent
-behaviour by checking for object existence via the object database, as
-well.
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- commit.c                |  7 ++++++-
- t/t5318-commit-graph.sh | 23 +++++++++++++++++++++++
- 2 files changed, 29 insertions(+), 1 deletion(-)
-
-diff --git a/commit.c b/commit.c
-index b3223478bc..109e9217e3 100644
---- a/commit.c
-+++ b/commit.c
-@@ -572,8 +572,13 @@ int repo_parse_commit_internal(struct repository *r,
- 		return -1;
- 	if (item->object.parsed)
- 		return 0;
--	if (use_commit_graph && parse_commit_in_graph(r, item))
-+	if (use_commit_graph && parse_commit_in_graph(r, item)) {
-+		if (!has_object(r, &item->object.oid, 0))
-+			return quiet_on_missing ? -1 :
-+				error(_("commit %s exists in commit-graph but not in the object databa=
-se"),
-+				      oid_to_hex(&item->object.oid));
- 		return 0;
-+	}
+On Fri, 2023-10-13 at 06:43 +0200, Dragan Simic wrote:
+> > *If* some changes were made to how git handles this, it might
+> > perhaps
+> > be worth to consider not to touch LESS at all, but only add the
+> > required settings via command line arguments (i.e. -F -R ...).
+>=20
+> Actually, that would be wrong.=C2=A0 If someone sets $LESS or $PAGER (or=
 =20
- 	if (oid_object_info_extended(r, &item->object.oid, &oi, flags) < 0)
- 		return quiet_on_missing ? -1 :
-diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index ba65f17dd9..25f8e9e2d3 100755
---- a/t/t5318-commit-graph.sh
-+++ b/t/t5318-commit-graph.sh
-@@ -821,4 +821,27 @@ test_expect_success 'overflow during generation versio=
-n upgrade' '
- 	)
- '
+> $GIT_PAGER, more specifically), it's up to the utility that invokes
+> the=20
+> pager internally not to override the user preferences configured
+> through=20
+> these environment variables.=C2=A0 That's how everyone can customize the=
 =20
-+test_expect_success 'commit exists in commit-graph but not in object datab=
-ase' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+
-+		test_commit A &&
-+		test_commit B &&
-+		test_commit C &&
-+		git commit-graph write --reachable &&
-+
-+		# Corrupt the repository by deleting the intermittent commit
-+		# object. Commands should notice that this object is absent and
-+		# thus that the repository is corrupt even if the commit graph
-+		# exists.
-+		oid=3D$(git rev-parse B) &&
-+		rm .git/objects/"$(test_oid_to_path "$oid")" &&
-+
-+		test_must_fail git rev-parse HEAD~2 2>error &&
-+		grep "error: commit $oid exists in commit-graph but not in the object da=
-tabase" error
-+	)
-+'
-+
- test_done
---=20
-2.42.0
+> pager behavior.
+
+Well, but if its clear that the output would otherwise be garbage (e.g.
+because -R is missing).
+
+In any case right now we have the situation that a user cannot just
+easily set LESS in his environment, with a minimum set of options, and
+git's use of less will continue flawlessly out of the box, as the -R
+would be missing.
 
 
---K6vEJ84LU30PsE27
-Content-Type: application/pgp-signature; name="signature.asc"
+> > Or perhaps only remove options from it, if they're known to break
+> > the
+> > behaviour with git (like -+R might).
+>=20
+> Again, not the way the whole thing with pagination works.=C2=A0 If someon=
+e
+> sets their environment variables wrong, it's simply the way they want
+> it, and it isn't anyone else's business to attempt fixing it=20
+> automatically.
 
------BEGIN PGP SIGNATURE-----
+Well, I wouldn't agree with that.
+LESS foremost a env var to configure less (surprise ^^).
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmUpOg4ACgkQVbJhu7ck
-PpSSCxAAhp54WnQ5s/vTWwS2Eiq4jRBWVg2ONWGFJhUyZYeFuCx/eND5tnGSE+TX
-Ajj9NM6J+yu+WYvzqGToLMgr69ruV8aQJ2BvhZIcFGAwz03Cv23boxovXmQ8LugL
-tbuu+bGt321FEb27r0NebdY8NyjjXSFMphI+h7GTQIuMZhBXFpMuD7e8Ug41Ni0m
-0wusjunqGEacV/mLCE5tBRMaLKhwgHAbXsZBygfXqNvXVDPAMGO+mhfJQD573i60
-A3SsW0eWGsmjSNi87WrkJvHa6mC8PVovdQmuSZJJan7pLbZCPa3qh/ommdQMDjlB
-gaFMlQhjUXbuiG6qZX3wyrVDMPQldXpUgoxk4MoVjyS5TfAMQfsRiIYrUOkNc/XN
-29jGqVrrHCjblZ6VM6F4DTaXHhtJViObc8gk1Xq6XtzlCIkH2GjSeYPuXVxTPvIX
-1DMuk4eUbE+s6QO9Py5Nel3GiMG/NZPgIDwqD9gXiuygrQAgapUNEA2eDrE34FBk
-BGNaSAPho05rZi6wOw9ted6cPEc9x1MsK2Zg6Xqp7kOfBGmzqgIaTnV6wqI6kY0k
-Vzm4MgSGEk3KiV+ZbGAtaXBq/tltnoN6m8hhp1Wp6GcjDWD8G4xkGyrNluMTL9BJ
-uf5Tf4E/AHU0JUu6WEhYe5xYADy3Du5BaaFkXFyqsxnokarQlvY=
-=7qRh
------END PGP SIGNATURE-----
+If git (or anyone else) uses less internally, e.g. because they don't
+want to implement their own pager, fine... but then they cannot just
+blindly assume that LESS is set only for git's (or any other tool's
+needs).
 
---K6vEJ84LU30PsE27--
+So I'd say the proper way is rather that any such tool makes sure, that
+any options strictly required as set no matter what. Just as e.g. delta
+does.
+
+
+> Well, fragile or not, that's the way it works.=C2=A0 It has its downsides
+> for=20
+> sure, but it's all about having each utility handle the environment=20
+> carefully and document it in its man page(s), so the users can also=20
+> carefully craft the values of their customized environment variables.
+
+Sure, but from a user's view, the use of less (or anything else) within
+git is conceptually completely opaque.
+
+In less' manpage LESS isn't documented as "oh and you must make sure -R
+is included or otherwise git will break"...
+
+
+
+> $LESS can be seen as a global set of the common options for less(1),=20
+
+o.O ... but, as I've described, one cannot really use it as that:
+
+If I globally set e.g. LESS=3D"F" because my desire is to make less
+always exit as soon as the file fits on a screen, which I think is a
+reasonable thing to do, git would no longer add "R" and output would
+break.
+
+
+> You don't have to define an alias, there's $GIT_PAGER for that
+> purpose,=20
+> as I already explained above.
+
+Well, yes... and as I've said before, one could also solve it via
+git_config... but the problem stays the same... as soon as someone
+wants to use LESS as global less options just as you described it
+yourself, git will no longer worker properly because of the missing -R.
+
+And actually if one would use GIT_PAGER one would again defeat the
+purpose of a allegedly global options LESS, because unless one does
+something like GIT_PAGER=3D"${LESS}R" it wouldn't see any changes made to
+LESS.
+
+
+> Moreover, the whole idea of the various utilities touching the $LESS=20
+> variable internally is to provide sane defaults to the users that
+> don't=20
+> configure $LESS, $PAGER, etc. on their own.
+
+Then I don't see what the big problem would be to just do it via a
+command argument - if someone really has ever some reasons to remove --
+RAW=E2=80=90CONTROL=E2=80=90CHARS from the command options when less is inv=
+oked via git
+... then he could still go into git_config and set that manually.
+
+But it would seem to me that the overall handling would be much more
+what one expects, than when doing the same via LESS.
+
+
+
+> I don't know what delta is and how it actually paginates its outputs,
+> but it should follow the rules of the environment-based pager=20
+> configuration that I described in detail above.
+
+Well, AFAIU, it doesn't and for good reasons :-)
+
+
+Anyway... I think all necessary things have been said and this thread
+has grown far to large with only semi-related stuff... so thanks for
+all the replies why git uses "-X".
+
+
+Cheers,
+Chris.
