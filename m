@@ -1,135 +1,91 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D18C6134CD
-	for <git@vger.kernel.org>; Fri, 13 Oct 2023 18:21:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D05223741
+	for <git@vger.kernel.org>; Fri, 13 Oct 2023 18:25:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KOc/pRo/"
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D425F83
-	for <git@vger.kernel.org>; Fri, 13 Oct 2023 11:21:50 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2A1761A8A5E;
-	Fri, 13 Oct 2023 14:21:50 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=oxRBnxR9aBbiJQnvkFxkvYcdlmb8ZN0KkS/c34
-	WX5pQ=; b=KOc/pRo/mvGSC3nXbXlMp4kWzLvyDy63XtREJmrFvEqZGsW2tj72C0
-	6rJfmRSgv3pi7DCi+laHX1W4lQ7wbDkVxrZmrR+BhE+dA6XljwYJb7XOfSAZ0Uko
-	jzSl/5jU6xHunc1UuRHVszOQH37YmZCfvhoZ8Akb2VZqfGyNOhZFU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1FF911A8A5D;
-	Fri, 13 Oct 2023 14:21:50 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7F8781A8A5C;
-	Fri, 13 Oct 2023 14:21:49 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>,  Taylor
- Blau <me@ttaylorr.com>
-Subject: Re: [PATCH] commit: detect commits that exist in commit-graph but
- not in the ODB
-In-Reply-To: <b0bf576c51a706367a758b8e30eca37edb9c2734.1697200576.git.ps@pks.im>
-	(Patrick Steinhardt's message of "Fri, 13 Oct 2023 14:37:35 +0200")
-References: <ZSkCGS3JPEQ71dOF@tanuki>
-	<b0bf576c51a706367a758b8e30eca37edb9c2734.1697200576.git.ps@pks.im>
-Date: Fri, 13 Oct 2023 11:21:48 -0700
-Message-ID: <xmqq1qdy1iyr.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XyrqRsMa"
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CD4C91
+	for <git@vger.kernel.org>; Fri, 13 Oct 2023 11:25:12 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id ffacd0b85a97d-32d3755214dso2275491f8f.0
+        for <git@vger.kernel.org>; Fri, 13 Oct 2023 11:25:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1697221511; x=1697826311; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=RcyfenvIapks0Sx4n6StdWqX51C1sLlV7XR9pAD0bEU=;
+        b=XyrqRsMaIyPLxCh0Jx4tgkXBssaDaS4hBmg4B3wgY7baqwsq//TQNcKP4NPFRHihl4
+         97szOzvz30fDuGn69hDVzkOfpnJoeTd+KpJYYtm/DqCswTkNJ/1GLv3/cexGMEW4Nj5E
+         tG5HT0YY/cAS9iFoZzZgmjFWXUSurN90xoIwkgQGh2D9T7ODDAyTstNroGI/4G4RM+f8
+         N48tlNa833NkwzchmbeVcBmaTYm4hkwOEZuvbKCwCJC7sO0N0oByknhbjXz6wZPGQWQ6
+         9rDY6iTZOx6a610Aiw/Ge8CO37nqPSCokqQgl8sX/iSRSHzs/PaKVRp4k0szylf6gXyX
+         qRtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697221511; x=1697826311;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=RcyfenvIapks0Sx4n6StdWqX51C1sLlV7XR9pAD0bEU=;
+        b=ss8wKlGua8ng6zdo1q2D5R4RrUAEw2AsvZIonWfrQ6JkNRiFM5Y4pFE/IFBdmAjxr/
+         aSj9diDQiBYZq7mYbssLj0enl+QJY4Oqx20EwcMjynPBYdtLBgvEtC0KgCdKt9E7kxGP
+         OCgcqrA1oM4wLAURozgnKnlNLegkSz5Am4cv8r1WauX+84DNbLUeRpoOjOKTx2P8SKoJ
+         4VfZo6CbAM//L0o+mWSZiHJpC25h3kUex+U8iiNJZnNfmgYVafFqyLpU+Quv2upEfzxk
+         bQb9aBgxSubZNkWcq99G+b77kDeEBtGy4oQGOrbFIOFQVBSOaDHvM9un1BWtZvqQlGvV
+         XzvA==
+X-Gm-Message-State: AOJu0Yw84JAIM4LLxvZuDUIHFF8J2vs5WHzoOcWOM0RLuNO/r/cyJ8J8
+	G30evzwjIICBHe4BJdTSXCfiwp3Cq6M=
+X-Google-Smtp-Source: AGHT+IHi9jlQ9UlwzwnPex9Qrz6+eo5ZPNJQdDsFtT4c4Mc4cBGJeku6tRUYq+H219VRPPI/YTv3vw==
+X-Received: by 2002:a5d:42c4:0:b0:32d:a0f7:40cc with SMTP id t4-20020a5d42c4000000b0032da0f740ccmr1175595wrr.68.1697221510474;
+        Fri, 13 Oct 2023 11:25:10 -0700 (PDT)
+Received: from [192.168.2.52] (93.red-88-14-42.dynamicip.rima-tde.net. [88.14.42.93])
+        by smtp.gmail.com with ESMTPSA id ce9-20020a5d5e09000000b0032d687fd9d0sm9670076wrb.19.2023.10.13.11.25.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 13 Oct 2023 11:25:09 -0700 (PDT)
+Message-ID: <329f635f-2050-421e-bd0d-943f8ad0de22@gmail.com>
+Date: Fri, 13 Oct 2023 20:25:08 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 601B93EC-69F5-11EE-A424-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] branch.c: adjust error messages to coding guidelines
+Content-Language: en-US
+To: Isoken June Ibizugbe via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Isoken June Ibizugbe <isokenjune@gmail.com>
+References: <pull.1590.git.git.1697211227.gitgitgadget@gmail.com>
+ <91e4ad3984147fcc277254a3f6836bf79f5c9550.1697211227.git.gitgitgadget@gmail.com>
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+In-Reply-To: <91e4ad3984147fcc277254a3f6836bf79f5c9550.1697211227.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+	RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 	lindbergh.monkeyblade.net
 
-Patrick Steinhardt <ps@pks.im> writes:
+On 13-oct-2023 15:33:47, Isoken June Ibizugbe via GitGitGadget wrote:
 
-> @@ -572,8 +572,13 @@ int repo_parse_commit_internal(struct repository *r,
->  		return -1;
->  	if (item->object.parsed)
->  		return 0;
-> -	if (use_commit_graph && parse_commit_in_graph(r, item))
-> +	if (use_commit_graph && parse_commit_in_graph(r, item)) {
-> +		if (!has_object(r, &item->object.oid, 0))
-> +			return quiet_on_missing ? -1 :
-> +				error(_("commit %s exists in commit-graph but not in the object database"),
-> +				      oid_to_hex(&item->object.oid));
->  		return 0;
-> +	}
+>  	    replace_each_worktree_head_symref(worktrees, oldref.buf, newref.buf,
+>  					      logmsg.buf))
+> -		die(_("branch renamed to %s, but HEAD is not updated!"), newname);
+> +		die(_("branch renamed to %s, but HEAD is not updated"), newname);
 
-Ever since this codepath was introduced by 177722b3 (commit:
-integrate commit graph with commit parsing, 2018-04-10), we blindly
-trusted what commit-graph file says.  This change is a strict
-improvement in the correctness department, but there are two things
-that are a bit worrying.
+Thanks.  This change is not explicitly suggested in the guidelines, but I think
+it fits well in the spirit of this series.
 
-One.  The additional check should certainly be cheaper than a full
-reading and parsing of an object, either from a loose object file or
-from a pack entry.  It may not hurt performance too much, but it
-still would give us more confidence if we know by how much we are
-pessimising good cases where the commit-graph does match reality.
-Our stance on these secondary files that store precomputed values
-for optimization purposes is in general to use them blindly unless
-in exceptional cases where the operation values the correctness even
-when the validity of these secondary files is dubious (e.g., "fsck"),
-and doing this extra check regardless of the caller at this low level
-of the callchain is a bit worrying.
-
-Another is that by the time parse_commit_in_graph() returns true and
-we realize that the answer we got is bogus by asking has_object(),
-item->object.parsed has already been toggled on, so the caller now
-has a commit object that claimed it was already parsed and does not
-match reality.  Hopefully the caller takes an early exit upon seeing
-a failure from parse_commit_gently() and the .parsed bit does not
-matter, but maybe I am missing a case where it does.  I dunno.
-
-Other than that, sounds very sensible and the code change is clean.
-
-Will queue.  Thanks.
-
-> diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-> index ba65f17dd9..25f8e9e2d3 100755
-> --- a/t/t5318-commit-graph.sh
-> +++ b/t/t5318-commit-graph.sh
-> @@ -821,4 +821,27 @@ test_expect_success 'overflow during generation version upgrade' '
->  	)
->  '
+> @@ -965,7 +965,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+>  		const char *start_name = argc == 2 ? argv[1] : head;
 >  
-> +test_expect_success 'commit exists in commit-graph but not in object database' '
-> +	test_when_finished "rm -rf repo" &&
-> +	git init repo &&
-> +	(
-> +		cd repo &&
-> +
-> +		test_commit A &&
-> +		test_commit B &&
-> +		test_commit C &&
-> +		git commit-graph write --reachable &&
-> +
-> +		# Corrupt the repository by deleting the intermittent commit
-> +		# object. Commands should notice that this object is absent and
-> +		# thus that the repository is corrupt even if the commit graph
-> +		# exists.
-> +		oid=$(git rev-parse B) &&
-> +		rm .git/objects/"$(test_oid_to_path "$oid")" &&
-> +
-> +		test_must_fail git rev-parse HEAD~2 2>error &&
-> +		grep "error: commit $oid exists in commit-graph but not in the object database" error
-> +	)
-> +'
-> +
->  test_done
+>  		if (filter.kind != FILTER_REFS_BRANCHES)
+> -			die(_("the -a, and -r, options to 'git branch' do not take a branch name\n"
+> +			die(_("the -a, and -r, options to 'git branch' do not take a branch name.\n"
+
+You have mistakenly deleted this full stop in the previous [1/2] patch.
+Therefore, if you stop doing so, you do not need to add it here.
