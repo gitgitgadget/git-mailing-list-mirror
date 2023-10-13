@@ -1,204 +1,173 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E97101F8
-	for <git@vger.kernel.org>; Fri, 13 Oct 2023 08:38:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 768EE63A9
+	for <git@vger.kernel.org>; Fri, 13 Oct 2023 09:09:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rqOV82vY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aGFb2PDi"
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49CF5D9
-	for <git@vger.kernel.org>; Fri, 13 Oct 2023 01:38:57 -0700 (PDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.nyi.internal (Postfix) with ESMTP id 1B7205C035B;
-	Fri, 13 Oct 2023 04:38:54 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Fri, 13 Oct 2023 04:38:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm2; t=1697186334; x=1697272734; bh=mf
-	XXr67VgbbOxD8VvuZetLIGlEtMIICxpmccBSe0RIk=; b=rqOV82vYuC6+yaOKpQ
-	1OOHS7HmwV6jI2NOWiMGDzIzh+PWzvXDj5y64fwcByQDg6lxvH1bDZ5m/DYlA0VY
-	WlMr/JPHFpjQSboSBnRkg0W6iM8JPqz81wefWR2W11dB9Ad5KuYDxZzJlBQAEqlc
-	+UfVj39qSFh6LKqx94+dpJmKSl3Uyy6ppY2x1UPM4LTR3SOBI9+55q9WSkr+RLUw
-	x47e9E5PW8U9gw806X9bV/3lqNGmeVH6IVfmg81hi3V8WZU6ZUsb2FOSJqa1XHy2
-	t/V1p5qlaBVmQ1PgSkr9C3EoQz28pHN4/t5SjhAAORc8+TENtvmV/ihBRf3Jw7b7
-	FqYw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm2; t=1697186334; x=1697272734; bh=mfXXr67VgbbOx
-	D8VvuZetLIGlEtMIICxpmccBSe0RIk=; b=aGFb2PDibIwEnhkQZ4tz6hK+qBUB6
-	Je7ptBXFSdH+y1XgvaQ36gNER/3+oydWdkCg3cxq1mjd/6wZciZZct+6IgGE+5g+
-	geLa4bXlZ4IvOmqA62WEV8SVzr/88haTziZTuywmFGCMr9Rzv589iRuIj/ZzZa2u
-	5s0myouNanrXHK2jGsOy/hP+ZNqueGagk1sG1tEe0LBrDuml7+77wP9kyDM6QIz0
-	FNQFm9g0qdgyBLZyzsJHyONjBsq/xSGt/gtXZ8VdQBRsmlq+TVRBBiQDfgcp4PGs
-	Sodwz2Od8WAuZFRYC2rL0O6kYjPRXmAmOg+FVjRKeUWc1QCSauoJ8EuJA==
-X-ME-Sender: <xms:HQIpZYq_XSNsHTFOaMvzypdRjUXZBAUtFEza10W51hlk-1JhcvsBkw>
-    <xme:HQIpZeqlLtB3jO_kGEHG1ai8fdO44h_LnrWfKFTsth8a8S1xgmQ0MH5FSDbwrB99Z
-    kk3UGOXCd7sjjU2Zg>
-X-ME-Received: <xmr:HQIpZdM4BWSTTTUzKOiDlYSdgQv5cAzLS7KENwqhZPDCWd3nPtemi6MYIZKQcoVFCzYhOkEdqaIY6DOQLizAIE3x58X2ITFbXR6X0zoT3_gZjek>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedriedvgddtfecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhm
-X-ME-Proxy: <xmx:HQIpZf4vruj15f5tCo6wMEy_KjZd8xgBOLk_CSKrF4TNNQmGIJXz9g>
-    <xmx:HQIpZX5ntE_odsfw0Z66OXBtSqMDc6tYKxYVWJcv4xkALD4hEmM-DA>
-    <xmx:HQIpZfjg2TFAtRvzN0dFYUuY7h4caOObvjmukuPy4Cuw4SCshqK_WQ>
-    <xmx:HgIpZRT9T_s5sRxy3RVAwk8HSgzN99oIoyeJR4-r9UZGUKEt0amkkA>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Oct 2023 04:38:53 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id ad1984ec (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 13 Oct 2023 08:38:50 +0000 (UTC)
-Date: Fri, 13 Oct 2023 10:38:49 +0200
-From: Patrick Steinhardt <ps@pks.im>
+	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="lori6W81"
+Received: from st43p00im-ztbu10073601.me.com (st43p00im-ztbu10073601.me.com [17.58.63.184])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D11FF11A
+	for <git@vger.kernel.org>; Fri, 13 Oct 2023 02:09:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
+	s=1a1hai; t=1697188170;
+	bh=qCVgiGRh3eIEPf2bqGKKnOdEyco9TxXou1WYIR50y74=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type;
+	b=lori6W81EcREZKwZHeaUKX38d6kVqhrBFv6GhbQa2sMK+IVhMycm+Lh5V0AhshJIf
+	 U4eIV0DnMB/4ye/oDzV+8/jKvW/QcXWRP7qEhjoP892cR5V26Sw0srnqOSrFWg1Fjo
+	 tobdY3JhheEOFHD+hmCDbF9iBePj+qADG+7qCEO+A5zhgybBNB0tJrCetfvw9woMYz
+	 JdMWkYYzWFOSUjp1XGsy4dwlmh7HY1rZOBuoDqJjC22ww+qbO74k0mQOnlbaXlmlHB
+	 mHmXndOfeeDAydHH4HBI7pHowDWGLR6jT0ZShoKHMUKSGaPhk29wLTZYdgo0/p/NIJ
+	 3A6g1NNkX3IDw==
+Received: from [169.254.31.67] (st43p00im-dlb-asmtp-mailmevip.me.com [17.42.251.41])
+	by st43p00im-ztbu10073601.me.com (Postfix) with ESMTPSA id 9F38E180203;
+	Fri, 13 Oct 2023 09:09:29 +0000 (UTC)
+From: Sebastian Thiel <sebastian.thiel@icloud.com>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 0/3] rev-list: add support for commits in `--missing`
-Message-ID: <ZSkCGS3JPEQ71dOF@tanuki>
-References: <20231009105528.17777-1-karthik.188@gmail.com>
- <ZSTs3BUVtaI9QIoA@tanuki>
- <xmqqil7etndo.fsf@gitster.g>
- <CAOLa=ZSbd_E+DAkhuGrUpfHkxaje3jrH9-fEDyctAPFExKnj9A@mail.gmail.com>
- <xmqqbkd5nlq0.fsf@gitster.g>
- <CAOLa=ZQxNX4oGtqrgLyKenC_D8M=9q0sFJVmo4fyjSPtgw315Q@mail.gmail.com>
- <ZSfSt4tXx8sE68Bn@tanuki>
- <xmqqy1g7hl2y.fsf@gitster.g>
- <ZSjbYCXfSUtEIkAt@tanuki>
+Cc: git@vger.kernel.org, Josh Triplett <josh@joshtriplett.org>,
+ Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: Re: [RFC] Define "precious" attribute and support it in `git clean`
+Date: Fri, 13 Oct 2023 11:09:27 +0200
+X-Mailer: MailMate Trial (1.14r5937)
+Message-ID: <9C4A2AFD-AAA2-4ABA-8A8B-2133FD870366@icloud.com>
+In-Reply-To: <xmqqttqvg4lw.fsf@gitster.g>
+References: <79901E6C-9839-4AB2-9360-9EBCA1AAE549@icloud.com>
+ <xmqqttqytnqb.fsf@gitster.g>
+ <0E44CB2C-57F2-4075-95BE-60FBFDD3CEE2@icloud.com>
+ <xmqqttqvg4lw.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="VkWqUycrE03RvqbU"
-Content-Disposition: inline
-In-Reply-To: <ZSjbYCXfSUtEIkAt@tanuki>
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-GUID: 7B3Z4f5cxsl4J3qdMH0mw7hpRsU2Qrch
+X-Proofpoint-ORIG-GUID: 7B3Z4f5cxsl4J3qdMH0mw7hpRsU2Qrch
+X-Proofpoint-Virus-Version: =?UTF-8?Q?vendor=3Dfsecure_engine=3D1.1.170-22c6f66c430a71ce266a39bfe25bc?=
+ =?UTF-8?Q?2903e8d5c8f:6.0.138,18.0.572,17.0.605.474.0000000_definitions?=
+ =?UTF-8?Q?=3D2020-02-14=5F11:2020-02-14=5F02,2020-02-14=5F11,2020-01-23?=
+ =?UTF-8?Q?=5F02_signatures=3D0?=
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=748 suspectscore=0
+ malwarescore=0 clxscore=1015 mlxscore=0 phishscore=0 adultscore=0
+ bulkscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2310130074
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS
-	autolearn=ham autolearn_force=no version=3.4.6
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+	RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 	lindbergh.monkeyblade.net
 
+On 12 Oct 2023, at 18:58, Junio C Hamano wrote:
 
---VkWqUycrE03RvqbU
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> I presume you picked '$' > exactly because of this reason?
 
-On Fri, Oct 13, 2023 at 07:53:36AM +0200, Patrick Steinhardt wrote:
-> On Thu, Oct 12, 2023 at 09:17:09AM -0700, Junio C Hamano wrote:
-> > Patrick Steinhardt <ps@pks.im> writes:
-[snip]
-> > My assumption also has been that there is no point in running
-> > "rev-list --missing" if we know there is no repository corruption,
-> > and those who run "rev-list --missing" wants to know if the objects
-> > are really available, i.e. even if commit-graph that is out of sync
-> > with reality says it exists, if it is not in the object store, they
-> > would want to know that.
-> >=20
-> > If you can show me that it is not the case, then I may be pursuaded
-> > why producing a result that is out of sync with reality _quickly_,
-> > instead of taking time to produce a result that matches reality, is
-> > a worthy "optimization" to keep.
->=20
-> Note that I'm not saying that it's fine to return wrong results -- this
-> is of course a bug that needs to be addressed somehow. After all, things
-> working correctly should always trump things working fast. But until now
-> it felt more like we were going into the direction of disabling commit
-> graphs without checking whether there is an alternative solution that
-> allows us to get the best of both worlds, correctness and performance.
->=20
-> So what I'm looking for in this thread is a reason why we _can't_ have
-> that, or at least can't have it without unreasonable amounts of work. We
-> have helpers like `lookup_commit_in_graph()` that are designed to detect
-> stale commit graphs by double-checking whether a commit that has been
-> looked up via the commit graph actually exists in the repository. So I'm
-> wondering whether this could help us address the issue.
->=20
-> If there is a good reason why all of that is not possible then I'm happy
-> to carve in.
+Yes, and because I thought '$' seems a great fit to represent value.
 
-I've had a quick look at this problem so that I can solidify my own
-train of thought a bit. The issue is `repo_parse_commit_internal()`,
-which calls `parse_commit_in_graph()` without verifying that the object
-actually exists in the object database. It's the only callsite of that
-function outside of "commit-graph.c", as all other external callers
-would call `lookup_commit_in_graph()` which _does_ perform the object
-existence check.
+> I do not think it will be the end of the world if we don't do so,
+> but it would be really really nice if we at least explored a way (or
+> two) to make a big enough hole in the syntax to not just add
+> "precious", but leave room to later add other traits, without having
+> to worry about breaking the backward compatibility again.  A
+> simplest and suboptimal way may be to declare that a path that
+> begins with '$' now needs '\'-quoting (just like your proposal),
+> reserve '$$' as the precious prefix, and '$' followed by any other
+> byte reserved for future use, but there may be better ideas.
 
-So I think that the proper way to address the regression would be a
-patch similar to the following:
+Even though I'd love to go with the unextensible option assuming it would=
+ last
+another 15 years, I can see the appeal of making it extensible from the s=
+tart.
 
-diff --git a/commit.c b/commit.c
-index b3223478bc..109e9217e3 100644
---- a/commit.c
-+++ b/commit.c
-@@ -572,8 +572,13 @@ int repo_parse_commit_internal(struct repository *r,
- 		return -1;
- 	if (item->object.parsed)
- 		return 0;
--	if (use_commit_graph && parse_commit_in_graph(r, item))
-+	if (use_commit_graph && parse_commit_in_graph(r, item)) {
-+		if (!has_object(r, &item->object.oid, 0))
-+			return quiet_on_missing ? -1 :
-+				error(_("commit %s exists in commit-graph but not in the object databa=
-se"),
-+				      oid_to_hex(&item->object.oid));
- 		return 0;
-+	}
-=20
- 	if (oid_object_info_extended(r, &item->object.oid, &oi, flags) < 0)
- 		return quiet_on_missing ? -1 :
+In a world where '$' is a prefix, I'd also think that it's now possible t=
+o
+specify exclusion using '$!path' for completeness, if '$$path' marks 'pat=
+h'
+precious.
 
-I wouldn't be surprised if there are other edge cases where this can
-lead to buggy behaviour.
+But if there is now a prefix, I feel that it might as well be chosen so t=
+hat it
+is easier to remember and/or less likely to cause conflicts. I think it m=
+ust
+have been that reason for pathspecs to choose ':' as their prefix, and it=
+ seems
+to be an equally good choice here.
 
-Also, this issue may not necessarily stem from repository corruption. It
-could for example happen that commits are getting garbage collected
-without the commit graph having been updated, whatever the reason may be
-for this. In that case we would happily continue to return these commits
-=66rom the commit graph even though the underlying object has since been
-deleted. The repository itself is not corrupt though, we merely look at
-an out-of-date commit graph. And for what it's worth, I think that we
-should always gracefully handle that case or otherwise the commit graph
-becomes less useful overall.
+This would give us the following, taking the Linux kernel as example:
 
-I didn't dig much deeper yet. And while the above patch fixes some of
-the test failures, it doesn't fix them all. If we agree that this is the
-way to go then I'd be happy to turn this into a proper patch.
+    .*
+    !this-file-is-hidden-and-tracked
+    :!new-syntax-for-negation-for-completeness
+    \!an-ignored-file-with-leading-!
+    \:an-ignored-file-with-leading-:-which-is-technically-breaking
+    :$.config
+    :x-invalid-as-:-needs-either-!-or-$-to-follow-it
 
-Patrick
+Now ':$path' would make any path precious, which is `:$.config` in the ex=
+ample
+above.
 
---VkWqUycrE03RvqbU
-Content-Type: application/pgp-signature; name="signature.asc"
+How does that 'feel'? Is the similarity to pathspecs without being pathsp=
+ecs
+an anti-feature maybe?
 
------BEGIN PGP SIGNATURE-----
+>> Thus, to make this work, projects that ship the `.gitignore` files wou=
+ld *have
+>> to add patterns* that make certain files precious.
+>
+> Not really.  They do not have to do anything if they are content
+> with the current Git ecosystem.  And users who have precious stuff
+> can mark them in the.git/info/excludes no?
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmUpAhgACgkQVbJhu7ck
-PpTxOQ//bnOrsvci3HpOqBlQn/BbZdcxMU4yX+fHrccB8FdDh6ZIJnvXIjSNL3ZN
-x50mllv0gkIeiS29uw60mm236R5OIlg8Uh/lv1qeASn2QfsUvEwnK83YA8istLEc
-QIKquHBdJSC9FqJFf0B26hGIKwLbDbn5Z8Tt3cboIulMu2Y7hnrL7FYTL/P3n7n1
-fZ2ES0/bbPXemLflnIKe3yZII21NFz8mpAFN85CmqQzMPCcak8vWJk1Q1/7q76/g
-rEXXIBlSfCbtWREoUi15/Wv8j1epIl95sT6bIEorCrpbmn0jPS3IssLnSYrGYiwx
-6wsChvEQvsaljh+zTyZ0kuswg2kxJihoRjq4cbbpfMd5TfhC6B0DjAlG+Q2LvNjb
-XfijbkJ2IEYSQrO4g3zsaxqnNFcS3usODsTlK88oGyu9Y5bwuM2irQjgDeTkZVXQ
-KRt1RFt4p21xx7LoqVYMmQPO4B4MPaHXbC4wFtU339jUvQr0o4yu2Sb3PgQre9wP
-W/2cubbFP+0INp6aErT1mVqSxG3pphlO04en5wzznszyg4cl+pt4nMCDqy7QFjlU
-mpBIYzWrszpk1jhK3CXmETCQ5lgcL8bgc4xosQTPohxYvMf2AOwX8Fr6pOf2s6fL
-0oklNH343J8uMKKbK4uu9yyyXUoK7GEfCxMs6MLRSrox0fqlacI=
-=7g/H
------END PGP SIGNATURE-----
+Yes, but only if they control all the ignore patterns in their global fil=
+es. If
+the repository decides to exclude a file they deem precious, now it won't=
+ be
+precious anymore as their ':$make-this-precious' pattern is seen sequenti=
+ally
+after the pattern in the repository.
 
---VkWqUycrE03RvqbU--
+For instance, tooling-specific ignores are typically fully controlled by =
+the
+user, like '/.idea/', which could now easily be made precious with ':$/id=
+ea/'.
+
+But as the Linux kernel repository ships with a '.gitignore' file that in=
+cludes
+the '.*' pattern, users won't be able to 'get ahead' of that pattern with=
+ their
+':$.config' specification.
+
+> The only case that is
+> problematic is when the project says 'foo' is ignored and expendable
+> but the user thinks otherwise.  So to make this work, projects that
+> ship the ".gitignore" files have to avoid adding patterns to ignore
+> things that it may reasonably be expected for its users to mark
+> precious.
+
+Yes, I think my paragraph above is exactly that but with examples to prac=
+tice
+the new syntax-proposal.
+
+>
+>> Such opted-in projects would produce `.gitignore` files like these:
+>>
+>>     .*
+>>     $.config
+>
+> I would understand if you ignored "*~" or "*.o", but why ignore ".*"?
+
+I don't have an answer, the example is from the Linux Kernel repository w=
+as
+added in 1e65174a33784 [1].
+
+I am definitely getting excited about the progress the syntax is making :=
+),
+thanks for proposing it!
+
+[ Reference ]
+
+1. https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/com=
+mit/?id=3D1e65174a33784
+
