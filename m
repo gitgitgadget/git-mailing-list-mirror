@@ -1,60 +1,60 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E5E1803B
-	for <git@vger.kernel.org>; Sat, 14 Oct 2023 18:14:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09CD6185A
+	for <git@vger.kernel.org>; Sat, 14 Oct 2023 19:37:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="LFhqSZ3c";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aWc6cRP/"
-Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C620A1
-	for <git@vger.kernel.org>; Sat, 14 Oct 2023 11:14:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="QjooVZMf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L19/GM3c"
+Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43824B7
+	for <git@vger.kernel.org>; Sat, 14 Oct 2023 12:37:46 -0700 (PDT)
 Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.west.internal (Postfix) with ESMTP id 09A3E32009DD;
-	Sat, 14 Oct 2023 14:14:33 -0400 (EDT)
+	by mailout.west.internal (Postfix) with ESMTP id C861C320095F;
+	Sat, 14 Oct 2023 15:37:43 -0400 (EDT)
 Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Sat, 14 Oct 2023 14:14:34 -0400
+  by compute1.internal (MEProxy); Sat, 14 Oct 2023 15:37:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
 	 h=cc:cc:content-type:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:sender:subject:subject:to:to; s=fm2; t=1697307273; x=
-	1697393673; bh=YkFQ5BSG4LYy4eQEYjC4JS8xV3Ju+38uwzZ/I9nHFFo=; b=L
-	FhqSZ3cuDvb9bnKCyxTT/5USGSTl30smvLK1DgRaALZcjqK359troqB6pODYNqEt
-	n9H7tXm88GWKuT3tGjLbB7F4osrVKeuFo/UFw/m5Ru39DH9iEMCirrGP53ErLpDt
-	+kSnkjSMLBc8OywCb3jO8dug4UwuPf6HYwC2fLHbWzZ5cZAcYwMZTUZiyBQJqvxb
-	5ddYt9ujzC9bFyfzQkSA2ItfY5PoDH1e8sMtMtJ0HioXKLtmQ8jnESspXkQoDVgY
-	kCMM7Yc5/pWxZnH4lUng+a5fByFKG6Uu6VewUDjPBSe5V4iWK6sX7dKPz+LQ8a1E
-	OgfVCYGPBThWBSFzdhaUA==
+	:reply-to:sender:subject:subject:to:to; s=fm2; t=1697312263; x=
+	1697398663; bh=8H1KP40fGhedB+FGzSG++O3FdVq1tgDeqnwdEJTLMMY=; b=Q
+	jooVZMf3YXVtToiQAnWnPvXjXgezVcwrkC5E150pnBxg93z969aXiyIurFhiV6dR
+	9abpnE69xnau75SK73UQlSlOWjrVxVDetRrQuCFz6MCK/IdU28q6UjrGFb1Z+NDD
+	C/liYp/wyGhEm5bnkj981lXREiAM58msza1o/XLS3JWrpaw8oX3jgZ7foE6kfybp
+	yKGWH0yuvK2zSHEumLeCS8XmYtC/VBGcn/or8c4zu3qQjY2xDHPCKlAJ4NTLVqfx
+	oIA2yVC4xdcDTHMEQO40kD48gxg+3CL86e72SF3Rx8E0/VKsTjnZnWtiLEt44nyg
+	6rv8H1kphCGHqMsuBiDHg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1697307273; x=1697393673; bh=YkFQ5BSG4LYy4
-	eQEYjC4JS8xV3Ju+38uwzZ/I9nHFFo=; b=aWc6cRP/o0WFt7fNykYeevprKI9tf
-	t6rYfrgpOP+l+S/efvpb6LyU7oHj3lxhmDz3mDc2lGvo7adzhM0I7UoFjkcJr1E0
-	HAUh8QpgdDwcl8GsTRYnODwbE0/U9Kl4c/M4Uvz8kPzn3jzC5M85wX4FB4Y9G5a0
-	vrPl5kcRH97WeQ6VWe4y7c2BHlSeV8Wu2+zJdVoNmzlQrYuHIOA43f07i3i6yKgY
-	WZYt75KizL9o7BsTipJEvxaReR1wd1jTJz1LeTQ2yhdUMjP/KhmSJrNehrv4Z8Cd
-	Mu6lAWZjGXCejVf7qvcwnrxsev4a40by+eJR9enrfZuMDmfypeiXnyJTQ==
-X-ME-Sender: <xms:idoqZVNjFySbNPCr981Sq6Is_rfPCCZIHAllSq3jzJl8XnbcAMM_4TY>
-    <xme:idoqZX_4qzOIHTMO6_36ZN82-FTrzgmC9xIyWWdezqap92AeF9O-d2kGvSup5-eVp
-    SQrijPLO0y0hLmizw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrieehgdduvdduucetufdoteggodetrfdotf
+	:x-sasl-enc; s=fm3; t=1697312263; x=1697398663; bh=8H1KP40fGhedB
+	+FGzSG++O3FdVq1tgDeqnwdEJTLMMY=; b=L19/GM3cYhmle0vipCyZNDU9UPpJN
+	p23573G+HbEywmL54cHXBZmbk+dQxwzxcAQ5FG48ptL3RUV45ZbmCGBTjMb32egT
+	Wl997i/z9yey4ZgOEeEvQPwmgnAFcW0+fc2lvBthxiS9yhPeXBW8VmmUf2bGDV7R
+	mA0/HDMkbHjnIrzMq0kocLYEp5F47Kf1WxTnsB95ayXMQmBZegIY7YiqIHbPWRVu
+	XCn/5J+Q8+IIc2tLco/AnXx5i0LFDtFiwcc8SevhgdJCHVTmRwHekyVMADi1XYQW
+	GVF/osmyZZCIjOktJ4dnrJkSlQgdHeOF6w+XPkYTyhWG8pQnWK6SJmHEw==
+X-ME-Sender: <xms:B-4qZeEHFMlid2bKYsPXu8X650k1pQXwHkhZje_mtrmHpg_rsbpguuU>
+    <xme:B-4qZfWc_UWbSIGFQoXD46q8iBUwwOdXlp_VBoLltBb54vQ5bVprZUp2mqlw77TPo
+    4QOxVZFMxfApD6T_Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrieehgddufeekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfgjfhffhffvvefutgesth
-    dtredtreertdenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdf
-    uceotghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpe
-    dtkedtjeeiffelteffheeiheeufffgheelueeftdejkeeufffgiefhgeekffffueenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskh
-    hhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:idoqZURA76_tJy472wknaRiPv7O2MyPoB2hwZcD3WLcmyYwiTvFulA>
-    <xmx:idoqZRvhLlg1siTO4GIFXXYNTWSJqTrp3g9akVaf4xlemnkYgzQyiw>
-    <xmx:idoqZdfeW9UAPhKpOv_F0N0iml6iZWeBX62MujIGoBLnhhOnTbm0Vg>
-    <xmx:idoqZTocobPcPGbJ_fiS82dPe5oyyiL8hTAYLoOP3LFQP4XJFE6iYg>
+    uceurghilhhouhhtmecufedttdenucgoteeftdduqddtudculdduhedmnecujfgurhepof
+    gfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedfmfhrihhsthhofhhf
+    vghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
+    eqnecuggftrfgrthhtvghrnheptdektdejieffleetffehieehueffgfehleeufedtjeek
+    ueffgfeihfegkeffffeunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
+X-ME-Proxy: <xmx:B-4qZYJKPMeyjWtL8P2io5ayDCcGPKLb2Kd8GhZDTrd3R66JW8Avtg>
+    <xmx:B-4qZYHxV7BMPKSomsPBo1bgVUj6-0UraELSeM8ntQGcPJhYGlnj3w>
+    <xmx:B-4qZUV-m9WEB7V8I5TIinXygQg2dNBQXVUO6qGhVooan9nu2ymq_w>
+    <xmx:B-4qZdd1I8y3zOhu6gw4JPAYJUTzLDJ6MidxQ1PKGFvpl8uc7Lf_Hw>
 Feedback-ID: i2671468f:Fastmail
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 10C8A15A0091; Sat, 14 Oct 2023 14:14:32 -0400 (EDT)
+	id 0A8A015A0092; Sat, 14 Oct 2023 15:37:43 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.9.0-alpha0-1019-ged83ad8595-fm-20231002.001-ged83ad85
 Precedence: bulk
@@ -63,56 +63,36 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <2d8eca81-0415-43bf-b3c4-f1163713422b@app.fastmail.com>
-In-Reply-To: 
- <CAKFQ_Q_P4HvCMHsg4=6ycb8r44qprhRCGSmLQf7B3_-zy28_oQ@mail.gmail.com>
+Message-Id: <6bb48aac-460c-4d7f-9057-40c3df0c807d@app.fastmail.com>
+In-Reply-To: <2d8eca81-0415-43bf-b3c4-f1163713422b@app.fastmail.com>
 References: 
  <CAKFQ_Q_P4HvCMHsg4=6ycb8r44qprhRCGSmLQf7B3_-zy28_oQ@mail.gmail.com>
-Date: Sat, 14 Oct 2023 20:12:04 +0200
+ <2d8eca81-0415-43bf-b3c4-f1163713422b@app.fastmail.com>
+Date: Sat, 14 Oct 2023 21:37:08 +0200
 From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "ks1322 ks1322" <ks1322@gmail.com>
-Cc: git@vger.kernel.org
+To: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+Cc: git@vger.kernel.org, "ks1322 ks1322" <ks1322@gmail.com>
 Subject: Re: Bug: git grep --no-index 123 /dev/stdin crashes with SIGABRT
 Content-Type: text/plain
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-	SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+	RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 	lindbergh.monkeyblade.net
 
-Hi ks1322 
+On Sat, Oct 14, 2023, at 20:12, Kristoffer Haugsbakk wrote:
+> It looks like `setup.c:verify_filename` fails to deny paths that are not
+> transitive children (or whatever the term) of the directory that git(1) is
+> running in:
 
-On Sat, Oct 14, 2023, at 17:42, ks1322 ks1322 wrote:
-> Thank you for filling out a Git bug report!
-> Please answer the following questions to help us understand your issue.
->
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> `git grep --no-index 123 /dev/stdin` outside of git repository
->
-> What did you expect to happen? (Expected behavior)
-> Ability to grep input from stdin
->
-> What happened instead? (Actual behavior)
-> `git grep` crashed with SIGABRT
->
-> $ git grep --no-index 123 /dev/stdin
-> BUG: environment.c:215: git environment hasn't been setup
-> Aborted (core dumped)
->
-> What's different between what you expected and what actually happened?
-> Crash, no grep result
+No, that's not it. I don't think that's the responsibility of that
+function. Compare to a successful run, that is when run in a Git
+repository:
 
-It looks like `setup.c:verify_filename` fails to deny paths that are not
-transitive children (or whatever the term) of the directory that git(1) is
-running in:
+    $ git grep --no-index dfddf /home
+    fatal: /home: '/home' is outside repository at '/home/kristoffer/programming/git'
 
-    $ git -C ~/IdeaProjects/ grep --no-index dfddf ~
-    BUG: environment.c:213: git environment hasn't been setup
-    Aborted (core dumped)
+And that error happens at `pathspec.c:473`.
 
-So `builtin/grep.c` goes past that check, into
-`pathspec.c:init_pathspec_item` and dies at line 472 since that function
-assumes that we are in a Git repository.
-
--- 
-Kristoffer Haugsbakk
+So going down into that file is not wrong.
