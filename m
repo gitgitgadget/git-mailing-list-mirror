@@ -1,97 +1,95 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E49211877
-	for <git@vger.kernel.org>; Sat, 14 Oct 2023 07:30:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE1E5687
+	for <git@vger.kernel.org>; Sat, 14 Oct 2023 10:35:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="rkEJbqdK"
-Received: from st43p00im-zteg10071901.me.com (st43p00im-zteg10071901.me.com [17.58.63.169])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99E60C2
-	for <git@vger.kernel.org>; Sat, 14 Oct 2023 00:30:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
-	s=1a1hai; t=1697268656;
-	bh=iCKt5TctUc7KXlmPEeDz8afMhnkcqQ3WMZ0oCtv5La0=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type;
-	b=rkEJbqdKjh3Tt21RqCEzzZYG2Et0t9ivQyUiie3rDzbKGYayMfUQ8O6MLRlmC+XzY
-	 jm7lYUNKK11h1SNPv8lF4ANNaSOQNEYHQMI5DpCSTM36AnwEsBm+OG599t0aExbrc/
-	 cMf2CT12dqRb6ZFgrlBAbkaY3ZOPOGzzDzl90uv6Ze46AGNpLF6fMq3PC4v03FPEuJ
-	 KzdbQAeMxy2PuueG+iU5wkmmahAhcFG3W/BcxQr6bEW+a5eZT7IBGIWhxydcGm4XQs
-	 qiST8tXCrF26s+itK4WdzLPEGiLY5Qg/3pswBckTzBqSCi/u4SmKyh4aUh/dzd+y5v
-	 jSBql2d85nFvA==
-Received: from [192.168.178.33] (st43p00im-dlb-asmtp-mailmevip.me.com [17.42.251.41])
-	by st43p00im-zteg10071901.me.com (Postfix) with ESMTPSA id DF9BB8400D0;
-	Sat, 14 Oct 2023 07:30:55 +0000 (UTC)
-From: Sebastian Thiel <sebastian.thiel@icloud.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Josh Triplett <josh@joshtriplett.org>,
- Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: Re: [RFC] Define "precious" attribute and support it in `git clean`
-Date: Sat, 14 Oct 2023 09:30:53 +0200
-X-Mailer: MailMate (1.14r5937)
-Message-ID: <9815705C-EF59-473F-A119-DE84C0E16A89@icloud.com>
-In-Reply-To: <xmqqfs2e3292.fsf@gitster.g>
-References: <79901E6C-9839-4AB2-9360-9EBCA1AAE549@icloud.com>
- <xmqqttqytnqb.fsf@gitster.g>
- <0E44CB2C-57F2-4075-95BE-60FBFDD3CEE2@icloud.com>
- <xmqqttqvg4lw.fsf@gitster.g>
- <9C4A2AFD-AAA2-4ABA-8A8B-2133FD870366@icloud.com>
- <xmqqfs2e3292.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="XvINhDle";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QWegp+Y3"
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE239B3
+	for <git@vger.kernel.org>; Sat, 14 Oct 2023 03:35:30 -0700 (PDT)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id 3E5655C02AC;
+	Sat, 14 Oct 2023 06:35:27 -0400 (EDT)
+Received: from imap49 ([10.202.2.99])
+  by compute1.internal (MEProxy); Sat, 14 Oct 2023 06:35:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:sender:subject:subject:to:to;
+	 s=fm2; t=1697279727; x=1697366127; bh=dYcspenoeN6qp7jFGTRt4VUZZ
+	NW0w4gliwNmEAkuFH8=; b=XvINhDle78zLUMJxV3JdrnPVCKRQlV+Qp/+11EVln
+	IMPwx0qYA0j6WziKVdLdwnqpZfsO14FNQ3toejYOA+ARH1LiGXc6r8Bd3U/SPNyT
+	UR0kXut+J9P1PxbBX4awxUiZpmvDQ+msVQqXQYRZjZquIS1LO2wJHAyOC4dgbTmO
+	XZ2uPmCGOwZg+rduOIQIaPd6O2VeGXR/i+dxZTblvQoJ4M6S9H2Mt439+etiz7Sp
+	2o8gy9xylkDJlYn2xQn8WvI0w9kc0dfgTCkSft+Jsz7lNv85ASEBgLiV06QJYBLM
+	r1vQx/YNHCeXx2IO6w5ItLkS576a21SWw5Vix27p6gLsQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:sender:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1697279727; x=1697366127; bh=dYcspenoeN6qp7jFGTRt4VUZZNW0w4gliwN
+	mEAkuFH8=; b=QWegp+Y3qJFJq1O2+7e0eUyNQSzZ5uY9JpmkbCE6IkGqwxixwlK
+	EF9qtCutNAkcLCZz5rw5MaisRVk5UcO2r45j2x0myGXirFF6gP38qCSwzdiuOqDL
+	nHULsVkGg8DnOx/tAAu6CvV1ZkFZjkqM7IW6ZRrCuR4kFbE5MMnB/KfVrF8/dFlK
+	KLsF3kEU47WaXLCuqS8JZqQCCSWp/PC/dEsc6kn3VKXX4jwASfaHrrU1jKaAXtEc
+	mTYfoskarhqfIHRn8UoFO+uoqf3036e5k5Fkn/rBfGUExN2B11+H2kgw/hW1GTAB
+	4Z1O+s8Ef8srGMm9pAdLeAvIvta7yhVBhBg==
+X-ME-Sender: <xms:724qZeAMh33pcO1NleA-io0jGsjZgfZrUYppjJ8oaunc75NH78jBJFk>
+    <xme:724qZYjXhy67CYUeDzSm2GpdsHxwTFyLzFJA0TCjLjnlTefC3JrDcXsP5sU7DyGaq
+    jyb_FVSWbhH0K33jA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrieehgdeftdcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpefofgggkfgjfhffhffvvefutgfgsehtqhertderreejnecuhfhrohhmpedfmfhr
+    ihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssggrkh
+    hkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepvdevheeiudefheffvdetueevkeehhfel
+    iefgkedtieefudetueehueeftefffedunecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
+X-ME-Proxy: <xmx:724qZRlNO3SXENu67rB33uq0N-8bObs7dmr9hAYBu57ZLw58HaWlQQ>
+    <xmx:724qZcy1c8qCpsswVogmv35x-TcSBYqJG7kLzjBP9ByGDQmF5bptGw>
+    <xmx:724qZTR07eSRcSm0DdxWSTLhIWVP_d5ekQ3jHaCuQB6YW7bOoHYOFw>
+    <xmx:724qZWNzzGwejZtKo21PiIKJMDkJTJ4Q9tWq5t3s9ltr4s6MvicRcg>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id DF44D15A0093; Sat, 14 Oct 2023 06:35:26 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-1019-ged83ad8595-fm-20231002.001-ged83ad85
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Proofpoint-ORIG-GUID: e-m_T5GgMwDCsxKaWbZTFfR7_To1_Jeg
-X-Proofpoint-GUID: e-m_T5GgMwDCsxKaWbZTFfR7_To1_Jeg
-X-Proofpoint-Virus-Version: =?UTF-8?Q?vendor=3Dfsecure_engine=3D1.1.170-22c6f66c430a71ce266a39bfe25bc?=
- =?UTF-8?Q?2903e8d5c8f:6.0.591,18.0.572,17.11.176.26.0000000_definitions?=
- =?UTF-8?Q?=3D2023-07-31=5F02:2023-07-31=5F02,2020-02-14=5F11,2023-05-22?=
- =?UTF-8?Q?=5F02_signatures=3D0?=
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0 bulkscore=0 spamscore=0
- clxscore=1015 suspectscore=0 phishscore=0 mlxlogscore=728 mlxscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2310140065
+Message-Id: <90bf6f0e-6061-4670-aa04-9d6e44b1d246@app.fastmail.com>
+In-Reply-To: <20231014040101.8333-1-jacob@initialcommit.io>
+References: <20231014040101.8333-1-jacob@initialcommit.io>
+Date: Sat, 14 Oct 2023 12:35:06 +0200
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Jacob Stopak" <jacob@initialcommit.io>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] bugreport: add 'seconds' to default outfile name
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-	RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 	lindbergh.monkeyblade.net
 
-On 13 Oct 2023, at 18:39, Junio C Hamano wrote:
+Hi Jacob
 
-> Come to think of it, we might be able to retrofit '!' without too
-> much damage.  Something like "!unignored" is now a deprecated but
-> still supported way to say "!!unignored", "!*precious" is new, and
-> "\!anything" is a pathname that begins with '!'.
+On Sat, Oct 14, 2023, at 06:01, Jacob Stopak wrote:
+> This patch adds the calendar second value to the default bugreport
 
-I don't know anything about statistics, and I don't which of the proposed
-syntax thus far has the lowest probability of accidental breakage, possibly
-in combination with the best possible usability.
+Nitpick: you can just say =E2=80=9CAdd the calendar=E2=80=9D. =E2=80=9CT=
+his patch=E2=80=9D is redundant.
 
-However, I do like even more the idea to retro-fit `!` instead of having an
-entirely new prefix, it seems more intuitive to me.
+See `Documentation/SubmittingPatches` at `imperative-mood`.
 
-An apparent disadvantage would be that using `!` prefix with
-backwards-compatibility will make any additional future modifier more
-breaking. For instance `!*` is potentially ignoring an additional file
-in old git, and another `!-` modifier is having the same effect.
-
-Chances for this are probably low though, but if in doubt it would be possible
-to check certain patterns against all files of the top-3.5TB of
-GitHub repositories.
-
-Using `!*` to signal precious files also seems like a less likely
-path prefix than `!$` would be, but then again, it's just a guess
-which most definitely doesn't have much bearing.
-
-I personally also like this more than using special comments as 'modifier',
-even though doing so would probably have the lowest probability for
-accidentally ignoring files in old git.
-
-Maybe it's time to choose one of the options with the possibility to validate
-it for accidental exclusion of files against the top 3.5TB of
-GitHub repositories to be more sure it?
-
+--=20
+Kristoffer
