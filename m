@@ -1,174 +1,114 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35547E
-	for <git@vger.kernel.org>; Sat, 14 Oct 2023 00:43:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A389991
-	for <git@vger.kernel.org>; Fri, 13 Oct 2023 17:43:50 -0700 (PDT)
-Received: (qmail 27706 invoked by uid 109); 14 Oct 2023 00:43:50 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 14 Oct 2023 00:43:50 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17764 invoked by uid 111); 14 Oct 2023 00:43:52 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 13 Oct 2023 20:43:52 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 13 Oct 2023 20:43:48 -0400
-From: Jeff King <peff@peff.net>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D503D15D2
+	for <git@vger.kernel.org>; Sat, 14 Oct 2023 04:01:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=initialcommit-io.20230601.gappssmtp.com header.i=@initialcommit-io.20230601.gappssmtp.com header.b="Kt+e9GYi"
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDF4EC0
+	for <git@vger.kernel.org>; Fri, 13 Oct 2023 21:01:15 -0700 (PDT)
+Received: by mail-pj1-x102b.google.com with SMTP id 98e67ed59e1d1-27cfb8442f9so1914357a91.2
+        for <git@vger.kernel.org>; Fri, 13 Oct 2023 21:01:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=initialcommit-io.20230601.gappssmtp.com; s=20230601; t=1697256075; x=1697860875; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=lyvfKHPl2ZFAOu5EpaNHvDMXLhUYLdwTgxVd/gSprzA=;
+        b=Kt+e9GYispGYNMcrmuVSogsO9gS/kRQGUPwBjPvq5IrBNwqL7jj8JCYxTojsvpoJsF
+         E/MPzG+5yP9/uw+Eato3ilvIM+Qcr7CoyuHGskcIYH0+1MgPw4UmkPwFhdor/MDEBQAv
+         4kh8Dcz5j5UAughrAOGoggUlC1/M3y0YXQhMh6i7gFHMgKaaMIeHPancFYVmib2JAtuy
+         OTKWjftyuzfPicckejK+rdDZbZSpHp5ZwgMCTLLlm8w8xL6I4qo6Yao2avfubptW1i3Z
+         mV8gpur5brxCvNGWPWEp7VY7Ud1idDLnF1UEObqlThPlJkF6gnUO5Evlv79XawnbNo6T
+         OBZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697256075; x=1697860875;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lyvfKHPl2ZFAOu5EpaNHvDMXLhUYLdwTgxVd/gSprzA=;
+        b=pEB3li9y8P8oVWWSLYh9RK2g7mI5yZ4n0p97oRMIN5GRzdN+sSO89Q8KAcoGVcQYat
+         JXfty/FELDPd0a8CKrbYOUmOLkilt5Xh5o6PLyzlrtfJdSQxqTnQPtedupDfyQ0lyNoA
+         G5sRwJYmUE2lwU2OkU3M0MOyVu/3UoshBKI5c2XdESA1xVq7WGECMiN95Hm9Sor0nbDG
+         IrjJLNB6SaA6BMTn/owgqaSzulHmegVLfnnGsXb0ifbQvgI6tof8KJir7JrtbvY1FtEd
+         Y7hqIW9blXOVbMgppQYUL3WBbjPrfkMaThiBDsWfkkiYnZ6/Swkp15N9Rf+1zD6iy7UH
+         3ljQ==
+X-Gm-Message-State: AOJu0YxaFbIs/C+w9qq3wS45WqKk1aWIqFOhvxN0sOfZSkt9FoejE0nL
+	HE9rLVgap+HPvI36STjRjVMXtJRv2UCSQl1vh9o=
+X-Google-Smtp-Source: AGHT+IH625b7WpZseW1mIHw2kx/IhVQWEpB9k6mdwCpMleyvaVHSAuI60njT6f/q4hITygWItu4L/w==
+X-Received: by 2002:a17:90a:983:b0:27c:edd6:b08d with SMTP id 3-20020a17090a098300b0027cedd6b08dmr10964678pjo.24.1697256074934;
+        Fri, 13 Oct 2023 21:01:14 -0700 (PDT)
+Received: from localhost.localdomain (ip68-7-58-180.sd.sd.cox.net. [68.7.58.180])
+        by smtp.gmail.com with ESMTPSA id gd1-20020a17090b0fc100b0026801e06ac1sm837767pjb.30.2023.10.13.21.01.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Oct 2023 21:01:14 -0700 (PDT)
+From: Jacob Stopak <jacob@initialcommit.io>
 To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH 21/20] t5319: make corrupted large-offset test more robust
-Message-ID: <20231014004348.GA43880@coredump.intra.peff.net>
-References: <20231009205544.GA3281950@coredump.intra.peff.net>
+Cc: Jacob Stopak <jacob@initialcommit.io>
+Subject: [PATCH] bugreport: add 'seconds' to default outfile name
+Date: Fri, 13 Oct 2023 21:01:01 -0700
+Message-ID: <20231014040101.8333-1-jacob@initialcommit.io>
+X-Mailer: git-send-email 2.42.0.297.g393e7d1581
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20231009205544.GA3281950@coredump.intra.peff.net>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
-	RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=ham
 	autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 	lindbergh.monkeyblade.net
 
-On Mon, Oct 09, 2023 at 04:55:44PM -0400, Jeff King wrote:
+Currently, git bugreport postfixes the default bugreport filename (and
+diagnostics zip filename if --diagnose is supplied) with the current
+calendar hour and minute values, assuming the -s flag is absent.
 
->   [10/20]: midx: bounds-check large offset chunk
+If a user runs the bugreport command more than once within a calendar
+minute, a filename conflict with an existing file occurs and the program
+errors, since the new output filename was already used for the previous
+file. If the user waits anywhere from 1 to 60 seconds (depending on
+_when_ during the calendar minute the first command was run) the command
+works again with no error since the default filename is now unique, and
+multiple bug reports are able to be created with default settings.
 
-Here's one more patch on top that fixes a flaky test. Sorry not to have
-caught it before sending out the original series. I did see a flaky CI
-run before then, but I tweaked the test with what I thought was the
-solution, and then it didn't re-occur until I ran CI again today.
+This is a minor thing but can cause confusion especially for first time
+users of the bugreport command, who are likely to run it multiple times
+in quick succession to learn how it works, (like I did).
 
-I'm pretty sure this should fix it for good.
+This patch adds the calendar second value to the default bugreport
+filename. This technically just shortens the window during which the
+issue occurs, but a single second is a small enough time increment that
+users will avoid the filename conflict in practice in this scenario.
 
-(I also saw Taylor posted some further patches; I haven't looked closely
-yet, this should be orthogonal to those).
+This means the user will end up with multiple bugreport files being
+created if they run the command multiple times quickly, but that feels
+more intuitive and consistent than an error arbitrarily occuring within
+a calendar minute, especially given that the time window in which the
+error currently occurs is variable as described above.
 
--- >8 --
-Subject: [PATCH] t5319: make corrupted large-offset test more robust
-
-The test t5319.88 ("reader bounds-checks large offset table") can fail
-intermittently. The failure mode looks like this:
-
-  1. An earlier test sets up "objects64", a directory that can be used
-     to produce a midx with a corrupted large-offsets table. To get the
-     large offsets, it corrupts the normal ".idx" file to have a fake
-     large offset, and then builds a midx from that.
-
-     That midx now has a large offset table, which is what we want. But
-     we also have a .idx on disk that has a corrupted entry. We'll call
-     the object with the corrupted large-offset "X".
-
-  2. In t5319.88, we further corrupt the midx by reducing the size of
-     the large-offset chunk (because our goal is to make sure we do not
-     do an out-of-bounds read on it).
-
-  3. We then enumerate all of the objects with "cat-file --batch-check
-     --batch-all-objects", expecting to see a complaint when we try to
-     show object X. We use --batch-all-objects because our objects64
-     repo doesn't actually have any refs (but if we check them all, one
-     of them will be the failing one). The default batch-check format
-     includes %(objecttype) and %(objectsize), both of which require us
-     to access the actual pack data (and thus requires looking at the
-     offset).
-
-  4a. Usually, this succeeds. We try to output object X, do a lookup via
-      the midx for the type/size lookup, and run into the corrupt
-      large-offset table.
-
-  4b. But sometimes we hit a different error. If another object points
-      to X as a delta base, then trying to find the type of that object
-      requires walking the delta chain to the base entry (since only the
-      base has the concrete type; deltas themselves are either OFS_DELTA
-      or REF_DELTA).
-
-      Normally this would not require separate offset lookups at all, as
-      deltas are usually stored as OFS_DELTA, specifying the relative
-      offset to the base. But the corrupt idx created in step 1 is done
-      directly with "git pack-objects" and does not pass the
-      --delta-base-offset option, meaning we have REF_DELTA entries!
-      Those do have to consult an index to find the location of the base
-      object, and they use the pack .idx to do this. The same pack .idx
-      that we know is corrupted from step 1!
-
-      Git does notice the error, but it does so by seeing the corrupt
-      .idx file, not the corrupt midx file, and the error it reports is
-      different, causing the test to fail.
-
-The set of objects created in the test is deterministic. But the delta
-selection seems not to be (which is not too surprising, as it is
-multi-threaded). I have seen the failure in Windows CI but haven't
-reproduced it locally (not even with --stress). Re-running a failed
-Windows CI job tends to work. But when I download and examine the trash
-directory from a failed run, it shows a different set of deltas than I
-get locally. But the exact source of non-determinism isn't that
-important; our test should be robust against any order.
-
-There are a few options to fix this:
-
-  a. It would be OK for the "objects64" setup to "unbreak" the .idx file
-     after generating the midx. But then it would be hard for subsequent
-     tests to reuse it, since it is the corrupted idx that forces the
-     midx to have a large offset table.
-
-  b. The "objects64" setup could use --delta-base-offset. This would fix
-     our problem, but earlier tests have many hard-coded offsets. Using
-     OFS_DELTA would change the locations of objects in the pack (this
-     might even be OK because I think most of the offsets are within the
-     .idx file, but it seems brittle and I'm afraid to touch it).
-
-  c. Our cat-file output is in oid order by default. Since we store
-     bases before deltas, if we went in pack order (using the
-     "--unordered" flag), we'd always see our corrupt X before any delta
-     which depends on it. But using "--unordered" means we skip the midx
-     entirely. That makes sense, since it is just enumerating all of
-     the packs, using the offsets found in their .idx files directly.
-     So it doesn't work for our test.
-
-  d. We could ask directly about object X, rather than enumerating all
-     of them. But that requires further hard-coding of the oid (both
-     sha1 and sha256) of object X. I'd prefer not to introduce more
-     brittleness.
-
-  e. We can use a --batch-check format that looks at the pack data, but
-     doesn't have to chase deltas. The problem in this case is
-     %(objecttype), which has to walk to the base. But %(objectsize)
-     does not; we can get the value directly from the delta itself.
-     Another option would be %(deltabase), where we report the REF_DELTA
-     name but don't look at its data.
-
-I've gone with option (e) here. It's kind of subtle, but it's simple and
-has no side effects.
-
-Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Jacob Stopak <jacob@initialcommit.io>
 ---
- t/t5319-multi-pack-index.sh | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ builtin/bugreport.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-index 2a11dd1af6..d3c9e97feb 100755
---- a/t/t5319-multi-pack-index.sh
-+++ b/t/t5319-multi-pack-index.sh
-@@ -1129,8 +1129,10 @@ test_expect_success 'reader bounds-checks large offset table' '
- 		git multi-pack-index --object-dir=../objects64 write &&
- 		midx=../objects64/pack/multi-pack-index &&
- 		corrupt_chunk_file $midx LOFF clear &&
--		test_must_fail git cat-file \
--			--batch-check --batch-all-objects 2>err &&
-+		# using only %(objectsize) is important here; see the commit
-+		# message for more details
-+		test_must_fail git cat-file --batch-all-objects \
-+			--batch-check="%(objectsize)" 2>err &&
- 		cat >expect <<-\EOF &&
- 		fatal: multi-pack-index large offset out of bounds
- 		EOF
+diff --git a/builtin/bugreport.c b/builtin/bugreport.c
+index d2ae5c305d..b556c6e135 100644
+--- a/builtin/bugreport.c
++++ b/builtin/bugreport.c
+@@ -106,7 +106,7 @@ int cmd_bugreport(int argc, const char **argv, const char *prefix)
+ 	struct tm tm;
+ 	enum diagnose_mode diagnose = DIAGNOSE_NONE;
+ 	char *option_output = NULL;
+-	char *option_suffix = "%Y-%m-%d-%H%M";
++	char *option_suffix = "%Y-%m-%d-%H%M%S";
+ 	const char *user_relative_path = NULL;
+ 	char *prefixed_filename;
+ 	size_t output_path_len;
+
+base-commit: 493f4622739e9b64f24b465b21aa85870dd9dc09
 -- 
-2.42.0.937.g4d9eb42d36
+2.42.0.297.g393e7d1581
 
