@@ -1,48 +1,48 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D34B326E28
-	for <git@vger.kernel.org>; Sat, 14 Oct 2023 21:47:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613031845
+	for <git@vger.kernel.org>; Sat, 14 Oct 2023 23:01:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="cT03ihOS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HkbMExN+"
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C04C5D6
-	for <git@vger.kernel.org>; Sat, 14 Oct 2023 14:47:02 -0700 (PDT)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.west.internal (Postfix) with ESMTP id 1198232009BB;
-	Sat, 14 Oct 2023 17:47:01 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="YSlMh9WO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="M5nlGlR6"
+Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF5D1B7
+	for <git@vger.kernel.org>; Sat, 14 Oct 2023 16:01:05 -0700 (PDT)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailout.west.internal (Postfix) with ESMTP id 47A863200927;
+	Sat, 14 Oct 2023 19:01:03 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Sat, 14 Oct 2023 17:47:02 -0400
+  by compute6.internal (MEProxy); Sat, 14 Oct 2023 19:01:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
 	 h=cc:cc:content-transfer-encoding:content-type:date:date:from
 	:from:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:sender:subject:subject:to:to; s=fm2; t=1697320021; x=
-	1697406421; bh=yFOZtHDAxL/J9lBur5x6bBmlfenz6cMPvtVn3MBMwQk=; b=c
-	T03ihOSzJWPG3UQu2VqyQXEC+9+L4+aZoz/SjtiO5V4XUaD7PslKca3ylIFFddNK
-	mpvEp/QFqk8Q6k4abZ2dZVpfOfedVEMWiE6IQyov+rNU3aGyZPpddYUPvmavoruY
-	iCe4CGva3hILCoSmSvdGQpoMoIKgvl5nT3vbtBHiV+5bX3mPMTOW0LaOtRBn+fqW
-	qDhtu1rX3mlNF6a8H2YIWkuT0Yf4VY09LoRl9VRlNYGRvItINPwc9V7Gs13tkw0G
-	uE6Q+GnPDa/oQ7ePk8219RyyBZ9Q767MzUrfEy27C18P4idYdvdXBI4wx1B9LjNP
-	nq6YL5lYKLZ37bpCi76RA==
+	:reply-to:sender:subject:subject:to:to; s=fm2; t=1697324462; x=
+	1697410862; bh=yXQYbJQVWjFGHSeLqxMc71kugvCqksjC7wd1Fww/3PY=; b=Y
+	SlMh9WONQBOMdm7XiaXzEzWfFzAbI90VfYCqxWGYdIpHOiEmT2vCe4IQfn8BbnuG
+	Vcs+/bEZRXClSl9U77RzNpFiWnTzvx2N9FSNJ6AA8wK8eId/8jXg4fICbsJlgDFC
+	ByOF9D5BijRCG6oppsMESwpIwG8SljmBEfEDEX94cJb49UES8mHeYNhc0puOvGJn
+	lg6keHA7tSJymkYqgifIslIN0a4/Dmm1NfvMd+6PqYJB85JarIanhWSkX23YeCzm
+	rhIS+EFOf962sUckonzGfKOBccV2QZ2BxZ1YrSZRx9OwRvLtEuFY2XYr7gctinW7
+	kqRkzMUms+jwbAv7dRwyA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:date:date:feedback-id:feedback-id:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
 	:reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1697320021; x=
-	1697406421; bh=yFOZtHDAxL/J9lBur5x6bBmlfenz6cMPvtVn3MBMwQk=; b=H
-	kbMExN+ZRzfeitob7dGlKwOnMSUNwnQ4GzbHpd94WRUvHTlHYwT1pM1aZXbThw2y
-	bGqjmBh+6yzALObQbcoJ+uv7MG7V/PhARJr+LOfIiZdxp2o2NllyO4rsEqpi05v/
-	KFtHBWb29Vmlfa8q4AaxlMYt8Vy/FWGoU58LkfTOcDZpKrrJFduB1GQoKg2qsa8s
-	MeLUnOotN3KECKm6Ho7bfbmL8t5Qee7nTVndqyWPZBrGfwn0HCpR2QT7qow+eQUB
-	VgpG2oZ9rl/0FwDZqpr3iPqbUgjoSlpr3jnVvwjboZUp+iWVmQG5tFQ7cCkvsG2q
-	Dg8AA/iILyh6REBM1F0sA==
-X-ME-Sender: <xms:VQwrZUzRRZN73QRWnu5X7vRbJfLTXVJOlIFoR4ZuFy4tmL-GTTs-OeE>
-    <xme:VQwrZYSBypCRfKZ0zbjAOhS0e5ovDBoUdGGcC02u_HQ1x9uG_eviKP0bUmRxOBU0W
-    4xRFPYEfREIl_5Gsw>
-X-ME-Received: <xmr:VQwrZWUVpmsWg6uSlyj4BRcw_sRARQizl2QqE3aa8ZteOdQqLtQq9T8HI_9H8OfrMZp3rM-PRlRVzxvGDUWV8B_jlY-KMRS5tEXSznPVSt6V1av6NDw6Xv9h2w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrieeigddtudcutefuodetggdotefrodftvf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1697324462; x=
+	1697410862; bh=yXQYbJQVWjFGHSeLqxMc71kugvCqksjC7wd1Fww/3PY=; b=M
+	5nlGlR6SYLKSfH4NySQQ4Dvnb6GxKZu9Xnea6Gu9HHPxP9pxG2ju3GtyB8tcw5y9
+	AOL8gooK4A7Xo/tyjV4Xsw9gyXuj00oWS6VU7PWB80/8rWLY9Y8tXtyJPy9sx9GP
+	azzzcZ7oXI/zI7ZT75NWCy7dDy7QY9LuavZS9kQDC7TEIOEKVcLa8G9x5O1/JOzJ
+	CHfhyaOYwUWxq0CgdWluX2MtM/HuD/5sXrlYahqK2kNHBy3IuBBoGaGYDuAsChPT
+	CEPrSAItVdcQjBz6P6QqgDIEO29VaNHR2YSrzOi/5QNKSY4k11wEBTxPUJUWpzHE
+	4LziK6Fuu2DbyNaRsE4Mg==
+X-ME-Sender: <xms:rh0rZQZVNRqOdlmpl4UlTi_dYWEqFID2BboeL5RJW7X_4F6CTMtRkXw>
+    <xme:rh0rZbazlvC3HydPb-fZNAsA59Q8ORqP1gFdey0px-JKQmnVa-kpcGUbJ_a6CEld7
+    HH2pgsai4RIVUjXWw>
+X-ME-Received: <xmr:rh0rZa9gyEyY1pyiblfzjFHqBB2_DAQp9g6Q33yoOzKRv58Pjo754_S_txvIaEY0osbQ2J83HzkVIdMXPP3-juwlVtRe4H4Ef3XjNTj452zQrhcTpJ-oM3YHqQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrieeigdduhecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecunecujfgurhephffvvefufffkofgjfhgggfestdekre
     dtredttdenucfhrhhomhepmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkuceotgho
@@ -50,20 +50,20 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrieeigddtudcutefuodetggdote
     eguddtgfduveekhfevudeiieetjefhffetiedtgeejieehtdfhjefgteenucevlhhushht
     vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghugh
     hssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:VQwrZShG76CNs1Zu2tYi8JI2uZz2foKWHLGrdg0dWA7YZpopJhtq5g>
-    <xmx:VQwrZWCTDBhojOIOfpPC0z3OglGnEziH9uH7NrHXfMvmNh4X624nyw>
-    <xmx:VQwrZTKcKSd7gME3mez7pBjQGo3RN3ojFS-mKz1dtrA-Lt8nPPj2Rw>
-    <xmx:VQwrZX7uiXI6nLb_dEM7hpehdEhOm677Cvw670MPogOcfTseCe-9FA>
+X-ME-Proxy: <xmx:rh0rZarQZeB8I_kG8tqIZ0RFO0fBFFB2zh027A212wLKSiBBCc5IAw>
+    <xmx:rh0rZbpYzglwETMhvDjwQEU4sDS4y_cecp0OEJPftTlzelGfzC2iEQ>
+    <xmx:rh0rZYR_8SgdY1QGxkU-vWmtWUx2YqxYHyyai75qAF8vsa0lcK11lA>
+    <xmx:rh0rZUCHogMkMeNP6gwEAkrW31VLB7L_w4wq8X7q0KvWVRMcoBWN9A>
 Feedback-ID: i2671468f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 14 Oct 2023 17:47:00 -0400 (EDT)
+ 14 Oct 2023 19:01:01 -0400 (EDT)
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	stolee@gmail.com
-Subject: [PATCH 4/8] t7900: factor out inheritance test dependency
-Date: Sat, 14 Oct 2023 23:45:55 +0200
-Message-ID: <a4491ff0411be82179a2f40c36ce427a5d7c39f6.1697319294.git.code@khaugsbakk.name>
+Subject: [PATCH 9/8] t7900: fix register dependency
+Date: Sun, 15 Oct 2023 01:00:44 +0200
+Message-ID: <fc3dd058521ca00033509c6ffbc75017ba1ace35.1697324157.git.code@khaugsbakk.name>
 X-Mailer: git-send-email 2.42.0.2.g879ad04204
 In-Reply-To: <cover.1697319294.git.code@khaugsbakk.name>
 References: <cover.1697319294.git.code@khaugsbakk.name>
@@ -74,44 +74,41 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-	RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS
-	autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 	lindbergh.monkeyblade.net
 
-Factor out the dependency that test `maintenance.strategy inheritance` has
-on test `--schedule inheritance weekly -> daily -> hourly`.
+The test `maintenance.auto config option` will fail if any preceding test
+has run `git maintenance register` since that turns `maintenance.auto` off
+for that repository and later calls to `unregister` will not turn it back
+to the default `true` value.
+
+Start with a fresh repository in this test.
 
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
- t/t7900-maintenance.sh | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+
+Notes (series):
+    I found this after publishing the series.
+
+ t/t7900-maintenance.sh | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 4bfb4ec5cf6..6e3ee365ccd 100755
+index bc417b518b..dbc5e1eb44 100755
 --- a/t/t7900-maintenance.sh
 +++ b/t/t7900-maintenance.sh
-@@ -408,14 +408,16 @@ test_expect_success 'invalid --schedule value' '
- 	test_i18ngrep "unrecognized --schedule" err
+@@ -55,6 +55,8 @@ test_expect_success 'run [--auto|--quiet]' '
  '
  
--test_expect_success '--schedule inheritance weekly -> daily -> hourly' '
-+test_expect_success 'setup for inheritance' '
- 	git config maintenance.loose-objects.enabled true &&
- 	git config maintenance.loose-objects.schedule hourly &&
- 	git config maintenance.commit-graph.enabled true &&
- 	git config maintenance.commit-graph.schedule daily &&
- 	git config maintenance.incremental-repack.enabled true &&
--	git config maintenance.incremental-repack.schedule weekly &&
-+	git config maintenance.incremental-repack.schedule weekly
-+'
- 
-+test_expect_success '--schedule inheritance weekly -> daily -> hourly' '
- 	GIT_TRACE2_EVENT="$(pwd)/hourly.txt" \
- 		git maintenance run --schedule=hourly 2>/dev/null &&
- 	test_subcommand git prune-packed --quiet <hourly.txt &&
+ test_expect_success 'maintenance.auto config option' '
++	rm -rf .git &&
++	git init &&
+ 	GIT_TRACE2_EVENT="$(pwd)/default" git commit --quiet --allow-empty -m 1 &&
+ 	test_subcommand git maintenance run --auto --quiet <default &&
+ 	GIT_TRACE2_EVENT="$(pwd)/true" \
 -- 
 2.42.0.2.g879ad04204
 
