@@ -1,101 +1,104 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E08185F
-	for <git@vger.kernel.org>; Sun, 15 Oct 2023 08:00:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C17296FA6
+	for <git@vger.kernel.org>; Sun, 15 Oct 2023 14:08:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="PkjZD9tO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SEEHvrt4"
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55CC1D8
-	for <git@vger.kernel.org>; Sun, 15 Oct 2023 01:00:44 -0700 (PDT)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id F30165C029F;
-	Sun, 15 Oct 2023 04:00:41 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Sun, 15 Oct 2023 04:00:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-type:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:sender:subject:subject:to:to; s=fm2; t=1697356841; x=
-	1697443241; bh=1GI3TGT/jVbrZsb2J3geTbyDbHMYnOUBSn5SAuJIY+c=; b=P
-	kjZD9tOxhQo5QZe9v+zz9dhE+OP3lBeCs65Xm2/0o0WEDmM2NeJs8N1TqOreZavj
-	+5Bih49PjBetQcU8CSJzp7JDRxGC0A68PuE7ymjddOAJOHwJaPl6E0P+mO7GapaG
-	zF560oq3sqOjuqDcabCP+6MxnGU5WoH44eRHCQD3NSR9w1AGgKle3CEnxFp4Mfkp
-	O+O5ZN+yjKfhV8wMfSJb34v3+x7zpkQXrezM+tNY+w5gbI7uOiPLfsfin/dxm9qe
-	gb83P/5EeXXZTXOi6pdDuQY5HDfbscLPOc3hqSloI4wn57+E/M5k4xXuYesu3XR0
-	wk0CeTa7xVr9PVwF/Kg8Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1697356841; x=1697443241; bh=1GI3TGT/jVbrZ
-	sb2J3geTbyDbHMYnOUBSn5SAuJIY+c=; b=SEEHvrt4KwRcOhkzeno9VhVOcrtVS
-	tK9Od7vKTxO34Z2g8CbXVZ/qm6E4toQUR0nClwM0EWMNCM9xkdTKmZIb0Vb9yHj+
-	besm5RNGt9SxbvKBas+tPTb3jQfy6gGj1c40aXIDfEPMKkmcNApyenoxxvFnZBGn
-	R/jVHo73sSa4cbIAuIKYrQuFFI/4F/SCO+zd1WGv60+tZl9GxN1DrtDKV1zCwsV7
-	vefuAlPgErqAA+CUmEnw95/JB5IYy8PAMQV3BLrKNrdNR6RZOgrJssRHLD5OLFia
-	d7j4Dde86LS+S9yTpf63bBOSE0+2Z12Z8iNuhR78rtifOhIYhSeMsreYA==
-X-ME-Sender: <xms:KZwrZWPmTZda8DnLpBE6_CYuc7sq7bPxeoudeP7M_dwxGicXvUpQ7q0>
-    <xme:KZwrZU8mYu5TvfwRqKGyWrXsDJTWKkSPok5hGjRJ1NR8n905ey-JLwvxTHZHAA7In
-    JWBhPfe2pwUuDKWoQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrieeigdduvdefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfgjfhffhffvvefutgesth
-    dtredtreertdenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdf
-    uceotghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpe
-    dtkedtjeeiffelteffheeiheeufffgheelueeftdejkeeufffgiefhgeekffffueenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskh
-    hhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:KZwrZdShaXgMdGU00RvP2YtCTjZrj-FfDpnBCEkFzohnTFQnAeRlcA>
-    <xmx:KZwrZWvLsXiWxIHNx5IzlVm7IZmitB0dgyw_ldQ2GV9ZCsdaQLHlYQ>
-    <xmx:KZwrZeeCXa3fan0alPXpd6yHbqRz74XIr-gcz6Tq12y9E01zkAyuKQ>
-    <xmx:KZwrZWmlEVlDlha3q3WjY8pgaE47fKtVAhgNtObo6GXnJroIqNC92A>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id AB96915A0091; Sun, 15 Oct 2023 04:00:41 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-1019-ged83ad8595-fm-20231002.001-ged83ad85
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PI5O7dwP"
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C58B0C1
+	for <git@vger.kernel.org>; Sun, 15 Oct 2023 07:08:51 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-4060b623e64so22569485e9.0
+        for <git@vger.kernel.org>; Sun, 15 Oct 2023 07:08:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1697378930; x=1697983730; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=3ZDE43Prm5ICylZKVQBbRhA0M+EruasqvtuQYPhU4nA=;
+        b=PI5O7dwPTyXl/vYab11vvJcFTHedse9OmRzWKilmbW1wxEVq+4wwOvJWI0QkiDrQfA
+         8ys7m7qvjHSZmP4WMbDgMF6pOgVa8mt/d5IngCB8g5L7+ZSQN63qTOWWvBD8rrANZd2X
+         OLwFViQq1GjbgDWzPdYqXg5G3bgT3tTdYH+5w9fnNCt9TmDAr/oGetIUr0EeuFvM0Twr
+         TvjS65kWkiUbWUKcPHKYAXjliKG1VsNoqgsgjECny3r4mBrVTv3PqlFeu3Cc2nFi8PbE
+         ZgVSmW/DgIC6rs022Jm+bscqeyPk6ZJZa6L0jAaZS0rhFo1enV7vs5jibF5boFQhRxZB
+         ruDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697378930; x=1697983730;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3ZDE43Prm5ICylZKVQBbRhA0M+EruasqvtuQYPhU4nA=;
+        b=Oa7DbGFcr/SLY6smvdf+/PNQW/1mKZq2U8LdPJTMMvq4WxdiyYtlV5p+RawCIxyeFv
+         jPEFL74279dZbRjf2wFoI0GbvNQn97i75k3w0pwZHnan9ZYmUaoEUXNifcvfduV2H/Tk
+         EY5wrTRnS7rrEYu68EpfpdYk+UEsVayWPOqEpDPNrrMhLt41iOvAikfk//TApNPHYEQ2
+         9DbJ1JaHSiALn3BXgQjMrLG6cd/pzvnSwPQlQr3nY/FLcYQnJAIefpB2VTEa03JWCU4U
+         /KGQV/IDn0wtnm24KPIy5Gr+dx3i4qsfnNS5iFCL7POOhygYWJ7P1OOwJXHVX9YJVuG6
+         P2EQ==
+X-Gm-Message-State: AOJu0Yyu+GvCUtuhNamomnGwVFUxDU2q47WRpz2s0eiHLW3fYzSKcycF
+	yCZ977bJTWIfti495XtVYtPNVXu4WHs=
+X-Google-Smtp-Source: AGHT+IEdy/xskDEj0wH3NvxIiXWrWNI9XRkbDbvNRT5N2TOyMi452rbFIBKYwo9f6I6KHeVzPWxaBg==
+X-Received: by 2002:a05:600c:1e0a:b0:406:45c1:4dd with SMTP id ay10-20020a05600c1e0a00b0040645c104ddmr3827458wmb.14.1697378929769;
+        Sun, 15 Oct 2023 07:08:49 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id f18-20020a05600c4e9200b004064288597bsm4611470wmq.30.2023.10.15.07.08.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 15 Oct 2023 07:08:49 -0700 (PDT)
+Message-ID: <pull.1592.git.git.1697378928693.gitgitgadget@gmail.com>
+From: "Wangchangxin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 15 Oct 2023 14:08:48 +0000
+Subject: [PATCH] typo: fix the typo 'neeed' into 'needed' in the comment under
+ merge-ort.c
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <b953efce-da38-4dbc-9032-985481f3d721@app.fastmail.com>
-In-Reply-To: <20231015032636.GC554702@coredump.intra.peff.net>
-References: <6bb48aac-460c-4d7f-9057-40c3df0c807d@app.fastmail.com>
- <087c92e3904dd774f672373727c300bf7f5f6369.1697317276.git.code@khaugsbakk.name>
- <20231015032636.GC554702@coredump.intra.peff.net>
-Date: Sun, 15 Oct 2023 10:00:20 +0200
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Jeff King" <peff@peff.net>
-Cc: git@vger.kernel.org, "ks1322 ks1322" <ks1322@gmail.com>
-Subject: Re: [PATCH] grep: die gracefully when outside repository
-Content-Type: text/plain
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS
-	autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: Wangchangxin <1571825323@qq.com>,
+    foril <1571825323@qq.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+	RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 	lindbergh.monkeyblade.net
 
-On Sun, Oct 15, 2023, at 05:26, Jeff King wrote:
-> Is it even reasonable for "grep --no-index" to care about leaving the
-> tree in the first place? That is, is there a reason we should not allow:
->
->   git grep --no-index foo ../bar
->
-> ?
+From: foril <1571825323@qq.com>
 
-On second thought yeah, it doesn't make sense. We are outside of any
-repository already so what does it matter where the file is relative to
-the current working directory?
+Signed-off-by: 王常新 (Wang Changxin) <foril@foril.space>
+---
+    typo: fix the typo 'neeed' into 'needed' in the comment under merge-o…
+    
+    the comments on line 2039 under merge-ort.c should be :
+    this is needed if we have content merges of content merges rather than
+    this is neeed if we have content merges of content merges
+    
+    fix the typo
 
-It seems that `pathspec.c:init_pathspec_item` should let you through in
-this case.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1592%2FforiLLL%2Fcomment_patch-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1592/foriLLL/comment_patch-v1
+Pull-Request: https://github.com/git/git/pull/1592
 
+ merge-ort.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/merge-ort.c b/merge-ort.c
+index 7857ce9fbd1..aee6f7d8173 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -2036,7 +2036,7 @@ static int handle_content_merge(struct merge_options *opt,
+ 	 * the three blobs to merge on various sides of history.
+ 	 *
+ 	 * extra_marker_size is the amount to extend conflict markers in
+-	 * ll_merge; this is neeed if we have content merges of content
++	 * ll_merge; this is needed if we have content merges of content
+ 	 * merges, which happens for example with rename/rename(2to1) and
+ 	 * rename/add conflicts.
+ 	 */
+
+base-commit: a9ecda2788e229afc9b611acaa26d0d9d4da53ed
 -- 
-Kristoffer Haugsbakk
-
+gitgitgadget
