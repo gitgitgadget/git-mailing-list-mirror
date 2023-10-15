@@ -1,83 +1,101 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B766110A
-	for <git@vger.kernel.org>; Sun, 15 Oct 2023 03:26:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9522ADC
-	for <git@vger.kernel.org>; Sat, 14 Oct 2023 20:26:37 -0700 (PDT)
-Received: (qmail 10456 invoked by uid 109); 15 Oct 2023 03:26:37 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 15 Oct 2023 03:26:37 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28572 invoked by uid 111); 15 Oct 2023 03:26:40 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 14 Oct 2023 23:26:40 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sat, 14 Oct 2023 23:26:36 -0400
-From: Jeff King <peff@peff.net>
-To: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Cc: git@vger.kernel.org, ks1322@gmail.com
-Subject: Re: [PATCH] grep: die gracefully when outside repository
-Message-ID: <20231015032636.GC554702@coredump.intra.peff.net>
-References: <6bb48aac-460c-4d7f-9057-40c3df0c807d@app.fastmail.com>
- <087c92e3904dd774f672373727c300bf7f5f6369.1697317276.git.code@khaugsbakk.name>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8C6E15D4
+	for <git@vger.kernel.org>; Sun, 15 Oct 2023 03:42:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=initialcommit-io.20230601.gappssmtp.com header.i=@initialcommit-io.20230601.gappssmtp.com header.b="Pog3p7hg"
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84413C9
+	for <git@vger.kernel.org>; Sat, 14 Oct 2023 20:42:57 -0700 (PDT)
+Received: by mail-ot1-x32d.google.com with SMTP id 46e09a7af769-6c4c594c0eeso2285732a34.0
+        for <git@vger.kernel.org>; Sat, 14 Oct 2023 20:42:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=initialcommit-io.20230601.gappssmtp.com; s=20230601; t=1697341376; x=1697946176; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+OzSw35lGOSSnhYxtGRzIocaNUTl+7XwBXC0NaLRCBs=;
+        b=Pog3p7hgaquKdduCmm3lcItDgms9a3uFerCpz3z7Jamw/Tsu7mhoidzoZGMYaLPHh2
+         6qCnKjJSZQAWLpYD5mKLg9NBTGZb+CffTrXeGR2dZXJonzU+bJmCQyP9PfX6i+hz6gF6
+         xu9TlHY8r9FAKLwBtqZhy2lfZ4A62+uEaQ5i9o6acQByl0l8emGVOhFiVa6zVcBHkvev
+         wCEfYT0KiwVLm+2mE4jaFSuGcEuvjYIRycSNFRJVFxiAuBEZ1687Affcyfs4eVtcXVg+
+         /2+COA5HuSbsnx6OgnsPIFIjERQ4uZkm4e/JoNVz0S4LiRK83aI5+wFdDQWvzgnEw9Jm
+         UFQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697341376; x=1697946176;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+OzSw35lGOSSnhYxtGRzIocaNUTl+7XwBXC0NaLRCBs=;
+        b=ahmh327TVNxoHi6RJHB8qvIIQQsQ8fHgW8EGCmmB5CTiy5UDQl+YRhseQoZKvOn+P5
+         wcdjkhP5+BIqqCX6wLXDfdfIqQUib3nvVKQXE37hocLikz68DbaM9vYACrGd5zomYV4/
+         OFgbRXhrZcZH4LStiK0EmpdeURB30GD2fSRIv1biOLxo28r+UXVoweRIRcCrNIldasPi
+         w6h+jjCGUbiebKW+cwJ6QJctXCObsDiOGpVPcQteiWS18JHX4NhfQ0S+Rhgr+eoE8XDd
+         hFWJK5S2jAEfi3R0wUtpcfRU5e1017GT4U3smKE2cWi3Jm4OnsH7bdu6TCkpr3kUYCOt
+         /qkA==
+X-Gm-Message-State: AOJu0YwUwuPKuPcixsgm8ZJ+ZxRWWmeUiCZCb7Fcg68Ix9Rq3xm05iGO
+	yR97pe9KzczqOZYB0YXGFpApcKOFn3+rslPLiTo=
+X-Google-Smtp-Source: AGHT+IFSHYPueOGVIxzjKBhJ+P/oAi5aYipe2nEyo4kRO37fwAPJr0dK8ekLhuUYvVla2iL5bTRR6A==
+X-Received: by 2002:a05:6870:d905:b0:1e9:f4e4:2882 with SMTP id gq5-20020a056870d90500b001e9f4e42882mr5898354oab.38.1697341376537;
+        Sat, 14 Oct 2023 20:42:56 -0700 (PDT)
+Received: from localhost.localdomain (ip68-7-58-180.sd.sd.cox.net. [68.7.58.180])
+        by smtp.gmail.com with ESMTPSA id bq10-20020a056a02044a00b0059ce3d1def5sm510777pgb.45.2023.10.14.20.42.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 14 Oct 2023 20:42:56 -0700 (PDT)
+From: Jacob Stopak <jacob@initialcommit.io>
+To: git@vger.kernel.org
+Cc: Jacob Stopak <jacob@initialcommit.io>,
+	Junio C Hamano <gitster@pobox.com>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: [PATCH v2 0/3] bugreport: include +i in outfile suffix as needed
+Date: Sat, 14 Oct 2023 20:42:34 -0700
+Message-ID: <20231015034238.100675-1-jacob@initialcommit.io>
+X-Mailer: git-send-email 2.42.0.298.gd89efca819.dirty
+In-Reply-To: <20231014040101.8333-1-jacob@initialcommit.io>
+References: <20231014040101.8333-1-jacob@initialcommit.io>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <087c92e3904dd774f672373727c300bf7f5f6369.1697317276.git.code@khaugsbakk.name>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
-	RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
 	autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 	lindbergh.monkeyblade.net
 
-On Sat, Oct 14, 2023 at 11:02:38PM +0200, Kristoffer Haugsbakk wrote:
+Update git bugreport to allow creation of multiple bugreports with
+default settings during a given minute interval.
 
-> Die gracefully when `git grep --no-index` is run outside of a Git
-> repository and the path is outside the directory tree.
-> 
-> If you are not in a Git repository and say:
-> 
->     git grep --no-index search ..
-> 
-> You trigger a `BUG`:
-> 
->     BUG: environment.c:213: git environment hasn't been setup
->     Aborted (core dumped)
-> 
-> Because `..` is a valid path which is treated as a pathspec. Then
-> `pathspec` figures out that it is not in the current directory tree. The
-> `BUG` is triggered when `pathspec` tries to advice the user about the path
-> to the (non-existing) repository.
+Address several edge cases where users might run git bugreport multiple
+times within a minute and expect multiple reports to be created.
 
-Is it even reasonable for "grep --no-index" to care about leaving the
-tree in the first place? That is, is there a reason we should not allow:
+Handle these cases by checking to see if a file with the default
+timestamped filename already exists, and if so, appending a '+1' value
+to the filename suffix. Keep doing so until a unique filename is reached
+or '+9' is reached. At this point, if uniqueness is still not found,
+the previous error that a file with the given name already exists.
 
-  git grep --no-index foo ../bar
+If the --diagnose flag is supplied, apply the same '+i' incremented
+filename suffix to the diagnostics zip file.
 
-? And if we do want to care, there is a weirdness here that even with
-your patch, we check to see if the file exists:
+Reorder the code block that creates the diagnostics zip file so it isn't
+created in the event the bugreport itself isn't created due to an error.
 
-  $ git grep --no-index foo ../does-exist
-  fatal: '../does-exist' is outside the directory tree
+Jacob Stopak (3):
+  bugreport: include +i in outfile suffix as needed
+  bugreport: match diagnostics filename with report
+  bugreport: don't create --diagnose zip w/o report
 
-  $ git grep --no-index foo ../does-not-exist
-  fatal: ../does-not-exist: no such path in the working tree.
+ builtin/bugreport.c | 54 ++++++++++++++++++++++++++++++---------------
+ 1 file changed, 36 insertions(+), 18 deletions(-)
 
-If we want to avoid leaving the current directory, then I think we need
-to be checking much sooner (but again, I would argue that it is not
-worth caring about in no-index mode).
 
-I do think your patch does not make anything worse (and indeed makes the
-error output much better). So I do not mind it in the meantime. But I
-have a feeling that we'd end up reverting it as part of the fix for the
-larger issue.
+base-commit: 493f4622739e9b64f24b465b21aa85870dd9dc09
+-- 
+2.42.0.298.gd89efca819.dirty
 
--Peff
