@@ -1,114 +1,120 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613031845
-	for <git@vger.kernel.org>; Sat, 14 Oct 2023 23:01:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 035D3110A
+	for <git@vger.kernel.org>; Sun, 15 Oct 2023 03:01:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="YSlMh9WO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="M5nlGlR6"
-Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF5D1B7
-	for <git@vger.kernel.org>; Sat, 14 Oct 2023 16:01:05 -0700 (PDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.west.internal (Postfix) with ESMTP id 47A863200927;
-	Sat, 14 Oct 2023 19:01:03 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Sat, 14 Oct 2023 19:01:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:date:date:from
-	:from:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:sender:subject:subject:to:to; s=fm2; t=1697324462; x=
-	1697410862; bh=yXQYbJQVWjFGHSeLqxMc71kugvCqksjC7wd1Fww/3PY=; b=Y
-	SlMh9WONQBOMdm7XiaXzEzWfFzAbI90VfYCqxWGYdIpHOiEmT2vCe4IQfn8BbnuG
-	Vcs+/bEZRXClSl9U77RzNpFiWnTzvx2N9FSNJ6AA8wK8eId/8jXg4fICbsJlgDFC
-	ByOF9D5BijRCG6oppsMESwpIwG8SljmBEfEDEX94cJb49UES8mHeYNhc0puOvGJn
-	lg6keHA7tSJymkYqgifIslIN0a4/Dmm1NfvMd+6PqYJB85JarIanhWSkX23YeCzm
-	rhIS+EFOf962sUckonzGfKOBccV2QZ2BxZ1YrSZRx9OwRvLtEuFY2XYr7gctinW7
-	kqRkzMUms+jwbAv7dRwyA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1697324462; x=
-	1697410862; bh=yXQYbJQVWjFGHSeLqxMc71kugvCqksjC7wd1Fww/3PY=; b=M
-	5nlGlR6SYLKSfH4NySQQ4Dvnb6GxKZu9Xnea6Gu9HHPxP9pxG2ju3GtyB8tcw5y9
-	AOL8gooK4A7Xo/tyjV4Xsw9gyXuj00oWS6VU7PWB80/8rWLY9Y8tXtyJPy9sx9GP
-	azzzcZ7oXI/zI7ZT75NWCy7dDy7QY9LuavZS9kQDC7TEIOEKVcLa8G9x5O1/JOzJ
-	CHfhyaOYwUWxq0CgdWluX2MtM/HuD/5sXrlYahqK2kNHBy3IuBBoGaGYDuAsChPT
-	CEPrSAItVdcQjBz6P6QqgDIEO29VaNHR2YSrzOi/5QNKSY4k11wEBTxPUJUWpzHE
-	4LziK6Fuu2DbyNaRsE4Mg==
-X-ME-Sender: <xms:rh0rZQZVNRqOdlmpl4UlTi_dYWEqFID2BboeL5RJW7X_4F6CTMtRkXw>
-    <xme:rh0rZbazlvC3HydPb-fZNAsA59Q8ORqP1gFdey0px-JKQmnVa-kpcGUbJ_a6CEld7
-    HH2pgsai4RIVUjXWw>
-X-ME-Received: <xmr:rh0rZa9gyEyY1pyiblfzjFHqBB2_DAQp9g6Q33yoOzKRv58Pjo754_S_txvIaEY0osbQ2J83HzkVIdMXPP3-juwlVtRe4H4Ef3XjNTj452zQrhcTpJ-oM3YHqQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrieeigdduhecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhephffvvefufffkofgjfhgggfestdekre
-    dtredttdenucfhrhhomhepmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkuceotgho
-    uggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpeetudeihe
-    eguddtgfduveekhfevudeiieetjefhffetiedtgeejieehtdfhjefgteenucevlhhushht
-    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghugh
-    hssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:rh0rZarQZeB8I_kG8tqIZ0RFO0fBFFB2zh027A212wLKSiBBCc5IAw>
-    <xmx:rh0rZbpYzglwETMhvDjwQEU4sDS4y_cecp0OEJPftTlzelGfzC2iEQ>
-    <xmx:rh0rZYR_8SgdY1QGxkU-vWmtWUx2YqxYHyyai75qAF8vsa0lcK11lA>
-    <xmx:rh0rZUCHogMkMeNP6gwEAkrW31VLB7L_w4wq8X7q0KvWVRMcoBWN9A>
-Feedback-ID: i2671468f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 14 Oct 2023 19:01:01 -0400 (EDT)
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	stolee@gmail.com
-Subject: [PATCH 9/8] t7900: fix register dependency
-Date: Sun, 15 Oct 2023 01:00:44 +0200
-Message-ID: <fc3dd058521ca00033509c6ffbc75017ba1ace35.1697324157.git.code@khaugsbakk.name>
-X-Mailer: git-send-email 2.42.0.2.g879ad04204
-In-Reply-To: <cover.1697319294.git.code@khaugsbakk.name>
-References: <cover.1697319294.git.code@khaugsbakk.name>
+	dkim=pass (2048-bit key) header.d=initialcommit-io.20230601.gappssmtp.com header.i=@initialcommit-io.20230601.gappssmtp.com header.b="LPGfxsWI"
+Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BBA9D9
+	for <git@vger.kernel.org>; Sat, 14 Oct 2023 20:01:31 -0700 (PDT)
+Received: by mail-pg1-x52f.google.com with SMTP id 41be03b00d2f7-5859a7d6556so2505867a12.0
+        for <git@vger.kernel.org>; Sat, 14 Oct 2023 20:01:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=initialcommit-io.20230601.gappssmtp.com; s=20230601; t=1697338891; x=1697943691; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=P6UpKz4npGFKHpbLiJrv9j/irx8FMeGf5qnH7OfGqcA=;
+        b=LPGfxsWImtDRY+rCR9Hlf49qgKzY0zZO2uxNE1DLUs2voW2J/psU/3XsYT1GD8ZBju
+         9Rx1pbEO4GcS1Ja7JFUYR+rHfLRMEt4bZgrQEABSqQfbPX4JefHP7GlI/YKmXITAcAiN
+         0hyJifT7lN0D+wdnkdu8nQXJEqSbxlH+Aj5fOE7XmCe1iHTUliNjFOl8KC+Y3PbOq49F
+         pXP3QGv/kATWmpQHVngF8WJeRjMVNaZrw3TgnyvqGI85c0OP2zdeWWlj02KsFZn4CYh1
+         UPtWxQv9Qay+bnGJjW9Xgypfpxo1uVp7fOWfGOZSqLnyZBk0Tfv/8mKVQIy7pji4BmBD
+         Yr5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697338891; x=1697943691;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=P6UpKz4npGFKHpbLiJrv9j/irx8FMeGf5qnH7OfGqcA=;
+        b=RxyzA3H+tNg/SNGIYQTP7lZ3JGkuN1kX6D533uYFcodxQEDI8uB0Okjj9TLZlxOajt
+         SzZzaZekh+s3AUvGPBGJrCCewOcyowvcheCkQuz8f73EgAzDfE26w1iEg1iwx3IRNfiX
+         OiDLYIz1fTG0twOvMQ3PZr7N6e4EX0mVCbwyBpg+cOUZ+EscItsavQlcsMkqQ0+PQ4tq
+         p8Y/WU0AOGyy4XpLy93wv8hL37Wec1mUl98OyXlGFptOVlrE4PhCJwHSKJRzOJFOw0Fa
+         DlXbQ3sqPdPzzBVn3V2oO5vtWgs7sIK81eJMaJ1A0KAEs1F6KlTa5K9lyX2TCSxTvIMs
+         HG4g==
+X-Gm-Message-State: AOJu0Yzt7dPj5RxlRu698kKZnioLOUfwA4QXTYQiuW5l9e+biaqjqyTS
+	llMQ00+0mnvIoWeZxzP2eLl72CFvmACyEFx9nFQ=
+X-Google-Smtp-Source: AGHT+IFUjAgSu1V7RlvZwLt7baCk1yw2aYn7oiKVA095pByI3rAH7itIKb17pOh7P67w5ZPYrOyT0w==
+X-Received: by 2002:a05:6a21:4889:b0:172:629f:455e with SMTP id av9-20020a056a21488900b00172629f455emr13425876pzc.57.1697338890787;
+        Sat, 14 Oct 2023 20:01:30 -0700 (PDT)
+Received: from initialcommit.io (ip68-7-58-180.sd.sd.cox.net. [68.7.58.180])
+        by smtp.gmail.com with ESMTPSA id g12-20020a63be4c000000b005898e4acf2dsm4731261pgo.49.2023.10.14.20.01.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 14 Oct 2023 20:01:30 -0700 (PDT)
+Date: Sat, 14 Oct 2023 20:01:27 -0700
+From: Jacob Stopak <jacob@initialcommit.io>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] bugreport: add 'seconds' to default outfile name
+Message-ID: <ZStWB1/LX7cTbVGr.jacob@initialcommit.io>
+References: <20231014040101.8333-1-jacob@initialcommit.io>
+ <xmqq4jitw4nk.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq4jitw4nk.fsf@gitster.g>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+	autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 	lindbergh.monkeyblade.net
 
-The test `maintenance.auto config option` will fail if any preceding test
-has run `git maintenance register` since that turns `maintenance.auto` off
-for that repository and later calls to `unregister` will not turn it back
-to the default `true` value.
+On Sat, Oct 14, 2023 at 09:27:27AM -0700, Junio C Hamano wrote:
+> Jacob Stopak <jacob@initialcommit.io> writes:
+> 
+> Is "postfix" a verb that is commonly understood?  I would say
+> "append" would be understood by more readers.
 
-Start with a fresh repository in this test.
+It's probably true that "append" or "suffix" (which is used in the code)
+would be more easily understood. I'll switch in my updated messages.
 
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
+> Also, is "calendar"
+> hour different from other kinds of hours, perhaps stopwatch hours
+> and microwave-oven hours?
 
-Notes (series):
-    I found this after publishing the series.
+Lol! By saying "calendar" I mean "falling on the official boundaries
+of", like 11:15:00 - 11:16:00. Unlike the time between 11:15:30 -
+11:16:30 which is also a minute, but it's not a "calendar" minute
+because it overlaps into the next minute. I guess in this case it's more
+of a "clock" minute than a "calendar" minute though ':D... I guess
+"calendar" terminology is used more for months/years...
 
- t/t7900-maintenance.sh | 2 ++
- 1 file changed, 2 insertions(+)
+> I personally do not think it is a problem, simply because a quality
+> bug report that would capture information necessary to diagnose any
+> issue concisely in a readable fashion would take at least 90 seconds
+> or more to produce, though.
 
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index bc417b518b..dbc5e1eb44 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -55,6 +55,8 @@ test_expect_success 'run [--auto|--quiet]' '
- '
- 
- test_expect_success 'maintenance.auto config option' '
-+	rm -rf .git &&
-+	git init &&
- 	GIT_TRACE2_EVENT="$(pwd)/default" git commit --quiet --allow-empty -m 1 &&
- 	test_subcommand git maintenance run --auto --quiet <default &&
- 	GIT_TRACE2_EVENT="$(pwd)/true" \
--- 
-2.42.0.2.g879ad04204
+This is true, when the user intentionally opens the bugreport with the
+intent to start filling it out immediately, I assume they would almost
+always cross the minute barrier and avoid the issue.
 
+However, there are edge cases like the one I outlined, where the user
+might open and close the report quickly, followed by rerunning the
+command. This could be someone learning to use the command for the first
+time. Or the case where a user only fills in a small part of the report
+before closing it and running the command again.
+
+These cases are certainly "the exception" but it seems the program could
+be a bit more consistent/intuitive when they do occur.
+
+> Instead of lengthening the filename for all files by 2 digits, the
+> command can retry by adding say "+1", "+2", etc. after the failed
+> filename to find a unique suffix within the same minute.  It would
+> mean that after writing git-bugreport-2023-10-14-0920.txt and you
+> start another one without spending enough time, the new one may
+> become git-bugreport-2023-10-14-0920+1.txt or something unique.  It
+> would be really unlikely that you would run out after failing to
+> find a vacant single digit suffix nine times, i.e. trying "+9".  It
+> would also help preserve existing user's workflow, e.g. they may
+> have written automation that assumes the down-to-minute format and
+> it would keep working on their bug reports without breaking.
+
+I agree with all of this, and to me it's a better solution than
+_appending_ the second value :). I have a patchset almost ready for this 
+so I'll try to submit it later tonight.
