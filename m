@@ -1,95 +1,173 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F2515ADD
-	for <git@vger.kernel.org>; Mon, 16 Oct 2023 07:32:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BB581C6AE
+	for <git@vger.kernel.org>; Mon, 16 Oct 2023 10:07:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b="Hhvlu1y/";
-	dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b="k6XmEzeN"
-Received: from fallback17.i.mail.ru (fallback17.i.mail.ru [79.137.243.72])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2CABD9
-	for <git@vger.kernel.org>; Mon, 16 Oct 2023 00:32:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
-	h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:References:Message-ID:Subject:To:From:Date:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=BT/8yf5c7LNDHH2IlwuNAQ+mlBSkYzsXDv8SFJcSF0Q=;
-	t=1697441551;x=1697531551; 
-	b=Hhvlu1y/YGwGh4m0etJiyETd2rI6RPS6nZUetFQCOgb1VwWNrT+5ucGC5vLl8LWVv/DMLfRUmqvWWB/2jC4b4Bcabx2Q3n8dUmYuxLMUiIVqlh/9ukS7xVQvyLQZnFe7ZPtFYGetM1Cs0UmO8cFjsxRPNBjgNlDP9b7Xayh3AGo=;
-Received: from [10.12.4.10] (port=51214 helo=smtp34.i.mail.ru)
-	by fallback17.i.mail.ru with esmtp (envelope-from <kostix@bswap.ru>)
-	id 1qsI5V-001v2z-A4
-	for git@vger.kernel.org; Mon, 16 Oct 2023 10:32:29 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru;
-	s=mailru; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
-	References:Message-ID:Subject:To:From:Date:From:Sender:Reply-To:To:Cc:
-	Content-Type:Content-Transfer-Encoding:Content-ID:Content-Description:
-	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-	List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
-	List-Archive:X-Cloud-Ids:Disposition-Notification-To;
-	bh=BT/8yf5c7LNDHH2IlwuNAQ+mlBSkYzsXDv8SFJcSF0Q=; t=1697441549; x=1697531549; 
-	b=k6XmEzeNtQmPsGGDfgOQw9q5N7Sb87VQl4qXCY6Im0gTPPCZns9dCvDcYj3leZzax1gYyy7Zmh8
-	mlm0nYTGLJ17C4vGd2XtqFZNVJKSuD0zCf8fmFFdiaeYIqiHuehqe5ydNn6KsGk730rIfjM3WImq+
-	9d4zHvPpDTHLgdrf4xo=;
-Received: by smtp34.i.mail.ru with esmtpa (envelope-from <kostix@bswap.ru>)
-	id 1qsI5R-00DQXw-0z
-	for git@vger.kernel.org; Mon, 16 Oct 2023 10:32:25 +0300
-Date: Mon, 16 Oct 2023 10:32:27 +0300
-From: Konstantin Khomoutov <kostix@bswap.ru>
-To: git@vger.kernel.org
-Subject: Re: You are marked as spam, and therefore cannot authorize a third
- party application.
-Message-ID: <20231016073227.2c5qhmcr6z2dr7zq@carbon>
-Mail-Followup-To: git@vger.kernel.org
-References: <c4880ac5-45b6-90ff-f730-6c66ba59f26f@infohubinnovations.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eB+U4+RA"
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68483AC
+	for <git@vger.kernel.org>; Mon, 16 Oct 2023 03:07:05 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id ffacd0b85a97d-3296b3f03e5so3740835f8f.2
+        for <git@vger.kernel.org>; Mon, 16 Oct 2023 03:07:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1697450824; x=1698055624; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=T9SdJqtNVnpzow1mwaIshhCEd26f+cG+6mOlF2abQdA=;
+        b=eB+U4+RAhq2Oc+64yGZFHb6KvqVhyDwJsaAI575kuz3Nlc1bAv6QJMjuJYX+mcplkI
+         D2D82vg8akEw0M8f1OoXS8w73c5AZLPYZKywP1gtKtHJZB3AHW8XVWtWjW2W0GVCfLdA
+         UTNP1wtlz4PoBkwZg/eurKVoXd7r4/dLu614g/LCTpAL3PEcx+0fQa/1PIpaUknalTIy
+         LWbqNy6jyBLLFPBj8Og7o6n6/kyNT3kvz+BFGBHAhzohULgUXVVxXdBHAq8xebznZ2o9
+         bLG7ZZQs40+Mjs3dJiKzYTC6FDCSkM3UPPdwp6C0NNcA1tXnDIkK4feUTYb3rSU1saBS
+         iMnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697450824; x=1698055624;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=T9SdJqtNVnpzow1mwaIshhCEd26f+cG+6mOlF2abQdA=;
+        b=g7FYAGMm2Vak7YD/waDL2jGhZsDVNGUFEyk9x7bi8M4JFkEbzITzDukmnagGWJTQjI
+         0aRlhcG7ECi1asJy1yTFSljrBB5cTSYANWus+kOvt232U8JgO0IwF8q6UV8QMugckKxA
+         5xm8CYgObyOSLPsIKZgddUYpc6Uj2TPBuB9gpOsJjqfWXNRx39OmUvYm1Aa8dz4g70Fv
+         3MP/uJedtaVNf7yE8rElhCNtIBxguHg5K5WUC/pZ8tu5qVZ3Ty9DA2rOo4RZASthjc4K
+         OBe+zbZx/ffrQaNqM6zrPoYDJ9aXC3xm2136YdimGxpvT4qT/1h2aftynfdAFfpw0QAc
+         KD+A==
+X-Gm-Message-State: AOJu0YzMRq3ZxE+dfLJ4q1MGCZJiXH+I41qKeg86oX+JAPTgK1QxAUhl
+	iSmRR/MJfLzqdTlgQFQxQ3Y=
+X-Google-Smtp-Source: AGHT+IEx1mUtQD9qrsiSMYWXuLvBuGPEGwxddV2XCQE/kQQ5joWIRAftfP2Sm+jyG8r5PlOi8s0bQA==
+X-Received: by 2002:adf:fa90:0:b0:32d:aa11:221d with SMTP id h16-20020adffa90000000b0032daa11221dmr3313979wrr.27.1697450823541;
+        Mon, 16 Oct 2023 03:07:03 -0700 (PDT)
+Received: from [192.168.1.12] (host-2-102-115-95.as13285.net. [2.102.115.95])
+        by smtp.gmail.com with ESMTPSA id k7-20020adfb347000000b0032d8913f3dasm12693754wrd.97.2023.10.16.03.07.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 16 Oct 2023 03:07:03 -0700 (PDT)
+Message-ID: <93a18989-bf05-4318-8d85-cf23c0f32170@gmail.com>
+Date: Mon, 16 Oct 2023 11:07:02 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+From: phillip.wood123@gmail.com
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v8 0/3] Add unit test framework and project plan
+Content-Language: en-US
+To: Josh Steadmon <steadmon@google.com>, git@vger.kernel.org
+Cc: linusa@google.com, calvinwan@google.com, gitster@pobox.com,
+ rsbecker@nexbridge.com
+References: <0169ce6fb9ccafc089b74ae406db0d1a8ff8ac65.1688165272.git.steadmon@google.com>
+ <cover.1696889529.git.steadmon@google.com>
+In-Reply-To: <cover.1696889529.git.steadmon@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <c4880ac5-45b6-90ff-f730-6c66ba59f26f@infohubinnovations.com>
-X-Mailru-Src: smtp
-X-7564579A: 78E4E2B564C1792B
-X-77F55803: 4F1203BC0FB41BD978AFEFB3096932CF13E7FB3349EB8EC0C23B91B6439F56BB182A05F5380850405B77BACE15BA0E1A18A43737339E0AEDEBD07F1A358C5928F2BD787EFFEE69DC
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7FCFCB92DA8654BB0EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F79006373D58C44ED3182E498638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D857CB9F08A617E259270D6735632DD732117882F4460429724CE54428C33FAD305F5C1EE8F4F765FC1A9C11735BBA05FBA471835C12D1D9774AD6D5ED66289B52BA9C0B312567BB23117882F446042972877693876707352026055571C92BF10FBDFBBEFFF4125B51D2E47CDBA5A96583BA9C0B312567BB2376E601842F6C81A19E625A9149C048EEB28585415E75ADA90A5971FBB7557E96D8FC6C240DEA76429C9F4D5AE37F343AA9539A8B242431040A6AB1C7CE11FEE367F1C1C3ABB44F3AAD7EC71F1DB88427C4224003CC836476E2F48590F00D11D6E2021AF6380DFAD1A18204E546F3947C17119E5299B287EE2E808ACE2090B5E1725E5C173C3A84C3C5EA940A35A165FF2DBA43225CD8A89F83C798A30B85E16B42539A7722CA490CB5C8C57E37DE458BEDA766A37F9254B7
-X-C1DE0DAB: 0D63561A33F958A5348072F4224E751E2B5FCC8C6B3F4A2E523BC7F8E16967C8F87CCE6106E1FC07E67D4AC08A07B9B01E44367C8E80A7B4CB5012B2E24CD356
-X-C8649E89: 1C3962B70DF3F0ADBF74143AD284FC7177DD89D51EBB7742DC8270968E61249B1004E42C50DC4CA955A7F0CF078B5EC49A30900B95165D34C0DDD40374D3501798DD50D2ECE3C902F22BF5DB9E923045BD1537345002EF512D7B40E9E66A47DF1D7E09C32AA3244CCD66D4FC0B90818757EC07823A3EFCB98580396430872480BC4AF6B5DE6957CB5DA084F8E80FEBD3B644FBF139BB3089A015563ECF9503F943082AE146A756F3
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojaEe5+VLEN6n+b/RGQOBV7Q==
-X-Mailru-Sender: 641179478317D3F0421D0BEF39CFD1382FC0E94CDA5D05B32B2A937B90B5A697AB4E52EF0D8536FB13BA5AC085B0DF3CFD8FF98A8691EE7BAAB64A3C2C77197FCA12F3F80FA6A2FFE7D80B0F635B57EC5FEEDEB644C299C0ED14614B50AE0675
-X-Mras: Ok
-X-7564579A: 646B95376F6C166E
-X-77F55803: 6242723A09DB00B4DEDBBC46D76EB2520ED4F58DABF9B69518791C104F4FF5CF049FFFDB7839CE9E80FBBB2CB63C9CB5238AE29E3D8EC0D325CC300CD57527454E68A0529D4C4058
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5xhPKz0ZEsZ5k6NOOPWz5QAiZSCXKGQRq3/7KxbCLSB2ESzQkaOXqCBFZPLWFrEGlV1shfWe2EVcxl5toh0c/aCGOghz/frdRhzMe95NxDFdVi+mls5yutqyAoBka01a5w==
-X-Mailru-MI: C000000000000800
-X-Mras: Ok
-X-Spam-Status: No, score=-0.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-	RCVD_IN_VALIDITY_RPBL,SPF_HELO_NONE,SPF_PASS autolearn=no
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+	FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 	lindbergh.monkeyblade.net
 
-Hi!
+Hi Josh
 
-On Mon, Oct 16, 2023 at 11:30:05AM +0530, Ramesh wrote:
+Thanks for the update
 
-> Hi GitHub Team,
+On 09/10/2023 23:21, Josh Steadmon wrote:
+> In addition to reviewing the patches in this series, reviewers can help
+> this series progress by chiming in on these remaining TODOs:
+> - Figure out if we should split t-basic.c into multiple meta-tests, to
+>    avoid merge conflicts and changes to expected text in
+>    t0080-unit-test-output.sh.
 
-This mailing list has nothing to do with GitHub - a Git hosting provider, -
-as it's dedicated to the developing of Git (a distributed version control
-system) itself.
+I think it depends on how many new tests we think we're going to want to 
+add here. I can see us adding a few more check_* macros (comparing 
+object ids and arrays of bytes spring to mind) and wanting to test them 
+here, but (perhaps naÃ¯vely) I don't expect huge amounts of churn here.
 
-> I am trying to clone my repository from local machine.But i am getting the
-> follow exception that  "You are marked as spam, and therefore cannot
-> authorize a third party application.". Can you please suggest the same.
+> - Figure out if we should de-duplicate assertions in t-strbuf.c at the
+>    cost of making tests less self-contained and diagnostic output less
+>    helpful.
 
-Please use your favorite internet search engine to look for the exact error
-message (that one in double quotes) - you will find lots of relevant material,
-for instance this [1]. If you want to actually contact GitHub, use [2] and [3]
-for further pointers.
+In principle we could pass the location information along to any helper 
+function, I'm not sure how easy that is at the moment. We can get 
+reasonable error messages by using the check*() macros in the helper and 
+wrapping the call to the helper with check() as well. For example
 
- 1. https://github.com/orgs/community/discussions/23842
- 2. https://github.com/orgs/community/discussions/
- 3. https://support.github.com/
+static int assert_sane_strbuf(struct strbuf *buf)
+{
+	/* Initialized strbufs should always have a non-NULL buffer */
+	if (!check(!!buf->buf))
+		return 0;
+	/* Buffers should always be NUL-terminated */
+	if (!check_char(buf->buf[buf->len], ==, '\0'))
+		return 0;
+	/*
+	 * Freshly-initialized strbufs may not have a dynamically allocated
+	 * buffer
+	 */
+	if (buf->len == 0 && buf->alloc == 0)
+		return 1;
+	/* alloc must be at least one byte larger than len */
+	return check_uint(buf->len, <, buf->alloc);
+}
 
+and in the test function call it as
+
+	check(assert_sane_strbuf(buf));
+
+which gives error messages like
+
+# check "buf->len < buf->alloc" failed at t/unit-tests/t-strbuf.c:43
+#    left: 5
+#   right: 0
+# check "assert_sane_strbuf(&buf)" failed at t/unit-tests/t-strbuf.c:60
+
+So we can see where assert_sane_strbuf() was called and which assertion 
+in assert_sane_strbuf() failed.
+
+> - Figure out if we should collect unit tests statistics similar to the
+>    "counts" files for shell tests
+
+Unless someone has an immediate need for that I'd be tempted to leave it 
+wait until someone requests that data.
+
+> - Decide if it's OK to wait on sharding unit tests across "sliced" CI
+>    instances
+
+Hopefully the unit tests will run fast enough that we don't need to 
+worry about that in the early stages.
+
+> - Provide guidelines for writing new unit tests
+
+This is not a comprehensive list but we should recommend that
+
+- tests avoid leaking resources so the leak sanitizer see if the code
+   being tested has a resource leak.
+
+- tests check that pointers are not NULL before deferencing them to
+   avoid the whole program being taken down with SIGSEGV.
+
+- tests are written with easy debugging in mind - i.e. good diagnostic
+   messages. Hopefully the check* macros make that easy to do.
+
+> Changes in v8:
+> - Flipped return values for TEST, TEST_TODO, and check_* macros &
+>    functions. This makes it easier to reason about control flow for
+>    patterns like:
+>      if (check(some_condition)) { ... } > - Moved unit test binaries to t/unit-tests/bin to simplify .gitignore
+>    patterns.
+
+Thanks for the updates to the test library, the range diff looks good to me.
+
+ > - Removed testing of some strbuf implementation details in t-strbuf.c
+
+I agree that makes sense. I think it would be good to update 
+assert_sane_strbuf() to use the check* macros as suggest above.
+
+Best Wishes
+
+Phillip
