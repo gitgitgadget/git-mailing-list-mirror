@@ -1,61 +1,109 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62DF3846F
-	for <git@vger.kernel.org>; Mon, 16 Oct 2023 06:08:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D921C14
+	for <git@vger.kernel.org>; Mon, 16 Oct 2023 06:11:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=infohubinnovations.com header.i=@infohubinnovations.com header.b="TcgH6ywT"
-X-Greylist: delayed 489 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 15 Oct 2023 23:08:16 PDT
-Received: from us2-ob4-2.mailhostbox.com (us2-ob4-2.mailhostbox.com [208.91.198.28])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 991BFDC
-	for <git@vger.kernel.org>; Sun, 15 Oct 2023 23:08:16 -0700 (PDT)
-Received: from [192.168.1.3] (unknown [115.98.187.43])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: ramesh@infohubinnovations.com)
-	by us2.outbound.mailhostbox.com (Postfix) with ESMTPSA id EC091B8028A
-	for <git@vger.kernel.org>; Mon, 16 Oct 2023 06:00:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=infohubinnovations.com; s=20220207; t=1697436007;
-	bh=HLNmcWf4bV81PFEMrdi8eg+GUexFKUxIxRn9W08bNhE=;
-	h=Date:To:From:Subject;
-	b=TcgH6ywTZmNVwN16COQ/pXSIEw529XaJvCnB4ldW8kmVyYeLPcbzp0wRiyv3UPcSf
-	 ddPl6uEop+5g4pP9T6s+a9SWlTqtLF4/mKNaGikKnqT7YKpr1z3aVFTNRB0V+SO7//
-	 xOYy7cJDoQRuatmXFKCuie8mCKp+by5rOer6/ESU=
-Message-ID: <c4880ac5-45b6-90ff-f730-6c66ba59f26f@infohubinnovations.com>
-Date: Mon, 16 Oct 2023 11:30:05 +0530
+	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="f0aVvWiP"
+X-Greylist: delayed 563 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 15 Oct 2023 23:11:52 PDT
+Received: from ms11p00im-qufo17281901.me.com (ms11p00im-qufo17281901.me.com [17.58.38.56])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C4E6D9
+	for <git@vger.kernel.org>; Sun, 15 Oct 2023 23:11:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
+	s=1a1hai; t=1697436148;
+	bh=uqb3wi04tvsIKSghw1M/lUv2ACtArZFgh0+WTvcFsSU=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type;
+	b=f0aVvWiPkakAlZoWFg/SDsFw+aIFjTxZetIQd/Nw6DhnzR/oJApb+d0KrqRYPSbz3
+	 t++xPOOiOOIShtqj4ayayvHP7SMEaE5z7GqFctk3crRihK2Ci20/eP7XDHAq+wli0u
+	 xt76XE7duRKkaO8SDRtSQh5yBcLpC/mLwtcPrCHI5cksypow5xqFbstuPWF6msAqbk
+	 yE4Nd1xWWL/d/Q3rIaLWrYhK8+Na/DpUKCo8Fs8OH1qX2v93Bc/JE0qlbNkrNY7jRE
+	 lrfGh07P6jOCWNimcTRu8CINa9O2ppMkCQNCVyus0+8R2eAyFSO8yOwGyfHJ8QTNyN
+	 7HNmB7irOUKbQ==
+Received: from [192.168.178.33] (ms11p00im-dlb-asmtpmailmevip.me.com [17.57.154.19])
+	by ms11p00im-qufo17281901.me.com (Postfix) with ESMTPSA id 9891DD801DE;
+	Mon, 16 Oct 2023 06:02:27 +0000 (UTC)
+From: Sebastian Thiel <sebastian.thiel@icloud.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Elijah Newren <newren@gmail.com>, Josh Triplett <josh@joshtriplett.org>,
+ git@vger.kernel.org
+Subject: Re: [RFC] Define "precious" attribute and support it in `git clean`
+Date: Mon, 16 Oct 2023 08:02:25 +0200
+X-Mailer: MailMate (1.14r5937)
+Message-ID: <1EE716BB-C8D5-4543-A5BE-EB8518151077@icloud.com>
+In-Reply-To: <xmqqmswjsv8c.fsf@gitster.g>
+References: <79901E6C-9839-4AB2-9360-9EBCA1AAE549@icloud.com>
+ <xmqqttqytnqb.fsf@gitster.g> <ZSouSI_zPusOefsv@localhost>
+ <CABPp-BEg6vxiUpcJAG_=KB_sTrVgCF19JZh-+ZGCTPXdbo9ekg@mail.gmail.com>
+ <B088FC28-BE30-424D-9CDD-7A53EDFC1710@icloud.com>
+ <xmqqmswjsv8c.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Content-Language: en-US
-To: git@vger.kernel.org
-From: Ramesh <ramesh@infohubinnovations.com>
-Subject: You are marked as spam, and therefore cannot authorize a third party
- application.
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-CMAE-Score: 0
-X-CMAE-Analysis: v=2.4 cv=Ou4sdwzt c=1 sm=1 tr=0 ts=652cd167
-	a=JL0k81vbQB6cM9aoH3cQHQ==:117 a=JL0k81vbQB6cM9aoH3cQHQ==:17
-	a=CQTh9BFugTK7ixPW:21 a=IkcTkHD0fZMA:10 a=1WRS_WFjRPugUhdkDUEA:9
-	a=QEXdDO2ut3YA:10 a=WAo2-Ho-8khQyMhaiEuU:22
-X-Spam-Status: No, score=0.6 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-	RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS
-	autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Proofpoint-GUID: yY7ZYj2_FFCcfnmHtgK2M-e1vOxmTRfl
+X-Proofpoint-ORIG-GUID: yY7ZYj2_FFCcfnmHtgK2M-e1vOxmTRfl
+X-Proofpoint-Virus-Version: =?UTF-8?Q?vendor=3Dfsecure_engine=3D1.1.170-22c6f66c430a71ce266a39bfe25bc?=
+ =?UTF-8?Q?2903e8d5c8f:6.0.425,18.0.572,17.11.62.513.0000000_definitions?=
+ =?UTF-8?Q?=3D2022-01-14=5F01:2022-01-14=5F01,2020-02-14=5F11,2021-12-02?=
+ =?UTF-8?Q?=5F01_signatures=3D0?=
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999 adultscore=0
+ clxscore=1015 spamscore=0 malwarescore=0 bulkscore=0 suspectscore=0
+ mlxscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2310160051
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+	RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 	lindbergh.monkeyblade.net
 
-Hi GitHub Team,
+Thanks a lot, that makes perfect sense!
 
-I am trying to clone my repository from local machine.But i am getting 
-the follow exception that  "You are marked as spam, and therefore cannot 
-authorize a third party application.". Can you please suggest the same.
+Thanks to Elijah we may also have discovered why the idea of precious files
+didn't get implemented last time it came up: it's too much work to make
+all portions of the code aware.
 
+I don't know if this time will be different as I can only offer to implement
+the syntax adjustment, whatever that might be (possibly after validating
+the candidate against a corpus of repositories), along with the update
+to `git clean` so it leaves precious files alone by default and a new flag
+to also remove precious files.
 
+Maybe that already is something worth having, but I can also imagine
+that ideally there is a plan for retrofitting other portions of git as
+well along with the resources to actually do it.
+
+On 15 Oct 2023, at 18:31, Junio C Hamano wrote:
+
+> Sebastian Thiel <sebastian.thiel@icloud.com> writes:
+>
+>> A particularly interesting question brought up here also was the question
+>> of what's more important: untracked files, or precious files? Are they
+>> effectively treated the same, or is there a difference?
+>
+> Think of it this way.  There are two orthogonal axes.
+>
+>  (1) Are you a candidate to be tracked, even though you are not
+>      tracked right now?
+>
+>  (2) Should you be kept and make an operation fail that wants to
+>      remove you to make room?
+>
+> For untracked files, both are "Yes".  As we already saw in the long
+> discussion, precious files are "not to be added and not to be
+> clobbered", so you'd answer "No" and "Yes" [*].
+>
+> In other words, both are equally protected from getting cloberred.
+>
+>     Side note: for completeness, for ignored files, the answers are
+>     "No", and "No".  The introduction of "precious" class makes a
+>     combination "No-Yes" that hasn't been possible so far.
+>
+> Elijah, thanks for doing a very good job of creating a catalog of
+> kludges we accumulated over the years for the lack of proper support
+> for the precious paths.  I think they should be kept for backward
+> compatibility, but for new users they should not have to learn any
+> of them once we have the support for precious paths.
