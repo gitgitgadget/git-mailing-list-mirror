@@ -1,60 +1,63 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98350224FB
-	for <git@vger.kernel.org>; Mon, 16 Oct 2023 10:38:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1439A8482
+	for <git@vger.kernel.org>; Mon, 16 Oct 2023 13:44:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fMYLZs5e"
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99AF0E8
-	for <git@vger.kernel.org>; Mon, 16 Oct 2023 03:38:45 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-9be7e3fa1daso305122466b.3
-        for <git@vger.kernel.org>; Mon, 16 Oct 2023 03:38:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XbXoIqrW"
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B638FF
+	for <git@vger.kernel.org>; Mon, 16 Oct 2023 06:44:41 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-405361bb94eso52400375e9.0
+        for <git@vger.kernel.org>; Mon, 16 Oct 2023 06:44:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697452724; x=1698057524; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=86imHDVmdTpFlF6Ru4qRiI5dVgFaPxgnx/oYtQjs1Vw=;
-        b=fMYLZs5eY/gsqE1d80r70ySEER6b9MVPvuoXxeALRpQyNgedhGeojsArBzDaiweQGd
-         J3DuVTLWSPWjeWd+86SphqHmAM9aW57+DmCFFGDUmXasz6+6zoLex3z3W1MK+cjrsZxV
-         eygPkpCWgu05u91IwOBInpeWze9Feuxd1Aq/Gu/BnQOAEOdZyWlXt9MRGCkkhSJ6jhG6
-         xVOmWodmpehwNfGtzNrpuEbXs51JNskMYTeICW5rp3dcKjESmApI9O/J5FOO9wQngisn
-         URh6D769fuel6LRK2rha9OPBmdxU31fxp+BHnfgjJzXPQOc8LBFuUPuxguDmvzSnuy/M
-         Mj1w==
+        d=gmail.com; s=20230601; t=1697463880; x=1698068680; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:reply-to:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=kratpb9GpTqhcrfetabeu+58flcxOYCe0k5b5fEbC3E=;
+        b=XbXoIqrWG1SaQiBHcWp9tDL6nNrDXVBdrhop50nvn/SjrklSCtUB/JdHvKiFgy3zRr
+         M+Qc0ZOW3kubFW0KsZW27ghiKuDMAiqjl0E6a/8M9AQYeLJ/qMVxs6vH4eAtm91Us2NC
+         PtPpNgkGZNzDMg+0y0BL1XnAZ5eO8jFwcyCs4McjCeZOd09aquLDknTC5L/Kyd5PYK/6
+         HhZgb42NljhrsjzdqKCIl4yysgDjv/ojomkPuM9WpCtaAHfbGyBWRzCYNZjIO5qZUQtV
+         a1gPgPta2NihUUKUqMo1UuGb60a/6USHw700CiCpHw72sVRfFzkjKP8q4AV4KR+/S+Mb
+         t0zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697452724; x=1698057524;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=86imHDVmdTpFlF6Ru4qRiI5dVgFaPxgnx/oYtQjs1Vw=;
-        b=J3hx0xvsmufeLDnlEV1eH7E5tMvD9jHO+SH2VdfRcgMQ7oCEc7Abn6YqeQrvZ1I88c
-         YmF58YIqnbXVoPNqaTMk8e3LzTV+o8w/RnxVReAwc4y7hZQkKnJPfeBxlbEi7tRPYVnJ
-         6Tfi1LrBpfYNMeBf5mSGqpo1rE0mRfXIBaeALWBjlJbkEus2boXll8vUIHrZ4MMtfgxv
-         EpONFFFKJlm4lN60ahQ7OUtgErQKJiyOtJTbPkxr4STptvGN5xjQ36E3RI9+R/ZZtaYR
-         iA3N0b2xsCKp3nqJp4EyAZqyl9bEDzz+2ddenrGLUSOdQAPuNEgxjbtgvLneB/wKf3uX
-         T37A==
-X-Gm-Message-State: AOJu0YyK5BdLPrfIsbGLwWEkrEx++IpMSF0xHR3jQrwienCoDsVV10Rc
-	jMJLXz1/EB+ay+BKGLjo3dk=
-X-Google-Smtp-Source: AGHT+IGDU6nrBMmTQR6Lh4GPpaQb0BLWW8NUZVnL58ay6mBDQFmXJMULQvPf4WtWYs4wlldixy0vUg==
-X-Received: by 2002:a17:907:31c2:b0:9be:30c2:b8ff with SMTP id xf2-20020a17090731c200b009be30c2b8ffmr6594077ejb.61.1697452723926;
-        Mon, 16 Oct 2023 03:38:43 -0700 (PDT)
-Received: from worklaptop.fritz.box ([2a02:2454:56d:f00:b15b:356c:2a07:7b52])
-        by smtp.gmail.com with ESMTPSA id jx17-20020a170907761100b009ad875d12d7sm3784390ejc.210.2023.10.16.03.38.42
+        d=1e100.net; s=20230601; t=1697463880; x=1698068680;
+        h=content-transfer-encoding:mime-version:reply-to:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=kratpb9GpTqhcrfetabeu+58flcxOYCe0k5b5fEbC3E=;
+        b=MSvQynY4NnYJFP0jWucr1SdIb+DqO/zN/vzCgpgsqkELzUSWb5UNpxuy0Zt66stUEV
+         BgF+e58I2atiNQi5vpBmZhmpDh5qVco4thIISBzQMgzDuHhGMR+SOISmtyKc25UTnQEx
+         g3tqP9mCgszSYxAwxplpettpGiHDK2mUo6wqzgmhHHFl6XrvzQje8BdSxG/DrtrC5Qjw
+         sW1k59HQkOB53yZHc2ccJ/JMQbgQ+3372BrfFmLx3z7VATb73WMNMzrecCymDexV/757
+         XZ54bDXZVS+gUc0N7svD5EYSJKLdR2eqGO5bVNTJlrkm8zfWIgQiNDoQa6CSwt8QA1jA
+         K6hQ==
+X-Gm-Message-State: AOJu0Yy4rXLuFnhyx0sJizvBhnQWUdc4MISWrAjIfMaNAb75Vbs84e0/
+	UX3OorpS4MQIw/74EAzscJY=
+X-Google-Smtp-Source: AGHT+IGCZRwmBBXWe9IzmySvI396y3iXu+kkWV7r9wp2uwM4HJhniL8/WBzFziZyIFaPkOYJYE17+Q==
+X-Received: by 2002:a05:600c:294a:b0:3f5:fff8:d4f3 with SMTP id n10-20020a05600c294a00b003f5fff8d4f3mr30619478wmd.7.1697463879343;
+        Mon, 16 Oct 2023 06:44:39 -0700 (PDT)
+Received: from localhost.localdomain (host-2-102-115-95.as13285.net. [2.102.115.95])
+        by smtp.gmail.com with ESMTPSA id 10-20020a05600c230a00b00405718cbeadsm2521822wmo.1.2023.10.16.06.44.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Oct 2023 03:38:43 -0700 (PDT)
-From: Karthik Nayak <karthik.188@gmail.com>
-To: karthik.188@gmail.com
-Cc: git@vger.kernel.org,
+        Mon, 16 Oct 2023 06:44:38 -0700 (PDT)
+From: Phillip Wood <phillip.wood123@gmail.com>
+To: steadmon@google.com
+Cc: calvinwan@google.com,
+	git@vger.kernel.org,
 	gitster@pobox.com,
-	ps@pks.im
-Subject: [PATCH v2 3/3] rev-list: add commit object support in `--missing` option
-Date: Mon, 16 Oct 2023 12:38:30 +0200
-Message-ID: <20231016103830.56486-4-karthik.188@gmail.com>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20231016103830.56486-1-karthik.188@gmail.com>
-References: <20231009105528.17777-1-karthik.188@gmail.com>
- <20231016103830.56486-1-karthik.188@gmail.com>
+	linusa@google.com,
+	phillip.wood123@gmail.com,
+	rsbecker@nexbridge.com
+Subject: [PATCH v8 2.5/3] fixup! unit tests: add TAP unit test framework
+Date: Mon, 16 Oct 2023 14:43:00 +0100
+Message-ID: <20231016134421.21659-1-phillip.wood123@gmail.com>
+X-Mailer: git-send-email 2.42.0.506.g0dd4464cfd3
+In-Reply-To: <00d3c95a81449bf49c4ce992d862d7a858691840.1696889530.git.steadmon@google.com>
+References: <00d3c95a81449bf49c4ce992d862d7a858691840.1696889530.git.steadmon@google.com>
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -64,214 +67,94 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-	FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.6
+	FREEMAIL_FROM,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 	lindbergh.monkeyblade.net
 
-The `--missing` object option in rev-list currently works only with
-missing blobs/trees. For missing commits the revision walker fails with
-a fatal error.
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Let's extend the functionality of `--missing` option to also support
-commit objects. This is done by adding a new `MISSING` flag that the
-revision walker sets whenever it encounters a missing tree/commit. The
-revision walker will now continue the traversal and call `show_commit()`
-even for missing commits. In rev-list we can then check for this flag
-and call the existing code for parsing `--missing` objects.
+Here are a couple of cleanups for the unit test framework that I
+noticed.
 
-A scenario where this option would be used is to find the boundary
-objects between different object directories. Consider a repository with
-a main object directory (GIT_OBJECT_DIRECTORY) and one or more alternate
-object directories (GIT_ALTERNATE_OBJECT_DIRECTORIES). In such a
-repository, using the `--missing=print` option while disabling the
-alternate object directory allows us to find the boundary objects
-between the main and alternate object directory.
+Update the documentation of the example custom check to reflect the
+change in return value of test_assert() and mention that
+checks should be careful when dereferencing pointer arguments.
 
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+Also avoid evaluating macro augments twice in check_int() and
+friends. The global variable test__tmp was introduced to avoid
+evaluating the arguments to these macros more than once but the macros
+failed to use it when passing the values being compared to
+check_int_loc().
+
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- builtin/rev-list.c          |  6 +++
- list-objects.c              |  2 +-
- object.h                    |  2 +-
- revision.c                  | 11 ++++--
- revision.h                  |  3 ++
- t/t6022-rev-list-missing.sh | 74 +++++++++++++++++++++++++++++++++++++
- 6 files changed, 93 insertions(+), 5 deletions(-)
- create mode 100755 t/t6022-rev-list-missing.sh
+ t/unit-tests/test-lib.h | 26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 98542e8b3c..604ae01d0c 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -149,6 +149,12 @@ static void show_commit(struct commit *commit, void *data)
- 
- 	display_progress(progress, ++progress_counter);
- 
-+	if (revs->do_not_die_on_missing_objects &&
-+	    commit->object.flags & MISSING) {
-+		finish_object__ma(&commit->object);
-+		return;
-+	}
-+
- 	if (show_disk_usage)
- 		total_disk_usage += get_object_disk_usage(&commit->object);
- 
-diff --git a/list-objects.c b/list-objects.c
-index 47296dff2f..60c5533721 100644
---- a/list-objects.c
-+++ b/list-objects.c
-@@ -387,7 +387,7 @@ static void do_traverse(struct traversal_context *ctx)
- 		 * an uninteresting boundary commit may not have its tree
- 		 * parsed yet, but we are not going to show them anyway
- 		 */
--		if (!ctx->revs->tree_objects)
-+		if (!ctx->revs->tree_objects || commit->object.flags & MISSING)
- 			; /* do not bother loading tree */
- 		else if (repo_get_commit_tree(the_repository, commit)) {
- 			struct tree *tree = repo_get_commit_tree(the_repository,
-diff --git a/object.h b/object.h
-index 114d45954d..12913e6116 100644
---- a/object.h
-+++ b/object.h
-@@ -62,7 +62,7 @@ void object_array_init(struct object_array *array);
+diff --git a/t/unit-tests/test-lib.h b/t/unit-tests/test-lib.h
+index 8df3804914..a8f07ae0b7 100644
+--- a/t/unit-tests/test-lib.h
++++ b/t/unit-tests/test-lib.h
+@@ -42,18 +42,21 @@ void test_msg(const char *format, ...);
  
  /*
-  * object flag allocation:
-- * revision.h:               0---------10         15             23------27
-+ * revision.h:               0---------10         15             22------27
-  * fetch-pack.c:             01    67
-  * negotiator/default.c:       2--5
-  * walker.c:                 0-2
-diff --git a/revision.c b/revision.c
-index e789834dd1..d147e0f611 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1110,7 +1110,7 @@ static int process_parents(struct rev_info *revs, struct commit *commit,
- 	struct commit_list *parent = commit->parents;
- 	unsigned pass_flags;
+  * Test checks are built around test_assert(). checks return 1 on
+- * success, 0 on failure. If any check fails then the test will
+- * fail. To create a custom check define a function that wraps
+- * test_assert() and a macro to wrap that function. For example:
++ * success, 0 on failure. If any check fails then the test will fail. To
++ * create a custom check define a function that wraps test_assert() and
++ * a macro to wrap that function to provide a source location and
++ * stringified arguments. Custom checks that take pointer arguments
++ * should be careful to check that they are non-NULL before
++ * dereferencing them. For example:
+  *
+  *  static int check_oid_loc(const char *loc, const char *check,
+  *			     struct object_id *a, struct object_id *b)
+  *  {
+- *	    int res = test_assert(loc, check, oideq(a, b));
++ *	    int res = test_assert(loc, check, a && b && oideq(a, b));
+  *
+- *	    if (res) {
+- *		    test_msg("   left: %s", oid_to_hex(a);
+- *		    test_msg("  right: %s", oid_to_hex(a);
++ *	    if (!res) {
++ *		    test_msg("   left: %s", a ? oid_to_hex(a) : "NULL";
++ *		    test_msg("  right: %s", b ? oid_to_hex(a) : "NULL";
+  *
+  *	    }
+  *	    return res;
+@@ -79,7 +82,8 @@ int check_bool_loc(const char *loc, const char *check, int ok);
+ #define check_int(a, op, b)						\
+ 	(test__tmp[0].i = (a), test__tmp[1].i = (b),			\
+ 	 check_int_loc(TEST_LOCATION(), #a" "#op" "#b,			\
+-		       test__tmp[0].i op test__tmp[1].i, a, b))
++		       test__tmp[0].i op test__tmp[1].i,		\
++		       test__tmp[0].i, test__tmp[1].i))
+ int check_int_loc(const char *loc, const char *check, int ok,
+ 		  intmax_t a, intmax_t b);
  
--	if (commit->object.flags & ADDED)
-+	if (commit->object.flags & ADDED || commit->object.flags & MISSING)
- 		return 0;
- 	commit->object.flags |= ADDED;
+@@ -90,7 +94,8 @@ int check_int_loc(const char *loc, const char *check, int ok,
+ #define check_uint(a, op, b)						\
+ 	(test__tmp[0].u = (a), test__tmp[1].u = (b),			\
+ 	 check_uint_loc(TEST_LOCATION(), #a" "#op" "#b,			\
+-			test__tmp[0].u op test__tmp[1].u, a, b))
++			test__tmp[0].u op test__tmp[1].u,		\
++			test__tmp[0].u, test__tmp[1].u))
+ int check_uint_loc(const char *loc, const char *check, int ok,
+ 		   uintmax_t a, uintmax_t b);
  
-@@ -1168,7 +1168,8 @@ static int process_parents(struct rev_info *revs, struct commit *commit,
- 	for (parent = commit->parents; parent; parent = parent->next) {
- 		struct commit *p = parent->item;
- 		int gently = revs->ignore_missing_links ||
--			     revs->exclude_promisor_objects;
-+			     revs->exclude_promisor_objects ||
-+			     revs->do_not_die_on_missing_objects;
- 		if (repo_parse_commit_gently(revs->repo, p, gently) < 0) {
- 			if (revs->exclude_promisor_objects &&
- 			    is_promisor_object(&p->object.oid)) {
-@@ -1176,7 +1177,11 @@ static int process_parents(struct rev_info *revs, struct commit *commit,
- 					break;
- 				continue;
- 			}
--			return -1;
-+
-+			if (!revs->do_not_die_on_missing_objects)
-+				return -1;
-+			else
-+				p->object.flags |= MISSING;
- 		}
- 		if (revs->sources) {
- 			char **slot = revision_sources_at(revs->sources, p);
-diff --git a/revision.h b/revision.h
-index c73c92ef40..07906bc3bc 100644
---- a/revision.h
-+++ b/revision.h
-@@ -41,6 +41,9 @@
- /* WARNING: This is also used as REACHABLE in commit-graph.c. */
- #define PULL_MERGE	(1u<<15)
+@@ -101,7 +106,8 @@ int check_uint_loc(const char *loc, const char *check, int ok,
+ #define check_char(a, op, b)						\
+ 	(test__tmp[0].c = (a), test__tmp[1].c = (b),			\
+ 	 check_char_loc(TEST_LOCATION(), #a" "#op" "#b,			\
+-			test__tmp[0].c op test__tmp[1].c, a, b))
++			test__tmp[0].c op test__tmp[1].c,		\
++			test__tmp[0].c, test__tmp[1].c))
+ int check_char_loc(const char *loc, const char *check, int ok,
+ 		   char a, char b);
  
-+/* WARNING: This is also used as NEEDS_BITMAP in pack-bitmap.c. */
-+#define MISSING         (1u<<22)
-+
- #define TOPO_WALK_EXPLORED	(1u<<23)
- #define TOPO_WALK_INDEGREE	(1u<<24)
- 
-diff --git a/t/t6022-rev-list-missing.sh b/t/t6022-rev-list-missing.sh
-new file mode 100755
-index 0000000000..40265a4f66
---- /dev/null
-+++ b/t/t6022-rev-list-missing.sh
-@@ -0,0 +1,74 @@
-+#!/bin/sh
-+
-+test_description='handling of missing objects in rev-list'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
-+. ./test-lib.sh
-+
-+# We setup the repository with two commits, this way HEAD is always
-+# available and we can hide commit 1.
-+test_expect_success 'create repository and alternate directory' '
-+	test_commit 1 &&
-+	test_commit 2 &&
-+	test_commit 3
-+'
-+
-+for obj in "HEAD~1" "HEAD~1^{tree}" "HEAD:1.t"
-+do
-+	test_expect_success "rev-list --missing=error fails with missing object $obj" '
-+		oid="$(git rev-parse $obj)" &&
-+		path=".git/objects/$(test_oid_to_path $oid)" &&
-+
-+		mv "$path" "$path.hidden" &&
-+		test_when_finished "mv $path.hidden $path" &&
-+
-+		test_must_fail git rev-list --missing=error --objects \
-+			--no-object-names HEAD
-+	'
-+done
-+
-+for obj in "HEAD~1" "HEAD~1^{tree}" "HEAD:1.t"
-+do
-+	for action in "allow-any" "print"
-+	do
-+		test_expect_success "rev-list --missing=$action with missing $obj" '
-+			oid="$(git rev-parse $obj)" &&
-+			path=".git/objects/$(test_oid_to_path $oid)" &&
-+
-+			# Before the object is made missing, we use rev-list to
-+			# get the expected oids.
-+			git rev-list --objects --no-object-names \
-+				HEAD ^$obj >expect.raw &&
-+
-+			# Blobs are shared by all commits, so evethough a commit/tree
-+			# might be skipped, its blob must be accounted for.
-+			if [ $obj != "HEAD:1.t" ]; then
-+				echo $(git rev-parse HEAD:1.t) >>expect.raw &&
-+				echo $(git rev-parse HEAD:2.t) >>expect.raw
-+			fi &&
-+
-+			mv "$path" "$path.hidden" &&
-+			test_when_finished "mv $path.hidden $path" &&
-+
-+			git rev-list --missing=$action --objects --no-object-names \
-+				HEAD >actual.raw &&
-+
-+			# When the action is to print, we should also add the missing
-+			# oid to the expect list.
-+			case $action in
-+			allow-any)
-+				;;
-+			print)
-+				grep ?$oid actual.raw &&
-+				echo ?$oid >>expect.raw
-+				;;
-+			esac &&
-+
-+			sort actual.raw >actual &&
-+			sort expect.raw >expect &&
-+			test_cmp expect actual
-+		'
-+	done
-+done
-+
-+test_done
 -- 
-2.41.0
+2.42.0.506.g0dd4464cfd3
 
