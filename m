@@ -1,55 +1,55 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B44228E22
-	for <git@vger.kernel.org>; Mon, 16 Oct 2023 15:21:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E6802B779
+	for <git@vger.kernel.org>; Mon, 16 Oct 2023 15:52:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Du2wsLFY"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VemfruM4"
 Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E35D3EA
-	for <git@vger.kernel.org>; Mon, 16 Oct 2023 08:21:39 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-9b2f73e3af3so714471866b.3
-        for <git@vger.kernel.org>; Mon, 16 Oct 2023 08:21:39 -0700 (PDT)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEFD583
+	for <git@vger.kernel.org>; Mon, 16 Oct 2023 08:52:11 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-99c1c66876aso756065066b.2
+        for <git@vger.kernel.org>; Mon, 16 Oct 2023 08:52:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697469698; x=1698074498; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1697471530; x=1698076330; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=vBWhTf6YgDj4Lk8hUuMTLAH3soVsOQzAyyqBcPxSZQI=;
-        b=Du2wsLFYOaYuWs2LEDEppp43ikOMXABIFrRRlxsatGFCHZUdFhszhoDHKeNuPc6SaF
-         RbYqHISbNnK6HgQfDU2vS8AhuU70/ryGog6RyRb/0dIGjpUICmRVmNygsBk+Be7ZMAkD
-         khN6NZqZvIwzn8Q1mVHmtok9cJHgAJSRgviDmtCufoIJIq02+FvFY+Skyr5m83JnSf4/
-         VKM4MCbgyt99PsQgtNusrsK265IGGk4lEFFISnxCI2vPU3kJIsJ1B04BafNzU8h2si6D
-         6a/X33MzMFuHwxx2XfQEBUbofNMMCaQYxceUjwqDRAYwkjP+wjsev3R07Z6CioXgPo3O
-         RXpA==
+        bh=mk1Xz8HpC5YPdnh9VFn70QmpDVyts4uSRAgTs+vUIpc=;
+        b=VemfruM4DC79gBfstlALMKQNQAURc3/jcueRvFgOEbcNnk+rc/Dz3gpshJ0TBx/cMh
+         pGnd3xu2ggM/GNhRt0+id/t5DNPLRiiC8cbuAEHsIiimNdcYUs2n2+oExI3aKznZUfFu
+         bsVh5NbjSBFVSn55wnHdgJNOJHsNNxOhLT8NyzDUQzuiKHxPg/xiSq1s/dYxMpXLL9Sb
+         jPXO8vyRkdbliJ7WiCBKytoNYybf3itJMA27DGumiaDvjSOpN9GcV+QbfW9iv0dkUzVE
+         okqA0eAbWJVhRHBydf4sGG8oS6M0zHqxnUyETxBrUR5qMc6FfoNY2bN2nAuC3gNy+hCj
+         hHgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697469698; x=1698074498;
+        d=1e100.net; s=20230601; t=1697471530; x=1698076330;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=vBWhTf6YgDj4Lk8hUuMTLAH3soVsOQzAyyqBcPxSZQI=;
-        b=lXuLL17ZqOemhlxREIwb/54BUFnYS7am+DwWYaSID9gVL2dxnFwotxehJGSEA1ZTmg
-         t/s0RpFwoqxtEYq27ar4q1CHLzy4FlYxkzIBmsow6+uXdTlhiZ9RDnif9JSK+2oBpUIe
-         mRW6GCptLUhPtt6+1U/YQPRPfptQu7dyFaK59zN07axcKk8MCG+xC2rkXBBpZtLfUZ7S
-         9CLleT04jnn+n2XTJPypAnzbIjHdgwD37bPOcdHTX8MAnQE2n2+SNGdPPOaZIL3KZPtf
-         MmlKzoWWW9PITtNbaIgB1qvLjSxbdQiCHW4peiLXGe2h6GALMOL+FtmEkyPnPULjaT3f
-         LIYw==
-X-Gm-Message-State: AOJu0YzAuYHIT/pojfu4ZpefOJYJ8aAMVczzEhjs5GWFeREjmLqPdLvT
-	RJXujuvsDI6B1TRcns6pFg==
-X-Google-Smtp-Source: AGHT+IEZyKUaFuady8YHFB1NGRyMxRkln7XJpuJSAF6IQVsZd0L5orZYRFgyBChPRZFxSKyerVs28g==
-X-Received: by 2002:a17:906:30ca:b0:9b2:b7f2:bc7b with SMTP id b10-20020a17090630ca00b009b2b7f2bc7bmr28000556ejb.37.1697469697889;
-        Mon, 16 Oct 2023 08:21:37 -0700 (PDT)
+        bh=mk1Xz8HpC5YPdnh9VFn70QmpDVyts4uSRAgTs+vUIpc=;
+        b=PtZM5JKove3Vl0UPqJkflT1sgYTs5iukhf+qUgDyi1MB78VqmV/XqeKLUODrHIEcMX
+         Q2uyQyCQzMCbJZVj7HCBttjOs0fBmqRj96prBZWlZzNv2FmRS9v153H+k3bzbmEZqdCv
+         JZX/xhNZM7G3BJBvpQSnv94HJy9jipl+lrYF8fNO0iWEcCHrCVHTjtFdtXJUcX0ilht/
+         JCo1mX7+AX34HMWxc1pBboyW2VtYFovOjtmfvw0//FzeYGUOIbQ7x+g+8WfRBfsQ+pB2
+         Q6zVZyORdRNyfuse7o1U691zy9Jb1U9qlSwRuV0s6ZQJFRXEsCftsGQFEzf8hUyUi26n
+         KU/A==
+X-Gm-Message-State: AOJu0Yz4l5xAoQaO/RkxfTkwOfbR3fqcGCeJZbrH+P/aAPlCgeHg/9jd
+	BQJrvJjhmYfwh8DPR5sfCMhhqDc5Me/LYnc=
+X-Google-Smtp-Source: AGHT+IEEPLwjKSt/bDBOR1VoUVJMB9NLDF0ttV4iBgfGwHC+GKWy+9D/VvUfKmiZ8vMzN85ld6+Ejw==
+X-Received: by 2002:a17:906:c108:b0:9be:fc60:32d9 with SMTP id do8-20020a170906c10800b009befc6032d9mr5762106ejc.47.1697471529974;
+        Mon, 16 Oct 2023 08:52:09 -0700 (PDT)
 Received: from dorcaslitunya-virtual-machine.localdomain ([105.163.1.143])
-        by smtp.gmail.com with ESMTPSA id 30-20020a170906009e00b009ae587ce135sm4219609ejc.223.2023.10.16.08.21.35
+        by smtp.gmail.com with ESMTPSA id z2-20020a170906668200b009adc77fe164sm4267915ejo.66.2023.10.16.08.52.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Oct 2023 08:21:37 -0700 (PDT)
+        Mon, 16 Oct 2023 08:52:09 -0700 (PDT)
 From: Dorcas AnonoLitunya <anonolitunya@gmail.com>
 To: christian.couder@gmail.com
 Cc: anonolitunya@gmail.com,
 	git@vger.kernel.org,
 	gitster@pobox.com
-Subject: [PATCH] t/t7601: Modernize test scripts using functions
-Date: Mon, 16 Oct 2023 18:21:00 +0300
-Message-ID: <20231016152113.135970-1-anonolitunya@gmail.com>
+Subject: [[Outreachy]PATCH v2] t/t7601: Modernize test scripts using functions
+Date: Mon, 16 Oct 2023 18:50:11 +0300
+Message-ID: <20231016155059.137057-2-anonolitunya@gmail.com>
 X-Mailer: git-send-email 2.42.0.345.gaab89be2eb
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -80,6 +80,9 @@ easier to understand.
 
 Signed-off-by: Dorcas AnonoLitunya <anonolitunya@gmail.com>
 ---
+Changes in v2:
+  - Add Outreachy to subject line
+
  t/t7601-merge-pull-config.sh | 24 ++++++++++++------------
  1 file changed, 12 insertions(+), 12 deletions(-)
 
