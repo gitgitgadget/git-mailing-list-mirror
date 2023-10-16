@@ -1,125 +1,95 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8BE5156D2
-	for <git@vger.kernel.org>; Mon, 16 Oct 2023 07:19:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F2515ADD
+	for <git@vger.kernel.org>; Mon, 16 Oct 2023 07:32:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="t+I+KsKH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="geoeivEP"
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24C5DDC
-	for <git@vger.kernel.org>; Mon, 16 Oct 2023 00:19:54 -0700 (PDT)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id 09F8F5C035E;
-	Mon, 16 Oct 2023 03:19:51 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Mon, 16 Oct 2023 03:19:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:sender:subject:subject:to:to;
-	 s=fm3; t=1697440791; x=1697527191; bh=JrEEE2bd5fhGGaM2VrEKCQ11d
-	1wYDrjXkuA5excOZLY=; b=t+I+KsKHOUespaavbGkZY8EIFSeuJufmpr+Luebtb
-	wgkVVrxzIcvhfNFfMfn7mvTs3kXEckt4MWB6UP0jnsAxbNA4kjRcNfYN9ZVhp9ux
-	pQpzqgu8WOlEohqpsO2RKvgrFPy5rQ0psX0h0r4siVXPUyma4qLpWKBDOfjyzQGY
-	buqe3d+VxjL6f5K1lB7ATkJYKe1Fn3nJKT7GGnQk7ytQqcvj4ItqXsIZC1BlLcLz
-	GPVZkfk9sH3snfvpObur79311p+J/vnAMG+cQhfBuTxhoUZkER0jQj37BJchAOte
-	syWNelGsYKakcdRepm8f95ceEiuGPOtNMJDfJ6bfBtUug==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:sender:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1697440791; x=1697527191; bh=JrEEE2bd5fhGGaM2VrEKCQ11d1wYDrjXkuA
-	5excOZLY=; b=geoeivEPYwv5fA9fg6lHPPFSVjf82m5VJ639FcfN2Yjqe7Qu/VX
-	nZkUH8ZXGfaHkj6RDHL0tTxUG6HjH/ESG1TKIVM9mmWMx0PwypJ715rBiHMcEE44
-	R4yJl7GgvuV3Al245q1djXNPXoHAc7H7/6f7izSpTWwhM0DQ1a1NI71TZ7JgNY4Q
-	37/YaRGCw2vGdFzEVmuWck9ONB4GoEqQchCc/1fJDBXWBUTMuxHFNTG6kB58CuWv
-	3nYqjV0FgBlXEOig8Exql9Kk/glibG7AKY+x3z2oSE4atSI9hKFdw5hwJ6jCxQDY
-	Kw3+DordHEhvm7npKU2pXU+uaapPcGKJChA==
-X-ME-Sender: <xms:FuQsZT8CDBioEFQSGk3qzKAZasFGD4xWO-njIQStqkwxfGGUe9PE2g>
-    <xme:FuQsZfuqKwOIrE7VXH1PLAv19ul4ZljNYJsoXaVMH4EI7j1HoxTRjLxFBEL-fDqNt
-    26_BD9y_JNN6JfrYQ>
-X-ME-Received: <xmr:FuQsZRCn-dWJodfHuJ_ww7hrhxlAZ1-kCFpoFAsEBz82ezmyl5t4gqOlQhzP4q36Y0riP72KT29psYDzobRItAs1SBwECK13CCLM5TGKKhsXgHQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrieelgdduudejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfggtggusehgtderre
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeeugfeutdeuieehteelveegudejkeejheelje
-    ejhffhgffhvefgkeeukeejtdeijeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:FuQsZfftB4-zDNs-HD7el9UTscXKYRaqsLUXpdt4wd_WB9hA6CT65Q>
-    <xmx:FuQsZYMAJNTfScagYPCZkgpp12t-HYYamw64n_tTjzOrLvuP-CydMQ>
-    <xmx:FuQsZRmGdD_GeGzCCGdXhfvYwDaCZx3OfvyZBGXFdPdP5ELvRRFmSg>
-    <xmx:F-QsZSWWjuGoUz5bV04h8EqTZiBySO3ZtJV-ci5lqP8SUHzqmxhhHQ>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Oct 2023 03:19:50 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 42d48076 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 16 Oct 2023 07:19:48 +0000 (UTC)
-Date: Mon, 16 Oct 2023 09:19:46 +0200
-From: Patrick Steinhardt <ps@pks.im>
+	dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b="Hhvlu1y/";
+	dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b="k6XmEzeN"
+Received: from fallback17.i.mail.ru (fallback17.i.mail.ru [79.137.243.72])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2CABD9
+	for <git@vger.kernel.org>; Mon, 16 Oct 2023 00:32:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
+	h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:References:Message-ID:Subject:To:From:Date:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=BT/8yf5c7LNDHH2IlwuNAQ+mlBSkYzsXDv8SFJcSF0Q=;
+	t=1697441551;x=1697531551; 
+	b=Hhvlu1y/YGwGh4m0etJiyETd2rI6RPS6nZUetFQCOgb1VwWNrT+5ucGC5vLl8LWVv/DMLfRUmqvWWB/2jC4b4Bcabx2Q3n8dUmYuxLMUiIVqlh/9ukS7xVQvyLQZnFe7ZPtFYGetM1Cs0UmO8cFjsxRPNBjgNlDP9b7Xayh3AGo=;
+Received: from [10.12.4.10] (port=51214 helo=smtp34.i.mail.ru)
+	by fallback17.i.mail.ru with esmtp (envelope-from <kostix@bswap.ru>)
+	id 1qsI5V-001v2z-A4
+	for git@vger.kernel.org; Mon, 16 Oct 2023 10:32:29 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru;
+	s=mailru; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
+	References:Message-ID:Subject:To:From:Date:From:Sender:Reply-To:To:Cc:
+	Content-Type:Content-Transfer-Encoding:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
+	List-Archive:X-Cloud-Ids:Disposition-Notification-To;
+	bh=BT/8yf5c7LNDHH2IlwuNAQ+mlBSkYzsXDv8SFJcSF0Q=; t=1697441549; x=1697531549; 
+	b=k6XmEzeNtQmPsGGDfgOQw9q5N7Sb87VQl4qXCY6Im0gTPPCZns9dCvDcYj3leZzax1gYyy7Zmh8
+	mlm0nYTGLJ17C4vGd2XtqFZNVJKSuD0zCf8fmFFdiaeYIqiHuehqe5ydNn6KsGk730rIfjM3WImq+
+	9d4zHvPpDTHLgdrf4xo=;
+Received: by smtp34.i.mail.ru with esmtpa (envelope-from <kostix@bswap.ru>)
+	id 1qsI5R-00DQXw-0z
+	for git@vger.kernel.org; Mon, 16 Oct 2023 10:32:25 +0300
+Date: Mon, 16 Oct 2023 10:32:27 +0300
+From: Konstantin Khomoutov <kostix@bswap.ru>
 To: git@vger.kernel.org
-Cc: Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH 0/2] doc/git-repack: small fixes for geometric repacks
-Message-ID: <cover.1697440686.git.ps@pks.im>
+Subject: Re: You are marked as spam, and therefore cannot authorize a third
+ party application.
+Message-ID: <20231016073227.2c5qhmcr6z2dr7zq@carbon>
+Mail-Followup-To: git@vger.kernel.org
+References: <c4880ac5-45b6-90ff-f730-6c66ba59f26f@infohubinnovations.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="+DvbGm7pJl+3t4i4"
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <c4880ac5-45b6-90ff-f730-6c66ba59f26f@infohubinnovations.com>
+X-Mailru-Src: smtp
+X-7564579A: 78E4E2B564C1792B
+X-77F55803: 4F1203BC0FB41BD978AFEFB3096932CF13E7FB3349EB8EC0C23B91B6439F56BB182A05F5380850405B77BACE15BA0E1A18A43737339E0AEDEBD07F1A358C5928F2BD787EFFEE69DC
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7FCFCB92DA8654BB0EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F79006373D58C44ED3182E498638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D857CB9F08A617E259270D6735632DD732117882F4460429724CE54428C33FAD305F5C1EE8F4F765FC1A9C11735BBA05FBA471835C12D1D9774AD6D5ED66289B52BA9C0B312567BB23117882F446042972877693876707352026055571C92BF10FBDFBBEFFF4125B51D2E47CDBA5A96583BA9C0B312567BB2376E601842F6C81A19E625A9149C048EEB28585415E75ADA90A5971FBB7557E96D8FC6C240DEA76429C9F4D5AE37F343AA9539A8B242431040A6AB1C7CE11FEE367F1C1C3ABB44F3AAD7EC71F1DB88427C4224003CC836476E2F48590F00D11D6E2021AF6380DFAD1A18204E546F3947C17119E5299B287EE2E808ACE2090B5E1725E5C173C3A84C3C5EA940A35A165FF2DBA43225CD8A89F83C798A30B85E16B42539A7722CA490CB5C8C57E37DE458BEDA766A37F9254B7
+X-C1DE0DAB: 0D63561A33F958A5348072F4224E751E2B5FCC8C6B3F4A2E523BC7F8E16967C8F87CCE6106E1FC07E67D4AC08A07B9B01E44367C8E80A7B4CB5012B2E24CD356
+X-C8649E89: 1C3962B70DF3F0ADBF74143AD284FC7177DD89D51EBB7742DC8270968E61249B1004E42C50DC4CA955A7F0CF078B5EC49A30900B95165D34C0DDD40374D3501798DD50D2ECE3C902F22BF5DB9E923045BD1537345002EF512D7B40E9E66A47DF1D7E09C32AA3244CCD66D4FC0B90818757EC07823A3EFCB98580396430872480BC4AF6B5DE6957CB5DA084F8E80FEBD3B644FBF139BB3089A015563ECF9503F943082AE146A756F3
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojaEe5+VLEN6n+b/RGQOBV7Q==
+X-Mailru-Sender: 641179478317D3F0421D0BEF39CFD1382FC0E94CDA5D05B32B2A937B90B5A697AB4E52EF0D8536FB13BA5AC085B0DF3CFD8FF98A8691EE7BAAB64A3C2C77197FCA12F3F80FA6A2FFE7D80B0F635B57EC5FEEDEB644C299C0ED14614B50AE0675
+X-Mras: Ok
+X-7564579A: 646B95376F6C166E
+X-77F55803: 6242723A09DB00B4DEDBBC46D76EB2520ED4F58DABF9B69518791C104F4FF5CF049FFFDB7839CE9E80FBBB2CB63C9CB5238AE29E3D8EC0D325CC300CD57527454E68A0529D4C4058
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5xhPKz0ZEsZ5k6NOOPWz5QAiZSCXKGQRq3/7KxbCLSB2ESzQkaOXqCBFZPLWFrEGlV1shfWe2EVcxl5toh0c/aCGOghz/frdRhzMe95NxDFdVi+mls5yutqyAoBka01a5w==
+X-Mailru-MI: C000000000000800
+X-Mras: Ok
+X-Spam-Status: No, score=-0.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-	SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+	RCVD_IN_VALIDITY_RPBL,SPF_HELO_NONE,SPF_PASS autolearn=no
+	autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 	lindbergh.monkeyblade.net
 
+Hi!
 
---+DvbGm7pJl+3t4i4
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Mon, Oct 16, 2023 at 11:30:05AM +0530, Ramesh wrote:
 
-Hi,
+> Hi GitHub Team,
 
-this small series addresses two issues in our documentation for the
-git-repack(1) command that relate to geometric repacks.
+This mailing list has nothing to do with GitHub - a Git hosting provider, -
+as it's dedicated to the developing of Git (a distributed version control
+system) itself.
 
-Patrick
+> I am trying to clone my repository from local machine.But i am getting the
+> follow exception that  "You are marked as spam, and therefore cannot
+> authorize a third party application.". Can you please suggest the same.
 
-Patrick Steinhardt (2):
-  doc/git-repack: fix syntax for `-g` shorthand option
-  doc/git-repack: don't mention nonexistent "--unpacked" option
+Please use your favorite internet search engine to look for the exact error
+message (that one in double quotes) - you will find lots of relevant material,
+for instance this [1]. If you want to actually contact GitHub, use [2] and [3]
+for further pointers.
 
- Documentation/git-repack.txt | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ 1. https://github.com/orgs/community/discussions/23842
+ 2. https://github.com/orgs/community/discussions/
+ 3. https://support.github.com/
 
---=20
-2.42.0
-
-
---+DvbGm7pJl+3t4i4
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmUs5A0ACgkQVbJhu7ck
-PpTd2A/9GWxrXIRpXfMq4bcSVWKYkWkC69Rvg+VGMJmE3j8T1Vz2Jw4BzTfMfQVY
-ZVVy1QibmJP4nKMEmPmsvcgBEYgXe3XIxUj5Ti3667zJVaBI3k6WSmBdEPKMilKO
-xd2ATtxQ90whhOX2g3msdWq22x/0Bf9NHxvFfP8KksoIfTlNaggdxK6AWjllz9mj
-mgMNtJyT5FHT3+xvS+vHe3kBOpKYmBModOh1LcwtK5K1KTA1EPRTeIvWbie2kDT3
-3pA0qBh0SQgJLQ32KvlztCZd7zmJnG2Q6elUjcMi/+UFpoo06hSAo+yVKE3m9/wD
-WSOrZVufV8laYj5dAheH8uWDMWRYRFEXQwdkgFxUuwiXuBwUISL7KjdyQ8iAU01D
-JngbGTURZIy7iMRHdukDt7dvZnooq1TQW0RVeFQdD6bEHabplBKnMdMkhKqsdhPE
-vVu0DfDO35YJgEnnvN/emeKStM1aEBpG5pwXnWTdFg1CgeKVlLuMG+L2MCVkfIaM
-s3zvvR0cGLxvm6/r9MKIWENMEt1TCDiyWXl3DggMjUzbc2Jtb4HVGsWNivyG7jQY
-R/Z4oEzbizbDCb2Otr2DJbmIiP8NIpLrmFCzyjGdgNQRMwz3qicAslfbyw92IyKF
-PuWJlN32R81wmhf11wtZWFkWGKqpAFRVcPw0MYLcyl6pvfva2sQ=
-=G5SK
------END PGP SIGNATURE-----
-
---+DvbGm7pJl+3t4i4--
