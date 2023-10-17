@@ -1,67 +1,68 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFA9EA50
-	for <git@vger.kernel.org>; Tue, 17 Oct 2023 05:15:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VSdFdHXu"
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2ADC49E
-	for <git@vger.kernel.org>; Mon, 16 Oct 2023 22:15:31 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-40572aeb673so51189715e9.0
-        for <git@vger.kernel.org>; Mon, 16 Oct 2023 22:15:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697519729; x=1698124529; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=j05eYTFv/5gCsb3/NBdlDOh6ZC/+XBwfAQi4g8LwJ4Y=;
-        b=VSdFdHXuvpWM4+fT4cnNqRpbbdq5XNOpeqPK3dY6CQjPPepkQOMFFZWysFLetx2oMA
-         UetyS2MMEO5zpRUPkK7AnBsVvouIByBlvhEaNm4dCaANL/ieFkUSouD3FEVkFvvsV9zU
-         quhxnDcjpLPsw1ATBWSc5gGpG7QHABQMV2+TIg/UZ8f6cLXZzX5eFzuPaQWcaPw83RfL
-         biXvxJV0pJzqNk4lLGc6OykNS7UfpNIziGRUUX9EBReB1/TuvwuXqEqO1ggmAYlmkVED
-         znKhqwzG/XSSGfFEq1lffhnh6+aFcCI/PDK/oUrx6Rr68xq8SV5QIgSWzKHnjq62H+PV
-         B1zg==
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E4008BF9
+	for <git@vger.kernel.org>; Tue, 17 Oct 2023 05:19:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEC72A2
+	for <git@vger.kernel.org>; Mon, 16 Oct 2023 22:19:38 -0700 (PDT)
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-66d36b2a247so19368456d6.1
+        for <git@vger.kernel.org>; Mon, 16 Oct 2023 22:19:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697519729; x=1698124529;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=j05eYTFv/5gCsb3/NBdlDOh6ZC/+XBwfAQi4g8LwJ4Y=;
-        b=vhwVTAJYMN+YHi4VmvYUyC6jH156TJ6lUagm6cRyOAtalI35K2DMSDqQkO9csGvohP
-         w6gkouODrJr82wRVPJVCKH0xlp8a4zb50aO85ZwYRs2MoFh/vCsNdv1xrl2yEHg4Bm5z
-         addIykeuFnEaK2RNPiFHuQZqrqMk9WgU60aSP2Lqi0k7RXR+nTIk0FOh+5LdJbccZhoR
-         LWpGzEyXP8nhC0L4roLwm7seUC3b3viptXLGCV6uDY2dVuDstf0vz1kYhUKmjCT8rp18
-         qkhEnlmRvayoFJgQL+9Vteubg7fFmnnJLuEqfmEAZk8tEZS94gPImfvF/aUtHv1GWnvM
-         5fAA==
-X-Gm-Message-State: AOJu0YxNwJ2ecpinZanvDEaF7IvdAUPZ1sq0v/+XzzXrKiWQLatGRHAH
-	2mZ7jVhG8lAvbmHvk/qci+9zEsXbx5pZJXVcz2Hvt5Zdvhc=
-X-Google-Smtp-Source: AGHT+IET7DRMEFu/TAchNfLf98mOg2sU0rqly/ewazlWgTYVYglIMLnvBX6sXlqnvjYePh94qpTvhhYcBCd5ka/KxnQ=
-X-Received: by 2002:a5d:4842:0:b0:32d:a211:798a with SMTP id
- n2-20020a5d4842000000b0032da211798amr1031182wrs.6.1697519729321; Mon, 16 Oct
- 2023 22:15:29 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1697519978; x=1698124778;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=QTVjQvZ0L1PnPC4rDSRX0QGkJdfAiMN8IAX985nnjB8=;
+        b=mlscBYGqj0u7RYZiNGRgKT39BRQk6vLJEWp9tVAVOOAWZGV9WO1ZEppNh0F6Y9k2Xc
+         8/jnC51kP79Ufrdt7cST/E7uZyw8fnrsXb4Ir8lxlO6dIuUl1R1Kv3gzQFekldvcHmHG
+         jFLReEVhEQT5T9mV7+hVTo5tUqfDeTexBFb147ZvPIMYK5wNl4PeBs5d6v0+yATL8cq8
+         4W2zUPxZW4nVaUUqUPEyBAjVu2PBLqQXyOgNPdWgN1FE2Ig45G5UD6ngYB4lY2tsPD1A
+         4OO3EGOixteM9zcQQwZSby5pvxsvRaflCuzoMuqTSCZ7D6t7BL7R274Kf7A5CHoB4u0L
+         Ne7Q==
+X-Gm-Message-State: AOJu0YzcLJUW78Zvax4jjvW5VoquXaNdf1tkNdibzS6e80BeJUUYqHbb
+	Oo8/wWpDMeoTedYe/cINpe/C0CXpGcYXnPWF0v8=
+X-Google-Smtp-Source: AGHT+IHD9CaCLavuw4hh6AGpweUc5JNvYCsZyhdmEjgl1XgFf+4V06+HUwRU6yHnMhTiOuw2XQmqWqk2Ia+huom2bPQ=
+X-Received: by 2002:a05:6214:21e3:b0:658:7f94:3978 with SMTP id
+ p3-20020a05621421e300b006587f943978mr1601000qvj.13.1697519977880; Mon, 16 Oct
+ 2023 22:19:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Jaydeep Das <jaydeepjd.8914@gmail.com>
-Date: Tue, 17 Oct 2023 10:45:17 +0530
-Message-ID: <CACaPSotRhyFZ-eBZ9KNKRUjLFHKo09P-Un+sitDXEktzmwuaxA@mail.gmail.com>
-Subject: Proxy Flag for git-clone, push, pull
-To: Git Mailing List <git@vger.kernel.org>
+References: <CACaPSotRhyFZ-eBZ9KNKRUjLFHKo09P-Un+sitDXEktzmwuaxA@mail.gmail.com>
+In-Reply-To: <CACaPSotRhyFZ-eBZ9KNKRUjLFHKo09P-Un+sitDXEktzmwuaxA@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Tue, 17 Oct 2023 01:19:26 -0400
+Message-ID: <CAPig+cR8-s3bGCw6qF12Bcxuy4vB8Gh9H5jTb_r3pUu1LK35-g@mail.gmail.com>
+Subject: Re: Proxy Flag for git-clone, push, pull
+To: Jaydeep Das <jaydeepjd.8914@gmail.com>
+Cc: Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-0.4 required=5.0 tests=BAYES_05,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-	FREEMAIL_FROM,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS
-	autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 	lindbergh.monkeyblade.net
 
-To make git work through proxy, we need to set the `http.proxy` config
-or need to set `http_proxy` environment variable.
+On Tue, Oct 17, 2023 at 1:15=E2=80=AFAM Jaydeep Das <jaydeepjd.8914@gmail.c=
+om> wrote:
+> To make git work through proxy, we need to set the `http.proxy` config
+> or need to set `http_proxy` environment variable.
+>
+> However wouldn't it be better if there was a flag in the command
+> itself (like npm) which
+> overrides whatever proxy is set. Something like
+>
+> git clone --proxy "http://..." <url>
 
-However wouldn't it be better if there was a flag in the command
-itself (like npm) which
-overrides whatever proxy is set. Something like
+The -c option allows you to specify configuration on the command-line, so:
 
-git clone --proxy "http://..." <url>
+    git -c http.proxy=3D"http://..." clone <url>
+
+should do what you want.
