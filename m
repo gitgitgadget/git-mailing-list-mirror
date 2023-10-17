@@ -1,99 +1,122 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAC3E16403
-	for <git@vger.kernel.org>; Tue, 17 Oct 2023 10:51:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C45E41AA4
+	for <git@vger.kernel.org>; Tue, 17 Oct 2023 11:37:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="T7UfoMeW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Hsbew0qz"
-Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50462A2
-	for <git@vger.kernel.org>; Tue, 17 Oct 2023 03:51:25 -0700 (PDT)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id E85C65C020D;
-	Tue, 17 Oct 2023 06:51:21 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Tue, 17 Oct 2023 06:51:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to;
-	 s=fm2; t=1697539881; x=1697626281; bh=XUMNhF/HfjRbGkvS1kHMAbHFo
-	w8nESA2ZT8vApaIRD8=; b=T7UfoMeWOvOm/WHTpOU7Y+TI61jeR2bwMP+YkrzEE
-	y9P6McuLTJ5RyUb2Y/zTItCNdu+fl56VUp+SPqbAN5Ut5hsbhDg9Pvu/HrnjxcwE
-	ICSVC4bq0IPUNicN20gAtwmE1G5hNDNuPWSu9MscHro2WkRpN+xcIUObx+Ygm1M2
-	A2RuMF/d5VmqxhxqrLBjsVSvGA1Nqf0p4dF1bC8vYcm9jhhhrBQwYWP17AjZRMLL
-	0LWMzwxXwCPVazMVnvV6HI97Wao5PGlGBe2m9X+sFUYxzqV9Xd+JV7xrwxJl6jgA
-	7pn3UVHtdERr4tghBeFBBXIm23WSF0RjoXBbAbOC62coQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:sender:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1697539881; x=1697626281; bh=XUMNhF/HfjRbGkvS1kHMAbHFow8nESA2ZT8
-	vApaIRD8=; b=Hsbew0qzszjvdFi117b6gFoWhBL9zLiB0XEMISfPaZJIvDKNioz
-	9Gnm57goOpLMfjRw6zKQ1fXt4XkUG9kllPIl2Jh7OIjeRJx9x6la2Ky29l4v+0Kn
-	4VBfwUqOrVCi53t/Xvo/eZKTucGidBExY7yXlDygoOuyAzRwYSJGEdwARNu29nVX
-	jGfR+YF5wIZKyyvcCMYllHS4+zU6zpXD/Lm+LtBx41vF66oUiKEpJMLgtPfbEybJ
-	EY+WFzaIbxxVu074vhunrMEx1OqSw7+JXzgGWqlAF7UhQRarKk4yblhQ6lCjl5Yd
-	3PUAx/rV4yyoltRbV5jnomSNhT28sPZD7ZQ==
-X-ME-Sender: <xms:KWcuZWNGapAlpjmd9WZMnHCbJvns5t0tnj-6wZcREXqEiqbUlfpe5A4>
-    <xme:KWcuZU8Gt_3ZvDUMPz_xnWA1RbwhthS0WKLrOFSE4zIRF3wk4X6muUclDFNybMeqz
-    XkaXbaOAadxjsRhZg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrjedvgdefvdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpefofgggkfgjfhffhffvvefutgfgsehtqhertderreejnecuhfhrohhmpedfmfhr
-    ihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssggrkh
-    hkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepfeelgfejvdfgtdefgffhfeekvdevvdeg
-    ueffieetgedtheekvefhfeefkefguedunecuffhomhgrihhnpehsthgrtghkohhvvghrfh
-    hlohifrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhf
-    rhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:KWcuZdQBzcC0A79xYSji8DrCD0PZTa0xKnlSmQnnKvbgqfn5VpHu0g>
-    <xmx:KWcuZWurQRMVqlMVXpt1q3GiKnMzD38L_kb1hPLp5HmKEcAG3oqfaw>
-    <xmx:KWcuZefi3z-wC82aqo0R77QyFNVaSnoN391rDt6ogivRFCMPftjCWA>
-    <xmx:KWcuZQoUsstCYyjxDdjkX5HBk1nXJh0o5XF8nMme5NziFSxBoEhhOA>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id A6D1B15A0092; Tue, 17 Oct 2023 06:51:21 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-1019-ged83ad8595-fm-20231002.001-ged83ad85
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eaxRLhBq"
+Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89233FB
+	for <git@vger.kernel.org>; Tue, 17 Oct 2023 04:37:58 -0700 (PDT)
+Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-5a7b91faf40so67398107b3.1
+        for <git@vger.kernel.org>; Tue, 17 Oct 2023 04:37:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1697542678; x=1698147478; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mZSHbqiVJ91MdEAgp+ZDTsYRfgO7hB6nwafZ7PNdsiA=;
+        b=eaxRLhBqiy9V8g07L2+TjlEmGhHOjdAWo5W1QX+fhUbuotTzyerrhmTrrB1MfRG8WS
+         qirhkoxdLX5EJp+Zip4edQDJHaI1RryX6Xe5kwj0qNTpF5rICY2G0/jjvjfSs/tM8+LA
+         E9jyYQIPhbNS/t1nHsrlNYrvmWGfqGcg6IWSbu8109/aNqDXNHg27p4qeY4Uc6N10WVy
+         LFxPWXLt7nu4OXqoLT1+wBOQ40R6agE0BulUzxvd1SQQSQ/s9mVPaKMAlqYMdPnKHqDd
+         yRzUZuvSpEKd66eECPCBINYSs6/9fxAvwxL+Qxnf1CW63X3HK0D4ixX269Uy5yswJIcd
+         p2XQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697542678; x=1698147478;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mZSHbqiVJ91MdEAgp+ZDTsYRfgO7hB6nwafZ7PNdsiA=;
+        b=WAqjF3knwnYN6aYJvSqqAH08lIYfczisAopaOmVgso3cvd2CO4Zb/7ouPoIzzPIBHv
+         oWgU1i6Z1l2M3OrygaVAaD5eq9NfjnjhBc+fnUGn/ZWC2TwbofGVvKb27tzz0fPn/3FB
+         pBZU3jltmGbLF7ERJJKHG3uzldRW2T7dNqhP5EOtgxkKWf4+JItuQLTqyCIt1jiLzJ+j
+         qL5N0YAuYThRP/uWKvKc958CXhCEHuo/dlSgekbcDICsNCfF5rFEcq+XLcVZ6tLyzf9o
+         rpBYF6jwZPd3kNPYKTV7myiPZDeM0J8+IsT2RxPcjCD0I2IXdbtZV38ssgBzzHMhHpzY
+         JoyA==
+X-Gm-Message-State: AOJu0YyTx5C1l69RYqqHWfBBLMWknq/p0KdHaLBC4W4poGoPuzBwQlOs
+	VL2pSMqmnSI6firRK6/WgWFEbpjG3z3R5uQ5u+8=
+X-Google-Smtp-Source: AGHT+IGJfAjSzn1p1zeeVHbct9/7W6ITkVcdXELPIKsxggBqze7B2NHEHNg10miUPPLLY31KNS+8qJ2o6zOwEHjw07Y=
+X-Received: by 2002:a0d:c802:0:b0:589:e7c1:96f2 with SMTP id
+ k2-20020a0dc802000000b00589e7c196f2mr1771186ywd.46.1697542677755; Tue, 17 Oct
+ 2023 04:37:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <2c45e813-738a-480f-8c77-8c646df9c0e3@app.fastmail.com>
-In-Reply-To: <7368e4ad-b05b-4b8f-a13b-0a68b442e72b@tweaklab.org>
-References: <7368e4ad-b05b-4b8f-a13b-0a68b442e72b@tweaklab.org>
-Date: Tue, 17 Oct 2023 12:51:00 +0200
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Moritz Widmann" <widmann@tweaklab.org>
-Cc: git@vger.kernel.org
-Subject: Re: Git Pathspec bug
-Content-Type: text/plain;charset=utf-8
+References: <CAGP6POKg4mSFv-Z+dD1aXDFDbxH9Xu1WCdCA5TGfCAM3NUUQLw@mail.gmail.com>
+ <ZS2qZtYDvItovjqg@tapette.crustytoothpaste.net>
+In-Reply-To: <ZS2qZtYDvItovjqg@tapette.crustytoothpaste.net>
+From: Hongyi Zhao <hongyi.zhao@gmail.com>
+Date: Tue, 17 Oct 2023 19:37:46 +0800
+Message-ID: <CAGP6PO+SeZPzD21nErX=Vq=+d6oy-kg+diu=irot3enOhpQNMg@mail.gmail.com>
+Subject: Re: Method for Calculating Statistics of Developer Contribution to a
+ Specified Branch.
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, Hongyi Zhao <hongyi.zhao@gmail.com>, 
+	Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+	RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 	lindbergh.monkeyblade.net
 
-On Tue, Oct 17, 2023, at 11:45, Moritz Widmann wrote:
-> I executed the following command in zsh (added `command` just to be su=
-re=20
-> that there's no aliases or functions)
+On Tue, Oct 17, 2023 at 5:26=E2=80=AFAM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
 >
-> command git submodule add=20
-> 'git@github.com:moritz-t-w/Godot-Onscreen-Keyboard.git' '.'
-> fatal: empty string is not a valid pathspec. please use . instead if y=
-ou=20
-> meant to match all paths
+> On 2023-10-16 at 14:10:01, Hongyi Zhao wrote:
+> > Dear Git Mailing List,
+> >
+> > I am a developer currently working on a project and I wanted to
+> > establish statistics for each team member's contribution to a specific
+> > branch.
+> >
+> > Say, for a user "JianboLin", I am currently using the following method:
+> >
+> > $ git clone https://github.com/OrderN/CONQUEST-release.git
+> > $ cd CONQUEST-release
+> > $ git log --author=3D"JianboLin" --stat --summary origin/f-mlff | awk
+> > 'NF =3D=3D4 && $2 =3D=3D"|" && $3 ~/[0-9]+/ && $4 ~/[+-]+|[+]+|[-]+/ {s=
++=3D$3}
+> > END {print s}'
+> >
+> > Using the above command, I am able to calculate the number of lines
+> > contributed by a specific author on a specific branch, which allows me
+> > to quantify the contribution to a branch by each team member.
+> >
+> > However, I would like to know if a more efficient or accurate method
+> > exists to carry out this task. Are there any other parameters,
+> > commands, or aspects I need to consider to get a more comprehensive
+> > measure of contribution?
 >
-> Git Version:=C2=A02.42.0
+> Can you maybe explain what you want to measure and what your goal is in
+> doing so?
 >
-> OS: Arch Linux
+> The problem is that lines of code isn't really that useful as a measure
+> of contribution value or developer productivity, which are the reasons
+> people typically measure that metric.  For example, with three lines, a
+> colleague fixed a persistently difficult-to-reproduce problem which had
+> been affecting many of our largest customers.  That was a very valuable
+> contribution, but not very large.  I've made similar kinds of changes
+> myself, both at work and in open source projects.
+>
+> Certainly you can compute the number of lines of code changed by a
+> developer, but that is not typically a very useful metric, since it
+> doesn't lead you to any interesting conclusions about the benefits or
+> value of the contributions or developer in question.  However, perhaps
+> you have a different goal in mind, and if you can explain what that is,
+> we may be able to help you find a better way of doing it.
 
-Is this the same issue?: https://stackoverflow.com/a/53441183/1725151
+I want to calculate a certain developer's contribution based on
+different standards of code line count and the importance of the code.
+
+> --
+> brian m. carlson (he/him or they/them)
+> Toronto, Ontario, CA
+
+Regards,
+Zhao
