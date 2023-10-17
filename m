@@ -1,122 +1,120 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C45E41AA4
-	for <git@vger.kernel.org>; Tue, 17 Oct 2023 11:37:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4233741746
+	for <git@vger.kernel.org>; Tue, 17 Oct 2023 11:40:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eaxRLhBq"
-Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89233FB
-	for <git@vger.kernel.org>; Tue, 17 Oct 2023 04:37:58 -0700 (PDT)
-Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-5a7b91faf40so67398107b3.1
-        for <git@vger.kernel.org>; Tue, 17 Oct 2023 04:37:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EUFNl+N5"
+Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC0EB109
+	for <git@vger.kernel.org>; Tue, 17 Oct 2023 04:40:23 -0700 (PDT)
+Received: by mail-yb1-xb36.google.com with SMTP id 3f1490d57ef6-d9abc069c8bso5746637276.3
+        for <git@vger.kernel.org>; Tue, 17 Oct 2023 04:40:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697542678; x=1698147478; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mZSHbqiVJ91MdEAgp+ZDTsYRfgO7hB6nwafZ7PNdsiA=;
-        b=eaxRLhBqiy9V8g07L2+TjlEmGhHOjdAWo5W1QX+fhUbuotTzyerrhmTrrB1MfRG8WS
-         qirhkoxdLX5EJp+Zip4edQDJHaI1RryX6Xe5kwj0qNTpF5rICY2G0/jjvjfSs/tM8+LA
-         E9jyYQIPhbNS/t1nHsrlNYrvmWGfqGcg6IWSbu8109/aNqDXNHg27p4qeY4Uc6N10WVy
-         LFxPWXLt7nu4OXqoLT1+wBOQ40R6agE0BulUzxvd1SQQSQ/s9mVPaKMAlqYMdPnKHqDd
-         yRzUZuvSpEKd66eECPCBINYSs6/9fxAvwxL+Qxnf1CW63X3HK0D4ixX269Uy5yswJIcd
-         p2XQ==
+        d=gmail.com; s=20230601; t=1697542823; x=1698147623; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=AFfGJFSRc2tAJ8jWdzB3ElkUN1Hunq6c3upqY4apeVU=;
+        b=EUFNl+N5usKQqk5J25RXha7njKwOxa8xkbryxmIj7My6RcxIX9nHSElKLkHXMQNlF0
+         C93ElHZ79wmjAz6arxwi3VDXJdnpCW/BCv40wWYsYhqL5sZOgAnEAYjNmK/0fCxYY+e9
+         cKn4ZnRPrpDsO3gLI0ZdPE4N7iDHCJjwN3GwA/iYf8SMZwhgMxKaPeOkMRhd4EL8CCxu
+         lHc+2PgavXeKWu7BFrHqbRNYXAJ5e5UOngG4GAHFMvhiFEQd3mAKS2gRKnwrhWA3FFUY
+         XYew6XG4rlTIEZIk0HSuWoDnrtGTIt4xR3IuWtmDQzZ9kZwVm4kldDBYYyV1/GctXZ2r
+         8nOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697542678; x=1698147478;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mZSHbqiVJ91MdEAgp+ZDTsYRfgO7hB6nwafZ7PNdsiA=;
-        b=WAqjF3knwnYN6aYJvSqqAH08lIYfczisAopaOmVgso3cvd2CO4Zb/7ouPoIzzPIBHv
-         oWgU1i6Z1l2M3OrygaVAaD5eq9NfjnjhBc+fnUGn/ZWC2TwbofGVvKb27tzz0fPn/3FB
-         pBZU3jltmGbLF7ERJJKHG3uzldRW2T7dNqhP5EOtgxkKWf4+JItuQLTqyCIt1jiLzJ+j
-         qL5N0YAuYThRP/uWKvKc958CXhCEHuo/dlSgekbcDICsNCfF5rFEcq+XLcVZ6tLyzf9o
-         rpBYF6jwZPd3kNPYKTV7myiPZDeM0J8+IsT2RxPcjCD0I2IXdbtZV38ssgBzzHMhHpzY
-         JoyA==
-X-Gm-Message-State: AOJu0YyTx5C1l69RYqqHWfBBLMWknq/p0KdHaLBC4W4poGoPuzBwQlOs
-	VL2pSMqmnSI6firRK6/WgWFEbpjG3z3R5uQ5u+8=
-X-Google-Smtp-Source: AGHT+IGJfAjSzn1p1zeeVHbct9/7W6ITkVcdXELPIKsxggBqze7B2NHEHNg10miUPPLLY31KNS+8qJ2o6zOwEHjw07Y=
-X-Received: by 2002:a0d:c802:0:b0:589:e7c1:96f2 with SMTP id
- k2-20020a0dc802000000b00589e7c196f2mr1771186ywd.46.1697542677755; Tue, 17 Oct
- 2023 04:37:57 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1697542823; x=1698147623;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=AFfGJFSRc2tAJ8jWdzB3ElkUN1Hunq6c3upqY4apeVU=;
+        b=QYUYhPVzqjF6y50QS8g/hIVEmUkkTjgO3G6zHSBvWt8S99HsvYCL5ZGs8nz4jqkb83
+         HbXDYmsui8RIWKTNhA/tdtOzYg1mFgwSM4+vgSLqrOjkGfhIlQhPu9V9TfUO0VlhJimZ
+         TrJ2ASnE4fDfiYupapHyw0VEp+mZKnNABqtXPHgqf+/SrJ5/0a4A8HjpQHtEQc5cq+mJ
+         ZR/nIM4YGOW9iJy9iKrk+RqzvAR/PdJV7d0Hk6XrqlQjrGL+ITQco5jkmT6PjmqprUxo
+         wxLz9JrI/UeknsmMkDFibleWiP+asCDH76mD3ix0C91UevuVZq/Vv153l12AVIrioOdS
+         QP6g==
+X-Gm-Message-State: AOJu0YzLUj6sLAVrCQhmxcBxIGz4tYAtlzFI0Y0VJf9rE5v7RUmdD46O
+	YqzYtja2rW8yOvzuDTE0tCv+C3L7iYJmMZU=
+X-Google-Smtp-Source: AGHT+IHZaKIvtY6YfSN/Gia5OGgvlFCG98uBUdnWW/FK5HyISFqyjwcNrMrHfgNQ0kbhAfn8JduzJw==
+X-Received: by 2002:a25:b292:0:b0:d9c:1ef5:b12 with SMTP id k18-20020a25b292000000b00d9c1ef50b12mr1901893ybj.65.1697542822988;
+        Tue, 17 Oct 2023 04:40:22 -0700 (PDT)
+Received: from localhost.localdomain ([105.112.176.13])
+        by smtp.gmail.com with ESMTPSA id l23-20020a25b317000000b00d9b4ddf1c32sm452122ybj.2.2023.10.17.04.40.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Oct 2023 04:40:21 -0700 (PDT)
+From: Naomi Ibe <naomi.ibeh69@gmail.com>
+To: git@vger.kernel.org
+Cc: Naomi Ibe <naomi.ibeh69@gmail.com>
+Subject: [PATCH v2 1/1] [OUTREACHY] add: standardize die() messages output.
+Date: Tue, 17 Oct 2023 12:39:45 +0100
+Message-Id: <20231017113946.747-1-naomi.ibeh69@gmail.com>
+X-Mailer: git-send-email 2.36.1.windows.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAGP6POKg4mSFv-Z+dD1aXDFDbxH9Xu1WCdCA5TGfCAM3NUUQLw@mail.gmail.com>
- <ZS2qZtYDvItovjqg@tapette.crustytoothpaste.net>
-In-Reply-To: <ZS2qZtYDvItovjqg@tapette.crustytoothpaste.net>
-From: Hongyi Zhao <hongyi.zhao@gmail.com>
-Date: Tue, 17 Oct 2023 19:37:46 +0800
-Message-ID: <CAGP6PO+SeZPzD21nErX=Vq=+d6oy-kg+diu=irot3enOhpQNMg@mail.gmail.com>
-Subject: Re: Method for Calculating Statistics of Developer Contribution to a
- Specified Branch.
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, Hongyi Zhao <hongyi.zhao@gmail.com>, 
-	Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-	RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+	FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 	lindbergh.monkeyblade.net
 
-On Tue, Oct 17, 2023 at 5:26=E2=80=AFAM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> On 2023-10-16 at 14:10:01, Hongyi Zhao wrote:
-> > Dear Git Mailing List,
-> >
-> > I am a developer currently working on a project and I wanted to
-> > establish statistics for each team member's contribution to a specific
-> > branch.
-> >
-> > Say, for a user "JianboLin", I am currently using the following method:
-> >
-> > $ git clone https://github.com/OrderN/CONQUEST-release.git
-> > $ cd CONQUEST-release
-> > $ git log --author=3D"JianboLin" --stat --summary origin/f-mlff | awk
-> > 'NF =3D=3D4 && $2 =3D=3D"|" && $3 ~/[0-9]+/ && $4 ~/[+-]+|[+]+|[-]+/ {s=
-+=3D$3}
-> > END {print s}'
-> >
-> > Using the above command, I am able to calculate the number of lines
-> > contributed by a specific author on a specific branch, which allows me
-> > to quantify the contribution to a branch by each team member.
-> >
-> > However, I would like to know if a more efficient or accurate method
-> > exists to carry out this task. Are there any other parameters,
-> > commands, or aspects I need to consider to get a more comprehensive
-> > measure of contribution?
->
-> Can you maybe explain what you want to measure and what your goal is in
-> doing so?
->
-> The problem is that lines of code isn't really that useful as a measure
-> of contribution value or developer productivity, which are the reasons
-> people typically measure that metric.  For example, with three lines, a
-> colleague fixed a persistently difficult-to-reproduce problem which had
-> been affecting many of our largest customers.  That was a very valuable
-> contribution, but not very large.  I've made similar kinds of changes
-> myself, both at work and in open source projects.
->
-> Certainly you can compute the number of lines of code changed by a
-> developer, but that is not typically a very useful metric, since it
-> doesn't lead you to any interesting conclusions about the benefits or
-> value of the contributions or developer in question.  However, perhaps
-> you have a different goal in mind, and if you can explain what that is,
-> we may be able to help you find a better way of doing it.
+ builtin/add.c: clean up die() messages
 
-I want to calculate a certain developer's contribution based on
-different standards of code line count and the importance of the code.
+    As described in the CodingGuidelines document, a single line
+    message given to die() and its friends should not capitalize its
+    first word, and should not add full-stop at the end.
 
-> --
-> brian m. carlson (he/him or they/them)
-> Toronto, Ontario, CA
+Signed-off-by: Naomi Ibe <naomi.ibeh69@gmail.com>
+---
+ builtin/add.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-Regards,
-Zhao
+diff --git a/builtin/add.c b/builtin/add.c
+index c27254a5cd..5126d2ede3 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -182,7 +182,7 @@ static int edit_patch(int argc, const char **argv, const char *prefix)
+ 	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
+ 
+ 	if (repo_read_index(the_repository) < 0)
+-		die(_("Could not read the index"));
++		die(_("could not read the index"));
+ 
+ 	repo_init_revisions(the_repository, &rev, prefix);
+ 	rev.diffopt.context = 7;
+@@ -200,15 +200,15 @@ static int edit_patch(int argc, const char **argv, const char *prefix)
+ 		die(_("editing patch failed"));
+ 
+ 	if (stat(file, &st))
+-		die_errno(_("Could not stat '%s'"), file);
++		die_errno(_("could not stat '%s'"), file);
+ 	if (!st.st_size)
+-		die(_("Empty patch. Aborted."));
++		die(_("empty patch. aborted"));
+ 
+ 	child.git_cmd = 1;
+ 	strvec_pushl(&child.args, "apply", "--recount", "--cached", file,
+ 		     NULL);
+ 	if (run_command(&child))
+-		die(_("Could not apply '%s'"), file);
++		die(_("could not apply '%s'"), file);
+ 
+ 	unlink(file);
+ 	free(file);
+@@ -568,7 +568,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ finish:
+ 	if (write_locked_index(&the_index, &lock_file,
+ 			       COMMIT_LOCK | SKIP_IF_UNCHANGED))
+-		die(_("Unable to write new index file"));
++		die(_("unable to write new index file"));
+ 
+ 	dir_clear(&dir);
+ 	clear_pathspec(&pathspec);
+-- 
+2.36.1.windows.1
+
