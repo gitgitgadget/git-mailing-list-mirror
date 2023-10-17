@@ -1,128 +1,120 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE86430F4
-	for <git@vger.kernel.org>; Tue, 17 Oct 2023 21:50:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93ECA430E8
+	for <git@vger.kernel.org>; Tue, 17 Oct 2023 22:07:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qpZab4Yg"
-Received: from pb-sasl-trial20.pobox.com (pb-sasl-trial20.pobox.com [173.228.157.50])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12F0CB0
-	for <git@vger.kernel.org>; Tue, 17 Oct 2023 14:50:07 -0700 (PDT)
-Received: from pb-sasl-trial20.pobox.com (localhost.local [127.0.0.1])
-	by pb-sasl-trial20.pobox.com (Postfix) with ESMTP id 91D392BF50;
-	Tue, 17 Oct 2023 17:50:04 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=2Lk6olHsK4nC
-	nxCsYwr42xN2SZk=; b=qpZab4YgmhviRsa/ncmR0a3xeNqVG9pkCW6t43sb5/OR
-	SSu1Mf9c5go/zBBpX5mPtBaGHcw/I4ewmR3u++nYZAQMHbBgLNAA1QQM400jx2it
-	vtLQZE2/77EUmRduqvFLbvT2UYaHAhPTMkSajhXVZGfen/6bavhoHF9g0Rr+RFI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=CHgbgo
-	cR3j5nGv9x+2vYzIeCFW+5O4MQufZbWKzst+VvWMuQrXZR81bCBBGjwyJVn8rZR1
-	LoYbHAjxzyOI+Mg7Z9l0pUQ1Gr53pux2YUbsDo3JmN8dJDQ9lThMjXgFjtym7m2X
-	xIsFPbk4sWujthqzaWo4TqVstA0sWjGiUtvwc=
-Received: from pb-smtp20.sea.icgroup.com (pb-smtp20.pobox.com [10.110.30.20])
-	by pb-sasl-trial20.pobox.com (Postfix) with ESMTP id 727182BF4F;
-	Tue, 17 Oct 2023 17:50:04 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EAF4F18EC5;
-	Tue, 17 Oct 2023 17:49:59 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Alexander Shopov <ash@kambanaria.org>
-Cc: Git List <git@vger.kernel.org>,  jmas@softcatala.org,
-  alexhenrie24@gmail.com,  ralf.thielow@gmail.com,
-  matthias.ruester@gmail.com,  phillip.szelat@gmail.com,  vyruss@hellug.gr,
-  christopher.diaz.riv@gmail.com,  jn.avila@free.fr,
-  flashcode@flashtux.org,  bagasdotme@gmail.com,  =?utf-8?B?w4Z2YXIgQXJu?=
- =?utf-8?B?ZmrDtnLDsA==?= Bjarmason
- <avarab@gmail.com>,  alessandro.menti@alessandromenti.it,
-  elongbug@gmail.com,  cwryu@debian.org,  uneedsihyeon@gmail.com,
-  arek_koz@o2.pl,  dacs.git@brilhante.top,  "insolor@gmail.com"
- <insolor@gmail.com>,  peter@softwolves.pp.se,  bitigchi@me.com,
-  ark@cho.red,  kate@kgthreads.com,  "vnwildman@gmail.com"
- <vnwildman@gmail.com>,  pclouds@gmail.com,  "dyroneteng@gmail.com"
- <dyroneteng@gmail.com>,  "oldsharp@gmail.com" <oldsharp@gmail.com>,
-  "lilydjwg@gmail.com" <lilydjwg@gmail.com>,  me@angyi.io,  Xin Jiang
- <worldhello.net@gmail.com>,  "pan93412@gmail.com" <pan93412@gmail.com>,
-  "franklin@goodhorse.idv.tw" <franklin@goodhorse.idv.tw>
-Subject: Re: Is there any interest in localizing term delimiters in git
- messages?
-In-Reply-To: <CAP6f5Mmi=f4DPcFwfvEiJMdKMa0BUyZ019mc8uFXyOufgD4NjA@mail.gmail.com>
-	(Alexander Shopov's message of "Tue, 17 Oct 2023 23:09:50 +0200")
-References: <CAP6f5Mmi=f4DPcFwfvEiJMdKMa0BUyZ019mc8uFXyOufgD4NjA@mail.gmail.com>
-Date: Tue, 17 Oct 2023 14:49:58 -0700
-Message-ID: <xmqqzg0gx6k9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mjyUKklJ"
+Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD0E1D3
+	for <git@vger.kernel.org>; Tue, 17 Oct 2023 15:07:13 -0700 (PDT)
+Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-5a877e0f0d8so23588787b3.1
+        for <git@vger.kernel.org>; Tue, 17 Oct 2023 15:07:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1697580433; x=1698185233; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=AFfGJFSRc2tAJ8jWdzB3ElkUN1Hunq6c3upqY4apeVU=;
+        b=mjyUKklJY70Ud0tA+CFNsUoY5bxTaKnKw9YYpQWHt3MkyA/K0llfA5s9ehuvim7iwc
+         gMoFBoemWhnLPYWbl4gZqvbzE5TUkXqO9i/yfF2M8q1GYtQOxVjVWNvF6fa099jXPApK
+         W6Jh0KLqL32oJYDSH8i1LCkkWmHyU9D6fxbofFhgnlTROIZ6hDBT7IAs8aehVA/NFngY
+         MU/RvE4UXcgAEQMAjP08a5itANAFuUCDcTfSRRHGIeZ8EqwGnnkB9KsnsL0qbEgs2W/u
+         7zdIgWReIqDAbtkgRrNFhPHXqiApYziiVlyQErPM0SpeHgsRFWDum+SpeqsMW/af59iF
+         qQFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697580433; x=1698185233;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=AFfGJFSRc2tAJ8jWdzB3ElkUN1Hunq6c3upqY4apeVU=;
+        b=q2hfXXlY9VptRuSm6I2y8Ic8zduULBpdX0Zb227yWnfhSML1osy0BGbWRqmoAgOdDa
+         WFg72xznK6v5vNZ8Zvu+3urItPHXTJXaaIhj8XbTldv3jMbQnFrijtNErooO28j/Cgk+
+         bOqrruGV6bZS9E7LqJBJm2mLdcrxbETHu3kLWtsSfa9tbDrkTg9JCK9OzwRranAMlufH
+         f6I7L8MrGPXiOybTkoqKsiQK63caKco1sAXzXLslc+qOMJkLy9mcergjjH8G6HrThfjT
+         m1vU0Ocw92S9cRQDt6zIPLApTfwOCy1OVnq/9X84sk5TVwNZAEBSx0BMeVoxbZVWs5Z/
+         b/EQ==
+X-Gm-Message-State: AOJu0YxTi2TUqy/Hy+47FdnJBsD2j6sDLUw3t4pf/wZTApl3kF3hnIIM
+	ATGzayUo2k77h5vLl9RkjGr/wsUiA4+26eY=
+X-Google-Smtp-Source: AGHT+IH9a36MlM5B32tfIOM/jr0cnX3JzENH/FCoOWBU19nzoF6s5xp1DvrYKApBiM5MhWI7u5hIjA==
+X-Received: by 2002:a81:498e:0:b0:5a7:b53a:3223 with SMTP id w136-20020a81498e000000b005a7b53a3223mr2406882ywa.21.1697580432795;
+        Tue, 17 Oct 2023 15:07:12 -0700 (PDT)
+Received: from localhost.localdomain ([105.112.67.145])
+        by smtp.gmail.com with ESMTPSA id p128-20020a0dcd86000000b005925765aa30sm972516ywd.135.2023.10.17.15.07.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Oct 2023 15:07:11 -0700 (PDT)
+From: Naomi Ibe <naomi.ibeh69@gmail.com>
+To: git@vger.kernel.org
+Cc: Naomi Ibe <naomi.ibeh69@gmail.com>
+Subject: [PATCH v2 1/1] [OUTREACHY] add: standardize die() messages output.
+Date: Tue, 17 Oct 2023 23:06:42 +0100
+Message-Id: <20231017220642.293-1-naomi.ibeh69@gmail.com>
+X-Mailer: git-send-email 2.36.1.windows.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 1EAAD720-6D37-11EE-B764-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+	FREEMAIL_FROM,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 	lindbergh.monkeyblade.net
 
-Alexander Shopov <ash@kambanaria.org> writes:
+ builtin/add.c: clean up die() messages
 
-> Typical example:
-> ORIGINAL
-> msgid "  (use \"git rm --cached <file>...\" to unstage)"
->
-> TRANSLATION
-> msgstr ""
-> "  (=D0=B8=D0=B7=D0=BF=D0=BE=D0=BB=D0=B7=D0=B2=D0=B0=D0=B9=D1=82=D0=B5 =
-=E2=80=9Egit rm --cached %s =D0=A4=D0=90=D0=99=D0=9B=E2=80=A6=E2=80=9C, =D0=
-=B7=D0=B0 =D0=B4=D0=B0 =D0=B8=D0=B7=D0=B2=D0=B0=D0=B4=D0=B8=D1=82=D0=B5 =D0=
-=A4=D0=90=D0=99=D0=9B=D0=B0 =D0=BE=D1=82 =D0=B8=D0=BD=D0=B4=D0=B5=D0=BA=D1=
-=81=D0=B0)"
->
-> The important part are the `<' and `>' delimiters of the term "file"
->
-> Instead of using them - I omit them and capitalize the term. As if `<'
-> and `>' are declared as localizable and then I translate them as `',
-> `'
+    As described in the CodingGuidelines document, a single line
+    message given to die() and its friends should not capitalize its
+    first word, and should not add full-stop at the end.
 
-Is it because it is more common in your target language to omit <>
-around the placeholder word, or is it just your personal preference?
+Signed-off-by: Naomi Ibe <naomi.ibeh69@gmail.com>
+---
+ builtin/add.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-Whichever is the case, I am not sure how it affects ...
+diff --git a/builtin/add.c b/builtin/add.c
+index c27254a5cd..5126d2ede3 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -182,7 +182,7 @@ static int edit_patch(int argc, const char **argv, const char *prefix)
+ 	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
+ 
+ 	if (repo_read_index(the_repository) < 0)
+-		die(_("Could not read the index"));
++		die(_("could not read the index"));
+ 
+ 	repo_init_revisions(the_repository, &rev, prefix);
+ 	rev.diffopt.context = 7;
+@@ -200,15 +200,15 @@ static int edit_patch(int argc, const char **argv, const char *prefix)
+ 		die(_("editing patch failed"));
+ 
+ 	if (stat(file, &st))
+-		die_errno(_("Could not stat '%s'"), file);
++		die_errno(_("could not stat '%s'"), file);
+ 	if (!st.st_size)
+-		die(_("Empty patch. Aborted."));
++		die(_("empty patch. aborted"));
+ 
+ 	child.git_cmd = 1;
+ 	strvec_pushl(&child.args, "apply", "--recount", "--cached", file,
+ 		     NULL);
+ 	if (run_command(&child))
+-		die(_("Could not apply '%s'"), file);
++		die(_("could not apply '%s'"), file);
+ 
+ 	unlink(file);
+ 	free(file);
+@@ -568,7 +568,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ finish:
+ 	if (write_locked_index(&the_index, &lock_file,
+ 			       COMMIT_LOCK | SKIP_IF_UNCHANGED))
+-		die(_("Unable to write new index file"));
++		die(_("unable to write new index file"));
+ 
+ 	dir_clear(&dir);
+ 	clear_pathspec(&pathspec);
+-- 
+2.36.1.windows.1
 
-> So I am asking - is there any interest from other localizers to have
-> such a feature? Would the additional maintenance be OK for the
-> developers?
-
-... the maintenance burden for developers.  Perhaps I am not getting
-what you are proposing, but we are not going to change the message
-in "C" locale (the original you see in msgid).  In untranslated Git,
-we will keep the convention to highlight the placeholder word by
-having <> around it, so the "(use \"git rm --cached <file>...\" to
-unstage)" message will be spelled with "<file>".  You can translate
-that to a msgstr without <> markings without asking anybody's
-permission, and I do not think of a reason why it would burden
-developers to do so.
-
-As long as the target audience of your translation wants to see
-<file> to be translated to =D0=A4=D0=90=D0=99=D0=9B without <> around the=
- word, I do
-not think there is any problem doing so.  I of course am assuming
-that using capitalized placeholder is the norm for all users who use
-Bulgarian translated Git---if it is not some users want to see <>
-around the placeholder word just like "C" locale, then you'd need to
-answer your users wish first, or course, but that would not need to
-concern the developers who write the "C" locale messages.
-
-Thanks for helping Git easier to use for users with your language.
