@@ -1,53 +1,53 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93ECA430E8
-	for <git@vger.kernel.org>; Tue, 17 Oct 2023 22:07:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0A28430F9
+	for <git@vger.kernel.org>; Tue, 17 Oct 2023 22:13:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mjyUKklJ"
-Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD0E1D3
-	for <git@vger.kernel.org>; Tue, 17 Oct 2023 15:07:13 -0700 (PDT)
-Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-5a877e0f0d8so23588787b3.1
-        for <git@vger.kernel.org>; Tue, 17 Oct 2023 15:07:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JNB4bZMw"
+Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8DAA95
+	for <git@vger.kernel.org>; Tue, 17 Oct 2023 15:13:54 -0700 (PDT)
+Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-5a7ac4c3666so76309707b3.3
+        for <git@vger.kernel.org>; Tue, 17 Oct 2023 15:13:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697580433; x=1698185233; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1697580834; x=1698185634; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=AFfGJFSRc2tAJ8jWdzB3ElkUN1Hunq6c3upqY4apeVU=;
-        b=mjyUKklJY70Ud0tA+CFNsUoY5bxTaKnKw9YYpQWHt3MkyA/K0llfA5s9ehuvim7iwc
-         gMoFBoemWhnLPYWbl4gZqvbzE5TUkXqO9i/yfF2M8q1GYtQOxVjVWNvF6fa099jXPApK
-         W6Jh0KLqL32oJYDSH8i1LCkkWmHyU9D6fxbofFhgnlTROIZ6hDBT7IAs8aehVA/NFngY
-         MU/RvE4UXcgAEQMAjP08a5itANAFuUCDcTfSRRHGIeZ8EqwGnnkB9KsnsL0qbEgs2W/u
-         7zdIgWReIqDAbtkgRrNFhPHXqiApYziiVlyQErPM0SpeHgsRFWDum+SpeqsMW/af59iF
-         qQFw==
+        bh=aLmmbQMGnBtvmUtBajNzWBNAI48NH+utExeIyO8p6xo=;
+        b=JNB4bZMwZOp0saroOUZRhAejaixp79QGkCSIQJ7Zk2IKlOlB09gkVGCjIS8pY88cD0
+         eP333VbB56adr18UqPy3mHi1IL9eC0fdrdKdW1dP3mr9p82z9hhX5QVixmqI/SMzttKU
+         xwkUcMbd6/wx4lhCLeEtwnPMVLuq3km7LqoMxkcg+q3TYuzvcv+ZeeQcFzD5Zr4LlBOo
+         GQQbiP5FaVJ+lHdQIb2qOWyQo2NI5Gw2KjE2wKE+Jp78AA9GJtzAImKSvA6EyU+PHNId
+         5A8PnN5vcPTd/0bWu/M+sDCx0/y2jq1gHyWkl7B8q5Ucj+V+skAAbYHEK8R5jVEs1F2Z
+         +NEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697580433; x=1698185233;
+        d=1e100.net; s=20230601; t=1697580834; x=1698185634;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=AFfGJFSRc2tAJ8jWdzB3ElkUN1Hunq6c3upqY4apeVU=;
-        b=q2hfXXlY9VptRuSm6I2y8Ic8zduULBpdX0Zb227yWnfhSML1osy0BGbWRqmoAgOdDa
-         WFg72xznK6v5vNZ8Zvu+3urItPHXTJXaaIhj8XbTldv3jMbQnFrijtNErooO28j/Cgk+
-         bOqrruGV6bZS9E7LqJBJm2mLdcrxbETHu3kLWtsSfa9tbDrkTg9JCK9OzwRranAMlufH
-         f6I7L8MrGPXiOybTkoqKsiQK63caKco1sAXzXLslc+qOMJkLy9mcergjjH8G6HrThfjT
-         m1vU0Ocw92S9cRQDt6zIPLApTfwOCy1OVnq/9X84sk5TVwNZAEBSx0BMeVoxbZVWs5Z/
-         b/EQ==
-X-Gm-Message-State: AOJu0YxTi2TUqy/Hy+47FdnJBsD2j6sDLUw3t4pf/wZTApl3kF3hnIIM
-	ATGzayUo2k77h5vLl9RkjGr/wsUiA4+26eY=
-X-Google-Smtp-Source: AGHT+IH9a36MlM5B32tfIOM/jr0cnX3JzENH/FCoOWBU19nzoF6s5xp1DvrYKApBiM5MhWI7u5hIjA==
-X-Received: by 2002:a81:498e:0:b0:5a7:b53a:3223 with SMTP id w136-20020a81498e000000b005a7b53a3223mr2406882ywa.21.1697580432795;
-        Tue, 17 Oct 2023 15:07:12 -0700 (PDT)
+        bh=aLmmbQMGnBtvmUtBajNzWBNAI48NH+utExeIyO8p6xo=;
+        b=OYIQyrUsX6RTsEplkbYol+vADHo+7iWwF5PNWIJ93yEfZLTiSjW9kiG2tIOaO9z4/w
+         4bbv+3M/5WqvLPbXPqvnLs8ADDSppajJaY84sFpIqMFbd5KwALuhAZmxJJGmEHl+4d90
+         90YM9kKll/JROV+1u4taJLt+u6Mbo+6fUvV0wRdXqclg7fmv2w8jm4aMM4/V7xXNT3hG
+         k/muR5O4fvRi28Z7vVHnzk9UukS1bReIUoWXUHho2rYJFnygQ58l3LlegcGAlUjlEI74
+         xsMvXQO2lpZsL/sQ7GUCMJdrTkmbpesJeHYeQqoLdTf1z10HR8PFWm3h5a/ZIPWkLLyt
+         IGFw==
+X-Gm-Message-State: AOJu0YzvmH0ZhvUEzfZ+yYQ7OhhMqieTeW+CAM2aVCgJixYyZ7hP7p35
+	9NhIWhKIuWcEEyhkMSz1yKPfg1Lc7LGeszM=
+X-Google-Smtp-Source: AGHT+IH9EHUiAMJdBjAw9WBT2QohFS4QRr2zH+LbQdqpXzD4BdJWFF6kQl52AKvd6hyLOzhT8Ct1Fg==
+X-Received: by 2002:a0d:ea05:0:b0:5a7:aa54:42b1 with SMTP id t5-20020a0dea05000000b005a7aa5442b1mr3805475ywe.28.1697580833905;
+        Tue, 17 Oct 2023 15:13:53 -0700 (PDT)
 Received: from localhost.localdomain ([105.112.67.145])
-        by smtp.gmail.com with ESMTPSA id p128-20020a0dcd86000000b005925765aa30sm972516ywd.135.2023.10.17.15.07.09
+        by smtp.gmail.com with ESMTPSA id c195-20020a814ecc000000b00570253fc3e5sm955373ywb.105.2023.10.17.15.13.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Oct 2023 15:07:11 -0700 (PDT)
+        Tue, 17 Oct 2023 15:13:53 -0700 (PDT)
 From: Naomi Ibe <naomi.ibeh69@gmail.com>
 To: git@vger.kernel.org
 Cc: Naomi Ibe <naomi.ibeh69@gmail.com>
-Subject: [PATCH v2 1/1] [OUTREACHY] add: standardize die() messages output.
-Date: Tue, 17 Oct 2023 23:06:42 +0100
-Message-Id: <20231017220642.293-1-naomi.ibeh69@gmail.com>
+Subject: [PATCH v2 1/1] [OUTREACHY] builtin/add.c: clean up die() messages
+Date: Tue, 17 Oct 2023 23:13:23 +0100
+Message-Id: <20231017221323.352-1-naomi.ibeh69@gmail.com>
 X-Mailer: git-send-email 2.36.1.windows.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -63,11 +63,9 @@ X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 	lindbergh.monkeyblade.net
 
- builtin/add.c: clean up die() messages
-
-    As described in the CodingGuidelines document, a single line
-    message given to die() and its friends should not capitalize its
-    first word, and should not add full-stop at the end.
+As described in the CodingGuidelines document, a single line
+message given to die() and its friends should not capitalize its
+first word, and should not add full-stop at the end.
 
 Signed-off-by: Naomi Ibe <naomi.ibeh69@gmail.com>
 ---
