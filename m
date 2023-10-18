@@ -1,70 +1,70 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10E3914AB2
-	for <git@vger.kernel.org>; Wed, 18 Oct 2023 05:35:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D71215AF7
+	for <git@vger.kernel.org>; Wed, 18 Oct 2023 05:36:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="z0HgXSsV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="I1H0RWD4"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dae/S8zH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cpGdIiQF"
 Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4488A181
-	for <git@vger.kernel.org>; Tue, 17 Oct 2023 22:35:41 -0700 (PDT)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.west.internal (Postfix) with ESMTP id 9AAF03200B3A;
-	Wed, 18 Oct 2023 01:35:40 -0400 (EDT)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 097E812D
+	for <git@vger.kernel.org>; Tue, 17 Oct 2023 22:35:46 -0700 (PDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.west.internal (Postfix) with ESMTP id 63ED83200B45;
+	Wed, 18 Oct 2023 01:35:45 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Wed, 18 Oct 2023 01:35:40 -0400
+  by compute3.internal (MEProxy); Wed, 18 Oct 2023 01:35:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1697607340; x=1697693740; bh=ZN
-	0s8cpLORyMUOSR0o1dZPgGpdx3IRQztpSSJYDj9J8=; b=z0HgXSsVTq/PEqov0c
-	6vUCbdWa2iONxgdy+phkpUChqhlz8MYHuNgOkfU7/oSVuu48STKyZzbJ1SGOcevy
-	qP8RUGg+JEjh/zo1it641bFdhQl4eCxkI1sxptDdUgxAJL76+6Gqn41o4I8YKLrc
-	tO1EFyPpA3horwraMcBXnUFTl1cpyuaDFTLsdeHHhsKIUqU3oVTeUcDZtxtpiuoV
-	FgU40/1W/pKDEREylB+lCjNAqILvKgKSstqT7B16AP6KqBHlzsdYXAecqI5qeJCx
-	Qq87X95wlm5P1Y7Sf3i3Z2+kEjC/Y52kv5FWnd57OV0b2kXdIdvqTZRGenE3qiU8
-	WBMA==
+	:subject:subject:to:to; s=fm3; t=1697607344; x=1697693744; bh=Nc
+	OpWIcB/RfVHGmvTqxuzGFNAlgYiAiNnUP4EjFEuFY=; b=dae/S8zHqqQ0BvIffr
+	fHQpmaemaoFGhjNvMcwNVUrmYspz4kHrnZeZTWg/sz4k/X9Bb8L/s+JQZ8XXIHDS
+	iQSpv2dIZRjV+cQOyuhAp8Kfo9HRnL7Aw3ie2lu2/F4jp8vjHcBn2zguNd6odCby
+	sUwoVkhwS56Sz6dPPvaSNA4CmxRVa2V9MLPTTBLdX1srXOr+rntYkgHR6fEfJocA
+	eM0APxsBnSi6Hjqoq/8tbo/GWi/iQYVVkU3rZVk6W5FEE/+Cvmn1N8kjAqI8yphT
+	Pr3U0WE+Hlwvym1i1H7Dzqr8lE37J7ZsFaoGgqHJaH6FVFgK5pc03hiEzHnS2sbd
+	+h+Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1697607340; x=1697693740; bh=ZN0s8cpLORyMU
-	OSR0o1dZPgGpdx3IRQztpSSJYDj9J8=; b=I1H0RWD4KPMphwU/D3EfJdC5vLGqy
-	eVa/DTZuWk8gQhiYrSKxZxoFtPfiaILc+ZZkqj+w0yHmV0dl7daWodnD9FkzDdlz
-	VqLDAbsgTC4H+1ax74xyziOOOE/BK1/ip/DcfdLaYmb980/hK/NFjhTPkoYZfKVT
-	0Zc2h8WVMs+0V+UT9nCCUHTpXOfcsFlMG3MCwqQi9LStEkbh825+ejlYS3p2w3Ro
-	dwX4LS6Emxkxm6N8pK4KbG+7idXa0HIjQx1ERgCt4KrUXEagDNsI4NLjwCXl7zGP
-	smvI3n5KznPYLsyL1FXUSnCAN54e7DyrwNidQgt1JFQlcSskPP9Xiw6aA==
-X-ME-Sender: <xms:q24vZaCzuDCc7fjpfgNiLDWIiE_4MuRMwtABGP6vSTb-U6Dc_5eZCA>
-    <xme:q24vZUhXfE8eUXMoUuk3L0_KMtnF1rYKoVt0tckHFv77Fnak9oWKDjcFkhkl73wqm
-    FEhLfbybXdHAf50KQ>
-X-ME-Received: <xmr:q24vZdkxHGwlfqplFCveDug3DHtdwYdLkt_TRextq4PpjRQBoR7EckS1avI0VRSYRGiu40_rhFxvu6X5XgfUChmKWSy1ua-2gXJyHOSfelNHlQT7>
+	:x-sasl-enc; s=fm3; t=1697607344; x=1697693744; bh=NcOpWIcB/RfVH
+	GmvTqxuzGFNAlgYiAiNnUP4EjFEuFY=; b=cpGdIiQF/7Rl87zhj+08rpW0rpIQ/
+	OR/B+Liv4vAFeHlvOFX107AAaSj4dlkdMGb6SCbVlLc7Ok0Kz8VUbS/puTHRWfnc
+	H3PfAb9epCARJq1Pojv6wSrIAmk7oES1y7PM6BHaKJp9Gu9JvB28sNKa1kgXYXN+
+	a9TSvUCFJuSRjNswW/c1Q8XX2ysvx5V0sZOx4hrsmo3LmoKsgUGjTHaT1DW8gslw
+	HEEaQGpgwPdMAVcjy7a9dIysLTy7auGicSwJB4PVXmE3nvGF9nklMS4AsqwDRHaG
+	1TyWevRWNz99UMS7UWWuGwIIh86gw3GfMv/+M3DghaGLQoEG3yI3WyPjQ==
+X-ME-Sender: <xms:sG4vZcHSqvwpDCAwC6xsff7vjre7hy9gw-Qw88kT-D6SeVDxxBLqhg>
+    <xme:sG4vZVU-9_1Z7mpCWBCYYp5J2bZlfeigopPNRqqigy_0HFJpW_ZUPncrOWZLxlZPh
+    TV0W9LK9jH8MUC7qQ>
+X-ME-Received: <xmr:sG4vZWJAAmgiSYCY9Jh4HiU5bj_fDa-6nEPKxBXNAvBNKUYtvMh34udHmAW3G71f4jwLkizP9b69TESJFz3q4zY8cUY1AbtF-NS40WVfryPLWpSw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrjeefgdelgecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
-    ucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhm
-X-ME-Proxy: <xmx:rG4vZYybucPBwr0Qfn6psp-6Ay8Vmx5o4yz-O9apfwpij-0PfivIBw>
-    <xmx:rG4vZfTGGiH_OUVIfm4X6p4oA-EcbblNWACcHIq4SAXQsb6Jxj1qwg>
-    <xmx:rG4vZTaK_KhKskZpmDgDFgRtRa-gcMp0Sv5tOxmDBXjWFt_8I2H-6g>
-    <xmx:rG4vZQ5RQpb31yeBXS-ECyoT7mXqH_ynkCg6iYziHgWPuJdfz2D9Xg>
+X-ME-Proxy: <xmx:sG4vZeHhCOovDuiwRAz3HxfBVgY_D1hsT20HYIokEOcGOgdRGfDgMg>
+    <xmx:sG4vZSUXaDaZb0xgo3m6ewIYvIALSi935LKoFU5-P3HBVf_q0DDQZQ>
+    <xmx:sG4vZRO1H5wmc3noNlK8icMZFmlWqZSc4xXNkx8u1AgmvQhom0cQWA>
+    <xmx:sG4vZbdHviLeOnBZp-cHGqcDbP5x7nf5qchayUzvpMRjJZcRraABcA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Oct 2023 01:35:39 -0400 (EDT)
+ 18 Oct 2023 01:35:44 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 5a0febda (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 18 Oct 2023 05:35:38 +0000 (UTC)
-Date: Wed, 18 Oct 2023 07:35:37 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 0d4d6f2b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 18 Oct 2023 05:35:42 +0000 (UTC)
+Date: Wed, 18 Oct 2023 07:35:42 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Han-Wen Nienhuys <hanwen@google.com>
-Subject: [PATCH 08/11] t4207: delete replace references via git-update-ref(1)
-Message-ID: <c4d09e3e5dbd11221cc4d229b815434d441cdb4d.1697607222.git.ps@pks.im>
+Subject: [PATCH 09/11] t7300: assert exact states of repo
+Message-ID: <153b5b199c8d1d5893c3ccec777609ab561cfa3b.1697607222.git.ps@pks.im>
 References: <cover.1697607222.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -73,87 +73,126 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="PxGozpenGUBspIZt"
+	protocol="application/pgp-signature"; boundary="oHEpTI2XC4s034yo"
 Content-Disposition: inline
 In-Reply-To: <cover.1697607222.git.ps@pks.im>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-	SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-0.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,PDS_OTHER_BAD_TLD,
+	RCVD_IN_DNSWL_BLOCKED,SPF_HELO_PASS,SPF_PASS autolearn=no
+	autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 	lindbergh.monkeyblade.net
 
 
---PxGozpenGUBspIZt
+--oHEpTI2XC4s034yo
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-In t4207 we set up a set of replace objects via git-replace(1). Because
-these references should not be impacting subsequent tests we also set up
-some cleanup logic that deletes the replacement references via a call to
-`rm -rf`. This reaches into the internal implementation details of the
-reference backend and will thus break when we grow an alternative refdb
-implementation.
+Some of the tests in t7300 verify that git-clean(1) doesn't touch
+repositories that are embedded into the main repository. This is done by
+asserting a small set of substructures that are assumed to always exist,
+like the "refs/", "objects/" or "HEAD". This has the downside that we
+need to assume a specific repository structure that may be subject to
+change when new backends for the refdb land. At the same time, we don't
+thoroughly assert that git-clean(1) really didn't end up cleaning any
+files in the repository either.
 
-Refactor the tests to delete the replacement refs via Git commands so
-that we become independent of the actual refdb that's in use. As we
-don't have a nice way to delete all replacements or all references in a
-certain namespace, we opt for a combination of git-for-each-ref(1) and
-git-update-ref(1)'s `--stdin` mode.
+Convert the tests to instead assert that all files continue to exist
+after git-clean(1) by comparing a file listing via find(1) before and
+after executing clean. This makes our actual assertions stricter while
+having to care less about the repository's actual on-disk format.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t4207-log-decoration-colors.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t7300-clean.sh | 23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
-diff --git a/t/t4207-log-decoration-colors.sh b/t/t4207-log-decoration-colo=
-rs.sh
-index 21986a866df..d138e513a04 100755
---- a/t/t4207-log-decoration-colors.sh
-+++ b/t/t4207-log-decoration-colors.sh
-@@ -71,7 +71,7 @@ ${c_tag}tag: ${c_reset}${c_tag}A${c_reset}${c_commit})${c=
-_reset} A
+diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
+index 0ef7b784573..d7d9202f37f 100755
+--- a/t/t7300-clean.sh
++++ b/t/t7300-clean.sh
+@@ -517,8 +517,12 @@ test_expect_success 'nested (empty) git should be kept=
+' '
+ 	git init empty_repo &&
+ 	mkdir to_clean &&
+ 	>to_clean/should_clean.this &&
++	# Note that we put the expect file in the .git directory so that it
++	# does not get cleaned.
++	find empty_repo | sort >.git/expect &&
+ 	git clean -f -d &&
+-	test_path_is_file empty_repo/.git/HEAD &&
++	find empty_repo | sort >actual &&
++	test_cmp .git/expect actual &&
+ 	test_path_is_missing to_clean
  '
 =20
- test_expect_success 'test coloring with replace-objects' '
--	test_when_finished rm -rf .git/refs/replace* &&
-+	test_when_finished "git for-each-ref refs/replace*/** --format=3D${SQ}del=
-ete %(refname)${SQ} | git update-ref --stdin" &&
- 	test_commit C &&
- 	test_commit D &&
-=20
-@@ -99,7 +99,7 @@ EOF
+@@ -559,10 +563,10 @@ test_expect_success 'giving path in nested git work t=
+ree will NOT remove it' '
+ 		mkdir -p bar/baz &&
+ 		test_commit msg bar/baz/hello.world
+ 	) &&
++	find repo | sort >expect &&
+ 	git clean -f -d repo/bar/baz &&
+-	test_path_is_file repo/.git/HEAD &&
+-	test_path_is_dir repo/bar/ &&
+-	test_path_is_file repo/bar/baz/hello.world
++	find repo | sort >actual &&
++	test_cmp expect actual
  '
 =20
- test_expect_success 'test coloring with grafted commit' '
--	test_when_finished rm -rf .git/refs/replace* &&
-+	test_when_finished "git for-each-ref refs/replace*/** --format=3D${SQ}del=
-ete %(refname)${SQ} | git update-ref --stdin" &&
+ test_expect_success 'giving path to nested .git will not remove it' '
+@@ -573,10 +577,10 @@ test_expect_success 'giving path to nested .git will =
+not remove it' '
+ 		git init &&
+ 		test_commit msg hello.world
+ 	) &&
++	find repo | sort >expect &&
+ 	git clean -f -d repo/.git &&
+-	test_path_is_file repo/.git/HEAD &&
+-	test_path_is_dir repo/.git/refs &&
+-	test_path_is_dir repo/.git/objects &&
++	find repo | sort >actual &&
++	test_cmp expect actual &&
+ 	test_path_is_dir untracked/
+ '
 =20
- 	git replace --graft HEAD HEAD~2 &&
+@@ -588,9 +592,10 @@ test_expect_success 'giving path to nested .git/ will =
+NOT remove contents' '
+ 		git init &&
+ 		test_commit msg hello.world
+ 	) &&
++	find repo | sort >expect &&
+ 	git clean -f -d repo/.git/ &&
+-	test_path_is_dir repo/.git &&
+-	test_path_is_file repo/.git/HEAD &&
++	find repo | sort >actual &&
++	test_cmp expect actual &&
+ 	test_path_is_dir untracked/
+ '
 =20
 --=20
 2.42.0
 
 
---PxGozpenGUBspIZt
+--oHEpTI2XC4s034yo
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmUvbqgACgkQVbJhu7ck
-PpQA9A//erPwFSCotubFRWS76pchv+nFL1FRKN9l3ujdomQa2vTNyUplSVlt4Tx4
-IbHda9tQJOoZdLdukvg6yOgu4Y99I4ooSfLW+21St0n/lH48W9it+V8BjXiPTxty
-1cWv5Kyqy+cnUvS/kcr6+nkz2LPsm58VkK+EvCfXS1p9LkgK9+yH56AVC1et31Yl
-AGg7ZnoVKTrAkazXrPpLQsJnMQ6YCbFC1GSfGBs6seL5swy3CU2O2mVMKG7V3lVn
-KJGXV5WWsH90M4CedY/znURA69y0WzbT2AQmqAHSYXI9L8y6Ijgslt/v508+EdDE
-O0u0LXsmbJUsjRgWU1apy/ydluTxRgFaFKAMCWUtU39+pc1qxke0ZBA7tZv97Xg7
-BRvXJn3w6bNys0GMYMNYQHCfPacjVpENMLoLQwTyn+HHn7qlUYvtpPXw1tAUCH3u
-QiwjmpY64kM4PBPiBMJ5NxXckTcvwpcUBUKlVbFLnlRn6HI5j3M7uVDQ7XgLu3Tw
-3sR2Rfcgm4XBlLpumiXHJpZ1sCLigk+15ILvy0GpEJIehcW90l0mIL6dw4ISuGkM
-RNl2RWddTpteTLEi56NQ2AhhiXHoillcl3rOpDHF7E2VPQoNVhHApQgDkCVQiOK9
-GEoef2RB4r34AhRrCXd0yDzY5nVhlhuDJCQMgO0Jkhe9u0hA/jw=
-=EyjI
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmUvbq0ACgkQVbJhu7ck
+PpR0BQ/+M7oLPzJN3QIkmOKKmykVa5KvFSouOhUEUzZXOCua9s+YiOCrUtEdcK7R
+MuKFbgthM4IYl5BYR2VeCRFMSkmpnBaYXqfAysyffeVKKIIBKiraE9CAcq8qyEkp
+TGyU+j3PB/PbT7YBLVIC1ZW9a9/2GN1k+Xc0QKksGF3BpYt1aObes8+FhJETLff2
+/pYi9mVA5tv6GFo9gQ4nOSo236HBX7jIb0Eh9r8xBLTySwRifkn09v+//+4V0I3H
+rB1NCTICc3ltxJ7zlPHgqD2TL0oNKliQVR8yRPF3ecIPjJXTazZt52liqKIX58i8
+MhMlIfPopUi/ILfJfhvYgLeqFsg9vSElTPbnbXKc7GEBX5muTkVn+AgZY+o+ndg1
+jMtTx9icuRtL8eD3rpcZhHowFnOozJhZkJhHIV2M8c0zJBpakN1mUJ9FJ9wc6cRE
+aOzP67TYZU7smeVVlkY8oBvxZssr9pkgWYKSmzculayVnx8UtK2EXjraXaFDUxkI
+It2QgmpmW1sG4oNSb5YxspVj3NThpa2vYqgf1mhtb3J66cock/IaXBwHX3lWCWQL
+bnhO5oSZsq030VS+aoVTv7LQvWiw1V37C37UlmwG8JMi/nBp56MssAFBEkJeVOkC
+JQKG5IGI+7dDcH5EX5wOXoo3tO9FWRDdMyDbNC9N+7aN6nbNueU=
+=5Ox1
 -----END PGP SIGNATURE-----
 
---PxGozpenGUBspIZt--
+--oHEpTI2XC4s034yo--
