@@ -1,69 +1,71 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 521AA8F41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 545518F43
 	for <git@vger.kernel.org>; Wed, 18 Oct 2023 05:35:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Up23TKNy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LA4vHK4X"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Mkdk55ZT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j83108Ni"
 Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6495AB0
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5298BA
 	for <git@vger.kernel.org>; Tue, 17 Oct 2023 22:35:11 -0700 (PDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.west.internal (Postfix) with ESMTP id 44E643200B3A;
-	Wed, 18 Oct 2023 01:35:08 -0400 (EDT)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.west.internal (Postfix) with ESMTP id 0DC223200B3C;
+	Wed, 18 Oct 2023 01:35:10 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Wed, 18 Oct 2023 01:35:08 -0400
+  by compute2.internal (MEProxy); Wed, 18 Oct 2023 01:35:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:sender:subject:subject:to:to;
-	 s=fm3; t=1697607307; x=1697693707; bh=mCfX9a4ExBdYEGGlK5z71V4/Z
-	UbR53NxXTpATnG3KH8=; b=Up23TKNyaWc+jAw0UcRCM3UcDc8Q6ZNhf871vZJ2E
-	OjC1zFQweDxvTOq4FuwjU5Le428hJkZaZr9+XuzukKTHYC9AjT0Z+XG6kcYRLk61
-	6W1rExpUn5fARqAYrTpj4Q5YybM3jpMPaB60IPhKD7KBa42YEVjHyEvif8/TMg7F
-	A5jMa7eK5JhBKGezm9EvtUGRrIkFlq0npGJM3ajqtDG92/D91VhP8ZW/FfwfrblF
-	sNZaR53xJEo/Km0kc4m1FIg4BKHb6n/WSlt7WR5rX3PQEayTXpi4rdunKDGp8vIV
-	T1kh4cRAqNrQEou7vcl8srF3FFEj822xv6rrn5+jU4xlQ==
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to; s=fm3; t=1697607310; x=1697693710; bh=Gn
+	ShDaZnENgGK4rT0hfJ9QUT0PufBVYFXRao5LyZgcQ=; b=Mkdk55ZToZ44qPQGye
+	hGIY9GZhKWsq/wu7oUu83n4GKmr8b1Zxcr4x8u/6VK/h8RM6/Qsn4/qVNkSwgIEv
+	UKtVAursAo/yT2XsLGgJdcbXAfFWIfWuufAZFQ5YzOPMqEcMiU+f4RXRGtg+nrgh
+	n8mn/Bq3bYCv/wIqZ9QYTzf6XWmy3A15tnzHrKa8jP4TvxKixXsSkqCEeMCqXxu+
+	hJ1LPcaskH3TXmeEVnVeiHjV+fO5NG18nmidUb9aNsL7Jedlh36WTe518F96zlDJ
+	DDJojVt3IpIOZeq2NzJvVDNSdjogGrsvL0xPL81SCKFyCrt5PwdLt89PbGZ45VMr
+	8THw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:sender:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1697607307; x=1697693707; bh=mCfX9a4ExBdYEGGlK5z71V4/ZUbR53NxXTp
-	ATnG3KH8=; b=LA4vHK4XIxlw6cP3ox4AcOM8w7vLpG5+UBlUHgIGL8cmQ1N2rhZ
-	BnA2/XT0LMH+fvWEGGge4GKsiRO4FOBx1ay9XmZtd7Ptn6WBLuxZOXh7THUpY5KP
-	0iRl2ncnc0ZxXR+9eLNJ+Ap4Mrpec8D1SUdPwYTW0vof/yARQN/vr8lD/d6Es4oc
-	VJ4ZW/GQmfsG1va1t8IHlcz4s8frX9kyFmthTidqab/qT7Tbl+zXYr4vciHqJi4E
-	RZ3MP+9RCNazZWsQ2CgmDjzgBvvi5GGZ6pcWzdhhFaOnSZmklAAEfZQLc3MWdegR
-	Bd4R9+MUvhnfIKmGnQ3DvBhizyINGTD6ngg==
-X-ME-Sender: <xms:i24vZXYnlJf6uEgwtH-JA_oQgUCcDzRs3t6uwG3jR49Ho_OEtSqElw>
-    <xme:i24vZWbtRqL4J4MaO1ePg-6by-psnInaeIy8nx1BUPyiKloevsOOpe0dm6V9JA8xa
-    l5iRvn8CXSA5wFN_w>
-X-ME-Received: <xmr:i24vZZ8Q5RYVqFHkh8u-cKYaVpShvaiPNzMPThsBylnMB7FUXdfLLTajzLJNRR7wMvPpjeGmkMfJdQ6QuhX9esaQEH-EMPLNM5GBC25J54ddkv65>
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm3; t=1697607310; x=1697693710; bh=GnShDaZnENgGK
+	4rT0hfJ9QUT0PufBVYFXRao5LyZgcQ=; b=j83108NiMcJUhwFjUXQcvWhL4v31i
+	LML67T12C7idItOkMgz5ixmDVL+zjZ5ti+lm+D5oLICzZM9DYgUdABySm7TdqoyR
+	Khgyf2na3wfLOmr1PTBKYMOX5VcAVVtRc439X7k4X8HFtKcIyCyoBrnqmY3ShR3A
+	99P0mKRn+ust6dr6nLIwz7duB40vHU00mncPQZqeLAXcxSqYu+DAskhbgCwLKk6A
+	n72hbszFTj+tUBPlJD17P9Kmp+HPELtQ74h7Y8tZHyrx3fRTskP4Hvjn5AQKkF6Q
+	5klR/oIMScGyXL6cgo1WaEvc+TlorVdD1zipZK+ke6DqCkKS7IObih0JQ==
+X-ME-Sender: <xms:jm4vZfj5ICNCXBD8EFovDjs6QnW2anWpDyiOFm_FFppl7L7z7OdRKw>
+    <xme:jm4vZcBaNV7GXwFUVa5-UKidjJfNg2x9ZXa1kf_IZMgTJ9RoIb0I87lQ63MdcC2hg
+    BlYfJcVvvx2S7RKhA>
+X-ME-Received: <xmr:jm4vZfF7oCxJtZ5B92Mjl3ox9lI9d1ohAYAiV-xBRuspBaa8wHGAKZKNH-3dXaSAsXE47a-GYLoVIaDFVLa_sHgZ3UUq1CdPJ3xQHiridJeQAOVe>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrjeefgdelgecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfggtggusehgtderredttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    eugfeutdeuieehteelveegudejkeejheeljeejhffhgffhvefgkeeukeejtdeijeenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhm
-X-ME-Proxy: <xmx:i24vZdpZ7gXw1KXbHTYl8pfoy_4T4iVNS9zFbCXGB0qZsEYz3-I3BA>
-    <xmx:i24vZSricciVrBtwR2lcqMc3g8mjUd_LRu3z_rorSZ6tqClqzFkUYw>
-    <xmx:i24vZTSkTRUTxU0OrAsgSKwwkr5nA_fdMRN8tXlax0xxNe6W8_5Ynw>
-    <xmx:i24vZZQCIomEcCn0GzF9e4O2Tpf2yMx0HK4K3d4geJYDuJ9T3ns5hw>
+    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhm
+X-ME-Proxy: <xmx:jm4vZcS3vrTEv-lvldBPKALA5iaVTRKjvA-heKq1y5oSSZ7qRaCjzA>
+    <xmx:jm4vZcwaQusq4VToY5YrEwV0IloRwBW7pTKB7QBeWnRWg45YmH0WvQ>
+    <xmx:jm4vZS5NL6zAr6FL8UMmnBDRlpV32YyZH5u-6J8htZAeyGBj5Lacng>
+    <xmx:jm4vZSbGzC5BYFTF_HVQVJx2xig9bIVGYIjRbaAf1VnccY_tklAHgg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Oct 2023 01:35:07 -0400 (EDT)
+ 18 Oct 2023 01:35:09 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id df9a98c4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 18 Oct 2023 05:35:03 +0000 (UTC)
-Date: Wed, 18 Oct 2023 07:35:03 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id b8525af4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 18 Oct 2023 05:35:08 +0000 (UTC)
+Date: Wed, 18 Oct 2023 07:35:07 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Han-Wen Nienhuys <hanwen@google.com>
-Subject: [PATCH 00/11] t: reduce direct disk access to data structures
-Message-ID: <cover.1697607222.git.ps@pks.im>
+Subject: [PATCH 01/11] t: add helpers to test for reference existence
+Message-ID: <e947feb1c77f7e9f3c7f983bbe47137fbce42367.1697607222.git.ps@pks.im>
+References: <cover.1697607222.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,8 +73,9 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="jUW6VLJSO0cqAXZi"
+	protocol="application/pgp-signature"; boundary="Qc1dUeCxbeJYscUd"
 Content-Disposition: inline
+In-Reply-To: <cover.1697607222.git.ps@pks.im>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
 	SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -80,92 +83,242 @@ X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 	lindbergh.monkeyblade.net
 
 
---jUW6VLJSO0cqAXZi
+--Qc1dUeCxbeJYscUd
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+There are two major ways to check for the existence of a reference in
+our tests:
 
-this patch series refactors a bunch of our tests to perform less direct
-disk access to on-disk data structures. Instead, the tests are converted
-to use Git tools or our test-tool to access data to the best extent
-possible. This serves two benefits:
+    - `git rev-parse --verify` can be used to check for existence of a
+      reference. This only works in the case where the reference is well
+      formed though and resolves to an actual object ID. This does not
+      work with malformed reference names or invalid contents.
 
-    - We increase test coverage of our own code base.
+    - `test_path_is_file` can be used to check for existence of a loose
+      reference if it is known to not resolve to an actual object ID. It
+      by necessity reaches into implementation details of the reference
+      backend though.
 
-    - We become less dependent on the actual on-disk format.
+Similarly, there are two equivalent ways to check for the absence of a
+reference:
 
-The main motivation for this patch series was the second bullet point as
-it is preparatory work to get the reftable backend upstreamed. My intent
-is to get rid of many or even most of the current blockers in the Git
-project before trying to send the reftable implementation upstream.
-While this will be a lot of up-front work that is going to span over a
-long time period, I think this approach will make everyones live easier
-by doing comparatively small and incremental improvements to the Git
-project. Ultimately, the final patch series should in the best case only
-contain the new backend as well as testing infrastructure, but not much
-else.
+    - `test_must_fail git rev-parse` can be used to check for the
+      absence of a reference. It could fail due to a number of reasons
+      though, and all of these reasons will be thrown into the same bag
+      as an absent reference.
 
-Patrick
+    - `test_path_is_missing` can be used to check explicitly for the
+      absence of a loose reference, but again reaches into internal
+      implementation details of the reference backend.
 
-Patrick Steinhardt (11):
-  t: add helpers to test for reference existence
-  t: allow skipping expected object ID in `ref-store update-ref`
-  t: convert tests to use helpers for reference existence
-  t: convert tests to not write references via the filesystem
-  t: convert tests to not access symrefs via the filesystem
-  t: convert tests to not access reflog via the filesystem
-  t1450: convert tests to remove worktrees via git-worktree(1)
-  t4207: delete replace references via git-update-ref(1)
-  t7300: assert exact states of repo
-  t7900: assert the absence of refs via git-for-each-ref(1)
-  t: mark several tests that assume the files backend with REFFILES
+So both our tooling to check for the presence and for the absence of
+references in tests is lacking as either failure cases are thrown into
+the same bag or we need to reach into internal implementation details of
+the respective reference backend.
 
- t/README                           |  9 ++++
- t/helper/test-ref-store.c          | 38 +++++++++++++--
- t/t1400-update-ref.sh              | 49 ++++++++++----------
- t/t1430-bad-ref-name.sh            | 39 ++++++++++------
- t/t1450-fsck.sh                    | 46 ++++++++++---------
- t/t2011-checkout-invalid-head.sh   | 16 +++----
- t/t3200-branch.sh                  | 74 ++++++++++++++++--------------
- t/t3400-rebase.sh                  |  2 +-
- t/t3404-rebase-interactive.sh      |  2 +-
- t/t4013-diff-various.sh            |  2 +-
- t/t4202-log.sh                     |  2 +-
- t/t4207-log-decoration-colors.sh   |  4 +-
- t/t5521-pull-options.sh            |  4 +-
- t/t5526-fetch-submodules.sh        |  2 +-
- t/t5605-clone-local.sh             |  6 +--
- t/t5702-protocol-v2.sh             | 24 +++++++---
- t/t7300-clean.sh                   | 23 ++++++----
- t/t7900-maintenance.sh             |  3 +-
- t/t9133-git-svn-nested-git-repo.sh |  2 +-
- t/test-lib-functions.sh            | 66 ++++++++++++++++++++++++++
- 20 files changed, 277 insertions(+), 136 deletions(-)
+Introduce a new subcommand for our ref-store test helper that explicitly
+checks only for the presence or absence of a reference. This addresses
+these limitations:
 
+    - We can check for the presence of references with malformed names.
+
+    - We can check for the presence of references that don't resolve.
+
+    - We can explicitly handle the case where a reference is missing by
+      special-casing ENOENT errors.
+
+    - We don't need to reach into implementation details of the backend,
+      which would allow us to use this helper for the future reftable
+      backend.
+
+Next to this subcommand we also provide two wrappers `test_ref_exists`
+and `test_ref_missing` that make the helper easier to use.
+
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ t/README                  |  9 ++++++
+ t/helper/test-ref-store.c | 27 +++++++++++++++-
+ t/test-lib-functions.sh   | 66 +++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 101 insertions(+), 1 deletion(-)
+
+diff --git a/t/README b/t/README
+index 61080859899..779f7e7dd86 100644
+--- a/t/README
++++ b/t/README
+@@ -928,6 +928,15 @@ see test-lib-functions.sh for the full list and their =
+options.
+    committer times to defined state.  Subsequent calls will
+    advance the times by a fixed amount.
+=20
++ - test_ref_exists <ref>, test_ref_missing <ref>
++
++   Check whether a reference exists or is missing. In contrast to
++   git-rev-parse(1), these helpers also work with invalid reference
++   names and references whose contents are unresolvable. The latter
++   function also distinguishes generic errors from the case where a
++   reference explicitly doesn't exist and is thus safer to use than
++   `test_must_fail git rev-parse`.
++
+  - test_commit <message> [<filename> [<contents>]]
+=20
+    Creates a commit with the given message, committing the given
+diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
+index 48552e6a9e0..7400f560ab6 100644
+--- a/t/helper/test-ref-store.c
++++ b/t/helper/test-ref-store.c
+@@ -1,6 +1,6 @@
+ #include "test-tool.h"
+ #include "hex.h"
+-#include "refs.h"
++#include "refs/refs-internal.h"
+ #include "setup.h"
+ #include "worktree.h"
+ #include "object-store-ll.h"
+@@ -221,6 +221,30 @@ static int cmd_verify_ref(struct ref_store *refs, cons=
+t char **argv)
+ 	return ret;
+ }
+=20
++static int cmd_ref_exists(struct ref_store *refs, const char **argv)
++{
++	const char *refname =3D notnull(*argv++, "refname");
++	struct strbuf unused_referent =3D STRBUF_INIT;
++	struct object_id unused_oid;
++	unsigned int unused_type;
++	int failure_errno;
++
++	if (refs_read_raw_ref(refs, refname, &unused_oid, &unused_referent,
++			      &unused_type, &failure_errno)) {
++		/*
++		 * We handle ENOENT separately here such that it is possible to
++		 * distinguish actually-missing references from any kind of
++		 * generic error.
++		 */
++		if (failure_errno =3D=3D ENOENT)
++			return 17;
++		return -1;
++	}
++
++	strbuf_release(&unused_referent);
++	return 0;
++}
++
+ static int cmd_for_each_reflog(struct ref_store *refs,
+ 			       const char **argv UNUSED)
+ {
+@@ -325,6 +349,7 @@ static struct command commands[] =3D {
+ 	{ "for-each-ref--exclude", cmd_for_each_ref__exclude },
+ 	{ "resolve-ref", cmd_resolve_ref },
+ 	{ "verify-ref", cmd_verify_ref },
++	{ "ref-exists", cmd_ref_exists },
+ 	{ "for-each-reflog", cmd_for_each_reflog },
+ 	{ "for-each-reflog-ent", cmd_for_each_reflog_ent },
+ 	{ "for-each-reflog-ent-reverse", cmd_for_each_reflog_ent_reverse },
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 2f8868caa17..212fddffa96 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -251,6 +251,72 @@ debug () {
+ 	done
+ }
+=20
++# Usage: test_ref_exists [options] <ref>
++#   -C <dir>:
++#	Run all git commands in directory <dir>
++#   --refdb <refdb>:
++#	The reference database to run in. One of:
++#		- "main", the main reference database (default).
++#		- "submodule:<submodule>", the reference database of a
++#		  submodule.
++#		- "worktree:<worktree>", the reference database for a
++#		  worktree's per-worktree references.
++#
++# This helper function checks whether a reference exists. Symrefs will not=
+ be
++# resolved. Can be used to check references with bad names.
++test_ref_exists () {
++	local indir=3D
++	local refdb=3Dmain
++
++	while test $# !=3D 0
++	do
++		case "$1" in
++		-C)
++			indir=3D"$2"
++			shift
++			;;
++		--refdb)
++			refdb=3D"$2"
++			shift
++			;;
++		*)
++			break
++			;;
++		esac
++		shift
++	done &&
++
++	indir=3D${indir:+"$indir"/} &&
++
++	if test "$#" !=3D 1
++	then
++		BUG "expected exactly one reference"
++	fi &&
++
++	test-tool ${indir:+ -C "$indir"} ref-store "${refdb}" ref-exists "$1"
++}
++
++# Behaves the same as test_ref_exists, except that it checks for the absen=
+ce of
++# a reference. This is preferable to `! test_ref_exists` as this function =
+is
++# able to distinguish actually-missing references from other, generic erro=
+rs.
++test_ref_missing () {
++	test_ref_exists "$@"
++	case "$?" in
++	17)
++		# This is the good case.
++		return 0
++		;;
++	0)
++		echo >&4 "test_ref_missing: reference exists"
++		return 1
++		;;
++	*)
++		echo >&4 "test_ref_missing: generic error"
++		return 1
++		;;
++	esac
++}
++
+ # Usage: test_commit [options] <message> [<file> [<contents> [<tag>]]]
+ #   -C <dir>:
+ #	Run all git commands in directory <dir>
 --=20
 2.42.0
 
 
---jUW6VLJSO0cqAXZi
+--Qc1dUeCxbeJYscUd
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmUvboEACgkQVbJhu7ck
-PpTaHA/8CcaM02dCuuTU7+mU44iHIt5dGfeQeRPWYgs/TZPRW27WH9hVPPBgcDUA
-bx7eIkWZY/7puBXJNdFIiWG6QVY8yGnYWsy3ajwXF5XCV627qr2fDXjx52V89Ob3
-us8Vb3RMzQUpyJRUZ0evUaZDpVWHHBC5y2tL8/NhdCQjgAYXKGxvr9gsUsigmmdB
-y9IEjYO2gSVmhJxLBFkRpjyRT/Fg2SVrQtQQt3BhwpPHDvzBEjowCEeYoz+MNrrm
-8eRWiiu5AQUAuqCKaD2Qwk5sxwbkI7xeRqo75GNynAUQSZuXQsTy9+PmIHjy5mbC
-FwTYSfLJ1lJvyHARANGrC5VzQz0twYkkwBpnNdNz33Qdv7hzaRwmmriBP3CBhGn2
-G3jtXkNmpf9ya4DS1RARc+7+VRl+4xixTsO8H8WzgFtNka9sDDcKyAAJDgmGSqcj
-BLxunAGCrrKjZuf/6uwPu/6+qIzpRXjmE08DkMrNB54SZEYJQpv6pCevOrp2/Hq9
-bx2ux380W8Uf6/QrFoXQF6OQYuoBJNM82NbKwAwNiBjqWgGgLtOcSIXScyCORKPu
-qJ1hHJYcMeVprXCMQ5SFoFpLP5/4jnxfkQD4+32uo75JvwrSIFC4sxg2nyrD9VGz
-xAXaGUxTAkW3ZMgNNOhtWtq0ORve1J9LKV0pgiimuEQ+2/h5IK0=
-=puna
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmUvbooACgkQVbJhu7ck
+PpRvrw//UuKPwNfhumDXUXQRdqpkau6KEAoqCdaKrmzUkfyL6W00T0Yzg7pSDNYa
+jqhjnF4o9Q6qTbGqY+S0lO0mvWP+P/OH+wETyD+4ZdbVk/MpPRVBfAEig1mf8jE4
+mFDeBhj3ukdRM3YoMW3bMj742Y68dGAMAy+tk+DLFPClLwnfTXBLFBwKrc9fXHyo
+1CXtjgUhV7hHzre5l3rGcn5vFgWRclKx2rCy7sY/gnkrDNIkzbVyJWmJGzXRatar
+7zaQ4vQxs66cFdsUSGwH+uJGrigAqzNxDxkvrtoZ/wlxbol72wV04dGIC0tuRQxE
+xYXrhhV/pf0cn4XwE0XmPoWb04vXXUcJxRk7n2KS06AHKx94fvrsUPRt1JFnBzwk
+rHtr+iRzozxp2ZU6NMGTjhMDSU/ntzgu++2ZGawfJvnesZQr4dzPHsKSRQ2FZSlP
+9Fr31yMK5TrAFdaVpyzEENz+wwZC/KGkfibyGQAuDF3gRgQHv4y7+eTaMpXvKQCb
+ih23DtmCtG5hhXCXENxO0t8ugurv49aUG8tJ2Lb/njz0Ztm1E9qAK+n7eGShSFcM
+mTFcdlSFQuwo5RV9pR7bseGtN03HgJOl+hdVLc/WeyBFIjTxhNlCIIdx+kTTu+eL
+WM+fwV+suayIGIuE0NmYn66czx3tuTFIgHQi+pm2MO3qXC/0PIY=
+=JN/h
 -----END PGP SIGNATURE-----
 
---jUW6VLJSO0cqAXZi--
+--Qc1dUeCxbeJYscUd--
