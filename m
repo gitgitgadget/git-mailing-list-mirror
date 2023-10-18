@@ -1,166 +1,244 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D54C6185D
-	for <git@vger.kernel.org>; Wed, 18 Oct 2023 02:02:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA191FC5
+	for <git@vger.kernel.org>; Wed, 18 Oct 2023 02:18:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hhFvnIU/"
-Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6A81F7
-	for <git@vger.kernel.org>; Tue, 17 Oct 2023 19:02:04 -0700 (PDT)
-Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-579de633419so78111557b3.3
-        for <git@vger.kernel.org>; Tue, 17 Oct 2023 19:02:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697594524; x=1698199324; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=n2AGfuyzKbxdUIfI7ATw6oWwni0+hmtjYpLxQgz+a6g=;
-        b=hhFvnIU/iDylViP21tdhAGdAlgqZh9QvL4JsiIRmNNL0yDgEfAnrRW0Evxh0YqNAtA
-         Qll8kSA2r7qM/HSlnix5svoysH0RUuZyT8E/PJZo1tqBxntakupOVy8Nuod/JxItZ9IJ
-         +RPEUXgFYDgV/YVy1xJc5nBXXxvIWhz23m7ZZxasIX8pxzF1jNYYoqdxk9/kqhSll52x
-         Mk5MwfWcJ5DnO13+uAiG2tFZcH1fdRErD5qEfcP15APEWhxz9e/BiwReBWOK+NSjXuUR
-         t+6Ou4kR96fDbcY1JmZ/IHzQBoEwtnIEHEU8nGKYJ/co6wTWADse06LwNPfZle32fFrf
-         RVhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697594524; x=1698199324;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=n2AGfuyzKbxdUIfI7ATw6oWwni0+hmtjYpLxQgz+a6g=;
-        b=jwL67cYs+ObY3a/LcH8EsrH3pFn4zGZP1MIcOloBv6juvS/YzNw61cMFpAtDBIIf6e
-         nsHZ793DazQdDbxo8R1Esu30P+FQg/RuiX/8d8FP3VQuoIYK5TM84/8NHOYi1igq2Ecv
-         3yXI0XrBChkSUKZP72BpipwruJ9IOIaPp/i1F0QYEQsm0FC2OOMDmGc2G4PRmdGp5BW6
-         UkKhH4tDi9Dn/j9dXdyPjuVBpCXMfm0yFLs7vdQhC80lINiEzhU2f7i0P5AsiKfhyFu4
-         QtCMMSbqLKoCmlK7Z+TtaEjFhwq0Hc/f/9NBZH1wXvF84w8/2/9GIxq53lftEy8mEh2g
-         C7RQ==
-X-Gm-Message-State: AOJu0Yzw0Efn3HyXwDUOrY1rEUHTn+QvD5yOzu+IeabkQBxRoDHNkf/x
-	hqlZLP8JizAPJyh6DyQ/yU7QtzSR0GH8ssTGy+A=
-X-Google-Smtp-Source: AGHT+IHRwBpGqekr436J3z9NSamOiOaw0goW2RP+zWL/h7kwKuZAIVEJyQUVyBSg5q3obIVQ4kan4tKp8PVNBXZFqoM=
-X-Received: by 2002:a0d:db56:0:b0:5a7:b930:16a8 with SMTP id
- d83-20020a0ddb56000000b005a7b93016a8mr4355746ywe.4.1697594523910; Tue, 17 Oct
- 2023 19:02:03 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HSmvXtFE"
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B78CAB
+	for <git@vger.kernel.org>; Tue, 17 Oct 2023 19:18:10 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id AFFE930490;
+	Tue, 17 Oct 2023 22:18:09 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=TrXkZM70Ce80XdfXxjFHmqVPGuUmxyL7mlJZgy
+	Xo4H0=; b=HSmvXtFELKTwfTL0GFGxzz3P82V+tvB/VOkZY1oJqIdyMo5uI3k7fH
+	n8cW1TtM/JUvg3R5HW7WBMLlt4jtXgLo0yxbqzXmJvrByexTWd6uBPEeJt+XWwva
+	i62XaSiJ+MXuqsOq/c10HwWmkvyNEd1jJQQ3NSefwZQdmZNLV29EE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id A9D953048F;
+	Tue, 17 Oct 2023 22:18:09 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3A2C83048E;
+	Tue, 17 Oct 2023 22:18:06 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  "Eric W.
+ Biederman" <ebiederm@gmail.com>,  Jeff King <peff@peff.net>,  Patrick
+ Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v2 5/7] bulk-checkin: introduce
+ `index_blob_bulk_checkin_incore()`
+In-Reply-To: <239bf39bfb21ef621a15839bade34446dcbc3103.1697560266.git.me@ttaylorr.com>
+	(Taylor Blau's message of "Tue, 17 Oct 2023 12:31:26 -0400")
+References: <cover.1696629697.git.me@ttaylorr.com>
+	<cover.1697560266.git.me@ttaylorr.com>
+	<239bf39bfb21ef621a15839bade34446dcbc3103.1697560266.git.me@ttaylorr.com>
+Date: Tue, 17 Oct 2023 19:18:04 -0700
+Message-ID: <xmqq5y34wu5f.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAP6f5Mmi=f4DPcFwfvEiJMdKMa0BUyZ019mc8uFXyOufgD4NjA@mail.gmail.com>
- <xmqqzg0gx6k9.fsf@gitster.g>
-In-Reply-To: <xmqqzg0gx6k9.fsf@gitster.g>
-From: Jiang Xin <worldhello.net@gmail.com>
-Date: Wed, 18 Oct 2023 10:01:52 +0800
-Message-ID: <CANYiYbHK90Ptq5v4EbquyRA7N9jo=xwkg=WuM=r60Wh9HMxdyA@mail.gmail.com>
-Subject: Re: Is there any interest in localizing term delimiters in git messages?
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Alexander Shopov <ash@kambanaria.org>, Git List <git@vger.kernel.org>, jmas@softcatala.org, 
-	alexhenrie24@gmail.com, ralf.thielow@gmail.com, matthias.ruester@gmail.com, 
-	phillip.szelat@gmail.com, vyruss@hellug.gr, christopher.diaz.riv@gmail.com, 
-	jn.avila@free.fr, flashcode@flashtux.org, bagasdotme@gmail.com, 
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	alessandro.menti@alessandromenti.it, elongbug@gmail.com, cwryu@debian.org, 
-	uneedsihyeon@gmail.com, arek_koz@o2.pl, dacs.git@brilhante.top, 
-	"insolor@gmail.com" <insolor@gmail.com>, peter@softwolves.pp.se, bitigchi@me.com, ark@cho.red, 
-	kate@kgthreads.com, "vnwildman@gmail.com" <vnwildman@gmail.com>, pclouds@gmail.com, 
-	"dyroneteng@gmail.com" <dyroneteng@gmail.com>, "oldsharp@gmail.com" <oldsharp@gmail.com>, 
-	"lilydjwg@gmail.com" <lilydjwg@gmail.com>, me@angyi.io, "pan93412@gmail.com" <pan93412@gmail.com>, 
-	"franklin@goodhorse.idv.tw" <franklin@goodhorse.idv.tw>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 92CFA00C-6D5C-11EE-8BAE-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-	RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.6
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 	lindbergh.monkeyblade.net
 
-On Wed, Oct 18, 2023 at 5:50=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Alexander Shopov <ash@kambanaria.org> writes:
->
-> > Typical example:
-> > ORIGINAL
-> > msgid "  (use \"git rm --cached <file>...\" to unstage)"
-> >
-> > TRANSLATION
-> > msgstr ""
-> > "  (=D0=B8=D0=B7=D0=BF=D0=BE=D0=BB=D0=B7=D0=B2=D0=B0=D0=B9=D1=82=D0=B5 =
-=E2=80=9Egit rm --cached %s =D0=A4=D0=90=D0=99=D0=9B=E2=80=A6=E2=80=9C, =D0=
-=B7=D0=B0 =D0=B4=D0=B0 =D0=B8=D0=B7=D0=B2=D0=B0=D0=B4=D0=B8=D1=82=D0=B5 =D0=
-=A4=D0=90=D0=99=D0=9B=D0=B0 =D0=BE=D1=82 =D0=B8=D0=BD=D0=B4=D0=B5=D0=BA=D1=
-=81=D0=B0)"
-> >
-> > The important part are the `<' and `>' delimiters of the term "file"
-> >
-> > Instead of using them - I omit them and capitalize the term. As if `<'
-> > and `>' are declared as localizable and then I translate them as `',
-> > `'
->
-> Is it because it is more common in your target language to omit <>
-> around the placeholder word, or is it just your personal preference?
->
-> Whichever is the case, I am not sure how it affects ...
->
-> > So I am asking - is there any interest from other localizers to have
-> > such a feature? Would the additional maintenance be OK for the
-> > developers?
->
-> ... the maintenance burden for developers.  Perhaps I am not getting
-> what you are proposing, but we are not going to change the message
-> in "C" locale (the original you see in msgid).  In untranslated Git,
-> we will keep the convention to highlight the placeholder word by
-> having <> around it, so the "(use \"git rm --cached <file>...\" to
-> unstage)" message will be spelled with "<file>".  You can translate
-> that to a msgstr without <> markings without asking anybody's
-> permission, and I do not think of a reason why it would burden
-> developers to do so.
+Taylor Blau <me@ttaylorr.com> writes:
 
-Starting with the release of git 2.34.0 two years ago, we had a new
-l10n pipeline and the git-po-helper tool as part of our l10n workflow.
-The first version of git-po-helper introduced a validator to protect
-git command parameters and variable names in megid. E.g. In pull
-request 541 (https://github.com/git-l10n/git-po/pull/541), a
-mismatched variable name "new_index" was reported in bg.po as below:
+>  bulk-checkin.c | 118 +++++++++++++++++++++++++++++++++++++++++++++++++
+>  bulk-checkin.h |   4 ++
+>  2 files changed, 122 insertions(+)
 
-    level=3Dwarning msg=3D"mismatch variable names in msgstr: new_index"
-    level=3Dwarning msg=3D">> msgid: unable to write new_index file"
-    level=3Dwarning msg=3D">> msgstr: =D0=BD=D0=BE=D0=B2=D0=B8=D1=8F=D1=82 =
-=D0=B8=D0=BD=D0=B4=D0=B5=D0=BA=D1=81 =D0=BD=D0=B5 =D0=BC=D0=BE=D0=B6=D0=B5 =
-=D0=B4=D0=B0 =D0=B1=D1=8A=D0=B4=D0=B5 =D0=B7=D0=B0=D0=BF=D0=B8=D1=81=D0=B0=
-=D0=BD"
+Unlike the previous four, which were very clear refactoring to
+create reusable helper functions, this step leaves a bad aftertaste
+after reading twice, and I think what is disturbing is that many new
+lines are pretty much literally copied from stream_blob_to_pack().
 
-And po/bg.po changed as below:
+I wonder if we can introduce an "input" source abstraction, that
+replaces "fd" and "size" (and "path" for error reporting) parameters
+to the stream_blob_to_pack(), so that the bulk of the implementation
+of stream_blob_to_pack() can call its .read() method to read bytes
+up to "size" from such an abstracted interface?  That would be a
+good sized first half of this change.  Then in the second half, you
+can add another "input" source that works with in-core "buf" and
+"size", whose .read() method will merely be a memcpy().
 
-    msgid "unable to write new_index file"
-    msgstr "=D0=BD=D0=BE=D0=B2=D0=B8=D1=8F=D1=82 =D0=B8=D0=BD=D0=B4=D0=B5=
-=D0=BA=D1=81 (new_index) =D0=BD=D0=B5 =D0=BC=D0=BE=D0=B6=D0=B5 =D0=B4=D0=B0=
- =D0=B1=D1=8A=D0=B4=D0=B5 =D0=B7=D0=B0=D0=BF=D0=B8=D1=81=D0=B0=D0=BD"
+That way, we will have two functions, one for stream_obj_to_pack()
+that reads from an open file descriptor, and the other for
+stream_obj_to_pack_incore() that reads from an in-core buffer,
+sharing the bulk of the implementation that is extracted from the
+current code, which hopefully be easier to audit.
 
-Later, more validators were introduced into git-po-helper for checking
-git config name, place holders, etc. "git-po-helper" used a list of
-regular expressions to find git config names, placeholders, and there
-are some false positive cases need to be ignored. So I added tweaks in
-smarge tables in "dict/*.go" of git-po-helper. E.g. For German
-translation, there are two exceptions that need to be ignored:
-
-    "e.g." was translated to "z.B.",
-    "you@example.com" was translated to "ihre@emailadresse.de"
-
-In pull request 593 (https://github.com/git-l10n/git-po/pull/593), it
-was the first time I know that in Bulgarian translations, markers
-around <placeholder> were not suitable for Bulgarian. So I decided to
-add more tweaks for Bulgarian by adding more exception rules in
-"dict/smudge-bg.go".
-
-I wonder if Bulgarian can use some unique characters to wrap the
-placeholders (e.g. Chinese can use wrappers around placeholders
-like=E3=80=8Cplaceholder=E3=80=8D=EF=BC=8C=E3=80=90placeholder=E3=80=91=EF=
-=BC=8Cetc). It will be much simpler to
-define exception rules for Bulgarian. Otherwize, maybe I can add
-filters for validators in "po-helper", and Bulgarian can bypass some
-validators to suppress warnings in pull requests.
-
---
-Jiang Xin
+> diff --git a/bulk-checkin.c b/bulk-checkin.c
+> index f4914fb6d1..25cd1ffa25 100644
+> --- a/bulk-checkin.c
+> +++ b/bulk-checkin.c
+> @@ -140,6 +140,69 @@ static int already_written(struct bulk_checkin_packfile *state, struct object_id
+>  	return 0;
+>  }
+>  
+> +static int stream_obj_to_pack_incore(struct bulk_checkin_packfile *state,
+> +				     git_hash_ctx *ctx,
+> +				     off_t *already_hashed_to,
+> +				     const void *buf, size_t size,
+> +				     enum object_type type,
+> +				     const char *path, unsigned flags)
+> +{
+> +	git_zstream s;
+> +	unsigned char obuf[16384];
+> +	unsigned hdrlen;
+> +	int status = Z_OK;
+> +	int write_object = (flags & HASH_WRITE_OBJECT);
+> +
+> +	git_deflate_init(&s, pack_compression_level);
+> +
+> +	hdrlen = encode_in_pack_object_header(obuf, sizeof(obuf), type, size);
+> +	s.next_out = obuf + hdrlen;
+> +	s.avail_out = sizeof(obuf) - hdrlen;
+> +
+> +	if (*already_hashed_to < size) {
+> +		size_t hsize = size - *already_hashed_to;
+> +		if (hsize) {
+> +			the_hash_algo->update_fn(ctx, buf, hsize);
+> +		}
+> +		*already_hashed_to = size;
+> +	}
+> +	s.next_in = (void *)buf;
+> +	s.avail_in = size;
+> +
+> +	while (status != Z_STREAM_END) {
+> +		status = git_deflate(&s, Z_FINISH);
+> +		if (!s.avail_out || status == Z_STREAM_END) {
+> +			if (write_object) {
+> +				size_t written = s.next_out - obuf;
+> +
+> +				/* would we bust the size limit? */
+> +				if (state->nr_written &&
+> +				    pack_size_limit_cfg &&
+> +				    pack_size_limit_cfg < state->offset + written) {
+> +					git_deflate_abort(&s);
+> +					return -1;
+> +				}
+> +
+> +				hashwrite(state->f, obuf, written);
+> +				state->offset += written;
+> +			}
+> +			s.next_out = obuf;
+> +			s.avail_out = sizeof(obuf);
+> +		}
+> +
+> +		switch (status) {
+> +		case Z_OK:
+> +		case Z_BUF_ERROR:
+> +		case Z_STREAM_END:
+> +			continue;
+> +		default:
+> +			die("unexpected deflate failure: %d", status);
+> +		}
+> +	}
+> +	git_deflate_end(&s);
+> +	return 0;
+> +}
+> +
+>  /*
+>   * Read the contents from fd for size bytes, streaming it to the
+>   * packfile in state while updating the hash in ctx. Signal a failure
+> @@ -316,6 +379,50 @@ static void finalize_checkpoint(struct bulk_checkin_packfile *state,
+>  	}
+>  }
+>  
+> +static int deflate_obj_contents_to_pack_incore(struct bulk_checkin_packfile *state,
+> +					       git_hash_ctx *ctx,
+> +					       struct hashfile_checkpoint *checkpoint,
+> +					       struct object_id *result_oid,
+> +					       const void *buf, size_t size,
+> +					       enum object_type type,
+> +					       const char *path, unsigned flags)
+> +{
+> +	struct pack_idx_entry *idx = NULL;
+> +	off_t already_hashed_to = 0;
+> +
+> +	/* Note: idx is non-NULL when we are writing */
+> +	if (flags & HASH_WRITE_OBJECT)
+> +		CALLOC_ARRAY(idx, 1);
+> +
+> +	while (1) {
+> +		prepare_checkpoint(state, checkpoint, idx, flags);
+> +		if (!stream_obj_to_pack_incore(state, ctx, &already_hashed_to,
+> +					       buf, size, type, path, flags))
+> +			break;
+> +		truncate_checkpoint(state, checkpoint, idx);
+> +	}
+> +
+> +	finalize_checkpoint(state, ctx, checkpoint, idx, result_oid);
+> +
+> +	return 0;
+> +}
+> +
+> +static int deflate_blob_to_pack_incore(struct bulk_checkin_packfile *state,
+> +				       struct object_id *result_oid,
+> +				       const void *buf, size_t size,
+> +				       const char *path, unsigned flags)
+> +{
+> +	git_hash_ctx ctx;
+> +	struct hashfile_checkpoint checkpoint = {0};
+> +
+> +	format_object_header_hash(the_hash_algo, &ctx, &checkpoint, OBJ_BLOB,
+> +				  size);
+> +
+> +	return deflate_obj_contents_to_pack_incore(state, &ctx, &checkpoint,
+> +						   result_oid, buf, size,
+> +						   OBJ_BLOB, path, flags);
+> +}
+> +
+>  static int deflate_blob_to_pack(struct bulk_checkin_packfile *state,
+>  				struct object_id *result_oid,
+>  				int fd, size_t size,
+> @@ -396,6 +503,17 @@ int index_blob_bulk_checkin(struct object_id *oid,
+>  	return status;
+>  }
+>  
+> +int index_blob_bulk_checkin_incore(struct object_id *oid,
+> +				   const void *buf, size_t size,
+> +				   const char *path, unsigned flags)
+> +{
+> +	int status = deflate_blob_to_pack_incore(&bulk_checkin_packfile, oid,
+> +						 buf, size, path, flags);
+> +	if (!odb_transaction_nesting)
+> +		flush_bulk_checkin_packfile(&bulk_checkin_packfile);
+> +	return status;
+> +}
+> +
+>  void begin_odb_transaction(void)
+>  {
+>  	odb_transaction_nesting += 1;
+> diff --git a/bulk-checkin.h b/bulk-checkin.h
+> index aa7286a7b3..1b91daeaee 100644
+> --- a/bulk-checkin.h
+> +++ b/bulk-checkin.h
+> @@ -13,6 +13,10 @@ int index_blob_bulk_checkin(struct object_id *oid,
+>  			    int fd, size_t size,
+>  			    const char *path, unsigned flags);
+>  
+> +int index_blob_bulk_checkin_incore(struct object_id *oid,
+> +				   const void *buf, size_t size,
+> +				   const char *path, unsigned flags);
+> +
+>  /*
+>   * Tell the object database to optimize for adding
+>   * multiple objects. end_odb_transaction must be called
