@@ -1,63 +1,62 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 556E6156EB
-	for <git@vger.kernel.org>; Wed, 18 Oct 2023 12:46:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5AFF335C2
+	for <git@vger.kernel.org>; Wed, 18 Oct 2023 12:48:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TR6NQ9xR"
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DECA998
-	for <git@vger.kernel.org>; Wed, 18 Oct 2023 05:46:25 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-9bdf5829000so779427566b.0
-        for <git@vger.kernel.org>; Wed, 18 Oct 2023 05:46:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S4/UuYYt"
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64819109
+	for <git@vger.kernel.org>; Wed, 18 Oct 2023 05:48:10 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-507973f3b65so8452502e87.3
+        for <git@vger.kernel.org>; Wed, 18 Oct 2023 05:48:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697633184; x=1698237984; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=8NyiINglnXqXgfyAC/7e0ZTqFVw1E/00+nZ8OCRJyqc=;
-        b=TR6NQ9xR9yO7yU3VpGcogrB685uvshvB9UEFJJX7UgkU/jMM4ZU8jJ6+4EFoArIuP+
-         i7htYgxS++lYdg9JtufcosW4XJb7M8j9NSfPxK2cBYHygN33Jo680EwVP3r4wmABEj2a
-         h+er90g5ZoYwvoFlz9DFsNmy0KtA7CTYkO1bWSgwoDQXhXRJjpISpRFcg7KnSjCm2ZfG
-         NlJASFaMmOTiPpoE0VdWjsyeAVoi1gOnSlmIfZK+Xd2OcOFWdU9fTj4d7TsNPBnWhaI8
-         hXy0NNh1WOJ1tvlxARHgv6nPjD9gfIH5i4ZOzTuWUzJ0eO68+yR5OD9VyYtCjHOCushw
-         JiNQ==
+        d=gmail.com; s=20230601; t=1697633288; x=1698238088; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pTAoGher9nXxcZNfEVCyHysSuvp6hqRmAfCNZusln34=;
+        b=S4/UuYYtAnxPOzoc9PqvCuT/hsc2L713kV+x/6KLnjO4E6gzNtjTcIpeona3ZUFaz6
+         ZY7x1v6hf+mSNacN2aRWFIGZhAGBcWLul30kzvu14huAF2GFLaM56OO6iwFCuWQ/pJjw
+         R8ru+MBAbGeQuw74TmwiyQr1V9Hf4wW8RUlH4bq8+eqbVqO7BCel0AE7+LLW+giigqGH
+         aPj1BuJ5GH7YRC+eYk7YQf5xv6W/s0jg6Z7ApT+NnUaO/IRzudNATY2tJdMgfCHoQOXt
+         r3Gde5fukwsu8mA581eZecLfoKOdBE8alWA+6AMkdhlgP8nARht9Ervr5DZcRYjEf9T/
+         CMOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697633184; x=1698237984;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8NyiINglnXqXgfyAC/7e0ZTqFVw1E/00+nZ8OCRJyqc=;
-        b=HlveFPVjEyjGhlXMykYY3mXM5NHrwE6rkJhVe5m+0tZEiGXvskdMMj0NTPZayPD1lE
-         FHBaWBrF+72TkR0Rv23DVKu1bNaLngekY1FZeBHMRTRpNCPJCoFOLc5S4NTv+wcTXHOX
-         /aUpxfBm2D9Ah/S6Q7RiY9agY1Yv2XzK8UX0IHo/2X7KPz1LSD8qnhdC/JThRqmdyMpE
-         THroeUYOavoRMWcgRo2hNWJo1PJEpFYuOfT2VrCfArUuvWUi974FleQK561TDv/t3fGN
-         sbbgC5nMAKnxMIa3zipQDMTI3Sw1NKrmJ+ds4pZmSsG6zkM5Mqf3H60cTizC6GAqDv16
-         hpzA==
-X-Gm-Message-State: AOJu0YwlfEDQyf0kgrboYiMhF/h6ry8GXIdqvcJ6hNsSWtfINCnt6N4J
-	03rMJ+ZzdLcjEvqwPQmiqOVZwDxMIZylfr0=
-X-Google-Smtp-Source: AGHT+IGTQCaPcFxFecJT3h1Jbf1HtXEID6Vbl8CKD6abtLww02QJYVdQfHE4NvfAFeLMBV1sBI+oYA==
-X-Received: by 2002:a17:907:eab:b0:9b2:abda:2543 with SMTP id ho43-20020a1709070eab00b009b2abda2543mr4829918ejc.65.1697633183860;
-        Wed, 18 Oct 2023 05:46:23 -0700 (PDT)
-Received: from dorcaslitunya-virtual-machine.localdomain ([105.163.0.137])
-        by smtp.gmail.com with ESMTPSA id g19-20020a170906395300b009b2cc87b8c3sm1606862eje.52.2023.10.18.05.46.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Oct 2023 05:46:23 -0700 (PDT)
-From: Dorcas AnonoLitunya <anonolitunya@gmail.com>
-To: christian.couder@gmail.com
-Cc: anonolitunya@gmail.com,
-	git@vger.kernel.org,
-	gitster@pobox.com
-Subject: [Outreachy] [PATCH v2] t/t7601: use "test_path_is_file"etc. instead of "test -f"
-Date: Wed, 18 Oct 2023 15:45:12 +0300
-Message-ID: <20231018124538.68549-2-anonolitunya@gmail.com>
-X-Mailer: git-send-email 2.42.0.345.gaab89be2eb
+        d=1e100.net; s=20230601; t=1697633288; x=1698238088;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pTAoGher9nXxcZNfEVCyHysSuvp6hqRmAfCNZusln34=;
+        b=sbSnZYbyhcYjdvXKwcCpRMWl35oOgmbRlKzI+p4/vG+fnyHYtdBG2xlkJ4sjWmxuzW
+         Op/Qw6faJDIvIWXe53lUypMmaJxJjpH6VcDO4C1QK0/1CFBIsLJ4zHJpYVx6qRX9WPBU
+         834qYhk9gjTVaVzXqBJhBTVyF9dTSuEx3DMy+WRpCLmdj6R7CAI4AzQElvCYdRVnQrO8
+         5K5B1+iwV0ltBCJup6EALS4sWlou4zfAujjqZodKp1nCZ9IQCJrab+D4Pl+vx6o212eU
+         Hcl+Ccl4IJ5T83varmuxvVY24KPbDQ2/cYHA9jkHb/IbWFbeyN2sOYuXs1sWVwhQ9Q6d
+         M1Mg==
+X-Gm-Message-State: AOJu0Yy8SA9J2yg09Hwr/tVRW/8GoeEpwRrFaSo0MY5MMqg1d8YHCTBG
+	zA89l7IuUkrWm9kmp0m6vtyHHgRivP2/8FXQyjsNef89CvtplkbF
+X-Google-Smtp-Source: AGHT+IGQL8EfpqZN2NwfKFGSK/+AZdoUlRuewS+p5Z4mpSU+wnNn4TSGqJrAbG9D/giIrGtR0ZiVepwEliBxpehqBWI=
+X-Received: by 2002:a05:6512:90f:b0:507:9ff7:2ed4 with SMTP id
+ e15-20020a056512090f00b005079ff72ed4mr4029658lft.43.1697633288151; Wed, 18
+ Oct 2023 05:48:08 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAOLTT8RzcENBx9NKffHReVKJAho89TCO7W2SPBX8sb2tEU84Gw@mail.gmail.com>
+ <22688989-1b51-4989-b92d-5a5891ec9265@kdbg.org>
+In-Reply-To: <22688989-1b51-4989-b92d-5a5891ec9265@kdbg.org>
+From: ZheNing Hu <adlternative@gmail.com>
+Date: Wed, 18 Oct 2023 20:47:55 +0800
+Message-ID: <CAOLTT8Ti_HMtCKnag0dGk8jdRQ_7mtWys8f9U0gKjP9UzcVyag@mail.gmail.com>
+Subject: Re: How to combine multiple commit diffs?
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
 	RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
@@ -65,70 +64,73 @@ X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 	lindbergh.monkeyblade.net
 
-Some tests in t7601 use "test -f" and "test ! -f" to see if a path
-exists or is missing.
+Johannes Sixt <j6t@kdbg.org> =E4=BA=8E2023=E5=B9=B410=E6=9C=8813=E6=97=A5=
+=E5=91=A8=E4=BA=94 00:41=E5=86=99=E9=81=93=EF=BC=9A
+>
+> [For general support questions, please address only the mailing list.
+> It's not necessary to bother the maintainer personally. Though, I'll not
+> remove him from Cc, yet, as to comply with this ML's etiquette.]
+>
 
-Use test_path_is_file and test_path_is_missing helper functions to
-clarify these tests a bit better. This especially matters for the
-"missing" case because "test ! -f F" will be happy if "F" exists as a
-directory, but the intent of the test is that "F" should not exist, even
-as a directory. The updated code expresses this better.
+OK... I get it.
 
-Signed-off-by: Dorcas AnonoLitunya <anonolitunya@gmail.com>
----
- t/t7601-merge-pull-config.sh | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+> Am 12.10.23 um 14:00 schrieb ZheNing Hu:
+> > Hi everyone,
+> >
+> > Our company wants to design a "small-batch" code review feature.
+> > Simply put, this "small-batch" means being able to treat multiple
+> > related commits within a MergeRequest as an independent "small" code
+> > review.
+> >
+> > Let me give you an example: We have five commits: A1, B, A2, C, A3.
+> > Among them, A1, A2, and A3 are multiple commits for the same feature.
+> > So when the user selects these commits, the page will return a
+> > "combine diff" that combines them together.
+> >
+> > A1       B A2 A3 C
+> > *--------*----*-----*-------* (branch)
+> >  \ A1'        \ A2'  \ A3'
+> >   *------------*------*------- (small branch code review)
+> >
+> > This may seem similar to cherry-picking a few commits from a pile of
+> > commits, but in fact, we do not expect to actually perform
+> > cherry-picking.
+> >
+> > Do you have any suggestions on how we can merge a few commits together
+> > and display the diff? The only reference we have is the non-open
+> > source platform, JetBrains Space CodeReview, they support selecting
+> > multiple commits for CodeReview. [1], .
+>
+>
+> Take a step back. Then ask: What are the consequences of the review?
+> What if the result is: the feature is perfect, we want it merged,
+> however, we cannot, because we do not want commit B. What if the result
+> is the opposite? You need B, but you can't merge it because the feature
+> is not ready, yet?
+>
 
-diff --git a/t/t7601-merge-pull-config.sh b/t/t7601-merge-pull-config.sh
-index bd238d89b0..e08767df66 100755
---- a/t/t7601-merge-pull-config.sh
-+++ b/t/t7601-merge-pull-config.sh
-@@ -349,13 +349,13 @@ test_expect_success 'Cannot rebase with multiple heads' '
- 
- test_expect_success 'merge c1 with c2' '
- 	git reset --hard c1 &&
--	test -f c0.c &&
--	test -f c1.c &&
--	test ! -f c2.c &&
--	test ! -f c3.c &&
-+	test_path_is_file c0.c &&
-+	test_path_is_file c1.c &&
-+	test_path_is_missing c2.c &&
-+	test_path_is_missing c3.c &&
- 	git merge c2 &&
--	test -f c1.c &&
--	test -f c2.c
-+	test_path_is_file c1.c &&
-+	test_path_is_file c2.c
- '
- 
- test_expect_success 'fast-forward pull succeeds with "true" in pull.ff' '
-@@ -411,8 +411,8 @@ test_expect_success 'merge c1 with c2 (ours in pull.twohead)' '
- 	git reset --hard c1 &&
- 	git config pull.twohead ours &&
- 	git merge c2 &&
--	test -f c1.c &&
--	! test -f c2.c
-+	test_path_is_file c1.c &&
-+	test_path_is_missing c2.c
- '
- 
- test_expect_success 'merge c1 with c2 and c3 (recursive in pull.octopus)' '
-@@ -431,10 +431,10 @@ test_expect_success 'merge c1 with c2 and c3 (recursive and octopus in pull.octo
- 	test "$(git rev-parse c2)" = "$(git rev-parse HEAD^2)" &&
- 	test "$(git rev-parse c3)" = "$(git rev-parse HEAD^3)" &&
- 	git diff --exit-code &&
--	test -f c0.c &&
--	test -f c1.c &&
--	test -f c2.c &&
--	test -f c3.c
-+	test_path_is_file c0.c &&
-+	test_path_is_file c1.c &&
-+	test_path_is_file c2.c &&
-+	test_path_is_file c3.c
- '
- 
- conflict_count()
--- 
-2.42.0.345.gaab89be2eb
+The CodeReview here is only expected to review the Diff changes
+ (just like jetbrains Space). If it is truly blocked by B, users should
+understand to remove B or cherrypick A1, A2, A3 into a new branch.
 
+
+> You are looking for a technical workaround for a non-optimal workflow.
+> If A1,A2,A3 are a feature on their own, they, and only they, should be
+> in their own feature branch.
+>
+
+I have to admit that this is addressing the issue for users who are not
+very familiar with the git workflow, as they might add 70 commits in a
+CodeReview.
+My goal is to enable these users to display the diff of multiple commits
+that they consider to be related together.
+
+> So, I would say, the best solution is to reorder the commits in a better
+> manageable order. You do know about git rebase --interactive, don't you?
+>
+
+It would be great if users knew how to do that, and I wouldn't have to
+explore such unconventional technical solutions :(
+
+> -- Hannes
+>
