@@ -1,49 +1,43 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2692846672
-	for <git@vger.kernel.org>; Wed, 18 Oct 2023 23:56:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAFED4666C
+	for <git@vger.kernel.org>; Wed, 18 Oct 2023 23:59:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="fDjO0TNV"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="LKbpy/LX"
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A42D0FA
-	for <git@vger.kernel.org>; Wed, 18 Oct 2023 16:56:19 -0700 (PDT)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C1E2106
+	for <git@vger.kernel.org>; Wed, 18 Oct 2023 16:59:33 -0700 (PDT)
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 75D061C328B;
-	Wed, 18 Oct 2023 19:56:10 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9882E1C32AF;
+	Wed, 18 Oct 2023 19:59:32 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=fZc2QNqnniSPC1RPAQIFrWt4pEPGryiLo7UL+9
-	uB9i8=; b=fDjO0TNV8DCWdbonlbF3DCjTfA/7ELQnA0TLIxYrLfMI+O6n+GILfj
-	qmFv0A2y9tDx3AeKg1vtpg7pM0rRYmJtx7o2kpKSgAiG95rzRMkxG9+BQbLyFJqO
-	8jQZUZWWyFzx69xGfY2KNy+QTd9jMN1dXhMvzIgmGDSxyGqq6P7b0=
+	:content-type; s=sasl; bh=54c873wzcjRGMXpeVnOzy/3PMdEU+IIoIL+aW5
+	kIkkY=; b=LKbpy/LXl8J+tetrf79aMSAtLEVCBndibyBBTrcFEy/nSrfhcUkxNe
+	vk4oicrJ3pdC6w60ct2A9E/0mxcVMNuEwgArBUmD/YJl9tSYHrEHLK9bWPaMSKoZ
+	MdSvdzbs345jDlBWlPRoaf2AFC7pzAXr0yOuYbpGkxhUNPc2Le7Ck=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6C6B01C328A;
-	Wed, 18 Oct 2023 19:56:10 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 916421C32AE;
+	Wed, 18 Oct 2023 19:59:32 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.222.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D44E71C3289;
-	Wed, 18 Oct 2023 19:56:09 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C65ED1C32AD;
+	Wed, 18 Oct 2023 19:59:31 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Jonathan Tan
- <jonathantanmy@google.com>,  Jeff King <peff@peff.net>,  SZEDER
- =?utf-8?Q?G=C3=A1bor?=
- <szeder.dev@gmail.com>
-Subject: Re: [PATCH v3 05/17] t/helper/test-read-graph.c: extract
- `dump_graph_info()`
-In-Reply-To: <ZTAXyMWeQLRWcpuu@nand.local> (Taylor Blau's message of "Wed, 18
-	Oct 2023 13:37:12 -0400")
-References: <cover.1692654233.git.me@ttaylorr.com>
-	<cover.1696969994.git.me@ttaylorr.com>
-	<94552abf455c6d341a0811333ae4edb4a8cea259.1696969994.git.me@ttaylorr.com>
-	<ZS5JnkybxvetTUzu@tanuki> <ZTAXyMWeQLRWcpuu@nand.local>
-Date: Wed, 18 Oct 2023 16:56:08 -0700
-Message-ID: <xmqqh6mnzdrb.fsf@gitster.g>
+To: Dorcas AnonoLitunya <anonolitunya@gmail.com>
+Cc: christian.couder@gmail.com,  git@vger.kernel.org
+Subject: Re: [Outreachy] [PATCH v2] t/t7601: use "test_path_is_file"etc.
+ instead of "test -f"
+In-Reply-To: <20231018124538.68549-2-anonolitunya@gmail.com> (Dorcas
+	AnonoLitunya's message of "Wed, 18 Oct 2023 15:45:12 +0300")
+References: <20231018124538.68549-2-anonolitunya@gmail.com>
+Date: Wed, 18 Oct 2023 16:59:30 -0700
+Message-ID: <xmqqa5sfzdlp.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -53,35 +47,78 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- E9129338-6E11-11EE-910C-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+ 61705CFC-6E12-11EE-B31D-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Taylor Blau <me@ttaylorr.com> writes:
+Dorcas AnonoLitunya <anonolitunya@gmail.com> writes:
 
-> On Tue, Oct 17, 2023 at 10:45:18AM +0200, Patrick Steinhardt wrote:
->> On Tue, Oct 10, 2023 at 04:33:33PM -0400, Taylor Blau wrote:
->> > Prepare for the 'read-graph' test helper to perform other tasks besides
->> > dumping high-level information about the commit-graph by extracting its
->> > main routine into a separate function.
->> >
->> > Signed-off-by: Taylor Blau <me@ttaylorr.com>
->> > Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
->> > Signed-off-by: Junio C Hamano <gitster@pobox.com>
->> > Signed-off-by: Taylor Blau <me@ttaylorr.com>
->>
->> Nit: your signoff is duplicated here. This is also still the case for
->> some of the other commits.
+> Some tests in t7601 use "test -f" and "test ! -f" to see if a path
+> exists or is missing.
 >
-> Yeah, this is an artifact of having tossed these patches back and forth
-> (originally Jonathan sent some of these, then I sent another round, then
-> Jonathan, now me again). It's a little verbose, but accurately tracks
-> the DCO across multiple rounds.
+> Use test_path_is_file and test_path_is_missing helper functions to
+> clarify these tests a bit better. This especially matters for the
+> "missing" case because "test ! -f F" will be happy if "F" exists as a
+> directory, but the intent of the test is that "F" should not exist, even
+> as a directory. The updated code expresses this better.
+>
+> Signed-off-by: Dorcas AnonoLitunya <anonolitunya@gmail.com>
+> ---
+>  t/t7601-merge-pull-config.sh | 24 ++++++++++++------------
+>  1 file changed, 12 insertions(+), 12 deletions(-)
 
-Well, between you and Jonathan Tan, that might be true, but my
-involvement in the chain is only that I happened to have looked at
-an earlier round and without doing anything else.  Even if you
-refetched from my tree and based the new round on that version, it
-would have been the same if you started from what you sent out
-earlier without even looking at my tree.  So I do not think that
-chain of DCO adds very little value by recording my sign-off there.
+Nicely done; it seems that the title line got garbled whitespace for
+some reason but I'll fix them up while queuing.
 
+Thanks.  Will queue.
+
+
+> diff --git a/t/t7601-merge-pull-config.sh b/t/t7601-merge-pull-config.sh
+> index bd238d89b0..e08767df66 100755
+> --- a/t/t7601-merge-pull-config.sh
+> +++ b/t/t7601-merge-pull-config.sh
+> @@ -349,13 +349,13 @@ test_expect_success 'Cannot rebase with multiple heads' '
+>  
+>  test_expect_success 'merge c1 with c2' '
+>  	git reset --hard c1 &&
+> -	test -f c0.c &&
+> -	test -f c1.c &&
+> -	test ! -f c2.c &&
+> -	test ! -f c3.c &&
+> +	test_path_is_file c0.c &&
+> +	test_path_is_file c1.c &&
+> +	test_path_is_missing c2.c &&
+> +	test_path_is_missing c3.c &&
+>  	git merge c2 &&
+> -	test -f c1.c &&
+> -	test -f c2.c
+> +	test_path_is_file c1.c &&
+> +	test_path_is_file c2.c
+>  '
+>  
+>  test_expect_success 'fast-forward pull succeeds with "true" in pull.ff' '
+> @@ -411,8 +411,8 @@ test_expect_success 'merge c1 with c2 (ours in pull.twohead)' '
+>  	git reset --hard c1 &&
+>  	git config pull.twohead ours &&
+>  	git merge c2 &&
+> -	test -f c1.c &&
+> -	! test -f c2.c
+> +	test_path_is_file c1.c &&
+> +	test_path_is_missing c2.c
+>  '
+>  
+>  test_expect_success 'merge c1 with c2 and c3 (recursive in pull.octopus)' '
+> @@ -431,10 +431,10 @@ test_expect_success 'merge c1 with c2 and c3 (recursive and octopus in pull.octo
+>  	test "$(git rev-parse c2)" = "$(git rev-parse HEAD^2)" &&
+>  	test "$(git rev-parse c3)" = "$(git rev-parse HEAD^3)" &&
+>  	git diff --exit-code &&
+> -	test -f c0.c &&
+> -	test -f c1.c &&
+> -	test -f c2.c &&
+> -	test -f c3.c
+> +	test_path_is_file c0.c &&
+> +	test_path_is_file c1.c &&
+> +	test_path_is_file c2.c &&
+> +	test_path_is_file c3.c
+>  '
+>  
+>  conflict_count()
 
