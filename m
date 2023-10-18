@@ -1,335 +1,106 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB84358A1
-	for <git@vger.kernel.org>; Wed, 18 Oct 2023 16:29:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15BF53D39D
+	for <git@vger.kernel.org>; Wed, 18 Oct 2023 16:34:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="IufAhq58"
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEED5B8
-	for <git@vger.kernel.org>; Wed, 18 Oct 2023 09:28:57 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 438841FA5B;
-	Wed, 18 Oct 2023 12:28:57 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=qfOlkDy4iyYtug9WeShKAvHj4OgEgODQRSguGx
-	2qBB0=; b=IufAhq58oQgHSObGvPuU+w0Dz+4uPAjjuItcluxTpZBuNswgoB5oq1
-	PadsFRJ+bGRtu8LU0i/HRzxWWyz+EPWnyyjnIKTCegOdBOLYYDFL00sllPIdApj5
-	d/aj8tfVrpWKzk+/iysoaDabLtQj+T7VcWkaBKHA1wXIX8G+x7Ol4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 3BC681FA5A;
-	Wed, 18 Oct 2023 12:28:57 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E4CB91FA12;
-	Wed, 18 Oct 2023 12:28:51 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH 03/11] t: convert tests to use helpers for reference
- existence
-In-Reply-To: <ac6a49c7c84ad2b836f099557dd6989703ebda8f.1697607222.git.ps@pks.im>
-	(Patrick Steinhardt's message of "Wed, 18 Oct 2023 07:35:16 +0200")
-References: <cover.1697607222.git.ps@pks.im>
-	<ac6a49c7c84ad2b836f099557dd6989703ebda8f.1697607222.git.ps@pks.im>
-Date: Wed, 18 Oct 2023 09:28:50 -0700
-Message-ID: <xmqqcyxbuc71.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="K0MO2kkj"
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAB15111
+	for <git@vger.kernel.org>; Wed, 18 Oct 2023 09:34:31 -0700 (PDT)
+Received: by mail-qk1-x730.google.com with SMTP id af79cd13be357-7789aed0e46so6904485a.0
+        for <git@vger.kernel.org>; Wed, 18 Oct 2023 09:34:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1697646871; x=1698251671; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=L/+tXC22cuJfSv48MR64M4rKjsfhVx2JLkU1grbILyY=;
+        b=K0MO2kkjctAHwaYTigeYE0YAxwmuGhb3ZFkCEhCZBcNLqGVoMi4dsJh/2Te3Asw5OK
+         V6y0TnX4Fn28vVMRw0F15vU4Aj2V9/NM7G4wfyrUvAvllrCr3o02z7DkVkGMBYlnH6Lh
+         6q0LIcADiCUQpY36RLmedgwuPpWFm8k/5r1uSljZ/ZVlJTob+SHoY/4Kt7hEj3m+xZvC
+         T6emtV6mr7MxosOOSCSAcSyilXwN2zyvjq/6Ef0XZXGOABcUQVAtcG2hxdi8wwQcpyYE
+         f50rUWT6YpUlp5AAYlfX41NYLTZvVrNqAOAVBnfjbxwdkVqVNTQMizMX086JLhVb//JQ
+         iiuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697646871; x=1698251671;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=L/+tXC22cuJfSv48MR64M4rKjsfhVx2JLkU1grbILyY=;
+        b=fb31ZK8VZfe91eMYTgaK4rGIKTGXFvNZtW4E8tOoF4esi5n3Omf3j2/Cte2HDNPoXw
+         M7AD8y6Fk6Ffb8Xre7OhEdfyO7Nf88JfmKys6YC7DYf+XVVBEZPP6pJDyaM1EdUP5fOR
+         jYkXGbMAbtMqptxVB4c5soqStq6MRVr0fusShrvkBXoQfxBCG7t/98/dig2KAKIg1C7Y
+         KUmnAIZqOJ3XaTJE4dSWn1rZDYQCeuFB5POTLmyEg/FVmhliGLe4yL36yZNFk0vxUdpv
+         Iu7YIOMCcsP6r9KMCRhXRxTYR9eTGftWVp1Qn9+cWzIrWfhKwopf4rSr0vt+Kb7KdfR/
+         biyw==
+X-Gm-Message-State: AOJu0YyeEs22sUe3aQRfPkgUTsUBMbcytlilBf1MekZfX+600J8kg2c0
+	kCjipVF3SGuMoQwV5RcjZmlORw==
+X-Google-Smtp-Source: AGHT+IHI3ts1M9fCbFmoLfOeTcylx2pjOthyO+T9insiLl/oGfVVbfBKh8C2blY4yR334RRjqEZkGw==
+X-Received: by 2002:a05:620a:1929:b0:774:33ce:cfb6 with SMTP id bj41-20020a05620a192900b0077433cecfb6mr7173503qkb.30.1697646870862;
+        Wed, 18 Oct 2023 09:34:30 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id d22-20020a05620a159600b0076dae4753efsm81092qkk.14.2023.10.18.09.34.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Oct 2023 09:34:30 -0700 (PDT)
+Date: Wed, 18 Oct 2023 12:34:28 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	"Eric W. Biederman" <ebiederm@gmail.com>, Jeff King <peff@peff.net>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v2 5/7] bulk-checkin: introduce
+ `index_blob_bulk_checkin_incore()`
+Message-ID: <ZTAJFK8BLFEb9FFq@nand.local>
+References: <cover.1696629697.git.me@ttaylorr.com>
+ <cover.1697560266.git.me@ttaylorr.com>
+ <239bf39bfb21ef621a15839bade34446dcbc3103.1697560266.git.me@ttaylorr.com>
+ <xmqq5y34wu5f.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 6C6A9F58-6DD3-11EE-8970-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq5y34wu5f.fsf@gitster.g>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
+	autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 	lindbergh.monkeyblade.net
 
-Patrick Steinhardt <ps@pks.im> writes:
-
-> Convert tests that use `test_path_is_file` and `test_path_is_missing` to
-> instead use our new helpers `test_ref_exists` and `test_ref_missing`.
-> These hook into the reference database directly and thus work indepently
-> of the actual reference backend that is being used.
+On Tue, Oct 17, 2023 at 07:18:04PM -0700, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
 >
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  t/t1430-bad-ref-name.sh | 27 ++++++++++++++++++---------
->  t/t3200-branch.sh       | 33 ++++++++++++++++++---------------
->  t/t5521-pull-options.sh |  4 ++--
->  t/t5605-clone-local.sh  |  2 +-
->  4 files changed, 39 insertions(+), 27 deletions(-)
+> >  bulk-checkin.c | 118 +++++++++++++++++++++++++++++++++++++++++++++++++
+> >  bulk-checkin.h |   4 ++
+> >  2 files changed, 122 insertions(+)
+>
+> Unlike the previous four, which were very clear refactoring to
+> create reusable helper functions, this step leaves a bad aftertaste
+> after reading twice, and I think what is disturbing is that many new
+> lines are pretty much literally copied from stream_blob_to_pack().
+>
+> I wonder if we can introduce an "input" source abstraction, that
+> replaces "fd" and "size" (and "path" for error reporting) parameters
+> to the stream_blob_to_pack(), so that the bulk of the implementation
+> of stream_blob_to_pack() can call its .read() method to read bytes
+> up to "size" from such an abstracted interface?  That would be a
+> good sized first half of this change.  Then in the second half, you
+> can add another "input" source that works with in-core "buf" and
+> "size", whose .read() method will merely be a memcpy().
 
-I scanned through the changes, and all of them looked sensible.  I
-also very much liked the added "now we have done something to create
-'badname' branch, let's make sure it exists, before trying to see if
-the machinery to delete it works correctly" tests.
+Thanks, I like this idea. I had initially avoided it in the first couple
+of rounds, because the abstraction felt clunky and involved an
+unnecessary extra memcpy().
 
-Looking good.
+But having applied your suggestion here, I think that the price is well
+worth the result, which is that `stream_blob_to_pack()` does not have to
+be implemented twice with very subtle differences.
 
-Thanks.
+Thanks again for the suggestion, I'm really pleased with how it came
+out. Reroll coming shortly...
 
-> diff --git a/t/t1430-bad-ref-name.sh b/t/t1430-bad-ref-name.sh
-> index ff1c967d550..7b7d6953c62 100755
-> --- a/t/t1430-bad-ref-name.sh
-> +++ b/t/t1430-bad-ref-name.sh
-> @@ -205,8 +205,9 @@ test_expect_success 'update-ref --no-deref -d can delete symref to broken name'
->  	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg refs/heads/broken...ref" &&
->  	test-tool ref-store main create-symref refs/heads/badname refs/heads/broken...ref msg &&
->  	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg refs/heads/badname" &&
-> +	test_ref_exists refs/heads/badname &&
->  	git update-ref --no-deref -d refs/heads/badname >output 2>error &&
-> -	test_path_is_missing .git/refs/heads/badname &&
-> +	test_ref_missing refs/heads/badname &&
->  	test_must_be_empty output &&
->  	test_must_be_empty error
->  '
-> @@ -216,8 +217,9 @@ test_expect_success 'branch -d can delete symref to broken name' '
->  	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg refs/heads/broken...ref" &&
->  	test-tool ref-store main create-symref refs/heads/badname refs/heads/broken...ref msg &&
->  	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg refs/heads/badname" &&
-> +	test_ref_exists refs/heads/badname &&
->  	git branch -d badname >output 2>error &&
-> -	test_path_is_missing .git/refs/heads/badname &&
-> +	test_ref_missing refs/heads/badname &&
->  	test_i18ngrep "Deleted branch badname (was refs/heads/broken\.\.\.ref)" output &&
->  	test_must_be_empty error
->  '
-> @@ -225,8 +227,9 @@ test_expect_success 'branch -d can delete symref to broken name' '
->  test_expect_success 'update-ref --no-deref -d can delete dangling symref to broken name' '
->  	test-tool ref-store main create-symref refs/heads/badname refs/heads/broken...ref msg &&
->  	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg refs/heads/badname" &&
-> +	test_ref_exists refs/heads/badname &&
->  	git update-ref --no-deref -d refs/heads/badname >output 2>error &&
-> -	test_path_is_missing .git/refs/heads/badname &&
-> +	test_ref_missing refs/heads/badname &&
->  	test_must_be_empty output &&
->  	test_must_be_empty error
->  '
-> @@ -234,8 +237,9 @@ test_expect_success 'update-ref --no-deref -d can delete dangling symref to brok
->  test_expect_success 'branch -d can delete dangling symref to broken name' '
->  	test-tool ref-store main create-symref refs/heads/badname refs/heads/broken...ref msg &&
->  	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg refs/heads/badname" &&
-> +	test_ref_exists refs/heads/badname &&
->  	git branch -d badname >output 2>error &&
-> -	test_path_is_missing .git/refs/heads/badname &&
-> +	test_ref_missing refs/heads/badname &&
->  	test_i18ngrep "Deleted branch badname (was refs/heads/broken\.\.\.ref)" output &&
->  	test_must_be_empty error
->  '
-> @@ -245,8 +249,9 @@ test_expect_success 'update-ref -d can delete broken name through symref' '
->  	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg refs/heads/broken...ref" &&
->  	test-tool ref-store main create-symref refs/heads/badname refs/heads/broken...ref msg &&
->  	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg refs/heads/badname" &&
-> +	test_ref_exists refs/heads/broken...ref &&
->  	git update-ref -d refs/heads/badname >output 2>error &&
-> -	test_path_is_missing .git/refs/heads/broken...ref &&
-> +	test_ref_missing refs/heads/broken...ref &&
->  	test_must_be_empty output &&
->  	test_must_be_empty error
->  '
-> @@ -254,8 +259,9 @@ test_expect_success 'update-ref -d can delete broken name through symref' '
->  test_expect_success 'update-ref --no-deref -d can delete symref with broken name' '
->  	printf "ref: refs/heads/main\n" >.git/refs/heads/broken...symref &&
->  	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg refs/heads/broken...symref" &&
-> +	test_ref_exists refs/heads/broken...symref &&
->  	git update-ref --no-deref -d refs/heads/broken...symref >output 2>error &&
-> -	test_path_is_missing .git/refs/heads/broken...symref &&
-> +	test_ref_missing refs/heads/broken...symref &&
->  	test_must_be_empty output &&
->  	test_must_be_empty error
->  '
-> @@ -263,8 +269,9 @@ test_expect_success 'update-ref --no-deref -d can delete symref with broken name
->  test_expect_success 'branch -d can delete symref with broken name' '
->  	printf "ref: refs/heads/main\n" >.git/refs/heads/broken...symref &&
->  	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg refs/heads/broken...symref" &&
-> +	test_ref_exists refs/heads/broken...symref &&
->  	git branch -d broken...symref >output 2>error &&
-> -	test_path_is_missing .git/refs/heads/broken...symref &&
-> +	test_ref_missing refs/heads/broken...symref &&
->  	test_i18ngrep "Deleted branch broken...symref (was refs/heads/main)" output &&
->  	test_must_be_empty error
->  '
-> @@ -272,8 +279,9 @@ test_expect_success 'branch -d can delete symref with broken name' '
->  test_expect_success 'update-ref --no-deref -d can delete dangling symref with broken name' '
->  	printf "ref: refs/heads/idonotexist\n" >.git/refs/heads/broken...symref &&
->  	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg refs/heads/broken...symref" &&
-> +	test_ref_exists refs/heads/broken...symref &&
->  	git update-ref --no-deref -d refs/heads/broken...symref >output 2>error &&
-> -	test_path_is_missing .git/refs/heads/broken...symref &&
-> +	test_ref_missing refs/heads/broken...symref &&
->  	test_must_be_empty output &&
->  	test_must_be_empty error
->  '
-> @@ -281,8 +289,9 @@ test_expect_success 'update-ref --no-deref -d can delete dangling symref with br
->  test_expect_success 'branch -d can delete dangling symref with broken name' '
->  	printf "ref: refs/heads/idonotexist\n" >.git/refs/heads/broken...symref &&
->  	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg refs/heads/broken...symref" &&
-> +	test_ref_exists refs/heads/broken...symref &&
->  	git branch -d broken...symref >output 2>error &&
-> -	test_path_is_missing .git/refs/heads/broken...symref &&
-> +	test_ref_missing refs/heads/broken...symref &&
->  	test_i18ngrep "Deleted branch broken...symref (was refs/heads/idonotexist)" output &&
->  	test_must_be_empty error
->  '
-> diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-> index 080e4f24a6e..bde4f1485b7 100755
-> --- a/t/t3200-branch.sh
-> +++ b/t/t3200-branch.sh
-> @@ -25,7 +25,7 @@ test_expect_success 'prepare a trivial repository' '
->  
->  test_expect_success 'git branch --help should not have created a bogus branch' '
->  	test_might_fail git branch --man --help </dev/null >/dev/null 2>&1 &&
-> -	test_path_is_missing .git/refs/heads/--help
-> +	test_ref_missing refs/heads/--help
->  '
->  
->  test_expect_success 'branch -h in broken repository' '
-> @@ -40,7 +40,8 @@ test_expect_success 'branch -h in broken repository' '
->  '
->  
->  test_expect_success 'git branch abc should create a branch' '
-> -	git branch abc && test_path_is_file .git/refs/heads/abc
-> +	git branch abc &&
-> +	test_ref_exists refs/heads/abc
->  '
->  
->  test_expect_success 'git branch abc should fail when abc exists' '
-> @@ -61,11 +62,13 @@ test_expect_success 'git branch --force abc should succeed when abc exists' '
->  '
->  
->  test_expect_success 'git branch a/b/c should create a branch' '
-> -	git branch a/b/c && test_path_is_file .git/refs/heads/a/b/c
-> +	git branch a/b/c &&
-> +	test_ref_exists refs/heads/a/b/c
->  '
->  
->  test_expect_success 'git branch mb main... should create a branch' '
-> -	git branch mb main... && test_path_is_file .git/refs/heads/mb
-> +	git branch mb main... &&
-> +	test_ref_exists refs/heads/mb
->  '
->  
->  test_expect_success 'git branch HEAD should fail' '
-> @@ -78,14 +81,14 @@ EOF
->  test_expect_success 'git branch --create-reflog d/e/f should create a branch and a log' '
->  	GIT_COMMITTER_DATE="2005-05-26 23:30" \
->  	git -c core.logallrefupdates=false branch --create-reflog d/e/f &&
-> -	test_path_is_file .git/refs/heads/d/e/f &&
-> +	test_ref_exists refs/heads/d/e/f &&
->  	test_path_is_file .git/logs/refs/heads/d/e/f &&
->  	test_cmp expect .git/logs/refs/heads/d/e/f
->  '
->  
->  test_expect_success 'git branch -d d/e/f should delete a branch and a log' '
->  	git branch -d d/e/f &&
-> -	test_path_is_missing .git/refs/heads/d/e/f &&
-> +	test_ref_missing refs/heads/d/e/f &&
->  	test_must_fail git reflog exists refs/heads/d/e/f
->  '
->  
-> @@ -213,7 +216,7 @@ test_expect_success 'git branch -M should leave orphaned HEAD alone' '
->  		test_commit initial &&
->  		git checkout --orphan lonely &&
->  		grep lonely .git/HEAD &&
-> -		test_path_is_missing .git/refs/head/lonely &&
-> +		test_ref_missing refs/head/lonely &&
->  		git branch -M main mistress &&
->  		grep lonely .git/HEAD
->  	)
-> @@ -799,8 +802,8 @@ test_expect_success 'deleting a symref' '
->  	git symbolic-ref refs/heads/symref refs/heads/target &&
->  	echo "Deleted branch symref (was refs/heads/target)." >expect &&
->  	git branch -d symref >actual &&
-> -	test_path_is_file .git/refs/heads/target &&
-> -	test_path_is_missing .git/refs/heads/symref &&
-> +	test_ref_exists refs/heads/target &&
-> +	test_ref_missing refs/heads/symref &&
->  	test_cmp expect actual
->  '
->  
-> @@ -809,16 +812,16 @@ test_expect_success 'deleting a dangling symref' '
->  	test_path_is_file .git/refs/heads/dangling-symref &&
->  	echo "Deleted branch dangling-symref (was nowhere)." >expect &&
->  	git branch -d dangling-symref >actual &&
-> -	test_path_is_missing .git/refs/heads/dangling-symref &&
-> +	test_ref_missing refs/heads/dangling-symref &&
->  	test_cmp expect actual
->  '
->  
->  test_expect_success 'deleting a self-referential symref' '
->  	git symbolic-ref refs/heads/self-reference refs/heads/self-reference &&
-> -	test_path_is_file .git/refs/heads/self-reference &&
-> +	test_ref_exists refs/heads/self-reference &&
->  	echo "Deleted branch self-reference (was refs/heads/self-reference)." >expect &&
->  	git branch -d self-reference >actual &&
-> -	test_path_is_missing .git/refs/heads/self-reference &&
-> +	test_ref_missing refs/heads/self-reference &&
->  	test_cmp expect actual
->  '
->  
-> @@ -826,8 +829,8 @@ test_expect_success 'renaming a symref is not allowed' '
->  	git symbolic-ref refs/heads/topic refs/heads/main &&
->  	test_must_fail git branch -m topic new-topic &&
->  	git symbolic-ref refs/heads/topic &&
-> -	test_path_is_file .git/refs/heads/main &&
-> -	test_path_is_missing .git/refs/heads/new-topic
-> +	test_ref_exists refs/heads/main &&
-> +	test_ref_missing refs/heads/new-topic
->  '
->  
->  test_expect_success SYMLINKS 'git branch -m u v should fail when the reflog for u is a symlink' '
-> @@ -1142,7 +1145,7 @@ EOF
->  test_expect_success 'git checkout -b g/h/i -l should create a branch and a log' '
->  	GIT_COMMITTER_DATE="2005-05-26 23:30" \
->  	git checkout -b g/h/i -l main &&
-> -	test_path_is_file .git/refs/heads/g/h/i &&
-> +	test_ref_exists refs/heads/g/h/i &&
->  	test_path_is_file .git/logs/refs/heads/g/h/i &&
->  	test_cmp expect .git/logs/refs/heads/g/h/i
->  '
-> diff --git a/t/t5521-pull-options.sh b/t/t5521-pull-options.sh
-> index 079b2f2536e..3681859f983 100755
-> --- a/t/t5521-pull-options.sh
-> +++ b/t/t5521-pull-options.sh
-> @@ -143,7 +143,7 @@ test_expect_success 'git pull --dry-run' '
->  		cd clonedry &&
->  		git pull --dry-run ../parent &&
->  		test_path_is_missing .git/FETCH_HEAD &&
-> -		test_path_is_missing .git/refs/heads/main &&
-> +		test_ref_missing refs/heads/main &&
->  		test_path_is_missing .git/index &&
->  		test_path_is_missing file
->  	)
-> @@ -157,7 +157,7 @@ test_expect_success 'git pull --all --dry-run' '
->  		git remote add origin ../parent &&
->  		git pull --all --dry-run &&
->  		test_path_is_missing .git/FETCH_HEAD &&
-> -		test_path_is_missing .git/refs/remotes/origin/main &&
-> +		test_ref_missing refs/remotes/origin/main &&
->  		test_path_is_missing .git/index &&
->  		test_path_is_missing file
->  	)
-> diff --git a/t/t5605-clone-local.sh b/t/t5605-clone-local.sh
-> index 1d7b1abda1a..946c5751885 100755
-> --- a/t/t5605-clone-local.sh
-> +++ b/t/t5605-clone-local.sh
-> @@ -69,7 +69,7 @@ test_expect_success 'local clone of repo with nonexistent ref in HEAD' '
->  	git clone a d &&
->  	(cd d &&
->  	git fetch &&
-> -	test ! -e .git/refs/remotes/origin/HEAD)
-> +	test_ref_missing refs/remotes/origin/HEAD)
->  '
->  
->  test_expect_success 'bundle clone without .bundle suffix' '
+Thanks,
+Taylor
