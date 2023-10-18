@@ -1,180 +1,164 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE9293E010
-	for <git@vger.kernel.org>; Wed, 18 Oct 2023 20:29:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B336742907
+	for <git@vger.kernel.org>; Wed, 18 Oct 2023 21:18:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="m5EYduWB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LfrDQY23"
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 350D110E6
-	for <git@vger.kernel.org>; Wed, 18 Oct 2023 13:29:24 -0700 (PDT)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id 2E1A95C0116;
-	Wed, 18 Oct 2023 16:29:23 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Wed, 18 Oct 2023 16:29:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:date:date:from
-	:from:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:sender:subject:subject:to:to; s=fm2; t=1697660963; x=
-	1697747363; bh=CvDfaddkbFav4E/axthUtVquSo78BG12GBoUBh5Nh7g=; b=m
-	5EYduWBynE7mggd2LmrTUJLh6eG9vKK8RPI8EL3hQM/YaZWZ9QoSk48llz5keP5L
-	WuazxNWDoEP9btKcWp44SWiK+8sgc1eOIWaKY/SF8R7uoy2xGi0YgLueUQC9QHLI
-	1NsEGqF8Ez6VxqNsXNEqgGcO2OsDYF6u07x6bAP1/8r2tH0i0rrt5IqUp5SIhEma
-	IFu7BBSXPBdg/Z6K9seVhThOTzSg1aykf30NNV4sqJBVSKXHe/55jWYy8OTl8mCB
-	p8/cdPnaTj+SNFeha4EY/xvWCUknYoy7g2NT0jRIBfhxU41HODrzzK5TUzEO3hVe
-	kT4JekqacHEE37Fd9mm4A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1697660963; x=
-	1697747363; bh=CvDfaddkbFav4E/axthUtVquSo78BG12GBoUBh5Nh7g=; b=L
-	frDQY23qjK3VMUQOf6GeKGp00moTN/uzXqhw1KQgAYFFiKk+7+8JNkWzLAntJ7ja
-	CHSY++f1admiRqwtR0qs82u4rutz7PTMbJdIxlor5zgOX69/Wc9zIYIqZ61/R3/I
-	4xmrI1eveFhElmPMvGVj6BQX1yY+YJrMUjqSUHubPZZRC2O5dkcqQEya21fuH5ez
-	8WcATXwmKDglrilNrlqxTw7RGvp+WUYknb4Dg5uNHDQOi51qbQWYHRvLh+8X0GKs
-	Kw8AiQM4t/n3eI/adfObNkWHNRpXumd3QMFovWNGkRUlmVjtDo62XGBI1ykWknkG
-	l+a+m3UmfeXY/Hx+RuVIQ==
-X-ME-Sender: <xms:IkAwZTaCjulQP2K4Os06CtxI3613T9FW0mbSNtXX0re_ZvoQU_tVYCo>
-    <xme:IkAwZSYRaKDCauLX3bFvGWGzkVQosHdqgRkLsJYSv9bObdDr-WKA_5Aw411B7MNJu
-    bs99TC8kv2jGlpb0g>
-X-ME-Received: <xmr:IkAwZV_JH4a1Sd_HcHJL5OV-5LdDTiqZEXzb2samkTIJx4Iuf5WARRmGw7RzYabympz9c08To_ccGDKkE59RZtn3YvRJTbvWEpcQobz4o1BkIWX1YkCbayxEJw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrjeeggddugeekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkffojghfggfgsedtke
-    ertdertddtnecuhfhrohhmpefmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhcuoegt
-    ohguvgeskhhhrghughhssggrkhhkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepteduie
-    ehgedutdfgudevkefhveduieeiteejhfffteeitdegjeeihedthfejgfetnecuvehluhhs
-    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghouggvsehkhhgruh
-    hgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:I0AwZZqD6_Rg94z_ZOa7DDgtFyaCNUrCS4_2yYZJCH_yvxfQQduflA>
-    <xmx:I0AwZeoov_omIfvNF9ALNHnMbaOetEuRMWx8DZD472xDvXrlDtWkZg>
-    <xmx:I0AwZfRDxaYIV4K6B1FJxA4cKktrHzQfXOjZF_YmeCy-4rZvdBbuyA>
-    <xmx:I0AwZV2pqglhPwyyLLPP_Z5AtRowB7WofRFanAnZJvVVcKZziCrmXA>
-Feedback-ID: i2671468f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Oct 2023 16:29:21 -0400 (EDT)
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	ps@pks.im,
-	stolee@gmail.com
-Subject: [PATCH v1 4/4] maintenance: use XDG config if it exists
-Date: Wed, 18 Oct 2023 22:28:41 +0200
-Message-ID: <1e2376a4b998b5b182cc5f72afc7282134bcdf2c.1697660181.git.code@khaugsbakk.name>
-X-Mailer: git-send-email 2.42.0.2.g879ad04204
-In-Reply-To: <cover.1697660181.git.code@khaugsbakk.name>
-References: <cover.1697660181.git.code@khaugsbakk.name>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="pJia8LIs"
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F36A1FA
+	for <git@vger.kernel.org>; Wed, 18 Oct 2023 14:18:29 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2309C1B1F6F;
+	Wed, 18 Oct 2023 17:18:29 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=DoEA27u5RYYRwmyXvGVvQm7WFKuEQtScvZubsm
+	7qNc8=; b=pJia8LIsfhe2vP3W+wvbYSdoLA2Z4zEuwQSRk3bFvcFWDkdxiXJ4xN
+	AJuT8jsLSb6J5vkEPznyfDGn/foGJTK7QpF1k+dwcgDD6vCD6zvowqanyscJZHRv
+	zBTlfcbFp5X7qGA7DCjm4/cGmgFXkwkOU8zQhMQ3IKWajulReVQvU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 19A0B1B1F6E;
+	Wed, 18 Oct 2023 17:18:29 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7452A1B1F6D;
+	Wed, 18 Oct 2023 17:18:28 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH 04/11] t: convert tests to not write references via the
+ filesystem
+In-Reply-To: <c79431c0bf117d756e1d584f4c9415888d9ff9eb.1697607222.git.ps@pks.im>
+	(Patrick Steinhardt's message of "Wed, 18 Oct 2023 07:35:20 +0200")
+References: <cover.1697607222.git.ps@pks.im>
+	<c79431c0bf117d756e1d584f4c9415888d9ff9eb.1697607222.git.ps@pks.im>
+Date: Wed, 18 Oct 2023 14:18:27 -0700
+Message-ID: <xmqqfs27r5ng.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ E1A4562E-6DFB-11EE-8D1B-25B3960A682E-77302942!pb-smtp2.pobox.com
 
+Patrick Steinhardt <ps@pks.im> writes:
 
-`git maintenance register` registers the repository in the user's global
-config. `$XDG_CONFIG_HOME/git/config` is supposed to be used if
-`~/.gitconfig` does not exist. However, this command creates a
-`~/.gitconfig` file and writes to that one even though the XDG variant
-exists.
+> @@ -434,7 +432,7 @@ test_expect_success 'Query "main@{2005-05-28}" (past end of history)' '
+>  	test_i18ngrep -F "warning: log for ref $m unexpectedly ended on $ld" e
+>  '
+>  
+> -rm -f .git/$m .git/logs/$m expect
+> +git update-ref -d $m
 
-This used to work correctly until 50a044f1e4 (gc: replace config
-subprocesses with API calls, 2022-09-27), when the command started calling
-the config API instead of git-config(1).
+We are not clearing "expect" file.  I do not know if it matters
+here, but I am only recording what I noticed.
 
-Also change `unregister` accordingly.
+> diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+> index 10a539158c4..5cce24f1006 100755
+> --- a/t/t1450-fsck.sh
+> +++ b/t/t1450-fsck.sh
+> @@ -115,15 +115,16 @@ test_expect_success 'zlib corrupt loose object output ' '
+>  '
+>  
+>  test_expect_success 'branch pointing to non-commit' '
+> -	git rev-parse HEAD^{tree} >.git/refs/heads/invalid &&
+> +	tree_oid=$(git rev-parse --verify HEAD^{tree}) &&
+> +	test-tool ref-store main update-ref msg refs/heads/invalid $tree_oid $ZERO_OID REF_SKIP_OID_VERIFICATION &&
 
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
- builtin/gc.c           | 23 +++++------------------
- t/t7900-maintenance.sh | 21 +++++++++++++++++++++
- 2 files changed, 26 insertions(+), 18 deletions(-)
+I have mixed feelings on this.
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 17fc031f63a..7b780f2ab38 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -1526,19 +1526,12 @@ static int maintenance_register(int argc, const char **argv, const char *prefix)
- 
- 	if (!found) {
- 		int rc;
--		char *user_config = NULL, *xdg_config = NULL;
- 
--		if (!config_file) {
--			git_global_config_paths(&user_config, &xdg_config);
--			config_file = user_config;
--			if (!user_config)
--				die(_("$HOME not set"));
--		}
-+		if (!config_file)
-+			config_file = git_global_config();
- 		rc = git_config_set_multivar_in_file_gently(
- 			config_file, "maintenance.repo", maintpath,
- 			CONFIG_REGEX_NONE, 0);
--		free(user_config);
--		free(xdg_config);
- 
- 		if (rc)
- 			die(_("unable to add '%s' value of '%s'"),
-@@ -1595,18 +1588,12 @@ static int maintenance_unregister(int argc, const char **argv, const char *prefi
- 
- 	if (found) {
- 		int rc;
--		char *user_config = NULL, *xdg_config = NULL;
--		if (!config_file) {
--			git_global_config_paths(&user_config, &xdg_config);
--			config_file = user_config;
--			if (!user_config)
--				die(_("$HOME not set"));
--		}
-+
-+		if (!config_file)
-+			config_file = git_global_config();
- 		rc = git_config_set_multivar_in_file_gently(
- 			config_file, key, NULL, maintpath,
- 			CONFIG_FLAGS_MULTI_REPLACE | CONFIG_FLAGS_FIXED_VALUE);
--		free(user_config);
--		free(xdg_config);
- 
- 		if (rc &&
- 		    (!force || rc == CONFIG_NOTHING_SET))
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 487e326b3fa..a11e6c61520 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -67,6 +67,27 @@ test_expect_success 'maintenance.auto config option' '
- 	test_subcommand ! git maintenance run --auto --quiet  <false
- '
- 
-+test_expect_success 'register uses XDG_CONFIG_HOME config if it exists' '
-+	XDG_CONFIG_HOME=.config &&
-+	test_when_finished rm -r "$XDG_CONFIG_HOME"/git/config &&
-+	export "XDG_CONFIG_HOME" &&
-+	mkdir -p "$XDG_CONFIG_HOME"/git &&
-+	touch "$XDG_CONFIG_HOME"/git/config &&
-+	git maintenance register &&
-+	git config --file="$XDG_CONFIG_HOME"/git/config --get maintenance.repo >actual &&
-+	pwd >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'register does not need XDG_CONFIG_HOME config to exist' '
-+	test_when_finished git maintenance unregister &&
-+	test_path_is_missing "$XDG_CONFIG_HOME"/git/config &&
-+	git maintenance register &&
-+	git config --global --get maintenance.repo >actual &&
-+	pwd >expect &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'maintenance.<task>.enabled' '
- 	git config maintenance.gc.enabled false &&
- 	git config maintenance.commit-graph.enabled true &&
--- 
-2.42.0.2.g879ad04204
+In olden days, plumbing commands tended to allow to pass anything
+the user told them to use, but in more recent versions of Git, we,
+probably by mistake, managed to butcher some of the plumbing
+commands to make them unable to deliberately "break" repositories,
+one victim being "update-ref", i.e.
+
+    $ git update-ref refs/heads/invalid HEAD^{tree}
+
+is rejected these days (I just checked with v1.3.0 and it allows me
+to do this), and that is one of the reasons why we manually broke
+the repository in these tests.  We need to have a warning message in
+comments near the implementation of "ref-store update-ref" that says
+never ever attempt to share code with the production version of
+update-ref---otherwise this (or the "safety" given to the plumbing
+command, possibly by mistake) will be broken, depending on which
+direction such a sharing goes.  On the other hand, forcing us to
+keep two separate implementations, one deliberately loose to allow
+us corrupt repositories, the other for production and actively used,
+would mean the former one that is only used for validation would risk
+bitrotting.
+
+>  	test_when_finished "git update-ref -d refs/heads/invalid" &&
+
+Not a problem this patch introduces, but I think it is a better
+discipline to have when_finished clean-up routine prepared before we
+do actual damage, i.e. if I were writing this test today from scratch,
+I would expect it to be before "git rev-parse >.git/refs/heads/invalid"
+is done.
+
+>  	test_must_fail git fsck 2>out &&
+>  	test_i18ngrep "not a commit" out
+>  '
+
+A #leftoverbit that is not relevant to the topic; we should clean
+these test_i18ngrep and replace them with a plain "grep".
+
+>  test_expect_success 'HEAD link pointing at a funny object' '
+> -	test_when_finished "mv .git/SAVED_HEAD .git/HEAD" &&
+> -	mv .git/HEAD .git/SAVED_HEAD &&
+> +	saved_head=$(git rev-parse --verify HEAD) &&
+> +	test_when_finished "git update-ref HEAD ${saved_head}" &&
+>  	echo $ZERO_OID >.git/HEAD &&
+
+Are you sure .git/HEAD when this test is entered is a detached HEAD?
+The title of the test says "HEAD link", and I take it to mean HEAD
+is a symlink, and we save it away, while we create a loose ref that
+points at 0{40} in a detached HEAD state.  Actually, the original
+would also work if HEAD is detached on entry.  In either case,
+moving SAVED_HEAD back to HEAD would restore the original state.
+
+But the updated one only works if HEAD upon entry is already
+detached.  Is this intended?
+
+> @@ -131,8 +132,8 @@ test_expect_success 'HEAD link pointing at a funny object' '
+>  '
+>  
+>  test_expect_success 'HEAD link pointing at a funny place' '
+> -	test_when_finished "mv .git/SAVED_HEAD .git/HEAD" &&
+> -	mv .git/HEAD .git/SAVED_HEAD &&
+> +	saved_head=$(git rev-parse --verify HEAD) &&
+> +	test_when_finished "git update-ref --no-deref HEAD ${saved_head}" &&
+
+Likewise.  Use of "update-ref" in the previous one vs "update-ref
+--no-deref" in this one to recover from the damage the tests make
+makes me feel that we may be assuming too much.
+
+>  	echo "ref: refs/funny/place" >.git/HEAD &&
+
+Even though "git symbolic-ref" refuses to point HEAD outside refs/,
+as plumbing command should, it allows it to point it outside refs/heads/.
+so this line should probably become
+
+	git symbolic-ref HEAD refs/funny/place
+
+in the same spirit as the rest of the series.
+
+> @@ -391,7 +393,7 @@ test_expect_success 'tag pointing to nonexistent' '
+>  
+>  	tag=$(git hash-object -t tag -w --stdin <invalid-tag) &&
+>  	test_when_finished "remove_object $tag" &&
+> -	echo $tag >.git/refs/tags/invalid &&
+> +	git update-ref refs/tags/invalid $tag &&
+
+Good (not just this one, but similar ones throughout this patch).
+
 
