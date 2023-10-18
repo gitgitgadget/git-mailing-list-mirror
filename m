@@ -1,56 +1,56 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5579D3C685
-	for <git@vger.kernel.org>; Wed, 18 Oct 2023 17:08:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79AC43D396
+	for <git@vger.kernel.org>; Wed, 18 Oct 2023 17:09:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="daHq/dsC"
-Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A31C6386D
-	for <git@vger.kernel.org>; Wed, 18 Oct 2023 10:08:21 -0700 (PDT)
-Received: by mail-qk1-x732.google.com with SMTP id af79cd13be357-777719639adso139233785a.3
-        for <git@vger.kernel.org>; Wed, 18 Oct 2023 10:08:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="g1O031Wa"
+Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AE1635B5
+	for <git@vger.kernel.org>; Wed, 18 Oct 2023 10:08:17 -0700 (PDT)
+Received: by mail-qk1-x72d.google.com with SMTP id af79cd13be357-7781bc3783fso139538885a.1
+        for <git@vger.kernel.org>; Wed, 18 Oct 2023 10:08:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1697648899; x=1698253699; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1697648890; x=1698253690; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=WYc5Y9iYFqj6E4GnaqAXiGbXRhIZ8LpcV4snUepGbzg=;
-        b=daHq/dsCjIoFVuq7tbSUuChb+9knxW2/B7iUWuLlW5AJwb16oHd4k3s3QQ/1pXaWZM
-         AhItsYhEK5sNy7XR4iPXIetYLEa/IjJcioaziqiTXPycD6SBNhCnG1sL/PmZV+72DEse
-         DxTNjdYLBUwKO//k+igz1PLtVROJa8XcLyT6cwx52A1e1mVbJh96Lj2rRMcj70tXIZdp
-         vQQjzK9bQPpc0/q81tddxbU6m4aTwXktSWdItjZqoW+BrZr6/RTCZNQmeOgHHfhWGfnH
-         sXSG+qP6lDc030qFHP58ms3zj9Y4L7wH1N3FSDYIBrYhrSR2Xa1Y6UaIBfD0OPXBKS/d
-         kD2Q==
+        bh=y7ZwlZkHGjvPzOo7/TXew226gbAp53JBC9TkQu6Y0uA=;
+        b=g1O031WaJaih77acUXbC/s3q6PJs2p+J72phsIracXhMN5zvznzbECPY8XcFMMrXXM
+         V9si9e4G8NFB4Z399PngtLXOoq122fLjR+BHyFNV5o57YXPL/z7WZMhQdniPdH0fvSwV
+         h7NT2xOg3+d4YB733CtnTeXuQCbLrHMAD3L8HQvLfG8CTBAERtXc+xk8W5OwRTeXuf/l
+         VGxnnQJPCDt/YIcfXrzaqeqQXY3Zgjc+myH8gx5LDHopPuRnJ0i49ciIy0PCwPulXokg
+         gVn+JDv4gUClVRX8xq83eWx35ArQh+xwTkfHTVHvYc1fG88GzoQjzEApXyqGbzrJ050s
+         kofQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697648899; x=1698253699;
+        d=1e100.net; s=20230601; t=1697648890; x=1698253690;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WYc5Y9iYFqj6E4GnaqAXiGbXRhIZ8LpcV4snUepGbzg=;
-        b=bfUkFLjmnHZlkuh1LfvVts97Rw699e03yN8ILqiNE47cl2DfUu+ZVss88IYsJGLvvi
-         To276b4a4CFx8/okKm77VXwDSMFDKVaGasu8mTNP0pxH77ianpd8EiT+Eh6B7o/ratiH
-         n/W/lEOAA5sMB8qsWOF9phSmy6LHZu3ew2BEVaA8D3hXQmsX6HW51/tS7I+Z/cbGTOsc
-         k7ylFcZbLTSrxr2lzlXYad2+mJZ5xWPRgR+8mXYnycqffeY+m7+RsTSxbw3zMCjDSXXQ
-         0n16nTAJgCWpYlI7PJmCQFHMCIBWQEWq/RBcuEcgjC/SqwwXkI8qXUQuQHQ+42hSLzfk
-         +YBQ==
-X-Gm-Message-State: AOJu0YwIgKNYGAfgSaoRtkDHYJ2e8OCf+2rG+cz2t3Zzr2t3ABayuTId
-	b5NkEqdHzpFew8bj+zj2ruHJPg/gfWlNus95KxPYFw==
-X-Google-Smtp-Source: AGHT+IFx6J6h7115bdXERiZMa7dXuyKxB1zdMYD+SI2LWCUm+V2i+5b6Mgo4uEw7fmbnA6sQTrPadg==
-X-Received: by 2002:a05:620a:25d2:b0:774:3497:a7a3 with SMTP id y18-20020a05620a25d200b007743497a7a3mr5897601qko.17.1697648899039;
-        Wed, 18 Oct 2023 10:08:19 -0700 (PDT)
+        bh=y7ZwlZkHGjvPzOo7/TXew226gbAp53JBC9TkQu6Y0uA=;
+        b=MTt0CsBx7Duf72ejGcob6IljD8fRrXQNPVlISS8i5ER5CEWyg+9kiWylPJVgXN62xM
+         Vjq48kvSJ/IQTIIYXTg/945Jr4px1VmFcyfQq1LVz/bMu9YDS7x0R5meErT1k48+YNTi
+         Hz0MYf4Hb82av03Sv0c0DT55XA0k3MrDgFNiipKgwJhvLMbIBUx3RCZE0hGh9Lato7E+
+         Eif2q5ymvMy/fkcGfKnz0t6rqCAkXSXlILN5a50fqWZt1k1r28a74VMUJw8L6vYtKK1Y
+         zFmoiAWZ6QuPwFK/LI+e0cwD8d91XELU/DgqYz/VTTfqvbWbgExxtbOx4Bq5DQpm1B6L
+         IA3g==
+X-Gm-Message-State: AOJu0Yw1hAbRdNG9LmXcxMqr71LzrSfae8S5Webd5F+PJ47OKVVnE7f4
+	jga10winaBhRY1fMKSOAsPzq2nfgcnzalIvWePMY/A==
+X-Google-Smtp-Source: AGHT+IHkIRVSsGt7RETl2PQ91C6hQzkyfLPrZPktxTF+DLvrHNJpjsM1uqGIyKG6TYpp6/EiGSAgUw==
+X-Received: by 2002:ad4:5b8f:0:b0:668:da55:6c17 with SMTP id 15-20020ad45b8f000000b00668da556c17mr6909231qvp.49.1697648889977;
+        Wed, 18 Oct 2023 10:08:09 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id s27-20020a05620a16bb00b007756f60bcacsm96178qkj.79.2023.10.18.10.08.18
+        by smtp.gmail.com with ESMTPSA id w11-20020a0562140b2b00b0066cf09f5ba9sm92912qvj.131.2023.10.18.10.08.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Oct 2023 10:08:18 -0700 (PDT)
-Date: Wed, 18 Oct 2023 13:08:17 -0400
+        Wed, 18 Oct 2023 10:08:09 -0700 (PDT)
+Date: Wed, 18 Oct 2023 13:08:08 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Elijah Newren <newren@gmail.com>,
 	"Eric W. Biederman" <ebiederm@gmail.com>, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v3 10/10] builtin/merge-tree.c: implement support for
- `--write-pack`
-Message-ID: <ae70508037265ed220d1d33543d61c5d9f0721e0.1697648864.git.me@ttaylorr.com>
+Subject: [PATCH v3 07/10] bulk-checkin: generify `stream_blob_to_pack()` for
+ arbitrary types
+Message-ID: <04ec74e3574b8e0cfc503c46fa3481ef196348ac.1697648864.git.me@ttaylorr.com>
 References: <cover.1696629697.git.me@ttaylorr.com>
  <cover.1697648864.git.me@ttaylorr.com>
 Precedence: bulk
@@ -68,314 +68,60 @@ X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 	lindbergh.monkeyblade.net
 
-When using merge-tree often within a repository[^1], it is possible to
-generate a relatively large number of loose objects, which can result in
-degraded performance, and inode exhaustion in extreme cases.
+The existing `stream_blob_to_pack()` function is named based on the fact
+that it knows only how to stream blobs into a bulk-checkin pack.
 
-Building on the functionality introduced in previous commits, the
-bulk-checkin machinery now has support to write arbitrary blob and tree
-objects which are small enough to be held in-core. We can use this to
-write any blob/tree objects generated by ORT into a separate pack
-instead of writing them out individually as loose.
-
-This functionality is gated behind a new `--write-pack` option to
-`merge-tree` that works with the (non-deprecated) `--write-tree` mode.
-
-The implementation is relatively straightforward. There are two spots
-within the ORT mechanism where we call `write_object_file()`, one for
-content differences within blobs, and another to assemble any new trees
-necessary to construct the merge. In each of those locations,
-conditionally replace calls to `write_object_file()` with
-`index_blob_bulk_checkin_incore()` or `index_tree_bulk_checkin_incore()`
-depending on which kind of object we are writing.
-
-The only remaining task is to begin and end the transaction necessary to
-initialize the bulk-checkin machinery, and move any new pack(s) it
-created into the main object store.
-
-[^1]: Such is the case at GitHub, where we run presumptive "test merges"
-  on open pull requests to see whether or not we can light up the merge
-  button green depending on whether or not the presumptive merge was
-  conflicted.
-
-  This is done in response to a number of user-initiated events,
-  including viewing an open pull request whose last test merge is stale
-  with respect to the current base and tip of the pull request. As a
-  result, merge-tree can be run very frequently on large, active
-  repositories.
+But there is no longer anything in this function which prevents us from
+writing objects of arbitrary types to the bulk-checkin pack. Prepare to
+write OBJ_TREEs by removing this assumption, adding an `enum
+object_type` parameter to this function's argument list, and renaming it
+to `stream_obj_to_pack()` accordingly.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Documentation/git-merge-tree.txt |  4 ++
- builtin/merge-tree.c             |  5 ++
- merge-ort.c                      | 42 +++++++++++----
- merge-recursive.h                |  1 +
- t/t4301-merge-tree-write-tree.sh | 93 ++++++++++++++++++++++++++++++++
- 5 files changed, 136 insertions(+), 9 deletions(-)
+ bulk-checkin.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/Documentation/git-merge-tree.txt b/Documentation/git-merge-tree.txt
-index ffc4fbf7e8..9d37609ef1 100644
---- a/Documentation/git-merge-tree.txt
-+++ b/Documentation/git-merge-tree.txt
-@@ -69,6 +69,10 @@ OPTIONS
- 	specify a merge-base for the merge, and specifying multiple bases is
- 	currently not supported. This option is incompatible with `--stdin`.
+diff --git a/bulk-checkin.c b/bulk-checkin.c
+index 133e02ce36..f0115efb2e 100644
+--- a/bulk-checkin.c
++++ b/bulk-checkin.c
+@@ -204,10 +204,10 @@ static ssize_t bulk_checkin_source_read(struct bulk_checkin_source *source,
+  * status before calling us just in case we ask it to call us again
+  * with a new pack.
+  */
+-static int stream_blob_to_pack(struct bulk_checkin_packfile *state,
+-			       git_hash_ctx *ctx, off_t *already_hashed_to,
+-			       struct bulk_checkin_source *source,
+-			       unsigned flags)
++static int stream_obj_to_pack(struct bulk_checkin_packfile *state,
++			      git_hash_ctx *ctx, off_t *already_hashed_to,
++			      struct bulk_checkin_source *source,
++			      enum object_type type, unsigned flags)
+ {
+ 	git_zstream s;
+ 	unsigned char ibuf[16384];
+@@ -220,8 +220,7 @@ static int stream_blob_to_pack(struct bulk_checkin_packfile *state,
  
-+--write-pack::
-+	Write any new objects into a separate packfile instead of as
-+	individual loose objects.
-+
- [[OUTPUT]]
- OUTPUT
- ------
-diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-index 0de42aecf4..672ebd4c54 100644
---- a/builtin/merge-tree.c
-+++ b/builtin/merge-tree.c
-@@ -18,6 +18,7 @@
- #include "quote.h"
- #include "tree.h"
- #include "config.h"
-+#include "bulk-checkin.h"
+ 	git_deflate_init(&s, pack_compression_level);
  
- static int line_termination = '\n';
+-	hdrlen = encode_in_pack_object_header(obuf, sizeof(obuf), OBJ_BLOB,
+-					      size);
++	hdrlen = encode_in_pack_object_header(obuf, sizeof(obuf), type, size);
+ 	s.next_out = obuf + hdrlen;
+ 	s.avail_out = sizeof(obuf) - hdrlen;
  
-@@ -414,6 +415,7 @@ struct merge_tree_options {
- 	int show_messages;
- 	int name_only;
- 	int use_stdin;
-+	int write_pack;
- };
+@@ -402,8 +401,8 @@ static int deflate_blob_to_pack(struct bulk_checkin_packfile *state,
  
- static int real_merge(struct merge_tree_options *o,
-@@ -440,6 +442,7 @@ static int real_merge(struct merge_tree_options *o,
- 	init_merge_options(&opt, the_repository);
- 
- 	opt.show_rename_progress = 0;
-+	opt.write_pack = o->write_pack;
- 
- 	opt.branch1 = branch1;
- 	opt.branch2 = branch2;
-@@ -548,6 +551,8 @@ int cmd_merge_tree(int argc, const char **argv, const char *prefix)
- 			   &merge_base,
- 			   N_("commit"),
- 			   N_("specify a merge-base for the merge")),
-+		OPT_BOOL(0, "write-pack", &o.write_pack,
-+			 N_("write new objects to a pack instead of as loose")),
- 		OPT_END()
- 	};
- 
-diff --git a/merge-ort.c b/merge-ort.c
-index 7857ce9fbd..e198d2bc2b 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -48,6 +48,7 @@
- #include "tree.h"
- #include "unpack-trees.h"
- #include "xdiff-interface.h"
-+#include "bulk-checkin.h"
- 
- /*
-  * We have many arrays of size 3.  Whenever we have such an array, the
-@@ -2107,10 +2108,19 @@ static int handle_content_merge(struct merge_options *opt,
- 		if ((merge_status < 0) || !result_buf.ptr)
- 			ret = error(_("failed to execute internal merge"));
- 
--		if (!ret &&
--		    write_object_file(result_buf.ptr, result_buf.size,
--				      OBJ_BLOB, &result->oid))
--			ret = error(_("unable to add %s to database"), path);
-+		if (!ret) {
-+			ret = opt->write_pack
-+				? index_blob_bulk_checkin_incore(&result->oid,
-+								 result_buf.ptr,
-+								 result_buf.size,
-+								 path, 1)
-+				: write_object_file(result_buf.ptr,
-+						    result_buf.size,
-+						    OBJ_BLOB, &result->oid);
-+			if (ret)
-+				ret = error(_("unable to add %s to database"),
-+					    path);
-+		}
- 
- 		free(result_buf.ptr);
- 		if (ret)
-@@ -3596,7 +3606,8 @@ static int tree_entry_order(const void *a_, const void *b_)
- 				 b->string, strlen(b->string), bmi->result.mode);
- }
- 
--static int write_tree(struct object_id *result_oid,
-+static int write_tree(struct merge_options *opt,
-+		      struct object_id *result_oid,
- 		      struct string_list *versions,
- 		      unsigned int offset,
- 		      size_t hash_size)
-@@ -3630,8 +3641,14 @@ static int write_tree(struct object_id *result_oid,
- 	}
- 
- 	/* Write this object file out, and record in result_oid */
--	if (write_object_file(buf.buf, buf.len, OBJ_TREE, result_oid))
-+	ret = opt->write_pack
-+		? index_tree_bulk_checkin_incore(result_oid,
-+						 buf.buf, buf.len, "", 1)
-+		: write_object_file(buf.buf, buf.len, OBJ_TREE, result_oid);
-+
-+	if (ret)
- 		ret = -1;
-+
- 	strbuf_release(&buf);
- 	return ret;
- }
-@@ -3796,8 +3813,8 @@ static int write_completed_directory(struct merge_options *opt,
- 		 */
- 		dir_info->is_null = 0;
- 		dir_info->result.mode = S_IFDIR;
--		if (write_tree(&dir_info->result.oid, &info->versions, offset,
--			       opt->repo->hash_algo->rawsz) < 0)
-+		if (write_tree(opt, &dir_info->result.oid, &info->versions,
-+			       offset, opt->repo->hash_algo->rawsz) < 0)
- 			ret = -1;
- 	}
- 
-@@ -4331,9 +4348,13 @@ static int process_entries(struct merge_options *opt,
- 		fflush(stdout);
- 		BUG("dir_metadata accounting completely off; shouldn't happen");
- 	}
--	if (write_tree(result_oid, &dir_metadata.versions, 0,
-+	if (write_tree(opt, result_oid, &dir_metadata.versions, 0,
- 		       opt->repo->hash_algo->rawsz) < 0)
- 		ret = -1;
-+
-+	if (opt->write_pack)
-+		end_odb_transaction();
-+
- cleanup:
- 	string_list_clear(&plist, 0);
- 	string_list_clear(&dir_metadata.versions, 0);
-@@ -4877,6 +4898,9 @@ static void merge_start(struct merge_options *opt, struct merge_result *result)
- 	 */
- 	strmap_init(&opt->priv->conflicts);
- 
-+	if (opt->write_pack)
-+		begin_odb_transaction();
-+
- 	trace2_region_leave("merge", "allocate/init", opt->repo);
- }
- 
-diff --git a/merge-recursive.h b/merge-recursive.h
-index b88000e3c2..156e160876 100644
---- a/merge-recursive.h
-+++ b/merge-recursive.h
-@@ -48,6 +48,7 @@ struct merge_options {
- 	unsigned renormalize : 1;
- 	unsigned record_conflict_msgs_as_headers : 1;
- 	const char *msg_header_prefix;
-+	unsigned write_pack : 1;
- 
- 	/* internal fields used by the implementation */
- 	struct merge_options_internal *priv;
-diff --git a/t/t4301-merge-tree-write-tree.sh b/t/t4301-merge-tree-write-tree.sh
-index 250f721795..2d81ff4de5 100755
---- a/t/t4301-merge-tree-write-tree.sh
-+++ b/t/t4301-merge-tree-write-tree.sh
-@@ -922,4 +922,97 @@ test_expect_success 'check the input format when --stdin is passed' '
- 	test_cmp expect actual
- '
- 
-+packdir=".git/objects/pack"
-+
-+test_expect_success 'merge-tree can pack its result with --write-pack' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+
-+	# base has lines [3, 4, 5]
-+	#   - side adds to the beginning, resulting in [1, 2, 3, 4, 5]
-+	#   - other adds to the end, resulting in [3, 4, 5, 6, 7]
-+	#
-+	# merging the two should result in a new blob object containing
-+	# [1, 2, 3, 4, 5, 6, 7], along with a new tree.
-+	test_commit -C repo base file "$(test_seq 3 5)" &&
-+	git -C repo branch -M main &&
-+	git -C repo checkout -b side main &&
-+	test_commit -C repo side file "$(test_seq 1 5)" &&
-+	git -C repo checkout -b other main &&
-+	test_commit -C repo other file "$(test_seq 3 7)" &&
-+
-+	find repo/$packdir -type f -name "pack-*.idx" >packs.before &&
-+	tree="$(git -C repo merge-tree --write-pack \
-+		refs/tags/side refs/tags/other)" &&
-+	blob="$(git -C repo rev-parse $tree:file)" &&
-+	find repo/$packdir -type f -name "pack-*.idx" >packs.after &&
-+
-+	test_must_be_empty packs.before &&
-+	test_line_count = 1 packs.after &&
-+
-+	git show-index <$(cat packs.after) >objects &&
-+	test_line_count = 2 objects &&
-+	grep "^[1-9][0-9]* $tree" objects &&
-+	grep "^[1-9][0-9]* $blob" objects
-+'
-+
-+test_expect_success 'merge-tree can write multiple packs with --write-pack' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+
-+		git config pack.packSizeLimit 512 &&
-+
-+		test_seq 512 >f &&
-+
-+		# "f" contains roughly ~2,000 bytes.
-+		#
-+		# Each side ("foo" and "bar") adds a small amount of data at the
-+		# beginning and end of "base", respectively.
-+		git add f &&
-+		test_tick &&
-+		git commit -m base &&
-+		git branch -M main &&
-+
-+		git checkout -b foo main &&
-+		{
-+			echo foo && cat f
-+		} >f.tmp &&
-+		mv f.tmp f &&
-+		git add f &&
-+		test_tick &&
-+		git commit -m foo &&
-+
-+		git checkout -b bar main &&
-+		echo bar >>f &&
-+		git add f &&
-+		test_tick &&
-+		git commit -m bar &&
-+
-+		find $packdir -type f -name "pack-*.idx" >packs.before &&
-+		# Merging either side should result in a new object which is
-+		# larger than 1M, thus the result should be split into two
-+		# separate packs.
-+		tree="$(git merge-tree --write-pack \
-+			refs/heads/foo refs/heads/bar)" &&
-+		blob="$(git rev-parse $tree:f)" &&
-+		find $packdir -type f -name "pack-*.idx" >packs.after &&
-+
-+		test_must_be_empty packs.before &&
-+		test_line_count = 2 packs.after &&
-+		for idx in $(cat packs.after)
-+		do
-+			git show-index <$idx || return 1
-+		done >objects &&
-+
-+		# The resulting set of packs should contain one copy of both
-+		# objects, each in a separate pack.
-+		test_line_count = 2 objects &&
-+		grep "^[1-9][0-9]* $tree" objects &&
-+		grep "^[1-9][0-9]* $blob" objects
-+
-+	)
-+'
-+
- test_done
+ 	while (1) {
+ 		prepare_checkpoint(state, &checkpoint, idx, flags);
+-		if (!stream_blob_to_pack(state, &ctx, &already_hashed_to,
+-					 &source, flags))
++		if (!stream_obj_to_pack(state, &ctx, &already_hashed_to,
++					&source, OBJ_BLOB, flags))
+ 			break;
+ 		truncate_checkpoint(state, &checkpoint, idx);
+ 		if (bulk_checkin_source_seek_to(&source, seekback) == (off_t)-1)
 -- 
 2.42.0.408.g97fac66ae4
+
