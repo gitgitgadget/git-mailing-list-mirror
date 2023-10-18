@@ -1,70 +1,70 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B43FD3DFF6
-	for <git@vger.kernel.org>; Wed, 18 Oct 2023 20:29:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA6A3E007
+	for <git@vger.kernel.org>; Wed, 18 Oct 2023 20:29:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="OzmRJK1F";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vIWQbOHR"
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="nsTxC3sn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="olgxaf6A"
 Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3ADC21BF
-	for <git@vger.kernel.org>; Wed, 18 Oct 2023 13:29:20 -0700 (PDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.nyi.internal (Postfix) with ESMTP id 3DF715C01A0;
-	Wed, 18 Oct 2023 16:29:20 -0400 (EDT)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3B4D10DD
+	for <git@vger.kernel.org>; Wed, 18 Oct 2023 13:29:22 -0700 (PDT)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id 858E05C0267;
+	Wed, 18 Oct 2023 16:29:21 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Wed, 18 Oct 2023 16:29:20 -0400
+  by compute5.internal (MEProxy); Wed, 18 Oct 2023 16:29:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:date:date:from
-	:from:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:sender:subject:subject:to:to; s=fm2; t=1697660960; x=
-	1697747360; bh=IVZe7LcBH7kIXFvwUiHdiyKp3CvN+hIRwcElAV/sG3k=; b=O
-	zmRJK1FgGzMtVgbSnh7LC1ek7A0gd09sZwrmZTCj85J4OrJQVGE/YKtB6bfswNCe
-	7rifAPlV7rEwMwGh3XF6qcPLziGlxDyWlpqZhZaUoYXI3ZEpYUM6gRDi0DZHqDdg
-	3YDTaBDuihQD5WeTKH31ONQcRf5oaJQs2zLo+luL32FvvEPUpV0KN5xK56UdSisz
-	0RjlBYhYhgr+lkMxKStpdKHLjC726f0yuP7Cxb97AzwtCq37qPJR9VBY6AguOX2x
-	UabbXNcmr8sLv4lgh5cuIv2sA7yHVb4lAG0C/0RNfWyXacHhYW6G0bDF9ViT0F+Z
-	TiEo/WW7XPb5nkRMDAprQ==
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:sender:subject:subject:to:to;
+	 s=fm2; t=1697660961; x=1697747361; bh=OKuqjneD8+v87x9+Y+Iv3A4XU
+	462/xfToiSeUDirN1k=; b=nsTxC3snRlaK1rzDgKVFRyZwDQj7jM08e5RdibRGc
+	z0L/Kry5bBeMqEm6gHvonfxGNE3RUgYhKU1E1GpqGRRo+yu7cg8fEyL/kaN4fcAu
+	Vx3XxMb0BgMTn64/5mzMgcEQiay3FrOZrlbbj5ngsZzZe9yRLuzWjS48wA3W9yAZ
+	INcvzBPvr7WaO/DdeCLxsGspPDbN+CVoyxMuyPiW+Gj3LJ8Ty9AdVxQ4c9GqSuE8
+	wMyp3D3jcVyzxoDQFl0wLd4TSoeo72F98l30sVBGF5loA1KfruiJjalQsXrSwK0D
+	l5FGRuxQj+y4/cLfhkwxhzfDVyz/jlDGAWyKUnJQMAcqQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1697660960; x=
-	1697747360; bh=IVZe7LcBH7kIXFvwUiHdiyKp3CvN+hIRwcElAV/sG3k=; b=v
-	IWQbOHRLlpb9Tbyzd1l6C1mofzd95XvcpxMLgo4c3wD0eqJpRpzyWTXJwuLL0MPt
-	Wj8VdbFgXCkDV7Qgj5IM7PTt+WSEvxD96tYD4qBmkxOf4MomE4Hw5NqF60kfVPaI
-	B6teDniO9Y0w8Mv+/nVJoQGIqJx0YLsOpGk3vHAKODn7kgMnCuYlOYkiL5oX15NM
-	R19Jezko2Lt/qTAKCBOlIDmuhxxbGmRhxkzVUr5hSf7M+oL+W0EhMTiHkj7rE12y
-	+xIOqmGFZwFOFvaHgRyad0XeCoKYWZ8wYd+gQ7P0A6KMKoWzi/PNI0GAbCVva04a
-	yVXI3Zfm5EUavNyrDXDlg==
-X-ME-Sender: <xms:IEAwZbVc1oYdmPeX3SnOJmyLKxRBCGUpCONGAr82Kc0iLRrTUEREKAI>
-    <xme:IEAwZTkzYrUByeoA_uktiMdKNTKh4RJtP9ENTnxW5AijX0eYxBtQdeHnVQ_dBzdki
-    JCRbd2cEj_dknwejw>
-X-ME-Received: <xmr:IEAwZXZdwRKKUHJTNt-eTiBPuAOG3mWnphaZ7mB9vz8eh-SqzRxBvPVC0hdAGjkN95C_zvPdzuuxSVi4QVTSpz9BM-LCtS0QRT81fS6IjEbAvdqpOuTzzefr_w>
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:sender:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1697660961; x=1697747361; bh=OKuqjneD8+v87x9+Y+Iv3A4XU462/xfToiS
+	eUDirN1k=; b=olgxaf6AygB46blulGacNn/5Fg+Q/p2Numki6z4KTH5PlJiciep
+	7+UULQXOSt3qnakwR/OGsvsko+oAziYfPP8Q0SYOviXgBPsZwgsvY1fBphW+MXbB
+	jMXf5BY0fJxBbk9Dxu84x1AXYCdeXw7js/sSw36LibOt7moR0XCujiFYesz2KaR/
+	aIk1WvRsGnG30x9I/jKAL5xV/RHcKrG2OF6ZCfBijjJeURVIvPBvhPMTRFHoHIiX
+	oqJv/CC/rMsRhnKpIaaAxD5IDBZH8SqzWWrRT7P4sr2lMWGPrUo3+pQVqXpIIEXK
+	5lMUnBOqZ9Q/JXHCD5icfw2hgv3yaCR8gyQ==
+X-ME-Sender: <xms:IUAwZUF8HprNBGvwB4h42GzfYBF0jGTaLm8bS6cdhvns7a8NyvyGUu8>
+    <xme:IUAwZdVpfzRPPE3v3orQakWRedksv7J6XUWQrOPNPqE2vckosNpqza0BoxMdvLAr_
+    Se3nKAeYzdYreFKwA>
+X-ME-Received: <xmr:IUAwZeLFERH5Litqxs3Oxhw5w9ivML701YWxlsrPSg3bGF14sV3YnlS43ZAREEUnxrWYjgljeU0E42QI7Io7BhMvXD7jD_l_5RsfGaIEK9GK0f7b1R4Bk-pJKQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrjeeggddugeejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkffojghfggfgsedtke
-    ertdertddtnecuhfhrohhmpefmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhcuoegt
-    ohguvgeskhhhrghughhssggrkhhkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepteduie
-    ehgedutdfgudevkefhveduieeiteejhfffteeitdegjeeihedthfejgfetnecuvehluhhs
-    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghouggvsehkhhgruh
-    hgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:IEAwZWU7-Hc4ouOuTUWPBVQPUP8CfB1pgYq5kzCiKzZfMYPzIJlpLQ>
-    <xmx:IEAwZVnMba2IFroZrFMGKjEufy-Tv4PEd4FWfqeXQlD6v0CwQ2ETqw>
-    <xmx:IEAwZTeUSo5nLOPrweM--GeImCzZZG5yb2uAj0FfUGyDzWmp_1Z1cw>
-    <xmx:IEAwZayruhn7RDb2vBUqzZLl8dF2Ra4qTyOUK4o48mFQZrcpMeNlWQ>
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkffojghfgggtgfesth
+    ekredtredtjeenucfhrhhomhepmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkuceo
+    tghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpeevgf
+    elveeikeegjeeikeeuvefhleeiuddvleegfeekjedtkeevtdetgfffveettdenucevlhhu
+    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrg
+    hughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:IUAwZWG5lemTVJlOH1uSQhS_qzoghpO8yE34Th63rmFuWngJBvEF0Q>
+    <xmx:IUAwZaXY_Di6dX72yq7MWhsn__myPWcMNJiKQTrj1yZ34spC-s37JA>
+    <xmx:IUAwZZMYT70Sz50Z2EfI6OV1zczhbahjYfaZ8jPHwGACe12LCAYJZw>
+    <xmx:IUAwZXh1yuqkuoLJoAOo8elA0RUgNnpP-X0tjB-ouKaj80oARnGwbA>
 Feedback-ID: i2671468f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Oct 2023 16:29:19 -0400 (EDT)
+ 18 Oct 2023 16:29:20 -0400 (EDT)
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	ps@pks.im,
 	stolee@gmail.com
-Subject: [PATCH v1 2/4] config: rename global config function
-Date: Wed, 18 Oct 2023 22:28:39 +0200
-Message-ID: <48a5357f97cec2c5babc6512e0b30bcb8f7d201f.1697660181.git.code@khaugsbakk.name>
+Subject: [PATCH v1 3/4] config: factor out global config file retrieval
+Date: Wed, 18 Oct 2023 22:28:40 +0200
+Message-ID: <147c767443c35b3b4a5516bf40557f41bb201078.1697660181.git.code@khaugsbakk.name>
 X-Mailer: git-send-email 2.42.0.2.g879ad04204
 In-Reply-To: <cover.1697660181.git.code@khaugsbakk.name>
 References: <cover.1697660181.git.code@khaugsbakk.name>
@@ -74,104 +74,107 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 
-Rename this function to a more descriptive name since we want to use the
-existing name for a new function.
+Factor out code that retrieves the global config file so that we can use
+it in `gc.c` as well.
+
+Use the old name from the previous commit since this function acts
+functionally the same as `git_system_config` but for “global”.
 
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
- builtin/config.c | 2 +-
- builtin/gc.c     | 4 ++--
- builtin/var.c    | 2 +-
- config.c         | 4 ++--
- config.h         | 2 +-
- 5 files changed, 7 insertions(+), 7 deletions(-)
+ builtin/config.c | 25 ++-----------------------
+ config.c         | 24 ++++++++++++++++++++++++
+ config.h         |  1 +
+ 3 files changed, 27 insertions(+), 23 deletions(-)
 
 diff --git a/builtin/config.c b/builtin/config.c
-index 87d0dc92d99..6fff2655816 100644
+index 6fff2655816..df06b766fad 100644
 --- a/builtin/config.c
 +++ b/builtin/config.c
-@@ -710,7 +710,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+@@ -708,30 +708,9 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 	}
+ 
  	if (use_global_config) {
- 		char *user_config, *xdg_config;
- 
--		git_global_config(&user_config, &xdg_config);
-+		git_global_config_paths(&user_config, &xdg_config);
- 		if (!user_config)
- 			/*
- 			 * It is unknown if HOME/.gitconfig exists, so
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 5c4315f0d81..17fc031f63a 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -1529,7 +1529,7 @@ static int maintenance_register(int argc, const char **argv, const char *prefix)
- 		char *user_config = NULL, *xdg_config = NULL;
- 
- 		if (!config_file) {
--			git_global_config(&user_config, &xdg_config);
-+			git_global_config_paths(&user_config, &xdg_config);
- 			config_file = user_config;
- 			if (!user_config)
- 				die(_("$HOME not set"));
-@@ -1597,7 +1597,7 @@ static int maintenance_unregister(int argc, const char **argv, const char *prefi
- 		int rc;
- 		char *user_config = NULL, *xdg_config = NULL;
- 		if (!config_file) {
--			git_global_config(&user_config, &xdg_config);
-+			git_global_config_paths(&user_config, &xdg_config);
- 			config_file = user_config;
- 			if (!user_config)
- 				die(_("$HOME not set"));
-diff --git a/builtin/var.c b/builtin/var.c
-index 74161bdf1c6..8e18b50b1e5 100644
---- a/builtin/var.c
-+++ b/builtin/var.c
-@@ -90,7 +90,7 @@ static char *git_config_val_global(int ident_flag UNUSED)
- 	char *user, *xdg;
- 	size_t unused;
- 
--	git_global_config(&user, &xdg);
-+	git_global_config_paths(&user, &xdg);
- 	if (xdg && *xdg) {
- 		normalize_path_copy(xdg, xdg);
- 		strbuf_addf(&buf, "%s\n", xdg);
+-		char *user_config, *xdg_config;
+-
+-		git_global_config_paths(&user_config, &xdg_config);
+-		if (!user_config)
+-			/*
+-			 * It is unknown if HOME/.gitconfig exists, so
+-			 * we do not know if we should write to XDG
+-			 * location; error out even if XDG_CONFIG_HOME
+-			 * is set and points at a sane location.
+-			 */
+-			die(_("$HOME not set"));
+-
++		given_config_source.file = git_global_config();
+ 		given_config_source.scope = CONFIG_SCOPE_GLOBAL;
+-
+-		if (access_or_warn(user_config, R_OK, 0) &&
+-		    xdg_config && !access_or_warn(xdg_config, R_OK, 0)) {
+-			given_config_source.file = xdg_config;
+-			free(user_config);
+-		} else {
+-			given_config_source.file = user_config;
+-			free(xdg_config);
+-		}
+-	}
+-	else if (use_system_config) {
++	} else if (use_system_config) {
+ 		given_config_source.file = git_system_config();
+ 		given_config_source.scope = CONFIG_SCOPE_SYSTEM;
+ 	} else if (use_local_config) {
 diff --git a/config.c b/config.c
-index 19f832818f1..d2cdda96edd 100644
+index d2cdda96edd..2ff766c56ff 100644
 --- a/config.c
 +++ b/config.c
-@@ -2111,7 +2111,7 @@ char *git_system_config(void)
+@@ -2111,6 +2111,30 @@ char *git_system_config(void)
  	return system_config;
  }
  
--void git_global_config(char **user_out, char **xdg_out)
-+void git_global_config_paths(char **user_out, char **xdg_out)
++char *git_global_config(void)
++{
++	char *user_config, *xdg_config;
++
++	git_global_config_paths(&user_config, &xdg_config);
++	if (!user_config)
++		/*
++		 * It is unknown if HOME/.gitconfig exists, so
++		 * we do not know if we should write to XDG
++		 * location; error out even if XDG_CONFIG_HOME
++		 * is set and points at a sane location.
++		 */
++		die(_("$HOME not set"));
++
++	if (access_or_warn(user_config, R_OK, 0) && xdg_config &&
++	    !access_or_warn(xdg_config, R_OK, 0)) {
++		free(user_config);
++		return xdg_config;
++	} else {
++		free(xdg_config);
++		return user_config;
++	}
++}
++
+ void git_global_config_paths(char **user_out, char **xdg_out)
  {
  	char *user_config = xstrdup_or_null(getenv("GIT_CONFIG_GLOBAL"));
- 	char *xdg_config = NULL;
-@@ -2186,7 +2186,7 @@ static int do_git_config_sequence(const struct config_options *opts,
- 							 data, CONFIG_SCOPE_SYSTEM,
- 							 NULL);
- 
--	git_global_config(&user_config, &xdg_config);
-+	git_global_config_paths(&user_config, &xdg_config);
- 
- 	if (xdg_config && !access_or_die(xdg_config, R_OK, ACCESS_EACCES_OK))
- 		ret += git_config_from_file_with_options(fn, xdg_config, data,
 diff --git a/config.h b/config.h
-index 6332d749047..9f04de8ee3e 100644
+index 9f04de8ee3e..5cf961b548d 100644
 --- a/config.h
 +++ b/config.h
-@@ -394,7 +394,7 @@ int config_error_nonbool(const char *);
+@@ -394,6 +394,7 @@ int config_error_nonbool(const char *);
  #endif
  
  char *git_system_config(void);
--void git_global_config(char **user, char **xdg);
-+void git_global_config_paths(char **user, char **xdg);
++char *git_global_config(void);
+ void git_global_config_paths(char **user, char **xdg);
  
  int git_config_parse_parameter(const char *, config_fn_t fn, void *data);
- 
 -- 
 2.42.0.2.g879ad04204
 
