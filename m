@@ -1,70 +1,71 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E0F947E
-	for <git@vger.kernel.org>; Wed, 18 Oct 2023 05:35:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B353BBE49
+	for <git@vger.kernel.org>; Wed, 18 Oct 2023 05:35:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="byjVLzaJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U19N+mBm"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rpXIDRiT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DJOdwCNb"
 Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63FA5C6
-	for <git@vger.kernel.org>; Tue, 17 Oct 2023 22:35:20 -0700 (PDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.west.internal (Postfix) with ESMTP id BD08F3200B01;
-	Wed, 18 Oct 2023 01:35:19 -0400 (EDT)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 323F2102
+	for <git@vger.kernel.org>; Tue, 17 Oct 2023 22:35:24 -0700 (PDT)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.west.internal (Postfix) with ESMTP id 891733200B2A;
+	Wed, 18 Oct 2023 01:35:23 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Wed, 18 Oct 2023 01:35:19 -0400
+  by compute2.internal (MEProxy); Wed, 18 Oct 2023 01:35:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1697607319; x=1697693719; bh=BO
-	lpV759OkrtsAxRiXnmXXOntEJ9/wMVqgpw4GDwAQ0=; b=byjVLzaJ2gPFHWcqZI
-	wrJbCWXxculnbtEYXkDX/8vJAV4QmBwufCWNqoJsFXDtIBU4PrGiwgh0SWi8JEHJ
-	xyjAc3E4Ax8hiN+d6xzN3RR4TKp/GXSvG4jcntGRF3pUlGcDbZHQ5K6GSjCLtz4z
-	DVeGBTTsMo6Rk7qSKay0KRTl3pj9J5i9zVCMvWabz2v2XvE9HkPlvkOkZIi/M5UG
-	9aec5A/UpI8r4gdnGnqBop/pd13D+kMDsO47w9KN17WXAuhnncXECXPIwlw7szBQ
-	ZI1rYZ8NLWwMEaJimpZdEc830h0MuUwi+vcq8tEhZnKuDETsY3dU+l/zdeLip3Hv
-	EBMw==
+	:subject:subject:to:to; s=fm3; t=1697607323; x=1697693723; bh=4h
+	V1g1aNgStGJuJ8XIHnhw1/XGrGF0EMBq/6t0w+pvE=; b=rpXIDRiTqLRiovfDf8
+	Iw2ApGT/7KbB4mHw0JEA1qDY2fR9E5tBw7n4JJXpBaz1BaGYuhyY8HS8uAQBBVIZ
+	uXaEAjC3ivJX4b0hfMThXU1pjfKPvYyBe8YWe9W6Q95MmNY/VDSFXJsHQmRfVMTa
+	3VfyFmh9qbwBBvYyEbenrkkIUTvAKCkAdAQt0PlMrDqoAMIFAcz1dULNESgDa2yN
+	nxNLKno2Wx+ZXGHc67ksdpD9xC/r9L9sjnPdPde47D8ioQ5LpkMIG5oORiK5Mv9i
+	Uylm8IRSTZMdh87ts3PWyu4G8YxxIHL/J0P9UPD/jvfzQj8kJo/RCx1CQHs/YZhD
+	BvyA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1697607319; x=1697693719; bh=BOlpV759Okrts
-	AxRiXnmXXOntEJ9/wMVqgpw4GDwAQ0=; b=U19N+mBm5Lu2zuDDvMIXyOleWrYEp
-	IDyV+jrS0XwFQk9kqweplTxDlJRC/YIbuBHeUx25CLECCqWBWIMmHSgq15aLw4Wz
-	rbJBvPpsX7mUTzOrD6C0xiY2Pk9U195Jjjfu/PUU0twMf5jR6RhK2lL+3JLiJ86h
-	RBK1ALn4DWvKt4VoHW96+nRHFmDlGpR0doK1Xz9Nf4W+9DF8QJewTkkua10kxCXH
-	mFSmLo+J2Io7XcrhjEjOzhDnJzfH+/jTEL0oeqqfEDcqowYgZL7cX9uLQxvpK07J
-	uaCOVQe7oaFloFENqkI3znv9gameH6W8vDNMAJGm8rtmOF/fxJruZ+Zmg==
-X-ME-Sender: <xms:l24vZXsoTc7d547T1asyvMGcAZBaIIhnmRJt76Z_VJmLL_vjl01MgA>
-    <xme:l24vZYfakmwuRf_KPyXgjjkflL1zA8wWp0ixOFYTL64qE1eU7UAGPeV-MSN8j2s24
-    gxdx9v6zZlHzYQPqQ>
-X-ME-Received: <xmr:l24vZaytsKgYrc59wmkPfegPilvuTOWOPl__9N4fxV0HCYxKaig45aFqJFFnrEHfxP18oDx2i4vReo-i-CRuMhAqRBkkIOBuaFtc1iGgkwThnPMP>
+	:x-sasl-enc; s=fm3; t=1697607323; x=1697693723; bh=4hV1g1aNgStGJ
+	uJ8XIHnhw1/XGrGF0EMBq/6t0w+pvE=; b=DJOdwCNbX5Zk9ixeqqLO6VHnb8dTv
+	sIvufuqbG/qbd1fM0vBTZ3Wjz4WhPhOwTJdN8GQm4cdLC9EJZpx/YStqkAFz4gr3
+	mZUiXjXeopLe1UEPacU5T26uSZS7swrJf2DTAkNXK+glTOyw6h/QtTEo0LHlu6nM
+	QCZzhgdhcg42DuG9HsJO/BV6Polc+e0R4xmErRQXoOx2aYPQtGPcUQ/+ZNl6XcBM
+	WxXr+i32c3g18zUid6SswRXx+e0ztmWcibUwt/PkEXng3g49uXoFsqgLVvNr9zl5
+	bDEGmBC2ovVfbfo6JA+gyxAPQ81Sz0t82e5z7WqpWMiYd4eiSKxNTMslg==
+X-ME-Sender: <xms:mm4vZebdFJXVQtK-g2z4TSyoBFzFPj2mKHHTCtSdjjQRdx_Y2H-aWQ>
+    <xme:mm4vZRY7PYVutTs14DsnEo92ln3HykcldHBAY0r32mEpYmW9EHUKWPQ_AAPk2pMDv
+    co2zVuxPljBx2UqSg>
+X-ME-Received: <xmr:mm4vZY9E0EFai5ZVXbv5Y1qFyKOOZndcXx7K4lJwNd23T87_jZhIwfw3K8FtHFq-3kxR4WGMqNuvDnvUi9V5paiix6iOIYr9mwCAM0kkAEr96iVA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrjeefgdelgecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhm
-X-ME-Proxy: <xmx:l24vZWPmtRZom3gePHE-rIx-TzykhPlvyqRNxAPZvLrMNWMgTq-oUQ>
-    <xmx:l24vZX_O95HlGAA90PYy17c5cGd9n0IG8wdgRIlimFjc9S5pbSJ_-w>
-    <xmx:l24vZWWiA8qopETx5SGW3OyyNnUMqxeHQxwp4UjOcGMZNcUjchi3xQ>
-    <xmx:l24vZUFUzZAIM1gueMrlabqnvcvai8Q6bV2Rr8-jYEqXkRBbw9j3vA>
+X-ME-Proxy: <xmx:mm4vZQoX_Z1beRodUbHYrI1VLl0vrrNIWp_TxbDSn-hLkhP2thJSSw>
+    <xmx:mm4vZZqP8cz4c8ZfPmXQaH8CyZ8j9xpLV1qISGSHjII26cRuAUJ25Q>
+    <xmx:mm4vZeQcvbgA7K6C0LRy81FgFettCb4ufN35px2WXYPbLylBuBOZuA>
+    <xmx:m24vZYTEZbh55IqQaQdeQGlHGN8BgY5AFp-PNx53yyLpnHW5nQSJZg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Oct 2023 01:35:18 -0400 (EDT)
+ 18 Oct 2023 01:35:22 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 90c54472 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 18 Oct 2023 05:35:17 +0000 (UTC)
-Date: Wed, 18 Oct 2023 07:35:16 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id f8f23a4b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 18 Oct 2023 05:35:21 +0000 (UTC)
+Date: Wed, 18 Oct 2023 07:35:20 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Han-Wen Nienhuys <hanwen@google.com>
-Subject: [PATCH 03/11] t: convert tests to use helpers for reference existence
-Message-ID: <ac6a49c7c84ad2b836f099557dd6989703ebda8f.1697607222.git.ps@pks.im>
+Subject: [PATCH 04/11] t: convert tests to not write references via the
+ filesystem
+Message-ID: <c79431c0bf117d756e1d584f4c9415888d9ff9eb.1697607222.git.ps@pks.im>
 References: <cover.1697607222.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -73,7 +74,7 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="nFm+D2i2K7hdSTnh"
+	protocol="application/pgp-signature"; boundary="SlQUnhtFAm0UjB/x"
 Content-Disposition: inline
 In-Reply-To: <cover.1697607222.git.ps@pks.im>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,343 +84,254 @@ X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 	lindbergh.monkeyblade.net
 
 
---nFm+D2i2K7hdSTnh
+--SlQUnhtFAm0UjB/x
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Convert tests that use `test_path_is_file` and `test_path_is_missing` to
-instead use our new helpers `test_ref_exists` and `test_ref_missing`.
-These hook into the reference database directly and thus work indepently
-of the actual reference backend that is being used.
+Some of our tests manually create, update or delete references by
+writing the respective new values into the filesystem directly. While
+this works with the current files reference backend, this will break
+once we have a second reference backend implementation in our codebase.
+
+Refactor these tests to instead use git-update-ref(1) or our `ref-store`
+test tool. The latter is required in some cases where safety checks of
+git-update-ref(1) would otherwise reject a reference update.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t1430-bad-ref-name.sh | 27 ++++++++++++++++++---------
- t/t3200-branch.sh       | 33 ++++++++++++++++++---------------
- t/t5521-pull-options.sh |  4 ++--
- t/t5605-clone-local.sh  |  2 +-
- 4 files changed, 39 insertions(+), 27 deletions(-)
+ t/t1400-update-ref.sh         | 16 +++++++---------
+ t/t1450-fsck.sh               | 28 +++++++++++++++-------------
+ t/t3404-rebase-interactive.sh |  2 +-
+ t/t5526-fetch-submodules.sh   |  2 +-
+ 4 files changed, 24 insertions(+), 24 deletions(-)
 
-diff --git a/t/t1430-bad-ref-name.sh b/t/t1430-bad-ref-name.sh
-index ff1c967d550..7b7d6953c62 100755
---- a/t/t1430-bad-ref-name.sh
-+++ b/t/t1430-bad-ref-name.sh
-@@ -205,8 +205,9 @@ test_expect_success 'update-ref --no-deref -d can delet=
-e symref to broken name'
- 	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg=
- refs/heads/broken...ref" &&
- 	test-tool ref-store main create-symref refs/heads/badname refs/heads/brok=
-en...ref msg &&
- 	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg=
- refs/heads/badname" &&
-+	test_ref_exists refs/heads/badname &&
- 	git update-ref --no-deref -d refs/heads/badname >output 2>error &&
--	test_path_is_missing .git/refs/heads/badname &&
-+	test_ref_missing refs/heads/badname &&
- 	test_must_be_empty output &&
- 	test_must_be_empty error
- '
-@@ -216,8 +217,9 @@ test_expect_success 'branch -d can delete symref to bro=
-ken name' '
- 	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg=
- refs/heads/broken...ref" &&
- 	test-tool ref-store main create-symref refs/heads/badname refs/heads/brok=
-en...ref msg &&
- 	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg=
- refs/heads/badname" &&
-+	test_ref_exists refs/heads/badname &&
- 	git branch -d badname >output 2>error &&
--	test_path_is_missing .git/refs/heads/badname &&
-+	test_ref_missing refs/heads/badname &&
- 	test_i18ngrep "Deleted branch badname (was refs/heads/broken\.\.\.ref)" o=
-utput &&
- 	test_must_be_empty error
- '
-@@ -225,8 +227,9 @@ test_expect_success 'branch -d can delete symref to bro=
-ken name' '
- test_expect_success 'update-ref --no-deref -d can delete dangling symref t=
-o broken name' '
- 	test-tool ref-store main create-symref refs/heads/badname refs/heads/brok=
-en...ref msg &&
- 	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg=
- refs/heads/badname" &&
-+	test_ref_exists refs/heads/badname &&
- 	git update-ref --no-deref -d refs/heads/badname >output 2>error &&
--	test_path_is_missing .git/refs/heads/badname &&
-+	test_ref_missing refs/heads/badname &&
- 	test_must_be_empty output &&
- 	test_must_be_empty error
- '
-@@ -234,8 +237,9 @@ test_expect_success 'update-ref --no-deref -d can delet=
-e dangling symref to brok
- test_expect_success 'branch -d can delete dangling symref to broken name' '
- 	test-tool ref-store main create-symref refs/heads/badname refs/heads/brok=
-en...ref msg &&
- 	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg=
- refs/heads/badname" &&
-+	test_ref_exists refs/heads/badname &&
- 	git branch -d badname >output 2>error &&
--	test_path_is_missing .git/refs/heads/badname &&
-+	test_ref_missing refs/heads/badname &&
- 	test_i18ngrep "Deleted branch badname (was refs/heads/broken\.\.\.ref)" o=
-utput &&
- 	test_must_be_empty error
- '
-@@ -245,8 +249,9 @@ test_expect_success 'update-ref -d can delete broken na=
-me through symref' '
- 	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg=
- refs/heads/broken...ref" &&
- 	test-tool ref-store main create-symref refs/heads/badname refs/heads/brok=
-en...ref msg &&
- 	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg=
- refs/heads/badname" &&
-+	test_ref_exists refs/heads/broken...ref &&
- 	git update-ref -d refs/heads/badname >output 2>error &&
--	test_path_is_missing .git/refs/heads/broken...ref &&
-+	test_ref_missing refs/heads/broken...ref &&
- 	test_must_be_empty output &&
- 	test_must_be_empty error
- '
-@@ -254,8 +259,9 @@ test_expect_success 'update-ref -d can delete broken na=
-me through symref' '
- test_expect_success 'update-ref --no-deref -d can delete symref with broke=
-n name' '
- 	printf "ref: refs/heads/main\n" >.git/refs/heads/broken...symref &&
- 	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg=
- refs/heads/broken...symref" &&
-+	test_ref_exists refs/heads/broken...symref &&
- 	git update-ref --no-deref -d refs/heads/broken...symref >output 2>error &&
--	test_path_is_missing .git/refs/heads/broken...symref &&
-+	test_ref_missing refs/heads/broken...symref &&
- 	test_must_be_empty output &&
- 	test_must_be_empty error
- '
-@@ -263,8 +269,9 @@ test_expect_success 'update-ref --no-deref -d can delet=
-e symref with broken name
- test_expect_success 'branch -d can delete symref with broken name' '
- 	printf "ref: refs/heads/main\n" >.git/refs/heads/broken...symref &&
- 	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg=
- refs/heads/broken...symref" &&
-+	test_ref_exists refs/heads/broken...symref &&
- 	git branch -d broken...symref >output 2>error &&
--	test_path_is_missing .git/refs/heads/broken...symref &&
-+	test_ref_missing refs/heads/broken...symref &&
- 	test_i18ngrep "Deleted branch broken...symref (was refs/heads/main)" outp=
-ut &&
- 	test_must_be_empty error
- '
-@@ -272,8 +279,9 @@ test_expect_success 'branch -d can delete symref with b=
-roken name' '
- test_expect_success 'update-ref --no-deref -d can delete dangling symref w=
-ith broken name' '
- 	printf "ref: refs/heads/idonotexist\n" >.git/refs/heads/broken...symref &&
- 	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg=
- refs/heads/broken...symref" &&
-+	test_ref_exists refs/heads/broken...symref &&
- 	git update-ref --no-deref -d refs/heads/broken...symref >output 2>error &&
--	test_path_is_missing .git/refs/heads/broken...symref &&
-+	test_ref_missing refs/heads/broken...symref &&
- 	test_must_be_empty output &&
- 	test_must_be_empty error
- '
-@@ -281,8 +289,9 @@ test_expect_success 'update-ref --no-deref -d can delet=
-e dangling symref with br
- test_expect_success 'branch -d can delete dangling symref with broken name=
-' '
- 	printf "ref: refs/heads/idonotexist\n" >.git/refs/heads/broken...symref &&
- 	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg=
- refs/heads/broken...symref" &&
-+	test_ref_exists refs/heads/broken...symref &&
- 	git branch -d broken...symref >output 2>error &&
--	test_path_is_missing .git/refs/heads/broken...symref &&
-+	test_ref_missing refs/heads/broken...symref &&
- 	test_i18ngrep "Deleted branch broken...symref (was refs/heads/idonotexist=
-)" output &&
- 	test_must_be_empty error
- '
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 080e4f24a6e..bde4f1485b7 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -25,7 +25,7 @@ test_expect_success 'prepare a trivial repository' '
+diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+index 4d66cd7f4a1..cd24018ce99 100755
+--- a/t/t1400-update-ref.sh
++++ b/t/t1400-update-ref.sh
+@@ -9,8 +9,6 @@ test_description=3D'Test git update-ref and basic ref loggi=
+ng'
+ Z=3D$ZERO_OID
 =20
- test_expect_success 'git branch --help should not have created a bogus bra=
-nch' '
- 	test_might_fail git branch --man --help </dev/null >/dev/null 2>&1 &&
--	test_path_is_missing .git/refs/heads/--help
-+	test_ref_missing refs/heads/--help
+ m=3Drefs/heads/main
+-n_dir=3Drefs/heads/gu
+-n=3D$n_dir/fixes
+ outside=3Drefs/foo
+ bare=3Dbare-repo
+=20
+@@ -62,10 +60,10 @@ test_expect_success "delete $m without oldvalue verific=
+ation" '
+ 	test_must_fail git show-ref --verify -q $m
  '
 =20
- test_expect_success 'branch -h in broken repository' '
-@@ -40,7 +40,8 @@ test_expect_success 'branch -h in broken repository' '
+-test_expect_success "fail to create $n" '
+-	test_when_finished "rm -f .git/$n_dir" &&
+-	touch .git/$n_dir &&
+-	test_must_fail git update-ref $n $A
++test_expect_success "fail to create $n due to file/directory conflict" '
++	test_when_finished "git update-ref -d refs/heads/gu" &&
++	git update-ref refs/heads/gu $A &&
++	test_must_fail git update-ref refs/heads/gu/fixes $A
  '
 =20
- test_expect_success 'git branch abc should create a branch' '
--	git branch abc && test_path_is_file .git/refs/heads/abc
-+	git branch abc &&
-+	test_ref_exists refs/heads/abc
+ test_expect_success "create $m (by HEAD)" '
+@@ -222,7 +220,7 @@ test_expect_success 'delete symref without dereference =
+when the referred ref is
+=20
+ test_expect_success 'update-ref -d is not confused by self-reference' '
+ 	git symbolic-ref refs/heads/self refs/heads/self &&
+-	test_when_finished "rm -f .git/refs/heads/self" &&
++	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF ref=
+s/heads/self" &&
+ 	test_path_is_file .git/refs/heads/self &&
+ 	test_must_fail git update-ref -d refs/heads/self &&
+ 	test_path_is_file .git/refs/heads/self
+@@ -230,7 +228,7 @@ test_expect_success 'update-ref -d is not confused by s=
+elf-reference' '
+=20
+ test_expect_success 'update-ref --no-deref -d can delete self-reference' '
+ 	git symbolic-ref refs/heads/self refs/heads/self &&
+-	test_when_finished "rm -f .git/refs/heads/self" &&
++	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF ref=
+s/heads/self" &&
+ 	test_path_is_file .git/refs/heads/self &&
+ 	git update-ref --no-deref -d refs/heads/self &&
+ 	test_must_fail git show-ref --verify -q refs/heads/self
+@@ -434,7 +432,7 @@ test_expect_success 'Query "main@{2005-05-28}" (past en=
+d of history)' '
+ 	test_i18ngrep -F "warning: log for ref $m unexpectedly ended on $ld" e
  '
 =20
- test_expect_success 'git branch abc should fail when abc exists' '
-@@ -61,11 +62,13 @@ test_expect_success 'git branch --force abc should succ=
-eed when abc exists' '
+-rm -f .git/$m .git/logs/$m expect
++git update-ref -d $m
+=20
+ test_expect_success 'creating initial files' '
+ 	test_when_finished rm -f M &&
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index 10a539158c4..5cce24f1006 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -115,15 +115,16 @@ test_expect_success 'zlib corrupt loose object output=
+ ' '
  '
 =20
- test_expect_success 'git branch a/b/c should create a branch' '
--	git branch a/b/c && test_path_is_file .git/refs/heads/a/b/c
-+	git branch a/b/c &&
-+	test_ref_exists refs/heads/a/b/c
+ test_expect_success 'branch pointing to non-commit' '
+-	git rev-parse HEAD^{tree} >.git/refs/heads/invalid &&
++	tree_oid=3D$(git rev-parse --verify HEAD^{tree}) &&
++	test-tool ref-store main update-ref msg refs/heads/invalid $tree_oid $ZER=
+O_OID REF_SKIP_OID_VERIFICATION &&
+ 	test_when_finished "git update-ref -d refs/heads/invalid" &&
+ 	test_must_fail git fsck 2>out &&
+ 	test_i18ngrep "not a commit" out
  '
 =20
- test_expect_success 'git branch mb main... should create a branch' '
--	git branch mb main... && test_path_is_file .git/refs/heads/mb
-+	git branch mb main... &&
-+	test_ref_exists refs/heads/mb
+ test_expect_success 'HEAD link pointing at a funny object' '
+-	test_when_finished "mv .git/SAVED_HEAD .git/HEAD" &&
+-	mv .git/HEAD .git/SAVED_HEAD &&
++	saved_head=3D$(git rev-parse --verify HEAD) &&
++	test_when_finished "git update-ref HEAD ${saved_head}" &&
+ 	echo $ZERO_OID >.git/HEAD &&
+ 	# avoid corrupt/broken HEAD from interfering with repo discovery
+ 	test_must_fail env GIT_DIR=3D.git git fsck 2>out &&
+@@ -131,8 +132,8 @@ test_expect_success 'HEAD link pointing at a funny obje=
+ct' '
  '
 =20
- test_expect_success 'git branch HEAD should fail' '
-@@ -78,14 +81,14 @@ EOF
- test_expect_success 'git branch --create-reflog d/e/f should create a bran=
-ch and a log' '
- 	GIT_COMMITTER_DATE=3D"2005-05-26 23:30" \
- 	git -c core.logallrefupdates=3Dfalse branch --create-reflog d/e/f &&
--	test_path_is_file .git/refs/heads/d/e/f &&
-+	test_ref_exists refs/heads/d/e/f &&
- 	test_path_is_file .git/logs/refs/heads/d/e/f &&
- 	test_cmp expect .git/logs/refs/heads/d/e/f
+ test_expect_success 'HEAD link pointing at a funny place' '
+-	test_when_finished "mv .git/SAVED_HEAD .git/HEAD" &&
+-	mv .git/HEAD .git/SAVED_HEAD &&
++	saved_head=3D$(git rev-parse --verify HEAD) &&
++	test_when_finished "git update-ref --no-deref HEAD ${saved_head}" &&
+ 	echo "ref: refs/funny/place" >.git/HEAD &&
+ 	# avoid corrupt/broken HEAD from interfering with repo discovery
+ 	test_must_fail env GIT_DIR=3D.git git fsck 2>out &&
+@@ -140,10 +141,10 @@ test_expect_success 'HEAD link pointing at a funny pl=
+ace' '
  '
 =20
- test_expect_success 'git branch -d d/e/f should delete a branch and a log'=
+ test_expect_success 'HEAD link pointing at a funny object (from different =
+wt)' '
+-	test_when_finished "mv .git/SAVED_HEAD .git/HEAD" &&
++	saved_head=3D$(git rev-parse --verify HEAD) &&
++	test_when_finished "git update-ref HEAD $saved_head" &&
+ 	test_when_finished "rm -rf .git/worktrees wt" &&
+ 	git worktree add wt &&
+-	mv .git/HEAD .git/SAVED_HEAD &&
+ 	echo $ZERO_OID >.git/HEAD &&
+ 	# avoid corrupt/broken HEAD from interfering with repo discovery
+ 	test_must_fail git -C wt fsck 2>out &&
+@@ -161,7 +162,8 @@ test_expect_success 'other worktree HEAD link pointing =
+at a funny object' '
+ test_expect_success 'other worktree HEAD link pointing at missing object' '
+ 	test_when_finished "rm -rf .git/worktrees other" &&
+ 	git worktree add other &&
+-	echo "Contents missing from repo" | git hash-object --stdin >.git/worktre=
+es/other/HEAD &&
++	object_id=3D$(echo "Contents missing from repo" | git hash-object --stdin=
+) &&
++	test-tool -C other ref-store main update-ref msg HEAD $object_id "" REF_N=
+O_DEREF,REF_SKIP_OID_VERIFICATION &&
+ 	test_must_fail git fsck 2>out &&
+ 	test_i18ngrep "worktrees/other/HEAD: invalid sha1 pointer" out
  '
- 	git branch -d d/e/f &&
--	test_path_is_missing .git/refs/heads/d/e/f &&
-+	test_ref_missing refs/heads/d/e/f &&
- 	test_must_fail git reflog exists refs/heads/d/e/f
- '
+@@ -391,7 +393,7 @@ test_expect_success 'tag pointing to nonexistent' '
 =20
-@@ -213,7 +216,7 @@ test_expect_success 'git branch -M should leave orphane=
-d HEAD alone' '
- 		test_commit initial &&
- 		git checkout --orphan lonely &&
- 		grep lonely .git/HEAD &&
--		test_path_is_missing .git/refs/head/lonely &&
-+		test_ref_missing refs/head/lonely &&
- 		git branch -M main mistress &&
- 		grep lonely .git/HEAD
- 	)
-@@ -799,8 +802,8 @@ test_expect_success 'deleting a symref' '
- 	git symbolic-ref refs/heads/symref refs/heads/target &&
- 	echo "Deleted branch symref (was refs/heads/target)." >expect &&
- 	git branch -d symref >actual &&
--	test_path_is_file .git/refs/heads/target &&
--	test_path_is_missing .git/refs/heads/symref &&
-+	test_ref_exists refs/heads/target &&
-+	test_ref_missing refs/heads/symref &&
- 	test_cmp expect actual
- '
+ 	tag=3D$(git hash-object -t tag -w --stdin <invalid-tag) &&
+ 	test_when_finished "remove_object $tag" &&
+-	echo $tag >.git/refs/tags/invalid &&
++	git update-ref refs/tags/invalid $tag &&
+ 	test_when_finished "git update-ref -d refs/tags/invalid" &&
+ 	test_must_fail git fsck --tags >out &&
+ 	test_i18ngrep "broken link" out
+@@ -411,7 +413,7 @@ test_expect_success 'tag pointing to something else tha=
+n its type' '
 =20
-@@ -809,16 +812,16 @@ test_expect_success 'deleting a dangling symref' '
- 	test_path_is_file .git/refs/heads/dangling-symref &&
- 	echo "Deleted branch dangling-symref (was nowhere)." >expect &&
- 	git branch -d dangling-symref >actual &&
--	test_path_is_missing .git/refs/heads/dangling-symref &&
-+	test_ref_missing refs/heads/dangling-symref &&
- 	test_cmp expect actual
+ 	tag=3D$(git hash-object -t tag -w --stdin <wrong-tag) &&
+ 	test_when_finished "remove_object $tag" &&
+-	echo $tag >.git/refs/tags/wrong &&
++	git update-ref refs/tags/wrong $tag &&
+ 	test_when_finished "git update-ref -d refs/tags/wrong" &&
+ 	test_must_fail git fsck --tags
  '
+@@ -428,7 +430,7 @@ test_expect_success 'tag with incorrect tag name & miss=
+ing tagger' '
 =20
- test_expect_success 'deleting a self-referential symref' '
- 	git symbolic-ref refs/heads/self-reference refs/heads/self-reference &&
--	test_path_is_file .git/refs/heads/self-reference &&
-+	test_ref_exists refs/heads/self-reference &&
- 	echo "Deleted branch self-reference (was refs/heads/self-reference)." >ex=
-pect &&
- 	git branch -d self-reference >actual &&
--	test_path_is_missing .git/refs/heads/self-reference &&
-+	test_ref_missing refs/heads/self-reference &&
- 	test_cmp expect actual
- '
+ 	tag=3D$(git hash-object --literally -t tag -w --stdin <wrong-tag) &&
+ 	test_when_finished "remove_object $tag" &&
+-	echo $tag >.git/refs/tags/wrong &&
++	git update-ref refs/tags/wrong $tag &&
+ 	test_when_finished "git update-ref -d refs/tags/wrong" &&
+ 	git fsck --tags 2>out &&
 =20
-@@ -826,8 +829,8 @@ test_expect_success 'renaming a symref is not allowed' '
- 	git symbolic-ref refs/heads/topic refs/heads/main &&
- 	test_must_fail git branch -m topic new-topic &&
- 	git symbolic-ref refs/heads/topic &&
--	test_path_is_file .git/refs/heads/main &&
--	test_path_is_missing .git/refs/heads/new-topic
-+	test_ref_exists refs/heads/main &&
-+	test_ref_missing refs/heads/new-topic
- '
+@@ -452,7 +454,7 @@ test_expect_success 'tag with bad tagger' '
 =20
- test_expect_success SYMLINKS 'git branch -m u v should fail when the reflo=
-g for u is a symlink' '
-@@ -1142,7 +1145,7 @@ EOF
- test_expect_success 'git checkout -b g/h/i -l should create a branch and a=
- log' '
- 	GIT_COMMITTER_DATE=3D"2005-05-26 23:30" \
- 	git checkout -b g/h/i -l main &&
--	test_path_is_file .git/refs/heads/g/h/i &&
-+	test_ref_exists refs/heads/g/h/i &&
- 	test_path_is_file .git/logs/refs/heads/g/h/i &&
- 	test_cmp expect .git/logs/refs/heads/g/h/i
- '
-diff --git a/t/t5521-pull-options.sh b/t/t5521-pull-options.sh
-index 079b2f2536e..3681859f983 100755
---- a/t/t5521-pull-options.sh
-+++ b/t/t5521-pull-options.sh
-@@ -143,7 +143,7 @@ test_expect_success 'git pull --dry-run' '
- 		cd clonedry &&
- 		git pull --dry-run ../parent &&
- 		test_path_is_missing .git/FETCH_HEAD &&
--		test_path_is_missing .git/refs/heads/main &&
-+		test_ref_missing refs/heads/main &&
- 		test_path_is_missing .git/index &&
- 		test_path_is_missing file
- 	)
-@@ -157,7 +157,7 @@ test_expect_success 'git pull --all --dry-run' '
- 		git remote add origin ../parent &&
- 		git pull --all --dry-run &&
- 		test_path_is_missing .git/FETCH_HEAD &&
--		test_path_is_missing .git/refs/remotes/origin/main &&
-+		test_ref_missing refs/remotes/origin/main &&
- 		test_path_is_missing .git/index &&
- 		test_path_is_missing file
- 	)
-diff --git a/t/t5605-clone-local.sh b/t/t5605-clone-local.sh
-index 1d7b1abda1a..946c5751885 100755
---- a/t/t5605-clone-local.sh
-+++ b/t/t5605-clone-local.sh
-@@ -69,7 +69,7 @@ test_expect_success 'local clone of repo with nonexistent=
- ref in HEAD' '
- 	git clone a d &&
- 	(cd d &&
- 	git fetch &&
--	test ! -e .git/refs/remotes/origin/HEAD)
-+	test_ref_missing refs/remotes/origin/HEAD)
- '
+ 	tag=3D$(git hash-object --literally -t tag -w --stdin <wrong-tag) &&
+ 	test_when_finished "remove_object $tag" &&
+-	echo $tag >.git/refs/tags/wrong &&
++	git update-ref refs/tags/wrong $tag &&
+ 	test_when_finished "git update-ref -d refs/tags/wrong" &&
+ 	test_must_fail git fsck --tags 2>out &&
+ 	test_i18ngrep "error in tag .*: invalid author/committer" out
+@@ -471,7 +473,7 @@ test_expect_success 'tag with NUL in header' '
 =20
- test_expect_success 'bundle clone without .bundle suffix' '
+ 	tag=3D$(git hash-object --literally -t tag -w --stdin <tag-NUL-header) &&
+ 	test_when_finished "remove_object $tag" &&
+-	echo $tag >.git/refs/tags/wrong &&
++	git update-ref refs/tags/wrong $tag &&
+ 	test_when_finished "git update-ref -d refs/tags/wrong" &&
+ 	test_must_fail git fsck --tags 2>out &&
+ 	test_i18ngrep "error in tag $tag.*unterminated header: NUL at offset" out
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 8ea2bf13026..d2a7a91f170 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -2160,7 +2160,7 @@ test_expect_success '--update-refs: check failed ref =
+update' '
+ 	# recorded in the update-refs file. We will force-update the
+ 	# "second" ref, but "git branch -f" will not work because of
+ 	# the lock in the update-refs file.
+-	git rev-parse third >.git/refs/heads/second &&
++	git update-ref refs/heads/second third &&
+=20
+ 	test_must_fail git rebase --continue 2>err &&
+ 	grep "update_ref failed for ref '\''refs/heads/second'\''" err &&
+diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
+index 26e933f93ae..7ab220fa313 100755
+--- a/t/t5526-fetch-submodules.sh
++++ b/t/t5526-fetch-submodules.sh
+@@ -771,7 +771,7 @@ test_expect_success 'fetching submodule into a broken r=
+epository' '
+ 	git -C dst fetch --recurse-submodules &&
+=20
+ 	# Break the receiving submodule
+-	rm -f dst/sub/.git/HEAD &&
++	test-tool -C dst/sub ref-store main delete-refs REF_NO_DEREF msg HEAD &&
+=20
+ 	# NOTE: without the fix the following tests will recurse forever!
+ 	# They should terminate with an error.
 --=20
 2.42.0
 
 
---nFm+D2i2K7hdSTnh
+--SlQUnhtFAm0UjB/x
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmUvbpMACgkQVbJhu7ck
-PpTwiBAAiopBR/Wl5SQNg1X8ud16zE71MiyI/MoAeaFcf19oOt9M8F2g5f+26dc6
-jSQaZf44xTVZ9vc6iN+K/NLV6oo7h4pt9GoEyDnkjrwU8GP7Z2v8NMIEr9bPqf+b
-pKT75LPmH3XkNmmvTLbfbWAs6MJRadnFQVENkNJEcvCEwa9ePgf77fqyso5Qr6ST
-Yy8m4yx/ywu7xZ+wfgbGYTBQqcdTJTmJDjAkn71hswQtUmgh+ZlMQh5Nyhk4BqCf
-tg0oeUsnd52G+RQCmIG23jlJmv0BAiXHi6WKXKXZj9VeRKCPxrO1OYiM2eoSZga+
-Yh+JZkL3I9hPkG1I2rpRbI8WXght+emolQ2Fm1zHzUNjVUZ7zUsRZu0wtsUBGlKe
-waUxep8UiQ0TAN2MqGVE4CDsXMTAwB3RqrBqpmY0+pRyjFFieQww4HnpFsIbSouH
-heKgbQ0ijpGfw00e18XVlD0dhrB9E3tPhkyFRn29VEFzc7Aw3DdWhesV3xt3s3WS
-ybYk7d+o9WVNgEfKr/nBc/u+zq219/hb3JEfvEUjeK/LlQj3GPDrs3OHVrl046go
-TQqeyAn2aOmPR8OLKWPX33QrAEmEm/4tmWeTJ8W9/sHzYb6Akhk3iO5Xqq3C+YXv
-qaSDrBNn8y1GXLZ0pQAeg+juPgNGvhlVpwzzMvZCKyOKDpAXunM=
-=lKe2
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmUvbpcACgkQVbJhu7ck
+PpSetxAAqTMLrRmyd7fEBKVCA4be9/EjiBmGtC3m7qeHgp7xRWKlAwosXJcJeGo9
+pxsqfiTxtL3tYxlM+XDwKewBSSuXETZIF9UqdJ9q/K54U59PVCATlcdLpd/aWqk8
+hTETqkYck4jyi19S2jiYmEPFoT47r9oq5LAMoMZ/Q8MtOJN3ONy/wHcjVKAYQef1
+mHRO8DWFpPSWzaBZCpVmiDiPA/vw9g7BfUps7q9f+BPRVAOa+8Vwx3icDJarwf3g
+YPV8UUJrr1S45/phtIsDG9caEg906LnCvbaobyndMJNkmI0wqV7V09Isp/xddUK0
+9ASliQprzkXcauD7vlnWpwwt85bKPJ/JVtLiwx8MD+AyQAIzwBx0Fw4vKDtD267v
+Kuvv/wQsLr8rhsaH9/qNu97QBFL5TPNKqAFbeCYJJ9E6+0HmasW7uoggcJ2h/3Ms
+9hbxVxH3D1Rq3F8x30Rm6nT2+NZNTT00g5g3PVSRIMQ95zVI5WvlNHcjPYVG+wjG
+Z19dNmt9zyufCEbYaKjH3hkwJkfAnNRYk6SEQZF/j8jpJyLFd1Fhfqjx1EXrXrAG
+sXaCljSyqqMGzXhRFn5Fjt5x8qvqNRCyU2NLNfssQ+XB5IlhK2cU3XqnfVH2z+Mf
++vAq7j4WJlL2GJrJ5OvmH8QpRNBniuhZfP5Z81EQOa6QIpEnaMw=
+=80Tz
 -----END PGP SIGNATURE-----
 
---nFm+D2i2K7hdSTnh--
+--SlQUnhtFAm0UjB/x--
