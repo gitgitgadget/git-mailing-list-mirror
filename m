@@ -1,60 +1,57 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15BF53D39D
-	for <git@vger.kernel.org>; Wed, 18 Oct 2023 16:34:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EFDA3C685
+	for <git@vger.kernel.org>; Wed, 18 Oct 2023 17:08:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="K0MO2kkj"
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAB15111
-	for <git@vger.kernel.org>; Wed, 18 Oct 2023 09:34:31 -0700 (PDT)
-Received: by mail-qk1-x730.google.com with SMTP id af79cd13be357-7789aed0e46so6904485a.0
-        for <git@vger.kernel.org>; Wed, 18 Oct 2023 09:34:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="PbpGXYCf"
+Received: from mail-qv1-xf34.google.com (mail-qv1-xf34.google.com [IPv6:2607:f8b0:4864:20::f34])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71877326A
+	for <git@vger.kernel.org>; Wed, 18 Oct 2023 10:08:10 -0700 (PDT)
+Received: by mail-qv1-xf34.google.com with SMTP id 6a1803df08f44-66d13ac2796so42057976d6.2
+        for <git@vger.kernel.org>; Wed, 18 Oct 2023 10:08:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1697646871; x=1698251671; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1697648877; x=1698253677; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=L/+tXC22cuJfSv48MR64M4rKjsfhVx2JLkU1grbILyY=;
-        b=K0MO2kkjctAHwaYTigeYE0YAxwmuGhb3ZFkCEhCZBcNLqGVoMi4dsJh/2Te3Asw5OK
-         V6y0TnX4Fn28vVMRw0F15vU4Aj2V9/NM7G4wfyrUvAvllrCr3o02z7DkVkGMBYlnH6Lh
-         6q0LIcADiCUQpY36RLmedgwuPpWFm8k/5r1uSljZ/ZVlJTob+SHoY/4Kt7hEj3m+xZvC
-         T6emtV6mr7MxosOOSCSAcSyilXwN2zyvjq/6Ef0XZXGOABcUQVAtcG2hxdi8wwQcpyYE
-         f50rUWT6YpUlp5AAYlfX41NYLTZvVrNqAOAVBnfjbxwdkVqVNTQMizMX086JLhVb//JQ
-         iiuA==
+        bh=fzYxvgYmm/IptMXg/jU7ny3eQ+8FXjm1uBaFK6DT4hY=;
+        b=PbpGXYCfjxy03wXqE4OuZENJKpnwr9vOK/4Q+uN7icLLceFUb8vRXrnZP74PFDsNVo
+         4MBVXjTY96OBKtetGh7stx6l9KTYI3GjWcD2mllcJyA1jgutqSTJ4jL5xWfWV87EXWpu
+         haCUr2iJHZ7LlhTK1Iky0SiOSboa09qFUoyM2/m/0wyDPkk+HGDJKRFfAjtXbrGgkWjK
+         gMAwHsKKIyhKShSbq5usv8oJFVoB5Yq8ACy6CSwvW9S4CcAYwBDV1oe3Bl8I/z4SRdKf
+         1jGnsYhJwqrH+B2VgVsIErzYcDfl0iwoS9kpnHdZruAXIxrG5F1hZr9fH6teI7n5BlWP
+         tqIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697646871; x=1698251671;
+        d=1e100.net; s=20230601; t=1697648877; x=1698253677;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=L/+tXC22cuJfSv48MR64M4rKjsfhVx2JLkU1grbILyY=;
-        b=fb31ZK8VZfe91eMYTgaK4rGIKTGXFvNZtW4E8tOoF4esi5n3Omf3j2/Cte2HDNPoXw
-         M7AD8y6Fk6Ffb8Xre7OhEdfyO7Nf88JfmKys6YC7DYf+XVVBEZPP6pJDyaM1EdUP5fOR
-         jYkXGbMAbtMqptxVB4c5soqStq6MRVr0fusShrvkBXoQfxBCG7t/98/dig2KAKIg1C7Y
-         KUmnAIZqOJ3XaTJE4dSWn1rZDYQCeuFB5POTLmyEg/FVmhliGLe4yL36yZNFk0vxUdpv
-         Iu7YIOMCcsP6r9KMCRhXRxTYR9eTGftWVp1Qn9+cWzIrWfhKwopf4rSr0vt+Kb7KdfR/
-         biyw==
-X-Gm-Message-State: AOJu0YyeEs22sUe3aQRfPkgUTsUBMbcytlilBf1MekZfX+600J8kg2c0
-	kCjipVF3SGuMoQwV5RcjZmlORw==
-X-Google-Smtp-Source: AGHT+IHI3ts1M9fCbFmoLfOeTcylx2pjOthyO+T9insiLl/oGfVVbfBKh8C2blY4yR334RRjqEZkGw==
-X-Received: by 2002:a05:620a:1929:b0:774:33ce:cfb6 with SMTP id bj41-20020a05620a192900b0077433cecfb6mr7173503qkb.30.1697646870862;
-        Wed, 18 Oct 2023 09:34:30 -0700 (PDT)
+        bh=fzYxvgYmm/IptMXg/jU7ny3eQ+8FXjm1uBaFK6DT4hY=;
+        b=ug+o/6BwOQxDCiyMrDUije0nAF+Ew6784SbWnn+l8b5tbYQCF+xxSR++/LivxwFJNW
+         3nnTv2ttLJHi8PlJrpILgdK0BJQWNiAtk/ILCO0aYXfZgEqsRTQoELYLv7akJYgeXa9t
+         yyc9eiIbchuIIm14hPkJJoBs4uwA2ywqIGjvHYfce9RMMWK9Y0+M+wCPSt8TSaWBnr+0
+         P5gmGHHZ8lzXjcb5dVnT7nvEVKMKn7Mkc/z09iEeDV1Tu+X4iLuxp+QxcxjUm4LwIUhT
+         3F+TY7LwUjbfGhV53gRkNKzdMkmdXbtRgahNElbl4gVjOW0iYBuPJkyUBrwecjuzkJEC
+         n14w==
+X-Gm-Message-State: AOJu0YzRAbhWbm1vaBpKczZrSzPN1Y+qHr7YG1R4SeEF607K8V5aeG+n
+	3ZJxfw2cZTMEYy2dWpDRJpRj4nhCPLejMCIfgLrfag==
+X-Google-Smtp-Source: AGHT+IE8cTi6CJ/dAOlXX+UU5pH5Ie2erz3NhPCdw9TZZNpPJSuQeH2e1Djq6qjff8n2a/T5JuJUuQ==
+X-Received: by 2002:a05:6214:d8e:b0:65d:f1d:d383 with SMTP id e14-20020a0562140d8e00b0065d0f1dd383mr6251643qve.3.1697648877689;
+        Wed, 18 Oct 2023 10:07:57 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id d22-20020a05620a159600b0076dae4753efsm81092qkk.14.2023.10.18.09.34.29
+        by smtp.gmail.com with ESMTPSA id u11-20020a05621411ab00b0065b1bcd0d33sm94519qvv.93.2023.10.18.10.07.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Oct 2023 09:34:30 -0700 (PDT)
-Date: Wed, 18 Oct 2023 12:34:28 -0400
+        Wed, 18 Oct 2023 10:07:57 -0700 (PDT)
+Date: Wed, 18 Oct 2023 13:07:56 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>,
 	"Eric W. Biederman" <ebiederm@gmail.com>, Jeff King <peff@peff.net>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 5/7] bulk-checkin: introduce
- `index_blob_bulk_checkin_incore()`
-Message-ID: <ZTAJFK8BLFEb9FFq@nand.local>
+	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v3 03/10] bulk-checkin: factor out `truncate_checkpoint()`
+Message-ID: <20c32d2178560180692327d8b93fe2a7adcf6ffd.1697648864.git.me@ttaylorr.com>
 References: <cover.1696629697.git.me@ttaylorr.com>
- <cover.1697560266.git.me@ttaylorr.com>
- <239bf39bfb21ef621a15839bade34446dcbc3103.1697560266.git.me@ttaylorr.com>
- <xmqq5y34wu5f.fsf@gitster.g>
+ <cover.1697648864.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -63,44 +60,66 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq5y34wu5f.fsf@gitster.g>
+In-Reply-To: <cover.1697648864.git.me@ttaylorr.com>
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
 	autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
 	lindbergh.monkeyblade.net
 
-On Tue, Oct 17, 2023 at 07:18:04PM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
->
-> >  bulk-checkin.c | 118 +++++++++++++++++++++++++++++++++++++++++++++++++
-> >  bulk-checkin.h |   4 ++
-> >  2 files changed, 122 insertions(+)
->
-> Unlike the previous four, which were very clear refactoring to
-> create reusable helper functions, this step leaves a bad aftertaste
-> after reading twice, and I think what is disturbing is that many new
-> lines are pretty much literally copied from stream_blob_to_pack().
->
-> I wonder if we can introduce an "input" source abstraction, that
-> replaces "fd" and "size" (and "path" for error reporting) parameters
-> to the stream_blob_to_pack(), so that the bulk of the implementation
-> of stream_blob_to_pack() can call its .read() method to read bytes
-> up to "size" from such an abstracted interface?  That would be a
-> good sized first half of this change.  Then in the second half, you
-> can add another "input" source that works with in-core "buf" and
-> "size", whose .read() method will merely be a memcpy().
+In a similar spirit as previous commits, factor our the routine to
+truncate a bulk-checkin packfile when writing past the pack size limit.
 
-Thanks, I like this idea. I had initially avoided it in the first couple
-of rounds, because the abstraction felt clunky and involved an
-unnecessary extra memcpy().
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ bulk-checkin.c | 27 +++++++++++++++++----------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
-But having applied your suggestion here, I think that the price is well
-worth the result, which is that `stream_blob_to_pack()` does not have to
-be implemented twice with very subtle differences.
+diff --git a/bulk-checkin.c b/bulk-checkin.c
+index c1f5450583..b92d7a6f5a 100644
+--- a/bulk-checkin.c
++++ b/bulk-checkin.c
+@@ -276,6 +276,22 @@ static void prepare_checkpoint(struct bulk_checkin_packfile *state,
+ 	}
+ }
+ 
++static void truncate_checkpoint(struct bulk_checkin_packfile *state,
++				struct hashfile_checkpoint *checkpoint,
++				struct pack_idx_entry *idx)
++{
++	/*
++	 * Writing this object to the current pack will make
++	 * it too big; we need to truncate it, start a new
++	 * pack, and write into it.
++	 */
++	if (!idx)
++		BUG("should not happen");
++	hashfile_truncate(state->f, checkpoint);
++	state->offset = checkpoint->offset;
++	flush_bulk_checkin_packfile(state);
++}
++
+ static int deflate_blob_to_pack(struct bulk_checkin_packfile *state,
+ 				struct object_id *result_oid,
+ 				int fd, size_t size,
+@@ -304,16 +320,7 @@ static int deflate_blob_to_pack(struct bulk_checkin_packfile *state,
+ 		if (!stream_blob_to_pack(state, &ctx, &already_hashed_to,
+ 					 fd, size, path, flags))
+ 			break;
+-		/*
+-		 * Writing this object to the current pack will make
+-		 * it too big; we need to truncate it, start a new
+-		 * pack, and write into it.
+-		 */
+-		if (!idx)
+-			BUG("should not happen");
+-		hashfile_truncate(state->f, &checkpoint);
+-		state->offset = checkpoint.offset;
+-		flush_bulk_checkin_packfile(state);
++		truncate_checkpoint(state, &checkpoint, idx);
+ 		if (lseek(fd, seekback, SEEK_SET) == (off_t) -1)
+ 			return error("cannot seek back");
+ 	}
+-- 
+2.42.0.408.g97fac66ae4
 
-Thanks again for the suggestion, I'm really pleased with how it came
-out. Reroll coming shortly...
-
-Thanks,
-Taylor
