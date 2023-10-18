@@ -1,81 +1,106 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52BC73B2AE
-	for <git@vger.kernel.org>; Wed, 18 Oct 2023 18:52:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52BAC1A593
+	for <git@vger.kernel.org>; Wed, 18 Oct 2023 18:59:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="YqE8cwbq"
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F6F6118
-	for <git@vger.kernel.org>; Wed, 18 Oct 2023 11:52:29 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0CB461C1276;
-	Wed, 18 Oct 2023 14:52:29 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=yFefI2f46T/X
-	3q3JajKDIS/6Igj3td2B0Bm/TG6Srrw=; b=YqE8cwbq89cCcPqs3SLHLn+kjtMh
-	VO794pz7RQhfeuUXfesnIxr6RlvKyAgynr0yok1Q43kcy8T3m9wr61gv581Z6M+l
-	zU65sDci/UsZ8TAbj1xmotVXqVhU5++xtnQc+XQNkQzcNhwmKOklSOLTbi8jBYT7
-	DxLHlW+I9imfYKE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 036361C1275;
-	Wed, 18 Oct 2023 14:52:29 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 33ABF1C1274;
-	Wed, 18 Oct 2023 14:52:28 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Matthias_A=C3=9Fhauer_via_GitGitGadget?=
- <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Pratyush Yadav <me@yadavpratyush.com>,  Matthias
- =?utf-8?Q?A=C3=9Fhauer?= <mha1993@live.de>
-Subject: Re: [PATCH] git-gui: add support for filenames starting with tilde
-In-Reply-To: <pull.1599.git.1697619043944.gitgitgadget@gmail.com> ("Matthias
-	=?utf-8?Q?A=C3=9Fhauer?= via GitGitGadget"'s message of "Wed, 18 Oct 2023
- 08:50:43
-	+0000")
-References: <pull.1599.git.1697619043944.gitgitgadget@gmail.com>
-Date: Wed, 18 Oct 2023 11:52:27 -0700
-Message-ID: <xmqqpm1bsqz8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=noprivs.com header.i=@noprivs.com header.b="HRMGR+o/"
+Received: from mail-108-mta198.mxroute.com (mail-108-mta198.mxroute.com [136.175.108.198])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7A10109
+	for <git@vger.kernel.org>; Wed, 18 Oct 2023 11:59:36 -0700 (PDT)
+Received: from mail-111-mta2.mxroute.com ([136.175.111.2] filter006.mxroute.com)
+ (Authenticated sender: mN4UYu2MZsgR)
+ by mail-108-mta198.mxroute.com (ZoneMTA) with ESMTPSA id 18b442852a0000ff68.001
+ for <git@vger.kernel.org>
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+ Wed, 18 Oct 2023 18:59:35 +0000
+X-Zone-Loop: ba9e7d830a02a0536b4459a6100640cb80b3b91ac182
+X-Originating-IP: [136.175.111.2]
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=noprivs.com
+	; s=x; h=Content-Transfer-Encoding:MIME-Version:Message-Id:Date:Subject:Cc:To
+	:From:Sender:Reply-To:Content-Type:Content-ID:Content-Description:Resent-Date
+	:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:
+	References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:
+	List-Owner:List-Archive; bh=XQOVDX2z4K3ImGFVbco+vXm66M0opAmis9PvRfrxDfg=; b=H
+	RMGR+o/AMSKSK5Yp+a71ee3/68Uk1Rh03H8pHJku9h9s8+tt9CiKMrwIAmqdeuOnKR1iFJNqHCgcb
+	iXSEIefg0RCfFS69aSjtXTgw/mMkDyQgSKOrk5QLPpLYA+tsD0rtsqpPn50Bo+KHRgA+X6TCckIiT
+	oaIRDIG/z4inBtKfouzHe7tC81b+gqy7Lp4cHcFBADABLi5TFxlmbGGmAQ/3Gv7FJU3yZ/U6qR5Xb
+	jE2TGMD4+5T0UWnvGTNHS9zCerFk9KEjV7eNZjuvDBxwHu0pMd2uhRVXcgfu9u10uoTe/gn1bIF/j
+	kQ+S0AoK5vtKcWNzbQB05rFq82vLeGAJw==;
+From: Matthew McClain <mmcclain@noprivs.com>
+To: git@vger.kernel.org
+Cc: Matthew McClain <mmcclain@noprivs.com>
+Subject: [PATCH] git-p4 shouldn't attempt to store symlinks in LFS
+Date: Wed, 18 Oct 2023 13:58:54 -0500
+Message-Id: <20231018185854.857674-1-mmcclain@noprivs.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 7C1DD104-6DE7-11EE-8C13-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-Authenticated-Id: catch@noprivs.com
 
-"Matthias A=C3=9Fhauer via GitGitGadget" <gitgitgadget@gmail.com> writes:
+If a symlink in your Perforce repository matches
+git-p4.largeFileExtensions, git-p4.py will attempt to put the symlink in
+LFS but will blow up when it passes a string to generateTempFile.
 
-> From: =3D?UTF-8?q?Matthias=3D20A=3DC3=3D9Fhauer?=3D <mha1993@live.de>
->
-> When git-gui encounters a file name starting with a tilde character (~)=
-,
-> TCL "helpfully" expands that tilde into a (probably non-existing) users
-> home directory. But in git-gui we're often not dealing with user suppli=
-ed
-> paths, where such an expansion might be expected, but actual names of f=
-iles.
->
-> Prevent TCL from doing tilde expansion on these literal filenames.
+Git LFS normal behavior does not stash symlinks in LFS.
 
-I do not have stake in git-gui (or gitk) and take the changes the
-subsystem owners have decided to take from them, but I have to
-wonder if this is merely robbing Peter to pay Paul?
+Importing revision 42889 (100%)Traceback (most recent call last):
+  File "./git/git-p4.py", line 4621, in <module>
+    main()
+  File "./git/git-p4.py", line 4615, in main
+    if not cmd.run(args):
+  File "./git/git-p4.py", line 4225, in run
+    self.importRevisions(args, branch_arg_given)
+  File "./git/git-p4.py", line 4002, in importRevisions
+    self.importChanges(changes)
+  File "./git/git-p4.py", line 3876, in importChanges
+    self.initialParent)
+  File "./git/git-p4.py", line 3496, in commit
+    self.streamP4Files(files)
+  File "./git/git-p4.py", line 3336, in streamP4Files
+    cb=streamP4FilesCbSelf)
+  File "./git/git-p4.py", line 910, in p4CmdList
+    cb(entry)
+  File "./git/git-p4.py", line 3321, in streamP4FilesCbSelf
+    self.streamP4FilesCb(entry)
+  File "./git/git-p4.py", line 3266, in streamP4FilesCb
+    self.streamOneP4File(self.stream_file, self.stream_contents)
+  File "./git/git-p4.py", line 3217, in streamOneP4File
+    git_mode, contents = self.largeFileSystem.processContent(git_mode, relPath, contents)
+  File "./git/git-p4.py", line 1656, in processContent
+    return LargeFileSystem.processContent(self, git_mode, relPath, contents)
+  File "./git/git-p4.py", line 1526, in processContent
+    contentTempFile = self.generateTempFile(contents)
+  File "./git/git-p4.py", line 1488, in generateTempFile
+    contentFile.write(d)
+  File "/usr/lib64/python3.6/tempfile.py", line 485, in func_wrapper
+    return func(*args, **kwargs)
+TypeError: a bytes-like object is required, not 'str'
 
-If the above description were not "we're often not" but "the only
-paths we use are repository relative, and a path that begin with a
-tilde NEVER refers to somebody's home directory", then I would buy
-into the change (but again, I am not even a user of git-gui, so take
-this with a moderate grains of salt).
+Signed-off-by: Matthew McClain <mmcclain@noprivs.com>
+---
+ git-p4.py | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-Thanks.
+diff --git a/git-p4.py b/git-p4.py
+index d26a980e5a..f5fda2a3dc 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -1522,6 +1522,10 @@ def processContent(self, git_mode, relPath, contents):
+            file is stored in the large file system and handles all necessary
+            steps.
+            """
++        # no need to store symlinks in LFS (generateTempFile wants bytes)
++        if git_mode == "120000":
++            return (git_mode, contents)
++
+         if self.exceedsLargeFileThreshold(relPath, contents) or self.hasLargeFileExtension(relPath):
+             contentTempFile = self.generateTempFile(contents)
+             pointer_git_mode, contents, localLargeFile = self.generatePointer(contentTempFile)
+-- 
+2.39.3
+
