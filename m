@@ -1,166 +1,163 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A344666B
-	for <git@vger.kernel.org>; Thu, 19 Oct 2023 05:08:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE48E63A5
+	for <git@vger.kernel.org>; Thu, 19 Oct 2023 06:45:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SbkoHgfw"
-Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBA5810F
-	for <git@vger.kernel.org>; Wed, 18 Oct 2023 22:08:22 -0700 (PDT)
-Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-5a86b6391e9so53451707b3.0
-        for <git@vger.kernel.org>; Wed, 18 Oct 2023 22:08:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697692102; x=1698296902; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NzVr0j/Sq+SIDOtH3sLxZe7ESpT/L4a6CdNZDaeMeVI=;
-        b=SbkoHgfwaDTdHT8KRcIg9eov6hSLFsWK+Rw8BnoKoR7WVNzzlrVJ95SgoMLKfFIADO
-         8uG+Uj+ym7J5ZfDs0QISsVgYEd477pZU8i3ea8hiWY7zGnxZeLZoncnrN2G/ndmB6RcO
-         o7IEm0BQydZH6OYw27iDWu6rAQYGLVVMMUz8F+F65++SiG+Aj+5bmtnUzoBD4mcUQSXh
-         n6p8C1OcbpF5+i7izJim0Ox0NRYFlT3s0PnT71HZ/3EZYUtcDZjv7AXjZ3GviDxNk2lE
-         pjqekV8cSSQJmYq4SIAePqC45aN51X40hYNTqBrrftRKS6hxKpcX8onbY5nlNV5dWlsM
-         ExOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697692102; x=1698296902;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=NzVr0j/Sq+SIDOtH3sLxZe7ESpT/L4a6CdNZDaeMeVI=;
-        b=g/M5qi9xjSonkwzp5Nu98/5LUyUa6fhPjZQhcbxyh0AINx7fl0nWFzL/EdBmyXC8WY
-         YbJH0gxdI8CEA1rV1GyIxmSWbYWPRXEMMIGVBSaGNQ/5gdnOjHZi7MVpvwF6CcoAxLyo
-         FDN4eLTGYxlA0o8KbWXlPfvaOYQg7lFclo0yq29QSi9LPZo9fn2AfVmr+pQxVcpTZce2
-         sDcJlO1pMApP74uxLdtFQl7jJKjWUZqRnFPA14fe7GHG5g2gmiSNNhOkFXGMZYwaOt5R
-         Ct2eaJB0PR2TG8y1Fk+ZL4hBRuGdxCJc0nn2dq8HaGPoUFfhS6zTNV7axV0hhkSdklTb
-         6ijA==
-X-Gm-Message-State: AOJu0YxUS/1/zTDAj8Z0IOHoswmxfKw6MjC7hFetIzSnGVvwjpweEEwY
-	Mw46PkxrgPKEIKruLr7zE5HZzId+olwUNTaoluo=
-X-Google-Smtp-Source: AGHT+IHkiVq9MES0ykz1LYY4rTWankJ2SYWDSS77tm1ZzvxLIO7KUYHCXGgHwwVt3Z7d5hFs663eXKmTuIznZv4yF18=
-X-Received: by 2002:a0d:d5d6:0:b0:5a7:a81b:d9af with SMTP id
- x205-20020a0dd5d6000000b005a7a81bd9afmr1168481ywd.7.1697692101989; Wed, 18
- Oct 2023 22:08:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Mw5U6jni";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lLltyzsW"
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C42F122
+	for <git@vger.kernel.org>; Wed, 18 Oct 2023 23:45:40 -0700 (PDT)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id 22D595C034D;
+	Thu, 19 Oct 2023 02:45:38 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Thu, 19 Oct 2023 02:45:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to; s=fm3; t=1697697938; x=1697784338; bh=JL
+	58iU1ACKDYMY1bbYfGVtbRaS3wHCBQsNJ72I1jv9o=; b=Mw5U6jni+qa3xH0wmK
+	Q1HbkjXkSCmSdD6sDelb9Copq398kX1j1YkPH1k2H4LYpiOFP5uwGx5fxG4//UwY
+	9xbNjL093s/LOUGHyh5pXE33P69nGRZHHDOGi7svaj6qGG/iEnNd2tk8Etp1TtiV
+	VzJn6pe0kZoCeKbDuucMvS2oRSbzyzSQr0jxI8sDo/y5nbfucirxlyL93y1JowTG
+	J7WSTb2fQ0aAh9H1RAMrHhbIB1CQThqXoYQRNZgTdzJ2liv0NQ8Tb8IXh00p5UJD
+	BcqKm7fak/zBb+TgOwQ/zsdRKtKUaXDRMpFBfdrOCVmfNekLSMsKU0VsjN9aFj7W
+	Hz1A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm3; t=1697697938; x=1697784338; bh=JL58iU1ACKDYM
+	Y1bbYfGVtbRaS3wHCBQsNJ72I1jv9o=; b=lLltyzsWn4trs+yEo5TJZ/HQyVUxV
+	rfTSxDMihuV6+s2rXhmw2GgTy+8rFlaG7GDnrSED+2CekcGb4KmNyfYzucdCWbyV
+	4MGWaDJmbR3xeqar9vopNLlu2zCM+HLw0W0uc+NlVqBuHTkgTzT0HHMapf79DOIT
+	81tdKUdo3t0cegn8VuMCGAuQ8p640S77CFwtdthLRGfPmwAmcIDfXH1QgPuk9Xhu
+	Txup4nIE8x2fGj34/ykNey+xFB1XrZX66ZMshmzfN6AjwAbHBXZpSejE875FoG0B
+	56m4Ztz4Kk+PGmtruG/6wXjHAAxIM4ovYYirkX1qqFqxeE1PHVjSJy/MA==
+X-ME-Sender: <xms:kdAwZYzViLOGEwpEmWtZ8xgCsKdfOukJFtuwuTssUakQsyhLeB2WbQ>
+    <xme:kdAwZcTQJO74znzutyNcG2n9w8o_OpQln9S94e8IMoCDjF01wgNub0ava5rDe2nfy
+    fbPJ5UQFULOPZV05w>
+X-ME-Received: <xmr:kdAwZaVTTd0hEIkKEQG82UruWJrJyoHjwAovnC1BggxDbT0JShX5MJnq6deZ8ZIG2zrVwIJBwkUT78A1j7gcayx1OGvjDFoLDGNb_GZA7N4xRA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrjeehgdduuddtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:kdAwZWhHEir89-nars4zFRBIT-Bfr_BgVNQkajcesJ1-wnYQAwf4mQ>
+    <xmx:kdAwZaCbE5Z8_ozaDIIO1B0wKtOzA8sSq6PyDNmO0NyFB1ySbxzPGg>
+    <xmx:kdAwZXKfkTx4Z4fqL_AxxE1FpYDfD1LQKX-xOVsT-sbe3vzdbgzvHA>
+    <xmx:ktAwZdN8GiGBD4VcgzqpcgjDWQ8aovZLLSsQIaC5aFvUIACZIi2CxA>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 19 Oct 2023 02:45:37 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id e9eb3046 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 19 Oct 2023 06:45:31 +0000 (UTC)
+Date: Thu, 19 Oct 2023 08:45:33 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH] commit: detect commits that exist in commit-graph but
+ not in the ODB
+Message-ID: <ZTDQjangLsQ1cSJl@tanuki>
+References: <ZSkCGS3JPEQ71dOF@tanuki>
+ <b0bf576c51a706367a758b8e30eca37edb9c2734.1697200576.git.ps@pks.im>
+ <xmqq1qdy1iyr.fsf@gitster.g>
+ <ZS4rmtBTYnp2RMiY@tanuki>
+ <xmqqjzrlhzci.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAP6f5Mmi=f4DPcFwfvEiJMdKMa0BUyZ019mc8uFXyOufgD4NjA@mail.gmail.com>
- <xmqqzg0gx6k9.fsf@gitster.g> <CANYiYbHK90Ptq5v4EbquyRA7N9jo=xwkg=WuM=r60Wh9HMxdyA@mail.gmail.com>
- <xmqqwmvkve83.fsf@gitster.g>
-In-Reply-To: <xmqqwmvkve83.fsf@gitster.g>
-From: Jiang Xin <worldhello.net@gmail.com>
-Date: Thu, 19 Oct 2023 13:08:10 +0800
-Message-ID: <CANYiYbEqTH975j9E0GTbSbexrw3MLhKwBCw7mibfnWbxZ+-_yw@mail.gmail.com>
-Subject: Re: Is there any interest in localizing term delimiters in git messages?
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Alexander Shopov <ash@kambanaria.org>, Git List <git@vger.kernel.org>, jmas@softcatala.org, 
-	alexhenrie24@gmail.com, ralf.thielow@gmail.com, matthias.ruester@gmail.com, 
-	phillip.szelat@gmail.com, vyruss@hellug.gr, christopher.diaz.riv@gmail.com, 
-	jn.avila@free.fr, flashcode@flashtux.org, bagasdotme@gmail.com, 
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	alessandro.menti@alessandromenti.it, elongbug@gmail.com, cwryu@debian.org, 
-	uneedsihyeon@gmail.com, arek_koz@o2.pl, dacs.git@brilhante.top, 
-	"insolor@gmail.com" <insolor@gmail.com>, peter@softwolves.pp.se, bitigchi@me.com, ark@cho.red, 
-	kate@kgthreads.com, "vnwildman@gmail.com" <vnwildman@gmail.com>, pclouds@gmail.com, 
-	"dyroneteng@gmail.com" <dyroneteng@gmail.com>, "oldsharp@gmail.com" <oldsharp@gmail.com>, 
-	"lilydjwg@gmail.com" <lilydjwg@gmail.com>, me@angyi.io, "pan93412@gmail.com" <pan93412@gmail.com>, 
-	"franklin@goodhorse.idv.tw" <franklin@goodhorse.idv.tw>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="JSGfCm6/kUrqtWw1"
+Content-Disposition: inline
+In-Reply-To: <xmqqjzrlhzci.fsf@gitster.g>
+
+
+--JSGfCm6/kUrqtWw1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 18, 2023 at 10:47=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
- wrote:
->
-> Jiang Xin <worldhello.net@gmail.com> writes:
->
-> > Starting with the release of git 2.34.0 two years ago, we had a new
-> > l10n pipeline and the git-po-helper tool as part of our l10n workflow.
-> > The first version of git-po-helper introduced a validator to protect
-> > git command parameters and variable names in megid.
->
-> Ahh, that is the piece I was missing.  I didn't know you guys are
-> doing extra checks that could trigger false positives.
->
-> > E.g. In pull
-> > request 541 (https://github.com/git-l10n/git-po/pull/541), a
-> > mismatched variable name "new_index" was reported in bg.po as below:
-> >
-> >     level=3Dwarning msg=3D"mismatch variable names in msgstr: new_index=
-"
-> >     level=3Dwarning msg=3D">> msgid: unable to write new_index file"
-> >     level=3Dwarning msg=3D">> msgstr: =D0=BD=D0=BE=D0=B2=D0=B8=D1=8F=D1=
-=82 =D0=B8=D0=BD=D0=B4=D0=B5=D0=BA=D1=81 =D0=BD=D0=B5 =D0=BC=D0=BE=D0=B6=D0=
-=B5 =D0=B4=D0=B0 =D0=B1=D1=8A=D0=B4=D0=B5 =D0=B7=D0=B0=D0=BF=D0=B8=D1=81=D0=
-=B0=D0=BD"
-> >
-> > And po/bg.po changed as below:
-> >
-> >     msgid "unable to write new_index file"
-> >     msgstr "=D0=BD=D0=BE=D0=B2=D0=B8=D1=8F=D1=82 =D0=B8=D0=BD=D0=B4=D0=
-=B5=D0=BA=D1=81 (new_index) =D0=BD=D0=B5 =D0=BC=D0=BE=D0=B6=D0=B5 =D0=B4=D0=
-=B0 =D0=B1=D1=8A=D0=B4=D0=B5 =D0=B7=D0=B0=D0=BF=D0=B8=D1=81=D0=B0=D0=BD"
->
-> Wait.  Is this supposed to be a good example of validator working
-> well?  We use this exact message three times in builtin/commit.c; is
-> the validator insisting on the translated message to have verbatim
-> string "new_index" in it so that the end-users will see it?
->
-> I may still be confused, but if that is what is going on, I think it
-> is a wrong validation in this particular case.  I can understand if
-> we were creating say .git/new_index file and it helps the end users
-> to diagnose a troubled repository by running "ls .git" to see if a
-> file called "new_index" exists and getting in the way, but I do not
-> think it is the case.  A new file ".git/index.lock" is created via
-> repo_hold_locked_index() and I do not think it helps the end-user to
-> know that we may be calling it "new_index" internally among the
-> developers' circle.  If the message were about "index.lock", it
-> might be a different story, but such an error would probably have
-> been issued long before write_locked_index() gets called.
->
-> I'd suggest doing s/new_index/new index/ to msgid string for these
-> anyway.
+On Tue, Oct 17, 2023 at 11:34:53AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+>=20
+> > Fair point indeed. The following is a worst-case scenario benchmark of
+> > of the change where we do a full topological walk of all reachable
+> > commits in the graph, executed in linux.git. We parse commit parents via
+> > `repo_parse_commit_gently()`, so the new code path now basically has to
+> > check for object existence of every reachable commit:
+> > ...
+> > The added check does lead to a performance regression indeed, which is
+> > not all that unexpected. That being said, the commit-graph still results
+> > in a significant speedup compared to the case where we don't have it.
+>=20
+> Yeah, I agree that both points are expected.  An extra check that is
+> much cheaper than the full parsing is paying a small price to be a
+> bit more careful than before.  The question is if the price is small
+> enough.  I am still not sure if the extra carefulness is warranted
+> for all normal cases to spend 30% extra cycles.
+>=20
+> Thanks.
 
-I tried to find similar patterns in `po/bg.po` using:
+Well, seen in contexts like the thread that spawned this discussion I
+think it's preferable to take a relatively smaller price compared to
+disabling the commit graph entirely in some situations. With that in
+mind, personally I'd be happy with either of two outcomes here:
 
-    $ git  grep -h -B5 '([a-zA-Z_\.]*_[a-zA-Z_\.]\+)' po/bg.po
+    - We take the patch I proposed as a hardening measure, which allows
+      us to use the commit graph in basically any situation where we
+      could parse objects from the ODB without any downside except for a
+      performance hit.
 
-And find other translated variable names in Bulgarian as follows:
+    - We say that corrupt repositories do not need to be accounted for
+      when using metadata caches like the commit-graph. That would mean
+      in consequence that for the `--missing` flag we would not have to
+      disable commit graphs.
 
- * cookie_result in builtin/fsmonitor--daemon.c:
+The test failure that was exposed in Karthik's test only stems from the
+fact that we manually corrupt the repository and is not specific to the
+`--missing` flag. This is further stressed by the new test aded in my
+own patch, as we can trigger a similar bug when not using `--missing`.
 
-   error(_("fsmonitor: cookie_result '%d' !=3D SEEN"),
+For end users, object pruning would happen either via git-gc(1) or via
+git-maintenance(1), and both of them do know to update commit graphs
+already. This should significantly decrease the chance that such stale
+commit graphs would be found out there in the wild, but it's still not
+impossible of course. Especially in cases where you use lower-level
+commands like git-repack(1) with cruft packs or git-prune(1), which is
+often the case for Git hosters, the risk is higher though.
 
- * run_command in builtin/submodule--helper.c:
+Patrick
 
-    die(_("run_command returned non-zero status for %s\n."),
-    die(_("run_command returned non-zero status while "
+--JSGfCm6/kUrqtWw1
+Content-Type: application/pgp-signature; name="signature.asc"
 
- * crlf_action in convert.c:
+-----BEGIN PGP SIGNATURE-----
 
-    warning(_("illegal crlf_action %d"), (int)crlf_action);
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmUw0IcACgkQVbJhu7ck
+PpTZyQ/9Fte2uQf+cmEj07z2qziSgWGLJjzoWT9TMDphmV0xyCcb2HGZWdjoU+UX
+8fnNeL/ubee/4mZFLNs+Swi29d4OZkcDsvzrcVMQnhROa/XbQ2jAMrgmovajqSBB
+PN5F5NtoQz084TrLd3D+6uYooE2eaI67a9abLJ7adac5iI6giiXnNC1FgZorAZN4
+0oBbEpfVlXa1bo2OvB8tXw+u0zLL0vJ6SofcS3zMhbc4zpx7Y83zklGVSqJoPiJs
+i0XbFZLpNk1RH2XZSt3IxMWFMbAYZkP+Nxa3BXFH7/E8YHQnU6eZd08bnI/V1+n9
+js3F3IT1vKiFsld2tHi2QdbOCTbwwn18GnzuPMz7ZeBfXQec391G2lvsz3CeAVcU
+e+VPms7gNf6L/odTyqrVYHRZglN9/MnNPHgqdJeWvL/XnES9XfuSeCBMHTOlvuKO
+vwzR6l23p5S60wfe9DdJzGdoqhWLlw5VxNXGzgNbK3vNrGg9HGbWQf5ru1TxgCRh
+vzDAx9inkD8TiwYP+Y+WnfqZFBY+7gS65HpXs3rCgidiBPFR7S8EhjmOM0w2fF/y
+2iyQrYZrNYxnC11D0Npr8N4zVumwXdtpTAyHUSiNItH+1SDuY9G/BRbRgTUGgmqa
+uIAZQ1zDafiIyPyQZA5P9wUErAH/Pp2Aey1Cc1pJT++CI7Up4/c=
+=sVsV
+-----END PGP SIGNATURE-----
 
- * lazy_dir in name-hash.c:
-
-    die(_("unable to create lazy_dir thread: %s"),
-
- * lazy_name in name-hash.c:
-
-    die(_("unable to create lazy_name thread: %s"),
-    die(_("unable to join lazy_name thread: %s"),
-
- * load_cache_entries in read-cache.c:
-
-    die(_("unable to create load_cache_entries thread: %s"),
-    die(_("unable to join load_cache_entries thread: %s"),
-
- * load_index_extensions in read-cache.c:
-
-    die(_("unable to create load_index_extensions thread: %s"),
-    die(_("unable to join load_index_extensions thread: %s"),
-
-Apart from "new_index", it seems that none of the above sentences can
-be rewritten simply by removing the underscores in variable names
-without breaking the grammar, and I suppose it would be better to keep
-those variable names unchanged.
+--JSGfCm6/kUrqtWw1--
