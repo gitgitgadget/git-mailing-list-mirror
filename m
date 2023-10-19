@@ -1,56 +1,56 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12EBA347C9
-	for <git@vger.kernel.org>; Thu, 19 Oct 2023 17:28:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BE18354EA
+	for <git@vger.kernel.org>; Thu, 19 Oct 2023 17:28:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="EbmIGWah"
-Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8D63CF
-	for <git@vger.kernel.org>; Thu, 19 Oct 2023 10:28:50 -0700 (PDT)
-Received: by mail-yb1-xb33.google.com with SMTP id 3f1490d57ef6-d77ad095f13so8515505276.2
-        for <git@vger.kernel.org>; Thu, 19 Oct 2023 10:28:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="InQ/O81/"
+Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C1CE112
+	for <git@vger.kernel.org>; Thu, 19 Oct 2023 10:28:54 -0700 (PDT)
+Received: by mail-qv1-xf29.google.com with SMTP id 6a1803df08f44-66d4453ba38so32946166d6.0
+        for <git@vger.kernel.org>; Thu, 19 Oct 2023 10:28:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1697736530; x=1698341330; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1697736533; x=1698341333; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Y+DEeCy474bdzfkPR1WnB7ovUU7jUK0mCkLA5nybjF8=;
-        b=EbmIGWah1t7gcxVP/vI5YD58zLpRDVoxrrJ2dyjh5oyNfvPSPNFxdWDrt5jPSbl3Y/
-         XwHMxSa9q6vI/JnQbIlzt2bMVMuEvA5HMcB/UfKBGTyJRQKMJt8/ZVAWGZgactPIDajT
-         rrzdDBHROuEnXtyi/Aul0Q4eug/c1W59OzM7/hKTxKuODVnnQMpmVJDmPNWlx+qgTuey
-         Ng2Hrc/bzt/QfXDXDV/wbRGtf0bfV78hmzoZnOOLA5lStNiU1LujIfGud7isuGuzcEix
-         n8GNcd6PYi+zg7Xv3NtwZDZ+rfIFuDDKg0m1mZSylXSxicsfmLpG+yD1MC9uIR819DWH
-         7NcQ==
+        bh=PO2d8JRzHU7FtTh9JiLtJgEt0DrafOcFO2g07IErPkA=;
+        b=InQ/O81/BEsvdXQiBs9qz2X8m7iVS7xjXbqLwNfyriXYf1n1oObDXYKuMp528Gt0Xx
+         cg8OHHyu6J//XToOtDfqpXPoe/InHFJ1yqImzpTWT5YSj81UzjvlBkudFGo6WNJyNFNU
+         kKpiaQEfQztlRbqGoUvP1nU9vr3iTH7/KA9pt2uYA9sGxbROMQykIqPMk4ECs8p32MK6
+         h7UUuC2ceHSrIN5vaM4gixEVhFduC/qtZfNdOnw5fIuADgcHABK2xluu7KQrORxukgbv
+         ml58BBx6L1Dk3bxtbPG+ft1mrr5fveKe+2cEvjaXsswB6jxNvkmtvSZc8/B3uSeycMj8
+         XV0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697736530; x=1698341330;
+        d=1e100.net; s=20230601; t=1697736533; x=1698341333;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Y+DEeCy474bdzfkPR1WnB7ovUU7jUK0mCkLA5nybjF8=;
-        b=B9CY5pA2QUmOgd/p4QHw/F/w49mNCRHHazaqHu3voPm9Qb8+a0ZQGA/7RoN426rmve
-         tZMXi1jfGk9BBE8gEbBCX6Ydsz/ygaV2GSeSGIZ46J0V2/K5S6HaZlGQy5Nl4r79uWoa
-         alqSaakqd+W9eQdk956sar3DtFYzQstYhu1Cz3zP4lqB+X9Uf7LnDAcCsk94V55lfxyt
-         y+VL2sLc+MldHSIqI/BPJAfI96V5Gr6ERYxbhI8CFYQDlBg2OUlGr/FykCj7fgaXZkA9
-         mAdmj4skjI6xb8EOy2w8dDzGB7BewNpRLpHezQN0dHdZSfoeUs2XI+3pAAx/snjv5V0M
-         UvUw==
-X-Gm-Message-State: AOJu0Yw9cvvfYX6bLRoUv4yvu/+XV5G1yHcXAyu/6PoncH3KbtK/Gf8j
-	YzVk5Ae6a71qEeAGkT0KC313dq67G0mDl9Tg/3QDVw==
-X-Google-Smtp-Source: AGHT+IFxkAyETLOZIuZ5HpSGeVEpOSIvlY8OXN3jSPSys2rXWcDLppIBHu8939vtp328qAJzM5vudg==
-X-Received: by 2002:a25:3d5:0:b0:d9a:58e1:106d with SMTP id 204-20020a2503d5000000b00d9a58e1106dmr2911711ybd.52.1697736529860;
-        Thu, 19 Oct 2023 10:28:49 -0700 (PDT)
+        bh=PO2d8JRzHU7FtTh9JiLtJgEt0DrafOcFO2g07IErPkA=;
+        b=vzlrNPBGQll9gUhZX7t8Jc8U7sJDQ9+K06FCg86FBgUWHovfICFz0IO68RFTqhgVC7
+         ywLBD8g4QtD8EwhAW4CHveJZThuPlElJa+7wwaRRPclJY0mCi2vMsvHADX7np6rkP4lW
+         u/HGY0ZWaNsLOBEyKBpJxWhiERDt/MvICaL8Om9Oen3NOH6v9XhU4iX7U2GkKB43xRvt
+         eEtl5mVxpdlOs6uao5HcqbWV4nIjnmVybQ3x482QGOrVlerJySi1A0rjtK10kTP9sMMb
+         N53RuQ6PcG+yqYsrF2YUXYnvZX+kdLwTrP59edz419iTgVaDYNysvXqiRnR5HpbtX/Hv
+         XMnw==
+X-Gm-Message-State: AOJu0Yx/bcO9kwPs9oMCm2O93FK8OiLQJB5ALlZlRwuIKChdDwcoaOlF
+	0FuGksue67P9lEDYJhB0L7YJnznAhMBqmi5B48T+ug==
+X-Google-Smtp-Source: AGHT+IHK6i4P9Z8hhcA2D+HWm+kBaGiQhY0q+x8P21v7I8An7hZ0k1H5HJ0sY1EM2P/N0oHJHa/5oQ==
+X-Received: by 2002:a05:6214:21ed:b0:651:6349:fa7 with SMTP id p13-20020a05621421ed00b0065163490fa7mr3290192qvj.25.1697736533076;
+        Thu, 19 Oct 2023 10:28:53 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id lg8-20020a056214548800b0066d05ed3778sm15830qvb.56.2023.10.19.10.28.49
+        by smtp.gmail.com with ESMTPSA id e20-20020ad442b4000000b0065d1380dd17sm15736qvr.61.2023.10.19.10.28.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Oct 2023 10:28:49 -0700 (PDT)
-Date: Thu, 19 Oct 2023 13:28:48 -0400
+        Thu, 19 Oct 2023 10:28:52 -0700 (PDT)
+Date: Thu, 19 Oct 2023 13:28:51 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Elijah Newren <newren@gmail.com>,
 	"Eric W. Biederman" <ebiederm@gmail.com>, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v4 3/7] bulk-checkin: refactor deflate routine to accept a
+Subject: [PATCH v4 4/7] bulk-checkin: implement `SOURCE_INCORE` mode for
  `bulk_checkin_source`
-Message-ID: <d5bbd7810ee8f90be4cf6028f6420f52d72d24d0.1697736516.git.me@ttaylorr.com>
+Message-ID: <e427fe6ad383cc238c13f313dc9f11eab37a3840.1697736516.git.me@ttaylorr.com>
 References: <cover.1697736516.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -62,117 +62,67 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1697736516.git.me@ttaylorr.com>
 
-Prepare for a future change where we will want to use a routine very
-similar to the existing `deflate_blob_to_pack()` but over arbitrary
-sources (i.e. either open file-descriptors, or a location in memory).
+Continue to prepare for streaming an object's contents directly from
+memory by teaching `bulk_checkin_source` how to perform reads and seeks
+based on an address in memory.
 
-Extract out a common "deflate_obj_to_pack()" routine that acts on a
-bulk_checkin_source, instead of a (int, size_t) pair. Then rewrite
-`deflate_blob_to_pack()` in terms of it.
+Unlike file descriptors, which manage their own offset internally, we
+have to keep track of how many bytes we've read out of the buffer, and
+make sure we don't read past the end of the buffer.
 
+Suggested-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- bulk-checkin.c | 52 ++++++++++++++++++++++++++++++--------------------
- 1 file changed, 31 insertions(+), 21 deletions(-)
+ bulk-checkin.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
 diff --git a/bulk-checkin.c b/bulk-checkin.c
-index 7e6b52112e..28bc8d5ab4 100644
+index 28bc8d5ab4..60361b3e2e 100644
 --- a/bulk-checkin.c
 +++ b/bulk-checkin.c
-@@ -285,30 +285,23 @@ static void prepare_to_stream(struct bulk_checkin_packfile *state,
- 		die_errno("unable to write pack header");
+@@ -141,11 +141,15 @@ static int already_written(struct bulk_checkin_packfile *state, struct object_id
  }
  
--static int deflate_blob_to_pack(struct bulk_checkin_packfile *state,
--				struct object_id *result_oid,
--				int fd, size_t size,
--				const char *path, unsigned flags)
+ struct bulk_checkin_source {
+-	enum { SOURCE_FILE } type;
++	enum { SOURCE_FILE, SOURCE_INCORE } type;
+ 
+ 	/* SOURCE_FILE fields */
+ 	int fd;
+ 
++	/* SOURCE_INCORE fields */
++	const void *buf;
++	size_t read;
 +
-+static int deflate_obj_to_pack(struct bulk_checkin_packfile *state,
-+			       struct object_id *result_oid,
-+			       struct bulk_checkin_source *source,
-+			       enum object_type type,
-+			       off_t seekback,
-+			       unsigned flags)
- {
--	off_t seekback, already_hashed_to;
-+	off_t already_hashed_to = 0;
- 	git_hash_ctx ctx;
- 	unsigned char obuf[16384];
- 	unsigned header_len;
- 	struct hashfile_checkpoint checkpoint = {0};
- 	struct pack_idx_entry *idx = NULL;
--	struct bulk_checkin_source source = {
--		.type = SOURCE_FILE,
--		.fd = fd,
--		.size = size,
--		.path = path,
--	};
- 
--	seekback = lseek(fd, 0, SEEK_CUR);
--	if (seekback == (off_t) -1)
--		return error("cannot find the current offset");
--
--	header_len = format_object_header((char *)obuf, sizeof(obuf),
--					  OBJ_BLOB, size);
-+	header_len = format_object_header((char *)obuf, sizeof(obuf), type,
-+					  source->size);
- 	the_hash_algo->init_fn(&ctx);
- 	the_hash_algo->update_fn(&ctx, obuf, header_len);
- 	the_hash_algo->init_fn(&checkpoint.ctx);
-@@ -317,8 +310,6 @@ static int deflate_blob_to_pack(struct bulk_checkin_packfile *state,
- 	if ((flags & HASH_WRITE_OBJECT) != 0)
- 		CALLOC_ARRAY(idx, 1);
- 
--	already_hashed_to = 0;
--
- 	while (1) {
- 		prepare_to_stream(state, flags);
- 		if (idx) {
-@@ -327,7 +318,7 @@ static int deflate_blob_to_pack(struct bulk_checkin_packfile *state,
- 			crc32_begin(state->f);
- 		}
- 		if (!stream_obj_to_pack(state, &ctx, &already_hashed_to,
--					&source, OBJ_BLOB, flags))
-+					source, type, flags))
- 			break;
- 		/*
- 		 * Writing this object to the current pack will make
-@@ -339,7 +330,7 @@ static int deflate_blob_to_pack(struct bulk_checkin_packfile *state,
- 		hashfile_truncate(state->f, &checkpoint);
- 		state->offset = checkpoint.offset;
- 		flush_bulk_checkin_packfile(state);
--		if (bulk_checkin_source_seek_to(&source, seekback) == (off_t)-1)
-+		if (bulk_checkin_source_seek_to(source, seekback) == (off_t)-1)
- 			return error("cannot seek back");
+ 	/* common fields */
+ 	size_t size;
+ 	const char *path;
+@@ -157,6 +161,11 @@ static off_t bulk_checkin_source_seek_to(struct bulk_checkin_source *source,
+ 	switch (source->type) {
+ 	case SOURCE_FILE:
+ 		return lseek(source->fd, offset, SEEK_SET);
++	case SOURCE_INCORE:
++		if (!(0 <= offset && offset < source->size))
++			return (off_t)-1;
++		source->read = offset;
++		return source->read;
+ 	default:
+ 		BUG("unknown bulk-checkin source: %d", source->type);
  	}
- 	the_hash_algo->final_oid_fn(result_oid, &ctx);
-@@ -361,6 +352,25 @@ static int deflate_blob_to_pack(struct bulk_checkin_packfile *state,
- 	return 0;
- }
- 
-+static int deflate_blob_to_pack(struct bulk_checkin_packfile *state,
-+				struct object_id *result_oid,
-+				int fd, size_t size,
-+				const char *path, unsigned flags)
-+{
-+	struct bulk_checkin_source source = {
-+		.type = SOURCE_FILE,
-+		.fd = fd,
-+		.size = size,
-+		.path = path,
-+	};
-+	off_t seekback = lseek(fd, 0, SEEK_CUR);
-+	if (seekback == (off_t) -1)
-+		return error("cannot find the current offset");
-+
-+	return deflate_obj_to_pack(state, result_oid, &source, OBJ_BLOB,
-+				   seekback, flags);
-+}
-+
- void prepare_loose_object_bulk_checkin(void)
- {
- 	/*
+@@ -168,6 +177,13 @@ static ssize_t bulk_checkin_source_read(struct bulk_checkin_source *source,
+ 	switch (source->type) {
+ 	case SOURCE_FILE:
+ 		return read_in_full(source->fd, buf, nr);
++	case SOURCE_INCORE:
++		assert(source->read <= source->size);
++		if (nr > source->size - source->read)
++			nr = source->size - source->read;
++		memcpy(buf, (unsigned char *)source->buf + source->read, nr);
++		source->read += nr;
++		return nr;
+ 	default:
+ 		BUG("unknown bulk-checkin source: %d", source->type);
+ 	}
 -- 
 2.42.0.405.g86fe3250c2
 
