@@ -1,163 +1,302 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE48E63A5
-	for <git@vger.kernel.org>; Thu, 19 Oct 2023 06:45:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D33F08F62
+	for <git@vger.kernel.org>; Thu, 19 Oct 2023 07:42:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Mw5U6jni";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lLltyzsW"
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C42F122
-	for <git@vger.kernel.org>; Wed, 18 Oct 2023 23:45:40 -0700 (PDT)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id 22D595C034D;
-	Thu, 19 Oct 2023 02:45:38 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Thu, 19 Oct 2023 02:45:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1697697938; x=1697784338; bh=JL
-	58iU1ACKDYMY1bbYfGVtbRaS3wHCBQsNJ72I1jv9o=; b=Mw5U6jni+qa3xH0wmK
-	Q1HbkjXkSCmSdD6sDelb9Copq398kX1j1YkPH1k2H4LYpiOFP5uwGx5fxG4//UwY
-	9xbNjL093s/LOUGHyh5pXE33P69nGRZHHDOGi7svaj6qGG/iEnNd2tk8Etp1TtiV
-	VzJn6pe0kZoCeKbDuucMvS2oRSbzyzSQr0jxI8sDo/y5nbfucirxlyL93y1JowTG
-	J7WSTb2fQ0aAh9H1RAMrHhbIB1CQThqXoYQRNZgTdzJ2liv0NQ8Tb8IXh00p5UJD
-	BcqKm7fak/zBb+TgOwQ/zsdRKtKUaXDRMpFBfdrOCVmfNekLSMsKU0VsjN9aFj7W
-	Hz1A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1697697938; x=1697784338; bh=JL58iU1ACKDYM
-	Y1bbYfGVtbRaS3wHCBQsNJ72I1jv9o=; b=lLltyzsWn4trs+yEo5TJZ/HQyVUxV
-	rfTSxDMihuV6+s2rXhmw2GgTy+8rFlaG7GDnrSED+2CekcGb4KmNyfYzucdCWbyV
-	4MGWaDJmbR3xeqar9vopNLlu2zCM+HLw0W0uc+NlVqBuHTkgTzT0HHMapf79DOIT
-	81tdKUdo3t0cegn8VuMCGAuQ8p640S77CFwtdthLRGfPmwAmcIDfXH1QgPuk9Xhu
-	Txup4nIE8x2fGj34/ykNey+xFB1XrZX66ZMshmzfN6AjwAbHBXZpSejE875FoG0B
-	56m4Ztz4Kk+PGmtruG/6wXjHAAxIM4ovYYirkX1qqFqxeE1PHVjSJy/MA==
-X-ME-Sender: <xms:kdAwZYzViLOGEwpEmWtZ8xgCsKdfOukJFtuwuTssUakQsyhLeB2WbQ>
-    <xme:kdAwZcTQJO74znzutyNcG2n9w8o_OpQln9S94e8IMoCDjF01wgNub0ava5rDe2nfy
-    fbPJ5UQFULOPZV05w>
-X-ME-Received: <xmr:kdAwZaVTTd0hEIkKEQG82UruWJrJyoHjwAovnC1BggxDbT0JShX5MJnq6deZ8ZIG2zrVwIJBwkUT78A1j7gcayx1OGvjDFoLDGNb_GZA7N4xRA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrjeehgdduuddtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:kdAwZWhHEir89-nars4zFRBIT-Bfr_BgVNQkajcesJ1-wnYQAwf4mQ>
-    <xmx:kdAwZaCbE5Z8_ozaDIIO1B0wKtOzA8sSq6PyDNmO0NyFB1ySbxzPGg>
-    <xmx:kdAwZXKfkTx4Z4fqL_AxxE1FpYDfD1LQKX-xOVsT-sbe3vzdbgzvHA>
-    <xmx:ktAwZdN8GiGBD4VcgzqpcgjDWQ8aovZLLSsQIaC5aFvUIACZIi2CxA>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Oct 2023 02:45:37 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id e9eb3046 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 19 Oct 2023 06:45:31 +0000 (UTC)
-Date: Thu, 19 Oct 2023 08:45:33 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH] commit: detect commits that exist in commit-graph but
- not in the ODB
-Message-ID: <ZTDQjangLsQ1cSJl@tanuki>
-References: <ZSkCGS3JPEQ71dOF@tanuki>
- <b0bf576c51a706367a758b8e30eca37edb9c2734.1697200576.git.ps@pks.im>
- <xmqq1qdy1iyr.fsf@gitster.g>
- <ZS4rmtBTYnp2RMiY@tanuki>
- <xmqqjzrlhzci.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cFvgRsXb"
+Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84B4DF7
+	for <git@vger.kernel.org>; Thu, 19 Oct 2023 00:41:54 -0700 (PDT)
+Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-5a7a80a96dbso4206937b3.0
+        for <git@vger.kernel.org>; Thu, 19 Oct 2023 00:41:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1697701313; x=1698306113; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=9lQ3imhDm795JiNG6BbfRdHxt4p1mUGjT86xDOxUmJg=;
+        b=cFvgRsXb35CzornFUy4TPDdjBq8hwTvAhIe+yWpDzCDLnDmhRVHlZBkrYcDKIgPLiD
+         eGVTr92vbUJ2Sup3pdlBLGUveu8zGKFL9bX1M8COj/hfeO/4vCIm2Q2TZWPHrq6EpShg
+         QDwP7sSLMc+E/1kFxnH8tKpGrOyiKAFg+UamWmHwAIagsAuIlGXWQtjZF7hkrolpdJzw
+         GUtQRPKtxpaJsTWNS2XYvP/Yd1/xwRolANcahoOWpuIw0wrGPCMCiD84+lV5/b20ljjN
+         2NzjFdXbo7nCvhoWIoLd6FlzCBql0fSXF/7+VIlMEIk1Sf6UDqmaldlveV9CXQubyp9U
+         KlOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697701313; x=1698306113;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9lQ3imhDm795JiNG6BbfRdHxt4p1mUGjT86xDOxUmJg=;
+        b=BFUsnhkaq1c6IaD3DNtqvaClQs34sQYvfXwjOBPfSHZHE0kNIP25kefF/X2S4tmfcb
+         5MMUhC1VA+KfGMWpZZU6Q/8kVLT+n3nRsISKANGX6HHIyq7j86g4up9r0xqM/lTbUq5q
+         Cl1zfNyo9F/53KT5sBO+9xWcm3LRDnPpFKQC5rz91BIgyAQPT85FKS/4xlxsyKeS35Wu
+         6bZW/JQOyZEMoWrHTbkywybxjbuQF/zVp1lYjuhD7SSZCZXxhPg8D8nR22d2K3NuD+9x
+         o6e+tmrgTrxom2eRHb2c4IGNWptsPf148TMU+7jzbh7LuUnASKKRVHbDlbXl0Pl6UznQ
+         Fopg==
+X-Gm-Message-State: AOJu0YziXQ5HOnCwx0ZneAnPGxSyST3AqRnG+MlGgI8pxWhyiAQycn+4
+	wUb27gSSdL5MuKkrJkbVSmNHkMEvwhXY6WPxqMI=
+X-Google-Smtp-Source: AGHT+IGl/j9AuVqvnW1h41joSCcwqsq7+AcTNhEL3/ZFZLrP3Wi9/qTELLC0hsID1rWCkIXbQmsHTw==
+X-Received: by 2002:a05:690c:fd6:b0:5a7:cb5f:ee0a with SMTP id dg22-20020a05690c0fd600b005a7cb5fee0amr882728ywb.17.1697701313293;
+        Thu, 19 Oct 2023 00:41:53 -0700 (PDT)
+Received: from isoken-VirtualBox.. ([105.112.214.207])
+        by smtp.gmail.com with ESMTPSA id s124-20020a0de982000000b0059935151fa1sm2210963ywe.126.2023.10.19.00.41.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Oct 2023 00:41:53 -0700 (PDT)
+From: Isoken June Ibizugbe <isokenjune@gmail.com>
+To: git@vger.kernel.org
+Cc: rjusto@gmail.com,
+	christian.couder@gmail.com,
+	gitster@pobox.com,
+	Isoken June Ibizugbe <isokenjune@gmail.com>
+Subject: [Outreachy][PATCH v2] builtin/branch.c: adjust error messages to coding guidelines
+Date: Thu, 19 Oct 2023 08:41:26 +0100
+Message-ID: <20231019074126.567638-1-isokenjune@gmail.com>
+X-Mailer: git-send-email 2.42.0.346.g24618a8a3e.dirty
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="JSGfCm6/kUrqtWw1"
-Content-Disposition: inline
-In-Reply-To: <xmqqjzrlhzci.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
 
+Signed-off-by: Isoken June Ibizugbe <isokenjune@gmail.com>
+---
+ builtin/branch.c | 66 ++++++++++++++++++++++++------------------------
+ 1 file changed, 33 insertions(+), 33 deletions(-)
 
---JSGfCm6/kUrqtWw1
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 2ec190b14a..938c40bfaa 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -173,11 +173,11 @@ static int branch_merged(int kind, const char *name,
+ 	    (head_rev ? repo_in_merge_bases(the_repository, rev, head_rev) : 0) != merged) {
+ 		if (merged)
+ 			warning(_("deleting branch '%s' that has been merged to\n"
+-				"         '%s', but not yet merged to HEAD."),
++				"         '%s', but not yet merged to HEAD"),
+ 				name, reference_name);
+ 		else
+ 			warning(_("not deleting branch '%s' that is not yet merged to\n"
+-				"         '%s', even though it is merged to HEAD."),
++				"         '%s', even though it is merged to HEAD"),
+ 				name, reference_name);
+ 	}
+ 	free(reference_name_to_free);
+@@ -190,13 +190,13 @@ static int check_branch_commit(const char *branchname, const char *refname,
+ {
+ 	struct commit *rev = lookup_commit_reference(the_repository, oid);
+ 	if (!force && !rev) {
+-		error(_("Couldn't look up commit object for '%s'"), refname);
++		error(_("couldn't look up commit object for '%s'"), refname);
+ 		return -1;
+ 	}
+ 	if (!force && !branch_merged(kinds, branchname, rev, head_rev)) {
+-		error(_("The branch '%s' is not fully merged.\n"
++		error(_("the branch '%s' is not fully merged.\n"
+ 		      "If you are sure you want to delete it, "
+-		      "run 'git branch -D %s'."), branchname, branchname);
++		      "run 'git branch -D %s'"), branchname, branchname);
+ 		return -1;
+ 	}
+ 	return 0;
+@@ -207,7 +207,7 @@ static void delete_branch_config(const char *branchname)
+ 	struct strbuf buf = STRBUF_INIT;
+ 	strbuf_addf(&buf, "branch.%s", branchname);
+ 	if (git_config_rename_section(buf.buf, NULL) < 0)
+-		warning(_("Update of config-file failed"));
++		warning(_("update of config-file failed"));
+ 	strbuf_release(&buf);
+ }
+ 
+@@ -260,7 +260,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ 		if (kinds == FILTER_REFS_BRANCHES) {
+ 			const char *path;
+ 			if ((path = branch_checked_out(name))) {
+-				error(_("Cannot delete branch '%s' "
++				error(_("cannot delete branch '%s' "
+ 					"used by worktree at '%s'"),
+ 				      bname.buf, path);
+ 				ret = 1;
+@@ -275,7 +275,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ 					&oid, &flags);
+ 		if (!target) {
+ 			if (remote_branch) {
+-				error(_("remote-tracking branch '%s' not found."), bname.buf);
++				error(_("remote-tracking branch '%s' not found"), bname.buf);
+ 			} else {
+ 				char *virtual_name = mkpathdup(fmt_remotes, bname.buf);
+ 				char *virtual_target = resolve_refdup(virtual_name,
+@@ -290,7 +290,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ 						"Did you forget --remote?"),
+ 						bname.buf);
+ 				else
+-					error(_("branch '%s' not found."), bname.buf);
++					error(_("branch '%s' not found"), bname.buf);
+ 				FREE_AND_NULL(virtual_target);
+ 			}
+ 			ret = 1;
+@@ -518,11 +518,11 @@ static void reject_rebase_or_bisect_branch(struct worktree **worktrees,
+ 			continue;
+ 
+ 		if (is_worktree_being_rebased(wt, target))
+-			die(_("Branch %s is being rebased at %s"),
++			die(_("branch %s is being rebased at %s"),
+ 			    target, wt->path);
+ 
+ 		if (is_worktree_being_bisected(wt, target))
+-			die(_("Branch %s is being bisected at %s"),
++			die(_("branch %s is being bisected at %s"),
+ 			    target, wt->path);
+ 	}
+ }
+@@ -578,7 +578,7 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
+ 		if (ref_exists(oldref.buf))
+ 			recovery = 1;
+ 		else
+-			die(_("Invalid branch name: '%s'"), oldname);
++			die(_("invalid branch name: '%s'"), oldname);
+ 	}
+ 
+ 	for (int i = 0; worktrees[i]; i++) {
+@@ -594,9 +594,9 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
+ 
+ 	if ((copy || !(oldref_usage & IS_HEAD)) && !ref_exists(oldref.buf)) {
+ 		if (oldref_usage & IS_HEAD)
+-			die(_("No commit on branch '%s' yet."), oldname);
++			die(_("no commit on branch '%s' yet"), oldname);
+ 		else
+-			die(_("No branch named '%s'."), oldname);
++			die(_("no branch named '%s'"), oldname);
+ 	}
+ 
+ 	/*
+@@ -624,32 +624,32 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
+ 
+ 	if (!copy && !(oldref_usage & IS_ORPHAN) &&
+ 	    rename_ref(oldref.buf, newref.buf, logmsg.buf))
+-		die(_("Branch rename failed"));
++		die(_("branch rename failed"));
+ 	if (copy && copy_existing_ref(oldref.buf, newref.buf, logmsg.buf))
+-		die(_("Branch copy failed"));
++		die(_("branch copy failed"));
+ 
+ 	if (recovery) {
+ 		if (copy)
+-			warning(_("Created a copy of a misnamed branch '%s'"),
++			warning(_("created a copy of a misnamed branch '%s'"),
+ 				interpreted_oldname);
+ 		else
+-			warning(_("Renamed a misnamed branch '%s' away"),
++			warning(_("renamed a misnamed branch '%s' away"),
+ 				interpreted_oldname);
+ 	}
+ 
+ 	if (!copy && (oldref_usage & IS_HEAD) &&
+ 	    replace_each_worktree_head_symref(worktrees, oldref.buf, newref.buf,
+ 					      logmsg.buf))
+-		die(_("Branch renamed to %s, but HEAD is not updated!"), newname);
++		die(_("branch renamed to %s, but HEAD is not updated"), newname);
+ 
+ 	strbuf_release(&logmsg);
+ 
+ 	strbuf_addf(&oldsection, "branch.%s", interpreted_oldname);
+ 	strbuf_addf(&newsection, "branch.%s", interpreted_newname);
+ 	if (!copy && git_config_rename_section(oldsection.buf, newsection.buf) < 0)
+-		die(_("Branch is renamed, but update of config-file failed"));
++		die(_("branch is renamed, but update of config-file failed"));
+ 	if (copy && strcmp(interpreted_oldname, interpreted_newname) && git_config_copy_section(oldsection.buf, newsection.buf) < 0)
+-		die(_("Branch is copied, but update of config-file failed"));
++		die(_("branch is copied, but update of config-file failed"));
+ 	strbuf_release(&oldref);
+ 	strbuf_release(&newref);
+ 	strbuf_release(&oldsection);
+@@ -773,7 +773,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 
+ 	head = resolve_refdup("HEAD", 0, &head_oid, NULL);
+ 	if (!head)
+-		die(_("Failed to resolve HEAD as a valid ref."));
++		die(_("failed to resolve HEAD as a valid ref"));
+ 	if (!strcmp(head, "HEAD"))
+ 		filter.detached = 1;
+ 	else if (!skip_prefix(head, "refs/heads/", &head))
+@@ -866,7 +866,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 
+ 		if (!argc) {
+ 			if (filter.detached)
+-				die(_("Cannot give description to detached HEAD"));
++				die(_("cannot give description to detached HEAD"));
+ 			branch_name = head;
+ 		} else if (argc == 1) {
+ 			strbuf_branchname(&buf, argv[0], INTERPRET_BRANCH_LOCAL);
+@@ -878,8 +878,8 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		strbuf_addf(&branch_ref, "refs/heads/%s", branch_name);
+ 		if (!ref_exists(branch_ref.buf))
+ 			error((!argc || branch_checked_out(branch_ref.buf))
+-			      ? _("No commit on branch '%s' yet.")
+-			      : _("No branch named '%s'."),
++			      ? _("no commit on branch '%s' yet")
++			      : _("no branch named '%s'"),
+ 			      branch_name);
+ 		else if (!edit_branch_description(branch_name))
+ 			ret = 0; /* happy */
+@@ -892,8 +892,8 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		if (!argc)
+ 			die(_("branch name required"));
+ 		else if ((argc == 1) && filter.detached)
+-			die(copy? _("cannot copy the current branch while not on any.")
+-				: _("cannot rename the current branch while not on any."));
++			die(copy? _("cannot copy the current branch while not on any")
++				: _("cannot rename the current branch while not on any"));
+ 		else if (argc == 1)
+ 			copy_or_rename_branch(head, argv[0], copy, copy + rename > 1);
+ 		else if (argc == 2)
+@@ -916,14 +916,14 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		if (!branch) {
+ 			if (!argc || !strcmp(argv[0], "HEAD"))
+ 				die(_("could not set upstream of HEAD to %s when "
+-				      "it does not point to any branch."),
++				      "it does not point to any branch"),
+ 				    new_upstream);
+ 			die(_("no such branch '%s'"), argv[0]);
+ 		}
+ 
+ 		if (!ref_exists(branch->refname)) {
+ 			if (!argc || branch_checked_out(branch->refname))
+-				die(_("No commit on branch '%s' yet."), branch->name);
++				die(_("no commit on branch '%s' yet"), branch->name);
+ 			die(_("branch '%s' does not exist"), branch->name);
+ 		}
+ 
+@@ -946,12 +946,12 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		if (!branch) {
+ 			if (!argc || !strcmp(argv[0], "HEAD"))
+ 				die(_("could not unset upstream of HEAD when "
+-				      "it does not point to any branch."));
++				      "it does not point to any branch"));
+ 			die(_("no such branch '%s'"), argv[0]);
+ 		}
+ 
+ 		if (!branch_has_merge_config(branch))
+-			die(_("Branch '%s' has no upstream information"), branch->name);
++			die(_("branch '%s' has no upstream information"), branch->name);
+ 
+ 		strbuf_reset(&buf);
+ 		strbuf_addf(&buf, "branch.%s.remote", branch->name);
+@@ -965,11 +965,11 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		const char *start_name = argc == 2 ? argv[1] : head;
+ 
+ 		if (filter.kind != FILTER_REFS_BRANCHES)
+-			die(_("The -a, and -r, options to 'git branch' do not take a branch name\n"
++			die(_("the -a, and -r, options to 'git branch' do not take a branch name.\n"
+ 				  "Did you mean to use: -a|-r --list <pattern>?"));
+ 
+ 		if (track == BRANCH_TRACK_OVERRIDE)
+-			die(_("the '--set-upstream' option is no longer supported. Please use '--track' or '--set-upstream-to' instead."));
++			die(_("the '--set-upstream' option is no longer supported. Please use '--track' or '--set-upstream-to' instead"));
+ 
+ 		if (recurse_submodules) {
+ 			create_branches_recursively(the_repository, branch_name,
+-- 
+2.42.0.346.g24618a8a3e.dirty
 
-On Tue, Oct 17, 2023 at 11:34:53AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->=20
-> > Fair point indeed. The following is a worst-case scenario benchmark of
-> > of the change where we do a full topological walk of all reachable
-> > commits in the graph, executed in linux.git. We parse commit parents via
-> > `repo_parse_commit_gently()`, so the new code path now basically has to
-> > check for object existence of every reachable commit:
-> > ...
-> > The added check does lead to a performance regression indeed, which is
-> > not all that unexpected. That being said, the commit-graph still results
-> > in a significant speedup compared to the case where we don't have it.
->=20
-> Yeah, I agree that both points are expected.  An extra check that is
-> much cheaper than the full parsing is paying a small price to be a
-> bit more careful than before.  The question is if the price is small
-> enough.  I am still not sure if the extra carefulness is warranted
-> for all normal cases to spend 30% extra cycles.
->=20
-> Thanks.
-
-Well, seen in contexts like the thread that spawned this discussion I
-think it's preferable to take a relatively smaller price compared to
-disabling the commit graph entirely in some situations. With that in
-mind, personally I'd be happy with either of two outcomes here:
-
-    - We take the patch I proposed as a hardening measure, which allows
-      us to use the commit graph in basically any situation where we
-      could parse objects from the ODB without any downside except for a
-      performance hit.
-
-    - We say that corrupt repositories do not need to be accounted for
-      when using metadata caches like the commit-graph. That would mean
-      in consequence that for the `--missing` flag we would not have to
-      disable commit graphs.
-
-The test failure that was exposed in Karthik's test only stems from the
-fact that we manually corrupt the repository and is not specific to the
-`--missing` flag. This is further stressed by the new test aded in my
-own patch, as we can trigger a similar bug when not using `--missing`.
-
-For end users, object pruning would happen either via git-gc(1) or via
-git-maintenance(1), and both of them do know to update commit graphs
-already. This should significantly decrease the chance that such stale
-commit graphs would be found out there in the wild, but it's still not
-impossible of course. Especially in cases where you use lower-level
-commands like git-repack(1) with cruft packs or git-prune(1), which is
-often the case for Git hosters, the risk is higher though.
-
-Patrick
-
---JSGfCm6/kUrqtWw1
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmUw0IcACgkQVbJhu7ck
-PpTZyQ/9Fte2uQf+cmEj07z2qziSgWGLJjzoWT9TMDphmV0xyCcb2HGZWdjoU+UX
-8fnNeL/ubee/4mZFLNs+Swi29d4OZkcDsvzrcVMQnhROa/XbQ2jAMrgmovajqSBB
-PN5F5NtoQz084TrLd3D+6uYooE2eaI67a9abLJ7adac5iI6giiXnNC1FgZorAZN4
-0oBbEpfVlXa1bo2OvB8tXw+u0zLL0vJ6SofcS3zMhbc4zpx7Y83zklGVSqJoPiJs
-i0XbFZLpNk1RH2XZSt3IxMWFMbAYZkP+Nxa3BXFH7/E8YHQnU6eZd08bnI/V1+n9
-js3F3IT1vKiFsld2tHi2QdbOCTbwwn18GnzuPMz7ZeBfXQec391G2lvsz3CeAVcU
-e+VPms7gNf6L/odTyqrVYHRZglN9/MnNPHgqdJeWvL/XnES9XfuSeCBMHTOlvuKO
-vwzR6l23p5S60wfe9DdJzGdoqhWLlw5VxNXGzgNbK3vNrGg9HGbWQf5ru1TxgCRh
-vzDAx9inkD8TiwYP+Y+WnfqZFBY+7gS65HpXs3rCgidiBPFR7S8EhjmOM0w2fF/y
-2iyQrYZrNYxnC11D0Npr8N4zVumwXdtpTAyHUSiNItH+1SDuY9G/BRbRgTUGgmqa
-uIAZQ1zDafiIyPyQZA5P9wUErAH/Pp2Aey1Cc1pJT++CI7Up4/c=
-=sVsV
------END PGP SIGNATURE-----
-
---JSGfCm6/kUrqtWw1--
