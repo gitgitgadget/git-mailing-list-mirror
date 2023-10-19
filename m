@@ -1,98 +1,99 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 936228F49
-	for <git@vger.kernel.org>; Thu, 19 Oct 2023 15:19:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29C5D2FE39
+	for <git@vger.kernel.org>; Thu, 19 Oct 2023 15:27:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="qRb4HHsd"
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3173611F
-	for <git@vger.kernel.org>; Thu, 19 Oct 2023 08:19:26 -0700 (PDT)
-Received: by mail-ot1-x330.google.com with SMTP id 46e09a7af769-6ce2b6cb933so417720a34.0
-        for <git@vger.kernel.org>; Thu, 19 Oct 2023 08:19:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TqL5SYrj"
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED25D121
+	for <git@vger.kernel.org>; Thu, 19 Oct 2023 08:27:48 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2b9338e4695so110792911fa.2
+        for <git@vger.kernel.org>; Thu, 19 Oct 2023 08:27:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1697728765; x=1698333565; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=M5/p4ohCVsg5S4csDBXvg2hb5PTnKxWTSa+pgb0K/x8=;
-        b=qRb4HHsd0Nm1nKES2RydDpnPoQrAzNQ53a6P3uV4GOBGrbm45d4HiIWQ8Fzv/lGBZ2
-         oQGocA2aDZt2MPhqizdGVJBhF7j168wtzDFCF2UdU7GgJPqnLSVqtqYGd9+UAVadeeSQ
-         6I3z10QU5WG+H9Dxd/DbPF1BCMeJxXvQSVapA6YRPfHYd6k0mcr7fALCgizcQlcm/H+E
-         Mvf4Ya5wVuYzucXMqyd9rjEJzFk8Ikh1bck3pX5MNXHeF6gphSHnaVmpUBcmNaa95Ov6
-         0F+GEhn2nAt+fS2FNiNWshAvGbh7yNrmcIBgM6r9ZrUXTb1Td0Vjh/0mzKUT7c+pmYwM
-         +3RQ==
+        d=gmail.com; s=20230601; t=1697729267; x=1698334067; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:reply-to:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=cRAAkzVjtemOySe9QFyPyi5ja34gIGDYBP3y6JanAeY=;
+        b=TqL5SYrj5c6eDFDS1KpX6VoaMvQ0lveXT26kWUfyreQReKpQReGAvlulhUteDvPt9/
+         kAxI36L0ZA8Rz9UmsXpJHrl9q/wgetqc5bL5fbn0rluTnlQwVjjxzo/wAGUNU9B/uycA
+         pQI6fIrGwa+zzN5PwsSelfLD+kqdMAH03qb6XFLRJnQtvALUKyQzAtM8f+EKSpjFe64l
+         nAXp1IDY9ug4i+3xrOu00b1/DR5BtO/OWEcy89foMeNomx00xNTfztqiSZ5ybLDwuUsN
+         yBmsjOKJuBgkh7C8L2C3aThUDjTiI2uaiGrKgneShW/DZe8fC8Q230Fn1U8h2H2Jmd/+
+         hPqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697728765; x=1698333565;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=M5/p4ohCVsg5S4csDBXvg2hb5PTnKxWTSa+pgb0K/x8=;
-        b=qHn9n9XzXrCKYgmHqHOkBYJ8fWm8fMGvgKANJ3AhN7fq5EbFcqYYwQzYk5vMWjoC/G
-         wuYa6aQVjBB4vwE1qsoK7kE9yNwoevhwOu/uwGCvMGPS2wxySmysjR9YQXe4P1fRzDUJ
-         L5GwdF6t68FT4suMutMf87lPh81uqpp2I3n9u3XIZQK6fwCdiL/SQEwDqdBYwoN1XYt2
-         wL7JXk5ZdXv9ZJccFrGO68m7DXOy+BA2srxO0fAxN0BkUo2zgwCzweX9S2S05g7/omfx
-         E31kRKuMTZRwtIdfutO+oAXA3X31+W0xNWwiaU+2GDpnKR0UZyH4bJywGaIqtYLgvTMh
-         F9/Q==
-X-Gm-Message-State: AOJu0Yx5bFKccMS418/Qbl73n/kY8qq/U6+bsKpWnkfUKNauEysLo0Nx
-	B9/W74RSFnG6btcIZfxhoVc0Jg==
-X-Google-Smtp-Source: AGHT+IFxHTQwj6VPl4WQfBSJrTrK73oopb6WO+ZX8ylaKfl+uF1LM3xVYJ2fsvDkvfLFUO+EsnnC2g==
-X-Received: by 2002:a05:6808:3:b0:3ae:251f:923f with SMTP id u3-20020a056808000300b003ae251f923fmr2515900oic.28.1697728765408;
-        Thu, 19 Oct 2023 08:19:25 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id dc2-20020a056214174200b0065d0a4262e0sm855714qvb.70.2023.10.19.08.19.25
+        d=1e100.net; s=20230601; t=1697729267; x=1698334067;
+        h=content-transfer-encoding:mime-version:reply-to:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cRAAkzVjtemOySe9QFyPyi5ja34gIGDYBP3y6JanAeY=;
+        b=Mr0WRDAJfKCxpIFabCtyGGaRI/r1M7m9K5oPsb02hm81Osh7F5Irm2EPz49E18NenT
+         tuEsajWH4HVFxfKPBJTpQLYhQS1+MjaNgUAAeYZKslBMx8sFSLDtFzSOlUYMlWq/GaAL
+         QyVa4RxH+1F4rXJni1B9I3On9p+ezOa6kC/StlTL8FJ2kxoQb04wpBuJpSb0hLLjJpxx
+         9+w4OtJcYW/hCAUaGj5qnZu5J/QfJuCMJb4Z4+btu+7pMuy++JZ2cuFekntLkNGIBUd7
+         tZD/wMCXU5zVna9dP4AxdrKsNoUdrYzyf6jEKFqnmHS+fFZa8m3+tDKLDrv/wViqE//0
+         VQdg==
+X-Gm-Message-State: AOJu0YxNeMU4qeS4WUXtV8QS/o8+dEDjNjRW2PbzoRg5Hv0JX1t+ns2l
+	VrIM8ieNz8gu8wTdkWZ31dk=
+X-Google-Smtp-Source: AGHT+IG7Rg/6Jw1oRW/A5J74SE68t2gCXaNABBVOVYTjr6e+pRIKDGM8rVNqkF8EYeUV5vf+anwALA==
+X-Received: by 2002:a2e:3213:0:b0:2c5:380:2a10 with SMTP id y19-20020a2e3213000000b002c503802a10mr1596349ljy.25.1697729266707;
+        Thu, 19 Oct 2023 08:27:46 -0700 (PDT)
+Received: from localhost.localdomain (host-2-102-115-95.as13285.net. [2.102.115.95])
+        by smtp.gmail.com with ESMTPSA id j7-20020a05600c190700b0040641a9d49bsm1022117wmq.17.2023.10.19.08.27.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Oct 2023 08:19:25 -0700 (PDT)
-Date: Thu, 19 Oct 2023 11:19:23 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	"Eric W. Biederman" <ebiederm@gmail.com>, Jeff King <peff@peff.net>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v3 05/10] bulk-checkin: extract abstract
- `bulk_checkin_source`
-Message-ID: <ZTFI++b51Cj+Sto9@nand.local>
-References: <cover.1696629697.git.me@ttaylorr.com>
- <cover.1697648864.git.me@ttaylorr.com>
- <da52ec838025a59a3f4f4ffaf2e6f9098a37547e.1697648864.git.me@ttaylorr.com>
- <xmqqa5sfplvw.fsf@gitster.g>
+        Thu, 19 Oct 2023 08:27:46 -0700 (PDT)
+From: Phillip Wood <phillip.wood123@gmail.com>
+To: gitster@pobox.com
+Cc: calvinwan@google.com,
+	git@vger.kernel.org,
+	johannes.schindelin@gmx.de,
+	linusa@google.com,
+	phillip.wood123@gmail.com,
+	rsbecker@nexbridge.com,
+	steadmon@google.com
+Subject: [PATCH 1/3] fixup! cmake: also build unit tests
+Date: Thu, 19 Oct 2023 16:21:49 +0100
+Message-ID: <20231019152726.14624-2-phillip.wood123@gmail.com>
+X-Mailer: git-send-email 2.42.0.506.g0dd4464cfd3
+In-Reply-To: <20231019152726.14624-1-phillip.wood123@gmail.com>
+References: <xmqqh6mzwe24.fsf@gitster.g>
+ <20231019152726.14624-1-phillip.wood123@gmail.com>
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqa5sfplvw.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
 
-On Wed, Oct 18, 2023 at 04:10:43PM -0700, Junio C Hamano wrote:
-> Looks OK, even though I expected to see a bit more involved object
-> orientation with something like
->
-> 	struct bulk_checkin_source {
-> 		off_t (*read)(struct bulk_checkin_source *, void *, size_t);
-> 		off_t (*seek)(struct bulk_checkin_source *, off_t);
-> 		union {
-> 			struct {
-> 				int fd;
-> 				size_t size;
-> 				const char *path;
-> 			} from_fd;
-> 			struct {
-> 				...
-> 			} incore;
-> 		} data;
-> 	};
->
-> As there will only be two subclasses of this thing, it may not
-> matter all that much right now, but it would be much nicer as your
-> methods do not have to care about "switch (enum) { case FILE: ... }".
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-I want to be cautious of going too far in this direction. I anticipate
-that "two" is probably the maximum number of kinds of sources we can
-reasonably expect for the foreseeable future. If that changes, it's easy
-enough to convert from the existing implementation to something closer
-to the above.
+---
+ contrib/buildsystems/CMakeLists.txt | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-Thanks,
-Taylor
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index d21835ca65..20f38e94c9 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -973,12 +973,12 @@ foreach(unit_test ${unit_test_PROGRAMS})
+ 	add_executable("${unit_test}" "${CMAKE_SOURCE_DIR}/t/unit-tests/${unit_test}.c")
+ 	target_link_libraries("${unit_test}" unit-test-lib common-main)
+ 	set_target_properties("${unit_test}"
+-		PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/t/unit-tests)
++		PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/t/unit-tests/bin)
+ 	if(MSVC)
+ 		set_target_properties("${unit_test}"
+-			PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/t/unit-tests)
++			PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/t/unit-tests/bin)
+ 		set_target_properties("${unit_test}"
+-			PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/t/unit-tests)
++			PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/t/unit-tests/bin)
+ 	endif()
+ 	list(APPEND PROGRAMS_BUILT "${unit_test}")
+ 
+-- 
+2.42.0.506.g0dd4464cfd3
+
