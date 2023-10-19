@@ -1,106 +1,95 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BB192EAFF
-	for <git@vger.kernel.org>; Thu, 19 Oct 2023 19:49:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 548C23D382
+	for <git@vger.kernel.org>; Thu, 19 Oct 2023 20:17:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="WLCpSMI4"
-Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A949C182
-	for <git@vger.kernel.org>; Thu, 19 Oct 2023 12:49:37 -0700 (PDT)
-Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-5a7bbe0a453so249877b3.0
-        for <git@vger.kernel.org>; Thu, 19 Oct 2023 12:49:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1697744977; x=1698349777; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=JVL4GJQ9gOSa+GL/1Rf9V4xgBza5NyTVkUyishPav3s=;
-        b=WLCpSMI4b8zMfxjFt8g2RJOAeaxkg6PBPNq3RucxKa5m6WqClObm0t5YxqeUA3I11G
-         CvkPABId2Rl8IllSBmLW9djJKmv/J5LD/Z8T7bP4BmaVoQ+5kE4w4OkkNGznS/BPlNGA
-         eLTEIKwmmVM2PvdLRgTx4dYaD9nuj3kT4ZxkE1sC0lfCaPm0jThhbhVCNLZqF17l/axa
-         fZ7OXVstY14ODRZc73FmN3IxdwQA5ziI11dBoMi3MvEpMdwBMfqndY9sgMrgtFiH41Rk
-         PdadJu5nJcSxAe9FEVdre61qzlhJ41Y68Cb88oP4uxuJBt5ME4AOr166GtP8ZMoHLagt
-         GJpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697744977; x=1698349777;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JVL4GJQ9gOSa+GL/1Rf9V4xgBza5NyTVkUyishPav3s=;
-        b=luitZd/6vc32rAral5YkB4cmdHylrR3YoNmeVujgB9QyR/nyvg2Z3ZwN/fckliPGUf
-         m4nezXdw8ey9ak1PWWON4t1EMv/2m9E3ldS1OQqn9a+sliw+Q3kjVbTbaleydorrmK+c
-         VdtN/OnJVYgXrYuVL5FwE5TSjvgaKfVu2QcER/Zol0BQCOpXDKgRGDQvSHbDxPy6uz6P
-         62kz49CNUBN1BG+NMCjaeaxMn9Khc8LakyjVZdQWpojqcDWBnpxXpGXQdYEKah2gKoLV
-         9/uqy3x7CxbDXdJ8X4616pg/UqCnHe+Kjwif+46Nu/3vDkE2pRyYyvWRN0ECpIu9m1PL
-         YpdA==
-X-Gm-Message-State: AOJu0Yz4HpkMCQffTlw04vFnzULAargDAz7YrM13t516/Guzog+KAxmK
-	Hmy89XDQaRtx8M9MC8DIfY++J4/Jg7Y=
-X-Google-Smtp-Source: AGHT+IHciKnAHyg5z+RwR9rKTm1JxdZUyz8frUOvHe+oEZiOxRQWpKdDFnQ0wD+SyWSjAsuA3eUrUlmZK5Y=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a0d:cbd1:0:b0:5a8:28be:bf86 with SMTP id
- n200-20020a0dcbd1000000b005a828bebf86mr83620ywd.5.1697744976958; Thu, 19 Oct
- 2023 12:49:36 -0700 (PDT)
-Date: Thu, 19 Oct 2023 12:49:35 -0700
-In-Reply-To: <20231010123847.2777056-12-christian.couder@gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="XZyjLH0P"
+Received: from pb-sasl-trial2.pobox.com (pb-sasl-trial2.pobox.com [64.147.108.86])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A863D116
+	for <git@vger.kernel.org>; Thu, 19 Oct 2023 13:17:01 -0700 (PDT)
+Received: from pb-sasl-trial2.pobox.com (localhost.local [127.0.0.1])
+	by pb-sasl-trial2.pobox.com (Postfix) with ESMTP id 90F2A3133C;
+	Thu, 19 Oct 2023 16:16:57 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=TQSlzfceLE4g
+	SNMBxwl05YBchLj6HwgcVYjWSDokiGM=; b=XZyjLH0PRp941nELHHgswVuj8Vzb
+	BuV5WoKdz/VUKSJMpRfXIOGhXkV+lxc9jeGeVxf1V+lzOZ0I6oHd/vgRK9zuxYsR
+	wCaWjfsRLWT6uNMev1/jwjKl72LO5eWwnWqbrm0T6cAmCbyTxgfqyL1aHuFedESL
+	uV35nnFkuJBflF8=
+Received: from pb-smtp1.nyi.icgroup.com (pb-smtp1.pobox.com [10.90.30.53])
+	by pb-sasl-trial2.pobox.com (Postfix) with ESMTP id 6E04031339;
+	Thu, 19 Oct 2023 16:16:57 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A79161CA7DF;
+	Thu, 19 Oct 2023 16:16:56 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc: Jiang Xin <worldhello.net@gmail.com>,  Jeff Hostetler
+ <jeffhostetler@github.com>,  Alexander Shopov <ash@kambanaria.org>,  Git
+ List <git@vger.kernel.org>,  jmas@softcatala.org,  alexhenrie24@gmail.com,
+  ralf.thielow@gmail.com,  matthias.ruester@gmail.com,
+  phillip.szelat@gmail.com,  vyruss@hellug.gr,
+  christopher.diaz.riv@gmail.com,  jn.avila@free.fr,
+  flashcode@flashtux.org,  bagasdotme@gmail.com,  =?utf-8?B?w4Z2YXIgQXJu?=
+ =?utf-8?B?ZmrDtnLDsA==?= Bjarmason
+ <avarab@gmail.com>,  alessandro.menti@alessandromenti.it,
+  elongbug@gmail.com,  cwryu@debian.org,  uneedsihyeon@gmail.com,
+  arek_koz@o2.pl,  dacs.git@brilhante.top,  "insolor@gmail.com"
+ <insolor@gmail.com>,  peter@softwolves.pp.se,  bitigchi@me.com,
+  ark@cho.red,  kate@kgthreads.com,  "vnwildman@gmail.com"
+ <vnwildman@gmail.com>,  pclouds@gmail.com,  "dyroneteng@gmail.com"
+ <dyroneteng@gmail.com>,  "oldsharp@gmail.com" <oldsharp@gmail.com>,
+  "lilydjwg@gmail.com" <lilydjwg@gmail.com>,  "pan93412@gmail.com"
+ <pan93412@gmail.com>,  "franklin@goodhorse.idv.tw"
+ <franklin@goodhorse.idv.tw>
+Subject: Re: Is there any interest in localizing term delimiters in git
+ messages?
+In-Reply-To: <20231019194747.GC25301@tb-raspi4> ("Torsten =?utf-8?Q?B?=
+ =?utf-8?Q?=C3=B6gershausen=22's?=
+	message of "Thu, 19 Oct 2023 21:47:47 +0200")
+References: <CAP6f5Mmi=f4DPcFwfvEiJMdKMa0BUyZ019mc8uFXyOufgD4NjA@mail.gmail.com>
+	<xmqqzg0gx6k9.fsf@gitster.g>
+	<CANYiYbHK90Ptq5v4EbquyRA7N9jo=xwkg=WuM=r60Wh9HMxdyA@mail.gmail.com>
+	<xmqqwmvkve83.fsf@gitster.g>
+	<CANYiYbEqTH975j9E0GTbSbexrw3MLhKwBCw7mibfnWbxZ+-_yw@mail.gmail.com>
+	<xmqqcyxaxzxw.fsf@gitster.g> <20231019194747.GC25301@tb-raspi4>
+Date: Thu, 19 Oct 2023 13:16:55 -0700
+Message-ID: <xmqq8r7yweo8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <20230907092521.733746-1-christian.couder@gmail.com>
- <20231010123847.2777056-1-christian.couder@gmail.com> <20231010123847.2777056-12-christian.couder@gmail.com>
-Message-ID: <owlypm1aqto0.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH v5 11/14] replay: use standard revision ranges
-From: Linus Arver <linusa@google.com>
-To: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Elijah Newren <newren@gmail.com>, 
-	John Cai <johncai86@gmail.com>, Derrick Stolee <stolee@gmail.com>, 
-	Phillip Wood <phillip.wood123@gmail.com>, Calvin Wan <calvinwan@google.com>, 
-	Toon Claes <toon@iotcl.com>, Dragan Simic <dsimic@manjaro.org>, 
-	Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 739F2B88-6EBC-11EE-BE75-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-This patch's documentation bits LGTM. The comments I have below are all
-nits and I don't think they are enough to require a re-roll. If v5 is
-accepted as-is, then this stuff could be #leftoverbits for a future
-(minor) cleanup.
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-Thanks!
+> The switch case covers all 8 values of "enum crlf_action",
+> and removing these 2 lines
+>  -	warning("Illegal crlf_action %d\n", (int)crlf_action);
+>  -	return core_eol;
+> does still compile without a compiler warning.
+> So yes, a BUG is more appropriate here.
 
-Christian Couder <christian.couder@gmail.com> writes:
+Yeah, and if our expectation is whenever we add a new value to enum
+convert_crlf_action, we will handle in and return from the switch
+statement, so I agree with you that BUG() is more appropriate.
 
-> From: Elijah Newren <newren@gmail.com>
-> 
-> +DESCRIPTION
-> +-----------
-> +
-> +Takes a range of commits and replays them onto a new location. Leaves
-> +the working tree and the index untouched, and updates no
-> +references.
+Thanks for a quick response.  Note that this was something we
+discovered while talking about i18n and no immediate action is
+required---it is not like we saw a report that tells us that end
+users are actively getting confused by this message.
 
-Nit: in v4 you had
-
-     Does
-    +not touch the working tree or index, and does not update any
-    +references. 
-
-and the "does not update any references" sounds more natural than
-"updates no references".
-
-> The output of this command is meant to be used as input to
-> +`git update-ref --stdin`, which would update the relevant branches
-> +(see the OUTPUT section below).
-> +
-> +THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
-
-Nit: add "IN THE FUTURE" at the end.
-
-> +EXAMPLES
-> +--------
-> +
-> +To simply rebase `mybranch` onto `target`:
-
-Nit: s/To simply rebase/Rebase
-
-or, remove "simply" because it doesn't add much value.
+Thanks.
