@@ -1,48 +1,48 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A1502747A
-	for <git@vger.kernel.org>; Thu, 19 Oct 2023 15:27:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D4A92FE3A
+	for <git@vger.kernel.org>; Thu, 19 Oct 2023 15:27:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eMhuSlWo"
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC35112A
-	for <git@vger.kernel.org>; Thu, 19 Oct 2023 08:27:47 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-408382da7f0so20726225e9.0
-        for <git@vger.kernel.org>; Thu, 19 Oct 2023 08:27:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SixJ+zSL"
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7950912D
+	for <git@vger.kernel.org>; Thu, 19 Oct 2023 08:27:49 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id 5b1f17b1804b1-4083f61322fso14498815e9.1
+        for <git@vger.kernel.org>; Thu, 19 Oct 2023 08:27:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697729266; x=1698334066; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1697729268; x=1698334068; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=cjS4/nGAmL2G/gKG1b32WLJLHkJWP2NWgcUFxqWGuLA=;
-        b=eMhuSlWoGzZzvcOPBCf7pc/YGzMvKOz0dRYHJLfy4R4fLPT0RVmqkKu0oyDE+ek3BC
-         7r3NaphqeKyitpLBDWsCtty7n1y75kHR/WpibNMHteCntdnRX0hAPwbeXzKJaBDlZMZH
-         8pujqHEOHqzOXbTuEUNQZXdqDlPNmd36AOD1SSzsT6PWTxzzpfXgOCrXOzZG6fr26IrU
-         q2KTQJMac56hEz4JBY3RsfdvBAmAutlQM8WwbQlWS0MxV2PT2pgslD5OfMZwnNJ3Tzmu
-         y3yLMaPL9ZHhtdnFQedg9qCHVkTCBeyHR9nJi7ECWfdYR8IkwJDRhkyaVLbUk6Dj/YTG
-         FGCQ==
+        bh=3kimNNYWoqBwfTCPtYxbhkrkDRujBhE+wKsXyBleEaI=;
+        b=SixJ+zSLdn0akl0L89EyhNUfZslxdka90+2OXogdGqUXILs54J4AlmMy1QUgbpZD7w
+         kMlrxcbfePwq1bYb9rb2rrI+hDbgDxXgcPCjci6U0mjN0Sc7ZdurydDdlMLW01n1IOuI
+         DD4ghMNrQv9iQ3mDw+Xi+qAstHtknTdBJ6rXCSwtAZT7ZSFodB3OgoI5X7OiQkMtM9HD
+         +0l9DJ5+ecNp4w4cXLCr674Fr7dWJaOXCS5CjFSTGnRriQAr3S5OPruNMv8TT99O2W7j
+         e6nkCWexNdxpdcDpalpAQtkpPSpX+LWkAY0IO8ffoKDe1B9sqtTTEui0LRlN4qBtPHPn
+         ba6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697729266; x=1698334066;
+        d=1e100.net; s=20230601; t=1697729268; x=1698334068;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=cjS4/nGAmL2G/gKG1b32WLJLHkJWP2NWgcUFxqWGuLA=;
-        b=AfljL9xGwawtM5afJKEST361j7Wy5KjFCZB2w80gGEmrlfvnbDyFNJe9arwcglCe6k
-         dUfcdwgVMAD8dnvriiO+hsUBrmrUAbrfmgaln/2bGHktWjuF9bMgZKTAiXVEOX1hLAkm
-         /lgAOVsTU6xTNtyTBMKj57r8FQLaf4qF5sXl02X0EUnPenaJrq5POB0Ovxk4CSFXImps
-         eFRsA1E0htK7HXKhGJWgpbediFMHfcPLk/QbdBxZGXySh5IcyUMn1USQ07udhhPbKJvf
-         RPubIl/d+uBueZsvB35N1C+AQcSSpolKJ01lddLKmVx17WYh1GmafrqQ8b7RuFDUC73V
-         yJdQ==
-X-Gm-Message-State: AOJu0YxKIIlT88655w+5ffEwu9BV3St9JTm4aMKoZs1MH1DlAIoUvqvs
-	QIDx2T2rNLRsmSJuyaBXEdA=
-X-Google-Smtp-Source: AGHT+IHLsCOyQmLFG+0g96hK/b+uJ/EuPV+TYKYMXhvo6ybPhfeBuJ7nTFDlx3h932y8W7CH5KHUAQ==
-X-Received: by 2002:a05:600c:19c9:b0:401:b53e:6c40 with SMTP id u9-20020a05600c19c900b00401b53e6c40mr1971370wmq.10.1697729266055;
-        Thu, 19 Oct 2023 08:27:46 -0700 (PDT)
+        bh=3kimNNYWoqBwfTCPtYxbhkrkDRujBhE+wKsXyBleEaI=;
+        b=HiqrBSbcozo8+OgSBx+GshG0ON6/ruC5UBmdLsphtr/xfnvuIdwvsD6zttbV3nmzEc
+         t8wTR0uS6s7EvYhIbeHTZYIeJrLjnAjc+JjeiOIGlJPS0DDKnZNtIFEztdZDOPoroZZs
+         a/MdYeXLkbw7C03JaTezAli/mo0IFMtauzoTXDnMKLGFsIndCjM68DpzUffM8ieTYBO+
+         vXTjImChZvX930KTsM3rV+amAOD9y0qs3k0EluDfMCxP6hZCIWWd+e3rd2Cd48B9WCic
+         VSzsF0JfrnoejUGwwlmDlYhq1CeN664GXbXbLPUY1c0GVG0vS0F77eJS8exFIT8d1Ydu
+         Au4A==
+X-Gm-Message-State: AOJu0Ywvg/fqpTCgspapQUOjxYHw9d7tltTo4FF1c+ieuWJicqG2vG09
+	u/M0MRmwWAH22HircjZtm4E=
+X-Google-Smtp-Source: AGHT+IGVXoYuq2PvDOG1o3iDOy4lOFfw/xwhfinOmWvYzzfvqVCfXs06s/7YAanF9jtq6nY8ylbc5A==
+X-Received: by 2002:a05:600c:5122:b0:408:3bbd:4a82 with SMTP id o34-20020a05600c512200b004083bbd4a82mr2199057wms.15.1697729267527;
+        Thu, 19 Oct 2023 08:27:47 -0700 (PDT)
 Received: from localhost.localdomain (host-2-102-115-95.as13285.net. [2.102.115.95])
-        by smtp.gmail.com with ESMTPSA id j7-20020a05600c190700b0040641a9d49bsm1022117wmq.17.2023.10.19.08.27.45
+        by smtp.gmail.com with ESMTPSA id j7-20020a05600c190700b0040641a9d49bsm1022117wmq.17.2023.10.19.08.27.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Oct 2023 08:27:45 -0700 (PDT)
+        Thu, 19 Oct 2023 08:27:47 -0700 (PDT)
 From: Phillip Wood <phillip.wood123@gmail.com>
 To: gitster@pobox.com
 Cc: calvinwan@google.com,
@@ -52,12 +52,13 @@ Cc: calvinwan@google.com,
 	phillip.wood123@gmail.com,
 	rsbecker@nexbridge.com,
 	steadmon@google.com
-Subject: [PATCH 0/3] CMake unit test fixups
-Date: Thu, 19 Oct 2023 16:21:48 +0100
-Message-ID: <20231019152726.14624-1-phillip.wood123@gmail.com>
+Subject: [PATCH 2/3] fixup! artifacts-tar: when including `.dll` files, don't forget the unit-tests
+Date: Thu, 19 Oct 2023 16:21:50 +0100
+Message-ID: <20231019152726.14624-3-phillip.wood123@gmail.com>
 X-Mailer: git-send-email 2.42.0.506.g0dd4464cfd3
-In-Reply-To: <xmqqh6mzwe24.fsf@gitster.g>
+In-Reply-To: <20231019152726.14624-1-phillip.wood123@gmail.com>
 References: <xmqqh6mzwe24.fsf@gitster.g>
+ <20231019152726.14624-1-phillip.wood123@gmail.com>
 Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -69,38 +70,23 @@ Content-Transfer-Encoding: 8bit
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Hi Junio
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> The other topic to adjust for cmake by Dscho builds on this topic,
-> and it needs to be rebased on this updated round.  I think I did so
-> correctly, but because I use neither cmake or Windows, the result is
-> not even compile tested.  Sanity checking the result is very much
-> appreciated when I push out the result of today's integration cycle.
-
-I need these fixups to get our CI to successfully build an run the
-unit tests using CMake & MSVC. They are all adjusting paths now that
-the unit test programs are built in t/unit-tests/bin
-
-You can see the unit tests passing at
-https://github.com/phillipwood/git/actions/runs/6575606322/job/17863460719
-Note that I have split up the patches since that run but the changes
-are the same.
-
-Best Wishes
-
-Phillip
-
-
-Phillip Wood (3):
-  fixup! cmake: also build unit tests
-  fixup! artifacts-tar: when including `.dll` files, don't forget the
-    unit-tests
-  fixup! cmake: handle also unit tests
-
- Makefile                            | 2 +-
- contrib/buildsystems/CMakeLists.txt | 8 ++++----
- 2 files changed, 5 insertions(+), 5 deletions(-)
-
+diff --git a/Makefile b/Makefile
+index 075d8e4899..e15c34e506 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3597,7 +3597,7 @@ rpm::
+ .PHONY: rpm
+ 
+ ifneq ($(INCLUDE_DLLS_IN_ARTIFACTS),)
+-OTHER_PROGRAMS += $(shell echo *.dll t/helper/*.dll t/unit-tests/*.dll)
++OTHER_PROGRAMS += $(shell echo *.dll t/helper/*.dll t/unit-tests/bin/*.dll)
+ endif
+ 
+ artifacts-tar:: $(ALL_COMMANDS_TO_INSTALL) $(SCRIPT_LIB) $(OTHER_PROGRAMS) \
 -- 
 2.42.0.506.g0dd4464cfd3
 
