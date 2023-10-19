@@ -1,114 +1,109 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8453C225B6
-	for <git@vger.kernel.org>; Thu, 19 Oct 2023 12:40:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCE4F2375D
+	for <git@vger.kernel.org>; Thu, 19 Oct 2023 13:18:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YxxztXCx"
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC5ACBE
-	for <git@vger.kernel.org>; Thu, 19 Oct 2023 05:40:19 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2c50d1b9f22so76062171fa.0
-        for <git@vger.kernel.org>; Thu, 19 Oct 2023 05:40:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QaonesFP"
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2F8EF7
+	for <git@vger.kernel.org>; Thu, 19 Oct 2023 06:18:57 -0700 (PDT)
+Received: by mail-pj1-x1034.google.com with SMTP id 98e67ed59e1d1-27cfb8442f9so5200603a91.2
+        for <git@vger.kernel.org>; Thu, 19 Oct 2023 06:18:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697719217; x=1698324017; darn=vger.kernel.org;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1697721537; x=1698326337; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+Rou4hccZK8UzIkFbhFlPYVOErvLFP0pkFBDEY8V7lY=;
-        b=YxxztXCxzPaL9U9H0O5QLq6ZQ3wfpyh0myodfN68sL2lHgKwQ4qqLhCinXUJUO/T+7
-         XvJTpU9nx7hggkUj53NYdef1mBSywFdSJ/vYD6Lm3YlEfT/q6dGoJ7hD/9qTco8GaXHF
-         jbqyGRy2Qa4M/9dBBH55Zf5QBSB8hbICFOEgAbqQHMdFRel0BHhs0Ne/nZ/TCAQ+MO0s
-         //llr+xkrp3/AEDwGZj8bEDpiXgKNwtINepm/1IRZPqLoID4+7HTPFrrgLx38/cU3lsV
-         AOyLnOhOEIiaBvabAW0QnY0KPA6OXrsm6eqpr7M8wnxBKj2QdDvPLArkYt5h86TACXFo
-         kezg==
+        bh=Xh93b2Fr71glkrEybTKW2nXsZT3AOEpKSL07ujRJYTU=;
+        b=QaonesFP3aQd3Xduq2CYAcUYSJse1XcJKSVxT6eSGzkMaf4Rfn5o+W+yv93La+/LQq
+         RSJ0hw3dB56YwvjHNHE4WVw9XeKRk/I7OKMnicJU12Ub6w/neO4vf0UdflVZnJzy2iXt
+         8+pY3VoFJLP8LbhGfitb5KngwI5umgyPMILu5mfKGq37UFI/EZolfVRuXQ9+vAhgG0G5
+         xvzAxobhh3bqplYbIi/kuAD7cGKMinNzFUVtPKFjCrepxaKzZJ7A1WLKtnZL4uC6O/VS
+         OdMoioIjXVGdq5bnOgR1bv20l0y4cGLPE86QJmkOh5JwU0MhQmzDJwjfuRpNDx6PU8HQ
+         fd6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697719217; x=1698324017;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1697721537; x=1698326337;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=+Rou4hccZK8UzIkFbhFlPYVOErvLFP0pkFBDEY8V7lY=;
-        b=YA3ysCyikq2jBtFqykvuXQiCz/KCi0J03ugd6aR54B2FWCJLfnp4vWuHYlku4RRHex
-         HzBiyaajplAkYpbaywEp3Y0OJMU72Tvxg3H4hLQpAwR6ehznYPelWjpcTGVktohslosA
-         zksjl3I67qKfJJGsm+pZ/Faf7JKPmui/H5l68HlN+DfMMHu2sRwjdd63rGiC1Dorual+
-         TN14m0hxKw+hF+Y4HyxuIPCtEZAIh9XnrWCZH677OZO90eudYuiGDDT+8PQb8pX0LzY3
-         3UvsBb3vdblyrGp+z8u+AruOa0PELqMOIJdZBnpYRH94YR6nH+pgeivLpDEX/1KiAQj7
-         oIWA==
-X-Gm-Message-State: AOJu0YwlsxYGfFSdnRmT0sJsxP+1IeTQUwKLL64V9f2XJo7giKYiOUNu
-	pcw08xTZuypm52T3TAdQTBSmIoz62QQ=
-X-Google-Smtp-Source: AGHT+IFDmfCaMT0ozOWSj0XrDQhU2x7xxtp4sAbuJjWFKAdyH32aKspSQoYttgXH0SGUQCOZLiZxjg==
-X-Received: by 2002:a2e:a4b0:0:b0:2c0:a0c:be7 with SMTP id g16-20020a2ea4b0000000b002c00a0c0be7mr1230061ljm.8.1697719217329;
-        Thu, 19 Oct 2023 05:40:17 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f7-20020a05600c4e8700b00403b63e87f2sm4437050wmq.32.2023.10.19.05.40.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Oct 2023 05:40:16 -0700 (PDT)
-Message-ID: <pull.1592.v2.git.git.1697719216137.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1592.git.git.1697378928693.gitgitgadget@gmail.com>
-References: <pull.1592.git.git.1697378928693.gitgitgadget@gmail.com>
-From: "Wangchangxin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 19 Oct 2023 12:40:15 +0000
-Subject: [PATCH v2] merge-ort.c: fix typo 'neeed' to 'needed'
+        bh=Xh93b2Fr71glkrEybTKW2nXsZT3AOEpKSL07ujRJYTU=;
+        b=PKLzDcbuNS7qzgkjnn7k59aBVrZFsWLOyjMPOhyOgYyoLYxihJ2MmY9oogWFUe7dns
+         WNWP5hPWVqBz340byGepbXB578RXWIUbSqvK5nNgn6a6MRCv/CPPe61q3Zz4zNaF3AUS
+         r9V+rM3zZXc8Y/twgX+dkfRgFNgPGkoLlzTf5phXrGxQr0Wz6UF5a/ii1UJ+3+oksF97
+         sPLr9I9hB4mNmkyCM18OLiYzQTlmRRoZe1LsBs+xipMJbwsLcDkqxLRFQqeBUDjtgEpd
+         +868v31J/t9/XvN/Mt4Im5jYyYhslrX4xp5bNvbK/EpUWmQ2Jz4SZ8bGxgkUV0kVO0aR
+         yujA==
+X-Gm-Message-State: AOJu0YxVZ3mxKKcJecAs9UeR1/FWHC+3cXrcmcx7jEoO0QGTe1DJmwpH
+	nCUK7OCMzVk66Oy6ddbPixW/FrpvK1MWYM51Zns=
+X-Google-Smtp-Source: AGHT+IFxyvHWbcI9nseMarsSfSqS4dJN5vHcr8ea9jQYdukA4C2GW8ihvHuzD6J/quR7K5TAp77YfBKd+kwHPNCWm+E=
+X-Received: by 2002:a17:90b:2744:b0:27c:facc:e3eb with SMTP id
+ qi4-20020a17090b274400b0027cfacce3ebmr1870522pjb.31.1697721537069; Thu, 19
+ Oct 2023 06:18:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc: Sent
-To: git@vger.kernel.org
-Cc: Wangchangxin <wchangxin824@163.com>,
-    foril <1571825323@qq.com>
+References: <CAKFQ_Q9WjF9i-Rx2jdCw-adPVQrWNfNKrDY-em8Rpa5RNLXz4A@mail.gmail.com>
+ <20231014135302.13095-1-martin.agren@gmail.com> <xmqq5y39unvc.fsf@gitster.g>
+In-Reply-To: <xmqq5y39unvc.fsf@gitster.g>
+From: =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date: Thu, 19 Oct 2023 15:18:45 +0200
+Message-ID: <CAN0heSqmZ7QXJbet2Tp=YYCjBLToOHtNy+n=zcf29XYaukYN0w@mail.gmail.com>
+Subject: Re: [PATCH] diagnose: require repository
+To: Junio C Hamano <gitster@pobox.com>
+Cc: ks1322 ks1322 <ks1322@gmail.com>, git@vger.kernel.org, Victoria Dye <vdye@github.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: foril <1571825323@qq.com>
+On Sat, 14 Oct 2023 at 19:15, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Martin =C3=85gren <martin.agren@gmail.com> writes:
+>
+> > Switch from the gentle setup to requiring a git directory. Without a gi=
+t
+> > repo, there isn't really much to diagnose.
+> >
+> > We could possibly do a best-effort collection of information about the
+> > machine and then give up. That would roughly be today's behavior but
+> > with a controlled exit rather than a segfault. However, the purpose of
+> > this tool is largely to create a zip archive. Rather than creating an
+> > empty zip file or no zip file at all, and having to explain that
 
-Signed-off-by: 王常新 (Wang Changxin) <foril@foril.space>
----
-    typo: fix the typo 'neeed' into 'needed' in the comment under merge-o…
-    
-    the comments on line 2039 under merge-ort.c should be :
-    this is needed if we have content merges of content merges rather than
-    this is neeed if we have content merges of content merges
-    
-    fix the typo
+Correcting myself: The zip archive would actually contain
+`diagnostics.log` with some general info about the machine and Git
+build.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1592%2FforiLLL%2Fcomment_patch-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1592/foriLLL/comment_patch-v2
-Pull-Request: https://github.com/git/git/pull/1592
+> > behavior, it seems more helpful to bail out clearly and early with a
+> > succinct error message.
+>
+> Without having thought things through, offhand I agree with your "no
+> repository?  there is nothing worth tarring up then" assessment.
+>
+> Because "git bugreport --diag" unconditionally spawns "git
+> diagnose", the former may also want to be extra careful, perhaps
+> like the attached patch.
 
-Range-diff vs v1:
+Good point. TBH, I had no idea about `git bugreport --diagnose`.
 
- 1:  737eccd2811 ! 1:  3934ee6b684 typo: fix the typo 'neeed' into 'needed' in the comment under merge-ort.c
-     @@ Metadata
-      Author: foril <1571825323@qq.com>
-      
-       ## Commit message ##
-     -    typo: fix the typo 'neeed' into 'needed' in the comment under merge-ort.c
-     +    merge-ort.c: fix typo 'neeed' to 'needed'
-      
-          Signed-off-by: 王常新 (Wang Changxin) <foril@foril.space>
-      
+> +       if (!startup_info->have_repository && diagnose !=3D DIAGNOSE_NONE=
+) {
+> +               warning(_("no repository--diagnostic output disabled"));
+> +               diagnose =3D DIAGNOSE_NONE;
+> +       }
+> +
 
+When the user explicitly provides that option, it seems unfortunate to
+me to drop it. Yes, we'd warn, but `git bugreport` then pops a text
+editor, so you would only see the warning after finishing up the report.
+(Maybe. By the time you quit your editor, you might not consider
+checking the terminal for warnings and such.)
 
- merge-ort.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+So I'm inclined to instead just die if we see the option outside a repo.
+If `diagnose` the command fundamentally requires a repo (as with my
+patch) it seems surprising to me to not have `--diagnose` the option
+behave the same.
 
-diff --git a/merge-ort.c b/merge-ort.c
-index 7857ce9fbd1..aee6f7d8173 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -2036,7 +2036,7 @@ static int handle_content_merge(struct merge_options *opt,
- 	 * the three blobs to merge on various sides of history.
- 	 *
- 	 * extra_marker_size is the amount to extend conflict markers in
--	 * ll_merge; this is neeed if we have content merges of content
-+	 * ll_merge; this is needed if we have content merges of content
- 	 * merges, which happens for example with rename/rename(2to1) and
- 	 * rename/add conflicts.
- 	 */
-
-base-commit: a9ecda2788e229afc9b611acaa26d0d9d4da53ed
--- 
-gitgitgadget
+Martin
