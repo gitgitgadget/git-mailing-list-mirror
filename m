@@ -1,37 +1,38 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5407E552
-	for <git@vger.kernel.org>; Fri, 20 Oct 2023 10:00:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C0AA15AE8
+	for <git@vger.kernel.org>; Fri, 20 Oct 2023 10:03:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dkim=none
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 753D210E4
-	for <git@vger.kernel.org>; Fri, 20 Oct 2023 03:00:26 -0700 (PDT)
-Received: (qmail 15336 invoked by uid 109); 20 Oct 2023 10:00:25 -0000
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7767793
+	for <git@vger.kernel.org>; Fri, 20 Oct 2023 03:03:45 -0700 (PDT)
+Received: (qmail 15364 invoked by uid 109); 20 Oct 2023 10:03:44 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 20 Oct 2023 10:00:25 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 20 Oct 2023 10:03:44 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12595 invoked by uid 111); 20 Oct 2023 10:00:30 -0000
+Received: (qmail 12606 invoked by uid 111); 20 Oct 2023 10:03:49 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 20 Oct 2023 06:00:30 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 20 Oct 2023 06:03:49 -0400
 Authentication-Results: peff.net; auth=none
-Date: Fri, 20 Oct 2023 06:00:24 -0400
+Date: Fri, 20 Oct 2023 06:03:43 -0400
 From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH] commit: detect commits that exist in commit-graph but
- not in the ODB
-Message-ID: <20231020100024.GA2194074@coredump.intra.peff.net>
-References: <ZSkCGS3JPEQ71dOF@tanuki>
- <b0bf576c51a706367a758b8e30eca37edb9c2734.1697200576.git.ps@pks.im>
- <xmqq1qdy1iyr.fsf@gitster.g>
- <ZS4rmtBTYnp2RMiY@tanuki>
- <xmqqjzrlhzci.fsf@gitster.g>
- <ZTDQjangLsQ1cSJl@tanuki>
- <ZTDn-Wd5xsFrBmqI@tanuki>
- <xmqqzg0ey1kn.fsf@gitster.g>
+To: Michael Strawbridge <michael.strawbridge@amd.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: [PATCH 0/3] some send-email --compose fixes
+Message-ID: <20231020100343.GA2194322@coredump.intra.peff.net>
+References: <ZSal-mQIZAUBaq6g@debian.me>
+ <95b9e5d5-ab07-48a6-b972-af5348f653be@amd.com>
+ <7e2c92ff-b42c-4b3f-a509-9d0785448262@amd.com>
+ <xmqq1qe0lui2.fsf@gitster.g>
+ <20231011221844.GB518221@coredump.intra.peff.net>
+ <xmqqzg0oiy4s.fsf@gitster.g>
+ <20231011224753.GE518221@coredump.intra.peff.net>
+ <b4385543-bee0-473b-ab2d-df0d7847ddf3@amd.com>
+ <20231020064525.GB1642714@coredump.intra.peff.net>
+ <20231020071402.GC1642714@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -40,41 +41,32 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqzg0ey1kn.fsf@gitster.g>
+In-Reply-To: <20231020071402.GC1642714@coredump.intra.peff.net>
 
-On Thu, Oct 19, 2023 at 10:16:56AM -0700, Junio C Hamano wrote:
+[culling the rather large cc, as we moving off the original topic]
 
-> Patrick Steinhardt <ps@pks.im> writes:
+On Fri, Oct 20, 2023 at 03:14:03AM -0400, Jeff King wrote:
+
+> and there's your perl array ref (from the square brackets, which are
+> necessary because we're sticking it in a hash value). But even before
+> your patch, this seems to end up as garbage. The code which reads
+> $parsed_line does not dereference the array.
 > 
-> > There's another way to handle this, which is to conditionally enable the
-> > object existence check. This would be less of a performance hit compared
-> > to disabling commit graphs altogether with `--missing`, but still ensure
-> > that repository corruption was detected. Second, it would not regress
-> > performance for all preexisting users of `repo_parse_commit_gently()`.
-> 
-> The above was what I meant to suggest when you demonstrated that the
-> code with additional check is still much more performant than
-> running without the commit-graph optimization, yet has observable
-> impact on performance for normal codepaths that do not need the
-> extra carefulness.
-> 
-> But I wasn't sure if it is easy to plumb the "do we want to double
-> check?  in other words, are we running something like --missing that
-> care the correctness a bit more than usual cases?" bit down from the
-> caller, because this check is so deep in the callchain.
+> The patch to fix it is only a few lines (well, more than that with some
+> light editorializing in the comments):
 
-I wonder if we would want a "be extra careful" flag that is read from
-the environment? That is largely how GIT_REF_PARANOIA works, and then
-particular operations set it (though actually it is the default these
-days, so they no longer do so explicitly).
+So here's the fix in a cleaned up form, guided by my own comments from
+earlier. ;) I think this is actually all orthogonal to the patch you are
+working on, so yours could either go on top or just be applied
+separately.
 
-I guess that is really like a global variable but even more gross. ;)
-But it is nice that it can cross process boundaries, because "how
-careful do we want to be" may be in the eye of the caller, especially
-for plumbing commands. E.g., even without --missing, you may want
-"rev-list" to be extra careful about checking the existence of commits.
-The caller in check_connected() could arguably turn that on by default
-(the way we used to turn on GIT_REF_PARANOIA for pruning repacks before
-it became the default).
+  [1/3]: doc/send-email: mention handling of "reply-to" with --compose
+  [2/3]: Revert "send-email: extract email-parsing code into a subroutine"
+  [3/3]: send-email: handle to/cc/bcc from --compose message
+
+ Documentation/git-send-email.txt |  10 +--
+ git-send-email.perl              | 132 ++++++++++++-------------------
+ t/t9001-send-email.sh            |  41 ++++++++++
+ 3 files changed, 98 insertions(+), 85 deletions(-)
 
 -Peff
