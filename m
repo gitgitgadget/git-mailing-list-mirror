@@ -1,169 +1,112 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57ED81A73E
-	for <git@vger.kernel.org>; Fri, 20 Oct 2023 16:40:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91C2D1B26E
+	for <git@vger.kernel.org>; Fri, 20 Oct 2023 16:41:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="q1IyzW2w";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kMHMXkx0"
-Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B2DC18F
-	for <git@vger.kernel.org>; Fri, 20 Oct 2023 09:40:34 -0700 (PDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.nyi.internal (Postfix) with ESMTP id 2436C5C0A3E;
-	Fri, 20 Oct 2023 12:40:32 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Fri, 20 Oct 2023 12:40:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:date:date:from
-	:from:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:sender:subject:subject:to:to; s=fm2; t=1697820032; x=
-	1697906432; bh=TweKuaZMWKvVWXRvp2XvsvEDpxryNMVq0dJBsV/2WtQ=; b=q
-	1IyzW2wgwIVZzefwBbCD8/mUEJX2jOLKJ1N+QTFJx5j1AQIL2tSbcLA6/HMaodDi
-	W4eSeQ4lABpgfEhzNXJMwpA0+tmfuaEoqc4Bwh1TymADPDs85MHfL+6OpdsCBQcy
-	6JmGNqGsuZU+Bm2D1efEcs3b+QREfuVVubAflO1TBmPzpzLepidlVrSoXvtf7SW6
-	gGwFKrwR0d+bV1bTSzIuskOQ33yiPBkNgb7i78c5aaaRz2VwJU6G0jbfYXL7wPxN
-	AdiTHyKSs5JlVUAVpBNo2UdOZKsLaBkC9fKkmAhVwV0ysVDPl51F8QMFDl9lciRb
-	8BcVSzC/+bQLCgwC+v1sg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1697820032; x=
-	1697906432; bh=TweKuaZMWKvVWXRvp2XvsvEDpxryNMVq0dJBsV/2WtQ=; b=k
-	MHMXkx0FIRjFMUkhfgSz1am44htZkEwdc4LIuUt/1PNfCPfLovfhIE9uk1Vfe8T+
-	mXrKch2rW4i6RWJ+2aQtdwN9xLLFeZhECg+q1EPOdxI9QSkUAJ9kglv42S40bVOo
-	UfeKG7XLT63gOuLTl8YepLUy9MIA979v9Gh3LIzxkaLXX6AtBd7PFQlsHFI69Ntu
-	N44GXN4UT8nN8jgFOUILbjtHfQ3iHod8NnEP2i9jIK14LOO1g5KkNu+daRN9HoFG
-	ZQgIiu3H/xibuhaPDUvph+mr186CtAJZ/Syr4knz7GgryF+25ic99oe9DnKpgcDK
-	yi56X3ooQL6A6EyfhWbaA==
-X-ME-Sender: <xms:f60yZYPvNUniEnfarCZmkfaCrJDs1aUwj-PEm0wt_v-f1-fKlO1QM7k>
-    <xme:f60yZe_I4E9C81AzE0CNkn1TiGPeuc0gt6lPk6TcYv8HLa9OqjPGIN676OB6xH3kg
-    wtPeICfIqGfZ8xQcw>
-X-ME-Received: <xmr:f60yZfSf8GxeV_SI5VsoT-zBK0uRzVjGfHDrKiDZ1Py95E6Hf13zAZY0-u8kGlpHGsRQ3C0O-zjdyyLGc1fxdfH2TqUuf68bQc3QjdPs0Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrjeekgddutdduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucgoteeftdduqddtudculdduhedmnecujfgurhephf
-    fvvefufffkofgjfhgggfestdekredtredttdenucfhrhhomhepmfhrihhsthhofhhfvghr
-    ucfjrghughhssggrkhhkuceotghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvqeenuc
-    ggtffrrghtthgvrhhnpefhudevveejtddttedvhfelffeuuefhffeugeeluedtgfdtuefh
-    tefhudelleekteenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgs
-    rghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:f60yZQu__OOywqXEy-2_XsP8MKz5KNmFNzWSY47i0i7e7BF8aJ97tg>
-    <xmx:f60yZQf-qAo9Wb6EP5l3welRdqGpNhiPKU9BLFqRclyyuPQTma7zBQ>
-    <xmx:f60yZU0PiR_JWROkmPUyHdwP5Zqnz72VmPJxLrY6GciR0vTPq8cItw>
-    <xmx:gK0yZRolXSLaHVAMIWBy2O5AB1Akd7xDm4ADOJCHHs7_Qj1Ooz6g7w>
-Feedback-ID: i2671468f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Oct 2023 12:40:30 -0400 (EDT)
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
-To: code@khaugsbakk.name
-Cc: gitster@pobox.com,
-	ks1322@gmail.com,
-	git@vger.kernel.org
-Subject: [PATCH v2] grep: die gracefully when outside repository
-Date: Fri, 20 Oct 2023 18:40:07 +0200
-Message-ID: <5c8ef6bec1c99e0fae7ada903885a8e77f8137f9.1697819838.git.code@khaugsbakk.name>
-X-Mailer: git-send-email 2.42.0.2.g879ad04204
-In-Reply-To: <087c92e3904dd774f672373727c300bf7f5f6369.1697317276.git.code@khaugsbakk.name>
-References: <087c92e3904dd774f672373727c300bf7f5f6369.1697317276.git.code@khaugsbakk.name>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="iGnvhrgU"
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B8C818F
+	for <git@vger.kernel.org>; Fri, 20 Oct 2023 09:41:09 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id D052131854;
+	Fri, 20 Oct 2023 12:41:08 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=nrwaL6CvbW7w40Bt8aq62B72c2RXU5lwkbl7zZ
+	k4WXI=; b=iGnvhrgUnqyH2RLBIXEEBJpohVVc9Sy9tJyN+gq806eu+waFh+haeh
+	tyDv40sB5/xrsS9WJR9Mb1QdENWk6kB5syzKejoF/os8pwMT+XYIgDHiePPchlhv
+	1D2lXn/z9H/SH6WZaLjqL+TTFXF8gmSGE72WmSaVzzUuS9I3Aqzvs=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id C921431853;
+	Fri, 20 Oct 2023 12:41:08 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 540BE31852;
+	Fri, 20 Oct 2023 12:41:05 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im
+Subject: Re: [PATCH v3 3/3] rev-list: add commit object support in
+ `--missing` option
+In-Reply-To: <xmqqttqmtcc2.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+	19 Oct 2023 16:35:41 -0700")
+References: <20231016103830.56486-1-karthik.188@gmail.com>
+	<20231019121024.194317-1-karthik.188@gmail.com>
+	<20231019121024.194317-4-karthik.188@gmail.com>
+	<xmqq4jimuv26.fsf@gitster.g> <xmqqttqmtcc2.fsf@gitster.g>
+Date: Fri, 20 Oct 2023 09:41:03 -0700
+Message-ID: <xmqq1qdptffk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 766342D6-6F67-11EE-B5BC-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Die gracefully when `git grep --no-index` is run outside of a Git
-repository and the path is outside the directory tree.
+Junio C Hamano <gitster@pobox.com> writes:
 
-If you are not in a Git repository and say:
+> Rather, I was wondering if we need to use object flags to mark these
+> objects, or can do what we want to do without using any object flags
+> at all.  For the purpose of reporting "missing" objects, wouldn't it
+> be sufficient to walk the object graph and report our findings as we
+> go?  To avoid reporting the same object twice, as we reasonably can
+> expect that the missing objects are minority (compared to the total
+> number of objects), perhaps the codepath that makes such a report
+> can use a hashmap of object_ids or something, for example.
 
-    git grep --no-index search ..
+Digging from the bottom,
 
-You trigger a `BUG`:
+ * builtin/rev-list.c:show_commit() gets "struct rev_list_info *"
+   that has "struct rev_info *" [*].
 
-    BUG: environment.c:213: git environment hasn't been setup
-    Aborted (core dumped)
+ * list-objects.c:do_traverse() calls revision.c:get_revision() to
+   obtain commits, some of which may be missing ones, and things
+   behind get_revision() are responsible for marking the commit as
+   missing.  It has "struct traversal_context *", among whose
+   members is the "revs" member that is the "struct rev_info *".
 
-Because `..` is a valid path which is treated as a pathspec. Then
-`pathspec` figures out that it is not in the current directory tree. The
-`BUG` is triggered when `pathspec` tries to advice the user about how the
-path is not in the current (non-existing) repository.
+ * revision.c:get_revision() and machinery behind it ultimately
+   discovers a missing commit in the revision.c:process_parents()
+   that loops over the parents commit_list.  It of course has access
+   to "struct rev_info *".
 
-Reported-by: ks1322 ks1322 <ks1322@gmail.com>
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
+So, presumably, if we add a new member to "struct rev_info" that
+optionally [*] points at an oidset that records the object names of
+missing objects we discovered so far (i.e., the set of missing
+objects), the location we set the MISSING bit of a commit can
+instead add the object name of the commit to the set.  And we can
+export a function that takes "struct rev_info *" and "struct object
+*" (or "struct object_id *") to check for membership in the "set of
+missing objects", which would be used where we checked the MISSING
+bit of a commit.
 
-Notes (series):
-    v2:
-    - Initialize `hint_path` after we know that we are in a Git repository
-    - Apply Junio's suggestion for the test: https://lore.kernel.org/git/xmqqzg0hf0g8.fsf@gitster.g/
+I do not know the performance implications of going this route, but
+if we do not find a suitable vacant bit, we do not have to use any
+object flags bit to do this, if we go this route, I would think.  I
+may be missing some details that breaks the above outline, though.
 
- pathspec.c      |  7 ++++++-
- t/t7810-grep.sh | 27 +++++++++++++++++++++++++++
- 2 files changed, 33 insertions(+), 1 deletion(-)
 
-diff --git a/pathspec.c b/pathspec.c
-index 3a3a5724c44..264b4929a55 100644
---- a/pathspec.c
-+++ b/pathspec.c
-@@ -467,7 +467,12 @@ static void init_pathspec_item(struct pathspec_item *item, unsigned flags,
- 		match = prefix_path_gently(prefix, prefixlen,
- 					   &prefixlen, copyfrom);
- 		if (!match) {
--			const char *hint_path = get_git_work_tree();
-+			const char *hint_path;
-+
-+			if (!have_git_dir())
-+				die(_("'%s' is outside the directory tree"),
-+				    copyfrom);
-+			hint_path = get_git_work_tree();
- 			if (!hint_path)
- 				hint_path = get_git_dir();
- 			die(_("%s: '%s' is outside repository at '%s'"), elt,
-diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-index 39d6d713ecb..84838c0fe1b 100755
---- a/t/t7810-grep.sh
-+++ b/t/t7810-grep.sh
-@@ -1234,6 +1234,33 @@ test_expect_success 'outside of git repository with fallbackToNoIndex' '
- 	)
- '
- 
-+test_expect_success 'no repository with path outside $cwd' '
-+	test_when_finished rm -fr non &&
-+	rm -fr non &&
-+	mkdir -p non/git/sub non/tig &&
-+	(
-+		GIT_CEILING_DIRECTORIES="$(pwd)/non" &&
-+		export GIT_CEILING_DIRECTORIES &&
-+		cd non/git &&
-+		test_expect_code 128 git grep --no-index search .. 2>error &&
-+		grep "is outside the directory tree" error
-+	) &&
-+	(
-+		GIT_CEILING_DIRECTORIES="$(pwd)/non" &&
-+		export GIT_CEILING_DIRECTORIES &&
-+		cd non/git &&
-+		test_expect_code 128 git grep --no-index search ../tig 2>error &&
-+		grep "is outside the directory tree" error
-+	) &&
-+	(
-+		GIT_CEILING_DIRECTORIES="$(pwd)/non" &&
-+		export GIT_CEILING_DIRECTORIES &&
-+		cd non/git &&
-+		test_expect_code 128 git grep --no-index search ../non 2>error &&
-+		grep "no such path in the working tree" error
-+	)
-+'
-+
- test_expect_success 'inside git repository but with --no-index' '
- 	rm -fr is &&
- 	mkdir -p is/git/sub &&
--- 
-2.42.0.2.g879ad04204
+[Footnotes]
 
+ * A potential #leftoverbits tangent.
+
+   Why is "rev_list_info" structure declared in <bisect.h>?  I
+   suspect that this is a fallout from recent header file shuffling,
+   but given who uses it (among which is rev-list:show_commit() that
+   has very little to do with bisection and uses the information in
+   rev_list_info when doing its normal non-bisect things), it does
+   not make much sense.
+
+ * When .do_not_die_on_missing_objects is false, it can and should
+   be left NULL, but presumably we use the "do not die" bit even
+   when we are not necessarily collecting the missing objects?  So
+   the new member cannot replace the "do not die" bit completely.
