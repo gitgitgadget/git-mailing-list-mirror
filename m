@@ -1,89 +1,76 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EFF8179A0
-	for <git@vger.kernel.org>; Fri, 20 Oct 2023 10:31:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4562018029
+	for <git@vger.kernel.org>; Fri, 20 Oct 2023 10:48:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0901114
-	for <git@vger.kernel.org>; Fri, 20 Oct 2023 03:31:17 -0700 (PDT)
-Received: (qmail 15542 invoked by uid 109); 20 Oct 2023 10:31:16 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 20 Oct 2023 10:31:16 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12920 invoked by uid 111); 20 Oct 2023 10:31:21 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 20 Oct 2023 06:31:21 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 20 Oct 2023 06:31:16 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Subject: Re: [PATCH 5/8] commit-graph: read `BIDX` chunk with
- `pair_chunk_expect()`
-Message-ID: <20231020103116.GC2673857@coredump.intra.peff.net>
-References: <20231009205544.GA3281950@coredump.intra.peff.net>
- <cover.1697225110.git.me@ttaylorr.com>
- <45cac29403e63483951f7766c6da3c022c68d9f0.1697225110.git.me@ttaylorr.com>
- <xmqqcyxhxk0h.fsf@gitster.g>
+Received: from bluemchen.kde.org (bluemchen.kde.org [209.51.188.41])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 268AC1BE7
+	for <git@vger.kernel.org>; Fri, 20 Oct 2023 03:45:48 -0700 (PDT)
+Received: from ugly.fritz.box (localhost [127.0.0.1])
+	by bluemchen.kde.org (Postfix) with ESMTP id E824E23F67;
+	Fri, 20 Oct 2023 06:45:43 -0400 (EDT)
+Received: by ugly.fritz.box (masqmail 0.3.6-dev, from userid 1000)
+	id 1qtn0h-t9w-00; Fri, 20 Oct 2023 12:45:43 +0200
+Date: Fri, 20 Oct 2023 12:45:43 +0200
+From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+To: Jeff King <peff@peff.net>
+Cc: Michael Strawbridge <michael.strawbridge@amd.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 2/3] Revert "send-email: extract email-parsing code into
+ a subroutine"
+Message-ID: <ZTJaVzt75r0iHPzR@ugly>
+References: <20231020100343.GA2194322@coredump.intra.peff.net>
+ <20231020101310.GB2673716@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <xmqqcyxhxk0h.fsf@gitster.g>
+In-Reply-To: <20231020101310.GB2673716@coredump.intra.peff.net>
 
-On Sat, Oct 14, 2023 at 09:10:22AM -0700, Junio C Hamano wrote:
+On Fri, Oct 20, 2023 at 06:13:10AM -0400, Jeff King wrote:
+>But one thing that gives me pause is that the neither before or after
+>this patch do we handle continuation lines like:
+>
+>  Subject: this is the beginning
+>    and this is more subject
+>
+>And it would probably be a lot easier to add when storing the headers in
+>a hash (it's not impossible to do it the other way, but you basically
+>have to delay processing each line with a small state machine).
+>
+that seems like a rather significant point, doesn't it?
 
-> > @@ -461,8 +449,10 @@ struct commit_graph *parse_commit_graph(struct repo_settings *s,
-> >  	}
-> >  
-> >  	if (s->commit_graph_read_changed_paths) {
-> > +		if (pair_chunk_expect(cf, GRAPH_CHUNKID_BLOOMINDEXES,
-> > +				      &graph->chunk_bloom_indexes,
-> > +				      st_mult(graph->num_commits, 4)) == -1)
-> > +			warning(_("commit-graph changed-path index chunk is too small (%d)"), graph->num_commits * 4);
-> >  		read_chunk(cf, GRAPH_CHUNKID_BLOOMDATA,
-> >  			   graph_read_bloom_data, graph);
-> >  	}
-> 
-> Overall the series looked sane, but the need for each caller to
-> supply error messages, when the helper perfectly well knows how many
-> bytes the caller expected and how many bytes there are avaiable, was
-> a bit disturbing, as the level of detail given per each caller will
-> inevitably become uneven.  Even now, some give an error() while
-> others give a warning(), even though I suspect all of them should be
-> data errors.
-> 
-> I wonder if it makes sense to stuff the message template in the
-> pair_chunk_data structure and do
-> 
-> static int pair_chunk_expect_fn(const unsigned char *chunk_start,
-> 				size_t chunk_size,
-> 				void *data)
-> {
-> 	struct pair_chunk_data *pcd = data;
-> 	if (pcd->expected_size != chunk_size)
-> 		return error(_(pcd->message), pcd->expected_size, chunk_size);
-> 	*pcd->p = chunk_start;
-> 	return 0;
-> }
+>So another option is to just fix the individual bugs separately.
+>
+... so that seems preferable to me, given that the necessary fixes seem 
+rather trivial.
 
-One issue with the series as-is is that the "chunk is too small"
-messages can be misleading when the chunk is in fact missing. We do say
-"missing or corrupt" in the die message (at least for midx; I did not
-update the similar ones for commit-graph), but the explicit "too small"
-for a missing chunk seems to me to cross the line.
+> I guess "readable" is up for debate here, but I find the inline handling
+> a lot easier to follow
+>
+any particular reason for that?
 
-The caller can distinguish the cases by the actual value returned from
-pair_chunk_expect(), but doing so makes the code a lot longer and harder
-to read.
+> (and it's half as many lines; most of the diffstat is the new tests).
 
-Your suggestion above takes care of it naturally (in the same way that
-the existing code does, which basically is emitting the same message in
-each read_chunk callback).
+>-	if ($parsed_email{'From'}) {
+>-		$sender = delete($parsed_email{'From'});
+>-	}
 
--Peff
+this verbosity could be cut down somewhat using just
+
+   $sender = delete($parsed_email{'From'});
+
+and if the value can be pre-set and needs to be preserved,
+
+   $sender = delete($parsed_email{'From'}) // $sender;
+
+but this seems kind of counter-productive legibility-wise.
+
+regards
