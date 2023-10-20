@@ -1,90 +1,93 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6AE512E7F
-	for <git@vger.kernel.org>; Fri, 20 Oct 2023 09:36:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from bluemchen.kde.org (bluemchen.kde.org [209.51.188.41])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 632F3D5F
-	for <git@vger.kernel.org>; Fri, 20 Oct 2023 02:36:56 -0700 (PDT)
-Received: from ugly.fritz.box (localhost [127.0.0.1])
-	by bluemchen.kde.org (Postfix) with ESMTP id E55E8240A4;
-	Fri, 20 Oct 2023 05:36:54 -0400 (EDT)
-Received: by ugly.fritz.box (masqmail 0.3.6-dev, from userid 1000)
-	id 1qtlw6-s5c-00; Fri, 20 Oct 2023 11:36:54 +0200
-From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v3 1/3] rebase: simplify code related to imply_merge()
-Date: Fri, 20 Oct 2023 11:36:52 +0200
-Message-ID: <20231020093654.922890-2-oswald.buddenhagen@gmx.de>
-X-Mailer: git-send-email 2.42.0.419.g70bf8a5751
-In-Reply-To: <20231020093654.922890-1-oswald.buddenhagen@gmx.de>
-References: <20230809171531.2564844-1-oswald.buddenhagen@gmx.de>
- <20231020093654.922890-1-oswald.buddenhagen@gmx.de>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4546A1FBC
+	for <git@vger.kernel.org>; Fri, 20 Oct 2023 09:41:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d2E+0J+w"
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B44BFC0
+	for <git@vger.kernel.org>; Fri, 20 Oct 2023 02:41:29 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-53e2dc8fa02so822254a12.2
+        for <git@vger.kernel.org>; Fri, 20 Oct 2023 02:41:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1697794888; x=1698399688; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BBw67ydQrZG1FlDG4zw5Q+Ilgle998Fo3nVfFF1uQ3M=;
+        b=d2E+0J+wtDx+QA2HOAK8LPoQ/diI5WFp2lu5HbouZbKGyaHODiGb35gnFUva6FRz2L
+         YMXMMSNjjrTflAflZxRRMZIF1sIuEnItWn9DT6xgCJFmfrHDAh8OIt1/WLUuqvpMkE1h
+         eDIgIiO3F4xZX3f+Q9Nrt+rNTKmRtyEsGY0qA51HEMttKjfWTgbinSgMq1KMqvV1pRR0
+         v6mWh8Le40COUpBM+u88Ife6/JHjtTf79Eafi5EisOh0XUv0d/9XkZjYcXyQDhGn7qYX
+         E0yK6ys1GN06GwtLccDKkuE2uDlrduZNHN4Hl8kmgI8tbyyelbaLmeyR60ctVWKawAZi
+         ESzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697794888; x=1698399688;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=BBw67ydQrZG1FlDG4zw5Q+Ilgle998Fo3nVfFF1uQ3M=;
+        b=VzcGEQSVBPB1eX0mVhNH4XIlWtKR6mPa8vDvpgZiNJSVBVykGt0PpXQJ+wL7ZLosRL
+         BBGHAgVqfyuMvQGNxWGWm1qbcznfAiY/2fPd1Dmqv1twlVFk5AijROoyr0WFO0R4S5bJ
+         hkAYc5rCjXT9ii+TT1Pr1CxH4vCfI6AZhCQsTQqM1m0lyohkH1f09DH19eHqrTMIlZQQ
+         MN4ME48A8p2Iw4t7D4Xz2L78msBnMZ2qO5YLNfzQscYcIe4FuJff2Eob9J2fqnbp/6dH
+         1TSXN5YKBd8j/TdcQaGQwHWpHgAnLWbFVSwGra7YCBCRlMbqjx9GNsjTclwAkNXZEFt1
+         N8rw==
+X-Gm-Message-State: AOJu0YwElZSx7r4SDUOCDAW34/2ACq3xoeMkF/8Jd7eUKOwNWd81xWi2
+	7nlsTS8LfCyqFx558yaY7VB83CxODnPBUCfnPFs=
+X-Google-Smtp-Source: AGHT+IFDd3lmglevbMsUH8ZxYbOJVhdlJtBN25SD8e18XGT0S0wnFnT40hTEIuU+1UTDt7vynMllAYp1PpQpU/fy5wk=
+X-Received: by 2002:a50:d09c:0:b0:53e:7a2d:a4a2 with SMTP id
+ v28-20020a50d09c000000b0053e7a2da4a2mr1000612edd.39.1697794887898; Fri, 20
+ Oct 2023 02:41:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <e08b2ec4-786a-4c18-b7af-0a6a250ae0f0@gmail.com>
+ <20231019084052.567922-1-isokenjune@gmail.com> <CAJHH8bFXVnFgjoCD+JU2uw77JAWUiKU+G=ub9Xg7xYJ_MwXPQQ@mail.gmail.com>
+In-Reply-To: <CAJHH8bFXVnFgjoCD+JU2uw77JAWUiKU+G=ub9Xg7xYJ_MwXPQQ@mail.gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Fri, 20 Oct 2023 11:41:15 +0200
+Message-ID: <CAP8UFD1U0cz3CDdE_0d0FUgPKP2pX-ZcVDJqz2tW-+rnZ7rvQw@mail.gmail.com>
+Subject: Re: [PATCH v2] builtin/branch.c: adjust error messages to coding guidelines
+To: Isoken Ibizugbe <isokenjune@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The code's evolution left in some bits surrounding enum rebase_type that
-don't really make sense any more. In particular, it makes no sense to
-invoke imply_merge() if the type is already known not to be
-REBASE_APPLY, and it makes no sense to assign the type after calling
-imply_merge().
+Hi Isoken,
 
-enum rebase_type had more values until commit a74b35081c ("rebase: drop
-support for `--preserve-merges`") and commit 10cdb9f38a ("rebase: rename
-the two primary rebase backends"). The latter commit also renamed
-imply_interactive() to imply_merge().
+On Fri, Oct 20, 2023 at 6:28=E2=80=AFAM Isoken Ibizugbe <isokenjune@gmail.c=
+om> wrote:
+>
+> On Thu, Oct 19, 2023 at 9:41=E2=80=AFAM Isoken June Ibizugbe
+> <isokenjune@gmail.com> wrote:
+> >
+> > As per the CodingGuidelines document, it is recommended that a single-l=
+ine
+> > message provided to error messages such as die(), error() and warning()=
+,
+> > should start with a lowercase letter and should not end with a period.
+> > Also this patch fixes the tests broken by the changes.
+> >
+> > Signed-off-by: Isoken June Ibizugbe <isokenjune@gmail.com>
+> > ---
+> >  builtin/branch.c          | 66 +++++++++++++++++++--------------------
+> >  t/t2407-worktree-heads.sh |  2 +-
+> >  t/t3200-branch.sh         | 16 +++++-----
+> >  t/t3202-show-branch.sh    | 10 +++---
+> >  4 files changed, 47 insertions(+), 47 deletions(-)
+> Hello Junio, I would appreciate your comment on this.
 
-Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Please don't expect Junio to give direct feedback on all the patches
+sent to the mailing list. This patch has already been reviewed by
+Rub=C3=A9n. If Junio doesn't review it and if this patch is not mentioned
+in the next "What's cooking in git.git" email from Junio, it likely
+means that you should send a version 3 addressing Rub=C3=A9n's feedback
+about the commit message.
 
----
-v2:
-- more verbose commit message
-
-Cc: Junio C Hamano <gitster@pobox.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>
----
- builtin/rebase.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
-
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 50cb85751f..44cc1eed12 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -386,7 +386,6 @@ static int parse_opt_keep_empty(const struct option *opt, const char *arg,
- 
- 	imply_merge(opts, unset ? "--no-keep-empty" : "--keep-empty");
- 	opts->keep_empty = !unset;
--	opts->type = REBASE_MERGE;
- 	return 0;
- }
- 
-@@ -1505,9 +1504,6 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		}
- 	}
- 
--	if (options.type == REBASE_MERGE)
--		imply_merge(&options, "--merge");
--
- 	if (options.root && !options.onto_name)
- 		imply_merge(&options, "--root without --onto");
- 
-@@ -1552,7 +1548,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 
- 	if (options.type == REBASE_UNSPECIFIED) {
- 		if (!strcmp(options.default_backend, "merge"))
--			imply_merge(&options, "--merge");
-+			options.type = REBASE_MERGE;
- 		else if (!strcmp(options.default_backend, "apply"))
- 			options.type = REBASE_APPLY;
- 		else
--- 
-2.42.0.419.g70bf8a5751
-
+Thanks,
+Christian.
