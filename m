@@ -1,71 +1,126 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 701EB1DDF8
-	for <git@vger.kernel.org>; Fri, 20 Oct 2023 17:30:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3AF2D7
-	for <git@vger.kernel.org>; Fri, 20 Oct 2023 10:30:16 -0700 (PDT)
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-65b0e623189so6487166d6.1
-        for <git@vger.kernel.org>; Fri, 20 Oct 2023 10:30:16 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697823016; x=1698427816;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ATk2OAR5/nUDN3i9gopes8kr3K692mmEQAluNCjqMKI=;
-        b=frt1VOXgodqoBNBfbmR99Mw9EsymR9iE5QxWLmz4NR8F+w7DQuCu3hJFRH305XvP4+
-         xCNV2PSCsmqlk0I2QTS9o9Qlh1nhXHLUK/IJLK3mZAB73z8wtblbAdAkNiMfjI/An0ZC
-         JFyzod0UyqJYTtuM+SvLoHVOoQ5IECf6eYGT/KZOY3AyXW+iT4TaMWBROHxorI/w0oj/
-         mqDQAhQC89dEbGcLdQJdmhuspEnaycifO/5Qe/KJt8HEnnYNmjT+XIvoUJkbEoWd2EtC
-         s16kteykkPErf318E0DqAQmfKmJms0GF9VS0Bv+ZfxXEpj8EmOHjm/dbBr7sxE3nVVpX
-         1A6A==
-X-Gm-Message-State: AOJu0YygJ/JGC18g9xkknWeQl2jEmWIM68w0D3m5U7FTH2QDwrxrNSay
-	OyPVgEBBYNFbJE7ghUQ19BivjqiDpDCsMgFdzZs=
-X-Google-Smtp-Source: AGHT+IF0WrohFCunoOg4/1QjXZ1huL0LrfHq+PN6/7t1Wx9psHSSqwc0S4gSyIzMhOhNaqv+UMzB/Tm8rMOlPnXy230=
-X-Received: by 2002:a05:6214:258b:b0:66d:12e0:2555 with SMTP id
- fq11-20020a056214258b00b0066d12e02555mr2559222qvb.33.1697823015881; Fri, 20
- Oct 2023 10:30:15 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99CD2200C7
+	for <git@vger.kernel.org>; Fri, 20 Oct 2023 17:31:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="uRPCVeFH"
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B0DBD7
+	for <git@vger.kernel.org>; Fri, 20 Oct 2023 10:31:21 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4FA081C385E;
+	Fri, 20 Oct 2023 13:31:20 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=/4prPvbi7DFh
+	LOr5i0frTu9ObZ11UUsorF84Fxh/Lyk=; b=uRPCVeFHQ9HXnkhj6dmIpiqA+6ai
+	p0lnyQT7MnpnM4kJ81UGbeWc0HwfSOXs0C3nkcUWlE6o8FcvtJHf8KaGVxTzXVaW
+	FmXqdkX5cKQap0yRjZhvm4vTPTgNxzsONxdrrKK2t0JDtVW9aBstMIgpYvWD8kxM
+	d6A9KAjbGIf1LOY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 40F7C1C385D;
+	Fri, 20 Oct 2023 13:31:20 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 97E801C385A;
+	Fri, 20 Oct 2023 13:31:19 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Cc: Isoken June Ibizugbe <isokenjune@gmail.com>,  git@vger.kernel.org,
+  christian.couder@gmail.com
+Subject: Re: [PATCH v2] builtin/branch.c: adjust error messages to coding
+ guidelines
+In-Reply-To: <331e1ab3-2e8c-497d-a05d-ef197d664188@gmail.com>
+ (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
+	message of "Thu, 19 Oct 2023 21:20:24 +0200")
+References: <e08b2ec4-786a-4c18-b7af-0a6a250ae0f0@gmail.com>
+	<20231019084052.567922-1-isokenjune@gmail.com>
+	<331e1ab3-2e8c-497d-a05d-ef197d664188@gmail.com>
+Date: Fri, 20 Oct 2023 10:31:18 -0700
+Message-ID: <xmqqwmvhqjyx.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231020100343.GA2194322@coredump.intra.peff.net> <20231020101524.GA2673857@coredump.intra.peff.net>
-In-Reply-To: <20231020101524.GA2673857@coredump.intra.peff.net>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Fri, 20 Oct 2023 13:30:05 -0400
-Message-ID: <CAPig+cQHOF-aQqqZUQB07HrPAoCg=80P3eLwwSUbbCeHAwX5zg@mail.gmail.com>
-Subject: Re: [PATCH 3/3] send-email: handle to/cc/bcc from --compose message
-To: Jeff King <peff@peff.net>
-Cc: Michael Strawbridge <michael.strawbridge@amd.com>, Junio C Hamano <gitster@pobox.com>, 
-	Bagas Sanjaya <bagasdotme@gmail.com>, Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 7B0A0110-6F6E-11EE-A4DD-25B3960A682E-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Oct 20, 2023 at 6:15=E2=80=AFAM Jeff King <peff@peff.net> wrote:
-> If the user writes a message via --compose, send-email will pick up
-> varius headers like "From", "Subject", etc and use them for other
+Rub=C3=A9n Justo <rjusto@gmail.com> writes:
 
-s/varius/various/
+> On 19-oct-2023 09:40:51, Isoken June Ibizugbe wrote:
+>
+>> As per the CodingGuidelines document, it is recommended that a single-=
+line
+>> message provided to error messages such as die(), error() and warning(=
+),
+>
+> This is confusing; some multi-line messages are fixed in this series.
+>
+>> should start with a lowercase letter and should not end with a period.
+>> Also this patch fixes the tests broken by the changes.
 
-> patches as if they were specified on the command-line. But we don't
-> handle "To", "Cc", or "Bcc" this way; we just tell the user "those
-> aren't interpeted yet" and ignore them.
->
-> But it seems like an obvious thing to want, especially as the same
-> feature exists when the cover letter is generated separately by
-> format-patch. There it is gated behind the --to-cover option, but I
-> don't think we'd need the same control here; since we generate the
-> --compose template ourselves based on the existing input, if the user
-> leaves the lines unchanged then the behavior remains the same.
->
-> So let's fill in the implementation; like those other headers we already
-> handle, we just need to assign to the initial_* variables. The only
-> difference in this case is that they are arrays, so we'll feed them
-> through parse_address_line() to split them (just like we would when
-> reading a single string via prompting).
->
-> Signed-off-by: Jeff King <peff@peff.net>
+"Also this patch fixes the tests broken by the changes" -> "Adjust
+tests to match updated messages".
+
+> Well done, describing why the tests are touched.
+
+Nicely reviewed.  But it is unclear to me how we want to mention
+updates to multi-line messages.  Do we have a good reference in the
+guidelines we can copy?
+
+The general desire is for a single-liner to look like so:
+
+    error: the branch 'foo' is not fully merged
+
+and an untold assumption is that we strongly prefer a single
+sentence in a single-liner error message---a full-stop to separate
+multiple sentences can be omitted for brevity.
+
+But we have follow-up sentences that are not strictly "errors" in
+some messages, e.g.,
+
+>> -		error(_("The branch '%s' is not fully merged.\n"
+>> +		error(_("the branch '%s' is not fully merged.\n"
+>>  		      "If you are sure you want to delete it, "
+>> -		      "run 'git branch -D %s'."), branchname, branchname);
+>> +		      "run 'git branch -D %s'"), branchname, branchname);
+
+In a modern codebase with facilities from advice.c, we would
+probably do "a single-liner error message, optionally followed by a
+hint message", i.e.
+
+    error: the branch 'foo' is not fully merged
+    hint: If you are sure you want to delete it,
+    hint: run "git branch -D foo".
+
+but this message apparently predates wide use of the advice_if() and
+friends.
+
+But rewriting this error message to use advice is probably outside
+the scope of this patch.  But for completeness it would probably
+look something like this (with necessary ADVICE_FOO defined):
+
+	error(_("the branch '%s' is not fully merged"), branchname);
+	advice_if_enabled(ADVICE_DELETE_BRANCH,
+                	  _("If you are sure you want to delete it,"
+			    "run 'git branch -D %s'."));
+
+If I were doing this patch, I'd probably just add
+
+	/* NEEDSWORK: turn the remainder ofthe message into advice */
+
+in front of the existing error() call for this one without touching
+the message itself, as it will have to be touched again when such a
+change happens.
+
+Thanks.
