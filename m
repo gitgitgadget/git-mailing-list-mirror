@@ -1,98 +1,71 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3989199A9
-	for <git@vger.kernel.org>; Fri, 20 Oct 2023 17:27:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="xN0qjXtd"
-Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01741D7
-	for <git@vger.kernel.org>; Fri, 20 Oct 2023 10:27:02 -0700 (PDT)
-Received: by mail-qk1-x72c.google.com with SMTP id af79cd13be357-7788ebea620so61203785a.3
-        for <git@vger.kernel.org>; Fri, 20 Oct 2023 10:27:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1697822822; x=1698427622; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=UR/M7H8zgLBG0FuN2/gItpzW59L8Fk5S9we1btR0UJM=;
-        b=xN0qjXtdoThXngz4kuDE3b61/NusqX8BkIqkbm4pcTYQ+W9mxfRel2qZGTWGAadwjB
-         ygIDTnNets+93e0zv0Ies6+ffJR2DDLKBCIOUWrRWOlXhgZxcMAR/Aduhh2J6lemVYsz
-         fUTRD0vU8Fd12lp1q07u6lBTkz+ntKXuv7Y7EUxxjjwd1N9n+GIiOSJ4WkHv3tWV28dO
-         GAFLYUcAkb4Ht3ddxJfvkhmWCd8p24IG/D3R7F7yBzZyG9Ndc2PfbOo8udDRAsXZAt3i
-         BziC21CXAJtqvAtMwLasqpLl4x0z+F7HPXsPT0XyU/YUkqUB0SJrpFHnK5lQxilbG7PJ
-         KZOA==
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 701EB1DDF8
+	for <git@vger.kernel.org>; Fri, 20 Oct 2023 17:30:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3AF2D7
+	for <git@vger.kernel.org>; Fri, 20 Oct 2023 10:30:16 -0700 (PDT)
+Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-65b0e623189so6487166d6.1
+        for <git@vger.kernel.org>; Fri, 20 Oct 2023 10:30:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697822822; x=1698427622;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UR/M7H8zgLBG0FuN2/gItpzW59L8Fk5S9we1btR0UJM=;
-        b=QuC71y1stXZWKa+K/0wM+z/00V534c0WyoPhPBrE7unZE4tTFpxh22dlBYLM6w3F3F
-         EWriTNeL/5S99i7J98ZmgzMdUYDjaE19M+w67oD4QuK+jnhgm12xZFRvp7OnPK/rYLOx
-         ZsqHGcM5XwOlU8wCsHQxesCTh0+4iwQTwgBbJWs2O93/CQrSm8O7yOi3k4uNonE/Z3Vb
-         Kqng8aWcFfJfx39dmfOwHjHWN6eNE4ROMh8OJ9Xbu3RJfFFm7pvEKC/AdQzvqrs4oSvN
-         auGz32kzuWcApCnMuu5XNUNwFwGLLepU4k4EbmZ73k8ioTb8s2k98ESbjVAElxXYJrnT
-         3Rcg==
-X-Gm-Message-State: AOJu0YyvfoFeGNEP+3i/WMf0qDj1pzQoFR0DzOw6oiO2mJvPskO74RY6
-	30T5ZLitHIHhzL6rBbva3QJC3A==
-X-Google-Smtp-Source: AGHT+IEECik2rNvg9g5X/1ZyVYb5KjShWXSZtDz0JLlJfotuqmOkcHu2tT5Tli21VDDo/u4FtGfE1g==
-X-Received: by 2002:a05:620a:27cc:b0:76f:f11:7d1 with SMTP id i12-20020a05620a27cc00b0076f0f1107d1mr2563433qkp.77.1697822822061;
-        Fri, 20 Oct 2023 10:27:02 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id t27-20020a05620a0b1b00b00773f008da40sm757316qkg.125.2023.10.20.10.27.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Oct 2023 10:27:01 -0700 (PDT)
-Date: Fri, 20 Oct 2023 13:27:00 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	"Eric W. Biederman" <ebiederm@gmail.com>, Jeff King <peff@peff.net>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v4 00/17] bloom: changed-path Bloom filters v2 (&
- sundries)
-Message-ID: <ZTK4ZKESDVghzSH8@nand.local>
-References: <cover.1696629697.git.me@ttaylorr.com>
- <cover.1697653929.git.me@ttaylorr.com>
- <xmqq34y71phj.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1697823016; x=1698427816;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ATk2OAR5/nUDN3i9gopes8kr3K692mmEQAluNCjqMKI=;
+        b=frt1VOXgodqoBNBfbmR99Mw9EsymR9iE5QxWLmz4NR8F+w7DQuCu3hJFRH305XvP4+
+         xCNV2PSCsmqlk0I2QTS9o9Qlh1nhXHLUK/IJLK3mZAB73z8wtblbAdAkNiMfjI/An0ZC
+         JFyzod0UyqJYTtuM+SvLoHVOoQ5IECf6eYGT/KZOY3AyXW+iT4TaMWBROHxorI/w0oj/
+         mqDQAhQC89dEbGcLdQJdmhuspEnaycifO/5Qe/KJt8HEnnYNmjT+XIvoUJkbEoWd2EtC
+         s16kteykkPErf318E0DqAQmfKmJms0GF9VS0Bv+ZfxXEpj8EmOHjm/dbBr7sxE3nVVpX
+         1A6A==
+X-Gm-Message-State: AOJu0YygJ/JGC18g9xkknWeQl2jEmWIM68w0D3m5U7FTH2QDwrxrNSay
+	OyPVgEBBYNFbJE7ghUQ19BivjqiDpDCsMgFdzZs=
+X-Google-Smtp-Source: AGHT+IF0WrohFCunoOg4/1QjXZ1huL0LrfHq+PN6/7t1Wx9psHSSqwc0S4gSyIzMhOhNaqv+UMzB/Tm8rMOlPnXy230=
+X-Received: by 2002:a05:6214:258b:b0:66d:12e0:2555 with SMTP id
+ fq11-20020a056214258b00b0066d12e02555mr2559222qvb.33.1697823015881; Fri, 20
+ Oct 2023 10:30:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq34y71phj.fsf@gitster.g>
+References: <20231020100343.GA2194322@coredump.intra.peff.net> <20231020101524.GA2673857@coredump.intra.peff.net>
+In-Reply-To: <20231020101524.GA2673857@coredump.intra.peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Fri, 20 Oct 2023 13:30:05 -0400
+Message-ID: <CAPig+cQHOF-aQqqZUQB07HrPAoCg=80P3eLwwSUbbCeHAwX5zg@mail.gmail.com>
+Subject: Re: [PATCH 3/3] send-email: handle to/cc/bcc from --compose message
+To: Jeff King <peff@peff.net>
+Cc: Michael Strawbridge <michael.strawbridge@amd.com>, Junio C Hamano <gitster@pobox.com>, 
+	Bagas Sanjaya <bagasdotme@gmail.com>, Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 18, 2023 at 04:26:48PM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
+On Fri, Oct 20, 2023 at 6:15=E2=80=AFAM Jeff King <peff@peff.net> wrote:
+> If the user writes a message via --compose, send-email will pick up
+> varius headers like "From", "Subject", etc and use them for other
+
+s/varius/various/
+
+> patches as if they were specified on the command-line. But we don't
+> handle "To", "Cc", or "Bcc" this way; we just tell the user "those
+> aren't interpeted yet" and ignore them.
 >
-> > (Rebased onto the tip of 'master', which is 3a06386e31 (The fifteenth
-> > batch, 2023-10-04), at the time of writing).
+> But it seems like an obvious thing to want, especially as the same
+> feature exists when the cover letter is generated separately by
+> format-patch. There it is gated behind the --to-cover option, but I
+> don't think we'd need the same control here; since we generate the
+> --compose template ourselves based on the existing input, if the user
+> leaves the lines unchanged then the behavior remains the same.
 >
-> Judging from 17/17 that has a free_commit_graph() call in
-> close_commit_graph(), that was merged in the eighteenth batch,
-> the above is probably untrue.  I'll apply to the current master and
-> see how it goes instead.
-
-Worse than that, I sent this `--in-reply-to` the wrong thread :-<.
-
-Sorry about that, and indeed you are right that the correct base for
-this round should be a9ecda2788 (The eighteenth batch, 2023-10-13).
-
-I'm optimistic that with the amount of careful review that this topic
-has already received, that this round should do the trick. But if there
-are more comments and we end up re-rolling it, I'll break this thread
-and split out the v5 into it's thread to avoid further confusion.
-
-> > Thanks to Jonathan, Peff, and SZEDER who have helped a great deal in
-> > assembling these patches. As usual, a range-diff is included below.
-> > Thanks in advance for your
-> > review!
+> So let's fill in the implementation; like those other headers we already
+> handle, we just need to assign to the initial_* variables. The only
+> difference in this case is that they are arrays, so we'll feed them
+> through parse_address_line() to split them (just like we would when
+> reading a single string via prompting).
 >
-> Thanks.
-
-Thank you, and sorry for the mistake on my end.
-
-Thanks,
-Taylor
+> Signed-off-by: Jeff King <peff@peff.net>
