@@ -1,56 +1,55 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 452D8208BE
-	for <git@vger.kernel.org>; Fri, 20 Oct 2023 19:01:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89411208C2
+	for <git@vger.kernel.org>; Fri, 20 Oct 2023 19:01:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a8g0/Eqv"
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38378D4C
-	for <git@vger.kernel.org>; Fri, 20 Oct 2023 12:01:39 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-4083740f92dso9304655e9.3
-        for <git@vger.kernel.org>; Fri, 20 Oct 2023 12:01:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dl1qsNIn"
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A0C3126
+	for <git@vger.kernel.org>; Fri, 20 Oct 2023 12:01:40 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2c50fbc218bso16796111fa.3
+        for <git@vger.kernel.org>; Fri, 20 Oct 2023 12:01:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697828497; x=1698433297; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1697828498; x=1698433298; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zWIlzatUj0yB3Mm8UszHb+wk6g8QnOKK3XsDQqGKZnc=;
-        b=a8g0/EqvdVilnxnMUYywKRaPD1WM5r86GEOYvGe58ZVpvKSoQ2lMsf2BVGVY9Zd2k1
-         Hhu7oLd+g6/ee0hmphiM+1R9CU8AQHkvGQp3EmsAGFdaMIhT01HfHFBhtFrGv/fW74Cn
-         MbSAh21x+xakL9NBldpO6uOod3MI+xar5JAUzeLyZWscTteQm3l4EQKZyAH8LWDJm23l
-         nyf10AvHdAni6tXu8DtaTuRkBZdDfOzAYxgM6W/kd6Yw8LAYvSg42dcgljn2XTfbUtVL
-         WJ4afin11hTpQAxkXSt37XBwdFyUnOZVJ2M4DBvM5b0XQ0L8WbYShEYcAQE4PGhRDUox
-         0OdA==
+        bh=o039u5fUixf5GdhKZFrUooxCe68hlMVa7Zg3at1+VM8=;
+        b=dl1qsNInsv4Cv2Wl7lLb14JOf0eRlzuLJ/s7zTn/TWGp69qjoHpd1qtaPwn8yIaz0h
+         QFfa/zb8fd4fwNRHF0wLgzscxBwDU1Q98+9Y4NnAIUkrqsx3VMgzwFg4qHAhho7A4FSd
+         pX6hPdZnCoufeDdmSF6hcXlyTDh49Gwcwolclal0SVWjzMDj9Fy+G/rkaV6PFA4W7XXX
+         yQ3Pvkl+K0dYUBXEwZ2C1yROwq6Va9Hj2ebequs3LDMlVTqLQdWiDD+MjM6YfpiEwX9L
+         janRoqwI3BDFbC8s2cTzKxnVTHpBTO04ZB/gTkUY3lXBA7ElvUNWEarki+5TCGr1KTKU
+         rfag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697828497; x=1698433297;
+        d=1e100.net; s=20230601; t=1697828498; x=1698433298;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=zWIlzatUj0yB3Mm8UszHb+wk6g8QnOKK3XsDQqGKZnc=;
-        b=aLsHS3+ZNnXwHAbLXEPSKHXnt4sYaQht0aarYF1cjAMi/YgEaiC2j0CvOr/PnHqo1K
-         m5whkkgCvS7dvPUCdgM0ITYX8aJr+cb/6urUfAZFNYoiGkMT8UxsyW/+lPyQqAzzQNyR
-         AD1iOwHyCCGRp+MCUl1ChKvzlLS9Km7ryCeOnDGRox2EpNSjTZ7XUhf8SGS8fDiy+3F8
-         vTqY906hSk33Dp7DPq+ZwooZ+RKu6CG8Ym0MaFYDDXPJSeDz6pQh0yNvgtMNFgTOR4Dv
-         7V5UItNTv8IONvgvmmGww/CK9TZ49EbTmqfquQNu2ZGZU2fjQ8LFBowi8rhIq+KZup9B
-         L8wg==
-X-Gm-Message-State: AOJu0Yxt4P8XefIEw597tsF4K4DC6cUIyPuQ0l1ZolNL3sDpJKnMzRXy
-	7IZ41Fms2Y0zPizyNMo7qhh9mw6updM=
-X-Google-Smtp-Source: AGHT+IHmMhbj88eRNIrHxI5GD/iHyofLLnaPPeQNeL6dnR1VWvevO/Pe+jD3dx8+n7p3vheONhM59g==
-X-Received: by 2002:a5d:4147:0:b0:319:72f8:7249 with SMTP id c7-20020a5d4147000000b0031972f87249mr2249734wrq.66.1697828497204;
+        bh=o039u5fUixf5GdhKZFrUooxCe68hlMVa7Zg3at1+VM8=;
+        b=F+ZVcsGehau38SKy7/5XjjQ1QCfWrTC3yxMj4RGgSHA6vkuIKMSGoEr5l3LIheKYp7
+         EChMh/3divtdM8u24pTgEcdx+bDJz3LG0x9p8obu64VQ3G7/dOn1LKcqYQvdncw3sMFP
+         nH6y4BbydRQt2syqrg4Ox1i94ryp3AJqA/r85IDYFN+Qj4pprbnD1gHTimr/oz6p/8R0
+         Iv+SHv0QHa9VTGSV9U3bXm3SnfjRxe9DMVShuvRBtk7jrjOnwpF33yh9vFNt8T+WJ3SE
+         GQ9XH0SaAbIQm7bHife1JUTInPWxdoqOBxXtL/OKC40jiS0jhz1kyuhFaNOAh5Ro+SoC
+         tWEg==
+X-Gm-Message-State: AOJu0Yxv1SXOn8HTS4M9w2EXOSr7Kppmk8uwxTGlcNf9Mqw63MBT9Pmg
+	BS5vjsXkQbtdDYTRZjHiKuyKj0lJyIg=
+X-Google-Smtp-Source: AGHT+IGjt6edJbjZKxQ6X0E6AKC4C+HrAiEKWaAb5yLFZkVEP4hiY1Jauka9mMtMdPJTn6IQYPQmUg==
+X-Received: by 2002:a2e:9bd6:0:b0:2c5:c31:eeac with SMTP id w22-20020a2e9bd6000000b002c50c31eeacmr1998920ljj.15.1697828497908;
         Fri, 20 Oct 2023 12:01:37 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f7-20020adff587000000b0031fb91f23e9sm2234673wro.43.2023.10.20.12.01.36
+        by smtp.gmail.com with ESMTPSA id fc11-20020a05600c524b00b004064cd71aa8sm2844820wmb.34.2023.10.20.12.01.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 20 Oct 2023 12:01:37 -0700 (PDT)
-Message-ID: <4ce5cf77005eb8c6da243777b3c29103add7ddbd.1697828495.git.gitgitgadget@gmail.com>
+Message-ID: <ce25420db29c9953095db652584dbed4e35d67ad.1697828495.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1563.v5.git.1697828495.gitgitgadget@gmail.com>
 References: <pull.1563.v4.git.1695709372.gitgitgadget@gmail.com>
 	<pull.1563.v5.git.1697828495.gitgitgadget@gmail.com>
 From: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 20 Oct 2023 19:01:33 +0000
-Subject: [PATCH v5 1/3] commit: ignore_non_trailer computes number of bytes to
- ignore
+Date: Fri, 20 Oct 2023 19:01:34 +0000
+Subject: [PATCH v5 2/3] trailer: find the end of the log message
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,89 +69,151 @@ Cc: Glen Choo <glencbz@gmail.com>,
 
 From: Linus Arver <linusa@google.com>
 
-ignore_non_trailer() returns the _number of bytes_ that should be
-ignored from the end of the log message. It does not by itself "ignore"
-anything.
+Previously, trailer_info_get() computed the trailer block end position
+by
 
-Rename this function to remove the leading "ignore" verb, to sound more
-like a quantity than an action.
+(1) checking for the opts->no_divider flag and optionally calling
+    find_patch_start() to find the "patch start" location (patch_start), and
+(2) calling find_trailer_end() to find the end of the trailer block
+    using patch_start as a guide, saving the return value into
+    "trailer_end".
 
+The logic in (1) was awkward because the variable "patch_start" is
+misleading if there is no patch in the input. The logic in (2) was
+misleading because it could be the case that no trailers are in the
+input (yet we are setting a "trailer_end" variable before even searching
+for trailers, which happens later in find_trailer_start()). The name
+"find_trailer_end" was misleading because that function did not look for
+any trailer block itself --- instead it just computed the end position
+of the log message in the input where the end of the trailer block (if
+it exists) would be (because trailer blocks must always come after the
+end of the log message).
+
+Combine the logic in (1) and (2) together into find_patch_start() by
+renaming it to find_end_of_log_message(). The end of the log message is
+the starting point which find_trailer_start() needs to start searching
+backward to parse individual trailers (if any).
+
+Helped-by: Jonathan Tan <jonathantanmy@google.com>
+Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Linus Arver <linusa@google.com>
 ---
- builtin/commit.c | 2 +-
- builtin/merge.c  | 2 +-
- commit.c         | 2 +-
- commit.h         | 4 ++--
- trailer.c        | 2 +-
- 5 files changed, 6 insertions(+), 6 deletions(-)
+ trailer.c | 64 +++++++++++++++++++++++++++++++++++--------------------
+ 1 file changed, 41 insertions(+), 23 deletions(-)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 7da5f924484..d1785d32db1 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -900,7 +900,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 		strbuf_stripspace(&sb, '\0');
- 
- 	if (signoff)
--		append_signoff(&sb, ignore_non_trailer(sb.buf, sb.len), 0);
-+		append_signoff(&sb, ignored_log_message_bytes(sb.buf, sb.len), 0);
- 
- 	if (fwrite(sb.buf, 1, sb.len, s->fp) < sb.len)
- 		die_errno(_("could not write commit template"));
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 545da0c8a11..c654a29fe85 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -870,7 +870,7 @@ static void prepare_to_commit(struct commit_list *remoteheads)
- 				_(no_scissors_editor_comment), comment_line_char);
- 	}
- 	if (signoff)
--		append_signoff(&msg, ignore_non_trailer(msg.buf, msg.len), 0);
-+		append_signoff(&msg, ignored_log_message_bytes(msg.buf, msg.len), 0);
- 	write_merge_heads(remoteheads);
- 	write_file_buf(git_path_merge_msg(the_repository), msg.buf, msg.len);
- 	if (run_commit_hook(0 < option_edit, get_index_file(), NULL,
-diff --git a/commit.c b/commit.c
-index b3223478bc2..4440fbabb83 100644
---- a/commit.c
-+++ b/commit.c
-@@ -1769,7 +1769,7 @@ const char *find_commit_header(const char *msg, const char *key, size_t *out_len
-  * Returns the number of bytes from the tail to ignore, to be fed as
-  * the second parameter to append_signoff().
-  */
--size_t ignore_non_trailer(const char *buf, size_t len)
-+size_t ignored_log_message_bytes(const char *buf, size_t len)
- {
- 	size_t boc = 0;
- 	size_t bol = 0;
-diff --git a/commit.h b/commit.h
-index 28928833c54..1cc872f225f 100644
---- a/commit.h
-+++ b/commit.h
-@@ -294,8 +294,8 @@ const char *find_header_mem(const char *msg, size_t len,
- const char *find_commit_header(const char *msg, const char *key,
- 			       size_t *out_len);
- 
--/* Find the end of the log message, the right place for a new trailer. */
--size_t ignore_non_trailer(const char *buf, size_t len);
-+/* Find the number of bytes to ignore from the end of a log message. */
-+size_t ignored_log_message_bytes(const char *buf, size_t len);
- 
- typedef int (*each_mergetag_fn)(struct commit *commit, struct commit_extra_header *extra,
- 				void *cb_data);
 diff --git a/trailer.c b/trailer.c
-index b6de5d9cb2d..3c54b38a85a 100644
+index 3c54b38a85a..70c81fda710 100644
 --- a/trailer.c
 +++ b/trailer.c
-@@ -928,7 +928,7 @@ continue_outer_loop:
- /* Return the position of the end of the trailers. */
- static size_t find_trailer_end(const char *buf, size_t len)
- {
--	return len - ignore_non_trailer(buf, len);
-+	return len - ignored_log_message_bytes(buf, len);
+@@ -809,21 +809,50 @@ static ssize_t last_line(const char *buf, size_t len)
  }
  
+ /*
+- * Return the position of the start of the patch or the length of str if there
+- * is no patch in the message.
++ * Find the end of the log message as an offset from the start of the input
++ * (where callers of this function are interested in looking for a trailers
++ * block in the same input). We have to consider two categories of content that
++ * can come at the end of the input which we want to ignore (because they don't
++ * belong in the log message):
++ *
++ * (1) the "patch part" which begins with a "---" divider and has patch
++ * information (like the output of git-format-patch), and
++ *
++ * (2) any trailing comment lines, blank lines like in the output of "git
++ * commit -v", or stuff below the "cut" (scissor) line.
++ *
++ * As a formula, the situation looks like this:
++ *
++ *     INPUT = LOG MESSAGE + IGNORED
++ *
++ * where IGNORED can be either of the two categories described above. It may be
++ * that there is nothing to ignore. Now it may be the case that the LOG MESSAGE
++ * contains a trailer block, but that's not the concern of this function.
+  */
+-static size_t find_patch_start(const char *str)
++static size_t find_end_of_log_message(const char *input, int no_divider)
+ {
++	size_t end;
+ 	const char *s;
+ 
+-	for (s = str; *s; s = next_line(s)) {
++	/* Assume the naive end of the input is already what we want. */
++	end = strlen(input);
++
++	if (no_divider) {
++		return end;
++	}
++
++	/* Optionally skip over any patch part ("---" line and below). */
++	for (s = input; *s; s = next_line(s)) {
+ 		const char *v;
+ 
+-		if (skip_prefix(s, "---", &v) && isspace(*v))
+-			return s - str;
++		if (skip_prefix(s, "---", &v) && isspace(*v)) {
++			end = s - input;
++			break;
++		}
+ 	}
+ 
+-	return s - str;
++	/* Skip over other ignorable bits. */
++	return end - ignored_log_message_bytes(input, end);
+ }
+ 
+ /*
+@@ -925,12 +954,6 @@ continue_outer_loop:
+ 	return len;
+ }
+ 
+-/* Return the position of the end of the trailers. */
+-static size_t find_trailer_end(const char *buf, size_t len)
+-{
+-	return len - ignored_log_message_bytes(buf, len);
+-}
+-
  static int ends_with_blank_line(const char *buf, size_t len)
+ {
+ 	ssize_t ll = last_line(buf, len);
+@@ -1101,7 +1124,7 @@ void process_trailers(const char *file,
+ void trailer_info_get(struct trailer_info *info, const char *str,
+ 		      const struct process_trailer_options *opts)
+ {
+-	int patch_start, trailer_end, trailer_start;
++	int end_of_log_message, trailer_start;
+ 	struct strbuf **trailer_lines, **ptr;
+ 	char **trailer_strings = NULL;
+ 	size_t nr = 0, alloc = 0;
+@@ -1109,16 +1132,11 @@ void trailer_info_get(struct trailer_info *info, const char *str,
+ 
+ 	ensure_configured();
+ 
+-	if (opts->no_divider)
+-		patch_start = strlen(str);
+-	else
+-		patch_start = find_patch_start(str);
+-
+-	trailer_end = find_trailer_end(str, patch_start);
+-	trailer_start = find_trailer_start(str, trailer_end);
++	end_of_log_message = find_end_of_log_message(str, opts->no_divider);
++	trailer_start = find_trailer_start(str, end_of_log_message);
+ 
+ 	trailer_lines = strbuf_split_buf(str + trailer_start,
+-					 trailer_end - trailer_start,
++					 end_of_log_message - trailer_start,
+ 					 '\n',
+ 					 0);
+ 	for (ptr = trailer_lines; *ptr; ptr++) {
+@@ -1141,7 +1159,7 @@ void trailer_info_get(struct trailer_info *info, const char *str,
+ 	info->blank_line_before_trailer = ends_with_blank_line(str,
+ 							       trailer_start);
+ 	info->trailer_start = str + trailer_start;
+-	info->trailer_end = str + trailer_end;
++	info->trailer_end = str + end_of_log_message;
+ 	info->trailers = trailer_strings;
+ 	info->trailer_nr = nr;
+ }
 -- 
 gitgitgadget
 
