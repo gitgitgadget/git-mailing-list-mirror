@@ -1,55 +1,55 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89411208C2
-	for <git@vger.kernel.org>; Fri, 20 Oct 2023 19:01:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1CD6208C7
+	for <git@vger.kernel.org>; Fri, 20 Oct 2023 19:01:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dl1qsNIn"
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A0C3126
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U324l8xP"
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE1E1D55
 	for <git@vger.kernel.org>; Fri, 20 Oct 2023 12:01:40 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2c50fbc218bso16796111fa.3
+Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-4083f613275so9154295e9.2
         for <git@vger.kernel.org>; Fri, 20 Oct 2023 12:01:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697828498; x=1698433298; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1697828499; x=1698433299; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=o039u5fUixf5GdhKZFrUooxCe68hlMVa7Zg3at1+VM8=;
-        b=dl1qsNInsv4Cv2Wl7lLb14JOf0eRlzuLJ/s7zTn/TWGp69qjoHpd1qtaPwn8yIaz0h
-         QFfa/zb8fd4fwNRHF0wLgzscxBwDU1Q98+9Y4NnAIUkrqsx3VMgzwFg4qHAhho7A4FSd
-         pX6hPdZnCoufeDdmSF6hcXlyTDh49Gwcwolclal0SVWjzMDj9Fy+G/rkaV6PFA4W7XXX
-         yQ3Pvkl+K0dYUBXEwZ2C1yROwq6Va9Hj2ebequs3LDMlVTqLQdWiDD+MjM6YfpiEwX9L
-         janRoqwI3BDFbC8s2cTzKxnVTHpBTO04ZB/gTkUY3lXBA7ElvUNWEarki+5TCGr1KTKU
-         rfag==
+        bh=krbUNlo2DNDPxwRker4EVSmBk1LaDeLHsA9bsD+TeYo=;
+        b=U324l8xPWvST9EJ2se/6NVD28xaJMFIYEycyg5tEd+I37kLqt+80q62GoapsuwOPbj
+         B8Tj96c/akv6Y/q0XRf5CtJOIEKOBTzmnHjmyLr+VpQ1DvIddPyyhpKPzFMs9H+nPMVt
+         iNplhXCGSopSUprceU5+1UT3Kli0n+aykyMbyMbmrDUtWQOIWdu0SO3f+FWIQFemDlrs
+         h+ka4E3wRT9vBuxFHkyM4ser8k2zu7yCIfcb3faar92B+92Bl9/yAeSZzyDa6gqXcgYn
+         KYcoWt9ECV01WA5tm81XN2HIKHSWsKEdWYTjBn9E8l7WAl/DTm8xWk8GlKtkh5o6Ub1a
+         U2Sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697828498; x=1698433298;
+        d=1e100.net; s=20230601; t=1697828499; x=1698433299;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=o039u5fUixf5GdhKZFrUooxCe68hlMVa7Zg3at1+VM8=;
-        b=F+ZVcsGehau38SKy7/5XjjQ1QCfWrTC3yxMj4RGgSHA6vkuIKMSGoEr5l3LIheKYp7
-         EChMh/3divtdM8u24pTgEcdx+bDJz3LG0x9p8obu64VQ3G7/dOn1LKcqYQvdncw3sMFP
-         nH6y4BbydRQt2syqrg4Ox1i94ryp3AJqA/r85IDYFN+Qj4pprbnD1gHTimr/oz6p/8R0
-         Iv+SHv0QHa9VTGSV9U3bXm3SnfjRxe9DMVShuvRBtk7jrjOnwpF33yh9vFNt8T+WJ3SE
-         GQ9XH0SaAbIQm7bHife1JUTInPWxdoqOBxXtL/OKC40jiS0jhz1kyuhFaNOAh5Ro+SoC
-         tWEg==
-X-Gm-Message-State: AOJu0Yxv1SXOn8HTS4M9w2EXOSr7Kppmk8uwxTGlcNf9Mqw63MBT9Pmg
-	BS5vjsXkQbtdDYTRZjHiKuyKj0lJyIg=
-X-Google-Smtp-Source: AGHT+IGjt6edJbjZKxQ6X0E6AKC4C+HrAiEKWaAb5yLFZkVEP4hiY1Jauka9mMtMdPJTn6IQYPQmUg==
-X-Received: by 2002:a2e:9bd6:0:b0:2c5:c31:eeac with SMTP id w22-20020a2e9bd6000000b002c50c31eeacmr1998920ljj.15.1697828497908;
-        Fri, 20 Oct 2023 12:01:37 -0700 (PDT)
+        bh=krbUNlo2DNDPxwRker4EVSmBk1LaDeLHsA9bsD+TeYo=;
+        b=YkC9GPrXjhZf2sJfByIWRNDrwxjTNxFSHZi6uyOkkWDjMKrarXvxAhQXTR+ZMK6idL
+         1b2Pw/msmbqfSZVrc/3tGXrvvTVjNHZbr+liFnRJa7Ou65K7Audsz7qyuVjUKSNcm9sE
+         OuP90RRcIEg56nY9IpmH4mgyzULWONuLW5kWiyI8gkkyYkzpw0Kjn1Nrcdiy2wX4YqKI
+         VIooroZadoNweOlaY0ZkBg0REhoRYb64c+UBw55s+wjp7vAP85kCWeRgHUf0aALiCeLT
+         PXSpWmeD9+uCWE7xX9Io0dUDx+l7JI4c/+EHutl5J2wEEk9ZvemIkN+Mccyc3HvfEyVW
+         d+kA==
+X-Gm-Message-State: AOJu0YzdqGSjGK7pRw5bg/Rpv+0ogjCrB4KUvzofBcD8lUxg5lOaaRzT
+	WjLdeEsiP2Nicstd+XgiAK/D0YwMnhY=
+X-Google-Smtp-Source: AGHT+IGphJRLoSb7U6AePEwWjuC9H8+VPzzs97pUtQBtBec3LOw4xT+d2IePD8pHuOooPH3UwigEwQ==
+X-Received: by 2002:a05:600c:4f52:b0:405:359a:c965 with SMTP id m18-20020a05600c4f5200b00405359ac965mr2214088wmq.4.1697828499154;
+        Fri, 20 Oct 2023 12:01:39 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id fc11-20020a05600c524b00b004064cd71aa8sm2844820wmb.34.2023.10.20.12.01.37
+        by smtp.gmail.com with ESMTPSA id u25-20020a05600c00d900b004068495910csm7507450wmm.23.2023.10.20.12.01.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Oct 2023 12:01:37 -0700 (PDT)
-Message-ID: <ce25420db29c9953095db652584dbed4e35d67ad.1697828495.git.gitgitgadget@gmail.com>
+        Fri, 20 Oct 2023 12:01:38 -0700 (PDT)
+Message-ID: <e3a7b150241c2d997026b8ccf7c88ecfecdfe4e7.1697828495.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1563.v5.git.1697828495.gitgitgadget@gmail.com>
 References: <pull.1563.v4.git.1695709372.gitgitgadget@gmail.com>
 	<pull.1563.v5.git.1697828495.gitgitgadget@gmail.com>
 From: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 20 Oct 2023 19:01:34 +0000
-Subject: [PATCH v5 2/3] trailer: find the end of the log message
+Date: Fri, 20 Oct 2023 19:01:35 +0000
+Subject: [PATCH v5 3/3] trailer: use offsets for trailer_start/trailer_end
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,151 +69,171 @@ Cc: Glen Choo <glencbz@gmail.com>,
 
 From: Linus Arver <linusa@google.com>
 
-Previously, trailer_info_get() computed the trailer block end position
-by
+Previously these fields in the trailer_info struct were of type "const
+char *" and pointed to positions in the input string directly (to the
+start and end positions of the trailer block).
 
-(1) checking for the opts->no_divider flag and optionally calling
-    find_patch_start() to find the "patch start" location (patch_start), and
-(2) calling find_trailer_end() to find the end of the trailer block
-    using patch_start as a guide, saving the return value into
-    "trailer_end".
+Use offsets to make the intended usage less ambiguous. We only need to
+reference the input string in format_trailer_info(), so update that
+function to take a pointer to the input.
 
-The logic in (1) was awkward because the variable "patch_start" is
-misleading if there is no patch in the input. The logic in (2) was
-misleading because it could be the case that no trailers are in the
-input (yet we are setting a "trailer_end" variable before even searching
-for trailers, which happens later in find_trailer_start()). The name
-"find_trailer_end" was misleading because that function did not look for
-any trailer block itself --- instead it just computed the end position
-of the log message in the input where the end of the trailer block (if
-it exists) would be (because trailer blocks must always come after the
-end of the log message).
+While we're at it, rename trailer_start to trailer_block_start to be
+more explicit about these offsets (that they are for the entire trailer
+block including other trailers). Ditto for trailer_end.
 
-Combine the logic in (1) and (2) together into find_patch_start() by
-renaming it to find_end_of_log_message(). The end of the log message is
-the starting point which find_trailer_start() needs to start searching
-backward to parse individual trailers (if any).
-
-Helped-by: Jonathan Tan <jonathantanmy@google.com>
-Helped-by: Junio C Hamano <gitster@pobox.com>
+Reported-by: Glen Choo <glencbz@gmail.com>
 Signed-off-by: Linus Arver <linusa@google.com>
 ---
- trailer.c | 64 +++++++++++++++++++++++++++++++++++--------------------
- 1 file changed, 41 insertions(+), 23 deletions(-)
+ sequencer.c |  2 +-
+ trailer.c   | 29 ++++++++++++++---------------
+ trailer.h   | 10 +++++-----
+ 3 files changed, 20 insertions(+), 21 deletions(-)
 
+diff --git a/sequencer.c b/sequencer.c
+index d584cac8ed9..8707a92204f 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -345,7 +345,7 @@ static int has_conforming_footer(struct strbuf *sb, struct strbuf *sob,
+ 	if (ignore_footer)
+ 		sb->buf[sb->len - ignore_footer] = saved_char;
+ 
+-	if (info.trailer_start == info.trailer_end)
++	if (info.trailer_block_start == info.trailer_block_end)
+ 		return 0;
+ 
+ 	for (i = 0; i < info.trailer_nr; i++)
 diff --git a/trailer.c b/trailer.c
-index 3c54b38a85a..70c81fda710 100644
+index 70c81fda710..f7dc7c4c008 100644
 --- a/trailer.c
 +++ b/trailer.c
-@@ -809,21 +809,50 @@ static ssize_t last_line(const char *buf, size_t len)
- }
- 
- /*
-- * Return the position of the start of the patch or the length of str if there
-- * is no patch in the message.
-+ * Find the end of the log message as an offset from the start of the input
-+ * (where callers of this function are interested in looking for a trailers
-+ * block in the same input). We have to consider two categories of content that
-+ * can come at the end of the input which we want to ignore (because they don't
-+ * belong in the log message):
-+ *
-+ * (1) the "patch part" which begins with a "---" divider and has patch
-+ * information (like the output of git-format-patch), and
-+ *
-+ * (2) any trailing comment lines, blank lines like in the output of "git
-+ * commit -v", or stuff below the "cut" (scissor) line.
-+ *
-+ * As a formula, the situation looks like this:
-+ *
-+ *     INPUT = LOG MESSAGE + IGNORED
-+ *
-+ * where IGNORED can be either of the two categories described above. It may be
-+ * that there is nothing to ignore. Now it may be the case that the LOG MESSAGE
-+ * contains a trailer block, but that's not the concern of this function.
+@@ -859,7 +859,7 @@ static size_t find_end_of_log_message(const char *input, int no_divider)
+  * Return the position of the first trailer line or len if there are no
+  * trailers.
   */
--static size_t find_patch_start(const char *str)
-+static size_t find_end_of_log_message(const char *input, int no_divider)
+-static size_t find_trailer_start(const char *buf, size_t len)
++static size_t find_trailer_block_start(const char *buf, size_t len)
  {
-+	size_t end;
  	const char *s;
+ 	ssize_t end_of_title, l;
+@@ -1075,7 +1075,6 @@ void process_trailers(const char *file,
+ 	LIST_HEAD(head);
+ 	struct strbuf sb = STRBUF_INIT;
+ 	struct trailer_info info;
+-	size_t trailer_end;
+ 	FILE *outfile = stdout;
  
--	for (s = str; *s; s = next_line(s)) {
-+	/* Assume the naive end of the input is already what we want. */
-+	end = strlen(input);
-+
-+	if (no_divider) {
-+		return end;
-+	}
-+
-+	/* Optionally skip over any patch part ("---" line and below). */
-+	for (s = input; *s; s = next_line(s)) {
- 		const char *v;
+ 	ensure_configured();
+@@ -1086,11 +1085,10 @@ void process_trailers(const char *file,
+ 		outfile = create_in_place_tempfile(file);
  
--		if (skip_prefix(s, "---", &v) && isspace(*v))
--			return s - str;
-+		if (skip_prefix(s, "---", &v) && isspace(*v)) {
-+			end = s - input;
-+			break;
-+		}
- 	}
+ 	parse_trailers(&info, sb.buf, &head, opts);
+-	trailer_end = info.trailer_end - sb.buf;
  
--	return s - str;
-+	/* Skip over other ignorable bits. */
-+	return end - ignored_log_message_bytes(input, end);
- }
+ 	/* Print the lines before the trailers */
+ 	if (!opts->only_trailers)
+-		fwrite(sb.buf, 1, info.trailer_start - sb.buf, outfile);
++		fwrite(sb.buf, 1, info.trailer_block_start, outfile);
  
- /*
-@@ -925,12 +954,6 @@ continue_outer_loop:
- 	return len;
- }
+ 	if (!opts->only_trailers && !info.blank_line_before_trailer)
+ 		fprintf(outfile, "\n");
+@@ -1112,7 +1110,7 @@ void process_trailers(const char *file,
  
--/* Return the position of the end of the trailers. */
--static size_t find_trailer_end(const char *buf, size_t len)
--{
--	return len - ignored_log_message_bytes(buf, len);
--}
--
- static int ends_with_blank_line(const char *buf, size_t len)
- {
- 	ssize_t ll = last_line(buf, len);
-@@ -1101,7 +1124,7 @@ void process_trailers(const char *file,
+ 	/* Print the lines after the trailers as is */
+ 	if (!opts->only_trailers)
+-		fwrite(sb.buf + trailer_end, 1, sb.len - trailer_end, outfile);
++		fwrite(sb.buf + info.trailer_block_end, 1, sb.len - info.trailer_block_end, outfile);
+ 
+ 	if (opts->in_place)
+ 		if (rename_tempfile(&trailers_tempfile, file))
+@@ -1124,7 +1122,7 @@ void process_trailers(const char *file,
  void trailer_info_get(struct trailer_info *info, const char *str,
  		      const struct process_trailer_options *opts)
  {
--	int patch_start, trailer_end, trailer_start;
-+	int end_of_log_message, trailer_start;
+-	int end_of_log_message, trailer_start;
++	size_t end_of_log_message = 0, trailer_block_start = 0;
  	struct strbuf **trailer_lines, **ptr;
  	char **trailer_strings = NULL;
  	size_t nr = 0, alloc = 0;
-@@ -1109,16 +1132,11 @@ void trailer_info_get(struct trailer_info *info, const char *str,
- 
+@@ -1133,10 +1131,10 @@ void trailer_info_get(struct trailer_info *info, const char *str,
  	ensure_configured();
  
--	if (opts->no_divider)
--		patch_start = strlen(str);
--	else
--		patch_start = find_patch_start(str);
--
--	trailer_end = find_trailer_end(str, patch_start);
--	trailer_start = find_trailer_start(str, trailer_end);
-+	end_of_log_message = find_end_of_log_message(str, opts->no_divider);
-+	trailer_start = find_trailer_start(str, end_of_log_message);
+ 	end_of_log_message = find_end_of_log_message(str, opts->no_divider);
+-	trailer_start = find_trailer_start(str, end_of_log_message);
++	trailer_block_start = find_trailer_block_start(str, end_of_log_message);
  
- 	trailer_lines = strbuf_split_buf(str + trailer_start,
--					 trailer_end - trailer_start,
-+					 end_of_log_message - trailer_start,
+-	trailer_lines = strbuf_split_buf(str + trailer_start,
+-					 end_of_log_message - trailer_start,
++	trailer_lines = strbuf_split_buf(str + trailer_block_start,
++					 end_of_log_message - trailer_block_start,
  					 '\n',
  					 0);
  	for (ptr = trailer_lines; *ptr; ptr++) {
-@@ -1141,7 +1159,7 @@ void trailer_info_get(struct trailer_info *info, const char *str,
+@@ -1157,9 +1155,9 @@ void trailer_info_get(struct trailer_info *info, const char *str,
+ 	strbuf_list_free(trailer_lines);
+ 
  	info->blank_line_before_trailer = ends_with_blank_line(str,
- 							       trailer_start);
- 	info->trailer_start = str + trailer_start;
--	info->trailer_end = str + trailer_end;
-+	info->trailer_end = str + end_of_log_message;
+-							       trailer_start);
+-	info->trailer_start = str + trailer_start;
+-	info->trailer_end = str + end_of_log_message;
++							       trailer_block_start);
++	info->trailer_block_start = trailer_block_start;
++	info->trailer_block_end = end_of_log_message;
  	info->trailers = trailer_strings;
  	info->trailer_nr = nr;
  }
+@@ -1174,6 +1172,7 @@ void trailer_info_release(struct trailer_info *info)
+ 
+ static void format_trailer_info(struct strbuf *out,
+ 				const struct trailer_info *info,
++				const char *msg,
+ 				const struct process_trailer_options *opts)
+ {
+ 	size_t origlen = out->len;
+@@ -1183,8 +1182,8 @@ static void format_trailer_info(struct strbuf *out,
+ 	if (!opts->only_trailers && !opts->unfold && !opts->filter &&
+ 	    !opts->separator && !opts->key_only && !opts->value_only &&
+ 	    !opts->key_value_separator) {
+-		strbuf_add(out, info->trailer_start,
+-			   info->trailer_end - info->trailer_start);
++		strbuf_add(out, msg + info->trailer_block_start,
++			   info->trailer_block_end - info->trailer_block_start);
+ 		return;
+ 	}
+ 
+@@ -1238,7 +1237,7 @@ void format_trailers_from_commit(struct strbuf *out, const char *msg,
+ 	struct trailer_info info;
+ 
+ 	trailer_info_get(&info, msg, opts);
+-	format_trailer_info(out, &info, opts);
++	format_trailer_info(out, &info, msg, opts);
+ 	trailer_info_release(&info);
+ }
+ 
+diff --git a/trailer.h b/trailer.h
+index ab2cd017567..1644cd05f60 100644
+--- a/trailer.h
++++ b/trailer.h
+@@ -32,16 +32,16 @@ int trailer_set_if_missing(enum trailer_if_missing *item, const char *value);
+ struct trailer_info {
+ 	/*
+ 	 * True if there is a blank line before the location pointed to by
+-	 * trailer_start.
++	 * trailer_block_start.
+ 	 */
+ 	int blank_line_before_trailer;
+ 
+ 	/*
+-	 * Pointers to the start and end of the trailer block found. If there
+-	 * is no trailer block found, these 2 pointers point to the end of the
+-	 * input string.
++	 * Offsets to the trailer block start and end positions in the input
++	 * string. If no trailer block is found, these are both set to the
++	 * "true" end of the input (find_end_of_log_message()).
+ 	 */
+-	const char *trailer_start, *trailer_end;
++	size_t trailer_block_start, trailer_block_end;
+ 
+ 	/*
+ 	 * Array of trailers found.
 -- 
 gitgitgadget
-
