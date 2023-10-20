@@ -1,72 +1,111 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C0AA15AE8
-	for <git@vger.kernel.org>; Fri, 20 Oct 2023 10:03:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD7A15E81
+	for <git@vger.kernel.org>; Fri, 20 Oct 2023 10:04:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7767793
-	for <git@vger.kernel.org>; Fri, 20 Oct 2023 03:03:45 -0700 (PDT)
-Received: (qmail 15364 invoked by uid 109); 20 Oct 2023 10:03:44 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 20 Oct 2023 10:03:44 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12606 invoked by uid 111); 20 Oct 2023 10:03:49 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 20 Oct 2023 06:03:49 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 20 Oct 2023 06:03:43 -0400
-From: Jeff King <peff@peff.net>
-To: Michael Strawbridge <michael.strawbridge@amd.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Bagas Sanjaya <bagasdotme@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 0/3] some send-email --compose fixes
-Message-ID: <20231020100343.GA2194322@coredump.intra.peff.net>
-References: <ZSal-mQIZAUBaq6g@debian.me>
- <95b9e5d5-ab07-48a6-b972-af5348f653be@amd.com>
- <7e2c92ff-b42c-4b3f-a509-9d0785448262@amd.com>
- <xmqq1qe0lui2.fsf@gitster.g>
- <20231011221844.GB518221@coredump.intra.peff.net>
- <xmqqzg0oiy4s.fsf@gitster.g>
- <20231011224753.GE518221@coredump.intra.peff.net>
- <b4385543-bee0-473b-ab2d-df0d7847ddf3@amd.com>
- <20231020064525.GB1642714@coredump.intra.peff.net>
- <20231020071402.GC1642714@coredump.intra.peff.net>
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6A3693
+	for <git@vger.kernel.org>; Fri, 20 Oct 2023 03:04:44 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1qtmN1-00078y-A0; Fri, 20 Oct 2023 12:04:43 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1qtmN0-00306P-QD; Fri, 20 Oct 2023 12:04:42 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1qtmN0-002Ri7-HC; Fri, 20 Oct 2023 12:04:42 +0200
+Date: Fri, 20 Oct 2023 12:04:42 +0200
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To: git@vger.kernel.org
+Cc: Luben Tuikov <luben.tuikov@amd.com>,
+	Michael Strawbridge <michael.strawbridge@amd.com>,
+	entwicklung@pengutronix.de
+Subject: Re: Regression: git send-email fails with "Use of uninitialized
+ value $address" + "unable to extract a valid address"
+Message-ID: <20231020100442.an47wwsti2d4zeyx@pengutronix.de>
+References: <20231013141437.ywrhw65xdapmev7d@pengutronix.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="6r7ew5vpi5zczxeh"
+Content-Disposition: inline
+In-Reply-To: <20231013141437.ywrhw65xdapmev7d@pengutronix.de>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
+
+
+--6r7ew5vpi5zczxeh
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20231020071402.GC1642714@coredump.intra.peff.net>
+Content-Transfer-Encoding: quoted-printable
 
-[culling the rather large cc, as we moving off the original topic]
+hello,
 
-On Fri, Oct 20, 2023 at 03:14:03AM -0400, Jeff King wrote:
+On Fri, Oct 13, 2023 at 04:14:37PM +0200, Uwe Kleine-K=C3=B6nig wrote:
+> Hello,
+>=20
+> 	$ git send-email --to 'A B <a@b.org>, C D <c@d.org>' lala.patch
+> 	Use of uninitialized value $address in sprintf at /usr/lib/git-core/git-=
+send-email line 1172.
+> 	error: unable to extract a valid address from:
+>=20
+> This happens for me with git 2.42.0 and also on master (59167d7d09fd, "Th=
+e seventeenth batch").
+>=20
+> Bisection points at
+>=20
+> 	a8022c5f7b67 ("send-email: expose header information to git-send-email's=
+ sendemail-validate hook")
+>=20
+> I didn't try to understand that change and fix the problem.
 
-> and there's your perl array ref (from the square brackets, which are
-> necessary because we're sticking it in a hash value). But even before
-> your patch, this seems to end up as garbage. The code which reads
-> $parsed_line does not dereference the array.
-> 
-> The patch to fix it is only a few lines (well, more than that with some
-> light editorializing in the comments):
+Another (similar?) problem with non-ascii-chars:
 
-So here's the fix in a cleaned up form, guided by my own comments from
-earlier. ;) I think this is actually all orthogonal to the patch you are
-working on, so yours could either go on top or just be applied
-separately.
+	$ git send-email --to 'Will Deacon <will@kernel.org>' --to 'Krzysztof Wilc=
+zy=C5=84ski <kw@linux.com>' --to 'Lorenzo Pieralisi <lpieralisi@kernel.org>=
+' --cc 'Rob Herring <robh@kernel.org>' --to 'Bjorn Helgaas <bhelgaas@google=
+=2Ecom>' --cc 'linux-pci@vger.kernel.org' --cc kernel@pengutronix.de -1 --b=
+ase=3D@~
+	Use of uninitialized value $address in sprintf at /home/uwe/gsrc/git/git-s=
+end-email line 1162.
+	error: unable to extract a valid address from:
 
-  [1/3]: doc/send-email: mention handling of "reply-to" with --compose
-  [2/3]: Revert "send-email: extract email-parsing code into a subroutine"
-  [3/3]: send-email: handle to/cc/bcc from --compose message
+Bisection points to the same commit, when dropping =C5=84 in Krzysztof's
+name, it works fine.
 
- Documentation/git-send-email.txt |  10 +--
- git-send-email.perl              | 132 ++++++++++++-------------------
- t/t9001-send-email.sh            |  41 ++++++++++
- 3 files changed, 98 insertions(+), 85 deletions(-)
+Best regards
+Uwe
 
--Peff
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=C3=B6nig         =
+   |
+Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+
+--6r7ew5vpi5zczxeh
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmUyULkACgkQj4D7WH0S
+/k45ewf/WZPwwxcHfH4YONzeec9snuhtHHgtCqID/RTdAESB2yyEs2ctwayLq87Z
+xeWPR7YXyCQvoY8YyzWSjtCXszbBntZgXv1Ymfpzt8C3md2TeAknn69pJj2oHAHY
+/CMMbKnSsMnt5U/QCTDox/ozqQVumr6PJEQYyC0bR43i/VZm+alBnfF/Za93SsVS
+EVg2ZpsHvXqtLUK2E1cam/EXiMj+sd69sWypIrW7jRsSWekoQU7NdGEoaTnlsS8/
+E0z2AFzIiBkN8oaUFMFm4GZCFOf0En8yayiEyiEMKJ37f+ML24ymfBHhI2UVYY/M
+M+7oTUASbkdSa7BZPAD29xbXamvYKw==
+=jnBG
+-----END PGP SIGNATURE-----
+
+--6r7ew5vpi5zczxeh--
