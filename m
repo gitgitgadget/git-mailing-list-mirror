@@ -1,70 +1,148 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E382132C82
-	for <git@vger.kernel.org>; Fri, 20 Oct 2023 22:07:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4CCC1A71B
+	for <git@vger.kernel.org>; Fri, 20 Oct 2023 23:02:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Eq8fdoyh"
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41998A3
-	for <git@vger.kernel.org>; Fri, 20 Oct 2023 15:07:25 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id A26F8338F7;
-	Fri, 20 Oct 2023 18:07:24 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=Pao3oojFecnWQBiogGzGE/gAttRezXO3Fr9Mgr
-	DNYmU=; b=Eq8fdoyho964iz3eLU3idGSkOPwFzdGmAy5yTqFMMSJ9WoIxQnQCmO
-	rpaCEQqjNmwbiHGPbxXX+k01qld/z7LJK6ONZ72l+WLXt4rxqUNkKNO0ry5XhdQP
-	oe1rz8Pv7lIIs31g1ys7XUXWUgTljHBC8UadmX24CFcXr+X6klxtA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 9C218338F6;
-	Fri, 20 Oct 2023 18:07:24 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3631F338F5;
-	Fri, 20 Oct 2023 18:07:21 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v3 0/3] rebase refactoring
-In-Reply-To: <20231020093654.922890-1-oswald.buddenhagen@gmx.de> (Oswald
-	Buddenhagen's message of "Fri, 20 Oct 2023 11:36:51 +0200")
-References: <20230809171531.2564844-1-oswald.buddenhagen@gmx.de>
-	<20231020093654.922890-1-oswald.buddenhagen@gmx.de>
-Date: Fri, 20 Oct 2023 15:07:19 -0700
-Message-ID: <xmqq5y31osmg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="X5Ka30Yy"
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04A421A8
+	for <git@vger.kernel.org>; Fri, 20 Oct 2023 16:02:48 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 0A8501F2-6F95-11EE-9C88-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1697842966;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=HZt+uzLJT0/xCFz3H/g6FhXSgYu4KHRCwyr12IDZLFk=;
+	b=X5Ka30YygUPkrDjKUflPJgvwJET0RgSN1wCz7JsiPBXFByZ55ZvgJUV3fAkcl0e7cJOWLi
+	6Q0K7PRtnDrXxexPsollL3ZQcUCj7lcVnLE3A5ZAGOQQASrBVDdXLtqrt3mqgMRQa4WTsH
+	KuiJBp4A2OuXmlfiMkA9QyzbgwtRnmnW0T7MaO+X/M/RK7QFtkGTQDoi94j97hWc4E8mjj
+	l2d18xsob4U6pFxPYud3waWBBnxPUFtc3bTh8TmTOApY4iXyCeGtQIpbc/u03M0xtwCJtL
+	DI/UFz+O3bkoYpcEnadPz7Stw4mH0SyRyc3oCdiMWkXoKvn7s/RHmLXIiOio+Q==
+Date: Sat, 21 Oct 2023 01:02:46 +0200
+From: Dragan Simic <dsimic@manjaro.org>
+To: Jacob Stopak <jacob@initialcommit.io>
+Cc: git@vger.kernel.org
+Subject: Re: [RFC PATCH 0/5] Introduce -t, --table for status/add commands
+In-Reply-To: <ZTL1wJIIK/5YWQK5.jacob@initialcommit.io>
+References: <20231020183947.463882-1-jacob@initialcommit.io>
+ <fd26df85661d554ced9d8e0445f75952@manjaro.org>
+ <ZTL1wJIIK/5YWQK5.jacob@initialcommit.io>
+Message-ID: <d3bbe53c3b910f891c80465ea0c3f53f@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
+On 2023-10-20 23:48, Jacob Stopak wrote:
+> On Fri, Oct 20, 2023 at 08:48:12PM +0200, Dragan Simic wrote:
+>> On 2023-10-20 20:39, Jacob Stopak wrote:
+>> > This is a proposal / proof-of-concept for a new table-based output
+>> > format for the git status command, and for dry runs (-n) of the git add
+>> > command. This could be extended to create visual dry runs for other
+>> > other commands like rm, mv, restore, stash, commit, and clean.
+>> 
+>> Huh, please don't get me wrong, but based on the examples provided 
+>> below, I
+>> really think that's only wasted screen estate, providing little or no 
+>> help
+>> in understanding the performed operations.
+>> 
+>> I appreciate your effort, but IMHO it makes little sense from the 
+>> usability
+>> standpoint.
+>> 
+> Thanks for the quick (and honest ;) reply - I appreciate it and no 
+> offense
+> taken! But let me try to expand on my reasoning a bit.
 
-> broken out of the bigger series, as the aggregation just unnecessarily holds it
-> up.
->
-> v3: removed "stray" footer. so more of a RESEND than an actual new version.
->
-> Oswald Buddenhagen (3):
->   rebase: simplify code related to imply_merge()
->   rebase: handle --strategy via imply_merge() as well
->   rebase: move parse_opt_keep_empty() down
->
->  builtin/rebase.c | 44 ++++++++++++++------------------------------
->  1 file changed, 14 insertions(+), 30 deletions(-)
+Thank you!
 
-Looking quite straight-forward and I didn't see anythihng
-potentially controversial.
+> I agree with you that Git users who are already comfortable with Git,
+> the command-line, and their workflows would be unlikely to use this in
+> their day to day work.
+> 
+> The main benefits of this format are for beginners and folks who
+> are still learning Git to use it as needed:
 
-Will queue.  Thanks.
+Oh, I always do my best to put myself in the shoes of the targeted 
+audience.  Maybe I sometimes fail at that, I don't know, but that's why 
+we're here to discuss it further.
+
+>   * To beginners, the concepts of working directory and "staging area"
+>     can be very abstract. By representing these concepts as table 
+> columns
+>     on the screen, (a format that 99% of humans are used to 
+> interpreting),
+>     they become more tangible and intuitive to new users.
+
+Frankly, based on my rather broad experience, there are two primary 
+categories of the beginners in the world of version control software 
+(VCS), be it git or any other product:
+
+1) People who are forced to use some VCS at work, and they actually 
+don't give a damn about it.
+2) True enthusiasts who love what they do, and who love expanding their 
+knowledge.
+
+For the first category, nothing helps.  For the second category, a 
+nicely written tutorial is all they needed to start with, aided later 
+with the man pages, Stack Exchange, and perhaps some textbook.
+
+>   * In Git, changes fly around all over the place, in all sorts of
+>     directions. Even small hints at this movement can be very helpful 
+> to
+>     understand what the heck is going on. The table format (esp with
+>     arrows used in the 'git add' version) highlights the "flow" of
+>     changes through the workflow in a way that the current default 
+> format
+>     doesn't. The current dry runs just show the filenames being added
+>     without context of _where_ they come from and where they are going.
+>     Not to mention many commands don't even have dry runs. This might
+>     sound like a small thing, but to a newbie having that extra level 
+> of
+>     confirmation and understanding can make a big difference.
+
+Please don't get me wrong, I understand your reasoning, but again, it 
+all comes down to the two categories described above.  IMHO, the second 
+category will likely start turning off the default hints sooner than 
+turning the table formatting on.  The first category will choose some 
+GUI anyway.
+
+>   * Git doesn't exactly have a reputation as a user-friendly tool, and
+>     much of that stems from the difficulty of learning Git. So we 
+> should
+>     try to make it more approachable to normal humans. This format
+>     (esp if applied to a wide variety of commands as dry runs) would
+>     provide a rudimentary visual output that is more intuitive to 
+> users.
+
+No pain, no gain.  That's the ancient mantra, but IMHO it still applies 
+very well to many things, and of course not to the first category 
+mentioned above.  Nothing applies to that category.
+
+>   * This flag doesn't change any default behavior, it can easily be
+>     tossed on for newbie use (either when teaching a newbie or when the
+>     newbie is practicing on their own). Given this usage, the screen
+>     realestate is not really a concern. I.e. this would be used
+>     specifically when needed for the extra info/clarity it provides,
+>     not to be efficient with the terminal space.
+
+As I already assumed above, the targeted audience will likely start 
+turning the default hints off, rather than turning the table formatting 
+on.  Maybe I'm wrong there, who knows.
+
+> That's my perspective anyway, but of course the point of this is to
+> propose it to the community and hear the response, so even if it's
+> not included it's still a good experience :D.
+
+Let's hear more thoughts from other people, of course.
