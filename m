@@ -1,106 +1,169 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A83C8171C6
-	for <git@vger.kernel.org>; Fri, 20 Oct 2023 16:09:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57ED81A73E
+	for <git@vger.kernel.org>; Fri, 20 Oct 2023 16:40:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="NiV1grH1"
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28C81D7
-	for <git@vger.kernel.org>; Fri, 20 Oct 2023 09:09:02 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-51e24210395so16645a12.0
-        for <git@vger.kernel.org>; Fri, 20 Oct 2023 09:09:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1697818140; x=1698422940; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CF53732RURYKphBLu69DMvkYJcICdtdUM2ad3jiR744=;
-        b=NiV1grH1X6JxTtsCkofomPiDu97yz8kEDTxhdU7/mLNdDAjE3PgpDhPN1ke633c0jJ
-         9kw/3Ukf2bjzdZn2vIC6aFZHojv+4940AjTbHGxYn4V55ble2n9XbLYVxvTy4qjhcuNC
-         +CR1ahqgXQiq0L48AQkFPLNcVODff9APLCwYhYIWAIe6U+jGGwgZ93lTbivekaqjlNXP
-         ytlf5hCKT3GwL+Vaf20XzeJpsC7TQiTgabBT0GnfaYGHwjhr1FjJ4aifr+lQ0oCNUtB7
-         j01/8A51LzO2zuRCruMTqcD4kpI34me0y5Ak59bA1vxCb9aCd4Q8DtfEf3JJu5O28fbQ
-         zxCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697818140; x=1698422940;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CF53732RURYKphBLu69DMvkYJcICdtdUM2ad3jiR744=;
-        b=u/C7vGEjz1r0Yu2qoHF3km1x9p93Q6F/28OWvW6tJPTvUmnXhAVQZ6uTGVw4nAizP6
-         flPVZx61MNPxTOZXTKEE+djzdUdJoiseRyuYtwDGyLyR/90PgrLIl9CBr8qtGKOqmznf
-         3iObWWEUMYN+TGdUDj1cjVzdnwRp1R6hJyfH4iMmT2+li4ucxOCPVIAV7B0pgkFSyC/7
-         Is9gB/p1Bq3q7wpZ/AM19o2dtLYzqHdjaetTbhtii14y/9K3Y/snlyH6SitDUVuwUjGZ
-         uIg4SSf1HbtsZWZxnTM3qtUGqzJ5yMTmu/q3Hh/qbcv6GpirtZnXH41gFv04xNa0VKpr
-         jd8A==
-X-Gm-Message-State: AOJu0YxpSezLpdgkIIgTcV3G2/dpZtzXD0UZ9XI0+L3BykkzMHy4WZ5S
-	yiAknlkGCodWRU7nh8JVMdKQArjy+Njs+wf6jcViILQh9yilZSlR4dRE04Ih
-X-Google-Smtp-Source: AGHT+IGt9TtvdWTpvkifOCOJU9UL/yCpF/hiSATCQmspEKihdGFx1X+ujZGngD0jzPfLwoh5gAd6+pEzZwOrCyKRHqI=
-X-Received: by 2002:a05:6402:332:b0:53f:c331:8708 with SMTP id
- q18-20020a056402033200b0053fc3318708mr128594edw.0.1697818140410; Fri, 20 Oct
- 2023 09:09:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="q1IyzW2w";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kMHMXkx0"
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B2DC18F
+	for <git@vger.kernel.org>; Fri, 20 Oct 2023 09:40:34 -0700 (PDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id 2436C5C0A3E;
+	Fri, 20 Oct 2023 12:40:32 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute3.internal (MEProxy); Fri, 20 Oct 2023 12:40:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:date:date:from
+	:from:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:sender:subject:subject:to:to; s=fm2; t=1697820032; x=
+	1697906432; bh=TweKuaZMWKvVWXRvp2XvsvEDpxryNMVq0dJBsV/2WtQ=; b=q
+	1IyzW2wgwIVZzefwBbCD8/mUEJX2jOLKJ1N+QTFJx5j1AQIL2tSbcLA6/HMaodDi
+	W4eSeQ4lABpgfEhzNXJMwpA0+tmfuaEoqc4Bwh1TymADPDs85MHfL+6OpdsCBQcy
+	6JmGNqGsuZU+Bm2D1efEcs3b+QREfuVVubAflO1TBmPzpzLepidlVrSoXvtf7SW6
+	gGwFKrwR0d+bV1bTSzIuskOQ33yiPBkNgb7i78c5aaaRz2VwJU6G0jbfYXL7wPxN
+	AdiTHyKSs5JlVUAVpBNo2UdOZKsLaBkC9fKkmAhVwV0ysVDPl51F8QMFDl9lciRb
+	8BcVSzC/+bQLCgwC+v1sg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1697820032; x=
+	1697906432; bh=TweKuaZMWKvVWXRvp2XvsvEDpxryNMVq0dJBsV/2WtQ=; b=k
+	MHMXkx0FIRjFMUkhfgSz1am44htZkEwdc4LIuUt/1PNfCPfLovfhIE9uk1Vfe8T+
+	mXrKch2rW4i6RWJ+2aQtdwN9xLLFeZhECg+q1EPOdxI9QSkUAJ9kglv42S40bVOo
+	UfeKG7XLT63gOuLTl8YepLUy9MIA979v9Gh3LIzxkaLXX6AtBd7PFQlsHFI69Ntu
+	N44GXN4UT8nN8jgFOUILbjtHfQ3iHod8NnEP2i9jIK14LOO1g5KkNu+daRN9HoFG
+	ZQgIiu3H/xibuhaPDUvph+mr186CtAJZ/Syr4knz7GgryF+25ic99oe9DnKpgcDK
+	yi56X3ooQL6A6EyfhWbaA==
+X-ME-Sender: <xms:f60yZYPvNUniEnfarCZmkfaCrJDs1aUwj-PEm0wt_v-f1-fKlO1QM7k>
+    <xme:f60yZe_I4E9C81AzE0CNkn1TiGPeuc0gt6lPk6TcYv8HLa9OqjPGIN676OB6xH3kg
+    wtPeICfIqGfZ8xQcw>
+X-ME-Received: <xmr:f60yZfSf8GxeV_SI5VsoT-zBK0uRzVjGfHDrKiDZ1Py95E6Hf13zAZY0-u8kGlpHGsRQ3C0O-zjdyyLGc1fxdfH2TqUuf68bQc3QjdPs0Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrjeekgddutdduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucgoteeftdduqddtudculdduhedmnecujfgurhephf
+    fvvefufffkofgjfhgggfestdekredtredttdenucfhrhhomhepmfhrihhsthhofhhfvghr
+    ucfjrghughhssggrkhhkuceotghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvqeenuc
+    ggtffrrghtthgvrhhnpefhudevveejtddttedvhfelffeuuefhffeugeeluedtgfdtuefh
+    tefhudelleekteenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgs
+    rghkkhdrnhgrmhgv
+X-ME-Proxy: <xmx:f60yZQu__OOywqXEy-2_XsP8MKz5KNmFNzWSY47i0i7e7BF8aJ97tg>
+    <xmx:f60yZQf-qAo9Wb6EP5l3welRdqGpNhiPKU9BLFqRclyyuPQTma7zBQ>
+    <xmx:f60yZU0PiR_JWROkmPUyHdwP5Zqnz72VmPJxLrY6GciR0vTPq8cItw>
+    <xmx:gK0yZRolXSLaHVAMIWBy2O5AB1Akd7xDm4ADOJCHHs7_Qj1Ooz6g7w>
+Feedback-ID: i2671468f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 20 Oct 2023 12:40:30 -0400 (EDT)
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+To: code@khaugsbakk.name
+Cc: gitster@pobox.com,
+	ks1322@gmail.com,
+	git@vger.kernel.org
+Subject: [PATCH v2] grep: die gracefully when outside repository
+Date: Fri, 20 Oct 2023 18:40:07 +0200
+Message-ID: <5c8ef6bec1c99e0fae7ada903885a8e77f8137f9.1697819838.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.42.0.2.g879ad04204
+In-Reply-To: <087c92e3904dd774f672373727c300bf7f5f6369.1697317276.git.code@khaugsbakk.name>
+References: <087c92e3904dd774f672373727c300bf7f5f6369.1697317276.git.code@khaugsbakk.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAJoAoZkWWKGjv0-ANQJf7dMaiAJVnOMkvQpCcR8OpjZbop4rKw@mail.gmail.com>
- <1D0EE77C-6DEF-4509-9846-6897C73C7CDD@gmail.com>
-In-Reply-To: <1D0EE77C-6DEF-4509-9846-6897C73C7CDD@gmail.com>
-From: Emily Shaffer <nasamuffin@google.com>
-Date: Fri, 20 Oct 2023 09:08:48 -0700
-Message-ID: <CAJoAoZmdZFN+BexGSUCJaSi2nBJK3MoiTEBOWcY1qmZEGdh0vA@mail.gmail.com>
-Subject: Re: Thanks and One Suggestion
-To: Brock Whitaker <brock.e.whitaker@gmail.com>, Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Adding back the list - first I accidentally HTML'd my reply, and then
-Brock replied directly to me :) In general, please make sure to keep
-the mailing list CC'd on responses, Brock. (And turn off HTML in your
-MUA. Don't be like me :) )
+Die gracefully when `git grep --no-index` is run outside of a Git
+repository and the path is outside the directory tree.
 
-I agree looking in my own browser that the monospace - both inline and
-blockquote - is a little difficult to read. Take
-https://git-scm.com/docs/git-commit#Documentation/git-commit.txt---amend
-for an example of both. However, I'll leave it up to the git-scm folks
-to recommend a fix.
+If you are not in a Git repository and say:
 
- - Emily
+    git grep --no-index search ..
 
-On Fri, Oct 20, 2023 at 8:13=E2=80=AFAM Brock Whitaker
-<brock.e.whitaker@gmail.com> wrote:
->
-> The code examples are the hardest to read. My monitor probably isn=E2=80=
-=99t helping.
->
-> Brock
->
-> On Oct 20, 2023, at 10:56=E2=80=AFAM, Emily Shaffer <nasamuffin@google.co=
-m> wrote:
->
-> =EF=BB=BF
-> Hi Brock, thanks for your feedback. Could you specify which orange-on-whi=
-te is difficult for you? There are a few different examples I see at a quic=
-k glance - headings, fixed-width text, sidebar. Which is bothering you?
->
->  - Emily
->
-> On Fri, Oct 20, 2023 at 7:20=E2=80=AFAM Brock Whitaker <brock.e.whitaker@=
-gmail.com> wrote:
->>
->> Thank you for the git-scm site. It's an invaluable resource I use often.
->>
->> My only issue with it is the text isn't as easy to read as I would
->> like. The orange text on a white background is a little tough to read
->> sometimes. A higher contrast between text and background color would
->> help.
->>
->> Splitting hairs,
->>
->> B
->>
->> PS - Thanks again for a super useful resource!
->>
+You trigger a `BUG`:
+
+    BUG: environment.c:213: git environment hasn't been setup
+    Aborted (core dumped)
+
+Because `..` is a valid path which is treated as a pathspec. Then
+`pathspec` figures out that it is not in the current directory tree. The
+`BUG` is triggered when `pathspec` tries to advice the user about how the
+path is not in the current (non-existing) repository.
+
+Reported-by: ks1322 ks1322 <ks1322@gmail.com>
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+---
+
+Notes (series):
+    v2:
+    - Initialize `hint_path` after we know that we are in a Git repository
+    - Apply Junio's suggestion for the test: https://lore.kernel.org/git/xmqqzg0hf0g8.fsf@gitster.g/
+
+ pathspec.c      |  7 ++++++-
+ t/t7810-grep.sh | 27 +++++++++++++++++++++++++++
+ 2 files changed, 33 insertions(+), 1 deletion(-)
+
+diff --git a/pathspec.c b/pathspec.c
+index 3a3a5724c44..264b4929a55 100644
+--- a/pathspec.c
++++ b/pathspec.c
+@@ -467,7 +467,12 @@ static void init_pathspec_item(struct pathspec_item *item, unsigned flags,
+ 		match = prefix_path_gently(prefix, prefixlen,
+ 					   &prefixlen, copyfrom);
+ 		if (!match) {
+-			const char *hint_path = get_git_work_tree();
++			const char *hint_path;
++
++			if (!have_git_dir())
++				die(_("'%s' is outside the directory tree"),
++				    copyfrom);
++			hint_path = get_git_work_tree();
+ 			if (!hint_path)
+ 				hint_path = get_git_dir();
+ 			die(_("%s: '%s' is outside repository at '%s'"), elt,
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index 39d6d713ecb..84838c0fe1b 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -1234,6 +1234,33 @@ test_expect_success 'outside of git repository with fallbackToNoIndex' '
+ 	)
+ '
+ 
++test_expect_success 'no repository with path outside $cwd' '
++	test_when_finished rm -fr non &&
++	rm -fr non &&
++	mkdir -p non/git/sub non/tig &&
++	(
++		GIT_CEILING_DIRECTORIES="$(pwd)/non" &&
++		export GIT_CEILING_DIRECTORIES &&
++		cd non/git &&
++		test_expect_code 128 git grep --no-index search .. 2>error &&
++		grep "is outside the directory tree" error
++	) &&
++	(
++		GIT_CEILING_DIRECTORIES="$(pwd)/non" &&
++		export GIT_CEILING_DIRECTORIES &&
++		cd non/git &&
++		test_expect_code 128 git grep --no-index search ../tig 2>error &&
++		grep "is outside the directory tree" error
++	) &&
++	(
++		GIT_CEILING_DIRECTORIES="$(pwd)/non" &&
++		export GIT_CEILING_DIRECTORIES &&
++		cd non/git &&
++		test_expect_code 128 git grep --no-index search ../non 2>error &&
++		grep "no such path in the working tree" error
++	)
++'
++
+ test_expect_success 'inside git repository but with --no-index' '
+ 	rm -fr is &&
+ 	mkdir -p is/git/sub &&
+-- 
+2.42.0.2.g879ad04204
+
