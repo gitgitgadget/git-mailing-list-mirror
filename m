@@ -1,48 +1,59 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 286EBFC1C
-	for <git@vger.kernel.org>; Fri, 20 Oct 2023 17:10:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3989199A9
+	for <git@vger.kernel.org>; Fri, 20 Oct 2023 17:27:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="G2gbTOxa"
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF0B4CA
-	for <git@vger.kernel.org>; Fri, 20 Oct 2023 10:10:06 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 7DD6C27020;
-	Fri, 20 Oct 2023 13:10:06 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=bI8WUSuif8oa
-	yuZ1pmlBYurU9qzOgCOZcmhhFEAoH58=; b=G2gbTOxa/+A+pX+fsAQbleXh3UhL
-	EYiYApYCpo497OzR9zpfyy0ZjuLvVXs4IsL6ucWQn5CtULSZCmaxrz+ShQFovpLq
-	F/5kIqinqYpNYfq+wmR1Ur+igGx7oKqWPtWUftSM4EzlJy75TsHvBD4OYFt7nCir
-	BXkZY6xCC4IPFlk=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 763EB2701F;
-	Fri, 20 Oct 2023 13:10:06 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DFD712701C;
-	Fri, 20 Oct 2023 13:10:02 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Isoken Ibizugbe <isokenjune@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH v2] builtin/branch.c: adjust error messages to coding
- guidelines
-In-Reply-To: <CAP8UFD1U0cz3CDdE_0d0FUgPKP2pX-ZcVDJqz2tW-+rnZ7rvQw@mail.gmail.com>
-	(Christian Couder's message of "Fri, 20 Oct 2023 11:41:15 +0200")
-References: <e08b2ec4-786a-4c18-b7af-0a6a250ae0f0@gmail.com>
-	<20231019084052.567922-1-isokenjune@gmail.com>
-	<CAJHH8bFXVnFgjoCD+JU2uw77JAWUiKU+G=ub9Xg7xYJ_MwXPQQ@mail.gmail.com>
-	<CAP8UFD1U0cz3CDdE_0d0FUgPKP2pX-ZcVDJqz2tW-+rnZ7rvQw@mail.gmail.com>
-Date: Fri, 20 Oct 2023 10:10:01 -0700
-Message-ID: <xmqqbkctrziu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="xN0qjXtd"
+Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01741D7
+	for <git@vger.kernel.org>; Fri, 20 Oct 2023 10:27:02 -0700 (PDT)
+Received: by mail-qk1-x72c.google.com with SMTP id af79cd13be357-7788ebea620so61203785a.3
+        for <git@vger.kernel.org>; Fri, 20 Oct 2023 10:27:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1697822822; x=1698427622; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=UR/M7H8zgLBG0FuN2/gItpzW59L8Fk5S9we1btR0UJM=;
+        b=xN0qjXtdoThXngz4kuDE3b61/NusqX8BkIqkbm4pcTYQ+W9mxfRel2qZGTWGAadwjB
+         ygIDTnNets+93e0zv0Ies6+ffJR2DDLKBCIOUWrRWOlXhgZxcMAR/Aduhh2J6lemVYsz
+         fUTRD0vU8Fd12lp1q07u6lBTkz+ntKXuv7Y7EUxxjjwd1N9n+GIiOSJ4WkHv3tWV28dO
+         GAFLYUcAkb4Ht3ddxJfvkhmWCd8p24IG/D3R7F7yBzZyG9Ndc2PfbOo8udDRAsXZAt3i
+         BziC21CXAJtqvAtMwLasqpLl4x0z+F7HPXsPT0XyU/YUkqUB0SJrpFHnK5lQxilbG7PJ
+         KZOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697822822; x=1698427622;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UR/M7H8zgLBG0FuN2/gItpzW59L8Fk5S9we1btR0UJM=;
+        b=QuC71y1stXZWKa+K/0wM+z/00V534c0WyoPhPBrE7unZE4tTFpxh22dlBYLM6w3F3F
+         EWriTNeL/5S99i7J98ZmgzMdUYDjaE19M+w67oD4QuK+jnhgm12xZFRvp7OnPK/rYLOx
+         ZsqHGcM5XwOlU8wCsHQxesCTh0+4iwQTwgBbJWs2O93/CQrSm8O7yOi3k4uNonE/Z3Vb
+         Kqng8aWcFfJfx39dmfOwHjHWN6eNE4ROMh8OJ9Xbu3RJfFFm7pvEKC/AdQzvqrs4oSvN
+         auGz32kzuWcApCnMuu5XNUNwFwGLLepU4k4EbmZ73k8ioTb8s2k98ESbjVAElxXYJrnT
+         3Rcg==
+X-Gm-Message-State: AOJu0YyvfoFeGNEP+3i/WMf0qDj1pzQoFR0DzOw6oiO2mJvPskO74RY6
+	30T5ZLitHIHhzL6rBbva3QJC3A==
+X-Google-Smtp-Source: AGHT+IEECik2rNvg9g5X/1ZyVYb5KjShWXSZtDz0JLlJfotuqmOkcHu2tT5Tli21VDDo/u4FtGfE1g==
+X-Received: by 2002:a05:620a:27cc:b0:76f:f11:7d1 with SMTP id i12-20020a05620a27cc00b0076f0f1107d1mr2563433qkp.77.1697822822061;
+        Fri, 20 Oct 2023 10:27:02 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id t27-20020a05620a0b1b00b00773f008da40sm757316qkg.125.2023.10.20.10.27.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Oct 2023 10:27:01 -0700 (PDT)
+Date: Fri, 20 Oct 2023 13:27:00 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	"Eric W. Biederman" <ebiederm@gmail.com>, Jeff King <peff@peff.net>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v4 00/17] bloom: changed-path Bloom filters v2 (&
+ sundries)
+Message-ID: <ZTK4ZKESDVghzSH8@nand.local>
+References: <cover.1696629697.git.me@ttaylorr.com>
+ <cover.1697653929.git.me@ttaylorr.com>
+ <xmqq34y71phj.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -50,33 +61,38 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 820F694E-6F6B-11EE-80B3-A19503B9AAD1-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <xmqq34y71phj.fsf@gitster.g>
 
-Christian Couder <christian.couder@gmail.com> writes:
-
->> Hello Junio, I would appreciate your comment on this.
+On Wed, Oct 18, 2023 at 04:26:48PM -0700, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
 >
-> Please don't expect Junio to give direct feedback on all the patches
-> sent to the mailing list. This patch has already been reviewed by
-> Rub=C3=A9n.
+> > (Rebased onto the tip of 'master', which is 3a06386e31 (The fifteenth
+> > batch, 2023-10-04), at the time of writing).
+>
+> Judging from 17/17 that has a free_commit_graph() call in
+> close_commit_graph(), that was merged in the eighteenth batch,
+> the above is probably untrue.  I'll apply to the current master and
+> see how it goes instead.
 
-Correct.
+Worse than that, I sent this `--in-reply-to` the wrong thread :-<.
 
-> If Junio doesn't review it and if this patch is not mentioned
-> in the next "What's cooking in git.git" email from Junio, it likely
-> means that you should send a version 3 addressing Rub=C3=A9n's feedback
-> about the commit message.
+Sorry about that, and indeed you are right that the correct base for
+this round should be a9ecda2788 (The eighteenth batch, 2023-10-13).
 
-While the above may be a good advice, I try to be easier to read
-than the above tealeaf-reading, especially to new contributors ;-)
+I'm optimistic that with the amount of careful review that this topic
+has already received, that this round should do the trick. But if there
+are more comments and we end up re-rolling it, I'll break this thread
+and split out the v5 into it's thread to avoid further confusion.
 
-At least I should comment on Rub=C3=A9n's comment, but I haven't got
-around to it yet.
+> > Thanks to Jonathan, Peff, and SZEDER who have helped a great deal in
+> > assembling these patches. As usual, a range-diff is included below.
+> > Thanks in advance for your
+> > review!
+>
+> Thanks.
 
-Thanks.
+Thank you, and sorry for the mistake on my end.
 
-
-
-
+Thanks,
+Taylor
