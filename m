@@ -1,72 +1,89 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54FD9EBD
-	for <git@vger.kernel.org>; Sat, 21 Oct 2023 09:37:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D5813FFE
+	for <git@vger.kernel.org>; Sat, 21 Oct 2023 10:27:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=abc.se header.i=@abc.se header.b="FTNDA7et"
-X-Greylist: delayed 399 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 21 Oct 2023 02:37:15 PDT
-Received: from hekla.abc.se (hekla.abc.se [158.174.61.227])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D500019E
-	for <git@vger.kernel.org>; Sat, 21 Oct 2023 02:37:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=default; bh=Y7BEU8sQqr
-	lPssIPZLbZH67dRsaYfp087dUlEzEBM2s=; h=references:in-reply-to:subject:
-	to:from:date; d=abc.se; b=FTNDA7ettZ5DCqWjhK/1aWLVeivoP7vRYoFLSZOFIGQv
-	aYACxEjmaZ1IgxT+hLVIFbOrcMJcLYnf5vQGg7MLFARW+7rruJcnPX4QmfsMTZsFF4jLjF
-	ozFzGCf4No2wZcLaJZo/E04QKgM9uitTSKY7qvrhNSs/wUJsmF13hmFc3fv0CdaV49r6ye
-	IhXmizaIwgOZ5XD9FhHzC+ZhG7PxDcY84Vy3OEjUMChDevLHJhMOCtzTkQi7dABmK6G1F4
-	6PBic3TcJawVbdZlgY63d2z0RtfTUyjIAVWqxCmusncxbu8w4GEtcjchu66FW0myhcsfJr
-	EP0J2wjeXxFVcItPVA==
-Received: from perkele.intern.softwolves.pp.se (cm-84.209.5.132.get.no [84.209.5.132])
-	by hekla.abc.se (OpenSMTPD) with ESMTPSA id 7100aa1d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Sat, 21 Oct 2023 11:30:33 +0200 (CEST)
-Date: Sat, 21 Oct 2023 10:30:32 +0100 (CET)
-From: Peter Krefting <peter@softwolves.pp.se>
-To: Git List <git@vger.kernel.org>
-Subject: Re: Is there any interest in localizing term delimiters in git
- messages?
-In-Reply-To: <CAP6f5Mmi=f4DPcFwfvEiJMdKMa0BUyZ019mc8uFXyOufgD4NjA@mail.gmail.com>
-Message-ID: <f6d7e29c-3532-428b-2c1-371eedaa5492@softwolves.pp.se>
-References: <CAP6f5Mmi=f4DPcFwfvEiJMdKMa0BUyZ019mc8uFXyOufgD4NjA@mail.gmail.com>
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-Organization: /universe/earth/europe/norway/oslo
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qv6Cgdc7"
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 759151BF
+	for <git@vger.kernel.org>; Sat, 21 Oct 2023 03:27:38 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-31427ddd3fbso1183926f8f.0
+        for <git@vger.kernel.org>; Sat, 21 Oct 2023 03:27:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1697884057; x=1698488857; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jReL+OYsCTFRBB/Z0F7x1v9aOxxTXd1/K93iY1moOX4=;
+        b=Qv6Cgdc7H8gbxCyBefmt3qg/nrwosiWvneDWVig+E3XZbnMcA894x4G7f0UTc8F2SL
+         Iq8ZyaCGNDb7RWgKhFaxECHkmGknhFT9NXTMNobcQdsLY6dppUbRCwrWJs6u9L9t3Bak
+         eiEchXi3FiwYTpjyX43170zaxUgJ0nsrdKCIVWsTquKF5vydkcmuNHNH9FMNC36IrbtD
+         RsyPMC4vkbBHEIEjKYE9LAcw9wCRWHc3osLKd6Buresso8FlBW/HAO6jpYsWnRn/Kv1L
+         nM2jQWv+6Ott9jwdsmPoNEnpOq23OQ1sjuPX9WqGOBH7WD0dGkIl0T9opfc2kxtkoTK7
+         XxbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697884057; x=1698488857;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jReL+OYsCTFRBB/Z0F7x1v9aOxxTXd1/K93iY1moOX4=;
+        b=w2ccaFFs1vIFolTqScdV4RjG+GFWldtUInHnuygsGynkRE8uBpC1PWB+k1Df231c23
+         q7TIZTW5qXWLZ9771a5fzO1RUlRhCpW9VGA0cPhB5alTH/LeuJZ8fBDVWhKax5rmgMN5
+         cnrdPuBCdJwILXnCYIXzTI2Tqc9c6EMAhF5yNdw2BslGjSGQUvSz6dvkmX4NLVNiakee
+         gFSLyiQ2CatamHIdUcz/oErw66tDI7MrponOp+typ3hDZVgvjiVlK+Wt+SowgwPipizr
+         YkOZYyi+l/r6c4u5wyW3MPLisj8g+cTAH6uUTFioRSB55rfYZiyf9J1j36eOoveEfU/d
+         tkWw==
+X-Gm-Message-State: AOJu0YwkoZ7wvNtWMJDY1a20bKyVXAjh4a4v20QrKX1XhWt+5DMjcf7F
+	cX71l9OdvnGi1rErmAJuHUAQKh02vHc=
+X-Google-Smtp-Source: AGHT+IFWv4mGmVDqbpV5tKDTK3OOQOzMbKJUnBsXxOcFSCUTRDNMxOW1CkLUJAVxQh7lIYiEVT6PvQ==
+X-Received: by 2002:a5d:5352:0:b0:32d:b051:9a27 with SMTP id t18-20020a5d5352000000b0032db0519a27mr3169541wrv.20.1697884056516;
+        Sat, 21 Oct 2023 03:27:36 -0700 (PDT)
+Received: from [192.168.2.52] (150.red-88-14-43.dynamicip.rima-tde.net. [88.14.43.150])
+        by smtp.gmail.com with ESMTPSA id f6-20020a5d50c6000000b003258934a4bcsm3454742wrt.42.2023.10.21.03.27.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 21 Oct 2023 03:27:35 -0700 (PDT)
+Message-ID: <c0d92716-2add-43c2-945a-cb0c9cb6b6a6@gmail.com>
+Date: Sat, 21 Oct 2023 12:27:34 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] builtin/branch.c: adjust error messages to coding
+ guidelines
+Content-Language: en-US
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+To: Isoken June Ibizugbe <isokenjune@gmail.com>, git@vger.kernel.org
+Cc: christian.couder@gmail.com, gitster@pobox.com
+References: <e08b2ec4-786a-4c18-b7af-0a6a250ae0f0@gmail.com>
+ <20231019084052.567922-1-isokenjune@gmail.com>
+ <331e1ab3-2e8c-497d-a05d-ef197d664188@gmail.com>
+In-Reply-To: <331e1ab3-2e8c-497d-a05d-ef197d664188@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Alexander Shopov:
+On 19-oct-2023 21:20:24, Rubén Justo wrote:
 
-> Hello all,
->
-> Is there any interest in being able to change the delimiters of the
-> changeable terms in git messages?
->
-> Typical example:
-> ORIGINAL
-> msgid "  (use \"git rm --cached <file>...\" to unstage)"
+> So, aside from the confusing message, this iteration looks good to me.
 
-I think there should be something indicating the variables, and with 
-Unicode there are better choices than the ASCII 
-less-than-greater-than, for instance U+2039/U+203A. In the same way, 
-we could also fix the quotation marks:
+Reviewing again the messages in builtin/branch.c, if you finally
+re-roll, maybe you want to add: 
 
-   "  (use “git rm --cached ‹file›...” to unstage)"
+diff --git a/builtin/branch.c b/builtin/branch.c
+index e7ee9bd0f1..31da889e95 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -777,7 +777,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+        if (!strcmp(head, "HEAD"))
+                filter.detached = 1;
+        else if (!skip_prefix(head, "refs/heads/", &head))
+-               die(_("HEAD not found below refs/heads!"));
++               die(_("HEAD not found below refs/heads"));
+ 
+But if you don't include this nit, that's fine with me.  I still think
+the changes you've already made are correct.
 
-The source should perhaps still be ASCII-only to be compatible with 
-older systems, but we could create a en_US.UTF-8 localization file 
-that does the above, and apply similar changes to other localizations 
-(I have been thinking about doing it to the Swedish translation for a 
-while, but so far have not come around to; of course quoting differs 
-from language to language, with different styles for ‘English’, 
-“American”, „German”, ”Swedish” and «Norwegian», for instance; it is 
-all very confusing and difficult to get right).
-
--- 
-\\// Peter - http://www.softwolves.pp.se/
+Thank you.
