@@ -1,70 +1,83 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38858ED2
-	for <git@vger.kernel.org>; Sat, 21 Oct 2023 04:14:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="vvpu8xsE"
-Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20D1DDA
-	for <git@vger.kernel.org>; Fri, 20 Oct 2023 21:14:52 -0700 (PDT)
-Received: by mail-pl1-x649.google.com with SMTP id d9443c01a7336-1c9c939cc94so13085735ad.1
-        for <git@vger.kernel.org>; Fri, 20 Oct 2023 21:14:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1697861691; x=1698466491; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=6ljys1NDsmy0m6YtsI+cT0lIRqGdOO0nfJ4LPEeYuPk=;
-        b=vvpu8xsEHRACNSFlUA66gF7DzDwavG7VjKwh+QCzO2eaQRLuvKzQu1ag7vDWU8rAza
-         RjD2oX+34fATlAD1mHCk2ay0KS+xTcaxPkcMhTtrLXa95RnRmubkwPJoJFg0ZStJiC46
-         jc8ol4xrUmnBjNmBJeSem+6Bzc4ijmq7iQgMPTa1vjf+Ck3u2Xv3vBxh2uhaf6GwuKOF
-         ViYwp1tjOlSCEeAH0f9VBmuMScRjdh6W+RhmxptEEI8f7YEZVSZ/W15TwJW322W2nmRk
-         LYNyalEFmyTG9pFpoIBrXkfluZIw48tuNm1p+7HpfteT8I3vY15EmNztbtXjsMuap0v3
-         p1XA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697861691; x=1698466491;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6ljys1NDsmy0m6YtsI+cT0lIRqGdOO0nfJ4LPEeYuPk=;
-        b=mqAnT1ylsoNdpTnSlyXH0BYCCivFR8Fl+at2tb+rWENTW3ANPztCTyBozoDudqEQVW
-         sAry7szWSbzQ6HUpct2vLYm6v3hh0hCmjbrbYqoAANfSkuTBR/kKYaEyXjT2P4Fwp6TX
-         AdJLCTSVS/7Zt27ZMXml2MT1HAsEj6ym7O6sV+BJZsywVyIsDHam7Uf7zIE40TcyLqYQ
-         UOTV8ZMNF0hrL6u8IVak4I8epfabhA4irOMK1qWlNEq4kbYbzFtzr0XDotqtU1tD5c19
-         yjmxDlSoNrLi6MZ1Lhlq6s28x1+GBwdTEsDCZxDc+9ICnSZunMuceDXyniDsIuZGuVg7
-         zzAA==
-X-Gm-Message-State: AOJu0YwfpjQyD73tZ6IeGajIheLKZxPbNNmrL8ZEiAHuuEro/1XI7SEo
-	jpG3HzMp3Z4/WsMIqDDUb1uAZQX84hs=
-X-Google-Smtp-Source: AGHT+IGXx8KVQ5SzZOvKzkBPdsKqupNoew+vlAJ2e1G+cM/S/Yi7/Wta6YVCCAe8od6bGpb1KPZfBH3fK90=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a17:902:ab0e:b0:1c9:bee2:e20b with SMTP id
- ik14-20020a170902ab0e00b001c9bee2e20bmr67942plb.11.1697861691512; Fri, 20 Oct
- 2023 21:14:51 -0700 (PDT)
-Date: Fri, 20 Oct 2023 21:14:49 -0700
-In-Reply-To: <02ecc00e9c7226c9eeb960cc49c8c03dcb182a38.1696021277.git.jonathantanmy@google.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FAC2111E
+	for <git@vger.kernel.org>; Sat, 21 Oct 2023 07:26:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+Received: from bluemchen.kde.org (bluemchen.kde.org [IPv6:2001:470:142:8::100])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2FB1D63
+	for <git@vger.kernel.org>; Sat, 21 Oct 2023 00:26:25 -0700 (PDT)
+Received: from ugly.fritz.box (localhost [127.0.0.1])
+	by bluemchen.kde.org (Postfix) with ESMTP id 834AB23E25;
+	Sat, 21 Oct 2023 03:26:23 -0400 (EDT)
+Received: by ugly.fritz.box (masqmail 0.3.6-dev, from userid 1000)
+	id 1qu6NK-7Bm-00; Sat, 21 Oct 2023 09:26:22 +0200
+Date: Sat, 21 Oct 2023 09:26:22 +0200
+From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+To: Marc Branchaud <marcnarc@xiplink.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	Charvi Mendiratta <charvi077@gmail.com>
+Subject: Re: [RESEND] git-rebase.txt: rewrite docu for fixup/squash (again)
+Message-ID: <ZTN9HgqH01iN2CGr@ugly>
+References: <20231020092707.917514-1-oswald.buddenhagen@gmx.de>
+ <841c3b59-9e7c-4492-9d66-8af42c3222ea@xiplink.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <20230627195251.1973421-1-calvinwan@google.com>
- <cover.1696021277.git.jonathantanmy@google.com> <02ecc00e9c7226c9eeb960cc49c8c03dcb182a38.1696021277.git.jonathantanmy@google.com>
-Message-ID: <owlyh6mkr4qu.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH v4 1/4] hex-ll: separate out non-hash-algo functions
-From: Linus Arver <linusa@google.com>
-To: Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Cc: Calvin Wan <calvinwan@google.com>, phillip.wood123@gmail.com, 
-	Junio C Hamano <gitster@pobox.com>, Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <841c3b59-9e7c-4492-9d66-8af42c3222ea@xiplink.com>
 
-Jonathan Tan <jonathantanmy@google.com> writes:
-
-> From: Calvin Wan <calvinwan@google.com>
+On Fri, Oct 20, 2023 at 05:40:01PM -0400, Marc Branchaud wrote:
+>I think the original text's "those identified by" is a bit vague: Does 
+>"those" mean "messages" or "commits"?  The sentence reads like "those" 
+>stands for "messages", but then of course you don't identify *messages* 
+>with "squash" commands.
 >
-> In order to further reduce all-in-one headers, separate out functions in
-> hex.h that do not operate on object hashes into its own file, hex-ll.h,
+fair enough, though the repetition makes it linguistically inferior.
 
-Nit: I was wondering what the "-ll" in "hex-ll.h" meant, then found
-d1cbe1e6d8 (hash-ll.h: split out of hash.h to remove dependency on
-repository.h, 2023-04-22) which seems to have set the precedent for this
-naming style. Might be worth including here.
+>Maybe emphasize the word "only" in the sentence (i.e. spell it as 
+>'only'). 
+>
+that seems excessive to me. i'm not assuming that my readers are dumb.
+
+> To really drive the point home it could say something like
+>	obtained 'only' from the "fixup -c" commit, dropping the
+>	messages of all the other involved commits
+>
+as above.
+
+also, i'm actually uneasy about including the exact behavior in the 
+first place, as it codifies something questionable - a better response 
+from git would be complaining about it. i will drop it.
+
+>> (having more than one "fixup -c" commit
+>> +makes no sense, and only the message from the last one is used).
+>
+>"Makes no sense" seems a bit opinionated (although I agree with the 
+>sentiment).
+>
+i'm not terribly worried about readers who have an aversion towards 
+being told facts ...
+anyway, i will use "is incorrect" instead, as it seems more to the 
+point.
+
+>Also, you can legitimately have more than one "fixup -c" in the overall 
+>instruction set, as long as there's at least one "pick" command in 
+>between, e.g.
+>
+yes, but the context is a single fixup sequence. the above comments 
+about readers and repetition apply here, too.
+
+>[1] Makes me wonder if rebase should also support "squash -c"...
+>
+the distinction is that "squash" combines the messages, while "fixup" 
+discards them, and the -c merely changes what is discarded. softening 
+that up seems counter-productive to me.
+
+thanks
