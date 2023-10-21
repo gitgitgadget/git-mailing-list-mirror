@@ -1,47 +1,45 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04912362
-	for <git@vger.kernel.org>; Sat, 21 Oct 2023 00:22:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B09B379
+	for <git@vger.kernel.org>; Sat, 21 Oct 2023 00:40:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="tuFYKkMk"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HWGXdACQ"
 Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04E3BD6E
-	for <git@vger.kernel.org>; Fri, 20 Oct 2023 17:22:22 -0700 (PDT)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 978F6D7D
+	for <git@vger.kernel.org>; Fri, 20 Oct 2023 17:39:56 -0700 (PDT)
 Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 2DE2529A52;
-	Fri, 20 Oct 2023 20:22:22 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id DA82629C71;
+	Fri, 20 Oct 2023 20:39:54 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=ZA+PAAd6sCpJH09HykzKE4g9I5x+5oM9mDf+90
-	GT/XU=; b=tuFYKkMkDv3pPTPx8SNW/dEusxJW6689jVlPQf4r5rEG0q7Xn/RPX3
-	13RkQVyF96bQaiXb3HxxXVk5wH4e6YcIimftkemFcUr8N0TDZOGgLMH+xvBP1NqE
-	xuWrBF1Yn7yOSK5WuCmdwtpWQbNdJN14lbSqRnaEYCaxvMAHGYlbY=
+	:content-type; s=sasl; bh=WQxhwWfAd1ABNjHrZd+gnS8KXghKJk+lOqN0us
+	I3Dvs=; b=HWGXdACQGWTwcy9y+hMw4YT0PkIU70iCJg0bjNIHCW42Z+kFxYzdYj
+	vIM4eFVIGUpYbgsGBYIIyP3ISHPtoef4yO1y7HvLrRo9dsXP2oRSEd3wT4U74wcP
+	D+iMbhRme6dmTGukE6sPisKrGwymnytlCe3Gxd6UVtTMzHyUgsbck=
 Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 252D629A51;
-	Fri, 20 Oct 2023 20:22:22 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id C6EDA29C70;
+	Fri, 20 Oct 2023 20:39:54 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.153.120])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B8F8429A4E;
-	Fri, 20 Oct 2023 20:22:18 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5822329C6F;
+	Fri, 20 Oct 2023 20:39:51 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Marc Branchaud <marcnarc@xiplink.com>
-Cc: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,  git@vger.kernel.org,
-  Phillip Wood <phillip.wood123@gmail.com>,  Christian Couder
- <christian.couder@gmail.com>,  Charvi Mendiratta <charvi077@gmail.com>
-Subject: Re: [RESEND] git-rebase.txt: rewrite docu for fixup/squash (again)
-In-Reply-To: <b5bc179d-46b6-4c48-bfe5-769dac38489b@xiplink.com> (Marc
-	Branchaud's message of "Fri, 20 Oct 2023 19:56:09 -0400")
-References: <20231020092707.917514-1-oswald.buddenhagen@gmx.de>
-	<841c3b59-9e7c-4492-9d66-8af42c3222ea@xiplink.com>
-	<xmqq1qdoq3tt.fsf@gitster.g>
-	<b5bc179d-46b6-4c48-bfe5-769dac38489b@xiplink.com>
-Date: Fri, 20 Oct 2023 17:22:17 -0700
-Message-ID: <xmqqsf64omdi.fsf@gitster.g>
+To: Jacob Stopak <jacob@initialcommit.io>,
+    Emily Shaffer <nasamuffin@google.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v3 1/1] bugreport: include +i in outfile suffix as needed
+In-Reply-To: <20231016214045.146862-2-jacob@initialcommit.io> (Jacob Stopak's
+	message of "Mon, 16 Oct 2023 14:40:45 -0700")
+References: <20231015034238.100675-2-jacob@initialcommit.io>
+	<20231016214045.146862-1-jacob@initialcommit.io>
+	<20231016214045.146862-2-jacob@initialcommit.io>
+Date: Fri, 20 Oct 2023 17:39:49 -0700
+Message-ID: <xmqqo7gsolka.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -51,23 +49,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- E50794CC-6FA7-11EE-8A64-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+ 586DB57A-6FAA-11EE-A7D6-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-Marc Branchaud <marcnarc@xiplink.com> writes:
+Jacob Stopak <jacob@initialcommit.io> writes:
 
-> I should have added "as a convenience".  Squash and fixup are similar
-> enough that it seems reasonable for them to both support -c.  Saves
-> people from having to remember that only fixup allows -c.
+>  int cmd_bugreport(int argc, const char **argv, const char *prefix)
+>  {
+>  	struct strbuf buffer = STRBUF_INIT;
+>  	struct strbuf report_path = STRBUF_INIT;
+>  	int report = -1;
+>  	time_t now = time(NULL);
+> -	struct tm tm;
+>  	enum diagnose_mode diagnose = DIAGNOSE_NONE;
+>  	char *option_output = NULL;
+> -	char *option_suffix = "%Y-%m-%d-%H%M";
+> +	char *option_suffix = "";
+> +	int option_suffix_is_from_user = 0;
+>  	const char *user_relative_path = NULL;
+>  	char *prefixed_filename;
+> -	size_t output_path_len;
+>  	int ret;
+> +	int i = 0;
 
-Yeah, "fixup" could have been a plain "squash" with some option.  It
-could have been two options, "-i" ("ignore message of this one") and
-"-o" ("use message of this one alone"), and then today's "fixup"
-would have been "squash -i", and today's "fixup -c" would have been
-"squash -o".
+OK, I think between me and you, we stared at this piece of code long
+enough to make ourselves numb.  The original "at most one report per
+a minute" default came from the very original in 238b439d
+(bugreport: add tool to generate debugging info, 2020-04-16) and
+that is what we are changing, so let me summon its author as an area
+expert for a pair of fresh eyes to see if they can offer any new
+insights.
 
-But I agree that "squash -c" is something one may find tempting to
-type, after learning "fixup -c".
+Thanks.
 
-I forgot to comment on the real contents of your review, by the way.
-Everything you said was reasonable.
-
+https://lore.kernel.org/git/20231016214045.146862-1-jacob@initialcommit.io/
