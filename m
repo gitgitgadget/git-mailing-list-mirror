@@ -1,345 +1,180 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8313114010
-	for <git@vger.kernel.org>; Sun, 22 Oct 2023 21:45:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E34ED11185
+	for <git@vger.kernel.org>; Sun, 22 Oct 2023 21:49:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="amzgMjJC"
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65E46E5
-	for <git@vger.kernel.org>; Sun, 22 Oct 2023 14:45:13 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-32dbbf3c782so2122749f8f.1
-        for <git@vger.kernel.org>; Sun, 22 Oct 2023 14:45:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SoD6IlQj"
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EC63E5
+	for <git@vger.kernel.org>; Sun, 22 Oct 2023 14:49:52 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-32ded3eb835so1008339f8f.0
+        for <git@vger.kernel.org>; Sun, 22 Oct 2023 14:49:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698011112; x=1698615912; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=E10Js2DOu7lwhZvrxfbzXhRUUK++r/GuIzgoqmfdf6A=;
-        b=amzgMjJC16HRqYO4KDoQpV0qQSg8IyMsSvkjLyyr5KqozUKOmclOtKzliRDFdvN/3Z
-         ftTGh72c1LyhWQwqt5dqCp2GfzSPB2XC+EKYt/TalUwoA6Gi0js6Y0dLpfafVfolXjhk
-         iNLtvb/WabmyDCTPMy6zhvQmrZUIwJ+ByDOHn39rnP8PGkPCns6QMd7jzwm5u4vEzz1P
-         ddLPX7t2cwx1ZcxSytdO1uuhVmqpkfJHdJ17iX5nUf2A1iWLku2NKRBS1hBX+6SgJsc4
-         b9aTfZUjP866YY6xPM94bh0UmTsPzYZAFPHZ+q68fatOirpfjy6NxrSdF0xCw3j2tRMu
-         wZjg==
+        d=gmail.com; s=20230601; t=1698011390; x=1698616190; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=zMuiMxuyXUZFqBVpOr15QmANUa57ErnXdDM01ju2GK0=;
+        b=SoD6IlQjisXVBPdO1H3rL3GawEeLZ7v/WM93LWCjzpulE5yVGbtoDJOsWOi7unGM74
+         E/Q74+v4E6aiCwQMU4GhzIsw3qHNzzVNiERwO8xzUZ7DsJyvYsuZIWF3Q1CfGo2eb6f4
+         fAtmmuxKNR/C/qQtJOPqp45TOt2TJBmm5u2/aXJzrhVd+Wrj/HN7ctb+jt7/vG0TtGue
+         QD1PaPiMZPh2aULsbZ0dQ6e6CJMDwCNVt+MpAgjty1GzJPehr5rsfSi4bkrtwjdr0Jnx
+         3+EjC7a1q3dwytOWW5EUxEmu0aLtLocJfBq5Gtgo477/LScv9WRC/lMaHT5Ipe/WVVxN
+         qYCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698011112; x=1698615912;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=E10Js2DOu7lwhZvrxfbzXhRUUK++r/GuIzgoqmfdf6A=;
-        b=Ze6GZ0kGqQKWTgecpRToxwjMDYt+dv8lwhYIvi/QGMN5YMOsgMN4IkikLghsulfZQW
-         wngOyBdWNyyEVWRYhj7N8/8kFpgGHkaMtqNDBLWnRYgknMaT1xR5ySoYjBWWaE4Q/sIH
-         zDA59roD1dsWVPvsIJmbJc1iLtgN+rKnjwTAuBCoVOIK3S/rdtXj0OTuv4ft3U/yB3mN
-         ekSZXvvPscMom1Gw3WawjI1KfMgKRIGXSyLyMluhZvj6Lsr2/eIPog23fNhcL4KHNOLf
-         5Iub3PU3jQzcE4ptWLX07OKgyfOtvm4dAGKyziVsE6WaxW067lUottFJ7Fqsq03NA5DW
-         9r/Q==
-X-Gm-Message-State: AOJu0YxphPA2lctzr7GVsNorYJk3TE/zlQgzBe4VJk+x2Bnlc5Cv69vh
-	3EzxkjFvyjJqpMTlI0HyEducrQKSs/I=
-X-Google-Smtp-Source: AGHT+IFXcCQ1Fyuw40y56rQyVZnupTHe2Wt4U1t6ikyqELqlTngn1OMtIhevidPnHzw/+0K0jHf8oQ==
-X-Received: by 2002:adf:b198:0:b0:32d:cae5:3573 with SMTP id q24-20020adfb198000000b0032dcae53573mr11288830wra.32.1698011111653;
-        Sun, 22 Oct 2023 14:45:11 -0700 (PDT)
-Received: from localhost.localdomain (cpc105060-sgyl40-2-0-cust995.18-2.cable.virginm.net. [81.111.15.228])
-        by smtp.gmail.com with ESMTPSA id v3-20020adff683000000b0032d9523de65sm6291972wrp.48.2023.10.22.14.45.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Oct 2023 14:45:11 -0700 (PDT)
-From: Andy Koppe <andy.koppe@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	Andy Koppe <andy.koppe@gmail.com>
-Subject: [PATCH v2 6/6] log: add color.decorate.pseudoref config variable
-Date: Sun, 22 Oct 2023 22:44:32 +0100
-Message-ID: <20231022214432.56325-7-andy.koppe@gmail.com>
-X-Mailer: git-send-email 2.42.GIT
-In-Reply-To: <20231022214432.56325-1-andy.koppe@gmail.com>
-References: <20231019193911.1669705-1-andy.koppe@gmail.com>
- <20231022214432.56325-1-andy.koppe@gmail.com>
+        d=1e100.net; s=20230601; t=1698011390; x=1698616190;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zMuiMxuyXUZFqBVpOr15QmANUa57ErnXdDM01ju2GK0=;
+        b=ANlg2iWq3EfHsSJiMVo8WbrxtCWbmT76537Be9zKB4+i3NILrSRsMHk/M5Anv0yXSc
+         5xMKN+WSmgaiJKMW4WzBQ1krM7Q0H8XWETH3z3U0TMcDt+kKG8pHC01mMf/uaqBYDg15
+         2dfQCkSGi21hUXHcQo2lFDGzXTmHVPiqld9Tm9kIOdZuq0XrvJ7ZA2d5yAPsmZ+cCKy6
+         a5k9oYcEFIyApNj+zszwJcGe5bePi9en699xw6Zs/pXQrNv+W+BwHU0DdLlD1ArYWfz8
+         H403rnRLsvcI7H0CnW7s2A98eql3G6LufhjnNLb1yPrKLn3FSB2XOHj2fOQDZ2Ulntt0
+         DODg==
+X-Gm-Message-State: AOJu0YzUCQbwZj2xtZb3RmObrd36DCcLMhP3H+0Ke6T3OfVtl+8AUR1T
+	V1r3VF9ZhAH5qM+hSs084CkdAwPNOlE=
+X-Google-Smtp-Source: AGHT+IESNa3Cf/rAq14fb4fKmfJpuwIGgw6QW1iV4iDE0MnLkp3HKVtWA+LAMxHkqGUlCSJGbbKnGQ==
+X-Received: by 2002:adf:e584:0:b0:32d:9a26:4d57 with SMTP id l4-20020adfe584000000b0032d9a264d57mr5911325wrm.20.1698011390051;
+        Sun, 22 Oct 2023 14:49:50 -0700 (PDT)
+Received: from [192.168.0.17] (cpc105060-sgyl40-2-0-cust995.18-2.cable.virginm.net. [81.111.15.228])
+        by smtp.gmail.com with ESMTPSA id d5-20020adffbc5000000b003233b554e6esm6303743wrs.85.2023.10.22.14.49.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 22 Oct 2023 14:49:49 -0700 (PDT)
+Message-ID: <fe3abed8-6be0-4d77-9057-79c9b7c0795c@gmail.com>
+Date: Sun, 22 Oct 2023 22:49:48 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/7] log: decorate pseudorefs and other refs
+Content-Language: en-GB
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+References: <20231003205442.22963-1-andy.koppe@gmail.com>
+ <20231019193911.1669705-1-andy.koppe@gmail.com> <xmqq1qdnseed.fsf@gitster.g>
+From: Andy Koppe <andy.koppe@gmail.com>
+In-Reply-To: <xmqq1qdnseed.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Add the ability to show pseudorefs in log decorations, and add config
-variable color.decorate.pseudoref to determine their color. They will
-not be shown unless the default decoration filtering is overridden with
-the relevant log options such as --clear-decorations or
-log.initialDecorationSet.
+On 22/10/2023 01:13, Junio C Hamano wrote:
+> Andy Koppe <andy.koppe@gmail.com> writes:
+>> This series is to replace the 'decorate: add color.decorate.symbols
+>> config option' patch proposed at:
+>> https://lore.kernel.org/git/20231003205442.22963-1-andy.koppe@gmail.com
+> 
+> If that is the case, it probably would have been nicer to mark the
+> series as [PATCH v2].
 
-Signed-off-by: Andy Koppe <andy.koppe@gmail.com>
----
- Documentation/config/color.txt                |  4 +++-
- commit.h                                      |  1 +
- log-tree.c                                    | 24 +++++++++++++++++++
- ..._--decorate=full_--clear-decorations_--all |  4 ++--
- ...f.log_--decorate_--clear-decorations_--all |  4 ++--
- t/t4202-log.sh                                | 21 +++++++++-------
- t/t4207-log-decoration-colors.sh              | 13 +++++++---
- 7 files changed, 54 insertions(+), 17 deletions(-)
+Thanks, I wasn't sure about that due to the change in title and increase 
+in scope. I shall err towards version-bumping in any future such cases.
 
-diff --git a/Documentation/config/color.txt b/Documentation/config/color.txt
-index 005a2bdb03..7af7d65f76 100644
---- a/Documentation/config/color.txt
-+++ b/Documentation/config/color.txt
-@@ -92,6 +92,8 @@ color.decorate.<slot>::
- 	the stash ref
- `ref`;;
- 	any other refs (not shown by default)
-+`pseudoref`;;
-+	pseudorefs such as ORIG_HEAD or MERGE_HEAD (not shown by default)
- `grafted`;;
- 	grafted and replaced commits
- `symbol`;;
-@@ -99,7 +101,7 @@ color.decorate.<slot>::
- --
- +
- (Variable `log.initialDecorationSet` or linkgit:git-log[1] option
--`--clear-decorations` can be used to show all refs.)
-+`--clear-decorations` can be used to show all refs and pseudorefs.)
- 
- color.grep::
- 	When set to `always`, always highlight matches.  When `false` (or
-diff --git a/commit.h b/commit.h
-index f6b2125fc4..44dd3ce19b 100644
---- a/commit.h
-+++ b/commit.h
-@@ -56,6 +56,7 @@ enum decoration_type {
- 	DECORATION_REF_STASH,
- 	DECORATION_REF,
- 	DECORATION_REF_HEAD,
-+	DECORATION_REF_PSEUDO,
- 	DECORATION_GRAFTED,
- 	DECORATION_SYMBOL,
- };
-diff --git a/log-tree.c b/log-tree.c
-index 36558f3008..4091b55532 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -41,6 +41,7 @@ static char decoration_colors[][COLOR_MAXLEN] = {
- 	GIT_COLOR_BOLD_MAGENTA,	/* REF_STASH */
- 	GIT_COLOR_BOLD_MAGENTA, /* REF */
- 	GIT_COLOR_BOLD_CYAN,	/* REF_HEAD */
-+	GIT_COLOR_BOLD_BLUE,	/* REF_PSEUDO */
- 	GIT_COLOR_BOLD_BLUE,	/* GRAFTED */
- 	GIT_COLOR_NIL,		/* SYMBOL */
- };
-@@ -52,6 +53,7 @@ static const char *color_decorate_slots[] = {
- 	[DECORATION_REF_STASH]	= "stash",
- 	[DECORATION_REF]	= "ref",
- 	[DECORATION_REF_HEAD]	= "HEAD",
-+	[DECORATION_REF_PSEUDO]	= "pseudoref",
- 	[DECORATION_GRAFTED]	= "grafted",
- 	[DECORATION_SYMBOL]	= "symbol",
- };
-@@ -208,6 +210,27 @@ static int add_ref_decoration(const char *refname, const struct object_id *oid,
- 	return 0;
- }
- 
-+static int add_pseudoref_decoration(const char *refname,
-+				    const struct object_id *oid,
-+				    int flags UNUSED,
-+				    void *cb_data)
-+{
-+	struct object *obj;
-+	enum object_type objtype;
-+	struct decoration_filter *filter = (struct decoration_filter *)cb_data;
-+
-+	if (filter && !ref_filter_match(refname, filter))
-+		return 0;
-+
-+	objtype = oid_object_info(the_repository, oid, NULL);
-+	if (objtype < 0)
-+		return 0;
-+
-+	obj = lookup_object_by_type(the_repository, oid, objtype);
-+	add_name_decoration(DECORATION_REF_PSEUDO, refname, obj);
-+	return 0;
-+}
-+
- static int add_graft_decoration(const struct commit_graft *graft,
- 				void *cb_data UNUSED)
- {
-@@ -236,6 +259,7 @@ void load_ref_decorations(struct decoration_filter *filter, int flags)
- 		decoration_loaded = 1;
- 		decoration_flags = flags;
- 		for_each_ref(add_ref_decoration, filter);
-+		for_each_pseudoref(add_pseudoref_decoration, filter);
- 		head_ref(add_ref_decoration, filter);
- 		for_each_commit_graft(add_graft_decoration, filter);
- 	}
-diff --git a/t/t4013/diff.log_--decorate=full_--clear-decorations_--all b/t/t4013/diff.log_--decorate=full_--clear-decorations_--all
-index 1c030a6554..7d16978e7f 100644
---- a/t/t4013/diff.log_--decorate=full_--clear-decorations_--all
-+++ b/t/t4013/diff.log_--decorate=full_--clear-decorations_--all
-@@ -33,13 +33,13 @@ Date:   Mon Jun 26 00:04:00 2006 +0000
- 
-     Merge branch 'side'
- 
--commit c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a (refs/heads/side)
-+commit c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a (FETCH_HEAD, refs/heads/side)
- Author: A U Thor <author@example.com>
- Date:   Mon Jun 26 00:03:00 2006 +0000
- 
-     Side
- 
--commit 9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0
-+commit 9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0 (ORIG_HEAD)
- Author: A U Thor <author@example.com>
- Date:   Mon Jun 26 00:02:00 2006 +0000
- 
-diff --git a/t/t4013/diff.log_--decorate_--clear-decorations_--all b/t/t4013/diff.log_--decorate_--clear-decorations_--all
-index 88be82cce3..4f9be50ce0 100644
---- a/t/t4013/diff.log_--decorate_--clear-decorations_--all
-+++ b/t/t4013/diff.log_--decorate_--clear-decorations_--all
-@@ -33,13 +33,13 @@ Date:   Mon Jun 26 00:04:00 2006 +0000
- 
-     Merge branch 'side'
- 
--commit c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a (side)
-+commit c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a (FETCH_HEAD, side)
- Author: A U Thor <author@example.com>
- Date:   Mon Jun 26 00:03:00 2006 +0000
- 
-     Side
- 
--commit 9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0
-+commit 9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0 (ORIG_HEAD)
- Author: A U Thor <author@example.com>
- Date:   Mon Jun 26 00:02:00 2006 +0000
- 
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index af4a123cd2..b14da62e3e 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -927,7 +927,7 @@ test_expect_success 'multiple decorate-refs' '
- test_expect_success 'decorate-refs-exclude with glob' '
- 	cat >expect.decorate <<-\EOF &&
- 	Merge-tag-reach (HEAD -> main)
--	Merge-tags-octopus-a-and-octopus-b
-+	Merge-tags-octopus-a-and-octopus-b (ORIG_HEAD)
- 	seventh (tag: seventh)
- 	octopus-b (tag: octopus-b)
- 	octopus-a (tag: octopus-a)
-@@ -944,7 +944,7 @@ test_expect_success 'decorate-refs-exclude with glob' '
- test_expect_success 'decorate-refs-exclude without globs' '
- 	cat >expect.decorate <<-\EOF &&
- 	Merge-tag-reach (HEAD -> main)
--	Merge-tags-octopus-a-and-octopus-b
-+	Merge-tags-octopus-a-and-octopus-b (ORIG_HEAD)
- 	seventh (tag: seventh)
- 	octopus-b (tag: octopus-b, octopus-b)
- 	octopus-a (tag: octopus-a, octopus-a)
-@@ -961,7 +961,7 @@ test_expect_success 'decorate-refs-exclude without globs' '
- test_expect_success 'multiple decorate-refs-exclude' '
- 	cat >expect.decorate <<-\EOF &&
- 	Merge-tag-reach (HEAD -> main)
--	Merge-tags-octopus-a-and-octopus-b
-+	Merge-tags-octopus-a-and-octopus-b (ORIG_HEAD)
- 	seventh (tag: seventh)
- 	octopus-b (tag: octopus-b)
- 	octopus-a (tag: octopus-a)
-@@ -1022,10 +1022,12 @@ test_expect_success 'decorate-refs-exclude and simplify-by-decoration' '
- 	EOF
- 	git log -n6 --decorate=short --pretty="tformat:%f%d" \
- 		--decorate-refs-exclude="*octopus*" \
-+		--decorate-refs-exclude="ORIG_HEAD" \
- 		--simplify-by-decoration >actual &&
- 	test_cmp expect.decorate actual &&
--	git -c log.excludeDecoration="*octopus*" log \
--		-n6 --decorate=short --pretty="tformat:%f%d" \
-+	git -c log.excludeDecoration="*octopus*" \
-+	    -c log.excludeDecoration="ORIG_HEAD" \
-+	    log -n6 --decorate=short --pretty="tformat:%f%d" \
- 		--simplify-by-decoration >actual &&
- 	test_cmp expect.decorate actual
- '
-@@ -1067,9 +1069,10 @@ test_expect_success 'decorate-refs and simplify-by-decoration without output' '
- 	test_cmp expect actual
- '
- 
--test_expect_success 'decorate-refs-exclude HEAD' '
-+test_expect_success 'decorate-refs-exclude HEAD ORIG_HEAD' '
- 	git log --decorate=full --oneline \
--		--decorate-refs-exclude="HEAD" >actual &&
-+		--decorate-refs-exclude="HEAD" \
-+		--decorate-refs-exclude="ORIG_HEAD" >actual &&
- 	! grep HEAD actual
- '
- 
-@@ -1107,7 +1110,7 @@ test_expect_success '--clear-decorations overrides defaults' '
- 
- 	cat >expect.all <<-\EOF &&
- 	Merge-tag-reach (HEAD -> refs/heads/main)
--	Merge-tags-octopus-a-and-octopus-b
-+	Merge-tags-octopus-a-and-octopus-b (ORIG_HEAD)
- 	seventh (tag: refs/tags/seventh)
- 	octopus-b (tag: refs/tags/octopus-b, refs/heads/octopus-b)
- 	octopus-a (tag: refs/tags/octopus-a, refs/heads/octopus-a)
-@@ -1139,7 +1142,7 @@ test_expect_success '--clear-decorations clears previous exclusions' '
- 	cat >expect.all <<-\EOF &&
- 	Merge-tag-reach (HEAD -> refs/heads/main)
- 	reach (tag: refs/tags/reach, refs/heads/reach)
--	Merge-tags-octopus-a-and-octopus-b
-+	Merge-tags-octopus-a-and-octopus-b (ORIG_HEAD)
- 	octopus-b (tag: refs/tags/octopus-b, refs/heads/octopus-b)
- 	octopus-a (tag: refs/tags/octopus-a, refs/heads/octopus-a)
- 	seventh (tag: refs/tags/seventh)
-diff --git a/t/t4207-log-decoration-colors.sh b/t/t4207-log-decoration-colors.sh
-index 4b51e34f8b..0b32e0bb8e 100755
---- a/t/t4207-log-decoration-colors.sh
-+++ b/t/t4207-log-decoration-colors.sh
-@@ -18,6 +18,7 @@ test_expect_success setup '
- 	git config color.decorate.tag "reverse bold yellow" &&
- 	git config color.decorate.stash magenta &&
- 	git config color.decorate.ref blue &&
-+	git config color.decorate.pseudoref "bold cyan" &&
- 	git config color.decorate.grafted black &&
- 	git config color.decorate.symbol white &&
- 	git config color.decorate.HEAD cyan &&
-@@ -30,6 +31,7 @@ test_expect_success setup '
- 	c_tag="<BOLD;REVERSE;YELLOW>" &&
- 	c_stash="<MAGENTA>" &&
- 	c_ref="<BLUE>" &&
-+	c_pseudoref="<BOLD;CYAN>" &&
- 	c_HEAD="<CYAN>" &&
- 	c_grafted="<BLACK>" &&
- 	c_symbol="<WHITE>" &&
-@@ -46,7 +48,10 @@ test_expect_success setup '
- 	test_commit B &&
- 	git tag v1.0 &&
- 	echo >>A.t &&
--	git stash save Changes to A.t
-+	git stash save Changes to A.t &&
-+	git reset other/main &&
-+	git reset ORIG_HEAD &&
-+	git revert --no-commit @~
- '
- 
- cmp_filtered_decorations () {
-@@ -63,17 +68,19 @@ ${c_symbol} -> ${c_reset}${c_branch}main${c_reset}${c_symbol}, ${c_reset}\
- ${c_tag}tag: ${c_reset}${c_tag}v1.0${c_reset}${c_symbol}, ${c_reset}\
- ${c_tag}tag: ${c_reset}${c_tag}B${c_reset}${c_symbol})${c_reset} B
- ${c_commit}COMMIT_ID${c_reset}${c_symbol} (${c_reset}\
-+${c_pseudoref}ORIG_HEAD${c_reset}${c_symbol}, ${c_reset}\
- ${c_tag}tag: ${c_reset}${c_tag}A1${c_reset}${c_symbol}, ${c_reset}\
- ${c_remoteBranch}other/main${c_reset}${c_symbol})${c_reset} A1
- 	${c_commit}COMMIT_ID${c_reset}${c_symbol} (${c_reset}\
- ${c_stash}refs/stash${c_reset}${c_symbol})${c_reset} On main: Changes to A.t
- 	${c_commit}COMMIT_ID${c_reset}${c_symbol} (${c_reset}\
-+${c_pseudoref}REVERT_HEAD${c_reset}${c_symbol}, ${c_reset}\
- ${c_tag}tag: ${c_reset}${c_tag}A${c_reset}${c_symbol}, ${c_reset}\
- ${c_ref}refs/foo${c_reset}${c_symbol})${c_reset} A
- 	EOF
- 
--	git log --first-parent --no-abbrev --decorate --clear-decorations \
--		--oneline --color=always --all >actual &&
-+	git log --first-parent --no-abbrev --decorate --color=always \
-+		--decorate-refs-exclude=FETCH_HEAD --oneline --all >actual &&
- 	cmp_filtered_decorations
- '
- 
--- 
-2.42.GIT
+> Also, can you make messages [1/7]..[7/7] replies to [0/7] when you
+> send them out?  It seems that all 8 of them (including the cover
+> letter) are replies to the previous round, which looked a bit
+> unusual.
 
+Not quite sure how that happened, but I think my mistake was passing 
+--in-reply-to to git-format-patch instead of git-send-email.
+
+>   [2/7] is a trivial readability improvement.  It obviously should be
+>         left outside the scope of this series, but we should notice
+>         the same pattern in similar color tables (e.g., wt-status.c
+>         has one, diff.c has another) and perform the same clean-up as
+>         a #leftoverbits item.
+
+Okay, I've removed that commit in v2. (I should have mentioned in the 
+commit message that it was triggered by the inconsistency with the 
+immediately following color_decorate_slots array, which uses designated 
+initializers.)
+
+>   [4/7] The name of new member .include added to ref_namespace_info
+>         will not be understood by anybody unless they are too deeply
+>         obsessed by decoration mechansim.  As the namespace_info
+>         covers far wider interest, so a name that *shouts* that it is
+>         about decoration filter must be used to be understood by
+>         readers of the code
+
+Agreed.
+
+>   [5/7] I am not sure if "other refs" should be an item in the
+>         namespace_info array.  If it is truly "catch-all", then
+>         shouldn't the refs in other namespaces without their own
+>         decoration (e.g. ones in refs/notes/ and refs/prefetch/) be
+>         colored in the same way as this new class?
+
+They would, because add_ref_decoration() skips ref_namespace entries 
+without a decoration type, so they would fall through to "refs/" and 
+pick up the DECORATION_REF type.
+
+>         And if so, having
+>         it as an independent element that sits next to these other
+>         classes smells like a strange design. >
+>         Another more worrying thing is that existing .ref members are
+>         designed to never overlap with each other, but this one
+>         obviously does.  When a caller with a ref (or a pseudoref)
+>         asks "which namespace does this one belong to", does the
+>         existing code still do the right thing with this new element?
+>         Without it, because there was no overlap, an implementation
+>         can randomly search in the namespace_info table and stop at
+>         the first hit, but now with the overlapping and widely open
+>         .ref = "refs/", the implementation of the search must know
+>         that it is a fallback position (i.e. if it found a match with
+>         the fallback .ref = "refs/" , unless it looked at all other
+>         entries that could begin with "refs/" and are more specific,
+>         it needs to keep going).
+
+Fair points. I've rewritten things to not touch the ref_namespace array.
+>   [6/7] This is pretty straight-forward, assuming that the existing
+>         is_pseudoref_syntax() function does the right thing.  I am
+>         not sure about that, though.  A refname with '-' is allowed
+>         to be called a pseudoref???
+> 
+>         Also, not a fault of this patch, but the "_syntax" in its
+>         name is totally unnecessary, I would think.  At first glance,
+>         I suspected that the excuse to append _syntax may have been
+>         to signal the fact that the helper function does not check if
+>         there actually is such a ref, but examining a few helpers
+>         defined nearby tells us that such an excuse does not make
+>         sense:
+
+I've dropped the use of that function from the change, checking against 
+the actual pseudoref names instead.
+
+>   [7/7] Allowing pseudorefs to optionally used when decorating might
+>         be a good idea, but I do not think it is particularly a good
+>         design decision to enable it by default.
+
+Okay!
+
+>         Each of them forming a separate "namespace" also looks like a
+>         poor design, as being able to group multiple things into one
+>         family and treat them the same way is the primary point of
+>         "namespace", I would think.
+
+Fair enough, although the array already contains HEAD and refs/stash as 
+singletons. I had vacillated about shoe-horning the pseudorefs in there, 
+and was swayed by having a single place to define which (pseudo)refs 
+should be included in decorations by default. That motivation goes away 
+with all the pseudorefs off by default.
+
+I've rewritten things to handle the pseudorefs separately from the 
+ref_namespace array, with iteration functions similar to the ones used 
+for HEAD and proper refs.
+
+ >         You do not want to say "I want
+ >         to decorate off of ORIG_HEAD and FETCH_HEAD"; instead you
+ >         would want to say "I want to decorate off of any pseudoref".
+
+They can now all be enabled with --clear-decorations or 
+log.initialDecorationSet=all, or be controlled individually with the 
+other filter options.
+
+Thank you very much for the review!
+Andy
