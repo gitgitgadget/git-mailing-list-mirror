@@ -1,176 +1,118 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB3F363
-	for <git@vger.kernel.org>; Sun, 22 Oct 2023 00:13:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D4DB36A
+	for <git@vger.kernel.org>; Sun, 22 Oct 2023 02:28:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="bdSktEVT"
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 149E2E8
-	for <git@vger.kernel.org>; Sat, 21 Oct 2023 17:13:19 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6D3DD1AF86A;
-	Sat, 21 Oct 2023 20:13:16 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=i1aCvtsu+vPvsTO+8gXsJ3Z6rRkptXxndZtzDi
-	gY9Dk=; b=bdSktEVTZqFq2eEZHPgg1Fi/lbjLt218tQv/ZH8lHfp6IZiYMvfT6q
-	9extGviBS6xRZG4A86tv/nAXPV0+YBcxJrU4QvyVM4RWTqHOMxuD/BTJ4Ie1aJdh
-	2JbqbA3cjdwCyWNkwer1Kgy2TvdWWwooqM4ncxiNk7O0x+MmOe0qA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 60AC91AF869;
-	Sat, 21 Oct 2023 20:13:16 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.198.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B60FF1AF866;
-	Sat, 21 Oct 2023 20:13:15 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Andy Koppe <andy.koppe@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/7] log: decorate pseudorefs and other refs
-In-Reply-To: <20231019193911.1669705-1-andy.koppe@gmail.com> (Andy Koppe's
-	message of "Thu, 19 Oct 2023 20:39:04 +0100")
-References: <20231003205442.22963-1-andy.koppe@gmail.com>
-	<20231019193911.1669705-1-andy.koppe@gmail.com>
-Date: Sat, 21 Oct 2023 17:13:14 -0700
-Message-ID: <xmqq1qdnseed.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=mcclimon.org header.i=@mcclimon.org header.b="DpNijYGt"
+Received: from mail-qv1-xf41.google.com (mail-qv1-xf41.google.com [IPv6:2607:f8b0:4864:20::f41])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 896ECBF
+	for <git@vger.kernel.org>; Sat, 21 Oct 2023 19:28:12 -0700 (PDT)
+Received: by mail-qv1-xf41.google.com with SMTP id 6a1803df08f44-66d36b2a247so13812406d6.1
+        for <git@vger.kernel.org>; Sat, 21 Oct 2023 19:28:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=mcclimon.org; s=gw; t=1697941691; x=1698546491; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=7GNOy0uIQgcf2jO6za71/+nz+4mzmIqjYgOAesmsLSA=;
+        b=DpNijYGtOGbfdqjBgLFiV3PmIFOCzuhqVesxsJrqy40Mll9lyTATGhht6sAqSWEA3I
+         P/5dQyqr1XXVQNr7Q9eTAmIETFU8s7fITiV3JJRh7WdhFsV3U6/Ej6bQutRDKJDD12TH
+         Hdp5iH7BIBB7xycWiEvaeVVumjgIw+sPWUuS8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697941691; x=1698546491;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7GNOy0uIQgcf2jO6za71/+nz+4mzmIqjYgOAesmsLSA=;
+        b=Cp0FJr8m+aKwMo62J/4BQsQpP4d9s/FXyA92ENDP8HBXJQf4cCWEAu2tr5xMGEyiiU
+         x/L5BvX5jA/YQv/QRqDbYh1IGPydpyAw6c8ugvlIZmuXTodL05IpdrDzJsuUfKqjKXr3
+         gQWH5KPuv/UDEpxTVsZx8PepAszQrXsrxK0BGc935zS9MSG3fKIqr6TkFEiAj8nHafk4
+         ebrr1lMIydET5tI8/WSx/9q11vrkGWgHTQH3gZ/I6LDNGOn84c0yYur43tR/hnjzEEFE
+         3G1c0X0RDfuGjUEfG0LJdegUIhENwLC+SLE4QZ0Tlu9SK0EMO7p9oSfFKIAnPUpKADvN
+         pCww==
+X-Gm-Message-State: AOJu0Yw0QWoVBbq1FY0JvkGMsBHmn3Av0Pqgw1zQutPZzCIMslTVmwXC
+	44RP17/kIO7kuuhRokD0w8kEG24+2MJ+5ka7KVsyoD/H
+X-Google-Smtp-Source: AGHT+IFaQuq9w6sfQT1Eq3ilS6Yl8jnVGHObkaE91jffmCGMnziU8EnC6fyIzImtR5DzD4JHk1K9OQ==
+X-Received: by 2002:a05:6214:23cc:b0:65b:2ad1:14f8 with SMTP id hr12-20020a05621423cc00b0065b2ad114f8mr7345519qvb.42.1697941691177;
+        Sat, 21 Oct 2023 19:28:11 -0700 (PDT)
+Received: from localhost ([2600:4040:7ee9:4100:1908:ac84:cbae:dea2])
+        by smtp.gmail.com with ESMTPSA id h7-20020a0ceec7000000b00655ec7bbfd0sm1873849qvs.7.2023.10.21.19.28.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 21 Oct 2023 19:28:10 -0700 (PDT)
+From: Michael McClimon <michael@mcclimon.org>
+To: git@vger.kernel.org
+Cc: Michael McClimon <michael@mcclimon.org>
+Subject: [RFC PATCH 0/2] pretty: add %I formatting for patch-id
+Date: Sat, 21 Oct 2023 22:27:58 -0400
+Message-ID: <20231022022800.69219-1-michael@mcclimon.org>
+X-Mailer: git-send-email 2.42.0.424.gceadf0f3
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- CBC77E28-706F-11EE-BF37-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: 8bit
 
-Andy Koppe <andy.koppe@gmail.com> writes:
+I'll say up front that this patch doesn't actually work, but I am stuck
+on it and interested in continuing, and am hopeful someone can point me
+in something closer to the right direction. (Also, the proposed log
+messages are not good, and I would not actually submit the patch for
+merge consideration with these messages.)
 
-> This patch series adds three slots to the color.decorate.<slot> config
-> option:
-> - 'symbol' for coloring the punctuation symbols used around the refs in
->   decorations, which currently use the same color as the commit hash.
-> - 'ref' for coloring refs other than branches, remote-tracking branches,
->   tags and the stash, which currently are not colored when included in
->   decorations through custom decoration filter options.
-> - 'pseudoref' for coloring pseudorefs such as ORIG_HEAD or MERGE_HEAD.
->   Include them in decorations by default.
->
-> This series is to replace the 'decorate: add color.decorate.symbols
-> config option' patch proposed at:
-> https://lore.kernel.org/git/20231003205442.22963-1-andy.koppe@gmail.com
+I would like to have a single-command way to get the patch id for a
+commit: the thing you'd see in a pipeline like
+    git diff-tree --patch-with-raw HEAD | git patch-id
 
-If that is the case, it probably would have been nicer to mark the
-series as [PATCH v2].
+My initial thought was to add a --patch-id flag to git diff-tree, but
+then I thought that maybe better would be to add a pretty specifier to
+do so, so that (for instance) you could generate patch-ids for
+everything in a branch by saying something like
+    git log --pretty='%I %H' start..
 
-Also, can you make messages [1/7]..[7/7] replies to [0/7] when you
-send them out?  It seems that all 8 of them (including the cover
-letter) are replies to the previous round, which looked a bit
-unusual.
+I have taken a pass at doing so here, but it doesn't _work_, and I'm not
+sure why. It seemed like the thing to do was to use commit_patch_id from
+patch-ids.c, but I think that either I'm not holding it correctly, or
+that it's not fit for purpose. It was added (or rather, made public) in
+ded2c097 (patch-ids: make commit_patch_id() a public helper function,
+2016-04-26), which was in service of fa2ab86d (format-patch: add
+'--base' option to record base tree info, 2016-04-26). It seems like at
+the very least, it probably won't work as expected on merge commits.
+
+The thing that is perplexing to me is that it _does_ appear to work on
+some commits, for example (where 8b3aa36f is a recent-ish commit from
+master, chosen at random):
+
+$ ./git --no-pager show -s --format='%I %H' 8b3aa36f5a7a0c923bc4a28ff19caae78644ae08
+ec66952bdef82a1fc6d31c1057195af31c86da48 8b3aa36f5a7a0c923bc4a28ff19caae78644ae08
+
+$ git diff-tree --patch-with-raw 8b3aa36f5a7a0c923bc4a28ff19caae78644ae08 | git patch-id
+ec66952bdef82a1fc6d31c1057195af31c86da48 8b3aa36f5a7a0c923bc4a28ff19caae78644ae08
+
+But for other commits, like the one in the test here, it does not. I
+have done a bit of investigation, but I would not really call myself a C
+programmer and I'm not super familiar with the codebase, so I'm a bit
+stuck. I thought maybe at first I wasn't initializing the diff_options
+correctly, but I suspect the problem is actually more fundamental than
+that.
+
+Anyway: I would be happy to hear any response at all, whether that's 
+a) a pointer to some other way of implementing a %I pretty format,
+b) an easier-to-implement possible solution (maybe diff-tree --patch-id
+would actually be better), or c) saying the thing I want isn't feasible
+and I should stick with the pipeline. Thanks!
 
 
-As to the contents of the series:
+Michael McClimon (2):
+  patch-ids: add const modifier to commit
+  pretty: add 'I' placeholder for patch-id
 
- [1/7] nicely lays out the color documentation; I do not think the
-       extra verbosity was absolutely needed for existing ones
-       (e.g., when a reader sees 'tag', the reader knows the color
-       will be applied to tags), but the more exotic ones the series
-       will be adding may deserve extra explanation on what they
-       are, so I guess it is OK.
+ patch-ids.c                   |  4 ++--
+ patch-ids.h                   |  2 +-
+ pretty.c                      | 11 +++++++++++
+ t/t4205-log-pretty-formats.sh |  7 +++++++
+ 4 files changed, 21 insertions(+), 3 deletions(-)
 
- [2/7] is a trivial readability improvement.  It obviously should be
-       left outside the scope of this series, but we should notice
-       the same pattern in similar color tables (e.g., wt-status.c
-       has one, diff.c has another) and perform the same clean-up as
-       a #leftoverbits item.
-
- [3/7] They way _NIL color is used to control the defaulting looked
-       a bit unusual, but clever way to use a non-constant color
-       defined elsewhere as its default.  A similar trick is used in
-       wt-status.c:color() for STATUS_ONBRANCH, so this is nothing
-       new.
-
- [4/7] The name of new member .include added to ref_namespace_info
-       will not be understood by anybody unless they are too deeply
-       obsessed by decoration mechansim.  As the namespace_info
-       covers far wider interest, so a name that *shouts* that it is
-       about decoration filter must be used to be understood by
-       readers of the code.
-
-       To be quite honest, "decoration filter" is probably a name
-       that will not be understood by anybody, but coming up with a
-       better name for it is probably outside the scope of this
-       series.
-
- [5/7] I am not sure if "other refs" should be an item in the
-       namespace_info array.  If it is truly "catch-all", then
-       shouldn't the refs in other namespaces without their own
-       decoration (e.g. ones in refs/notes/ and refs/prefetch/) be
-       colored in the same way as this new class?  And if so, having
-       it as an independent element that sits next to these other
-       classes smells like a strange design.
-
-       Another more worrying thing is that existing .ref members are
-       designed to never overlap with each other, but this one
-       obviously does.  When a caller with a ref (or a pseudoref)
-       asks "which namespace does this one belong to", does the
-       existing code still do the right thing with this new element?
-       Without it, because there was no overlap, an implementation
-       can randomly search in the namespace_info table and stop at
-       the first hit, but now with the overlapping and widely open
-       .ref = "refs/", the implementation of the search must know
-       that it is a fallback position (i.e. if it found a match with
-       the fallback .ref = "refs/" , unless it looked at all other
-       entries that could begin with "refs/" and are more specific,
-       it needs to keep going).
-
- [6/7] This is pretty straight-forward, assuming that the existing
-       is_pseudoref_syntax() function does the right thing.  I am
-       not sure about that, though.  A refname with '-' is allowed
-       to be called a pseudoref???
-
-       Also, not a fault of this patch, but the "_syntax" in its
-       name is totally unnecessary, I would think.  At first glance,
-       I suspected that the excuse to append _syntax may have been
-       to signal the fact that the helper function does not check if
-       there actually is such a ref, but examining a few helpers
-       defined nearby tells us that such an excuse does not make
-       sense:
-
-           int is_per_worktree_ref(const char *) {
-		   return starts_with(refname, "refs/worktree/") ||
-			  starts_with(refname, "refs/bisect/") ||
-			  starts_with(refname, "refs/rewritten/");
-	   }
-           int is_pseudoref_syntax(const char *);
-           int is_current_worktree_ref(const char *ref) {
-                   return is_pseudoref_syntax(ref) || is_per_worktree_ref(ref);
-           }
-
-       All these three work on the refname and based on what is in
-       that refname string, decides what kind of ref it is.  There
-       is nothing especially "syntax" about the second one, and we
-       should rename it as part of #leftoverbits clean-up effort.
-
-       Another unrelated tangent is that is_per_worktree_ref() shown
-       above and the namespace_info array we saw earlier are not
-       even aware of each other, which is maintenance nightmare
-       waiting to happen.
-
- [7/7] Allowing pseudorefs to optionally used when decorating might
-       be a good idea, but I do not think it is particularly a good
-       design decision to enable it by default.  
-
-       Each of them forming a separate "namespace" also looks like a
-       poor design, as being able to group multiple things into one
-       family and treat them the same way is the primary point of
-       "namespace", I would think.  You do not want to say "I want
-       to decorate off of ORIG_HEAD and FETCH_HEAD"; instead you
-       would want to say "I want to decorate off of any pseudoref".
-
+-- 
+2.42.0.424.gceadf0f3
 
