@@ -1,74 +1,102 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D746A48
-	for <git@vger.kernel.org>; Sun, 22 Oct 2023 06:52:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF6397FC
+	for <git@vger.kernel.org>; Sun, 22 Oct 2023 09:31:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="MfaTTVdf"
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C6E8112
-	for <git@vger.kernel.org>; Sat, 21 Oct 2023 23:52:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iOd8yl8s"
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37A78AF
+	for <git@vger.kernel.org>; Sun, 22 Oct 2023 02:31:28 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-32d9d8284abso1582300f8f.3
+        for <git@vger.kernel.org>; Sun, 22 Oct 2023 02:31:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1697967086; x=1698571886; darn=vger.kernel.org;
+        h=message-id:in-reply-to:to:references:date:subject:mime-version
+         :content-transfer-encoding:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=tZjA5DHucKPZbs5X+LD3xDqGAOonUuWCtReQNwqbemQ=;
+        b=iOd8yl8sKFb81TDWpZwLMHxNZw97ylM5vbgqPhpWgkGKYOuplANllQsbJrhCjWsM86
+         quvhCZqDHWEqe0SA47wi8uNsKQnK3uHEinZOmYlPql0DllG6jSvsje0uT5sOppjI0I6r
+         DdmCEADgsg3to71k+Jgij6op22c0Md4PQyIROHs6cFalNJir59GjNDnO4vt4TI9ZOLjY
+         MWjeQo8nhSvS1K+kR0yY9ww1z6mVb+8QMsHHxQO+7JalN6HVZ2N1FCKUJtUtNX+krz1C
+         Be9eliOsdoMxGPN0n+CgixVFwiec3g5Sy1PCQqtoOdRwO3WXuMxiqJuIUwTgvZFREuQB
+         D4QQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697967086; x=1698571886;
+        h=message-id:in-reply-to:to:references:date:subject:mime-version
+         :content-transfer-encoding:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=tZjA5DHucKPZbs5X+LD3xDqGAOonUuWCtReQNwqbemQ=;
+        b=JuJdxGpISDKHu69mKiDs/2b1JWnUMs245aIaiAGFSC7Wbatpp2lxeHmXimg5YdYKPC
+         pDG3N9/TUtHsqBI5QgUSemOdamLcCY8zdIY7DPoT9X/zvwWO5gHyETgp3/9Mml4wetUD
+         2IojKKStqlMAzth0Z9qDy0pU69Pntit8wqTy34BfM0/++kwQ2CHArz6MSdYy29Jg72CA
+         mxzRvz7pIbogTww84mDWrRY6NgGWE6z5TrkW/BoA19rsrLzfF4vxoqPG/Iyv0eP/e6+L
+         /+NJhavP8SzseUHlTwVkLIDzPeimRu6STOvIr11FloxGXHqKCZ/ivavAY+2L4cnMEsbH
+         GXyQ==
+X-Gm-Message-State: AOJu0Yz3mbwQukZiqzQadQ62ImeZD5T7zyNj6TCQknqXFAgBOqad/68t
+	qaxpoJ7cze3kn/RgleHUvTa+2nB1UbPC
+X-Google-Smtp-Source: AGHT+IHpZ2pWQoVPRpSliccDA55bU9a02kxB0LoLMbr4j2rh1ydLh5tIw3b0BcmOay8lb7WaxnW8nA==
+X-Received: by 2002:adf:cd12:0:b0:32d:9d66:5742 with SMTP id w18-20020adfcd12000000b0032d9d665742mr4674632wrm.10.1697967086187;
+        Sun, 22 Oct 2023 02:31:26 -0700 (PDT)
+Received: from smtpclient.apple ([2001:8a0:578a:4a00:20f4:df6:9675:dae9])
+        by smtp.gmail.com with ESMTPSA id l3-20020a5d5603000000b0032ddf2804ccsm5241795wrv.83.2023.10.22.02.31.24
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 22 Oct 2023 02:31:25 -0700 (PDT)
+From: Daniel Santos <daniel.dlds@gmail.com>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1697957557;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=XukDMB439NBYH2JFHapGwHyxOzPFiaE/gwldWcTgHzA=;
-	b=MfaTTVdfv73HaiHWMQXTgLJgiuQZg9KR8UPO2NjvHlXnCoRcw90ASbXHZZ4nUmDciOiWvp
-	OAuzlx9HxHTb1b/xY28saRHaDjOhOUvtd6ul/waOg50YXSjb/1B9uK22q3ODJCdYtGIFOe
-	jERI9kI3nnbRTNcLDMhEtYJfT9wMCEKUxyAzbihimZiZkTPCFBJt4E8OUcEGHQxuuTYj5j
-	uYv0DcouOrD8d7Sk908RbTWtNiEOwBylYTDKNyNkWZAjkZauMxQPRBjO5PXTGyeUySni+O
-	ka5xpRyaHhosW9uM/UiBiBIz7s6xb5swAaUuqO2dD4HlByIWStKpHA5vFIYSvw==
-Date: Sun, 22 Oct 2023 08:52:36 +0200
-From: Dragan Simic <dsimic@manjaro.org>
-To: Jacob Stopak <jacob@initialcommit.io>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [RFC PATCH 0/5] Introduce -t, --table for status/add commands
-In-Reply-To: <ZTS7YsxSE8UA+n4G.jacob@initialcommit.io>
-References: <20231020183947.463882-1-jacob@initialcommit.io>
- <fd26df85661d554ced9d8e0445f75952@manjaro.org>
- <ZTL1wJIIK/5YWQK5.jacob@initialcommit.io>
- <d3bbe53c3b910f891c80465ea0c3f53f@manjaro.org> <xmqqwmvgoovg.fsf@gitster.g>
- <ZTS7YsxSE8UA+n4G.jacob@initialcommit.io>
-Message-ID: <d6c06aec7313b8078382e16065d04282@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.3\))
+Subject: Re: Pulling from a linux box to a Solaris 9 OS
+Date: Sun, 22 Oct 2023 10:31:24 +0100
+References: <20A47898-41F6-4E94-822C-10509EC1E3B9@gmail.com>
+ <ZTHK7o5LXvMB5EeJ@tapette.crustytoothpaste.net>
+ <20231020062738.GA1642714@coredump.intra.peff.net>
+To: git@vger.kernel.org
+In-Reply-To: <20231020062738.GA1642714@coredump.intra.peff.net>
+Message-Id: <CC739286-AEFC-4F97-A86F-7A129159F592@gmail.com>
+X-Mailer: Apple Mail (2.3696.120.41.1.3)
 
-On 2023-10-22 08:04, Jacob Stopak wrote:
-> On Fri, Oct 20, 2023 at 04:28:19PM -0700, Junio C Hamano wrote:
+Hello,
+
+I set the environment variable GIT_SSH_VARIANT and it pulled with no issues.
+Thanks for the help
+
+Regards
+Daniel Santos
+
+
+
+> On 20 Oct 2023, at 07:27, Jeff King <peff@peff.net> wrote:
+> 
+> On Fri, Oct 20, 2023 at 12:33:50AM +0000, brian m. carlson wrote:
+> 
+>> By default, if the SSH binary is the default ("ssh"), Git assumes that
+>> it's OpenSSH and sends certain options to enable protocol v2, including
+>> -o SendEnv.
 >> 
->> You are not alone in feeling the impedance mismatch between the
->> intended audience the patch(es) try to help (pointy-clicky GUI
->> users)
+>> If you don't want that, you can set "ssh.variant" to "simple", in which
+>> case Git will send only the username and the host, but not -p port, -4,
+>> -6, or -o.  If you do need a different port, then you're out of luck,
+>> and will either have to install Putty (in which case, the ssh.variant
+>> value would need to be "putty") or upgrade OpenSSH.  Otherwise, the
+>> simple value should work fine.
 > 
-> I'm sure there's overlap with "pointy-clicky GUI users" but my point
-> isn't to directly cater to them. I find it intersting to think about
-> how visual (and ok fine even gui) tools can be used as bridge tools
-> that can be discarded one the important concepts are solidified, and
-> maybe resurrected in a moment of stupidity or strife.
+> I think your suggestion is the most straight-forward one, but just in
+> case the "out of luck" part is a problem, you should also be able to
+> side-step the issue with:
 > 
-> It's like yes use the crutch if you need it, but then do it the real
-> way once you get it.
+>  git -c protocol.version=0 fetch ...
+> 
+> That would allow other features (assuming this older ssh version
+> supports them!) without triggering the SendEnv option.
+> 
+> -Peff
 
-Quite frankly, that would be like starting to learn how to drive a car 
-by playing GTA 5, or whichever version of GTA it currently popular.  I 
-don't think that would work out well for the vast majority of student 
-drivers.
-
-> And altho this is a visual helper feature, it keeps the user within the
-> terminal, close to the Git cli and may help some subset stay there.
-
-Even if that would work out for some people, it would require the 
-formatting into tables to be the default for git, which frankly I'd 
-never support.
