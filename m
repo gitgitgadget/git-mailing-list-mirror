@@ -1,74 +1,73 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA4E200BF
-	for <git@vger.kernel.org>; Mon, 23 Oct 2023 17:52:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from bluemchen.kde.org (bluemchen.kde.org [IPv6:2001:470:142:8::100])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EE7297
-	for <git@vger.kernel.org>; Mon, 23 Oct 2023 10:52:16 -0700 (PDT)
-Received: from ugly.fritz.box (localhost [127.0.0.1])
-	by bluemchen.kde.org (Postfix) with ESMTP id 32C4920386;
-	Mon, 23 Oct 2023 13:52:04 -0400 (EDT)
-Received: by ugly.fritz.box (masqmail 0.3.6-dev, from userid 1000)
-	id 1quz5w-fWa-00; Mon, 23 Oct 2023 19:52:04 +0200
-Date: Mon, 23 Oct 2023 19:52:04 +0200
-From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Charvi Mendiratta <charvi077@gmail.com>,
-	Marc Branchaud <marcnarc@xiplink.com>, Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [RESEND v2] git-rebase.txt: rewrite docu for fixup/squash (again)
-Message-ID: <ZTayxB0Nm7AEyafp@ugly>
-References: <20231023130016.1093356-1-oswald.buddenhagen@gmx.de>
- <a85c80eb-65ab-4b8c-ba94-de71516da5ef@gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5690721352
+	for <git@vger.kernel.org>; Mon, 23 Oct 2023 17:52:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="XfbTEMkM"
+Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE16AB0
+	for <git@vger.kernel.org>; Mon, 23 Oct 2023 10:52:20 -0700 (PDT)
+Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-5a7b9e83b70so34737427b3.0
+        for <git@vger.kernel.org>; Mon, 23 Oct 2023 10:52:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1698083540; x=1698688340; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=tn7HRI5SI3Hbj9fQC4oSVyPtEoCbGEsIBhNW8OhXZ5g=;
+        b=XfbTEMkMMv68PADkrToWolfsI7HAQR2thOi6G5mXOVGzn0gcRDgHs9SV8/09JdRMDr
+         BRUkSCNaGWGG0TnO8Z9HaXRsk6XX8Ilb6CYqx9ixvUWaNGXkTMV4IqSS5ck/kqUGayEE
+         B+PfeKVx2acGEWSN8klvq5G860BA0xJ2r+XCFtjk2fxa+cbf3OGj/HSaiXaJRtPBVV/Z
+         Uf5S5UHX+ix95DgN9nxwKJR6NpQYsCIDfYomAyXznjqLld/h9l4cAxoex3yqgAMNteC1
+         Rzlp6gkOxk+ybXgV+TILsIanPlfm8obPFCNXFYe5teJ0/WUJvcKWVIN9ng1h4Lm1oyFF
+         3oMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698083540; x=1698688340;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=tn7HRI5SI3Hbj9fQC4oSVyPtEoCbGEsIBhNW8OhXZ5g=;
+        b=vD7RC855P2xBoKyqRrKhcQeIZLvQqJmVQH6I58gmY9W7fRmmhAZcoNYJ3S9Q5ducex
+         mcH/ObaLBUWnowx9QhMkjYIIZrNZjsHdmvEN0vDDx+0HrX65Ge92gVrSx8t99vCbxvTF
+         L0eDCrjBtDyvBdAwjDTVUmwTbHsqPr0t24mEsTiNe0meGMNg+jzB9jG4pzOgvAL32fMl
+         1oZ0JDYjHeoYsBsLaSEqMdTlVt8Zew5aLg0vDLwigsMFk5j7XVdAgEpVyzFM4HX2SEVf
+         jfMv96SHyRQlxC6mbNysF8Pcamw6fti8GvD/n8dIWsTy9u2yB1cjHbfG1uenSoh3rihh
+         mjEw==
+X-Gm-Message-State: AOJu0YxkL0M2jvs73dNyMpC4XJAylxva1wom3udHLX3JmLaApH15h317
+	8guZeauogOt1AjkteKxTLhfI8mKoTwnH7dM9/vC4
+X-Google-Smtp-Source: AGHT+IEISmLdmIGKWo2xNFs/vqhKl6dRYGgroR2jmsEI32lVKcyC0Q46hUARFpjuhXFAfDxcRtXz2pYKrkKm0rQkck8Q
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:29f6:5cb7:f652:5c5e])
+ (user=jonathantanmy job=sendgmr) by 2002:a81:5295:0:b0:58c:e8da:4d1a with
+ SMTP id g143-20020a815295000000b0058ce8da4d1amr264359ywb.2.1698083539888;
+ Mon, 23 Oct 2023 10:52:19 -0700 (PDT)
+Date: Mon, 23 Oct 2023 10:52:17 -0700
+In-Reply-To: <fa55b7836f112cb7c7ab9b80e745b9969421c768.1695330852.git.steadmon@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <a85c80eb-65ab-4b8c-ba94-de71516da5ef@gmail.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.42.0.758.gaed0368e0e-goog
+Message-ID: <20231023175217.984090-1-jonathantanmy@google.com>
+Subject: Re: [PATCH v3 1/5] config: split out config_parse_options
+From: Jonathan Tan <jonathantanmy@google.com>
+To: Josh Steadmon <steadmon@google.com>
+Cc: Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org, calvinwan@google.com, 
+	glencbz@gmail.com, gitster@pobox.com
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Oct 23, 2023 at 05:01:02PM +0100, Phillip Wood wrote:
->On 23/10/2023 14:00, Oswald Buddenhagen wrote:
->> +unless "fixup -c" is used. In the latter case, the message is 
->> obtained
->> +only from the "fixup -c" commit (having more than one of these is
->> +incorrect).
->
->This change is incorrect - it is perfectly fine to have more than one 
->"fixup -c" command. In that case we use the message of the commit of the 
->final "fixup -c" command.
->
-i know that this is the case, see the previous thread (which i failed to 
-link by header, cf.  
-https://lore.kernel.org/all/20231020092707.917514-1-oswald.buddenhagen@gmx.de/T/#u 
-).
+Josh Steadmon <steadmon@google.com> writes:
+> From: Glen Choo <chooglen@google.com>
+> 
+> "struct config_options" is a disjoint set of options used by the config
+> parser (e.g. event listeners) and options used by config_with_options()
+> (e.g. to handle includes, choose which config files to parse).
 
->One case where there can be multiple "fixup -c" commands is  when a 
->commit has been reworded several times via "git commit 
->--fixup=reword:<commit>" and the user runs "git rebase --autosquash"
->
-a cleaner solution would be recognizing the situation and not generating 
-these contradicting commands in the first place. of course that would be 
-more complexity, but it would also allow catching accidental use.
+Can this sentence be reworded? In particular, "disjoint" is a word
+normally applied to two or more sets (meaning that they have no elements
+in common), but here it is used for only one.
 
-of course i can go back to documenting the status quo, but it seems kind 
-of wrong.
-
->In the case of
->
->pick A
->fixup -C B
->
->don't we keep the authorship from A and just use the commit message from B?
->
-uhm. we clearly do. that means i was given incorrect advice in 
-https://lore.kernel.org/all/YjXRM5HiRizZ035p@ugly/T/#u (and so the 
-thread is still looking for a resolution) ...
-
-regards
+Everything else looks good, and the reasoning (some functions only use
+a subset of the fields, and this subset is easily explained conceptually
+as those related to parsing) makes sense.
+ 
