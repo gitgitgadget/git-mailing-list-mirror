@@ -1,74 +1,82 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA6C58830
-	for <git@vger.kernel.org>; Mon, 23 Oct 2023 10:07:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC81012B9E
+	for <git@vger.kernel.org>; Mon, 23 Oct 2023 10:15:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kay7do5s";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gaqN8dst"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dJjFqL6j";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AygVf9dL"
 Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4947DA
-	for <git@vger.kernel.org>; Mon, 23 Oct 2023 03:07:29 -0700 (PDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.west.internal (Postfix) with ESMTP id 0E59432009B3;
-	Mon, 23 Oct 2023 06:07:28 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Mon, 23 Oct 2023 06:07:29 -0400
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD110DA
+	for <git@vger.kernel.org>; Mon, 23 Oct 2023 03:15:40 -0700 (PDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.west.internal (Postfix) with ESMTP id C48E932009A1;
+	Mon, 23 Oct 2023 06:15:39 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute3.internal (MEProxy); Mon, 23 Oct 2023 06:15:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1698055648; x=1698142048; bh=8k
-	PR29y5JF2NUe9LPScb/EGruUmiqojY384FrbilLkw=; b=kay7do5seEEtD80piT
-	V8cv2ca44eaxSW9J4SelTcfiE4INNcMaLKtYjqhdqQomqMh7PTGChy1hTuJyvqga
-	jJMeqf/BI2Up8BUbMpnrow8yhwnNw5ABJes7e+ii7h+3G3SF5IlF6KhtsTRL2mIM
-	f1g30UpFKEb3t9qJXJx2ZfCdzr1BVpRfAFfyM2XBw2SJR9F5lP5vA6t1nQ8WGPtJ
-	r7mgRxO7NUxdEO5KRYFr1pQ38W6b43lgRExUj1MTML3sKPLGgdexrI6+6fcT2ZRb
-	SSPzIQZCtWrfNE9Eq/ARJ99+N+4uR3K3DYdypC2dylePO02tbdbsgB+S0g/OCXzZ
-	T/+w==
+	:subject:subject:to:to; s=fm3; t=1698056139; x=1698142539; bh=1L
+	RL9KJkQwyKCBMW4AVD8a3qSWXrCXPGCKMILaQTpWw=; b=dJjFqL6j1TjlAzUQrf
+	P+BQGsA2jUWL89r3Rg5TTWwE+MAwKzQ6CyfK3cZT5uYZVR9SRMcmLyXBmQZ4dbhD
+	/93i5qrJUNC8NgLSjveh6mB58ZpGeE/Y9iTqXSu/SzMi3mJl6ZFK6yicR9OeA/qn
+	r+L5LkNK3t1Ifb2M4738kfUgVyCikD+20rqY0EyL5YFU1SH6TTm9kLL/fSI+mj68
+	uUahfQ1vFaOMbLcUc/gXC0HekgbxcRk949wE1sAPhMliwqHs1z1miwPhIRbyrvnk
+	C+29qEHwLXv7f5Sl4MU8o9fC6mJ7U86QevOwGIJ3puBteWsCkKzvzl17SbCg/9zs
+	BqWg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1698055648; x=1698142048; bh=8kPR29y5JF2NU
-	e9LPScb/EGruUmiqojY384FrbilLkw=; b=gaqN8dstCFFR08XN5tyBqG8RedV2H
-	b52U2utupZxHOjRmvPEKj9WKnvbkIekZ8LevAdd6M/kMnov8cMOq+maYOgU/RymU
-	gPAUfeuBPlaGuJfygBYjmZPEInru4kWGjta9oOF6SeME/ljFiCYSXBczimaFhkT/
-	qXQTSB9UsTx9UINFCPfIG0MFbXO7ymXAMkHYyZ1coBztlp5/itN9O8Cn1G8dGnvk
-	Rlm33TygFc34DUleLnzu/lbvOVtw0/S4BdAI0ao8KwK5vd4In9BOYN4l8klSOTdm
-	rwlDVGqz/7JEiPHuywIB+tLEr/KcKUDeYKQ6cO9pgVZD60PjsKHxmxa5g==
-X-ME-Sender: <xms:4EU2ZVb77FWbLM4wRaA2vShAxzQa-wyZk58yk2MQZ_yQULYE8duFCg>
-    <xme:4EU2ZcZj9A6DGOI0afQTfSSvKwy8obW8aVpt-2gkCMZVzqT1YIoE3pouw6PgzxOSC
-    IDtpLHNG6U0yfMYHQ>
-X-ME-Received: <xmr:4EU2ZX-3mpUhVjWKkDk1fSX2ITwt61jV4LKpS90qesqa1dff0dl0YP1ez03x-QuYTkY1bSF6DRcYCoys3wh9e9wdLLGdWQQNidBdD6_3_n-1>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrkeeigddvfecutefuodetggdotefrodftvf
+	:x-sasl-enc; s=fm3; t=1698056139; x=1698142539; bh=1LRL9KJkQwyKC
+	BMW4AVD8a3qSWXrCXPGCKMILaQTpWw=; b=AygVf9dLfAJWYlFdzGNqsQkWjAQ6i
+	/j98wOyQAVdp1jx5puiCh9U1onJbRrYc0PrrOe5dNi53KIhh3ufFm7H3qAFBpQ/h
+	44id04d8/AT9dlBQyiUnvJPNgEsHjCG20S1N9ubohp0cdc4Ue9IsZHxj2MKf5AV1
+	cqRQtMg5UK4IG6xzrc6FBk+RjwPm3IIVDamMNTWPvRcB89CcZWvXGpko5YwLtPNY
+	h8xm9Bory+nFKJahZ//asmCrBx19lng0DB9DFC4da/Thrthc00xlGYvqrG8EW1ev
+	bR6Ud4Q+YdY2tmuECjFoYAMjw+KwWhCYEQaOtFyROBNgHRsyVVr1HFx+g==
+X-ME-Sender: <xms:y0c2ZakX-m5qy3jIOKlM8lMtnD4ADVAn8tmKT3_aiu032_qYJEvlVg>
+    <xme:y0c2ZR0FgJcO7bWeSQ-KGOnHtZ0k9QwG5EMlvDr8aAee_u9k8NNuen_b4OPihRoaH
+    Z6yUa9glmzXu4PigA>
+X-ME-Received: <xmr:y0c2ZYqTNlqx6jegf52fVOdccyLNKYp87C5CcS-0sZJBkwQrehrFovlbmUmIHWPQxi_FpxH-CJLesavrU2nSFX6bzfH67jBkUp-M5H3Q2-ot>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrkeeigddvgecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesghdtre
-    ertddtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepteeuvefhhfdufedvgeeiueeileegtdfhge
-    eftdeuveejjedtgfejhedujeeutddunecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:4EU2ZTqns0PfujCQACefeLUbAYph1oBavc-TZmnLbACUYBqnaTHkkw>
-    <xmx:4EU2ZQoUeO17Mm0EyYgN4PI6ErKxXIPlEthcUJ4vGthuxRR578xCTA>
-    <xmx:4EU2ZZQgQKQ2FvjC8yzKG_sVtQyIppgUaAFgkOR7-wqSVG8HgE--bg>
-    <xmx:4EU2ZX3YKQkqo2yP3tCfmwcMDdc9Wh7aPtZj3xiii_Di8fK4qIpPiA>
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhm
+X-ME-Proxy: <xmx:y0c2Zek55mWoIP9HWQ6jLZGw75Bxb3HFJOFSo9DTCiAawuzqV5uWrQ>
+    <xmx:y0c2ZY3CHeg7qbMdRIP-foZrD8gTsOeZrlYEj85Y4whJL6ktOWfYUQ>
+    <xmx:y0c2ZVsgWbJHFDrzv4CNgkAycC2TKX1Tgv6_J_PhzMoeYX4tKQrwfw>
+    <xmx:y0c2ZVwWZXAJXA-xQjCxaZ19nxhOZvfJM6MqhsUYNqybre3fAB7obw>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 23 Oct 2023 06:07:27 -0400 (EDT)
+ 23 Oct 2023 06:15:38 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id b8501de9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 23 Oct 2023 10:07:23 +0000 (UTC)
-Date: Mon, 23 Oct 2023 12:07:24 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 56c62659 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 23 Oct 2023 10:15:33 +0000 (UTC)
+Date: Mon, 23 Oct 2023 12:15:34 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Jiang Xin <worldhello.net@gmail.com>
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: Re: [PATCH 2/2] fetch: no redundant error message for atomic fetch
-Message-ID: <ZTZF3AbNNuGpy38l@tanuki>
-References: <38b0b22038399265407f7fc5f126f471dcc6f1a3.1697725898.git.zhiyou.jx@alibaba-inc.com>
- <ced46baeb1c18b416b4b4cc947f498bea2910b1b.1697725898.git.zhiyou.jx@alibaba-inc.com>
- <ZTYue-3gAS1aGXNa@tanuki>
- <CANYiYbEJ_mHdsPM3-huDPFktSWFhrpoz7Cvf000JSfZM2cco9w@mail.gmail.com>
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH] commit: detect commits that exist in commit-graph but
+ not in the ODB
+Message-ID: <ZTZHxh4v0_fKkZpg@tanuki>
+References: <ZSkCGS3JPEQ71dOF@tanuki>
+ <b0bf576c51a706367a758b8e30eca37edb9c2734.1697200576.git.ps@pks.im>
+ <xmqq1qdy1iyr.fsf@gitster.g>
+ <ZS4rmtBTYnp2RMiY@tanuki>
+ <xmqqjzrlhzci.fsf@gitster.g>
+ <ZTDQjangLsQ1cSJl@tanuki>
+ <ZTDn-Wd5xsFrBmqI@tanuki>
+ <xmqqzg0ey1kn.fsf@gitster.g>
+ <20231020100024.GA2194074@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -76,87 +84,88 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="WpdTTr4UtZ/DIkLK"
+	protocol="application/pgp-signature"; boundary="6F7ZeGBC/8Z9zyO4"
 Content-Disposition: inline
-In-Reply-To: <CANYiYbEJ_mHdsPM3-huDPFktSWFhrpoz7Cvf000JSfZM2cco9w@mail.gmail.com>
+In-Reply-To: <20231020100024.GA2194074@coredump.intra.peff.net>
 
 
---WpdTTr4UtZ/DIkLK
-Content-Type: text/plain; charset=utf-8
+--6F7ZeGBC/8Z9zyO4
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Oct 23, 2023 at 05:16:20PM +0800, Jiang Xin wrote:
-> On Mon, Oct 23, 2023 at 4:27=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wr=
-ote:
-> >
-> > On Thu, Oct 19, 2023 at 10:34:33PM +0800, Jiang Xin wrote:
-> > > @@ -1775,10 +1775,8 @@ static int do_fetch(struct transport *transpor=
-t,
-> > >       }
-> > >
-> > >  cleanup:
-> > > -     if (retcode && transaction) {
-> > > -             ref_transaction_abort(transaction, &err);
-> > > +     if (retcode && transaction && ref_transaction_abort(transaction=
-, &err))
-> > >               error("%s", err.buf);
-> > > -     }
-> >
-> > Right. We already call `error()` in all cases where `err` was populated
-> > before we `goto cleanup;`, so calling it unconditionally a second time
-> > here is wrong.
-> >
-> > That being said, `ref_transaction_abort()` will end up calling the
-> > respective backend's implementation of `transaction_abort`, and for the
-> > files backend it actually ignores `err` completely. So if the abort
-> > fails, we would still end up calling `error()` with an empty string.
+On Fri, Oct 20, 2023 at 06:00:24AM -0400, Jeff King wrote:
+> On Thu, Oct 19, 2023 at 10:16:56AM -0700, Junio C Hamano wrote:
 >=20
-> The transaction_abort implementations of the two builtin refs backends
-> will not use "err=E2=80=9C because they never fail (always return 0). Som=
-e one
-> may want to implement their own refs backend which may use the "err"
-> variable in their "transaction_abort". So follow the pattern as
-> update-ref.c and files-backend.c to call ref_transaction_abort() is
-> safe.
+> > Patrick Steinhardt <ps@pks.im> writes:
+> >=20
+> > > There's another way to handle this, which is to conditionally enable =
+the
+> > > object existence check. This would be less of a performance hit compa=
+red
+> > > to disabling commit graphs altogether with `--missing`, but still ens=
+ure
+> > > that repository corruption was detected. Second, it would not regress
+> > > performance for all preexisting users of `repo_parse_commit_gently()`.
+> >=20
+> > The above was what I meant to suggest when you demonstrated that the
+> > code with additional check is still much more performant than
+> > running without the commit-graph optimization, yet has observable
+> > impact on performance for normal codepaths that do not need the
+> > extra carefulness.
+> >=20
+> > But I wasn't sure if it is easy to plumb the "do we want to double
+> > check?  in other words, are we running something like --missing that
+> > care the correctness a bit more than usual cases?" bit down from the
+> > caller, because this check is so deep in the callchain.
 >=20
-> > Furthermore, it can happen that `transaction_commit` fails, writes to
-> > the buffer and then prints the error. If the abort now fails as well, we
-> > would end up printing the error message twice.
+> I wonder if we would want a "be extra careful" flag that is read from
+> the environment? That is largely how GIT_REF_PARANOIA works, and then
+> particular operations set it (though actually it is the default these
+> days, so they no longer do so explicitly).
 >=20
-> The abort never fails so error message from transaction_commit() will
-> not reach the code.
+> I guess that is really like a global variable but even more gross. ;)
+> But it is nice that it can cross process boundaries, because "how
+> careful do we want to be" may be in the eye of the caller, especially
+> for plumbing commands. E.g., even without --missing, you may want
+> "rev-list" to be extra careful about checking the existence of commits.
+> The caller in check_connected() could arguably turn that on by default
+> (the way we used to turn on GIT_REF_PARANOIA for pruning repacks before
+> it became the default).
 
-With that reasoning we could get rid of the error handling of abort
-completely as it's known not to fail. But only because it does not fail
-right now doesn't mean that it won't in the future, as the infra for it
-to fail is all in place. And in case it ever does the current code will
-run into the bug I described.
+Good point indeed, I also started to ask myself whether we'd want to
+have a config option. An environment variable `GIT_OBJECT_PARANOIA`
+would work equally well though and be less "official".
 
-So in my opinion, we should either refactor the code to clarify that
-this cannot fail indeed. Or do the right thing and handle the error case
-correctly, which right now we don't.
+What I like about this idea is that it would also allow us to easily
+unify the behaviour of `lookup_commit_in_graph()` and the new sanity
+check in `repo_parse_commit_gently()` that I'm introducing here. I'd
+personally think that the default for any such toggle should be `true`,
+also to keep the current behaviour of `lookup_commit_in_graph()`. But
+changing it would be easy enough.
+
+I'll send a v2 of this series with such a toggle.
 
 Patrick
 
---WpdTTr4UtZ/DIkLK
+--6F7ZeGBC/8Z9zyO4
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmU2RdsACgkQVbJhu7ck
-PpSqMg//Zl+a++6SYM9DRrRJ1+Ru37uSpDmH3aRsMFdKApJxPJEb2QwdtsZfnWLD
-OBXdr6OMdVfbFiDfFu2seCZTGTMapglmoWZIhntQFaxjSWNovR908gcgcrRctRgF
-9Eq1eJEskvkfZtD0VWfL+SKDyAMO/9xuQ6tzEgudLiU7mKZdbjwS5kx7409zYzib
-H9kpcY0QQ2s6U8pHMNAqi6cOEi4UB5Pfw8mtwLvww0JK0q7yRDpgha4ty+M4nyYv
-wbyL8PaAnh2dLZSxBwEG2ARQPXEWzBOjLjzHZtjMWO2WWjEu3VF3vMzUiV3oVZoT
-2mwy/kXgSRocCVDVFdR+Q1LBIGtYgQk6gzsWkDBbgdb4TVh1wKpaYsiQHnqIkspK
-1+jCqtLNKyyS54xuYGnshq9nniNw6YxyUiPYugSWhGmPFIl6dHDLzz/SBuHjangw
-3ucD8a/d5hORR2voRDxPRh7CI/PoKJDderRQlk/QW3bl0BIxqZ5Y+ViZqbfocUdv
-3wfTB8lCcTXy1cV2S6s21gFZn2gwrW+ZN1KwrbawPmuV5oXIdblq/5WfVgKeFFCV
-6gN7kyxJ4Z6FfgUekxAcZWwX5BaylkVT/3uMEzpc+7XpKQyYGU1oF5BGwWZnGHQ8
-YFCcXQxeBEvV1gyYRF8MgQDg440SdmXOsKC8E1d1AN06PeZd2B4=
-=rNr8
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmU2R8UACgkQVbJhu7ck
+PpRsRA//RvqUW5TTIsAMJZeGY1wtpKJBVx6otxRG8FAeKlbrtbB8IKLoeSnnbEGa
+CcwGkRyK1YeGBZcOrwRtegsdsZmuR/+JgG6aazFipNmSTo3T2zxidqQxNwtfGegT
+swcqPGmSMNV6SCga8mkIZV6I3SjFI3mNq6JsMnpggznL2jJCvTvSARn4KYXzhkyU
+UGhumVAzB0pLp0mS/4af0U+p5oCb6q/3sVrpNVtDQI+dZBBYyPtgA37hFCbGhfXt
+3GZQqLOaV0tvBwq48pBvT0SBaW2UI2bwuGCMGaMCe0HOUUZprf6HnBk9Jar7cpDY
+7xzDaHF26ot323Z2r8WomuWkXJnkPiNM82SHWnH9U03ey0noxSTh7idwQuMOR9aK
+drZIwfNMM5Rz9Rz5A0J1hWiE9HaAilxvNR/Xs4CLbcSUEatfZO/YPXPREDUapqWN
+DbVRWhQt5EzheoFwc7TniWomO8+e+zlyLSqsFjIxmg2Z8S4ha1Tcczs7crcgMZNu
+YzauDHQySkibgtcB9WGy+/lA6o4coTnoarPXdH7WXkuzaJlILKfMybMEb38uEJV2
+i4+k/dBlFiPFhzkbWRznFSaidH0nd3KsnwUy88ykLKBGx0+31orZ8QtmScoFziXu
+Bpr4U1Q5R9W30SdJBjIwyFy+AmToTsqZYOo0uPZEkUbVR2cVcNE=
+=5hbV
 -----END PGP SIGNATURE-----
 
---WpdTTr4UtZ/DIkLK--
+--6F7ZeGBC/8Z9zyO4--
