@@ -1,187 +1,182 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3581FD9
-	for <git@vger.kernel.org>; Mon, 23 Oct 2023 13:41:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41FD211CAC
+	for <git@vger.kernel.org>; Mon, 23 Oct 2023 13:58:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lqly9MGr"
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E71C1E4
-	for <git@vger.kernel.org>; Mon, 23 Oct 2023 06:41:19 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-9be3b66f254so471686566b.3
-        for <git@vger.kernel.org>; Mon, 23 Oct 2023 06:41:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698068477; x=1698673277; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=n7ZdwAPDy4ZT3SiavQNVYQpl05oqCoydcjaUERt9nw4=;
-        b=Lqly9MGrLGLRy3taiQrwPN9rUFh/qs+jekTlVDr8ZlDmZBm6IcCA+CcnPiAAFWKq1/
-         67yDkYYpRQLA316dk7QtWwBkpDbuHuOs4ZiwdLmKy6D6OsoBi1lKQ1iQpSoa/rHdDhcG
-         uBT+ahmlPzkrSIbXXzAu0LoJ0ZmRolZ0+HW656NZghRrfmA5mAc3kxBNez9aTva1aSoo
-         E6UEHQq5cTY8WRwrh3hSDorbdbvaW2Nw0VLlR0Kdq3/o12b8urEz7+0yWX5GYFKJw1d8
-         pCuQpdIjZJyZu/ft4jlkdEYur1k7GDuuKKYsAnxQq4z8a/feWUNWQ7LueK8tZr1VzeiZ
-         s43Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698068477; x=1698673277;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=n7ZdwAPDy4ZT3SiavQNVYQpl05oqCoydcjaUERt9nw4=;
-        b=ZV4vB1RcwSycHk4qMEMDyje/NsHbQr9uULhtdtrpCzgfOEUhldIa7U0IkEal9CIGiR
-         lUPhwficImLGWwcT5clwOOS0fVg1ZzC7V5zpfHMQszTo/nuqRzHKMvsy5UzYwYtMYTrY
-         KdFTYDsHSkCRxJcKX89K2qfqpx+Or1m8FVPZ60QnqH4o3mF7RGQY5QlZu5/u/rAptlN9
-         MVDe/vFwitLZ3y3/k5l38GAhws3Ul2Af5YfS0ogAdqw/Si2geVWRz4g4X6MmVM/SPKS9
-         pbrCU8s5Rjw6ErlXa6g1aTA+gA1SeWLkcFGApjzkW9B5hbcoF6qs/g2GIdGKfI3oX1gZ
-         +1WQ==
-X-Gm-Message-State: AOJu0YzlWiSBNUETFRuFovVyPeduWnzEl5h7hUP4K8N2JdtJNmX5gLLq
-	0gLb46qM/T+Rc8S9U91TZdjxfHwWiaugqiQ7NkSLpZSdTuY=
-X-Google-Smtp-Source: AGHT+IEUTVxD7UgRz8mzgYlvEITkTJw3NT8ayL5pCDz7AId4MUbzLXds/5te/AZVlDP1e5LBcuTo+Yces0FiH2odKXw=
-X-Received: by 2002:a17:907:a45:b0:9b2:ccd8:2d42 with SMTP id
- be5-20020a1709070a4500b009b2ccd82d42mr6290562ejc.32.1698068476907; Mon, 23
- Oct 2023 06:41:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gtk2m/a7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Eu9DIiS/"
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5A2110B
+	for <git@vger.kernel.org>; Mon, 23 Oct 2023 06:58:17 -0700 (PDT)
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailout.nyi.internal (Postfix) with ESMTP id E1F435C0332;
+	Mon, 23 Oct 2023 09:58:16 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute7.internal (MEProxy); Mon, 23 Oct 2023 09:58:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to; s=fm3; t=1698069496; x=1698155896; bh=C7
+	aeqj34qEDMRr1o8remr5ulI7fvJroUD4cG0uQEsSo=; b=gtk2m/a7wlxDEiv1eN
+	1Uamd/0ajry5rWEcMNkC6x14nF8ER1Eym89dkdLrlkPQlCdq99zUgg5Px+F+R/Yi
+	a8X6yXx725lVNd8ZcjygixXsTNFo14vVLZv9Flq6Q2C3AOONmkpheq5d3vm6xEw8
+	W5Ker4BfPwrJ8dgDiGeepH7gVojQqiuUZTgrqLT4/5vHDbWL8Wm6+b2jn2Jhgooe
+	Uny/hdY58XqsygUKLJ4eyMGUWR8+F/Zztwm/e1ViRZdKrAjYw6mOXSN6n6yJv+hj
+	PEAeD7VABOcul4dGdW582LciLR5VDfWLswqCJXvXcZ/EZGpXgDoLPZmLU5RxU5QP
+	wYOg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm3; t=1698069496; x=1698155896; bh=C7aeqj34qEDMR
+	r1o8remr5ulI7fvJroUD4cG0uQEsSo=; b=Eu9DIiS/yvmuqBSNkqqWC849HnQhL
+	MfOgnksJJnJaGzzVAXOFEAeEZy4do6pEB3wMoxr6H5MLztWH8SS5a0+TXfhXZGUi
+	cw0vtJrjnKOjuL2242Hr7KMmdsIinboRelk9fS057k0/sCDwYHq9kTLkOVzT3HRF
+	jNs0rZ32xDloKSYm/pSYUDlggmMLvuFHJam4887PQ4uER2XIuxP9NmEhL9tJ/2Ig
+	21/35t+X2wnpDnImh+FUaW9WAALp0mZCYu4uBY1WKBlXi7UaeOA4vgGp+JfPL184
+	eQhEuShYjdBwX6goIt6uFHFhzllv4qdqVXDzQ3Xlknip9j9z+WtkGOtbQ==
+X-ME-Sender: <xms:-Hs2ZU0tfnAz81QjP0QhRLduZI1_u_f_vsj4qQ2NEUgDk8pIJUFpKg>
+    <xme:-Hs2ZfGTXhPpo0CA-jYhz2SYt5wsByHKm4EhoHs5LM_cH6lLFK6W3kQwSqC9iFLir
+    85o7AvEjH6l_RTH1A>
+X-ME-Received: <xmr:-Hs2Zc7bu48HLyPK-5teeSsiJVccGPPVUhTddngYk3MmZT-DxV3UaPB-DURVJP7vAZ6LS6rn_4KEkMduoY89UbnUoGfMlX2aESF6CVBcEpr9>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrkeeigdeilecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeetueevhffhudefvdegieeuieelgedthfegfedtueevjeejtdfgjeehudejuedtuden
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhm
+X-ME-Proxy: <xmx:-Hs2Zd0WQ4XoELsPsxVgj9SDi0kyF-pKPQ-HPo7ZIe755hSNjQ4dBw>
+    <xmx:-Hs2ZXEOG_qV7OaS7Cd7eQ7OLGwzPYZ4uaCPhecULFsZUoxyHy_svw>
+    <xmx:-Hs2ZW9IkZsDsvuNhEP86tgnPlPf-lyDclpwWWawwpj9bJdI9tM76Q>
+    <xmx:-Hs2ZdNAIYWCsmigBkOAVQI44VuhLLDzUStZ-rhgjrYoIwKLIUPtPg>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 23 Oct 2023 09:58:15 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 9462acfa (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 23 Oct 2023 13:58:11 +0000 (UTC)
+Date: Mon, 23 Oct 2023 15:58:12 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Han-Wen Nienhuys <hanwen@google.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH 00/11] t: reduce direct disk access to data structures
+Message-ID: <ZTZ79DENl6c-1C0q@tanuki>
+References: <cover.1697607222.git.ps@pks.im>
+ <xmqqbkcwuetq.fsf@gitster.g>
+ <CAFQ2z_Om724+o+EG1FAhC9VrvJECnQ5UA+Z04Rzycpi_mXvMHg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAFR+8DynAJ7eieMYUrezoNii5tzARNbESFxRCcT4w6okS5FZDg@mail.gmail.com>
- <xmqqedibzgi1.fsf@gitster.g> <CAFR+8DyN8vbuvdgZPkSVqS2=sqconwhx3QfcpJ0+Wi_oCA=s0w@mail.gmail.com>
- <CAFR+8Dz717pcc2Lm_J29xxiBt-kUrMP4JAUbm=3XaJuJPYseHg@mail.gmail.com> <CAFR+8Dwxr3iV+R7een0t2sYXUWu1XHhQcLVuqMhOsSg9Bt4wrg@mail.gmail.com>
-In-Reply-To: <CAFR+8Dwxr3iV+R7een0t2sYXUWu1XHhQcLVuqMhOsSg9Bt4wrg@mail.gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Mon, 23 Oct 2023 15:41:05 +0200
-Message-ID: <CAP8UFD0A_vWCZ5cVAZqdTBebdhZNye_FmNNJF+vA7epUx2JWHQ@mail.gmail.com>
-Subject: Re: [Outreachy] Move existing tests to a unit testing framework
-To: Achu Luma <ach.lumap@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="qCz1R6Q9aFUh6ZnD"
+Content-Disposition: inline
+In-Reply-To: <CAFQ2z_Om724+o+EG1FAhC9VrvJECnQ5UA+Z04Rzycpi_mXvMHg@mail.gmail.com>
+
+
+--qCz1R6Q9aFUh6ZnD
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Oct 20, 2023 at 3:16=E2=80=AFPM Achu Luma <ach.lumap@gmail.com> wro=
-te:
->
-> Dear Git Community and Mentors,
->
-> I hope this email finds you well. As a follow-up to my previous applicati=
-on, I'd like to provide additional details on the process of migrating exis=
-ting unit tests from the t/helper/ directory to the new Git unit test frame=
-work.
+On Thu, Oct 19, 2023 at 12:13:12PM +0200, Han-Wen Nienhuys wrote:
+> On Wed, Oct 18, 2023 at 5:32=E2=80=AFPM Junio C Hamano <gitster@pobox.com=
+> wrote:
+> > > this patch series refactors a bunch of our tests to perform less dire=
+ct
+> > > disk access to on-disk data structures. Instead, the tests are conver=
+ted
+> > > to use Git tools or our test-tool to access data to the best extent
+> > > possible. This serves two benefits:
+> >
+> > Laudable goal.
+> >
+> > >     - We increase test coverage of our own code base.
+> >
+> > Meaning the new code added to test-tool for this series will also
+> > get tested and bugs spotted?
 
-Thanks for these details!
+For now all the helpers of the test-tool only have implicit test
+coverage, but I get your point. If we decide to instead transform this
+test tool into production-level code as you suggested (e.g. `git
+rev-parse --exists`) then this becomes less of a discussion point as we
+would of course have proper test coverage for it.
 
-> -- Identify Target Unit Tests: Start by identifying the specific unit tes=
-ts in the t/helper/ directory that we want to port to the new Git unit test=
- framework. Ensure that the tests are suitable for migration and that the b=
-enefits of doing so outweigh the effort(By avoiding integration tests). The=
- following points have been developed with on going work on the unit-tests =
-framework visible here:
->
-> 1- https://lore.kernel.org/git/0169ce6fb9ccafc089b74ae406db0d1a8ff8ac65.1=
-688165272.git.steadmon@google.com/
-> 2- https://github.com/steadmon/git/blob/unit-tests-asciidoc/Documentation=
-/technical/unit-tests.adoc
+> > >     - We become less dependent on the actual on-disk format.
+> >
+> > Yes, this is very desirable.  Without looking at the implementation,
+> > I see some issues aiming for this goal may involve. [a] using the
+> > production code for validation would mean our expectation to be
+> > compared to the reality to be validated can be affected by the same
+> > bug, making two wrongs to appear right; [b] using a separate
+> > implementation used only for validation would at least mean we will
+> > have to make the same mistake in unique part of both implementations
+> > that is less likely to miss bugs compared to [a], but bugs in shared
+> > part of the production code and validation code will be hidden the
+> > same way as [a].
+>=20
+> I think it would be really great if there were separate unittests for
+> the ref backend API. Some of the reftable work was needlessly
+> difficult because the contract of the API was underspecified. The API
+> is well compartmentalized in refs-internal.h, and a lot of the API
+> behavior can be tested as a black box, eg.
+>=20
+> * setup symref HEAD pointing to R1
+> * setup transaction updating ref R1 from C1 to C2
+> * commit transaction, check that it succeeds
+> * read ref R1, check if it is C2
+> * read reflog for R1, see that it has a C1 =3D> C2 update
+> * read reflog for HEAD, see that it has a C1 =3D> C2 update
+>=20
+> Tests for the loose/packed backend could directly mess with the
+> on-disk files to test failure scenarios.
+>=20
+> With unittests like that, the tests can zoom in on the functionality
+> of the ref backend, and provide more convenient coverage for
+> dynamic/static analysis.
 
-Maybe if you have time you could add some descriptions or comments
-related to the above emails and documents. For example you could tell
-what the new unit test framework will be like, how the unit tests will
-look like, etc. Maybe a short overview would be nice.
+Agreed. Ideally, I think our tests should be split up into two layers:
 
-You could also try to apply the patches in the series that adds the
-test framework, or alternatively use the 'seen' branch where the
-series has been merged, and start playing with it by writing, or
-porting, a small example test.
+    1. Low-level tests which are backend specific. These allow us to
+       assert the on-disk state of the respective backend thoroughly and
+       also allow us to explicitly test for edge cases that are only of
+       relevance to this specific backend.
 
-> -- Create a New C Test File: For each unit test I plan to migrate, create=
- a new C source file (.c) in the Git project's test suite directory(t/unit-=
-tests). Name it appropriately to reflect the purpose of the test.
+       The reftable backend in its current (non-upstream) already has
+       such tests, but we don't really have explicit tests for the files
+       backend. This is a gap that should ideally be filled at some
+       point in time.
 
-Could you provide an example of what the new name would be for an
-existing test that is worth porting?
+    2. Higher-level tests should then be allowed to assume that the
+       underlying logic works as expected. These tests are thus free to
+       use plumbing tools that tie into the reference backends.
 
-> --  Include Necessary Headers:In the new C test file, include the necessa=
-ry Git unit test framework headers. Typically, this includes headers like "=
-test-lib.h" and others relevant to the specific test.
-> #include "test-lib.h"
+Patrick
 
-Maybe you could continue the above example and tell which headers
-would be needed for it?
+--qCz1R6Q9aFUh6ZnD
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> -- Convert Test Logic: Refactor the test logic from the original Shell sc=
-ript into the new C-based test format. Use the testing macros provided by t=
-he Git unit test framework, such as test_expect_success, test_expect_failur=
-e, etc., to define the tests.
-> test_expect_success("simple progress display", "{
->     // Test logic here...
-> }");
+-----BEGIN PGP SIGNATURE-----
 
-Ok, a simple example would be nice too.
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmU2e/MACgkQVbJhu7ck
+PpSOsw/8D3lN4krl+uVG7rKaId5UspvTI/imV0ofQlUH/TzS1GdbqnLrsm9lJEW+
+iQUifq9Qem0xabjJ07ES6cdVZSnDMbcB9X7yMNfdgDZ7DZojnTxdfZV+q8UO8egy
+gs8qfqzIuRkzKklwzxP9v5n4ZG8hKBjSDDbeMVR+FB/lIxfn1nkn9xO46ZmtTMwk
+jUEE6tJuJV9kIZIUxD39GO/RsNtp9Q7tvxIBSBV8RzbjYykzg3LBjL3ULiNlGUZT
+KMUXmSC4VQzdB/G1d/3O+oPSuQeFlFWr0XnO0GGbkK16HvC7u8GIW05HVwFjyjUS
+bqyESKUnIVWtlmOPeT6pfK3Zllod3Q7sVijJYrgGDGKxG3R5WxPr8eXRlDQ+89+A
+ybUA+HcNXU9abM4rK46V5YKERzwlt/6/aQWD22vdki3ZfO2Vyu/KwyijqiBa3f73
+jFcHHOjUhv1dyzTV24FgfCvLcV6SN6ksuo0Bsp3B0A8Ia2kB4etaHUeEAfbEypAV
+9bR6JGiutjzOd29g4i0yelR0yN2wM43OX34hoxBso138pqbinlaPGIiZ62z4tsru
+XiHs5vcgXRjSAeqwBQiIt+PhzrJNkWWkM7ssAZookxxgn5bgwkFMgw2wmDe1x2A0
+10yRXLZS3yUecNLY/mSVdDOwjVPR02zCg/X4qyqjQnAF6hEDCVI=
+=syA3
+-----END PGP SIGNATURE-----
 
-> -- Add Test Descriptions: Provide clear and informative descriptions for =
-each test using the testing macros. These descriptions will help in identif=
-ying the purpose of each test when the test suite is run.
-
-This would seem to be part of the previous step, as you would have to
-provide a description when using the testing macro. But Ok.
-
-> -- Define a Test Entry Point: Create a cmd_main function as the entry poi=
-nt for the C-based tests. Inside this function, include the test functions =
-using the testing macros.
-> int cmd_main(int argc, const char **argv) {
->     // Test functions...
->     return test_done();
-> }
-
-Yeah, continuing an example would be nice.
-
-> -- Ensure TAP Format Output: Ensure that the C-based tests produce output=
- in the Test Anything Protocol (TAP) format. This format includes the test =
-name, status (ok or not ok), and any diagnostic information.
-
-That means using TEST* macros in the cmd_main() function, as they
-should do the right thing or is there more to be done here?
-
-> -- Test Interaction: Ensure that the migrated tests interact correctly wi=
-th the new Git unit test framework and any other tests that may be relevant=
-. Consider dependencies and interactions with other parts of the Git projec=
-t.
-
-I am not sure what work would be needed here. Is there more to do than
-compiling the test files? Having an example would be nice.
-
-> -- Test Execution: Run the migrated tests to verify that they produce the=
- expected results when executed as part of the Git project's test suite. Us=
-e the Git testing framework's test runners to execute the tests.
-
-Ok.
-
-> -- Documentation Update: Update the Git project's documentation to reflec=
-t the changes made during the migration. Include a reference to the origina=
-l unit tests in the t/helper/ directory and indicate that these tests have =
-been ported to the new Git unit test framework.
-
-I am not sure that we would want that. I think we might instead want
-to document things in t/helper/ that we don't want to port to the new
-unit test framework and why.
-
-> By following these points, I think I can successfully port existing unit =
-tests from the t/helper/ directory to use the new Git unit test framework. =
-This migration helps standardize and streamline the testing process within =
-the Git project, improving code quality and maintainability.
-
-Yeah!
-
-> Next Steps:
->
-> I am eager to discuss these suggestions and collaborate with the Git comm=
-unity to ensure the success of this project. I will continue to engage with=
- the community, seek guidance, and refine my proposal as per your suggestio=
-ns.
->  I look forward to the opportunity to contribute to the Git project and h=
-elp make it even more robust and reliable.
-
-Thanks for this application and sorry for the late answer!
-
-Best,
-Christian.
+--qCz1R6Q9aFUh6ZnD--
