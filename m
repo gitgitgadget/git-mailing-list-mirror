@@ -1,60 +1,67 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D6CA22EE7
-	for <git@vger.kernel.org>; Mon, 23 Oct 2023 20:19:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from bluemchen.kde.org (bluemchen.kde.org [209.51.188.41])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20E44D6E
-	for <git@vger.kernel.org>; Mon, 23 Oct 2023 13:19:49 -0700 (PDT)
-Received: from ugly.fritz.box (localhost [127.0.0.1])
-	by bluemchen.kde.org (Postfix) with ESMTP id B8E8523FE5;
-	Mon, 23 Oct 2023 16:19:47 -0400 (EDT)
-Received: by ugly.fritz.box (masqmail 0.3.6-dev, from userid 1000)
-	id 1qv1Ot-jTP-00; Mon, 23 Oct 2023 22:19:47 +0200
-Date: Mon, 23 Oct 2023 22:19:47 +0200
-From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-To: Jacob Stopak <jacob@initialcommit.io>
-Cc: Dragan Simic <dsimic@manjaro.org>, git@vger.kernel.org
-Subject: Re: [RFC PATCH 0/5] Introduce -t, --table for status/add commands
-Message-ID: <ZTbVY7Nf+DTYqHky@ugly>
-References: <d3bbe53c3b910f891c80465ea0c3f53f@manjaro.org>
- <ZTS4jfsU6oS6LW0u.jacob@initialcommit.io>
- <5fac8607a3c270e06fd610551d7403c7@manjaro.org>
- <ZTT5uI5Hm1+n0Agx@ugly>
- <58a6a25a7b2eb82c21d9b87143033cef@manjaro.org>
- <ZTZQZhtTxvGT/s81@ugly>
- <bc55e29274da0d8059a8cd4383aa1b22@manjaro.org>
- <ZTatzlzCkPOW3Rn7.jacob@initialcommit.io>
- <ZTa4iqe0lqn/Yg5L@ugly>
- <ZTbJiIkIyXwWK8JP.jacob@initialcommit.io>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EECC22EE7
+	for <git@vger.kernel.org>; Mon, 23 Oct 2023 20:20:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="WLOm3N/D"
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE894D73
+	for <git@vger.kernel.org>; Mon, 23 Oct 2023 13:20:02 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 5D1553FF74;
+	Mon, 23 Oct 2023 16:20:02 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=5Bm/G+yjm3sW
+	zEXVnIyIPz9djiuH6s8DjVQL/YekEc8=; b=WLOm3N/DuywoydQ52waBFibtjJBU
+	nZ3Ej/QuM32e/jBZeiVHgJs6ojeTg0qnYk5RYQ+p/yspF5EBYOjvDH+XJ4CSc6NY
+	OrO/LuSNrCRJknyeUcl75nqIZIX0/JogPskMclnHOqS911BSoxkViirYc23pGiSO
+	hwtTlXpPWJBzhCY=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 564BB3FF73;
+	Mon, 23 Oct 2023 16:20:02 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.198.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C94003FF70;
+	Mon, 23 Oct 2023 16:19:58 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Cc: Isoken June Ibizugbe <isokenjune@gmail.com>,  git@vger.kernel.org,
+  Dragan Simic <dsimic@manjaro.org>
+Subject: Re: [PATCH v3] builtin/branch.c: adjust error messages to coding
+ guidelines
+In-Reply-To: <14df596a-d0ef-46aa-97c6-3c9f0da1975f@gmail.com>
+ (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
+	message of "Mon, 23 Oct 2023 22:17:33 +0200")
+References: <39fd1327b2ae4f73689d70561a2f738d@manjaro.org>
+	<20231023160656.4341-1-isokenjune@gmail.com>
+	<14df596a-d0ef-46aa-97c6-3c9f0da1975f@gmail.com>
+Date: Mon, 23 Oct 2023 13:19:57 -0700
+Message-ID: <xmqqmsw9m6qa.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <ZTbJiIkIyXwWK8JP.jacob@initialcommit.io>
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 89CA9668-71E1-11EE-BBA3-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Oct 23, 2023 at 12:29:12PM -0700, Jacob Stopak wrote:
->Those arrows showing how things move only really apply to "simulating"
->(dry runs) for specific commands like add, restore, rm, commit, stash,
->etc, so making the --table proposal a default status output would still
->miss those scenarios.
+Rub=C3=A9n Justo <rjusto@gmail.com> writes:
+
+> The rest of the patch is equal to the previous iteration (v2), which
+> already seemed correct to me.
 >
-you're too focused on the status quo of your own tool. :-)
-there is really nothing that would speak against the real commands 
-reporting what they just *actually did*. this would seem rather helpful 
-for noobs and other insecure users.
-if one really wanted, "you can also use this with --dry-run" could be 
-part of the hint that would say how to turn off the extra verbosity (or 
-just the hint itself, if one likes the verbosity).
+> Thank you.
 
-one could even go one step further and put at least the destructive 
-commands into interactive/confirmation mode by default. but that's 
-probably a bridge too far, as it would be potentially habit-forming in a 
-bad way.
+Thanks, all.  Let's declare a victory and mark the topic to be
+merged to 'next'.
 
-regards
