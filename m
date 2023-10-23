@@ -1,71 +1,74 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37B2115E84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37BCC15E85
 	for <git@vger.kernel.org>; Mon, 23 Oct 2023 11:27:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lnxWsnS0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="djq+BGZr"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ty8U0mLw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Tfqbx1G7"
 Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 178D0E8
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7F8AC1
 	for <git@vger.kernel.org>; Mon, 23 Oct 2023 04:27:20 -0700 (PDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.west.internal (Postfix) with ESMTP id 977DE32007F9;
-	Mon, 23 Oct 2023 07:27:16 -0400 (EDT)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.west.internal (Postfix) with ESMTP id 0C498320097D;
+	Mon, 23 Oct 2023 07:27:19 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Mon, 23 Oct 2023 07:27:17 -0400
+  by compute1.internal (MEProxy); Mon, 23 Oct 2023 07:27:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:sender:subject:subject:to:to;
-	 s=fm3; t=1698060436; x=1698146836; bh=XROFSa9bm7OWnP90sJr3WgPmY
-	1e89ZTnfYqoxQcFOvU=; b=lnxWsnS0g/zDu3dZqqEhvQRHUP9Vac2/KZyxwolnw
-	pQhFHopJVmmVQg7aLMnFib1kyb20L0ONvFwNHURFpwyN4iYELMvoD+9CTAchboy0
-	F2WnSvsXUotSGYs3ZARt6MYMxzWUarpYX/8RqW3Yv94KOlzS17KEHiRoSRk5Gn1r
-	B/pwg4ojzVOBv/hkN9mDb95mD6vwBGZR3Hk5pAsmVrE4gwIDU9s+RCgw9qAAnlRY
-	Bvq2825jf6yQoPJ5ZU32m27qF+TdJeTlXKJI8+OHnBdp6gI3FCE907ao457Zkrz0
-	TjoyS/f0EiqmShHQlXPnCFxiA//+T9FiBvJZsJI3+nQ8g==
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to; s=fm3; t=1698060439; x=1698146839; bh=lF
+	CK0KTX+2Y/XXO2kKtdk0mvtPkS7kkoKSa2QgR1v0Q=; b=ty8U0mLwUtzJ5JuJxW
+	i/l8zN4PVY8o2R135vc0Bx9tTU6bfSusOSeKcu3YfAAggnbeWBFhUIiIBqNDXEbc
+	74fo5L2ucg7cj2cCakYuHVdbl0ZzgpxigzYOBVFoLuS1+/kC30yCZmgU/k54/KMV
+	9e1XS7HDWmKPuh0AOESjO9Uh9rthRajwB/gi0gdSMzrnqE6lK5OTeFQrLVPOOJvk
+	d2MamEIVATOkTqZWTf/upCGP+f/I/ljYh6/uAAhnMYDRPM46mdegpBGo59QVNMJr
+	n817WafAucKB0gKwD8t7m2KkiUAJeWCJX7M8+OxiLpvMhL65vseKZx/mxmy141Fp
+	FUoQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:sender:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1698060436; x=1698146836; bh=XROFSa9bm7OWnP90sJr3WgPmY1e89ZTnfYq
-	oxQcFOvU=; b=djq+BGZrDvTOJr329nYOizjpR0pC7PJygJ7wgH/TbVxpSY18ckZ
-	5iX7P4pPMUiZrKa3Xm+8bSvmTaQIMoFMf6V2RwjGoW+ymUeVQ4Y4PIMLaxvi2RuT
-	PKeqQ2yz0Tepa7qtiSxIyti/qacGr+AJpAmcB4e8okwniEOQQkpcF65172Z2Sg1c
-	7aZ8hThc29t/BPhiGUR0Uykt3llTuATQDH/RbtiN2sw2+74seicM/pVd7TOHM5eG
-	q85ZwOYNj22HIGNYinV/mvzaJx5GxQiYANf2Hr646Sc4CoiNgU3rWTsRM6RhgAWk
-	96/T6ezeooYW+CZMdY1/0YgwRWXuvX8Q2CQ==
-X-ME-Sender: <xms:k1g2ZVxy4gdP3ulUlpIS0DhFM5ve9nErs0HphEs5zwXRMK7292iy6g>
-    <xme:k1g2ZVR170qXsIdkx4lowoZ7QESSCmVqaeGykJES3eyjwTnwT24zGUI75Gi8w1M4v
-    VDKx9hJ4nb0xcN5rw>
-X-ME-Received: <xmr:k1g2ZfXELgREDw23y96HLP6ZkupueRQ5ghl3_fts5BsCoweNKIfXsYN8u5Y5ZXrFemhDqhcVjiuzWCayWL0pbgsmo9dD3SFkBsg5NMrNQvCE>
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm3; t=1698060439; x=1698146839; bh=lFCK0KTX+2Y/X
+	XO2kKtdk0mvtPkS7kkoKSa2QgR1v0Q=; b=Tfqbx1G7GDiC/m9EFxKJVQIYiQNV8
+	/gby+C9aEjTj09aApps4NE2eHXaBoEKJqXYqrsGnVtXUIKJHdc+gVJInVi/I+KZo
+	RPxbuiTZze2ehICykv4aMQaBmkF1+EtjSaRp4WAKMfvEjvaVPpNePjYVkpSttG8+
+	xZ4wE9g4xnH4IWxYkL4qtO3NCCX+Tk0yAOwQfwNjkjkMZW/DXKcCvoxlhkVeO3yd
+	chUC86IQe2kM4PqbgLXo8EnQRzQ5eKteRlm2Uncu2B8m/ahEUFelEL4c6AsEkbT7
+	IiTadhueKh1NyyR68y2IbEtqTg6CpPI/zSWwTZfUa+tHO8b6SG2AHsEiA==
+X-ME-Sender: <xms:l1g2ZQsXe_gvvF2CfOISSyFDG5EAq-TwI5eri6MLnhzFsBd-nBFfZQ>
+    <xme:l1g2ZdfNNnNCQWz86yTSeVnii3Ho0F8vML6HzOUfDWRftnsjodSGR2Af6XyhgtJhK
+    vVEoHKEt8rVwybS7w>
+X-ME-Received: <xmr:l1g2Zbwm2XarPOVs1xjDL8LaY1Gy9D6sbAErePBeBjX077qxjG1AOKpVabwdMY0DBuf1meo11Skdxh_6EnZC6QvsGzynB_KcYsHjCyCn2wBW>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrkeeigdeflecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfggtggusehgtderredttdejnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    eghfefveeuleehtdekteevfeejfeekteeiudeujedtleektdeltdektedttdegueenucff
-    ohhmrghinhepphhkshdrihhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:k1g2ZXhmnRnNN_wJ5bZ8oogm9zBfeMFcP_YrRnYjzejisbZpRfmwsg>
-    <xmx:k1g2ZXA1-BTbtkPW1gHwZLYqO0WTeqnHzD_5VtiQEUFk8jseQTRtmA>
-    <xmx:k1g2ZQL919ERZB9AfaU3suvGAmxt4Vb6jiy_DFf56fSyrGbjIYsqpw>
-    <xmx:lFg2ZeNA7uePtuJrjbwTY2IjhiyTyzX0CkBVFsHmTxQyg9YqpNNarg>
+    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhm
+X-ME-Proxy: <xmx:l1g2ZTPSdbWKjOGj-K47aMpzwtSB2bnn4j1oeN5E2YUH5J5F1W7KCQ>
+    <xmx:l1g2ZQ8WTFvqV_DF87_0U_1m9nHxOVP4dJl7l7feO52XgJWlqR0e_g>
+    <xmx:l1g2ZbV68RO6bRk1OyQokrr0q_lSDKGx8K7_rHmH-jqUHKS5N74Pkw>
+    <xmx:l1g2ZfahKJq1OhtA7E21wo8UfOtHeAtnNHvHy5SjZ6QQPcSS7O21Dw>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 23 Oct 2023 07:27:14 -0400 (EDT)
+ 23 Oct 2023 07:27:18 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 10da9b5d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 23 Oct 2023 11:27:10 +0000 (UTC)
-Date: Mon, 23 Oct 2023 13:27:11 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id c1d978b3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 23 Oct 2023 11:27:15 +0000 (UTC)
+Date: Mon, 23 Oct 2023 13:27:16 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
 	Jeff King <peff@peff.net>
-Subject: [PATCH v2 0/2] commit-graph: detect commits missing in ODB
-Message-ID: <cover.1698060036.git.ps@pks.im>
+Subject: [PATCH v2 1/2] commit-graph: introduce envvar to disable commit
+ existence checks
+Message-ID: <a89c4355285bc0bb0ec339818e6fe907f9ffd30e.1698060036.git.ps@pks.im>
+References: <cover.1698060036.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -73,206 +76,177 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="vaqLBqt0kDPRk91u"
+	protocol="application/pgp-signature"; boundary="mqHZ7MQatWDgc4+S"
 Content-Disposition: inline
+In-Reply-To: <cover.1698060036.git.ps@pks.im>
 
 
---vaqLBqt0kDPRk91u
-Content-Type: text/plain; charset=utf-8
+--mqHZ7MQatWDgc4+S
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+Our `lookup_commit_in_graph()` helper tries to look up commits from the
+commit graph and, if it doesn't exist there, falls back to parsing it
+=66rom the object database instead. This is intended to speed up the
+lookup of any such commit that exists in the database. There is an edge
+case though where the commit exists in the graph, but not in the object
+database. To avoid returning such stale commits the helper function thus
+double checks that any such commit parsed from the graph also exists in
+the object database. This makes the function safe to use even when
+commit graphs aren't updated regularly.
 
-this is version 2 of my patch series to more readily detect commits
-parsed from the commit graph which are missing in the object database.
-I've split this out into a separate thread as version 1 was sent in
-reply to a different series to extend git-rev-list(1)'s `--missing`
-option so that I don't continue to hijack this thread.
+We're about to introduce the same pattern into other parts of our code
+base though, namely `repo_parse_commit_internal()`. Here the extra
+sanity check is a bit of a tougher sell: `lookup_commit_in_graph()` was
+a newly introduced helper, and as such there was no performance hit by
+adding this sanity check. If we added `repo_parse_commit_internal()`
+with that sanity check right from the beginning as well, this would
+probably never have been an issue to begin with. But by retrofitting it
+with this sanity check now we do add a performance regression to
+preexisting code, and thus there is a desire to avoid this or at least
+give an escape hatch.
 
-Changes compared to v1:
+In practice, there is no inherent reason why either of those functions
+should have the sanity check whereas the other one does not: either both
+of them are able to detect this issue or none of them should be. This
+also means that the default of whether we do the check should likely be
+the same for both. To err on the side of caution, we thus rather want to
+make `repo_parse_commit_internal()` stricter than to loosen the checks
+that we already have in `lookup_commit_in_graph()`.
 
-    - I've added a preparatory patch that introduced a new
-      GIT_COMMIT_GRAPH_PARANOIA environment variable as suggested by
-      Peff. This envvar is retrofitted to the preexisting check in
-      `lookup_commit_in_graph()` so that the behaviour for this sanity
-      check is consistent.
+The escape hatch is added in the form of a new GIT_COMMIT_GRAPH_PARANOIA
+environment variable that mirrors GIT_REF_PARANOIA. If enabled, which is
+the default, we will double check that commits looked up in the commit
+graph via `lookup_commit_in_graph()` also exist in the object database.
+This same check will also be added in `repo_parse_commit_internal()`.
 
-    - `repo_parse_commit_internal()` now also honors this new envvar.
-
-    - I've amended the commit message in v2 to include the benchmark
-      that demonstrates the performance regression.
-
-    - We now un-parse the commit when parsing it via the commit graph
-      succeeded, but it doesn't exist in the ODB.
-
-Thanks for all the feedback and discussion around this.
-
-Patrick
-
-[1]: <b0bf576c51a706367a758b8e30eca37edb9c2734.1697200576.git.ps@pks.im>
-
-Patrick Steinhardt (2):
-  commit-graph: introduce envvar to disable commit existence checks
-  commit: detect commits that exist in commit-graph but not in the ODB
-
- Documentation/git.txt   |  9 ++++++++
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ Documentation/git.txt   |  9 +++++++++
  commit-graph.c          |  6 +++++-
  commit-graph.h          |  6 ++++++
- commit.c                | 16 +++++++++++++-
- t/t5318-commit-graph.sh | 48 +++++++++++++++++++++++++++++++++++++++++
- 5 files changed, 83 insertions(+), 2 deletions(-)
+ t/t5318-commit-graph.sh | 21 +++++++++++++++++++++
+ 4 files changed, 41 insertions(+), 1 deletion(-)
 
-Range-diff against v1:
--:  ---------- > 1:  a89c435528 commit-graph: introduce envvar to disable c=
-ommit existence checks
-1:  6ec1e340f8 ! 2:  0476d48555 commit: detect commits that exist in commit=
--graph but not in the ODB
-    @@ Commit message
-         behaviour by checking for object existence via the object database=
-, as
-         well.
-    =20
-    +    This check of course comes with a performance penalty. The followi=
-ng
-    +    benchmarks have been executed in a clone of linux.git with stable =
-tags
-    +    added:
-    +
-    +        Benchmark 1: git -c core.commitGraph=3Dtrue rev-list --topo-or=
-der --all (git =3D master)
-    +          Time (mean =C2=B1 =CF=83):      2.913 s =C2=B1  0.018 s    [=
-User: 2.363 s, System: 0.548 s]
-    +          Range (min =E2=80=A6 max):    2.894 s =E2=80=A6  2.950 s    =
-10 runs
-    +
-    +        Benchmark 2: git -c core.commitGraph=3Dtrue rev-list --topo-or=
-der --all (git =3D pks-commit-graph-inconsistency)
-    +          Time (mean =C2=B1 =CF=83):      3.834 s =C2=B1  0.052 s    [=
-User: 3.276 s, System: 0.556 s]
-    +          Range (min =E2=80=A6 max):    3.780 s =E2=80=A6  3.961 s    =
-10 runs
-    +
-    +        Benchmark 3: git -c core.commitGraph=3Dfalse rev-list --topo-o=
-rder --all (git =3D master)
-    +          Time (mean =C2=B1 =CF=83):     13.841 s =C2=B1  0.084 s    [=
-User: 13.152 s, System: 0.687 s]
-    +          Range (min =E2=80=A6 max):   13.714 s =E2=80=A6 13.995 s    =
-10 runs
-    +
-    +        Benchmark 4: git -c core.commitGraph=3Dfalse rev-list --topo-o=
-rder --all (git =3D pks-commit-graph-inconsistency)
-    +          Time (mean =C2=B1 =CF=83):     13.762 s =C2=B1  0.116 s    [=
-User: 13.094 s, System: 0.667 s]
-    +          Range (min =E2=80=A6 max):   13.645 s =E2=80=A6 14.038 s    =
-10 runs
-    +
-    +        Summary
-    +          git -c core.commitGraph=3Dtrue rev-list --topo-order --all (=
-git =3D master) ran
-    +            1.32 =C2=B1 0.02 times faster than git -c core.commitGraph=
-=3Dtrue rev-list --topo-order --all (git =3D pks-commit-graph-inconsistency)
-    +            4.72 =C2=B1 0.05 times faster than git -c core.commitGraph=
-=3Dfalse rev-list --topo-order --all (git =3D pks-commit-graph-inconsistenc=
-y)
-    +            4.75 =C2=B1 0.04 times faster than git -c core.commitGraph=
-=3Dfalse rev-list --topo-order --all (git =3D master)
-    +
-    +    We look at a ~30% regression in general, but in general we're stil=
-l a
-    +    whole lot faster than without the commit graph. To counteract this=
-, the
-    +    new check can be turned off with the `GIT_COMMIT_GRAPH_PARANOIA` e=
-nvvar.
-    +
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-    =20
-      ## commit.c ##
-    +@@
-    + #include "shallow.h"
-    + #include "tree.h"
-    + #include "hook.h"
-    ++#include "parse.h"
-    +=20
-    + static struct commit_extra_header *read_commit_extra_header_lines(con=
-st char *buf, size_t len, const char **);
-    +=20
-     @@ commit.c: int repo_parse_commit_internal(struct repository *r,
-      		return -1;
-      	if (item->object.parsed)
-      		return 0;
-     -	if (use_commit_graph && parse_commit_in_graph(r, item))
-     +	if (use_commit_graph && parse_commit_in_graph(r, item)) {
-    -+		if (!has_object(r, &item->object.oid, 0))
-    ++		static int object_paranoia =3D -1;
-    ++
-    ++		if (object_paranoia =3D=3D -1)
-    ++			object_paranoia =3D git_env_bool(GIT_COMMIT_GRAPH_PARANOIA, 1);
-    ++
-    ++		if (object_paranoia && !has_object(r, &item->object.oid, 0)) {
-    ++			unparse_commit(r, &item->object.oid);
-     +			return quiet_on_missing ? -1 :
-     +				error(_("commit %s exists in commit-graph but not in the object d=
-atabase"),
-     +				      oid_to_hex(&item->object.oid));
-    ++		}
-    ++
-      		return 0;
-     +	}
-     =20
-    @@ commit.c: int repo_parse_commit_internal(struct repository *r,
-      		return quiet_on_missing ? -1 :
-    =20
-      ## t/t5318-commit-graph.sh ##
-    -@@ t/t5318-commit-graph.sh: test_expect_success 'overflow during gener=
-ation version upgrade' '
-    +@@ t/t5318-commit-graph.sh: test_expect_success 'stale commit cannot b=
-e parsed when given directly' '
-      	)
-      '
-     =20
-    -+test_expect_success 'commit exists in commit-graph but not in object =
-database' '
-    ++test_expect_success 'stale commit cannot be parsed when traversing gr=
-aph' '
-     +	test_when_finished "rm -rf repo" &&
-     +	git init repo &&
-     +	(
-    @@ t/t5318-commit-graph.sh: test_expect_success 'overflow during genera=
-tion version
-     +		oid=3D$(git rev-parse B) &&
-     +		rm .git/objects/"$(test_oid_to_path "$oid")" &&
-     +
-    ++		# Again, we should be able to parse the commit when not
-    ++		# being paranoid about commit graph staleness...
-    ++		GIT_COMMIT_GRAPH_PARANOIA=3Dfalse git rev-parse HEAD~2 &&
-    ++		# ... but fail when we are paranoid.
-     +		test_must_fail git rev-parse HEAD~2 2>error &&
-     +		grep "error: commit $oid exists in commit-graph but not in the obje=
-ct database" error
-     +	)
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 11228956cd..22c2b537aa 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -911,6 +911,15 @@ for full details.
+ 	should not normally need to set this to `0`, but it may be
+ 	useful when trying to salvage data from a corrupted repository.
+=20
++`GIT_COMMIT_GRAPH_PARANOIA`::
++	If this Boolean environment variable is set to false, ignore the
++	case where commits exist in the commit graph but not in the
++	object database. Normally, Git will check whether commits loaded
++	from the commit graph exist in the object database to avoid
++	issues with stale commit graphs, but this check comes with a
++	performance penalty. The default is `1` (i.e., be paranoid about
++	stale commits in the commit graph).
++
+ `GIT_ALLOW_PROTOCOL`::
+ 	If set to a colon-separated list of protocols, behave as if
+ 	`protocol.allow` is set to `never`, and each of the listed
+diff --git a/commit-graph.c b/commit-graph.c
+index fd2f700b2e..12ec31902e 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -939,14 +939,18 @@ int repo_find_commit_pos_in_graph(struct repository *=
+r, struct commit *c,
+=20
+ struct commit *lookup_commit_in_graph(struct repository *repo, const struc=
+t object_id *id)
+ {
++	static int object_paranoia =3D -1;
+ 	struct commit *commit;
+ 	uint32_t pos;
+=20
++	if (object_paranoia =3D=3D -1)
++		object_paranoia =3D git_env_bool(GIT_COMMIT_GRAPH_PARANOIA, 1);
++
+ 	if (!prepare_commit_graph(repo))
+ 		return NULL;
+ 	if (!search_commit_pos_in_graph(id, repo->objects->commit_graph, &pos))
+ 		return NULL;
+-	if (!has_object(repo, id, 0))
++	if (object_paranoia && !has_object(repo, id, 0))
+ 		return NULL;
+=20
+ 	commit =3D lookup_commit(repo, id);
+diff --git a/commit-graph.h b/commit-graph.h
+index 20ada7e891..bd4289620c 100644
+--- a/commit-graph.h
++++ b/commit-graph.h
+@@ -8,6 +8,12 @@
+ #define GIT_TEST_COMMIT_GRAPH_DIE_ON_PARSE "GIT_TEST_COMMIT_GRAPH_DIE_ON_P=
+ARSE"
+ #define GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS "GIT_TEST_COMMIT_GRAPH_CHANGED=
+_PATHS"
+=20
++/*
++ * This environment variable controls whether commits looked up via the
++ * commit graph will be double checked to exist in the object database.
++ */
++#define GIT_COMMIT_GRAPH_PARANOIA "GIT_COMMIT_GRAPH_PARANOIA"
++
+ /*
+  * This method is only used to enhance coverage of the commit-graph
+  * feature in the test suite with the GIT_TEST_COMMIT_GRAPH and
+diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+index ba65f17dd9..c0cc454538 100755
+--- a/t/t5318-commit-graph.sh
++++ b/t/t5318-commit-graph.sh
+@@ -821,4 +821,25 @@ test_expect_success 'overflow during generation versio=
+n upgrade' '
+ 	)
+ '
+=20
++test_expect_success 'stale commit cannot be parsed when given directly' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit A &&
++		test_commit B &&
++		git commit-graph write --reachable &&
++
++		oid=3D$(git rev-parse B) &&
++		rm .git/objects/"$(test_oid_to_path "$oid")" &&
++
++		# Verify that it is possible to read the commit from the
++		# commit graph when not being paranoid, ...
++		GIT_COMMIT_GRAPH_PARANOIA=3Dfalse git rev-list B &&
++		# ... but parsing the commit when double checking that
++		# it actually exists in the object database should fail.
++		test_must_fail git rev-list -1 B
++	)
++'
++
+ test_done
 --=20
 2.42.0
 
 
---vaqLBqt0kDPRk91u
+--mqHZ7MQatWDgc4+S
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmU2WI4ACgkQVbJhu7ck
-PpTraQ//c3JF2PyZoxWRzRyfFE8ZZXkjlkhlHx23KmeDzeEKHpOFL9reHr2v4YA2
-1bnCny4W32rfwWhStJygeAA1kYXQykVCC+5Tuu6r3XX96EU8AlezxMIh4/ZxhKcZ
-rVMNDWPTd+r6Jh1pksLOdEJmMBvUkfDdj/2pfCo+q+/DTzDdaYHX3HoDUUu/Uffp
-GQ3edXYtbtjLey+RLdcoQRUXAhU344qDJkj5XpyxtkuIZOunIjK8Z3n70b7++E2e
-hKAUUy96k80/amJlEZKvSTvzLv5M4OzSuXR/MuY2cLGmAlFDpF5uqsQ3Op+Tj95d
-Ie69CUxe7YueZubhr/GI9jpODtXGFgxpnZulx8Ca+pjU0bnfXcQNYq0q9jeQ+zIU
-jZk8NjYCCFvCH2Upmexu39aFmGjfA5pgFI0LJdRdovh+wGfa3V9aTgdt9hkJo3n2
-4G870DcwqHPKrZaNNCfszJ/7TLzSx+w67VtCTXKhU4wHhDhfaJ6ZLqqlie3ewNvr
-G+CqkQPRO16fuMHEADJep40OetxWA9SET0hM7URPJoyvfVSbiyx/6zZ13mETXVC8
-Od8M19zDhi5KUS38S9/XmrDXz+REpn059QU7xIM80b+pLkplENdB8EKVyj+tCzc5
-kDRPkU3lUea9xA/G2gSxNHG171uzLilbYED/YehZL8Zc8UldOms=
-=YMYS
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmU2WJMACgkQVbJhu7ck
+PpTATg//X0ONNzQHxyxkIeipFo6GUbRQ1ZbG9u6umpt5FS3Re2pkaLKtIS30rpa2
+84ZmQKRwL/I2nBtzZzDkL/eSoreTAqCb6NJ0vCr/lOr2WcqI7Jmb4WYpd0lwkLf9
+PZUKy2iSk/4GcmV1AZbhRYfP1lco96xET7S1fuC2PjAYtOZ/FceHngDejjNV62et
+ckYn54hcXYJ6zt9Rrai030htdFNac6KzeBlSjDI2+o7mc/gq33HhhuuPJOp7MUwk
+ev1Nmd3+3olh+I5gwEM83cflNkc/il2DvIwYO6DyYy2mZkOciC/uHpH0rVB1Bunt
+djQj2czhEtte+OC215i1xQzujHmgGao92xMkVNEEpTzQu3SMBHHmBBndJN2ZBbQ2
+hlXm2+iLzRivnD5k5cgKSB56Xm3roZeSKcyoe4fMHPKKvh264/GvWhWbax6maoDv
+CPUsEVOl7/dTCbZnq8nfY1agLDi5vSWBMVX2hph3WIlneXvDVCoNo3YjeeUR60ll
+ED84lH8BdBzRWIK9EO277adtv1gLjTamXARNhDPFnxpBKNKOsYri3YEQPcW5L6i/
+Rear9foEFcQcfq1Td6OhnrUW1kT9W7JNoylVv2lf8z+QmkpJ93j+TcfVndsX1WRW
+1Ub/ZQsH/80cYmBBvp1zoQP5JvY33/fKn4cSiJr3FW+3rXn9aZI=
+=Bc2X
 -----END PGP SIGNATURE-----
 
---vaqLBqt0kDPRk91u--
+--mqHZ7MQatWDgc4+S--
