@@ -1,258 +1,106 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20D39637
-	for <git@vger.kernel.org>; Mon, 23 Oct 2023 14:24:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96BEA29A9
+	for <git@vger.kernel.org>; Mon, 23 Oct 2023 14:34:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cswysLLw"
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8A7AB3
-	for <git@vger.kernel.org>; Mon, 23 Oct 2023 07:24:17 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-9b96c3b4be4so492213766b.1
-        for <git@vger.kernel.org>; Mon, 23 Oct 2023 07:24:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698071056; x=1698675856; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vnQN97W5kQs5RQsysq4ecHDSro8zbyyXU0TNmNwAL2M=;
-        b=cswysLLw27chrjnhHI/BGtR7VDmu6hdcviFPZylEVHQ0nXiTlONe2I8/NiXu9d2sq6
-         tZMguOFsw2aCinI3KljGU+pP41koe+TfRb4JeZQk1EXF0G5oyTbS78uAlL3yCPjfeCzn
-         CJ/+8QZw6f2hF5ISyLrA0NCm4mgnBaIX2sAB+gFpm3Hx51yX5RlZ0FihTEADvy6Pbtlw
-         KRV9CNI3pWkIQP34+dnwn9HTMLtHFIXgERSCk+IGGHJj5B6Jlitd1TyjtkDNXKrveWiw
-         wwcMnIvkMqHt280kDVNyEVv3QvJZO2rPHNegP0sVPPks6cDuxLBsDPJWYDIPYI9PMLBb
-         YyyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698071056; x=1698675856;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vnQN97W5kQs5RQsysq4ecHDSro8zbyyXU0TNmNwAL2M=;
-        b=jTDKN7DtUVZocam5KKFPXIwND+mvHvI8ArhbiRZ1OrgfQdfKbyLvHaX//Mr17UByl9
-         F6LF1nyNGpN2RDDghmteRMRhUtl+x9fbeLTGnvoBQw3v5nL+WabmiqOjy4/Oly0+dKBe
-         knF7cWYh3KPuZLBKCqY84DWnqQEL1MAprUUA5xtkBA4SUYtXP2Xg+F3l064XDdUYJOGR
-         OnAmI9DePvw5cmP6NqI7qRoLWwZ0a4YR4aB3pMGTxBlxLmRNWMRB6MZUuB63+3PBJiJf
-         jMA8GdETInXX8zdhhrbDxKJg0knrD0UqKyxdOUMtOWYN93j8zHMfDzmDEjX69Eol1TJT
-         sqxg==
-X-Gm-Message-State: AOJu0YwQSHLjX2nLvnYZGrz5x79hiYbBM4druzYSqE8U+EMlFWd4OttW
-	2SZ8qAGd0J3/TQWALl15G9Pp9GAsltYZwlgtI/0=
-X-Google-Smtp-Source: AGHT+IEIHBK/C8+3d6mw1BgkfjseFU4vG60Km2u9x+Lqm6IJ2LK3KGfmaykUu3RcB3+gvAV2tsLprPIrRrq8ieaLiXg=
-X-Received: by 2002:a17:907:1c93:b0:9bf:70ea:6926 with SMTP id
- nb19-20020a1709071c9300b009bf70ea6926mr7483128ejc.2.1698071055731; Mon, 23
- Oct 2023 07:24:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="s3EHok03"
+Received: from mail.manjaro.org (mail.manjaro.org [IPv6:2a01:4f8:c0c:51f3::1])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D308D7C
+	for <git@vger.kernel.org>; Mon, 23 Oct 2023 07:34:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAJHH8bEfM8KmwhHX_Fmcb0A2zpr8L75vgNhfvZy-uitpSXNUvQ@mail.gmail.com>
-In-Reply-To: <CAJHH8bEfM8KmwhHX_Fmcb0A2zpr8L75vgNhfvZy-uitpSXNUvQ@mail.gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Mon, 23 Oct 2023 16:24:03 +0200
-Message-ID: <CAP8UFD22EpdBU8HJqFM+=75EBABOTf5a0q+KsbzLK+XTEGSkPw@mail.gmail.com>
-Subject: Re: [RFC][Outreachy] Seeking Git Community Feedback on My Application
-To: Isoken Ibizugbe <isokenjune@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1698071656;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Qd2KbLhy1nv9Brci3kdk5okvEkbxPuPfT+OCQJJqAUA=;
+	b=s3EHok03w73fJdXzLVALEoanlSm+LJACB3P69HRaCssM1MkuEWz23ZhAaXbyn7dW0rxyNC
+	4H2uQFBuH3taX3EfMKWbgi0L+FnrIr8tZrOrfVuYGmZj1j2r/05hLVleq2AbnC1RTPhENd
+	JcJ0qy3fZj09BZfhavv/MctNw3aZvWqNNM5HS/S1Y62LPdtGO8sacfqVliS4SbebEpcsAN
+	ZxyeWq7/GZo4NB3lRNTllBb+zCEXI10ihUF2ytrpYr/CN1arIeH/saO8WDhGvt8V0vQxU9
+	qsPa3E4MnqBtKJCWLtxC9LppiWmkSk0385UFzhxJp8KxJl/nqYoRVuo83fXNQw==
+Date: Mon, 23 Oct 2023 16:34:15 +0200
+From: Dragan Simic <dsimic@manjaro.org>
+To: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Cc: Jacob Stopak <jacob@initialcommit.io>, git@vger.kernel.org
+Subject: Re: [RFC PATCH 0/5] Introduce -t, --table for status/add commands
+In-Reply-To: <ZTZQZhtTxvGT/s81@ugly>
+References: <20231020183947.463882-1-jacob@initialcommit.io>
+ <fd26df85661d554ced9d8e0445f75952@manjaro.org>
+ <ZTL1wJIIK/5YWQK5.jacob@initialcommit.io>
+ <d3bbe53c3b910f891c80465ea0c3f53f@manjaro.org>
+ <ZTS4jfsU6oS6LW0u.jacob@initialcommit.io>
+ <5fac8607a3c270e06fd610551d7403c7@manjaro.org> <ZTT5uI5Hm1+n0Agx@ugly>
+ <58a6a25a7b2eb82c21d9b87143033cef@manjaro.org> <ZTZQZhtTxvGT/s81@ugly>
+Message-ID: <bc55e29274da0d8059a8cd4383aa1b22@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-On Thu, Oct 19, 2023 at 11:26=E2=80=AFAM Isoken Ibizugbe <isokenjune@gmail.=
-com> wrote:
->
-> Dear Git Community and Mentors,
->
-> I hope you're doing well. I'm excited to share my application draft
-> for the Outreachy program with the Git project. Your feedback is
-> invaluable, and I'm eager to align the project with the community's
-> needs. Please review the attached draft and share your insights.
+On 2023-10-23 12:52, Oswald Buddenhagen wrote:
+> On Sun, Oct 22, 2023 at 02:55:05PM +0200, Dragan Simic wrote:
+>> Oh, that's awesome and I'm really happy to be wrong with my broad
+>> classification of VCS users.  However, I still need to be convinced
+>> further, and I'd assign your example as an exception to the rules,
+> 
+> i don't see myself as exceptional at all in that regard.
+> in fact, your second user group seems like unicorns, and the first
+> like a disparaging attitude from an elitist. in reality, users lie on
+> a spectrum of willingness to engage with the details of the tools they
+> use, and that willingness is circumstantial. a tool that is
+> forthcoming with information has a higher chance of being actively
+> engaged.
 
-Thanks for your project application!
+Actually, I see myself as some kind of a slave worker who just keeps 
+typing on his keyboard and helps the elite (i.e. the "normal people") to 
+enjoy their lives.  In other words, my viewpoint is totally opposite of 
+how you perceived it.
 
-[...]
+>> and because you use the command line a lot.
+>> 
+> in my experience, this isn't uncommon for users of "discrete" vcs'es
+> at all, even if they aren't too interested in the details. they just
+> copy "magic incantations" from stackoverflow, etc. - disgusting,
+> right? ;-)
 
-> Why am I interested in working with the Git chosen project?
->
-> Git has been a cornerstone for software development, enabling
-> developers worldwide to collaborate, innovate, and create exceptional
-> software. I would say without Git, my journey to pursuing my software
-> engineering career would be impossible, as I use it almost every day.
-> Yet, in this constantly evolving landscape, there is always room for
-> improvement, even in a well-established project. The Git project
-> currently relies on end-to-end tests, and this is where I see an
-> opportunity to make a profound impact. Being able to test libraries in
-> isolation via unit tests or mocks speeds up determining the root cause
-> of bugs. I am deeply passionate about contributing to this project and
-> firmly believe in the power of open-source software and the collective
-> intelligence of the community. A successful completion of this project
-> will significantly improve Git's testing capabilities and bring the
-> benefits of fewer errors, faster work and better testing for all
-> parts.
+Good point.  Various commands are often simply copied and pasted with 
+little understanding.  I guess that makes people content, as one of 
+their life choices.  I can respect that.
 
-Ok.
+>> I also ask myself why would I use git-gui or any other GUI utility?
+>> To me, clicking on something that represents a file is often simply
+>> wrong.
+> 
+> that makes you an outlier. most people find point-and-click
+> interaction rather intuitive and significantly more efficient than
+> encoding their intent into character sequences.
 
-[...]
+Well, I guess I'm different.  As I already wrote above, I see myself as 
+some kind of a "slave worker" who helps in enabling others (i.e. the 
+"elite") to do whatever they want.
 
-> Contributions to Git
->
-> I have actively participated in Git's mailing list discussions and
-> contributed to a micro-project;
->
-> - builtin/branch.c: Adjust error messages such as die(), error(), and
-> warning() messages used in branch, to conform to coding guidelines
-> (https://lore.kernel.org/git/20231019084052.567922-1-isokenjune@gmail.com=
-/)
-> - Implemented changes to fix broken tests based on reviews from the
-> community (https://lore.kernel.org/git/20231019084052.567922-1-isokenjune=
-@gmail.com/)
-> - In review.
+> you should however consider whether your preferences are a good
+> default for the wider audience, even within the context of the command
+> line.
 
-Nice!
+Actually, some of my own preferences for my environment, when it comes 
+to the git configuration, are not the defaults.
 
-> Project Goals:
->
-> - Improve Testing Efficiency: Transitioning from end-to-end tests to
-> unit tests will enable more efficient testing of error conditions.
-> - Codebase Stability: Unit tests enhance code stability and facilitate
-> easier debugging through isolation.
-> - Simplify Testing: Writing unit tests in pure C simplifies test
-> setup, data passing, and reduces testing runtime by eliminating
-> separate processes for each test.
+> i for one think that it would be a perfectly valid experiment to go
+> all-in and beyond with jacob's proposal - _and make it the default_
+> (when the output is a tty). more advanced users who feel annoyed would
+> be expected to opt out of it via configuration, as they are for the
+> advice messages. because it's really the same idea, only thought
+> bigger.
 
-Ok.
-
-> Project Milestones:
->
-> - Add useful tests of library-like code
-> - Integrate with stdlib work
-
-Not sure what you call "stdlib" here.
-
-> - Run alongside regular make test target
->
-> Project Timeline:
->
-> 1. Oct 2 - Nov 20: Community Bonding
->
-> - Understanding the structure of Git
-> - Getting familiar with the code
-
-I think some of this time is also spent on working on a microproject,
-writing an application and perhaps doing other things that regular Git
-developers do.
-
-> 2. Dec 4 - Jan 15: Add useful tests of library-like code
->
-> - Identify and document the current state of the tests in the Git
-> t/helper directory.
-
-It would be nice if you could already take a look at that and tell us
-about it in your application. There are different things in t/helper.
-Some are worth porting and others are not. You might not want (or have
-time to) to classify everything right now, but if you can identify a
-few of each kind, and use those, or just one of them, as an example,
-that would be great.
-
-> - Confirm the licensing and compatibility requirements for the chosen
-> unit testing framework.
-
-I think those who have been working on the unit test framework have
-already done this.
-
-> - Develop unit tests for these library-like components.
-
-Not sure what are "these library-like components". An example would
-perhaps help.
-
-> - Execute the tests and ensure they cover various scenarios, including
-> error conditions.
-> - Run the tests and address any initial issues or bugs to ensure they
-> work as intended.
-
-Ok.
-
-> - Document the new tests and their coverage.
-
-What kind of documentation would that be?
-
-> - Seek feedback  and support from mentors and the Git community
->
-> 3. Jan 15 - Feb 15: Integrate with Stdlib Work
->
-> - Collaborate with the team working on standard library integration.
-
-Not sure what "standard library". Actually, maybe you are talking
-about the goal of having a "standard library" implementation for Git
-which is described in this report from the Virtual Contributor's
-Summit:
-
-https://lore.kernel.org/git/ZRrfN2lbg14IOLiK@nand.local/
-
-It's true that the unit test framework would help with that goal. So
-yeah maybe you will have to collaborate with the team working on that
-goal. I am not sure at what step the work on this library will be when
-the internship will start though.
-
-> - Ensure that the tests for library-like code align with stdlib work.
-> - Verify that the tests effectively check the compatibility and
-> interaction of the code with standard libraries.
-> - Gather feedback and insights from the Git community on the
-> integrated tests, addressing any concerns or suggestions.
-
-Ok, but I think it would be more interesting to follow the steps with
-an example test.
-
-> 4. Feb 15 - March 1: Run Alongside Regular 'make test' Target and finaliz=
-e
->
-> - Configure the testing framework to run alongside the regular 'make
-> test' target.
-
-I think others will likely take care of that sooner.
-
-> - Ensure that the new tests are included in the standard testing suite.
-> - Execute 'make test' with the new tests and verify that they pass succes=
-sfully.
-> - Document the integration process and how the new tests are included
-> in the standard testing procedure.
-> - Perform comprehensive testing of the entire unit testing framework.
-> - Ensure all migrated tests are working correctly within the new framewor=
-k.
-> - Document the entire process of migrating Git's tests
-> - Prepare a final project report
-
-Ok, but here also following an example test would be more interesting.
-
-> Technical Requirements
->
-> According to the documentation on the unit test project
-> (https://github.com/steadmon/git/blob/unit-tests-asciidoc/Documentation/t=
-echnical/unit-tests.adoc),
-> the suggested best framework for the Git project is the "Custom TAP
-> framework" (Phillip Wood's TAP implementation), as it aligns with
-> Git's licensing requirements, is vendorable, and can be customized by
-> Git's developers as needed, but it may require some additional
-> development work for features like parallel execution and mock
-> support, but it offers a strong foundation for unit testing within the
-> Git project.
-
-Yeah, right. Thanks for summarizing that document!
-
-> Relevant Projects
->
-> Simple shell -  A project based on emulating a shell. It was a
-> collaborative project which we managed using Git.
-> (https://github.com/Junie06/simple_shell).
-> This project was written in C, which allowed me to apply my C language
-> knowledge, essential for Git projects.
-> I'm proficient in using Shell for scripting, redirections, and
-> permissions, as shown in my work
-> (https://github.com/Junie06/alx-system_engineering-devops).
-> Creating the simple shell project deepened my understanding of how
-> shells work, and I even attempted to replicate a shell environment.
-> Collaborating on the Simple Shell project reinforced my Git skills.
-
-Ok, nice!
-
-Best,
-Christian.
+I'd never support that, FWIW.
