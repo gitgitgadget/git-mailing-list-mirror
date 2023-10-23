@@ -1,106 +1,96 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96BEA29A9
-	for <git@vger.kernel.org>; Mon, 23 Oct 2023 14:34:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 329EC18E23
+	for <git@vger.kernel.org>; Mon, 23 Oct 2023 14:48:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="s3EHok03"
-Received: from mail.manjaro.org (mail.manjaro.org [IPv6:2a01:4f8:c0c:51f3::1])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D308D7C
-	for <git@vger.kernel.org>; Mon, 23 Oct 2023 07:34:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OTEvgOXl"
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 466BDD7A
+	for <git@vger.kernel.org>; Mon, 23 Oct 2023 07:48:03 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-507a98517f3so4677049e87.0
+        for <git@vger.kernel.org>; Mon, 23 Oct 2023 07:48:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1698072481; x=1698677281; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HPVrnpNpiOblV3Uw3lRo4m6/ic2m9xyL5/1sjC2HLMw=;
+        b=OTEvgOXlIEgfWkgDmGo9XzPNUn3L3DOeHMFUuccUPNMcFPX1O9tw/0Bf4Wo+mE9e6F
+         vKfE6p+du9k+e6qtEloqU1weLL/jkBRmqmXYO3WRPYminB5SZO1RtgwHA1tr4nuy0gpZ
+         PDbtTbFd0+fUNa61ghHUysZYa/VhPwIm5U9nb4xZptd0g3zdhPxwo2fXn+EIvWD01xQc
+         DemMKnRCB3ndQfMqsydcooW6t4pjz+IkMD30RH2PB3xQzED8Pzfnny/yL50npgr+RjOH
+         fLA/wIYVjwpE0g2QYD2OcyCJ+uM6GZ9NswOAxbe5fTMMrVNMuDiq8QNKTkMZsFyZ/5v3
+         C2iA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698072481; x=1698677281;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=HPVrnpNpiOblV3Uw3lRo4m6/ic2m9xyL5/1sjC2HLMw=;
+        b=Edt1bPUE9kENjuG2N9R1pE4Yu+MwF7UNXnqkP0Od3zSeoiP3xYrQ2KfGC9UHOJz9uz
+         hR+VAetrTHqTqUfNrWNNuik4OveZ6SwzYCGVqMoz6/Keo5OstxoJkPM/SalGFCX6e/Tj
+         gjtrp+xAKSruTvmI67VcVDJkdvt7g3/42P2PDDmk1RNMfiW1dYTCU/Ww4A/5sr8OdVtq
+         RxJFP5ElUUbMxcUf8Ss9vGCEXBJYUwzLpDlX2OQGCtFF6s3q3vDtDq2Y6NhWzwoNShBK
+         o3qYCTuktqVD1OYFiQqTSlzwFOV0sW+hX4suudnizy4i5pJ47Jvr6cZUZtpzuii+A155
+         3yew==
+X-Gm-Message-State: AOJu0YxYkC3gekAtLQx8Qyn1FYYfza5Oy8ea+4f5OykOeRIi1m/9b75f
+	2nAiNwt5OK/s81dCx2/jjA9cieV8estrpkEE+yy502K0krBF5g==
+X-Google-Smtp-Source: AGHT+IFzvd0TgUegEAxos4hmCXTRJOJd6x4MuMe05KUynXQj7lDgGRVDcdi4FL93i5p6acmGZOGkrojcGft9RF7UM2s=
+X-Received: by 2002:ac2:5311:0:b0:507:a1e0:22f4 with SMTP id
+ c17-20020ac25311000000b00507a1e022f4mr5933317lfh.29.1698072481117; Mon, 23
+ Oct 2023 07:48:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1698071656;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Qd2KbLhy1nv9Brci3kdk5okvEkbxPuPfT+OCQJJqAUA=;
-	b=s3EHok03w73fJdXzLVALEoanlSm+LJACB3P69HRaCssM1MkuEWz23ZhAaXbyn7dW0rxyNC
-	4H2uQFBuH3taX3EfMKWbgi0L+FnrIr8tZrOrfVuYGmZj1j2r/05hLVleq2AbnC1RTPhENd
-	JcJ0qy3fZj09BZfhavv/MctNw3aZvWqNNM5HS/S1Y62LPdtGO8sacfqVliS4SbebEpcsAN
-	ZxyeWq7/GZo4NB3lRNTllBb+zCEXI10ihUF2ytrpYr/CN1arIeH/saO8WDhGvt8V0vQxU9
-	qsPa3E4MnqBtKJCWLtxC9LppiWmkSk0385UFzhxJp8KxJl/nqYoRVuo83fXNQw==
-Date: Mon, 23 Oct 2023 16:34:15 +0200
-From: Dragan Simic <dsimic@manjaro.org>
-To: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Cc: Jacob Stopak <jacob@initialcommit.io>, git@vger.kernel.org
-Subject: Re: [RFC PATCH 0/5] Introduce -t, --table for status/add commands
-In-Reply-To: <ZTZQZhtTxvGT/s81@ugly>
-References: <20231020183947.463882-1-jacob@initialcommit.io>
- <fd26df85661d554ced9d8e0445f75952@manjaro.org>
- <ZTL1wJIIK/5YWQK5.jacob@initialcommit.io>
- <d3bbe53c3b910f891c80465ea0c3f53f@manjaro.org>
- <ZTS4jfsU6oS6LW0u.jacob@initialcommit.io>
- <5fac8607a3c270e06fd610551d7403c7@manjaro.org> <ZTT5uI5Hm1+n0Agx@ugly>
- <58a6a25a7b2eb82c21d9b87143033cef@manjaro.org> <ZTZQZhtTxvGT/s81@ugly>
-Message-ID: <bc55e29274da0d8059a8cd4383aa1b22@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+References: <CACS=G2zPH4+R6L8bQ8w=b8u1i6Zsj6xwMibghPKzPX7oGko_tw@mail.gmail.com>
+In-Reply-To: <CACS=G2zPH4+R6L8bQ8w=b8u1i6Zsj6xwMibghPKzPX7oGko_tw@mail.gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Mon, 23 Oct 2023 16:47:49 +0200
+Message-ID: <CAP8UFD2EXVmHb88rch0zsyA0v7vkitYVcONzJzGVc-DAVBvgyA@mail.gmail.com>
+Subject: Re: Outreachy Internship Project Timeline
+To: Naomi Ibe <naomi.ibeh69@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 2023-10-23 12:52, Oswald Buddenhagen wrote:
-> On Sun, Oct 22, 2023 at 02:55:05PM +0200, Dragan Simic wrote:
->> Oh, that's awesome and I'm really happy to be wrong with my broad
->> classification of VCS users.  However, I still need to be convinced
->> further, and I'd assign your example as an exception to the rules,
-> 
-> i don't see myself as exceptional at all in that regard.
-> in fact, your second user group seems like unicorns, and the first
-> like a disparaging attitude from an elitist. in reality, users lie on
-> a spectrum of willingness to engage with the details of the tools they
-> use, and that willingness is circumstantial. a tool that is
-> forthcoming with information has a higher chance of being actively
-> engaged.
+On Sun, Oct 22, 2023 at 7:17=E2=80=AFPM Naomi Ibe <naomi.ibeh69@gmail.com> =
+wrote:
+>
+> On the Outreachy website under the "Final application section", this
+> statement appears:
+> "Please work with your mentor to provide a timeline of the work you
+> plan to accomplish on the project and what tasks you will finish at
+> each step. Make sure take into account any time commitments you have
+> during the Outreachy internship round. If you are still working on
+> your contributions and need more time, you can leave this blank and
+> edit your application later."
+> Is there a link to where I can access the project timeline and
+> subsequently edit it?
 
-Actually, I see myself as some kind of a slave worker who just keeps 
-typing on his keyboard and helps the elite (i.e. the "normal people") to 
-enjoy their lives.  In other words, my viewpoint is totally opposite of 
-how you perceived it.
+We don't provide a timeline. Providing one is part of writing an
+application for the project and I am Ok to work with you on your
+application by reviewing it.
 
->> and because you use the command line a lot.
->> 
-> in my experience, this isn't uncommon for users of "discrete" vcs'es
-> at all, even if they aren't too interested in the details. they just
-> copy "magic incantations" from stackoverflow, etc. - disgusting,
-> right? ;-)
+I recently reviewed Isoken's application, see the thread starting with:
 
-Good point.  Various commands are often simply copied and pasted with 
-little understanding.  I guess that makes people content, as one of 
-their life choices.  I can respect that.
+https://lore.kernel.org/git/CAJHH8bEfM8KmwhHX_Fmcb0A2zpr8L75vgNhfvZy-uitpSX=
+NUvQ@mail.gmail.com/
 
->> I also ask myself why would I use git-gui or any other GUI utility?
->> To me, clicking on something that represents a file is often simply
->> wrong.
-> 
-> that makes you an outlier. most people find point-and-click
-> interaction rather intuitive and significantly more efficient than
-> encoding their intent into character sequences.
+and Luma's application, see the thread starting with:
 
-Well, I guess I'm different.  As I already wrote above, I see myself as 
-some kind of a "slave worker" who helps in enabling others (i.e. the 
-"elite") to do whatever they want.
+https://lore.kernel.org/git/CAFR+8Dz717pcc2Lm_J29xxiBt-kUrMP4JAUbm=3D3XaJuJ=
+PYseHg@mail.gmail.com/
 
-> you should however consider whether your preferences are a good
-> default for the wider audience, even within the context of the command
-> line.
+Hopefully my comments on these applications can help you get a better
+idea of what we would like to see in your application.
 
-Actually, some of my own preferences for my environment, when it comes 
-to the git configuration, are not the defaults.
+See also https://git.github.io/General-Application-Information/,
+especially the "Application (required)" section, about what should or
+could be in your application.
 
-> i for one think that it would be a perfectly valid experiment to go
-> all-in and beyond with jacob's proposal - _and make it the default_
-> (when the output is a tty). more advanced users who feel annoyed would
-> be expected to opt out of it via configuration, as they are for the
-> advice messages. because it's really the same idea, only thought
-> bigger.
-
-I'd never support that, FWIW.
+Best,
+Christian.
