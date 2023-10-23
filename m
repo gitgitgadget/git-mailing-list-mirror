@@ -1,58 +1,48 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AC4619BCF
-	for <git@vger.kernel.org>; Mon, 23 Oct 2023 16:59:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B5E81DA39
+	for <git@vger.kernel.org>; Mon, 23 Oct 2023 17:24:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="UrP729/F"
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 744D8E6
-	for <git@vger.kernel.org>; Mon, 23 Oct 2023 09:59:52 -0700 (PDT)
-Received: by mail-qk1-x729.google.com with SMTP id af79cd13be357-778a20df8c3so249564985a.3
-        for <git@vger.kernel.org>; Mon, 23 Oct 2023 09:59:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1698080391; x=1698685191; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=S5x3D1eEZnT5GGbskJwm+QvFNH10E4hR6//bvfv2g70=;
-        b=UrP729/F81Lrxm5ycJLFXi/r228hwFf/9oIlE7rYmQMgqbS8Be/G9SUB0kQZ3EEz5J
-         AQ7yP7Zoi0ttBVtEZl67UE4+MHyoPJDLyd6wbJISL6CGWuiu3zepRURm2MxmzSUhoTmw
-         j6dIgqPaC/YATFdii6K2ZkLKNCyyJ9/qfY46WM1FC/Hzu1RDhYRV6g6a+Ff6q6IZt+Pt
-         deKdc/XIUOcARh1fyHgdmrL2v51XWJJvmXARQNdRotH/M8zjZF4G9Ac8e105LVoLtBUQ
-         rEy0lV80hfCe+Dlxy5Y7ItOI1srKsFY7P6mqDYsEUqa14qR1k9e5Ek4zc4/BRAQQLRgE
-         B1EA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698080391; x=1698685191;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=S5x3D1eEZnT5GGbskJwm+QvFNH10E4hR6//bvfv2g70=;
-        b=VW89iV8Oy3S8OEwMD+s4hG/0eRBFdftL4dC6atXZnTFYLMMVtGFeI8rAQT6OtqL3ih
-         BatYY3vBkl7aR/yaCvH7e/K46PYcuPOJaVWs59sY8x/mNeEE8rPnIZpTp7ycvS6bM+3m
-         Nzkt0Z1bMuVP2BMFDLJB2jDBlp2rM37Ym05xkX5UskB7jCAaV0oD7mlHPRg5b5TqQGWh
-         vFh81Vl+kENAx4oZ1p+pFIvcetROiU5poAaF0inN+albtBdPNfhJkjAxPtAID45dy+XJ
-         UbwJ4cvVFCZuzR4NvsTHJHngd5sD7zfuTJotd6zPQjFuw2n5XWoaAoUFlwFsIB6IsH5r
-         BF/A==
-X-Gm-Message-State: AOJu0YwcGd11Z0fRRRTULnCoW7pKNHKlKXubkG1VoQ30skbb5fB0SipJ
-	s0EPzpbXFXo3IWpzysokioANXA==
-X-Google-Smtp-Source: AGHT+IE/ptaL00AATIIrj9rP3+avjxjyLhspA1aHb4FGgxtcQtKGRiwo9JsIGKb3qXQahakIKRWwgQ==
-X-Received: by 2002:a05:620a:240c:b0:779:e171:3356 with SMTP id d12-20020a05620a240c00b00779e1713356mr2237994qkn.53.1698080391251;
-        Mon, 23 Oct 2023 09:59:51 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id f1-20020a05620a408100b007789a3499casm2812816qko.115.2023.10.23.09.59.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Oct 2023 09:59:51 -0700 (PDT)
-Date: Mon, 23 Oct 2023 12:59:49 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Charvi Mendiratta <charvi077@gmail.com>,
-	Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [RESEND v2] git-rebase.txt: rewrite docu for fixup/squash (again)
-Message-ID: <ZTamhY1sTpp1N6n+@nand.local>
-References: <20231023130016.1093356-1-oswald.buddenhagen@gmx.de>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mDXbXMrF"
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0D8894
+	for <git@vger.kernel.org>; Mon, 23 Oct 2023 10:24:03 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 688753EE9C;
+	Mon, 23 Oct 2023 13:24:01 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=q8zWO8hfzWZN
+	mdw3jKeH7gUPIy3nm/2oXackihKG3no=; b=mDXbXMrFjzbp0pEOfbrDmOJXtHSq
+	3qUybYnMrWhrByI02mN7I/1GuVTRW/WLlvmdmWuvcnBOtrD+NUxAhTw/nPEBP+CF
+	PUboDCx2LZyyQ2D1+uI/rNGURz+cbtCxAr+435cZIDh9Bq1nSuc2Z9jgkxXaXjLo
+	vgKhNfROMCVuVq8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 60B1D3EE9B;
+	Mon, 23 Oct 2023 13:24:01 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.198.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C94B53EE99;
+	Mon, 23 Oct 2023 13:23:56 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Eric Sunshine <sunshine@sunshineco.com>,  cousteau via GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Javier Mora
+ <cousteaulecommandant@gmail.com>
+Subject: Re: [PATCH] doc/git-bisect: clarify `git bisect run` syntax
+In-Reply-To: <ZTYi55w_70ZlP8Ew@tanuki> (Patrick Steinhardt's message of "Mon,
+	23 Oct 2023 09:38:15 +0200")
+References: <pull.1602.git.1698004968582.gitgitgadget@gmail.com>
+	<CAPig+cS4J-L44a-fjQ=2bXxRj6e1qdQK8705K3NPqmTsWXBQsw@mail.gmail.com>
+	<xmqqa5sap44i.fsf@gitster.g> <ZTYi55w_70ZlP8Ew@tanuki>
+Date: Mon, 23 Oct 2023 10:23:55 -0700
+Message-ID: <xmqqsf61ntg4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -60,23 +50,41 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20231023130016.1093356-1-oswald.buddenhagen@gmx.de>
+X-Pobox-Relay-ID:
+ F259430A-71C8-11EE-AC2D-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Oct 23, 2023 at 03:00:16PM +0200, Oswald Buddenhagen wrote:
-> ---
->  Documentation/git-rebase.txt | 29 +++++++++++++++--------------
->  1 file changed, 15 insertions(+), 14 deletions(-)
+Patrick Steinhardt <ps@pks.im> writes:
 
-The new documentation below looks fine, and I don't have strong
-feelings beyond the proposed modifications.
+>> I also thought at least some commands we know the "-h" output and
+>> SYNOPSIS match, we had tests to ensure they do not drift apart.  We
+>> would probably want to cover more subcommands with t0450.
+>>=20
+>> Thanks.
+>
+> If we don't want them to drift apart I wonder whether we could instead
+> generate the synopsis from the output of `-h`? This reduces duplication
+> at the cost of a more complex build process for our manpages.
 
-The line wrapping is a little odd: it looks like each sentence begins on
-a its own line. Did you mean for there to be a visual separation between
-those sentences in the rendered doc? If so, replace the single line feed
-with a pair of them.
+There also is the cost of making it unusable to peek the source
+git-foo.txt files as a quick way to get the usage guide, which I
+think is a downside only felt by developers of Git (not developers
+of other projects that happen to use Git), but still a downside.
 
-If not, this looks good to me as-is.
+But aside from that, it is an obviously possible direction to go [*]
+and in fact I suspect we may have talked about it when =C3=86var made a
+gigantic effort to clean these up in Sep-Oct 2022 timeframe, which
+resulted in the series leading to a0343f30 (tests: assert consistent
+whitespace in -h output, 2022-10-13) [*].
 
-Thanks,
-Taylor
+[Footnote]
+
+ * And another possibility is to go from the doc to the message
+   string, which may be even more involved, but at least the code
+   needs to go through the build process anyway, so the downside
+   might be lessor)
+
+ * https://lore.kernel.org/git/patch-v5-34.34-4de83d3d89a-20221013T153626=
+Z-avarab@gmail.com/
+
+
