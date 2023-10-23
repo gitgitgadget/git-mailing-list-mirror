@@ -1,71 +1,104 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A95944C6F
-	for <git@vger.kernel.org>; Mon, 23 Oct 2023 18:29:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=coup.net.nz header.i=@coup.net.nz header.b="YkJb8Ej/"
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D35C38E
-	for <git@vger.kernel.org>; Mon, 23 Oct 2023 11:29:08 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-507bd644a96so5333125e87.3
-        for <git@vger.kernel.org>; Mon, 23 Oct 2023 11:29:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=coup.net.nz; s=google; t=1698085747; x=1698690547; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=hLG9Tyq292Aazy9wW1g0ZgI5eKXZki+6jjmBEo4tF8I=;
-        b=YkJb8Ej/sXfUbnN3+plgbhdZSj8lKBivrCVr9XCxqQcguhX+5RQlvauHveaETX/P0b
-         qYM/SorUGioVDClUNgTv1wqd915pHcXszQV2ezSZ/hrLZn18k7ULw9HHakAW1UxThcPN
-         CFc3l90/fQVrZsWJ8eOX4rca/LTS4Hw/6XkZI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698085747; x=1698690547;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hLG9Tyq292Aazy9wW1g0ZgI5eKXZki+6jjmBEo4tF8I=;
-        b=Oc8ujMKmVkyl5TImIBOHSj1JfCeder3x9yQoYU2Mbc01MPA5BHm6td5g2b7RPJhwsw
-         ec/W6K4MvXKyQOywtfPPk6u7VZAWk5sI+vVW6p2qCpyd2i5LLRbes5WGVSvBgPOSj9m6
-         k1b5+l3HLMKfdOv5FIUk21M167vGpLF7yvCGRF6orlnaMqlIZSNv+6aqlMVofpj6PbeT
-         ctdgcOwYKcgjaU5Am10ErVbaMHmpQR7SaEjxyK/TgKctYmyJsMR+jWogsdt/uhEB2G6c
-         mOOWCY6MPGZuGIKlp0UT+Ghqll622PIwsj7dMUmfjTjrHzMK4zXbMBAGt1bJhtzmUgu7
-         o6pg==
-X-Gm-Message-State: AOJu0YyDTGkTi1GP9H/pRvcqSp8oG1g2BuGJD05zkCyw4KhEmI4O0KbQ
-	DEOpsNyOTarIIKxNy4lskGUBWWtVHuSr63IhLX41qw==
-X-Google-Smtp-Source: AGHT+IHW7BuvyfMMKKIlZaM7/2Kj2aDrLNSxpjl6ak9dZjesWHBM8NmIVdwCuVaOEZzzv+3MhQZ9LxOBm1f0E5tO0lI=
-X-Received: by 2002:a19:e05c:0:b0:507:b8c5:654e with SMTP id
- g28-20020a19e05c000000b00507b8c5654emr7202066lfj.1.1698085746879; Mon, 23 Oct
- 2023 11:29:06 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83C0219E2
+	for <git@vger.kernel.org>; Mon, 23 Oct 2023 18:40:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6647CC
+	for <git@vger.kernel.org>; Mon, 23 Oct 2023 11:40:12 -0700 (PDT)
+Received: (qmail 22544 invoked by uid 109); 23 Oct 2023 18:40:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 23 Oct 2023 18:40:11 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14631 invoked by uid 111); 23 Oct 2023 18:40:13 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 23 Oct 2023 14:40:13 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 23 Oct 2023 14:40:10 -0400
+From: Jeff King <peff@peff.net>
+To: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Cc: Michael Strawbridge <michael.strawbridge@amd.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 2/3] Revert "send-email: extract email-parsing code into
+ a subroutine"
+Message-ID: <20231023184010.GA1537181@coredump.intra.peff.net>
+References: <20231020100343.GA2194322@coredump.intra.peff.net>
+ <20231020101310.GB2673716@coredump.intra.peff.net>
+ <ZTJaVzt75r0iHPzR@ugly>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1598.git.1697040242703.gitgitgadget@gmail.com> <pull.1598.v2.git.1697577168128.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1598.v2.git.1697577168128.gitgitgadget@gmail.com>
-From: Robert Coup <robert@coup.net.nz>
-Date: Mon, 23 Oct 2023 19:28:55 +0100
-Message-ID: <CACf-nVevRU+yxfv44UcV9VcfAwuWLa+4w_OAMAVD5Z5nshqq7g@mail.gmail.com>
-Subject: Re: [PATCH v2] upload-pack: add tracing for fetches
-To: Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Robert Coup via GitGitGadget <gitgitgadget@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ZTJaVzt75r0iHPzR@ugly>
 
-Hi Jeff & Taylor,
+On Fri, Oct 20, 2023 at 12:45:43PM +0200, Oswald Buddenhagen wrote:
 
-Sorry to nag, but would it be possible to give this v2 patch a
-look-over? Would be good to get it progressed.
+> On Fri, Oct 20, 2023 at 06:13:10AM -0400, Jeff King wrote:
+> > But one thing that gives me pause is that the neither before or after
+> > this patch do we handle continuation lines like:
+> > 
+> >  Subject: this is the beginning
+> >    and this is more subject
+> > 
+> > And it would probably be a lot easier to add when storing the headers in
+> > a hash (it's not impossible to do it the other way, but you basically
+> > have to delay processing each line with a small state machine).
+> > 
+> that seems like a rather significant point, doesn't it?
 
-Thanks,
+Maybe. It depends on whether anybody is interested in adding
+continuation support. Nobody has in the previous 18 years, and nobody
+has asked for it.
 
-Rob :)
+> > So another option is to just fix the individual bugs separately.
+> > 
+> ... so that seems preferable to me, given that the necessary fixes seem
+> rather trivial.
 
+They're not too bad. Probably:
 
-On Tue, 17 Oct 2023 at 22:12, Robert Coup via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->     Changes since V1
->     ================
->
->      * Don't generate the JSON event unless Trace2 is active.
->      * Code style fix.
+  1. lc() the keys we put into the hash
+
+  2. match to/cc/bcc and dereference their arrays
+
+  3. maybe handle 'body' separately from headers to avoid confusion
+
+But there may be other similar bugs lurking. One I didn't mention: the
+hash-based version randomly reorders headers!
+
+> > I guess "readable" is up for debate here, but I find the inline handling
+> > a lot easier to follow
+> > 
+> any particular reason for that?
+
+For the reasons I gave in the commit message: namely that the matching
+and logic is in one place and doesn't need to be duplicated (e.g., the
+special handling of to/cc/bcc, which caused a bug here).
+
+> > (and it's half as many lines; most of the diffstat is the new tests).
+> 
+> > -	if ($parsed_email{'From'}) {
+> > -		$sender = delete($parsed_email{'From'});
+> > -	}
+> 
+> this verbosity could be cut down somewhat using just
+> 
+>   $sender = delete($parsed_email{'From'});
+> 
+> and if the value can be pre-set and needs to be preserved,
+> 
+>   $sender = delete($parsed_email{'From'}) // $sender;
+> 
+> but this seems kind of counter-productive legibility-wise.
+
+We do need to avoid overwriting the pre-set value. The "//" one would
+work, but we support perl versions old enough that they don't have it.
+
+-Peff
