@@ -1,75 +1,74 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3364412B8E
-	for <git@vger.kernel.org>; Mon, 23 Oct 2023 09:19:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12C4F12E43
+	for <git@vger.kernel.org>; Mon, 23 Oct 2023 09:19:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="0MI7liem";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kfrMGiIK"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gr5KTAUO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZHA0Eq4G"
 Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DB95B0
-	for <git@vger.kernel.org>; Mon, 23 Oct 2023 02:19:20 -0700 (PDT)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.west.internal (Postfix) with ESMTP id 1CD1E32000E5;
-	Mon, 23 Oct 2023 05:19:19 -0400 (EDT)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBFFE97
+	for <git@vger.kernel.org>; Mon, 23 Oct 2023 02:19:24 -0700 (PDT)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.west.internal (Postfix) with ESMTP id C1F56320099A;
+	Mon, 23 Oct 2023 05:19:23 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Mon, 23 Oct 2023 05:19:19 -0400
+  by compute5.internal (MEProxy); Mon, 23 Oct 2023 05:19:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1698052758; x=1698139158; bh=3I
-	8p8kW3ZxfkNwOc35NjvyrZHq9+4T5znqklSJNTRXk=; b=0MI7liemVN5LyvCMTw
-	WiX5m6cOEH0CioyjESv8Mih6mJS5rfOxpdld9WptLWEVURY/g3oCbA3q3sRaR/5z
-	ddAVplTYYyZ5yor8LidTDJiczlRsc1zwLdVMmgqYLPl5ouO3OEDXbUFuaPIZIdAf
-	EWZs4thxqnLKnXOB4BmkbnoJ+2nfI/F7HrbY9mAbZfLrK7fw0VEVz0PxZpRpR7js
-	EItt3jUnRgt+PHVFx0cd7GJizEdcXe2ejFlw8tE0aS9AnP2KJZJujFW7G5QzGipU
-	B4s5Ti+qqvZ2Dx6DqstD6WYV2aJm+PZ3Pb/JC2mH5Uz4xCDY+6wNFAhGsalHVpPm
-	K9jg==
+	:subject:subject:to:to; s=fm3; t=1698052763; x=1698139163; bh=+Y
+	GxbxipsowFwwr/Rc3Xe/ZWI2IgNS8/nb1JotX3R6Y=; b=gr5KTAUONPAGCmgGBM
+	QlkTkyNkJsBW+pIMHLU9BxFBk75vVVFblU0uIIBEvaADmNZYnMuUoBK76Y+ubsx7
+	kC93EUDJNMbSR8QIDA8Pt8O+3BI0z6hFN7I39viwvRki3q1MFf1Q7ZovYt2NoR+g
+	yRD/Y6xaElrunqvbIWpGeyoetC2xZV+qPzVNgPFkZSIh+NV1LeHWreWKHXI/SsMi
+	I3225pcTQKOTkB92ZIiWyIYFk64a9HyJVvGVqDImAwtM0IDQ6svSxe2UeVsKjmdZ
+	u8yueeaXJwbH94GpJ3uk25Ur3dQB7tQzUSEmo1jAZhtuCIN0GoyP06/JwwLoYT/7
+	dHFA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1698052758; x=1698139158; bh=3I8p8kW3ZxfkN
-	wOc35NjvyrZHq9+4T5znqklSJNTRXk=; b=kfrMGiIKblpsKAOM69QdWe+T6h470
-	Rf5J2huUaqBfY6V0mHz5xUG4s0Tc1F7Rt8Tx7m04DosrnQxYKw+qH0PfhjfHHXYQ
-	hsGazTZ5B6UxRGQGmGGXU00ToepIKX370IbbOCePYdTapya6vIxg38XlKOQyHY3y
-	tzh2unXTCx3h0UEAc/E9Z6ZGE7UAQBDHsi3vq+sSt+RjqP8QojO7K1Q0kFJnzQSJ
-	MiKi3hno7O3cVA4uou1S0xqoyoUYfWfMa/s4pSwvY/lRZsF5BLSyr7ot4RcSm1C/
-	brPfmPOfdl1hCmlocWkZvTVAGBi389EuOPyVrzTuCJYLE8bhrq5UidI8g==
-X-ME-Sender: <xms:ljo2Ze9oiJEPE6_CEowKkCM1IbEK0cYfMKc-zjMyq6wjuGpCioXGCA>
-    <xme:ljo2ZeuDpcucgC6QTq_71lU59McZNHZTWq4F6fDpNUQ3zfiSrdM0NnPm37nrHsxou
-    8S1tQHW9TOJLlwxdg>
-X-ME-Received: <xmr:ljo2ZUClAsiEbIoMM_zaMEPGRrEezylYcRnFHKWp-1zw_5AaJ-BcMwzR2y32hlSDbgPowm8c1LdJpIRyzVLyQmATTw6RvEKZuXPBvFxWJ-ju>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrkeeigddugecutefuodetggdotefrodftvf
+	:x-sasl-enc; s=fm3; t=1698052763; x=1698139163; bh=+YGxbxipsowFw
+	wr/Rc3Xe/ZWI2IgNS8/nb1JotX3R6Y=; b=ZHA0Eq4Gn50q/nzjp3TgVQZC2vDb+
+	DvwjwQfLTlube06+zXEhrYufLJgOr3mQ+36k7f4+6TNl0zqS/nMc+MB68lwPd3iF
+	LON3TQnma0mN4Swr0HXmZRPmKjYh8SIaXWHBF88eFYFxLTUrvGv2u5r3nonwxX+e
+	Gn3uzPbZQobBvQNsMVn3xtna0Vi3VXpxWP/HGzDVtK4gtoBEuWo3i0y22/qxjKZd
+	j8HsKf6+daxf48r4mzdEiyTq9e54mLotaMeBmvfzGdBqEtPyiXkjKRkJuOCmEgYo
+	Cth4dlE5blzhQHoUYV+FlkXXf/lnz+VbZJEwhDcvdJ3b5cOgyIoTmixcA==
+X-ME-Sender: <xms:mzo2ZTQxwdSNm7n9SPq9XZN56RCsyjhOPlgTz3OVBlBT7VpSNE1wKQ>
+    <xme:mzo2ZUzHXOQbmy3pbE6DjmM4KTvNoklTihMK7yRh9G758xDczQ5-PhPOZlfvvwkDX
+    elowTdwlrBDkccitA>
+X-ME-Received: <xmr:mzo2ZY17_y-vIunHOFYRAmjEPMadSn6ogMVOUxgh3mTfisdWYrx4YGzlxvfc8u9oc0pRh62c7N_3UULF0Uff6usEckFbzQi7B-b0LqWU-i3O>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrkeeigddufecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhm
-X-ME-Proxy: <xmx:ljo2ZWdIe6U3-st4cJLYiOHWnuPDxws9PesBuVRvxh9718kmpdsWAw>
-    <xmx:ljo2ZTMiwoX3DrmsMgYXWCmzhn_bCYLS_0JdK-96Y3bpG0-acUIE6g>
-    <xmx:ljo2ZQn-TKBafSi82EmFtWnyMNNSicGe8GyT2iB3vw2KexUM43k7Pg>
-    <xmx:ljo2ZYoQyGwxnWLyVWl7qT5hvLsEVfcXalNyw70qNCPIfvBTwLDLiQ>
+    hnpeeiveektdfggfeluefgvdelvdeftdfhgeeugeefveejleeufeekgeefffehgfelgfen
+    ucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenuc
+    frrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:mzo2ZTC1p2k6KMWZrySZAYPIZFO7xvLGqLgFsOuvJSkI0fkBtlGa4g>
+    <xmx:mzo2ZcgJtY3keMV_MpZbeJAm8r0RP2EsQ4ReoTOueCDCubDH5c-0lw>
+    <xmx:mzo2ZXp2JfKFrLqgnnZcX1KXKanAtfVhJOQ7KxtXvrAL1jTWqrK-Bg>
+    <xmx:mzo2ZUelI3tfVaE_0kz87lONjkVt3Hvf213DRMOdreRwSQTM-OESlQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 23 Oct 2023 05:19:17 -0400 (EDT)
+ 23 Oct 2023 05:19:21 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 3a4bbdb4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 23 Oct 2023 09:19:12 +0000 (UTC)
-Date: Mon, 23 Oct 2023 11:19:13 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 0f8853de (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 23 Oct 2023 09:19:19 +0000 (UTC)
+Date: Mon, 23 Oct 2023 11:19:19 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
 	"Eric W. Biederman" <ebiederm@gmail.com>, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 4/7] bulk-checkin: implement `SOURCE_INCORE` mode for
- `bulk_checkin_source`
-Message-ID: <ZTY6kTZT-ni16usH@tanuki>
+Subject: Re: [PATCH v4 0/7] merge-ort: implement support for packing objects
+ together
+Message-ID: <ZTY6lwtMgtRwmMrB@tanuki>
 References: <cover.1697736516.git.me@ttaylorr.com>
- <e427fe6ad383cc238c13f313dc9f11eab37a3840.1697736516.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -77,112 +76,362 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="emjz+GuRGrQ+nK9U"
+	protocol="application/pgp-signature"; boundary="S6W0PQVJlj65rXGn"
 Content-Disposition: inline
-In-Reply-To: <e427fe6ad383cc238c13f313dc9f11eab37a3840.1697736516.git.me@ttaylorr.com>
+In-Reply-To: <cover.1697736516.git.me@ttaylorr.com>
 
 
---emjz+GuRGrQ+nK9U
+--S6W0PQVJlj65rXGn
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Oct 19, 2023 at 01:28:51PM -0400, Taylor Blau wrote:
-> Continue to prepare for streaming an object's contents directly from
-> memory by teaching `bulk_checkin_source` how to perform reads and seeks
-> based on an address in memory.
+On Thu, Oct 19, 2023 at 01:28:38PM -0400, Taylor Blau wrote:
+> (Rebased onto the current tip of 'master', which is 813d9a9188 (The
+> nineteenth batch, 2023-10-18) at the time of writing).
 >=20
-> Unlike file descriptors, which manage their own offset internally, we
-> have to keep track of how many bytes we've read out of the buffer, and
-> make sure we don't read past the end of the buffer.
+> This series implements support for a new merge-tree option,
+> `--write-pack`, which causes any newly-written objects to be packed
+> together instead of being stored individually as loose.
 >=20
-> Suggested-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> ---
->  bulk-checkin.c | 18 +++++++++++++++++-
->  1 file changed, 17 insertions(+), 1 deletion(-)
+> I intentionally broke this off from the existing thread, since I
+> accidentally rerolled mine and Jonathan Tan's Bloom v2 series into it,
+> causing some confusion.
 >=20
-> diff --git a/bulk-checkin.c b/bulk-checkin.c
-> index 28bc8d5ab4..60361b3e2e 100644
-> --- a/bulk-checkin.c
-> +++ b/bulk-checkin.c
-> @@ -141,11 +141,15 @@ static int already_written(struct bulk_checkin_pack=
-file *state, struct object_id
->  }
-> =20
->  struct bulk_checkin_source {
-> -	enum { SOURCE_FILE } type;
-> +	enum { SOURCE_FILE, SOURCE_INCORE } type;
-> =20
->  	/* SOURCE_FILE fields */
->  	int fd;
-> =20
-> +	/* SOURCE_INCORE fields */
-> +	const void *buf;
-> +	size_t read;
-> +
->  	/* common fields */
->  	size_t size;
->  	const char *path;
-> @@ -157,6 +161,11 @@ static off_t bulk_checkin_source_seek_to(struct bulk=
-_checkin_source *source,
->  	switch (source->type) {
->  	case SOURCE_FILE:
->  		return lseek(source->fd, offset, SEEK_SET);
-> +	case SOURCE_INCORE:
-> +		if (!(0 <=3D offset && offset < source->size))
-> +			return (off_t)-1;
-> +		source->read =3D offset;
-> +		return source->read;
->  	default:
->  		BUG("unknown bulk-checkin source: %d", source->type);
->  	}
-> @@ -168,6 +177,13 @@ static ssize_t bulk_checkin_source_read(struct bulk_=
-checkin_source *source,
->  	switch (source->type) {
->  	case SOURCE_FILE:
->  		return read_in_full(source->fd, buf, nr);
-> +	case SOURCE_INCORE:
-> +		assert(source->read <=3D source->size);
+> This is a new round that is significantly simplified thanks to
+> another very helpful suggestion[1] from Junio. By factoring out a common
+> "deflate object to pack" that takes an abstract bulk_checkin_source as a
+> parameter, all of the earlier refactorings can be dropped since we
+> retain only a single caller instead of multiple.
+>=20
+> This resulted in a rather satisfying range-diff (included below, as
+> usual), and a similarly satisfying inter-diff:
+>=20
+>     $ git diff --stat tb/ort-bulk-checkin.v3..
+>      bulk-checkin.c | 203 ++++++++++++++++-------------------------------=
+--
+>      1 file changed, 64 insertions(+), 139 deletions(-)
+>=20
+> Beyond that, the changes since last time can be viewed in the range-diff
+> below. Thanks in advance for any review!
+>=20
+> [1]: https://lore.kernel.org/git/xmqq34y7plj4.fsf@gitster.g/
 
-Is there any guideline around when to use `assert()` vs `BUG()`? I think
-that this assertion here is quite critical, because when it does not
-hold we can end up performing out-of-bounds reads and writes. But as
-asserts are typically missing in non-debug builds, this safeguard would
-not do anything for our end users, right?
+A single question regarding an `assert()` from my side. Other than that
+the series looks good to me, thanks.
 
 Patrick
 
-> +		if (nr > source->size - source->read)
-> +			nr =3D source->size - source->read;
-> +		memcpy(buf, (unsigned char *)source->buf + source->read, nr);
-> +		source->read +=3D nr;
-> +		return nr;
->  	default:
->  		BUG("unknown bulk-checkin source: %d", source->type);
->  	}
+> Taylor Blau (7):
+>   bulk-checkin: extract abstract `bulk_checkin_source`
+>   bulk-checkin: generify `stream_blob_to_pack()` for arbitrary types
+>   bulk-checkin: refactor deflate routine to accept a
+>     `bulk_checkin_source`
+>   bulk-checkin: implement `SOURCE_INCORE` mode for `bulk_checkin_source`
+>   bulk-checkin: introduce `index_blob_bulk_checkin_incore()`
+>   bulk-checkin: introduce `index_tree_bulk_checkin_incore()`
+>   builtin/merge-tree.c: implement support for `--write-pack`
+>=20
+>  Documentation/git-merge-tree.txt |   4 +
+>  builtin/merge-tree.c             |   5 +
+>  bulk-checkin.c                   | 161 ++++++++++++++++++++++++++-----
+>  bulk-checkin.h                   |   8 ++
+>  merge-ort.c                      |  42 ++++++--
+>  merge-recursive.h                |   1 +
+>  t/t4301-merge-tree-write-tree.sh |  93 ++++++++++++++++++
+>  7 files changed, 280 insertions(+), 34 deletions(-)
+>=20
+> Range-diff against v3:
+>  1:  2dffa45183 <  -:  ---------- bulk-checkin: factor out `format_object=
+_header_hash()`
+>  2:  7a10dc794a <  -:  ---------- bulk-checkin: factor out `prepare_check=
+point()`
+>  3:  20c32d2178 <  -:  ---------- bulk-checkin: factor out `truncate_chec=
+kpoint()`
+>  4:  893051d0b7 <  -:  ---------- bulk-checkin: factor out `finalize_chec=
+kpoint()`
+>  5:  da52ec8380 !  1:  97bb6e9f59 bulk-checkin: extract abstract `bulk_ch=
+eckin_source`
+>     @@ bulk-checkin.c: static int stream_blob_to_pack(struct bulk_checkin=
+_packfile *sta
+>       			if (*already_hashed_to < offset) {
+>       				size_t hsize =3D offset - *already_hashed_to;
+>      @@ bulk-checkin.c: static int deflate_blob_to_pack(struct bulk_check=
+in_packfile *state,
+>     - 	git_hash_ctx ctx;
+>     + 	unsigned header_len;
+>       	struct hashfile_checkpoint checkpoint =3D {0};
+>       	struct pack_idx_entry *idx =3D NULL;
+>      +	struct bulk_checkin_source source =3D {
+>     @@ bulk-checkin.c: static int deflate_blob_to_pack(struct bulk_checki=
+n_packfile *st
+>       	seekback =3D lseek(fd, 0, SEEK_CUR);
+>       	if (seekback =3D=3D (off_t) -1)
+>      @@ bulk-checkin.c: static int deflate_blob_to_pack(struct bulk_check=
+in_packfile *state,
+>     - 	while (1) {
+>     - 		prepare_checkpoint(state, &checkpoint, idx, flags);
+>     + 			crc32_begin(state->f);
+>     + 		}
+>       		if (!stream_blob_to_pack(state, &ctx, &already_hashed_to,
+>      -					 fd, size, path, flags))
+>      +					 &source, flags))
+>       			break;
+>     - 		truncate_checkpoint(state, &checkpoint, idx);
+>     + 		/*
+>     + 		 * Writing this object to the current pack will make
+>     +@@ bulk-checkin.c: static int deflate_blob_to_pack(struct bulk_check=
+in_packfile *state,
+>     + 		hashfile_truncate(state->f, &checkpoint);
+>     + 		state->offset =3D checkpoint.offset;
+>     + 		flush_bulk_checkin_packfile(state);
+>      -		if (lseek(fd, seekback, SEEK_SET) =3D=3D (off_t) -1)
+>      +		if (bulk_checkin_source_seek_to(&source, seekback) =3D=3D (off_t)=
+-1)
+>       			return error("cannot seek back");
+>       	}
+>     - 	finalize_checkpoint(state, &ctx, &checkpoint, idx, result_oid);
+>     + 	the_hash_algo->final_oid_fn(result_oid, &ctx);
+>  7:  04ec74e357 !  2:  9d633df339 bulk-checkin: generify `stream_blob_to_=
+pack()` for arbitrary types
+>     @@ bulk-checkin.c: static int stream_blob_to_pack(struct bulk_checkin=
+_packfile *sta
+>       	s.avail_out =3D sizeof(obuf) - hdrlen;
+>      =20
+>      @@ bulk-checkin.c: static int deflate_blob_to_pack(struct bulk_check=
+in_packfile *state,
+>     -=20
+>     - 	while (1) {
+>     - 		prepare_checkpoint(state, &checkpoint, idx, flags);
+>     + 			idx->offset =3D state->offset;
+>     + 			crc32_begin(state->f);
+>     + 		}
+>      -		if (!stream_blob_to_pack(state, &ctx, &already_hashed_to,
+>      -					 &source, flags))
+>      +		if (!stream_obj_to_pack(state, &ctx, &already_hashed_to,
+>      +					&source, OBJ_BLOB, flags))
+>       			break;
+>     - 		truncate_checkpoint(state, &checkpoint, idx);
+>     - 		if (bulk_checkin_source_seek_to(&source, seekback) =3D=3D (off_t)=
+-1)
+>     + 		/*
+>     + 		 * Writing this object to the current pack will make
+>  -:  ---------- >  3:  d5bbd7810e bulk-checkin: refactor deflate routine =
+to accept a `bulk_checkin_source`
+>  6:  4e9bac5bc1 =3D  4:  e427fe6ad3 bulk-checkin: implement `SOURCE_INCOR=
+E` mode for `bulk_checkin_source`
+>  8:  8667b76365 !  5:  48095afe80 bulk-checkin: introduce `index_blob_bul=
+k_checkin_incore()`
+>     @@ Commit message
+>          objects individually as loose.
+>     =20
+>          Similar to the existing `index_blob_bulk_checkin()` function, the
+>     -    entrypoint delegates to `deflate_blob_to_pack_incore()`, which is
+>     -    responsible for formatting the pack header and then deflating the
+>     -    contents into the pack. The latter is accomplished by calling
+>     -    deflate_obj_contents_to_pack_incore(), which takes advantage of =
+the
+>     -    earlier refactorings and is responsible for writing the object t=
+o the
+>     -    pack and handling any overage from pack.packSizeLimit.
+>     -
+>     -    The bulk of the new functionality is implemented in the function
+>     -    `stream_obj_to_pack()`, which can handle streaming objects from =
+memory
+>     -    to the bulk-checkin pack as a result of the earlier refactoring.
+>     +    entrypoint delegates to `deflate_obj_to_pack_incore()`. That fun=
+ction in
+>     +    turn delegates to deflate_obj_to_pack(), which is responsible for
+>     +    formatting the pack header and then deflating the contents into =
+the
+>     +    pack.
+>     =20
+>          Consistent with the rest of the bulk-checkin mechanism, there ar=
+e no
+>          direct tests here. In future commits when we expose this new
+>     @@ Commit message
+>          Signed-off-by: Taylor Blau <me@ttaylorr.com>
+>     =20
+>       ## bulk-checkin.c ##
+>     -@@ bulk-checkin.c: static void finalize_checkpoint(struct bulk_check=
+in_packfile *state,
+>     - 	}
+>     +@@ bulk-checkin.c: static int deflate_obj_to_pack(struct bulk_checki=
+n_packfile *state,
+>     + 	return 0;
+>       }
+>      =20
+>     -+static int deflate_obj_contents_to_pack_incore(struct bulk_checkin_=
+packfile *state,
+>     -+					       git_hash_ctx *ctx,
+>     -+					       struct hashfile_checkpoint *checkpoint,
+>     -+					       struct object_id *result_oid,
+>     -+					       const void *buf, size_t size,
+>     -+					       enum object_type type,
+>     -+					       const char *path, unsigned flags)
+>     ++static int deflate_obj_to_pack_incore(struct bulk_checkin_packfile =
+*state,
+>     ++				       struct object_id *result_oid,
+>     ++				       const void *buf, size_t size,
+>     ++				       const char *path, enum object_type type,
+>     ++				       unsigned flags)
+>      +{
+>     -+	struct pack_idx_entry *idx =3D NULL;
+>     -+	off_t already_hashed_to =3D 0;
+>      +	struct bulk_checkin_source source =3D {
+>      +		.type =3D SOURCE_INCORE,
+>      +		.buf =3D buf,
+>     @@ bulk-checkin.c: static void finalize_checkpoint(struct bulk_checki=
+n_packfile *st
+>      +		.path =3D path,
+>      +	};
+>      +
+>     -+	/* Note: idx is non-NULL when we are writing */
+>     -+	if (flags & HASH_WRITE_OBJECT)
+>     -+		CALLOC_ARRAY(idx, 1);
+>     -+
+>     -+	while (1) {
+>     -+		prepare_checkpoint(state, checkpoint, idx, flags);
+>     -+
+>     -+		if (!stream_obj_to_pack(state, ctx, &already_hashed_to, &source,
+>     -+					type, flags))
+>     -+			break;
+>     -+		truncate_checkpoint(state, checkpoint, idx);
+>     -+		bulk_checkin_source_seek_to(&source, 0);
+>     -+	}
+>     -+
+>     -+	finalize_checkpoint(state, ctx, checkpoint, idx, result_oid);
+>     -+
+>     -+	return 0;
+>     -+}
+>     -+
+>     -+static int deflate_blob_to_pack_incore(struct bulk_checkin_packfile=
+ *state,
+>     -+				       struct object_id *result_oid,
+>     -+				       const void *buf, size_t size,
+>     -+				       const char *path, unsigned flags)
+>     -+{
+>     -+	git_hash_ctx ctx;
+>     -+	struct hashfile_checkpoint checkpoint =3D {0};
+>     -+
+>     -+	format_object_header_hash(the_hash_algo, &ctx, &checkpoint, OBJ_BL=
+OB,
+>     -+				  size);
+>     -+
+>     -+	return deflate_obj_contents_to_pack_incore(state, &ctx, &checkpoin=
+t,
+>     -+						   result_oid, buf, size,
+>     -+						   OBJ_BLOB, path, flags);
+>     ++	return deflate_obj_to_pack(state, result_oid, &source, type, 0, fl=
+ags);
+>      +}
+>      +
+>       static int deflate_blob_to_pack(struct bulk_checkin_packfile *state,
+>     @@ bulk-checkin.c: int index_blob_bulk_checkin(struct object_id *oid,
+>      +				   const void *buf, size_t size,
+>      +				   const char *path, unsigned flags)
+>      +{
+>     -+	int status =3D deflate_blob_to_pack_incore(&bulk_checkin_packfile,=
+ oid,
+>     -+						 buf, size, path, flags);
+>     ++	int status =3D deflate_obj_to_pack_incore(&bulk_checkin_packfile, =
+oid,
+>     ++						buf, size, path, OBJ_BLOB,
+>     ++						flags);
+>      +	if (!odb_transaction_nesting)
+>      +		flush_bulk_checkin_packfile(&bulk_checkin_packfile);
+>      +	return status;
+>  9:  cba043ef14 !  6:  60568f9281 bulk-checkin: introduce `index_tree_bul=
+k_checkin_incore()`
+>     @@ Commit message
+>          machinery will have enough to keep track of the converted object=
+'s hash
+>          in order to update the compatibility mapping.
+>     =20
+>     -    Within `deflate_tree_to_pack_incore()`, the changes should be li=
+mited
+>     -    to something like:
+>     +    Within some thin wrapper around `deflate_obj_to_pack_incore()` (=
+perhaps
+>     +    `deflate_tree_to_pack_incore()`), the changes should be limited =
+to
+>     +    something like:
+>     =20
+>              struct strbuf converted =3D STRBUF_INIT;
+>              if (the_repository->compat_hash_algo) {
+>     @@ Commit message
+>          Signed-off-by: Taylor Blau <me@ttaylorr.com>
+>     =20
+>       ## bulk-checkin.c ##
+>     -@@ bulk-checkin.c: static int deflate_blob_to_pack_incore(struct bul=
+k_checkin_packfile *state,
+>     - 						   OBJ_BLOB, path, flags);
+>     - }
+>     -=20
+>     -+static int deflate_tree_to_pack_incore(struct bulk_checkin_packfile=
+ *state,
+>     -+				       struct object_id *result_oid,
+>     -+				       const void *buf, size_t size,
+>     -+				       const char *path, unsigned flags)
+>     -+{
+>     -+	git_hash_ctx ctx;
+>     -+	struct hashfile_checkpoint checkpoint =3D {0};
+>     -+
+>     -+	format_object_header_hash(the_hash_algo, &ctx, &checkpoint, OBJ_TR=
+EE,
+>     -+				  size);
+>     -+
+>     -+	return deflate_obj_contents_to_pack_incore(state, &ctx, &checkpoin=
+t,
+>     -+						   result_oid, buf, size,
+>     -+						   OBJ_TREE, path, flags);
+>     -+}
+>     -+
+>     - static int deflate_blob_to_pack(struct bulk_checkin_packfile *state,
+>     - 				struct object_id *result_oid,
+>     - 				int fd, size_t size,
+>      @@ bulk-checkin.c: int index_blob_bulk_checkin_incore(struct object_=
+id *oid,
+>       	return status;
+>       }
+>     @@ bulk-checkin.c: int index_blob_bulk_checkin_incore(struct object_i=
+d *oid,
+>      +				   const void *buf, size_t size,
+>      +				   const char *path, unsigned flags)
+>      +{
+>     -+	int status =3D deflate_tree_to_pack_incore(&bulk_checkin_packfile,=
+ oid,
+>     -+						 buf, size, path, flags);
+>     ++	int status =3D deflate_obj_to_pack_incore(&bulk_checkin_packfile, =
+oid,
+>     ++						buf, size, path, OBJ_TREE,
+>     ++						flags);
+>      +	if (!odb_transaction_nesting)
+>      +		flush_bulk_checkin_packfile(&bulk_checkin_packfile);
+>      +	return status;
+> 10:  ae70508037 =3D  7:  b9be9df122 builtin/merge-tree.c: implement suppo=
+rt for `--write-pack`
 > --=20
 > 2.42.0.405.g86fe3250c2
->=20
 
---emjz+GuRGrQ+nK9U
+--S6W0PQVJlj65rXGn
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmU2OpAACgkQVbJhu7ck
-PpTe8w/+L7/q7t4ObqfvpplaexLfvm+Jg4kGYzKoUZgMIfW4rQy8l/9nUPdtXEbP
-M8fnYd/WSUKIBnI27/e902LeUkBpOtXoAF5dVYS/eg/90ivuzwHYBD2es0jMc+Lf
-/497tLBAJr+pBt3N1PqBEdWjNrQ+ywBbr5ovjdb0+3EcYoOPRHVE51j8lgv9XWDU
-wEqxhs5U7jjqGjotMS6HpmQkIA086XqzyH+8EWB5cC7nSN6wnrrhbMjrEHPkFIxl
-B2VFRMQ9HHQ5hvxzDGEo7WW8u23MkIm+YFpnCdm/iv5QAhT4/q/UP0ckasPk4O3o
-LCYGXdT7e+mpysq4Hnely70GWGK6LINstLIoNZABBPEI/6iOKS1ms00mkDK2znaz
-Gf9aQ4XtbJoa8h0d5M+mVWhY5gQ8NZY2cOkcAl6guH3hNBOuLh0Pdhq1EI7VbNcj
-k5rKA5p6js1Xq68cpvb5990usm0Wdn53n00dzyttvq7POsK1G3mm8aIbrfFlLnGz
-o5/NuM1oA15ZHO/ZgTyS8MWMPiFdEkx3ap/xIhSq87JbUcXNBN2dEPIjkBFm5+OG
-Uni8ydKkwFIliGprcQ/68uTFcouz5G9AdKylY/SJotpnCz8DI6HIm3IzMjLXeJbe
-mScXdxgpcoZBckyZXV/mFYF0CxGyU+XWhlI5HgiSanNBR/w2vU8=
-=iIej
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmU2OpcACgkQVbJhu7ck
+PpT/Yw/+KfpIx6FS6ytWKMKAo9Ly6XGFa9F1k12B05Fc26o+gLk2BvzWB+BorS5+
+aZ/Qj07fQaD5YKjKJBKfPQazqmy1bVfoa3cwpuyu/Wae9dqFrfHdQTprrVpF+vRz
+0fgKkUL2vhlAk++qzTd49vuR/g1O3pTwfpwE3zWEuC3gWihtQyQGJINsekUMyXFY
+PwE2GRBhKsJ4v9zDOo9dSSvdmSl3RRDkRSVQOzzlKIYns4u9wvlztyvxBAgZ6XaK
+qM6z+HwDQjKSYWPaaVkG7kJPuR+8WsC1qe7S00aTuLw5q1Q3O0eUBaE/NpuW7jjw
+a5IR0i0Ot46lYzLHUDLtIcNTYexKMYiE+5c4sSVOtyCvLDKZCroJg9XBvygNrtmu
+APDgmoNAP4Q17nbGZIDgqLfItU6o3G9ZT0B9R8w9eVrEVOGUEg8YRHRaW3HpAC7W
+45d47PCNO0zrufZhaMSFFxXjUjllx50+4M7tDxHvnoOQr2ppQPkdi4m7Zoihl4ee
+h6SfpqWWNCknscmpUacRx1XSUAyp+UWGY1zKkcokzsxAER6Tx+gAOHUROn8UzDbb
+qaMJWF5/T4miQasx/yQqR6oVBm66XRIFqWwKWIVMQYpgLEb/MQOAyYTU/ZU1GSSp
+NcQp39CyhuRFEk39jAbIA8gcw6dnX3MapH3O0O0al+4XpTFueIw=
+=quYa
 -----END PGP SIGNATURE-----
 
---emjz+GuRGrQ+nK9U--
+--S6W0PQVJlj65rXGn--
