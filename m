@@ -1,73 +1,74 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41FD211CAC
-	for <git@vger.kernel.org>; Mon, 23 Oct 2023 13:58:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C04441A72D
+	for <git@vger.kernel.org>; Mon, 23 Oct 2023 13:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gtk2m/a7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Eu9DIiS/"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jcYLbP6N";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XFvZrwB1"
 Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5A2110B
-	for <git@vger.kernel.org>; Mon, 23 Oct 2023 06:58:17 -0700 (PDT)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailout.nyi.internal (Postfix) with ESMTP id E1F435C0332;
-	Mon, 23 Oct 2023 09:58:16 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Mon, 23 Oct 2023 09:58:16 -0400
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62F59100
+	for <git@vger.kernel.org>; Mon, 23 Oct 2023 06:58:22 -0700 (PDT)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id 7671E5C0346;
+	Mon, 23 Oct 2023 09:58:21 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Mon, 23 Oct 2023 09:58:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1698069496; x=1698155896; bh=C7
-	aeqj34qEDMRr1o8remr5ulI7fvJroUD4cG0uQEsSo=; b=gtk2m/a7wlxDEiv1eN
-	1Uamd/0ajry5rWEcMNkC6x14nF8ER1Eym89dkdLrlkPQlCdq99zUgg5Px+F+R/Yi
-	a8X6yXx725lVNd8ZcjygixXsTNFo14vVLZv9Flq6Q2C3AOONmkpheq5d3vm6xEw8
-	W5Ker4BfPwrJ8dgDiGeepH7gVojQqiuUZTgrqLT4/5vHDbWL8Wm6+b2jn2Jhgooe
-	Uny/hdY58XqsygUKLJ4eyMGUWR8+F/Zztwm/e1ViRZdKrAjYw6mOXSN6n6yJv+hj
-	PEAeD7VABOcul4dGdW582LciLR5VDfWLswqCJXvXcZ/EZGpXgDoLPZmLU5RxU5QP
-	wYOg==
+	:subject:subject:to:to; s=fm3; t=1698069501; x=1698155901; bh=LZ
+	6/tYrz43awCG98Yd57/1klGi2wmmXQtMvkUgDNUfI=; b=jcYLbP6NshMKoSPUxW
+	vx8b3oanFNXffw/3OSBsxyKEC4zI47QJ5+ujj0x3olUWLwQgFeT0xDkWQ6Y2DX6n
+	WSt1etGviKLgUWUALPHtkBHnWSB18SULAulM+gralNTAYksyofF855RtxJjq97a7
+	nc+gJjH/uTN5sDkBkyIIh8GxQYtOEPrImdtYSUmQUbXtRIcCj+AaWQL/Q022yYuK
+	082v2p7GDq2qW5PagxdiLzrUjjCQCLgraA8yJ1fubKQbxXFE0KJvxWPanMgWh3cM
+	ZJ7DI9U0jaSXB3b/Fi6/xb8fpcNfFEVi2s46m8XTCCI+uxXLsEULTm2rF9lvzc2X
+	EQyw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1698069496; x=1698155896; bh=C7aeqj34qEDMR
-	r1o8remr5ulI7fvJroUD4cG0uQEsSo=; b=Eu9DIiS/yvmuqBSNkqqWC849HnQhL
-	MfOgnksJJnJaGzzVAXOFEAeEZy4do6pEB3wMoxr6H5MLztWH8SS5a0+TXfhXZGUi
-	cw0vtJrjnKOjuL2242Hr7KMmdsIinboRelk9fS057k0/sCDwYHq9kTLkOVzT3HRF
-	jNs0rZ32xDloKSYm/pSYUDlggmMLvuFHJam4887PQ4uER2XIuxP9NmEhL9tJ/2Ig
-	21/35t+X2wnpDnImh+FUaW9WAALp0mZCYu4uBY1WKBlXi7UaeOA4vgGp+JfPL184
-	eQhEuShYjdBwX6goIt6uFHFhzllv4qdqVXDzQ3Xlknip9j9z+WtkGOtbQ==
-X-ME-Sender: <xms:-Hs2ZU0tfnAz81QjP0QhRLduZI1_u_f_vsj4qQ2NEUgDk8pIJUFpKg>
-    <xme:-Hs2ZfGTXhPpo0CA-jYhz2SYt5wsByHKm4EhoHs5LM_cH6lLFK6W3kQwSqC9iFLir
-    85o7AvEjH6l_RTH1A>
-X-ME-Received: <xmr:-Hs2Zc7bu48HLyPK-5teeSsiJVccGPPVUhTddngYk3MmZT-DxV3UaPB-DURVJP7vAZ6LS6rn_4KEkMduoY89UbnUoGfMlX2aESF6CVBcEpr9>
+	:x-sasl-enc; s=fm3; t=1698069501; x=1698155901; bh=LZ6/tYrz43awC
+	G98Yd57/1klGi2wmmXQtMvkUgDNUfI=; b=XFvZrwB1ZecJgelz0t5OlA7OMgRZR
+	nwxx1XmrGYoJbdE3UtyHrwwYvhxh8uRdTPwgCfMSN2oleV8qYYthGlxHgrDT2/j2
+	1L/fSbm7DcFEtypjHQ6V80lIvKda8kLO5wGB/bpyU8qYkpO+siqHJeuPzZ5vq9GF
+	yiePqDiGw266aTB5XlEse47c3mTAMjJFm+BP7siu74ZN3o/qt3B9XBwsox7kHVqG
+	Mj8DrQSdb7Sll0z3foQfkKSE9KFQg27pfcYoc4xbM1X3/JqFH2PYXLBi0Dnuvr4d
+	lK3cRyEqsOKdO7B4pnnf1Wha89j268sOxh9iXkYh1xBE5pjGGGBbudFTQ==
+X-ME-Sender: <xms:_Xs2ZRpcmZZ6ioayvsIZYfU8HQ4JvG4tfWFA11TdqWTatYRNXSgvwQ>
+    <xme:_Xs2ZTqv-aN0dji1JayDl9IBivIHqzeZRgWUatQixh-1UX5lanoSmuSvYbTDRmYt3
+    opLMh6XkY-wU3_0Pw>
+X-ME-Received: <xmr:_Xs2ZeMPlvHnPUhgbdTlYv0pLv4Mt6GRKlnWoZNRRAZsPCcTv_RN3Y5GymzcjcEsnB7fYU29h1l1d--fqmUXK9hKKbRTkkqn3OpoL9rDjj-C>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrkeeigdeilecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefrrghtrhhi
+    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeetueevhffhudefvdegieeuieelgedthfegfedtueevjeejtdfgjeehudejuedtuden
+    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhm
-X-ME-Proxy: <xmx:-Hs2Zd0WQ4XoELsPsxVgj9SDi0kyF-pKPQ-HPo7ZIe755hSNjQ4dBw>
-    <xmx:-Hs2ZXEOG_qV7OaS7Cd7eQ7OLGwzPYZ4uaCPhecULFsZUoxyHy_svw>
-    <xmx:-Hs2ZW9IkZsDsvuNhEP86tgnPlPf-lyDclpwWWawwpj9bJdI9tM76Q>
-    <xmx:-Hs2ZdNAIYWCsmigBkOAVQI44VuhLLDzUStZ-rhgjrYoIwKLIUPtPg>
+X-ME-Proxy: <xmx:_Xs2Zc4hUnPuPcUYBQVfTyvg5j0xE6O-BgNtEv3S3fcX6q494Yi32A>
+    <xmx:_Xs2ZQ49g-5DghPPkS4R5WDCFOufpniwWpQovKHZr5iTnqydJ2hpKw>
+    <xmx:_Xs2ZUgvimRNrnE9rXsZWuc-avcT8JgvvGDOzPgilfX8hJhE18gmDg>
+    <xmx:_Xs2ZeRYstBTBB_Sbk50h_rpwFv22aIjGDRwIPZuinMhel_vQrBjww>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 23 Oct 2023 09:58:15 -0400 (EDT)
+ 23 Oct 2023 09:58:20 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 9462acfa (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 23 Oct 2023 13:58:11 +0000 (UTC)
-Date: Mon, 23 Oct 2023 15:58:12 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 5f6bce86 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 23 Oct 2023 13:58:17 +0000 (UTC)
+Date: Mon, 23 Oct 2023 15:58:18 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Han-Wen Nienhuys <hanwen@google.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 00/11] t: reduce direct disk access to data structures
-Message-ID: <ZTZ79DENl6c-1C0q@tanuki>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH 02/11] t: allow skipping expected object ID in `ref-store
+ update-ref`
+Message-ID: <ZTZ7-oMqek8kQqhJ@tanuki>
 References: <cover.1697607222.git.ps@pks.im>
- <xmqqbkcwuetq.fsf@gitster.g>
- <CAFQ2z_Om724+o+EG1FAhC9VrvJECnQ5UA+Z04Rzycpi_mXvMHg@mail.gmail.com>
+ <1f615d62f99e9ab47d37500f05b29615bafffba2.1697607222.git.ps@pks.im>
+ <xmqqil73ud5j.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,108 +76,94 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="qCz1R6Q9aFUh6ZnD"
+	protocol="application/pgp-signature"; boundary="kl4YOdCLD6sdzOlF"
 Content-Disposition: inline
-In-Reply-To: <CAFQ2z_Om724+o+EG1FAhC9VrvJECnQ5UA+Z04Rzycpi_mXvMHg@mail.gmail.com>
+In-Reply-To: <xmqqil73ud5j.fsf@gitster.g>
 
 
---qCz1R6Q9aFUh6ZnD
-Content-Type: text/plain; charset=utf-8
+--kl4YOdCLD6sdzOlF
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Oct 19, 2023 at 12:13:12PM +0200, Han-Wen Nienhuys wrote:
-> On Wed, Oct 18, 2023 at 5:32=E2=80=AFPM Junio C Hamano <gitster@pobox.com=
-> wrote:
-> > > this patch series refactors a bunch of our tests to perform less dire=
-ct
-> > > disk access to on-disk data structures. Instead, the tests are conver=
-ted
-> > > to use Git tools or our test-tool to access data to the best extent
-> > > possible. This serves two benefits:
-> >
-> > Laudable goal.
-> >
-> > >     - We increase test coverage of our own code base.
-> >
-> > Meaning the new code added to test-tool for this series will also
-> > get tested and bugs spotted?
-
-For now all the helpers of the test-tool only have implicit test
-coverage, but I get your point. If we decide to instead transform this
-test tool into production-level code as you suggested (e.g. `git
-rev-parse --exists`) then this becomes less of a discussion point as we
-would of course have proper test coverage for it.
-
-> > >     - We become less dependent on the actual on-disk format.
-> >
-> > Yes, this is very desirable.  Without looking at the implementation,
-> > I see some issues aiming for this goal may involve. [a] using the
-> > production code for validation would mean our expectation to be
-> > compared to the reality to be validated can be affected by the same
-> > bug, making two wrongs to appear right; [b] using a separate
-> > implementation used only for validation would at least mean we will
-> > have to make the same mistake in unique part of both implementations
-> > that is less likely to miss bugs compared to [a], but bugs in shared
-> > part of the production code and validation code will be hidden the
-> > same way as [a].
+On Wed, Oct 18, 2023 at 09:08:08AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 >=20
-> I think it would be really great if there were separate unittests for
-> the ref backend API. Some of the reftable work was needlessly
-> difficult because the contract of the API was underspecified. The API
-> is well compartmentalized in refs-internal.h, and a lot of the API
-> behavior can be tested as a black box, eg.
+> > We require the caller to pass both the old and new expected object ID to
+> > our `test-tool ref-store update-ref` helper. When trying to update a
+> > symbolic reference though it's impossible to specify the expected object
+> > ID, which means that the test would instead have to force-update the
+> > reference. This is currently impossible though.
+> >
+> > Update the helper to optionally skip verification of the old object ID
+> > in case the test passes in an empty old object ID as input.
+> >
+> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> > ---
+> >  t/helper/test-ref-store.c | 11 +++++++----
+> >  1 file changed, 7 insertions(+), 4 deletions(-)
 >=20
-> * setup symref HEAD pointing to R1
-> * setup transaction updating ref R1 from C1 to C2
-> * commit transaction, check that it succeeds
-> * read ref R1, check if it is C2
-> * read reflog for R1, see that it has a C1 =3D> C2 update
-> * read reflog for HEAD, see that it has a C1 =3D> C2 update
+> Good.
 >=20
-> Tests for the loose/packed backend could directly mess with the
-> on-disk files to test failure scenarios.
->=20
-> With unittests like that, the tests can zoom in on the functionality
-> of the ref backend, and provide more convenient coverage for
-> dynamic/static analysis.
+> Even better would be to make the old one optional, though.
 
-Agreed. Ideally, I think our tests should be split up into two layers:
-
-    1. Low-level tests which are backend specific. These allow us to
-       assert the on-disk state of the respective backend thoroughly and
-       also allow us to explicitly test for edge cases that are only of
-       relevance to this specific backend.
-
-       The reftable backend in its current (non-upstream) already has
-       such tests, but we don't really have explicit tests for the files
-       backend. This is a gap that should ideally be filled at some
-       point in time.
-
-    2. Higher-level tests should then be allowed to assume that the
-       underlying logic works as expected. These tests are thus free to
-       use plumbing tools that tie into the reference backends.
+I was also a bit torn when writing this. We could of course make the
+behaviour conditional on whether `argc` is 4 or 5. But I wasn't quite
+sure how important it is to provide a nice UI for this test helper, and
+we don't have `argc` readily available. It's not hard to count them
+manually, but until now I was under the impression that the test helpers
+only need to be "good enough".
 
 Patrick
 
---qCz1R6Q9aFUh6ZnD
+> > diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
+> > index 7400f560ab6..7dc83137584 100644
+> > --- a/t/helper/test-ref-store.c
+> > +++ b/t/helper/test-ref-store.c
+> > @@ -322,16 +322,19 @@ static int cmd_update_ref(struct ref_store *refs,=
+ const char **argv)
+> >  	const char *new_sha1_buf =3D notnull(*argv++, "new-sha1");
+> >  	const char *old_sha1_buf =3D notnull(*argv++, "old-sha1");
+> >  	unsigned int flags =3D arg_flags(*argv++, "flags", transaction_flags);
+> > -	struct object_id old_oid;
+> > +	struct object_id old_oid, *old_oid_ptr =3D NULL;
+> >  	struct object_id new_oid;
+> > =20
+> > -	if (get_oid_hex(old_sha1_buf, &old_oid))
+> > -		die("cannot parse %s as %s", old_sha1_buf, the_hash_algo->name);
+> > +	if (*old_sha1_buf) {
+> > +		if (get_oid_hex(old_sha1_buf, &old_oid))
+> > +			die("cannot parse %s as %s", old_sha1_buf, the_hash_algo->name);
+> > +		old_oid_ptr =3D &old_oid;
+> > +	}
+> >  	if (get_oid_hex(new_sha1_buf, &new_oid))
+> >  		die("cannot parse %s as %s", new_sha1_buf, the_hash_algo->name);
+> > =20
+> >  	return refs_update_ref(refs, msg, refname,
+> > -			       &new_oid, &old_oid,
+> > +			       &new_oid, old_oid_ptr,
+> >  			       flags, UPDATE_REFS_DIE_ON_ERR);
+> >  }
+>=20
+
+--kl4YOdCLD6sdzOlF
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmU2e/MACgkQVbJhu7ck
-PpSOsw/8D3lN4krl+uVG7rKaId5UspvTI/imV0ofQlUH/TzS1GdbqnLrsm9lJEW+
-iQUifq9Qem0xabjJ07ES6cdVZSnDMbcB9X7yMNfdgDZ7DZojnTxdfZV+q8UO8egy
-gs8qfqzIuRkzKklwzxP9v5n4ZG8hKBjSDDbeMVR+FB/lIxfn1nkn9xO46ZmtTMwk
-jUEE6tJuJV9kIZIUxD39GO/RsNtp9Q7tvxIBSBV8RzbjYykzg3LBjL3ULiNlGUZT
-KMUXmSC4VQzdB/G1d/3O+oPSuQeFlFWr0XnO0GGbkK16HvC7u8GIW05HVwFjyjUS
-bqyESKUnIVWtlmOPeT6pfK3Zllod3Q7sVijJYrgGDGKxG3R5WxPr8eXRlDQ+89+A
-ybUA+HcNXU9abM4rK46V5YKERzwlt/6/aQWD22vdki3ZfO2Vyu/KwyijqiBa3f73
-jFcHHOjUhv1dyzTV24FgfCvLcV6SN6ksuo0Bsp3B0A8Ia2kB4etaHUeEAfbEypAV
-9bR6JGiutjzOd29g4i0yelR0yN2wM43OX34hoxBso138pqbinlaPGIiZ62z4tsru
-XiHs5vcgXRjSAeqwBQiIt+PhzrJNkWWkM7ssAZookxxgn5bgwkFMgw2wmDe1x2A0
-10yRXLZS3yUecNLY/mSVdDOwjVPR02zCg/X4qyqjQnAF6hEDCVI=
-=syA3
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmU2e/kACgkQVbJhu7ck
+PpTAnA//dEXvCGa5D5jhDgdChK7de8iodZ79+diZvW89APUcwMgbiPDcU8TQcDoI
+kv/BvwkRL8vPSdVfF1uiPIewXmVt0dLDPSAqUw3qoqK50K9KvZwJ5UleKNbj9oaK
+urD/h/TwoT97e57Db6omxSRSGAkg9WCam2wjdZ/S3rpwob0Qpay/Wqau/fyW6Amo
+3c39+tI1NNmDdbloeSB1L/KALATTJlqOI4OAAbw1MYgxmsl7hQu/ZxIt38yTpGvH
+nX9QjMXJcKwOzuCqlVfiQIybULKqaPlDAEX9k8IvxkoSkLd5MVvDausz9KcbPbJn
+58yyDpEz3zQZcffiqpoK38T8C7ZoEY91G2l6B9qT+IZJsVyPJ/lQhw7JdifsuVrF
+j3oDkkpKnLFyFZUtlq9bAULaMcD/cOyNx2GqiWezrrflt/0hK1vJ+LkxZJEQ7voY
+qFe4kXj2uvxlr7Z00WT5ShwUmlRRGOeQrrpuAtIm//8VxfUwyUR+FwAtgfjLfWAU
+70XQ5GS0iueXNkCt2oJhTi69MHyxlodjLrxSYiSTTIRyw24BHc9HeyHoJEeOQmNB
+3u7iv9qzo705If+9HYiurBfesU96MEM+9fxo78Z5o2bus1pkT67Obph8uw6wnHy+
+irYhSVeP7G8xB83yMknnjuerS/g7FORr5CNi5Yq7ye8Efiu27hY=
+=z2fN
 -----END PGP SIGNATURE-----
 
---qCz1R6Q9aFUh6ZnD--
+--kl4YOdCLD6sdzOlF--
