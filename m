@@ -1,88 +1,127 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675F924203
-	for <git@vger.kernel.org>; Mon, 23 Oct 2023 23:18:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from mail-vk1-f177.google.com (mail-vk1-f177.google.com [209.85.221.177])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88B9CC0
-	for <git@vger.kernel.org>; Mon, 23 Oct 2023 16:18:30 -0700 (PDT)
-Received: by mail-vk1-f177.google.com with SMTP id 71dfb90a1353d-49d8fbd307fso1533464e0c.3
-        for <git@vger.kernel.org>; Mon, 23 Oct 2023 16:18:30 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72ED42376A
+	for <git@vger.kernel.org>; Mon, 23 Oct 2023 23:20:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IYYKLEfV"
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B9F7C0
+	for <git@vger.kernel.org>; Mon, 23 Oct 2023 16:20:21 -0700 (PDT)
+Received: by mail-yb1-xb2d.google.com with SMTP id 3f1490d57ef6-d865854ef96so3590891276.2
+        for <git@vger.kernel.org>; Mon, 23 Oct 2023 16:20:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1698103220; x=1698708020; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Vy5D7svGj5hkmHNE+GWRU9JSpOO6T1hqL5hdXHq4yRw=;
+        b=IYYKLEfVQ9ZzsGGj/JqdXCq8Jw5CHwBHzLFHIsN3Yc8kuFn/tRbyE2Ss2nzpwjqfet
+         Q0oP9L3PxQqtuT+YR53XO2HR0VSmUssYaXiFjcPwJBZiVkjFGeXAUnqWb1IeMbd4SDeH
+         LpyyhwnRMKXZThuOsK4TSDZ8xxU1SktjpDztphxRO2HPFH+Pdf6Zbkj/uo6XspVkkvdL
+         JZAgBPYmq5dbS7rvr8Lsd7xcbU2edeR43nGmGsp4pTAHMYIJyoVNXOA6Ifg/B+Pmydhp
+         ZE+0pNgLldyqBdgWgyPNJGC1/gsQi7didrON1Rgm0xFbQYf9y89+kN8nJ++niIozWSbc
+         Mw2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698103109; x=1698707909;
+        d=1e100.net; s=20230601; t=1698103220; x=1698708020;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=5yLydk83ffJj90QJbFYX6G3JOJ9ULvejNUBl9xSIp4c=;
-        b=S/BvI9Uekga18qLv/VWaGGBeTV+V/6hMxeu4s6igkXXA7OZkwXpVubXe4TfgB5fGEa
-         5dqWMGOvegqB/i7exixKE0LlsgmFWCtBiYs8n73m5MaPIC2ndrm+7y9Mev+QL+eJ4rKi
-         ZsKOzF642ucHmO52XBBKF74y+hyCf5+ECJUll6z83rw70m4UF7YpgTAJuIVTPVLj0wKF
-         +gP4clKnqExlTkD00hTlTpWL0KEUcFMj/EvcIn2e8YCi/t+3cNMSSgjJ+dyIj99PeLBI
-         bpkUOVg2XkcZZds6Q/qQawM2/8b1xCvaOU9CPmo5eQbidUfNgMjAu0bCW9w2obv9zhVr
-         eF0w==
-X-Gm-Message-State: AOJu0YzO/kDSoSxHWcs17AFFA4RG6DqJyVwd3RW2MeDX7xlm81Zn5IbW
-	zKk3koQSreqKMZbB8uH0D00D58trDNLFGLFTsSo=
-X-Google-Smtp-Source: AGHT+IG8TlZt8c9XB+xWcUSN7rLMNDTZC9lw1mcxvEwPoFUnI8rak2g64ISSADC9xi/Mc/dyZ0APZUoroeA3g7wu+l4=
-X-Received: by 2002:a05:6122:309e:b0:49d:3e4c:6168 with SMTP id
- cd30-20020a056122309e00b0049d3e4c6168mr10232768vkb.7.1698103109582; Mon, 23
- Oct 2023 16:18:29 -0700 (PDT)
+        bh=Vy5D7svGj5hkmHNE+GWRU9JSpOO6T1hqL5hdXHq4yRw=;
+        b=g/lt3aOkoIfJlz+k3szSglM98qAOSAl1iEEsqJLQ31VneOBTsv6xYuLVXwixRSxysq
+         GYL0Bt9zeBusUftThQR1RENUWwAs31l9GqTOk+3V85rj9PNwd2DeZIOG6LqJ4YWHLGos
+         TwcRNQZbBpOSqcDjJ6U8Ozr+mKHkjY3224LBbDMdHt+2X1DOZ1gStNjQOLvNHqKctJ99
+         9bufNCCfsMIcA/ImxtbS/zbCe0LAR7m43ZMiM9BU9XNBzQcDMTZnGYNzxQHGeCS40oQm
+         FsElDz4rW6q1yzhIrfdvjNzCT9UY/XdmE64Sleu5ZKGpOpHtBS1qk6iLxO0yAt1dQg/v
+         0VAQ==
+X-Gm-Message-State: AOJu0YxYyjMAXcW8Keghkl1C4xq4MiFvufWYAsMk6iHgW2D0Sl+6W8pu
+	pX0lOPNDHPGXoj5TImQ6Ew/ZklpH04QgCtEsP1k=
+X-Google-Smtp-Source: AGHT+IEGrihnd38gKJ5V93zUL7dHMsnMhnWUldMFXDO4JZeONaFE9Lov0Ld55qFh/ExHSzXPatvQtDWAKA9Own3xVU0=
+X-Received: by 2002:a25:e00b:0:b0:d99:5613:213d with SMTP id
+ x11-20020a25e00b000000b00d995613213dmr11933296ybg.61.1698103220285; Mon, 23
+ Oct 2023 16:20:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1602.git.1698004968582.gitgitgadget@gmail.com>
- <pull.1602.v2.git.1698088990478.gitgitgadget@gmail.com> <CAPig+cQuBwzaG7ZssGUY6k8wf8pcGZHAGLnbRy579uTPMKqwKQ@mail.gmail.com>
- <CAH1-q0hNSKgr1-dtZac=z7Bx15gON0Y-1pyBM57zuXaFPaJJKQ@mail.gmail.com>
-In-Reply-To: <CAH1-q0hNSKgr1-dtZac=z7Bx15gON0Y-1pyBM57zuXaFPaJJKQ@mail.gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Mon, 23 Oct 2023 19:18:18 -0400
-Message-ID: <CAPig+cS7-YrWf=cxbq6V8FH1BdtoqAS-EKzxF-ha-A0A6_91ew@mail.gmail.com>
-Subject: Re: [PATCH v2] doc/git-bisect: clarify `git bisect run` syntax
-To: Javier Mora <cousteaulecommandant@gmail.com>
-Cc: cousteau via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Patrick Steinhardt <ps@pks.im>
+References: <38b0b22038399265407f7fc5f126f471dcc6f1a3.1697725898.git.zhiyou.jx@alibaba-inc.com>
+ <ced46baeb1c18b416b4b4cc947f498bea2910b1b.1697725898.git.zhiyou.jx@alibaba-inc.com>
+ <ZTYue-3gAS1aGXNa@tanuki> <CANYiYbEJ_mHdsPM3-huDPFktSWFhrpoz7Cvf000JSfZM2cco9w@mail.gmail.com>
+ <ZTZF3AbNNuGpy38l@tanuki>
+In-Reply-To: <ZTZF3AbNNuGpy38l@tanuki>
+From: Jiang Xin <worldhello.net@gmail.com>
+Date: Tue, 24 Oct 2023 07:20:08 +0800
+Message-ID: <CANYiYbG0YFc4Hg=e+0db4NBgM2QwOLpjHjfp8WaoObNxR-=euA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] fetch: no redundant error message for atomic fetch
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>, 
+	Jiang Xin <zhiyou.jx@alibaba-inc.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Oct 23, 2023 at 6:53=E2=80=AFPM Javier Mora
-<cousteaulecommandant@gmail.com> wrote:
-> > the patch subject becomes a bit outdated with this addition.
+On Mon, Oct 23, 2023 at 6:07=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrot=
+e:
 >
-> Right; I wanted to change it to something like "clarify `git bisect
-> run` syntax and other minor changes" but wanted to keep the title
-> concise.
-> I guess I could change it to just "clarify `git bisect` syntax" though
-> remove the "run").
-
-Yup.
-
-> > the following two lines are already referencing placeholders
-> > <term-new> and <term-old>
+> On Mon, Oct 23, 2023 at 05:16:20PM +0800, Jiang Xin wrote:
+> > On Mon, Oct 23, 2023 at 4:27=E2=80=AFPM Patrick Steinhardt <ps@pks.im> =
+wrote:
+> > >
+> > > On Thu, Oct 19, 2023 at 10:34:33PM +0800, Jiang Xin wrote:
+> > > > @@ -1775,10 +1775,8 @@ static int do_fetch(struct transport *transp=
+ort,
+> > > >       }
+> > > >
+> > > >  cleanup:
+> > > > -     if (retcode && transaction) {
+> > > > -             ref_transaction_abort(transaction, &err);
+> > > > +     if (retcode && transaction && ref_transaction_abort(transacti=
+on, &err))
+> > > >               error("%s", err.buf);
+> > > > -     }
+> > >
+> > > Right. We already call `error()` in all cases where `err` was populat=
+ed
+> > > before we `goto cleanup;`, so calling it unconditionally a second tim=
+e
+> > > here is wrong.
+> > >
+> > > That being said, `ref_transaction_abort()` will end up calling the
+> > > respective backend's implementation of `transaction_abort`, and for t=
+he
+> > > files backend it actually ignores `err` completely. So if the abort
+> > > fails, we would still end up calling `error()` with an empty string.
+> >
+> > The transaction_abort implementations of the two builtin refs backends
+> > will not use "err=E2=80=9C because they never fail (always return 0). S=
+ome one
+> > may want to implement their own refs backend which may use the "err"
+> > variable in their "transaction_abort". So follow the pattern as
+> > update-ref.c and files-backend.c to call ref_transaction_abort() is
+> > safe.
+> >
+> > > Furthermore, it can happen that `transaction_commit` fails, writes to
+> > > the buffer and then prints the error. If the abort now fails as well,=
+ we
+> > > would end up printing the error message twice.
+> >
+> > The abort never fails so error message from transaction_commit() will
+> > not reach the code.
 >
-> That's why I added it; that `(bad|new|<term-new>)` felt a bit awkward
-> with no previous explanation of what <term-new> was.
+> With that reasoning we could get rid of the error handling of abort
+> completely as it's known not to fail. But only because it does not fail
+> right now doesn't mean that it won't in the future, as the infra for it
+> to fail is all in place. And in case it ever does the current code will
+> run into the bug I described.
+
+If in the future ref_transaction_abort() fails for some reason, the
+err variable will be filled with the error message and the previous
+error message will be discarded, no duplication will occur. So I think
+use this fix is OK.
+
+> So in my opinion, we should either refactor the code to clarify that
+> this cannot fail indeed. Or do the right thing and handle the error case
+> correctly, which right now we don't.
 >
-> > ...now we have an inconsistency again since this text just uses the
-> > generic <term>. However, I haven't convinced myself that we need to
-> > care about this inconsistency.
->
-> I thought about that, but in THAT case it wasn't necessary because
-> <term-new> and <term-old> are never used there (and I wanted to avoid
-> making -h too long).  But it's true that it feels inconsistent; I may
-> add it just for the sake of consistency.
-
-I don't feel strongly about the inconsistency at this point.
-
-> Overall, maybe I should leave that change to a separate patch, even if
-> it's a minor correction.  (This made more sense when I had in mind the
-> plan to move everything from description to synopsis so I would need
-> to touch all those lines anyway.)  The changes will be compatible
-> anyway (they're far away enough to not cause merge conflicts).  What
-> do you think?
-
-I can certainly see the "{new,bad}" to "(new|bad") and <term> to
-<new-term>/<old-term> changes being separated out, making this a two-
-or three-patch series.
+> Patrick
