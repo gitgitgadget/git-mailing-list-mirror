@@ -1,317 +1,258 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF2011B260
-	for <git@vger.kernel.org>; Mon, 23 Oct 2023 13:58:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20D39637
+	for <git@vger.kernel.org>; Mon, 23 Oct 2023 14:24:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MJwg5OFJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BUAhrjZS"
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55C51101
-	for <git@vger.kernel.org>; Mon, 23 Oct 2023 06:58:50 -0700 (PDT)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.nyi.internal (Postfix) with ESMTP id BDE195C024C;
-	Mon, 23 Oct 2023 09:58:49 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Mon, 23 Oct 2023 09:58:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1698069529; x=1698155929; bh=Up
-	ib5W2XKW29wtjwIcp1oOyVsNIzdmVgU3WGzwVQ7Oo=; b=MJwg5OFJ6Qz82qnPHK
-	727Smp/BCsU40AXo2FMDuz/QEhn+G+DFlvM3DfkWzgLq8rvwygn0clUex9YKC3Fv
-	vqPge1TbBklXT0RRmSF328G9ut2+Nrn45rAJ7f7pw/kT+QzT4WVPW7jtQju/Wf0A
-	3EhQIcdDqttejDExrD877p6nqEQu+vT1BJEFsrwF+6Vwj5mWZDZHqjuBM9nwi8qZ
-	RNuSdlKN8Jh3TkzDSYXW7dv9Zl2wevbVuIawHg/E2G8Ncl7sH9Zz9sR25aDvWqhT
-	21P99ZsC3WQC1r9C5W5BkrVTYzdoFYi/YHv+btuTq6q2aPBSjREDELMD048hl8ns
-	sIHQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1698069529; x=1698155929; bh=Upib5W2XKW29w
-	tjwIcp1oOyVsNIzdmVgU3WGzwVQ7Oo=; b=BUAhrjZS/c3Jx8sL8HPKbIHT99kRb
-	cnKfc5vDBzt1qp6S4gN3QyxZ2TSSunyKGmESiKhYsaCYbt0GM4w2BKEJhtTZmcs9
-	dMkyuG8Qd0FfuIAR7DJ6PaASkx8UC4qqKinzog5Xp0CCk9lnzFQ83KWPlhN0HBRa
-	qerPjzRa1Nf1ZmOSjAFA/ceRa2Xrf0jvzjI/pqARPajr7gxLrqsulzZjFhY8hTx1
-	gs0MZ3/3ODQAWU4AUCmUPvx3b2hDHottYLYO0xvvR1/cj2KzkqW/0te4nY3cHtgg
-	6kxB+URpRsC6b2z//wwzKIEt6kInXa21UzRigk+cehWpFkO1yrtaQIXhg==
-X-ME-Sender: <xms:GXw2ZdG3Mx5ocedS0vEEvS3RMQAFcORiSLWI9iy3a9bJ84gZIpgT6w>
-    <xme:GXw2ZSUmzU1gnfdNevj7i3t7KRkVhduIh1SDbSFyN3tAna3D2We9eqemD9dNPKA9h
-    oRBQSnpo3OGgLYTGQ>
-X-ME-Received: <xmr:GXw2ZfLTGqhRKjwnidJACFsNi1HMYbKSawIUcC9lctRb4hkbmekvzHjaqFzsjnE-aru8v7bDBJStMFScIy68zjuys_WHl3H94jRF9N1wOadQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrkeeigdeilecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhm
-X-ME-Proxy: <xmx:GXw2ZTEW0zEZtwF2493gCgOsreyUOwqs0cLssM5FylNuhME--DJAwg>
-    <xmx:GXw2ZTU9QAx3UIJVnxGlgzx1iaAycV-ddTfajMaDkhlj3Pk5e5HmUw>
-    <xmx:GXw2ZeNJGtLECpVN3V_R1Rxaz5sgkznsE1-c6guhoJdV4E2kq60B3Q>
-    <xmx:GXw2ZadWakYpRxflgvVFLO6V_3o56nA5QGpwgqpppsmmNeeeuzVB1g>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 23 Oct 2023 09:58:48 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 6d9274ca (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 23 Oct 2023 13:58:45 +0000 (UTC)
-Date: Mon, 23 Oct 2023 15:58:46 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH 01/11] t: add helpers to test for reference existence
-Message-ID: <ZTZ8Fm1Gk7Rxn6Yu@tanuki>
-References: <cover.1697607222.git.ps@pks.im>
- <e947feb1c77f7e9f3c7f983bbe47137fbce42367.1697607222.git.ps@pks.im>
- <xmqqmswfud7p.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cswysLLw"
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8A7AB3
+	for <git@vger.kernel.org>; Mon, 23 Oct 2023 07:24:17 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-9b96c3b4be4so492213766b.1
+        for <git@vger.kernel.org>; Mon, 23 Oct 2023 07:24:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1698071056; x=1698675856; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vnQN97W5kQs5RQsysq4ecHDSro8zbyyXU0TNmNwAL2M=;
+        b=cswysLLw27chrjnhHI/BGtR7VDmu6hdcviFPZylEVHQ0nXiTlONe2I8/NiXu9d2sq6
+         tZMguOFsw2aCinI3KljGU+pP41koe+TfRb4JeZQk1EXF0G5oyTbS78uAlL3yCPjfeCzn
+         CJ/+8QZw6f2hF5ISyLrA0NCm4mgnBaIX2sAB+gFpm3Hx51yX5RlZ0FihTEADvy6Pbtlw
+         KRV9CNI3pWkIQP34+dnwn9HTMLtHFIXgERSCk+IGGHJj5B6Jlitd1TyjtkDNXKrveWiw
+         wwcMnIvkMqHt280kDVNyEVv3QvJZO2rPHNegP0sVPPks6cDuxLBsDPJWYDIPYI9PMLBb
+         YyyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698071056; x=1698675856;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vnQN97W5kQs5RQsysq4ecHDSro8zbyyXU0TNmNwAL2M=;
+        b=jTDKN7DtUVZocam5KKFPXIwND+mvHvI8ArhbiRZ1OrgfQdfKbyLvHaX//Mr17UByl9
+         F6LF1nyNGpN2RDDghmteRMRhUtl+x9fbeLTGnvoBQw3v5nL+WabmiqOjy4/Oly0+dKBe
+         knF7cWYh3KPuZLBKCqY84DWnqQEL1MAprUUA5xtkBA4SUYtXP2Xg+F3l064XDdUYJOGR
+         OnAmI9DePvw5cmP6NqI7qRoLWwZ0a4YR4aB3pMGTxBlxLmRNWMRB6MZUuB63+3PBJiJf
+         jMA8GdETInXX8zdhhrbDxKJg0knrD0UqKyxdOUMtOWYN93j8zHMfDzmDEjX69Eol1TJT
+         sqxg==
+X-Gm-Message-State: AOJu0YwQSHLjX2nLvnYZGrz5x79hiYbBM4druzYSqE8U+EMlFWd4OttW
+	2SZ8qAGd0J3/TQWALl15G9Pp9GAsltYZwlgtI/0=
+X-Google-Smtp-Source: AGHT+IEIHBK/C8+3d6mw1BgkfjseFU4vG60Km2u9x+Lqm6IJ2LK3KGfmaykUu3RcB3+gvAV2tsLprPIrRrq8ieaLiXg=
+X-Received: by 2002:a17:907:1c93:b0:9bf:70ea:6926 with SMTP id
+ nb19-20020a1709071c9300b009bf70ea6926mr7483128ejc.2.1698071055731; Mon, 23
+ Oct 2023 07:24:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="mUoZPZ2PunDlxArv"
-Content-Disposition: inline
-In-Reply-To: <xmqqmswfud7p.fsf@gitster.g>
-
-
---mUoZPZ2PunDlxArv
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <CAJHH8bEfM8KmwhHX_Fmcb0A2zpr8L75vgNhfvZy-uitpSXNUvQ@mail.gmail.com>
+In-Reply-To: <CAJHH8bEfM8KmwhHX_Fmcb0A2zpr8L75vgNhfvZy-uitpSXNUvQ@mail.gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Mon, 23 Oct 2023 16:24:03 +0200
+Message-ID: <CAP8UFD22EpdBU8HJqFM+=75EBABOTf5a0q+KsbzLK+XTEGSkPw@mail.gmail.com>
+Subject: Re: [RFC][Outreachy] Seeking Git Community Feedback on My Application
+To: Isoken Ibizugbe <isokenjune@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 18, 2023 at 09:06:50AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->=20
-> > There are two major ways to check for the existence of a reference in
-> > our tests:
-> >
-> >     - `git rev-parse --verify` can be used to check for existence of a
-> >       reference. This only works in the case where the reference is well
-> >       formed though and resolves to an actual object ID. This does not
-> >       work with malformed reference names or invalid contents.
-> >
-> >     - `test_path_is_file` can be used to check for existence of a loose
-> >       reference if it is known to not resolve to an actual object ID. It
-> >       by necessity reaches into implementation details of the reference
-> >       backend though.
->=20
-> True.  It would be ideal if we can limit the use of latter when we
-> _care_ how the ref is stored (e.g., "we expect it to be stored as a
-> loose ref, not packed").  "The ref R at must be pointing at the
-> commit X" is better asserted by using the former (or "git show-ref")
-> as we not just only want to see the .git/refs/R file holding the
-> object name X, but also want to see the production git tools observe
-> the same---if what rev-parse or show-ref observes is different from
-> the expected state and they say ref R does not point at commit X, we
-> should complain (rev-parse or show-ref may be broken in the version
-> of Git being tested, but we can assume that their breakage will be
-> caught elsewhere in the test suite as well, so as long as we trust
-> them, using them as the validator is better than going into the
-> implementation detail and assuming things like "new refs always
-> appear as a loose ref" that we might want to change in the future).
->=20
-> > Similarly, there are two equivalent ways to check for the absence of a
-> > reference:
-> >
-> >     - `test_must_fail git rev-parse` can be used to check for the
-> >       absence of a reference. It could fail due to a number of reasons
-> >       though, and all of these reasons will be thrown into the same bag
-> >       as an absent reference.
-> >
-> >     - `test_path_is_missing` can be used to check explicitly for the
-> >       absence of a loose reference, but again reaches into internal
-> >       implementation details of the reference backend.
-> >
-> > So both our tooling to check for the presence and for the absence of
-> > references in tests is lacking as either failure cases are thrown into
-> > the same bag or we need to reach into internal implementation details of
-> > the respective reference backend.
->=20
-> > Introduce a new subcommand for our ref-store test helper that explicitly
-> > checks only for the presence or absence of a reference. This addresses
-> > these limitations:
-> >
-> >     - We can check for the presence of references with malformed names.
->=20
-> But for the purpose of tests, we can control the input.  When we
-> perform an operation that we expect a ref R to be created, we would
-> know R is well formed and we can validate using a tool that we know
-> would be broken when fed a malformed name.  So I do not see this as
-> a huge "limitation".
+On Thu, Oct 19, 2023 at 11:26=E2=80=AFAM Isoken Ibizugbe <isokenjune@gmail.=
+com> wrote:
+>
+> Dear Git Community and Mentors,
+>
+> I hope you're doing well. I'm excited to share my application draft
+> for the Outreachy program with the Git project. Your feedback is
+> invaluable, and I'm eager to align the project with the community's
+> needs. Please review the attached draft and share your insights.
 
-This is explicitly about the case where such a ref R is not well-formed
-though. This limitation was mostly a problem in t1430-bad-ref-name.sh,
-which verifies many such scenarios.
+Thanks for your project application!
 
-> >     - We can check for the presence of references that don't resolve.
->=20
-> Do you mean a dangling symbolic ref?  We are using a wrong tool if
-> you are using rev-parse for that, aren't we?  Isn't symbolic-ref
-> there for us for this exact use case?  That is
+[...]
 
-Again, t1430-bad-ref-name.sh has been the inspiration for this:
+> Why am I interested in working with the Git chosen project?
+>
+> Git has been a cornerstone for software development, enabling
+> developers worldwide to collaborate, innovate, and create exceptional
+> software. I would say without Git, my journey to pursuing my software
+> engineering career would be impossible, as I use it almost every day.
+> Yet, in this constantly evolving landscape, there is always room for
+> improvement, even in a well-established project. The Git project
+> currently relies on end-to-end tests, and this is where I see an
+> opportunity to make a profound impact. Being able to test libraries in
+> isolation via unit tests or mocks speeds up determining the root cause
+> of bugs. I am deeply passionate about contributing to this project and
+> firmly believe in the power of open-source software and the collective
+> intelligence of the community. A successful completion of this project
+> will significantly improve Git's testing capabilities and bring the
+> benefits of fewer errors, faster work and better testing for all
+> parts.
 
-```
-$ git symbolic-ref refs/heads/bad...name refs/heads/master
-$ git symbolic-ref refs/heads/bad...name
-fatal: No such ref: refs/heads/bad...name
-```
+Ok.
 
-The mismatch that you can write but not read the reference is kind of
-astonishing though. We could fix this limitation, but I think there were
-more usecases than only bad reference names. I honestly can't quite
-remember right now.
+[...]
 
-> >     - We can explicitly handle the case where a reference is missing by
-> >       special-casing ENOENT errors.
->=20
-> You probably know the error conditions refs_read_raw_ref() can be
-> broken better than I do, but this feels a bit too intimate with how
-> the method for the files backend happens to be implemented, which at
-> the same time, can risk that [a] other backends can implement their
-> "ref does not resolve to an object name---is it because it is
-> missing?" report incorrectly and [b] we would eventually want to
-> know error conditions other than "the ref requested is missing" and
-> at that point we would need more "special casing", which does not
-> smell easy to scale.
+> Contributions to Git
+>
+> I have actively participated in Git's mailing list discussions and
+> contributed to a micro-project;
+>
+> - builtin/branch.c: Adjust error messages such as die(), error(), and
+> warning() messages used in branch, to conform to coding guidelines
+> (https://lore.kernel.org/git/20231019084052.567922-1-isokenjune@gmail.com=
+/)
+> - Implemented changes to fix broken tests based on reviews from the
+> community (https://lore.kernel.org/git/20231019084052.567922-1-isokenjune=
+@gmail.com/)
+> - In review.
 
-We actually rely on some of these error codes to be consistent across
-backends. E.g. "refs.c" itself has higher-level logic that verifies
-specific error codes when resolving symrefs. And as we explicitly made
-these error codes part of the API design with `refs_read_raw_ref()` my
-assumption is that any other backend needs to match the behaviour here.
+Nice!
 
-I also think that this is a somewhat sane assumption to make. While it
-may not be a good idea to tie this to standard error codes, the backend
-should indeed be able to signal specific error cases to the caller. We
-could refactor this to be more explicit about the expected failure cases
-in the form of specialized error codes. But I'm not sure whether that
-would be worth it for now, but it's sure something to keep in mind for
-future patch series.
+> Project Goals:
+>
+> - Improve Testing Efficiency: Transitioning from end-to-end tests to
+> unit tests will enable more efficient testing of error conditions.
+> - Codebase Stability: Unit tests enhance code stability and facilitate
+> easier debugging through isolation.
+> - Simplify Testing: Writing unit tests in pure C simplifies test
+> setup, data passing, and reduces testing runtime by eliminating
+> separate processes for each test.
 
-> >     - We don't need to reach into implementation details of the backend,
-> >       which would allow us to use this helper for the future reftable
-> >       backend.
->=20
-> This is exactly what we want to aim for.
->=20
-> > Next to this subcommand we also provide two wrappers `test_ref_exists`
-> > and `test_ref_missing` that make the helper easier to use.
->=20
-> Hmmmm.  This may introduce "who watches the watchers" problem, no?
-> I briefly wondered if a better approach is to teach the production
-> code, e.g., rev-parse, to optionally give more detailed diag.  It
-> essentially may be the same (making the code in test-ref-store.c
-> added by this patch available from rev-parse, we would easily get
-> there), so I do not think the distinction matters.
->=20
-> > diff --git a/t/README b/t/README
-> > index 61080859899..779f7e7dd86 100644
-> > --- a/t/README
-> > +++ b/t/README
-> > @@ -928,6 +928,15 @@ see test-lib-functions.sh for the full list and th=
-eir options.
-> >     committer times to defined state.  Subsequent calls will
-> >     advance the times by a fixed amount.
-> > =20
-> > + - test_ref_exists <ref>, test_ref_missing <ref>
-> > +
-> > +   Check whether a reference exists or is missing. In contrast to
-> > +   git-rev-parse(1), these helpers also work with invalid reference
-> > +   names and references whose contents are unresolvable. The latter
-> > +   function also distinguishes generic errors from the case where a
-> > +   reference explicitly doesn't exist and is thus safer to use than
-> > +   `test_must_fail git rev-parse`.
-> > +
-> >   - test_commit <message> [<filename> [<contents>]]
-> > =20
-> >     Creates a commit with the given message, committing the given
-> > diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
-> > index 48552e6a9e0..7400f560ab6 100644
-> > --- a/t/helper/test-ref-store.c
-> > +++ b/t/helper/test-ref-store.c
-> > @@ -1,6 +1,6 @@
-> >  #include "test-tool.h"
-> >  #include "hex.h"
-> > -#include "refs.h"
-> > +#include "refs/refs-internal.h"
-> >  #include "setup.h"
-> >  #include "worktree.h"
-> >  #include "object-store-ll.h"
-> > @@ -221,6 +221,30 @@ static int cmd_verify_ref(struct ref_store *refs, =
-const char **argv)
-> >  	return ret;
-> >  }
-> > =20
-> > +static int cmd_ref_exists(struct ref_store *refs, const char **argv)
-> > +{
-> > +	const char *refname =3D notnull(*argv++, "refname");
-> > +	struct strbuf unused_referent =3D STRBUF_INIT;
-> > +	struct object_id unused_oid;
-> > +	unsigned int unused_type;
-> > +	int failure_errno;
-> > +
-> > +	if (refs_read_raw_ref(refs, refname, &unused_oid, &unused_referent,
-> > +			      &unused_type, &failure_errno)) {
-> > +		/*
-> > +		 * We handle ENOENT separately here such that it is possible to
-> > +		 * distinguish actually-missing references from any kind of
-> > +		 * generic error.
-> > +		 */
-> > +		if (failure_errno =3D=3D ENOENT)
-> > +			return 17;
->=20
-> Can we tell between the cases where the ref itself is missing, and
-> the requested ref is symbolic and points at a missing ref?  This
-> particular case might be OK, but there may other cases where this
-> "special case" may not be narrow enough.
+Ok.
 
-Yes, because `refs_read_raw_ref()` doesn't concern itself with recursive
-resolving of the reference, which is done at a higher level. It only
-reads and parses the reference without caring whether their target
-actually exists.
+> Project Milestones:
+>
+> - Add useful tests of library-like code
+> - Integrate with stdlib work
 
-> As long we are going to spend cycles to refine the classification of
-> error conditions, which is a very good thing to aim for the reason
-> described in the proposed log message, namely "rev-parse can fail
-> for reasons other than the ref being absent", I have to wonder again
-> that the fruit of such an effort should become available in the
-> production code, instead of being kept only in test-tool.
+Not sure what you call "stdlib" here.
 
-Fair enough, I'm happy to lift this up into production code. I just
-didn't think this would be all that useful in general, but I can see
-that somebody might want to use such functionality as part of our
-plumbing interfaces.
+> - Run alongside regular make test target
+>
+> Project Timeline:
+>
+> 1. Oct 2 - Nov 20: Community Bonding
+>
+> - Understanding the structure of Git
+> - Getting familiar with the code
 
-I wonder what the best spot would be for it. Should we add a new
-`--exists` switch to git-rev-parse(1)?
+I think some of this time is also spent on working on a microproject,
+writing an application and perhaps doing other things that regular Git
+developers do.
 
-Patrick
+> 2. Dec 4 - Jan 15: Add useful tests of library-like code
+>
+> - Identify and document the current state of the tests in the Git
+> t/helper directory.
 
---mUoZPZ2PunDlxArv
-Content-Type: application/pgp-signature; name="signature.asc"
+It would be nice if you could already take a look at that and tell us
+about it in your application. There are different things in t/helper.
+Some are worth porting and others are not. You might not want (or have
+time to) to classify everything right now, but if you can identify a
+few of each kind, and use those, or just one of them, as an example,
+that would be great.
 
------BEGIN PGP SIGNATURE-----
+> - Confirm the licensing and compatibility requirements for the chosen
+> unit testing framework.
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmU2fBUACgkQVbJhu7ck
-PpQrMA//be44e1ptNNDaItI0ykzJLdYJULjSL4Kn9YzR6MEkmnY2fDkgZCk9u1sg
-NBUvyX2KZjzzL+34JfS4Wy12sn5qeOJh6NjnjfHo7jukJLEW6r/HQwAeFJCOJjub
-61uTN9fyKx5wkzB7bdem2kyFoIx5oSM3Ln+4YK/W+/RU3ii7O2KMsik4M5nGuGj0
-w08zRw+lF7bLwAM89J0OvEAiLrLHCYCpLmjXgkkMsz7eCOaGTrEY8q9TVmlLM9Fq
-VCfeYUPa2rS6I4cJCv2MjXV3/JpZvOhdV3o1jFYZFuc/4J71pnQbZQN5iOhTWaHB
-SpgsSb1ORW0Lu7bjQ19iV90oJ82aZhaSr9iK4whW8P/2sQxOHaeWkPDBsvqfpIrz
-7ocBuH/VwzfxpYVh3cRVWUHtpw1AisixRQsM+xzfbOuWbCeKjvF3hNhSfrUToQgl
-w2wwgnwTnUc3YWPvHkX6nREKNv3TcvM8Runl2FY/dZ/6q/oNGasiJe6cErVHnfAv
-gEenhAgGKVgdj2Q8UkPYjdBxaANEzg9cJtDpN7PBAZgFWnYixEDKV1i7HUBxwvj4
-ksU0on5f1zCldF48JAqHaBFDNQ6KJruXwrROhoFSBVcVg97MKs4QO2X7GT6THKT8
-QjI+duJgv5DvTqaA2BUmwf0MPV/MEB+WCfiHAAIy+nXbdOyiPl8=
-=M8l/
------END PGP SIGNATURE-----
+I think those who have been working on the unit test framework have
+already done this.
 
---mUoZPZ2PunDlxArv--
+> - Develop unit tests for these library-like components.
+
+Not sure what are "these library-like components". An example would
+perhaps help.
+
+> - Execute the tests and ensure they cover various scenarios, including
+> error conditions.
+> - Run the tests and address any initial issues or bugs to ensure they
+> work as intended.
+
+Ok.
+
+> - Document the new tests and their coverage.
+
+What kind of documentation would that be?
+
+> - Seek feedback  and support from mentors and the Git community
+>
+> 3. Jan 15 - Feb 15: Integrate with Stdlib Work
+>
+> - Collaborate with the team working on standard library integration.
+
+Not sure what "standard library". Actually, maybe you are talking
+about the goal of having a "standard library" implementation for Git
+which is described in this report from the Virtual Contributor's
+Summit:
+
+https://lore.kernel.org/git/ZRrfN2lbg14IOLiK@nand.local/
+
+It's true that the unit test framework would help with that goal. So
+yeah maybe you will have to collaborate with the team working on that
+goal. I am not sure at what step the work on this library will be when
+the internship will start though.
+
+> - Ensure that the tests for library-like code align with stdlib work.
+> - Verify that the tests effectively check the compatibility and
+> interaction of the code with standard libraries.
+> - Gather feedback and insights from the Git community on the
+> integrated tests, addressing any concerns or suggestions.
+
+Ok, but I think it would be more interesting to follow the steps with
+an example test.
+
+> 4. Feb 15 - March 1: Run Alongside Regular 'make test' Target and finaliz=
+e
+>
+> - Configure the testing framework to run alongside the regular 'make
+> test' target.
+
+I think others will likely take care of that sooner.
+
+> - Ensure that the new tests are included in the standard testing suite.
+> - Execute 'make test' with the new tests and verify that they pass succes=
+sfully.
+> - Document the integration process and how the new tests are included
+> in the standard testing procedure.
+> - Perform comprehensive testing of the entire unit testing framework.
+> - Ensure all migrated tests are working correctly within the new framewor=
+k.
+> - Document the entire process of migrating Git's tests
+> - Prepare a final project report
+
+Ok, but here also following an example test would be more interesting.
+
+> Technical Requirements
+>
+> According to the documentation on the unit test project
+> (https://github.com/steadmon/git/blob/unit-tests-asciidoc/Documentation/t=
+echnical/unit-tests.adoc),
+> the suggested best framework for the Git project is the "Custom TAP
+> framework" (Phillip Wood's TAP implementation), as it aligns with
+> Git's licensing requirements, is vendorable, and can be customized by
+> Git's developers as needed, but it may require some additional
+> development work for features like parallel execution and mock
+> support, but it offers a strong foundation for unit testing within the
+> Git project.
+
+Yeah, right. Thanks for summarizing that document!
+
+> Relevant Projects
+>
+> Simple shell -  A project based on emulating a shell. It was a
+> collaborative project which we managed using Git.
+> (https://github.com/Junie06/simple_shell).
+> This project was written in C, which allowed me to apply my C language
+> knowledge, essential for Git projects.
+> I'm proficient in using Shell for scripting, redirections, and
+> permissions, as shown in my work
+> (https://github.com/Junie06/alx-system_engineering-devops).
+> Creating the simple shell project deepened my understanding of how
+> shells work, and I even attempted to replicate a shell environment.
+> Collaborating on the Simple Shell project reinforced my Git skills.
+
+Ok, nice!
+
+Best,
+Christian.
