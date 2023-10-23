@@ -1,147 +1,136 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EE1B14F70
-	for <git@vger.kernel.org>; Mon, 23 Oct 2023 16:27:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ECA933C8
+	for <git@vger.kernel.org>; Mon, 23 Oct 2023 16:42:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xvvk26DH"
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 685B7E5
-	for <git@vger.kernel.org>; Mon, 23 Oct 2023 09:27:32 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-53dd3f169d8so5106900a12.3
-        for <git@vger.kernel.org>; Mon, 23 Oct 2023 09:27:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="E1ykdK9B"
+Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF3B093
+	for <git@vger.kernel.org>; Mon, 23 Oct 2023 09:42:14 -0700 (PDT)
+Received: by mail-qk1-x72f.google.com with SMTP id af79cd13be357-778a20df8c3so248469885a.3
+        for <git@vger.kernel.org>; Mon, 23 Oct 2023 09:42:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698078451; x=1698683251; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pN4w29v5k+1qqbXn8F+9zmywI1SaxdFNvWm/dojXwbg=;
-        b=Xvvk26DHkBiTkEYlyZ+YaCuCq6rfKGl9w7FZJF9UEzO10Dn83cekoTnMJDWUpzbwEt
-         MbPO3I+qFis77EptR6oM3/meCnY6j9c5W5b6+nLSJjk/plShKjKz1HAgavYXQ7b3J4+Z
-         eexet+cfgfFdQVsTs9oBz2ns02LxdCCMYy98A008XvES6kHWosGdd3LPNCUQ0uTkXvkf
-         629fH4jmyu7gmmAtda86lEZpuJ8VH1kfopKg40T5WX9mEA4fg8SyIh+5L2ENMk3LbSvK
-         ZDBuQlroPURDlhfbN23ejmHfWZvA71QnwuqSXVG6XYYZx0G0dZ1t+f3jfTX1x7EfsgHF
-         qKZg==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1698079334; x=1698684134; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=JSsOJHnNwysHiG20BGnNHzQdvBsRvnmZt382BQ3Aqgk=;
+        b=E1ykdK9BjxskX0gdlBKDzm/xCcFiOWBL3TcnypnPelNXgazBeEnjyjZgqIMbhViJBL
+         mGRC/6PjTocD1YoMbjGhOhYOfWOdloL23t0/UBp9HIymw05T9mGemtMwzBxYGRZw+7qA
+         lFo6/QgwqAAVeIYnV8KR9POq7Sb0PueGdeb/DAiaUxemT7QeI4wytbElBdgBFUccrRWn
+         q3lD15Ef8Ysxu4CqH+Smh2au68dWwpe6EXpGGIWF3/2lf1HG47VCktavXFwNNzEJwtoX
+         LqTnXoRUgvVZ1RSgaA5F0Z74/k83LjlI5DYeeSBMpCSWSqXIZX8mlrT3PXwgkMCb3Da6
+         urug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698078451; x=1698683251;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pN4w29v5k+1qqbXn8F+9zmywI1SaxdFNvWm/dojXwbg=;
-        b=uqQGBvSSW+iyNAboC8Ld54a+muRIk7c5mop4LIXYVFM0d/A9wcCNOX3V2A6uSEJmIv
-         VWCK5QpJa04spCx00PksaJFkzhu9GIvD7QMyAJU+Ltof5RViPq1c4n3Rmxzuw3yIPjhy
-         J+CSO9J2Mvcuuh83I7M0IIs/TMmgy9Svqnr/zE9MxPKgUJzGkKyikOUKHDdES85oeNBn
-         HGy5LnVv48qfJrBW8VdsXu5F0cO/gQSHD4raNYNh1uEFIVnVF6MpIRPjHFnv8fHrhrbS
-         HOhkkC1B3qjdsxh2uL5uzCQKmC1ext7GatW0PFc3VKxcK5f8iZP/Dm3xvJ5R5aZ8YSZx
-         urKQ==
-X-Gm-Message-State: AOJu0YxQjmA4wl7tg4kRS6s8qQePlDwuYPjTF9rwhE13zYd5LAqSUROS
-	ek0uEnnJFXNWkPzzuBiCp+UvYH92bJmT73/Xw5c=
-X-Google-Smtp-Source: AGHT+IHYPkLjlnKRJEWGrGoUGxXXDLBQBGibbcwEUfX08tgVLXxlCgPv3gGtNzp+NBDkOyL2VuPxmZS3jrSTIaBMhG8=
-X-Received: by 2002:a50:d09b:0:b0:53e:3b8f:8a5a with SMTP id
- v27-20020a50d09b000000b0053e3b8f8a5amr6145712edd.39.1698078450371; Mon, 23
- Oct 2023 09:27:30 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1698079334; x=1698684134;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JSsOJHnNwysHiG20BGnNHzQdvBsRvnmZt382BQ3Aqgk=;
+        b=GgCk2bErCcruvv2QLTiL/RZLlMEfxgZlNv4jmQmiALh+qTAoBole9jnokEQw6D4S4S
+         5tjOdqZENhpUpmHymlkqP6gd1L4dy5rKRVYb7YkQwrPOnQ0KxeyoFYvQ3lyxVGFaaiwT
+         3jeK+bb/2Gbyju4mZBcvlwyhkzFYDFeAdHJy6GLPXIyI88p9vfsbn5okvyXEuD2Io1ax
+         q3aE0SeUfLQeJ1/l/TMrbk8d7I4K2nrwu8WIM4ECTKvaUoe8cx5rCPh7YVP1opW9kFpw
+         Xy828N1Zqx7BctFL+5wJEh1cJQ2qrB+EFfKxSjx5gAEdSo4N8RovVlbaaNoB7j2c94NL
+         A6Xw==
+X-Gm-Message-State: AOJu0YyU716MhhWgBNxUyI5ZXgC61vRl7ZiAR9pHLiv5R/PFoPgf1skR
+	Bb7bHtk6CGcFYAODVi6YWsIetQ==
+X-Google-Smtp-Source: AGHT+IFjERpguxKptNO1Td+/2RuAkDzKvMcJDGlj3LROKw3Bybk/LzaBrVvIs/p3C+k3ItA2fTBJfQ==
+X-Received: by 2002:a05:620a:2909:b0:779:e02b:26e2 with SMTP id m9-20020a05620a290900b00779e02b26e2mr2158911qkp.25.1698079333919;
+        Mon, 23 Oct 2023 09:42:13 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id z13-20020ae9e60d000000b00774652483b7sm2812351qkf.33.2023.10.23.09.42.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Oct 2023 09:42:13 -0700 (PDT)
+Date: Mon, 23 Oct 2023 12:42:08 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH 08/11] t4207: delete replace references via
+ git-update-ref(1)
+Message-ID: <ZTaiYEyhKT/yZwHZ@nand.local>
+References: <cover.1697607222.git.ps@pks.im>
+ <c4d09e3e5dbd11221cc4d229b815434d441cdb4d.1697607222.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1602.git.1698004968582.gitgitgadget@gmail.com>
- <CAPig+cS4J-L44a-fjQ=2bXxRj6e1qdQK8705K3NPqmTsWXBQsw@mail.gmail.com>
- <xmqqa5sap44i.fsf@gitster.g> <ZTYi55w_70ZlP8Ew@tanuki>
-In-Reply-To: <ZTYi55w_70ZlP8Ew@tanuki>
-From: Javier Mora <cousteaulecommandant@gmail.com>
-Date: Mon, 23 Oct 2023 17:27:17 +0100
-Message-ID: <CAH1-q0hrfROfQROXGoCfde4MFkEjxjSMneDcqLO1pqYpe+bN9g@mail.gmail.com>
-Subject: Re: [PATCH] doc/git-bisect: clarify `git bisect run` syntax
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, Eric Sunshine <sunshine@sunshineco.com>, 
-	cousteau via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <c4d09e3e5dbd11221cc4d229b815434d441cdb4d.1697607222.git.ps@pks.im>
 
-> The output of `git bisect -h` suffers the same problem. Perhaps this
-> patch can fix that, as well?
-
-Certainly possible.  Probably best if I put that on a second patch
-though (i.e. a separate commit).  Or should I just squash everything
-together?
-
-There are still multiple .po files containing the old string, I guess
-I don't need to touch those?
-
-Speaking of which, looking at the .po files I've found that there's
-also a `git bisect--helper` command; I don't know if that's relevant
-nor how to modify that.
-
-> I wonder if we should eventually move these into the
-> proper SYNOPSIS section.
-
-Seems reasonable.  I was actually wondering about that.
-
-I can make an extra patch for that if you want, while I'm at it.
-
-> If we don't want them to drift apart I wonder whether we could instead
-> generate the synopsis from the output of `-h`? This reduces duplication
-
-That's not a bad idea.  Or maybe the other way around -- generate the
-output of `-h` from the synopsis.  Or generate both (manpage and help
-message) from a "synopsis stub" file; I wonder if that could be easily
-done.
-
-
-El lun, 23 oct 2023 a las 8:38, Patrick Steinhardt (<ps@pks.im>) escribi=C3=
-=B3:
+On Wed, Oct 18, 2023 at 07:35:37AM +0200, Patrick Steinhardt wrote:
+> In t4207 we set up a set of replace objects via git-replace(1). Because
+> these references should not be impacting subsequent tests we also set up
+> some cleanup logic that deletes the replacement references via a call to
+> `rm -rf`. This reaches into the internal implementation details of the
+> reference backend and will thus break when we grow an alternative refdb
+> implementation.
 >
-> On Sun, Oct 22, 2023 at 05:35:41PM -0700, Junio C Hamano wrote:
-> > Eric Sunshine <sunshine@sunshineco.com> writes:
-> >
-> > > On Sun, Oct 22, 2023 at 4:03=E2=80=AFPM cousteau via GitGitGadget
-> > > <gitgitgadget@gmail.com> wrote:
-> > >> The description of the `git bisect run` command syntax at the beginn=
-ing
-> > >> of the manpage is `git bisect run <cmd>...`, which isn't quite clear
-> > >> about what `<cmd>` is or what the `...` mean; one could think that i=
-t is
-> > >> the whole (quoted) command line with all arguments in a single strin=
-g,
-> > >> or that it supports multiple commands, or that it doesn't accept
-> > >> commands with arguments at all.
-> > >>
-> > >> Change to `git bisect run <cmd> [<arg>...]` to clarify the syntax.
-> > >
-> > > Okay, makes sense.
-> > >
-> > >> Signed-off-by: Javier Mora <cousteaulecommandant@gmail.com>
-> > >> ---
-> > >> diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect=
-.txt
-> > >> @@ -26,7 +26,7 @@ on the subcommand:
-> > >> - git bisect run <cmd>...
-> > >> + git bisect run <cmd> [<arg>...]
-> > >
-> > > The output of `git bisect -h` suffers the same problem. Perhaps this
-> > > patch can fix that, as well?
-> >
-> > Good eyes.
-> >
-> > Not a new problem and obviously can be left outside of this simple
-> > update, but I wonder if we should eventually move these into the
-> > proper SYNOPSIS section.  Other multi-modal commands like "git
-> > checkout", "git rebase", etc. do list different forms all in the
-> > SYNOPSIS section.
-> >
-> > I also thought at least some commands we know the "-h" output and
-> > SYNOPSIS match, we had tests to ensure they do not drift apart.  We
-> > would probably want to cover more subcommands with t0450.
-> >
-> > Thanks.
+> Refactor the tests to delete the replacement refs via Git commands so
+> that we become independent of the actual refdb that's in use. As we
+> don't have a nice way to delete all replacements or all references in a
+> certain namespace, we opt for a combination of git-for-each-ref(1) and
+> git-update-ref(1)'s `--stdin` mode.
 >
-> If we don't want them to drift apart I wonder whether we could instead
-> generate the synopsis from the output of `-h`? This reduces duplication
-> at the cost of a more complex build process for our manpages.
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  t/t4207-log-decoration-colors.sh | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 >
-> Not saying that this is necessarily a good idea, just throwing it out
-> there.
+> diff --git a/t/t4207-log-decoration-colors.sh b/t/t4207-log-decoration-colors.sh
+> index 21986a866df..d138e513a04 100755
+> --- a/t/t4207-log-decoration-colors.sh
+> +++ b/t/t4207-log-decoration-colors.sh
+> @@ -71,7 +71,7 @@ ${c_tag}tag: ${c_reset}${c_tag}A${c_reset}${c_commit})${c_reset} A
+>  '
 >
-> Patrick
+>  test_expect_success 'test coloring with replace-objects' '
+> -	test_when_finished rm -rf .git/refs/replace* &&
+> +	test_when_finished "git for-each-ref refs/replace*/** --format=${SQ}delete %(refname)${SQ} | git update-ref --stdin" &&
+
+Here and below, should we avoid the for-each-ref showing up on the
+left-hand side of the pipe? I'd think we want something closer to:
+
+    test_when_finished "git for-each-ref refs/replace*/** --format=${SQ}delete %(refname)${SQ} >in && git update-ref --stdin <in" &&
+
+But having to quote the --format argument with "${SQ}"s makes the whole
+thing a little awkward to read and parse.
+
+Do you think that something like the below would be a readability
+improvement?
+
+diff --git a/t/t4207-log-decoration-colors.sh b/t/t4207-log-decoration-colors.sh
+index d138e513a0..de8f6638cb 100755
+--- a/t/t4207-log-decoration-colors.sh
++++ b/t/t4207-log-decoration-colors.sh
+@@ -70,8 +70,13 @@ ${c_tag}tag: ${c_reset}${c_tag}A${c_reset}${c_commit})${c_reset} A
+ 	cmp_filtered_decorations
+ '
+
+--- >8 ---
++remove_replace_refs () {
++	git for-each-ref 'refs/replace*/**' --format='delete %(refname)' >in &&
++	git update-ref --stdin <in
++}
++
+ test_expect_success 'test coloring with replace-objects' '
+-	test_when_finished "git for-each-ref refs/replace*/** --format=${SQ}delete %(refname)${SQ} | git update-ref --stdin" &&
++	test_when_finished remove_replace_refs &&
+ 	test_commit C &&
+ 	test_commit D &&
+
+@@ -99,7 +104,7 @@ EOF
+ '
+
+ test_expect_success 'test coloring with grafted commit' '
+-	test_when_finished "git for-each-ref refs/replace*/** --format=${SQ}delete %(refname)${SQ} | git update-ref --stdin" &&
++	test_when_finished remove_replace_refs &&
+
+ 	git replace --graft HEAD HEAD~2 &&
+--- 8< ---
+
+Thanks,
+Taylor
