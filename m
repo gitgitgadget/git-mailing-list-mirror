@@ -1,148 +1,157 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC5921FD7
-	for <git@vger.kernel.org>; Tue, 24 Oct 2023 11:34:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B802748C
+	for <git@vger.kernel.org>; Tue, 24 Oct 2023 12:26:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZaMAj08+"
-Received: from mail-oa1-x29.google.com (mail-oa1-x29.google.com [IPv6:2001:4860:4864:20::29])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5635AD68
-	for <git@vger.kernel.org>; Tue, 24 Oct 2023 04:34:30 -0700 (PDT)
-Received: by mail-oa1-x29.google.com with SMTP id 586e51a60fabf-1dd1714b9b6so2997603fac.0
-        for <git@vger.kernel.org>; Tue, 24 Oct 2023 04:34:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cytct41X"
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 989AB123
+	for <git@vger.kernel.org>; Tue, 24 Oct 2023 05:26:39 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-9936b3d0286so668160666b.0
+        for <git@vger.kernel.org>; Tue, 24 Oct 2023 05:26:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698147269; x=1698752069; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1698150398; x=1698755198; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=xCIP9cu5klkA2PjkN0l5M9zLToBsqDOhsaqz/2XqfpQ=;
-        b=ZaMAj08+mbZpbyJc5xxe1fpzYnWVZL8k2jOdSNlyc5e//trM2cEeMgUG8RIpbfm8xo
-         xEXEptT+gkRTjY2zSNw3EYSo16VhUIvR7xSS9glPMgiOf/Zf7XMq+kFhrm6JHQJJGw0A
-         q1Lzh5J/tliEbun7AFgHv9lO0g8dV8f9wS7Gowp6rs3b6ppfZFFx2L8Et8l9D6KYh/9y
-         23bH+5RkrDjUM0v0Js4BOSflWFHV6fNwxD9z3TuBUu41oNYreoB+ofI1lwj/vWDQVC79
-         MNob9Jw28rWMv1ZwHLQJ1O2/QKX3nn1vzbnxCI4Dx8Jgzy+908Kzm0bh23FQgOIt9Qwq
-         MFEQ==
+        bh=jTrEXOeFol6AmaA9KXR+u1DxcdpMVWbMe6+zVa2nt9I=;
+        b=Cytct41X5C9yYUmxrYOxaaJSMEeNiMZ3XYcNifjRqJWm7W0XZH68QDOxDBjd7HVMx6
+         Y5if2I+yhn4spMTWw6v3KELKfM75hkXOBkG5jlgn32NIvOHnYVGd0w0slmTNswVW4hlj
+         HXZiM3kJ2c8GWG7ei+aR7PjLq4XB+Q7I1AcSrPO++nVrlOX2iKn7wOadCExXc48vneo/
+         aQRzx45ADusTrasr8pnL8RCUCdAsY7K6m435C1XumgN22eIVL6cYx4+4ho7DHsmuxsaN
+         PnnaY68TnBIusPtAH1ysidD6LWUg4fcBJmHijvdMY1QIsw4uko9gXOi4OHECk8+VlenE
+         EhsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698147269; x=1698752069;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1698150398; x=1698755198;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=xCIP9cu5klkA2PjkN0l5M9zLToBsqDOhsaqz/2XqfpQ=;
-        b=It4gx/c8T6v1Nw03lVOQOuZbFtiBSCMZg1kh6lz/USLRzUjYbZW3GTbirFzMUDkiOT
-         ecs6VWkOg65iYSbGeiwXgvHFmsVwKPvgVZxWiJIoBpoUGBI9/MyPHtdfLVAWm2wH1oDQ
-         9gdqAHTMuvi/GFGqyZtwYh9Txs4o2tYuve2z4qO0lY6iQg6J0I2n0gW8W9F9uLUqQlfW
-         x9pZLNQfofIg5DjyItB09JRKcQ91SwMbW5KA6k70HsBtLuXB0+CdwQV3m8tFlwi5SlQB
-         FDvUHLMYRr6rX5Ne2SH/28rT/+UoCm9S5kEovf2vgqSkFLRZGeEPNBMLgNmn+WdaH3j0
-         3XcQ==
-X-Gm-Message-State: AOJu0YwIz/EFWPWxiqOHgVYrkM1gqbmmH+95RpuK6u1bXhWl2JWfHic8
-	PaO9Ys1GjAUSBBuo7wOzOFmtFhKGhcgT558+NHI=
-X-Google-Smtp-Source: AGHT+IGu6O+8ZfEUYqqQq9lIN6c7j9+IIzHVrFpKdI01A043zGaZ++OxcjJg3LJ/joCJoPHj/QPhSTHlGNc8Fzl47VA=
-X-Received: by 2002:a05:6870:1e83:b0:1e9:e605:27a2 with SMTP id
- pb3-20020a0568701e8300b001e9e60527a2mr16013058oab.40.1698147269430; Tue, 24
- Oct 2023 04:34:29 -0700 (PDT)
+        bh=jTrEXOeFol6AmaA9KXR+u1DxcdpMVWbMe6+zVa2nt9I=;
+        b=AXJZ28cTLRRnGFIY5osjZJIX7gp6uGKLWUjNmEJZIab4MbR6yHpZWlzemdwwY9WOR9
+         ehO7XTtuMuoDGSHpIJstlfpPtVxp9eeqzX6TMrAsHkVfP9lobMDcUB0+JOLLww3CLtxm
+         Dcc35xHkkH8i71G+fOtmoF9G0r5IzXgBTPw7bG9E/ulgcOSQ1kgWRJA1rba/OgCRt0QC
+         CoG9MAVenavdd2R1Egbi7B7v5lIztRSZW0+M4R/bY62uDYs3FFB3QnEOOPqII2Ow4abU
+         q3y22e/Z0aZ1z/6h0u+14rU4+dFYcMB93w+f+3Hfyu0djYNXVBrFjfOJlw78Fls5THAE
+         /V5Q==
+X-Gm-Message-State: AOJu0Yybs9rPCrey1464J0Rg8NLwsyA1gtp1y4bitu5pNFxj6DJHEm+k
+	voR10MRNSy6GFbj4KaMt/piy7pLkO5W/pA==
+X-Google-Smtp-Source: AGHT+IFC4X9vFJ4MaXL2v8S80JLzHopjxB0Lk12BhiQ8cfKNYoEOQt/nml28IJ0EyKpROYt/EdfyIw==
+X-Received: by 2002:a17:907:c0d:b0:9be:8693:66bb with SMTP id ga13-20020a1709070c0d00b009be869366bbmr9089151ejc.59.1698150397657;
+        Tue, 24 Oct 2023 05:26:37 -0700 (PDT)
+Received: from laptop.fritz.box ([2a02:2454:56d:f00:be13:9408:ebb5:e370])
+        by smtp.gmail.com with ESMTPSA id jl24-20020a17090775d800b0099315454e76sm8102726ejc.211.2023.10.24.05.26.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Oct 2023 05:26:37 -0700 (PDT)
+From: Karthik Nayak <karthik.188@gmail.com>
+To: karthik.188@gmail.com
+Cc: git@vger.kernel.org,
+	gitster@pobox.com,
+	ps@pks.im
+Subject: [PATCH v4 1/3] revision: rename bit to `do_not_die_on_missing_objects`
+Date: Tue, 24 Oct 2023 14:26:29 +0200
+Message-ID: <20231024122631.158415-2-karthik.188@gmail.com>
+X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20231024122631.158415-1-karthik.188@gmail.com>
+References: <20231019121024.194317-1-karthik.188@gmail.com>
+ <20231024122631.158415-1-karthik.188@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231016103830.56486-1-karthik.188@gmail.com> <20231019121024.194317-1-karthik.188@gmail.com>
- <20231019121024.194317-4-karthik.188@gmail.com> <xmqq4jimuv26.fsf@gitster.g>
- <xmqqttqmtcc2.fsf@gitster.g> <xmqq1qdptffk.fsf@gitster.g>
-In-Reply-To: <xmqq1qdptffk.fsf@gitster.g>
-From: Karthik Nayak <karthik.188@gmail.com>
-Date: Tue, 24 Oct 2023 13:34:01 +0200
-Message-ID: <CAOLa=ZTUiYi1YqSuirmB9e_7B8ihC6rsFAR3VTDCL4SoLrEX_Q@mail.gmail.com>
-Subject: Re: [PATCH v3 3/3] rev-list: add commit object support in `--missing` option
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, ps@pks.im
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Fri, Oct 20, 2023 at 6:41=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Junio C Hamano <gitster@pobox.com> writes:
->
-> > Rather, I was wondering if we need to use object flags to mark these
-> > objects, or can do what we want to do without using any object flags
-> > at all.  For the purpose of reporting "missing" objects, wouldn't it
-> > be sufficient to walk the object graph and report our findings as we
-> > go?  To avoid reporting the same object twice, as we reasonably can
-> > expect that the missing objects are minority (compared to the total
-> > number of objects), perhaps the codepath that makes such a report
-> > can use a hashmap of object_ids or something, for example.
->
-> Digging from the bottom,
->
->  * builtin/rev-list.c:show_commit() gets "struct rev_list_info *"
->    that has "struct rev_info *" [*].
->
->  * list-objects.c:do_traverse() calls revision.c:get_revision() to
->    obtain commits, some of which may be missing ones, and things
->    behind get_revision() are responsible for marking the commit as
->    missing.  It has "struct traversal_context *", among whose
->    members is the "revs" member that is the "struct rev_info *".
->
->  * revision.c:get_revision() and machinery behind it ultimately
->    discovers a missing commit in the revision.c:process_parents()
->    that loops over the parents commit_list.  It of course has access
->    to "struct rev_info *".
->
-> So, presumably, if we add a new member to "struct rev_info" that
-> optionally [*] points at an oidset that records the object names of
-> missing objects we discovered so far (i.e., the set of missing
-> objects), the location we set the MISSING bit of a commit can
-> instead add the object name of the commit to the set.  And we can
-> export a function that takes "struct rev_info *" and "struct object
-> *" (or "struct object_id *") to check for membership in the "set of
-> missing objects", which would be used where we checked the MISSING
-> bit of a commit.
->
-> I do not know the performance implications of going this route, but
-> if we do not find a suitable vacant bit, we do not have to use any
-> object flags bit to do this, if we go this route, I would think.  I
-> may be missing some details that breaks the above outline, though.
->
->
-> [Footnotes]
->
->  * A potential #leftoverbits tangent.
->
->    Why is "rev_list_info" structure declared in <bisect.h>?  I
->    suspect that this is a fallout from recent header file shuffling,
->    but given who uses it (among which is rev-list:show_commit() that
->    has very little to do with bisection and uses the information in
->    rev_list_info when doing its normal non-bisect things), it does
->    not make much sense.
->
->  * When .do_not_die_on_missing_objects is false, it can and should
->    be left NULL, but presumably we use the "do not die" bit even
->    when we are not necessarily collecting the missing objects?  So
->    the new member cannot replace the "do not die" bit completely.
+The bit `do_not_die_on_missing_tree` is used in revision.h to ensure the
+revision walker does not die when encountering a missing tree. This is
+currently exclusively set within `builtin/rev-list.c` to ensure the
+`--missing` option works with missing trees.
 
-Thanks for the suggestion, this does seem like a good way to go ahead witho=
-ut
-using flags. The only performance issue being if there are too many commits
-which are missing, then oidset would be large.
+In the upcoming commits, we will extend `--missing` to also support
+missing commits. So let's rename the bit to
+`do_not_die_on_missing_objects`, which is object type agnostic and can
+be used for both trees/commits.
 
-But I think that's okay though.
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+---
+ builtin/reflog.c   |  2 +-
+ builtin/rev-list.c |  2 +-
+ list-objects.c     |  2 +-
+ revision.h         | 17 +++++++++--------
+ 4 files changed, 12 insertions(+), 11 deletions(-)
 
-> Thanks for researching.  It sounds like it may be a better bit to
-> steal than the one used by the commit-graph, as long as there is no
-> reason to expect that blame may want to work in a corrupt repository
-> with missing objects, but when it happens, we may regret the
-> decision we are making here.
->
+diff --git a/builtin/reflog.c b/builtin/reflog.c
+index df63a5892e..9e369a5977 100644
+--- a/builtin/reflog.c
++++ b/builtin/reflog.c
+@@ -298,7 +298,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+ 		struct rev_info revs;
+ 
+ 		repo_init_revisions(the_repository, &revs, prefix);
+-		revs.do_not_die_on_missing_tree = 1;
++		revs.do_not_die_on_missing_objects = 1;
+ 		revs.ignore_missing = 1;
+ 		revs.ignore_missing_links = 1;
+ 		if (verbose)
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index ff715d6918..ea77489c38 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -561,7 +561,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	if (arg_missing_action)
+-		revs.do_not_die_on_missing_tree = 1;
++		revs.do_not_die_on_missing_objects = 1;
+ 
+ 	argc = setup_revisions(argc, argv, &revs, &s_r_opt);
+ 
+diff --git a/list-objects.c b/list-objects.c
+index c25c72b32c..47296dff2f 100644
+--- a/list-objects.c
++++ b/list-objects.c
+@@ -177,7 +177,7 @@ static void process_tree(struct traversal_context *ctx,
+ 		    is_promisor_object(&obj->oid))
+ 			return;
+ 
+-		if (!revs->do_not_die_on_missing_tree)
++		if (!revs->do_not_die_on_missing_objects)
+ 			die("bad tree object %s", oid_to_hex(&obj->oid));
+ 	}
+ 
+diff --git a/revision.h b/revision.h
+index 50091bbd13..c73c92ef40 100644
+--- a/revision.h
++++ b/revision.h
+@@ -212,18 +212,19 @@ struct rev_info {
+ 
+ 			/*
+ 			 * Blobs are shown without regard for their existence.
+-			 * But not so for trees: unless exclude_promisor_objects
++			 * But not so for trees/commits: unless exclude_promisor_objects
+ 			 * is set and the tree in question is a promisor object;
+ 			 * OR ignore_missing_links is set, the revision walker
+-			 * dies with a "bad tree object HASH" message when
+-			 * encountering a missing tree. For callers that can
+-			 * handle missing trees and want them to be filterable
++			 * dies with a "bad <type> object HASH" message when
++			 * encountering a missing object. For callers that can
++			 * handle missing trees/commits and want them to be filterable
+ 			 * and showable, set this to true. The revision walker
+-			 * will filter and show such a missing tree as usual,
+-			 * but will not attempt to recurse into this tree
+-			 * object.
++			 * will filter and show such a missing object as usual,
++			 * but will not attempt to recurse into this tree/commit
++			 * object. The revision walker will also set the MISSING
++			 * flag for such objects.
+ 			 */
+-			do_not_die_on_missing_tree:1,
++			do_not_die_on_missing_objects:1,
+ 
+ 			/* for internal use only */
+ 			exclude_promisor_objects:1;
+-- 
+2.42.0
 
-I don't see blame working with missing commits though, because it relies on
-parsing commits to get information to show to the user. So I think it's a s=
-afe
-bit to steal. Also, when the time comes we could always release the bit and
-move to the solution you mentioned above.
-
-Anyways on the whole I think keeping it future compatible makes a lot
-more sense.
-I'll send a patch series to implement an oidset instead of flags soon.
-
-- Karthik
