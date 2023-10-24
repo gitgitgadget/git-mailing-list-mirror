@@ -1,113 +1,120 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A15F2125DE
-	for <git@vger.kernel.org>; Tue, 24 Oct 2023 13:26:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D65929437
+	for <git@vger.kernel.org>; Tue, 24 Oct 2023 14:01:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="sFxS3jQ6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EGoCvlEy"
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2753A211D
-	for <git@vger.kernel.org>; Tue, 24 Oct 2023 06:24:05 -0700 (PDT)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.west.internal (Postfix) with ESMTP id C85C53200991;
-	Tue, 24 Oct 2023 09:23:32 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Tue, 24 Oct 2023 09:23:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-type:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:sender:subject:subject:to:to; s=fm2; t=1698153812; x=
-	1698240212; bh=SrIcwH1Gy869cwhGL8TU7yv4xZLa1sM3V98wl4atJHk=; b=s
-	FxS3jQ65pxHYm9Ct0FV9ezkeK6oxHwsoa4O9yBJOwbpjdW8FeQ85TpU42EZix1ae
-	Tg8FB1fvFDQpL+5ZI1Lx03PoL2N7iVvMuLmv5Y502Ir7VOAV9vtAAEHAGWJwhaPF
-	fn+rKxOZUthXcyUUvW13WR4Zzjg2BQddeAhneuKgZi03nSsIWZz0i8yjud/e5px0
-	TWQWuwA2nNJXDU5yfVpLTHFlxMflduibDxeOIhAQNAMkelxqPqlxmyURK5xxNdJs
-	sESMo2KEVbdI1lAw/VXsLTi3y60rhksR7yoWSUcQwrZqmFhLzCjboE4/63/SerLt
-	5U60Vw2kd5kQVb/yV2fVQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1698153812; x=1698240212; bh=SrIcwH1Gy869c
-	whGL8TU7yv4xZLa1sM3V98wl4atJHk=; b=EGoCvlEyT3PFsRT777wZhDMiREuxH
-	DIOft5hXloKPXqS9tK/vPRNRDsOUfCr1JXio8fAb1bd/o+xIV907Bmvhh2IZmLOL
-	0X4OWs6+0zSSL89f9XshpUwJgBG+lcFvO+65xyLR9BSQt3USOqZC7JE3L3enDkrg
-	bLvhxP2Q+/P3mQCtPsNeIfJMIvwciMNwqG+ad8IM/XyaPGPLb5kTsbhk/xpCWFwF
-	M2MBFR4xxbvDHkUB7NtTzshKUzJZG1fSfeikCuyaqbaJIB6UOXFF4wVwL8PKnZhf
-	0/PYsCVH2HLOGeGjbb2Uli/Ykl9mP/PKXdQs1/xcRM5CkmgCP/SL9mWUg==
-X-ME-Sender: <xms:VMU3ZUzN8VIVSXkO3VohApeVo-3SM6ijP9xWh5FGgIfjEsMXdQ8cEVc>
-    <xme:VMU3ZYTNbAEmHJM8FOpxIBGGqDVS4M0hQH3Fjm9qPl5Xg_TEnP3-tVQXHi5m1FTzY
-    7wcbDPDM_ZTK8D1qw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrkeekgdeivdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdfmrhhi
-    shhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrghkkh
-    drnhgrmhgvqeenucggtffrrghtthgvrhhnpedtkedtjeeiffelteffheeiheeufffgheel
-    ueeftdejkeeufffgiefhgeekffffueenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:VMU3ZWVxCEHh7groH8tX0wCjyjsR2RAVPtn7gqP1YNbp01w_IMSTfg>
-    <xmx:VMU3ZShyeKonmJinG5e67AOvqwu4aNC_0nSnh_4pByaEkVJIqa2JgQ>
-    <xmx:VMU3ZWBP_PQ8OhAoWvpkT0M120Lz-o30b-68vExcwikVsx9TWiXxTQ>
-    <xmx:VMU3ZX6ajDu9INWNQ9dXsSbSx5BuHi321Og1iiZ_U3FuPzRg5q7euA>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id F381B15A0092; Tue, 24 Oct 2023 09:23:31 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-1048-g9229b632c5-fm-20231019.001-g9229b632
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kdv9rP3j"
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 769CCFE
+	for <git@vger.kernel.org>; Tue, 24 Oct 2023 07:01:01 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-408382da7f0so37275275e9.0
+        for <git@vger.kernel.org>; Tue, 24 Oct 2023 07:01:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1698156060; x=1698760860; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=HHkKianCxFBcRDL593EH77nm8GXs8q4EUBFf931idtA=;
+        b=kdv9rP3juFillEjkspsjOyUuIKIvMKreNOiU6k3SzbxpncTT1ceOAOtO9UrcSwwxLv
+         zbCCXRGPy9f4Swbqn3Ki0cmHhqVzjislr/uV6AyHwQXp5T7uLhAeTDWlEWboY1PC68k4
+         er/r1pCldGqWhcKYhE/Sx6n07F6AXrwuKf8zLrap4H9c6Tr7ULGI9Nl2hgXRaE0e2Bli
+         1+xxTqXS68o2Aj9kX6RxxEeeXAkYASvIPYiIBGNawuX902RFYyu8yOOrl/vUVMibbCoY
+         qIAoveAYnlUliH95sHL0SGW/WeDYXtYpzXFq8JFIWTeXvQ6DIY3jhiI4AhKwbnz4LOdy
+         0HTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698156060; x=1698760860;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=HHkKianCxFBcRDL593EH77nm8GXs8q4EUBFf931idtA=;
+        b=aXoG1gFeFKrLdXHeH/GjWJIPmKHZVviZLKb/x/ALph7tmQTBaXGIPyyyTzNF+CkoDb
+         HsS1vbWCGVt7Vw152re6DY+XfnlYuTHQYFdFU2ivXj4l/XmDBqXhDWIk1Qkc+VSLQgW2
+         gN4mBF0v9xWrpL/dg6gNU1HMReA8+/GFWUbN7FyWrKhJUZWFtjbs+1MewIhLC6b4YY5g
+         EJfMNyGudN6RpDlDtUQUCbRy3HLzpbv8q3QjZuh6BohevHhR8xEvwi+Y5nkj1FI3Zk+P
+         8yMbcuY/n3OgnPLMHE3tvR085BS8eBVviM47O7bFVC7mYxcBNCntmvp9z4VQJAt7Lviv
+         +g2g==
+X-Gm-Message-State: AOJu0YwBrdT3W6Tza0C8LGCtFBH2894rdDszjhEBr8AD/TfqPXW9WevJ
+	6soHEN+SmcfS/NSj1urLsceDSK10Ihk=
+X-Google-Smtp-Source: AGHT+IE4rN3FhnDdFlL9C9Hpo4Z6Jkgo/Wr43+g2ZDMW5YZ/u4mmGFckYGRu2MdSzoJgsZraQMDWow==
+X-Received: by 2002:a05:600c:4e91:b0:408:4551:fade with SMTP id f17-20020a05600c4e9100b004084551fademr10056677wmq.38.1698156059664;
+        Tue, 24 Oct 2023 07:00:59 -0700 (PDT)
+Received: from [192.168.1.12] (host-2-102-115-95.as13285.net. [2.102.115.95])
+        by smtp.gmail.com with ESMTPSA id s10-20020a05600c45ca00b00407752f5ab6sm12302504wmo.6.2023.10.24.07.00.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 Oct 2023 07:00:59 -0700 (PDT)
+Message-ID: <138631cd-ead3-4f22-95ce-61afccfa409f@gmail.com>
+Date: Tue, 24 Oct 2023 15:00:58 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <87badbe0-de18-4f8a-9589-314cea46065e@app.fastmail.com>
-In-Reply-To: <ZTav2u1JWmLexEHL@nand.local>
-References: <cover.1697660181.git.code@khaugsbakk.name>
- <147c767443c35b3b4a5516bf40557f41bb201078.1697660181.git.code@khaugsbakk.name>
- <ZTZDqToqcsDiS5AP@tanuki> <ZTav2u1JWmLexEHL@nand.local>
-Date: Tue, 24 Oct 2023 15:23:11 +0200
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Taylor Blau" <me@ttaylorr.com>, "Patrick Steinhardt" <ps@pks.im>
-Cc: git@vger.kernel.org, stolee@gmail.com
-Subject: Re: [PATCH v1 3/4] config: factor out global config file retrievalync-mailbox>
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: using oldest date when squashing commits
+Content-Language: en-US
+To: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>, phillip.wood@dunelm.org.uk
+Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+References: <YjXRM5HiRizZ035p@ugly>
+ <9fae5292-d58f-95da-245b-6e205383cb50@kdbg.org>
+ <a99b16a8-a06c-4d38-bb78-46ce17411597@gmail.com> <ZTeZ3KEQLIVU/sq2@ugly>
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <ZTeZ3KEQLIVU/sq2@ugly>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Taylor and Patrick
-
-On Mon, Oct 23, 2023, at 19:40, Taylor Blau wrote:
->> Nit: we don't know about the intent of the caller, so they may not want
->> to write to the file but only read it.
->
-> I was going to suggest that we allow the caller to pass in the flags
-> that they wish for git_global_config() to pass down to access(2), but
-> was surprised to see that we always use R_OK.
->
-> But thinking on it for a moment longer, I realized that we don't care
-> about write-level permissions for the config, since we want to instead
-> open $GIT_DIR/config.lock for writing, and then rename() it into place,
-> meaning we only care about whether or not we have write permissions on
-> $GIT_DIR itself.
->
-> I think in the existing location of this code, the "if we should write"
-> portion of the comment is premature, since we don't know for sure
-> whether or not we are writing. So I'd be fine with leaving it as-is, but
-> changing the comment seems easy enough to do...
->
->> > +		 * location; error out even if XDG_CONFIG_HOME
->> > +		 * is set and points at a sane location.
->> > +		 */
->> > +		die(_("$HOME not set"));
+On 24/10/2023 11:18, Oswald Buddenhagen wrote:
+> On Tue, Oct 24, 2023 at 10:26:29AM +0100, Phillip Wood wrote:
+>> On 20/03/2022 08:05, Johannes Sixt wrote:
+>>> Am 19.03.22 um 13:48 schrieb Oswald Buddenhagen:
+>>>> during interactive rebasing, i sometimes find it necessary to move a
+>>>> hunk from one commit to a later one in the branch. now, if that hunk
+>>>> cannot be re-ordered with the later commit due to conflicting with it,
+>>>> it becomes necessary to squash the later commit onto a temporary commit
+>>>> created from the extracted hunk, not the other way around (or using a
+>>>> stash). unfortunately, this causes the author date of the later commit
+>>>> to be reset, which can rather seriously falsify the date if the branch
+>>>> is long-lived.
+>>>
+>>> You want `fixup -C` in the todo-list. See the hints near the end of the
+>>> todo-list.
 >>
->> Is it sensible to `die()` here in this new function that behaves more
->> like a library function? I imagine it would be more sensible to indicate
->> the error to the user and let them handle it accordingly.
->
-> Agreed.
->
-> Thanks,
-> Taylor
+>> Unfortunately "fixup -C" only copies the commit message not the 
+>> authorship
+> 
+>> (that's usually a good thing
+>>
+> why? what would that be useful for?
+ > it seems rather counter-intuitive.
 
-What do you guys think the signature of `git_global_config` should be?
+In the same way that you do not want to change the author date when 
+using a fixup to move a small hunk from one commit to another most users 
+do not want to update the author information when they make a small 
+change to a commit message using "fixup -C"
+
+> it's also inconsistent with commit -c/-C's behavior, which seems like a 
+> red flag to me.
+
+That could mean the option is mis-named instead rather than the behavior 
+being wrong.
+
+>> but not it means it wont work for what Oswald wants to do).
+> 
+>> Maybe we should add another flag for fixup/squash commands to take the 
+>> authorship from that commit.
+>>
+> that's a possibility. but given the above, it might be better to simply 
+> change the behavior of -c/-C to keep the UI lean and consistent with 
+> commit's behavior.
+
+"fixup -c/-C" were conceived as a way to reword a commit message at the 
+same time as optionally fixing up the commit's content. I think changing 
+the behavior to automatically update the authorship would surprise 
+people and as I said above most of the time one does not want that behavior.
+
+Best Wishes
+
+Phillip
