@@ -1,44 +1,45 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83ADE1D6A9
-	for <git@vger.kernel.org>; Tue, 24 Oct 2023 19:26:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC89D3B2A8
+	for <git@vger.kernel.org>; Tue, 24 Oct 2023 19:39:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D43B510C6
-	for <git@vger.kernel.org>; Tue, 24 Oct 2023 12:26:03 -0700 (PDT)
-Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-5840bb16101so2833691eaf.3
-        for <git@vger.kernel.org>; Tue, 24 Oct 2023 12:26:03 -0700 (PDT)
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1C92B3
+	for <git@vger.kernel.org>; Tue, 24 Oct 2023 12:39:40 -0700 (PDT)
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-66d2f3bb312so31646786d6.0
+        for <git@vger.kernel.org>; Tue, 24 Oct 2023 12:39:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698175563; x=1698780363;
+        d=1e100.net; s=20230601; t=1698176379; x=1698781179;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=z7sL7V0HxH0UMW/rL4Jix+I4oRVRd/YvY6IQGRUgZW0=;
-        b=Le/1XGmBhvynxJvMyR6tNLa+OW9qzL1cXXq2zeFGfoaKZ0k2n9r6ijZ7QLgWMvjOTr
-         LFytqEZYxfBmNM0A+tWg1b0PktLopstbaI9wEzofmTcyHBZASn5Vvdw+6CN2dOm0m6kF
-         t9CSylPyP/VxESOSVA62Ib0oN/cdi1FtQAeCABVRJ7ejVbyGfC8c0aYBJDKX41+VGM2R
-         AoQUrigs3U7VsTVAqSYE2BOVMKE55ILYyUEawNnPYLJOUoBA6HNlfswR/yBG48YiXX2f
-         Aj9AK8tQYVzf1wWRH8jjevlMsIKOHKhokLr+zN6nCyOyRY4ZJE3e+M1UnBfVpnZVQMiI
-         48cQ==
-X-Gm-Message-State: AOJu0Yyy4s83AzGXtHkGrC7bHsCeTgezTQnXnBt7xe/D6dYfdjRTGEBT
-	SDfiwdkb1DoQkKqqXB1mrGNe+fL3zCyW1Femus4=
-X-Google-Smtp-Source: AGHT+IE4V4u2Y24N1pi3jnKwr6FV3qorW7UUxn9kuiHbRVCuzsBIB6SxjL7GSAVUP6/CtsrqhPKezPil7IBj1+CLhTY=
-X-Received: by 2002:a05:6359:8003:b0:168:dbfd:cec8 with SMTP id
- rc3-20020a056359800300b00168dbfdcec8mr6336170rwb.13.1698175563059; Tue, 24
- Oct 2023 12:26:03 -0700 (PDT)
+        bh=GGr0P/l4S6AEgYyhM/UN4jP++JcJB8rR9xNa6b+A4W8=;
+        b=uKWnVkIN247cGwdIsHmmsmErzFrEmvx67JTToo5paSbkmc0nObUik5yWgYwojyRjgN
+         PIYQg0UkdLtmc69RxmFH8Gf/BnE0aczz7KVb22d/bQq6yh4wdvGjUTXjunjNggbFxSdv
+         6XEnHVJoUybtYABYsWE40EopKFWALv9jtlQgF8TmlbWn+L66nMju9Z83QMsflGfOLvWU
+         Ndoj3CK8k/RCyLGWVIgBakMkvkEZGF/kjSNcl8v56zF+NB9Houvu2ACnfV0jf218iDWk
+         HYStV5vNJ2ufs+T91j354M8JHRzuQm2tAEMM1rdIJvF/f2WHTuDzAMGZDkVI3d5gg/Kq
+         +WNQ==
+X-Gm-Message-State: AOJu0YzzK5WgHdBnq5QkRMLLQOnB9GPSTKOIIGum5y/DYAtuM5QbgCgU
+	cvbT5AXFf7x9SAeeFzIZ27DNuq9IIMWwcnOEegc=
+X-Google-Smtp-Source: AGHT+IHMASjRrMK82jkp5S8mpG6OZwGEthmpb5PvNO9yWNVJAA+axlwoRTmffsReXlAIdSHqOMAZa9i/YuLlJXVSpEQ=
+X-Received: by 2002:ad4:5f09:0:b0:66d:6043:fa16 with SMTP id
+ fo9-20020ad45f09000000b0066d6043fa16mr17703489qvb.2.1698176379034; Tue, 24
+ Oct 2023 12:39:39 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1698152926.git.ps@pks.im> <d0a991cf4f892e73e4fd62ef3fdae3fa73277321.1698152926.git.ps@pks.im>
-In-Reply-To: <d0a991cf4f892e73e4fd62ef3fdae3fa73277321.1698152926.git.ps@pks.im>
+References: <cover.1698152926.git.ps@pks.im> <adcfa7a6a9d8fb6f915faf77df52362544cd590e.1698152926.git.ps@pks.im>
+In-Reply-To: <adcfa7a6a9d8fb6f915faf77df52362544cd590e.1698152926.git.ps@pks.im>
 From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Tue, 24 Oct 2023 15:25:52 -0400
-Message-ID: <CAPig+cSrp7vZuy7D_ENHKZKZzF4OSmCtfYNHPGMtS1Hj6gArDw@mail.gmail.com>
-Subject: Re: [PATCH 09/12] builtin/show-ref: ensure mutual exclusiveness of subcommands
+Date: Tue, 24 Oct 2023 15:39:28 -0400
+Message-ID: <CAPig+cQ=VhRm40oW=TQYzy2NXKNJm4QVQhtw3FAKsFRn12qYLA@mail.gmail.com>
+Subject: Re: [PATCH 10/12] builtin/show-ref: explicitly spell out different
+ modes in synopsis
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
 	Han-Wen Nienhuys <hanwen@google.com>
@@ -47,27 +48,51 @@ Content-Transfer-Encoding: quoted-printable
 
 On Tue, Oct 24, 2023 at 9:11=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
 e:
-> The git-show-ref(1) command has three different modes, of which one is
-> implicit and the other two can be chosen explicitly by passing a flag.
-> But while these modes are standalone and cause us to execute completely
-> separate code paths, we gladly accept the case where a user asks for
-> both `--exclude-existing` and `--verify` at the same time even though it
-> is not obvious what will happen. Spoiler: we ignore `--verify` and
-> execute the `--exclude-existing` mode.
+> The synopsis treats the `--verify` and the implicit mode the same. They
+> are slightly different though:
 >
-> Let's explicitly detect this invalid usage and die in case both modes
-> were requested.
+>     - They accept different sets of flags.
 >
+>     - The implicit mode accepts patterns while the `--verify` mode
+>       accepts references.
+>
+> Split up the synopsis for these two modes such that we can disambiguate
+> those differences.
+
+Good. When reading [2/12], my immediate thought was that such a
+documentation change was needed.
+
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
-> diff --git a/builtin/show-ref.c b/builtin/show-ref.c
-> @@ -269,6 +269,9 @@ int cmd_show_ref(int argc, const char **argv, const c=
-har *prefix)
-> +       if ((!!exclude_existing_opts.enabled + !!verify) > 1)
-> +               die(_("only one of --exclude-existing or --verify can be =
-given"));
+> diff --git a/Documentation/git-show-ref.txt b/Documentation/git-show-ref.=
+txt
+> @@ -8,9 +8,12 @@ git-show-ref - List references in a local repository
+>  SYNOPSIS
+> -'git show-ref' [-q | --quiet] [--verify] [--head] [-d | --dereference]
+> +'git show-ref' [-q | --quiet] [--head] [-d | --dereference]
+>              [-s | --hash[=3D<n>]] [--abbrev[=3D<n>]] [--tags]
+>              [--heads] [--] [<pattern>...]
+> +'git show-ref' --verify [-q | --quiet] [-d | --dereference]
+> +            [-s | --hash[=3D<n>]] [--abbrev[=3D<n>]]
+> +            [--] [<ref>...]
+>  'git show-ref' --exclude-existing[=3D<pattern>]
 
-Somewhat recently, work was done to normalize this sort of message.
-The result was to instead use the phrasing "options '%s' and '%s'
-cannot be used together". See, for instance, 43ea635c35 (i18n:
-refactor "foo and bar are mutually exclusive", 2022-01-05).
+What does it mean to request "quiet" for the plain `git show-ref`
+mode? That seems pointless and counterintuitive. Even though this mode
+may accept --quiet as a quirk of implementation, we probably shouldn't
+be promoting its use in the documentation. Moreover, the blurb for
+--quiet later in the document:
+
+   Do not print any results to stdout. When combined with --verify,
+   this can be used to silently check if a reference exists.
+
+should probably be rephrased since it currently implies that it may be
+used with modes other than --verify, but that's not really the case
+(implementation quirks aside).
+
+This also raises the question as to whether an interlock should be
+added to disallow --quiet with plain `git show-ref`, much like the
+interlock preventing --exclude-existing and --verify from being used
+together. Ideally, such an interlock ought to be added, but I wouldn't
+be surprised to learn that doing so would break someone's existing
+tooling which insensibly uses --quiet with plain `git show-ref`.
