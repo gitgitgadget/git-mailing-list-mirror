@@ -1,116 +1,197 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD8E1173A
-	for <git@vger.kernel.org>; Tue, 24 Oct 2023 20:43:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9BA42B756
+	for <git@vger.kernel.org>; Tue, 24 Oct 2023 21:02:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5732210C3
-	for <git@vger.kernel.org>; Tue, 24 Oct 2023 13:43:23 -0700 (PDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1qvOFD-0001oP-NQ; Tue, 24 Oct 2023 22:43:19 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1qvOFD-0041Xb-1u; Tue, 24 Oct 2023 22:43:19 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1qvOFC-005Wvt-Ou; Tue, 24 Oct 2023 22:43:18 +0200
-Date: Tue, 24 Oct 2023 22:43:18 +0200
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To: Michael Strawbridge <michael.strawbridge@amd.com>
-Cc: Luben Tuikov <luben.tuikov@amd.com>, git@vger.kernel.org,
-	entwicklung@pengutronix.de
-Subject: Re: Regression: git send-email fails with "Use of uninitialized
- value $address" + "unable to extract a valid address"
-Message-ID: <20231024204318.gi6b4ygqbilm2yke@pengutronix.de>
-References: <20231013141437.ywrhw65xdapmev7d@pengutronix.de>
- <20231020100442.an47wwsti2d4zeyx@pengutronix.de>
- <68d7e5c3-6b4a-4d0d-9885-f3d4e2199f26@amd.com>
- <20231024130037.sbevzk2x7oclj7d7@pengutronix.de>
- <89712aea-04fc-4775-afd4-afd3ca24ad01@amd.com>
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6A2D10CE
+	for <git@vger.kernel.org>; Tue, 24 Oct 2023 14:02:07 -0700 (PDT)
+Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-7788f727dd7so305198385a.1
+        for <git@vger.kernel.org>; Tue, 24 Oct 2023 14:02:07 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698181327; x=1698786127;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=cQGbPLTW0oqfjMWjHZQKrf+7z/eENd4rXCGZHpbEXjI=;
+        b=dg9r5Bzi5GMT7id4ricWXw005Uu+04wVi+lUVGTIvyOyX6vlOxggB624IYb2AyatKq
+         dy5EG/0AP/44dMmaKAK/huK60Cyym9H34PrMMn6AxCJOpoxWO0btc3l4s/W9v1EwMf1R
+         GkAc3D+eMvrDPWXfN4WWuLrgH9r7xYSy/7sk2muUZKrEECDzVNAIbW9LPg/E0uVPT1E3
+         JbpVt9NsSWUihcAIGIMFSF1hlUDA72+sPIgitm7Y1KXtBXayTjaC8T4Rg9J8EEGGDgzt
+         uauMnTpHXQq7ODTjfcecz/rNhbL4zlT//j6kaKjQlKHv1Rh+gQL6yttTTbNhHdZ6Hr5K
+         Q2jQ==
+X-Gm-Message-State: AOJu0Yy7umy/cPWmzOcokqck2ksTVTT1wewIx+Ak5ucYgED2JzqpLQQx
+	hfXgLYrg4RgOvse4/ezJ3OwpXEKSVmTxtVWJnSow5wH+sKw=
+X-Google-Smtp-Source: AGHT+IFpwL52KZtyRLZZI+Ft0IPhzgfrDYjblhYsbMPKrIXVICIeoCm98e/zowC8Ne2h67uH2vWCJ5cwdrjaDS80LqM=
+X-Received: by 2002:a05:6214:d8a:b0:65d:6a5:1a3f with SMTP id
+ e10-20020a0562140d8a00b0065d06a51a3fmr18321372qve.43.1698181326767; Tue, 24
+ Oct 2023 14:02:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="m4vfhh7kkidpznpi"
-Content-Disposition: inline
-In-Reply-To: <89712aea-04fc-4775-afd4-afd3ca24ad01@amd.com>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
-
-
---m4vfhh7kkidpznpi
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+References: <cover.1698152926.git.ps@pks.im> <2f876e61dd36a8887a1286bb8db9fb6577c55c9b.1698152926.git.ps@pks.im>
+In-Reply-To: <2f876e61dd36a8887a1286bb8db9fb6577c55c9b.1698152926.git.ps@pks.im>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Tue, 24 Oct 2023 17:01:55 -0400
+Message-ID: <CAPig+cRTOMie0rUf=Mhbo9e2EXf-_2kQyMeqpB9OCRB1MZZ1rw@mail.gmail.com>
+Subject: Re: [PATCH 11/12] builtin/show-ref: add new mode to check for
+ reference existence
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
+	Han-Wen Nienhuys <hanwen@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hello Michael,
+On Tue, Oct 24, 2023 at 9:11=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+> While we have multiple ways to show the value of a given reference, we
+> do not have any way to check whether a reference exists at all. While
+> commands like git-rev-parse(1) or git-show-ref(1) can be used to check
+> for reference existence in case the reference resolves to something
+> sane, neither of them can be used to check for existence in some other
+> scenarios where the reference does not resolve cleanly:
+>
+>     - References which have an invalid name cannot be resolved.
+>
+>     - References to nonexistent objects cannot be resolved.
+>
+>     - Dangling symrefs can be resolved via git-symbolic-ref(1), but this
+>       requires the caller to special case existence checks depending on
+>       whteher or not a reference is symbolic or direct.
 
-On Tue, Oct 24, 2023 at 03:00:38PM -0400, Michael Strawbridge wrote:
-> On 10/24/23 09:00, Uwe Kleine-K=F6nig wrote:
-> > On Fri, Oct 20, 2023 at 05:06:36PM -0400, Michael Strawbridge wrote:
-> >> On 10/20/23 06:04, Uwe Kleine-K=F6nig wrote:
-> >>> On Fri, Oct 13, 2023 at 04:14:37PM +0200, Uwe Kleine-K=F6nig wrote:
-> >>>> 	$ git send-email --to 'A B <a@b.org>, C D <c@d.org>' lala.patch
-> >>>> 	Use of uninitialized value $address in sprintf at /usr/lib/git-core=
-/git-send-email line 1172.
-> >>>> 	error: unable to extract a valid address from:
-> >>>>
-> >>>> This happens for me with git 2.42.0 and also on master (59167d7d09fd=
-, "The seventeenth batch").
-> Hm.  I tried reproing with master (59167d7d09fd, "The seventeenth batch")=
- but I don't seem to see an error:
-> ```
-> $ git send-email --to 'Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de=
->' -1 --smtp-server=3D"$(pwd)/fake.sendmail"
-> [...]
+s/whteher/whether/
 
-I debugged a bit and if I do
+> Furthermore, git-rev-list(1) and other commands do not let the caller
+> distinguish easily between an actually missing reference and a generic
+> error.
+>
+> Taken together, this gseems like sufficient motivation to introduce a
 
-	mv .git/hooks/sendemail-validate .git/hooks/sendemail-validate.bak
+s/gseems/seems/
 
-git send-email --to 'Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>'
-starts to work for me, too.
+> separate plumbing command to explicitly check for the existence of a
+> reference without trying to resolve its contents.
+>
+> This new command comes in the form of `git show-ref --exists`. This
+> new mode will exit successfully when the reference exists, with a
+> specific error code of 2 when it does not exist, or with 1 when there
+> has been a generic error.
+>
+> Note that the only way to properly implement this command is by using
+> the internal `refs_read_raw_ref()` function. While the public function
+> `refs_resolve_ref_unsafe()` can be made to behave in the same way by
+> passing various flags, it does not provide any way to obtain the errno
+> with which the reference backend failed when reading the reference. As
+> such, it becomes impossible for us to distinguish generic errors from
+> the explicit case where the reference wasn't found.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+> diff --git a/Documentation/git-show-ref.txt b/Documentation/git-show-ref.=
+txt
+> @@ -65,6 +70,12 @@ OPTIONS
+> +--exists::
+> +
+> +       Check whether the given reference exists. Returns an error code o=
+f 0 if
 
-I'd guess the content of my sendemail-validate script doesn't matter
-much, but for the record, it's:
+We probably want to call this "exit code" rather than "error code"
+since the latter is unnecessarily scary sounding for the success case
+(when the ref does exit).
 
-	#!/bin/sh
-	# installed by patatt install-hook
-	patatt sign --hook "${1}"
+> +       it does, 2 if it is missing, and 128 in case looking up the refer=
+ence
+> +       failed with an error other than the reference being missing.
 
-Does the problem reproduce on your end with a sendemail-validate script?
+The commit message says it returns 1 for a generic error, but this
+inconsistently says it returns 128 for that case. The actual
+implementation returns 1.
 
-Best regards
-Uwe
+> diff --git a/builtin/show-ref.c b/builtin/show-ref.c
+> @@ -214,6 +215,41 @@ static int cmd_show_ref__patterns(const struct patte=
+rns_options *opts,
+> +static int cmd_show_ref__exists(const char **refs)
+> +{
+> +       struct strbuf unused_referent =3D STRBUF_INIT;
+> +       struct object_id unused_oid;
+> +       unsigned int unused_type;
+> +       int failure_errno =3D 0;
+> +       const char *ref;
+> +       int ret =3D 1;
+> +
+> +       if (!refs || !*refs)
+> +               die("--exists requires a reference");
+> +       ref =3D *refs++;
+> +       if (*refs)
+> +               die("--exists requires exactly one reference");
+> +
+> +       if (refs_read_raw_ref(get_main_ref_store(the_repository), ref,
+> +                             &unused_oid, &unused_referent, &unused_type=
+,
+> +                             &failure_errno)) {
+> +               if (failure_errno =3D=3D ENOENT) {
+> +                       error(_("reference does not exist"));
 
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+The documentation doesn't mention this printing any output, and indeed
+one would intuitively expect a boolean-like operation to not produce
+any printed output since its exit code indicates the result (except,
+of course, in the case of a real error).
 
---m4vfhh7kkidpznpi
-Content-Type: application/pgp-signature; name="signature.asc"
+> +                       ret =3D 2;
+> +               } else {
+> +                       error(_("failed to look up reference: %s"), strer=
+ror(failure_errno));
 
------BEGIN PGP SIGNATURE-----
+Or use error_errno():
 
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmU4LGUACgkQj4D7WH0S
-/k6miQf8CG+Q1gq7QPR5l78KRfSnBbv4mR+R1OPpv92E14dH6WIXGIErOekEb0rE
-5lpMny3iy0b+glXVxYsd+/QyE86y7LyDZXflHDEdEPU3x6odXQmOoZbWdK7Rc0k/
-z8f0AIVCfDnqZ5woJ5XMsnyQBhI3hbSICffsUUGMXIqz3De6uURbgmg5/1YrJcVW
-LWq6vZdfo+3XTAzKQcrmnJUqJX7xB7lRBK9irY+t6s5GGdaMLwcrkGNnOngLHECh
-zasGJDge/MC/9QMFag04CquSgaE/lkftSUOLo2Jo2ZWnBmAHf07P04QbkZh5YjAV
-G/WYThbHu9R2YzeS1z20HkgA3+ZPxA==
-=gmPm
------END PGP SIGNATURE-----
+    errno =3D failure_errno;
+    error_errno(_("failed to look up reference: %s"));
 
---m4vfhh7kkidpznpi--
+> +               }
+> +
+> +               goto out;
+> +       }
+> +
+> +       ret =3D 0;
+> +
+> +out:
+> +       strbuf_release(&unused_referent);
+> +       return ret;
+> +}
+
+It's a bit odd having `ret` be 1 at the outset rather than 0, thus
+making the logic a bit more difficult to reason about. I would have
+expected it to be organized like this:
+
+    int ret =3D 0;
+    if (refs_read_raw_ref(...)) {
+         if (failure_errno =3D=3D ENOENT) {
+            ret =3D 2;
+        } else {
+            ret =3D 1;
+            errno =3D failure_errno;
+            error_errno(_("failed to look up reference: %s"));
+       }
+    }
+    strbuf_release(...);
+    return ret;
+
+> @@ -272,13 +309,15 @@ int cmd_show_ref(int argc, const char **argv, const=
+ char *prefix)
+> +       if ((!!exclude_existing_opts.enabled + !!verify + !!exists) > 1)
+> +               die(_("only one of --exclude-existing, --exists or --veri=
+fy can be given"));
+
+When reviewing an earlier patch in this series, I forgot to mention
+that we can simplify the life of translators by using placeholders:
+
+    die(_("options '%s', '%s' or '%s' cannot be used together"),
+        "--exclude-existing", "--exists", "--verify");
+
+which ensures that they don't translate the literal option names, and
+makes it possible to reuse the translated message in multiple
+locations (since it doesn't mention hard-coded option names).
