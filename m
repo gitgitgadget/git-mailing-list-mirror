@@ -1,63 +1,73 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCFCE208AB
-	for <git@vger.kernel.org>; Tue, 24 Oct 2023 19:17:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="szQZe7fp"
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8459F109
-	for <git@vger.kernel.org>; Tue, 24 Oct 2023 12:17:26 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 2A8392D16B;
-	Tue, 24 Oct 2023 15:17:26 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=74WJsuBxB0GOiM5dfvvHDVL8e8uFkLY3goB1+z
-	IFCjk=; b=szQZe7fp8TFCPn9wAqiaJgY33ldFILfW25u7Iqq8YErpOB9H80IRkQ
-	ICjraAJjgn5NhAwM5oI0sDXkALrDRDAFitt1dhxDXG26ODm5v9DmPPn7ajfwLW1B
-	IdQ7XWiSRQGNhIjGkp1jEH3QwFDcGPTbJTvH74u4uVTd5KStYYcD0=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 247772D16A;
-	Tue, 24 Oct 2023 15:17:26 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.198.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B4B802D162;
-	Tue, 24 Oct 2023 15:17:22 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>,  Han-Wen
- Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH 00/12] show-ref: introduce mode to check for ref existence
-In-Reply-To: <cover.1698152926.git.ps@pks.im> (Patrick Steinhardt's message of
-	"Tue, 24 Oct 2023 15:10:36 +0200")
-References: <cover.1698152926.git.ps@pks.im>
-Date: Tue, 24 Oct 2023 12:17:21 -0700
-Message-ID: <xmqqttqf3k5a.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83ADE1D6A9
+	for <git@vger.kernel.org>; Tue, 24 Oct 2023 19:26:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D43B510C6
+	for <git@vger.kernel.org>; Tue, 24 Oct 2023 12:26:03 -0700 (PDT)
+Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-5840bb16101so2833691eaf.3
+        for <git@vger.kernel.org>; Tue, 24 Oct 2023 12:26:03 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698175563; x=1698780363;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=z7sL7V0HxH0UMW/rL4Jix+I4oRVRd/YvY6IQGRUgZW0=;
+        b=Le/1XGmBhvynxJvMyR6tNLa+OW9qzL1cXXq2zeFGfoaKZ0k2n9r6ijZ7QLgWMvjOTr
+         LFytqEZYxfBmNM0A+tWg1b0PktLopstbaI9wEzofmTcyHBZASn5Vvdw+6CN2dOm0m6kF
+         t9CSylPyP/VxESOSVA62Ib0oN/cdi1FtQAeCABVRJ7ejVbyGfC8c0aYBJDKX41+VGM2R
+         AoQUrigs3U7VsTVAqSYE2BOVMKE55ILYyUEawNnPYLJOUoBA6HNlfswR/yBG48YiXX2f
+         Aj9AK8tQYVzf1wWRH8jjevlMsIKOHKhokLr+zN6nCyOyRY4ZJE3e+M1UnBfVpnZVQMiI
+         48cQ==
+X-Gm-Message-State: AOJu0Yyy4s83AzGXtHkGrC7bHsCeTgezTQnXnBt7xe/D6dYfdjRTGEBT
+	SDfiwdkb1DoQkKqqXB1mrGNe+fL3zCyW1Femus4=
+X-Google-Smtp-Source: AGHT+IE4V4u2Y24N1pi3jnKwr6FV3qorW7UUxn9kuiHbRVCuzsBIB6SxjL7GSAVUP6/CtsrqhPKezPil7IBj1+CLhTY=
+X-Received: by 2002:a05:6359:8003:b0:168:dbfd:cec8 with SMTP id
+ rc3-20020a056359800300b00168dbfdcec8mr6336170rwb.13.1698175563059; Tue, 24
+ Oct 2023 12:26:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- F5672AEC-72A1-11EE-8242-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+References: <cover.1698152926.git.ps@pks.im> <d0a991cf4f892e73e4fd62ef3fdae3fa73277321.1698152926.git.ps@pks.im>
+In-Reply-To: <d0a991cf4f892e73e4fd62ef3fdae3fa73277321.1698152926.git.ps@pks.im>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Tue, 24 Oct 2023 15:25:52 -0400
+Message-ID: <CAPig+cSrp7vZuy7D_ENHKZKZzF4OSmCtfYNHPGMtS1Hj6gArDw@mail.gmail.com>
+Subject: Re: [PATCH 09/12] builtin/show-ref: ensure mutual exclusiveness of subcommands
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
+	Han-Wen Nienhuys <hanwen@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Tue, Oct 24, 2023 at 9:11=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+> The git-show-ref(1) command has three different modes, of which one is
+> implicit and the other two can be chosen explicitly by passing a flag.
+> But while these modes are standalone and cause us to execute completely
+> separate code paths, we gladly accept the case where a user asks for
+> both `--exclude-existing` and `--verify` at the same time even though it
+> is not obvious what will happen. Spoiler: we ignore `--verify` and
+> execute the `--exclude-existing` mode.
+>
+> Let's explicitly detect this invalid usage and die in case both modes
+> were requested.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+> diff --git a/builtin/show-ref.c b/builtin/show-ref.c
+> @@ -269,6 +269,9 @@ int cmd_show_ref(int argc, const char **argv, const c=
+har *prefix)
+> +       if ((!!exclude_existing_opts.enabled + !!verify) > 1)
+> +               die(_("only one of --exclude-existing or --verify can be =
+given"));
 
-> this patch series introduces a new `--exists` mode to git-show-ref(1) to
-> explicitly check for the existence of a reference, only.
-
-I agree that show-ref would be the best place for this feature (not
-rev-parse, which is already a kitchen sink).  After all, the command
-was designed for validating refs in 358ddb62 (Add "git show-ref"
-builtin command, 2006-09-15).
-
-Thanks.  Hopefully I can take a look before I go offline.
-
+Somewhat recently, work was done to normalize this sort of message.
+The result was to instead use the phrasing "options '%s' and '%s'
+cannot be used together". See, for instance, 43ea635c35 (i18n:
+refactor "foo and bar are mutually exclusive", 2022-01-05).
