@@ -1,87 +1,85 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F13F44734A
-	for <git@vger.kernel.org>; Tue, 24 Oct 2023 22:30:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 711F32D61B
+	for <git@vger.kernel.org>; Tue, 24 Oct 2023 22:50:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="iETbNwaR"
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F8B13AB7
-	for <git@vger.kernel.org>; Tue, 24 Oct 2023 15:27:40 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id BED63218AC;
-	Tue, 24 Oct 2023 18:27:01 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=ImGMaVDK3JznZfFy6OZoMUy2O/CJ2Vyu4UngVr
-	6UC00=; b=iETbNwaRxXMvCy0SZKDD1TM2ry/fx4bJKUq8NSK3zx8wb6PrR51MLb
-	+QuYSL1lxdrdL8Z/dKVGXJJI+etFoJAzS38FF+EH7nd+WC6idu+IJxObgNEsQZNc
-	mDsIvQAwS72kH/sHDNCUSFZ1/zW4pNSQSaqpStJwsW+u0iKcnY7l8=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id B8130218AB;
-	Tue, 24 Oct 2023 18:27:01 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.198.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4DC5F218A7;
-	Tue, 24 Oct 2023 18:26:58 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Andrei Rybak <rybak.a.v@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] SubmittingPatches: call gitk's command "Copy commit
- reference"
-In-Reply-To: <20231024195123.911431-1-rybak.a.v@gmail.com> (Andrei Rybak's
-	message of "Tue, 24 Oct 2023 21:51:06 +0200")
-References: <20231024195123.911431-1-rybak.a.v@gmail.com>
-Date: Tue, 24 Oct 2023 15:26:56 -0700
-Message-ID: <xmqqedhj3bdb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="akS7qmzA"
+Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E71AB0
+	for <git@vger.kernel.org>; Tue, 24 Oct 2023 15:50:08 -0700 (PDT)
+Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-5a828bdcfbaso67635717b3.2
+        for <git@vger.kernel.org>; Tue, 24 Oct 2023 15:50:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1698187808; x=1698792608; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=9CI+90FzZHOtdPkZx1+1lAdlxDSpTD1iSmeY7TzTpG8=;
+        b=akS7qmzAGM40QTq4RIqggQVyXjOeqtSipRUcVkicStiRr+vRM3Q6I4F5QiKSQ99cgi
+         fVhKegJs7dJGYvIK8jwnYBmtvvtI2sWhGc4vZA5fD/FyzFWxF4lE3wXu3epIfDqJAI7U
+         YsMG9cZNQhkbNGB3bsO+gCFLSMhvdVBFfANwWxpwMUkCeSaqAGNLPOcdgp29W7QAhtlN
+         v/R8dsTOVmsElh7kFTgumkC1NsUqOcTAnYeIgc95JxKaQunDkP/FhfnJxm9vxDskz+J3
+         eGd0+p3kz7BuVz/BQBRkq/UakLU3J5WDfgxhbwoqGAbXHpObY5E9izBYV87/QYqssM2T
+         4Tjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698187808; x=1698792608;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9CI+90FzZHOtdPkZx1+1lAdlxDSpTD1iSmeY7TzTpG8=;
+        b=dtpCkgusFhMvWFnjhjTAy+z148YPeDrmwsDn7dCKQAXqLSgml+TpuEU1ME1vYN9Wex
+         C/jWtlRrHseTJ3mJTMyjN3GnEQtTx2jS6mAh3c9dqqzLjf4nJ4epIDbG6Eum8j5JmDZI
+         XDnbDJYX5rpuzl/VT8vBSloVPkG0QGi6qMoqP+1KqcLgdegbliJAMLPXhhrPzeQ0Tut8
+         se0ug2oxny4gs1m24EL7M8ec6PX2NCQoxtukT9MRlv3oES2b2fv+UPgLXL0N89DlcJVR
+         11Ko90a1TfaxSr1D3sDyISBie8r0oiZfsZpPLMtwgRAZ/SRE2ycY15JZrEw+ZkZifsx2
+         Fuhw==
+X-Gm-Message-State: AOJu0YxjtnUuxmWDb3a/qV9FrLWPs0DMC1XOf8mdBZiEA4VyBBt4vHcd
+	yDdM9pjYVCv0tTTX/UvCpIriPI/+5kWaWs6aW6UT
+X-Google-Smtp-Source: AGHT+IFIv8YfEFyTZwUms4j/R0TKJyKt+dAwx4SrYT173aWdQdlZDCTstRIsaIS9wiOJDhhkT29kwty4mgYkeHvisux5
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:edb9:f7d1:6b9c:d86b])
+ (user=jonathantanmy job=sendgmr) by 2002:a05:690c:288e:b0:5a8:205e:1f27 with
+ SMTP id ee14-20020a05690c288e00b005a8205e1f27mr233083ywb.6.1698187807766;
+ Tue, 24 Oct 2023 15:50:07 -0700 (PDT)
+Date: Tue, 24 Oct 2023 15:50:05 -0700
+In-Reply-To: <ZTbK3QTJYXxYj/M6@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 71C6B606-72BC-11EE-ACF1-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.42.0.758.gaed0368e0e-goog
+Message-ID: <20231024225005.1191555-1-jonathantanmy@google.com>
+Subject: Re: [PATCH v3 0/5] config-parse: create config parsing library
+From: Jonathan Tan <jonathantanmy@google.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Jonathan Tan <jonathantanmy@google.com>, Junio C Hamano <gitster@pobox.com>, 
+	Josh Steadmon <steadmon@google.com>, git@vger.kernel.org, calvinwan@google.com, 
+	glencbz@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
-Andrei Rybak <rybak.a.v@gmail.com> writes:
+Taylor Blau <me@ttaylorr.com> writes:
+> But I am not sure that I agree that this series is moving us in the
+> right direction necessarily. Or at least I am not convinced that
+> shipping the intermediate state is worth doing before we have callers
+> that could drop '#include "config.h"' for just the parser.
+> 
+> This feels like churn that does not yield a tangible pay-off, at least
+> in the sense that the refactoring and code movement delivers us
+> something that we can substantively use today.
+> 
+> I dunno.
+> 
+> Thanks,
+> Taylor
 
-> Documentation/SubmittingPatches informs the contributor that gitk's
-> context menu command "Copy commit summary" can be used to obtain the
-> conventional format of referencing existing commits.  This command in
-> gitk was renamed to "Copy commit reference" in commit [1], following
-> implementation of Git's "reference" pretty format in [2].
->
-> Update mention of this gitk command in Documentation/SubmittingPatches
-> to its new name.
->
-> [1] b8b60957ce (gitk: rename "commit summary" to "commit reference",
->     2019-12-12)
-> [2] commit 1f0fc1d (pretty: implement 'reference' format, 2019-11-20)
->
-> Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
-> ---
->  Documentation/SubmittingPatches | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+Thanks for calling this out. We do want our changes to be good for both
+the libification and the non-libification cases as much as possible. As
+it is, I do agree that since we won't have callers that can use the new
+parser header (I think the likeliest cause of having such a caller is
+if we have a "interpret-config" command, like "interpret-trailers"), we
+probably shouldn't merge this (at least, the last 2 patches).
 
-Thanks for a very well researched log message.  Will queue.
-
-
->
-> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-> index 0e2d3fbb9c..653bb2ad44 100644
-> --- a/Documentation/SubmittingPatches
-> +++ b/Documentation/SubmittingPatches
-> @@ -266,7 +266,7 @@ date)", like this:
->  	noticed that ...
->  ....
->  
-> -The "Copy commit summary" command of gitk can be used to obtain this
-> +The "Copy commit reference" command of gitk can be used to obtain this
->  format (with the subject enclosed in a pair of double-quotes), or this
->  invocation of `git show`:
+I think patches 1-3 are still usable (they make some internals of config
+parsing less confusing) but I'm also OK if we hold off on them until
+we find a compelling use case that motivates refactoring on the config
+parser.
