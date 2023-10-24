@@ -1,102 +1,116 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1D3415B4
-	for <git@vger.kernel.org>; Tue, 24 Oct 2023 20:40:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QJRXOHPJ"
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B529310C3
-	for <git@vger.kernel.org>; Tue, 24 Oct 2023 13:40:25 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id 98e67ed59e1d1-27d0a173e61so3379577a91.0
-        for <git@vger.kernel.org>; Tue, 24 Oct 2023 13:40:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698180025; x=1698784825; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=f0krgvJ4thU/Jlwk6Fa2lV0GFWgVNkode1wSh18RO/4=;
-        b=QJRXOHPJCBtkJY97Ina7ArGuLVxfHZ+V1Ij0WQeRHon1vkX13U5nP1/a0OPMIPUEIT
-         iqFzdR+Wyg5up4KRZ1ZkXgh9pXtlWV4gAdv++uyaiuOdcuc78LhDjqOHQYEcwjd71x/2
-         34P5fr9enr6SpIdIQ/ZDZXibOqHHXRH0DA9zKt7u9abBgscNiLVNidyxj9b6gcQbjZ8M
-         2QQW+sDla3C8j4lnT7yjZpZDJ4aOFsJ2h6glrlxSsS4kk19SaWF/sELUVk1HBSGvs6K7
-         FNbmbQyuPjnjKvvPUE82sYCNs68RHvrMph8+ND+UCGMfMV0vYe3IoVaHO482efl+rhoa
-         LWCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698180025; x=1698784825;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=f0krgvJ4thU/Jlwk6Fa2lV0GFWgVNkode1wSh18RO/4=;
-        b=vF4YrQ0yLzdLkSNP6dFvBa7GEOoglZ4EYqvDm2n3dW2JVYu2XXvQDSFrkr2TFD+hgr
-         GUsRvyL7AVAGI7aiQc+ore9aVUGOr04EpNp7db60MhZeuH0UliNv3JymD34Vptxr9yS2
-         pNVk/HRc2MiaXuLe5wXvj6EgNMPZxXqR55RCDoZc0XSFllfGEdFV93z2nXNHZhB0FXyJ
-         pWtO6UyJFpJoDWKqldxfSF3STZGWrQ6Nedkiyh81C59Hp620W/WwgYeL2eoqh3OMkqP0
-         wd41UUqqkrfwhE4szzYQ0m90VCLIPCoXyS1prvFiLAM/nslhscbA3dE87MNImvTEsFJP
-         /0yQ==
-X-Gm-Message-State: AOJu0YxLtCP4xv6NWlOUAxx8uFGiIRZ3ufS/daHvVA0s/hAL0p6z3VKS
-	MSeZ0Jws3ANo2zXe6P2QJuLgYWXzYQkUuI8hFww0QbrQ
-X-Google-Smtp-Source: AGHT+IGV6yYWQpezjuOtsyvX2SLIXSmx73F5ib3OkjPKXCI6BBxlnB0/IU9FaAiXk1mqVe/4HGFDDGB6yPM1XkT1/WI=
-X-Received: by 2002:a17:90a:1a04:b0:27e:1ea0:c6fc with SMTP id
- 4-20020a17090a1a0400b0027e1ea0c6fcmr9390189pjk.6.1698180024754; Tue, 24 Oct
- 2023 13:40:24 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD8E1173A
+	for <git@vger.kernel.org>; Tue, 24 Oct 2023 20:43:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5732210C3
+	for <git@vger.kernel.org>; Tue, 24 Oct 2023 13:43:23 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1qvOFD-0001oP-NQ; Tue, 24 Oct 2023 22:43:19 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1qvOFD-0041Xb-1u; Tue, 24 Oct 2023 22:43:19 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1qvOFC-005Wvt-Ou; Tue, 24 Oct 2023 22:43:18 +0200
+Date: Tue, 24 Oct 2023 22:43:18 +0200
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To: Michael Strawbridge <michael.strawbridge@amd.com>
+Cc: Luben Tuikov <luben.tuikov@amd.com>, git@vger.kernel.org,
+	entwicklung@pengutronix.de
+Subject: Re: Regression: git send-email fails with "Use of uninitialized
+ value $address" + "unable to extract a valid address"
+Message-ID: <20231024204318.gi6b4ygqbilm2yke@pengutronix.de>
+References: <20231013141437.ywrhw65xdapmev7d@pengutronix.de>
+ <20231020100442.an47wwsti2d4zeyx@pengutronix.de>
+ <68d7e5c3-6b4a-4d0d-9885-f3d4e2199f26@amd.com>
+ <20231024130037.sbevzk2x7oclj7d7@pengutronix.de>
+ <89712aea-04fc-4775-afd4-afd3ca24ad01@amd.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: galo joel <ilsmaciaszambranogalo@gmail.com>
-Date: Tue, 24 Oct 2023 22:40:14 +0200
-Message-ID: <CAKh3n_qqMiJL-Mn2MxBmG5MRL36w+v-kxjqb8wUv1i7KOEVaDw@mail.gmail.com>
-Subject: bugreport
-To: git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="00000000000023f85506087c590b"
-
---00000000000023f85506087c590b
-Content-Type: multipart/alternative; boundary="00000000000023f85306087c5909"
-
---00000000000023f85306087c5909
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="m4vfhh7kkidpznpi"
+Content-Disposition: inline
+In-Reply-To: <89712aea-04fc-4775-afd4-afd3ca24ad01@amd.com>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 
 
+--m4vfhh7kkidpznpi
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
---00000000000023f85306087c5909
-Content-Type: text/html; charset="UTF-8"
+Hello Michael,
 
-<div dir="ltr"><br></div>
+On Tue, Oct 24, 2023 at 03:00:38PM -0400, Michael Strawbridge wrote:
+> On 10/24/23 09:00, Uwe Kleine-K=F6nig wrote:
+> > On Fri, Oct 20, 2023 at 05:06:36PM -0400, Michael Strawbridge wrote:
+> >> On 10/20/23 06:04, Uwe Kleine-K=F6nig wrote:
+> >>> On Fri, Oct 13, 2023 at 04:14:37PM +0200, Uwe Kleine-K=F6nig wrote:
+> >>>> 	$ git send-email --to 'A B <a@b.org>, C D <c@d.org>' lala.patch
+> >>>> 	Use of uninitialized value $address in sprintf at /usr/lib/git-core=
+/git-send-email line 1172.
+> >>>> 	error: unable to extract a valid address from:
+> >>>>
+> >>>> This happens for me with git 2.42.0 and also on master (59167d7d09fd=
+, "The seventeenth batch").
+> Hm.  I tried reproing with master (59167d7d09fd, "The seventeenth batch")=
+ but I don't seem to see an error:
+> ```
+> $ git send-email --to 'Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de=
+>' -1 --smtp-server=3D"$(pwd)/fake.sendmail"
+> [...]
 
---00000000000023f85306087c5909--
---00000000000023f85506087c590b
-Content-Type: text/plain; charset="US-ASCII"; name="git-bugreport-2023-10-24-2215.txt"
-Content-Disposition: attachment; 
-	filename="git-bugreport-2023-10-24-2215.txt"
-Content-Transfer-Encoding: base64
-Content-ID: <f_lo4sj7uv0>
-X-Attachment-Id: f_lo4sj7uv0
+I debugged a bit and if I do
 
-VGhhbmsgeW91IGZvciBmaWxsaW5nIG91dCBhIEdpdCBidWcgcmVwb3J0IQpQbGVhc2UgYW5zd2Vy
-IHRoZSBmb2xsb3dpbmcgcXVlc3Rpb25zIHRvIGhlbHAgdXMgdW5kZXJzdGFuZCB5b3VyIGlzc3Vl
-LgoKV2hhdCBkaWQgeW91IGRvIGJlZm9yZSB0aGUgYnVnIGhhcHBlbmVkPyAoU3RlcHMgdG8gcmVw
-cm9kdWNlIHlvdXIgaXNzdWUpCgpleGVjdXRlIGFzIGFkbWluIGdpdCBiYXNoIGFuZCwoaW4gY21k
-IFcxMCwgc2FtZS4gb3BlbiBnaXQtYmFzaC5leGUgYXMgc3lzdGVtLTMyKS4KdHJ5IGNobW9kIDc1
-NSwgNzc3Li4uIGRvZXMgbm90IHdvcmsgJ2NhdXNlIGltIHVzZXIgKCQpIGFuZCBub3QgYWRtaW4g
-KCMpCgpXaGEgZGlkIHlvdSBleHBlY3QgdG8gaGFwcGVuPyAoRXhwZWN0ZWQgYmVoYXZpb3IpCgpj
-aGFuZ2UgLnNoIHRvIGNobW9kIDc1NSBmb3IgZXhlY3V0ZSBiYXNoCgpXaGF0IGhhcHBlbmVkIGlu
-c3RlYWQ/IChBY3R1YWwgYmVoYXZpb3IpCgpub3RoaW5nIC5fLgoKV2hhdCdzIGRpZmZlcmVudCBi
-ZXR3ZWVuIHdoYXQgeW91IGV4cGVjdGVkIGFuZCB3aGF0IGFjdHVhbGx5IGhhcHBlbmVkPwoKaSBl
-eHBlY3RlZCBhIGdvb2Qgc3JpcHQgaW4gYmFzaC4gbm93IGknbSBzYWQKCkFueXRoaW5nIGVsc2Ug
-eW91IHdhbnQgdG8gYWRkOgoKUGxlYXNlIHRlbGwgbWUgd2hhdCBoYXBwZW4sIG1heWJlIGknbSB3
-cm9uZyBidXQgY2hhdEdQVCBhbHNvIG5vIGhhdmUgaWRlYSB3aHkgCmkgY2Fubm90IGJlIGFkbWlu
-IGluIG15IG93biBsYXB0b3AgeEQsIG9yIG1heWJlIGkgbmVlZCBzb21lIGxpYnJhcmllcyB0aGF0
-IGkgZGlkbm90Cmluc3RhbGwuIEkgc2VsbCBhbGwgbXkgaW5mb3JtYXRpb24gc28gcGxlYXNlIGhl
-bHAgbWUgdG8gdW5kZXJzdGFuZCB3aHkgZG9lcyBub3Qgd29yayA6KQoKUGxlYXNlIHJldmlldyB0
-aGUgcmVzdCBvZiB0aGUgYnVnIHJlcG9ydCBiZWxvdy4KWW91IGNhbiBkZWxldGUgYW55IGxpbmVz
-IHlvdSBkb24ndCB3aXNoIHRvIHNoYXJlLgoKCltTeXN0ZW0gSW5mb10KZ2l0IHZlcnNpb246Cmdp
-dCB2ZXJzaW9uIDIuNDIuMC53aW5kb3dzLjIKY3B1OiB4ODZfNjQKYnVpbHQgZnJvbSBjb21taXQ6
-IDJmODE5ZDE2NzBmZmY5YTE4MThmNjNiNjcyMmU5OTU5NDA1Mzc4ZTMKc2l6ZW9mLWxvbmc6IDQK
-c2l6ZW9mLXNpemVfdDogOApzaGVsbC1wYXRoOiAvYmluL3NoCmZlYXR1cmU6IGZzbW9uaXRvci0t
-ZGFlbW9uCnVuYW1lOiBXaW5kb3dzIDEwLjAgMTkwNDUgCmNvbXBpbGVyIGluZm86IGdudWM6IDEz
-LjIKbGliYyBpbmZvOiBubyBsaWJjIGluZm9ybWF0aW9uIGF2YWlsYWJsZQokU0hFTEwgKHR5cGlj
-YWxseSwgaW50ZXJhY3RpdmUgc2hlbGwpOiBDOlxQcm9ncmFtIEZpbGVzXEdpdFx1c3JcYmluXGJh
-c2guZXhlCgoKW0VuYWJsZWQgSG9va3NdCm5vdCBydW4gZnJvbSBhIGdpdCByZXBvc2l0b3J5IC0g
-bm8gaG9va3MgdG8gc2hvdwo=
---00000000000023f85506087c590b--
+	mv .git/hooks/sendemail-validate .git/hooks/sendemail-validate.bak
+
+git send-email --to 'Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>'
+starts to work for me, too.
+
+I'd guess the content of my sendemail-validate script doesn't matter
+much, but for the record, it's:
+
+	#!/bin/sh
+	# installed by patatt install-hook
+	patatt sign --hook "${1}"
+
+Does the problem reproduce on your end with a sendemail-validate script?
+
+Best regards
+Uwe
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
+Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+
+--m4vfhh7kkidpznpi
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmU4LGUACgkQj4D7WH0S
+/k6miQf8CG+Q1gq7QPR5l78KRfSnBbv4mR+R1OPpv92E14dH6WIXGIErOekEb0rE
+5lpMny3iy0b+glXVxYsd+/QyE86y7LyDZXflHDEdEPU3x6odXQmOoZbWdK7Rc0k/
+z8f0AIVCfDnqZ5woJ5XMsnyQBhI3hbSICffsUUGMXIqz3De6uURbgmg5/1YrJcVW
+LWq6vZdfo+3XTAzKQcrmnJUqJX7xB7lRBK9irY+t6s5GGdaMLwcrkGNnOngLHECh
+zasGJDge/MC/9QMFag04CquSgaE/lkftSUOLo2Jo2ZWnBmAHf07P04QbkZh5YjAV
+G/WYThbHu9R2YzeS1z20HkgA3+ZPxA==
+=gmPm
+-----END PGP SIGNATURE-----
+
+--m4vfhh7kkidpznpi--
