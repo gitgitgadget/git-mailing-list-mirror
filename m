@@ -1,48 +1,45 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F1AE27EDD
-	for <git@vger.kernel.org>; Tue, 24 Oct 2023 17:30:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F326219ED
+	for <git@vger.kernel.org>; Tue, 24 Oct 2023 17:45:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vegphAZj"
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D12412C
-	for <git@vger.kernel.org>; Tue, 24 Oct 2023 10:30:05 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2A6801C909B;
-	Tue, 24 Oct 2023 13:30:04 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="q0bN15G9"
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C37C3E8
+	for <git@vger.kernel.org>; Tue, 24 Oct 2023 10:45:21 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0E5311C7E5F;
+	Tue, 24 Oct 2023 13:45:21 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=4QQ9vkR0gn1BzLb0X0REm0Jgt4Wlk3kswoyKv0
-	XJ5WI=; b=vegphAZjMVU4kYFAINJtUvqv/MHlb7Qwe/EMMw6brvkt5A+wynJqrh
-	zs2gCTpE/oAGQ/MPhJw/z1jjr+cV8UO5er2i0XuE1XmEzb8xctYSEGB419o/gBqR
-	03e4xKOKwGEKpPhzm4qxnxPu29y0dhI6RdooMuiahIfkyL/lEi9gc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 052FD1C9099;
-	Tue, 24 Oct 2023 13:30:04 -0400 (EDT)
+	:content-type; s=sasl; bh=VEolbiUx4Op8Me67GvrxofTRGdyD2hAICpe7eh
+	NAPTY=; b=q0bN15G9VD6zzPcKfgjSINB5czYzOP8LrDjI2TMnIjj3I7Tijo+Hlc
+	HhXtUjAAc4Zxol+kq22zCByEVLv2SjHBVylJlHUly5bbbgkX0wNSZnKLklHs0vyN
+	fLq6SWkbnfmFd9Iaen8h6W9HnVjmcdoCr5g/UFpR+AhqYuSB1+SFI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 05F101C7E5E;
+	Tue, 24 Oct 2023 13:45:21 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.198.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C58101C9097;
-	Tue, 24 Oct 2023 13:30:02 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5F0B41C7E5D;
+	Tue, 24 Oct 2023 13:45:20 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
-  phillip.wood@dunelm.org.uk,  Johannes Sixt <j6t@kdbg.org>,
-  git@vger.kernel.org
-Subject: Re: using oldest date when squashing commits
-In-Reply-To: <138631cd-ead3-4f22-95ce-61afccfa409f@gmail.com> (Phillip Wood's
-	message of "Tue, 24 Oct 2023 15:00:58 +0100")
-References: <YjXRM5HiRizZ035p@ugly>
-	<9fae5292-d58f-95da-245b-6e205383cb50@kdbg.org>
-	<a99b16a8-a06c-4d38-bb78-46ce17411597@gmail.com>
-	<ZTeZ3KEQLIVU/sq2@ugly>
-	<138631cd-ead3-4f22-95ce-61afccfa409f@gmail.com>
-Date: Tue, 24 Oct 2023 10:30:01 -0700
-Message-ID: <xmqqpm143p46.fsf@gitster.g>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im
+Subject: Re: [PATCH v4 3/3] rev-list: add commit object support in
+ `--missing` option
+In-Reply-To: <20231024122631.158415-4-karthik.188@gmail.com> (Karthik Nayak's
+	message of "Tue, 24 Oct 2023 14:26:31 +0200")
+References: <20231019121024.194317-1-karthik.188@gmail.com>
+	<20231024122631.158415-1-karthik.188@gmail.com>
+	<20231024122631.158415-4-karthik.188@gmail.com>
+Date: Tue, 24 Oct 2023 10:45:19 -0700
+Message-ID: <xmqqbkcn52z4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -52,42 +49,48 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- F6E8BCA0-7292-11EE-B942-25B3960A682E-77302942!pb-smtp2.pobox.com
+ 19D3A8C2-7295-11EE-A2CE-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Karthik Nayak <karthik.188@gmail.com> writes:
 
->>> Unfortunately "fixup -C" only copies the commit message not the
->>> authorship
->> 
->>> (that's usually a good thing
->>>
->> why? what would that be useful for?
->> it seems rather counter-intuitive.
->
-> In the same way that you do not want to change the author date when
-> using a fixup to move a small hunk from one commit to another most
-> users do not want to update the author information when they make a
-> small change to a commit message using "fixup -C"
+> @@ -1176,7 +1181,11 @@ static int process_parents(struct rev_info *revs,...
+>  					break;
+>  				continue;
+>  			}
+> -			return -1;
+> +
+> +			if (!revs->do_not_die_on_missing_objects)
+> +				return -1;
+> +			else
+> +				oidset_insert(&revs->missing_objects, &p->object.oid);
 
-Exactly.
+I would suspect that swapping if/else would make it easier to
+follow.  Everybody else in the patch guards the use of the oidset
+with "were we told not to die on missing objects?", i.e.,
 
-It would be OK to add "fixup -c --reset-author", but the default
-should stay.  In addition, I wouldn't be able to use "rebase -i" to
-make typofixes to commits made out of received patches if the
-operation changes the authorship.
+	if (revs->do_not_die_on_missing_objects)
+		oidset_insert(&revs->missing_objects, &p->object.oid);
+	else
+		return -1; /* corrupt repository */
 
-> "fixup -c/-C" were conceived as a way to reword a commit message at
-> the same time as optionally fixing up the commit's content.
+> @@ -3800,6 +3809,9 @@ int prepare_revision_walk(struct rev_info *revs)
+>  				       FOR_EACH_OBJECT_PROMISOR_ONLY);
+>  	}
+>  
+> +	if (revs->do_not_die_on_missing_objects)
+> +		oidset_init(&revs->missing_objects, 0);
 
-Yup, it still is a "fix", meaning the identity and the spirit of the
-commit being fixed are unchanged.  What it aims to achieve, how it
-implements the behaviour it wants to give its users, who thought of
-that change, all that are the same as the original.  It may be a
-nice addition to optionally allow users to use --reset-author (or
-better yet, --author="Na Me <a@dd.re.ss>") with "fixup", but if the
-"-c" variant can be concluded with "commit --amend --reset-author"
-to achieve the same effect, that may be sufficient.
+I read the patch to make sure that .missing_objects oidset is used
+only when .do_not_die_on_missing_objects is set and the oidset is
+untouched unless it is initialized.  Well done.
+
+I know I floated "perhaps oidset can replace the object bits,
+especially because the number of objects that need marking is
+expected to be small", but I am curious what the performance
+implication of this would be.  Is this something we can create
+comparison easily?
+
+I noticed that nobody releases the resource held by this new oidset.
+Shouldn't we do so in revision.c:release_revisions()?
 
 Thanks.
-
-
