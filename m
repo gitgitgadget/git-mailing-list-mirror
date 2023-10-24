@@ -1,71 +1,73 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07022219ED
-	for <git@vger.kernel.org>; Tue, 24 Oct 2023 13:10:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6154929404
+	for <git@vger.kernel.org>; Tue, 24 Oct 2023 13:10:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tsM3OvRm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R/dqwCSw"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KejSKgq0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Yf5bZ1Ah"
 Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8EF810E9
-	for <git@vger.kernel.org>; Tue, 24 Oct 2023 06:10:44 -0700 (PDT)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C68510F7
+	for <git@vger.kernel.org>; Tue, 24 Oct 2023 06:10:45 -0700 (PDT)
 Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.west.internal (Postfix) with ESMTP id 035F13200A22;
-	Tue, 24 Oct 2023 09:10:41 -0400 (EDT)
+	by mailout.west.internal (Postfix) with ESMTP id 3BF4B3200A27;
+	Tue, 24 Oct 2023 09:10:44 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Tue, 24 Oct 2023 09:10:42 -0400
+  by compute6.internal (MEProxy); Tue, 24 Oct 2023 09:10:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:sender:subject:subject:to:to;
-	 s=fm3; t=1698153041; x=1698239441; bh=Lw3nLXoVp57DTp7fdpRdISTo8
-	U/6T+g3/nAmEUT5R3I=; b=tsM3OvRmLkU9BApoEYU9SpStruIB5sFc+fbmfSRzn
-	McEIzF961QH7fGFg5lKd2J9DSQ305U92t4L5sHOzgDxjv63ZlX7Qj86QvUIeAs6K
-	YtX83jXpPrHUxomVF247oTSp6z7Bjpm9IFGE/W3Hu9yzBvQ3uslysS5S7gqDLGJ7
-	NIhHiQoDM35EhPsyyYiyukJeDbVY9fL+vbgwkcwiiqljWauaMSuemwgB+vHAZtcO
-	0cGVkHD3LjjehplGVujJ3P01JVV2UqxrFDfEmey56Zab8Eg/8X5s9IU8Ct8lKtp5
-	UTMCvGXN9umjQhue96PBeXzjXo+jD8kH33xNosDVxcMzA==
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to; s=fm3; t=1698153043; x=1698239443; bh=4k
+	7MKiB3q6wYj5DiWFe3VjKUx/nnZuUeoUeNiE2DEms=; b=KejSKgq0uDk3KRR9yL
+	qxdzhq2VJvPXGDY/LI3mU9ToxU6QHCJsSUU4QB2aTyspJLi9dUV0ep2FmO5BuqVA
+	oDIrYzAps6uTw9nPBPHVHOlYptno68ViLxq9iQ586J4zXuvMzVG1bl/FwZQ9wxWN
+	/MIBRJDwqGyJgWNmV6OHh4xar8tqzCr6XuoGlOqPDk6igv5ehaKMsLz7BTNAUa5T
+	a/W6lR8P1OOw50/ZSgDd3/gWZZhaFWgg47n5MIQ+beHcv+iAjkGrLxlV7rJTjtjM
+	x3A7APUU7D+GAVT9pRLpPFcnC5RCnmyZmkZmlm42OJgQhU9l07gCHzUBrTa6L8jC
+	ZpOA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:sender:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1698153041; x=1698239441; bh=Lw3nLXoVp57DTp7fdpRdISTo8U/6T+g3/nA
-	mEUT5R3I=; b=R/dqwCSw4y4cR+gf6wnfDXYZ/NDMrvqNgeyaEvTUQZIaDR+KiWz
-	X5GtrSUbGB8G0FSeIhg5UuBOw17UFNZ04R/lALSTYdBlRvtIUTt7Y+IMc1tVPn5F
-	Yxc9iw4U3Gxv9jDUsJwQjmsEG6UFgqeasy447Juq6c5IngKdfpPAzgXZZe36pVM7
-	scNNq6bCQHOddCNqq06p2ah/lzpAGnp0ZWvldQfoIWOuu2ROU4sALc1Uvk3Mv7kb
-	mlskrxQARapPn03qGx1OWdjBSOVOwRq3zGNiF1VJXJWfv/OMhVzpmAq1T1Wgnp2O
-	irPHgnGJoTdB55SVEONMlFKrOHy93N1BjWQ==
-X-ME-Sender: <xms:UMI3ZU7YO6zQpgqpbHhC_ZOeNJgHuVse4ctq6ch4Jfx9M4NROuy0ag>
-    <xme:UMI3ZV5Jr2269GMwOPmJi1vfZ5EnftfkaZlN3tqEe9ckyP_zmk2LIGAIFhNympr-b
-    ZfTt1VXB9WTQ5M3jg>
-X-ME-Received: <xmr:UMI3ZTcJlU0QzxX0gIVgZysSZdJ2QK6_5WGou1Sbog9wxr5o46fnBZsnYXoNmXiQYHqmbcQ1hpZfCGbBNaU6-VQsMwYmW27KYRM5PRFMeUrZl2Y>
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm3; t=1698153043; x=1698239443; bh=4k7MKiB3q6wYj
+	5DiWFe3VjKUx/nnZuUeoUeNiE2DEms=; b=Yf5bZ1AhG+pYixPzDKbX7gQiOWidn
+	Udq3QkSbGV0A8CzjhlAo8B3+Qo0q4z6ExQaTdSRiT2ZZTVNAeHQkw+6s3ThnWzUW
+	OQUaAfHVITL71X7zzIZnFG/OmReOOPI/9U2Qau0xZqsSBiEczBFjoWPt7dZgXDhj
+	IcTTPpXDjUqaelFwZQdEUKDp5mMN2ZCO9hT4zk8wl5NchifVIKkMOdeCvRZeVUwD
+	lzwD+THxWgIXjTOzvPoXXpUfYsfzZ8slp3ibuH9u4CglbuFsVRRg7pl5lvn6A9+0
+	KSNn4sWuKg+qa8PQ4kj6t7mcWUuj7EAUO+LtiKlBfCZfS3yokmyKJpfOg==
+X-ME-Sender: <xms:U8I3Zbkefyv30CzOP_lBWpgQX14w3VEhDcByBUz4rMOrhd_CeKQRBg>
+    <xme:U8I3Ze1mPMMdzZOMYepzftjQfcqs-jJ9E-4tRASbQCrY0RiIbNK3rFuD-5PUP1d4n
+    PQcWeKMbTo3EqnbWA>
+X-ME-Received: <xmr:U8I3ZRoZDcUNNa-6phRa1UQWKgi-faWu2fwYo3Z9e28rguwvT9xVeXtNoDSJAnYWlJ8JCWSOCCqa_BvQJFmQCt-VsCg8w-yRc4yKCluDhORhUHw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrkeekgdeitdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfggtggusehgtderredttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    efveetlefhhedvgfelgeehkeejkeegveduveffgeejudduueevhfetgefhkeelleenucff
-    ohhmrghinhepphhkshdrihhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:UMI3ZZLCU2TCRfPMi7XzcKpLa3WAUS9adN_bFPBADYGTdk-72s_MDA>
-    <xmx:UMI3ZYLIVC_HertaeQgwhmQ9X8aAYLOUiD70a9SQW9AJXj64Y1fskQ>
-    <xmx:UMI3ZazH_Gfx5pdHbha5YHKrQzv2Hp_27V_Au9PnUJof1QMsd84qKw>
-    <xmx:UcI3ZfWjCzhv5JLHByDKDpOki4vwa2dG5XrK41-sMA37Qwz8skhLlQ>
+    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhm
+X-ME-Proxy: <xmx:U8I3ZTl4_J8ukCXQU_GfwXNU_rnEwUYlP97mkZqO0L-i_rF4K_koYw>
+    <xmx:U8I3ZZ0qUnHy6ILOoaMVhrALX0wcUGGThW1HqJtEUZNxq9032Mli3A>
+    <xmx:U8I3ZSvP5wF-riqeFU0KahC2HUn_aXx6tuUm__Ip-kYDEpjlahQxJA>
+    <xmx:U8I3ZXAOiwzcY3ekYw64yCf1jUGDLz6LuDhJjznb7tKVFS8zonRHuA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Oct 2023 09:10:39 -0400 (EDT)
+ 24 Oct 2023 09:10:42 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id dbc63736 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 24 Oct 2023 13:10:32 +0000 (UTC)
-Date: Tue, 24 Oct 2023 15:10:36 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id d377ceae (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 24 Oct 2023 13:10:37 +0000 (UTC)
+Date: Tue, 24 Oct 2023 15:10:40 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Han-Wen Nienhuys <hanwen@google.com>
-Subject: [PATCH 00/12] show-ref: introduce mode to check for ref existence
-Message-ID: <cover.1698152926.git.ps@pks.im>
+Subject: [PATCH 01/12] builtin/show-ref: convert pattern to a local variable
+Message-ID: <78163accbd2c39721249474512dedd8ed2f0fe4e.1698152926.git.ps@pks.im>
+References: <cover.1698152926.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -73,102 +75,162 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ef0ocYEVgqoXO7Sj"
+	protocol="application/pgp-signature"; boundary="NcnBag3+U2E3FSqN"
 Content-Disposition: inline
+In-Reply-To: <cover.1698152926.git.ps@pks.im>
 
 
---ef0ocYEVgqoXO7Sj
+--NcnBag3+U2E3FSqN
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+The `pattern` variable is a global variable that tracks either the
+reference names (not patterns!) for the `--verify` mode or the patterns
+for the non-verify mode. This is a bit confusing due to the slightly
+different meanings.
 
-this patch series introduces a new `--exists` mode to git-show-ref(1) to
-explicitly check for the existence of a reference, only. It tries to
-address a gap in our plumbing tools: while we have a plethora of tools
-to resolve revisions and thus also references, we do not have any tool
-that can generically check for the existence of both direct and symoblic
-references without resolving its contents.
+Convert the variable to be local. While this does not yet fix the double
+meaning of the variable, this change allows us to address it in a
+subsequent patch more easily by explicitly splitting up the different
+subcommands of git-show-ref(1).
 
-This series has been split out of my other patch series that refactors
-our test suite to reduce direct access to on-disk data structures. It is
-structured as follows:
+Note that we introduce a `struct show_ref_data` to pass the patterns to
+`show_ref()`. While this is overengineered now, we will extend this
+structure in a subsequent patch.
 
-    - Patches 1-8 refactor the code to stop relying on global variables,
-      addressing some smaller issues that surface. Furthermore, the
-      different modes that git-show-ref(1) has are made more explicit
-      such that the command becomes more extensible.
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ builtin/show-ref.c | 46 ++++++++++++++++++++++++++++------------------
+ 1 file changed, 28 insertions(+), 18 deletions(-)
 
-    - Patch 9 ensures that the user does not request mutually exclusive
-      modes.
-
-    - Patch 10 updates the documentation to better reflect how the modes
-      are to be used.
-
-    - Patch 11 introduces the new `--exists` mode as well as a bunch of
-      tests for it.
-
-    - Patch 12 introduces two test helpers `test_ref_exists` and
-      `test_ref_missing` and updates many of our tests to use those
-      instead.
-
-I admittedly may have went a bit overboard with this series. But I had a
-hard time understanding git-show-ref(1) and how the global state affects
-the different modes.
-
-Patrick
-
-[1]: <cover.1697607222.git.ps@pks.im>
-
-Patrick Steinhardt (12):
-  builtin/show-ref: convert pattern to a local variable
-  builtin/show-ref: split up different subcommands
-  builtin/show-ref: fix leaking string buffer
-  builtin/show-ref: fix dead code when passing patterns
-  builtin/show-ref: refactor `--exclude-existing` options
-  builtin/show-ref: stop using global variable to count matches
-  builtin/show-ref: stop using global vars for `show_one()`
-  builtin/show-ref: refactor options for patterns subcommand
-  builtin/show-ref: ensure mutual exclusiveness of subcommands
-  builtin/show-ref: explicitly spell out different modes in synopsis
-  builtin/show-ref: add new mode to check for reference existence
-  t: use git-show-ref(1) to check for ref existence
-
- Documentation/git-show-ref.txt |  16 +-
- builtin/show-ref.c             | 275 ++++++++++++++++++++++-----------
- t/t1403-show-ref.sh            |  70 +++++++++
- t/t1430-bad-ref-name.sh        |  27 ++--
- t/t3200-branch.sh              |  33 ++--
- t/t5521-pull-options.sh        |   4 +-
- t/t5605-clone-local.sh         |   2 +-
- t/test-lib-functions.sh        |  55 +++++++
- 8 files changed, 363 insertions(+), 119 deletions(-)
-
-
-base-commit: a9ecda2788e229afc9b611acaa26d0d9d4da53ed
+diff --git a/builtin/show-ref.c b/builtin/show-ref.c
+index 5110814f796..7efab14b96c 100644
+--- a/builtin/show-ref.c
++++ b/builtin/show-ref.c
+@@ -20,7 +20,6 @@ static const char * const show_ref_usage[] =3D {
+=20
+ static int deref_tags, show_head, tags_only, heads_only, found_match, veri=
+fy,
+ 	   quiet, hash_only, abbrev, exclude_arg;
+-static const char **pattern;
+ static const char *exclude_existing_arg;
+=20
+ static void show_one(const char *refname, const struct object_id *oid)
+@@ -50,15 +49,21 @@ static void show_one(const char *refname, const struct =
+object_id *oid)
+ 	}
+ }
+=20
++struct show_ref_data {
++	const char **patterns;
++};
++
+ static int show_ref(const char *refname, const struct object_id *oid,
+-		    int flag UNUSED, void *cbdata UNUSED)
++		    int flag UNUSED, void *cbdata)
+ {
++	struct show_ref_data *data =3D cbdata;
++
+ 	if (show_head && !strcmp(refname, "HEAD"))
+ 		goto match;
+=20
+-	if (pattern) {
++	if (data->patterns) {
+ 		int reflen =3D strlen(refname);
+-		const char **p =3D pattern, *m;
++		const char **p =3D data->patterns, *m;
+ 		while ((m =3D *p++) !=3D NULL) {
+ 			int len =3D strlen(m);
+ 			if (len > reflen)
+@@ -180,6 +185,9 @@ static const struct option show_ref_options[] =3D {
+=20
+ int cmd_show_ref(int argc, const char **argv, const char *prefix)
+ {
++	struct show_ref_data show_ref_data =3D {0};
++	const char **patterns;
++
+ 	git_config(git_default_config, NULL);
+=20
+ 	argc =3D parse_options(argc, argv, prefix, show_ref_options,
+@@ -188,38 +196,40 @@ int cmd_show_ref(int argc, const char **argv, const c=
+har *prefix)
+ 	if (exclude_arg)
+ 		return exclude_existing(exclude_existing_arg);
+=20
+-	pattern =3D argv;
+-	if (!*pattern)
+-		pattern =3D NULL;
++	patterns =3D argv;
++	if (!*patterns)
++		patterns =3D NULL;
+=20
+ 	if (verify) {
+-		if (!pattern)
++		if (!patterns)
+ 			die("--verify requires a reference");
+-		while (*pattern) {
++		while (*patterns) {
+ 			struct object_id oid;
+=20
+-			if ((starts_with(*pattern, "refs/") || !strcmp(*pattern, "HEAD")) &&
+-			    !read_ref(*pattern, &oid)) {
+-				show_one(*pattern, &oid);
++			if ((starts_with(*patterns, "refs/") || !strcmp(*patterns, "HEAD")) &&
++			    !read_ref(*patterns, &oid)) {
++				show_one(*patterns, &oid);
+ 			}
+ 			else if (!quiet)
+-				die("'%s' - not a valid ref", *pattern);
++				die("'%s' - not a valid ref", *patterns);
+ 			else
+ 				return 1;
+-			pattern++;
++			patterns++;
+ 		}
+ 		return 0;
+ 	}
+=20
++	show_ref_data.patterns =3D patterns;
++
+ 	if (show_head)
+-		head_ref(show_ref, NULL);
++		head_ref(show_ref, &show_ref_data);
+ 	if (heads_only || tags_only) {
+ 		if (heads_only)
+-			for_each_fullref_in("refs/heads/", show_ref, NULL);
++			for_each_fullref_in("refs/heads/", show_ref, &show_ref_data);
+ 		if (tags_only)
+-			for_each_fullref_in("refs/tags/", show_ref, NULL);
++			for_each_fullref_in("refs/tags/", show_ref, &show_ref_data);
+ 	} else {
+-		for_each_ref(show_ref, NULL);
++		for_each_ref(show_ref, &show_ref_data);
+ 	}
+ 	if (!found_match) {
+ 		if (verify && !quiet)
 --=20
 2.42.0
 
 
---ef0ocYEVgqoXO7Sj
+--NcnBag3+U2E3FSqN
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmU3wkcACgkQVbJhu7ck
-PpQz8BAAlMxHyKghmXXCuvTAj+cZAyvst+r8vjxfCsdg1J4IHifekSpdc3DSSCpp
-nIokxoeCl0wffaLievu+boVmf7UL2zFfYbaJQVAqMKxj9qptsYvvHi4fqURjICEn
-527rmrmcn1o+iXqXQBWNVlBhCQjJfOSyvC1E6L1dY7M1ypsNlANxR9xkDOcJul7f
-cN+oNZdbbNQLY0CPDDnXSAYB9iTnDuQs4vBDY9yAks84XX0urH1/StxKyW/TDEYQ
-9tsz9uTxRljmSZyUElJFfiDl05LC6sA58NbLBjXUuch5/w1Fi7wa0XfnsiMLrncu
-qaMEOFQ83iYt1W9gVoZuzGaSpcReXGcPUfqEUg5RnmfsWct8DHcGMTXGV3gcSWcL
-L2LF7pXNbOjVNIklv9HCYEHJEusADw6KvmMc8rxCabx2ap4llERjrPB7N3psvJrQ
-eOvufnYwgt1rNYdpEkKXqC5KrWaCeXMj4Br4SaiBmCDaDSd+Gs4IfKH0j4ALu5Mm
-kDEpYXQdslDeEObZuiDA30Dw8Dtzqm9i+UBP3xz+wlTdNk77SmM2HzXJEpiLLdzm
-Yl+l75qQg8rX4wH5dL0gqEkgw4ayYha9QQ1upF+7exdoOp1QXAmczUIEiROKt7U5
-2tNm3a8e0JAqtZE5piLu10mW6VG4LN3k8AXWabunWDSeMlxf7zE=
-=u33C
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmU3wk8ACgkQVbJhu7ck
+PpS3VBAAgnc+SglazDlFTC3nZ4Nx8ahSCAf+7X7OLDcgEiZUvKe+008j1YtihUm4
+CeAVdunw43x/Bk5tR6duBPTRM71shvGEuIwXVJCRpJYXmxQ6eY1oKpeCaGGnJ1UN
+7Ph+yoFHdeDguh9+ZVdNxyGVDGBezGTS60AXURp5f/v9bFpf5lVWvxF2XMeCSIAZ
+6Cc0uVNQ8C8lcKrP9X0mh+bVvAmyW8KsUxeE7nQwWtn7gS/Ha8YXk1Cz7EL4lxmK
+HA02THI0qDwl+c3q+3dBwr8e0Sh0DalDzRpSD1S9EH6aozMWNygyPsMYZ1d2YqXh
+e3gcS35shJw2au6vPfv5DMXLKQhIZSpa6mC+Dx6x9+157ODQo9etVi10sbyi0mjg
+6P03e/vD34MARjLXX5ZOtJNiph36oaEBe0AlVKZRn/up37b4n20CuFVOs8A/wxz2
+SZBTxEoBWr0P79iNmI5hqCp1J8AehBTN9JaTPDYorhHac6zWH3KGMUEmadYecgz9
+34Li3V49D0l+FW2DidyFCrygA0E+F3Eooz3Tox9jmKU/0zLRFUJFuSebzZa4g8U/
+KsXWYWqrYcJbatzLL5uQvf5e38k+5MWmJoV8Zf7/Pedi2IGpOsNr6g8LOjbPtGbm
+xKgqkJUTS4QSTIHTkQqS9nXeHXMjoq7PwHd6+3ssF0ssujhM/LA=
+=Fb0X
 -----END PGP SIGNATURE-----
 
---ef0ocYEVgqoXO7Sj--
+--NcnBag3+U2E3FSqN--
