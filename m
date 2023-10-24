@@ -1,216 +1,545 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C4A111730
-	for <git@vger.kernel.org>; Tue, 24 Oct 2023 14:01:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43264125DE
+	for <git@vger.kernel.org>; Tue, 24 Oct 2023 14:04:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=xiplink.com header.i=@xiplink.com header.b="OqWM7A/P"
-Received: from CAN01-YQB-obe.outbound.protection.outlook.com (mail-yqbcan01on2095.outbound.protection.outlook.com [40.107.116.95])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C51D710C6
-	for <git@vger.kernel.org>; Tue, 24 Oct 2023 07:01:11 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=gwp9yiqF7EuG00JwPizwqKOduic3WBIhjR3R0+983VSJYDBulRc5F9w1XyzQMybCoELKHeMMN2mrmLGopyTnaW4Gkdeil3ZcT2H84TpL/TFeOSLB+PD88dPLhs+4/4oqhoCw7+noa3fYI8jL6pnsjo/TPVu2q2HUb3TRihn2lfe/KCfPwSbxqnWTD9ZjfHMqOrD3mjhsTwItVWJYpyC08uNu1mOddSPRqPjVG9TWi2uOQKech7UEyDj/+UxBwwU6stNGgNXqBTJzl/Q5CEw8pU8Kny+ry4YmgKFLqaamvPHbWoDGMGZN5UYOO+Vxzj5AYGE71w4h1rOUPqkWDCpVUA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=aTt/Bl+xiCILH6UMCLwG5I9Uig/+16ELAppz+NZ+ONE=;
- b=buv0JrwOfvCFMCZbaHyEm5uzSmOWeqWA8OOQG9o/zUvEmuNHm33W/uPNgZhsgdme5FC02qVdsTp+BnrPxUaJy9+hbWeM9vODGLxUt5x3fUAmKFTsfpSB6EYuUcp2cGav88Uvm8+duvlgX+Kgb/jV73RJSqfU37BzpD2QHSbu4VNoFWmtiIx3eiWnDuwuvKAoqberyx/IvNGYBMO3ls5Kpwn6gPkO2eUJaa1Sm+VrBMhY7oW/XrOAvickpuoago0jWqO0PhyEguNjbznR3nLM10PrNw6NUdqt5mqh9wJ3lEcwTU9sPa2nbTwmkuUah9ojQ8lMMtpvj+3Ed4jFmBrX+g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=xiplink.com; dmarc=pass action=none header.from=xiplink.com;
- dkim=pass header.d=xiplink.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xiplink.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=aTt/Bl+xiCILH6UMCLwG5I9Uig/+16ELAppz+NZ+ONE=;
- b=OqWM7A/PPJpVX6+L0QVuSAbNZY0hhhiS0QeGDgEpJfHdv5p4HYoTf5toQSpo7gioabFof0+IJd1JYQ8x28etRDpCVU8xd/SfkPpytw5EXSh0J4/XJDGjq4m9FBbdn4tjj8PlJgaIhn5nvnVe0z4kfxUgm+SxsZkK/YmenjMxV5uRfPbklmoxjNWvtZ89Q/4yV45cSXn/fSyAGT/OKPRSvFa6Llvwe7GPq0qB6enzyUWdK4SoJ1fGbvcsLox3pOYbedy2UOII0iWAysF8MG7jBW5aywO8Vg7+eKGmQzz8uCvu5ZMiDXivZ23vb02fwhVQR6kDHyh4j9Tn5+UkLbBw8g==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=xiplink.com;
-Received: from QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:c00:30::29)
- by YT3PR01MB5570.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:b01:64::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6907.33; Tue, 24 Oct
- 2023 14:01:08 +0000
-Received: from QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM
- ([fe80::855e:3a6d:d436:2903]) by QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM
- ([fe80::855e:3a6d:d436:2903%6]) with mapi id 15.20.6907.032; Tue, 24 Oct 2023
- 14:01:08 +0000
-Message-ID: <e33f919d-1b6a-4944-ab5d-93ad0d323b68@xiplink.com>
-Date: Tue, 24 Oct 2023 10:01:07 -0400
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RESEND v2] git-rebase.txt: rewrite docu for fixup/squash (again)
-Content-Language: en-US
-To: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
- Phillip Wood <phillip.wood123@gmail.com>,
- Christian Couder <christian.couder@gmail.com>,
- Charvi Mendiratta <charvi077@gmail.com>
-References: <20231023130016.1093356-1-oswald.buddenhagen@gmx.de>
-From: Marc Branchaud <marcnarc@xiplink.com>
-In-Reply-To: <20231023130016.1093356-1-oswald.buddenhagen@gmx.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: YQBPR0101CA0186.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:c01:f::29) To QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:c00:30::29)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bGtKoyP4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="p7vGG5KY"
+Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DFABA3
+	for <git@vger.kernel.org>; Tue, 24 Oct 2023 07:04:56 -0700 (PDT)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.west.internal (Postfix) with ESMTP id 353523200A26;
+	Tue, 24 Oct 2023 10:04:55 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Tue, 24 Oct 2023 10:04:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to; s=fm3; t=1698156294; x=1698242694; bh=uJ
+	Nva0vwUe9QMR7XD5tUgMCQcGvDUlr6H2OfA//vNo0=; b=bGtKoyP4JJsvmZBpaw
+	Az4mfGsMZPEaoT2v715t43ApHJW+4v2QIGX/kovt27e7bI8IrnE2EVqYfOgARTyX
+	ArNVou95NaZyO/dICLq9LkGV9i5KaQUwwi5Wuo6OQHec4fOTnHG5JpKSWwt/uEon
+	nxgsRlHyQi3VLOsSZfsbu1Q0uHnzUzYzRDVRBuVPhm5XCYhAGuXcJECdK+gK4aX4
+	umvixNFyQ5uD05ee5bLHZlSZ/8KHuSqYekOAWel9IzrIZ6MPkKRPcarbn+cGbN+P
+	4dYOn8qBlMiZ0itvdVKDKt6pQUfFnjKTuTSuXJzTUG7RqIolEa4E59NBSmM6z/gB
+	KZgw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm3; t=1698156294; x=1698242694; bh=uJNva0vwUe9QM
+	R7XD5tUgMCQcGvDUlr6H2OfA//vNo0=; b=p7vGG5KYZZekf/Crb5pBLjjLvnfGw
+	guK+RrXEz6S5gH5+BsekqppuvDh93eYKSoyUphSYNsLjQRA7Ev0H8alo92+xkWYi
+	vI1fDvYj8Q5cmn0fqoFRJmfo6jkU78Y0dGM4KZwq/r1BQiiZhwBoohJ8CgFVF6Ml
+	AW5J2THwGxzZQixRO71lJkS/9IIFqsQENkf/TPXHJd/pLXkdMRZ9wmQCdMw/MHDx
+	U55RPDFGml0DWseIet/2lluWibktXGPUtYMgxPOMMHc3ZC8wq0ra2cWaN4tJSyM3
+	ej1DqhdVrJADCs07SZPvKA0naiDj/rTrkXAYYevaHmHwEFW0bwqupGjYw==
+X-ME-Sender: <xms:Bs83ZeG15uA3e_j5gEzSr_fvCgjmpeHCl2-XIi1Ab8P_avgPU-Ztbg>
+    <xme:Bs83ZfWyBRtlevUI3g6GOvKqSvY5-7Fgo5I9_677sZ7Hw3hDXSJ-Em2LNlPAn4_Cj
+    E6391t8zViQySDd9w>
+X-ME-Received: <xmr:Bs83ZYKocQdMDDdV21YKyvrF70UGsdQYt_llhL__Oj_oF6qzzOx55Z25vfmg6PFfUSuqbNUSJAwZPru61XjBtfS6DF4HFEdJAolhKcQHabfiG1k>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrkeekgdejfecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhm
+X-ME-Proxy: <xmx:Bs83ZYH3hKFBEPqVmA1A7OBGakBNqijCDhRK7dsCeU41MivRtLX3SQ>
+    <xmx:Bs83ZUUMK4HFSeN5LtwIvx6_IhO5uSptgFaA70HC5scf_-QQERnLOg>
+    <xmx:Bs83ZbPT3FLI1MimEY7lsYXia2PPu4uYFZoqIhPIDOpjmI_DIDGIGg>
+    <xmx:Bs83ZbTceoGaPsdc11aZsNbkRz036xBlHX3ZcFd4MZXXqHUbX4O68A>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 24 Oct 2023 10:04:53 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 841d4965 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 24 Oct 2023 14:04:46 +0000 (UTC)
+Date: Tue, 24 Oct 2023 16:04:49 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: git@vger.kernel.org
+Cc: Han-Wen Nienhuys <hanwen@google.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 0/9] t: reduce direct disk access to data structures
+Message-ID: <cover.1698156169.git.ps@pks.im>
+References: <cover.1697607222.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: QB1PR01MB2451:EE_|YT3PR01MB5570:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5368dbc8-5112-457e-c814-08dbd499ac28
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	uV3Z1iHNpGouDLd4nxRdF7pYrpHgVF8eZqWgrKe9cHJHEroHoQSpBaXd65wkk8hetbvVkIL03yAowmM508OZ5df6EcVQILCsr3Ujr4rD35v1ZsNLDPiUeA8BT4vAGSlE7ENqrNyiCm6QaoGcF2Qyqzwwg97zLeHTEWDQ333YFRAWPzR98HC7as/56sgnfouLbnsVoqFZPR1TWmfaeDhhkzmR7W/h1AUsfVKZ+ezs4Vvc2B3dHhfjbM65y0UC3Pq4cFF1Xwwqo0SY1wNyU+1Uyl1kA/2IlCrOF7maK2ns2ILM+5FkTsxWIfapmX89CjKRIoBZHWqVI7Ls7zMfL+lXc6obxvLQdQgeUylLr1TZUUhxdzdGcZF/R9/XKJgPEufb+PaOFxiqUixBgx1u/Qo2VVcQmFC7dIqtXo/2zYiisGHqeFSWfbCrMMT/tR26sMLL29vyXe9XKoLwU3Z2y8x1wX1NnCwbEiB2VN3RhkFnuF41qHjxhPU4D2ca7lLFtXINVJ9nbAQmoAwgK1sZ+fMDbnV4uEWMiNrIi5Dr7tdWTOH4VNUu6qkgjL27Pyiado05ha4ixZXwHqS7Z6KIp/BlCRs0qP9EU5Aejy7tL631wwCqvgkQJC9Z+miOxg1I4Nf6kD0KJdrj+3Q+TWFnCvcDwQ==
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230031)(376002)(136003)(346002)(366004)(39840400004)(396003)(230922051799003)(1800799009)(451199024)(186009)(64100799003)(31686004)(4001150100001)(38100700002)(2906002)(36756003)(41300700001)(31696002)(5660300002)(86362001)(4326008)(8936002)(8676002)(6506007)(478600001)(26005)(66946007)(54906003)(316002)(2616005)(66476007)(66556008)(83380400001)(6512007)(6486002)(53546011)(45980500001)(43740500002);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?ektuMGk4SzJ2Sng5ZnZoRkVBSFI4WGhpZ0twb3JBNEg5WFpWL3JhdWVLRVR4?=
- =?utf-8?B?L003TlVlY0xYd2Z3elJFVzFYUTRUNWgwTDcrc1FuYVlMYzVhZ0hrUGhodWNW?=
- =?utf-8?B?TDRhTFFkSEdjRzJxdTdFb0ZKZFd3dkZWU1JIZE9GQUxzdjlxWmtDTTc1MDhF?=
- =?utf-8?B?VHdqZjAvMkJJc0N0ZlhFWTVMdXdpSDF3T2NkT05UK3M1MXJnQWpMcUNDUS9N?=
- =?utf-8?B?NFA3eXVlNGMwRWVyOGE2UlNydkV4UVBqTzk0Yjg1UVE1ZDExTkJmQk9yNHI2?=
- =?utf-8?B?TjhHVnFBdnBzdCtWeERaeWlLYzV1YXBhUFZNZU5ybVN3TFllRm84bm5CMFMy?=
- =?utf-8?B?MDJDaUdNdGxIYlJIbmttb0Rad2pDZk1iV2xoN2Y1OGpROCtlZTQ5Wld2SXVn?=
- =?utf-8?B?VmsxK2JDWDQ2VFQ4QVFZNjFJallPMmwwV3IwOHlWOWtiNzJjYktHang5L05p?=
- =?utf-8?B?MFdIQjBnRVBqOEtrRnlQanFFajJKK0JueDliU3VSR1FSUDdxeERBVzVDNDV3?=
- =?utf-8?B?NUliMmNEOHcyV0E4YWs3MlUrQWVvSHBMekdreThObzNncXlTZGdvcVJySTFV?=
- =?utf-8?B?WWErYm43ME1QL2FsS1dvUGp5Um5hU2Z4NUFRc2MvUFRQellSdUlEY0VrMW9D?=
- =?utf-8?B?K3pZWUNMWm5teHVYb3pzUmtvOUVhZW9tQVF3djFpZ2xoa2N3WS9PaTNtMGpK?=
- =?utf-8?B?cklXMkt3ZFRkaEFnMEU0YWZoVWJnWEJESjBpd21SRTAzNFZVRGs0ODFyRUdU?=
- =?utf-8?B?RWY2Rjlmb2QvemtEUDRDNjM2Ykhna1ZGWUJrK0NYS2l0RmlNNVNmb0cyR04v?=
- =?utf-8?B?SmFpU29BQUt5enN5RVNGU3RWMkQ3bWhNZjlQZmQ0d2lPQVNMSDZnbnFsZWJP?=
- =?utf-8?B?RDdJNVV4Yk9iOWd3bGY5MWVGNTdrSXo1Mkk3MG1teDcvSzJHNnhYNXlFYzUy?=
- =?utf-8?B?RSt2ZEJkY3JRSHBoWVlLZGVBUkVCbkNocUorbHF2RTN4MHRMaEJtdUdwemFH?=
- =?utf-8?B?TVduZ2pWRWlMOWc3VzRad3NRaWlGMndrY1MxVmlOQ1pDeHIvcytESk9uNVRV?=
- =?utf-8?B?aS9VNFo4cnNXbjFMYWlycjhyVGs0NmZta1FxUnA2N0VjblZWNHh0NGoyaTRY?=
- =?utf-8?B?akp5R1ArYldJbG5sN3E0YVNxaG5XS0VTZWtlZVJ0V1d1MW9oV3FGMXBkZVpq?=
- =?utf-8?B?R3BLWWJvZUluVEd0ZXZIMFBIdUc5Yno3ZFJUdUVESWhuclI0dTA1eHFmb2po?=
- =?utf-8?B?S09LTm8yRTJQRVdUTzZDRHhkUGRJU0lLdWczN1g5TDhDekNOS3dubktoRXYr?=
- =?utf-8?B?OGJ3LzFkVHo3WVVJVUhOU2Q4dHFDMVpWTExXRFZkcGpwQWdId1dHTkhJWk9D?=
- =?utf-8?B?cTVYZm5oM2hwUm93ZmVqY09ReWVpMmxETzRIYWU3T0VvUXVhTkxnU0VsaUVI?=
- =?utf-8?B?Mjh5K0h1WUVpQlNJczFwRVVQQ0tLV3ExY1BMSFRPR2JMWHBvMWt5TTNMOU1p?=
- =?utf-8?B?S1ZBUlRyMUVQMGdNeWtvVThUTVZtNVJDSVVtMXg3R0ZoeDg3eVhXMUU2SmMv?=
- =?utf-8?B?dmRtMGdKc2dCdm9IdDNrM1h5M3REd0FNYnhIK0lIVzE3NE5tR2ZaZlJGL2FQ?=
- =?utf-8?B?UXhxTDlqdjV3QXFWeHZkUHd4NnVIaGJEWmJ4aUNwMkJvZGI3aVRpSTNCSTcy?=
- =?utf-8?B?WHRPMElTVzZTTGloNzZyM0ZMdlk1eU94VWRBTmRMVjNxbEIxSm04SUtodzk1?=
- =?utf-8?B?MWtwNnJicDZDckhRb0lZeWhFUGw4NmVMY2V5MkUyanRMODNHbDJqWW1ML1V4?=
- =?utf-8?B?MWd6L09odzZqK21lU0JqRW9DS3BPdkx4TTJYVjEyQ0lmZTJKdkhGWTZCRzly?=
- =?utf-8?B?WW9xNmN3NHFlWGwxU0dOQlpmL0RoOFRDM2N5d3Z6dGhXSUF3SlVNNGtvQ1ZF?=
- =?utf-8?B?SDdiZGdWMVVCQUp1cWNla2xvSWRqdXBFYlhNNE5DWmgxWWRxU3ZLaEFYNHZz?=
- =?utf-8?B?SDN4OEJNRGNBZUFia3VGNS8ySEl1OWFKVm9UT1ozanBsMG9aOEdSeWJkcFRQ?=
- =?utf-8?B?ZHg5SXlaUG1RVTl1cmwxRDV0YVpybUtFVEpDZz09?=
-X-OriginatorOrg: xiplink.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5368dbc8-5112-457e-c814-08dbd499ac28
-X-MS-Exchange-CrossTenant-AuthSource: QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Oct 2023 14:01:08.7971
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 14f927ba-c95b-4aa6-b674-375045ee9d4d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: jVVTPSAA5OESLJeVOHbkOfgGKoZEyYiGkSdL5Uef/PstJzw2ydng005dkuLQTog3HwJ3M8k101J3gM5S+PWBhA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: YT3PR01MB5570
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="dqM14yfdvsLJLPIC"
+Content-Disposition: inline
+In-Reply-To: <cover.1697607222.git.ps@pks.im>
 
 
-On 2023-10-23 09:00, Oswald Buddenhagen wrote:
-> Create a clear top-down structure which makes it hopefully unambiguous
-> what happens when.
-> 
-> Also mention the timestamp along with the author - this is primarily
-> meant to include the keywords somebody might be searching for, like I
-> did a year ago.
-> 
-> Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-> 
-> ---
-> v2:
-> - slight adjustments inspired by marc. however, i left most things
->    unchanged or even went in the opposite direction, because i assume the
->    readers to be sufficiently context-sensitive, and the objective is
->    merely to be not actively confusing. adding redundancy in the name of
->    clarity would just make the text stylistically inferior and arguably
->    harder to read.
+--dqM14yfdvsLJLPIC
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I disagree with this on many levels, but your tone seems to brook no 
-discussion and I do not want to get into a protracted debate here.
+Hi,
 
-I will only say that, I personally don't read man pages from 
-start-to-end like a novel.  I jump to the part that explains the thing I 
-need to learn about.  So I think your assumptions about what context a 
-reader might have in mind when they see this text are invalid.
+this is the second version of my patch series that aims to reduce access
+to on-disk data structures in favor of using plumbing tools where
+possible.
 
-Since we have very different notions about who is reading this, I think 
-we'll never agree on the final wording.  I'll continue to make my 
-suggestions, but I won't stand in the way of these changes if I'm the 
-only one who thinks they could be better.
+Changes compared to v1:
 
-> Cc: Junio C Hamano <gitster@pobox.com>
-> Cc: Phillip Wood <phillip.wood123@gmail.com>
-> Cc: Christian Couder <christian.couder@gmail.com>
-> Cc: Charvi Mendiratta <charvi077@gmail.com>
-> Cc: Marc Branchaud <marcnarc@xiplink.com>
-> ---
->   Documentation/git-rebase.txt | 29 +++++++++++++++--------------
->   1 file changed, 15 insertions(+), 14 deletions(-)
-> 
-> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-> index e7b39ad244..337df9ef2f 100644
-> --- a/Documentation/git-rebase.txt
-> +++ b/Documentation/git-rebase.txt
-> @@ -890,20 +890,21 @@ command "pick" with the command "reword".
->   To drop a commit, replace the command "pick" with "drop", or just
->   delete the matching line.
->   
-> -If you want to fold two or more commits into one, replace the command
-> -"pick" for the second and subsequent commits with "squash" or "fixup".
-> -If the commits had different authors, the folded commit will be
-> -attributed to the author of the first commit.  The suggested commit
-> -message for the folded commit is the concatenation of the first
-> -commit's message with those identified by "squash" commands, omitting the
-> -messages of commits identified by "fixup" commands, unless "fixup -c"
-> -is used.  In that case the suggested commit message is only the message
-> -of the "fixup -c" commit, and an editor is opened allowing you to edit
-> -the message.  The contents (patch) of the "fixup -c" commit are still
-> -incorporated into the folded commit. If there is more than one "fixup -c"
-> -commit, the message from the final one is used.  You can also use
-> -"fixup -C" to get the same behavior as "fixup -c" except without opening
-> -an editor.
-> +If you want to fold two or more commits into one (that is, to combine
-> +their contents/patches), replace the command "pick" for the second and
-> +subsequent commits with "squash" or "fixup".
+    - Patches 1, 3: I've dropped these patches that introduced and
+      started to use the test helper for reference existence. This has
+      been split out into a separate patch series now that instead
+      implements the logic as part of git-show-ref(1), see [1].
 
-s/the command "pick"/the "pick" command/
+    - Patch 4: I've made it more explicit that tests in t1450 are all
+      ran in detached HEAD mode via a new `orig_head` variable that is
+      set in the test setup. This variable is later used to reset HEAD
+      back to that original state.
 
-> +The commit message for the folded commit is the concatenation of the
-> +message of the first commit with those of commits identified by "squash"
+    - Patch 4, 5: I've reordered some of the logic such that we schedule
+      `test_when_finished` before doing the actual mutation of the repo.
 
-s/message of the first commit/picked commit's message/
+    - Patch 8: I've adopted the proposal of a `remove_replace_refs()`=20
+      helper function to clean up replace refs.
 
-> +commands, omitting those of commits identified by "fixup" commands,
-> +unless "fixup -c" is used. In the latter case, the message is obtained
-> +only from the "fixup -c" commit (having more than one of these is
-> +incorrect).
+    - Now comes with a base commit. Unbelievable.
 
-As Phillip said, this is wrong.  I agree with Phillip that the 
-documentation should reflect the actual implementation, not what we hope 
-the implementation might be some day.
+Thanks for all the feedback so far!
 
-> +If the resulting commit message is a concatenation of multiple messages,
-> +an editor is opened allowing you to edit it. This is also the case for a
-> +message obtained via "fixup -c", while using "fixup -C" instead skips
-> +the editor; this is analogous to the behavior of `git commit`.
-> +The first commit which contributes to the suggested commit message also
+Patrick
 
-s/suggested/folded/ -- with "fixup -C" there is no "suggested" message.
+Patrick Steinhardt (9):
+  t: allow skipping expected object ID in `ref-store update-ref`
+  t: convert tests to not write references via the filesystem
+  t: convert tests to not access symrefs via the filesystem
+  t: convert tests to not access reflog via the filesystem
+  t1450: convert tests to remove worktrees via git-worktree(1)
+  t4207: delete replace references via git-update-ref(1)
+  t7300: assert exact states of repo
+  t7900: assert the absence of refs via git-for-each-ref(1)
+  t: mark several tests that assume the files backend with REFFILES
+
+ t/helper/test-ref-store.c          | 11 ++++---
+ t/t1400-update-ref.sh              | 50 ++++++++++++++++--------------
+ t/t1430-bad-ref-name.sh            | 12 +++----
+ t/t1450-fsck.sh                    | 44 +++++++++++++-------------
+ t/t2011-checkout-invalid-head.sh   | 16 +++++-----
+ t/t3200-branch.sh                  | 41 ++++++++++++------------
+ t/t3400-rebase.sh                  |  2 +-
+ t/t3404-rebase-interactive.sh      |  2 +-
+ t/t4013-diff-various.sh            |  2 +-
+ t/t4202-log.sh                     |  2 +-
+ t/t4207-log-decoration-colors.sh   | 10 ++++--
+ t/t5526-fetch-submodules.sh        |  2 +-
+ t/t5605-clone-local.sh             |  4 +--
+ t/t5702-protocol-v2.sh             | 24 ++++++++++----
+ t/t7300-clean.sh                   | 23 ++++++++------
+ t/t7900-maintenance.sh             |  3 +-
+ t/t9133-git-svn-nested-git-repo.sh |  2 +-
+ 17 files changed, 142 insertions(+), 108 deletions(-)
+
+Range-diff against v1:
+ 1:  e947feb1c77 <  -:  ----------- t: add helpers to test for reference ex=
+istence
+ 2:  1f615d62f99 =3D  1:  c868198f8c1 t: allow skipping expected object ID =
+in `ref-store update-ref`
+ 3:  ac6a49c7c84 <  -:  ----------- t: convert tests to use helpers for ref=
+erence existence
+ 4:  c79431c0bf1 !  2:  4c0939d868e t: convert tests to not write reference=
+s via the filesystem
+    @@ Commit message
+         test tool. The latter is required in some cases where safety check=
+s of
+         git-update-ref(1) would otherwise reject a reference update.
+    =20
+    +    While at it, refactor some of the tests to schedule the cleanup co=
+mmand
+    +    via `test_when_finished` before modifying the repository.
+    +
+         Signed-off-by: Patrick Steinhardt <ps@pks.im>
+    =20
+      ## t/t1400-update-ref.sh ##
+    @@ t/t1400-update-ref.sh: test_expect_success "delete $m without oldval=
+ue verificat
+     =20
+      test_expect_success "create $m (by HEAD)" '
+     @@ t/t1400-update-ref.sh: test_expect_success 'delete symref without d=
+ereference when the referred ref is
+    + '
+     =20
+      test_expect_success 'update-ref -d is not confused by self-reference'=
+ '
+    ++	test_when_finished "test-tool ref-store main delete-refs REF_NO_DERE=
+F refs/heads/self" &&
+      	git symbolic-ref refs/heads/self refs/heads/self &&
+     -	test_when_finished "rm -f .git/refs/heads/self" &&
+    -+	test_when_finished "test-tool ref-store main delete-refs REF_NO_DERE=
+F refs/heads/self" &&
+      	test_path_is_file .git/refs/heads/self &&
+      	test_must_fail git update-ref -d refs/heads/self &&
+      	test_path_is_file .git/refs/heads/self
+    -@@ t/t1400-update-ref.sh: test_expect_success 'update-ref -d is not co=
+nfused by self-reference' '
+    + '
+     =20
+      test_expect_success 'update-ref --no-deref -d can delete self-referen=
+ce' '
+    ++	test_when_finished "test-tool ref-store main delete-refs REF_NO_DERE=
+F refs/heads/self" &&
+      	git symbolic-ref refs/heads/self refs/heads/self &&
+     -	test_when_finished "rm -f .git/refs/heads/self" &&
+    -+	test_when_finished "test-tool ref-store main delete-refs REF_NO_DERE=
+F refs/heads/self" &&
+      	test_path_is_file .git/refs/heads/self &&
+      	git update-ref --no-deref -d refs/heads/self &&
+      	test_must_fail git show-ref --verify -q refs/heads/self
+    @@ t/t1400-update-ref.sh: test_expect_success 'Query "main@{2005-05-28}=
+" (past end
+      '
+     =20
+     -rm -f .git/$m .git/logs/$m expect
+    ++rm -f expect
+     +git update-ref -d $m
+     =20
+      test_expect_success 'creating initial files' '
+      	test_when_finished rm -f M &&
+    =20
+      ## t/t1450-fsck.sh ##
+    +@@ t/t1450-fsck.sh: test_expect_success setup '
+    + 	git config --unset i18n.commitencoding &&
+    + 	git checkout HEAD^0 &&
+    + 	test_commit B fileB two &&
+    ++	orig_head=3D$(git rev-parse HEAD) &&
+    + 	git tag -d A B &&
+    + 	git reflog expire --expire=3Dnow --all
+    + '
+     @@ t/t1450-fsck.sh: test_expect_success 'zlib corrupt loose object out=
+put ' '
+      '
+     =20
+      test_expect_success 'branch pointing to non-commit' '
+     -	git rev-parse HEAD^{tree} >.git/refs/heads/invalid &&
+     +	tree_oid=3D$(git rev-parse --verify HEAD^{tree}) &&
+    -+	test-tool ref-store main update-ref msg refs/heads/invalid $tree_oid=
+ $ZERO_OID REF_SKIP_OID_VERIFICATION &&
+      	test_when_finished "git update-ref -d refs/heads/invalid" &&
+    ++	test-tool ref-store main update-ref msg refs/heads/invalid $tree_oid=
+ $ZERO_OID REF_SKIP_OID_VERIFICATION &&
+      	test_must_fail git fsck 2>out &&
+      	test_i18ngrep "not a commit" out
+      '
+    @@ t/t1450-fsck.sh: test_expect_success 'zlib corrupt loose object outp=
+ut ' '
+      test_expect_success 'HEAD link pointing at a funny object' '
+     -	test_when_finished "mv .git/SAVED_HEAD .git/HEAD" &&
+     -	mv .git/HEAD .git/SAVED_HEAD &&
+    -+	saved_head=3D$(git rev-parse --verify HEAD) &&
+    -+	test_when_finished "git update-ref HEAD ${saved_head}" &&
+    ++	test_when_finished "git update-ref HEAD $orig_head" &&
+      	echo $ZERO_OID >.git/HEAD &&
+      	# avoid corrupt/broken HEAD from interfering with repo discovery
+      	test_must_fail env GIT_DIR=3D.git git fsck 2>out &&
+    @@ t/t1450-fsck.sh: test_expect_success 'HEAD link pointing at a funny =
+object' '
+      test_expect_success 'HEAD link pointing at a funny place' '
+     -	test_when_finished "mv .git/SAVED_HEAD .git/HEAD" &&
+     -	mv .git/HEAD .git/SAVED_HEAD &&
+    -+	saved_head=3D$(git rev-parse --verify HEAD) &&
+    -+	test_when_finished "git update-ref --no-deref HEAD ${saved_head}" &&
+    ++	test_when_finished "git update-ref --no-deref HEAD $orig_head" &&
+      	echo "ref: refs/funny/place" >.git/HEAD &&
+      	# avoid corrupt/broken HEAD from interfering with repo discovery
+      	test_must_fail env GIT_DIR=3D.git git fsck 2>out &&
+    @@ t/t1450-fsck.sh: test_expect_success 'HEAD link pointing at a funny =
+place' '
+     =20
+      test_expect_success 'HEAD link pointing at a funny object (from diffe=
+rent wt)' '
+     -	test_when_finished "mv .git/SAVED_HEAD .git/HEAD" &&
+    -+	saved_head=3D$(git rev-parse --verify HEAD) &&
+    -+	test_when_finished "git update-ref HEAD $saved_head" &&
+    ++	test_when_finished "git update-ref HEAD $orig_head" &&
+      	test_when_finished "rm -rf .git/worktrees wt" &&
+      	git worktree add wt &&
+     -	mv .git/HEAD .git/SAVED_HEAD &&
+ 5:  1ac120368c6 !  3:  048583ed2c3 t: convert tests to not access symrefs =
+via the filesystem
+    @@ Commit message
+      ## t/t1400-update-ref.sh ##
+     @@ t/t1400-update-ref.sh: test_expect_success 'delete symref without d=
+ereference when the referred ref is
+      test_expect_success 'update-ref -d is not confused by self-reference'=
+ '
+    - 	git symbolic-ref refs/heads/self refs/heads/self &&
+      	test_when_finished "test-tool ref-store main delete-refs REF_NO_DERE=
+F refs/heads/self" &&
+    + 	git symbolic-ref refs/heads/self refs/heads/self &&
+     -	test_path_is_file .git/refs/heads/self &&
+     +	git symbolic-ref --no-recurse refs/heads/self &&
+      	test_must_fail git update-ref -d refs/heads/self &&
+    @@ t/t1400-update-ref.sh: test_expect_success 'delete symref without de=
+reference wh
+      '
+     =20
+      test_expect_success 'update-ref --no-deref -d can delete self-referen=
+ce' '
+    - 	git symbolic-ref refs/heads/self refs/heads/self &&
+      	test_when_finished "test-tool ref-store main delete-refs REF_NO_DERE=
+F refs/heads/self" &&
+    + 	git symbolic-ref refs/heads/self refs/heads/self &&
+     -	test_path_is_file .git/refs/heads/self &&
+     +	git symbolic-ref --no-recurse refs/heads/self &&
+      	git update-ref --no-deref -d refs/heads/self &&
+    @@ t/t1430-bad-ref-name.sh: test_expect_success 'update-ref -d can dele=
+te broken na
+     -	printf "ref: refs/heads/main\n" >.git/refs/heads/broken...symref &&
+     +	test-tool ref-store main create-symref refs/heads/broken...symref re=
+fs/heads/main &&
+      	test_when_finished "test-tool ref-store main delete-refs REF_NO_DERE=
+F msg refs/heads/broken...symref" &&
+    - 	test_ref_exists refs/heads/broken...symref &&
+      	git update-ref --no-deref -d refs/heads/broken...symref >output 2>er=
+ror &&
+    + 	test_path_is_missing .git/refs/heads/broken...symref &&
+     @@ t/t1430-bad-ref-name.sh: test_expect_success 'update-ref --no-deref=
+ -d can delete symref with broken name
+      '
+     =20
+    @@ t/t1430-bad-ref-name.sh: test_expect_success 'update-ref --no-deref =
+-d can delet
+     -	printf "ref: refs/heads/main\n" >.git/refs/heads/broken...symref &&
+     +	test-tool ref-store main create-symref refs/heads/broken...symref re=
+fs/heads/main &&
+      	test_when_finished "test-tool ref-store main delete-refs REF_NO_DERE=
+F msg refs/heads/broken...symref" &&
+    - 	test_ref_exists refs/heads/broken...symref &&
+      	git branch -d broken...symref >output 2>error &&
+    + 	test_path_is_missing .git/refs/heads/broken...symref &&
+     @@ t/t1430-bad-ref-name.sh: test_expect_success 'branch -d can delete =
+symref with broken name' '
+      '
+     =20
+    @@ t/t1430-bad-ref-name.sh: test_expect_success 'branch -d can delete s=
+ymref with b
+     -	printf "ref: refs/heads/idonotexist\n" >.git/refs/heads/broken...sym=
+ref &&
+     +	test-tool ref-store main create-symref refs/heads/broken...symref re=
+fs/heads/idonotexist &&
+      	test_when_finished "test-tool ref-store main delete-refs REF_NO_DERE=
+F msg refs/heads/broken...symref" &&
+    - 	test_ref_exists refs/heads/broken...symref &&
+      	git update-ref --no-deref -d refs/heads/broken...symref >output 2>er=
+ror &&
+    + 	test_path_is_missing .git/refs/heads/broken...symref &&
+     @@ t/t1430-bad-ref-name.sh: test_expect_success 'update-ref --no-deref=
+ -d can delete dangling symref with br
+      '
+     =20
+    @@ t/t1430-bad-ref-name.sh: test_expect_success 'update-ref --no-deref =
+-d can delet
+     -	printf "ref: refs/heads/idonotexist\n" >.git/refs/heads/broken...sym=
+ref &&
+     +	test-tool ref-store main create-symref refs/heads/broken...symref re=
+fs/heads/idonotexist &&
+      	test_when_finished "test-tool ref-store main delete-refs REF_NO_DERE=
+F msg refs/heads/broken...symref" &&
+    - 	test_ref_exists refs/heads/broken...symref &&
+      	git branch -d broken...symref >output 2>error &&
+    + 	test_path_is_missing .git/refs/heads/broken...symref &&
+    =20
+      ## t/t1450-fsck.sh ##
+     @@ t/t1450-fsck.sh: test_expect_success 'HEAD link pointing at a funny=
+ object' '
+    +=20
+      test_expect_success 'HEAD link pointing at a funny place' '
+    - 	saved_head=3D$(git rev-parse --verify HEAD) &&
+    - 	test_when_finished "git update-ref --no-deref HEAD ${saved_head}" &&
+    + 	test_when_finished "git update-ref --no-deref HEAD $orig_head" &&
+     -	echo "ref: refs/funny/place" >.git/HEAD &&
+     +	test-tool ref-store main create-symref HEAD refs/funny/place &&
+      	# avoid corrupt/broken HEAD from interfering with repo discovery
+    @@ t/t3200-branch.sh: test_expect_success 'git branch -M should leave o=
+rphaned HEAD
+     +		git symbolic-ref HEAD >expect &&
+     +		echo refs/heads/lonely >actual &&
+     +		test_cmp expect actual &&
+    - 		test_ref_missing refs/head/lonely &&
+    + 		test_path_is_missing .git/refs/head/lonely &&
+      		git branch -M main mistress &&
+     -		grep lonely .git/HEAD
+     +		git symbolic-ref HEAD >expect &&
+    @@ t/t3200-branch.sh: test_expect_success 'deleting a symref' '
+     +	git symbolic-ref --no-recurse refs/heads/dangling-symref &&
+      	echo "Deleted branch dangling-symref (was nowhere)." >expect &&
+      	git branch -d dangling-symref >actual &&
+    - 	test_ref_missing refs/heads/dangling-symref &&
+    + 	test_path_is_missing .git/refs/heads/dangling-symref &&
+    =20
+      ## t/t4013-diff-various.sh ##
+     @@ t/t4013-diff-various.sh: test_expect_success 'log -S requires an ar=
+gument' '
+ 6:  eaac658bbfd !  4:  5e7937e7904 t: convert tests to not access reflog v=
+ia the filesystem
+    @@ t/t3200-branch.sh: test_expect_success 'git branch HEAD should fail'=
+ '
+      test_expect_success 'git branch --create-reflog d/e/f should create a=
+ branch and a log' '
+      	GIT_COMMITTER_DATE=3D"2005-05-26 23:30" \
+      	git -c core.logallrefupdates=3Dfalse branch --create-reflog d/e/f &&
+    - 	test_ref_exists refs/heads/d/e/f &&
+    + 	test_path_is_file .git/refs/heads/d/e/f &&
+     -	test_path_is_file .git/logs/refs/heads/d/e/f &&
+     -	test_cmp expect .git/logs/refs/heads/d/e/f
+     +	git reflog show --no-abbrev-commit refs/heads/d/e/f >actual &&
+    @@ t/t3200-branch.sh: test_expect_success '--set-upstream-to notices an=
+ error to se
+      test_expect_success 'git checkout -b g/h/i -l should create a branch =
+and a log' '
+      	GIT_COMMITTER_DATE=3D"2005-05-26 23:30" \
+      	git checkout -b g/h/i -l main &&
+    - 	test_ref_exists refs/heads/g/h/i &&
+    + 	test_path_is_file .git/refs/heads/g/h/i &&
+     -	test_path_is_file .git/logs/refs/heads/g/h/i &&
+     -	test_cmp expect .git/logs/refs/heads/g/h/i
+     +	git reflog show --no-abbrev-commit refs/heads/g/h/i >actual &&
+ 7:  3dc65a80074 !  5:  089565a358e t1450: convert tests to remove worktree=
+s via git-worktree(1)
+    @@ Commit message
+    =20
+      ## t/t1450-fsck.sh ##
+     @@ t/t1450-fsck.sh: test_expect_success 'HEAD link pointing at a funny=
+ place' '
+    +=20
+      test_expect_success 'HEAD link pointing at a funny object (from diffe=
+rent wt)' '
+    - 	saved_head=3D$(git rev-parse --verify HEAD) &&
+    - 	test_when_finished "git update-ref HEAD $saved_head" &&
+    + 	test_when_finished "git update-ref HEAD $orig_head" &&
+     -	test_when_finished "rm -rf .git/worktrees wt" &&
+     +	test_when_finished "git worktree remove -f wt" &&
+      	git worktree add wt &&
+ 8:  c4d09e3e5db !  6:  cb738888ed7 t4207: delete replace references via gi=
+t-update-ref(1)
+    @@ Commit message
+    =20
+      ## t/t4207-log-decoration-colors.sh ##
+     @@ t/t4207-log-decoration-colors.sh: ${c_tag}tag: ${c_reset}${c_tag}A$=
+{c_reset}${c_commit})${c_reset} A
+    + 	cmp_filtered_decorations
+      '
+     =20
+    ++remove_replace_refs () {
+    ++	git for-each-ref 'refs/replace*/**' --format=3D'delete %(refname)' >=
+in &&
+    ++	git update-ref --stdin <in &&
+    ++	rm in
+    ++}
+    ++
+      test_expect_success 'test coloring with replace-objects' '
+     -	test_when_finished rm -rf .git/refs/replace* &&
+    -+	test_when_finished "git for-each-ref refs/replace*/** --format=3D${S=
+Q}delete %(refname)${SQ} | git update-ref --stdin" &&
+    ++	test_when_finished remove_replace_refs &&
+      	test_commit C &&
+      	test_commit D &&
+     =20
+    @@ t/t4207-log-decoration-colors.sh: EOF
+     =20
+      test_expect_success 'test coloring with grafted commit' '
+     -	test_when_finished rm -rf .git/refs/replace* &&
+    -+	test_when_finished "git for-each-ref refs/replace*/** --format=3D${S=
+Q}delete %(refname)${SQ} | git update-ref --stdin" &&
+    ++	test_when_finished remove_replace_refs &&
+     =20
+      	git replace --graft HEAD HEAD~2 &&
+     =20
+ 9:  153b5b199c8 =3D  7:  e730e011de4 t7300: assert exact states of repo
+10:  b99d98b00a3 =3D  8:  a1bdea52397 t7900: assert the absence of refs via=
+ git-for-each-ref(1)
+11:  67cb282a414 !  9:  497e43ae5c3 t: mark several tests that assume the f=
+iles backend with REFFILES
+    @@ t/t1450-fsck.sh: test_expect_success 'branch pointing to non-commit'=
+ '
+     =20
+     -test_expect_success 'HEAD link pointing at a funny object' '
+     +test_expect_success REFFILES 'HEAD link pointing at a funny object' '
+    - 	saved_head=3D$(git rev-parse --verify HEAD) &&
+    - 	test_when_finished "git update-ref HEAD ${saved_head}" &&
+    + 	test_when_finished "git update-ref HEAD $orig_head" &&
+      	echo $ZERO_OID >.git/HEAD &&
+    + 	# avoid corrupt/broken HEAD from interfering with repo discovery
+     @@ t/t1450-fsck.sh: test_expect_success 'HEAD link pointing at a funny=
+ place' '
+      	test_i18ngrep "HEAD points to something strange" out
+      '
+     =20
+     -test_expect_success 'HEAD link pointing at a funny object (from diffe=
+rent wt)' '
+     +test_expect_success REFFILES 'HEAD link pointing at a funny object (f=
+rom different wt)' '
+    - 	saved_head=3D$(git rev-parse --verify HEAD) &&
+    - 	test_when_finished "git update-ref HEAD $saved_head" &&
+    + 	test_when_finished "git update-ref HEAD $orig_head" &&
+      	test_when_finished "git worktree remove -f wt" &&
+    + 	git worktree add wt &&
+     @@ t/t1450-fsck.sh: test_expect_success 'HEAD link pointing at a funny=
+ object (from different wt)' '
+      	test_i18ngrep "main-worktree/HEAD: detached HEAD points" out
+      '
+    @@ t/t2011-checkout-invalid-head.sh: test_expect_success 'create ref di=
+rectory/file
+    =20
+      ## t/t3200-branch.sh ##
+     @@ t/t3200-branch.sh: test_expect_success 'git branch --help should no=
+t have created a bogus branch' '
+    - 	test_ref_missing refs/heads/--help
+    + 	test_path_is_missing .git/refs/heads/--help
+      '
+     =20
+     -test_expect_success 'branch -h in broken repository' '
+    @@ t/t3200-branch.sh: test_expect_success 'git branch -M baz bam should=
+ succeed whe
+      	git worktree add -f bazdir2 baz &&
+      	touch .git/worktrees/bazdir1/HEAD.lock &&
+     @@ t/t3200-branch.sh: test_expect_success 'renaming a symref is not al=
+lowed' '
+    - 	test_ref_missing refs/heads/new-topic
+    + 	test_path_is_missing .git/refs/heads/new-topic
+      '
+     =20
+     -test_expect_success SYMLINKS 'git branch -m u v should fail when the =
+reflog for u is a symlink' '
+
+base-commit: a9ecda2788e229afc9b611acaa26d0d9d4da53ed
+--=20
+2.42.0
 
 
-Thanks,
+--dqM14yfdvsLJLPIC
+Content-Type: application/pgp-signature; name="signature.asc"
 
-		M.
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmU3zvwACgkQVbJhu7ck
+PpQFAg//WZagfP/paQBShx3hfczclneyk+qxKBxlF4qZgqVEqUNHs5eQ/jsDVhxK
+hR9Dfbxk5wAGSu3Zt/r33gH4EgRzS7b4aBNaSa8U+2eXMLMiQQO3dsVbB6yif/KU
+Z9K4fKx3CKfL4zcWKr1mvOlG7kv4kBEiV+Lk3aHXNZSH3cB+Io6LOd47SLQePR1G
+9uDk2jpZjF4DkFDdw70Ht4Rwx2ej6fDmch2dTmxB9t5LhS920H0NDVGtn6n8jySv
+QAh1YstqK1P3NZquX7Rrdykjw/q/GdcMSPQBcqZgyRtKxW/IsQjuUxxg2MzsqgNf
+bhXVcjjtltLIisQnaGZ6Wf4AsJSkyiKmlzLM4KFMDND4fv1ZEzk7VmooRtRCAM7c
+KC+G0Rt6GSYttr+bhl11V/b1q+q2YjLei450Xmm+AUqY27nOJz6Bb04BpBsU4r99
+x1lAyKb8JRQEy9650BtWOEh6btGvnzxvEujsyILK4NUosoX/yigr83JeUkEZ91EZ
+2uFWvbPc9VcHki34L/5dtohFxwrO2Z/K6VRbyWMamdGZ0Tr7J/3YClAtPKtJyZny
+6wAKQ1XbWn2ADhSglcHFb9VukHJJUJw5wNu4MibsgXad/o/sWLkmHH7pJnEcVtvX
+P1d5Q1x2vXnVN6ESmMHDAxi6ESUowYyLJNujgYC2rZG0nhXbfKQ=
+=MJoZ
+-----END PGP SIGNATURE-----
+
+--dqM14yfdvsLJLPIC--
