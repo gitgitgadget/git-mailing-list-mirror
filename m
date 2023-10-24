@@ -1,47 +1,47 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 525EA17FF
-	for <git@vger.kernel.org>; Tue, 24 Oct 2023 06:34:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C45BE10E7
+	for <git@vger.kernel.org>; Tue, 24 Oct 2023 06:42:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="O9+UBQFQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TgGb1QAT"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cfxAf6g/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vSSRG8EE"
 Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C588DE
-	for <git@vger.kernel.org>; Mon, 23 Oct 2023 23:34:45 -0700 (PDT)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 363A8DD
+	for <git@vger.kernel.org>; Mon, 23 Oct 2023 23:42:39 -0700 (PDT)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.nyi.internal (Postfix) with ESMTP id D937D5C025D;
-	Tue, 24 Oct 2023 02:34:44 -0400 (EDT)
+	by mailout.nyi.internal (Postfix) with ESMTP id A04F45C0268;
+	Tue, 24 Oct 2023 02:42:38 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Tue, 24 Oct 2023 02:34:44 -0400
+  by compute3.internal (MEProxy); Tue, 24 Oct 2023 02:42:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1698129284; x=1698215684; bh=U7
-	Q/i6wmgknMO+J1ID8C4M3Pft/vNHV/ZY5bdi3j/HI=; b=O9+UBQFQ6hlpNEdxLM
-	lokQ+r0Pl8ZWLgJd42gyRnFOgwpIMcBsvbXuOJJFMpDJSMt6jWiC7QMvfOley8oN
-	ymAZC1s7XBSTlAAYj5BtF+NR+tupzV+HShyimRjAHETeNXm75iyddujRl4gQs9d6
-	7HnBpwTtuURn3OaYrpUZd68Rnnu/pEvpQw8uPquf8/qv3V5jnxB8brlvkAJSokic
-	2RYKczXcJLKQZ6YBtrCnGtSLKIgPoOnqCWtBDJ5aUdsaGBhpl+HxhQaYsmGgj9EH
-	V51AxsMS1jjEv0EaRyHqCpywCMPdShqkvhBBdnYiUgJV8y3wmTlfDpUb2bOfSAFc
-	Co+A==
+	:subject:subject:to:to; s=fm3; t=1698129758; x=1698216158; bh=eL
+	po96Id85n61nWwHM5aVX3KqMB/QXml4xxeSKHt/4A=; b=cfxAf6g/Uo0dqBiNG2
+	iIcBdcw9PgI5MG1t4c9bjyJnEvmspAdrYtn0JrAmUqoPOHhOh4WPBjPVDudAINxm
+	oAFUOG+ehYHjyapoZAlD7cRYAWDtx9f4iexamgT7wqw74uCe8EuWAfRefIvcd1HR
+	jq7SwBXLPN6b6TXonCCE2Yc3Df9Gx1niIP/s2Sk8Hc8EPm23AuUbCGi2dpZHq1QY
+	UszT8btg5oOKKpcRKstGMkqZ1m/Q93YlnZE3r/FLRcB55UWEYdnvKf+mRm3T4dhh
+	LW2v9yt/feuhexkFdFsmRTF5cEXUB1qOPFPGtT0dQ0NEXhes+0LofeTSim1+cNMU
+	OqZg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1698129284; x=1698215684; bh=U7Q/i6wmgknMO
-	+J1ID8C4M3Pft/vNHV/ZY5bdi3j/HI=; b=TgGb1QAT5tgCYdmCIgUBRycUlO3xU
-	yE1Ox+1Jx9vEtmuKh8+C06b8CMa5PPsTVF4i8GsOmPRdadSeok1Uo0dlrWlqsBKF
-	vAeXaY2YhJFmhz2QXvK9MIpK7CM4O+oX54cBSG6S97+wPi2JpaCcvAQKr7eqbYBI
-	cdxftXUuqPgJhySa0Iljf+X4DNKCtmJNqnCVUYdFWPydjpWdMdqnoXjgkULGi2a8
-	qQ7k9KTMGZLfPcEHgeJ+1kqAkJoMO119QOZ6JYyG5ZQt1L0YgFO+nN6hMP5KYc0k
-	qyuc8c74vfGN1kUWe/gjCPLMQbqpTN0l+giClQCxMFFk4wWShDXw161Ig==
-X-ME-Sender: <xms:hGU3ZeJR0ilYRgCn_C07SK0pKR_ALgrXz9XHjoEUCBn1mKsSyslHBA>
-    <xme:hGU3ZWIFbITM3E-x9o9MT-rk1nsJ2Z_69sV7pV0k1irXt5ZBypS6d4uSlnRSV5Ma2
-    w-2FaDMQu5QSxa1bw>
-X-ME-Received: <xmr:hGU3ZeuujFhKJHKZejAwMK7nudFBveDMWxqBYiYP-OqiiW4WzGAwdOUn3ZNewjFjwdHNU6hyA3GF_-1qiia8f4F1dBRH1fNiPy3Dn_RyWgmpztA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrkeejgddutdeiucetufdoteggodetrfdotf
+	:x-sasl-enc; s=fm3; t=1698129758; x=1698216158; bh=eLpo96Id85n61
+	nWwHM5aVX3KqMB/QXml4xxeSKHt/4A=; b=vSSRG8EELc6fVeyb2TWMJz6aKNzM0
+	rzChJ4XoP3wnTMO3VVzrnDJzngRafBczpxmbwMgWoFdKQQIkHtKsxQZCgMrvdqWx
+	CxJEc1o9Xh4bgrz3njcjCZgPrC9didTYQWQtHjN+tbrjahw3v1nfcTW9MEKZDgWQ
+	yyxi6LJCAn94/AfyHAi/tCgz4RXUPMA7jKqA1DYHPM6HTbj8vmwOLnfdCdYsSt8X
+	o84iFOL9+kgbDDcQCxgwZ9IDmWLT5Qzw6hDAsMoZVIa+b4juoapTl4elL89mEk93
+	4ST5x6ctP3bPu+8E2Z+YNUYdkHPCqnG5tSJDq8md+E3Cg0OVPlcmfraPw==
+X-ME-Sender: <xms:Xmc3ZcbOvNBqG1A7rdMdQv7r3PAcBihn9VI0b4CIa1zqC-DglT6Zpw>
+    <xme:Xmc3ZXYKqBwmZR7DlDaLVpNJLTV_plQR0En5OARUDFNNnb671nNohn5XFcuS_qZeE
+    47mBqDPcFhhJzLz4w>
+X-ME-Received: <xmr:Xmc3ZW_QGh0b34Yr0DQoxhhgoAt-Wa5oWvb0IDS4sSfXUjQWsGO3uui1a9hsEy95NGczSjHE_nIosG1Bi0ZJaGlu4FalwTDtPH05zygiwvZafkI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrkeejgddutdekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
@@ -49,30 +49,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrkeejgddutdeiucetufdoteggod
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
     necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:hGU3ZTYIlWhMw8LdCW0DFDxHecKxg5iVqybom9ljX46YtGHD5eAm3Q>
-    <xmx:hGU3ZVbH4A6eLAsxQ_SLFAoSqZEt8fAb1ls5UgQNIRAomtc83E7m0w>
-    <xmx:hGU3ZfC_-iCxMEe4wIBsEVYqGdy988_-R7sL1cDE2v-FBJk6ZBgBbQ>
-    <xmx:hGU3ZUXadsTBQkD8kkbaf_wfnVPLXnLG1wdSCu8acXl410E-eFP_9A>
+X-ME-Proxy: <xmx:Xmc3ZWrl5SiPHNv4tYEcBkvTihFDSyO4HUrCa1Nt1MzmW2cjjw6Hmw>
+    <xmx:Xmc3ZXqu-5vrSB-IAv-vNuvrhlV_shNX8v03ilBFnLbo7wr1EpQolw>
+    <xmx:Xmc3ZUSCSa5438oOxtWqd7RbvO6yjE7oEqAY52ZcXT3YVh_aw-B2eQ>
+    <xmx:Xmc3ZQB0yCgme3vMe4hpvQU_rTX-xXEii5b_5gV3DTE8ElFyKPRJ4A>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Oct 2023 02:34:43 -0400 (EDT)
+ 24 Oct 2023 02:42:37 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 0f596d7e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 24 Oct 2023 06:34:37 +0000 (UTC)
-Date: Tue, 24 Oct 2023 08:34:40 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 01c21433 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 24 Oct 2023 06:42:31 +0000 (UTC)
+Date: Tue, 24 Oct 2023 08:42:34 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-	Elijah Newren <newren@gmail.com>,
-	"Eric W. Biederman" <ebiederm@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 4/7] bulk-checkin: implement `SOURCE_INCORE` mode for
- `bulk_checkin_source`
-Message-ID: <ZTdlgEaRLpdSjB1n@tanuki>
-References: <cover.1697736516.git.me@ttaylorr.com>
- <e427fe6ad383cc238c13f313dc9f11eab37a3840.1697736516.git.me@ttaylorr.com>
- <ZTY6kTZT-ni16usH@tanuki>
- <20231023185842.GE1537181@coredump.intra.peff.net>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH 08/11] t4207: delete replace references via
+ git-update-ref(1)
+Message-ID: <ZTdnWoTaAMuVMc7v@tanuki>
+References: <cover.1697607222.git.ps@pks.im>
+ <c4d09e3e5dbd11221cc4d229b815434d441cdb4d.1697607222.git.ps@pks.im>
+ <ZTaiYEyhKT/yZwHZ@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -80,67 +76,122 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="n8C8ckaXblLPeDw5"
+	protocol="application/pgp-signature"; boundary="xn1CFjUXbCAoY3SX"
 Content-Disposition: inline
-In-Reply-To: <20231023185842.GE1537181@coredump.intra.peff.net>
+In-Reply-To: <ZTaiYEyhKT/yZwHZ@nand.local>
 
 
---n8C8ckaXblLPeDw5
+--xn1CFjUXbCAoY3SX
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Oct 23, 2023 at 02:58:42PM -0400, Jeff King wrote:
-> On Mon, Oct 23, 2023 at 11:19:13AM +0200, Patrick Steinhardt wrote:
+On Mon, Oct 23, 2023 at 12:42:08PM -0400, Taylor Blau wrote:
+> On Wed, Oct 18, 2023 at 07:35:37AM +0200, Patrick Steinhardt wrote:
+> > In t4207 we set up a set of replace objects via git-replace(1). Because
+> > these references should not be impacting subsequent tests we also set up
+> > some cleanup logic that deletes the replacement references via a call to
+> > `rm -rf`. This reaches into the internal implementation details of the
+> > reference backend and will thus break when we grow an alternative refdb
+> > implementation.
+> >
+> > Refactor the tests to delete the replacement refs via Git commands so
+> > that we become independent of the actual refdb that's in use. As we
+> > don't have a nice way to delete all replacements or all references in a
+> > certain namespace, we opt for a combination of git-for-each-ref(1) and
+> > git-update-ref(1)'s `--stdin` mode.
+> >
+> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> > ---
+> >  t/t4207-log-decoration-colors.sh | 4 ++--
+> >  1 file changed, 2 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/t/t4207-log-decoration-colors.sh b/t/t4207-log-decoration-=
+colors.sh
+> > index 21986a866df..d138e513a04 100755
+> > --- a/t/t4207-log-decoration-colors.sh
+> > +++ b/t/t4207-log-decoration-colors.sh
+> > @@ -71,7 +71,7 @@ ${c_tag}tag: ${c_reset}${c_tag}A${c_reset}${c_commit}=
+)${c_reset} A
+> >  '
+> >
+> >  test_expect_success 'test coloring with replace-objects' '
+> > -	test_when_finished rm -rf .git/refs/replace* &&
+> > +	test_when_finished "git for-each-ref refs/replace*/** --format=3D${SQ=
+}delete %(refname)${SQ} | git update-ref --stdin" &&
 >=20
-> > > +	case SOURCE_INCORE:
-> > > +		assert(source->read <=3D source->size);
-> >=20
-> > Is there any guideline around when to use `assert()` vs `BUG()`? I think
-> > that this assertion here is quite critical, because when it does not
-> > hold we can end up performing out-of-bounds reads and writes. But as
-> > asserts are typically missing in non-debug builds, this safeguard would
-> > not do anything for our end users, right?
+> Here and below, should we avoid the for-each-ref showing up on the
+> left-hand side of the pipe? I'd think we want something closer to:
 >=20
-> I don't think we have a written guideline. My philosophy is: always use
-> BUG(), because you will never be surprised that the assertion was not
-> compiled in (and I think compiling without assertions is almost
-> certainly premature optimization, especially given the way we tend to
-> use them).
+>     test_when_finished "git for-each-ref refs/replace*/** --format=3D${SQ=
+}delete %(refname)${SQ} >in && git update-ref --stdin <in" &&
 >=20
-> -Peff
+> But having to quote the --format argument with "${SQ}"s makes the whole
+> thing a little awkward to read and parse.
+>=20
+> Do you think that something like the below would be a readability
+> improvement?
 
-I'm inclined to agree with your philosophy. Makes me wonder whether we
-should write a Coccinelle rule to catch this. But a quick-and-dirty grep
-in our codebase shows that such a rule would cause quite a lot of churn:
-
-$ git grep BUG\( | wc -l
-677
-$ git grep assert\( | wc -l
-549
-
-Probably not worth it.
+Yes, this certainly looks like a good improvement to me, thanks!
 
 Patrick
 
---n8C8ckaXblLPeDw5
+> diff --git a/t/t4207-log-decoration-colors.sh b/t/t4207-log-decoration-co=
+lors.sh
+> index d138e513a0..de8f6638cb 100755
+> --- a/t/t4207-log-decoration-colors.sh
+> +++ b/t/t4207-log-decoration-colors.sh
+> @@ -70,8 +70,13 @@ ${c_tag}tag: ${c_reset}${c_tag}A${c_reset}${c_commit})=
+${c_reset} A
+>  	cmp_filtered_decorations
+>  '
+>=20
+> --- >8 ---
+> +remove_replace_refs () {
+> +	git for-each-ref 'refs/replace*/**' --format=3D'delete %(refname)' >in =
+&&
+> +	git update-ref --stdin <in
+> +}
+> +
+>  test_expect_success 'test coloring with replace-objects' '
+> -	test_when_finished "git for-each-ref refs/replace*/** --format=3D${SQ}d=
+elete %(refname)${SQ} | git update-ref --stdin" &&
+> +	test_when_finished remove_replace_refs &&
+>  	test_commit C &&
+>  	test_commit D &&
+>=20
+> @@ -99,7 +104,7 @@ EOF
+>  '
+>=20
+>  test_expect_success 'test coloring with grafted commit' '
+> -	test_when_finished "git for-each-ref refs/replace*/** --format=3D${SQ}d=
+elete %(refname)${SQ} | git update-ref --stdin" &&
+> +	test_when_finished remove_replace_refs &&
+>=20
+>  	git replace --graft HEAD HEAD~2 &&
+> --- 8< ---
+>=20
+> Thanks,
+> Taylor
+
+--xn1CFjUXbCAoY3SX
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmU3ZXsACgkQVbJhu7ck
-PpTkGg/9HnaSTVdcl1KR3/Xkio+C9YR1skWO0PiiAmLh24LmL6aXMQ7Ebw/Wq0Yd
-XY8gjfbxD4iiwKJS7KcJp/3OrDLXkm8cbsW450ynbLUmP6jlp9yj/yRdC7YBZpJi
-sAnh8ZWsk9xphoO7hBQSHqvqkURwMlGuEkbDlhvUfL4g2JM0dFDu3OobwO3HVv70
-uIP+7TtfKuWMj3KfHJTQjA7KUCxipzxe7oXQTYEEKZFZbTpfaZ4dxcog8va0a44N
-p5ciuQcWdTpW05da5cgtUJA6YHifYaHBa7krBXp1TXbo6sCkzK+c9RL3W5ALUggJ
-kPpgUhaBQyxvsPT3S2URrw//wZNMY0BKJJWKl++GYQpudTUlfr5ITx/kmdfwavov
-1T79JzJUVo4j1nqDXN/D/mYUQbNziLjM+/3YBezR+rZfo2xPqSEHoCxT5rg/XASA
-QQCFIDvM7dC5BxYEEHykAKyknm+qlO3qavGW/U+6NKfoqJJWb1Ph9RUczCAKVPIv
-PInW762hGiEKHvGtiE0k4vNlLF3EFoUI86cMEKWNyeD5TonzW3QywPgFFEw8VkKH
-HP6dc1Ehd+6SQcVAWfdjDpgwx+8h1/3U3YDfeLUvT8AH//7gjzG/2lqRHCOsvWdG
-Namp3EQnTOW7KhJDp1bpKM8ebfIPnWGM+mDnK8cjHTgXMyHGKeA=
-=nVEW
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmU3Z1kACgkQVbJhu7ck
+PpRRqw//QtesJ+Nz4LsV353Wq8119V/fS4n4ZsM/rNz1LQCI1ic0+Uk4PHCYChqA
+lQbsQwga2S53nJlZ8X+t7bAYg3MJaSIao61BtzLRgrPisrtohfrQ5l7n+4H5TLCd
+7cTZEbQDIvcE/ReqTmcypJ/GjuXrdZY8l0DWJkfEsWCyNEKD1hBs7N2FeMwSo7Jj
+MoLB4lpcxjlSZtyFr0Ofg0Tng/AlXw/ax2IfCzH4QC/RL7SUXqsILPDaAyDA6Bt3
+I/bjVdtI3oliv1QG72clT94bwqB+ewDxdSIZ7MQTtLnTFA5L11yI47nI+Z0xk25l
+6X+HR/cZaOkWfkkDguL3XvU5XhVHxwOVhAFy1SOZo/5etm4jz4DzkTNIEXLA7NFH
+eG8YTxrK2AJ02dOilzcVrhgjC+jok2VNYUSneFQYss7VcQefj7tnSY03Y6iOJq4H
+3KRriYN5Rg4DRzGCu32ZDC8OXvb6aBaNAN1I9Jdhd3AjQjZLivM5YzilN/9qLu7F
+njKSClR0fL22/prReao+3P3QmD/uF/f+E1/P2do0NJBYUTHk2OX9bdFrhim+D5Bt
+ch7ton7NSNW486CFNsx2SlQesmnWx+vx5zGntPmWrLCb699IKz9PHIenbLEnDClF
+r4zNCOTvNlcrOPg+Ma8a8Bsne0cCzdJsRxTnXAhmBRK3/WtJrP0=
+=ynEq
 -----END PGP SIGNATURE-----
 
---n8C8ckaXblLPeDw5--
+--xn1CFjUXbCAoY3SX--
