@@ -1,494 +1,113 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74E3B2941C
-	for <git@vger.kernel.org>; Tue, 24 Oct 2023 13:11:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A15F2125DE
+	for <git@vger.kernel.org>; Tue, 24 Oct 2023 13:26:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TlP+T933";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sXm2i5Qe"
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="sFxS3jQ6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EGoCvlEy"
 Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B513129
-	for <git@vger.kernel.org>; Tue, 24 Oct 2023 06:11:33 -0700 (PDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.west.internal (Postfix) with ESMTP id B02863200946;
-	Tue, 24 Oct 2023 09:11:32 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Tue, 24 Oct 2023 09:11:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1698153092; x=1698239492; bh=zz
-	OH5ueITiZTBr1TZ6jNHry3ZIaZVc9wnVkZyZ5d64g=; b=TlP+T933/ltJdnPX4S
-	mrJ/az6XF0kIwXRAML0pkLRs6zNK8B4n8OHOE2OWjK0CdIwy0ceUZEstFsf5JS4r
-	CGXqsMfSF0ho91VPYXBvuXaNAgZ0DMQIKAOsFCcbKns9cxrfFqnA0ikZH8BevmPR
-	SAy5c5uCSDwWNDiIkE5+X3T8CVbCuatyNdbXZu4ku3LDo2+LW6QP2MiMKTSO3/i/
-	D3IqozCHHCn+c0FDDV8yz1WV7U3NP8sILIyU1OGBJDJwFKFbPcK1STRRnDXNLGva
-	Esr6s0vsEhtFxcy1xnO3WaS50GVi3pE0GxPr+79WjH/eHOfjRPjREoAvqesBPai1
-	qoMQ==
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2753A211D
+	for <git@vger.kernel.org>; Tue, 24 Oct 2023 06:24:05 -0700 (PDT)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.west.internal (Postfix) with ESMTP id C85C53200991;
+	Tue, 24 Oct 2023 09:23:32 -0400 (EDT)
+Received: from imap49 ([10.202.2.99])
+  by compute1.internal (MEProxy); Tue, 24 Oct 2023 09:23:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-type:content-type:date:date:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:sender:subject:subject:to:to; s=fm2; t=1698153812; x=
+	1698240212; bh=SrIcwH1Gy869cwhGL8TU7yv4xZLa1sM3V98wl4atJHk=; b=s
+	FxS3jQ65pxHYm9Ct0FV9ezkeK6oxHwsoa4O9yBJOwbpjdW8FeQ85TpU42EZix1ae
+	Tg8FB1fvFDQpL+5ZI1Lx03PoL2N7iVvMuLmv5Y502Ir7VOAV9vtAAEHAGWJwhaPF
+	fn+rKxOZUthXcyUUvW13WR4Zzjg2BQddeAhneuKgZi03nSsIWZz0i8yjud/e5px0
+	TWQWuwA2nNJXDU5yfVpLTHFlxMflduibDxeOIhAQNAMkelxqPqlxmyURK5xxNdJs
+	sESMo2KEVbdI1lAw/VXsLTi3y60rhksR7yoWSUcQwrZqmFhLzCjboE4/63/SerLt
+	5U60Vw2kd5kQVb/yV2fVQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1698153092; x=1698239492; bh=zzOH5ueITiZTB
-	r1TZ6jNHry3ZIaZVc9wnVkZyZ5d64g=; b=sXm2i5Qe551annuRcKZJ6wY/cleSI
-	BPLH6TQltcv/b09mMgT1voznxorMtpgE+x34UqsffKlYUAiE3fygwxPIUQ0LUATJ
-	Wq1BiFYcFGOqlv+3XKgvHOIEC4fD1GNJbS+niS0ekg1qZD3uI5u7RR9QibT5FL22
-	4VHx1R04pOSbtmu5a09Ubj0+LwPMy7jo3ORycpPaIfqZAILygXFKDY4+/+qh3Q5N
-	AUyt2cUqnApDoMHkErSORmJxgqoDlndgMEuP94T0GAo46M7bkz02YOjviTYMD4pI
-	ZaeuONOyDuy6lufas9NFN2iEFkh2903NOmRF6obgbdDi9M94oRmQh37vA==
-X-ME-Sender: <xms:g8I3ZVgLve8Y857qAxpmkOcjiLTtF2nU-EIwEgN9G70XEBu7MUu-9A>
-    <xme:g8I3ZaAAxfhnvym5Y2ckHEYLt9RbxBjCXLYCB9UpgPpi3ZHBgJ6vpJVdBAO5zb04A
-    ob-lxkBoYp6kxhSZQ>
-X-ME-Received: <xmr:g8I3ZVFcUTVtE0yvgYSD7I_f9d60l1Di_JUpHejKTBt1FNmde4QiNXOmJQmKdXgimte6S2NGtmBZi-qg9GfmFZbF_pcqAODYThiBdz608efWGwM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrkeekgdeitdcutefuodetggdotefrodftvf
+	:x-sasl-enc; s=fm3; t=1698153812; x=1698240212; bh=SrIcwH1Gy869c
+	whGL8TU7yv4xZLa1sM3V98wl4atJHk=; b=EGoCvlEyT3PFsRT777wZhDMiREuxH
+	DIOft5hXloKPXqS9tK/vPRNRDsOUfCr1JXio8fAb1bd/o+xIV907Bmvhh2IZmLOL
+	0X4OWs6+0zSSL89f9XshpUwJgBG+lcFvO+65xyLR9BSQt3USOqZC7JE3L3enDkrg
+	bLvhxP2Q+/P3mQCtPsNeIfJMIvwciMNwqG+ad8IM/XyaPGPLb5kTsbhk/xpCWFwF
+	M2MBFR4xxbvDHkUB7NtTzshKUzJZG1fSfeikCuyaqbaJIB6UOXFF4wVwL8PKnZhf
+	0/PYsCVH2HLOGeGjbb2Uli/Ykl9mP/PKXdQs1/xcRM5CkmgCP/SL9mWUg==
+X-ME-Sender: <xms:VMU3ZUzN8VIVSXkO3VohApeVo-3SM6ijP9xWh5FGgIfjEsMXdQ8cEVc>
+    <xme:VMU3ZYTNbAEmHJM8FOpxIBGGqDVS4M0hQH3Fjm9qPl5Xg_TEnP3-tVQXHi5m1FTzY
+    7wcbDPDM_ZTK8D1qw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrkeekgdeivdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
-    ucevlhhushhtvghrufhiiigvpeefnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhm
-X-ME-Proxy: <xmx:hMI3ZaSAJGp5qHuKyQaE6UeJo2XUhI_duazVZ92N2_-zkXM3dKwKiQ>
-    <xmx:hMI3ZSzikQgarSQhV5HwkbR-0gv38j_OaN5MC2ogYhz2A9gCp8tLxw>
-    <xmx:hMI3ZQ5xx-A94wzuU2tTkaay8a5RT7QdN2LyDa_Ax6yxzh-aZxMnlg>
-    <xmx:hMI3Zd-IbnebGZKtWky48bXfW5oGyiI0vWn5T5ZKQi6pcV-naSIHVA>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Oct 2023 09:11:30 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 4041d07e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 24 Oct 2023 13:11:26 +0000 (UTC)
-Date: Tue, 24 Oct 2023 15:11:29 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Han-Wen Nienhuys <hanwen@google.com>
-Subject: [PATCH 12/12] t: use git-show-ref(1) to check for ref existence
-Message-ID: <a3a43d82e1f713c51d2ef7ee332dbf653cdbbf1d.1698152926.git.ps@pks.im>
-References: <cover.1698152926.git.ps@pks.im>
+    fjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdfmrhhi
+    shhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrghkkh
+    drnhgrmhgvqeenucggtffrrghtthgvrhhnpedtkedtjeeiffelteffheeiheeufffgheel
+    ueeftdejkeeufffgiefhgeekffffueenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:VMU3ZWVxCEHh7groH8tX0wCjyjsR2RAVPtn7gqP1YNbp01w_IMSTfg>
+    <xmx:VMU3ZShyeKonmJinG5e67AOvqwu4aNC_0nSnh_4pByaEkVJIqa2JgQ>
+    <xmx:VMU3ZWBP_PQ8OhAoWvpkT0M120Lz-o30b-68vExcwikVsx9TWiXxTQ>
+    <xmx:VMU3ZX6ajDu9INWNQ9dXsSbSx5BuHi321Og1iiZ_U3FuPzRg5q7euA>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id F381B15A0092; Tue, 24 Oct 2023 09:23:31 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-1048-g9229b632c5-fm-20231019.001-g9229b632
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="MM6kN4DCJ3RokskW"
-Content-Disposition: inline
-In-Reply-To: <cover.1698152926.git.ps@pks.im>
+Message-Id: <87badbe0-de18-4f8a-9589-314cea46065e@app.fastmail.com>
+In-Reply-To: <ZTav2u1JWmLexEHL@nand.local>
+References: <cover.1697660181.git.code@khaugsbakk.name>
+ <147c767443c35b3b4a5516bf40557f41bb201078.1697660181.git.code@khaugsbakk.name>
+ <ZTZDqToqcsDiS5AP@tanuki> <ZTav2u1JWmLexEHL@nand.local>
+Date: Tue, 24 Oct 2023 15:23:11 +0200
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Taylor Blau" <me@ttaylorr.com>, "Patrick Steinhardt" <ps@pks.im>
+Cc: git@vger.kernel.org, stolee@gmail.com
+Subject: Re: [PATCH v1 3/4] config: factor out global config file retrievalync-mailbox>
+Content-Type: text/plain
 
+Hi Taylor and Patrick
 
---MM6kN4DCJ3RokskW
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Mon, Oct 23, 2023, at 19:40, Taylor Blau wrote:
+>> Nit: we don't know about the intent of the caller, so they may not want
+>> to write to the file but only read it.
+>
+> I was going to suggest that we allow the caller to pass in the flags
+> that they wish for git_global_config() to pass down to access(2), but
+> was surprised to see that we always use R_OK.
+>
+> But thinking on it for a moment longer, I realized that we don't care
+> about write-level permissions for the config, since we want to instead
+> open $GIT_DIR/config.lock for writing, and then rename() it into place,
+> meaning we only care about whether or not we have write permissions on
+> $GIT_DIR itself.
+>
+> I think in the existing location of this code, the "if we should write"
+> portion of the comment is premature, since we don't know for sure
+> whether or not we are writing. So I'd be fine with leaving it as-is, but
+> changing the comment seems easy enough to do...
+>
+>> > +		 * location; error out even if XDG_CONFIG_HOME
+>> > +		 * is set and points at a sane location.
+>> > +		 */
+>> > +		die(_("$HOME not set"));
+>>
+>> Is it sensible to `die()` here in this new function that behaves more
+>> like a library function? I imagine it would be more sensible to indicate
+>> the error to the user and let them handle it accordingly.
+>
+> Agreed.
+>
+> Thanks,
+> Taylor
 
-Convert tests that use `test_path_is_file` and `test_path_is_missing` to
-instead use a set of helpers `test_ref_exists` and `test_ref_missing`.
-These helpers are implemented via the newly introduced `git show-ref
---exists` command. Thus, we can avoid intimate knowledge of how the ref
-backend stores references on disk.
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- t/t1430-bad-ref-name.sh | 27 +++++++++++++-------
- t/t3200-branch.sh       | 33 ++++++++++++++-----------
- t/t5521-pull-options.sh |  4 +--
- t/t5605-clone-local.sh  |  2 +-
- t/test-lib-functions.sh | 55 +++++++++++++++++++++++++++++++++++++++++
- 5 files changed, 94 insertions(+), 27 deletions(-)
-
-diff --git a/t/t1430-bad-ref-name.sh b/t/t1430-bad-ref-name.sh
-index ff1c967d550..7b7d6953c62 100755
---- a/t/t1430-bad-ref-name.sh
-+++ b/t/t1430-bad-ref-name.sh
-@@ -205,8 +205,9 @@ test_expect_success 'update-ref --no-deref -d can delet=
-e symref to broken name'
- 	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg=
- refs/heads/broken...ref" &&
- 	test-tool ref-store main create-symref refs/heads/badname refs/heads/brok=
-en...ref msg &&
- 	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg=
- refs/heads/badname" &&
-+	test_ref_exists refs/heads/badname &&
- 	git update-ref --no-deref -d refs/heads/badname >output 2>error &&
--	test_path_is_missing .git/refs/heads/badname &&
-+	test_ref_missing refs/heads/badname &&
- 	test_must_be_empty output &&
- 	test_must_be_empty error
- '
-@@ -216,8 +217,9 @@ test_expect_success 'branch -d can delete symref to bro=
-ken name' '
- 	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg=
- refs/heads/broken...ref" &&
- 	test-tool ref-store main create-symref refs/heads/badname refs/heads/brok=
-en...ref msg &&
- 	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg=
- refs/heads/badname" &&
-+	test_ref_exists refs/heads/badname &&
- 	git branch -d badname >output 2>error &&
--	test_path_is_missing .git/refs/heads/badname &&
-+	test_ref_missing refs/heads/badname &&
- 	test_i18ngrep "Deleted branch badname (was refs/heads/broken\.\.\.ref)" o=
-utput &&
- 	test_must_be_empty error
- '
-@@ -225,8 +227,9 @@ test_expect_success 'branch -d can delete symref to bro=
-ken name' '
- test_expect_success 'update-ref --no-deref -d can delete dangling symref t=
-o broken name' '
- 	test-tool ref-store main create-symref refs/heads/badname refs/heads/brok=
-en...ref msg &&
- 	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg=
- refs/heads/badname" &&
-+	test_ref_exists refs/heads/badname &&
- 	git update-ref --no-deref -d refs/heads/badname >output 2>error &&
--	test_path_is_missing .git/refs/heads/badname &&
-+	test_ref_missing refs/heads/badname &&
- 	test_must_be_empty output &&
- 	test_must_be_empty error
- '
-@@ -234,8 +237,9 @@ test_expect_success 'update-ref --no-deref -d can delet=
-e dangling symref to brok
- test_expect_success 'branch -d can delete dangling symref to broken name' '
- 	test-tool ref-store main create-symref refs/heads/badname refs/heads/brok=
-en...ref msg &&
- 	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg=
- refs/heads/badname" &&
-+	test_ref_exists refs/heads/badname &&
- 	git branch -d badname >output 2>error &&
--	test_path_is_missing .git/refs/heads/badname &&
-+	test_ref_missing refs/heads/badname &&
- 	test_i18ngrep "Deleted branch badname (was refs/heads/broken\.\.\.ref)" o=
-utput &&
- 	test_must_be_empty error
- '
-@@ -245,8 +249,9 @@ test_expect_success 'update-ref -d can delete broken na=
-me through symref' '
- 	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg=
- refs/heads/broken...ref" &&
- 	test-tool ref-store main create-symref refs/heads/badname refs/heads/brok=
-en...ref msg &&
- 	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg=
- refs/heads/badname" &&
-+	test_ref_exists refs/heads/broken...ref &&
- 	git update-ref -d refs/heads/badname >output 2>error &&
--	test_path_is_missing .git/refs/heads/broken...ref &&
-+	test_ref_missing refs/heads/broken...ref &&
- 	test_must_be_empty output &&
- 	test_must_be_empty error
- '
-@@ -254,8 +259,9 @@ test_expect_success 'update-ref -d can delete broken na=
-me through symref' '
- test_expect_success 'update-ref --no-deref -d can delete symref with broke=
-n name' '
- 	printf "ref: refs/heads/main\n" >.git/refs/heads/broken...symref &&
- 	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg=
- refs/heads/broken...symref" &&
-+	test_ref_exists refs/heads/broken...symref &&
- 	git update-ref --no-deref -d refs/heads/broken...symref >output 2>error &&
--	test_path_is_missing .git/refs/heads/broken...symref &&
-+	test_ref_missing refs/heads/broken...symref &&
- 	test_must_be_empty output &&
- 	test_must_be_empty error
- '
-@@ -263,8 +269,9 @@ test_expect_success 'update-ref --no-deref -d can delet=
-e symref with broken name
- test_expect_success 'branch -d can delete symref with broken name' '
- 	printf "ref: refs/heads/main\n" >.git/refs/heads/broken...symref &&
- 	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg=
- refs/heads/broken...symref" &&
-+	test_ref_exists refs/heads/broken...symref &&
- 	git branch -d broken...symref >output 2>error &&
--	test_path_is_missing .git/refs/heads/broken...symref &&
-+	test_ref_missing refs/heads/broken...symref &&
- 	test_i18ngrep "Deleted branch broken...symref (was refs/heads/main)" outp=
-ut &&
- 	test_must_be_empty error
- '
-@@ -272,8 +279,9 @@ test_expect_success 'branch -d can delete symref with b=
-roken name' '
- test_expect_success 'update-ref --no-deref -d can delete dangling symref w=
-ith broken name' '
- 	printf "ref: refs/heads/idonotexist\n" >.git/refs/heads/broken...symref &&
- 	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg=
- refs/heads/broken...symref" &&
-+	test_ref_exists refs/heads/broken...symref &&
- 	git update-ref --no-deref -d refs/heads/broken...symref >output 2>error &&
--	test_path_is_missing .git/refs/heads/broken...symref &&
-+	test_ref_missing refs/heads/broken...symref &&
- 	test_must_be_empty output &&
- 	test_must_be_empty error
- '
-@@ -281,8 +289,9 @@ test_expect_success 'update-ref --no-deref -d can delet=
-e dangling symref with br
- test_expect_success 'branch -d can delete dangling symref with broken name=
-' '
- 	printf "ref: refs/heads/idonotexist\n" >.git/refs/heads/broken...symref &&
- 	test_when_finished "test-tool ref-store main delete-refs REF_NO_DEREF msg=
- refs/heads/broken...symref" &&
-+	test_ref_exists refs/heads/broken...symref &&
- 	git branch -d broken...symref >output 2>error &&
--	test_path_is_missing .git/refs/heads/broken...symref &&
-+	test_ref_missing refs/heads/broken...symref &&
- 	test_i18ngrep "Deleted branch broken...symref (was refs/heads/idonotexist=
-)" output &&
- 	test_must_be_empty error
- '
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 080e4f24a6e..bde4f1485b7 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -25,7 +25,7 @@ test_expect_success 'prepare a trivial repository' '
-=20
- test_expect_success 'git branch --help should not have created a bogus bra=
-nch' '
- 	test_might_fail git branch --man --help </dev/null >/dev/null 2>&1 &&
--	test_path_is_missing .git/refs/heads/--help
-+	test_ref_missing refs/heads/--help
- '
-=20
- test_expect_success 'branch -h in broken repository' '
-@@ -40,7 +40,8 @@ test_expect_success 'branch -h in broken repository' '
- '
-=20
- test_expect_success 'git branch abc should create a branch' '
--	git branch abc && test_path_is_file .git/refs/heads/abc
-+	git branch abc &&
-+	test_ref_exists refs/heads/abc
- '
-=20
- test_expect_success 'git branch abc should fail when abc exists' '
-@@ -61,11 +62,13 @@ test_expect_success 'git branch --force abc should succ=
-eed when abc exists' '
- '
-=20
- test_expect_success 'git branch a/b/c should create a branch' '
--	git branch a/b/c && test_path_is_file .git/refs/heads/a/b/c
-+	git branch a/b/c &&
-+	test_ref_exists refs/heads/a/b/c
- '
-=20
- test_expect_success 'git branch mb main... should create a branch' '
--	git branch mb main... && test_path_is_file .git/refs/heads/mb
-+	git branch mb main... &&
-+	test_ref_exists refs/heads/mb
- '
-=20
- test_expect_success 'git branch HEAD should fail' '
-@@ -78,14 +81,14 @@ EOF
- test_expect_success 'git branch --create-reflog d/e/f should create a bran=
-ch and a log' '
- 	GIT_COMMITTER_DATE=3D"2005-05-26 23:30" \
- 	git -c core.logallrefupdates=3Dfalse branch --create-reflog d/e/f &&
--	test_path_is_file .git/refs/heads/d/e/f &&
-+	test_ref_exists refs/heads/d/e/f &&
- 	test_path_is_file .git/logs/refs/heads/d/e/f &&
- 	test_cmp expect .git/logs/refs/heads/d/e/f
- '
-=20
- test_expect_success 'git branch -d d/e/f should delete a branch and a log'=
- '
- 	git branch -d d/e/f &&
--	test_path_is_missing .git/refs/heads/d/e/f &&
-+	test_ref_missing refs/heads/d/e/f &&
- 	test_must_fail git reflog exists refs/heads/d/e/f
- '
-=20
-@@ -213,7 +216,7 @@ test_expect_success 'git branch -M should leave orphane=
-d HEAD alone' '
- 		test_commit initial &&
- 		git checkout --orphan lonely &&
- 		grep lonely .git/HEAD &&
--		test_path_is_missing .git/refs/head/lonely &&
-+		test_ref_missing refs/head/lonely &&
- 		git branch -M main mistress &&
- 		grep lonely .git/HEAD
- 	)
-@@ -799,8 +802,8 @@ test_expect_success 'deleting a symref' '
- 	git symbolic-ref refs/heads/symref refs/heads/target &&
- 	echo "Deleted branch symref (was refs/heads/target)." >expect &&
- 	git branch -d symref >actual &&
--	test_path_is_file .git/refs/heads/target &&
--	test_path_is_missing .git/refs/heads/symref &&
-+	test_ref_exists refs/heads/target &&
-+	test_ref_missing refs/heads/symref &&
- 	test_cmp expect actual
- '
-=20
-@@ -809,16 +812,16 @@ test_expect_success 'deleting a dangling symref' '
- 	test_path_is_file .git/refs/heads/dangling-symref &&
- 	echo "Deleted branch dangling-symref (was nowhere)." >expect &&
- 	git branch -d dangling-symref >actual &&
--	test_path_is_missing .git/refs/heads/dangling-symref &&
-+	test_ref_missing refs/heads/dangling-symref &&
- 	test_cmp expect actual
- '
-=20
- test_expect_success 'deleting a self-referential symref' '
- 	git symbolic-ref refs/heads/self-reference refs/heads/self-reference &&
--	test_path_is_file .git/refs/heads/self-reference &&
-+	test_ref_exists refs/heads/self-reference &&
- 	echo "Deleted branch self-reference (was refs/heads/self-reference)." >ex=
-pect &&
- 	git branch -d self-reference >actual &&
--	test_path_is_missing .git/refs/heads/self-reference &&
-+	test_ref_missing refs/heads/self-reference &&
- 	test_cmp expect actual
- '
-=20
-@@ -826,8 +829,8 @@ test_expect_success 'renaming a symref is not allowed' '
- 	git symbolic-ref refs/heads/topic refs/heads/main &&
- 	test_must_fail git branch -m topic new-topic &&
- 	git symbolic-ref refs/heads/topic &&
--	test_path_is_file .git/refs/heads/main &&
--	test_path_is_missing .git/refs/heads/new-topic
-+	test_ref_exists refs/heads/main &&
-+	test_ref_missing refs/heads/new-topic
- '
-=20
- test_expect_success SYMLINKS 'git branch -m u v should fail when the reflo=
-g for u is a symlink' '
-@@ -1142,7 +1145,7 @@ EOF
- test_expect_success 'git checkout -b g/h/i -l should create a branch and a=
- log' '
- 	GIT_COMMITTER_DATE=3D"2005-05-26 23:30" \
- 	git checkout -b g/h/i -l main &&
--	test_path_is_file .git/refs/heads/g/h/i &&
-+	test_ref_exists refs/heads/g/h/i &&
- 	test_path_is_file .git/logs/refs/heads/g/h/i &&
- 	test_cmp expect .git/logs/refs/heads/g/h/i
- '
-diff --git a/t/t5521-pull-options.sh b/t/t5521-pull-options.sh
-index 079b2f2536e..3681859f983 100755
---- a/t/t5521-pull-options.sh
-+++ b/t/t5521-pull-options.sh
-@@ -143,7 +143,7 @@ test_expect_success 'git pull --dry-run' '
- 		cd clonedry &&
- 		git pull --dry-run ../parent &&
- 		test_path_is_missing .git/FETCH_HEAD &&
--		test_path_is_missing .git/refs/heads/main &&
-+		test_ref_missing refs/heads/main &&
- 		test_path_is_missing .git/index &&
- 		test_path_is_missing file
- 	)
-@@ -157,7 +157,7 @@ test_expect_success 'git pull --all --dry-run' '
- 		git remote add origin ../parent &&
- 		git pull --all --dry-run &&
- 		test_path_is_missing .git/FETCH_HEAD &&
--		test_path_is_missing .git/refs/remotes/origin/main &&
-+		test_ref_missing refs/remotes/origin/main &&
- 		test_path_is_missing .git/index &&
- 		test_path_is_missing file
- 	)
-diff --git a/t/t5605-clone-local.sh b/t/t5605-clone-local.sh
-index 1d7b1abda1a..946c5751885 100755
---- a/t/t5605-clone-local.sh
-+++ b/t/t5605-clone-local.sh
-@@ -69,7 +69,7 @@ test_expect_success 'local clone of repo with nonexistent=
- ref in HEAD' '
- 	git clone a d &&
- 	(cd d &&
- 	git fetch &&
--	test ! -e .git/refs/remotes/origin/HEAD)
-+	test_ref_missing refs/remotes/origin/HEAD)
- '
-=20
- test_expect_success 'bundle clone without .bundle suffix' '
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 2f8868caa17..56b33536ed1 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -251,6 +251,61 @@ debug () {
- 	done
- }
-=20
-+# Usage: test_ref_exists [options] <ref>
-+#
-+#   -C <dir>:
-+#      Run all git commands in directory <dir>
-+#
-+# This helper function checks whether a reference exists. Symrefs or objec=
-t IDs
-+# will not be resolved. Can be used to check references with bad names.
-+test_ref_exists () {
-+	local indir=3D
-+
-+	while test $# !=3D 0
-+	do
-+		case "$1" in
-+		-C)
-+			indir=3D"$2"
-+			shift
-+			;;
-+		*)
-+			break
-+			;;
-+		esac
-+		shift
-+	done &&
-+
-+	indir=3D${indir:+"$indir"/} &&
-+
-+	if test "$#" !=3D 1
-+	then
-+		BUG "expected exactly one reference"
-+	fi &&
-+
-+	git ${indir:+ -C "$indir"} show-ref --exists "$1"
-+}
-+
-+# Behaves the same as test_ref_exists, except that it checks for the absen=
-ce of
-+# a reference. This is preferable to `! test_ref_exists` as this function =
-is
-+# able to distinguish actually-missing references from other, generic erro=
-rs.
-+test_ref_missing () {
-+	test_ref_exists "$@"
-+	case "$?" in
-+	2)
-+		# This is the good case.
-+		return 0
-+		;;
-+	0)
-+		echo >&4 "test_ref_missing: reference exists"
-+		return 1
-+		;;
-+	*)
-+		echo >&4 "test_ref_missing: generic error"
-+		return 1
-+		;;
-+	esac
-+}
-+
- # Usage: test_commit [options] <message> [<file> [<contents> [<tag>]]]
- #   -C <dir>:
- #	Run all git commands in directory <dir>
---=20
-2.42.0
-
-
---MM6kN4DCJ3RokskW
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmU3woAACgkQVbJhu7ck
-PpSIeg//Ta2WMCRzCfblF2XYTa3VXI1XZZdwHrV8HFLBIxRwnGl1ew2K1azD0TQF
-KbnLDWIbOkIP25FnkOtGZ844fg3vRig9Bt+X/AN/DEnjXo0RBGjqREHxNafg9wz4
-YZJZWz45px4gF2BDRtA0kN8SXJMMTht3LXfAEBRyt3TWzejYQUTz0AHXUC2xPxCv
-4tRAdWiKKUV5NUJZSZ1Inu09FjJcN8V6+N3t5d9znr7PyYqKrbMeL6D7KMpnhsg2
-BZ0tmPfeSGbDrE/UheFMEWxOVCyvp0iG2QGoMKkiXNGJMjipjYv36g3s6EV3GUSZ
-qz2ilRVkcL+7qsUmvl9zbVt2C6Obf7q187//e04Wm91PJ4ra/ubKVgTEIXzzBsb+
-NmuT+DaJmL2tuk8fOEnYzPFhfd+EhcR47vSL5Op5oYba6WIbEfW7IT8dJ9WLq8z6
-kbmFfP6ogeMpOlx4Cvb7q6LUw/6kBeHQy210LVcLoUZM50zslGxzLJgI1ghcrJOY
-jlQYAIohLJZ3mRBQ6v75ckLBa+d3vl8NpUN63etu0qXIWdgyDV5F3E8jcHY+YRJF
-KzjAAJiabOz5X85Qcy8SniRDoHcAKbDrwy+NHUup256F2MBTRcdiUnoznCMCS9av
-Me/oGsigQCm80dK4NqWi3FANLSZJ91KwaRbuMLg33KYVE5Iwi5E=
-=pl9D
------END PGP SIGNATURE-----
-
---MM6kN4DCJ3RokskW--
+What do you guys think the signature of `git_global_config` should be?
