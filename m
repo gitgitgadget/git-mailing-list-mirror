@@ -1,357 +1,314 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E12212E62F
-	for <git@vger.kernel.org>; Tue, 24 Oct 2023 14:05:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 859CF2C871
+	for <git@vger.kernel.org>; Tue, 24 Oct 2023 14:25:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tTCYQLS9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aAzuCILt"
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCABD10C3
-	for <git@vger.kernel.org>; Tue, 24 Oct 2023 07:05:33 -0700 (PDT)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.west.internal (Postfix) with ESMTP id 4E34E3200A8D;
-	Tue, 24 Oct 2023 10:05:32 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Tue, 24 Oct 2023 10:05:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1698156331; x=1698242731; bh=xC
-	5MSLBIaMkZjTcJpiDNpb7tTBB9/8ix79RVCdctk5Y=; b=tTCYQLS9gnAQWyi8VI
-	iDqI6zrUPpfN1m4zkCtMZHicwNbOuyfZ9MguBOM//BYB9IOyhRpRhZslGTr4NgzT
-	h+jcMb1hh7v63vs7nAHmntlS6l/zSPwDMSS2y22jGeP+IwPoctllyncOXLK6vD9v
-	d9OgX8m71dBnX6cu4kKmwjHsUCOmSiqwsCmNVaXY5t5x9QxJ9nVBu2Sa2hJNALEA
-	ZKY6QJfKIqtiuuevVQ5lz2rGwf9wYqbRP0Ejvo+/WVibTxicZ8NjylsLSXvRCx6P
-	GdDbalAbc3YZoWRx2QfK1SL55owSfzETcj4uKmUxYRTvjOQr8OeSqxPluCDgVRfU
-	yANA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1698156331; x=1698242731; bh=xC5MSLBIaMkZj
-	TcJpiDNpb7tTBB9/8ix79RVCdctk5Y=; b=aAzuCILtAlJt/qscfr3i2nusyEN51
-	0dsvDJIHZWOjRS/6pPhOLHB+2xmxVSal/r7JjemGh6kbTst0vGnu563S8L/r9V4O
-	XWDIqWQIGcrLt9x9bLrMv6oH3T8ur9Q9U1kEX8wVYv1K05iJdFm1TFLMjAWwumfh
-	81dgsVMSLOn3q/VY1evUkbdMEeAKszTW4PHpNvBZG++53rD56sgZlS43hrZiXAaN
-	BiJjidtIWfMPumbmafCwuuGB4sSXQCHj7hV4lPwnrnrlYBj/DNi2OeXK2TL1DL3q
-	B3dbBiT6KUa/Sjs2t+MDtfZ+N1AzoZRYVHykO6dz4qUKgY3XVJlQWH1TA==
-X-ME-Sender: <xms:K883ZRp0DhbTiGiSAc5SLKzTTf4z8xIljmLYi3EPGHePL3fE9_JJwA>
-    <xme:K883ZTrnZDzvtzp_-249P55qLuM3qUzelO15Pvkuu9X01Yz6yswjkV4jSn8aym91P
-    6HwK9DIbK5N0qW4IQ>
-X-ME-Received: <xmr:K883ZePnjMt242CURmIHrWyRTqwnmig66vvQDwGWjKnYL76uNKf4fbdQTeZ6csoB1_nmWoO_3rCn2D6u-tPCu0YYZYhwRoxJhH8kIYjie8CQ0i8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrkeekgdejfecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
-    ucevlhhushhtvghrufhiiigvpeehnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhm
-X-ME-Proxy: <xmx:K883Zc4ZfCcBMKOxr0GYtqFuZzifmBcTxukHxRVowpsAIde8oncZCA>
-    <xmx:K883ZQ7VMflAYY977qkgtYqS0bAumFM19jJ4kHYhmtp76-238RT9nA>
-    <xmx:K883ZUjncO1U7wGQ5TumbrOrJoK1Ul-QGFkXeycLhhwYlLdNUd00Vg>
-    <xmx:K883ZentQ8ak2mxKrqfz5qgcF6S8H95WMEmbYx-pPzj5hLKmFTd2AA>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Oct 2023 10:05:30 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 32c6180b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 24 Oct 2023 14:05:25 +0000 (UTC)
-Date: Tue, 24 Oct 2023 16:05:28 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Han-Wen Nienhuys <hanwen@google.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 9/9] t: mark several tests that assume the files backend
- with REFFILES
-Message-ID: <497e43ae5c362da9ad972e2813dc907df58a8676.1698156169.git.ps@pks.im>
-References: <cover.1697607222.git.ps@pks.im>
- <cover.1698156169.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bBCcv/VL"
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 560ECE8
+	for <git@vger.kernel.org>; Tue, 24 Oct 2023 07:25:37 -0700 (PDT)
+Received: by mail-pg1-x544.google.com with SMTP id 41be03b00d2f7-5a9d8f4388bso2518474a12.3
+        for <git@vger.kernel.org>; Tue, 24 Oct 2023 07:25:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1698157537; x=1698762337; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3pD+4MrNh8hXH2CPDUwIXcfsShDiVFIfrLg+kv7x3/o=;
+        b=bBCcv/VLG/w8Ot80KNgYXyqIiul3DlrV3BQ5Z2mcdLuT7ZugOpZWR81ZSw28hRi8Hw
+         M5PI9XjcjvAkb+H8cJTCjNrZZdCoiwXWGYuhlyJikH8tBZbmj8GVDdsDE02nN5f7LqCn
+         sBuAM0q+ENxxSSzl6e8DSnofmTlvDfjSS7EPG6TtlUsA1IM5DqZN1zSRj70a9xr0gs++
+         XBmGQ+EkFfxnGv0ffMiYIp5jpXRC1MJADk/MjM3GTPJ9/797/mn0p0Gk2YBvY9PIbrVR
+         NATDvoGRfv9aZElmpRiyACJrKu6yaVFQJJ00/O7Qiz0hLVJAbHYBXiGOMHEjKTGtBBti
+         zmjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698157537; x=1698762337;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=3pD+4MrNh8hXH2CPDUwIXcfsShDiVFIfrLg+kv7x3/o=;
+        b=br3fUhig457siebV24o8HuiANvffR3N1sO+oPL+GouASK5voiFtqNn50APzDck8aIb
+         wh/KaZ+BoIQ4+tTiUfWztmKGnyykCZK3Tl2olVngoae+IPu5WwSXVqpmxCETAz5kL98G
+         pvsHTV2HV//z3Ijsaw0bclLN0LhJe1D9PFBZshE5SY27nEohuo6k/2/MGUL7IT7PpxvC
+         aW9rH/riQzKoFUlkiruC4YTFRNYove4RLwj6ykUboIuErNtwK7cOxVcOgY9JoRab3/++
+         DsIzmjTufK/VBjbqG5qG9RnPbWZIxez7aQPGsYmPH/KrWTZJxcadQEuJpAk0w0ztsoLO
+         nRqw==
+X-Gm-Message-State: AOJu0YzOCHbV2Ripttr6YhZLKQ1Kjq/6fo2txfQ9iHyb3IReJMwwRdVL
+	ozwvQowRBNS+D8wM3c9d7X6hfp/tKTKVgvtz3oU=
+X-Google-Smtp-Source: AGHT+IEzxLygqxvr3a0N17gSecupNgvURJv80vzIXl4O0GZHPNetdbDGNyTdrYeTLqlnsJZfylFKIXm0yRABHwgXEL0=
+X-Received: by 2002:a17:90a:6096:b0:27d:46e5:2d7c with SMTP id
+ z22-20020a17090a609600b0027d46e52d7cmr9486360pji.26.1698157536481; Tue, 24
+ Oct 2023 07:25:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="yWt4GbSehEqnmICI"
-Content-Disposition: inline
-In-Reply-To: <cover.1698156169.git.ps@pks.im>
-
-
---yWt4GbSehEqnmICI
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <CAFR+8DynAJ7eieMYUrezoNii5tzARNbESFxRCcT4w6okS5FZDg@mail.gmail.com>
+ <xmqqedibzgi1.fsf@gitster.g> <CAFR+8DyN8vbuvdgZPkSVqS2=sqconwhx3QfcpJ0+Wi_oCA=s0w@mail.gmail.com>
+ <CAFR+8Dz717pcc2Lm_J29xxiBt-kUrMP4JAUbm=3XaJuJPYseHg@mail.gmail.com>
+ <CAFR+8Dwxr3iV+R7een0t2sYXUWu1XHhQcLVuqMhOsSg9Bt4wrg@mail.gmail.com> <CAP8UFD0A_vWCZ5cVAZqdTBebdhZNye_FmNNJF+vA7epUx2JWHQ@mail.gmail.com>
+In-Reply-To: <CAP8UFD0A_vWCZ5cVAZqdTBebdhZNye_FmNNJF+vA7epUx2JWHQ@mail.gmail.com>
+From: Achu Luma <ach.lumap@gmail.com>
+Date: Tue, 24 Oct 2023 15:25:26 +0100
+Message-ID: <CAFR+8DzdFbwaiHtZSdLMqWYWh=fK0WA4c48+eBug-ZeAgddhcQ@mail.gmail.com>
+Subject: Re: [Outreachy] Move existing tests to a unit testing framework
+To: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org, 
+	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Add the REFFILES prerequisite to several tests that assume we're using
-the files backend. There are various reasons why we cannot easily
-convert those tests to be backend-independent, where the most common
-one is that we have no way to write corrupt references into the refdb
-via our tooling. We may at a later point in time grow the tooling to
-make this possible, but for now we just mark these tests as requiring
-the files backend.
+On Mon, Oct 23, 2023 at 2:41=E2=80=AFPM Christian Couder
+<christian.couder@gmail.com> wrote:
+>
+> On Fri, Oct 20, 2023 at 3:16=E2=80=AFPM Achu Luma <ach.lumap@gmail.com> w=
+rote:
+> >
+> > Dear Git Community and Mentors,
+> >
+> > I hope this email finds you well. As a follow-up to my previous applica=
+tion, I'd like to provide additional details on the process of migrating ex=
+isting unit tests from the t/helper/ directory to the new Git unit test fra=
+mework.
+>
+> Thanks for these details!
+>
+> > -- Identify Target Unit Tests: Start by identifying the specific unit t=
+ests in the t/helper/ directory that we want to port to the new Git unit te=
+st framework. Ensure that the tests are suitable for migration and that the=
+ benefits of doing so outweigh the effort(By avoiding integration tests). T=
+he following points have been developed with on going work on the unit-test=
+s framework visible here:
+> >
+> > 1- https://lore.kernel.org/git/0169ce6fb9ccafc089b74ae406db0d1a8ff8ac65=
+.1688165272.git.steadmon@google.com/
+> > 2- https://github.com/steadmon/git/blob/unit-tests-asciidoc/Documentati=
+on/technical/unit-tests.adoc
+>
+> Maybe if you have time you could add some descriptions or comments
+> related to the above emails and documents. For example you could tell
+> what the new unit test framework will be like, how the unit tests will
+> look like, etc. Maybe a short overview would be nice.
+>
+sure,
+1- https://lore.kernel.org/git/0169ce6fb9ccafc089b74ae406db0d1a8ff8ac65.168=
+8165272.git.steadmon@google.com/
+:
+    The emails highlight the significant milestones achieved in
+defining and testing the custom TAP
+     framework for writing git unit tests. It also contains some
+examples of implementation such as
+     that of STRBUF_INIT with output:
+      ok 1 - static initialization works
+     1..1
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- t/t1400-update-ref.sh            |  8 ++++----
- t/t1450-fsck.sh                  |  6 +++---
- t/t2011-checkout-invalid-head.sh | 16 ++++++++--------
- t/t3200-branch.sh                |  8 ++++----
- t/t3400-rebase.sh                |  2 +-
- t/t5605-clone-local.sh           |  2 +-
- 6 files changed, 21 insertions(+), 21 deletions(-)
+2-  https://github.com/steadmon/git/blob/unit-tests-asciidoc/Documentation/=
+technical/unit-tests.adoc:
+     From this technical doc, the new unit test framework in the Git
+project represents a significant
+     enhancement, introducing a systematic and efficient approach to
+unit testing. The custom git
+     TAP implementation was selected from several alternatives based
+on strict criteria as the most
+     suitable test framework for porting the unit tests.
+     The unit tests are  written in pure C, eliminating the need for
+the previous shell/test-tool helper
+     setup, simplifying test configuration, data handling, and
+reducing testing runtime.
+     Each unit test is encapsulated as a function and employs a range
+of predefined check functions
+     for validation. These checks can evaluate conditions, compare
+integers or characters, validate
+     strings, and more, providing comprehensive coverage for test scenarios=
+.
 
-diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-index b7d1e5deede..70a760ba378 100755
---- a/t/t1400-update-ref.sh
-+++ b/t/t1400-update-ref.sh
-@@ -236,7 +236,7 @@ test_expect_success 'update-ref --no-deref -d can delet=
-e self-reference' '
- 	test_must_fail git show-ref --verify -q refs/heads/self
- '
-=20
--test_expect_success 'update-ref --no-deref -d can delete reference to bad =
-ref' '
-+test_expect_success REFFILES 'update-ref --no-deref -d can delete referenc=
-e to bad ref' '
- 	>.git/refs/heads/bad &&
- 	test_when_finished "rm -f .git/refs/heads/bad" &&
- 	git symbolic-ref refs/heads/ref-to-bad refs/heads/bad &&
-@@ -288,7 +288,7 @@ test_expect_success "set $m (logged by touch)" '
- 	test $A =3D $(git show-ref -s --verify $m)
- '
-=20
--test_expect_success 'empty directory removal' '
-+test_expect_success REFFILES 'empty directory removal' '
- 	git branch d1/d2/r1 HEAD &&
- 	git branch d1/r2 HEAD &&
- 	test_path_is_file .git/refs/heads/d1/d2/r1 &&
-@@ -300,7 +300,7 @@ test_expect_success 'empty directory removal' '
- 	test_path_is_file .git/logs/refs/heads/d1/r2
- '
-=20
--test_expect_success 'symref empty directory removal' '
-+test_expect_success REFFILES 'symref empty directory removal' '
- 	git branch e1/e2/r1 HEAD &&
- 	git branch e1/r2 HEAD &&
- 	git checkout e1/e2/r1 &&
-@@ -1639,7 +1639,7 @@ test_expect_success PIPE 'transaction flushes status =
-updates' '
- 	test_cmp expected actual
- '
-=20
--test_expect_success 'directory not created deleting packed ref' '
-+test_expect_success REFFILES 'directory not created deleting packed ref' '
- 	git branch d1/d2/r1 HEAD &&
- 	git pack-refs --all &&
- 	test_path_is_missing .git/refs/heads/d1/d2 &&
-diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index a6af550867c..50b15bd7fc0 100755
---- a/t/t1450-fsck.sh
-+++ b/t/t1450-fsck.sh
-@@ -123,7 +123,7 @@ test_expect_success 'branch pointing to non-commit' '
- 	test_i18ngrep "not a commit" out
- '
-=20
--test_expect_success 'HEAD link pointing at a funny object' '
-+test_expect_success REFFILES 'HEAD link pointing at a funny object' '
- 	test_when_finished "git update-ref HEAD $orig_head" &&
- 	echo $ZERO_OID >.git/HEAD &&
- 	# avoid corrupt/broken HEAD from interfering with repo discovery
-@@ -139,7 +139,7 @@ test_expect_success 'HEAD link pointing at a funny plac=
-e' '
- 	test_i18ngrep "HEAD points to something strange" out
- '
-=20
--test_expect_success 'HEAD link pointing at a funny object (from different =
-wt)' '
-+test_expect_success REFFILES 'HEAD link pointing at a funny object (from d=
-ifferent wt)' '
- 	test_when_finished "git update-ref HEAD $orig_head" &&
- 	test_when_finished "git worktree remove -f wt" &&
- 	git worktree add wt &&
-@@ -149,7 +149,7 @@ test_expect_success 'HEAD link pointing at a funny obje=
-ct (from different wt)' '
- 	test_i18ngrep "main-worktree/HEAD: detached HEAD points" out
- '
-=20
--test_expect_success 'other worktree HEAD link pointing at a funny object' '
-+test_expect_success REFFILES 'other worktree HEAD link pointing at a funny=
- object' '
- 	test_when_finished "git worktree remove -f other" &&
- 	git worktree add other &&
- 	echo $ZERO_OID >.git/worktrees/other/HEAD &&
-diff --git a/t/t2011-checkout-invalid-head.sh b/t/t2011-checkout-invalid-he=
-ad.sh
-index d9997e7b6b4..3c8135831b8 100755
---- a/t/t2011-checkout-invalid-head.sh
-+++ b/t/t2011-checkout-invalid-head.sh
-@@ -18,18 +18,18 @@ test_expect_success 'checkout should not start branch f=
-rom a tree' '
- 	test_must_fail git checkout -b newbranch main^{tree}
- '
-=20
--test_expect_success 'checkout main from invalid HEAD' '
-+test_expect_success REFFILES 'checkout main from invalid HEAD' '
- 	echo $ZERO_OID >.git/HEAD &&
- 	git checkout main --
- '
-=20
--test_expect_success 'checkout notices failure to lock HEAD' '
-+test_expect_success REFFILES 'checkout notices failure to lock HEAD' '
- 	test_when_finished "rm -f .git/HEAD.lock" &&
- 	>.git/HEAD.lock &&
- 	test_must_fail git checkout -b other
- '
-=20
--test_expect_success 'create ref directory/file conflict scenario' '
-+test_expect_success REFFILES 'create ref directory/file conflict scenario'=
- '
- 	git update-ref refs/heads/outer/inner main &&
-=20
- 	# do not rely on symbolic-ref to get a known state,
-@@ -39,26 +39,26 @@ test_expect_success 'create ref directory/file conflict=
- scenario' '
- 	}
- '
-=20
--test_expect_success 'checkout away from d/f HEAD (unpacked, to branch)' '
-+test_expect_success REFFILES 'checkout away from d/f HEAD (unpacked, to br=
-anch)' '
- 	reset_to_df &&
- 	git checkout main
- '
-=20
--test_expect_success 'checkout away from d/f HEAD (unpacked, to detached)' '
-+test_expect_success REFFILES 'checkout away from d/f HEAD (unpacked, to de=
-tached)' '
- 	reset_to_df &&
- 	git checkout --detach main
- '
-=20
--test_expect_success 'pack refs' '
-+test_expect_success REFFILES 'pack refs' '
- 	git pack-refs --all --prune
- '
-=20
--test_expect_success 'checkout away from d/f HEAD (packed, to branch)' '
-+test_expect_success REFFILES 'checkout away from d/f HEAD (packed, to bran=
-ch)' '
- 	reset_to_df &&
- 	git checkout main
- '
-=20
--test_expect_success 'checkout away from d/f HEAD (packed, to detached)' '
-+test_expect_success REFFILES 'checkout away from d/f HEAD (packed, to deta=
-ched)' '
- 	reset_to_df &&
- 	git checkout --detach main
- '
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index a38601dbbb7..8d82f9bc52a 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -28,7 +28,7 @@ test_expect_success 'git branch --help should not have cr=
-eated a bogus branch' '
- 	test_path_is_missing .git/refs/heads/--help
- '
-=20
--test_expect_success 'branch -h in broken repository' '
-+test_expect_success REFFILES 'branch -h in broken repository' '
- 	mkdir broken &&
- 	(
- 		cd broken &&
-@@ -242,7 +242,7 @@ test_expect_success 'git branch -M baz bam should succe=
-ed when baz is checked ou
- 	git worktree prune
- '
-=20
--test_expect_success 'git branch -M fails if updating any linked working tr=
-ee fails' '
-+test_expect_success REFFILES 'git branch -M fails if updating any linked w=
-orking tree fails' '
- 	git worktree add -b baz bazdir1 &&
- 	git worktree add -f bazdir2 baz &&
- 	touch .git/worktrees/bazdir1/HEAD.lock &&
-@@ -833,14 +833,14 @@ test_expect_success 'renaming a symref is not allowed=
-' '
- 	test_path_is_missing .git/refs/heads/new-topic
- '
-=20
--test_expect_success SYMLINKS 'git branch -m u v should fail when the reflo=
-g for u is a symlink' '
-+test_expect_success SYMLINKS,REFFILES 'git branch -m u v should fail when =
-the reflog for u is a symlink' '
- 	git branch --create-reflog u &&
- 	mv .git/logs/refs/heads/u real-u &&
- 	ln -s real-u .git/logs/refs/heads/u &&
- 	test_must_fail git branch -m u v
- '
-=20
--test_expect_success SYMLINKS 'git branch -m with symlinked .git/refs' '
-+test_expect_success SYMLINKS,REFFILES 'git branch -m with symlinked .git/r=
-efs' '
- 	test_when_finished "rm -rf subdir" &&
- 	git init --bare subdir &&
-=20
-diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-index d3df19a51f8..435943a0891 100755
---- a/t/t3400-rebase.sh
-+++ b/t/t3400-rebase.sh
-@@ -424,7 +424,7 @@ test_expect_success 'refuse to switch to branch checked=
- out elsewhere' '
- 	test_i18ngrep "already used by worktree at" err
- '
-=20
--test_expect_success MINGW,SYMLINKS_WINDOWS 'rebase when .git/logs is a sym=
-link' '
-+test_expect_success REFFILES,MINGW,SYMLINKS_WINDOWS 'rebase when .git/logs=
- is a symlink' '
- 	git checkout main &&
- 	mv .git/logs actual_logs &&
- 	cmd //c "mklink /D .git\logs ..\actual_logs" &&
-diff --git a/t/t5605-clone-local.sh b/t/t5605-clone-local.sh
-index a26689de379..8ad6445eca7 100755
---- a/t/t5605-clone-local.sh
-+++ b/t/t5605-clone-local.sh
-@@ -157,7 +157,7 @@ test_expect_success 'cloning locally respects "-u" for =
-fetching refs' '
- 	test_must_fail git clone --bare -u false a should_not_work.git
- '
-=20
--test_expect_success 'local clone from repo with corrupt refs fails gracefu=
-lly' '
-+test_expect_success REFFILES 'local clone from repo with corrupt refs fail=
-s gracefully' '
- 	git init corrupt &&
- 	test_commit -C corrupt one &&
- 	echo a >corrupt/.git/refs/heads/topic &&
---=20
-2.42.0
+    When a test is run using the TEST() macro, it undergoes a series
+of checks, and if any check fails,
+    a diagnostic message is printed to aid in debugging. This
+diagnostic output includes information
+    about the specific check that failed, the file and line number
+where it occurred, and a clear comparison
+    of the expected and actual values. Such detailed reporting
+simplifies the identification and resolution
+    of issues, contributing to codebase stability.
 
+    Additionally, the framework supports features like skipping tests
+with explanations, sending custom
+    diagnostic messages using test_msg(), and marking known-to-fail
+checks using TEST_TODO().
+    This flexibility allows developers to tailor their tests to
+specific scenarios while ensuring a
+    comprehensive testing suite.
 
---yWt4GbSehEqnmICI
-Content-Type: application/pgp-signature; name="signature.asc"
+> You could also try to apply the patches in the series that adds the
+> test framework, or alternatively use the 'seen' branch where the
+> series has been merged, and start playing with it by writing, or
+> porting, a small example test.
+>
+ok, I think I can push a patch for one.
+> > -- Create a New C Test File: For each unit test I plan to migrate, crea=
+te a new C source file (.c) in the Git project's test suite directory(t/uni=
+t-tests). Name it appropriately to reflect the purpose of the test.
+>
+> Could you provide an example of what the new name would be for an
+> existing test that is worth porting?
+>
+Sure... let's consider an existing unit test in t/helper directory
+such as  t/helper/test-date.c or
+its shell named t0006-date.sh, which is part of the current
+shell-based test suite. In the context
+of the new unit testing framework, this test could be reimagined and rename=
+d as
+"t-date.c". The "t-" prefix is typically used for test program files
+in Git, and "date" is retained to
+ reflect the nature of the tests within this suite.
+> > --  Include Necessary Headers:In the new C test file, include the neces=
+sary Git unit test framework headers. Typically, this includes headers like=
+ "test-lib.h" and others relevant to the specific test.
+> > #include "test-lib.h"
+>
+> Maybe you could continue the above example and tell which headers
+> would be needed for it?
+>
+> > -- Convert Test Logic: Refactor the test logic from the original Shell =
+script into the new C-based test format. Use the testing macros provided by=
+ the Git unit test framework, such as test_expect_success, test_expect_fail=
+ure, etc., to define the tests.
+> > test_expect_success("simple progress display", "{
+> >     // Test logic here...
+> > }");
+>
+> Ok, a simple example would be nice too.
+>
+we can continue with the example used for naming: test-date.c. a
+typical t-date.c unit test would look
+like the following:
+--
+#include "test-lib.h"
+#include "date.h"
+--
+date.h here is a necessary header file. Now refactoring the test logic
+from the original shell script:
+--
+#include "test-lib.h"
+#include "date.h"
 
------BEGIN PGP SIGNATURE-----
+static void test_parse_dates(void)
+{
+    const char *dates[] =3D { "invalid_date", "2023-10-17 10:00:00 +0200", =
+NULL };
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmU3zycACgkQVbJhu7ck
-PpQu+hAAlEMhCSF73q5DLH/Tco5bqTMUhRWnLrr4TwMoV1zuiO8dNUROFChgIN23
-l+eLBR1g3Wx7fLzxxNXC6F+9QQbnnN9FLAlmvIar4M5evyZpHTSxLgXOYoGIXTpe
-+SLLySbBQdWo8IJmpXXjCgK2J3/myNJEU0TM/zic6nEKP81naqkMJ207H8gdPVO0
-yAqnMShvO32xXL/PHiydkJKtTQUKVw6bc5UUBhD0en/rDsu04lEnY1R9tj4mZYZt
-2/ZC8h9mPGhFY1YqcyQkwHE2DP+OGD68UU539swnzNnB+KeWtKd14KX4Zv3SkSJa
-ySJwHNcPpg6DS2yENbhvxi4mRKto7mIo5cpAXZufDEUWGv4dW/VMYBo5mMI/LV1g
-DSBZrP6SDi95manF2xpQijlxzA55mUK3NeIJIAAm/1g3ZJ3rYQrM5YfyqL+GT3FZ
-ETDm3w9fNgd89i3HCFwYBPf38a8S+xxvGGIH7oCDh6DWQBmSGBhWt4j37rzRN/Fy
-WT/Nzkv7fpPsOrUOrK+hfv/aW6TXjz8VC5AorwDCN6LDLWSrqCl4PNx9ApzseGdX
-a2De+OUqTEkzYBf2V9b1QjOUBRSV5QfGlCvmkWPezmaPGbkeg1O0WQDGypt+QzoJ
-0tg6mOVGKHpjin1v4Pbccs1kqrIIQvQBbJWm2mD9dGbwong5BWk=
-=fOkM
------END PGP SIGNATURE-----
+    for (const char **argv =3D dates; *argv; argv++) {
+        check_int(parse_dates((const char *[]){ *argv, NULL }), 0);
+    }
+}
+--
 
---yWt4GbSehEqnmICI--
+> > -- Add Test Descriptions: Provide clear and informative descriptions fo=
+r each test using the testing macros. These descriptions will help in ident=
+ifying the purpose of each test when the test suite is run.
+>
+> This would seem to be part of the previous step, as you would have to
+> provide a description when using the testing macro. But Ok.
+>
+> > -- Define a Test Entry Point: Create a cmd_main function as the entry p=
+oint for the C-based tests. Inside this function, include the test function=
+s using the testing macros.
+> > int cmd_main(int argc, const char **argv) {
+> >     // Test functions...
+> >     return test_done();
+> > }
+>
+> Yeah, continuing an example would be nice.
+>
+Continuing, we can add a test entrance as follows:
+--
+#include "test-lib.h"
+#include "date.h"
+
+static void test_parse_dates(void)
+{
+    const char *dates[] =3D { "invalid_date", "2023-10-17 10:00:00 +0200", =
+NULL };
+
+    for (const char **argv =3D dates; *argv; argv++) {
+        check_int(parse_dates((const char *[]){ *argv, NULL }), 0);
+    }
+}
+
+int main(int argc UNUSED, const char **argv UNUSED)
+{
+    TEST(test_parse_dates, "Test date parsing");
+
+    return test_done();
+}
+--
+
+A typical unit tests with the custom TAP framework would look
+something like above. This might run in theory
+but I have not yet run it as I used it here just for demonstration.
+The unit tests can be built using
+"make unit-tests." Additionally, Makefile can be modified to add the
+file to the build:
+--
+UNIT_TEST_PROGRAMS +=3D t-date
+--
+> > -- Ensure TAP Format Output: Ensure that the C-based tests produce outp=
+ut in the Test Anything Protocol (TAP) format. This format includes the tes=
+t name, status (ok or not ok), and any diagnostic information.
+>
+> That means using TEST* macros in the cmd_main() function, as they
+> should do the right thing or is there more to be done here?
+>
+> > -- Test Interaction: Ensure that the migrated tests interact correctly =
+with the new Git unit test framework and any other tests that may be releva=
+nt. Consider dependencies and interactions with other parts of the Git proj=
+ect.
+>
+> I am not sure what work would be needed here. Is there more to do than
+> compiling the test files? Having an example would be nice.
+>
+> > -- Test Execution: Run the migrated tests to verify that they produce t=
+he expected results when executed as part of the Git project's test suite. =
+Use the Git testing framework's test runners to execute the tests.
+>
+> Ok.
+>
+> > -- Documentation Update: Update the Git project's documentation to refl=
+ect the changes made during the migration. Include a reference to the origi=
+nal unit tests in the t/helper/ directory and indicate that these tests hav=
+e been ported to the new Git unit test framework.
+>
+> I am not sure that we would want that. I think we might instead want
+> to document things in t/helper/ that we don't want to port to the new
+> unit test framework and why.
+>
+Ok noted.
+> > By following these points, I think I can successfully port existing uni=
+t tests from the t/helper/ directory to use the new Git unit test framework=
+. This migration helps standardize and streamline the testing process withi=
+n the Git project, improving code quality and maintainability.
+>
+> Yeah!
+>
+> > Next Steps:
+> >
+> > I am eager to discuss these suggestions and collaborate with the Git co=
+mmunity to ensure the success of this project. I will continue to engage wi=
+th the community, seek guidance, and refine my proposal as per your suggest=
+ions.
+> >  I look forward to the opportunity to contribute to the Git project and=
+ help make it even more robust and reliable.
+>
+> Thanks for this application and sorry for the late answer!
+>
+> Best,
+> Christian.
+
+I look forward to feedback and better understanding of the new testing
+framework.
+
+BR,
+Achu Luma.
