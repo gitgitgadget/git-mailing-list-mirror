@@ -1,63 +1,118 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCACD3F4A8
-	for <git@vger.kernel.org>; Tue, 24 Oct 2023 21:20:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 049211701
-	for <git@vger.kernel.org>; Tue, 24 Oct 2023 14:20:00 -0700 (PDT)
-Received: from bsmtp3.bon.at (unknown [192.168.181.108])
-	by bsmtp5.bon.at (Postfix) with ESMTPS id 4SFQ1q2H5pz5tnw
-	for <git@vger.kernel.org>; Tue, 24 Oct 2023 23:19:59 +0200 (CEST)
-Received: from [192.168.0.106] (unknown [93.83.142.38])
-	by bsmtp3.bon.at (Postfix) with ESMTPSA id 4SFQ1l3hn3z5tl9;
-	Tue, 24 Oct 2023 23:19:54 +0200 (CEST)
-Message-ID: <59731c05-c3f6-4815-8411-783bb1c2aac4@kdbg.org>
-Date: Tue, 24 Oct 2023 23:19:53 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EDFC3E469
+	for <git@vger.kernel.org>; Tue, 24 Oct 2023 21:23:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="itxoD29F"
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C66FA9D
+	for <git@vger.kernel.org>; Tue, 24 Oct 2023 14:23:06 -0700 (PDT)
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id F086C5B091;
+	Tue, 24 Oct 2023 21:23:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1698182586;
+	bh=n8cFdYFOhaVhXljFCgPVq/cAYsvbIZF0nej03f/+smM=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=itxoD29FtxgGS5NgU44JZF8TkLQE5X8iWkgnXdUkXoFSYOMion5HMAeUzSsheNI2J
+	 HWmX+nSqXtwlyOjfxk7dTtUiZwJzP+vJTS/j+EkzwMzmcEcUnlXv7+UbC0bDOSD271
+	 C61e3PnKBrfq1Xf2dmgtHDKTzNzAvBy52XU2RhD0B0EbbHfokLkh4hCL7HdQDd3peI
+	 +7zUDO4NV0TiI03oqW3Kuu306pK/9alkWbDeXDn45R/hxxKqWzQz8f+pXoSMy+7+K+
+	 ebZ7gbCJ31ZWy6quTPFw6gT/jS5FvbxUNhXScRZ6aq1et8yP4rAHKPpwTWIlbKrybq
+	 /bylCSkZnXdCY2vZiv9JRj9eocYMQ2hBIThLuHWRa6URv/KlO4Mj4QwrCvh8x9IzG9
+	 bAWubhokG2NIjl+wwdq4+aPmktZbKZ9gZyIaZuWya9T62iQ30Czxd0rpgFcOnpG9Vw
+	 fmhA4dFT6QcNktFVzglYVngKuGgUAl2DPvPuzTXdPtbokrFEUpY
+Date: Tue, 24 Oct 2023 21:23:03 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>,
+	Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH 1/1] merge-file: add an option to process object IDs
+Message-ID: <ZTg1t33cxzvmvAVK@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>,
+	Phillip Wood <phillip.wood123@gmail.com>
+References: <20231024195655.2413191-1-sandals@crustytoothpaste.net>
+ <20231024195655.2413191-2-sandals@crustytoothpaste.net>
+ <CAPig+cT_yq-ke4RTpTdTTLsnJFxCtyGAP2K0mQ_S23jJYtUp=w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: using oldest date when squashing commits
-Content-Language: en-US
-To: Junio C Hamano <gitster@pobox.com>,
- Phillip Wood <phillip.wood123@gmail.com>
-Cc: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
- phillip.wood@dunelm.org.uk, git@vger.kernel.org
-References: <YjXRM5HiRizZ035p@ugly>
- <9fae5292-d58f-95da-245b-6e205383cb50@kdbg.org>
- <a99b16a8-a06c-4d38-bb78-46ce17411597@gmail.com> <ZTeZ3KEQLIVU/sq2@ugly>
- <138631cd-ead3-4f22-95ce-61afccfa409f@gmail.com> <xmqqpm143p46.fsf@gitster.g>
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <xmqqpm143p46.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="z7c6CkcE95GBSGVS"
+Content-Disposition: inline
+In-Reply-To: <CAPig+cT_yq-ke4RTpTdTTLsnJFxCtyGAP2K0mQ_S23jJYtUp=w@mail.gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
 
-Am 24.10.23 um 19:30 schrieb Junio C Hamano:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
->> "fixup -c/-C" were conceived as a way to reword a commit message at
->> the same time as optionally fixing up the commit's content.
-> 
-> Yup, it still is a "fix", meaning the identity and the spirit of the
-> commit being fixed are unchanged.
 
-That's a pitty, because that is not at all what *I* use "fixup -C" for.
-To update the commit message, I use "squash" (or occasionally "reword").
-I use "fixup -C" after the following events:
+--z7c6CkcE95GBSGVS
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-1. Commit unfinished changes for whatever reason. Usually the commit
-message just says "WIP <topic>" because that's what it is.
-2. Make a fixup commit for an earlier commit because doing the fixup now
-gets it out of the way, and often delaying it until after the completed
-change would cause merge conflicts.
-3. Complete the WIP including the commit message.
+On 2023-10-24 at 20:12:52, Eric Sunshine wrote:
+> On Tue, Oct 24, 2023 at 3:58=E2=80=AFPM brian m. carlson
+> <sandals@crustytoothpaste.net> wrote:
+> > git merge-file knows how to merge files on the file system already.  It
+> > would be helpful, however, to allow it to also merge single blobs.
+> > Teach it an `--object-id` option which means that its arguments are
+> > object IDs and not files to allow it to do so.
+> >
+> > Since we obviously won't be writing the data to the first argument,
+> > either write to the object store and print the object ID, or honor the
+> > -p argument and print it to standard out.
+> >
+> > We handle the empty blob specially since read_mmblob doesn't read it
+> > directly, instead throwing an error, and otherwise users cannot specify
+> > an empty ancestor.
+> >
+> > Signed-off-by: brian m. carlson <bk2204@github.com>
+> > ---
+> > diff --git a/builtin/merge-file.c b/builtin/merge-file.c
+> > @@ -99,20 +116,29 @@ int cmd_merge_file(int argc, const char **argv, co=
+nst char *prefix)
+> >         if (ret >=3D 0) {
+> > -               const char *filename =3D argv[0];
+> > -               char *fpath =3D prefix_filename(prefix, argv[0]);
+> > -               FILE *f =3D to_stdout ? stdout : fopen(fpath, "wb");
+> > +               if (object_id && !to_stdout) {
+> > +                       struct object_id oid;
+> > +                       if (result.size)
+> > +                               write_object_file(result.ptr, result.si=
+ze, OBJ_BLOB, &oid);
+>=20
+> Should this be caring about errors by checking the return value of
+> write_object_file()?
 
-I would now use "fixup -C" on commit 3, because its metadata reflects
-reality more accurately than that of 1. Commit 3 often comes days after 1.
+Probably so.  I think I saw write_object_file_prepare returned void and
+misinterpreted that as write_object_file returning void.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
--- Hannes
+--z7c6CkcE95GBSGVS
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.40 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZTg1twAKCRB8DEliiIei
+gbmsAQDABKWV//nmuYFIJsssqeLau4IKe7WG5H85cnUOKlDqzgD/b8MnZMvg6O9Y
+mVOvbM8uTMn5EK2APokxH3IXV2F4MAA=
+=n61q
+-----END PGP SIGNATURE-----
+
+--z7c6CkcE95GBSGVS--
