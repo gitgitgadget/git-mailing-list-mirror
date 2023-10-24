@@ -1,46 +1,44 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B948E24204
-	for <git@vger.kernel.org>; Mon, 23 Oct 2023 23:31:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BCA2386
+	for <git@vger.kernel.org>; Tue, 24 Oct 2023 00:09:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wcs9fyDa"
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44B49F9
-	for <git@vger.kernel.org>; Mon, 23 Oct 2023 16:31:51 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 82C7E1C2630;
-	Mon, 23 Oct 2023 19:31:50 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="tzJNazKn"
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A54210D
+	for <git@vger.kernel.org>; Mon, 23 Oct 2023 17:08:59 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id EB58828903;
+	Mon, 23 Oct 2023 20:08:57 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=epErR0DlBHvZR1MK2/R5KEvMh3s7GN14eUtX5Z
-	Q5jzk=; b=wcs9fyDaEHmHrYzft6cNOuPAhN9mSh4Bm/AouSHhwRN6geRNyoSrM2
-	rpCoUm5HCtmsLTzv67Xeqsm2xW4Ke8guOYFwiRGfhhdlvYVj96LecnV2JLm1/Azw
-	s6JG9n1u8i47Hf9R9+TkFsa5Fw/cbTKn1FjInfdettHjw1Kruag7s=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 78C161C262F;
-	Mon, 23 Oct 2023 19:31:50 -0400 (EDT)
+	:content-type; s=sasl; bh=Uay2Eo4koWZoFUnuYYdX+JuixTDMTk0a9lkZq5
+	CgZ8o=; b=tzJNazKnCF0xsTMGaOihRMkEj2UOuDnFcIlXjY5k6HCaAPJ2BIfaO8
+	rgZh/NJK7vgOYXoVEgO4iO3eN0m9rl+ddvQiFTvI57Bd/mg4JjlwZvcYtqxBAXnQ
+	S+01xu5hqjG0l8k3u5tarrctIE3v4JB/UMGlrKWvVth3dxmVEvH4s=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id E351928902;
+	Mon, 23 Oct 2023 20:08:57 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.198.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DD8971C262D;
-	Mon, 23 Oct 2023 19:31:49 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B9FA5288D3;
+	Mon, 23 Oct 2023 20:08:52 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  "Eric W.
- Biederman" <ebiederm@gmail.com>,  Jeff King <peff@peff.net>,  Patrick
- Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v5 0/5] merge-ort: implement support for packing objects
- together
-In-Reply-To: <cover.1698101088.git.me@ttaylorr.com> (Taylor Blau's message of
-	"Mon, 23 Oct 2023 18:44:49 -0400")
-References: <cover.1697736516.git.me@ttaylorr.com>
-	<cover.1698101088.git.me@ttaylorr.com>
-Date: Mon, 23 Oct 2023 16:31:48 -0700
-Message-ID: <xmqqo7go7w63.fsf@gitster.g>
+To: Andy Koppe <andy.koppe@gmail.com>
+Cc: git@vger.kernel.org,  stolee@gmail.com
+Subject: Re: [PATCH v3 5/7] refs: add pseudorefs array and iteration functions
+In-Reply-To: <20231023221143.72489-6-andy.koppe@gmail.com> (Andy Koppe's
+	message of "Mon, 23 Oct 2023 23:11:41 +0100")
+References: <20231022214432.56325-1-andy.koppe@gmail.com>
+	<20231023221143.72489-1-andy.koppe@gmail.com>
+	<20231023221143.72489-6-andy.koppe@gmail.com>
+Date: Mon, 23 Oct 2023 17:08:51 -0700
+Message-ID: <xmqqjzrc7ugc.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -50,17 +48,20 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 56EF1E24-71FC-11EE-9E40-25B3960A682E-77302942!pb-smtp2.pobox.com
+ 83DB074A-7201-11EE-871C-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Taylor Blau <me@ttaylorr.com> writes:
+Andy Koppe <andy.koppe@gmail.com> writes:
 
-> But I
-> think that this approach ended up being less heavy-weight than I had
-> originally imagined, so I think that this version is a worthwhile
-> improvement over v4.
+> Define const array 'pseudorefs' with the names of the pseudorefs that
+> are documented in gitrevisions.1, and add functions for_each_pseudoref()
+> and refs_for_each_pseudoref() for iterating over them.
 
-;-).
+Makes sense, and we can later (ab|re)use the same mechanism to
+extend "git for-each-ref" that currently only knows how to show
+things under "refs/" hierarchy.
 
-This version is a good place to stop, a bit short of going full OO.
-Nicely done.
+> The functions process the pseudorefs in the same way as head_ref() and
+> refs_head_ref() process HEAD, invoking an each_ref_fn callback on each
+> pseudoref that exists.
 
+Good.
