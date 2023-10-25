@@ -1,100 +1,81 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E441A58E
-	for <git@vger.kernel.org>; Wed, 25 Oct 2023 14:44:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 143CA156E5
+	for <git@vger.kernel.org>; Wed, 25 Oct 2023 15:39:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m2AmQnAl"
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B174DC
-	for <git@vger.kernel.org>; Wed, 25 Oct 2023 07:44:36 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-4083f613275so46432695e9.2
-        for <git@vger.kernel.org>; Wed, 25 Oct 2023 07:44:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="DQ80j7mf"
+Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B41A131
+	for <git@vger.kernel.org>; Wed, 25 Oct 2023 08:39:49 -0700 (PDT)
+Received: by mail-qt1-x836.google.com with SMTP id d75a77b69052e-41cb76f3cf0so35770801cf.2
+        for <git@vger.kernel.org>; Wed, 25 Oct 2023 08:39:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698245075; x=1698849875; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=MVg1AJzQGvKUkCUjSo/QSgHwyl/zhMWjs+ES9VrIvFs=;
-        b=m2AmQnAln97inYRshbV+TCLomJOJZf5BOCYRJnJu5rzs3b7zaI/QXH5mdUtFwlJjPU
-         cBezcQH9NPFINflBPxlG6eOnLPor3ZFjMAm36YdaxdnW4KJHJCaTSNBKn0jOnVe0ikgj
-         PAyt6pOxGvXjcXBc+1UdbSZlx1YnjyXJg3QYAg7mvTvZmjhNbwJWmfe/S+71QkZdu2Fn
-         iDw/gMx9Z6UI0HdmVYRpC3r0HboPo307Acm5d7MfLTBsUEZdm09ORNpO/y9RHviBuibk
-         GadMfQ6X3n7Nl1bq/9vSHEjVgXZpDFLMU/MWGJf2kPneP5940KTgEri9ykGSWH9PdgRJ
-         tneQ==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1698248388; x=1698853188; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=44GaEUmlVdbLLkP3V/i3j0JH1UyEZoDhBYraAo6oAGE=;
+        b=DQ80j7mfUwXylD87653S2SIY7s6Klrn5OzyxhnxT1iAEqJ6qWzEAelrUDvpftqsdce
+         PjUnV430yaDD49UtRVLbTXqQ0PIqKYjrb+90FwLUgAhRu5j4t7epUW2B4bLg4QFGWciM
+         ejIxU1iHf+x/prmFD+NqoH/tfBeBlNKbIFCFnGM0abR7pUxcALGd5k4q529IsN7gOE2W
+         nmbNjis9nvAOYuUnycW/KTrk7PGak9mBmylL0CqG9x1nsMujhNbpWx1MngqP8FKQP5G4
+         L6dECctwdu7mjkY4Aa0L0TbNDtcDvySAVSKrgFJ++L6cw4sph0cStFBwX2PhVQr88DC3
+         hsuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698245075; x=1698849875;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MVg1AJzQGvKUkCUjSo/QSgHwyl/zhMWjs+ES9VrIvFs=;
-        b=bNeoS7k5/bo6aGKFub6apLPlj22LIKTufLegvCmZmoA+es9wTdNqfg3PRVzDroU2c/
-         WH+H9DWIOfBd8vsfQhJoJ9EXsl+HY0HxEJ6FchXv/2y1DkREKmx4CX7Pd2bYXd+uC44n
-         FBYGCxd0x5Sj8d0eHrkVgK5jVm+tRmFy6HKfFpJ+OEf92y7XrPJpPzRuY07lBefFp73S
-         g5bU0/iXi7OK3+0drdqC8DcAbSC4NRsS/U8VMoMJhN9FqZCuKQw+X1o7TViANzeS0lyE
-         KRJTZnBrvcYlVEzYw1yyhnODXVsFG4EcV1JwtLpEq1HtAwTtQMR/qh3UUmv4ytxyl6NG
-         LxwA==
-X-Gm-Message-State: AOJu0Yxs98cpYt+feayGPc2c74fDsNEBpmvUPyzErhZqV9/tVz2nYELq
-	JwAHwzHX+cTMQ+DdqebYb/qj7YcUtb0=
-X-Google-Smtp-Source: AGHT+IHoVw+jxN1fujVmaiTR1fmVtz/RWDIxkiQsFv4ncL5Bp3Yl+uIo2vU/SAk3bi3IqS9QdVYJJw==
-X-Received: by 2002:adf:e590:0:b0:32d:8357:42dd with SMTP id l16-20020adfe590000000b0032d835742ddmr10556954wrm.68.1698245074456;
-        Wed, 25 Oct 2023 07:44:34 -0700 (PDT)
-Received: from [192.168.1.12] (host-2-102-115-95.as13285.net. [2.102.115.95])
-        by smtp.gmail.com with ESMTPSA id y10-20020a5d470a000000b0032d9efeccd8sm12239931wrq.51.2023.10.25.07.44.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Oct 2023 07:44:34 -0700 (PDT)
-Message-ID: <f87c95d6-b1e5-45c7-b380-bdc8b8143ab9@gmail.com>
-Date: Wed, 25 Oct 2023 15:44:33 +0100
+        d=1e100.net; s=20230601; t=1698248388; x=1698853188;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=44GaEUmlVdbLLkP3V/i3j0JH1UyEZoDhBYraAo6oAGE=;
+        b=hMvEbJc7eTGY47LHJWAWyU7UBr4eLz5A3lPc9RSNrXLEZCcOkFB1lLo2rVoA4GgE0L
+         cul78kL/MMmiPsGDqUFeyVQillmbV/QMqQmYVPQ1yd74UVoXaPc85MEGFOG+uD+BYott
+         ModgMoh1+k3+z5Mmo9P0+LSPDibPQvde0+Gycz+AXP30jqq9T1diImjFEH0Iw0IQb5g7
+         +rc1FtXrTqwNDedNjgTFZVJ7Au79UEQ3DaeGPikS7GsRBJ3vo4b3rsncStyBVD0ZGkR9
+         3uLGpaEeFyNmOGwRTYvKF3ut88lP/8sPBD/LsLVGBS9zKb4XLueILCDi4OKiNPSW4NOZ
+         ccdA==
+X-Gm-Message-State: AOJu0YzYpC49ve7Vubqm/C7csi3ist9U7mS2hpbtL77vBkAtPXU1K7g9
+	fMikBAC0WVmnTPNo55bve7Epmg==
+X-Google-Smtp-Source: AGHT+IGRjka42kIDliT0VwMCis5gC4wChKowGf3SOXKkzsjVPkYEkk60p3kvcRW0aTzsgzlryVED0g==
+X-Received: by 2002:a05:622a:1313:b0:418:1f52:1421 with SMTP id v19-20020a05622a131300b004181f521421mr17205551qtk.9.1698248388536;
+        Wed, 25 Oct 2023 08:39:48 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id g7-20020ac87d07000000b00417dd1dd0adsm4321851qtb.87.2023.10.25.08.39.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Oct 2023 08:39:48 -0700 (PDT)
+Date: Wed, 25 Oct 2023 11:39:47 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	"Eric W. Biederman" <ebiederm@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v5 1/5] bulk-checkin: extract abstract
+ `bulk_checkin_source`
+Message-ID: <ZTk2w6rV2y7ZKfQh@nand.local>
+References: <cover.1697736516.git.me@ttaylorr.com>
+ <cover.1698101088.git.me@ttaylorr.com>
+ <696aa027e46ddec310812fad2d4b12082447d925.1698101088.git.me@ttaylorr.com>
+ <20231025073736.GB2145145@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 00/12] show-ref: introduce mode to check for ref existence
-Content-Language: en-US
-To: Han-Wen Nienhuys <hanwen@google.com>, Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
- Eric Sunshine <sunshine@sunshineco.com>
-References: <cover.1698152926.git.ps@pks.im> <xmqqttqf3k5a.fsf@gitster.g>
- <CAFQ2z_PqNsz+zycSxz=q2cUVOpJS-AEjwHxEM-fiafxd3dxc9g@mail.gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <CAFQ2z_PqNsz+zycSxz=q2cUVOpJS-AEjwHxEM-fiafxd3dxc9g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20231025073736.GB2145145@coredump.intra.peff.net>
 
-On 25/10/2023 15:26, Han-Wen Nienhuys wrote:
-> On Tue, Oct 24, 2023 at 9:17 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Patrick Steinhardt <ps@pks.im> writes:
->>
->>> this patch series introduces a new `--exists` mode to git-show-ref(1) to
->>> explicitly check for the existence of a reference, only.
->>
->> I agree that show-ref would be the best place for this feature (not
->> rev-parse, which is already a kitchen sink).  After all, the command
->> was designed for validating refs in 358ddb62 (Add "git show-ref"
->> builtin command, 2006-09-15).
->>
->> Thanks.  Hopefully I can take a look before I go offline.
-> 
-> The series description doesn't say why users would care about this.
-> 
-> If this is just to ease testing, I suggest adding functionality to a
-> suitable test helper. Anything you add to git-show-ref is a publicly
-> visible API that needs documentation and comes with a stability
-> guarantee that is more expensive to maintain than test helper
-> functionality.
+On Wed, Oct 25, 2023 at 03:37:36AM -0400, Jeff King wrote:
+> I don't mind this in-between state. It is a funny layering violating
+> from an OO standpoint, but it's not like we expect an unbounded set of
+> concrete types to "inherit" from the source struct.
 
-Does the new functionality provide a way for scripts to see if a branch 
-is unborn (i.e. has not commits yet)? I don't think we have a way to 
-distinguish between a ref that points to a missing object and an unborn 
-branch at the moment.
+Yeah, this was exactly my thinking when writing up the changes for this
+round. Since all of the "sub-classes" are local to the bulk-checkin.o
+compilation unit, I don't have grave concerns about one implementation
+peering into the details of another's.
 
-Best Wishes
+Gotta stop somewhere ;-).
 
-Phillip
-
+Thanks,
+Taylor
