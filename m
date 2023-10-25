@@ -1,207 +1,394 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88B1D2773D
-	for <git@vger.kernel.org>; Wed, 25 Oct 2023 12:14:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFD21224FB
+	for <git@vger.kernel.org>; Wed, 25 Oct 2023 12:46:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lUl1DuO8"
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9DAF13D
-	for <git@vger.kernel.org>; Wed, 25 Oct 2023 05:14:20 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-507ac66a969so7466357e87.3
-        for <git@vger.kernel.org>; Wed, 25 Oct 2023 05:14:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dE0WxnsE"
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79F298F
+	for <git@vger.kernel.org>; Wed, 25 Oct 2023 05:46:52 -0700 (PDT)
+Received: by mail-pj1-x1029.google.com with SMTP id 98e67ed59e1d1-27d292d38c0so3993742a91.1
+        for <git@vger.kernel.org>; Wed, 25 Oct 2023 05:46:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698236059; x=1698840859; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=PSsxv2cn5y0AcxXpDd1/4hocSUW2Ag1qM3UwlbCIs+c=;
-        b=lUl1DuO8wOVo8tCafrueDqzmBq9f5K+1aWyU0IAJz/rTSb1gwHc+56cWjfXPbOpb/G
-         TJqRvFzWsK8IdYRzks3GGNXxr7+JVK+uKD1/LxCI93vS50jXg/+kZtOzYhiDm9liyF2L
-         p5QmIrHDlBUYOZnajfuBqHXKaEI28mbqrZS6hyLk2AUgD6hwqYIDffP3Ojxk0wX6iTmj
-         XdDFwZEIB8lYf73XJzEviJgEvKKo4wcDbwvEh8PLG450sRrNyr56SjvvpaR4e7lNkCsg
-         Veds3aoKKqquZyKQ4QymM5Ft4nVR+4lRbox/9+nCDPLGM5MbWxhAlV7Z7xUNRfisM6r/
-         QQDw==
+        d=gmail.com; s=20230601; t=1698238012; x=1698842812; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=e1KxaORqsQQIBE6lbr8mjcHQ62l7PNJ6xRged/Aon+8=;
+        b=dE0WxnsEJ/bxprQrKLhUvzYXmUmHrZtlb8zIOQikSIX2agp+hNZnvvc8IEU+TI5IJk
+         cTDJO7dkHOV1TwIu+YmYXLgr571stfX4rvt/W2/3pUHf3HO3w6bxk1b2zHBjhyrybgdu
+         eYVPgzMZ4Mkke0XJHM/QpsGa0Zta2IoZdl1HhvegIfPaHjdw3on6K3ocJh5fpPrcUXtU
+         29uKrWTonW5S7IhkZC69nVTqh4fpJoiPOBukTS/JCKc697zMx4Yp64d4+bWxtSClIfwB
+         TBS3QKh0Ebj6SOT2wnZIohnvRbWXqZNGIwEQfiZkqSVGiz8lTObqOF2Dr71q60H1PiY8
+         dKXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698236059; x=1698840859;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=PSsxv2cn5y0AcxXpDd1/4hocSUW2Ag1qM3UwlbCIs+c=;
-        b=hXuqn8Ilnp53c9h2YrC88ddQJcGBLqEI9+Bo9Dcp2afzFgFEDkPEoX1kEKloj8lX2Y
-         lXeooRe8zVmfGSHAoGsB+UNmCv+cGN2gBTdYTXFf/ZzCJD4ix6yLRfXDoTj+fxKQpHlw
-         Xy3CKomR4p98PxKtCrLwt53i7qdz4iJKJVbLxJ+cIetmllxGP5mcLnJzRYJ5vJr+oS4i
-         VVI4PrUeloFVZqlPHlsAdsr9T9Fa6/sGXTG1EMIhcfpuPCWrEzlpoPGQmtkbz7YtIaB0
-         3FyWguNzerVsP1ThvQbXT/IpiPX1u9Vq+eG4zImYvbSrSqN07NGvAOnETkG4yAZ0VKZi
-         8mdw==
-X-Gm-Message-State: AOJu0YxTRqvnNn8SImAGU/L03BV1gpmi/lou9O8+FhEmS6Wro1Jdc4XS
-	R8xXI7OviKhwEuPKVmYFRJOgU5rULck=
-X-Google-Smtp-Source: AGHT+IHc1uIukmUH8PzU16WFcwwoxAg6dfk4RNr1HzvK4oRgGNujS1xIGPdyPXPnjBQ5O2MhTA7HvQ==
-X-Received: by 2002:ac2:5192:0:b0:507:cfbc:bf8d with SMTP id u18-20020ac25192000000b00507cfbcbf8dmr9370609lfi.16.1698236058335;
-        Wed, 25 Oct 2023 05:14:18 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j15-20020a05600c1c0f00b003fefb94ccc9sm14635263wms.11.2023.10.25.05.14.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Oct 2023 05:14:17 -0700 (PDT)
-Message-ID: <pull.1600.git.git.1698236057229.gitgitgadget@gmail.com>
-From: "Stefan Muenzel via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 25 Oct 2023 12:14:16 +0000
-Subject: [PATCH] merge: ignore whitespace changes when detecting renames
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1698238012; x=1698842812;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=e1KxaORqsQQIBE6lbr8mjcHQ62l7PNJ6xRged/Aon+8=;
+        b=grCLEyIJV3DoufZyb3iDWiVhl2VEQU3ksuGXGCjvWuUnycHwMAZ7lo/5zNLQuwH65S
+         2cgvT61vDtw9FVDEEgepnlYtJ0S9NI1a1+SR8hI2WLnvtCvdjYRuRzDQmhqONWaGnCd6
+         6p+dPb9VnMkopWVACb+OHV/Wxt4fmwqYOOq8xbiMakim6ESY4bVsO+iYPP9WrtsMGtdE
+         cAHhCqB3YPTKV6KhaNYgfmezCuDeEO4XUxHa0gRBuj/6HzR2v0BIECCbKo9vr54uNBM6
+         4KFcslZL0GxzeQgnWRjbqno/e4fH5ehX8zSamDM3j153SQUOTw17h2cUm3xqmNdAjpNB
+         04qg==
+X-Gm-Message-State: AOJu0YyddRgwtoXAuYIlU2ME2F1R+zqIo67ZakyF3SRmh4SfGAgi+e7d
+	YXxwDvIF31C1wbRuLyoedpOoO7mg2TnKH8c8GS7JjEOUCQ1lsequ
+X-Google-Smtp-Source: AGHT+IFHAMY+4d2VFa5EGaRXz73ohhF7ah5vqvIzE/JDJB8fVRn3lI27UMuwD8k6cYYsPX9e2NhFGuVYRBH4BAgNF2E=
+X-Received: by 2002:a17:90b:1c82:b0:27f:df1e:198e with SMTP id
+ oo2-20020a17090b1c8200b0027fdf1e198emr1349088pjb.26.1698238011455; Wed, 25
+ Oct 2023 05:46:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Stefan Muenzel <source@s.muenzel.net>,
-    Stefan Muenzel <source@s.muenzel.net>
+References: <CAJHH8bEfM8KmwhHX_Fmcb0A2zpr8L75vgNhfvZy-uitpSXNUvQ@mail.gmail.com>
+ <CAP8UFD22EpdBU8HJqFM+=75EBABOTf5a0q+KsbzLK+XTEGSkPw@mail.gmail.com>
+In-Reply-To: <CAP8UFD22EpdBU8HJqFM+=75EBABOTf5a0q+KsbzLK+XTEGSkPw@mail.gmail.com>
+From: Isoken Ibizugbe <isokenjune@gmail.com>
+Date: Wed, 25 Oct 2023 13:45:20 +0100
+Message-ID: <CAJHH8bH0gp9tbDJ4DYk3jkNPD5_dZ9s62D9ae3q33aBP0ZL9Lg@mail.gmail.com>
+Subject: Re: [RFC][Outreachy] Seeking Git Community Feedback on My Application
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Stefan Muenzel <source@s.muenzel.net>
+On Mon, Oct 23, 2023 at 3:24=E2=80=AFPM Christian Couder
+<christian.couder@gmail.com> wrote:
+>
+> On Thu, Oct 19, 2023 at 11:26=E2=80=AFAM Isoken Ibizugbe <isokenjune@gmai=
+l.com> wrote:
+> >
+> > Dear Git Community and Mentors,
+> >
+> > I hope you're doing well. I'm excited to share my application draft
+> > for the Outreachy program with the Git project. Your feedback is
+> > invaluable, and I'm eager to align the project with the community's
+> > needs. Please review the attached draft and share your insights.
+>
+> Thanks for your project application!
+>
+> [...]
+>
+> > Why am I interested in working with the Git chosen project?
+> >
+> > Git has been a cornerstone for software development, enabling
+> > developers worldwide to collaborate, innovate, and create exceptional
+> > software. I would say without Git, my journey to pursuing my software
+> > engineering career would be impossible, as I use it almost every day.
+> > Yet, in this constantly evolving landscape, there is always room for
+> > improvement, even in a well-established project. The Git project
+> > currently relies on end-to-end tests, and this is where I see an
+> > opportunity to make a profound impact. Being able to test libraries in
+> > isolation via unit tests or mocks speeds up determining the root cause
+> > of bugs. I am deeply passionate about contributing to this project and
+> > firmly believe in the power of open-source software and the collective
+> > intelligence of the community. A successful completion of this project
+> > will significantly improve Git's testing capabilities and bring the
+> > benefits of fewer errors, faster work and better testing for all
+> > parts.
+>
+> Ok.
+>
+> [...]
+>
+> > Contributions to Git
+> >
+> > I have actively participated in Git's mailing list discussions and
+> > contributed to a micro-project;
+> >
+> > - builtin/branch.c: Adjust error messages such as die(), error(), and
+> > warning() messages used in branch, to conform to coding guidelines
+> > (https://lore.kernel.org/git/20231019084052.567922-1-isokenjune@gmail.c=
+om/)
+> > - Implemented changes to fix broken tests based on reviews from the
+> > community (https://lore.kernel.org/git/20231019084052.567922-1-isokenju=
+ne@gmail.com/)
+> > - In review.
+>
+> Nice!
+>
+> > Project Goals:
+> >
+> > - Improve Testing Efficiency: Transitioning from end-to-end tests to
+> > unit tests will enable more efficient testing of error conditions.
+> > - Codebase Stability: Unit tests enhance code stability and facilitate
+> > easier debugging through isolation.
+> > - Simplify Testing: Writing unit tests in pure C simplifies test
+> > setup, data passing, and reduces testing runtime by eliminating
+> > separate processes for each test.
+>
+> Ok.
+>
+> > Project Milestones:
+> >
+> > - Add useful tests of library-like code
+> > - Integrate with stdlib work
+>
+> Not sure what you call "stdlib" here.
+>
+> > - Run alongside regular make test target
+> >
+> > Project Timeline:
+> >
+> > 1. Oct 2 - Nov 20: Community Bonding
+> >
+> > - Understanding the structure of Git
+> > - Getting familiar with the code
+>
+> I think some of this time is also spent on working on a microproject,
+> writing an application and perhaps doing other things that regular Git
+> developers do.
+>
+> > 2. Dec 4 - Jan 15: Add useful tests of library-like code
+> >
+> > - Identify and document the current state of the tests in the Git
+> > t/helper directory.
+>
+> It would be nice if you could already take a look at that and tell us
+> about it in your application. There are different things in t/helper.
+> Some are worth porting and others are not. You might not want (or have
+> time to) to classify everything right now, but if you can identify a
+> few of each kind, and use those, or just one of them, as an example,
+> that would be great.
+>
+> > - Confirm the licensing and compatibility requirements for the chosen
+> > unit testing framework.
+>
+> I think those who have been working on the unit test framework have
+> already done this.
 
-The options ignore-space-changes and ignore-all-space for
-merge strategies based on "ort" are now propagated
-to the computation of file renames, by normalizing spacing
-changes when computing file hashes.
+Thank you for the review. I have made changes to the project plan and
+it emphasizes the critical tasks of identifying, selecting, and
+porting tests, making it more concise and aligned with the project's
+scope.
 
-Signed-off-by: Stefan Muenzel <source@s.muenzel.net>
----
-    merge: ignore whitespace changes when detecting renames
+- Community Bonding (Oct 2 - Nov 20): Microproject contribution, Git
+project application, get familiar with the Git codebase and testing
+ecosystem.
+-Identify and Select Tests: Identify and prioritize tests worth
+porting, and document the selected tests. (I would classify tests that
+are worth porting according to the following for now;
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1600%2Fsmuenzel%2Frenames-ignore-whitespace-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1600/smuenzel/renames-ignore-whitespace-v1
-Pull-Request: https://github.com/git/git/pull/1600
+Relevance: Prioritize tests that are relevant to the current Git codebase.
+Coverage: Focus on tests that cover core functionality or critical code pat=
+hs.
+Usage Frequency: Port tests that are frequently used or run in Git's
+development process.
+Isolation: Choose tests that can be easily ported and run independently.
 
- diff.c            |  4 ++++
- diffcore-delta.c  | 14 ++++++++++++++
- diffcore-rename.c |  9 +++++++++
- diffcore.h        |  2 ++
- merge-recursive.c |  1 +
- 5 files changed, 30 insertions(+)
+- Write Unit Tests: Write unit tests for the identified test cases
+using the Git custom test framework.
+- Port Existing Tests: Port selected test cases from the t/helper
+directory to the unit testing framework, by modifying them to work
+within the custom TAP framework.
+- Test Execution and Debugging: Execute the newly written unit tests
+and the ported tests using the test framework.
+- Seek Feedback: Share the progress with mentors and the Git
+community, and address any concerns or suggestions provided by the
+community.
+- Documentation and Reporting: Document the entire process of
+migrating Git's tests to the unit testing framework, and prepare a
+final project report summarizing the work done, challenges faced, and
+lessons learned.
 
-diff --git a/diff.c b/diff.c
-index 2c602df10a3..916cc38f57c 100644
---- a/diff.c
-+++ b/diff.c
-@@ -4081,6 +4081,7 @@ int diff_populate_filespec(struct repository *r,
- {
- 	int size_only = options ? options->check_size_only : 0;
- 	int check_binary = options ? options->check_binary : 0;
-+	int ignore_whitespace = options ? options->ignore_whitespace : 0;
- 	int err = 0;
- 	int conv_flags = global_conv_flags_eol;
- 	/*
-@@ -4090,6 +4091,9 @@ int diff_populate_filespec(struct repository *r,
- 	if (conv_flags & CONV_EOL_RNDTRP_DIE)
- 		conv_flags = CONV_EOL_RNDTRP_WARN;
- 
-+	if (ignore_whitespace)
-+		s->ignore_whitespace = 1;
-+
- 	if (!DIFF_FILE_VALID(s))
- 		die("internal error: asking to populate invalid file.");
- 	if (S_ISDIR(s->mode))
-diff --git a/diffcore-delta.c b/diffcore-delta.c
-index c30b56e983b..e2bb5f9133a 100644
---- a/diffcore-delta.c
-+++ b/diffcore-delta.c
-@@ -130,6 +130,7 @@ static struct spanhash_top *hash_chars(struct repository *r,
- 	unsigned char *buf = one->data;
- 	unsigned int sz = one->size;
- 	int is_text = !diff_filespec_is_binary(r, one);
-+	int ignore_whitespace = one->ignore_whitespace;
- 
- 	i = INITIAL_HASH_SIZE;
- 	hash = xmalloc(st_add(sizeof(*hash),
-@@ -149,6 +150,19 @@ static struct spanhash_top *hash_chars(struct repository *r,
- 		if (is_text && c == '\r' && sz && *buf == '\n')
- 			continue;
- 
-+		if (is_text && ignore_whitespace && isspace(c)) {
-+			if (sz) {
-+				char next = *buf;
-+				if ( c == '\n' && next == '\n')
-+					continue;
-+				else if ( c != '\n' && isspace(next))
-+					continue;
-+			}
-+			if ( c != '\n')
-+				/* Normalize whitespace to space*/
-+				c = ' ';
-+		}
-+
- 		accum1 = (accum1 << 7) ^ (accum2 >> 25);
- 		accum2 = (accum2 << 7) ^ (old_1 >> 25);
- 		accum1 += c;
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 5a6e2bcac71..ee68442afc3 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -14,6 +14,7 @@
- #include "string-list.h"
- #include "strmap.h"
- #include "trace2.h"
-+#include "xdiff-interface.h"
- 
- /* Table of rename/copy destinations */
- 
-@@ -950,6 +951,10 @@ static int find_basename_matches(struct diff_options *options,
- 		.info = info
- 	};
- 
-+	dpf_options.ignore_whitespace =
-+		DIFF_XDL_TST(options, IGNORE_WHITESPACE_CHANGE)
-+		|| DIFF_XDL_TST(options, IGNORE_WHITESPACE);
-+
- 	/*
- 	 * Create maps of basename -> fullname(s) for remaining sources and
- 	 * dests.
-@@ -1402,6 +1407,10 @@ void diffcore_rename_extended(struct diff_options *options,
- 		.repo = options->repo
- 	};
- 
-+	dpf_options.ignore_whitespace =
-+		DIFF_XDL_TST(options, IGNORE_WHITESPACE_CHANGE)
-+		|| DIFF_XDL_TST(options, IGNORE_WHITESPACE);
-+
- 	trace2_region_enter("diff", "setup", options->repo);
- 	info.setup = 0;
- 	assert(!dir_rename_count || strmap_empty(dir_rename_count));
-diff --git a/diffcore.h b/diffcore.h
-index 5ffe4ec788f..d6bee67e646 100644
---- a/diffcore.h
-+++ b/diffcore.h
-@@ -61,6 +61,7 @@ struct diff_filespec {
- 	unsigned has_more_entries : 1; /* only appear in combined diff */
- 	/* data should be considered "binary"; -1 means "don't know yet" */
- 	signed int is_binary : 2;
-+	unsigned ignore_whitespace : 1;
- 	struct userdiff_driver *driver;
- };
- 
-@@ -78,6 +79,7 @@ void diff_queued_diff_prefetch(void *repository);
- struct diff_populate_filespec_options {
- 	unsigned check_size_only : 1;
- 	unsigned check_binary : 1;
-+	unsigned ignore_whitespace : 1;
- 
- 	/*
- 	 * If an object is missing, diff_populate_filespec() will invoke this
-diff --git a/merge-recursive.c b/merge-recursive.c
-index e3beb0801b1..0e52c45158a 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -1894,6 +1894,7 @@ static struct diff_queue_struct *get_diffpairs(struct merge_options *opt,
- 	repo_diff_setup(opt->repo, &opts);
- 	opts.flags.recursive = 1;
- 	opts.flags.rename_empty = 0;
-+	opts.xdl_opts = opt->xdl_opts;
- 	opts.detect_rename = merge_detect_rename(opt);
- 	/*
- 	 * We do not have logic to handle the detection of copies.  In
+What is the custom TAP framework?
 
-base-commit: 2e8e77cbac8ac17f94eee2087187fa1718e38b14
--- 
-gitgitgadget
+According to this patch
+(https://lore.kernel.org/git/ca284c575ece0aee7149641d5fb1977ccd7e7873.16922=
+29626.git.steadmon@google.com/)
+by Phillip Wood, which contains an example implementation for writing
+unit tests with TAP output. The custom TAP framework is a Test
+Anything Protocol (TAP) framework that allows for clear reporting of
+test results, aiding in debugging and troubleshooting.
+
+The framework contains the following features:
+
+- Test Structure: Unit tests are defined as functions containing
+multiple checks. The tests are run using the TEST() macro. If any
+checks within a test fail, the entire test is marked as failed.
+- Output Format: The output of the test program follows the TAP
+format. It includes a series of messages describing the test's status.
+For passed tests, it reports "ok," and for failed tests, it reports
+"not ok." Each test is numbered, e.g., "ok 1 - static initialization
+works," to indicate success or failure.
+- Check Functions: Several check functions are available, including
+check() for boolean conditions, check_int(), check_uint(), and
+check_char() for comparing values using various operators. check_str()
+is used to compare strings.
+- Skipping Tests: Tests can be skipped using test_skip() and can
+include a reason for skipping, which is printed as part of the report.
+- Diagnostic Messages: Tests can generate diagnostic messages using
+test_msg() to provide additional context or explanations for test
+failures.
+- Planned Failing Tests: Tests that are known to fail can be marked
+with TEST_TODO(). These tests will still run, and the failures will be
+reported, but they will not cause the entire suite to fail.
+- Building and Running: The unit tests can be built with "make
+unit-tests" (with some additional Makefile changes), and they can be
+executed manually or using a tool like prove.
+
+Using the formerly given criteria, test-ctype.c is suitable for
+porting because it tests character type checks used extensively in
+Git. These tests cover various character types and their expected
+behaviour, ensuring the correctness and reliability of Git's
+operations, and test-ctype.c isolation makes it suitable for porting
+without relying on multiple libraries.
+
+
+Here is a sample of the implementation of how I would write the unit
+test following the custom TAP framework taking t/helper/test-ctype.c
+
+- Create and rename the new .c file;
+I would rename it according to the convention done in the t/unit-test
+directory, by starting the name with a =E2=80=9Ct-=E2=80=9D prefix e.g t-ct=
+ype.c
+
+- Document the tests and include the necessary headers:
+/**
+ *Tests the behavior of ctype
+ *functions
+*/
+#include "test-lib.h"
+#include "ctype.h"
+
+- Define test functions:
+#define DIGIT "0123456789"
+
+static void t_digit_type(void)
+{
+    int i;
+    const char *digits =3D DIGIT;
+    for (i =3D 0; digits[i]; i++)
+   {
+         check_int(isdigit(digits[i]), =3D=3D, 0);
+   }
+
+- Include main function which will call the test functions using the TEST m=
+acro;
+int main(void)
+{
+    TEST(t_digit_type(), "Character is a digit");
+    return test_done();
+}
+
+- Run the tests:
+=E2=80=98make && make=E2=80=99 unit-tests can be used build and run the uni=
+t tests
+Or run the test binaries directly:
+./t/unit-tests/t-ctype.c
+
+The Makefile will be modified to add the file;
+UNIT_TEST_PROGRAMS +=3D t-ctype
+The test output will be in the TAP format and will indicate which
+tests passed(ok) and which failed(not ok), along with diagnostic
+messages in case of failures.
+
+ok 1 - Character is a digit
+
+1..1
+
+>
+> > - Develop unit tests for these library-like components.
+>
+> Not sure what are "these library-like components". An example would
+> perhaps help.
+>
+> > - Execute the tests and ensure they cover various scenarios, including
+> > error conditions.
+> > - Run the tests and address any initial issues or bugs to ensure they
+> > work as intended.
+>
+> Ok.
+>
+> > - Document the new tests and their coverage.
+>
+> What kind of documentation would that be?
+>
+> > - Seek feedback  and support from mentors and the Git community
+> >
+> > 3. Jan 15 - Feb 15: Integrate with Stdlib Work
+> >
+> > - Collaborate with the team working on standard library integration.
+>
+> Not sure what "standard library". Actually, maybe you are talking
+> about the goal of having a "standard library" implementation for Git
+> which is described in this report from the Virtual Contributor's
+> Summit:
+>
+> https://lore.kernel.org/git/ZRrfN2lbg14IOLiK@nand.local/
+>
+> It's true that the unit test framework would help with that goal. So
+> yeah maybe you will have to collaborate with the team working on that
+> goal. I am not sure at what step the work on this library will be when
+> the internship will start though.
+>
+> > - Ensure that the tests for library-like code align with stdlib work.
+> > - Verify that the tests effectively check the compatibility and
+> > interaction of the code with standard libraries.
+> > - Gather feedback and insights from the Git community on the
+> > integrated tests, addressing any concerns or suggestions.
+>
+> Ok, but I think it would be more interesting to follow the steps with
+> an example test.
+>
+> > 4. Feb 15 - March 1: Run Alongside Regular 'make test' Target and final=
+ize
+> >
+> > - Configure the testing framework to run alongside the regular 'make
+> > test' target.
+>
+> I think others will likely take care of that sooner.
+>
+> > - Ensure that the new tests are included in the standard testing suite.
+> > - Execute 'make test' with the new tests and verify that they pass succ=
+essfully.
+> > - Document the integration process and how the new tests are included
+> > in the standard testing procedure.
+> > - Perform comprehensive testing of the entire unit testing framework.
+> > - Ensure all migrated tests are working correctly within the new framew=
+ork.
+> > - Document the entire process of migrating Git's tests
+> > - Prepare a final project report
+>
+> Ok, but here also following an example test would be more interesting.
+
+>
+> > Technical Requirements
+> >
+> > According to the documentation on the unit test project
+> > (https://github.com/steadmon/git/blob/unit-tests-asciidoc/Documentation=
+/technical/unit-tests.adoc),
+> > the suggested best framework for the Git project is the "Custom TAP
+> > framework" (Phillip Wood's TAP implementation), as it aligns with
+> > Git's licensing requirements, is vendorable, and can be customized by
+> > Git's developers as needed, but it may require some additional
+> > development work for features like parallel execution and mock
+> > support, but it offers a strong foundation for unit testing within the
+> > Git project.
+>
+> Yeah, right. Thanks for summarizing that document!
+>
+> > Relevant Projects
+> >
+> > Simple shell -  A project based on emulating a shell. It was a
+> > collaborative project which we managed using Git.
+> > (https://github.com/Junie06/simple_shell).
+> > This project was written in C, which allowed me to apply my C language
+> > knowledge, essential for Git projects.
+> > I'm proficient in using Shell for scripting, redirections, and
+> > permissions, as shown in my work
+> > (https://github.com/Junie06/alx-system_engineering-devops).
+> > Creating the simple shell project deepened my understanding of how
+> > shells work, and I even attempted to replicate a shell environment.
+> > Collaborating on the Simple Shell project reinforced my Git skills.
+>
+> Ok, nice!
+>
+> Best,
+> Christian.
