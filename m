@@ -1,60 +1,60 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 143CA156E5
-	for <git@vger.kernel.org>; Wed, 25 Oct 2023 15:39:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 500B3156E5
+	for <git@vger.kernel.org>; Wed, 25 Oct 2023 15:44:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="DQ80j7mf"
-Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B41A131
-	for <git@vger.kernel.org>; Wed, 25 Oct 2023 08:39:49 -0700 (PDT)
-Received: by mail-qt1-x836.google.com with SMTP id d75a77b69052e-41cb76f3cf0so35770801cf.2
-        for <git@vger.kernel.org>; Wed, 25 Oct 2023 08:39:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="gtJmSRgr"
+Received: from mail-vk1-xa2a.google.com (mail-vk1-xa2a.google.com [IPv6:2607:f8b0:4864:20::a2a])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 459C513A
+	for <git@vger.kernel.org>; Wed, 25 Oct 2023 08:44:17 -0700 (PDT)
+Received: by mail-vk1-xa2a.google.com with SMTP id 71dfb90a1353d-49d6bd360f8so2389869e0c.2
+        for <git@vger.kernel.org>; Wed, 25 Oct 2023 08:44:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1698248388; x=1698853188; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1698248656; x=1698853456; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=44GaEUmlVdbLLkP3V/i3j0JH1UyEZoDhBYraAo6oAGE=;
-        b=DQ80j7mfUwXylD87653S2SIY7s6Klrn5OzyxhnxT1iAEqJ6qWzEAelrUDvpftqsdce
-         PjUnV430yaDD49UtRVLbTXqQ0PIqKYjrb+90FwLUgAhRu5j4t7epUW2B4bLg4QFGWciM
-         ejIxU1iHf+x/prmFD+NqoH/tfBeBlNKbIFCFnGM0abR7pUxcALGd5k4q529IsN7gOE2W
-         nmbNjis9nvAOYuUnycW/KTrk7PGak9mBmylL0CqG9x1nsMujhNbpWx1MngqP8FKQP5G4
-         L6dECctwdu7mjkY4Aa0L0TbNDtcDvySAVSKrgFJ++L6cw4sph0cStFBwX2PhVQr88DC3
-         hsuw==
+        bh=KZ9kFrGIW1bwEDEyqb4NjpecByHUh8cKYQRehwD/neQ=;
+        b=gtJmSRgr/Ll2JrPMMvnJHlO57E6rs2jqsqll/OYs09eGZxFldxE4V8azI3cfqqcn/g
+         N/xmIN4G5V41iAgDNaCtfgbTrIi9d1qd5J5Frz6/ZDDC7e9Ce63r311sShSgsKVxCGaS
+         UxcZgF859KvXRRHA+d+F/zOxQiEK+80BrtHo0XkK34hHJwjQzU71OUK5Q334hC6lfy0N
+         2XU0fshxlpJFX4SP2lcq+xYuOqP9yEzkcXarCkVH1ymP1xdbkVGdDVxbHK4nqeN3swmT
+         K+kEYQVbpqQznyPYthAiLJN8eS9BTyTmJord4WfUrAqDd4cZtIE283zfbotssuhm+0ot
+         npxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698248388; x=1698853188;
+        d=1e100.net; s=20230601; t=1698248656; x=1698853456;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=44GaEUmlVdbLLkP3V/i3j0JH1UyEZoDhBYraAo6oAGE=;
-        b=hMvEbJc7eTGY47LHJWAWyU7UBr4eLz5A3lPc9RSNrXLEZCcOkFB1lLo2rVoA4GgE0L
-         cul78kL/MMmiPsGDqUFeyVQillmbV/QMqQmYVPQ1yd74UVoXaPc85MEGFOG+uD+BYott
-         ModgMoh1+k3+z5Mmo9P0+LSPDibPQvde0+Gycz+AXP30jqq9T1diImjFEH0Iw0IQb5g7
-         +rc1FtXrTqwNDedNjgTFZVJ7Au79UEQ3DaeGPikS7GsRBJ3vo4b3rsncStyBVD0ZGkR9
-         3uLGpaEeFyNmOGwRTYvKF3ut88lP/8sPBD/LsLVGBS9zKb4XLueILCDi4OKiNPSW4NOZ
-         ccdA==
-X-Gm-Message-State: AOJu0YzYpC49ve7Vubqm/C7csi3ist9U7mS2hpbtL77vBkAtPXU1K7g9
-	fMikBAC0WVmnTPNo55bve7Epmg==
-X-Google-Smtp-Source: AGHT+IGRjka42kIDliT0VwMCis5gC4wChKowGf3SOXKkzsjVPkYEkk60p3kvcRW0aTzsgzlryVED0g==
-X-Received: by 2002:a05:622a:1313:b0:418:1f52:1421 with SMTP id v19-20020a05622a131300b004181f521421mr17205551qtk.9.1698248388536;
-        Wed, 25 Oct 2023 08:39:48 -0700 (PDT)
+        bh=KZ9kFrGIW1bwEDEyqb4NjpecByHUh8cKYQRehwD/neQ=;
+        b=t1yimAC+WrLT4/dJ790gMWF/pDgTGRwWUmggxrDSaaLeO7v0L0j7LdSLQY20o5H9dD
+         yYHde4NeI/IBxNaX4IOyRjRFq/vDeq1Sm5/4is1w/vhCLR5GfVr+URHKXQpRh4rExx+I
+         hngf81OVTdobN4rpdZIbNHIWot5iT4U78Wz8df1p0Hx6iKshcDCJNnxyv86zZ30mVIqD
+         1ZOOs/QnZBddYXZ+7wdAvbi91RKL8SVBMHqgzBY9df4yiw7wJ/+VWr3t8vN1HLqsGt/X
+         NNaFygp2gNlskfidPpj2dz465xeG6cHqxliGSttDjpfzQPqtt9w/IgWGuCvInFrvFy3l
+         CKrA==
+X-Gm-Message-State: AOJu0Yzj+6uBNcY3nnP73j11e3izGPKSOtg2d63eDd9sAXUuLFCAtskb
+	KKS+UFq+0D9h7Vix5nLWRYnf7Q==
+X-Google-Smtp-Source: AGHT+IF3lXs1t90h8G8ch3qndbdTNQIcHBwlorszQFdKsHGDf6tvbNZTy9gKe6b/UsZgU87b8f2Qtg==
+X-Received: by 2002:a05:6122:2020:b0:4a1:a334:57f6 with SMTP id l32-20020a056122202000b004a1a33457f6mr15127138vkd.1.1698248656196;
+        Wed, 25 Oct 2023 08:44:16 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id g7-20020ac87d07000000b00417dd1dd0adsm4321851qtb.87.2023.10.25.08.39.48
+        by smtp.gmail.com with ESMTPSA id a18-20020ac87212000000b00419b5274381sm4297957qtp.94.2023.10.25.08.44.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Oct 2023 08:39:48 -0700 (PDT)
-Date: Wed, 25 Oct 2023 11:39:47 -0400
+        Wed, 25 Oct 2023 08:44:15 -0700 (PDT)
+Date: Wed, 25 Oct 2023 11:44:14 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	"Eric W. Biederman" <ebiederm@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v5 1/5] bulk-checkin: extract abstract
- `bulk_checkin_source`
-Message-ID: <ZTk2w6rV2y7ZKfQh@nand.local>
+	"Eric W. Biederman" <ebiederm@gmail.com>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 3/5] bulk-checkin: introduce
+ `index_blob_bulk_checkin_incore()`
+Message-ID: <ZTk3zoncT6nvV3aQ@nand.local>
 References: <cover.1697736516.git.me@ttaylorr.com>
  <cover.1698101088.git.me@ttaylorr.com>
- <696aa027e46ddec310812fad2d4b12082447d925.1698101088.git.me@ttaylorr.com>
- <20231025073736.GB2145145@coredump.intra.peff.net>
+ <d8cf8e4395375f88fe4e1ade2b79a3be6ce5fb12.1698101088.git.me@ttaylorr.com>
+ <ZTjKjkRMkmCuxDU1@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -63,19 +63,42 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20231025073736.GB2145145@coredump.intra.peff.net>
+In-Reply-To: <ZTjKjkRMkmCuxDU1@tanuki>
 
-On Wed, Oct 25, 2023 at 03:37:36AM -0400, Jeff King wrote:
-> I don't mind this in-between state. It is a funny layering violating
-> from an OO standpoint, but it's not like we expect an unbounded set of
-> concrete types to "inherit" from the source struct.
+On Wed, Oct 25, 2023 at 09:58:06AM +0200, Patrick Steinhardt wrote:
+> On Mon, Oct 23, 2023 at 06:45:01PM -0400, Taylor Blau wrote:
+> > Introduce `index_blob_bulk_checkin_incore()` which allows streaming
+> > arbitrary blob contents from memory into the bulk-checkin pack.
+> >
+> > In order to support streaming from a location in memory, we must
+> > implement a new kind of bulk_checkin_source that does just that. These
+> > implementation in spread out across:
+>
+> Nit: the commit message is a bit off here. Probably not worth a reroll
+> though.
 
-Yeah, this was exactly my thinking when writing up the changes for this
-round. Since all of the "sub-classes" are local to the bulk-checkin.o
-compilation unit, I don't have grave concerns about one implementation
-peering into the details of another's.
+Your eyes are definitely mine, because I'm not seeing where the commit
+message is off! But hopefully since you already don't think it's worth a
+reroll, and I'm not even sure what the issue is that we can just leave
+it ;-).
 
-Gotta stop somewhere ;-).
+> > +static off_t bulk_checkin_source_seek_incore(struct bulk_checkin_source *source,
+> > +					     off_t offset)
+> > +{
+> > +	if (!(0 <= offset && offset < source->size))
+> > +		return (off_t)-1;
+>
+> At the risk of showing my own ignorance, but why is the cast here
+> necessary?
+
+It's not necessary, see this godbolt example that shows two functions
+doing the same thing (one with the explicit cast, one without):
+
+  https://godbolt.org/z/f737EcGfG
+
+But there are a couple of other spots within the bulk-checkin code
+(specifically within the deflate_blob_to_pack() routine) that explicitly
+cast -1 to an off_t, so I was more trying to imitate the local style.
 
 Thanks,
 Taylor
