@@ -1,162 +1,139 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 170AF2D62A
-	for <git@vger.kernel.org>; Wed, 25 Oct 2023 08:04:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B8D154BD
+	for <git@vger.kernel.org>; Wed, 25 Oct 2023 08:05:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HbtSfS9p"
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1F3D187
-	for <git@vger.kernel.org>; Wed, 25 Oct 2023 01:04:02 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-9c3aec5f326so122366366b.1
-        for <git@vger.kernel.org>; Wed, 25 Oct 2023 01:04:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698221041; x=1698825841; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BAhuPGp0AbQUSAhusVx+532T6usHaQvtFEDbxXzy2yw=;
-        b=HbtSfS9pN4JSIxPobi1kXImGeLD48duG33dI3IY9DvNalVRD7MGhVrp5KZx2JwAuw2
-         xep5/WGDZQIBL2iBD3/qemPSlhe3D9OZ1xrdb+ymhsF76nIp3COgBTHJtsvoC9kkHz1H
-         lJf8cWcHlNKGtPpIO3He5XZijNk1jPtZgkgM3BDB62bx+53f6N3xEaE9Dl5iBnFL8itO
-         0fCf4rvDuYBmgUVgmEF4tultyDYL+fj6M19MHXiylIZrFHh8vJ5jfEnV3IlQ2xI4ClDT
-         0PqR9FN04Cgt5JkbfGO/ToX/5wL9XnRVXnf/aRUlGD7fSulCu6sbrrQGqkdKclnmn+1F
-         czmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698221041; x=1698825841;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=BAhuPGp0AbQUSAhusVx+532T6usHaQvtFEDbxXzy2yw=;
-        b=ctafyyhWdZPK2BCChl5AYDQOnV6wunA3HdXzAf4Gu9GYVqagVchQErNIVwq+HpzY6E
-         ZuZcylyTSkVXooiChtM4YGuy2haMKKlvj5i2I7cdQuj208xv93vFsmXAVM0Mtu+HRfD7
-         rlLTfoGIKplvyipXD4xDrRZcubbZh4KPKu3J0Djw0XbHRj11vYQvA49HV7LUwv2+oAIS
-         9+9T33s8QEM7/PcyZOPBKLbse2ahfkacvvJzCkFUeCNgxD5t+UlNXOT60IRLhCKI5i0a
-         dqHcZ2Gc8LBtkntqwAkJaWUE74ncLz9lcmqU0qpZo6BM2D4aBbci0xJg0axNFHFoSeQP
-         OPUA==
-X-Gm-Message-State: AOJu0YwHs9pYJPfkzSIqTqr51H8gUwYAde3zTX76K2DpMP3ia8Bh56uh
-	0gS1luDkh+bAreSeGx3hhSlCWowIY61ilXLnH7w=
-X-Google-Smtp-Source: AGHT+IFnt7M5p28BO1iKlkpwXe9vWa8dUeFj0CpDM3x8lXiIA45Nvn6658QRQfDTH8E+SwFij7kiYwMu7fYaiDOHxRY=
-X-Received: by 2002:a17:906:6a13:b0:9ad:8a96:ad55 with SMTP id
- qw19-20020a1709066a1300b009ad8a96ad55mr17255535ejc.14.1698221040691; Wed, 25
- Oct 2023 01:04:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jZvKyK2L";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T7iGykjB"
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4925E91
+	for <git@vger.kernel.org>; Wed, 25 Oct 2023 01:05:09 -0700 (PDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id 956275C032C;
+	Wed, 25 Oct 2023 04:05:08 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute3.internal (MEProxy); Wed, 25 Oct 2023 04:05:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to; s=fm3; t=1698221108; x=1698307508; bh=lU
+	bvddw67+RW1V2mFMtrTqemk4M/ZArmrLvsPU7IqIs=; b=jZvKyK2Llfk3nmAR8v
+	DQQtXp603OC+ER2hd9Qk6WbQ1ogsPgNx8IXBF/gfxx0YW9AZ8o/QCPEBpiGBHOHA
+	cSemduv5gK1qTKPe01o5MD5mLHof7uBJyn2W24I47w6Z6RYPkmjhqAEAD6pbw3dI
+	uM8UFRdotd9Hm2u9Ylp7/mWAUKZBP2ef5jqEqTlUDUxBxui5QSjI6i399e9COqJi
+	enxD7n7+/+udWAHfDjuE4mDdD78wmPSzV7vn4lJ39lwLKir/oqSlDGPPUHN69uwF
+	Dt1MhT8AUdStVaYznHv0QMJmGv2N6Qa4/XM188JNGW1x2ZGI+HoIR5+zb717Y+wz
+	CBwg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm3; t=1698221108; x=1698307508; bh=lUbvddw67+RW1
+	V2mFMtrTqemk4M/ZArmrLvsPU7IqIs=; b=T7iGykjBnLDfkpoOy2h49uyhyGAQ9
+	1f3RYL+niqJ+EWvVCJwI6lML5xQ0MEv4tk5AUmXjfg+aUxmUSdcScrlMl5mn8mKj
+	mKgjqPeTNH7dl9WRIHstx1rG7vds0jLruNZiCR7Cd2XlVhHgbPHSOrLJ9iU1I/Iz
+	3NltLxuZKKa9Sklf/wvUbu846z6mOJMR6XFoAa2y9Ku9tOn4Es75X4ZNwVPw1irF
+	bMlLxZ9V6s75ghAMMierc6/6o1FLAkaZ3Tcsvusv2x+mHT3krtBG6yEWZW/EnPmB
+	MuSrES6pnZNc1DOYMazUasnWqnT0PmbND9Q6OFydH7JMs+sfocWVGwXPw==
+X-ME-Sender: <xms:NMw4Zd3WVoM8jz23OSYb-vABermN2b3NGIaiDSfujAE9Vj2KnbFDdg>
+    <xme:NMw4ZUEmtvLXmAJnlGMQou3KjbUikxk6K3mFor6P9ReLKyBsjNCNooTtWjoAJBLBS
+    6CX_8oF8TeChGQt5A>
+X-ME-Received: <xmr:NMw4Zd4HOZfa-RpTR0FV5uaNYXmoMal13HRcUOOhk4vrWokDpi3GLCsM033YdoSAqLh8zvtZzHwtH92_vZ0bNYBzqZ8rv-STRMZfsu6juMFckmI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrledtucetufdoteggodetrfdotffvucfrrh
+    hofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgenuceurghi
+    lhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttd
+    dvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdr
+    ihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfe
+    efgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhep
+    mhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:NMw4Za055alqvVj-RwrrPof1gdkaAhC8jwf4z5vufmp0ftsrieaFFA>
+    <xmx:NMw4ZQHBKraHVHejW4SJlbbhR2OZdZAXXiuBboFgvJjBz7KP3lhMSQ>
+    <xmx:NMw4Zb-vbUVZCuKs7FtEsFL98KYbD76h0fg9-NSGGLk9YIs1Ty_vJA>
+    <xmx:NMw4ZVSNUko0w-OOg6tH7Qe9abC88lLyFLC0AMB_1We92SZn5q5tLw>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 25 Oct 2023 04:05:07 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id eed56c0c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 25 Oct 2023 08:04:59 +0000 (UTC)
+Date: Wed, 25 Oct 2023 10:05:04 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org, stolee@gmail.com
+Subject: Re: [PATCH v1 3/4] config: factor out global config file
+ retrievalync-mailbox>
+Message-ID: <ZTjMMC1GiPJUXnQm@tanuki>
+References: <cover.1697660181.git.code@khaugsbakk.name>
+ <147c767443c35b3b4a5516bf40557f41bb201078.1697660181.git.code@khaugsbakk.name>
+ <ZTZDqToqcsDiS5AP@tanuki>
+ <ZTav2u1JWmLexEHL@nand.local>
+ <87badbe0-de18-4f8a-9589-314cea46065e@app.fastmail.com>
+ <ZTip7JWm-WRWTImU@tanuki>
+ <2b764f52-d3ae-467f-a915-fb73beb247bb@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CACS=G2yJa3xvCPN6bqsa4+vSkwsdUouhqNvuH6y_CC2cJ0YSmQ@mail.gmail.com>
-In-Reply-To: <CACS=G2yJa3xvCPN6bqsa4+vSkwsdUouhqNvuH6y_CC2cJ0YSmQ@mail.gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 25 Oct 2023 10:03:48 +0200
-Message-ID: <CAP8UFD3athDOto3vMr_SgSTZG_3ny=yyZ22fGcV5yoWNjJo2fA@mail.gmail.com>
-Subject: Re: [OUTREACHY] Final Application For Git Internshhip
-To: Naomi Ibe <naomi.ibeh69@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="8g6Q8X2nKbJgIz6b"
+Content-Disposition: inline
+In-Reply-To: <2b764f52-d3ae-467f-a915-fb73beb247bb@app.fastmail.com>
+
+
+--8g6Q8X2nKbJgIz6b
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 24, 2023 at 9:48=E2=80=AFAM Naomi Ibe <naomi.ibeh69@gmail.com> =
-wrote:
->
-> I'm Ibe Naomi Amarachi,I'm a Nigerian and I currently live in
-> Lagos,Nigeria. I'm a graduate of the African Leadership Xcelerator
-> Software Engineering program (ALX SE), with specialization in backend
-> web development and I'm applying for the "Moving Existing Tests to a
-> Unit Testing Framework" project
->
-> Some of my projects that involve working with Shell,C and Git can be foun=
-d here:
->
-> https://github.com/Amarajah/alx-system_engineering-devops
->
-> https://github.com/Amarajah/alx-low_level_programming
->
-> Git has been a part of my software engineering journey from day one
-> and it's allowed me to collaborate with peers and also keep track of
-> my personal projects. Currently Git uses end-to-end tests for error
-> conditions that could easily be captured by unit tests, the project is
-> aimed at turning end-to-end tests to unit tests, and I'd love to be a
-> part of it
+On Wed, Oct 25, 2023 at 09:33:23AM +0200, Kristoffer Haugsbakk wrote:
+> On Wed, Oct 25, 2023, at 07:38, Patrick Steinhardt wrote:
+> >> What do you guys think the signature of `git_global_config` should be?
+> >
+> > Either of the following:
+> >
+> >     - `int git_global_config(char **out_pat)`
+> >     - `char **git_global_config(void)`
+> >
+> > In the first case you'd signal error via a non-zero return value,
+> > whereas in the second case you would signal it via a `NULL` return
+> > value.
+> >
+> > To decide which one to go with I'd recommend to check whether there is
+> > any similar precedent in "config.h" and what style that precedent uses.
+>=20
+> Okay thanks. So no parameter for determining whether one is writing or
+> just reading the file.
 
-Maybe a period is missing at the end of the above sentence. Otherwise Ok.
+This parameter would only exist for the purpose of the error message,
+right? If so, I think that'd be overkill. If we want to have differing
+errors depending on how the function is called the best way to handle
+that would likely be to generate the error message at the callsite
+instead of in the library itself.
 
-> My microproject contribution is here:
->
-> https://public-inbox.org/git/20231009011652.1791-1-naomi.ibeh69@gmail.com=
-/T/#u
->
-> And here is my updated contribution link after review by the Git communit=
-y:
->
-> https://public-inbox.org/git/xmqqttqox5cp.fsf@gitster.g/T/#u
+Patrick
 
-It could help to say if your contribution has been merged to 'master',
-'next', 'seen' or not at all.
+--8g6Q8X2nKbJgIz6b
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> Below is my project timeline:
-> (Of course I'd be very much willing to work with the community and
-> mentors to edit it so it perfectly meets up to the community's
-> expectations)
->
-> October 2, 2023 - October 30, 2023
->
-> Familiarizing myself with the community , mailing list and
-> contributing my microproject
->
-> November 20, 2023 - December 4, 2023
->
-> Familiarizing myself with the already existing tests and also the
-> chosen unit test framework
->
-> Do more research on the internship projects and find better ways to
-> get it done in harmony with coding guidelines and community
-> requirements
->
-> December 4, 2023 - December 31, 2023
->
-> First document the initial state of the test files, then make sure all
-> test files conform to coding guidelines down to the tiniest details
-> (e.g git/t/helper/test-write-cache.c and git/t/helper/test-advise.c
-> have die() messages which do not conform to coding guidelines)
+-----BEGIN PGP SIGNATURE-----
 
-We don't advise spending a lot of time during your internship with
-small things that could be part of someone else's microproject later.
-You should be focused on the internship goal first.
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmU4zC8ACgkQVbJhu7ck
+PpR9Ew/+PqtJQ5Ak77yIeKJoKY11Sv1RzG7u3tnjJvxfzVe2+hDpZNOSVcga6DmR
+Tu2ufpbKYIKnH2Tueqmq9Rw8KuGGr4WGIi7E6ehQ05nooaZSEVt3iZmnTtuM6tHX
+VBovvJ2ks1dXZPuS1hiCL/aO2ZzUjsEvHVq1yi6Vth1wOQMNarxa2q54OvpWcitO
+2x7ysP8fzVJMrrcE16jRKBgw7bOmxnpztkPWaEwPK3E9Lgnrjr1MReFFgFlUtKik
+wjwcBO4psEr4vGImvLsdFX6nAXHMeztM80QpMRfpDCZOy3Gyl/dXMdm4V9Bjx5D0
+pL+bMMOcW8ixcShsmyrTBqOQjsvXXuZbRDw8oyZmAWsWQTvLv1ztd9aBW5OUJxDi
+jI3XV/VW1QoPks3W0a25iE6GBzX1wG8VOX8KFnC+DweBtbKYaBu7plbmWsq/iJqL
+/uRFiC5Gjdyn8JqLfRXV/Lfk+I32UAb8ZE6DlfB7gWaybFYtr567tFkbuGMTASJn
+y5YRSzVXz7oPbjAtApp6dIpAzGu0WDu1SfQL7KelU64N4/rZlX8zWzPLyPzTv5aZ
+03KRpLBwkKAWIqeUVDWdldFvtAxCteNbYLqWdyHWLM0ioszQdMSKunt/sm7yatY+
+PI/rBxSfzCudQu48V11y8+DasQiFS8dyQfwLOH3o8lv8OGE7zSQ=
+=k6AL
+-----END PGP SIGNATURE-----
 
-Of course if you are migrating some code to the new unit test
-framework, it's Ok to improve that code before migrating it. But no
-need to improve everything under t/helper before starting to migrate
-parts of the code there.
-
-I think that one of the important tasks to be done early is to
-identify what code in t/helper is unit testing C code and what code is
-really about helping other tests in the t/t*.sh scripts. It would be
-nice if you could give an example of each kind of code.
-
-> January 2, 2024 - January 31, 2024
->
-> Run the tests and verify they still work as originally intended
->
-> Begin migrations of test files
->
-> Test migrated files and make necessary changes based on feedback
-> received from teammates and mentors
-
-An example of how you would migrate parts of a test, or how a migrated
-test would look like, would be nice.
-
-> February 1, 2024 - March 1, 2024
->
-> Continue testing migrated files and making necessary changes based on
-> feedback received from teammates and mentors
->
-> Document each step and request for reviews from teammates and mentors
->
-> Tidy up the project,make sure all necessary files are migrated, they
-> all work as intended, they are well documented and that there are no
-> conflicts
-
-Thanks,
-Christian.
+--8g6Q8X2nKbJgIz6b--
