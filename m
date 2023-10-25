@@ -1,51 +1,51 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D0BA883B
-	for <git@vger.kernel.org>; Wed, 25 Oct 2023 20:41:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A68B15491
+	for <git@vger.kernel.org>; Wed, 25 Oct 2023 20:50:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OzYvXrGk"
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 780A012A
-	for <git@vger.kernel.org>; Wed, 25 Oct 2023 13:41:42 -0700 (PDT)
-Received: by mail-pf1-x42f.google.com with SMTP id d2e1a72fcca58-6be0277c05bso155730b3a.0
-        for <git@vger.kernel.org>; Wed, 25 Oct 2023 13:41:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LrOSfYJ5"
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82AC4136
+	for <git@vger.kernel.org>; Wed, 25 Oct 2023 13:50:03 -0700 (PDT)
+Received: by mail-pl1-x636.google.com with SMTP id d9443c01a7336-1c9bca1d96cso921215ad.3
+        for <git@vger.kernel.org>; Wed, 25 Oct 2023 13:50:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698266502; x=1698871302; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1698267002; x=1698871802; darn=vger.kernel.org;
         h=content-transfer-encoding:subject:from:to:content-language
          :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=etmrizWDtfVBCGuGqT7jU0OQgYeJjcwpupJU10dJlG4=;
-        b=OzYvXrGkx73P0nEvVg9rzQnC2s0NBzUzQR7NDamy9qsUeUYQ4KS1ZDQjAvoXRucuan
-         Y6YMD/tzPLAumbFyHmiSgjGU9cFIZQ09M8ZuHaeDS28CV146ZUCZZLDn+C4YscAJdix8
-         aOBYu8TRTMU+zWR51J7aaTWDyOWOQWTPuhed7uWW/bQOiK77NeJsM3VpmbMdDgHGfoEh
-         tctvl1LDriXRusR1ScaNwT4QrkAZWVa4TlI2OnrprTk6sgGb5dXvGNMRk32ZqMQ3SY7V
-         LiETlKpA3Rxiht6o77IMsHccQLTx377PwBrMDkUmdpEVTTGLzu+zI+ZZVxnAjnK9HCvD
-         Y03A==
+        bh=sInV//U2ryaX6Zn2JMzEfDtQG+bqG0OgbuabPs7woS0=;
+        b=LrOSfYJ5oShviGX/Po03kHyC/TC0vZ+sM+iSh7UbAgkAP5ws+SvdwWwSWWApUY+t45
+         hkpTeWu0mvLCAouJcJ9KEAA4sqzbDsaQ352kpdo+AtO8H49SKmVZvBFtC/xQJZuzD0rU
+         YdRHMTsOGrCiAi3N9cBrQzSUqpSwVz16sx+EIZQdzBgJ2FmPrfCicTQ07zY5s74dfmaq
+         h4ME/ym2ThhHp3OXZ/jzJB1ydwjYggFdqZubqHB4ITiUNlSywBafWJU4BXPuaTVIF85d
+         2RblN7hMvSC8bAs9EIZWDvb3RdQpbeSjSwXDU6EHwrsznxEnOLAYawzHfqVmepZCnk4z
+         Gswg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698266502; x=1698871302;
+        d=1e100.net; s=20230601; t=1698267002; x=1698871802;
         h=content-transfer-encoding:subject:from:to:content-language
          :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=etmrizWDtfVBCGuGqT7jU0OQgYeJjcwpupJU10dJlG4=;
-        b=cLFTEYOmFuFbrybjFVq8man5O3jYJXJbmInaNmh8Asdy0cTZJJvbsBiQAsgeaZoGVI
-         FiFbqXAq20Za4MTqBhdIJc42YdwWOheiCZvJEWv1YMxPMKbArqFzstLGeYQRPin6CH5i
-         /Hw9vJb962Sh4QWp6m4cG/TgMerohY+3f0+cTjbEOK6lMIb3f2CC8sXBiEz95DUhIhgy
-         UI3WrWtzAx1mN8Lbou3CMBM85Ab7cgYoNTIvT49paqKd0jlHajmFoLmGazVQml+s+sTl
-         K1lbMeAXfs92Tp+6wnhEPSt4nV3bi2m1jftShx7DMcWYXZ2V05isTBBZ7BhYxkDu0+bc
-         NERQ==
-X-Gm-Message-State: AOJu0YzmLKFHscdQxxJN2tHgAYWKGlvLWovqztDweZeO/mXbZW3mwh6c
-	Q2EFyD/GV3P7/tMY9LIFZrktdPtfDa0=
-X-Google-Smtp-Source: AGHT+IEBPdTIDtdrpT41tE7Ygf9aqfZAWibxu+YyqWRa0NA2QrL26OB1w4jmPUwpLGC/WhcA56kFyA==
-X-Received: by 2002:a05:6a21:a583:b0:17a:eff5:fbcb with SMTP id gd3-20020a056a21a58300b0017aeff5fbcbmr8656710pzc.43.1698266501729;
-        Wed, 25 Oct 2023 13:41:41 -0700 (PDT)
+        bh=sInV//U2ryaX6Zn2JMzEfDtQG+bqG0OgbuabPs7woS0=;
+        b=C9NNqIRPj4Fi5GVdWcgkvT/xvj7S+ZN936J24r76DWekJqPCK0+uqk8OqmFp39x7WE
+         OppS/4GdnOg2dhc0qLhC43h0s0wjwq+lBe/LYBOFmcPiIXEHW8frKUkiwuwmEprxG3ap
+         9Z+O8JvDL0GwulMXc3BcJ+4iBaBfTR8GtbV+NX7GWkqjj7xMofCRQnbbQVhr4HtbZQDz
+         9copBYszAArwMIqinx0oCQagze/nFGsebv8tzwSeCmNxcfry8UGCoAEZaOJZyVsYB1S2
+         rdNFhJKL36HS3CQgRn2FlNblC2SbD2Bdo7nf1yJB4AAk92i807EAEdGoKl5+FKJ7XSEX
+         kw8g==
+X-Gm-Message-State: AOJu0YxSFPiRv6Lx0mnyONwrcKEWSdYl41JSqP6h9zUO4g7gLXiTcsGr
+	2ODkfEQKqro7Xyqp4sn3b5zLvE7t+bI=
+X-Google-Smtp-Source: AGHT+IFxVk/Za5OD9zMPVzBCBiy/ENiE3YpCxHciu1B9YW0BSe0WXAt0P3aGXT76nXcsBIW+bu+SNg==
+X-Received: by 2002:a17:903:110d:b0:1c9:e508:ad43 with SMTP id n13-20020a170903110d00b001c9e508ad43mr15817419plh.8.1698267002556;
+        Wed, 25 Oct 2023 13:50:02 -0700 (PDT)
 Received: from ?IPV6:2001:8003:3cef:4901:beb7:1ccc:62ea:5ce9? ([2001:8003:3cef:4901:beb7:1ccc:62ea:5ce9])
-        by smtp.gmail.com with ESMTPSA id z19-20020a63e113000000b00577d53c50f7sm9339081pgh.75.2023.10.25.13.41.40
+        by smtp.gmail.com with ESMTPSA id b5-20020a170903228500b001c727d3ea6bsm9575626plh.74.2023.10.25.13.50.01
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Oct 2023 13:41:41 -0700 (PDT)
-Message-ID: <3e409165-2468-47be-895e-f3ec86b94730@gmail.com>
-Date: Thu, 26 Oct 2023 07:41:37 +1100
+        Wed, 25 Oct 2023 13:50:02 -0700 (PDT)
+Message-ID: <849b6ee2-99f3-4aaa-835f-44d3e13befc3@gmail.com>
+Date: Thu, 26 Oct 2023 07:49:58 +1100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -56,26 +56,27 @@ User-Agent: Mozilla Thunderbird
 Content-Language: en-US
 To: git@vger.kernel.org
 From: Sheik <sahibzone@gmail.com>
-Subject: git diagnose in non git directory results in core dump
+Subject: git diagnose with invalid CLI argument does not report error
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 Hi Maintainers,
 
 
-Running git diagnose in a non git directory results in a core dump. 
-Expected behaviour would be that it reports an error.
+Running git diagnose with an invalid CLI argument in a valid Git 
+directory does not report error. Expected behaviour would be that it 
+reports an error.
 
+#Example shell commands which should have reported an error but 
+continues to succeed
 
-mkdir test
+cd $ToAGitDirectory
 
-cd test
+git diagnose mod
 
-git diagnose
+git diagnose mode
 
-#Output...
-
-Segmentation fault (core dumped)
+git diagnose mode=all
 
 
 Thanks
