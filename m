@@ -1,79 +1,78 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73D851A289
-	for <git@vger.kernel.org>; Wed, 25 Oct 2023 21:02:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A68AF30CE5
+	for <git@vger.kernel.org>; Wed, 25 Oct 2023 22:24:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="CuPpszU7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lnzpjydP"
-Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AD0212A
-	for <git@vger.kernel.org>; Wed, 25 Oct 2023 14:02:28 -0700 (PDT)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id A6FC05C01EB;
-	Wed, 25 Oct 2023 17:02:27 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Wed, 25 Oct 2023 17:02:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-type:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:sender:subject:subject:to:to; s=fm2; t=1698267747; x=
-	1698354147; bh=VtzZmzsDGOkchIcie0Ai3/IPk8+Zh4IC2QhL6FqX/W0=; b=C
-	uPpszU7Wa8IePU7LQJzGq3z/TlqA/V7U7F22qGXdgkF0/CLxLMN2s9dBdYvZN6Bb
-	8MFm9DUjGe39E5HxgCAQaTWt6VQvm53+1b9lIrj6YGlVtsd66JfFfh65jo9IqCiC
-	nP5PORAQynrkJOX3rXxZxGQ8OqCrLa50MOzvyrrwMYjUJk4yNst78+QdWXYOS9tS
-	8RgJ5pb3AT4yeDAxcSBKwloI9GnWIyHXlte8/VGdRNxB77LPNe+VgGZnVtmGPlb+
-	xUsfThtWdmYKh5IPgL3GHx69d+mp4CrdY3U8KzCmVzyNkVmcxT44aG9TG7u/RQxk
-	0ZlxvABh6uKmTfdDK/wKA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1698267747; x=1698354147; bh=VtzZmzsDGOkch
-	Icie0Ai3/IPk8+Zh4IC2QhL6FqX/W0=; b=lnzpjydPd0hV1usQv0bqB9h0yF36u
-	/43FfTlwuTAo5d2YgKW1ORSzC8vr3tQllSskdqULEJLokFklIxW8XWIvI7sc/GQj
-	ydyki5SuOn7fBFPq6LoY7jXcKlxep82lOUj4rungNeWH7QkREku8n2OGAp5Z2ImI
-	0CfwEim3zmqWYPzs/Mgb9Nhl2SvbRiPtbCeh1G5s9cV52Ep/v9rBWupOnl7zdtgc
-	ycbzZYZyNcKYFULD9hsz9QnBzqhoOloj7aMP9FyFikTw7nQyRrjffuepO741Kjzt
-	IokbSe8HQYlFRzAlyWhzC+8fu4MQhO1QnPJ0bedyLxs15jVy3j4Vhy7uQ==
-X-ME-Sender: <xms:Y4I5ZQbIpH-72qXSvT4N5X2yc-leTFfuFdD-fra8EO1BCZKPdtfQwJs>
-    <xme:Y4I5ZbaqXEZI-dekhib4mzKAAqrvrM-D3SGjXOr29_SQgwXer4R1Mq7xKQzonG0J_
-    lIvfm_U5iY4e1SIUA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrledtgdduheehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfgjfhffhffvvefutgesth
-    dtredtreertdenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdf
-    uceotghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpe
-    eukedvjeffuedugeeuleetueefveehhffghfejtdehleduffefheeivdetleffhfenucff
-    ohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:Y4I5Za-L_GHi2qg53QodYYOfDjdtoC4YcjKMxjN2fobZ2DajD9TRbg>
-    <xmx:Y4I5ZaofPmr-FQEjIhS952bBTcTm5F0gzrEf7RaaXc7DWGZrKz9jqw>
-    <xmx:Y4I5Zbr74eXjnCC_FC9HXxvIcJXvtP2_HSYjQmEpVMrcqx8QoZtu8Q>
-    <xmx:Y4I5ZVE-C8Y61dXM8s7FJHmVGv3SbrCi3i49vtl8MJNbbUq8dbdChw>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 31B0915A0091; Wed, 25 Oct 2023 17:02:27 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-1048-g9229b632c5-fm-20231019.001-g9229b632
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PfAHhrSI"
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 081BA92
+	for <git@vger.kernel.org>; Wed, 25 Oct 2023 15:24:56 -0700 (PDT)
+Received: by mail-pl1-x62d.google.com with SMTP id d9443c01a7336-1c87a85332bso1666235ad.2
+        for <git@vger.kernel.org>; Wed, 25 Oct 2023 15:24:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1698272695; x=1698877495; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language:subject
+         :references:cc:to:user-agent:mime-version:date:message-id:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=motNA5jn9hY/hKLzKeESxZU3Qr7VyBlJelwuQ6/vcjQ=;
+        b=PfAHhrSIhw3z0CWXFB4HEaY0gqKdCX5LK6676jIar3LdUM6oSEEVH9eAY01UqND266
+         HeYHUdUpvzlosgUGgwGZEDr9hjOTKpcBhPru5JZW19XkzDNK8k+cPef5elPLVov3need
+         cHKD+fZ/rCveKSNZs+WDZ5gAPoI7GAUn7gvtC8aYcgYaikujtsT3czz5QnmTpYzesxl0
+         fc5W7F/zxgJtcVegFtJQ7scxGQ2rSfFsFRwXVTx2f3Qy9zg9+RyAwx1BVJUOpVjiPPTL
+         Y8grsS9HVKSyYEVic9u6Yjdd1UIWelall1ZDIuIZhjKLJWd1h9/EV9mT2ccsLVUdd0I5
+         b+MA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698272695; x=1698877495;
+        h=content-transfer-encoding:in-reply-to:from:content-language:subject
+         :references:cc:to:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=motNA5jn9hY/hKLzKeESxZU3Qr7VyBlJelwuQ6/vcjQ=;
+        b=JiIQ5L92fpKE+DJZDeM2wyOLvBJb6Kt8a1MvpdhczJiahZtza731ts9uVV3c7nwNMd
+         1VsbCyN2l0jGwJ9MCyB7Z0zmnuhTvELflvzrqldx4CUpcxjlFIefnF+6lJSDjdM7Odq9
+         O2eykPwRMiYa0A/c3LvMID0LbtQqj8fSB3NLTJS9do7KNOvAFEwxVOaQYLw3In/nOEB0
+         N4HUfnYJySSlm+1c5b3M1eMjGWFX6SYjdJLTkRce4gVdjHbELCRzXNrboOkeyTEpw5/Z
+         DJs8f4jGkPwLZ8RthaS5tOJxfn5vIk785RsZ3LQ1Vw3Mi0Rk4WeqXimNE8deK5I0B5Nn
+         24KA==
+X-Gm-Message-State: AOJu0Yyt/gAT8n0p0hduKakXP5vIEQu5xayQ7rt6MJYb+r33YhDiO/6X
+	xplhgcBh5OhbFAv/I0kVLIH1OAYQa+s=
+X-Google-Smtp-Source: AGHT+IEYP7Jcsn1B6nIpaRWbRbPbBBjSsuGN3/RwCQdQ96TDxcJz89TSHacAzqiuINsDcCl6zw5iiw==
+X-Received: by 2002:a17:903:1383:b0:1ca:8e79:538f with SMTP id jx3-20020a170903138300b001ca8e79538fmr13749068plb.25.1698272695431;
+        Wed, 25 Oct 2023 15:24:55 -0700 (PDT)
+Received: from ?IPV6:2001:8003:3cef:4901:beb7:1ccc:62ea:5ce9? ([2001:8003:3cef:4901:beb7:1ccc:62ea:5ce9])
+        by smtp.gmail.com with ESMTPSA id e13-20020a170902d38d00b001bb9d6b1baasm9721254pld.198.2023.10.25.15.24.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 Oct 2023 15:24:54 -0700 (PDT)
+Message-ID: <b73d2634-3a86-4aac-8eb0-98d7a990970b@gmail.com>
+Date: Thu, 26 Oct 2023 09:24:52 +1100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <1f1e89c7-6502-4a01-a99b-df191f1d733b@app.fastmail.com>
-In-Reply-To: <3e409165-2468-47be-895e-f3ec86b94730@gmail.com>
-References: <3e409165-2468-47be-895e-f3ec86b94730@gmail.com>
-Date: Wed, 25 Oct 2023 23:01:14 +0200
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: Sheik <sahibzone@gmail.com>
+User-Agent: Mozilla Thunderbird
+To: sahibzone@gmail.com
 Cc: git@vger.kernel.org
-Subject: Re: git diagnose in non git directory results in core dump
-Content-Type: text/plain
+References: <39e013af-69c7-4185-99ae-1e8fe5edef5c@gmail.com>
+Subject: Re: Cloning new bare repository using ssh does not respect bare
+ repository --initial-branch
+Content-Language: en-US
+From: Sheik <sahibzone@gmail.com>
+In-Reply-To: <39e013af-69c7-4185-99ae-1e8fe5edef5c@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Being worked on: https://lore.kernel.org/git/CAKFQ_Q9WjF9i-Rx2jdCw-adPVQrWNfNKrDY-em8Rpa5RNLXz4A@mail.gmail.com/
+Hi Maintainers,
 
--- 
-Kristoffer Haugsbakk
+
+Sorry thought this wouldn't make it through due to html, please 
+disregard this and see latest posted here 
+https://lore.kernel.org/git/63eb269e-72b9-4830-98fc-aeef8b8180d7@gmail.com/
+
+
+Thanks
+
+Sheik
+
+
