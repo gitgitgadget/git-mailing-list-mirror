@@ -1,111 +1,100 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B08B010FB
-	for <git@vger.kernel.org>; Wed, 25 Oct 2023 19:04:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A097610FB
+	for <git@vger.kernel.org>; Wed, 25 Oct 2023 19:38:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="Tr4Wq0Ly";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hdSrjh4d"
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA012133
-	for <git@vger.kernel.org>; Wed, 25 Oct 2023 12:04:27 -0700 (PDT)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id 0FFBF5C0398;
-	Wed, 25 Oct 2023 15:04:25 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Wed, 25 Oct 2023 15:04:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to;
-	 s=fm2; t=1698260665; x=1698347065; bh=kPGLJUzDyKAN9Z4RqxrFEIh9w
-	/WhBXwe0UiuCeNBFW0=; b=Tr4Wq0LyOdqkd77pl1J0w1qah5rNWOaHA8o0KIhPa
-	HdNJyF7Czqxnf0Vs0S53DLtSbarbhUFd1aodRNq69CG3nefkaIvLbC56sV9oH04M
-	3yOWs0niDzgFYaPvUDuJYIbhkDC4vV+Q7dbt/0VqMTxVU469rQe4dGNzYNLtBh7U
-	7PZxG+Xw/fAc4swVwovZ/HEJFocRZhTfXsG5COAzLkVRtodSYif54jU+vhvfBf2/
-	e2kcR7GYP6tQfY1CLWkq+vhSiT1wHNBp4s5x1L+A47PaYh1R5qqWfvGadVgJO8pq
-	kLYqC2p/LXxE5Nu/JAaR6psP4ETVfFKREJYXZ8OFV4p3g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:sender:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1698260665; x=1698347065; bh=kPGLJUzDyKAN9Z4RqxrFEIh9w/WhBXwe0Ui
-	uCeNBFW0=; b=hdSrjh4dzvNC/8KRxtty5Fj0mZxTAFeWJHtRWHaE6HWRvnc+/b9
-	8Tzrfz6UibnoOmLKGUts67ELd+TGk9ZrgEKmd98Cv1g17I3bL1uQc1cFIML0Glf1
-	ISBjmnbiv+bX/9daaZvhjHUnxK8v96n3rJ+eQC8a0OsYXqnkuvM7JTL96NlB0YoV
-	W773uFPyWyK66StEOfJ9t3d4KmYyHnht+OJSKlG2kLMC8STtmFZbc+SmxreYV1d3
-	aPCCiXntCvLL2GT1ByvMryhOxQ22h/0hgZWKSbcMtjuFep+BeDNbYPjej7Nl5+el
-	Q/Cg5QQ7ATafeffVDsEWftUXpTipVgHxbMg==
-X-ME-Sender: <xms:uGY5ZThLSuwkdhrunPzxkkobdJ-r3zOypSasKaDJo1xtG6Sol6qHaJA>
-    <xme:uGY5ZQBzzIopz-uJybDdKzLBFCSHdKmt-d9qqjUpbDdfCdcUuG9leiwetNmKac9aA
-    klM67gv297RS3mtxA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrledtgddufedvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfm
-    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
-    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedvveehiedufeehffdvteeuveekhefh
-    leeigfektdeifeduteeuheeufeetffefudenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:uGY5ZTFPv8PRKVjLXkGTiwGwjL3uJ6wOtN2qq9Q0aG0ypbhhJIL-8w>
-    <xmx:uGY5ZQQqqv3AMEVgB1tSCg8c2Fxkqnt-DuTDW78l5wp81IUk8k5jAQ>
-    <xmx:uGY5ZQxAJ1NTh2Mw5XxSMfNXG0xZX-dFu6hefSfCl9R_JaW6aceOsQ>
-    <xmx:uWY5ZdsFjO5wfHv9eYvwqyYC9e7h4PJ3F9u-13UqB00PlXANPRgfpw>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id AB8B415A0093; Wed, 25 Oct 2023 15:04:24 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-1048-g9229b632c5-fm-20231019.001-g9229b632
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="McONPq+J"
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59D6B137
+	for <git@vger.kernel.org>; Wed, 25 Oct 2023 12:37:59 -0700 (PDT)
+Received: by mail-pl1-x62e.google.com with SMTP id d9443c01a7336-1c9de3f66e5so330195ad.3
+        for <git@vger.kernel.org>; Wed, 25 Oct 2023 12:37:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1698262679; x=1698867479; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Xz7ZXsYKgjQzhT5aI3NM1AX8UdEWmkB+zsbimNGpMV4=;
+        b=McONPq+JxU80mmF534DspxLSIFziJcZGZ6Tqc7JWGjUU4hbz/1Vxv8IgcelRLx6Gra
+         U0OmXC3F/gR/lN8bJlT0LygJ4p23v07lRr0u8oGECAzQtR5Xz5/Wr4AaS1ZFaZQBXURp
+         /O88iPaiEuiJOfj4Xk+UZ4ZidBVJ81lBcIdVioklrcqJSWCSuH+2holE59JGUKUUS2F8
+         r4T0g0frOUgrIm5B4Nn6ZuoBSLkQdwPIFayweRqzww3DH4DDTkSnJxUXgkgctm0/AHeT
+         LRDPvHz6XKDcUlooJUHtUXx6cRfvA+Bv+/rNK5avszAfXjD0r6H2XRShYc0CgI5bG96P
+         xnxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698262679; x=1698867479;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Xz7ZXsYKgjQzhT5aI3NM1AX8UdEWmkB+zsbimNGpMV4=;
+        b=dIbzE6/tMWlDeakiNzCYYmXJlF1vG14FPADS3vIJsAoQQy+CSMuJ+O1bJdtKrDZF/K
+         HSO63HxmyBzSHgEpfVowv51rpZTa0Krb0S7XMLTdPggs6H3MpDH3JuwOrWS5e03MJGRM
+         Vk6E8AVoJnSzwacSL7rVwuONV+97v62gowoKdTBoAgkgL9QN3DawAqQbCbKz8nF8+jnS
+         /UU4u9rGcSI8ZhX64eElS+7TtFy0aL9GE908YpDATw8PgD8NN/TEUkBuiiZOHLVF6CO7
+         PdjDgTMazs71mu/7Nk4PZKuoagrn9KUvudyITa/ZnaZ7eCbD4Aw7JN/i2SYyJQy6ymZx
+         NZ2g==
+X-Gm-Message-State: AOJu0Yx59UfjkkOSvmXe9Ry5rEkBm82EHxVMVFz3aCRdKLSRtMNQew85
+	swWj7l6ndD7qm943F8PpX6jd7Q==
+X-Google-Smtp-Source: AGHT+IGChhzcuMGhwu2NCV8x5ie7PVqphTcVQQ+Bzn49nf6ls8RHJw3XtTs31qom1NjqMYo8piT3TA==
+X-Received: by 2002:a17:903:84f:b0:1c9:d25c:17c6 with SMTP id ks15-20020a170903084f00b001c9d25c17c6mr13103890plb.1.1698262678665;
+        Wed, 25 Oct 2023 12:37:58 -0700 (PDT)
+Received: from google.com ([2620:15c:2d3:204:6c87:a9c3:39a2:c663])
+        by smtp.gmail.com with ESMTPSA id jh1-20020a170903328100b001c55e13bf2asm9565724plb.283.2023.10.25.12.37.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Oct 2023 12:37:57 -0700 (PDT)
+Date: Wed, 25 Oct 2023 12:37:51 -0700
+From: Josh Steadmon <steadmon@google.com>
+To: Jonathan Tan <jonathantanmy@google.com>
+Cc: Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org, calvinwan@google.com, glencbz@gmail.com
+Subject: Re: [PATCH v3 0/5] config-parse: create config parsing library
+Message-ID: <ZTluW0Ha2W4NYaJd@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+	Jonathan Tan <jonathantanmy@google.com>,
+	Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org, calvinwan@google.com, glencbz@gmail.com
+References: <ZTbK3QTJYXxYj/M6@nand.local>
+ <20231024225005.1191555-1-jonathantanmy@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <840358e1-05b4-4730-a89d-1efae568d04d@app.fastmail.com>
-In-Reply-To: <e38ebf04-cf92-c80b-3432-bf86ecda1054@gmail.com>
-References: <pull.1599.git.git.1698224280816.gitgitgadget@gmail.com>
- <da246287-8530-4680-8fcc-f68f881bc24b@app.fastmail.com>
- <e38ebf04-cf92-c80b-3432-bf86ecda1054@gmail.com>
-Date: Wed, 25 Oct 2023 21:04:02 +0200
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Ruslan Yakauleu" <ruslan.yakauleu@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] merge: --ff-one-only to apply FF if commit is one
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231024225005.1191555-1-jonathantanmy@google.com>
 
-On Wed, Oct 25, 2023, at 20:31, Ruslan Yakauleu wrote:
-> Hi
->
-> If we use squash we will lose some context and occasionally, we need
-> multiple small features combined into one big release. We would rather
-> not mix it into one monolithic non-readable blob.
+On 2023.10.24 15:50, Jonathan Tan wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+> > But I am not sure that I agree that this series is moving us in the
+> > right direction necessarily. Or at least I am not convinced that
+> > shipping the intermediate state is worth doing before we have callers
+> > that could drop '#include "config.h"' for just the parser.
+> > 
+> > This feels like churn that does not yield a tangible pay-off, at least
+> > in the sense that the refactoring and code movement delivers us
+> > something that we can substantively use today.
+> > 
+> > I dunno.
+> > 
+> > Thanks,
+> > Taylor
+> 
+> Thanks for calling this out. We do want our changes to be good for both
+> the libification and the non-libification cases as much as possible. As
+> it is, I do agree that since we won't have callers that can use the new
+> parser header (I think the likeliest cause of having such a caller is
+> if we have a "interpret-config" command, like "interpret-trailers"), we
+> probably shouldn't merge this (at least, the last 2 patches).
+> 
+> I think patches 1-3 are still usable (they make some internals of config
+> parsing less confusing) but I'm also OK if we hold off on them until
+> we find a compelling use case that motivates refactoring on the config
+> parser.
 
-The only context you lose is the point where your branch started, if that
-matters. (Later in the email you say that you rebase before you merge so
-apparently it does not matter to you.)
-
-To squash one single commit doesn=E2=80=99t make a =E2=80=9Cmonolithic=E2=
-=80=9D commit=E2=80=94it is
-exactly as monolithic as the commit you started with.
-
-> For us, sometimes it is better to rebase something to make history more
-> accurate than squash everything into one commit. We can use squash only
-> for one story.
-
-No, squash one single commit. Not multiple.
-
-> Anyway, squash is a different feature.  Same as rebase (of course we're
-> doing the rebase before merge to clarify history and to make some
-> regression tests)
-
-Squash and rebase are functionally identical in this case. And since you
-rebase before merge anyway it is identical to the flow of
-
-1. Rebase before merge
-2. Merge with your new option
-
-Except you don=E2=80=99t have to split it into two steps.
+Thanks everyone for the revived discussion here. I think I agree, this
+series is not going in the right direction. Additionally, our internal
+use case for this change has evaporated, so let's just drop the series.
+We can pick it up again later if interest returns.
