@@ -1,75 +1,75 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 521062770C
-	for <git@vger.kernel.org>; Wed, 25 Oct 2023 11:50:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 097A12770C
+	for <git@vger.kernel.org>; Wed, 25 Oct 2023 11:51:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gMx0xdbd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WPdZ3utk"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Rfyw3mk2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="q+po0Wr2"
 Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06285185
-	for <git@vger.kernel.org>; Wed, 25 Oct 2023 04:50:54 -0700 (PDT)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id 6587A5C01EF;
-	Wed, 25 Oct 2023 07:50:53 -0400 (EDT)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59B8B130
+	for <git@vger.kernel.org>; Wed, 25 Oct 2023 04:51:00 -0700 (PDT)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id B4E365C01EF;
+	Wed, 25 Oct 2023 07:50:59 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Wed, 25 Oct 2023 07:50:53 -0400
+  by compute5.internal (MEProxy); Wed, 25 Oct 2023 07:50:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1698234653; x=1698321053; bh=Ne
-	PJHr+nvIFjNtwbF3nq92Muk+rEyRjgY2CN/0jLHgY=; b=gMx0xdbduXjNfOAQ41
-	IvJ5eMOmpEawgChDh+Id9AsGdZbhZnbiDlEobVVBY1kjQaqtMbJAKWHpFawls2uK
-	uBhYYUI+VlZuHfqQuKwe5R29sbOoEFUFMQ8IgGNSlNJ+bxUK06OmOXW5CgAqT7bs
-	1vxxM2tLkG5t+2UHxMh43ROXoOzBiu0t0h1RPSKlh/35pelCrtyB8CbFuz/Rui4d
-	EsVl/TMNcEfHvx/bjiehIMxKtmsHChNjR1mZjH9bUdsyh9J5pxgaMLOPeSFfuTv/
-	nUsAeelOiMFFTAsSSaxGopuuiebSQaZ54rhfom8WrOkhimkAMu5GCMmUFggtDGFw
-	c2vA==
+	:subject:subject:to:to; s=fm3; t=1698234659; x=1698321059; bh=We
+	BCfV2ILlfHAkI4xpEL7lO6C2sL6GrzsGfN0rdURcg=; b=Rfyw3mk2jcwrulzgMD
+	uVzS59tNV1LlGhoyrfC290IZD9OF2AU7BKO/DpNBxVJCDOvrFyPaxmT71iZNwFlt
+	0FfmoNIw07+tWSZKlg0wW0diN5EUkXR0uhhZYr5IIczIlnbEl75npg6qmTypAnQy
+	Ts9R8ykuLoJV9GcQdI+J2Iiws2j0AwWBP+mDlm+EJeSULpEu9IbtSrDAoZC26eqd
+	7yfKzpZSMup9dq+amvUHRXz7LxoCjvugyn2oeKIHZ1PcmBuLx2r7ogsOfLRYJksD
+	4GrmCBAdu3NL64sph3n8hnsoq/o0pnvAjICgAVWS9F/w6Bzn0foRMCoagzB1B0s2
+	afsQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1698234653; x=1698321053; bh=NePJHr+nvIFjN
-	twbF3nq92Muk+rEyRjgY2CN/0jLHgY=; b=WPdZ3utk6U//c8PLbPKfWJzCYAkAg
-	7qPDJpGSBrcmBtOT9ZTkq5S5jMoKI7P3/ykAV81L9HJoXH8gykON2wpwoUaSk7Om
-	yO6ij6K7FnS1CvvbVSwTNv+uCQI5aMRlIfB3VkscRQfRiT/8wstMJ7pZxf6csJHB
-	L7KWTF37q0Julxp7JOhVzVSbYZLZ+PIHASFFAt3RMJgQhM9Z7u6iinjFxVJ7xm92
-	nz3rNJlqOPprfRlzpG9wU90LXQKKrJDCs5fXRxioElVU0C1K+1wXARL35wsSYvxS
-	VSb7CTW0qLenZYEsFSJbArGg1b6Mp3O5DJo2Bnzpk/B6/oqyNC4hatRDg==
-X-ME-Sender: <xms:HQE5ZXV2xfpowWSzpsWCYO6OCNq4VBlKGENCeSoQSNcQuNBGozeaPw>
-    <xme:HQE5ZfmpUiAiK1OFZOLSiYBwOw-JmH5ezMzGiYEDtBvcgZKtpB-9Y4XJFfBarNLhi
-    hW8iHRelznDjm0npw>
-X-ME-Received: <xmr:HQE5ZTZt1J7CTTs3Zo4WOZPrccEgmJgS8lDkiOD1Twvk0ccpM3_Z8Pq9KsNnFL6qmsxigJ7MZXGS6yx_VLK8kvyzzzdu8cNpsMjHYv3KVTXR1XA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrledtgdeghecutefuodetggdotefrodftvf
+	:x-sasl-enc; s=fm3; t=1698234659; x=1698321059; bh=WeBCfV2ILlfHA
+	kI4xpEL7lO6C2sL6GrzsGfN0rdURcg=; b=q+po0Wr2R1EWTKJJHTEHdvEgGuwRv
+	lIRhpRgpRLftRUW88n19USF/JaeGQ5TjM8ko5VgsuzTFV1fTFtySAn1eSOIQBMEf
+	6QDMGbnzW0GWlSN44tdvzblxprs3/E7GJyom2EflTJicROKE2GE5ubaWE4YUULKf
+	Zj9LOccBhlhlFxa7+fg4SKWArlQdtQfpimLdMMTlAsF6k5pwrfP5u01bEcZcIWDk
+	M9mo+U1BRT0437bCAvs0qFG4YzGAiyF+gpTVxeQrbbt4yn1r5ceAtUnDdtCpdMSx
+	YpjsU5ncz2cq0PaJ/UMnTcmhfzO3fdCqWzNIivjZtwnffqLUC7uRZyeGw==
+X-ME-Sender: <xms:IwE5ZcOR8RHuWp5D-I6UJHE2JytY8Tco0X4hxl2xCRrNanCJniIReA>
+    <xme:IwE5ZS9eim4PYcTBci4zYkB9R1Kfdmd2IYqtjC6x8v4F5Yl2wMWNQ2N2h-4E_PYdN
+    gwejVYcVJL8xhu3Ag>
+X-ME-Received: <xmr:IwE5ZTSsPO5lD0Mc6zlYSRJqN_So2dSrTb2asmn-vNV8sr-abtJB6sS8_H8mbJZPb_k8PntsOGpCGk1IXGrT7SgOD7Pp3DN_LsubR3iKlpqfOQA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrledtgdeggecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeetueevhffhudefvdegieeuieelgedthfegfedtueevjeejtdfgjeehudejuedtuden
-    ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhm
-X-ME-Proxy: <xmx:HQE5ZSVwPEHbCpFiBP3xyxbEmrMoCeJv61L-piUZO1ZZ2neEPVE1Rg>
-    <xmx:HQE5ZRnC3MepQR5vVNWlgvNcJA3Exyv2bSyhK2JEq2ZgQfsLuh-AHw>
-    <xmx:HQE5Zfe2U40IAV-YmivAfqV0eJzn82EQgvSENiMzfuRRVd4SSvICOw>
-    <xmx:HQE5ZWyZajGmaR_dXLgm32v8adv_6bOpnm8yFuZbjClBx8DU1ULFHw>
+X-ME-Proxy: <xmx:IwE5ZUt2Xw-OLu4bxBqwTn0j0aWTgNWzHWYSo54llxBrLyGNKWCSwg>
+    <xmx:IwE5ZUeEVKO1np3uFU9nPr_WXgsYrNR2js-3Fnu2FOF5MvYhq5XNPQ>
+    <xmx:IwE5ZY24Ln7uJmdEBUCMx5mc0uc6tNR16lfEaUozEFM7YgiSXqaHlQ>
+    <xmx:IwE5ZVozG4A8npCMzaPdBdeH-fReQ-y7jU1aEFmFaC9ZhKToosM7jg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 25 Oct 2023 07:50:52 -0400 (EDT)
+ 25 Oct 2023 07:50:58 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id b34d732b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 25 Oct 2023 11:50:45 +0000 (UTC)
-Date: Wed, 25 Oct 2023 13:50:50 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id baece706 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 25 Oct 2023 11:50:52 +0000 (UTC)
+Date: Wed, 25 Oct 2023 13:50:57 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Eric Sunshine <sunshine@sunshineco.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH 10/12] builtin/show-ref: explicitly spell out different
- modes in synopsis
-Message-ID: <ZTkBGob0IU8BE-_h@tanuki>
+Subject: Re: [PATCH 11/12] builtin/show-ref: add new mode to check for
+ reference existence
+Message-ID: <ZTkBIVODFzX8Jr5P@tanuki>
 References: <cover.1698152926.git.ps@pks.im>
- <adcfa7a6a9d8fb6f915faf77df52362544cd590e.1698152926.git.ps@pks.im>
- <CAPig+cQ=VhRm40oW=TQYzy2NXKNJm4QVQhtw3FAKsFRn12qYLA@mail.gmail.com>
+ <2f876e61dd36a8887a1286bb8db9fb6577c55c9b.1698152926.git.ps@pks.im>
+ <CAPig+cRTOMie0rUf=Mhbo9e2EXf-_2kQyMeqpB9OCRB1MZZ1rw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -77,106 +77,212 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="bisKaXg1hrMC1x/n"
+	protocol="application/pgp-signature"; boundary="T9aCewfOR9lF6f+z"
 Content-Disposition: inline
-In-Reply-To: <CAPig+cQ=VhRm40oW=TQYzy2NXKNJm4QVQhtw3FAKsFRn12qYLA@mail.gmail.com>
+In-Reply-To: <CAPig+cRTOMie0rUf=Mhbo9e2EXf-_2kQyMeqpB9OCRB1MZZ1rw@mail.gmail.com>
 
 
---bisKaXg1hrMC1x/n
+--T9aCewfOR9lF6f+z
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 24, 2023 at 03:39:28PM -0400, Eric Sunshine wrote:
+On Tue, Oct 24, 2023 at 05:01:55PM -0400, Eric Sunshine wrote:
 > On Tue, Oct 24, 2023 at 9:11=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wr=
 ote:
-> > The synopsis treats the `--verify` and the implicit mode the same. They
-> > are slightly different though:
+> > While we have multiple ways to show the value of a given reference, we
+> > do not have any way to check whether a reference exists at all. While
+> > commands like git-rev-parse(1) or git-show-ref(1) can be used to check
+> > for reference existence in case the reference resolves to something
+> > sane, neither of them can be used to check for existence in some other
+> > scenarios where the reference does not resolve cleanly:
 > >
-> >     - They accept different sets of flags.
+> >     - References which have an invalid name cannot be resolved.
 > >
-> >     - The implicit mode accepts patterns while the `--verify` mode
-> >       accepts references.
+> >     - References to nonexistent objects cannot be resolved.
 > >
-> > Split up the synopsis for these two modes such that we can disambiguate
-> > those differences.
+> >     - Dangling symrefs can be resolved via git-symbolic-ref(1), but this
+> >       requires the caller to special case existence checks depending on
+> >       whteher or not a reference is symbolic or direct.
 >=20
-> Good. When reading [2/12], my immediate thought was that such a
-> documentation change was needed.
+> s/whteher/whether/
 >=20
+> > Furthermore, git-rev-list(1) and other commands do not let the caller
+> > distinguish easily between an actually missing reference and a generic
+> > error.
+> >
+> > Taken together, this gseems like sufficient motivation to introduce a
+>=20
+> s/gseems/seems/
+>=20
+> > separate plumbing command to explicitly check for the existence of a
+> > reference without trying to resolve its contents.
+> >
+> > This new command comes in the form of `git show-ref --exists`. This
+> > new mode will exit successfully when the reference exists, with a
+> > specific error code of 2 when it does not exist, or with 1 when there
+> > has been a generic error.
+> >
+> > Note that the only way to properly implement this command is by using
+> > the internal `refs_read_raw_ref()` function. While the public function
+> > `refs_resolve_ref_unsafe()` can be made to behave in the same way by
+> > passing various flags, it does not provide any way to obtain the errno
+> > with which the reference backend failed when reading the reference. As
+> > such, it becomes impossible for us to distinguish generic errors from
+> > the explicit case where the reference wasn't found.
+> >
 > > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > > ---
 > > diff --git a/Documentation/git-show-ref.txt b/Documentation/git-show-re=
 f.txt
-> > @@ -8,9 +8,12 @@ git-show-ref - List references in a local repository
-> >  SYNOPSIS
-> > -'git show-ref' [-q | --quiet] [--verify] [--head] [-d | --dereference]
-> > +'git show-ref' [-q | --quiet] [--head] [-d | --dereference]
-> >              [-s | --hash[=3D<n>]] [--abbrev[=3D<n>]] [--tags]
-> >              [--heads] [--] [<pattern>...]
-> > +'git show-ref' --verify [-q | --quiet] [-d | --dereference]
-> > +            [-s | --hash[=3D<n>]] [--abbrev[=3D<n>]]
-> > +            [--] [<ref>...]
-> >  'git show-ref' --exclude-existing[=3D<pattern>]
+> > @@ -65,6 +70,12 @@ OPTIONS
+> > +--exists::
+> > +
+> > +       Check whether the given reference exists. Returns an error code=
+ of 0 if
 >=20
-> What does it mean to request "quiet" for the plain `git show-ref`
-> mode? That seems pointless and counterintuitive. Even though this mode
-> may accept --quiet as a quirk of implementation, we probably shouldn't
-> be promoting its use in the documentation. Moreover, the blurb for
-> --quiet later in the document:
+> We probably want to call this "exit code" rather than "error code"
+> since the latter is unnecessarily scary sounding for the success case
+> (when the ref does exit).
+
+I was trying to stick to the preexisting style of "error code" in this
+manual page. But I think I agree with your argument that we also call it
+an error code in the successful case, which is misleading.
+
+> > +       it does, 2 if it is missing, and 128 in case looking up the ref=
+erence
+> > +       failed with an error other than the reference being missing.
 >=20
->    Do not print any results to stdout. When combined with --verify,
->    this can be used to silently check if a reference exists.
+> The commit message says it returns 1 for a generic error, but this
+> inconsistently says it returns 128 for that case. The actual
+> implementation returns 1.
+
+Good catch, fixed.
+
+> > diff --git a/builtin/show-ref.c b/builtin/show-ref.c
+> > @@ -214,6 +215,41 @@ static int cmd_show_ref__patterns(const struct pat=
+terns_options *opts,
+> > +static int cmd_show_ref__exists(const char **refs)
+> > +{
+> > +       struct strbuf unused_referent =3D STRBUF_INIT;
+> > +       struct object_id unused_oid;
+> > +       unsigned int unused_type;
+> > +       int failure_errno =3D 0;
+> > +       const char *ref;
+> > +       int ret =3D 1;
+> > +
+> > +       if (!refs || !*refs)
+> > +               die("--exists requires a reference");
+> > +       ref =3D *refs++;
+> > +       if (*refs)
+> > +               die("--exists requires exactly one reference");
+> > +
+> > +       if (refs_read_raw_ref(get_main_ref_store(the_repository), ref,
+> > +                             &unused_oid, &unused_referent, &unused_ty=
+pe,
+> > +                             &failure_errno)) {
+> > +               if (failure_errno =3D=3D ENOENT) {
+> > +                       error(_("reference does not exist"));
 >=20
-> should probably be rephrased since it currently implies that it may be
-> used with modes other than --verify, but that's not really the case
-> (implementation quirks aside).
+> The documentation doesn't mention this printing any output, and indeed
+> one would intuitively expect a boolean-like operation to not produce
+> any printed output since its exit code indicates the result (except,
+> of course, in the case of a real error).
 
-Good point indeed, will change.
+I'm inclined to leave this as-is. While the exit code should be
+sufficient, I think it's rather easy to wonder whether it actually did
+anything at all and why it failed in more interactive use cases. Not
+that I think these will necessarily exist.
 
-> This also raises the question as to whether an interlock should be
-> added to disallow --quiet with plain `git show-ref`, much like the
-> interlock preventing --exclude-existing and --verify from being used
-> together. Ideally, such an interlock ought to be added, but I wouldn't
-> be surprised to learn that doing so would break someone's existing
-> tooling which insensibly uses --quiet with plain `git show-ref`.
+I also don't think it's going to hurt to print this error. If it ever
+does start to become a problem we might end up honoring the "--quiet"
+flag to squelch this case.
 
-Yeah, I also wouldn't go as far as this. The mutual exclusiveness for
-`--exclude-existing` and `--verify` makes sense in my opinion because
-the result is extremely misleading and may cause users to assume that
-the wrong thing has happened.
+> > +                       ret =3D 2;
+> > +               } else {
+> > +                       error(_("failed to look up reference: %s"), str=
+error(failure_errno));
+>=20
+> Or use error_errno():
+>=20
+>     errno =3D failure_errno;
+>     error_errno(_("failed to look up reference: %s"));
 
-I don't think that's necessarily true for `--quiet`. It may not make a
-lot of sense to specify `--quiet` here, but it also doesn't quietly do
-the wrong thing as in the other case.
+Ah, good suggestion.
 
-Furthermore, we also don't have any interlocks for incompatible other
-flags, either: git-show-ref(1) won't complain when passing any of the
-mode-specific flags to the other modes. If we want to fix that I'd
-rather defer it to a follow up patch series though. And as you said, I
-would almost certainly expect there to be some kind of fallout if we did
-this change.
+> > +               }
+> > +
+> > +               goto out;
+> > +       }
+> > +
+> > +       ret =3D 0;
+> > +
+> > +out:
+> > +       strbuf_release(&unused_referent);
+> > +       return ret;
+> > +}
+>=20
+> It's a bit odd having `ret` be 1 at the outset rather than 0, thus
+> making the logic a bit more difficult to reason about. I would have
+> expected it to be organized like this:
+>=20
+>     int ret =3D 0;
+>     if (refs_read_raw_ref(...)) {
+>          if (failure_errno =3D=3D ENOENT) {
+>             ret =3D 2;
+>         } else {
+>             ret =3D 1;
+>             errno =3D failure_errno;
+>             error_errno(_("failed to look up reference: %s"));
+>        }
+>     }
+>     strbuf_release(...);
+>     return ret;
+
+Fair enough. I've seen both styles used in our codebase, but ultimately
+don't care much which of either we use here. Will adapt.
+
+> > @@ -272,13 +309,15 @@ int cmd_show_ref(int argc, const char **argv, con=
+st char *prefix)
+> > +       if ((!!exclude_existing_opts.enabled + !!verify + !!exists) > 1)
+> > +               die(_("only one of --exclude-existing, --exists or --ve=
+rify can be given"));
+>=20
+> When reviewing an earlier patch in this series, I forgot to mention
+> that we can simplify the life of translators by using placeholders:
+>=20
+>     die(_("options '%s', '%s' or '%s' cannot be used together"),
+>         "--exclude-existing", "--exists", "--verify");
+>=20
+> which ensures that they don't translate the literal option names, and
+> makes it possible to reuse the translated message in multiple
+> locations (since it doesn't mention hard-coded option names).
+
+Done.
+
+Thanks for your review, highly appreciated! I'll wait until tomorrow for
+additional feedback and then send out v2.
 
 Patrick
 
---bisKaXg1hrMC1x/n
+--T9aCewfOR9lF6f+z
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmU5ARkACgkQVbJhu7ck
-PpTsxw//ZxSMG1voNdokuw+uquKYokUJLYaoscEdKscVfYkNCXyTTz4ejEq9LeWi
-/c6bitBnjC3KDzwwHd9rlsptuozSy3X3XhUpAVdOaEYnhdAJV0mi9gaD9kAfJnh3
-+qbD5UO1f+ZekvmNeGLhZi4a9iItUlfQA5xvosFG4QK0qV/kRUZSglB4u36zzPjr
-kq306QKXlL74RZbVK1871T71CFvWGWKsVCMVm7RYkKY+C03pAUb7UEd/CnEGZM1E
-wkOqLc+qdSk4bNI0O9wU23AB9juv53I/2TIhr3qad3tiUuF/MiGDBuRCazk3wFSd
-TUpI54NEXpHz5dsZgvkbaisxZPPvlRCz/oGok3GGcAi+78S2qvrU5MjAKQlrxE/q
-irUce0jEa+imZBOKcr5ksJpKhm26qispgl20qDF9mwB2HaOd2C8XoL2hRYIOIolJ
-SSfW+s351IZpwNovGsKJ4pfZSJyFdkpNynVumk9nTygdeZfwuNu2OkoMUzUR6t5z
-Pik5+89n+KG2uMYvXo077cyNao8Wwrmnjp0zbAIznjLNQ56+nQXB1nY10jbY7f6r
-lOvbsA3H/K0FnX6j5tTXa5BXW3YVmgGj+/yZTP4/7QZkR3mSNCqb9i+yJuvdpbRY
-oIRUD1XVsFKhI7T7GdDcWsz6KeRBDZNF5LRQQhIoL0rl5yhUW7s=
-=RfJw
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmU5ASAACgkQVbJhu7ck
+PpTYSQ//SaH7RxtEYWhmeOztOnInUHKPES4ZkDIfkePnVBw9znKLR0LH170mPuUy
+KUKLIW4TfxbM4/lpM9YE9erPGGJJaLXepV2oaZJbcIJ8r6LoxDz4LIXP4Pup2lWh
+cIoheIe2kqu0ZPr6xUELoZxn1gxVCymy6CgvHbHBwbPZDYYY9OvQ7D3k/fSEpSA9
+yrDZfHWJU19m6YnAmqBtA0wWn11L285FMcysxAS1mo8T+y5eAPB9WzMXUBnj8SIv
+881xfTOgRAz+uI35CGLanDYGmWQG8pd7JmdbFzGWsndITGUgWAntIDxC9rS4mjNc
+bqNRl4pSoIoPC2J1WWdoEQ767mJOMmyNm9pA4G1KN7CgTmXGMM6/QVtdF3MBlCOi
+VoEmTv9mKwsZZorbhrEXx38cAflhz7zj6XOPwKt47vDDP2xZi5ORGHmZ4w7JlJXy
+bXfwJISu7o8EDXzudiR+tK5Oh/Lly1tlYDLQMY6gw2D9g85gMOWteXffK9bnYrxS
+5P1HYuFXTCvLd0D5zv4M57+hpR4Cl72NFZPFBM3gCC4LaLE2GjZnM5axWk5A31cp
+4PbCdR9sSL5H16HBm+NMHwVQ8e3pPtMj4EHQSglRf2KucBnQ0Z6KnAQTCuorWAE0
+1I+JCaWBmuQ6X33t5lzq/SH4RZ8ITRxfUCEXsPYFRrbClD7ubbM=
+=ynoW
 -----END PGP SIGNATURE-----
 
---bisKaXg1hrMC1x/n--
+--T9aCewfOR9lF6f+z--
