@@ -1,182 +1,124 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE83817EE
-	for <git@vger.kernel.org>; Wed, 25 Oct 2023 09:35:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BAM6R1vR"
-Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53ACFA6
-	for <git@vger.kernel.org>; Wed, 25 Oct 2023 02:35:25 -0700 (PDT)
-Received: by mail-oo1-xc32.google.com with SMTP id 006d021491bc7-57e40f0189aso2873221eaf.1
-        for <git@vger.kernel.org>; Wed, 25 Oct 2023 02:35:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698226524; x=1698831324; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OlNi0drLDiiJrgkNvZfVESUPz5kN2maE/Oc5aAdDseg=;
-        b=BAM6R1vRqXdtVlJnprbOJKORzYhPTFldgb+4ypn3gRQznEi6kw46wwIGPpWHw7TxpM
-         0S9f4rxIvAvYnnl9vD13fD5SbOCZRekYpp5y2eUol3j2vN8oFzfagGIFDS9Vqzd7cDB+
-         UEW91hF4D2JrgYNq8GEy9qNRq9D/V+dudbniptnpYFVMfK52HUURfsSBsqF0R0y/tyOO
-         8eVPzH6DtIPMnQwmpkPH/VqOpFPHUZwU6SFaLckG0nrFF/WUbBWI3NGLR/QuJ+Atqt97
-         fPBlQ1swdKcWtmMF2C+EkLVnYl59+T6XhCUM8OwUskh+ZTuCdl14syebSFFhwhlhdBT+
-         i/HQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698226524; x=1698831324;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=OlNi0drLDiiJrgkNvZfVESUPz5kN2maE/Oc5aAdDseg=;
-        b=ANt8P6fioUB591GxVXl8NLmr0neygcnpdPTt+d0TqKXBNAJ9iY54Eu5dw4RkXyOjnU
-         92jKy4+yLYvCvrK2uGicKL6SNFV9omTgu1yaLD7n/DgXWzQzG651X7a9fvu/eb4J26cW
-         dGoSUwj0XTFkKZ4Ef6yMFiXDSBPk6pZwSubBmZa1jBD1C+XWKUzYHiqEqXuU202OdMyK
-         jufqVZPbuR516UF4jEL+jDrPGohHOmeEKPuI79SPwNiViPtU2wIEpag6HbdlNzRv9lQ7
-         NlXtm64pTKVJJ7cbch0oV3+37nB0GKPhb8R7RHx8Wfg3T4KdSNBPk/rxv9tasT5+5fEv
-         7XYA==
-X-Gm-Message-State: AOJu0YxmEhOvZ/culvFdBmjYKZKPvpMH7WYPusf1hBD7sZAuKFNaYwnE
-	X7zkSOOs+tIlpBnKtIcABGRz1IMCcCEfbB9pt9BacyDdNUnA1g==
-X-Google-Smtp-Source: AGHT+IGWot9YzpEI71dxH1JNuBu4ZtTVJap6Ciy7RPsmfqew+nFEfiRe2oZ+YXqTVLiXdxGN1ftO/UkVoJLEPNvcKPI=
-X-Received: by 2002:a05:6871:7408:b0:1ea:9a1:e96f with SMTP id
- nw8-20020a056871740800b001ea09a1e96fmr17491780oac.9.1698226524265; Wed, 25
- Oct 2023 02:35:24 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEF80262A7
+	for <git@vger.kernel.org>; Wed, 25 Oct 2023 10:29:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+Received: from bluemchen.kde.org (bluemchen.kde.org [209.51.188.41])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0A2493
+	for <git@vger.kernel.org>; Wed, 25 Oct 2023 03:29:36 -0700 (PDT)
+Received: from ugly.fritz.box (localhost [127.0.0.1])
+	by bluemchen.kde.org (Postfix) with ESMTP id 2EED824125;
+	Wed, 25 Oct 2023 06:29:33 -0400 (EDT)
+Received: by ugly.fritz.box (masqmail 0.3.6-dev, from userid 1000)
+	id 1qvb8m-2m4-00; Wed, 25 Oct 2023 12:29:32 +0200
+From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Taylor Blau <me@ttaylorr.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	Charvi Mendiratta <charvi077@gmail.com>,
+	Marc Branchaud <marcnarc@xiplink.com>
+Subject: [PATCH v3] git-rebase.txt: rewrite docu for fixup/squash (again)
+Date: Wed, 25 Oct 2023 12:29:32 +0200
+Message-ID: <20231025102932.1202299-1-oswald.buddenhagen@gmx.de>
+X-Mailer: git-send-email 2.42.0.419.g70bf8a5751
+In-Reply-To: <20231023130016.1093356-1-oswald.buddenhagen@gmx.de>
+References: <20231023130016.1093356-1-oswald.buddenhagen@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231019121024.194317-1-karthik.188@gmail.com>
- <20231024122631.158415-1-karthik.188@gmail.com> <20231024122631.158415-4-karthik.188@gmail.com>
- <xmqqbkcn52z4.fsf@gitster.g>
-In-Reply-To: <xmqqbkcn52z4.fsf@gitster.g>
-From: Karthik Nayak <karthik.188@gmail.com>
-Date: Wed, 25 Oct 2023 11:34:58 +0200
-Message-ID: <CAOLa=ZQ6K8g-r+Oq8Jq53QbB4qhKr6HLgpfT5OjtgzBW7DMzbg@mail.gmail.com>
-Subject: Re: [PATCH v4 3/3] rev-list: add commit object support in `--missing` option
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, ps@pks.im
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Tue, Oct 24, 2023 at 7:45=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
-> I would suspect that swapping if/else would make it easier to
-> follow.  Everybody else in the patch guards the use of the oidset
-> with "were we told not to die on missing objects?", i.e.,
->
->         if (revs->do_not_die_on_missing_objects)
->                 oidset_insert(&revs->missing_objects, &p->object.oid);
->         else
->                 return -1; /* corrupt repository */
->
+Create a clear top-down structure which makes it hopefully unambiguous
+what happens when.
 
-Makes sense. Will change.
+The behavior in the presence of multiple "fixup -c" is somewhat
+questionable, as arguably it would be better to complain about it rather
+than letting the last instance win. But for the time being we document
+the status quo, with a note that it is not guaranteed. Note that
+actually changing it would require --autosquash eliding the superseded
+uses.
 
-> > @@ -3800,6 +3809,9 @@ int prepare_revision_walk(struct rev_info *revs)
-> >                                      FOR_EACH_OBJECT_PROMISOR_ONLY);
-> >       }
-> >
-> > +     if (revs->do_not_die_on_missing_objects)
-> > +             oidset_init(&revs->missing_objects, 0);
->
-> I read the patch to make sure that .missing_objects oidset is used
-> only when .do_not_die_on_missing_objects is set and the oidset is
-> untouched unless it is initialized.  Well done.
->
-> I know I floated "perhaps oidset can replace the object bits,
-> especially because the number of objects that need marking is
-> expected to be small", but I am curious what the performance
-> implication of this would be.  Is this something we can create
-> comparison easily?
+Also emphasize that the author info of the first commit is preserved
+even in the presence of "fixup -c", as this diverges from "git commit
+-c"'s behavior. New options matching the latter should be introduced for
+completeness.
 
-I did a simple comparision here, I randomly deleted commits which had
-child commits with greater than 2 parents.
+Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 
-$ git rev-list --missing=3Dprint HEAD | grep "?" | wc -l
-828
+---
+v3:
+- adjust to reality, and elaborate in the commit message why it's
+  arguably somewhat suboptimal
 
-Using the flag bit:
+i deliberated the 'command "pick"' word order swap suggested by marc,
+but while it improves things locally, it somehow doesn't flow with the
+"redundancy-reduced" last part of the sentence.
 
-$ hyperfine -w 3 "~/git/bin-wrappers/git rev-list --missing=3Dallow-any HEA=
-D"
-Benchmark 1: ~/git/bin-wrappers/git rev-list --missing=3Dallow-any HEAD
-  Time (mean =C2=B1 =CF=83):     860.5 ms =C2=B1  15.2 ms    [User: 375.3 m=
-s, System: 467.5 ms]
-  Range (min =E2=80=A6 max):   835.2 ms =E2=80=A6 881.0 ms    10 runs
+v2:
+- slight adjustments inspired by marc. however, i left most things
+  unchanged or even went in the opposite direction, because i assume the
+  readers to be sufficiently context-sensitive, and the objective is
+  merely to be not actively confusing. adding redundancy in the name of
+  clarity would just make the text stylistically inferior and arguably
+  harder to read.
 
-Using the oidset:
+Cc: Junio C Hamano <gitster@pobox.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Taylor Blau <me@ttaylorr.com>
+Cc: Christian Couder <christian.couder@gmail.com>
+Cc: Charvi Mendiratta <charvi077@gmail.com>
+Cc: Marc Branchaud <marcnarc@xiplink.com>
+---
+ Documentation/git-rebase.txt | 30 ++++++++++++++++--------------
+ 1 file changed, 16 insertions(+), 14 deletions(-)
 
-$ hyperfine -w 3 "~/git/bin-wrappers/git rev-list --missing=3Dallow-any HEA=
-D"
-Benchmark 1: ~/git/bin-wrappers/git rev-list --missing=3Dallow-any HEAD
-  Time (mean =C2=B1 =CF=83):     901.3 ms =C2=B1   9.6 ms    [User: 394.3 m=
-s, System: 488.3 ms]
-  Range (min =E2=80=A6 max):   885.0 ms =E2=80=A6 913.2 ms    10 runs
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index e7b39ad244..578d1d34a6 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -890,20 +890,22 @@ command "pick" with the command "reword".
+ To drop a commit, replace the command "pick" with "drop", or just
+ delete the matching line.
+ 
+-If you want to fold two or more commits into one, replace the command
+-"pick" for the second and subsequent commits with "squash" or "fixup".
+-If the commits had different authors, the folded commit will be
+-attributed to the author of the first commit.  The suggested commit
+-message for the folded commit is the concatenation of the first
+-commit's message with those identified by "squash" commands, omitting the
+-messages of commits identified by "fixup" commands, unless "fixup -c"
+-is used.  In that case the suggested commit message is only the message
+-of the "fixup -c" commit, and an editor is opened allowing you to edit
+-the message.  The contents (patch) of the "fixup -c" commit are still
+-incorporated into the folded commit. If there is more than one "fixup -c"
+-commit, the message from the final one is used.  You can also use
+-"fixup -C" to get the same behavior as "fixup -c" except without opening
+-an editor.
++If you want to fold two or more commits into one (that is, to combine
++their contents/patches), replace the command "pick" for the second and
++subsequent commits with "squash" or "fixup".
++The commit message for the folded commit is the concatenation of the
++message of the first commit with those of commits identified by "squash"
++commands, omitting those of commits identified by "fixup" commands,
++unless "fixup -c" is used. In the latter case, the message is obtained
++only from the "fixup -c" commit (if multiple are present, the last one
++takes precedence, but this should not be relied upon).
++If the resulting commit message is a concatenation of multiple messages,
++an editor is opened allowing you to edit it. This is also the case for a
++message obtained via "fixup -c", while using "fixup -C" instead skips
++the editor; this is analogous to the behavior of `git commit`.
++The author information (including date/timestamp) always comes from
++the first commit; this is the case even if "fixup -c/-C" is used,
++contrary to what `git commit` does.
+ 
+ `git rebase` will stop when "pick" has been replaced with "edit" or
+ when a command fails due to merge errors. When you are done editing
+-- 
+2.42.0.419.g70bf8a5751
 
-Its definitely slower, but not by much.
-
->
-> > I noticed that nobody releases the resource held by this new oidset.
-> > Shouldn't we do so in revision.c:release_revisions()?
->
-> It seems that linux-leaks CI job noticed the same.
->
-> https://github.com/git/git/actions/runs/6633599458/job/18021612518#step:5=
-:2949
->
-> I wonder if the following is sufficient?
->
->  revision.c | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git c/revision.c w/revision.c
-> index 724a116401..7a67ff74dc 100644
-> --- c/revision.c
-> +++ w/revision.c
-> @@ -3136,6 +3136,8 @@ void release_revisions(struct rev_info *revs)
->         clear_decoration(&revs->merge_simplification, free);
->         clear_decoration(&revs->treesame, free);
->         line_log_free(revs);
-> +       if (revs->do_not_die_on_missing_objects)
-> +               oidset_clear(&revs->missing_objects);
->  }
->
->  static void add_child(struct rev_info *revs, struct commit *parent, stru=
-ct commit *child)
->
-
-Yup, this seems right and was missed, will add.
-
-
-On Wed, Oct 25, 2023 at 8:40=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
->
-> >
-> >       if (commit->object.flags & ADDED)
-> >               return 0;
-> > +     if (revs->do_not_die_on_missing_objects &&
-> > +             oidset_contains(&revs->missing_objects, &commit->object.o=
-id))
->
-> Nit: indentation is off here.
->
-
-Thanks, will fix.
-
-> > +
-> > +     /* Missing objects to be tracked without failing traversal. */
-> > +     struct oidset missing_objects;
->
-> As far as I can see we only use this set to track missing commits, but
-> none of the other objects. The name thus feels a bit misleading to me,
-> as a reader might rightfully assume that it contains _all_ missing
-> objects after the revwalk. Should we rename it to `missing_commits` to
-> clarify?
->
-
-Fair enough, I was thinking of being future compatible. But probably best t=
-o
-be specific now and refactor as needed in the future. Will change.
-
-Thanks both for the review!
