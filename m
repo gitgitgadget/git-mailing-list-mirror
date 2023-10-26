@@ -1,73 +1,73 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA4F2D030
-	for <git@vger.kernel.org>; Thu, 26 Oct 2023 09:57:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 052392AB2C
+	for <git@vger.kernel.org>; Thu, 26 Oct 2023 09:57:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KQ1UlfMD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RZf/yqox"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LSu/kLLj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="d1JEESUT"
 Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 726B5196
-	for <git@vger.kernel.org>; Thu, 26 Oct 2023 02:57:01 -0700 (PDT)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B13FD9D
+	for <git@vger.kernel.org>; Thu, 26 Oct 2023 02:57:05 -0700 (PDT)
 Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.west.internal (Postfix) with ESMTP id A212E320098F;
-	Thu, 26 Oct 2023 05:57:00 -0400 (EDT)
+	by mailout.west.internal (Postfix) with ESMTP id DD96132009FB;
+	Thu, 26 Oct 2023 05:57:04 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Thu, 26 Oct 2023 05:57:01 -0400
+  by compute1.internal (MEProxy); Thu, 26 Oct 2023 05:57:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1698314220; x=1698400620; bh=yg
-	B7IeWhUT4cltMwwgYeY6qSBMZWncbd6TfzGypuEUs=; b=KQ1UlfMDooA54fk6/n
-	YPwhVxvVe7aq21hSublLxA3LIYdeKRItD3QmrTZRCeEf8HYq9kVGwi48njBMxuUi
-	O2LxqpuQ6b/VIVhV7S7pj6eMXlUGltXMVTNz9ocSqvUsSmqVUL+2tv1gyaBSk8+D
-	FHs2hjmM5AfzNxKBJ6AkePGNI+WaGrO8cGpQZhaCj9R7Vhf/DEiQGaOljZ4g+Pqd
-	lA3F0elhmqde9S+RKB6W4iL6cPRK0XSV/o4oB5G7X6+RZhpxZoQtKaU9anenmiYn
-	kfMzaw1Gsu9oIw1IhhC4vMqjvQ5GcW0maJ4wfsT8wK9Y2YzxqWsawoD6Q0Fe6tvg
-	2x1Q==
+	:subject:subject:to:to; s=fm3; t=1698314224; x=1698400624; bh=3O
+	8z3KuuDmwSmlLeG4kB6BOGHumzN+SakJtG5c6mPxw=; b=LSu/kLLjGJTm6ny43k
+	vEcoHYLxKn3li6JyxmKKpinkF4c8s4HAyOeNtIwCDJPerNTsMvkmol8iMwuKlX9b
+	r8svnscJb02mrZFK9wHGIsqmWuj4zokG4oABgFwI1pQKBrJucHx65rFW0SHEXXRc
+	c8s7nnTw8KkYOzZh0MbuljjeGskPCx0LKxOK7VVrWvLkYM7CTUpugkjPh6SQOc0K
+	9vtTw6Q65zFuigoFaq6cpwRgFM3cnFExBJndRIH/zjwhZzH84dmcHeKnwmq7bQdn
+	TncmbCImlMXqSQJjt/DO8isV9zeEnMykoIXKu32YUpYsDTMpruq+JrYgBkNr+F8C
+	g/bA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1698314220; x=1698400620; bh=ygB7IeWhUT4cl
-	tMwwgYeY6qSBMZWncbd6TfzGypuEUs=; b=RZf/yqoxhLK5hKMrDXI72Mb5pG2el
-	L9RPnAK6J5kT3G5GH7a1X8HkH6GufsRbWLEQR/UiEBco8R0tbnwC6pEKQ7sjq4fl
-	GVyKIA5EU7jd7Ij3hiWKbauOJy5/qdfjD5MdoWITdNQMVFk1YqKNHG4QnjIQuUv0
-	w/EQJvYpzYS7FmUxdPMGJtXX2NkxuzjVIcrIG1tZVqJrGNUDkZvNNhtOI8pYVh65
-	Q8NNepwdMrySk1VOo+zq9pFZ0wU6a1sAZ6JiMWOgcBeXZZjpcPI8llRmifRkT7Jl
-	kDb2KHkNEu7pcgZrQ7qeMcrBRPnXfT7y0r8MSpNWAc26Pr1iqvfUGiD3w==
-X-ME-Sender: <xms:7Dc6ZeqIzZOmHp6CcnqZ_Ju_LgJQAV_CRQKSvCvzIeWuknGl1xlyZQ>
-    <xme:7Dc6ZcqjMwOi7TMkxU9YcIXsRVMPwxk1jND_2q-OvZXBIP-mxf_htz-tYGQ8pyFHF
-    EMrPoBWBCQOs2xYkA>
-X-ME-Received: <xmr:7Dc6ZTORvOMFhFqjbahxfIrbTpBgG14bBgdwlF0QCpuQlpopXi-JvGT3ywGwlfAFrFGBksIRCUF6ky77i6iHjdIcCkTgyU41vXzsTJlSrna9OBs>
+	:x-sasl-enc; s=fm3; t=1698314224; x=1698400624; bh=3O8z3KuuDmwSm
+	lLeG4kB6BOGHumzN+SakJtG5c6mPxw=; b=d1JEESUTEnucBLVo8LnnMT7ve4fgu
+	FbnvNfzaDMyXjRxy0GezwTWNdml8JsGXDSEe2IkVKV9CgkjNNlMCFGorzaQBCOU3
+	PpOEPRzvRSXnNQLii/8y/UM+/nXPRTaR2X8F44Z6GR6aEuXD/V0SdRWIJFsYBhJg
+	AszPGixZliO0x2h0evUgnf29/RhdyXkpdJl4hyFccabFp/Y1tWwXw5cSvxGdH21P
+	Y6kN+ULP31PhJ7/uOLWHhxJjV1judeh1Az3nTf/nprOZXLMaWlxryg/V4Eua5U/s
+	ibg3HQSPqzD90BtYmGWKRGja7ZvRrAoZ+zmJfTDaW+8v1aWWThnT7wqBQ==
+X-ME-Sender: <xms:8Dc6ZRWJTNBg037JF86xgkezN8FNZQ-kYvd3N6jbvaSohRUm29T0Eg>
+    <xme:8Dc6ZRlYEVEmngzUZF1oqzoXX9iS88124wrs-sFEcMuW_EWdl20KiW0jgkwN6c6wd
+    6dYYFs4IRn1s0dmeg>
+X-ME-Received: <xmr:8Dc6ZdZQ9fUTZeDvm11bM8GhHjX-uNyzl2N477KSBF1Xwl3tjl8Spbn-pJljw-C1ipwqaLmg5RBNA-L3oKlQfuPsyzf93l-uP4Gl-v4_qpHJHOQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrledvgddvvdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
-    ucevlhhushhtvghrufhiiigvpeefnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    ucevlhhushhtvghrufhiiigvpeegnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhm
-X-ME-Proxy: <xmx:7Dc6Zd4Qpbu6BhFwy1lENFMQw2wpD-FfPLH6-YDc6FigaVwvyBTbwg>
-    <xmx:7Dc6Zd5mW39oCpVzeOKzgiG-M1f6Ed-Q3QaeCj1PeNtqpqx_Hxnu_g>
-    <xmx:7Dc6Zdjc5DHGMwO--rQ5S5C-iZdgK4DMtoh3K6q5H72SLp-sQyPNLQ>
-    <xmx:7Dc6ZdExjaxiFxABvJ0M-4YZGSyCz_oxGeDyWPIuSRAXruxplzYeSA>
+X-ME-Proxy: <xmx:8Dc6ZUUbP34CvzxOkidXOpA7tALf9GcuA8EXjbuFTUrXOb-KJP7TrQ>
+    <xmx:8Dc6ZblePqmv_zIfQumhtQ2U8wT70KAUToAfTGMF0mDpUgJf1u8hmA>
+    <xmx:8Dc6ZRcnG1paF2bxFWP1Zxv3WyHklOhahc1tv3xsNQVOEELUzS1IHw>
+    <xmx:8Dc6ZQwqZ-JaFTvhX9LJQ3T5tzZWVyQenmugJxengPMfyqd-UrBcHA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 26 Oct 2023 05:56:59 -0400 (EDT)
+ 26 Oct 2023 05:57:03 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 8937df9e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 26 Oct 2023 09:56:50 +0000 (UTC)
-Date: Thu, 26 Oct 2023 11:56:57 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 210335e2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 26 Oct 2023 09:56:54 +0000 (UTC)
+Date: Thu, 26 Oct 2023 11:57:01 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Han-Wen Nienhuys <hanwen@google.com>
-Subject: [PATCH v2 09/12] builtin/show-ref: ensure mutual exclusiveness of
- subcommands
-Message-ID: <5ba566723e8742e6df150b12f1d044089ff62b59.1698314128.git.ps@pks.im>
+Subject: [PATCH v2 10/12] builtin/show-ref: explicitly spell out different
+ modes in synopsis
+Message-ID: <b78ccc5f69297fec7807c077ccdcf722ee12edf3.1698314128.git.ps@pks.im>
 References: <cover.1698152926.git.ps@pks.im>
  <cover.1698314128.git.ps@pks.im>
 Precedence: bulk
@@ -77,87 +77,107 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="0hcDKNufFU0v+twX"
+	protocol="application/pgp-signature"; boundary="gPZfI4gGQU9CvpwY"
 Content-Disposition: inline
 In-Reply-To: <cover.1698314128.git.ps@pks.im>
 
 
---0hcDKNufFU0v+twX
+--gPZfI4gGQU9CvpwY
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The git-show-ref(1) command has three different modes, of which one is
-implicit and the other two can be chosen explicitly by passing a flag.
-But while these modes are standalone and cause us to execute completely
-separate code paths, we gladly accept the case where a user asks for
-both `--exclude-existing` and `--verify` at the same time even though it
-is not obvious what will happen. Spoiler: we ignore `--verify` and
-execute the `--exclude-existing` mode.
+The synopsis treats the `--verify` and the implicit mode the same. They
+are slightly different though:
 
-Let's explicitly detect this invalid usage and die in case both modes
-were requested.
+    - They accept different sets of flags.
+
+    - The implicit mode accepts patterns while the `--verify` mode
+      accepts references.
+
+Split up the synopsis for these two modes such that we can disambiguate
+those differences.
+
+While at it, drop "--quiet" from the pattern mode's synopsis. It does
+not make a lot of sense to list patterns, but squelch the listing output
+itself. The description for "--quiet" is adapted accordingly.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/show-ref.c  | 4 ++++
- t/t1403-show-ref.sh | 5 +++++
- 2 files changed, 9 insertions(+)
+ Documentation/git-show-ref.txt | 9 ++++++---
+ builtin/show-ref.c             | 5 ++++-
+ 2 files changed, 10 insertions(+), 4 deletions(-)
 
+diff --git a/Documentation/git-show-ref.txt b/Documentation/git-show-ref.txt
+index 2fe274b8faa..22f5ebc6a92 100644
+--- a/Documentation/git-show-ref.txt
++++ b/Documentation/git-show-ref.txt
+@@ -8,9 +8,12 @@ git-show-ref - List references in a local repository
+ SYNOPSIS
+ --------
+ [verse]
+-'git show-ref' [-q | --quiet] [--verify] [--head] [-d | --dereference]
++'git show-ref' [--head] [-d | --dereference]
+ 	     [-s | --hash[=3D<n>]] [--abbrev[=3D<n>]] [--tags]
+ 	     [--heads] [--] [<pattern>...]
++'git show-ref' --verify [-q | --quiet] [-d | --dereference]
++	     [-s | --hash[=3D<n>]] [--abbrev[=3D<n>]]
++	     [--] [<ref>...]
+ 'git show-ref' --exclude-existing[=3D<pattern>]
+=20
+ DESCRIPTION
+@@ -70,8 +73,8 @@ OPTIONS
+ -q::
+ --quiet::
+=20
+-	Do not print any results to stdout. When combined with `--verify`, this
+-	can be used to silently check if a reference exists.
++	Do not print any results to stdout. Can be used with `--verify` to
++	silently check if a reference exists.
+=20
+ --exclude-existing[=3D<pattern>]::
+=20
 diff --git a/builtin/show-ref.c b/builtin/show-ref.c
-index 87bc45d2d13..1768aef77b3 100644
+index 1768aef77b3..d4561d7ce1f 100644
 --- a/builtin/show-ref.c
 +++ b/builtin/show-ref.c
-@@ -271,6 +271,10 @@ int cmd_show_ref(int argc, const char **argv, const ch=
-ar *prefix)
- 	argc =3D parse_options(argc, argv, prefix, show_ref_options,
- 			     show_ref_usage, 0);
+@@ -11,9 +11,12 @@
+ #include "parse-options.h"
 =20
-+	if ((!!exclude_existing_opts.enabled + !!verify) > 1)
-+		die(_("only one of '%s' or '%s' can be given"),
-+		    "--exclude-existing", "--verify");
-+
- 	if (exclude_existing_opts.enabled)
- 		return cmd_show_ref__exclude_existing(&exclude_existing_opts);
- 	else if (verify)
-diff --git a/t/t1403-show-ref.sh b/t/t1403-show-ref.sh
-index 9252a581abf..4a90a88e05d 100755
---- a/t/t1403-show-ref.sh
-+++ b/t/t1403-show-ref.sh
-@@ -196,4 +196,9 @@ test_expect_success 'show-ref --verify with dangling re=
-f' '
- 	)
- '
-=20
-+test_expect_success 'show-ref sub-modes are mutually exclusive' '
-+	test_must_fail git show-ref --verify --exclude-existing 2>err &&
-+	grep "only one of ${SQ}--exclude-existing${SQ} or ${SQ}--verify${SQ} can =
-be given" err
-+'
-+
- test_done
+ static const char * const show_ref_usage[] =3D {
+-	N_("git show-ref [-q | --quiet] [--verify] [--head] [-d | --dereference]\=
+n"
++	N_("git show-ref [--head] [-d | --dereference]\n"
+ 	   "             [-s | --hash[=3D<n>]] [--abbrev[=3D<n>]] [--tags]\n"
+ 	   "             [--heads] [--] [<pattern>...]"),
++	N_("git show-ref --verify [-q | --quiet] [-d | --dereference]\n"
++	   "             [-s | --hash[=3D<n>]] [--abbrev[=3D<n>]]\n"
++	   "             [--] [<ref>...]"),
+ 	N_("git show-ref --exclude-existing[=3D<pattern>]"),
+ 	NULL
+ };
 --=20
 2.42.0
 
 
---0hcDKNufFU0v+twX
+--gPZfI4gGQU9CvpwY
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmU6N+gACgkQVbJhu7ck
-PpR/VA/8Dc9X1uTaxQnhQYG4ZPiaHUjM2i2r58g/T10NKwqd8sNuMheydRY24nQd
-tmH9009029zxTzkPIE+wcwdKbP08+v98gPsEnEBb9lA7tmfqMR9iBnTGZmc5AMCV
-SRH0NEDQPzH8q4r5QDisBTAiVTwbcNmcgF3JB1QOuzitBB5LWriUpyd6VGIyd0Fz
-zIDaBvHrD2S+pK+wERp5VW0CB5EcuNBOWbkYEoycYcm5VhsNd8f2cRddtzBtHbsT
-QyKqBk/E3biXsAvGUCRLF8hDliEW//dLtNSqzhvTGd5gjt/ZiBVbV8lQ1unFD9VI
-GGbCBBv+aTc8cehNPUaSXFsXv5ZQy+gl/X6EFHME2bVDQf+q6gWkK3q7wpgNJKG6
-790RD8pajUGlYW0NiGyzAf87iNLkBojVf+eCX3h61flOLKmhQr133gPFcTFc8u4o
-4ClhULQE80zyrospVMuT0jAJM/0GYPzX3ln8GqdWvP+4E2vpWDRETSeXXOr8AJWi
-wKMYj/K3Mh65Dld8t2FRnk+Tu41DEQw3Exijt6BnzvZAlz8CnFIXVkQJC9dgeILA
-mLbCWf6oi7xEQrp8yuvekhh2K0lusfuVpbZWOwYzSVbP2HbU9Z++IgnbNrtvZfVS
-qMzUbt46aAizqw47pYNesA+UW5O7tIw4T+wSnE4gooMeMFsiv5Q=
-=uubU
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmU6N+wACgkQVbJhu7ck
+PpSDYQ//SLjr9Lq2Wt1PIN5E9H+EynteVzcUmY9WsdiCMVcGFiZvO3e8Jf5bX4A2
+vw0FW3frXkttl/LZSc/vMY/KvxUgiK4x0iBwz85OPMACD6SWEFOBnCoPdp1eLR4o
+sC1sKno8HunHdgHdIkMR9pBJfOZZe6bgkhZZLqopekEp5jfvZ1bLgyp2DmN4ACn0
+v+9uviyTD1n53ITxDm9I/sNHOHUJm/F/v0JClI2Y8Rm93Xmd9D4yyVG1pk0KzaTO
+zkk37776pofXa0s/RYQDuD7IA7FiZ1+o8fVk30A7zm89NEXbDVMT0cz0pT4zLMFB
+eJ0PxoBbJoVqqz/ktJEgh4J8uebMfn7hd9uT90BDDTU+gd7A5wRMURaw2YKxgY2h
+s6b+apLaLXanPYkIy7QfVzFHiNEj3Xi8sSDl+BQmMG2ld6yO85RYr1qdP/+sH/2s
+diskDuVMpx0+DtPvPHfhspFWdhK79tuKeOttypJZTaJqiS4vi3bgzJbPkcVo5bCh
+XCShALtrpQMSdRgOUS6Qq6MMenk/rcKKBRYDelKWJj4UrKrX6bLAq3FHv6CAuKjm
+U8oCVJXufjXAFg1xiLrkvCnwUUZ7Grj5oN4i6Q8R7yXptPlm4lD0fWW+L/agATtl
+LmxYswf1RAtdjEV2RtM+4Wbh/yJ5ujzHVRotWLLNYt04xM9u974=
+=LUn5
 -----END PGP SIGNATURE-----
 
---0hcDKNufFU0v+twX--
+--gPZfI4gGQU9CvpwY--
