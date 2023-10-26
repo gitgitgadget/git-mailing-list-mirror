@@ -1,46 +1,46 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2131618644
-	for <git@vger.kernel.org>; Thu, 26 Oct 2023 08:00:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 252D21945F
+	for <git@vger.kernel.org>; Thu, 26 Oct 2023 08:00:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bZwwa/DY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QoI26bHQ"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="irlTzin2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Bf77x1vw"
 Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 991C918D
-	for <git@vger.kernel.org>; Thu, 26 Oct 2023 01:00:11 -0700 (PDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.west.internal (Postfix) with ESMTP id 206F43200A05
-	for <git@vger.kernel.org>; Thu, 26 Oct 2023 04:00:11 -0400 (EDT)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEDCACE
+	for <git@vger.kernel.org>; Thu, 26 Oct 2023 01:00:15 -0700 (PDT)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.west.internal (Postfix) with ESMTP id 5C7743200A0C
+	for <git@vger.kernel.org>; Thu, 26 Oct 2023 04:00:15 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Thu, 26 Oct 2023 04:00:11 -0400
+  by compute5.internal (MEProxy); Thu, 26 Oct 2023 04:00:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1698307210; x=1698393610; bh=Ba
-	cV0TdBwgF9XfrN//Zw53Br5b9V+qEXQ6hAxsurEDQ=; b=bZwwa/DYSkbsoAIUsa
-	THWrmwh9X7HvwtBB2LdqYZiOXWiQ+fLKv6H2WKLXb08IbhoHZlBlpzzPwQK2+Pb+
-	2NviSFR3ZttX5JqZ+Ue5WzBZZbrNFgh3X450MKbBJqwELFN2H6Qx0LNUiQUzFrdU
-	amwxbrq7MXUXIZG4v9yifr+oPYvMnuTi4m1Boo6QTk/cY0AntGGKUgwwJcOSQXc3
-	yJcFwAM/LA/pyLJRHkuY4rhjG3ni5qEy3iW9ZzrcJC/yvxbvho0xwADPb0RLjGDO
-	8yQOOc5cJQYklrDSS2NyEEsDmGJeof2UFxMXfICtkYQH3OS4LFdCV7msTGD+aGRW
-	ZaOg==
+	:subject:subject:to:to; s=fm3; t=1698307215; x=1698393615; bh=ho
+	pNqA1aCKeGo4sKc3LlhiLkwLBxItuLsm1UGuPVoBk=; b=irlTzin2Lw97son+Fr
+	Kl2BWwpBj5trB8qy/UI7xd+TlFSMBAbclmQTmL9Wzdv6IU+wUKmiqp6omJBZd38n
+	tYfgUUQZomjNBtqezPSUXfFxzp0fi04/UxJhEmaPNbcJV6NRBmunJ5n8ln0J1OrG
+	tsr0U6CbgBoBGWuUk87dnkkn7bknnZwkgjo898Lf77JTon0+2xLU71ObuUHAQ+G6
+	jXRcQn1YZkjc8U3tXH4fJC9P1s3FfLl8CXQP1sMOSvO2APn0oKcJgy7U+8rzMm06
+	PDVXxOhHT7xkhzp7rsNDu3nclGC2p0NpPNNLWpScsqkzkey7NyWWxEENbg1QBdiN
+	FQxw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1698307210; x=1698393610; bh=BacV0TdBwgF9X
-	frN//Zw53Br5b9V+qEXQ6hAxsurEDQ=; b=QoI26bHQdUuC4E6JrL/80nv4+cEiv
-	DN1S5cJje2DZte1Qo+9Ql89mC+6Z522NUCirak+Hdej9F+ZG41ezhlA78BNyKfC8
-	abK35IZZNkxunXud67OyXrSskMDr+HYxGFiPBH5AwOwzmBctRSr2dLHbvzRwRS2O
-	pxURfDTaBpBnLcukmEjCMX/4ykhGsO2dLUvhe+OjAZUskp+ubSyIEkVq5GkMUFbM
-	sMq+FQ05LMLm4JvOwWj8mtgjEZS8Q7uckKru1yjQz1VsTtmGBcbSSczkdN4nQjUz
-	xhrbC11KWsirPZ176rqVoOZRAiLQ7pcTP19SGPJhD4HKFN3tmK4GAYrvw==
-X-ME-Sender: <xms:ihw6ZQnkOwJsEcWl48u4qi3oFD2Z7ciSjfz4RxGAUc_x2EgONa6izA>
-    <xme:ihw6Zf1JohDgyMf-qhgjg8C3O_9Z-Vk8NCGikmb29kaXDeMJQ7-DKZs1VAptsXGtQ
-    T0zTJQEAStRQiaTdA>
-X-ME-Received: <xmr:ihw6ZeomL3a945ZCfpWYBepj_7TqTR6XuxlQuJBOiu4cYOBU7Z_Wq82gbm73q93an_oAnheU4NGwUeFyeQdqdIOkT9KtZMnCpX-nsOtdnlAWsQM>
+	:x-sasl-enc; s=fm3; t=1698307215; x=1698393615; bh=hopNqA1aCKeGo
+	4sKc3LlhiLkwLBxItuLsm1UGuPVoBk=; b=Bf77x1vw3YAp4CTdOmzgV5bYJSvwr
+	elZcS/MtYcCfcaZz9ChD9h5pYLKicizSyOUIHe1O3Tt7Fj6DHEOgVJJsMl/X++sG
+	LuvbeC4WJKQCzJrWLqusBAICG9lMLkAIlnQQ9Rgmta+rhESRdzpoOa2RpMmhoFJl
+	ATW0N0Or1IVrd/+nG+a9ozzFplY7criQMqGcES8hvH0S5xw/TUTvCKrxfuf4U4py
+	CIxkbqwjx7+wvnVN8e4Qhv9uZbeulpXsW3Sr4S1YN/JdcLmkAHtGmUOwU3fJl6NF
+	6R7iKpq1H/yWDtbCLmM5+wBcuPj6NVrUGXJR+B0nh2eHR8F9OE4aNYATw==
+X-ME-Sender: <xms:jhw6ZZc4ZXYeuhmW5M6bBb7Yvq5ODXaW1BS92QrnGth2CSrLDeynpg>
+    <xme:jhw6ZXPeGr8gdRXDGoMZxYq7KYcGgCEMFlJm4t-kGzmVdM2cINOiJo_fhU-HZAOXD
+    swRar8_UoCUpvTo1w>
+X-ME-Received: <xmr:jhw6ZShhsEU6VBdfe2-BDCc4bqloFH-8cmPmPcrda_Sw6tIepRUcv9tmC_d4dpipVfg0L06iczVubgAyaYz4po9uabT1yChh5erfJ8qaOtov0Ls>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrledugdduvdehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
@@ -48,22 +48,22 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrledugdduvdehucetufdoteggod
     khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
     dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:ihw6Zck5pb8p4QGkGCuNrM9tlx1dWUEQVDNdbb0_VLQyBqanTxEJXw>
-    <xmx:ihw6Ze3009oDCVbpIkU9iHrVwrO40W2lMN6pbysJ9RermsupoVPmbw>
-    <xmx:ihw6ZTvTrmvKs4AWREI6PKkdaY_XyrYPsmvLOBm_wFe4qUNFf7EX1g>
-    <xmx:ihw6ZXjfNDWfcWrhoCRroQIxOf1mxq08tBumItVLCum7lMPfwLDtOA>
+X-ME-Proxy: <xmx:jhw6ZS-6Jql7_-rzyXuoXQID0HW9BTtiWyxWSiaqRagNug49zB54Yw>
+    <xmx:jhw6ZVtEW3JFdmawy6y9IVYGGJUw8n5AaalPQIqr4SCYwlzLm0hkgQ>
+    <xmx:jhw6ZRF5EB8t33_YNu69Qo4eEmSuG1Gv0kmhTeHkHcSy1JPp1_pCZw>
+    <xmx:jxw6Za5MA1YcibSgc4CaLVCGitWS89EhA69rpvpYeWE2yiI_rAYSRA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 26 Oct 2023 04:00:10 -0400 (EDT)
+ <git@vger.kernel.org>; Thu, 26 Oct 2023 04:00:14 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 341a2c29 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id c789c6ff (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Thu, 26 Oct 2023 08:00:01 +0000 (UTC)
-Date: Thu, 26 Oct 2023 10:00:08 +0200
+	Thu, 26 Oct 2023 08:00:05 +0000 (UTC)
+Date: Thu, 26 Oct 2023 10:00:12 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 2/5] ci: make grouping setup more generic
-Message-ID: <ec390354f15604eb440bec0d3d0d817441e0f5b2.1698305961.git.ps@pks.im>
+Subject: [PATCH 3/5] ci: group installation of Docker dependencies
+Message-ID: <a65d235dd3c14df4945b9753507d9cdab777966c.1698305961.git.ps@pks.im>
 References: <cover.1698305961.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -72,105 +72,71 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="BRn9FQslFNmdApzu"
+	protocol="application/pgp-signature"; boundary="YJD5bq9zRa8dmnQG"
 Content-Disposition: inline
 In-Reply-To: <cover.1698305961.git.ps@pks.im>
 
 
---BRn9FQslFNmdApzu
+--YJD5bq9zRa8dmnQG
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Make the grouping setup more generic by always calling `begin_group ()`
-and `end_group ()` regardless of whether we have stubbed those functions
-or not. This ensures we can more readily add support for additional CI
-platforms.
-
-Second, this commit changes `end_group ()` to also accept a parameter
-that indicates _which_ group should end. This will be required by a
-later commit that introduces support for GitLab CI.
+Pull in "lib.sh" into "install-docker-dependencies.sh" such that we can
+set up proper groups for those dependencise. This allows the reader to
+collapse sections in the CI output on GitHub Actions (and later on on
+GitLab CI).
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- ci/lib.sh | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ ci/install-docker-dependencies.sh | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/ci/lib.sh b/ci/lib.sh
-index eb384f4e952..957fd152d9c 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -14,12 +14,14 @@ then
- 		need_to_end_group=3D
- 		echo '::endgroup::' >&2
- 	}
--	trap end_group EXIT
-=20
- 	group () {
- 		set +x
--		begin_group "$1"
-+
-+		group=3D"$1"
- 		shift
-+		begin_group "$group"
-+
- 		# work around `dash` not supporting `set -o pipefail`
- 		(
- 			"$@" 2>&1
-@@ -28,11 +30,10 @@ then
- 		sed 's/^\(\([^ ]*\):\([0-9]*\):\([0-9]*:\) \)\(error\|warning\): /::\5 f=
-ile=3D\2,line=3D\3::\1/'
- 		res=3D$(cat exit.status)
- 		rm exit.status
--		end_group
-+
-+		end_group "$group"
- 		return $res
- 	}
--
--	begin_group "CI setup"
- else
- 	begin_group () { :; }
- 	end_group () { :; }
-@@ -44,6 +45,9 @@ else
- 	set -x
- fi
-=20
-+begin_group "CI setup"
-+trap "end_group 'CI setup'" EXIT
-+
- # Set 'exit on error' for all CI scripts to let the caller know that
- # something went wrong.
+diff --git a/ci/install-docker-dependencies.sh b/ci/install-docker-dependen=
+cies.sh
+index 78b7e326da6..d0bc19d3bb3 100755
+--- a/ci/install-docker-dependencies.sh
++++ b/ci/install-docker-dependencies.sh
+@@ -3,6 +3,10 @@
+ # Install dependencies required to build and test Git inside container
  #
-@@ -287,5 +291,5 @@ esac
 =20
- MAKEFLAGS=3D"$MAKEFLAGS CC=3D${CC:-cc}"
-=20
--end_group
-+end_group "CI setup"
- set -x
++. ${0%/*}/lib.sh
++
++begin_group "Install dependencies"
++
+ case "$jobname" in
+ linux32)
+ 	linux32 --32bit i386 sh -c '
+@@ -20,3 +24,5 @@ pedantic)
+ 	dnf -yq install make gcc findutils diffutils perl python3 gettext zlib-de=
+vel expat-devel openssl-devel curl-devel pcre2-devel >/dev/null
+ 	;;
+ esac
++
++end_group "Install dependencies"
 --=20
 2.42.0
 
 
---BRn9FQslFNmdApzu
+--YJD5bq9zRa8dmnQG
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmU6HIcACgkQVbJhu7ck
-PpRMpxAAk/6l5ShyRZK535Jj6TucnuNzKDy85pRBSk2sAAYwad/fOamh4hfH/o84
-ND123El/Elh4qaLZ8S8thCHO49HsXIqTamVGR9MjAmjz/1udjDDjRPA09eHpSHal
-DOI+ZnzmpZaJbcaRSYNgvOUMLpYvU9MgDA6cXLPad+23sUU5tXHKogf1Iz3hr2Rh
-ElHypB8z9SZ+0s43aLWR0fiNXyRJREBAEd+rItPLp8PwexC5hI99+ZG17NqAnEnd
-BSXulCstivhmAEEpWTb8gP3fJI2yVZj4uOdBDJa/oTt2yKvbzMn5ehy9FFaxBPaq
-9ywnMHKgNfLeXKsaPV5j1iV8qSDHGwoDeDPThurMxvACZ7rBN7tNslXx01qc5x7a
-hLKF40lzS+VXY7HkK7Ywx7gUmnXZEbjFRAWg8rJfCDY7x1knBrTg1aOVeTSqeUGA
-K0kD8JQcHYkVwd7CAIOiMF+uCQ8FEqgfvO5q9nvzznjgq0Dp3NVkIowFMETHp8nN
-W0p9zhtqRcolXYnw5Mz9KZdL1VFAl5zUGjNRwHw01diSgv8mhMeQ9MGW7e9q+bKf
-FNuRTiIlPyNBBpHhcf5CvYvSz9SY7PwPwzaVgNRJE5z/ZrxiHDV2R6N2oSceKy8n
-ScY+es+81EEQCSwV4p62O6av/8ML+9mFLCY8gnhIwURkl/OpyWk=
-=IS9m
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmU6HIsACgkQVbJhu7ck
+PpRU8Q//U+I4oZwE6G+2gw49SV6HLCOIq78xb/YZaMRZ918mMvFZ0w1yyI4HYiMe
+bu5dwRkK/6pjCEYm4pg/S7BwibV5gs9lmuRGyAnn1VMnWJ758oQ1sbkQ5yUKd8D8
+6SX7QvBmQaBhHG47vnJu0QGzys8ftPchkubMCi8CW4V8vueHOFJFj4C8xL5Kjzt2
+ESvBtQnveab/SPk9U1/p7hRU3qwyTFetz7Q2lYShr1UWlOftNG+oUCoFpfkoa1kU
+6Rrmc2o/gIDagFSiet0EvEw38e3WKd+eOytx0R5NT2d7mH4L5GdDEli9bI78GoT5
+m3EFl5zW8J4ppxnT1VlpnQyduUzfzmt6jANNs2eO9n6xXhVDEQHMSZHIEwAaIiH6
+ngxaChDrf5lORyiJwcjVw7AmNwQ/zN4mk6L14BKOOAjPpNyBwXrynC0LEfJYfFom
+VQ8Z/vwbMZ2ILgdl90T8BdvnPbMTpT2WvPIAAo6ss4k2tb7Utq3u+F7QXwkU2TCw
+uiMueGdB16KMUzBX+YvKewOt4VPKSavEmott+sewsxbIeOBxVerBFAltDX0/DG/Y
+7gY0ZbNa025FDvtWIfIb3fcA8Jm5+iRe6Pyo+tz9/lvfZo1c/hdtP/xfRRuD/Tcp
+NodvD9ZANPLsvaKvoXOUQpHvn+FINDrwDH7nyFESK6UfC+kjBlM=
+=w9oi
 -----END PGP SIGNATURE-----
 
---BRn9FQslFNmdApzu--
+--YJD5bq9zRa8dmnQG--
