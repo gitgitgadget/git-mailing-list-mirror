@@ -1,92 +1,120 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5476A339AE
-	for <git@vger.kernel.org>; Wed, 25 Oct 2023 23:11:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA377BB
-	for <git@vger.kernel.org>; Wed, 25 Oct 2023 16:11:24 -0700 (PDT)
-Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-7788ebea620so21587585a.3
-        for <git@vger.kernel.org>; Wed, 25 Oct 2023 16:11:24 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9708715C3
+	for <git@vger.kernel.org>; Thu, 26 Oct 2023 00:56:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="yljWxAz2"
+Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEB74136
+	for <git@vger.kernel.org>; Wed, 25 Oct 2023 17:55:58 -0700 (PDT)
+Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-5a839b31a0dso5055487b3.0
+        for <git@vger.kernel.org>; Wed, 25 Oct 2023 17:55:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1698281758; x=1698886558; darn=vger.kernel.org;
+        h=cc:to:from:subject:references:mime-version:message-id:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Qa6UdDw066Es3JPwGhf9j63zEeuN/hkmQgIhzP8/jLY=;
+        b=yljWxAz2ljf4T620VEYiZZJplDzmZ+N0V7tXDe0UvqEM/AQDytGDXNbgNuJqVKqA/I
+         BGSXzwj5cRs9kV9dz5JaK6n2QR5s5CbBvJKnbvcTcC/+wl+rw90/wRMcMkgSZORrNToq
+         UECvfVV8aaiRRK561uYYyEGlrqOr/TipG8INwYyNgdkcQET7Co2hbL4jrEoL89dx5xBm
+         K0kvGi9Ki4pgTFMZ/jkFvFKGLLvyAvps8YLRkgaQJscFTQxq/DJpXnJFYrC6trjJz3dC
+         fjRCDCLOuPpkJVMRwjD3H9gPuI60cvIyts0SoGB6O5u47tEZQtY8SATxIBgKXznNTfXC
+         HtEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698275483; x=1698880283;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5NfVJMI8DygF8ykk6Ckh1ZImX2JuLWi7gQ8ET7zZ5D8=;
-        b=sfCq/fKuiADF663MX7nM2veAc4Ja+e6IkM1WgCNjIOy2dKjPFEWxOEBbxWBGSlQfrA
-         mcfHz1nLLwlcguCvhmIFT+J1kFxFb2s6e2hVcTdSKK1anvwVExrq2YyxLVsLERjTLr3P
-         KFNVQ2pNCaqe7fd53N1KiMZFJd0yY8k5d9S9YyiosAPDPhdJzcQkMnLL1OvxHo4PX7Z5
-         DicSnQnZrVd4palc149M5WuexHil3I2ngi3VIlckcauBNsLg4F3JtY8s4dxGWHVsP0sI
-         +nMtf6ewtj1vgFv00SsfmFux14vJeExf1WPOghNgYryP2yyD6S7zQMPxNXqiAGx1K9Fz
-         UNyQ==
-X-Gm-Message-State: AOJu0YwSClyaqn7DDGobZ7aTt2oHEh5OJYG35wiGKR8WhtQI28TM8McL
-	1MjYWRUb2nKHzJNzPjL+gtOAk2CZwmoffWKGiEwR1lrA
-X-Google-Smtp-Source: AGHT+IHDs8TPHkyP9en2UOgkdv7R1FJG90kG4g4RjGmBZEP+LlHqq4X44f/0Ioqqiugq8zPIPh/KNDt6oNauQ6aAnzs=
-X-Received: by 2002:a05:6214:c81:b0:66d:4d99:bd3b with SMTP id
- r1-20020a0562140c8100b0066d4d99bd3bmr20603060qvr.23.1698275483567; Wed, 25
- Oct 2023 16:11:23 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1698281758; x=1698886558;
+        h=cc:to:from:subject:references:mime-version:message-id:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Qa6UdDw066Es3JPwGhf9j63zEeuN/hkmQgIhzP8/jLY=;
+        b=DuHOqclgYcYx2kV3hMgG1UJCXGj/wMPB0AFEolWAG4ZDz/YTfAE/xbLCuGeodhVwCe
+         B5soep9N+TLkHMeG0AE/774A9CUYGk8ydJy2Y7RAah4fA0NbdqiX9hZB5N3wtQEHaOLU
+         mvJSxZJlxJqgQMwJ7ChasQ3VO/NnO8qqyy2LpQPi9zTdRREmEqSCaAgRQU7xd9JvWw8E
+         85nUnMDAvHKhmBBdJ0OJXuNeNtA+aDvUJ6j1imQ8+QINZI1TFubC3BCjwfamxlt9/0Fe
+         vR06ckLlRIgAd63kj1GKmd5x1eA2TOWs7/tvT9dLzUj4LQcNPelWvDFhDn+kUzBQ5EgQ
+         lJ9w==
+X-Gm-Message-State: AOJu0Yy35+Omiv8RxC93Dpzwm/BnVEYzy9E76tqX1KPYWo+WfFZxyqB0
+	IW8JyWGp1eEYsB3f+7HWvZzO1klYDbt4VZDsbeo4ViCHxbl7hDE3jF8mE0RbXN78+7f+3978ywr
+	Q2X7RnN1KSThTf5n1Fg5BATqL6WKRubACP/FKGpO3JDkiWcZ3zCk4LPbgTF2mP2g222lpAmcsgQ
+	==
+X-Google-Smtp-Source: AGHT+IFRwH0zijfqNoOXaasVCIsON6obg6rZS3opAN5mfmq7q1FRHHfvtyA73ZJcs9ea6Xkbv/QTb2bTYXYFbtAQ/sw=
+X-Received: from podkayne.svl.corp.google.com ([2620:15c:2d3:204:a9a1:5044:5663:ae78])
+ (user=emilyshaffer job=sendgmr) by 2002:a0d:eb55:0:b0:59b:ccba:1249 with SMTP
+ id u82-20020a0deb55000000b0059bccba1249mr367605ywe.10.1698281757883; Wed, 25
+ Oct 2023 17:55:57 -0700 (PDT)
+Date: Wed, 25 Oct 2023 17:55:41 -0700
+In-Reply-To: <CAPig+cQtoEpTDK1U5R+wUD4qovFtpcx6+zyOQE-SAYp5SE2q2Q@mail.gmail.com>
+Message-Id: <20231026005542.872301-1-nasamuffin@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <7a92b537-ba88-4667-bb18-2e8c74aa9915@gmail.com> <ZTmcVJaY2TjFCVyw@google.com>
-In-Reply-To: <ZTmcVJaY2TjFCVyw@google.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Wed, 25 Oct 2023 19:11:12 -0400
-Message-ID: <CAPig+cQtoEpTDK1U5R+wUD4qovFtpcx6+zyOQE-SAYp5SE2q2Q@mail.gmail.com>
-Subject: Re: git bugreport with invalid CLI argument does not report error
-To: Emily Shaffer <nasamuffin@google.com>
-Cc: Sheik <sahibzone@gmail.com>, git@vger.kernel.org
+Mime-Version: 1.0
+References: <CAPig+cQtoEpTDK1U5R+wUD4qovFtpcx6+zyOQE-SAYp5SE2q2Q@mail.gmail.com>
+X-Mailer: git-send-email 2.42.0.758.gaed0368e0e-goog
+Subject: [PATCH v2] bugreport: reject positional arguments
+From: emilyshaffer@google.com
+To: git@vger.kernel.org
+Cc: Emily Shaffer <nasamuffin@google.com>, Eric Sunshine <sunshine@sunshineco.com>, 
+	Sheik <sahibzone@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 25, 2023 at 6:53=E2=80=AFPM Emily Shaffer <nasamuffin@google.co=
-m> wrote:
-> On Thu, Oct 26, 2023 at 07:59:16AM +1100, Sheik wrote:
-> > Running git bugreport with an invalid CLI argument in a valid Git direc=
-tory
-> > does not report error. Expected behaviour would be that it reports an e=
-rror.
->
-> It looks like parse-options.[ch] helps us here for misspelled dashed
-> options, like `--diaggnose`. But it doesn't complain when there are
-> unexpected positional arguments. I think we can just notice if there are
-> any argc left over, complain, and print usage.
->
-> I put together a quick patch; could be that we don't need to leave this
-> error about "positional arguments" and can leave it as an exercise to
-> the reader to compare their previous command to the usage text. I guess
-> we could also unroll remaining argv but it was just a hair more time
-> than I wanted to spend ;)
->
-> --- 8< ---
-> Subject: [PATCH] bugreport: reject positional arguments
->
-> git-bugreport already rejected unrecognized flag arguments, like
-> `--diaggnose`, but this doesn't help if the user's mistake was to forget
-> the `--` in front of the argument. This can result in a user's intended
-> argument not being parsed with no indication to the user that something
-> went wrong. Since git-bugreport presently doesn't take any positionals
-> at all, let's reject all positionals and give the user a usage hint.
->
-> Signed-off-by: Emily Shaffer <nasamuffin@google.com>
-> ---
-> diff --git a/builtin/bugreport.c b/builtin/bugreport.c
-> @@ -126,6 +126,11 @@ int cmd_bugreport(int argc, const char **argv, const=
- char *prefix)
-> +       if (argc) {
-> +               error(_("git bugreport does not take positional arguments=
-"));
-> +               usage(bugreport_usage[0]);
-> +       }
+From: Emily Shaffer <nasamuffin@google.com>
 
-This error message may be somewhat difficult to interpret. Providing
-additional context could help the user understand the actual problem.
-For instance:
+git-bugreport already rejected unrecognized flag arguments, like
+`--diaggnose`, but this doesn't help if the user's mistake was to forget
+the `--` in front of the argument. This can result in a user's intended
+argument not being parsed with no indication to the user that something
+went wrong. Since git-bugreport presently doesn't take any positionals
+at all, let's reject all positionals and give the user a usage hint.
 
-    % git bugreport diagnose
-    error: unrecognized argument "diagnose"
+Signed-off-by: Emily Shaffer <nasamuffin@google.com>
+---
+Per Eric's suggestion, added a citation of the first positional arg
+found. I don't think it's necessary to unroll the entire argv array
+here, though.
+
+ - Emily
+
+ builtin/bugreport.c  | 6 ++++++
+ t/t0091-bugreport.sh | 7 +++++++
+ 2 files changed, 13 insertions(+)
+
+diff --git a/builtin/bugreport.c b/builtin/bugreport.c
+index d2ae5c305d..8a69a23397 100644
+--- a/builtin/bugreport.c
++++ b/builtin/bugreport.c
+@@ -126,6 +126,12 @@ int cmd_bugreport(int argc, const char **argv, const char *prefix)
+ 	argc = parse_options(argc, argv, prefix, bugreport_options,
+ 			     bugreport_usage, 0);
+ 
++	if (argc) {
++		if (argv[0])
++			error(_("unknown argument `%s'"), argv[0]);
++		usage(bugreport_usage[0]);
++	}
++
+ 	/* Prepare the path to put the result */
+ 	prefixed_filename = prefix_filename(prefix,
+ 					    option_output ? option_output : "");
+diff --git a/t/t0091-bugreport.sh b/t/t0091-bugreport.sh
+index f6998269be..5b1b3e8d07 100755
+--- a/t/t0091-bugreport.sh
++++ b/t/t0091-bugreport.sh
+@@ -69,6 +69,13 @@ test_expect_success 'incorrect arguments abort with usage' '
+ 	test_path_is_missing git-bugreport-*
+ '
+ 
++test_expect_success 'incorrect positional arguments abort with usage and hint' '
++	test_must_fail git bugreport false 2>output &&
++	test_i18ngrep usage output &&
++	test_i18ngrep false output &&
++	test_path_is_missing git-bugreport-*
++'
++
+ test_expect_success 'runs outside of a git dir' '
+ 	test_when_finished rm non-repo/git-bugreport-* &&
+ 	nongit git bugreport
+-- 
+2.42.0.758.gaed0368e0e-goog
+
