@@ -1,127 +1,123 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17A162EAFC
-	for <git@vger.kernel.org>; Thu, 26 Oct 2023 14:49:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A8A62F509
+	for <git@vger.kernel.org>; Thu, 26 Oct 2023 15:55:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="w4E9aH3B"
-X-Greylist: delayed 134 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 26 Oct 2023 07:48:53 PDT
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81B99D42
-	for <git@vger.kernel.org>; Thu, 26 Oct 2023 07:48:53 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 968501CD54;
-	Thu, 26 Oct 2023 10:46:38 -0400 (EDT)
-	(envelope-from tmz@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=date:from
-	:to:cc:subject:message-id:references:mime-version:content-type
-	:in-reply-to:content-transfer-encoding; s=sasl; bh=/368eh9ftM9Xt
-	AfrJJZN6Jg7KD3q3bmsT68Vr3Td5ek=; b=w4E9aH3BvM33eUTTYUjxTNdYUhi7P
-	E19W0bml6E+8ZoxxR0ldC7mUchHzD3xGifkWx9YWNd6qFVnlwjZm+AqykuzwcISh
-	rv1hDjiRih50QHYFS7WHer2pXS63Vi/5BHEmcue5Qwe00A0FXYUDf7BDA5uRfjaW
-	VrPnsLo/i36CV0=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 8E1FA1CD53;
-	Thu, 26 Oct 2023 10:46:38 -0400 (EDT)
-	(envelope-from tmz@pobox.com)
-Received: from pobox.com (unknown [108.15.224.39])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 046931CD4D;
-	Thu, 26 Oct 2023 10:46:32 -0400 (EDT)
-	(envelope-from tmz@pobox.com)
-Date: Thu, 26 Oct 2023 10:46:30 -0400
-From: Todd Zullinger <tmz@pobox.com>
-To: Michael Strawbridge <michael.strawbridge@amd.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@pengutronix.de>,
-	Luben Tuikov <luben.tuikov@amd.com>, git@vger.kernel.org,
-	entwicklung@pengutronix.de
-Subject: Re: Regression: git send-email fails with "Use of uninitialized
- value $address" + "unable to extract a valid address"
-Message-ID: <ZTp7xvXDw1GF-NUB@pobox.com>
-References: <20231013141437.ywrhw65xdapmev7d@pengutronix.de>
- <20231020100442.an47wwsti2d4zeyx@pengutronix.de>
- <68d7e5c3-6b4a-4d0d-9885-f3d4e2199f26@amd.com>
- <20231024130037.sbevzk2x7oclj7d7@pengutronix.de>
- <89712aea-04fc-4775-afd4-afd3ca24ad01@amd.com>
- <20231024204318.gi6b4ygqbilm2yke@pengutronix.de>
- <20231025072104.GA2145145@coredump.intra.peff.net>
- <xmqqsf5xr1xk.fsf@gitster.g>
- <a71f2f1f-b5f0-4628-a4f3-6fd1319062a3@amd.com>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="gFQzz5ya"
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B74049D
+	for <git@vger.kernel.org>; Thu, 26 Oct 2023 08:55:03 -0700 (PDT)
+Received: by mail-yb1-xb4a.google.com with SMTP id 3f1490d57ef6-da05b786f1dso831690276.2
+        for <git@vger.kernel.org>; Thu, 26 Oct 2023 08:55:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1698335703; x=1698940503; darn=vger.kernel.org;
+        h=cc:to:from:subject:references:mime-version:message-id:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=rpj38fvTuTGG75+kzt0ajURP0x6ExOj9Y9aurel7TAA=;
+        b=gFQzz5yawHVqi6fo38gMLE2m5jPoIu1BBIOrYVJidodiSRGAC/uLTbg14SdXxS/ARb
+         x4ZoI9ow0O56JtIbqV7+JbEcNEJxPxm9ZbSuzR0a8utLLYAiLz+XU+ME29MyeIR51n5X
+         fsa4b+uexNR9lA43a6CkPr4QiubakjCKwQb7hELZ4SvtWyLtnix68NB6cNMI8UGHDkth
+         g6CBub8dW/hjvvnT3ZNjLJsmnVcSIwWMJRYT6TiDEHzLh9KtGPJ0gM2AbOJyP5upaY6q
+         tMi4srrme3hvUkaWMhvKQnym7cMmdPYeHv1fo8KEYVRiATjU06Gy0U190EfQV/eUGP+q
+         rQSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698335703; x=1698940503;
+        h=cc:to:from:subject:references:mime-version:message-id:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rpj38fvTuTGG75+kzt0ajURP0x6ExOj9Y9aurel7TAA=;
+        b=gToLXyWSUb9Cr8RzocFku6xNPK9Qiptwgy6xDCyf+cYiSqcVomH7jReUjGg2x3HGZN
+         2ziOgHzUGww5RQGUOg7egh5+lbxaPJF0/0M0AZjH7b6sX741TSMdZ/+RcbuCWIOdr7qB
+         fQdCoYl3xDALt6ZSzZ95GUohbQA4oI2dawbLuzjGca0SBjhCeoyXAugXXRDRWscRY4c9
+         EyJuebuWvsxXGu3Xu0NAR/m6u7Lc/obYu4nglZGgFG5yOlF4pBHisn3ymQHDa2szaVkA
+         qHgC/e3TYTvlsvlDoNPWkzcpmAN6xef7mXYN1qajwZQE5oEsY71+CW3m2b14ralK02QV
+         L8qg==
+X-Gm-Message-State: AOJu0YxX69YP3F9Ws9bsZ0tKpNyLOAfHs410zJQgP7/O8Icbhwur2L6Z
+	g/67g9EJrhxcNipxyJh7htVsArTwsx3y/Jv2fJBtWYRPzPLWc/AtqCB0O+nFJMF69aZiGLKG9GR
+	6QH+EKlFvM53ZBh2qlw/OuHLvRArzs0yXTI8X7K91ZFphyvxMbqQht+gEK7DrMPgvLLAJ4aGthA
+	==
+X-Google-Smtp-Source: AGHT+IFQEJ33JpzI4AG2mD3vrtt7Wa5LIxBpJzBh6sCmHcnK6owTYUNJBIuBZAkhuDQp0UkAdqIsSLuMN9tw1D8QZPo=
+X-Received: from podkayne.svl.corp.google.com ([2620:15c:2d3:204:a9a1:5044:5663:ae78])
+ (user=emilyshaffer job=sendgmr) by 2002:a25:d387:0:b0:d9a:f3dc:7d18 with SMTP
+ id e129-20020a25d387000000b00d9af3dc7d18mr348760ybf.13.1698335702877; Thu, 26
+ Oct 2023 08:55:02 -0700 (PDT)
+Date: Thu, 26 Oct 2023 08:54:59 -0700
+In-Reply-To: <20231026005542.872301-1-nasamuffin@google.com>
+Message-Id: <20231026155459.2234929-1-nasamuffin@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-In-Reply-To: <a71f2f1f-b5f0-4628-a4f3-6fd1319062a3@amd.com>
-X-Pobox-Relay-ID:
- 74F3F3C2-740E-11EE-89F6-F515D2CDFF5E-09356542!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0
+References: <20231026005542.872301-1-nasamuffin@google.com>
+X-Mailer: git-send-email 2.42.0.758.gaed0368e0e-goog
+Subject: [PATCH v3] bugreport: reject positional arguments
+From: emilyshaffer@google.com
+To: git@vger.kernel.org
+Cc: Emily Shaffer <nasamuffin@google.com>, Eric Sunshine <sunshine@sunshineco.com>, 
+	Sheik <sahibzone@gmail.com>, Dragan Simic <dsimic@manjaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Michael Strawbridge wrote:
-> On 10/26/23 08:41, Junio C Hamano wrote:
->> Jeff King <peff@peff.net> writes:
->>=20
->>> Note that the bug will only trigger if Email::Valid is installed.
->>=20
->> I recall we chased a different bug that depends on the use/non-use
->> of this package a few years ago.  Is the difference significant
->> enough that we may want to install on one but not in another CI
->> environment, like we have a separate CI jobs with exotic settings, I
->> wonder.
->=20
-> That would make sense to me.  We have had 3 regressions threads
-> recently for git send email where Email::Valid was important.
->=20
-> - [REGRESSION] uninitialized value $address in git send-email when give=
-n multiple recipients separated by commas - (this thread)
-> - [REGRESSION] uninitialized value $address in git send-email - https:/=
-/public-inbox.org/git/20230918212004.GC2163162@coredump.intra.peff.net/T/=
-#m9e0211a8ad387adbbadf31dcfcd7982d4046633d
-> - Regression: git send-email fails with "Use of uninitialized value $ad=
-dress" + "unable to extract a valid address" - https://public-inbox.org/g=
-it/68d7e5c3-6b4a-4d0d-9885-f3d4e2199f26@amd.com/T/#m1411c155e11ad9c5d913d=
-22d1d11180ed56eabc7
+From: Emily Shaffer <nasamuffin@google.com>
 
-Alternately, perhaps having Email::Valid as an optional
-dependency is worth reconsidering. If it's truly important
-to validation, make it a requirement.  If it's not, then
-drop it to simplify the code and avoid these sort of issues.
+git-bugreport already rejected unrecognized flag arguments, like
+`--diaggnose`, but this doesn't help if the user's mistake was to forget
+the `--` in front of the argument. This can result in a user's intended
+argument not being parsed with no indication to the user that something
+went wrong. Since git-bugreport presently doesn't take any positionals
+at all, let's reject all positionals and give the user a usage hint.
 
-As a (former) distribution packager, having these optional
-dependencies which change the behavior is always a tough
-position to be in.
+Signed-off-by: Emily Shaffer <nasamuffin@google.com>
+---
+Per Eric's and Dragan's comments, dropped the null checking for argv[0].
+No point in being too paranoid, I suppose :)
 
-If I make the git package require it to ensure consistent
-behavior then some folks will -quite rightly- complain that
-it should not be a requirement.  If I keep it an optional
-dependency, then debugging becomes more difficult for the
-reasons we've seen in these recent (and not-so-recent)
-threads.
+Note that after this morning it's not likely that I'll be able to find
+time to update this again so quickly, so if there are other nits,
+reviewers can feel free to send their own rerolls rather than waiting
+for me to see it and turn the patch around.
 
-I'd lean toward dropping the dependency entirely and leave
-the more basic validation of git-send-email in place.  That
-may not catch every type of address error, but I would argue
-that what we do without Email::Valid is perfectly reasonable
-for checking basic email address syntax sanity.
+ - Emily
 
-Further validation will happen along the path of mail
-transfer agents and failures should be reported to the
-sender in the same way as any other invalid email address.
+ builtin/bugreport.c  | 5 +++++
+ t/t0091-bugreport.sh | 7 +++++++
+ 2 files changed, 12 insertions(+)
 
-On a related note, one issue=B9 we had reported in Fedora
-after making Email::Valid a requirement was that it rejected
-messages where the local part was too long, per the relevant
-RFC's.  But these were generated addresses from GitLab.  The
-addresses worked in practice.  While Email::Valid was
-technically correct in rejecting such addresses, it didn't
-improve the experience of git send-email users.
+diff --git a/builtin/bugreport.c b/builtin/bugreport.c
+index d2ae5c305d..3106e56a13 100644
+--- a/builtin/bugreport.c
++++ b/builtin/bugreport.c
+@@ -126,6 +126,11 @@ int cmd_bugreport(int argc, const char **argv, const char *prefix)
+ 	argc = parse_options(argc, argv, prefix, bugreport_options,
+ 			     bugreport_usage, 0);
+ 
++	if (argc) {
++		error(_("unknown argument `%s'"), argv[0]);
++		usage(bugreport_usage[0]);
++	}
++
+ 	/* Prepare the path to put the result */
+ 	prefixed_filename = prefix_filename(prefix,
+ 					    option_output ? option_output : "");
+diff --git a/t/t0091-bugreport.sh b/t/t0091-bugreport.sh
+index f6998269be..5b1b3e8d07 100755
+--- a/t/t0091-bugreport.sh
++++ b/t/t0091-bugreport.sh
+@@ -69,6 +69,13 @@ test_expect_success 'incorrect arguments abort with usage' '
+ 	test_path_is_missing git-bugreport-*
+ '
+ 
++test_expect_success 'incorrect positional arguments abort with usage and hint' '
++	test_must_fail git bugreport false 2>output &&
++	test_i18ngrep usage output &&
++	test_i18ngrep false output &&
++	test_path_is_missing git-bugreport-*
++'
++
+ test_expect_success 'runs outside of a git dir' '
+ 	test_when_finished rm non-repo/git-bugreport-* &&
+ 	nongit git bugreport
+-- 
+2.42.0.758.gaed0368e0e-goog
 
-=B9 https://bugzilla.redhat.com/2046203
-
---=20
-Todd
