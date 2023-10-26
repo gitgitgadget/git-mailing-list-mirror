@@ -1,71 +1,80 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D5D71CFB7
-	for <git@vger.kernel.org>; Thu, 26 Oct 2023 08:00:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4DE256C
+	for <git@vger.kernel.org>; Thu, 26 Oct 2023 08:16:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DacffOrQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ffPL6p9m"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="x8FhRiaq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ku49wPZx"
 Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B5D6CE
-	for <git@vger.kernel.org>; Thu, 26 Oct 2023 01:00:23 -0700 (PDT)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailout.west.internal (Postfix) with ESMTP id 256913200A05
-	for <git@vger.kernel.org>; Thu, 26 Oct 2023 04:00:23 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Thu, 26 Oct 2023 04:00:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCBE4B8
+	for <git@vger.kernel.org>; Thu, 26 Oct 2023 01:16:13 -0700 (PDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.west.internal (Postfix) with ESMTP id D500332009EA;
+	Thu, 26 Oct 2023 04:16:12 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute4.internal (MEProxy); Thu, 26 Oct 2023 04:16:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1698307222; x=1698393622; bh=hh
-	qsCkmkssUaVxhnbdy7UhmtShdrOMYWJ8lXQdQH9Uc=; b=DacffOrQtLOcUxCXAv
-	nZu+KJBNbTA+aUkitY/DpJVv54HhTdbAGJbs4u26kAUzEYAot2EFlgq8EJIzkHLr
-	UtouDjlFsc+0ftpadePr66DYHVcJUwICoaNCRz6ZZjRZ5jaIaFr4sbFkDJ0rlPnX
-	WH8PrINV26fG1+W74o25L/zyVVJpM2kKc5pb6TiQwi/bALR4XiEx72WQ+RJ8fikg
-	2o1dRCddU92yKqv7+kz9bOKU2rgvlCvExDCHaSg4RzMuIXMOfNIfq/amwy957oXi
-	rPpGT4AGXw7dQ3Jsoe1wbHQBP+HXJwnOxO3JMw/2BVvdX+VqPuyiISSUQgVavmbd
-	UpYQ==
+	:subject:subject:to:to; s=fm3; t=1698308172; x=1698394572; bh=R0
+	C0bLbRXtU0RGrOOsc5GMdfDJ/yyf50un/XiWU5ZC4=; b=x8FhRiaqvsDP60OgSn
+	sC14b0CQ8qHQmcsmRzDQd0z3NxIJR75C0i7O3H6KtB7mAjNOylR4NDgLUxRV+KE/
+	11SohBpgHsSoR/+9D7TDVwNEuNzmSs/XrBN63JmjCJWGFOvSJETqQN0OtxUlqpVY
+	7bn35DmEGEEF+TXYuDbKUXs+WDltV1NRkOuuS86mHFQMsPWrDM4B2r47UuyBYJ8L
+	6HXFCaShvEP6QpRxLKcMXNfRkGCUtE/3sQ+IsPCs8+sI4pcdB23Hj7TDFz6ewT5q
+	grNiAli9+O5Lx2aiZw8VbDCfeKQVQkZZ5UXvqXbOnFYDsg9O4bsY5TjjoDjAQA9n
+	1hBw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1698307222; x=1698393622; bh=hhqsCkmkssUaV
-	xhnbdy7UhmtShdrOMYWJ8lXQdQH9Uc=; b=ffPL6p9mjCdPOI4yDsi14g7R9Xu1E
-	NcxzQi5Lqy9e+bCneFxrnhyrE4vTJ9xCXTMMWA4P/Y2lAxjU9UZzYHCNwO82I0eQ
-	mskusImrLRMPRvPZhMCGOaNaaZeZIOUyWF0A2zGCCpf+JuFKEatKI5jzpJgQhdFd
-	KZ3o0L6p4pepKfo9VmSaajR1yLV7nu3kiUnECa0NZIG6wVYyPDgs8d8Ew1qMX7Eg
-	5h5eMWz/9hCpnpngU6gWPVDejdLOhc1TE9wcIPzwLVjmleBpNVWZ9AOsqkmlHLSz
-	qAWk9V73vekAEGviSGgxL49H8HmS6myyMKA7IsFbj8VHxda63Njz5FzlQ==
-X-ME-Sender: <xms:lhw6ZVrJYQUd3T2qSxg48lXdL-2TRzKiG_83FfnVHxS1Lb7t8A3QkQ>
-    <xme:lhw6ZXqzdxjXsNLmQS4CUwFTVeRX__8hO1qPi-a1d1KHV-NNSjPpMC5mhAuye7X_Z
-    Cpqg8cSnO4fdINahA>
-X-ME-Received: <xmr:lhw6ZSNfDy5m8HIL3_k62ntAgPkgifjuZh1MtSB17CUof37ygjWYX0uQhpuuaUrnLM5zMTwvYNLHXNFE_RZk7qIPKNOfIU95JtjEgrLcSdYWzcQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrledugdduvdeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
-    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepjeejtdeigfegkefgjeehveevjeejveeuvd
-    dtieekffevleeglefhgffgjeejfeefnecuffhomhgrihhnpehgihhtlhgrsgdrtghomhen
+	:x-sasl-enc; s=fm3; t=1698308172; x=1698394572; bh=R0C0bLbRXtU0R
+	GrOOsc5GMdfDJ/yyf50un/XiWU5ZC4=; b=ku49wPZxQy0k2OCoOr+0YfskvZjJB
+	eq7lX+nHRBe8gahNUc4O4fCWyaVURqsl9s3A0xiNSGSnxc8INo1PCh4KLDYRHRGe
+	iGJs3mPdlOZdsqfvkaY+zaN5JyRqY5dr/NuoMmhaSf9LcweBcQlUCyWEv3mxE3yA
+	Le2voZY9E6Tei7/MZuL1aNhVJxDBm7hE4DOoYvundWSJSSCpAzLxLbi/AvfSiw08
+	1pGnkAHOCNhl6KiPt0pP811PdXnZ1s+42A93coJj7s3zzh6mMfGGsHbAq1C13lZF
+	xHNFpRfk5XBF5XL8C1Yv/pzc5xWuiioC3c+7ptrLXq4HfdF+i+CaSEGoQ==
+X-ME-Sender: <xms:TCA6ZSuCyWP8fNqys3xsGX30dOJlrqrGB9wcz4Z1yNGoIt4fn2jh_A>
+    <xme:TCA6ZXcqWRlm3_QoIMLaMkvGZzDK0nHioEAQDYE69JL4wOy9jiveHkr3bvpLaAZ-H
+    cxF1-DTNkdMTzKWlA>
+X-ME-Received: <xmr:TCA6ZdxWMjaB0hBrj79CT1obI6GsoZ-IVnoOzZIaF5kEmVgYgcVU8cMiiE2VogBq4046Y3GFydN6axD-fZQyyeSia_uAUVtOD1-4jM7yMu4qb1Y>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrledvgddtvdcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeetueevhffhudefvdegieeuieelgedthfegfedtueevjeejtdfgjeehudejuedtuden
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhm
-X-ME-Proxy: <xmx:lhw6ZQ5gLL9UyTk8BL4PyIMPYpS5uyBGHT9WD91omAtN4SnjeX5KpA>
-    <xmx:lhw6ZU4-XTGSfiTgTHmmXh-_SB082WpidxaAXBRLGUEA8XVSCFu4lA>
-    <xmx:lhw6ZYg3fF_OTyDX_vK01X22IVP5nIfgC9CmnIZe1gx5UF77_4WgAw>
-    <xmx:lhw6ZZUbTaZBLK68G3DKgjzMbBeulvj6h5SF0hA5qmzdWndEHiI1lQ>
+X-ME-Proxy: <xmx:TCA6ZdMPLG0qL59GFRrCGjwIgR31R255WSz0c2zYibINHLzuiE53tw>
+    <xmx:TCA6ZS8Twt7cnrhtNnG-c5pZitJcA5qdKiESVk5E2G7JME1NOiO5Vw>
+    <xmx:TCA6ZVUBGSjOpFOjMv74XOsDPyNwL2a7ms0rO3TIiLm8uBj4vWe5Yg>
+    <xmx:TCA6ZZnoCUqiULvJobgtCuPbfwYRajDGDhoGPw4LFzUhHxbdAGoHZQ>
 Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 26 Oct 2023 04:00:22 -0400 (EDT)
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 26 Oct 2023 04:16:10 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id d856c048 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Thu, 26 Oct 2023 08:00:13 +0000 (UTC)
-Date: Thu, 26 Oct 2023 10:00:20 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id a5e44912 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 26 Oct 2023 08:16:00 +0000 (UTC)
+Date: Thu, 26 Oct 2023 10:16:07 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Subject: [PATCH 5/5] ci: add support for GitLab CI
-Message-ID: <35b07e5378d960b93ae8990a3abb525e1762d97d.1698305961.git.ps@pks.im>
-References: <cover.1698305961.git.ps@pks.im>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+	Elijah Newren <newren@gmail.com>,
+	"Eric W. Biederman" <ebiederm@gmail.com>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 3/5] bulk-checkin: introduce
+ `index_blob_bulk_checkin_incore()`
+Message-ID: <ZTogPThYhQbSQ-NI@tanuki>
+References: <cover.1697736516.git.me@ttaylorr.com>
+ <cover.1698101088.git.me@ttaylorr.com>
+ <d8cf8e4395375f88fe4e1ade2b79a3be6ce5fb12.1698101088.git.me@ttaylorr.com>
+ <ZTjKjkRMkmCuxDU1@tanuki>
+ <ZTk3zoncT6nvV3aQ@nand.local>
+ <CAPig+cTjQe6FWo98LxvDS=s3dOs33SUUJa=x-bkyWHNBMx+XFw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -73,275 +82,64 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="KTriI+80vC4YA3DG"
+	protocol="application/pgp-signature"; boundary="h8eLT472T7Q+e109"
 Content-Disposition: inline
-In-Reply-To: <cover.1698305961.git.ps@pks.im>
+In-Reply-To: <CAPig+cTjQe6FWo98LxvDS=s3dOs33SUUJa=x-bkyWHNBMx+XFw@mail.gmail.com>
 
 
---KTriI+80vC4YA3DG
-Content-Type: text/plain; charset=us-ascii
+--h8eLT472T7Q+e109
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-We already support Azure Pipelines and GitHub Workflows in the Git
-project, but until now we do not have support for GitLab CI. While it is
-arguably not in the interest of the Git project to maintain a ton of
-different CI platforms, GitLab has recently ramped up its efforts and
-tries to contribute to the Git project more regularly.
+On Wed, Oct 25, 2023 at 01:21:50PM -0400, Eric Sunshine wrote:
+> On Wed, Oct 25, 2023 at 11:44=E2=80=AFAM Taylor Blau <me@ttaylorr.com> wr=
+ote:
+> > On Wed, Oct 25, 2023 at 09:58:06AM +0200, Patrick Steinhardt wrote:
+> > > On Mon, Oct 23, 2023 at 06:45:01PM -0400, Taylor Blau wrote:
+> > > > In order to support streaming from a location in memory, we must
+> > > > implement a new kind of bulk_checkin_source that does just that. Th=
+ese
+> > > > implementation in spread out across:
+> > >
+> > > Nit: the commit message is a bit off here. Probably not worth a reroll
+> > > though.
+> >
+> > Your eyes are definitely mine, because I'm not seeing where the commit
+> > message is off! But hopefully since you already don't think it's worth a
+> > reroll, and I'm not even sure what the issue is that we can just leave
+> > it ;-).
+>=20
+> Perhaps:
+>=20
+>     s/implementation in/implementations are/
 
-Part of a problem we hit at GitLab rather frequently is that our own,
-custom CI setup we have is so different to the setup that the Git
-project has. More esoteric jobs like "linux-TEST-vars" that also sets a
-couple of environment variables do not exist in GitLab's custom CI
-setup, and maintaining them to keep up with what Git does feels like
-wasted time. The result is that we regularly send patch series upstream
-that would otherwise fail to compile or pass tests in GitHub Workflows.
-We would thus like to integrate the GitLab CI configuration into the Git
-project to help us ensure to send better patch series upstream and thus
-reduce overhead for the maintainer.
+Yeah, that's what I referred to. Sorry for not pointing it out
+explicitly :)
 
-The integration does not necessarily have to be a first-class citizen,
-which would in practice only add to the fallout that pipeline failures
-have for the maintainer. That being said, we are happy to maintain this
-alternative CI setup for the Git project and will make test results
-available as part of our own mirror of the Git project at [1].
+In any case, as stated before: I don't think any of my comments warrant
+a reroll, and overall this patch series looks good to me.
 
-This commit introduces the integration into our regular CI scripts so
-that most of the setup continues to be shared across all of the CI
-solutions.
+Patrick
 
-[1]: https://gitlab.com/gitlab-org/git
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- .gitlab-ci.yml                    | 51 +++++++++++++++++++++++
- ci/install-docker-dependencies.sh |  9 +++-
- ci/lib.sh                         | 69 +++++++++++++++++++++++++++++++
- ci/print-test-failures.sh         |  6 +++
- 4 files changed, 134 insertions(+), 1 deletion(-)
- create mode 100644 .gitlab-ci.yml
-
-diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
-new file mode 100644
-index 00000000000..43d3a961fa0
---- /dev/null
-+++ b/.gitlab-ci.yml
-@@ -0,0 +1,51 @@
-+default:
-+  timeout: 2h
-+
-+workflow:
-+  rules:
-+    - if: $CI_PIPELINE_SOURCE =3D=3D "merge_request_event"
-+    - if: $CI_COMMIT_TAG
-+    - if: $CI_COMMIT_REF_PROTECTED =3D=3D "true"
-+
-+test:
-+  image: $image
-+  before_script:
-+    - ./ci/install-docker-dependencies.sh
-+  script:
-+    - useradd builder --home-dir "${CI_PROJECT_DIR}"
-+    - chown -R builder "${CI_PROJECT_DIR}"
-+    - sudo --preserve-env --set-home --user=3Dbuilder ./ci/run-build-and-t=
-ests.sh
-+  after_script:
-+    - |
-+      if test "$CI_JOB_STATUS" !=3D 'success'
-+      then
-+        sudo --preserve-env --set-home --user=3Dbuilder ./ci/print-test-fa=
-ilures.sh
-+      fi
-+  parallel:
-+    matrix:
-+      - jobname: linux-sha256
-+        image: ubuntu:latest
-+        CC: clang
-+      - jobname: linux-gcc
-+        image: ubuntu:20.04
-+        CC: gcc
-+        CC_PACKAGE: gcc-8
-+      - jobname: linux-TEST-vars
-+        image: ubuntu:20.04
-+        CC: gcc
-+        CC_PACKAGE: gcc-8
-+      - jobname: linux-gcc-default
-+        image: ubuntu:latest
-+        CC: gcc
-+      - jobname: linux-leaks
-+        image: ubuntu:latest
-+        CC: gcc
-+      - jobname: linux-asan-ubsan
-+        image: ubuntu:latest
-+        CC: clang
-+      - jobname: linux-musl
-+        image: alpine:latest
-+  artifacts:
-+    paths:
-+      - t/failed-test-artifacts
-+    when: on_failure
-diff --git a/ci/install-docker-dependencies.sh b/ci/install-docker-dependen=
-cies.sh
-index d0bc19d3bb3..1cd92db1876 100755
---- a/ci/install-docker-dependencies.sh
-+++ b/ci/install-docker-dependencies.sh
-@@ -7,6 +7,9 @@
-=20
- begin_group "Install dependencies"
-=20
-+# Required so that apt doesn't wait for user input on certain packages.
-+export DEBIAN_FRONTEND=3Dnoninteractive
-+
- case "$jobname" in
- linux32)
- 	linux32 --32bit i386 sh -c '
-@@ -16,9 +19,13 @@ linux32)
- 	'
- 	;;
- linux-musl)
--	apk add --update build-base curl-dev openssl-dev expat-dev gettext \
-+	apk add --update git shadow sudo build-base curl-dev openssl-dev expat-de=
-v gettext \
- 		pcre2-dev python3 musl-libintl perl-utils ncurses >/dev/null
- 	;;
-+linux-*)
-+	apt update -q &&
-+	apt install -q -y sudo git make language-pack-is libsvn-perl apache2 libs=
-sl-dev libcurl4-openssl-dev libexpat-dev tcl tk gettext zlib1g-dev perl-mod=
-ules liberror-perl libauthen-sasl-perl libemail-valid-perl libio-socket-ssl=
--perl libnet-smtp-ssl-perl ${CC_PACKAGE:-${CC:-gcc}}
-+	;;
- pedantic)
- 	dnf -yq update >/dev/null &&
- 	dnf -yq install make gcc findutils diffutils perl python3 gettext zlib-de=
-vel expat-devel openssl-devel curl-devel pcre2-devel >/dev/null
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 33005854520..102e9d04a1f 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -15,6 +15,42 @@ then
- 		echo '::endgroup::' >&2
- 	}
-=20
-+	group () {
-+		set +x
-+
-+		group=3D"$1"
-+		shift
-+		begin_group "$group"
-+
-+		# work around `dash` not supporting `set -o pipefail`
-+		(
-+			"$@" 2>&1
-+			echo $? >exit.status
-+		) |
-+		sed 's/^\(\([^ ]*\):\([0-9]*\):\([0-9]*:\) \)\(error\|warning\): /::\5 f=
-ile=3D\2,line=3D\3::\1/'
-+		res=3D$(cat exit.status)
-+		rm exit.status
-+
-+		end_group "$group"
-+		return $res
-+	}
-+elif test true =3D "$GITLAB_CI"
-+then
-+	begin_group () {
-+		need_to_end_group=3Dt
-+		echo -e "\e[0Ksection_start:$(date +%s):$(echo "$1" | tr ' ' _)\r\e[0K$1"
-+		trap "end_group '$1'" EXIT
-+		set -x
-+	}
-+
-+	end_group () {
-+		test -n "$need_to_end_group" || return 0
-+		set +x
-+		need_to_end_group=3D
-+		echo -e "\e[0Ksection_end:$(date +%s):$(echo "$1" | tr ' ' _)\r\e[0K"
-+		trap - EXIT
-+	}
-+
- 	group () {
- 		set +x
-=20
-@@ -209,6 +245,39 @@ then
- 	MAKEFLAGS=3D"$MAKEFLAGS --jobs=3D10"
- 	test windows !=3D "$CI_OS_NAME" ||
- 	GIT_TEST_OPTS=3D"--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
-+elif test true =3D "$GITLAB_CI"
-+then
-+	CI_TYPE=3Dgitlab-ci
-+	CI_BRANCH=3D"$CI_COMMIT_REF_NAME"
-+	CI_COMMIT=3D"$CI_COMMIT_SHA"
-+	case "$CI_JOB_IMAGE" in
-+	macos-*)
-+		CI_OS_NAME=3Dosx;;
-+	alpine:*|ubuntu:*)
-+		CI_OS_NAME=3Dlinux;;
-+	*)
-+		echo "Could not identify OS image" >&2
-+		env >&2
-+		exit 1
-+		;;
-+	esac
-+	CI_REPO_SLUG=3D"$CI_PROJECT_PATH"
-+	CI_JOB_ID=3D"$CI_JOB_ID"
-+	CC=3D"${CC_PACKAGE:-${CC:-gcc}}"
-+	DONT_SKIP_TAGS=3Dt
-+	handle_failed_tests () {
-+		create_failed_test_artifacts
-+	}
-+
-+	cache_dir=3D"$HOME/none"
-+
-+	runs_on_pool=3D$(echo "$CI_JOB_IMAGE" | tr : -)
-+
-+	export GIT_PROVE_OPTS=3D"--timer --jobs $(nproc)"
-+	export GIT_TEST_OPTS=3D"--verbose-log -x"
-+	MAKEFLAGS=3D"$MAKEFLAGS --jobs=3D$(nproc)"
-+	test windows !=3D "$CI_OS_NAME" ||
-+	GIT_TEST_OPTS=3D"--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
- else
- 	echo "Could not identify CI type" >&2
- 	env >&2
-diff --git a/ci/print-test-failures.sh b/ci/print-test-failures.sh
-index 57277eefcd0..c33ad4e3a22 100755
---- a/ci/print-test-failures.sh
-+++ b/ci/print-test-failures.sh
-@@ -51,6 +51,12 @@ do
- 			tar czf failed-test-artifacts/"$test_name".trash.tar.gz "$trash_dir"
- 			continue
- 			;;
-+		gitlab-ci)
-+			mkdir -p failed-test-artifacts
-+			cp "${TEST_EXIT%.exit}.out" failed-test-artifacts/
-+			tar czf failed-test-artifacts/"$test_name".trash.tar.gz "$trash_dir"
-+			continue
-+			;;
- 		*)
- 			echo "Unhandled CI type: $CI_TYPE" >&2
- 			exit 1
---=20
-2.42.0
-
-
---KTriI+80vC4YA3DG
+--h8eLT472T7Q+e109
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmU6HJMACgkQVbJhu7ck
-PpTbNQ//TF5sF7/BANZ/P1pecyy0KTjdwN+gPnCkf4iydsAYJ/pA0zBBLkHzOwb+
-mYN2Xz0+A9KBQDAPuCeQApIRotSIi18+dDlvpFtYLrL2G45BBucJeYRQjcqQunBL
-5sWDe5SnuOWXh4SgNVnmXdDgGO/XOYG+gVIchHkiZmJqNdqAxpK9nh7h2oIsm7KN
-+UhgecK1m2c3hQ3i012+LPCe7cN2INGW9kRVNUf8G0ukTExTzx9IGHqBwkSwo0NT
-PXFSkkBFfshVH/QA/t6XBP4sxBDDOGyu9yZPq2h5/Gmsga3OITgFA2B4MrlmmbO/
-WmI4UKUbKRnE5mYJAdEovB88xk4hcfsl625sr9FNVf3gxkXwHreLcFg/9xdF/ntH
-K2SvkRM7coI4crRQfBu2dQom5kIqLTJKw3mJBdb8CKvQfvpBDpJh2l7ZF8CEL4FY
-uACImCsefheXPK7yzGmiUYvf38Yvl+C8uGxeWDF83YvpY3MoJU1b15sGQiQ0zXuI
-oPYtN8uPVq7KH07+ZptoZ5sFTnhRZodvwA29fQGCarjfHK4prqZ7kNhuA+6nuy0M
-uriHfZfvqC8KIBgyvctQ+yCt6vdl62XlS/5rqGiFmIQYdbT5BuGeMpJm92F0yeCl
-14MZtyH0doCFaLG1b0JuJCG/nRohZB8HlVZg9/mjV3YG44WQ3nQ=
-=serX
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmU6IEYACgkQVbJhu7ck
+PpQ/cxAAlfrQiPkr0CPrZep1cuzR20x+CiimbKIHpc7NQ0Gbs12F+XYnSgWk09N9
+hjmCZtAszr4UbEG1a1FRks1AMCyG2d7h8DptwakWvr9WfP3BZPnMnWtxVMah2LOY
+1yeuKubG5O94Hr33my/TfPX3IHDcKu/Cc9B3Z2WQb2dHphWxIT3oiLGidKHITi1+
+ZLpC2FXQCvRHiVGtN0b2OnQS/SGKWFlL90wxqGzXMXPhlmkocPX3IGhasEWK8tLx
+loEiPapDbpFEncMbTafdrJw48rd+zHvRViU/mwo4FrsuNWBonD0R7skOrhBx3+sB
+6byT4F8jMqVVk5JvQr4Gsw3rrRq8ZzDVWcFyrWKThAdp0MkGx1B4E/WykXIEXq5G
+wydZ1fxmTHD7Boub3hlV9/Dr42gajk8Bm1bt3eMgxSPzFUOCGjutmKBIpc5N1PpY
+XTfdRqzAJO9H06Eu19kvmV3aUqoHS91LnDsHf5m3E6y9fWiSSc3ilUVD153i800x
+BtejaQglnEjQRylMWXRejOedak8WvsN0GN3PGUqeQ1uoLSLTa43VD5WVqe6oV7OD
+3e217eeHYfs247/WTjJgoAZd8en6Uuz6OBwSTlSlfCDkj56za1OTWOMcIlNsFZtB
+x6RC+BWxuw0INVBe0fJC6J6i1wNe97c5db4Ku+N3xlCJPTYjw+Y=
+=jY0I
 -----END PGP SIGNATURE-----
 
---KTriI+80vC4YA3DG--
+--h8eLT472T7Q+e109--
