@@ -1,83 +1,80 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8E89156FA
-	for <git@vger.kernel.org>; Thu, 26 Oct 2023 17:19:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 261AB1B6
-	for <git@vger.kernel.org>; Thu, 26 Oct 2023 10:18:59 -0700 (PDT)
-Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-66d24ccc6f2so19042746d6.0
-        for <git@vger.kernel.org>; Thu, 26 Oct 2023 10:18:59 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA27A381DC
+	for <git@vger.kernel.org>; Thu, 26 Oct 2023 18:22:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="lSI1XMHz"
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE13D10F7
+	for <git@vger.kernel.org>; Thu, 26 Oct 2023 11:22:36 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id 3f1490d57ef6-d9caf486775so979768276.2
+        for <git@vger.kernel.org>; Thu, 26 Oct 2023 11:22:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1698344555; x=1698949355; darn=vger.kernel.org;
+        h=cc:to:from:subject:references:mime-version:message-id:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=EX6oftXkHWSW08FRc+9r5HoctSmiGO52b1depWLT3z4=;
+        b=lSI1XMHzHGdzQyt9TD93LzgA30L0wRgGBYCpTEpofTeHXBL1CApyyh63a8fVXJg4oa
+         bb83RBlLADSR00c1nP+/UvV+cbC1R11FRaDIp3a1vDMFWKXIqn1ct8wGL1nSXjDUuuvk
+         RsRpObzw0ogvekbTSC+jQBzwmYe+4YC4g1TwJ81UQNJ2zXRKHd3wjfSW1NuFGFQrqH60
+         +Z5rR+V6IVqYKVJjkZpKRZR9JijgTXvHi69dhMHCOPQQ8LijiQmsUJsvzH4FKiA35Rv6
+         d1GDxKCc5zEskR57hk80Pu71IdOteAWS/YYCyM1LUee0+Xce4ZSBbVeRBH0ebqAOyLO5
+         uzHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698340738; x=1698945538;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=9GUFG/Kymfj5jI21E9lAikkB8aj+p5IJ8qNgXfNI8DE=;
-        b=uEJB1gJfSOjMzilMEVGadCBE4IPZcWGSA8FEjCh+OaOASbo1n1w5BU6Vmohk+ITF/6
-         vdyQkmuaN6kBRid/iVRzej72CCp1Le5BMpkXwSHSUibF7b3HX5k+49uraAgZmvdYykIh
-         IvGJfpkmwy6Z9RTfImKlKT2MjUBRRnM7e4DU4Mki7KabtOMCgbVOeyN2cVqMfCZNLc8d
-         IDMC0GrcxRpNp//iUhKrx95wSVJBGIu0rS6VZwcgJ+LIRnqEPiavoBkfN9GKBw93vCUD
-         z7sYKI0Pg3YzOWhmDjfoZrrK1asprmf/HV4LH9+oirzOHo5NBlaEYkIcOIKe4W+57X9f
-         gybQ==
-X-Gm-Message-State: AOJu0YykFUx2nIqG5bJy4YDf8whmZu0IH0X/H2Ehft1lMz2NH4QCNjv+
-	QUDUbBehg+5zQqTtZmTpyl90CJxHcKfu4erurD8=
-X-Google-Smtp-Source: AGHT+IHjpI0wqAOxYh6jLyXinsIePxejlJfGi/qdMChEee7IzBH0CxlDV1AoA/FcOFfYGX/JHjLXpN7Ck36NPMD5+YA=
-X-Received: by 2002:a05:6214:1316:b0:66f:ac58:69d4 with SMTP id
- pn22-20020a056214131600b0066fac5869d4mr634987qvb.1.1698340738102; Thu, 26 Oct
- 2023 10:18:58 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1698344555; x=1698949355;
+        h=cc:to:from:subject:references:mime-version:message-id:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=EX6oftXkHWSW08FRc+9r5HoctSmiGO52b1depWLT3z4=;
+        b=mwSAildpg9urXfsPtegQab5abBX0jhBKBkcK+WE1jjIITgK6/C/2HOqAp5TIPn0NQG
+         lNafZNOlu0exiosKMu+smWjQAEOyyaM0NGUMLaFXSqMQK+pDoeMIRnQH0pyNOPZZ6kD2
+         RsBViDIojDK6BFpUuw2Yq/9iWWlyNC15rDRayy+GXmLWteJvDSSS2CCvs9aaG49mm6pY
+         h0y3bF1Hl24vouqwicjU2ItHUQqzzCR9aCI1fe3oeFK0FODk6Nv2C9ZHVE31L+XLm/uw
+         8sDfd0kweeM8Vkgny507EL1nWEOtaSoqlVpVx6qJHreEclmKq8AqIDKkjG76SyI1bCzr
+         BQbg==
+X-Gm-Message-State: AOJu0YwPLcH81OW9S0GCJYmMW7sAdcPQO+3ANO9Vxwf3t0Z34jR+laCc
+	oi9OpG/LVwGwpZRFizA1i+uNvrEgWVRNjaoeYVWUxQfQa0aXf+M09ZstQ69OP3d0nC1KbiWbH+y
+	MWDSs4s0G/3Fp8vrwjgMRs8gSrPXubs2mJEv8z9iEF0/09sBb+7pMts43JK8H1YgKZiP1W3cavg
+	==
+X-Google-Smtp-Source: AGHT+IFCQYbbkKy3cqcKnZuLFNpGdFeZLsZMNTpEA542m3kWY2ffMPJSwuCcZTPEve9PoTYUzngefflInopDo+hNsFY=
+X-Received: from podkayne.svl.corp.google.com ([2620:15c:2d3:204:a9a1:5044:5663:ae78])
+ (user=emilyshaffer job=sendgmr) by 2002:a25:abcd:0:b0:da0:42f3:6ce4 with SMTP
+ id v71-20020a25abcd000000b00da042f36ce4mr2799ybi.7.1698344555569; Thu, 26 Oct
+ 2023 11:22:35 -0700 (PDT)
+Date: Thu, 26 Oct 2023 11:22:29 -0700
+In-Reply-To: <20231026155459.2234929-1-nasamuffin@google.com>
+Message-Id: <20231026182231.3369370-1-nasamuffin@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <20231026005542.872301-1-nasamuffin@google.com> <20231026155459.2234929-1-nasamuffin@google.com>
-In-Reply-To: <20231026155459.2234929-1-nasamuffin@google.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Thu, 26 Oct 2023 13:18:46 -0400
-Message-ID: <CAPig+cTmYtWR=QN3LeN9yw3HmsKEmD2fUiRjKf=eJHhAZyT-yA@mail.gmail.com>
-Subject: Re: [PATCH v3] bugreport: reject positional arguments
-To: emilyshaffer@google.com
-Cc: git@vger.kernel.org, Emily Shaffer <nasamuffin@google.com>, Sheik <sahibzone@gmail.com>, 
-	Dragan Simic <dsimic@manjaro.org>
+Mime-Version: 1.0
+References: <20231026155459.2234929-1-nasamuffin@google.com>
+X-Mailer: git-send-email 2.42.0.820.g83a721a137-goog
+Subject: [PATCH v4 0/2] bugreport: reject positional arguments
+From: emilyshaffer@google.com
+To: git@vger.kernel.org
+Cc: Emily Shaffer <nasamuffin@google.com>, Eric Sunshine <sunshine@sunshineco.com>, 
+	Sheik <sahibzone@gmail.com>, Dragan Simic <dsimic@manjaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Thu, Oct 26, 2023 at 11:55=E2=80=AFAM <emilyshaffer@google.com> wrote:
-> git-bugreport already rejected unrecognized flag arguments, like
-> `--diaggnose`, but this doesn't help if the user's mistake was to forget
-> the `--` in front of the argument. This can result in a user's intended
-> argument not being parsed with no indication to the user that something
-> went wrong. Since git-bugreport presently doesn't take any positionals
-> at all, let's reject all positionals and give the user a usage hint.
->
-> Signed-off-by: Emily Shaffer <nasamuffin@google.com>
-> ---
-> Per Eric's and Dragan's comments, dropped the null checking for argv[0].
-> No point in being too paranoid, I suppose :)
->
-> Note that after this morning it's not likely that I'll be able to find
-> time to update this again so quickly, so if there are other nits,
-> reviewers can feel free to send their own rerolls rather than waiting
-> for me to see it and turn the patch around.
+From: Emily Shaffer <nasamuffin@google.com>
 
-Thanks. This version looks good enough to me. Just one minor comment below.=
-..
+The test I cribbed from for the newly added one in patch 2 was still
+using test_i18ngrep, and Eric mentioned us not wanting i18ngrep at all
+anymore, so I went ahead and cleaned that up as well.
 
-> diff --git a/t/t0091-bugreport.sh b/t/t0091-bugreport.sh
-> @@ -69,6 +69,13 @@ test_expect_success 'incorrect arguments abort with us=
-age' '
-> +test_expect_success 'incorrect positional arguments abort with usage and=
- hint' '
-> +       test_must_fail git bugreport false 2>output &&
-> +       test_i18ngrep usage output &&
-> +       test_i18ngrep false output &&
-> +       test_path_is_missing git-bugreport-*
-> +'
+ - Emily
 
-I didn't really pay attention to the test in earlier rounds so didn't
-notice this, but these days we just use 'grep' rather than
-'test_i18ngrep'. (Indeed, the existing tests in this script use
-'grep'.)
+Emily Shaffer (2):
+  t0091-bugreport: stop using i18ngrep
+  bugreport: reject positional arguments
+
+ builtin/bugreport.c  | 5 +++++
+ t/t0091-bugreport.sh | 9 ++++++++-
+ 2 files changed, 13 insertions(+), 1 deletion(-)
+
+-- 
+2.42.0.820.g83a721a137-goog
+
