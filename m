@@ -1,69 +1,70 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A210D182A1
-	for <git@vger.kernel.org>; Thu, 26 Oct 2023 08:00:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2131618644
+	for <git@vger.kernel.org>; Thu, 26 Oct 2023 08:00:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ppqlb9qS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uEnGE89q"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bZwwa/DY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QoI26bHQ"
 Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83019B8
-	for <git@vger.kernel.org>; Thu, 26 Oct 2023 01:00:07 -0700 (PDT)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 991C918D
+	for <git@vger.kernel.org>; Thu, 26 Oct 2023 01:00:11 -0700 (PDT)
 Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.west.internal (Postfix) with ESMTP id 704403200A0E
-	for <git@vger.kernel.org>; Thu, 26 Oct 2023 04:00:04 -0400 (EDT)
+	by mailout.west.internal (Postfix) with ESMTP id 206F43200A05
+	for <git@vger.kernel.org>; Thu, 26 Oct 2023 04:00:11 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Thu, 26 Oct 2023 04:00:04 -0400
+  by compute6.internal (MEProxy); Thu, 26 Oct 2023 04:00:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:sender:subject:subject:to:to;
-	 s=fm3; t=1698307204; x=1698393604; bh=UgMobPGetxHYozLHtlJ3PO3gy
-	vAtCPuKgCyooGoljdk=; b=Ppqlb9qSe9amWGAdGJAPPbbHpOQAHd4ruJDyccyYO
-	SjiDd3w8MX5cxsrj15nPCYLC3kRkF6fsiPXO4xNPWaxJR75m+dvqgpi9jNvCPswU
-	s2rvdFuDYlhoo4faB3HRVEbeGg7SLQyDGJpQluCJYDYIrrk2knWo/JVWOrZ8njt4
-	SCuDbx65xEaSk0/7pcaA186+K92fTT5kw+VlaIgOOmYX0tu7cCYj+ID4+W4VZ03v
-	IArD2A16yJeXpDAScEec3ifVW4sPmqfqhVA/3H1jSSF39lG6227PtRfufeuMjW1G
-	P9mdZSZuPYT2XtCO/AdqXSUwp8ktZwjYSfS4iP20Pe6Ig==
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to; s=fm3; t=1698307210; x=1698393610; bh=Ba
+	cV0TdBwgF9XfrN//Zw53Br5b9V+qEXQ6hAxsurEDQ=; b=bZwwa/DYSkbsoAIUsa
+	THWrmwh9X7HvwtBB2LdqYZiOXWiQ+fLKv6H2WKLXb08IbhoHZlBlpzzPwQK2+Pb+
+	2NviSFR3ZttX5JqZ+Ue5WzBZZbrNFgh3X450MKbBJqwELFN2H6Qx0LNUiQUzFrdU
+	amwxbrq7MXUXIZG4v9yifr+oPYvMnuTi4m1Boo6QTk/cY0AntGGKUgwwJcOSQXc3
+	yJcFwAM/LA/pyLJRHkuY4rhjG3ni5qEy3iW9ZzrcJC/yvxbvho0xwADPb0RLjGDO
+	8yQOOc5cJQYklrDSS2NyEEsDmGJeof2UFxMXfICtkYQH3OS4LFdCV7msTGD+aGRW
+	ZaOg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:sender:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1698307204; x=1698393604; bh=UgMobPGetxHYozLHtlJ3PO3gyvAtCPuKgCy
-	ooGoljdk=; b=uEnGE89qo05mkpqngfmWiPPKKkSG2HE+zR0sh7oN27eRU9SyJ6g
-	P1W6aYVH4kGwLKmyxDh1XKBMriaT3/l/0Holn36irHvzRsGP6uuAnDxgif/4ljsE
-	wHCog8Qz//T5oNO7HTdy75LMBRGvguaudGsveLnNljJx/nnxMU5BXQoh7ux2YZAD
-	lFQZ0CxTsPbr2CrpUKquF0+4J8hjXb6pWiu8OLBqj85El6WBfere+134ZxjUwe4X
-	IxB6gvu1/XAgxcVwsQHeeOJFbg/TlTVzEbMOFGjQcWTtAFYtPtxKXWFujW7CZNS5
-	WYsU+9KNbe+FCdu6DYA4qVKMU8tO/jBvMRg==
-X-ME-Sender: <xms:gxw6ZT-WYyLiAh5a99vqQjB_NZ0jPh3pTYmSTp-NCt34YDuqibDYNA>
-    <xme:gxw6ZfuubYmPfv2o-INAuu0CiHpUmH1IDAvT6NwVwQops8fHU3bfKnNRK_fPC-DQU
-    8Wl-myhqVSPPsSMUw>
-X-ME-Received: <xmr:gxw6ZRBbrf-2JNR3zOCqADcqFOqCNOJEwRWfBRaEv35g7oOoh9mTFoQv_hYPHpQaMXJv68xkYjH9phk0l5AE_CsHKFZSOe3uehW5-1aq5aHqteY>
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm3; t=1698307210; x=1698393610; bh=BacV0TdBwgF9X
+	frN//Zw53Br5b9V+qEXQ6hAxsurEDQ=; b=QoI26bHQdUuC4E6JrL/80nv4+cEiv
+	DN1S5cJje2DZte1Qo+9Ql89mC+6Z522NUCirak+Hdej9F+ZG41ezhlA78BNyKfC8
+	abK35IZZNkxunXud67OyXrSskMDr+HYxGFiPBH5AwOwzmBctRSr2dLHbvzRwRS2O
+	pxURfDTaBpBnLcukmEjCMX/4ykhGsO2dLUvhe+OjAZUskp+ubSyIEkVq5GkMUFbM
+	sMq+FQ05LMLm4JvOwWj8mtgjEZS8Q7uckKru1yjQz1VsTtmGBcbSSczkdN4nQjUz
+	xhrbC11KWsirPZ176rqVoOZRAiLQ7pcTP19SGPJhD4HKFN3tmK4GAYrvw==
+X-ME-Sender: <xms:ihw6ZQnkOwJsEcWl48u4qi3oFD2Z7ciSjfz4RxGAUc_x2EgONa6izA>
+    <xme:ihw6Zf1JohDgyMf-qhgjg8C3O_9Z-Vk8NCGikmb29kaXDeMJQ7-DKZs1VAptsXGtQ
+    T0zTJQEAStRQiaTdA>
+X-ME-Received: <xmr:ihw6ZeomL3a945ZCfpWYBepj_7TqTR6XuxlQuJBOiu4cYOBU7Z_Wq82gbm73q93an_oAnheU4NGwUeFyeQdqdIOkT9KtZMnCpX-nsOtdnlAWsQM>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrledugdduvdehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkgggtugesghdtreertd
-    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhepjefgfeevleefjeettddvjeeugfdtieejvdekge
-    fhkeeuleetgfekheeugfeugeefnecuffhomhgrihhnpehgihhtlhgrsgdrtghomhenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhm
-X-ME-Proxy: <xmx:gxw6ZfeRQ7RQ4EdMb30qyIT5oYf-I-LNDq91CgN227BZ_myiJPxZHg>
-    <xmx:gxw6ZYPU4HOEPdqTL5K8aTICUxRDaer8LpX14cWRkIAU56hD8LfAMw>
-    <xmx:gxw6ZRnKUllhUMyQwcVKNdNObD6k9vEhR_OzYn7wgccnZ-RN2wDV2w>
-    <xmx:hBw6ZTam3HUqrYac5LeOJw9wxkbeXhGnHcK5DgEIPP9FTrfU8ZletQ>
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
+    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
+    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:ihw6Zck5pb8p4QGkGCuNrM9tlx1dWUEQVDNdbb0_VLQyBqanTxEJXw>
+    <xmx:ihw6Ze3009oDCVbpIkU9iHrVwrO40W2lMN6pbysJ9RermsupoVPmbw>
+    <xmx:ihw6ZTvTrmvKs4AWREI6PKkdaY_XyrYPsmvLOBm_wFe4qUNFf7EX1g>
+    <xmx:ihw6ZXjfNDWfcWrhoCRroQIxOf1mxq08tBumItVLCum7lMPfwLDtOA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 26 Oct 2023 04:00:03 -0400 (EDT)
+ <git@vger.kernel.org>; Thu, 26 Oct 2023 04:00:10 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 289cf836 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 341a2c29 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Thu, 26 Oct 2023 07:59:52 +0000 (UTC)
-Date: Thu, 26 Oct 2023 09:59:59 +0200
+	Thu, 26 Oct 2023 08:00:01 +0000 (UTC)
+Date: Thu, 26 Oct 2023 10:00:08 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 0/5] ci: add GitLab CI definition
-Message-ID: <cover.1698305961.git.ps@pks.im>
+Subject: [PATCH 2/5] ci: make grouping setup more generic
+Message-ID: <ec390354f15604eb440bec0d3d0d817441e0f5b2.1698305961.git.ps@pks.im>
+References: <cover.1698305961.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,112 +72,105 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="bohyH0O2yGVh4X2+"
+	protocol="application/pgp-signature"; boundary="BRn9FQslFNmdApzu"
 Content-Disposition: inline
+In-Reply-To: <cover.1698305961.git.ps@pks.im>
 
 
---bohyH0O2yGVh4X2+
+--BRn9FQslFNmdApzu
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+Make the grouping setup more generic by always calling `begin_group ()`
+and `end_group ()` regardless of whether we have stubbed those functions
+or not. This ensures we can more readily add support for additional CI
+platforms.
 
-this patch series adds GitLab CI definitions to the Git project.
+Second, this commit changes `end_group ()` to also accept a parameter
+that indicates _which_ group should end. This will be required by a
+later commit that introduces support for GitLab CI.
 
-At GitLab, we're have already and will continue to ramp up our
-involvement with the Git project. I myself will be working almost
-exclusively on Git in the context of the reftable reference backend.
-This has surfaced some issues in our own workflow, and the current CI
-integration is one of the biggest pain points I personally feel right
-now.
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ ci/lib.sh | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-It's happened multiple times already that we sent patch series upstream
-that passed on our own self-made pipeline at GitLab, but that didn't
-pass the GitHub Actions pipeline. This is because the latter is a lot
-more involved than what we have. There are pipelines for:
-
-    - Various sanitizers in the form of the linux-leaks and
-      linux-asan-ubsan jobs.
-
-    - SHA256 in the form of the linux-sha256 job.
-
-    - The linux-TEST-vars job, which sets several environment variables
-      to non-default values.
-
-    - The linux-musl job that tests on Alpine Linux.
-
-We have none of that. And while we could of course iterate on our own
-pipeline definition, the current setup results in quite a convoluted
-workflow on our side. While I realize that this is not the problem of
-the Git project, I really hope that we can integrate GitLab CI into the
-Git project.
-
-And this is exactly what this patch series does: it adds GitLab-specific
-knowledge to our CI scripts and adds a CI definition that builds on top
-of those scripts. This is rather straight forward, as the scripts
-already know to discern Azure Pipelines and GitHub Actions, and adding
-a third item to this list feels quite natural. And by building on top of
-the preexisting infra, the actual ".gitlab-ci.yml" is really quite
-small.
-
-I acknowledge that the Git project may not be willing to fully support
-GitLab CI, and that's fine with me. If we want to further stress that
-point then I'd also be perfectly happy to move the definitions into the
-"contrib/" directory -- it would still be a huge win for our workflow.
-In any case, I'm happy to keep on maintaining the intgeration with
-GitLab CI, and if things break I'll do my best to fix them fast.
-
-I hope that this sheds some light on my motivations here. I do not wish
-to replace GitHub Actions and would be okay if this was only a
-semi-supported thing. But it would help us at GitLab and by extension
-also the Git project because we will hopefully send higher-quality patch
-series to the mailing list. And maybe this is even useful to somebody
-outside of GitLab.
-
-If this is accepted I'll likely eventually iterate to also support macOS
-and/or Windows. A full pipeline run of this can be found at [1].
-
-Patrick
-
-[1]: https://gitlab.com/gitlab-org/git/-/pipelines/1045746751
-
-Patrick Steinhardt (5):
-  ci: reorder definitions for grouping functions
-  ci: make grouping setup more generic
-  ci: group installation of Docker dependencies
-  ci: split out logic to set up failed test artifacts
-  ci: add support for GitLab CI
-
- .gitlab-ci.yml                    |  51 +++++++++++
- ci/install-docker-dependencies.sh |  15 +++-
- ci/lib.sh                         | 139 +++++++++++++++++++++++-------
- ci/print-test-failures.sh         |   6 ++
- 4 files changed, 179 insertions(+), 32 deletions(-)
- create mode 100644 .gitlab-ci.yml
-
+diff --git a/ci/lib.sh b/ci/lib.sh
+index eb384f4e952..957fd152d9c 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -14,12 +14,14 @@ then
+ 		need_to_end_group=3D
+ 		echo '::endgroup::' >&2
+ 	}
+-	trap end_group EXIT
+=20
+ 	group () {
+ 		set +x
+-		begin_group "$1"
++
++		group=3D"$1"
+ 		shift
++		begin_group "$group"
++
+ 		# work around `dash` not supporting `set -o pipefail`
+ 		(
+ 			"$@" 2>&1
+@@ -28,11 +30,10 @@ then
+ 		sed 's/^\(\([^ ]*\):\([0-9]*\):\([0-9]*:\) \)\(error\|warning\): /::\5 f=
+ile=3D\2,line=3D\3::\1/'
+ 		res=3D$(cat exit.status)
+ 		rm exit.status
+-		end_group
++
++		end_group "$group"
+ 		return $res
+ 	}
+-
+-	begin_group "CI setup"
+ else
+ 	begin_group () { :; }
+ 	end_group () { :; }
+@@ -44,6 +45,9 @@ else
+ 	set -x
+ fi
+=20
++begin_group "CI setup"
++trap "end_group 'CI setup'" EXIT
++
+ # Set 'exit on error' for all CI scripts to let the caller know that
+ # something went wrong.
+ #
+@@ -287,5 +291,5 @@ esac
+=20
+ MAKEFLAGS=3D"$MAKEFLAGS CC=3D${CC:-cc}"
+=20
+-end_group
++end_group "CI setup"
+ set -x
 --=20
 2.42.0
 
 
---bohyH0O2yGVh4X2+
+--BRn9FQslFNmdApzu
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmU6HHoACgkQVbJhu7ck
-PpS3vg//QJXjiNjpdfCcM7rEkAs4J+xL3ry79f8dL8PfMTQ26XrTQO00Aynhpn6Z
-BugEcZrZUaqUuUemt10pRgX+MnKBwqD8vhQbR1R4KuCCwntUqDk1v18QJ7+670vl
-5guREDtbhP8iqB/9QsBjFcygZWwvLeb/nK8Mq8m6YU4OrMiA23ib25yfKJeKXQ+V
-UIqgs6CoK52nycI/T4SiOWcvM6UvQ8vqRbJb/QEMQ+lVQDX0LrzECsdFPWWkcpU8
-6LzniEfQK2HRW8xSBOZNS4FE3hEpQUP28aN3sRQCOEYO2puJSECogZMt7HvY/tSR
-MkTLop647teOaouC7V4UbXV7hC4lRptRk3iqvYYvAcVL8GoO89mUqCFCDNWR6YfL
-dsGrxu4cjCzDYkZV/qmnd5LeHZcDmuXHsHvwU03zwl7UYMkgZ6xIX8AjAK08r+aD
-Skx5t/efod2uHid9/rNulvX1Ms7AEhViD4g7Db33boMhKPKnjerg/EfU8zD6sdGC
-DecJlCST+h5OiYcNxQbNKvW7cQfXobBU5k/DqBRJIZA5ubOyafO+AYubnk1qfzPs
-1DudQhPn1UysOIOuE486NIpfyKJmQyVATQM5FjnrNbLzB2x6WeGBAR0yhAmKqOEE
-hZ8P3H/Adaf5+53vR7oRlpbPpQdm+OOucIr710W4EFj9SmUUO9g=
-=qw81
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmU6HIcACgkQVbJhu7ck
+PpRMpxAAk/6l5ShyRZK535Jj6TucnuNzKDy85pRBSk2sAAYwad/fOamh4hfH/o84
+ND123El/Elh4qaLZ8S8thCHO49HsXIqTamVGR9MjAmjz/1udjDDjRPA09eHpSHal
+DOI+ZnzmpZaJbcaRSYNgvOUMLpYvU9MgDA6cXLPad+23sUU5tXHKogf1Iz3hr2Rh
+ElHypB8z9SZ+0s43aLWR0fiNXyRJREBAEd+rItPLp8PwexC5hI99+ZG17NqAnEnd
+BSXulCstivhmAEEpWTb8gP3fJI2yVZj4uOdBDJa/oTt2yKvbzMn5ehy9FFaxBPaq
+9ywnMHKgNfLeXKsaPV5j1iV8qSDHGwoDeDPThurMxvACZ7rBN7tNslXx01qc5x7a
+hLKF40lzS+VXY7HkK7Ywx7gUmnXZEbjFRAWg8rJfCDY7x1knBrTg1aOVeTSqeUGA
+K0kD8JQcHYkVwd7CAIOiMF+uCQ8FEqgfvO5q9nvzznjgq0Dp3NVkIowFMETHp8nN
+W0p9zhtqRcolXYnw5Mz9KZdL1VFAl5zUGjNRwHw01diSgv8mhMeQ9MGW7e9q+bKf
+FNuRTiIlPyNBBpHhcf5CvYvSz9SY7PwPwzaVgNRJE5z/ZrxiHDV2R6N2oSceKy8n
+ScY+es+81EEQCSwV4p62O6av/8ML+9mFLCY8gnhIwURkl/OpyWk=
+=IS9m
 -----END PGP SIGNATURE-----
 
---bohyH0O2yGVh4X2+--
+--BRn9FQslFNmdApzu--
