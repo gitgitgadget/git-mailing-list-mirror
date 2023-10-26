@@ -1,54 +1,54 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B4D171DF
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4259273D1
 	for <git@vger.kernel.org>; Thu, 26 Oct 2023 22:46:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=initialcommit-io.20230601.gappssmtp.com header.i=@initialcommit-io.20230601.gappssmtp.com header.b="jD50dil2"
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D4ED1AB
-	for <git@vger.kernel.org>; Thu, 26 Oct 2023 15:46:47 -0700 (PDT)
-Received: by mail-pf1-x434.google.com with SMTP id d2e1a72fcca58-6b5af4662b7so1378434b3a.3
-        for <git@vger.kernel.org>; Thu, 26 Oct 2023 15:46:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=initialcommit-io.20230601.gappssmtp.com header.i=@initialcommit-io.20230601.gappssmtp.com header.b="PylVT53k"
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58E5C1B2
+	for <git@vger.kernel.org>; Thu, 26 Oct 2023 15:46:48 -0700 (PDT)
+Received: by mail-pf1-x42a.google.com with SMTP id d2e1a72fcca58-6bd0e1b1890so1383930b3a.3
+        for <git@vger.kernel.org>; Thu, 26 Oct 2023 15:46:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=initialcommit-io.20230601.gappssmtp.com; s=20230601; t=1698360406; x=1698965206; darn=vger.kernel.org;
+        d=initialcommit-io.20230601.gappssmtp.com; s=20230601; t=1698360407; x=1698965207; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3jpis/aPcpBI1zfIbeqY4n9p1XyHUUNCJMvbE7Bv7CY=;
-        b=jD50dil21PxIypULMZBwsprF9bGJI8sSqRvjUi9Fz21DPsNEtqZaqIIeYeVca2hwBJ
-         WjoyA93+J+Fhy7VWUJqcDQ0EMuPe9LtsOrCn34+1boiu15bk70Jowialx+8IBDwHjsX2
-         AbJoz5yAk2om9TbAnlPYDxrURhExNg4cwbgKQeFdPOI13BPza2Zz2QAOdBVvHL+hXAA2
-         U4Q9bALX3RWT+zOGbuR8bPL8799qSBH/PcNGKGXiiN7MPhAhTgG44d0tRhmLQaR8uchI
-         8uFMwbXkFCywNHwR//em/w8GiazZ0fMJY8gPyTAU5XcQYhQ06p2ZRoswEA7U0bDmi++f
-         tvAw==
+        bh=Y/myvL0wBmCeIacYTdD9mDqkuo8P/UBGmG+cU/3jDDE=;
+        b=PylVT53kjQgfwZr2vYWx5xAEGsuJu/5w96LIM4wvjNsalWlct3W5MKblEPUkmIxzHC
+         a6OgiN047hKWh35teUgfJrNWzuJFKzqGfFI3dpqbFBYjePgcQpfIimVVsYl+xbDmllIL
+         Dvd4HXYfZ8MjFUUnBtXq5iEW72ngfXqxlJrtmhNluzvrp8iaaOAUis6vKbmpLZOhawDG
+         LOvt8UPMPaQaxJG4g+Pd3tbwjUVBqDMqKIIPc4Gpqfq5y0bblA6J5Ld9KESgg4vYz4em
+         s7eXWhlMNrlJkwgKjROxcf/gyBx1L1qv6P6ywyHUsI2wHuSIfL1mY+XVhx0Ju5P0L8IK
+         PBsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698360406; x=1698965206;
+        d=1e100.net; s=20230601; t=1698360407; x=1698965207;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=3jpis/aPcpBI1zfIbeqY4n9p1XyHUUNCJMvbE7Bv7CY=;
-        b=Vl0E0ttmRadgFCA0JwnO5AnZIgBxw2DTMKs3yi/Gt96g3M+DcVkUycuWoRTE5G2Qgu
-         eXstw+BwDdMmurlFHYqQLBzjF70JWZLc/wAk0TtRTm76IKUUYNdrQOHy3gbgPeCB5mq/
-         4bebp27z+Wg7B1APCoKaVNd2/CZJ/CSze69HC8q8vzAAlKzAGIS5/FUHc0XUvG+Spxdy
-         7Il+Gb6/MnhzXaKj3tdMnR6ZRj0jT0roCoZjaDtA2hgOoYeJwmkJLIKs+jqnAFpwN2bV
-         oYBvXHTe3UBTpVztwiLZMIhJc7JST9LQDPT6Ji0sbQUe//YqIqClaCY4WWI1Rtlaf2Pd
-         Mv7Q==
-X-Gm-Message-State: AOJu0YxEhtLHBvLoE9CTsiaHJuT1yInQcZfKuz1PZxi6azyNU5Q6K/f6
-	T6DBELkOD5kCcN7L2rFwtzW53fiYnCtCuNB+AUE=
-X-Google-Smtp-Source: AGHT+IFPhMnshkjA+k/ew9SOqI6AuKXCdGNKehBNaGR8+G5cqsyV0I62N+U3rkx/8nxelJ5Z7PnTPg==
-X-Received: by 2002:a05:6a21:7988:b0:161:7a0c:3c38 with SMTP id bh8-20020a056a21798800b001617a0c3c38mr1184459pzc.32.1698360406344;
-        Thu, 26 Oct 2023 15:46:46 -0700 (PDT)
+        bh=Y/myvL0wBmCeIacYTdD9mDqkuo8P/UBGmG+cU/3jDDE=;
+        b=D8bqORve+F4Ns+Zoa/tjwKEcwadg15LgWYNEb+PJeCReoNMfXw3PuZLnPJTQPeXq5i
+         T+gnLMgL4nZUhbKqcS7rqesyXiu7z/vWnDNP+hLCwRuPU4dDFc93uSexFoGsYjLwWwZL
+         GZvzJkH3IX2kys/w2w8WZacj3xDYSLdWvTssIO18a0EtrgqTiBOaLoYTq+Y8L8CiEGMp
+         EgVi5L+HEE3EldP3oZ6ySxFxFU2SJ3f984SaNjtjqX+j5Ue3BbbBY/TgwGV/hMpYRYPE
+         mX6l9Z7HeYLWAR2Q66tnbpADfoBXHn18ws7xg83QpsUyzqMyKKfN93gLl6bUIoy4oROw
+         KDnw==
+X-Gm-Message-State: AOJu0YzOstc030cKhgI5GGTIUnKMLE1AApdWEvEt1sXHyOJAQd0srkME
+	SXfhej78lihRN+9G3L6AocS40MzFuMte5erGtT8=
+X-Google-Smtp-Source: AGHT+IE5233cIBC4QDjUtuKrewtP1MGenM4au6Ls2CVyPSx3ecS7wd5i2GofdPnBDFKxGk518e+Wgg==
+X-Received: by 2002:a05:6a20:3d8b:b0:137:514a:984f with SMTP id s11-20020a056a203d8b00b00137514a984fmr1365100pzi.35.1698360407633;
+        Thu, 26 Oct 2023 15:46:47 -0700 (PDT)
 Received: from localhost.localdomain (mobile-166-170-45-225.mycingular.net. [166.170.45.225])
-        by smtp.gmail.com with ESMTPSA id s194-20020a6377cb000000b0058ac101ad83sm112318pgc.33.2023.10.26.15.46.45
+        by smtp.gmail.com with ESMTPSA id s194-20020a6377cb000000b0058ac101ad83sm112318pgc.33.2023.10.26.15.46.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Oct 2023 15:46:45 -0700 (PDT)
+        Thu, 26 Oct 2023 15:46:46 -0700 (PDT)
 From: Jacob Stopak <jacob@initialcommit.io>
 To: git@vger.kernel.org
 Cc: Jacob Stopak <jacob@initialcommit.io>
-Subject: [RFC PATCH v2 5/6] restore: implement noob mode
-Date: Thu, 26 Oct 2023 15:46:14 -0700
-Message-ID: <20231026224615.675172-6-jacob@initialcommit.io>
+Subject: [RFC PATCH v2 6/6] status: add advice status hints as table footer
+Date: Thu, 26 Oct 2023 15:46:15 -0700
+Message-ID: <20231026224615.675172-7-jacob@initialcommit.io>
 X-Mailer: git-send-email 2.42.0.404.g2bcc23f3db
 In-Reply-To: <20231026224615.675172-1-jacob@initialcommit.io>
 References: <20231020183947.463882-1-jacob@initialcommit.io>
@@ -63,302 +63,152 @@ Content-Transfer-Encoding: 8bit
 
 Signed-off-by: Jacob Stopak <jacob@initialcommit.io>
 ---
- builtin/checkout.c | 46 ++++++++++++++++++++++++++++-------
- read-cache-ll.h    |  1 +
- read-cache.c       |  9 ++++++-
- table.c            | 60 +++++++++++++++++++++++++++++++++++++++-------
- wt-status.h        |  1 +
- 5 files changed, 100 insertions(+), 17 deletions(-)
+ builtin/commit.c |  1 +
+ table.c          | 42 +++++++++++++++++++++++++++---------------
+ table.h          |  2 +-
+ wt-status.c      |  3 ++-
+ wt-status.h      |  2 ++
+ 5 files changed, 33 insertions(+), 17 deletions(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index f02434bc15..afc414b0b1 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -41,6 +41,7 @@
- #include "entry.h"
- #include "parallel-checkout.h"
- #include "add-interactive.h"
-+#include "noob.h"
- 
- static const char * const checkout_usage[] = {
- 	N_("git checkout [<options>] <branch>"),
-@@ -456,7 +457,8 @@ static int checkout_worktree(const struct checkout_opts *opts,
- }
- 
- static int checkout_paths(const struct checkout_opts *opts,
--			  const struct branch_info *new_branch_info)
-+			  const struct branch_info *new_branch_info,
-+			  struct wt_status *status)
- {
- 	int pos;
- 	static char *ps_matched;
-@@ -598,8 +600,10 @@ static int checkout_paths(const struct checkout_opts *opts,
- 	for (pos = 0; pos < the_index.cache_nr; pos++) {
- 		const struct cache_entry *ce = the_index.cache[pos];
- 		if (ce->ce_flags & CE_MATCHED) {
--			if (!ce_stage(ce))
-+			if (!ce_stage(ce)) {
-+				string_list_insert(&status->restored, ce->name);
- 				continue;
-+			}
- 			if (opts->ignore_unmerged) {
- 				if (!opts->quiet)
- 					warning(_("path '%s' is unmerged"), ce->name);
-@@ -621,7 +625,7 @@ static int checkout_paths(const struct checkout_opts *opts,
- 	if (opts->checkout_worktree)
- 		errs |= checkout_worktree(opts, new_branch_info);
- 	else
--		remove_marked_cache_entries(&the_index, 1);
-+		remove_marked_cache_entries_with_status(&the_index, 1, status);
- 
- 	/*
- 	 * Allow updating the index when checking out from the index.
-@@ -1668,7 +1672,8 @@ static char cb_option = 'b';
- static int checkout_main(int argc, const char **argv, const char *prefix,
- 			 struct checkout_opts *opts, struct option *options,
- 			 const char * const usagestr[],
--			 struct branch_info *new_branch_info)
-+			 struct branch_info *new_branch_info,
-+			 struct wt_status *status)
- {
- 	int parseopt_flags = 0;
- 
-@@ -1865,7 +1870,7 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
- 	}
- 
- 	if (opts->patch_mode || opts->pathspec.nr)
--		return checkout_paths(opts, new_branch_info);
-+		return checkout_paths(opts, new_branch_info, status);
- 	else
- 		return checkout_branch(opts, new_branch_info);
- }
-@@ -1887,6 +1892,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 	};
- 	int ret;
- 	struct branch_info new_branch_info = { 0 };
-+	struct wt_status status;
- 
- 	memset(&opts, 0, sizeof(opts));
- 	opts.dwim_new_local_branch = 1;
-@@ -1917,7 +1923,8 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 	options = add_checkout_path_options(&opts, options);
- 
- 	ret = checkout_main(argc, argv, prefix, &opts,
--			    options, checkout_usage, &new_branch_info);
-+			    options, checkout_usage,
-+			    &new_branch_info, &status);
- 	branch_info_release(&new_branch_info);
- 	clear_pathspec(&opts.pathspec);
- 	free(opts.pathspec_from_file);
-@@ -1942,6 +1949,7 @@ int cmd_switch(int argc, const char **argv, const char *prefix)
- 	};
- 	int ret;
- 	struct branch_info new_branch_info = { 0 };
-+	struct wt_status status;
- 
- 	memset(&opts, 0, sizeof(opts));
- 	opts.dwim_new_local_branch = 1;
-@@ -1961,7 +1969,8 @@ int cmd_switch(int argc, const char **argv, const char *prefix)
- 	cb_option = 'c';
- 
- 	ret = checkout_main(argc, argv, prefix, &opts,
--			    options, switch_branch_usage, &new_branch_info);
-+			    options, switch_branch_usage,
-+			    &new_branch_info, &status);
- 	branch_info_release(&new_branch_info);
- 	FREE_AND_NULL(options);
- 	return ret;
-@@ -1985,6 +1994,13 @@ int cmd_restore(int argc, const char **argv, const char *prefix)
- 	};
- 	int ret;
- 	struct branch_info new_branch_info = { 0 };
-+	struct wt_status status;
-+	unsigned int progress_flag = 0;
-+
-+	wt_status_prepare(the_repository, &status);
-+	git_config(git_status_config, &status);
-+	finalize_deferred_config(&status);
-+	status.status_format = status_format;
- 
- 	memset(&opts, 0, sizeof(opts));
- 	opts.accept_ref = 0;
-@@ -2000,7 +2016,21 @@ int cmd_restore(int argc, const char **argv, const char *prefix)
- 	options = add_checkout_path_options(&opts, options);
- 
- 	ret = checkout_main(argc, argv, prefix, &opts,
--			    options, restore_usage, &new_branch_info);
-+			    options, restore_usage,
-+			    &new_branch_info, &status);
-+
-+	if (status.status_format == STATUS_FORMAT_NOOB) {
-+		/* Read index and populate status */
-+		repo_read_index(the_repository);
-+		refresh_index(&the_index,
-+			      REFRESH_QUIET|REFRESH_UNMERGED|progress_flag,
-+			      &status.pathspec, NULL, NULL);
-+		status.show_branch = 0;
-+		wt_status_collect(&status);
-+		wt_status_print(&status);
-+		wt_status_collect_free_buffers(&status);
-+	}
-+
- 	branch_info_release(&new_branch_info);
- 	FREE_AND_NULL(options);
- 	return ret;
-diff --git a/read-cache-ll.h b/read-cache-ll.h
-index 302a075714..8bdc157196 100644
---- a/read-cache-ll.h
-+++ b/read-cache-ll.h
-@@ -389,6 +389,7 @@ void rename_index_entry_at(struct index_state *, int pos, const char *new_name);
- /* Remove entry, return true if there are more entries to go. */
- int remove_index_entry_at(struct index_state *, int pos);
- 
-+void remove_marked_cache_entries_with_status(struct index_state *istate, int invalidate, struct wt_status *status);
- void remove_marked_cache_entries(struct index_state *istate, int invalidate);
- int remove_file_from_index(struct index_state *, const char *path);
- #define ADD_CACHE_VERBOSE 1
-diff --git a/read-cache.c b/read-cache.c
-index 319415430a..1c1a3290c0 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -558,7 +558,7 @@ int remove_index_entry_at(struct index_state *istate, int pos)
-  * CE_REMOVE is set in ce_flags.  This is much more effective than
-  * calling remove_index_entry_at() for each entry to be removed.
-  */
--void remove_marked_cache_entries(struct index_state *istate, int invalidate)
-+void remove_marked_cache_entries_with_status(struct index_state *istate, int invalidate, struct wt_status *status)
- {
- 	struct cache_entry **ce_array = istate->cache;
- 	unsigned int i, j;
-@@ -570,6 +570,7 @@ void remove_marked_cache_entries(struct index_state *istate, int invalidate)
- 							   ce_array[i]->name);
- 				untracked_cache_remove_from_index(istate,
- 								  ce_array[i]->name);
-+				string_list_insert(&status->restored, ce_array[i]->name);
- 			}
- 			remove_name_hash(istate, ce_array[i]);
- 			save_or_free_index_entry(istate, ce_array[i]);
-@@ -583,6 +584,12 @@ void remove_marked_cache_entries(struct index_state *istate, int invalidate)
- 	istate->cache_nr = j;
- }
- 
-+void remove_marked_cache_entries(struct index_state *istate, int invalidate)
-+{
-+	struct wt_status status;
-+	remove_marked_cache_entries_with_status(istate, invalidate, &status);
-+}
-+
- int remove_file_from_index(struct index_state *istate, const char *path)
- {
- 	int pos = index_name_pos(istate, path, strlen(path));
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 3f816c117d..b97943e642 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1434,6 +1434,7 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+ 	s.ignore_submodule_arg = ignore_submodule_arg;
+ 	s.status_format = status_format;
+ 	s.verbose = verbose;
++	s.is_cmd_status = 1;
+ 	if (no_renames != -1)
+ 		s.detect_rename = !no_renames;
+ 	if ((intptr_t)rename_score_arg != -1) {
 diff --git a/table.c b/table.c
-index d29b311440..3602def17a 100644
+index 3602def17a..36719e3d09 100644
 --- a/table.c
 +++ b/table.c
-@@ -66,7 +66,7 @@ static void build_table_entry(struct strbuf *buf, char *entry, int cols)
- 		strbuf_addchars(buf, ' ', (cols / 3 - len - 1) / 2);
+@@ -6,6 +6,7 @@
+ #include "config.h"
+ #include "string-list.h"
+ #include "color.h"
++#include "advice.h"
+ #include "sys/ioctl.h"
+ 
+ static const char *color(int slot, struct wt_status *s)
+@@ -132,7 +133,18 @@ static void print_table_body_line(struct strbuf *buf1, struct strbuf *buf2, stru
+ 	printf(_("|\n"));
  }
  
--static void build_arrow(struct strbuf *buf, struct strbuf* arrow, int add_after_entry)
-+static void build_arrow_(struct strbuf *buf, struct strbuf* arrow, int add_after_entry, int reversed)
+-void print_noob_status(struct wt_status *s, int advice)
++static void print_table_hint_line(struct strbuf *buf1, struct strbuf *buf2, struct strbuf *buf3, struct wt_status *s)
++{
++	printf(_("|"));
++	color_fprintf(s->fp, color(WT_STATUS_HINT, s), "%s", buf1->buf);
++	printf(_("|"));
++	color_fprintf(s->fp, color(WT_STATUS_HINT, s), "%s", buf2->buf);
++	printf(_("|"));
++	color_fprintf(s->fp, color(WT_STATUS_HINT, s), "%s", buf3->buf);
++	printf(_("|\n"));
++}
++
++void print_noob_status(struct wt_status *s)
  {
- 	struct strbuf empty = STRBUF_INIT;
- 	struct strbuf trimmed = STRBUF_INIT;
-@@ -80,17 +80,38 @@ static void build_arrow(struct strbuf *buf, struct strbuf* arrow, int add_after_
- 		strbuf_reset(buf);
- 		strbuf_addchars(arrow, '-', len + 1);
- 	} else if (add_after_entry) {
--		strbuf_rtrim(buf);
--		strbuf_addchars(arrow, ' ', 1);
--		strbuf_addchars(arrow, '-', len - strlen(buf->buf) + 1);
-+		if (!reversed) {
-+			strbuf_rtrim(buf);
-+			strbuf_addchars(arrow, ' ', 1);
-+			strbuf_addchars(arrow, '-', len - strlen(buf->buf) + 1);
-+		} else {
-+			strbuf_rtrim(buf);
-+			strbuf_addchars(arrow, ' ', 1);
-+			strbuf_addchars(arrow, '<', 1);
-+			strbuf_addchars(arrow, '-', len - strlen(buf->buf) - 3);
-+		}
- 	} else if (!add_after_entry) {
--		strbuf_ltrim(buf);
--		strbuf_addchars(arrow, '-', len - strlen(buf->buf) - 3);
--		strbuf_addchars(arrow, '>', 1);
--		strbuf_addchars(arrow, ' ', 1);
-+		if (!reversed) {
-+			strbuf_ltrim(buf);
-+			strbuf_addchars(arrow, '-', len - strlen(buf->buf) - 3);
-+			strbuf_addchars(arrow, '>', 1);
-+			strbuf_addchars(arrow, ' ', 1);
-+		} else {
-+			strbuf_ltrim(buf);
-+			strbuf_addchars(arrow, '-', len - strlen(buf->buf) + 1);
-+			strbuf_addchars(arrow, ' ', 1);
-+		}
+ 	struct winsize w;
+ 	int cols;
+@@ -163,20 +175,6 @@ void print_noob_status(struct wt_status *s, int advice)
+ 	printf(_("%s\n"), table_border.buf);
+ 	printf(_("|%s|%s|%s|\n"), table_col_entry_1.buf, table_col_entry_2.buf, table_col_entry_3.buf);
+ 
+-	if (advice) {
+-		build_table_entry(&table_col_entry_1, "(stage: git add <file>)", cols);
+-		build_table_entry(&table_col_entry_2, "(stage: git add <file>)", cols);
+-		build_table_entry(&table_col_entry_3, "(unstage: git restore --staged <file>)", cols);
+-
+-		printf(_("|%s|%s|%s|\n"), table_col_entry_1.buf, table_col_entry_2.buf, table_col_entry_3.buf);
+-
+-		build_table_entry(&table_col_entry_1, "", cols);
+-		build_table_entry(&table_col_entry_2, "(discard: git restore --staged <file>)", cols);
+-		build_table_entry(&table_col_entry_3, "", cols);
+-
+-		printf(_("|%s|%s|%s|\n"), table_col_entry_1.buf, table_col_entry_2.buf, table_col_entry_3.buf);
+-	}
+-
+ 	printf(_("%s\n"), table_border.buf);
+ 
+ 	/* Draw table body */
+@@ -282,6 +280,20 @@ void print_noob_status(struct wt_status *s, int advice)
  	}
- }
  
-+static void build_arrow(struct strbuf *buf, struct strbuf* arrow, int add_after_entry) {
-+	build_arrow_(buf, arrow, add_after_entry, 0);
-+}
+ 	printf(_("%s\n"), table_border.buf);
 +
-+static void build_reversed_arrow(struct strbuf *buf, struct strbuf* arrow, int add_after_entry) {
-+	build_arrow_(buf, arrow, add_after_entry, 1);
-+}
++	if (s->is_cmd_status && advice_enabled(ADVICE_STATUS_HINTS)) {
++		build_table_entry(&table_col_entry_1, "stage: git add ...", cols);
++		build_table_entry(&table_col_entry_2, "stage: git add ...", cols);
++		build_table_entry(&table_col_entry_3, "unstage: git restore --staged ...", cols);
++		print_table_hint_line(&table_col_entry_1, &table_col_entry_2, &table_col_entry_3, s);
 +
- static void print_table_body_line(struct strbuf *buf1, struct strbuf *buf2, struct strbuf *buf3, struct strbuf *arrow1, struct strbuf *arrow2, struct strbuf *arrow3, struct wt_status *s, int hide_pipe)
- {
- 	printf(_("|"));
-@@ -180,6 +201,18 @@ void print_noob_status(struct wt_status *s, int advice)
- 			}
- 		}
++		build_table_entry(&table_col_entry_1, "", cols);
++		build_table_entry(&table_col_entry_2, "discard: git restore --staged ...", cols);
++		build_table_entry(&table_col_entry_3, "", cols);
++		print_table_hint_line(&table_col_entry_1, &table_col_entry_2, &table_col_entry_3, s);
++		printf(_("%s\n"), table_border.buf);
++	}
++
+ 	strbuf_release(&table_border);
+ 	strbuf_release(&table_col_entry_1);
+ 	strbuf_release(&table_col_entry_2);
+diff --git a/table.h b/table.h
+index 5dff7162a4..c9e8c386de 100644
+--- a/table.h
++++ b/table.h
+@@ -1,6 +1,6 @@
+ #ifndef TABLE_H
+ #define TABLE_H
  
-+		for_each_string_list_item(item2, &s->restored) {
-+			strbuf_reset(&buf_2);
-+			strbuf_addstr(&buf_2, item2->string);
-+			if (!strbuf_cmp(&buf_1, &buf_2)) {
-+				build_table_entry(&table_col_entry_3, buf_1.buf, cols);
-+				build_reversed_arrow(&table_col_entry_1, &arrow_1, 1);
-+				build_reversed_arrow(&table_col_entry_2, &arrow_2, 0);
-+				build_reversed_arrow(&table_col_entry_3, &arrow_3, 0);
-+				is_arrow = 1;
-+			}
-+		}
-+
- 		if (!is_arrow)
- 			print_table_body_line(&table_col_entry_1, &table_col_entry_2, &table_col_entry_3, &arrow_1, &arrow_2, &arrow_3, s, 0);
- 		else
-@@ -215,6 +248,17 @@ void print_noob_status(struct wt_status *s, int advice)
- 					is_arrow = 1;
- 				}
- 			}
-+
-+			for_each_string_list_item(item2, &s->restored) {
-+				strbuf_reset(&buf_2);
-+				strbuf_addstr(&buf_2, item2->string);
-+				if (!strbuf_cmp(&buf_1, &buf_2)) {
-+					build_table_entry(&table_col_entry_3, buf_1.buf, cols);
-+					build_reversed_arrow(&table_col_entry_2, &arrow_2, 1);
-+					build_reversed_arrow(&table_col_entry_3, &arrow_3, 0);
-+					is_arrow = 1;
-+				}
-+			}
- 		} else if (d->index_status) {
- 			build_table_entry(&table_col_entry_1, "", cols);
- 			build_table_entry(&table_col_entry_2, "", cols);
-diff --git a/wt-status.h b/wt-status.h
-index 7b883fd476..c6bce8f74a 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -144,6 +144,7 @@ struct wt_status {
- 	struct string_list untracked;
- 	struct string_list ignored;
- 	struct string_list added;
-+	struct string_list restored;
- 	uint32_t untracked_in_ms;
+-void print_noob_status(struct wt_status *s, int i);
++void print_noob_status(struct wt_status *s);
+ 
+ #endif /* TABLE_H */
+diff --git a/wt-status.c b/wt-status.c
+index 1332d07dba..288817dcf7 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -50,6 +50,7 @@ static char default_wt_status_colors[][COLOR_MAXLEN] = {
+ 	GIT_COLOR_RED,    /* WT_STATUS_REMOTE_BRANCH */
+ 	GIT_COLOR_NIL,    /* WT_STATUS_ONBRANCH */
+ 	GIT_COLOR_CYAN,   /* WT_STATUS_ARROW */
++	GIT_COLOR_YELLOW, /* WT_STATUS_HINT */
  };
  
+ static const char *color(int slot, struct wt_status *s)
+@@ -2151,7 +2152,7 @@ static void wt_noobstatus_print(struct wt_status *s)
+ 		wt_longstatus_print_tracking(s);
+ 	}
+ 
+-	print_noob_status(s, 0);
++	print_noob_status(s);
+ }
+ 
+ static void wt_porcelain_print(struct wt_status *s)
+diff --git a/wt-status.h b/wt-status.h
+index c6bce8f74a..0a14b4b064 100644
+--- a/wt-status.h
++++ b/wt-status.h
+@@ -20,6 +20,7 @@ enum color_wt_status {
+ 	WT_STATUS_REMOTE_BRANCH,
+ 	WT_STATUS_ONBRANCH,
+ 	WT_STATUS_ARROW,
++	WT_STATUS_HINT,
+ 	WT_STATUS_MAXSLOT
+ };
+ 
+@@ -146,6 +147,7 @@ struct wt_status {
+ 	struct string_list added;
+ 	struct string_list restored;
+ 	uint32_t untracked_in_ms;
++	int is_cmd_status;
+ };
+ 
+ size_t wt_status_locate_end(const char *s, size_t len);
 -- 
 2.42.0.404.g2bcc23f3db
 
