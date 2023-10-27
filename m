@@ -1,216 +1,184 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EA493F4DC
-	for <git@vger.kernel.org>; Thu, 26 Oct 2023 23:16:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C3BA5B
+	for <git@vger.kernel.org>; Fri, 27 Oct 2023 01:08:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N11AfmIK"
-Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1859C1B9
-	for <git@vger.kernel.org>; Thu, 26 Oct 2023 16:16:13 -0700 (PDT)
-Received: by mail-qt1-x831.google.com with SMTP id d75a77b69052e-41b406523fcso10644641cf.2
-        for <git@vger.kernel.org>; Thu, 26 Oct 2023 16:16:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WTXE79IG"
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58FCD1B6
+	for <git@vger.kernel.org>; Thu, 26 Oct 2023 18:08:21 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id d9443c01a7336-1cac925732fso12823785ad.1
+        for <git@vger.kernel.org>; Thu, 26 Oct 2023 18:08:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698362172; x=1698966972; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nboWB7crZiunHNO3kcoSvfLRGW5dnFd7i5AGlZ3T5G0=;
-        b=N11AfmIKn8czgiw9eybj91MPkBw4dtDOqRROEohTvaBh/OFswBNK3y8bGNOw357GdO
-         XPu30z9LPeYRtwIl6SrSsVvu9U0ScXJZDpx6WkkH6I5TCsrgmioAaQuibltU6WZVZh/n
-         jkAl6VQoVWjA+Qi9tcqncaMXqyH824ixTSxqJiytEr7LlhpsMSnmyqzfnLy3ASIu6DaP
-         cB/lYgjc4N9g6nPtamQ1H2PYbxYIP/dUhSTD+/fHZSrDRX71/M5pepad1RA/MGo9XlXm
-         VlfZrejeWjW3/bl5Og6FfpMdXzim5eOQ14lERwDdy3eAubQ0jo1WILded9YH8JePLt8r
-         MQSw==
+        d=gmail.com; s=20230601; t=1698368901; x=1698973701; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=KF+fSXPvoJEsQZsmtSdzrKoaeViIcTLj5P7tu2KUZpw=;
+        b=WTXE79IG85QUP1znX7o55iEPhsPVoHVwwfcctL/mao5kG8SThc/dhHJB+FeshrheVH
+         8AYl0sZfsgYeHo+OMnHFK9X/tF6wBJZlBHSv9tZ+DJt9eEUAsaaZvuHWL8ySTX6F8NGN
+         6dSvmI4ilNYyv7mvECpt3uMAkTvlOO1iLITAwGyKY+wDok6HzF8/ctXivcOWrwbYTWBb
+         l2Ie1Q92fd2hprgTXSJxx/jGrfA5gJd3vHhGcyh5idbG7MaOaTSUSpf+fWOFhOhMNV7x
+         7v2z/l8KD16fqXs/JhvtP0rbxxFElPEp1TAVjAIVv4xCPPzm0c9WZTsxMaFD5O1vG0fh
+         eh5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698362172; x=1698966972;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nboWB7crZiunHNO3kcoSvfLRGW5dnFd7i5AGlZ3T5G0=;
-        b=GC+W0mL1I7rRjnRghxlIjXSz92+4hcqCaINIghj4bCzK3cCnrN4wwsbMN/qDC3FiJo
-         INr0HqJZJNk/h+jJmOc3eIUZ9dnYNShg1QYO5gWF0mkcJVeUjmD/Y1G2oPrg1rlK90Qf
-         FapDbdbgS8tttnNcYM7/6iQQ3YdArnT0gehaXPA0G2m5uUOXFhY3l/xepsktF61Ql4q+
-         ZbV1u+RZzYYFg2qfa7P04EIsAXAd0liubBIRsDPCtDRxtOWrxcADxZsJ92PltHmAKvlg
-         6NxRjOAFObaF0+w2mHv5BpJf/uDguq6B7ydlGVQimHXMLoYZkrq1w2js6M3npXiI/heb
-         zjeA==
-X-Gm-Message-State: AOJu0YzoV3TVI6njpFLOECnUr32hjqDooWcpkY4Ir3oLCNe+q8D2BsyI
-	w+NdQ5tc5rFiMmpqG+MV3c85/B92320=
-X-Google-Smtp-Source: AGHT+IGqql5iGcCe/HBcu37P0SFPkvDutC4+8LpAkf4thqyECUJFvUWUaNYGaOseRyEwZjDpqNRLEw==
-X-Received: by 2002:a05:622a:547:b0:41c:dbdb:7ff5 with SMTP id m7-20020a05622a054700b0041cdbdb7ff5mr1218998qtx.33.1698362171687;
-        Thu, 26 Oct 2023 16:16:11 -0700 (PDT)
-Received: from [192.168.0.16] (modemcable063.135-226-192.mc.videotron.ca. [192.226.135.63])
-        by smtp.gmail.com with ESMTPSA id do10-20020a05622a478a00b004181b41e793sm132459qtb.50.2023.10.26.16.16.10
+        d=1e100.net; s=20230601; t=1698368901; x=1698973701;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KF+fSXPvoJEsQZsmtSdzrKoaeViIcTLj5P7tu2KUZpw=;
+        b=V7lga6G8cqxd7NrL/hEEmx8JI5bptz0sW5ORRrx1sUd/Ln5fjy34Q4m8dhgAmC6/+w
+         8Rg60I74i3g2QPjt17aMJ9U7/DeyVt3lfR6IhhvLl3KqnmwsaoThU9Di/dd/HYHbm05s
+         8hO6eFMTmoojOrBSpGbH5nZqC++/tjtVLuI9HxXYJDEiyYjx75fonX6D1ljl41IdwBnn
+         AKtRA2poK0XInoWsXvtwq62NMEbFZ7RqUWMCpMp1cDQmjuOvUoEj6kE7z3uNfl3Bj2uI
+         50Vffqte6tX//sjdJq7h0toCglyHvlXIrETKyh5CspHZHjq1hcdZ/J2EecIhTx7eab49
+         W5fA==
+X-Gm-Message-State: AOJu0YwDZIeQvy0Q3j9JbPStpSfKxNk1yZ6W2R9s/kQf4CtYbgZhBqMz
+	+1O6eRAywfiDsXe38j78tIQ=
+X-Google-Smtp-Source: AGHT+IECV4/54l6rX1UCImw3u+kdsubboru4oq+o5EMW0ODCtHgh4wj5w3l/Y+chvqU5zVTRe8igsg==
+X-Received: by 2002:a17:902:c411:b0:1c5:bc83:557b with SMTP id k17-20020a170902c41100b001c5bc83557bmr1615328plk.51.1698368900610;
+        Thu, 26 Oct 2023 18:08:20 -0700 (PDT)
+Received: from debian.me ([103.131.18.64])
+        by smtp.gmail.com with ESMTPSA id b13-20020a170902650d00b001bc5dc0cd75sm310620plk.180.2023.10.26.18.08.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Oct 2023 16:16:11 -0700 (PDT)
-From: Liam Beguin <liambeguin@gmail.com>
-Date: Thu, 26 Oct 2023 19:16:05 -0400
-Subject: [PATCH 2/2] pretty: add '%aA' to show domain-part of email
- addresses
+        Thu, 26 Oct 2023 18:08:19 -0700 (PDT)
+Received: by debian.me (Postfix, from userid 1000)
+	id 3BA64819CFF3; Fri, 27 Oct 2023 08:08:14 +0700 (WIB)
+Date: Fri, 27 Oct 2023 08:08:14 +0700
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+To: Lior Zeltzer <liorz@marvell.com>,
+	Git Mailing List <git@vger.kernel.org>
+Cc: Andrzej Hunt <ajrhunt@google.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: ls-remote bug
+Message-ID: <ZTsNfgJV1JN2y-Aw@debian.me>
+References: <BL0PR18MB2130C672D503E49F955E04E8BADFA@BL0PR18MB2130.namprd18.prod.outlook.com>
+ <BL0PR18MB2130A3CA5DEF0DD7199F2979BADFA@BL0PR18MB2130.namprd18.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20231026-pretty-email-domain-v1-2-5d6bfa6615c0@gmail.com>
-References: <20231026-pretty-email-domain-v1-0-5d6bfa6615c0@gmail.com>
-In-Reply-To: <20231026-pretty-email-domain-v1-0-5d6bfa6615c0@gmail.com>
-To: git@vger.kernel.org
-Cc: Liam Beguin <liambeguin@gmail.com>
-X-Mailer: b4 0.13-dev-83828
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1698362168; l=5513;
- i=liambeguin@gmail.com; s=20230824; h=from:subject:message-id;
- bh=opGL40SnDup62JHf38SYwT4FAjEWSBkGCGS2aNYnXzo=;
- b=6L2Kphrq9BcctJ5UJWmEI10g0U+GFiFjY7HROgoGElnnFmJrCkbdDw+GWSRnmGfZgYQHQMJ+u
- 6uenXp9l9GoBxQvtAlGpFd8D2ObUyI3Gw367uv91MhaaaC6QZp3Apn+
-X-Developer-Key: i=liambeguin@gmail.com; a=ed25519;
- pk=x+XyGOzOACLmUQ7jTEZhMy+lL3K5nhtUH6Oxt+tHkUQ=
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="oKlGejh+/OWpFIn4"
+Content-Disposition: inline
+In-Reply-To: <BL0PR18MB2130A3CA5DEF0DD7199F2979BADFA@BL0PR18MB2130.namprd18.prod.outlook.com>
 
-Many reports use the email domain to keep track of organizations
-contributing to projects.
-Add support for formatting the domain-part of a contributor's address so
-that this can be done using git itself, with something like:
 
-	git shortlog -sn --group=format:%aA v2.41.0..v2.42.0
+--oKlGejh+/OWpFIn4
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Liam Beguin <liambeguin@gmail.com>
----
- Documentation/pretty-formats.txt |  6 ++++++
- pretty.c                         | 13 ++++++++++++-
- t/t4203-mailmap.sh               | 28 ++++++++++++++++++++++++++++
- t/t6006-rev-list-format.sh       |  6 ++++--
- 4 files changed, 50 insertions(+), 3 deletions(-)
+On Tue, Oct 24, 2023 at 10:55:24AM +0000, Lior Zeltzer wrote:
+>=20
+> >uname -a
+> Linux dc3lp-veld0045 3.10.0-1160.21.1.el7.x86_64 #1 SMP Tue Mar 16 18:28:=
+22 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux
+>=20
+> Gerrit version :
+> 3.8.0
+>=20
+> Bug description :=20
+> When running ls-remote : sometime data gets cut in the middle
+>=20
+> Reproducing :
+> You need a few files with a few repo names (I used 4 files with 10 repos =
+each)
+> Call then l1..l4
+> And the code below just cd into each of them does ls-remote twice and com=
+pares the data
+> Doing it in parallel on all lists.
+> Data received in both ls-remotes should be the same , if not, it prints *=
+**
+> Repos should contain a lot of tags and refs
 
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index a22f6fceecdd..72102a681c3a 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -195,6 +195,9 @@ The placeholders are:
- '%al':: author email local-part (the part before the '@' sign)
- '%aL':: author email local-part (see '%al') respecting .mailmap, see
- 	linkgit:git-shortlog[1] or linkgit:git-blame[1])
-+'%aa':: author email domain-part (the part after the '@' sign)
-+'%aA':: author email domain-part (see '%al') respecting .mailmap, see
-+	linkgit:git-shortlog[1] or linkgit:git-blame[1])
- '%ad':: author date (format respects --date= option)
- '%aD':: author date, RFC2822 style
- '%ar':: author date, relative
-@@ -213,6 +216,9 @@ The placeholders are:
- '%cl':: committer email local-part (the part before the '@' sign)
- '%cL':: committer email local-part (see '%cl') respecting .mailmap, see
- 	linkgit:git-shortlog[1] or linkgit:git-blame[1])
-+'%ca':: committer email domain-part (the part before the '@' sign)
-+'%cA':: committer email domain-part (see '%cl') respecting .mailmap, see
-+	linkgit:git-shortlog[1] or linkgit:git-blame[1])
- '%cd':: committer date (format respects --date= option)
- '%cD':: committer date, RFC2822 style
- '%cr':: committer date, relative
-diff --git a/pretty.c b/pretty.c
-index cf964b060cd1..4f5d081589ea 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -791,7 +791,7 @@ static size_t format_person_part(struct strbuf *sb, char part,
- 	mail = s.mail_begin;
- 	maillen = s.mail_end - s.mail_begin;
- 
--	if (part == 'N' || part == 'E' || part == 'L') /* mailmap lookup */
-+	if (part == 'N' || part == 'E' || part == 'L' || part == 'A') /* mailmap lookup */
- 		mailmap_name(&mail, &maillen, &name, &namelen);
- 	if (part == 'n' || part == 'N') {	/* name */
- 		strbuf_add(sb, name, namelen);
-@@ -808,6 +808,17 @@ static size_t format_person_part(struct strbuf *sb, char part,
- 		strbuf_add(sb, mail, maillen);
- 		return placeholder_len;
- 	}
-+	if (part == 'a' || part == 'A') {	/* domain-part */
-+		const char *at = memchr(mail, '@', maillen);
-+		if (at) {
-+			at += 1;
-+			maillen -= at - mail;
-+			strbuf_add(sb, at, maillen);
-+		} else {
-+			strbuf_add(sb, mail, maillen);
-+		}
-+		return placeholder_len;
-+	}
- 
- 	if (!s.date_begin)
- 		goto skip;
-diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
-index 2016132f5161..35bf7bb05bea 100755
---- a/t/t4203-mailmap.sh
-+++ b/t/t4203-mailmap.sh
-@@ -624,6 +624,34 @@ test_expect_success 'Log output (local-part email address)' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'Log output (domain-part email address)' '
-+	cat >expect <<-EOF &&
-+	Author email cto@coompany.xx has domain-part coompany.xx
-+	Committer email $GIT_COMMITTER_EMAIL has domain-part $TEST_COMMITTER_DOMAIN
-+
-+	Author email me@company.xx has domain-part company.xx
-+	Committer email $GIT_COMMITTER_EMAIL has domain-part $TEST_COMMITTER_DOMAIN
-+
-+	Author email me@company.xx has domain-part company.xx
-+	Committer email $GIT_COMMITTER_EMAIL has domain-part $TEST_COMMITTER_DOMAIN
-+
-+	Author email nick2@company.xx has domain-part company.xx
-+	Committer email $GIT_COMMITTER_EMAIL has domain-part $TEST_COMMITTER_DOMAIN
-+
-+	Author email bugs@company.xx has domain-part company.xx
-+	Committer email $GIT_COMMITTER_EMAIL has domain-part $TEST_COMMITTER_DOMAIN
-+
-+	Author email bugs@company.xx has domain-part company.xx
-+	Committer email $GIT_COMMITTER_EMAIL has domain-part $TEST_COMMITTER_DOMAIN
-+
-+	Author email author@example.com has domain-part example.com
-+	Committer email $GIT_COMMITTER_EMAIL has domain-part $TEST_COMMITTER_DOMAIN
-+	EOF
-+
-+	git log --pretty=format:"Author email %ae has domain-part %aa%nCommitter email %ce has domain-part %ca%n" >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'Log output with --use-mailmap' '
- 	test_config mailmap.file complex.map &&
- 
-diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
-index 573eb97a0f7f..34c686becf2d 100755
---- a/t/t6006-rev-list-format.sh
-+++ b/t/t6006-rev-list-format.sh
-@@ -163,11 +163,12 @@ commit $head1
- EOF
- 
- # we don't test relative here
--test_format author %an%n%ae%n%al%n%ad%n%aD%n%at <<EOF
-+test_format author %an%n%ae%n%al%aa%n%ad%n%aD%n%at <<EOF
- commit $head2
- $GIT_AUTHOR_NAME
- $GIT_AUTHOR_EMAIL
- $TEST_AUTHOR_LOCALNAME
-+$TEST_AUTHOR_DOMAIN
- Thu Apr 7 15:13:13 2005 -0700
- Thu, 7 Apr 2005 15:13:13 -0700
- 1112911993
-@@ -180,11 +181,12 @@ Thu, 7 Apr 2005 15:13:13 -0700
- 1112911993
- EOF
- 
--test_format committer %cn%n%ce%n%cl%n%cd%n%cD%n%ct <<EOF
-+test_format committer %cn%n%ce%n%cl%ca%n%cd%n%cD%n%ct <<EOF
- commit $head2
- $GIT_COMMITTER_NAME
- $GIT_COMMITTER_EMAIL
- $TEST_COMMITTER_LOCALNAME
-+$TEST_COMMITTER_DOMAIN
- Thu Apr 7 15:13:13 2005 -0700
- Thu, 7 Apr 2005 15:13:13 -0700
- 1112911993
+What repo did you find this regression? Did you mean linux.git (Linux kerne=
+l)?
 
--- 
-2.39.0
+>=20
+> Note :=20
+> 1. =C2=A0without stderr redirection (2>&1) all works well
+> 2. On local repos (not through gerrit) all works well
+>=20
+> I compared various git vers and found the bug to be between 2.31.8 and 2.=
+32.0
+> Comparing ls-remote.c file between those vers gave me :
+>=20
+> Lines :
+> if (transport_disconnect(transport))
+> 		return 1;
+>=20
+> moved to end of sub
+>=20
+> copying ls-remote.c from 2.31.8 to 2.32.0 - fixed the bug
+>=20
+>=20
+>=20
+> Code reproducing bug :
+>=20
+> #!/proj/mislcad/areas/DAtools/tools/perl/5.10.1/bin/perl -w
+> use strict;
+> use Cwd qw(cwd);
+>=20
+> my $count =3D 4;
+> for my $f (1..$count) {
+> =C2=A0 my $child =3D fork();
+> =C2=A0 if (!$child) {
+> =C2=A0=C2=A0=C2=A0 my $curr =3D cwd();
+> =C2=A0=C2=A0=C2=A0=20
+> =C2=A0=C2=A0=C2=A0=C2=A0my @repos =3D `cat l$f`;
+> =C2=A0=C2=A0=C2=A0 foreach my $repo (@repos) {
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 chomp $repo;
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 print "$repo\n";
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 chdir($repo);
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 my $remote_tags_str =3D `git ls-remote=C2=
+=A0 2>&1`;
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 my $remote_tags_str2 =3D `git ls-remote=C2=
+=A0 2>&1 `;
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 chdir($curr);
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if ( $remote_tags_str ne $remote_tags_str2=
+) {
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 print "***\n";
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> =C2=A0=C2=A0=C2=A0 }
+> =C2=A0=20
+> =C2=A0=C2=A0=C2=A0=C2=A0exit(0);
+> =C2=A0 }
+> }
+> while (wait !=3D -1) {}
+> 1;
+>=20
 
+I tried reproducing this regression by:
+
+```
+$ cd /path/to/git.git
+$ git ls-remote 2>&1 > /tmp/root.list
+$ cd builtin/
+$ git ls-remote 2>&1 > /tmp/builtin.list
+$ cd ../
+$ git diff --no-index /tmp/root.list /tmp/builtin.list
+```
+
+And indeed, the diff was empty (which meant that both listings are same).
+
+Confused...
+
+--=20
+An old man doll... just what I always wanted! - Clara
+
+--oKlGejh+/OWpFIn4
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQQZO/gRNchuWgPJR+Z7tWyQc2rTCAUCZTsNeAAKCRB7tWyQc2rT
+CFP6AP9n+W5ZCGhyGk831dyWVnc9/DgjPou3+y+cfyjTDVK+FQD7BMescDsJlmXd
+sFqIzjAKpA6VuyotrdqbCOmycqdMkg0=
+=OrOh
+-----END PGP SIGNATURE-----
+
+--oKlGejh+/OWpFIn4--
