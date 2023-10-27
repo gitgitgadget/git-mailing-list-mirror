@@ -1,76 +1,125 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6B6381C1
-	for <git@vger.kernel.org>; Fri, 27 Oct 2023 16:12:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from bluemchen.kde.org (bluemchen.kde.org [209.51.188.41])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67875CE
-	for <git@vger.kernel.org>; Fri, 27 Oct 2023 09:12:19 -0700 (PDT)
-Received: from ugly.fritz.box (localhost [127.0.0.1])
-	by bluemchen.kde.org (Postfix) with ESMTP id C46F624258;
-	Fri, 27 Oct 2023 12:12:17 -0400 (EDT)
-Received: by ugly.fritz.box (masqmail 0.3.6-dev, from userid 1000)
-	id 1qwPRZ-i1Q-00; Fri, 27 Oct 2023 18:12:17 +0200
-Date: Fri, 27 Oct 2023 18:12:17 +0200
-From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-To: Marc Branchaud <marcnarc@xiplink.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4227BB678
+	for <git@vger.kernel.org>; Fri, 27 Oct 2023 17:13:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=initialcommit-io.20230601.gappssmtp.com header.i=@initialcommit-io.20230601.gappssmtp.com header.b="GG+PnGUN"
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9ED561B6
+	for <git@vger.kernel.org>; Fri, 27 Oct 2023 10:13:55 -0700 (PDT)
+Received: by mail-pl1-x62c.google.com with SMTP id d9443c01a7336-1ca3a54d2c4so20911245ad.3
+        for <git@vger.kernel.org>; Fri, 27 Oct 2023 10:13:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=initialcommit-io.20230601.gappssmtp.com; s=20230601; t=1698426835; x=1699031635; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=xPDyM+iPZn0+1vOfM12FmTQNVHgxVRv7qRqh4fWIuP8=;
+        b=GG+PnGUN1QfXCctdfjuhlNuDOSg37xAO0iipm2AyOoedH3SoHzYa8xJ5pQNitleTW+
+         REbmSDir5WvQ4cV8F1MdkO1QdXZoAge6PxLEdfspk8St4mulEb0Osn7XzbydlHL8Anyy
+         pDS8sUhi+l6mX28+HmA7BfqulFdrcCC3dJBgnYojirLoCOnIvQOrMUfT4LLaiI4sp2Nh
+         NEWwiabFi4KiYy+eG++oX15qHd+C3ak2lPKKptHOP/+HWMwz1QLfwIcNQjoPUdKMb31V
+         XXVME2qk3jT2EA1uReX9F/yYpCcSqPyNeJMoqZhc8/qN9comEae0bBfWewwqNbadtZ4a
+         bTmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698426835; x=1699031635;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xPDyM+iPZn0+1vOfM12FmTQNVHgxVRv7qRqh4fWIuP8=;
+        b=GYge4GnK7PbHE+pgli4WpkwkGcIC2F39gBBuzMBl9zTcLo2VLvKAmyOnMujqB+tY1L
+         MImtGuODaDvRQyLYs5/490L7jajj2iGtf04cOQhzyUkd5shaVJH0ylOvBQXWRRnJRPf6
+         /ejM159g83E97lmP3HhESZ/uHPs0TOQ8KoTslMnArr+/8a2PzIfeNr7J/lTvjVpSb7Rx
+         arM3HK+RPRRE3uNvkrlzoVadGuTZUYlB73I4Mc3gE5kfGMsNrWCn3EMzVaips4j8HGsE
+         Xv9ymmVMSP+VN+n5zasfkjbDri1ERK+DyIBjQEsuP1lbaIMMP56HZ1E4FEgzzHTM/h0g
+         IWuA==
+X-Gm-Message-State: AOJu0YwGN2TXleLaBayDvk7rrjYVRnZ+BhrosFiKCG51QOSsMylzgdqr
+	9cPMGrcP9xcR/874I7RUtp1yTE30kSjR9MMvbuQ=
+X-Google-Smtp-Source: AGHT+IHTHgQihU8zjXgymFKfgmgGeaQfEhe+6NHwV/94cbTF9YdBPBNA3ovbSWTB/W2CMo+0RO3wLg==
+X-Received: by 2002:a17:902:d4cf:b0:1cc:1686:37ac with SMTP id o15-20020a170902d4cf00b001cc168637acmr4193957plg.55.1698426835118;
+        Fri, 27 Oct 2023 10:13:55 -0700 (PDT)
+Received: from initialcommit.io (ip68-7-58-180.sd.sd.cox.net. [68.7.58.180])
+        by smtp.gmail.com with ESMTPSA id i17-20020a170902eb5100b001cc25cfec58sm839204pli.226.2023.10.27.10.13.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Oct 2023 10:13:54 -0700 (PDT)
+Date: Fri, 27 Oct 2023 10:13:51 -0700
+From: Jacob Stopak <jacob@initialcommit.io>
+To: Dragan Simic <dsimic@manjaro.org>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Taylor Blau <me@ttaylorr.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Charvi Mendiratta <charvi077@gmail.com>
-Subject: Re: [PATCH v3] git-rebase.txt: rewrite docu for fixup/squash (again)
-Message-ID: <ZTvhYSMOiaNbpTZ2@ugly>
-References: <20231023130016.1093356-1-oswald.buddenhagen@gmx.de>
- <20231025102932.1202299-1-oswald.buddenhagen@gmx.de>
- <56e3e974-a027-439f-871d-c7fbae65a04e@xiplink.com>
+	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Subject: Re: [RFC PATCH v2 0/6] Noobify format for status, add, restore
+Message-ID: <ZTvvz6/GFdwagVa+.jacob@initialcommit.io>
+References: <20231020183947.463882-1-jacob@initialcommit.io>
+ <20231026224615.675172-1-jacob@initialcommit.io>
+ <ca47d328c280e4b4c13bfa6dd9958a57@manjaro.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <56e3e974-a027-439f-871d-c7fbae65a04e@xiplink.com>
+In-Reply-To: <ca47d328c280e4b4c13bfa6dd9958a57@manjaro.org>
 
-On Fri, Oct 27, 2023 at 09:14:42AM -0400, Marc Branchaud wrote:
->On 2023-10-25 06:29, Oswald Buddenhagen wrote:
->> The behavior in the presence of multiple "fixup -c" is somewhat
->> questionable, as arguably it would be better to complain about it rather
->> than letting the last instance win. But for the time being we document
->> the status quo, with a note that it is not guaranteed. Note that
->> actually changing it would require --autosquash eliding the superseded
->> uses.
->
->I do not think this kind of editorializing belongs in the commit's 
->message, but this likely isn't the first commit message that expresses 
->an opinion.
->
-commmit messages should elaborate alternatives considered, which 
-includes ones which depend on changes that can be reasonably expected to 
-possibly happen at some point.
+On Fri, Oct 27, 2023 at 03:32:40PM +0200, Dragan Simic wrote:
+> On 2023-10-27 00:46, Jacob Stopak wrote:
+> > Take into account reviewer feedback by doing several things differently:
+> > 
+> >   * Rename this feature (for now) as "noob format mode" (or just "noob
+> >     mode") instead of the original "--table" verbiage. As pointed out,
+> >     this no longer ties the name of the setting to it's proposed
+> >     implementation detail as a table. Noob mode is not necessarily the
+> >     right name, just a placeholder for now. Unless people like it :D
+> > 
+> >   * Instead of manually having to invoke the -t, --table every time this
+> >     format is to be used, set the config option "status.noob" to true.
+> >     Although this is logically tied to the status command, there are
+> > many
+> >     commands that produce status output, (and this series adds more), so
+> >     assume that if the user wants to see the status this way, that it
+> >     should be enabled whenever the status info is displayed.
+> 
+> How would "status.noob" relate to and coexist with possible future
+> configuration options named "<command>.verbose", which would be somewhat
+> similar to the currently existing "commit.verbose" option?  IOW, perhaps it
+> would be better to have per-command options "<command>.verbose = noob" or,
+> even better, "<command>.verbose = extended", to make it all more
+> future-proof and more granular.
 
->But I think you should remove the "but this should not be relied upon" 
->phrase.  This reads as if Git's current behaviour is undefined, which 
->most definitely is not true.
->
->Even changing this to something like "but this might change in the 
->future" is unhelpful.  Everything in Git is subject to change over a 
->long-enough time span, so the same could be said about every aspect of Git.
->
->Until the behaviour actually changes, it's perfectly fine for people to 
->use multiple "fixup -c" commands.  There's no reason to scare them off 
->of it.
->
-things can't change overnight; the resistance even the most trivial 
-behavior changes meet is enormous. so explicitly documenting long in 
-advance that something is subject to change is basically the only way to 
-get it changed at all.
+Hmm, do there currently exist other <command>.verbose config settings
+besides for commit? From what I can tell from "git help config", the
+commit.verbose setting is the only one I see, and it just adds the diff
+info into the editor if the user runs git commit without the -m flag, but
+otherwise there seems to be no extra verbosity outputted.
 
-specifically for this feature, there is no reason at all to rely on this 
-behavior when hand-editing the todo list, and occurrences most likely 
-indicate a mistake, which is why i would prefer it to be rejected.
+I noticed that git add and git mv have "verbose" (-v, --verbose) cli flags
+which just output the name of the file being added or renamed, and that
+certain other commands like git branch has a verbose output which includes
+the branch head commit hash and message in the output, so I guess this one
+is actually kindof verbose in that it outputs more than the non-empty
+default output.
 
-regards
+So it seems like currently "verbose" is used for various things among the
+command set, sometimes meaning "add something into the template if one is
+used" or "add some tiny output to a command that has no default output"
+(which still seems more "--shy" than "--verbose" :P) or "add some
+additional output to a command that already has some sparse output".
+
+Another thing is that commands like status have multiple flags that can be
+used to specify the output format, such as --short, --long, --porcelain,
+etc, but only --short seems to be configurable as a git config setting.
+Is there a reason (besides backward compatibility I guess) that these
+aren't rolled into a single thing like --format=<type>? This seems like
+it would be the easiest way to future proof for new formats like
+--format=verbose, --format=noob, --format=extended, etc.
+
+From a noob's perspective though, does adding a config setting for each
+command really make sense? I'm kindof envisioning this setting now as a
+"mode" that is either enabled for all commands it affects or for none.
+And it's highly unlikely a newish user would individually discover which
+commands this "extended" format is available for, and run "git config
+<command>.verbose = extended" for every one. I mean we could do that
+in case there are folks who only want it for specific commands, but to
+fulfill it's purpose I think there should definetely be some general way
+to enable the setting for all commands that have it.
