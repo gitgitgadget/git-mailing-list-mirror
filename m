@@ -1,90 +1,71 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7886F5CBC
-	for <git@vger.kernel.org>; Fri, 27 Oct 2023 13:02:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D7E31A733
+	for <git@vger.kernel.org>; Fri, 27 Oct 2023 13:04:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K1YiJCCH"
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5E8E129
-	for <git@vger.kernel.org>; Fri, 27 Oct 2023 06:02:07 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-40859c464daso16440245e9.1
-        for <git@vger.kernel.org>; Fri, 27 Oct 2023 06:02:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698411726; x=1699016526; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=1zOIrY581mztdFneTLengF65GCws1ZzWlZzhvDifCkk=;
-        b=K1YiJCCH4qNoR965MC8ltU219/vBjkaYQqrzEj3tnrj6AXgdD59wPQUJbVkBL+Xues
-         YA5069f+by0H7L285Orhu+Ik9aic52DAnlfor2905/LGzv36dcM2/Xh0WT/AsUYfpAJj
-         eirergpS+nKe6NVt0fZOR2wwQlR8D/ZeTrEcAF2TiLLmrkQzmhjr3eh82RAW1b/X900T
-         BXq7Tg6oDAdUWmZIMT4SWtyXf9VYIspYqKK/NK6bvwpF5WMM1Sd00n/oEGms71UtVEEA
-         EaYfzvzpukdBzEf5MCaxGyLmpq+eTOetdn3vHbLM8Ui3pXO0JRRcCnrYa7wi4fNYqoti
-         4PqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698411726; x=1699016526;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1zOIrY581mztdFneTLengF65GCws1ZzWlZzhvDifCkk=;
-        b=l6rs2AMMenuQ0B4Bg3OaPTSSFrVQsAKGKXK5NnVpV0SLBbtJrtjNoY4O8mfwZw9oiH
-         FUd5vf+7fjAa49OwOxVYx3HecULcxDO/jOUbWbjkc1xTOcMSuy/hBTAO2mN9HzNyYDJa
-         6PuDBC1+E+aLVXBAUosYCWFnNtIf1BvqmZj0mjTQTDAwZUHoGghcfS8GI2eTNGaXJFTl
-         ct2EKY2ECty6mb0dq2I0SoazGvBN9KFd/UV26Hl2piL582kXFkDOfDJgIqlteULrTGKH
-         qXQKllDKO8S6S6rDWOpxTnD7axdrlxm75AnmnkEArSOrIJt5PF2VFGkUK7wKTTx7szZc
-         qSmg==
-X-Gm-Message-State: AOJu0YzgXl61X6J5q99FKubD7FI/f22/yVe4KzfLRypGji1Ze+MWP8PD
-	KKz25P4fzvNULpI40fu8Ofg5bA49TIY=
-X-Google-Smtp-Source: AGHT+IGHJVHiSvu3u5BLGXcYdvltlQHSKwgMCDH4jomJmwCI03oIloytF+RhXIdAtSegoC6zLbl2RQ==
-X-Received: by 2002:a05:600c:4514:b0:408:7abb:b0ee with SMTP id t20-20020a05600c451400b004087abbb0eemr2120283wmo.26.1698411725684;
-        Fri, 27 Oct 2023 06:02:05 -0700 (PDT)
-Received: from [192.168.1.101] ([90.242.223.1])
-        by smtp.gmail.com with ESMTPSA id k19-20020a05600c1c9300b004030e8ff964sm5166253wms.34.2023.10.27.06.02.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Oct 2023 06:02:05 -0700 (PDT)
-From: Phillip Wood <phillip.wood31459@gmail.com>
-X-Google-Original-From: Phillip Wood <phil@crinan.ddns.net>
-Message-ID: <6ee43015-1abc-4269-b710-0647ce80d7a2@crinan.ddns.net>
-Date: Fri, 27 Oct 2023 14:02:04 +0100
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="UxdC4Ic1"
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3ED218F
+	for <git@vger.kernel.org>; Fri, 27 Oct 2023 06:04:25 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id A50322462B;
+	Fri, 27 Oct 2023 09:04:25 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=i6Vdn8TmN7VfMaApmiIHvJ29tt5pTBq9eKXJXl
+	KXv+s=; b=UxdC4Ic1r30fuudx7MtKWkd0Yh6pkhCo2KVJ2g39Yv+W/EDAvX2Lzm
+	6yjMNCNUxe8Jk4ugd+mRmAc0vR25zusE6cVonaK26bKs9XivzNjSNoc9DuwfMTR3
+	9UZJJUkaS5GSSoy5uYn3dqTfRdvLkiLLAHDkdPvOBq2AHiwHjKqMU=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 9D7372462A;
+	Fri, 27 Oct 2023 09:04:25 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.198.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6EA3524628;
+	Fri, 27 Oct 2023 09:04:21 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Josh Steadmon <steadmon@google.com>
+Cc: Jonathan Tan <jonathantanmy@google.com>,  Taylor Blau <me@ttaylorr.com>,
+  git@vger.kernel.org,  calvinwan@google.com,  glencbz@gmail.com
+Subject: Re: [PATCH v3 0/5] config-parse: create config parsing library
+In-Reply-To: <ZTluW0Ha2W4NYaJd@google.com> (Josh Steadmon's message of "Wed,
+	25 Oct 2023 12:37:51 -0700")
+References: <ZTbK3QTJYXxYj/M6@nand.local>
+	<20231024225005.1191555-1-jonathantanmy@google.com>
+	<ZTluW0Ha2W4NYaJd@google.com>
+Date: Fri, 27 Oct 2023 22:04:19 +0900
+Message-ID: <xmqqjzr8p67g.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/5] ci: add support for GitLab CI
-Content-Language: en-US
-To: Patrick Steinhardt <ps@pks.im>, phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-References: <cover.1698305961.git.ps@pks.im> <cover.1698398590.git.ps@pks.im>
- <37a507e9b255dd40c0536438dfe3fa05b067f08f.1698398590.git.ps@pks.im>
- <0d889da1-7fd8-4e21-965f-6222e4433ecf@gmail.com> <ZTucxlBR1VrJPuSK@tanuki>
- <ZTulo_rh_G-lfICQ@tanuki>
-In-Reply-To: <ZTulo_rh_G-lfICQ@tanuki>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 585B456A-74C9-11EE-98E1-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-On 27/10/2023 12:57, Patrick Steinhardt wrote:
-> Hum. After having a look at `ci/run-docker-build.sh` I don't feel like
-> it's sensible to update it. It's not even used anymore by our CI but
-> only by `ci/run-docker.sh`, which seems to be more of a developer-facing
-> script?
-> 
-> As you said, this smells like rotting bits that might rather be removed.
-> But in any case, as they don't relate to our current CI infrastructure
-> except for being in "ci/" I'll leave them be for now.
+Josh Steadmon <steadmon@google.com> writes:
 
-I was trying to suggest that we start using these scripts again. The 
-fact that we run the dockerized tests as root on the other CI platforms 
-is a regression from what we used to do. I'm not an expert but I think 
-for the builds that use docker we're essentially using the some build 
-environment regardless of the CI provider so it would make sense to 
-handle them all in the same way. I think the existing script uses "su" 
-but we could change it to use "sudo" like you're doing here.
+> Thanks everyone for the revived discussion here. I think I agree, this
+> series is not going in the right direction. Additionally, our internal
+> use case for this change has evaporated, so let's just drop the series.
+> We can pick it up again later if interest returns.
 
-Best Wishes
+OK.  Let's scrap it for now.
 
-Phillip
+The "internal use case" behind a proposed feature changing so
+quickly is a bit worrying.  What is good for this project should
+ideally be good for everybody, not only for satisfying a particular
+$CORP needs of the day.  But I think the idea of giving enhanced
+visibility into stakeholder companies directions and priorities
+Emily (I think?)  floated during the contributors' summit may help
+reduce such a risk, hopefully.
 
+Thanks.
