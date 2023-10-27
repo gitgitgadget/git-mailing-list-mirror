@@ -1,70 +1,139 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C6DE1EB48
-	for <git@vger.kernel.org>; Fri, 27 Oct 2023 12:37:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78E9F1EB4A
+	for <git@vger.kernel.org>; Fri, 27 Oct 2023 12:39:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b="10aGnv5r"
-X-Greylist: delayed 456 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 27 Oct 2023 05:37:37 PDT
-Received: from smtp43.i.mail.ru (smtp43.i.mail.ru [95.163.41.66])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6CA7FA
-	for <git@vger.kernel.org>; Fri, 27 Oct 2023 05:37:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru;
-	s=mailru; h=In-Reply-To:Content-Type:MIME-Version:Message-ID:Subject:To:From:
-	Date:From:Sender:Reply-To:To:Cc:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:References:List-Id:List-Help:
-	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive:X-Cloud-Ids
-	:Disposition-Notification-To; bh=O0SpRcK20IRCej7OaEjsnHKIqCHg7xeXDMGjcaTbvh0=
-	; t=1698410257; x=1698500257; b=10aGnv5re1rT6prh7huk555ZGWTy7qDvCo/G1M3BzNpGs
-	uFiybhYiO0xqbhvhROwiZNyewBX+GXSehjhXz8IZW8LHYfvHDyYBypVHnoryrH0AwJR6T9dtZurQS
-	VJAwPP3q5nkRoyGwFYCvayhdwSQ9k7oP9TwvcbYQqX0P4Vuwg=;
-Received: by smtp43.i.mail.ru with esmtpa (envelope-from <kostix@bswap.ru>)
-	id 1qwM5n-001Ox9-0V
-	for git@vger.kernel.org; Fri, 27 Oct 2023 15:37:35 +0300
-Date: Fri, 27 Oct 2023 15:37:34 +0300
-From: Konstantin Khomoutov <kostix@bswap.ru>
-To: git@vger.kernel.org
-Subject: Re: GFW fails with ST3 on Windows 11
-Message-ID: <20231027123734.x4ziimecgj6isfsa@carbon>
-Mail-Followup-To: git@vger.kernel.org
+	dkim=pass (2048-bit key) header.d=xiplink.com header.i=@xiplink.com header.b="L46hZ5iH"
+Received: from CAN01-YQB-obe.outbound.protection.outlook.com (mail-yqbcan01on2094.outbound.protection.outlook.com [40.107.116.94])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50D78C0
+	for <git@vger.kernel.org>; Fri, 27 Oct 2023 05:39:06 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=btcjw5rv6LpHipAXaf+Tnd+qz40EYI26ib2UkhnaiZYpRs/DV2ollOACbMX7uqCIcbXsVKlIEirTMEz6ACu49QzdG4dFWg9x2us31oHmCMhppbF21TDMZ72PohKR408Qw+BZYccs4Yxge4YLvTduT9OWbhXT+RjYFSwY1uhF0Btyh2Rxc5u+D0BLiZ/gWimk+cMvT00URpXsZTPclLZre12LlS9JsS3IqS33hA5OMHmzpW1KgE1BAdNal0S/1Fyh0EyFyC1n/BQJ4rRXLgJbn4liSUp5skaTB2jjaeoxqHKd+m3TJnEItJXa9ZDF6EC0DGLph5IXDgeHoV+4jkhpZw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=1NEqFft5MTEzMs9UJORtDeGc3u14rHccl9uDEgzzINg=;
+ b=OegYKkUvQu8ZQ0rX+5AfNntQ4IEzxUobxr0ytOXYZ3RQyVj+JXppZ2LgYFkFUjPbwJF61fekFjQLkWfREElX4GJyCVH2MNyXezOLoidWISQbZxjosbkraMvZRyDT96rD2qUQOPfoebIQOUzOalIWmvlUNEdlqOKsSZbclCtObsRVoP2AIcQapoWn5ifFPEzifx3KiJ41y2f0JuT7B3sqEvYl/7Af3wDxpqMv2d1inUMJcR1lj3noufFIMRfSHtPb6gUrv/PMZPQubOWSIOd6o1dPJRhQbqGRCifzrgkIhfL2C1l96wjaYEUdijGot/S1+LIvQNj4MiTppFFsml6hyA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=xiplink.com; dmarc=pass action=none header.from=xiplink.com;
+ dkim=pass header.d=xiplink.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xiplink.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=1NEqFft5MTEzMs9UJORtDeGc3u14rHccl9uDEgzzINg=;
+ b=L46hZ5iHSVCV5rYY7arGSsPTwgLzGk7vC/kg7Jcx0k1bUcIZ/b3n1NHJdAVZjPSKmo2KryPhO7DWDkJNpJAqmFig9g7edcSQDRCbWZTaCLORJoHTjS0cHsHB10opjv3IdOZWY5mR4lnewumfUoFdT+cUZDzMLU+1rWB1G4B8EEgdX+ykj4DNJREDnm3dLbj3Z4Wc1jUfJWHlbCCCwEjUhcbn/gtI6OHtuh/hTGHjBDZzC0BBIZbM13MtwqrffyrFId7RCfUG2y8L2QRzbys01Vbbf0Xkzz5PLu/8CNtKSBpPHPRLgqVwCK7pRx8EPK0+TtHeTAuwFpkUnz02PbSWcw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=xiplink.com;
+Received: from QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:c00:30::29)
+ by YT1PR01MB9517.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:b01:c4::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6933.24; Fri, 27 Oct
+ 2023 12:39:04 +0000
+Received: from QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::b888:ac1d:f4b9:93ea]) by QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::b888:ac1d:f4b9:93ea%4]) with mapi id 15.20.6933.024; Fri, 27 Oct 2023
+ 12:39:04 +0000
+Message-ID: <b71d066b-104a-4c60-9319-b3c635be6efc@xiplink.com>
+Date: Fri, 27 Oct 2023 08:39:03 -0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RESEND v2] git-rebase.txt: rewrite docu for fixup/squash (again)
+Content-Language: en-US
+To: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+ Phillip Wood <phillip.wood123@gmail.com>,
+ Christian Couder <christian.couder@gmail.com>,
+ Charvi Mendiratta <charvi077@gmail.com>
+References: <20231023130016.1093356-1-oswald.buddenhagen@gmx.de>
+ <e33f919d-1b6a-4944-ab5d-93ad0d323b68@xiplink.com> <ZTg0zXkvSQ6L+4Oj@ugly>
+From: Marc Branchaud <marcnarc@xiplink.com>
+In-Reply-To: <ZTg0zXkvSQ6L+4Oj@ugly>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: YQBPR0101CA0153.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:c01:e::26) To QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:c00:30::29)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cd248c66-fc71-4783-9195-02c8811744b8@app.fastmail.com>
-Authentication-Results: smtp43.i.mail.ru; auth=pass smtp.auth=kostix@bswap.ru smtp.mailfrom=kostix@bswap.ru
-X-Mailru-Src: smtp
-X-7564579A: 78E4E2B564C1792B
-X-77F55803: 4F1203BC0FB41BD9C931D0C4A91E7130A733B0074C8BDE7E63FE4C20E82C5CEB00894C459B0CD1B9AF8177B53E9029F9A7C7D1BC369376E0566B1CFE0B5DCA9015B839EAEBA98067
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7CA8E915ACC910FBDEA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F790063750E64749F09C4ED58638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D8A5422778ADE4BF523898253BFDB07321117882F4460429724CE54428C33FAD305F5C1EE8F4F765FCF80095D1E57F4578A471835C12D1D9774AD6D5ED66289B52BA9C0B312567BB23117882F4460429728776938767073520140C956E756FBB7AF04B652EEC242312D2E47CDBA5A96583BA9C0B312567BB2376E601842F6C81A19E625A9149C048EEB28585415E75ADA93DBBCB839D0549ACD8FC6C240DEA76429C9F4D5AE37F343AA9539A8B242431040A6AB1C7CE11FEE367F1C1C3ABB44F3A040F9FF01DFDA4A8C4224003CC836476E2F48590F00D11D6E2021AF6380DFAD1A18204E546F3947CB861051D4BA689FC2E808ACE2090B5E1725E5C173C3A84C317B107DEF921CE79089D37D7C0E48F6C8AA50765F79006373BC478629CBEC79DEFF80C71ABB335746BA297DBC24807EABDAD6C7F3747799A
-X-C1DE0DAB: 0D63561A33F958A50B9145C1632A8236FE93C14C9A85993DD14640B0C5C926F4F87CCE6106E1FC07E67D4AC08A07B9B064E7220B7C550592CB5012B2E24CD356
-X-C8649E89: 1C3962B70DF3F0ADBF74143AD284FC7177DD89D51EBB7742DC8270968E61249B1004E42C50DC4CA955A7F0CF078B5EC49A30900B95165D348E5EF936B2E46EBA9E1C425E2044F95A5303B514120969342862A57733B76D18A7B60DE63B159E1A1D7E09C32AA3244CC91C0D27F551FDB5D6728AB17D95E8BDF2F5F14F68F1805BBC4AF6B5DE6957CB5DA084F8E80FEBD3B644FBF139BB3089A015563ECF9503F943082AE146A756F3
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojbL9S8ysBdXjvLO52BZK6m9J5V/JR7lb6
-X-Mailru-Sender: 2765FF0E0CDDFF58F03FEFFD311CBBE89CD3DF36A56795F3BAF744416C57014BA45CECB847E7C5432F0A6AF357119A4D04176AAE5055CC72595A8557D9C981F4633CE835492D9647D182D770C8C7E642B4A721A3011E896F
-X-Mras: Ok
-X-Spam-Level: *
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: QB1PR01MB2451:EE_|YT1PR01MB9517:EE_
+X-MS-Office365-Filtering-Correlation-Id: 951878fc-4c1f-4581-05e9-08dbd6e9b437
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	ziftYHmp/wkC5onIh0ePO3mdE3y+6rg5Vd9/xtPKDsNCMvMdLVGnsBvTIsuV9FD+zhur3GTAOX9jMjhGDWsjLbTOaslpD3bGlrX7/zD+PJ6+fiJ6yg3I7mHNEpWqVfVYtQ+GX6uDv2gRQHP+ars00fhcXqXf0iRtZ19yikl2EJWtSNgZzontOOsJPI2/S7BRtQwGcuPV2BjlVPBqRqWyZ5OdQPNohy3tfbwtYnZMPSfLdElz85L9DudbldTUSw+04uzf1OoGg9QA/sgZ+7V940jFDfp9upLMpQqj3XeJTxT2fagwjjZWoIdNXneBQOoU9H6sJ22QD3XuTy3WgizITlv9kstB81GD26onFBUO2jJ/ylm41wV1m6EHr2Blk2B9O1M/3K5dF7Wb5/6xXW7Ky5zFKh65Q195opfp0x544vG7MeiZ5yl+mKS7rmqtafFu5oBOoYufdUSScTGIlpuwmtWkBXINc03izG0RnhpoZlJsa7aee2/DQ3m6CRle8EZhPdVheoZJ9pJsIVOEUSzwoSVctfGqiFoueHuFi/jmHkqRLBJp3dnIb/aCb42vExYHd6M45zOQ+/Umhs6H3NRZUTHegjpurJRdccyJVfaFVO1Hq6X05l81ZQIA0OXTGmd3u4V5MQPHQmvf0TkUAojriA==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230031)(136003)(376002)(346002)(366004)(396003)(39840400004)(230922051799003)(451199024)(1800799009)(186009)(64100799003)(2906002)(4001150100001)(6486002)(4744005)(31696002)(66476007)(38100700002)(54906003)(316002)(66946007)(66556008)(53546011)(6916009)(2616005)(6506007)(6512007)(478600001)(83380400001)(26005)(41300700001)(5660300002)(36756003)(86362001)(8676002)(4326008)(8936002)(31686004)(43740500002)(45980500001);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?K1JKdnJ1eG1la0JVZ0Nua0p3UjlTRmpSMjBJWUlHZHJ2NjdhOXZNbFFwTkFY?=
+ =?utf-8?B?S00yOC9tWE0rZGk0cDdWNzNPaG9leGltd2l1NzZsZ01lZW9aYThrcWRuUkZQ?=
+ =?utf-8?B?a09Ea3JiUFpBL0xlTDhHdkM3N2E4WmlzMXltYW0zYkI3ZTk1QlJGUWM2bzdq?=
+ =?utf-8?B?VDBlZXVoRTRKWHh2OEwwbjhtS1BCYU02SVBnTFdIdldxQWppM0s0cE9hTUdH?=
+ =?utf-8?B?SkNPdW5QNE8rcUJCckc3UmNuOWl2S1BaS21RY3dmZzNnWFhySFdXSGg2T1Zm?=
+ =?utf-8?B?Wng2ODVuNnlOQXIyV3cyeXJic1BoK2YvblNkazVMOW9ZZjZGekliOXFxYjVP?=
+ =?utf-8?B?bjRKR2d0YWVUbm9QYzZPYWZmSDJpM0w2MW4vSUdUVUJ3R0lVbzB1Nk9EY1Fa?=
+ =?utf-8?B?VnhaNHE5VWZOQ2xMalJJMFlXZ29heU80cFI1TXR0dUhSWFlCRTY1MTZ6NmpY?=
+ =?utf-8?B?a3ovbERjeC9Hd2cwNXFsaHlueE8zZk9WVXdTcnoyNUdxZ0dmN0E3akNvTVlB?=
+ =?utf-8?B?YUNoelNXd2s0SXBuU0UyM3poRStsRmJDYWUzOHlBUHVDM1R3ZGk1K2tOM3Zi?=
+ =?utf-8?B?N01nOHl5MkgyaEtkMUQvd05QanYvZmJlZEd5RlNWSjZ1Vy8rRDZsREU3VUVu?=
+ =?utf-8?B?NG1iclhSOVUwa0xwaXVoZnlPRS9WT2VyK1psM0xlZ0dSM3hvL05KWEpNZWVm?=
+ =?utf-8?B?T0NRNjhlOHBhbjRveHFXMndCN0ZYdUpRT0xaS0hhM2tzTFgwWjZUU3dTcE8x?=
+ =?utf-8?B?MFhaZ1pRZy9FdTVFMWdEc1ZIL3kxQlpJNXRtTWdnQzZmWDA1bVQyMXBLVGpn?=
+ =?utf-8?B?ZzFIVEhTWU52NGIrbnRkMXJJajJobTVHZ2lsSVhjaklsWm1UZ0U3WUxFSlpt?=
+ =?utf-8?B?NmZ6RlVLZmRMaktqa2t4dWRqWTNwaHR1NmlFZkNOcUdOL2xaNEx1UkphMkhy?=
+ =?utf-8?B?a1d2U09vRUt3YTBTQzk2QXo5bTU4TUdCQlNlM1NLQUlycThSMHFrZWJuTXll?=
+ =?utf-8?B?WEV1N0VlWU9tU1dIT0VkN29PeWhlNEJqZkEyYm1uS2x0YUpWNHZRb2xtZ3Yw?=
+ =?utf-8?B?c0oxQUdzOUJubGlyR3Z5Qm02bzVCdEszYkx5NkxDdzJaSmhqK1Vua0R5eVF3?=
+ =?utf-8?B?WjArazd5WmRKTzZnZmtPcnRPSlJoMWo1WUZnRHNZYTcvSDd2Vnp1QkdGaEFs?=
+ =?utf-8?B?NHJKTmtXQ0ljQkRuRXhjUTJIeG9MNFZnRWlxb0hxS0haNVBWQ1dwL3pOUjlx?=
+ =?utf-8?B?clFjeFlBSTFVci85SlZxOXRLcGZpMGl1N0JNWUdUbFg0OTAwengrRVo0VFhY?=
+ =?utf-8?B?YlNtVEtlRUwyaG1FMzk2MFR2Unk5WTdWQVB0NDlkbGI1MkZkRHAyVUp4L2Jl?=
+ =?utf-8?B?L1NLYVRsSzJQbGlBdUMrN1hXVW1GeHdYczlKWjRGazR0bjA4UnFqMWMyVkl2?=
+ =?utf-8?B?eGdPd1BKQTNZSzh1Q044VjNlbjFRcHFRNXdmeVpiSDVIanVyU2c0aURWT0lI?=
+ =?utf-8?B?QWZKdDltRCtUTG02ZnpYU1R0aHNvam9zUVVTSURJMmdGcU5maXhnenRTWUZJ?=
+ =?utf-8?B?bnNOSkZ2bVhtblBacGd6UmFlQWJrbHhBWElta2ptcFRrSDBZQ1h4c3A4enBT?=
+ =?utf-8?B?YUZVY1lRSStvc1lJL0NxbURnM3NTa3VBbi85dE94Zm1URVE2Z2lUUXFwK2pi?=
+ =?utf-8?B?VGRaNGMxTlpjK2hpeUpmWVFtVU14TUk1V1hMRUR0aXEzMUZnUEJyZGJ4NzU4?=
+ =?utf-8?B?dVhpbE81N2VUZUdBSlBWUDdLcXBlNEh3aXBpV1BDQkRzQ3h1VUJ2TDA5bDla?=
+ =?utf-8?B?WC92QWJOaUVrNURSR0NESU9vdUg5KzhFdXc5MEE4djNxVCthcW5pRW1rRzhj?=
+ =?utf-8?B?K2pPOWFmUnd3OHdKS2hWSWFzYWtZTlYrYlJCTkI5SkpDMGV2UHFFMjVPMGJE?=
+ =?utf-8?B?S2JNaG1oSGhHMG5yd2ozVlVEbko3TEN0cmtyNXhhdHV2TVJEN2s4cWhIVE1s?=
+ =?utf-8?B?VkROcWRGQ3JuWlhSbjBoRmJIT3RIcURoUmt6MUNBVkdtYWtiUm95dXo4SHRs?=
+ =?utf-8?B?WkF4WTI3ZE5OMjZvQUNneGJUVGRGem1SbHFGQT09?=
+X-OriginatorOrg: xiplink.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 951878fc-4c1f-4581-05e9-08dbd6e9b437
+X-MS-Exchange-CrossTenant-AuthSource: QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Oct 2023 12:39:04.3833
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 14f927ba-c95b-4aa6-b674-375045ee9d4d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: d+tR4UBTy7KVAAPHAUBEEiD2t0Bz3k1xeYLX2TGaAHyVmAf5Q5ctIUyQz7W7PfQTvIAJVoNJbVUY4kMjhBnnyw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: YT1PR01MB9517
 
-On Fri, Oct 27, 2023 at 03:29:58PM +0300, Konstantin Khomoutov wrote:
 
-[...]
-> Also please check the core.editor configuration setting - it might be set,
-> and then you should try to modify it instead.
-[...]
+On 2023-10-24 17:19, Oswald Buddenhagen wrote:
+> 
+>>> +The commit message for the folded commit is the concatenation of the
+>>> +message of the first commit with those of commits identified by 
+>>> "squash"
+>>
+>> s/message of the first commit/picked commit's message/
+>>
+> that does indeed sound better, but i think it's more confusing (and 
+> potentially even more so when translated directly). i guess one could 
+> use "pick'd commit's", but that's kind of ugly again.
 
-This means Git's configuration setting.
+Let the translators worry about how to phrase it in other languages.  In 
+English "picked" is the right choice.  You should not presume that other 
+languages will want to use the word "pick" verbatim.
 
-You might run
-
-  git config --get-all --show-scope core.editor
-
-in your shell to get the values of this setting printed, if set, prefixed with
-the scope these values are defined in (see `git help config` or [1] for more
-info).
-
- 1. https://www.git-scm.com/docs/git-config
-
+		M.
