@@ -1,440 +1,404 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF6C18057
-	for <git@vger.kernel.org>; Fri, 27 Oct 2023 11:16:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06C49182C0
+	for <git@vger.kernel.org>; Fri, 27 Oct 2023 11:19:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=marvell.onmicrosoft.com header.i=@marvell.onmicrosoft.com header.b="KotxwjgA"
-Received: from mx0b-0016f401.pphosted.com (mx0b-0016f401.pphosted.com [67.231.156.173])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D9A519A9
-	for <git@vger.kernel.org>; Fri, 27 Oct 2023 04:16:26 -0700 (PDT)
-Received: from pps.filterd (m0045851.ppops.net [127.0.0.1])
-	by mx0b-0016f401.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39RArZjC004544;
-	Fri, 27 Oct 2023 04:16:22 -0700
-Received: from nam10-dm6-obe.outbound.protection.outlook.com (mail-dm6nam10lp2101.outbound.protection.outlook.com [104.47.58.101])
-	by mx0b-0016f401.pphosted.com (PPS) with ESMTPS id 3u0bu7r2fs-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 27 Oct 2023 04:16:22 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=P+DLDqWeNuUomB22kue1oGzRNyM5ArpLMhDxyGASjo4DOAohz1cstIdj8iavUG8uL1VeKJf1MIQX4h38haU7w7bdDN2usU6INsoYTPIfiuHbQR38PAZlR2WgFFNqf0sSHAUZXWWUBMi3+Fopys8OBjh5rUJOFwuH2yUsq2/9dyq3B5ooVGCynjllPCkKwa/MN+yBNhVn7z7CZd16Ggc7Ce/poRo5iPIpl92I68hhhbGC4rjdAfbNF2qygVFSRIszm1WgpJqccJ3AaD1uadbOHqHXl6eMmpPtlbxj1cr9ngWC5oQdWNr0tOO85oec1BQcNT1p7yLdHwFQcsgS1n4Dxg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=FIg3pfr5VhgVT3zBUdRNE/a5SaLZvOyWGwMl7HW4VqQ=;
- b=Xa3stfm/tdlnFi3eqYGHjAUKVLXV1Oe4Fm9tNIZRmKHVB12EmbvqvWS4dJ3d9aKYCIQfeRzGCYdhCk7Q5xRgtSSz1l7KvlD6KlFnBXDGiRqImkx/VdUnAaQNNmLXSOdVFzgVcg20r0qOTTvMy+AelFyni5HTyT2HZ6qByooknROt8+Sx599PLjQeZk/Aq3fpxm7c4iXeS75VijOGDB+yVB3QD2Nf2IJW51jLtOcOf0cPYB7+g0MBaNwXr0ne1RFc6RVkl1pUllsaiHvOj62SiIEBYGORVIq4r55Y2bFesKswpbgg6D5OuLUUVHNDTwiXmLHNJqccfqe+YdkHbzGI5A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=marvell.com; dmarc=pass action=none header.from=marvell.com;
- dkim=pass header.d=marvell.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=marvell.onmicrosoft.com; s=selector1-marvell-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=FIg3pfr5VhgVT3zBUdRNE/a5SaLZvOyWGwMl7HW4VqQ=;
- b=KotxwjgAAyPd+jAkiGIwNXF3LwVzYsTnDmcnm+g/L+SiQ9U2x8LFOSW88Bmca/TKOkggZ2ImKcVYz1Gl9S9yF/MRDAxUdwysxCa0DAXhXXj/RfLbvuwAafVbJiDnNMn0GhsjYnlJDmo9zAc7m62PfmahKWge4Tqkd3u4CKmt4bA=
-Received: from BL0PR18MB2130.namprd18.prod.outlook.com (2603:10b6:207:47::12)
- by PH0PR18MB4427.namprd18.prod.outlook.com (2603:10b6:510:d5::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6933.19; Fri, 27 Oct
- 2023 11:16:15 +0000
-Received: from BL0PR18MB2130.namprd18.prod.outlook.com
- ([fe80::777b:1751:b54e:ee3e]) by BL0PR18MB2130.namprd18.prod.outlook.com
- ([fe80::777b:1751:b54e:ee3e%7]) with mapi id 15.20.6933.022; Fri, 27 Oct 2023
- 11:16:15 +0000
-From: Lior Zeltzer <liorz@marvell.com>
-To: Bagas Sanjaya <bagasdotme@gmail.com>,
-        Git Mailing List
-	<git@vger.kernel.org>
-CC: Andrzej Hunt <ajrhunt@google.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C
- Hamano <gitster@pobox.com>
-Subject: RE: [EXT] Re: ls-remote bug
-Thread-Topic: [EXT] Re: ls-remote bug
-Thread-Index: AdoGY04tbPJJThnSRfyFYX+7DzS4xgABKLHwAIKHowAAFQ968A==
-Date: Fri, 27 Oct 2023 11:16:14 +0000
-Message-ID: 
- <BL0PR18MB213007901229C84D348D4CB8BADCA@BL0PR18MB2130.namprd18.prod.outlook.com>
-References: 
- <BL0PR18MB2130C672D503E49F955E04E8BADFA@BL0PR18MB2130.namprd18.prod.outlook.com>
- <BL0PR18MB2130A3CA5DEF0DD7199F2979BADFA@BL0PR18MB2130.namprd18.prod.outlook.com>
- <ZTsNfgJV1JN2y-Aw@debian.me>
-In-Reply-To: <ZTsNfgJV1JN2y-Aw@debian.me>
-Accept-Language: he-IL, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-dg-rorf: true
-x-dg-ref: 
- =?utf-8?B?UEcxbGRHRStQR0YwSUc1dFBTSmliMlI1TG5SNGRDSWdjRDBpWXpwY2RYTmxj?=
- =?utf-8?B?bk5jYkdsdmNucGNZWEJ3WkdGMFlWeHliMkZ0YVc1blhEQTVaRGcwT1dJMkxU?=
- =?utf-8?B?TXlaRE10TkdFME1DMDROV1ZsTFRaaU9EUmlZVEk1WlRNMVlseHRjMmR6WEcx?=
- =?utf-8?B?elp5MHpZekprWW1ZNE9DMDNOR0poTFRFeFpXVXRPV00xWWkwME5HVTFNVGM1?=
- =?utf-8?B?TjJKaE56VmNZVzFsTFhSbGMzUmNNMk15WkdKbU9HRXROelJpWVMweE1XVmxM?=
- =?utf-8?B?VGxqTldJdE5EUmxOVEUzT1RkaVlUYzFZbTlrZVM1MGVIUWlJSE42UFNJMk5E?=
- =?utf-8?B?UTJJaUIwUFNJeE16TTBNamczT0RrM01qYzFNamd3T1RRaUlHZzlJakZLZHpO?=
- =?utf-8?B?amQwWktWa05hVnl0b2IwRlFOakpwTldaWFNrbDRaejBpSUdsa1BTSWlJR0pz?=
- =?utf-8?B?UFNJd0lpQmliejBpTVNJZ1kyazlJbU5CUVVGQlJWSklWVEZTVTFKVlJrNURa?=
- =?utf-8?B?MVZCUVVKblYwRkJRMlZDU1ZncmVHZHFZVUZXYld0dGJITkNaMWN2T0ZkaFUy?=
- =?utf-8?B?RlhkMGRDWWk5M1drRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVG?=
- =?utf-8?B?SVFVRkJRVUoxUkhkQlFUTm5PRUZCUkc5SFFVRkJRVUZCUVVGQlFVRkJRVUZG?=
- =?utf-8?B?UVVGUlJVSkJRVUZCT1ZKbGJreDNRMEZCVVVGQlFVRkJRVUZCUVVGQlNqUkJR?=
- =?utf-8?B?VUZDYUVGSFVVRmFRVUo1UVVkVlFXTjNRbnBCUVVGQlFVRkJRVUZCUVVGQlFV?=
- =?utf-8?B?RkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVG?=
- =?utf-8?B?QlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZC?=
- =?utf-8?B?UVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJR?=
- =?utf-8?B?VUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFV?=
- =?utf-8?B?RkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVVZCUVVGQlFVRkJRVUZCWjBG?=
- =?utf-8?B?QlFVRkJRVzVuUVVGQlIwMUJaRkZDZWtGSVVVRmlkMEowUVVZNFFXTkJRbXhC?=
- =?utf-8?B?U0VsQlkzZENka0ZITkVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJR?=
- =?utf-8?B?VUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFV?=
- =?utf-8?B?RkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVG?=
- =?utf-8?B?QlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZC?=
- =?utf-8?B?UVVGQlFVRkJRVUZCUVVGQlFWRkJRVUZCUVVGQlFVRkJRVUZCUVVGUlFVRkJR?=
- =?utf-8?B?VUZCUVVGQlEwRkJRVUZCUVVObFFVRkJRVmwzUWpGQlNFMUJaRUZDZGtGSE1F?=
- =?utf-8?B?RllkMEozUVVkblFXSjNRblZCUjFWQlltZENNVUZITUVGWlowSnNRVWhKUVVG?=
- =?utf-8?B?QlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZC?=
- =?utf-8?B?UVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJR?=
- =?utf-8?B?VUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFV?=
- =?utf-8?B?RkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVG?=
- =?utf-8?B?QlFVRkNRVUZCUVVGQlFVRkJRVWxCUVVGQlFVRktORUZCUVVKcVFVaFZRV04z?=
- =?utf-8?B?UWpCQlJ6aEJZbEZDWmtGSVRVRmpkMEoxUVVZNFFWcEJRbWhCU0UxQllVRkNa?=
- =?utf-8?B?a0ZJV1VGTlFVRjVRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFV?=
- =?utf-8?Q?FBQUFB?=
-x-dg-refone: 
- =?utf-8?B?UVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJR?=
- =?utf-8?B?VUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFV?=
- =?utf-8?B?RkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVG?=
- =?utf-8?B?QlFVRkJRVUZCUlVGQlFVRkJRVUZCUVVGblFVRkJRVUZCYm1kQlFVRkhUVUZr?=
- =?utf-8?B?VVVKNlFVaFJRV0ozUW5SQlJqaEJZM2RDZWtGSE5FRllkMEp5UVVkVlFXVlJR?=
- =?utf-8?B?ak5CUnpoQlkyZENhMEZJVFVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFV?=
- =?utf-8?B?RkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVG?=
- =?utf-8?B?QlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZC?=
- =?utf-8?B?UVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJR?=
- =?utf-8?B?VUZCUVVGQlFVRkJRVUZCUVVGQlFWRkJRVUZCUVVGQlFVRkRRVUZCUVVGQlEy?=
- =?utf-8?B?VkJRVUZCV1hkQ01VRklUVUZrUVVKMlFVY3dRVmgzUW5wQlNFMUJZbWRDWmtG?=
- =?utf-8?B?SE5FRmlkMEpyUVVkVlFXSkJRbkJCUnpCQllWRkNNRUZIVlVGalowSm1RVWha?=
- =?utf-8?B?UVUxQlFYbEJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJR?=
- =?utf-8?B?VUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFV?=
- =?utf-8?B?RkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVG?=
- =?utf-8?B?QlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUpCUVVGQlFVRkJRVUZC?=
- =?utf-8?B?U1VGQlFVRkJRVW8wUVVGQlFtcEJTRlZCWTNkQ01FRkhPRUZpVVVKbVFVaE5R?=
- =?utf-8?B?V04zUW5WQlJqaEJZM2RDZDBGSFJVRlpkMEpzUVVZNFFXUm5RWGRCUkVsQlFV?=
- =?utf-8?B?RkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVG?=
- =?utf-8?B?QlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZC?=
- =?utf-8?B?UVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJR?=
- =?utf-8?B?VUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGRlFV?=
- =?utf-8?B?RkJRVUZCUVVGQlFXZEJRVUZCUVVGdVowRkJRVWRSUVdKQlFuZEJSamhCWTNk?=
- =?utf-8?B?Q2NrRklhMEZqUVVKc1FVWTRRVmwzUW05QlIwVkJaRUZDWmtGSE1FRmFVVUo2?=
- =?utf-8?B?UVVoTlFWbFJRbTVCUjFWQldIZENNa0ZFUVVGTlowRkJRVUZCUVVGQlFVRkJR?=
- =?utf-8?B?VUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFV?=
- =?utf-8?B?RkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVG?=
- =?utf-8?B?QlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZC?=
- =?utf-8?B?UVVGQlFVRkJVVUZCUVVGQlFVRkJRVU5CUVVGQlFVRkRaVUZCUVVGYVFVSnpR?=
- =?utf-8?B?VWhCUVZoM1FucEJSM2RCV1ZGQ2FrRkhjMEZZZDBKcVFVZG5RVmxSUWpCQlJq?=
- =?utf-8?B?aEJZbEZDYkVGSVRVRmpkMEpvUVVkalFWcFJRVUZCUVVGQlFVRkJRVUZCUVVG?=
- =?utf-8?B?QlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZC?=
- =?utf-8?B?UVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJR?=
- =?utf-8?B?VUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFV?=
- =?utf-8?Q?FBQUFB?=
-x-dg-reftwo: 
- =?utf-8?B?UVVGQlFVRkJRVUZCUWtGQlFVRkJRVUZCUVVGSlFVRkJRVUZCU2pSQlFVRkNh?=
- =?utf-8?B?MEZIZDBGalFVSm1RVWhSUVZwUlFtaEJSekJCWTNkQ1prRkhPRUZpWjBKc1FV?=
- =?utf-8?B?ZFJRV05uUW5CQlNGbEJXbEZDWmtGSFdVRmhVVUp6UVVkVlFVRkJRVUZCUVVG?=
- =?utf-8?B?QlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZC?=
- =?utf-8?B?UVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJR?=
- =?utf-8?B?VUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFV?=
- =?utf-8?B?RkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVVkJRVUZCUVVGQlFVRkJaMEZCUVVG?=
- =?utf-8?B?QlFXNW5RVUZCUjFWQllsRkNhRUZIYTBGaVFVSm1RVWRGUVZwQlFtdEJTRWxC?=
- =?utf-8?B?V2xGQ2VrRklUVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJR?=
- =?utf-8?B?VUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFV?=
- =?utf-8?B?RkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVG?=
- =?utf-8?B?QlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZC?=
- =?utf-8?B?UVVGQlFVRkJRVUZCUW1kQlFVRkJRVUZCUVVGQlFVRkJRVUZSUVVGQlFVRkJR?=
- =?utf-8?B?VUZCUTBGQlFVRkJRVU5sUVVGQlFXSlJRbWhCU0VsQlpHZENiRUZIZDBGWWQw?=
- =?utf-8?B?SjNRVWhKUVdKM1FuRkJSMVZCV1hkQ01FRkdPRUZpWjBKb1FVY3dRVnBSUW5w?=
- =?utf-8?B?QlJqaEJXWGRDZGtGSE5FRmFaMEp3UVVkUlFWcFJRblZCU0ZGQllWRkNhRUZI?=
- =?utf-8?B?ZDBGWWQwSm9RVWQzUVdKM1FuVkJSMVZCUVVGQlFVRkJRVUZCUVVGQlFVRkJR?=
- =?utf-8?B?VUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFV?=
- =?utf-8?B?RkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVG?=
- =?utf-8?B?Q1FVRkJRVUZCUVVGQlFVbEJRVUZCUVVGS05FRkJRVUowUVVkRlFXTm5RakpC?=
- =?utf-8?B?UjFWQllrRkNaa0ZJUVVGalowSjJRVWR2UVZwUlFtcEJTRkZCV0hkQ2RVRkhS?=
- =?utf-8?B?VUZpVVVKc1FVaE5RVmgzUW5sQlIxVkJZM2RDTUVGSVNVRmhVVUpxUVVoUlFW?=
- =?utf-8?B?cFJRbXRCUmpoQldWRkNjMEZIT0VGaVowSnNRVUZCUVVGQlFVRkJRVUZCUVVG?=
- =?utf-8?B?QlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZC?=
- =?utf-8?B?UVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJR?=
- =?utf-8?B?VUZCUVVGQlFVRkJSVUZCUVVGQlFVRkJRVUZuUVVGQlFVRkJibWRCUVVGSE1F?=
- =?utf-8?B?RlpVVUo1UVVoWlFWcFJRbk5CUmpoQlkwRkNlVUZIT0VGaFowSnNRVWROUVdS?=
- =?utf-8?B?QlFtWkJSelJCV1ZGQ2RFRkhWVUZqZDBKbVFVaEpRVnBSUW5wQlNGRkJZMmRD?=
- =?utf-8?B?Y0VGSFRVRmtRVUpzUVVkUlFWaDNRbTlCUjFWQlpVRkNha0ZIT0VGYVFVSnNR?=
- =?utf-8?B?VWhOUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFV?=
- =?utf-8?B?RkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVG?=
- =?utf-8?B?QlFVRkJRVUZCUVVGQlFVRkJRVUZCUVZGQlFVRkJRVUZCUVVGRFFVRkJRVUZC?=
- =?utf-8?B?UTJWQlFVRkJZbEZDYUVGSVNVRmtaMEpzUVVkM1FXSkJRbVpCUjBWQlkyZENk?=
- =?utf-8?B?RUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFV?=
- =?utf-8?Q?FBQUFB?=
-x-dg-refthree: 
- =?utf-8?B?UVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJR?=
- =?utf-8?B?VUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFV?=
- =?utf-8?B?RkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVG?=
- =?utf-8?B?QlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVSkJRVUZCUVVGQlFVRkJTVUZC?=
- =?utf-8?B?UVVGQlFVbzBRVUZCUW5SQlIwVkJZMmRDTWtGSFZVRmlRVUp6UVVZNFFWcDNR?=
- =?utf-8?B?blpCUnpoQlduZENjMEZIVlVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFV?=
- =?utf-8?B?RkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVG?=
- =?utf-8?B?QlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZC?=
- =?utf-8?B?UVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJR?=
- =?utf-8?B?VUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZGUVVGQlFV?=
- =?utf-8?B?RkJRVUZCUVdkQlFVRkJRVUZ1WjBGQlFVY3dRVmxSUW5sQlNGbEJXbEZDYzBG?=
- =?utf-8?B?SGQwRllkMEozUVVoSlFXSjNRbkZCUjFWQldYZENNRUZHT0VGWmQwSjJRVWRS?=
- =?utf-8?B?UVZwUlFucEJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJR?=
- =?utf-8?B?VUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFV?=
- =?utf-8?B?RkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVG?=
- =?utf-8?B?QlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZC?=
- =?utf-8?B?UVVGQlVVRkJRVUZCUVVGQlFVTkJRVUZCUVVGRFpVRkJRVUZpVVVKb1FVaEpR?=
- =?utf-8?B?V1JuUW14QlIzZEJZa0ZDWmtGSVFVRmpaMEoyUVVkdlFWcFJRbXBCU0ZGQldI?=
- =?utf-8?B?ZENha0ZIT0VGYVFVSnNRVWhOUVZoM1FtdEJSMnRCV1hkQ01FRkJRVUZCUVVG?=
- =?utf-8?B?QlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZC?=
- =?utf-8?B?UVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJR?=
- =?utf-8?B?VUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFV?=
- =?utf-8?B?RkJRVUZCUVVGQlFVRkJRa0ZCUVVGQlFVRkJRVUZKUVVGQlFVRkJTalJCUVVG?=
- =?utf-8?B?Q2RFRkhSVUZqWjBJeVFVZFZRV0pCUW5OQlJqaEJZMEZDZVVGSE9FRmhaMEpz?=
- =?utf-8?B?UVVkTlFXUkJRbVpCUnpSQldWRkNkRUZIVlVGamQwSm1RVWROUVdKM1FuVkJS?=
- =?utf-8?B?MWxCWVZGQ2EwRkhWVUZpWjBJd1FVZHJRVmxSUW5OQlJqaEJZbEZDYUVGSVNV?=
- =?utf-8?B?RmtaMEpzUVVkM1FXSkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVG?=
- =?utf-8?B?QlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZC?=
- =?utf-8?B?UVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVWQlFVRkJRVUZCUVVGQlowRkJR?=
- =?utf-8?B?VUZCUVc1blFVRkJSekJCV1ZGQ2VVRklXVUZhVVVKelFVZDNRVmgzUW5kQlNF?=
- =?utf-8?B?bEJZbmRDY1VGSFZVRlpkMEl3UVVZNFFXSm5RbWhCUnpCQldsRkNla0ZHT0VG?=
- =?utf-8?B?WmQwSjJRVWMwUVZwblFuQkJSMUZCV2xGQ2RVRklVVUZoVVVKb1FVZDNRVmgz?=
- =?utf-8?B?UW5SQlIwVkJZMmRDTWtGSFZVRmlRVUp6UVVZNFFXSjNRbmxCUmpoQldWRkNl?=
- =?utf-8?B?VUZITUVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFV?=
- =?utf-8?Q?FBQUFB?=
-x-dg-reffour: 
- =?utf-8?B?UVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRlJRVUZCUVVGQlFVRkJR?=
- =?utf-8?B?MEZCUVVGQlFVTmxRVUZCUVdKUlFtaEJTRWxCWkdkQ2JFRkhkMEZpUVVKbVFV?=
- =?utf-8?B?aEJRV05uUW5aQlIyOUJXbEZDYWtGSVVVRllkMEoxUVVkRlFXSlJRbXhCU0Ux?=
- =?utf-8?B?QldIZENha0ZIT0VGaVowSnRRVWRyUVZwQlFteEJSelJCWkVGQ2NFRkhSVUZp?=
- =?utf-8?B?UVVKbVFVY3dRVmxSUW5sQlNGbEJXbEZDYzBGSGQwRllkMEoyUVVoSlFWaDNR?=
- =?utf-8?B?bTVCUnpoQlluZENia0ZIZDBGYVVVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFV?=
- =?utf-8?B?RkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZDUVVG?=
- =?utf-8?B?QlFVRkJRVUZCUVVsQlFVRkJRVUZLTkVGQlFVSjBRVWRGUVdOblFqSkJSMVZC?=
- =?utf-8?B?WWtGQ2MwRkdPRUZqUVVKNVFVYzRRV0ZuUW14QlIwMUJaRUZDWmtGSE5FRlpV?=
- =?utf-8?B?VUowUVVkVlFXTjNRbVpCU0VsQldsRkNla0ZJVVVGalowSndRVWROUVdSQlFt?=
- =?utf-8?B?eEJSMUZCV0hkQ2RFRkhSVUZqWjBJeVFVZFZRV0pCUW5OQlFVRkJRVUZCUVVG?=
- =?utf-8?B?QlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZC?=
- =?utf-8?B?UVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJR?=
- =?utf-8?B?VUZCUVVGQlJVRkJRVUZCUVVGQlFVRm5RVUZCUVVGQmJtZEJRVUZITUVGWlVV?=
- =?utf-8?B?SjVRVWhaUVZwUlFuTkJSM2RCV0hkQ2QwRklTVUZpZDBKeFFVZFZRVmwzUWpC?=
- =?utf-8?B?QlJqaEJZbWRDYUVGSE1FRmFVVUo2UVVZNFFXTm5RbXhCU0UxQlpFRkNlVUZI?=
- =?utf-8?B?YTBGWmQwSXdRVWRWUVZwQlFtWkJSekJCV1ZGQ2VVRklXVUZhVVVKelFVZDNR?=
- =?utf-8?B?VmgzUW5aQlNFbEJXSGRDYUVGSVNVRmlVVUZCUVVGQlFVRkJRVUZCUVVGQlFV?=
- =?utf-8?B?RkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVG?=
- =?utf-8?B?QlFVRkJRVUZCUVVGQlFVRkJRVkZCUVVGQlFVRkJRVUZEUVVGQlFVRkJRMlZC?=
- =?utf-8?B?UVVGQllsRkNhRUZJU1VGa1owSnNRVWQzUVdKQlFtWkJTRkZCV2xGQ2VVRkhN?=
- =?utf-8?B?RUZoVVVKMVFVaFZRV04zUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFV?=
- =?utf-8?B?RkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVG?=
- =?utf-8?B?QlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZC?=
- =?utf-8?B?UVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJR?=
- =?utf-8?B?VUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVKQlFVRkJRVUZCUVVGQlNV?=
- =?utf-8?B?RkJRVUZCUVVvMFFVRkJRblJCUjBWQlkyZENNa0ZIVlVGaVFVSnpRVVk0UVdS?=
- =?utf-8?B?M1FuWkJTRWxCV2tGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZC?=
- =?utf-8?B?UVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJR?=
- =?utf-8?B?VUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFV?=
- =?utf-8?B?RkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVG?=
- =?utf-8?B?QlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkJRVUZCUVVGQlFVRkZRVUZC?=
- =?utf-8?B?UVVGQlFVRkJRV2RCUVVGQlFVRlBaMWxCUVVGQlFVRkJRVWxCUVVGQlFVRkJR?=
- =?utf-8?B?VUZCWjBGQlFVRkJRVUZCUVVOQlFVRkJRVUZCUVVGQllVSm5RVUZIVVVGQlFV?=
- =?utf-8?Q?JnQUFB?=
-x-dg-reffive: 
- =?utf-8?B?UVVGQlFVRkJXVkZDYTBGSFVVRmpaMEpzUVVoTlFXTjNRVUZCUTFGQlFVRkJR?=
- =?utf-8?B?a0ZCUVVGWmQwSXhRVWhOUVdSQlFuWkJSekJCV0hkQ2QwRkhWVUZqWjBKNlFV?=
- =?utf-8?B?YzRRV0puUVVGQlF6UkJRVUZCUVVGQlFVRlpkMEl4UVVoTlFXUkJRblpCUnpC?=
- =?utf-8?B?QldIZENkMEZIWjBGaWQwSjFRVWRWUVdKblFqRkJSekJCV1dkQ2JFRklTVUZC?=
- =?utf-8?B?UVVGM1FVRkJRVUZCUVVGQlIwMUJaRkZDZWtGSVVVRmlkMEowUVVZNFFXTjNR?=
- =?utf-8?B?bnBCUnpSQldIZENhMEZIUlVGamQwSnZRVVk0UVdSblFYZEJSRWxCUVVGQmQw?=
- =?utf-8?B?RkJRVUZCUVVGQlFVZE5RV1JSUW5wQlNGRkJZbmRDZEVGR09FRmpkMEo2UVVj?=
- =?utf-8?B?MFFWaDNRbkpCUjFWQlpWRkNNMEZIT0VGalowSnJRVWhOUVVGQlFTdEJRVUZC?=
- =?utf-8?B?UVVGQlFVRkhUVUZrVVVKNlFVaFJRV0ozUW5SQlJqaEJZM2RDZWtGSE5FRllk?=
- =?utf-8?B?MEoxUVVjNFFWcEJRbXhCUjNkQllWRkNkRUZIYTBGa1FVSnNRVWhKUVZoM1Fq?=
- =?utf-8?B?SkJSRUZCVFdkQlFVRkVTVUZCUVVGQlFVRkJRVmwzUWpGQlNFMUJaRUZDZGtG?=
- =?utf-8?B?SE1FRllkMEo2UVVoTlFXSm5RbVpCU0UxQlkwRkNhRUZIVFVGYVVVSm1RVWha?=
- =?utf-8?B?UVUxQlFYbEJRVUZCVUdkQlFVRkJRVUZCUVVKclFVZDNRV05CUW1aQlNFMUJZ?=
- =?utf-8?B?WGRDTlVGSVFVRmFVVUptUVVkTlFXRkJRbWhCU0ZGQldIZENkRUZIVlVGamQw?=
- =?utf-8?B?SjZRVWRGUVZwM1FteEJSamhCWkdkQmQwRkVTVUZCUVVFeVFVRkJRVUZCUVVG?=
- =?utf-8?B?QlIxRkJZa0ZDZDBGR09FRmpkMEp6UVVkRlFWbDNRbkpCUmpoQldYZENiMEZI?=
- =?utf-8?B?UlVGa1FVSm1RVWN3UVZwUlFucEJTRTFCV1ZGQ2JrRkhWVUZCUVVFMFFVRkJR?=
- =?utf-8?B?VUZCUVVGQlIxRkJZa0ZDZDBGR09FRmtRVUpzUVVkRlFXSlJRbnBCUmpoQllu?=
- =?utf-8?B?ZENkVUZIVlVGYVFVSjVRVWRyUVdSblFteEJSamhCV21kQ2NFRkhkMEZhVVVG?=
- =?utf-8?B?QlFVTlJRVUZCUVVkQlFVRkJXbEZDZEVGSFJVRmhVVUp6UVVZNFFWbFJRbXRC?=
- =?utf-8?B?UjFGQlkyZENiRUZJVFVGamQwRkJRVVpuUVVGQlFVRkJRVUZCWWxGQ2FFRklT?=
- =?utf-8?B?VUZrWjBKc1FVZDNRVmgzUW5kQlNFbEJZbmRDY1VGSFZVRlpkMEl3UVVZNFFX?=
- =?utf-8?B?Sm5RbWhCUnpCQldsRkNla0ZHT0VGWmQwSjJRVWMwUVZwblFuQkJSMUZCV2xG?=
- =?utf-8?B?Q2RVRklVVUZoVVVKb1FVZDNRVmgzUW1oQlIzZEJZbmRDZFVGSFZVRkJRVUpW?=
- =?utf-8?B?UVVGQlFVRkJRVUZCUnpCQldWRkNlVUZJV1VGYVVVSnpRVVk0UVdOQlFubEJS?=
- =?utf-8?B?emhCWVdkQ2JFRkhUVUZrUVVKbVFVYzBRVmxSUW5SQlIxVkJZM2RDWmtGSVNV?=
- =?utf-8?B?RmFVVUo2UVVoUlFXTm5RbkJCUjAxQlpFRkNiRUZIVVVGWWQwSm9RVWQzUVdK?=
- =?utf-8?B?M1FuVkJSMVZCUVVGQ1lVRkJRVUZCUVVGQlFVY3dRVmxSUW5sQlNGbEJXbEZD?=
- =?utf-8?B?YzBGR09FRmpRVUo1UVVjNFFXRm5RbXhCUjAxQlpFRkNaa0ZITkVGWlVVSjBR?=
- =?utf-8?B?VWRWUVdOM1FtWkJTRWxCV2xGQ2VrRklVVUZqWjBKd1FVZE5RV1JCUW14QlIx?=
- =?utf-8?B?RkJXSGRDYjBGSFZVRmxRVUpxUVVjNFFWcEJRbXhCU0UxQlFVRkJaMEZCUVVG?=
- =?utf-8?B?QlFVRkJRVWN3UVZsUlFubEJTRmxCV2xGQ2MwRkhkMEZZZDBKb1FVaEpRV0pS?=
- =?utf-8?B?UVVGQlExbEJRVUZCUVVGQlFVRmlVVUpvUVVoSlFXUm5RbXhCUjNkQllrRkNa?=
- =?utf-8?B?a0ZIWTBGaWQwSjJRVWRqUVdKQlFteEJRVUZCVGtGQlFVRkJRVUZCUVVKMFFV?=
- =?utf-8?Q?dFQWNn?=
-x-dg-refsix: 
- =?utf-8?B?UWpKQlIxVkJZa0ZDYzBGR09FRmpRVUo1UVVjNFFXRm5RbXhCUjAxQlpFRkNa?=
- =?utf-8?B?a0ZIVFVGaWQwSnJRVWRWUVdOM1FVRkJSRFJCUVVGQlFVRkJRVUZpVVVKb1FV?=
- =?utf-8?B?aEpRV1JuUW14QlIzZEJZa0ZDWmtGSVFVRmpaMEoyUVVkdlFWcFJRbXBCU0ZG?=
- =?utf-8?B?QldIZENha0ZIT0VGYVFVSnNRVWhOUVZoM1FtdEJSMnRCV1hkQ01FRkJRVUZZ?=
- =?utf-8?B?WjBGQlFVRkJRVUZCUW5SQlIwVkJZMmRDTWtGSFZVRmlRVUp6UVVZNFFXTkJR?=
- =?utf-8?B?bmxCUnpoQllXZENiRUZIVFVGa1FVSm1RVWMwUVZsUlFuUkJSMVZCWTNkQ1pr?=
- =?utf-8?B?RkhUVUZpZDBKMVFVZFpRV0ZSUW10QlIxVkJZbWRDTUVGSGEwRlpVVUp6UVVZ?=
- =?utf-8?B?NFFXSlJRbWhCU0VsQlpHZENiRUZIZDBGaVFVRkJRVWQzUVVGQlFVRkJRVUZC?=
- =?utf-8?B?WWxGQ2FFRklTVUZrWjBKc1FVZDNRV0pCUW1aQlNFRkJZMmRDZGtGSGIwRmFV?=
- =?utf-8?B?VUpxUVVoUlFWaDNRblZCUjBWQllsRkNiRUZJVFVGWWQwSnFRVWM0UVdKblFt?=
- =?utf-8?B?MUJSMnRCV2tGQ2JFRkhORUZrUVVKd1FVZEZRV0pCUW1aQlJ6QkJXVkZDZVVG?=
- =?utf-8?B?SVdVRmFVVUp6UVVkM1FWaDNRblpCU0VsQldIZENhRUZJU1VGaVVVRkJRVWhK?=
- =?utf-8?B?UVVGQlFVRkJRVUZCWWxGQ2FFRklTVUZrWjBKc1FVZDNRV0pCUW1aQlNFRkJZ?=
- =?utf-8?B?MmRDZGtGSGIwRmFVVUpxUVVoUlFWaDNRblZCUjBWQllsRkNiRUZJVFVGWWQw?=
- =?utf-8?B?SnFRVWM0UVdKblFtMUJSMnRCV2tGQ2JFRkhORUZrUVVKd1FVZEZRV0pCUW1a?=
- =?utf-8?B?QlJ6QkJXVkZDZVVGSVdVRmFVVUp6UVVkM1FWaDNRblpCU0VsQldIZENia0ZI?=
- =?utf-8?B?T0VGaWQwSnVRVWQzUVZwUlFVRkJSbTlCUVVGQlFVRkJRVUZpVVVKb1FVaEpR?=
- =?utf-8?B?V1JuUW14QlIzZEJZa0ZDWmtGSVFVRmpaMEoyUVVkdlFWcFJRbXBCU0ZGQldI?=
- =?utf-8?B?ZENkVUZIUlVGaVVVSnNRVWhOUVZoM1FubEJSMVZCWTNkQ01FRklTVUZoVVVK?=
- =?utf-8?B?cVFVaFJRVnBSUW10QlJqaEJZbEZDYUVGSVNVRmtaMEpzUVVkM1FXSkJRVUZC?=
- =?utf-8?B?UjJkQlFVRkJRVUZCUVVGaVVVSm9RVWhKUVdSblFteEJSM2RCWWtGQ1prRklR?=
- =?utf-8?B?VUZqWjBKMlFVZHZRVnBSUW1wQlNGRkJXSGRDZFVGSFJVRmlVVUpzUVVoTlFW?=
- =?utf-8?B?aDNRbmxCUjFWQlkzZENNRUZJU1VGaFVVSnFRVWhSUVZwUlFtdEJSamhCWWxG?=
- =?utf-8?B?Q2FFRklTVUZrWjBKc1FVZDNRV0pCUW1aQlJ6aEJZMmRDWmtGSFJVRmpaMEow?=
- =?utf-8?B?UVVGQlFVdG5RVUZCUVVGQlFVRkNkRUZIUlVGalowSXlRVWRWUVdKQlFuTkJS?=
- =?utf-8?B?amhCWkVGQ2JFRklTVUZpVVVKd1FVYzBRV1JSUW5wQlFVRkJTV2RCUVVGQlFV?=
- =?utf-8?B?RkJRVUowUVVkRlFXTm5RakpCUjFWQllrRkNjMEZHT0VGa2QwSjJRVWhKUVZw?=
- =?utf-8?B?QlFVRkJRVDA5SWk4K1BDOXRaWFJoUGc9PQ==?=
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: BL0PR18MB2130:EE_|PH0PR18MB4427:EE_
-x-ms-office365-filtering-correlation-id: 0694d157-5b7e-47ac-cdff-08dbd6de2254
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 
- Dsj8ItUIPscn30gve1ucbrt+bM9f05PuFn+ChImDqk8NcPHhymJfYV3AQOrFROEdPK/VIbU6NOaZ8W9DfwN2EHa0V8DKmRh5l5sJqaZYH+hdJ1dfYJtveHb+9rQZ//GOZjAoH9dV+p9jJMdmsxBNpzoPYMZuk9qysTtsr8Vpbbr3itaZA8FejwZjQFtTAs6aIZK0MhpFZr5EeCeGOG/9loD0RGarN6aO0x5AbQ7769Ug8QrA2w+Iom+14jkvqqnDerbOgXeZus7XV/5KIqTzIo00Df2HqNKBcwVNRtfgQpczoDsyV4VJPl4P8NYCpOHwKzdrCgqYIzuN0sF4lgow32vGBa2a7FL6Odjyh0jvztzMuv8q/OTsp9WvJ++on0WAJfA0Z1jU+gHRCFRkAb7IYr2Xb+m8rsXLQ/FjuAF6DpfFj/GuT8gs4l6ZRLJ//H0sbccT66ZHN3umRqhrqL6PZs0lRzvu83nG6G0zzrP5ObyRieSv7DKtwJaFKPx4xT89BCA78y4vdE+eHJIbp8c0WsMo/olXL5sjW/CcHNBVWitYm4eVXxYXPigEpr5pmODzmNGebCtGFwyFA8ZDHnyFmK1P7EFpfZWScBys4oYqTSwkbS6ocmN5B0x4aSVIQg4GkJKXMpcU5FGEoV58wMZdKKjmU/FjyJlfjsOWd3jJL8I=
-x-forefront-antispam-report: 
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR18MB2130.namprd18.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376002)(346002)(396003)(136003)(39860400002)(366004)(230922051799003)(230273577357003)(230173577357003)(64100799003)(1800799009)(186009)(451199024)(26005)(110136005)(478600001)(7696005)(6506007)(316002)(76116006)(54906003)(66556008)(66446008)(64756008)(66946007)(66476007)(38070700009)(86362001)(33656002)(52536014)(83380400001)(38100700002)(122000001)(71200400001)(8676002)(4326008)(8936002)(2906002)(9686003)(5660300002)(55016003)(41300700001)(53546011);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: 
- =?utf-8?B?YkRMV3oyYzBRQk1kTWhjN3FiYTdYMEpqS0xSZXJXYXVPY0IxR3grdnBTMWhw?=
- =?utf-8?B?cTMwR2x3OVVuOGpYSlZRVXdTRzBFVEwzc1BQT1BFUjZDMGJ0dXBZamRtTEdP?=
- =?utf-8?B?cFRQeEpZZkQySEwyUVg1K3UxSjIxVDlYL1V0QUFGQVZteStYS2NYNzRIZkxD?=
- =?utf-8?B?Q0VpYVk3NFM4Zmo0VHFFR1RjUGpVbVJiRldibFFnN09ibmIrMUhKQ1gyVzZp?=
- =?utf-8?B?QzRvRjBxWUFLdGlZSk9EcE54cjdGcUtsTXI4cWlJcGRDV3djTjNMczJ6Lzdp?=
- =?utf-8?B?L3VCZ0lZeGY5aHpZME9tbzRva0ZHODJ2SDdEdmdyNWFxdmFqNU1NdkZRajZH?=
- =?utf-8?B?UXhvMmQxZmR4ZGY1MVBtYlR5eU85NzlRclFZRkhMQjZpaTBYZ0l2bE5rU1hw?=
- =?utf-8?B?UkN1RjJiNU55VEFrbEF2QzNidnZsNXdCUEtrSGN6a0pHNG5Gc1F5a0xzVmsx?=
- =?utf-8?B?WFdqV2RmOGEwMnB6SCtkaEcxZGoxMmQxSHJnVHFkR1M1SXZFMGd2bDRSVWhX?=
- =?utf-8?B?dlNWSDArR1RYYi8yTWxUOEsrTDVJcGJnaEkwMTVMQ3QzUWtEbE1xR2RNT3lF?=
- =?utf-8?B?dlAraXA3TWNpdHBrZ3hTSS83bW5NaEJlSWMwTExEdVdHWThIZWlvTmNyaHBV?=
- =?utf-8?B?SGptRHhGQTZYdHlxSUp3M3BzMkJ2SGNHeER6R2NjeE5ka0lJMExENEhiRjZj?=
- =?utf-8?B?VzBnY1F2Q1Mzb1FYT2NjWEd0RGRtTzh3VzdGMzRyQWRSYmVUK2d4c1U2QnVy?=
- =?utf-8?B?czREaVc5ejIraVV2bmt1RmYza0V3UWJWcytBVUZJOFRpOU5xRDg3c1o5MTNx?=
- =?utf-8?B?aTFTWUl5WUNLVjhuMCtjSm5YNEd4MlFYWGpzRW5mZzYvb3o2RGp0ZGIwQ3Rj?=
- =?utf-8?B?WnpHc1VCSEdPY0lnbU1Hd0lWQmthNlNGWW9hVUJmN1RwTFhoTlJDcUFVVndp?=
- =?utf-8?B?YmZUSmJxYm43QmQ2enQwaDl3WTNhMWFSY0NYSXU5bGFJVm9mZG1PU2xmSUJU?=
- =?utf-8?B?YXhRMi94R3d3U1BvQ3QxRG1VRThVMGY0aW83UzJMcm54N25Qb21KbWFKejhE?=
- =?utf-8?B?bDZMS3dUVUFHcWtmUDBzaHRHeURSdXVuSXhveHJxelpVS0N5eXdaOStENW5s?=
- =?utf-8?B?b3p6cXFPWTgxOFRQUDRtOFZhTXNUb3E1a2d6bFdjUGV0T0x2Nko1NWlNN2RN?=
- =?utf-8?B?QTNhZkVhLzBZRUs3czRGOElRY3NGZzBYdEdSYkI0UWFFSUMxVHdaN2d1UGov?=
- =?utf-8?B?aUo2cHFQbjFMOWJlNWNRLzFJTXQ5dU9yTkpiVDJHRWE2QUJFMFpyV3RtSlZK?=
- =?utf-8?B?cHpqYUN4d3dFNmhnMENxdStScnRWcHZOajd3WGJRR0I5UnB1OXB4TVFtVEFP?=
- =?utf-8?B?UzdpdG93a2l2ZnNBclppZ0hQVGVZMGZabUlvQUduWFhmQ1R0Q0wveTRJRTRZ?=
- =?utf-8?B?eVVtQnhJK25ObEtSSXExaUh6VGI2Ky9QK2VvRWMwWUlvL0NoUG5vWFBHY0VD?=
- =?utf-8?B?QmRjTHNjTmljTkVQbkZKbW9QcGt6Z1hscjQyVThrRXRINlZhNUlTYS9qS2hp?=
- =?utf-8?B?Um9nanA4TlFHUzdYYlFaMml6dElUSUJiL05jY2k2UzM0anJYcFMydzNuQUFX?=
- =?utf-8?B?Q3NnaVMxWXdHTHdySWlCZjB6bUJYNThKNUNjNzRqT3N1U0dabWxDdE8rdlc5?=
- =?utf-8?B?N0FzSllFRmNCU3RzMmRSZ1Y0NENlRmo0b3QvdXRNWkRxeGord0ppbU5mcXNQ?=
- =?utf-8?B?RTRXZTk4U0xCaDRtWTRjcDhWRU4zMUZTZTBzNkNYd1pUWklmRU82TGR5ak8y?=
- =?utf-8?B?Q1Avd1djcE9pYlcwZ3BuV0JLMlV0Rm15VE8xYU9ZMnAwaEJCcTE3ZTA3Zk1V?=
- =?utf-8?B?b0VtbHQ4U1NRVEIweUlJUGNueDdlNlNyRjUxOFhVVVA1UTd2M3I4aDduUEha?=
- =?utf-8?B?UW15QjRnbjdaQ3o0anFsVkM5a3g2UHlkVTEyeERrWGFpNFZqRi9GbTArOXI4?=
- =?utf-8?B?U1FsMlJwZ0V0YmdwUGFlZFV3V2svUUtkcEswVXNSVHNWdWhtR2QyL2dEbTBR?=
- =?utf-8?B?elNjb2lJYUhESDVZZTJYN3JaMkhlc3NGNXNhSVArSERZdUxrSWM4bmpUSkxo?=
- =?utf-8?Q?AJUsgdyzCi5tEo7ESGMQ3iBq2?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="floz312X";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EQLUwXtZ"
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A1E19C
+	for <git@vger.kernel.org>; Fri, 27 Oct 2023 04:19:42 -0700 (PDT)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id 8D1E35C01AE;
+	Fri, 27 Oct 2023 07:19:41 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Fri, 27 Oct 2023 07:19:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to; s=fm3; t=1698405581; x=1698491981; bh=9z
+	pg+fyeI1aRWrRghICIVjKwTpFFhXoAUtF5xjRzdCQ=; b=floz312XBJqjW30wvS
+	MnfAiDkKhATPCnubXVMbLr83zDJQf0a6SnGtzv5oTEx+T2RkoXE2tz+ygriGXk0h
+	vwCiF73NsSX8i7fRRjMokvYaMsCbelyo/i0m20TlrZjpbAjmu2G55b6Atie0fMsO
+	xq9fZs2TtxqyVE+Ouv8DuEEKYmIJ4ioaHA/UAnVwbC9mORPpMt/+WEJkyo5xXMWr
+	zCDC83bsIfKoWQiB4+d/f73IYXmxYh4PmdLn2BnkN3jjoLvpgWzxy7TnZP7L+eBl
+	86PDgEpAtFmOO+sBOMgwFR9MfRvZZbSsDkT3ukdU/0xpSfliMuUG2H+Ll1GmIE78
+	qWGw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm3; t=1698405581; x=1698491981; bh=9zpg+fyeI1aRW
+	rRghICIVjKwTpFFhXoAUtF5xjRzdCQ=; b=EQLUwXtZkfsD2wWhg+vZHX7oaXCLY
+	bbsNTUvWHMSJQMC6vAhoFLDVP4qqBY573+SpO93fBGM2Txz9ABhSdplkAKwSarHz
+	zcmaMctbG3+tfj2sRnF9uDpDimmKat9+Y7oARXZwsKvBPlFsylTbRMrOGdGfwwFr
+	DW54Lvphm8OLfDc/KHhL7iN8rnnu4OHXltte1JGfIFJe3vS3rLIPrN7N3LjhochK
+	wtr94qINi4kFmow9KtvcWLAhRidSUKkPnTmwSqxigtWoSB8Buxd73EwvusVACC+W
+	OFIMZzghfgIF7ZHak6T5UZJZ2F5x97xofEkTVNQ6g5YuFwZdA88M0KwbQ==
+X-ME-Sender: <xms:yZw7ZVECpsefhErZyEsMeVZ6kbjxLU99PEqAkHOpEouABL3KRsmKMw>
+    <xme:yZw7ZaXeZdCQHPjUAZid4AweKQc9pSukC3jAtFdRVa66r_HZLbc1vNNwGT91brwBO
+    HM9R1Fw2ZiRa_EP2g>
+X-ME-Received: <xmr:yZw7ZXJi5I5R1kU3b6LC_Tf4o5YMr7xIkDoN2GgmcLjvQ61lpAZvxrYb8pZPMzSqHcSEC7wQGcqlytyQam8CaqizcWLsKctYZVpMAxsUMaraUQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrleeggdegtdcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeegheevgfevtddtfeduiefgvefhiefhhefghfdukeevtddtvedtledtvefhhfejgfen
+    ucffohhmrghinhepghhithhlrggsrdgtohhmpdhhthhtphgurghrvghnohifshhkihhpph
+    gvuggrshhthhgvhihrvghfuhhsvghtohhruhhnrghsrhhoohhtrdgtihdprhhunhdqugho
+    tghkvghrqdgsuhhilhgurdhshhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:yZw7ZbHCq-n1yRWI13fRrEId0UlMEH_QA7R9fPgbicuwfDw8JhoHaQ>
+    <xmx:yZw7ZbWvfATUEfWoHdBcwssVH-97FcLfQTrIA-oMX0egF1tJLJIUOg>
+    <xmx:yZw7ZWMKtmAqIzeXjQ8PppJ47I32rzNOSmAxi-XHsu6QpXy2rKejxQ>
+    <xmx:zZw7ZScT_Po1NURxgNfHNEilHeioqOnO3RAVeO35JTc_-vlPLv9O8w>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 27 Oct 2023 07:19:37 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 4e275eb1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 27 Oct 2023 11:19:25 +0000 (UTC)
+Date: Fri, 27 Oct 2023 13:19:34 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Subject: Re: [PATCH v2 5/5] ci: add support for GitLab CI
+Message-ID: <ZTucxlBR1VrJPuSK@tanuki>
+References: <cover.1698305961.git.ps@pks.im>
+ <cover.1698398590.git.ps@pks.im>
+ <37a507e9b255dd40c0536438dfe3fa05b067f08f.1698398590.git.ps@pks.im>
+ <0d889da1-7fd8-4e21-965f-6222e4433ecf@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: marvell.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BL0PR18MB2130.namprd18.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0694d157-5b7e-47ac-cdff-08dbd6de2254
-X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Oct 2023 11:16:15.0024
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 70e1fb47-1155-421d-87fc-2e58f638b6e0
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: B+BH1NVL3U/AMqAzr2rr8SA3TQMBTEsGfkenM/uhMlkhMpNXQY76L8xYrT/ppMsIzyhTwcVHHV0ByY4/9BFdcw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR18MB4427
-X-Proofpoint-GUID: NrsjtmRN6MW849XmKmGnxYcvIyqF02w1
-X-Proofpoint-ORIG-GUID: NrsjtmRN6MW849XmKmGnxYcvIyqF02w1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-27_09,2023-10-27_01,2023-05-22_02
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="T6QpYSicFpM+K5rq"
+Content-Disposition: inline
+In-Reply-To: <0d889da1-7fd8-4e21-965f-6222e4433ecf@gmail.com>
 
-VGhlIHJlcHJvZHVjdGlvbiAsYXMgSSB3cm90ZSBpbiB0aGUgY29kZSwgc2hvdWxkIGJlIGRvbmUg
-d2l0aCBmZXcgdGhyZWFkcyBpbiBwYXJhbGxlbCANCkVhY2ggd29ya2luZyBvbiBhIGxpc3Qgb2Yg
-fjEwIHJlcG9zIHdpdGggZWFjaCByZXBvIGNvbnRhaW5pbmcgYSBsb3Qgb2YgcmVmcy90YWdzICh+
-MTAwMCkNCkFsbCB0aGlzIHNob3VsZCBiZSBhZ2FpbnN0IGdlcnJpdCAobXkgZ2Vycml0IGlzIDMu
-OC4wKQ0KDQpBbHNvIHJlYWQgdGhlIG5vdGVzIGJlbG93IHJlZ2FyZGluZyB0aGUgY29kZSB0aGF0
-IHdhcyBtb3ZlZCBiZXR3ZWVuIDIuMzEuOCBhbmQgMi4zMi4wIGluIGxzLXJlbW90ZS5jIGZpbGUN
-CkkgY2FuIGVsYWJvcmF0ZSBtb3JlLCBpbiBhIHpvb20gbWVldGluZy4NCg0KMTB4DQpMaW9yLg0K
-DQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiBCYWdhcyBTYW5qYXlhIDxiYWdh
-c2RvdG1lQGdtYWlsLmNvbT4gDQpTZW50OiBGcmlkYXksIE9jdG9iZXIgMjcsIDIwMjMgNDowOCBB
-TQ0KVG86IExpb3IgWmVsdHplciA8bGlvcnpAbWFydmVsbC5jb20+OyBHaXQgTWFpbGluZyBMaXN0
-IDxnaXRAdmdlci5rZXJuZWwub3JnPg0KQ2M6IEFuZHJ6ZWogSHVudCA8YWpyaHVudEBnb29nbGUu
-Y29tPjsgw4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24gPGF2YXJhYkBnbWFpbC5jb20+OyBKdW5p
-byBDIEhhbWFubyA8Z2l0c3RlckBwb2JveC5jb20+DQpTdWJqZWN0OiBbRVhUXSBSZTogbHMtcmVt
-b3RlIGJ1Zw0KDQpFeHRlcm5hbCBFbWFpbA0KDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpPbiBUdWUsIE9jdCAy
-NCwgMjAyMyBhdCAxMDo1NToyNEFNICswMDAwLCBMaW9yIFplbHR6ZXIgd3JvdGU6DQo+IA0KPiA+
-dW5hbWUgLWENCj4gTGludXggZGMzbHAtdmVsZDAwNDUgMy4xMC4wLTExNjAuMjEuMS5lbDcueDg2
-XzY0ICMxIFNNUCBUdWUgTWFyIDE2IA0KPiAxODoyODoyMiBVVEMgMjAyMSB4ODZfNjQgeDg2XzY0
-IHg4Nl82NCBHTlUvTGludXgNCj4gDQo+IEdlcnJpdCB2ZXJzaW9uIDoNCj4gMy44LjANCj4gDQo+
-IEJ1ZyBkZXNjcmlwdGlvbiA6IA0KPiBXaGVuIHJ1bm5pbmcgbHMtcmVtb3RlIDogc29tZXRpbWUg
-ZGF0YSBnZXRzIGN1dCBpbiB0aGUgbWlkZGxlDQo+IA0KPiBSZXByb2R1Y2luZyA6DQo+IFlvdSBu
-ZWVkIGEgZmV3IGZpbGVzIHdpdGggYSBmZXcgcmVwbyBuYW1lcyAoSSB1c2VkIDQgZmlsZXMgd2l0
-aCAxMCANCj4gcmVwb3MgZWFjaCkgQ2FsbCB0aGVuIGwxLi5sNCBBbmQgdGhlIGNvZGUgYmVsb3cg
-anVzdCBjZCBpbnRvIGVhY2ggb2YgDQo+IHRoZW0gZG9lcyBscy1yZW1vdGUgdHdpY2UgYW5kIGNv
-bXBhcmVzIHRoZSBkYXRhIERvaW5nIGl0IGluIHBhcmFsbGVsIA0KPiBvbiBhbGwgbGlzdHMuDQo+
-IERhdGEgcmVjZWl2ZWQgaW4gYm90aCBscy1yZW1vdGVzIHNob3VsZCBiZSB0aGUgc2FtZSAsIGlm
-IG5vdCwgaXQgDQo+IHByaW50cyAqKiogUmVwb3Mgc2hvdWxkIGNvbnRhaW4gYSBsb3Qgb2YgdGFn
-cyBhbmQgcmVmcw0KDQpXaGF0IHJlcG8gZGlkIHlvdSBmaW5kIHRoaXMgcmVncmVzc2lvbj8gRGlk
-IHlvdSBtZWFuIGxpbnV4LmdpdCAoTGludXgga2VybmVsKT8NCg0KPiANCj4gTm90ZSA6IA0KPiAx
-LiDCoHdpdGhvdXQgc3RkZXJyIHJlZGlyZWN0aW9uICgyPiYxKSBhbGwgd29ya3Mgd2VsbCAyLiBP
-biBsb2NhbCByZXBvcyANCj4gKG5vdCB0aHJvdWdoIGdlcnJpdCkgYWxsIHdvcmtzIHdlbGwNCj4g
-DQo+IEkgY29tcGFyZWQgdmFyaW91cyBnaXQgdmVycyBhbmQgZm91bmQgdGhlIGJ1ZyB0byBiZSBi
-ZXR3ZWVuIDIuMzEuOCBhbmQgDQo+IDIuMzIuMCBDb21wYXJpbmcgbHMtcmVtb3RlLmMgZmlsZSBi
-ZXR3ZWVuIHRob3NlIHZlcnMgZ2F2ZSBtZSA6DQo+IA0KPiBMaW5lcyA6DQo+IGlmICh0cmFuc3Bv
-cnRfZGlzY29ubmVjdCh0cmFuc3BvcnQpKQ0KPiAJCXJldHVybiAxOw0KPiANCj4gbW92ZWQgdG8g
-ZW5kIG9mIHN1Yg0KPiANCj4gY29weWluZyBscy1yZW1vdGUuYyBmcm9tIDIuMzEuOCB0byAyLjMy
-LjAgLSBmaXhlZCB0aGUgYnVnDQo+IA0KPiANCj4gDQo+IENvZGUgcmVwcm9kdWNpbmcgYnVnIDoN
-Cj4gDQo+ICMhL3Byb2ovbWlzbGNhZC9hcmVhcy9EQXRvb2xzL3Rvb2xzL3BlcmwvNS4xMC4xL2Jp
-bi9wZXJsIC13IHVzZSANCj4gc3RyaWN0OyB1c2UgQ3dkIHF3KGN3ZCk7DQo+IA0KPiBteSAkY291
-bnQgPSA0Ow0KPiBmb3IgbXkgJGYgKDEuLiRjb3VudCkgew0KPiDCoCBteSAkY2hpbGQgPSBmb3Jr
-KCk7DQo+IMKgIGlmICghJGNoaWxkKSB7DQo+IMKgwqDCoCBteSAkY3VyciA9IGN3ZCgpOw0KPiDC
-oMKgwqAgDQo+IMKgwqDCoMKgbXkgQHJlcG9zID0gYGNhdCBsJGZgOw0KPiDCoMKgwqAgZm9yZWFj
-aCBteSAkcmVwbyAoQHJlcG9zKSB7DQo+IMKgwqDCoMKgwqAgY2hvbXAgJHJlcG87DQo+IMKgwqDC
-oMKgwqAgcHJpbnQgIiRyZXBvXG4iOw0KPiDCoMKgwqDCoMKgIGNoZGlyKCRyZXBvKTsNCj4gwqDC
-oMKgwqDCoCBteSAkcmVtb3RlX3RhZ3Nfc3RyID0gYGdpdCBscy1yZW1vdGXCoCAyPiYxYDsNCj4g
-wqDCoMKgwqDCoCBteSAkcmVtb3RlX3RhZ3Nfc3RyMiA9IGBnaXQgbHMtcmVtb3RlwqAgMj4mMSBg
-Ow0KPiDCoMKgwqDCoMKgIGNoZGlyKCRjdXJyKTsNCj4gwqDCoMKgwqDCoCBpZiAoICRyZW1vdGVf
-dGFnc19zdHIgbmUgJHJlbW90ZV90YWdzX3N0cjIpIHsNCj4gwqDCoMKgwqDCoMKgwqDCoCBwcmlu
-dCAiKioqXG4iOw0KPiDCoMKgwqDCoMKgIH0NCj4gwqDCoMKgIH0NCj4gwqAgDQo+IMKgwqDCoMKg
-ZXhpdCgwKTsNCj4gwqAgfQ0KPiB9DQo+IHdoaWxlICh3YWl0ICE9IC0xKSB7fQ0KPiAxOw0KPiAN
-Cg0KSSB0cmllZCByZXByb2R1Y2luZyB0aGlzIHJlZ3Jlc3Npb24gYnk6DQoNCmBgYA0KJCBjZCAv
-cGF0aC90by9naXQuZ2l0DQokIGdpdCBscy1yZW1vdGUgMj4mMSA+IC90bXAvcm9vdC5saXN0DQok
-IGNkIGJ1aWx0aW4vDQokIGdpdCBscy1yZW1vdGUgMj4mMSA+IC90bXAvYnVpbHRpbi5saXN0ICQg
-Y2QgLi4vICQgZ2l0IGRpZmYgLS1uby1pbmRleCAvdG1wL3Jvb3QubGlzdCAvdG1wL2J1aWx0aW4u
-bGlzdCBgYGANCg0KQW5kIGluZGVlZCwgdGhlIGRpZmYgd2FzIGVtcHR5ICh3aGljaCBtZWFudCB0
-aGF0IGJvdGggbGlzdGluZ3MgYXJlIHNhbWUpLg0KDQpDb25mdXNlZC4uLg0KDQotLQ0KQW4gb2xk
-IG1hbiBkb2xsLi4uIGp1c3Qgd2hhdCBJIGFsd2F5cyB3YW50ZWQhIC0gQ2xhcmENCg==
+
+--T6QpYSicFpM+K5rq
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Fri, Oct 27, 2023 at 11:19:04AM +0100, Phillip Wood wrote:
+> On 27/10/2023 10:25, Patrick Steinhardt wrote:
+> > We already support Azure Pipelines and GitHub Workflows in the Git
+> > project, but until now we do not have support for GitLab CI. While it is
+> > arguably not in the interest of the Git project to maintain a ton of
+> > different CI platforms, GitLab has recently ramped up its efforts and
+> > tries to contribute to the Git project more regularly.
+>=20
+> I agree we don't want to support too many CI platforms but I think adding
+> support for GitLab is good as it helps to stop us being too tied to GitHub
+> Actions (which should make it easier if we ever need to transition to a
+> different platform in the future) and provides an alternative for
+> contributors who want to use a different platform.
+>=20
+> > Part of a problem we hit at GitLab rather frequently is that our own,
+> > custom CI setup we have is so different to the setup that the Git
+> > project has. More esoteric jobs like "linux-TEST-vars" that also set a
+> > couple of environment variables do not exist in GitLab's custom CI
+> > setup, and maintaining them to keep up with what Git does feels like
+> > wasted time. The result is that we regularly send patch series upstream
+> > that fail to compile or pass tests in GitHub Workflows. We would thus
+> > like to integrate the GitLab CI configuration into the Git project to
+> > help us send better patch series upstream and thus reduce overhead for
+> > the maintainer.
+> >=20
+> > The integration does not necessarily have to be a first-class citizen,
+> > which would in practice only add to the fallout that pipeline failures
+> > have for the maintainer. That being said, we are happy to maintain this
+> > alternative CI setup for the Git project and will make test results
+> > available as part of our own mirror of the Git project at [1].
+>=20
+> Having someone committed to on-going maintenance is great.
+>=20
+> > This commit introduces the integration into our regular CI scripts so
+> > that most of the setup continues to be shared across all of the CI
+> > solutions.
+> >=20
+> > [1]: https://gitlab.com/gitlab-org/git
+> >=20
+> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> > ---
+> >   .gitlab-ci.yml                    | 51 +++++++++++++++++++++++++++++++
+> >   ci/install-docker-dependencies.sh |  9 +++++-
+> >   ci/lib.sh                         | 49 +++++++++++++++++++++++++++++
+> >   ci/print-test-failures.sh         |  6 ++++
+> >   4 files changed, 114 insertions(+), 1 deletion(-)
+> >   create mode 100644 .gitlab-ci.yml
+> >=20
+> > diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
+> > new file mode 100644
+> > index 00000000000..43d3a961fa0
+> > --- /dev/null
+> > +++ b/.gitlab-ci.yml
+> > @@ -0,0 +1,51 @@
+> > +default:
+> > +  timeout: 2h
+> > +
+> > +workflow:
+> > +  rules:
+> > +    - if: $CI_PIPELINE_SOURCE =3D=3D "merge_request_event"
+> > +    - if: $CI_COMMIT_TAG
+> > +    - if: $CI_COMMIT_REF_PROTECTED =3D=3D "true"
+> > +
+> > +test:
+> > +  image: $image
+> > +  before_script:
+> > +    - ./ci/install-docker-dependencies.sh
+> > +  script:
+> > +    - useradd builder --home-dir "${CI_PROJECT_DIR}"
+> > +    - chown -R builder "${CI_PROJECT_DIR}"
+> > +    - sudo --preserve-env --set-home --user=3Dbuilder ./ci/run-build-a=
+nd-tests.sh
+>=20
+> It's really good that you're running the tests as an unprivileged user. T=
+his
+> is something we used to do when we were using Travis that got lost in the
+> transition to Azure Pipelines which means some tests that rely on httpd a=
+re
+> now skipped as they refuse to run as root. ci/run-docker-build.sh is
+> currently bit-rotting, I wonder if it is possible to update it so that we
+> can run the dockerized tests in the same way on all CI platforms.
+>=20
+> > +  after_script:
+> > +    - |
+> > +      if test "$CI_JOB_STATUS" !=3D 'success'
+> > +      then
+> > +        sudo --preserve-env --set-home --user=3Dbuilder ./ci/print-tes=
+t-failures.sh
+> > +      fi
+> > +  parallel:
+> > +    matrix:
+> > +      - jobname: linux-sha256
+> > +        image: ubuntu:latest
+> > +        CC: clang
+> > +      - jobname: linux-gcc
+> > +        image: ubuntu:20.04
+> > +        CC: gcc
+> > +        CC_PACKAGE: gcc-8
+> > +      - jobname: linux-TEST-vars
+> > +        image: ubuntu:20.04
+> > +        CC: gcc
+> > +        CC_PACKAGE: gcc-8
+> > +      - jobname: linux-gcc-default
+> > +        image: ubuntu:latest
+> > +        CC: gcc
+> > +      - jobname: linux-leaks
+> > +        image: ubuntu:latest
+> > +        CC: gcc
+> > +      - jobname: linux-asan-ubsan
+> > +        image: ubuntu:latest
+> > +        CC: clang
+> > +      - jobname: linux-musl
+> > +        image: alpine:latest
+> > +  artifacts:
+> > +    paths:
+> > +      - t/failed-test-artifacts
+> > +    when: on_failure
+>=20
+> This file is pleasingly small.
+>=20
+> > diff --git a/ci/install-docker-dependencies.sh b/ci/install-docker-depe=
+ndencies.sh
+> > index d0bc19d3bb3..1cd92db1876 100755
+> > --- a/ci/install-docker-dependencies.sh
+> > +++ b/ci/install-docker-dependencies.sh
+> > @@ -7,6 +7,9 @@
+> >   begin_group "Install dependencies"
+> > +# Required so that apt doesn't wait for user input on certain packages.
+> > +export DEBIAN_FRONTEND=3Dnoninteractive
+> > +
+> >   case "$jobname" in
+> >   linux32)
+> >   	linux32 --32bit i386 sh -c '
+> > @@ -16,9 +19,13 @@ linux32)
+> >   	'
+> >   	;;
+> >   linux-musl)
+> > -	apk add --update build-base curl-dev openssl-dev expat-dev gettext \
+> > +	apk add --update git shadow sudo build-base curl-dev openssl-dev expa=
+t-dev gettext \
+> >   		pcre2-dev python3 musl-libintl perl-utils ncurses >/dev/null
+>=20
+> It would be helpful to explain the new dependencies in the commit message=
+=2E I
+> can see why you're adding sudo, but how were we getting away without
+> installing the other packages for GitHub Actions?
+
+True, that part is missing.
+
+- Both sudo and shadow are now required because of `useradd` that we use
+  to set up the unprivileged build.
+
+- Git has been required all along, I think. `save_good_tree ()` is used
+  in our CI scripts, and Toon (fellow GitLabber from my team) has
+  noticed that the CI job warned about missing Git. The warning was
+  mostly benign as it seems, but still, doesn't hurt to fix it while at
+  it.
+
+I'll have a look at whether I can add another patch on top that adjusts
+`ci/run-docker-build.sh` to do rootless builds, which would also make it
+more obvious why we now need to install sudo and shadow. And I'll make
+sure to document why we now need to have Git around.
+
+> >   	;;
+> > +linux-*)
+> > +	apt update -q &&
+> > +	apt install -q -y sudo git make language-pack-is libsvn-perl apache2 =
+libssl-dev libcurl4-openssl-dev libexpat-dev tcl tk gettext zlib1g-dev perl=
+-modules liberror-perl libauthen-sasl-perl libemail-valid-perl libio-socket=
+-ssl-perl libnet-smtp-ssl-perl ${CC_PACKAGE:-${CC:-gcc}}
+> > +	;;
+> >   pedantic)
+> >   	dnf -yq update >/dev/null &&
+> >   	dnf -yq install make gcc findutils diffutils perl python3 gettext zl=
+ib-devel expat-devel openssl-devel curl-devel pcre2-devel >/dev/null
+> > diff --git a/ci/lib.sh b/ci/lib.sh
+> > index 9ffdf743903..f518df7e2cb 100755
+> > --- a/ci/lib.sh
+> > +++ b/ci/lib.sh
+> > @@ -14,6 +14,22 @@ then
+> >   		need_to_end_group=3D
+> >   		echo '::endgroup::' >&2
+> >   	}
+> > +elif test true =3D "$GITLAB_CI"
+> > +then
+> > +	begin_group () {
+> > +		need_to_end_group=3Dt
+> > +		echo -e "\e[0Ksection_start:$(date +%s):$(echo "$1" | tr ' ' _)\r\e[=
+0K$1"
+> > +		trap "end_group '$1'" EXIT
+> > +		set -x
+> > +	}
+> > +
+> > +	end_group () {
+> > +		test -n "$need_to_end_group" || return 0
+> > +		set +x
+> > +		need_to_end_group=3D
+> > +		echo -e "\e[0Ksection_end:$(date +%s):$(echo "$1" | tr ' ' _)\r\e[0K"
+> > +		trap - EXIT
+> > +	}
+> >   else
+> >   	begin_group () { :; }
+> >   	end_group () { :; }
+> > @@ -203,6 +219,39 @@ then
+> >   	MAKEFLAGS=3D"$MAKEFLAGS --jobs=3D10"
+> >   	test windows !=3D "$CI_OS_NAME" ||
+> >   	GIT_TEST_OPTS=3D"--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
+> > +elif test true =3D "$GITLAB_CI"
+> > +then
+> > +	CI_TYPE=3Dgitlab-ci
+> > +	CI_BRANCH=3D"$CI_COMMIT_REF_NAME"
+> > +	CI_COMMIT=3D"$CI_COMMIT_SHA"
+> > +	case "$CI_JOB_IMAGE" in
+> > +	macos-*)
+> > +		CI_OS_NAME=3Dosx;;
+> > +	alpine:*|ubuntu:*)
+> > +		CI_OS_NAME=3Dlinux;;
+> > +	*)
+> > +		echo "Could not identify OS image" >&2
+> > +		env >&2
+> > +		exit 1
+> > +		;;
+> > +	esac
+> > +	CI_REPO_SLUG=3D"$CI_PROJECT_PATH"
+> > +	CI_JOB_ID=3D"$CI_JOB_ID"
+>=20
+> I guess making this explicit is helpful, otherwise someone may wonder why
+> CI_JOB_ID is not being set.
+>=20
+> > +	CC=3D"${CC_PACKAGE:-${CC:-gcc}}"
+> > +	DONT_SKIP_TAGS=3Dt
+> > +	handle_failed_tests () {
+> > +		create_failed_test_artifacts
+> > +	}
+> > +
+> > +	cache_dir=3D"$HOME/none"
+> > +
+> > +	runs_on_pool=3D$(echo "$CI_JOB_IMAGE" | tr : -)
+> > +
+> > +	export GIT_PROVE_OPTS=3D"--timer --jobs $(nproc)"
+> > +	export GIT_TEST_OPTS=3D"--verbose-log -x"
+> > +	MAKEFLAGS=3D"$MAKEFLAGS --jobs=3D$(nproc)"
+> > +	test windows !=3D "$CI_OS_NAME" ||
+> > +	GIT_TEST_OPTS=3D"--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
+>=20
+> This last paragraph feels like it should be common to all the CI provider=
+s.
+> There are some small differences but if we're going to support several
+> providers it would be nice to set the common options centrally. I'm pretty
+> sure the --jobs=3D10 we use for the GitHub and Azure is not optimal, using
+> $(nproc) is nice so long as it is supported on all the images we use.
+
+True enough, I can have a go at it. I'm rather cautious around updating
+the build infra as I cannot easily verify that things continue to work
+for GitHub. But this part here might be a good candidate for deduping.
+
+> I had a quick glance through the previous patches and they all look like
+> nice cleanups that make our ci support less dependent on a single provide=
+r.
+> This series looks like a nice addition to our CI support.
+>=20
+> Best Wishes
+>=20
+> Phillip
+
+Thanks!
+
+Patrick
+
+>=20
+> >   else
+> >   	echo "Could not identify CI type" >&2
+> >   	env >&2
+> > diff --git a/ci/print-test-failures.sh b/ci/print-test-failures.sh
+> > index 57277eefcd0..c33ad4e3a22 100755
+> > --- a/ci/print-test-failures.sh
+> > +++ b/ci/print-test-failures.sh
+> > @@ -51,6 +51,12 @@ do
+> >   			tar czf failed-test-artifacts/"$test_name".trash.tar.gz "$trash_di=
+r"
+> >   			continue
+> >   			;;
+> > +		gitlab-ci)
+> > +			mkdir -p failed-test-artifacts
+> > +			cp "${TEST_EXIT%.exit}.out" failed-test-artifacts/
+> > +			tar czf failed-test-artifacts/"$test_name".trash.tar.gz "$trash_dir"
+> > +			continue
+> > +			;;
+> >   		*)
+> >   			echo "Unhandled CI type: $CI_TYPE" >&2
+> >   			exit 1
+>=20
+
+--T6QpYSicFpM+K5rq
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmU7nMUACgkQVbJhu7ck
+PpQf1RAApSwuBKW2NZxGxSNs3YMRkWjXkNGQWD/swTWO2V2tFVSbhP2BPiiClvsM
+zip6S9F8BiAPu/1AYVy6FD4lJEgRP/Eq1/c4e/YfyjkLicZEHZ41VSoaCMEgqpk5
+fdJzjNst+vym1B9dntCIwmBI+X4Ovag1dVp0kZWQkzIAQSDg/ql0bKMKBGBs1fCf
+4jANsqJyTxp94qUyJDyKLlA/nvLb6xWa9DqdOYAD36lWh00tp0XeWrxgV/bR4SKk
+hnhgwoHLNXhQpOR434NpEgcawBWHO3kmjB+jjwIyk9Bq6w34RkqFBNMumtCN4cM7
+lm2F7rfkwANz2bB5hxsnLILQUc077taPo3Zmrvf8xqU4r0rt91IIydLfomJJODAV
+SK4ZCdmnLSPD4n8ZY3fSADkLOqCa/ZpWYg4oeGzUYZCoICbQnPs1K0lzDW05a1vx
+SFqjL4MD9S2/prKpGAw09aqpBSg87ewmW9n33q2YBN+ieOj8m56sYhw3g+WFz244
+6DFNYjAKKtWzGLRLx+w0LfyLNHRQnJpQzLRNSpXo47DqMKVVOB2e2zddsSFugFDi
+8sUzLSDKcQQuX2cVmjhhbs9VJG7oT8YDQVC9BG/c1bNCHrVT5Wg5xpuuw2vv0qCM
+KoAojWV1A6INf8CdXDUwUVKCki8W04aktB41deI865emYxJDIc0=
+=Cj2h
+-----END PGP SIGNATURE-----
+
+--T6QpYSicFpM+K5rq--
