@@ -1,47 +1,47 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE35513ACF
-	for <git@vger.kernel.org>; Fri, 27 Oct 2023 08:17:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A2A7156F7
+	for <git@vger.kernel.org>; Fri, 27 Oct 2023 09:25:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ap2NgqU6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AY+MES6Y"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="l4cOAn9C";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vCD0Fno7"
 Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1373FA
-	for <git@vger.kernel.org>; Fri, 27 Oct 2023 01:17:36 -0700 (PDT)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0F5C194
+	for <git@vger.kernel.org>; Fri, 27 Oct 2023 02:25:27 -0700 (PDT)
 Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailout.nyi.internal (Postfix) with ESMTP id 6963D5C0105;
-	Fri, 27 Oct 2023 04:17:36 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute7.internal (MEProxy); Fri, 27 Oct 2023 04:17:36 -0400
+	by mailout.nyi.internal (Postfix) with ESMTP id 54BD45C01FC;
+	Fri, 27 Oct 2023 05:25:27 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute7.internal (MEProxy); Fri, 27 Oct 2023 05:25:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1698394656; x=1698481056; bh=Zu
-	xoMtuYeAE1Vu4Ewk8E8mAZbT/M/h1BcD9Vxn3aljw=; b=Ap2NgqU6RN3sflUoTC
-	/y1G/mxaieTzZADCxBUk0ClyO3pl3fddeo6/tgCmgfJNeqVDrDBCRkU2rAdATPLa
-	3GgcMsmfPtTrUNDMsX5pg5kryANhVl1ndJ4xsa0GdoznyYjU3+CwbmYK4xHAAL8C
-	SisORYztIwtfyBf3yEjOj/8VsZAUEuwkWBKsbBzMbgieAbqSy2gFfeRkBPmNBF7X
-	q0e15aDXKjw5WIsNj5/rGBm1chIsAcQgASJfFzeaZl6CE1zmnaAqUUOKE6bAiX/Q
-	PFSlBBFUjOgqiCLhEQaXixzSvOhkHyAsOX8QnjiU+1Ju7Lls4i+ciGLZlPLwj5OG
-	BYDQ==
+	:subject:subject:to:to; s=fm3; t=1698398727; x=1698485127; bh=aP
+	wFgVogvWN4ndtDd8yzqjtRaABKsgRB10KYGuLNBWc=; b=l4cOAn9Ce9vrWqtEzL
+	MpDm5499aB2CWZ2kJ4JZdaqgOuTmv9nUbqwAMVti04hZpYCeG1dBprhHg4gTMqTC
+	Xd+/UzC4zaZOOhLcg8XXJGks22KQpHsNRsu6LOhhTmahpjG8poIfVUyk8bJHgUe9
+	8KE6EncOUB15MehIVVgEmyZbWRnRsq6n4HgC0BArfw418mceaz09qdUpYCZbOJF8
+	acB+qoT81eLu7/ofG7QDc64swJxz81YZpoEnIGrTGLysNBL0s30+e+IH3zjbmDTp
+	CFr70k1Oz88oz/u0tqVe5rzzIRoj9mCs5cjK76CL/b6SIgfcgd4dqxbvm1H5hSfV
+	nHwA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1698394656; x=1698481056; bh=ZuxoMtuYeAE1V
-	u4Ewk8E8mAZbT/M/h1BcD9Vxn3aljw=; b=AY+MES6Y28VChrWjSV2dMKFPeyZa6
-	7rGmC83vYgO8jr7O6G9LaU75MapxzdkOvmtgl6LXP0Qxa7SBq7xLQEwcIltxMo4y
-	xJXBo9exXQal74jHM1yoswiFG4sT8GxyK1tW1/cSw/5CHlleYtO513yD/2LghTMl
-	m2vRwCbOfhyYafuiCFauJxJlXww3Vc7tEAjKRtTXR4IcIIGbtvyoui5487f1ZFOp
-	EfaKyO+qQKBkxa8zbTEIQbU18YKxoUsVEoRRG9EzJG67srWlfK8CYI3T+TseRsEu
-	OMbgUyUq/RafYhijdY+VuWCb8NosgkS05ER8Sh3a4HrCkdAHwGSDvIXBA==
-X-ME-Sender: <xms:IHI7ZZwVMI4ZqkBPwMcV6R1kAzLiY5ipZSnj7K6RT7DM_PyxfRFMSA>
-    <xme:IHI7ZZR3qTlUSTYVXLPuycBKJZ8EJ3ni4vZgzuAkw6ILn7hLsjfawdlKIyfwPWhbq
-    IbwQKJ-mqL9_x9awA>
-X-ME-Received: <xmr:IHI7ZTU6Z1rlLnTK67K5CzYVdJ0xcd49qWZDxtzTBjiLJoussZaIhYMmYfQqNjWYRcCvoYvqDWa_0uueV82cHsGoSv1jTN_NBNx_Xcdcw5Bjsw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrleeggddtudcutefuodetggdotefrodftvf
+	:x-sasl-enc; s=fm3; t=1698398727; x=1698485127; bh=aPwFgVogvWN4n
+	dtDd8yzqjtRaABKsgRB10KYGuLNBWc=; b=vCD0Fno7K/6WzD8EYxmmiTmlwGN+7
+	r2KRFdJE6lBG3ySTCQ+p71Rt05xODTRk1MYuEw2Qe989vlaG+Yrf6DnGfzrDZf3l
+	ymHRjvNS7CuLhe0hfnOZzDCNbYh4EDa4dPOTUVjnAJkeX1BwZgIEjJLmJeqww9JM
+	INAPeBvwd/kKdz3CUEFAR9eYXEMfrQTKK9G7eIjl63bIUublx1wDqpnfbfHXvkhU
+	6GkmnjZfmyJmqNYfx5oeWzXAXwyLeIZETEwSLzayz2izzosJoEP2wL+I3t4sWVL/
+	EQVEHVQIjSZlSfqDuKlo2x3B+B1MIj5g9z37SsSepYGbsBTaAzmOycj6A==
+X-ME-Sender: <xms:B4I7ZS3T2p6To2kW2sscyUFZ9TXulc2Wb9FdAKL_xjU0qvBYBpgdGw>
+    <xme:B4I7ZVF0WDjQk5jxgBtkrtZfonp8zBd91H3NwEKiPlFGnZCISXzJVjGQMec7sX4kO
+    y5cxkSOgPGAUA9m6A>
+X-ME-Received: <xmr:B4I7Za6kNuZjM9hwRZhZlGG8kGoYiFp8HgJpLWAhH7GrYv-9iYCypVXYQY6XkzdE3ANau9ZHfXBpwwu_Q9_4XSVfr5BmOl5RobdOcmyqDpBkFA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrleeggdduhecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
@@ -49,25 +49,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrleeggddtudcutefuodetggdote
     hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhm
-X-ME-Proxy: <xmx:IHI7ZbjS_h_h78h-ZjpzPjl764yFnZZIqCChsf74EcB5omYXIUwOFA>
-    <xmx:IHI7ZbDMtJ66SadfsxIZ94QDMivYI0aMEv6fGf05OWAJn59NJxNoFA>
-    <xmx:IHI7ZULjB9asn5cGPVn2eg38ASanyNeBPWeVBRSCojOs9MmsDSoKEQ>
-    <xmx:IHI7ZeqIa0H_zFi4k2Dx9hGOM7-5Y5j_4BVaz2smDpMA0jY_vgMQ0w>
+X-ME-Proxy: <xmx:B4I7ZT3egxYiNIPwyYl8tfxyoXN8x7Ig-7W_kwiVrsuteq0vZOD3jQ>
+    <xmx:B4I7ZVEyUBK3fBmtKGjqaJTE1_mM_kerp-1XZV0fyNQ51E6Ayb0npA>
+    <xmx:B4I7Zc_O7PpSZoa8TWK64v3NOBw4S2ZDx1QcoYeal4AoMH4sX6iIhA>
+    <xmx:B4I7ZYNpxqSv6CY5klWIpzAp7aX1A3uZJNoiEmyq_guAb3SoKvI-aw>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 27 Oct 2023 04:17:35 -0400 (EDT)
+ 27 Oct 2023 05:25:26 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id f41c3c16 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 27 Oct 2023 08:17:25 +0000 (UTC)
-Date: Fri, 27 Oct 2023 10:17:33 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id c8f14b1a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 27 Oct 2023 09:25:15 +0000 (UTC)
+Date: Fri, 27 Oct 2023 11:25:24 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 5/5] ci: add support for GitLab CI
-Message-ID: <ZTtyHScKkMg4qnMH@tanuki>
+To: git@vger.kernel.org
+Cc: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Subject: [PATCH v2 1/5] ci: reorder definitions for grouping functions
+Message-ID: <4eb9cfc816b160a8fbce1bbec03df10f82c83dfc.1698398590.git.ps@pks.im>
 References: <cover.1698305961.git.ps@pks.im>
- <35b07e5378d960b93ae8990a3abb525e1762d97d.1698305961.git.ps@pks.im>
- <ZTosPCkpx/FMTDH5@ugly>
+ <cover.1698398590.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,130 +74,91 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="H8XEopxtE8PDkBib"
+	protocol="application/pgp-signature"; boundary="Zaj/puWMP5BYeWTa"
 Content-Disposition: inline
-In-Reply-To: <ZTosPCkpx/FMTDH5@ugly>
+In-Reply-To: <cover.1698398590.git.ps@pks.im>
 
 
---H8XEopxtE8PDkBib
+--Zaj/puWMP5BYeWTa
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Oct 26, 2023 at 11:07:08AM +0200, Oswald Buddenhagen wrote:
-> On Thu, Oct 26, 2023 at 10:00:20AM +0200, Patrick Steinhardt wrote:
-> > project has. More esoteric jobs like "linux-TEST-vars" that also sets a
-> 								     ^ 								     -s
->=20
-> > couple of environment variables do not exist in GitLab's custom CI
-> > setup, and maintaining them to keep up with what Git does feels like
-> > wasted time. The result is that we regularly send patch series upstream
-> > that would otherwise fail to compile or pass tests in GitHub Workflows.
->       ^^^^^^^^^^^^^^^
->       that inverts the meaning
->=20
-> > [...]
-> > project to help us ensure to send better patch series upstream and thus
-> 			   ^^
-> 			   "we"
-> > reduce overhead for the maintainer.
->=20
-> > --- a/ci/install-docker-dependencies.sh
-> > +++ b/ci/install-docker-dependencies.sh
-> > @@ -16,9 +19,13 @@ linux32)
-> > 	'
-> > 	;;
-> > linux-musl)
-> > -	apk add --update build-base curl-dev openssl-dev expat-dev gettext \
-> > +	apk add --update git shadow sudo build-base curl-dev openssl-dev expa=
-t-dev gettext \
-> > 		pcre2-dev python3 musl-libintl perl-utils ncurses >/dev/null
-> > 	;;
-> > +linux-*)
-> >=20
-> you should probably choose a less generic name for the jobs, at least
-> debian-*.
+We define a set of grouping functions that are used to group together
+output in our CI, where these groups then end up as collapsible sections
+in the respective pipeline platform. The way these functions are defined
+is not easily extensible though as we have an up front check for the CI
+_not_ being GitHub Actions, where we define the non-stub logic in the
+else branch.
 
-The names are all preexisting, so I cannot change them. And the CI infra
-does indeed rely on the exact names to choose what to do.
+Reorder the conditional branches such that we explicitly handle GitHub
+Actions.
 
-> > diff --git a/ci/lib.sh b/ci/lib.sh
-> > index 33005854520..102e9d04a1f 100755
-> > --- a/ci/lib.sh
-> > +++ b/ci/lib.sh
-> > @@ -15,6 +15,42 @@ then
-> > 		echo '::endgroup::' >&2
-> > 	}
-> >=20
-> > +	group () {
-> > [...]
-> > +	}
-> >=20
-> this counter-intutive patch structure reveals that the function is
-> duplicated between github and gitlab. you may want to factor it out and
-> alias it. or change the structure entirely (circling back to patch 1/5).
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ ci/lib.sh | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-I don't quite know what you mean by counter-intuitive patch structure.
-But regarding the duplication for the `group ()` function I agree, it's
-a bit unfortunate. My first version did de-duplicate it indeed, but it
-resulted in some weirdness in the stubbed case.
+diff --git a/ci/lib.sh b/ci/lib.sh
+index 6fbb5bade12..eb384f4e952 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -1,16 +1,7 @@
+ # Library of functions shared by all CI scripts
+=20
+-if test true !=3D "$GITHUB_ACTIONS"
++if test true =3D "$GITHUB_ACTIONS"
+ then
+-	begin_group () { :; }
+-	end_group () { :; }
+-
+-	group () {
+-		shift
+-		"$@"
+-	}
+-	set -x
+-else
+ 	begin_group () {
+ 		need_to_end_group=3Dt
+ 		echo "::group::$1" >&2
+@@ -42,6 +33,15 @@ else
+ 	}
+=20
+ 	begin_group "CI setup"
++else
++	begin_group () { :; }
++	end_group () { :; }
++
++	group () {
++		shift
++		"$@"
++	}
++	set -x
+ fi
+=20
+ # Set 'exit on error' for all CI scripts to let the caller know that
+--=20
+2.42.0
 
-I'll revisit this.
 
-> > +	CI_BRANCH=3D"$CI_COMMIT_REF_NAME"
-> > +	CI_COMMIT=3D"$CI_COMMIT_SHA"
-> >=20
-> assignments need no quoting to prevent word splitting.
-> repeats below.
->=20
-> > +	case "$CI_JOB_IMAGE" in
-> >=20
-> ... as does the selector in case statements.
-
-True, but I'm simply matching the coding style in this script.
-
-> > --- a/ci/print-test-failures.sh
-> > +++ b/ci/print-test-failures.sh
-> > @@ -51,6 +51,12 @@ do
-> > 			tar czf failed-test-artifacts/"$test_name".trash.tar.gz "$trash_dir"
-> > 			continue
-> > 			;;
-> > +		gitlab-ci)
-> > +			mkdir -p failed-test-artifacts
-> > +			cp "${TEST_EXIT%.exit}.out" failed-test-artifacts/
-> > +			tar czf failed-test-artifacts/"$test_name".trash.tar.gz "$trash_dir"
-> >=20
-> you're just following the precedent, but imo it's more legible to quote t=
-he
-> entire string, not just the variable expansion. the code doesn't even agr=
-ee
-> with itself, as the line directly above apparently agrees with me.
->=20
-> regards
-
-Yeah, as you say, this is another case where I follow precedent. I
-honestly don't quite care which way we go in this case.
-
-Patrick
-
---H8XEopxtE8PDkBib
+--Zaj/puWMP5BYeWTa
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmU7chwACgkQVbJhu7ck
-PpTLwhAAm/IJUoX7LeiupO+FpY6bdUkHx4BLnbkYoWwOshAsZXgD+Uuba/O/3Jvs
-f5gRKwpa6r+AVvDbKrEwpavYwI5MalCmnTdsQNtji/o2y8tnP4056GxJ0fKeXOgf
-8XWpbeToJEbNyuW9Q7Wk5GEMHbleXxsPTxMv5nLRNxgZ4sXBgAtr5m2DgZeaTBW9
-4x7SxdHIK4K10hqTIkbWQCj5Ph6bUxoHeCX3OD8xulCQa/H5ceR9lwF9/GTpvW+9
-MZaLnJFARmLlPr1SwAy4Wfz8bUzt+Tq3t4Oq+kwMKlMQRtPDRl0BIod9gror5+we
-s4Blqrlq9xZoLNW6D9/Juq6p+7NeIMTpp/f7LgXwvAK91Jcdq2eA5tYd5+3qOgt8
-tWBnmpOizqQ3nnYx+oA6DGwPa/ubI/YUkeuWkJMEATOYuIBN1ph7L7LD2SNnVgA/
-rpHVjFdg+Z8SUa8GORpjz+55RvqRwDKMyGU/un9tt/oIlw9ttyprJmGRXNVmH9Od
-w8cOfxHF/YTmz7yh7xFf37PVgggTxB9Ne2wbWYJHXM8eFZGQjbj5jh8wj3UH3vDm
-0NaJjs+WS4ZeB6Xpv/88+OQGY+F9FPt7xG7A7FcWTRUas1v9XcByk4AoDMrzatEs
-iniaTP9T0wwMd8IbpBqNLfQ6M2abimiKsgMO91nruPwKJjD4/i0=
-=fdiQ
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmU7ggMACgkQVbJhu7ck
+PpQyMQ/8DcbfjaFBQeQQH5ElwsFlSh5RAlefAjhcDxR4ayfu5UP4BETCheBPiEsj
+6jztFqkH0s8sP8A/o7f6WgaK8QFuhlbNGOXkXhX40Vw/wAW9A79U5aHHNZ7rYg0i
+YknGZBwJU0tnv65uo/ilsFnws8VHPVJLW2H+YVwB3gI0vnzgbymPIdQ979OI4FKq
+g+8GIAnilOktz6to/5T1ckZ1tTTKSZghi55sMQ9GNGEB6Vr2ue+zmL6umBHLC2jh
+csNPy3YG2voSZpyFv/vpV62f87QWBIk7ANgBB6h/FQwf5Syp5EUpFCs0kXX1QNlr
+78jVaiEJ6TDvkUxJiUXeyPpfbR39juSWcmYAdOXJOXpZQ44qKldg/B/eDbCvPGPd
+lm9bE3sJ21i27yK6A1k25e5KZYk7kVBsPDRYgyynq80lwbs0mD1Fl9MYjMVBI/l4
+vfeY1pBdHQQ0soxsOUMhxXAUaodbIO1kHNmXrzq5tVoMjGYUaG6w5XbNE+ellobE
+l7buKsABo4a4cUYzt0ygyi9ZhASEiR85sbM2dWS1zVLNjhTkvDcEes4UzmYDKUyf
+J2mT8JoiGRd6N9a4OJNaU93voViC4RLcuXfHPvei4gc1JddHDzfQuDmMmEX0EnzZ
+mQvQ3tCtGS8SgfxkyepDOlPzncvx+9IIQvRJsOGgoAkKNih3BMo=
+=1RVd
 -----END PGP SIGNATURE-----
 
---H8XEopxtE8PDkBib--
+--Zaj/puWMP5BYeWTa--
