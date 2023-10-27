@@ -1,27 +1,26 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA5F08489
-	for <git@vger.kernel.org>; Fri, 27 Oct 2023 10:49:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E94F315AF7
+	for <git@vger.kernel.org>; Fri, 27 Oct 2023 11:01:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from bluemchen.kde.org (bluemchen.kde.org [IPv6:2001:470:142:8::100])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38C00129
-	for <git@vger.kernel.org>; Fri, 27 Oct 2023 03:49:21 -0700 (PDT)
+Received: from bluemchen.kde.org (bluemchen.kde.org [209.51.188.41])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37308D6
+	for <git@vger.kernel.org>; Fri, 27 Oct 2023 04:01:37 -0700 (PDT)
 Received: from ugly.fritz.box (localhost [127.0.0.1])
-	by bluemchen.kde.org (Postfix) with ESMTP id 62FC023F67;
-	Fri, 27 Oct 2023 06:49:19 -0400 (EDT)
+	by bluemchen.kde.org (Postfix) with ESMTP id 1F5C923F67;
+	Fri, 27 Oct 2023 07:01:35 -0400 (EDT)
 Received: by ugly.fritz.box (masqmail 0.3.6-dev, from userid 1000)
-	id 1qwKP1-bUg-00; Fri, 27 Oct 2023 12:49:19 +0200
-Date: Fri, 27 Oct 2023 12:49:19 +0200
+	id 1qwKat-boT-00; Fri, 27 Oct 2023 13:01:35 +0200
+Date: Fri, 27 Oct 2023 13:01:35 +0200
 From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 5/5] ci: add support for GitLab CI
-Message-ID: <ZTuVr54KxhdaIf+F@ugly>
+Subject: Re: [PATCH v2 5/5] ci: add support for GitLab CI
+Message-ID: <ZTuYjzOfG0y27Sho@ugly>
 References: <cover.1698305961.git.ps@pks.im>
- <35b07e5378d960b93ae8990a3abb525e1762d97d.1698305961.git.ps@pks.im>
- <ZTosPCkpx/FMTDH5@ugly>
- <ZTtyHScKkMg4qnMH@tanuki>
+ <cover.1698398590.git.ps@pks.im>
+ <37a507e9b255dd40c0536438dfe3fa05b067f08f.1698398590.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -30,22 +29,16 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <ZTtyHScKkMg4qnMH@tanuki>
+In-Reply-To: <37a507e9b255dd40c0536438dfe3fa05b067f08f.1698398590.git.ps@pks.im>
 
-On Fri, Oct 27, 2023 at 10:17:33AM +0200, Patrick Steinhardt wrote:
->On Thu, Oct 26, 2023 at 11:07:08AM +0200, Oswald Buddenhagen wrote:
->> you should probably choose a less generic name for the jobs, at least
->> debian-*.
+On Fri, Oct 27, 2023 at 11:25:41AM +0200, Patrick Steinhardt wrote:
+>+	export GIT_PROVE_OPTS="--timer --jobs $(nproc)"
+>+	export GIT_TEST_OPTS="--verbose-log -x"
 >
->The names are all preexisting, so I cannot change them.
->
-aren't they coming from the yml file? would adjusting them in the 
-company setup be an unreasonable effort?
-
->I don't quite know what you mean by counter-intuitive patch structure.
->
-it looked like you're adding the function to the github branch, not to 
-the freshly added gitlab branch. of course that's just a diffing 
-artifact.
+fwiw (as this is again only copied), export with assignment is a 
+bash-ism (though (d)ash started to accept this syntax some time ago), 
+and not all of the including scripts ask for bash (i didn't check 
+whether they are using these functions, but the inconsistency is an 
+armed trap).
 
 regards
