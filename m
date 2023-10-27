@@ -1,65 +1,77 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E544199A7
-	for <git@vger.kernel.org>; Fri, 27 Oct 2023 15:53:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from bluemchen.kde.org (bluemchen.kde.org [IPv6:2001:470:142:8::100])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E8FAC2
-	for <git@vger.kernel.org>; Fri, 27 Oct 2023 08:53:40 -0700 (PDT)
-Received: from ugly.fritz.box (localhost [127.0.0.1])
-	by bluemchen.kde.org (Postfix) with ESMTP id 1433820092;
-	Fri, 27 Oct 2023 11:53:35 -0400 (EDT)
-Received: by ugly.fritz.box (masqmail 0.3.6-dev, from userid 1000)
-	id 1qwP9S-hfE-00; Fri, 27 Oct 2023 17:53:34 +0200
-Date: Fri, 27 Oct 2023 17:53:34 +0200
-From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-To: phillip.wood@dunelm.org.uk
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: [PATCH v2 5/5] ci: add support for GitLab CI
-Message-ID: <ZTvc/tPGxREyq17J@ugly>
-References: <cover.1698305961.git.ps@pks.im>
- <cover.1698398590.git.ps@pks.im>
- <37a507e9b255dd40c0536438dfe3fa05b067f08f.1698398590.git.ps@pks.im>
- <ZTuYjzOfG0y27Sho@ugly>
- <d00b02e9-fb05-44bc-90ee-1851ef98dd26@gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E013238BB2
+	for <git@vger.kernel.org>; Fri, 27 Oct 2023 15:54:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="B8ZJmO3v"
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF4F21B9
+	for <git@vger.kernel.org>; Fri, 27 Oct 2023 08:54:17 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 518EB1CC37D;
+	Fri, 27 Oct 2023 11:54:17 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=kWVM5IdLCbPL+Ubv4uwj00ltahDBfqVKJIHzXb
+	KnxfE=; b=B8ZJmO3vikHHYhYVuTrEwmC6DWkLOJL9i047ov1pOgh9zTAN5Q7QMK
+	b/NTNgxuqGn2gypnmV9FkRRKEzIUBk5Zv/lE8ul/zuOTyErCO151Gvcc6x4gE9zu
+	izK64ICxoUpQObr9Zxc22NMxgbIohUZs8UT07XI/kQ5yTPEM1iGq4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 47AD61CC37C;
+	Fri, 27 Oct 2023 11:54:17 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.198.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A48401CC37B;
+	Fri, 27 Oct 2023 11:54:16 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,  Taylor Blau
+ <me@ttaylorr.com>,  git@vger.kernel.org,  stolee@gmail.com
+Subject: Re: [PATCH v1 3/4] config: factor out global config file
+ retrievalync-mailbox>
+In-Reply-To: <ZTjMMC1GiPJUXnQm@tanuki> (Patrick Steinhardt's message of "Wed,
+	25 Oct 2023 10:05:04 +0200")
+References: <cover.1697660181.git.code@khaugsbakk.name>
+	<147c767443c35b3b4a5516bf40557f41bb201078.1697660181.git.code@khaugsbakk.name>
+	<ZTZDqToqcsDiS5AP@tanuki> <ZTav2u1JWmLexEHL@nand.local>
+	<87badbe0-de18-4f8a-9589-314cea46065e@app.fastmail.com>
+	<ZTip7JWm-WRWTImU@tanuki>
+	<2b764f52-d3ae-467f-a915-fb73beb247bb@app.fastmail.com>
+	<ZTjMMC1GiPJUXnQm@tanuki>
+Date: Sat, 28 Oct 2023 00:54:15 +0900
+Message-ID: <xmqq8r7ooyc8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <d00b02e9-fb05-44bc-90ee-1851ef98dd26@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 152E7470-74E1-11EE-AA15-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On Fri, Oct 27, 2023 at 02:17:02PM +0100, Phillip Wood wrote:
->On 27/10/2023 12:01, Oswald Buddenhagen wrote:
->> On Fri, Oct 27, 2023 at 11:25:41AM +0200, Patrick Steinhardt wrote:
->>> +    export GIT_PROVE_OPTS="--timer --jobs $(nproc)"
->>> +    export GIT_TEST_OPTS="--verbose-log -x"
->>>
->> fwiw (as this is again only copied), export with assignment is a 
->> bash-ism
->
->Not according to 
->https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#export
->
-hmm, it's there since at least SUSv1, aka XPG4v2, in 1994. i didn't 
-bother digging deeper.
+Patrick Steinhardt <ps@pks.im> writes:
 
->It is true that in our test suite we separate a variable assignment 
->when exporting. Presumably that is because someone reported that their 
->shell did not support the "export name=WORD" syntax in the past.
->
-most likely it's just a historical default, not the result of a specific 
-bug report. the assumption that it's bash-specific is wide-spread.
+> This parameter would only exist for the purpose of the error message,
+> right? If so, I think that'd be overkill. If we want to have differing
+> errors depending on how the function is called the best way to handle
+> that would likely be to generate the error message at the callsite
+> instead of in the library itself.
 
->As we're already using this syntax with the same docker images in 
->Github Actions I think we can assume it is safe here.
->
-i guess so. docker seems a tad unlikely to run some ancient bourne 
-shells ...
+We would need to make sure the lower-level helpers need to be able
+to tell what kind of failure they saw (in other words, why they are
+failing) to the callers, which may require a bit of designing the
+error return convention and plumbing through necessary pieces of
+information, but the longer term payoff would be great.
 
-regards
+I do not think this is such a case, but if the lower-level needs to
+fail differently (e.g., the thing not existing is acceptable when
+writing as we will create a new one, but is a fail-worthy error when
+reading), then the caller needs to give that down the callchain,
+though.
