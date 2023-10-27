@@ -1,354 +1,269 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 625F58F43
-	for <git@vger.kernel.org>; Fri, 27 Oct 2023 06:25:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 486B78F5C
+	for <git@vger.kernel.org>; Fri, 27 Oct 2023 06:34:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="yWian3de";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MlcLBqOm"
-Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83D011A1
-	for <git@vger.kernel.org>; Thu, 26 Oct 2023 23:25:38 -0700 (PDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.nyi.internal (Postfix) with ESMTP id 5228D5C0222;
-	Fri, 27 Oct 2023 02:25:35 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Fri, 27 Oct 2023 02:25:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1698387935; x=1698474335; bh=ni
-	BENvPreCyeUInNMjAQ8UtZ3irohQCIpc1sKDG1ywI=; b=yWian3dez1LZqseWUr
-	fObgj+jR1r8qmxqtwfbngIZ075vKtWe5KnrJnHuAM9gF9o878YRGmphyHOeneJOA
-	WheWJC+YDzI1NQDFPubh5YQxx7u6Q0AvLLtZrkDHaLFPrnluevRWHvmXdVviUogp
-	eTS5tdr0L8Z6JB45xZ8JK6bkGZzpxyYePGYf6Agl6np78I/74tOCGZCbSdMNg8kh
-	hv5PZLFQpGn+4NIYKqCQOZ1E0LlzRfo+LSaMofqgFJo99qfnCp5uR/VUwVR4ituf
-	tRMlw5u/pRe+Mo3PRl7VDVpjkVzRMQiY2gkjQ0QAnxmvfmUN2bxadTzDx02LU/rF
-	fdwA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1698387935; x=1698474335; bh=niBENvPreCyeU
-	InNMjAQ8UtZ3irohQCIpc1sKDG1ywI=; b=MlcLBqOm5CYRy0vXcDYyJhTr1uHHK
-	5tZslE8CXUr6jO5VODSMOH3479r+PncRkycW+KKT0zVeCfrgpByhR58HQp8KEekR
-	ZZ57y8D9JM9G7+9Golg9JVV9T7EYQETmI8FsKIz6e5cmajH87+Bdhlgre+VyHoU4
-	m0SoNvy2v4pCScC0lLccbN6RA8FAg6SLTB09gRc2yImNMJZtjFhtC24pk4w3PEh5
-	I885F53qw4A2ru4PtrnqdUppC2DLVWSPZW4SlNs3i5KDHzvr90jXgfW5WdNLy0GA
-	bSHIA4pol4YivfU0eZJgsWlFqApEDKLOyIFtKPVcfhB+G9sLuFLFOkDpA==
-X-ME-Sender: <xms:31c7ZcLTcmh93W0cWIx78cTlPoZwbQ-aisoPH-fPTI3Z1X3K8y05jA>
-    <xme:31c7ZcKR8l233uXD9iGseN32BP8IcFPTwy_X3qQHAM80wWguXZGGaU49ddXl3o1au
-    nSXAaDhxPM43zzaIg>
-X-ME-Received: <xmr:31c7ZcuzdIEMqAzTkVUrUvHP88YZNamkQ24XUVnQ2rQL49N1sOTfoIsPHQ0g21VzMR_yPN-9TXgj0UeuzmhmKh_ZoNDvkaActXjuicXAvTb0mQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrleefgddutdelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:31c7ZZZbQAb9H1XpDaUrVJpb8ztMqKGRk0igd9x--8WUYQ_c5kNRUw>
-    <xmx:31c7ZTaHOzrkBgbBhTZRombBehqra93rrL9NqmMQkPQMA3fS2g0yew>
-    <xmx:31c7ZVCygUEAq23mkejTGXdMbPnYRS1wBPsdPrGyc7pEyMpUcXIUbA>
-    <xmx:31c7ZawDM0mr0GAFaQFUmB54wdNABsducOjA5yArZLYFlFX-_x65pw>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 27 Oct 2023 02:25:34 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 91bb3b70 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 27 Oct 2023 06:25:21 +0000 (UTC)
-Date: Fri, 27 Oct 2023 08:25:30 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH v5 3/3] rev-list: add commit object support in
- `--missing` option
-Message-ID: <ZTtXzg4NGJZzAqfS@tanuki>
-References: <20231024122631.158415-1-karthik.188@gmail.com>
- <20231026101109.43110-1-karthik.188@gmail.com>
- <20231026101109.43110-4-karthik.188@gmail.com>
+	dkim=pass (2048-bit key) header.d=initialcommit-io.20230601.gappssmtp.com header.i=@initialcommit-io.20230601.gappssmtp.com header.b="eVKQ6gpo"
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FAC71B1
+	for <git@vger.kernel.org>; Thu, 26 Oct 2023 23:34:16 -0700 (PDT)
+Received: by mail-pj1-x102d.google.com with SMTP id 98e67ed59e1d1-28001f8079cso1049639a91.2
+        for <git@vger.kernel.org>; Thu, 26 Oct 2023 23:34:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=initialcommit-io.20230601.gappssmtp.com; s=20230601; t=1698388455; x=1698993255; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=juTOwP0Z5sYvEIjJXs4dndxfMuYi35eqDIlZ0HNMuTs=;
+        b=eVKQ6gpoDvD9cTGKrUp6JQSZxd37Q3EHoijFnXnR6c0GHW6MB1Mwv+QiE/LmEvP9eh
+         Ka/1K1xG3vSLgFJTyBf0Tk5xPb1x/F8iKtd051NQkalbdSoM1TPlN9hKYEdFTn1Ac0SD
+         iv3PNdcw77SIVQ8wlJgpH0XEIw9kOtouaXlaSDsgQQae5IufFPwFe0R/C6QJnp9uJNOU
+         WJI66uAeJPgTe7oetQP2AAH9hiRUeZd4P3YlsFWM+iyG+lM6zyEW80Mzsi6negXUEAkC
+         tPII7vcHbRmrg2ySIcY3Kr1DCtF+L4hVv+6zbPiuyKxqY63HCcA5cgWUz2tJql+UAUaY
+         PY4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698388455; x=1698993255;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=juTOwP0Z5sYvEIjJXs4dndxfMuYi35eqDIlZ0HNMuTs=;
+        b=NpVS3GGEThpbyLrX9VMHbZKHnC5wNRtxvfBKyX2ZX/gCgA79IjhHucXtfB0VzVaBIf
+         Jmj4AsHtY/QJWbe4p//9QJK8XZDdTr/cHENBMWjNj7eMLldZXDU/XbNh7Zh6cgOp5bgQ
+         mLORZFIEf6EfZ2tjR+gjH1Fkhvx3nn0ef4qsiGZhDEPOyEjsnoPKQROpfUr72Ohwtea7
+         KnsVpPUPgS1nt0icN3dMl2lE2h7X+AFwOiAvI3+J4bmzegB1A+hEvkb2V7/PskEQ/8Ox
+         ScsmG2OZKw2TaX6CkRE7+MwEIwKyf7c+1ElCmZKlOFyciGPt2GulqDpWedE9wItNip3o
+         4uTw==
+X-Gm-Message-State: AOJu0Yye4pVNyTcpcZP+8xxcVeqYM0Mazy1/3tnPEXTS2dQGSsC+QB6C
+	0LWs0SGNoOe32WaM6z4aPW4+tcZ8lM6Hvj4vW7Y=
+X-Google-Smtp-Source: AGHT+IGUVCVoXr43GtVuzOu6pqI0iiEjUOIMlwN7WfTtobHBk7xsbV8AigVFp0oR1tUGF5hT+7r9Vg==
+X-Received: by 2002:a17:90a:f015:b0:27d:114e:d4a3 with SMTP id bt21-20020a17090af01500b0027d114ed4a3mr1682466pjb.14.1698388455437;
+        Thu, 26 Oct 2023 23:34:15 -0700 (PDT)
+Received: from initialcommit.io (mobile-166-171-123-53.mycingular.net. [166.171.123.53])
+        by smtp.gmail.com with ESMTPSA id q5-20020a17090a750500b00277246e857esm2895252pjk.23.2023.10.26.23.34.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Oct 2023 23:34:14 -0700 (PDT)
+Date: Thu, 26 Oct 2023 23:34:12 -0700
+From: Jacob Stopak <jacob@initialcommit.io>
+To: Emily Shaffer <nasamuffin@google.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v3 1/1] bugreport: include +i in outfile suffix as needed
+Message-ID: <ZTtZ5CbIGETy1ucV.jacob@initialcommit.io>
+References: <20231015034238.100675-2-jacob@initialcommit.io>
+ <20231016214045.146862-1-jacob@initialcommit.io>
+ <20231016214045.146862-2-jacob@initialcommit.io>
+ <ZTrX4PMYtbVT-tUu@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="YAI++KLx/rmyB7XN"
-Content-Disposition: inline
-In-Reply-To: <20231026101109.43110-4-karthik.188@gmail.com>
-
-
---YAI++KLx/rmyB7XN
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <ZTrX4PMYtbVT-tUu@google.com>
 
-On Thu, Oct 26, 2023 at 12:11:09PM +0200, Karthik Nayak wrote:
-> The `--missing` object option in rev-list currently works only with
-> missing blobs/trees. For missing commits the revision walker fails with
-> a fatal error.
->=20
-> Let's extend the functionality of `--missing` option to also support
-> commit objects. This is done by adding a `missing_objects` field to
-> `rev_info`. This field is an `oidset` to which we'll add the missing
-> commits as we encounter them. The revision walker will now continue the
-> traversal and call `show_commit()` even for missing commits. In rev-list
-> we can then check if the commit is a missing commit and call the
-> existing code for parsing `--missing` objects.
->=20
-> A scenario where this option would be used is to find the boundary
-> objects between different object directories. Consider a repository with
-> a main object directory (GIT_OBJECT_DIRECTORY) and one or more alternate
-> object directories (GIT_ALTERNATE_OBJECT_DIRECTORIES). In such a
-> repository, using the `--missing=3Dprint` option while disabling the
-> alternate object directory allows us to find the boundary objects
-> between the main and alternate object directory.
->=20
-> Helped-by: Patrick Steinhardt <ps@pks.im>
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
->  builtin/rev-list.c          |  6 +++
->  list-objects.c              |  3 ++
->  revision.c                  | 17 ++++++++-
->  revision.h                  |  4 ++
->  t/t6022-rev-list-missing.sh | 74 +++++++++++++++++++++++++++++++++++++
->  5 files changed, 102 insertions(+), 2 deletions(-)
->  create mode 100755 t/t6022-rev-list-missing.sh
->=20
-> diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-> index 98542e8b3c..181353dcf5 100644
-> --- a/builtin/rev-list.c
-> +++ b/builtin/rev-list.c
-> @@ -149,6 +149,12 @@ static void show_commit(struct commit *commit, void =
-*data)
-> =20
->  	display_progress(progress, ++progress_counter);
-> =20
-> +	if (revs->do_not_die_on_missing_objects &&
-> +	    oidset_contains(&revs->missing_commits, &commit->object.oid)) {
-> +		finish_object__ma(&commit->object);
-> +		return;
-> +	}
-> +
->  	if (show_disk_usage)
->  		total_disk_usage +=3D get_object_disk_usage(&commit->object);
-> =20
-> diff --git a/list-objects.c b/list-objects.c
-> index 47296dff2f..f4e1104b56 100644
-> --- a/list-objects.c
-> +++ b/list-objects.c
-> @@ -389,6 +389,9 @@ static void do_traverse(struct traversal_context *ctx)
->  		 */
->  		if (!ctx->revs->tree_objects)
->  			; /* do not bother loading tree */
-> +		else if (ctx->revs->do_not_die_on_missing_objects &&
-> +			 oidset_contains(&ctx->revs->missing_commits, &commit->object.oid))
-> +			;
->  		else if (repo_get_commit_tree(the_repository, commit)) {
->  			struct tree *tree =3D repo_get_commit_tree(the_repository,
->  								 commit);
-> diff --git a/revision.c b/revision.c
-> index 219dc76716..738bacad08 100644
-> --- a/revision.c
-> +++ b/revision.c
-> @@ -6,6 +6,7 @@
->  #include "object-name.h"
->  #include "object-file.h"
->  #include "object-store-ll.h"
-> +#include "oidset.h"
->  #include "tag.h"
->  #include "blob.h"
->  #include "tree.h"
-> @@ -1112,6 +1113,9 @@ static int process_parents(struct rev_info *revs, s=
-truct commit *commit,
-> =20
->  	if (commit->object.flags & ADDED)
->  		return 0;
-> +	if (revs->do_not_die_on_missing_objects &&
-> +	    oidset_contains(&revs->missing_commits, &commit->object.oid))
-> +		return 0;
->  	commit->object.flags |=3D ADDED;
-> =20
->  	if (revs->include_check &&
-> @@ -1168,7 +1172,8 @@ static int process_parents(struct rev_info *revs, s=
-truct commit *commit,
->  	for (parent =3D commit->parents; parent; parent =3D parent->next) {
->  		struct commit *p =3D parent->item;
->  		int gently =3D revs->ignore_missing_links ||
-> -			     revs->exclude_promisor_objects;
-> +			     revs->exclude_promisor_objects ||
-> +			     revs->do_not_die_on_missing_objects;
->  		if (repo_parse_commit_gently(revs->repo, p, gently) < 0) {
->  			if (revs->exclude_promisor_objects &&
->  			    is_promisor_object(&p->object.oid)) {
-> @@ -1176,7 +1181,11 @@ static int process_parents(struct rev_info *revs, =
-struct commit *commit,
->  					break;
->  				continue;
->  			}
-> -			return -1;
-> +
-> +			if (revs->do_not_die_on_missing_objects)
-> +				oidset_insert(&revs->missing_commits, &p->object.oid);
-> +			else
-> +				return -1; /* corrupt repository */
->  		}
->  		if (revs->sources) {
->  			char **slot =3D revision_sources_at(revs->sources, p);
-> @@ -3109,6 +3118,7 @@ void release_revisions(struct rev_info *revs)
->  	clear_decoration(&revs->merge_simplification, free);
->  	clear_decoration(&revs->treesame, free);
->  	line_log_free(revs);
-> +	oidset_clear(&revs->missing_commits);
->  }
-> =20
->  static void add_child(struct rev_info *revs, struct commit *parent, stru=
-ct commit *child)
-> @@ -3800,6 +3810,9 @@ int prepare_revision_walk(struct rev_info *revs)
->  				       FOR_EACH_OBJECT_PROMISOR_ONLY);
->  	}
-> =20
-> +	if (revs->do_not_die_on_missing_objects)
-> +		oidset_init(&revs->missing_commits, 0);
-> +
+> > +static void build_path(struct strbuf *buf, const char *dir_path,
+> > +		       const char *prefix, const char *suffix,
+> > +		       time_t t, int *i, const char *ext)
+> > +{
+> > +	struct tm tm;
+> > +
+> > +	strbuf_reset(buf);
+> > +	strbuf_addstr(buf, dir_path);
+> > +	strbuf_complete(buf, '/');
+> > +
+> > +	strbuf_addstr(buf, prefix);
+> > +	strbuf_addftime(buf, suffix, localtime_r(&t, &tm), 0, 0);
+> > +
+> > +	if (*i > 0)
+> > +		strbuf_addf(buf, "+%d", *i);
+> > +
+> > +	strbuf_addstr(buf, ext);
+> > +
+> > +	(*i)++;
+> > +}
+> 
+> I commented on the weirdness of having to decrement i for --diagnose
+> below, but I think I generally just wish that instead of build_path()
+> this function did create_file_with_optional_suffix() and returned the
+> final modified option_suffix(). Better still would be if this function
+> created (or at least tested) all the necessary output paths so you don't
+> end up succeeding in creating a bugreport.txt but failing in creating
+> the diagnostics.zip in some edge case, something like....
 
-We unconditionally clear the oidset now, so shouldn't we also
-unconditionally initialize it?
+So the funny thing is that the existing behavior of the diagnostics file
+just overwrites any existing diagnostics file with the same name, which
+is at odds with how the bugreport throws an error in the case of a
+conflict. I wasn't sure whether it made sense to touch that here since it
+seemed possibly out of the scope of this change, given that there is
+a separate "git diagnose" command to take into account.
 
-Patrick
+But if we keep this behavior it basically means there's no need to test
+the necessary diagnostics output paths when determining the path of the
+bugreport itself, since whatever we pick for the bugreport will just
+overwrite anything for the diagnotics zip if it already exists. The one
+caveat is that any future files created should behave the same way...
 
->  	if (!revs->reflog_info)
->  		prepare_to_use_bloom_filter(revs);
->  	if (!revs->unsorted_input)
-> diff --git a/revision.h b/revision.h
-> index c73c92ef40..94c43138bc 100644
-> --- a/revision.h
-> +++ b/revision.h
-> @@ -4,6 +4,7 @@
->  #include "commit.h"
->  #include "grep.h"
->  #include "notes.h"
-> +#include "oidset.h"
->  #include "pretty.h"
->  #include "diff.h"
->  #include "commit-slab-decl.h"
-> @@ -373,6 +374,9 @@ struct rev_info {
-> =20
->  	/* Location where temporary objects for remerge-diff are written. */
->  	struct tmp_objdir *remerge_objdir;
-> +
-> +	/* Missing commits to be tracked without failing traversal. */
-> +	struct oidset missing_commits;
->  };
-> =20
->  /**
-> diff --git a/t/t6022-rev-list-missing.sh b/t/t6022-rev-list-missing.sh
-> new file mode 100755
-> index 0000000000..40265a4f66
-> --- /dev/null
-> +++ b/t/t6022-rev-list-missing.sh
-> @@ -0,0 +1,74 @@
-> +#!/bin/sh
-> +
-> +test_description=3D'handling of missing objects in rev-list'
-> +
-> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
-> +. ./test-lib.sh
-> +
-> +# We setup the repository with two commits, this way HEAD is always
-> +# available and we can hide commit 1.
-> +test_expect_success 'create repository and alternate directory' '
-> +	test_commit 1 &&
-> +	test_commit 2 &&
-> +	test_commit 3
-> +'
-> +
-> +for obj in "HEAD~1" "HEAD~1^{tree}" "HEAD:1.t"
-> +do
-> +	test_expect_success "rev-list --missing=3Derror fails with missing obje=
-ct $obj" '
-> +		oid=3D"$(git rev-parse $obj)" &&
-> +		path=3D".git/objects/$(test_oid_to_path $oid)" &&
-> +
-> +		mv "$path" "$path.hidden" &&
-> +		test_when_finished "mv $path.hidden $path" &&
-> +
-> +		test_must_fail git rev-list --missing=3Derror --objects \
-> +			--no-object-names HEAD
-> +	'
-> +done
-> +
-> +for obj in "HEAD~1" "HEAD~1^{tree}" "HEAD:1.t"
-> +do
-> +	for action in "allow-any" "print"
-> +	do
-> +		test_expect_success "rev-list --missing=3D$action with missing $obj" '
-> +			oid=3D"$(git rev-parse $obj)" &&
-> +			path=3D".git/objects/$(test_oid_to_path $oid)" &&
-> +
-> +			# Before the object is made missing, we use rev-list to
-> +			# get the expected oids.
-> +			git rev-list --objects --no-object-names \
-> +				HEAD ^$obj >expect.raw &&
-> +
-> +			# Blobs are shared by all commits, so evethough a commit/tree
-> +			# might be skipped, its blob must be accounted for.
-> +			if [ $obj !=3D "HEAD:1.t" ]; then
-> +				echo $(git rev-parse HEAD:1.t) >>expect.raw &&
-> +				echo $(git rev-parse HEAD:2.t) >>expect.raw
-> +			fi &&
-> +
-> +			mv "$path" "$path.hidden" &&
-> +			test_when_finished "mv $path.hidden $path" &&
-> +
-> +			git rev-list --missing=3D$action --objects --no-object-names \
-> +				HEAD >actual.raw &&
-> +
-> +			# When the action is to print, we should also add the missing
-> +			# oid to the expect list.
-> +			case $action in
-> +			allow-any)
-> +				;;
-> +			print)
-> +				grep ?$oid actual.raw &&
-> +				echo ?$oid >>expect.raw
-> +				;;
-> +			esac &&
-> +
-> +			sort actual.raw >actual &&
-> +			sort expect.raw >expect &&
-> +			test_cmp expect actual
-> +		'
-> +	done
-> +done
-> +
-> +test_done
-> --=20
-> 2.42.0
->=20
+But I get that this is perhaps inconsistent and it might be worth it to
+make "git diagnose" work the same way as bugreport so it makes more sense
+to do the kind of validations you mentioned.
 
---YAI++KLx/rmyB7XN
-Content-Type: application/pgp-signature; name="signature.asc"
+> build_suffix(..., &option_suffix) {
+>   ... build timestamp ...
+>   while (...)
+>     for (final_path in eventual_paths) {
+>     	err = select(final_path);
+> 	if (err)
+> 	  final_path = strcat(most_of_path, i)
+> 	else
+> 	  break
+> (Yeah, that's very handwavey, but I hope you see what I'm getting at.)
+> 
+> Really, though, I mostly don't think I like leaving the control variable i raw
+> to the calling scope and making it be manipulated later. Fancy
+> pre-guessing-path-availability aside, I think you could achieve a more
+> pleasant solution even by letting build_path() become
+> create_file_with_optional_suffix() (that reports the optional suffix
+> eventually settled on).
 
------BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmU7V9kACgkQVbJhu7ck
-PpSo3xAApkHTdiHsav1x58RmTCHwh1SPF9wOm1B1W6yu+IUSCbHv6atlDtLm7m1w
-hyrOvQU9Ps/pRYDYspylipzJtDJDEjUCuSO6MefKuknMyxxbSs2MRhvtWiAo0tAN
-/9MtS2Ywfg7vunsAxG8ESkodEnSZG9BKFbQw1tx1r9JgJtDeK88wJQOP5xbyBZMy
-OssJaj6VheRCbrlgu6ZbjPc3uHm8YpWG6q2Bg/QRT694rCQqDubql5yO5nLyfL3i
-QmLrTL3f4xM4kK0/l6bN2PhulPMrpFvTLngtY3zMNasNcPgfvhdIHWGSZcRTK/6Q
-t9ypkhf9cU86rqAQdnLYeUaRKUk3nZ1YO417RyFCw96XOotn4pAvVU+5hiR8GTSr
-EJVn/3s0tOT7rQE6rW59AVgoXeidi7TGP7oJx4f4pgQrqbdC1LHgpabXjRAwMKtw
-AnVkqKvceoNPHJVfism2dHctnwjnH9zPBx8gSIeGRGJ4CpO8R/Y3uTe+sjrSeEDP
-NnanuPOllAOQzO3IlZrmeuo36PToPgd8bp8UibgtElhECG7e1ukvbDXbcuRxqmou
-xUUGdOUd2a7cXDZG6NYN5izLGb5FATiWTE2HkzPYwDVjBgCZ9l3nNDNkna4KL2+j
-qfTMHf0MQP1Zy627XKKYovV0quXzZfLD8sdInbVOHgwsSEZvl58=
-=QNAH
------END PGP SIGNATURE-----
+Hmm... so when you say "create_file_with_optional_suffix", do you mean
+a function that tests a set of paths to find the minimum incremented
+suffix that will work for all the paths? Would it use the current method
+the patch uses of trying to create the files and if creation fails we
+know the file exists -> increment -> try again? Repeat until all the
+files are able to be created and make sure to clean up any extras?
+(And maybe just clean up everything since the actual files with content
+will be created later on, now that the suffix is known).
 
---YAI++KLx/rmyB7XN--
+An alternative could be to wrap `build_path()` in a function that does
+this work, locally scope `i` in it, call build_path on each needed path,
+and test creation until all paths are valid, clean up all the paths,
+then return the suffix.
+
+> > +	if (!strlen(option_suffix))
+> > +		option_suffix = "%Y-%m-%d-%H%M";
+> > +	else
+> > +		option_suffix_is_from_user = 1;
+> 
+> Looking at where this is used, it looks like you're saying "if the user
+> specified the suffix manually and has this problem, then that sucks for
+> them, they put their own foot in it".
+>
+> But I don't know if I necessarily
+> follow that logic - I'd just as soon drop the exception, append an int
+> to the user-provided suffix, and document that we'll do that in the
+> manpage.
+
+Haha - it's interesting how we each interpreted the user's experience here,
+and I was a bit torn about this too. But here are my thoughts on it:
+
+If the user specifies their own suffix, it seems more natural and even
+expected for them to just get an error if a file with that name already
+exists. To me it's not that they put their foot in anything, it's that
+they asked for a specific thing that we can't deliver since it's already
+taken, so just let them know so they can either delete the existing one
+or alter the custom suffix. Incremeting the filename without telling them
+in this case might not be what they actually want, we're kindof guessing.
+
+However, in the default case where no suffix is specified, the user likely
+has no assumption or awareness about the suffix at all, which is why it
+felt odd to throw an error out of the blue if the default suffix happens
+to conflict with an existing file that was also created by default. The
+user didn't ask for anything specific in this case, so would likely be
+confused as to why they are getting an error when it just worked a second
+ago. So I was thinking we can just handle it gracefully and give them the
+incremented report.
+
+> (This isn't something I feel strongly about, except that I think it
+> makes the code harder to follow for not very notable user benefit. I
+> also didn't look through the reviews up until now, so if this was
+> already hashed back and forth, just go ahead and ignore me.)
+
+Setting up the default variables like this was discussed, but not the
+difference in behavior based on whether the user specifies a suffix.
+Altho I do agree that we sacrifice some consistency here and it does add
+an extra pathway to the code, imo there is a good enough reason to do it
+as described above - to me it makes things more intuitive to the user.
+
+> > +		/* fopen doesn't offer us an O_EXCL alternative, except with glibc. */
+> > +		report = open(report_path.buf, O_CREAT | O_EXCL | O_WRONLY, 0666);
+> > +		if (report < 0 && errno == EEXIST && !option_suffix_is_from_user) {
+> > +			build_path(&report_path, prefixed_filename,
+> > +				   "git-bugreport-", option_suffix, now, &i,
+> > +				   ".txt");
+> > +			goto again;
+> > +		} else if (report < 0) {
+> Nit, but the double-checking of (report < 0) bothers me a little. Is it
+> nicer if it's nested?
+> 
+> 	if (report < 0) {
+> 		if (errno == EEXIST) {
+> 			build_path(...);
+> 			goto again;
+> 		}
+> 
+> 		die_errno(_(...));
+> 	}
+> 
+> I like it a little more, but that's up to taste, I suppose.
+
+I like yours better too :)
+
+> > +			die_errno(_("unable to open '%s'"), report_path.buf);
+> > +		}
+> >  
+> >  	if (write_in_full(report, buffer.buf, buffer.len) < 0)
+> >  		die_errno(_("unable to write to %s"), report_path.buf);
+> >  
+> >  	close(report);
+> >  
+> > +	/* Prepare diagnostics, if requested */
+> > +	if (diagnose != DIAGNOSE_NONE) {
+> > +		struct strbuf zip_path = STRBUF_INIT;
+> > +		i--; /* Undo last increment to match zipfile suffix to bugreport */
+> I understand why you're doing this, but I'd rather see it decremented
+> (or more care taken in the increment logic elsewhere) closer to where it
+> is being increment-and-checked. If someone wants to add another
+> associated file besides the report and the diagnostics, then the logic
+> for the decrement becomes complicated (what happens if I run `git
+> bugreport --diagnostics --desktop_screencap`? what if I run only `git
+> bugreport --desktop_screencap`?). Even without that potential pain,
+> reading this comment here means I have to say "oh wait, what did I read
+> above? hold on, let me page it back in".
+> 
+
+Yeah these are great points and I completely agree! Even if we stick with
+this method of doing things, the `i` decrement should be moved out of the
+conditional and up closer to where the value of `i` is set.
+
+> > +		build_path(&zip_path, prefixed_filename, "git-diagnostics-",
+> > +			   option_suffix, now, &i, ".zip");
+> > +
+> > +		if (create_diagnostics_archive(&zip_path, diagnose))
+> > +			die_errno(_("unable to create diagnostics archive %s"),
+> > +				  zip_path.buf);
+> > +
+> > +		strbuf_release(&zip_path);
+> > +	}
+> > +
+> >  	/*
+> >  	 * We want to print the path relative to the user, but we still need the
+> >  	 * path relative to us to give to the editor.
+> > -- 
+> > 2.42.0.297.g36452639b8
+> 
+> Last thing: it probably makes sense to mention this new behavior in the
+> manpage, especially if you'll apply that behavior to user-provided
+> suffixes too.
+
+Sure I can add some docs to the manpage, altho as described above I
+prefer throwing an error instead of adding the increment to the
+user-provided suffixes :D
+
+> Thanks for your effort on the patch so far and again, sorry for the late
+> reply.
+>  - Emily
+
+No worries at all and thanks a lot for your review! I'll start working
+on a v3 - it would be great to get your thoughts on the unresolved items.
