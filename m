@@ -1,46 +1,313 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D7E9460
-	for <git@vger.kernel.org>; Sat, 28 Oct 2023 15:27:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from bluemchen.kde.org (bluemchen.kde.org [209.51.188.41])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2406FCF
-	for <git@vger.kernel.org>; Sat, 28 Oct 2023 08:27:18 -0700 (PDT)
-Received: from ugly.fritz.box (localhost [127.0.0.1])
-	by bluemchen.kde.org (Postfix) with ESMTP id A7FC62424E;
-	Sat, 28 Oct 2023 11:27:16 -0400 (EDT)
-Received: by ugly.fritz.box (masqmail 0.3.6-dev, from userid 1000)
-	id 1qwlDY-uUL-00; Sat, 28 Oct 2023 17:27:16 +0200
-Date: Sat, 28 Oct 2023 17:27:16 +0200
-From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-To: Liam Beguin <liambeguin@gmail.com>
-Cc: Kousik Sanagavarapu <five231003@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] pretty: add '%aA' to show domain-part of email
- addresses
-Message-ID: <ZT0oVKPzVi5TsrdS@ugly>
-References: <20231026-pretty-email-domain-v1-2-5d6bfa6615c0@gmail.com>
- <20231027184357.21049-1-five231003@gmail.com>
- <20231028022048.GA1784118@shaak>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C32FC1D
+	for <git@vger.kernel.org>; Sat, 28 Oct 2023 15:39:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="FDmeShWh"
+Received: from APC01-SG2-obe.outbound.protection.outlook.com (mail-sgaapc01olkn2080.outbound.protection.outlook.com [40.92.53.80])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60504CF
+	for <git@vger.kernel.org>; Sat, 28 Oct 2023 08:39:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=BxF2Qm3M7De6CPCsZ92yzMV7NDiGVYztg1IGMS71re7ecCrFP9h08gYZ9MIP6RNaGHnxKdN2lAkplTmrkAoszBuFkQyZbPQHj4Z5q4Tz1PVfSjg8eRNwLg1G+UR/HvqWB4k3G0nF9dQFx8FM9TsCe23syfvUpYkbGPM6MulI4ivmx4/qZa1eiy1EHSOjBb0kNEYgn065fgdZIgovHKfEMUSFkRrO6BLQGn2jvpqqpzrVZk1XvTYx7XQx3+6AaL38VssoT5veeB38WKpFgNOVI0lkn/1JR2+h3CqMJN2m2qA2PdcH/U1zg6ShdpdeUZX1GasfJ5PZ4h3dr3qvFK6mpQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=GIj6N+ISKR6e55+UxARNni/tzEQ3Sm/aKm56PKYTXaw=;
+ b=RgMLPKn8wBRR9yRwxrcsrrt4u3jRb2nKsrZ1HCNGwf38K0vmgEkNu6MQeMddVCfy3EUTxfG995DhCqLdixlT0XLANskMecVMg5BBLaWPTuydO5WA05HqJkGARoAuLxzwP5SRcjPNThOYQ/JW4SmOry8RYQMtPuicWSK5TJOzlxzg2nq7S/d5CTAvv1CkCNDo5EiRH3pmxxzmdoPf9Fa2mlKis8cyi3RbTV26qg3ZJIc8250rjrskUmXSfdhXnVGznG4hZ4IXy4HLD9AookhsqXdJlo06ZoBw2JkSspk8WqK2D6QpZwxqtw1Zb+GsfXFjlcqyNLUpo+Lqv5skNudGLA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=GIj6N+ISKR6e55+UxARNni/tzEQ3Sm/aKm56PKYTXaw=;
+ b=FDmeShWh4qDUmcb2lQnf1qvrSrSsEJRYIJsWlaPujdLz1AoI30oQ0UqedEg2TuW85aJ+p0p7Mc8vsAVFoFXVZxD/tj10JC3IdMDJERb60vdj5h9QkPfLvzkXevdPruWgfFnld52DD1jcnNfYErgmMS//tbsiL2Z+PcirKoHeg/zYseyu2ZjgNISToeky4963mq5nCD9yp+Hu8434lsoDLEDqb6jyXf3Y/6Wn2ZLM/VHuL0MJtJsaLXlMkHyEjtruOWEzuLcmXJqtmLqGmuVZNLqIY01p3YZ23tcPEyncO2vduz8TC+gwv7p2RqQOc3gJzJhz6vErfjUajGANeTFKAA==
+Received: from PSBPR01MB3544.apcprd01.prod.exchangelabs.com
+ (2603:1096:301:3::10) by SEZPR01MB4664.apcprd01.prod.exchangelabs.com
+ (2603:1096:101:ce::7) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6933.24; Sat, 28 Oct
+ 2023 15:39:05 +0000
+Received: from PSBPR01MB3544.apcprd01.prod.exchangelabs.com
+ ([fe80::3838:f3ee:2ddf:e016]) by PSBPR01MB3544.apcprd01.prod.exchangelabs.com
+ ([fe80::3838:f3ee:2ddf:e016%4]) with mapi id 15.20.6933.019; Sat, 28 Oct 2023
+ 15:39:05 +0000
+From: h hm <haoming9245@outlook.com>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: [Bugs] Hello,I can't build git by ./configure
+Thread-Topic: [Bugs] Hello,I can't build git by ./configure
+Thread-Index: AQHaCbPVFIyqo/LiZkCdRsSuzhkBQA==
+Date: Sat, 28 Oct 2023 15:39:05 +0000
+Message-ID:
+ <PSBPR01MB3544370EEA032FA47778135DBDA3A@PSBPR01MB3544.apcprd01.prod.exchangelabs.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator:
+msip_labels:
+x-tmn: [xGO0LG3+G8ii6X1kgc6dRKDI8MGOM2e2]
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PSBPR01MB3544:EE_|SEZPR01MB4664:EE_
+x-ms-office365-filtering-correlation-id: 4a517c72-f296-4d81-fc19-08dbd7cc04a2
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:
+ u6IAhbCuB9gz+0NOOgGF7sExxFGmF9PAJXicj4+7yZEP/5TwRHUvM/Eh7fYt36tG3iIDLcBJgYI7lxj4lnT9LfTm0smkN+HSMnaq4hN/05E2C3w2q92XJZ2FnL4717c8pevrxjAy+1/XH06fqiK1i+W23Ivw2SNUyovFULEN2HL5m6u9mZy211tv6kEkG7C2PCVrnL34o8QBggTZ9RXm0t0C2kJtD5W2SWcIbOlmusbhpRGS9ICWJ7s9cxxw6AdSN1a6/+c94zSil7IbuSDQPVlPYIVZHKua4AZN70XSawa11FYc5VVZFIzZV6SVD6pskwKkX4hqiSndedV0pAWXCamzGV57Y56NUkJ2P0szf+JN6Pch3XgMQzap1DUf4GHoM1Blk+M4EXyFLgKgFmxx9ZJRXK/pG7UdsMpcM4uILuEHuqoFtG/iQVedGVnVXPxWtskImwvCoyLxnTioFqQWCrNdnQ1obIeCQIyH2p9guZqFiVm3cbadSqjYq5tEZHXecu4aOWGtgOPkrNt33W4yI2QLEIiIyR4KCOFY3O9Agm5vE/jiprS7W57iHS3gaVzY
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?gb2312?B?bXQ4SnhuWEFWY2pxUVRPRFVxdFdWWHpqSklQSmdyZ3RYQ1NXQ3haYzZ6cWpD?=
+ =?gb2312?B?M21YdUdKeS9tcmVsM1lOQ3ErMWNiTzg5b1dWNkdwNzhjK0N3aGxnM2N3a096?=
+ =?gb2312?B?UXlIUGkyYjJQRTI2ZUdZaHp0elVjdElvUzF4czRFTjFYK3NjOER5V2dsanZE?=
+ =?gb2312?B?amdvbDNWUFJIS3BlUW85T1o1TzJyY3JWUWIrbFRyM21WYVBxcHk3cTBZbjFy?=
+ =?gb2312?B?ZDVZNDFyaUJEamZOcjlLT0VQMlo3QUV4R1orclJrQWNObDBkM2pOU2xDQS9h?=
+ =?gb2312?B?Z2VFTUREa0RVWVdtK0xnR1ZUai9kOW9PTlRITUdyVTJlMDVBQXR6QjJ3aGJF?=
+ =?gb2312?B?MnBkZFRscnlRZ0FRL0tuNDhaK3pQVXU1cU5zUWxpQmR1dnRFNWtKeC80a1Qx?=
+ =?gb2312?B?NjlMZmNOWDhzeEw4WW5sQWhsMDFqNG1VVHd6NUxHUUIvTHM3ZFh3WGdQRlp5?=
+ =?gb2312?B?YkZNVUlDUWxLNTNmU2p2MlRUWVZzT3V6djFNYVdzT2pxMHNvcHQxdHdHZ2d6?=
+ =?gb2312?B?d2szeVAzbVQ2elB4eHowV1AyVGdTVU1KUDY1U25ZZTJPMDU5Wm9hMFo1azJz?=
+ =?gb2312?B?ajNwYUZ1Q1RIVnMrYUJBOHVYb3dQblRVblA3bisxOTJKZXNlMnd1MTdkeWQ1?=
+ =?gb2312?B?T3R1ZUJyM3VoalJyMzNyOHN2TGorMUM5YWVDRmEvazlVNXVRLzVEeUplQ1hr?=
+ =?gb2312?B?SXY0ZkZDcVJzVjBlbHQyV3Zoa0grRjhrZEdLZ0M5QmdwazN4MmlQWTlUOE1T?=
+ =?gb2312?B?NWlFS0Exb3BmUDV0SG1KS0NEQ1JmQ0FKaytBYXh2NlhCdGtIdVNKZjlSSFo5?=
+ =?gb2312?B?WmtOaGJXa2d3MUQ4MWNOM0dOSEFJbmhUdFNhazlRNDkySWxscnlMR2gydHFl?=
+ =?gb2312?B?aHFaSk1xRFZjVHlEa04veXZIT1AzVXc3bDZQV3BPTUlFbjJRRkhhQUwvbXFC?=
+ =?gb2312?B?KzY3STN4RDhyaU0yQjBDRURwUVUzTzJyVll3ZU96VWhWQ2Fqd0d1YlZ1WlRT?=
+ =?gb2312?B?bzFiU3Z4cVVrZmFOR3pSc3RyTitNNTdHSFRRbFlGZ0E1K0R0VnNrNDBOOHFH?=
+ =?gb2312?B?Nm5WTW8wciswQjdnQTNUQ3l4SHQyNVF4S0ZXUHprOVY5UzNxVlBVVnIzdzNu?=
+ =?gb2312?B?cjlTWk0xU0x6TlZaN0J1VEY4aS9MZTlBemZ3R2VjeVhQVW5tN3k2UzZKWUho?=
+ =?gb2312?B?Zjk5bkR0Y3MwdWZ6SkIwQi9QUlYvKy8xTXpsdVBzb2Y5R1ZLTFBucGpLcUpx?=
+ =?gb2312?B?Tk5zVzhoMm1EcG8vOG9aSkxTUlVqbGxKMXNkbDdOQTQwSEFzMnlNc0ZMa1ZK?=
+ =?gb2312?B?c1ROMkVsUVNnR2duclNra0s2Q3N0WUVhL0I1UXJUOG4xOEhzUVFaWk04S0JS?=
+ =?gb2312?B?Y1JRbDd4M1BmbVdHcThIRHE0NjZ3N0J4NFN6OUpISTBzZlUxN1d2TmVjTXJW?=
+ =?gb2312?B?OTNCWTVsa0tyb0F5ZEFCVUdVWGlUb2xManEzMjVPa1pySnRPSFVtOFR6L2JU?=
+ =?gb2312?B?SlNtV2tydHlGaXNqcnVUOWh4Mm93S1ZlL2tKZkRsNmREMlJDUkMrek0zRklU?=
+ =?gb2312?B?a0NVQVBlL1R4endFRE5SbXU4TFp6dDZpV3dGK1ZkV1lycXVaUWdUcnZ5a2or?=
+ =?gb2312?B?NTZWdGhkeUlGSmZSYUhtSWVpUDV6OWc9PQ==?=
+Content-Type: multipart/mixed;
+	boundary="_004_PSBPR01MB3544370EEA032FA47778135DBDA3APSBPR01MB3544apcp_"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20231028022048.GA1784118@shaak>
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PSBPR01MB3544.apcprd01.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4a517c72-f296-4d81-fc19-08dbd7cc04a2
+X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Oct 2023 15:39:05.3810
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR01MB4664
 
-On Fri, Oct 27, 2023 at 10:20:48PM -0400, Liam Beguin wrote:
->I agree, %aa isn't the best, I'm definitly opened to suggestions.
->My preference would've been for something like %ad, but that's already
->taken.
+--_004_PSBPR01MB3544370EEA032FA47778135DBDA3APSBPR01MB3544apcp_
+Content-Type: multipart/alternative;
+	boundary="_000_PSBPR01MB3544370EEA032FA47778135DBDA3APSBPR01MB3544apcp_"
+
+--_000_PSBPR01MB3544370EEA032FA47778135DBDA3APSBPR01MB3544apcp_
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
+
+SSB3YW50IHRvIGJ1aWxkIGNvbW1pdCAyZThlNzdjIGluIHRoZSBtYXN0ZXINCg0KU3RlcDoNCmNk
+IGdpdA0KbWFrZSBjb25maWd1cmUNCi4vY29uZmlndXJlDQoNCk91dDoNCmNvbmZpZ3VyZTogU2V0
+dGluZyBsaWIgdG8gJ2xpYicgKHRoZSBkZWZhdWx0KQ0KY29uZmlndXJlOiBXaWxsIHRyeSAtcHRo
+cmVhZCB0aGVuIC1scHRocmVhZCB0byBlbmFibGUgUE9TSVggVGhyZWFkcy4NCmNvbmZpZ3VyZTog
+Q0hFQ0tTIGZvciBzaXRlIGNvbmZpZ3VyYXRpb24NCmNoZWNraW5nIGZvciBnY2MuLi4gZ2NjDQpj
+aGVja2luZyB3aGV0aGVyIHRoZSBDIGNvbXBpbGVyIHdvcmtzLi4uIG5vDQpjb25maWd1cmU6IGVy
+cm9yOiBpbiBgL2hvbWUvaGFvbWkvZ2l0JzoNCmNvbmZpZ3VyZTogZXJyb3I6IEMgY29tcGlsZXIg
+Y2Fubm90IGNyZWF0ZSBleGVjdXRhYmxlcw0KU2VlIGBjb25maWcubG9nJyBmb3IgbW9yZSBkZXRh
+aWxzDQoNCkJ1dCBiZWZvcmUgdGhhdCBjb21taXQgLGJ1aWxkIG9rDQpUaGVyZSBpcyBteSBjb25m
+aWcubG9nDQo=
+
+--_000_PSBPR01MB3544370EEA032FA47778135DBDA3APSBPR01MB3544apcp_
+Content-Type: text/html; charset="gb2312"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dgb2312">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, =
+Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);" clas=
+s=3D"elementToProof ContentPasted0">
+I want to build commit 2e8e77c in the master</div>
+<div style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, =
+Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);" clas=
+s=3D"elementToProof ContentPasted0">
+<br>
+</div>
+<div style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, =
+Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);" clas=
+s=3D"elementToProof ContentPasted0">
+Step:</div>
+<div style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, =
+Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);" clas=
+s=3D"elementToProof ContentPasted0">
+cd git</div>
+<div style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, =
+Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);" clas=
+s=3D"elementToProof ContentPasted0">
+make configure</div>
+<div style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, =
+Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);" clas=
+s=3D"elementToProof ContentPasted0">
+./configure</div>
+<div style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, =
+Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);" clas=
+s=3D"elementToProof ContentPasted0 ContentPasted1">
+<div class=3D"ContentPasted1"><br>
+</div>
+<div class=3D"ContentPasted1">Out:</div>
+<div class=3D"ContentPasted1">configure: Setting lib to 'lib' (the default)=
+</div>
+<div class=3D"ContentPasted1">configure: Will try -pthread then -lpthread t=
+o enable POSIX Threads.</div>
+<div class=3D"ContentPasted1">configure: CHECKS for site configuration</div=
 >
-H for host would be available. (not to be confused with h for human.)
+<div class=3D"ContentPasted1">checking for gcc... gcc</div>
+<div class=3D"ContentPasted1">checking whether the C compiler works... no</=
+div>
+<div class=3D"ContentPasted1">configure: error: in `/home/haomi/git':</div>
+<div class=3D"ContentPasted1">configure: error: C compiler cannot create ex=
+ecutables</div>
+<div class=3D"ContentPasted1">See `config.log' for more details</div>
+<div class=3D"ContentPasted1"><br>
+</div>
+<div class=3D"ContentPasted1">But before that commit ,build ok</div>
+</div>
+<div style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, =
+Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);" clas=
+s=3D"elementToProof">
+There is my config.log<br>
+</div>
+</body>
+</html>
 
-in retrospect i'd say that it was unwise to use separate letters for the 
-various forms of dates - a set of qualifiers that would be applied to a 
-single specifier would be nicer. ah well ...
+--_000_PSBPR01MB3544370EEA032FA47778135DBDA3APSBPR01MB3544apcp_--
 
-regards
+--_004_PSBPR01MB3544370EEA032FA47778135DBDA3APSBPR01MB3544apcp_
+Content-Type: application/octet-stream; name="config.log"
+Content-Description: config.log
+Content-Disposition: attachment; filename="config.log"; size=6380;
+	creation-date="Sat, 28 Oct 2023 15:32:33 GMT";
+	modification-date="Sat, 28 Oct 2023 15:33:03 GMT"
+Content-Transfer-Encoding: base64
+
+VGhpcyBmaWxlIGNvbnRhaW5zIGFueSBtZXNzYWdlcyBwcm9kdWNlZCBieSBjb21waWxlcnMgd2hp
+bGUKcnVubmluZyBjb25maWd1cmUsIHRvIGFpZCBkZWJ1Z2dpbmcgaWYgY29uZmlndXJlIG1ha2Vz
+IGEgbWlzdGFrZS4KCkl0IHdhcyBjcmVhdGVkIGJ5IGdpdCBjb25maWd1cmUgMi40Mi5HSVQsIHdo
+aWNoIHdhcwpnZW5lcmF0ZWQgYnkgR05VIEF1dG9jb25mIDIuNzEuICBJbnZvY2F0aW9uIGNvbW1h
+bmQgbGluZSB3YXMKCiAgJCAuL2NvbmZpZ3VyZSBwcmVmaXg9L3Vzci9sb2NhbC9naXQKCiMjIC0t
+LS0tLS0tLSAjIwojIyBQbGF0Zm9ybS4gIyMKIyMgLS0tLS0tLS0tICMjCgpob3N0bmFtZSA9IERF
+U0tUT1AtNFRUUEhNUgp1bmFtZSAtbSA9IHg4Nl82NAp1bmFtZSAtciA9IDMuNC45LTEueDg2XzY0
+CnVuYW1lIC1zID0gQ1lHV0lOX05ULTEwLjAtMjU5ODIKdW5hbWUgLXYgPSAyMDIzLTA5LTA2IDEx
+OjE5IFVUQwoKL3Vzci9iaW4vdW5hbWUgLXAgPSB1bmtub3duCi9iaW4vdW5hbWUgLVggICAgID0g
+dW5rbm93bgoKL2Jpbi9hcmNoICAgICAgICAgICAgICA9IHg4Nl82NAovdXNyL2Jpbi9hcmNoIC1r
+ICAgICAgID0gdW5rbm93bgovdXNyL2NvbnZleC9nZXRzeXNpbmZvID0gdW5rbm93bgovdXNyL2Jp
+bi9ob3N0aW5mbyAgICAgID0gdW5rbm93bgovYmluL21hY2hpbmUgICAgICAgICAgID0gdW5rbm93
+bgovdXNyL2Jpbi9vc2xldmVsICAgICAgID0gdW5rbm93bgovYmluL3VuaXZlcnNlICAgICAgICAg
+ID0gdW5rbm93bgoKUEFUSDogL3Vzci9sb2NhbC9iaW4vClBBVEg6IC91c3IvYmluLwpQQVRIOiAv
+Y3lnZHJpdmUvYy9XSU5ET1dTL3N5c3RlbTMyLwpQQVRIOiAvY3lnZHJpdmUvYy9XSU5ET1dTLwpQ
+QVRIOiAvY3lnZHJpdmUvYy9XSU5ET1dTL1N5c3RlbTMyL1diZW0vClBBVEg6IC9jeWdkcml2ZS9j
+L1dJTkRPV1MvU3lzdGVtMzIvV2luZG93c1Bvd2VyU2hlbGwvdjEuMC8KUEFUSDogL2N5Z2RyaXZl
+L2MvV0lORE9XUy9TeXN0ZW0zMi9PcGVuU1NILwpQQVRIOiAvY3lnZHJpdmUvYy9Qcm9ncmFtIEZp
+bGVzL2RvdG5ldC8KUEFUSDogL2N5Z2RyaXZlL2MvUHJvZ3JhbSBGaWxlcy9CYW5kaXppcC8KUEFU
+SDogL2N5Z2RyaXZlL2MvVXNlcnMvaGFvbWkvQXBwRGF0YS9Mb2NhbC9NaWNyb3NvZnQvV2luZG93
+c0FwcHMvCgoKIyMgLS0tLS0tLS0tLS0gIyMKIyMgQ29yZSB0ZXN0cy4gIyMKIyMgLS0tLS0tLS0t
+LS0gIyMKCmNvbmZpZ3VyZToyNjI4OiBTZXR0aW5nIGxpYiB0byAnbGliJyAodGhlIGRlZmF1bHQp
+CmNvbmZpZ3VyZToyNjUyOiBXaWxsIHRyeSAtcHRocmVhZCB0aGVuIC1scHRocmVhZCB0byBlbmFi
+bGUgUE9TSVggVGhyZWFkcy4KY29uZmlndXJlOjI2ODg6IENIRUNLUyBmb3Igc2l0ZSBjb25maWd1
+cmF0aW9uCmNvbmZpZ3VyZToyODQyOiBjaGVja2luZyBmb3IgZ2NjCmNvbmZpZ3VyZToyODYzOiBm
+b3VuZCAvdXNyL2Jpbi9nY2MKY29uZmlndXJlOjI4NzQ6IHJlc3VsdDogZ2NjCmNvbmZpZ3VyZToz
+MjI3OiBjaGVja2luZyBmb3IgQyBjb21waWxlciB2ZXJzaW9uCmNvbmZpZ3VyZTozMjM2OiBnY2Mg
+LS12ZXJzaW9uID4mNQpnY2MgKEdDQykgMTEuNC4wCkNvcHlyaWdodCAoQykgMjAyMSBGcmVlIFNv
+ZnR3YXJlIEZvdW5kYXRpb24sIEluYy4KVGhpcyBpcyBmcmVlIHNvZnR3YXJlOyBzZWUgdGhlIHNv
+dXJjZSBmb3IgY29weWluZyBjb25kaXRpb25zLiAgVGhlcmUgaXMgTk8Kd2FycmFudHk7IG5vdCBl
+dmVuIGZvciBNRVJDSEFOVEFCSUxJVFkgb3IgRklUTkVTUyBGT1IgQSBQQVJUSUNVTEFSIFBVUlBP
+U0UuCgpjb25maWd1cmU6MzI0NzogJD8gPSAwCmNvbmZpZ3VyZTozMjM2OiBnY2MgLXYgPiY1ClVz
+aW5nIGJ1aWx0LWluIHNwZWNzLgpDT0xMRUNUX0dDQz1nY2MKQ09MTEVDVF9MVE9fV1JBUFBFUj0v
+dXNyL2xpYi9nY2MveDg2XzY0LXBjLWN5Z3dpbi8xMS9sdG8td3JhcHBlci5leGUKVGFyZ2V0OiB4
+ODZfNjQtcGMtY3lnd2luCkNvbmZpZ3VyZWQgd2l0aDogL21udC9zaGFyZS9jeWdwa2dzL2djYy9n
+Y2MueDg2XzY0L3NyYy9nY2MtMTEuNC4wL2NvbmZpZ3VyZSAtLXNyY2Rpcj0vbW50L3NoYXJlL2N5
+Z3BrZ3MvZ2NjL2djYy54ODZfNjQvc3JjL2djYy0xMS40LjAgLS1wcmVmaXg9L3VzciAtLWV4ZWMt
+cHJlZml4PS91c3IgLS1sb2NhbHN0YXRlZGlyPS92YXIgLS1zeXNjb25mZGlyPS9ldGMgLS1kb2Nk
+aXI9L3Vzci9zaGFyZS9kb2MvZ2NjIC0taHRtbGRpcj0vdXNyL3NoYXJlL2RvYy9nY2MvaHRtbCAt
+QyAtLWJ1aWxkPXg4Nl82NC1wYy1jeWd3aW4gLS1ob3N0PXg4Nl82NC1wYy1jeWd3aW4gLS10YXJn
+ZXQ9eDg2XzY0LXBjLWN5Z3dpbiAtLXdpdGhvdXQtbGliaWNvbnYtcHJlZml4IC0td2l0aG91dC1s
+aWJpbnRsLXByZWZpeCAtLWxpYmV4ZWNkaXI9L3Vzci9saWIgLS13aXRoLWdjYy1tYWpvci12ZXJz
+aW9uLW9ubHkgLS1lbmFibGUtc2hhcmVkIC0tZW5hYmxlLXNoYXJlZC1saWJnY2MgLS1lbmFibGUt
+c3RhdGljIC0tZW5hYmxlLXZlcnNpb24tc3BlY2lmaWMtcnVudGltZS1saWJzIC0tZW5hYmxlLWJv
+b3RzdHJhcCAtLWVuYWJsZS1fX2N4YV9hdGV4aXQgLS13aXRoLWR3YXJmMiAtLXdpdGgtdHVuZT1n
+ZW5lcmljIC0tZW5hYmxlLWxhbmd1YWdlcz1hZGEsYyxjKyssZCxmb3J0cmFuLGx0byxvYmpjLG9i
+ai1jKyssaml0IC0tZW5hYmxlLWdyYXBoaXRlIC0tZW5hYmxlLXRocmVhZHM9cG9zaXggLS1lbmFi
+bGUtbGliYXRvbWljIC0tZW5hYmxlLWxpYmdvbXAgLS1lbmFibGUtbGlicXVhZG1hdGggLS1lbmFi
+bGUtbGlicXVhZG1hdGgtc3VwcG9ydCAtLWRpc2FibGUtbGlic3NwIC0tZW5hYmxlLWxpYmFkYSAt
+LWRpc2FibGUtc3ltdmVycyAtLWRpc2FibGUtbXVsdGlsaWIgLS13aXRoLWdudS1sZCAtLXdpdGgt
+Z251LWFzIC0td2l0aC1jbG9vZy1pbmNsdWRlPS91c3IvaW5jbHVkZS9jbG9vZy1pc2wgLS13aXRo
+b3V0LWxpYmljb252LXByZWZpeCAtLXdpdGhvdXQtbGliaW50bC1wcmVmaXggLS13aXRoLXN5c3Rl
+bS16bGliIC0tZW5hYmxlLWxpbmtlci1idWlsZC1pZCAtLXdpdGgtZGVmYXVsdC1saWJzdGRjeHgt
+YWJpPWdjYzQtY29tcGF0aWJsZSAtLWVuYWJsZS1saWJzdGRjeHgtZmlsZXN5c3RlbS10cwpUaHJl
+YWQgbW9kZWw6IHBvc2l4ClN1cHBvcnRlZCBMVE8gY29tcHJlc3Npb24gYWxnb3JpdGhtczogemxp
+YiB6c3RkCmdjYyB2ZXJzaW9uIDExLjQuMCAoR0NDKSAKY29uZmlndXJlOjMyNDc6ICQ/ID0gMApj
+b25maWd1cmU6MzIzNjogZ2NjIC1WID4mNQpnY2M6IGVycm9yOiB1bnJlY29nbml6ZWQgY29tbWFu
+ZC1saW5lIG9wdGlvbiAnLVYnCmdjYzogZmF0YWwgZXJyb3I6IG5vIGlucHV0IGZpbGVzCmNvbXBp
+bGF0aW9uIHRlcm1pbmF0ZWQuCmNvbmZpZ3VyZTozMjQ3OiAkPyA9IDEKY29uZmlndXJlOjMyMzY6
+IGdjYyAtcXZlcnNpb24gPiY1CmdjYzogZXJyb3I6IHVucmVjb2duaXplZCBjb21tYW5kLWxpbmUg
+b3B0aW9uICctcXZlcnNpb24nOyBkaWQgeW91IG1lYW4gJy0tdmVyc2lvbic/CmdjYzogZmF0YWwg
+ZXJyb3I6IG5vIGlucHV0IGZpbGVzCmNvbXBpbGF0aW9uIHRlcm1pbmF0ZWQuCmNvbmZpZ3VyZToz
+MjQ3OiAkPyA9IDEKY29uZmlndXJlOjMyMzY6IGdjYyAtdmVyc2lvbiA+JjUKZ2NjOiBlcnJvcjog
+dW5yZWNvZ25pemVkIGNvbW1hbmQtbGluZSBvcHRpb24gJy12ZXJzaW9uJwpnY2M6IGZhdGFsIGVy
+cm9yOiBubyBpbnB1dCBmaWxlcwpjb21waWxhdGlvbiB0ZXJtaW5hdGVkLgpjb25maWd1cmU6MzI0
+NzogJD8gPSAxCmNvbmZpZ3VyZTozMjY3OiBjaGVja2luZyB3aGV0aGVyIHRoZSBDIGNvbXBpbGVy
+IHdvcmtzCmNvbmZpZ3VyZTozMjg5OiBnY2MgICAgY29uZnRlc3QuYyAgPiY1CmNvbmZpZ3VyZToz
+MjkzOiAkPyA9IDEKY29uZmlndXJlOjMzMzM6IHJlc3VsdDogbm8KY29uZmlndXJlOiBmYWlsZWQg
+cHJvZ3JhbSB3YXM6CnwgLyogY29uZmRlZnMuaCAqLwp8ICNkZWZpbmUgUEFDS0FHRV9OQU1FICJn
+aXQiCnwgI2RlZmluZSBQQUNLQUdFX1RBUk5BTUUgImdpdCIKfCAjZGVmaW5lIFBBQ0tBR0VfVkVS
+U0lPTiAiMi40Mi5HSVQiCnwgI2RlZmluZSBQQUNLQUdFX1NUUklORyAiZ2l0IDIuNDIuR0lUIgp8
+ICNkZWZpbmUgUEFDS0FHRV9CVUdSRVBPUlQgImdpdEB2Z2VyLmtlcm5lbC5vcmciCnwgI2RlZmlu
+ZSBQQUNLQUdFX1VSTCAiIgp8IC8qIGVuZCBjb25mZGVmcy5oLiAgKi8KfCAKfCBpbnQKfCBtYWlu
+ICh2b2lkKQp8IHsKfCAKfCAgIDsKfCAgIHJldHVybiAwOwp8IH0KY29uZmlndXJlOjMzMzg6IGVy
+cm9yOiBpbiBgL2hvbWUvaGFvbWkvZ2l0JzoKY29uZmlndXJlOjMzNDA6IGVycm9yOiBDIGNvbXBp
+bGVyIGNhbm5vdCBjcmVhdGUgZXhlY3V0YWJsZXMKU2VlIGBjb25maWcubG9nJyBmb3IgbW9yZSBk
+ZXRhaWxzCgojIyAtLS0tLS0tLS0tLS0tLS0tICMjCiMjIENhY2hlIHZhcmlhYmxlcy4gIyMKIyMg
+LS0tLS0tLS0tLS0tLS0tLSAjIwoKYWNfY3ZfZW52X0NDX3NldD0KYWNfY3ZfZW52X0NDX3ZhbHVl
+PQphY19jdl9lbnZfQ0ZMQUdTX3NldD1zZXQKYWNfY3ZfZW52X0NGTEFHU192YWx1ZT0KYWNfY3Zf
+ZW52X0NQUEZMQUdTX3NldD0KYWNfY3ZfZW52X0NQUEZMQUdTX3ZhbHVlPQphY19jdl9lbnZfQ1BQ
+X3NldD0KYWNfY3ZfZW52X0NQUF92YWx1ZT0KYWNfY3ZfZW52X0xERkxBR1Nfc2V0PQphY19jdl9l
+bnZfTERGTEFHU192YWx1ZT0KYWNfY3ZfZW52X0xJQlNfc2V0PXNldAphY19jdl9lbnZfTElCU192
+YWx1ZT0KYWNfY3ZfZW52X2J1aWxkX2FsaWFzX3NldD0KYWNfY3ZfZW52X2J1aWxkX2FsaWFzX3Zh
+bHVlPQphY19jdl9lbnZfaG9zdF9hbGlhc19zZXQ9CmFjX2N2X2Vudl9ob3N0X2FsaWFzX3ZhbHVl
+PQphY19jdl9lbnZfdGFyZ2V0X2FsaWFzX3NldD0KYWNfY3ZfZW52X3RhcmdldF9hbGlhc192YWx1
+ZT0KYWNfY3ZfcHJvZ19hY19jdF9DQz1nY2MKCiMjIC0tLS0tLS0tLS0tLS0tLS0tICMjCiMjIE91
+dHB1dCB2YXJpYWJsZXMuICMjCiMjIC0tLS0tLS0tLS0tLS0tLS0tICMjCgpBTExPQ0E9JycKQVI9
+JycKQVNDSUlET0M9JycKQ0M9J2djYycKQ0ZMQUdTPScnCkNQUD0nJwpDUFBGTEFHUz0nJwpDVVJM
+X0NPTkZJRz0nJwpERUZTPScnCkRJRkY9JycKRUNIT19DPScnCkVDSE9fTj0nLW4nCkVDSE9fVD0n
+JwpFR1JFUD0nJwpFWEVFWFQ9JycKR1JFUD0nJwpMREZMQUdTPScnCkxJQk9CSlM9JycKTElCUz0n
+JwpMVExJQk9CSlM9JycKT0JKRVhUPScnClBBQ0tBR0VfQlVHUkVQT1JUPSdnaXRAdmdlci5rZXJu
+ZWwub3JnJwpQQUNLQUdFX05BTUU9J2dpdCcKUEFDS0FHRV9TVFJJTkc9J2dpdCAyLjQyLkdJVCcK
+UEFDS0FHRV9UQVJOQU1FPSdnaXQnClBBQ0tBR0VfVVJMPScnClBBQ0tBR0VfVkVSU0lPTj0nMi40
+Mi5HSVQnClBBVEhfU0VQQVJBVE9SPSc6JwpTSEVMTD0nL2Jpbi9zaCcKVEFSPScnClRDTFRLX1BB
+VEg9JycKYWNfY3RfQVI9JycKYWNfY3RfQ0M9J2djYycKYmluZGlyPScke2V4ZWNfcHJlZml4fS9i
+aW4nCmJ1aWxkX2FsaWFzPScnCmRhdGFkaXI9JyR7ZGF0YXJvb3RkaXJ9JwpkYXRhcm9vdGRpcj0n
+JHtwcmVmaXh9L3NoYXJlJwpkb2NkaXI9JyR7ZGF0YXJvb3RkaXJ9L2RvYy8ke1BBQ0tBR0VfVEFS
+TkFNRX0nCmR2aWRpcj0nJHtkb2NkaXJ9JwpleGVjX3ByZWZpeD0nTk9ORScKaG9zdF9hbGlhcz0n
+JwpodG1sZGlyPScke2RvY2Rpcn0nCmluY2x1ZGVkaXI9JyR7cHJlZml4fS9pbmNsdWRlJwppbmZv
+ZGlyPScke2RhdGFyb290ZGlyfS9pbmZvJwpsaWJkaXI9JyR7ZXhlY19wcmVmaXh9L2xpYicKbGli
+ZXhlY2Rpcj0nJHtleGVjX3ByZWZpeH0vbGliZXhlYycKbG9jYWxlZGlyPScke2RhdGFyb290ZGly
+fS9sb2NhbGUnCmxvY2Fsc3RhdGVkaXI9JyR7cHJlZml4fS92YXInCm1hbmRpcj0nJHtkYXRhcm9v
+dGRpcn0vbWFuJwpvbGRpbmNsdWRlZGlyPScvdXNyL2luY2x1ZGUnCnBkZmRpcj0nJHtkb2NkaXJ9
+JwpwcmVmaXg9Jy91c3IvbG9jYWwvZ2l0Jwpwcm9ncmFtX3RyYW5zZm9ybV9uYW1lPSdzLHgseCwn
+CnBzZGlyPScke2RvY2Rpcn0nCnJ1bnN0YXRlZGlyPScke2xvY2Fsc3RhdGVkaXJ9L3J1bicKc2Jp
+bmRpcj0nJHtleGVjX3ByZWZpeH0vc2JpbicKc2hhcmVkc3RhdGVkaXI9JyR7cHJlZml4fS9jb20n
+CnN5c2NvbmZkaXI9JyR7cHJlZml4fS9ldGMnCnRhcmdldF9hbGlhcz0nJwoKIyMgLS0tLS0tLS0t
+LS0gIyMKIyMgY29uZmRlZnMuaC4gIyMKIyMgLS0tLS0tLS0tLS0gIyMKCi8qIGNvbmZkZWZzLmgg
+Ki8KI2RlZmluZSBQQUNLQUdFX05BTUUgImdpdCIKI2RlZmluZSBQQUNLQUdFX1RBUk5BTUUgImdp
+dCIKI2RlZmluZSBQQUNLQUdFX1ZFUlNJT04gIjIuNDIuR0lUIgojZGVmaW5lIFBBQ0tBR0VfU1RS
+SU5HICJnaXQgMi40Mi5HSVQiCiNkZWZpbmUgUEFDS0FHRV9CVUdSRVBPUlQgImdpdEB2Z2VyLmtl
+cm5lbC5vcmciCiNkZWZpbmUgUEFDS0FHRV9VUkwgIiIKCmNvbmZpZ3VyZTogZXhpdCA3Nwo=
+
+--_004_PSBPR01MB3544370EEA032FA47778135DBDA3APSBPR01MB3544apcp_--
