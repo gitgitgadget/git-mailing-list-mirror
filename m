@@ -1,40 +1,55 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B32234422
-	for <git@vger.kernel.org>; Sat, 28 Oct 2023 17:41:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E047F9D6
+	for <git@vger.kernel.org>; Sat, 28 Oct 2023 18:05:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="bZdBfc25"
-Received: from mail.manjaro.org (mail.manjaro.org [IPv6:2a01:4f8:c0c:51f3::1])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9B51F1
-	for <git@vger.kernel.org>; Sat, 28 Oct 2023 10:41:49 -0700 (PDT)
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-List-Id: <git.vger.kernel.org>
-List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
-List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1698514907;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=DXhKkWQX56urA5GZm9j7wq+GmjMM4vXKOhdAx1lHR3k=;
-	b=bZdBfc25jzI3pxV0gwU+bR59FxAPHeDEs72Nd/xP4uMYp8sgg0/FuU64FTstYVqSdoShT/
-	R/d7P+sc2K3RjrN4mrWnj5S2eeIJZ/b2dE9dBomkioX7mU8FeiLhkeyqgZ/1ZaRD6WBKAe
-	M9ZTZU7Wd/jp+XloaY45O2NnP5i7pDkgf1rbGKTZu10LnUrDiWhNv+ExoFYrIOuA8xsKqj
-	lPO5KmoUnj7XNTaA9dHFRWbcbcVA65i6O/mSs7Qr0UPkwsO4xUYTINlk94BAj7bPeW+RMU
-	zHYSMdLcQRyM96pK4fR008MNybhEC5nN5ngtMtYBuQWHgh0jZlt+jhOyy0qXTA==
-Date: Sat, 28 Oct 2023 19:41:47 +0200
-From: Dragan Simic <dsimic@manjaro.org>
-To: Jacob Stopak <jacob@initialcommit.io>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Oswald
- Buddenhagen <oswald.buddenhagen@gmx.de>
+	dkim=pass (2048-bit key) header.d=initialcommit-io.20230601.gappssmtp.com header.i=@initialcommit-io.20230601.gappssmtp.com header.b="BaXH196w"
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C28E4CE
+	for <git@vger.kernel.org>; Sat, 28 Oct 2023 11:05:48 -0700 (PDT)
+Received: by mail-pf1-x431.google.com with SMTP id d2e1a72fcca58-6b87c1edfd5so2747721b3a.1
+        for <git@vger.kernel.org>; Sat, 28 Oct 2023 11:05:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=initialcommit-io.20230601.gappssmtp.com; s=20230601; t=1698516348; x=1699121148; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=tMLa/nQN+T7sh8oK691X7FQk+Q7X0Wagopx3C5zTzEg=;
+        b=BaXH196wOM35u2+9ACrHSUoKk29fKo4CU98EU8A5ZB6XlV2KcBmH263w+L3usD7DQs
+         oQig58FTXHpLOG7V0XZ81+BznLFxgdeR0Yea0g0Eu3AtYSRUYFJhnY7WsQbbpgi5M49B
+         KlsNIElAuQV4FwlmST1ThkFtYI/n4xKV5YX6yx3XFiCXgkk3Ho1iY42eXTKwX2R4/u03
+         4P1QIQXOA0H/yklduXx48QCMTqQGT7Vt2G4+fXJOfSEe7AXAVFDB4dL8dbaHXpyLhBRB
+         0MT3ctinVinRNulb+flttFkFKuLRG3qSaX4nSXzRd7vAYzwHIa/CowmA1WQhFpfPYREn
+         sqXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698516348; x=1699121148;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tMLa/nQN+T7sh8oK691X7FQk+Q7X0Wagopx3C5zTzEg=;
+        b=YfmUzMCQgk5XByYfu7+WBe+dHKFVHK1Pb2kIhbji+Ih7RkzaR3CSOVxjwK0wJhkZy7
+         Q3o4ymc65eHQ8hVhDTV7+dQSUiLptfr3W3mPSUo5UphxYhBkcFZjOE023ZDlOkk6Zw1J
+         g36CaNVCegPDVRchRVrBHzOXLg70GHsETGX/OqxsjrSt2oIyxxFmvpR+iHztee0ddhdT
+         b2kCFt1uzsKHSQMaKXQZNvWM3BhxQkn2MygH8OHgsdicyxp8JSu1t1LKb6OagZ5YGF3k
+         p/TWob8pFgGOwfIxNl+k327zJ9wFSBfUaRjLvOtlFLt/odPIOvuapAeiLNiHssHTacvy
+         KLHQ==
+X-Gm-Message-State: AOJu0Yy7jyrbcGeTnmyrjy440g0dFFuepNv8lbGO+C5xhSXItAdvle3Q
+	cMyV5R7s1zNrUZs17uN9fnERRV+Nq8x98CZEMPs=
+X-Google-Smtp-Source: AGHT+IEbGhe0+Zb28eDhTdeoOxIViaX/34erhgEeU4YEzFyAkEn+WLO8FrfYg/CBwM/dY5t3ihye6g==
+X-Received: by 2002:a05:6a00:9a6:b0:6be:18a9:8f60 with SMTP id u38-20020a056a0009a600b006be18a98f60mr6846844pfg.16.1698516348190;
+        Sat, 28 Oct 2023 11:05:48 -0700 (PDT)
+Received: from initialcommit.io (ip68-7-58-180.sd.sd.cox.net. [68.7.58.180])
+        by smtp.gmail.com with ESMTPSA id v1-20020aa78501000000b006c031c6c200sm3223936pfn.88.2023.10.28.11.05.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 28 Oct 2023 11:05:47 -0700 (PDT)
+Date: Sat, 28 Oct 2023 11:05:45 -0700
+From: Jacob Stopak <jacob@initialcommit.io>
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 Subject: Re: [RFC PATCH v2 0/6] Noobify format for status, add, restore
-In-Reply-To: <ZT1GWw886XuXwqlw.jacob@initialcommit.io>
-References: <20231020183947.463882-1-jacob@initialcommit.io>
- <20231026224615.675172-1-jacob@initialcommit.io>
+Message-ID: <ZT1NeRSSUA9r0KdG.jacob@initialcommit.io>
+References: <20231026224615.675172-1-jacob@initialcommit.io>
  <ca47d328c280e4b4c13bfa6dd9958a57@manjaro.org>
  <ZTvvz6/GFdwagVa+.jacob@initialcommit.io>
  <9b93115810ca269c87ec08f72fdc9c12@manjaro.org>
@@ -43,47 +58,30 @@ References: <20231020183947.463882-1-jacob@initialcommit.io>
  <ZT0m68HWZS/tDGtH.jacob@initialcommit.io>
  <37e7bd8f6f4b75aa3b31dc98804b1334@manjaro.org>
  <ZT1GWw886XuXwqlw.jacob@initialcommit.io>
-Message-ID: <fd54ef08fa676ec12ad6835f0122c4c0@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+ <fd54ef08fa676ec12ad6835f0122c4c0@manjaro.org>
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+List-Id: <git.vger.kernel.org>
+List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
+List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <fd54ef08fa676ec12ad6835f0122c4c0@manjaro.org>
 
-On 2023-10-28 19:35, Jacob Stopak wrote:
-> On Sat, Oct 28, 2023 at 06:20:41PM +0200, Dragan Simic wrote:
->> I agree, there should be a well-placed hint, but we'd need to think 
->> really
->> well where to place it, so we don't annoy experienced git users too 
->> much,
->> while we also inform the less experienced users.
+On Sat, Oct 28, 2023 at 07:41:47PM +0200, Dragan Simic wrote:
+> That's something we can keep thinking about, until we find a good solution.
+> Also, a detailed review of the current logic behind displaying the hints
+> should be performed first, if you agree.
+
+Yes of course.
+
+> > Yes I agree, that sounds great! Maybe I'll just wait then until seeing
+> > your implementation of that before I poke around on mine more. Then I'll
+> > apply your patches locally to add my extended option.
 > 
-> Yes, hmm, I wonder if maybe we could add the hint for the extended 
-> option
-> only in the case that the user uses the --verbose option either on the
-> command line or via the config setting. Since using the verbose option
-> tells us the user is asking for more details, that might be a good time
-> to inform them of the _even more detailed_ option, but of course that
-> hint could be disabled easily if they preferred the "basic" verbosity.
+> Great, thanks.  I'll start working on the patches tomorrow or so, and I'll
+> get back with any important conclusions or open questions arising from that,
+> so we can discuss them further.
 
-That's something we can keep thinking about, until we find a good 
-solution.  Also, a detailed review of the current logic behind 
-displaying the hints should be performed first, if you agree.
-
->> Sounds good, thank you.  If you agree, I'll go ahead and implement 
->> support
->> for a few "<command>.verbose" configuration options during the next 
->> week or
->> so, and submit the patches.  I'll most probably come to some more 
->> important
->> conclusions while implementing that, which I'll relay over, of course.
-> 
-> Yes I agree, that sounds great! Maybe I'll just wait then until seeing
-> your implementation of that before I poke around on mine more. Then 
-> I'll
-> apply your patches locally to add my extended option.
-
-Great, thanks.  I'll start working on the patches tomorrow or so, and 
-I'll get back with any important conclusions or open questions arising 
-from that, so we can discuss them further.
+:)
