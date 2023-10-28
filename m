@@ -1,201 +1,99 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9D3A7FD
-	for <git@vger.kernel.org>; Sat, 28 Oct 2023 05:55:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4640210EA
+	for <git@vger.kernel.org>; Sat, 28 Oct 2023 06:58:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="QkyF/tI7"
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38D37F4
-	for <git@vger.kernel.org>; Fri, 27 Oct 2023 22:55:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FNhKGEtV"
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D613FE3
+	for <git@vger.kernel.org>; Fri, 27 Oct 2023 23:58:35 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2c594196344so41645751fa.3
+        for <git@vger.kernel.org>; Fri, 27 Oct 2023 23:58:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1698476314; x=1699081114; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=iGYJdCZ0sd6bPAwpUlWWCwMfL1g3X5jDw0TxQKSMDaw=;
+        b=FNhKGEtVzeVcILl4IrT+a9/SZVoy+ktGznaudxla/JOf1Rfm6OXJ5U0EJYihSSdGiP
+         fyQcbFbnL9N39+HNd+lKxBh4SkK0bW5ql6DDeqlrh1q6X8OCKWUB/zy7oIfUTu4d3NOu
+         8SnSbffRityp1ZhTX+zMa3b10qb0cK/lWzm+mjYrhQbMKqX4AANT5DM8Sd2wREaBc+Jx
+         inJWaXpBTWoGkWel0uV2gb06CWGaAkv81+JUEHro+9HqpmV9DCwmYXKOVO3M6ScuD7nP
+         lxGpsd2/72HG+g+PV4qtE2b0W4tyK+VLeuGyhiA4HjwnbujEudfs/LA0WAPLeqnQnAhj
+         V/XQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698476314; x=1699081114;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=iGYJdCZ0sd6bPAwpUlWWCwMfL1g3X5jDw0TxQKSMDaw=;
+        b=g5SgKu3b2GM3oxaK2GM8N8M/nowGXfLgMDSCRCmwb8achZai7BsB3Tq9mLn6dhsWP5
+         VxryUcBBFPltjWz3AOZr/76pmmJzlQTMjS0yEi19o9xloBvKPc26ThXCFGoGQjHSoel8
+         kT3pRQYNoFLAAjsWebiUgxSeuthuopWbylpRk/MY/fHMchESJJsl8dMmc7pR+cBXUZUl
+         dr5je42hj1pCZFTZuNay8UZP2xb3YPVHbo/PixaU7LT3uE5VuzqOYN2lkwu2XYgCV2BQ
+         4x8mk1hsfK0n+7WkEm0s22WUzQGnWQypKEk6CEI24OmnPk31ZsBlDrntw5zGrv68eDoO
+         bDqQ==
+X-Gm-Message-State: AOJu0YyQM7O3zTby4xrYxTE0VVRrwOBP7mGo0PGTcAdByN++tirmZE2U
+	8qF+rRVS8dhsgNp8uWidaxg=
+X-Google-Smtp-Source: AGHT+IFDFBa6s0GGKHPmrdgMlD8MrbWaSIv6WazmKHy7o6AU/3aqCilRfeNOKmB+FuJowDfmOA/FFw==
+X-Received: by 2002:a2e:a791:0:b0:2c1:375a:b37c with SMTP id c17-20020a2ea791000000b002c1375ab37cmr3674796ljf.40.1698476313724;
+        Fri, 27 Oct 2023 23:58:33 -0700 (PDT)
+Received: from [192.168.0.17] (cpc105060-sgyl40-2-0-cust995.18-2.cable.virginm.net. [81.111.15.228])
+        by smtp.gmail.com with ESMTPSA id q3-20020adff503000000b0032d09f7a713sm3254076wro.18.2023.10.27.23.58.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 27 Oct 2023 23:58:33 -0700 (PDT)
+Message-ID: <9a1e3e90-3e94-41fa-897d-5c64c4a42871@gmail.com>
+Date: Sat, 28 Oct 2023 07:58:31 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1698472532;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=6EsrNvPwB3I8EBt4C9+P7c78BYrESdbRMfL3EZD+wZU=;
-	b=QkyF/tI71vELgXwJzKbDKkRC1RLmXiw7VqDwwwtXxf9NZdiJJSdcxg/g++dySNJQZq6OQD
-	ECTwn8ac23/VYgIMOS5gpwqPJNVH6IlnAWDovsDjVxSr0RtITSHf3Q1yZ4XaVxCO5/ixi0
-	v8bsZ/+0sfCELiAfKFaY9XIOm0+KxLZ2gHCbe402I2DyDMVkrMoN7SMOoZyiG3F3LACH8z
-	m2HoPFlaj+tAGcjOEDl2l26Sqz8lWa73aybE6PdoY7qq1sPiimBjpx4pZti6spCXsVAFWy
-	Z7jNIMj+tVsqmTU0KdrM3Fb1Q+gc8vT+QACq6doZfNFesb0C/Y8mjG5kMoqgjA==
-Date: Sat, 28 Oct 2023 07:55:31 +0200
-From: Dragan Simic <dsimic@manjaro.org>
-To: Jacob Stopak <jacob@initialcommit.io>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Oswald
- Buddenhagen <oswald.buddenhagen@gmx.de>
-Subject: Re: [RFC PATCH v2 0/6] Noobify format for status, add, restore
-In-Reply-To: <ZTx3fIGpdGl4JpaV.jacob@initialcommit.io>
-References: <20231020183947.463882-1-jacob@initialcommit.io>
- <20231026224615.675172-1-jacob@initialcommit.io>
- <ca47d328c280e4b4c13bfa6dd9958a57@manjaro.org>
- <ZTvvz6/GFdwagVa+.jacob@initialcommit.io>
- <9b93115810ca269c87ec08f72fdc9c12@manjaro.org>
- <ZTx3fIGpdGl4JpaV.jacob@initialcommit.io>
-Message-ID: <2a0ba4c8e96cb7d2ea66dd1e78cdd39c@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] pretty: add '%aA' to show domain-part of email
+ addresses
+Content-Language: en-GB
+To: Liam Beguin <liambeguin@gmail.com>, Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>,
+ Kousik Sanagavarapu <five231003@gmail.com>, git@vger.kernel.org
+References: <20231026-pretty-email-domain-v1-2-5d6bfa6615c0@gmail.com>
+ <20231027184357.21049-1-five231003@gmail.com> <xmqq7cn7obah.fsf@gitster.g>
+ <20231028021301.GA35796@coredump.intra.peff.net>
+ <20231028032221.GB1784118@shaak>
+From: Andy Koppe <andy.koppe@gmail.com>
+In-Reply-To: <20231028032221.GB1784118@shaak>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-On 2023-10-28 04:52, Jacob Stopak wrote:
->> They currently don't exist, but that's something I've planned to 
->> implement,
->> e.g. to "add.verbose" as a new configuration option.  It should be 
->> usable,
->> while not being messy or intrusive as a new feature.
+On 28/10/2023 04:22, Liam Beguin wrote:
+> On Fri, Oct 27, 2023 at 10:13:01PM -0400, Jeff King wrote:
+>> One way you could directly use this is in shortlog, which these days
+>> lets you group by specific formats. So:
+>>
+>>    git shortlog -ns --group=format:%aA
 > 
-> "git add" already has the -v, --verbose flag available for the command
-> itself like:
+> That's exactly what I implemented this for :-)
+
+Another potential use case is custom log formats where one might want to 
+color the local-part separately from the domain part.
+
+>> It also feels like a symmetric match to "%al", which already exists.
+
+Speaking of symmetry, I think it would need "%c" counterparts for the 
+coloring use case.
+
+> I chose the "a" for "address", but I'm not sold on %aa either.
+> I just couldn't find anything better that wasn't already taken.
 > 
-> $ git add -v foo.txt
-> add 'foo.txt'
-> 
-> But like you said the config option add.verbose doesn't seem to exist 
-> yet.
-> 
-> So I assume an "add.verbose" config option would just always print that
-> without having to specify the -v, --verbose flag when running the 
-> command?
+> What about "a@"?
 
-Yes, that's how I see it.  Setting "add.verbose" to "true", to be 
-precise, or to "basic", which I'll explain a bit further later in my 
-response.
+Makes sense, and I suppose there's "%G?" as precedent for using a symbol 
+rather than letter in these.
 
-> Basically what I'm asking is if commands that already have a --verbose 
-> flag
-> would just get a config setting that does the existing thing by 
-> default?
+If that's not suitable though, how about "m" for "mail domain"? It also 
+immediately follows "l" for "local-part" in the alphabet.
 
-Well, not by default.  The default values would remain "false", so 
-nothing jumps out of nowhere.
-
->>> So it seems like currently "verbose" is used for various things among
->>> the command set...
->> 
->> Yes, that's the basic verbosity, as I named it above.
-> 
-> Would it make sense to try to define a more consistent type of output 
-> or
-> format style for "verbosity" across different commands? As it stands it
-> seems each command treats verbosity in its own way which makes it hard 
-> to
-> interpret exactly what it will do each time...
-
-We'd have to follow the already established behavior of the commands, 
-and there are the man pages to describe what's going on with the 
-verbosity for each command.  In other words, nothing would get changed, 
-just some more knobs would be added, for those who prefer to have the 
-additional verbosity enabled.
-
->>> Another thing is that commands like status have multiple flags that 
->>> can be
->>> used to specify the output format, such as --short, --long, 
->>> --porcelain,
->>> etc, but only --short seems to be configurable as a git config 
->>> setting.
->>> Is there a reason (besides backward compatibility I guess) that these
->>> aren't rolled into a single thing like --format=<type>? This seems 
->>> like
->>> it would be the easiest way to future proof for new formats like
->>> --format=verbose, --format=noob, --format=extended, etc.
->> 
->> That's a good question, but I'd need to go through the commit history 
->> to be
->> able to provide some kind of an explanation.  It could also be all 
->> packed
->> into "status.verbose" as a new configuration option.
-> 
-> Ok so it sounds like you prefer to use "verbose" as the setting key?
-> I guess at this point that might make more sense since commit.verbose
-> already exists, and existing options could be packed into it like you
-> said instead of just true or false.
-
-It looks like a logical choice to me.
-
-> And then my thing here would just be called "command.verbose = 
-> extended"?
-
-Yes, that's what I propose.  It also looks like a logical choice to me, 
-and it would leave space for some possible later changes to the 
-"<command>.verbose = extended" verbosity, without tying it to the 
-tables.  We'd also leave some space that way for even maybe an 
-additional level of verbosity, be it "<command>.verbose = simple", 
-"<command>.verbose = graphical" or whatever.
-
-Perhaps this scheme should also support "<command>.verbose = basic", 
-which would be an alias for "<command>.verbose = true", for additional 
-clarity.
-
->>> From a noob's perspective though, does adding a config setting for 
->>> each
->>> command really make sense? I'm kindof envisioning this setting now as 
->>> a
->>> "mode" that is either enabled for all commands it affects or for 
->>> none.
->>> And it's highly unlikely a newish user would individually discover 
->>> which
->>> commands this "extended" format is available for, and run "git config
->>> <command>.verbose = extended" for every one. I mean we could do that
->>> in case there are folks who only want it for specific commands, but 
->>> to
->>> fulfill it's purpose I think there should definetely be some general 
->>> way
->>> to enable the setting for all commands that have it.
->> 
->> Quite frankly, we shouldn't expect that all users are noobs, and as a 
->> result
->> dumb everything down just to make them as comfortable as possible.  On 
->> the
->> other hand, perhaps not everyone would like to have extended verbosity
->> enabled for all commands, just as not everyone uses "-v" for all 
->> commands.
-> 
-> I agree with this, and I think it's important to cater to both newbies 
-> and
-> experienced users alike. That's why I said I never dreamed of making 
-> this
-> new format the default.
-
-Perhaps it would also be good to nudge the newbies a bit by requesting 
-them to enable the extended verbosity for each command by hand.  That 
-way they would both learn a bit about the way git configuration works, 
-which they ultimately can't escape from, and they would be excited to 
-learn new git commands.  Or I at least hope so. :)
-
-> And it's true that some users might only want the extended (or any 
-> format)
-> for specific commands. I think a happy medium then is to have the 
-> command-
-> specific settings like you mention, plus one toplevel option that 
-> enables a
-> specific type of output format among all commands (and overrides the
-> command-specific settings), so that the user can choose which they 
-> prefer.
-
-That's something we can consider as an additional configuration option.  
-That way, users could also enable the basic verbosity for all commands, 
-which may also be usable.
-
-> Any thoughts on what the section in the config for a more general 
-> setting
-> like this might be named? If "status.verbose = extended" would already 
-> be
-> taken specifically for the status command, what terminology could we 
-> use
-> to mean something like "global.verbose = extended" or "global.extended 
-> =
-> true"? Although the former seems better to me since other format values
-> could be implemented, like "global.verbose = standard"...
-
-Maybe "core.verbose"?  We already have "core.pager", which kind of 
-affects the way all command outputs look like.
+Regards,
+Andy
