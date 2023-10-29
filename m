@@ -1,152 +1,106 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C36B85664
-	for <git@vger.kernel.org>; Sun, 29 Oct 2023 06:02:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB4FF33D1
+	for <git@vger.kernel.org>; Sun, 29 Oct 2023 06:17:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VhFqgazG"
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EF45C9
-	for <git@vger.kernel.org>; Sat, 28 Oct 2023 23:02:13 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2c5056059e0so49892871fa.3
-        for <git@vger.kernel.org>; Sat, 28 Oct 2023 23:02:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="han63LE2"
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EF72CC
+	for <git@vger.kernel.org>; Sat, 28 Oct 2023 23:17:23 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-50797cf5b69so4697674e87.2
+        for <git@vger.kernel.org>; Sat, 28 Oct 2023 23:17:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698559331; x=1699164131; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1698560241; x=1699165041; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ftvJ1CDXnOD57ZFbx5vqyruEm4YxWY8mAHPTszjTP7Q=;
-        b=VhFqgazGYPAzeXdGMBTG0TlBzu3lzkxIHcY8Gh0kM0BMcaT3ECWpUhxBuC3DFrl7b6
-         ni3tSBE0noJLNVEHYSU1wgQuBGtPUtjohWdGgCrNRmmGprJ5LTuTQUjzB4MfxS4ppPat
-         oSPXhXUU0EXoOK3ntSPjAdKiZs0ttVuO0efSWLGvvSKTyXyQRMzAQfAGsCdLf0iW18mC
-         8Kg4xWSwQ/XoEz/tcG26e4pckicSX2iVi/I4L2U7phRBUI9Gzxbgvl1iHQTpxgJwySwE
-         1yWh6TU3VR1UfCod2HgnHRRU9bO96KJm7rPKaR+9Mh/l2VsBTqKnJVbwMBEaDaJs3Rsz
-         RdcA==
+        bh=aiyG8ofev7H9NZy5G2OHhT0BDt7GLmTST4nasqdsS3s=;
+        b=han63LE2i27ZE6MfVsBoxOaJlC8fuieAOEej3DCS5CmMXrp/ywT8awjh3KPu9m1D7n
+         x/hDkd3hxKZQS4EDcmKP/it1yxewW5sXz+HXbTNTdG9QUoS/h46piwX9DJo7HgMJBs87
+         VcTkkJjxHMxfP2D48r0cHUeAVIuOdqqCUn6VLng/bLmqxGK9j/Y49EwgcVHgD24Ty0R2
+         Bghv2mNoNjcM9WdOu95Ab632KYTXHlydvOGv8iRuCLGa/VFt0O5kVrm9SXxQ2UMu/6FK
+         RLgBh4f8HdcitgG72f478FE389+Coc7B+S5n47pgdgbjX4yVLKwCoVbYoa4EILFW/wcE
+         TtHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698559331; x=1699164131;
+        d=1e100.net; s=20230601; t=1698560241; x=1699165041;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ftvJ1CDXnOD57ZFbx5vqyruEm4YxWY8mAHPTszjTP7Q=;
-        b=TOvx1xYNSK1VJxgPnsQByLXOcSAr1zCVzmwqD4Eq996u3g0bTO61Fr7Eb9EanWwo1x
-         RUGWVIh6hA9bbz7+RchwAOiWr8dCFnZ8AV3aAoBFpkk/ToHKRnTXMDd+VZt2NDHSmTEq
-         2H5RenKJrQuQEoealwT9AVOUhrFNvnDS0vzBKXYwWPB+vFXMwiAjnAGzEDNrhE8IlcTI
-         mryQVriYLh3Fq1DawFeGsa8AKRMFcKyNgM5JtNGqiq60OCsp5kqBusk6jXChYowPYzVJ
-         YSftXr4gE9Urk8bATh7xjPbHnDDX2exYhC6DQ4g7msRVUZiOxh3WFxhZb50vW66vuFBB
-         g6pg==
-X-Gm-Message-State: AOJu0Yw1+gXeXoloGbaL3H+d+urCD3aMiy2UB6ohtHPXgKfg0WAEUj6B
-	7eKz1b9IxFOkYum3pUjM+p59Mpakk/t77LlURA8=
-X-Google-Smtp-Source: AGHT+IE7JFS7xlgvccjH8wgHGVOdLq6qr07x3JCKegcIH4ucaIi1UJX+qcJkyVEHZIFgxIwPXtFa/jtBGZ12QJ3T/5k=
-X-Received: by 2002:a2e:9893:0:b0:2c5:9e4:3fdd with SMTP id
- b19-20020a2e9893000000b002c509e43fddmr5249894ljj.27.1698559330912; Sat, 28
- Oct 2023 23:02:10 -0700 (PDT)
+        bh=aiyG8ofev7H9NZy5G2OHhT0BDt7GLmTST4nasqdsS3s=;
+        b=Nx8pw7fY+Mfwo5Y4Mwpe3U+NZVl9BEIlzo6eMs5UAtRu+epeTSXdeVW+QQp59eGPyH
+         21QfpnUDXPYJDCIVQtDi3bc8Cofwdg1Cb0e+HDnfQ9+Eiuki/18x+Lzgzq3UBOojqF1F
+         4wHXxnx8P94h15X0Z5Mz78JCv9y+sFh/n1VqahzqmA+p4XKbrkCMCshOI1aPiWWKGTTy
+         MhYBq+3z++QBYYnrZVHWxKT8v6GpWF0c4mQ5Uu3WIXg1h51FIJRWGrh7FSCexKs1/shO
+         OCfpD9xGQAE/op6Q3/enjSeYr6XgCcBvQTZpXMtFVp5eV/+jYx3grhelWigaQ8LBNZT4
+         RRZA==
+X-Gm-Message-State: AOJu0Yx5CyPHPEvD3rjtxohAxWff287FK27gmsmKsCzABGgZGb/wy5CR
+	Tm8SsEncmoljBB3PoKwGku6aKbDGlwxp6Eb8Cxo=
+X-Google-Smtp-Source: AGHT+IGh/er43NYxh9q8rzLt3yQjVqoQOnJIGypyBu2wv5KwbnfJ85cWNkAnZjYOWNdHcmRTZ9RCu10MXp76ZvhEBNA=
+X-Received: by 2002:a05:6512:3a8b:b0:509:1207:5e9a with SMTP id
+ q11-20020a0565123a8b00b0050912075e9amr2202207lfu.42.1698560241517; Sat, 28
+ Oct 2023 23:17:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20230907092521.733746-1-christian.couder@gmail.com>
- <20231010123847.2777056-1-christian.couder@gmail.com> <bd872b81-80a9-5e4e-dcb6-faebc9671848@gmx.de>
-In-Reply-To: <bd872b81-80a9-5e4e-dcb6-faebc9671848@gmx.de>
+References: <20231024195655.2413191-1-sandals@crustytoothpaste.net> <20231024195655.2413191-2-sandals@crustytoothpaste.net>
+In-Reply-To: <20231024195655.2413191-2-sandals@crustytoothpaste.net>
 From: Elijah Newren <newren@gmail.com>
-Date: Sat, 28 Oct 2023 23:01:58 -0700
-Message-ID: <CABPp-BFrVfGHOrBk7g=4TkGxDv=oSqF1FOkhp6WVbxUV-2yveQ@mail.gmail.com>
-Subject: Re: [PATCH v5 00/14] Introduce new `git replay` command
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org, 
-	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, John Cai <johncai86@gmail.com>, 
-	Derrick Stolee <stolee@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>, 
-	Calvin Wan <calvinwan@google.com>, Toon Claes <toon@iotcl.com>, Dragan Simic <dsimic@manjaro.org>, 
-	Linus Arver <linusa@google.com>
+Date: Sat, 28 Oct 2023 23:17:09 -0700
+Message-ID: <CABPp-BG9Y6aZ+TWdkL4QE9e12fu3n61V16G6DLtawEDe=g9F4w@mail.gmail.com>
+Subject: Re: [PATCH 1/1] merge-file: add an option to process object IDs
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
+	Phillip Wood <phillip.wood123@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 Hi,
 
-On Thu, Oct 26, 2023 at 6:44=E2=80=AFAM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
+Overall, looks good.  Just a couple questions...
+
+On Tue, Oct 24, 2023 at 12:58=E2=80=AFPM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
 >
-> Hi Christian,
->
-> On Tue, 10 Oct 2023, Christian Couder wrote:
+> From: "brian m. carlson" <bk2204@github.com>
 >
 [...]
-> >      +  /* requirements/overrides for revs */
-> >     -+  revs.reverse =3D 1;
-> >     ++  revs.reverse =3D !revs.reverse;
-> >      +  revs.sort_order =3D REV_SORT_IN_GRAPH_ORDER;
-> >      +  revs.topo_order =3D 1;
-> >      +  revs.simplify_history =3D 0;
->
-> This still overrides a couple of command-line options, _silently_. I woul=
-d
-> prefer those three assignments to be moved just before the
-> `setup_revisions()` call.
->
-> Letting users override these settings may not make much sense, but it
-> makes even less sense to pretend to let them override the settings and
-> then just ignore them without warning. (See also
-> https://en.wikipedia.org/wiki/Principle_of_least_astonishment.)
->
-> Moving these three assignments before the `setup_revisions()` call would
-> neatly remedy that.
+> --- a/Documentation/git-merge-file.txt
+> +++ b/Documentation/git-merge-file.txt
+> @@ -12,6 +12,9 @@ SYNOPSIS
+>  'git merge-file' [-L <current-name> [-L <base-name> [-L <other-name>]]]
+>         [--ours|--theirs|--union] [-p|--stdout] [-q|--quiet] [--marker-si=
+ze=3D<n>]
+>         [--[no-]diff3] <current-file> <base-file> <other-file>
+> +'git merge-file' --object-id [-L <current-name> [-L <base-name> [-L <oth=
+er-name>]]]
+> +       [--ours|--theirs|--union] [-q|--quiet] [--marker-size=3D<n>]
+> +       [--[no-]diff3] <current-oid> <base-oid> <other-oid>
 
-I agree that warnings or error messages would be better.
+Why was the `[-p|--stdout]` option removed in the second synopsis?
+Elsewhere you explicitly call it out as a possibility to be used with
+--object-id.
 
-But if we're talking about something short of that, I'd actually argue
-the opposite of what you do here.  I intentionally moved these
-assignments after setup_revisions(), and in my mind, the purpose in
-doing so was to satisfy the Principle of Least Astonishment.  My
-experience with git-fast-export, where some settings are made before
-calling setup_revisions() and then can be overridden, and then do
-completely hideous things, was much worse to me than just admitting
-the flags are bad given the various assumptions the tool makes.  I
-have some patches sitting around to fix fast-export that I never got
-around to upstreaming, but when it came time to implement git-replay,
-I made sure to fix what I viewed as the bigger problem.
+Also, why the extra synopsis instead of just adding a `[--object-id]`
+option to the previous one?
 
 [...]
-> >     @@ Documentation/git-replay.txt (new)
-> >      +
-> >      +NAME
-> >      +----
-> >     -+git-replay - Replay commits on a different base, without touching=
- working tree
-> >     ++git-replay - Replay commits on a new base, works on bare repos to=
-o
-> >      +
-> >      +
-> >      +SYNOPSIS
+> @@ -80,12 +88,21 @@ int cmd_merge_file(int argc, const char **argv, const=
+ char *prefix)
 >
-> As mentioned in
-> https://lore.kernel.org/git/03460733-0219-c648-5757-db1958f8042e@gmx.de/,
-> I would like the `EXPERIMENTAL` label to be shown prominently here.
-> Probably not only the `SYNOPSIS` as I had originally suggested but also i=
-n
-> the `NAME`.
+>                 fname =3D prefix_filename(prefix, argv[i]);
 >
-> Otherwise we may end up with the same situation as with the (from my
-> perspective, failed) `git switch`/`git restore` experiment, where we
-> wanted to explore a better user experience than the overloaded `git
-> checkout` command, only to now be stuck with having to maintain
-> backward-compatibility for `git switch`/`git restore` command-line option=
-s
-> that were not meant to be set in stone but to be iterated on, instead. A
-> real-life demonstration of [Hyrum's Law](hyrumslaw.com/), if you like. Or=
-,
-> from a different angle, we re-enacted https://xkcd.com/927/ in a way.
->
-> I'd like to suggest to learn from history and avoid this by tacking on a
-> warning label right at the top of the documentation. We may eventually
-> manage to iterate `git replay` to a point where it is totally capable to
-> supersede `git rebase`, by doing everything the latter does, except
-> better, who knows? But we _do_ need the liberty to make sweeping changes
-> to this new builtin if we want to have a prayer of doing that. And I fear
-> that not even mentioning the EXPERIMENTAL nature right at the top of the
-> manual page would just render us into that undesirable corner.
+> -               if (read_mmfile(mmf, fname))
+> +               if (object_id) {
+> +                       if (repo_get_oid(the_repository, argv[i], &oid))
+> +                               ret =3D -1;
+> +                       else if (!oideq(&oid, the_hash_algo->empty_blob))
+> +                               read_mmblob(mmf, &oid);
+> +                       else
+> +                               read_mmfile(mmf, "/dev/null");
 
-I fully support this.  Absolutely, 100%.
-
-Thanks both,
-Elijah
+Does "/dev/null" have any portability considerations?  (I really don't
+know; just curious.)
