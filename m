@@ -1,83 +1,82 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A8D12E7B
-	for <git@vger.kernel.org>; Sun, 29 Oct 2023 22:31:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B789D14F92
+	for <git@vger.kernel.org>; Sun, 29 Oct 2023 23:17:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KZ8c8gpg"
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72E50BD
-	for <git@vger.kernel.org>; Sun, 29 Oct 2023 15:31:30 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 7B8E62C08B;
-	Sun, 29 Oct 2023 18:31:27 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=Flo65EPVBfvA
-	ROVhjDVcS2Pxg0n0g8fgtqPQ+EGCDbM=; b=KZ8c8gpgYuGGkAB35+edxTiqvVKz
-	FNPqWgMg1EuXsw6d+QpVgQLVxNAYJAB3E9i4CdOIlUyKUEVF8tcmLfpGiGqXoU9m
-	ryFkcbRgr3oQWH9EUlj6DXwaeaRoadvIGWID4o6QJm8Dyid3V6u6A2Uxgi3Dxzbs
-	1ZIEse/p0Z/6s+A=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 746D52C08A;
-	Sun, 29 Oct 2023 18:31:27 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.198.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 1695F2C078;
-	Sun, 29 Oct 2023 18:31:24 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc: Git List <git@vger.kernel.org>,  John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH] reflog: fix expire --single-worktree
-In-Reply-To: <63eade0e-bf2c-4906-8b4c-689797cff737@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-	message of "Sat, 28 Oct 2023 13:58:41 +0200")
-References: <63eade0e-bf2c-4906-8b4c-689797cff737@web.de>
-Date: Mon, 30 Oct 2023 07:31:22 +0900
-Message-ID: <xmqqa5s1hxhh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j20c1iwo"
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EED94EBDE
+	for <git@vger.kernel.org>; Sun, 29 Oct 2023 16:15:48 -0700 (PDT)
+Received: by mail-ot1-x330.google.com with SMTP id 46e09a7af769-6cd1918afb2so2373862a34.0
+        for <git@vger.kernel.org>; Sun, 29 Oct 2023 16:15:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1698621347; x=1699226147; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=1qpjbKIpPTkq0srG5c2G3P+Ku2iSte2JIs81nSN2xvw=;
+        b=j20c1iwo3vI58dZW7oKRigDVwjBYrM7M1exO79TIJX10XFMZpx1sCCE1ZlptghPeXi
+         AxNKcj7x5s1l15ImNByAhz9yfn3cTs3wa8sfW7FjLWwX106Npz1v04o+7ifCecwU0sbd
+         BGWLSXq8npph4kiKC9jvPsK4l8QhnFf1ePEROx94CAM/6eoMIGFyENqU/YjILX4I6uQr
+         9HmdDiNLBF/JUt9UVfSJiaXhOqMdHRbwp0TE50JgmU6vRUn3oKxaCFB6ncG1V4s0gFNo
+         52iIpxO14GBywhqv+nuyIxByvJ526XKUCeoeETFRVnJHVRPjsw2bAiOuIbOuc6fMCNzr
+         TrPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698621347; x=1699226147;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=1qpjbKIpPTkq0srG5c2G3P+Ku2iSte2JIs81nSN2xvw=;
+        b=tb3PfUOZjirRzMAlGZLqUUXQN+NY5Are2dswWfUMesqhSrg/SqKxxJUHA0wU/+KUEX
+         cT0Wm3rFiJsxQwFCUJV5aMwXiypmvn0AV72rzPjUCQSY1/h1HV4xpTQGVa2wpHvjz509
+         RtgF82mdTGK/ISL4n1Ras89BbXSCBVSqadSja4CgIofACtjCYdXp8rK2HWJJw8+Wy+Y6
+         J5hwfDhdWElo98/OlXyYCT9Kn/WlT6mgmWYb7Ya+hzrLRxpXHgyMcgKUedidrPqCAq6Q
+         uax9L8ZXCpxD8EuKbSLp4D8znzkJCcoPC9o+G3P/IAApsBNESsNqXlG2LNAvtKHVTlvg
+         icDw==
+X-Gm-Message-State: AOJu0YzHG+a9FT/vTsH73Jc7AwwZAbSe3HGrII912noKnsz3RrXBg+8A
+	xoNpPBI+bEHDQ5braqCM6PtZgKK131yW2T4ChzSr8rR+DucwoPXN
+X-Google-Smtp-Source: AGHT+IH4D43VbYgioFYv/8KbjezYDPp5L9tbt+wO0ELwvjRiASZzwYnNFughfK7wBXYJbhLQQ4gS6RklHIhiwe5GpeE=
+X-Received: by 2002:a05:6830:4492:b0:6b9:146a:f1c9 with SMTP id
+ r18-20020a056830449200b006b9146af1c9mr11217672otv.0.1698621347423; Sun, 29
+ Oct 2023 16:15:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- E4415B90-76AA-11EE-99CC-A19503B9AAD1-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+From: Alexander Mills <alexander.d.mills@gmail.com>
+Date: Sun, 29 Oct 2023 18:15:35 -0500
+Message-ID: <CA+KyZp5mwGJ6YOvjKtfnDMDb9ci3vSq5KNUep6-8EfkHNaxREg@mail.gmail.com>
+Subject: please add link / url to remote - when - git push
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+When a feature branch is pushed, we get a link in the console to go to
+remote, however when I push directly to main/master, no such link, eg:
 
-> ... and added a non-printable short flag for it, presumably by
-> accident.
+```
+alex.mills@alex node-be % git push
+Enumerating objects: 20, done.
+Counting objects: 100% (20/20), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (10/10), done.
+Writing objects: 100% (11/11), 1.56 KiB | 799.00 KiB/s, done.
+Total 11 (delta 7), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (7/7), completed with 7 local objects.
+remote: Bypassed rule violations for refs/heads/main:
+remote:
+remote: - Changes must be made through a pull request.
+remote:
+To github.com:elx-onlinx/beautychat-chatcards.git
+   ffe1e05..bb7b0ef  main -> main
+```
 
-Very well spotted.
+Having the link in the console saves me tremendous time and is
+extremely effective/efficient. Can we get links in the console plz?
 
-FWIW, with the following patch on top of this patch, all tests pass
-(and without your fix, of course this notices the "\001" and breaks
-numerous tests that use "git reflog").  So you seem to have found
-the only one broken instance (among those that are tested, anyway).
+-alex
 
- parse-options.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git i/parse-options.c w/parse-options.c
-index 093eaf2db8..be8bedba29 100644
---- i/parse-options.c
-+++ w/parse-options.c
-@@ -469,7 +469,8 @@ static void parse_options_check(const struct option *=
-opts)
- 			optbug(opts, "uses incompatible flags "
- 			       "LASTARG_DEFAULT and OPTARG");
- 		if (opts->short_name) {
--			if (0x7F <=3D opts->short_name)
-+			if (opts->short_name &&
-+			    (opts->short_name < 0x21 || 0x7F <=3D opts->short_name))
- 				optbug(opts, "invalid short name");
- 			else if (short_opts[opts->short_name]++)
- 				optbug(opts, "short name already used");
+-- 
+Alexander D. Mills
+Mobile phone (737) 281-4824
+https://linkedin.com/in/alexanderdmills
