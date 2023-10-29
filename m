@@ -1,60 +1,61 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67E3C80B
-	for <git@vger.kernel.org>; Sun, 29 Oct 2023 06:00:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C36B85664
+	for <git@vger.kernel.org>; Sun, 29 Oct 2023 06:02:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LIama3OC"
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99791C9
-	for <git@vger.kernel.org>; Sat, 28 Oct 2023 23:00:35 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2c509d5ab43so50158321fa.0
-        for <git@vger.kernel.org>; Sat, 28 Oct 2023 23:00:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VhFqgazG"
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EF45C9
+	for <git@vger.kernel.org>; Sat, 28 Oct 2023 23:02:13 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2c5056059e0so49892871fa.3
+        for <git@vger.kernel.org>; Sat, 28 Oct 2023 23:02:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698559234; x=1699164034; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1698559331; x=1699164131; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=AQE5umkieqPwnkPU42DRdrJ7lbdKFVxOoGYXGxnI6Qw=;
-        b=LIama3OCIL1KDYeNWAuDbRWGw1gXJz3yNH3iyTuXp58xvmQSYxcivWQjVOnFOIicx8
-         zYtO9RY4Gz4FsgLvI9RRXMtQV/P9dgWv/UwrgOH4CMqSCpwHWGTskxfpB1v5+9q/yeKQ
-         sfDIBsTFFAgjAIzol5+NwklId4s/sY2+XW1zekNgPAHLJQLRaShJIV3B2SHFsrARO3Du
-         jtv3WBVRekwyMromh9Ahb4gTDMIINptOdovZea0O7ncVhVp8P8meah2hnumRcCGGEDhu
-         Ub+QyeQYQWitSrDt/u2bRo47IcuA5GOv7C9ybTh1lp2danH2bKEezWE5b9GEFoqp9q3V
-         gT4w==
+        bh=ftvJ1CDXnOD57ZFbx5vqyruEm4YxWY8mAHPTszjTP7Q=;
+        b=VhFqgazGYPAzeXdGMBTG0TlBzu3lzkxIHcY8Gh0kM0BMcaT3ECWpUhxBuC3DFrl7b6
+         ni3tSBE0noJLNVEHYSU1wgQuBGtPUtjohWdGgCrNRmmGprJ5LTuTQUjzB4MfxS4ppPat
+         oSPXhXUU0EXoOK3ntSPjAdKiZs0ttVuO0efSWLGvvSKTyXyQRMzAQfAGsCdLf0iW18mC
+         8Kg4xWSwQ/XoEz/tcG26e4pckicSX2iVi/I4L2U7phRBUI9Gzxbgvl1iHQTpxgJwySwE
+         1yWh6TU3VR1UfCod2HgnHRRU9bO96KJm7rPKaR+9Mh/l2VsBTqKnJVbwMBEaDaJs3Rsz
+         RdcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698559234; x=1699164034;
+        d=1e100.net; s=20230601; t=1698559331; x=1699164131;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=AQE5umkieqPwnkPU42DRdrJ7lbdKFVxOoGYXGxnI6Qw=;
-        b=ewXT5KyMp4V20jHnj0j/SRAICSQCoUUZnwXb8zsHdP3j//ozkj+UxkpjY+uhs+NYV6
-         FRu+c7+6EjSY1N0OWWm/dAg3dz2cuZnGtKW23VrErQvvboAf+bIXCCaBp80qouFNfPvs
-         YbsHXYiSmGZkBSaz0oCD6Jv/SxSbUhFVsXXzAbp9w0xpICWEEL3ATV65MfX9dhwr2W9K
-         /UJYC2VE/BXXXu2fbr2G4yPMU+jBUjVT3Ew39eFr0ykl/2BgQJxVtmK11yR1BSUYpacA
-         a1soyMhmZjcL9MOMa/AF+Bi70SY/ut5sEGyZDYDVP65AsfVYDihmFKXfeBVUK852o8/O
-         EAMQ==
-X-Gm-Message-State: AOJu0YwgEf5hi0uz3DNtaApeRaqDHyQMU6Z8XaNoP/qpuSdfmOem30+v
-	U8gzrO8snIS8iZvovbGttRg1DEXJE6/BicRnCsE=
-X-Google-Smtp-Source: AGHT+IHByKLpLgQcHoLMf5JMH2nqnMmEbTlB9AsDUyrreCcXLj2hdJ8J3kAgXpDCy/v7V1BhfJIwZxlhYGy2mf+Kh7k=
-X-Received: by 2002:a05:651c:1032:b0:2be:54b4:ff90 with SMTP id
- w18-20020a05651c103200b002be54b4ff90mr5045083ljm.53.1698559232884; Sat, 28
- Oct 2023 23:00:32 -0700 (PDT)
+        bh=ftvJ1CDXnOD57ZFbx5vqyruEm4YxWY8mAHPTszjTP7Q=;
+        b=TOvx1xYNSK1VJxgPnsQByLXOcSAr1zCVzmwqD4Eq996u3g0bTO61Fr7Eb9EanWwo1x
+         RUGWVIh6hA9bbz7+RchwAOiWr8dCFnZ8AV3aAoBFpkk/ToHKRnTXMDd+VZt2NDHSmTEq
+         2H5RenKJrQuQEoealwT9AVOUhrFNvnDS0vzBKXYwWPB+vFXMwiAjnAGzEDNrhE8IlcTI
+         mryQVriYLh3Fq1DawFeGsa8AKRMFcKyNgM5JtNGqiq60OCsp5kqBusk6jXChYowPYzVJ
+         YSftXr4gE9Urk8bATh7xjPbHnDDX2exYhC6DQ4g7msRVUZiOxh3WFxhZb50vW66vuFBB
+         g6pg==
+X-Gm-Message-State: AOJu0Yw1+gXeXoloGbaL3H+d+urCD3aMiy2UB6ohtHPXgKfg0WAEUj6B
+	7eKz1b9IxFOkYum3pUjM+p59Mpakk/t77LlURA8=
+X-Google-Smtp-Source: AGHT+IE7JFS7xlgvccjH8wgHGVOdLq6qr07x3JCKegcIH4ucaIi1UJX+qcJkyVEHZIFgxIwPXtFa/jtBGZ12QJ3T/5k=
+X-Received: by 2002:a2e:9893:0:b0:2c5:9e4:3fdd with SMTP id
+ b19-20020a2e9893000000b002c509e43fddmr5249894ljj.27.1698559330912; Sat, 28
+ Oct 2023 23:02:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20230907092521.733746-1-christian.couder@gmail.com> <20231010123847.2777056-1-christian.couder@gmail.com>
-In-Reply-To: <20231010123847.2777056-1-christian.couder@gmail.com>
+References: <20230907092521.733746-1-christian.couder@gmail.com>
+ <20231010123847.2777056-1-christian.couder@gmail.com> <bd872b81-80a9-5e4e-dcb6-faebc9671848@gmx.de>
+In-Reply-To: <bd872b81-80a9-5e4e-dcb6-faebc9671848@gmx.de>
 From: Elijah Newren <newren@gmail.com>
-Date: Sat, 28 Oct 2023 23:00:20 -0700
-Message-ID: <CABPp-BGCzxL-kpOvZzWRTJcx2v18QHm5ev8bFv7bm0dyNqhKug@mail.gmail.com>
+Date: Sat, 28 Oct 2023 23:01:58 -0700
+Message-ID: <CABPp-BFrVfGHOrBk7g=4TkGxDv=oSqF1FOkhp6WVbxUV-2yveQ@mail.gmail.com>
 Subject: Re: [PATCH v5 00/14] Introduce new `git replay` command
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, John Cai <johncai86@gmail.com>, 
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org, 
+	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, John Cai <johncai86@gmail.com>, 
 	Derrick Stolee <stolee@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>, 
 	Calvin Wan <calvinwan@google.com>, Toon Claes <toon@iotcl.com>, Dragan Simic <dsimic@manjaro.org>, 
 	Linus Arver <linusa@google.com>
@@ -63,90 +64,89 @@ Content-Transfer-Encoding: quoted-printable
 
 Hi,
 
-On Tue, Oct 10, 2023 at 5:39=E2=80=AFAM Christian Couder
-<christian.couder@gmail.com> wrote:
-> * Patch 12/15 (replay: disallow revision specific options and
->   pathspecs) in version 4 has been removed, so there are now only 14
->   patches instead of 15 in the series. This follows a suggestion by
->   Dscho, and goes in the direction Elijah initially wanted before
->   Derrick Stolee argued for disallowing revision specific options and
->   pathspecs.
+On Thu, Oct 26, 2023 at 6:44=E2=80=AFAM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Hi Christian,
+>
+> On Tue, 10 Oct 2023, Christian Couder wrote:
+>
+[...]
+> >      +  /* requirements/overrides for revs */
+> >     -+  revs.reverse =3D 1;
+> >     ++  revs.reverse =3D !revs.reverse;
+> >      +  revs.sort_order =3D REV_SORT_IN_GRAPH_ORDER;
+> >      +  revs.topo_order =3D 1;
+> >      +  revs.simplify_history =3D 0;
+>
+> This still overrides a couple of command-line options, _silently_. I woul=
+d
+> prefer those three assignments to be moved just before the
+> `setup_revisions()` call.
+>
+> Letting users override these settings may not make much sense, but it
+> makes even less sense to pretend to let them override the settings and
+> then just ignore them without warning. (See also
+> https://en.wikipedia.org/wiki/Principle_of_least_astonishment.)
+>
+> Moving these three assignments before the `setup_revisions()` call would
+> neatly remedy that.
 
-That's too strongly worded; and may be misleading.  My primary goal in
-that discussion was that setup_revisions() should not be a disallowed
-API for future consumers such as git-replay.  My secondary thought, at
-the time, was that although I agreed that setup_revisions() was a
-problematic API, I didn't think fixing it should be a prerequisite for
-new features to make use of it.
+I agree that warnings or error messages would be better.
 
-However, your paragraph here could easily be read that I think the
-setup_revisions() API is fine.  I don't.  I actually think fixing the
-setup_revisions() API and preventing not only git-replay but many
-other commands from accepting non-sensical flags, as suggested by
-Stolee, is a very good idea.  I even brought up the example
-$ git stash show --graph --relative-date --min-parents=3D3
-     --simplify-merges --cherry --show-pulls --unpacked -v -t -8
-     --format=3Doneline --abbrev=3D12 --pretty=3Dfuller --show-notes
-     --encode-email-headers --always --branches --indexed-objects stash@{0}
-in the thread[1] along with the comment "guess which flags are ignored
-and which aren't".  That's garbage.  This digging plus various things
-Stolee said actually convinced me that perhaps prioritizing fixing the
-setup_revisions() API over adding new consumers does make sense.
+But if we're talking about something short of that, I'd actually argue
+the opposite of what you do here.  I intentionally moved these
+assignments after setup_revisions(), and in my mind, the purpose in
+doing so was to satisfy the Principle of Least Astonishment.  My
+experience with git-fast-export, where some settings are made before
+calling setup_revisions() and then can be overridden, and then do
+completely hideous things, was much worse to me than just admitting
+the flags are bad given the various assumptions the tool makes.  I
+have some patches sitting around to fix fast-export that I never got
+around to upstreaming, but when it came time to implement git-replay,
+I made sure to fix what I viewed as the bigger problem.
 
-But, I don't feel nearly as strong about it as Stolee on
-prioritization, so I'm not going to object too strongly with this
-patch being tossed for now.  But I do want to note that I actually
-like Stolee's suggestion that we should fix that API and tighten what
-many commands accept.
+[...]
+> >     @@ Documentation/git-replay.txt (new)
+> >      +
+> >      +NAME
+> >      +----
+> >     -+git-replay - Replay commits on a different base, without touching=
+ working tree
+> >     ++git-replay - Replay commits on a new base, works on bare repos to=
+o
+> >      +
+> >      +
+> >      +SYNOPSIS
+>
+> As mentioned in
+> https://lore.kernel.org/git/03460733-0219-c648-5757-db1958f8042e@gmx.de/,
+> I would like the `EXPERIMENTAL` label to be shown prominently here.
+> Probably not only the `SYNOPSIS` as I had originally suggested but also i=
+n
+> the `NAME`.
+>
+> Otherwise we may end up with the same situation as with the (from my
+> perspective, failed) `git switch`/`git restore` experiment, where we
+> wanted to explore a better user experience than the overloaded `git
+> checkout` command, only to now be stuck with having to maintain
+> backward-compatibility for `git switch`/`git restore` command-line option=
+s
+> that were not meant to be set in stone but to be iterated on, instead. A
+> real-life demonstration of [Hyrum's Law](hyrumslaw.com/), if you like. Or=
+,
+> from a different angle, we re-enacted https://xkcd.com/927/ in a way.
+>
+> I'd like to suggest to learn from history and avoid this by tacking on a
+> warning label right at the top of the documentation. We may eventually
+> manage to iterate `git replay` to a point where it is totally capable to
+> supersede `git rebase`, by doing everything the latter does, except
+> better, who knows? But we _do_ need the liberty to make sweeping changes
+> to this new builtin if we want to have a prayer of doing that. And I fear
+> that not even mentioning the EXPERIMENTAL nature right at the top of the
+> manual page would just render us into that undesirable corner.
 
-[1] https://lore.kernel.org/git/f5dd91a7-ba11-917a-39e2-2737829558cb@github=
-.com/
+I fully support this.  Absolutely, 100%.
 
-> * In patch 2/14 (replay: introduce new builtin) the command is now in
->   the "plumbingmanipulators" category instead of the "mainporcelain"
->   category. This is more in line with the goal of introducing it as a
->   plumbing command for now. Thanks to a suggestion from Dscho.
-
-I do want to eventually make it a porcelain, but I think it's pretty
-far from that in its current state, so this is a good change.
-
-> * In patch 6/14 (replay: change rev walking options) the commit
->   message has been improved, including its subject, to better match
->   and explain what the patch does.
-
-This (and multiple other changes I elided) are good; thanks for
-pushing forward on this.
-
->   Also instead of forcing reverse
->   order we use the reverse order by default but allow it to be changed
->   using `--reverse`. Thanks to Dscho.
-
-I can see why this might sometimes be useful for exclusively linear
-history, but it seems to open a can of worms and possibly unfixable
-corner cases for non-linear history.  I'd rather not do this, or at
-least pull it out of this series and let us discuss it in some follow
-up series.  There are some other alternatives that might handle such
-usecases better.
-
->  6:  ec51351889 !  6:  37d545d5d6 replay: don't simplify history
-...
->     +    We want the command to work from older commits to newer ones by =
-default,
->     +    but we are Ok with letting users reverse that, using --reverse, =
-if that's
->     +    what they really want.
-
-As noted above, _I_ am not ok with this yet.  Given the patch
-prominently bears my name, the "we" here at a minimum is wrong.  I
-would rather leave this change out for now and discuss it for a
-follow-on series.
-
->     @@ Documentation/git-replay.txt (new)
->      +
->      +NAME
->      +----
->     -+git-replay - Replay commits on a different base, without touching w=
-orking tree
->     ++git-replay - Replay commits on a new base, works on bare repos too
-
-really minor point: "works on" or "works in" or "works with" ?
+Thanks both,
+Elijah
