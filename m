@@ -1,95 +1,83 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA0AB11C99
-	for <git@vger.kernel.org>; Sun, 29 Oct 2023 20:23:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A8D12E7B
+	for <git@vger.kernel.org>; Sun, 29 Oct 2023 22:31:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UuNDtK8L"
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26533C0
-	for <git@vger.kernel.org>; Sun, 29 Oct 2023 13:23:11 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-32f7c44f6a7so809398f8f.1
-        for <git@vger.kernel.org>; Sun, 29 Oct 2023 13:23:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698610989; x=1699215789; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=HNdsCo+vMheZ6VmPMr0gKwMOp+OninhIfK7w4fFsKHg=;
-        b=UuNDtK8LOPZUCiviZBvxUGelbQlpdEq0ApAMisRHUYKhbpQjkp/aFGFhKX+CvbGW7R
-         qLDjj8ebJP9YwIcZKiOBH7822/WWEsyAWdghhqY9RMjGYTHINxlmDxOSE3W7+QCsUV6f
-         za4Jny0ltV86YcGtCDBr9pSp/lo9CRlb4QJ/YM9eq+4du0Uz5CyUUbRU/qb+U/jtPw7N
-         MiaIqmBXoY/7wATT2S5n4fFzCftwWrojNZZVWfa1/iBPmJmiPDKr0i0vyMAzJzhrLidA
-         SFI7fc8rCWSX21wro//hhUFw6DPvyKCqvssV48BuUI4RAmLmeO4H61KxtYgB1mKfRxuK
-         VHaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698610989; x=1699215789;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=HNdsCo+vMheZ6VmPMr0gKwMOp+OninhIfK7w4fFsKHg=;
-        b=fhpmI6uisA5j8UMfksqeiXAjl7HHsYGmFz3q8JlfFcxSkvMJG0kYyL7AH3xZqkfSOz
-         f1mnQR/l2M5zLthmI0KX8eTjqIypAZ+fOECxWUV+BJDaWgTWJdOTLYb06NDfFccl0lNJ
-         ZPVskSBSWX4dHtXcngYvdbqn++cxXeHvfpBoX9BdLXQ4q52w0f+v7lDa8gI2FmzdW0l5
-         vXaD5lTD7JEHNirGwQhZ8DHFCL4eqRO/Tfb0V0mAiEHnocVrncN6nEJZid6giXEzLJpU
-         hUBiJ2sOyl0lTK364ijbvAv6hb51tDZmsAhrDMSG9P4oIXTj7QVnBZyGUUA8LPiFwmfW
-         mm0Q==
-X-Gm-Message-State: AOJu0YzthUk4Rfo0TjD5TuDbLSHg+zlosTcqhwA68UyfZN+vYwCS7DOi
-	Of+4ZQ51jJI1EqOEx4TtznQb6bx4Pcs=
-X-Google-Smtp-Source: AGHT+IFQyqpbABS1pvWVlM5kP4Bb1FLpd6kbGXovwg8M5+duu7/cflR+PUxxQjChe+Lhw/JAk9EaDA==
-X-Received: by 2002:a05:6000:186c:b0:32f:7c4a:4f28 with SMTP id d12-20020a056000186c00b0032f7c4a4f28mr3670176wri.65.1698610989074;
-        Sun, 29 Oct 2023 13:23:09 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z9-20020a5d44c9000000b00327b5ca093dsm6666513wrr.117.2023.10.29.13.23.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 29 Oct 2023 13:23:08 -0700 (PDT)
-Message-ID: <pull.1602.git.git.1698610987926.gitgitgadget@gmail.com>
-From: "Aditya Neelamraju via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 29 Oct 2023 20:23:07 +0000
-Subject: [PATCH] chore: fix typo in .clang-format comment
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KZ8c8gpg"
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72E50BD
+	for <git@vger.kernel.org>; Sun, 29 Oct 2023 15:31:30 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 7B8E62C08B;
+	Sun, 29 Oct 2023 18:31:27 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=Flo65EPVBfvA
+	ROVhjDVcS2Pxg0n0g8fgtqPQ+EGCDbM=; b=KZ8c8gpgYuGGkAB35+edxTiqvVKz
+	FNPqWgMg1EuXsw6d+QpVgQLVxNAYJAB3E9i4CdOIlUyKUEVF8tcmLfpGiGqXoU9m
+	ryFkcbRgr3oQWH9EUlj6DXwaeaRoadvIGWID4o6QJm8Dyid3V6u6A2Uxgi3Dxzbs
+	1ZIEse/p0Z/6s+A=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 746D52C08A;
+	Sun, 29 Oct 2023 18:31:27 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.198.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 1695F2C078;
+	Sun, 29 Oct 2023 18:31:24 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc: Git List <git@vger.kernel.org>,  John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH] reflog: fix expire --single-worktree
+In-Reply-To: <63eade0e-bf2c-4906-8b4c-689797cff737@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+	message of "Sat, 28 Oct 2023 13:58:41 +0200")
+References: <63eade0e-bf2c-4906-8b4c-689797cff737@web.de>
+Date: Mon, 30 Oct 2023 07:31:22 +0900
+Message-ID: <xmqqa5s1hxhh.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Aditya Neelamraju <adityanv97@gmail.com>,
-    Aditya Neelamraju <adityanv97@gmail.com>
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ E4415B90-76AA-11EE-99CC-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-From: Aditya Neelamraju <adityanv97@gmail.com>
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-Signed-off-by: Aditya Neelamraju <adityanv97@gmail.com>
----
-    chore: fix typo in .clang-format comment
+> ... and added a non-printable short flag for it, presumably by
+> accident.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1602%2Faneelamr%2Fclang-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1602/aneelamr/clang-v1
-Pull-Request: https://github.com/git/git/pull/1602
+Very well spotted.
 
- .clang-format | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+FWIW, with the following patch on top of this patch, all tests pass
+(and without your fix, of course this notices the "\001" and breaks
+numerous tests that use "git reflog").  So you seem to have found
+the only one broken instance (among those that are tested, anyway).
 
-diff --git a/.clang-format b/.clang-format
-index c592dda681f..3ed4fac753a 100644
---- a/.clang-format
-+++ b/.clang-format
-@@ -83,9 +83,9 @@ BinPackParameters: true
- BreakBeforeBraces: Linux
- 
- # Break after operators
--# int valuve = aaaaaaaaaaaaa +
--#              bbbbbb -
--#              ccccccccccc;
-+# int value = aaaaaaaaaaaaa +
-+#             bbbbbb -
-+#             ccccccccccc;
- BreakBeforeBinaryOperators: None
- BreakBeforeTernaryOperators: false
- 
+ parse-options.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-base-commit: 2e8e77cbac8ac17f94eee2087187fa1718e38b14
--- 
-gitgitgadget
+diff --git i/parse-options.c w/parse-options.c
+index 093eaf2db8..be8bedba29 100644
+--- i/parse-options.c
++++ w/parse-options.c
+@@ -469,7 +469,8 @@ static void parse_options_check(const struct option *=
+opts)
+ 			optbug(opts, "uses incompatible flags "
+ 			       "LASTARG_DEFAULT and OPTARG");
+ 		if (opts->short_name) {
+-			if (0x7F <=3D opts->short_name)
++			if (opts->short_name &&
++			    (opts->short_name < 0x21 || 0x7F <=3D opts->short_name))
+ 				optbug(opts, "invalid short name");
+ 			else if (short_opts[opts->short_name]++)
+ 				optbug(opts, "short name already used");
