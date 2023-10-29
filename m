@@ -1,51 +1,51 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B45720F5
-	for <git@vger.kernel.org>; Sun, 29 Oct 2023 10:13:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBC7A3C13
+	for <git@vger.kernel.org>; Sun, 29 Oct 2023 10:15:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AmCNCDz8"
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49BB9B8
-	for <git@vger.kernel.org>; Sun, 29 Oct 2023 03:13:02 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-5079f9675c6so5349073e87.2
-        for <git@vger.kernel.org>; Sun, 29 Oct 2023 03:13:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W7ApNl90"
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0493BC
+	for <git@vger.kernel.org>; Sun, 29 Oct 2023 03:15:06 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id ffacd0b85a97d-32da4ffd7e5so1994777f8f.0
+        for <git@vger.kernel.org>; Sun, 29 Oct 2023 03:15:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698574380; x=1699179180; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1698574505; x=1699179305; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:from:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=6AsjNqg8Zyc6VM4OyMRzq9QOZiZfmtIupx044yG0I/4=;
-        b=AmCNCDz8TT3NnHHUdROPsOkG1IeQN7MKzCl9Amxw1Dk2MgR6LpzBd1QEcsdZktMSd6
-         K265gg1c1vAMRNwfLa4vVNMxGgRkkGEunLmCTUVHXQ9suztUMGvuitAdxNqI85p+elY2
-         ouB8C0BkzHUQl2m4lUOLvxJZashVkfJR1jGmnOMwS+nHOwC4qrxo/RKmE3Z8NJXO+kUX
-         gWczISLnBj0Ces4s9jP6VeSr5/yANtrTt+YKMQ4NuDgn8LmAO2D6nQFySrCYCeYzaDt/
-         dR0bXGMkC0tWVScwPKOmA6hvVJAK6DYb2dOnbOk4nLOkZdi1QxL06oEt+jsfcVnEvLJe
-         hoFA==
+        bh=NtWrJ9YYvqIntREhHko4QahlkXKuJlJ6ITfu2fPiKxE=;
+        b=W7ApNl90fDehSHt3nxoyFvJHsmLFQWrJlPYEK0jaJEsscgI7vzVql22bt2Gdi+gjFH
+         chHF4ewMGjNvPQeA51JpP3cb5sxpjZ63JtCD6OEkVufn+DP3K+QyhtILwrXXGrC1u5l/
+         uH2oXh/Y82yH95qplZV6YirKfIRl8WRtN7lS/3X1ficsWBsZVoZw8GvD5m6rD2jNNv2w
+         +VNsxUQOMhvc1fxUmIwYKjOzEIWjkwjg67s5Ie7twKb4NkhLLXqSKVFZa3WAQ9VvlE9p
+         OPy8T4ZkjpLfYsX+AMH4PNFf5f9nC3ftcHJ0mEgtAaj6WutO7hz22cpQtAkkxyFCCVXD
+         kaRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698574380; x=1699179180;
+        d=1e100.net; s=20230601; t=1698574505; x=1699179305;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:from:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=6AsjNqg8Zyc6VM4OyMRzq9QOZiZfmtIupx044yG0I/4=;
-        b=lbaoIEbafGioVQ9K85M8FZe1i0fomnsr63NkzmQ96NC3b5KonoDO4NqswGqZuiUyhF
-         TJd22OB5K0G7JqxVjnLVzimZ0VcNObkt7nZ3GTii8Xy2c5HFuGCZ8PiDCFjuWZf6sA1n
-         7aFmf+INNcWeIYjjGd5K+2HQOgFY//ImpA3L/FX/bh0r/5gviSJuzAtqou23EuS8OG+d
-         R/ucqB7crWGEN4iIiNnewsA//i/P+B8k4dWaBlEMHzguiDKTMpwsYuuLKa9ttngOZzpD
-         hTvkjOICf0TV9D8NuF/22Dh2T6LbF80LcQAtZihUVzUhB9FFMuPnlaE5YDIUcQmjCILv
-         Ixkw==
-X-Gm-Message-State: AOJu0YwB+0H6/YXULCoRB9C05xQpezCKSURpYIoqMd5qlbj9xK1wMRpb
-	xz727RKnVMaV/LEgd+ADbFM=
-X-Google-Smtp-Source: AGHT+IHZd8oLZ3qJFbqnixq2L7eQOkMdxp0ArrI5VcJB8yC0CwCTnut+xCWPrKFL6ivRjPUUHVE3EQ==
-X-Received: by 2002:ac2:5448:0:b0:507:a1e5:74fe with SMTP id d8-20020ac25448000000b00507a1e574femr5006303lfn.54.1698574380239;
-        Sun, 29 Oct 2023 03:13:00 -0700 (PDT)
+        bh=NtWrJ9YYvqIntREhHko4QahlkXKuJlJ6ITfu2fPiKxE=;
+        b=UTE80womXz+r1vAOIpdfMtmEeT5SKhuoTod+200mcopBgA3grkStg4nZSVL1mLn3p5
+         rcH1cPxHxod1rAMNAqNRQY0ugk5KBNEWBn60ikm8aGB9BawYX0Wpa6eQ8RfstPadH7XI
+         0nrd/xVr+WrFkuFntIDjNerMwu+ETpfgmeL1KeCo9crK9tSqIRmGUag1syDDl4PJbVut
+         xInX8oReFyPb44ZwVzGW2jBqlMCUuYWg114QkIEdcC+oqrMoOi7V87Xo60l9aTVda/E9
+         B7m4h1YVhJbnhMFjlYfEJkGVoToA4g+5K/RFl/IOmv5+8EFSv+FDAhEFehmtwh3a5esz
+         /1Qg==
+X-Gm-Message-State: AOJu0Yxskh7JQ5+oe/YkZVTqXDqFce4hvvsadYZtN/4PlRZQW6W7c68h
+	HV04esWCsJObAKtKT+Azv+o=
+X-Google-Smtp-Source: AGHT+IFBDkpTydb9k0WsOOoSWKcs+oind6jvjww2rp9WwMoecckvFmIOj9KEdRryyGQ2dLC5Ws5rEg==
+X-Received: by 2002:a5d:6483:0:b0:32f:87e8:707d with SMTP id o3-20020a5d6483000000b0032f87e8707dmr564628wri.5.1698574504782;
+        Sun, 29 Oct 2023 03:15:04 -0700 (PDT)
 Received: from [192.168.1.212] ([90.242.223.1])
-        by smtp.gmail.com with ESMTPSA id bs27-20020a056000071b00b0032daf848f68sm2037071wrb.59.2023.10.29.03.12.59
+        by smtp.gmail.com with ESMTPSA id t9-20020a05600c198900b00403b63e87f2sm6251344wmq.32.2023.10.29.03.15.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 29 Oct 2023 03:12:59 -0700 (PDT)
-Message-ID: <fec21bbe-46da-4f1c-a9b8-6be44403d68f@gmail.com>
-Date: Sun, 29 Oct 2023 10:12:57 +0000
+        Sun, 29 Oct 2023 03:15:04 -0700 (PDT)
+Message-ID: <80c6b0d9-7d6c-4a1c-ba2e-330786b13cf0@gmail.com>
+Date: Sun, 29 Oct 2023 10:15:02 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -55,37 +55,29 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: Phillip Wood <phillip.wood123@gmail.com>
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 1/1] merge-file: add an option to process object IDs
+Subject: Re: [PATCH 0/1] Object ID support for git merge-file
 Content-Language: en-US
 To: Elijah Newren <newren@gmail.com>,
  "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 References: <20231024195655.2413191-1-sandals@crustytoothpaste.net>
- <20231024195655.2413191-2-sandals@crustytoothpaste.net>
- <CABPp-BG9Y6aZ+TWdkL4QE9e12fu3n61V16G6DLtawEDe=g9F4w@mail.gmail.com>
-In-Reply-To: <CABPp-BG9Y6aZ+TWdkL4QE9e12fu3n61V16G6DLtawEDe=g9F4w@mail.gmail.com>
+ <CABPp-BFJn5NsSaaxEMpicqND_-8CBw370kyBQuKHGOX-3PRyMw@mail.gmail.com>
+In-Reply-To: <CABPp-BFJn5NsSaaxEMpicqND_-8CBw370kyBQuKHGOX-3PRyMw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hi brian
+On 29/10/2023 06:24, Elijah Newren wrote:
+> On Tue, Oct 24, 2023 at 12:58 PM brian m. carlson
+>> This is in use at
+>> GitHub to produce conflict diffs when a merge fails, and it seems
+>> generally useful, so I'm sending it here.
+> 
+> But...wouldn't you already have the conflicts generated when doing the
+> merge and learning that it fails?  Why would you need to generate them
+> again?
 
-I agree with everything Elijah said, I just have one more comment
-
->> @@ -80,12 +88,21 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
->>
->>                  fname = prefix_filename(prefix, argv[i]);
->>
->> -               if (read_mmfile(mmf, fname))
->> +               if (object_id) {
->> +                       if (repo_get_oid(the_repository, argv[i], &oid))
->> +                               ret = -1;
-
-It would be nice to print an error message here
-
-	ret = error("object '%s' does not exist", argv[i]);
-
-none of the existing error messages are marked for translation so I've 
-left this untranslated as well.
+I was surprised by this as well, but as you say this seems like a 
+useful addition independent of any specific use at GitHub.
 
 Best Wishes
 
