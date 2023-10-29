@@ -1,111 +1,123 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 473CDBA35
-	for <git@vger.kernel.org>; Sun, 29 Oct 2023 14:14:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 379A68835
+	for <git@vger.kernel.org>; Sun, 29 Oct 2023 14:19:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="Ev6nS53p"
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D64E6B0
-	for <git@vger.kernel.org>; Sun, 29 Oct 2023 07:14:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-	t=1698588854; x=1699193654; i=johannes.schindelin@gmx.de;
-	bh=QFSERw5FePPexSDbRhESOGkbDvNaCfulKwzHs57hXnE=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:
-	 References;
-	b=Ev6nS53pAL3f42cRaTrCF509nQ+p9x6j893kMDmREAxCA+wOSrundG/YlMCrAAFI
-	 0WPi2cpJ0Tg1bD8QcUT5Fvtz+TGTFz41S28U0qNxynpdpqNpV7qpps66AC8mTTazo
-	 9jeWLDpPRo+e1EkZ+a1I+D2XrkPvfTwETaEJ1oBAKZQya8dJB5voLO9D58N2RTcQq
-	 XS7DaJv1+fn2bhxF+FPAG/ottoLHPFsW99eh0A0880SxJgooVpftmKMGBltsVwGI5
-	 lzq55JVDRzfHTmCTwkP6qTHKlgVw6q7zrYBR8ol7A5W4dg3Rz2avP2h4mC/0+iWPy
-	 uqbqSdblRlgfd/U1vg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.213.28]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MmDEg-1rNbbK30ue-00iEBt; Sun, 29
- Oct 2023 15:14:14 +0100
-Date: Sun, 29 Oct 2023 15:14:07 +0100 (CET)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="C3PReCB8"
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C00FEB0
+	for <git@vger.kernel.org>; Sun, 29 Oct 2023 07:18:59 -0700 (PDT)
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 715825B09E;
+	Sun, 29 Oct 2023 14:18:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1698589138;
+	bh=0q40W/20Xasp52GwiipdViZQhv4mspXoQcwwe/0p3Rc=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=C3PReCB8DuUqX8PZDNXCLq+VFnjZ50ThQ7sO2VBuPOGTw1jHJHuPd7wNhsJO9gHgk
+	 nsPMuylW3NQ8Sd+vorTy855wOtSDsPZFLW6sfvab1ISkSozKARW0WYSbBL1HLT8oJp
+	 4LQB/s5xWNV0m99wNrSKMpFsqLtV+uYCTaNPnLNsDVbRou9C8eEW1LegBLxByzP6OG
+	 iCArlNF14Kkw6k5MMYUDhnUMgQKpS8SA2Ftj6bEbTZ5O5GxX6DsQwKqtrTXwz0BxyO
+	 mdEdWXFBDvrKuU/a3+t6Bf4OJZE18hEAij6mFeHfX9oe0ihS5PLspPj2vaaFagqDzK
+	 OQtO3Ql59dd1ZyHhi9mtVHFStIWo5HZHvKovbF8DBOOYj1VNMpUSgXKghGA/3JCHQX
+	 07uP6dI3UdxAtPM2Bb8e1sDNeC30NeEGJhRGmM8AmCp3GgkdSJvC4+85kD3ZE9yVMZ
+	 jz+KoNiTClqmPi7KzZrWBJG1hDBlWYYWW2mGCgLXMK0mLUbHYgu
+Date: Sun, 29 Oct 2023 14:18:57 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: Elijah Newren <newren@gmail.com>
-cc: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org, 
-    Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
-    John Cai <johncai86@gmail.com>, Derrick Stolee <stolee@gmail.com>, 
-    Phillip Wood <phillip.wood123@gmail.com>, 
-    Calvin Wan <calvinwan@google.com>, Toon Claes <toon@iotcl.com>, 
-    Dragan Simic <dsimic@manjaro.org>, Linus Arver <linusa@google.com>
-Subject: Re: [PATCH v5 00/14] Introduce new `git replay` command
-In-Reply-To: <CABPp-BGCzxL-kpOvZzWRTJcx2v18QHm5ev8bFv7bm0dyNqhKug@mail.gmail.com>
-Message-ID: <e04cfbdc-fd28-c645-8f5d-132f7ceec6be@gmx.de>
-References: <20230907092521.733746-1-christian.couder@gmail.com> <20231010123847.2777056-1-christian.couder@gmail.com> <CABPp-BGCzxL-kpOvZzWRTJcx2v18QHm5ev8bFv7bm0dyNqhKug@mail.gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH 1/1] merge-file: add an option to process object IDs
+Message-ID: <ZT5p0WUw7EeaY8vW@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Elijah Newren <newren@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Phillip Wood <phillip.wood123@gmail.com>
+References: <20231024195655.2413191-1-sandals@crustytoothpaste.net>
+ <20231024195655.2413191-2-sandals@crustytoothpaste.net>
+ <CABPp-BG9Y6aZ+TWdkL4QE9e12fu3n61V16G6DLtawEDe=g9F4w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-465570248-1698588855=:542"
-X-Provags-ID: V03:K1:uL+BawcMxPlaNit+XMW7X+N8LpxMVCtaGFVqzNqjo1C8K+8FUmj
- iTdtLWHlpuT0sRaXDmDhHTidIJQzYMi649oaUAcY5qay28Bko5F7M0wNe3Gnt7BGvrWRQC5
- u2V9/QQCPA45ZpomeqNvP0Xzp+Zrivd3WRKuZHzsgNgmoyAhKm3gMHO1pO4urV1elgWrSHF
- PUx8OQFcpnBLs+CQs2wwQ==
-UI-OutboundReport: notjunk:1;M01:P0:jPoRCWTtm3w=;5UFEXcpoBTXR4Xc5ToAdrasOja+
- at9Ovmdq8SXAPASEuEgmFe4upsdmZG1ICJb2VruUA4YLHJCj4SrcMvYFXHl802T3gSAkqmKbA
- BTTgZXoOvO8mnz1PsdcUfqCvZrdVJ1tA7zJVBtJV+DyYCsFjmB1Hi7msI7ZyWVXYDqpAsxnPj
- yhDJzmjIEswzIms6A7Lalm2Q0/Ri7u4upgX9NcLtNuxNaayb00/ywe8Nkg1OJAuVlpI1c81hy
- qXb9Efi/97W+Wvd6naLi8Cl3OgRRrz8ZKjWH9X59KguZYJE8s6SSV3qPJc01WdzPQDmFm4Nyj
- lYIjpxD8ibajXc/SjqQpAitQItdqfqv/lhmpSj42AWRqORwHznJ7fwgoB1ctmVfOrpAfDgfD9
- 6womLsINA5SzhYaRVp+mydTyXTVZLanFVqrbTirJ9Bkr7o3JIqk1lti5UfbW1ILPDKhDY/U2Y
- reNLGAkn8txxEZKBM3Rdhs/x0QXqC5jSgxD9iP843WMqd0vLeyiJ9fPBIAGBiHQ8sVXgUwoR6
- 8hbNBjDFMbOi4HNRx1UDcXmvu/1ePEGJTcuhf5oraI9KxYi657wYNdJE4p/lzvx7AiTt6CfvV
- qvLejWfR/luKlA5KrYx5WMaAO4NIu46vCimJEVBFsE9tGOW+NMfcVPHmpKxgMhMUGfYEWaMng
- KxEWh0p09MrFbISpcftD9SSVoZ82vZh1dbSRWdjyuH6MFAZ22XE6F7pyZbBxJVea6S6SBMQYi
- jv78PZcnwc2DWj9xL5kaQyTBLa0NZVZocSwuS/54C195cmWk3+rzUSAUfCathsLx52XoO5pMD
- /Z+8ANiteZ2900ANxcta1qUUvmi6HnToPPdaLVYzedRpBEPgVX/luckKDVzoZK6Siq7nj7Mw0
- mJHpeAPK+MpTsEA0zzuukIBZqq2HWlGIIjksA8J8ihMnrMQUTxPvDZm1ChERnVpD2YFwNZVCD
- /H1Vsw==
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="/rDfEQzsswgJ/tfn"
+Content-Disposition: inline
+In-Reply-To: <CABPp-BG9Y6aZ+TWdkL4QE9e12fu3n61V16G6DLtawEDe=g9F4w@mail.gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Spam-Level: *
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-465570248-1698588855=:542
-Content-Type: text/plain; charset=UTF-8
+--/rDfEQzsswgJ/tfn
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi Elijah,
+On 2023-10-29 at 06:17:09, Elijah Newren wrote:
+> Hi,
+>=20
+> Overall, looks good.  Just a couple questions...
+>=20
+> On Tue, Oct 24, 2023 at 12:58=E2=80=AFPM brian m. carlson
+> <sandals@crustytoothpaste.net> wrote:
+> >
+> > From: "brian m. carlson" <bk2204@github.com>
+> >
+> [...]
+> > --- a/Documentation/git-merge-file.txt
+> > +++ b/Documentation/git-merge-file.txt
+> > @@ -12,6 +12,9 @@ SYNOPSIS
+> >  'git merge-file' [-L <current-name> [-L <base-name> [-L <other-name>]]]
+> >         [--ours|--theirs|--union] [-p|--stdout] [-q|--quiet] [--marker-=
+size=3D<n>]
+> >         [--[no-]diff3] <current-file> <base-file> <other-file>
+> > +'git merge-file' --object-id [-L <current-name> [-L <base-name> [-L <o=
+ther-name>]]]
+> > +       [--ours|--theirs|--union] [-q|--quiet] [--marker-size=3D<n>]
+> > +       [--[no-]diff3] <current-oid> <base-oid> <other-oid>
+>=20
+> Why was the `[-p|--stdout]` option removed in the second synopsis?
+> Elsewhere you explicitly call it out as a possibility to be used with
+> --object-id.
 
-On Sat, 28 Oct 2023, Elijah Newren wrote:
+Originally because it implied `-p`, but I changed that to write into the
+object store.  I'll restore it.
 
-> On Tue, Oct 10, 2023 at 5:39=E2=80=AFAM Christian Couder
-> <christian.couder@gmail.com> wrote:
-> > * Patch 12/15 (replay: disallow revision specific options and
-> >   pathspecs) in version 4 has been removed, so there are now only 14
-> >   patches instead of 15 in the series. This follows a suggestion by
-> >   Dscho, and goes in the direction Elijah initially wanted before
-> >   Derrick Stolee argued for disallowing revision specific options and
-> >   pathspecs.
->
-> [... snipping many parts that I agree with...]
->
-> >   Also instead of forcing reverse order we use the reverse order by
-> >   default but allow it to be changed using `--reverse`. Thanks to
-> >   Dscho.
->
-> I can see why this might sometimes be useful for exclusively linear
-> history, but it seems to open a can of worms and possibly unfixable
-> corner cases for non-linear history.  I'd rather not do this, or at
-> least pull it out of this series and let us discuss it in some follow
-> up series.  There are some other alternatives that might handle such
-> usecases better.
+> Also, why the extra synopsis instead of just adding a `[--object-id]`
+> option to the previous one?
 
-I find myself wishing for an easy way to reverse commits, if only to
-switch around the latest two commits while stopped during a rebase.
+Because there's a relevant difference: the former has <current-file>,
+<base-file>, and <other-file>, and the latter has the -oid versions.
 
-So it would have been nice for me if there had been an easy, worktree-less
-way to make that happen.
+> Does "/dev/null" have any portability considerations?  (I really don't
+> know; just curious.)
 
-I guess this would be going in the direction of reordering commits,
-though, something we deliberately left for later?
+We already use it elsewhere in the codebase, so I assume it works.  We
+also have a test for that case and it worked in CI, so it's probably
+fine.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
-Ciao,
-Johannes
+--/rDfEQzsswgJ/tfn
+Content-Type: application/pgp-signature; name="signature.asc"
 
---8323328-465570248-1698588855=:542--
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.40 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZT5p0AAKCRB8DEliiIei
+gU6nAP9eP+PUlAFlPaDKRqbdiPS2DdZLwK41QZFktN/vy8XWCQD+OmBoa3BSGhWQ
+Yx2k6Cdw0xVMybR4jh32TKVN5SfKxw4=
+=IEL4
+-----END PGP SIGNATURE-----
+
+--/rDfEQzsswgJ/tfn--
