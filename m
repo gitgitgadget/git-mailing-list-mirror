@@ -1,123 +1,134 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 379A68835
-	for <git@vger.kernel.org>; Sun, 29 Oct 2023 14:19:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6169389
+	for <git@vger.kernel.org>; Sun, 29 Oct 2023 14:43:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="C3PReCB8"
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C00FEB0
-	for <git@vger.kernel.org>; Sun, 29 Oct 2023 07:18:59 -0700 (PDT)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 715825B09E;
-	Sun, 29 Oct 2023 14:18:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1698589138;
-	bh=0q40W/20Xasp52GwiipdViZQhv4mspXoQcwwe/0p3Rc=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=C3PReCB8DuUqX8PZDNXCLq+VFnjZ50ThQ7sO2VBuPOGTw1jHJHuPd7wNhsJO9gHgk
-	 nsPMuylW3NQ8Sd+vorTy855wOtSDsPZFLW6sfvab1ISkSozKARW0WYSbBL1HLT8oJp
-	 4LQB/s5xWNV0m99wNrSKMpFsqLtV+uYCTaNPnLNsDVbRou9C8eEW1LegBLxByzP6OG
-	 iCArlNF14Kkw6k5MMYUDhnUMgQKpS8SA2Ftj6bEbTZ5O5GxX6DsQwKqtrTXwz0BxyO
-	 mdEdWXFBDvrKuU/a3+t6Bf4OJZE18hEAij6mFeHfX9oe0ihS5PLspPj2vaaFagqDzK
-	 OQtO3Ql59dd1ZyHhi9mtVHFStIWo5HZHvKovbF8DBOOYj1VNMpUSgXKghGA/3JCHQX
-	 07uP6dI3UdxAtPM2Bb8e1sDNeC30NeEGJhRGmM8AmCp3GgkdSJvC4+85kD3ZE9yVMZ
-	 jz+KoNiTClqmPi7KzZrWBJG1hDBlWYYWW2mGCgLXMK0mLUbHYgu
-Date: Sun, 29 Oct 2023 14:18:57 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Elijah Newren <newren@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH 1/1] merge-file: add an option to process object IDs
-Message-ID: <ZT5p0WUw7EeaY8vW@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Elijah Newren <newren@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood123@gmail.com>
-References: <20231024195655.2413191-1-sandals@crustytoothpaste.net>
- <20231024195655.2413191-2-sandals@crustytoothpaste.net>
- <CABPp-BG9Y6aZ+TWdkL4QE9e12fu3n61V16G6DLtawEDe=g9F4w@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=crinan.ddns.net header.i=@crinan.ddns.net header.b="J+zkSHDb"
+Received: from crinan.ddns.net (unknown [90.242.223.1])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A46DBB6
+	for <git@vger.kernel.org>; Sun, 29 Oct 2023 07:43:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=crinan.ddns.net;
+	s=september; t=1698590616;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=HqPe8MEc1ApBQ22NQxZNMYW4MZSICBNTflq4nosnb2A=;
+	b=J+zkSHDb3PaiVAIINUG3/Rarqs0ykqTSnejKVz36CjMnYvk/LT6xRxI6BHR/jI3ETwUSy1
+	Eg9ljTR7Q351G6LG6I+0Dz545Bc101UHWf5XljHcWkTeri5NeyiDNvSLQ/+qHZ+JffTDN6
+	cbvEyEu3h1oqufKVNHS0uqeEsy5qMZt0GEfVH93fb+Jw124jpBA2foooXrr3rU6OiJaijQ
+	jxNARrpU2Ktt24wjs97VMqJq/uidCA992DqNm7RBN+UOBxagj0wbXslz5G6e5P8wFaWria
+	Eb+F+5AG9KZjmPwlK9zohBTGZ3sP/iiKRFgrw0gDe69nV8POs890629fPdhvlg==
+Received: from [192.168.1.212] (<unknown> [192.168.1.212])
+	by crinan.ddns.net (OpenSMTPD) with ESMTPSA id c9e2cdce (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Sun, 29 Oct 2023 14:43:36 +0000 (UTC)
+Message-ID: <9c317b54-7ed4-4ca6-ad75-6857ded0d658@crinan.ddns.net>
+Date: Sun, 29 Oct 2023 14:43:33 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="/rDfEQzsswgJ/tfn"
-Content-Disposition: inline
-In-Reply-To: <CABPp-BG9Y6aZ+TWdkL4QE9e12fu3n61V16G6DLtawEDe=g9F4w@mail.gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Spam-Level: *
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC][Outreachy] Seeking Git Community Feedback on My Application
+Content-Language: en-US
+To: Isoken Ibizugbe <isokenjune@gmail.com>,
+ Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org
+References: <CAJHH8bEfM8KmwhHX_Fmcb0A2zpr8L75vgNhfvZy-uitpSXNUvQ@mail.gmail.com>
+ <CAP8UFD22EpdBU8HJqFM+=75EBABOTf5a0q+KsbzLK+XTEGSkPw@mail.gmail.com>
+ <CAJHH8bH0gp9tbDJ4DYk3jkNPD5_dZ9s62D9ae3q33aBP0ZL9Lg@mail.gmail.com>
+ <CAP8UFD16OAPiRFJfjZN=soAe3WzDBteyvzv-b3CD67jz6Haqyg@mail.gmail.com>
+ <CAJHH8bGK28Fc+VG3uxgC5sGgFEAw6_6AEtusgmw7c4Vz0iGF_g@mail.gmail.com>
+ <CAP8UFD1+aWGymjssk5CotPjEmhu5sMcTy-b7eJc4fw-UA41Qig@mail.gmail.com>
+ <CAJHH8bHCfx3vknPCGATbLZeTA7hYrVVtnYqfE1avWkiL1PvU1g@mail.gmail.com>
+From: Phillip Wood <phil@crinan.ddns.net>
+In-Reply-To: <CAJHH8bHCfx3vknPCGATbLZeTA7hYrVVtnYqfE1avWkiL1PvU1g@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Level: **
 
+Hi Isoken
 
---/rDfEQzsswgJ/tfn
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 28/10/2023 15:07, Isoken Ibizugbe wrote:
+> #include "test-lib.h"
+> #include "ctype.h"
+> 
+> static void t_digit_type(void)
+> {
+>      int i;
+> 
+> for (i = 0; i < 256; i++)
+>          {
+>              if (i < '0' || i > '9')
+>                  check_int(isdigit(i), ==, 0);
+>              else
+>                  check_int(isdigit(i), ==, 1);
+>          }
+> }
 
-On 2023-10-29 at 06:17:09, Elijah Newren wrote:
-> Hi,
->=20
-> Overall, looks good.  Just a couple questions...
->=20
-> On Tue, Oct 24, 2023 at 12:58=E2=80=AFPM brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
-> >
-> > From: "brian m. carlson" <bk2204@github.com>
-> >
-> [...]
-> > --- a/Documentation/git-merge-file.txt
-> > +++ b/Documentation/git-merge-file.txt
-> > @@ -12,6 +12,9 @@ SYNOPSIS
-> >  'git merge-file' [-L <current-name> [-L <base-name> [-L <other-name>]]]
-> >         [--ours|--theirs|--union] [-p|--stdout] [-q|--quiet] [--marker-=
-size=3D<n>]
-> >         [--[no-]diff3] <current-file> <base-file> <other-file>
-> > +'git merge-file' --object-id [-L <current-name> [-L <base-name> [-L <o=
-ther-name>]]]
-> > +       [--ours|--theirs|--union] [-q|--quiet] [--marker-size=3D<n>]
-> > +       [--[no-]diff3] <current-oid> <base-oid> <other-oid>
->=20
-> Why was the `[-p|--stdout]` option removed in the second synopsis?
-> Elsewhere you explicitly call it out as a possibility to be used with
-> --object-id.
+I think this is correct but when you are writing tests it is important 
+to think about how easy they will be to debug if they fail. In this case 
+because there is a single test to check all the characters it will be 
+hard to tell which character caused the test to fail. If we restructure 
+the code to use a separate test for each character then we will be able 
+to see which characters are causing isdigit() to fail. To do that we 
+need a function that prints the character that we're testing. Because we 
+don't want to print raw control characters in the test name we need to 
+check if the character can be printed as is or if it needs to be printed 
+as an octal escape sequence. We can do that by writing a function like
 
-Originally because it implied `-p`, but I changed that to write into the
-object store.  I'll restore it.
+static const char* char_name(int i)
+{
+	static char buf[5];
+	if (i < ' ' || i >= 127)
+		xsnprintf(buf, sizeof(buf), "\\%03o", (unsigned int)i);
+	else
+		xsnprintf(buf, sizeof(buf), "%c", i);
 
-> Also, why the extra synopsis instead of just adding a `[--object-id]`
-> option to the previous one?
+	return buf;
+}
 
-Because there's a relevant difference: the former has <current-file>,
-<base-file>, and <other-file>, and the latter has the -oid versions.
+Then we can write a test function defines a separate test for each character
 
-> Does "/dev/null" have any portability considerations?  (I really don't
-> know; just curious.)
+static void t_isdigit(void)
+{
+	for (int i = 0; i < 256; i++) {
+		if (i < '0' || i > '9')
+			TEST(check(!isdigit(i)), "'%s' is not a digit",
+			     char_name(i));
+		else
+			TEST(check(isdigit(i)), "'%s' is a digit",
+			     char_name(i));
+	}
+}
 
-We already use it elsewhere in the codebase, so I assume it works.  We
-also have a test for that case and it worked in CI, so it's probably
-fine.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+Note that as isdigit() returns a boolean we simplify things by using 
+check() rather than check_int().
 
---/rDfEQzsswgJ/tfn
-Content-Type: application/pgp-signature; name="signature.asc"
+Now we can easily see which character is being tested when a check fails 
+as the character being tested is in the test name. You would call this 
+function with
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.40 (GNU/Linux)
+int cmd_main(int argc, const char** argv)
+{
+	t_isdigit();
+	return test_done();
+}
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZT5p0AAKCRB8DEliiIei
-gU6nAP9eP+PUlAFlPaDKRqbdiPS2DdZLwK41QZFktN/vy8XWCQD+OmBoa3BSGhWQ
-Yx2k6Cdw0xVMybR4jh32TKVN5SfKxw4=
-=IEL4
------END PGP SIGNATURE-----
+I think it would be helpful for you to try and build and run this test 
+by checking out the unit test branch from Junio's tree[1] and adding 
+this test. You could then try making the test fail to see what the 
+output for a failing test looks like.
 
---/rDfEQzsswgJ/tfn--
+Best Wishes
+
+Phillip
+
+[1] You can fetch that branch with
+         git fetch https://github.com/gitster/git.git 
+js/doc-unit-tests-with-cmake
+     and then create your branch with
+         git checkout -b isdigit-unit-tests FETCH_HEAD
