@@ -1,81 +1,82 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84FAB33C7
-	for <git@vger.kernel.org>; Sat, 28 Oct 2023 21:11:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GkJQcuY5"
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F2E9B8
-	for <git@vger.kernel.org>; Sat, 28 Oct 2023 14:11:27 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-32f7c44f6a7so426141f8f.1
-        for <git@vger.kernel.org>; Sat, 28 Oct 2023 14:11:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698527486; x=1699132286; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ngSFBlNIMXcq17gV6R9xHvB1PMF2z8I89lVM45mnEW0=;
-        b=GkJQcuY5YSl/GUZQMgxSHRR5LRG0z7UylebNuvkwXNN/S0u9m9ni+abNWz4ma5zmQW
-         D1ECOnLBdkEdBZpZOuIBWtX7DNhclHbCYtrW3zxpln4WrJuLHMvp+tP4bkNhDsnUnxxz
-         d0yvacYpTGat1ON9ICyz/5gxDv38wmTatIb23SRunYuys/fv+2LawUi14AkIAveug9dQ
-         1xq/KoIiSyBzYSSKNs4Op5O/h8CT9dcVv4v/qgFbSZOGrwdfnVQ+eJgEm+gj5HxKErAS
-         M02xOybzPHkI9Qzr7zunlLt5iBbsHkRYDmePN4xX/2a0Yygg7VJ+4ni3YQMiH5adeF80
-         DBBg==
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C1938B
+	for <git@vger.kernel.org>; Sun, 29 Oct 2023 01:34:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+Received: from mail-oo1-f53.google.com (mail-oo1-f53.google.com [209.85.161.53])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42261CE
+	for <git@vger.kernel.org>; Sat, 28 Oct 2023 18:34:12 -0700 (PDT)
+Received: by mail-oo1-f53.google.com with SMTP id 006d021491bc7-5842a7fdc61so1915317eaf.3
+        for <git@vger.kernel.org>; Sat, 28 Oct 2023 18:34:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698527486; x=1699132286;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ngSFBlNIMXcq17gV6R9xHvB1PMF2z8I89lVM45mnEW0=;
-        b=Dqei03VshkXCTGpXjXCrBmrK+G2Sum9XcP7WHQ+M2miBwkSdzkH5TVmtLFoZHz+FF1
-         UK+pfrTrVfR3w47ynmVWv1XlcY45/6QQbVyqg9zn21bgOZzYeX9cDEO5ahBqWwAH0tgy
-         Qc0RnIjOBihEh3lGi933YIpo2egUABPiyDpbKnRo/42qi79dsCn0JhTqcdmJDNxKPakJ
-         f6ujf4KY+ahZ7HRbdtMagB5uJn3H/4NEroXb85+ovderpYX4r6+XwZ4dY+nTcL2F/P3m
-         9KlsKaOOopulf73dUC/tYix8C92sLRlnZJNGQKyGmUiJhfiQTMAQ8Zc+8gairJJESV1s
-         eGPw==
-X-Gm-Message-State: AOJu0YyCVQnhMWc3lUTwtD/Gm1cf/heFaPgyloHIKNuk7L4CArR2XZLr
-	ZUthu79cf7DT+XGb4R7yPo0i86jPqpqj2w==
-X-Google-Smtp-Source: AGHT+IEMsKr3KSVpO1DQ2zZXiYzwj9RYfbBGcOr5+Gxu0sUBcd30Mi2G99kRSPn04zTzRJLAtTCqOQ==
-X-Received: by 2002:a05:6000:4b:b0:32d:570b:c0a4 with SMTP id k11-20020a056000004b00b0032d570bc0a4mr4445527wrx.27.1698527485735;
-        Sat, 28 Oct 2023 14:11:25 -0700 (PDT)
-Received: from [192.168.0.17] (cpc105060-sgyl40-2-0-cust995.18-2.cable.virginm.net. [81.111.15.228])
-        by smtp.gmail.com with ESMTPSA id az30-20020adfe19e000000b0032f7d7ec4adsm1757724wrb.92.2023.10.28.14.11.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 28 Oct 2023 14:11:25 -0700 (PDT)
-Message-ID: <26e8ad28-a534-4a7b-8653-2bf580d316b5@gmail.com>
-Date: Sat, 28 Oct 2023 22:11:19 +0100
+        d=1e100.net; s=20230601; t=1698543250; x=1699148050;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Rx0C04yZsmAkLX+1/ZPT39gm8AnYwowHn5yK4MvP6gU=;
+        b=KJ1/IIFfC1uPbi1VgBp91AHGQj2iYbZCUuSjUT1XKOG/hlaECwqaswVOhFgutYXQTw
+         Tdqgewc2qeSiEjGpBuMctHSUYp+uBxzSNM5mZ0sS5kOn4Y/y7CnlUFf5XK70Gx/uTLKx
+         B8702eV6Y049xN9ZYPAQkX2Z3MMi22XU7INQgLnFkvfi57Zu1M/VxN7d1tKndT/a2HcV
+         BXsTNazoPGJXX+sOmltxDnsSnZBROBw804UEJvT7xEa8QzL02Il+JBt8OwmYfrrVZY6R
+         wgOmAdHJvfg5o3SileMq/VLpluWKjsQx/MhmFsqdMjulFtpAz62CTYmjshRvlQBMOXCF
+         Yysw==
+X-Gm-Message-State: AOJu0Yxyl5uxab4GRDAO/l7dlebflN/ykcHi4L+WNhBU6yALAa5cEW5B
+	kGdfqkEqBgSIk5dXPwLWlggz8Mqnc4Sx5DqKSVI=
+X-Google-Smtp-Source: AGHT+IEz5l06PKnnBju9t32nM3Sf3NjN31mtfmhhIwx8EcG6KDOaECyTCTxCG9HN5zYdCWrlZr+ZGkPLNzgrAXk4KHY=
+X-Received: by 2002:a05:6358:7e47:b0:168:eb8a:7da with SMTP id
+ p7-20020a0563587e4700b00168eb8a07damr8206894rwm.23.1698543250193; Sat, 28 Oct
+ 2023 18:34:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] pretty: add '%aA' to show domain-part of email
- addresses
-To: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
- Liam Beguin <liambeguin@gmail.com>
-Cc: Kousik Sanagavarapu <five231003@gmail.com>, git@vger.kernel.org
-References: <20231026-pretty-email-domain-v1-2-5d6bfa6615c0@gmail.com>
- <20231027184357.21049-1-five231003@gmail.com>
- <20231028022048.GA1784118@shaak> <ZT0oVKPzVi5TsrdS@ugly>
-Content-Language: en-GB
-From: Andy Koppe <andy.koppe@gmail.com>
-In-Reply-To: <ZT0oVKPzVi5TsrdS@ugly>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <PSBPR01MB3544370EEA032FA47778135DBDA3A@PSBPR01MB3544.apcprd01.prod.exchangelabs.com>
+In-Reply-To: <PSBPR01MB3544370EEA032FA47778135DBDA3A@PSBPR01MB3544.apcprd01.prod.exchangelabs.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Sat, 28 Oct 2023 21:33:58 -0400
+Message-ID: <CAPig+cScxS=NYBpeoyWe8JQA6HBO+PNCKJpzL=57-9mu3Dxwbg@mail.gmail.com>
+Subject: Re: [Bugs] Hello,I can't build git by ./configure
+To: h hm <haoming9245@outlook.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 28/10/2023 16:27, Oswald Buddenhagen wrote:
-> On Fri, Oct 27, 2023 at 10:20:48PM -0400, Liam Beguin wrote:
->> I agree, %aa isn't the best, I'm definitly opened to suggestions.
->> My preference would've been for something like %ad, but that's already
->> taken.
->>
-> H for host would be available. (not to be confused with h for human.)
+On Sat, Oct 28, 2023 at 11:39=E2=80=AFAM h hm <haoming9245@outlook.com> wro=
+te:
+> I want to build commit 2e8e77c in the master
 
-Both lowercase and uppercase would be needed though, to mirror %ae/%aE 
-and %al/%aL for choosing whether to respect .mailmap. That actually 
-rules out the %a@ idea as well.
+This is a merge commit bringing together multiple topics, so it's
+difficult to say which topic may have caused a regression. Perhaps try
+git-bisect to narrow the problem down to a single commit.
 
-Andy
+> configure: Setting lib to 'lib' (the default)
+> configure: Will try -pthread then -lpthread to enable POSIX Threads.
+> configure: CHECKS for site configuration
+> checking for gcc... gcc
+> checking whether the C compiler works... no
+> configure: error: in `/home/haomi/git':
+> configure: error: C compiler cannot create executables
+
+Your config.log shows that it is trying to test-compile this tiny program:
+
+    /* confdefs.h */
+    #define PACKAGE_NAME "git"
+    #define PACKAGE_TARNAME "git"
+    #define PACKAGE_VERSION "2.42.GIT"
+    #define PACKAGE_STRING "git 2.42.GIT"
+    #define PACKAGE_BUGREPORT "git@vger.kernel.org"
+    #define PACKAGE_URL ""
+    /* end confdefs.h.  */
+    int
+    main (void)
+    {
+      ;
+      return 0;
+    }
+
+with the simplest command `gcc conftest.c`, but it's failing. Perhaps
+try compiling that program manually in your `/home/haomi/git'
+directory and see what the result is (also check $?).
