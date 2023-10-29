@@ -1,51 +1,50 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E061BA44
-	for <git@vger.kernel.org>; Sun, 29 Oct 2023 16:13:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A67C9454
+	for <git@vger.kernel.org>; Sun, 29 Oct 2023 16:27:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nYTEdn2g"
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB728AC
-	for <git@vger.kernel.org>; Sun, 29 Oct 2023 09:13:44 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id ffacd0b85a97d-32dbbf3c782so2809688f8f.1
-        for <git@vger.kernel.org>; Sun, 29 Oct 2023 09:13:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SuWLVnG3"
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 881FEB7
+	for <git@vger.kernel.org>; Sun, 29 Oct 2023 09:27:49 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2c5210a1515so54278501fa.0
+        for <git@vger.kernel.org>; Sun, 29 Oct 2023 09:27:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698596023; x=1699200823; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:reply-to:references:cc:to
-         :from:content-language:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=JQyCNdjP+gWqPrVR9JzLbHPaSRYjvUAMqOMedcAUIHE=;
-        b=nYTEdn2glBabV/aQ/5F785f47pmj4V0TeXQdSoypR11uGiRE09czH3J9aoH6BcV0+9
-         ofastppLs5+w6r5seTCeDOsIFyNkfOlSw2RnL1vmFoaj5Bggtro54Y+jZkPf0JugIAUB
-         te13Sv6TudcpavyuyxBXk7AAKkIcWd8CUxiVorMjQPtXFwdxTnjxvl+DU5pdc7Osd+PY
-         JD5oJF3nHXekQe9oAka8xYqu8qt0C1ZXCMrkGqcVRwrJkeWXtmFGtLMMZxoB9RNwCf3b
-         +RoXWd893dUcPJshEfO+1jh7nTPFW4uYYqBK0fmaUoDX/h3SW1OOeGGtpq2c8VEihFEs
-         Jb+w==
+        d=gmail.com; s=20230601; t=1698596868; x=1699201668; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:reply-to:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UrSlmSxqHicy9fc77WFvsEImymx40C5r1ycH4rht5wU=;
+        b=SuWLVnG33TatlSyq9wz4FWFha1VwVmjyKChCKmktmr1Re/XL7AjEBQkfUCSipWM3VT
+         X4yCxvNod9hoyO4P3RXKquOzVVzPm46q9kDLAXn9xLscyizZKvIlkfEH98k9wS5E9cbJ
+         skvz02ii5khRDxDAkIN14ZySlEs7NTyW9kPeXe8Uc984PTn61QrA/ugI1JC2eS0rSqVo
+         1JEWUyzAO62e6eZN3xkdxz92NgW8v1xg9hFgnFK8eQ3dd9FvSnNo5VbZCGQS6H51EcBf
+         Dv550urvWKfqjLMqCgBI8RMI5yTWb6e5nCuBrD/etGu8yQdJFw+Zl90oZi0C4eRd2iQB
+         ZX5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698596023; x=1699200823;
-        h=content-transfer-encoding:in-reply-to:reply-to:references:cc:to
-         :from:content-language:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=JQyCNdjP+gWqPrVR9JzLbHPaSRYjvUAMqOMedcAUIHE=;
-        b=FVJGyKugusuuFb/auFbsfPxzQBAfZAr1Y+8bVCRaRJuqh59YWz2OZA7kkABeGrt3Ku
-         u0ZksBuktTGE26LNzbxfonP4eYoggBtTcLkP5GOFI1TKKQ4tfXgm2nH7n4vDx/nbqdoi
-         y/Jlq7ARPb0YfmhzEsf8IESo4oNakc4Oa0JAdE9/SiSR09PprLByaEZleJYX9FiyR679
-         iZcyt6tnHzHLktjj89ugOVjfUEQOiZiv0JzvoqQIZjwJ0u0Ez8rGsKlZhqu+s8p423/0
-         ZvDjS630mAH8eTaONdwRBS+tiS8XWxfZbjFOfhQ1sSq2RMfmXv7k0qMcMh6KyQQmTHZe
-         FRFg==
-X-Gm-Message-State: AOJu0YxFnxyBe+ytNg0VNyTAkRdC2Vun31rwHqSRy6hAiuK2r8PvKWgt
-	BDSpRg1OMdUBS9dNMVriVcw=
-X-Google-Smtp-Source: AGHT+IHQo2tPytSPxRPIWAqw6B4CQSps6+eXnDN1uo1DyuO8CDLK5a0HgAxNUY7dzyeLXQUZ07Fzqg==
-X-Received: by 2002:a05:6000:144b:b0:32f:8181:7d42 with SMTP id v11-20020a056000144b00b0032f81817d42mr1904744wrx.9.1698596022889;
-        Sun, 29 Oct 2023 09:13:42 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1698596868; x=1699201668;
+        h=content-transfer-encoding:in-reply-to:from:reply-to:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UrSlmSxqHicy9fc77WFvsEImymx40C5r1ycH4rht5wU=;
+        b=YW1ZtXQMpm2y4SszAoWZdVCF+sCb9EbfyygJYQNt+CfBgaFCxoQnREL0EzQPBWVWp8
+         bHsfXSEwxNVNkw41WXdmVTIkB2LEcT3EFnxc1uhpXcoBahUEklUQe+auxeHpTQDgTfnt
+         homKSyDpNoBRRZ/yrYWVAr4tCnVk4U8z5s5gfVbiqbNzpRGQJhKptIDmAq1ykPI+3w3l
+         6f2d3XePzyB+JIB0RcSKECR1iTN7NpQaAp92+VM243abcXDh6SogWw+w07YHQBHmvp83
+         pOX8A8KvY4NhyhuEG/DV9Dot+U/dI6cTJf9SD6iHTb4vrOygw4KidhUohl8jPimIpzpN
+         0D6A==
+X-Gm-Message-State: AOJu0YxGbYtMOZBvw490bWFSDcb7osvw9EyyGdxCsqZdO3xWQPjWI3O+
+	dqMZALJht5NC2SkK55rr/gg=
+X-Google-Smtp-Source: AGHT+IEcuDHwr2Xg3gYZ50TdGmrXxQgZZDOCQ9vMq5Q7FBwfvaNZ5rQfGTPQ8sdPnfTKMa0RqTxCqg==
+X-Received: by 2002:a2e:9598:0:b0:2c5:1073:5f2 with SMTP id w24-20020a2e9598000000b002c5107305f2mr5597885ljh.5.1698596867466;
+        Sun, 29 Oct 2023 09:27:47 -0700 (PDT)
 Received: from [192.168.1.212] ([90.242.223.1])
-        by smtp.gmail.com with ESMTPSA id u14-20020a05600c4d0e00b003fef5e76f2csm4046538wmp.0.2023.10.29.09.13.42
+        by smtp.gmail.com with ESMTPSA id k16-20020a05600c0b5000b0040586360a36sm10282299wmr.17.2023.10.29.09.27.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 29 Oct 2023 09:13:42 -0700 (PDT)
-Message-ID: <8db10489-546d-428d-9b3e-7ecea87e1313@gmail.com>
-Date: Sun, 29 Oct 2023 16:13:39 +0000
+        Sun, 29 Oct 2023 09:27:47 -0700 (PDT)
+Message-ID: <a165fd76-a44b-45c7-b02c-e9b90fda3db3@gmail.com>
+Date: Sun, 29 Oct 2023 16:27:44 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -55,45 +54,90 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2 5/5] ci: add support for GitLab CI
 Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>, phillip.wood@dunelm.org.uk
 Cc: git@vger.kernel.org, Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 References: <cover.1698305961.git.ps@pks.im> <cover.1698398590.git.ps@pks.im>
  <37a507e9b255dd40c0536438dfe3fa05b067f08f.1698398590.git.ps@pks.im>
  <0d889da1-7fd8-4e21-965f-6222e4433ecf@gmail.com> <ZTucxlBR1VrJPuSK@tanuki>
- <ZTulo_rh_G-lfICQ@tanuki>
- <6ee43015-1abc-4269-b710-0647ce80d7a2@crinan.ddns.net>
 Reply-To: phillip.wood@dunelm.org.uk
-In-Reply-To: <6ee43015-1abc-4269-b710-0647ce80d7a2@crinan.ddns.net>
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <ZTucxlBR1VrJPuSK@tanuki>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 Hi Patrick
 
-On 27/10/2023 14:02, Phillip Wood wrote:
-> On 27/10/2023 12:57, Patrick Steinhardt wrote:
->> Hum. After having a look at `ci/run-docker-build.sh` I don't feel like
->> it's sensible to update it. It's not even used anymore by our CI but
->> only by `ci/run-docker.sh`, which seems to be more of a developer-facing
->> script?
+On 27/10/2023 12:19, Patrick Steinhardt wrote:
+> On Fri, Oct 27, 2023 at 11:19:04AM +0100, Phillip Wood wrote:
+>> On 27/10/2023 10:25, Patrick Steinhardt wrote:
+>>> +  parallel:
+>>> +    matrix:
+>>> +      - jobname: linux-sha256
+>>> +        image: ubuntu:latest
+>>> +        CC: clang
+>>> +      - jobname: linux-gcc
+>>> +        image: ubuntu:20.04
+>>> +        CC: gcc
+>>> +        CC_PACKAGE: gcc-8
+>>> +      - jobname: linux-TEST-vars
+>>> +        image: ubuntu:20.04
+>>> +        CC: gcc
+>>> +        CC_PACKAGE: gcc-8
+>>> +      - jobname: linux-gcc-default
+>>> +        image: ubuntu:latest
+>>> +        CC: gcc
+>>> +      - jobname: linux-leaks
+>>> +        image: ubuntu:latest
+>>> +        CC: gcc
+>>> +      - jobname: linux-asan-ubsan
+>>> +        image: ubuntu:latest
+>>> +        CC: clang
+>>> +      - jobname: linux-musl
+>>> +        image: alpine:latest
+
+I assume you've chosen the configurations from the existing GitHub 
+Actions that give the best coverage of the various options. One thing I 
+noticed is that the is no equivalent of the "pedantic" job that builds 
+git with "DEVELOPER=1 DEVOPTS=pedantic"
+
+>>> diff --git a/ci/install-docker-dependencies.sh b/ci/install-docker-dependencies.sh
+>>> index d0bc19d3bb3..1cd92db1876 100755
+>>> --- a/ci/install-docker-dependencies.sh
+>>> +++ b/ci/install-docker-dependencies.sh
+>>> @@ -16,9 +19,13 @@ linux32)
+>>>    	'
+>>>    	;;
+>>>    linux-musl)
+>>> -	apk add --update build-base curl-dev openssl-dev expat-dev gettext \
+>>> +	apk add --update git shadow sudo build-base curl-dev openssl-dev expat-dev gettext \
+>>>    		pcre2-dev python3 musl-libintl perl-utils ncurses >/dev/null
 >>
->> As you said, this smells like rotting bits that might rather be removed.
->> But in any case, as they don't relate to our current CI infrastructure
->> except for being in "ci/" I'll leave them be for now.
+>> It would be helpful to explain the new dependencies in the commit message. I
+>> can see why you're adding sudo, but how were we getting away without
+>> installing the other packages for GitHub Actions?
 > 
-> I was trying to suggest that we start using these scripts again.
+> True, that part is missing.
+> 
+> - Both sudo and shadow are now required because of `useradd` that we use
+>    to set up the unprivileged build.
+> 
+> - Git has been required all along, I think. `save_good_tree ()` is used
+>    in our CI scripts, and Toon (fellow GitLabber from my team) has
+>    noticed that the CI job warned about missing Git. The warning was
+>    mostly benign as it seems, but still, doesn't hurt to fix it while at
+>    it.
 
-Having taken a closer look I think we'd be better off adding something like
+Oh I had a look at this and the docker based jobs on GitHub do not have 
+a git repository so installing git means we now get a repository not 
+found error from save_good_tree() instead. We should probably make 
+save_good_tree() and check_unignored_build_artifacts() return early if 
+there isn't a repository but that's orthogonal to this series.
 
-   # Ensure the build and tests run as an unprivileged user
-   if test "$(id -u)" -eq 0
-   then
-       useradd --home-dir "$(pwd)" builder
-       chown -R builder .
-       exec sudo --preserve-env --set-home --user=builder "$0"
-   fi
+Looking at the test output from the link in your cover letter we should 
+we should also install apache2[1] and gnupg[2]
 
-To the beginning of ci/run-build-and-tests.sh.
+[1] https://gitlab.com/gitlab-org/git/-/jobs/5349205374#L1444
+[2] https://gitlab.com/gitlab-org/git/-/jobs/5349205374#L1167
 
 Best Wishes
 
