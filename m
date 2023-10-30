@@ -1,81 +1,79 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3C8D19BA8
-	for <git@vger.kernel.org>; Mon, 30 Oct 2023 18:22:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5658616408
+	for <git@vger.kernel.org>; Mon, 30 Oct 2023 18:24:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="HwEKpre8"
-Received: from mail.manjaro.org (mail.manjaro.org [IPv6:2a01:4f8:c0c:51f3::1])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B22C0F3
-	for <git@vger.kernel.org>; Mon, 30 Oct 2023 11:22:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="AG/QrPN3"
+Received: from mail-oo1-xc30.google.com (mail-oo1-xc30.google.com [IPv6:2607:f8b0:4864:20::c30])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55F07C1
+	for <git@vger.kernel.org>; Mon, 30 Oct 2023 11:24:23 -0700 (PDT)
+Received: by mail-oo1-xc30.google.com with SMTP id 006d021491bc7-581de3e691dso2778840eaf.3
+        for <git@vger.kernel.org>; Mon, 30 Oct 2023 11:24:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1698690262; x=1699295062; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=F1mSmgoCDfib66rmVubgH5eYXN6J6TqiHxMYQCt+ZPo=;
+        b=AG/QrPN3FphDPu956joTHKx+zxdM8UCcSGIF/OadReSkM/d/xrLhqRiZdE+ceF4mIg
+         TnGZPUz+VlNxXMymsw8+uUxBYqfywD5uEOhmqRNNDr1qlk624mMYsUv8S67/wbxrH9gZ
+         v7PgrVQd3kdB+BQc12pyH6z81x/9S9RM378yaYri0VlmNXiV+EiyromSdbXhbvGwLSZb
+         VMO0wLa4OWYCUyay6K7+ODLclk8gxa+WzIOC7XI11TMXeKTh2Jkes9UxfakaDqUKgC/l
+         sIWufxT1t/wRUENVH3S2HLCh+WsI0RFq/F1RU8x3wTnJTJc70zELOvLp8t1PMkHbTu4R
+         5FGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698690262; x=1699295062;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=F1mSmgoCDfib66rmVubgH5eYXN6J6TqiHxMYQCt+ZPo=;
+        b=rVuxu1iAMBHij4ZoRZp+vvXXDe/r7rOm/1fsTMyfVi8LlTVTA+fKVuiz2F0IemLEJJ
+         LWQK90bBxwQDY+uHAE2IOmyYjxIzDhMWjBdMSCSXg0X4ZxZYWNa3rNIH4zw7BdP3R1gQ
+         i2P54XFJI+Owq/Pqr0SKAoby2pXreNM/JmhWazO+U83zfant7kH4Rtn0DjYtFIyToxKr
+         vKwvjTCr6Hjw2B/sQAgTU4Qx8PO13xzQiWZVLqpFXViWj+tYq+CCjE2FDjlz6FE23wQf
+         7VVgEiCeXg7HgQ+OaO2caHuu0F59W+rms3570Vcy/6oxyvX1GOH0CFqU45Y5BICt8uML
+         uUnw==
+X-Gm-Message-State: AOJu0YwUfyXUJmLywlVJQco2nsCzoNvEkJ1JAp3W85oIqGekMM8H/dN4
+	DmrOI2TMx4CskoH08GQPeAT+Iw==
+X-Google-Smtp-Source: AGHT+IHlWrtulRxTQ0m0DVaS8OlM/ZduFQ32SXaiVe3IDzI5i0kBedtmbiAzaU9EZ7VUs6MNz8y4Tw==
+X-Received: by 2002:a05:6358:904c:b0:168:dbac:b94e with SMTP id f12-20020a056358904c00b00168dbacb94emr13546851rwf.32.1698690262587;
+        Mon, 30 Oct 2023 11:24:22 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id cs11-20020ad44c4b000000b0065b29403540sm2399575qvb.127.2023.10.30.11.24.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Oct 2023 11:24:22 -0700 (PDT)
+Date: Mon, 30 Oct 2023 14:24:21 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH v2 04/12] builtin/show-ref: fix dead code when passing
+ patterns
+Message-ID: <ZT/01cjmdWrSXs+c@nand.local>
+References: <cover.1698152926.git.ps@pks.im>
+ <cover.1698314128.git.ps@pks.im>
+ <87afcee830caab2782ce693c1f961df6fea6e7b5.1698314128.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1698690149;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=yCGrp6DGUAEto4G4V1vGrOHwOObmn1rl1HTIOyxCHN4=;
-	b=HwEKpre8rbzZUq9GCHow5qBNK8udDISO5KYADbpGbYoFlJkfF4A1gWy95aumpUWTGV/7Mv
-	b1gjLsV4HejkMnKGFEDNAPYX0oZEqtEo9XmFhwpsvvMAQ24YWJUqf/z4JRP2uomXuLvd12
-	QluDiWHhKldoCGULeidbVLaUna2X0XfJIigICKnaU+mU28LJqnuK5UrBuzVxcUBJ7De0jq
-	CGDN1bGF6gf/7rSfKBLYTjsaPFjcFTcK4veg/3eDfX/hk9dlWMzh7nMgiCZgFk/Wmq6Aaa
-	Uc+rjXC825pNfzDP3ao7bxubkx9I89GS3vFhMTF01HskI7Ud3GxP+hAzQSnfGA==
-Date: Mon, 30 Oct 2023 19:22:23 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: phillip.wood@dunelm.org.uk
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, Junio C Hamano
- <gitster@pobox.com>, Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Subject: Re: [PATCH v3 5/8] ci: unify setup of some environment variables
-In-Reply-To: <87430c6c-91c0-4be1-b89d-bf442b3f018b@gmail.com>
-References: <cover.1698305961.git.ps@pks.im>
- <cover.1698667545.git.ps@pks.im>
- <6af0075fd875f176e7fdf6c219e7117dac5cd71c.1698667545.git.ps@pks.im>
- <87430c6c-91c0-4be1-b89d-bf442b3f018b@gmail.com>
-Message-ID: <1365af33315c501db15778bc1ecf3852@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87afcee830caab2782ce693c1f961df6fea6e7b5.1698314128.git.ps@pks.im>
 
-On 2023-10-30 16:09, Phillip Wood wrote:
-> On 30/10/2023 12:15, Patrick Steinhardt wrote:
->> Both GitHub Actions and Azue Pipelines set up the environment 
->> variables
->> GIT_TEST_OPTS, GIT_PROVE_OPTS and MAKEFLAGS. And while most values are
->> actually the same, the setup is completely duplicate. With the 
->> upcoming
->> support for GitLab CI this duplication would only extend even further.
->> 
->> Unify the setup of those environment variables so that only the 
->> uncommon
->> parts are separated. While at it, we also perform some additional 
->> small
->> improvements:
->> 
->>      - We use nproc instead of a hardcoded count of jobs for make and
->>        prove. This ensures that the number of concurrent processes 
->> adapts
->>        to the host automatically.
-> 
-> Sadly this makes the Windows and MacOS jobs fail on GitHub Actions as
-> nproc is not installed[1]. Perhaps we could do
-> 
-> 	--jobs="$(nproc || echo 2)"
+On Thu, Oct 26, 2023 at 11:56:33AM +0200, Patrick Steinhardt wrote:
+> When passing patterns to `git show-ref` we have some code that will
+> cause us to die if `verify && !quiet` is true. But because `verify`
+> indicates a different subcommand of git-show-ref(1) that causes us to
+> execute `cmd_show_ref__verify()` and not `cmd_show_ref__patterns()`, the
+> condition cannot ever be true.
+>
+> Let's remove this dead code.
 
-It would be better to use the following, to also suppress any error 
-messages:
+Makes sense. Let's read on...
 
-         --jobs=$(nproc 2> /dev/null || echo 2)
-
-Having the quotation marks is also pretty much redundant.
-
-> instead. (Maybe 2 is a bit low but the current value of 10 seems
-> pretty high for the number of cores on the runners that we use)
+Thanks,
+Taylor
