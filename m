@@ -1,37 +1,41 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FE4ED50F
-	for <git@vger.kernel.org>; Mon, 30 Oct 2023 09:13:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FAC9D52E
+	for <git@vger.kernel.org>; Mon, 30 Oct 2023 09:29:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dkim=none
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3933AA7
-	for <git@vger.kernel.org>; Mon, 30 Oct 2023 02:13:28 -0700 (PDT)
-Received: (qmail 1618 invoked by uid 109); 30 Oct 2023 09:13:28 -0000
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42D3AB6
+	for <git@vger.kernel.org>; Mon, 30 Oct 2023 02:29:05 -0700 (PDT)
+Received: (qmail 1653 invoked by uid 109); 30 Oct 2023 09:29:04 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 30 Oct 2023 09:13:28 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 30 Oct 2023 09:29:04 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9406 invoked by uid 111); 30 Oct 2023 09:13:32 -0000
+Received: (qmail 9517 invoked by uid 111); 30 Oct 2023 09:29:09 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 30 Oct 2023 05:13:32 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 30 Oct 2023 05:29:09 -0400
 Authentication-Results: peff.net; auth=none
-Date: Mon, 30 Oct 2023 05:13:27 -0400
+Date: Mon, 30 Oct 2023 05:29:03 -0400
 From: Jeff King <peff@peff.net>
-To: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+To: Todd Zullinger <tmz@pobox.com>
 Cc: Michael Strawbridge <michael.strawbridge@amd.com>,
 	Junio C Hamano <gitster@pobox.com>,
-	Bagas Sanjaya <bagasdotme@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 2/3] Revert "send-email: extract email-parsing code into
- a subroutine"
-Message-ID: <20231030091327.GC84866@coredump.intra.peff.net>
-References: <20231020100343.GA2194322@coredump.intra.peff.net>
- <20231020101310.GB2673716@coredump.intra.peff.net>
- <ZTJaVzt75r0iHPzR@ugly>
- <20231023184010.GA1537181@coredump.intra.peff.net>
- <ZTbOnsxBFERPLN3F@ugly>
- <20231025061120.GA2094463@coredump.intra.peff.net>
- <ZTjedSluwyrVY+L9@ugly>
+	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Luben Tuikov <luben.tuikov@amd.com>, git@vger.kernel.org,
+	entwicklung@pengutronix.de
+Subject: Re: Regression: git send-email fails with "Use of uninitialized
+ value $address" + "unable to extract a valid address"
+Message-ID: <20231030092903.GD84866@coredump.intra.peff.net>
+References: <20231013141437.ywrhw65xdapmev7d@pengutronix.de>
+ <20231020100442.an47wwsti2d4zeyx@pengutronix.de>
+ <68d7e5c3-6b4a-4d0d-9885-f3d4e2199f26@amd.com>
+ <20231024130037.sbevzk2x7oclj7d7@pengutronix.de>
+ <89712aea-04fc-4775-afd4-afd3ca24ad01@amd.com>
+ <20231024204318.gi6b4ygqbilm2yke@pengutronix.de>
+ <20231025072104.GA2145145@coredump.intra.peff.net>
+ <xmqqsf5xr1xk.fsf@gitster.g>
+ <a71f2f1f-b5f0-4628-a4f3-6fd1319062a3@amd.com>
+ <ZTp7xvXDw1GF-NUB@pobox.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -40,27 +44,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZTjedSluwyrVY+L9@ugly>
+In-Reply-To: <ZTp7xvXDw1GF-NUB@pobox.com>
 
-On Wed, Oct 25, 2023 at 11:23:01AM +0200, Oswald Buddenhagen wrote:
+On Thu, Oct 26, 2023 at 10:46:30AM -0400, Todd Zullinger wrote:
 
-> On Wed, Oct 25, 2023 at 02:11:20AM -0400, Jeff King wrote:
-> > The "//" operator was added in perl 5.10. I'm not sure what you found
-> > that makes you think the ship has sailed. The only hits for "//" I see
-> > look like the end of substitution regexes ("s/foo//" and similar).
-> > 
-> grep with spaces around the operator, then you can see the instance in
-> git-credential-netrc.perl easily.
+> I'd lean toward dropping the dependency entirely and leave
+> the more basic validation of git-send-email in place.  That
+> may not catch every type of address error, but I would argue
+> that what we do without Email::Valid is perfectly reasonable
+> for checking basic email address syntax sanity.
 
-Ah, yeah, there is one instance there. That script does not have a "use"
-marker, though, and we do not necessarily need or want to be as strict
-with contrib/ scripts, which are quite optional compared to core
-functionality like send-email.
+I am somewhat tempted to say the same, but in this case didn't it help
+us find a real bug? True, the bug was that we were feeding garbage to
+Email::Valid because we were calling it to early, and I _think_ the
+ultimate emails we sent would have been OK. But I think we were possibly
+feeding that garbage to the user-visible validation hook.
 
-That said, I do suspect that requiring 5.10 or later would not be too
-burdensome these days. If we want to do so, then the first step would be
-updating the text in INSTALL, along with the "use" directives in most
-files.  Probably d48b284183 (perl: bump the required Perl version to 5.8
-from 5.6.[21], 2010-09-24) could serve as a template.
+That might just mean we need to beef up our homegrown validation a bit
+(though as you indicate here, I am generally of the opinion that the
+best validation is trying to actually send things).
 
 -Peff
