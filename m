@@ -1,80 +1,118 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 739A27EA
-	for <git@vger.kernel.org>; Mon, 30 Oct 2023 01:38:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D60F7EE
+	for <git@vger.kernel.org>; Mon, 30 Oct 2023 01:59:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="UhSMQM5f"
-Received: from mail.manjaro.org (mail.manjaro.org [IPv6:2a01:4f8:c0c:51f3::1])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 146F3C1
-	for <git@vger.kernel.org>; Sun, 29 Oct 2023 18:38:04 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="bVTrCNXk"
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08824BF
+	for <git@vger.kernel.org>; Sun, 29 Oct 2023 18:59:18 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id A0D802D65A;
+	Sun, 29 Oct 2023 21:59:18 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=f+xytVevKh5xOIyS3MGy7oXQJNLks3lLLIst0C
+	sS5no=; b=bVTrCNXkK29ngspWQ85Y+LUT2Q/GsddfhczvrTZFxRYPUFUaDH64oj
+	JF2A3xJWZD3UOfSR8jdsq5q/+YBIp9oo1q7LrMoNLi/Ww4ut9mxW3s7oAt1TcGee
+	3H8YfvBWGHn1nuBeiRV3WBkPJGlIeIb76maKAP+BDjjK/91uuBDpQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 97E642D659;
+	Sun, 29 Oct 2023 21:59:18 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.198.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2AD3C2D657;
+	Sun, 29 Oct 2023 21:59:15 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>,  emilyshaffer@google.com,
+  git@vger.kernel.org,  Emily Shaffer <nasamuffin@google.com>,  Sheik
+ <sahibzone@gmail.com>,  Dragan Simic <dsimic@manjaro.org>
+Subject: Re: [PATCH v3] bugreport: reject positional arguments
+In-Reply-To: <xmqqpm0xeyp9.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+	30 Oct 2023 09:33:22 +0900")
+References: <20231026005542.872301-1-nasamuffin@google.com>
+	<20231026155459.2234929-1-nasamuffin@google.com>
+	<CAPig+cTmYtWR=QN3LeN9yw3HmsKEmD2fUiRjKf=eJHhAZyT-yA@mail.gmail.com>
+	<3e15f266-c790-4b71-84b6-1328339425c1@gmail.com>
+	<xmqqv8apez0o.fsf@gitster.g> <xmqqpm0xeyp9.fsf@gitster.g>
+Date: Mon, 30 Oct 2023 10:59:13 +0900
+Message-ID: <xmqqcywwg9am.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1698629881;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=TWkWyWFOsWYr8L9/hArd3hc9MtvsBqOdajjm6RlosKY=;
-	b=UhSMQM5fN8pKx2O7XAZp24URMqyH2nIiYqOCUoyPFuTJu5y4bwtjOH0LL8U8FZa4+BkL3b
-	2c/l+uCPgdkaJAevW62D91H+lOKtfSW+JUBOpAgckLkfvtwuDYL9pV+kKXKAezHxnCTwig
-	A0wq7zE+ExyEdtITIklTtH1bdv6pdLA8fYMvUxX/290fvlspilBhdk+poZU/k8UHFBxU8X
-	b31YqhfLF359zYxbTXRKaHybXycDYafq4OWgo//wLQpWeyevsIw+7xhpX0UHXQsjBL0e3N
-	s25C8qereu9405ULwKUQlT6+1FCJucqk0lXVCa/T6gH06jBTJWltFG4w8dkxuA==
-Date: Mon, 30 Oct 2023 02:38:01 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jacob Stopak <jacob@initialcommit.io>, git@vger.kernel.org
-Subject: Re: [RFC PATCH v2 1/6] status: add noob format from status.noob
- config
-In-Reply-To: <xmqqjzr4gaie.fsf@gitster.g>
-References: <20231020183947.463882-1-jacob@initialcommit.io>
- <20231026224615.675172-1-jacob@initialcommit.io>
- <20231026224615.675172-2-jacob@initialcommit.io>
- <xmqqjzr4gaie.fsf@gitster.g>
-Message-ID: <c31418c38996d1e67a4f3602458a5a91@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ ED9A1264-76C7-11EE-A51F-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-On 2023-10-30 02:32, Junio C Hamano wrote:
-> Jacob Stopak <jacob@initialcommit.io> writes:
->> diff --git a/table.h b/table.h
->> new file mode 100644
->> index 0000000000..c9e8c386de
->> --- /dev/null
->> +++ b/table.h
->> @@ -0,0 +1,6 @@
->> +#ifndef TABLE_H
->> +#define TABLE_H
->> +
->> +void print_noob_status(struct wt_status *s);
->> +
->> +#endif /* TABLE_H */
-> 
-> I am guessing that your plan is to add other "distim_noob_add()" and
-> other "noob" variant of operations for various Git subcommands here,
-> but I really do not think you want to add table.[ch] that has logic
-> for such random set of Git subcommands copied and tweaked from all
-> over the place, as the only trait being shared among them will
-> become "they are written by Jacob Stopak", that is not a very useful
-> grouping of the functions.  It is not even "this file collects all
-> the code that produce tabular output from Git"---"git status -s"
-> already gives tabular output, for example, without using any of the
-> "I only want to draw a table with three columns of equal width"
-> logic.  Adding code that are necessary to add yet another output
-> mode for "git status" directly to where various output modes of "git
-> status" are implemented, i.e. wt-status.c, and do similar changes for
-> each command would make more sense, I would think.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Furthermore, "extended" should perhaps be used instead of "noob" 
-throughout, to reflect the planned naming of the configuration option 
-values.
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Phillip Wood <phillip.wood123@gmail.com> writes:
+>>
+>>> It is rather unfortunate that test_i18ngrep was deprecated without
+>>> providing an alternative that offers the same debugging
+>>> experience.
+>> ...
+>> We could rename test_i18ngrep to test_grep (and make test_i18ngrep
+>> into a thin wrapper with warnings).
+>>
+>> 	test_grep -e must-exist file &&
+>> 	test_grep ! -e must-not-exist file
+>
+> ... as the only remaining part in test_18ngrep has no hack to work
+> around the tainted localization tests, so "was deprecated without"
+> is a bit too strong.  There is nothing we have lost yet.
+
+Having said all that, when re-reading the test_i18ngrep with a fresh
+pair of eyes, I somehow doubt there was much upside in "debugging
+experience" with test_i18ngrep in the first place, and I doubt if
+retaining it with a new name test_grep has much value.
+
+Given that test_i18ngrep (hence test_grep) requires you to have the
+haystack in a file, between
+
+    test_i18ngrep must-exist file &&
+    test_i18ngrep ! must-not-exist file
+
+and
+
+    grep must-exist file &&
+    ! grep must-not-exist file
+
+I do not see any difference in "debugging experience" when you run
+the test with "-i [-v] -d".   The two cases you care about are
+
+ (1) the test expects the string "must-exist" in the file "file" but
+     the string is not there.
+
+ (2) the test expects the string "must-not-exist" missing from the
+     file "file", but the string is there.
+
+The latter can clearly be seen in output from "-i -v -d" (the "grep"
+outputs a line with "must-not-exist" on it).  The former will show
+silence but since you are debugging with "-d", and your haystack is
+in a file, after such a step fails, the test stops, and without
+removing the "file" even if the test piece had test_when_finished
+to remove it (i.e. running tests in debugging mode "-d" and
+immediately stopping upon failure "-i" behaves this way exactly to
+help you debugging), so you can go there to the TRASH_DIRECTORY
+yourself and inspect "file" to see what is going on anyway.
+
+So, I dunno.  Surely with a long &&-chain of steps, where a grep
+that expects lack of something is in the middle, it is hard to see
+if the lack of hit is because an earlier step failed (and the
+control did not reach "grep must-exist file") or because the
+haystack lacked the "must-exist" needle, so from that point of view,
+it may be nicer that "did not find an expected match" is explicitly
+stated.
