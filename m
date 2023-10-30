@@ -1,73 +1,106 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A42E119440
-	for <git@vger.kernel.org>; Mon, 30 Oct 2023 16:56:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E711833ED
+	for <git@vger.kernel.org>; Mon, 30 Oct 2023 17:14:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="NSsSLDl7"
-Received: from mail-yw1-x1133.google.com (mail-yw1-x1133.google.com [IPv6:2607:f8b0:4864:20::1133])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4363FA9
-	for <git@vger.kernel.org>; Mon, 30 Oct 2023 09:56:35 -0700 (PDT)
-Received: by mail-yw1-x1133.google.com with SMTP id 00721157ae682-5a7afd45199so44401577b3.0
-        for <git@vger.kernel.org>; Mon, 30 Oct 2023 09:56:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fwy0GFny"
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46CC1AB
+	for <git@vger.kernel.org>; Mon, 30 Oct 2023 10:14:57 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-5082a874098so4600983e87.3
+        for <git@vger.kernel.org>; Mon, 30 Oct 2023 10:14:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1698684994; x=1699289794; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=SXouChhvt513HFvRiWXBJ4hJm6rj3ztWKni+GHGSZ9A=;
-        b=NSsSLDl789DW7ra0Wze9MsGvsXHC2uw/fcVW7twcO2+j8AtAUwnu/eZynQ0hn6HwNh
-         nQ9rBTceCjHOledlcRGYit+g5cvpv7HjnUyb1agujSHGrof9Ds4n0VVAyE8ljoKtkRQR
-         LPGpwE6TGXmJbgC3nBLKzPyHc7SYeLn19W1yb4I09qZVEH8Orv25Gudf4lFg0wHUeQWR
-         65MmGBiW5bWZ3gEAqXGH4E4j0GJEYbc7bGrzrB83TvKjQNIR2LgZa5U4HhklL79zgZFR
-         IITWFzK+7Bg+Eel7B1gdDpGRaq63yD8yftbyobMk+y/fFAdGz46O6IKB6LhcBMlcmDlp
-         6PCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698684994; x=1699289794;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1698686095; x=1699290895; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=SXouChhvt513HFvRiWXBJ4hJm6rj3ztWKni+GHGSZ9A=;
-        b=VVsr6cIhRcFsMQYKpPWWKDobzhj8FP9J/er6iHvaz0jKo2RrBATlST3pFWZ7XaS1uQ
-         VepUq+eLI4RoSTJ7feXJBDibVb5deLjc6XYDAmJEUScb0LiRb8HsWKoOtRK6111PrVFD
-         3xlJwoHimuAKKr+4RDqmVMQbMzSMB9ABDEj0D5KB1khrPFe9+fIwQGv0Thi9V1VjU/vH
-         HLxntTeo9wxWTKmnnuE+1n6g+iOwZftaxYtrS3WYySo67yypoJktJozcJwwxYvSzE/YH
-         PKeI/DbpWkix48XRsdHLwGC1mykYEhJtBVsQAzGIllFn+CyfcvNggbZX/Kvh1Gn6Uvzi
-         tlLA==
-X-Gm-Message-State: AOJu0YwjuFykbonV0hOhqfMNJCVjD9/J6C6dtf2xElaKoc+Jz702YvcA
-	bgnUZcv2R9yqcAesAm2WKWAaSg==
-X-Google-Smtp-Source: AGHT+IFohlT4hAAFnc0uTKmn+I1R5CXqA8+woRPMBNrODzYYg7xgtWuGagRC+v/Ghq+jw8mlRiOrPw==
-X-Received: by 2002:a81:9b16:0:b0:5a7:aa7b:cb9f with SMTP id s22-20020a819b16000000b005a7aa7bcb9fmr11157075ywg.14.1698684994457;
-        Mon, 30 Oct 2023 09:56:34 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id l2-20020ad44242000000b00671248b9cfcsm2267483qvq.67.2023.10.30.09.56.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Oct 2023 09:56:34 -0700 (PDT)
-Date: Mon, 30 Oct 2023 12:56:33 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Aditya Neelamraju via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Aditya Neelamraju <adityanv97@gmail.com>
-Subject: Re: [PATCH] chore: fix typo in .clang-format comment
-Message-ID: <ZT/gQZlVKfgn/+BZ@nand.local>
-References: <pull.1602.git.git.1698610987926.gitgitgadget@gmail.com>
+        bh=brmV05OaZJHkvbwsDoJvNqj7KKP3jmgcUm50SC1M8pg=;
+        b=fwy0GFnykdOVwWL3CqiVpTWlYCEqif2M2KolM9hT10oKfGEYUdXEFfkqyccj9ivXF8
+         s+QaINV03og73rrN9m6LhljF4DRpPeaJcrI9LJ/MEynRbIEnnCgq6c1ip1rT+6BjANf0
+         6gTIKW1KuM8jJPeN5cW5LAseuKQWGxS+bN+ofxf0XQkiDtdDWXi328mH+W1doJUQto7o
+         eJvrkDapSewyToteuVXjkk1857EMZZPqLt1QQov/yCI81bPQyP73uNLdEpwyi6ifB/6D
+         C/UwTdsVkuzs5b+CZY5wlSOrOlgcAPPuZAuJ3I8UgwPueD7oRtlmdRIsAmDQFFstfJxM
+         FlIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698686095; x=1699290895;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=brmV05OaZJHkvbwsDoJvNqj7KKP3jmgcUm50SC1M8pg=;
+        b=q23zJBbQypKuvlztIn0/+Jm+oL0ufGxd+H6Ni0Rz76Z0iwIVVnFVRxZxTXRlDQO3Eg
+         7KNc2PFOuwib7k24/pjnB+FdhP2Eg6jKdvoDds7abGOlfdq/3iz+jsxFqc3UW6XCgoMq
+         F//5quESxn/J5fhAcb2vkjk9+VipowEYpUaoHiXyOFjbEOb0jIPSsq3QVI1e10KQmTeP
+         F1sgAXlUxzQ7DFk2IxdqztDi5D7bKZvKC6JO+G8y062DxCy6UJ9wUKPwQgvuZcArB4SI
+         8cT51ONCLl4vqEdbeVIAXmBPu9x3oMMNcC2a90eP/sOwrYTw7agPAmVgfuUZklN1KBJX
+         Byxg==
+X-Gm-Message-State: AOJu0YwQwvBhK/0UT8PSXkrroDTBtoE/c61Zii0fT8iWekt0+/S57QtL
+	LZgwb8JMC+CeCgyIpi1sdBl8OHrM8alRSnBe3d4=
+X-Google-Smtp-Source: AGHT+IHBrYI4COWjmRUzc6YGKDyegA2F9RbEAJcpY3j2y5Ug11Tpl/5WdUrpGP7GIWNEWNzaoV9y8setvf4usHQR6jc=
+X-Received: by 2002:a19:650c:0:b0:507:9996:f62b with SMTP id
+ z12-20020a19650c000000b005079996f62bmr6249931lfb.56.1698686095090; Mon, 30
+ Oct 2023 10:14:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.1602.git.git.1698610987926.gitgitgadget@gmail.com>
+References: <20231024195655.2413191-1-sandals@crustytoothpaste.net>
+ <CABPp-BFJn5NsSaaxEMpicqND_-8CBw370kyBQuKHGOX-3PRyMw@mail.gmail.com>
+ <ZT/RpqvfQyx+uzxa@nand.local> <ZT_YuF4g-8P9fc4t@tapette.crustytoothpaste.net>
+In-Reply-To: <ZT_YuF4g-8P9fc4t@tapette.crustytoothpaste.net>
+From: Elijah Newren <newren@gmail.com>
+Date: Mon, 30 Oct 2023 10:14:42 -0700
+Message-ID: <CABPp-BG6HqX9CzjjJrPYyS=AvmKF0gMOQT7f+jXDHOGFTXFU0A@mail.gmail.com>
+Subject: Re: [PATCH 0/1] Object ID support for git merge-file
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, Taylor Blau <me@ttaylorr.com>, 
+	Elijah Newren <newren@gmail.com>, git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
+	Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, Oct 29, 2023 at 08:23:07PM +0000, Aditya Neelamraju via GitGitGadget wrote:
-> From: Aditya Neelamraju <adityanv97@gmail.com>
+On Mon, Oct 30, 2023 at 9:24=E2=80=AFAM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+>
+> On 2023-10-30 at 15:54:14, Taylor Blau wrote:
+> > On Sat, Oct 28, 2023 at 11:24:06PM -0700, Elijah Newren wrote:
+> > > But...wouldn't you already have the conflicts generated when doing th=
+e
+> > > merge and learning that it fails?  Why would you need to generate the=
+m
+> > > again?
+> >
+> > brian would know better than I do, but I believe the reason is because
+> > the "attempt this merge" RPC is handled separately from the "show me th=
+e
+> > merge conflict(s) at xyz path". Those probably could be combined
+> > (obviating the need for this patch), but doing so is probably rather
+> > complicated.
+>
+> That's correct.  They could in theory happen at different times, which
+> is why they're not linked.
 
-We typically prefix commit messages with the subject area they're
-working in, not with "chore", or "feat" like some Git workflows
-recommend.
+Maybe this is digging a little into "historical reasons" too much, but
+this still seems a little funny.  If they happen at different times,
+you still need multiple pieces of information remembered from the
+merge operation in order for git-merge-file to be able to regenerate
+the conflict correctly in general.  In particular, you need the OIDs
+and the filenames.  Trying to regenerate a conflict without
+remembering those from the merge step would only work for common
+cases, but would be problematic in the face of either renames being
+involved or recursive merges or both.  And if you need to remember
+information from the merge step, then why not remember the actual
+conflicts (or at least the tree OID generated by the merge operation,
+which has the conflicts embedded within it)?
 
-That said, the contents of this patch look obviously correct to me.
-Thanks for noticing and fixing!
+I know, I know, there's probably just historical cruft that needs
+cleaning up, and I don't think any of this matters to the patch at
+hand since it's independently useful.  It just sounds like a system
+has been set up that has some rough edge cases caused by a poor
+splitting.
 
-Thanks,
-Taylor
+
+> --
+> brian m. carlson (he/him or they/them)
+> Toronto, Ontario, CA
