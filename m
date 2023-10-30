@@ -1,93 +1,143 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24805199AC
-	for <git@vger.kernel.org>; Mon, 30 Oct 2023 17:22:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51E733DD
+	for <git@vger.kernel.org>; Mon, 30 Oct 2023 17:26:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="lQECiK+S"
-Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46D02BD
-	for <git@vger.kernel.org>; Mon, 30 Oct 2023 10:22:01 -0700 (PDT)
-Received: by mail-qk1-x72d.google.com with SMTP id af79cd13be357-77386822cfbso320857285a.0
-        for <git@vger.kernel.org>; Mon, 30 Oct 2023 10:22:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DHQI2w77"
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62DDE93
+	for <git@vger.kernel.org>; Mon, 30 Oct 2023 10:26:33 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-508126afb9bso6610493e87.0
+        for <git@vger.kernel.org>; Mon, 30 Oct 2023 10:26:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1698686520; x=1699291320; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Ge/1AsTo3rJ1dpfaGrjqk4oY9cRrtSeBmALzwywC0Ds=;
-        b=lQECiK+SoGrYUb9ABHN4eXqEU+tzfCheIzOUyhb2ahDUu5gTw6SeyucubIP+4rTPwH
-         tRxw5Zv5Ee5GbhlOea1Ws5DbnX1cX3aPeisF7ZuKxxL/F5BKFYsCMB4naDSV89Z4o3xX
-         51Hm7kXlEQ0vF3bGbiCBropSVp/DqSWWiSI0380V9Mxv3CIJWC6yowlYK2UyWt/SZZut
-         SwGkttwfWm+zBAJWilA18r2mGjmWi4zuhVLg44M719cYazbh7BJsvUmuUdKBoh8EJoMA
-         mPvpOl4YiPu9DRkTFELGaxjW7qw1n60YeOtKEvS2xg8z3ovKTquhooh7CumscgdvmpHg
-         e16A==
+        d=gmail.com; s=20230601; t=1698686791; x=1699291591; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=msmucqEl5mzvgatR9YB9AlIVXje56OBKp4nWa8iyE/U=;
+        b=DHQI2w77iNxCUK5CO+33hqmee35QQLGKrl7Xu8BII2KHZhgPsSX2SWGyOdRMci91AP
+         tSPUm+aitmBJjC76i+fUcM0c1W+b4IGHNy+mlzmmZPoGkpD+2IL1BEfPZIm/WSRMbuM+
+         xlGvUhSiYVJogD1XgG8oRXWld9GrPmtvB12DQHtls0Kn8jSiJ6Y0kdKen2ZM7T82vTW9
+         9OOVszpQQW5x67Dt1eTgpl27IpkJ7FbgHfmxels/5k7yRszVQoQQN83UxIHdCNyfj3Lm
+         s3wl1MMIr/syxbtbp+c5ECMGkKCTTwXM+EZx5J4KtIQg4ML4MDja0jpIoOkao9aDe+65
+         MfNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698686520; x=1699291320;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ge/1AsTo3rJ1dpfaGrjqk4oY9cRrtSeBmALzwywC0Ds=;
-        b=j7PDRxPaWJw3lwgDhxBm3gPNF6pK7kiXGc3hfONd8QzatXmkW6rOQmiQKeeaSa64rg
-         KXoZkgOiaXCsRDBXDPp9aJuNjerTBOdbuH9GQVFS7TUW8+Hz1yjnTvhQJBntepq0qDLD
-         qSWm7TbiE9cZKj4X/FzE9+CBC/LTpqAgHriwKzUhXKGDzbW6MQtq6CSPOR4IuME4kg2k
-         2N/StIVL1Vn/NuNENUf7nv15oHeaP8KBHh4MEfVFvL7Z8CNyBlDa0NW32P36E8JvdUzw
-         Pt2t4eCUXoRuubmwZREkh0vi/alUtJh+WD3M46MtOk5aMYI9oUxOaAOoJoGRzZSG9Imq
-         zWRg==
-X-Gm-Message-State: AOJu0YwhUba1TAEtZbg05JNJikdW0r//7150P+O4J1wBecdjS4nM8cij
-	fQp/lQTRfhk881nIYF9dRt55PyGptSvEe1UyQcMvBA==
-X-Google-Smtp-Source: AGHT+IETGVGkDqAxNS9JcyEK717tsMS2Yk8/iOx8QzGBAB6LwuS840cYp9ayEZnMxgPzOYnZ+Y+55A==
-X-Received: by 2002:a05:6214:20e8:b0:671:d2a5:316c with SMTP id 8-20020a05621420e800b00671d2a5316cmr5222539qvk.42.1698686520394;
-        Mon, 30 Oct 2023 10:22:00 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id o19-20020a0ccb13000000b0065afcf19e23sm3539737qvk.62.2023.10.30.10.22.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Oct 2023 10:22:00 -0700 (PDT)
-Date: Mon, 30 Oct 2023 13:21:59 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	Git List <git@vger.kernel.org>, John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH] reflog: fix expire --single-worktree
-Message-ID: <ZT/mN9RouiqzL9aT@nand.local>
-References: <63eade0e-bf2c-4906-8b4c-689797cff737@web.de>
- <xmqqa5s1hxhh.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1698686791; x=1699291591;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=msmucqEl5mzvgatR9YB9AlIVXje56OBKp4nWa8iyE/U=;
+        b=QnTZWTXIe8xEsm8EIZI028bf4fll9JZY4jvuCtvXdwopYiHBY7Nkp7lqFnhaQq2qG9
+         jDenEer1LW37RPNjm8xncdGbAWL2sMKJ5GcIz4bNYVFVudMp3zDn2PN7huGuxyhHBzjM
+         lOFcGxZ2M8XxOQ3A5VJfvFT7HkoKjh9P7tzM8E+w4Mbom/5AP4nhbMlwPkpCiMzpjdea
+         ApZUqTZXE6WZY6Rl7U241Op2vtFxLRNYlxVN2SnWb+N7X2Ut3WaqWk9UNKnvvRcuIQss
+         DnWq8xPSVm8Ih/vBcIz4rwncMWbLnuXOu4tCrnkJaaFKBjJEZcRYew5/eg88qQnfoXvM
+         mCuQ==
+X-Gm-Message-State: AOJu0Yxd0r5OvnP6Ctii2OHf/gD4X8jKMgxgtkjg3WF2T/fU4oz96mYH
+	BqK1aTjz3GTKeDS/8APcgPKlKqhFk9AvqSv39VAeRije
+X-Google-Smtp-Source: AGHT+IG45HGPEan3XSQ5HzfM4TgDlE37LJXj3EuJC0MHpuCyVnr7Klc7Cd37KRPwqSvhJPnH7PhVpljTxTT4Rm7I91Y=
+X-Received: by 2002:ac2:4c82:0:b0:507:9a33:f105 with SMTP id
+ d2-20020ac24c82000000b005079a33f105mr6791418lfl.69.1698686791449; Mon, 30 Oct
+ 2023 10:26:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqa5s1hxhh.fsf@gitster.g>
+References: <pull.1603.git.1698635292629.gitgitgadget@gmail.com> <xmqq7cn4g3nx.fsf@gitster.g>
+In-Reply-To: <xmqq7cn4g3nx.fsf@gitster.g>
+From: Elijah Newren <newren@gmail.com>
+Date: Mon, 30 Oct 2023 10:26:18 -0700
+Message-ID: <CABPp-BE6_nuMeiqOAMGwP8SH=d1+i57-STgTNKU8-Gnkv2jW=Q@mail.gmail.com>
+Subject: Re: [PATCH] sequencer: remove use of comment character
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Tony Tung via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Tony Tung <tonytung@merly.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Oct 30, 2023 at 07:31:22AM +0900, Junio C Hamano wrote:
-> René Scharfe <l.s.r@web.de> writes:
+On Sun, Oct 29, 2023 at 9:01=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> > ... and added a non-printable short flag for it, presumably by
-> > accident.
+> "Tony Tung via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> Very well spotted.
+> > From: Tony Tung <tonytung@merly.org>
+> >
+> > Instead of using the hardcoded `# `, use the
+> > user-defined comment_line_char.  Adds a test
+> > to prevent regressions.
 >
-> FWIW, with the following patch on top of this patch, all tests pass
-> (and without your fix, of course this notices the "\001" and breaks
-> numerous tests that use "git reflog").  So you seem to have found
-> the only one broken instance (among those that are tested, anyway).
+> Good spotting.
+>
+> Two observations.
+>
+>  (1) There are a few more places that need similar treatment in the
+>      same file; you may want to fix them all while at it.
+>
+>  (2) The second argument to strbuf_commented_addf() is always the
+>      comment_line_char global variable, not just inside this file
+>      but all callers across the codebase.  We probably should drop
+>      it and have the strbuf_commented_addf() helper itself refer to
+>      the global.  That way, if we ever want to change the global
+>      variable reference to something else (e.g. function call), we
+>      only have to touch a single place.
+>
+> The latter is meant as #leftoverbits and will be a lot wider
+> clean-up that we may want to do long after this patch hits out
+> codebase.  The "other places" I spotted for the former are the
+> following, but needs to be taken with a huge grain of salt, as it
+> has not even been compile tested.
+>
+> Thanks.
+>
+>  sequencer.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git c/sequencer.c w/sequencer.c
+> index d584cac8ed..33208b1660 100644
+> --- c/sequencer.c
+> +++ w/sequencer.c
+> @@ -1893,8 +1893,8 @@ static void update_squash_message_for_fixup(struct =
+strbuf *msg)
+>         size_t orig_msg_len;
+>         int i =3D 1;
+>
+> -       strbuf_addf(&buf1, "# %s\n", _(first_commit_msg_str));
+> -       strbuf_addf(&buf2, "# %s\n", _(skip_first_commit_msg_str));
+> +       strbuf_addf(&buf1, comment_line_char, "%s\n", _(first_commit_msg_=
+str));
+> +       strbuf_addf(&buf2, comment_line_char, "%s\n", _(skip_first_commit=
+_msg_str));
+>         s =3D start =3D orig_msg =3D strbuf_detach(msg, &orig_msg_len);
+>         while (s) {
+>                 const char *next;
+> @@ -2269,8 +2269,8 @@ static int do_pick_commit(struct repository *r,
+>                 next =3D parent;
+>                 next_label =3D msg.parent_label;
+>                 if (opts->commit_use_reference) {
+> -                       strbuf_addstr(&msgbuf,
+> -                               "# *** SAY WHY WE ARE REVERTING ON THE TI=
+TLE LINE ***");
+> +                       strbuf_commented_addf(&msgbuf, comment_line_char,=
+ "%s",
+> +                               "*** SAY WHY WE ARE REVERTING ON THE TITL=
+E LINE ***");
+>                 } else if (skip_prefix(msg.subject, "Revert \"", &orig_su=
+bject) &&
+>                            /*
+>                             * We don't touch pre-existing repeated revert=
+s, because
+>
 
-This makes sense to me, but obviously won't catch non-tested cases.  I
-thought that a new Cocinelle rule might be appropriate here, but it is
-frustratingly difficult to specify a constraint like:
-
-    OPT_BOOL(e1, e2, e3, ...)
-
-with
-
-    !(e1 == 0 || (33 <= e1 && e1 <= 127))
-
-I'll think on it a little bit, but this seems low priority enough that I
-don't feel compelled to urgently deal with adding a new Coccinelle rule.
-
-Thanks,
-Taylor
+I thought the point of the comment_line_char was so that commit
+messages could have lines starting with '#'.  That rationale doesn't
+apply to the TODO list generation or parsing, and I'm not sure if we
+want to add the same complexity there.  If we do want to add the same
+complexity there, I'm worried that making these changes are
+insufficent; there are some other hardcoded '#' references in the code
+(as a quick greps for '".*#' and "'#'" will turn up).  Since those
+other references include parsing as well as generation, I think we
+might actually be introducing bugs in the TODO list handling if we
+only partially convert it, but someone would need to double check.
