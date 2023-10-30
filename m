@@ -1,48 +1,44 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD3401366
-	for <git@vger.kernel.org>; Mon, 30 Oct 2023 00:33:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F041655
+	for <git@vger.kernel.org>; Mon, 30 Oct 2023 01:33:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FpBTSHF7"
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4CA6B7
-	for <git@vger.kernel.org>; Sun, 29 Oct 2023 17:33:24 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 593521C3F39;
-	Sun, 29 Oct 2023 20:33:24 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="oZCkxO5y"
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56364BD
+	for <git@vger.kernel.org>; Sun, 29 Oct 2023 18:33:03 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id EFA2719CCE;
+	Sun, 29 Oct 2023 21:33:02 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=XrxIWkRGKCn9Ji1mSzvqua5gRrOBSvIlGvVYax
-	CXQiY=; b=FpBTSHF74SSbsgNDvcdIxfAap/0qYj0HZhToKxiu7ezN4ch0ScS8Vl
-	F7NwxrrA95wqmZNae0R1sRPSDVYPlu+BDNCQpVl41z8Obj5QXYXby1XeUty/+d4I
-	dG/qnMF6PBJP91Ov5DmzTSctSNfgU6+kH7BEcDuvcQwKfRbsiIxMU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4F7A41C3F38;
-	Sun, 29 Oct 2023 20:33:24 -0400 (EDT)
+	:content-type; s=sasl; bh=4ko8r1haXuH0DMA63Of7fGpuHo/Tdx1I4oteOC
+	AxtLY=; b=oZCkxO5yQNYQFt0cG3FNf8sZIaVNXaHnxmZOYoQlhOnpoqFP5jOaRv
+	FBKmm7YrbM4jfV2npC2ny90lsw+7Eex4VttAcNG3MT5qW1mNzlxjuc/cnsNoSJfF
+	TgZnj5GWTbGqr31ZpW1Vt/0Toe4s6kgU0+zozFuTvOeVZYRPf6TBw=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id E933D19CCD;
+	Sun, 29 Oct 2023 21:33:02 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.198.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A59031C3F37;
-	Sun, 29 Oct 2023 20:33:23 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7EC4B19CCA;
+	Sun, 29 Oct 2023 21:32:59 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Eric Sunshine <sunshine@sunshineco.com>,  emilyshaffer@google.com,
-  git@vger.kernel.org,  Emily Shaffer <nasamuffin@google.com>,  Sheik
- <sahibzone@gmail.com>,  Dragan Simic <dsimic@manjaro.org>
-Subject: Re: [PATCH v3] bugreport: reject positional arguments
-In-Reply-To: <xmqqv8apez0o.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-	30 Oct 2023 09:26:31 +0900")
-References: <20231026005542.872301-1-nasamuffin@google.com>
-	<20231026155459.2234929-1-nasamuffin@google.com>
-	<CAPig+cTmYtWR=QN3LeN9yw3HmsKEmD2fUiRjKf=eJHhAZyT-yA@mail.gmail.com>
-	<3e15f266-c790-4b71-84b6-1328339425c1@gmail.com>
-	<xmqqv8apez0o.fsf@gitster.g>
-Date: Mon, 30 Oct 2023 09:33:22 +0900
-Message-ID: <xmqqpm0xeyp9.fsf@gitster.g>
+To: Jacob Stopak <jacob@initialcommit.io>
+Cc: git@vger.kernel.org
+Subject: Re: [RFC PATCH v2 1/6] status: add noob format from status.noob config
+In-Reply-To: <20231026224615.675172-2-jacob@initialcommit.io> (Jacob Stopak's
+	message of "Thu, 26 Oct 2023 15:46:10 -0700")
+References: <20231020183947.463882-1-jacob@initialcommit.io>
+	<20231026224615.675172-1-jacob@initialcommit.io>
+	<20231026224615.675172-2-jacob@initialcommit.io>
+Date: Mon, 30 Oct 2023 10:32:57 +0900
+Message-ID: <xmqqjzr4gaie.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -52,67 +48,167 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- EF122E76-76BB-11EE-966D-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+ 426F99A2-76C4-11EE-A2B7-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jacob Stopak <jacob@initialcommit.io> writes:
 
-> Phillip Wood <phillip.wood123@gmail.com> writes:
->
->> It is rather unfortunate that test_i18ngrep was deprecated without
->> providing an alternative that offers the same debugging
->> experience.
->
-> The primary thing test_i18ngrep did was to _SKIP_ certain test that
-> looked for an expected string in "C" locale from the output when the
-> tests were run under a tainted localization mode.  The tests that
-> looked for strings in messages that are *not* to be localized used
-> "grep".  Tests that (unfortunately) had to match human-readable
-> messages had to work around the tainted localization test to use
-> test_i18ngrep.
->
->> When test_i18ngrep fails it prints a message with the
->> pattern and text that failed to match so it is easy to see where the
->> test failed. If grep fails there is no output and so unless the test
->> is run with "-x" it can be hard to see which command caused the test
->> to fail.
->
-> We could rename test_i18ngrep to test_grep (and make test_i18ngrep
-> into a thin wrapper with warnings).
->
-> 	test_grep -e must-exist file &&
-> 	test_grep ! -e must-not-exist file
+> diff --git a/table.c b/table.c
+> new file mode 100644
+> index 0000000000..15600e117f
+> --- /dev/null
+> +++ b/table.c
 
-... as the only remaining part in test_18ngrep has no hack to work
-around the tainted localization tests, so "was deprecated without"
-is a bit too strong.  There is nothing we have lost yet.
+Yuck, do we need an entirely new file?  What trait are the things
+that are thrown into this file together supposed to share [*]?  It
+is not very clear to me what the focus of this file is.
 
+	Side note: for example, stuff in wt-status.c are to compute
+	per-path status of the working tree and in-index files.
 
+> @@ -0,0 +1,117 @@
+> +#define USE_THE_INDEX_VARIABLE
 
- t/test-lib-functions.sh | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+I personally do not mind, but I suspect many people hate to see this
+compatibility set of macros used in a newly written source file.
 
-diff --git c/t/test-lib-functions.sh w/t/test-lib-functions.sh
-index 2f8868caa1..c50bc18861 100644
---- c/t/test-lib-functions.sh
-+++ w/t/test-lib-functions.sh
-@@ -1208,14 +1208,16 @@ test_cmp_bin () {
- 	cmp "$@"
- }
- 
--# Wrapper for grep which used to be used for
--# GIT_TEST_GETTEXT_POISON=false. Only here as a shim for other
--# in-flight changes. Should not be used and will be removed soon.
-+# Deprecated - do not use this in new code
- test_i18ngrep () {
-+	test_grep "$@"
-+}
-+
-+test_grep () {
- 	eval "last_arg=\${$#}"
- 
- 	test -f "$last_arg" ||
--	BUG "test_i18ngrep requires a file to read as the last parameter"
-+	BUG "test_grep requires a file to read as the last parameter"
- 
- 	if test $# -lt 2 ||
- 	   { test "x!" = "x$1" && test $# -lt 3 ; }
+> +static const char *color(int slot, struct wt_status *s)
+> +{
+> +	const char *c = "";
+> +	if (want_color(s->use_color))
+> +		c = s->color_palette[slot];
+> +	if (slot == WT_STATUS_ONBRANCH && color_is_nil(c))
+> +		c = s->color_palette[WT_STATUS_HEADER];
+> +	return c;
+> +}
+
+Do we need to duplicate this from other files?  If this is about
+"git status", perhaps some parts of this patch, the truly new things
+(rather than what was copied, like this one) can be added to
+wt-status.c instead of adding a new file with unclear focus?
+
+> +static void build_table_border(struct strbuf *buf, int cols)
+> +{
+> +	strbuf_reset(buf);
+> +	strbuf_addchars(buf, '-', cols);
+> +}
+
+This seems to be horizontal border; do we need a separate vertical
+border?
+
+> +static void build_table_entry(struct strbuf *buf, char *entry, int cols)
+> +{
+> +	strbuf_reset(buf);
+> +	strbuf_addchars(buf, ' ', (cols / 3 - 1 - strlen(entry)) / 2);
+> +	strbuf_addstr(buf, entry);
+> +
+> +	/* Bump right padding if entry length is odd */
+> +	if (!(strlen(entry) % 2))
+> +		strbuf_addchars(buf, ' ', (cols / 3 - 1 - strlen(entry)) / 2 + 1);
+> +	else
+> +		strbuf_addchars(buf, ' ', (cols / 3 - 1 - strlen(entry)) / 2);
+> +}
+
+The code assumes that one byte in string "entry" occupies one and
+only one display columns, which is so 20th centry assumption that
+does not care about i18n.  Often what takes 3 bytes in a UTF-8
+string occupies 2 display columns, for example.  In addition, if you
+plan to color entries in the table, some substring would end up to
+be 0-width.  Your pathname may be so long that 1/3 of a window
+width may not be sufficient to show it in its entirety, you might
+need to show it truncated in the middle.
+
+utf8.c has support for measuring the display width of UTF-8 string,
+which is used elsewhere in our code.  You may want to study it if
+you want to do a "tabular" output.  The code in diff.c that shows
+diffstat has many gems to help what this code wants to do, including
+measuring display columns of a string, chomping a long string to fit
+in a desired display columns, etc., by using helpers defined in
+utf8.c
+
+A potential excuse I can think of to have these outside wt-status.c
+and in a separate new file is to have a generic "table" layout
+machinery that is independent from "git status" or what each column
+of the table is showing (in other words, they may not be pathnames),
+and reusable by other subcommands that want to show things in the
+"table" layout.  But even as a candidate for such a generic table
+mechanism, the above falls far short by hardcoding that it can only
+show 3-col table whose columns are evenly distributed and nothing
+else.
+
+> +static void print_table_body_line(struct strbuf *buf1, struct strbuf *buf2, struct strbuf *buf3, struct wt_status *s)
+> +{
+> +	printf(_("|"));
+> +	color_fprintf(s->fp, color(WT_STATUS_UNTRACKED, s), "%s", buf1->buf);
+> +	printf(_("|"));
+> +	color_fprintf(s->fp, color(WT_STATUS_CHANGED, s), "%s", buf2->buf);
+> +	printf(_("|"));
+> +	color_fprintf(s->fp, color(WT_STATUS_UPDATED, s), "%s", buf3->buf);
+> +	printf(_("|\n"));
+> +}
+
+How does the code deal with unknown display width of translated
+version of "|" emitted here?  Are you assuming that no matter how
+these are translated, they will always occupy one display column
+each?
+
+> +void print_noob_status(struct wt_status *s)
+> +{
+> +	struct winsize w;
+> +	int cols;
+> +	struct strbuf table_border = STRBUF_INIT;
+> +	struct strbuf table_col_entry_1 = STRBUF_INIT;
+> +	struct strbuf table_col_entry_2 = STRBUF_INIT;
+> +	struct strbuf table_col_entry_3 = STRBUF_INIT;
+> +	struct string_list_item *item;
+> +
+> +	/* Get terminal width */
+> +	ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+> +	cols = w.ws_col;
+
+Let's not reinvent an incomplete solution before studying and
+finding out what we already have in our codebase.  Immediately after
+you got tempted to type TIOCGWINSZ, you can "git grep" the codebase
+for that particular constant to see if we already use it, as that is
+one very reasonable way to achieve what this piece of code wants to
+do (i.e. find out what the display width would be).  You'd find
+pager.c:term_columns() and also learned that we want to prepare for
+the case where the ioctl() is not available.
+
+> +	build_table_entry(&table_col_entry_1, "Untracked files", cols);
+> +	build_table_entry(&table_col_entry_2, "Unstaged changes", cols);
+> +	build_table_entry(&table_col_entry_3, "Staging area", cols);
+
+Shouldn't these three strings be translatable?
+
+What shoudl happen when these labels are wider than cols/3?
+
+> diff --git a/table.h b/table.h
+> new file mode 100644
+> index 0000000000..c9e8c386de
+> --- /dev/null
+> +++ b/table.h
+> @@ -0,0 +1,6 @@
+> +#ifndef TABLE_H
+> +#define TABLE_H
+> +
+> +void print_noob_status(struct wt_status *s);
+> +
+> +#endif /* TABLE_H */
+
+I am guessing that your plan is to add other "distim_noob_add()" and
+other "noob" variant of operations for various Git subcommands here,
+but I really do not think you want to add table.[ch] that has logic
+for such random set of Git subcommands copied and tweaked from all
+over the place, as the only trait being shared among them will
+become "they are written by Jacob Stopak", that is not a very useful
+grouping of the functions.  It is not even "this file collects all
+the code that produce tabular output from Git"---"git status -s"
+already gives tabular output, for example, without using any of the
+"I only want to draw a table with three columns of equal width"
+logic.  Adding code that are necessary to add yet another output
+mode for "git status" directly to where various output modes of "git
+status" are implemented, i.e. wt-status.c, and do similar changes for
+each command would make more sense, I would think.
+
+Thanks.
+
