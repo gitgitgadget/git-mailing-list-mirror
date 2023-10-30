@@ -1,81 +1,112 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F141945B
-	for <git@vger.kernel.org>; Mon, 30 Oct 2023 17:15:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6384B15EA1
+	for <git@vger.kernel.org>; Mon, 30 Oct 2023 17:18:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X0+G1vgk"
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7793399
-	for <git@vger.kernel.org>; Mon, 30 Oct 2023 10:15:24 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2c595f5dc84so64923281fa.0
-        for <git@vger.kernel.org>; Mon, 30 Oct 2023 10:15:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R7JGYyRo"
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C302A9F
+	for <git@vger.kernel.org>; Mon, 30 Oct 2023 10:18:28 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-507a62d4788so7200327e87.0
+        for <git@vger.kernel.org>; Mon, 30 Oct 2023 10:18:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698686123; x=1699290923; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1698686307; x=1699291107; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8zdA/rRVOChuD/1DPyUV1QE/9k1Od9xKpLP/zlKP+4s=;
-        b=X0+G1vgkkOvI1jEP+6CWiudpeyXJaDaryzCGqgpRTf9zySAHA9/p8oEDUwr+9NqVOO
-         gCi47u97DZUkuIQy0ZK1rXarQiABDGUIVh9nxBLYN/9c9UIdfqcLSBKvXZ/7QSZhQGqX
-         WXIRMUXJ+FSYUognqE0TUtVYo5Ek3+bXG9udIJ4+ilneLD15sS5pqRkLYkSvpvbMU0fO
-         KRcJxlOEQQ68KfreTAWS69PjNPxvKl18kgRlqSXsRbM3nKKJATbHZXSqclfFTV3OubE2
-         M5vSCkVQpIoOO7I18JHsCQ0SeHq1e0gV1cWftSCEthsWmk9PXCoFdSnaOe/r1wDqNJ7c
-         tbBw==
+        bh=02/ULIouUYibY+jkLvETgXRxQjHMar6q16IrWznmR4s=;
+        b=R7JGYyRo2v9v/Dimt6QY+u3YtpH/+P6VGF91XtpZLcNONoyCbiueRZ5TT4JXzIQ12V
+         Tn1NDf87tcDaNDB1XlqH9XlDCWm2gs1GoHTqCTiffXqKxzYALjOC5oOWcCnoYvaWD8bn
+         RYz9IWejo+bEAYD52Rkf0zHKEblJaLje6WxfWUzs+HcN/dDIp53Z8ETw0eY/xyZ1RZJb
+         y873DRk8Nf+GTezNkcwClM1Ji4FC6+YH3Jgj+DRHXkcQdx2BOAhh2pzaM4TzxDvP0t9Q
+         VSir2JVt+5K8+q4CrXHBaDGGmUQZ7RTzScGBRQNUB72XJj/cdXGlxufP3jCuVvOb1/1b
+         vLrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698686123; x=1699290923;
+        d=1e100.net; s=20230601; t=1698686307; x=1699291107;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8zdA/rRVOChuD/1DPyUV1QE/9k1Od9xKpLP/zlKP+4s=;
-        b=GPL6ytuvDyBaQF3H627Sy35aGGqXIgkII2vgnXo4QaOC6C7UsEjoU3DBH60cHiYmDJ
-         cdKDusBeukU3Gv/6zPkZ27JJP3soS6ZMLm/yTI1h3YjGNjndtPVEiEo+RK+uK5d1BWfa
-         NzbgTDonc3Fffg9UBZEU+CkE8wX8chw/H9o6E64dtk6B1WlZToANOTNGgtHDVukxlju4
-         ldqwnbFkOfatwxFB5g0ocR+t//p5m1dc3dpvlHeOkINPv4mIwC0FnzCr0BF0DVwnSFrp
-         OrI1v0vMt2/aFz+SSNCgxrzwFuYXpAQFPyELzWy1jKOzS/ZTHe1kXO1kLMx+Pb2blJfV
-         LwdA==
-X-Gm-Message-State: AOJu0YwQMnNSqAuTi8wtBWWrXZxrsYt96Jf7FSC+7mJAoDG3yfmAqWi2
-	sYYoPGq3oX0V4MEDPxr5zQST9pq0mD7ZUWGVuKQ=
-X-Google-Smtp-Source: AGHT+IGIPWXwxwBYW4xMdphfgTWIEZixeEoulT48NPtEcGYYrX4Z8k5HMFkkTE491Ijjitgprrv3q9afqm3mQ+44n6o=
-X-Received: by 2002:a19:6d1d:0:b0:507:9b69:6028 with SMTP id
- i29-20020a196d1d000000b005079b696028mr79064lfc.24.1698686122494; Mon, 30 Oct
- 2023 10:15:22 -0700 (PDT)
+        bh=02/ULIouUYibY+jkLvETgXRxQjHMar6q16IrWznmR4s=;
+        b=bB8CSApINUEqrsUr0LEUhrr0IZ562vmUIZVhoBl8dVxPOvq9uVliiXvaC3s1ska6RV
+         1kVN9X0K/vBepSkPZyEuXEITiMKljAk+bPDvl/NVduhjrww0/ZBP8gFDwfJ5WfqnXfCr
+         5KqFg+9ztc4sRxNeruK/KUmbqw87XkBi3Vgp3957l7g5CVZldDMHiblrGCGoqOsW5lCw
+         bMu04yRsaFDXeHMtOEpvRXGUuILquJsDm9hwamsYud2jTrLE/+LGTqcB69bsJBrKS3Fi
+         yFvARjbYoFuHWHwa4CEmxa5AgyNXvKIHZS96GAcJzUNj5LxBRTOCCXbEXMag1ggwAN1f
+         V3fw==
+X-Gm-Message-State: AOJu0YzjDVzy38cqYfON5KZksZ6b2x/MQw0ej2yB176JszcrpZdjkR1B
+	bhSKGpgQJqG/jVycHrwJRaU7wDL6YLVRGG5LkOc=
+X-Google-Smtp-Source: AGHT+IGkYKpS9MX1rQmOOIyVpyCaZaqgmNAQLX/BPw+dXHzzlemWBgWTlu+6M+VeJu2w4WYk4VwNySoLyxLFm1Xx+pY=
+X-Received: by 2002:a05:6512:3c8d:b0:507:b922:f920 with SMTP id
+ h13-20020a0565123c8d00b00507b922f920mr9739739lfv.8.1698686306675; Mon, 30 Oct
+ 2023 10:18:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231024195655.2413191-1-sandals@crustytoothpaste.net> <20231030162658.567523-1-sandals@crustytoothpaste.net>
-In-Reply-To: <20231030162658.567523-1-sandals@crustytoothpaste.net>
+References: <20230907092521.733746-1-christian.couder@gmail.com>
+ <20231010123847.2777056-1-christian.couder@gmail.com> <CABPp-BGCzxL-kpOvZzWRTJcx2v18QHm5ev8bFv7bm0dyNqhKug@mail.gmail.com>
+ <e04cfbdc-fd28-c645-8f5d-132f7ceec6be@gmx.de>
+In-Reply-To: <e04cfbdc-fd28-c645-8f5d-132f7ceec6be@gmx.de>
 From: Elijah Newren <newren@gmail.com>
-Date: Mon, 30 Oct 2023 10:15:10 -0700
-Message-ID: <CABPp-BF6vxU5x5VLGbRhtcTBqDu3x31=vMOd2bimZNg2mkkvuA@mail.gmail.com>
-Subject: Re: [PATCH v2 0/1] Object ID support for git merge-file
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
-	Phillip Wood <phillip.wood123@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>, 
-	Taylor Blau <me@ttaylorr.com>
+Date: Mon, 30 Oct 2023 10:18:14 -0700
+Message-ID: <CABPp-BGfsda-8CK7_YPJfhGMfpLqdDeB8X6wnqPAGmhiY4KjDA@mail.gmail.com>
+Subject: Re: [PATCH v5 00/14] Introduce new `git replay` command
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org, 
+	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, John Cai <johncai86@gmail.com>, 
+	Derrick Stolee <stolee@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>, 
+	Calvin Wan <calvinwan@google.com>, Toon Claes <toon@iotcl.com>, Dragan Simic <dsimic@manjaro.org>, 
+	Linus Arver <linusa@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Oct 30, 2023 at 9:27=E2=80=AFAM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> This series introduces an --object-id option to git merge-file such
-> that, instead of reading and writing from files on the system, it reads
-> from and writes to the object store using blobs.
->
-> Changes from v1:
-> * Improve error handling
-> * Re-add `-p` argument for documentation
->
-> brian m. carlson (1):
->   merge-file: add an option to process object IDs
->
->  Documentation/git-merge-file.txt | 20 +++++++++++
->  builtin/merge-file.c             | 62 +++++++++++++++++++++++---------
->  t/t6403-merge-file.sh            | 58 ++++++++++++++++++++++++++++++
->  3 files changed, 124 insertions(+), 16 deletions(-)
+Hi Johannes,
 
-Thanks, this version looks good to me.
+On Sun, Oct 29, 2023 at 7:14=E2=80=AFAM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Hi Elijah,
+>
+> On Sat, 28 Oct 2023, Elijah Newren wrote:
+>
+> > On Tue, Oct 10, 2023 at 5:39=E2=80=AFAM Christian Couder
+> > <christian.couder@gmail.com> wrote:
+> > > * Patch 12/15 (replay: disallow revision specific options and
+> > >   pathspecs) in version 4 has been removed, so there are now only 14
+> > >   patches instead of 15 in the series. This follows a suggestion by
+> > >   Dscho, and goes in the direction Elijah initially wanted before
+> > >   Derrick Stolee argued for disallowing revision specific options and
+> > >   pathspecs.
+> >
+> > [... snipping many parts that I agree with...]
+> >
+> > >   Also instead of forcing reverse order we use the reverse order by
+> > >   default but allow it to be changed using `--reverse`. Thanks to
+> > >   Dscho.
+> >
+> > I can see why this might sometimes be useful for exclusively linear
+> > history, but it seems to open a can of worms and possibly unfixable
+> > corner cases for non-linear history.  I'd rather not do this, or at
+> > least pull it out of this series and let us discuss it in some follow
+> > up series.  There are some other alternatives that might handle such
+> > usecases better.
+>
+> I find myself wishing for an easy way to reverse commits, if only to
+> switch around the latest two commits while stopped during a rebase.
+>
+> So it would have been nice for me if there had been an easy, worktree-les=
+s
+> way to make that happen.
+
+Seems reasonable; we'll definitely want to keep this in mind.
+
+> I guess this would be going in the direction of reordering commits,
+> though, something we deliberately left for later?
+
+Yes, I think that's a good framing for it.
+
+Thanks,
+Elijah
