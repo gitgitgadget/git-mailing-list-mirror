@@ -1,118 +1,152 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D60F7EE
-	for <git@vger.kernel.org>; Mon, 30 Oct 2023 01:59:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3378EA3
+	for <git@vger.kernel.org>; Mon, 30 Oct 2023 03:08:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="bVTrCNXk"
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08824BF
-	for <git@vger.kernel.org>; Sun, 29 Oct 2023 18:59:18 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id A0D802D65A;
-	Sun, 29 Oct 2023 21:59:18 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=f+xytVevKh5xOIyS3MGy7oXQJNLks3lLLIst0C
-	sS5no=; b=bVTrCNXkK29ngspWQ85Y+LUT2Q/GsddfhczvrTZFxRYPUFUaDH64oj
-	JF2A3xJWZD3UOfSR8jdsq5q/+YBIp9oo1q7LrMoNLi/Ww4ut9mxW3s7oAt1TcGee
-	3H8YfvBWGHn1nuBeiRV3WBkPJGlIeIb76maKAP+BDjjK/91uuBDpQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 97E642D659;
-	Sun, 29 Oct 2023 21:59:18 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.198.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2AD3C2D657;
-	Sun, 29 Oct 2023 21:59:15 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Eric Sunshine <sunshine@sunshineco.com>,  emilyshaffer@google.com,
-  git@vger.kernel.org,  Emily Shaffer <nasamuffin@google.com>,  Sheik
- <sahibzone@gmail.com>,  Dragan Simic <dsimic@manjaro.org>
-Subject: Re: [PATCH v3] bugreport: reject positional arguments
-In-Reply-To: <xmqqpm0xeyp9.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-	30 Oct 2023 09:33:22 +0900")
-References: <20231026005542.872301-1-nasamuffin@google.com>
-	<20231026155459.2234929-1-nasamuffin@google.com>
-	<CAPig+cTmYtWR=QN3LeN9yw3HmsKEmD2fUiRjKf=eJHhAZyT-yA@mail.gmail.com>
-	<3e15f266-c790-4b71-84b6-1328339425c1@gmail.com>
-	<xmqqv8apez0o.fsf@gitster.g> <xmqqpm0xeyp9.fsf@gitster.g>
-Date: Mon, 30 Oct 2023 10:59:13 +0900
-Message-ID: <xmqqcywwg9am.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R3UfkPUv"
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBB0683
+	for <git@vger.kernel.org>; Sun, 29 Oct 2023 20:08:15 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-408002b5b9fso29458155e9.3
+        for <git@vger.kernel.org>; Sun, 29 Oct 2023 20:08:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1698635294; x=1699240094; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=Yqs2I45H+XBtf9yS5dVD9F+ySbonGCYvJjULMWEImMM=;
+        b=R3UfkPUvFRIOOltuY1KhRaNJ3EZFVkLNbJRmVdzVp6OkKmps8uKAwBbf+dkN+ySRY7
+         Cd8aJ4Ao2ym94FKl/yeppEMfyzbbGAL6UsrnsnbQwFHeUcUXBHsUTNOXTrE6GZmE25MU
+         CEhd9iBHvOzPXFDj1nUpLFZ5K1tqkuiPjMfwnCELsfoZkuW1znpgi79hHhcTnBvjhiC9
+         Amw/ZJr5aFDL+ZNb6j45sMGHfyhNSG3nwJPA9ws82m5O+/4ECZ/sOlHPmjA0mODNbZ3V
+         /3KjyM/Ski4/lChIr0ArLQiymWQkWLqsg/Pzk7uEfJLAtj0Sl4fPRyY15vbyXLbpH5Uk
+         YVSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698635294; x=1699240094;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Yqs2I45H+XBtf9yS5dVD9F+ySbonGCYvJjULMWEImMM=;
+        b=oZ6CHjt+M/F8BFDrea2QNHTyu8YIHmy0Y5OhHcgvGLUG72ThaBj29sj/xQoxtMEQH/
+         7d1ruRkZ6/R5jAwQTXvPkOIT/OqlMSzoOiMZfVhjxMkV8sXLVJ/OwCww3YEs2nGtMW98
+         CMLHKyRjbmR+MWxQuC/z/AphoDB1uaa1j5vT+LoMBu3YS961s/itakvgtOHHtryXQj1x
+         1i4CDmpVRnQCrTriq69wtp4LS0cGvr8arMQ29UXyM15Df1ED/wk34jNI1b+kVj47AfvT
+         yWO6Pn4nctfVmW8ZTTUlJwlVx3+N0hbcSGDW6oLUnYyF2swMAIsXG0sPvgGQA8n327tI
+         Z64Q==
+X-Gm-Message-State: AOJu0YyrsOrmf98MLzgY9Bxv42lrr+9PHn77sjAt5+rcQQRziaJiJSQv
+	VX7CdZu4eL4XjGGuSaHi407CLTwkw70=
+X-Google-Smtp-Source: AGHT+IE6YQspnCEQXxPo8RxCOZffURtEmFApenmRDzkdpAGXWfruNinwYGIk+cVmdTEqOcLqR6lVOQ==
+X-Received: by 2002:a05:600c:3149:b0:409:101e:235a with SMTP id h9-20020a05600c314900b00409101e235amr6871334wmo.28.1698635293953;
+        Sun, 29 Oct 2023 20:08:13 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id r5-20020a05600c458500b00406443c8b4fsm11517844wmo.19.2023.10.29.20.08.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 29 Oct 2023 20:08:13 -0700 (PDT)
+Message-ID: <pull.1603.git.1698635292629.gitgitgadget@gmail.com>
+From: "Tony Tung via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 30 Oct 2023 03:08:12 +0000
+Subject: [PATCH] sequencer: remove use of comment character
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- ED9A1264-76C7-11EE-A51F-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+To: git@vger.kernel.org
+Cc: Tony Tung <tonytung@merly.org>,
+    Tony Tung <tonytung@merly.org>
 
-Junio C Hamano <gitster@pobox.com> writes:
+From: Tony Tung <tonytung@merly.org>
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Phillip Wood <phillip.wood123@gmail.com> writes:
->>
->>> It is rather unfortunate that test_i18ngrep was deprecated without
->>> providing an alternative that offers the same debugging
->>> experience.
->> ...
->> We could rename test_i18ngrep to test_grep (and make test_i18ngrep
->> into a thin wrapper with warnings).
->>
->> 	test_grep -e must-exist file &&
->> 	test_grep ! -e must-not-exist file
->
-> ... as the only remaining part in test_18ngrep has no hack to work
-> around the tainted localization tests, so "was deprecated without"
-> is a bit too strong.  There is nothing we have lost yet.
+Instead of using the hardcoded `# `, use the
+user-defined comment_line_char.  Adds a test
+to prevent regressions.
 
-Having said all that, when re-reading the test_i18ngrep with a fresh
-pair of eyes, I somehow doubt there was much upside in "debugging
-experience" with test_i18ngrep in the first place, and I doubt if
-retaining it with a new name test_grep has much value.
+Signed-off-by: Tony Tung <tonytung@merly.org>
+---
+    sequencer: remove use of hardcoded comment char
+    
+    Instead of using the hardcoded # , use the user-defined
+    comment_line_char. Adds a test to prevent regressions.
 
-Given that test_i18ngrep (hence test_grep) requires you to have the
-haystack in a file, between
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1603%2Fttung%2Fttung%2Fcommentchar-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1603/ttung/ttung/commentchar-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1603
 
-    test_i18ngrep must-exist file &&
-    test_i18ngrep ! must-not-exist file
+ sequencer.c                   |  5 +++--
+ t/t3404-rebase-interactive.sh | 39 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 42 insertions(+), 2 deletions(-)
 
-and
+diff --git a/sequencer.c b/sequencer.c
+index d584cac8ed9..8c6666d5e43 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -6082,8 +6082,9 @@ static int add_decorations_to_list(const struct commit *commit,
+ 		/* If the branch is checked out, then leave a comment instead. */
+ 		if ((path = branch_checked_out(decoration->name))) {
+ 			item->command = TODO_COMMENT;
+-			strbuf_addf(ctx->buf, "# Ref %s checked out at '%s'\n",
+-				    decoration->name, path);
++			strbuf_commented_addf(ctx->buf, comment_line_char,
++					      "Ref %s checked out at '%s'\n",
++					      decoration->name, path);
+ 		} else {
+ 			struct string_list_item *sti;
+ 			item->command = TODO_UPDATE_REF;
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 8ea2bf13026..076dca87871 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -1839,6 +1839,45 @@ test_expect_success '--update-refs adds label and update-ref commands' '
+ 	)
+ '
+ 
++test_expect_success '--update-refs works with core.commentChar' '
++	git checkout -b update-refs-with-commentchar no-conflict-branch &&
++	test_config core.commentChar : &&
++	git branch -f base HEAD~4 &&
++	git branch -f first HEAD~3 &&
++	git branch -f second HEAD~3 &&
++	git branch -f third HEAD~1 &&
++	git commit --allow-empty --fixup=third &&
++	git branch -f is-not-reordered &&
++	git commit --allow-empty --fixup=HEAD~4 &&
++	git branch -f shared-tip &&
++	git checkout update-refs &&
++	(
++		write_script fake-editor.sh <<-\EOF &&
++		grep "^[^:]" "$1"
++		exit 1
++		EOF
++		test_set_editor "$(pwd)/fake-editor.sh" &&
++
++		cat >expect <<-EOF &&
++		pick $(git log -1 --format=%h J) J
++		fixup $(git log -1 --format=%h update-refs) fixup! J : empty
++		update-ref refs/heads/second
++		update-ref refs/heads/first
++		pick $(git log -1 --format=%h K) K
++		pick $(git log -1 --format=%h L) L
++		fixup $(git log -1 --format=%h is-not-reordered) fixup! L : empty
++		update-ref refs/heads/third
++		pick $(git log -1 --format=%h M) M
++		update-ref refs/heads/no-conflict-branch
++		update-ref refs/heads/is-not-reordered
++		update-ref refs/heads/update-refs-with-commentchar
++		EOF
++
++		test_must_fail git rebase -i --autosquash --update-refs primary shared-tip >todo &&
++		test_cmp expect todo
++	)
++'
++
+ test_expect_success '--update-refs adds commands with --rebase-merges' '
+ 	git checkout -b update-refs-with-merge no-conflict-branch &&
+ 	git branch -f base HEAD~4 &&
 
-    grep must-exist file &&
-    ! grep must-not-exist file
-
-I do not see any difference in "debugging experience" when you run
-the test with "-i [-v] -d".   The two cases you care about are
-
- (1) the test expects the string "must-exist" in the file "file" but
-     the string is not there.
-
- (2) the test expects the string "must-not-exist" missing from the
-     file "file", but the string is there.
-
-The latter can clearly be seen in output from "-i -v -d" (the "grep"
-outputs a line with "must-not-exist" on it).  The former will show
-silence but since you are debugging with "-d", and your haystack is
-in a file, after such a step fails, the test stops, and without
-removing the "file" even if the test piece had test_when_finished
-to remove it (i.e. running tests in debugging mode "-d" and
-immediately stopping upon failure "-i" behaves this way exactly to
-help you debugging), so you can go there to the TRASH_DIRECTORY
-yourself and inspect "file" to see what is going on anyway.
-
-So, I dunno.  Surely with a long &&-chain of steps, where a grep
-that expects lack of something is in the middle, it is hard to see
-if the lack of hit is because an earlier step failed (and the
-control did not reach "grep must-exist file") or because the
-haystack lacked the "must-exist" needle, so from that point of view,
-it may be nicer that "did not find an expected match" is explicitly
-stated.
+base-commit: 2e8e77cbac8ac17f94eee2087187fa1718e38b14
+-- 
+gitgitgadget
