@@ -1,75 +1,79 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6702AB67E
-	for <git@vger.kernel.org>; Mon, 30 Oct 2023 15:19:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BAA76FAF
+	for <git@vger.kernel.org>; Mon, 30 Oct 2023 15:23:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MsQHTTxL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dUjassHK"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iRz4SSYw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FGKC0HdY"
 Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DEBDA9
-	for <git@vger.kernel.org>; Mon, 30 Oct 2023 08:19:22 -0700 (PDT)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96450C9
+	for <git@vger.kernel.org>; Mon, 30 Oct 2023 08:23:11 -0700 (PDT)
 Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.west.internal (Postfix) with ESMTP id 8BDE032009D3;
-	Mon, 30 Oct 2023 11:19:18 -0400 (EDT)
+	by mailout.west.internal (Postfix) with ESMTP id C1DF832009C0;
+	Mon, 30 Oct 2023 11:23:10 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Mon, 30 Oct 2023 11:19:18 -0400
+  by compute1.internal (MEProxy); Mon, 30 Oct 2023 11:23:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1698679158; x=1698765558; bh=yt
-	NfwqF34jCZk9JwP89JPeyyZqMCNapzujX3x1xME2o=; b=MsQHTTxLxXzsCpLObV
-	HLuxqzCo8A9LuY1WY9sloWQaAkf99+M8DOmL+0GqBfdhS+DG0SzUrD40Q1+ognRV
-	mSWPS7Q5RPRUrlCSjl/lA1VDvZGSSUaePJjecETffmWQKJTxo/2tyyq/YNhKKvkO
-	aFKR5gdB7JAtMrenY9zwqtHMsWE99Ls9ciTlOeUFXTjuQnfMdKJU5b/cfvGPmimx
-	jXQecyawz0UDeTrQRULrYeTKY05IrDWVmcLeKKSKp2CPa2zUAV/i98e8/s6Ihf36
-	PfG1ZhgYWZdqpZlmy0x9ZHhxs2VSzL3ZT4rwqIEfKtzEHt9PaKII9uKjIpAzvbTF
-	9kIw==
+	:subject:subject:to:to; s=fm3; t=1698679390; x=1698765790; bh=1j
+	nh5/Ec9Rj/N1He3vYywcy2Kcmvh0R/wS28DG7xs5Q=; b=iRz4SSYwpXhf83DMtw
+	tRrQZlxBaVpGnJWioMW5gINzxlUcrlZrjJ4pViJaZyCYIaI3CEK/kOC61n/8xuXs
+	m7jmy+3xKPOtFP3hry9robphOBfloRDQe0a5BAAlclAruAujJzQtVqvLBbglgxEU
+	xF+wZ9ZKtJFkhmrVQncZg8rk0gKtFmbBS+kXnfTKCrx2FXOjgg4LXCohF8ldmPbx
+	VVlVFcVYKKr2yj7Uxf+IwHXeNbRy0N52C5MjrotMV8OUJrVXpIYGwfGq8RRG4ALI
+	jL2GdGRk5H3y22UnWs3ifDAepwaRSbNcKrD13336EuPYhm/6xNI18lrbpHHCVQvN
+	ZCZQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1698679158; x=1698765558; bh=ytNfwqF34jCZk
-	9JwP89JPeyyZqMCNapzujX3x1xME2o=; b=dUjassHKWAUPJpIAFFptxOFaI29uV
-	pKfs66dGM7VQAPiZUFaNzYFvFmGjjNaQzrzZgh9egExYcgKXo8LNx/PDsc+xrcqb
-	jZcqhlfLd1M8uugYfSXy1tQn+oPBxx+kDmNi4tvcXCt1gMGkwcT/C8VW9woUCQyS
-	KC5h3Iik6dq6mnGlO9mScK7s9YiBOB1BrDOUV0KGUl0+fPgowUmhHLyZina1WSCD
-	PMJPiZvBBjFYdgW0cXISiDMO2SnTuJkS7luNDmCKcoyd8OJHDOXiarjHJOO3uITg
-	/JUNwFpSfKiH1eECNOQOn78bM8qc/rHRWyEN5Mc7oLZRQcpNl7tNa3tgA==
-X-ME-Sender: <xms:dck_ZV6Kyeh4c_RaKYOVrLxE2dAUVCY4TAatkiIRQ-L6thN8c7kjqw>
-    <xme:dck_ZS56voor08sbWWNfVbRTKQ5zXQKctUe5yhzm7-hXjZSQ3TlHTAS3c-SSigJnP
-    GxNNydf4x_xOojNsg>
-X-ME-Received: <xmr:dck_Zcexp7JPTY1GnG4LO2scbmfqtEmcPROpMKqP3hWWC4MGaLqrEYrTRB4l46uDswbe4DVH4AqYlMXyJjoG_OWUBPy8z6xDAg76SGM8kWRkdA>
+	:x-sasl-enc; s=fm3; t=1698679390; x=1698765790; bh=1jnh5/Ec9Rj/N
+	1He3vYywcy2Kcmvh0R/wS28DG7xs5Q=; b=FGKC0HdYCBRjCiGqYT14drP3jB+v8
+	S2wSSjtllbgpypWMs3MODjrXO14prStn+b5A8InMNtr8roodfYyqU+DxJi6wPRMh
+	r/XNEhMkUsXZkgdUXXRX853Uw5Iu0wQYXxN9yO9mt4BooGGzYOVwnCqlkqRgvnFg
+	Qx3PaKirhOCTdw6nitpbR0y4wMSYSBe339NN7CJBKtbJgFYwLjdGrUWjrH0fXwVR
+	ELGFrkUVh4Xwm3juGGC8NcO3U82v0k9YIoTrK3xt4TOHYEj5dNPdDG1U9lcl1D47
+	+IgFAOJi0K/DjbefLGtDbDnMRFXOh8ThVuMMivF7PGBAjTh0oLHr1+mxw==
+X-ME-Sender: <xms:Xso_ZXjJ-JWMksnI7F8yV0AoVBk0Loy9TdtkxRlGcJELx5kguJHcvw>
+    <xme:Xso_ZUC0hXLnwJ_2_21aemX2JvIwB7ExV468gpy1y4pNqO_45PJ9JKim6QmJhTGio
+    83ac2kTgJF4bxRcPQ>
+X-ME-Received: <xmr:Xso_ZXGXP4Xjtd5cndgKxOBrGmfYONcPbYqpnwQleprFOK_cDjKHnPSke4T6I89CRcZ1Hi4cII8-RcV2VAsWmoC7dUuKp-LGp0ddzQgsGJSfAg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddttddgjeegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:dck_ZeLndnU44oDqNzfxxiXt68zXsSxkjUEso51USJ79xWzMIxqYdg>
-    <xmx:dck_ZZKLkdR468bM-swRprfoqSnHJr6Lu9iFINprkkVa-2OiADo6Sg>
-    <xmx:dck_ZXw13AynXlGRDPm1BL55bs2b0cyiZsC5EVDvtWRWnki6kv24nA>
-    <xmx:dsk_ZQW5V2OPb-xANEwH1m-oEOGFtdTWU0SdjzNwl3NrMhvnHLMkHQ>
+    hrnhepffdvheeiuedukeduueevfeevgeejtdehteelhfehjeelgfdvheetgfehhfevgfek
+    necuffhomhgrihhnpehhthhtphdqphhushhhqdifvggsuggrvhdrshhhpdhhthhtphguth
+    gvshhtshhithhhohhughhhthhinhhsthgrlhhlqdguohgtkhgvrhdquggvphgvnhguvghn
+    tghivghsrdhshhdphhhtthhpugdrshhhpdgrlhhpihhnvghlihhnuhigrdhorhhgnecuve
+    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhs
+    rdhimh
+X-ME-Proxy: <xmx:Xso_ZURtMr2thHarqwjYqCeO-obJbaaRXLOKZIp64UnXJClpr--voQ>
+    <xmx:Xso_ZUxil8tk1A-oOQmW1JKkVnM7UYTkzyxvCerJbykzminZhq5Dsg>
+    <xmx:Xso_Za6-u7ijcx7JAHT7g13DPkZmaPvAq6YKXbFiGsx5laXR4c4BIQ>
+    <xmx:Xso_Zf_sV2pkSUoLJD61UBhSqz8pMv5OOWy_AnHRvQIN__jj3Durag>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 30 Oct 2023 11:19:16 -0400 (EDT)
+ 30 Oct 2023 11:23:09 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id ac1c94ce (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 30 Oct 2023 15:19:08 +0000 (UTC)
-Date: Mon, 30 Oct 2023 16:19:12 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 4ebbb70e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 30 Oct 2023 15:23:02 +0000 (UTC)
+Date: Mon, 30 Oct 2023 16:23:06 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: phillip.wood@dunelm.org.uk
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Subject: Re: [PATCH v3 5/8] ci: unify setup of some environment variables
-Message-ID: <ZT_JcNH79ncQhzPD@tanuki>
+Subject: Re: [PATCH v3 7/8] ci: install test dependencies for linux-musl
+Message-ID: <ZT_KWjxkPEIXHEeH@tanuki>
 References: <cover.1698305961.git.ps@pks.im>
  <cover.1698667545.git.ps@pks.im>
- <6af0075fd875f176e7fdf6c219e7117dac5cd71c.1698667545.git.ps@pks.im>
- <87430c6c-91c0-4be1-b89d-bf442b3f018b@gmail.com>
+ <f150d61a1ceec5dd6cf370c3f4421a3e2d9f11a3.1698667545.git.ps@pks.im>
+ <ZT-l4qDDNloizjxl@tanuki>
+ <d675b51b-c50b-43e4-b127-650c0e24d3d0@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -77,145 +81,109 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="NaOj42E7fjjh0G3D"
+	protocol="application/pgp-signature"; boundary="t1Cifv1VuZ5yy0fo"
 Content-Disposition: inline
-In-Reply-To: <87430c6c-91c0-4be1-b89d-bf442b3f018b@gmail.com>
+In-Reply-To: <d675b51b-c50b-43e4-b127-650c0e24d3d0@gmail.com>
 
 
---NaOj42E7fjjh0G3D
+--t1Cifv1VuZ5yy0fo
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Oct 30, 2023 at 03:09:01PM +0000, Phillip Wood wrote:
+On Mon, Oct 30, 2023 at 03:13:35PM +0000, Phillip Wood wrote:
 > Hi Patrick
 >=20
-> On 30/10/2023 12:15, Patrick Steinhardt wrote:
-> > Both GitHub Actions and Azue Pipelines set up the environment variables
-> > GIT_TEST_OPTS, GIT_PROVE_OPTS and MAKEFLAGS. And while most values are
-> > actually the same, the setup is completely duplicate. With the upcoming
-> > support for GitLab CI this duplication would only extend even further.
+> On 30/10/2023 12:47, Patrick Steinhardt wrote:
+> > On Mon, Oct 30, 2023 at 01:15:10PM +0100, Patrick Steinhardt wrote:
+> > But once fixed, tests do indeed start to fail:
 > >=20
-> > Unify the setup of those environment variables so that only the uncommon
-> > parts are separated. While at it, we also perform some additional small
-> > improvements:
+> > t5540-http-push-webdav.sh                        (Wstat: 256 (exited 1)=
+ Tests: 20 Failed: 11)
+> >    Failed tests:  5-11, 13, 15-16, 18
+> >    Non-zero exit status: 1
 > >=20
-> >      - We use nproc instead of a hardcoded count of jobs for make and
-> >        prove. This ensures that the number of concurrent processes adap=
-ts
-> >        to the host automatically.
+> > Seems like another thing to fix in a separate patch series.
 >=20
-> Sadly this makes the Windows and MacOS jobs fail on GitHub Actions as npr=
-oc
-> is not installed[1]. Perhaps we could do
->=20
-> 	--jobs=3D"$(nproc || echo 2)"
->=20
-> instead. (Maybe 2 is a bit low but the current value of 10 seems pretty h=
-igh
-> for the number of cores on the runners that we use)
+> Yes, or we could just leave it - I had not realized before that it was on=
+ly
+> the musl job that was not running the httpd tests (I thought
+> install-docker-dependencies.sh was missing the packages for ubuntu as wel=
+l).
+> Given that, the status quo does not seem so bad.
 
-Ugh, thanks. I'll update it to keep the hardcoded 10 jobs in place for
-now for the other pipelines. Trying to do too many things at once is
-only going to make it harder to get this landed, doubly so when you have
-no easy way to verify what you're doing :)
+I of course couldn't let go. The following would fix this:
 
-> >      - We now always pass `--state=3Dfailed,slow,save` via GIT_PROVE_OP=
-TS.
-> >        It doesn't hurt on platforms where we don't persist the state, so
-> >        this further reduces boilerplate.
-> >=20
-> >      - When running on Windows systems we set `--no-chain-lint` and
-> >        `--no-bin-wrappers`. Interestingly though, we did so _after_
-> >        already having exported the respective environment variables.
-> > >      - We stop using `export VAR=3Dvalue` syntax, which is a Bashism.=
- It's
-> >        not quite worth it as we still use this syntax all over the plac=
-e,
-> >        but it doesn't hurt readability either.
->=20
-> I don't mind this change, but the 'export VAR=3Dvalue' syntax is in POSIX=
-[2]
+diff --git a/ci/install-docker-dependencies.sh b/ci/install-docker-dependen=
+cies.sh
+index 5e28adf55b6..48cb2e735b5 100755
+--- a/ci/install-docker-dependencies.sh
++++ b/ci/install-docker-dependencies.sh
+@@ -21,7 +21,8 @@ linux32)
+ linux-musl)
+        apk add --update shadow sudo build-base curl-dev openssl-dev expat-=
+dev gettext \
+                pcre2-dev python3 musl-libintl perl-utils ncurses \
+-               apache2 bash cvs gnupg perl-cgi perl-dbd-sqlite >/dev/null
++               apache2 apache2-http2 apache2-proxy apache2-ssl apache2-web=
+dav apr-util-dbd_sqlite3 \
++               bash cvs gnupg perl-cgi perl-dbd-sqlite >/dev/null
+        ;;
+ linux-*)
+        apt update -q &&
+diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
+index 9791f94b16f..9ea74927c40 100644
+--- a/t/lib-httpd.sh
++++ b/t/lib-httpd.sh
+@@ -128,6 +128,20 @@ else
+                "Could not identify web server at '$LIB_HTTPD_PATH'"
+ fi
 
-I don't quite mind it, either. The reason why I chose to use it is that
-there was indeed a bug already with the order of exports and
-modification of the vars after the export. So with that in mind it made
-sense to me to adapt it accordingly.
++if test -n "$LIB_HTTPD_DAV" && test -f /etc/os-release
++then
++       case "$(grep "^ID=3D" /etc/os-release | cut -d=3D -f2-)" in
++       alpine)
++               # The WebDAV module in Alpine Linux is broken at least up to
++               # Alpine v3.16 as the default DBM driver is missing.
++               #
++               # https://gitlab.alpinelinux.org/alpine/aports/-/issues/131=
+12
++               test_skip_or_die GIT_TEST_HTTPD \
++                       "Apache WebDAV module does not have default DBM bac=
+kend driver"
++               ;;
++       esac
++fi
++
+ install_script () {
+        write_script "$HTTPD_ROOT_PATH/$1" <"$TEST_PATH/$1"
+ }
 
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > ---
-> >   ci/lib.sh | 24 ++++++++++++++----------
-> >   1 file changed, 14 insertions(+), 10 deletions(-)
-> >=20
-> > diff --git a/ci/lib.sh b/ci/lib.sh
-> > index 9ffdf743903..c7a716a6e3f 100755
-> > --- a/ci/lib.sh
-> > +++ b/ci/lib.sh
-> > @@ -175,11 +175,7 @@ then
-> >   	# among *all* phases)
-> >   	cache_dir=3D"$HOME/test-cache/$SYSTEM_PHASENAME"
-> > -	export GIT_PROVE_OPTS=3D"--timer --jobs 10 --state=3Dfailed,slow,save"
-> > -	export GIT_TEST_OPTS=3D"--verbose-log -x --write-junit-xml"
-> > -	MAKEFLAGS=3D"$MAKEFLAGS --jobs=3D10"
-> > -	test windows_nt !=3D "$CI_OS_NAME" ||
-> > -	GIT_TEST_OPTS=3D"--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
-> > +	GIT_TEST_OPTS=3D"--write-junit-xml"
-> >   elif test true =3D "$GITHUB_ACTIONS"
-> >   then
-> >   	CI_TYPE=3Dgithub-actions
-> > @@ -198,17 +194,25 @@ then
-> >   	cache_dir=3D"$HOME/none"
-> > -	export GIT_PROVE_OPTS=3D"--timer --jobs 10"
-> > -	export GIT_TEST_OPTS=3D"--verbose-log -x --github-workflow-markup"
-> > -	MAKEFLAGS=3D"$MAKEFLAGS --jobs=3D10"
-> > -	test windows !=3D "$CI_OS_NAME" ||
-> > -	GIT_TEST_OPTS=3D"--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
-> > +	GIT_TEST_OPTS=3D"--github-workflow-markup"
-> >   else
-> >   	echo "Could not identify CI type" >&2
-> >   	env >&2
-> >   	exit 1
-> >   fi
-> > +MAKEFLAGS=3D"$MAKEFLAGS --jobs=3D$(nproc)"
-> > +GIT_PROVE_OPTS=3D"--timer --jobs $(nproc) --state=3Dfailed,slow,save"
-> > +
-> > +GIT_TEST_OPTS=3D"$GIT_TEST_OPTS --verbose-log -x"
-> > +if test windows =3D "$CI_OS_NAME"
-> > +then
-> > +	GIT_TEST_OPTS=3D"$GIT_TEST_OPTS --no-chain-lint --no-bin-wrappers"
-> > +fi
-> >
-> > +export GIT_TEST_OPTS
-> > +export GIT_PROVE_OPTS
->=20
-> I was wondering why we don't export MAKEFLAGS here but it is exported
-> earlier on before we set it. Apart from the nproc issue this looks like a
-> nice improvement
-
-In fact, I also noticed later today that we adapt MAKEFLAGS at a later
-point again without reexporting it, so it's got the same issue. I'll
-adapt it in the same way.
+I might as well roll it into this patch series now. It increases test
+coverage on musl libc and doesn't have any significant downsides. In
+fact, it uncovers that tests on Alpine Linux don't work right now, so it
+fixes real issues to have the test coverage in our pipelines.
 
 Patrick
 
---NaOj42E7fjjh0G3D
+--t1Cifv1VuZ5yy0fo
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmU/yXAACgkQVbJhu7ck
-PpSO5A//QrA8AvFea3shejopGjIYXpchAC/1W6hv9/6zRwj36ul/UvW353Z04xme
-hN56k/UKkhoUQPR1TK5gLaR7pLU6I17EE6ZO4d+XBZ3ar+860J6x89KahwyhBZXd
-EHP6esniMHew93M25qnttaX+DyV8oRuWVa9avPlWhw/Yxto3JOgTR7XeAbFOew/7
-TnVUXVom2AdnBtUPvx6wfplW8KxkcP45s2U9ldYQxoCXgGbvbP+uv+aotMKhQC5u
-iDWLcbjgcWd1rgxNQmlR1YyBd5nfYG6Re2BfXZykrzdmk7qEvYn4e/CqWaQdiK1x
-BiqyElDH67w0cer2rizuJiu5jaPtkDPI0RgBpWjV9xX9w+kmGaL25smskA2fIDRh
-CesmzpPHBOD0wRSp0RCWYx2rpTJnn9SSUq7cabriArSStOQmDD6nK1aM6FXjblI4
-wHmmNI70AHccd9VlVGKw5gJo7eBV4E3sr26wpMznZQCtWYKcQm/fEgk921A2VO+E
-eWhFYwhJXLbkAhCwCgqyjOCuPdpUQLwE2ilJ/8b2zpPAiWHF6VN2+ToiFInj3uID
-d7CDVkFAaMLIgSNZhQspCIven2/Sp30GZPqtSuwWrKrOerHexee5M764+jwQNKy6
-xfU69LzYfL7kb9s3UTWGOsJwJEQeesqR5i8szbtlODpc4GI9r1I=
-=CSRE
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmU/ylkACgkQVbJhu7ck
+PpSWMBAAkX2Fb3wIXmY6XfihSFlwGFM++XUcg60/IaWYkdxOwSFbcW+gadL5Z+ym
+zsjkmpIrLa9gJccFNYwm9ojyZwGxUGJLNW5XSKibMhEqlJJOdU+PkEz+nXuVRiP0
+KbxHPo1yoNv7MV+2REuB/ne9YOghkIATo7Ai7JWK9PFw0ndJv1dj7UbvpdWOucmX
+obuaxRjtFyET/mJUP7Rr7QtAE2vpxKSz5X8X4VOfvlU+Gi/OQITWynKmalcqMgPb
+YMRCY3Mj/a9Kv/DnqAN0ClSkktFxwdVx1Q7wdOujpfxSoPaptME+793LzyZJWB9g
+ZI11JqGktygx++QJ4pIVK3zLArDxdSNslN6PWxJDRcc1dyyieqZkduBPRSBiIANL
+JRRcZLxCRzODnN4ck7YC2T2g5B7W407pBAaOdOt+euY52N3hpYJG3Ur+ewBeuCXI
+hYoTNkovXnqjilNPyxg5I+8FO5tPOh90XqOrFIlylUJMrZ0sL7HEMPgn/Xpabjvw
+h0BbffoR77XZ0dpIYeRsonY2Kkck1Niiuhmv01djOzWh2gPGYvqddZ+nR0oynUfA
+y5158IXv/iQisHwwFrQ8lN+/sEAVY37mL8N8LKETeJ0uXXlUcGGFICO6CUNv5qBo
+iKa8mJMs05b19aCRfq1bcmZZ5LlmV8zIEJfRfjmiIhbyz+5FUjg=
+=IBv1
 -----END PGP SIGNATURE-----
 
---NaOj42E7fjjh0G3D--
+--t1Cifv1VuZ5yy0fo--
