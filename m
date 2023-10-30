@@ -1,51 +1,30 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C0C018C15
-	for <git@vger.kernel.org>; Mon, 30 Oct 2023 16:09:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A176818C18
+	for <git@vger.kernel.org>; Mon, 30 Oct 2023 16:12:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="At4nsOVM"
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 864E7DD
-	for <git@vger.kernel.org>; Mon, 30 Oct 2023 09:09:34 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-32f78dcf036so1356041f8f.0
-        for <git@vger.kernel.org>; Mon, 30 Oct 2023 09:09:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698682173; x=1699286973; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=fUim6QMxfnMGLdndmXJocwjKIAafhUavfbjjLwmEwDk=;
-        b=At4nsOVMQBXJoNCTMXbUj1XzEwKOtR54S0SkfEzqkt/7It1tZi4OpWrDvs6FR+xrjh
-         9It6EkqhcIYq32VLqOWl3+wkipFWXzElrLCsxcvkBF9asoLrOFtdSdl783oyTfB6kcII
-         vdiGkxnPqX6daNX/XSNhUWQIQyJtovMayiMKq2p+BdQ38dhzXomcfvO67wu2vWfFOKgn
-         t3yjBWEAKmQ9a5+fpmPs2zhK/JcZcwmmIQX5HEn8jV0QTdfoqzu3ej0sbmMsq9kPEs2w
-         b9qpbylw3foTS5w2hPmn9HSz+lbOBbsC/S+kYXx1AVddVGlvjqs28VMPy7q05w8O1sWl
-         CZkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698682173; x=1699286973;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=fUim6QMxfnMGLdndmXJocwjKIAafhUavfbjjLwmEwDk=;
-        b=jYgC8jQWV6qZ1waN7RGNqfaZawv83vT7nUm6FSexPWAXN9beQ9D9MoHOy5A2BYiJDH
-         010zE+0j4RHAI2JGI8ZN4ARxxP6Vj4xLg8WzuB9MCwuEcsJdQt+HoDNteCcOYt8Tzxqn
-         Fi2Xaa9awfEMVdDoNjzFxG4+npr4YsRZZds6qAqc9uzpxQ937CvsPa8z5JXjvIJsMWMH
-         lReWsuuUnBJQH/P94e6ZyIjP5vTQwBjzUNh4Co1gtjtfOXboV4kIWHgIYY5NFdKmopKh
-         R0tDPltGTCGxh44/2xcBC6qvRkjCo8Oug3XbwaRl09FgSLS8L8ZJo16KdzGJakXO/zry
-         EmgA==
-X-Gm-Message-State: AOJu0YwWPL/7mzsTc3nNI2Sl4NMWhjBCwZUiAnS6iintnqENEMxmEKCn
-	dNX0VyLFlfsxkY+9vaZkfBI=
-X-Google-Smtp-Source: AGHT+IHRDl4DWxZeq5DoOgywvHUCcfEtpZiHI8GHOCe7+UoaxCDbPy80tfn9BKqwmSuJ+vzvvMWy/Q==
-X-Received: by 2002:a05:6000:2ab:b0:32f:8bbb:fc00 with SMTP id l11-20020a05600002ab00b0032f8bbbfc00mr92036wry.12.1698682172697;
-        Mon, 30 Oct 2023 09:09:32 -0700 (PDT)
-Received: from [192.168.1.212] ([90.242.223.1])
-        by smtp.gmail.com with ESMTPSA id d10-20020a5d6dca000000b0032f7eaa6e43sm5509184wrz.79.2023.10.30.09.09.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Oct 2023 09:09:32 -0700 (PDT)
-Message-ID: <ba7a7a8c-bb0c-4f12-a7fa-d05b1c246d5f@gmail.com>
-Date: Mon, 30 Oct 2023 16:09:32 +0000
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="OEbpct2f"
+Received: from mout.web.de (mout.web.de [212.227.17.11])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE2E4C2
+	for <git@vger.kernel.org>; Mon, 30 Oct 2023 09:12:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+	t=1698682362; x=1699287162; i=l.s.r@web.de;
+	bh=jgtFJ0LZhi973VgqDoXtUS4BW834ZRPBAfe2z4rvX8M=;
+	h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
+	 In-Reply-To;
+	b=OEbpct2fwNx7kfvP5Zj20BBTSau3lNqK8KQVLNX/QYd7SGHCo6qZIn7JqstR8Gh3
+	 OlK0g584xt74apTTsGlg6BnsYQl19yU3LANmMWOv3a6JzIhr6SrWBNLSxF1K3Obsb
+	 rfKqgvbQJcG6Mqvq1l7Q18cwtYDOQxTH8GmBOObLoITd1savjGA0obVKnSgH08EI1
+	 RYAzUL1YgxPtvQhHxI5AVdR68rIZ9F1v96lEzkiU0LCEWzkEb8cVe7vzk7pztT5oF
+	 nN6trG/cKZkfLI6Va/z+UY5VqjE/TYzkg9xwEcdaYFpROC6VTnXyH4dfV/dk2oMD1
+	 6drFuNHnh6z2+Sp2cw==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.159.209]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MQPdr-1rAKlP2ge9-00M1Ju; Mon, 30
+ Oct 2023 17:12:42 +0100
+Message-ID: <82b832cb-da0b-47cf-9b5d-e8011a222151@web.de>
+Date: Mon, 30 Oct 2023 17:12:41 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -53,92 +32,69 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 7/8] ci: install test dependencies for linux-musl
+Subject: Re: [PATCH] reflog: fix expire --single-worktree
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Git List <git@vger.kernel.org>, John Cai <johncai86@gmail.com>
+References: <63eade0e-bf2c-4906-8b4c-689797cff737@web.de>
+ <xmqqa5s1hxhh.fsf@gitster.g>
 Content-Language: en-US
-To: Patrick Steinhardt <ps@pks.im>, phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
- Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-References: <cover.1698305961.git.ps@pks.im> <cover.1698667545.git.ps@pks.im>
- <f150d61a1ceec5dd6cf370c3f4421a3e2d9f11a3.1698667545.git.ps@pks.im>
- <ZT-l4qDDNloizjxl@tanuki> <d675b51b-c50b-43e4-b127-650c0e24d3d0@gmail.com>
- <ZT_KWjxkPEIXHEeH@tanuki>
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <ZT_KWjxkPEIXHEeH@tanuki>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <xmqqa5s1hxhh.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:YXRkC0h5Db1aSvaC9zJD5RsEE87Oluwufvss0/e30lyfri+uLTB
+ xLjQ/FEE4/nXStjwp+hCU6uzpS/Af3TPS3o1cPsMtyKjZ2vBWLoKwlGJsVwAfgVCM+IxLpx
+ xYmIxFC706BGOioQGhhCGZwDhS/12wqBpn9xCufLjOXz+RxZRu9hKhJhL1apeW67qO0BT7d
+ 96obUES2xAu14Hne0hZ1w==
+UI-OutboundReport: notjunk:1;M01:P0:fXvYL34VtBg=;5nVKYmykpqkVhAw7wZkEEhTPVVi
+ wQGgITiCQR4sfLalDjJqEkofP7/US8WwmOtsEUPONhDN3i+2gUOljGHjPrSGHfwlFGSsS+nqs
+ SoIywZk7wXsJ1MQe5fL94qJ5P/qO8clQYEXw6olb+T/Ofcb9oUVnA8s2s3t3gtPonVpIsLk8m
+ 3CG+pjb3rkq4GzQsyUvvkpl7G+lylYgyt2eIJahIsiVJ4ufDwy7eThOrbFQ3A3nbVoRGUZvZI
+ XDAo9f7YLMiHSmgQD777ri1idMhvgo3YXu0c6Gr0ScFKEQHogHXTGeVWgK7qA93Idqg/bMXMd
+ zkvfFcq8X/5x4u1UUgW0TtZnubKA2ZXIu9iE5WZ8nM9UpUuxtPkZJer88dSvKH0O9SW9QDuYZ
+ lfJgZkVvlhi/wNapmSt50qw8ZRJvZf/6Uhkx00NtItCpTNop9x2EEyEzLCIdicnBN+VK6tleS
+ 7kzlhEg6KOzHTzuwktf36dZdgm5+jEfQdON16+BDnPeDCLus6IrjNVETPGZMYYAtM+K2xjan7
+ QjU5VMpMPgtzxFvIZxYTzax23fLsNGRBN9XV1KaoKDPfRUwnJVxN7vX3ItAhPEWhsVW3wlcdG
+ 7tZ6hdoBC1+UMK7bRkK4rAYcXd7nxcHhN0AD9Q6SkSaIKeY1kLrExTP81jOwLKRJceS+hIsap
+ viWzgI1VQmY/F3P4MxaI6NQ+Oal1Zzqlm1H3R8jJlqdNSuIsSPKVdkZvk1IImlPyruPfYwr0Y
+ enTN9Sf1Vuy8u1KPup5av8zb4WssEqEJmUhGVHc+cQPJOtuGJ7VohW3I+Urb8JYnObiVBuXQe
+ +ihr6f0e3PMY7UqdKiQmreZ8dTAjxExq4eUodWDqizUn8NzNaHkFltP6bqCHlK6Vq5Uhx/Yw1
+ L+Rtnit1G+S1fTUfliTQnYry/qtPTd3Lg2ZVRGCDHwemsGK8YTkNmwNjQiyqFvIU3+Bmw3mnl
+ nCe9fg==
 
-On 30/10/2023 15:23, Patrick Steinhardt wrote:
-> On Mon, Oct 30, 2023 at 03:13:35PM +0000, Phillip Wood wrote:
->> Hi Patrick
->>
->> On 30/10/2023 12:47, Patrick Steinhardt wrote:
->>> On Mon, Oct 30, 2023 at 01:15:10PM +0100, Patrick Steinhardt wrote:
->>> But once fixed, tests do indeed start to fail:
->>>
->>> t5540-http-push-webdav.sh                        (Wstat: 256 (exited 1) Tests: 20 Failed: 11)
->>>     Failed tests:  5-11, 13, 15-16, 18
->>>     Non-zero exit status: 1
->>>
->>> Seems like another thing to fix in a separate patch series.
->>
->> Yes, or we could just leave it - I had not realized before that it was only
->> the musl job that was not running the httpd tests (I thought
->> install-docker-dependencies.sh was missing the packages for ubuntu as well).
->> Given that, the status quo does not seem so bad.
-> 
-> I of course couldn't let go. The following would fix this:
+Am 29.10.23 um 23:31 schrieb Junio C Hamano:
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>
+>> ... and added a non-printable short flag for it, presumably by
+>> accident.
+>
+> Very well spotted.
+>
+> FWIW, with the following patch on top of this patch, all tests pass
+> (and without your fix, of course this notices the "\001" and breaks
+> numerous tests that use "git reflog").  So you seem to have found
+> the only one broken instance (among those that are tested, anyway).
+>
+>  parse-options.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git i/parse-options.c w/parse-options.c
+> index 093eaf2db8..be8bedba29 100644
+> --- i/parse-options.c
+> +++ w/parse-options.c
+> @@ -469,7 +469,8 @@ static void parse_options_check(const struct option =
+*opts)
+>  			optbug(opts, "uses incompatible flags "
+>  			       "LASTARG_DEFAULT and OPTARG");
+>  		if (opts->short_name) {
+> -			if (0x7F <=3D opts->short_name)
+> +			if (opts->short_name &&
+> +			    (opts->short_name < 0x21 || 0x7F <=3D opts->short_name))
 
-Great, that was fast! As you've got a fix I agree it makes sense to 
-include it in this series.
+Good idea.  This is equivalent to !isprint(opts->short_name), which I
+find to be more readable here.  Seeing why "char short_opts[128];" a
+few lines up is big enough would become a bit harder, though.
 
-Best Wishes
-
-Phillip
-
-> diff --git a/ci/install-docker-dependencies.sh b/ci/install-docker-dependencies.sh
-> index 5e28adf55b6..48cb2e735b5 100755
-> --- a/ci/install-docker-dependencies.sh
-> +++ b/ci/install-docker-dependencies.sh
-> @@ -21,7 +21,8 @@ linux32)
->   linux-musl)
->          apk add --update shadow sudo build-base curl-dev openssl-dev expat-dev gettext \
->                  pcre2-dev python3 musl-libintl perl-utils ncurses \
-> -               apache2 bash cvs gnupg perl-cgi perl-dbd-sqlite >/dev/null
-> +               apache2 apache2-http2 apache2-proxy apache2-ssl apache2-webdav apr-util-dbd_sqlite3 \
-> +               bash cvs gnupg perl-cgi perl-dbd-sqlite >/dev/null
->          ;;
->   linux-*)
->          apt update -q &&
-> diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
-> index 9791f94b16f..9ea74927c40 100644
-> --- a/t/lib-httpd.sh
-> +++ b/t/lib-httpd.sh
-> @@ -128,6 +128,20 @@ else
->                  "Could not identify web server at '$LIB_HTTPD_PATH'"
->   fi
-> 
-> +if test -n "$LIB_HTTPD_DAV" && test -f /etc/os-release
-> +then
-> +       case "$(grep "^ID=" /etc/os-release | cut -d= -f2-)" in
-> +       alpine)
-> +               # The WebDAV module in Alpine Linux is broken at least up to
-> +               # Alpine v3.16 as the default DBM driver is missing.
-> +               #
-> +               # https://gitlab.alpinelinux.org/alpine/aports/-/issues/13112
-> +               test_skip_or_die GIT_TEST_HTTPD \
-> +                       "Apache WebDAV module does not have default DBM backend driver"
-> +               ;;
-> +       esac
-> +fi
-> +
->   install_script () {
->          write_script "$HTTPD_ROOT_PATH/$1" <"$TEST_PATH/$1"
->   }
-> 
-> I might as well roll it into this patch series now. It increases test
-> coverage on musl libc and doesn't have any significant downsides. In
-> fact, it uncovers that tests on Alpine Linux don't work right now, so it
-> fixes real issues to have the test coverage in our pipelines.
-> 
-> Patrick
+>  				optbug(opts, "invalid short name");
+>  			else if (short_opts[opts->short_name]++)
+>  				optbug(opts, "short name already used");
