@@ -1,47 +1,47 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 363E71BDD4
-	for <git@vger.kernel.org>; Mon, 30 Oct 2023 20:23:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 999131C2A4
+	for <git@vger.kernel.org>; Mon, 30 Oct 2023 20:23:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="K8oIIiIQ"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="omFBASwv"
 Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22C3E113
-	for <git@vger.kernel.org>; Mon, 30 Oct 2023 13:22:56 -0700 (PDT)
-Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-5a839b31a0dso78533177b3.0
-        for <git@vger.kernel.org>; Mon, 30 Oct 2023 13:22:56 -0700 (PDT)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6D9E121
+	for <git@vger.kernel.org>; Mon, 30 Oct 2023 13:22:57 -0700 (PDT)
+Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-5a8ee6a1801so53776847b3.3
+        for <git@vger.kernel.org>; Mon, 30 Oct 2023 13:22:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1698697375; x=1699302175; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1698697377; x=1699302177; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ca07YqBQZ+ZumzmFGjz42CMph0rJWSX8b8Hm+rqoPoE=;
-        b=K8oIIiIQ3ryG758gtvlAjRZ3FEzsDKiq1AFvPd1ItMLNqCtzX8SPFviR8rD9PzeRmX
-         4f5JMcRdC11Mr1t5ba9S02iiLarCnPnLjjVHihSD2Fn9wAhNgEpAY9iDkVA0jyjc/ALz
-         bwIDseBUpdRi3pRQKVenQLmAkGwJFIKJqkV1edxoBlatpIqyFxmfzuDWnzcxDWyAVae1
-         0k+cL3ETPpRcjum0fsqZvA+uBkSlsgoX29z3eb4Rw+u3f8UX3lpb6XsXk2Nl8ogyPvts
-         4ac/GxKKlp3n3+RQ+78DDBJPOptBVxyuQRj8NWDMBDz+GSsjQH5tf7DCp/3s4dQ0IyU7
-         G4yw==
+        bh=jfo8/CSFnTnIsaToydsJzXpp4ouXWIX3119SnI96MuM=;
+        b=omFBASwvhtIebwf6tJo8RrME5/eJ93pBRsh+q0ue9Bdyda87W5HDfBpZvsi1+NE08L
+         1cRDwa0GR+g/sJsk7SNEsBn4DYlvFcMb0uXAlfC4XxnBzgL4vffXMYzfpeYMsyN4QTcj
+         dcoOhRQsNlugvLQktQbgzvngQy8WjvUCVoaG6Z7D6mKvdp1cUJhDgGqnA+KT20Ds5rVP
+         u4ehrLvPSd3riaW2dXzTi/8rXa0x//bkR712OoeX9osfl25fyNLQDiv4RXaXZRWfRJ17
+         V4s+dg7QWFagXf9CDo+MLZbMC6X+ZpKvUYtjFscNO2TAqvCIEt6bOAX5wqeVrpb5mAxl
+         EU6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698697375; x=1699302175;
+        d=1e100.net; s=20230601; t=1698697377; x=1699302177;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ca07YqBQZ+ZumzmFGjz42CMph0rJWSX8b8Hm+rqoPoE=;
-        b=w48sMu5iY6Hp2bmAMHTsMlppGXnjwVYJ8Vn+Egkn7s/JGs7WZ5Tv3d20H7Cce7eTrw
-         I6zVfHQaD4ncYHYK+D1iSl+43qt9HRT28liJWCynvWAqv4ju/ZZZP90KUXyMtDiHzAnC
-         t+YTna7GhXl/odyJNPzaEU7wWUSZQb65sbfQE6zMxiEPnngXlrKBbLbUto5dL3gTjigl
-         XBRuYOQDBhfRBbHeUfzZFE9gNUsfqV/y0qtEpi+2Iha8Yf8on8qFesZKBtdXWw5A11yM
-         dHPVhHlolpSnfDXvNhKMpmqciDIhc2ggKIhL9LxrDfVst2BGr/+X9pY3ePR5sa7/dR8k
-         cf4A==
-X-Gm-Message-State: AOJu0YxrXlztXJV158faNVEo/T48nKMhdUeLekqWNKV8LlS7jL1SAyNd
-	oFmeAwz0Z77nq+/hVaudFCzZ7eV2NTk28gwC4npE+XSLs0CBU25aRsp/C9VWrCDqrCVnvQ4vpGz
-	/8Vs/UyTkoxSm3G13D+Y4dwYEpOWF3morZLgLEv/8KU0SQ+BwJ2R2XOXzEZoey3hd6HsQeqc343
-	F7
-X-Google-Smtp-Source: AGHT+IHn4fhS8/SMYfnWclffglomugmGtBUJZW9lYFS2L/eoHI3ZPiio/mg/4YZu0/37qGy3HZXmzAiHteqjaMeLBiZt
+        bh=jfo8/CSFnTnIsaToydsJzXpp4ouXWIX3119SnI96MuM=;
+        b=fa+wUg4nVqRWegWtxSkkg3AuU/pwoerCJHKJklSKSTndjX6kVturVo8pAaVxr+AvN+
+         lrSwYOKdqsFBZb8/PGboJsX+IWHYAx7HGSfw2f01q6GH8Dfe4Ca4RvXKEcTiuWa8qdh8
+         M773ufzOCg0Rd06LoF72D+rSKAfphnT6We1r77CFMmcYwIinXoyUrCp/JgA80KvOyysJ
+         ajZzU1kvoPvl0kfkuRgc8Uis9a3lAnFPIiIVIUWjbgjXnPO/ObOxtjzJCi8Rx9VyJLRp
+         2uxrapNmkjEuD/dG1HnBKwd0fg2SaREX6zHG6TGctrKwgouHMUIHQrhxV6N2D/r3XhoX
+         LlpA==
+X-Gm-Message-State: AOJu0Yz4SiW1k2r77kNfy8Gg8f1OS6p71lVZ0SVkklnpzBXAQH9E0q5d
+	NiQ3f6xfi+fJkPd/tGirE6XKJBEPu5XeJHhy7xXJLl7xgReHs3aXlslYOQRWKrtSvahQRIDdX3A
+	BIKtxJDxFPjBqgMw9LAAjkWmrB2H4kDTVAxvjiLEXZD94TyKMCTuNRsrBIwcj9gw60d1SE6C+Ku
+	W2
+X-Google-Smtp-Source: AGHT+IE9DWvEXV8Q3xwTrXXRfPRTRuV0vXBB6jnX8sTJW33GSZeBD7Yh5POfPmsc8PS+exCDaVC1dZGT0c8BRHZkSl7b
 X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:3e1e:2bd9:a4cd:fa38])
- (user=jonathantanmy job=sendgmr) by 2002:a25:2589:0:b0:d9a:c946:c18c with
- SMTP id l131-20020a252589000000b00d9ac946c18cmr203911ybl.6.1698697374882;
- Mon, 30 Oct 2023 13:22:54 -0700 (PDT)
-Date: Mon, 30 Oct 2023 13:22:46 -0700
+ (user=jonathantanmy job=sendgmr) by 2002:a0d:e294:0:b0:5a7:ccf3:3f28 with
+ SMTP id l142-20020a0de294000000b005a7ccf33f28mr226149ywe.0.1698697376662;
+ Mon, 30 Oct 2023 13:22:56 -0700 (PDT)
+Date: Mon, 30 Oct 2023 13:22:47 -0700
 In-Reply-To: <cover.1698696798.git.jonathantanmy@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -51,132 +51,263 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 References: <db6702ba-11a7-44c1-af2a-95b080aaeb77@gmail.com> <cover.1698696798.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.42.0.820.g83a721a137-goog
-Message-ID: <d96633a2919ac619ccf29e87abc6f25314a8bfb1.1698696798.git.jonathantanmy@google.com>
-Subject: [RFC PATCH 1/3] strbuf: make add_lines() public
+Message-ID: <bb01336233b30d46960d6eb15f036e6346a9cd2b.1698696798.git.jonathantanmy@google.com>
+Subject: [RFC PATCH 2/3] strbuf_commented_addf(): drop the comment_line_char parameter
 From: Jonathan Tan <jonathantanmy@google.com>
 To: git@vger.kernel.org
-Cc: Jonathan Tan <jonathantanmy@google.com>, Junio C Hamano <gitster@pobox.com>, 
-	Phillip Wood <phillip.wood123@gmail.com>, Dragan Simic <dsimic@manjaro.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Phillip Wood <phillip.wood123@gmail.com>, 
+	Dragan Simic <dsimic@manjaro.org>, Jonathan Tan <jonathantanmy@google.com>
 Content-Type: text/plain; charset="UTF-8"
 
-Subsequent patches will require the ability to add different prefixes
-to different lines (depending on their contents), so make this
-functionality available from outside strbuf.c.
+From: Junio C Hamano <gitster@pobox.com>
 
+All the callers of this function supply the global variable
+comment_line_char as an argument to its second parameter.  Remove
+the parameter to allow us in the future to change the reference to
+the global variable with something else, like a function call.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- branch.c |  3 ++-
- commit.c |  2 +-
- strbuf.c | 39 ++++++++++++++++-----------------------
- strbuf.h |  3 ++-
- 4 files changed, 21 insertions(+), 26 deletions(-)
+ add-patch.c          |  8 ++++----
+ builtin/branch.c     |  2 +-
+ builtin/merge.c      |  8 ++++----
+ builtin/tag.c        |  4 ++--
+ environment.c        | 18 ++++++++++++++++++
+ environment.h        |  7 +++++++
+ rebase-interactive.c |  2 +-
+ sequencer.c          |  4 ++--
+ strbuf.c             | 19 +------------------
+ strbuf.h             |  7 -------
+ wt-status.c          |  2 +-
+ 11 files changed, 41 insertions(+), 40 deletions(-)
 
-diff --git a/branch.c b/branch.c
-index 06f7af9dd4..04a8b90b6a 100644
---- a/branch.c
-+++ b/branch.c
-@@ -721,7 +721,8 @@ static int submodule_create_branch(struct repository *r,
- 		return ret;
- 	ret = finish_command(&child);
- 	strbuf_read(&child_err, child.err, 0);
--	strbuf_add_lines(&out_buf, out_prefix, child_err.buf, child_err.len);
-+	strbuf_add_lines(&out_buf, out_prefix, out_prefix,
-+			 child_err.buf, child_err.len);
+diff --git a/add-patch.c b/add-patch.c
+index bfe19876cd..471a0037be 100644
+--- a/add-patch.c
++++ b/add-patch.c
+@@ -1106,11 +1106,11 @@ static int edit_hunk_manually(struct add_p_state *s, struct hunk *hunk)
+ 	size_t i;
  
- 	if (ret)
- 		fprintf(stderr, "%s", out_buf.buf);
-diff --git a/commit.c b/commit.c
-index b3223478bc..7caafcde01 100644
---- a/commit.c
-+++ b/commit.c
-@@ -1361,7 +1361,7 @@ static void add_extra_header(struct strbuf *buffer,
- {
- 	strbuf_addstr(buffer, extra->key);
- 	if (extra->len)
--		strbuf_add_lines(buffer, " ", extra->value, extra->len);
-+		strbuf_add_lines(buffer, " ", " ", extra->value, extra->len);
- 	else
- 		strbuf_addch(buffer, '\n');
+ 	strbuf_reset(&s->buf);
+-	strbuf_commented_addf(&s->buf, comment_line_char,
++	strbuf_commented_addf(&s->buf,
+ 			      _("Manual hunk edit mode -- see bottom for "
+ 				"a quick guide.\n"));
+ 	render_hunk(s, hunk, 0, 0, &s->buf);
+-	strbuf_commented_addf(&s->buf, comment_line_char,
++	strbuf_commented_addf(&s->buf,
+ 			      _("---\n"
+ 				"To remove '%c' lines, make them ' ' lines "
+ 				"(context).\n"
+@@ -1119,13 +1119,13 @@ static int edit_hunk_manually(struct add_p_state *s, struct hunk *hunk)
+ 			      s->mode->is_reverse ? '+' : '-',
+ 			      s->mode->is_reverse ? '-' : '+',
+ 			      comment_line_char);
+-	strbuf_commented_addf(&s->buf, comment_line_char, "%s",
++	strbuf_commented_addf(&s->buf, "%s",
+ 			      _(s->mode->edit_hunk_hint));
+ 	/*
+ 	 * TRANSLATORS: 'it' refers to the patch mentioned in the previous
+ 	 * messages.
+ 	 */
+-	strbuf_commented_addf(&s->buf, comment_line_char,
++	strbuf_commented_addf(&s->buf,
+ 			      _("If it does not apply cleanly, you will be "
+ 				"given an opportunity to\n"
+ 				"edit again.  If all lines of the hunk are "
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 2ec190b14a..b2f171e10b 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -668,7 +668,7 @@ static int edit_branch_description(const char *branch_name)
+ 	exists = !read_branch_desc(&buf, branch_name);
+ 	if (!buf.len || buf.buf[buf.len-1] != '\n')
+ 		strbuf_addch(&buf, '\n');
+-	strbuf_commented_addf(&buf, comment_line_char,
++	strbuf_commented_addf(&buf,
+ 		    _("Please edit the description for the branch\n"
+ 		      "  %s\n"
+ 		      "Lines starting with '%c' will be stripped.\n"),
+diff --git a/builtin/merge.c b/builtin/merge.c
+index d748d46e13..8f0e8be7c3 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -857,15 +857,15 @@ static void prepare_to_commit(struct commit_list *remoteheads)
+ 		strbuf_addch(&msg, '\n');
+ 		if (cleanup_mode == COMMIT_MSG_CLEANUP_SCISSORS) {
+ 			wt_status_append_cut_line(&msg);
+-			strbuf_commented_addf(&msg, comment_line_char, "\n");
++			strbuf_commented_addf(&msg, "\n");
+ 		}
+-		strbuf_commented_addf(&msg, comment_line_char,
++		strbuf_commented_addf(&msg,
+ 				      _(merge_editor_comment));
+ 		if (cleanup_mode == COMMIT_MSG_CLEANUP_SCISSORS)
+-			strbuf_commented_addf(&msg, comment_line_char,
++			strbuf_commented_addf(&msg,
+ 					      _(scissors_editor_comment));
+ 		else
+-			strbuf_commented_addf(&msg, comment_line_char,
++			strbuf_commented_addf(&msg,
+ 				_(no_scissors_editor_comment), comment_line_char);
+ 	}
+ 	if (signoff)
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 3918eacbb5..a85a0d8def 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -314,10 +314,10 @@ static void create_tag(const struct object_id *object, const char *object_ref,
+ 			struct strbuf buf = STRBUF_INIT;
+ 			strbuf_addch(&buf, '\n');
+ 			if (opt->cleanup_mode == CLEANUP_ALL)
+-				strbuf_commented_addf(&buf, comment_line_char,
++				strbuf_commented_addf(&buf,
+ 				      _(tag_template), tag, comment_line_char);
+ 			else
+-				strbuf_commented_addf(&buf, comment_line_char,
++				strbuf_commented_addf(&buf,
+ 				      _(tag_template_nocleanup), tag, comment_line_char);
+ 			write_or_die(fd, buf.buf, buf.len);
+ 			strbuf_release(&buf);
+diff --git a/environment.c b/environment.c
+index bb3c2a96a3..d9f64cffa0 100644
+--- a/environment.c
++++ b/environment.c
+@@ -416,3 +416,21 @@ int print_sha1_ellipsis(void)
+ 	}
+ 	return cached_result;
  }
++
++void strbuf_commented_addf(struct strbuf *sb,
++			   const char *fmt, ...)
++{
++	va_list params;
++	struct strbuf buf = STRBUF_INIT;
++	int incomplete_line = sb->len && sb->buf[sb->len - 1] != '\n';
++
++	va_start(params, fmt);
++	strbuf_vaddf(&buf, fmt, params);
++	va_end(params);
++
++	strbuf_add_commented_lines(sb, buf.buf, buf.len, comment_line_char);
++	if (incomplete_line)
++		sb->buf[--sb->len] = '\0';
++
++	strbuf_release(&buf);
++}
+diff --git a/environment.h b/environment.h
+index e5351c9dd9..5778f5a8e4 100644
+--- a/environment.h
++++ b/environment.h
+@@ -229,4 +229,11 @@ extern const char *excludes_file;
+  */
+ int print_sha1_ellipsis(void);
+ 
++/**
++ * Add a formatted string prepended by a comment character and a
++ * blank to the buffer.
++ */
++__attribute__((format (printf, 2, 3)))
++void strbuf_commented_addf(struct strbuf *sb, const char *fmt, ...);
++
+ #endif
+diff --git a/rebase-interactive.c b/rebase-interactive.c
+index d9718409b3..3f33da7f03 100644
+--- a/rebase-interactive.c
++++ b/rebase-interactive.c
+@@ -71,7 +71,7 @@ void append_todo_help(int command_count,
+ 
+ 	if (!edit_todo) {
+ 		strbuf_addch(buf, '\n');
+-		strbuf_commented_addf(buf, comment_line_char,
++		strbuf_commented_addf(buf,
+ 				      Q_("Rebase %s onto %s (%d command)",
+ 					 "Rebase %s onto %s (%d commands)",
+ 					 command_count),
+diff --git a/sequencer.c b/sequencer.c
+index d584cac8ed..5d348a3f12 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -675,11 +675,11 @@ void append_conflicts_hint(struct index_state *istate,
+ 	}
+ 
+ 	strbuf_addch(msgbuf, '\n');
+-	strbuf_commented_addf(msgbuf, comment_line_char, "Conflicts:\n");
++	strbuf_commented_addf(msgbuf, "Conflicts:\n");
+ 	for (i = 0; i < istate->cache_nr;) {
+ 		const struct cache_entry *ce = istate->cache[i++];
+ 		if (ce_stage(ce)) {
+-			strbuf_commented_addf(msgbuf, comment_line_char,
++			strbuf_commented_addf(msgbuf,
+ 					      "\t%s\n", ce->name);
+ 			while (i < istate->cache_nr &&
+ 			       !strcmp(ce->name, istate->cache[i]->name))
 diff --git a/strbuf.c b/strbuf.c
-index 7827178d8e..9ee639519a 100644
+index 9ee639519a..b1717270a2 100644
 --- a/strbuf.c
 +++ b/strbuf.c
-@@ -339,26 +339,6 @@ void strbuf_addf(struct strbuf *sb, const char *fmt, ...)
- 	va_end(ap);
+@@ -1,4 +1,5 @@
+ #include "git-compat-util.h"
++#include "environment.h"
+ #include "gettext.h"
+ #include "hex-ll.h"
+ #include "strbuf.h"
+@@ -352,24 +353,6 @@ void strbuf_add_commented_lines(struct strbuf *out, const char *buf,
+ 	strbuf_add_lines(out, prefix1, prefix2, buf, size);
  }
  
--static void add_lines(struct strbuf *out,
--			const char *prefix1,
--			const char *prefix2,
--			const char *buf, size_t size)
+-void strbuf_commented_addf(struct strbuf *sb, char comment_line_char,
+-			   const char *fmt, ...)
 -{
--	while (size) {
--		const char *prefix;
--		const char *next = memchr(buf, '\n', size);
--		next = next ? (next + 1) : (buf + size);
+-	va_list params;
+-	struct strbuf buf = STRBUF_INIT;
+-	int incomplete_line = sb->len && sb->buf[sb->len - 1] != '\n';
 -
--		prefix = ((prefix2 && (buf[0] == '\n' || buf[0] == '\t'))
--			  ? prefix2 : prefix1);
--		strbuf_addstr(out, prefix);
--		strbuf_add(out, buf, next - buf);
--		size -= next - buf;
--		buf = next;
--	}
--	strbuf_complete_line(out);
+-	va_start(params, fmt);
+-	strbuf_vaddf(&buf, fmt, params);
+-	va_end(params);
+-
+-	strbuf_add_commented_lines(sb, buf.buf, buf.len, comment_line_char);
+-	if (incomplete_line)
+-		sb->buf[--sb->len] = '\0';
+-
+-	strbuf_release(&buf);
 -}
 -
- void strbuf_add_commented_lines(struct strbuf *out, const char *buf,
- 				size_t size, char comment_line_char)
+ void strbuf_vaddf(struct strbuf *sb, const char *fmt, va_list ap)
  {
-@@ -369,7 +349,7 @@ void strbuf_add_commented_lines(struct strbuf *out, const char *buf,
- 		xsnprintf(prefix1, sizeof(prefix1), "%c ", comment_line_char);
- 		xsnprintf(prefix2, sizeof(prefix2), "%c", comment_line_char);
- 	}
--	add_lines(out, prefix1, prefix2, buf, size);
-+	strbuf_add_lines(out, prefix1, prefix2, buf, size);
- }
- 
- void strbuf_commented_addf(struct strbuf *sb, char comment_line_char,
-@@ -747,10 +727,23 @@ ssize_t strbuf_read_file(struct strbuf *sb, const char *path, size_t hint)
- 	return len;
- }
- 
--void strbuf_add_lines(struct strbuf *out, const char *prefix,
-+void strbuf_add_lines(struct strbuf *out, const char *default_prefix,
-+		      const char *tab_or_nl_prefix,
- 		      const char *buf, size_t size)
- {
--	add_lines(out, prefix, NULL, buf, size);
-+	while (size) {
-+		const char *prefix;
-+		const char *next = memchr(buf, '\n', size);
-+		next = next ? (next + 1) : (buf + size);
-+
-+		prefix = (buf[0] == '\n' || buf[0] == '\t')
-+			  ? tab_or_nl_prefix : default_prefix;
-+		strbuf_addstr(out, prefix);
-+		strbuf_add(out, buf, next - buf);
-+		size -= next - buf;
-+		buf = next;
-+	}
-+	strbuf_complete_line(out);
- }
- 
- void strbuf_addstr_xml_quoted(struct strbuf *buf, const char *s)
+ 	int len;
 diff --git a/strbuf.h b/strbuf.h
-index e959caca87..3559e73dd8 100644
+index 3559e73dd8..4c58dc25e9 100644
 --- a/strbuf.h
 +++ b/strbuf.h
-@@ -599,7 +599,8 @@ void strbuf_list_free(struct strbuf **list);
- void strbuf_strip_file_from_path(struct strbuf *sb);
+@@ -374,13 +374,6 @@ void strbuf_humanise_rate(struct strbuf *buf, off_t bytes);
+ __attribute__((format (printf,2,3)))
+ void strbuf_addf(struct strbuf *sb, const char *fmt, ...);
  
- void strbuf_add_lines(struct strbuf *sb,
--		      const char *prefix,
-+		      const char *default_prefix,
-+		      const char *tab_or_nl_prefix,
- 		      const char *buf,
- 		      size_t size);
+-/**
+- * Add a formatted string prepended by a comment character and a
+- * blank to the buffer.
+- */
+-__attribute__((format (printf, 3, 4)))
+-void strbuf_commented_addf(struct strbuf *sb, char comment_line_char, const char *fmt, ...);
+-
+ __attribute__((format (printf,2,0)))
+ void strbuf_vaddf(struct strbuf *sb, const char *fmt, va_list ap);
+ 
+diff --git a/wt-status.c b/wt-status.c
+index 9f45bf6949..54b2775730 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1102,7 +1102,7 @@ void wt_status_append_cut_line(struct strbuf *buf)
+ {
+ 	const char *explanation = _("Do not modify or remove the line above.\nEverything below it will be ignored.");
+ 
+-	strbuf_commented_addf(buf, comment_line_char, "%s", cut_line);
++	strbuf_commented_addf(buf, "%s", cut_line);
+ 	strbuf_add_commented_lines(buf, explanation, strlen(explanation), comment_line_char);
+ }
  
 -- 
 2.42.0.820.g83a721a137-goog
