@@ -1,120 +1,133 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEB961DFDE
-	for <git@vger.kernel.org>; Tue, 31 Oct 2023 18:22:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F2B2030F
+	for <git@vger.kernel.org>; Tue, 31 Oct 2023 18:48:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=github.com header.i=@github.com header.b="Ey0pVcz0"
-Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3AC1A6
-	for <git@vger.kernel.org>; Tue, 31 Oct 2023 11:22:25 -0700 (PDT)
-Received: by mail-pg1-x52e.google.com with SMTP id 41be03b00d2f7-517ab9a4a13so4801785a12.1
-        for <git@vger.kernel.org>; Tue, 31 Oct 2023 11:22:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1698776545; x=1699381345; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=95t4zqGGRVbL1AM5qIZbEF+JqMlseOvMK7Zn9DAKQMI=;
-        b=Ey0pVcz0J3KvjJu8DFb4za/PXT4hIvsoiwqRLbfS7ZDRSa0Llf+VxMxirhZjYL3f4j
-         Lk+0U6lKgNUKb4sb4jk8i90vCWKRfMiYVaXiGltVaJaOsguPAd3Aer/4DVEPQRAZth8I
-         ZQYe+2BVJUA5z++DMRuFHTDFY2x4Ln1alW3oFZhxnh72346/B5IHUIF8rHdIZqrpJacF
-         FZkGNYbsViMX1epKBqVwyMzpXRx4Wl0/VAZhQr3e6eCzlAB/zQ63tJ0CqHlrsvpEDJAs
-         jEGF8g+6oPo4sUF5/xnxtX0Pme9A56aUCcpB6iVN1JHvC60jD64x1jcoJCuIlz6ah8fV
-         lPnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698776545; x=1699381345;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=95t4zqGGRVbL1AM5qIZbEF+JqMlseOvMK7Zn9DAKQMI=;
-        b=FB/K2cd/6t6d3kGN3hCI6y4Y7sUCn5Xxrfim1r6I8JvFFqAwct9Goyu6gFkfgpGXNf
-         m4yspnoS+vmfV7gxtRWtINcMpJECnnU3/p5imf+PTdE3Sx5hREr/rO+GiRPBC53vXgqd
-         ncNgQnFEGbEpt7aycxt/7s0v5kYR8gXScPvIG7hf8P2Ti35kxEYPuSmEAl49Jk30wytQ
-         TFkPNCfxeGkrfEbb9mFRf3MyqB8nxOeabs2/zn0QeUn5/Ih27ev2leLmJPKHpkwQ3zhs
-         4o1f8efnnOWcFQZhZG0NaMFSjVUfagnRJG1qtiNL9wwCgR9fbkKKnoqbroW1rVYOmYrD
-         c20A==
-X-Gm-Message-State: AOJu0Yxys2seWhRXplflbkqBa5N9o2mk1cIpmaEpWfjPIiyiyHsTEfIe
-	T3rbDFMmTMRlewFkiBL3s2NU
-X-Google-Smtp-Source: AGHT+IGfL0OQZ2eKGfQvJQ9OObZbLbR40ly+OHfc8/jEuw/RD6H7jhht65xBweZZvHQ/sCyjlaZH5w==
-X-Received: by 2002:a05:6a21:6d9c:b0:162:4f45:b415 with SMTP id wl28-20020a056a216d9c00b001624f45b415mr17977143pzb.51.1698776545266;
-        Tue, 31 Oct 2023 11:22:25 -0700 (PDT)
-Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
-        by smtp.gmail.com with ESMTPSA id c17-20020aa781d1000000b0068790c41ca2sm1544353pfn.27.2023.10.31.11.22.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 31 Oct 2023 11:22:24 -0700 (PDT)
-Message-ID: <8e4d111f-3982-4989-90b5-08377fe9c5fd@github.com>
-Date: Tue, 31 Oct 2023 11:22:23 -0700
+	dkim=pass (2048-bit key) header.d=xiplink.com header.i=@xiplink.com header.b="OhEHBV+x"
+Received: from CAN01-YT3-obe.outbound.protection.outlook.com (mail-yt3can01on2091.outbound.protection.outlook.com [40.107.115.91])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03A118F
+	for <git@vger.kernel.org>; Tue, 31 Oct 2023 11:48:23 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=WKOOh7Xqr0UOfKiyjJfWC+bm2albtCy/yQvCdfx4OxLuoCZhkTVigcxsvkCG697PABdb16kUSaODt5MI1tT51BVvqeVrYMW9mK1MLW8A1BP/wqXPUaV6AcKLuSuM7zKjy2unHpXt+LOj/5jJzUIuLxjpjFo84XNaHKV3HjeCS482mdsyLsbECupMIOiPL6RZYk9HUNYslgz7gQR1uOYBbp2l5KQ1UoSzNmUuv2HFrP/Mcn8P400T8N2HbGb/NxiMZ9JMg4DY+tumCBb2SRxhN/eNURlZlmLwyJPj7dpGhd/HLaCGgDL7YgkNEGnNScEPPc4geBVUnPdI4B0on4nIDA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=6Pw8pJk6uTVQHzaoh3Z798qaMIDWcXPJS4FfiBA5zQo=;
+ b=O2iM05p4ZNuXXuNTrDOy59OVXC5uNhtuBUU1T1eazcXVa63UIGsrSfITSrGY6gOWl2KqsKNNwYHFVavooZiBKajN9fEchR8/weImLN6B0rPY5+GJdjXwbS5hTNM8z+nyxChqdVk0JK9Jz03dcRY5uXu7bes3mriOsmhwAEbNxyI+bC21iXqX+R6pFd0gWS6/6oIJMInyez1oea4VZrLFZuDfnUH6T0lT0CSuDu6T+HszRNlJtm5kBKd7JznXcfDqY0W7eDa8AmhIlXJoQTlnu3kmyMKovEeDlqtMsGYFEcgCiks0lPxlJspeU3gXoE2otAGuHP9w//IsoCmC43s7Mg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=xiplink.com; dmarc=pass action=none header.from=xiplink.com;
+ dkim=pass header.d=xiplink.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xiplink.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=6Pw8pJk6uTVQHzaoh3Z798qaMIDWcXPJS4FfiBA5zQo=;
+ b=OhEHBV+xqr5AoGmOUuNetHVLf/oRDYKI9pEPMAG1/sXzZJKw+KNiF0xQ2Sp40RqcwVIwVblHmB7XIuXQCKKzS/y1hEvedDv+np95Q2f2gV6nj9YljnR9TDg6xrPv+70C+2TS2bVbPMcPPyd9u1ohElaWIPAGiqE4TYA5WzKWR5y6gVVoFMdU2mjmLojYFP/FEsTaA7KqFsZYiGWk515zphTW4QwdcBG6/dTqLhTf2TIzh8HzT8wBzcF3zAobi5HVQSVCtob7yDMZXtWN/zH/7t2Q2qesXdSTSuwTieo96MK0Ts+RADTrfqpLRU2x3sIFudIo7RLwrl2L0eX/dgo+/A==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=xiplink.com;
+Received: from QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:c00:30::29)
+ by YQXPR01MB6172.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:c01:29::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6954.19; Tue, 31 Oct
+ 2023 18:48:21 +0000
+Received: from QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::b888:ac1d:f4b9:93ea]) by QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::b888:ac1d:f4b9:93ea%4]) with mapi id 15.20.6954.019; Tue, 31 Oct 2023
+ 18:48:20 +0000
+Message-ID: <cc71b825-8283-44d0-a059-f2c069caebe3@xiplink.com>
+Date: Tue, 31 Oct 2023 14:48:19 -0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] git-rebase.txt: rewrite docu for fixup/squash (again)
+Content-Language: en-US
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>, git@vger.kernel.org,
+ Phillip Wood <phillip.wood123@gmail.com>, Taylor Blau <me@ttaylorr.com>,
+ Christian Couder <christian.couder@gmail.com>,
+ Charvi Mendiratta <charvi077@gmail.com>
+References: <20231023130016.1093356-1-oswald.buddenhagen@gmx.de>
+ <20231025102932.1202299-1-oswald.buddenhagen@gmx.de>
+ <56e3e974-a027-439f-871d-c7fbae65a04e@xiplink.com>
+ <xmqqh6mbod1b.fsf@gitster.g>
+From: Marc Branchaud <marcnarc@xiplink.com>
+In-Reply-To: <xmqqh6mbod1b.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: YQBPR0101CA0175.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:c01:f::18) To QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:c00:30::29)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/8] ci: add GitLab CI definition
-Content-Language: en-US
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
- Phillip Wood <phillip.wood123@gmail.com>,
- Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-References: <cover.1698305961.git.ps@pks.im> <cover.1698742590.git.ps@pks.im>
-From: Victoria Dye <vdye@github.com>
-In-Reply-To: <cover.1698742590.git.ps@pks.im>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: QB1PR01MB2451:EE_|YQXPR01MB6172:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3f0b933c-1fba-4ff3-b926-08dbda41f401
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	qbsM1NiK8dVyootd37CmnWfaYYvD8/7EFK0kq9XE4ceIueR5atCkO7tizsZ7P2baHlOlMGn7TAji02CEQqz0mq2jjWzv0s2u6ADrEGjZ0kktc0usUTUwr4Tlp8O9AwbnvMdqUqEjwHy/jErSDxPI/8HFO4dGa0oNO5JVLEFnBl2peOj1VsikhN/P8iYqbHOJa4Qz9fpwwt/DuXzg8SSlBuIFpw4eiyrmNoaKDkPFFK2KITb0TUcsydnANPOZmmND4BrK9EE0jt5m1Y+kwwGfpGx/8kiM8jqtC6qzv2HSmmNkjBH6QeHO+Jc/5nDREmsX8zMUutnCp4bQk5i7lzsPBZhaH14PJ52i01GWdyhB6/Oz30d2QthwJltgx11KZoUUBO2nDy1KNXHuKKLE6LWtH7CQxrdGDdFuJIFJZHBnquNptyCgIJ8H+YP1cgEuw1VsF3TlCT/q3tKcmLrve2vJHU10EyRl5EDr5swcJC8Ajx/v8ryHAgjN3k/hGOnOZKRC2Eky23LGukYq/b+SLUazMPlWFePazDx32v9eUZZmNxnC1Ul/1r4bDcNWNEjps/mF2sBq1whsBQz543x8ah3wmWYfK3VAQMbziNDAQkYOH+OQUvcjlrjy9fQzpYsUKmnQQ84xk4XNlnnjJhq5JxE73w==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230031)(136003)(396003)(346002)(39830400003)(376002)(366004)(230922051799003)(1800799009)(186009)(451199024)(64100799003)(6916009)(316002)(31696002)(86362001)(2616005)(66476007)(2906002)(54906003)(26005)(4001150100001)(66556008)(66946007)(6506007)(478600001)(53546011)(36756003)(41300700001)(6512007)(38100700002)(8936002)(8676002)(31686004)(4326008)(558084003)(6486002)(5660300002)(43740500002)(45980500001);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?S0oxc0kybHFXVG1ZR2tWOGh5N0FUUkJzL21wRkdJWmxrR0F2ZG5ZRGd4NWZR?=
+ =?utf-8?B?UFdZMTBOaGNaTy9IcDRLUXZQTEpzc2xjMk5TeTZLTktwWWcrQ2ZkcjlhZG1j?=
+ =?utf-8?B?a2VKcmRwRkVaRml4TGtuNlBXSE12VUlZZ1VaazExQjBLU1FaMFVOQ0FqUnpo?=
+ =?utf-8?B?Nks5cXQ5eDJrTDh3bDV0V1h0bHhud0RnNE92cThvYTJ1RUkxTU8vSHdXVWNt?=
+ =?utf-8?B?MzMwMXBFcHByRHF3UHhuRFNMRGRscCt1MS9aQlo0Q2JHSmhIQ2I5MSs3YS9K?=
+ =?utf-8?B?djlpZjhvaDJidzJEdHNxYmN6WDAzN25qMzA5ekd5QjVDcVJzNlE0UGxJcHZE?=
+ =?utf-8?B?YzZXemJKeUptcDV6MjV1bU1PbjBlTUhwTDNRZzlySGNMcDY0ZmRkWHhKcnFi?=
+ =?utf-8?B?VEQzVmFkUmpmL3M3cUc0SE05R0pOVVpkTVlGR08xeXNNYyt2RnJPTU5SOUdN?=
+ =?utf-8?B?Uis0dXdxdXpmZXZoZGRZdk93MFlweXgyRDVaWkpJZkNOQnJRRW53bHpmZVJK?=
+ =?utf-8?B?N2prWWtiM1dKY21kWHdhTUptR3dyeWg1ckdxSlkvVzhXSDNGaTdXa3p5QldR?=
+ =?utf-8?B?V3RHNUxUbmp3OTN2UVR4MnpadnIySjZXa09oT3hwb1dUbklqSmpxUnlFY0xZ?=
+ =?utf-8?B?Q2pLa2k0UGJ0RjFlT0d1T1Rrc1ZmOGQ0SEkxYXhyUCs4M0ZzVUhyb2UvQkVu?=
+ =?utf-8?B?SHRNVDdIb2dpYlIwYWtwN1BDeVlJMmxmRTNyQ0VkWkpOTWpSNlk3Rld4Q3RD?=
+ =?utf-8?B?ekFTWW1naHBQOHNPR0hkRUdEYUtBT1M3NW9RS3lIY3lSdEl2WENYNHVuSSs1?=
+ =?utf-8?B?WUhpVGpXTUpsUnplRXFnKytjVnJuMS9zL2pnUTBRNzhoSVh1dXdQcWdpbWRy?=
+ =?utf-8?B?SFZVR05RcDlUb2Z3TWM2UlhwNzFUb1U3bndzdHY4eUVoUGc2aDVQTWRKVkNt?=
+ =?utf-8?B?dlFNNTViMWdxRXAxWVl4ZG9IdnhDT1d3OFVQSW5BMjVFc1JzbGptK0dvUkJ2?=
+ =?utf-8?B?NEVzemw2L3JicGMycXc3NThiU1VIQzNjaGtLdksvYXVVcW00RlVLODk2MjZp?=
+ =?utf-8?B?SUxZcHBTSkdRMjBsZi9LWnNqcENJRWxIRVh2NU52VWZKRmNxMC9aVUNmQllQ?=
+ =?utf-8?B?SHpkZ2p0U0xINWcxNmY3UGhtaWFySW5hdklqMWtnN3NIMS9KbWlEWmlUcWNL?=
+ =?utf-8?B?MDM2cjZyb2hMYjA1a2ZKNzlrTlV0YVJMUk9xcC9ocUFjTTlRRTFRUDFsU3c0?=
+ =?utf-8?B?Q2tsNHpPUEZMVDZjbWtvYkZCc1lzTmR0dVQxV0lkK3Y0Nzc3WWtQV0Z5MzFW?=
+ =?utf-8?B?N3c1TW1GSkNzcENKV2FIWUdvUTRNMmJtNTFpWS8zbmMzU1BFYjFIenIrbkFT?=
+ =?utf-8?B?bzdIMVhlVmNGZkRIU0M1bGQxcVVUZkZZTFZCSnZLQUxkSjA3aE15NGZHT2VJ?=
+ =?utf-8?B?T1RwYi81RG1tZVRSdjBtNWVVN0Rtd0NMYTBYV0hqRzVsdTAxbk1vQk5KMmRR?=
+ =?utf-8?B?ZkRZN1JRZGJrZk1lSWJ3SzJKVzFMRkFYaExZRU1acVR4S0oyY2xnYWZzTWhs?=
+ =?utf-8?B?YUdsbHpldVBSYSs5Q0Q4SFZVODV5STVHS2UwVnBRZ2tQTEZkelVYZENlQmY2?=
+ =?utf-8?B?Mlp6djNXaVYraGNxNUIzNTE1Y1RMYms1RGtic29Ud1lXQkViWldwU2MxTTNt?=
+ =?utf-8?B?WGcxR2VEbDd5c2M1MlhPckp2d1VXb21BbldFaExHK2N5dmRGM01MMlc1MHEv?=
+ =?utf-8?B?YW5PeXF5Y2JPbVJnZ1ZJMnZoSGEzQXdDNHF5YjFKN2k0enpjU3F6aUFiVk9P?=
+ =?utf-8?B?MjBmQzc4RENmZytjY2xQZUNzamRBY2pYSmFxVUh0VmZ1b3BnakNJak5na0Rr?=
+ =?utf-8?B?bFY3ZEY0aUxBMHVJbDdxRTVOY0Fpc1N0cVhvQ2puSlNxOFhNVXYzU3IvcTM4?=
+ =?utf-8?B?bWxnbC9MY21yZHhwYzU4ejl5ckhmWG1rQjNXMlhVQjBnODhFbXMrR2QxMVBP?=
+ =?utf-8?B?R1laWGF6Q3ZkeHEvNklEWVJqUWVyQnorbll0SjJFT1JRa29GSVFRVUNLdzhq?=
+ =?utf-8?B?b0tiWDlaV2x4WE1HL2x0eGZudkUyYUV4YzB1dz09?=
+X-OriginatorOrg: xiplink.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3f0b933c-1fba-4ff3-b926-08dbda41f401
+X-MS-Exchange-CrossTenant-AuthSource: QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Oct 2023 18:48:20.7313
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 14f927ba-c95b-4aa6-b674-375045ee9d4d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 0YEojN8ZFFSnrZDTXyq7WfHZyai9V0ASgxex3t6u69OnBfPHh4cpHRAAx3BK/kn4wiJkI3cXCyofV1nsx5HX+A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: YQXPR01MB6172
 
-Patrick Steinhardt wrote:
-> Hi,
-> 
-> this is the fourth version of my patch series that introduces support
-> for GitLab CI.
-> 
-> Changes compared to v3:
-> 
->     - Stopped using nproc(1) to figure out the number of builds jobs for
->       GitHub Actions and Azure Pipelines. Instead, we now continue to
->       use the hardcoded 10 jobs there, whereas on GitLab CI we now use
->       nproc. We can adapt GitHub/Azure at a later point as required, but
->       I don't feel comfortable doing changes there.
-> 
->     - Improved the linux-musl job. Namely, we now also install all
->       required Apache modules, which makes the Apache-based test setup
->       work. There is a packaging issue with the WebDAV module though, so
->       we now skip tests that depend on it on Alpine Linux.
-> 
-> I still didn't move `.gitlab-ci.yml` to `contrib/`. As Taylor argued
-> (and I don't disagree), moving it to `contrib/` would convey the spirit
-> that this is _not_ an authoritative CI pipeline setup. But I wanted to
-> hear other opinions first before moving it into `contrib/`.
 
-I've read through some of the earlier discussion on this (as well as your
-original cover letter [1]), so I'll throw in my 2c.
-
-The majority of the changes in this patch series aren't conditioned on
-anything that says "gitlab", they just improve the flexibility of our CI
-scripts. I personally didn't notice anything too cumbersome added in the
-series, so I'm happy with all of that (essentially, patches 1-7 & parts of
-8).
-
-As for adding the GitLab-specific stuff, I'm not opposed to having it in the
-main tree. For one, there doesn't seem to be a clean way to "move it into
-`contrib/`" - '.gitlab-ci.yml' must be at the root of the project [2], and
-moving the $GITLAB_CI conditions out of the 'ci/*.sh' files into dedicated
-scripts would likely result in a lot of duplicated code (which doesn't solve
-the maintenance burden issue this series intends to address).
-
-More generally, there are lots of open source projects that include CI
-configurations across different forges, _especially_ those that are
-officially mirrored across a bunch of them. As long as there are
-contributors with a vested interest in keeping the GitLab CI definition
-stable (and your cover letter indicates that there are), and the GitLab
-stuff doesn't negatively impact any other CI configurations, I think it
-warrants the same treatment as e.g. GitHub CI.
-
-[1] https://lore.kernel.org/git/cover.1698305961.git.ps@pks.im/
-[2] https://docs.gitlab.com/ee/ci/index.html#the-gitlab-ciyml-file
-
+On 2023-10-27 19:34, Junio C Hamano wrote:
 > 
-> Patrick
-> 
+> Thanks for a good review.  I guess the patch is very near the finish
+> line?
+
+Yes.  In my mind, all that's needed is to remove the part about "should 
+not be relied upon".
+
+		M.
