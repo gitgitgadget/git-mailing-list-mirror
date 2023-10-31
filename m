@@ -1,46 +1,44 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A151101E4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6672BDF65
 	for <git@vger.kernel.org>; Tue, 31 Oct 2023 06:18:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="uA1jxkq7"
-Received: from pb-smtp21.pobox.com (unknown [173.228.157.53])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42FC4EA
-	for <git@vger.kernel.org>; Mon, 30 Oct 2023 23:05:51 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 6108F180D5;
-	Tue, 31 Oct 2023 02:01:45 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="MErMdYYJ"
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 371E791
+	for <git@vger.kernel.org>; Mon, 30 Oct 2023 23:07:53 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8CDD71BAB41;
+	Tue, 31 Oct 2023 02:07:52 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=jB26+OTUQy31uxwaGg437Q55csEpBiZP2z4yGQ
-	gmHVw=; b=uA1jxkq75S+CgYZawyuOV4ehkLKFcVzdM2ZTR6OZoxSbi+hvsFXtv7
-	sZVPUA2uyhazYFb014qQclKFkRf4oqBh7NzxEHWcSLm4LrZVxCPK+6U0QQPStyP+
-	Qa4XseCaW5zEDtPRPwgnYY95t5MjPqaWYeTVlRVUt0VSph0BT+D2A=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 59401180D4;
-	Tue, 31 Oct 2023 02:01:45 -0400 (EDT)
+	:content-type; s=sasl; bh=B1JFtmZD8A4wzh6Yy3cFBli1zA3Jwh3l7OKkZ+
+	LIsY4=; b=MErMdYYJlsXECc9iuACZg6jDVunufZ8Gqyu0Q9gQkoe+QCt4MJ5ugF
+	jHZNTNkcW+IRI4f6lK/L4AvUwTByL1AzDvugu6skhp+YUa+T10+CrGP7924Hchwo
+	Y0UevVt51ymc5Fq3asuDvdWCi+Z9iYzv4Mm2HWxlQ1dtV7YJrXyKg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 842781BAB40;
+	Tue, 31 Oct 2023 02:07:52 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.198.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 72C02180D3;
-	Tue, 31 Oct 2023 02:01:42 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B17191BAB3E;
+	Tue, 31 Oct 2023 02:07:51 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jonathan Tan <jonathantanmy@google.com>
-Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,  Dragan
- Simic <dsimic@manjaro.org>
-Subject: Re: [RFC PATCH 1/3] strbuf: make add_lines() public
-In-Reply-To: <xmqqy1fj8y5m.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	31 Oct 2023 08:53:57 +0900")
-References: <db6702ba-11a7-44c1-af2a-95b080aaeb77@gmail.com>
-	<cover.1698696798.git.jonathantanmy@google.com>
-	<d96633a2919ac619ccf29e87abc6f25314a8bfb1.1698696798.git.jonathantanmy@google.com>
-	<xmqqy1fj8y5m.fsf@gitster.g>
-Date: Tue, 31 Oct 2023 15:01:40 +0900
-Message-ID: <xmqq1qdb49ff.fsf@gitster.g>
+To: Ruslan Yakauleu <ruslan.yakauleu@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] merge: --ff-one-only to apply FF if commit is one
+In-Reply-To: <9f584927-7506-421e-a363-953eebb0ef90@gmail.com> (Ruslan
+	Yakauleu's message of "Tue, 31 Oct 2023 08:48:40 +0300")
+References: <pull.1599.git.git.1698224280816.gitgitgadget@gmail.com>
+	<ZUALkdSJZ70+KBYq@nand.local> <xmqq1qdb8wzk.fsf@gitster.g>
+	<9f584927-7506-421e-a363-953eebb0ef90@gmail.com>
+Date: Tue, 31 Oct 2023 15:07:50 +0900
+Message-ID: <xmqqwmv32ukp.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -50,29 +48,12 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- F6E0B0D0-77B2-11EE-AA52-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+ D2F937A4-77B3-11EE-8CB0-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-Junio C Hamano <gitster@pobox.com> writes:
+Ruslan Yakauleu <ruslan.yakauleu@gmail.com> writes:
 
-> Jonathan Tan <jonathantanmy@google.com> writes:
->
->> Subsequent patches will require the ability to add different prefixes
->> to different lines (depending on their contents), so make this
->> functionality available from outside strbuf.c.
->
-> I do not think it is a good idea to force almost everybody to repeat
-> themselves.  As we can see here, all but just a single caller of
-> strbuf_add_lines() with this patch pass the same prefix for both
-> parameters.  If we need to make the current strbuf.c:add_lines()
-> also available to some specific callers, that is fine, but let's
-> keep the simpler version that almost everybody uses as-is, and give
-> the more complex and featureful one that is used only by selected
-> callers a longer and more cumbersome name.
->
-> Thanks.
+> Command of developers can decide which policy use and why.
+> If a team decides to avoid extra merges - why not?
 
-Another practical downside of this patch is that it breaks other
-in-flight topics that adds new users of strbuf_add_lines(), and that
-breakage is totally unnecessary.
-
-
+I never said "--ff" is a bad option that should not exist, and I am
+not sure why I had to be thrown such a rhetorical question at.
