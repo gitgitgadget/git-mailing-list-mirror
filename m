@@ -1,46 +1,46 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4384B11182
-	for <git@vger.kernel.org>; Tue, 31 Oct 2023 08:10:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF22E111AE
+	for <git@vger.kernel.org>; Tue, 31 Oct 2023 08:10:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FTMeVlo7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZG43Ak/I"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tjKtpiyE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VuJAj92U"
 Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7B3FDE
-	for <git@vger.kernel.org>; Tue, 31 Oct 2023 01:10:30 -0700 (PDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.west.internal (Postfix) with ESMTP id 2A8AF3200A79;
-	Tue, 31 Oct 2023 04:10:30 -0400 (EDT)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39D15BD
+	for <git@vger.kernel.org>; Tue, 31 Oct 2023 01:10:36 -0700 (PDT)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailout.west.internal (Postfix) with ESMTP id 731793200A6E;
+	Tue, 31 Oct 2023 04:10:35 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Tue, 31 Oct 2023 04:10:30 -0400
+  by compute6.internal (MEProxy); Tue, 31 Oct 2023 04:10:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1698739829; x=1698826229; bh=lw
-	CKpDZpBLxusPbn1C4HOpnGE7TCUSpLc68Bs0FicJE=; b=FTMeVlo7O3ygQvis3P
-	l/ETkrP83ql13/rp1tLSFSU6vSJDocaFaY0dIgwM6sTZeMd9Gcom1g8cs2MgLZhB
-	IjDCe10vIJ6raUfr/LeLCf5jeiAsmt3z09BCtKpYA/c6NY2Yxpe+bP/ffdQth+Pl
-	1CU1xXpleOIgZEFHc0yMy9S4xY1Snrl57ZPayJeXVO7RcNlEHL3m5zdATkDm6wn5
-	ePZ7tiXUqhjRDkYa8JSzjnb1hXHrmBR1VTPeQDqZWQGxsk3Ctzb1CYGrw5WmxnC2
-	iewm3Qs6ESqTF2KrBhgHen/kJEtV5GsO9URu6AcLetH+LNehbEwbJArkBfx4VeaA
-	S2/Q==
+	:subject:subject:to:to; s=fm3; t=1698739835; x=1698826235; bh=P5
+	yExTg51zaJp2EhKREEs77VjTs+KVlrFhfxFyafEKQ=; b=tjKtpiyEVOcHJATPBb
+	ecfdwGMHH65KVC1WOS5KT+IJDG/Sfv8E+S5X6XBsx3O2wYPfEVj+x1g+cc2/raaj
+	yd8BPvZRKcCjK09JhVsYmV+Hwak59Oa+bxB+UcaZNyj+l4WXfDjii72HbIr8eC9f
+	nIHajaECSQhOEO6wQdrKL17F7N6FXuBDGDRlcg1wkG1RMs4tANOjLP4XmY+GZS1w
+	V24HN8P4JSoDsyaUWVd6eZ0MgbEdGWjzlXPJGn3KUKuG6DKrrdpRWHE8jturaLgp
+	Laa9nd0mWLh5ucTO0Jm5GvkKuoMvFv6KsHDzU76begKLkaQqGB2wVqNU9+HS64pJ
+	1+8w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1698739829; x=1698826229; bh=lwCKpDZpBLxus
-	Pbn1C4HOpnGE7TCUSpLc68Bs0FicJE=; b=ZG43Ak/I+XaLH/rzP1V084oDN5VZH
-	MwbvNc4n2EX67n7BTvKRpqCzeld2XWZVvNXGsaPFlmHwcUR6venfRLGVY3+J8VkW
-	U7I8KJy2V53LeiLLB1HJ6pe+ZLauv4p9s4vUYB2CmjA4lwaqtB+4vgbklECyxbD8
-	OIfPJkT28l/TPgCid1VkjFrXdcPaFglKLqSx7U940lU4GLEt8GtNsDwGxxxhrGgG
-	U7RbXTN1p46ucOD9MyDeLyQNxJEhOzsIj5wKCGKrvZIpHzHDgMbJILZ0rGfszDaD
-	/VFknR9ai3zmwRcLP8n8vB4c4ZaIb9jfYuIXb64E/bfmQ+8+ur7CyVauw==
-X-ME-Sender: <xms:dbZAZW12SnHKMybI5O6fLO0m1juXwV9LssJ-hiqx_DCPE2FwWrhZFw>
-    <xme:dbZAZZF2jB2MZV1rQhT6ym8nBeuHYFgbL7Fd5z8o9k_m_G9oPR4kWJavskAVzecmT
-    UtgCKkcunB_nYCy4g>
-X-ME-Received: <xmr:dbZAZe4ZYcqic0Ke3COG8XhKzTgbNU-Q6phL5wyAZ52-mVl3eP1Qm9984MD9SY1m99wXeQfD6gjm15cZed7t7LmV2PzvHZ4pV2pPiObmEA4Z2Yl7>
+	:x-sasl-enc; s=fm3; t=1698739835; x=1698826235; bh=P5yExTg51zaJp
+	2EhKREEs77VjTs+KVlrFhfxFyafEKQ=; b=VuJAj92UDKNg3xQZwapo5bmBE611e
+	LpumIN1cOHyITwU7LrNfffnAb0jnbPnwmLQh/QDQnVwO9EIFZ+SGD4OV4Yn3Y2bP
+	yCiQ7/sSXXz70lQd3iSzvFShNUk9mglgsGCH85hdKfqEWuipzi2DxEaO44qF6ox3
+	j6TPKULA+BH6cs/8YFfMXegbhtJpLlBU6duC9/reJZOaufyCx6e+JLXGInHIE5PE
+	mBpPwrJXCdhR3c5R8nGYUaJPZAFQ18DpcFD4qp2oS3wtwBySHT2e9HYYr21BBxXM
+	aCHT7ZSJRmE/Lxhrr4wcDI89pVSgb/xgQjSnCfgEk2n/dAMGyqnG/CJvQ==
+X-ME-Sender: <xms:erZAZdx_gt4Aty60IpnyWjR7dwD8Ngg7uzzGe8nw5FIqDn2E6woLwA>
+    <xme:erZAZdQ0NuuLcazij-8_lfB6IEgOp7QHcLeQb5J-lvogDli30txbZL9LIqelg0YJL
+    8MW919UZCV1YxNNgA>
+X-ME-Received: <xmr:erZAZXVOW1zQ5NUI1MMi61Zf4Ym4OtGG3KXRzfpqKRXjIZYddTbsGp7SUK5ZiAyEwD0Raf-o59oGBpVpOqYCkUzCYA4fECGKa_gctx0cq2Fcd9Sp>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddtuddguddufecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
@@ -49,17 +49,17 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddtuddguddufecutefuodetgg
     gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
     teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
     esphhkshdrihhm
-X-ME-Proxy: <xmx:dbZAZX1K7_gBwY5Aii-zteBOEsAs3Rvhjk3R7Gjln7WnDpva6pmaDA>
-    <xmx:dbZAZZHJTkj777jnPtSr4PeWv-Css97y2tUu44aPdSmiy39AbNzuqg>
-    <xmx:dbZAZQ-1NqNObenvVGVzJtO1pjDLYltIPtHpOUV_efa9LpxRgcfooA>
-    <xmx:dbZAZZANVWaFeM3ocm-teU50eAqBjrFpK-SUj0r9tycufzLAuIlWyw>
+X-ME-Proxy: <xmx:erZAZfjxHGpv1OqTowf5YrijOHzCxtVIGBbs2bhpt9G1dBjyoTRegw>
+    <xmx:erZAZfCam4z0rm8pbhm_KFjjEkIPPz-M1md1YQBg9AZoWHgbUC5ASg>
+    <xmx:erZAZYI0myG46TXvQ-pjNN4z5TDUFOMnQpBLOuC8hRonaYuAnMYthA>
+    <xmx:e7ZAZWPoEPXG2FKdsRfRlWjOhd8wRBq46kJVTdwIsKEXNz1ClNI_HQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 31 Oct 2023 04:10:28 -0400 (EDT)
+ 31 Oct 2023 04:10:33 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 56ae44a4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 31 Oct 2023 08:10:19 +0000 (UTC)
-Date: Tue, 31 Oct 2023 09:10:25 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id c3287189 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 31 Oct 2023 08:10:26 +0000 (UTC)
+Date: Tue, 31 Oct 2023 09:10:32 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
@@ -67,11 +67,11 @@ Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Han-Wen Nienhuys <hanwen@google.com>
 Subject: Re: [PATCH v2 05/12] builtin/show-ref: refactor `--exclude-existing`
  options
-Message-ID: <ZUC2cXiS949_7r4s@tanuki>
+Message-ID: <ZUC2ePXa4t8OElhu@tanuki>
 References: <cover.1698152926.git.ps@pks.im>
  <cover.1698314128.git.ps@pks.im>
  <bed2a8a07696371e07c0b2d1282ed51c0b1b9fee.1698314128.git.ps@pks.im>
- <ZT/32jI62GQKPlcp@nand.local>
+ <ZT/8GbzAmBq0aRIK@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -79,88 +79,91 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="S2WkdIhrZF//32mG"
+	protocol="application/pgp-signature"; boundary="anGq2Qp6WJcp7o1T"
 Content-Disposition: inline
-In-Reply-To: <ZT/32jI62GQKPlcp@nand.local>
+In-Reply-To: <ZT/8GbzAmBq0aRIK@nand.local>
 
 
---S2WkdIhrZF//32mG
+--anGq2Qp6WJcp7o1T
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Oct 30, 2023 at 02:37:14PM -0400, Taylor Blau wrote:
+On Mon, Oct 30, 2023 at 02:55:21PM -0400, Taylor Blau wrote:
 > On Thu, Oct 26, 2023 at 11:56:37AM +0200, Patrick Steinhardt wrote:
-> > It's not immediately obvious options which options are applicable to
-> > what subcommand in git-show-ref(1) because all options exist as global
-> > state. This can easily cause confusion for the reader.
-> >
-> > Refactor options for the `--exclude-existing` subcommand to be contained
-> > in a separate structure. This structure is stored on the stack and
-> > passed down as required. Consequently, it clearly delimits the scope of
-> > those options and requires the reader to worry less about global state.
-> >
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
->=20
-> All makes sense, but...
->=20
-> > @@ -19,8 +19,7 @@ static const char * const show_ref_usage[] =3D {
-> >  };
-> >
-> >  static int deref_tags, show_head, tags_only, heads_only, found_match, =
-verify,
-> > -	   quiet, hash_only, abbrev, exclude_arg;
-> > -static const char *exclude_existing_arg;
-> > +	   quiet, hash_only, abbrev;
-> >
-> >  static void show_one(const char *refname, const struct object_id *oid)
-> >  {
 > > @@ -95,6 +94,11 @@ static int add_existing(const char *refname,
 > >  	return 0;
 > >  }
 > >
 > > +struct exclude_existing_options {
 > > +	int enabled;
+> > +	const char *pattern;
+> > +};
+> > +
 >=20
-> ...do we need an .enabled here? I think checking whether or not .pattern
-> is NULL is sufficient, but perhaps there is another use of .enabled
-> later on in the series...
-
-This is the second time that this question comes up, which is likely not
-all that surprising. Quoting my first reply:
-
-On Wed, Oct 25, 2023 at 01:50:44PM +0200, Patrick Steinhardt wrote:
-> Yeah, we do. It's perfectly valid to pass `--exclude-existing` without
-> the optional pattern argument. We still want to use this mode in that
-> case, but don't populate the pattern.
+> Thinking on my earlier suggestion more, I wondered if using the
+> OPT_SUBCOMMAND() function might make things easier to organize and
+> eliminate the need for things like .enabled or having to define structs
+> for each of the sub-commands.
 >=20
-> An alternative would be to assign something like a sentinel value in
-> here. But I'd think that it's clearer to instead have an explicit
-> separate field for this.
+> But I don't think that this is (easily) possible to do, since
+> `--exclude-existing` is behind a command-line option, not a separate
+> mode (e.g. "commit-graph verify", not "commit-graph --verify"). So I
+> think you *could* make it work with some combination of OPT_SUBCOMMAND
+> and callbacks to set the function pointer yourself when given the
+> `--exclude-existing` option. But I think that's sufficiently gross as to
+> not be worth it.
 
-Anyway, the fact that this question comes up again indicates that I need
-to comment this better.
+Yeah, agreed. Honestly, while working on this series I had the dream of
+just discarding git-show-ref(1) in favor of a new command with proper
+subcommands as we tend to use them nowadays:
+
+    - `git references list <patterns>...` replaces `git show-ref
+      <pattern>`.
+
+    - `git references filter <pattern>` replaces `git show-ref
+      --exclude-existing` and filters references from stdin.
+
+    - `git references exists <ref>` checks whether a reference exists or
+      not and replaces `git show-ref --exists`.
+
+This would make for a much more enjoyable UX. It'd also be a more
+natural home for potential future additions:
+
+    - `git references show <ref>` allows you to show the contents of the
+      reference without resolving it, regardless of whether it's a
+      direct or a symbolic reference.
+
+    - `git references count <patterns>...` allows you to count refs
+      patching the pattern.
+
+I shied away though because it would be a much more controversial topic
+that would potentially result in lots of bikeshedding. Now if everyone
+was enthusiastic about this idea I'd still be happy to do it, even
+though it derails the topic even further from its original intent to
+just fix a bunch of tests. But unless that happens, I'll continue to
+stick with the mediocre UI we have in git-show-ref(1).
 
 Patrick
 
---S2WkdIhrZF//32mG
+--anGq2Qp6WJcp7o1T
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVAtnAACgkQVbJhu7ck
-PpRR1A//RV+7Ivb1EuGUKsqxt4wXdvj7ez0UVtHWHDkgdZRv9cNRfoCHAfJi/NGq
-mQyvQXHjmfgj1ncbh4U5IVZk+AxOPkgA7Nnyt3nh90Buewchgns/zvZNX9SmXlqg
-lmQ91d1s8zh+ltADWxqKmJRrhgiKsCUcqsUVdJ6wZSfI9Y18Ja3XZFb6VfG88CPA
-ouFtjJZQ71HOFQ5fDpNoW51GOQ5d/tgvCAQalIVcBHQ70SgKQSRfYvyiqSqhybC7
-tvw5tmibpsMyOIFNAyducWyed4ymbMp0pHqshHyJMDL37UDwpZgFeUEAEq+aguu2
-4RnopOfOCQ7LLH3V0ss5ab1IbG0z1zaQv18Ir+ub26lxT6Kw7vaIto+BE5HYIkKF
-G0r8/v3hH8ktQ+l+I2NQBm94RJ/W7hiFJpsFVY00G36c6iD+xiyK5IXESrqV70KR
-RFmkytlpboAXlj3FnZpM7T2bmORGGlPyeWAABFkXM28GjtKn7rpw4KTrOfwmhjC0
-FZgAjtPSKkoh9EcEbAPr+c1TtKgOXrY3qYlXgebJyUANMPbOw8g6uU1cwZIo0s8M
-rlnwfQpY/fq4YPfw5LQz7JfvSF1o4BLTmIabTHX8E5aJgWR0hHkGAdifgseMIhCm
-Hzdm8a+noTs7nzYlvpMsMY0IZmsxAP9zMqcgOGYlI9MUc1AQR7I=
-=Jwcj
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVAtncACgkQVbJhu7ck
+PpQOHg//SnsrGg2370syE8WFv1s9ES7VTzuEizXopEERIVBhVnNMu4xomAnNR9ui
+QkBvXcxLLVWhTxrD57Olaemv0nmMlScUSw6uY6CKqf1D+rmlH2dCxgQR3S/OS5NX
+hPZ6PLPhn/pRsrEGwSjb3LqhDlX2gE94kqnJ0XhBu3Qy3PJyHA7sBPhNoF1Ic8lO
+6Fk5JSTKp9LnihfLkOGlLzLzaIYqWsYAWOCmBAyq+7nKUlh51mDtLZE1UQq8aqaK
+1KuYeEt25fCHxABogI5Ww9B3M2139q+srxu4ZH6G4IjIPT4E5bt/GDOBgWsxvPTl
+/ztB2ihSFPeCzaRjRV8PFeMLTmzJeYJZ0iYCJLK89N9a2irTAzIQx/NX0zWzG64u
+ktItmDGBedoMNeSRbWCc9K4p464rNcG3WJ1N+1Z6FUGm8pAHWYeQ7dHOEzjapktc
+VB0vM10WN2b0GqMPujm3cfkAGdyzNS5NqsUx7PWrlsfRMLZRshD1TWxaqXq3o7g7
+aAWWLMr1a17YEXlj3gWl0q4zdpFyYbs0S8KfeZuKmjTCYkbaHXogQkT7BWbbcsrR
+4caPaiTP2fMz0VME9iFNnvB71YBB/JVUg06RUBi0E5rneNcRFcvse1E/0SbxkkxL
+yMYu9h/H2aFqgZog6m7+mjJdyt6hDiL2smRZ2rjnWgXZ8fY2KyY=
+=+OVA
 -----END PGP SIGNATURE-----
 
---S2WkdIhrZF//32mG--
+--anGq2Qp6WJcp7o1T--
