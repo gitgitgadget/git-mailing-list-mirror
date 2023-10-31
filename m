@@ -1,85 +1,89 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F10076AB5
-	for <git@vger.kernel.org>; Tue, 31 Oct 2023 04:54:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C70816D22
+	for <git@vger.kernel.org>; Tue, 31 Oct 2023 05:09:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="HPvxrxIQ"
-Received: from mail.manjaro.org (mail.manjaro.org [IPv6:2a01:4f8:c0c:51f3::1])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EBB19E
-	for <git@vger.kernel.org>; Mon, 30 Oct 2023 21:54:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SnfyqULV"
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 222F6D8
+	for <git@vger.kernel.org>; Mon, 30 Oct 2023 22:09:18 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-40838915cecso41094215e9.2
+        for <git@vger.kernel.org>; Mon, 30 Oct 2023 22:09:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1698728956; x=1699333756; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+CtfuBGSiqPMc0kbC+tReJdYb9e6zL7/auX4v0KL7q0=;
+        b=SnfyqULVNUC2xHfzhDRfw28kM6cB9VRjZCHY8ZQiyJ5eqRcxG7S0lT3gro8K4O3NRW
+         PKeSfwBPXadr+S7lnIwHCTk5YpegCYk4FICxBMDKjDvX6pwUS8zg5JwuSzsZ16FFCnyz
+         0fW7FOgu4f8rVc3o9xn+nWx3p1vHawm6kSOa54STLJVlI/PW+PxPbUez+btzS/aQIv07
+         11y+VGoL6zQsUHu0HjY+Oi8rCY6iyN3kNJ2W4b1uZfmXs143ysBuoqleEmxpf1zd5vAv
+         kFrwq49XVEZ8WAgk4ml1NW/3c3i+RL2b3aK0oRywwFWV4KZrocwsaicfrz/zwh8cgSFG
+         hlsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698728956; x=1699333756;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+CtfuBGSiqPMc0kbC+tReJdYb9e6zL7/auX4v0KL7q0=;
+        b=vI8YbPARASejDIspaEJtzvzt/iX0kmk1U377i5hikU5QwGkSgzoJGjpMMzuEYj+jiH
+         kZKEHxxr0aFroDtuIKYawmxYQkIJi5z/HCM/a0PXfzZmnZAC2AyYS4Yj/Jz+KhTF2xGn
+         ENXtVyG3SwqYMIvGHRpgI5yx+NkvF2DUH/QX7e+o5TNnGHKAK08higp4zv8Dma+qba7N
+         MZxszY7cQYvVP0ipNRFUbHP2wObkIOIg2l2j44lOAE0O0QWW+PuAlCXZD2cfQi2haLdq
+         d+0EGxuaBgIC+lZgv4Bv2LQHEVDse0epCogtFrKv93VE6wVSSpKDV3Tfiru0OXftzzl5
+         hrEw==
+X-Gm-Message-State: AOJu0YzXQRX6SWaJh8kdxd2c0hlby5aHK60grlF9jaWGmWy2RGURRbv0
+	a8CKx4MqOplDiRgIN0VcC5QWZE9DofA=
+X-Google-Smtp-Source: AGHT+IFVh++xvZiseF2tmuMAgnDP/1i6l/ne6VvcEpE4WrW6VvAYSpSobZdMh5Z8YnV+aTDEDAGBGg==
+X-Received: by 2002:a05:600c:4ba1:b0:405:a30:151e with SMTP id e33-20020a05600c4ba100b004050a30151emr10270694wmp.12.1698728956158;
+        Mon, 30 Oct 2023 22:09:16 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id h12-20020a05600c350c00b00405718cbeadsm211379wmq.1.2023.10.30.22.09.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Oct 2023 22:09:14 -0700 (PDT)
+Message-ID: <pull.1603.v2.git.1698728952.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1603.git.1698635292629.gitgitgadget@gmail.com>
+References: <pull.1603.git.1698635292629.gitgitgadget@gmail.com>
+From: "Tony Tung via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 31 Oct 2023 05:09:10 +0000
+Subject: [PATCH v2 0/2] sequencer: remove use of hardcoded comment char
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1698728071;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=muOZnwSShYJIiLPcGKHBKQqsgvB8BbMRtsaMNWBKic8=;
-	b=HPvxrxIQ2+gxz9ATpWnwuotievwho5sIr8Cn3qZqgdLH9qLDSmS+o8pmjlF8lREunB243A
-	PymUGuFH16TLKP098806gUOqNXXKBxsTK+0KcvZ0L4wrDrn+3mlkzD74Ek1uyHAL+5on/J
-	ouBSCLNFhMCrCC5qcIx/TFTNUDCMxN3DcX8Js5t1ycRqx0a4KR8QdTdnHSYslMuxfnW35f
-	bNNT7rsLiSFI2g3ey/rEACVg+zI+MM/DCqbTZOoUNzY+uHCsKy5iPpnkv2mkQNqj05Iaoq
-	hBpEjb24m9ukGhsfdsN3zbUWf++NfCTLFG1aKXKIqmeZ0mGObYqbQQ5Oaltodg==
-Date: Tue, 31 Oct 2023 05:54:31 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Hugo Sales <hugo@hsal.es>, git@vger.kernel.org, Derrick Stolee
- <derrickstolee@github.com>, Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-Subject: Re: [PATCH 0/3] Add `-p' option to `git-mv', inspired by `mkdir'
-In-Reply-To: <xmqqlebj4dnt.fsf@gitster.g>
-References: <20231009233458.1371351-1-hugo@hsal.es>
- <xmqq1qe3wbt1.fsf@gitster.g>
- <1384513657.119681.1697027599941@office.mailbox.org>
- <xmqqlebj4dnt.fsf@gitster.g>
-Message-ID: <ffbb04b363938e4a487906134ce4f3c6@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>,
+    Tony Tung <tonytung@merly.org>,
+    Tony Tung <tonytung@merly.org>
 
-On 2023-10-31 05:30, Junio C Hamano wrote:
-> Hugo Sales <hugo@hsal.es> writes:
-> 
->>> Both are plausible, and "mkdir -p" does not have such a nasty
->>> ambiguity.  That is what makes me unsure about the new feature
->>> (again, either with required "-p" or with implied "-p").
->> 
->> I think the ambiguity is resolved by the inclusion of lack thereof
->> of a trailing `/`.
-> 
-> The question is not if we can come up with a rule that the user can
-> use to disambiguate.  It is if the user will find that such a rule
-> is a naturally acceptable way to disambiguate.
-> 
-> When both of
-> 
->     git mv file there/exists/such/a/directory
->     git mv file there/exists/such/a/directory/
-> 
-> create "there/exists/such/a/directory/file" and removes "file", with
-> or without a trailing slash, "you should add a slash if you want a
-> directory, and otherwise you should not add a slash" is a rather
-> arbitrary rule.  Let's not go there.  I still view the downside more
-> grave than having to occasionally do "mkdir".
+Instead of using the hardcoded # , use the user-defined comment_line_char.
+Adds a test to prevent regressions.
 
-Please note that the above-described git-mv operation succeeds with no 
-trailing slash if "there/exists/such/a/directory" doesn't already exist 
-as a directory, and creates "there/exists/such/a/directory" as a file.  
-With the trailing slash, the git-mv operation succeeds only if 
-"there/exists/such/a/directory" already exists as a directory, and fails 
-otherwise.
+Tony Tung (2):
+  sequencer: remove use of comment character
+  sequencer: fix remaining hardcoded comment char
 
-A quite similar ambiguity exists in cp(1) in mv(1), which is also 
-resolved by the use of the trailing slash character.  However, I've 
-encountered only one person aware of that disambiguation, and in cp(1) 
-only, but in the "I always include the trailing slash" way, without 
-actually understanding it fully.  Maybe I need to encounter more people, 
-I don't know.
+ sequencer.c                   | 21 +++++++++++++------
+ t/t3404-rebase-interactive.sh | 39 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 54 insertions(+), 6 deletions(-)
+
+
+base-commit: 2e8e77cbac8ac17f94eee2087187fa1718e38b14
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1603%2Fttung%2Fttung%2Fcommentchar-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1603/ttung/ttung/commentchar-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1603
+
+Range-diff vs v1:
+
+ 1:  10598a56d64 = 1:  10598a56d64 sequencer: remove use of comment character
+ -:  ----------- > 2:  c9f4ff34dbd sequencer: fix remaining hardcoded comment char
+
+-- 
+gitgitgadget
