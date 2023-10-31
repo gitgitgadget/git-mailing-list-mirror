@@ -1,72 +1,72 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A982B168B7
-	for <git@vger.kernel.org>; Tue, 31 Oct 2023 09:04:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5879C182A4
+	for <git@vger.kernel.org>; Tue, 31 Oct 2023 09:05:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IuXKLp3A";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="k1BtKeuI"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KaVf4Yaf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R7I19XNl"
 Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 661B591
-	for <git@vger.kernel.org>; Tue, 31 Oct 2023 02:04:58 -0700 (PDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.west.internal (Postfix) with ESMTP id 80AD432001FC;
-	Tue, 31 Oct 2023 05:04:57 -0400 (EDT)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E10A291
+	for <git@vger.kernel.org>; Tue, 31 Oct 2023 02:05:02 -0700 (PDT)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.west.internal (Postfix) with ESMTP id 06C473200979;
+	Tue, 31 Oct 2023 05:05:01 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Tue, 31 Oct 2023 05:04:57 -0400
+  by compute1.internal (MEProxy); Tue, 31 Oct 2023 05:05:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1698743097; x=1698829497; bh=CB
-	TC27/gk3SfAJlkjrofJ1X981YGe0tiPYnh8gyQi0U=; b=IuXKLp3APBeF7Cnmh4
-	9iUjq0IciS8sEJj8Dm1ACgC5iZjUJOG3LucnKCLPxyPh8akoWRS+C8yeJHnhdgS2
-	QlGcLLSoVNw1NhpsQau2n3v+3bEn//v+pl7Thz8YeR3/tkDixYUDj8Fk8e3fR2uC
-	Qg+5XFN0seL61fFIjE2/ZM/Q5S2BYLSeubNeX8oEY38uwsiRtYo5qQ8rVl44hP+u
-	IXqePzyCh0HdxdBZA90Jueg/3NvA7+grgEyBDiaVf1pL77lZ7fT0O4L6NQLTLWFv
-	3YqoTv3s0QuAJHhgEa8hAHmlcIGo8ID49WVUJbF77kYeV5A4ixpHsPyQnaW2L4F0
-	hDrg==
+	:subject:subject:to:to; s=fm3; t=1698743101; x=1698829501; bh=+z
+	8YuG/jUwTGAh1ZCpIH0dHYmgGp07sh9tJvJ0CAWIo=; b=KaVf4YafHqZwAggX2+
+	Bqp2msnR5XbaTMVGeqylJeJxrw8DAfwZJhgTay0t+GBZGkP0jdb2u+4+CbfAWX8k
+	wEcrzLv+1d1lEeUkqrpZ2UjZjvZMoY0doC86wJ6529CbojL2rwne2ZftdWuaOE6A
+	NYMuQchXdxVLiZAwage8V4SdNRVLwyPine8+zr6uwJF1Jb75Kzlr6fk+1XApMIs+
+	mEFLrLNOU9zLbmEyT+rlA26KHtGGvkRYzWGhpQxaIyY5lcSukE29Dwh2GlbwDb0x
+	LqVDz8WdrfGoFTDjxgKxfxoR05Zw/th2LZ7U10elH5qqMnwauAx39FS50ScwkaE5
+	8lTg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1698743097; x=1698829497; bh=CBTC27/gk3SfA
-	JlkjrofJ1X981YGe0tiPYnh8gyQi0U=; b=k1BtKeuI9Cqxqs3dbCFVco5BqfKv3
-	tUGDdWU3SZ31xRLuRvWyzvW2tmz3YDikz1b8yB9Xvs9Ll7APQyRaMQ35L8WRQqKk
-	vNQHIYuODmgVRRogAe/EzQQUNAYuZfVv+EVXJA9awpqm0SouuN3GBfCLnE71j4wM
-	noPOqaalm8+/UebSWVc4Ug9gNDqnR2rpyefIhJUoAiiT2deiYlveNlPN54pD8xYH
-	O1YEFzCaOp215BekETd/AhCMmz8LC+uiigvLksItjNsTMjmaPjBpcGUn3GPdtJsc
-	Sus4e1kgJwKn3qsL6nW9dzKhe0CNkxCFWNP8e1Bh1tx4pGgXRaoIok2eg==
-X-ME-Sender: <xms:OMNAZXekv6TqAEcTNFNH9uX9el70ApNmDevUWIuq1srwPfrhs-PV5Q>
-    <xme:OMNAZdMMBmsMme3ra4MxZrw62dA8jnVJ9e8OAuyfPaqWJ0fTii3IleaYeZm2iaJ21
-    0npcK__GJH_H8xd3Q>
-X-ME-Received: <xmr:OMNAZQhg_cRRpRyQ3b9_eYOVBa88XyTt41y8NUlazwpGai21CzVP9v9ktXjzh14E4mX1yPBVKpAPmtvN5_MQm4d3Xk9Zplcivps28ICfiLsEv-7F>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddtuddguddvgecutefuodetggdotefrod
+	:x-sasl-enc; s=fm3; t=1698743101; x=1698829501; bh=+z8YuG/jUwTGA
+	h1ZCpIH0dHYmgGp07sh9tJvJ0CAWIo=; b=R7I19XNlIlB5/sBUcPe9benh7Qs4C
+	GowCa7quuIizg0Asrt9LSgg6bxYssKoT347jGM7Nq/fc9fYXJ/n81Gf1l3edRWBh
+	M0DfeFAhBZpsfNTdPis110yqRgfRO0A6vtRnHWdd7vzEXDmk3084sx8a7rbeCFzm
+	DJEczT0xrX9LrMOY6N+pjVNZnDlyhnOeGBnTwIjXqmAAlvMhhX59aEXfrwgHOSIJ
+	+g+wL6BKTrN9wCByrsAAj35JbJCMxcCWB4jrUKZLSXeaqkG9NzpNAtg3OYUEeuPF
+	VXUr5kh7+z65mewQLoQ5SKqHrZY7toeiNPg+9IYqp3IGq04l0voRF3I7w==
+X-ME-Sender: <xms:PcNAZc7cH9TSvhCrNbAaOEPUasarSkBVosesIoovISQB9OuHweX-eQ>
+    <xme:PcNAZd4z0Gt4VhKHbk3LqZ1LOkU1thT3D5Ow0heKlVws5aRLrMCBzrSHXO_f9b6sO
+    vDRkYxfJ2Yg1W5-IA>
+X-ME-Received: <xmr:PcNAZbfhR0LP14RmpIL_BGuxm4bzT0HxNuuaKJGqZ5J-720CJhUJJV5nux_hXqkJ2hlJL8aoMAxo0q893La8nHjbLBSxmEZqh_Hne_YAh54hdLW1>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddtuddguddvhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
     enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
     rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
     gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
-    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
+    teenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
     esphhkshdrihhm
-X-ME-Proxy: <xmx:OMNAZY9_bED9EJbUkGNtEzIAuwZ1ESMT33KUCYkga13ANzK7y-dSfA>
-    <xmx:OMNAZTuO5L6shyG-STc2CXp5FS1UJyFHtkRgWnjpHrMH6HAia778rw>
-    <xmx:OMNAZXEtZGhag12J4duJ-xOOQZMDOW3r1sjxPNua0XHME3DQetkZxQ>
-    <xmx:OcNAZTJwIFO1fEawMAd0As8ZNYPEKJT5JvQoC95Qi9GFXIRLLhvdVw>
+X-ME-Proxy: <xmx:PcNAZRLx_NgwhxXutzPgwMXk6FXJ6PbhfwS-hNX1AXWm2m_09rGaPQ>
+    <xmx:PcNAZQKVJLni8REkUSyJia5Tkr6RaFNwvjyUXZN-B4rKLRxlKrrN1g>
+    <xmx:PcNAZSzaMU3741xjJB2sqzG8I4ExcpX44lymnNKAfp5iLg2yejKGRQ>
+    <xmx:PcNAZU3Z8qvBuvjBPvpzw2BapEyaVgPGTmggczz45N5kG_4-w-Gdfg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 31 Oct 2023 05:04:55 -0400 (EDT)
+ 31 Oct 2023 05:05:00 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id bd5ebe73 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 31 Oct 2023 09:04:48 +0000 (UTC)
-Date: Tue, 31 Oct 2023 10:04:54 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id e492443f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 31 Oct 2023 09:04:52 +0000 (UTC)
+Date: Tue, 31 Oct 2023 10:04:58 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
 	Phillip Wood <phillip.wood123@gmail.com>,
 	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Subject: [PATCH v4 4/8] ci: split out logic to set up failed test artifacts
-Message-ID: <e15651b3f5d5b7250f73eeb0db33ae1d68cd37c0.1698742590.git.ps@pks.im>
+Subject: [PATCH v4 5/8] ci: unify setup of some environment variables
+Message-ID: <a64799b6e25d05e5d5fc7fe3c5602b5ce256d8b9.1698742590.git.ps@pks.im>
 References: <cover.1698305961.git.ps@pks.im>
  <cover.1698742590.git.ps@pks.im>
 Precedence: bulk
@@ -76,111 +76,112 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="nGRzfMpHV+yemeGW"
+	protocol="application/pgp-signature"; boundary="tXtn69AWXjf5bjqK"
 Content-Disposition: inline
 In-Reply-To: <cover.1698742590.git.ps@pks.im>
 
 
---nGRzfMpHV+yemeGW
+--tXtn69AWXjf5bjqK
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-We have some logic in place to create a directory with the output from
-failed tests, which will then subsequently be uploaded as CI artifacts.
-We're about to add support for GitLab CI, which will want to reuse the
-logic.
+Both GitHub Actions and Azue Pipelines set up the environment variables
+GIT_TEST_OPTS, GIT_PROVE_OPTS and MAKEFLAGS. And while most values are
+actually the same, the setup is completely duplicate. With the upcoming
+support for GitLab CI this duplication would only extend even further.
 
-Split the logic into a separate function so that it is reusable.
+Unify the setup of those environment variables so that only the uncommon
+parts are separated. While at it, we also perform some additional small
+improvements:
+
+    - We now always pass `--state=3Dfailed,slow,save` via GIT_PROVE_OPTS.
+      It doesn't hurt on platforms where we don't persist the state, so
+      this further reduces boilerplate.
+
+    - When running on Windows systems we set `--no-chain-lint` and
+      `--no-bin-wrappers`. Interestingly though, we did so _after_
+      already having exported the respective environment variables.
+
+    - We stop using `export VAR=3Dvalue` syntax, which is a Bashism. It's
+      not quite worth it as we still use this syntax all over the place,
+      but it doesn't hurt readability either.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- ci/lib.sh | 40 ++++++++++++++++++++++------------------
- 1 file changed, 22 insertions(+), 18 deletions(-)
+ ci/lib.sh | 24 ++++++++++++++----------
+ 1 file changed, 14 insertions(+), 10 deletions(-)
 
 diff --git a/ci/lib.sh b/ci/lib.sh
-index b3411afae8e..9ffdf743903 100755
+index 9ffdf743903..9a9b92c05b3 100755
 --- a/ci/lib.sh
 +++ b/ci/lib.sh
-@@ -131,6 +131,27 @@ handle_failed_tests () {
- 	return 1
- }
+@@ -175,11 +175,7 @@ then
+ 	# among *all* phases)
+ 	cache_dir=3D"$HOME/test-cache/$SYSTEM_PHASENAME"
 =20
-+create_failed_test_artifacts () {
-+	mkdir -p t/failed-test-artifacts
-+
-+	for test_exit in t/test-results/*.exit
-+	do
-+		test 0 !=3D "$(cat "$test_exit")" || continue
-+
-+		test_name=3D"${test_exit%.exit}"
-+		test_name=3D"${test_name##*/}"
-+		printf "\\e[33m\\e[1m=3D=3D=3D Failed test: ${test_name} =3D=3D=3D\\e[m\=
-\n"
-+		echo "The full logs are in the 'print test failures' step below."
-+		echo "See also the 'failed-tests-*' artifacts attached to this run."
-+		cat "t/test-results/$test_name.markup"
-+
-+		trash_dir=3D"t/trash directory.$test_name"
-+		cp "t/test-results/$test_name.out" t/failed-test-artifacts/
-+		tar czf t/failed-test-artifacts/"$test_name".trash.tar.gz "$trash_dir"
-+	done
-+	return 1
-+}
-+
- # GitHub Action doesn't set TERM, which is required by tput
- export TERM=3D${TERM:-dumb}
-=20
-@@ -171,25 +192,8 @@ then
- 	CC=3D"${CC_PACKAGE:-${CC:-gcc}}"
- 	DONT_SKIP_TAGS=3Dt
- 	handle_failed_tests () {
--		mkdir -p t/failed-test-artifacts
- 		echo "FAILED_TEST_ARTIFACTS=3Dt/failed-test-artifacts" >>$GITHUB_ENV
--
--		for test_exit in t/test-results/*.exit
--		do
--			test 0 !=3D "$(cat "$test_exit")" || continue
--
--			test_name=3D"${test_exit%.exit}"
--			test_name=3D"${test_name##*/}"
--			printf "\\e[33m\\e[1m=3D=3D=3D Failed test: ${test_name} =3D=3D=3D\\e[m=
-\\n"
--			echo "The full logs are in the 'print test failures' step below."
--			echo "See also the 'failed-tests-*' artifacts attached to this run."
--			cat "t/test-results/$test_name.markup"
--
--			trash_dir=3D"t/trash directory.$test_name"
--			cp "t/test-results/$test_name.out" t/failed-test-artifacts/
--			tar czf t/failed-test-artifacts/"$test_name".trash.tar.gz "$trash_dir"
--		done
--		return 1
-+		create_failed_test_artifacts
- 	}
+-	export GIT_PROVE_OPTS=3D"--timer --jobs 10 --state=3Dfailed,slow,save"
+-	export GIT_TEST_OPTS=3D"--verbose-log -x --write-junit-xml"
+-	MAKEFLAGS=3D"$MAKEFLAGS --jobs=3D10"
+-	test windows_nt !=3D "$CI_OS_NAME" ||
+-	GIT_TEST_OPTS=3D"--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
++	GIT_TEST_OPTS=3D"--write-junit-xml"
+ elif test true =3D "$GITHUB_ACTIONS"
+ then
+ 	CI_TYPE=3Dgithub-actions
+@@ -198,17 +194,25 @@ then
 =20
  	cache_dir=3D"$HOME/none"
+=20
+-	export GIT_PROVE_OPTS=3D"--timer --jobs 10"
+-	export GIT_TEST_OPTS=3D"--verbose-log -x --github-workflow-markup"
+-	MAKEFLAGS=3D"$MAKEFLAGS --jobs=3D10"
+-	test windows !=3D "$CI_OS_NAME" ||
+-	GIT_TEST_OPTS=3D"--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
++	GIT_TEST_OPTS=3D"--github-workflow-markup"
+ else
+ 	echo "Could not identify CI type" >&2
+ 	env >&2
+ 	exit 1
+ fi
+=20
++MAKEFLAGS=3D"$MAKEFLAGS --jobs=3D10"
++GIT_PROVE_OPTS=3D"--timer --jobs 10 --state=3Dfailed,slow,save"
++
++GIT_TEST_OPTS=3D"$GIT_TEST_OPTS --verbose-log -x"
++if test windows =3D "$CI_OS_NAME"
++then
++	GIT_TEST_OPTS=3D"$GIT_TEST_OPTS --no-chain-lint --no-bin-wrappers"
++fi
++
++export GIT_TEST_OPTS
++export GIT_PROVE_OPTS
++
+ good_trees_file=3D"$cache_dir/good-trees"
+=20
+ mkdir -p "$cache_dir"
 --=20
 2.42.0
 
 
---nGRzfMpHV+yemeGW
+--tXtn69AWXjf5bjqK
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVAwzUACgkQVbJhu7ck
-PpSWZw//TJs5Enj/7MBfLO745OgnAMZBFQmNINTIMHnsVQvYiQ+mn4AWnyXBQeAf
-8mSfHJDsAsLyCwV6Jlrcu6E/IIIdfSHYj+WDR1acerUnfUH2m7yDaJXuHFvfS161
-UZsGVzUEC/ySdesbEZH0BGvpsVqDbF6KXHnRVr5NF96O2tC9pMJyJ01itCLVwJJE
-FK5bZ/BIN1NkyIs9FFgqCiEdpsHl11QO7MbgGgBK5Gd3gudrD3WV5mlecdsg9IpA
-8wjVgip2ccuG3iW966CiQIXL7D3h4RldFCR73FvEwISk7Ie0BG5vIu41SZ7Bg3Sx
-oLCoj2SmdsPy0brXPe1gQ2vLrnUdSmdDbXe0HSZdrndfYJq4CObtBsetmqwTIJuL
-PhC555VrsMyB0YYSfMdTAI5bFq30pV+CRuBX1wr1dvXOY+2tcOCf8GQjLltsGAci
-rHQ3OIaqU6amcfajuK+BmqajcV9BAxbxc8JFbvkE3OGveOS+K/Qm25JCoib1I7yB
-jxDAa1xWkOu2p7aPfi86koOH+IQfMet8XnDJRKkq6ddCygWveIN7CJRGRSE/3Ueb
-HJiJUzxiTARlhHNrmM+7m+P90RuJH98ivthLTwyu48G7vAE84/MLBOYhbIydO785
-DWaO+jgkC3JIXB7JuxmFdHUttvF00s6dRamZoS7sAjiWS/6uZFE=
-=2oyE
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVAwzkACgkQVbJhu7ck
+PpQPTg/+LnJK9ronuPyOwoSW9vvvycKykeE3WvQYdjsXxffwY4zU1V9K5pNvOrXr
+aC13wZc6sUIDhXmfy4aYdrwsB1wEETdzDEAxDBKwRluXb40HiMJFvMWnQvuebDEp
+16qGjbAbA3wYArW/QDU7VvVJc38EF9JJQ85VI9epeEBjzRmprj0JOk9PSUNPJrTi
+zTisvhd4WLyhOMRZqR8xBwRBO/Qk5pzpxF1c+DCT5HbeOD5bgd6WxguPaxz/tf1i
+545B/2nAPXVgBIYQRvjqSZV154CsVKGZAcgy22n3GzQ8pli6rZmTOXr5LPEhZxka
+A99bLPHO4TZjBPO3YjiUQrNCKT8xtRi803J5TX9JtS94XHsRVepiV3/VkFUg3skE
+JK7ybwJrtQlcX3QyVV3YoHDOU9PV5EOzLbGp+YHSPsijmzZgQyMK/M1kwpiryC3l
+4IcdWFwTEq3JRG4saGFCthXUvR9HjfNMjEGI6tkTJlMIGUjvcqvVVi5hWraWbiDX
+nWfKsj7pkYFz+q6HnRFGerX4G9D8TLF7ykAxw8LGJ+U8vhRNGEWE3c8THxyQfPms
+8sVsl6C3yzN9gU2vxZOMn+rKr9wNtb3uaibEMeDiBJBoNAdZg4mLETOb67UCeXT+
+WtJ7pMguM0qZxgoeMpCdk8XCqMujOuhzNZHIQcb0WonN/kKOGjw=
+=YoGZ
 -----END PGP SIGNATURE-----
 
---nGRzfMpHV+yemeGW--
+--tXtn69AWXjf5bjqK--
