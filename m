@@ -1,73 +1,72 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3958F1944E
-	for <git@vger.kernel.org>; Tue, 31 Oct 2023 09:05:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E055199CA
+	for <git@vger.kernel.org>; Tue, 31 Oct 2023 09:05:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NtQ+KbIl";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T3FEv4Hz"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DZCIpWl1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PqbR5jE0"
 Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0BE0E8
-	for <git@vger.kernel.org>; Tue, 31 Oct 2023 02:05:11 -0700 (PDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.west.internal (Postfix) with ESMTP id D171032009AB;
-	Tue, 31 Oct 2023 05:05:10 -0400 (EDT)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26BFBFA
+	for <git@vger.kernel.org>; Tue, 31 Oct 2023 02:05:15 -0700 (PDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.west.internal (Postfix) with ESMTP id 43CB4320093C;
+	Tue, 31 Oct 2023 05:05:14 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Tue, 31 Oct 2023 05:05:11 -0400
+  by compute3.internal (MEProxy); Tue, 31 Oct 2023 05:05:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1698743110; x=1698829510; bh=Be
-	wxoY8nghTnmOg2GZFL8ChRX032VIIVJiBpyAt6cgU=; b=NtQ+KbIlRKSo+7QYPk
-	h3uRiH7V3T3wlkEOuJMEz8YPUK5DU0NtX6DQDPL0cl2z6eSXxmtePc33UwYHBHiC
-	liyPK6e7Ax4B0KOzzxgVZ7qE5+zXtLsDAvQPINo4F2DC+yiuCxFIx4nd31agy85r
-	maHuz4xijFzRBN6cF9TgNQOpIFZ3B+4gel7t1jtIInPZC+0VdeBpi/759R/MboR7
-	eMFSxlLN9nL1Cjic7xpzUQ1e1YNPzzAB1rBx5VJEZTTTqDZQeFynHo1U8AiN/c9B
-	pZbOhrDUu2jTr8NCtKUeXYcJfUMQfFBmJXuAF8fJBJW7yGy3zizFbj94xdLKM+G3
-	0Y7A==
+	:subject:subject:to:to; s=fm3; t=1698743113; x=1698829513; bh=Tk
+	GQR18xeEb0kF3Ko4vb8pA/m9+aGFQXdCvGYUNyR78=; b=DZCIpWl1wgBQhXUELS
+	Gjc3xE+OoMkfAYi50INgxEfdLBB3cRa32FKem2OGZa13r4gtxamciFlL+sf4Z8AP
+	GaybNU0tCt8JgJFDtBZ8OScx9mFx4k8erpVltq16N2ra0ZyVWcvdaz9IvJ+vIxoj
+	RD8GOXSLptOjiEVP8v2cb+QWsFQaUJOApfuajvdit0aMVZq/MbBbrWcENixwJOJH
+	93wIOolniXXCl86ucqOM0bCWipsompdDGrr5TOgjAZpuf+HJqZLwzW2w8Zntc+hB
+	YGdRRaGFR3NFIAbts2tQYkeqcG41hRF1SH2fbM2rFA+36xGOuqjIGHMOtzINtNH0
+	e4Gg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1698743110; x=1698829510; bh=BewxoY8nghTnm
-	Og2GZFL8ChRX032VIIVJiBpyAt6cgU=; b=T3FEv4HzoXqMKty78jY0qVtXFS39E
-	UFASMruHxjOoO0n1sklzOrzACC3ncDwYaP98Xweyez+ykLPq6J3mMiYNwtRfRoJJ
-	Edzvmn931QilM7MrfCOr6CGlUayH+kB1lNxQNX1ogO/DwTQfmYN2vp+4p3lABjjx
-	Wzs/oRvAm/mXmm4CDj9PibBr0IH5kh9Hs6M4pR2CcF2i8pxoWvbajBsFRY6jqFcb
-	kLenLjK5xTrdh8Cm6WBQZ2Tt4sZ2Yeo/bs0Q012zQPASxhLE5M/NgrMbLua+nEa6
-	ctwD0e60cxGiM/lRccDi/h8Wk5LJ0njl5Miu4fRaEoVLv7LVxb7bmfunA==
-X-ME-Sender: <xms:RsNAZdoWbW-zJh3GO1Ue7_l4sDd9oo_D27cJdH0loDZtNslFLg-9yg>
-    <xme:RsNAZfqy6NgwYXv9fc4-imRWyFi6w9ml9vt0G747zH6DxbHuWq37pwKuWVGf2HoxN
-    YtJ-9eujyOPx6OIzQ>
-X-ME-Received: <xmr:RsNAZaMouS0NC9pklgFyvXs2uZkfm2JZJWArpHl9wKUzwznGJzHdXI-gzyC4QRri6vokgtAOr_E1Sl0acaabgwKMJ6l_sdvBc6dydtYd2gej_K3o>
+	:x-sasl-enc; s=fm3; t=1698743113; x=1698829513; bh=TkGQR18xeEb0k
+	F3Ko4vb8pA/m9+aGFQXdCvGYUNyR78=; b=PqbR5jE0UaYy5dS5ec1NyU1aD2sg0
+	cuAjXPbPq+ODV0v1Fli3rsEH0ftneiokuyjIHzUXKNAB30it+cB5gFOP0gNJmdqK
+	H1OpMOlg6RwmV47poPw9PYOrg7IM17a86bjza1DoaFwhANvippjwMTESJFVQBMQ/
+	1I2e7UM+CRUqtZSHR1CpZ+1aLuph2MSuQHlEcqAVRtiYaxz0Qp97wf5kaNtINd6D
+	qJKHRRrO8HfjcqQ1+YgfwpnKczLgwHEyL3b+byKw11JHRSRNfbhoq5R3W7no3n/E
+	30X4rCJpAu1Zucc9f5soBhs2E4mm65UE5XHEl17JqEgl7saMX1ExFbf7A==
+X-ME-Sender: <xms:ScNAZfH_9fSKiCaC4gJlLhKt2HWDL7XiTIzf60oHIjN1SmjaZGjy6Q>
+    <xme:ScNAZcWb0oie09QJK218ZpnQp7nt94UvxmMXTa6GGo2oEvpHHRAqQj41DrKv9qZUw
+    cXwyz3_LZdAtvBZSQ>
+X-ME-Received: <xmr:ScNAZRKpm-BabQiKYHCoWgIBXocE1QhlBPIo61-KVccgpyE4tql6WfDMhksog6xwF7WfNimQK7yUtov7jc-Sy7xXt05BZ6yURWj3rQvsqavBvZbg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddtuddguddvgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
     enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
     rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeejteefleeitedtleefueduhfeghffhveduveegudeuuddvtedvteeghfdthfeg
-    veenucffohhmrghinheprghlphhinhgvlhhinhhugidrohhrghdphhhtthhpugdrshhhne
-    cuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehp
-    khhsrdhimh
-X-ME-Proxy: <xmx:RsNAZY4rgOcZGW5RaZng-HZHId7XO1EqNEN73vjuqGEWy50RAUzvfQ>
-    <xmx:RsNAZc7j3z8eDNLAnQBG19rOMWoYEFaYq-GFVcDGWrfZyICFYODAHA>
-    <xmx:RsNAZQivzX84Q7vziVeX2KFDZ8gWmda_5SSRiLhI6i2S7tm86hdKaw>
-    <xmx:RsNAZantCWNYfttU1bQkvs1Qia8ERv2GsVTVrK-tcxjSo8MM3eBQcQ>
+    gvrhhnpeelgfeitdffkedvteffgeduuedvffdtffehteefleffvedvffehvdffgeelgeeg
+    ieenucffohhmrghinhepghhithhlrggsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:ScNAZdGUqDkQWb23y6D1zbwMBwrPyLrcwjlscCLqvzS7Ko2QMoS5sQ>
+    <xmx:ScNAZVXnaq1s0aViie1DrZBBReZ2jqUL8yhTgOwD29PmCfdTPLGOkg>
+    <xmx:ScNAZYN5nVvN-rv4qJyx8BiaueNk3QQ8-bdW_KjPzlgTqBFlxQhHAg>
+    <xmx:ScNAZYRsXHDON1D89AyatJwnTlbvmEZ8EOSS8gIywhOCTuIlUBOPaw>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 31 Oct 2023 05:05:09 -0400 (EDT)
+ 31 Oct 2023 05:05:12 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id ab49968d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 31 Oct 2023 09:05:01 +0000 (UTC)
-Date: Tue, 31 Oct 2023 10:05:06 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 5c5b8331 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 31 Oct 2023 09:05:05 +0000 (UTC)
+Date: Tue, 31 Oct 2023 10:05:11 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
 	Phillip Wood <phillip.wood123@gmail.com>,
 	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Subject: [PATCH v4 7/8] ci: install test dependencies for linux-musl
-Message-ID: <9b43b0d90e30c3ec49fac29060dc19d21274139f.1698742590.git.ps@pks.im>
+Subject: [PATCH v4 8/8] ci: add support for GitLab CI
+Message-ID: <f3f2c98a0dc6042b7ed5eab9c10bee4f64858f02.1698742590.git.ps@pks.im>
 References: <cover.1698305961.git.ps@pks.im>
  <cover.1698742590.git.ps@pks.im>
 Precedence: bulk
@@ -77,122 +76,279 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="l4Ec4ncKMN1ckAtm"
+	protocol="application/pgp-signature"; boundary="GKl5S4PKgQ62WFmd"
 Content-Disposition: inline
 In-Reply-To: <cover.1698742590.git.ps@pks.im>
 
 
---l4Ec4ncKMN1ckAtm
+--GKl5S4PKgQ62WFmd
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The linux-musl CI job executes tests on Alpine Linux, which is based on
-musl libc instead of glibc. We're missing some test dependencies though,
-which causes us to skip a subset of tests.
+We already support Azure Pipelines and GitHub Workflows in the Git
+project, but until now we do not have support for GitLab CI. While it is
+arguably not in the interest of the Git project to maintain a ton of
+different CI platforms, GitLab has recently ramped up its efforts and
+tries to contribute to the Git project more regularly.
 
-Install these test dependencies to increase our test coverage on this
-platform. There are still some missing test dependecies, but these do
-not have a corresponding package in the Alpine repositories:
+Part of a problem we hit at GitLab rather frequently is that our own,
+custom CI setup we have is so different to the setup that the Git
+project has. More esoteric jobs like "linux-TEST-vars" that also set a
+couple of environment variables do not exist in GitLab's custom CI
+setup, and maintaining them to keep up with what Git does feels like
+wasted time. The result is that we regularly send patch series upstream
+that fail to compile or pass tests in GitHub Workflows. We would thus
+like to integrate the GitLab CI configuration into the Git project to
+help us send better patch series upstream and thus reduce overhead for
+the maintainer.
 
-    - p4 and p4d, both parts of the Perforce version control system.
+The integration does not necessarily have to be a first-class citizen,
+which would in practice only add to the fallout that pipeline failures
+have for the maintainer. That being said, we are happy to maintain this
+alternative CI setup for the Git project and will make test results
+available as part of our own mirror of the Git project at [1].
 
-    - cvsps, which generates patch sets for CVS.
+This commit introduces the integration into our regular CI scripts so
+that most of the setup continues to be shared across all of the CI
+solutions. Note that as the builds on GitLab CI run as unprivileged
+user, we need to pull in both sudo and shadow packages to our Alpine
+based job to set this up.
 
-    - Subversion and the SVN::Core Perl library, the latter of which is
-      not available in the Alpine repositories. While the tool itself is
-      available, all Subversion-related tests are skipped without the
-      SVN::Core Perl library anyway.
-
-The Apache2-based tests require a bit more care though. For one, the
-module path is different on Alpine Linux, which requires us to add it to
-the list of known module paths to detect it. But second, the WebDAV
-module on Alpine Linux is broken because it does not bundle the default
-database backend [1]. We thus need to skip the WebDAV-based tests on
-Alpine Linux for now.
-
-[1]: https://gitlab.alpinelinux.org/alpine/aports/-/issues/13112
+[1]: https://gitlab.com/gitlab-org/git
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- ci/install-docker-dependencies.sh |  4 +++-
- t/lib-httpd.sh                    | 17 ++++++++++++++++-
- 2 files changed, 19 insertions(+), 2 deletions(-)
+ .gitlab-ci.yml                    | 53 +++++++++++++++++++++++++++++++
+ ci/install-docker-dependencies.sh | 13 +++++++-
+ ci/lib.sh                         | 50 +++++++++++++++++++++++++++--
+ ci/print-test-failures.sh         |  6 ++++
+ 4 files changed, 119 insertions(+), 3 deletions(-)
+ create mode 100644 .gitlab-ci.yml
 
+diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
+new file mode 100644
+index 00000000000..cd98bcb18aa
+--- /dev/null
++++ b/.gitlab-ci.yml
+@@ -0,0 +1,53 @@
++default:
++  timeout: 2h
++
++workflow:
++  rules:
++    - if: $CI_PIPELINE_SOURCE =3D=3D "merge_request_event"
++    - if: $CI_COMMIT_TAG
++    - if: $CI_COMMIT_REF_PROTECTED =3D=3D "true"
++
++test:
++  image: $image
++  before_script:
++    - ./ci/install-docker-dependencies.sh
++  script:
++    - useradd builder --create-home
++    - chown -R builder "${CI_PROJECT_DIR}"
++    - sudo --preserve-env --set-home --user=3Dbuilder ./ci/run-build-and-t=
+ests.sh
++  after_script:
++    - |
++      if test "$CI_JOB_STATUS" !=3D 'success'
++      then
++        sudo --preserve-env --set-home --user=3Dbuilder ./ci/print-test-fa=
+ilures.sh
++      fi
++  parallel:
++    matrix:
++      - jobname: linux-sha256
++        image: ubuntu:latest
++        CC: clang
++      - jobname: linux-gcc
++        image: ubuntu:20.04
++        CC: gcc
++        CC_PACKAGE: gcc-8
++      - jobname: linux-TEST-vars
++        image: ubuntu:20.04
++        CC: gcc
++        CC_PACKAGE: gcc-8
++      - jobname: linux-gcc-default
++        image: ubuntu:latest
++        CC: gcc
++      - jobname: linux-leaks
++        image: ubuntu:latest
++        CC: gcc
++      - jobname: linux-asan-ubsan
++        image: ubuntu:latest
++        CC: clang
++      - jobname: pedantic
++        image: fedora:latest
++      - jobname: linux-musl
++        image: alpine:latest
++  artifacts:
++    paths:
++      - t/failed-test-artifacts
++    when: on_failure
 diff --git a/ci/install-docker-dependencies.sh b/ci/install-docker-dependen=
 cies.sh
-index d0bc19d3bb3..6e845283680 100755
+index 6e845283680..48cb2e735b5 100755
 --- a/ci/install-docker-dependencies.sh
 +++ b/ci/install-docker-dependencies.sh
-@@ -17,7 +17,9 @@ linux32)
+@@ -7,6 +7,9 @@
+=20
+ begin_group "Install dependencies"
+=20
++# Required so that apt doesn't wait for user input on certain packages.
++export DEBIAN_FRONTEND=3Dnoninteractive
++
+ case "$jobname" in
+ linux32)
+ 	linux32 --32bit i386 sh -c '
+@@ -16,11 +19,19 @@ linux32)
+ 	'
  	;;
  linux-musl)
- 	apk add --update build-base curl-dev openssl-dev expat-dev gettext \
--		pcre2-dev python3 musl-libintl perl-utils ncurses >/dev/null
-+		pcre2-dev python3 musl-libintl perl-utils ncurses \
-+		apache2 apache2-http2 apache2-proxy apache2-ssl apache2-webdav apr-util-=
+-	apk add --update build-base curl-dev openssl-dev expat-dev gettext \
++	apk add --update shadow sudo build-base curl-dev openssl-dev expat-dev ge=
+ttext \
+ 		pcre2-dev python3 musl-libintl perl-utils ncurses \
+ 		apache2 apache2-http2 apache2-proxy apache2-ssl apache2-webdav apr-util-=
 dbd_sqlite3 \
-+		bash cvs gnupg perl-cgi perl-dbd-sqlite >/dev/null
+ 		bash cvs gnupg perl-cgi perl-dbd-sqlite >/dev/null
  	;;
++linux-*)
++	apt update -q &&
++	apt install -q -y sudo git make language-pack-is libsvn-perl apache2 libs=
+sl-dev \
++		libcurl4-openssl-dev libexpat-dev tcl tk gettext zlib1g-dev \
++		perl-modules liberror-perl libauthen-sasl-perl libemail-valid-perl \
++		libdbd-sqlite3-perl libio-socket-ssl-perl libnet-smtp-ssl-perl ${CC_PACK=
+AGE:-${CC:-gcc}} \
++		apache2 cvs cvsps gnupg libcgi-pm-perl subversion
++	;;
  pedantic)
  	dnf -yq update >/dev/null &&
-diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
-index 2fb1b2ae561..9ea74927c40 100644
---- a/t/lib-httpd.sh
-+++ b/t/lib-httpd.sh
-@@ -67,7 +67,8 @@ for DEFAULT_HTTPD_MODULE_PATH in '/usr/libexec/apache2' \
- 				 '/usr/lib/apache2/modules' \
- 				 '/usr/lib64/httpd/modules' \
- 				 '/usr/lib/httpd/modules' \
--				 '/usr/libexec/httpd'
-+				 '/usr/libexec/httpd' \
-+				 '/usr/lib/apache2'
- do
- 	if test -d "$DEFAULT_HTTPD_MODULE_PATH"
- 	then
-@@ -127,6 +128,20 @@ else
- 		"Could not identify web server at '$LIB_HTTPD_PATH'"
- fi
-=20
-+if test -n "$LIB_HTTPD_DAV" && test -f /etc/os-release
+ 	dnf -yq install make gcc findutils diffutils perl python3 gettext zlib-de=
+vel expat-devel openssl-devel curl-devel pcre2-devel >/dev/null
+diff --git a/ci/lib.sh b/ci/lib.sh
+index e14b1029fad..6e3d64004ec 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -14,6 +14,22 @@ then
+ 		need_to_end_group=3D
+ 		echo '::endgroup::' >&2
+ 	}
++elif test true =3D "$GITLAB_CI"
 +then
-+	case "$(grep "^ID=3D" /etc/os-release | cut -d=3D -f2-)" in
-+	alpine)
-+		# The WebDAV module in Alpine Linux is broken at least up to
-+		# Alpine v3.16 as the default DBM driver is missing.
-+		#
-+		# https://gitlab.alpinelinux.org/alpine/aports/-/issues/13112
-+		test_skip_or_die GIT_TEST_HTTPD \
-+			"Apache WebDAV module does not have default DBM backend driver"
++	begin_group () {
++		need_to_end_group=3Dt
++		printf "\e[0Ksection_start:$(date +%s):$(echo "$1" | tr ' ' _)\r\e[0K$1\=
+n"
++		trap "end_group '$1'" EXIT
++		set -x
++	}
++
++	end_group () {
++		test -n "$need_to_end_group" || return 0
++		set +x
++		need_to_end_group=3D
++		printf "\e[0Ksection_end:$(date +%s):$(echo "$1" | tr ' ' _)\r\e[0K\n"
++		trap - EXIT
++	}
+ else
+ 	begin_group () { :; }
+ 	end_group () { :; }
+@@ -208,6 +224,7 @@ then
+ 	cache_dir=3D"$HOME/test-cache/$SYSTEM_PHASENAME"
+=20
+ 	GIT_TEST_OPTS=3D"--write-junit-xml"
++	JOBS=3D10
+ elif test true =3D "$GITHUB_ACTIONS"
+ then
+ 	CI_TYPE=3Dgithub-actions
+@@ -227,14 +244,43 @@ then
+ 	cache_dir=3D"$HOME/none"
+=20
+ 	GIT_TEST_OPTS=3D"--github-workflow-markup"
++	JOBS=3D10
++elif test true =3D "$GITLAB_CI"
++then
++	CI_TYPE=3Dgitlab-ci
++	CI_BRANCH=3D"$CI_COMMIT_REF_NAME"
++	CI_COMMIT=3D"$CI_COMMIT_SHA"
++	case "$CI_JOB_IMAGE" in
++	macos-*)
++		CI_OS_NAME=3Dosx;;
++	alpine:*|fedora:*|ubuntu:*)
++		CI_OS_NAME=3Dlinux;;
++	*)
++		echo "Could not identify OS image" >&2
++		env >&2
++		exit 1
 +		;;
 +	esac
-+fi
++	CI_REPO_SLUG=3D"$CI_PROJECT_PATH"
++	CI_JOB_ID=3D"$CI_JOB_ID"
++	CC=3D"${CC_PACKAGE:-${CC:-gcc}}"
++	DONT_SKIP_TAGS=3Dt
++	handle_failed_tests () {
++		create_failed_test_artifacts
++	}
 +
- install_script () {
- 	write_script "$HTTPD_ROOT_PATH/$1" <"$TEST_PATH/$1"
- }
++	cache_dir=3D"$HOME/none"
++
++	runs_on_pool=3D$(echo "$CI_JOB_IMAGE" | tr : -)
++	JOBS=3D$(nproc)
+ else
+ 	echo "Could not identify CI type" >&2
+ 	env >&2
+ 	exit 1
+ fi
+=20
+-MAKEFLAGS=3D"$MAKEFLAGS --jobs=3D10"
+-GIT_PROVE_OPTS=3D"--timer --jobs 10 --state=3Dfailed,slow,save"
++MAKEFLAGS=3D"$MAKEFLAGS --jobs=3D${JOBS}"
++GIT_PROVE_OPTS=3D"--timer --jobs ${JOBS} --state=3Dfailed,slow,save"
+=20
+ GIT_TEST_OPTS=3D"$GIT_TEST_OPTS --verbose-log -x"
+ if test windows =3D "$CI_OS_NAME"
+diff --git a/ci/print-test-failures.sh b/ci/print-test-failures.sh
+index 57277eefcd0..c33ad4e3a22 100755
+--- a/ci/print-test-failures.sh
++++ b/ci/print-test-failures.sh
+@@ -51,6 +51,12 @@ do
+ 			tar czf failed-test-artifacts/"$test_name".trash.tar.gz "$trash_dir"
+ 			continue
+ 			;;
++		gitlab-ci)
++			mkdir -p failed-test-artifacts
++			cp "${TEST_EXIT%.exit}.out" failed-test-artifacts/
++			tar czf failed-test-artifacts/"$test_name".trash.tar.gz "$trash_dir"
++			continue
++			;;
+ 		*)
+ 			echo "Unhandled CI type: $CI_TYPE" >&2
+ 			exit 1
 --=20
 2.42.0
 
 
---l4Ec4ncKMN1ckAtm
+--GKl5S4PKgQ62WFmd
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVAw0IACgkQVbJhu7ck
-PpRZ4w/+KTJE8Rux7cXtBamuoCceBheZ5A2TT6MnkeueOlYdQsYUnuKrvdMS/n2S
-7xFv77tH2FO0y8t0ASG1M+rGpDxj3FOWa8uOGGEhCHWZrZHJiTKayCP1JQlnE+d7
-2eHhsWyBDO1txfyexyzaZQ1QQhZFBpejMqqtGnP3xRcJ0iv7BGIBcKmJvvnVRQY6
-43n3BM/Bql1V9sLr9PKk0aQ8w/ZfjQ/x3RFUNTLGRKxdchYJDlBq8CaHmCqJri5q
-MFEvPGXis/4p52h2X7++/ZQYGf1x2tutuVykdEMM+ZJlBQbWcOWhnca7LZDCYqfN
-CSP3ATTQ5g7Bqsqh86akFe8BDuMM5YyepeTuKukDJyv7ymomkNx0SvYRMQqJB74G
-VYKCiNnADyP14d1Hqd/l582a1juhYClo9aihcfG4tjNkrYT+9YTgLmE1ZsNAh7pH
-FR7Oq+rjgPmEwOLL0uFPz6dABLTYW1oL8cRWltYGTMvizq9glkd4D22+NcLmrBNc
-MbBf1weivo3nFNOiQ8rGiVY3A4zMUSpQaxu+QgZ/9GkHtOcn8XcHJ8yiIegbPouT
-LUm32hZcuZL4iYCqe1Y3qMHs8yc/ycxduU1u6g/AcxTHZarH7QvQXMYqx8R1fQBb
-w+XzyDm7Br5tyZl0OFpIjzOYhy26x7RYpEJGVNTtm9ny80mVujQ=
-=JGP+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVAw0YACgkQVbJhu7ck
+PpRwTRAAgvjpIP1kt4P2R2KZX/qdGfW4Ri/fLUWNj8tQ5OB2Pa893HWtwdJ/tnzI
+vt/L7U3IBQReNIK0vps0/LbSCKyeUG5Yn88zUmCCC/6KmmK+BIlaVJ95S3b3wo/u
+QcqamMo8rR/n1bsHUImMBm+UZ3xcqy5OMLjeQXwQCLIGqpm33KSBZ4LgbypvKCKl
+5iGKU/DC1b9Y4pijFGFkr/OSmvHodDZumQAB7NwEbLjlXCnTHfZa9Rf0a/+nQ08W
+6bewwL7llPuqEsnVf+2/CAsW4e/WAy68+8ZBkz8l0zSMN6elaQnLY2cELLTFtcbi
+2WjKBWZHyYPjuLTRiRUto+5ChLPPRvemDRdPRJKXLMi+tk69bjBcMWoyreFmhLY0
+WtO33cxmbw8HS9hKXm746K2T5fil9ZAjlI3seNi8wVc3eFO/Y5ezkL4HR/1mTNcF
+2gBCPuOIgClOv+IGeTgful7o7KacmkVXuCA0Eu4U+fJsy1dDdXczdIq5l7thhgaI
+gCwsf+ZKyyXZouW5vCZcveaORuoVmHvGubo8d1X4+A7X3Et7f03UC1AOw0wLA686
+SYAHV748CvF3d4oc4nc1vDPjpDZC/yL4pjtyJB2PR/R5CgPYEISGdB+YrN/w6U6H
+ZWDr+pMc6q1k7jla2Zi8c7VyZ7xqW6nWRMttueYkOtqavXMJ+lk=
+=+5X9
 -----END PGP SIGNATURE-----
 
---l4Ec4ncKMN1ckAtm--
+--GKl5S4PKgQ62WFmd--
