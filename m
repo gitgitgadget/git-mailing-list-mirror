@@ -1,312 +1,184 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F5C1A736
-	for <git@vger.kernel.org>; Tue, 31 Oct 2023 20:21:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F7A4249FA
+	for <git@vger.kernel.org>; Tue, 31 Oct 2023 21:49:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OyuimR/X"
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5DF7F4
-	for <git@vger.kernel.org>; Tue, 31 Oct 2023 13:21:18 -0700 (PDT)
-Received: by mail-ot1-x32c.google.com with SMTP id 46e09a7af769-6d319933f9fso15633a34.2
-        for <git@vger.kernel.org>; Tue, 31 Oct 2023 13:21:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AmLNS1Nm"
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CD81ED
+	for <git@vger.kernel.org>; Tue, 31 Oct 2023 14:49:47 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2c51682fddeso2845401fa.1
+        for <git@vger.kernel.org>; Tue, 31 Oct 2023 14:49:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698783678; x=1699388478; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=qom1PICjfOeAEFmgEL+mKn+VUKQIarnm0PIocObjILo=;
-        b=OyuimR/X5n9gQbGA2YIQYsTSzXqj1jLegKJOoNHm8mZz3DDsTKP/dFsNQWNSus5iDI
-         TKhb9njWobOwOrwNY2VpNr3uJ+HzMEO73IY0Bdsh8vHt46b9uvV5hiSQ8sGFzHwk2HNZ
-         FvgTeT1agFMm8I5Mq6jdJpDL1LB7IkGWSM8phlovA0XCVxWdE+5Shex5SyKt1y8oFwTE
-         uIoWFiFdNJbvx07Yr3PHM39zZdqpIuq5cI+M1Dqgfv1HBR07Xlb6ntJqb4A19bFlMYHU
-         nRlUFtochYbioGTnjvglHOks+JM3DoT6JQHOoy/5NWQ3QAyeAtYsm6lq/ywh2rjwUOyf
-         XmHA==
+        d=gmail.com; s=20230601; t=1698788985; x=1699393785; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8uqWxWouL4vh0J+sbGw0YzrHfpOz1TO2fQBF3kyGipY=;
+        b=AmLNS1NmdnOFXsKllqDjD9+SI0vJ9XN1nfQKMcrc+VngfQVeT5m11xydVrzBQ9AEwI
+         ElRAwrfPL31fdUdSK2jUwHJgBjkkojCnOZXYgVl0Wfpp3e5zzvUeavS3dAp3C2AYSnoK
+         u9YIa0F0yOkQklMEyVTj2xX8YGGejb1SzmNJyAwsA84JHBBk0F4TjBxhgJ2UsHFPgRqN
+         3SA8rRLy/obd+gdD0Y8aklLV7NZrGgnwWRuqiOCgQP6kwJttb1Gx42BuBQZTDqG/Mhp5
+         y/FuMHSTIPNfopZOszT2HOy49JBtKSonIxZxthUoj8nK5HXFA29ks99DqnHlX6fnW5Ca
+         P9YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698783678; x=1699388478;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=qom1PICjfOeAEFmgEL+mKn+VUKQIarnm0PIocObjILo=;
-        b=INpDJKDXwRhIhauCEcxG7hEgdfyxKTWIbRKBfZ/yaXow7KIWLLQqbGpzjwBN2aKDAA
-         ChSmK6z96qj6CeAhClwMj3GKvfGolhTip8qyZYRtqA6gGupaAMmz3Ck4i/IQduqjvvOF
-         SzmDWFLqmDX4eLnI9IpSMPXihgs+fr2zT/YC7EhcfAZ68GLYU2ZpKyc01QEZx5Y6m/z2
-         srLMGIOF5wAVx2ukx6Hob5YUm4YET9i9PoEHBz5t+zzmIY2a+SR5KKDia9ceUUx9AGWE
-         EF3s0IjWZZ+KCSQt/xNyp8sMx6WoyuEV18hYxT8RjlFgi/0zVDjP7/Iapc4a2uKM1zNm
-         Xu7g==
-X-Gm-Message-State: AOJu0Yz0U0YvKWgJjlwWSAKP/7aR58+VNI8DnXHDJrS2Su49g9l3v45W
-	Mpg7ks0tQVS8QOPoOjrp7mpTJtZf7aNvRjPNsLLxraqM
-X-Google-Smtp-Source: AGHT+IH4KQBwSwnJjo09IlbVj8/UW23MIljZtOwmINJIbcW7sMyMaH7vIdB9hmntUOhi0016RKolzHK+DqB1YrwbcUI=
-X-Received: by 2002:a05:6830:1657:b0:6af:9b42:9794 with SMTP id
- h23-20020a056830165700b006af9b429794mr14485518otr.35.1698783677695; Tue, 31
- Oct 2023 13:21:17 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1698788985; x=1699393785;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8uqWxWouL4vh0J+sbGw0YzrHfpOz1TO2fQBF3kyGipY=;
+        b=SY+KQUBguMsUJs2GaUsgW8ufmUYhn6SCpgcmK04X+PuzNTguuQps+c4TNECDtS2vWi
+         kKEhOWpCQDQ4vMf9E6n9JpC4eyuiO3fEMKsG8+H+U4nfX2bmd4qQGCfEcl8l6KTZuIl6
+         lRTGdIXwoxHDa61AoFQHBGIfIrgmFrfAkdh9PHLF9qFddDrMTJydesHMAkNoly+QEIDI
+         +PcZTLCdfINAFubyOuCFo/Z5jWcg+af/MzmOfT8uuJTVUliV1+q6qmA52ffsE+VgvT+3
+         IAcX4tj1MBmp+UIYxSzpJxpF8qQ4yOxU54js2YiHiL7zdeq1qTHELJ7ouJscNwBm65X2
+         3DPA==
+X-Gm-Message-State: AOJu0YyNEfhlbdOrZ1xxdd1t0SuowyoU4BI8cQSN5TWb5E9zGh535ve8
+	6SDhHqYdTWEUUMeFEEEYuub8Hy4bv8A=
+X-Google-Smtp-Source: AGHT+IHuZsdn+5+qxjs16++UoL2fnsjbQMp2mSVtr0SQf4HQoY4xjVEIxt9wYvKaLE8j5En3WzONSw==
+X-Received: by 2002:a2e:9457:0:b0:2c4:fdaf:1d62 with SMTP id o23-20020a2e9457000000b002c4fdaf1d62mr283349ljh.11.1698788985176;
+        Tue, 31 Oct 2023 14:49:45 -0700 (PDT)
+Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
+        by smtp.gmail.com with ESMTPSA id m10-20020a2eb6ca000000b002c023d3dadesm25108ljo.113.2023.10.31.14.49.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 31 Oct 2023 14:49:44 -0700 (PDT)
+From: =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v2 1/1] merge-file: add an option to process object IDs
+Date: Tue, 31 Oct 2023 22:48:57 +0100
+Message-ID: <20231031214859.25293-1-martin.agren@gmail.com>
+X-Mailer: git-send-email 2.42.0.899.gfd14d11e2b
+In-Reply-To: <20231030162658.567523-2-sandals@crustytoothpaste.net>
+References: <20231030162658.567523-2-sandals@crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Injamul Hasan <injamulhasan2020@gmail.com>
-Date: Wed, 1 Nov 2023 02:21:08 +0600
-Message-ID: <CAG4aqRxyY+xeWVc+StqsE3AVp6O2ghFhtW9iHBUFfq+hCiTWEQ@mail.gmail.com>
-Subject: facing issue in git in a perticuler directory
-To: git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000a95998060908e582"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
---000000000000a95998060908e582
-Content-Type: multipart/alternative; boundary="000000000000a95996060908e580"
 
---000000000000a95996060908e580
-Content-Type: text/plain; charset="UTF-8"
+On Mon, 30 Oct 2023 at 17:37, brian m. carlson <sandals@crustytoothpaste.net> wrote:
+>
+> Since we obviously won't be writing the data to the first argument,
+> imply the -p option so we write to standard output.
 
-hello i'm facing this error in my e drive but when i try anything in other
-drive it works properly .do you have any solution?
+This paragraph changed from v1, but this doesn't match the actual
+behavior, from what I can tell: `-p` is not implied.
 
---000000000000a95996060908e580
-Content-Type: text/html; charset="UTF-8"
+>  'git merge-file' [-L <current-name> [-L <base-name> [-L <other-name>]]]
+>         [--ours|--theirs|--union] [-p|--stdout] [-q|--quiet] [--marker-size=<n>]
+>         [--[no-]diff3] <current-file> <base-file> <other-file>
+> +'git merge-file' --object-id [-L <current-name> [-L <base-name> [-L <other-name>]]]
+> +       [--ours|--theirs|--union] [-p|--stdout] [-q|--quiet] [--marker-size=<n>]
+> +       [--[no-]diff3] <current-oid> <base-oid> <other-oid>
 
-<div dir="ltr">hello i&#39;m facing this error in my e drive but when i try anything in other drive it works properly .do you have any solution?</div>
+I see this duplicated synopsis was discussed on v1, and that the
+difference here is "file" vs "oid". It seems we could avoid this
+redundancy and risk of going out of sync with no downside that I can see
+by instead dropping all these "-file". See below for a patch that could
+go in as a preparatory step.
 
---000000000000a95996060908e580--
---000000000000a95998060908e582
-Content-Type: image/png; name="Screenshot 2023-11-01 021641.png"
-Content-Disposition: attachment; filename="Screenshot 2023-11-01 021641.png"
-Content-Transfer-Encoding: base64
-Content-ID: <f_loervk9f0>
-X-Attachment-Id: f_loervk9f0
+> +If `--object-id` is specified, exactly the same behavior occurs, except that
+> +instead of specifying what to merge as files, it is specified as a list of
+> +object IDs referring to blobs.
 
-iVBORw0KGgoAAAANSUhEUgAAAgYAAAC7CAYAAAAe9FYiAAAAAXNSR0IArs4c6QAAAARnQU1BAACx
-jwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAADQGSURBVHhe7Z0PaBzXncd/OZTgWLFRiq1YlVRH
-kATDhtBLwsmbyMGCcm5gfXUO0epiO71CCCUrcKlKIsGRkFDqtYnKBaRQQuB6ySbnFEFdIrimXFkT
-O5EFjnuYCEzp4Sq7wq4cGpFEjkkFuu/vzZvR7Ghmdnb13/p+4Enz5s3v/ZmZ3d+f93bmppaWljkg
-iv6/66675L333jN5QgghhGws/s7+J4QQQgihYUAIIYSQeWgYEEIIIcSDhgEhhBBCPGgYEEIIIcTj
-7/y/SIhi2wmRHd+3mWr4lkgLZBvusXlC1iCpx0WOddpMFdQqF8exX4r03GUzFt33JtraiGzksROy
-WtzU3NxsLALXMFizP1eEcbEtK7LpDid7/TWRT/7H2TagfMeLIrOB/WrUzD4nMv1HZPQY1PHXIyJf
-OcWRcsH25C9o8x3nGK3zy26RGVvU8LJInS2rhwG15VHktQAynw7hOG0bqNwmZ9PDGwfaq087sp/7
-6jb4+4I6v0CdZjwgrr24siie//YHcv/V4/KdD0+a/L4HPpCn69+WZ997WS7KAZQ/I/ebEpdReeW3
-vfKuLZPxh+SFolOisrun3Py98uQDz8n+7S2mTK6V5J0LOPH34eJc+K68Nu3sdkBdj+yUF9CmsmvX
-gPzozrQ0aeaa25d5du36lRy7s2j7UT3Hjou8rl23+aSUyUGZH3tKpL3RFIlMibyEshGbTYoqwuJP
-RQb/ZHesINp2u91WJi+IHPy5zSwTqzleQkg462MqwSr0L6HYSlCaU1Cmm/aL3GKLlVugVFX5bXrQ
-yYehyvU66vCMAhAl14BjBcpe2zMJcl9+7JTFMgnDw8p8elnk9n+2+8Enbl2aoA9n0e5nMApugQLf
-5jsuiPal7rwjN4U+3Ya8N/aY9mLLooDCvrx9j+wzmQOyux55s62clBd++5B85+zb2KcGAbYDyvj+
-tiOyy27PA6PgkVdlv7wlzxoZpAtvyRn5SIozLdK8xR7m0rBTmmYmnO3WASh9kV+fdeSevfB7Z79L
-wxEYDdbYqAH1+uW/qzcKyuQ64dX+m5Pf+69Oyr4qcknL1hkv2f7vhbKW+xZGLwghNz7RhoEqY3i4
-OhWgadu37H6Ler8N2LcNTp2W+6ca1IN25TTV2/3KLZDZ4St35VQ56rapr8/Ja7m2UQ+FNguFqN6u
-ljc+6cj42Qo39nMo79lvlrfnUo86VdG7nrZLlFydGylwgVwlb1uZgaJ3DY+/qUaFm+s3YFxU2btG
-ylf/CaMhB9lRp6wMXAeNFHyOY5SvUP915Lfa6xHXXtK+lPO+nLualt2t2GzdI01T7/sMgwpcG5Xz
-8j350a577Q5L6w9k/2YYEh+enPf0p7E9LTIxU3LyUPC/+Pav5MkGbG/5BjqvLiQMira0nB+H8WEj
-ChenP/JFCw7I8/c9LOfG1VCpjSdw3V8v2Iyl58cip+DJanoT22H45XoexZ/fiTzrq2cc3feMDTUc
-jsM7Rl3mv3/6QSMN2LegLex/0/ZBU3DKQj3tHuzzZP3h9kCdWk/VCh791yvTqvcB0PYyvnpP+fqa
-suNz+xoM/fvPpybtd8bu0whFF4wqtyyjAhXGroTV6ZLk+hFCook2DKAEr1hv8wt4tmHcBq/dePHw
-4Ovw5egq1ukjjpzxiu0+D3jdGso35QG5Oihpre86vnS/hvwUPLBNzSK3Iv8llJyr3FX2upGwQEnW
-QTOo4r6Ovt5qlaZLHQyLLSgvmypQYuQ+077BAGmBIaLGSVCh3m4NG023BY0Iy1aMTacf/BEKA+rb
-dH6hkRIKdGQd+vY3m1U00lCH8xIksj0QVxbkzNSo3N94QPY1tsq5K9ZzT8TH8valUWm68wc24uCw
-qx7a5erp0DD/xZmiNNXDkIAx0CQt8uCOe83xl2c+Quld0ry5JJOiRsMH8hsYDs/7jI59D0ADXfqu
-vPa53VEl6vW3/G95tEAVVvrKvOdf2rFQMQXlWhtxXJRlokoORu7oqzAcfi5yEP9bkHcV9TEoRa1L
-2/rZH7Dt7DaK+aDtw/CU3RegC9f0NOrbC6Ox+R+tUgXBOmtBx6hK+7TP2PmXp2x7PzXBqHmKaOcZ
-p71gX/R8duEcvgQZU45UwPEjOBe6PYZjhn1lZuqlwtij6nTLKl0/Qkg8i5pK0Llu40VD2S8wACJQ
-xbTVjRgEPP9ZKEvXK3c9ZINVjDfD4zUGAr5Yzby5pf5ByJ5ztq+hjuC0wCy+tP0GiEucnHrmahhN
-YYyC/Y3or1/+UzVsbAoznDSyIe76gQDbYFD91T++JSC2vZiyUIqn5fz2x+Wx+vflTNncfwKKvfLK
-1bQ8FowauJjIgCr5D+QX9pim+ruMMXD+zzAqsK1MesoexkLjhPy7mcJ4X+TOV+V5E80YkMfkLW89
-Qy2o1/9fb9mMZc99jmJzPU5dM9BiFjfMEyYXCfraDOVW0ACIgv+jyBtPHApLla9b1ziUsI2fJGIY
-SnpE68U58BT1Iuv8iR33EMaoCtu/RkKNG9OeKm7f2gM1kJ5wIwb4bPrR8zkGA9/IWTSashji6kxy
-/Qgh8az4GoNtL+KPnS8PjSiEoMdsvsdR3uqp34pvwVl46a6y1ojCJvXukW+EASDIlxkBo0704XYo
-SL/nX1EOfAVDZTrnKP9gJCIKnUrRyEaYInajHkk8d4MaXRjrzTar6DTHrM9li2svriyak3L2KnzX
-qd+XLfJLyrv/9zYU+HMwLJy8RgXEXbcw/bL8EEr+laumCBbgx3K5fqd01Bfl7BUYJHa76DNILk/Z
-KQjInoVcU/0BM8XQtP0ZY2D8Zvf3pEnS8rQ7FZEEKFD1qsMWB47BaHM9Tk0H/UZAiFwRir79721m
-neOtMXhm4YLAP0codI1QiI1QLIgmrAKx148QUpHVWXxovzl04Z/f849CDQJdcHczFLwaFJ9AWX5m
-vfUZnQ6A0ne9d02qxLcEPBedx/8C/xtVMSsV5DQq4RkRMEoWrDmIQBW/ThOEKmLUswXGh0Y9EmOn
-Odx+6RqNTcjrokUlrr3YvlTg3Q8fkh9e1HB+DUCB/xqGRdNmmy/+h7xzDYr7kSOyL6i4pyfk8uaH
-5cH6j2Vi+k+4NXTblhkDRcy0hlnQ2HBAdm8vybkrJ+W19+wiRhNJcBdDBn/dEI2uCwjz+k9fgJJH
-mc6nu6R822Fyg7iPdKGezq2nnF1mCsFsqzcPr7XTrQP/08gXNdJhPf09NtSdseH7RbEcdSbBTqWk
-/gEeu7NpqHQ+FXcdQ1Li6kzSHiEknhU3DD7Dl6iZu4eXvhV5VcYaBXB1SBiq1Keg4La86Mi1qJFg
-yxr2Q3EGFu2pIaHrFYLrAnTtg65f0EWOleR02uJr2pYmjXIkDMVrFEKnLYycJl+UwhhC8KzKfooI
-3IWW2o4aSu76BXfB5/SQyCz6pfsa0W+dwnEjDnHtxZXVhv4k0e+h65TAQNl6Apd3PzyugSHLR1Dk
-T8k7Mw/L07udaYSnoeAvmxMBY+AajIiZCblof6XQJDASjJzWAzl5XI6ZdqHlxl9MrPwjgdJMR0QL
-dO57+IrIT3wL4p5wFVeUXMHxlEs430NW5tRTIm2qkOBlH8T9m0beLD7E/xLyxhtH+tnvcF1w/VVm
-D5SrzrkvCq0T9Xt1Ytei66zA674xPIG8rgvQKQldZxB7PsFpyLZbWU3u2oQ44uqs1B4hJAH6HANN
-X//610165JFH9IEGtad7ZA7Kx2zDu52DMvLyTExrIfUclzkooNCyuFSr3EoneMjz250y9+Yv10e/
-mZiY1kZa+ojBN+Y9bf1ZYdKV8ISsCDHRglhqlVsF2v5p3lseelRkNLCIkBBC4lg/Tz4khBBCyLKz
-OosPCSGEELImoWFACCGEEI9EhkEqm5Os9zusxZCRXCGfsK6wY3VfQfJL0xlCCCGEBKhgGKQkmy/I
-YFe7dA1CIecy87/TXhVGpK+zUw4N+R9iuxiqMVSSshx1EkIIISuDMQzchYdBUtl+SZcGpGd4TIZ7
-OuXoG5fKnitPCCGEkBuLilMJ/qeYjY9XNgtS2bzks1nJ5QtS0AgD8gX1oMOeXJLJST6fk4zrXaes
-nE4X5DrsToD9eezT/ZpQrQ/10LUO/Ley2m4lMjk9tlfaMUKNhjh1ox5bbqIlOe27U6bREhedWpnv
-T97rT+U6CSGEkDWO/+FGCx9wlJrL5gtzUH5zUH6+/dEJhsBcIZ+bg6KeyxUKc/lsyuzT/1Cd2Jef
-y6ZwXCY3l89n52ATWNn54009mexc3h47X7/Tn/K+WDnTJvIpyOUyvvK4NN+fYBmUvNcXc5zXblAG
-4/PJxdXJxMTExMS01lOFiMG4DB3qlIGxZmnvTb7ob3L0DRkxwYUxORGyHqD1cF76d74hhw4NzU9N
-ZDrgac8fPz4yUcVb4SZl9Gif0+b4kBzqW+zjXDLS0Q6jqWvQev290t4s0rJTxz8iZ8ZEugbzkstm
-JZMa5/QKIYSQG4ZEv0pQBT/QMwxteHhJwuLFIlR+emnqcijJxDJo57GBTunsnE/uoseRvkPIH5Uz
-0ird/fyVBCGEkBuHGMMgJakMks0tKaf65NAJkV6zNsDuu1SE398uHcZaSEkm270yb4UDrW12w8OJ
-CrR3a0TA7tLzodv4kzEb4zIy1CdHRyeleWEFIXUSQggha58Yw2Bc2nb2S3+hIL3t7dI7mJbSQN/S
-PXN9pE96hltQrzUOxofk6PCYtPRq6L5fOiZGl/2tcMYAGIYBYNosXyg40tcjw6U0+ueW9cvhNu1o
-m3T0u1MMBRlMl2TgDf9Zia6TEEIIWeuYdyX4f64Y9q6ETC4n0reERgEhhBBC1iRlhoH+v/vuu/kS
-JUIIIWSDknDxISGEEEI2AjQMCCGEEOJBw4AQQgghHjUaBtW8KCjsWN3H3/9vXHhPBMnkIh4bvtJk
-cubXNL4ngG8Aqvk+W0hKH+1ufoHkpPJzF3ZfO/vc49fPPc/P7UZhlSIGS/2WxPXC4r6AVo7V6OdK
-3hNr7DqkstItJ2Rowc9+lqOfKzl2batcUer7RG4soyMjh3tbZNT3MLTyB6+G3dfOPj12YPl/k73M
-bODP7Q0MpxIIWW3aWqW5vXdtKMyRPiirSSlesvklQB8UdmN/l5dkgr/lJjcQkT9X1Lci9suolNJd
-0q6vXi52y2CXyPDAIXg2arl1S7EH22ooaiitW+SE+74CfUtiP+SaRSbHxqTU3uIcK1nJoxL3jY36
-yOF561rr7JAzPWeko995NwEOkE6/+a1vWVT54P5Y9C2J/dJlKlQm7RicEGB/d7s026LJ4R5r+drx
-DYxKa7cdR6IyLdZz0SKlUklaWvD/xCEzRvWUehc8ynFMBjqTPB8iagyVzlm53CTK3PdIRI29cj+j
-64xlWe6JuL6En7OJjgrji7h+0X25JNn8oKRHffeAgnoKHWeS3ad6LDrlH/tiroO+/bO/S9/xqUyi
-3iruwQyuR8dE+DWt+vOHc5bXt6S2S4s9P9qHjjN2nJHnOp6o8Zn2/N9Lpr+tciLinLn3hPd9FvWZ
-DgV14bp3uVV5oM6K9/U8ej66i8G24u7rGKq+dxPUyc/txsR9q2JTU5NJ7tsV1+RbEnUfjikkfnui
-85bEAvpn6jT7MA67ncLYvH5jHIUC2jZ5py+eXNIy0z/fWIN533lz8slS9Bjiz5nKudfBHOs759Fj
-t8dG9DOuzuhk+7nE90RcX+Kue+T4Yq9fTF/Mcf7zp2MJP3/VpYh+IkWPPSizhG//NOPEeU38+dN+
-4bvBd39pv00/Y891XIobX6AscF2i7wmVi/hMV0wqG3ds2H09n8qvY9g+PYfR8l6KPZ/O+Kp/A62V
-4+d2w6XYqYQ195ZE3adzc4mtOectiWMnhuw4lHEZt9v673DeLgJaYI7CUj1q5cx7HPxElGlIeHJU
-TrltjZ+S0cnmRb43IX4M0ecs7g2RlcYeRXydkSzLPRHXl0rnLIKK1y+iL9g+MdYu3fhGMWQOS1fp
-hOO1LgtxY1/Gt39W/fmzmOkJ3/lRav6s1Dq+SvdE3Od9JanxM1brvRsHP7cblkWtMVgvb0kMJyO5
-wV6R0R5n0VDP8Cp+GSyG+HOmIT53UZQmJ2y2uLGH17lc1DK+5SK6LyNvuG8fTUm2u0WGy96fsTxE
-jX0tvv3TOT/9glOzaDbC202X/r5eye9WhZ/b9cziFh+u9FsSdc5QrcxcUlMk5i2JBqhDe8ek9sLq
-NFuLQMfenJa9bv2pvZJuXriQq7oIQqUxRLH4sS/sZ419WZZ7Iq4vyfq5YHwJr18orveR75f0Ensd
-VV0H/Fm2t39W/fnzYc5Ps7empeZznWB8JpuC8ds/Pwde87274iziM1brvRsFP7cblsX/KmFNvCUx
-mui3JI7IG8Ml28+8HIb/MTzZ7hg5jmj1YOyHBkqS7s9LLpeTfL++kdIuhDLgxq/hzYvRY4in9rFH
-97OmvizTPRHXl/h+Royv4vWLx3gf0ESjS+Z11HId1u7bP0f6Buave83nOm58vrH1d8iZE+WRsJru
-3VWg1s/YYu7dUPi53bDcpAsPdcP9ZQJfokRILcCjyg2GrDAnhKxd+LkNg88xIGSRZHLqveDLRYbl
-KL9cCFkX8HMbDSMGhBBCCPFYEDFwDQRCCCGEbDw4lUAIIYQQDxoGhBBCCPGgYUAIIYQQDxoGhBBC
-CPGgYUAIIYQQDxoGhBBCCPGgYUAIIYQQjzLDgM8wIIQQQjY2jBgQQgghxIOGASGEEEI8aBgQQggh
-xIOGASGEEEI8aBgQQgghxIOGASGEEEI8aBgQQgghxCORYbDthMiO79tMNXxLpAWyDffYPCFrkNTj
-Isc6baYKapWL49gvRXrushmL7nsTbW1ENvLYCVktbvr6178+5z7YSP/ffffdcvr0aZNfU8C42JYV
-2XSHk73+msgn/+NsG1C+40WR2cB+NWpmnxOZ/iMyegzq+OsRka+c4ki5YHvyF7T5jnOM1vllt8iM
-LWp4WaTOltXDgNryKPJaAJlPh3Cctg1UbpOz6eGNA+3Vpx3Zz311G/x9QZ1foE4zHhDXXlxZFM9/
-+wO5/+px+c6HJ01+3wMfyNP1b8uz770sF+UAyp+R+02Jy6i88tteedeWyfhD8kLRKVHZ3VNu/l55
-8oHnZP/2FlMm10ryzgWc+PtwcS58V16bdnY7oK5HdsoLaFPZtWtAfnRnWpo0c83tyzy7dv1Kjt1Z
-tP2onmPHRV7Xrtt8UsrkoMyPPSXS3miKRKZEXkLZiM0mRRVh8acig3+yO1YQbbvdbiuTF0QO/txm
-lonVHC8hJJz1MZVgFfqXUGwlKM0pKNNN+0VuscXKLVCqqvw2Pejkw1Dleh11eEYBiJJrwLECZa/t
-mQS5Lz92ymKZhOFhZT69LHL7P9v94BO3Lk3Qh7No9zMYBbdAgW/zHRdE+1J33pGbQp9uQ94be0x7
-sWVRQGFf3r5H9pnMAdldj7zZVk7KC799SL5z9m3sU4MA2wFlfH/bEdllt+eBUfDIq7Jf3pJnjQzS
-hbfkjHwkxZkWad5iD3Np2ClNMxPOdusAlL7Ir886cs9e+L2z36XhCIwGa2zUgHr98t/VGwVlcp3w
-av/Nye/9VydlXxW5pGXrjJds//dCWct9C6MXhJAbn2jDQJUxPFydCtC07Vt2v0W93wbs2wanTsv9
-Uw3qQbtymurtfuUWyOzwlbtyqhx129TX5+S1XNuoh0KbhUJUb1fLG590ZPxshRv7OZT37DfL23Op
-R52q6F1P2yVKrs6NFLhArpK3rcxA0buGx99Uo8LN9RswLqrsXSPlq/+E0ZCD7KhTVgaug0YKPscx
-yleo/zryW+31iGsvaV/KeV/OXU3L7lZstu6Rpqn3fYZBBa6Nynn5nvxo1712h6X1B7J/MwyJD0/O
-e/rT2J4WmZgpOXko+F98+1fyZAO2t3wDnVcXEgZFW1rOj8P4sBGFi9Mf+aIFB+T5+x6Wc+NqqNTG
-E7jurxdsxtLzY5FT8GQ1vYntMPxyPY/iz+9EnvXVM47ue8aGGg7H4R2jLvPfP/2gkQbsW9AW9r9p
-+6ApOGWhnnYP9nmy/nB7oE6tp2oFj/7rlWnV+wBoexlfvad8fU3Z8bl9DYb+/edTk/Y7Y/dphKIL
-RpVbllGBCmNXwup0SXL9CCHRRBsGUIJXrLf5BTzbMG6D1268eHjwdfhydBXr9BFHznjFdp8HvG4N
-5ZvygFwdlLTWdx1ful9Dfgoe2KZmkVuR/xJKzlXuKnvdSFigJOugGVRxX0dfb7VK06UOhsUWlJdN
-FSgxcp9p32CAtMAQUeMkqFBvt4aNptuCRoRlK8am0w/+CIUB9W06v9BICQU6sg59+5vNKhppqMN5
-CRLZHogrC3JmalTubzwg+xpb5dwV67kn4mN5+9KoNN35AxtxcNhVD+1y9XRomP/iTFGa6mFIwBho
-khZ5cMe95vjLMx+h9C5p3lySSVGj4QP5DQyH531Gx74HoIEufVde+9zuqBL1+lv+tzxaoAorfWXe
-8y/tWKiYgnKtjTguyjJRJQcjd/RVGA4/FzmI/y3Iu4r6GJSi1qVt/ewP2HZ2G8V80PZheMruC9CF
-a3oa9e2F0dj8j1apgmCdtaBjVKV92mfs/MtTtr2fmmDUPEW084zTXrAvej67cA5fgowpRyrg+BGc
-C90ewzHDvjIz9VJh7FF1umWVrh8hJJ5FTSXoXLfxoqHsFxgAEahi2upGDAKe/yyUpeuVux6ywSrG
-m+HxGgMBX6xm3txS/yBkzznb11BHcFpgFl/afgPEJU5OPXM1jKYwRsH+RvTXL/+pGjY2hRlOGtkQ
-d/1AgG0wqP7qH98SENteTFkoxdNyfvvj8lj9+3KmbO4/AcVeeeVqWh4LRg1cTGRAlfwH8gt7TFP9
-XcYYOP9nGBXYViY9ZQ9joXFC/t1MYbwvcuer8ryJZgzIY/KWt56hFtTr/6+3bMay5z5Hsbkep64Z
-aDGLG+YJk4sEfW2GcitoAETB/1HkjScOhaXK161rHErYxk8SMQwlPaL14hx4inqRdf7EjnsIY1SF
-7V8jocaNaU8Vt2/tgRpIT7gRA3w2/ej5HIOBb+QsGk1ZDHF1Jrl+hJB4VnyNwbYX8cfOl4dGFELQ
-Yzbf4yhv9dRvxbfgLLx0V1lrRGGTevfIN8IAEOTLjIBRJ/pwOxSk3/OvKAe+gqEynXOUfzASEYVO
-pWhkI0wRu1GPJJ67QY0ujPVmm1V0mmPW57LFtRdXFs1JOXsVvuvU78sW+SXl3f97Gwr8ORgWTl6j
-AuKuW5h+WX4IJf/KVVMEC/BjuVy/Uzrqi3L2CgwSu130GSSXp+wUBGTPQq6p/oCZYmja/owxMH6z
-+3vSJGl52p2KSAIUqHrVYYsDx2C0uR6npoN+IyBErghF3/73NrPO8dYYPLNwQeCfIxS6RijERigW
-RBNWgdjrRwipyOosPrTfHLrwz+/5R6EGgS64uxkKXg2KT6AsP7Pe+oxOB0Dpu967JlXiWwKei87j
-f4H/jaqYlQpyGpXwjAgYJQvWHESgil+nCUIVMerZAuNDox6JsdMcbr90jcYm5HXRohLXXmxfKvDu
-hw/JDy9qOL8GoMB/DcOiabPNF/9D3rkGxf3IEdkXVNzTE3J588PyYP3HMjH9J9waum3LjIEiZlrD
-LGhsOCC7t5fk3JWT8tp7dhGjiSS4iyGDv26IRtcFhHn9py9AyaNM59NdUr7tMLlB3Ee6UE/n1lPO
-LjOFYLbVm4fX2unWgf9p5Isa6bCe/h4b6s7Y8P2iWI46k2CnUlL/AI/d2TRUOp+Ku44hKXF1JmmP
-EBLPihsGn+FL1Mzdw0vfirwqY40CuDokDFXqU1BwW1505FrUSLBlDfuhOAOL9tSQ0PUKwXUBuvZB
-1y/oIsdKcjpt8TVtS5NGORKG4jUKodMWRk6TL0phDCF4VmU/RQTuQkttRw0ld/2Cu+BzekhkFv3S
-fY3ot07huBGHuPbiympDf5Lo99B1SmCgbD2By7sfHtfAkOUjKPKn5J2Zh+Xp3c40wtNQ8JfNiYAx
-cA1GxMyEXLS/UmgSGAlGTuuBnDwux0y70HLjLyZW/pFAaaYjogU69z18ReQnvgVxT7iKK0qu4HjK
-JZzvIStz6imRNlVI8LIP4v5NI28WH+J/CXnjjSP97He4Lrj+KrMHylXn3BeF1on6vTqxa9F1VuB1
-3xieQF7XBeiUhK4ziD2f4DRk262sJndtQhxxdVZqjxCSAH2OQVNTk0k7duyY27Nnjz7UoPZ0j8xB
-+ZhteLdzUEZenolpLaSe4zIHBRRaFpdqlVvpBA95frtT5t785froNxMT09pISx8x+Ma8p60/K0y6
-Ep6QFSEmWhBLrXKrQNs/zXvLQ4+KjAYWERJCSBzr58mHhBBCCFl2VmfxISGEEELWJDQMCCGEEOKR
-yDBIZXOS9X6HtRRkJFcoSH5JK621zuXoCyGEELI+qbDGICXZ/KB02R8mT44NyNG+kbJHyC4tqqS7
-pdhzSIaWr5GErKW+EEIIIStDbMQgle2XdGlAeobHZLinU46+cWkZjQJCCCGErDY36fMLdMONGvgj
-BqlsXgZbT0hPsUP2nupL7jmnspLr75L2Zo0yTJpHr42q5y1ZyQ92eU9GGxvolD77O6pMriC9Cx7R
-NiYDnX3xP7VCW1F1el7/wKi0dtv+DPfIIR1IjFzNfSGEEELWO/6HGy18wFFqLpsvzBUK+blcpvwB
-CNEpM5crFOby2ZTJpzK5uTzksyn/MU69C+tU2eCxSVNYnU5fCvnsXEbrRF8KhVzgYS/L0RcmJiYm
-Jqb1mSosPhyXoUOdMjDWLO29CRfoZTqkHd71CRteGB85U9Xb3ZaeSRk+OiQj2p1LRfc1DYQQQggJ
-IeHPFcdkoGdYpOuwJHmWOSGEEELWJzGGQUpSGSSbS4zxytulA7JaRybbXfXb3Vrb7MYaYC31hRBC
-CFluYgyDcWnb2S/9BV2I1y69g2kpDSRYfDc+JEcHxqSld1AKhX7pkNEq3u42ImeGxUxbFNBuoZBb
-xQjFWuoLIYQQsjLE/irBJZPLifQlX5GfSqVkfNxZY5DK5KS/V+QEV/QTQggha55EhkF1pGBI9Euv
-/jZQmRyT4aNV/NSREEIIIavGMhgGhBBCCFmvJPxVAiGEEEI2AjQMCCGEEOKxIoaBPlo5t6RL+vVR
-x/nAGx838lsSl3fsS3f9NvI1CiPsPk6OLuzNm1/MOKn8GoWda2efe/z6uQ5h54n3EiHLRvQjke3j
-hMtS8HHCSRLqyWfn8PF18qks8r469XHFZccnSav5uOKF5yWfy4Qct5Rplcfrv37LkpZ6fM418j/m
-OpMLe+z1aqfFjNvK1jgmPR9QqqFlay8t9f1RbVrt9pmYVjZViBhMmrcqdna6qfqfHKay3SInhpy3
-MqqHM9iFfI9XZ8/RU3LJHLme0Bcq2XOiT4Rs767Z61vrlF2/dUZ7d7b6B3StK0oywd8AE0KWmMVN
-JegbCjUsGRlnzsjh9Ki8Yb+8st3tAktD+syLCxz0eQdeTg2HfF5yOfvfX62+sTFvQ6C5DrsTuH2w
-aWE4NS/ZjE/Wr8HL6syjnhrCuuMT+Hputk9I1PZykknhv63Xf25M6NfdH+wLVFgWfXDLCqbfekp0
-u1fa0UbXoFtmH7YUO3YlvE6H8rJ86DUsv34ViTqfMf2MHZ+LKx/axwgmx2C+dUl/2AWNu89iSGVx
-vDcOv1wg1G366x9D3HUAbRH3Zyioyxyr56xdev11VjjXlUlyT4QQeT7jPw+xlN1L1Xze49qLG1/4
-Nap4f1Y9duf6LbjOqKeq+5uQ5SR+KqFC+CyVncOHdA43dGh5KpsvC1cGw7tlydTla68sr33xv7Ex
-cKxJ1b5dMVhn2Fsgw5LKzU+pQFksrDOPvNajY/Cdm1QqMx+SD7zpUUO7Xj/NvhSOd7e13ri+hb8h
-Mq5OLZu/Nqg/RD54/eJTkvNZ45ssK9xnC5OOJ2v64J5jHa9pN/Y+i0vBPuJcRpWZOpNcW+echd+f
-lZLKxh0bda6dVH79w/bpOYyW91Ls+XTGF/V5iE5WzruXwq5R9Oc9qr248UVfI3vsgvaRah27Oc5/
-7XQsIfUzMa1SKosYuM8ymMdvJYdYueNDckjD6X1hLqV6myXvLYsVaWuV5slROeUePn5KRietJ77g
-jY3qpScl4u2Ki3oL5LynNpjWIIh/imVSRo8ir9Xq+fGdG9112PUeev1vkMhIB7JjJ2w/DeNiHx5Z
-I3F1OmXNXfrYau0PPKJmkZad/utb5fVbzrdqxt5nMYz0ycBYu3T779u4+yyWETkzJvg8wCvMZuEJ
-+iJdsVS6tmvl7Z9J7okQKp7P6M9DJIv8vIe3Fze+StcoglrHju0T/vsyc1i6Sif4EDiyZqhqjcGh
-au5cfLhbRt8oW5NQxLdeewfs5HWPb43BoeBTHUsyEXqaMpIb7BUZtesreoZXUQk4jA3MX9sF1zfk
-+q1HRt7Qt4L2S3eL3bEIRvoO4TwdlTPSKt39IYbyDUDsPVETUZ+H5SK+vaUfXxzRfXHuS31bbUqy
-uDmHE8/XEbL8LNMaA73Zdc1a+adi6ARcrvZefKHqx8GSsm9wVG+pOS173YLUXkk3T0pRVyZ6b2w0
-BTW9sXEBS/AWyOqBKWC/KVJ74W2YLcXxRnWxnOmOAefF23ao7NX6iauzUnvh188Qdc2X4HxGji/y
-PkuA8c6apdk92XH3WRw4ORlzgsZlZKhPjo5OSnOgwyarc8r9XVVf29Wnxn7Wej7jWI7P+6I+Dw4L
-7s/FjN2NGuT7Jc1oAVljVDAMyqcSNCX6bs4clnSYtznSZzzlUrpXBt06+w9Lm36wNNQ2UJJ0v13I
-069vczzkfGBQdnRY39ioMv3SMVHNGxsj0DprfgtkLYzIG8MlO4a8HIbfOTypUxLOQqaRvh4ZLqWl
-1zvf/XLYnBgFX1w1vOkxrs7Y9qKuXxyLOp+1jS8pI30D832Ju89iaZOOfjcMrVNIJRnwvDxf//s7
-5MyJ8mhQ/LVdO9TUz5rPZwzL8XkHNX8eou7PRY7dRA1gQY4yWkDWGv7Fh3fccYdv8WGtSRfSxC2K
-WjsplZpffOUsllsf/V7eVPv14/lkYkqaUqELQJmY1kJa3FRCGLV4m6tCStoO91sPAB5gt07/+xcR
-blBqvn48n4QkAQYBPiOD0i3DcpRzCGQNUvZ2RU333HMP365ICCGEbFCWPmJACCGEkHWLMQz8zy9Y
-+CwDQgghhGwUGDEghBBCiAcNA0IIIYR40DAghBBCiAcNA0IIIYR40DAghBBCiAcNA0IIIYR40DAg
-hBBCiIdnGPD5BYQQQghhxIAQQgghHjQMCCGEEOJBw4AQQgghHjQMCCGEEOJBw4AQQgghHjQMCCGE
-EOKRyDDYdkJkx/dtphq+JdIC2YZ7bJ6QNUjqcZFjnTZTBbXKxXHslyI9d9mMRfe9ibY2Iht57ISs
-Fjc1NTXN6TMM3OcY3H333XLmzBmzvaaAcbEtK7LpDid7/TWRT/7H2TagfMeLIrOB/WrUzD4nMv1H
-ZPQY1PHXIyJfOcWRcsH25C9o8x3nGK3zy26RGVvU8LJInS2rhwG15VHktQAynw7hOG0bqNwmZ9PD
-Gwfaq087sp/76jb4+4I6v0CdZjwgrr24siie//YHcv/V4/KdD0+a/L4HPpCn69+WZ997WS7KAZQ/
-I/ebEpdReeW3vfKuLZPxh+SFolOisrun3Py98uQDz8n+7S2mTK6V5J0LOPH34eJc+K68Nu3sdkBd
-j+yUF9CmsmvXgPzozrQ0aeaa25d5du36lRy7s2j7UT3Hjou8rl23+aSUyUGZH3tKpL3RFIlMibyE
-shGbTYoqwuJPRQb/ZHesINp2u91WJi+IHPy5zSwTqzleQkg4f7cuHmxkFfqXUGwlKM0pKNNN+0Vu
-scXKLVCqqvw2Pejkw1Dleh11eEYBiJJrwLECZa/tmQS5Lz92ymKZhOFhZT69LHL7P9v94BO3Lk3Q
-h7No9zMYBbdAgW/zHRdE+1J33pGbQp9uQ94be0x7sWVRQGFf3r5H9pnMAdldj7zZVk7KC799SL5z
-9m3sU4MA2wFlfH/bEdllt+eBUfDIq7Jf3pJnjQzShbfkjHwkxZkWad5iD3Np2ClNMxPOdusAlL7I
-r886cs9e+L2z36XhCIwGa2zUgHr98t/VGwVlcp3wav/Nye/9VydlXxW5pGXrjJds//dCWct9C6MX
-hJAbn+ipBFXG8HB1KkDTtm/Z/Rb1fhuwbxucOi33TzWoB+3Kaaq3+5VbILPDV+7KqXLUbVNfn5PX
-cm2jHgptFgpRvV0tb3zSkfGzFW7s51Des98sb8+lHnWqonc9bZcouTo3UuACuUretjIDRe8aHn9T
-jQo312/AuKiyd42Ur/4TRkMOsqNOWRm4Dhop+BzHKF+h/uvIb7XXI669pH0p5305dzUtu1ux2bpH
-mqbe9xkGFbg2Kufle/KjXffaHZbWH8j+zTAkPjw57+lPY3taZGKm5OSh4H/x7V/Jkw3Y3vINdF5d
-SBgUbWk5Pw7jw0YULk5/5IsWHJDn73tYzo2roVIbT+C6v16wGUvPj0VOwZPV9Ca2w/DL9TyKP78T
-edZXzzi67xkbajgch3eMusx///SDRhqwb0Fb2P+m7YOm4JSFeto92OfJ+sPtgTq1nqoVPPqvV6ZV
-7wOg7WV89Z7y9TVlx+f2NRj6959PTdrvjN2nEYouGFVuWUYFKoxdCavTJcn1I4REE20YQAlesd7m
-F/Bsw7gNXrvx4uHB1+HL0VWs00ccOeMV230e8Lo1lG/KA3J1UNJa33V86X4N+Sl4YJuaRW5F/kso
-OVe5q+x1I2GBkqyDZlDFfR19vdUqTZc6GBZbUF42VaDEyH2mfYMB0gJDRI2ToEK93Ro2mm4LGhGW
-rRibTj/4IxQG1Lfp/EIjJRToyDr07W82q2ikoQ7nJUhkeyCuLMiZqVG5v/GA7GtslXNXrOeeiI/l
-7Uuj0nTnD2zEwWFXPbTL1dOhYf6LM0VpqochAWOgSVrkwR33muMvz3yE0rukeXNJJkWNhg/kNzAc
-nvcZHfsegAa69F157XO7o0rU62/53/JogSqs9JV5z7+0Y6FiCsq1NuK4KMtElRyM3NFXYTj8XOQg
-/rcg7yrqY1CKWpe29bM/YNvZbRTzQduH4Sm7L0AXrulp1LcXRmPzP1qlCoJ11oKOUZX2aZ+x8y9P
-2fZ+aoJR8xTRzjNOe8G+6Pnswjl8CTKmHKmA40dwLnR7DMcM+8rM1EuFsUfV6ZZVun6EkHgW9asE
-nes2XjSU/QIDIAJVTFvdiEHA85+FsnS9ctdDNljFeDM8XmMg4IvVzJtb6h+E7Dln+xrqCE4LzOJL
-22+AuMTJqWeuhtEUxijY34j++uU/VcPGpjDDSSMb4q4fCLANBtVf/eNbAmLbiykLpXhazm9/XB6r
-f1/OlM39J6DYK69cTctjwaiBi4kMqJL/QH5hj2mqv8sYA+f/DKMC28qkp+xhLDROyL+bKYz3Re58
-VZ430YwBeUze8tYz1IJ6/f/1ls1Y9tznKDbX49Q1Ay1mccM8YXKRoK/NUG4FDYAo+D+KvPHEobBU
-+bp1jUMJ2/hJIoahpEe0XpwDT1Evss6f2HEPYYyqsP1rJNS4Me2p4vatPVAD6Qk3YoDPph89n2Mw
-8I2cRaMpiyGuziTXjxASz4r/XHHbi/hj58tDIwoh6DGb73GUt3rqt+JbcBZeuqusNaKwSb175Bth
-AAjyZUbAqBN9uB0K0u/5V5QDX8FQmc45yj8YiYhCp1I0shGmiN2oRxLP3aBGF8Z6s80qOs0x63PZ
-4tqLK4vmpJy9Ct916vdli/yS8u7/vQ0F/hwMCyevUQFx1y1Mvyw/hJJ/5aopggX4sVyu3ykd9UU5
-ewUGid0u+gySy1N2CgKyZyHXVH/ATDE0bX/GGBi/2f09aZK0PO1ORSQBClS96rDFgWMw2lyPU9NB
-vxEQIleEom//e5tZ53hrDJ5ZuCDwzxEKXSMUYiMUC6IJq0Ds9SOEVGTFDQOD/ebQhX9+zz8KNQh0
-wd3NUPBqUHwCZfmZ9dZndDoASt/13jWpEt8S8Fx0Hv8L/G9UxaxUkNOohGdEwChZsOYgAlX8Ok0Q
-qohRzxYYHxr1SIyd5nD7pWs0NiGvixaVuPZi+1KBdz98SH54UcP5NQAF/msYFk2bbb74H/LONSju
-R47IvqDinp6Qy5sflgfrP5aJ6T/h1tBtW2YMFDHTGmZBY8MB2b29JOeunJTX3rOLGE0kwV0MGfx1
-QzS6LiDM6z99AUoeZTqf7pLybYfJDeI+0oV6OreecnaZKQSzrd48vNZOtw78TyNf1EiH9fT32FB3
-xobvF8Vy1JkEO5WS+gd47M6modL5VNx1DEmJqzNJe4SQeFbcMPgMX6Jm7h5e+lbkVRlrFMDVIWGo
-Up+CgtvyoiPXokaCLWvYD8UZWLSnhoSuVwiuC9C1D7p+QRc5VpLTaYuvaVuaNMqRMBSvUQidtjBy
-mnxRCmMIwbMq+ykicBdaajtqKLnrF9wFn9NDIrPol+5rRL91CseNOMS1F1dWG/qTRL+HrlMCA2Xr
-CVze/fC4BoYsH0GRPyXvzDwsT+92phGehoK/bE4EjIFrMCJmJuSi/ZVCk8BIMHJaD+TkcTlm2oWW
-G38xsfKPBEozHREt0Lnv4SsiP/EtiHvCVVxRcgXHUy7hfA9ZmVNPibSpQoKXfRD3bxp5s/gQ/0vI
-G28c6We/w3XB9VeZPVCuOue+KLRO1O/ViV2LrrMCr/vG8ATyui5ApyR0nUHs+QSnIdtuZTW5axPi
-iKuzUnuEkATs2LFjTtMdd9xhUkdHh/5+sfZ0j8xB+ZhteLdzUEZenolpLaSe4zIHBRRaFpdqlVvp
-BA95frtT5t785froNxMT09pISx8x+Ma8p60/K0y6Ep6QFSEmWhBLrXKrQNs/zXvLQ4+KjAYWERJC
-SBw3abRAN9b8kw8JIYQQsuyszuJDQgghhKxJltwwKBR8T0QhhBBCyLoikWGQyuYk6/0OixBCCCE3
-KhUMg5Rk8wUZ7GqXrsGC5HOZ+d9pE0IIIeSGI9YwSGX7JV0akJ7hMRnu6ZSjb1wqe648IYQQQm4s
-Kk4l+J9iNj5Os4AQQgi5kYk1DMaHjspwS68MdrVIa5vdSQghhJAblgoRg3EZOtQpA2PN0t5bkDxX
-IBJCCCE3NBWnEhzGZKBnWKTrcKJnmRNCCCFkfRJjGKQklUGyOUIIIYTc+MQYBuPStrNf+gsF6W1v
-l97BtJQG+vjMdUIIIeQGJnYqYWTokBzq1DUGYzLQeUj6aBUQQgghNzSJ1hiM9DFSQAghhGwEEi4+
-JIQQQshGoMwwcF+9TAghhJCNyZJHDDo7O+0WIYQQQtYbnEoghBBCiAcNA0IIIYR40DAghBBCiAcN
-A0IIIYR40DAghBBCiAcNA0IIIYR4GMOAzy8ghBBCiMKIASGEEEI8aBgQQgghxIOGASGEEEI8aBgQ
-QgghxIOGASGEEEI8aBgQQgghxIOGASGEEEI8aBgQQgghxIOGASGEEEI8aBgQQgghxIOGASGEEEI8
-aBgQQgghxIOGASGEEEI8aBgQQgghxIOGASGEEEI8aBgQQgghxIOGASGEEEI8aBgQQgghxIOGASGE
-EEI8aBgQQgghxIOGASGEEEI8aBgQQgghxIOGASGEEEI8aBgQQgghxMMzDObm5uwWIYQQQjYqjBgQ
-QgghxIOGASGEEEI8aBgQQgghxIOGASGEEEI8aBgQQgghxIOGASGEEEI8aBgQQgghxIOGASGEEEI8
-aBgQQgghxCLy/wbdXcSTDKdUAAAAAElFTkSuQmCC
---000000000000a95998060908e582--
+Makes sense.
+
+> +If the `-p` option is specified, the merged file (including conflicts, if any)
+> +goes to standard output as normal; otherwise, the merged file is written to the
+> +object store and the object ID of its blob is written to standard output.
+
+(Here, `-p` is not implied.)
+
+> +test_expect_success 'merge without conflict with --object-id' '
+> +       git add orig.txt new2.txt &&
+> +       git merge-file --object-id :orig.txt :orig.txt :new2.txt >actual &&
+> +       git rev-parse :new2.txt >expected &&
+> +       test_cmp actual expected
+> +'
+
+(Here, `-p` is not implied.)
+
+Martin
+
+-- >8 --
+Subject: [PATCH] git-merge-file doc: drop "-file" from argument placeholders
+
+`git merge-file` takes three positional arguments. Each of them is
+documented as `<foo-file>`. In preparation for teaching this command to
+alternatively take three object IDs, make these placeholders a bit more
+generic by dropping the "-file" parts. Instead, clarify early that the
+three arguments are filenames. Even after the next commit, we can afford
+to present this file-centric view up front and in the general
+discussion, since it will remain the default one.
+
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+ Documentation/git-merge-file.txt | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
+
+diff --git a/Documentation/git-merge-file.txt b/Documentation/git-merge-file.txt
+index 7e9093fab6..bf0a18cf02 100644
+--- a/Documentation/git-merge-file.txt
++++ b/Documentation/git-merge-file.txt
+@@ -11,19 +11,20 @@ SYNOPSIS
+ [verse]
+ 'git merge-file' [-L <current-name> [-L <base-name> [-L <other-name>]]]
+ 	[--ours|--theirs|--union] [-p|--stdout] [-q|--quiet] [--marker-size=<n>]
+-	[--[no-]diff3] <current-file> <base-file> <other-file>
++	[--[no-]diff3] <current> <base> <other>
+ 
+ 
+ DESCRIPTION
+ -----------
+-'git merge-file' incorporates all changes that lead from the `<base-file>`
+-to `<other-file>` into `<current-file>`. The result ordinarily goes into
+-`<current-file>`. 'git merge-file' is useful for combining separate changes
+-to an original. Suppose `<base-file>` is the original, and both
+-`<current-file>` and `<other-file>` are modifications of `<base-file>`,
++Given three files `<current>`, `<base>` and `<other>`,
++'git merge-file' incorporates all changes that lead from `<base>`
++to `<other>` into `<current>`. The result ordinarily goes into
++`<current>`. 'git merge-file' is useful for combining separate changes
++to an original. Suppose `<base>` is the original, and both
++`<current>` and `<other>` are modifications of `<base>`,
+ then 'git merge-file' combines both changes.
+ 
+-A conflict occurs if both `<current-file>` and `<other-file>` have changes
++A conflict occurs if both `<current>` and `<other>` have changes
+ in a common segment of lines. If a conflict is found, 'git merge-file'
+ normally outputs a warning and brackets the conflict with lines containing
+ <<<<<<< and >>>>>>> markers. A typical conflict will look like this:
+@@ -36,8 +37,8 @@ normally outputs a warning and brackets the conflict with lines containing
+ 
+ If there are conflicts, the user should edit the result and delete one of
+ the alternatives.  When `--ours`, `--theirs`, or `--union` option is in effect,
+-however, these conflicts are resolved favouring lines from `<current-file>`,
+-lines from `<other-file>`, or lines from both respectively.  The length of the
++however, these conflicts are resolved favouring lines from `<current>`,
++lines from `<other>`, or lines from both respectively.  The length of the
+ conflict markers can be given with the `--marker-size` option.
+ 
+ The exit value of this program is negative on error, and the number of
+@@ -62,7 +63,7 @@ OPTIONS
+ 
+ -p::
+ 	Send results to standard output instead of overwriting
+-	`<current-file>`.
++	`<current>`.
+ 
+ -q::
+ 	Quiet; do not warn about conflicts.
+-- 
+2.42.0.899.gfd14d11e2b
+
