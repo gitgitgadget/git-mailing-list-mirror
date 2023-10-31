@@ -1,98 +1,85 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49CFF6AB9
-	for <git@vger.kernel.org>; Tue, 31 Oct 2023 04:50:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F10076AB5
+	for <git@vger.kernel.org>; Tue, 31 Oct 2023 04:54:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=merly.org header.i=@merly.org header.b="LjGunutV"
-Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A34A2AB
-	for <git@vger.kernel.org>; Mon, 30 Oct 2023 21:50:24 -0700 (PDT)
-Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-5a7af52ee31so50104517b3.2
-        for <git@vger.kernel.org>; Mon, 30 Oct 2023 21:50:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=merly.org; s=google; t=1698727824; x=1699332624; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=AIGr4oMzAgAmn3nnUymqZp2PvGh+WwdR/W6CBUMjZXk=;
-        b=LjGunutVhRFNN0IJ9U9huJh5Vfc5QTSKCCGlGWr6GGVINuf+uNAav0upz+ABbUDlrV
-         go6XGfKGYt8tJtPCWhB6nFJ9f54RObN4alG/wtD/ZizM2lt9O6NBP+xaQIf68tYXPeVX
-         fAlSamrPj5tDamJO/jNoPWH6duD3/WwN/TpZmavQvhwcurBA6a1rtvBp19iJWKxJhC3P
-         r2Sl4Idj9fY4L/YsUNXJYpc7u2Xjt8Oh/iF3cMiOaqnnYh6lU2J2PWcLQKAYWoVVBzDj
-         3SutA7LOjHNw1mHjAgpROg/rrcZv3q0X8f8GDmEQ7/1nheMoqbg3sZPQ1b2p3PQlzowR
-         Cdgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698727824; x=1699332624;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=AIGr4oMzAgAmn3nnUymqZp2PvGh+WwdR/W6CBUMjZXk=;
-        b=poDViyR7VlnkbeeSTtlFYr5V7KqzyHPCHs3hJm2cPMIL832AsmxI45pCD+A1kVsJB6
-         Q/ovTaRzaSaxNXuCa4dKKHPxnGa6QmM3nmUp2BQyh4rKPMI2tzId2vBaOEgqbDxP3VFo
-         Pj3myrdUXkYc752e4zR9MhViTxj8ECPwV4uS1dIladW2KMH/5jEVb3oCtw87PWTa/7GT
-         YxdwopTxkIZ7ItuJYEdD00a2Jhwv/5sGjVPiIJJQXZFAPSh6r6ACZ60zUvw4toC7Pq0l
-         9ZEJ5lP4DY2k673ssLV4yPA4mIeqhsTZ4gmtURLIdl7jkUcFslFY3RCidi6OcT7xfhSn
-         6BWg==
-X-Gm-Message-State: AOJu0Yzwaqt2zvp2bb4DXeCGr/ss+9tJ9hgw24zJBMRWcEy90JQWf0zh
-	bjpm8cWzdgXB1ERTTt28UT0XNC1Vn7shpAlOrVs=
-X-Google-Smtp-Source: AGHT+IFJLoukXyhQqR2BscvCNbm1Drh4pz36t8tTdgjEEZmlLvBLgA+hyxIVFmBXM/TxlgB0A2J3Ww==
-X-Received: by 2002:a81:e608:0:b0:5a7:baae:329f with SMTP id u8-20020a81e608000000b005a7baae329fmr9918966ywl.15.1698727823573;
-        Mon, 30 Oct 2023 21:50:23 -0700 (PDT)
-Received: from smtpclient.apple ([2600:1700:42f0:9d0:3987:6054:b0de:82c1])
-        by smtp.gmail.com with ESMTPSA id s18-20020a819b12000000b005af9da2225bsm348059ywg.20.2023.10.30.21.50.22
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 30 Oct 2023 21:50:23 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="HPvxrxIQ"
+Received: from mail.manjaro.org (mail.manjaro.org [IPv6:2a01:4f8:c0c:51f3::1])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EBB19E
+	for <git@vger.kernel.org>; Mon, 30 Oct 2023 21:54:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.100.2.1.4\))
-Subject: Re: [PATCH] sequencer: remove use of comment character
-From: Tony Tung <tonytung@merly.org>
-In-Reply-To: <xmqqa5rzadlh.fsf@gitster.g>
-Date: Mon, 30 Oct 2023 21:50:11 -0700
-Cc: Elijah Newren <newren@gmail.com>,
- Tony Tung via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <10283034-816F-4184-A02B-100B2EADF31E@merly.org>
-References: <pull.1603.git.1698635292629.gitgitgadget@gmail.com>
- <xmqq7cn4g3nx.fsf@gitster.g>
- <CABPp-BE6_nuMeiqOAMGwP8SH=d1+i57-STgTNKU8-Gnkv2jW=Q@mail.gmail.com>
- <xmqqa5rzadlh.fsf@gitster.g>
+MIME-Version: 1.0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1698728071;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=muOZnwSShYJIiLPcGKHBKQqsgvB8BbMRtsaMNWBKic8=;
+	b=HPvxrxIQ2+gxz9ATpWnwuotievwho5sIr8Cn3qZqgdLH9qLDSmS+o8pmjlF8lREunB243A
+	PymUGuFH16TLKP098806gUOqNXXKBxsTK+0KcvZ0L4wrDrn+3mlkzD74Ek1uyHAL+5on/J
+	ouBSCLNFhMCrCC5qcIx/TFTNUDCMxN3DcX8Js5t1ycRqx0a4KR8QdTdnHSYslMuxfnW35f
+	bNNT7rsLiSFI2g3ey/rEACVg+zI+MM/DCqbTZOoUNzY+uHCsKy5iPpnkv2mkQNqj05Iaoq
+	hBpEjb24m9ukGhsfdsN3zbUWf++NfCTLFG1aKXKIqmeZ0mGObYqbQQ5Oaltodg==
+Date: Tue, 31 Oct 2023 05:54:31 +0100
+From: Dragan Simic <dsimic@manjaro.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3774.100.2.1.4)
+Cc: Hugo Sales <hugo@hsal.es>, git@vger.kernel.org, Derrick Stolee
+ <derrickstolee@github.com>, Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+Subject: Re: [PATCH 0/3] Add `-p' option to `git-mv', inspired by `mkdir'
+In-Reply-To: <xmqqlebj4dnt.fsf@gitster.g>
+References: <20231009233458.1371351-1-hugo@hsal.es>
+ <xmqq1qe3wbt1.fsf@gitster.g>
+ <1384513657.119681.1697027599941@office.mailbox.org>
+ <xmqqlebj4dnt.fsf@gitster.g>
+Message-ID: <ffbb04b363938e4a487906134ce4f3c6@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
+On 2023-10-31 05:30, Junio C Hamano wrote:
+> Hugo Sales <hugo@hsal.es> writes:
+> 
+>>> Both are plausible, and "mkdir -p" does not have such a nasty
+>>> ambiguity.  That is what makes me unsure about the new feature
+>>> (again, either with required "-p" or with implied "-p").
+>> 
+>> I think the ambiguity is resolved by the inclusion of lack thereof
+>> of a trailing `/`.
+> 
+> The question is not if we can come up with a rule that the user can
+> use to disambiguate.  It is if the user will find that such a rule
+> is a naturally acceptable way to disambiguate.
+> 
+> When both of
+> 
+>     git mv file there/exists/such/a/directory
+>     git mv file there/exists/such/a/directory/
+> 
+> create "there/exists/such/a/directory/file" and removes "file", with
+> or without a trailing slash, "you should add a slash if you want a
+> directory, and otherwise you should not add a slash" is a rather
+> arbitrary rule.  Let's not go there.  I still view the downside more
+> grave than having to occasionally do "mkdir".
 
-> On Oct 30, 2023, at 4:35=E2=80=AFPM, Junio C Hamano =
-<gitster@pobox.com> wrote:
->=20
-> Elijah Newren <newren@gmail.com> writes:
->=20
->> I thought the point of the comment_line_char was so that commit
->> messages could have lines starting with '#'.  That rationale doesn't
->> apply to the TODO list generation or parsing, and I'm not sure if we
->> want to add the same complexity there.
->=20
-> Thanks for a healthy dose of sanity.  I noticed existing use of
-> comment_line_char everywhere in sequencer.c and assumed we would
-> want to be consistent, but you are right to point out that they are
-> all about the COMMIT_EDITMSG kind of thing, and not about what
-> appears in "sequencer/todo=E2=80=9D.
+Please note that the above-described git-mv operation succeeds with no 
+trailing slash if "there/exists/such/a/directory" doesn't already exist 
+as a directory, and creates "there/exists/such/a/directory" as a file.  
+With the trailing slash, the git-mv operation succeeds only if 
+"there/exists/such/a/directory" already exists as a directory, and fails 
+otherwise.
 
-Actually, I withdraw my previous comment.  comment_line_char is all over =
-sequencer.c, and there are tests that say, "rebase -i respects =
-core.commentchar=E2=80=9D, which strongly implies that the *intent* is =
-that rebase -i respects comment_line_char.
-
-I would propose that we move forward with this, except perhaps removing =
-more instances of comment_line_char.
-
-Thanks.
-
-
-
+A quite similar ambiguity exists in cp(1) in mv(1), which is also 
+resolved by the use of the trailing slash character.  However, I've 
+encountered only one person aware of that disambiguation, and in cp(1) 
+only, but in the "I always include the trailing slash" way, without 
+actually understanding it fully.  Maybe I need to encounter more people, 
+I don't know.
