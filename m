@@ -1,82 +1,70 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F111A36A
-	for <git@vger.kernel.org>; Tue, 31 Oct 2023 00:03:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2203D360
+	for <git@vger.kernel.org>; Tue, 31 Oct 2023 00:08:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="sJH2JZE8"
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2467AB
-	for <git@vger.kernel.org>; Mon, 30 Oct 2023 17:03:33 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 5E2F51F906;
-	Mon, 30 Oct 2023 20:03:33 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=gDySbFupfaQr
-	p+BC0rckvPYyOinlFgxkLtlF7hbhhG0=; b=sJH2JZE8zqXmb0gpMtIqfeTxJk4g
-	0LbREDqOK6D7Yb/7NwugrNyqBJZ/tCIYnGunlYQTDipPuoyHF8UUXvXbLVvpGFsK
-	ZTQQlwAi8B4oVk+O6jf3r1PCt5MVdoIrC5s9sSYowrxxFJYuaDx71gz8F/tPZlcB
-	PJpZbimvTVKZnxY=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 5727C1F905;
-	Mon, 30 Oct 2023 20:03:33 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.198.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EA6AC1F8FE;
-	Mon, 30 Oct 2023 20:03:29 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  git@vger.kernel.org,
-  Phillip Wood <phillip.wood123@gmail.com>,  Eric Sunshine
- <sunshine@sunshineco.com>,  Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v2 0/1] Object ID support for git merge-file
-In-Reply-To: <CABPp-BF6vxU5x5VLGbRhtcTBqDu3x31=vMOd2bimZNg2mkkvuA@mail.gmail.com>
-	(Elijah Newren's message of "Mon, 30 Oct 2023 10:15:10 -0700")
-References: <20231024195655.2413191-1-sandals@crustytoothpaste.net>
-	<20231030162658.567523-1-sandals@crustytoothpaste.net>
-	<CABPp-BF6vxU5x5VLGbRhtcTBqDu3x31=vMOd2bimZNg2mkkvuA@mail.gmail.com>
-Date: Tue, 31 Oct 2023 09:03:28 +0900
-Message-ID: <xmqqttq78xpr.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HnMZjo4r"
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 255FEB3
+	for <git@vger.kernel.org>; Mon, 30 Oct 2023 17:08:40 -0700 (PDT)
+Received: by mail-pl1-x62d.google.com with SMTP id d9443c01a7336-1cc2575dfc7so24122985ad.1
+        for <git@vger.kernel.org>; Mon, 30 Oct 2023 17:08:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1698710919; x=1699315719; darn=vger.kernel.org;
+        h=to:date:message-id:subject:mime-version:content-transfer-encoding
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Nc+L6Nx1o5PaY3VLeixMG3v5gV3reIi39Z+LYTmaGeY=;
+        b=HnMZjo4rQ5iJGrOGB1nVruy3JCRjIu2zHJquvOEw3QX1U4D3UuidtNinCnemLiWXS7
+         H6KBWcjNgd3lTvrD2Z0d85T0bQGx6qvIFV+ROFiKPOFOjlMVQOfAuco56FmQRRsv3NSn
+         7xllz4KPBLBnKJR89c4OQDU+qjsoz9f/lld1xYvhnoAxB4qwoGR2J5Yl5YTzfSuxBSkW
+         hDmY35L27fCTb1k0vlXltzbKLlQatd5W3lxMDwX26msK4pqLuqZPqbsYh//Y3YHvd8ns
+         CZrLLZM/Tnr70jC/VAh0BrjpbGHPTvcpcnAPJYOICySXExg/OKJgw+6QrgHozH14nyry
+         SpOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698710919; x=1699315719;
+        h=to:date:message-id:subject:mime-version:content-transfer-encoding
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Nc+L6Nx1o5PaY3VLeixMG3v5gV3reIi39Z+LYTmaGeY=;
+        b=qId2LLf6CEYpXqoH/amxwIWMuwtcSQbIXhlzipSWKGii6Yv6IPjxpjqxj291wwqRfJ
+         fU/6IpxVNuZB6OiQ6qdKygMP9Uoh+RGmIlASDXQ2HbJZni3OzPo4gnxh19Ouhtng7Ukt
+         jxI6nkG+N7jzPHElp1EWD+VTXNMIwiCk4LxGrcrSy8pshiLW6OdZunWPdHAzpYdx4KVg
+         YRmoF2qyCjBuhWKyQMvVQSZ7R+Ax/1+vpRvoNyuoJfLGaHaTkYyFrxyzAPYPyPfHD5hl
+         mjpamO+bJta/CsnzmHdZFY0FkboRBLqURCgg3VmLou8ZbYP/4L68mSh8PoDa9Rl7FxVz
+         P+WA==
+X-Gm-Message-State: AOJu0YxPO61V4wWCinh7nKlKfJAN2pD0MOVrn7cKC17b8bGeGA6ABEZR
+	Gt5XVD5XbACEPFrLkVsE0B3UG1i2U8Cv2w==
+X-Google-Smtp-Source: AGHT+IFfhBRFhZnoArWv8yvXwadDENmGVSIPc1nDmu1nkGDacZJrhb8RZ0qEkwtaXJF9RSBBHYt8PQ==
+X-Received: by 2002:a17:90a:1c2:b0:280:52a3:711e with SMTP id 2-20020a17090a01c200b0028052a3711emr3505022pjd.47.1698710919358;
+        Mon, 30 Oct 2023 17:08:39 -0700 (PDT)
+Received: from smtpclient.apple ([2401:4900:4633:24f9:41f6:806e:b7d8:d879])
+        by smtp.gmail.com with ESMTPSA id t14-20020a17090a4e4e00b0028089fdce19sm44501pjl.52.2023.10.30.17.08.37
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 30 Oct 2023 17:08:38 -0700 (PDT)
+From: Shashank Gupta <shxshankgupta@gmail.com>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- EC581FEA-7780-11EE-AAEF-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.200.91.1.1\))
+Subject: How to get started with contribution 
+Message-Id: <FACCA976-EAAF-4B68-8748-D13A11EC6652@gmail.com>
+Date: Tue, 31 Oct 2023 05:38:27 +0530
+To: git@vger.kernel.org
+X-Mailer: Apple Mail (2.3774.200.91.1.1)
 
-Elijah Newren <newren@gmail.com> writes:
+Respected sir/madam,
+I am Shashank Gupta, a IT undergrad from Manipal university Jaipur. I am =
+currently in the 3rd sem of my Btech programme.
+I am new to open source contributions but I have good knowledge of c, =
+java and javascript. I would like to contribute to your organisation but =
+could you please tell me how to get started?
+Hoping to hear from you soon.
+Regards=20
+Shashank Gupta
 
-> On Mon, Oct 30, 2023 at 9:27=E2=80=AFAM brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
->>
->> This series introduces an --object-id option to git merge-file such
->> that, instead of reading and writing from files on the system, it read=
-s
->> from and writes to the object store using blobs.
->>
->> Changes from v1:
->> * Improve error handling
->> * Re-add `-p` argument for documentation
->>
->> brian m. carlson (1):
->>   merge-file: add an option to process object IDs
->>
->>  Documentation/git-merge-file.txt | 20 +++++++++++
->>  builtin/merge-file.c             | 62 +++++++++++++++++++++++--------=
--
->>  t/t6403-merge-file.sh            | 58 ++++++++++++++++++++++++++++++
->>  3 files changed, 124 insertions(+), 16 deletions(-)
->
-> Thanks, this version looks good to me.
-
-Thanks, both.  Will queue.
