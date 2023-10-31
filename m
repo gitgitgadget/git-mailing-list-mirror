@@ -1,58 +1,57 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F4B8D2ED
-	for <git@vger.kernel.org>; Tue, 31 Oct 2023 19:06:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E06D6182A4
+	for <git@vger.kernel.org>; Tue, 31 Oct 2023 19:09:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="S416pHAj"
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E2AEF4
-	for <git@vger.kernel.org>; Tue, 31 Oct 2023 12:06:33 -0700 (PDT)
-Received: by mail-ot1-x331.google.com with SMTP id 46e09a7af769-6ce2cf67be2so3786297a34.2
-        for <git@vger.kernel.org>; Tue, 31 Oct 2023 12:06:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="xoMXmw8c"
+Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A85ECF3
+	for <git@vger.kernel.org>; Tue, 31 Oct 2023 12:09:02 -0700 (PDT)
+Received: by mail-qk1-x736.google.com with SMTP id af79cd13be357-7789577b53fso393037485a.3
+        for <git@vger.kernel.org>; Tue, 31 Oct 2023 12:09:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1698779192; x=1699383992; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1698779342; x=1699384142; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=q2bOXh+B6hG0lnIFEcgizrrfwd3U3WpmJ9FsDoFq6ZY=;
-        b=S416pHAj1F8EzvZrzyD310uVNctpYQ8WILbAAjyOYnK5+uR21s9saB4YG8ALDtx476
-         fXjDgnvMpi+60fV+cG9JwzWhj8yqFa9eh1TswML1OCWq3yZ16Gz/MKIMLasqVM/66Bzr
-         y7L5afGrFtqfYNC0yMh2fxDoJuj4V2zf4Br8VErgAjrPih1GFEvqyrcUhZihMkigy25m
-         wE/t4aGgQdGZl/HAdtqQfTVasfUZI6DkWTP8UAuE+KVdf29Ucybkip3F5li8/tX5ZuWg
-         HbTT6HbSlo5/k48nmvFXJeYE5MI8XLUzRn6nA6VA1li/BxZVdhzTOWPt+pjJ7r/m5B1k
-         11CA==
+        bh=6c5RnsBQAM1dunV+CAJDbpk8REPk1TQLabnCRBaN3S4=;
+        b=xoMXmw8c92SsVPBfPYuN1MgXEdjAW57Np/+2c7qOsSKfUgE/24WuhtgeCpPoGjiO7A
+         wvs6nClFF5ELlmVkG3vRPS3RQ9f4u/YqISUntuB/G7NngLbY/DGNicKvK8N9Ip5d47QZ
+         qm5GcOoud9SUSXxckfcZH6DxkfG7aL8ibx4PLtOkqJZcMkxibhQU+iNu3lZBR1ezlivd
+         NwjJB/ZVb4O8YB+zWOUHJuaWx3lJvGJSUekVNmf42abKU0Hgm84mxynsx29fPB+xfbVO
+         nPEhjRzOK/aHDDzVwyi0q7uSnCD+ttMPxK/2tjevgPEGdqObgAHKTmnDyEf2cx6DTDRA
+         XH8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698779192; x=1699383992;
+        d=1e100.net; s=20230601; t=1698779342; x=1699384142;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=q2bOXh+B6hG0lnIFEcgizrrfwd3U3WpmJ9FsDoFq6ZY=;
-        b=eST1peJ9D0mJb5VZxTD794yOxLX4D9bSsOi2ucUdKCqraIx0hqBYgHxKY6s8BCa3xt
-         rNx6HWZNxQdAvwoJs7ECsFJAobFpBsY5V87cJW+mtDeqs/bEtWFeBZvF9nne/k+dhF4S
-         Xio73wxItzx6MNa3GKCgwtK8xvf8erRXjNtmeF0iCTEqCOUzHlxgpz0v44+UGtkf0pUz
-         WV7gsY09p/2PKn/Xr+ZUI7PIGFBlKnX4ndRv4DXYxxmCSyj4tm+2IlBoZ/DtMQxjt4Sl
-         j9Q7oDTgsF0iWBczNQI2anV5u6Z8EIJI4qfqbhyxF29+T+08JKFtj5WqTPQ49wY0WeqT
-         WgzQ==
-X-Gm-Message-State: AOJu0Yx8qm2je6skKsOc3mV1JPDtUYFy4D8kcmzQzOtpBNepqHxCuMde
-	IRn57Z5O9TzlS6QHZgkcyL4DBg==
-X-Google-Smtp-Source: AGHT+IFwrA+9nT1S6J4lbu4MrY1nXbG4neIF0gx8z13mzYfvX9RH535HJrY78uICXa21c8VIWtwX9Q==
-X-Received: by 2002:a9d:6b8d:0:b0:6c6:50d0:1104 with SMTP id b13-20020a9d6b8d000000b006c650d01104mr15150900otq.27.1698779192412;
-        Tue, 31 Oct 2023 12:06:32 -0700 (PDT)
+        bh=6c5RnsBQAM1dunV+CAJDbpk8REPk1TQLabnCRBaN3S4=;
+        b=PV8w14JCG9OIzkixHbEQmSL4c4v+0MFEDNuE5N8CNA8PmdLQxCYyH4YEe0UQ0ONBaD
+         8MZjkM0sLIlSMrqGF/s+tMMKJ/XzXXkV6EykDttHOTQrj6OM9lMsEw7XCt5Vnr6rwXzz
+         P8/361nB+QuzzQKu8cwulquL1pDDhJzgepCJV3h7/kE6GQ1YP4ysNv222mONF2vmvH5R
+         /8LsIicAQTi1OR9AdAXQnRB+rp6IfIpjOEplmUy65uSacJ1YJxg0dS+dzPcET6OplfMC
+         LMlmWJdkwzePekyQyP9p0G0S5IiBQiPNR9MRyISdZqghAmH/nvLtTtB8MGaGmL3PKKlL
+         2UEA==
+X-Gm-Message-State: AOJu0YxbhuuLwQrtpKlzG9lCHYbHRCgFzwHPeksV/EaRjV4K6AVkhnzB
+	jfroXoMDUeCaJhf0xUugKXSEtA==
+X-Google-Smtp-Source: AGHT+IGpEKD/1FcEAp+603I158t7v6z4rkaemT3LD/yFl1xHTCtV9mCXd82UrPul0LHIBRFN30XGLA==
+X-Received: by 2002:a05:620a:4088:b0:775:7703:ace5 with SMTP id f8-20020a05620a408800b007757703ace5mr16488159qko.56.1698779341774;
+        Tue, 31 Oct 2023 12:09:01 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id h4-20020ac85144000000b004108d49f391sm740994qtn.48.2023.10.31.12.06.32
+        by smtp.gmail.com with ESMTPSA id d9-20020a05620a166900b0077890c8896bsm743887qko.134.2023.10.31.12.09.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Oct 2023 12:06:32 -0700 (PDT)
-Date: Tue, 31 Oct 2023 15:06:31 -0400
+        Tue, 31 Oct 2023 12:09:01 -0700 (PDT)
+Date: Tue, 31 Oct 2023 15:09:00 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH v3 00/12] builtin/show-ref: introduce mode to check for
- ref existence
-Message-ID: <ZUFQN8wbMEDyyfF2@nand.local>
-References: <cover.1698152926.git.ps@pks.im>
- <cover.1698739941.git.ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Aditya Neelamraju via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Aditya Neelamraju <adityanv97@gmail.com>
+Subject: Re: [PATCH] chore: fix typo in .clang-format comment
+Message-ID: <ZUFQzFcgGdJsPJ8G@nand.local>
+References: <pull.1602.git.git.1698610987926.gitgitgadget@gmail.com>
+ <ZT/gQZlVKfgn/+BZ@nand.local>
+ <xmqqpm0v5vtg.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,28 +60,34 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1698739941.git.ps@pks.im>
+In-Reply-To: <xmqqpm0v5vtg.fsf@gitster.g>
 
-On Tue, Oct 31, 2023 at 09:16:08AM +0100, Patrick Steinhardt wrote:
-> Hi,
+On Tue, Oct 31, 2023 at 12:12:43PM +0900, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
 >
-> this is the third version of my patch series that introduces a new `git
-> show-ref --exists` mode to check for reference existence.
+> > On Sun, Oct 29, 2023 at 08:23:07PM +0000, Aditya Neelamraju via GitGitGadget wrote:
+> >> From: Aditya Neelamraju <adityanv97@gmail.com>
+> >
+> > We typically prefix commit messages with the subject area they're
+> > working in, not with "chore", or "feat" like some Git workflows
+> > recommend.
+> > ...
+> > That said, the contents of this patch look obviously correct to me.
+> > Thanks for noticing and fixing!
 >
-> Changes compared to v2:
->
->     - Patch 5: Document why we need `exclude_existing_options.enabled`,
->       which isn't exactly obvious.
->
->     - Patch 6: Fix a grammar issue in the commit message.
->
->     - Patch 9: Switch to `test_cmp` instead of grep(1).
->
-> Thanks!
+> As a comment for a new contributor, it is a bit unhelpful not to
+> suggest what the "subject area" string we would use if we were
+> working on this patch, I think.
 
-Thanks for the updated round. I took a look at the range-diff and didn't
-see anything surprising. This version looks great to me, thanks for
-working on this!
+Good suggestion. I would have suggested "clang-format", which is
+exactly Aditya ended up choosing, anyway. Thanks, Aditya!
+
+> I also suspected that valuve may be a valid word in some language,
+> as the indentation in the example looked as if the six-letter word
+> was meant, not typoed.  https://www.gasolineravaluve.com/ was one
+> of the first hits I saw in my search ;-)
+
+;-)
 
 Thanks,
 Taylor
