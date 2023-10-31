@@ -1,48 +1,48 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B82596FA0
-	for <git@vger.kernel.org>; Tue, 31 Oct 2023 04:43:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49CFF6AB9
+	for <git@vger.kernel.org>; Tue, 31 Oct 2023 04:50:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=merly.org header.i=@merly.org header.b="GLkv+c8Q"
-Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70C7EE8
-	for <git@vger.kernel.org>; Mon, 30 Oct 2023 21:42:58 -0700 (PDT)
-Received: by mail-yb1-xb32.google.com with SMTP id 3f1490d57ef6-d9c66e70ebdso4565680276.2
-        for <git@vger.kernel.org>; Mon, 30 Oct 2023 21:42:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=merly.org header.i=@merly.org header.b="LjGunutV"
+Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A34A2AB
+	for <git@vger.kernel.org>; Mon, 30 Oct 2023 21:50:24 -0700 (PDT)
+Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-5a7af52ee31so50104517b3.2
+        for <git@vger.kernel.org>; Mon, 30 Oct 2023 21:50:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=merly.org; s=google; t=1698727377; x=1699332177; darn=vger.kernel.org;
+        d=merly.org; s=google; t=1698727824; x=1699332624; darn=vger.kernel.org;
         h=to:references:message-id:content-transfer-encoding:cc:date
          :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EnkZAkCyCengqIugCxDABZfUpWJ7oScBazaMw+1b0FU=;
-        b=GLkv+c8Qtl/5V/MMm9TjudsspDubNsV+MS2B8LRocGE4bbUvGMMR1i0wlgWqFJpVAZ
-         Do7oxKKDDTT27Ocopbhl+frBlkOYyu4riBxMFnDZdAIJyAIDNQHKClXI4E8JuioKlWGF
-         /71DVL9p5Bnzj3l+V6T0KmQ1dHxoXqgJlksabbwLZH3QEFbu0JEKVM050iAhsvL23p1V
-         AOrruGh6JvHA/zMUaQBCcZb1jizb9PY4vQCLZu+tilge/nG3ZKYH6I4PuD2xxoglJGZM
-         IBLjGV9hOvpAy2CUWbvfM928KM2TGzBDQDj+XLsGcJGh5c81SaCfEN19hhMuLQ4o2Ou3
-         Te8g==
+        bh=AIGr4oMzAgAmn3nnUymqZp2PvGh+WwdR/W6CBUMjZXk=;
+        b=LjGunutVhRFNN0IJ9U9huJh5Vfc5QTSKCCGlGWr6GGVINuf+uNAav0upz+ABbUDlrV
+         go6XGfKGYt8tJtPCWhB6nFJ9f54RObN4alG/wtD/ZizM2lt9O6NBP+xaQIf68tYXPeVX
+         fAlSamrPj5tDamJO/jNoPWH6duD3/WwN/TpZmavQvhwcurBA6a1rtvBp19iJWKxJhC3P
+         r2Sl4Idj9fY4L/YsUNXJYpc7u2Xjt8Oh/iF3cMiOaqnnYh6lU2J2PWcLQKAYWoVVBzDj
+         3SutA7LOjHNw1mHjAgpROg/rrcZv3q0X8f8GDmEQ7/1nheMoqbg3sZPQ1b2p3PQlzowR
+         Cdgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698727377; x=1699332177;
+        d=1e100.net; s=20230601; t=1698727824; x=1699332624;
         h=to:references:message-id:content-transfer-encoding:cc:date
          :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=EnkZAkCyCengqIugCxDABZfUpWJ7oScBazaMw+1b0FU=;
-        b=sbhdOnTAi0hhRJXY43BfMqUvE1lBmh0f18w+PGfIDY08o3xHdjWbyPaljkSMWCmplK
-         FTSQvJGRf7GhZj0Lj9JCm35P2WpXwZcgERfsEKDJ70sJbhljVwh9RM4oXjrdtAqXMd4t
-         OF9sIoBSxrkcgHyXvN5snMsVfJ3D0c3XS4aMaNw+DS9DrETGcIgKi/hlR6MxKZwBOkvt
-         Qj45PQgWT8wFD0czdE96AG49bHJjNXsC53CcDvRSVaeIl6N8fUmiJUDRt1EBxa9nSanI
-         B8e2wQWpYfgUmNPwBOYryBh3isJZ7E+NxSPdM5IhjIqRj2hswGJ1jiyCglvPkmDZr+VL
-         gOLw==
-X-Gm-Message-State: AOJu0YzOEFbU0wz+3lThLEL1F2TdkeiwI5JlnBhWddJyP1wk7LuvKpIA
-	ag7DNidfmw4X5mpdpO8pSuS1cRuPLzH4f1R6200=
-X-Google-Smtp-Source: AGHT+IHwW96S5kt49EexVt22nB2m8wXnj+HJXeZ7s/4FPyPsZgamgLI/+0mP4N92toQiy4SyO0sCTQ==
-X-Received: by 2002:a25:244f:0:b0:d9a:f948:aae1 with SMTP id k76-20020a25244f000000b00d9af948aae1mr10826609ybk.29.1698727377034;
-        Mon, 30 Oct 2023 21:42:57 -0700 (PDT)
+        bh=AIGr4oMzAgAmn3nnUymqZp2PvGh+WwdR/W6CBUMjZXk=;
+        b=poDViyR7VlnkbeeSTtlFYr5V7KqzyHPCHs3hJm2cPMIL832AsmxI45pCD+A1kVsJB6
+         Q/ovTaRzaSaxNXuCa4dKKHPxnGa6QmM3nmUp2BQyh4rKPMI2tzId2vBaOEgqbDxP3VFo
+         Pj3myrdUXkYc752e4zR9MhViTxj8ECPwV4uS1dIladW2KMH/5jEVb3oCtw87PWTa/7GT
+         YxdwopTxkIZ7ItuJYEdD00a2Jhwv/5sGjVPiIJJQXZFAPSh6r6ACZ60zUvw4toC7Pq0l
+         9ZEJ5lP4DY2k673ssLV4yPA4mIeqhsTZ4gmtURLIdl7jkUcFslFY3RCidi6OcT7xfhSn
+         6BWg==
+X-Gm-Message-State: AOJu0Yzwaqt2zvp2bb4DXeCGr/ss+9tJ9hgw24zJBMRWcEy90JQWf0zh
+	bjpm8cWzdgXB1ERTTt28UT0XNC1Vn7shpAlOrVs=
+X-Google-Smtp-Source: AGHT+IFJLoukXyhQqR2BscvCNbm1Drh4pz36t8tTdgjEEZmlLvBLgA+hyxIVFmBXM/TxlgB0A2J3Ww==
+X-Received: by 2002:a81:e608:0:b0:5a7:baae:329f with SMTP id u8-20020a81e608000000b005a7baae329fmr9918966ywl.15.1698727823573;
+        Mon, 30 Oct 2023 21:50:23 -0700 (PDT)
 Received: from smtpclient.apple ([2600:1700:42f0:9d0:3987:6054:b0de:82c1])
-        by smtp.gmail.com with ESMTPSA id b19-20020a25ae93000000b00da086d6921fsm374811ybj.50.2023.10.30.21.42.56
+        by smtp.gmail.com with ESMTPSA id s18-20020a819b12000000b005af9da2225bsm348059ywg.20.2023.10.30.21.50.22
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 30 Oct 2023 21:42:56 -0700 (PDT)
+        Mon, 30 Oct 2023 21:50:23 -0700 (PDT)
 Content-Type: text/plain;
 	charset=utf-8
 Precedence: bulk
@@ -54,12 +54,12 @@ Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.100.2.1.4\))
 Subject: Re: [PATCH] sequencer: remove use of comment character
 From: Tony Tung <tonytung@merly.org>
 In-Reply-To: <xmqqa5rzadlh.fsf@gitster.g>
-Date: Mon, 30 Oct 2023 21:42:45 -0700
+Date: Mon, 30 Oct 2023 21:50:11 -0700
 Cc: Elijah Newren <newren@gmail.com>,
  Tony Tung via GitGitGadget <gitgitgadget@gmail.com>,
  git@vger.kernel.org
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <5C268049-561B-4E1A-AD6A-493BCD4F2351@merly.org>
+Message-Id: <10283034-816F-4184-A02B-100B2EADF31E@merly.org>
 References: <pull.1603.git.1698635292629.gitgitgadget@gmail.com>
  <xmqq7cn4g3nx.fsf@gitster.g>
  <CABPp-BE6_nuMeiqOAMGwP8SH=d1+i57-STgTNKU8-Gnkv2jW=Q@mail.gmail.com>
@@ -84,12 +84,15 @@ X-Mailer: Apple Mail (2.3774.100.2.1.4)
 > all about the COMMIT_EDITMSG kind of thing, and not about what
 > appears in "sequencer/todo=E2=80=9D.
 
-I believe comment_line_char is being applied when the sequencer reads =
-back the instructions, which is why I ran into this problem to begin =
-with.
+Actually, I withdraw my previous comment.  comment_line_char is all over =
+sequencer.c, and there are tests that say, "rebase -i respects =
+core.commentchar=E2=80=9D, which strongly implies that the *intent* is =
+that rebase -i respects comment_line_char.
 
-If the intent is not to apply it to the sequencer, then the bugfix is in =
-the wrong place.
+I would propose that we move forward with this, except perhaps removing =
+more instances of comment_line_char.
 
-Thanks
+Thanks.
+
+
 
