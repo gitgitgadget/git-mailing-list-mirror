@@ -1,45 +1,47 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D24D19450
-	for <git@vger.kernel.org>; Mon, 30 Oct 2023 23:54:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F111A36A
+	for <git@vger.kernel.org>; Tue, 31 Oct 2023 00:03:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="M7OCa4oO"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="sJH2JZE8"
 Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6CA1101
-	for <git@vger.kernel.org>; Mon, 30 Oct 2023 16:54:02 -0700 (PDT)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2467AB
+	for <git@vger.kernel.org>; Mon, 30 Oct 2023 17:03:33 -0700 (PDT)
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 3DDDA1F84C;
-	Mon, 30 Oct 2023 19:54:02 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 5E2F51F906;
+	Mon, 30 Oct 2023 20:03:33 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=MMYOg6NHjTM1KM5OfdOOGP9SnUAFJ/ZOjled5F
-	dLVr8=; b=M7OCa4oOLyHW69QJHOiyYgVmNe8XFKiHBDAZPwBq11yLgOaWD4RPHf
-	SUlzOgArwv3UUf7EyFc752T5oyYlV61NH5k7OOcyNuPC6fHbkLRNuYUsGUj9KDjX
-	GDDyBeaOYZcnaeQ6+70/FvJLmLAr957cwXzdK8W6dL3OamvGXP9HU=
+	:content-type:content-transfer-encoding; s=sasl; bh=gDySbFupfaQr
+	p+BC0rckvPYyOinlFgxkLtlF7hbhhG0=; b=sJH2JZE8zqXmb0gpMtIqfeTxJk4g
+	0LbREDqOK6D7Yb/7NwugrNyqBJZ/tCIYnGunlYQTDipPuoyHF8UUXvXbLVvpGFsK
+	ZTQQlwAi8B4oVk+O6jf3r1PCt5MVdoIrC5s9sSYowrxxFJYuaDx71gz8F/tPZlcB
+	PJpZbimvTVKZnxY=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 355B81F84B;
-	Mon, 30 Oct 2023 19:54:02 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 5727C1F905;
+	Mon, 30 Oct 2023 20:03:33 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.198.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C7AD61F849;
-	Mon, 30 Oct 2023 19:53:58 -0400 (EDT)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EA6AC1F8FE;
+	Mon, 30 Oct 2023 20:03:29 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jonathan Tan <jonathantanmy@google.com>
-Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,  Dragan
- Simic <dsimic@manjaro.org>
-Subject: Re: [RFC PATCH 1/3] strbuf: make add_lines() public
-In-Reply-To: <d96633a2919ac619ccf29e87abc6f25314a8bfb1.1698696798.git.jonathantanmy@google.com>
-	(Jonathan Tan's message of "Mon, 30 Oct 2023 13:22:46 -0700")
-References: <db6702ba-11a7-44c1-af2a-95b080aaeb77@gmail.com>
-	<cover.1698696798.git.jonathantanmy@google.com>
-	<d96633a2919ac619ccf29e87abc6f25314a8bfb1.1698696798.git.jonathantanmy@google.com>
-Date: Tue, 31 Oct 2023 08:53:57 +0900
-Message-ID: <xmqqy1fj8y5m.fsf@gitster.g>
+To: Elijah Newren <newren@gmail.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  git@vger.kernel.org,
+  Phillip Wood <phillip.wood123@gmail.com>,  Eric Sunshine
+ <sunshine@sunshineco.com>,  Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v2 0/1] Object ID support for git merge-file
+In-Reply-To: <CABPp-BF6vxU5x5VLGbRhtcTBqDu3x31=vMOd2bimZNg2mkkvuA@mail.gmail.com>
+	(Elijah Newren's message of "Mon, 30 Oct 2023 10:15:10 -0700")
+References: <20231024195655.2413191-1-sandals@crustytoothpaste.net>
+	<20231030162658.567523-1-sandals@crustytoothpaste.net>
+	<CABPp-BF6vxU5x5VLGbRhtcTBqDu3x31=vMOd2bimZNg2mkkvuA@mail.gmail.com>
+Date: Tue, 31 Oct 2023 09:03:28 +0900
+Message-ID: <xmqqttq78xpr.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -47,23 +49,34 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
 X-Pobox-Relay-ID:
- 97EA7D78-777F-11EE-8B92-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ EC581FEA-7780-11EE-AAEF-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Elijah Newren <newren@gmail.com> writes:
 
-> Subsequent patches will require the ability to add different prefixes
-> to different lines (depending on their contents), so make this
-> functionality available from outside strbuf.c.
+> On Mon, Oct 30, 2023 at 9:27=E2=80=AFAM brian m. carlson
+> <sandals@crustytoothpaste.net> wrote:
+>>
+>> This series introduces an --object-id option to git merge-file such
+>> that, instead of reading and writing from files on the system, it read=
+s
+>> from and writes to the object store using blobs.
+>>
+>> Changes from v1:
+>> * Improve error handling
+>> * Re-add `-p` argument for documentation
+>>
+>> brian m. carlson (1):
+>>   merge-file: add an option to process object IDs
+>>
+>>  Documentation/git-merge-file.txt | 20 +++++++++++
+>>  builtin/merge-file.c             | 62 +++++++++++++++++++++++--------=
+-
+>>  t/t6403-merge-file.sh            | 58 ++++++++++++++++++++++++++++++
+>>  3 files changed, 124 insertions(+), 16 deletions(-)
+>
+> Thanks, this version looks good to me.
 
-I do not think it is a good idea to force almost everybody to repeat
-themselves.  As we can see here, all but just a single caller of
-strbuf_add_lines() with this patch pass the same prefix for both
-parameters.  If we need to make the current strbuf.c:add_lines()
-also available to some specific callers, that is fine, but let's
-keep the simpler version that almost everybody uses as-is, and give
-the more complex and featureful one that is used only by selected
-callers a longer and more cumbersome name.
-
-Thanks.
+Thanks, both.  Will queue.
