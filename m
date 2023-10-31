@@ -1,71 +1,77 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BDC910A00
-	for <git@vger.kernel.org>; Tue, 31 Oct 2023 07:46:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4384B11182
+	for <git@vger.kernel.org>; Tue, 31 Oct 2023 08:10:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WTiiEoXC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="d7r/wCxR"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FTMeVlo7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZG43Ak/I"
 Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FE1CF5
-	for <git@vger.kernel.org>; Tue, 31 Oct 2023 00:46:37 -0700 (PDT)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7B3FDE
+	for <git@vger.kernel.org>; Tue, 31 Oct 2023 01:10:30 -0700 (PDT)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.west.internal (Postfix) with ESMTP id 3E8A332009D7;
-	Tue, 31 Oct 2023 03:46:34 -0400 (EDT)
+	by mailout.west.internal (Postfix) with ESMTP id 2A8AF3200A79;
+	Tue, 31 Oct 2023 04:10:30 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Tue, 31 Oct 2023 03:46:34 -0400
+  by compute3.internal (MEProxy); Tue, 31 Oct 2023 04:10:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1698738393; x=1698824793; bh=Tv
-	/fvWIvfYnw399K2LxrY0lVHqJCIrCi6vJYy7V5Ey0=; b=WTiiEoXCzD1Q05B9+k
-	9y051I+m3VTDXbYxbAjY95VK+mAXo4Pf7oeVSsxrYupj2W0bHMcYdIjgC2Cg0YSa
-	1m6IUQsEhGGPnE133J4AkOxNHwcKCWH7plr82kICerojuqyOtySlJwLLhFwv2VKN
-	YcWM4W/hEM/nGFGisT6BKBSqpZikKoxPzjBwAq6qIhDULJUqmS2u0yD+DQCmzX2i
-	DjrZs9GpSD4z/QG0JacbzguB05WdrgX7BZywkzUVoMyryIMFMBjAos2NBhnZYMks
-	yriMRBGBF76vUKSmHVjIorXu+b26E6O8mjk2oBz2PhAHl1GeTHxXPYYitfyB6XGB
-	254A==
+	:subject:subject:to:to; s=fm3; t=1698739829; x=1698826229; bh=lw
+	CKpDZpBLxusPbn1C4HOpnGE7TCUSpLc68Bs0FicJE=; b=FTMeVlo7O3ygQvis3P
+	l/ETkrP83ql13/rp1tLSFSU6vSJDocaFaY0dIgwM6sTZeMd9Gcom1g8cs2MgLZhB
+	IjDCe10vIJ6raUfr/LeLCf5jeiAsmt3z09BCtKpYA/c6NY2Yxpe+bP/ffdQth+Pl
+	1CU1xXpleOIgZEFHc0yMy9S4xY1Snrl57ZPayJeXVO7RcNlEHL3m5zdATkDm6wn5
+	ePZ7tiXUqhjRDkYa8JSzjnb1hXHrmBR1VTPeQDqZWQGxsk3Ctzb1CYGrw5WmxnC2
+	iewm3Qs6ESqTF2KrBhgHen/kJEtV5GsO9URu6AcLetH+LNehbEwbJArkBfx4VeaA
+	S2/Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1698738393; x=1698824793; bh=Tv/fvWIvfYnw3
-	99K2LxrY0lVHqJCIrCi6vJYy7V5Ey0=; b=d7r/wCxRa9zVLU14AaJrUk3E5y4Mw
-	IdFlL3TIbOU3J1Bi1k5W38syKxYTRwH8YQvhGlgVoEPgMqTPP1CqCnYn0ni/7Eft
-	3zurf4kRFnPFDAXamVrXWTTYE2UhlXh66XeVX8vMsa8mT46yKv6fi+2eg/PSNT8R
-	Wh984UrXRdma30hUdqVire3L9Qg8GKIEXcD5+81BZjxnZm5RmbecB17C+3cedG9U
-	gKpyru917j+gzdXfrb4FXhS7m1+NOBrjT1UCi7Mz5Yu8zcUDB5g1AQ5pV7dG3iKJ
-	0PR4mv1zIgFTMlKYmgkkfbY9Z8toX5rfs11AnIgiOEogFDFxIzeghgHRw==
-X-ME-Sender: <xms:2bBAZVwf-0_WL9fgBjIxe3-TFQn-i23dyenWYstSEAO3UQzYh-BbIw>
-    <xme:2bBAZVQe36SrQaA6qIyGGvmMlw6gReDvJhzZ1s1mxvj6djad-VM20e8nW_DaEnRXs
-    vX7iRNYJl9aOJUacA>
-X-ME-Received: <xmr:2bBAZfW5D20I8BVeql8OiMWeTGQ5TVwXD2mDwgYeYdl9vtXac_GS_KQJ9dShIyj-CNDrBBSiE-PSqDDXTd1WgTBKUO2Z1uuuUP_CSarxY5sIxH8e>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddtuddguddtkecutefuodetggdotefrod
+	:x-sasl-enc; s=fm3; t=1698739829; x=1698826229; bh=lwCKpDZpBLxus
+	Pbn1C4HOpnGE7TCUSpLc68Bs0FicJE=; b=ZG43Ak/I+XaLH/rzP1V084oDN5VZH
+	MwbvNc4n2EX67n7BTvKRpqCzeld2XWZVvNXGsaPFlmHwcUR6venfRLGVY3+J8VkW
+	U7I8KJy2V53LeiLLB1HJ6pe+ZLauv4p9s4vUYB2CmjA4lwaqtB+4vgbklECyxbD8
+	OIfPJkT28l/TPgCid1VkjFrXdcPaFglKLqSx7U940lU4GLEt8GtNsDwGxxxhrGgG
+	U7RbXTN1p46ucOD9MyDeLyQNxJEhOzsIj5wKCGKrvZIpHzHDgMbJILZ0rGfszDaD
+	/VFknR9ai3zmwRcLP8n8vB4c4ZaIb9jfYuIXb64E/bfmQ+8+ur7CyVauw==
+X-ME-Sender: <xms:dbZAZW12SnHKMybI5O6fLO0m1juXwV9LssJ-hiqx_DCPE2FwWrhZFw>
+    <xme:dbZAZZF2jB2MZV1rQhT6ym8nBeuHYFgbL7Fd5z8o9k_m_G9oPR4kWJavskAVzecmT
+    UtgCKkcunB_nYCy4g>
+X-ME-Received: <xmr:dbZAZe4ZYcqic0Ke3COG8XhKzTgbNU-Q6phL5wyAZ52-mVl3eP1Qm9984MD9SY1m99wXeQfD6gjm15cZed7t7LmV2PzvHZ4pV2pPiObmEA4Z2Yl7>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddtuddguddufecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
-    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
-    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeige
-    ekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:2bBAZXi3g7mClPPTJdmpcF1wYdQRw0wD9Zz7G5BkV-OgvEpZ9MPIZQ>
-    <xmx:2bBAZXCyzsKQ8HnmZMShXxnmqtj2WZMmuJqVfNr69LWR-fcNbgwjuQ>
-    <xmx:2bBAZQI2ecYgdtT2qsn2UYFT42WPqR0Ux6bVgvMKdFWg9roGaoF2bQ>
-    <xmx:2bBAZapAPAcU9wMMjYvjFaxa5Fm941iHf2cqdomc5IvHec1VXQGwjg>
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
+    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
+    gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
+    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
+    esphhkshdrihhm
+X-ME-Proxy: <xmx:dbZAZX1K7_gBwY5Aii-zteBOEsAs3Rvhjk3R7Gjln7WnDpva6pmaDA>
+    <xmx:dbZAZZHJTkj777jnPtSr4PeWv-Css97y2tUu44aPdSmiy39AbNzuqg>
+    <xmx:dbZAZQ-1NqNObenvVGVzJtO1pjDLYltIPtHpOUV_efa9LpxRgcfooA>
+    <xmx:dbZAZZANVWaFeM3ocm-teU50eAqBjrFpK-SUj0r9tycufzLAuIlWyw>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 31 Oct 2023 03:46:32 -0400 (EDT)
+ 31 Oct 2023 04:10:28 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 35e07211 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 31 Oct 2023 07:46:23 +0000 (UTC)
-Date: Tue, 31 Oct 2023 08:46:28 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 56ae44a4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 31 Oct 2023 08:10:19 +0000 (UTC)
+Date: Tue, 31 Oct 2023 09:10:25 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/5] ci: add GitLab CI definition
-Message-ID: <ZUCw1B6oQaDWKx3O@tanuki>
-References: <cover.1698305961.git.ps@pks.im>
- <ZT/P5Bl9lD9V6ID9@nand.local>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH v2 05/12] builtin/show-ref: refactor `--exclude-existing`
+ options
+Message-ID: <ZUC2cXiS949_7r4s@tanuki>
+References: <cover.1698152926.git.ps@pks.im>
+ <cover.1698314128.git.ps@pks.im>
+ <bed2a8a07696371e07c0b2d1282ed51c0b1b9fee.1698314128.git.ps@pks.im>
+ <ZT/32jI62GQKPlcp@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -73,129 +79,88 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="RJ2mC2E2non/HcyL"
+	protocol="application/pgp-signature"; boundary="S2WkdIhrZF//32mG"
 Content-Disposition: inline
-In-Reply-To: <ZT/P5Bl9lD9V6ID9@nand.local>
+In-Reply-To: <ZT/32jI62GQKPlcp@nand.local>
 
 
---RJ2mC2E2non/HcyL
+--S2WkdIhrZF//32mG
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Oct 30, 2023 at 11:46:44AM -0400, Taylor Blau wrote:
-> On Thu, Oct 26, 2023 at 09:59:59AM +0200, Patrick Steinhardt wrote:
-> > And this is exactly what this patch series does: it adds GitLab-specific
-> > knowledge to our CI scripts and adds a CI definition that builds on top
-> > of those scripts. This is rather straight forward, as the scripts
-> > already know to discern Azure Pipelines and GitHub Actions, and adding
-> > a third item to this list feels quite natural. And by building on top of
-> > the preexisting infra, the actual ".gitlab-ci.yml" is really quite
-> > small.
+On Mon, Oct 30, 2023 at 02:37:14PM -0400, Taylor Blau wrote:
+> On Thu, Oct 26, 2023 at 11:56:37AM +0200, Patrick Steinhardt wrote:
+> > It's not immediately obvious options which options are applicable to
+> > what subcommand in git-show-ref(1) because all options exist as global
+> > state. This can easily cause confusion for the reader.
 > >
-> > I acknowledge that the Git project may not be willing to fully support
-> > GitLab CI, and that's fine with me. If we want to further stress that
-> > point then I'd also be perfectly happy to move the definitions into the
-> > "contrib/" directory -- it would still be a huge win for our workflow.
-> > In any case, I'm happy to keep on maintaining the intgeration with
-> > GitLab CI, and if things break I'll do my best to fix them fast.
+> > Refactor options for the `--exclude-existing` subcommand to be contained
+> > in a separate structure. This structure is stored on the stack and
+> > passed down as required. Consequently, it clearly delimits the scope of
+> > those options and requires the reader to worry less about global state.
+> >
+> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 >=20
-> I don't have any strong opinions here, but my preference would probably
-> be to keep any GitLab-specific CI configuration limited to "contrib", if
-> it lands in the tree at all.
-
-As mentioned, I would not mind at all if we wanted to instead carry this
-as part of "contrib/".
-
-> We already have a rather complicated CI setup on GitHub, which I think
-> we generally consider authoritative in terms of determining whether "CI"
-> is green. I know we have some Azure remnants in "ci", but I'm not aware
-> of any of the details there.
+> All makes sense, but...
 >=20
-> So I have some hesitation about trying to mirror this rather complicated
-> set of build rules in another CI environment. My primary concern would
-> be that the two might fall out of sync and a series that is green on
-> GitHub would be red on GitLab, or vice-versa. Importantly, this can
-> happen even without changes to the build definitions, since (AFAICT)
-> both forges distribute new images automatically, so the set of packages
-> installed in GitHub may not exactly match what's in GitLab (and
-> vice-versa).
-
-Yup, that's a valid concern. As mentioned, this patch series does not
-have the intent to make GitLab CI a second authoritative CI platform.
-GitHub Actions should remain the source of truth of whether a pipeline
-passes or not. Most importantly, I do not want to require the maintainer
-to now watch both pipelines on GitHub and GitLab. This might be another
-indicator that the pipeline should rather be in "contrib/", so that
-people don't start to treat it as authoritative.
-
-> My other concern is that we're doubling the cost of any new changes to
-> our CI definition. Perhaps this is more of an academic concern, but I
-> think my fear would be that one or the other would fall behind on in
-> implementation leading to further divergence between the two.
+> > @@ -19,8 +19,7 @@ static const char * const show_ref_usage[] =3D {
+> >  };
+> >
+> >  static int deref_tags, show_head, tags_only, heads_only, found_match, =
+verify,
+> > -	   quiet, hash_only, abbrev, exclude_arg;
+> > -static const char *exclude_existing_arg;
+> > +	   quiet, hash_only, abbrev;
+> >
+> >  static void show_one(const char *refname, const struct object_id *oid)
+> >  {
+> > @@ -95,6 +94,11 @@ static int add_existing(const char *refname,
+> >  	return 0;
+> >  }
+> >
+> > +struct exclude_existing_options {
+> > +	int enabled;
 >=20
-> I think having the new CI definition live in "contrib" somewhat
-> addresses the "which CI is authoritative?" problem, but that it doesn't
-> address the "we have two of these" problem.
+> ...do we need an .enabled here? I think checking whether or not .pattern
+> is NULL is sufficient, but perhaps there is another use of .enabled
+> later on in the series...
 
-I do see that this requires us to be a bit more careful with future
-changes to our CI definitions. But I think the additional work that this
-creates is really very limited. Except for the `.gitlab-ci.yml`, there
-are only 54 lines specific to GitLab in our CI scripts now, which I
-think should be rather manageable.
+This is the second time that this question comes up, which is likely not
+all that surprising. Quoting my first reply:
 
-I also think that it is sensible to ensure that our CI scripts are as
-agnostic to the CI platform as possible, as it ensures that we continue
-to be agile here in the future if we are ever forced to switch due to
-whatever reason. In the best case, our CI scripts would allow a user to
-also easily run the tests locally via e.g. Docker. We're not there yet,
-but this patch series is a good step into that direction already.
+On Wed, Oct 25, 2023 at 01:50:44PM +0200, Patrick Steinhardt wrote:
+> Yeah, we do. It's perfectly valid to pass `--exclude-existing` without
+> the optional pattern argument. We still want to use this mode in that
+> case, but don't populate the pattern.
+>=20
+> An alternative would be to assign something like a sentinel value in
+> here. But I'd think that it's clearer to instead have an explicit
+> separate field for this.
 
-Last but not least, I actually think that having multiple supported CI
-platforms also has the benefit that people can more readily set it up
-for themselves. In theory, this has the potential to broaden the set of
-people willing to contribute to our `ci/` scripts, which would in the
-end also benefit GitHub Actions.
-
-In my opinion, this benefit is demonstrated by this patch series
-already: besides all the changes that aim to prepare for GitLab CI,
-there are also patches that deduplicate code and improve test coverage
-for Alpine Linux. These changes likely wouldn't have happened if it
-wasn't for the GitLab CI.
-
-> So my preference would probably to have this live out of Junio's tree,
-> but I'm curious to hear what others think.
-
-I understand your points, and especially the point about not having a
-second authoritative CI platform. I'm very much on the same page as you
-are here, and would be happy to move the definitions to "contrib/" if
-you want me to.
-
-But I think we should also see the potential benefit of having a second
-CI platform, as it enables a more diverse set of people to contribute.
-which can ultimately end up benefitting our CI infra for both GitHub
-Actions and GitLab CI.
+Anyway, the fact that this question comes up again indicates that I need
+to comment this better.
 
 Patrick
 
---RJ2mC2E2non/HcyL
+--S2WkdIhrZF//32mG
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVAsNMACgkQVbJhu7ck
-PpScLA//fWBwQ/ALKGga2Rgw29BSgWPO+pMt8RgVgtUDVhRGCqCnSWdIoraOcbZO
-58rOM/7hEUlx2J/kO/jKAufbt0vWmNAoLe1KDGeEmZX9bC7EPvrKjLjD1+EBcwsJ
-SMwIqdLbdgResNS30L7l6DpdAr20SOvgXdzhwyDv69SebViupZ9yY8bf7yDOVAT6
-eU5JtoB5kDtQ4TAKPvbpxkInIy5ibCpDk39J8y/PBNuHAUCQ1/ilpBUdJcKV7VVy
-VVF+C1M8MjP488iuHs2gCL/0OBwy09cHDIMSs1XdVKfm/bPgKdalOLxSSPzFwR1d
-1h7doiVG3ARWUDWDCRmsaAv/RjlJLgo06vtkK2E0XjijBaAlVwlhG5Wo/zgIELyH
-Udwa9w2LypXp5AonWTbdbst8im15qxmbHsCXaFMtBcBvE/PXWK9nnHYkoxAXrwug
-5DbOrL+xnQ5tEjU91+BmDKEnLJ/udJ82dWJc2Au1bR8mBOn0soVTW42+NMAPmaqp
-O5MTRTpAxqSQNcBG+2b75i6T+EP9cl1j7Ok0OZXcgpY9XWv00aJHxudyZwxoBgzZ
-wrQ0HfAQt1+iSZPA7oJYFdEeef5vAcpnlnN2349XF02Hjhuqyt+r3KwyP3XJkR/8
-Xl6JW1JpCvUqw/gG3A3dp00le+OapEwrHvsyzgn0aAlIjUTf1D4=
-=yvx8
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVAtnAACgkQVbJhu7ck
+PpRR1A//RV+7Ivb1EuGUKsqxt4wXdvj7ez0UVtHWHDkgdZRv9cNRfoCHAfJi/NGq
+mQyvQXHjmfgj1ncbh4U5IVZk+AxOPkgA7Nnyt3nh90Buewchgns/zvZNX9SmXlqg
+lmQ91d1s8zh+ltADWxqKmJRrhgiKsCUcqsUVdJ6wZSfI9Y18Ja3XZFb6VfG88CPA
+ouFtjJZQ71HOFQ5fDpNoW51GOQ5d/tgvCAQalIVcBHQ70SgKQSRfYvyiqSqhybC7
+tvw5tmibpsMyOIFNAyducWyed4ymbMp0pHqshHyJMDL37UDwpZgFeUEAEq+aguu2
+4RnopOfOCQ7LLH3V0ss5ab1IbG0z1zaQv18Ir+ub26lxT6Kw7vaIto+BE5HYIkKF
+G0r8/v3hH8ktQ+l+I2NQBm94RJ/W7hiFJpsFVY00G36c6iD+xiyK5IXESrqV70KR
+RFmkytlpboAXlj3FnZpM7T2bmORGGlPyeWAABFkXM28GjtKn7rpw4KTrOfwmhjC0
+FZgAjtPSKkoh9EcEbAPr+c1TtKgOXrY3qYlXgebJyUANMPbOw8g6uU1cwZIo0s8M
+rlnwfQpY/fq4YPfw5LQz7JfvSF1o4BLTmIabTHX8E5aJgWR0hHkGAdifgseMIhCm
+Hzdm8a+noTs7nzYlvpMsMY0IZmsxAP9zMqcgOGYlI9MUc1AQR7I=
+=Jwcj
 -----END PGP SIGNATURE-----
 
---RJ2mC2E2non/HcyL--
+--S2WkdIhrZF//32mG--
