@@ -1,76 +1,95 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1BE1D28D
-	for <git@vger.kernel.org>; Tue, 31 Oct 2023 04:30:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B82596FA0
+	for <git@vger.kernel.org>; Tue, 31 Oct 2023 04:43:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="pbpwTh70"
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15EA4A9
-	for <git@vger.kernel.org>; Mon, 30 Oct 2023 21:30:19 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 7419A37860;
-	Tue, 31 Oct 2023 00:30:18 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=w24e86oYz8Bkqs+Z5CskegZH933Qp7rTTjl6EL
-	VT8/0=; b=pbpwTh705AQfBiHHrofhGMHt0Onhay/1VuMwesUaT3OAGKoWxCHjMe
-	5ggRWl/b27AQf2W7tuzQ3SvZHvov+y6QcHBH0VYwAlzpg8dTYVw7RiGrfdc5zfYj
-	ySDSlZyEb0o3+rF3JaV5ZoFk9N2q3eMAAXBmuPVAZKXtzJFNyX1r0=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 6C6053785F;
-	Tue, 31 Oct 2023 00:30:18 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.198.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 886833785E;
-	Tue, 31 Oct 2023 00:30:15 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Hugo Sales <hugo@hsal.es>
-Cc: git@vger.kernel.org,  Derrick Stolee <derrickstolee@github.com>,
-  Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-Subject: Re: [PATCH 0/3] Add `-p' option to `git-mv', inspired by `mkdir'
-In-Reply-To: <1384513657.119681.1697027599941@office.mailbox.org> (Hugo
-	Sales's message of "Wed, 11 Oct 2023 13:33:19 +0100 (WEST)")
-References: <20231009233458.1371351-1-hugo@hsal.es>
-	<xmqq1qe3wbt1.fsf@gitster.g>
-	<1384513657.119681.1697027599941@office.mailbox.org>
-Date: Tue, 31 Oct 2023 13:30:14 +0900
-Message-ID: <xmqqlebj4dnt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=merly.org header.i=@merly.org header.b="GLkv+c8Q"
+Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70C7EE8
+	for <git@vger.kernel.org>; Mon, 30 Oct 2023 21:42:58 -0700 (PDT)
+Received: by mail-yb1-xb32.google.com with SMTP id 3f1490d57ef6-d9c66e70ebdso4565680276.2
+        for <git@vger.kernel.org>; Mon, 30 Oct 2023 21:42:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=merly.org; s=google; t=1698727377; x=1699332177; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EnkZAkCyCengqIugCxDABZfUpWJ7oScBazaMw+1b0FU=;
+        b=GLkv+c8Qtl/5V/MMm9TjudsspDubNsV+MS2B8LRocGE4bbUvGMMR1i0wlgWqFJpVAZ
+         Do7oxKKDDTT27Ocopbhl+frBlkOYyu4riBxMFnDZdAIJyAIDNQHKClXI4E8JuioKlWGF
+         /71DVL9p5Bnzj3l+V6T0KmQ1dHxoXqgJlksabbwLZH3QEFbu0JEKVM050iAhsvL23p1V
+         AOrruGh6JvHA/zMUaQBCcZb1jizb9PY4vQCLZu+tilge/nG3ZKYH6I4PuD2xxoglJGZM
+         IBLjGV9hOvpAy2CUWbvfM928KM2TGzBDQDj+XLsGcJGh5c81SaCfEN19hhMuLQ4o2Ou3
+         Te8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698727377; x=1699332177;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=EnkZAkCyCengqIugCxDABZfUpWJ7oScBazaMw+1b0FU=;
+        b=sbhdOnTAi0hhRJXY43BfMqUvE1lBmh0f18w+PGfIDY08o3xHdjWbyPaljkSMWCmplK
+         FTSQvJGRf7GhZj0Lj9JCm35P2WpXwZcgERfsEKDJ70sJbhljVwh9RM4oXjrdtAqXMd4t
+         OF9sIoBSxrkcgHyXvN5snMsVfJ3D0c3XS4aMaNw+DS9DrETGcIgKi/hlR6MxKZwBOkvt
+         Qj45PQgWT8wFD0czdE96AG49bHJjNXsC53CcDvRSVaeIl6N8fUmiJUDRt1EBxa9nSanI
+         B8e2wQWpYfgUmNPwBOYryBh3isJZ7E+NxSPdM5IhjIqRj2hswGJ1jiyCglvPkmDZr+VL
+         gOLw==
+X-Gm-Message-State: AOJu0YzOEFbU0wz+3lThLEL1F2TdkeiwI5JlnBhWddJyP1wk7LuvKpIA
+	ag7DNidfmw4X5mpdpO8pSuS1cRuPLzH4f1R6200=
+X-Google-Smtp-Source: AGHT+IHwW96S5kt49EexVt22nB2m8wXnj+HJXeZ7s/4FPyPsZgamgLI/+0mP4N92toQiy4SyO0sCTQ==
+X-Received: by 2002:a25:244f:0:b0:d9a:f948:aae1 with SMTP id k76-20020a25244f000000b00d9af948aae1mr10826609ybk.29.1698727377034;
+        Mon, 30 Oct 2023 21:42:57 -0700 (PDT)
+Received: from smtpclient.apple ([2600:1700:42f0:9d0:3987:6054:b0de:82c1])
+        by smtp.gmail.com with ESMTPSA id b19-20020a25ae93000000b00da086d6921fsm374811ybj.50.2023.10.30.21.42.56
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 30 Oct 2023 21:42:56 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 306C6B44-77A6-11EE-A598-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.100.2.1.4\))
+Subject: Re: [PATCH] sequencer: remove use of comment character
+From: Tony Tung <tonytung@merly.org>
+In-Reply-To: <xmqqa5rzadlh.fsf@gitster.g>
+Date: Mon, 30 Oct 2023 21:42:45 -0700
+Cc: Elijah Newren <newren@gmail.com>,
+ Tony Tung via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <5C268049-561B-4E1A-AD6A-493BCD4F2351@merly.org>
+References: <pull.1603.git.1698635292629.gitgitgadget@gmail.com>
+ <xmqq7cn4g3nx.fsf@gitster.g>
+ <CABPp-BE6_nuMeiqOAMGwP8SH=d1+i57-STgTNKU8-Gnkv2jW=Q@mail.gmail.com>
+ <xmqqa5rzadlh.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3774.100.2.1.4)
 
-Hugo Sales <hugo@hsal.es> writes:
 
->> Both are plausible, and "mkdir -p" does not have such a nasty
->> ambiguity.  That is what makes me unsure about the new feature
->> (again, either with required "-p" or with implied "-p").
->
-> I think the ambiguity is resolved by the inclusion of lack thereof
-> of a trailing `/`.
+> On Oct 30, 2023, at 4:35=E2=80=AFPM, Junio C Hamano =
+<gitster@pobox.com> wrote:
+>=20
+> Elijah Newren <newren@gmail.com> writes:
+>=20
+>> I thought the point of the comment_line_char was so that commit
+>> messages could have lines starting with '#'.  That rationale doesn't
+>> apply to the TODO list generation or parsing, and I'm not sure if we
+>> want to add the same complexity there.
+>=20
+> Thanks for a healthy dose of sanity.  I noticed existing use of
+> comment_line_char everywhere in sequencer.c and assumed we would
+> want to be consistent, but you are right to point out that they are
+> all about the COMMIT_EDITMSG kind of thing, and not about what
+> appears in "sequencer/todo=E2=80=9D.
 
-The question is not if we can come up with a rule that the user can
-use to disambiguate.  It is if the user will find that such a rule
-is a naturally acceptable way to disambiguate.
+I believe comment_line_char is being applied when the sequencer reads =
+back the instructions, which is why I ran into this problem to begin =
+with.
 
-When both of
+If the intent is not to apply it to the sequencer, then the bugfix is in =
+the wrong place.
 
-    git mv file there/exists/such/a/directory
-    git mv file there/exists/such/a/directory/
+Thanks
 
-create "there/exists/such/a/directory/file" and removes "file", with
-or without a trailing slash, "you should add a slash if you want a
-directory, and otherwise you should not add a slash" is a rather
-arbitrary rule.  Let's not go there.  I still view the downside more
-grave than having to occasionally do "mkdir".
