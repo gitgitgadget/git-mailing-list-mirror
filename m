@@ -1,56 +1,32 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF9202232F
-	for <git@vger.kernel.org>; Tue, 31 Oct 2023 19:24:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="aXdURaxE"
-Received: from mail-qv1-xf35.google.com (mail-qv1-xf35.google.com [IPv6:2607:f8b0:4864:20::f35])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84855DA
-	for <git@vger.kernel.org>; Tue, 31 Oct 2023 12:24:13 -0700 (PDT)
-Received: by mail-qv1-xf35.google.com with SMTP id 6a1803df08f44-66d17bdabe1so41308636d6.0
-        for <git@vger.kernel.org>; Tue, 31 Oct 2023 12:24:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1698780252; x=1699385052; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=QV3MfU+4pZ9NCMCn3YWPZ/3pv6aBO4+VZTyDwmW4+Ec=;
-        b=aXdURaxEtipiVMth1bMJWBlGp1RqOWrsJuikN0uhiAlkhgO/vjhex6mEfZff4eVwxU
-         QHacOG0OdPC/2zPrvZUsPZMbtubw4fibY5GHjIcrrGYOrlkh9peTG3zDtENWMFRS3OmE
-         TsOm1KY4w/ljDc9Tmtwb7bkElAhAixUMsm/ZLF3UkarPcPTkzMVFWB2dQ2SChgr0gIZO
-         CDH+WmlpVEQqibkWNzilW7W5ePXLhAfV4uJj13L8l6zG4KyqxCJKG4rjWAJL630ANdls
-         YqX3GwzzeZZq8eYrCr759UMss37jJ7xAxjDuNeqQeT2L9rkjyxo+KqSJFzAnhnCVjBpe
-         LFgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698780252; x=1699385052;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QV3MfU+4pZ9NCMCn3YWPZ/3pv6aBO4+VZTyDwmW4+Ec=;
-        b=sIGR2+dG3dMnSZVShAqza254dQSeud9UgZ9u82b2dud4os5X6HKyiRfxKQMxyS0+sn
-         Fs2IhOqv6b9on9pxLu7pbGmkm56SoYfY+m7TSzd8zJk7ax5qJE9OuOppQTneOC660kXB
-         zFYsBgWM9QNQsOhP6Ac6Chgc7qkqbE5FLMEMKOjh2gtRKM/wKc3Hhw9AjL8FlTXj5Fki
-         3IrYXzpgHORfoFDVmWVQFaueRUn5b6ehVUOUm6Cq3/A6YjKJd1fG436ODGBOf7ilGxh8
-         5qSIAxv4ujKDxuACgos8M+qjBbQJo2csSnGEkrpchVYDB4CwCyD+plpwDASfovjtdw0B
-         LJFg==
-X-Gm-Message-State: AOJu0YwBlnjccQ2Q6E53qYm0ybWxYzxOnZnqH+aHO/RIZrlU2IMbST19
-	B6zk6v2s4XLoOn51BMLulWqAMgGOqynzHXs20GHveg==
-X-Google-Smtp-Source: AGHT+IEmfDkCG2onlCmUZzaJqMwbp5CnHmY61902sL6NGtiTVdzvC63eddQ9zYiCQ/3NQwOGbX6GXA==
-X-Received: by 2002:a05:6214:2508:b0:66d:3f8b:fd93 with SMTP id gf8-20020a056214250800b0066d3f8bfd93mr16374085qvb.2.1698780252329;
-        Tue, 31 Oct 2023 12:24:12 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id i26-20020a05620a145a00b0076e1e2d6496sm754840qkl.104.2023.10.31.12.24.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Oct 2023 12:24:12 -0700 (PDT)
-Date: Tue, 31 Oct 2023 15:24:11 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 2/2] Documentation/gitformat-pack.txt: fix incorrect MIDX
- documentation
-Message-ID: <c149be35a1da66c5e1bbc1dd82839e32a52ace36.1698780244.git.me@ttaylorr.com>
-References: <cover.1697144959.git.me@ttaylorr.com>
- <cover.1698780244.git.me@ttaylorr.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA9DA1DDC1
+	for <git@vger.kernel.org>; Tue, 31 Oct 2023 19:36:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B886A3
+	for <git@vger.kernel.org>; Tue, 31 Oct 2023 12:36:31 -0700 (PDT)
+Received: (qmail 20422 invoked by uid 109); 31 Oct 2023 19:36:30 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 31 Oct 2023 19:36:30 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 24814 invoked by uid 111); 31 Oct 2023 19:36:32 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 31 Oct 2023 15:36:32 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 31 Oct 2023 15:36:29 -0400
+From: Jeff King <peff@peff.net>
+To: phillip.wood@dunelm.org.uk
+Cc: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
+	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Subject: Re: [PATCH v2 5/5] ci: add support for GitLab CI
+Message-ID: <20231031193629.GB875658@coredump.intra.peff.net>
+References: <cover.1698305961.git.ps@pks.im>
+ <cover.1698398590.git.ps@pks.im>
+ <37a507e9b255dd40c0536438dfe3fa05b067f08f.1698398590.git.ps@pks.im>
+ <ZTuYjzOfG0y27Sho@ugly>
+ <d00b02e9-fb05-44bc-90ee-1851ef98dd26@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -59,64 +35,70 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1698780244.git.me@ttaylorr.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <d00b02e9-fb05-44bc-90ee-1851ef98dd26@gmail.com>
 
-Back in 32f3c541e3 (multi-pack-index: write pack names in chunk,
-2018-07-12) the MIDX's "Packfile Names" (or "PNAM", for short) chunk was
-described as containing an array of string entries. e0d1bcf825 notes
-that this is the only chunk in the MIDX format's specification that is
-not guaranteed to be 4-byte aligned, and so should be placed last.
+On Fri, Oct 27, 2023 at 02:17:02PM +0100, Phillip Wood wrote:
 
-This isn't quite accurate: the entries within the PNAM chunk are not
-guaranteed to be 4-byte aligned since they are arbitrary strings, but
-the chunk itself is 4-byte aligned since the ending is padded with NUL
-bytes.
+> On 27/10/2023 12:01, Oswald Buddenhagen wrote:
+> > On Fri, Oct 27, 2023 at 11:25:41AM +0200, Patrick Steinhardt wrote:
+> > > +    export GIT_PROVE_OPTS="--timer --jobs $(nproc)"
+> > > +    export GIT_TEST_OPTS="--verbose-log -x"
+> > > 
+> > fwiw (as this is again only copied), export with assignment is a
+> > bash-ism
+> 
+> Not according to https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#export
+> 
+>     SYNOPSIS
+> 
+>         export name[=word]...
+> 
+>     DESCRIPTION
+> 
+>         The shell shall give the export attribute to the variables
+>         corresponding to the specified names, which shall cause them
+>         to be in the environment of subsequently executed commands. If
+>         the name of a variable is followed by = word, then the value
+>         of that variable shall be set to word.
+> 
+> It is true that in our test suite we separate a variable assignment when
+> exporting. Presumably that is because someone reported that their shell did
+> not support the "export name=WORD" syntax in the past. As we're already
+> using this syntax with the same docker images in Github Actions I think we
+> can assume it is safe here.
 
-That padding has always been there since 32f3c541e3 via
-midx.c::write_midx_pack_names(), which ended with:
+I've wondered about the origin of this myself, and tried to do some
+digging. All of the commits I found removing "export var=val" vaguely
+say "unportable" or "some shells can't handle", etc.
 
-    i = MIDX_CHUNK_ALIGNMENT - (written % MIDX_CHUNK_ALIGNMENT)
-    if (i < MIDX_CHUNK_ALIGNMENT) {
-      unsigned char padding[MIDX_CHUNK_ALIGNMENT];
-      memset(padding, 0, sizeof(padding))
-      hashwrite(f, padding, i);
-      written += i;
-    }
+The oldest mention I found on the mailing list was this thread:
 
-In fact, 32f3c541e3's log message itself describes the chunk in its
-first paragraph with:
+  https://lore.kernel.org/git/7vfyb0wexo.fsf@assigned-by-dhcp.cox.net/
 
-    Since filenames are not well structured, add padding to keep good
-    alignment in later chunks.
+which is even more explicit about its vagueness.
 
-So these have always been externally aligned. Correct the corresponding
-part of our documentation to reflect that.
+I wouldn't be surprised if SunOS/Solaris /bin/sh had problems with it,
+as that has been a common headache shell in the past. But I think we
+finally declared it unusable for other reasons (and they ship a more
+capable shell in /usr/xpg6, if anybody even still wants to build on
+those operating systems these days).
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- Documentation/gitformat-pack.txt | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+So it's possible that avoiding "export var=val" is mostly superstition,
+and we could loosen our rules these days. But some things to consider:
 
-diff --git a/Documentation/gitformat-pack.txt b/Documentation/gitformat-pack.txt
-index c4eb09d52a..9fcb29a9c8 100644
---- a/Documentation/gitformat-pack.txt
-+++ b/Documentation/gitformat-pack.txt
-@@ -390,10 +390,11 @@ CHUNK LOOKUP:
- CHUNK DATA:
- 
- 	Packfile Names (ID: {'P', 'N', 'A', 'M'})
--	    Stores the packfile names as concatenated, NUL-terminated strings.
--	    Packfiles must be listed in lexicographic order for fast lookups by
--	    name. This is the only chunk not guaranteed to be a multiple of four
--	    bytes in length, so should be the last chunk for alignment reasons.
-+	    Store the names of packfiles as a sequence of NUL-terminated
-+	    strings. There is no extra padding between the filenames,
-+	    and they are listed in lexicographic order. The chunk itself
-+	    is padded at the end with between 0 and 3 NUL bytes to make the
-+	    chunk size a multiple of 4 bytes.
- 
- 	OID Fanout (ID: {'O', 'I', 'D', 'F'})
- 	    The ith entry, F[i], stores the number of OIDs with first
--- 
-2.42.0.527.ge89c67d052
+  1. Some people may prefer reading the separated form (Junio indicates
+     such in the thread linked above, but I don't know how strong a
+     preference that is).
+
+  2. We won't really know if there is a odd-ball shell that rejects it
+     unless we make a change and wait for a while to see if anybody
+     screams. The existing ones in ci/ show that it is not a problem for
+     the platforms where we run CI, but I suspect the scripts in t/ see
+     a wider audience.
+
+I don't think this has any real bearing on the patches being proposed,
+but I have been curious about this for our other scripts for a while
+now.
+
+-Peff
