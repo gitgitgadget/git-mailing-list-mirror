@@ -1,73 +1,73 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A63C312B99
-	for <git@vger.kernel.org>; Tue, 31 Oct 2023 08:16:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A0813AEC
+	for <git@vger.kernel.org>; Tue, 31 Oct 2023 08:16:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="h3HCobtY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dPA3/6JR"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qXgeMFyp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T0BI56m5"
 Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 992D6E8
-	for <git@vger.kernel.org>; Tue, 31 Oct 2023 01:16:37 -0700 (PDT)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.west.internal (Postfix) with ESMTP id D1AE332009FD;
-	Tue, 31 Oct 2023 04:16:36 -0400 (EDT)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22EECDB
+	for <git@vger.kernel.org>; Tue, 31 Oct 2023 01:16:42 -0700 (PDT)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.west.internal (Postfix) with ESMTP id 3C4D43200905;
+	Tue, 31 Oct 2023 04:16:41 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Tue, 31 Oct 2023 04:16:37 -0400
+  by compute5.internal (MEProxy); Tue, 31 Oct 2023 04:16:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1698740196; x=1698826596; bh=5A
-	p7cqdDZw2sD3iP7Gg10qMzqT2dT1C+DxxFg/eguls=; b=h3HCobtY9siJMB/PkD
-	U9UiErhG7xVTq4hBdsZk8oaXi8aMejlxQUoymHVFj4O+uTh77PmFNQ0G4PK1/Zm6
-	jujgx2G+1nzi/8C41xoX0wcKJ5yse8MPo7iBcWUS8QmysMFytDiSD2dVOiXjRQtT
-	KT+bDTe/gi5ZNy+Tqk9gBFT7lqI///YYlIi8PQAra1+kO9wetfg7dqljB1DKH4z+
-	svakfZrFTbI6vHoehoc5Q+fA4IjlM/ajCrIu8zvjCfM4Je7opMZVL7ACVLkj+BE0
-	bkh39egiJXF1EvOIMmvhXjHwCJSW4bYvttK9iNAMcx3a7SFJYX0jp6Rww18lfHvl
-	pD4A==
+	:subject:subject:to:to; s=fm3; t=1698740200; x=1698826600; bh=Zq
+	LdwDphgDAemOBzuNRUhMzJVV8mMdGN+u90BrM/tp8=; b=qXgeMFypVggn2X/S34
+	vveyI4bTgLDY5Yp8dhdhJs3wUHfTsJOGclkL+LzbGXEfBsR1XHxnRdP3pSQglojb
+	ksmWrZ+xT+9OZtGyhHPDi0FgQTvoTmzHXyRKXv2mHK13+C7mF8o1fo7WlMXNvFzK
+	rnQo85BSexD4wtidkVR3nmhXnxsvVl16H+50/Hyx2e7bZFSHuZDV5O8UHEaa4wSv
+	6HHoFk3lcV3XLRCkhe8o0qno/5/qb+LHs23G3Ya6dqe9ERYVNZe6pmD0uvs1Abeb
+	05Oz3uFpKqj0lLdKyjm1a395vkfAwYHPDEtFwQpq6pOLcqcHj/En8Xi+ojHvDQqT
+	q/gg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1698740196; x=1698826596; bh=5Ap7cqdDZw2sD
-	3iP7Gg10qMzqT2dT1C+DxxFg/eguls=; b=dPA3/6JRZqcG/GB++Gae371ttvN4r
-	73Yb9GiOttjhbDhGhqtQvQer44hfwuD9xWEp6Io6ySs/FqKjiABpe2pE3B//BUz7
-	T7lV5D6MJ3LCAWmrIr0KSF4IbzyFF7XQ6jIhfXXfGp1txmxZbWjBhPpGHIjO9G7Q
-	eHTkBoBsJu3xcZEB4mVfcf1vjf+yifbSVK1ZBZIAOEguxZZg3NkZ0CN10Al3MNb9
-	tA3In2Via8KvlY70kwUM+ZqAxDe+O78kgUamum2Ywv7KGtifoPtRDpTgjCqkjfTi
-	vVX9DvdQpZViIgJsd2+SjuKJBoRuXhGBN45eJCXLPgz5Ves+MkbFiYhbA==
-X-ME-Sender: <xms:5LdAZXLBfoI_4cU10OudKKYtBJeh_DRTTXF8cub_E8kruisEThuQXg>
-    <xme:5LdAZbLl0uqpvsKjvksy3vyVRABBGMFvUvA18O_ImvFmCeJuxxaRPfoxuAJrXfHuM
-    51omzULWDow8fdEMA>
-X-ME-Received: <xmr:5LdAZfsQook0Zgw7cknUZrOydAtDVaN-Vm_9deN112fEx-I-_tbdUNQdeLRc5dgBM6lYekFSORMrpSWsbpVwrqqCOTnpo1IrMRrlGkQWpItozw8V>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddtuddgudduhecutefuodetggdotefrod
+	:x-sasl-enc; s=fm3; t=1698740200; x=1698826600; bh=ZqLdwDphgDAem
+	OBzuNRUhMzJVV8mMdGN+u90BrM/tp8=; b=T0BI56m5viEDgoUYXT4bpjrSRWPsV
+	2PmsL/nGqRF05NNV5E03V9ajoo1kvegW+f43n7O5GdwM0QPY/1+yHb2x7+wfhvWD
+	DmrKv5Nkwv/w09NoQnHAIi668PT1iG28dSUM3GyUMv2fzsqk7X9SmrcJR8op3Ybv
+	xtnUhdo604ZDMgS2iFdUXps+cBPpsQvjPaZ6m3yqjr1Ys/9emYBxoy8D8Y4mQpRC
+	yBsiPFJi4C0YXn3BOsHsR2VnxkEl5xZWphZ1Df7BDaekfL6tgCsaC/R+6/CGN8MC
+	m9T4EynhGPHfmEey7tDyf37VbIxsFWcGt16k0O9qP++xO3ucLZWA6x1VA==
+X-ME-Sender: <xms:6LdAZThncZKStwusw9nngObwCVDZaYYNfI-fMPhg20Y4dZEoIfUkSg>
+    <xme:6LdAZQBfmzzlsEBnGXK2kLOUYUR-qlbtp2fqdm46NJ7s7046lQ4DnKIH9dmfEh-NA
+    uugcvn0_naQXajRYA>
+X-ME-Received: <xmr:6LdAZTHL4fC2TK-kBF9q2UflYJAPVV7RH2tTerqQSfBfzsZAs-yVWe75dlIg5NVSmu62RN2ostkn-UEKT8vI9ginn4-o6T7eMFscIqJVCLD_NDcD>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddtuddguddugecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
     enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
     rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
     gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
-    teenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
+    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
     esphhkshdrihhm
-X-ME-Proxy: <xmx:5LdAZQYpissTtpwarCgNOaCgEme3JNptDYxOXt1yQsGd3zeKXp5YrQ>
-    <xmx:5LdAZeafegy8U-7kMP9TTqozkqFLo92T5qVvmXfi2xaVGs7EZX6GRw>
-    <xmx:5LdAZUBVzdjNxfAnUjY5nGCvk_LN4y1Kmh6Q1Xyzq8tDsAwGrNTD7A>
-    <xmx:5LdAZeEiU3IKQ0YZJ6i6KwVn6AhJc4p9_PxtcSdEP8dLULCghZJeiw>
+X-ME-Proxy: <xmx:6LdAZQT2wIBLFDRpczUHvSe4Ee9l5HeGJAEpJ6m3PjNIXGOgFCmmug>
+    <xmx:6LdAZQwcJK-PF6jWlJIZOrX5V5vS0w1uyjNJNBA99-BOpiyy5WpAUg>
+    <xmx:6LdAZW5ViccsiNtSbqQI5Y_IXLoYC32dpU6P7fsc_Irm3gia9Cp5Vw>
+    <xmx:6LdAZc-6UZX44CJQd9gEOhUXeD05Aol0jhyGKBNBF6O1_6b7jFzC7A>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 31 Oct 2023 04:16:35 -0400 (EDT)
+ 31 Oct 2023 04:16:39 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 81390ce0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 31 Oct 2023 08:16:28 +0000 (UTC)
-Date: Tue, 31 Oct 2023 09:16:33 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 51c70132 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 31 Oct 2023 08:16:32 +0000 (UTC)
+Date: Tue, 31 Oct 2023 09:16:38 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Han-Wen Nienhuys <hanwen@google.com>
-Subject: [PATCH v3 06/12] builtin/show-ref: stop using global variable to
- count matches
-Message-ID: <6172888e46514298ab8ca5a77346fee82c746c9c.1698739941.git.ps@pks.im>
+Subject: [PATCH v3 07/12] builtin/show-ref: stop using global vars for
+ `show_one()`
+Message-ID: <bc528db7667cbe9323162b80ad47bc9d46c4b275.1698739941.git.ps@pks.im>
 References: <cover.1698152926.git.ps@pks.im>
  <cover.1698739941.git.ps@pks.im>
 Precedence: bulk
@@ -77,94 +77,223 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="bR9hl9Tf7HaVT9kz"
+	protocol="application/pgp-signature"; boundary="Op7/KzG/QKjOg7S+"
 Content-Disposition: inline
 In-Reply-To: <cover.1698739941.git.ps@pks.im>
 
 
---bR9hl9Tf7HaVT9kz
+--Op7/KzG/QKjOg7S+
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When passing patterns to git-show-ref(1) we're checking whether any
-reference matches -- if none do, we indicate this condition via an
-unsuccessful exit code.
+The `show_one()` function implicitly receives a bunch of options which
+are tracked via global variables. This makes it hard to see which
+subcommands of git-show-ref(1) actually make use of these options.
 
-We're using a global variable to count these matches, which is required
-because the counter is getting incremented in a callback function. But
-now that we have the `struct show_ref_data` in place, we can get rid of
-the global variable and put the counter in there instead.
+Introduce a `show_one_options` structure that gets passed down to this
+function. This allows us to get rid of more global state and makes it
+more explicit which subcommands use those options.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/show-ref.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ builtin/show-ref.c | 62 ++++++++++++++++++++++++++++++----------------
+ 1 file changed, 40 insertions(+), 22 deletions(-)
 
 diff --git a/builtin/show-ref.c b/builtin/show-ref.c
-index 5aa6016376a..d0de69e29dd 100644
+index d0de69e29dd..fb0960ac507 100644
 --- a/builtin/show-ref.c
 +++ b/builtin/show-ref.c
-@@ -18,7 +18,7 @@ static const char * const show_ref_usage[] =3D {
+@@ -18,10 +18,17 @@ static const char * const show_ref_usage[] =3D {
  	NULL
  };
 =20
--static int deref_tags, show_head, tags_only, heads_only, found_match, veri=
-fy,
-+static int deref_tags, show_head, tags_only, heads_only, verify,
- 	   quiet, hash_only, abbrev;
+-static int deref_tags, show_head, tags_only, heads_only, verify,
+-	   quiet, hash_only, abbrev;
++static int show_head, tags_only, heads_only, verify;
 =20
- static void show_one(const char *refname, const struct object_id *oid)
-@@ -50,6 +50,7 @@ static void show_one(const char *refname, const struct ob=
-ject_id *oid)
+-static void show_one(const char *refname, const struct object_id *oid)
++struct show_one_options {
++	int quiet;
++	int hash_only;
++	int abbrev;
++	int deref_tags;
++};
++
++static void show_one(const struct show_one_options *opts,
++		     const char *refname, const struct object_id *oid)
+ {
+ 	const char *hex;
+ 	struct object_id peeled;
+@@ -30,25 +37,26 @@ static void show_one(const char *refname, const struct =
+object_id *oid)
+ 		die("git show-ref: bad ref %s (%s)", refname,
+ 		    oid_to_hex(oid));
+=20
+-	if (quiet)
++	if (opts->quiet)
+ 		return;
+=20
+-	hex =3D repo_find_unique_abbrev(the_repository, oid, abbrev);
+-	if (hash_only)
++	hex =3D repo_find_unique_abbrev(the_repository, oid, opts->abbrev);
++	if (opts->hash_only)
+ 		printf("%s\n", hex);
+ 	else
+ 		printf("%s %s\n", hex, refname);
+=20
+-	if (!deref_tags)
++	if (!opts->deref_tags)
+ 		return;
+=20
+ 	if (!peel_iterated_oid(oid, &peeled)) {
+-		hex =3D repo_find_unique_abbrev(the_repository, &peeled, abbrev);
++		hex =3D repo_find_unique_abbrev(the_repository, &peeled, opts->abbrev);
+ 		printf("%s %s^{}\n", hex, refname);
+ 	}
+ }
 =20
  struct show_ref_data {
++	const struct show_one_options *show_one_opts;
  	const char **patterns;
-+	int found_match;
+ 	int found_match;
  };
-=20
- static int show_ref(const char *refname, const struct object_id *oid,
-@@ -78,7 +79,7 @@ static int show_ref(const char *refname, const struct obj=
+@@ -81,7 +89,7 @@ static int show_ref(const char *refname, const struct obj=
 ect_id *oid,
- 	}
-=20
  match:
--	found_match++;
-+	data->found_match++;
+ 	data->found_match++;
 =20
- 	show_one(refname, oid);
-=20
-@@ -191,7 +192,7 @@ static int cmd_show_ref__patterns(const char **patterns)
- 	} else {
- 		for_each_ref(show_ref, &show_ref_data);
- 	}
--	if (!found_match)
-+	if (!show_ref_data.found_match)
- 		return 1;
+-	show_one(refname, oid);
++	show_one(data->show_one_opts, refname, oid);
 =20
  	return 0;
+ }
+@@ -153,7 +161,8 @@ static int cmd_show_ref__exclude_existing(const struct =
+exclude_existing_options
+ 	return 0;
+ }
+=20
+-static int cmd_show_ref__verify(const char **refs)
++static int cmd_show_ref__verify(const struct show_one_options *show_one_op=
+ts,
++				const char **refs)
+ {
+ 	if (!refs || !*refs)
+ 		die("--verify requires a reference");
+@@ -163,9 +172,9 @@ static int cmd_show_ref__verify(const char **refs)
+=20
+ 		if ((starts_with(*refs, "refs/") || !strcmp(*refs, "HEAD")) &&
+ 		    !read_ref(*refs, &oid)) {
+-			show_one(*refs, &oid);
++			show_one(show_one_opts, *refs, &oid);
+ 		}
+-		else if (!quiet)
++		else if (!show_one_opts->quiet)
+ 			die("'%s' - not a valid ref", *refs);
+ 		else
+ 			return 1;
+@@ -175,9 +184,12 @@ static int cmd_show_ref__verify(const char **refs)
+ 	return 0;
+ }
+=20
+-static int cmd_show_ref__patterns(const char **patterns)
++static int cmd_show_ref__patterns(const struct show_one_options *show_one_=
+opts,
++				  const char **patterns)
+ {
+-	struct show_ref_data show_ref_data =3D {0};
++	struct show_ref_data show_ref_data =3D {
++		.show_one_opts =3D show_one_opts,
++	};
+=20
+ 	if (patterns && *patterns)
+ 		show_ref_data.patterns =3D patterns;
+@@ -200,11 +212,16 @@ static int cmd_show_ref__patterns(const char **patter=
+ns)
+=20
+ static int hash_callback(const struct option *opt, const char *arg, int un=
+set)
+ {
+-	hash_only =3D 1;
++	struct show_one_options *opts =3D opt->value;
++	struct option abbrev_opt =3D *opt;
++
++	opts->hash_only =3D 1;
+ 	/* Use full length SHA1 if no argument */
+ 	if (!arg)
+ 		return 0;
+-	return parse_opt_abbrev_cb(opt, arg, unset);
++
++	abbrev_opt.value =3D &opts->abbrev;
++	return parse_opt_abbrev_cb(&abbrev_opt, arg, unset);
+ }
+=20
+ static int exclude_existing_callback(const struct option *opt, const char =
+*arg,
+@@ -220,6 +237,7 @@ static int exclude_existing_callback(const struct optio=
+n *opt, const char *arg,
+ int cmd_show_ref(int argc, const char **argv, const char *prefix)
+ {
+ 	struct exclude_existing_options exclude_existing_opts =3D {0};
++	struct show_one_options show_one_opts =3D {0};
+ 	const struct option show_ref_options[] =3D {
+ 		OPT_BOOL(0, "tags", &tags_only, N_("only show tags (can be combined with=
+ heads)")),
+ 		OPT_BOOL(0, "heads", &heads_only, N_("only show heads (can be combined w=
+ith tags)")),
+@@ -229,13 +247,13 @@ int cmd_show_ref(int argc, const char **argv, const c=
+har *prefix)
+ 				N_("show the HEAD reference, even if it would be filtered out")),
+ 		OPT_BOOL(0, "head", &show_head,
+ 		  N_("show the HEAD reference, even if it would be filtered out")),
+-		OPT_BOOL('d', "dereference", &deref_tags,
++		OPT_BOOL('d', "dereference", &show_one_opts.deref_tags,
+ 			    N_("dereference tags into object IDs")),
+-		OPT_CALLBACK_F('s', "hash", &abbrev, N_("n"),
++		OPT_CALLBACK_F('s', "hash", &show_one_opts, N_("n"),
+ 			       N_("only show SHA1 hash using <n> digits"),
+ 			       PARSE_OPT_OPTARG, &hash_callback),
+-		OPT__ABBREV(&abbrev),
+-		OPT__QUIET(&quiet,
++		OPT__ABBREV(&show_one_opts.abbrev),
++		OPT__QUIET(&show_one_opts.quiet,
+ 			   N_("do not print results to stdout (useful with --verify)")),
+ 		OPT_CALLBACK_F(0, "exclude-existing", &exclude_existing_opts,
+ 			       N_("pattern"), N_("show refs from stdin that aren't in local rep=
+ository"),
+@@ -251,7 +269,7 @@ int cmd_show_ref(int argc, const char **argv, const cha=
+r *prefix)
+ 	if (exclude_existing_opts.enabled)
+ 		return cmd_show_ref__exclude_existing(&exclude_existing_opts);
+ 	else if (verify)
+-		return cmd_show_ref__verify(argv);
++		return cmd_show_ref__verify(&show_one_opts, argv);
+ 	else
+-		return cmd_show_ref__patterns(argv);
++		return cmd_show_ref__patterns(&show_one_opts, argv);
+ }
 --=20
 2.42.0
 
 
---bR9hl9Tf7HaVT9kz
+--Op7/KzG/QKjOg7S+
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVAt+AACgkQVbJhu7ck
-PpRu/BAAimsa0rnWAxeq2fKFNGPuccJ3N7EH7li/eiIciWrSnk91GKQKU+pv6iQL
-ru/4pbZyW0EpgcmwukEhLtOq/9CsMc/2jx3kgNXPynQGzAKKBHAYJr/gz/f50Nx3
-grJ4j5vdNHbgwLC8htV7x5Two9W3ld0MkZN75mJEAbrRXASJPhswyNnxY9nO0j2g
-ZrVzcaWmnC07R8B1a/p6+RnQNyFnkYaqd5WA5xXvYztzZlrT2VQTjrCj/rzhK2/z
-YxfQ2Dd2YbqlNtNB8hnkIoEEY3BT+2oPiuCFCCe2nBK4SFhdbt0KHeklnAOOfhZn
-XoCF59iUvDZFjSdztKzABJVP3s7kvu/SAbzN2aNmQsX51TWtIeDJHS9dfOGHcdM7
-l9i1ibwm+7wfoVFXwvgV+AazJQzBn8WiNB5YQ/slfi1WsOMVGoFj9ECB0w/vjfgj
-8pBJIf/FQbAeBa6fxxSHYuh+uTifdU0nzGpaIlp3T9IEwRa4n9GMe2TiWpfI+wfs
-G6tkynsN3FfwcChtLCy5m9BNl5BOiA7qTJbl33ca0B5YLPKCpMz1G5TPa/HvrJc5
-kjU7DR7XFhTkJnOJy5h79Q8qRyLH6dkwPdwyheybW1EiXAFsN+sg8DLeVWFMiCRk
-Ck+MxQcY6A4tBuhy7uWrCKhx+Xl6g0OXmcPFhBWEfz9PyScS4X0=
-=Pbpj
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVAt+UACgkQVbJhu7ck
+PpQclw//YqKPs1OEkfFGKgGJtlB/QRU4keTDsmhIOEG7Cno/85rUJuLkp9p2WnEk
+n74OxkopTuUVI4bbG5Iz1ZYnYMKulJAp85EJocGtMQnXu4RGw1c41TMR1NODwuFx
+1970iaIJ+NwmFJUOlO5L8Ux0aQkpdtpUxG9j9GwHeE8E4L9312QuyoUyzdSPi5Vu
+tZ6GL097V7bKTv29d5LtbnT++lIXQkbk8jPilWvFyHeTOOIy0Dlfrev2xMIZtWr2
+hmTIDu8ldMHDBujuxvY01/aCPneOgwy/bk2JLt8VrokOSe/+JeDEihAIVBawLlWn
+UZILRXuLbYxgoXA7D+yYIppdTbpTUbnWhU6bOnaxD4UL3EgA1l59AJ098csulvw6
+V90e3/HcrvVclA5gKwaYyBlZaXLuPSHgbecon90rJWf1QKuXLyuQfK80pmZ/tBBT
+ftklrlSLud+6o0F9gWA7ysYQfWJgdzbq3qpi/j+djvhpBisGi/dTXNW+9Tfucw9F
+FQ7QsHGZvdn1C5CabxK4gnxYwEvgVft9ImfoyaLPqUN3p3qcDX08iiSprkOmHX6x
+mYPw2BDg4xgxBiVr73BZpHYdlZcVCPanaVDFmgn1Ggv8FNQxGw/+A5GZMfTXGi/4
+i7Lsztq98mRNGYpPqGJHw6Fs+UBLvY4c1JGX2UJ3Nr43Bv53Lj4=
+=uTab
 -----END PGP SIGNATURE-----
 
---bR9hl9Tf7HaVT9kz--
+--Op7/KzG/QKjOg7S+--
