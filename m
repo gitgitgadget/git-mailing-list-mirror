@@ -1,136 +1,225 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9530EC6
-	for <git@vger.kernel.org>; Tue, 31 Oct 2023 06:55:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ED0D1C31
+	for <git@vger.kernel.org>; Tue, 31 Oct 2023 07:16:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QWS/zgyx"
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00D7BC0
-	for <git@vger.kernel.org>; Mon, 30 Oct 2023 23:55:21 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-507d7b73b74so7319143e87.3
-        for <git@vger.kernel.org>; Mon, 30 Oct 2023 23:55:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698735320; x=1699340120; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=E/rdwXtV24LWNAx73tsMZP2uyZ4WmBmzSuC9fkIj1Eo=;
-        b=QWS/zgyxNFpE5LqkJPcIuO4i4zWhmuCYLgEhs+nA24qqy63J6+kiYEz3qp3zfFyAeS
-         79iRBj/USIFL6elu1ZsDNLuwGR0ZU1phVI8tXPM/oMqj6Z3Mw7bjcQ6Wbb64FMXQcuWU
-         WEC/oJcPuBVMHhmLoasOW4MkOJWmK+KoFPmQblc3T4fsRSAXtt3Fohmdk053osOMNF0F
-         JuEGTR66kM3pUw96zxv+j1V+0ccRqJb/Pnw/59GJd6IGKjB+n9fvo7u5Yq50LXJRiEsk
-         oQDW11jpDhOvg/EUFpNl9yUPoCwtJdiQ9SsmNf3Ur6WvKn1SaAShDOAp/yEC5oIQTueA
-         qy1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698735320; x=1699340120;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=E/rdwXtV24LWNAx73tsMZP2uyZ4WmBmzSuC9fkIj1Eo=;
-        b=lNv7FdFvjyeNqrdFkLkSD4fOcBVV8uLZ4edom3ufoXmQG5ZV7axUk8Lv6rqFs0OwCh
-         2FvCtgN2FpnSHknrlmFEYyybwAulvnYhWmR628NGAzBuTh62iPgqWXQdVUp5L+lr74Vg
-         p5gfelxmUmreQrRc2xyzH3bpaZJkHBEckQ9d/MpJtmR1Gkc3fN6+AJ4E8r44rwZWTvtX
-         VQcqIl4wauLxDexy7Y+6+1/+aePxISNve9fcrpMDHpiJ1CG40LFtt51i/Z6LjpMUztqM
-         C2HJLtViIKW6RhT4aBrtGyIR9X0KXltGRRiTDzqkRBFgm9Gutk54Yni1t83NIiDIiR8+
-         RRhA==
-X-Gm-Message-State: AOJu0YwM3ASzR9ulTBLtQxoDHJ8XhPfChekeSlLJRtLhjvA3AB0wvfyV
-	DjYtit0C+5EunmYLrdXMY15r4lvaKEm1w5jHaczD3c5sG1g=
-X-Google-Smtp-Source: AGHT+IGNRXXBLRMm8sMXqBIexaPOcBR1bzQEaAIjpH3WbLzLDEIQIsX3F79hw/5rgl4S+aEMFu+Aa6BpP6VkHXLBrCk=
-X-Received: by 2002:a05:6512:48c6:b0:507:9fa0:e247 with SMTP id
- er6-20020a05651248c600b005079fa0e247mr8232799lfb.32.1698735319857; Mon, 30
- Oct 2023 23:55:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AOP7vlSe";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VJa/u0tD"
+Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97D12C0
+	for <git@vger.kernel.org>; Tue, 31 Oct 2023 00:16:15 -0700 (PDT)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.west.internal (Postfix) with ESMTP id D3C8B3200A15;
+	Tue, 31 Oct 2023 03:16:14 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Tue, 31 Oct 2023 03:16:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to; s=fm3; t=1698736574; x=1698822974; bh=V6
+	QmuxscR3kBBcjbDSMLS0KPSscoPYjqiJA8bSdfvKc=; b=AOP7vlSeQv6PXXzy5s
+	1BCWvtAeYMvglAem4Ln+M3pkQPjPlX1HlZmqUiAzumhrvNAcQ5u4gwgzYYta6wsh
+	tVmt0/NC4hW+UayYHHoGNySD1+UVySKDzDO4UMJ39ghQZW8P7ugKRTa4LQa2vgeW
+	YBb3GvloQrTvI9G1vA2fIh+LB2i/KyTvzKtmQPJImsdrtbweVcsVqE4ozTEXGor4
+	nLBHyONb2PQD7aSI6z/RdigKfy2h7noD9RV0+Q9li2RGVK2oJ6QB0cHKhowH7dSv
+	fLyiyT0F4v6A5FO/tUN3TY9fvTwHIyk15XDpkQjRrCm9ecVyYuqawjPjVa6rER+j
+	K6OA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm3; t=1698736574; x=1698822974; bh=V6QmuxscR3kBB
+	cjbDSMLS0KPSscoPYjqiJA8bSdfvKc=; b=VJa/u0tDrG5cMfbYCairk35p/x9Rm
+	1wZtu06z9/211bqxaptXgaHH2q6IZbdvf3+Ss8upx/py/L0+DOQWrC+BQfSJ0llM
+	NuyChwUCuhSb8vzD8agRqTAROr4qy9Nx5SP06P/P5ZNNL8AjUHCF0uKd44hTGPn1
+	dRrTqhkF9euEzp4SCicyFmqb1cXmEuq7H70PkfovJTjvFiiF331d/1lG3UmANFtb
+	mNZpNucSe3ml/6TvNr/j+TrhSFx4JRxsIfgXc4687f1BAnMVMAGlhd5O7bz62HoP
+	vIhpv25I5iDpZwQUsltncS/FDOJMe5sGyqElhuhcmJe1X6/8+jtsYPp+g==
+X-ME-Sender: <xms:vqlAZSPsf1o9eahXja2N3CJHSq71BnMUfsrA_J_VQr80AbbEvANshA>
+    <xme:vqlAZQ8Z2chqDWRdCfg12xhvl8td180v6CyBB-Z0HEhxWIPrp7hnJtAafsb92sjP9
+    DruHknee5_7sPLBvQ>
+X-ME-Received: <xmr:vqlAZZR9J6RvNmGmfbF6Wwo1BVMllpUPxYqB-JFQCzPlFpl78GqGTDoO2ANTdNEyARaKK2o0Yz-o0MGtRD3eV2ARxAoCf-il4Lr7tt2rTEgdupU3>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddtuddguddtfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
+    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
+    gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
+    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
+    esphhkshdrihhm
+X-ME-Proxy: <xmx:vqlAZSvc9sBM_uYu2QQpVMtWW779PwlbmYQoKhUl7M4EZdowdc0qrw>
+    <xmx:vqlAZack0nBFRYgsXt7fqt2Q0LJkM06wGFIamabN-M5IiA6hU3vNGw>
+    <xmx:vqlAZW1BQvNDDyYueAXmV5sM2d_MnUEjrPPnrHACdd8RgXBXU58IVw>
+    <xmx:vqlAZa6Hlo8StYznSJSWGESGhF8ROGoNIHM5qm0X_f4WX0fpElg5aw>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 31 Oct 2023 03:16:12 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 88a8e3da (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 31 Oct 2023 07:16:03 +0000 (UTC)
+Date: Tue, 31 Oct 2023 08:16:09 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+	Jeff King <peff@peff.net>
+Subject: [PATCH v3 0/2] commit-graph: detect commits missing in ODB
+Message-ID: <cover.1698736363.git.ps@pks.im>
+References: <cover.1698060036.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1603.git.1698635292629.gitgitgadget@gmail.com> <pull.1603.v2.git.1698728952.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1603.v2.git.1698728952.gitgitgadget@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Mon, 30 Oct 2023 23:55:07 -0700
-Message-ID: <CABPp-BEjV0H=waNQfKNNqibs3g_BU1CCrNjb8G8h_jXrt8kaiw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] sequencer: remove use of hardcoded comment char
-To: Tony Tung via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Tony Tung <tonytung@merly.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="hDSIqqaL/93MmO5v"
+Content-Disposition: inline
+In-Reply-To: <cover.1698060036.git.ps@pks.im>
+
+
+--hDSIqqaL/93MmO5v
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
 Hi,
 
-On Mon, Oct 30, 2023 at 10:09=E2=80=AFPM Tony Tung via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> Instead of using the hardcoded # , use the user-defined comment_line_char=
-.
-> Adds a test to prevent regressions.
->
-> Tony Tung (2):
->   sequencer: remove use of comment character
->   sequencer: fix remaining hardcoded comment char
+this is version 3 of my patch series to more readily detect commits
+parsed from the commit graph which are missing in the object database.
 
-The second commit message seems to suggest that the two commits should
-just be squashed; there's no explicit or even implicit reason provided
-for why the two small patches are logically independent.  After
-reading them carefully, and digging through the particular changes
-being made and what part of the code they touch, I think I can guess
-at a potential reason, but I feel like I'm crossing into the territory
-of mind reading trying to articulate that reason.  (Besides, my
-rationale would argue that the two patches should be split
-differently.)  Perhaps a comment could be added, to either the second
-commit message or the cover letter, to explain that better?
+Changes compared to v2:
 
-More importantly, though, I think the second commit message is
-actually wrong.  Before and after applying this series:
+    - Rewrote the help text for `GIT_COMMIT_GRAPH_PARANOIA` to be more
+      accessible.
 
-$ git grep -c -e '".*#' -e "'#'" -- sequencer.c
-sequencer.c:16
+    - Renamed the `object_paranoia` variable to `commit_graph_paranoia`.
 
-$ b4 am c9f4ff34dbdb7ba221e4203bb6551b80948dc71d.1698728953.git.gitgitgadge=
-t@gmail.com
-$ git am ./v2_20231031_gitgitgadget_sequencer_remove_use_of_hardcoded_comme=
-nt_char.mbx
+    - Fixed a typo.
 
-$ git grep -c -e '".*#' -e "'#'" -- sequencer.c
-sequencer.c:12
+Thanks!
 
-Granted, four of those lines are code comments, but that still leaves
-8 hard coded references to '#' in the code at the end (i.e. the
-majority are still left), meaning your second patch doesn't do what
-its subject line claims.
+Patrick
 
-And, most important of all is still the first patch.  As I stated
-elsewhere in this thread (at
-CABPp-BFY7m_g+sT131_Ubxqo5FsHGKOPMng7=3D90_0-+xCS9NEQ@mail.gmail.com):
+Patrick Steinhardt (2):
+  commit-graph: introduce envvar to disable commit existence checks
+  commit: detect commits that exist in commit-graph but not in the ODB
 
-"""
-I think supporting comment_line_char for the TODO file provides no
-value, and I think the easier fix would be undoing the uses of
-comment_line_char relative to the TODO file (perhaps also leaving
-in-code comments to the effect that comment_line_char just doesn't
-apply to the TODO file).
+ Documentation/git.txt   | 10 +++++++++
+ commit-graph.c          |  6 +++++-
+ commit-graph.h          |  6 ++++++
+ commit.c                | 16 +++++++++++++-
+ t/t5318-commit-graph.sh | 48 +++++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 84 insertions(+), 2 deletions(-)
 
-However, if someone prefers to make the TODO file also respect
-comment_line_char, despite its dubious value, then I expect any patch
-should
-  1) audit *every* reference found via git grep -e '".*#' -e "'#'" sequence=
-r.c
-  2) add a test case (or cases) involving --rebase-merges -i that
-trigger the relevant code paths
-If they don't do that, then I fear we might make the bug more likely
-to be triggered rather than less.
-"""
+Range-diff against v2:
+1:  a89c435528 ! 1:  c433ec1254 commit-graph: introduce envvar to disable c=
+ommit existence checks
+    @@ Documentation/git.txt: for full details.
+      	useful when trying to salvage data from a corrupted repository.
+     =20
+     +`GIT_COMMIT_GRAPH_PARANOIA`::
+    -+	If this Boolean environment variable is set to false, ignore the
+    -+	case where commits exist in the commit graph but not in the
+    -+	object database. Normally, Git will check whether commits loaded
+    -+	from the commit graph exist in the object database to avoid
+    -+	issues with stale commit graphs, but this check comes with a
+    -+	performance penalty. The default is `1` (i.e., be paranoid about
+    -+	stale commits in the commit graph).
+    ++	When loading a commit object from the commit-graph, Git performs an
+    ++	existence check on the object in the object database. This is done to
+    ++	avoid issues with stale commit-graphs that contain references to
+    ++	already-deleted commits, but comes with a performance penalty.
+    +++
+    ++The default is "true", which enables the aforementioned behavior.
+    ++Setting this to "false" disables the existence check. This can lead to
+    ++a performance improvement at the cost of consistency.
+     +
+      `GIT_ALLOW_PROTOCOL`::
+      	If set to a colon-separated list of protocols, behave as if
+    @@ commit-graph.c: int repo_find_commit_pos_in_graph(struct repository =
+*r, struct c
+     =20
+      struct commit *lookup_commit_in_graph(struct repository *repo, const =
+struct object_id *id)
+      {
+    -+	static int object_paranoia =3D -1;
+    ++	static int commit_graph_paranoia =3D -1;
+      	struct commit *commit;
+      	uint32_t pos;
+     =20
+    -+	if (object_paranoia =3D=3D -1)
+    -+		object_paranoia =3D git_env_bool(GIT_COMMIT_GRAPH_PARANOIA, 1);
+    ++	if (commit_graph_paranoia =3D=3D -1)
+    ++		commit_graph_paranoia =3D git_env_bool(GIT_COMMIT_GRAPH_PARANOIA, 1=
+);
+     +
+      	if (!prepare_commit_graph(repo))
+      		return NULL;
+      	if (!search_commit_pos_in_graph(id, repo->objects->commit_graph, &po=
+s))
+      		return NULL;
+     -	if (!has_object(repo, id, 0))
+    -+	if (object_paranoia && !has_object(repo, id, 0))
+    ++	if (commit_graph_paranoia && !has_object(repo, id, 0))
+      		return NULL;
+     =20
+      	commit =3D lookup_commit(repo, id);
+2:  0476d48555 ! 2:  8629fd0892 commit: detect commits that exist in commit=
+-graph but not in the ODB
+    @@ commit.c: int repo_parse_commit_internal(struct repository *r,
+      		return 0;
+     -	if (use_commit_graph && parse_commit_in_graph(r, item))
+     +	if (use_commit_graph && parse_commit_in_graph(r, item)) {
+    -+		static int object_paranoia =3D -1;
+    ++		static int commit_graph_paranoia =3D -1;
+     +
+    -+		if (object_paranoia =3D=3D -1)
+    -+			object_paranoia =3D git_env_bool(GIT_COMMIT_GRAPH_PARANOIA, 1);
+    ++		if (commit_graph_paranoia =3D=3D -1)
+    ++			commit_graph_paranoia =3D git_env_bool(GIT_COMMIT_GRAPH_PARANOIA, =
+1);
+     +
+    -+		if (object_paranoia && !has_object(r, &item->object.oid, 0)) {
+    ++		if (commit_graph_paranoia && !has_object(r, &item->object.oid, 0)) {
+     +			unparse_commit(r, &item->object.oid);
+     +			return quiet_on_missing ? -1 :
+     +				error(_("commit %s exists in commit-graph but not in the object d=
+atabase"),
+    @@ t/t5318-commit-graph.sh: test_expect_success 'stale commit cannot be=
+ parsed when
+     +		test_commit C &&
+     +		git commit-graph write --reachable &&
+     +
+    -+		# Corrupt the repository by deleting the intermittent commit
+    ++		# Corrupt the repository by deleting the intermediate commit
+     +		# object. Commands should notice that this object is absent and
+     +		# thus that the repository is corrupt even if the commit graph
+     +		# exists.
+--=20
+2.42.0
 
-Personally, I would rather not accept patches changing the handling of
-the TODO script relative to comment_line_char until the above is done,
-and I worry that half measures _might_ end up being more hurtful than
-helpful.
 
-I feel quite differently about patches that make COMMIT_EDITMSG
-handling use comment_line_char more consistently since that code
-simply writes the file without re-parsing it; although fixing
-everything would be best, even fixing some of them to use
-comment_line_char would be welcome.  I think the first two hunks of
-your second patch happen to fall into this category, so if those were
-split out, then I'd say those are good partial solutions.
+--hDSIqqaL/93MmO5v
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVAqbgACgkQVbJhu7ck
+PpTFdQ//SmM8FBqUSJ7xX1eOA7JKp3G0KmEaudeKC0z7r27caRG6aQmQEEODe2ij
+JfLoA8RG36i461ghBwSsE6fCrBXX8xmdRyqZCZ1KsH6MXyvWEB+W4Mtugr8ttQeG
+3DjARNLDKnA7f0tpKP9PKJGUYhmHoCs7vSic39WM6ih/6IgLvA2xOhO0xL2sY9ny
+WdRDJfRtDQFr7xI8dta7hk1IKGPA63uoJdxZ9TkJXtLpXzZWLho6qCbSDSkYY+AY
+DmoAodPiWUtMw3gM0MzBbFRW197D7t1ML81RBkM7QgHB6jrG1cFyG1R9uhFwqTN1
+2LocRRHtPemZSWrUM5OfuAKKV4oBoXf+9tgd8PTF8xaCdkwPRIRBDavz3bylLWrt
+ZrMlr8pAbYmVP4ZPDMIk0asOgL9CfcR1t4CD2CqxhsNZwuK+66fUYv+oO8xXAuRg
+/uYOCQn9ZPIwJfLFoKVqEadVDJtkLMJTJ3qIu/2on55Bd04ghrEPY/WAYhRk9r6A
+BKrJL+4nm15NCncgZHOTgmrQ8ZOEwVz2y8UjqAxnjvFX6c0T5TSwAk8BIZcnlqtF
+gaewveIWcITKlDixtECHUMRnGY7FnEOyq77ZpM/1S8BWl2n5B95SZCQW2foQdju5
+9z5KGWuYj5CoPaPjwruIHH+81x/rVrfHQtqST+s8v5B1tHGxcfU=
+=gxmG
+-----END PGP SIGNATURE-----
+
+--hDSIqqaL/93MmO5v--
