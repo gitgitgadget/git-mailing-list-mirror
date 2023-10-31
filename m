@@ -1,256 +1,124 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B9B810784
-	for <git@vger.kernel.org>; Tue, 31 Oct 2023 06:20:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 973BA10780
+	for <git@vger.kernel.org>; Tue, 31 Oct 2023 06:20:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bG5Ewwpr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U3QQz0fP"
-Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3997091
-	for <git@vger.kernel.org>; Mon, 30 Oct 2023 23:20:04 -0700 (PDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.west.internal (Postfix) with ESMTP id 534D83200A81;
-	Tue, 31 Oct 2023 02:20:00 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Tue, 31 Oct 2023 02:20:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1698733199; x=1698819599; bh=Wl
-	lWMjfCyN/TGewB3zcKLPcaBHspmIjjQatzZVyZjdc=; b=bG5Ewwpr2eSTG8pham
-	jmm7fQtCT8nQl+n4B15ord4xIgh2rTF62vxr2DCmkECPGMXFu5ewHlh4e5wDpOEF
-	Kfh004SiFJm+2WRKEyboiL1ETQuOfMk0phESxDbxozKbcyfIHdlvHguVTiyOyOlS
-	JRA1ORR4hIliTFpxJUmAXNTHkggJzXlLwYA4pf49+vtgzqMQsGYtbM0awz3Peugn
-	04ZyuDfgY4D7kJ4AV8DnnxCHPCFUTr28CKeLFJPh8CKuKP+YS0eCTSDDi2c3rC7/
-	/gi7k5Xw/wPUlXJ6edlanFNr/mAYbnoaxzNAIFSQntVO4fNucw3bn0zoU3G/wkdD
-	IIPQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1698733199; x=1698819599; bh=WllWMjfCyN/TG
-	ewB3zcKLPcaBHspmIjjQatzZVyZjdc=; b=U3QQz0fP61nGUE6LyHAsWwOi3NG9L
-	/lUaJwDQVIzmSK9jv+TIFay9z4KOGUmrzCmPAtgn0ZIlySHspCOESyPIP8i9QZbW
-	7aDXbE38WQdJDrnXA4bIuKVvlykB/FLiA6/ajtM0JILnLYE5L/O9brluSnccvQBp
-	D6razqS7vAPnFdLogzLgdLmFUTE3g0wXlBSGuKdoxIFMkzoLqdWhqhOOmtI41Kgd
-	ISqBeaHMraKsk49qRFb4ccgiXcPr6u13oypEOmikQFyDxrxsl/gsMjCKuRszSgM7
-	9dOpFMzB1dCWl4NBNWxYpBmG5vPkWUm71CuRY6sKcxvoztCPl8YNbEoiA==
-X-ME-Sender: <xms:j5xAZd9l0ygIbI7saxLLSWN9MFlQqv7J9KvBDy4WFNEoPPznuvOMBA>
-    <xme:j5xAZRvWEuOVqDdAPt0qRPxo1Vz3BCeRaKyM0mKxb8W1N27pwpI6siYEsa30Xd8tw
-    -01zLnNBb3f5kfCcQ>
-X-ME-Received: <xmr:j5xAZbDDpV2iL73W1MaUpIZ1saBDQoGJlMjTWBkvEuboWi7qZRLeHLyzSMC_QZbZJjivhh5A4Pn9KbRcUB9CAqS4swyOQ37V078DjPh5zZXfQsrx>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddtuddgleduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:j5xAZRfehxiON1SzbVqYXaPFTEoNeU2Y_EInE_jn4_nt9cIwJHyjow>
-    <xmx:j5xAZSP-2W6KYwjgn9AkugCTeiiflMLw2PcDYSajfxtFr5V1VLu75A>
-    <xmx:j5xAZTlDTzC-IeyL-wy-jZaJXv-vXIPixoId2-QMDwYcxpaijGnKZA>
-    <xmx:j5xAZfp23XiWxQxWNQy6IXPkPXlAaoR1YvCfhfe5uM0-UYErwF0nBg>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 31 Oct 2023 02:19:58 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 1a0f200d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 31 Oct 2023 06:19:49 +0000 (UTC)
-Date: Tue, 31 Oct 2023 07:19:55 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 1/2] commit-graph: introduce envvar to disable commit
- existence checks
-Message-ID: <ZUCci5kcGj-5Ybcn@tanuki>
-References: <cover.1698060036.git.ps@pks.im>
- <a89c4355285bc0bb0ec339818e6fe907f9ffd30e.1698060036.git.ps@pks.im>
- <ZUAgPVR8HxgEZEWo@nand.local>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WQfb0un1"
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 480DEBD
+	for <git@vger.kernel.org>; Mon, 30 Oct 2023 23:20:56 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-507a62d4788so8060252e87.0
+        for <git@vger.kernel.org>; Mon, 30 Oct 2023 23:20:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1698733254; x=1699338054; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hSVuLNNvGZNaVLIxQRO3hm3J04vFoN9ceCyuyJlU8Lg=;
+        b=WQfb0un1PTytS+wuo84qYNKo0DXUUZWswlHjgya/2sL8FQymU+PzQEfV86gJNQ69lp
+         MDrknlUOkKfq7xZmPorpxru5uD7s0M2SG4bguSzxzGCYuW2V+ed8JEXwVbEeYUO9T99W
+         2DVoknSMRNShM0S2q2cyRpA8cFgVMnIK9K68qawlKHPgkqpDE1pu9BYsbcdvvlM4VLVs
+         0McP1ZTyodTCtTpsB47FJggPfooSqrPDp9VQsN1v8y3guS6YKVR/xypum/9X8r5mAT8S
+         KvY40d37luy004chc1xQoaC1K44U5+m+6dSvt5PotIW9iBO76PQtKYZmN9tEEesAnIfY
+         oMhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698733254; x=1699338054;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=hSVuLNNvGZNaVLIxQRO3hm3J04vFoN9ceCyuyJlU8Lg=;
+        b=VfNMzXrLN9UDxpBD9Yd+mhun645joXuSfyCkK3g4Y6B1XpfvyZvZrIZLVxVs1QB7wB
+         YyxuC9eVJ4l5AP8qm7xdFFYv3Fu4SDHpXxbbKkEijzNkorEhY7fQCFvTIJjpZHbSgjUw
+         vP5fnXz441Kc/kGGIDp3asp4me4GDiwYmWkQk5CNuO8NiG4C+WL3WE7bVp+3MKGSEmbR
+         KUlmWzK0EHo5Z3/sj4MaUhNUm27AvGspZtdsrz8xI2WIAirpN8yCNbDRHyX5xx9AzBRh
+         A8bh+XrTTXxqu6vgLdNb2EeBdG1V3mSXTzA53lwx/E+8Rko9KbuX8Sk5jA8zkVPv4XwJ
+         Jwwg==
+X-Gm-Message-State: AOJu0YwnJz7PzYHsKUPLUaMNfdihET57/NtZEYBJXe0zb/cqvs/c2v+j
+	vHxTXneK80xbO6MXclCwhlsqR62O8W+qQN+sQOg=
+X-Google-Smtp-Source: AGHT+IFAsyGawUrrb1hsiczBTLnXVeYptvu1sriY9U+RgasroHeO0EFI+vNYral74RrsMsGs1P71o0WTvP6LmyQgvGE=
+X-Received: by 2002:a05:6512:3b89:b0:503:36cb:5438 with SMTP id
+ g9-20020a0565123b8900b0050336cb5438mr10329654lfv.21.1698733254130; Mon, 30
+ Oct 2023 23:20:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="OXhe/lalonnDWGz+"
-Content-Disposition: inline
-In-Reply-To: <ZUAgPVR8HxgEZEWo@nand.local>
-
-
---OXhe/lalonnDWGz+
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <pull.1603.git.1698635292629.gitgitgadget@gmail.com>
+ <xmqq7cn4g3nx.fsf@gitster.g> <CABPp-BE6_nuMeiqOAMGwP8SH=d1+i57-STgTNKU8-Gnkv2jW=Q@mail.gmail.com>
+ <xmqqa5rzadlh.fsf@gitster.g> <xmqqcywv4ar2.fsf@gitster.g>
+In-Reply-To: <xmqqcywv4ar2.fsf@gitster.g>
+From: Elijah Newren <newren@gmail.com>
+Date: Mon, 30 Oct 2023 23:20:37 -0700
+Message-ID: <CABPp-BFY7m_g+sT131_Ubxqo5FsHGKOPMng7=90_0-+xCS9NEQ@mail.gmail.com>
+Subject: Re: [PATCH] sequencer: remove use of comment character
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Tony Tung via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Tony Tung <tonytung@merly.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Oct 30, 2023 at 05:29:33PM -0400, Taylor Blau wrote:
-> On Mon, Oct 23, 2023 at 01:27:16PM +0200, Patrick Steinhardt wrote:
-> > Our `lookup_commit_in_graph()` helper tries to look up commits from the
-> > commit graph and, if it doesn't exist there, falls back to parsing it
-> > from the object database instead. This is intended to speed up the
-> > lookup of any such commit that exists in the database. There is an edge
-> > case though where the commit exists in the graph, but not in the object
-> > database. To avoid returning such stale commits the helper function thus
-> > double checks that any such commit parsed from the graph also exists in
-> > the object database. This makes the function safe to use even when
-> > commit graphs aren't updated regularly.
+On Mon, Oct 30, 2023 at 10:33=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
+ wrote:
+>
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+> > Elijah Newren <newren@gmail.com> writes:
 > >
-> > We're about to introduce the same pattern into other parts of our code
-> > base though, namely `repo_parse_commit_internal()`. Here the extra
-> > sanity check is a bit of a tougher sell: `lookup_commit_in_graph()` was
-> > a newly introduced helper, and as such there was no performance hit by
-> > adding this sanity check. If we added `repo_parse_commit_internal()`
-> > with that sanity check right from the beginning as well, this would
-> > probably never have been an issue to begin with. But by retrofitting it
-> > with this sanity check now we do add a performance regression to
-> > preexisting code, and thus there is a desire to avoid this or at least
-> > give an escape hatch.
-> >
-> > In practice, there is no inherent reason why either of those functions
-> > should have the sanity check whereas the other one does not: either both
-> > of them are able to detect this issue or none of them should be. This
-> > also means that the default of whether we do the check should likely be
-> > the same for both. To err on the side of caution, we thus rather want to
-> > make `repo_parse_commit_internal()` stricter than to loosen the checks
-> > that we already have in `lookup_commit_in_graph()`.
->=20
-> All well reasoned. I think the most compelling reason is that we're
-> already doing this extra check in lookup_commit_in_graph(), and having
-> that be somewhat inconsistent with repo_parse_commit_internal() feels
-> error-prone to me.
->=20
-> > The escape hatch is added in the form of a new GIT_COMMIT_GRAPH_PARANOIA
-> > environment variable that mirrors GIT_REF_PARANOIA. If enabled, which is
-> > the default, we will double check that commits looked up in the commit
-> > graph via `lookup_commit_in_graph()` also exist in the object database.
-> > This same check will also be added in `repo_parse_commit_internal()`.
->=20
-> Sounds good.
->=20
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > ---
-> >  Documentation/git.txt   |  9 +++++++++
-> >  commit-graph.c          |  6 +++++-
-> >  commit-graph.h          |  6 ++++++
-> >  t/t5318-commit-graph.sh | 21 +++++++++++++++++++++
-> >  4 files changed, 41 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/Documentation/git.txt b/Documentation/git.txt
-> > index 11228956cd..22c2b537aa 100644
-> > --- a/Documentation/git.txt
-> > +++ b/Documentation/git.txt
-> > @@ -911,6 +911,15 @@ for full details.
-> >  	should not normally need to set this to `0`, but it may be
-> >  	useful when trying to salvage data from a corrupted repository.
-> >
-> > +`GIT_COMMIT_GRAPH_PARANOIA`::
-> > +	If this Boolean environment variable is set to false, ignore the
-> > +	case where commits exist in the commit graph but not in the
-> > +	object database. Normally, Git will check whether commits loaded
-> > +	from the commit graph exist in the object database to avoid
-> > +	issues with stale commit graphs, but this check comes with a
-> > +	performance penalty. The default is `1` (i.e., be paranoid about
-> > +	stale commits in the commit graph).
-> > +
->=20
-> The first two sentences seem to be flipped. Perhaps:
->=20
->     When loading a commit object from the commit-graph, Git will perform
->     an existence check on the object in the ODB before parsing it out of
->     the commit-graph. The default is "true", which enables the
->     aforementioned behavior. Setting this to "false" disables the
->     existential check when parsing commits from a commit-graph.
+> >> I thought the point of the comment_line_char was so that commit
+> >> messages could have lines starting with '#'.  That rationale doesn't
+> >> apply to the TODO list generation or parsing, and I'm not sure if we
+> >> want to add the same complexity there.
+>
+> Earlier I said
+>
+> > Thanks for a healthy dose of sanity.  I noticed existing use of
+> > comment_line_char everywhere in sequencer.c and assumed we would
+> > want to be consistent, but you are right to point out that they are
+> > all about the COMMIT_EDITMSG kind of thing, and not about what
+> > appears in "sequencer/todo".
+>
+> but with something as simple as
+>
+>     $ git -c core.commentchar=3D'@' rebase -i master seen^2
+>
+> I can see that the references to comment_line_char in sequencer.c
+> are about the commented lines after the list of insn in the
+> generated sequencer/todo file, so even though the rationale does not
+> apply, isn't this already "broken" in the current code anyway?
 
-I was modelling this after the text we had in `GIT_REF_PARANOIA`, but I
-like your version more indeed. I'll massage it a bit to mention _why_
-one would want to disable this.
+Yes, I believe it is.  However, I remember specifically looking at
+cases with --rebase-merges about a year and a half ago, and noted that
+there was a mixture of hardcoded '#' references along with
+comment_line_char.  I noted at the time that changing
+comment_line_char looked like it had a bug, and that the parsing in
+particular would be fooled and do wrong things if it changed.
+Unfortunately, I can't find any notes from the time with the details,
+so I don't remember exactly what or how it was triggered.
 
-> >  `GIT_ALLOW_PROTOCOL`::
-> >  	If set to a colon-separated list of protocols, behave as if
-> >  	`protocol.allow` is set to `never`, and each of the listed
-> > diff --git a/commit-graph.c b/commit-graph.c
-> > index fd2f700b2e..12ec31902e 100644
-> > --- a/commit-graph.c
-> > +++ b/commit-graph.c
-> > @@ -939,14 +939,18 @@ int repo_find_commit_pos_in_graph(struct reposito=
-ry *r, struct commit *c,
-> >
-> >  struct commit *lookup_commit_in_graph(struct repository *repo, const s=
-truct object_id *id)
-> >  {
-> > +	static int object_paranoia =3D -1;
-> >  	struct commit *commit;
-> >  	uint32_t pos;
-> >
-> > +	if (object_paranoia =3D=3D -1)
-> > +		object_paranoia =3D git_env_bool(GIT_COMMIT_GRAPH_PARANOIA, 1);
-> > +
->=20
-> I don't think that this is a reroll-able issue, but calling this
-> variable object_paranoia to store a setting for *graph* paranoia feels
-> like a good itch to scratch. But obviously not a big deal ;-).
+However, I do suspect that the references to comment_line_char in the
+`rebase -i` codepaths was not for any actual intended purpose, but
+just noting that they were used elsewhere in the file (for
+COMMIT_EDITMSG, where it made sense) and just mimicking that code
+without realizing the lack of rationale.  That would have been mere
+wasted effort had the comment_line_char been consistently supported in
+the TODO file editing and parsing, but it wasn't, which left TODO
+editing & parsing somewhat broken.
 
-Ugh, yeah. I first had the envvar as "GIT_OBJECT_PARANOIA", but
-discarded that name because I feared that it might become overloaded
-with semi-related checks.
+I think supporting comment_line_char for the TODO file provides no
+value, and I think the easier fix would be undoing the uses of
+comment_line_char relative to the TODO file (perhaps also leaving
+in-code comments to the effect that comment_line_char just doesn't
+apply to the TODO file).
 
-Will fix.
-
-> > @@ -821,4 +821,25 @@ test_expect_success 'overflow during generation ve=
-rsion upgrade' '
-> >  	)
-> >  '
-> >
-> > +test_expect_success 'stale commit cannot be parsed when given directly=
-' '
-> > +	test_when_finished "rm -rf repo" &&
-> > +	git init repo &&
-> > +	(
-> > +		cd repo &&
-> > +		test_commit A &&
-> > +		test_commit B &&
-> > +		git commit-graph write --reachable &&
-> > +
-> > +		oid=3D$(git rev-parse B) &&
-> > +		rm .git/objects/"$(test_oid_to_path "$oid")" &&
-> > +
-> > +		# Verify that it is possible to read the commit from the
-> > +		# commit graph when not being paranoid, ...
-> > +		GIT_COMMIT_GRAPH_PARANOIA=3Dfalse git rev-list B &&
-> > +		# ... but parsing the commit when double checking that
-> > +		# it actually exists in the object database should fail.
-> > +		test_must_fail git rev-list -1 B
->=20
-> Would "cat-file -p" be more direct here than "rev-list -1"?
-
-No, because it doesn't use `lookup_commit_in_graph()`. I had to go
-searching a bit to find something that exposes this inconsistency, and
-git-rev-list(1) was the easiest one I found.
-
-Patrick
-
---OXhe/lalonnDWGz+
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVAnIUACgkQVbJhu7ck
-PpT5jBAAromemnAEJ73XrtsKbdUV1bMNT0VnlftfmmUQNU3EATBnoKzfQtVcsfWH
-F14paOXwWCDCz898gnG2j40oJ0zfjl24fO6pG/898OeJ9O4OoMn9e8uWzt+0Amto
-B3lHXmoBnNq6DiIwvqix1/CQHOdSOhbP4D6509DzYFaKvRR/5e+IA+5FbH9npDmL
-my8pigWtvildm/3AHLQllCBf+5nUerwpXvDMK5P965ZwzfIXNJHSeaS00Y7PLZew
-VvJ99cJ0x4sA22+zlRjbOd3TrMIGqUWAPfnXroD0GnJnily8gv6r+OU42yerkuSP
-J9M4JAZwyAFktcNDZ1ogTMmNEC2bf24auzhpRvxBg0Pj9LFk0h4zCu6MYUe4UTvm
-OGKXeUr7TX25PVB099h+loBhYtakw217yahW6wRBE/xQ8t7Zn8bi2kp7OubOcp3S
-LJtcm7EE1UFafWqfE13013K2h5ZgJiKAURfpI66djXuw9Bjd+TbhwRqOzxVSRW0X
-xzzsOpcKqHw20tdchGLufH2vAmygWqJnl0JWOrwFFy+2x7wkEkvQav0vDNMAjyud
-4GImxhVdGKq5rG0YO8k7Z64LHTo7JN5ek5K5ej7VLvIGkJL0vGoueClNjiSJWR/M
-CQ1cNYm2Bji078PPus/d0FkPz2MW7mw5+LPbxBQlT7q5tO08Kmk=
-=NuMP
------END PGP SIGNATURE-----
-
---OXhe/lalonnDWGz+--
+However, if someone prefers to make the TODO file also respect
+comment_line_char, despite its dubious value, then I expect any patch
+should
+  1) audit *every* reference found via git grep -e '".*#' -e "'#'" sequence=
+r.c
+  2) add a test case (or cases) involving --rebase-merges -i that
+trigger the relevant code paths
+If they don't do that, then I fear we might make the bug more likely
+to be triggered rather than less.
