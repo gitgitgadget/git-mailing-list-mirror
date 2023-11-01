@@ -1,324 +1,206 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A786B12B90
-	for <git@vger.kernel.org>; Wed,  1 Nov 2023 13:03:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 946ED134A3
+	for <git@vger.kernel.org>; Wed,  1 Nov 2023 13:03:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bUdsu7+T";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LLgrnniB"
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5609EA6
-	for <git@vger.kernel.org>; Wed,  1 Nov 2023 06:03:18 -0700 (PDT)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailout.nyi.internal (Postfix) with ESMTP id BFA8A5C01B9;
-	Wed,  1 Nov 2023 09:03:17 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Wed, 01 Nov 2023 09:03:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1698843797; x=1698930197; bh=Jw
-	W21xk7NABA7qUL+dA6c4kuCd7iKQsRfmVBpLSfZC0=; b=bUdsu7+T1/m7aO2QNo
-	dSDWkAirikgvHYPPWMhOsd3B7mXovaOqQzGlcw99gIdMG2nur3lz/3+eHAtZOW7D
-	gtpp2tqK4GHydYlXjZ1e5RffRg/DdzgvFzo91u82CjOQTPEXYDyx14lu8gc2sTZr
-	MRsaOGN3bIZP0I8W+E/E5H3wcEwrlmSU6Nlcv7PRA2UrK71++C6BQMpxLmgHq9Vr
-	i7Z2oLpbI568QIZBLxuSwUxsJgaEsAdllZWQc5eMM5TYZJIlxCSn7eGd1+V5zon1
-	AN7hujpwIF80meCiK/rBFE0NE/CmOxDJ3Sdj4R0iVvpUhYKfS3Y6lXl+Wgt96QfG
-	KiYg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1698843797; x=1698930197; bh=JwW21xk7NABA7
-	qUL+dA6c4kuCd7iKQsRfmVBpLSfZC0=; b=LLgrnniBBwKeuoUl92hQp3HOoKTGj
-	hXRngwv0OVgvk2iQKBzs1B6gBCEe10A6dt+z+SWtqg36B2EA1ga66OE5bV2riVW3
-	W4woUJ3zPXvXNQwPqUdfA+uUegX2gPfW0/FYlsVXR0c3XVfImiyWbuFkprahYXZm
-	WMvVqlX6xwUDzJ4ibKZWX5Fyc6nz4B1DR+0dR56kwn1Dshb4HgF0bDd/XbY41k8G
-	Ptg5ei5h5rTxB4sVhrTH17SlnN1vSJRZCf2ycTglxMaTIsMjZfp6ojcsff9Z7ftV
-	RRENT8Eg/zNt94wB8Fi5G1gU6cbVN6X/32s7l3brtRLRawF9nJZxMZS7w==
-X-ME-Sender: <xms:lUxCZe77gxIgSiJwfnVL3YSEDua0mjXkctiAofRzAUKFOjKjAh4dsQ>
-    <xme:lUxCZX406GG0SYFKO3KUodunItOCRGFkcF58JZWbIyLpjtKyNjjGZ0yUmk_lM4VnE
-    qY9UNRQExKwVYvggg>
-X-ME-Received: <xmr:lUxCZdflj-5PrEHJLxAlQMDOrVZxLezi4B7olRlSbQ2xoMXa2Sj0mXuc--vGPq4TPWpXpcUL_8flK4eI1kau_WXICI13mOv-K-GZhQZoVda0zw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddtgedggeejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnheplefgiedtffekvdetffegudeuvdfftdffheetfeelffevvdffhedvffegleeggeei
-    necuffhomhgrihhnpehgihhtlhgrsgdrtghomhenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:lUxCZbJy23QJrMQHUXtNOe1mrzXoekciGzB00ja97pL-jJQltSIUnQ>
-    <xmx:lUxCZSKG1z7PUSRlL9-EIqvuOx_khkgk8rnWsHyGWLT874mCzCi0TQ>
-    <xmx:lUxCZcxEhQjKvOgCsndbdMltZ-_jv6GZfffwn_-xNlGoScpF2L7rOw>
-    <xmx:lUxCZXEdVLsdwJaxsFsUVi57nruxZulXSgGhn0pon69p2MkILHXZMg>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 1 Nov 2023 09:03:15 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id b19a96e1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 1 Nov 2023 13:03:05 +0000 (UTC)
-Date: Wed, 1 Nov 2023 14:03:13 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
-	Victoria Dye <vdye@github.com>
-Subject: [PATCH v5 8/8] ci: add support for GitLab CI
-Message-ID: <5784d03a6f102cac88f7a857e57987968e82a809.1698843660.git.ps@pks.im>
-References: <cover.1698305961.git.ps@pks.im>
- <cover.1698843660.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ClKdgXA4"
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6FE9B7
+	for <git@vger.kernel.org>; Wed,  1 Nov 2023 06:03:34 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2c5210a1515so97367301fa.0
+        for <git@vger.kernel.org>; Wed, 01 Nov 2023 06:03:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1698843812; x=1699448612; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HI7BSQ9eutWEFYErd1eSzNCJ99F+y4CKHnqm0krvW64=;
+        b=ClKdgXA44tV2KfxfQOVKc34Jg/xz7q2qjIXVWmrQfMpGcP0+3cyot8f57YUBTu4QLD
+         qIhiHaLuNHlizsYqpgacsbYBCe/hs4Av/UrZ6fpAS2L6VoOLvadR6x7p0l5hqPzXrOp3
+         mjSe1b2rmk2/PBc0ohizl/KZy7d+g32wBKtIC68sN5AiajllqZA6n6Hc13CPq/F9XfNk
+         rrjQXUfQsHpArKjbnVluLlpSO/PSVhxOtmWznUxxWdubdf7v5Y6adB/hI4nx5ieco5H+
+         D8tgm9kiNeJ4GcHLKHjsfAylhdQyX6fX+7Q4Y7XQYFc1ZjpiOT4zyGiPwSxsDlHXPRdm
+         EfYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698843812; x=1699448612;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=HI7BSQ9eutWEFYErd1eSzNCJ99F+y4CKHnqm0krvW64=;
+        b=NKh2V5ZA0YpJsDbe5JUsL6Kh56BrtCiq73RZVh5tOhBeoMQCJXrLo5zNez7ELT1gZv
+         MRLfnEUraIvK8wB6Q8FdCG4usMEfAl49ndpuYQNjnOJCm+t/gfOpt8vQglDGA9iPQsNI
+         4e/egq1OFI/5m9yHOtTPtNaBcKSFzw+phpoS4y1yBsYJBAupDNOtZdWhSqENTeMza9GK
+         yn6TFbL+rDjxkNXR6nF9eWJWCrAbOkRS2OqgTJ2BhWsddLNEJ2SOoewZ0EXNxLMljz7X
+         iJ5cpWNH4xkKlHR1JK3c4QuW+z4KoMs47p+h63FGAa3yCZiIKixGQMYeJSoWGjHOYgt2
+         RnHQ==
+X-Gm-Message-State: AOJu0YzdER6fJ3tuE7gEtf1I/G8WFNVAbqzRnHB03oZoB/d8o091ch22
+	TJ3WjRgc0f5MQ5iNwWgWj64M+vTOcWc=
+X-Google-Smtp-Source: AGHT+IFHrEvM62AvjGIZs0KgI2szeuGWwJIhAuF0ZacBn9bHruIJb/KpI9b0nZf+gYM0jO+F6wgUJA==
+X-Received: by 2002:a2e:9116:0:b0:2c5:56b:cbd1 with SMTP id m22-20020a2e9116000000b002c5056bcbd1mr12217442ljg.10.1698843811931;
+        Wed, 01 Nov 2023 06:03:31 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id j23-20020a05600c1c1700b004053e9276easm1473210wms.32.2023.11.01.06.03.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Nov 2023 06:03:31 -0700 (PDT)
+Message-ID: <pull.1604.v2.git.1698843810814.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1604.git.1698680732691.gitgitgadget@gmail.com>
+References: <pull.1604.git.1698680732691.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 01 Nov 2023 13:03:30 +0000
+Subject: [PATCH v2] max_tree_depth: lower it for MSVC to avoid stack overflows
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="lLDk8aWvuZYRHjZP"
-Content-Disposition: inline
-In-Reply-To: <cover.1698843660.git.ps@pks.im>
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
---lLDk8aWvuZYRHjZP
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+There seems to be some internal stack overflow detection in MSVC's
+`malloc()` machinery that seems to be independent of the `stack reserve`
+and `heap reserve` sizes specified in the executable (editable via
+`EDITBIN /STACK:<n> <exe>` and `EDITBIN /HEAP:<n> <exe>`).
 
-We already support Azure Pipelines and GitHub Workflows in the Git
-project, but until now we do not have support for GitLab CI. While it is
-arguably not in the interest of the Git project to maintain a ton of
-different CI platforms, GitLab has recently ramped up its efforts and
-tries to contribute to the Git project more regularly.
+In the newly test cases added by `jk/tree-name-and-depth-limit`, this
+stack overflow detection is unfortunately triggered before Git can print
+out the error message about too-deep trees and exit gracefully. Instead,
+it exits with `STATUS_STACK_OVERFLOW`. This corresponds to the numeric
+value -1073741571, something the MSYS2 runtime we sadly need to use to
+run Git's test suite cannot handle and which it internally maps to the
+exit code 127. Git's test suite, in turn, mistakes this to mean that the
+command was not found, and fails both test cases.
 
-Part of a problem we hit at GitLab rather frequently is that our own,
-custom CI setup we have is so different to the setup that the Git
-project has. More esoteric jobs like "linux-TEST-vars" that also set a
-couple of environment variables do not exist in GitLab's custom CI
-setup, and maintaining them to keep up with what Git does feels like
-wasted time. The result is that we regularly send patch series upstream
-that fail to compile or pass tests in GitHub Workflows. We would thus
-like to integrate the GitLab CI configuration into the Git project to
-help us send better patch series upstream and thus reduce overhead for
-the maintainer. Results of these pipeline runs will be made available
-(at least) in GitLab's mirror of the Git project at [1].
+Here is an example stack trace from an example run:
 
-This commit introduces the integration into our regular CI scripts so
-that most of the setup continues to be shared across all of the CI
-solutions. Note that as the builds on GitLab CI run as unprivileged
-user, we need to pull in both sudo and shadow packages to our Alpine
-based job to set this up.
+    [0x0]   ntdll!RtlpAllocateHeap+0x31   0x4212603f50   0x7ff9d6d4cd49
+    [0x1]   ntdll!RtlpAllocateHeapInternal+0x6c9   0x42126041b0   0x7ff9d6e14512
+    [0x2]   ntdll!RtlDebugAllocateHeap+0x102   0x42126042b0   0x7ff9d6dcd8b0
+    [0x3]   ntdll!RtlpAllocateHeap+0x7ec70   0x4212604350   0x7ff9d6d4cd49
+    [0x4]   ntdll!RtlpAllocateHeapInternal+0x6c9   0x42126045b0   0x7ff9596ed480
+    [0x5]   ucrtbased!heap_alloc_dbg_internal+0x210   0x42126046b0   0x7ff9596ed20d
+    [0x6]   ucrtbased!heap_alloc_dbg+0x4d   0x4212604750   0x7ff9596f037f
+    [0x7]   ucrtbased!_malloc_dbg+0x2f   0x42126047a0   0x7ff9596f0dee
+    [0x8]   ucrtbased!malloc+0x1e   0x42126047d0   0x7ff730fcc1ef
+    [0x9]   git!do_xmalloc+0x2f   0x4212604800   0x7ff730fcc2b9
+    [0xa]   git!do_xmallocz+0x59   0x4212604840   0x7ff730fca779
+    [0xb]   git!xmallocz_gently+0x19   0x4212604880   0x7ff7311b0883
+    [0xc]   git!unpack_compressed_entry+0x43   0x42126048b0   0x7ff7311ac9a4
+    [0xd]   git!unpack_entry+0x554   0x42126049a0   0x7ff7311b0628
+    [0xe]   git!cache_or_unpack_entry+0x58   0x4212605250   0x7ff7311ad3a8
+    [0xf]   git!packed_object_info+0x98   0x42126052a0   0x7ff7310a92da
+    [0x10]   git!do_oid_object_info_extended+0x3fa   0x42126053b0   0x7ff7310a44e7
+    [0x11]   git!oid_object_info_extended+0x37   0x4212605460   0x7ff7310a38ba
+    [0x12]   git!repo_read_object_file+0x9a   0x42126054a0   0x7ff7310a6147
+    [0x13]   git!read_object_with_reference+0x97   0x4212605560   0x7ff7310b4656
+    [0x14]   git!fill_tree_descriptor+0x66   0x4212605620   0x7ff7310dc0a5
+    [0x15]   git!traverse_trees_recursive+0x3f5   0x4212605680   0x7ff7310dd831
+    [0x16]   git!unpack_callback+0x441   0x4212605790   0x7ff7310b4c95
+    [0x17]   git!traverse_trees+0x5d5   0x42126058a0   0x7ff7310dc0f2
+    [0x18]   git!traverse_trees_recursive+0x442   0x4212605980   0x7ff7310dd831
+    [0x19]   git!unpack_callback+0x441   0x4212605a90   0x7ff7310b4c95
+    [0x1a]   git!traverse_trees+0x5d5   0x4212605ba0   0x7ff7310dc0f2
+    [0x1b]   git!traverse_trees_recursive+0x442   0x4212605c80   0x7ff7310dd831
+    [0x1c]   git!unpack_callback+0x441   0x4212605d90   0x7ff7310b4c95
+    [0x1d]   git!traverse_trees+0x5d5   0x4212605ea0   0x7ff7310dc0f2
+    [0x1e]   git!traverse_trees_recursive+0x442   0x4212605f80   0x7ff7310dd831
+    [0x1f]   git!unpack_callback+0x441   0x4212606090   0x7ff7310b4c95
+    [0x20]   git!traverse_trees+0x5d5   0x42126061a0   0x7ff7310dc0f2
+    [0x21]   git!traverse_trees_recursive+0x442   0x4212606280   0x7ff7310dd831
+    [...]
+    [0xfad]   git!cmd_main+0x2a2   0x42126ff740   0x7ff730fb6345
+    [0xfae]   git!main+0xe5   0x42126ff7c0   0x7ff730fbff93
+    [0xfaf]   git!wmain+0x2a3   0x42126ff830   0x7ff731318859
+    [0xfb0]   git!invoke_main+0x39   0x42126ff8a0   0x7ff7313186fe
+    [0xfb1]   git!__scrt_common_main_seh+0x12e   0x42126ff8f0   0x7ff7313185be
+    [0xfb2]   git!__scrt_common_main+0xe   0x42126ff960   0x7ff7313188ee
+    [0xfb3]   git!wmainCRTStartup+0xe   0x42126ff990   0x7ff9d5ed257d
+    [0xfb4]   KERNEL32!BaseThreadInitThunk+0x1d   0x42126ff9c0   0x7ff9d6d6aa78
+    [0xfb5]   ntdll!RtlUserThreadStart+0x28   0x42126ff9f0   0x0
 
-[1]: https://gitlab.com/gitlab-org/git
+I verified manually that `traverse_trees_cur_depth` was 562 when that
+happened, which is far below the 2048 that were already accepted into
+Git as a hard limit.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+Despite many attempts to figure out which of the internals trigger this
+`STATUS_STACK_OVERFLOW` and how to maybe increase certain sizes to avoid
+running into this issue and let Git behave the same way as under Linux,
+I failed to find any build-time/runtime knob we could turn to that
+effect.
+
+Note: even switching to using a different allocator (I used mimalloc
+because that's what Git for Windows uses for its GCC builds) does not
+help, as the zlib code used to unpack compressed pack entries _still_
+uses the regular `malloc()`. And runs into the same issue.
+
+Note also: switching to using a different allocator _also_ for zlib code
+seems _also_ not to help. I tried that, and it still exited with
+`STATUS_STACK_OVERFLOW` that seems to have been triggered by a
+`mi_assert_internal()`, i.e. an internal assertion of mimalloc...
+
+So the best bet to work around this for now seems to just lower the
+maximum allowed tree depth _even further_ for MSVC builds.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- .gitlab-ci.yml                    | 53 +++++++++++++++++++++++++++++++
- ci/install-docker-dependencies.sh | 13 +++++++-
- ci/lib.sh                         | 44 +++++++++++++++++++++++++
- ci/print-test-failures.sh         |  6 ++++
- 4 files changed, 115 insertions(+), 1 deletion(-)
- create mode 100644 .gitlab-ci.yml
+    Fix t6700.[45] in win+VS test
+    
+    These two test cases have been failing for a while in Git for Windows'
+    shears/* branches. Took a good while to figure out, too.
+    
+    Changes since v1:
+    
+     * Rewrite the patch to instead lower the max_allowed_tree_depth
+       threshold even further for MSVC, side-stepping the stack overflow.
 
-diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
-new file mode 100644
-index 00000000000..cd98bcb18aa
---- /dev/null
-+++ b/.gitlab-ci.yml
-@@ -0,0 +1,53 @@
-+default:
-+  timeout: 2h
-+
-+workflow:
-+  rules:
-+    - if: $CI_PIPELINE_SOURCE =3D=3D "merge_request_event"
-+    - if: $CI_COMMIT_TAG
-+    - if: $CI_COMMIT_REF_PROTECTED =3D=3D "true"
-+
-+test:
-+  image: $image
-+  before_script:
-+    - ./ci/install-docker-dependencies.sh
-+  script:
-+    - useradd builder --create-home
-+    - chown -R builder "${CI_PROJECT_DIR}"
-+    - sudo --preserve-env --set-home --user=3Dbuilder ./ci/run-build-and-t=
-ests.sh
-+  after_script:
-+    - |
-+      if test "$CI_JOB_STATUS" !=3D 'success'
-+      then
-+        sudo --preserve-env --set-home --user=3Dbuilder ./ci/print-test-fa=
-ilures.sh
-+      fi
-+  parallel:
-+    matrix:
-+      - jobname: linux-sha256
-+        image: ubuntu:latest
-+        CC: clang
-+      - jobname: linux-gcc
-+        image: ubuntu:20.04
-+        CC: gcc
-+        CC_PACKAGE: gcc-8
-+      - jobname: linux-TEST-vars
-+        image: ubuntu:20.04
-+        CC: gcc
-+        CC_PACKAGE: gcc-8
-+      - jobname: linux-gcc-default
-+        image: ubuntu:latest
-+        CC: gcc
-+      - jobname: linux-leaks
-+        image: ubuntu:latest
-+        CC: gcc
-+      - jobname: linux-asan-ubsan
-+        image: ubuntu:latest
-+        CC: clang
-+      - jobname: pedantic
-+        image: fedora:latest
-+      - jobname: linux-musl
-+        image: alpine:latest
-+  artifacts:
-+    paths:
-+      - t/failed-test-artifacts
-+    when: on_failure
-diff --git a/ci/install-docker-dependencies.sh b/ci/install-docker-dependen=
-cies.sh
-index 6e845283680..48c43f0f907 100755
---- a/ci/install-docker-dependencies.sh
-+++ b/ci/install-docker-dependencies.sh
-@@ -16,11 +16,22 @@ linux32)
- 	'
- 	;;
- linux-musl)
--	apk add --update build-base curl-dev openssl-dev expat-dev gettext \
-+	apk add --update shadow sudo build-base curl-dev openssl-dev expat-dev ge=
-ttext \
- 		pcre2-dev python3 musl-libintl perl-utils ncurses \
- 		apache2 apache2-http2 apache2-proxy apache2-ssl apache2-webdav apr-util-=
-dbd_sqlite3 \
- 		bash cvs gnupg perl-cgi perl-dbd-sqlite >/dev/null
- 	;;
-+linux-*)
-+	# Required so that apt doesn't wait for user input on certain packages.
-+	export DEBIAN_FRONTEND=3Dnoninteractive
-+
-+	apt update -q &&
-+	apt install -q -y sudo git make language-pack-is libsvn-perl apache2 libs=
-sl-dev \
-+		libcurl4-openssl-dev libexpat-dev tcl tk gettext zlib1g-dev \
-+		perl-modules liberror-perl libauthen-sasl-perl libemail-valid-perl \
-+		libdbd-sqlite3-perl libio-socket-ssl-perl libnet-smtp-ssl-perl ${CC_PACK=
-AGE:-${CC:-gcc}} \
-+		apache2 cvs cvsps gnupg libcgi-pm-perl subversion
-+	;;
- pedantic)
- 	dnf -yq update >/dev/null &&
- 	dnf -yq install make gcc findutils diffutils perl python3 gettext zlib-de=
-vel expat-devel openssl-devel curl-devel pcre2-devel >/dev/null
-diff --git a/ci/lib.sh b/ci/lib.sh
-index f0a2f80f094..2718ce8776c 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -14,6 +14,22 @@ then
- 		need_to_end_group=3D
- 		echo '::endgroup::' >&2
- 	}
-+elif test true =3D "$GITLAB_CI"
-+then
-+	begin_group () {
-+		need_to_end_group=3Dt
-+		printf "\e[0Ksection_start:$(date +%s):$(echo "$1" | tr ' ' _)\r\e[0K$1\=
-n"
-+		trap "end_group '$1'" EXIT
-+		set -x
-+	}
-+
-+	end_group () {
-+		test -n "$need_to_end_group" || return 0
-+		set +x
-+		need_to_end_group=3D
-+		printf "\e[0Ksection_end:$(date +%s):$(echo "$1" | tr ' ' _)\r\e[0K\n"
-+		trap - EXIT
-+	}
- else
- 	begin_group () { :; }
- 	end_group () { :; }
-@@ -229,6 +245,34 @@ then
-=20
- 	GIT_TEST_OPTS=3D"--github-workflow-markup"
- 	JOBS=3D10
-+elif test true =3D "$GITLAB_CI"
-+then
-+	CI_TYPE=3Dgitlab-ci
-+	CI_BRANCH=3D"$CI_COMMIT_REF_NAME"
-+	CI_COMMIT=3D"$CI_COMMIT_SHA"
-+	case "$CI_JOB_IMAGE" in
-+	macos-*)
-+		CI_OS_NAME=3Dosx;;
-+	alpine:*|fedora:*|ubuntu:*)
-+		CI_OS_NAME=3Dlinux;;
-+	*)
-+		echo "Could not identify OS image" >&2
-+		env >&2
-+		exit 1
-+		;;
-+	esac
-+	CI_REPO_SLUG=3D"$CI_PROJECT_PATH"
-+	CI_JOB_ID=3D"$CI_JOB_ID"
-+	CC=3D"${CC_PACKAGE:-${CC:-gcc}}"
-+	DONT_SKIP_TAGS=3Dt
-+	handle_failed_tests () {
-+		create_failed_test_artifacts
-+	}
-+
-+	cache_dir=3D"$HOME/none"
-+
-+	runs_on_pool=3D$(echo "$CI_JOB_IMAGE" | tr : -)
-+	JOBS=3D$(nproc)
- else
- 	echo "Could not identify CI type" >&2
- 	env >&2
-diff --git a/ci/print-test-failures.sh b/ci/print-test-failures.sh
-index 57277eefcd0..c33ad4e3a22 100755
---- a/ci/print-test-failures.sh
-+++ b/ci/print-test-failures.sh
-@@ -51,6 +51,12 @@ do
- 			tar czf failed-test-artifacts/"$test_name".trash.tar.gz "$trash_dir"
- 			continue
- 			;;
-+		gitlab-ci)
-+			mkdir -p failed-test-artifacts
-+			cp "${TEST_EXIT%.exit}.out" failed-test-artifacts/
-+			tar czf failed-test-artifacts/"$test_name".trash.tar.gz "$trash_dir"
-+			continue
-+			;;
- 		*)
- 			echo "Unhandled CI type: $CI_TYPE" >&2
- 			exit 1
---=20
-2.42.0
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1604%2Fdscho%2Ffix-vs-win-test-with-new-depth-limit-test-cases-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1604/dscho/fix-vs-win-test-with-new-depth-limit-test-cases-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1604
+
+Range-diff vs v1:
+
+ 1:  0e6e53bd824 < -:  ----------- tests: handle "funny" exit code 127 produced by MSVC-compiled exes
+ -:  ----------- > 1:  5f738a78eb1 max_tree_depth: lower it for MSVC to avoid stack overflows
 
 
---lLDk8aWvuZYRHjZP
-Content-Type: application/pgp-signature; name="signature.asc"
+ environment.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
------BEGIN PGP SIGNATURE-----
+diff --git a/environment.c b/environment.c
+index bb3c2a96a33..9e37bf58c0c 100644
+--- a/environment.c
++++ b/environment.c
+@@ -81,7 +81,20 @@ int merge_log_config = -1;
+ int precomposed_unicode = -1; /* see probe_utf8_pathname_composition() */
+ unsigned long pack_size_limit_cfg;
+ enum log_refs_config log_all_ref_updates = LOG_REFS_UNSET;
+-int max_allowed_tree_depth = 2048;
++int max_allowed_tree_depth =
++#ifdef _MSC_VER
++	/*
++	 * When traversing into too-deep trees, Visual C-compiled Git seems to
++	 * run into some internal stack overflow detection in the
++	 * `RtlpAllocateHeap()` function that is called from within
++	 * `git_inflate_init()`'s call tree. The following value seems to be
++	 * low enough to avoid that by letting Git exit with an error before
++	 * the stack overflow can occur.
++	 */
++	512;
++#else
++	2048;
++#endif
+ 
+ #ifndef PROTECT_HFS_DEFAULT
+ #define PROTECT_HFS_DEFAULT 0
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVCTJAACgkQVbJhu7ck
-PpQ1pw//T4w7AlEMn8r1BK6/dL+ms72uWsHcOBRKPyHkZyS8BM81gIT5bxmShvXA
-DDUOEf7EZejZy8hgZO6KI5k19FL7GtWl7zU2pFrTW5ft63hu+zZ0z4wBVLGMFSLn
-t6V1nqxw5L9GW/YT7DndYjVYPE6VSGtXNnKuHVuGl2gV2W9fr6ndlFsmsBClq4tU
-HEyZ6WQau+OUp5k/dG/hvMg6iI1xpNTkMQhHajGf/o/l29znjVNNh8akuH2PmRaU
-7gTJK9GfVZaxETrxjaNTYacrYmC3s6n9Rxkisl+R/xK3fqq9yNfOJMEYiQtHKvvn
-ToAZi23ybXADkxKnHxjeDQ1QGYi43V3q7yAKoaB5QdRqlaiJuiEGfOV1apwdzObk
-ZS8n8KCwqbjE6kHo6vDnoEEjAMHhfiwAz+O5pL4/EpOb7E/JAhQMDLvWXzhlheUy
-VAJWN4Nr+JxjJYeeMbgUXrh40yWfrtL03BIMqn4bYd6i9ZO+mGDbHs/NUaJn1w1o
-YDov7IxXqVvao9xe/WCdzpJAaU4cBqnxPlP+0EI/KwTi5tm6JC36dMAyCos0A9g0
-3tP4xKSD88VtFl7BUZaEAihfuwGeg/K2DmJxEmfQEATC/Xj462MvSRx2pU2FtCqD
-EhjfUCsMeNjJGtmDv5xfhHOWsl+KRv+3dbMy6aNVh4T13YBMWgk=
-=d1HC
------END PGP SIGNATURE-----
-
---lLDk8aWvuZYRHjZP--
+base-commit: 3130c155df9a65ebccf128b4af5a19af49532580
+-- 
+gitgitgadget
