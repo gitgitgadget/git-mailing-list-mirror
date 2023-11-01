@@ -1,64 +1,50 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B3BD33FA
-	for <git@vger.kernel.org>; Wed,  1 Nov 2023 22:54:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 876A82599
+	for <git@vger.kernel.org>; Wed,  1 Nov 2023 23:05:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="QXkiehJI"
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD480110
-	for <git@vger.kernel.org>; Wed,  1 Nov 2023 15:54:48 -0700 (PDT)
-Received: by mail-pf1-x432.google.com with SMTP id d2e1a72fcca58-6b5cac99cfdso367626b3a.2
-        for <git@vger.kernel.org>; Wed, 01 Nov 2023 15:54:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1698879288; x=1699484088; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:mail-followup-to:message-id:subject:cc:to
-         :from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=5VXXEL1reBvBRfpxjTTUrshJcL/6MWAVqmA6ZrRpXIg=;
-        b=QXkiehJIK011VsTWjT+Nm9bD9UhcEQvJGUkOOfSuD5XHqJNN0YAZaoDW5Iz9I4zQNk
-         clbYf+jM6qQMaKW5xB0QHZdh4pOMxtf7vEKkMtOVgBaQFbLSwy0DFxFCwXb9i3Ix5+2e
-         yI8OgLG7Ye07YUx+vwFNPZsoVMguvDSXD6ZgPy3DVQ7ZJrut4+P3Ov8YHoOYqt240KR3
-         AKkhwZXhJSweYr/eYz5b80mTRy0kfbw0FrUk34qvWgEM3rziwwUya6ivJqF1AoAwdDlF
-         Ee2i2Fapc6ODGmG3ZfpQmIr6JT2seFPFkCdNu6hA2/Zm7JfSIM+5hUH2BhzeZKTXTlgL
-         PHGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698879288; x=1699484088;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:mail-followup-to:message-id:subject:cc:to
-         :from:date:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5VXXEL1reBvBRfpxjTTUrshJcL/6MWAVqmA6ZrRpXIg=;
-        b=ccfN47DOiAbi2Xf3hDelm4Um1Um3qupd78+Q6Oe/4ABiqFWmdhhJyfi64gHoaCK1f2
-         SapUtolv3KMYq9k1SMPxKCz035mfrVY/yrpj5zhvhLWxc8VRLbEsP1snW049xINe3WOd
-         FboYDATfO+5kwHkhPOLEKAl8KipCjq/PGCojwbExqFyB5fH/fXLnc24zw7wIcF0iwb2x
-         qqICy9HglmmgSLlfUnY2A2auh0jDcarv0nbcflLrtXH2Rqkb9zouqrfKSRv/lF+tCwm4
-         k6JYtfrv+7zlvkqgeJb/8Pbn52SJahO9Uif0tMXAdLQ3WQfoJMO6T5CrwkgAuZNIB+G+
-         hDig==
-X-Gm-Message-State: AOJu0YxVhsv1hCniXSy4gBqXtQTr9D8UI2ehXPUIztPbtmBthzl1kuzD
-	2iTqt5PlL2DXJb7J0tumhtraC6vWLTdPb3PbPL60qg==
-X-Google-Smtp-Source: AGHT+IHTwxzFwdAXql9xavj4dTSJ+wdXwtQhNFKVwheDDqh5wt3eEqRTSgmwFAMxeNQF/jgpxie8Tw==
-X-Received: by 2002:a05:6a20:8f03:b0:13d:5b8e:db83 with SMTP id b3-20020a056a208f0300b0013d5b8edb83mr18713454pzk.9.1698879287957;
-        Wed, 01 Nov 2023 15:54:47 -0700 (PDT)
-Received: from google.com ([2620:15c:2d3:204:fc30:220:f2fb:969])
-        by smtp.gmail.com with ESMTPSA id u7-20020a170902e80700b001c444f185b4sm1760425plg.237.2023.11.01.15.54.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Nov 2023 15:54:47 -0700 (PDT)
-Date: Wed, 1 Nov 2023 15:54:42 -0700
-From: Josh Steadmon <steadmon@google.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org, phillip.wood123@gmail.com, linusa@google.com,
-	calvinwan@google.com, gitster@pobox.com, rsbecker@nexbridge.com
-Subject: Re: [PATCH v8 2/3] unit tests: add TAP unit test framework
-Message-ID: <ZULXMhD0ajESkde5@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-	Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
-	phillip.wood123@gmail.com, linusa@google.com, calvinwan@google.com,
-	gitster@pobox.com, rsbecker@nexbridge.com
-References: <0169ce6fb9ccafc089b74ae406db0d1a8ff8ac65.1688165272.git.steadmon@google.com>
- <cover.1696889529.git.steadmon@google.com>
- <00d3c95a81449bf49c4ce992d862d7a858691840.1696889530.git.steadmon@google.com>
- <CAP8UFD3eY_i36YO0OcpAp9ey5KO0q-PrwvjSLRXKYQb=iZ8JCA@mail.gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZYDkW4uI"
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27056A6
+	for <git@vger.kernel.org>; Wed,  1 Nov 2023 16:05:28 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4B1CD1B0123;
+	Wed,  1 Nov 2023 19:05:27 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=gDVw1lH1NjOb
+	Co+PjbR7XhnmgjbS6f2OgP5MCgWlGd0=; b=ZYDkW4uI3EiTJKQWAQbLS6GEJ18g
+	ZdYZ/YvXppezXfu50lwCAwYPB+MMRioWT9bbHaWZzmH1mcoI9Pph0w9ABC6fjOq2
+	lKqhG28RfrjRvmAD/BsSkgovkqw3YQ77yhwDsmsPfRSzqtZ5w196Z7WJOOcgpq5r
+	FvMFlzJqjLNyUFE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 420F51B0121;
+	Wed,  1 Nov 2023 19:05:27 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.67.28])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 989B11B0120;
+	Wed,  1 Nov 2023 19:05:26 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Ruslan Yakauleu" <ruslan.yakauleu@gmail.com>
+Cc: git@vger.kernel.org,
+    "Kristoffer Haugsbakk" <code@khaugsbakk.name>,
+    "Taylor Blau" <me@ttaylorr.com>
+Subject: Re: [PATCH] merge: --ff-one-only to apply FF if commit is one
+In-Reply-To: <a457e24c-3375-49c6-8cf7-d2dd945827fe@app.fastmail.com>
+	(Kristoffer Haugsbakk's message of "Wed, 01 Nov 2023 11:09:34 +0100")
+References: <pull.1599.git.git.1698224280816.gitgitgadget@gmail.com>
+	<ZUALkdSJZ70+KBYq@nand.local> <xmqq1qdb8wzk.fsf@gitster.g>
+	<cb166ed4-b8b5-4120-b546-e878445573b6@app.fastmail.com>
+	<xmqqa5ryxn8i.fsf@gitster.g>
+	<a457e24c-3375-49c6-8cf7-d2dd945827fe@app.fastmail.com>
+Date: Thu, 02 Nov 2023 08:05:25 +0900
+Message-ID: <xmqqv8aloz0q.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -66,135 +52,96 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAP8UFD3eY_i36YO0OcpAp9ey5KO0q-PrwvjSLRXKYQb=iZ8JCA@mail.gmail.com>
+X-Pobox-Relay-ID:
+ 24F08DE8-790B-11EE-BCBD-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-On 2023.10.27 22:15, Christian Couder wrote:
-> On Tue, Oct 10, 2023 at 12:22 AM Josh Steadmon <steadmon@google.com> wrote:
-> >
-> > From: Phillip Wood <phillip.wood@dunelm.org.uk>
-> >
-> > This patch contains an implementation for writing unit tests with TAP
-> > output. Each test is a function that contains one or more checks. The
-> > test is run with the TEST() macro and if any of the checks fail then the
-> > test will fail. A complete program that tests STRBUF_INIT would look
-> > like
-> >
-> >      #include "test-lib.h"
-> >      #include "strbuf.h"
-> >
-> >      static void t_static_init(void)
-> >      {
-> >              struct strbuf buf = STRBUF_INIT;
-> >
-> >              check_uint(buf.len, ==, 0);
-> >              check_uint(buf.alloc, ==, 0);
-> >              check_char(buf.buf[0], ==, '\0');
-> >      }
-> >
-> >      int main(void)
-> >      {
-> >              TEST(t_static_init(), "static initialization works);
-> >
-> >              return test_done();
-> >      }
-> >
-> > The output of this program would be
-> >
-> >      ok 1 - static initialization works
-> >      1..1
-> >
-> > If any of the checks in a test fail then they print a diagnostic message
-> > to aid debugging and the test will be reported as failing. For example a
-> > failing integer check would look like
-> >
-> >      # check "x >= 3" failed at my-test.c:102
-> 
-> I wonder if it would be a bit better to say that the test was an
-> integer test for example with "check_int(x >= 3) failed ..."
-> 
-> >      #    left: 2
-> >      #   right: 3
-> 
-> I like "expected" and "actual" better than "left" and "right", not
-> sure how it's possible to have that in a way consistent with the shell
-> tests though.
+"Kristoffer Haugsbakk" <code@khaugsbakk.name> writes:
 
-I also prefer expected/actual, but I don't think it's possible where we
-accept arbitrary operators, and I don't want to plumb a flag through to
-specify whether to display left/right vs expected/actual.
+> On Wed, Nov 1, 2023, at 02:42, Junio C Hamano wrote:
+>> Strictly speaking, the log message on a merge commit serves two
+>> purposes, one is to summarize commit(s) on the side branch that gets
+>> merged with the merge, and as you said above, it is not needed when
+>> merging a topic with just one commit.  But the other is to justify
+>> why the topic suits the objective of the line of history (which is
+>> needed even when merging a single commit topic---imagine a commit
+>> that is not incorrect per-se.  It may or may not be suitable for the
+>> maintenance track, and a merge commit of such a commit into the
+>> track can explain if/how the commit being merged is maint-worthy).
+>
+> Yes. If you have multiple release/maintenance branches which you need t=
+o
+> apply something to then you can=E2=80=99t use this .
 
+OK.  I do not mind a feature to help maintain the first-parent worldview
+better to exist, but have a few comments on the patch.
 
-> >      not ok 1 - x is greater than or equal to three
-> >
-> > There are a number of check functions implemented so far. check() checks
-> > a boolean condition, check_int(), check_uint() and check_char() take two
-> > values to compare and a comparison operator. check_str() will check if
-> > two strings are equal. Custom checks are simple to implement as shown in
-> > the comments above test_assert() in test-lib.h.
-> 
-> Yeah, nice.
-> 
-> > Tests can be skipped with test_skip() which can be supplied with a
-> > reason for skipping which it will print. Tests can print diagnostic
-> > messages with test_msg().  Checks that are known to fail can be wrapped
-> > in TEST_TODO().
-> 
-> Maybe TEST_TOFIX() would be a bit more clear, but "TODO" is something
-> that is more likely to be searched for than "TOFIX", so Ok.
-> 
-> > There are a couple of example test programs included in this
-> > patch. t-basic.c implements some self-tests and demonstrates the
-> > diagnostic output for failing test. The output of this program is
-> > checked by t0080-unit-test-output.sh. t-strbuf.c shows some example
-> > unit tests for strbuf.c
-> >
-> > The unit tests will be built as part of the default "make all" target,
-> > to avoid bitrot. If you wish to build just the unit tests, you can run
-> > "make build-unit-tests". To run the tests, you can use "make unit-tests"
-> > or run the test binaries directly, as in "./t/unit-tests/bin/t-strbuf".
-> 
-> Nice!
-> 
-> > +unit-tests-prove:
-> > +       @echo "*** prove - unit tests ***"; $(PROVE) $(GIT_PROVE_OPTS) $(UNIT_TESTS)
-> 
-> Nice, but DEFAULT_TEST_TARGET=prove isn't used. So not sure how
-> important or relevant the 'prove' related sections are in the
-> Documentation/technical/unit-tests.txt file introduced by the previous
-> patch.
+ * Nowhere in the name of feature --ff-one-only, the proposed commit
+   log message, added documentation and in-code comments, it is made
+   clear to readers that it is to maintain the first-parent view
+   better.  The "first-parent" was only brought up between you and I
+   as our conjecture on what the feature is for.  The should explain
+   the feature a bit better to our readers and users.
 
-The "unit-tests" target runs DEFAULT_UNIT_TEST_TARGET, which can be
-overridden to "unit-tests-prove".
+   SIDE NOTE: in general, it is not the best way to name and explain
+   a feature after what it does (e.g., "fast-forward only when it
+   has one commit"); it is better to include why the user want it to
+   do what it does.  It it especially true because "fast-forward
+   only when the other branch is ahead by one commit" may later turn
+   out not to be the best design to ensure "maintain first-parent
+   worldview", if the latter is what the feature is really about.
 
+ * The proposed commit log message needs a bit of proofreading and
+   polishing, paying attention to the grammar.
 
-> > +int test_assert(const char *location, const char *check, int ok)
-> > +{
-> > +       assert(ctx.running);
-> > +
-> > +       if (ctx.result == RESULT_SKIP) {
-> > +               test_msg("skipping check '%s' at %s", check, location);
-> > +               return 1;
-> > +       } else if (!ctx.todo) {
-> 
-> I think it would be a bit clearer without the "else" above and with
-> the "if (!ctx.todo) {" starting on a new line.
+ * The "allow fast-forward only when the other branch is ahead by
+   one commit" design misses an important case you would want to,
+   and you can detect easily, fast-forward.
 
-Fixed in v9.
+   Imagine that a developer has a rather complex topic with multiple
+   commits, asks the maintainer (or the auto-merger at their forge)
+   to pull, but due to modification on the upstream side, there are
+   heavy conflicts.  The maintainer can tell (and Git was designed
+   to support this mode of operation better---it is called
+   "distributed development") the developer:=20
 
+       Since you know your topic much better than I do, can you do
+       the merge into the upstream for me?
 
-> > +               if (ok) {
-> > +                       test_pass();
-> > +               } else {
-> > +                       test_msg("check \"%s\" failed at %s", check, location);
-> > +                       test_fail();
-> > +               }
-> > +       }
-> > +
-> > +       return !!ok;
-> > +}
-> 
-> Otherwise it looks good to me.
+   The contributor would then help the maintainer, perhaps like so:
 
-Thanks for the review!
+    $ git checkout origin/main
+    $ git merge [--no-ff] my-topic
+
+   to pretend as if the contributer were the maintainer, merge and
+   resolve the conflicts, and then summarizes the topic in the log
+   message of the merge commit.  The contributor then updates their
+   topic locally, perhaps with
+
+    $ git push . HEAD:my-topic
+
+   which would of course fast-forward, and then ask the maintainer
+   (or the auto-merger at their forge) to pull again from "my-topic".
+
+   Now, the updated "my-topic" is ahead of the origin by many
+   commits (i.e., the number of commits on the topic, plus the merge
+   commit the controbutor created to help the maintainer), but if we
+   want to see the resulting history as if the original pull request
+   was handled with the "--ff-one-only" option by the maintainer who
+   did the merge themself, then we should fast-forward this merge.
+   Even though the tip commit of "my-topic" has more commits behind
+   it, it is already the binding merge of the side topic that
+   "--ff-one-only" would have forced to create if the maintainer did
+   the merge.
+
+   So, a better design than "allow fast-forward, only if the branch
+   being merged is ahead by one commit" is to allow fast-forward
+   when the branch's first-parent is the current tip of the branch
+   pull/merge is trying to update.  "only by one commit" can be
+   handled as a natural degenerate case of this more general
+   criteria, and a good thing is that it is much easier and more
+   efficient to compute (i.e., in "git merge OTHER", allow ff if
+   "OTHER^1" and "HEAD" are the same).
+
+As I said, I do not mind a feature to help maintain the first-parent
+worldview better to exist; thanks for working on the topic.
