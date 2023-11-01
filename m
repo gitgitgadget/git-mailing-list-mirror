@@ -1,77 +1,77 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DABF11C86
-	for <git@vger.kernel.org>; Wed,  1 Nov 2023 11:44:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E2D41171F
+	for <git@vger.kernel.org>; Wed,  1 Nov 2023 11:44:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZoL7s6+y";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ssf4v+c+"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="exetaaEg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="h1NC/nQQ"
 Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47759111
-	for <git@vger.kernel.org>; Wed,  1 Nov 2023 04:44:31 -0700 (PDT)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42CFF119
+	for <git@vger.kernel.org>; Wed,  1 Nov 2023 04:44:39 -0700 (PDT)
 Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id AB78A5C0505;
-	Wed,  1 Nov 2023 07:44:27 -0400 (EDT)
+	by mailout.nyi.internal (Postfix) with ESMTP id AAF455C04F2;
+	Wed,  1 Nov 2023 07:44:38 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Wed, 01 Nov 2023 07:44:27 -0400
+  by compute2.internal (MEProxy); Wed, 01 Nov 2023 07:44:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1698839067; x=1698925467; bh=XO
-	RVHFMLaM+WwFRbcf9CgSMYDid8jAYKT+VQv96KOXg=; b=ZoL7s6+yB8dowp3sKr
-	MaIdbVjMwK4PYquTDue15KySLquMju5iCvGHjz3AZqUi2rF1Y3yXaDVNEZcdqzeN
-	EKokwgK3zNFjr2VDsP5HLECHaHa1Un7lDCyTtgbqfrCpAqslDyvL1cCa0o11yR7Z
-	x64f+O2/bMOoPP3BVLW1MU/zAH6YirydH/dJc3Gf79gh5fLEgOVwBy7gHkVrOLeg
-	KR1CON8+BCQvA8t+hb80HeZ8ABNgYR1aN2ENClJ32nbxlv6w6twAN5UEv9lHWzFC
-	otkqM5hufgfHrioi9Y70922L6JCeAekOGjeJ9qyDg6IEQ7Y3PY/d7SWa2FXqjd/H
-	DiRA==
+	:subject:subject:to:to; s=fm3; t=1698839078; x=1698925478; bh=7t
+	Ih+pjD0YtxZJCGVsZbP06Op+V7m8+8rwqBaa968To=; b=exetaaEg9/wVVaV/xD
+	wAYR8VESjG2d3n8QmBx6bRq5aDBITJ+iIAoa9jpSRXP221MNW1MQi/f4lynNp82b
+	o4pF0fbjIF2/P3rwlCn1JLic9EcMO24R/1zRyuPV87AprmtfsqweudaaWECjpcwa
+	Y/MnoL9n3gfgGZ9afzZ9qPaMH7aB7T7MUleOW5zadhrxJGpuGLNdJTaDz2JRHn65
+	34oxedp7ICemKs0XHsTdJE9FrxujMdH1MabIhGVZswwVPhcQSaHamvTomVp66J5+
+	eUtxtIuT9GVAwUC/SjbCA0R76B+lXpjjXCeWGKgH61PSmCkCAHqnzrxa7SUosm8a
+	iWSg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1698839067; x=1698925467; bh=XORVHFMLaM+Ww
-	FRbcf9CgSMYDid8jAYKT+VQv96KOXg=; b=Ssf4v+c+i/Gp6kRyS/6pzkxNX54kU
-	QkqUS04MWh2muXXAnrGpIKctXO4l0UrhxtE6D4ugKdF6+IDszXsPkY4J6w4wYo/x
-	7apjzrz9e3sdzqYP9FFKOc3fOiani3/dPdIqf2e6ofW9xlvkAtX9LCP2au0/6Hx2
-	bOdbXWDa+hVhwF+WEYPZ6bfBrlAVOQRZsksDkKjco/znfvaQEMpYuAkdo2D7FbVF
-	OSMhezfCTsuxei3uerlE4i78uylxwPTDq6nIPzy0OFURGa6J/QmZHKRh7z5EzSzJ
-	eghKhs11osJCgNBzz9UCy7+SVwIG57KDgGggulZYQSX+hP+4IPrpZpMLA==
-X-ME-Sender: <xms:GzpCZd8wcGQ8IQQLyp2dWMazikTNDmZRe6KUw--ox2MDOAqSA0xJLA>
-    <xme:GzpCZRtFN0d0AJ1Nbf8_rFpStZBJbjnhEr81suLHZF2V5v6BJc1SJAGxVIeMkCidZ
-    vno1sbdxkPAMgWh_g>
-X-ME-Received: <xmr:GzpCZbAG4xAmP166yeL1zUpOdfsZiXayTihKOUoC2b2fZkrgRXFZ9EpjWYorCfhM_frR8JFj4LXJr4QGdOmjb1uaTygFweLLFd_gVYs3LdebNA>
+	:x-sasl-enc; s=fm3; t=1698839078; x=1698925478; bh=7tIh+pjD0YtxZ
+	JCGVsZbP06Op+V7m8+8rwqBaa968To=; b=h1NC/nQQXkt/CZgGWhWwBZp2pfbJ8
+	lA5VabjdNeV/Ldn/OPxrBr7JOTWH7vxmpDY4aAATV1My2xO20lUY4W54WUKSGJsS
+	vvqxbgCE9zj8GO4qcrjJ3GIq+zYveCSbj9vbZcUH0kQEp2gd9zBFbHL5Lwc0lyfO
+	zpBRTziIT3qIwDTBHuQUlO++8ISVl6P4fMZq4NTlMLRYYKhNdYAXmDTEm0wDJsor
+	lJFRw+NBlK8dHpNVYB5OJTOC0zyURHZ/8fsrLmtRaubhx8mbozmbO7CRVG2r+cIK
+	hP19Wnp9vXgtCcTAh12uf2wcqO8dzk5DqDNZVd+tu7MLdeUjBVVadsg5g==
+X-ME-Sender: <xms:JjpCZW0jQuHZybJvHeljVwbduLuFICKiCrAOlxnj_1_yRGxceYlcHQ>
+    <xme:JjpCZZEfb8vOqjb-nuIVoTiDeZ8U9bOqNwIDmF_w__GhM5AYnMobhI9-nY_OFpDFX
+    9dmwUDUEbpiFc8-OA>
+X-ME-Received: <xmr:JjpCZe4OuUM8vCVE9-ktPf11qaIakKLuD-qhysJCkM2a4LMchO7cbHN0j4W2P49Kl-mCK8Rz-VB0CfY5sUJzve854HUIiRqPNqa1uDm1XeGk7w>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddtgedgfeduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:GzpCZRdlzzcjStLv8TXdYyvvKHpPf9mxy09nKsMDsyME--2HvbJ3Jg>
-    <xmx:GzpCZSN5mHcFstfosMv_8MbD95hty0rXUoo3s35zY05CMgxo8wYTaQ>
-    <xmx:GzpCZTmi629Hi5uYxr_3qMtnd2SimYfjmkceOuqPSI1GmgShZuvI0w>
-    <xmx:GzpCZfq2ZX_topacr_1Vb2rZw06XvWuLJd3L3wr8j4K6fR7KQ6WQmA>
+X-ME-Proxy: <xmx:JjpCZX2bgIWKbUMxrNruqiCwi504VTRgikR6nrRY_jFvSRYKyqrbtA>
+    <xmx:JjpCZZFG9FysySA3XDpUmJEmGt3nODoswDmoEvNM8gRaqWF8sgUllg>
+    <xmx:JjpCZQ_u-ldPv8MrdeHuaLTm7lzrJxPA01J3XZBCPrGtM71apxOCqw>
+    <xmx:JjpCZdiqn36QAhq2KANGntmRcVAQnn8aqUVivJuDdZRuCKN4rKoJKQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 1 Nov 2023 07:44:25 -0400 (EDT)
+ 1 Nov 2023 07:44:37 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 0a7d722e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 1 Nov 2023 11:44:13 +0000 (UTC)
-Date: Wed, 1 Nov 2023 12:44:22 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id cf4f7000 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 1 Nov 2023 11:44:26 +0000 (UTC)
+Date: Wed, 1 Nov 2023 12:44:35 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Victoria Dye <vdye@github.com>, git@vger.kernel.org,
-	Taylor Blau <me@ttaylorr.com>,
+To: Victoria Dye <vdye@github.com>
+Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+	Junio C Hamano <gitster@pobox.com>,
 	Phillip Wood <phillip.wood123@gmail.com>,
 	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Subject: Re: [PATCH v4 0/8] ci: add GitLab CI definition
-Message-ID: <ZUI6Fqj7QJQG6ox-@tanuki>
+Subject: Re: [PATCH v4 5/8] ci: unify setup of some environment variables
+Message-ID: <ZUI6I8_r7Lff0ruj@tanuki>
 References: <cover.1698305961.git.ps@pks.im>
  <cover.1698742590.git.ps@pks.im>
- <8e4d111f-3982-4989-90b5-08377fe9c5fd@github.com>
- <xmqqpm0uw41b.fsf@gitster.g>
+ <a64799b6e25d05e5d5fc7fe3c5602b5ce256d8b9.1698742590.git.ps@pks.im>
+ <31ebe4c9-84aa-4d42-9aeb-712e2a6cece3@github.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -79,76 +79,136 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="o0dh6iuDQjCaCFm/"
+	protocol="application/pgp-signature"; boundary="fKP/fhvoLKlIPbLc"
 Content-Disposition: inline
-In-Reply-To: <xmqqpm0uw41b.fsf@gitster.g>
+In-Reply-To: <31ebe4c9-84aa-4d42-9aeb-712e2a6cece3@github.com>
 
 
---o0dh6iuDQjCaCFm/
+--fKP/fhvoLKlIPbLc
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Nov 01, 2023 at 12:22:56PM +0900, Junio C Hamano wrote:
-> Victoria Dye <vdye@github.com> writes:
+On Tue, Oct 31, 2023 at 10:06:24AM -0700, Victoria Dye wrote:
+> Patrick Steinhardt wrote:
+> > Both GitHub Actions and Azue Pipelines set up the environment variables
 >=20
-> > As for adding the GitLab-specific stuff, I'm not opposed to having it i=
-n the
-> > main tree. For one, there doesn't seem to be a clean way to "move it in=
-to
-> > `contrib/`" - '.gitlab-ci.yml' must be at the root of the project [2], =
-and
-> > moving the $GITLAB_CI conditions out of the 'ci/*.sh' files into dedica=
-ted
-> > scripts would likely result in a lot of duplicated code (which doesn't =
-solve
-> > the maintenance burden issue this series intends to address).
-
-It is possible to change the location of the `.gitlab-ci.yml` in GitLab
-projects, so moving it into `contrib/` would work, too. But it does of
-course require additional setup by the project admin.
-
-> > More generally, there are lots of open source projects that include CI
-> > configurations across different forges, _especially_ those that are
-> > officially mirrored across a bunch of them. As long as there are
-> > contributors with a vested interest in keeping the GitLab CI definition
-> > stable (and your cover letter indicates that there are), and the GitLab
-> > stuff doesn't negatively impact any other CI configurations, I think it
-> > warrants the same treatment as e.g. GitHub CI.
+> s/Azue/Azure
 >=20
-> Thanks for expressing this so clearly.  I do prefer to add this as
-> the first class citizen (more generally, I do not want to add new
-> things to contrib/ at this point) if we are going to use it.
+> > GIT_TEST_OPTS, GIT_PROVE_OPTS and MAKEFLAGS. And while most values are
+> > actually the same, the setup is completely duplicate. With the upcoming
+> > support for GitLab CI this duplication would only extend even further.
+> >=20
+> > Unify the setup of those environment variables so that only the uncommon
+> > parts are separated. While at it, we also perform some additional small
+> > improvements:
+> >=20
+> >     - We now always pass `--state=3Dfailed,slow,save` via GIT_PROVE_OPT=
+S.
+> >       It doesn't hurt on platforms where we don't persist the state, so
+> >       this further reduces boilerplate.
+> >=20
+> >     - When running on Windows systems we set `--no-chain-lint` and
+> >       `--no-bin-wrappers`. Interestingly though, we did so _after_
+> >       already having exported the respective environment variables.
+> >=20
+> >     - We stop using `export VAR=3Dvalue` syntax, which is a Bashism. It=
+'s
+> >       not quite worth it as we still use this syntax all over the place,
+> >       but it doesn't hurt readability either.
+> >=20
+> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> > ---
+> >  ci/lib.sh | 24 ++++++++++++++----------
+> >  1 file changed, 14 insertions(+), 10 deletions(-)
+> >=20
+> > diff --git a/ci/lib.sh b/ci/lib.sh
+> > index 9ffdf743903..9a9b92c05b3 100755
+> > --- a/ci/lib.sh
+> > +++ b/ci/lib.sh
+> > @@ -175,11 +175,7 @@ then
+> >  	# among *all* phases)
+> >  	cache_dir=3D"$HOME/test-cache/$SYSTEM_PHASENAME"
+> > =20
+> > -	export GIT_PROVE_OPTS=3D"--timer --jobs 10 --state=3Dfailed,slow,save"
+> > -	export GIT_TEST_OPTS=3D"--verbose-log -x --write-junit-xml"
+> > -	MAKEFLAGS=3D"$MAKEFLAGS --jobs=3D10"
+> > -	test windows_nt !=3D "$CI_OS_NAME" ||
+> > -	GIT_TEST_OPTS=3D"--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
+> > +	GIT_TEST_OPTS=3D"--write-junit-xml"
+> >  elif test true =3D "$GITHUB_ACTIONS"
+> >  then
+> >  	CI_TYPE=3Dgithub-actions
+> > @@ -198,17 +194,25 @@ then
+> > =20
+> >  	cache_dir=3D"$HOME/none"
+> > =20
+> > -	export GIT_PROVE_OPTS=3D"--timer --jobs 10"
+> > -	export GIT_TEST_OPTS=3D"--verbose-log -x --github-workflow-markup"
+> > -	MAKEFLAGS=3D"$MAKEFLAGS --jobs=3D10"
+> > -	test windows !=3D "$CI_OS_NAME" ||
+> > -	GIT_TEST_OPTS=3D"--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
+> > +	GIT_TEST_OPTS=3D"--github-workflow-markup"
+> >  else
+> >  	echo "Could not identify CI type" >&2
+> >  	env >&2
+> >  	exit 1
+> >  fi
+> > =20
+> > +MAKEFLAGS=3D"$MAKEFLAGS --jobs=3D10"
+> > +GIT_PROVE_OPTS=3D"--timer --jobs 10 --state=3Dfailed,slow,save"
+> > +
+> > +GIT_TEST_OPTS=3D"$GIT_TEST_OPTS --verbose-log -x"
+> > +if test windows =3D "$CI_OS_NAME"
+>=20
+> Based on the deleted lines above, I think this would need to be:
+>=20
+> 	if test windows =3D "$CI_OS_NAME" || test windows_nt =3D "$CI_OS_NAME"
+>=20
+> I believe these settings are required on all Windows builds, though, so y=
+ou could=20
+> instead match on the first 7 characters of $CI_OS_NAME:
+>=20
+> 	if test windows =3D "$(echo "$CI_OS_NAME" | cut -c1-7)"
+>=20
+> (full disclosure: I'm not 100% confident in the correctness of that shell=
+ syntax)
 
-I certainly know that we in the Gitaly team will use this CI definition
-on a daily basis, which is my main motivation to add and maintain it in
-the future. I personally don't mind to add this as a first-class
-citizen, because for my own workflows I'll certainly treat it as such.
-And if others can benefit from it, too, then I'm even happier.
-
-I'll keep it in the default location at `.gitlab-ci.yml` then, thanks
-for your thoughts!
+Oh, right. I didn't notice the slight difference between "windows" and
+"windows_nt". Thanks!
 
 Patrick
 
---o0dh6iuDQjCaCFm/
+> > +then
+> > +	GIT_TEST_OPTS=3D"$GIT_TEST_OPTS --no-chain-lint --no-bin-wrappers"
+> > +fi
+> > +
+> > +export GIT_TEST_OPTS
+> > +export GIT_PROVE_OPTS
+> > +
+> >  good_trees_file=3D"$cache_dir/good-trees"
+> > =20
+> >  mkdir -p "$cache_dir"
+>=20
+
+--fKP/fhvoLKlIPbLc
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVCOhUACgkQVbJhu7ck
-PpRdpw/+IVAWL2R8F++IRFWvrk6FaLFRf3NHHVln4ZygP7uupbWj1QiJeNRoLKMh
-9Ej3b+rskOMZH/rWiSuksSc5a/yMIni8DH4ma+8hY0NTtIkvVDVxZmg3gXRCg7wh
-oWG9XotQURr1/jGRRzZYURqeVQoS+9l5cT/rF/h8rTqe+SU2nVIvQMkUwqJa5SoL
-PY8zZ1et0hpvw9wFsMrSN24qwWXdSg6UlPQyQ3rzLmrccXoRwNmpIwPdku9kaYJL
-vbQypeGt8Ddax4IsYMvcv+xLqL/bGwq5EWLKr7VYisgBXSrXTPFq/Fd5DqfeQQ03
-Six7XXmDW+CWZeC+YKDjacc4VoT1tLXwUla9YO9NCprRmEk8G7K/gL1coxPXQEZz
-Exw1Ffh2+m+dFcSmWj8GnKyfgIIUcfC+Ri74qRu3RZFzrOpL1mKd9QIijdhRIDOQ
-NtsT+wJlw3PGMWshSz25OXXGa+yHg9axsjd0nAFgAlHBArGcquJWnF6L9mZqiInB
-8HXFjgIdM6ACo6tmj1tP5zAanqPLgc96+jqOAF+9GjZqcBkWXuYZh3FdoGL/hhKY
-CRH1ldQCUH7uSkQcNRnb4a0Yx5Xbrs8TB+gFdGgufg6m+bEBzeO5AFJCv70VamOY
-I7lT3XmPqPSasVBbonMCe9Fe38s3QpUod2yniOTs83fe25A4LCI=
-=PDAY
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVCOiIACgkQVbJhu7ck
+PpTvlw//aacjAmQthQFl5LABDXwYcPcu1v3RBJ3Es6+Ylwd2hJ5ZJujWwfdtzMR+
+BtchdDZTuT/0ejSg/xG2cG+Vwxkejr9ZS9v8b9kJpfYqmBOYj9FuaQOilAq133zL
+ENwUWY+BeJddmDVamZwYsJ4HIZcqZg0Cjz/KjVKVABV/4+HxiUh9t9+Cx1jGx/Bp
+XiIsZQBOfAAXepSigCEnBhRpYXffyHeWa8W5u4uebMGjBZP0RdEJ2khOf41RWMXh
+mjSRCUBvxLaVeHj/52TyD63NVDVY3Y45ROdQjTokyhwC3B8kR28d8eo8XYtBau65
+LoLdOcmPIkskvJG7jsWtJ8fTy8HbiKgWuX2NpESXi0ttShHcglnzV+jT8gTkczIk
+fCAeNCaYUvt3HPTrUFyNDmYCiTuvBTqvBwgTwTaQqsnhnNWlwSxDd751/O58iQ+M
+ZXVKa4PqppWsaeqM9im7M4m4PGbGfGniaYOM/GrU+gG20hutmANTwMtp4F4a5XKC
+xfZ1BeZ7JMQtfq+n3uoKviuQRXPzGhFJVkmxg7AP2IENkdgfBXnnCsxzd+julkdz
+uwpWr2LUK5Scb+pGvdfsmVTvVLHuJgwqDrRSBZNCBOypU3HkecgODA2GWV8x3Try
+ZsBmO2tQSyVx+A3+6COn+qqE+akdyqzA8QspWePouVrRmmeKjgw=
+=Yv7A
 -----END PGP SIGNATURE-----
 
---o0dh6iuDQjCaCFm/--
+--fKP/fhvoLKlIPbLc--
