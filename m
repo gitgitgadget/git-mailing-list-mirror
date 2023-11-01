@@ -1,68 +1,85 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B6A7F
-	for <git@vger.kernel.org>; Wed,  1 Nov 2023 05:01:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1AAB5680
+	for <git@vger.kernel.org>; Wed,  1 Nov 2023 06:34:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qF0RBCNK"
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38FFEB9
-	for <git@vger.kernel.org>; Tue, 31 Oct 2023 22:01:11 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id DE16E2A642;
-	Wed,  1 Nov 2023 01:01:10 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=YNoNNY28A7ljkURe/qAXO8QS8bXQU3nXcPLYQm
-	vnWV4=; b=qF0RBCNKcQzAF2w5bswqQcNJRDSj96oeAIcl/pNao8pYFiQ2fUpiTt
-	PyLlkZkRfjigCtjFR4nLdLhMBybUP3QlAKNI1gC1zCy/Y7yZrFLXmCdqD+9pskwi
-	Ph+4edi4IxvF+WMOJE9bOjh7wdcB6jSOnMGAmeu4nFq5bFfN48HEQ=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id D6BFB2A641;
-	Wed,  1 Nov 2023 01:01:10 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.198.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6EFC22A640;
-	Wed,  1 Nov 2023 01:01:07 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Taylor Blau <me@ttaylorr.com>,  git@vger.kernel.org,  Karthik Nayak
- <karthik.188@gmail.com>,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 0/2] commit-graph: detect commits missing in ODB
-In-Reply-To: <ZUHaLqslYFDahNkq@tanuki> (Patrick Steinhardt's message of "Wed,
-	1 Nov 2023 05:55:21 +0100")
-References: <cover.1698060036.git.ps@pks.im> <cover.1698736363.git.ps@pks.im>
-	<ZUFSqRYXhwsWC+EA@nand.local> <xmqqh6m6z6pe.fsf@gitster.g>
-	<xmqq34xqxm5u.fsf@gitster.g> <ZUHaLqslYFDahNkq@tanuki>
-Date: Wed, 01 Nov 2023 14:01:05 +0900
-Message-ID: <xmqqh6m6t6cu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="esF4pqHX"
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E1B4F4
+	for <git@vger.kernel.org>; Tue, 31 Oct 2023 23:34:20 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2c509f2c46cso89852211fa.1
+        for <git@vger.kernel.org>; Tue, 31 Oct 2023 23:34:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1698820459; x=1699425259; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:cc:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=lIFTf15ODN/FZZf1V/i59mJ8zTggezvg8lfgB5ri3hQ=;
+        b=esF4pqHX1mGH+Z5S/0A8/3KsqREmJd1OBpHp8wO8bC4WmmZcWERhWcfp0TK/11QPta
+         FgYcAMada70qd3XIton8S+CjhEuGZJSyw7imjX23mqwURMD22sPh1Yjt4L3MIhoG2FDs
+         klNnwK9mKIfef+VLXx/ge58mPyOSRcQh8ZGQ2G5dMy60OAn0pQbYHRCyG/yxQPypyrlY
+         eYoG9murFhXoK36c5chR/79TzYLwJ1oSOeAgLsvrwSxNl5uZOYijEqaXS2yf0Ni5giVT
+         0HAx1kZ/III4AVYmVqrIb9pUZdVYQqOSejbFaHdWRVMu7ceQ18BVR9rLaxpaEaUATND1
+         wLFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698820459; x=1699425259;
+        h=content-transfer-encoding:in-reply-to:from:cc:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=lIFTf15ODN/FZZf1V/i59mJ8zTggezvg8lfgB5ri3hQ=;
+        b=t3eR27+sXHLVDrAL/XAq9YurxFq5mw6XQrREm12c4BPkKKSpB7250DLhgc1G36ySP8
+         TJSm2Uf1PKafB/k3NDwtZ4S7tlgGB19ZMBT/igi/haUsMROPosMA/IeGvHUrElLjp+pj
+         XTBoojITQuuCJY4IgfYuVGVz6TUeamsN+nGVRFXPK0YPfSmualXFu5QlyQxh9jVBkEbQ
+         Mf1BDYp6EfCLwanvYZEGZsFpnVi1yenzWvZIKyncFl5Cd2QTDwlmaXS8iTf2wThHVqgW
+         wCr0ajdDodYRv6wrVpeFNhpE1YlkqR4uChVxnG9qGyLgcnff0uKmqUkfsipRU1CZtHaY
+         ghSQ==
+X-Gm-Message-State: AOJu0Yzhr36UE7NivoZXt9j0EE/hW7VsRV1hUlRVHrQvECas7RldNAwC
+	xyrjZYZNnZCBGruhFdYtV2hWDyUDvFpRwA==
+X-Google-Smtp-Source: AGHT+IFoj6KSlM7WSDbY+wtf4zzAG3QMpJuIWYEie7n2sVqa7SctLuEV34t2E9dw2lFlQzFhkUHaCw==
+X-Received: by 2002:a2e:8090:0:b0:2c5:183d:42bf with SMTP id i16-20020a2e8090000000b002c5183d42bfmr11124968ljg.45.1698820458414;
+        Tue, 31 Oct 2023 23:34:18 -0700 (PDT)
+Received: from [192.168.192.11] ([178.127.214.205])
+        by smtp.gmail.com with ESMTPSA id u22-20020a2ea176000000b002c0336f0f27sm116968ljl.119.2023.10.31.23.34.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 31 Oct 2023 23:34:18 -0700 (PDT)
+Message-ID: <aa3559d6-0e05-4c7a-818e-8a0cb05e908b@gmail.com>
+Date: Wed, 1 Nov 2023 09:34:15 +0300
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- AAA70694-7873-11EE-B08E-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] merge: --ff-one-only to apply FF if commit is one
+To: Junio C Hamano <gitster@pobox.com>
+References: <pull.1599.git.git.1698224280816.gitgitgadget@gmail.com>
+ <ZUALkdSJZ70+KBYq@nand.local> <xmqq1qdb8wzk.fsf@gitster.g>
+ <cb166ed4-b8b5-4120-b546-e878445573b6@app.fastmail.com>
+ <xmqqa5ryxn8i.fsf@gitster.g>
+Content-Language: en-US
+Cc: git@vger.kernel.org
+From: Ruslan Yakauleu <ruslan.yakauleu@gmail.com>
+In-Reply-To: <xmqqa5ryxn8i.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+ > And the only effect to have the "--ff-one-only" option is to allow
+ > you *not* to look at what is on the side branch.
 
->> In the meantime, here is a mechanically produced incremental I'll
->> tentatively queue.  Hopefully I did not screw up while generating
->> it.
->> 
->> Thanks.
->
-> Ah, sorry, didn't notice it was in 'next' already. Anyway, the diff
-> below looks good to me, thanks!
+Moreover, it allows not to forget choose the right way and allow use
+a lot of external tools (GitExtensions for example) as not all in command
+are console ninja
 
-I changed my mind ;-) I'll kick out a few topics and rebuild 'next',
-with your v3 patches.
+Currently, when complex features merged with --ff accidentally we have
+to do in main branch something like
+$ git reset ...
+$ git checkout <some_old_commit_which_we_have_to_find>
+$ git merge --no-ff <latest commit>
+$ git push --force
 
-Thanks.
+And that's what I prefer to avoid
+
+--
+Ruslan
