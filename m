@@ -1,86 +1,75 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45A7014AAE
-	for <git@vger.kernel.org>; Wed,  1 Nov 2023 20:18:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71ABAC2
-	for <git@vger.kernel.org>; Wed,  1 Nov 2023 13:18:12 -0700 (PDT)
-Received: (qmail 32416 invoked by uid 109); 1 Nov 2023 20:18:12 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 01 Nov 2023 20:18:12 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5647 invoked by uid 111); 1 Nov 2023 20:18:13 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 01 Nov 2023 16:18:13 -0400
-Authentication-Results: peff.net; auth=none
-Date: Wed, 1 Nov 2023 16:18:10 -0400
-From: Jeff King <peff@peff.net>
-To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2] max_tree_depth: lower it for MSVC to avoid stack
- overflows
-Message-ID: <20231101201810.GA1419081@coredump.intra.peff.net>
-References: <pull.1604.git.1698680732691.gitgitgadget@gmail.com>
- <pull.1604.v2.git.1698843810814.gitgitgadget@gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5809F18630
+	for <git@vger.kernel.org>; Wed,  1 Nov 2023 21:19:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TQSlm+xH"
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA5CE10E
+	for <git@vger.kernel.org>; Wed,  1 Nov 2023 14:19:16 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-543456dbd7bso2632528a12.1
+        for <git@vger.kernel.org>; Wed, 01 Nov 2023 14:19:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1698873554; x=1699478354; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=HGBXyWR1KZa5tTkJIfHkyPptb/CL45DM5m4xBrDnXu4=;
+        b=TQSlm+xHi48DQySW3sd9Az9GHG6mHHymq+IY/Kv7b4QC07V1AUslWhqLz+x/Np2nGu
+         Vf+vsXIVJcQxkeAW2bJfuzlbboBhIpz00rvJGbfevFPpnuV6fXW7cka6UgB66PijZ6Bj
+         LZLGU+Ytd/pFbpOCXJfKtpvdyMbSLS1bHRCVrim7gJGcEPfS2IMdtvNdJ+fWDThOPVfM
+         qPiHinMzBqprFmowlU56fB+221Z3fGnhvSjvBnGR9GGTit4Z8g0vOiBs46kEM2Qq5yDG
+         kzD897FxOXT6O6WIH91MZBQuH6s6B46Abg65I7dl4+sTqKqdG3v7K/n3Z+JqNIIsHzx8
+         1t3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698873554; x=1699478354;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=HGBXyWR1KZa5tTkJIfHkyPptb/CL45DM5m4xBrDnXu4=;
+        b=O/lSXEDrtOY2D6NtYt3FNTELCpepq3JTKrXuzv8Ma8IyfvgDtrkRD02P46f3yjrsvZ
+         36e/9fyR4LoehvW7D8xlpRy3TI/frHVe2Ygq8lOjLhpwUWbrb79UW//IkAgnxQCS+0pV
+         8W694zHGz1ljuCHZ2Mt4H8MHlt4qUrmUcCb5IxlPEI4zRpF9cHE69kQEcReCtWoyhKuU
+         ss6ouMb5wthTrUdiXw6ZnCJnTVwkjuB3MvVU1+WAf3iQ7brwW2JYsYwJTKiEH6soLiiz
+         ja1d1ZCVeg/7Vbd+SqYoB/EiUTEE1vN4FXaoO2b/BmA1dLfXp+PjsRGalUhPPRvDq8o2
+         jRcw==
+X-Gm-Message-State: AOJu0Yz9VCdYVjeak5VjQ036xcJzpGWJenFJJxuYViYg26yb6ykPIRaM
+	/EtPLgq2ybPeNJfnVL08hPWsToNhRk/EeIyHFul/H6QBWYs=
+X-Google-Smtp-Source: AGHT+IHNvpipzc1GMRJ3sPwqfHSHCBNQ3Fi/KP0yB/MLCnFG4sfGQhCNr8kgt6h2Hc/zvwMTLcY3Tvz/PzaCKm8rr2g=
+X-Received: by 2002:a05:6402:1bd9:b0:51e:5bd5:fe7e with SMTP id
+ ch25-20020a0564021bd900b0051e5bd5fe7emr3024606edb.17.1698873554393; Wed, 01
+ Nov 2023 14:19:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.1604.v2.git.1698843810814.gitgitgadget@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Wed, 1 Nov 2023 22:19:02 +0100
+Message-ID: <CAP8UFD3npkXXzjMLQRpxM7eKQQozMmfbLJKGeXuG_ZAbbVY0-A@mail.gmail.com>
+Subject: [ANNOUNCE] Git Rev News edition 104
+To: git <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
+	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
+	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
+	lwn@lwn.net, Bruno Brito <bruno@git-tower.com>, Adam Johnson <me@adamj.eu>, 
+	Sven Strickroth <email@cs-ware.de>, Dragan Simic <dsimic@manjaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Nov 01, 2023 at 01:03:30PM +0000, Johannes Schindelin via GitGitGadget wrote:
+Hi everyone,
 
-> So the best bet to work around this for now seems to just lower the
-> maximum allowed tree depth _even further_ for MSVC builds.
+The 104th edition of Git Rev News is now published:
 
-Thanks for rewriting this. The resulting patch looks good to me.
+  https://git.github.io/rev_news/2023/10/31/edition-104/
 
-Just a few small thoughts:
+Thanks a lot to Bruno Brito, Adam Johnson and Sven Strickroth who
+helped this month!
 
-> There seems to be some internal stack overflow detection in MSVC's
-> `malloc()` machinery that seems to be independent of the `stack reserve`
-> and `heap reserve` sizes specified in the executable (editable via
-> `EDITBIN /STACK:<n> <exe>` and `EDITBIN /HEAP:<n> <exe>`).
+Enjoy,
+Christian, Jakub, Markus and Kaartic.
 
-Yikes, I'm sure that paragraph sums up a painful debugging journey. :)
+PS: An issue for the next edition is already opened and contributions
+are welcome:
 
-> In the newly test cases added by `jk/tree-name-and-depth-limit`, this
-> stack overflow detection is unfortunately triggered before Git can print
-> out the error message about too-deep trees and exit gracefully. Instead,
-> it exits with `STATUS_STACK_OVERFLOW`. This corresponds to the numeric
-> value -1073741571, something the MSYS2 runtime we sadly need to use to
-> run Git's test suite cannot handle and which it internally maps to the
-> exit code 127. Git's test suite, in turn, mistakes this to mean that the
-> command was not found, and fails both test cases.
-
-I think this detail is OK, but the bit about mistaking 127 is IMHO kind
-of irrelevant to the purpose of the patch. The whole point of those
-tests is that they would trigger in a segfault to alert us that the
-default depth limit was too high, and they did. So it was in fact lucky
-that even though the segfault was munged into 127, our test_must_fail
-still noticed it.
-
-> Note: even switching to using a different allocator (I used mimalloc
-> because that's what Git for Windows uses for its GCC builds) does not
-> help, as the zlib code used to unpack compressed pack entries _still_
-> uses the regular `malloc()`. And runs into the same issue.
-
-I didn't think zlib ever malloc'd, since we feed it streaming data (and
-it will return and ask us to flush if the output buffer is full). But I
-admit I haven't dug too far into it, and it sounds like you may have.
-
-What I was wondering specifically is whether you're actually hitting the
-raw malloc() (as opposed to xmalloc) calls in diff-delta.c (which would
-depend on how you've set up the different allocator).
-
-Either way, changing anything there is well outside the scope of your
-patch. I've just always wondered if those raw malloc() calls might cause
-headaches, and whether this might be a concrete example of such.
-
--Peff
+  https://github.com/git/git.github.io/issues/670
