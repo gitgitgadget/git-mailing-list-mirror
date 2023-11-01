@@ -1,45 +1,48 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBBFB10EE
-	for <git@vger.kernel.org>; Wed,  1 Nov 2023 03:23:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A986615A8
+	for <git@vger.kernel.org>; Wed,  1 Nov 2023 03:33:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="d8GA3a1D"
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BC8DA4
-	for <git@vger.kernel.org>; Tue, 31 Oct 2023 20:22:59 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A35931D6E97;
-	Tue, 31 Oct 2023 23:22:58 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="h+H+pkrC"
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35EC5B9
+	for <git@vger.kernel.org>; Tue, 31 Oct 2023 20:33:48 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 49F821C3D57;
+	Tue, 31 Oct 2023 23:33:47 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=xbDi+saPISXTn24Okj4So5isxpgR+DLaAQtizO
-	5lH1w=; b=d8GA3a1D2p2T0GzvADnZJiFV+1Dj/9fhUyxEBvMc2GGl+f/6lSgwiS
-	ARI0D6qxsgth6ha2gsHVsUQXFIVgk4Z4CK1T4JthxycXvwAsKWUIX0tqk2n8xQ+m
-	lQKaeG3nrlsXxCNPhofgjQZzhHLt/Ywh6WT3gm7aT5yA7KvX8p0sM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9CA961D6E96;
-	Tue, 31 Oct 2023 23:22:58 -0400 (EDT)
+	:content-type; s=sasl; bh=u/B5SVXUSaXpkSnnqaatrqXBmPafeReoWj6Cp7
+	8dnBk=; b=h+H+pkrCe9uEqjsLqbAcDfl0hhNlRMBx93HDreOSD6u1j3UABbffMP
+	eH5kE1/INawVdRhkMc1k6z98i66h3qaj7z384jrsu/vUfxMKI/J5snf9QLBE3Zo5
+	MTN1zGCBrsdnI29JDET1dHRASUMIaoSBBubJ6eqrfAcOJolX4XyQw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 414AF1C3D56;
+	Tue, 31 Oct 2023 23:33:47 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.198.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0CD4E1D6E95;
-	Tue, 31 Oct 2023 23:22:57 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A202F1C3D55;
+	Tue, 31 Oct 2023 23:33:46 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Victoria Dye <vdye@github.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Taylor Blau
- <me@ttaylorr.com>,  Phillip Wood <phillip.wood123@gmail.com>,  Oswald
- Buddenhagen <oswald.buddenhagen@gmx.de>
-Subject: Re: [PATCH v4 0/8] ci: add GitLab CI definition
-In-Reply-To: <8e4d111f-3982-4989-90b5-08377fe9c5fd@github.com> (Victoria Dye's
-	message of "Tue, 31 Oct 2023 11:22:23 -0700")
-References: <cover.1698305961.git.ps@pks.im> <cover.1698742590.git.ps@pks.im>
-	<8e4d111f-3982-4989-90b5-08377fe9c5fd@github.com>
-Date: Wed, 01 Nov 2023 12:22:56 +0900
-Message-ID: <xmqqpm0uw41b.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: phillip.wood@dunelm.org.uk,  Oswald Buddenhagen
+ <oswald.buddenhagen@gmx.de>,  Patrick Steinhardt <ps@pks.im>,
+  git@vger.kernel.org
+Subject: Re: [PATCH v2 5/5] ci: add support for GitLab CI
+In-Reply-To: <20231031193629.GB875658@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 31 Oct 2023 15:36:29 -0400")
+References: <cover.1698305961.git.ps@pks.im> <cover.1698398590.git.ps@pks.im>
+	<37a507e9b255dd40c0536438dfe3fa05b067f08f.1698398590.git.ps@pks.im>
+	<ZTuYjzOfG0y27Sho@ugly>
+	<d00b02e9-fb05-44bc-90ee-1851ef98dd26@gmail.com>
+	<20231031193629.GB875658@coredump.intra.peff.net>
+Date: Wed, 01 Nov 2023 12:33:45 +0900
+Message-ID: <xmqqil6mw3ja.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -49,26 +52,21 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- F44C0898-7865-11EE-94ED-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+ 76E5E296-7867-11EE-B8B2-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-Victoria Dye <vdye@github.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> As for adding the GitLab-specific stuff, I'm not opposed to having it in the
-> main tree. For one, there doesn't seem to be a clean way to "move it into
-> `contrib/`" - '.gitlab-ci.yml' must be at the root of the project [2], and
-> moving the $GITLAB_CI conditions out of the 'ci/*.sh' files into dedicated
-> scripts would likely result in a lot of duplicated code (which doesn't solve
-> the maintenance burden issue this series intends to address).
->
-> More generally, there are lots of open source projects that include CI
-> configurations across different forges, _especially_ those that are
-> officially mirrored across a bunch of them. As long as there are
-> contributors with a vested interest in keeping the GitLab CI definition
-> stable (and your cover letter indicates that there are), and the GitLab
-> stuff doesn't negatively impact any other CI configurations, I think it
-> warrants the same treatment as e.g. GitHub CI.
+> So it's possible that avoiding "export var=val" is mostly superstition,
 
-Thanks for expressing this so clearly.  I do prefer to add this as
-the first class citizen (more generally, I do not want to add new
-things to contrib/ at this point) if we are going to use it.
+Thanks for digging up the old thread.  I would not be surprised if
+it was already superstition back in the days.
 
+>   2. We won't really know if there is a odd-ball shell that rejects it
+>      unless we make a change and wait for a while to see if anybody
+>      screams. The existing ones in ci/ show that it is not a problem for
+>      the platforms where we run CI, but I suspect the scripts in t/ see
+>      a wider audience.
+
+We could start with a single weather balloon use in t/ somewhere to
+see if anybody screams.  It would be a good place to start if we
+want to get rid of this particular superstition.
