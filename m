@@ -1,46 +1,45 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB37A32
-	for <git@vger.kernel.org>; Wed,  1 Nov 2023 03:14:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBBFB10EE
+	for <git@vger.kernel.org>; Wed,  1 Nov 2023 03:23:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gSGjb4mr"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="d8GA3a1D"
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09C9CA4
-	for <git@vger.kernel.org>; Tue, 31 Oct 2023 20:14:47 -0700 (PDT)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BC8DA4
+	for <git@vger.kernel.org>; Tue, 31 Oct 2023 20:22:59 -0700 (PDT)
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 976DC1D6E43;
-	Tue, 31 Oct 2023 23:14:44 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A35931D6E97;
+	Tue, 31 Oct 2023 23:22:58 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=ByknGmshU3R0t1bYmN9r5gmglI7e/ZZAzVKSuy
-	ix6QM=; b=gSGjb4mrg5BBUsWJE3EUVWdIvSCiIkEuNvsk0YI139lsTH+EtUnL9e
-	5zt09GRZHjPndSeOQp7FOJ2RE9UWha+v1DX5MK+tEAkAiibjSzKCf8L5lFq5xhFw
-	DuVNo9vjkEHYUQsNJ7iOe4pluBzBcr0WGdBxtHW2kK/fhI9SQOQtQ=
+	:content-type; s=sasl; bh=xbDi+saPISXTn24Okj4So5isxpgR+DLaAQtizO
+	5lH1w=; b=d8GA3a1D2p2T0GzvADnZJiFV+1Dj/9fhUyxEBvMc2GGl+f/6lSgwiS
+	ARI0D6qxsgth6ha2gsHVsUQXFIVgk4Z4CK1T4JthxycXvwAsKWUIX0tqk2n8xQ+m
+	lQKaeG3nrlsXxCNPhofgjQZzhHLt/Ywh6WT3gm7aT5yA7KvX8p0sM=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 903041D6E42;
-	Tue, 31 Oct 2023 23:14:44 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9CA961D6E96;
+	Tue, 31 Oct 2023 23:22:58 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.198.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0A7AD1D6E41;
-	Tue, 31 Oct 2023 23:14:43 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0CD4E1D6E95;
+	Tue, 31 Oct 2023 23:22:57 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>,  Victoria Dye <vdye@github.com>
-Cc: git@vger.kernel.org,  Taylor Blau <me@ttaylorr.com>,  Phillip Wood
- <phillip.wood123@gmail.com>,  Oswald Buddenhagen
- <oswald.buddenhagen@gmx.de>
-Subject: Re: [PATCH v4 5/8] ci: unify setup of some environment variables
-In-Reply-To: <31ebe4c9-84aa-4d42-9aeb-712e2a6cece3@github.com> (Victoria Dye's
-	message of "Tue, 31 Oct 2023 10:06:24 -0700")
+To: Victoria Dye <vdye@github.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Taylor Blau
+ <me@ttaylorr.com>,  Phillip Wood <phillip.wood123@gmail.com>,  Oswald
+ Buddenhagen <oswald.buddenhagen@gmx.de>
+Subject: Re: [PATCH v4 0/8] ci: add GitLab CI definition
+In-Reply-To: <8e4d111f-3982-4989-90b5-08377fe9c5fd@github.com> (Victoria Dye's
+	message of "Tue, 31 Oct 2023 11:22:23 -0700")
 References: <cover.1698305961.git.ps@pks.im> <cover.1698742590.git.ps@pks.im>
-	<a64799b6e25d05e5d5fc7fe3c5602b5ce256d8b9.1698742590.git.ps@pks.im>
-	<31ebe4c9-84aa-4d42-9aeb-712e2a6cece3@github.com>
-Date: Wed, 01 Nov 2023 12:14:42 +0900
-Message-ID: <xmqqttq6w4f1.fsf@gitster.g>
+	<8e4d111f-3982-4989-90b5-08377fe9c5fd@github.com>
+Date: Wed, 01 Nov 2023 12:22:56 +0900
+Message-ID: <xmqqpm0uw41b.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -50,52 +49,26 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- CDD7CBBC-7864-11EE-9E70-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+ F44C0898-7865-11EE-94ED-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
 Victoria Dye <vdye@github.com> writes:
 
->> +MAKEFLAGS="$MAKEFLAGS --jobs=10"
->> +GIT_PROVE_OPTS="--timer --jobs 10 --state=failed,slow,save"
->> +
->> +GIT_TEST_OPTS="$GIT_TEST_OPTS --verbose-log -x"
->> +if test windows = "$CI_OS_NAME"
+> As for adding the GitLab-specific stuff, I'm not opposed to having it in the
+> main tree. For one, there doesn't seem to be a clean way to "move it into
+> `contrib/`" - '.gitlab-ci.yml' must be at the root of the project [2], and
+> moving the $GITLAB_CI conditions out of the 'ci/*.sh' files into dedicated
+> scripts would likely result in a lot of duplicated code (which doesn't solve
+> the maintenance burden issue this series intends to address).
 >
-> Based on the deleted lines above, I think this would need to be:
->
-> 	if test windows = "$CI_OS_NAME" || test windows_nt = "$CI_OS_NAME"
->
-> I believe these settings are required on all Windows builds, though, so you could 
-> instead match on the first 7 characters of $CI_OS_NAME:
->
-> 	if test windows = "$(echo "$CI_OS_NAME" | cut -c1-7)"
->
-> (full disclosure: I'm not 100% confident in the correctness of that shell syntax)
->> +then
->> +	GIT_TEST_OPTS="$GIT_TEST_OPTS --no-chain-lint --no-bin-wrappers"
->> +fi
+> More generally, there are lots of open source projects that include CI
+> configurations across different forges, _especially_ those that are
+> officially mirrored across a bunch of them. As long as there are
+> contributors with a vested interest in keeping the GitLab CI definition
+> stable (and your cover letter indicates that there are), and the GitLab
+> stuff doesn't negatively impact any other CI configurations, I think it
+> warrants the same treatment as e.g. GitHub CI.
 
-Either
+Thanks for expressing this so clearly.  I do prefer to add this as
+the first class citizen (more generally, I do not want to add new
+things to contrib/ at this point) if we are going to use it.
 
-	case "$CI_OS_NAME" in
-	windows*)
-		GIT_TEST_OPTS=...
-	esac
-
-or if we want to be more selective, for documentation purposes
-especially when it is unlikely for us to gain the third variant of
-windows build:
-
-	case ... in
-	windows | windows_nt)
-		GIT_TEST_OPTS=...
-	esac
-
-
-
->> +
->> +export GIT_TEST_OPTS
->> +export GIT_PROVE_OPTS
->> +
->>  good_trees_file="$cache_dir/good-trees"
->>  
->>  mkdir -p "$cache_dir"
