@@ -1,45 +1,49 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F1B5680
-	for <git@vger.kernel.org>; Wed,  1 Nov 2023 23:49:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 988391CF80
+	for <git@vger.kernel.org>; Wed,  1 Nov 2023 23:49:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="GJxFyJeQ"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="EyOE4Lxi"
 Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 081E3C2
-	for <git@vger.kernel.org>; Wed,  1 Nov 2023 16:48:58 -0700 (PDT)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A056C2
+	for <git@vger.kernel.org>; Wed,  1 Nov 2023 16:49:24 -0700 (PDT)
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4FE631CB9BC;
-	Wed,  1 Nov 2023 19:48:57 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8AF591CB9CC;
+	Wed,  1 Nov 2023 19:49:23 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=R76SD21pGsnaDhVqKP1w8upgl7CoZGVChIusSZ
-	vijUw=; b=GJxFyJeQA30gXcsVrNtAQe+x2ltC7gMKoaMRbiUf0EQHUjqc3Ow1F7
-	L6t1RbQ/aLrQz4uMHY6wW1Cop+Avbb0Jrde/iVI3aKlFiNM9lob9TqC9GIRRNRvj
-	vCdmORhUW2oDrAVTj82NckJc0akA/Lib22xQmrhNCIFrdDqESLoF0=
+	:content-type:content-transfer-encoding; s=sasl; bh=GrfjBRQYzzbe
+	0wBjlmqsoKqTvDCgAbIyRCT9vq8mRCA=; b=EyOE4LxiOqfaDsebfgG8q1BxuY4R
+	rQYF6w3g5uu8Nxg8M3xHZELv+p4qxltGQ029eGLPYBhkQ04QhSAEHUGuhkTbZnOf
+	o+5y+dC28dz2WyQJlfwf9+RZlQH4pTjuKH95XknBtaEZj562o4H+UMSfOhu2CX+E
+	pwluqY3e0Oi442Y=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 465E71CB9BB;
-	Wed,  1 Nov 2023 19:48:57 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 830901CB9CB;
+	Wed,  1 Nov 2023 19:49:23 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.67.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9E78B1CB9B8;
-	Wed,  1 Nov 2023 19:48:56 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E291C1CB9CA;
+	Wed,  1 Nov 2023 19:49:22 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: Josh Steadmon <steadmon@google.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>,  calvinwan@google.com,
-  git@vger.kernel.org,  linusa@google.com,  rsbecker@nexbridge.com
-Subject: Re: [PATCH v8 2.5/3] fixup! unit tests: add TAP unit test framework
-In-Reply-To: <ZUKQ8xtFSYbSBPXb@google.com> (Josh Steadmon's message of "Wed, 1
-	Nov 2023 10:54:59 -0700")
-References: <00d3c95a81449bf49c4ce992d862d7a858691840.1696889530.git.steadmon@google.com>
-	<20231016134421.21659-1-phillip.wood123@gmail.com>
-	<xmqq1qduo6yr.fsf@gitster.g> <ZUKQ8xtFSYbSBPXb@google.com>
-Date: Thu, 02 Nov 2023 08:48:55 +0900
-Message-ID: <xmqqmsvxox08.fsf@gitster.g>
+Cc: Christian Couder <christian.couder@gmail.com>,  git@vger.kernel.org,
+  phillip.wood123@gmail.com,  linusa@google.com,  calvinwan@google.com,
+  rsbecker@nexbridge.com
+Subject: Re: [PATCH v8 1/3] unit tests: Add a project plan document
+In-Reply-To: <ZUKPJsW1mT62Mcjy@google.com> (Josh Steadmon's message of "Wed, 1
+	Nov 2023 10:47:18 -0700")
+References: <0169ce6fb9ccafc089b74ae406db0d1a8ff8ac65.1688165272.git.steadmon@google.com>
+	<cover.1696889529.git.steadmon@google.com>
+	<81c5148a1267b8f9ce432a950340f0fa16b4d773.1696889530.git.steadmon@google.com>
+	<CAP8UFD26X4MPbJs4KfNOgicLMb-wiuFZj3Hw17acMmmc_=vcqQ@mail.gmail.com>
+	<ZUKPJsW1mT62Mcjy@google.com>
+Date: Thu, 02 Nov 2023 08:49:21 +0900
+Message-ID: <xmqqil6lowzi.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -47,35 +51,34 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
 X-Pobox-Relay-ID:
- 38A361F2-7911-11EE-A0DC-25B3960A682E-77302942!pb-smtp2.pobox.com
+ 484D17C4-7911-11EE-A218-25B3960A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
 Josh Steadmon <steadmon@google.com> writes:
 
-> On 2023.10.16 09:41, Junio C Hamano wrote:
->> Phillip Wood <phillip.wood123@gmail.com> writes:
->> 
->> > From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> On 2023.10.27 22:12, Christian Couder wrote:
+>> On Tue, Oct 10, 2023 at 12:22=E2=80=AFAM Josh Steadmon <steadmon@googl=
+e.com> wrote:
 >> >
->> > Here are a couple of cleanups for the unit test framework that I
->> > noticed.
->> 
->> Thanks.  I trust that this will be squashed into the next update,
->> but in the meantime, I'll include it in the copy of the series I
->> have (without squashing).  Here is another one I noticed.
->> 
->> ----- >8 --------- >8 --------- >8 -----
->> Subject: [PATCH] fixup! ci: run unit tests in CI
->> 
->> A CI job failed due to contrib/coccinelle/equals-null.cocci
->> and suggested this change, which seems sensible.
->> 
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->> ---
->>  t/unit-tests/t-strbuf.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
+>> > In our current testing environment, we spend a significant amount of
+>> > effort crafting end-to-end tests for error conditions that could eas=
+ily
+>> > be captured by unit tests (or we simply forgo some hard-to-setup and
+>> > rare error conditions). Describe what we hope to accomplish by
+>> > implementing unit tests, and explain some open questions and milesto=
+nes.
+>> > Discuss desired features for test frameworks/harnesses, and provide =
+a
+>> > preliminary comparison of several different frameworks.
+>>=20
+>> Nit: Not sure why the test framework comparison is "preliminary" as we
+>> have actually selected a unit test framework and are adding it in the
+>> next patch of the series. I understand that this was perhaps written
+>> before the choice was made, but maybe we might want to update that
+>> now.
 >
-> Applied in v9, thanks!
+> Fixed in v9, thanks.
 
 Thanks for working well together.
