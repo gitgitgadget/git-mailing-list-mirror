@@ -1,93 +1,71 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DF4018C2A
-	for <git@vger.kernel.org>; Wed,  1 Nov 2023 17:55:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="UMEfme/4"
-Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEF84C1
-	for <git@vger.kernel.org>; Wed,  1 Nov 2023 10:55:04 -0700 (PDT)
-Received: by mail-pg1-x52b.google.com with SMTP id 41be03b00d2f7-5b8f68ba4e5so25311a12.1
-        for <git@vger.kernel.org>; Wed, 01 Nov 2023 10:55:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1698861304; x=1699466104; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bd701X2Uk3e9Fo7WlJ0IQ4Vk2Gd4wYBmJ2Tl/H5W4bc=;
-        b=UMEfme/4LAiWOyoDwM/Yx1bVhL+Ad4dD/T4ObBYjtbo72UP/FkgT1xA1dJHPY16A2a
-         uCRDGcdNOZIpzQ4vRjm/bEXCPkN56lmGeS8JIxu4aPxO3iZjhKwq9pkvxJNJx38sddDp
-         68vwQtB4D4yF4Q7Q1CrgpsQjloek8mICJKj9YFOVemNlGJX1w7U7ZCfVawlimAVCrBJT
-         7oZhFFMUt7ouH38TV2fNHiYbFbIm46Tpma/ZISmfu10COmKKQXzWmjwz7d0lLXNitX41
-         v4vMAMJbxCjYn+UfU5Lv+jRUFFwikEgp2PR3SbPWEShRaEy8zY7maSwoNsdQDR24i6hO
-         Om8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698861304; x=1699466104;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bd701X2Uk3e9Fo7WlJ0IQ4Vk2Gd4wYBmJ2Tl/H5W4bc=;
-        b=IgJtS3xw3DeRqeNZ4zBjF5gFSB59XXjml5Ek3XWzupdotbdqwtHH4beK+moI35ZHrb
-         ZquMOiWJp452UV0YAbqkW5g0+4LPT5OsSZcfNs5Sf0BFZQjwMnicOU2o441RsXL4nniZ
-         pIB8MzVDYFC5sUPFdifE23nGT2+XfmMnE9BmJKXfD57qXaOxZgudFuyoVbzDJgv9wxs5
-         1qlx1XRJ7R3sfweDYXs8Ei+xvha3TZUySBTDLCqk2fvNyyEKn+YgApac3kpRVESy/dPm
-         dLUCA8dAABiuPl2Z1RuNoMBCu9EI9/dsRTujeO+tuPBIijsqjlrrmngr224ZgNGB0RZI
-         fB6A==
-X-Gm-Message-State: AOJu0Yx+vDjutLqfxjxtNGNtOjD0cRsavQ52SquM5MOT1fZOz97IExrZ
-	uL+9Qe2ayGKsmpuARyb7D+XJpg==
-X-Google-Smtp-Source: AGHT+IHAHvlkyIYNFvjNvhFvRi1axes/gohMtOaGSr7LyeXGQnIrFb5prLV/yXrUjv2l95gXzVQkqg==
-X-Received: by 2002:a17:902:e803:b0:1cc:482c:bc4d with SMTP id u3-20020a170902e80300b001cc482cbc4dmr9649715plg.5.1698861304334;
-        Wed, 01 Nov 2023 10:55:04 -0700 (PDT)
-Received: from google.com ([2620:15c:2d3:204:22ea:81ca:f3ec:8bce])
-        by smtp.gmail.com with ESMTPSA id h20-20020a170902f7d400b001b86dd825e7sm1610597plw.108.2023.11.01.10.55.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Nov 2023 10:55:03 -0700 (PDT)
-Date: Wed, 1 Nov 2023 10:54:59 -0700
-From: Josh Steadmon <steadmon@google.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>, calvinwan@google.com,
-	git@vger.kernel.org, linusa@google.com, rsbecker@nexbridge.com
-Subject: Re: [PATCH v8 2.5/3] fixup! unit tests: add TAP unit test framework
-Message-ID: <ZUKQ8xtFSYbSBPXb@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood123@gmail.com>, calvinwan@google.com,
-	git@vger.kernel.org, linusa@google.com, rsbecker@nexbridge.com
-References: <00d3c95a81449bf49c4ce992d862d7a858691840.1696889530.git.steadmon@google.com>
- <20231016134421.21659-1-phillip.wood123@gmail.com>
- <xmqq1qduo6yr.fsf@gitster.g>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C566718E02
+	for <git@vger.kernel.org>; Wed,  1 Nov 2023 18:44:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+Received: from shell1.rawbw.com (shell1.rawbw.com [198.144.192.42])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTP id C91CBA6
+	for <git@vger.kernel.org>; Wed,  1 Nov 2023 11:44:25 -0700 (PDT)
+Received: from [192.168.5.3] (c-73-70-62-113.hsd1.ca.comcast.net [73.70.62.113])
+	(authenticated bits=0)
+	by shell1.rawbw.com (8.15.1/8.15.1) with ESMTPSA id 3A1IiPti024046
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO)
+	for <git@vger.kernel.org>; Wed, 1 Nov 2023 11:44:25 -0700 (PDT)
+	(envelope-from yuri@rawbw.com)
+X-Authentication-Warning: shell1.rawbw.com: Host c-73-70-62-113.hsd1.ca.comcast.net [73.70.62.113] claimed to be [192.168.5.3]
+Message-ID: <5c8a94e6-6691-45e6-bcb3-04fa472ae9ad@rawbw.com>
+Date: Wed, 1 Nov 2023 11:44:24 -0700
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq1qduo6yr.fsf@gitster.g>
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: Git Mailing List <git@vger.kernel.org>
+From: Yuri <yuri@rawbw.com>
+Subject: 'git stash' in one subfolder fails because some other subfolder has
+ unmerged files
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 2023.10.16 09:41, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
-> > From: Phillip Wood <phillip.wood@dunelm.org.uk>
-> >
-> > Here are a couple of cleanups for the unit test framework that I
-> > noticed.
-> 
-> Thanks.  I trust that this will be squashed into the next update,
-> but in the meantime, I'll include it in the copy of the series I
-> have (without squashing).  Here is another one I noticed.
-> 
-> ----- >8 --------- >8 --------- >8 -----
-> Subject: [PATCH] fixup! ci: run unit tests in CI
-> 
-> A CI job failed due to contrib/coccinelle/equals-null.cocci
-> and suggested this change, which seems sensible.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  t/unit-tests/t-strbuf.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+Here is the log:
 
-Applied in v9, thanks!
+[yuri@yv /usr/ports/audio/giada]$ git stash push -m "audio/giada: Update 
+to 0.26.0 has run-time issues" -- /usr/ports/audio/gia
+da
+audio/triceratops-lv2/Makefile: needs merge
+audio/triceratops-lv2/pkg-descr: needs merge
+audio/triceratops-lv2/pkg-plist: needs merge
+science/py-dftbplus/Makefile: needs merge
+science/py-dftbplus/distinfo: needs merge
+science/py-dftbplus/pkg-descr: needs merge
+
+
+
+
+
+
+I asked git to stash only the audio/giada subfolder. Unmerged files in 
+science/py-dftbplus and audio/triceratops-lv2 shouldn't prevent stashing 
+files in audio/giada.
+
+
+
+
+
+
+
+I believe that this is a bug.
+
+
+
+
+
+
+
+Thanks,
+Yuri
+
