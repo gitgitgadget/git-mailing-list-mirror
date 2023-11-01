@@ -1,147 +1,184 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 876A82599
-	for <git@vger.kernel.org>; Wed,  1 Nov 2023 23:05:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF84310A3A
+	for <git@vger.kernel.org>; Wed,  1 Nov 2023 23:09:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZYDkW4uI"
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27056A6
-	for <git@vger.kernel.org>; Wed,  1 Nov 2023 16:05:28 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4B1CD1B0123;
-	Wed,  1 Nov 2023 19:05:27 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=gDVw1lH1NjOb
-	Co+PjbR7XhnmgjbS6f2OgP5MCgWlGd0=; b=ZYDkW4uI3EiTJKQWAQbLS6GEJ18g
-	ZdYZ/YvXppezXfu50lwCAwYPB+MMRioWT9bbHaWZzmH1mcoI9Pph0w9ABC6fjOq2
-	lKqhG28RfrjRvmAD/BsSkgovkqw3YQ77yhwDsmsPfRSzqtZ5w196Z7WJOOcgpq5r
-	FvMFlzJqjLNyUFE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 420F51B0121;
-	Wed,  1 Nov 2023 19:05:27 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.67.28])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 989B11B0120;
-	Wed,  1 Nov 2023 19:05:26 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Ruslan Yakauleu" <ruslan.yakauleu@gmail.com>
-Cc: git@vger.kernel.org,
-    "Kristoffer Haugsbakk" <code@khaugsbakk.name>,
-    "Taylor Blau" <me@ttaylorr.com>
-Subject: Re: [PATCH] merge: --ff-one-only to apply FF if commit is one
-In-Reply-To: <a457e24c-3375-49c6-8cf7-d2dd945827fe@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Wed, 01 Nov 2023 11:09:34 +0100")
-References: <pull.1599.git.git.1698224280816.gitgitgadget@gmail.com>
-	<ZUALkdSJZ70+KBYq@nand.local> <xmqq1qdb8wzk.fsf@gitster.g>
-	<cb166ed4-b8b5-4120-b546-e878445573b6@app.fastmail.com>
-	<xmqqa5ryxn8i.fsf@gitster.g>
-	<a457e24c-3375-49c6-8cf7-d2dd945827fe@app.fastmail.com>
-Date: Thu, 02 Nov 2023 08:05:25 +0900
-Message-ID: <xmqqv8aloz0q.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="mA8K2JUX"
+Received: from mail-oo1-xc33.google.com (mail-oo1-xc33.google.com [IPv6:2607:f8b0:4864:20::c33])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60DCCA6
+	for <git@vger.kernel.org>; Wed,  1 Nov 2023 16:09:49 -0700 (PDT)
+Received: by mail-oo1-xc33.google.com with SMTP id 006d021491bc7-586abec2c8cso157358eaf.3
+        for <git@vger.kernel.org>; Wed, 01 Nov 2023 16:09:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1698880188; x=1699484988; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:mail-followup-to:message-id:subject:cc:to
+         :from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=+qbB5zLlYTe1kh8rYbH9PEd1U/az1LQZRiCR9BTx6Yc=;
+        b=mA8K2JUX16JC2EXLVs2y6S6lz3CUbjsN5PjbGIlalZFf5KIHessHe3hQLY3Bx9j4cf
+         Fjnr7vo0q89POsesBaFRCqWO21Ei166paeKFARhLgr8rXGW/DZ6SV/LRKhN1C5cMyMFI
+         qScbXIlDDOByRde3WtHJZuHZmSM1yfC8EmeQVmgs6BtnWkTmSioPxXEV43/GdwxErSpK
+         4UMCeG+JWjjIeYqB2vuJKHY8vARQHN1XqlEzS90IUb5/OazCe2isngE7S+7wuFFRGgxs
+         AFHreFvaO3Qj+A3QLybzwXH0d91Efzxw5NpDvQCbSNDDh5uc9PEWxJ6W//AzlDKWFdSs
+         6n9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698880188; x=1699484988;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:mail-followup-to:message-id:subject:cc:to
+         :from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+qbB5zLlYTe1kh8rYbH9PEd1U/az1LQZRiCR9BTx6Yc=;
+        b=RVHNG4tD7bpRg5QY7v/DZZiop8pdP6PjjVdzLHuPHbz9ZLBty8JRnDhMRh6ept9VK0
+         G7FHcfUwtrQmIfxwMI7MCpt1dqgHNA3SgYCuSRWpiM5uP1JNqiy9tYB1vDyOl8ZWWf70
+         vNV2VmcD7gvh2fVaMA79jhuXF21WAbg2yjpqg114QeSLrJqUhKxaaH5vFVgWV7GX8Rfy
+         2vY4x/CAlWKTMiqFPn/Eyb3PJl5RZUaePlKk2qyPD5Vqj8/AWvanBYeLwFlc3vZMJR/Z
+         ya+OGhx4W+N15r3Rsa9wp03NcXuvN75+4w4Z9a2hg400yDVYYNG0rI6YPIPxbHeLvdk2
+         rrBA==
+X-Gm-Message-State: AOJu0YwgQmh/7jy/aUKAUelY8G4NpLtrSx9CiYPCLmTUD7yACOAcDVwe
+	VRB7HplO9oskpo4JWRaJB7K/Fj+i+t5ybkJhZ+vV/Q==
+X-Google-Smtp-Source: AGHT+IFd7ikJY0ytHxNiSzkk34tP/PENsdpdw253uDMqjUjOqWR92eVGacbfw6P7/jpUWMsXDWibCA==
+X-Received: by 2002:a05:6358:5e09:b0:169:a54e:eb26 with SMTP id q9-20020a0563585e0900b00169a54eeb26mr3060189rwn.19.1698880188316;
+        Wed, 01 Nov 2023 16:09:48 -0700 (PDT)
+Received: from google.com ([2620:15c:2d3:204:fc30:220:f2fb:969])
+        by smtp.gmail.com with ESMTPSA id d4-20020a63a704000000b005b8ebef9fa0sm339941pgf.83.2023.11.01.16.09.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Nov 2023 16:09:47 -0700 (PDT)
+Date: Wed, 1 Nov 2023 16:09:43 -0700
+From: Josh Steadmon <steadmon@google.com>
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, linusa@google.com, calvinwan@google.com,
+	gitster@pobox.com, rsbecker@nexbridge.com
+Subject: Re: [PATCH v8 0/3] Add unit test framework and project plan
+Message-ID: <ZULaty2ce5rUy8vz@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+	phillip.wood@dunelm.org.uk, git@vger.kernel.org, linusa@google.com,
+	calvinwan@google.com, gitster@pobox.com, rsbecker@nexbridge.com
+References: <0169ce6fb9ccafc089b74ae406db0d1a8ff8ac65.1688165272.git.steadmon@google.com>
+ <cover.1696889529.git.steadmon@google.com>
+ <93a18989-bf05-4318-8d85-cf23c0f32170@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 24F08DE8-790B-11EE-BCBD-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <93a18989-bf05-4318-8d85-cf23c0f32170@gmail.com>
 
-"Kristoffer Haugsbakk" <code@khaugsbakk.name> writes:
+On 2023.10.16 11:07, phillip.wood123@gmail.com wrote:
+> Hi Josh
+> 
+> Thanks for the update
+> 
+> On 09/10/2023 23:21, Josh Steadmon wrote:
+> > In addition to reviewing the patches in this series, reviewers can help
+> > this series progress by chiming in on these remaining TODOs:
+> > - Figure out if we should split t-basic.c into multiple meta-tests, to
+> >    avoid merge conflicts and changes to expected text in
+> >    t0080-unit-test-output.sh.
+> 
+> I think it depends on how many new tests we think we're going to want to add
+> here. I can see us adding a few more check_* macros (comparing object ids
+> and arrays of bytes spring to mind) and wanting to test them here, but
+> (perhaps naïvely) I don't expect huge amounts of churn here.
 
-> On Wed, Nov 1, 2023, at 02:42, Junio C Hamano wrote:
->> Strictly speaking, the log message on a merge commit serves two
->> purposes, one is to summarize commit(s) on the side branch that gets
->> merged with the merge, and as you said above, it is not needed when
->> merging a topic with just one commit.  But the other is to justify
->> why the topic suits the objective of the line of history (which is
->> needed even when merging a single commit topic---imagine a commit
->> that is not incorrect per-se.  It may or may not be suitable for the
->> maintenance track, and a merge commit of such a commit into the
->> track can explain if/how the commit being merged is maint-worthy).
->
-> Yes. If you have multiple release/maintenance branches which you need t=
-o
-> apply something to then you can=E2=80=99t use this .
+This is my feeling as well.
 
-OK.  I do not mind a feature to help maintain the first-parent worldview
-better to exist, but have a few comments on the patch.
 
- * Nowhere in the name of feature --ff-one-only, the proposed commit
-   log message, added documentation and in-code comments, it is made
-   clear to readers that it is to maintain the first-parent view
-   better.  The "first-parent" was only brought up between you and I
-   as our conjecture on what the feature is for.  The should explain
-   the feature a bit better to our readers and users.
+> > - Figure out if we should de-duplicate assertions in t-strbuf.c at the
+> >    cost of making tests less self-contained and diagnostic output less
+> >    helpful.
+> 
+> In principle we could pass the location information along to any helper
+> function, I'm not sure how easy that is at the moment. We can get reasonable
+> error messages by using the check*() macros in the helper and wrapping the
+> call to the helper with check() as well. For example
+> 
+> static int assert_sane_strbuf(struct strbuf *buf)
+> {
+> 	/* Initialized strbufs should always have a non-NULL buffer */
+> 	if (!check(!!buf->buf))
+> 		return 0;
+> 	/* Buffers should always be NUL-terminated */
+> 	if (!check_char(buf->buf[buf->len], ==, '\0'))
+> 		return 0;
+> 	/*
+> 	 * Freshly-initialized strbufs may not have a dynamically allocated
+> 	 * buffer
+> 	 */
+> 	if (buf->len == 0 && buf->alloc == 0)
+> 		return 1;
+> 	/* alloc must be at least one byte larger than len */
+> 	return check_uint(buf->len, <, buf->alloc);
+> }
+> 
+> and in the test function call it as
+> 
+> 	check(assert_sane_strbuf(buf));
+> 
+> which gives error messages like
+> 
+> # check "buf->len < buf->alloc" failed at t/unit-tests/t-strbuf.c:43
+> #    left: 5
+> #   right: 0
+> # check "assert_sane_strbuf(&buf)" failed at t/unit-tests/t-strbuf.c:60
+> 
+> So we can see where assert_sane_strbuf() was called and which assertion in
+> assert_sane_strbuf() failed.
 
-   SIDE NOTE: in general, it is not the best way to name and explain
-   a feature after what it does (e.g., "fast-forward only when it
-   has one commit"); it is better to include why the user want it to
-   do what it does.  It it especially true because "fast-forward
-   only when the other branch is ahead by one commit" may later turn
-   out not to be the best design to ensure "maintain first-parent
-   worldview", if the latter is what the feature is really about.
+I like this approach. We'll need to document unit-test best practices,
+but I think now that I'll want to do that in a separate series after
+this one lands.
 
- * The proposed commit log message needs a bit of proofreading and
-   polishing, paying attention to the grammar.
 
- * The "allow fast-forward only when the other branch is ahead by
-   one commit" design misses an important case you would want to,
-   and you can detect easily, fast-forward.
+> > - Figure out if we should collect unit tests statistics similar to the
+> >    "counts" files for shell tests
+> 
+> Unless someone has an immediate need for that I'd be tempted to leave it
+> wait until someone requests that data.
+> 
+> > - Decide if it's OK to wait on sharding unit tests across "sliced" CI
+> >    instances
+> 
+> Hopefully the unit tests will run fast enough that we don't need to worry
+> about that in the early stages.
+> 
+> > - Provide guidelines for writing new unit tests
+> 
+> This is not a comprehensive list but we should recommend that
+> 
+> - tests avoid leaking resources so the leak sanitizer see if the code
+>   being tested has a resource leak.
+> 
+> - tests check that pointers are not NULL before deferencing them to
+>   avoid the whole program being taken down with SIGSEGV.
+> 
+> - tests are written with easy debugging in mind - i.e. good diagnostic
+>   messages. Hopefully the check* macros make that easy to do.
 
-   Imagine that a developer has a rather complex topic with multiple
-   commits, asks the maintainer (or the auto-merger at their forge)
-   to pull, but due to modification on the upstream side, there are
-   heavy conflicts.  The maintainer can tell (and Git was designed
-   to support this mode of operation better---it is called
-   "distributed development") the developer:=20
+Thanks for the suggestions! I will make sure these make it into the best
+practices doc.
 
-       Since you know your topic much better than I do, can you do
-       the merge into the upstream for me?
 
-   The contributor would then help the maintainer, perhaps like so:
+> > Changes in v8:
+> > - Flipped return values for TEST, TEST_TODO, and check_* macros &
+> >    functions. This makes it easier to reason about control flow for
+> >    patterns like:
+> >      if (check(some_condition)) { ... } > - Moved unit test binaries to t/unit-tests/bin to simplify .gitignore
+> >    patterns.
+> 
+> Thanks for the updates to the test library, the range diff looks good to me.
+> 
+> > - Removed testing of some strbuf implementation details in t-strbuf.c
+> 
+> I agree that makes sense. I think it would be good to update
+> assert_sane_strbuf() to use the check* macros as suggest above.
 
-    $ git checkout origin/main
-    $ git merge [--no-ff] my-topic
+Fixed in v9.
 
-   to pretend as if the contributer were the maintainer, merge and
-   resolve the conflicts, and then summarizes the topic in the log
-   message of the merge commit.  The contributor then updates their
-   topic locally, perhaps with
-
-    $ git push . HEAD:my-topic
-
-   which would of course fast-forward, and then ask the maintainer
-   (or the auto-merger at their forge) to pull again from "my-topic".
-
-   Now, the updated "my-topic" is ahead of the origin by many
-   commits (i.e., the number of commits on the topic, plus the merge
-   commit the controbutor created to help the maintainer), but if we
-   want to see the resulting history as if the original pull request
-   was handled with the "--ff-one-only" option by the maintainer who
-   did the merge themself, then we should fast-forward this merge.
-   Even though the tip commit of "my-topic" has more commits behind
-   it, it is already the binding merge of the side topic that
-   "--ff-one-only" would have forced to create if the maintainer did
-   the merge.
-
-   So, a better design than "allow fast-forward, only if the branch
-   being merged is ahead by one commit" is to allow fast-forward
-   when the branch's first-parent is the current tip of the branch
-   pull/merge is trying to update.  "only by one commit" can be
-   handled as a natural degenerate case of this more general
-   criteria, and a good thing is that it is much easier and more
-   efficient to compute (i.e., in "git merge OTHER", allow ff if
-   "OTHER^1" and "HEAD" are the same).
-
-As I said, I do not mind a feature to help maintain the first-parent
-worldview better to exist; thanks for working on the topic.
+> Best Wishes
+> 
+> Phillip
