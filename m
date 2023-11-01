@@ -1,77 +1,73 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE9AD11C86
-	for <git@vger.kernel.org>; Wed,  1 Nov 2023 11:45:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5B8411C86
+	for <git@vger.kernel.org>; Wed,  1 Nov 2023 11:56:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Aa/eWZ/7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iDMKqSp1"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ESix88Yw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="N+qsxwwV"
 Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC476F7
-	for <git@vger.kernel.org>; Wed,  1 Nov 2023 04:44:58 -0700 (PDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.nyi.internal (Postfix) with ESMTP id 64D995C04FB;
-	Wed,  1 Nov 2023 07:44:58 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Wed, 01 Nov 2023 07:44:58 -0400
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9D9CF7
+	for <git@vger.kernel.org>; Wed,  1 Nov 2023 04:56:49 -0700 (PDT)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailout.nyi.internal (Postfix) with ESMTP id 2EAA25C04AD;
+	Wed,  1 Nov 2023 07:56:49 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Wed, 01 Nov 2023 07:56:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1698839098; x=1698925498; bh=wv
-	7zTkuLAoqdA90M0RX8e0tMP6CixPlOeqpzTm7ObrE=; b=Aa/eWZ/7pZjlBTLKmu
-	ihK++5dPoirBK19uqmjmh92e3IOlNRytv9OL/ryx/DLjnjfTdnaW4d8CGksUzVUR
-	vbi5zIhdMfLIcfBjZd3KJ4s7U8FvEAzagu2aSQVNexk1+e0dN0uJIc+rhIt3apxt
-	rtdlh1EUEtG4SLzs1wdR4MqH0KEtqxJSaVzSAe5FRpiqoOHGOd3KhmU7hVVNDKL3
-	1at74t7d0Lclf0l86bnCLHpq808FjspmOh0wNhtiJnmmjD6dpmslG+zeR1+10vQn
-	bsYrUL9D4msp7tKpOCyW6udEzBmcO7R73xfIDVFHEjj3ytIa7wSEvNyBl564fkJk
-	8NmQ==
+	:subject:subject:to:to; s=fm3; t=1698839809; x=1698926209; bh=nJ
+	StPfSmYy/lF9F/5TP2seFUmBUZ48nPJTP8Is21hek=; b=ESix88YwHOXBOc/DOH
+	6rPZ6kOihlt+hjvkZ70woK71QaV907fgeD28aoatfDqb4tXycbzT9lN5+BjlBLAG
+	kN1N4uSea+Gs6HV2/6uGKm06B0HMK6ZoSBbkrxmhDGjbjM+AfHOnO0UW0c3jA01J
+	tTaX+szg/WWEZYO5j7jXaJhreQ8m+lUKvW3LHK6RvSy+xViBY6zz8+awI4lv9Mlr
+	idPtMb6E8qPy+LnejdsjoVTRIr9fNcZxgp5yIEJkN+WsOn5BvGHD67D9S36C/5P3
+	2zrX8FmTpWTluJaE/K8uGue1Dbd5Wxy1XYsYac++TvtQ2nPenpFO/GfVqwZ7xI5W
+	+xzg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1698839098; x=1698925498; bh=wv7zTkuLAoqdA
-	90M0RX8e0tMP6CixPlOeqpzTm7ObrE=; b=iDMKqSp1Hvy5WJOp/kc9v88vW0rBX
-	qKqcOw7W0O409aF5zbz1mTsJ/WrJpRnWDPrQ3RF8tdMvfET+/d/79Ytay237Lztg
-	E5zbaoNTCq9voRcQGXj21p2EhyABpnAT+DwCaOkW/bIx6xwfMMjV8ezJ04IsSC31
-	wV+quIHSMmuUnR5SxPJm6b9zyKcQEHoVAK9GA8v7MjwA7aAZ7UFDIUH+TGaRxymp
-	KmUUogDKh+iBat76LtVQv6uGvkyGbpiIRPV4u8GVxMd7sI/xZdt0m7vy1ZB2xZ9l
-	MMtXrYllmxv0wXCTVcADN7/gfwvcnOeZCmnVssdC4b0/xNLR6CuihMGvA==
-X-ME-Sender: <xms:OjpCZQygcmA6Vfbunp3pl_4dWnyrDzGeSzsHlakflfYULTTxvyISFQ>
-    <xme:OjpCZUQJn0eKOUImKbvsW43T6cYKJaHCkabg5X7JkniA3Ae_CePmCK9QaUvJIm2eE
-    m1EDjFait3VJ-Qu1w>
-X-ME-Received: <xmr:OjpCZSViGtvzM8nWxB3AuwbouXkJGPfbcZVyfM4sgVxOaWejJivi6k9o_kP9H-Zg_jT_5zHRty_brnhU_uwO0JH3BohzTK-vaw2DVM8AqDuw2g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddtgedgfeduucetufdoteggodetrfdotf
+	:x-sasl-enc; s=fm3; t=1698839809; x=1698926209; bh=nJStPfSmYy/lF
+	9F/5TP2seFUmBUZ48nPJTP8Is21hek=; b=N+qsxwwVDyzLeGTvfvkvwtSwFSAwQ
+	cCsVX6TVNth/lv0EyKgfrGmgQ3Xzk5Ig9v7jJ/UVXFCIRCk5sMN4VFksGZdEJfC1
+	n/PZe0bcpbRCijMClSqyuqgiBbNoNxi9Hf/1bmn2ksoB27SIFI59wMQleKyKrXIK
+	6xmkNFhgW1h4Y9tPJpxEmIRJ03sqiWgIn2/wOOlZ62TZQXj9TIOhZp6b+C5V/ba6
+	4dWA1u0r+Ik1TogXt4R/AOX8sQh5sL5EVQ0dStrEQo7hry3EabhUETcKLDPb5lxD
+	rVhL9+RSRWbQTVUMfyv7LhM0dVMfCjPw06LwJ1TJb1TEk40dv6cM4Un7g==
+X-ME-Sender: <xms:AD1CZYZVVRLgro590ePYxgA2XEUaiaXoWcaPxmxTBkr9wVDbZREpog>
+    <xme:AD1CZTbqqcwBeIFreAs_VkI1Auyxx88zuuqOJa4fKDZe33lbdatZn0-HMc-FNAdyc
+    UBILCHqBtJvgg_eXQ>
+X-ME-Received: <xmr:AD1CZS-V7YHlcTOLQ-JjocmphbwE6XxX2NegKGjCrEfnAxeJNakCkIKpfOnCLOl1K_TVq-isall8Hu6KGbA8dwwJ04bGevD8vd3mVDSDtUG_pg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddtgedgfeefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:OjpCZehzaNNRbRkf9TTMHFqbv7sYHPC1g1ocQT-t02rOUUzVSl6mnQ>
-    <xmx:OjpCZSCOvyHglU59voX1S0tb8S4wql89JFESBiA4jyuTl-sUw0AH2g>
-    <xmx:OjpCZfLfpr4ZGp9n0sJuxdD5-guOF7KlEFFgIElG2xhBaEQuRYYmZQ>
-    <xmx:OjpCZV9I5cf8EB8DATTsrXXpOelfAwVyY4lJ6qhIaJ9zzcof0h6tjQ>
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
+    erredttddunecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeefvdelfeeuteegiedtkeehleffkeekgf
+    ffudfhuddvfefftdehkeeihfekjeekheenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:AD1CZSoraFQcDX3U2KmpY02AA9vwnNI5Rcv5Qd_GeNVILr9eqmZH8g>
+    <xmx:AD1CZTrhHfraahKgvpxRGveS51e9hPUmjMvjWpT1VrID-Dv0o0Xbvg>
+    <xmx:AD1CZQSeccVmcHTQ3NVAJNBaB06u6EVZHvVqZeTTgPHU9dI2W2Grrg>
+    <xmx:AT1CZcCxpQJHHw6oNiOn9DZATpRO73yPGanOGRvZCn9enfKicnRuog>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 1 Nov 2023 07:44:56 -0400 (EDT)
+ 1 Nov 2023 07:56:47 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 58ba9c66 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 1 Nov 2023 11:44:46 +0000 (UTC)
-Date: Wed, 1 Nov 2023 12:44:54 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 21809bc1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 1 Nov 2023 11:56:35 +0000 (UTC)
+Date: Wed, 1 Nov 2023 12:56:43 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Victoria Dye <vdye@github.com>
-Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Subject: Re: [PATCH v4 8/8] ci: add support for GitLab CI
-Message-ID: <ZUI6Nv-HIxXuPMVC@tanuki>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Subject: Re: [PATCH 0/5] ci: add GitLab CI definition
+Message-ID: <ZUI8-z2luCAC-XtB@tanuki>
 References: <cover.1698305961.git.ps@pks.im>
- <cover.1698742590.git.ps@pks.im>
- <f3f2c98a0dc6042b7ed5eab9c10bee4f64858f02.1698742590.git.ps@pks.im>
- <4c8c2f19-1a7e-4524-81e7-c74091e88edf@github.com>
+ <ZT/P5Bl9lD9V6ID9@nand.local>
+ <ZUCw1B6oQaDWKx3O@tanuki>
+ <xmqqttq6xr9k.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -79,156 +75,144 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ACslhabbD2e9DmaD"
+	protocol="application/pgp-signature"; boundary="zw4ALuATlJei2ut9"
 Content-Disposition: inline
-In-Reply-To: <4c8c2f19-1a7e-4524-81e7-c74091e88edf@github.com>
+In-Reply-To: <xmqqttq6xr9k.fsf@gitster.g>
 
 
---ACslhabbD2e9DmaD
-Content-Type: text/plain; charset=us-ascii
+--zw4ALuATlJei2ut9
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 31, 2023 at 10:47:44AM -0700, Victoria Dye wrote:
-> Patrick Steinhardt wrote:> diff --git a/ci/install-docker-dependencies.sh=
- b/ci/install-docker-dependencies.sh
-> > index 6e845283680..48cb2e735b5 100755
-> > --- a/ci/install-docker-dependencies.sh
-> > +++ b/ci/install-docker-dependencies.sh
-> > @@ -7,6 +7,9 @@
-> > =20
-> >  begin_group "Install dependencies"
-> > =20
-> > +# Required so that apt doesn't wait for user input on certain packages.
-> > +export DEBIAN_FRONTEND=3Dnoninteractive
-> > +
-> >  case "$jobname" in
-> >  linux32)
-> >  	linux32 --32bit i386 sh -c '
-> > @@ -16,11 +19,19 @@ linux32)
-> >  	'
-> >  	;;
-> >  linux-musl)
-> > -	apk add --update build-base curl-dev openssl-dev expat-dev gettext \
-> > +	apk add --update shadow sudo build-base curl-dev openssl-dev expat-de=
-v gettext \
-> >  		pcre2-dev python3 musl-libintl perl-utils ncurses \
-> >  		apache2 apache2-http2 apache2-proxy apache2-ssl apache2-webdav apr-u=
-til-dbd_sqlite3 \
-> >  		bash cvs gnupg perl-cgi perl-dbd-sqlite >/dev/null
-> >  	;;
-> > +linux-*)
-> > +	apt update -q &&
-> > +	apt install -q -y sudo git make language-pack-is libsvn-perl apache2 =
-libssl-dev \
-> > +		libcurl4-openssl-dev libexpat-dev tcl tk gettext zlib1g-dev \
-> > +		perl-modules liberror-perl libauthen-sasl-perl libemail-valid-perl \
-> > +		libdbd-sqlite3-perl libio-socket-ssl-perl libnet-smtp-ssl-perl ${CC_=
-PACKAGE:-${CC:-gcc}} \
-> > +		apache2 cvs cvsps gnupg libcgi-pm-perl subversion
-> > +	;;
-> >  pedantic)
-> >  	dnf -yq update >/dev/null &&
-> >  	dnf -yq install make gcc findutils diffutils perl python3 gettext zli=
-b-devel expat-devel openssl-devel curl-devel pcre2-devel >/dev/null
+On Wed, Nov 01, 2023 at 09:15:51AM +0900, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 >=20
-> ...
+> >> So I have some hesitation about trying to mirror this rather complicat=
+ed
+> >> set of build rules in another CI environment. My primary concern would
+> >> be that the two might fall out of sync and a series that is green on
+> >> GitHub would be red on GitLab, or vice-versa. Importantly, this can
+> >> happen even without changes to the build definitions, since (AFAICT)
+> >> both forges distribute new images automatically, so the set of packages
+> >> installed in GitHub may not exactly match what's in GitLab (and
+> >> vice-versa).
+> >
+> > Yup, that's a valid concern.
 >=20
-> > diff --git a/ci/lib.sh b/ci/lib.sh
-> > index e14b1029fad..6e3d64004ec 100755
-> > --- a/ci/lib.sh
-> > +++ b/ci/lib.sh
-> > @@ -208,6 +224,7 @@ then
-> >  	cache_dir=3D"$HOME/test-cache/$SYSTEM_PHASENAME"
-> > =20
-> >  	GIT_TEST_OPTS=3D"--write-junit-xml"
-> > +	JOBS=3D10
-> >  elif test true =3D "$GITHUB_ACTIONS"
-> >  then
-> >  	CI_TYPE=3Dgithub-actions
+> Is it?
 >=20
-> ...
+> I rather na=EFvely think different set of build options and tools
+> running the tests would mean we gain wider test coverage.  Even with
+> the current setup that relies on whatever GitHub offers, we already
+> see "this version passes all tests except for the job on macOS" and
+> "the version that was passing yesterday is not broken today---perhas
+> the image of the test environment has been updated and we need to
+> adjust to it" every once in a while.
 >=20
-> > -MAKEFLAGS=3D"$MAKEFLAGS --jobs=3D10"
-> > -GIT_PROVE_OPTS=3D"--timer --jobs 10 --state=3Dfailed,slow,save"
-> > +MAKEFLAGS=3D"$MAKEFLAGS --jobs=3D${JOBS}"
-> > +GIT_PROVE_OPTS=3D"--timer --jobs ${JOBS} --state=3Dfailed,slow,save"
-> > =20
+> > As mentioned, this patch series does not have the intent to make
+> > GitLab CI a second authoritative CI platform.  GitHub Actions
+> > should remain the source of truth of whether a pipeline passes or
+> > not.
 >=20
-> Organizationally, this commit seems to be doing two things at once:
+> I am not sure I follow.  Often we take a version that happened to
+> have failed Actions tests when we know the reason of the failure
+> has nothing to do with the new code.  From time to time people help
+> to make CI tests less flakey, but flakes are expected.
 >=20
-> - Adding GitLab-specific CI setup (either in the new .gitlab-ci.yml or in
->   conditions gated on "gitlab-ci").
-> - Updating the common CI scripts with things that are needed for GitLab C=
-I,
->   but aren't conditioned on it (i.e. the patch excerpts I've included
->   above).=20
+> > Most importantly, I do not want to require the maintainer
+> > to now watch both pipelines on GitHub and GitLab.
 >=20
-> I'd prefer these being separated into two patches, mainly to isolate "thi=
-ngs
-> that affect all CI" from "things that affect only GitLab CI". This is
-> ultimately a pretty minor nit, though; if you're not planning on re-rolli=
-ng
-> (or just disagree with what I'm suggesting :) ), I'm okay with leaving it
-> as-is.
+> I don't even make tests by GitHub Actions force me to do anything,
+> so there is no worry here.
 
-Yeah, the JOBS refactoring can certainly be split out into a preparatory
-commit where we unify the envvars (currently patch 5). But for the other
-changes it makes a bit less sense to do so, in my opinion:
+Okay.
 
-    - The DEBIAN_FRONTEND variable isn't needed before as the there are
-      no Docker-based CI jobs that use apt.
+> > This might be another indicator that the pipeline should rather be
+> > in "contrib/", so that people don't start to treat it as
+> > authoritative.
+>=20
+> Let me step back and as more basic questions.
+>=20
+>  - What do you mean by "authoritative"?  For an authoritative CI
+>    test, contributors whose changes do not pass it should take it as
+>    a sign that their changes need more work?  If so, isn't it a
+>    natural expectation and a good thing?  Unless you expect the CI
+>    tests to be extra flakey, that is.
 
-    - Adding the shadow and sudo packages to the linux-musl job wouldn't
-      be needed either as there are no cases yet where we run
-      unprivileged CI builds via Docker.
+I was assuming that GitHub Actions was considered to be "the" CI
+platform of the Git project. But with your explanations above I think
+that assumption may not necessarily hold, or at least not to the extent
+I assumed.
 
-    - Adding the apt packages as a preparatory step doesn't make much
-      sense either as there is no Docker job using it.
+>  - Are there reasons why you do not trust the CI tests at GitLab
+>    more than those run at GitHub?
 
-But anyway. I will:
+No. Based on the above assumption I was simply treading carefully here.
+Most importantly, I didn't want to create the impression that either:
 
-    - Move around the JOBS variable refactoring to a preparatory patch,
-      which feels sensible to me.
+    - "Now you have to watch two pipelines", doubling the effort that CI
+      infrastructure creates for you as a maintainer.
 
-    - Move the `DEBIAN_FRONTEND` varible into the "linux-*" case, which
-      should further clarify that this only impacts the newly added and
-      thus GitLab-specific infrastructure.
+    - "I want to eventually replace GitHub Actions".
 
-With these changes, the only thing left in this commit that is not
-guarded by a GitLab CI specific condition is the change to the
-"linux-musl" case where we install shadow and sudo now. But I don't feel
-like it makes sense to move them into a standalone preparatory commit.
+This carefulness probably also comes from the fact that GitLab and
+GitHub are direct competitors, so I was trying to preempt any kind of
+implied agenda here. There is none, I just want to make sure that it
+becomes easier for us at GitLab and other potential contributors that
+use GitLab to contribute to Git.
 
-Thanks!
+Hope that makes sense.
+
+> > Last but not least, I actually think that having multiple supported CI
+> > platforms also has the benefit that people can more readily set it up
+> > for themselves. In theory, this has the potential to broaden the set of
+> > people willing to contribute to our `ci/` scripts, which would in the
+> > end also benefit GitHub Actions.
+>=20
+> Yes, assuming that we can do so without much cutting and pasting but
+> with a clear sharing of the infrastructure code, and the multiple
+> supported CI environments are not too flakey, I am with this rather
+> na=EFve worldview that the more we have the merrier we would be.
+>=20
+> > I understand your points, and especially the point about not having a
+> > second authoritative CI platform. I'm very much on the same page as you
+> > are here, and would be happy to move the definitions to "contrib/" if
+> > you want me to.
+> >
+> > But I think we should also see the potential benefit of having a second
+> > CI platform, as it enables a more diverse set of people to contribute.
+> > which can ultimately end up benefitting our CI infra for both GitHub
+> > Actions and GitLab CI.
+>=20
+> I do *not* want to add new things, if we were to use them ourselves,
+> to "contrib/".  We have passed that stage long time ago that keeping
+> everything in my tree gives wider exposure and foster cooperation.
+
+Fair enough.
+
+Thanks for taking the time to make your thoughts clearer to me!
 
 Patrick
 
-> Otherwise, I can't comment on the correctness of the GitLab CI definition=
- (I
-> assume you've tested it anyway), but AFAICT the changes above shouldn't b=
-reak
-> GitHub CI.
-
-
---ACslhabbD2e9DmaD
+--zw4ALuATlJei2ut9
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVCOjUACgkQVbJhu7ck
-PpSJYBAApxJFuHzKhX01pppMVX2I4nc0SpRe2t8cvjMKQuNuXViA78CWpqZNZskB
-7JHOIZqDRNC057qWqennj+BEvIQ+hbLeH7dWicVrc3b9wcQ//lixqc/rgXmN4bAC
-vlXigJytxgNpVsUkAe1rou+vsUw79993CHl/Vz7Js89U+c9kqLic0IwrTd0y/TdN
-8vrThRVevyjm+LgzCUP3k3wVynmieTqL/N5buoHaWr9Xjqnp3GDZTSXuneuZJs3S
-WR8Zs4IqluVSDJixAOSYWQzItkYoDoBb0APUGN2gavToUjNTNqA4J98hGJIh72zF
-jYQZZ7BT/mgD0c7rllC/KUgzOQdRBLToVJUwCnBwNHG0Kj5yHjQJ8oVmTHzcfFjy
-W70dD/Oc7/XUfrQVfLqWppbkgTfAzdiIWdpinrTM8F/CjxbetTTin6GvFVW3qcQR
-GPfWhRul0+pH2G0UPqt4G+gblUsecxeJvNLF/+SK54P3OvIHLacMbbrIUfwAs10D
-yQVUIA/od9OzbbgAw4QOtY/QvHl6p7JXeEH4hwjWPxO/tM5Tlu3uBVtsjGzn3qyR
-zI96na5AQ/G0vvqOd2f0KI+cZAyAZAeiasa1iDV/H/nXR2b3SVef9b6S/OQo6Mpu
-HZke8ONuFboYz+WYe7qig2UiG7xF6B9jtZPSQXlRzQH5NmG7LuQ=
-=c0cO
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVCPPoACgkQVbJhu7ck
+PpS7Rw//QuC6E6xfuQu+FrB9LIck8E9vyZf+gFVXxSmqptMkag4vr2xfWeqRUDZo
+nlZWubOa/FGHGZAPWTe6hMRRXFy8ghr7Zp9Zxk0Tge9IPdVr6OqiCPOJgbkY3JuH
+erllD4UAjoVUwX1OQSUgSzaRsW+XTWOWg9aGlAtReQWpgWssaGY9tvzvBNWq+cuh
+LmDhiIplsEYVEcG+wnhl8e7tIPj+d2zYIFjbhfajLeL9ZTh/UpGHVvSsNMFIG8dI
+JNwG7DqAS3teVGip1RKISi70Ito/vGbDL2wmAJ90FOfROsKe1Pc0F3YRu4a0OmBT
+IJOWWFuVuGjxdtWe/Qqyy+uIVXI3hDHurpPNXwMvMlfuUe6Vta+68XJ2atDYAUGx
+FX4rSaeZIK8BirAyKqjkhlVGUYz6R+kIaHuLUXxn4vKuJykPrwn4Qf35Txf6dhDK
+jTrStcAF8Tt4DccUa1sHC5xccXkjpulzcjr/j9+6G/mV+Qc+t3qAhD2m32q4Mk3M
+Lmi9yw2JQMVKCQhzgqxATVMiXXNsUdHKFrlbya6GQRa0tDmHm8qn5jy4UD54EHVz
+bN7rITlD7RqjBBYh2ZHFVoN0ChbCNpCP2sJ5zRBm+eE7XiMhW9jwt11U5v0fQxbH
+LloE2ZbCwV3eQ0ae0SbTYTUzMqpt5pvff9+xra+GczZgiBRB/DM=
+=4ptC
 -----END PGP SIGNATURE-----
 
---ACslhabbD2e9DmaD--
+--zw4ALuATlJei2ut9--
