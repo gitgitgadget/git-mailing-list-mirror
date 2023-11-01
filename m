@@ -1,46 +1,46 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0B53125A4
-	for <git@vger.kernel.org>; Wed,  1 Nov 2023 13:02:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7DD1125D1
+	for <git@vger.kernel.org>; Wed,  1 Nov 2023 13:02:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mWzW3I/f";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Dd/3JS7T"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OqqEWQ1E";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="D1SYxj+t"
 Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 749C710C
-	for <git@vger.kernel.org>; Wed,  1 Nov 2023 06:02:49 -0700 (PDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.nyi.internal (Postfix) with ESMTP id 0F2815C0429;
-	Wed,  1 Nov 2023 09:02:47 -0400 (EDT)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B52E0F4
+	for <git@vger.kernel.org>; Wed,  1 Nov 2023 06:02:51 -0700 (PDT)
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailout.nyi.internal (Postfix) with ESMTP id 2EA425C04A7;
+	Wed,  1 Nov 2023 09:02:51 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Wed, 01 Nov 2023 09:02:47 -0400
+  by compute7.internal (MEProxy); Wed, 01 Nov 2023 09:02:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1698843767; x=1698930167; bh=Nn
-	BHNOi9hucY5UlSonC3hhtnCN1xzlDiHCccJM2fuWE=; b=mWzW3I/f9QA22qWdn6
-	bNxH2JgTGOM/WA0rf3PZfNAk+HClww+F64a90C+H8FOfVgFfs7PVuX1B2z2mibv5
-	d/loSn6KTci6zSYxsUldHs0rQ7wo3MjmLm/cOPiODfHfAmgfm+mzmtE94s3Tra2E
-	RUj6E8e7BhJUONsnMR1HLt3IscO+gcVgy3YhYdHjqjTKO+s7sgE11kBNGGQ/Ygb7
-	UUJaqjDZyJeDgll+hAY+K2xh4L+KGoGQJLFJLOJwcnM6mKg1C+SuXhQvR9CfWyxi
-	92hoeeUA/5ZWkG6LSGealm40ywSN4x2MD7ADRKZP03w8P3/X1DlvMEiJlkaPJxpE
-	HzWQ==
+	:subject:subject:to:to; s=fm3; t=1698843771; x=1698930171; bh=DK
+	cHsghbITCg5CVzN6KHVu0FC1otSQM+4z7ZaXo5Wug=; b=OqqEWQ1EiJ04BSxbBw
+	Da+YBY6eBwqXSJZ+qX+E9MKXQd8u6eRUwYB3iYFPV7CTKeFAXIX5keEI6k1sWlXi
+	GvJVebfJnmbhz35n/0LIq1JFwu4eRE7OjYqCgr61GvqP5mzXurGdG/uysVobBdcI
+	kcqyHPDAwiZE8R+M5w/DG9b5B8YpQ8Od2hepXGjwU0HnLb+uKmgafyv7r9hPROjn
+	ROhbBsQUj6cRBjtibefPNLuTNyutGMXYUz8wd5vPyUgEde+ldvcev3BrZRPyVwgN
+	qQAC+EL/2C1FIH08pkQo/RYokMbBArNEeIJP9nM9tQj8a+829U+dltg8XxBTLnq3
+	8xmw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1698843767; x=1698930167; bh=NnBHNOi9hucY5
-	UlSonC3hhtnCN1xzlDiHCccJM2fuWE=; b=Dd/3JS7TGOTG9kN3kFx4DFpeBDY9R
-	ttpd69Is6TLNqixDhwG2aD4ycWVNC+ShaOWFH2u/4izaCJBg7VHbRdN3rHs6YErm
-	rn/8A9jD+Qys2zdrHJvRSPIR9bR8Dj6He6hvVbGhpngCuCvq2sNkBCButqO+UmM5
-	fyKTpA5Nc0aUfy4vwTTz4Gk2TbGF/jp3YSreyXAFIsCAHlt4a5m9LLV8VRpJHABu
-	Sa9IVuXf57ohScUpHN35yKVyRnmkwF8nx0+ZGLEAJYzPUXImEhxuELbqJRP0wOTU
-	6AMnUJAxv5230jql97Btplp8hHLRc3XekUK09MDCvpn4l32Lg9/scIIlA==
-X-ME-Sender: <xms:dkxCZV81W81Ud8G8Sx44OqxA0YDljMHozxswYGtZKkGw159k-n903g>
-    <xme:dkxCZZsvUz8cKyQZmDzkfByzrcs4u1Yk0XpWBsDghC-jyZYd0aWgZ5k_Hnf-qu9Iy
-    jC_BBMJfdIe6grCLw>
-X-ME-Received: <xmr:dkxCZTDfdPdUNLzt_ZH2do_rAZL1M2V27lRT436Ij8ntfTRDinhVKWCum1SqlA-4liahUilgoX7VToTEEixHzLFStc0fO3uMgIqqr3PF_Prptg>
+	:x-sasl-enc; s=fm3; t=1698843771; x=1698930171; bh=DKcHsghbITCg5
+	CVzN6KHVu0FC1otSQM+4z7ZaXo5Wug=; b=D1SYxj+t3oE5gvdVCwk8ypYVyFIKm
+	kg8xg2q4s4LIXohhMEmksItFVL+zLEbz5aP8zV5HKfoN9RjgkPh8W2o4TV1hkwY1
+	hvJjpS0veCqUFT7/J192ZI1eTNROe2aLccFbSLhRz4PlvNgFt+ldxnDVhJVkzANg
+	Pce+uQ4YvwBPPi+el4pnBBWwYwSVmNWEHItF4lN9GEb1i6rhIkf+pegCaTvC7n6X
+	RxNmwLcPCpUwpcO7TQVRcA6nQl/3Lq6vvspY/Ts4pEmnTS/+2SoDVqbYnG2npyD4
+	TORY2HKsjEI7lsRivhH4COwDvDc5TLHaW18AX7LFcHGouJB/93MWWyTyw==
+X-ME-Sender: <xms:ekxCZbaBUvrsVyKIXOPaXYXO-8lMp3x3Q0dOo-uvsfrDu_6WWmY8TA>
+    <xme:ekxCZabaaGVeRHGttCBdsI8b2r-TTbNJmRXLh84K-Bzcxq7mO0IFRt_ejXzsrr0dp
+    tJdBTUtWpkebGB8sg>
+X-ME-Received: <xmr:ekxCZd-Uft6fAm8p8lVIu2wmkaUUx9DrgL3N7wkiFpfzbraVrVVvSGjZSmznwLyeynKmOUe5IY4rlpIfw2sis5vhzMlgrmsjU_LOVKcc_7gvGw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddtgedggeejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
@@ -49,25 +49,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddtgedggeejucetufdoteggod
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
     necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:dkxCZZeTawK5wiIpm_h5SDY2Dt8Q55bArv83c9KQ2gB7nWyjW65ajw>
-    <xmx:dkxCZaNF3-tlsV-q1iZV4J3rrsBQLsVGZP0ssYqDw3iFDDcp5oUhCg>
-    <xmx:dkxCZbm0yxOGS5fY1244ERse0pGZwEvfz09p0kyL4ORg77GXI1BtWQ>
-    <xmx:d0xCZXonOH0Y-WIzVHXan0GAGrX29WPDHRXc35SRz5FdcspF4lnXSA>
+X-ME-Proxy: <xmx:ekxCZRopHVraNS8fhG3vJKxrNmQ1tETXrUiL8Lp1EnXtg6Ra7JRrkQ>
+    <xmx:ekxCZWqgkz0LNGFlxC7dOARm9ZTtYNL-aXecZvGYU8mkCedKJSXzZg>
+    <xmx:ekxCZXQlmSh3WPIITzWNZKVdjtiDc33-gXI7Z4SWfSrNVuxV41Al9g>
+    <xmx:e0xCZfkd-p_m3JJHV33eZ5WnS3JOAcqxBH60wYusIvckFnbxtGT2mw>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 1 Nov 2023 09:02:45 -0400 (EDT)
+ 1 Nov 2023 09:02:49 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 1e736688 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 1 Nov 2023 13:02:34 +0000 (UTC)
-Date: Wed, 1 Nov 2023 14:02:43 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 3321c172 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 1 Nov 2023 13:02:39 +0000 (UTC)
+Date: Wed, 1 Nov 2023 14:02:47 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
 	Phillip Wood <phillip.wood123@gmail.com>,
 	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
 	Victoria Dye <vdye@github.com>
-Subject: [PATCH v5 1/8] ci: reorder definitions for grouping functions
-Message-ID: <0ba396f2a331ce1e9f7e7122e13dc683e3ecc752.1698843660.git.ps@pks.im>
+Subject: [PATCH v5 2/8] ci: make grouping setup more generic
+Message-ID: <821cfcd61254ace6981288a9ad23999502892873.1698843660.git.ps@pks.im>
 References: <cover.1698305961.git.ps@pks.im>
  <cover.1698843660.git.ps@pks.im>
 Precedence: bulk
@@ -77,91 +77,134 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="A3PSJ4HlG0Tp7FCA"
+	protocol="application/pgp-signature"; boundary="LAG+1UdyDiR11B++"
 Content-Disposition: inline
 In-Reply-To: <cover.1698843660.git.ps@pks.im>
 
 
---A3PSJ4HlG0Tp7FCA
+--LAG+1UdyDiR11B++
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-We define a set of grouping functions that are used to group together
-output in our CI, where these groups then end up as collapsible sections
-in the respective pipeline platform. The way these functions are defined
-is not easily extensible though as we have an up front check for the CI
-_not_ being GitHub Actions, where we define the non-stub logic in the
-else branch.
+Make the grouping setup more generic by always calling `begin_group ()`
+and `end_group ()` regardless of whether we have stubbed those functions
+or not. This ensures we can more readily add support for additional CI
+platforms.
 
-Reorder the conditional branches such that we explicitly handle GitHub
-Actions.
+Furthermore, the `group ()` function is made generic so that it is the
+same for both GitHub Actions and for other platforms. There is a
+semantic conflict here though: GitHub Actions used to call `set +x` in
+`group ()` whereas the non-GitHub case unconditionally uses `set -x`.
+The latter would get overriden if we kept the `set +x` in the generic
+version of `group ()`. To resolve this conflict, we simply drop the `set
++x` in the generic variant of this function. As `begin_group ()` calls
+`set -x` anyway this is not much of a change though, as the only
+commands that aren't printed anymore now are the ones between the
+beginning of `group ()` and the end of `begin_group ()`.
+
+Last, this commit changes `end_group ()` to also accept a parameter that
+indicates _which_ group should end. This will be required by a later
+commit that introduces support for GitLab CI.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- ci/lib.sh | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ ci/lib.sh | 46 ++++++++++++++++++++++------------------------
+ 1 file changed, 22 insertions(+), 24 deletions(-)
 
 diff --git a/ci/lib.sh b/ci/lib.sh
-index 6fbb5bade12..eb384f4e952 100755
+index eb384f4e952..b3411afae8e 100755
 --- a/ci/lib.sh
 +++ b/ci/lib.sh
-@@ -1,16 +1,7 @@
- # Library of functions shared by all CI scripts
-=20
--if test true !=3D "$GITHUB_ACTIONS"
-+if test true =3D "$GITHUB_ACTIONS"
- then
--	begin_group () { :; }
--	end_group () { :; }
+@@ -14,36 +14,34 @@ then
+ 		need_to_end_group=3D
+ 		echo '::endgroup::' >&2
+ 	}
+-	trap end_group EXIT
 -
+-	group () {
+-		set +x
+-		begin_group "$1"
+-		shift
+-		# work around `dash` not supporting `set -o pipefail`
+-		(
+-			"$@" 2>&1
+-			echo $? >exit.status
+-		) |
+-		sed 's/^\(\([^ ]*\):\([0-9]*\):\([0-9]*:\) \)\(error\|warning\): /::\5 f=
+ile=3D\2,line=3D\3::\1/'
+-		res=3D$(cat exit.status)
+-		rm exit.status
+-		end_group
+-		return $res
+-	}
+-
+-	begin_group "CI setup"
+ else
+ 	begin_group () { :; }
+ 	end_group () { :; }
+=20
 -	group () {
 -		shift
 -		"$@"
 -	}
--	set -x
--else
- 	begin_group () {
- 		need_to_end_group=3Dt
- 		echo "::group::$1" >&2
-@@ -42,6 +33,15 @@ else
- 	}
-=20
- 	begin_group "CI setup"
-+else
-+	begin_group () { :; }
-+	end_group () { :; }
-+
-+	group () {
-+		shift
-+		"$@"
-+	}
-+	set -x
+ 	set -x
  fi
 =20
++group () {
++	group=3D"$1"
++	shift
++	begin_group "$group"
++
++	# work around `dash` not supporting `set -o pipefail`
++	(
++		"$@" 2>&1
++		echo $? >exit.status
++	) |
++	sed 's/^\(\([^ ]*\):\([0-9]*\):\([0-9]*:\) \)\(error\|warning\): /::\5 fi=
+le=3D\2,line=3D\3::\1/'
++	res=3D$(cat exit.status)
++	rm exit.status
++
++	end_group "$group"
++	return $res
++}
++
++begin_group "CI setup"
++trap "end_group 'CI setup'" EXIT
++
  # Set 'exit on error' for all CI scripts to let the caller know that
+ # something went wrong.
+ #
+@@ -287,5 +285,5 @@ esac
+=20
+ MAKEFLAGS=3D"$MAKEFLAGS CC=3D${CC:-cc}"
+=20
+-end_group
++end_group "CI setup"
+ set -x
 --=20
 2.42.0
 
 
---A3PSJ4HlG0Tp7FCA
+--LAG+1UdyDiR11B++
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVCTHIACgkQVbJhu7ck
-PpR3jg//QDGXt7XHoIx31gh62/jvHh+5ioyNlBUAPY/0Q07L0IcMzvmCcmr5KTC9
-e2BJox2OTdo5L6HX8ZDjOw7VH40Opowzg8t8XwOq6puMPa+6lu5OXJ/xWqVT/oFL
-KhjBekWEFRNlvxmvDuE5kuauWpa4eLzOMSDT17NEXGrthm1c+RecoZn8RMtb+p4c
-haQyQ0JmIeSCuoZ5QSz4D4fqZn+bmIgUhYNcsvrOeIDtrOBhFgfa+hrn/10PNP8B
-Uy7m9xlnAFr5FOowhYM2tbqakE8ARoDopkkfK9GS2CY1vm7g52r3YurThJu0JgGO
-mF8R5IiPXD6IaA/unyEHYbWWOG4H5KJ0+loKlOCL1xagUvmDkP/hb+8QG4OvI5DR
-Eul0fs9oZkLI3cXqS35V2zNiA2jY8yERni6xra1cDI/BCQz2d3s+XZ1YAcsg7iev
-gNwglwtAZEN4bM7KI/W38i4PGZJKnns3ENtdPIIiUB5CMe0TGeXBnAe7x4F35snX
-8IgjsabSiQVp4zaLwcOcxng9RERmNGWlufm2Unj/XcYkE0UKscMoOkkgAxSnn2P0
-001KIhAJBdYT9PU+ipzFQvEKyPYvhSXblj1JURQDLR74qrrae35OvWqpi23Hb3YG
-XmLkuiUfI/R1xZxS6P72jBe03p4xLaaRnFi8MTanXnAUTKsgb9g=
-=J6vs
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVCTHYACgkQVbJhu7ck
+PpQVaw/+OvfTT3el3qfMFwJtlT6dRJ0DhDYqM/iPqFMfp8g1l1fYr7OQZAAzPSCi
+5GhfU3vOMHxLggYZKY3mnrLd0SJBRHZJvgWEaueSp48q4mCHFOzdmPfI+hiUvMf9
+eVnJAta5VZlYvilaAK1WLaG5+4zCWQ2//FSjhUehdwErPdSfp2Tsb8mwXjiQVIkg
+FhB2i0GFUUCnwHIYKEgOq5ZqkFZE1xJs7Z6o8c9ieoYDNYx3q1SMhuj7UlI1+E9G
+PJnllM4yh1dMbhdB3lc0Shzh9KWYsVh1Od2dmAdS7sL2Yof/ZSU2aApdCxuOA3FT
+VvHlgP0C7E3BpKRWzYGmNTgftzd3F3Vemsd4GkDT5W9EXnklsJHOLVYW+gzuYUUw
+RIy2ujDVZD9eUROH72szsB+eXRa1zmMIUhqJmNMlNnvemp9YY+o07LvWArvDHXvF
+qTCOJMlGlpjrlGbPy0Jib6thWWRgKa6pbZASkY6mVSECRabHv5OITr+wZYGxoVAE
+bAoUqwAYSGthjiIV/4ZuYa0BnDVhQ1ytt6U1fHLM8inIxaXG9Z2dgBXhhB4HczyW
+lwis1VUTFBexcL3cKpgYLkiHSkrhWEN1lN4LOSNdQhslU3aew5xu7Ii031Cl44UU
+d8EDSmJUJorGerTin4lzg4kZlrCZt1wngl4K0H95TzinFfM4FrE=
+=2nn/
 -----END PGP SIGNATURE-----
 
---A3PSJ4HlG0Tp7FCA--
+--LAG+1UdyDiR11B++--
