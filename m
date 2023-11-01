@@ -1,44 +1,47 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE167F
-	for <git@vger.kernel.org>; Wed,  1 Nov 2023 00:15:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABE217F
+	for <git@vger.kernel.org>; Wed,  1 Nov 2023 00:16:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hvZzdyZh"
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 867E5B7
-	for <git@vger.kernel.org>; Tue, 31 Oct 2023 17:15:53 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id B5F041C288E;
-	Tue, 31 Oct 2023 20:15:52 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="U6eLlQrE"
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65364ED
+	for <git@vger.kernel.org>; Tue, 31 Oct 2023 17:16:07 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 143191F3BA;
+	Tue, 31 Oct 2023 20:16:07 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=AN1XkpR4NO2k
-	T+76KJbdFFtapR7+FKzrJfB2mowm830=; b=hvZzdyZhIMc/stRnK3gboQlPFP1i
-	bZ+G3uGdjsSPSxukK4DMtLhLpMiJMya1umFRmsiqzy4zKGY+sRqI3n5SuFEp2CzW
-	nIz+jIn628kdWja4PO82DK3l5Lz6T1HJI44HtCSsdCRXSPCLOv2mkPrtnK3wdG6p
-	2NQGluzoo0RHEi4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id AD6501C288D;
-	Tue, 31 Oct 2023 20:15:52 -0400 (EDT)
+	:content-type; s=sasl; bh=ML/i3l2k1jd+fyoqzYU0yeaGKrjFhhYCu9S0XF
+	AXDjQ=; b=U6eLlQrEAN/YUWLvtgHdrs6yRhza6uRkgJtL5K1nR+ylQbDg7UmaWb
+	Z6VGKRHI0fyc0/VaOamDCgVWT94Tx7SqoGa3FxpVwE/HEyBdIwYNfQfthAWQEYmI
+	10CKRyhbWh08es8CGYmVYFPSGFvBAk1cYA6TEhoutWnXUkXfe/oUg=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id ED77A1F3B9;
+	Tue, 31 Oct 2023 20:16:06 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.198.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1EE0B1C288C;
-	Tue, 31 Oct 2023 20:15:52 -0400 (EDT)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 78F281F3B8;
+	Tue, 31 Oct 2023 20:16:03 -0400 (EDT)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Taylor Blau <me@ttaylorr.com>,  git@vger.kernel.org
-Subject: Re: [PATCH 0/5] ci: add GitLab CI definition
-In-Reply-To: <ZUCw1B6oQaDWKx3O@tanuki> (Patrick Steinhardt's message of "Tue,
-	31 Oct 2023 08:46:28 +0100")
-References: <cover.1698305961.git.ps@pks.im> <ZT/P5Bl9lD9V6ID9@nand.local>
-	<ZUCw1B6oQaDWKx3O@tanuki>
-Date: Wed, 01 Nov 2023 09:15:51 +0900
-Message-ID: <xmqqttq6xr9k.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Elijah Newren <newren@gmail.com>,  Tony Tung via GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Tony Tung
+ <tonytung@merly.org>
+Subject: Re: [PATCH v2 0/2] sequencer: remove use of hardcoded comment char
+In-Reply-To: <f59f75cd-1991-456a-9ea6-638b39711bf1@gmail.com> (Phillip Wood's
+	message of "Tue, 31 Oct 2023 11:18:10 +0000")
+References: <pull.1603.git.1698635292629.gitgitgadget@gmail.com>
+	<pull.1603.v2.git.1698728952.gitgitgadget@gmail.com>
+	<CABPp-BEjV0H=waNQfKNNqibs3g_BU1CCrNjb8G8h_jXrt8kaiw@mail.gmail.com>
+	<f59f75cd-1991-456a-9ea6-638b39711bf1@gmail.com>
+Date: Wed, 01 Nov 2023 09:16:01 +0900
+Message-ID: <xmqqo7gexr9a.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -46,90 +49,40 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain
 X-Pobox-Relay-ID:
- D11FD382-784B-11EE-A062-25B3960A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+ D7E57136-784B-11EE-846B-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-Patrick Steinhardt <ps@pks.im> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
->> So I have some hesitation about trying to mirror this rather complicat=
-ed
->> set of build rules in another CI environment. My primary concern would
->> be that the two might fall out of sync and a series that is green on
->> GitHub would be red on GitLab, or vice-versa. Importantly, this can
->> happen even without changes to the build definitions, since (AFAICT)
->> both forges distribute new images automatically, so the set of package=
-s
->> installed in GitHub may not exactly match what's in GitLab (and
->> vice-versa).
->
-> Yup, that's a valid concern.
+> As far as I can see those remaining instances are all to do with the
+> '#' that separates a merge subject line from its parents. I don't
+> think we need to complicate things anymore by respecting
+> core.commentchar there as the '#' is not denoting a commented line, it
+> is being used as an intra-line separator instead.
 
-Is it?
+It is unfortunate that the format of the file needs an intra-line
+separator in the first place, but I tend to agree with you that the
+comment-line-char would be a terrible fit there.  '#' or any
+replacement character at the beginning of a line is easy to spot as
+a signal that the line in its entirety is commented out, but it is
+much harder to eyeball-spot a single punctuation character in the
+middle of a line.  If we do not have to look for a different
+character depending on the comment-line-char setting, it would make
+the system (slightly) easier to use.
 
-I rather na=C3=AFvely think different set of build options and tools
-running the tests would mean we gain wider test coverage.  Even with
-the current setup that relies on whatever GitHub offers, we already
-see "this version passes all tests except for the job on macOS" and
-"the version that was passing yesterday is not broken today---perhas
-the image of the test environment has been updated and we need to
-adjust to it" every once in a while.
+> I agree that I don't see much point in respecting core.commentchar in
+> the TODO file as unlike a commit message a legitimate non-commented
+> line will never begin with '#'. Unfortunately I think we're committed
+> to respecting it - see 180bad3d10f (rebase -i: respect
+> core.commentchar, 2013-02-11)
 
-> As mentioned, this patch series does not have the intent to make
-> GitLab CI a second authoritative CI platform.  GitHub Actions
-> should remain the source of truth of whether a pipeline passes or
-> not.
+Yeah, the ship has long sailed.
 
-I am not sure I follow.  Often we take a version that happened to
-have failed Actions tests when we know the reason of the failure
-has nothing to do with the new code.  From time to time people help
-to make CI tests less flakey, but flakes are expected.
+> I think splitting the changes so that we have one patch that fixes the
+> TODO file generation and another that fixes the commit message
+> generation for fixup commands would be best.
 
-> Most importantly, I do not want to require the maintainer
-> to now watch both pipelines on GitHub and GitLab.
-
-I don't even make tests by GitHub Actions force me to do anything,
-so there is no worry here.
-
-> This might be another indicator that the pipeline should rather be
-> in "contrib/", so that people don't start to treat it as
-> authoritative.
-
-Let me step back and as more basic questions.
-
- - What do you mean by "authoritative"?  For an authoritative CI
-   test, contributors whose changes do not pass it should take it as
-   a sign that their changes need more work?  If so, isn't it a
-   natural expectation and a good thing?  Unless you expect the CI
-   tests to be extra flakey, that is.
-
- - Are there reasons why you do not trust the CI tests at GitLab
-   more than those run at GitHub?
-
-> Last but not least, I actually think that having multiple supported CI
-> platforms also has the benefit that people can more readily set it up
-> for themselves. In theory, this has the potential to broaden the set of
-> people willing to contribute to our `ci/` scripts, which would in the
-> end also benefit GitHub Actions.
-
-Yes, assuming that we can do so without much cutting and pasting but
-with a clear sharing of the infrastructure code, and the multiple
-supported CI environments are not too flakey, I am with this rather
-na=C3=AFve worldview that the more we have the merrier we would be.
-
-> I understand your points, and especially the point about not having a
-> second authoritative CI platform. I'm very much on the same page as you
-> are here, and would be happy to move the definitions to "contrib/" if
-> you want me to.
->
-> But I think we should also see the potential benefit of having a second
-> CI platform, as it enables a more diverse set of people to contribute.
-> which can ultimately end up benefitting our CI infra for both GitHub
-> Actions and GitLab CI.
-
-I do *not* want to add new things, if we were to use them ourselves,
-to "contrib/".  We have passed that stage long time ago that keeping
-everything in my tree gives wider exposure and foster cooperation.
+Yes, it would be great.
 
 Thanks.
