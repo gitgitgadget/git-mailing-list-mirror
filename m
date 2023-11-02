@@ -1,132 +1,93 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 257291FA1
-	for <git@vger.kernel.org>; Thu,  2 Nov 2023 09:18:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B46B611713
+	for <git@vger.kernel.org>; Thu,  2 Nov 2023 09:29:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="hFXkyyTS"
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66929132
-	for <git@vger.kernel.org>; Thu,  2 Nov 2023 02:18:20 -0700 (PDT)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 173615B0C3;
-	Thu,  2 Nov 2023 09:18:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1698916697;
-	bh=D3Lknum3ZtCZBxmx31bdcwC7xArR707aRRe4vNXICuU=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=hFXkyyTS4V5lSoRQkvcTH/SRPYPWg/zx7jnSyWfVeQebs5N4o8HrKysIbu27wt8KW
-	 QfBfcVrDKWPESEjyM+bUpVJ4yQ1uCp+zYZGay63xlY0ad0CGIUd5uCpyVwkBhqsBAT
-	 c6STaPy1/ntxmGCWiEXKRC0zAuW3k3/ssdGLcq9ZJdeK52s8CrXBRh8PZ9trxBXzfA
-	 rmZTAri4JijT9NtXix3qmMGwJTovJR1tpqt9J0hwOmKbEWbOiZDzoy1F4K8CNssCGG
-	 ZbA0pqrkuj9yHytQhXqgbuhbUjb8fBqfXgrDa5UT1hqF6cY10C4qIJbSrP+ICa3fW8
-	 GTSzAKVeUQGiCukteAB7MWU1y2+bCw7YsQzFV76hFDx+xDrHTVBEmpkRQqxeDsrZb7
-	 ICZluCnU6xJ8ANLMrg+2L1l7pe0o1+XH13WxqWrFsDQ/RndsMLmkwNkkxIb0hc++ZN
-	 nypthOmdx10tnRyNYcI6I2TfCOdrJzuzA3J7C0QPONlPNrfxFhP
-Date: Thu, 2 Nov 2023 09:18:15 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Elijah Newren <newren@gmail.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v3 1/2] git-merge-file doc: drop "-file" from argument
- placeholders
-Message-ID: <ZUNpVyQYUT8TA6An@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Elijah Newren <newren@gmail.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Taylor Blau <me@ttaylorr.com>
-References: <20231024195655.2413191-1-sandals@crustytoothpaste.net>
- <20231101192419.794162-1-sandals@crustytoothpaste.net>
- <20231101192419.794162-2-sandals@crustytoothpaste.net>
- <xmqq8r7howsq.fsf@gitster.g>
- <CAN0heSrv7MPcEwkq4uEtv9uBbqm4FLKQLE3gdsEbqKkxPXOj5A@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CKFnpHa1"
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69651133
+	for <git@vger.kernel.org>; Thu,  2 Nov 2023 02:29:34 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id 98e67ed59e1d1-28028f92709so613798a91.0
+        for <git@vger.kernel.org>; Thu, 02 Nov 2023 02:29:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1698917374; x=1699522174; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sA/E2i+Ma/zs7hTGUQgxU+16cmFggthc6jA3MYA8DS8=;
+        b=CKFnpHa1NxkGnot3wJLGs5THGUQ81EEsbKmyRDnr+H5RQ29JX3rCj0fBsf/bTud2a7
+         Io9BwQtcfFgQjES1eF8696VSNRDqDjY8iroHU33UAuPdxDsTMOQIwhQK1Pxn/acKHgnm
+         UiE4TGy0xMrlyTjqPN7Mnw64xbgkNaXePRn8Q7g7/ptCmMPwAJMGM+IxIo5jve3b2j9b
+         nt7U88VrfJYJma+hmlle5MlXZqr6Oat5TU1pqnezdDtlYH/F9EMtyA0GTpbLP/31Y3MS
+         8aBhu+N7Ys6ghpyB4fLcwYNCi5S/r0t8oT4WduXIaIcWWwNuKsCYotg0WaP6X9GHBF3u
+         T9mA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698917374; x=1699522174;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=sA/E2i+Ma/zs7hTGUQgxU+16cmFggthc6jA3MYA8DS8=;
+        b=Llt+9z8JcDH4CX6zR9hqg2ZDoZbbtQNd5zJ66Ad3N6/gPJjPnpV14IPOfQk6FuW/Je
+         Wxq4NkNKc4Hc58n93dw6knPaie+JMlNlzRBp3d9ucyqM2i6WMTIuYI8ptFRVOd1WpKNx
+         Hn02E655CDdO/MfX4MTuJxm4BZLggsDEEG0vyW0DhBy/iLpac7V0Nwv7hcuQkE+p8btI
+         9dr6FeMILwLeByaF3th6XO//zAyx8Fy3axVAMZjBCh8g7WXMj9+EqG/xbnbrq3P8grKo
+         cngvlwczOT04XkmiZb5sTGvMNGqsGPWFsCLWPUPwP7FGTlo3oxClj8SN1HufN15y1v4R
+         uv3g==
+X-Gm-Message-State: AOJu0YymyvqP3ernRJr4cAHFc2Xv6E4rFYudTXGF5BvC55KVbpv672VO
+	G/DEBtle9anmj+3/mq15emgvRQeOPkPfiJKE0hk=
+X-Google-Smtp-Source: AGHT+IEhCgsPOu13+myWYcaM+8LzvXmE+39+IKRj21JtMd7IJ17jk4NcSdZtchzYk5pQ+F0u+womtI9W/8BV+yV8uV8=
+X-Received: by 2002:a17:90b:1d8e:b0:280:4af4:1a41 with SMTP id
+ pf14-20020a17090b1d8e00b002804af41a41mr7570444pjb.15.1698917373894; Thu, 02
+ Nov 2023 02:29:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="uIRGgvOPPj0GX8/P"
-Content-Disposition: inline
-In-Reply-To: <CAN0heSrv7MPcEwkq4uEtv9uBbqm4FLKQLE3gdsEbqKkxPXOj5A@mail.gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Spam-Level: *
-
-
---uIRGgvOPPj0GX8/P
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <20231024195655.2413191-1-sandals@crustytoothpaste.net>
+ <20231101192419.794162-1-sandals@crustytoothpaste.net> <20231101192419.794162-2-sandals@crustytoothpaste.net>
+ <xmqq8r7howsq.fsf@gitster.g> <CAN0heSrv7MPcEwkq4uEtv9uBbqm4FLKQLE3gdsEbqKkxPXOj5A@mail.gmail.com>
+ <ZUNpVyQYUT8TA6An@tapette.crustytoothpaste.net>
+In-Reply-To: <ZUNpVyQYUT8TA6An@tapette.crustytoothpaste.net>
+From: =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date: Thu, 2 Nov 2023 10:29:22 +0100
+Message-ID: <CAN0heSot6a5fabjh7NPdWhCBoUcDDpNmV0ovJ0bby1mpw8M7YA@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] git-merge-file doc: drop "-file" from argument placeholders
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>, 
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, Elijah Newren <newren@gmail.com>, 
+	Phillip Wood <phillip.wood123@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>, 
+	Taylor Blau <me@ttaylorr.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On 2023-11-02 at 08:53:36, Martin =C3=85gren wrote:
-> On Thu, 2 Nov 2023 at 00:53, Junio C Hamano <gitster@pobox.com> wrote:
-> >
-> > "brian m. carlson" <sandals@crustytoothpaste.net> writes:
-> >
-> > > From: Martin =C3=85gren <martin.agren@gmail.com>
-> > >
-> > > `git merge-file` takes three positional arguments. Each of them is
-> > > documented as `<foo-file>`. In preparation for teaching this command =
-to
-> > > alternatively take three object IDs, make these placeholders a bit mo=
-re
-> >
-> > Minor nit.  Don't we want to say "three blob object names"?  Unless
-> > we plan to grow this feature into accepting three tree object names,
-> > that is.
->=20
-> Hmm, yeah. Or just "three non-filename arguments". I do wonder: doesn't
-> this mean that the second patch could/should possibly move away from the
-> notion of "object ID"/`--object-id`? (That's not trying to shift any
-> blame from one patch to the other, that's my honest reaction.)
+On Thu, 2 Nov 2023 at 10:18, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+>
+> On 2023-11-02 at 08:53:36, Martin =C3=85gren wrote:
 
-Not specifying an option would make this ambiguous.  What if I have a
-file named "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"?  Is that the
-empty blob, or is it that file?  Normally we have ways to disambiguate
-this, but those don't work here because of the positional arguments.
+> > Hmm, yeah. Or just "three non-filename arguments". I do wonder: doesn't
+> > this mean that the second patch could/should possibly move away from th=
+e
+> > notion of "object ID"/`--object-id`? (That's not trying to shift any
+> > blame from one patch to the other, that's my honest reaction.)
+>
+> Not specifying an option would make this ambiguous.  What if I have a
+> file named "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"?  Is that the
+> empty blob, or is it that file?  Normally we have ways to disambiguate
+> this, but those don't work here because of the positional arguments.
 
-> Ah, yes, I thought I recognized this. Quoting your response [1] to v2:
->=20
-> > I briefly thought about suggesting --blob-id instead of --object-id
-> > simply because you'd never want to feed it trees and commits, but
-> > the error message from read_mmblob() the users would get mentions
-> > 'blob' to signal that non-blob objects are unwelcome, so the name of
-> > the optionwould be OK as-is.
->=20
-> Maybe you having a similar reaction a second time makes this smell a bit
-> more?
+I didn't intend to suggest dropping the new option altogether, sorry for
+being unclear. I meant moving from `--object-id` to something else, such
+as `--blob` that you mention. Completely agreed that something explicit
+is needed here and that heuristics aren't possible.
 
-I think the name is fine.  We don't typically use the phrase "blob ID"
-anywhere, but we do say "object ID".  We'd need to say "--blob", but
-I'm not sure that's an improvement, and I fear it may be less
-understandable.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+> I think the name is fine.  We don't typically use the phrase "blob ID"
+> anywhere, but we do say "object ID".  We'd need to say "--blob", but
+> I'm not sure that's an improvement, and I fear it may be less
+> understandable.
 
---uIRGgvOPPj0GX8/P
-Content-Type: application/pgp-signature; name="signature.asc"
+Agreed. Thanks.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.3 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZUNpVwAKCRB8DEliiIei
-ga/sAQC18K4MVr6olcu/FA2Emef5U9xVWfxH6FbrPBCtbKYlUQD+JmFt1S3SMocm
-IKf2CS46gq3O2+PG3/RGP0Oqw8irLwA=
-=4Hw2
------END PGP SIGNATURE-----
-
---uIRGgvOPPj0GX8/P--
+Martin
