@@ -1,48 +1,48 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6330719BCB
-	for <git@vger.kernel.org>; Thu,  2 Nov 2023 13:52:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B776018E3E
+	for <git@vger.kernel.org>; Thu,  2 Nov 2023 13:52:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ns3Mabu8"
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB43913E
-	for <git@vger.kernel.org>; Thu,  2 Nov 2023 06:52:19 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-4083cd3917eso7383955e9.3
-        for <git@vger.kernel.org>; Thu, 02 Nov 2023 06:52:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SAVtH2pD"
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1FC2134
+	for <git@vger.kernel.org>; Thu,  2 Nov 2023 06:52:15 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-32ded3eb835so643625f8f.0
+        for <git@vger.kernel.org>; Thu, 02 Nov 2023 06:52:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698933137; x=1699537937; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1698933133; x=1699537933; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ncAd+2ucxHGdsaMheafElVVM6cv8o6UtKktsMaTiu/U=;
-        b=Ns3Mabu8bepcP0rlwL74s6kK3oMOGkJx6mJy1nwISIkvdSK/shSBlV1Tu+LtdsnMBX
-         k7KjEaXdPw/e3y7fwpIPgdzkT+agJwz/eNbIUe1WxGPlYqIgqu/ne8TCUwQgGdTdCag1
-         uTKMd7InWvnyPbwzU8CDZW00X7iMwdgTuNdCSyxhga2N+trX9enJhq1weQ1g69ljUhuG
-         61RI7THVk6Fpa87fMdZaPW0TQhlE8rO24Y+2isHZAOamAW8jxHEPmIQGj7oe+WnnLGF5
-         1XsWuFHJRLNj0c9l+9T97G/NSmShHcEfRlNPwlmU3qL8JEyrc/csYy58c/UPg8m+d/0R
-         17qQ==
+        bh=ImVsE3pHpna1OMPcMzvPChWkRGt3L0Pv/Sl/c9RZsyI=;
+        b=SAVtH2pDpJbU+WGzaaAvji4zLLFtNB1F5m2uljuV7S1bdVwRgJq1vBZ5/rkfdJvtvR
+         PvWPICTA2qOlcpZal265L1pZ3LeMAEBiEpRJTiok5qSShTwESBO4+Q5LlYH/Y/QdP0v6
+         nPTFRMea8tFyRI5vCfhylXCRcUuiOYCl2lA75tWamDUY6kq32SYE6eqY/dg0TZBiS0ZO
+         7CYYxBbohuM96UNjUBEDZ5ALVxAFZno4r/eO46twU6jSGvJAns/LhKlr2qf7bM5LkDNJ
+         Z2T6U5tUTyg5oZKrCCaGj5kL8TpYo8Fk1s8g3b7kkCmiFaSb5ifKfoTqLk+NyVWkxD0L
+         avTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698933137; x=1699537937;
+        d=1e100.net; s=20230601; t=1698933133; x=1699537933;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ncAd+2ucxHGdsaMheafElVVM6cv8o6UtKktsMaTiu/U=;
-        b=XrKcjatNFWt9xDpFtnNgugebrgV9YJxgA8nQY5V1EaniXE9VdDHB0PfPUP0/uUAMB1
-         Y4Ga93AXjTfurkb2+T/oDkwj1xNSPaAO+b0kvMMYmSgFRLwnruSOFHsg8NIgCXzCvn7X
-         IJZi+14c2fABirmkJxnYcgce0ZnNyntCqBoG8JtxY2wdWpVnvfX7r6yBARqc8RylXnw+
-         4yGFAJEnxJhgMdPvlpOgAwyz5/K08rX6HKld288hiNfTMai40jmg7+vX8q5ADUgGRMc0
-         WiMgx0La4hb/vD4bZjkEiXi3Yh3G2t4IG2ezbHG/3zqQvs7VaV5Q6WlDbZTzY5PR6L6j
-         K9og==
-X-Gm-Message-State: AOJu0Yyx8yMCcnyplR3BUPRZXOIPBQJLub8l1jbb0XrJNbppzhJJc/bH
-	z4Vu3Py2W3n+QMXFP8hqOTSVHLc924w=
-X-Google-Smtp-Source: AGHT+IFXfP1CsYtEwTsspknG3po5qfarkaSmxO/6Kol83TT2VPsLS+TMRiIdhEx+Vn0mYfXGBHUgqA==
-X-Received: by 2002:a05:600c:a0a:b0:409:5580:bc9f with SMTP id z10-20020a05600c0a0a00b004095580bc9fmr6347508wmp.34.1698933137429;
-        Thu, 02 Nov 2023 06:52:17 -0700 (PDT)
+        bh=ImVsE3pHpna1OMPcMzvPChWkRGt3L0Pv/Sl/c9RZsyI=;
+        b=CWlny5/MRGkvh8e/M5DIHKSDDJ6+uLdxH1cWZC+ZkTInGeOzuzhg8f8T30tj5VyBZ0
+         gJv//K6biDvcVaZA+FapEkECoe2z8tj0JGP7iZjsmddOBEXLiz+7y/ChOZtNP8j2GMu9
+         UZEHXap10hjemAVFlwPhboNmxTxf6zlHYTTYR5A3CpE5NYYq44d9ES/OCSZdPc0E2Kst
+         hKvXopCC9fp24V605YJjc+s4tq7oqrxmsv0unyir3cfMAoTnI9QpJD7nToEsO+SOmp/X
+         ofDxT3AevWUIYVVIgkgYanHIpdHx7mSDhpoG/14R/3ioQKRf/zOxFA0PVZTeyX8i23Vm
+         szkQ==
+X-Gm-Message-State: AOJu0YwpZHmKVPWleR2P/Wcp6gMaeaIrDLwYZpzQPsFayUtqCABud2+e
+	2YtONaGmr7Rh0lgCQtHionmnJbaXubs=
+X-Google-Smtp-Source: AGHT+IHErN4F4/iWqxjZFhHXyOxMIHM4cc8uAeqcXzSjhhlx3TCyWDNK7hoD5yvXxy4WCM6Rfge8RA==
+X-Received: by 2002:a05:6000:b0a:b0:32d:b9c5:82fc with SMTP id dj10-20020a0560000b0a00b0032db9c582fcmr13881880wrb.36.1698933133362;
+        Thu, 02 Nov 2023 06:52:13 -0700 (PDT)
 Received: from christian-Precision-5550.. ([2a04:cec0:116d:4e46:313c:1f52:4963:91b6])
-        by smtp.gmail.com with ESMTPSA id e6-20020adffc46000000b0030647449730sm2514996wrs.74.2023.11.02.06.52.15
+        by smtp.gmail.com with ESMTPSA id e6-20020adffc46000000b0030647449730sm2514996wrs.74.2023.11.02.06.52.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Nov 2023 06:52:16 -0700 (PDT)
+        Thu, 02 Nov 2023 06:52:12 -0700 (PDT)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -57,9 +57,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Dragan Simic <dsimic@manjaro.org>,
 	Linus Arver <linusa@google.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v6 05/14] replay: introduce pick_regular_commit()
-Date: Thu,  2 Nov 2023 14:51:42 +0100
-Message-ID: <20231102135151.843758-6-christian.couder@gmail.com>
+Subject: [PATCH v6 03/14] replay: start using parse_options API
+Date: Thu,  2 Nov 2023 14:51:40 +0100
+Message-ID: <20231102135151.843758-4-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.42.0.496.g529a7fda40
 In-Reply-To: <20231102135151.843758-1-christian.couder@gmail.com>
 References: <20231010123847.2777056-1-christian.couder@gmail.com>
@@ -74,108 +74,126 @@ Content-Transfer-Encoding: 8bit
 
 From: Elijah Newren <newren@gmail.com>
 
-Let's refactor the code to handle a regular commit (a commit that is
-neither a root commit nor a merge commit) into a single function instead
-of keeping it inside cmd_replay().
+Instead of manually parsing arguments, let's start using the parse_options
+API. This way this new builtin will look more standard, and in some
+upcoming commits will more easily be able to handle more command line
+options.
 
-This is good for separation of concerns, and this will help further work
-in the future to replay merge commits.
+Note that we plan to later use standard revision ranges instead of
+hardcoded "<oldbase> <branch>" arguments. When we will use standard
+revision ranges, it will be easier to check if there are no spurious
+arguments if we keep ARGV[0], so let's call parse_options() with
+PARSE_OPT_KEEP_ARGV0 even if we don't need ARGV[0] right now to avoid
+some useless code churn.
 
 Co-authored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Elijah Newren <newren@gmail.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/replay.c | 54 ++++++++++++++++++++++++++++++------------------
- 1 file changed, 34 insertions(+), 20 deletions(-)
+ builtin/replay.c | 45 ++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 32 insertions(+), 13 deletions(-)
 
 diff --git a/builtin/replay.c b/builtin/replay.c
-index 32dbaaf028..5c4cbd11db 100644
+index f2d8444417..afabb844d3 100644
 --- a/builtin/replay.c
 +++ b/builtin/replay.c
-@@ -89,6 +89,35 @@ static struct commit *create_commit(struct tree *tree,
- 	return (struct commit *)obj;
- }
- 
-+static struct commit *pick_regular_commit(struct commit *pickme,
-+					  struct commit *last_commit,
-+					  struct merge_options *merge_opt,
-+					  struct merge_result *result)
-+{
-+	struct commit *base;
-+	struct tree *pickme_tree, *base_tree;
-+
-+	base = pickme->parents->item;
-+
-+	pickme_tree = repo_get_commit_tree(the_repository, pickme);
-+	base_tree = repo_get_commit_tree(the_repository, base);
-+
-+	merge_opt->branch2 = short_commit_name(pickme);
-+	merge_opt->ancestor = xstrfmt("parent of %s", merge_opt->branch2);
-+
-+	merge_incore_nonrecursive(merge_opt,
-+				  base_tree,
-+				  result->tree,
-+				  pickme_tree,
-+				  result);
-+
-+	free((char*)merge_opt->ancestor);
-+	merge_opt->ancestor = NULL;
-+	if (!result->clean)
-+		return NULL;
-+	return create_commit(result->tree, pickme, last_commit);
-+}
-+
+@@ -15,7 +15,7 @@
+ #include "lockfile.h"
+ #include "merge-ort.h"
+ #include "object-name.h"
+-#include "read-cache-ll.h"
++#include "parse-options.h"
+ #include "refs.h"
+ #include "revision.h"
+ #include "sequencer.h"
+@@ -92,6 +92,7 @@ static struct commit *create_commit(struct tree *tree,
  int cmd_replay(int argc, const char **argv, const char *prefix)
  {
  	struct commit *onto;
-@@ -100,7 +129,7 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 	struct rev_info revs;
- 	struct commit *commit;
- 	struct merge_options merge_opt;
--	struct tree *next_tree, *base_tree, *head_tree;
-+	struct tree *head_tree;
- 	struct merge_result result;
- 	struct strbuf reflog_msg = STRBUF_INIT;
++	const char *onto_name = NULL;
+ 	struct commit *last_commit = NULL, *last_picked_commit = NULL;
+ 	struct object_id head;
+ 	struct lock_file lock = LOCK_INIT;
+@@ -105,16 +106,32 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
  	struct strbuf branch_name = STRBUF_INIT;
-@@ -175,7 +204,7 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 	result.tree = head_tree;
- 	last_commit = onto;
- 	while ((commit = get_revision(&revs))) {
--		struct commit *base;
-+		struct commit *pick;
+ 	int ret = 0;
  
- 		fprintf(stderr, "Rebasing %s...\r",
- 			oid_to_hex(&commit->object.oid));
-@@ -185,26 +214,11 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 		if (commit->parents->next)
- 			die(_("replaying merge commits is not supported yet!"));
- 
--		base = commit->parents->item;
--
--		next_tree = repo_get_commit_tree(the_repository, commit);
--		base_tree = repo_get_commit_tree(the_repository, base);
--
--		merge_opt.branch2 = short_commit_name(commit);
--		merge_opt.ancestor = xstrfmt("parent of %s", merge_opt.branch2);
--
--		merge_incore_nonrecursive(&merge_opt,
--					  base_tree,
--					  result.tree,
--					  next_tree,
--					  &result);
--
--		free((char*)merge_opt.ancestor);
--		merge_opt.ancestor = NULL;
--		if (!result.clean)
-+		pick = pick_regular_commit(commit, last_commit, &merge_opt, &result);
-+		if (!pick)
- 			break;
-+		last_commit = pick;
- 		last_picked_commit = commit;
--		last_commit = create_commit(result.tree, commit, last_commit);
+-	if (argc == 2 && !strcmp(argv[1], "-h")) {
+-		printf("git replay --onto <newbase> <oldbase> <branch> # EXPERIMENTAL\n");
+-		exit(129);
++	const char * const replay_usage[] = {
++		N_("git replay --onto <newbase> <oldbase> <branch> # EXPERIMENTAL"),
++		NULL
++	};
++	struct option replay_options[] = {
++		OPT_STRING(0, "onto", &onto_name,
++			   N_("revision"),
++			   N_("replay onto given commit")),
++		OPT_END()
++	};
++
++	argc = parse_options(argc, argv, prefix, replay_options, replay_usage,
++			     PARSE_OPT_KEEP_ARGV0 | PARSE_OPT_KEEP_UNKNOWN_OPT);
++
++	if (!onto_name) {
++		error(_("option --onto is mandatory"));
++		usage_with_options(replay_usage, replay_options);
  	}
  
- 	merge_finalize(&merge_opt, &result);
+-	if (argc != 5 || strcmp(argv[1], "--onto"))
+-		die("usage: read the code, figure out how to use it, then do so");
++	if (argc != 3) {
++		error(_("bad number of arguments"));
++		usage_with_options(replay_usage, replay_options);
++	}
+ 
+-	onto = peel_committish(argv[2]);
+-	strbuf_addf(&branch_name, "refs/heads/%s", argv[4]);
++	onto = peel_committish(onto_name);
++	strbuf_addf(&branch_name, "refs/heads/%s", argv[2]);
+ 
+ 	/* Sanity check */
+ 	if (repo_get_oid(the_repository, "HEAD", &head))
+@@ -126,6 +143,7 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 		BUG("Could not read index");
+ 
+ 	repo_init_revisions(the_repository, &revs, prefix);
++
+ 	revs.verbose_header = 1;
+ 	revs.max_parents = 1;
+ 	revs.cherry_mark = 1;
+@@ -134,7 +152,8 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 	revs.right_only = 1;
+ 	revs.sort_order = REV_SORT_IN_GRAPH_ORDER;
+ 	revs.topo_order = 1;
+-	strvec_pushl(&rev_walk_args, "", argv[4], "--not", argv[3], NULL);
++
++	strvec_pushl(&rev_walk_args, "", argv[2], "--not", argv[1], NULL);
+ 
+ 	if (setup_revisions(rev_walk_args.nr, rev_walk_args.v, &revs, NULL) > 1) {
+ 		ret = error(_("unhandled options"));
+@@ -197,8 +216,8 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 			       &last_commit->object.oid,
+ 			       &last_picked_commit->object.oid,
+ 			       REF_NO_DEREF, UPDATE_REFS_MSG_ON_ERR)) {
+-			error(_("could not update %s"), argv[4]);
+-			die("Failed to update %s", argv[4]);
++			error(_("could not update %s"), argv[2]);
++			die("Failed to update %s", argv[2]);
+ 		}
+ 		if (create_symref("HEAD", branch_name.buf, reflog_msg.buf) < 0)
+ 			die(_("unable to update HEAD"));
+@@ -210,8 +229,8 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 			       &last_commit->object.oid,
+ 			       &head,
+ 			       REF_NO_DEREF, UPDATE_REFS_MSG_ON_ERR)) {
+-			error(_("could not update %s"), argv[4]);
+-			die("Failed to update %s", argv[4]);
++			error(_("could not update %s"), argv[2]);
++			die("Failed to update %s", argv[2]);
+ 		}
+ 	}
+ 	ret = (result.clean == 0);
 -- 
 2.42.0.496.g529a7fda40
 
