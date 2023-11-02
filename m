@@ -1,86 +1,78 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AD461BDE2
-	for <git@vger.kernel.org>; Thu,  2 Nov 2023 15:07:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26CFB171B5
+	for <git@vger.kernel.org>; Thu,  2 Nov 2023 16:28:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WWHl2M4T"
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A64E138
-	for <git@vger.kernel.org>; Thu,  2 Nov 2023 08:07:01 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-543c3756521so1692682a12.2
-        for <git@vger.kernel.org>; Thu, 02 Nov 2023 08:07:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698937619; x=1699542419; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jNfTFWnqfCrBf3rmtUbL9UNp3dU9CDFK2MjzE3SWm3A=;
-        b=WWHl2M4Tv7b/NIIqIV8FyVNW8UUGaYd4aWX2aYM2vc4MVMIm++p2RHhMI7rDFm4OQy
-         9kF/i9pUWAsvrgak5PL1h3Ln6ayPFC3C6LSw005SBLLLs85sFwwMirp3QRFjBnaVdfxq
-         xEOpxoxj7K5dNzT5R5n//2h2mLS61cNFTXul7qCHzo7ZSXj9fPGvd7yX//9EH5hLzr2X
-         xQp65nFk0XHD4Ymip+CovdZoIsuxy/X25JVBBVK3xHX+2/joCJGPyH4p6CsP5exqWAIk
-         /xkLI+DHu0U4TwJyYafEDjNUA3ty5ErJl/dMsEo9tGni2o2OLISPuc6WmcIKtbTd+CqH
-         9cTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698937619; x=1699542419;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=jNfTFWnqfCrBf3rmtUbL9UNp3dU9CDFK2MjzE3SWm3A=;
-        b=b6zeIusYK6Fbc/bPYxqH7u94FXzcw9a5JU7blOUPdOCz283QCEBgXsONWl+APF6+cU
-         BK/ban9dITmKMFjEOjCrGyVQjxL1b6UrEX2WHKJz+qzDtnya4+kXMzbQoctLSj9v6hJZ
-         btaTd8wLZepQEhGX0AMMuMVESNjcvK4J67np2UZHsl0nVkOBB1yWHplZip0EzNDpTYQj
-         wiFRfSnpjBNJTvDwDs2jjreAUO+1cxWxp75TYLw9xdPGOzEKnrhSwKzMv/U9EcIjP+d9
-         6qeXzSErPCnJAj/4/ye8wh1gHIIP3TejJnptLAw4a2ib5nDIhj2IiO7H2w+aPSZBH1JS
-         A7Eg==
-X-Gm-Message-State: AOJu0Yz0qQT9pFULnJWdNZph8asea7xhiA91FpYKNGU8w59fhZDLwI4K
-	Oox0dNUgiMrDT1a5/qtH7FEejW22aQ8hd2JWVm4=
-X-Google-Smtp-Source: AGHT+IE+7SsWEQ1trzfgGx2/h586cmVMVzo4X/E13NZsiH7x5YNwREkPv77w8iLMWsF42s+fyYi9FmNFHaTL4uO+SIQ=
-X-Received: by 2002:a50:d5d4:0:b0:53e:98c6:5100 with SMTP id
- g20-20020a50d5d4000000b0053e98c65100mr15774104edj.30.1698937619452; Thu, 02
- Nov 2023 08:06:59 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xY0wjHWX"
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F0F7123
+	for <git@vger.kernel.org>; Thu,  2 Nov 2023 09:28:46 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8D8431B7B9C;
+	Thu,  2 Nov 2023 12:28:37 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=ZkA15TffKyJz
+	jTXDUKoB6bGb8kG4pLZyEyZWAzu6dEU=; b=xY0wjHWXq4OWPrn/6DUlfuFb/iSA
+	TTcs+ht7AaP0icuZV0voXIFytmBKRTIR/yQ3hrtUBv5mcSehatIx9ud8uKt0bk6E
+	iA5mPtkDEXAVx8BhDWlu4239nvX2JHrjRZU14CFGQU+ZlcYmo0CdIFqT6Wo1iKM4
+	eHriWMIQ8Eh+n58=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 84E041B7B9B;
+	Thu,  2 Nov 2023 12:28:37 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.67.28])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E70691B7B9A;
+	Thu,  2 Nov 2023 12:28:36 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  git@vger.kernel.org,
+  Elijah Newren <newren@gmail.com>,  Phillip Wood
+ <phillip.wood123@gmail.com>,  Eric Sunshine <sunshine@sunshineco.com>,
+  Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v3 1/2] git-merge-file doc: drop "-file" from argument
+ placeholders
+In-Reply-To: <CAN0heSrv7MPcEwkq4uEtv9uBbqm4FLKQLE3gdsEbqKkxPXOj5A@mail.gmail.com>
+	("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Thu, 2 Nov 2023 09:53:36
+ +0100")
+References: <20231024195655.2413191-1-sandals@crustytoothpaste.net>
+	<20231101192419.794162-1-sandals@crustytoothpaste.net>
+	<20231101192419.794162-2-sandals@crustytoothpaste.net>
+	<xmqq8r7howsq.fsf@gitster.g>
+	<CAN0heSrv7MPcEwkq4uEtv9uBbqm4FLKQLE3gdsEbqKkxPXOj5A@mail.gmail.com>
+Date: Fri, 03 Nov 2023 01:28:35 +0900
+Message-ID: <xmqqpm0sm85o.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20230907092521.733746-1-christian.couder@gmail.com>
- <20231010123847.2777056-1-christian.couder@gmail.com> <bd872b81-80a9-5e4e-dcb6-faebc9671848@gmx.de>
-In-Reply-To: <bd872b81-80a9-5e4e-dcb6-faebc9671848@gmx.de>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Thu, 2 Nov 2023 16:06:47 +0100
-Message-ID: <CAP8UFD09dZbrbebRFZvarY71q5Vc0YBfRQHbTg7A3H-qM2g8fg@mail.gmail.com>
-Subject: Re: [PATCH v5 00/14] Introduce new `git replay` command
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>, Elijah Newren <newren@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
-	John Cai <johncai86@gmail.com>, Derrick Stolee <stolee@gmail.com>, 
-	Phillip Wood <phillip.wood123@gmail.com>, Calvin Wan <calvinwan@google.com>, 
-	Toon Claes <toon@iotcl.com>, Dragan Simic <dsimic@manjaro.org>, Linus Arver <linusa@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ DFADD2E4-799C-11EE-9FCC-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
-Hi Dscho and Elijah,
+Martin =C3=85gren <martin.agren@gmail.com> writes:
 
-On Thu, Oct 26, 2023 at 3:44=E2=80=AFPM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
+> Maybe you having a similar reaction a second time makes this smell a bi=
+t
+> more?
 
-> In addition, I am still a bit uneasy with introducing both the manual pag=
-e
-> and the test script in this commit (see my comments in
-> https://lore.kernel.org/git/03460733-0219-c648-5757-db1958f8042e@gmx.de/)=
-.
-> It would be better to uphold our high standard and introduce scaffolds fo=
-r
-> both files in the first commit, then populate the file contents
-> incrementally in the same the patches that introduce the corresponding
-> options/features/changes.
+Not at all.  I am perfectly OK with --object-*, not --blob-*, as the
+end-user facing option name.  I however strongly prefer to see our
+log messages record the thought behind the design accurately in
+order to help future developers when they wonder what our intention
+was back when the commit was created.
 
-I have tried to improve on that in the v6 I just sent, but there are
-many patches implementing changes in behavior that I think weren't
-worth documenting and testing in `test-tool fast-rebase` (which had no
-doc and no test) and that aren't worth documenting and testing
-specifically in `git replay` either.
+In this case, I want to see that we tell our future selves "even
+though we named the option 'object', we plan to support blobs and
+nothing else, at least for now".
 
-Thanks!
+Thanks.
