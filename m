@@ -1,136 +1,117 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A17722301
-	for <git@vger.kernel.org>; Thu,  2 Nov 2023 21:32:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B08ED21A06
+	for <git@vger.kernel.org>; Thu,  2 Nov 2023 21:48:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mtRxifOg"
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF0D5187
-	for <git@vger.kernel.org>; Thu,  2 Nov 2023 14:32:16 -0700 (PDT)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id BD5661A494F;
-	Thu,  2 Nov 2023 17:32:15 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=/9VhPYkuh9Uq1T9oHeJbg+BY9IPhibHCnzfneN
-	dIaDU=; b=mtRxifOgRhaTpE98C7wUzT8o4jjLbKgOmMWCGcq/VHrU3/uVT+s1Ih
-	XwFesGr4L4AU4m76NElUDWqO+ZNqiUUpnFPHFRxwFKw5gDsiydqygVZuxp/ejO8Y
-	k4O2KgSwjFSlojrDZx0sh6NKi+rnttysqgTXGV/5Kyx7Wj3eKWbwI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id B5C651A494E;
-	Thu,  2 Nov 2023 17:32:15 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.67.28])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="HmMsuRvH"
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CF2518C
+	for <git@vger.kernel.org>; Thu,  2 Nov 2023 14:48:10 -0700 (PDT)
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 209BA1A494D;
-	Thu,  2 Nov 2023 17:32:15 -0400 (EDT)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Joanna Wang <jojwang@google.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/1] attr: enable attr pathspec magic for git-add and
- git-stash
-In-Reply-To: <20231102175316.2229631-1-jojwang@google.com> (Joanna Wang's
-	message of "Thu, 2 Nov 2023 17:53:15 +0000")
-References: <xmqqfs1ooil2.fsf@gitster.g>
-	<20231102175316.2229631-1-jojwang@google.com>
-Date: Fri, 03 Nov 2023 06:32:13 +0900
-Message-ID: <xmqqil6jlu3m.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 117965B0C4;
+	Thu,  2 Nov 2023 21:48:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1698961689;
+	bh=H6h0kfGc65ZAU+i9ams7jzWkN0sgWZLHaNtsucsJRzo=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=HmMsuRvH4uU1cV18v4o12y8gQGn90ZvDO46NE7SnUYnJUeydcefeAwIbPCsFxD5mP
+	 xxIENPQroVxu7B+vSCTjCKckPEyRNUu23IeOlpTb3mYXCrkcXmGEe6mAp0F6xcecCi
+	 Jx0zP2RRrad99XA0sBKDQz/T56DH6VxdsG4So+5AZNc/G4yA4nmErIhktXLWNuirF8
+	 STDEbtNaAkOrWW/OlKMnMnYb9r5iXnwux6cLtiPGhf+vknDhsUV1hQf7RVP3Jpvxw2
+	 BnKCgTSrqwJS2J3pjg8HHYy9Lcn+GIqxurjK9MdqLE8mkydGBRBj8BGBUTDS8rEBdw
+	 t/Y/kYf+TSfJ0BsZRVwyK/CJ8UJ/akewHEQP9zydbjpT+5xACJ73IKY4qPIcZBuo5u
+	 F0aKOHFjD2sLMLdjHpMgk2JalzhFerEI7Q5TjNxHbJOu2EiqcvJlZI2nuwTOtJO7u0
+	 RglJiy/eaLlft5zenGwFBXoMWMjOt/Ru2I4xj1W7aAq5ZwG6HaW
+Date: Thu, 2 Nov 2023 21:48:07 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Robin Dos Anjos <robin_1997@hotmail.fr>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: General question about "git range-diff"
+Message-ID: <ZUQZF-4CW-FbjfAU@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Robin Dos Anjos <robin_1997@hotmail.fr>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+References: <PR3P195MB087847E68AD2032148EFCA039BA6A@PR3P195MB0878.EURP195.PROD.OUTLOOK.COM>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 4A90BAB6-79C7-11EE-A911-25B3960A682E-77302942!pb-smtp2.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="QhSdzFRzbd4Lma6z"
+Content-Disposition: inline
+In-Reply-To: <PR3P195MB087847E68AD2032148EFCA039BA6A@PR3P195MB0878.EURP195.PROD.OUTLOOK.COM>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Spam-Level: *
 
-Joanna Wang <jojwang@google.com> writes:
 
->> Indeed, if you are going to pass the original "elt" string *anyway*,
->> you have all the info in there that you need.  I wonder if it makes
->> sense to get rid of the "unsigned magic" bitset from the parameter,
-> This was my initial strategy but ran into trouble when the magic was
-> in shorthand form. Upon closer look at how the shorthand works
-> (e.g. shorthand and longhand can never mix so
-> ':!/(attr:chicken)file' would make <(attr:chicken)file> the match string)
-> I tried this again by processing the forms separately.
-> It would still need both the element and element_magic, but I think it
-> addresses the concerns with future changes where multiple magic match
-> values could be allowed and the match values could be any string.
+--QhSdzFRzbd4Lma6z
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The "bits" were acceptable for things like "exclude" and "icase"
-because it does not matter how many times you gave them and they do
-not take any additional parameters, but attr is different in that it
-takes a value, and multiple instances with different values can be
-given.  It is lucky that we did not allow mixing the short and long
-forms ;-)
+On 2023-11-02 at 18:56:39, Robin Dos Anjos wrote:
+> Hi git community!
 
-> These changes would be fine as long as there is no overlap between
-> magic that takes a user-supplied value and magic that can be
-> expressed in shorthand.
+Hi,
 
-Indeed.  Thanks for thinking this through.
+> I'm a bit intimidated as this is my first message in the mailing list but=
+ I'll give it a go!
 
-> -static void prefix_magic(struct strbuf *sb, int prefixlen, unsigned magic)
-> +static void prefix_magic(struct strbuf *sb, int prefixlen, unsigned magic, const char *element)
->  {
-> -	int i;
-> -	strbuf_addstr(sb, ":(");
-> -	for (i = 0; i < ARRAY_SIZE(pathspec_magic); i++)
-> -		if (magic & pathspec_magic[i].bit) {
-> -			if (sb->buf[sb->len - 1] != '(')
-> -				strbuf_addch(sb, ',');
-> -			strbuf_addstr(sb, pathspec_magic[i].name);
+No reason to be intimidated.  We're very friendly here.
 
-At this point in the code, is it guaranteed that element[0] is ':'
-and never a NUL?  Also is it guaranteed that element has ')'
-somewhere later if element[1] is '('?
+> This is so useful to me that I'm wondering why "git range-diff" does
+> not implement this behavior. We could imagine a flag that would make
+> it behave as I described. Is this something that was ever considered?
+> Are there any technical difficulties that I'm completely missing? Do
+> you think this could be helpful to other people?
 
-"Otherwise the caller would have failed to parse the pathspec magic
-into the magic bits, and this helper function would not have been
-called" is the answer I am expecting, but I didn't check if the
-caller refrains from calling us.  It would be better to have a brief
-comment explaining why a seemingly loose parsing of element[] string
-is OK to save future readers from wondering the same thing as I did
-here.
+I'm not the author of range-diff, but I believe it was based on an
+earlier tool named git-tbdiff[0], which had similar behaviour and
+similar limitations.  My guess as to why nobody implemented a feature to
+handle the squashed commits case is that typically the recommended
+workflow in Git is to write small independent, logical, well-described,
+bisectable commits, and squashing is not recommended because it destroys
+all the work that people have put into making nice commits.
 
-> +	if (element[1] != '(') {
-> +		/* Process an element in shorthand form (e.g. ":!/<match>") */
-> +		strbuf_addstr(sb, ":(");
-> +		for (int i = 0; i < ARRAY_SIZE(pathspec_magic); i++) {
-> +			if ((magic & pathspec_magic[i].bit) && (pathspec_magic[i].mnemonic != '\0')) {
-> +				if (sb->buf[sb->len - 1] != '(')
-> +					strbuf_addch(sb, ',');
-> +				strbuf_addstr(sb, pathspec_magic[i].name);
-> +			}
->  		}
-> +	} else {
-> +		/* For an element in longhand form, we simply copy everything up to the final ')' */
+Of course, in many situations, people don't write nice commits like
+that, and many commits are effectively fixup commits with very short
+messages (e.g. "make it work"), sometimes containing profanity directed
+at the computer, and in those environments, squashing may be a
+legitimate choice.  However, it isn't typically a workflow that gets a
+lot of focus because most tooling is focused on the more recommended
+approach.
 
-A comment that is a bit on the overly-long side.
+Having said that, I'm sure people would find a feature like you
+suggested useful, although I'm not likely to use it myself.  It's
+possible that somebody might see your message and implement it, but
+usually patches come in from people who feel strongly about a feature
+and implement it themselves.  If you feel like you'd like to try such a
+change, I'm sure you can find folks to review it and provide feedback.
 
-> +		int len = strchr(element, ')') - element;
-> +		strbuf_add(sb, element, len);
-> +	}
->  	strbuf_addf(sb, ",prefix:%d)", prefixlen);
->  }
+[0] https://github.com/trast/tbdiff
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
-Come to think of it, this part of the change could stand on its own
-as an independent bugfix.  I wonder if this existing bug caused by
-failing to copy the value of "attr:" is triggerable from a codepath
-that already allows PATHSPEC_ATTR magic.  Not absolutely required
-when the rest of the patch is in reasonably close to the finish
-line, but it would narrow the scope of the new feature proper to
-treat this as a separate and independent fix, on which the new
-fature depends on.
+--QhSdzFRzbd4Lma6z
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Thanks for working on fixing this rather old bug.  I think we should
-have noticed when we added the support for the "attr" magic to the
-pathspec API.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.3 (GNU/Linux)
 
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZUQZFwAKCRB8DEliiIei
+gZuwAP9Gb3KR7WVtQVCO4wC/vIFvB9uBuM34IMtQmqN/qgNsHwEAmp47UNoxqX1l
+TSA8BCTp3vT+QEn9E/dAYhlpKnJPKgI=
+=7VsQ
+-----END PGP SIGNATURE-----
+
+--QhSdzFRzbd4Lma6z--
