@@ -1,101 +1,136 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF9511736
-	for <git@vger.kernel.org>; Thu,  2 Nov 2023 20:51:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A17722301
+	for <git@vger.kernel.org>; Thu,  2 Nov 2023 21:32:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Pi8+px8k"
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99178184
-	for <git@vger.kernel.org>; Thu,  2 Nov 2023 13:51:20 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-32f7abbb8b4so843362f8f.0
-        for <git@vger.kernel.org>; Thu, 02 Nov 2023 13:51:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698958278; x=1699563078; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=JILAqu1fh3Eb/3IyzuhSp54njt452p8V8rROwluhj1Q=;
-        b=Pi8+px8k8WlGIlYkXCwsS20n4FyOlh9zRU7qmv5BtYoaOb/hZW6LLgbWfquaxcn91j
-         0Ws1+NH4C3LvsH31a5A8Aa67bOLK91ZgjaHN+R5G+GiXahrl1F62w+6jKYcz88rSbHjU
-         NeKCT5fVboTE+dwi14VE2nVZeaL1QYxWeHoYpCZjMzcn2lGLEJ/HbzSdJeFgFxWv6iMs
-         USMjr27ODb+kpNqVvml3LYy9/xNJNcK0JA9hOrIrBOap7x0RMcLWcqCy3TEUcU/Ipdk5
-         B2qFvccLYVviJ1/xejvbJV6e8IYASdZWjkHwFWco1tL+Em44+7B/U8B4po1HLejulmCK
-         t69w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698958278; x=1699563078;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=JILAqu1fh3Eb/3IyzuhSp54njt452p8V8rROwluhj1Q=;
-        b=ppgbA3zy1yb8Iggadd0v3BCSZB51fRhiVgfEK1izdXHxpmVO2HgJVUacMMp+pzm1nT
-         EAi36sQyTF3qbDsn8fUx6fJzUzqNfkxXa4dx+Dd58W5ZchPNGI6DV2vcSQ+Zha1/VKW3
-         VljJJzBIIPkV/b59b+6Wc8cA4H75o9a0wh0nEavywZMBpgzkMpNholXXn9QSn2yHdEps
-         JV1EubPB6fcM+Fzeq4Lue3YbJagi5eItwxzOvVbc3RSGqNrjcHESi3CGx1hxJlh+pEFY
-         LgrsbQqDCGDHyXvF9caIk9a+0QiKbe9vOGRuIhrSU/P4RxKgMSmxBn7/GCqWBIV4YwIa
-         yHIQ==
-X-Gm-Message-State: AOJu0Yz59V5nTntXDdEPjEThLz6ZA7PpOAGAuxknm4m5AFRvg7SfnvtQ
-	I0eee2PKixS3LO6khYsSk524zNAQ/lo=
-X-Google-Smtp-Source: AGHT+IHnVTgpEaU+nz8wcgRViG9Wsj6K5gSG6ixovfAsc1ys8fsNFi7mUrMKu/YUQN+0/qpIyVfcOA==
-X-Received: by 2002:a5d:5443:0:b0:32d:857c:d546 with SMTP id w3-20020a5d5443000000b0032d857cd546mr13709886wrv.64.1698958278244;
-        Thu, 02 Nov 2023 13:51:18 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e11-20020adfe7cb000000b00317a04131c5sm253691wrn.57.2023.11.02.13.51.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Nov 2023 13:51:17 -0700 (PDT)
-Message-ID: <pull.1608.git.1698958277454.gitgitgadget@gmail.com>
-From: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 02 Nov 2023 20:51:17 +0000
-Subject: [PATCH] strvec: drop unnecessary include of hex.h
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mtRxifOg"
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF0D5187
+	for <git@vger.kernel.org>; Thu,  2 Nov 2023 14:32:16 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id BD5661A494F;
+	Thu,  2 Nov 2023 17:32:15 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=/9VhPYkuh9Uq1T9oHeJbg+BY9IPhibHCnzfneN
+	dIaDU=; b=mtRxifOgRhaTpE98C7wUzT8o4jjLbKgOmMWCGcq/VHrU3/uVT+s1Ih
+	XwFesGr4L4AU4m76NElUDWqO+ZNqiUUpnFPHFRxwFKw5gDsiydqygVZuxp/ejO8Y
+	k4O2KgSwjFSlojrDZx0sh6NKi+rnttysqgTXGV/5Kyx7Wj3eKWbwI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id B5C651A494E;
+	Thu,  2 Nov 2023 17:32:15 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.67.28])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 209BA1A494D;
+	Thu,  2 Nov 2023 17:32:15 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Joanna Wang <jojwang@google.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/1] attr: enable attr pathspec magic for git-add and
+ git-stash
+In-Reply-To: <20231102175316.2229631-1-jojwang@google.com> (Joanna Wang's
+	message of "Thu, 2 Nov 2023 17:53:15 +0000")
+References: <xmqqfs1ooil2.fsf@gitster.g>
+	<20231102175316.2229631-1-jojwang@google.com>
+Date: Fri, 03 Nov 2023 06:32:13 +0900
+Message-ID: <xmqqil6jlu3m.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Jonathan Tan <jonathantanmy@google.com>,
-    Calvin Wan <calvinwan@google.com>,
-    Linus Arver <linusa@google.com>,
-    Linus Arver <linusa@google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 4A90BAB6-79C7-11EE-A911-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-From: Linus Arver <linusa@google.com>
+Joanna Wang <jojwang@google.com> writes:
 
-In 41771fa435 (cache.h: remove dependence on hex.h; make other files
-include it explicitly, 2023-02-24) we added this as part of a larger
-mechanical refactor. But strvec doesn't actually depend on hex.h, so
-remove it.
+>> Indeed, if you are going to pass the original "elt" string *anyway*,
+>> you have all the info in there that you need.  I wonder if it makes
+>> sense to get rid of the "unsigned magic" bitset from the parameter,
+> This was my initial strategy but ran into trouble when the magic was
+> in shorthand form. Upon closer look at how the shorthand works
+> (e.g. shorthand and longhand can never mix so
+> ':!/(attr:chicken)file' would make <(attr:chicken)file> the match string)
+> I tried this again by processing the forms separately.
+> It would still need both the element and element_magic, but I think it
+> addresses the concerns with future changes where multiple magic match
+> values could be allowed and the match values could be any string.
 
-Signed-off-by: Linus Arver <linusa@google.com>
----
-    strvec: drop unnecessary include of hex.h
-    
-    In 41771fa435 (cache.h: remove dependence on hex.h; make other files
-    include it explicitly, 2023-02-24) we added this as part of a larger
-    mechanical refactor. But strvec doesn't actually depend on hex.h, so
-    remove it.
+The "bits" were acceptable for things like "exclude" and "icase"
+because it does not matter how many times you gave them and they do
+not take any additional parameters, but attr is different in that it
+takes a value, and multiple instances with different values can be
+given.  It is lucky that we did not allow mixing the short and long
+forms ;-)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1608%2Flistx%2Fstrvec-cleanup-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1608/listx/strvec-cleanup-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1608
+> These changes would be fine as long as there is no overlap between
+> magic that takes a user-supplied value and magic that can be
+> expressed in shorthand.
 
- strvec.c | 1 -
- 1 file changed, 1 deletion(-)
+Indeed.  Thanks for thinking this through.
 
-diff --git a/strvec.c b/strvec.c
-index 89dc9e7e753..178f4f37480 100644
---- a/strvec.c
-+++ b/strvec.c
-@@ -1,6 +1,5 @@
- #include "git-compat-util.h"
- #include "strvec.h"
--#include "hex.h"
- #include "strbuf.h"
- 
- const char *empty_strvec[] = { NULL };
+> -static void prefix_magic(struct strbuf *sb, int prefixlen, unsigned magic)
+> +static void prefix_magic(struct strbuf *sb, int prefixlen, unsigned magic, const char *element)
+>  {
+> -	int i;
+> -	strbuf_addstr(sb, ":(");
+> -	for (i = 0; i < ARRAY_SIZE(pathspec_magic); i++)
+> -		if (magic & pathspec_magic[i].bit) {
+> -			if (sb->buf[sb->len - 1] != '(')
+> -				strbuf_addch(sb, ',');
+> -			strbuf_addstr(sb, pathspec_magic[i].name);
 
-base-commit: bc5204569f7db44d22477485afd52ea410d83743
--- 
-gitgitgadget
+At this point in the code, is it guaranteed that element[0] is ':'
+and never a NUL?  Also is it guaranteed that element has ')'
+somewhere later if element[1] is '('?
+
+"Otherwise the caller would have failed to parse the pathspec magic
+into the magic bits, and this helper function would not have been
+called" is the answer I am expecting, but I didn't check if the
+caller refrains from calling us.  It would be better to have a brief
+comment explaining why a seemingly loose parsing of element[] string
+is OK to save future readers from wondering the same thing as I did
+here.
+
+> +	if (element[1] != '(') {
+> +		/* Process an element in shorthand form (e.g. ":!/<match>") */
+> +		strbuf_addstr(sb, ":(");
+> +		for (int i = 0; i < ARRAY_SIZE(pathspec_magic); i++) {
+> +			if ((magic & pathspec_magic[i].bit) && (pathspec_magic[i].mnemonic != '\0')) {
+> +				if (sb->buf[sb->len - 1] != '(')
+> +					strbuf_addch(sb, ',');
+> +				strbuf_addstr(sb, pathspec_magic[i].name);
+> +			}
+>  		}
+> +	} else {
+> +		/* For an element in longhand form, we simply copy everything up to the final ')' */
+
+A comment that is a bit on the overly-long side.
+
+> +		int len = strchr(element, ')') - element;
+> +		strbuf_add(sb, element, len);
+> +	}
+>  	strbuf_addf(sb, ",prefix:%d)", prefixlen);
+>  }
+
+Come to think of it, this part of the change could stand on its own
+as an independent bugfix.  I wonder if this existing bug caused by
+failing to copy the value of "attr:" is triggerable from a codepath
+that already allows PATHSPEC_ATTR magic.  Not absolutely required
+when the rest of the patch is in reasonably close to the finish
+line, but it would narrow the scope of the new feature proper to
+treat this as a separate and independent fix, on which the new
+fature depends on.
+
+Thanks for working on fixing this rather old bug.  I think we should
+have noticed when we added the support for the "attr" magic to the
+pathspec API.
+
