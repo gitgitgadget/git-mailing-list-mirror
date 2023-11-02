@@ -1,138 +1,157 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 255831867
-	for <git@vger.kernel.org>; Thu,  2 Nov 2023 06:48:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6E461FDF
+	for <git@vger.kernel.org>; Thu,  2 Nov 2023 08:46:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="Zg6W2V8B"
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FC0C123
-	for <git@vger.kernel.org>; Wed,  1 Nov 2023 23:48:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lUnrPkR2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Oloj8KBz"
+Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9901E12C
+	for <git@vger.kernel.org>; Thu,  2 Nov 2023 01:46:46 -0700 (PDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.west.internal (Postfix) with ESMTP id 9BC733200925;
+	Thu,  2 Nov 2023 04:46:45 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute4.internal (MEProxy); Thu, 02 Nov 2023 04:46:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to; s=fm3; t=1698914805; x=1699001205; bh=mC
+	5f7yW+sMhQR+N7FZ7yZSSGO1YBs/TTYn/7WTaGHvY=; b=lUnrPkR21wWZsn1xK8
+	0pM87ru1mS9Yi++bgZHrqBYLkvNuCPHJaKMiA5VAyxKsdul16ToLLD2tYNZ3UHjS
+	Y2AXxLi30RuKvgSPuPKW7w7Un0NYbhJJXE2owLOIDXnkyAPLV5F36+MorFN90v3y
+	O2NgwkQPJAbK4Y9a1Q1Nj81xdE6umFPWKIih+JwkfNB+eY000gE/Izje8hVv9+8m
+	sQYbhkae5qsbBqKRL8ERRGilNv5c1l8GStGrjQPL85GXO/+mwm9A6rb96PtOx64Y
+	rJZLyffFX7/Cwelq9J9xGgBN+sD/stKY8AEARZXXRI8NpUaTklYGgGJ1IrHY3BT9
+	4zOg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm3; t=1698914805; x=1699001205; bh=mC5f7yW+sMhQR
+	+N7FZ7yZSSGO1YBs/TTYn/7WTaGHvY=; b=Oloj8KBz5I0UiGWjbMtaUsE9VI5D+
+	AqPd2GeBd/uxTljQ7MuAqymqA0LkZWB7TZYozpvrGg28Ap4MXz6gD0LrKBUPg2bz
+	Pgi3KGbUwnmrMvZlcRgOU140yf/LiKC+mZ0+4WwE+pqtk10lUp7yEkCOTBN1PKg/
+	N5OYh487kW4cRNtH8hPijqjl43Yi2vNwwAL4uVa15azJ2XsCzhMrDrgDZ2JcZNRf
+	8DeFPXvuKWVu0hJFF0Rk7hPyqB12zk7kdFppvnizNaO3zwgxrF5GPbXqNXkk3Fq9
+	ziV7/FBj9jmbp3HI+VrJWtv2TnMysR+X9qo/DBC3tbaSDfgazpMPFLmGg==
+X-ME-Sender: <xms:9GFDZZUZVO2iFK6EerVlBEs8tYnT7JNgNWncNNS03lQ4WOUWWHKG3w>
+    <xme:9GFDZZneHK_kBnK8OZuU8D7206vkLkYxG6pZx4R5VqTJEleYj4-1w94qUVK6R3Aiv
+    OMn0LsnKpva9LKxSA>
+X-ME-Received: <xmr:9GFDZVaVtFm93UYJr2ZrZO-vZ_ucUXwl7dhVi0XJYnMgxzadzOpIf2D-pxCxcTARHIk_lLtfgtDA8-mj_3Cas0MiC-geIbfdrQev61UjVoFIBmo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddthedguddvvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
+    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
+    gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
+    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
+    esphhkshdrihhm
+X-ME-Proxy: <xmx:9GFDZcVFOvQRQUqd2aosrPc18ofwCQ9-KhdvQVTA88w5-LAbskQv_w>
+    <xmx:9GFDZTl3XruWg3XHAzxPewuTgL8ybPAnE0f_1RfvJwfYlG0n9fahQA>
+    <xmx:9GFDZZeVyH1JuDVhK4hj2uUejZ8hv57X9mJB3OJmSO56WZ6GasI66A>
+    <xmx:9WFDZRh3PxlVsbJU22-MnG5U6hgPYQylih5HlbCGd_SdhKXXFxxHxQ>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 2 Nov 2023 04:46:43 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 9281ca90 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 2 Nov 2023 08:46:31 +0000 (UTC)
+Date: Thu, 2 Nov 2023 09:46:41 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: git@vger.kernel.org
+Cc: Han-Wen Nienhuys <hanwen@google.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v3 1/9] t: allow skipping expected object ID in `ref-store
+ update-ref`
+Message-ID: <3caf9e3f28f2c2b8c87d95307852299b66d0fe12.1698914571.git.ps@pks.im>
+References: <cover.1697607222.git.ps@pks.im>
+ <cover.1698914571.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1698907722;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=YHxJ9Ozi2o5i+v/sRBW5neOWtD3LLfzkdU5JPtDFB9c=;
-	b=Zg6W2V8BlIf1cwRtfGkM5POG0SKdrSbledhuLEEGYm8IQeWeDBd9UE7HMjbsglZuPci4Y3
-	5Gdckn6KAumn1hwPZLsJN4wkHd6xklvL05NLxQkxkHU5xDiFNfLyx7h+5bVsLgBADubJPK
-	wJTmV5qjIG9WpIQbtBf7ajd304W6bxn+iG+gylksczKElCPRL/FYk2fhKt/jz7d3fKNezb
-	sHYsZut/sxlEcevUyOPu5jjzBHVRTxsVlMiicLTunL82iRkbTZCxA3zNqE9xMRo3Or9rtq
-	XnzVYlNhP+nam/J5fgWP+/L9R91ok+2WoambuGcok2InvOXYHNhMdjACgSdlzQ==
-Date: Thu, 02 Nov 2023 07:48:42 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Thomas Guyot <tguyot@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, Christoph
- Anton Mitterer <calestyo@scientia.org>, git@vger.kernel.org
-Subject: Re: why does git set X in LESS env var?
-In-Reply-To: <cfbe174f-23ac-4a35-8db4-66bdfdfdc14e@gmail.com>
-References: <3a2c362c019338ca7408b7a3bc5715b535d15b8a.camel@scientia.org>
- <xmqqa5sokdd3.fsf@gitster.g>
- <20231012000416.GA520855@coredump.intra.peff.net>
- <xmqqh6mwipqi.fsf@gitster.g> <3946c06e90604a92ad0dddf787729668@manjaro.org>
- <xmqqr0lzhkzk.fsf@gitster.g> <a831af51b6fb46b5d6fcd9768a7fb52d@manjaro.org>
- <cfbe174f-23ac-4a35-8db4-66bdfdfdc14e@gmail.com>
-Message-ID: <8022dae27797bf1e1770f099ed37f5d3@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="rHd5gqMj3w+4jnBP"
+Content-Disposition: inline
+In-Reply-To: <cover.1698914571.git.ps@pks.im>
 
-On 2023-11-02 06:48, Thomas Guyot wrote:
-> On 2023-10-13 16:12, Dragan Simic wrote:
->> On 2023-10-12 18:19, Junio C Hamano wrote:
->>> Dragan Simic <dsimic@manjaro.org> writes:
->>>> Please note that dropping "-X" and leaving "-F" would actually
->>>> introduce the inconsistency that I already mentioned.  To reiterate,
->>>> short outputs would then remain displayed on screen, while long
->>>> outputs would disappear after exiting less(1).
->>> 
->>> Good point.
->> 
->> I've been thinking about this, and a rather elegant, 
->> backward-compatible
->> solution is possible, but it requires some improvements to be made to
->> less(1) first.  I'll reach out to the author of less(1) and propose 
->> that
->> new feature, and I'll let you know his opinion about it.
-> 
->  Hey there...
 
-Hello!
+--rHd5gqMj3w+4jnBP
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> I'm clearly late to the party but I'm wondering, has anyone tested
-> adding -cy0 ? From the manpage (slightly edited):
-> 
->        -c or --clear-screen ( and backward compat. -C or
-> --CLEAR-SCREEN )
->               Causes full screen repaints to be painted from the top
-> line down.  By default, full screen repaints are done by scrolling
-> from the  bottom  of the screen.
+We require the caller to pass both the old and new expected object ID to
+our `test-tool ref-store update-ref` helper. When trying to update a
+symbolic reference though it's impossible to specify the expected object
+ID, which means that the test would instead have to force-update the
+reference. This is currently impossible though.
 
-AFAIK, the "-c" option is about the way screen contents is updated when 
-scrolled, and it exists to aid in resolving possible issues with some 
-terminal emulators.  To make sure, I just tested it, and "-c" doesn't 
-replace "-X".
+Update the helper to optionally skip verification of the old object ID
+in case the test passes in an empty old object ID as input.
 
->        -yn or --max-forw-scroll=n
->               Specifies  a  maximum  number of lines to scroll
-> forward.  If it is necessary to scroll forward more than n lines, the
-> screen is repainted in‐
->               stead.  The -c or -C option may be used to repaint from
-> the top of the screen if desired.  By default, any forward movement
-> causes scrolling.
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ t/helper/test-ref-store.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-This option is, I'd guess, also about aiding in resolving possible 
-issues with some terminal emulators.  Or maybe even with some actual 
-terminals as pieces of hardware, who knows, which may be too slow to 
-scroll many lines at once.
+diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
+index 48552e6a9e0..702ec1f128a 100644
+--- a/t/helper/test-ref-store.c
++++ b/t/helper/test-ref-store.c
+@@ -298,16 +298,19 @@ static int cmd_update_ref(struct ref_store *refs, con=
+st char **argv)
+ 	const char *new_sha1_buf =3D notnull(*argv++, "new-sha1");
+ 	const char *old_sha1_buf =3D notnull(*argv++, "old-sha1");
+ 	unsigned int flags =3D arg_flags(*argv++, "flags", transaction_flags);
+-	struct object_id old_oid;
++	struct object_id old_oid, *old_oid_ptr =3D NULL;
+ 	struct object_id new_oid;
+=20
+-	if (get_oid_hex(old_sha1_buf, &old_oid))
+-		die("cannot parse %s as %s", old_sha1_buf, the_hash_algo->name);
++	if (*old_sha1_buf) {
++		if (get_oid_hex(old_sha1_buf, &old_oid))
++			die("cannot parse %s as %s", old_sha1_buf, the_hash_algo->name);
++		old_oid_ptr =3D &old_oid;
++	}
+ 	if (get_oid_hex(new_sha1_buf, &new_oid))
+ 		die("cannot parse %s as %s", new_sha1_buf, the_hash_algo->name);
+=20
+ 	return refs_update_ref(refs, msg, refname,
+-			       &new_oid, &old_oid,
++			       &new_oid, old_oid_ptr,
+ 			       flags, UPDATE_REFS_DIE_ON_ERR);
+ }
+=20
+--=20
+2.42.0
 
-> I actually have one major issue with it, it's that displaying anything
-> less than a full page will fill the screen with ~ on the bottom, just
-> like when scrolling up on a partial page  without -F. I can see this
-> being a major annoyance when using for ex. git log -1, git show --stat
-> or --name-only, etc. as I  usually do it to keep the latest history
-> within the current screen (and there's likely even commands that I
-> never seen using the pager because I never exceeded the page height).
 
-Huh, this confuses me a bit, quite frankly.  Isn't the "-F" option used 
-specifically to make pagination invisible in case fewer lines than one 
-full screen are displayed?
+--rHd5gqMj3w+4jnBP
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> OTOH by repainting from the top, the scrollback buffer is never
-> affected. only the last displayed page remains on the terminal.
+-----BEGIN PGP SIGNATURE-----
 
-Just to clarify, it's the "-X" option that creates all the issues, and 
-the "--redraw-on-quit" option is already there to replace it with no 
-associated issues, but the trouble is that only newer versions of 
-less(1) support the "--redraw-on-quit" option.  IOW, it's all about 
-improving less(1) to avoid complex workarounds required to handle 
-different versions, such as the workarounds used in bat(1).
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVDYfAACgkQVbJhu7ck
+PpQoSRAAlW5AqcBZ6yuX4s8UTT4/WpVMzcuYyQw839IVQ93d8+XE7R2Pt6v2A7Tp
+CiFpSUQHotRoNq1WIVshvENF9TMX2VAwl3S+1QtS6dZbP2NJJubhqviqg6reMIq4
+jW6LZa/dmTeLLaDnWpth6rSf77D1jUV3ZxEM8ODEaDeTqpXYUFM/JXaXNp7LonlJ
+E42F9ZxoY6e2lgkId3xdvRuXMfOOLOateCIVTDwq6cLBmJK+2XVo9l+1G1pn6+MR
+myYzeigRHSSkQx8mhCpCTglh+7NmmBO4frRu9PhjUiPdxICMp/ZBswK1n133ttmf
+RO4psvKXP5fUfLMG8Ng5hGnt6dBXKRDewDBFYeIIcgJsFB+yDEKYSBroM8dXACdq
+HYiYgA+YlndSchFI+52Yu5rNP3Trg9x1D7EVNMfYpIIOYLzQZQQ1xyhXExYUjMrw
+ITWXC4hAhGp04wM9MlWhOEFZ7+3AEa9iGD9CDQE5b1TGq1x4yx3Wg6fjVb5qPsxQ
+q+lDZK9rUpRHGiD+r8qW1rZOpw1/aqAO7wcO42Oxs4JKTK+Q0zTixJOSosc8ZIPT
+09qFTonwz2hJ4+BT5aR+iSZNRdTue3LdzRJY1snIXi64W9nXtq59CQFu80zCZinG
+18Slabnq6YKGdiMCNIQt34d0g4ummC+1x4GMCFbqf5VMqVBZU/c=
+=k4Rw
+-----END PGP SIGNATURE-----
 
-> If less could only enable this behavior after the first full page
-> draw, that would be perfect!
-
-Could you, please, elaborate a bit on that?
-
-> Dragan, that may be useful if you're discussing with less
-> developers...
-
-We've basically reached some kind of an agreement about the need for a 
-good solution, which turned out to be rather complex as a result of 
-being quite universal and extensible, which was required for it to, 
-hopefully, be accepted into less(1).  Also, the author of less(1) seems 
-to be quite busy with some other things, and he prefers to implement new 
-features himself.
-
-We've also agreed on another new feature for less(1), hopefully, which 
-isn't exactly related, but should be quite useful.  It's about the 
-secure mode for less(1).
+--rHd5gqMj3w+4jnBP--
