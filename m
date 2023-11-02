@@ -1,48 +1,48 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D35731CAB3
-	for <git@vger.kernel.org>; Thu,  2 Nov 2023 13:52:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E86851CAB6
+	for <git@vger.kernel.org>; Thu,  2 Nov 2023 13:52:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nIj2g2q/"
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8566283
-	for <git@vger.kernel.org>; Thu,  2 Nov 2023 06:52:30 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-507a29c7eefso1124887e87.1
-        for <git@vger.kernel.org>; Thu, 02 Nov 2023 06:52:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Io1cVyf+"
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 813C212E
+	for <git@vger.kernel.org>; Thu,  2 Nov 2023 06:52:32 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-32f737deedfso558930f8f.3
+        for <git@vger.kernel.org>; Thu, 02 Nov 2023 06:52:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698933148; x=1699537948; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1698933150; x=1699537950; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=44KysQNtpohBpEFJtZEUhq40vrU+T9MrcgAIxT/M1EM=;
-        b=nIj2g2q/nDYJyuSF0tZHfBIKMnvERQcT7iglrG/cNymMuv4d1w1omRG8IYS9oq4gEf
-         WHLzvo++IyAP7iUMLLFvMR+dLa9VIBiT/444rSR3KRpX0DaH+/vK2HOOJjGbPEnpkDOk
-         Ulplrv3qQdfAQzWxhZpU/+9QMKFPf6AQ4h98CwSVqINrMJc1KzEpgG1H2jYFklpFX4ck
-         DEvpvoHpsE/F7Dh1ueI3lbKFPg7I4eovF9fMpVfT5sQQsEiGvmbmGxJPmoQwnLyZ5VAc
-         TneS848Aslhnd5icTaPa046gXCKXhVaEpNgOJzvsxTsplY4X7IS+OC9dZhmV4m9ArKk+
-         qZRA==
+        bh=fHOLRsLHPKeFgeopTzXV5xfagG71+oHPhlWpsK62kCI=;
+        b=Io1cVyf+8AR3Z7xEBBiLCelVMOAk5jSicShfh+YhilITePNe07uUCdwMnuFFO3SLWN
+         YBaIu4HbYxP2imHLJLTzoU7OK3T/AktvHjPH9aCxqBb2LSPx6lp9HXGC3k3dD5V6Q3QJ
+         073hKE9+yMT730g+BSxLbW9R6DFCByBU0/DGWstXG+qi3LCae+SNG9BRvCyuB1HT7aMq
+         V5RjFc6Fv4AOAhfjBfnSMlIZ7MFZRUiO+CjgEbAkjH738gkVUEdlo3BKAB6XYehXj/zZ
+         /p0GmKIg27icykbzFTnvW6OUjsmwNhxuoxhuIgsrObdZ/5VXWiGlNWBeCEHgeHLwaK2G
+         I+rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698933148; x=1699537948;
+        d=1e100.net; s=20230601; t=1698933150; x=1699537950;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=44KysQNtpohBpEFJtZEUhq40vrU+T9MrcgAIxT/M1EM=;
-        b=UhD60gW6aceKE8ouR9BYguzpvJiReGz71/XzNrgFh0PPfBEuEqB32bZ6XNQ1lYKQEP
-         RpJleOjXg7HV9PdJlwMwW1gDlJSeIB9io61STxiSPZYPrppyR7GOOxaL7iBiMWJcxyYs
-         iSjH+D8dNdrB7wTwJY5x/KqKnNui8nMkb9C3cPsleSScSssXSrIrWEXSFcPv6IVMv3Y0
-         4oNKovnsFv8nj763I9MDodTbIfRktLzFxIUcxzbYb7M1eedQhcocPPNjcfDnxklgHq0E
-         tqvqSomGY3LeoljsxAxJcBhY/6pRyv3hebHnKuxkHNXJn+CVrIiM3pkX763qdiAVlrv4
-         LyxA==
-X-Gm-Message-State: AOJu0Yze8XUAU2cAETp/9uYLBa0ZKjhHoF+HwFCbgXo933VP/LDSCtVY
-	PM6oxpsSGg0wPrL8Ix4fpjvcx/ms6ks=
-X-Google-Smtp-Source: AGHT+IErqMNrpMpp6fsZ4WDlGteNcm9AOpqC0OAjMTtWLCP1nZ5lZzUeXOZxvgauuhVDpq7H+JpRsw==
-X-Received: by 2002:a05:6512:ba7:b0:509:2b82:385c with SMTP id b39-20020a0565120ba700b005092b82385cmr9643290lfv.61.1698933147745;
-        Thu, 02 Nov 2023 06:52:27 -0700 (PDT)
+        bh=fHOLRsLHPKeFgeopTzXV5xfagG71+oHPhlWpsK62kCI=;
+        b=lKKlw4AJNRJn/GrYBRWw5vkml40mL9I9glNs0SqtpaPZUQY9pywxEeaTes6BmekXPS
+         tQvP0r4Q3X93Tv5iljYYV8KDj25onm3r1boxMNhxsK5Nuca/ePDDp9guv/JJwybedHzQ
+         5lcb8tiHZmIV9xDSCX8xdw6/EtAgY+f9341DE6UaFSfqAebQIn7C42/YXsGsf1erfoeb
+         OipoOSpBKY9gkDDSG8ALG+RRo0v6SQA+K8UxEs+7wlYY76qVle/ZGhqIaFmS8DwH0nWA
+         vaV2CpyUwSNeoX981b9rJl+7KTHm6eaTowvGny8a6f+aLB/Mi0MCctVob8qxNH5BB3Rv
+         +ddQ==
+X-Gm-Message-State: AOJu0YxzbUA6GYhauP3Y5Ria8Oz8FmkxRYzdkVJTxMRcCKSo17Hxlzwr
+	6URKtfaYra09ekScTHdgHdRS3DeFBEs=
+X-Google-Smtp-Source: AGHT+IEsjkIZ3nwT6mkNSg7lGch5Rs8zq8wXthHXWtfA631voNDjZCQq7a5TlCr/UpqwsinFGxhqag==
+X-Received: by 2002:a5d:64c5:0:b0:32f:952f:c524 with SMTP id f5-20020a5d64c5000000b0032f952fc524mr6709579wri.10.1698933149897;
+        Thu, 02 Nov 2023 06:52:29 -0700 (PDT)
 Received: from christian-Precision-5550.. ([2a04:cec0:116d:4e46:313c:1f52:4963:91b6])
-        by smtp.gmail.com with ESMTPSA id e6-20020adffc46000000b0030647449730sm2514996wrs.74.2023.11.02.06.52.26
+        by smtp.gmail.com with ESMTPSA id e6-20020adffc46000000b0030647449730sm2514996wrs.74.2023.11.02.06.52.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Nov 2023 06:52:27 -0700 (PDT)
+        Thu, 02 Nov 2023 06:52:29 -0700 (PDT)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -57,9 +57,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Dragan Simic <dsimic@manjaro.org>,
 	Linus Arver <linusa@google.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v6 10/14] replay: make it a minimal server side command
-Date: Thu,  2 Nov 2023 14:51:47 +0100
-Message-ID: <20231102135151.843758-11-christian.couder@gmail.com>
+Subject: [PATCH v6 11/14] replay: use standard revision ranges
+Date: Thu,  2 Nov 2023 14:51:48 +0100
+Message-ID: <20231102135151.843758-12-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.42.0.496.g529a7fda40
 In-Reply-To: <20231102135151.843758-1-christian.couder@gmail.com>
 References: <20231010123847.2777056-1-christian.couder@gmail.com>
@@ -74,332 +74,318 @@ Content-Transfer-Encoding: 8bit
 
 From: Elijah Newren <newren@gmail.com>
 
-We want this command to be a minimal command that just does server side
-picking of commits, displaying the results on stdout for higher level
-scripts to consume.
+Instead of the fixed "<oldbase> <branch>" arguments, the replay
+command now accepts "<revision-range>..." arguments in a similar
+way as many other Git commands. This makes its interface more
+standard and more flexible.
 
-So let's simplify it:
-  * remove the worktree and index reading/writing,
-  * remove the ref (and reflog) updating,
-  * remove the assumptions tying us to HEAD, since (a) this is not a
-    rebase and (b) we want to be able to pick commits in a bare repo,
-    i.e. to/from branches that are not checked out and not the main
-    branch,
-  * remove unneeded includes,
-  * handle rebasing multiple branches by printing on stdout the update
-    ref commands that should be performed.
+This also enables many revision related options accepted and
+eaten by setup_revisions(). If the replay command was a high level
+one or had a high level mode, it would make sense to restrict some
+of the possible options, like those generating non-contiguous
+history, as they could be confusing for most users.
 
-The output can be piped into `git update-ref --stdin` for the ref
-updates to happen.
+Also as the interface of the command is now mostly finalized,
+we can add more documentation and more testcases to make sure
+the command will continue to work as designed in the future.
 
-In the future to make it easier for users to use this command
-directly maybe an option can be added to automatically pipe its output
-into `git update-ref`.
+We only document the rev-list related options among all the
+revision related options that are now accepted, as the rev-list
+related ones are probably the most useful for now.
 
+Helped-by: Dragan Simic <dsimic@manjaro.org>
+Helped-by: Linus Arver <linusa@google.com>
 Co-authored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Elijah Newren <newren@gmail.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Documentation/git-replay.txt             |  5 +-
- builtin/replay.c                         | 78 ++++++++----------------
- t/t3650-replay-basics.sh                 | 19 +++++-
- t/t6429-merge-sequence-rename-caching.sh | 39 +++++++-----
- 4 files changed, 72 insertions(+), 69 deletions(-)
+ Documentation/git-replay.txt             | 55 +++++++++++++++++++++++-
+ builtin/replay.c                         | 21 ++-------
+ t/t3650-replay-basics.sh                 | 12 +++++-
+ t/t6429-merge-sequence-rename-caching.sh | 18 ++++----
+ 4 files changed, 76 insertions(+), 30 deletions(-)
 
 diff --git a/Documentation/git-replay.txt b/Documentation/git-replay.txt
-index 44bf584fed..4c852ff3bd 100644
+index 4c852ff3bd..36ddd7daed 100644
 --- a/Documentation/git-replay.txt
 +++ b/Documentation/git-replay.txt
-@@ -14,7 +14,10 @@ SYNOPSIS
+@@ -9,7 +9,7 @@ git-replay - EXPERIMENTAL: Replay commits on a new base, works with bare repos t
+ SYNOPSIS
+ --------
+ [verse]
+-'git replay' --onto <newbase> <oldbase> <branch> # EXPERIMENTAL
++'git replay' --onto <newbase> <revision-range>... # EXPERIMENTAL
+ 
  DESCRIPTION
  -----------
- 
--Takes a range of commits and replays them onto a new location.
-+Takes a range of commits and replays them onto a new location. Leaves
-+the working tree and the index untouched, and updates no
-+references. The output of this command is meant to be used as input to
-+`git update-ref --stdin`, which would update the relevant branches.
+@@ -17,7 +17,8 @@ DESCRIPTION
+ Takes a range of commits and replays them onto a new location. Leaves
+ the working tree and the index untouched, and updates no
+ references. The output of this command is meant to be used as input to
+-`git update-ref --stdin`, which would update the relevant branches.
++`git update-ref --stdin`, which would update the relevant branches
++(see the OUTPUT section below).
  
  THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
  
+@@ -27,6 +28,30 @@ OPTIONS
+ --onto <newbase>::
+ 	Starting point at which to create the new commits.  May be any
+ 	valid commit, and not just an existing branch name.
+++
++The update-ref command(s) in the output will update the branch(es) in
++the revision range to point at the new commits, similar to the way how
++`git rebase --update-refs` updates multiple branches in the affected
++range.
++
++<revision-range>::
++	Range of commits to replay; see "Specifying Ranges" in
++	linkgit:git-rev-parse and the "Commit Limiting" options below.
++
++include::rev-list-options.txt[]
++
++OUTPUT
++------
++
++When there are no conflicts, the output of this command is usable as
++input to `git update-ref --stdin`.  It is of the form:
++
++	update refs/heads/branch1 ${NEW_branch1_HASH} ${OLD_branch1_HASH}
++	update refs/heads/branch2 ${NEW_branch2_HASH} ${OLD_branch2_HASH}
++	update refs/heads/branch3 ${NEW_branch3_HASH} ${OLD_branch3_HASH}
++
++where the number of refs updated depends on the arguments passed and
++the shape of the history being replayed.
+ 
+ EXIT STATUS
+ -----------
+@@ -36,6 +61,32 @@ the replay has conflicts, the exit status is 1.  If the replay is not
+ able to complete (or start) due to some kind of error, the exit status
+ is something other than 0 or 1.
+ 
++EXAMPLES
++--------
++
++To simply rebase `mybranch` onto `target`:
++
++------------
++$ git replay --onto target origin/main..mybranch
++update refs/heads/mybranch ${NEW_mybranch_HASH} ${OLD_mybranch_HASH}
++------------
++
++When calling `git replay`, one does not need to specify a range of
++commits to replay using the syntax `A..B`; any range expression will
++do:
++
++------------
++$ git replay --onto origin/main ^base branch1 branch2 branch3
++update refs/heads/branch1 ${NEW_branch1_HASH} ${OLD_branch1_HASH}
++update refs/heads/branch2 ${NEW_branch2_HASH} ${OLD_branch2_HASH}
++update refs/heads/branch3 ${NEW_branch3_HASH} ${OLD_branch3_HASH}
++------------
++
++This will simultaneously rebase `branch1`, `branch2`, and `branch3`,
++all commits they have since `base`, playing them on top of
++`origin/main`. These three branches may have commits on top of `base`
++that they have in common, but that does not need to be the case.
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
 diff --git a/builtin/replay.c b/builtin/replay.c
-index 9331f5c6ec..7e3ebac3db 100644
+index 7e3ebac3db..8fe4391976 100644
 --- a/builtin/replay.c
 +++ b/builtin/replay.c
-@@ -6,11 +6,7 @@
- #include "git-compat-util.h"
- 
- #include "builtin.h"
--#include "cache-tree.h"
--#include "commit.h"
- #include "environment.h"
--#include "gettext.h"
--#include "hash.h"
- #include "hex.h"
- #include "lockfile.h"
- #include "merge-ort.h"
-@@ -18,8 +14,6 @@
+@@ -14,7 +14,6 @@
  #include "parse-options.h"
  #include "refs.h"
  #include "revision.h"
--#include "sequencer.h"
--#include "setup.h"
- #include "strvec.h"
+-#include "strvec.h"
  #include <oidset.h>
  #include <tree.h>
-@@ -102,6 +96,7 @@ static struct commit *pick_regular_commit(struct commit *pickme,
- 	pickme_tree = repo_get_commit_tree(the_repository, pickme);
- 	base_tree = repo_get_commit_tree(the_repository, base);
  
-+	merge_opt->branch1 = short_commit_name(last_commit);
- 	merge_opt->branch2 = short_commit_name(pickme);
- 	merge_opt->ancestor = xstrfmt("parent of %s", merge_opt->branch2);
- 
-@@ -122,15 +117,12 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- {
+@@ -118,16 +117,14 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
  	struct commit *onto;
  	const char *onto_name = NULL;
--	struct commit *last_commit = NULL, *last_picked_commit = NULL;
--	struct lock_file lock = LOCK_INIT;
-+	struct commit *last_commit = NULL;
- 	struct strvec rev_walk_args = STRVEC_INIT;
+ 	struct commit *last_commit = NULL;
+-	struct strvec rev_walk_args = STRVEC_INIT;
  	struct rev_info revs;
  	struct commit *commit;
  	struct merge_options merge_opt;
--	struct tree *head_tree;
  	struct merge_result result;
--	struct strbuf reflog_msg = STRBUF_INIT;
- 	struct strbuf branch_name = STRBUF_INIT;
+-	struct strbuf branch_name = STRBUF_INIT;
  	int i, ret = 0;
  
-@@ -161,10 +153,6 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 	onto = peel_committish(onto_name);
- 	strbuf_addf(&branch_name, "refs/heads/%s", argv[2]);
- 
--	repo_hold_locked_index(the_repository, &lock, LOCK_DIE_ON_ERROR);
--	if (repo_read_index(the_repository) < 0)
--		BUG("Could not read index");
--
- 	repo_init_revisions(the_repository, &revs, prefix);
- 
- 	strvec_pushl(&rev_walk_args, "", argv[2], "--not", argv[1], NULL);
-@@ -203,58 +191,44 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 	init_merge_options(&merge_opt, the_repository);
- 	memset(&result, 0, sizeof(result));
- 	merge_opt.show_rename_progress = 0;
--	merge_opt.branch1 = "HEAD";
--	head_tree = repo_get_commit_tree(the_repository, onto);
--	result.tree = head_tree;
-+	result.tree = repo_get_commit_tree(the_repository, onto);
- 	last_commit = onto;
- 	while ((commit = get_revision(&revs))) {
--		struct commit *pick;
-+		const struct name_decoration *decoration;
- 
- 		if (!commit->parents)
- 			die(_("replaying down to root commit is not supported yet!"));
- 		if (commit->parents->next)
- 			die(_("replaying merge commits is not supported yet!"));
- 
--		pick = pick_regular_commit(commit, last_commit, &merge_opt, &result);
--		if (!pick)
-+		last_commit = pick_regular_commit(commit, last_commit, &merge_opt, &result);
-+		if (!last_commit)
- 			break;
--		last_commit = pick;
--		last_picked_commit = commit;
-+
-+		decoration = get_name_decoration(&commit->object);
-+		if (!decoration)
-+			continue;
-+
-+		while (decoration) {
-+			if (decoration->type == DECORATION_REF_LOCAL) {
-+				printf("update %s %s %s\n",
-+				       decoration->name,
-+				       oid_to_hex(&last_commit->object.oid),
-+				       oid_to_hex(&commit->object.oid));
-+			}
-+			decoration = decoration->next;
-+		}
+ 	const char * const replay_usage[] = {
+-		N_("git replay --onto <newbase> <oldbase> <branch> # EXPERIMENTAL"),
++		N_("git replay --onto <newbase> <revision-range>... # EXPERIMENTAL"),
+ 		NULL
+ 	};
+ 	struct option replay_options[] = {
+@@ -145,18 +142,10 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 		usage_with_options(replay_usage, replay_options);
  	}
  
- 	merge_finalize(&merge_opt, &result);
-+	ret = result.clean;
- 
--	if (result.clean < 0)
--		exit(128);
--
--	if (result.clean) {
--		strbuf_addf(&reflog_msg, "finish rebase %s onto %s",
--			    oid_to_hex(&last_picked_commit->object.oid),
--			    oid_to_hex(&last_commit->object.oid));
--		if (update_ref(reflog_msg.buf, branch_name.buf,
--			       &last_commit->object.oid,
--			       &last_picked_commit->object.oid,
--			       REF_NO_DEREF, UPDATE_REFS_MSG_ON_ERR)) {
--			error(_("could not update %s"), argv[2]);
--			die("Failed to update %s", argv[2]);
--		}
--		if (create_symref("HEAD", branch_name.buf, reflog_msg.buf) < 0)
--			die(_("unable to update HEAD"));
--	} else {
--		strbuf_addf(&reflog_msg, "rebase progress up to %s",
--			    oid_to_hex(&last_picked_commit->object.oid));
--		if (update_ref(reflog_msg.buf, "HEAD",
--			       &last_commit->object.oid,
--			       &onto->object.oid,
--			       REF_NO_DEREF, UPDATE_REFS_MSG_ON_ERR)) {
--			error(_("could not update %s"), argv[2]);
--			die("Failed to update %s", argv[2]);
--		}
+-	if (argc != 3) {
+-		error(_("bad number of arguments"));
+-		usage_with_options(replay_usage, replay_options);
 -	}
--	ret = (result.clean == 0);
+-
+ 	onto = peel_committish(onto_name);
+-	strbuf_addf(&branch_name, "refs/heads/%s", argv[2]);
+ 
+ 	repo_init_revisions(the_repository, &revs, prefix);
+ 
+-	strvec_pushl(&rev_walk_args, "", argv[2], "--not", argv[1], NULL);
+-
+ 	/*
+ 	 * TODO: For now, let's warn when we see an option that we are
+ 	 * going to override after setup_revisions() below. In the
+@@ -170,8 +159,9 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 			warning(_("option '%s' will be overridden"), argv[i]);
+ 	}
+ 
+-	if (setup_revisions(rev_walk_args.nr, rev_walk_args.v, &revs, NULL) > 1) {
+-		ret = error(_("unhandled options"));
++	argc = setup_revisions(argc, argv, &revs, NULL);
++	if (argc > 1) {
++		ret = error(_("unrecognized argument: %s"), argv[1]);
+ 		goto cleanup;
+ 	}
+ 
+@@ -181,8 +171,6 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 	revs.topo_order = 1;
+ 	revs.simplify_history = 0;
+ 
+-	strvec_clear(&rev_walk_args);
+-
+ 	if (prepare_revision_walk(&revs) < 0) {
+ 		ret = error(_("error preparing revisions"));
+ 		goto cleanup;
+@@ -224,7 +212,6 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 	ret = result.clean;
+ 
  cleanup:
--	strbuf_release(&reflog_msg);
- 	strbuf_release(&branch_name);
+-	strbuf_release(&branch_name);
  	release_revisions(&revs);
--	return ret;
-+
-+	/* Return */
-+	if (ret < 0)
-+		exit(128);
-+	return ret ? 0 : 1;
- }
+ 
+ 	/* Return */
 diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
-index b5b9f9ade2..3567c98362 100755
+index 3567c98362..a1da4f9ef9 100755
 --- a/t/t3650-replay-basics.sh
 +++ b/t/t3650-replay-basics.sh
-@@ -47,12 +47,29 @@ test_expect_success 'setup' '
- 	test_commit C.conflict C.t conflict
+@@ -52,7 +52,7 @@ test_expect_success 'setup bare' '
  '
  
-+test_expect_success 'setup bare' '
-+	git clone --bare . bare
-+'
-+
  test_expect_success 'using replay to rebase two branches, one on top of other' '
- 	git replay --onto main topic1 topic2 >result &&
+-	git replay --onto main topic1 topic2 >result &&
++	git replay --onto main topic1..topic2 >result &&
  
-+	test_line_count = 1 result &&
-+
- 	git log --format=%s $(cut -f 3 -d " " result) >actual &&
- 	test_write_lines E D M L B A >expect &&
--	test_cmp expect actual
-+	test_cmp expect actual &&
-+
-+	printf "update refs/heads/topic2 " >expect &&
-+	printf "%s " $(cut -f 3 -d " " result) >>expect &&
-+	git rev-parse topic2 >>expect &&
-+
-+	test_cmp expect result
-+'
-+
-+test_expect_success 'using replay on bare repo to rebase two branches, one on top of other' '
-+	git -C bare replay --onto main topic1 topic2 >result-bare &&
-+	test_cmp expect result-bare
+ 	test_line_count = 1 result &&
+ 
+@@ -68,8 +68,16 @@ test_expect_success 'using replay to rebase two branches, one on top of other' '
  '
  
+ test_expect_success 'using replay on bare repo to rebase two branches, one on top of other' '
+-	git -C bare replay --onto main topic1 topic2 >result-bare &&
++	git -C bare replay --onto main topic1..topic2 >result-bare &&
+ 	test_cmp expect result-bare
+ '
+ 
++test_expect_success 'using replay to rebase with a conflict' '
++	test_expect_code 1 git replay --onto topic1 B..conflict
++'
++
++test_expect_success 'using replay on bare repo to rebase with a conflict' '
++	test_expect_code 1 git -C bare replay --onto topic1 B..conflict
++'
++
  test_done
 diff --git a/t/t6429-merge-sequence-rename-caching.sh b/t/t6429-merge-sequence-rename-caching.sh
-index 7670b72008..099aefeffc 100755
+index 099aefeffc..0f39ed0d08 100755
 --- a/t/t6429-merge-sequence-rename-caching.sh
 +++ b/t/t6429-merge-sequence-rename-caching.sh
-@@ -71,8 +71,9 @@ test_expect_success 'caching renames does not preclude finding new ones' '
+@@ -71,7 +71,7 @@ test_expect_success 'caching renames does not preclude finding new ones' '
  
  		git switch upstream &&
  
--		git replay --onto HEAD upstream~1 topic &&
--		git reset --hard topic &&
-+		git replay --onto HEAD upstream~1 topic >out &&
-+		git update-ref --stdin <out &&
-+		git checkout topic &&
+-		git replay --onto HEAD upstream~1 topic >out &&
++		git replay --onto HEAD upstream~1..topic >out &&
+ 		git update-ref --stdin <out &&
+ 		git checkout topic &&
  
- 		git ls-files >tracked-files &&
- 		test_line_count = 2 tracked-files &&
-@@ -140,7 +141,9 @@ test_expect_success 'cherry-pick both a commit and its immediate revert' '
+@@ -141,7 +141,7 @@ test_expect_success 'cherry-pick both a commit and its immediate revert' '
  		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
  		export GIT_TRACE2_PERF &&
  
--		git replay --onto HEAD upstream~1 topic &&
-+		git replay --onto HEAD upstream~1 topic >out &&
-+		git update-ref --stdin <out &&
-+		git checkout topic &&
+-		git replay --onto HEAD upstream~1 topic >out &&
++		git replay --onto HEAD upstream~1..topic >out &&
+ 		git update-ref --stdin <out &&
+ 		git checkout topic &&
+ 
+@@ -201,7 +201,7 @@ test_expect_success 'rename same file identically, then reintroduce it' '
+ 		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
+ 		export GIT_TRACE2_PERF &&
+ 
+-		git replay --onto HEAD upstream~1 topic >out &&
++		git replay --onto HEAD upstream~1..topic >out &&
+ 		git update-ref --stdin <out &&
+ 		git checkout topic &&
+ 
+@@ -279,7 +279,7 @@ test_expect_success 'rename same file identically, then add file to old dir' '
+ 		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
+ 		export GIT_TRACE2_PERF &&
+ 
+-		git replay --onto HEAD upstream~1 topic >out &&
++		git replay --onto HEAD upstream~1..topic >out &&
+ 		git update-ref --stdin <out &&
+ 		git checkout topic &&
+ 
+@@ -357,7 +357,7 @@ test_expect_success 'cached dir rename does not prevent noticing later conflict'
+ 		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
+ 		export GIT_TRACE2_PERF &&
+ 
+-		test_must_fail git replay --onto HEAD upstream~1 topic >output &&
++		test_must_fail git replay --onto HEAD upstream~1..topic >output &&
  
  		grep region_enter.*diffcore_rename trace.output >calls &&
- 		test_line_count = 1 calls
-@@ -198,8 +201,9 @@ test_expect_success 'rename same file identically, then reintroduce it' '
+ 		test_line_count = 2 calls
+@@ -456,7 +456,7 @@ test_expect_success 'dir rename unneeded, then add new file to old dir' '
  		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
  		export GIT_TRACE2_PERF &&
  
--		git replay --onto HEAD upstream~1 topic &&
--		git reset --hard topic &&
-+		git replay --onto HEAD upstream~1 topic >out &&
-+		git update-ref --stdin <out &&
-+		git checkout topic &&
+-		git replay --onto HEAD upstream~1 topic >out &&
++		git replay --onto HEAD upstream~1..topic >out &&
+ 		git update-ref --stdin <out &&
+ 		git checkout topic &&
  
- 		git ls-files >tracked &&
- 		test_line_count = 2 tracked &&
-@@ -275,8 +279,9 @@ test_expect_success 'rename same file identically, then add file to old dir' '
+@@ -523,7 +523,7 @@ test_expect_success 'dir rename unneeded, then rename existing file into old dir
  		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
  		export GIT_TRACE2_PERF &&
  
--		git replay --onto HEAD upstream~1 topic &&
--		git reset --hard topic &&
-+		git replay --onto HEAD upstream~1 topic >out &&
-+		git update-ref --stdin <out &&
-+		git checkout topic &&
+-		git replay --onto HEAD upstream~1 topic >out &&
++		git replay --onto HEAD upstream~1..topic >out &&
+ 		git update-ref --stdin <out &&
+ 		git checkout topic &&
  
- 		git ls-files >tracked &&
- 		test_line_count = 4 tracked &&
-@@ -451,8 +456,9 @@ test_expect_success 'dir rename unneeded, then add new file to old dir' '
+@@ -626,7 +626,7 @@ test_expect_success 'caching renames only on upstream side, part 1' '
  		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
  		export GIT_TRACE2_PERF &&
  
--		git replay --onto HEAD upstream~1 topic &&
--		git reset --hard topic &&
-+		git replay --onto HEAD upstream~1 topic >out &&
-+		git update-ref --stdin <out &&
-+		git checkout topic &&
+-		git replay --onto HEAD upstream~1 topic >out &&
++		git replay --onto HEAD upstream~1..topic >out &&
+ 		git update-ref --stdin <out &&
+ 		git checkout topic &&
  
- 		grep region_enter.*diffcore_rename trace.output >calls &&
- 		test_line_count = 2 calls &&
-@@ -517,8 +523,9 @@ test_expect_success 'dir rename unneeded, then rename existing file into old dir
+@@ -685,7 +685,7 @@ test_expect_success 'caching renames only on upstream side, part 2' '
  		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
  		export GIT_TRACE2_PERF &&
  
--		git replay --onto HEAD upstream~1 topic &&
--		git reset --hard topic &&
-+		git replay --onto HEAD upstream~1 topic >out &&
-+		git update-ref --stdin <out &&
-+		git checkout topic &&
+-		git replay --onto HEAD upstream~1 topic >out &&
++		git replay --onto HEAD upstream~1..topic >out &&
+ 		git update-ref --stdin <out &&
+ 		git checkout topic &&
  
- 		grep region_enter.*diffcore_rename trace.output >calls &&
- 		test_line_count = 3 calls &&
-@@ -619,8 +626,9 @@ test_expect_success 'caching renames only on upstream side, part 1' '
- 		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
- 		export GIT_TRACE2_PERF &&
- 
--		git replay --onto HEAD upstream~1 topic &&
--		git reset --hard topic &&
-+		git replay --onto HEAD upstream~1 topic >out &&
-+		git update-ref --stdin <out &&
-+		git checkout topic &&
- 
- 		grep region_enter.*diffcore_rename trace.output >calls &&
- 		test_line_count = 1 calls &&
-@@ -677,8 +685,9 @@ test_expect_success 'caching renames only on upstream side, part 2' '
- 		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
- 		export GIT_TRACE2_PERF &&
- 
--		git replay --onto HEAD upstream~1 topic &&
--		git reset --hard topic &&
-+		git replay --onto HEAD upstream~1 topic >out &&
-+		git update-ref --stdin <out &&
-+		git checkout topic &&
- 
- 		grep region_enter.*diffcore_rename trace.output >calls &&
- 		test_line_count = 2 calls &&
 -- 
 2.42.0.496.g529a7fda40
 
