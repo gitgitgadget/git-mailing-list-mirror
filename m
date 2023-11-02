@@ -1,45 +1,45 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D27406AAC
-	for <git@vger.kernel.org>; Thu,  2 Nov 2023 14:44:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3AB57486
+	for <git@vger.kernel.org>; Thu,  2 Nov 2023 14:48:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ScUI8paY"
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71AA612F
-	for <git@vger.kernel.org>; Thu,  2 Nov 2023 07:44:44 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-54394328f65so1692180a12.3
-        for <git@vger.kernel.org>; Thu, 02 Nov 2023 07:44:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VREJKWQH"
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63BF9B7
+	for <git@vger.kernel.org>; Thu,  2 Nov 2023 07:48:28 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-5437d60fb7aso1694210a12.3
+        for <git@vger.kernel.org>; Thu, 02 Nov 2023 07:48:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698936283; x=1699541083; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1698936507; x=1699541307; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=9pB463uIFQ579HicIKyJPKCEPkXshB/g8Ws9BJ+6Xao=;
-        b=ScUI8paYoa7j22POXAIj7pZVG9AMVXEL6fGGMoKPZOx702XezPcE5DtOAV1ST8VFpi
-         QCHxkYMlyMz1GZP1HX2DOjHhz2Ezr9A132Vt3oZdE1h0Nzg+XruhGn7MoZuWVPOvjcqn
-         TSUoFevlHTXWWM6Hc+qHreUBR8unRUTehoHUaoX24rhX460YgkbHWta92jDcK9yYq54T
-         JuOf1WWreL6U7YJnSK6RUt8QUIz8TlA6y0o+xXm9AWVOogKEOncXHuvop0QyRuWac75i
-         ATyC1G0PSSXz0l11biMieCoab678jOgmcq72g4PYdBhlyHUXwleb7/j5eSrsyf6VvA0S
-         /E6A==
+        bh=ScgPM8hzETr3rG76ynWXfeVQpRnjUHhpKjQyRhq+5aM=;
+        b=VREJKWQHizZJV5Zp/YwByE4PZV3j64zsi7F3z8CAvUbiRRz0fVm2kv3S8mMObOB39x
+         uqVy3Fz7DLiYch0aWxpbAudo/qpk2T1M4odgu4UKHJdtJoRhBHjHSvgeY6pp4/4FmSJo
+         /edjJcyId/GIQPZ9JCaQQ/squp0LbcnVuqmLQijZ56zlizicXPOdDxcivX9YHTqhAHyO
+         BBPbLcDlKCLVkbNL2eZLkZeC88X+Y3eV4Ws8k6zyztT/jZrG5Gy7CnMWLFVst6mStGRw
+         qqnroZ0COhZ0QATtvmPrUkccWO3wpuTThHjNqxdCaas0ju3VtyLRWFfvNsdNIt4YJD1q
+         GQrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698936283; x=1699541083;
+        d=1e100.net; s=20230601; t=1698936507; x=1699541307;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=9pB463uIFQ579HicIKyJPKCEPkXshB/g8Ws9BJ+6Xao=;
-        b=XQJkewceAQk8zP6I4+xxR47HWe2x8gD6ULkqwAJOue3imIBaQdXcaynVgyY5TzIn4v
-         a+5WEpqfHJnnWyXH3JefOCHhOQ8JMbIoLLy2lZi2p9ms+jGnlNxn8PVXWNUaBW6JECbP
-         MrIFmwkb+7JudYyMY2vuCVxBCfVlcreF8BNbHQtIG43/fRHbyG63zUeocOdGABFBPEx5
-         mtc/unyylYsVMUCVfy89L+E1D7g/Y3qDOFejx7N9sxiF9lZFL6lCS1bQ/eRIF7qNvWTN
-         orJfnITo22MYkayg66N3ypk3HOGgsHNXpyBN13ifdTUhNEdJWx55yjgR9xGCjnDoDeGh
-         5W5w==
-X-Gm-Message-State: AOJu0Yxnoa91nq40EHEMP9WIJldzof+WdmBwqJK6mRsPiKJ8o/pHy0Ln
-	b1aDUKQTdNAIabtf2c0fsQUsvGR+6TWNwi1JZqE=
-X-Google-Smtp-Source: AGHT+IFqSSWUw4sL3qqjYacO6P2cV3qtTGvGuaIVsB7dDWu3YXxanERU5vsOM4GvNh2ACtfS7AnKlxbFdFyWhiy2B+w=
-X-Received: by 2002:a05:6402:299:b0:53f:731a:e513 with SMTP id
- l25-20020a056402029900b0053f731ae513mr14074423edv.25.1698936282780; Thu, 02
- Nov 2023 07:44:42 -0700 (PDT)
+        bh=ScgPM8hzETr3rG76ynWXfeVQpRnjUHhpKjQyRhq+5aM=;
+        b=WQdnVqQG1p9ot2REu6bxGFwO9tYYQkNR18ySymDFdzIa6H4uYd0Jge/5YQgPNrcej2
+         20GZRYD8JfHmp8e3OKpq+7KKfQIMTq8/GPwN/vHWvx32eh/8lbberfNlk3kkCnPeZ1DY
+         AzKa+leZOIiCjoid6JSHjr5Ga3v68VdpzD0aQHKF5RKxO8m9AwiQd+ChRh1nqMz461BV
+         gw+vPdkhCWBuXxp0dG7LVqymDCXeoBtine8pZx6xXnzKLFZKq3bz60R88PJrb1DLU2W8
+         NupYM+0HoTwWlPSKHipBQyQGqQZZIbvC1YCT/MkuxfjoxILxPevtmMLkgaXo6w6xelaX
+         aapg==
+X-Gm-Message-State: AOJu0YxYLqtpYvW9aHhxFr5zJ50xwfhik8GE81HF9UGxBXECs8NaOvVp
+	uMr70uLOhpdiw6+Ex3QL1jDfmn6ZHzKyN9gxErg=
+X-Google-Smtp-Source: AGHT+IHnPn+mw2IJD+Lshr4FcWRvcpX03SUFBeYhlTdya+/LnZIi/oCVjYhQEeURUQ5hbWYbVAuvoJ0XFJ4WN+VbEww=
+X-Received: by 2002:a50:9fc3:0:b0:543:5852:2f1d with SMTP id
+ c61-20020a509fc3000000b0054358522f1dmr9309169edf.37.1698936506646; Thu, 02
+ Nov 2023 07:48:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -48,53 +48,37 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20230907092521.733746-1-christian.couder@gmail.com>
  <20231010123847.2777056-1-christian.couder@gmail.com> <CABPp-BGCzxL-kpOvZzWRTJcx2v18QHm5ev8bFv7bm0dyNqhKug@mail.gmail.com>
- <e04cfbdc-fd28-c645-8f5d-132f7ceec6be@gmx.de> <CABPp-BGfsda-8CK7_YPJfhGMfpLqdDeB8X6wnqPAGmhiY4KjDA@mail.gmail.com>
-In-Reply-To: <CABPp-BGfsda-8CK7_YPJfhGMfpLqdDeB8X6wnqPAGmhiY4KjDA@mail.gmail.com>
+In-Reply-To: <CABPp-BGCzxL-kpOvZzWRTJcx2v18QHm5ev8bFv7bm0dyNqhKug@mail.gmail.com>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Thu, 2 Nov 2023 15:44:29 +0100
-Message-ID: <CAP8UFD0iS2za20Mzy2Dy7XLnhHTwN-_=8gV-NCzxzxcfaF-TMQ@mail.gmail.com>
+Date: Thu, 2 Nov 2023 15:48:13 +0100
+Message-ID: <CAP8UFD38KEdpArdixVHpTFGF__G89s_sMUHa+gmWoLULv+CvJw@mail.gmail.com>
 Subject: Re: [PATCH v5 00/14] Introduce new `git replay` command
-To: Elijah Newren <newren@gmail.com>, Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Elijah Newren <newren@gmail.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
-	John Cai <johncai86@gmail.com>, Derrick Stolee <stolee@gmail.com>, 
-	Phillip Wood <phillip.wood123@gmail.com>, Calvin Wan <calvinwan@google.com>, 
-	Toon Claes <toon@iotcl.com>, Dragan Simic <dsimic@manjaro.org>, Linus Arver <linusa@google.com>
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, John Cai <johncai86@gmail.com>, 
+	Derrick Stolee <stolee@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>, 
+	Calvin Wan <calvinwan@google.com>, Toon Claes <toon@iotcl.com>, Dragan Simic <dsimic@manjaro.org>, 
+	Linus Arver <linusa@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Elijah and Dscho,
-
-On Mon, Oct 30, 2023 at 6:18=E2=80=AFPM Elijah Newren <newren@gmail.com> wr=
+On Sun, Oct 29, 2023 at 7:00=E2=80=AFAM Elijah Newren <newren@gmail.com> wr=
 ote:
-> On Sun, Oct 29, 2023 at 7:14=E2=80=AFAM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > On Sat, 28 Oct 2023, Elijah Newren wrote:
 
-> > > I can see why this might sometimes be useful for exclusively linear
-> > > history, but it seems to open a can of worms and possibly unfixable
-> > > corner cases for non-linear history.  I'd rather not do this, or at
-> > > least pull it out of this series and let us discuss it in some follow
-> > > up series.  There are some other alternatives that might handle such
-> > > usecases better.
-> >
-> > I find myself wishing for an easy way to reverse commits, if only to
-> > switch around the latest two commits while stopped during a rebase.
-> >
-> > So it would have been nice for me if there had been an easy, worktree-l=
-ess
-> > way to make that happen.
+> On Tue, Oct 10, 2023 at 5:39=E2=80=AFAM Christian Couder
+> <christian.couder@gmail.com> wrote:
+
+> >     @@ Documentation/git-replay.txt (new)
+> >      +
+> >      +NAME
+> >      +----
+> >     -+git-replay - Replay commits on a different base, without touching=
+ working tree
+> >     ++git-replay - Replay commits on a new base, works on bare repos to=
+o
 >
-> Seems reasonable; we'll definitely want to keep this in mind.
->
-> > I guess this would be going in the direction of reordering commits,
-> > though, something we deliberately left for later?
->
-> Yes, I think that's a good framing for it.
+> really minor point: "works on" or "works in" or "works with" ?
 
-Ok, in the v6 I just sent, a warning() is emitted when `--reverse` is
-passed and the option has no effect.
-
-I agree that handling such options in a better way should be left for
-later patch series.
-
-Thanks both!
+I have changed it to "works with", I hope it sounds better. Also I
+forgot to talk about this change in the cover letter, sorry about
+that.
