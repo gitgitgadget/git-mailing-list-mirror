@@ -1,111 +1,233 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D69B23DD
-	for <git@vger.kernel.org>; Fri,  3 Nov 2023 08:55:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FB4E8836
+	for <git@vger.kernel.org>; Fri,  3 Nov 2023 11:25:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="oh8skMRZ"
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F25D2D47
-	for <git@vger.kernel.org>; Fri,  3 Nov 2023 01:55:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-	t=1699001729; x=1699606529; i=johannes.schindelin@gmx.de;
-	bh=geyn7ZpYy6VZjUGHBzRSpuhhtcy1qfCtpoQ8PHDivi0=;
-	h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
-	b=oh8skMRZ6x5WTQ04I/zPyCfQMQttuGjseBesNWr9d6aI6RlYB35nFAfP1rKJ5P5C
-	 TvPC2huJ3A0WhINAtd8U1xg7mMcYWDRZ8dNgB41Hzx0BgMIpjRlLZiQKJxf/2ImA/
-	 0mCb8W4GWGbbRO/B198gfin+KJ8CcX4hX3To/8N/QJk1P5akU8WX/2wQ4VABmnjyQ
-	 e2HkW/5H5XHEcCHn90FDRJrFK003ojDyDUIwPhhZUF7iAcpJ525FF5DJpvTxeZvfO
-	 VQ++qw7laRTfPd0R15KHjn0osoYZYX8C2Z/uzlnxyxlX5odENhL2Tddqf73S0QmW4
-	 88WnaoJElxMvRWElww==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from
- fv-az404-794.fclqd05oofmu3jo3usbz0f0p3a.cx.internal.cloudapp.net
- ([172.176.163.152]) by mail.gmx.net (mrgmx104 [212.227.17.168]) with ESMTPSA
- (Nemesis) id 1MJVDM-1qjW2K2m2S-00Jt54; Fri, 03 Nov 2023 09:55:28 +0100
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-To: git-for-windows@googlegroups.com,
-	git@vger.kernel.org,
-	git-packagers@googlegroups.com
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.43.0-rc0
-Date: Fri,  3 Nov 2023 08:55:26 +0000
-Message-ID: <20231103085526.3655-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.42.0
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NHpy1w++"
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8941918B
+	for <git@vger.kernel.org>; Fri,  3 Nov 2023 04:25:05 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id ffacd0b85a97d-32dcd3e5f3fso1150082f8f.1
+        for <git@vger.kernel.org>; Fri, 03 Nov 2023 04:25:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1699010703; x=1699615503; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=sNkPfK/JsDA3/aDQ9ymO6ifG4On1wgil2nae/Wb11qE=;
+        b=NHpy1w++kMuCPGAddw922K3jvz7/DNB8MXTQhTz41XEQPGP/10ewvggmn6+0Bgr9kA
+         XVLWdDw0f1faZ2GiQL1K7RLS2eb40sWwl9oei+5ODYuHJ/kOa9E0/y+8TcQj4ikbk2bi
+         e/D24vgivinl7WEjl9VUdiEaIjJeqNdbqPq+j7tKXUMJnSP14DHzTxfL5E+f4FNAka5E
+         nkoRfskaH1UKkidh7A0P5Q0BWBm8ovP19+2rOTrbMmWuWWR0LyPwEbW/hK+kqEUT8dx7
+         6LX/RUTDfUkxO8Bi3Q5GuiWBMBj/ctc2OoZpcQBDNQaQ3hk9PQ0D8tslxicgZ7LJQtW4
+         Zthg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699010703; x=1699615503;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=sNkPfK/JsDA3/aDQ9ymO6ifG4On1wgil2nae/Wb11qE=;
+        b=XDBrCXjIQGa9Mu2t1UBCz2PJNIrXVvTiD4UoVi1A8oZsacZ2B/vJZfS5MxU5pqTaa0
+         7ZYtDNxK/27Nsc24XpyHraM9+U5zSlucnrbf17JuKUBk1aj+bMY/uAAQ4dNrK4Ogjilw
+         RO7F/VKdhf0hv7S/GiSiCTLZT8OtexjJPqXp3skOJ/ydUfBqC4Mo+T+TFzlm1NIFXYN2
+         jlDGu6T2G1itL7TV6DPY8+xjm6vPIAtje3PcSRwxIqrZ+dx+ho3U6vrpYdMfSgbKzErX
+         ovHYLS58/o52FApO/ZNbUS6Q0GxNiO1BDXJDl3QoWqvpBe1BXOky7/Nz36yX2+6WTrDd
+         JPVQ==
+X-Gm-Message-State: AOJu0Yxjg7necRPpjldlNOyFpCSdJB2WH3k4pxk+LQPO/8Fd7eISRgx2
+	EW3K0kftm9P4k8P4Ky+toQDupTN7e/c=
+X-Google-Smtp-Source: AGHT+IEkSkB4GLiOxEcGIEryEEkVvU4Y5v5JNVV11V94KsWgYJShN4+SfBebncmczEFRNPnuxOVA2w==
+X-Received: by 2002:adf:e48a:0:b0:32d:95ef:9281 with SMTP id i10-20020adfe48a000000b0032d95ef9281mr17815333wrm.4.1699010702759;
+        Fri, 03 Nov 2023 04:25:02 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id d8-20020adffd88000000b0032fbe5b1e45sm55163wrr.61.2023.11.03.04.25.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 Nov 2023 04:25:02 -0700 (PDT)
+Message-ID: <pull.1606.git.1699010701704.gitgitgadget@gmail.com>
+From: "Sam James via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 03 Nov 2023 11:25:01 +0000
+Subject: [PATCH] diff: implement config.diff.renames=copies-harder
+Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Fcc: Sent
-X-Provags-ID: V03:K1:C5Dn/AFp4rQqXwxkq0S+zJtfy69vQwSP5UE2C0YvynqmNKq46Ld
- tJzDkc16xDLAmgs26amrUZ+3WjoopNDPV9TaeUq+PZEbaL9ZrZ5mUwHzXY1iLMDTd/gjVw5
- xkqitfSSSZ0AmWr0IYXkImDKbQDwggMzgcR8S6fz36UxFqKXwr3ARbnHxEUTb16tbOs2BL0
- yxTnHZ1+eCsfuSSP23qVg==
-UI-OutboundReport: notjunk:1;M01:P0:umoc6uLentE=;g0I1UKFXTK/HBwpjTnSZxS+Vran
- fZE5UaF1v0pHHITaPg5aXjPp0R7Xb7a8Fba5dvEN//EAUxdK039KoofmLYC237ytdSnWFFCQv
- +wFb7FKWQQgKWnKw4JUbYd4TGlGiNYYYDeV+X1jDzLTZbH6NSS93psUuf5YrgnruYDQW9Tj8D
- /XsCjLzgdeviuSIph0eFO97S1fxqlUxUhWzKJRJWx7xFC2defuh0tJY2vMy9cMk/Hoin33XKw
- qfsQ8bB2vV0+UmWMTF5v8Vfqj870BN8IevoMXowIvSRzHb2kFiiGr2i+AE/3AvwkXC+wEOH8F
- gl2js5srA5Nmb9OBcGabk6BoZAmRXbcpplwJAEZxSP+3dYuDPWQJXZNFWO1Eu5sH/UveWXMVC
- /WyBc9zmf0/E3pEN8p5KeUIfU/TXWmJUEfiFy98YfRIXUoRnApak3P5FH9rA94hL8SKTeYwyy
- 5cBeUSlvLr/r4IA2CBO9mfpjEHO8BWxR8wm0x00qHAtp83WsEexzU/v4JczMtQ19+SIi6+PP9
- WweXTjGfiyo85vVhsJqHuhdn9G/u1b6SeOCHd1DSCTuDA26fjnvI+MNXJwlYXUWBaZF6iVO0D
- LizQt/wULc5CaMLQiGC76XqMJaSQXny/+7BcqxLWmxhses6yxzGZT95omW218ijCLOkr7Qeom
- PW1JChuHXcnfLc1ctYK+o+SgJL8KHoeJvMtT5VSFFiFsXUQhsu7pDXltWqsCcPZKIMTCdY6cY
- Sw29L/qhW1NmmWVOv4pMoI61+DgR0nqy1CYl1Q3B4Vj/7yL/ifBOQvCKaDYIzUwAUu+V7ItV9
- NCsNgT+9NfUr2lcxGJkPk+ZlNFIHhvUEvRQwpUmAPnAA+Yb5npazInsxTjOhpWzyM9qWPwHNy
- sICClpwLnCEBIAdIq1gVWqKdC4sAr0/CuMLiGA5/nrADMZgauOH6JyTmxNEWjHfbEMv5+kB83
- zkc8uaJJidBOrvVnVTlQ6/2YRTM=
+To: git@vger.kernel.org
+Cc: Sam James <sam@gentoo.org>,
+    Sam James <sam@gentoo.org>
 
-Dear Git users,
+From: Sam James <sam@gentoo.org>
 
-I hereby announce that Git for Windows 2.43.0-rc0 is available from:
+This patch adds a config value for 'diff.renames' called 'copies-harder'
+which make it so '-C -C' is in effect always passed for 'git log -p',
+'git diff', etc.
 
-    https://github.com/git-for-windows/git/releases/tag/v2.43.0-rc0.windows.1
+This allows specifying that 'git log -p', 'git diff', etc should always act
+as if '-C --find-copies-harder' was passed.
 
-Changes since Git for Windows v2.42.0(2) (August 30th 2023)
+I've found this especially useful for certain types of repository (like
+Gentoo's ebuild repositories) because files are often copies of a previous
+version.
 
-New Features
+Signed-off-by: Sam James <sam@gentoo.org>
+---
+    diff: implement config.diff.renames=copies-harder
+    
+    This patch adds a config value for 'diff.renames' called 'copies-harder'
+    which make it so '-C -C' is in effect always passed for 'git log -p',
+    'git diff', etc.
+    
+    This allows specifying that 'git log -p', 'git diff', etc should always
+    act as if '-C --find-copies-harder' was passed.
+    
+    I've found this especially useful for certain types of repository (like
+    Gentoo's ebuild repositories) because files are often copies of a
+    previous version.
 
-  * Comes with Git v2.43.0-rc0.
-  * Comes with MinTTY v3.6.5.
-  * Comes with MSYS2 runtime v3.4.9.
-  * Comes with GNU TLS v3.8.1.
-  * When installing into a Windows setup with Mandatory Address Space
-    Layout Randomization (ASLR) enabled, which is incompatible with the
-    MSYS2 runtime powering Git Bash, SSH and some other programs
-    distributed with Git for Windows, the Git for Windows installer now
-    offers to add exceptions that will allow those programs to work as
-    expected.
-  * Comes with OpenSSH v9.5.P1.
-  * Comes with cURL v8.4.0.
-  * Comes with OpenSSL v3.1.4.
-  * Comes with Git Credential Manager v2.4.1.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1606%2Fthesamesam%2Fconfig-copies-harder-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1606/thesamesam/config-copies-harder-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1606
 
-Bug Fixes
+ Documentation/config/diff.txt   |  3 ++-
+ Documentation/config/status.txt |  3 ++-
+ diff.c                          | 12 +++++++++---
+ diff.h                          |  1 +
+ diffcore-rename.c               |  4 ++--
+ merge-ort.c                     |  2 +-
+ merge-recursive.c               |  2 +-
+ 7 files changed, 18 insertions(+), 9 deletions(-)
 
-  * Symbolic links whose target is an absolute path without the drive
-    prefix accidentally had a drive prefix added when checked out,
-    rendering them "eternally modified". This bug has been fixed.
-  * Git for Windows's installer is no longer confused by global GIT_*
-    environment variables.
-  * The installer no longer claims that "fast-forward or merge" is the
-    default git pull behavior: The default behavior has changed in Git
-    a while ago, to "fast-forward only".
+diff --git a/Documentation/config/diff.txt b/Documentation/config/diff.txt
+index bd5ae0c3378..d2ff3c62d41 100644
+--- a/Documentation/config/diff.txt
++++ b/Documentation/config/diff.txt
+@@ -131,7 +131,8 @@ diff.renames::
+ 	Whether and how Git detects renames.  If set to "false",
+ 	rename detection is disabled. If set to "true", basic rename
+ 	detection is enabled.  If set to "copies" or "copy", Git will
+-	detect copies, as well.  Defaults to true.  Note that this
++	detect copies, as well.  If set to "copies-harder", Git will try harder
++	to detect copies.  Defaults to true.  Note that this
+ 	affects only 'git diff' Porcelain like linkgit:git-diff[1] and
+ 	linkgit:git-log[1], and not lower level commands such as
+ 	linkgit:git-diff-files[1].
+diff --git a/Documentation/config/status.txt b/Documentation/config/status.txt
+index 2ff8237f8fc..7ca7a4becd7 100644
+--- a/Documentation/config/status.txt
++++ b/Documentation/config/status.txt
+@@ -33,7 +33,8 @@ status.renames::
+ 	Whether and how Git detects renames in linkgit:git-status[1] and
+ 	linkgit:git-commit[1] .  If set to "false", rename detection is
+ 	disabled. If set to "true", basic rename detection is enabled.
+-	If set to "copies" or "copy", Git will detect copies, as well.
++	If set to "copies" or "copy", Git will detect copies, as well.  If
++	set to "copies-harder", Git will try harder to detect copies.
+ 	Defaults to the value of diff.renames.
+ 
+ status.showStash::
+diff --git a/diff.c b/diff.c
+index 2c602df10a3..0ca906611f5 100644
+--- a/diff.c
++++ b/diff.c
+@@ -206,8 +206,11 @@ int git_config_rename(const char *var, const char *value)
+ {
+ 	if (!value)
+ 		return DIFF_DETECT_RENAME;
++	if (!strcasecmp(value, "copies-harder"))
++		return DIFF_DETECT_COPY_HARDER;
+ 	if (!strcasecmp(value, "copies") || !strcasecmp(value, "copy"))
+-		return  DIFF_DETECT_COPY;
++		return DIFF_DETECT_COPY;
++
+ 	return git_config_bool(var,value) ? DIFF_DETECT_RENAME : 0;
+ }
+ 
+@@ -4832,8 +4835,11 @@ void diff_setup_done(struct diff_options *options)
+ 	else
+ 		options->flags.diff_from_contents = 0;
+ 
+-	if (options->flags.find_copies_harder)
++	/* Just fold this in as it makes the patch-to-git smaller */
++	if (options->flags.find_copies_harder || options->detect_rename == DIFF_DETECT_COPY_HARDER) {
++		options->flags.find_copies_harder = 1;
+ 		options->detect_rename = DIFF_DETECT_COPY;
++	}
+ 
+ 	if (!options->flags.relative_name)
+ 		options->prefix = NULL;
+@@ -5264,7 +5270,7 @@ static int diff_opt_find_copies(const struct option *opt,
+ 	if (*arg != 0)
+ 		return error(_("invalid argument to %s"), opt->long_name);
+ 
+-	if (options->detect_rename == DIFF_DETECT_COPY)
++	if (options->detect_rename == DIFF_DETECT_COPY || options->detect_rename == DIFF_DETECT_COPY_HARDER)
+ 		options->flags.find_copies_harder = 1;
+ 	else
+ 		options->detect_rename = DIFF_DETECT_COPY;
+diff --git a/diff.h b/diff.h
+index 66bd8aeb293..b29e5b777f8 100644
+--- a/diff.h
++++ b/diff.h
+@@ -555,6 +555,7 @@ int git_config_rename(const char *var, const char *value);
+ 
+ #define DIFF_DETECT_RENAME	1
+ #define DIFF_DETECT_COPY	2
++#define DIFF_DETECT_COPY_HARDER 3
+ 
+ #define DIFF_PICKAXE_ALL	1
+ #define DIFF_PICKAXE_REGEX	2
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index 5a6e2bcac71..856291d66f2 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -299,7 +299,7 @@ static int find_identical_files(struct hashmap *srcs,
+ 		}
+ 		/* Give higher scores to sources that haven't been used already */
+ 		score = !source->rename_used;
+-		if (source->rename_used && options->detect_rename != DIFF_DETECT_COPY)
++		if (source->rename_used && options->detect_rename != DIFF_DETECT_COPY && options->detect_rename != DIFF_DETECT_COPY_HARDER)
+ 			continue;
+ 		score += basename_same(source, target);
+ 		if (score > best_score) {
+@@ -1405,7 +1405,7 @@ void diffcore_rename_extended(struct diff_options *options,
+ 	trace2_region_enter("diff", "setup", options->repo);
+ 	info.setup = 0;
+ 	assert(!dir_rename_count || strmap_empty(dir_rename_count));
+-	want_copies = (detect_rename == DIFF_DETECT_COPY);
++	want_copies = (detect_rename == DIFF_DETECT_COPY || detect_rename == DIFF_DETECT_COPY_HARDER);
+ 	if (dirs_removed && (break_idx || want_copies))
+ 		BUG("dirs_removed incompatible with break/copy detection");
+ 	if (break_idx && relevant_sources)
+diff --git a/merge-ort.c b/merge-ort.c
+index 6491070d965..77498354652 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -4782,7 +4782,7 @@ static void merge_start(struct merge_options *opt, struct merge_result *result)
+ 	 * sanity check them anyway.
+ 	 */
+ 	assert(opt->detect_renames >= -1 &&
+-	       opt->detect_renames <= DIFF_DETECT_COPY);
++	       opt->detect_renames <= DIFF_DETECT_COPY_HARDER);
+ 	assert(opt->verbosity >= 0 && opt->verbosity <= 5);
+ 	assert(opt->buffer_output <= 2);
+ 	assert(opt->obuf.len == 0);
+diff --git a/merge-recursive.c b/merge-recursive.c
+index e3beb0801b1..d52dd536606 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -3708,7 +3708,7 @@ static int merge_start(struct merge_options *opt, struct tree *head)
+ 	assert(opt->branch1 && opt->branch2);
+ 
+ 	assert(opt->detect_renames >= -1 &&
+-	       opt->detect_renames <= DIFF_DETECT_COPY);
++	       opt->detect_renames <= DIFF_DETECT_COPY_HARDER);
+ 	assert(opt->detect_directory_renames >= MERGE_DIRECTORY_RENAMES_NONE &&
+ 	       opt->detect_directory_renames <= MERGE_DIRECTORY_RENAMES_TRUE);
+ 	assert(opt->rename_limit >= -1);
 
-Git-2.43.0-rc0-64-bit.exe | 11a41993a28a7f6dcf0381dd6b92b0ee013c1acf227a332074bb323c0a479e2a
-Git-2.43.0-rc0-32-bit.exe | 924e10b97571ce4810434fc1464a63f97946def7a0492283abc03bc84cba35e7
-PortableGit-2.43.0-rc0-64-bit.7z.exe | 697bcdf0e182a551221048f4447baf2f4cbc9bc54718830dde33a497192f0bd3
-PortableGit-2.43.0-rc0-32-bit.7z.exe | 35eaed402eb541c7892323eae5b85604a5fa1f86741850c43fcd7745ab14bf31
-MinGit-2.43.0-rc0-64-bit.zip | 216006c249857c6c2aa9b2d44b06b0dbc89d4bd52202dae6a3201cfa432fc430
-MinGit-2.43.0-rc0-32-bit.zip | 50fea5aeee4b2ba97e300ca973b1a85c3bd9618e030079a49aa849cbbef1db17
-MinGit-2.43.0-rc0-busybox-64-bit.zip | c633050b43896e8bfd318f2251b3e66a4161287e00e0ad2b92de25c8c6ee511b
-MinGit-2.43.0-rc0-busybox-32-bit.zip | cbfdbf1f148aefb04c51327ef6642e4c6366b86c105c3de0fd846f33dd79c120
-Git-2.43.0-rc0-64-bit.tar.bz2 | bdd7e890f297c351f16e262ab94ad1e77d18c5b647e54d06a1b80a7dda6ac60f
-Git-2.43.0-rc0-32-bit.tar.bz2 | 1765bc7a4f33984a209dca4570ff964af3f4ca68e00d4528c50ce32a9e955e0c
-
-Ciao,
-Johannes
+base-commit: 692be87cbba55e8488f805d236f2ad50483bd7d5
+-- 
+gitgitgadget
