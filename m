@@ -1,75 +1,93 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 145AA23776
-	for <git@vger.kernel.org>; Fri,  3 Nov 2023 21:50:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAA96D6D
-	for <git@vger.kernel.org>; Fri,  3 Nov 2023 14:50:54 -0700 (PDT)
-Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-41cc7b67419so15083941cf.2
-        for <git@vger.kernel.org>; Fri, 03 Nov 2023 14:50:54 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75B62241EA
+	for <git@vger.kernel.org>; Fri,  3 Nov 2023 21:54:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hg5BWm/H"
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4DADD64
+	for <git@vger.kernel.org>; Fri,  3 Nov 2023 14:54:36 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-53df747cfe5so4242515a12.2
+        for <git@vger.kernel.org>; Fri, 03 Nov 2023 14:54:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1699048475; x=1699653275; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=b9ZDo2dFnLpR0as/NzJg53IX/hktsmg/ucnxrZy7kj0=;
+        b=hg5BWm/H3lDerDpJdCRTMydjUp7JOm8qaNbl8Q1nJxcx6W7SfhByMJ4uzrLFx7jMcb
+         z06QjdiNAWNLftnX6oykiWSJYdllic+bDIl2DHzV5O5q7x78/e8nL/mQnQ4e/WcI0t16
+         PpOAfpahDR8teAC8TWvbjZDAy8uVIKJVaerXsgyxu4u0SgIUz+UkQOFCadFpLTqLCPfk
+         phJDiiIykSyrWtqxGNEIMdbMfNfF9MdnI2PJkoNDAoHoAGiJHSbhoWgeJ2Z0S9JmjdQO
+         hRgmLqa8LiqHZwrXBar+7Qh5STjY9DzkqTsas2vGSAzV6SRIIuf1ahKZpjXs3JbQ8yXa
+         ggiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699048254; x=1699653054;
+        d=1e100.net; s=20230601; t=1699048475; x=1699653275;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=6pj9vMHJy63RTG2LHadOp9SXvf7A9D8PAeylDfbwDzs=;
-        b=iCY4gN7njJDjRsULH+agDp88fIHyPZxb16/9viw21OMYUhac6udp4odrEukxrLKlW6
-         x6ejfWIxuDXWqxXAKx5FdKjsHnFOwg7SY8FVAbolpzsePvkCashjyJUxGG9mUDiPcNEO
-         eTyTqiJ0DaDyQi9+B9V4AJADa9zJrFIkK7K42QlW1yEMt2ncIhaMTlk6oONTs7c4cSep
-         42LyM0yZqED+UudqqfeAaASSvqesFe7oKiUmfjjn1Jh8ycqSYboO246hWtsqBTQwGGT0
-         45i63hYcFNY0vhLmP4jfqZdOp234xKh7vzy036vyJOJTcVixD3KT3vmAB5Hou1bu+w6D
-         DGjA==
-X-Gm-Message-State: AOJu0YwpdlYUr5Bgg/SUbgX2OxHhzjijSUFdInMcPzzcfl5GOZ8kMuKt
-	q0sXsg5XM9CJnTCYqBqrWgJ8ejzWVuU8m308eWZKGK1obME=
-X-Google-Smtp-Source: AGHT+IF3WG+No9wxKAm1t0v+ywtmstKtzJsIM/sQ2ly2sZtJTYgbri28l09T++zA/AtiKqgBk9k5dUfZDzGk/vvxhMA=
-X-Received: by 2002:a05:6214:1d09:b0:649:8f20:5528 with SMTP id
- e9-20020a0562141d0900b006498f205528mr27985064qvd.60.1699048253825; Fri, 03
- Nov 2023 14:50:53 -0700 (PDT)
+        bh=b9ZDo2dFnLpR0as/NzJg53IX/hktsmg/ucnxrZy7kj0=;
+        b=eyiYI0cgmoRC28LOIfiw1jJ7edOpKGW0trjWvtWdG14jGZ+R3KcIBJS+9UR6+q1x8h
+         HGl8moNbwU67M0GTsfCsFcWL8xGUCFnwZL7K1mjNggkOshZQv5BHW+e39Fqo7M42tYAL
+         mzHOWnKSK4DhsDHeXMQ6RbFzb+tdA/gOEqsochgxjeojvmieF8iROnwHqLHJYriN4y8k
+         aOCST5uQvV/qFgtZi7THts/LKZzcWMalUdHBOAuKJjrIHMyC3z4dSTjwBc2erLdSN/to
+         BEL0lfl650Zg5W2UR+jcPbLtF+ZbztpWMh4xCBn/HlZS3XYB3e/wvtYmwhm2tsoVXvWJ
+         GC7Q==
+X-Gm-Message-State: AOJu0YyQHTDy/lUWqo6krGK2VNXkqqpF1lytwACP8LSw+fw88JJr9Az4
+	6gRt/PdBV4Wgqq83y2robbaluiMMDY5gidE4Nauw37+cOJQ=
+X-Google-Smtp-Source: AGHT+IGYe0fRDMBXKSE09PnUq364/W40UP0B3BELPCRqELymWFzb6pLIPQkrrwTSDTxzLVySv7m1O+M7hrr4WS6RtP0=
+X-Received: by 2002:a50:d098:0:b0:540:164c:2be1 with SMTP id
+ v24-20020a50d098000000b00540164c2be1mr19868399edd.0.1699048474900; Fri, 03
+ Nov 2023 14:54:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <00a101da0e88$778cd3b0$66a67b10$@nexbridge.com>
- <CAPig+cTzWCpmksJm-0M1MfUSeYpWbgMaFNHRSOtAhCsNQigV-g@mail.gmail.com> <00c301da0e9d$0d2cb8e0$27862aa0$@nexbridge.com>
-In-Reply-To: <00c301da0e9d$0d2cb8e0$27862aa0$@nexbridge.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Fri, 3 Nov 2023 17:50:42 -0400
-Message-ID: <CAPig+cRG3VWgnwOPWvbW9boUooa6sD9d667wbSUe4_RkcR60vg@mail.gmail.com>
-Subject: Re: Request for Help - Too many perl arguments as of 2.43.0-rc0
-To: rsbecker@nexbridge.com
-Cc: Git List <git@vger.kernel.org>
+References: <0169ce6fb9ccafc089b74ae406db0d1a8ff8ac65.1688165272.git.steadmon@google.com>
+ <cover.1698881249.git.steadmon@google.com> <8b831f4937a167519b77c724fcbc36884bbfe43d.1698881249.git.steadmon@google.com>
+In-Reply-To: <8b831f4937a167519b77c724fcbc36884bbfe43d.1698881249.git.steadmon@google.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Fri, 3 Nov 2023 22:54:22 +0100
+Message-ID: <CAP8UFD3SVnu+HFQhFpsF4PA6pK5B5L+aP-jxRX=Ro3EYekS0kg@mail.gmail.com>
+Subject: Re: [PATCH v9 2/3] unit tests: add TAP unit test framework
+To: Josh Steadmon <steadmon@google.com>
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>, 
+	Phillip Wood <phillip.wood123@gmail.com>, "Randall S. Becker" <rsbecker@nexbridge.com>, 
+	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Nov 3, 2023 at 5:31=E2=80=AFPM <rsbecker@nexbridge.com> wrote:
-> On November 3, 2023 4:52 PM, Eric Sunshine wrote:
-> >On Fri, Nov 3, 2023 at 3:03=E2=80=AFPM <rsbecker@nexbridge.com> wrote:
-> >> I can no longer test git as the number of arguments (and size) sent to
-> >> perl from the make infrastructure is too big for my platform. Is it
-> >> possible to use xargs instead?
-> >
-> >Presumably you're talking about the invocation of chainlint.pl?
-> >Considering that that's quite an unimportant part of `make test` for tho=
-se just
-> >running the test suite (as opposed to those authoring new tests), the si=
-mplest
-> >workaround is to disable chainlint when you run the tests by setting env=
-ironment
-> >variable GIT_TEST_EXT_CHAIN_LINT to 0.
+On Thu, Nov 2, 2023 at 12:31=E2=80=AFAM Josh Steadmon <steadmon@google.com>=
+ wrote:
 >
-> I tried both ways to specify this variable with no success:
->
-> /usr/coreutils/bin/bash: /usr/bin/perl: Argument list too long
-> Makefile:125: recipe for target 'test-lint-shell-syntax' failed
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-This is a separate issue from chainlint (though, it too will likely
-suffer the same problem). In this case, it's trying to run the
-check-non-portable-shell.pl script and the command-line is too long.
-Unfortunately, unlike chainlint for which there is a knob to disble
-it, there is no direct knob to disable `test-lint-shell-syntax`. You
-may be able to skip all the shell-script linting by setting TEST_LINT
-to an empty value.
+> +int test_assert(const char *location, const char *check, int ok)
+> +{
+> +       assert(ctx.running);
+> +
+> +       if (ctx.result =3D=3D RESULT_SKIP) {
+> +               test_msg("skipping check '%s' at %s", check, location);
+> +               return 1;
+> +       } else if (!ctx.todo) {
+
+I suggested removing the "else" and moving the "if (!ctx.todo) {" to
+its own line in the previous round and thought you agreed with that,
+but maybe it fell through the cracks somehow.
+
+Anyway I think this is a minor nit, and the series looks good to me.
+
+> +               if (ok) {
+> +                       test_pass();
+> +               } else {
+> +                       test_msg("check \"%s\" failed at %s", check, loca=
+tion);
+> +                       test_fail();
+> +               }
+> +       }
+> +
+> +       return !!ok;
+> +}
