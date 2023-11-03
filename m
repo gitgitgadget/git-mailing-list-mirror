@@ -1,116 +1,155 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A101010E5
-	for <git@vger.kernel.org>; Fri,  3 Nov 2023 01:25:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from EUR03-AM7-obe.outbound.protection.outlook.com (mail-am7eur03olkn2104.outbound.protection.outlook.com [40.92.59.104])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAAA5198
-	for <git@vger.kernel.org>; Thu,  2 Nov 2023 18:25:14 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ZkDtUKUaI682AgMpF+VARdTr8Ndl2b13/HkLhgjMuyuDIEgxb8xjYqa7J7ELNzCWB1xfHCYvJt5khCmF4DLVLA0YWBKLfVlSLAl3KkMvniMMNTHCmbhaLUqFYCh9jo+XJo+MZXXM28EUZJnprCJbUJCOMHvYkHCHz1xEV1apWbWkGySemSRDkUXmjyZ3j5/LgFujKy8gNec0Z7lNDDBUkwrKKyPlHkFTxQ7aXfAqiiONLDhhhPdJQQ120JCVmbYRcQRhq18PtgH+aN4AbSQrjKipbcokmiw5HIgteSWrhbwmV9TpSYxbtP+wgmylTNfl3uhClKEqFfJlD+O/tZctDQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Ed3Krup+YxY+5lXxbitm2OA/eZ56zIhaG7QBap8alcY=;
- b=lL8izDgb+s97sMcuUVvAp/JVZtNxcG7lAMrS8JBvKrqFtzZWj6MWRBiL+0OcaJxD5BA3pQRCZB/o2mQegsZuGj8wgH7bg4nt3+NrMpdts3avq/zOIWS+DXnoK2sK+A8ak190rRLXleQB/d5ilgxGjuQL6NZx3lfC+a7AZChzQo/XVxOyaHQY4+sRprvq/AGEZjG7FiY7Sn5LbgkNqP3JYu8OVFA6+1UqWJaKn5xLygyAtjzQAohadIFymwaQsijIzgcsh0CkofECt7VM+caPOdv1L3eFc8JWeR3avSVhgndTeP3hi7JOuUa7UekBaN7stpktvOYN0tvUyit9LEBKEg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-Received: from PR3P195MB0878.EURP195.PROD.OUTLOOK.COM (2603:10a6:102:a3::5) by
- VI1P195MB0541.EURP195.PROD.OUTLOOK.COM (2603:10a6:800:153::20) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6954.21; Fri, 3 Nov 2023 01:25:12 +0000
-Received: from PR3P195MB0878.EURP195.PROD.OUTLOOK.COM
- ([fe80::5e3c:6010:6ee7:e299]) by PR3P195MB0878.EURP195.PROD.OUTLOOK.COM
- ([fe80::5e3c:6010:6ee7:e299%4]) with mapi id 15.20.6954.021; Fri, 3 Nov 2023
- 01:25:12 +0000
-From: Robin Dos Anjos <robin_1997@hotmail.fr>
-To: Junio C Hamano <gitster@pobox.com>
-CC: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: General question about "git range-diff"
-Thread-Topic: General question about "git range-diff"
-Thread-Index: AQHaDbc9AahPo/u4nk2yXD+mzwKkwLBnqyLKgAAiANU=
-Date: Fri, 3 Nov 2023 01:25:12 +0000
-Message-ID:
- <PR3P195MB0878B1E5B7E63F767F34EA999BA5A@PR3P195MB0878.EURP195.PROD.OUTLOOK.COM>
-References:
- <PR3P195MB087847E68AD2032148EFCA039BA6A@PR3P195MB0878.EURP195.PROD.OUTLOOK.COM>
- <xmqqbkcblp1y.fsf@gitster.g>
-In-Reply-To: <xmqqbkcblp1y.fsf@gitster.g>
-Accept-Language: fr-FR, en-US
-Content-Language: fr-FR
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
-x-ms-exchange-messagesentrepresentingtype: 1
-x-tmn: [3Hlpb4fKH+JVOSzQloIHRtmpZavZdj49sjK9CevVAfaRrRWZOS2w7n8lHVb67IcU]
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: PR3P195MB0878:EE_|VI1P195MB0541:EE_
-x-ms-office365-filtering-correlation-id: c6ecdfbf-c568-4330-54ad-08dbdc0bb9ad
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:
- 2bkeYZyB093uD/Klz9mh9512alhHyRTlixh4pIoFt06044W1lDUr/8SEqnU67Z1QP0YjfCxs6b2FQM36/56B5/YEE+Q6dqylxqQ1KsGcJv3NiCR004ayJfUEz4OjZUrirc2of1WMNOZBwcLmZ3xLbYgV19lyvh3vi/CRHFwRfNiW7UHV/AoIB9D3tzUEr1pgKp7mG7rk907zUvZQ98FVFISwnRg7B6gniJF560YNA79oWueS3UuCarOP8vR5MnEEOQaNq6m6L0S34H2TJh+tNQYAsEIxgIv+2PYst74wZCgvuxCTjDmF7V8wbvCc6iwBr/3VvAR2K+vQKgCqTYJqSkqzQAm7yeiv3vrgh1AQz7NyeOAc1QckDo/vfJM0xfibnaYuXVSTj6ea2p0QP5r8F6/N6wUq4agN+lohgOoA42KPlF1Gj9eO25wyKD1xfIYKSwjs8/7HaWCc6nD8FUabX2okFzGDZe935h/NP+mNmsfVraM1XeiS6OdSqKsESFSCFy/NkWhjfirT+CuAXGFoB/gbDySnAvdVRncs1aQK1BNK6rHstuOIqC0rC7p575ck
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-1?Q?G2t14a8/Jk0GHI16uqw706qBBtnfc+98AeksDLhQRluZTnGgKUH43cDXeH?=
- =?iso-8859-1?Q?cFMgjrVv2NJW/Bd/u4NbDfJFHssVyhoE5AHfHYEh4BJyp3pa+livUVciwH?=
- =?iso-8859-1?Q?Tfg/5E7TWQdXbGvXZ+0y6oWKFcMW9kB5GGIuWiPIX++FzJuSasjXysQBRo?=
- =?iso-8859-1?Q?5HPTtSy8Ld9Jj4+4mXCun5MgbGdwFUiVzjIgR3TwFjWrTFkoSSIZV8fO9e?=
- =?iso-8859-1?Q?3vvAPrOhXFTKTgZ3Pmmc8KrEKBCEemPkCffx+M7YAd9vQS/EUogNeI5fxg?=
- =?iso-8859-1?Q?ECcqwTsq0tDAyqf0bjt5B1WnsQzEZHhvbT+FiD6RdmY9JRWDHExpkKE07H?=
- =?iso-8859-1?Q?QBpiNVg1B5Upwy5ciz3XzXxgIJwSNLbPR9cc/tdzeAWNkVs5pO2Z8nKyOs?=
- =?iso-8859-1?Q?NPWB67SDQas3D1tctLI3wNP9NUWYf8U/nIJoOB3xKYuWVmw/nF1ocUPea0?=
- =?iso-8859-1?Q?BnTad1coRRX3jFoctOwHeitf0FYBvhJt0ZeOAa47cpzYB3wqzdb2LQYfWl?=
- =?iso-8859-1?Q?SWJfc5N7izezwTAIaU9OugMc0xfhK1mARh7zsiH8DsdIUG9L7dwL1zqf6A?=
- =?iso-8859-1?Q?TZgjplswKPpVKIdmq1wUPCMlg1QGzGn/YdhDfZDndO7/9xSQb3jdysM6kj?=
- =?iso-8859-1?Q?FMqPCqFYNexQGz6rmTTBQEYWPiIB5Hrc+SmB41s36IicGAYtsB2pTzmS6b?=
- =?iso-8859-1?Q?hikHBnURNoKgiEI3F9F3+ogfi5F77Q8JyTAfTV/GiWxbPbcMl0k/Bjkdjn?=
- =?iso-8859-1?Q?8bBT8ye/BDH93ZzMfpgKgqyhDHGiiITS3qITjdseXugf+yyDrDc/6IObwz?=
- =?iso-8859-1?Q?BnnC1E1aZuI1n6dDxyc1/37U6J+0bb3Na4VBcC34mCwGt0URLDbv/Zg7iy?=
- =?iso-8859-1?Q?6Zrg1IcFHqqcdZ13leUj7seutAx4Fqkmk/cOjqxXY5M1qJYPN273TbpcXW?=
- =?iso-8859-1?Q?u02SQgxAa5e1UjZZvudmlcwtHYh47qTN7PfLrDBOy/3yCGfnu3rYcGgvBa?=
- =?iso-8859-1?Q?eygxkPJusbajg0xTKngCFoFyx6p7jbxepZMD1vQNYQIZNpAEaFIGS0qskD?=
- =?iso-8859-1?Q?OgjYDgFgjwpTmht/hWAnMHhRhGkmk4kiN1vDT1h3+Yn1RltyNt/E4iukCb?=
- =?iso-8859-1?Q?Mg3czXrJZEYGyPns+5v3H6ig/9H8Jp2ELpeDsPTjP1nXmq4Oshct+JzVVT?=
- =?iso-8859-1?Q?JW2PsBPLldiSPwy8j1zvYVV/IuETofBvRueGf+DfI2vwB2Cjez2AnVGEd5?=
- =?iso-8859-1?Q?bS1rqYVS1zZOVBlj1nkyM7DNaHWOOGCx10ew2Vnty3+DH0gUtAyJZCs6b1?=
- =?iso-8859-1?Q?6b7deQ0ND4IXrYY02Qxt/lG3Uw=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D534B7E
+	for <git@vger.kernel.org>; Fri,  3 Nov 2023 07:27:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mufjAn79"
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B39E2184
+	for <git@vger.kernel.org>; Fri,  3 Nov 2023 00:27:38 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-32fb1c35fe0so490948f8f.1
+        for <git@vger.kernel.org>; Fri, 03 Nov 2023 00:27:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1698996456; x=1699601256; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=h+Lyalwrt5P3NolaoLuCME8NuzkNgfanux5FRlpYr/A=;
+        b=mufjAn79n0pagxxjzt8x+vzpogsN37AddVx+FxZXVlyneTeno0hpdmiiz8bbDxiTig
+         l8X6ObdXCOSQmHWxkl2Wk6nmsJmbGENSACm1LSYtKN8DoRvGKzHtEQpN+vvN8YnZq1nR
+         4IU2tnl5iI+RT1Ocf5cX/+SvN4hmin1OVTacNa7r6VbE32B6PCEEamofoGxsILqn2E1K
+         0t11ux9QmgogOUgeLt/+41zta/dr5uzoCUTGFklvo3fcy4VpKJjNZHa/u+OwB1qJfAhb
+         vC1hgj2V4tfpD8LmvH3M1f1BXaM4Ys3KkEd3kKMkSNxlhmxNCSP6HzqEKXKpz1I7DYbq
+         qeZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698996456; x=1699601256;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=h+Lyalwrt5P3NolaoLuCME8NuzkNgfanux5FRlpYr/A=;
+        b=qZT8I8dHufITfb5OeiMTScAD3vmt65ELkLNZ/dVX7niyMQAGZZVGzFrn4qKIUlGd5I
+         CboTBpt/4rw/uKXAaIbIN2XDedjT3XPjoGxEGqw80h5MhalY2Mv3cSzZ0Rv9VmY1akWe
+         oUk+630G26apsJfOqsmkIKP6cDX1vcR/mXzGxrXdOWawZHuNk7b33DkP1hEf2xIHCw04
+         h/lzgeUQIFtG/H1z8APqVEoP9RbXnk/05KIH9ifPy0nzxFi+2dfc2iIFX/yEWb6n5h7W
+         GR057SPxLEt3bfNpN+yaQWOnQ+DpZlaxoJ+ihpMk0b0D5a5Pd3TSxzjtGv8OKKD9jhwG
+         WpAQ==
+X-Gm-Message-State: AOJu0YwxR6CqqHCW19WIO1kaq6kAWY7WCL9DeUOddbtgmnyLoiauJ4iB
+	Ucs1XtBQFYCRCHOF/9W9PmGwvkZFZVk=
+X-Google-Smtp-Source: AGHT+IHItmFzbLGHy1FLUkbWufM/n5PVeHbkvq6s94IKNrg0iAPy7aQV7J37QyBaE8vfJmmTHOhrNQ==
+X-Received: by 2002:a5d:4049:0:b0:32d:9d6b:ac99 with SMTP id w9-20020a5d4049000000b0032d9d6bac99mr14193600wrp.31.1698996456356;
+        Fri, 03 Nov 2023 00:27:36 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id k17-20020a5d6e91000000b0032d9382e6e0sm1141038wrz.45.2023.11.03.00.27.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 Nov 2023 00:27:36 -0700 (PDT)
+Message-ID: <pull.1607.git.1698996455218.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 03 Nov 2023 07:27:35 +0000
+Subject: [PATCH] ci: upgrade to using macos-13
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: sct-15-20-4755-11-msonline-outlook-49ed2.templateTenant
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PR3P195MB0878.EURP195.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: c6ecdfbf-c568-4330-54ad-08dbdc0bb9ad
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Nov 2023 01:25:12.0908
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1P195MB0541
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Thank you both for your very quick answers and recommendations! I will chec=
-k your links. That sounds really interesting.=0A=
-I'm happy to hear that you don't find my suggestion entirely stupid. My use=
- case is so specific that I wasn't sure it would be very relevant as a feat=
-ure request.=0A=
-=0A=
-I will probably take a look at the source code too. But to be very honest, =
-my experience with C is quite limited. I have the basics, but I never pract=
-iced it in a real world project. So a codebase such as git's will be way mo=
-re intimidating to me than sending a message to this mailing list. Building=
- git from the sources would be a good start.=0A=
-=0A=
-It would be an immense honor for me to invest some time to add a feature to=
- git. But adding this mode to "git range-diff" is probably very ambitious a=
-nd not very beginner-friendly. I will check the code and see how it goes. W=
-e never know!=0A=
-=0A=
-If you have further recommendations to start this journey, I will be very h=
-appy to hear them, of course. Thank you again!=
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+
+In April, GitHub announced that the `macos-13` pool is available:
+https://github.blog/changelog/2023-04-24-github-actions-macos-13-is-now-available/.
+It is only a matter of time until the `macos-12` pool is going away,
+therefore we should switch now, without pressure of a looming deadline.
+
+Since the `macos-13` runners no longer include Python2, we also drop
+specifically testing with Python2 and switch uniformly to Python3, see
+https://github.com/actions/runner-images/blob/HEAD/images/macos/macos-13-Readme.md
+for details about the software available on the `macos-13` pool's
+runners.
+
+Also, on macOS 13, Homebrew seems to install a `gcc@9` package that no
+longer comes with a regular `unistd.h` (there seems only to be a
+`ssp/unistd.h`), and hence builds would fail with:
+
+    In file included from base85.c:1:
+    git-compat-util.h:223:10: fatal error: unistd.h: No such file or directory
+      223 | #include <unistd.h>
+          |          ^~~~~~~~~~
+    compilation terminated.
+
+The reason why we install GCC v9.x explicitly is historical, and back in
+the days it was because it was the _newest_ version available via
+Homebrew: 176441bfb58 (ci: build Git with GCC 9 in the 'osx-gcc' build
+job, 2019-11-27).
+
+To reinstate the spirit of that commit _and_ to fix that build failure,
+let's switch to the now-newest GCC version: v13.x.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+    ci: upgrade to using macos-13
+    
+    GitHub announced in April that the macos-13 pool is available
+    [https://github.blog/changelog/2023-04-24-github-actions-macos-13-is-now-available/],
+    so let's switch. This might also stave off CI failures we experience
+    over in GitGitGadget (e.g. here
+    [https://github.com/gitgitgadget/git/actions/runs/6729366919/job/18290134547#step:3:56])
+    and in Git for Windows (e.g. here
+    [https://github.com/git-for-windows/git/actions/runs/6708618181/job/18252834721#step:3:57])
+    where occasionally macos-12-xl runners seem to be co-opted to cope with
+    macos-12 workload (and the former don't have Python2 in their PATH).
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1607%2Fdscho%2Fswitch-ci-to-macos-13-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1607/dscho/switch-ci-to-macos-13-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1607
+
+ .github/workflows/main.yml | 6 +++---
+ ci/lib.sh                  | 6 ++----
+ 2 files changed, 5 insertions(+), 7 deletions(-)
+
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index dcf7d78f1d0..9fdbd540289 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -276,11 +276,11 @@ jobs:
+             pool: ubuntu-20.04
+           - jobname: osx-clang
+             cc: clang
+-            pool: macos-12
++            pool: macos-13
+           - jobname: osx-gcc
+             cc: gcc
+-            cc_package: gcc-9
+-            pool: macos-12
++            cc_package: gcc-13
++            pool: macos-13
+           - jobname: linux-gcc-default
+             cc: gcc
+             pool: ubuntu-latest
+diff --git a/ci/lib.sh b/ci/lib.sh
+index 6fbb5bade12..bc0b23099df 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -253,11 +253,9 @@ ubuntu-*)
+ 	export PATH="$GIT_LFS_PATH:$P4_PATH:$PATH"
+ 	;;
+ macos-*)
+-	if [ "$jobname" = osx-gcc ]
++	MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=$(which python3)"
++	if [ "$jobname" != osx-gcc ]
+ 	then
+-		MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=$(which python3)"
+-	else
+-		MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=$(which python2)"
+ 		MAKEFLAGS="$MAKEFLAGS APPLE_COMMON_CRYPTO_SHA1=Yes"
+ 	fi
+ 	;;
+
+base-commit: 692be87cbba55e8488f805d236f2ad50483bd7d5
+-- 
+gitgitgadget
