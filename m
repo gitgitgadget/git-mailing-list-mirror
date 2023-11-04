@@ -1,242 +1,81 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 222241E511
-	for <git@vger.kernel.org>; Sat,  4 Nov 2023 22:06:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G24kbVGL"
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68EAADE
-	for <git@vger.kernel.org>; Sat,  4 Nov 2023 15:06:18 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-408425c7c10so24446975e9.0
-        for <git@vger.kernel.org>; Sat, 04 Nov 2023 15:06:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1699135577; x=1699740377; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=puIyt7ATCqKSzJuSo3wQmgfV+z1DB1brb3UdgUUOaM0=;
-        b=G24kbVGLXHaW6ab9oJFhS0Z+t16ylX/o/IrB4UcwWfDYsEomXU7C4Jzb+0YgQsAY3N
-         8MQOVdP5oP2+V9tJ2Ei2A3B9fxkY4ErTTf168s6tF++yRBQopwnEHI0kC30DiyKxvKUw
-         ASUGfPEjtnkMSOAmIYFf0jiY6FIDc6liZ7gx3iNcv9S5wc6exNOeuy9gi1lYzB4Pzgjb
-         tQGJYYlwAF+qQ40LQNGWV030V5dOGm3Bdk0PnFXw70KE7Ygi5VKIrcGyupT245AoPyUr
-         HRWo4TVHTCgMyQzZB+g/l+CGN9WMP3TpdfF8VuWL+TMB2aFl5JdAn7AqsnUDI7oMxuqQ
-         nyTg==
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BDDCF9FC
+	for <git@vger.kernel.org>; Sat,  4 Nov 2023 23:50:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84C10D69
+	for <git@vger.kernel.org>; Sat,  4 Nov 2023 16:50:32 -0700 (PDT)
+Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-66d093265dfso19561756d6.3
+        for <git@vger.kernel.org>; Sat, 04 Nov 2023 16:50:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699135577; x=1699740377;
+        d=1e100.net; s=20230601; t=1699141831; x=1699746631;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=puIyt7ATCqKSzJuSo3wQmgfV+z1DB1brb3UdgUUOaM0=;
-        b=c/g4hsVFL1ka0a5cZzpAPZiHpPvBmhrSgrwnyenwF0qPRb6di2H+cwdUJqG/biXE5i
-         WvyjTkk4XSobxFR/AiWThcq31TMyNgYjkdgfF5eXthWhfOtB1HGQGaXh3K6bEGCdGg5a
-         2DhUDOPsGV1qYNlCKJnVfFQNxSlAQgjolFamc+HLBR9q1HyvZP8XwgM2Fg3q/P2E3Sc6
-         8ZIpVuaB9uE5eCIO+fFTRjipaJWBtpLw18u3uALGtmiFW2lXN4wckhVbHlJWDdkxG5/5
-         X7vQ0MTocGJNf+ikPbFWI5zz+vsBswjJ6qEzrAKZoXfpcX2wvQStFUabMGbJF0nSUppO
-         1MOg==
-X-Gm-Message-State: AOJu0YyVrvkdOfg275iSDvLmupLheNRyO1xF0lQ7VtwIp1Qzn6y+8t30
-	8zot4fO6gbJmQT5bsMNPTResu7Zp2oJZm2Uy6qY=
-X-Google-Smtp-Source: AGHT+IHl0T4RbHu3P9hQlqZ7F/fLIeAATlfkixc77Xtn4Q0iPA+Dcf00R91sJ3umgLFdNjaPwSZ4msTE5/BbQmttFsM=
-X-Received: by 2002:a05:600c:4f55:b0:408:3707:b199 with SMTP id
- m21-20020a05600c4f5500b004083707b199mr19470463wmq.3.1699135576485; Sat, 04
- Nov 2023 15:06:16 -0700 (PDT)
+        bh=tqvq6y+oC6U8t8v8ktzjSxt0JPzC/Dg0Z4oo0+CW3NI=;
+        b=Ae054RoR6KOKWEwi7ZZchF75AUoKSnD2gaWvxar5lbvaoEjdQJ0TcIOGS0bv7yjU5D
+         CNhBGJm6qr6EI6BoNvJOe8raylCgWKllRluaT4IrdtSUy89DqSIzRhoyC/O2a9IECIYO
+         1APV/Ay21UPUceRI6pElG75kB/0aw9ESRwvQCycpW9dYFvO0zDctfD5vcqVKH3hiOrzs
+         c+SollcEUI/9fl9pZiLnQlt8gFnQcREkIcgIh5PUjSJ7q60GSv0Hjqg6MaLZIRoChY+w
+         sqe0zePOCG18GZAdI8yIWnrGfVWPEQGFSPcXJn1nkJrwxjmBbNeD0zhsfkcFittmf1iy
+         3ZrA==
+X-Gm-Message-State: AOJu0YyxBS4qf7HbBi2xg6PogVyTcttdsG0VfEXX6jNjhwOectA8DeyO
+	5QJTk3pe3ySWKKe3Ed3Ys4EiO3Ga9T6rA3fwiIt5XHzykC8=
+X-Google-Smtp-Source: AGHT+IGK7dU9mgnvIubGqBBTawupV02n/IXqtGd5ngLzADsU0tFduSXB0ClfBE35zRpsCZ7U4D8W7Ws+DHmZUDZuYzE=
+X-Received: by 2002:a05:6214:1d09:b0:649:8f20:5528 with SMTP id
+ e9-20020a0562141d0900b006498f205528mr31518662qvd.60.1699141831275; Sat, 04
+ Nov 2023 16:50:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAC7ZvybvykKQyMWcZoKXxFDu_amnkxZCDq2C6KHoyhmHN2tcKw@mail.gmail.com>
- <CAC7ZvyYGSa-sH1LZ8Lo=NRXbvJsujgFYGPOQR5ZwGHJHZgoDzA@mail.gmail.com>
- <orr5573q-7148-84ro-9rpq-nr7411s894r9@tzk.qr> <CAC7ZvyaQpYiVAszu_Oe5UoKgpe48dRJ8i1O8hLNOSo3UXfPVug@mail.gmail.com>
-In-Reply-To: <CAC7ZvyaQpYiVAszu_Oe5UoKgpe48dRJ8i1O8hLNOSo3UXfPVug@mail.gmail.com>
-From: Kache Hit <kache.hit@gmail.com>
-Date: Sat, 4 Nov 2023 15:05:40 -0700
-Message-ID: <CAC7ZvyacrYUmJ6sr3YVqevM0zB9W1yQb65uHFwrevBy2K5fmjA@mail.gmail.com>
-Subject: Re: BUG: fsmonitor.c:21: fsmonitor_dirty has more entries than the index
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: git@vger.kernel.org
+References: <00a101da0e88$778cd3b0$66a67b10$@nexbridge.com>
+ <CAPig+cTzWCpmksJm-0M1MfUSeYpWbgMaFNHRSOtAhCsNQigV-g@mail.gmail.com>
+ <00c301da0e9d$0d2cb8e0$27862aa0$@nexbridge.com> <CAPig+cRG3VWgnwOPWvbW9boUooa6sD9d667wbSUe4_RkcR60vg@mail.gmail.com>
+ <00c401da0ea1$b61899c0$2249cd40$@nexbridge.com> <CAPig+cQpxRQnhffR8EWWRhqJPmOeOuCE3qsuMcnDyuMLLbTH8Q@mail.gmail.com>
+ <xmqq8r7egd8u.fsf@gitster.g>
+In-Reply-To: <xmqq8r7egd8u.fsf@gitster.g>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Sat, 4 Nov 2023 19:50:20 -0400
+Message-ID: <CAPig+cSC8m5a8PhMw_eJbswwNB-VgBt+n56HSTLLabV9_+y--g@mail.gmail.com>
+Subject: Re: Request for Help - Too many perl arguments as of 2.43.0-rc0
+To: Junio C Hamano <gitster@pobox.com>
+Cc: rsbecker@nexbridge.com, Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Just reporting that I ran into this again, this time with some info to
-help repro, though the issue may be fixed already.
+On Sat, Nov 4, 2023 at 3:59=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
+rote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> > Also, in the longer term, as you suggested, `xargs` is likely a more
+> > fruitful solution.
+>
+> Hmph, the list of our test scripts exceed command line limit?  That
+> sounds a bit nasty, as we somehow need to prepare a pipe and feed
+> them into it, in order to drive xargs downstream of the pipe.
+>
+> Ideally if there were a GNUMake function that slices a list into
+> sublists of "reasonable" lengths, we could use it to directly drive
+> N invocations of check-non-portable-shell script instead of xargs,
+> but I didn't find one.  Here is I came up with, using foreach that
+> is "slice the list into many sublists of 1 element", but it made me
+> feel dirty.
 
-I managed to avoid it by turning off core.splitIndex, so I'd suspected
-the setting conflicts with feature.manyFiles.
-It could very also be/instead conflict with fsmonitor that I also use,
-as mentioned in the similar/related thread:
-https://public-inbox.org/git/xmqqbkhv6dw3.fsf@gitster.g/T/#m13a5ad383f040bb=
-3a6be7641bd04aa20424a274c
+Indeed, that's ugly. I hadn't even put any thought into it since there
+doesn't seem to be a pressing need for it.
 
-Which references a splitindex & fsmonitor bug that's since been
-addressed since 2.41:
-https://github.com/git/git/commit/3704fed5eae8ca2fa20bcf6adb277ee83b012ce0
+In the long run, =C3=86var's idea of having `make` notice which, if any,
+test scripts have changed, and only perform linting on an as-needed
+basis may be the way to go[1,2,3], thus only passing a single script
+as argument to each of the linters.
 
-On Mon, Aug 22, 2022 at 9:53=E2=80=AFPM Kache Hit <kache.hit@gmail.com> wro=
-te:
->
-> Hi,
->
-> I've not been able to successfully repro this after managing to
-> recover from it by rebuilding the index:
-> https://stackoverflow.com/questions/73044253
->
-> I'm sorry I couldn't be more helpful.
->
-> On Fri, Jul 29, 2022 at 8:59 AM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > Hi Kache,
-> >
-> > On Tue, 19 Jul 2022, Kache Hit wrote:
-> >
-> > > A thought: the 179457 is reminiscent of something else I did just bef=
-ore this:
-> > >
-> > > I was doing some "code archeology" and was headlessly checking out
-> > > some old SHAs in this large monorepo.
-> > > During checkout, it said it was updating 174823 files in total.
-> >
-> > Do you think it would be possible to whittle this down a bit, and maybe
-> > attempt to come up with a reproducible example? Something like what is
-> > described in https://stackoverflow.com/help/mcve.
-> >
-> > If all else fails, and you _only_ manage to reproduce it in the origina=
-l
-> > repository, could you at least try to figure out a reliable way to get =
-the
-> > Git index into the indicated state (if I were you, I would start off by
-> > switching to the pre-rebase revision, deleting `.git/index` and then
-> > running `git reset --hard` and then see whether the bug can be
-> > reproduced)?
-> >
-> > Ciao,
-> > Johannes
-> >
-> > >
-> > > On Tue, Jul 19, 2022 at 2:36 PM Kache Hit <kache.hit@gmail.com> wrote=
-:
-> > > >
-> > > > Hi. Output of git bugreport:
-> > > >
-> > > > ---
-> > > >
-> > > > Thank you for filling out a Git bug report!
-> > > > Please answer the following questions to help us understand your is=
-sue.
-> > > >
-> > > > What did you do before the bug happened? (Steps to reproduce your i=
-ssue)
-> > > >
-> > > > Wanted to retain git tree structure when pulling latest and rebasin=
-g.
-> > > > First indication of error was the `rebase -r` of the merge commit
-> > > >
-> > > > What did you expect to happen? (Expected behavior)
-> > > >
-> > > > successful --rebase-merges rebase of my commits on top of master
-> > > >
-> > > > What happened instead? (Actual behavior)
-> > > >
-> > > > ```sh
-> > > > =E2=9D=AF git rebase -r master
-> > > > BUG: fsmonitor.c:21: fsmonitor_dirty has more entries than the inde=
-x
-> > > > (179457 > 1040)
-> > > > zsh: abort      git rebase -r master
-> > > > ```
-> > > >
-> > > > What's different between what you expected and what actually happen=
-ed?
-> > > >
-> > > > Anything else you want to add:
-> > > >
-> > > > I'm currently "stuck" in this state, not sure how to recover or rep=
-ro:
-> > > >
-> > > > ```sh
-> > > > =E2=9D=AF git s
-> > > > BUG: fsmonitor.c:21: fsmonitor_dirty has more entries than the inde=
-x
-> > > > (179457 > 1040)
-> > > > error: git died of signal 6
-> > > >
-> > > > =E2=9D=AF git log
-> > > >
-> > > > =E2=9D=AF git d head~
-> > > > error: git died of signal 6
-> > > > BUG: fsmonitor.c:21: fsmonitor_dirty has more entries than the inde=
-x
-> > > > (179457 > 1040)
-> > > >
-> > > > =E2=9D=AF git log # works
-> > > >
-> > > > =E2=9D=AF git status
-> > > > BUG: fsmonitor.c:21: fsmonitor_dirty has more entries than the inde=
-x
-> > > > (179457 > 1040)
-> > > > zsh: abort      git status
-> > > >
-> > > > =E2=9D=AF git commit --amend
-> > > > BUG: fsmonitor.c:21: fsmonitor_dirty has more entries than the inde=
-x
-> > > > (179457 > 1040)
-> > > > zsh: abort      git commit --amend
-> > > >
-> > > > =E2=9D=AF git checkout head
-> > > > fatal: Unable to create '/Users/XXXXX/YYYYY/.git/index.lock': File =
-exists.
-> > > >
-> > > > Another git process seems to be running in this repository, e.g.  #
-> > > > All of this was run while git bugreport was running
-> > > > an editor opened by 'git commit'. Please make sure all processes
-> > > > are terminated then try again. If it still fails, a git process
-> > > > may have crashed in this repository earlier:
-> > > > remove the file manually to continue.
-> > > >
-> > > > =E2=9D=AF rm /Users/XXXXX/YYYYY/.git/index.lock
-> > > >
-> > > > =E2=9D=AF git checkout head
-> > > > BUG: fsmonitor.c:21: fsmonitor_dirty has more entries than the inde=
-x
-> > > > (179457 > 1040)
-> > > > zsh: abort      git checkout head
-> > > >
-> > > > =E2=9D=AF git checkout head
-> > > > fatal: Unable to create '/Users/XXXXX/YYYYY/.git/index.lock': File =
-exists.
-> > > >
-> > > > Another git process seems to be running in this repository, e.g.
-> > > > an editor opened by 'git commit'. Please make sure all processes
-> > > > are terminated then try again. If it still fails, a git process
-> > > > may have crashed in this repository earlier:
-> > > > remove the file manually to continue.
-> > > > ```
-> > > >
-> > > >
-> > > > Please review the rest of the bug report below.
-> > > > You can delete any lines you don't wish to share.
-> > > >
-> > > >
-> > > > [System Info]
-> > > > git version:
-> > > > git version 2.37.1
-> > > > cpu: x86_64
-> > > > no commit associated with this build
-> > > > sizeof-long: 8
-> > > > sizeof-size_t: 8
-> > > > shell-path: /bin/sh
-> > > > feature: fsmonitor--daemon
-> > > > uname: Darwin 20.6.0 Darwin Kernel Version 20.6.0: Tue Feb 22 21:10=
-:41
-> > > > PST 2022; root:xnu-7195.141.26~1/RELEASE_X86_64 x86_64
-> > > > compiler info: clang: 13.0.0 (clang-1300.0.29.30)
-> > > > libc info: no libc information available
-> > > > $SHELL (typically, interactive shell): /bin/zsh
-> > > >
-> > > >
-> > > > [Enabled Hooks]
-> > > > pre-commit
-> > > > pre-push
-> > >
+[1]: https://lore.kernel.org/git/220901.86bkrzjm6e.gmgdl@evledraar.gmail.co=
+m/
+[2]: https://lore.kernel.org/git/221122.86cz9fbyln.gmgdl@evledraar.gmail.co=
+m/
+[3]: https://github.com/avar/git/commits/avar/t-Makefile-break-T-to-file-as=
+sociation
