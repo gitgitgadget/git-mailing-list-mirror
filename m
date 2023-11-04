@@ -1,126 +1,79 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 106BB187E
-	for <git@vger.kernel.org>; Sat,  4 Nov 2023 00:02:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 472667FF
+	for <git@vger.kernel.org>; Sat,  4 Nov 2023 01:19:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jpK32Nlj"
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E784D54
-	for <git@vger.kernel.org>; Fri,  3 Nov 2023 17:02:46 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-5406c099cebso4200169a12.2
-        for <git@vger.kernel.org>; Fri, 03 Nov 2023 17:02:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1699056164; x=1699660964; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=6na/rRoZzMK+KP+unkUOnxukNnFblVxLV8SsWvpUJ3g=;
-        b=jpK32Nlj+0tBaretK+O4BIym9yiisHVHksXcKI66FEeWDt4XkTmwYqTE+l79UEiJBd
-         8sDUrxHKE0UmyypmCl6ttJATto1ABH7teDcr959o8c34ni3eO+vOGT/EdYfjePg8wddL
-         z3ahVQim1VCSOstePdvdll93ZZ2LNrH/h/bOo/XwrTH5JwViw6LGuarpC12yZaNA3Fli
-         +tMRXsNsEooc9bKW+Cz3rtzvS1MD4KSTnLzo6xF3ZagtRIiZA3zaM/KFBGyBMD+fcLCQ
-         FOdWb0rSSAaYraKmozDnMWLtFsqv4St2s89IHQWAJxojbpoKLQ+yMTe4k/iORA7xd8gh
-         mT/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699056164; x=1699660964;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6na/rRoZzMK+KP+unkUOnxukNnFblVxLV8SsWvpUJ3g=;
-        b=R9nP0Db7tevqa4yVTQQzk7/4PpN/oEwJQGDRYov1Kme4n11gO3Ygbls3C4oK72NxgC
-         ua0Ti8hRmlUE6l3LBFUbjxkNtHZA88CtMngwcOhKaLWwlO2fBFIlAkLMZkktmYO1A4Sx
-         w0hFL1iDsHxyZ2JuJGPDVYTnu/eDk7pe0M/TVQ/F8YnpZsp8xQZB5hEInOrrGO2sWv2z
-         fZPSPfcFvyDQmlithWgYZ9QtazvNCl2vP/2jDDEd9Vvm/4PshhGy1JH9BMpaMhJBSWsn
-         UxtMRXdOEaCVALma0DoEu2kGD6GS9KnX2w5huZ5Pw9goz4ifqEUhh8BMJGTD0MBNszVo
-         GEIA==
-X-Gm-Message-State: AOJu0YyqyPWr9BpXilKdCj+tsqxoshDZnAKQf0bKoXwqlqeK/4eATPe5
-	4NchDnpjKEpgf7gDzWwvkjPiHNhayVc=
-X-Google-Smtp-Source: AGHT+IEO+JyskbveQVEaFmdrXF8WF8I3JV+Z0MOfIC3q6eT2CDhvMNI+UygkVbEWnWjSS8+VKz72sQ==
-X-Received: by 2002:a17:907:843:b0:9be:85c9:43ef with SMTP id ww3-20020a170907084300b009be85c943efmr7732275ejb.62.1699056163922;
-        Fri, 03 Nov 2023 17:02:43 -0700 (PDT)
-Received: from linuxerio.localdomain (j149130.upc-j.chello.nl. [24.132.149.130])
-        by smtp.gmail.com with ESMTPSA id z15-20020a17090655cf00b0098ec690e6d7sm1407492ejp.73.2023.11.03.17.02.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Nov 2023 17:02:43 -0700 (PDT)
-From: Edmundo Carmona Antoranz <eantoranz@gmail.com>
-To: git@vger.kernel.org
-Cc: Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Subject: [RFC PATCH] status: avoid reporting worktrees as "Untracked files"
-Date: Sat,  4 Nov 2023 01:02:08 +0100
-Message-ID: <20231104000209.916189-1-eantoranz@gmail.com>
-X-Mailer: git-send-email 2.42.0
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="tsKh0XC6"
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7AFED54
+	for <git@vger.kernel.org>; Fri,  3 Nov 2023 18:19:21 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3675C1B99F5;
+	Fri,  3 Nov 2023 21:19:19 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=is6irX7XUwnmnHVSYFK7MDdFmWVhEkF9qgIWFX
+	VQYLk=; b=tsKh0XC6fyOBl97Ppwm5vl24PzPr4/JYOWQGHveQrkB9G/VP0//Lux
+	rgC9tBo4/co73d4G9AZ+zL6dpAGdsQWnliN1+l8LnAd2TVgSGscGmhCKXt+kFl9a
+	6HODMlYosJ2TF6llepMI/5V1HQa+J7RIHkqLsFUPA+5KvshJ1ETeg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 14F291B99F3;
+	Fri,  3 Nov 2023 21:19:19 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.67.28])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5DD501B99F2;
+	Fri,  3 Nov 2023 21:19:18 -0400 (EDT)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Andy Koppe <andy.koppe@gmail.com>
+Cc: git@vger.kernel.org,  newren@gmail.com
+Subject: Re: [PATCH 1/2] rebase: support non-interactive autosquash
+In-Reply-To: <20231103212958.18472-1-andy.koppe@gmail.com> (Andy Koppe's
+	message of "Fri, 3 Nov 2023 21:29:57 +0000")
+References: <20231103212958.18472-1-andy.koppe@gmail.com>
+Date: Sat, 04 Nov 2023 10:19:17 +0900
+Message-ID: <xmqqil6iiacq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 2D11B2A8-7AB0-11EE-9572-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-Given that worktrees are tracked in their own special fashion separately,
-it makes sense to _not_ report them as "untracked". Also, when seeing the
-directory of a worktree listed as Untracked, it might be tempting to try
-to do operations (like 'git add') on them from the parent worktree which,
-at the moment, will silently do nothing.
+Andy Koppe <andy.koppe@gmail.com> writes:
 
-With this patch, we check items against the list of worktrees to add
-them into the untracked items list effectively hiding them.
+>  rebase.autoSquash::
+> -	If set to true enable `--autosquash` option by default.
+> +	When set to 'interactive' or 'true', enable the `--autosquash` option
+> +	for interactive rebase. When set to 'always', enable it for
+> +	non-interactive rebase as well. Defaults to 'false'.
 
-END OF PATCH
+I think a better and more extensible way to coax the new feature
+into the configuration system is to arrange it more like so:
 
-Here are a few questions more inline with the "RFC" part of the patch.
+    false	  - synonym for "".
+    true	  - synonym for "interactive".
+    anything else - comman separated list of rebase methods, e.g.,
+		    "interactive,noninteractive"
 
-About UI
-- Would it make more sense to separate them from Untracked files instead
-  of hiding them (perhaps add a --worktrees option to display them)?
-- Follow-up if the previous answer is 'yes': List a worktree only if it
-  is not clean?
+		    possible rebase method names might include other
+		    stuff like "apply" or "merge", but I haven't
+		    thought it through, so take this part with a
+		    grain of salt.
 
-About code:
-- If keeping the idea/patch, Would it make more sense (performance-wise) to
-  fist check an item in the list of worktrees before checking it in the
-  index? In other words, reverse the conditions to add an item to the
-  untracked list?
----
- wt-status.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
-
-diff --git a/wt-status.c b/wt-status.c
-index 9f45bf6949..5fd1e6007a 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -775,6 +775,7 @@ static void wt_status_collect_untracked(struct wt_status *s)
- 	struct dir_struct dir = DIR_INIT;
- 	uint64_t t_begin = getnanotime();
- 	struct index_state *istate = s->repo->index;
-+	struct worktree **worktrees;
- 
- 	if (!s->show_untracked_files)
- 		return;
-@@ -795,9 +796,12 @@ static void wt_status_collect_untracked(struct wt_status *s)
- 
- 	fill_directory(&dir, istate, &s->pathspec);
- 
-+	worktrees = get_worktrees();
-+
- 	for (i = 0; i < dir.nr; i++) {
- 		struct dir_entry *ent = dir.entries[i];
--		if (index_name_is_other(istate, ent->name, ent->len))
-+		if (index_name_is_other(istate, ent->name, ent->len) &&
-+		    !find_worktree_by_path(worktrees, ent->name))
- 			string_list_insert(&s->untracked, ent->name);
- 	}
- 
-@@ -809,6 +813,9 @@ static void wt_status_collect_untracked(struct wt_status *s)
- 
- 	dir_clear(&dir);
- 
-+	if (worktrees)
-+		free_worktrees(worktrees);
-+
- 	if (advice_enabled(ADVICE_STATUS_U_OPTION))
- 		s->untracked_in_ms = (getnanotime() - t_begin) / 1000000;
- }
--- 
-2.42.0
-
+That way, the Boolean versions can be considered historical spelling
+of a more general system where you can exactly tell when autosquash
+takes place.  When we add to a new variant on top of 'interactive'
+and 'non-interactive' variants the current rebase has, we do not
+know if it makes sense to allow it to also handle autosquash without
+knowing how that new variant's behavior appears to the end user, so
+'always' that blindly enables autosquash for any unforseen future
+variants of 'rebase' is probably not what you want.
