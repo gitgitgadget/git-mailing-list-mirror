@@ -1,122 +1,99 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68A1925110
-	for <git@vger.kernel.org>; Sat,  4 Nov 2023 22:04:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 226CD1E511
+	for <git@vger.kernel.org>; Sat,  4 Nov 2023 22:06:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jwq39ajt"
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83051D69
-	for <git@vger.kernel.org>; Sat,  4 Nov 2023 15:04:08 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id ffacd0b85a97d-32f9268bf8cso1890123f8f.0
-        for <git@vger.kernel.org>; Sat, 04 Nov 2023 15:04:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T4JbcB8l"
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CD9EDE
+	for <git@vger.kernel.org>; Sat,  4 Nov 2023 15:06:00 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-32fbf271346so758447f8f.1
+        for <git@vger.kernel.org>; Sat, 04 Nov 2023 15:06:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1699135447; x=1699740247; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=iGKSQFzPepLUi2rVAxBmF9LedmT2S5KIcvZZndPeWdQ=;
-        b=Jwq39ajtYHJQhHCHkzlNWFVDDjFlkuI0pqqcWZkQn5M/FvYO5yomz02O9XD8AvhfO3
-         AT72woMjWriGvWgvkQIKPUU/0T4XeYpwkhq/Ej+TvubBpbda+v2cqe1ZyOWF2Hij9rHJ
-         OW++o7Qe2+Vf1qwou4ibUK7cj7NmzHI+nC5BA7mRf6TVHv85hBzkygLAjBqmXEWqGl/p
-         A4DeYvSTQrU6QZNv/1RdFQl0Nvh+v73TVvEE4YC0IKmdcFrfzOJBdajKWOvOhXCNRI3L
-         ui76T7rKiJXqywgKQRaQGmeRh2S3awIGT61X2qKxTkuY+xTKHH6TYFsVj6Arn8d5vSVa
-         CP4w==
+        d=gmail.com; s=20230601; t=1699135559; x=1699740359; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=NgzZ0N8aOgdOCoi8EFvH/WmEoOcVLPlEulW9fC/qk4E=;
+        b=T4JbcB8leImZWbeijNoV/6dYEUfsoDSEGIUSQ6hog9pQm9qU0Xcw3MGnXxO1tNTxXG
+         WjGCULYDcM0a/SSAgzQL/7DGaPNQ1QzZSfHFwLiz98aMwV0jQon0QHCeBzIJOmlCjIkd
+         UoLFIj7eJLZOOxDelJjbrk+g21ezoRQ0soMfOzYOeQxv3cHZ7ldK6oCJZ3zjCC8KsRY6
+         6uRf4QQj4/AmpHRW9vSTxRILTCUX+d2lnFt3qg/C1BFs/TNJ+30unbChJL8spxoHF+68
+         JXXkFCUeJ38idDowzl14vLaxNtAXFeLxFiiT9sX+kP1A3OD4BXoftU4mJBzSsGJO1dqh
+         Jenw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699135447; x=1699740247;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=iGKSQFzPepLUi2rVAxBmF9LedmT2S5KIcvZZndPeWdQ=;
-        b=KniZvsCg0CeDOXtV9Uf+i9TN+iXCmdAR6gGIVF+eq1k9SY4IU/9bwxH64T5xmKcrFr
-         XCHu2siJ/ls88VLC6HDu3347fH/tBEifjplm0iIZBDp0ablAHgl7/xDQGKaUDf8PHmFU
-         Zg0L6SHMlFMgvmLInjpwhGJDNV4Qpi7HMK3pkojrBbqZafXOMoxPsrKHf0ySH+vG9w3X
-         lLzuo5Tqv8Gjye9SFUd75chK/q9M3LBDbN8rLmHFYwgc2qoRZaH6um/ZmgOVIAYk36E3
-         rtepfJCqHcWD0rr5xj31G8qu3Fs8A/43vO5qz2HODc2Q1F0Il1AhvRpyH0O8D+9hVvQn
-         vjFA==
-X-Gm-Message-State: AOJu0Yy2rfzxuDUDlK2AfyK132HmZWovsvGZyOHB3DkkzAj1tU2gOU3D
-	uloxSa7sLgYJR2HgdTvXnXo2X1FwmokZvw==
-X-Google-Smtp-Source: AGHT+IFD4Lmv8Ajl7vp/olcmRL8XbxLsyS8H3kyyGwAsI2d/TIA8GRUJHGBjRcYrCDF1VlbJ+TdoDg==
-X-Received: by 2002:a5d:6d8e:0:b0:32f:83e4:50e5 with SMTP id l14-20020a5d6d8e000000b0032f83e450e5mr18584089wrs.6.1699135446938;
-        Sat, 04 Nov 2023 15:04:06 -0700 (PDT)
-Received: from localhost.localdomain (cpc105060-sgyl40-2-0-cust995.18-2.cable.virginm.net. [81.111.15.228])
-        by smtp.gmail.com with ESMTPSA id l4-20020adfa384000000b0032d2489a399sm5387221wrb.49.2023.11.04.15.04.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 04 Nov 2023 15:04:06 -0700 (PDT)
-From: Andy Koppe <andy.koppe@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	newren@gmail.com,
-	Andy Koppe <andy.koppe@gmail.com>
-Subject: [PATCH v2 2/2] docs: rewrite rebase --(no-)autosquash description
-Date: Sat,  4 Nov 2023 22:03:30 +0000
-Message-ID: <20231104220330.14577-2-andy.koppe@gmail.com>
-X-Mailer: git-send-email 2.43.0-rc0
-In-Reply-To: <20231104220330.14577-1-andy.koppe@gmail.com>
-References: <20231103212958.18472-1-andy.koppe@gmail.com>
- <20231104220330.14577-1-andy.koppe@gmail.com>
+        d=1e100.net; s=20230601; t=1699135559; x=1699740359;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=NgzZ0N8aOgdOCoi8EFvH/WmEoOcVLPlEulW9fC/qk4E=;
+        b=dGrRGVgvlIm4FUF/jd62IFUVFWLmO4Zb9Y+/XT71qTuuDrO6o/rHNh9cFnPqGyTQ+q
+         m1VoG9FjmYDpdEFC2tJV4x2Yz9gpXnRqLZa9xNI8KacwXwxRV2KDXnR66Brq1gbQN5+6
+         gUuQNhsko7CVAYP274ZLPxPNxPqzR25q7uKu/hjOu92aUJI6hkmSP9xONOOMtH+LAF59
+         h0bvQjo2QwB0RXS8aYH3gElt+e/54xe+DoSj37WwTvRfegPAK6JtMfSoq8FGXPBpGkZC
+         ov/cQCOrFhS3YwGDoBFYMu1oxR6+4kdIJct0PVBtEACE7wd5HoxuYUvXY/VewxE3+MbD
+         Pn6w==
+X-Gm-Message-State: AOJu0YzX5hBKctH8Ch4aWdPRkjU6ZfgYeO8kGOYm4aLmVENeziIxWTQI
+	vw839LIGhr2aqLFOfsWAVns=
+X-Google-Smtp-Source: AGHT+IGMkleEE6SnbWhW58Ol5EPcLsWh9HMHs5HHWW2LdxgCpiH2y3x2M+391CjjTPz+OEHryojUgA==
+X-Received: by 2002:a05:6000:1882:b0:32f:7f02:daca with SMTP id a2-20020a056000188200b0032f7f02dacamr17778521wri.13.1699135558707;
+        Sat, 04 Nov 2023 15:05:58 -0700 (PDT)
+Received: from [192.168.0.17] (cpc105060-sgyl40-2-0-cust995.18-2.cable.virginm.net. [81.111.15.228])
+        by smtp.gmail.com with ESMTPSA id o7-20020a5d6847000000b0032f7e832cabsm5314611wrw.90.2023.11.04.15.05.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 04 Nov 2023 15:05:58 -0700 (PDT)
+Message-ID: <20531e2a-deb5-4bbf-93dc-a83648f59fca@gmail.com>
+Date: Sat, 4 Nov 2023 22:05:56 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] rebase: support non-interactive autosquash
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, newren@gmail.com
+References: <20231103212958.18472-1-andy.koppe@gmail.com>
+ <xmqqil6iiacq.fsf@gitster.g>
+Content-Language: en-GB
+From: Andy Koppe <andy.koppe@gmail.com>
+In-Reply-To: <xmqqil6iiacq.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Rewrite the description of the rebase --(no-)autosquash options to try
-to make it a bit clearer. Don't use "the '...'" to refer to part of a
-commit message, mention how --interactive can be used to review the
-todo list, and add a bit more detail on commit --squash/amend.
+On 04/11/2023 01:19, Junio C Hamano wrote:
+> Andy Koppe <andy.koppe@gmail.com> writes:
+> 
+>>   rebase.autoSquash::
+>> -	If set to true enable `--autosquash` option by default.
+>> +	When set to 'interactive' or 'true', enable the `--autosquash` option
+>> +	for interactive rebase. When set to 'always', enable it for
+>> +	non-interactive rebase as well. Defaults to 'false'.
+> 
+> I think a better and more extensible way to coax the new feature
+> into the configuration system is to arrange it more like so:
+> 
+>      false	  - synonym for "".
+>      true	  - synonym for "interactive".
+>      anything else - comman separated list of rebase methods, e.g.,
+> 		    "interactive,noninteractive"
+> 
+> 		    possible rebase method names might include other
+> 		    stuff like "apply" or "merge", but I haven't
+> 		    thought it through, so take this part with a
+> 		    grain of salt.
+> 
+> That way, the Boolean versions can be considered historical spelling
+> of a more general system where you can exactly tell when autosquash
+> takes place.  When we add to a new variant on top of 'interactive'
+> and 'non-interactive' variants the current rebase has, we do not
+> know if it makes sense to allow it to also handle autosquash without
+> knowing how that new variant's behavior appears to the end user, so
+> 'always' that blindly enables autosquash for any unforseen future
+> variants of 'rebase' is probably not what you want.
 
-Signed-off-by: Andy Koppe <andy.koppe@gmail.com>
----
- Documentation/git-rebase.txt | 32 ++++++++++++++++++--------------
- 1 file changed, 18 insertions(+), 14 deletions(-)
+Thanks, done in v2.
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 102ff91493..594158fcbc 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -589,21 +589,25 @@ See also INCOMPATIBLE OPTIONS below.
- 
- --autosquash::
- --no-autosquash::
--	When the commit log message begins with "squash! ..." or "fixup! ..."
--	or "amend! ...", and there is already a commit in the todo list that
--	matches the same `...`, automatically modify the todo list of
--	`rebase`, so that the commit marked for squashing comes right after
--	the commit to be modified, and change the action of the moved commit
--	from `pick` to `squash` or `fixup` or `fixup -C` respectively. A commit
--	matches the `...` if the commit subject matches, or if the `...` refers
--	to the commit's hash. As a fall-back, partial matches of the commit
--	subject work, too. The recommended way to create fixup/amend/squash
--	commits is by using the `--fixup`, `--fixup=amend:` or `--fixup=reword:`
--	and `--squash` options respectively of linkgit:git-commit[1].
-+	Automatically squash commits with specially formatted messages into
-+	previous commits.  If a commit message starts with "squash! ",
-+	"fixup! " or "amend! ", the remainder of the subject line is taken
-+	as a commit specifier, which matches a previous commit if it matches
-+	the start of the subject line or the hash of that commit.
- +
--If the `--autosquash` option is enabled by default using the
--configuration variable `rebase.autoSquash`, this option can be
--used to override and disable this setting.
-+In the rebase todo list, commits marked for squashing are moved right after
-+the commits they modify, and their action is changed from `pick` to `squash`,
-+`fixup` or `fixup -C`, depending on the squash marker.  The `--interactive`
-+option can be used to review and edit the todo list before proceeding.
-++
-+The recommended way to create commits with squash markers is by using the
-+`--squash`, `--fixup`, `--fixup=amend:` or `--fixup=reword:` options of
-+linkgit:git-commit[1], which take the target commit as an argument and
-+automatically fill in the subject line of the new commit from that.
-++
-+The configuration variable `rebase.autoSquash` can be used to enable
-+`--autosquash` by default.  See the CONFIGURATION section below for details.
-+The `--no-autosquash` option overrides that setting.
- +
- See also INCOMPATIBLE OPTIONS below.
- 
--- 
-2.43.0-rc0
-
+Andy
