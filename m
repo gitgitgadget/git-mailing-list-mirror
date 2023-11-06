@@ -1,79 +1,52 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E532E2D03C
-	for <git@vger.kernel.org>; Mon,  6 Nov 2023 21:26:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 235D22E638
+	for <git@vger.kernel.org>; Mon,  6 Nov 2023 22:01:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=idiomdrottning.org header.i=@idiomdrottning.org header.b="XcEKQREm"
-X-Greylist: delayed 513 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 06 Nov 2023 13:26:07 PST
-Received: from halsen.idiomdrottning.org (halsen.idiomdrottning.org [74.207.231.133])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25E5BB3
-	for <git@vger.kernel.org>; Mon,  6 Nov 2023 13:26:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=idiomdrottning.org;
-	s=idiomdrottningorg; t=1699305451;
-	bh=yYnzPXCOsylN51/MjWu1lynQNh8ptOwLR/BXaVRdmYY=;
-	h=From:To:Subject:Date:From;
-	b=XcEKQREmz8xT/dY/pGuF4O8SgQwa6dc1hlJmE8V4OC2gGhMASQaxv1tkATgS4UInA
-	 SXrD1gtJ5rBDn9/nYy9MkcpFSJF5JQYdEEsiH+/eN43MIGzT6N1Hl8yblaYThZsQIb
-	 3sY+2eiDSKAKwjiZFBhdysW+3+RsSFLCyMR01/bg72EgZvC+PWk5jukzKZBIPhASMv
-	 aQ4XvkFDN1qhwyqw+7NFQaC3f5Y3JNKdCAazRLqsitElrv/XSHmyHYSB3co0+B9OrS
-	 o9mUnwo9GPSzBifCnMS19BKsatCBo9n+ACi1KFculOnP7rJSHRzKeyJ+XCfpjvC5SH
-	 ww8n0ThN3kk/A==
-Received: from localhost (31-211-247-254.customers.ownit.se [31.211.247.254])
-	by halsen.idiomdrottning.org (Postfix) with ESMTPSA id D41B920F47;
-	Mon,  6 Nov 2023 22:17:28 +0100 (CET)
-From: Sandra Snan <sandra.snan@idiomdrottning.org>
-To: git@vger.kernel.org
-Subject: first-class conflicts?
-Autocrypt: addr=sandra.snan@idiomdrottning.org; prefer-encrypt=mutual; keydata=
- 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
-Date: Mon, 06 Nov 2023 22:17:22 +0100
-Message-ID: <87cywmintp.fsf@ellen.idiomdrottning.org>
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="XRrUXkT0"
+Received: from mail.manjaro.org (mail.manjaro.org [IPv6:2a01:4f8:c0c:51f3::1])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5DB6134
+	for <git@vger.kernel.org>; Mon,  6 Nov 2023 14:01:20 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1699308078;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=8W++ht9ff/vazKtrgl5RUifDetsOqd6nvcv8HHmotps=;
+	b=XRrUXkT0gVgbewSq7bjjotX+VBQL7ISpt18F/YUQMA2iYlEke5Z/WDgX2r3hw0UcD6Vp+v
+	PBswTzClOIRsSvBE0CJh//ioV11qqhA+bNpiuu0UVv88DlsnpqYVI54dS/y0nj+dAmabEV
+	w+PDU2IQxzHqISg5aD3f3/Uf5yBgNPl5z1PDQnf9eYanvZogdUabkhNQEqSQvTZQQ95Pzo
+	1VWflKP4AbkxunUdXSGmfNJAQl7qvXoPXE+1XgVUodxX/PEmmH0VT+2ej2dNP3bVKq4VEQ
+	3gzR0Wf3E/h0aQDOHY43Qs2iuv7BE1GKiJRR++6k+SE12aGFL//vNRzGxoILkw==
+Date: Mon, 06 Nov 2023 23:01:18 +0100
+From: Dragan Simic <dsimic@manjaro.org>
+To: Sandra Snan <sandra.snan@idiomdrottning.org>
+Cc: git@vger.kernel.org
+Subject: Re: first-class conflicts?
+In-Reply-To: <87cywmintp.fsf@ellen.idiomdrottning.org>
+References: <87cywmintp.fsf@ellen.idiomdrottning.org>
+Message-ID: <ef30a484525157579c64249a396f10ae@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-Is this feature from jj also a good idea for git?
-https://martinvonz.github.io/jj/v0.11.0/conflicts/
+On 2023-11-06 22:17, Sandra Snan wrote:
+> Is this feature from jj also a good idea for git?
+> https://martinvonz.github.io/jj/v0.11.0/conflicts/
+
+Hmm, that's quite interesting, but frankly it makes little sense to me.  
+See, the source code in a repository should always be in a compileable 
+or runnable state, in each and every commit, so going against that rule 
+wouldn't make much sense.  Just think about various CI/CD tools that 
+also expect the same.
