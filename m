@@ -1,73 +1,68 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33F70BE48
-	for <git@vger.kernel.org>; Mon,  6 Nov 2023 07:17:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC8B216432
+	for <git@vger.kernel.org>; Mon,  6 Nov 2023 10:45:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rftQqkpj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AwN9yQBk"
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54007CC
-	for <git@vger.kernel.org>; Sun,  5 Nov 2023 23:16:58 -0800 (PST)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.nyi.internal (Postfix) with ESMTP id 55C995C01CC;
-	Mon,  6 Nov 2023 02:16:55 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Mon, 06 Nov 2023 02:16:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rCsgs6Gy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EP3Xk+6C"
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83596CC
+	for <git@vger.kernel.org>; Mon,  6 Nov 2023 02:45:55 -0800 (PST)
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailout.nyi.internal (Postfix) with ESMTP id 17AE45C00EC
+	for <git@vger.kernel.org>; Mon,  6 Nov 2023 05:45:53 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute7.internal (MEProxy); Mon, 06 Nov 2023 05:45:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1699255015; x=1699341415; bh=jm
-	5hLJ3o07lciCyzDmEGYypJ2MDHZ4at7/T/Iiy+cQc=; b=rftQqkpjH2n+qHwr4+
-	zmrAyUCM611gVA3K7oX53CnM0M0Nv1GjZ90LlxBUUYZY/r0NCV8UOiZ2YMvnFvbe
-	sb9jyMIPNSsXc8IBFz37B/aH9coOSODVE9uZxVgTfvezIW+N4Gw+Ke/4uvMVZPxs
-	zJRrdCPB3cIiNy67iqKnDPvfU9kO+w3XEQ3jnY6fgKAsNEL1vW0c3H2bXZFtNGvF
-	CFUmHTRUiO3vwNWrqxe9UGhhhr9FB/LmqNtU6FlzIacc4CspwhNunO8J6XGDYIqS
-	VnetPPERCG1kmO7mJM7gnSlkJgy8VPrkOHVT6Ajl2+/CnfdHcIGDCgDGQebGTBGf
-	Lr1Q==
+	:message-id:mime-version:reply-to:sender:subject:subject:to:to;
+	 s=fm3; t=1699267553; x=1699353953; bh=O8+7Tov/1f4s0ck5GiELg6zRg
+	hyArfsW+8bzBmGti1g=; b=rCsgs6GyUYPh8V+PKx61fxAnYoNhYQ7W5j5ZJr5mQ
+	I0wlzNNaKwlmMqgg6etadXN0asZctHj4jmIhUcL2Q0QZHx/q93fuJ7DPB+qbPYj+
+	RA9WxOzauWLunrekPXgwHkkbM5w1m9RRdNAWqt3UkO/VCqEmcWq7gfabMx6lldZ5
+	ApI2l0L6vVli8ZBde57lNGOiOkxdhbKM8KacduEwyXLimbKilKZruC+GEp/nK9DQ
+	scx5SVXKZ5CSC/jAejg48mSlPtYQF3VeGf3mrYla2mZlM0/6GaXa6tQP1yRMChs0
+	dBOM3sVzqJHOT6T7+Pf4LeJjewDy9iHashWmyVFUr8bzQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1699255015; x=1699341415; bh=jm5hLJ3o07lci
-	CyzDmEGYypJ2MDHZ4at7/T/Iiy+cQc=; b=AwN9yQBkAaqIOyx0zXBZnPw+qP8Hp
-	HRqnZELuD6Zzv9H2XEo7T4C77IZdpH1p+dbpNG3bJ668F9OOmjMpmalwqP1OBRnX
-	gG7AoVy5awwRWcrQiSJVdvM1ZuRM6GuII/huWLQy52ilLikgc821jxBeuO0Fj9Rc
-	ssvxqEUvS2KcYO2mXtoRQLJCL5KR0dX55yWRR7cWY3AzAiOAA3sN2FlSK/3xNBoz
-	SYq0gJNrKOyfjUfXk273QSkiQRM8POn8MFZzygsbeSfmJJjHY9/k/6k4GJV14op5
-	0rG4EYGXTGbf4ebsVghr3T7a2H32dKmcHvNXkyhBxy873YqVwNT7IKjOA==
-X-ME-Sender: <xms:55JIZUGKuUcbfEU-3Y9Kv0OP6yjl1rIgxPZ8XOo4sRHqYauIWi_j2Q>
-    <xme:55JIZdVfGFadvyC7eg5r5r6pYrpkstTPpij06vXpNG7F42rL_Db5DmP01FBT0_zwh
-    eqNCLlKAXEK2YoO8g>
-X-ME-Received: <xmr:55JIZeKDNpRU9teyYcCUZsw_v0LRXtth5i21SvjmAAttRKBwZEzFa8d4yp-8FtBl0akAb-Da9mP7lCJDAy-F2jOrSL0rYMXY_zZrQaqet_aUk5k>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddufedguddtjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefrrght
-    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeetueevhffhudefvdegieeuieelgedthfegfedtueevjeejtdfgjeehudejuedt
-    udenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
-    esphhkshdrihhm
-X-ME-Proxy: <xmx:55JIZWGf7uoH_62IYS3KJez8m0YlU_0zDrlnPJT0JeCwik7AExWb1Q>
-    <xmx:55JIZaXGerKd-24Uxrtjp8xP4Cfh1n8HytEp55kmA10cdnpdHV4tjA>
-    <xmx:55JIZZNuwQOhYQV_v8yLUC1Dj4JNZefKcOf0PPgx6eLziml-UkVUmA>
-    <xmx:55JIZTd754yY0aE6NfF9TsdOH4JkaITdrGvVegc6XUMMXIihQGxf0Q>
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:sender:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1699267553; x=1699353953; bh=O8+7Tov/1f4s0ck5GiELg6zRghyArfsW+8b
+	zBmGti1g=; b=EP3Xk+6Cky6+9A7drtVnfK4zakluf5S7wct9DVAm88kV5uljL0i
+	T8y4DzcIisCpSrPcb1bh4u+uWcpM+O0DCGrcQRpbS2cNEnPiZTYSAa1XfdQZuGFS
+	NdzONi8Ks4C9dgcelevH3Oed67VwVDWEex845wYHdm/pqs9msEsMNYzvbCaaMMTN
+	Fe3hW6MM+2qsco7Wso/43qZ7n85HXdsK+0/F+4fjzgScqxx6kz3Py6Hkq84FMix9
+	9FJbyi7XBbngWYwPX7zcIL1WpfhvLNx/aGVcbl+b/zxjADG+otkbDEih7pxdDhu2
+	G9yWevYt7jPdI3HoQJ4jA+fQze03FtYdh/A==
+X-ME-Sender: <xms:4MNIZbVhz6PGJGXUNJC80Yd43ELkXrqIDdiIgHxX5Qyc_amTvvAJUg>
+    <xme:4MNIZTlU52F-j3b78W7cY3keUQEyy4nn-CM-Ww7va0Dfda47cDqoQh3gRAfcWxM-b
+    1EdRtKnqHookpUDfA>
+X-ME-Received: <xmr:4MNIZXZqFo-FIFD66A6g_9XkFt5E21ls5ypjiYMWtAVV3jBWbMKtV61QLTwUAbXY_qnn5KtghduxW1EsTsEqaa7_cQ1IOAjE_CAo6KvUMKfhQ0s>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddugedgudekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkgggtugesghdtreertd
+    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
+    rdhimheqnecuggftrfgrthhtvghrnhepjeeifedvueelfffgjeduffdvgefhiefgjefgvd
+    dvfeduvefffeevfffhgfekieffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:4MNIZWXE3M39yk5IIcQS-jkCzin3Z5mgVFYaLAE3ZDruyE99Bfixqg>
+    <xmx:4MNIZVkh0t75yu_SmoWwV7ORK_DCwwSFAdPxWJnj_5VrMUCb_obd0w>
+    <xmx:4MNIZTfFYBZHNCSnet9pDjCuVDbbb8kwUNM13aHIAheAUa7WQi7KNQ>
+    <xmx:4cNIZTR1Ik-d9FFQcFlVR00WHq7AfTi6m4GMUDQKjTXH46ntHmIr3w>
 Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 Nov 2023 02:16:54 -0500 (EST)
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Mon, 6 Nov 2023 05:45:52 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 4b512060 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 6 Nov 2023 07:16:32 +0000 (UTC)
-Date: Mon, 6 Nov 2023 08:16:50 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 342b5be3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Mon, 6 Nov 2023 10:45:29 +0000 (UTC)
+Date: Mon, 6 Nov 2023 11:45:48 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 4/5] ci: split out logic to set up failed test artifacts
-Message-ID: <ZUiS0llx6juV_1M7@tanuki>
-References: <cover.1698305961.git.ps@pks.im>
- <4a864a1d174f7d4d36202a375302d450fbe9f2a3.1698305961.git.ps@pks.im>
- <CAP8UFD25O9D1WL+CAQOcdqwuPsgdd6qOMNWuVtAw18U3RccYZQ@mail.gmail.com>
+To: git@vger.kernel.org
+Subject: [PATCH 0/4] Memory leak fixes
+Message-ID: <cover.1699267422.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,94 +70,57 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="cWN+gpiHvYcK4umE"
+	protocol="application/pgp-signature"; boundary="vPfhL/UL88GctsF2"
 Content-Disposition: inline
-In-Reply-To: <CAP8UFD25O9D1WL+CAQOcdqwuPsgdd6qOMNWuVtAw18U3RccYZQ@mail.gmail.com>
 
 
---cWN+gpiHvYcK4umE
-Content-Type: text/plain; charset=utf-8
+--vPfhL/UL88GctsF2
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Nov 03, 2023 at 11:35:01PM +0100, Christian Couder wrote:
-> On Thu, Oct 26, 2023 at 10:01=E2=80=AFAM Patrick Steinhardt <ps@pks.im> w=
-rote:
-> >
-> > We have some logic in place to create a directory with the output from
-> > failed tests, which will then subsequently be uploaded as CI artifact.
-> > We're about to add support for GitLab CI, which will want to reuse the
-> > logic.
-> >
-> > Split the logic into a separate function so that it is reusable.
-> >
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > ---
-> >  ci/lib.sh | 40 ++++++++++++++++++++++------------------
-> >  1 file changed, 22 insertions(+), 18 deletions(-)
-> >
-> > diff --git a/ci/lib.sh b/ci/lib.sh
-> > index 957fd152d9c..33005854520 100755
-> > --- a/ci/lib.sh
-> > +++ b/ci/lib.sh
-> > @@ -137,6 +137,27 @@ handle_failed_tests () {
-> >         return 1
-> >  }
-> >
-> > +create_failed_test_artifacts () {
-> > +       mkdir -p t/failed-test-artifacts
-> > +
-> > +       for test_exit in t/test-results/*.exit
-> > +       do
-> > +               test 0 !=3D "$(cat "$test_exit")" || continue
-> > +
-> > +               test_name=3D"${test_exit%.exit}"
-> > +               test_name=3D"${test_name##*/}"
-> > +               printf "\\e[33m\\e[1m=3D=3D=3D Failed test: ${test_name=
-} =3D=3D=3D\\e[m\\n"
-> > +               echo "The full logs are in the 'print test failures' st=
-ep below."
-> > +               echo "See also the 'failed-tests-*' artifacts attached =
-to this run."
-> > +               cat "t/test-results/$test_name.markup"
-> > +
-> > +               trash_dir=3D"t/trash directory.$test_name"
-> > +               cp "t/test-results/$test_name.out" t/failed-test-artifa=
-cts/
-> > +               tar czf t/failed-test-artifacts/"$test_name".trash.tar.=
-gz "$trash_dir"
-> > +       done
-> > +       return 1
->=20
-> Nit: I think it's more the responsibility of handle_failed_tests() to
-> `return 1` than of create_failed_test_artifacts(). I understand that
-> putting it into this new function means one more line that is common
-> to several CI tools though.
->=20
-> Otherwise everything in this series LGTM. Thanks!
+Hi,
 
-Good point indeed. Not sure whether this is worth a reroll though?
+this patch series fixes some memory leaks. All of these leaks have been
+found while working on the reftable backend.
 
 Patrick
 
---cWN+gpiHvYcK4umE
+Patrick Steinhardt (4):
+  test-bloom: stop setting up Git directory twice
+  shallow: fix memory leak when registering shallow roots
+  setup: refactor `upgrade_repository_format()` to have common exit
+  setup: fix leaking repository format
+
+ setup.c                         | 33 ++++++++++++++++++++++-----------
+ shallow.c                       |  4 +++-
+ t/helper/test-bloom.c           |  1 -
+ t/t5311-pack-bitmaps-shallow.sh |  2 ++
+ t/t5530-upload-pack-error.sh    |  1 +
+ 5 files changed, 28 insertions(+), 13 deletions(-)
+
+--=20
+2.42.0
+
+
+--vPfhL/UL88GctsF2
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVIkuEACgkQVbJhu7ck
-PpRkgw/+PaDFIupeOTKDodrVQnbjeFz4GXDQ9iJvNVhQWRDCLUIMhuismsmGdZAa
-X+yYESPRTPbhWbxQyOt+0shUIayWuHwT2TYjtt4f3uixK6sCSxIa86y4r4qxM+Le
-glVKNp0OdUAWSZIHDLlGWigVlwm+4TKRQmM/jDmAIi8ZssQlL1hLqkSZ350umtEm
-EGszW7Bvx2R58VlX62cwWFPScK6+iLquLs+eH6v4yXjLMWAHyqAj44S5Nqh9STUq
-QNn0ViNsu4wGTug9GsSzxIy+3+8PV2h2KINsoHKpgZ6bd3cEwu8xkWUHaPNyB3tI
-z45KYsnsBzyow6A4Qb210BOSAotXhGYhT1t4V2B01oj3mp5UML63M/ov87KRhO9o
-oEzXqNi/tnI92cal1WYcSV5BhrAZ+S1ZdMCPiYfAvbfL12aP3PPqVw9Foe8LnyNV
-pXMLzZnMzDAVEJ8Xj+WNbiASLaj0lyQlspTZI5dODZOS+VMyVs8KgXoyajDEW/h3
-vHJx4S/rgn0Fwu9F9snw8TXJaA3JQDFiKXd0ldzZrgzHnjgCuaOP8UuYoMiwRojU
-dExIxkUiR7OeHiT5aDmy4sXDn/MubQT4DOnorlx8GjqL7f+P9RTT3n3SvKgyHsch
-Ir0tvd8CC3iYtb71rWQckhShettaZU2mVFx5z137y8hGfpxFGF4=
-=TjrJ
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVIw9sACgkQVbJhu7ck
+PpRFVA/7BEQt/oaGFBCIAQgsdIiPf8oev/ktHaY83evdxlcR0L2VVLTxBCTrIR2w
+MyrGhNQPawxZ/c9ONuSBPidQrdxJ+0UljU8Vtolnr5QibLV7yXts+RBcSJRYwtOH
+JdZs0k9Wi1wn+uLtxmpDYL0pQTdh9+HWjMcKLcyJc+mL/qixnkPylcgzoMYIka9T
+4TyO3XpJJALtMJ+An6lKMf1ub+gzjcJZVpagGj66WinkkSB5J60rh+5yU2/hS/WF
+EpmpajXKtald33kxcOqcP4Z1AV/yJCcnEF8BvRW6m+lQSX8u4yunIgjtfaB3iRB8
+2eXkG56RMSy2oFrYBhevP+3AJGHVPqJkm85aVJAzK37p5/swDlM/UDoMbk1jEPZ6
+YsKqWyOQbP4Qx1YSavz1S9slyUXRnZ3GsvfcE6BBOsv7P6FNA0wOljGDA1MJzQjv
+kyyuggVS0InUT8YY8U92I0m77YmZ84S1cV6sovmfJdKNIl/Zr8ii2kHGlhk4hKJV
+0MENR0GopfIspTE6PPESktlTG5ofp0cmJv3uCl1Lc4Hlt7iGmjU+gxlSFWpIzNlL
+6xEJ3o3iJnd8i9gUvzRIaGvx9lUxrxLQrQLlJf+hfk2jE0Ic6R5ruhtdn0EIX6k3
+hvg+V53pAGjThHBRTZ+l/r+ERYgfqUmBGtHvOWNaCPCJ/gzoONg=
+=VXoQ
 -----END PGP SIGNATURE-----
 
---cWN+gpiHvYcK4umE--
+--vPfhL/UL88GctsF2--
