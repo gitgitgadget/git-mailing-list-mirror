@@ -1,163 +1,81 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532BD1A58A
-	for <git@vger.kernel.org>; Mon,  6 Nov 2023 11:07:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68013182BF
+	for <git@vger.kernel.org>; Mon,  6 Nov 2023 11:29:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XqS0yLC2"
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D37D134
-	for <git@vger.kernel.org>; Mon,  6 Nov 2023 03:07:18 -0800 (PST)
-Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2c5720a321aso57561421fa.1
-        for <git@vger.kernel.org>; Mon, 06 Nov 2023 03:07:18 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NFbitn2k"
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0924FDB
+	for <git@vger.kernel.org>; Mon,  6 Nov 2023 03:29:14 -0800 (PST)
+Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-9d216597f64so651397266b.3
+        for <git@vger.kernel.org>; Mon, 06 Nov 2023 03:29:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1699268836; x=1699873636; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=DMppQbsl+n4exxLUV8K6SdfOslFjSzvn1xLFS4DPSZc=;
-        b=XqS0yLC2SEgs6tpNGtRV0dZLFSYre4ya7/t53KGrKxDdJKmMz3YhGOjTIh9IigGAyI
-         0jE0d5rPY/FkhFRfhE2R3MnMNYN2k7KnIoR+e7dpTBZIRilv/3RfnV8eCg0x+lWPsrqG
-         pgRWoCIDK+EZBQr5en43edturZbw8VvD50VUdEXoE2yS2QB4DZHMBAi6//qxpvFMOKTt
-         YmU68p0wMdg1xcq0RhrDYUxK7VgmZM+//dtUK/2UzdFmEqhhc0a7Vm5N10R2T+Fk6MCy
-         o42V1deNQTQd2fhbl16UZZi7dDzO8pEYORZZV4JPe7qSSkmYAHkjtREGt1Ve98seK32F
-         SqKQ==
+        d=gmail.com; s=20230601; t=1699270152; x=1699874952; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=F4D4ENCY0YBjdNAPiH/AfiuAWP83uenSlVUNUTHCdVA=;
+        b=NFbitn2kA2dxq0/ydvSpsLm+7BlcnIfqyi+3znHqcmzF29KnHSzVmEs4FAUUYvHGk3
+         KvOWznNOklTVnUYRU5XA9rwnmTgJ5l5Ly5McfMZJtd5DsDGHNvmlYNDVcWXe5FK5O4vr
+         3h7e2K+BBSmOszuhNryU3fFO7Y9ygmIqe2PFnj8/B88swx/b3GQjGhawMa7Uw/k9RyjQ
+         HA3JarbrOwMAGKvv6GrLh8PY8AwpZ7SqHMgLyhW8T3ZQIcX3OU2S0OhTTpAM0N27oXGp
+         RSBppG8Luf1SWt9ovkeAROJMXC/FuQiFvds6RKyiBuRgvbFbCy/GtWCttDv8xDWLPcaX
+         ajFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699268836; x=1699873636;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DMppQbsl+n4exxLUV8K6SdfOslFjSzvn1xLFS4DPSZc=;
-        b=E3KV9fD+UJFuQ3cuxGz6/uoppB7FlPXJ8KsD/rccJqnD7ksdJDU+rkPXdck5sXhoAx
-         JTvz7GCENbgQ9IqB06FyBWjMDeYb/upD77xlczRi8Tsks670ZJz+gF5o027ll4YW11Ji
-         6u8UoO09l5TC02NZ+7x/BhzTqcIEqfka/Ht/r+Pq30KTVZtkvjvFl8Wqxr+zC8XOFy6E
-         0tzGBPz8kDe/G489IJrD3DHdeNbPZiNkSfCNehHvyVIQk8+y71NQaBVOhlLiWC5u7uu9
-         DBODPGg394M/Ctx8LNQyZnNoLAY0w58151uWFhkubJdi/gcpj+mCe+knD/PeHqRSO2dJ
-         veXA==
-X-Gm-Message-State: AOJu0YwYIobixDQtzOnbPZkIOYnEEhi96+/R0keJ5Ky9PNelJkFO926m
-	1UjVRRoKxwpUyomXLjFHefKyBNE1WCE=
-X-Google-Smtp-Source: AGHT+IF4qStp47H4SMgIhKJLv7FvMXYKDXL3ynsA9qvwLSI8dq0h/ILhPs+mIXBfAViU3iFB5RNx7g==
-X-Received: by 2002:a05:651c:1305:b0:2c5:2132:24f6 with SMTP id u5-20020a05651c130500b002c5213224f6mr22073266lja.12.1699268836447;
-        Mon, 06 Nov 2023 03:07:16 -0800 (PST)
-Received: from [192.168.1.101] ([90.242.223.1])
-        by smtp.googlemail.com with ESMTPSA id n5-20020a05600c3b8500b004064e3b94afsm12051132wms.4.2023.11.06.03.07.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Nov 2023 03:07:16 -0800 (PST)
-Message-ID: <a4679ee0-b36f-441f-9350-b4c9c02f6e2d@gmail.com>
-Date: Mon, 6 Nov 2023 11:07:16 +0000
+        d=1e100.net; s=20230601; t=1699270152; x=1699874952;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=F4D4ENCY0YBjdNAPiH/AfiuAWP83uenSlVUNUTHCdVA=;
+        b=m2AXyX6Qg591d/1oSaDRNTKC9bKCBeKh8js1lPYZDaJcVUNc023m19q7rAS1LWz7y2
+         ghClOkX7ojNX2yIROgzQQMcNEsZ1hkyi6db7jMuXK0JyZnXfss8MX3BwY6LP+d1AgR76
+         T6MGd7W2pR8qtkk/d7q5zTZD/t7Lx6MCqyz4lGsnkJe5evrSLLKtLzNV7TfA+59fBBFF
+         AcUjcp8D3Z4RnCJkCSiuWok+1mgzXUMFusl5udUm6vPU1fAOFyZ0wx+z3mtjfXRWZ3Df
+         NRwXWBvyPKGKIBkpJx78rCt0WitU3iBM4+3V0eZzCilJiP7iuf0QLDsT6TWco3tAlNWw
+         63HA==
+X-Gm-Message-State: AOJu0YzBOeXxiqE8enECIEagSo5f5rSfzT+1Q7mGiByyyQ+9yQCOlivK
+	AHFP+4DeJC+/L94Oh/0Mzpaqx90jrehVRnVOu7M=
+X-Google-Smtp-Source: AGHT+IHnU3JaY3Xy3SEfwlqKIKNAy7cF1EFhHhRTj3gqxPo+iZ6XHw5gSr3ymZdGGcUIs0subn2aghLZ3Jh3w4gU6X0=
+X-Received: by 2002:a17:907:6e88:b0:9dd:add6:4c12 with SMTP id
+ sh8-20020a1709076e8800b009ddadd64c12mr7952215ejc.77.1699270152318; Mon, 06
+ Nov 2023 03:29:12 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v3 2/2] docs: rewrite rebase --(no-)autosquash description
-Reply-To: phillip.wood@dunelm.org.uk
-To: Andy Koppe <andy.koppe@gmail.com>, git@vger.kernel.org
-Cc: gitster@pobox.com, newren@gmail.com
-References: <20231104220330.14577-1-andy.koppe@gmail.com>
- <20231105000808.10171-1-andy.koppe@gmail.com>
- <20231105000808.10171-2-andy.koppe@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20231105000808.10171-2-andy.koppe@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20231011123534.119994-1-oystwa@gmail.com> <xmqqpm1lnme4.fsf@gitster.g>
+In-Reply-To: <xmqqpm1lnme4.fsf@gitster.g>
+From: =?UTF-8?Q?=C3=98ystein_Walle?= <oystwa@gmail.com>
+Date: Mon, 6 Nov 2023 12:28:36 +0100
+Message-ID: <CAFaJEqtN0b+Prv79E2=sODaw8vRVGD-Ane7U+WzoFoTWkvCNkA@mail.gmail.com>
+Subject: Re: [PATCH] revision: Don't queue uninteresting commits
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, derrickstolee@github.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Andy
+Hi, Junio, and sorry for the late response.
 
-On 05/11/2023 00:08, Andy Koppe wrote:
-> Rewrite the description of the rebase --(no-)autosquash options to try
-> to make it a bit clearer. Don't use "the '...'" to refer to part of a
-> commit message,
+On Wed, 11 Oct 2023 at 18:40, Junio C Hamano <gitster@pobox.com> wrote:
 
-Thanks for doing that, it is a definite improvement, I'm a bit concerned 
-about the loss of detail in other areas though - see below.
+> What is not described here is what benefit we are expecting to gain
+> by making this change.  Is anything leaking?  Are we showing wrong
+> output?  Is the effect something we can demonstrate, and more
+> importantly we can protect from future breakages, with a test or
+> two?
 
-> mention how --interactive can be used to review the
-> todo list, and add a bit more detail on commit --squash/amend.
-> 
-> Signed-off-by: Andy Koppe <andy.koppe@gmail.com>
-> ---
->   Documentation/git-rebase.txt | 32 ++++++++++++++++++--------------
->   1 file changed, 18 insertions(+), 14 deletions(-)
-> 
-> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-> index 102ff91493..594158fcbc 100644
-> --- a/Documentation/git-rebase.txt
-> +++ b/Documentation/git-rebase.txt
-> @@ -589,21 +589,25 @@ See also INCOMPATIBLE OPTIONS below.
->   
->   --autosquash::
->   --no-autosquash::
-> -	When the commit log message begins with "squash! ..." or "fixup! ..."
-> -	or "amend! ...", and there is already a commit in the todo list that
-> -	matches the same `...`, automatically modify the todo list of
-> -	`rebase`, so that the commit marked for squashing comes right after
-> -	the commit to be modified, and change the action of the moved commit
-> -	from `pick` to `squash` or `fixup` or `fixup -C` respectively. A commit
-> -	matches the `...` if the commit subject matches, or if the `...` refers
-> -	to the commit's hash. As a fall-back, partial matches of the commit
-> -	subject work, too. The recommended way to create fixup/amend/squash
-> -	commits is by using the `--fixup`, `--fixup=amend:` or `--fixup=reword:`
-> -	and `--squash` options respectively of linkgit:git-commit[1].
-> +	Automatically squash commits with specially formatted messages into
-> +	previous commits.  If a commit message starts with "squash! ",
-> +	"fixup! " or "amend! ", the remainder of the subject line is taken
-> +	as a commit specifier,
+As far as I know there is no significant benefit to this change. The
+only one I can think of is a case such as this:
 
-I like this change as I think saying "remainder of the subject line" is 
-clearer than using `...`
+    git rev-list some-rev ^a ^very ^large ^amount ^of ^negative ^revs ^here
 
-> which matches a previous commit if it matches
-> +	the start of the subject line or the hash of that commit.
+but even then I would assume the work done by the algorithm in total is
+so large that the work saved by this change is insignificant.
 
-This simplification glosses over some details, in particular it is no 
-longer clear we prefer an exact subject match to a prefix match so that
+I was just a bit happy after grokking a piece of this code and let the
+excitement get the best of me :-) I suggest we just drop it.
 
-	pick 123 foo
-	pick 456 foo bar
-	pick 789 fixup! foo
-
-will be re-arranged to
-	
-	pick 123 foo
-	fixup 789 fixup! foo
-	pick 456 foo bar
-
-and not
-
-	pick 123 foo
-	pick 456 foo bar
-	fixup 789 fixup! foo
-
->   +
-> -If the `--autosquash` option is enabled by default using the
-> -configuration variable `rebase.autoSquash`, this option can be
-> -used to override and disable this setting.
-> +In the rebase todo list, commits marked for squashing are moved right after
-> +the commits they modify, and their action is changed from `pick` to `squash`,
-> +`fixup` or `fixup -C`, depending on the squash marker.
-
-Here we have lost the documentation that told users which marker 
-corresponds to which action which is unfortunate.
-
-Best Wishes
-
-Phillip
-
->  The `--interactive`
-> +option can be used to review and edit the todo list before proceeding.
-> ++
-> +The recommended way to create commits with squash markers is by using the
-> +`--squash`, `--fixup`, `--fixup=amend:` or `--fixup=reword:` options of
-> +linkgit:git-commit[1], which take the target commit as an argument and
-> +automatically fill in the subject line of the new commit from that.
-> ++
-> +The configuration variable `rebase.autoSquash` can be used to enable
-> +`--autosquash` by default.  See the CONFIGURATION section below for details.
-> +The `--no-autosquash` option overrides that setting.
->   +
->   See also INCOMPATIBLE OPTIONS below.
->   
+=C3=98sse
