@@ -1,68 +1,70 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC8B216432
-	for <git@vger.kernel.org>; Mon,  6 Nov 2023 10:45:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84EF517721
+	for <git@vger.kernel.org>; Mon,  6 Nov 2023 10:45:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rCsgs6Gy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EP3Xk+6C"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="wVhRA8EI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CAsAjJ9L"
 Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83596CC
-	for <git@vger.kernel.org>; Mon,  6 Nov 2023 02:45:55 -0800 (PST)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailout.nyi.internal (Postfix) with ESMTP id 17AE45C00EC
-	for <git@vger.kernel.org>; Mon,  6 Nov 2023 05:45:53 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Mon, 06 Nov 2023 05:45:53 -0500
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BDB9FA
+	for <git@vger.kernel.org>; Mon,  6 Nov 2023 02:45:56 -0800 (PST)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.nyi.internal (Postfix) with ESMTP id EA58A5C0144
+	for <git@vger.kernel.org>; Mon,  6 Nov 2023 05:45:55 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute4.internal (MEProxy); Mon, 06 Nov 2023 05:45:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:sender:subject:subject:to:to;
-	 s=fm3; t=1699267553; x=1699353953; bh=O8+7Tov/1f4s0ck5GiELg6zRg
-	hyArfsW+8bzBmGti1g=; b=rCsgs6GyUYPh8V+PKx61fxAnYoNhYQ7W5j5ZJr5mQ
-	I0wlzNNaKwlmMqgg6etadXN0asZctHj4jmIhUcL2Q0QZHx/q93fuJ7DPB+qbPYj+
-	RA9WxOzauWLunrekPXgwHkkbM5w1m9RRdNAWqt3UkO/VCqEmcWq7gfabMx6lldZ5
-	ApI2l0L6vVli8ZBde57lNGOiOkxdhbKM8KacduEwyXLimbKilKZruC+GEp/nK9DQ
-	scx5SVXKZ5CSC/jAejg48mSlPtYQF3VeGf3mrYla2mZlM0/6GaXa6tQP1yRMChs0
-	dBOM3sVzqJHOT6T7+Pf4LeJjewDy9iHashWmyVFUr8bzQ==
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to; s=fm3; t=1699267555; x=1699353955; bh=JO
+	ITV44VHCkIkJu9VyPQ1mAWTEnS9PnW7xh+xuIY4iA=; b=wVhRA8EIvSPg/7qrPY
+	rMUGON8FtD5dIlf3tuCjRFjWH9rXmq1cbEvTZwGxC4N7KK9ReLtMGauRlcaks5cD
+	r4hw/r0ZR1U7NuEf7dxAKOfANyoUVr1H9PlRKiyuJzE38tBtXchD8+kpRaCivBbC
+	TbcqJuUiRdVRyE6CCarKxCHt+uVSQ+pBV8w0hp7tOH7osfjykgdO3Ut4Pdife1uW
+	shQHEuU77VIaawbQ1h6lb9VJJ3bj2twInLaPpC+MS2lrdM2HEXUdNiPaoiDZwNLm
+	Hf+sAf44Yp/LM/7BNRwXdeA5/9YuMd6sRu/cGA2zrTj//a/ZPOHQkXiY6C3g2kRw
+	pcAg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:sender:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1699267553; x=1699353953; bh=O8+7Tov/1f4s0ck5GiELg6zRghyArfsW+8b
-	zBmGti1g=; b=EP3Xk+6Cky6+9A7drtVnfK4zakluf5S7wct9DVAm88kV5uljL0i
-	T8y4DzcIisCpSrPcb1bh4u+uWcpM+O0DCGrcQRpbS2cNEnPiZTYSAa1XfdQZuGFS
-	NdzONi8Ks4C9dgcelevH3Oed67VwVDWEex845wYHdm/pqs9msEsMNYzvbCaaMMTN
-	Fe3hW6MM+2qsco7Wso/43qZ7n85HXdsK+0/F+4fjzgScqxx6kz3Py6Hkq84FMix9
-	9FJbyi7XBbngWYwPX7zcIL1WpfhvLNx/aGVcbl+b/zxjADG+otkbDEih7pxdDhu2
-	G9yWevYt7jPdI3HoQJ4jA+fQze03FtYdh/A==
-X-ME-Sender: <xms:4MNIZbVhz6PGJGXUNJC80Yd43ELkXrqIDdiIgHxX5Qyc_amTvvAJUg>
-    <xme:4MNIZTlU52F-j3b78W7cY3keUQEyy4nn-CM-Ww7va0Dfda47cDqoQh3gRAfcWxM-b
-    1EdRtKnqHookpUDfA>
-X-ME-Received: <xmr:4MNIZXZqFo-FIFD66A6g_9XkFt5E21ls5ypjiYMWtAVV3jBWbMKtV61QLTwUAbXY_qnn5KtghduxW1EsTsEqaa7_cQ1IOAjE_CAo6KvUMKfhQ0s>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddugedgudekucetufdoteggodetrfdotf
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm3; t=1699267555; x=1699353955; bh=JOITV44VHCkIk
+	Ju9VyPQ1mAWTEnS9PnW7xh+xuIY4iA=; b=CAsAjJ9LyTRlTo0Ivn8zmqoNzv4AU
+	xZMhv6W50888NQL5PoexZwcKBddyjIofObu+3iqxeLSAryV1etCYIf2Q7lydHNBN
+	ogoyl/+qiIomc3qiGqCi7vP82i3SYgHgqbdzS4O0mFoUrX+inqIFAHjU0Fb8VoZD
+	m+VxEtITWrYDq97kaa31oEokCw7apDt2BS6wu53NB29Qfn15LDzwhcAxmi4eE+YA
+	pmvLtIJ2FLtJ42eo6HQ/vOO5zwG3fACtQpckHwy/NdVDPQd75vclzW60YaYdsFrf
+	mIAlx61kYlUdwWLf5bNzcdmZpRZm3RO4OldDlZqccQwvjGmYtRHvy4icg==
+X-ME-Sender: <xms:48NIZVUiUfy16DFA6CQpcqe5jXdHA2Thf7aLf1CYpf8dPRlTnHULHQ>
+    <xme:48NIZVkYtvePkXFxrYNct5DVpaSLQDoH7V_LtLJUaRbLpsVmw_WQIAX4gKX-ulRwo
+    OgxKNCwQobRq1WDRA>
+X-ME-Received: <xmr:48NIZRas1KnSC2Ny9WLvfK65BZFvA8jZ_4zFCAUBIgvEwgMmA-72GIib5g10PR2H67PuMFfx_F00a5EgT0eFkZsatwt-Bkz2qIrMPnhtHgIOWOA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddugedgudelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkgggtugesghdtreertd
-    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhepjeeifedvueelfffgjeduffdvgefhiefgjefgvd
-    dvfeduvefffeevfffhgfekieffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
-    pehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:4MNIZWXE3M39yk5IIcQS-jkCzin3Z5mgVFYaLAE3ZDruyE99Bfixqg>
-    <xmx:4MNIZVkh0t75yu_SmoWwV7ORK_DCwwSFAdPxWJnj_5VrMUCb_obd0w>
-    <xmx:4MNIZTfFYBZHNCSnet9pDjCuVDbbb8kwUNM13aHIAheAUa7WQi7KNQ>
-    <xmx:4cNIZTR1Ik-d9FFQcFlVR00WHq7AfTi6m4GMUDQKjTXH46ntHmIr3w>
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
+    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
+    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:48NIZYV1VF9IE4LFonx7ZjbAs3oz4qBDOA0jZqyy1redRvMugAh9Ow>
+    <xmx:48NIZflLa2EyR7Op5uXAAlUC3k_uqQcL7-q9ce7Yq23fwF7pqSCMPg>
+    <xmx:48NIZVerY1k76g-RknMmMB2u9tUVbDPL2h__eWBfzW84PqmzQEwPdw>
+    <xmx:48NIZVSdOUPitCttLB-tP2d-slPv2zZJE9H3Qfycxi6N8JI_CLhr0g>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 6 Nov 2023 05:45:52 -0500 (EST)
+ <git@vger.kernel.org>; Mon, 6 Nov 2023 05:45:55 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 342b5be3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 2f1d7b8d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Mon, 6 Nov 2023 10:45:29 +0000 (UTC)
-Date: Mon, 6 Nov 2023 11:45:48 +0100
+	Mon, 6 Nov 2023 10:45:34 +0000 (UTC)
+Date: Mon, 6 Nov 2023 11:45:53 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 0/4] Memory leak fixes
-Message-ID: <cover.1699267422.git.ps@pks.im>
+Subject: [PATCH 1/4] test-bloom: stop setting up Git directory twice
+Message-ID: <fb1cc73ed3395ba3de72aba70d7679dd85ebb034.1699267422.git.ps@pks.im>
+References: <cover.1699267422.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,57 +72,64 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="vPfhL/UL88GctsF2"
+	protocol="application/pgp-signature"; boundary="o8T7wPIuP867dizT"
 Content-Disposition: inline
+In-Reply-To: <cover.1699267422.git.ps@pks.im>
 
 
---vPfhL/UL88GctsF2
+--o8T7wPIuP867dizT
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+We're setting up the Git directory twice in the `test-tool bloom`
+helper, once at the beginning of `cmd_bloom()` and once in the local
+subcommand implementation `get_bloom_filter_for_commit()`. This can lead
+to memory leaks as we'll overwrite variables of `the_repository` with
+newly allocated data structures. On top of that it's simply unnecessary.
 
-this patch series fixes some memory leaks. All of these leaks have been
-found while working on the reftable backend.
+Fix this by only setting up the Git directory once.
 
-Patrick
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ t/helper/test-bloom.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-Patrick Steinhardt (4):
-  test-bloom: stop setting up Git directory twice
-  shallow: fix memory leak when registering shallow roots
-  setup: refactor `upgrade_repository_format()` to have common exit
-  setup: fix leaking repository format
-
- setup.c                         | 33 ++++++++++++++++++++++-----------
- shallow.c                       |  4 +++-
- t/helper/test-bloom.c           |  1 -
- t/t5311-pack-bitmaps-shallow.sh |  2 ++
- t/t5530-upload-pack-error.sh    |  1 +
- 5 files changed, 28 insertions(+), 13 deletions(-)
-
+diff --git a/t/helper/test-bloom.c b/t/helper/test-bloom.c
+index aabe31d724b..1281e66876f 100644
+--- a/t/helper/test-bloom.c
++++ b/t/helper/test-bloom.c
+@@ -40,7 +40,6 @@ static void get_bloom_filter_for_commit(const struct obje=
+ct_id *commit_oid)
+ {
+ 	struct commit *c;
+ 	struct bloom_filter *filter;
+-	setup_git_directory();
+ 	c =3D lookup_commit(the_repository, commit_oid);
+ 	filter =3D get_or_compute_bloom_filter(the_repository, c, 1,
+ 					     &settings,
 --=20
 2.42.0
 
 
---vPfhL/UL88GctsF2
+--o8T7wPIuP867dizT
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVIw9sACgkQVbJhu7ck
-PpRFVA/7BEQt/oaGFBCIAQgsdIiPf8oev/ktHaY83evdxlcR0L2VVLTxBCTrIR2w
-MyrGhNQPawxZ/c9ONuSBPidQrdxJ+0UljU8Vtolnr5QibLV7yXts+RBcSJRYwtOH
-JdZs0k9Wi1wn+uLtxmpDYL0pQTdh9+HWjMcKLcyJc+mL/qixnkPylcgzoMYIka9T
-4TyO3XpJJALtMJ+An6lKMf1ub+gzjcJZVpagGj66WinkkSB5J60rh+5yU2/hS/WF
-EpmpajXKtald33kxcOqcP4Z1AV/yJCcnEF8BvRW6m+lQSX8u4yunIgjtfaB3iRB8
-2eXkG56RMSy2oFrYBhevP+3AJGHVPqJkm85aVJAzK37p5/swDlM/UDoMbk1jEPZ6
-YsKqWyOQbP4Qx1YSavz1S9slyUXRnZ3GsvfcE6BBOsv7P6FNA0wOljGDA1MJzQjv
-kyyuggVS0InUT8YY8U92I0m77YmZ84S1cV6sovmfJdKNIl/Zr8ii2kHGlhk4hKJV
-0MENR0GopfIspTE6PPESktlTG5ofp0cmJv3uCl1Lc4Hlt7iGmjU+gxlSFWpIzNlL
-6xEJ3o3iJnd8i9gUvzRIaGvx9lUxrxLQrQLlJf+hfk2jE0Ic6R5ruhtdn0EIX6k3
-hvg+V53pAGjThHBRTZ+l/r+ERYgfqUmBGtHvOWNaCPCJ/gzoONg=
-=VXoQ
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVIw+AACgkQVbJhu7ck
+PpQGgw/5AVu3A6S0qPGJ3ne7C406OC6UdPPJgcG+yrob0RMP8Wt95NV2Fi9XiagT
+EPmedqZZ5yHIC526S1kPYxxWKo/ZGHWiQ6mDLQ6fBBn+sUZvVwLZRz5VxtbNKw0v
++7TuRJSPw5bFKb/UO5nBm6uqkIn1hqq9hDpNE6K5RqD+EgfsMnN2Bl2ZIWpLAmbb
+gHiWzgHzTgYLZJKcqqeCn7SxegDTUnCJnhUK2JqUqd2sH1Pb/Tjh4wmd32icl413
+kMhfQi3ickyVtoZ9X6HXDxKXRrOTEW9kZDhEtX4VOybRiRW0UwbpNDYcTBNi3AKc
+vltI7gaLiQUBD59TfqxH433Fe1z6nIH7JNCmwgZsVQWreZSwIWYLJ1b/eHeBth55
+NF2+jqwPfASXgIAhk7TCxJTT1qEzt0SVxb+NxCMlpi+/BWNmROlcDcyCHnNtfXMI
+FWzX3rBldJjCqfV4bdpuww9bexy1zGj3IGggdTBkF9hDXtDMu+JvnELi64l06VRp
+a7c5joju4EJUqkfVJRMwDNWKSuEfb7b3+rXU6d3eukKsWIpB5VlDaCFImuJbLwJL
+IFRCA3UP38113QkcaAX6HguAKhqVZGKcL5cu9ipY2KVXpcaSaLLOifn5hW/ydUIJ
+Qze2cpBDImNwHXZskMeBCVRiULLxbGYevLf5m2a6rG1klEXdu68=
+=5ayd
 -----END PGP SIGNATURE-----
 
---vPfhL/UL88GctsF2--
+--o8T7wPIuP867dizT--
