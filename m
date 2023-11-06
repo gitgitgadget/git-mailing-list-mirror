@@ -1,52 +1,55 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D5961CF81
-	for <git@vger.kernel.org>; Mon,  6 Nov 2023 22:56:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10C3D2EB14
+	for <git@vger.kernel.org>; Mon,  6 Nov 2023 22:56:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="wbNdR/g8"
-Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C26B0D6E
-	for <git@vger.kernel.org>; Mon,  6 Nov 2023 14:56:29 -0800 (PST)
-Received: by mail-qk1-x72c.google.com with SMTP id af79cd13be357-7789a4c01ddso332766185a.1
-        for <git@vger.kernel.org>; Mon, 06 Nov 2023 14:56:29 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="y2oFkT9z"
+Received: from mail-ua1-x92d.google.com (mail-ua1-x92d.google.com [IPv6:2607:f8b0:4864:20::92d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE3CED73
+	for <git@vger.kernel.org>; Mon,  6 Nov 2023 14:56:32 -0800 (PST)
+Received: by mail-ua1-x92d.google.com with SMTP id a1e0cc1a2514c-7ba962d534eso2047688241.3
+        for <git@vger.kernel.org>; Mon, 06 Nov 2023 14:56:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1699311388; x=1699916188; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=HuXjv9ijgQOCue+WSPkudYo6iC8i1EQnq6tbg5ri6Ac=;
-        b=wbNdR/g8Wz77BJ97dz8BErAJAqZf+CiuYSQLXu3ebIgVzK1QAS7r/2FNvxOOxb7QAM
-         0wunK88Fd+mKPT2RmV+93bNQX3NIFYULpIhj2rjiyLbHZb5fqgAmZijXZYnPpQIcEAI+
-         8eEcYifGJ/M7tXN9wyS1+Im+ekt+IJgDIOhOW1On3muYCxMvEY/pxU+FjQQ7BRC1PjST
-         C5yi9cw59YB5hfg5486OsTDzdzGhh8Oij75nPHzkGkQ0ppNK1LkJQB6TWdOFZYVpPLOp
-         GNBhyp+0WnUnq3rkWTncyG9580zkcmycIm+6urwJ0mjxa3h2VCaUHnuusKR0P98wEyyw
-         F9mg==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1699311391; x=1699916191; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=SmbAJOPvOxlonyTOSHSXWfRz8/PAZTQqB3RHCadHKOs=;
+        b=y2oFkT9zUeB18YsJtBIpyN7Ce7gxiRvipLPWpYY6pymE3ArH1Gi4I+Nb2fTvUJMaTx
+         2IYoEBFBQmhs3EmbfSPgeVCCL7vUELX6GUlWXUwTvrYfhUXro1Im5dT5HV+ewTj88AgE
+         vgl+5oLLtCl+e2s1Dzl+LQPzX4b8AFWL/wY77U2FWb8VRJk/ftx/Vf5nmHTtKwGN/IQW
+         NfX7ST/DQd0M/IaIiWgxwHxvC9kUrz8gh2Pkcr7rt9htYP4EUnDXvkxVOSzhsWhI6Vht
+         kveAEqf8Rgea9pDs/092X0lFZ2f9cOBoD7o4XttRdhexHq1G2MiXpxB7nAtNvLWEtuqy
+         +Niw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699311388; x=1699916188;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HuXjv9ijgQOCue+WSPkudYo6iC8i1EQnq6tbg5ri6Ac=;
-        b=rZ9pFy0EYivpWH+AIStmXP0KICH63hQDKGhNn5qoEOTmdLkcI+SjEItK60klCo/9cn
-         sRekkyKFB6HVKVdo5wTBIFzDS/woFgBVjkcWrSDRts7+jT9go8dQZKkpDJyU5231b2m9
-         3XhIo7kq/SQIf49Ihj5CYdS3HS2PcBKYODAEreOAd1biHqh724J/CUfU3rku6I9b34QA
-         5aU2VhSvwXuQ3/vnGcw+XU8OaIE1+CympopFRvVUYt4WuHhlWMlx3V+pP6qSSHAXugn3
-         Dv82+cs3kuwjUnSATr3ycO6L5bKaQ48Lymsa9N8nhLXVbhVQxa98v9p3yS20jAbeSeu8
-         Vmjg==
-X-Gm-Message-State: AOJu0Yy2oCs7cwqYJ1AgdktY2WMjU3HD7bpKA8BFyW5OzW6RvcMd6iAy
-	IJqL9iVqlCrtRP5K7FvSaqdFrJEBayQRZ5VTOMEUnA==
-X-Google-Smtp-Source: AGHT+IHVwXeU+yA+baZAl6ybwt7eQzY709ROHdfMtdTXdrDl4Uxxill9RSjhhq8pkgT8OWJyaWnmRg==
-X-Received: by 2002:a05:620a:4556:b0:779:cf0f:e4cf with SMTP id u22-20020a05620a455600b00779cf0fe4cfmr39399952qkp.49.1699311388680;
-        Mon, 06 Nov 2023 14:56:28 -0800 (PST)
+        d=1e100.net; s=20230601; t=1699311391; x=1699916191;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SmbAJOPvOxlonyTOSHSXWfRz8/PAZTQqB3RHCadHKOs=;
+        b=cqAIC+aF492eDqI4jE6JTYUfVxW1NtZ4naZHZjsbpxut23qgoQf558LJ9Pd42aqm3r
+         6PmmIjM6OAMUGcltl7phuOrt4OOd56I+ijPxZt26Aa20frGYJsk887FNMe20GbdSGLYb
+         JE5MgcAkUCWwMk/6n6mprNSnjb43Od1oM7AzjDLHl5/5hYxDiJA2QgvxhQKn5CP5M/u+
+         38agK7yn1xqrZV0pBqXzd/rUkgvUXdZvC7HzmMjO/ZfmkEHHbL58fZeHXI/H8VKAZW/I
+         A5TtHLPHSuIyL3vyt+8knMykUzLQ1hZwgeM2VTIqqoDimFllAyd59/Ue11HZSC6vsuiF
+         27+A==
+X-Gm-Message-State: AOJu0YxAljjDX831oszneeKP6o6BuRaA9GUEDJsNoqeEmw53ZgpaHo3W
+	22srpibyTaVOug7FJ8T0NT1T2cI+aCIx/QNDsOxHhw==
+X-Google-Smtp-Source: AGHT+IHvgRpHln9tXufuMWruxGhKS6YoHcAI9Iut21ONo2pLtIOy2jeIML/9jZa0Q6G52WYoIE6+tw==
+X-Received: by 2002:a05:6102:c93:b0:45f:3b30:9ca9 with SMTP id f19-20020a0561020c9300b0045f3b309ca9mr4408178vst.15.1699311391562;
+        Mon, 06 Nov 2023 14:56:31 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id a26-20020a05620a125a00b0077892023fc5sm3695832qkl.120.2023.11.06.14.56.27
+        by smtp.gmail.com with ESMTPSA id gb7-20020a05622a598700b00418189b689csm3861374qtb.10.2023.11.06.14.56.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Nov 2023 14:56:28 -0800 (PST)
-Date: Mon, 6 Nov 2023 17:56:27 -0500
+        Mon, 06 Nov 2023 14:56:31 -0800 (PST)
+Date: Mon, 6 Nov 2023 17:56:30 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 0/2] revision: exclude all packed objects with `--unpacked`
-Message-ID: <cover.1699311386.git.me@ttaylorr.com>
+Subject: [PATCH 1/2] list-objects: drop --unpacked non-commit objects from
+ results
+Message-ID: <d3992c98aaa54c3635c249a15d919aa1177324d8.1699311386.git.me@ttaylorr.com>
+References: <cover.1699311386.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -55,41 +58,98 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <cover.1699311386.git.me@ttaylorr.com>
 
-While working on my longer series to enable verbatim pack reuse across
-multiple packs[^1], I noticed a couple of oddities with the `--unpacked`
-rev-walk flag.
+In git-rev-list(1), we describe the `--unpacked` option as:
 
-While it does exclude packed commits, it does not exclude (all) packed
-trees/blobs/annotated tags. This problem exists in the pack-bitmap
-machinery, too, which will over-count queries like:
+    Only useful with `--objects`; print the object IDs that are not in
+    packs.
 
-    $ git rev-list --use-bitmap-index --all --unpacked --objects
+This is true of commits, which we discard via get_commit_action(), but
+not of the objects they reach. So if we ask for an --objects traversal
+with --unpacked, we may get arbitrarily many objects which are indeed
+packed.
 
-, etc.
+I am nearly certain this behavior dates back to the introduction of
+`--unpacked` via 12d2a18780 ("git rev-list --unpacked" shows only
+unpacked commits, 2005-07-03), but I couldn't get that revision of Git
+to compile for me. At least as early as v2.0.0 this has been subtly
+broken:
 
-The fix is relatively straightforward, split across two patches that
-Peff and I worked on together earlier today.
+    $ git.compile --version
+    git version 2.0.0
 
-This is technically a backwards-incompatible change, but the existing
-behavior is broken and does not match the documented behavior, so I
-think in this case we are OK to change --unpacked to faithfully
-implement its documentation.
+    $ git.compile rev-list --objects --all --unpacked
+    72791fe96c93f9ec5c311b8bc966ab349b3b5bbe
+    05713d991c18bbeef7e154f99660005311b5004d v1.0
+    153ed8b7719c6f5a68ce7ffc43133e95a6ac0fdb
+    8e4020bb5a8d8c873b25de15933e75cc0fc275df one
+    9200b628cf9dc883a85a7abc8d6e6730baee589c two
+    3e6b46e1b7e3b91acce99f6a823104c28aae0b58 unpacked.t
 
-[^1]: Which, I'm very excited to say, is working :-).
+There, only the first, third, and sixth entries are loose, with the
+remaining set of objects belonging to at least one pack.
 
-Taylor Blau (2):
-  list-objects: drop --unpacked non-commit objects from results
-  pack-bitmap: drop --unpacked non-commit objects from results
+The implications for this are relatively benign: bare 'git repack'
+invocations which invoke pack-objects with --unpacked are impacted, and
+at worst we'll store a few extra objects that should have been excluded.
 
- list-objects.c                     |  3 +++
- pack-bitmap.c                      | 27 +++++++++++++++++++++++++++
- t/t6000-rev-list-misc.sh           | 13 +++++++++++++
- t/t6113-rev-list-bitmap-filters.sh | 13 +++++++++++++
- t/t6115-rev-list-du.sh             |  7 +++++++
- 5 files changed, 63 insertions(+)
+Arguably changing this behavior is a backwards-incompatible change,
+since it alters the set of objects emitted from rev-list queries with
+`--objects` and `--unpacked`. But I argue that this change is still
+sensible, since the existing implementation deviates from
+clearly-written documentation.
 
+The fix here is straightforward: avoid showing any non-commit objects
+which are contained in packs by discarding them within list-objects.c,
+before they are shown to the user. Note that similar treatment for
+`list-objects.c::show_commit()` is not needed, since that case is
+already handled by `revision.c::get_commit_action()`.
 
-base-commit: bc5204569f7db44d22477485afd52ea410d83743
+Co-authored-by: Jeff King <peff@peff.net>
+Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ list-objects.c           |  3 +++
+ t/t6000-rev-list-misc.sh | 13 +++++++++++++
+ 2 files changed, 16 insertions(+)
+
+diff --git a/list-objects.c b/list-objects.c
+index c25c72b32c..c8a5fb998e 100644
+--- a/list-objects.c
++++ b/list-objects.c
+@@ -39,6 +39,9 @@ static void show_object(struct traversal_context *ctx,
+ {
+ 	if (!ctx->show_object)
+ 		return;
++	if (ctx->revs->unpacked && has_object_pack(&object->oid))
++		return;
++
+ 	ctx->show_object(object, name, ctx->show_data);
+ }
+ 
+diff --git a/t/t6000-rev-list-misc.sh b/t/t6000-rev-list-misc.sh
+index 12def7bcbf..6289a2e8b0 100755
+--- a/t/t6000-rev-list-misc.sh
++++ b/t/t6000-rev-list-misc.sh
+@@ -169,4 +169,17 @@ test_expect_success 'rev-list --count --objects' '
+ 	test_line_count = $count actual
+ '
+ 
++test_expect_success 'rev-list --unpacked' '
++	git repack -ad &&
++	test_commit unpacked &&
++
++	git rev-list --objects --no-object-names unpacked^.. >expect.raw &&
++	sort expect.raw >expect &&
++
++	git rev-list --all --objects --unpacked --no-object-names >actual.raw &&
++	sort actual.raw >actual &&
++
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 2.43.0.rc0.2.gef6b2154a3
+
