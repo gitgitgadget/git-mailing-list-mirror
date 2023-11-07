@@ -1,46 +1,30 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8234430
-	for <git@vger.kernel.org>; Tue,  7 Nov 2023 03:10:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="h8gMqKIS"
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39953184
-	for <git@vger.kernel.org>; Mon,  6 Nov 2023 19:10:41 -0800 (PST)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8A4971D0796;
-	Mon,  6 Nov 2023 22:10:40 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=jfG9hHiycIod
-	DjIGXKdp8XbfmXdqPtf/uXsbEqxwh9c=; b=h8gMqKISGH+w/B0u+Mh6c64bmCbd
-	iwuceUKmPTOP+DVhKiYaBh7yz1lO6PL4X7lxICi0ztl1ULY5R8GJSsTj4QMxmsUt
-	ZfIzcCje2X2HnLnvMbeKg33mzjXnp/LrPbAYljvQmW77yxAKTMf5NEn7efokQM3o
-	hxnGrN7ghBrDoek=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8065E1D0794;
-	Mon,  6 Nov 2023 22:10:40 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.67.28])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CDF341D0793;
-	Mon,  6 Nov 2023 22:10:39 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: Sam James via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Sam James <sam@gentoo.org>
-Subject: Re: [PATCH] diff: implement config.diff.renames=copies-harder
-In-Reply-To: <CABPp-BEuvjduS4JiORJybKtoPWvJd+BbbR_JAvZdj4Px_v8H4A@mail.gmail.com>
-	(Elijah Newren's message of "Mon, 6 Nov 2023 18:45:20 -0800")
-References: <pull.1606.git.1699010701704.gitgitgadget@gmail.com>
-	<CABPp-BEuvjduS4JiORJybKtoPWvJd+BbbR_JAvZdj4Px_v8H4A@mail.gmail.com>
-Date: Tue, 07 Nov 2023 12:10:38 +0900
-Message-ID: <xmqq7cmu9s29.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37D62117
+	for <git@vger.kernel.org>; Tue,  7 Nov 2023 03:25:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94881101
+	for <git@vger.kernel.org>; Mon,  6 Nov 2023 19:25:14 -0800 (PST)
+Received: (qmail 27394 invoked by uid 109); 7 Nov 2023 03:25:14 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 07 Nov 2023 03:25:14 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9414 invoked by uid 111); 7 Nov 2023 03:25:15 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 06 Nov 2023 22:25:15 -0500
+Authentication-Results: peff.net; auth=none
+Date: Mon, 6 Nov 2023 22:25:11 -0500
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Joanna Wang <jojwang@google.com>, git@vger.kernel.org
+Subject: Re: Bug: magic-less pathspecs that start with ":" not processed as
+ expected.
+Message-ID: <20231107032144.GA873619@coredump.intra.peff.net>
+References: <CAMmZTi-JJ6=Uw_+r50hKMYf34D0NtqXhaA=f+11+wAQBjqA7_g@mail.gmail.com>
+ <20231106173133.GC10414@coredump.intra.peff.net>
+ <xmqqfs1icvfl.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -48,59 +32,26 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 3AC4E3C6-7D1B-11EE-8A2F-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <xmqqfs1icvfl.fsf@gitster.g>
 
-Elijah Newren <newren@gmail.com> writes:
+On Tue, Nov 07, 2023 at 08:29:34AM +0900, Junio C Hamano wrote:
 
-> On Fri, Nov 3, 2023 at 4:25=E2=80=AFAM Sam James via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->>
->> From: Sam James <sam@gentoo.org>
->>
->> This patch adds a config value for 'diff.renames' called 'copies-harde=
-r'
->> which make it so '-C -C' is in effect always passed for 'git log -p',
->> 'git diff', etc.
->>
->> This allows specifying that 'git log -p', 'git diff', etc should alway=
-s act
->> as if '-C --find-copies-harder' was passed.
->>
->> I've found this especially useful for certain types of repository (lik=
-e
->> Gentoo's ebuild repositories) because files are often copies of a prev=
-ious
->> version.
->
-> These must be very small repositories?  --find-copies-harder is really
-> expensive...
+> Jeff King <peff@peff.net> writes:
+> 
+> > PS It took me a while to figure out where we document pathspec syntax. I
+> >    wonder if a "gitpathspecs" manpage would make sense, like we have
+> >    "gitrevisions".
+> 
+> Yeah, I came to the same conclusion (should have saved time by
+> scanning the mailing list before I started writing my response) and
+> wondered where we wrote it down.  The description you found in the
+> glossary, as far as I recall, is the authoritative one and looks
+> readable, but I agree it is not as discoverable as it should be.
+> 
+> A simpler and more readable workaround than ":::file" is "./:file"
+> by the way ;-)
 
-True.  "often copies of a previous version" means that it is a
-directory that has a collection of subdirectories, one for each
-version?  In a source tree managed in a version control system,
-files are often rewritten in place from the previous version,
-so I am puzzled by that justification.
+Oh, indeed. That is much less horrible than ":(literal)". :)
 
-It is, in the proposed log message of our commits, a bit unusual to
-see "This patch does X" and "I do Y", by the way, which made my
-reading hiccup a bit, but perhaps it is just me?
-
->> diff --git a/Documentation/config/diff.txt b/Documentation/config/diff=
-.txt
->> index bd5ae0c3378..d2ff3c62d41 100644
->> --- a/Documentation/config/diff.txt
->> +++ b/Documentation/config/diff.txt
->> @@ -131,7 +131,8 @@ diff.renames::
->>         Whether and how Git detects renames.  If set to "false",
->>         rename detection is disabled. If set to "true", basic rename
->>         detection is enabled.  If set to "copies" or "copy", Git will
->> -       detect copies, as well.  Defaults to true.  Note that this
->> +       detect copies, as well.  If set to "copies-harder", Git will t=
-ry harder
->> +       to detect copies.  Defaults to true.  Note that this
->
-> "try harder to detect copies" feels like an unhelpful explanation.
-
-Yup.  "will spend extra cycles to find more copies", perhaps?
+-Peff
