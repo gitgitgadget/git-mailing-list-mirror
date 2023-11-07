@@ -1,136 +1,157 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFAE4347B8
-	for <git@vger.kernel.org>; Tue,  7 Nov 2023 17:36:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C96651C684
+	for <git@vger.kernel.org>; Tue,  7 Nov 2023 17:38:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="iNYsagyH"
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D804012A
-	for <git@vger.kernel.org>; Tue,  7 Nov 2023 09:36:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-	t=1699378558; x=1699983358; i=tboegi@web.de;
-	bh=9gey4+L9ehanOYYMfQVomf0rpiPBef3omt4nGoxxbfY=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:
-	 In-Reply-To;
-	b=iNYsagyHdU9zEfK/+QE6Mc0j7vXedGBFYn2SeconJWgTe1GJ7zzFb7tS1huBt39D
-	 oK97N1ceucVmpQ6VervrlY908DM64Lx4HeQ2s+0kIl8XTrmcY+VTkBWUTRkEPAEwD
-	 wDDe5zfirlmKWzfYWv9u2UvFwPIIY+coniUETqljPKP3+dbhMP56d/inPb2bQu9L+
-	 nM8/nnlLYYVT0nwllCFAluUCQ4roTZRX6FB2vj7LGdFQkwLSIlPXAmoW1U/iDglsZ
-	 osG9LPwrSCNf4qK7/KYqBelQeOoCDRRGyyWZWBhMmOrf8ZhZd7Tfht3kopYMX0D4f
-	 7+libaJP7gn3fQ09UA==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from localhost ([195.198.253.159]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MjBVh-1rfVQu3i8D-00f2b9; Tue, 07
- Nov 2023 18:35:57 +0100
-Date: Tue, 7 Nov 2023 18:35:57 +0100
-From: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To: chengpu lee <okuxxo@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: issue unable to commit file and folder name to upper lower case
-Message-ID: <20231107173557.GA29083@tb-raspi4>
-References: <CAHv3AeCOoEXxpNh=gzjNcKbVyZFaYZ5BzSf3FGL1=pdheNebZw@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="mhl33iRO"
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40ED6121
+	for <git@vger.kernel.org>; Tue,  7 Nov 2023 09:38:31 -0800 (PST)
+Received: by mail-pl1-x62e.google.com with SMTP id d9443c01a7336-1cc209561c3so3065ad.0
+        for <git@vger.kernel.org>; Tue, 07 Nov 2023 09:38:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1699378711; x=1699983511; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4SrdQP2YJDO7S3oP9SvjoGFzthIMDYSnVb2LeuP0U4U=;
+        b=mhl33iROnCAt70gaz7hm4GIV43RvEFcKGCv0gDyb/4eWPfF8jdFSg0ey+TGmM056kL
+         +n16PwO+vSTsRh5l96JkcrrKflqlkLj20hiBceVyuOJUbGC1HAxf1pKZfqbwCS40+FlO
+         jyiWnjxgwKpTH5bgVnUbHWQXrt2+/9sdhRgiMWjCraIXOBa7pgeY6pBOyFJOBA8P13dY
+         GINggCo2IdtnazQ6py9EMRSN5EHD5mW5nS/9AVXOprQi1TmbeaYsfFVRpAec8O2T1NE2
+         lE6/plqZwzwavyM3pV1D/ZuM5nUPOOWM3TYwzN+0M0QzvT+fqUt62EZgCcYxVIWQm+uF
+         8OZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699378711; x=1699983511;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=4SrdQP2YJDO7S3oP9SvjoGFzthIMDYSnVb2LeuP0U4U=;
+        b=rmgmwpokEkZUYnS5p4ty2Cahb65Ddho+Jd+nInQwP50zHHaCAjm34yQRltufrCXboX
+         e3wMNAQQ/PY357qoFoPcG2nZNnvP1TUR6YSTpWkVypakyp7/lJfBYC5TI+apphSPWiYm
+         icVtb5DpiWzNVooR7e73sVGQCSJ+6dPoTo4YhrBEDE4SIyT5NTEUHEZ45LUGrxh5L7oe
+         0TIDVPgfrXY98GXcFkQbzc10dGMj4iJqT+wIXguChgv/Hkd72wn9pXrrG/A+gTqmJzqa
+         htp9ejdSxl/6/562IYzI6yRPTLRyoeSciTgllM4/Oy3wGiXwnrX6ZfvIUBMvlI+V3I7b
+         WevQ==
+X-Gm-Message-State: AOJu0Yxa+T7kFL0p0YPh8zDR6CMtlbqxz13ote1bjr1muaTM90uUhXTe
+	McKAa8Q18wL0e5VmfAZ/Fy00OkX2sPg3lEQHLAp2JA==
+X-Google-Smtp-Source: AGHT+IFkQEFOGgJHZvao+BU4vipymXiybvnpkFhntwLCbBtBHkMCfa6aYT2YC7usRM8btZX6D60/DoapwkKkmr3k4Yc=
+X-Received: by 2002:a17:902:d58a:b0:1cc:b957:d320 with SMTP id
+ k10-20020a170902d58a00b001ccb957d320mr290117plh.0.1699378710440; Tue, 07 Nov
+ 2023 09:38:30 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAHv3AeCOoEXxpNh=gzjNcKbVyZFaYZ5BzSf3FGL1=pdheNebZw@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Provags-ID: V03:K1:XABxKz9Mmy3NbtHyP60gXCVV2E9IN/OjTR9zt6/+zfPIM7wa0uF
- kBGlU6ihi1fVeyLB3dRowk05ZJ6QTzbPbBQKg5ATRgvWx7HBcZlQuT1m+H5jUeH4oprra/C
- yMpnEwWpuDttBwYtGKr9dCvloh+eP0TdZzV6cOkjm0xFXtMI7sFeZphjguPOieYka6FZCCD
- 7RVOoC/xm5aMC3VerABpA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:3mBimHgGBnw=;VIJj2BHF9l+0cZpvkl4ZSkf0iTP
- hF2VnWjObBBP9a4qSkIRp4Ret1eJcdqL39vTcPneOKgpTK4cv99x7pFNVJUu2JsTYaNt6KgOk
- XRV5R5hGB9rQ1XP7EeUYifs57zG4+1JK/G3G4W/dioxpDYXlHN7CotqTqNAZsy+U7fLuHu0Zi
- DPLvexygXfc2LoSpeSdyqzk3pgMZS+hf2PI4/4rZTsOIQC6aMENlAEOWplnxH9lbFP2epataT
- oBNG7QtArZaWV+336EpnMdP3yhBrUU1RFtbAkrmRVTi2/YOnwUTXDNMRhyHVNtsE4GzeN1fl4
- AaQ1tdpBedk5+sTeqcjZseC5VkjoqNPrTyUQPQRtJKeMBgo738/ikX7kZRKbvmf1MDCpP+7ms
- UJAhhUqYIHf9tdBRTHug+b84t/yOgfIKaJ/33e5rQuBE1ubVA1+LZ4NentLnN2I4/u/MP84Ie
- tSa9WHBSWRuvXZIZKPXKavjU4xvRD22ggSO9HsfMkRtdIwsDe68fkDUqQUd8a8gZJt5F5ZVFx
- QE4cWCmxZY9b18XRJdVzRLyX1zrw3R2rcN6cYo6w5Mmpldent+QzNFO+Mw+x4zCJOEzwplLWx
- Bp63YFnqrRh3kKt/I3peatD3GizlSwxTqJaP2xTvTFF88/f7A/LKjabIj/GaarINR9n9kaF/n
- Q8/eJDHjBFPMqYvv2+rwGqbXQB65+gQlCxXKM0N3sdgZy5md56NyiCu7to+m2L7DLhGRCoX2K
- 6O0e+XlKCSOqUaIjODspHyx2xEjYtQVJ5Y0NnJhjZ6odUSTfVM/rz73GKPyL4RJdFe4MfW/m8
- Zbrq1JZIzNRPDT0i8O+7pcP5ZXiAosdu4THuzDt91GJ84bMnPdJKu1GmOCN6h0ZwEz6ThB6lw
- mzEVEoBQ5efIk6qf+ZzkWNmhThuRoqMlFjHav36g+uQfV/mJRKpWo4C4Y8CYcJ3AYfaSPrzfR
- K9eiB1MgsFnymBOmYn++508XeT8=
+References: <87cywmintp.fsf@ellen.idiomdrottning.org> <CABPp-BH7WBm1j-Ue9oZFjoy6sTcw5B0hz_ndDEtJqvpZF4YF=w@mail.gmail.com>
+ <ba047d38-4ad1-4440-8342-3379404f430b@gmail.com>
+In-Reply-To: <ba047d38-4ad1-4440-8342-3379404f430b@gmail.com>
+From: Martin von Zweigbergk <martinvonz@google.com>
+Date: Tue, 7 Nov 2023 09:38:19 -0800
+Message-ID: <CAESOdVDmQ85-des6Au-LH0fkUB9BZBZho0r-5=8MkPLJVA5WQQ@mail.gmail.com>
+Subject: Re: first-class conflicts?
+To: phillip.wood@dunelm.org.uk
+Cc: Elijah Newren <newren@gmail.com>, Sandra Snan <sandra.snan@idiomdrottning.org>, 
+	git@vger.kernel.org, "Randall S. Becker" <rsbecker@nexbridge.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Nov 07, 2023 at 07:28:14PM +0800, chengpu lee wrote:
-> Thank you for filling out a Git bug report!
-> Please answer the following questions to help us understand your issue.
->
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> $ mkdir abc
->
-> $ echo "">abc/.keep
->
-> $ git status
-> On branch master
-> Untracked files:
->   (use "git add <file>..." to include in what will be committed)
->         abc/
->
-> $ mv abc Abc
->
-> $ git status
-> On branch master
-> Untracked files:
->   (use "git add <file>..." to include in what will be committed)
->         Abc/                                                      # rena=
-me
-> to Abc/ successfully
->
-> $ git commit -m "commit Abc/"                                     # comm=
-it
->
-> $ mv Abc abc
->
-> $ git status
-> On branch master
-> nothing to commit, working tree clean                             # cann=
-ot
-> rename again
->
-> $ git diff
-> >""
->
-> $ git add .
->
-> $ git commit -m "Cannot rename from Abc/ to abc/"
-> On branch master
-> nothing to commit, working tree clean                             # cann=
-ot
-> commit to right, keep old file name / folder name
->
->
-> What did you expect to happen? (Expected behavior)
-> It should be correct to new name although just change upper/lower case,
-> because other commiter can pull it from repo or improve reading clarity.
->
-> What happened instead? (Actual behavior)
-> can commit file/folder but cannot fix upper/lower case.
->
-> What's different between what you expected and what actually happened?
-> git unable to faithfully represent file/folder upper/lower case changes.
->
+(new attempt in plain text)
 
-Yes, that is a restriction in Git, call it a bug, call it a missing featur=
-e.
-Unless someone fixes it, the recommendation is still to use a workaround:
+On Tue, Nov 7, 2023 at 3:49=E2=80=AFAM Phillip Wood <phillip.wood123@gmail.=
+com> wrote:
+>
+> Hi Elijah
+>
+> [I've cc'd Martin to see if he has anything to add about how "jj"
+> manages the issues around storing conflicts.]
+>
+> On 07/11/2023 08:16, Elijah Newren wrote:
+> > On Mon, Nov 6, 2023 at 1:26=E2=80=AFPM Sandra Snan
+> > <sandra.snan@idiomdrottning.org> wrote:
+> >>
+> >> Is this feature from jj also a good idea for git?
+> >> https://martinvonz.github.io/jj/v0.11.0/conflicts/
+> >
+> > Martin talked about this and other features at Git Merge 2022, a
+> > little over a year ago.  I talked to him in more depth about these
+> > while there.  I personally think he has some really interesting
+> > features here, though at the time, I thought that the additional
+> > object type might be too much to ask for in a Git change, and it was
+> > an intrinsic part of the implementation back then.
+> >
+> > Martin also gave us an update at the 2023 Git Contributors summit, and
+> > in particular noted a significant implementation change to not have
+> > per-file storage of conflicts, but rather storing at the commit level
+> > the multiple conflicting trees involved.  That model might be
+> > something we could implement in Git.  And if we did, it'd solve
+> > various issues such as people wanting to be able to stash conflicts,
+> > or wanting to be able to partially resolve conflicts and fix it up
+> > later, or be able to collaboratively resolve conflicts without having
+> > everyone have access to the same checkout.
+>
+> One thing to think about if we ever want to implement this is what other
+> data we need to store along with the conflict trees to preserve the
+> context in which the conflict was created. For example the files that
+> are read by "git commit" when it commits a conflict resolution. For a
+> single cherry-pick/revert it would probably be fairly straight forward
+> to store CHERRY_PICK_HEAD/REVERT_HEAD and add it as a parent so it gets
+> transferred along with the conflicts. For a sequence of cherry-picks or
+> a rebase it is more complicated to preserve the context of the conflict.
+> Even "git merge" can create several files in addition to MERGE_HEAD
+> which are read when the conflict resolution is committed.
 
-tb@pc:/tmp/ttt> git mv Abc tmp
-tb@pc:/tmp/ttt> git mv tmp abc
-tb@pc:/tmp/ttt> git status
-On branch master
-Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
-        renamed:    Abc/.keep -> abc/.keep
+Good point. We actually don't store any extra data in jj. The old
+per-path conflict model was prepared for having some label associated
+with each term of the conflict but we never actually used it.
 
-tb@pc:/tmp/ttt>
+If we add such metadata, it would probably have to be something that
+makes sense even after pushing the conflict to another repo, so it
+probably shouldn't be commit ids, unless we made sure to also push
+those commits. Also note that if you `jj restore --from <commit with
+conflict>`, you can get a conflict into a commit that didn't have
+conflicts previously. Or if you already had conflicts in the
+destination commit, your root trees (the multiple root trees
+constituting the conflict) will now have conflicts that potentially
+were created by two completely unrelated operations, so you would kind
+of need different labels for different paths.
+
+https://github.com/martinvonz/jj/issues/1176 has some more discussion
+about this.
+
+> > But we'd also have to be careful and think through usecases, including
+> > in the surrounding community.  People would probably want to ensure
+> > that e.g. "Protected" or "Integration" branches don't get accept
+> > fetches or pushes of conflicted commits,
+>
+> I think this is a really important point, while it can be useful to
+> share conflicts so they can be collaboratively resolved we don't want to
+> propagate them into "stable" or production branches. I wonder how 'jj'
+> handles this.
+
+Agreed. `jj git push` refuses to push commits with conflicts, because
+it's very unlikely that the remote will be able to make any sense of
+it. Our commit backend at Google does support conflicts, so users can
+check out each other's conflicted commits there (except that we
+haven't even started dogfooding yet).
+
+> > git status would probably
+> > need some special warnings or notices, git checkout would probably
+> > benefit from additional warnings/notices checks for those cases, git
+> > log should probably display conflicted commits differently, we'd need
+> > to add special handling for higher order conflicts (e.g. a merge with
+> > conflicts is itself involved in a merge) probably similar to what jj
+> > has done, and audit a lot of other code paths to see what would be
+> > needed.
+>
+> As you point out there is a lot more to this than just being able to
+> store the conflict data in a commit - in many ways I think that is the
+> easiest part of the solution to sharing conflicts.
+
+Yes, I think it would be a very large project. Unlike jj, Git of
+course has to worry about backwards compatibility. For example, you
+would have to decide if your goal - even in the long term - is to make
+`git rebase` etc. not get interrupted due to conflicts.
