@@ -1,54 +1,54 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 455101C15
-	for <git@vger.kernel.org>; Tue,  7 Nov 2023 01:26:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B4E20E8
+	for <git@vger.kernel.org>; Tue,  7 Nov 2023 01:26:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jvB5vsR8"
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4ABB11C
-	for <git@vger.kernel.org>; Mon,  6 Nov 2023 17:26:06 -0800 (PST)
-Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2c6efcef4eeso62378601fa.1
-        for <git@vger.kernel.org>; Mon, 06 Nov 2023 17:26:06 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GoNZOEaw"
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E420D51
+	for <git@vger.kernel.org>; Mon,  6 Nov 2023 17:26:09 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-40839807e82so31379925e9.0
+        for <git@vger.kernel.org>; Mon, 06 Nov 2023 17:26:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1699320364; x=1699925164; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1699320367; x=1699925167; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Lah1s9uytX5XX598RCAWq36WhVflhjVdRAmRGoYilwM=;
-        b=jvB5vsR8QVXLYGfV+mKp1xZSQtExHwR7Va9l6o/VMaMnHRWmDVXKFmENY+meNxaQCJ
-         iTlZvf3LUEBFs31Lyn928BFt21HXU9DuhZLoYNLbguSb/76g5OuyZee2OoQ0oaga8EiV
-         SJFb1M3JtIf7Phg8umT6+14/4bquwuCSXgUgtOi8Ph7TTjkFML69XWrmm48foluYPwYq
-         oAXGkixOOKI4yPrToPSEOqVzALD49/1ce0sWgu5r7F/Kx2qjpj0GtJIFhoVWuR5jQvn6
-         Oiu/Z4nmpVVCPNMkMtKFkhtdu5MedAUPYKgFbzykT113v4obtVSQEN9VD2LGMSH4dEQn
-         HGJQ==
+        bh=H/ky/3AXZvzs39bJrJJY3vV8N3LWOoVZM5pazlpvi0g=;
+        b=GoNZOEawLlBlEbtDj8QHBQDd+vUVQu160ApArh2MPZgmMePSL9wQGQQnKg5S/OBGcv
+         QLLIipcJUCiHt5iyGTgLJ7aQ2o4bb7xLHOVJtx6qIxpy+4E1R+9l5FaFGScBZowEGW0E
+         l8wUHvcWLAXgMFIYKnlfcwqZcZ/jd62QI2R+ftjDvlXVfzULCPxX07arEy+wQpxJvJog
+         7KOXklthm2DC+rAK8EHMTTocf5SB61+xWi1xUgcBDij4Ob7dW6XldZLdTmxI917CJjsM
+         L7LMfFmPsUjTeC3Z+2zL/VwhWTc0kEVE5Dn6zBgQK+0rkZCIYkfIWAr5wd33BYfu6/OQ
+         TRVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699320364; x=1699925164;
+        d=1e100.net; s=20230601; t=1699320367; x=1699925167;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Lah1s9uytX5XX598RCAWq36WhVflhjVdRAmRGoYilwM=;
-        b=weLoX2qp5ujRTG8bOJoY7g3vFzzHJiARwV+NNDVhviPZZdEMaD3s10PY9p+/n6swxs
-         1MtUxlVeY5e5O/j4+iq+YwHBQfUDaU5hirWcfzeu08HMSydch3kAc0xnHaCod6MbkXpp
-         Xg6UX4i2CUY3TW3J1djm3mfBDJGmOV6JBQ/8XN2Av2SoY5S3TJt1a2cZ1JQuqDy+kMVT
-         2bUEZmoKE6Y+bx+8g15UqeClYmGk1B3ZOfzvMsuijLP7pBcx11S6sa3nF1NOYFH/5cYW
-         a582uk2AroUXayXqklny6xcebI5o7jsshwJsaIfhI9h/IHPn4CB/DSl3q8GoZu/MptIj
-         QWaQ==
-X-Gm-Message-State: AOJu0YyBpTIlgBk4op+Vi+TJ9xRy5aRgTtXlP8aXJYiKRWB+3Tc6G1pB
-	+WAUSkU/I4HcJ/e5tnvHf8gcQPIY93c=
-X-Google-Smtp-Source: AGHT+IGumhtiBaObQFMclFt0X3WI65vn7L6Gksr8LL+VGPEHBceWyI4q3jnPjVnCjSgDHmwQKe02VA==
-X-Received: by 2002:a05:6512:acf:b0:507:9d3c:c655 with SMTP id n15-20020a0565120acf00b005079d3cc655mr28967052lfu.61.1699320364270;
-        Mon, 06 Nov 2023 17:26:04 -0800 (PST)
+        bh=H/ky/3AXZvzs39bJrJJY3vV8N3LWOoVZM5pazlpvi0g=;
+        b=qEf6Wj4wOLxfrO9UmD9+FhbnuONC15wRuzeO/g5cfMnBjVFCeVusCC3yqqdUVsxInT
+         ZlkrYPM9cereC95h4toqcQ9AO1/fgi/TRv4wWxF65KrdNdqaTu8tZa677k0JF04m6J5Q
+         jlefNfBkugITV1N+iaoulMbHqKuJ3ngiKhmb7Kk0Dcugz2gvipVvvc4CnloXHY4uQyKI
+         HoRxq0EAXsImgVKLjLzykxW/dF2yzmqHo5AnBvY2YaOu2CZH8O0QBLG34z4aVXrxH5iv
+         Cn8V3rR7Rew3FsQsYK3v9ozAgc6KCJOGmOxu9xg8Ezwlq4KwCkUUmtnEr9J9VlUjaup5
+         Wt0Q==
+X-Gm-Message-State: AOJu0YxR1yXralL5yBIgzcz5XFOmZMMuLC2DzKjU8h/r6gdREfKzzDWZ
+	YRvHY7tJJ/cnw5gzIKIZNsVEZtccTi4=
+X-Google-Smtp-Source: AGHT+IGOEMzn3TVaJd56EJ5qzWyRbYM5R6Zhsl/WmcrznuV1GLu5F82/XoSZ8tM+XkHOIPdmw1ymyw==
+X-Received: by 2002:a05:600c:3c97:b0:406:5a14:5c1e with SMTP id bg23-20020a05600c3c9700b004065a145c1emr1343783wmb.1.1699320366828;
+        Mon, 06 Nov 2023 17:26:06 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t10-20020a5d42ca000000b0032f7fab0712sm907825wrr.52.2023.11.06.17.26.04
+        by smtp.gmail.com with ESMTPSA id t10-20020a05600c450a00b004064cd71aa8sm13907368wmo.34.2023.11.06.17.26.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Nov 2023 17:26:04 -0800 (PST)
-Message-ID: <dea8d7d1e866d9784320051b372ff729fca855d7.1699320362.git.gitgitgadget@gmail.com>
+        Mon, 06 Nov 2023 17:26:06 -0800 (PST)
+Message-ID: <2e2f9738205f732c2e640fd9a7183d16d0bf7f00.1699320362.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1609.git.1699320361.gitgitgadget@gmail.com>
 References: <pull.1609.git.1699320361.gitgitgadget@gmail.com>
 From: "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 07 Nov 2023 01:25:53 +0000
-Subject: [PATCH 1/9] ref-filter.c: really don't sort when using --no-sort
+Date: Tue, 07 Nov 2023 01:25:55 +0000
+Subject: [PATCH 3/9] ref-filter.h: add max_count and omit_empty to ref_format
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -64,356 +64,160 @@ Cc: Victoria Dye <vdye@github.com>,
 
 From: Victoria Dye <vdye@github.com>
 
-Update 'ref_sorting_options()' to return a NULL 'struct ref_sorting *' if
-the string list provided to it is empty, rather than returning the default
-refname sort structure. Also update 'ref_array_sort()' to explicitly skip
-sorting if its 'struct ref_sorting *' arg is NULL. Other functions using
-'struct ref_sorting *' do not need any changes because they already properly
-ignore NULL values.
-
-The goal of this change is to have the '--no-sort' option truly disable
-sorting in commands like 'for-each-ref, 'tag', and 'branch'. Right now,
-'--no-sort' will still trigger refname sorting by default in 'for-each-ref',
-'tag', and 'branch'.
-
-To match existing behavior as closely as possible, explicitly add "refname"
-to the list of sort keys in 'for-each-ref', 'tag', and 'branch' before
-parsing options (if no config-based sort keys are set). This ensures that
-sorting will only be fully disabled if '--no-sort' is provided as an option;
-otherwise, "refname" sorting will remain the default. Note: this also means
-that even when sort keys are provided on the command line, "refname" will be
-the final sort key in the sorting structure. This doesn't actually change
-any behavior, since 'compare_refs()' already falls back on comparing
-refnames if two refs are equal w.r.t all other sort keys.
-
-Finally, remove the condition around sorting in 'ls-remote', since it's no
-longer necessary. Unlike 'for-each-ref' et. al., it does *not* set any sort
-keys by default. The default empty list of sort keys will produce a NULL
-'struct ref_sorting *', which causes the sorting to be skipped in
-'ref_array_sort()'.
+Add an internal 'array_opts' struct to 'struct ref_format' containing
+formatting options that pertain to the formatting of an entire ref array:
+'max_count' and 'omit_empty'. These values are specified by the '--count'
+and '--omit-empty' options, respectively, to 'for-each-ref'/'tag'/'branch'.
+Storing these values in the 'ref_format' will simplify the consolidation of
+ref array formatting logic across builtins in later patches.
 
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- builtin/branch.c        |  6 ++++
- builtin/for-each-ref.c  |  3 ++
- builtin/ls-remote.c     | 10 ++----
- builtin/tag.c           |  6 ++++
- ref-filter.c            | 19 ++----------
- t/t3200-branch.sh       | 68 +++++++++++++++++++++++++++++++++++++++--
- t/t6300-for-each-ref.sh | 21 +++++++++++++
- t/t7004-tag.sh          | 45 +++++++++++++++++++++++++++
- 8 files changed, 152 insertions(+), 26 deletions(-)
+ builtin/branch.c       |  5 ++---
+ builtin/for-each-ref.c | 21 +++++++++++----------
+ builtin/tag.c          |  5 ++---
+ ref-filter.h           |  5 +++++
+ 4 files changed, 20 insertions(+), 16 deletions(-)
 
 diff --git a/builtin/branch.c b/builtin/branch.c
-index e7ee9bd0f15..d67738bbcaa 100644
+index d67738bbcaa..5a1ec1cd04f 100644
 --- a/builtin/branch.c
 +++ b/builtin/branch.c
-@@ -767,7 +767,13 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 	if (argc == 2 && !strcmp(argv[1], "-h"))
- 		usage_with_options(builtin_branch_usage, options);
+@@ -45,7 +45,6 @@ static const char *head;
+ static struct object_id head_oid;
+ static int recurse_submodules = 0;
+ static int submodule_propagate_branches = 0;
+-static int omit_empty = 0;
  
-+	/*
-+	 * Try to set sort keys from config. If config does not set any,
-+	 * fall back on default (refname) sorting.
-+	 */
- 	git_config(git_branch_config, &sorting_options);
-+	if (!sorting_options.nr)
-+		string_list_append(&sorting_options, "refname");
- 
- 	track = git_branch_track;
- 
+ static int branch_use_color = -1;
+ static char branch_colors[][COLOR_MAXLEN] = {
+@@ -480,7 +479,7 @@ static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sortin
+ 			string_list_append(output, out.buf);
+ 		} else {
+ 			fwrite(out.buf, 1, out.len, stdout);
+-			if (out.len || !omit_empty)
++			if (out.len || !format->array_opts.omit_empty)
+ 				putchar('\n');
+ 		}
+ 	}
+@@ -737,7 +736,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		OPT_BIT('D', NULL, &delete, N_("delete branch (even if not merged)"), 2),
+ 		OPT_BIT('m', "move", &rename, N_("move/rename a branch and its reflog"), 1),
+ 		OPT_BIT('M', NULL, &rename, N_("move/rename a branch, even if target exists"), 2),
+-		OPT_BOOL(0, "omit-empty",  &omit_empty,
++		OPT_BOOL(0, "omit-empty",  &format.array_opts.omit_empty,
+ 			N_("do not output a newline after empty formatted refs")),
+ 		OPT_BIT('c', "copy", &copy, N_("copy a branch and its reflog"), 1),
+ 		OPT_BIT('C', NULL, &copy, N_("copy a branch, even if target exists"), 2),
 diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 350bfa6e811..93b370f550b 100644
+index 93b370f550b..881c3ee055f 100644
 --- a/builtin/for-each-ref.c
 +++ b/builtin/for-each-ref.c
-@@ -67,6 +67,9 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+@@ -19,10 +19,10 @@ static char const * const for_each_ref_usage[] = {
  
- 	git_config(git_default_config, NULL);
- 
-+	/* Set default (refname) sorting */
-+	string_list_append(&sorting_options, "refname");
-+
- 	parse_options(argc, argv, prefix, opts, for_each_ref_usage, 0);
- 	if (maxcount < 0) {
- 		error("invalid --count argument: `%d'", maxcount);
-diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
-index fc765754305..436249b720c 100644
---- a/builtin/ls-remote.c
-+++ b/builtin/ls-remote.c
-@@ -58,6 +58,7 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 	struct transport *transport;
- 	const struct ref *ref;
- 	struct ref_array ref_array;
-+	struct ref_sorting *sorting;
+ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+ {
+-	int i;
++	int i, total;
+ 	struct ref_sorting *sorting;
  	struct string_list sorting_options = STRING_LIST_INIT_DUP;
+-	int maxcount = 0, icase = 0, omit_empty = 0;
++	int icase = 0;
+ 	struct ref_array array;
+ 	struct ref_filter filter = REF_FILTER_INIT;
+ 	struct ref_format format = REF_FORMAT_INIT;
+@@ -40,11 +40,11 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+ 			N_("quote placeholders suitably for python"), QUOTE_PYTHON),
+ 		OPT_BIT(0 , "tcl",  &format.quote_style,
+ 			N_("quote placeholders suitably for Tcl"), QUOTE_TCL),
+-		OPT_BOOL(0, "omit-empty",  &omit_empty,
++		OPT_BOOL(0, "omit-empty",  &format.array_opts.omit_empty,
+ 			N_("do not output a newline after empty formatted refs")),
  
- 	struct option options[] = {
-@@ -141,13 +142,8 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 		item->symref = xstrdup_or_null(ref->symref);
+ 		OPT_GROUP(""),
+-		OPT_INTEGER( 0 , "count", &maxcount, N_("show only <n> matched refs")),
++		OPT_INTEGER( 0 , "count", &format.array_opts.max_count, N_("show only <n> matched refs")),
+ 		OPT_STRING(  0 , "format", &format.format, N_("format"), N_("format to use for the output")),
+ 		OPT__COLOR(&format.use_color, N_("respect format colors")),
+ 		OPT_REF_FILTER_EXCLUDE(&filter),
+@@ -71,8 +71,8 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+ 	string_list_append(&sorting_options, "refname");
+ 
+ 	parse_options(argc, argv, prefix, opts, for_each_ref_usage, 0);
+-	if (maxcount < 0) {
+-		error("invalid --count argument: `%d'", maxcount);
++	if (format.array_opts.max_count < 0) {
++		error("invalid --count argument: `%d'", format.array_opts.max_count);
+ 		usage_with_options(for_each_ref_usage, opts);
+ 	}
+ 	if (HAS_MULTI_BITS(format.quote_style)) {
+@@ -109,15 +109,16 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+ 
+ 	ref_array_sort(sorting, &array);
+ 
+-	if (!maxcount || array.nr < maxcount)
+-		maxcount = array.nr;
+-	for (i = 0; i < maxcount; i++) {
++	total = format.array_opts.max_count;
++	if (!total || array.nr < total)
++		total = array.nr;
++	for (i = 0; i < total; i++) {
+ 		strbuf_reset(&err);
+ 		strbuf_reset(&output);
+ 		if (format_ref_array_item(array.items[i], &format, &output, &err))
+ 			die("%s", err.buf);
+ 		fwrite(output.buf, 1, output.len, stdout);
+-		if (output.len || !omit_empty)
++		if (output.len || !format.array_opts.omit_empty)
+ 			putchar('\n');
  	}
  
--	if (sorting_options.nr) {
--		struct ref_sorting *sorting;
--
--		sorting = ref_sorting_options(&sorting_options);
--		ref_array_sort(sorting, &ref_array);
--		ref_sorting_release(sorting);
--	}
-+	sorting = ref_sorting_options(&sorting_options);
-+	ref_array_sort(sorting, &ref_array);
- 
- 	for (i = 0; i < ref_array.nr; i++) {
- 		const struct ref_array_item *ref = ref_array.items[i];
 diff --git a/builtin/tag.c b/builtin/tag.c
-index 3918eacbb57..64f3196cd4c 100644
+index 64f3196cd4c..2d599245d48 100644
 --- a/builtin/tag.c
 +++ b/builtin/tag.c
-@@ -501,7 +501,13 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+@@ -44,7 +44,6 @@ static const char * const git_tag_usage[] = {
+ static unsigned int colopts;
+ static int force_sign_annotate;
+ static int config_sign_tag = -1; /* unspecified */
+-static int omit_empty = 0;
  
- 	setup_ref_filter_porcelain_msg();
- 
-+	/*
-+	 * Try to set sort keys from config. If config does not set any,
-+	 * fall back on default (refname) sorting.
-+	 */
- 	git_config(git_tag_config, &sorting_options);
-+	if (!sorting_options.nr)
-+		string_list_append(&sorting_options, "refname");
- 
- 	memset(&opt, 0, sizeof(opt));
- 	filter.lines = -1;
-diff --git a/ref-filter.c b/ref-filter.c
-index e4d3510e28e..7250089b7c6 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -3142,7 +3142,8 @@ void ref_sorting_set_sort_flags_all(struct ref_sorting *sorting,
- 
- void ref_array_sort(struct ref_sorting *sorting, struct ref_array *array)
- {
--	QSORT_S(array->items, array->nr, compare_refs, sorting);
-+	if (sorting)
-+		QSORT_S(array->items, array->nr, compare_refs, sorting);
- }
- 
- static void append_literal(const char *cp, const char *ep, struct ref_formatting_state *state)
-@@ -3248,18 +3249,6 @@ static int parse_sorting_atom(const char *atom)
- 	return res;
- }
- 
--/*  If no sorting option is given, use refname to sort as default */
--static struct ref_sorting *ref_default_sorting(void)
--{
--	static const char cstr_name[] = "refname";
--
--	struct ref_sorting *sorting = xcalloc(1, sizeof(*sorting));
--
--	sorting->next = NULL;
--	sorting->atom = parse_sorting_atom(cstr_name);
--	return sorting;
--}
--
- static void parse_ref_sorting(struct ref_sorting **sorting_tail, const char *arg)
- {
- 	struct ref_sorting *s;
-@@ -3283,9 +3272,7 @@ struct ref_sorting *ref_sorting_options(struct string_list *options)
- 	struct string_list_item *item;
- 	struct ref_sorting *sorting = NULL, **tail = &sorting;
- 
--	if (!options->nr) {
--		sorting = ref_default_sorting();
--	} else {
-+	if (options->nr) {
- 		for_each_string_list_item(item, options)
- 			parse_ref_sorting(tail, item->string);
+ static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting,
+ 		     struct ref_format *format)
+@@ -83,7 +82,7 @@ static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting,
+ 		if (format_ref_array_item(array.items[i], format, &output, &err))
+ 			die("%s", err.buf);
+ 		fwrite(output.buf, 1, output.len, stdout);
+-		if (output.len || !omit_empty)
++		if (output.len || !format->array_opts.omit_empty)
+ 			putchar('\n');
  	}
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 3182abde27f..9918ba05dec 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -1570,9 +1570,10 @@ test_expect_success 'tracking with unexpected .fetch refspec' '
  
- test_expect_success 'configured committerdate sort' '
- 	git init -b main sort &&
-+	test_config -C sort branch.sort "committerdate" &&
-+
- 	(
- 		cd sort &&
--		git config branch.sort committerdate &&
- 		test_commit initial &&
- 		git checkout -b a &&
- 		test_commit a &&
-@@ -1592,9 +1593,10 @@ test_expect_success 'configured committerdate sort' '
- '
+@@ -481,7 +480,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 		OPT_WITHOUT(&filter.no_commit, N_("print only tags that don't contain the commit")),
+ 		OPT_MERGED(&filter, N_("print only tags that are merged")),
+ 		OPT_NO_MERGED(&filter, N_("print only tags that are not merged")),
+-		OPT_BOOL(0, "omit-empty",  &omit_empty,
++		OPT_BOOL(0, "omit-empty",  &format.array_opts.omit_empty,
+ 			N_("do not output a newline after empty formatted refs")),
+ 		OPT_REF_SORT(&sorting_options),
+ 		{
+diff --git a/ref-filter.h b/ref-filter.h
+index 1524bc463a5..d87d61238b7 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -92,6 +92,11 @@ struct ref_format {
  
- test_expect_success 'option override configured sort' '
-+	test_config -C sort branch.sort "committerdate" &&
+ 	/* List of bases for ahead-behind counts. */
+ 	struct string_list bases;
 +
- 	(
- 		cd sort &&
--		git config branch.sort committerdate &&
- 		git branch --sort=refname >actual &&
- 		cat >expect <<-\EOF &&
- 		  a
-@@ -1606,10 +1608,70 @@ test_expect_success 'option override configured sort' '
- 	)
- '
++	struct {
++		int max_count;
++		int omit_empty;
++	} array_opts;
+ };
  
-+test_expect_success '--no-sort cancels config sort keys' '
-+	test_config -C sort branch.sort "-refname" &&
-+
-+	(
-+		cd sort &&
-+
-+		# objecttype is identical for all of them, so sort falls back on
-+		# default (ascending refname)
-+		git branch \
-+			--no-sort \
-+			--sort="objecttype" >actual &&
-+		cat >expect <<-\EOF &&
-+		  a
-+		* b
-+		  c
-+		  main
-+		EOF
-+		test_cmp expect actual
-+	)
-+
-+'
-+
-+test_expect_success '--no-sort cancels command line sort keys' '
-+	(
-+		cd sort &&
-+
-+		# objecttype is identical for all of them, so sort falls back on
-+		# default (ascending refname)
-+		git branch \
-+			--sort="-refname" \
-+			--no-sort \
-+			--sort="objecttype" >actual &&
-+		cat >expect <<-\EOF &&
-+		  a
-+		* b
-+		  c
-+		  main
-+		EOF
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success '--no-sort without subsequent --sort prints expected branches' '
-+	(
-+		cd sort &&
-+
-+		# Sort the results with `sort` for a consistent comparison
-+		# against expected
-+		git branch --no-sort | sort >actual &&
-+		cat >expect <<-\EOF &&
-+		  a
-+		  c
-+		  main
-+		* b
-+		EOF
-+		test_cmp expect actual
-+	)
-+'
-+
- test_expect_success 'invalid sort parameter in configuration' '
-+	test_config -C sort branch.sort "v:notvalid" &&
-+
- 	(
- 		cd sort &&
--		git config branch.sort "v:notvalid" &&
- 
- 		# this works in the "listing" mode, so bad sort key
- 		# is a dying offence.
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index 00a060df0b5..0613e5e3623 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -1335,6 +1335,27 @@ test_expect_success '--no-sort cancels the previous sort keys' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success '--no-sort without subsequent --sort prints expected refs' '
-+	cat >expected <<-\EOF &&
-+	refs/tags/multi-ref1-100000-user1
-+	refs/tags/multi-ref1-100000-user2
-+	refs/tags/multi-ref1-200000-user1
-+	refs/tags/multi-ref1-200000-user2
-+	refs/tags/multi-ref2-100000-user1
-+	refs/tags/multi-ref2-100000-user2
-+	refs/tags/multi-ref2-200000-user1
-+	refs/tags/multi-ref2-200000-user2
-+	EOF
-+
-+	# Sort the results with `sort` for a consistent comparison against
-+	# expected
-+	git for-each-ref \
-+		--format="%(refname)" \
-+		--no-sort \
-+		"refs/tags/multi-*" | sort >actual &&
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'do not dereference NULL upon %(HEAD) on unborn branch' '
- 	test_when_finished "git checkout main" &&
- 	git for-each-ref --format="%(HEAD) %(refname:short)" refs/heads/ >actual &&
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index e689db42929..b41a47eb943 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -1862,6 +1862,51 @@ test_expect_success 'option override configured sort' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success '--no-sort cancels config sort keys' '
-+	test_config tag.sort "-refname" &&
-+
-+	# objecttype is identical for all of them, so sort falls back on
-+	# default (ascending refname)
-+	git tag -l \
-+		--no-sort \
-+		--sort="objecttype" \
-+		"foo*" >actual &&
-+	cat >expect <<-\EOF &&
-+	foo1.10
-+	foo1.3
-+	foo1.6
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--no-sort cancels command line sort keys' '
-+	# objecttype is identical for all of them, so sort falls back on
-+	# default (ascending refname)
-+	git tag -l \
-+		--sort="-refname" \
-+		--no-sort \
-+		--sort="objecttype" \
-+		"foo*" >actual &&
-+	cat >expect <<-\EOF &&
-+	foo1.10
-+	foo1.3
-+	foo1.6
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--no-sort without subsequent --sort prints expected tags' '
-+	# Sort the results with `sort` for a consistent comparison against
-+	# expected
-+	git tag -l --no-sort "foo*" | sort >actual &&
-+	cat >expect <<-\EOF &&
-+	foo1.10
-+	foo1.3
-+	foo1.6
-+	EOF
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'invalid sort parameter on command line' '
- 	test_must_fail git tag -l --sort=notvalid "foo*" >actual
- '
+ #define REF_FILTER_INIT { \
 -- 
 gitgitgadget
 
