@@ -1,128 +1,153 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA15312E40
-	for <git@vger.kernel.org>; Tue,  7 Nov 2023 09:43:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D19828FD
+	for <git@vger.kernel.org>; Tue,  7 Nov 2023 10:49:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XKPryH2U"
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BB07102
-	for <git@vger.kernel.org>; Tue,  7 Nov 2023 01:43:36 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-53e2308198eso9104955a12.1
-        for <git@vger.kernel.org>; Tue, 07 Nov 2023 01:43:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1699350215; x=1699955015; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mlVLHso9CGXaXN2cC2rslbIZ1Af3gNQTuDGOPzt+3Fk=;
-        b=XKPryH2UpvJnJbQHYgJaZ5OFvvN+OFeBAJ3PkiadjyJd/zP1pjNLA07bGDVvweXeEM
-         jB9DL3l/Rmu0sdXspFQ3AOIbH+BNPqy4I80UoRauwiLD6XmClhZiz7BvTmHXF+imnC3d
-         vnuIMAv0ACoJ6jUCIOBnHYDkpDeCMtKCG5WmwwVLo19ML5XTbITvnRNeT9eZ3pV2JmSB
-         sDe0NYKzLyM3m+udTh2S6t/MV+SGZLQmvAkQNbbDRiVlWvQTlgE8l8zmLR6hvqx2ThUc
-         koUnuXycHot29A6mJzE+CBRUxynDHACCgk2EL/NOXXrvSVIl5uyd/KQlPq60uW1JPznL
-         oBXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699350215; x=1699955015;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mlVLHso9CGXaXN2cC2rslbIZ1Af3gNQTuDGOPzt+3Fk=;
-        b=qESW/tZg4NshmDlNlHzHmjIkmKRpJsu4yY5Eh+tth5ecoC9UCrgjqW4Lds98w+b+ub
-         kIi72JepKCqnAwOvPeW5qeYkFESBVi63N56qhMQHcesyy17fjaEqy55cq2Ldw5VRguO6
-         Z87zi0V1M7YXrc0WUiUfogphQNzRxhUpYQHbQ78GuPrCtuWGd/fQd4NOsK3M0ceoy6z1
-         mjXc6DfHJfBYCOIVSR9EKXlnFgSlPljsZAzLSPvF3Bugm0Ub198CBk/ZAf8SCR8vXPi8
-         pZmX1glKUdQ59o6303euqZ8MlQ1NuHUbkctZ/jXDVl+nfT3vsODEgnzo3tBhQ7OOdzOp
-         mzPQ==
-X-Gm-Message-State: AOJu0YzuFSTRhef3g0hr9wleDwHPWG4NeHpe1czmbLl68fhG5KKc3blF
-	jt4bUFBpo4gijZmPaQRSaanm2geGZ0y61FX+7O1iOHqtHjg=
-X-Google-Smtp-Source: AGHT+IFufhK+A9DHHBm75EKtAqIoTTSSZFGZGf9Fddo2CXwbw4i3NugcbYFAl+TnnsDrBvAQJAAgVo0JsODbGaeq51k=
-X-Received: by 2002:a50:d658:0:b0:53d:b5bc:6415 with SMTP id
- c24-20020a50d658000000b0053db5bc6415mr24329106edj.15.1699350214386; Tue, 07
- Nov 2023 01:43:34 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="xAoMtLgP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GjZ658gX"
+Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A04C1A3
+	for <git@vger.kernel.org>; Tue,  7 Nov 2023 02:49:43 -0800 (PST)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.west.internal (Postfix) with ESMTP id 4C3D232009D1;
+	Tue,  7 Nov 2023 05:49:40 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute1.internal (MEProxy); Tue, 07 Nov 2023 05:49:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to; s=fm3; t=1699354179; x=1699440579; bh=Jy
+	JfXtLnCCp0p5DB2ogSbJaYJmjiYXNLr+Hx1+e7sSk=; b=xAoMtLgPDRuCra9X4z
+	NbWQLT/au0wPsHCcek36FQsS86HyU9ZWKoMigcsOBJ1k/Z7TEXvCoXNPUOaN6QvR
+	yY/BMGtl3JVicND8fQk6dm372T3h9zkJmRdalk4Y7w+z2HLxK+EA3SjpPUxFos0l
+	/nsvkSMtK/Dq+R08nQfKZsKzT7Wa6phAiirQn4Gg2fyKlDoHMDcnK+J1Ni7iXgpf
+	xVe3KAJopZ/9X8fKRGQpnYCnrJLyhuKlI4pkhnNCFOYLucXBIllLrxiac4hCfHSI
+	wDThD3lMMg9d49O3Mk3wJR0fDD/EuB5VgOV9f5Yt9iAJoOylxiAdT1efGF0hOF0m
+	+i4A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm3; t=1699354179; x=1699440579; bh=JyJfXtLnCCp0p
+	5DB2ogSbJaYJmjiYXNLr+Hx1+e7sSk=; b=GjZ658gXYlkFvxVSrxnyzYbwdn/CN
+	/Mx3uYSHN8bd5Rtj6b5fl1kry0nCXnBCF5zwqeptMCjw7zuoyrP9D+Ea+ZOTHZv6
+	z2NluuOfa4NTrUkmyJ0ZGRU6cIGKfquZSvwhfwR1Blbq1x9pIWlkW0kP65+J/s0w
+	puZI67QxrvsfmlJiHpdbo+3CDDwIWvE05Ky27Zb1qiH1WkVbarHYh0KUrQRKMWgf
+	mH8yhJjE7+xS4y4BHgvIKpRQRKZSi5Rx6RK2VPivSnnjbn6MDtexO4YzRvkFNKlK
+	r7eLlnUzcqwh/Oaw55wKmSHtEZA4nvIPXXC//EHkHvPnaM0pg0kHhsNnQ==
+X-ME-Sender: <xms:QxZKZX4DPBtmOfWH6FtqP5ew8IfEXXZ3zQN0-xJABCFQyYkEc7QC9Q>
+    <xme:QxZKZc7MzkdLW6PC8SEsfsmYVxjd6hG8rrUDmwLl0RmoNAFPqc1UAsKzXPoS5Oyn-
+    4TuyrbzlWBhO8_wTg>
+X-ME-Received: <xmr:QxZKZeefVsgbBWHewu4NnymfLXeaYo23mVwbCNkPlOGnX4p7krzz94WGVdtRltZ2v4y9kawaZfP_yqklnR1CRPGsyUq1tCSbnSPWD66yMsY82DADUg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudduiedgvddtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:QxZKZYILYyDGDxV9ZORTHyf5uXPj_p-vFVrzzWqeHDqBpj7bGnASMQ>
+    <xmx:QxZKZbJ2nloxTxIoYLvOsBQ7VLmDdsCgcwJcGKcYHTXMORvn8g_F0w>
+    <xmx:QxZKZRwSGz29MLoRudGG6CAzc73AuMG_PPlNqdXHoXZIPqkEba8ZZQ>
+    <xmx:QxZKZSXoqowKAd1E2OOl4qe5pYQ6NzWj8QMcZ-MhqOqS3jh_gnKjbQ>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 7 Nov 2023 05:49:38 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 01e73b1c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 7 Nov 2023 10:49:13 +0000 (UTC)
+Date: Tue, 7 Nov 2023 11:49:34 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Victoria Dye <vdye@github.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org
+Subject: Re: [PATCH 0/9] for-each-ref optimizations & usability improvements
+Message-ID: <ZUoWPpFHEi-PZjoD@tanuki>
+References: <pull.1609.git.1699320361.gitgitgadget@gmail.com>
+ <xmqqo7g69tmf.fsf@gitster.g>
+ <dbcbcf0e-aeee-4bb9-9e39-e2e85194d083@github.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231010123847.2777056-1-christian.couder@gmail.com>
- <20231102135151.843758-1-christian.couder@gmail.com> <CABPp-BE6G2qaF50bhz-CwxSsvxGDHzwvsWtfQO4zVcX6ERppLw@mail.gmail.com>
-In-Reply-To: <CABPp-BE6G2qaF50bhz-CwxSsvxGDHzwvsWtfQO4zVcX6ERppLw@mail.gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 7 Nov 2023 10:43:22 +0100
-Message-ID: <CAP8UFD24fzhiecJtANqEsxvh1mxT4pKR=QjfUFZh8C6HQE-k1A@mail.gmail.com>
-Subject: Re: [PATCH v6 00/14] Introduce new `git replay` command
-To: Elijah Newren <newren@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, John Cai <johncai86@gmail.com>, 
-	Derrick Stolee <stolee@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>, 
-	Calvin Wan <calvinwan@google.com>, Toon Claes <toon@iotcl.com>, Dragan Simic <dsimic@manjaro.org>, 
-	Linus Arver <linusa@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="R65H2tkznvsVCZEi"
+Content-Disposition: inline
+In-Reply-To: <dbcbcf0e-aeee-4bb9-9e39-e2e85194d083@github.com>
+
+
+--R65H2tkznvsVCZEi
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On Mon, Nov 06, 2023 at 06:48:29PM -0800, Victoria Dye wrote:
+> Junio C Hamano wrote:
+> > "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com> writes:
+[snip]
+> >>  * I'm not attached to '--full-deref' as a name - if someone has an id=
+ea for
+> >>    a more descriptive name, please suggest it!
+> >=20
+> > Another candidate verb may be "to peel", and I have no strong
+> > opinion between it and "to dereference".  But I have a mild aversion
+> > to an abbreviation that is not strongly established.
+> >=20
+>=20
+> Makes sense. I got the "deref" abbreviation for 'update-ref --no-deref', =
+but
+> 'show-ref' has a "--dereference" option and protocol v2's "ls-refs" inclu=
+des
+> a "peel" arg. "Dereference" is the term already used in the 'for-each-ref'
+> documentation, though, so if no one comes in with an especially strong
+> opinion on this I'll change the option to '--full-dereference'. Thanks!
 
-On Tue, Nov 7, 2023 at 3:44=E2=80=AFAM Elijah Newren <newren@gmail.com> wro=
-te:
-> Looking good, just one comment on one small hunk...
->
-> On Thu, Nov 2, 2023 at 6:52=E2=80=AFAM Christian Couder
-> <christian.couder@gmail.com> wrote:
-> >
-> [...]
->
-> >     @@ builtin/replay.c: int cmd_replay(int argc, const char **argv, co=
-nst char *prefix
-> >      -
-> >         strvec_pushl(&rev_walk_args, "", argv[2], "--not", argv[1], NUL=
-L);
-> >
-> >     ++  /*
-> >     ++   * TODO: For now, let's warn when we see an option that we are
-> >     ++   * going to override after setup_revisions() below. In the
-> >     ++   * future we might want to either die() or allow them if we
-> >     ++   * think they could be useful though.
-> >     ++   */
-> >     ++  for (i =3D 0; i < argc; i++) {
-> >     ++          if (!strcmp(argv[i], "--reverse") || !strcmp(argv[i], "=
---date-order") ||
-> >     ++              !strcmp(argv[i], "--topo-order") || !strcmp(argv[i]=
-, "--author-date-order") ||
-> >     ++              !strcmp(argv[i], "--full-history"))
-> >     ++                  warning(_("option '%s' will be overridden"), ar=
-gv[i]);
-> >     ++  }
-> >     ++
->
-> Two things:
->
-> 1) Not sure it makes sense to throw a warning with --topo-order or
-> --full-history, since they would result in a value matching what we
-> would be setting anyway.
+But doesn't dereferencing in the context of git-update-ref(1) refer to
+something different? It's not about tags, but it is about symbolic
+references and whether we want to update the symref or the pointee. But
+true enough, in git-show-ref(1) "dereference" actually means that we
+should peel the tag.
 
-Yeah, I am not sure about this either. About "--reverse" I think it
-makes sense because even if the command is setting the reverse bit, it
-would be possible to reverse the reverse like Dscho wanted. But I
-agree "--topo-order" and "--full-history" will very unlikely be reused
-for anything else in the future.
+To me it feels like preexisting commands are confused already. In my
+mind model:
 
-> 2) This seems like an inefficient way to provide this warning; could
-> we avoid parsing the arguments for an extra time?  Perhaps instead
->   a) set the desired values here, before setup_revisions()
->   b) after setup_revisions, check whether these values differ from the
-> desired values, if so throw a warning.
->   c) set the desired values, again
+    - "peel" means that an object gets resolved to one of its pointees.
+      This also includes the case here, where a tag gets peeled to its
+      pointee.
 
-Yeah, that would work. The downside is that it would be more difficult
-in the warning to tell the user which command line option was
-overridden as there are some values changed by different options.
-Maybe we can come up with a warning message that is still useful and
-enough for now, as the command is supposed to be used by experienced
-users. Perhaps something like:
+    - "dereference" means that a symbolic reference gets resolved to its
+      pointee. This matches what we do in `git update-ref --no-deref`.
 
-warning(_("some rev walking options will be overridden as '%s' bit in
-'struct rev_info' will be forced"), "sort_order");
+But after reading through the code I don't think we distinguish those
+terms cleanly throughout our codebase. Still, "peeling" feels like a
+better match in my opinion.
 
-Thanks!
+Patrick
+
+--R65H2tkznvsVCZEi
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVKFj4ACgkQVbJhu7ck
+PpRrABAArRXNkk4UfH9PlukJArcp9PNELRZ8raDow7tS+5SjXah1OMpM1ArIoWMw
+qLvFiKex5EFG9Lx20s/97WqxnREpiGWree/PBCHon/XNtiTYFnT7ousebfIP6nqf
+NnrCFN54di8Njv3LfydkWDDAIslDodCxadBW6v5hG1IR+LhbLWDWMz25k5SXdY7a
+DE0S5KHlwULWMn6h6t6b9ijGi04hOigesHkLAfLdO6K0A0yoVHbgZZNTdsSRiVdz
+5Ep1/UMmQHAiVNj+CO2sJiBWCDs/eOgOmdoCmMeovBWMh6Cvtupq5aQg9ZMkd/LC
+wPVYvSSCdZP1RETH5dOTs2RVtVfbXuYsr+3auwK1aZ6cN6C4nSbbRMg5UEaCTvCg
+hS/9E+AFaHP5PcYfT4VQK5CgdQiVVIIDAKB2JNwkj/c6iHuYmkszPxI/4tuUHPXd
+vOZjYQHPbG3sEyRBtiUDhGCc+glcmT28uF7qcBAsdBZKTSSQp8AruLzSsF+w1GmU
+oBZFSiYP6c/2qcDJVN5l1q0jNF82l5WURqk3mWXFDBPAv05aDbCEnyn21l0fzrIU
+x+fuaAFf4cZmYIJqDISpms+3OCdB1Dkn4McoY4j47VLcvhOBldmxy9SME/HD9mrb
+5NTzSTRDU6uGTI5BWHJ0vjTFG+XJjR4b2HiLZ/Nc9sAioIhRuwQ=
+=k1hY
+-----END PGP SIGNATURE-----
+
+--R65H2tkznvsVCZEi--
