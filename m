@@ -1,56 +1,56 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81AF436AE3
-	for <git@vger.kernel.org>; Tue,  7 Nov 2023 18:23:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4748B36AEB
+	for <git@vger.kernel.org>; Tue,  7 Nov 2023 18:23:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="uqIFg28b"
-Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F643B0
-	for <git@vger.kernel.org>; Tue,  7 Nov 2023 10:23:01 -0800 (PST)
-Received: by mail-qk1-x72c.google.com with SMTP id af79cd13be357-7788ebea620so382931185a.3
-        for <git@vger.kernel.org>; Tue, 07 Nov 2023 10:23:01 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="WRkqp4Bv"
+Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A431213A
+	for <git@vger.kernel.org>; Tue,  7 Nov 2023 10:23:04 -0800 (PST)
+Received: by mail-qv1-xf33.google.com with SMTP id 6a1803df08f44-67131800219so40915506d6.3
+        for <git@vger.kernel.org>; Tue, 07 Nov 2023 10:23:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1699381380; x=1699986180; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1699381383; x=1699986183; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=uAIHW7rhds10ZgTT7ADJK5wsRDifl8IBm77/et8Wzgc=;
-        b=uqIFg28bAUH6RWP5kIE/mY8RegPqFCIeOkjfjkHth0FiBeO/PlV5jqDCkdGm1yRdZT
-         945xRlPra2ZDbrAasGB5//CjouHiPw4PqhufwlwWknvzVzNy/TJkFJ8B7ZfITdHTt7BD
-         U2uC5pBUYRjNUArLM/qp81LeWER3koG9B5UQ8aOstm8xxMyNjUQ1UAZlLh6HQBsw8FlW
-         mwQa5xCsjuAikuLGpvOysBdUOUE9VwVwoPtDJ7Fm5r0CBTUcGJvPajxrrOos1IYvFLyC
-         9fFHH+RC+AhL7t2AfNXTfurazRfiZ6ZRU/ZOACnlbxCpJ2QKwtCBtHbs6OIduxPY3c26
-         kGAA==
+        bh=fI+D4IMqk4r9R7LsBjQLBvIeLqQkjS+RkfVlR2YZTiA=;
+        b=WRkqp4BvGEBYeAH7oXCBTGtqjvWsf8HU6ICW6yd5/fQDEwUWYnyy36vcWEHnVa46To
+         MvTQpJMXFXgXD7FcEaioXr6Oea80ZfPRNgQMqOTAUfzsTCC6dFOhj/0nF3+ssPciHOV5
+         pXVsQT0lcgb8OkqAgRxXrgeuHPdbJFVFmh/QW+ofWoxTBDMKjWwaqO5UZiOnq0uTE73O
+         VPemtfnd939gbBSu4ah7sRlKc/TiAvLy7SLCDqDLrMuImHYhMcNqZbbh9x3r6a3XY4LB
+         vVd8WPl7PMNFhVBKsCwRaS65AGGXsHGrg8uyLJY5UUpRM683ePByXH1JnjdWRbWInoNQ
+         0fyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699381380; x=1699986180;
+        d=1e100.net; s=20230601; t=1699381383; x=1699986183;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=uAIHW7rhds10ZgTT7ADJK5wsRDifl8IBm77/et8Wzgc=;
-        b=uGQMIjxFFlfoXnbKb4pVtNgMWmFHnkX5Crmw8SJiY2peA6RVLDmcxkEeDRjhLWkypx
-         i4TpKkp+ECqcruJHu19Q/mVDXwDEgk7EgQwi5sF+mx9MApWIq20/NZbHPa+kB37H+dkx
-         MKlr4q22ze8/Zba8aC0af2zNwGckJ7JBjr1WTbwpthoIbF8Tk0SbCkY74IKzRnllyOEg
-         rc1FC0shjcWw4FaHWXtay84HcPpCxv0uMes5Nb6kcyCdQNEvtNQ1xN1mH4TA0kbSf+Ts
-         MKvfyhTKLcPN8IK4exVk9HnQUt7j1Thk5zuthVXpKbSdpItFUhIkgCwPtSNPA/dJHpp8
-         VTvw==
-X-Gm-Message-State: AOJu0Yz1uIJHzvG3B9/MdVhasXTtntgBRQgPB7s8pVcOQmBdze/YfNxG
-	TtlqLxT2Rvfonq2S4lilleSNvxX023kQUTZBwlqqlQ==
-X-Google-Smtp-Source: AGHT+IHrC+kj5waeXedKFUnaMXy7H2XxlUAdV6yLaiMs+41pRVPaQWHP/BKHhoPGTr5WW+z4NNxDyg==
-X-Received: by 2002:ad4:5ca2:0:b0:66d:3723:294b with SMTP id q2-20020ad45ca2000000b0066d3723294bmr35165507qvh.64.1699381380429;
-        Tue, 07 Nov 2023 10:23:00 -0800 (PST)
+        bh=fI+D4IMqk4r9R7LsBjQLBvIeLqQkjS+RkfVlR2YZTiA=;
+        b=de94E8mS7gZ2Kkw8qFElPB+Q+HzfB+Gk2UQFUPpZ28cXzHQV0h35KuHK+kGDNGtHr8
+         uCG82fGJsTb4VV+ICgJVV/xq2PELh2sC33DSTqIiz4vT6GGhO1LUqk7zWJeReU6vBsu5
+         Z+quhZ9ZOr0ez9fRDARI5uGcOQMboLMDUg0YTL92AcscsQbqDhRf3MNERo7bMVXkYR8k
+         yJI1++E2AIK7YsvgDcmgUK1+gNlFvimDpdQqfZP2niQaUW2JxtrkuyxEpcbrbZ9M3BW0
+         sRO1SyJ2YbLfo61/DoXC68sJ93ZQZJ9BF9AoZwTuuXFfp8xtaJfUQrJrZeVAvp1s64Gp
+         NhDw==
+X-Gm-Message-State: AOJu0YxzXqCjPdRrN7jJ7kk51gmv1KMEduwlL7TLxIIqB+RPYJs59d2c
+	tLUE+tupKvO2M1T8GdvauTdQ2oXSrdOKd5Njw2mSZw==
+X-Google-Smtp-Source: AGHT+IHeMdnqx1oZ+O1BGIprSxrjSkCZGuiaYiDaXKba1VptPiyAZn9qeZx3bDJinBF+TR/dT+dFkQ==
+X-Received: by 2002:ad4:5c88:0:b0:66d:1b4c:e867 with SMTP id o8-20020ad45c88000000b0066d1b4ce867mr47070683qvh.45.1699381383379;
+        Tue, 07 Nov 2023 10:23:03 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id mn22-20020a0562145ed600b006655cc8f872sm141393qvb.99.2023.11.07.10.22.59
+        by smtp.gmail.com with ESMTPSA id q8-20020a05621410e800b006590d020260sm136688qvt.98.2023.11.07.10.23.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Nov 2023 10:23:00 -0800 (PST)
-Date: Tue, 7 Nov 2023 13:22:58 -0500
+        Tue, 07 Nov 2023 10:23:03 -0800 (PST)
+Date: Tue, 7 Nov 2023 13:23:02 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>,
 	Elijah Newren <newren@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [RFC PATCH 2/3] tmp-objdir: introduce `tmp_objdir_repack()`
-Message-ID: <0f19c139ba9bb5105747f545038825d0c89f2e42.1699381371.git.me@ttaylorr.com>
+Subject: [RFC PATCH 3/3] builtin/replay.c: introduce `--write-pack`
+Message-ID: <0b9ef904888d45289445638ae59817feab1dc813.1699381371.git.me@ttaylorr.com>
 References: <ZUpepnSCSxL8i96b@nand.local>
  <cover.1699381371.git.me@ttaylorr.com>
 Precedence: bulk
@@ -63,82 +63,154 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1699381371.git.me@ttaylorr.com>
 
-In the following commit, we will teach `git replay` how to write a pack
-containing the set of new objects created as a result of the `replay`
-operation.
+Now that the prerequisites are in place, we can implement a
+`--write-pack` option for `git replay`, corresponding to the existing
+one in `git merge-tree`.
 
-Since `replay` needs to be able to see the object(s) written
-from previous steps in order to replay each commit, the ODB transaction
-may have multiple pending packs. Migrating multiple packs back into the
-main object store has a couple of downsides:
+The changes are mostly limited to:
 
-  - It is error-prone to do so: each pack must be migrated in the
-    correct order (with the ".idx" file staged last), and the set of
-    packs themselves must be moved over in the correct order to avoid
-    racy behavior.
+  - introducing a new option in the builtin
+  - replacing the main object store with the temporary one
+  - then repacking and migrating the temporary object store back into
+    the main object store after the replay has completed
 
-  - It is a (potentially significant) performance degradation to migrate
-    a large number of packs back into the main object store.
-
-Introduce a new function that combines the set of all packs in the
-temporary object store to produce a single pack which is the logical
-concatenation of all packs created during that level of the ODB
-transaction.
+Along with tests and documentation to ensure that the new behavior
+matches our expectations.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- tmp-objdir.c | 13 +++++++++++++
- tmp-objdir.h |  6 ++++++
- 2 files changed, 19 insertions(+)
+ Documentation/git-replay.txt |  4 ++++
+ builtin/replay.c             | 18 ++++++++++++++++++
+ t/t3650-replay-basics.sh     | 37 ++++++++++++++++++++++++++++++++++++
+ 3 files changed, 59 insertions(+)
 
-diff --git a/tmp-objdir.c b/tmp-objdir.c
-index 5f9074ad1c..ef53180b47 100644
---- a/tmp-objdir.c
-+++ b/tmp-objdir.c
-@@ -12,6 +12,7 @@
- #include "strvec.h"
- #include "quote.h"
- #include "object-store-ll.h"
-+#include "run-command.h"
+diff --git a/Documentation/git-replay.txt b/Documentation/git-replay.txt
+index e7551aec54..f424c1a676 100644
+--- a/Documentation/git-replay.txt
++++ b/Documentation/git-replay.txt
+@@ -42,6 +42,10 @@ When `--advance` is specified, the update-ref command(s) in the output
+ will update the branch passed as an argument to `--advance` to point at
+ the new commits (in other words, this mimics a cherry-pick operation).
  
- struct tmp_objdir {
- 	struct strbuf path;
-@@ -277,6 +278,18 @@ int tmp_objdir_migrate(struct tmp_objdir *t)
- 	return ret;
- }
++--write-pack::
++	Write any new objects into a separate packfile instead of as
++	individual loose objects.
++
+ <revision-range>::
+ 	Range of commits to replay. More than one <revision-range> can
+ 	be passed, but in `--advance <branch>` mode, they should have
+diff --git a/builtin/replay.c b/builtin/replay.c
+index c3d53ff0cd..72b7b7f43a 100644
+--- a/builtin/replay.c
++++ b/builtin/replay.c
+@@ -17,6 +17,7 @@
+ #include "strmap.h"
+ #include <oidset.h>
+ #include <tree.h>
++#include "tmp-objdir.h"
  
-+int tmp_objdir_repack(struct tmp_objdir *t)
-+{
-+	struct child_process cmd = CHILD_PROCESS_INIT;
-+
-+	cmd.git_cmd = 1;
-+
-+	strvec_pushl(&cmd.args, "repack", "-a", "-d", "-k", "-l", NULL);
-+	strvec_pushv(&cmd.env, tmp_objdir_env(t));
-+
-+	return run_command(&cmd);
-+}
-+
- const char **tmp_objdir_env(const struct tmp_objdir *t)
+ static const char *short_commit_name(struct commit *commit)
  {
- 	if (!t)
-diff --git a/tmp-objdir.h b/tmp-objdir.h
-index 237d96b660..d00e3b3e27 100644
---- a/tmp-objdir.h
-+++ b/tmp-objdir.h
-@@ -36,6 +36,12 @@ struct tmp_objdir *tmp_objdir_create(const char *prefix);
-  */
- const char **tmp_objdir_env(const struct tmp_objdir *);
+@@ -272,6 +273,7 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 	struct commit *onto = NULL;
+ 	const char *onto_name = NULL;
+ 	int contained = 0;
++	int write_pack = 0;
  
-+/*
-+ * Combines all packs in the tmp_objdir into a single pack before migrating.
-+ * Removes original pack(s) after installing the combined pack into place.
-+ */
-+int tmp_objdir_repack(struct tmp_objdir *);
+ 	struct rev_info revs;
+ 	struct commit *last_commit = NULL;
+@@ -279,6 +281,7 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 	struct merge_options merge_opt;
+ 	struct merge_result result;
+ 	struct strset *update_refs = NULL;
++	struct tmp_objdir *tmp_objdir = NULL;
+ 	kh_oid_map_t *replayed_commits;
+ 	int i, ret = 0;
+ 
+@@ -296,6 +299,8 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 			   N_("replay onto given commit")),
+ 		OPT_BOOL(0, "contained", &contained,
+ 			 N_("advance all branches contained in revision-range")),
++		OPT_BOOL(0, "write-pack", &write_pack,
++			 N_("write new objects to a pack instead of as loose")),
+ 		OPT_END()
+ 	};
+ 
+@@ -352,8 +357,15 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 	init_merge_options(&merge_opt, the_repository);
+ 	memset(&result, 0, sizeof(result));
+ 	merge_opt.show_rename_progress = 0;
++	merge_opt.write_pack = write_pack;
+ 	last_commit = onto;
+ 	replayed_commits = kh_init_oid_map();
 +
- /*
-  * Finalize a temporary object directory by migrating its objects into the main
-  * object database, removing the temporary directory, and freeing any
++	if (merge_opt.write_pack) {
++		tmp_objdir = tmp_objdir_create("replay");
++		tmp_objdir_replace_primary_odb(tmp_objdir, 0);
++	}
++
+ 	while ((commit = get_revision(&revs))) {
+ 		const struct name_decoration *decoration;
+ 		khint_t pos;
+@@ -417,5 +429,11 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 	/* Return */
+ 	if (ret < 0)
+ 		exit(128);
++	if (ret && tmp_objdir) {
++		if (tmp_objdir_repack(tmp_objdir) < 0)
++			ret = 0;
++		else if (tmp_objdir_migrate(tmp_objdir) < 0)
++			ret = 0;
++	}
+ 	return ret ? 0 : 1;
+ }
+diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
+index 389670262e..e7048748c2 100755
+--- a/t/t3650-replay-basics.sh
++++ b/t/t3650-replay-basics.sh
+@@ -67,6 +67,43 @@ test_expect_success 'using replay to rebase two branches, one on top of other' '
+ 	test_cmp expect result
+ '
+ 
++packdir=.git/objects/pack
++
++test_expect_success 'using replay to rebase two branches, with --write-pack' '
++	# Remove the results of the previous rebase, ensuring that they
++	# are pruned from the object store.
++	git gc --prune=now &&
++	test_must_fail git cat-file -t "$(cut -d " " -f 3 expect)" &&
++
++	# Create an extra packfile to ensure that the tmp-objdir repack
++	# takes place outside of the main object store.
++	git checkout --detach &&
++	test_commit unreachable &&
++	git repack -d &&
++	git checkout main &&
++
++	find $packdir -type f -name "*.idx" | sort >packs.before &&
++	git replay --write-pack --onto main topic1..topic2 >result &&
++	find $packdir -type f -name "*.idx" | sort >packs.after &&
++
++	comm -13 packs.before packs.after >packs.new &&
++
++	# Ensure that we got a single new pack.
++	test_line_count = 1 result &&
++	test_line_count = 1 packs.new &&
++
++	# ... and that the rest of the results match our expeectations.
++	git log --format=%s $(cut -f 3 -d " " result) >actual &&
++	test_write_lines E D M L B A >expect &&
++	test_cmp expect actual &&
++
++	printf "update refs/heads/topic2 " >expect &&
++	printf "%s " $(cut -f 3 -d " " result) >>expect &&
++	git rev-parse topic2 >>expect &&
++
++	test_cmp expect result
++'
++
+ test_expect_success 'using replay on bare repo to rebase two branches, one on top of other' '
+ 	git -C bare replay --onto main topic1..topic2 >result-bare &&
+ 	test_cmp expect result-bare
 -- 
 2.42.0.446.g0b9ef90488
-
