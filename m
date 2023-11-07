@@ -1,137 +1,128 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55ED411C8B
-	for <git@vger.kernel.org>; Tue,  7 Nov 2023 09:43:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA15312E40
+	for <git@vger.kernel.org>; Tue,  7 Nov 2023 09:43:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aizy5v03";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rZkj0NbZ"
-Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 524D210A
-	for <git@vger.kernel.org>; Tue,  7 Nov 2023 01:43:12 -0800 (PST)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.west.internal (Postfix) with ESMTP id 2C070320090A;
-	Tue,  7 Nov 2023 04:43:11 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Tue, 07 Nov 2023 04:43:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1699350190; x=1699436590; bh=Jb
-	AenFfRMIO1j9AGRgEv8TEAMtVw9inscDvbqVo+38s=; b=aizy5v03xrePpknzG8
-	OeO3mlFmJyU21SlP7tNbzRonUliUDCaqHom1Iy2iykYnEfBt0MkVVfI1R34vLU0/
-	J5z9c6BlJ/k0fJb/7+ah8LQSUWDjgw8lh06bSyR8S581Y5QFUSiZ739QlSFB+RfH
-	gWb7sM8EFcYXE20GQzQy6hD1xXbqUta95+I/ByepQGfC8UnVMPAMycWq4sYkqlBi
-	cWya2BoAdrYw3PBAbnfwQ/VT2/EOc5/pP8cAbBY5PVHMUjvwEax9DrE5NLuqohWN
-	xYmZlkALBJhow9aIr4osSv4bnBpxInYki3WrEXHFNouRlWDa7doI5wQ0NaQdCL0E
-	ow7w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1699350190; x=1699436590; bh=JbAenFfRMIO1j
-	9AGRgEv8TEAMtVw9inscDvbqVo+38s=; b=rZkj0NbZZlD82JHpYACp1gp3kX81V
-	vuYhTUKFgF4t0+8HDwBs7SQ2AQDCJuFW+cF2w/nlgWmi9VHlYYbbyFwDiewjPP+8
-	p1z4XS5kYxdT4RKaUPj5jM9g+b358bemcCE1vkN1954Fyzum3Mx+R3B/h1CyUx8g
-	4wgp9hJCP4DFzKn8blmaUyEDbHK0lhXr9CKno73CMo1witzaSUiBb/y9nJiV34Hp
-	P63PNeKKtyocQEL3ZArnRoMBDja9Sl+JABC3ulfniKWbGDr71H9TtS73xV4u/4Pb
-	YQR6/BkNQ2OiMlixwyeZA77ZT7DQcYAV2aKwlhkyUeyYL/QwILWHLZWpQ==
-X-ME-Sender: <xms:rgZKZd2llUquIDpiOxWWHX39Q85tTnfNB0uiiMDGq8bOrPXv9Ur4zg>
-    <xme:rgZKZUFJbgr_Hw2qnjx2c3XQS4enEkEPzyJmMW7OfZOQyWTjELlTMyOM44D_b78k6
-    cgiPrXvoeiAkmUiNA>
-X-ME-Received: <xmr:rgZKZd7uEWRj4uM4-LriUz28sH3ALKwXIYQmZKEyL_rzGzOE88-l3yv-Zk_U35kuwvqLdp-L51p9wNH5haOUuzRqLap0oG2j2YVNDs328L8Si5It4w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudduiedgtdeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
-    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:rgZKZa2UybUS5OXaZGM6nFsw8Vx1IdcS3f7TOn2_M0znUvGoxcpp7Q>
-    <xmx:rgZKZQGAJ9R04BwXstNYYQXAfqWzQFVCmojCRyzRlbRHFX3MYctWjg>
-    <xmx:rgZKZb8CpTGHYA0tuvaUxFkQgHpfQWX1R023r3b8UtmQU_Hzf2ihFQ>
-    <xmx:rgZKZVQsiL1MDAWThUVYjre3ME0xGvJA9JyxTSaXGFr39P_DXxUttw>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Nov 2023 04:43:09 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 600625b0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 7 Nov 2023 09:42:45 +0000 (UTC)
-Date: Tue, 7 Nov 2023 10:43:06 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] revision: exclude all packed objects with
- `--unpacked`
-Message-ID: <ZUoGoYpJFvGSll-u@tanuki>
-References: <cover.1699311386.git.me@ttaylorr.com>
- <20231107040235.GD873619@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XKPryH2U"
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BB07102
+	for <git@vger.kernel.org>; Tue,  7 Nov 2023 01:43:36 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-53e2308198eso9104955a12.1
+        for <git@vger.kernel.org>; Tue, 07 Nov 2023 01:43:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1699350215; x=1699955015; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mlVLHso9CGXaXN2cC2rslbIZ1Af3gNQTuDGOPzt+3Fk=;
+        b=XKPryH2UpvJnJbQHYgJaZ5OFvvN+OFeBAJ3PkiadjyJd/zP1pjNLA07bGDVvweXeEM
+         jB9DL3l/Rmu0sdXspFQ3AOIbH+BNPqy4I80UoRauwiLD6XmClhZiz7BvTmHXF+imnC3d
+         vnuIMAv0ACoJ6jUCIOBnHYDkpDeCMtKCG5WmwwVLo19ML5XTbITvnRNeT9eZ3pV2JmSB
+         sDe0NYKzLyM3m+udTh2S6t/MV+SGZLQmvAkQNbbDRiVlWvQTlgE8l8zmLR6hvqx2ThUc
+         koUnuXycHot29A6mJzE+CBRUxynDHACCgk2EL/NOXXrvSVIl5uyd/KQlPq60uW1JPznL
+         oBXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699350215; x=1699955015;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mlVLHso9CGXaXN2cC2rslbIZ1Af3gNQTuDGOPzt+3Fk=;
+        b=qESW/tZg4NshmDlNlHzHmjIkmKRpJsu4yY5Eh+tth5ecoC9UCrgjqW4Lds98w+b+ub
+         kIi72JepKCqnAwOvPeW5qeYkFESBVi63N56qhMQHcesyy17fjaEqy55cq2Ldw5VRguO6
+         Z87zi0V1M7YXrc0WUiUfogphQNzRxhUpYQHbQ78GuPrCtuWGd/fQd4NOsK3M0ceoy6z1
+         mjXc6DfHJfBYCOIVSR9EKXlnFgSlPljsZAzLSPvF3Bugm0Ub198CBk/ZAf8SCR8vXPi8
+         pZmX1glKUdQ59o6303euqZ8MlQ1NuHUbkctZ/jXDVl+nfT3vsODEgnzo3tBhQ7OOdzOp
+         mzPQ==
+X-Gm-Message-State: AOJu0YzuFSTRhef3g0hr9wleDwHPWG4NeHpe1czmbLl68fhG5KKc3blF
+	jt4bUFBpo4gijZmPaQRSaanm2geGZ0y61FX+7O1iOHqtHjg=
+X-Google-Smtp-Source: AGHT+IFufhK+A9DHHBm75EKtAqIoTTSSZFGZGf9Fddo2CXwbw4i3NugcbYFAl+TnnsDrBvAQJAAgVo0JsODbGaeq51k=
+X-Received: by 2002:a50:d658:0:b0:53d:b5bc:6415 with SMTP id
+ c24-20020a50d658000000b0053db5bc6415mr24329106edj.15.1699350214386; Tue, 07
+ Nov 2023 01:43:34 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="kxu5DdBTuQtzhgSS"
-Content-Disposition: inline
-In-Reply-To: <20231107040235.GD873619@coredump.intra.peff.net>
-
-
---kxu5DdBTuQtzhgSS
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <20231010123847.2777056-1-christian.couder@gmail.com>
+ <20231102135151.843758-1-christian.couder@gmail.com> <CABPp-BE6G2qaF50bhz-CwxSsvxGDHzwvsWtfQO4zVcX6ERppLw@mail.gmail.com>
+In-Reply-To: <CABPp-BE6G2qaF50bhz-CwxSsvxGDHzwvsWtfQO4zVcX6ERppLw@mail.gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Tue, 7 Nov 2023 10:43:22 +0100
+Message-ID: <CAP8UFD24fzhiecJtANqEsxvh1mxT4pKR=QjfUFZh8C6HQE-k1A@mail.gmail.com>
+Subject: Re: [PATCH v6 00/14] Introduce new `git replay` command
+To: Elijah Newren <newren@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, John Cai <johncai86@gmail.com>, 
+	Derrick Stolee <stolee@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>, 
+	Calvin Wan <calvinwan@google.com>, Toon Claes <toon@iotcl.com>, Dragan Simic <dsimic@manjaro.org>, 
+	Linus Arver <linusa@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Nov 06, 2023 at 11:02:35PM -0500, Jeff King wrote:
-> On Mon, Nov 06, 2023 at 05:56:27PM -0500, Taylor Blau wrote:
->=20
-> > While working on my longer series to enable verbatim pack reuse across
-> > multiple packs[^1], I noticed a couple of oddities with the `--unpacked`
-> > rev-walk flag.
-> >=20
-> > While it does exclude packed commits, it does not exclude (all) packed
-> > trees/blobs/annotated tags. This problem exists in the pack-bitmap
-> > machinery, too, which will over-count queries like:
-> >=20
-> >     $ git rev-list --use-bitmap-index --all --unpacked --objects
-> >=20
-> > , etc.
-> >=20
-> > The fix is relatively straightforward, split across two patches that
-> > Peff and I worked on together earlier today.
->=20
-> I'm not sure my review is worth anything, but this looks good to me. ;)
-> I do think it might be worth tightening up the docs as Junio suggested,
-> but I would be fine to see that as a patch on top.
->=20
-> -Peff
+Hi,
 
-I also read through the patches and agree, this looks good to me.
+On Tue, Nov 7, 2023 at 3:44=E2=80=AFAM Elijah Newren <newren@gmail.com> wro=
+te:
+> Looking good, just one comment on one small hunk...
+>
+> On Thu, Nov 2, 2023 at 6:52=E2=80=AFAM Christian Couder
+> <christian.couder@gmail.com> wrote:
+> >
+> [...]
+>
+> >     @@ builtin/replay.c: int cmd_replay(int argc, const char **argv, co=
+nst char *prefix
+> >      -
+> >         strvec_pushl(&rev_walk_args, "", argv[2], "--not", argv[1], NUL=
+L);
+> >
+> >     ++  /*
+> >     ++   * TODO: For now, let's warn when we see an option that we are
+> >     ++   * going to override after setup_revisions() below. In the
+> >     ++   * future we might want to either die() or allow them if we
+> >     ++   * think they could be useful though.
+> >     ++   */
+> >     ++  for (i =3D 0; i < argc; i++) {
+> >     ++          if (!strcmp(argv[i], "--reverse") || !strcmp(argv[i], "=
+--date-order") ||
+> >     ++              !strcmp(argv[i], "--topo-order") || !strcmp(argv[i]=
+, "--author-date-order") ||
+> >     ++              !strcmp(argv[i], "--full-history"))
+> >     ++                  warning(_("option '%s' will be overridden"), ar=
+gv[i]);
+> >     ++  }
+> >     ++
+>
+> Two things:
+>
+> 1) Not sure it makes sense to throw a warning with --topo-order or
+> --full-history, since they would result in a value matching what we
+> would be setting anyway.
+
+Yeah, I am not sure about this either. About "--reverse" I think it
+makes sense because even if the command is setting the reverse bit, it
+would be possible to reverse the reverse like Dscho wanted. But I
+agree "--topo-order" and "--full-history" will very unlikely be reused
+for anything else in the future.
+
+> 2) This seems like an inefficient way to provide this warning; could
+> we avoid parsing the arguments for an extra time?  Perhaps instead
+>   a) set the desired values here, before setup_revisions()
+>   b) after setup_revisions, check whether these values differ from the
+> desired values, if so throw a warning.
+>   c) set the desired values, again
+
+Yeah, that would work. The downside is that it would be more difficult
+in the warning to tell the user which command line option was
+overridden as there are some values changed by different options.
+Maybe we can come up with a warning message that is still useful and
+enough for now, as the command is supposed to be used by experienced
+users. Perhaps something like:
+
+warning(_("some rev walking options will be overridden as '%s' bit in
+'struct rev_info' will be forced"), "sort_order");
+
 Thanks!
-
-Patrick
-
---kxu5DdBTuQtzhgSS
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVKBqkACgkQVbJhu7ck
-PpSUZRAAmLN3vheRNfcth6lDfp5htsRDcK9cwtdA1YRX2fy7Non3focXvKdFs1M8
-qVKza7bbBof63GXyZKOkYkHDuOJV764zkBUw+guNAU7/P1Snh/P6f3Nyu5Ai58J2
-Cm3026xjpN9xc/kurWEZfJtTW7wcQNwLXfy0mZ42nOTY7NvXOx7YMn3aChbrZwX1
-kbXZdNoaUG/9c2f1tn3GkOODnK2lB2zKECd8SVdWfBUcJjzYMoN4mnNLLwtZA4S0
-Cy4pkAdn+7XMqN+74YadfwQLq1BV9TOIXJITKT2lOQ2hM3mTpgqLYeIL8Xfz3XUu
-qlNan4yigQn+zNaYW/e4RMDWjo8G60q7boiQwe1csZmDOTlorV5rssJwT5SFSfrs
-mwFaRJKn0bBs0xhswGmb2o5ujTuLEm9QeTvMiJtXVTMnRK8NtTLsbCd8lZsMr/kg
-z1AoJYMhouuHEpsBqIaKdPTtCMWWsJd5PBdYQjAw8NBRhyKOJAr+2Tm697mtyB49
-W6XoYqST6Zr+V9GQl0Gmt+psF+Wx73M1maJ7c1EqFG3n3wHJ1pdrZqBGR3f/up5w
-ozpCZ8DnvOQ07/eLKIEZp6UXiDznTxlXO+P71T5Y8TA1byY0QOCm9JIKPF/4a7kR
-RVGBaxcJZ+KEohcGkmQ6RzbMVGV53yUHYTvYyA6LraWBul3ay7s=
-=iTgo
------END PGP SIGNATURE-----
-
---kxu5DdBTuQtzhgSS--
