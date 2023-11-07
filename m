@@ -1,93 +1,147 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C372E65B
-	for <git@vger.kernel.org>; Tue,  7 Nov 2023 17:12:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A4430FA1
+	for <git@vger.kernel.org>; Tue,  7 Nov 2023 17:20:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="SK1WCBB4"
-Received: from mout.web.de (mout.web.de [212.227.17.12])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 798069B
-	for <git@vger.kernel.org>; Tue,  7 Nov 2023 09:12:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-	t=1699377135; x=1699981935; i=tboegi@web.de;
-	bh=CETNY6MlLuUXqcOUujyB0c9OtbwFQzKv8rDCSOZcvqs=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:
-	 In-Reply-To;
-	b=SK1WCBB4pH0O954zgNasNWfSOG+GZoNa9xPwzacWbd+6kGZkpOvEHgpSpHPVkgC2
-	 wS8g2i6UPvacNaTAhPaV1oSDrJ/muezZ+Y7d2DZxwaaCb67YLWz4IYZA1w/N3+u/w
-	 5933rKC2x1F2AE24EhyFcBDwxufcsQPpkQ7L5xCNKdzlfZkvQ4Q71HkPxP+8DtgKj
-	 U13+DxmtqQcSfwwknqKs0Oi/2fRTXRphsUvIhwk3ycsfyfBLLG+9dxmSMKR1bntWI
-	 UZX0ZhKg8Ie+x4t0z09Q9DHHnkqzMc6aeiSg8Mil6ft7nnZ7lUtXjuGQI+Pon2S7l
-	 v77Hyi5oYQlF2jlAZA==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from localhost ([195.198.253.159]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MT7aP-1qq7OK39l1-00Uewe; Tue, 07
- Nov 2023 18:12:15 +0100
-Date: Tue, 7 Nov 2023 18:12:15 +0100
-From: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To: Hans Meiser <brille1@hotmail.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Explanation of `eol` attribute doesn't seem correct for Windows
- machines
-Message-ID: <20231107171215.GA28569@tb-raspi4>
-References: <AS4P195MB15272FE283D0CF606A8B074EE2AAA@AS4P195MB1527.EURP195.PROD.OUTLOOK.COM>
- <20231106162125.GA31375@tb-raspi4>
- <AS4P195MB1527BC2DF67412D4FF340989E2A9A@AS4P195MB1527.EURP195.PROD.OUTLOOK.COM>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QjP1PTgO"
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0CA89B
+	for <git@vger.kernel.org>; Tue,  7 Nov 2023 09:20:02 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-507a55302e0so8050315e87.0
+        for <git@vger.kernel.org>; Tue, 07 Nov 2023 09:20:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1699377601; x=1699982401; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8gFEWuZqN2Q03UTyXO7Oujuzy+ztBg8t4B06P6yFmQY=;
+        b=QjP1PTgOmOva5fjC5EPY9Dg3ZV0tyjwVvVKBCP0Y7QOFQTBf0+HNoKYIIFVp7t4nyN
+         fsw4gMIGb5vEi7w0rDJnfncIUIQGTXv2j5rRgeyR9nodpfZrq7Tlg4Cqw3wG/OpDuV2y
+         QgUXIIVXkeQgCbttZxVIIbnIF8xW+pM50eReGi307gw8RSmrwhYhKn1bRcK23HRkwIM3
+         3/9zMMNh+5sj5fwMfBCab3TvkReizJ5qfx1PvLVvydRv0aiWSeMe3wwaO6MIepT8n5fJ
+         DBcbOmfYNMpJr6WTM88alzO+IwcCmvZ+c+rZkTrs+Iwq9m1qbacBEUIp0Rw2Jl2YRoAC
+         sBCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699377601; x=1699982401;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8gFEWuZqN2Q03UTyXO7Oujuzy+ztBg8t4B06P6yFmQY=;
+        b=jJ3xryyEcsD5EF0YTkiuuckAebgh6bqr1D+Sigb6lDatOYm1t/8A+D4WtX+c35BvTt
+         wQfA9aHcz9Ib95y5nPq1O4c0Ak5QrXTeCNQ8ll/clQcbpwUREN+2cb24bHnR/shw2TbB
+         KUvReRCvEKDEHk3RVwNs24aUp5VkSs9YC8zkyAGYTohEPy3LjZ0UKNhd3B+vZ+wphMRw
+         S2vrUzYGYvRi/m8CNrjj8/yALQU9OZ5xMAv98Z0MYLQN12LFkxa/53vnUDWl9XEV3KCE
+         xRSkzTR6rZs9oM4BiPjSGvVOOggdtgH04PrS6hTrtZRzyZuyELw4HzWJhEnhnVMuKXHX
+         tl3g==
+X-Gm-Message-State: AOJu0YyDXCbv53ca3UeRheXEZaOTlFDOQ2OXRrK3L7Lm2lwp49RaKBtZ
+	qH6gq2TmzPvsd4Q7Cs+nho5idDudvA4zXNJoYd8=
+X-Google-Smtp-Source: AGHT+IGs34m3HspY4TebXKsJUtxPuuvNZFCo834VI+/Ek88tpzEH9Nju52pLe6gKs9ufXMbtl6gO7qCX4SJ1Z3nCeEw=
+X-Received: by 2002:ac2:5f6d:0:b0:506:899d:1989 with SMTP id
+ c13-20020ac25f6d000000b00506899d1989mr21006426lfc.44.1699377600826; Tue, 07
+ Nov 2023 09:20:00 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <AS4P195MB1527BC2DF67412D4FF340989E2A9A@AS4P195MB1527.EURP195.PROD.OUTLOOK.COM>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Provags-ID: V03:K1:uVs+uw1Zv8aHoP2ZG3bGCJ9vnk6XVFPd3d3rdbxy0bjmGk/dyXm
- 5tjkX1FeZtj0yPc1Rd/tOkmITnyaKDjN+hvasT6nqzSxGdevvBWfftlM4EDe2doY/0osK4X
- HLmsX8Squ2jsjXes8fob2XlFA81YDnVoL5w7kDorOtz1EwW2hHTmMyPfMi7np0YOsF6UVrI
- 0hRrL6GbRPoWmRk0ObsvQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:oEesbK1gqy0=;J6NTEJPN4A+vhcLCzBGyf2d9gQX
- i/+DCNXEwq7krA8XqNkP10FymNCNSeWY4r2HTsZ7kX4k82s2qxNjbxJQ11bs9apJv09erkFFL
- m/2Kg8F4wNzPErYHjsqIl/1kZ56mUEhnDL8aJntmrO85N2kkx/fPaD2PYt28DLHCt59k9/3YT
- mbkvq8Gd2YLGo/RI6/VmJYb09XMXX632oBDaGSzckQ8vFfxU+AHC7nFpeGQvvgaG4ZMKrbIuy
- 6J7E7kc875OvCBQ1RrEgyORF2xAyqT+4H/rQ4WlllE5zg1xe5VQgkz/IDjT/xBGI+AkQIq5Hx
- 06WSWUzIRDjlqydGVgsG3VAUkAslMg0keiNY0iXS8P2JnH/NP4aHyZyL9vYlnr7iROzz7bfxJ
- B0lTYhQ4rz7DVn9q8ahB4kCs3nzCD5i0YF1TqhmkPMtE3pFQP4BsWutL0wgzwgTgR1A1g7Xt7
- wZyOMNFAuqp5OEhI/ojgas9Vj4ql3h0LN13Tc70cCnRoIKN0R08J2tjv4IeLiVKHmkZAycBdZ
- Agxf65oMwiAAAtoEW6WQgpgoJth4z4d8vtWO74GkPg/iAttB0Pin293lVQK6eI7wkb3e4DdeF
- VqAh6TiSaRxUatdYlPOwBsp0W5EUvrzFt9R4E2lkZ2u+ajg2AzmfVPmYPboyfJl1po5JilWvs
- ggEy38Ua+PoV4C873bz8NFfnM8DxnjtOTtIXru9TaNMzvQZ94ytnbGLjs0+1I/8MX0hDm1qLI
- SSLYizTW7JRPK0g2PYwmlbeiktvmwykVH/wnOr6Qy+uOo1iyNncwdF+/BKWvRAus7u6Kfvs1X
- vCZagpDymVRb1xLIgRCz/E7ASvf+/o+o792aHCQFuSiCBTS8B5dwguhSFIPlzeNlUrJv5ngYL
- lOgHS0Bumu6QPpIIh1nDzCy41p9PmEixZz+D2Fpy8o94AKvLstFr8url0dZ8VCLcSvhPly/M3
- 3nCoJDv73xz+MwewSxqM41uwPMw=
+References: <pull.1606.git.1699010701704.gitgitgadget@gmail.com>
+ <CABPp-BEuvjduS4JiORJybKtoPWvJd+BbbR_JAvZdj4Px_v8H4A@mail.gmail.com> <xmqq7cmu9s29.fsf@gitster.g>
+In-Reply-To: <xmqq7cmu9s29.fsf@gitster.g>
+From: Elijah Newren <newren@gmail.com>
+Date: Tue, 7 Nov 2023 09:19:48 -0800
+Message-ID: <CABPp-BF9iUkF+g_w7wLATFTmjfJ3f1hsBr+zXxNZEcq-XiNOWg@mail.gmail.com>
+Subject: Re: [PATCH] diff: implement config.diff.renames=copies-harder
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Sam James via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, Sam James <sam@gentoo.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Nov 07, 2023 at 12:23:29AM +0000, Hans Meiser wrote:
-> > > And what happens when a file is added to the index with `core.autocr=
-lf=3Dinput` on Windows machines?
-> > Do you have a .gitattributes file ? Or not ?
-> > Is the file a new one, or does it exist ?
+On Mon, Nov 6, 2023 at 7:10=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
 >
-> Exactly all these questions/cases should be explained by the documentati=
-on, I suppose.
+> Elijah Newren <newren@gmail.com> writes:
+>
+> > On Fri, Nov 3, 2023 at 4:25=E2=80=AFAM Sam James via GitGitGadget
+> > <gitgitgadget@gmail.com> wrote:
+> >>
+> >> From: Sam James <sam@gentoo.org>
+> >>
+> >> This patch adds a config value for 'diff.renames' called 'copies-harde=
+r'
+> >> which make it so '-C -C' is in effect always passed for 'git log -p',
+> >> 'git diff', etc.
+> >>
+> >> This allows specifying that 'git log -p', 'git diff', etc should alway=
+s act
+> >> as if '-C --find-copies-harder' was passed.
+> >>
+> >> I've found this especially useful for certain types of repository (lik=
+e
+> >> Gentoo's ebuild repositories) because files are often copies of a prev=
+ious
+> >> version.
+> >
+> > These must be very small repositories?  --find-copies-harder is really
+> > expensive...
+>
+> True.  "often copies of a previous version" means that it is a
+> directory that has a collection of subdirectories, one for each
+> version?  In a source tree managed in a version control system,
+> files are often rewritten in place from the previous version,
+> so I am puzzled by that justification.
+>
+> It is, in the proposed log message of our commits, a bit unusual to
+> see "This patch does X" and "I do Y", by the way, which made my
+> reading hiccup a bit, but perhaps it is just me?
 
-In general, the CRLF - LF ("line endings") conversion is defined by
-different settings.
+I think I read Sam's description a bit differently than you.  My
+assumption was they'd have files with names like the following in the
+same directory:
+   gcc-13.x.build.recipe
+   gcc-12.x.build.recipe
+   gcc-11.x.build.recipe
+   gcc-10.x.build.recipe
 
-The .gitattributes file (which is typically added to the repo and commited=
-,
-so that it travels trough into all repos by using `git clone`, `git pull`
-or `git fetch` followed by a `git checkout`
+And that gcc-13.x.build.recipe was started as a copy of
+gcc-12.x.build.recipe (which was started as a copy of
+gcc-11.x.build.recipe, etc.).  They keep all versions because they
+want users to be able to build and install multiple gcc versions.
 
-This link
-https://git-scm.com/docs/gitattributes#_text
-should describe everything you may want to know about
-.gitattributes
-to handle line endings.
-If I say "should" then this is from a perspective of someone who has read =
-and used this
-too often to see with fresh eyes what may be missing.
+I could be completely off, but that's what I was imagining from the descrip=
+tion.
 
+> >> diff --git a/Documentation/config/diff.txt b/Documentation/config/diff=
+.txt
+> >> index bd5ae0c3378..d2ff3c62d41 100644
+> >> --- a/Documentation/config/diff.txt
+> >> +++ b/Documentation/config/diff.txt
+> >> @@ -131,7 +131,8 @@ diff.renames::
+> >>         Whether and how Git detects renames.  If set to "false",
+> >>         rename detection is disabled. If set to "true", basic rename
+> >>         detection is enabled.  If set to "copies" or "copy", Git will
+> >> -       detect copies, as well.  Defaults to true.  Note that this
+> >> +       detect copies, as well.  If set to "copies-harder", Git will t=
+ry harder
+> >> +       to detect copies.  Defaults to true.  Note that this
+> >
+> > "try harder to detect copies" feels like an unhelpful explanation.
+>
+> Yup.  "will spend extra cycles to find more copies", perhaps?
+
+I find that marginally better; but I still don't think it answers the
+user's question of why they should pick one option or the other.  The
+wording for the `--find-copies-harder` does explain when it's useful:
+
+        For performance reasons, by default, `-C` option finds copies only
+        if the original file of the copy was modified in the same
+        changeset.  This flag makes the command
+        inspect unmodified files as candidates for the source of
+        copy.  This is a very expensive operation for large
+        projects, so use it with caution.
+
+We probably don't want to copy all three of those sentences here, but
+I think we need to make sure users can find them, thus my suggestion
+to reference the `--find-copies-harder` option to git-diff so that
+affected users can get the info they need to choose.
