@@ -1,136 +1,85 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07F231FA6
-	for <git@vger.kernel.org>; Tue,  7 Nov 2023 11:49:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g3kccO3D"
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 393F3116
-	for <git@vger.kernel.org>; Tue,  7 Nov 2023 03:49:26 -0800 (PST)
-Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-40850b244beso42197785e9.2
-        for <git@vger.kernel.org>; Tue, 07 Nov 2023 03:49:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1699357764; x=1699962564; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=nCapDl5XA0uH1gabl593HnCr7W6JW5iEMI3x0Bfojuw=;
-        b=g3kccO3DX7lutdy6q6LL4JejWpfxDr564CicVebNZJxIBxC+TMCGwDVSgSNHT9NUcQ
-         BNyGvyF5E0a2Ev7sTDGr/AtO21SLFlsAHd3il+9O5wj2cYb1zJ4K6iDrQDaqJ4K0ekHY
-         hGhTdy5WzY/5jcMux+eYMCWFxAURadH0O8A6H/bi2iWzgoEoFc2aasObqW88bhlKXETM
-         J/sDPQyNY3VfF6RpYxmNQ8s7Uv7WenTBrfbq2JMWO0Vi3aiWXrriX8BsY0bYkIxy0L2O
-         rDM6C47D8LwRYDUX/eUEwOXXMqdMZ5btn2tIR71/8uFXEvdlwpboONX9jiM0wuA9dmVq
-         hg6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699357764; x=1699962564;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nCapDl5XA0uH1gabl593HnCr7W6JW5iEMI3x0Bfojuw=;
-        b=vWpZGocgRKP2mInlm6QeamUTwh9+4Rt0HJryvFFmfyyel62hnCENoRqYxJ6lGpBADk
-         U1Ozhdk43dKiQ2OYj/XjamS1PetQTkT5qfXSCpdZg2fHTvcGhxo6wB41qWr4D2mxkS58
-         S+TuHFTciifm5ZIgZsijlKC1DTfbmspjy9wQ/vVviMiuj5p2TucPN9kRTeWuX92MJPBs
-         DclTFyyWty7aqld13jjO7SSNtR0ZKfrBj3mWuzbSNctcZe3005S2X3xDH1YM+sGdVMRD
-         x0OaPHbDbe5O+JNnXCoQ0jBX8sTBKj+BNsi01+N9I/YLhGo4s1FNh7FAa9T2HQiSeHpH
-         5mtw==
-X-Gm-Message-State: AOJu0YzTnwE+1f4KwKmc9pSHmKyILG4rWWkOhnJH2ZSPZPJceiX6BuLP
-	xj2DV38jVvpf/vwhg2Q6RNc=
-X-Google-Smtp-Source: AGHT+IGEyWxHxJsxMfDxVnZrvIPmUVmRzbWsfvHQ/UFWChnOvi9ptHla1rbm8pzYz5nk/Dtke/lBYA==
-X-Received: by 2002:a05:600c:3144:b0:408:4266:12db with SMTP id h4-20020a05600c314400b00408426612dbmr2317356wmo.13.1699357764477;
-        Tue, 07 Nov 2023 03:49:24 -0800 (PST)
-Received: from [192.168.1.101] ([90.242.223.1])
-        by smtp.googlemail.com with ESMTPSA id t14-20020a05600c198e00b00405d9a950a2sm15631710wmq.28.2023.11.07.03.49.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Nov 2023 03:49:24 -0800 (PST)
-Message-ID: <ba047d38-4ad1-4440-8342-3379404f430b@gmail.com>
-Date: Tue, 7 Nov 2023 11:49:23 +0000
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4870A33E5
+	for <git@vger.kernel.org>; Tue,  7 Nov 2023 13:32:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+X-Greylist: delayed 1674 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 07 Nov 2023 05:32:01 PST
+Received: from mail.inka.de (mail.inka.de [IPv6:2a04:c9c7:0:1073:217:a4ff:fe3b:e77c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DB018F
+	for <git@vger.kernel.org>; Tue,  7 Nov 2023 05:32:01 -0800 (PST)
+Received: from raven.inka.de (uucp@[127.0.0.1])
+	by mail.inka.de with uucp (rmailwrap 0.5) 
+	id 1r0LkT-001X8l-Qm; Tue, 07 Nov 2023 14:04:05 +0100
+Received: by raven.inka.de (Postfix, from userid 1000)
+	id 746F3600B8; Tue,  7 Nov 2023 14:03:03 +0100 (CET)
+Date: Tue, 7 Nov 2023 14:03:03 +0100
+From: Josef Wolf <jw@raven.inka.de>
+To: git@vger.kernel.org
+Subject: Error when "git mv" file in a sparsed checkout
+Message-ID: <20231107130303.GS7041@raven.inka.de>
+Mail-Followup-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: first-class conflicts?
-Content-Language: en-US
-To: Elijah Newren <newren@gmail.com>,
- Sandra Snan <sandra.snan@idiomdrottning.org>
-Cc: git@vger.kernel.org, Martin von Zweigbergk <martinvonz@google.com>,
- "Randall S. Becker" <rsbecker@nexbridge.com>
-References: <87cywmintp.fsf@ellen.idiomdrottning.org>
- <CABPp-BH7WBm1j-Ue9oZFjoy6sTcw5B0hz_ndDEtJqvpZF4YF=w@mail.gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <CABPp-BH7WBm1j-Ue9oZFjoy6sTcw5B0hz_ndDEtJqvpZF4YF=w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-Hi Elijah
+Hello,
 
-[I've cc'd Martin to see if he has anything to add about how "jj" 
-manages the issues around storing conflicts.]
+I have used the procedure described below for many years. In fact,
+this procedure is part of a script which I am using for about 10 years.
+This procedure was definitely working with git-2-25-1 and git-2.26.2.
 
-On 07/11/2023 08:16, Elijah Newren wrote:
-> On Mon, Nov 6, 2023 at 1:26 PM Sandra Snan
-> <sandra.snan@idiomdrottning.org> wrote:
->>
->> Is this feature from jj also a good idea for git?
->> https://martinvonz.github.io/jj/v0.11.0/conflicts/
-> 
-> Martin talked about this and other features at Git Merge 2022, a
-> little over a year ago.  I talked to him in more depth about these
-> while there.  I personally think he has some really interesting
-> features here, though at the time, I thought that the additional
-> object type might be too much to ask for in a Git change, and it was
-> an intrinsic part of the implementation back then.
-> 
-> Martin also gave us an update at the 2023 Git Contributors summit, and
-> in particular noted a significant implementation change to not have
-> per-file storage of conflicts, but rather storing at the commit level
-> the multiple conflicting trees involved.  That model might be
-> something we could implement in Git.  And if we did, it'd solve
-> various issues such as people wanting to be able to stash conflicts,
-> or wanting to be able to partially resolve conflicts and fix it up
-> later, or be able to collaboratively resolve conflicts without having
-> everyone have access to the same checkout.
+Now, with git-2.34.1 (on a freshly installed ubuntu-22.04), this
+procedure fails.
 
-One thing to think about if we ever want to implement this is what other 
-data we need to store along with the conflict trees to preserve the 
-context in which the conflict was created. For example the files that 
-are read by "git commit" when it commits a conflict resolution. For a 
-single cherry-pick/revert it would probably be fairly straight forward 
-to store CHERRY_PICK_HEAD/REVERT_HEAD and add it as a parent so it gets 
-transferred along with the conflicts. For a sequence of cherry-picks or 
-a rebase it is more complicated to preserve the context of the conflict. 
-Even "git merge" can create several files in addition to MERGE_HEAD 
-which are read when the conflict resolution is committed.
+Here is what I do:
 
-> But we'd also have to be careful and think through usecases, including
-> in the surrounding community.  People would probably want to ensure
-> that e.g. "Protected" or "Integration" branches don't get accept
-> fetches or pushes of conflicted commits,
+I want to rename a file on a branch which is not currently checked out
+without messing/touching my current working directory.
 
-I think this is a really important point, while it can be useful to 
-share conflicts so they can be collaboratively resolved we don't want to 
-propagate them into "stable" or production branches. I wonder how 'jj' 
-handles this.
+For this, I first create a clone of the repo with shared git-directory:
 
-> git status would probably
-> need some special warnings or notices, git checkout would probably
-> benefit from additional warnings/notices checks for those cases, git
-> log should probably display conflicted commits differently, we'd need
-> to add special handling for higher order conflicts (e.g. a merge with
-> conflicts is itself involved in a merge) probably similar to what jj
-> has done, and audit a lot of other code paths to see what would be
-> needed.
+  $ SANDBOX=/var/tmp/manage-scans-X1pKZQiey
+  $ WT=$SANDBOX/wt
+  $ GIT=$SANDBOX/git
 
-As you point out there is a lot more to this than just being able to 
-store the conflict data in a commit - in many ways I think that is the 
-easiest part of the solution to sharing conflicts.
+  $ mkdir -p $SANDBOX
+  $ git --work-tree $WT --git-dir $GIT clone -qns -n ~/upstream-repo $GIT
 
-Best Wishes
+Then, I do a sparse checkout in this clone, containing only the file
+that is to be renamed:
 
-Phillip
+  $ cd $WT
+  $ echo 'path/to/old-filename' >>$GIT/info/sparse-checkout
+  $ git --work-tree $WT --git-dir $GIT config core.sparsecheckout true
+  $ git --work-tree $WT --git-dir $GIT checkout -b the-branch remotes/origin/the-branch
+  Switched to a new branch 'the-branch'
 
+Next step would be to "git mv" the file:
+
+  $ mkdir -p /path/to  # already exists, but should do no harm
+  $ git --work-tree $WT --git-dir $GIT mv path/to/old-filename path/to/new-filename
+  The following paths and/or pathspecs matched paths that exist
+  outside of your sparse-checkout definition, so will not be
+  updated in the index:
+  path/to/new-filename
+  hint: If you intend to update such entries, try one of the following:
+  hint: * Use the --sparse option.
+  hint: * Disable or modify the sparsity rules.
+  hint: Disable this message with "git config advice.updateSparsePath false"
+
+This error is something I have not expected.
+
+Error message suggests, there already exists a file named "new-filename". This
+is not true at all. There is no file named "new-filename" in the entire
+repository. Not in any directory of any branch.
+
+-- 
+Josef Wolf
+jw@raven.inka.de
