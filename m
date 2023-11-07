@@ -1,222 +1,136 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F23B2D05E
-	for <git@vger.kernel.org>; Tue,  7 Nov 2023 11:28:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07F231FA6
+	for <git@vger.kernel.org>; Tue,  7 Nov 2023 11:49:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hbTGzvWd"
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BE30DF
-	for <git@vger.kernel.org>; Tue,  7 Nov 2023 03:28:28 -0800 (PST)
-Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-50949b7d7ffso7355998e87.0
-        for <git@vger.kernel.org>; Tue, 07 Nov 2023 03:28:28 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g3kccO3D"
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 393F3116
+	for <git@vger.kernel.org>; Tue,  7 Nov 2023 03:49:26 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-40850b244beso42197785e9.2
+        for <git@vger.kernel.org>; Tue, 07 Nov 2023 03:49:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1699356506; x=1699961306; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=/IYfP6FFei71QkbXE/2LPLDa2p1uSRi9Bzl3DFhvvS4=;
-        b=hbTGzvWdkfS94m6zW5+E3GQHTUurJAFYvG2pE7TGGHddSz9jK4uHIfM/JLl6QWH9gi
-         E5fLtJVa5bpJT2+wSUVmhM170jE9dm1xLI9ZjEA1jHsKv6iy07nKD3qQrYPv9C0sD6mD
-         7+mB0r0Sqse0ovvk8vWbohpyqsXdKDgv1EnNBy/UsIa8xecfDOo0U660G31PGTN6UspG
-         8Ik/uDkBDcYBMImMIDQkQosB0z1/1T8+fql6rwUyAcNcVvVq5WqeMwyuLIq+zte1wciV
-         9Xsh1FzgFbtH8UQFUIUpqq6Yuo6CbdT8Khpc2iRGij3MI23zpxiFenLhZqXMhpAm/1rK
-         Ks/A==
+        d=gmail.com; s=20230601; t=1699357764; x=1699962564; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=nCapDl5XA0uH1gabl593HnCr7W6JW5iEMI3x0Bfojuw=;
+        b=g3kccO3DX7lutdy6q6LL4JejWpfxDr564CicVebNZJxIBxC+TMCGwDVSgSNHT9NUcQ
+         BNyGvyF5E0a2Ev7sTDGr/AtO21SLFlsAHd3il+9O5wj2cYb1zJ4K6iDrQDaqJ4K0ekHY
+         hGhTdy5WzY/5jcMux+eYMCWFxAURadH0O8A6H/bi2iWzgoEoFc2aasObqW88bhlKXETM
+         J/sDPQyNY3VfF6RpYxmNQ8s7Uv7WenTBrfbq2JMWO0Vi3aiWXrriX8BsY0bYkIxy0L2O
+         rDM6C47D8LwRYDUX/eUEwOXXMqdMZ5btn2tIR71/8uFXEvdlwpboONX9jiM0wuA9dmVq
+         hg6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699356506; x=1699961306;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/IYfP6FFei71QkbXE/2LPLDa2p1uSRi9Bzl3DFhvvS4=;
-        b=R1440FNf4XMvRtsHxpRZ1gygLv/Y3fpERJHLEK48XJRj37k58U2k3+lYBGEW/XPa1V
-         emNgGlsedWbT4sc3/un9T4+MUty6NmjeuDZg1W8rvYSbS/cRoaUCG723d8JN6zryLUjT
-         bYChrcZVQEfU0kOikOyimE1/zOckTONhWXURkLwBRdq/6s9IGiKBhQgJfFBctb7Zq+fm
-         sG4M4Z6Ad9IFVz4ZfIcmFAOexHLLgFOLDtXs1xzKtVBv3tvdorqLNhPpxlnCfZaJkIed
-         XXd4deRsR9N8J0OxuZwI/SV5OzXVMV6DE5+AOS7xscYst13Y+yogKbwF6BHBd/BvvDaE
-         oShw==
-X-Gm-Message-State: AOJu0YxTnt7mIwyylrlB5bfNGXvShQSiOHuqAfzFqyM61z/9qToBm8lF
-	KESDICE6qI0i2o+oi5a9TnBunwFaFgYOMqDLMhwEMhhNNJQ=
-X-Google-Smtp-Source: AGHT+IGOghN7Kt9Ds8DvwjAWYyOLVVTHtDJVlITbyZyNb6G36g00bUlRDrFb9Y4n7rGV5Ya819ZFyydxO7UGcAI28YU=
-X-Received: by 2002:a05:6512:514:b0:509:471e:f111 with SMTP id
- o20-20020a056512051400b00509471ef111mr10741239lfb.57.1699356505893; Tue, 07
- Nov 2023 03:28:25 -0800 (PST)
+        d=1e100.net; s=20230601; t=1699357764; x=1699962564;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nCapDl5XA0uH1gabl593HnCr7W6JW5iEMI3x0Bfojuw=;
+        b=vWpZGocgRKP2mInlm6QeamUTwh9+4Rt0HJryvFFmfyyel62hnCENoRqYxJ6lGpBADk
+         U1Ozhdk43dKiQ2OYj/XjamS1PetQTkT5qfXSCpdZg2fHTvcGhxo6wB41qWr4D2mxkS58
+         S+TuHFTciifm5ZIgZsijlKC1DTfbmspjy9wQ/vVviMiuj5p2TucPN9kRTeWuX92MJPBs
+         DclTFyyWty7aqld13jjO7SSNtR0ZKfrBj3mWuzbSNctcZe3005S2X3xDH1YM+sGdVMRD
+         x0OaPHbDbe5O+JNnXCoQ0jBX8sTBKj+BNsi01+N9I/YLhGo4s1FNh7FAa9T2HQiSeHpH
+         5mtw==
+X-Gm-Message-State: AOJu0YzTnwE+1f4KwKmc9pSHmKyILG4rWWkOhnJH2ZSPZPJceiX6BuLP
+	xj2DV38jVvpf/vwhg2Q6RNc=
+X-Google-Smtp-Source: AGHT+IGEyWxHxJsxMfDxVnZrvIPmUVmRzbWsfvHQ/UFWChnOvi9ptHla1rbm8pzYz5nk/Dtke/lBYA==
+X-Received: by 2002:a05:600c:3144:b0:408:4266:12db with SMTP id h4-20020a05600c314400b00408426612dbmr2317356wmo.13.1699357764477;
+        Tue, 07 Nov 2023 03:49:24 -0800 (PST)
+Received: from [192.168.1.101] ([90.242.223.1])
+        by smtp.googlemail.com with ESMTPSA id t14-20020a05600c198e00b00405d9a950a2sm15631710wmq.28.2023.11.07.03.49.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Nov 2023 03:49:24 -0800 (PST)
+Message-ID: <ba047d38-4ad1-4440-8342-3379404f430b@gmail.com>
+Date: Tue, 7 Nov 2023 11:49:23 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: chengpu lee <okuxxo@gmail.com>
-Date: Tue, 7 Nov 2023 19:28:14 +0800
-Message-ID: <CAHv3AeCOoEXxpNh=gzjNcKbVyZFaYZ5BzSf3FGL1=pdheNebZw@mail.gmail.com>
-Subject: issue unable to commit file and folder name to upper lower case
-To: git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000e1b71306098e44da"
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: first-class conflicts?
+Content-Language: en-US
+To: Elijah Newren <newren@gmail.com>,
+ Sandra Snan <sandra.snan@idiomdrottning.org>
+Cc: git@vger.kernel.org, Martin von Zweigbergk <martinvonz@google.com>,
+ "Randall S. Becker" <rsbecker@nexbridge.com>
+References: <87cywmintp.fsf@ellen.idiomdrottning.org>
+ <CABPp-BH7WBm1j-Ue9oZFjoy6sTcw5B0hz_ndDEtJqvpZF4YF=w@mail.gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <CABPp-BH7WBm1j-Ue9oZFjoy6sTcw5B0hz_ndDEtJqvpZF4YF=w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
---000000000000e1b71306098e44da
-Content-Type: multipart/alternative; boundary="000000000000e1b71006098e44d8"
+Hi Elijah
 
---000000000000e1b71006098e44d8
-Content-Type: text/plain; charset="UTF-8"
+[I've cc'd Martin to see if he has anything to add about how "jj" 
+manages the issues around storing conflicts.]
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+On 07/11/2023 08:16, Elijah Newren wrote:
+> On Mon, Nov 6, 2023 at 1:26 PM Sandra Snan
+> <sandra.snan@idiomdrottning.org> wrote:
+>>
+>> Is this feature from jj also a good idea for git?
+>> https://martinvonz.github.io/jj/v0.11.0/conflicts/
+> 
+> Martin talked about this and other features at Git Merge 2022, a
+> little over a year ago.  I talked to him in more depth about these
+> while there.  I personally think he has some really interesting
+> features here, though at the time, I thought that the additional
+> object type might be too much to ask for in a Git change, and it was
+> an intrinsic part of the implementation back then.
+> 
+> Martin also gave us an update at the 2023 Git Contributors summit, and
+> in particular noted a significant implementation change to not have
+> per-file storage of conflicts, but rather storing at the commit level
+> the multiple conflicting trees involved.  That model might be
+> something we could implement in Git.  And if we did, it'd solve
+> various issues such as people wanting to be able to stash conflicts,
+> or wanting to be able to partially resolve conflicts and fix it up
+> later, or be able to collaboratively resolve conflicts without having
+> everyone have access to the same checkout.
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-$ mkdir abc
+One thing to think about if we ever want to implement this is what other 
+data we need to store along with the conflict trees to preserve the 
+context in which the conflict was created. For example the files that 
+are read by "git commit" when it commits a conflict resolution. For a 
+single cherry-pick/revert it would probably be fairly straight forward 
+to store CHERRY_PICK_HEAD/REVERT_HEAD and add it as a parent so it gets 
+transferred along with the conflicts. For a sequence of cherry-picks or 
+a rebase it is more complicated to preserve the context of the conflict. 
+Even "git merge" can create several files in addition to MERGE_HEAD 
+which are read when the conflict resolution is committed.
 
-$ echo "">abc/.keep
+> But we'd also have to be careful and think through usecases, including
+> in the surrounding community.  People would probably want to ensure
+> that e.g. "Protected" or "Integration" branches don't get accept
+> fetches or pushes of conflicted commits,
 
-$ git status
-On branch master
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-        abc/
+I think this is a really important point, while it can be useful to 
+share conflicts so they can be collaboratively resolved we don't want to 
+propagate them into "stable" or production branches. I wonder how 'jj' 
+handles this.
 
-$ mv abc Abc
+> git status would probably
+> need some special warnings or notices, git checkout would probably
+> benefit from additional warnings/notices checks for those cases, git
+> log should probably display conflicted commits differently, we'd need
+> to add special handling for higher order conflicts (e.g. a merge with
+> conflicts is itself involved in a merge) probably similar to what jj
+> has done, and audit a lot of other code paths to see what would be
+> needed.
 
-$ git status
-On branch master
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-        Abc/                                                      # rename
-to Abc/ successfully
+As you point out there is a lot more to this than just being able to 
+store the conflict data in a commit - in many ways I think that is the 
+easiest part of the solution to sharing conflicts.
 
-$ git commit -m "commit Abc/"                                     # commit
+Best Wishes
 
-$ mv Abc abc
+Phillip
 
-$ git status
-On branch master
-nothing to commit, working tree clean                             # cannot
-rename again
-
-$ git diff
->""
-
-$ git add .
-
-$ git commit -m "Cannot rename from Abc/ to abc/"
-On branch master
-nothing to commit, working tree clean                             # cannot
-commit to right, keep old file name / folder name
-
-
-What did you expect to happen? (Expected behavior)
-It should be correct to new name although just change upper/lower case,
-because other commiter can pull it from repo or improve reading clarity.
-
-What happened instead? (Actual behavior)
-can commit file/folder but cannot fix upper/lower case.
-
-What's different between what you expected and what actually happened?
-git unable to faithfully represent file/folder upper/lower case changes.
-
-Anything else you want to add:
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.40.0.windows.1
-cpu: x86_64
-built from commit: 1d90ca2906dd4b7ddaf0669a13c173ec579d794a
-sizeof-long: 4
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-uname: Windows 10.0 19045
-compiler info: gnuc: 12.2
-libc info: no libc information available
-$SHELL (typically, interactive shell): C:\Program Files\Git\usr\bin\bash.exe
-
-
-[Enabled Hooks]
-
---000000000000e1b71006098e44d8
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Thank you for filling out a Git bug report!<br>Please answ=
-er the following questions to help us understand your issue.<br><br>What di=
-d you do before the bug happened? (Steps to reproduce your issue)<br>$ mkdi=
-r abc<br><br>$ echo &quot;&quot;&gt;abc/.keep<br><br>$ git status<br>On bra=
-nch master<br>Untracked files:<br>=C2=A0 (use &quot;git add &lt;file&gt;...=
-&quot; to include in what will be committed)<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0=
- abc/<br><br>$ mv abc Abc<br><br>$ git status<br>On branch master<br>Untrac=
-ked files:<br>=C2=A0 (use &quot;git add &lt;file&gt;...&quot; to include in=
- what will be committed)<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 Abc/ =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0# rename to Abc/ successfully<br><br>$ git commi=
-t -m &quot;commit Abc/&quot; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 # commit<br><br>$ mv Abc abc<br><br>$ git status<br>On branch master=
-<br>nothing to commit, working tree clean =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # cannot=
- rename again<br><br>$ git diff<br>&gt;&quot;&quot;<br><br>$ git add .<br><=
-br>$ git commit -m &quot;Cannot rename from Abc/ to abc/&quot;<br>On branch=
- master<br>nothing to commit, working tree clean =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 #=
- cannot commit to right, keep old file name / folder name<br><br><br>What d=
-id you expect to happen? (Expected behavior)<br>It should be correct to new=
- name although just change upper/lower case, because other commiter can pul=
-l it from repo or improve reading clarity.<br><br>What happened instead? (A=
-ctual behavior)<br>can commit file/folder but cannot fix upper/lower case.<=
-br><br>What&#39;s different between what you expected and what actually hap=
-pened?<br>git unable to faithfully represent file/folder upper/lower case c=
-hanges.<br><br>Anything else you want to add:<br><br>Please review the rest=
- of the bug report below.<br>You can delete any lines you don&#39;t wish to=
- share.<br><br><br>[System Info]<br>git version:<br>git version 2.40.0.wind=
-ows.1<br>cpu: x86_64<br>built from commit: 1d90ca2906dd4b7ddaf0669a13c173ec=
-579d794a<br>sizeof-long: 4<br>sizeof-size_t: 8<br>shell-path: /bin/sh<br>fe=
-ature: fsmonitor--daemon<br>uname: Windows 10.0 19045 <br>compiler info: gn=
-uc: 12.2<br>libc info: no libc information available<br>$SHELL (typically, =
-interactive shell): C:\Program Files\Git\usr\bin\bash.exe<br><br><br>[Enabl=
-ed Hooks]<br></div>
-
---000000000000e1b71006098e44d8--
---000000000000e1b71306098e44da
-Content-Type: text/plain; charset="US-ASCII"; name="git-bugreport-2023-11-07-1855.txt"
-Content-Disposition: attachment; 
-	filename="git-bugreport-2023-11-07-1855.txt"
-Content-Transfer-Encoding: base64
-Content-ID: <f_loo8vbqf0>
-X-Attachment-Id: f_loo8vbqf0
-
-VGhhbmsgeW91IGZvciBmaWxsaW5nIG91dCBhIEdpdCBidWcgcmVwb3J0IQpQbGVhc2UgYW5zd2Vy
-IHRoZSBmb2xsb3dpbmcgcXVlc3Rpb25zIHRvIGhlbHAgdXMgdW5kZXJzdGFuZCB5b3VyIGlzc3Vl
-LgoKV2hhdCBkaWQgeW91IGRvIGJlZm9yZSB0aGUgYnVnIGhhcHBlbmVkPyAoU3RlcHMgdG8gcmVw
-cm9kdWNlIHlvdXIgaXNzdWUpCiQgbWtkaXIgYWJjCgokIGVjaG8gIiI+YWJjLy5rZWVwCgokIGdp
-dCBzdGF0dXMKT24gYnJhbmNoIG1hc3RlcgpVbnRyYWNrZWQgZmlsZXM6CiAgKHVzZSAiZ2l0IGFk
-ZCA8ZmlsZT4uLi4iIHRvIGluY2x1ZGUgaW4gd2hhdCB3aWxsIGJlIGNvbW1pdHRlZCkKICAgICAg
-ICBhYmMvCgokIG12IGFiYyBBYmMKCiQgZ2l0IHN0YXR1cwpPbiBicmFuY2ggbWFzdGVyClVudHJh
-Y2tlZCBmaWxlczoKICAodXNlICJnaXQgYWRkIDxmaWxlPi4uLiIgdG8gaW5jbHVkZSBpbiB3aGF0
-IHdpbGwgYmUgY29tbWl0dGVkKQogICAgICAgIEFiYy8gICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAjIHJlbmFtZSB0byBBYmMvIHN1Y2Nlc3NmdWxs
-eQoKJCBnaXQgY29tbWl0IC1tICJjb21taXQgQWJjLyIgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgIyBjb21taXQKCiQgbXYgQWJjIGFiYwoKJCBnaXQgc3RhdHVzCk9uIGJyYW5j
-aCBtYXN0ZXIKbm90aGluZyB0byBjb21taXQsIHdvcmtpbmcgdHJlZSBjbGVhbiAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgIyBjYW5ub3QgcmVuYW1lIGFnYWluCgokIGdpdCBkaWZmCj4iIgoK
-JCBnaXQgYWRkIC4KCiQgZ2l0IGNvbW1pdCAtbSAiQ2Fubm90IHJlbmFtZSBmcm9tIEFiYy8gdG8g
-YWJjLyIKT24gYnJhbmNoIG1hc3Rlcgpub3RoaW5nIHRvIGNvbW1pdCwgd29ya2luZyB0cmVlIGNs
-ZWFuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAjIGNhbm5vdCBjb21taXQgdG8gcmlnaHQs
-IGtlZXAgb2xkIGZpbGUgbmFtZSAvIGZvbGRlciBuYW1lCgoKV2hhdCBkaWQgeW91IGV4cGVjdCB0
-byBoYXBwZW4/IChFeHBlY3RlZCBiZWhhdmlvcikKSXQgc2hvdWxkIGJlIGNvcnJlY3QgdG8gbmV3
-IG5hbWUgYWx0aG91Z2gganVzdCBjaGFuZ2UgdXBwZXIvbG93ZXIgY2FzZSwgYmVjYXVzZSBvdGhl
-ciBjb21taXRlciBjYW4gcHVsbCBpdCBmcm9tIHJlcG8gb3IgaW1wcm92ZSByZWFkaW5nIGNsYXJp
-dHkuCgpXaGF0IGhhcHBlbmVkIGluc3RlYWQ/IChBY3R1YWwgYmVoYXZpb3IpCmNhbiBjb21taXQg
-ZmlsZS9mb2xkZXIgYnV0IGNhbm5vdCBmaXggdXBwZXIvbG93ZXIgY2FzZS4KCldoYXQncyBkaWZm
-ZXJlbnQgYmV0d2VlbiB3aGF0IHlvdSBleHBlY3RlZCBhbmQgd2hhdCBhY3R1YWxseSBoYXBwZW5l
-ZD8KZ2l0IHVuYWJsZSB0byBmYWl0aGZ1bGx5IHJlcHJlc2VudCBmaWxlL2ZvbGRlciB1cHBlci9s
-b3dlciBjYXNlIGNoYW5nZXMuCgpBbnl0aGluZyBlbHNlIHlvdSB3YW50IHRvIGFkZDoKClBsZWFz
-ZSByZXZpZXcgdGhlIHJlc3Qgb2YgdGhlIGJ1ZyByZXBvcnQgYmVsb3cuCllvdSBjYW4gZGVsZXRl
-IGFueSBsaW5lcyB5b3UgZG9uJ3Qgd2lzaCB0byBzaGFyZS4KCgpbU3lzdGVtIEluZm9dCmdpdCB2
-ZXJzaW9uOgpnaXQgdmVyc2lvbiAyLjQwLjAud2luZG93cy4xCmNwdTogeDg2XzY0CmJ1aWx0IGZy
-b20gY29tbWl0OiAxZDkwY2EyOTA2ZGQ0YjdkZGFmMDY2OWExM2MxNzNlYzU3OWQ3OTRhCnNpemVv
-Zi1sb25nOiA0CnNpemVvZi1zaXplX3Q6IDgKc2hlbGwtcGF0aDogL2Jpbi9zaApmZWF0dXJlOiBm
-c21vbml0b3ItLWRhZW1vbgp1bmFtZTogV2luZG93cyAxMC4wIDE5MDQ1IApjb21waWxlciBpbmZv
-OiBnbnVjOiAxMi4yCmxpYmMgaW5mbzogbm8gbGliYyBpbmZvcm1hdGlvbiBhdmFpbGFibGUKJFNI
-RUxMICh0eXBpY2FsbHksIGludGVyYWN0aXZlIHNoZWxsKTogQzpcUHJvZ3JhbSBGaWxlc1xHaXRc
-dXNyXGJpblxiYXNoLmV4ZQoKCltFbmFibGVkIEhvb2tzXQo=
---000000000000e1b71306098e44da--
