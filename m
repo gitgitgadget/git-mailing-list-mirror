@@ -1,67 +1,81 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5494EBB
-	for <git@vger.kernel.org>; Sat, 11 Nov 2023 00:27:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1981B137B
+	for <git@vger.kernel.org>; Sat, 11 Nov 2023 00:55:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="NhvZowLy"
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5408C420B
-	for <git@vger.kernel.org>; Fri, 10 Nov 2023 16:27:49 -0800 (PST)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id D83A42B483;
-	Fri, 10 Nov 2023 19:27:48 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=QYwQgS6pYMp2A3ZLz2Uc0bO604LduO0Ik/dio5
-	fJ5KI=; b=NhvZowLyAFjdCpJiSjUZgASRWsxjUA+HhhIMCISywLX0MSXwOsVNko
-	D14RzFMU+DuOVrrCsLeVObENVCMHZ9BWMUn1bEnOeWYIP2ibkN69xgDXBNwpjtP8
-	QjiG68m2OHQTYJdolRf8DFEjJ6BcmPCZkHOMapkjpvJvRM4zkwch0=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id D05AB2B482;
-	Fri, 10 Nov 2023 19:27:48 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.67.28])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6E0EC2B47B;
-	Fri, 10 Nov 2023 19:27:44 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: Taylor Blau <me@ttaylorr.com>,  git@vger.kernel.org,  "Eric W.
- Biederman" <ebiederm@gmail.com>,  Jeff King <peff@peff.net>,  Patrick
- Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v5 5/5] builtin/merge-tree.c: implement support for
- `--write-pack`
-In-Reply-To: <CABPp-BEfy9VOvimP9==ry_rZXu=metOQ8s=_-XiG_Pdx9c06Ww@mail.gmail.com>
-	(Elijah Newren's message of "Fri, 10 Nov 2023 15:51:18 -0800")
-References: <cover.1697736516.git.me@ttaylorr.com>
-	<cover.1698101088.git.me@ttaylorr.com>
-	<3595db76a525fcebc3c896e231246704b044310c.1698101088.git.me@ttaylorr.com>
-	<CABPp-BEfy9VOvimP9==ry_rZXu=metOQ8s=_-XiG_Pdx9c06Ww@mail.gmail.com>
-Date: Sat, 11 Nov 2023 09:27:42 +0900
-Message-ID: <xmqqmsvlrv5t.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b="WfINzYld"
+Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A59D144BF
+	for <git@vger.kernel.org>; Fri, 10 Nov 2023 16:55:25 -0800 (PST)
+Received: from letrec.thunk.org ([172.59.192.143])
+	(authenticated bits=0)
+        (User authenticated as tytso@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 3AB0t1sP028412
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 10 Nov 2023 19:55:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
+	t=1699664104; bh=JgNg/KTh/7uyo5XJeVG6IDcT63wjo9dR37R+WxJBXog=;
+	h=Date:From:Subject:Message-ID:MIME-Version:Content-Type;
+	b=WfINzYldEyMx7zR1NvywnWb7IZzJxL+FyuIDNZjBxfZS9kXJOfK70wmkuHIQvm61O
+	 IwUERtUHTahcEeUll+bKk0tTOMSWLpxkFcSquu4dC6rnuNzkRskxApVholtmMXiYJN
+	 Yj5oqfEWnVvmiZCmMA3mk6X0h/qpBqbNaSqQEh+2q4N+eG35rFFdalAtFnrvUwNMzT
+	 huKZaDma/X/LslLzmLbyRfGpzp4+OC0xGp6ZnkU4nrJAiHZEK4tGYbkYJORqsjc45m
+	 /WflSN5gSPG5mn2+mea0ZMYaldS8N4Ocz/2qOLPayo9msTFtcoVb2lX+uGzYClot8Q
+	 tTYGCAzMnC+zA==
+Received: by letrec.thunk.org (Postfix, from userid 15806)
+	id B032A8C01E3; Mon,  6 Nov 2023 19:50:16 -0500 (EST)
+Date: Mon, 6 Nov 2023 19:50:16 -0500
+From: "Theodore Ts'o" <tytso@mit.edu>
+To: Sandra Snan <sandra.snan@idiomdrottning.org>
+Cc: git@vger.kernel.org, Dragan Simic <dsimic@manjaro.org>,
+        rsbecker@nexbridge.com
+Subject: Re: first-class conflicts?
+Message-ID: <ZUmJyFs7z7wdmLVK@mit.edu>
+References: <87cywmintp.fsf@ellen.idiomdrottning.org>
+ <002901da1101$7d39a420$77acec60$@nexbridge.com>
+ <Gr..Y5kkszDx87g@idiomdrottning.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 226D7052-8029-11EE-947C-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Gr..Y5kkszDx87g@idiomdrottning.org>
+X-Spam-Level: *
 
-Elijah Newren <newren@gmail.com> writes:
+On Mon, Nov 06, 2023 at 10:45:03PM +0000, Sandra Snan wrote:
+> Randall, thank you for that.
+> 
+> I just have sometimes wish git could be a little more aware of them beyond
+> just storing them with ASCII art in the files themselves (and alerting /
+> warning when they happen but I often can't properly see those warnings flash
+> by so I end up having to search for the conflict markers manually). So if
+> conflicts are a thing that *can* happen, it'd be better if vc could know
+> about them which would make some of the rebases simpler as in jj. That
+> doesn't mean we wanna adopt the jj workflow of deliberately checking in
+> conflicts (not even locally), just be able to deal with them better if it
+> does happen.
 
-> I believe the above is built on an assumption that any objects written
-> will not need to be read until after the merge is completed.  And we
-> might have a nesting issue too...
-> ...
-> This is unsafe; the object may need to be read later within the same
-> merge.
+Well, if you miss them, "git status" does show that there are conflicts:
 
-Thanks for a good analysis.  I agree.
+   Unmerged paths:
+     (use "git add <file>..." to mark resolution)
+           both modified:   version.h
 
+And if you attempt to commit the merge without resolving the
+conflicts, git won't let you:
+
+   error: Committing is not possible because you have unmerged files.
+   hint: Fix them up in the work tree, and then use 'git add/rm <file>'
+   hint: as appropriate to mark resolution and make a commit.
+
+So it's hard to miss the indications of the content conflict, because
+if you try to commit without resolving them, it's not a warning, it's
+an outright error.
+
+Cheers,
+
+					- Ted
