@@ -1,147 +1,136 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A4430FA1
-	for <git@vger.kernel.org>; Tue,  7 Nov 2023 17:20:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFAE4347B8
+	for <git@vger.kernel.org>; Tue,  7 Nov 2023 17:36:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QjP1PTgO"
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0CA89B
-	for <git@vger.kernel.org>; Tue,  7 Nov 2023 09:20:02 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-507a55302e0so8050315e87.0
-        for <git@vger.kernel.org>; Tue, 07 Nov 2023 09:20:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1699377601; x=1699982401; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8gFEWuZqN2Q03UTyXO7Oujuzy+ztBg8t4B06P6yFmQY=;
-        b=QjP1PTgOmOva5fjC5EPY9Dg3ZV0tyjwVvVKBCP0Y7QOFQTBf0+HNoKYIIFVp7t4nyN
-         fsw4gMIGb5vEi7w0rDJnfncIUIQGTXv2j5rRgeyR9nodpfZrq7Tlg4Cqw3wG/OpDuV2y
-         QgUXIIVXkeQgCbttZxVIIbnIF8xW+pM50eReGi307gw8RSmrwhYhKn1bRcK23HRkwIM3
-         3/9zMMNh+5sj5fwMfBCab3TvkReizJ5qfx1PvLVvydRv0aiWSeMe3wwaO6MIepT8n5fJ
-         DBcbOmfYNMpJr6WTM88alzO+IwcCmvZ+c+rZkTrs+Iwq9m1qbacBEUIp0Rw2Jl2YRoAC
-         sBCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699377601; x=1699982401;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8gFEWuZqN2Q03UTyXO7Oujuzy+ztBg8t4B06P6yFmQY=;
-        b=jJ3xryyEcsD5EF0YTkiuuckAebgh6bqr1D+Sigb6lDatOYm1t/8A+D4WtX+c35BvTt
-         wQfA9aHcz9Ib95y5nPq1O4c0Ak5QrXTeCNQ8ll/clQcbpwUREN+2cb24bHnR/shw2TbB
-         KUvReRCvEKDEHk3RVwNs24aUp5VkSs9YC8zkyAGYTohEPy3LjZ0UKNhd3B+vZ+wphMRw
-         S2vrUzYGYvRi/m8CNrjj8/yALQU9OZ5xMAv98Z0MYLQN12LFkxa/53vnUDWl9XEV3KCE
-         xRSkzTR6rZs9oM4BiPjSGvVOOggdtgH04PrS6hTrtZRzyZuyELw4HzWJhEnhnVMuKXHX
-         tl3g==
-X-Gm-Message-State: AOJu0YyDXCbv53ca3UeRheXEZaOTlFDOQ2OXRrK3L7Lm2lwp49RaKBtZ
-	qH6gq2TmzPvsd4Q7Cs+nho5idDudvA4zXNJoYd8=
-X-Google-Smtp-Source: AGHT+IGs34m3HspY4TebXKsJUtxPuuvNZFCo834VI+/Ek88tpzEH9Nju52pLe6gKs9ufXMbtl6gO7qCX4SJ1Z3nCeEw=
-X-Received: by 2002:ac2:5f6d:0:b0:506:899d:1989 with SMTP id
- c13-20020ac25f6d000000b00506899d1989mr21006426lfc.44.1699377600826; Tue, 07
- Nov 2023 09:20:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="iNYsagyH"
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D804012A
+	for <git@vger.kernel.org>; Tue,  7 Nov 2023 09:36:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+	t=1699378558; x=1699983358; i=tboegi@web.de;
+	bh=9gey4+L9ehanOYYMfQVomf0rpiPBef3omt4nGoxxbfY=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:
+	 In-Reply-To;
+	b=iNYsagyHdU9zEfK/+QE6Mc0j7vXedGBFYn2SeconJWgTe1GJ7zzFb7tS1huBt39D
+	 oK97N1ceucVmpQ6VervrlY908DM64Lx4HeQ2s+0kIl8XTrmcY+VTkBWUTRkEPAEwD
+	 wDDe5zfirlmKWzfYWv9u2UvFwPIIY+coniUETqljPKP3+dbhMP56d/inPb2bQu9L+
+	 nM8/nnlLYYVT0nwllCFAluUCQ4roTZRX6FB2vj7LGdFQkwLSIlPXAmoW1U/iDglsZ
+	 osG9LPwrSCNf4qK7/KYqBelQeOoCDRRGyyWZWBhMmOrf8ZhZd7Tfht3kopYMX0D4f
+	 7+libaJP7gn3fQ09UA==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from localhost ([195.198.253.159]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MjBVh-1rfVQu3i8D-00f2b9; Tue, 07
+ Nov 2023 18:35:57 +0100
+Date: Tue, 7 Nov 2023 18:35:57 +0100
+From: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To: chengpu lee <okuxxo@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: issue unable to commit file and folder name to upper lower case
+Message-ID: <20231107173557.GA29083@tb-raspi4>
+References: <CAHv3AeCOoEXxpNh=gzjNcKbVyZFaYZ5BzSf3FGL1=pdheNebZw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1606.git.1699010701704.gitgitgadget@gmail.com>
- <CABPp-BEuvjduS4JiORJybKtoPWvJd+BbbR_JAvZdj4Px_v8H4A@mail.gmail.com> <xmqq7cmu9s29.fsf@gitster.g>
-In-Reply-To: <xmqq7cmu9s29.fsf@gitster.g>
-From: Elijah Newren <newren@gmail.com>
-Date: Tue, 7 Nov 2023 09:19:48 -0800
-Message-ID: <CABPp-BF9iUkF+g_w7wLATFTmjfJ3f1hsBr+zXxNZEcq-XiNOWg@mail.gmail.com>
-Subject: Re: [PATCH] diff: implement config.diff.renames=copies-harder
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Sam James via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, Sam James <sam@gentoo.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAHv3AeCOoEXxpNh=gzjNcKbVyZFaYZ5BzSf3FGL1=pdheNebZw@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Provags-ID: V03:K1:XABxKz9Mmy3NbtHyP60gXCVV2E9IN/OjTR9zt6/+zfPIM7wa0uF
+ kBGlU6ihi1fVeyLB3dRowk05ZJ6QTzbPbBQKg5ATRgvWx7HBcZlQuT1m+H5jUeH4oprra/C
+ yMpnEwWpuDttBwYtGKr9dCvloh+eP0TdZzV6cOkjm0xFXtMI7sFeZphjguPOieYka6FZCCD
+ 7RVOoC/xm5aMC3VerABpA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:3mBimHgGBnw=;VIJj2BHF9l+0cZpvkl4ZSkf0iTP
+ hF2VnWjObBBP9a4qSkIRp4Ret1eJcdqL39vTcPneOKgpTK4cv99x7pFNVJUu2JsTYaNt6KgOk
+ XRV5R5hGB9rQ1XP7EeUYifs57zG4+1JK/G3G4W/dioxpDYXlHN7CotqTqNAZsy+U7fLuHu0Zi
+ DPLvexygXfc2LoSpeSdyqzk3pgMZS+hf2PI4/4rZTsOIQC6aMENlAEOWplnxH9lbFP2epataT
+ oBNG7QtArZaWV+336EpnMdP3yhBrUU1RFtbAkrmRVTi2/YOnwUTXDNMRhyHVNtsE4GzeN1fl4
+ AaQ1tdpBedk5+sTeqcjZseC5VkjoqNPrTyUQPQRtJKeMBgo738/ikX7kZRKbvmf1MDCpP+7ms
+ UJAhhUqYIHf9tdBRTHug+b84t/yOgfIKaJ/33e5rQuBE1ubVA1+LZ4NentLnN2I4/u/MP84Ie
+ tSa9WHBSWRuvXZIZKPXKavjU4xvRD22ggSO9HsfMkRtdIwsDe68fkDUqQUd8a8gZJt5F5ZVFx
+ QE4cWCmxZY9b18XRJdVzRLyX1zrw3R2rcN6cYo6w5Mmpldent+QzNFO+Mw+x4zCJOEzwplLWx
+ Bp63YFnqrRh3kKt/I3peatD3GizlSwxTqJaP2xTvTFF88/f7A/LKjabIj/GaarINR9n9kaF/n
+ Q8/eJDHjBFPMqYvv2+rwGqbXQB65+gQlCxXKM0N3sdgZy5md56NyiCu7to+m2L7DLhGRCoX2K
+ 6O0e+XlKCSOqUaIjODspHyx2xEjYtQVJ5Y0NnJhjZ6odUSTfVM/rz73GKPyL4RJdFe4MfW/m8
+ Zbrq1JZIzNRPDT0i8O+7pcP5ZXiAosdu4THuzDt91GJ84bMnPdJKu1GmOCN6h0ZwEz6ThB6lw
+ mzEVEoBQ5efIk6qf+ZzkWNmhThuRoqMlFjHav36g+uQfV/mJRKpWo4C4Y8CYcJ3AYfaSPrzfR
+ K9eiB1MgsFnymBOmYn++508XeT8=
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Nov 6, 2023 at 7:10=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
+On Tue, Nov 07, 2023 at 07:28:14PM +0800, chengpu lee wrote:
+> Thank you for filling out a Git bug report!
+> Please answer the following questions to help us understand your issue.
 >
-> Elijah Newren <newren@gmail.com> writes:
+> What did you do before the bug happened? (Steps to reproduce your issue)
+> $ mkdir abc
 >
-> > On Fri, Nov 3, 2023 at 4:25=E2=80=AFAM Sam James via GitGitGadget
-> > <gitgitgadget@gmail.com> wrote:
-> >>
-> >> From: Sam James <sam@gentoo.org>
-> >>
-> >> This patch adds a config value for 'diff.renames' called 'copies-harde=
-r'
-> >> which make it so '-C -C' is in effect always passed for 'git log -p',
-> >> 'git diff', etc.
-> >>
-> >> This allows specifying that 'git log -p', 'git diff', etc should alway=
-s act
-> >> as if '-C --find-copies-harder' was passed.
-> >>
-> >> I've found this especially useful for certain types of repository (lik=
-e
-> >> Gentoo's ebuild repositories) because files are often copies of a prev=
-ious
-> >> version.
-> >
-> > These must be very small repositories?  --find-copies-harder is really
-> > expensive...
+> $ echo "">abc/.keep
 >
-> True.  "often copies of a previous version" means that it is a
-> directory that has a collection of subdirectories, one for each
-> version?  In a source tree managed in a version control system,
-> files are often rewritten in place from the previous version,
-> so I am puzzled by that justification.
+> $ git status
+> On branch master
+> Untracked files:
+>   (use "git add <file>..." to include in what will be committed)
+>         abc/
 >
-> It is, in the proposed log message of our commits, a bit unusual to
-> see "This patch does X" and "I do Y", by the way, which made my
-> reading hiccup a bit, but perhaps it is just me?
-
-I think I read Sam's description a bit differently than you.  My
-assumption was they'd have files with names like the following in the
-same directory:
-   gcc-13.x.build.recipe
-   gcc-12.x.build.recipe
-   gcc-11.x.build.recipe
-   gcc-10.x.build.recipe
-
-And that gcc-13.x.build.recipe was started as a copy of
-gcc-12.x.build.recipe (which was started as a copy of
-gcc-11.x.build.recipe, etc.).  They keep all versions because they
-want users to be able to build and install multiple gcc versions.
-
-I could be completely off, but that's what I was imagining from the descrip=
-tion.
-
-> >> diff --git a/Documentation/config/diff.txt b/Documentation/config/diff=
-.txt
-> >> index bd5ae0c3378..d2ff3c62d41 100644
-> >> --- a/Documentation/config/diff.txt
-> >> +++ b/Documentation/config/diff.txt
-> >> @@ -131,7 +131,8 @@ diff.renames::
-> >>         Whether and how Git detects renames.  If set to "false",
-> >>         rename detection is disabled. If set to "true", basic rename
-> >>         detection is enabled.  If set to "copies" or "copy", Git will
-> >> -       detect copies, as well.  Defaults to true.  Note that this
-> >> +       detect copies, as well.  If set to "copies-harder", Git will t=
-ry harder
-> >> +       to detect copies.  Defaults to true.  Note that this
-> >
-> > "try harder to detect copies" feels like an unhelpful explanation.
+> $ mv abc Abc
 >
-> Yup.  "will spend extra cycles to find more copies", perhaps?
+> $ git status
+> On branch master
+> Untracked files:
+>   (use "git add <file>..." to include in what will be committed)
+>         Abc/                                                      # rena=
+me
+> to Abc/ successfully
+>
+> $ git commit -m "commit Abc/"                                     # comm=
+it
+>
+> $ mv Abc abc
+>
+> $ git status
+> On branch master
+> nothing to commit, working tree clean                             # cann=
+ot
+> rename again
+>
+> $ git diff
+> >""
+>
+> $ git add .
+>
+> $ git commit -m "Cannot rename from Abc/ to abc/"
+> On branch master
+> nothing to commit, working tree clean                             # cann=
+ot
+> commit to right, keep old file name / folder name
+>
+>
+> What did you expect to happen? (Expected behavior)
+> It should be correct to new name although just change upper/lower case,
+> because other commiter can pull it from repo or improve reading clarity.
+>
+> What happened instead? (Actual behavior)
+> can commit file/folder but cannot fix upper/lower case.
+>
+> What's different between what you expected and what actually happened?
+> git unable to faithfully represent file/folder upper/lower case changes.
+>
 
-I find that marginally better; but I still don't think it answers the
-user's question of why they should pick one option or the other.  The
-wording for the `--find-copies-harder` does explain when it's useful:
+Yes, that is a restriction in Git, call it a bug, call it a missing featur=
+e.
+Unless someone fixes it, the recommendation is still to use a workaround:
 
-        For performance reasons, by default, `-C` option finds copies only
-        if the original file of the copy was modified in the same
-        changeset.  This flag makes the command
-        inspect unmodified files as candidates for the source of
-        copy.  This is a very expensive operation for large
-        projects, so use it with caution.
+tb@pc:/tmp/ttt> git mv Abc tmp
+tb@pc:/tmp/ttt> git mv tmp abc
+tb@pc:/tmp/ttt> git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        renamed:    Abc/.keep -> abc/.keep
 
-We probably don't want to copy all three of those sentences here, but
-I think we need to make sure users can find them, thus my suggestion
-to reference the `--find-copies-harder` option to git-diff so that
-affected users can get the info they need to choose.
+tb@pc:/tmp/ttt>
