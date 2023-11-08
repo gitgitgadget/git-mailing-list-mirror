@@ -1,71 +1,69 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43B90D50C
-	for <git@vger.kernel.org>; Wed,  8 Nov 2023 07:30:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1DF4D528
+	for <git@vger.kernel.org>; Wed,  8 Nov 2023 07:30:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="keJOmNkR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z33k1Ny8"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RWGFVlMx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lpsXVl0z"
 Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA1391AC
-	for <git@vger.kernel.org>; Tue,  7 Nov 2023 23:30:04 -0800 (PST)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailout.west.internal (Postfix) with ESMTP id 3C87832009FD
-	for <git@vger.kernel.org>; Wed,  8 Nov 2023 02:30:04 -0500 (EST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75ED7170D
+	for <git@vger.kernel.org>; Tue,  7 Nov 2023 23:30:08 -0800 (PST)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.west.internal (Postfix) with ESMTP id E734A32009FF
+	for <git@vger.kernel.org>; Wed,  8 Nov 2023 02:30:07 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Wed, 08 Nov 2023 02:30:04 -0500
+  by compute2.internal (MEProxy); Wed, 08 Nov 2023 02:30:08 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1699428603; x=1699515003; bh=5F
-	nSZPbfEN5Lu5dWGa6FbZG71c1gmmytDIasvKNNEs8=; b=keJOmNkR+H0+RrzkK9
-	1s4EgKhYMQN4SiOry1cyodZMiZhTNnh9Ms6juFK0OYpKTiSWbafAQ697dQ7cgF/Q
-	bj8qUUcrJloRW/BJ9BKQ2JFiCTllqxj4Zl2ZVfrst9S5lb77I7wHDvFRIKjoOsC9
-	RGjjQqIinCvJJ+WgTC+Ndh5hLnG35LgeA7sbceZJ0YCi0fHyeG7rna0Hh2cs7MnX
-	Dssz59Qlkxx1K+kA0azc0TiUKuBNVj31dcPm2uucGFQctRNL1npKnWeKn/KBz2x4
-	ftXSN/aHgxKxzzv39s2b9a/0Lrg+0RKuZhsEWJ4Khfp2+o0nLhSzqrfeBgZG2NWh
-	bXdw==
+	:subject:subject:to:to; s=fm3; t=1699428607; x=1699515007; bh=cd
+	z5SMqW8kENbFOwiZlwZAY+siLBzuIKGJslFg4PSKY=; b=RWGFVlMx2g7Xw3thqo
+	mE+gxd6YC+PUqF/0/0C6lttO3l9NfOHY8mhpFGkhJE45pIFtReSQTqq473QDtSGU
+	P2uvqM+nE5hgjGyvYCiTp3lvcIMVYyOGjGJ3tRms453WHoC7mhBYipClzdkw3sRo
+	lHrQNgOpwXGSOV/ycKyj2FR9Fj29fXrxONwQoUcA2xcNcwW02jAttt0lgTPUWqQd
+	pMtrYLyEfz42hR9kFaiWwxUNDNhF8qmOLsYIkcsEnCeRg/w4d4Rpfdk28wR2WkmC
+	BdAscdOg621klYdUlRNnRMgC1N5DymCH3V+d5qY4h0sZqih0u4e7kT2Ehe/CaseQ
+	fUbQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1699428603; x=1699515003; bh=5FnSZPbfEN5Lu
-	5dWGa6FbZG71c1gmmytDIasvKNNEs8=; b=Z33k1Ny8CkKral5/8yAbrYEvhm6xR
-	s+arSvcfypimz7Br2IY+EZYLaRlx5FOzQ4sbZ+D+Cag5VOB9De1zXSxMo3LEbsm5
-	783khMH19JDkz9tqwe96M16/thQj89kAkWqEqZpS7+SxqvEHtkfeFaH5w50MOCH+
-	5Z8mbC//Y3E9VuSKR9G7a7uTaewUKN4xbfHAklQe59o0TGGv0JvxFQFRyRzSk1lh
-	G6rLBvKy/hFBzQco+ddrgvNChA145ZhkIR1D2EsrC3MTqPl5e4jGQX4HKm4okwJ1
-	W/SUglB5RWoFdVi1yMFnyykEvHAlsn0A1EIOvqUgzgljquCsOypaptdBg==
-X-ME-Sender: <xms:-zhLZQ1odW2_F0qka6d4HeEU-e4ft1k5UgK0z_IOlDJiogRc8bEYig>
-    <xme:-zhLZbEXa5Cig9bxEvZng5qiirrniYfJPZxh2ZNfXY4G-6CuJqHYwWXoFCRQEkHZ_
-    ja1LKkz98zvlxd4BQ>
-X-ME-Received: <xmr:-zhLZY50bgGxOO3cDHbwH64ku-1cKUU-WZvaGISWZLpcCAs9mPMsIplp2gJHi8Fi0Ue5WQi2bvyc6LOlmINvdQU2LjXcAtQgjjhDgipdHUmM>
+	:x-sasl-enc; s=fm3; t=1699428607; x=1699515007; bh=cdz5SMqW8kENb
+	FOwiZlwZAY+siLBzuIKGJslFg4PSKY=; b=lpsXVl0zFIrmfDZRH06o3KYzouV33
+	vn21S3QNq8YU0en/Zu3t1zxJfh0rRMKvuR/aFQMH5345M17arzUDh3ckx23le3jC
+	ukWoYKBiixAbn+ng7llH/P8p5qDbGt2YGtfq5z9Tb1bj5TfEleFax97stdJD1Xk4
+	5qZXTCWi+ie9VfQ0seJjlzIfP+yWdpqdoDW1ya3KqkiFhL2kYyM9p6oHHnWHwyiM
+	dzHwj9xmUyx5SfyWiTggDEZXcu/75tQ0FbTKTNb9CB1KAnSjgu8oaPnPHFR+4c4t
+	R/kx2h+gmxBOCsye80r4fDK2Bp2kqAbTnxN6BcyZ9no7WMw8GSuAN8RVw==
+X-ME-Sender: <xms:_zhLZV0k6ACWz1e4iokK2ogxdbNvMxXHZzZns1Emgiqq6aPE3wM3IQ>
+    <xme:_zhLZcElNWeeIcLw0AqttV_gtkLkiPbA_PLdgAuny2cVEeNeHu-jpSG9BZlcZ7wx0
+    4OpGhIPx1MKS7wBVw>
+X-ME-Received: <xmr:_zhLZV7R2NQ4vAUEXAXPkyKGsGt7cmvHncnjk_OUudzUupAfowWMjMj5D7Kt0M5SEKnKf9KLjRc-ovO_ilTR0zpVaRODhzxGBXxXYYaeE1l->
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddukedguddtiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtd
     erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeefheelkeeggedtgfeuheekhefgkeevie
-    evjeejffeuteekudelheeuheffveffveenucffohhmrghinheprghprggthhgvrdhorhhg
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:-zhLZZ2girQAoXIu4cyJGQEdxIxESOiXyn9faVv1aY9KRG6jx4WEMA>
-    <xmx:-zhLZTE1U940MLPHUScy_Cs3ax0YyHDIB4x9Tu-OMKWEFzVcJAt-UA>
-    <xmx:-zhLZS9ISnNX4gTV-FFGHmDElNUcgokY0r7oQS8cYicWihY05kAAWw>
-    <xmx:-zhLZawv3uxTAiU5vxU2CdYKAriGrzQnsSKM0EQ0d3U6878SNrliYA>
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeehgefhtdefueffheekgfffudelffejtd
+    fhvdejkedthfehvdelgfetgfdvtedthfenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:_zhLZS0F9zfTMuBwuBVvGGVIBw-Qds0k9serZXZDK6gEP-uW44TfBg>
+    <xmx:_zhLZYFmk8rbdUd1_aRerEbHk_cfLOE4PANImpAZ7dpbVt5Efj-S5g>
+    <xmx:_zhLZT8nrYxrXEEdSDKTEkxKqgIB_ZbuQNVJJZTrKtxOU3VB093UEQ>
+    <xmx:_zhLZbzv9ROUVJeeHmcgNGx7uAixZe1Mrr9QB2pEqgJ8iIGoW4Wg8A>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 8 Nov 2023 02:30:02 -0500 (EST)
+ <git@vger.kernel.org>; Wed, 8 Nov 2023 02:30:06 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id a03edc15 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id c6a8d844 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Wed, 8 Nov 2023 07:29:38 +0000 (UTC)
-Date: Wed, 8 Nov 2023 08:30:01 +0100
+	Wed, 8 Nov 2023 07:29:42 +0000 (UTC)
+Date: Wed, 8 Nov 2023 08:30:05 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 2/3] t/lib-httpd: stop using legacy crypt(3) for
- authentication
-Message-ID: <23835763002c5f5cd68db7bdc9e4c083dda3558f.1699428122.git.ps@pks.im>
+Subject: [PATCH 3/3] t9164: fix inability to find basename(1) in hooks
+Message-ID: <b50e625f9677469ecb33150343b88d5ac119dadd.1699428122.git.ps@pks.im>
 References: <cover.1699428122.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -74,86 +72,89 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="gwNv30ckdhIQct8X"
+	protocol="application/pgp-signature"; boundary="2P82t5COjCs7He+F"
 Content-Disposition: inline
 In-Reply-To: <cover.1699428122.git.ps@pks.im>
 
 
---gwNv30ckdhIQct8X
+--2P82t5COjCs7He+F
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When setting up httpd for our tests, we also install a passwd and
-proxy-passwd file that contain the test user's credentials. These
-credentials currently use crypt(3) as the password encryption schema.
+The post-commit hook in t9164 is executed with a default environment.
+To work around this issue we already write the current `PATH` value into
+the hook script. But this is done at a point where we already tried to
+execute non-built-in commands, namely basename(1). While this seems to
+work alright on most platforms, it fails on NixOS.
 
-This schema can be considered deprecated nowadays as it is not safe
-anymore. Quoting Apache httpd's documentation [1]:
-
-> Unix only. Uses the traditional Unix crypt(3) function with a
-> randomly-generated 32-bit salt (only 12 bits used) and the first 8
-> characters of the password. Insecure.
-
-This is starting to cause issues in modern Linux distributions. glibc
-has deprecated its libcrypt library that used to provide crypt(3) in
-favor of the libxcrypt library. This newer replacement provides a
-compile time switch to disable insecure password encryption schemata,
-which causes crypt(3) to always return `EINVAL`. The end result is that
-httpd tests that exercise authentication will fail on distros that use
-libxcrypt without these insecure encryption schematas.
-
-Regenerate the passwd files to instead use the default password
-encryption schema, which is md5. While it feels kind of funny that an
-MD5-based encryption schema should be more secure than anything else, it
-is the current default and supported by all platforms. Furthermore, it
-really doesn't matter all that much given that these files are only used
-for testing purposes anyway.
-
-[1]: https://httpd.apache.org/docs/2.4/misc/password_encryptions.html
+Set the `PATH` variable earlier to fix this issue. Note that we do this
+via two separate heredocs. This is done because in the first one we do
+want to expand variables, whereas in the second one we don't.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/lib-httpd/passwd       | 2 +-
- t/lib-httpd/proxy-passwd | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ t/t9164-git-svn-dcommit-concurrent.sh | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/t/lib-httpd/passwd b/t/lib-httpd/passwd
-index 99a34d64874..d9c122f3482 100644
---- a/t/lib-httpd/passwd
-+++ b/t/lib-httpd/passwd
-@@ -1 +1 @@
--user@host:xb4E8pqD81KQs
-+user@host:$apr1$LGPmCZWj$9vxEwj5Z5GzQLBMxp3mCx1
-diff --git a/t/lib-httpd/proxy-passwd b/t/lib-httpd/proxy-passwd
-index 77c25138e07..2ad7705d9a3 100644
---- a/t/lib-httpd/proxy-passwd
-+++ b/t/lib-httpd/proxy-passwd
-@@ -1 +1 @@
--proxuser:2x7tAukjAED5M
-+proxuser:$apr1$RxS6MLkD$DYsqQdflheq4GPNxzJpx5.
+diff --git a/t/t9164-git-svn-dcommit-concurrent.sh b/t/t9164-git-svn-dcommi=
+t-concurrent.sh
+index c8e6c0733f4..3b64022dc57 100755
+--- a/t/t9164-git-svn-dcommit-concurrent.sh
++++ b/t/t9164-git-svn-dcommit-concurrent.sh
+@@ -47,9 +47,15 @@ setup_hook()
+ 	echo "cnt=3D$skip_revs" > "$hook_type-counter"
+ 	rm -f "$rawsvnrepo/hooks/"*-commit # drop previous hooks
+ 	hook=3D"$rawsvnrepo/hooks/$hook_type"
+-	cat > "$hook" <<- 'EOF1'
++	cat >"$hook" <<-EOF
+ 		#!/bin/sh
+ 		set -e
++
++		PATH=3D\"$PATH\"
++		export PATH
++	EOF
++
++	cat >>"$hook" <<-'EOF'
+ 		cd "$1/.."  # "$1" is repository location
+ 		exec >> svn-hook.log 2>&1
+ 		hook=3D"$(basename "$0")"
+@@ -59,11 +65,11 @@ setup_hook()
+ 		cnt=3D"$(($cnt - 1))"
+ 		echo "cnt=3D$cnt" > ./$hook-counter
+ 		[ "$cnt" =3D "0" ] || exit 0
+-EOF1
++	EOF
++
+ 	if [ "$hook_type" =3D "pre-commit" ]; then
+ 		echo "echo 'commit disallowed' >&2; exit 1" >>"$hook"
+ 	else
+-		echo "PATH=3D\"$PATH\"; export PATH" >>"$hook"
+ 		echo "svnconf=3D\"$svnconf\"" >>"$hook"
+ 		cat >>"$hook" <<- 'EOF2'
+ 			cd work-auto-commits.svn
 --=20
 2.42.0
 
 
---gwNv30ckdhIQct8X
+--2P82t5COjCs7He+F
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVLOPgACgkQVbJhu7ck
-PpStQQ/+LteLoIaiKTaicnS5sdMQaoeF+QrimzscVwxqkU6UsFYua8yU+x6zERYa
-CBAso72y+r5VjSeRQaUrVNIO3GoAcsYL0jw+1MgHqRaoZIegRhk/gtix1Uywlvg3
-kqjT0OjQcJEypldx3lg7j82o7wG/zD9LBDNnDfoDA6ihDTx4scCAJsThCWu70xds
-KvyIKCxSZhxwU4b5qhwezTYVmhs/cNWW0rJRa+wv89WxGRwuWgH+urz2RPnTM40j
-hP1Lclwwcj1oeY2gZumh6AFw+gFiN6/SWy4vcLMiT9Ps1AN+Y5t75+shr61wmkIr
-f9VxMSJKAuceXVk7Q/KaivodWcuGc1AVgmc8t6p7hzepEko2o4d0IdLwPn+5EhUa
-/ErrVdP9Tr3VtXAblVMwNUcoTGYvm65L2qoffwwm+hBokwNKUdYfymyVtiQ4UbUf
-m9BlX3jbKCMwPPib8+WKQBjdUcnupSt1AgE+cu4kZsDxn2bYCVkTfz+2CByMMHln
-0376mAARRA1jdEangmuKCC6kSkcXUfdXyR4+vFr98ZeSB085TIi92JSsJxu7CBaH
-78yen7s8rWzdTkTdq+ZaXKqqt8MSNwiiXkMb+MjjH7XzsQ7lFQ426h167w6AEwo3
-G5f8u1phHo+hd8+i38GlfHRkD2aN2V0ERLa8lRtzR8Bp1oattXY=
-=caDh
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVLOPwACgkQVbJhu7ck
+PpRiIRAAqaAfoQ7gmAYsReGFbdMcaxKcNNOEwnsttAhjFWC3MQD2GEKqRBiYSc9A
+Yk7AkG4uaklL4zWEJmLb5xaqenZZf9gtLYyTSg8XTp3Zbn7athL0JCodmoM/NEz6
+XRZkeBc/taVCUiqc//IkdfrpVuJk4cqwAOwUt73bCdi7y7WblLf4PEVhDrDet2Gd
+o8sF4OM9CMNJO1ypLY3s+x9LiBnxlmx5cubNnZgj2vWP65CQm2Ki0+hposg9gANr
+rl6hdwoP72y4479xgzni8LUgx9IXpRNEC86+1Cw1Ot5p0o2Q8u/CJ5drytZKY6Wy
+KbMFHuaahYLsA3gKmJ5V2cF8ObRNokr4kOawgyQSs6XXNKs5bsuhuHxTYJDOToB0
+nIhs8lnP8uKOsh5NGdrwb6dGbRmCfH3c7GA3FJV1xU+gDah+YOfeh/7TMItHx9Uq
+pD00VGXhX0mUmqM8og3X7ypKxXDoWpSzI1/UU0Gk7Afq3jrk6tzw3v3BNh7rrdp7
+ybXgmPibwRpnU/qr/Ge+OEAEKgCOdaY4TjQkCfowr5fjqyRyAiDt0UFyXQUs+/2Z
+22yCZPmJ49LsstIS6wb74qYxIt3V/juu4Gqt76bo0xkpAq1FdsbnUeVdNLKbrhwi
+WzzNFyVSf6rHx1P3o1Ms0l2hogvd7Y/4hYBshXMLDxnAu2iWxig=
+=+7Gk
 -----END PGP SIGNATURE-----
 
---gwNv30ckdhIQct8X--
+--2P82t5COjCs7He+F--
