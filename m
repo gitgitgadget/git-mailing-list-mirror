@@ -1,48 +1,45 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07ABE7ED
-	for <git@vger.kernel.org>; Wed,  8 Nov 2023 01:34:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EADD27EA
+	for <git@vger.kernel.org>; Wed,  8 Nov 2023 01:48:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qTR/loVs"
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7811910C0
-	for <git@vger.kernel.org>; Tue,  7 Nov 2023 17:34:29 -0800 (PST)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id A4C3C1C5E0B;
-	Tue,  7 Nov 2023 20:34:28 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="l1qHRdc+"
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66A93199
+	for <git@vger.kernel.org>; Tue,  7 Nov 2023 17:48:53 -0800 (PST)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id D765E3336A;
+	Tue,  7 Nov 2023 20:48:52 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=YveOoOc2hShX
-	ZoTbN1OJ7ND8+CxzI4M0pFzpAGYyy2I=; b=qTR/loVsqiDciexWev48O34B6BYq
-	3rizG7ujq40/BJ7Mkl62fo+yabNyG86uQJRTRaGz4e3XK8UEiUY0drNwvt+04B8A
-	+YQiRsI2ZZ6mPv72Ku5tWEYCVlvAS2IF902AxQNUPF2z7mB3Xg6wkBPj2uBiWUjm
-	SetU5dufblUM15k=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8C2101C5E0A;
-	Tue,  7 Nov 2023 20:34:28 -0500 (EST)
+	:content-type:content-transfer-encoding; s=sasl; bh=hOQYmlzLGkVV
+	EisQhiVGDylS8bcXAbtIjoyXI+GZ9OE=; b=l1qHRdc+AN0scLEpdq1yfR6yxRNk
+	kcf0BdQlxhn6bLnxlGm8fkIofymOtMk9GqmbXxXEqxrkX+mo/CXX8C26AVKTeYnJ
+	7Bbz8ldT/09vl0yxwZhmtys2kizMF0QyJxcdAwGtAKjMIfeWtVckMwq6+WcR5OuT
+	kc9Znoklu/L4hQo=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id C2B6633369;
+	Tue,  7 Nov 2023 20:48:52 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.67.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C85601C5E09;
-	Tue,  7 Nov 2023 20:34:27 -0500 (EST)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4A66533368;
+	Tue,  7 Nov 2023 20:48:48 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-Cc: Michael Strawbridge <michael.strawbridge@amd.com>,  Douglas Anderson
- <dianders@chromium.org>,  git@vger.kernel.org,  entwicklung@pengutronix.de
-Subject: Re: Regression: git send-email Message-Id: numbering doesn't start
- at 1 any more
-In-Reply-To: <20231107070632.spe3cappk5b5jg3q@pengutronix.de> ("Uwe
-	=?utf-8?Q?Kleine-K=C3=B6nig=22's?= message of "Tue, 7 Nov 2023 08:06:32
- +0100")
-References: <20231106153214.s5abourejkuiwk64@pengutronix.de>
-	<xmqqwmuucwi9.fsf@gitster.g>
-	<20231107070632.spe3cappk5b5jg3q@pengutronix.de>
-Date: Wed, 08 Nov 2023 10:34:26 +0900
-Message-ID: <xmqqpm0l81ul.fsf@gitster.g>
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc: chengpu lee <okuxxo@gmail.com>,  git@vger.kernel.org
+Subject: Re: issue unable to commit file and folder name to upper lower case
+In-Reply-To: <20231107173557.GA29083@tb-raspi4> ("Torsten =?utf-8?Q?B?=
+ =?utf-8?Q?=C3=B6gershausen=22's?=
+	message of "Tue, 7 Nov 2023 18:35:57 +0100")
+References: <CAHv3AeCOoEXxpNh=gzjNcKbVyZFaYZ5BzSf3FGL1=pdheNebZw@mail.gmail.com>
+	<20231107173557.GA29083@tb-raspi4>
+Date: Wed, 08 Nov 2023 10:48:46 +0900
+Message-ID: <xmqqleb9816p.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -52,21 +49,27 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 X-Pobox-Relay-ID:
- F4CA106E-7DD6-11EE-B3C0-25B3960A682E-77302942!pb-smtp2.pobox.com
+ F645ADFC-7DD8-11EE-A2AB-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
-Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de> writes:
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-> The output of git send-email dumps the messages it sends out and then I
-> pick the message-id of the last mail by cut-n-paste and call my script
-> with that as a parameter.
+> Yes, that is a restriction in Git, call it a bug, call it a missing fea=
+ture.
+> Unless someone fixes it, the recommendation is still to use a workaroun=
+d:
+>
+> tb@pc:/tmp/ttt> git mv Abc tmp
+> tb@pc:/tmp/ttt> git mv tmp abc
+> tb@pc:/tmp/ttt> git status
+> On branch master
+> Changes to be committed:
+>   (use "git restore --staged <file>..." to unstage)
+>         renamed:    Abc/.keep -> abc/.keep
+>
+> tb@pc:/tmp/ttt>
 
-Yikes.  I was hoping that the whole "dumps the messages" output is
-read by the script, so that it does not have to assume anything
-about the Message-ID format (like "it has some unchanging parts,
-the changing parts begin with 1, and it increments by 1 for each
-message").
+Correct and very helpful suggestion.  Or get a better filesystem ;-)
 
-You could give Message-ID externally to the output of format-patch
-before feeding send-email, which would just use them, and that way
-you would have more control over the entire process, I guess.
+Thanks.
+
