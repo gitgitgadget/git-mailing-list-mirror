@@ -1,69 +1,71 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09422D266
-	for <git@vger.kernel.org>; Wed,  8 Nov 2023 07:29:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3421D28E
+	for <git@vger.kernel.org>; Wed,  8 Nov 2023 07:30:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gMzX0WBe";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S0g45EAt"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NtBtAG09";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uEov7f38"
 Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61142198
-	for <git@vger.kernel.org>; Tue,  7 Nov 2023 23:29:57 -0800 (PST)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.west.internal (Postfix) with ESMTP id D29E832009F9
-	for <git@vger.kernel.org>; Wed,  8 Nov 2023 02:29:56 -0500 (EST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C06A1711
+	for <git@vger.kernel.org>; Tue,  7 Nov 2023 23:30:00 -0800 (PST)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailout.west.internal (Postfix) with ESMTP id 7CBB03200929
+	for <git@vger.kernel.org>; Wed,  8 Nov 2023 02:29:59 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Wed, 08 Nov 2023 02:29:56 -0500
+  by compute6.internal (MEProxy); Wed, 08 Nov 2023 02:29:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:sender:subject:subject:to:to;
-	 s=fm3; t=1699428596; x=1699514996; bh=ONdv9R91TpQn02QQDUeFxPmLv
-	5NXv6Xin+uq6ukVn2U=; b=gMzX0WBeQV0pqRHUPgAVCmeTP0xTxLl3/pVkXwrul
-	QwrGBfExxUjmeZwzEjIEackkuZGHpThQZvVAUnX/rTe1Y83L8XNPfK6Vj8RErU/m
-	tTDd5fnwbRYV0FPrR6xOhLOLz/NS/9W702JzHeeGUUPuM/F4r56I4mDBFj70Rf/p
-	MYMA6kWqgER6VfVfkj/Wx20MuGEfXu0SVLijo35AUieQzCsPON74PSmd/MPaPGW5
-	JrMcQma3saNDRG7wFzt2dZAkP7ucZFRowF4WJNlGszi0pTgl9IyJ1OpnfpmteDl+
-	Sv5wfYsCU4M2bx474mH30oI/nnM5T8LqXkNCd7tsauDEQ==
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to; s=fm3; t=1699428599; x=1699514999; bh=DR
+	jluC3VFOUNpZ33gUJnwCPW0H8UuhJhoGYb73KqGqQ=; b=NtBtAG09s/VobrBLbp
+	7alU1eLN4TxnhimT4CqioLoj1wA8ifqGxVxgqL92ukshd3BKksPhpkrClG1ZHPY6
+	Q7NyGtoA0XDJJ49KtbAjhJRLS7RMZNEcTotnlOGR2j5Mwlgi5O83nho7mfhGvsxI
+	AVEWyYMP2lkMjKzbYrhcX49+xNQ7rLYfwCPxqZHksEySQdISsFxlqr8OyyMUQuMV
+	gZDSnocXPaokFHcOb8wzDhtqF6C8cthqHVAzw3uhW4+bFuuttlUmnHtrSRJ5pNJf
+	IU4JJDuC1ayztzrENJGuNPGAy9cwDwWU+Mo74gfmEPHO3CyXppMqz39EnyIqt8Js
+	13xw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:sender:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1699428596; x=1699514996; bh=ONdv9R91TpQn02QQDUeFxPmLv5NXv6Xin+u
-	q6ukVn2U=; b=S0g45EAtTXTI93QSGptaRK9bYCTZ5SJV/MpJfbL678veoV9SZC8
-	pdDLFC3W0BZdkNbaBe91mSToqkrAunOH0f5nUFjxRyS6PIgH4q/2I5hY7OPi1OBY
-	sSRWkwNGPchAvl1DWSibUBJ5FOY/CJ3OxnxsROxInc2TGrhmLFEUJ+pmwvjvDcew
-	ch83x/EdBOzkqKuY6p0G+ackXAy7u+k5VLWDIhHENm0LoaANBwxeu0JhEQ6YOuVT
-	RrQQf3Y2TZbGCpVvxFQfWrEDQTEEL0bFqYMzLwPsMlWSDOoDCUNskhF2EQ4MU2Mj
-	aG57xTf+yZaVxhq4Em6P/qepft5kILzfing==
-X-ME-Sender: <xms:9DhLZUKtZ_gndxiV7YZNJfgNKQrUozw5Bk7I1coV7KezCYAu05ZN2g>
-    <xme:9DhLZUItnCbcIT78FCz4RgIJuWZOdY_JtsXYXvu4-D9Jt8nlODr8GV_XgOQvm0kpo
-    vRRla_KzpW8noKbhA>
-X-ME-Received: <xmr:9DhLZUvpYK2_ojwrbDr0E2FZOtlcMCn6Cq_EUslJIjndrmFz7y3G4vVZpDprPsPgsgggiX26d_vU8BhHzGA3hLYQPM6pY53RlqdIpZ8v8vrS>
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm3; t=1699428599; x=1699514999; bh=DRjluC3VFOUNp
+	Z33gUJnwCPW0H8UuhJhoGYb73KqGqQ=; b=uEov7f38Aic3TXlOlMiofuEIjIrL7
+	kyczsnReZZJIm1++hkJr8UEaIdWD7kdMm/DZA+XPw9BSgaPneEynGiC09GBNlFP6
+	vDC+hxBx0a3O6Jl9sFfyUWJQpwXYYiVSFhzb8KHl6qEQR2UFgYA9Tf2sQBsYdEp8
+	lYzyOWFQVUVgPTfolMeHyU86rTkHPQK/JY4CBHj90ehgA5Wrfwh/AieB607FKe7m
+	Fe6NIZvpuaPF5FzaFG52qtig6CUDVuBfPAJJ2tXHoOMwlnHP+yWefOldOpmcGb/l
+	C/Sv+c6kxznfjjSjimiSpeS4RSf8GrhZAqTd1HuixCCDphZF6R+grBS8Q==
+X-ME-Sender: <xms:9jhLZRx7pNMh8_zISWPXKzV4yTFDX39ZGQ-Acz7PfqZyk-njsuPBIA>
+    <xme:9jhLZRSvafF9u5UBsfCs17o23Cm9BA_7QRpGT3DmL_kfF0ETi60FnV7G6m84j3HuZ
+    QlA8dVScDX_ORkwKA>
+X-ME-Received: <xmr:9jhLZbXbG3NnwrwQpnj3gXJOzvv9C0Tz1fnxrBjJ2wQ9PEY0HMAYoVe2AEFWrBJ_SZZ92otHetlNRftKMnQtFbV2WpzB5p0_vkg3Xrk3go8_>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddukedguddtiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfggtggusehgtderre
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeefhfejgffhtdejffekueetgeduuefhudevtd
-    efudekudetudevjefhudetleelveenucffohhmrghinhephhhtthhpugdrshhhnecuvehl
-    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrd
-    himh
-X-ME-Proxy: <xmx:9DhLZRYj5EPTGGdhp1DEqP86uUFBRkhllQTwgFHN7NU2RbYRJu6q3g>
-    <xmx:9DhLZbZ4NIijAFUPpmWE4GJX2NQFw9KRVfgayTTxBDV7iaO8x9CWWQ>
-    <xmx:9DhLZdCFeb-z6UKaGPChn9zGjzJkz97EM89F_pVSnCmil9WUZxR1ow>
-    <xmx:9DhLZV0GjPKGsNhSEmjfyrGZQLDhjNBuqpYqIJQhjm0Ni0JyUSF5yw>
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtd
+    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeejffevhfegkefgtdehheduvdeuieeite
+    eufeduudehtdetvdfgvdefueduieffffenucffohhmrghinhephhhtthhpugdrshhhnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimh
+X-ME-Proxy: <xmx:9jhLZTiWAND35GMimZ8xyPaRQfol0k0PbDrOxv0_dSh7aNzUDyLJWg>
+    <xmx:9jhLZTAKGl8xw0rziQoPpjYzy-ycgWgrSlayVXwrOPZUdXUO41n4Vw>
+    <xmx:9jhLZcISZGhdFs6QirFn4Vv1fdsWfwCmQ-XZZXbYDUKUn85baENjpw>
+    <xmx:9zhLZW8wBeyyebm6K9XVpnylUbuySL4OaKnxb5-2um-IhCmA1KgsEQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 8 Nov 2023 02:29:55 -0500 (EST)
+ <git@vger.kernel.org>; Wed, 8 Nov 2023 02:29:58 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id e691834a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id eca21282 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Wed, 8 Nov 2023 07:29:29 +0000 (UTC)
-Date: Wed, 8 Nov 2023 08:29:52 +0100
+	Wed, 8 Nov 2023 07:29:33 +0000 (UTC)
+Date: Wed, 8 Nov 2023 08:29:56 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 0/3] t: improve compatibility with NixOS
-Message-ID: <cover.1699428122.git.ps@pks.im>
+Subject: [PATCH 1/3] t/lib-httpd: dynamically detect httpd and modules path
+Message-ID: <ac059db8fedc6493c64f703814c7db11adb4385e.1699428122.git.ps@pks.im>
+References: <cover.1699428122.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,73 +73,128 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="mfHgp3h/xIfVOMxK"
+	protocol="application/pgp-signature"; boundary="WCC7p5JVokn3q8qV"
 Content-Disposition: inline
+In-Reply-To: <cover.1699428122.git.ps@pks.im>
 
 
---mfHgp3h/xIfVOMxK
+--WCC7p5JVokn3q8qV
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+In order to set up the Apache httpd server, we need to locate both the
+httpd binary and its default module path. This is done with a hardcoded
+list of locations that we scan. While this works okayish with distros
+that more-or-less follow the Filesystem Hierarchy Standard, it falls
+apart on others like NixOS that don't.
 
-this patch series improves compatibility of our test suite with NixOS.
+While it is possible to specify these paths via `LIB_HTTPD_PATH` and
+`LIB_HTTPD_MODULE_PATH`, it is not a nice experience for the developer
+to figure out how to set those up. And in fact we can do better by
+dynamically detecting both httpd and its module path at runtime:
 
-NixOS is somewhat special compared to more conventional Linux distros
-because it doesn't follow the Filesystem Hierarchy Specification for
-most of the part. Instead, packages are installed into the Nix store
-in `/nix` with hashed paths that change frequently when upgrading the
-system to a newer generation. Consequentially, paths cannot be hardcoded
-and must instead be computed at runtime.
+    - The httpd binary can be located via PATH.
 
-We have two such issues in our test harness right now:
+    - The module directory can (in many cases) be derived via the
+      `HTTPD_ROOT` compile-time variable.
 
-    - t/lib-httpd searches Apache httpd and its modules directory in a
-      list of hardcoded paths.
+Refactor the code to do so. If runtime detection of the paths fails we
+continue to fall back to the hardcoded list of paths.
 
-    - t9164 doesn't propagate PATH to a script and thus cannot find the
-      basename(1) utility.
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ t/lib-httpd.sh | 51 +++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 34 insertions(+), 17 deletions(-)
 
-Both of these issues are fixed in this patch series. In addition, this
-patch series fixes an upcoming issue in httpd's passwd files caused by
-the deprecation of the crypt(3) function.
-
-Patrick
-
-Patrick Steinhardt (3):
-  t/lib-httpd: dynamically detect httpd and modules path
-  t/lib-httpd: stop using legacy crypt(3) for authentication
-  t9164: fix inability to find basename(1) in hooks
-
- t/lib-httpd.sh                        | 51 ++++++++++++++++++---------
- t/lib-httpd/passwd                    |  2 +-
- t/lib-httpd/proxy-passwd              |  2 +-
- t/t9164-git-svn-dcommit-concurrent.sh | 12 +++++--
- 4 files changed, 45 insertions(+), 22 deletions(-)
-
+diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
+index 2fb1b2ae561..06038f72607 100644
+--- a/t/lib-httpd.sh
++++ b/t/lib-httpd.sh
+@@ -55,25 +55,42 @@ fi
+=20
+ HTTPD_PARA=3D""
+=20
+-for DEFAULT_HTTPD_PATH in '/usr/sbin/httpd' '/usr/sbin/apache2'
+-do
+-	if test -x "$DEFAULT_HTTPD_PATH"
+-	then
+-		break
+-	fi
+-done
+-
+-for DEFAULT_HTTPD_MODULE_PATH in '/usr/libexec/apache2' \
+-				 '/usr/lib/apache2/modules' \
+-				 '/usr/lib64/httpd/modules' \
+-				 '/usr/lib/httpd/modules' \
+-				 '/usr/libexec/httpd'
+-do
+-	if test -d "$DEFAULT_HTTPD_MODULE_PATH"
++DEFAULT_HTTPD_PATH=3D"$(command -v httpd)"
++if test -z "$DEFAULT_HTTPD_PATH" -o ! -x "$DEFAULT_HTTPD_PATH"
++then
++	for DEFAULT_HTTPD_PATH in '/usr/sbin/httpd' '/usr/sbin/apache2'
++	do
++		if test -x "$DEFAULT_HTTPD_PATH"
++		then
++			break
++		fi
++	done
++fi
++
++if test -x "$DEFAULT_HTTPD_PATH"
++then
++	HTTPD_ROOT=3D"$("$DEFAULT_HTTPD_PATH" -V | sed -n 's/^ -D HTTPD_ROOT=3D"\=
+(.*\)"$/\1/p')"
++	if test -n "$HTTPD_ROOT" -a -d "$HTTPD_ROOT/modules"
+ 	then
+-		break
++		DEFAULT_HTTPD_MODULE_PATH=3D"$HTTPD_ROOT/modules"
+ 	fi
+-done
++	unset HTTPD_ROOT
++fi
++
++if test -z "$DEFAULT_HTTPD_MODULE_PATH" -o ! -d "$DEFAULT_HTTPD_MODULE_PAT=
+H"
++then
++	for DEFAULT_HTTPD_MODULE_PATH in '/usr/libexec/apache2' \
++					 '/usr/lib/apache2/modules' \
++					 '/usr/lib64/httpd/modules' \
++					 '/usr/lib/httpd/modules' \
++					 '/usr/libexec/httpd'
++	do
++		if test -d "$DEFAULT_HTTPD_MODULE_PATH"
++		then
++			break
++		fi
++	done
++fi
+=20
+ case $(uname) in
+ 	Darwin)
 --=20
 2.42.0
 
 
---mfHgp3h/xIfVOMxK
+--WCC7p5JVokn3q8qV
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVLOO8ACgkQVbJhu7ck
-PpTr6g//TS7pIPBtVlb7iJl01flTCHKO4QEtk6T06zj84PZK59lqW5VkC6vrw+bw
-Ts6FvlfY3pb6xW4Oelm8GhlfAyyRga8azZ9dOr2Rgw5XOoXP0s/lSHQN2sGHiEol
-NunSTwkNY4gVnmY7ZkngHUc/i69C3Xun7Ij37DO844ezFCL//mEZ+3VoAWs2CXGp
-TCfgD9jZ/vzlDZV0oF/auBpCSqVcJG90l0JczZgYdLrI3SCK2chMBPCA2lzJtN00
-mlSdKR7bBpFqlnNSKki+6hQgT6VW2PJywEG3J2GDlh5GJZ9tEbODCORsGgiHh4XA
-0mlkYYPEMbo8j+X2ZHGfocq4+KTuLMZ4PZmEpDgJAN1H5m0PjuItRv1P0w0L8F+K
-elYPjFaJvbEgumeA7Xyin/mpFklktwdi4fKWUBbDrXrqW9lo3HDpfb36dwTP35C6
-pvoBYQkVhCD+4XXPaBhhiMWMmPbI0sOKzC9uHVZ7r2oND8Kwk2unxp9AbQxqqh6g
-NPPOz/roGzOglwKE9paZTCyvcIJWt6weJwTqSyEevTDdSCdJHQjrwuaH7yjgecuc
-Kncc4QAkYRXkqaFCrAXhArKyW8CmVSLlkTThoP93ccRJhjLVymXKzmTewV/m+oF1
-cSfZbnMcVTPjqsQ/RvJyucMglZzo8d6/Dur0x2g/8TBOqYx2q0o=
-=3Ip9
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVLOPQACgkQVbJhu7ck
+PpRlwg//U8r3CvWN9ajy1dvGTgdT7wHGsiai5lRKmBV9q65NkDxoPIy8aqzMuCSW
+lSPnbbnHf4xkU2VsJt+8ceIQZju5RALRhJUhfxgE9tl9pOsA8Dhtk7YkqP3fXQTN
+nfc+U9GgIfjq4KigOC+AzYYfN+4bgV8y6PJl5YcI+mcCwikCBJTkxSIoEJOoI5zT
+RH6uFa20D9fPEEL9wTn5vu4GnDOtB4cdno2A60NGUeQAgA8EjNgQtEEoqH/yO2CS
+vZmUukdjeEwD5ry4lDQKXSlR4E+lILA8sjl5CQ3UQNBa6VTiBksgJNMaW8nOwlFD
+3i/C3xhJpY4Wn5aclGIAjTtsNMg1fHeNN5xg4HIaKSlcFz8u7TeuxEU2jO38/t8b
+efBXgaa/SOaPOHBceESh47FhZVw+rEoqHC7PKJvs+5dWn4bfK1VfXW2zG/V9D62X
+UW3TLlaiTWDob3QanXWA1FAnaP3AMSz45e2xiYsA2Qi7NKdxzobGUVeT/p1UvCap
+4qNFfeESoSysN8EA+5CNF8SUEUDEyec8mGNQfEI4QE0oOfbQq7UjYT79kS91LOkE
+HYj+1745oD/ejlmwnaZuMmGGJbsdKNLfcy1UtPodESZC15SLfSgHvztQlOEeaxQ3
+3+rrsQWGEpPgGWlnlo+wgXmQteIUG4pvJktBQEXyTPKEPWEbQKI=
+=oBi4
 -----END PGP SIGNATURE-----
 
---mfHgp3h/xIfVOMxK--
+--WCC7p5JVokn3q8qV--
