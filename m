@@ -1,112 +1,234 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07DEB37165
-	for <git@vger.kernel.org>; Wed,  8 Nov 2023 19:53:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5AF528E2B
+	for <git@vger.kernel.org>; Wed,  8 Nov 2023 20:39:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="arFgTFo8"
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28B90211E
-	for <git@vger.kernel.org>; Wed,  8 Nov 2023 11:53:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-	t=1699473199; x=1700077999; i=johannes.schindelin@gmx.de;
-	bh=uOf046pfLSNCFeYSJs82EdC0MzG3P+HoTIUI/LhzJiw=;
-	h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
-	b=arFgTFo8Lj4Lfn9goJTWkuya8/Mp7NDGaVwvElCXFjd4BYHU1ixUF2Pr7DypMSNG
-	 SfRoJ6UCCEGhnb2okKrXP9Ow1b0hZbdY0g4nRlq/+jj60NmEQ3cTtDS8RSvW3N9+A
-	 vyUhb1f2xzN8GQ5meFi0CqhNvfqoZU2agUFsi6W/l30NCRXjK8h8vvkASjQ42nlVB
-	 JL5N3PfptxwvDoZrBQJQzTq8X6BCrIDc6gwgGMZTOfr3fPsgeXi+kRsHEMdSWRWZt
-	 4YqysUxqbN822qWKhrIqgsF56U9uIwDtPw2EFdb9UBqsaS91UhQ67di5KyzDegf4n
-	 6wYZBZSlzVRYoGvHaQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from
- fv-az881-188.kxqfgnpkrxgetcyd3drl2yrtfd.ex.internal.cloudapp.net
- ([172.183.154.191]) by mail.gmx.net (mrgmx005 [212.227.17.190]) with ESMTPSA
- (Nemesis) id 1N9dsV-1rWD620y4D-015Xh8; Wed, 08 Nov 2023 20:53:19 +0100
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-To: git-for-windows@googlegroups.com,
-	git@vger.kernel.org,
-	git-packagers@googlegroups.com
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.43.0-rc1
-Date: Wed,  8 Nov 2023 19:53:16 +0000
-Message-ID: <20231108195316.3690-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.42.0
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="jHSuHt6e"
+Received: from NAM04-DM6-obe.outbound.protection.outlook.com (mail-dm6nam04on2052.outbound.protection.outlook.com [40.107.102.52])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D93B210E
+	for <git@vger.kernel.org>; Wed,  8 Nov 2023 12:39:25 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=nHLi2/mhxJ51YBz6mCApfDnUBaM+frBnkwlFArao+td7a3goOXmn4L136QIV0+O7Uiw8+CqXF1UP8PztjPKNMPDxsY3UAhvXDoNLCYAXXqJu47owpHA+r/7OOGD2l1oKna6zoshXOB/GgFftmZE4wnMKjyUoRCpaT0K3DTyVAuzMuTF6EnSD9pdjKXiWEQQ4vpRsvG+EFmODpjjIFfVxCbO9xIutuVs3Oc6Xpt7i8PRY6CTLh6lvpDrOPgJGYt0ZxjQXIwZkZkjxhuccA/CWsEcgoCNHQKdGC2jtHYkGm0F9jb/qyGGR0zzRshEvF6/dxdNdnLl9EY0tnPSzdBf3+A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=AneXQebD/PRn8BM87DRZRPktO5CZ11CRn9CYv04XSGk=;
+ b=O9oGM8/RNyzJ8XKfjXGfL6MMAz3R6pqwoJ57WAAdipIitljJaIgSC5nK5h2qnXpE0tU0edhpOSrZ1nA9+xx7XVInOXZjodbcO6gZBWbpDt8A0US6G0c0hhGrErnIQsdObf632uS3h636Tfk0AvSAAArgElP5pOeufyo6uF5qXf2L6Rnarsb8kHCb6fH8fhJrj0aEQkRfCbZKhs51B3n44KhDGOq2qACphbPchxQaKctMsoVCW7yDrxVh490U/sg9tvRXO+IjH5ftcTpBiQID72Ef+aBf+Ti4bYHcnEmH2Jt+fBTMZ5gDk/mqkM8YEAQL44j4MHV3Io/QgNJ/c7jAKg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=AneXQebD/PRn8BM87DRZRPktO5CZ11CRn9CYv04XSGk=;
+ b=jHSuHt6e+fvfgJIYi9+8VXstWfgeVL4SO0eG8HZj+h5jYj8dcei41WUtSSI20GVO3Z5Dg4H9UDmuR8SLicZ2pti7c9MESZ1PPzJH5vrjWkZmCrJbPBIQy2jLFrBeIm8ug9lTqs3C8N2YUZCkzL9Id2HzfzociChoVzURjrN7SrE=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from DM6PR12MB4356.namprd12.prod.outlook.com (2603:10b6:5:2aa::8) by
+ CYYPR12MB8870.namprd12.prod.outlook.com (2603:10b6:930:bb::18) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6954.28; Wed, 8 Nov 2023 20:39:22 +0000
+Received: from DM6PR12MB4356.namprd12.prod.outlook.com
+ ([fe80::a0be:f6a8:2c72:ae90]) by DM6PR12MB4356.namprd12.prod.outlook.com
+ ([fe80::a0be:f6a8:2c72:ae90%7]) with mapi id 15.20.6954.029; Wed, 8 Nov 2023
+ 20:39:22 +0000
+Message-ID: <c1e81faa-9253-4009-8077-805f4a6b071b@amd.com>
+Date: Wed, 8 Nov 2023 15:39:18 -0500
+User-Agent: Mozilla Thunderbird
+Subject: Re: Regression: git send-email Message-Id: numbering doesn't start at
+ 1 any more
+Content-Language: en-US
+To: =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+ Junio C Hamano <gitster@pobox.com>
+Cc: Douglas Anderson <dianders@chromium.org>, git@vger.kernel.org,
+ entwicklung@pengutronix.de
+References: <20231106153214.s5abourejkuiwk64@pengutronix.de>
+ <xmqqwmuucwi9.fsf@gitster.g> <20231107070632.spe3cappk5b5jg3q@pengutronix.de>
+From: Michael Strawbridge <michael.strawbridge@amd.com>
+In-Reply-To: <20231107070632.spe3cappk5b5jg3q@pengutronix.de>
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: BN9PR03CA0851.namprd03.prod.outlook.com
+ (2603:10b6:408:13d::16) To DM6PR12MB4356.namprd12.prod.outlook.com
+ (2603:10b6:5:2aa::8)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Fcc: Sent
-X-Provags-ID: V03:K1:1a2CbQMDoscpwMzqZKQEmMh65iUyuJzXrO608ueZCWCvg+9euXo
- o1/YBuYwcgw27ZX4s7RurRR+g+3zu0a+Vgl6s9OMh3+/pYXKtVwvd+Ld8MWuBV4pdXbuBY+
- +U2mGUDcCkjXpQw3gmSyhO00btPIy5eBWd+Q+xRb/42rGG9zqv87oI46NJjzxH4dhidk450
- w+k05yn9S+QmBkzZq8wkw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:iezD/TEL2VM=;1mjvdzwz6aSs9ohkxQ6rkmdTlkS
- 32kFLvILxwkqCV88xHYUPDQ//ftrQwJTobBEOg8kovZmeEMiNsI94bEQ+sz+6sC2qnj/+f/Np
- W3xI1A9ont3quT3RX93twNYTPFk/fKKxn2Xxgrya7hSuFJO85U5OwKghv3snoX1Aa1+Dp0cNZ
- NucmRlA2MH0iTRnxRt7UtVTdPrrk1MIsRWs3qX8ya3NbvmrXrOpBZxVMRxzWqvPmDUUrF/gHK
- MUnfxxvDdVEwhFKdand/kkeNaI4+pTamWiLaGPfsZL8d53OBHjbR8mlAni9Bdj7grSbTXj2R2
- tfvmd6AiNko2UPjBWK9Zy31/3BEjuPNLyCuwKiievfTa2rBUSX8OS0ZPUVFKnYWdWMK1uA3Ks
- 1RaYZgtV8JTcZTqTu8MdsQY5lK4yXj5HEdSCyXnSs6cn6/hHrikfSHxbCW3ppJYU3H2o0JClB
- WvGiLFTBF5c+zkHvSSk+dvkJoO5vi2E2dKHWHfyBfY15jsUTPzy7ltvYGt1QbWablwvmm1Fqf
- xGeUZOoSaFF59E9yrYbtFs5/Ee++VGT0FctkBuwDiQThRY+751X18XqkawTjXXGqcXfre3agV
- BhGvAVBFw57EDl4k4aIqGjLqSNOUaG/4h10iQYmTNPeweWjZMrtME4/dW+IjtgNVSBTAb13+2
- X4XqhHLG42giVt8BTABDkzyryzdfX/KNGMGCgJMF+dgoEQp7Hx6hsgMmCrAvCwcnuZkgv2Rdg
- /l/0QCjrk1DUS8ZNtT7R7x66G0aXWQmvDxhJFJK2D4n2KiHJY8bYEYxwgXgGv3rGhXh+vdlla
- wzc04OJ3Dyn3f5KNNY5qa+IEnsX13NayaqccAqu9hIqPOwL4HuvbiGfHnyrIrNLb53zrPh0ya
- jz4uF4lvlLVSp+e4JImTCtYTaitfaEAS9acxr8gG0ysWFKaKlCdaXDEoxaaEQy3gHO2zbnw91
- bsB02JPOYUqnpTzNp2zj3iG15OA=
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM6PR12MB4356:EE_|CYYPR12MB8870:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2e0b530d-3fff-450b-d84c-08dbe09aca47
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	oXQD//WvRiCJkJ7c/lzcrktYFWRU0vUG92YbS4U61QmjKKifd5OnnImR8j3maT8ynawPwbwAz+NCESFJG+MgN/hgwXLfcVvNEYlz8Gp3vnE1FElkJsiwc15Q8hbY3/x9n4sqTiOivq2cm4tUOsy3QfLKbSY6OJ7/VgKPdRsogj5h+wXO3ufSIFloDtuYZ41ui3PM6Ugda2EsfnVXDUCuuZmFjs/Fw4R1pCHMc2m3evnwBFQySRrARpMPn70nhfJXozbmgMzyA4vPQUoXcxbG6UdH6VmTwZf6RyPnQKHFwU284A7dGI671aPDGG8dJZ5jvDKvq3wrvqMAZFXG7b/napJBEXj2iLEr7fycFSqaT2+Tlnd0SgDaO4epG9m5j9RfSo5A+351Ty6GoGiAr5Nvx1qVsCsCfVMKBH/OKU95xZWysu7rSOaX65hxSWs+TCg6cjAgsWKl/oxn7VFhJBmWmoqu3ZupTmLQFYxKM9dSCB1Dxx2JF2a4deVElNcre66TEuUbKsDDukJOcRhy33jFiWYFppkUkcfymKTIIOYUw+htY57w9RIcAQwAqPE9g5yHpa8gS3jpLg62Q2I/nd5CcZCicmFxS1PPD5+zjosXj281sch4EKZ5FWT25B/WgNA++5OitIFZM4oBMQGjOJ0RWmiPsCJ3pcVp3WdAo3ir7SCNJkXsEVxE+9Bvc4HAP/1R
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4356.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(396003)(366004)(346002)(39860400002)(136003)(376002)(230922051799003)(451199024)(186009)(1800799009)(64100799003)(41300700001)(31686004)(6512007)(53546011)(6506007)(6486002)(478600001)(2616005)(6666004)(15650500001)(38100700002)(36756003)(86362001)(31696002)(66946007)(26005)(44832011)(66556008)(5660300002)(110136005)(66574015)(2906002)(83380400001)(316002)(66476007)(8936002)(4326008)(8676002)(750200012)(43740500002)(45980500001);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?R3J1UFVaTUNXcnFnVlRjU0FwRTdDK055OVdCMlhWQmRZdmJPeUVsTWIzeTgz?=
+ =?utf-8?B?dTV4WGJRL2ZyM21FNHNCL3l5R3c4THNlb1RWZEpTK0RMV0RvdFVlZllaelFu?=
+ =?utf-8?B?VFYxSnpNbC9ZVjVjUnkzeXNnQjNWNXNWeWpYWnFxemxERjhxRFRQaGVTbm9F?=
+ =?utf-8?B?eE9FdVE2Nytud1lta1M3Vmgxa2pSSEVaSmN5cmE0RXIxOVV4d3pDY2g3Mitt?=
+ =?utf-8?B?Z25reHgycnk4VWVxNS8xM2ZjYmtZMWFCVENoQnZia2F0Z0NlZ3VINi9lTURO?=
+ =?utf-8?B?U3EwQUY3UTBzU2I5TFhoblRTclBsUFNtazFTMmZPUzFqN1I3Q2VnRnJuVkkr?=
+ =?utf-8?B?OHBFUFRndlJUdUNXRjFjRUcyK2ZoK2cxeEpqbDNXaHU3K2dqT3U1RWZIdVZx?=
+ =?utf-8?B?QlJRM3dEZzhEOTV0ZWU1bFV5UkRhbisyK2huMW95RmtEcFNVMXZvNU05MDBn?=
+ =?utf-8?B?MnBQRFI0UGxxK3ArUmM3T3ZWMDRQSUtzZ211S2xQbXF6UDVPOHFsYmw2dHJK?=
+ =?utf-8?B?YWl3WUJLcm0wWWZSNlRCclg3a0R4Um8vZlZSc24yR00xM0pSMTJNeGZDZ1NJ?=
+ =?utf-8?B?Y1dyNTRrTjhmeGdob0JyNWJnd1U0ekRjWnNRaDIzbjRiZ2x0cVcrem92YVA4?=
+ =?utf-8?B?Vkg2amV4LzNtRjY5dUtTbjV6ZnRoNXFnQkFSUkxsS1MxUlRDWG1uZ2pTSitL?=
+ =?utf-8?B?ckllVFA4NlVaaXBqWktSV1FpemVUZW9SbW82eS95clgxNmdjeDJTNUhTNVlr?=
+ =?utf-8?B?VklXcmh6azgzdkVZYldOSVhEV0lpU2lvMWRnVTlGZWJiODI5Q2dHVFhqdlR2?=
+ =?utf-8?B?ZytGbEFVMTRaZnV6SEorYyt2b0pLVTVrVURyVVRsSVBRWUt5RkVFSVNKQjFX?=
+ =?utf-8?B?TlV6RjZVSXJpajl4aXRKYkwzUEZDcElQMjZEenVuM1RZNnBqdjFubS9hY0M0?=
+ =?utf-8?B?L1A4cFl6cGc0aGgwWkRtNW9QRnBZS0h5UVBIRHVjRVQ1SVlXVVloOU1OZWIr?=
+ =?utf-8?B?cS9XcWdlMlJ0QzJkOGhsTytrbEVob1VxWjJaa0NETlo4YjNQcVVNRTN1SXhS?=
+ =?utf-8?B?SE5MRGVKeENIUjlqZmJ4Z2xxb0VzM0t5YktsMG5TWlhUeUFzeFBxNXhDell1?=
+ =?utf-8?B?NzZQSlMzdVRKcXYzbWkzOTRraldaQzlkOGFwK0MwZXFNdnYrRWUrc0c0OHc2?=
+ =?utf-8?B?TVZ2ZWsrR2lvNzFwWFpOcmJ4TGdPc3Zob0V3VkxtVmE3eHpoNDF6TytRYmxo?=
+ =?utf-8?B?Vml4aVZMcXYvWTNMbTBKMSt1RGpNU0g3aEtoa0xKZWNidkNDVFdOMDZyaUVo?=
+ =?utf-8?B?UW1KQ2tsWHU1T3NWeXBiUkZRSUszQ2dsd2xoeFhxb0lhQVlPUnVYSytEeTY3?=
+ =?utf-8?B?S3ZtbndpQlRwTmg3TmZyVGt0MVZlOTlpUDNWaDRkQmRwOVBGYk1OaHRVSDVC?=
+ =?utf-8?B?cGtZS2s4QS9HRlh2L1BxemlZazJvWGduZUdLVUJXb2xrZVRLR2VMeDNwbW9L?=
+ =?utf-8?B?dUdlTllWbkN3VU0zWUhCVVBHZ29JZDFPNCtsa3JlZkIxVS9QdEkyTHBzRTI5?=
+ =?utf-8?B?OXBPS0RvelM4YlcrUm42U1pqa2lMOGdtdVZYdGFnZml1T0RqUStPNS8xcytv?=
+ =?utf-8?B?cEdrQ05NZldyUjZJNHhHRG9tRXRoV2hGbm5SVGR3MGt0Tk1uN1dGMHRDQ0E1?=
+ =?utf-8?B?eU0vdGxRd1VDTkREenlRNk1SQzdyaHZBdWh6cEdTYllsbmZlQmthVHAzRlV4?=
+ =?utf-8?B?NDZWY2E1Q2tkY1kxWGVGNEwxelBwUGxtWUVmbk50U0laSHJxUUpsVUYrdGRB?=
+ =?utf-8?B?NU16OGM0eGMzUDhNWSs5ZTJ3S1pnS1lxRjFmOVhqOXlKR2hEM1VHNUk2OUJ5?=
+ =?utf-8?B?SHZNcTdWOUZjWXhPNk9DdzFyZE1uT3ZSdUFleTFmKzF1SmNLeDNKalJ3eDBJ?=
+ =?utf-8?B?cVRHWjZxeWhHOFVJalVmRDNkbG1sV3Vpc1FBUTQvelhWZ0FBZFZ4MXFPbHpV?=
+ =?utf-8?B?NnZwdGdUQlg4UXpUWisrcXFRNDQ5UVg2SWE3ZzQxcFVwVFJEVmw0QTFyUloz?=
+ =?utf-8?B?N2dZVzRGbS80NEhkcGVHQWZZc21RZXpMU3kzRHlDRDllZ1RxMU10bG4zcWhi?=
+ =?utf-8?Q?hmv9InddBHumaXXNRxm81n7a0?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2e0b530d-3fff-450b-d84c-08dbe09aca47
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4356.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Nov 2023 20:39:22.8027
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: vnFfLlckql58tI2yzPVRPqsLdj/JPoqQg6qV6xqgC8oUjAgC5RdAWdC8rqQSMglIWWSijzJTl+giQy37Uo7gQw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CYYPR12MB8870
 
-Dear Git users,
 
-I hereby announce that Git for Windows 2.43.0-rc1 is available from:
 
-    https://github.com/git-for-windows/git/releases/tag/v2.43.0-rc1.windows.1
+On 11/7/23 02:06, Uwe Kleine-König wrote:
+> Hello Junio,
+> 
+> On Tue, Nov 07, 2023 at 08:06:22AM +0900, Junio C Hamano wrote:
+>> Uwe Kleine-König <u.kleine-koenig@pengutronix.de> writes:
+>>
+>>> Hello,
+>>>
+>>> Since commit 3ece9bf0f9e24909b090cf348d89e8920bd4f82f I experience that
+>>> the generated Message-Ids don't start at ....-1-... any more. I have:
+>>>
+>>> $ git send-email w/*
+>>> ...
+>>> Subject: [PATCH 0/5] watchdog: Drop platform_driver_probe() and convert to platform remove callback returning void (part II)
+>>> Date: Mon,  6 Nov 2023 16:10:04 +0100
+>>> Message-ID: <20231106151003.3844134-7-u.kleine-koenig@pengutronix.de>
+>>> ...
+>>>
+>>> So the cover letter is sent with Message-Id: ...-7-...
+>>
+>> The above is consistent with the fact that a 5-patch series with a
+>> cover letter consists of 6 messages.  Dry-run uses message numbers
+>> 1-6 and forgets to reset the counter, so the next message becomes 7.
+>> As you identified, the fix in 3ece9bf0 (send-email: clear the
+>> $message_id after validation, 2023-05-17) for the fallout from an
+>> even earlier change to process each message twice still had left an
+>> observable side effect subject to the Hyrum's law, it seems.
+>>
+>>> +my ($message_id_stamp, $message_id_serial);
+>>>  if ($validate) {
+>>>  	# FIFOs can only be read once, exclude them from validation.
+>>>  	my @real_files = ();
+>>> @@ -821,6 +822,7 @@ sub is_format_patch_arg {
+>>>  	}
+>>>  	delete $ENV{GIT_SENDEMAIL_FILE_COUNTER};
+>>>  	delete $ENV{GIT_SENDEMAIL_FILE_TOTAL};
+>>> +	$message_id_serial = 0;
+>>>  }
+>>
+>> This fix looks quite logical to me, but even with this, the side
+>> effects of the earlier "read message twice" persists in end-user
+>> observable form, don't they?  IIRC, when sending out an N message
+>> series, we start from the timestamp as of N seconds ago and give
+>> each message the Date: header that increments by 1 second, which
+>> would mean the validator will see Date: that is different from what
+>> will actually be sent out, and more importantly, the messages sent
+>> out for real will have timestamps from the future, negating the
+>> point of starting from N seconds ago in the first place.
+> 
+> The series I used as an example here was finally sent out with
+> git-send-email patched with my suggested change.
+> 
+> The Message-Ids involved are:
+> 
+> 	20231106154807.3866712-1-u.kleine-koenig@pengutronix.de
+> 	20231106154807.3866712-2-u.kleine-koenig@pengutronix.de
+> 	20231106154807.3866712-3-u.kleine-koenig@pengutronix.de
+> 	20231106154807.3866712-4-u.kleine-koenig@pengutronix.de
+> 	20231106154807.3866712-5-u.kleine-koenig@pengutronix.de
+> 	20231106154807.3866712-6-u.kleine-koenig@pengutronix.de
+> 
+> So the Ids are are identical apart from the number this report is about.
+> 
+>> Your script may not have been paying attention to it and only noticed
+>> the difference in id_serial, but somebody else would complain the
+>> difference coming from calling gen_header more than once for each
+>> messages since a8022c5f (send-email: expose header information to
+>> git-send-email's sendemail-validate hook, 2023-04-19).
+>>
+>> So, I dunno.  Michael, what do you think?  It appears to me that a
+>> more fundamental fix to the fallout from a8022c5f might be needed
+>> (e.g., we still let gen_header run while validating, but once
+>> validation is done, save the headers that validator saw and use them
+>> without calling gen_header again when we send the messages out, or
+>> something), if we truly want to be regression free.
+> 
+> That sounds sane.
 
-Changes since Git for Windows v2.42.0(2) (August 30th 2023)
-
-New Features
-
-  * Comes with Git v2.43.0-rc1.
-  * Comes with MinTTY v3.6.5.
-  * Comes with MSYS2 runtime v3.4.9.
-  * Comes with GNU TLS v3.8.1.
-  * When installing into a Windows setup with Mandatory Address Space
-    Layout Randomization (ASLR) enabled, which is incompatible with the
-    MSYS2 runtime powering Git Bash, SSH and some other programs
-    distributed with Git for Windows, the Git for Windows installer now
-    offers to add exceptions that will allow those programs to work as
-    expected.
-  * Comes with OpenSSH v9.5.P1.
-  * Comes with cURL v8.4.0.
-  * Comes with OpenSSL v3.1.4.
-  * Comes with Git Credential Manager v2.4.1.
-
-Bug Fixes
-
-  * Symbolic links whose target is an absolute path without the drive
-    prefix accidentally had a drive prefix added when checked out,
-    rendering them "eternally modified". This bug has been fixed.
-  * Git for Windows's installer is no longer confused by global GIT_*
-    environment variables.
-  * The installer no longer claims that "fast-forward or merge" is the
-    default git pull behavior: The default behavior has changed in Git
-    a while ago, to "fast-forward only".
-
-Git-2.43.0-rc1-64-bit.exe | 88ede07be3d3cee256f180130ed69e978e93271e835d31078e75ec8c0b13b77e
-Git-2.43.0-rc1-32-bit.exe | cf66dda600bf0d1dbb7e4ae85c33cc81fd3a5aefc09ea43bad8737f2c7043644
-PortableGit-2.43.0-rc1-64-bit.7z.exe | 5027018b1274ff5164f9ca1277838aea867c78c521a0a7d418b005dee651e00b
-PortableGit-2.43.0-rc1-32-bit.7z.exe | 42a771402c47e0f0bc10100107fc5427951e95b309e5c3f53e48aed033165e98
-MinGit-2.43.0-rc1-64-bit.zip | e3ca213c6f6f4acc08b249032770b5a061310473444c59628f0732bee02e15f1
-MinGit-2.43.0-rc1-32-bit.zip | 375e8ec3c1d91536c3a2800db52c851d06e9273c0f0e13bc7cd54f32159e06d3
-MinGit-2.43.0-rc1-busybox-64-bit.zip | bb4f22761110411d519f7c05bdd0655938db9d056dd929074d68603ff2f3713c
-MinGit-2.43.0-rc1-busybox-32-bit.zip | 8eabb4f8b16018fe4124841957aebc1e2a9de9ed12c40b20b2bae59a69bfb088
-Git-2.43.0-rc1-64-bit.tar.bz2 | fab6adea4a09a079a783aae395cf8c5963bca97095f16790f4c30f54ced8303c
-Git-2.43.0-rc1-32-bit.tar.bz2 | e29cf087c9c5456092a53736b563d4c84c9ed4100552b532a7cf6abef232bef7
-
-Ciao,
-Johannes
+I agree that a more fundamental fix would be optimal.  Saving the header
+information after generating it and using that in both validation and
+sending would be great.  That would probably need to be paired with
+cleaning up all the random code in between the function declarations
+so that we can get a good look at all the variables.  Right now the
+control flow is hard to follow.  I can't guarantee any specific timeline
+on those patches.  It would likely be fairly large changes.  If anyone
+else wants to take a crack at it, feel free.  Otherwise I may tinker
+and post when I have a chance.
+> 
+>> By the way, out of curiosity, earlier you said your script looks at
+>> the Message-IDs and counts the number of messages.  How does it do
+>> that?  Does it read the output of send-email and pass the messages
+>> to MTA for sending out for real?
+> 
+> The output of git send-email dumps the messages it sends out and then I
+> pick the message-id of the last mail by cut-n-paste and call my script
+> with that as a parameter. It then adds notes to the $commitcount topmost
+> commits such that I have something like this on the sent out commits:
+> 
+> 	Notes:
+> 	    Forwarded: id:20231106154807.3866712-2-u.kleine-koenig@pengutronix.de (v1)
+> 
+> This is very convenient to find the thread to ping if a patch doesn't
+> make it into the next release.
+> 
+> (By the way, one difficulty in my script is that depending on the series
+> having a cover letter or not I have to apply the id:....-1-... marker or
+> not. Would be great if git send-email started with ...-0-... for a
+> series with a cover letter. Detecting that reliably isn't trivial I
+> guess.)
+> 
+> Best regards
+> Uwe
+> 
