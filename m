@@ -1,160 +1,203 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1DF4D528
-	for <git@vger.kernel.org>; Wed,  8 Nov 2023 07:30:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF9BED278
+	for <git@vger.kernel.org>; Wed,  8 Nov 2023 07:31:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RWGFVlMx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lpsXVl0z"
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75ED7170D
-	for <git@vger.kernel.org>; Tue,  7 Nov 2023 23:30:08 -0800 (PST)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.west.internal (Postfix) with ESMTP id E734A32009FF
-	for <git@vger.kernel.org>; Wed,  8 Nov 2023 02:30:07 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Wed, 08 Nov 2023 02:30:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1699428607; x=1699515007; bh=cd
-	z5SMqW8kENbFOwiZlwZAY+siLBzuIKGJslFg4PSKY=; b=RWGFVlMx2g7Xw3thqo
-	mE+gxd6YC+PUqF/0/0C6lttO3l9NfOHY8mhpFGkhJE45pIFtReSQTqq473QDtSGU
-	P2uvqM+nE5hgjGyvYCiTp3lvcIMVYyOGjGJ3tRms453WHoC7mhBYipClzdkw3sRo
-	lHrQNgOpwXGSOV/ycKyj2FR9Fj29fXrxONwQoUcA2xcNcwW02jAttt0lgTPUWqQd
-	pMtrYLyEfz42hR9kFaiWwxUNDNhF8qmOLsYIkcsEnCeRg/w4d4Rpfdk28wR2WkmC
-	BdAscdOg621klYdUlRNnRMgC1N5DymCH3V+d5qY4h0sZqih0u4e7kT2Ehe/CaseQ
-	fUbQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1699428607; x=1699515007; bh=cdz5SMqW8kENb
-	FOwiZlwZAY+siLBzuIKGJslFg4PSKY=; b=lpsXVl0zFIrmfDZRH06o3KYzouV33
-	vn21S3QNq8YU0en/Zu3t1zxJfh0rRMKvuR/aFQMH5345M17arzUDh3ckx23le3jC
-	ukWoYKBiixAbn+ng7llH/P8p5qDbGt2YGtfq5z9Tb1bj5TfEleFax97stdJD1Xk4
-	5qZXTCWi+ie9VfQ0seJjlzIfP+yWdpqdoDW1ya3KqkiFhL2kYyM9p6oHHnWHwyiM
-	dzHwj9xmUyx5SfyWiTggDEZXcu/75tQ0FbTKTNb9CB1KAnSjgu8oaPnPHFR+4c4t
-	R/kx2h+gmxBOCsye80r4fDK2Bp2kqAbTnxN6BcyZ9no7WMw8GSuAN8RVw==
-X-ME-Sender: <xms:_zhLZV0k6ACWz1e4iokK2ogxdbNvMxXHZzZns1Emgiqq6aPE3wM3IQ>
-    <xme:_zhLZcElNWeeIcLw0AqttV_gtkLkiPbA_PLdgAuny2cVEeNeHu-jpSG9BZlcZ7wx0
-    4OpGhIPx1MKS7wBVw>
-X-ME-Received: <xmr:_zhLZV7R2NQ4vAUEXAXPkyKGsGt7cmvHncnjk_OUudzUupAfowWMjMj5D7Kt0M5SEKnKf9KLjRc-ovO_ilTR0zpVaRODhzxGBXxXYYaeE1l->
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddukedguddtiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeehgefhtdefueffheekgfffudelffejtd
-    fhvdejkedthfehvdelgfetgfdvtedthfenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:_zhLZS0F9zfTMuBwuBVvGGVIBw-Qds0k9serZXZDK6gEP-uW44TfBg>
-    <xmx:_zhLZYFmk8rbdUd1_aRerEbHk_cfLOE4PANImpAZ7dpbVt5Efj-S5g>
-    <xmx:_zhLZT8nrYxrXEEdSDKTEkxKqgIB_ZbuQNVJJZTrKtxOU3VB093UEQ>
-    <xmx:_zhLZbzv9ROUVJeeHmcgNGx7uAixZe1Mrr9QB2pEqgJ8iIGoW4Wg8A>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 8 Nov 2023 02:30:06 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c6a8d844 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Wed, 8 Nov 2023 07:29:42 +0000 (UTC)
-Date: Wed, 8 Nov 2023 08:30:05 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Subject: [PATCH 3/3] t9164: fix inability to find basename(1) in hooks
-Message-ID: <b50e625f9677469ecb33150343b88d5ac119dadd.1699428122.git.ps@pks.im>
-References: <cover.1699428122.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hS8mKEq9"
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F112512B
+	for <git@vger.kernel.org>; Tue,  7 Nov 2023 23:31:24 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-507a5f2193bso533924e87.1
+        for <git@vger.kernel.org>; Tue, 07 Nov 2023 23:31:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1699428683; x=1700033483; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Mb9cgp6tR3bgikIKRtqhuEwNhqSNeMzPYve4tsk4Ne4=;
+        b=hS8mKEq9T2DQeL6x1TGbxO2X4lFeUq9Q5u78dWCtEP4RnWY/RKtgU4tfdp4jaq5Q2J
+         ogn0GLi+gnbzr+9QGhSvgjmn3MttiQE1e/FRfUQ/gUl7CWvLcCOmhFQ9mVHo2r2v97on
+         YngstNq/fxZoAC05pD2QkHM/GjZRDSfUAh6nrxNwl3/MeH0KGIbzWgZPIxcJmmNUqv8C
+         BVA4v5GNMkLDuj3w5ANF5Il9Q3/5DWqMF+r872przbFD5pUgWyWZHn0i+tiqVoSjttE3
+         86q1JYaG+LcK9YyN+ndQkVCn3ObJbmbR6t1suEgvgwOIVmZJONQAOsMdFq37Yw7O6n7F
+         PG1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699428683; x=1700033483;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Mb9cgp6tR3bgikIKRtqhuEwNhqSNeMzPYve4tsk4Ne4=;
+        b=WkIZMb7dVKrToWnF9ZgACAQiqcbmIXwune+alcxkJT13w9clRnadwBUfYgAKZ1P++z
+         wjhNxOxi6zT9le6F1LmMUAekQ0ZdA7a05Ud4Wd3yXUxWEfRYoWqWp/yQ00MFLdKbllto
+         NBJwnB8ayeJHF49xKNw7U4T+bh8DqwrdY0G6hhkoGemw48jGf3/Blh+eVlGjaYJFjOt1
+         NH7mQztmLGBlbMpS3H0cuxO1oBwWRoizXRNV0O7UGzNUYaVbLpwNZhig8A09V3Nej1bV
+         gTgH3IpMFJ7MfiTYcyK4p8PR21E3pVDPRry9XykaDLb+xmbOlLCeXCal9POCXHqeKdW1
+         IKPQ==
+X-Gm-Message-State: AOJu0Yx4UoU1qcDhEKa351DTsbAsD7ohq7W4WaNxOZqvke0UlfLwA0Vz
+	D9ioyt1b0v7LwoAnsOr53QGBjNAoSM7RGVRN7Qs=
+X-Google-Smtp-Source: AGHT+IGyjbKgOAJJ5yGtGmccekROgTkbms1cq/6hzxrE24E+b9qIyEv87J/1y5Smrl8azoKdxFtjaOO1z1MFu9XO5WY=
+X-Received: by 2002:a19:4f18:0:b0:504:33ff:156a with SMTP id
+ d24-20020a194f18000000b0050433ff156amr1969044lfb.11.1699428682834; Tue, 07
+ Nov 2023 23:31:22 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="2P82t5COjCs7He+F"
-Content-Disposition: inline
-In-Reply-To: <cover.1699428122.git.ps@pks.im>
-
-
---2P82t5COjCs7He+F
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <87cywmintp.fsf@ellen.idiomdrottning.org> <CABPp-BH7WBm1j-Ue9oZFjoy6sTcw5B0hz_ndDEtJqvpZF4YF=w@mail.gmail.com>
+ <ba047d38-4ad1-4440-8342-3379404f430b@gmail.com> <CAESOdVDmQ85-des6Au-LH0fkUB9BZBZho0r-5=8MkPLJVA5WQQ@mail.gmail.com>
+In-Reply-To: <CAESOdVDmQ85-des6Au-LH0fkUB9BZBZho0r-5=8MkPLJVA5WQQ@mail.gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Tue, 7 Nov 2023 23:31:00 -0800
+Message-ID: <CABPp-BEcqSJ79b9WLm+KgKkcPwSwTv3o13meU_aXakQhV6iKDQ@mail.gmail.com>
+Subject: Re: first-class conflicts?
+To: Martin von Zweigbergk <martinvonz@google.com>
+Cc: phillip.wood@dunelm.org.uk, Sandra Snan <sandra.snan@idiomdrottning.org>, 
+	git@vger.kernel.org, "Randall S. Becker" <rsbecker@nexbridge.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-The post-commit hook in t9164 is executed with a default environment.
-To work around this issue we already write the current `PATH` value into
-the hook script. But this is done at a point where we already tried to
-execute non-built-in commands, namely basename(1). While this seems to
-work alright on most platforms, it fails on NixOS.
+Hi Martin,
 
-Set the `PATH` variable earlier to fix this issue. Note that we do this
-via two separate heredocs. This is done because in the first one we do
-want to expand variables, whereas in the second one we don't.
+On Tue, Nov 7, 2023 at 9:38=E2=80=AFAM Martin von Zweigbergk
+<martinvonz@google.com> wrote:
+>
+[...]
+> > One thing to think about if we ever want to implement this is what othe=
+r
+> > data we need to store along with the conflict trees to preserve the
+> > context in which the conflict was created. For example the files that
+> > are read by "git commit" when it commits a conflict resolution. For a
+> > single cherry-pick/revert it would probably be fairly straight forward
+> > to store CHERRY_PICK_HEAD/REVERT_HEAD and add it as a parent so it gets
+> > transferred along with the conflicts. For a sequence of cherry-picks or
+> > a rebase it is more complicated to preserve the context of the conflict=
+.
+> > Even "git merge" can create several files in addition to MERGE_HEAD
+> > which are read when the conflict resolution is committed.
+>
+> Good point. We actually don't store any extra data in jj. The old
+> per-path conflict model was prepared for having some label associated
+> with each term of the conflict but we never actually used it.
+>
+> If we add such metadata, it would probably have to be something that
+> makes sense even after pushing the conflict to another repo, so it
+> probably shouldn't be commit ids, unless we made sure to also push
+> those commits. Also note that if you `jj restore --from <commit with
+> conflict>`, you can get a conflict into a commit that didn't have
+> conflicts previously. Or if you already had conflicts in the
+> destination commit, your root trees (the multiple root trees
+> constituting the conflict) will now have conflicts that potentially
+> were created by two completely unrelated operations, so you would kind
+> of need different labels for different paths.
+>
+> https://github.com/martinvonz/jj/issues/1176 has some more discussion
+> about this.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- t/t9164-git-svn-dcommit-concurrent.sh | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+Interesting link; thanks for sharing.
 
-diff --git a/t/t9164-git-svn-dcommit-concurrent.sh b/t/t9164-git-svn-dcommi=
-t-concurrent.sh
-index c8e6c0733f4..3b64022dc57 100755
---- a/t/t9164-git-svn-dcommit-concurrent.sh
-+++ b/t/t9164-git-svn-dcommit-concurrent.sh
-@@ -47,9 +47,15 @@ setup_hook()
- 	echo "cnt=3D$skip_revs" > "$hook_type-counter"
- 	rm -f "$rawsvnrepo/hooks/"*-commit # drop previous hooks
- 	hook=3D"$rawsvnrepo/hooks/$hook_type"
--	cat > "$hook" <<- 'EOF1'
-+	cat >"$hook" <<-EOF
- 		#!/bin/sh
- 		set -e
-+
-+		PATH=3D\"$PATH\"
-+		export PATH
-+	EOF
-+
-+	cat >>"$hook" <<-'EOF'
- 		cd "$1/.."  # "$1" is repository location
- 		exec >> svn-hook.log 2>&1
- 		hook=3D"$(basename "$0")"
-@@ -59,11 +65,11 @@ setup_hook()
- 		cnt=3D"$(($cnt - 1))"
- 		echo "cnt=3D$cnt" > ./$hook-counter
- 		[ "$cnt" =3D "0" ] || exit 0
--EOF1
-+	EOF
-+
- 	if [ "$hook_type" =3D "pre-commit" ]; then
- 		echo "echo 'commit disallowed' >&2; exit 1" >>"$hook"
- 	else
--		echo "PATH=3D\"$PATH\"; export PATH" >>"$hook"
- 		echo "svnconf=3D\"$svnconf\"" >>"$hook"
- 		cat >>"$hook" <<- 'EOF2'
- 			cd work-auto-commits.svn
---=20
-2.42.0
+I am curious more about the data you do store.  My fuzzy memory is
+that you store a commit header involving something of the form "A + B
+- C", where those are all commit IDs.  Is that correct?  Is this in
+addition to a normal "tree" header as in Git, or are one of A or B
+found in the tree header?  I think you said there was also the
+possibility for more than three terms.  Are those for when a
+conflicted commit is merged with another branch that adds more
+conflicts, or are there other cases too?  (Octopus merges?)
 
+What about recursive merges, i.e. merges where the two sides do not
+have a unique merge base.  What is the form of those?  (Would "- C" be
+replaced by "- C1 - C2 - ... - Cn"?  Or would we create the virtual
+merge base V and then do a " - V"?  Or do we only have "A + B"?)
 
---2P82t5COjCs7He+F
-Content-Type: application/pgp-signature; name="signature.asc"
+You previously mentioned that if someone goes to edit a commit with
+conflicts, and resolves the conflicts in just one file, then you can
+modify each of the trees A, B, and C such that a merging of those
+trees gives the partially resolved result.  How does one do that with
+special conflicts, such as:
+   * User modifies file D on both sides of history, in conflicting
+ways, and also renames D -> E on one side of history.  User checks out
+this conflicted commit and fixes the conflicts in E (but not other
+files) and does a "git add E".  When they go to commit, does the
+machinery need a mapping to figure out that it needs to adjust "D" in
+two of the trees while adjusting "E" in the other?
+   * Similar to the above, but the side that doesn't rename D renames
+olddir/ -> newdir/, and the side that renames D instead renames
+D->olddir/E.  For this case, the file will end up at newdir/E; do we
+need the backward mapping from newdir/E to both olddir/E and D?
+   * Slightly different than the above: User renames D -> E on one
+side of history, and D -> F on the other.  That's a rename/rename
+(1to2) conflict.  User checks out this conflicted commit and does a
+"git add F", marking it as okay, but leaving E conflicted.  How can
+one adjust the tree such that no conflict for F appears, but one still
+appears for E?
+   * Similar to above with an extra wrinkle: User renames D -> E on
+one side of history, and on the other side both renames D -> F and
+adds a slightly different file named E.  That's both a rename/rename
+(1to2) conflict for E & F, and an add/add conflict for E.  Users
+checks out this conflicted commit and resolves textual conflict in E
+(in favor of the "other side"), and does a "git add E", marking it as
+resolved.  When they go to commit, we not only need to worry about
+making sure a conflict for F appears, we also need to figure out how
+to adjust the tree such that the merge result gives you the expected
+value in E without affecting F.  How can that be done?
 
------BEGIN PGP SIGNATURE-----
+On the first two bullet points, there's no such thing as a reverse
+mapping from conflicted files to original files from previous commits
+in current Git.  Creating one, if possible, would be a fair amount of
+work.  But, I'm not so sure it's even possible, due to the fact that
+conflicts and files do not always have one-to-one (or even one-to-many
+or many-to-one) relationships; many-to-many relationship can exist, as
+I've started alluding to in the last two bullet points (see also
+https://github.com/git/git/blob/98009afd24e2304bf923a64750340423473809ff/Do=
+cumentation/git-merge-tree.txt#L266-L271).
+In fact, they can get even more complicated (e.g.
+https://github.com/git/git/blob/master/t/t6422-merge-rename-corner-cases.sh=
+#L1017-L1022).
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVLOPwACgkQVbJhu7ck
-PpRiIRAAqaAfoQ7gmAYsReGFbdMcaxKcNNOEwnsttAhjFWC3MQD2GEKqRBiYSc9A
-Yk7AkG4uaklL4zWEJmLb5xaqenZZf9gtLYyTSg8XTp3Zbn7athL0JCodmoM/NEz6
-XRZkeBc/taVCUiqc//IkdfrpVuJk4cqwAOwUt73bCdi7y7WblLf4PEVhDrDet2Gd
-o8sF4OM9CMNJO1ypLY3s+x9LiBnxlmx5cubNnZgj2vWP65CQm2Ki0+hposg9gANr
-rl6hdwoP72y4479xgzni8LUgx9IXpRNEC86+1Cw1Ot5p0o2Q8u/CJ5drytZKY6Wy
-KbMFHuaahYLsA3gKmJ5V2cF8ObRNokr4kOawgyQSs6XXNKs5bsuhuHxTYJDOToB0
-nIhs8lnP8uKOsh5NGdrwb6dGbRmCfH3c7GA3FJV1xU+gDah+YOfeh/7TMItHx9Uq
-pD00VGXhX0mUmqM8og3X7ypKxXDoWpSzI1/UU0Gk7Afq3jrk6tzw3v3BNh7rrdp7
-ybXgmPibwRpnU/qr/Ge+OEAEKgCOdaY4TjQkCfowr5fjqyRyAiDt0UFyXQUs+/2Z
-22yCZPmJ49LsstIS6wb74qYxIt3V/juu4Gqt76bo0xkpAq1FdsbnUeVdNLKbrhwi
-WzzNFyVSf6rHx1P3o1Ms0l2hogvd7Y/4hYBshXMLDxnAu2iWxig=
-=+7Gk
------END PGP SIGNATURE-----
+> > > But we'd also have to be careful and think through usecases, includin=
+g
+> > > in the surrounding community.  People would probably want to ensure
+> > > that e.g. "Protected" or "Integration" branches don't get accept
+> > > fetches or pushes of conflicted commits,
+> >
+> > I think this is a really important point, while it can be useful to
+> > share conflicts so they can be collaboratively resolved we don't want t=
+o
+> > propagate them into "stable" or production branches. I wonder how 'jj'
+> > handles this.
+>
+> Agreed. `jj git push` refuses to push commits with conflicts, because
+> it's very unlikely that the remote will be able to make any sense of
+> it. Our commit backend at Google does support conflicts, so users can
+> check out each other's conflicted commits there (except that we
+> haven't even started dogfooding yet).
 
---2P82t5COjCs7He+F--
+I'm curious to hear what happens when you do start dogfooding, on
+projects with many developers and which are jj-only.  Do commits with
+conflicts accidentally end up in mainline branches, or are there good
+ways to make sure they don't hit anything considered stable?
+
+> > > git status would probably
+> > > need some special warnings or notices, git checkout would probably
+> > > benefit from additional warnings/notices checks for those cases, git
+> > > log should probably display conflicted commits differently, we'd need
+> > > to add special handling for higher order conflicts (e.g. a merge with
+> > > conflicts is itself involved in a merge) probably similar to what jj
+> > > has done, and audit a lot of other code paths to see what would be
+> > > needed.
+> >
+> > As you point out there is a lot more to this than just being able to
+> > store the conflict data in a commit - in many ways I think that is the
+> > easiest part of the solution to sharing conflicts.
+>
+> Yes, I think it would be a very large project. Unlike jj, Git of
+> course has to worry about backwards compatibility. For example, you
+> would have to decide if your goal - even in the long term - is to make
+> `git rebase` etc. not get interrupted due to conflicts.
+
+...and whether to copy jj's other feature in this area in some form:
+auto-rebasing any descendants when you checkout and amend an old
+commit (e.g. to resolve conflicts).  :-)
