@@ -1,160 +1,167 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4D5A12E47
-	for <git@vger.kernel.org>; Wed,  8 Nov 2023 10:42:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NNzgk5M1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dwuFs2Pl"
-Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AA691BD4
-	for <git@vger.kernel.org>; Wed,  8 Nov 2023 02:42:17 -0800 (PST)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.west.internal (Postfix) with ESMTP id B46CA32009EE;
-	Wed,  8 Nov 2023 05:42:16 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Wed, 08 Nov 2023 05:42:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1699440136; x=1699526536; bh=nZ
-	I//KvLB5dqBSfmvbZbdqrlXm9vgLYc1IoQtiUes44=; b=NNzgk5M1Pc+0IYP4VS
-	4hu1iFw8vBpHCFRBasCfaklVBa1qRfGca36GKFQUKNR+DxsZisFjzhjKXz+hrVgE
-	FukoBVkSOnWk5l8ZiLv4PdjNX4uZ08T68gs8n47TjZKVnO+zjO3WGRPK85IwPB/Q
-	kAQPHSJCDdbSwwWhE3qiFigBqI7k4S2gILWcp1Dt3n7Q82KgJwlG/5M2V3T8MVOj
-	OjIgnBOsaXE4FIbI+XKgeQKKavxvtpUqr03RWAeI8wR+YBWy9Mrl/tBTXyaetN4C
-	GArwBUOxeViuV98Aam2cXXkxxG+IplQ7QxUBZTtO49NpxM9wKT6wDPbrVyctheDz
-	0mFg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1699440136; x=1699526536; bh=nZI//KvLB5dqB
-	SfmvbZbdqrlXm9vgLYc1IoQtiUes44=; b=dwuFs2Pl5hCoSgcKNPLXiTFAs2lFt
-	Ls7OWFcOVTOGHYawRXnbK3fZ6et/5FxR/VGnZ0zZIAOlLrM2J5B/N3v8UWAWpmDz
-	GUS4ROWjfERSO9tJuFuV1BVrceKgGCh16ArexV5MhjtAwKcWaOWuvKBO/zjVSZI2
-	SEnAja4wnE7i6NqlJhmdLdtcTQwgl8TtEpWcrj2sWhXNHmR5nYgAvT59G5ZoMTK8
-	CIgNHOejYj4Q1dpBIC4WHdjAKCQ+bmN4i8Pzg0UUcYg89yIjwBdy2AsAaJEeG2PI
-	8BwUDflFOrA5r1LIgIiTA/RW6rko/w6jrDHwOhJ99boAe85TJR+ZlEfZg==
-X-ME-Sender: <xms:B2ZLZU1xK49vN7nobkp8SmNiQSy2yoI-oFvBPdSDyX-tMnaxkdvc4Q>
-    <xme:B2ZLZfGHPH46HQCdoZWK4FYp26_0fjh7bPOoW_ydb5a7dl491cofOq4Ih54aga7kF
-    hRXA3azgMhAv1HIpg>
-X-ME-Received: <xmr:B2ZLZc6_dGlHmLATn-UUMFeDsJivpD2cgEdQ_aZGymnAFWNHv0o_eoU7MQ8A_bWaJquxAuNZseQSJ2w4S-1yNP6mQTwpLLRnzxrqA2MBr71K>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudduledgudekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
-    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:B2ZLZd0q1IUebBs8ThuYC6wSzb30rYzUAqR_4Oj4SHZp8QfkaZZQhA>
-    <xmx:B2ZLZXGS2P-mRXEuRd0tphwfW3RigmgVjGM617_80UIa2hrBfVwg5w>
-    <xmx:B2ZLZW982gEWIgsNpsM1RnAPe51gIGlAkbahdYCrMIfcJTOXd6b4iw>
-    <xmx:CGZLZaPIQO4RT8kAXII9gVyY7sUg2MpTPyFq1_Fa1CAjGiIjBHxhig>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Nov 2023 05:42:15 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 41c05d1d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 8 Nov 2023 10:41:48 +0000 (UTC)
-Date: Wed, 8 Nov 2023 11:42:11 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/3] t/lib-httpd: dynamically detect httpd and modules
- path
-Message-ID: <ZUtmAyVHO4ROhLEq@tanuki>
-References: <cover.1699428122.git.ps@pks.im>
- <ac059db8fedc6493c64f703814c7db11adb4385e.1699428122.git.ps@pks.im>
- <xmqqcywk7k0d.fsf@gitster.g>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C75715EAA
+	for <git@vger.kernel.org>; Wed,  8 Nov 2023 11:38:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+Received: from mail.inka.de (mail.inka.de [IPv6:2a04:c9c7:0:1073:217:a4ff:fe3b:e77c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E002193
+	for <git@vger.kernel.org>; Wed,  8 Nov 2023 03:38:17 -0800 (PST)
+Received: from raven.inka.de (uucp@[127.0.0.1])
+	by mail.inka.de with uucp (rmailwrap 0.5) 
+	id 1r0gsy-0024iB-CI; Wed, 08 Nov 2023 12:38:16 +0100
+Received: by raven.inka.de (Postfix, from userid 1000)
+	id B6DD3600B8; Wed,  8 Nov 2023 12:36:36 +0100 (CET)
+Date: Wed, 8 Nov 2023 12:36:36 +0100
+From: Josef Wolf <jw@raven.inka.de>
+To: git@vger.kernel.org
+Subject: Re: Error when "git mv" file in a sparsed checkout
+Message-ID: <20231108113636.GT7041@raven.inka.de>
+Mail-Followup-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
+References: <20231107130303.GS7041@raven.inka.de>
+ <CABPp-BEAU8rPeNHphut0ZxcLdH0pzjh+Z_CF+rg2uhvVZoZfxg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="YqWe118U3Okirj4R"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqcywk7k0d.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABPp-BEAU8rPeNHphut0ZxcLdH0pzjh+Z_CF+rg2uhvVZoZfxg@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
+Thanks for the reply, Elijah!
 
---YqWe118U3Okirj4R
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Nov 08, 2023 at 04:59:46PM +0900, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->=20
-> > In order to set up the Apache httpd server, we need to locate both the
-> > httpd binary and its default module path. This is done with a hardcoded
-> > list of locations that we scan. While this works okayish with distros
-> > that more-or-less follow the Filesystem Hierarchy Standard, it falls
-> > apart on others like NixOS that don't.
+On Tue, Nov 07, 2023 at 06:21:00PM -0800, Elijah Newren wrote:
+> On Tue, Nov 7, 2023 at 5:32 AM Josef Wolf <jw@raven.inka.de> wrote:
+> > I have used the procedure described below for many years. In fact,
+> > this procedure is part of a script which I am using for about 10 years.
+> > This procedure was definitely working with git-2-25-1 and git-2.26.2.
 > >
-> > While it is possible to specify these paths via `LIB_HTTPD_PATH` and
-> > `LIB_HTTPD_MODULE_PATH`, it is not a nice experience for the developer
-> > to figure out how to set those up. And in fact we can do better by
-> > dynamically detecting both httpd and its module path at runtime:
+> > Now, with git-2.34.1 (on a freshly installed ubuntu-22.04), this
+> > procedure fails.
 > >
-> >     - The httpd binary can be located via PATH.
+> > Here is what I do:
 > >
-> >     - The module directory can (in many cases) be derived via the
-> >       `HTTPD_ROOT` compile-time variable.
+> > I want to rename a file on a branch which is not currently checked out
+> > without messing/touching my current working directory.
 > >
-> > Refactor the code to do so. If runtime detection of the paths fails we
-> > continue to fall back to the hardcoded list of paths.
->=20
-> Hmph.
->=20
-> I do not think we would want to punish the distros that follow the
-> FHS that was created explicitly to help developers by standardizing
-> locations of various things, with an approach this patch takes that
-> throws everthing with bathwater and rely on $PATH first.
->=20
-> Would it be sufficient to please NixOS if we simply append $(command
-> -v apache) or whatever after the well known candidate locations?
+> > For this, I first create a clone of the repo with shared git-directory:
+> >
+> >   $ SANDBOX=/var/tmp/manage-scans-X1pKZQiey
+> >   $ WT=$SANDBOX/wt
+> >   $ GIT=$SANDBOX/git
+> >
+> >   $ mkdir -p $SANDBOX
+> >   $ git --work-tree $WT --git-dir $GIT clone -qns -n ~/upstream-repo $GIT
+> >
+> > Then, I do a sparse checkout in this clone, containing only the file
+> > that is to be renamed:
+> >
+> >   $ cd $WT
+> >   $ echo 'path/to/old-filename' >>$GIT/info/sparse-checkout
+> >   $ git --work-tree $WT --git-dir $GIT config core.sparsecheckout true
+> >   $ git --work-tree $WT --git-dir $GIT checkout -b the-branch remotes/origin/the-branch
+> >   Switched to a new branch 'the-branch'
+> >
+> > Next step would be to "git mv" the file:
+> >
+> >   $ mkdir -p /path/to  # already exists, but should do no harm
+> >   $ git --work-tree $WT --git-dir $GIT mv path/to/old-filename path/to/new-filename
+> 
+> sparse checkouts are designed such that only files matching the
+> patterns in the sparse-checkout file should be present in the working
+> tree, so renaming to a path that should not be present is problematic.
+> We could possibly have "git-mv" immediately remove the path from the
+> working tree (while leaving the new pathname in the index), but that's
+> problematic in that users often overlook the index and only look at
+> the working tree and might think the file was deleted instead of
+> renamed.  Not immediately removing it is potentially even worse,
+> because any subsequent operation (particularly ones like checkout,
+> reset, merge, rebase, etc.) are likely to nuke the file from the
+> working tree and the fact that the removal is delayed makes it much
+> harder for users to understand and diagnose.
+> 
+> So, Stolee fixed this to make it throw an error; see
+> https://lore.kernel.org/git/pull.1018.v4.git.1632497954.gitgitgadget@gmail.com/
+> for details.  His description did focus on cone mode, but you'll note
+> that none of my explanation here did.  The logic for making this an
+> error fully applies to non-cone mode for all the same reasons.
+> 
+> If you want to interact with `path/to/new-filename` as a path within
+> your sparse checkout (as suggested by your git-mv command), then that
+> path should actually be part of your sparse checkout.  In other words,
+> you should add `path/to/new-filename` to $GIT/info/sparse-checkout and
+> do so _before_ attempting your `git mv` command.  If you don't like
+> that for some reason, you are allowed to instead ignore the
+> problematic consequences of renaming outside the sparse-checkout by
+> providing the `--sparse` flag.  Both of these possibilities are
+> documented in the hints provided along with the error message you
+> showed below:
+> 
+> >   The following paths and/or pathspecs matched paths that exist
+> >   outside of your sparse-checkout definition, so will not be
+> >   updated in the index:
+> >   path/to/new-filename
+> >   hint: If you intend to update such entries, try one of the following:
+> >   hint: * Use the --sparse option.
+> >   hint: * Disable or modify the sparsity rules.
+> >   hint: Disable this message with "git config advice.updateSparsePath false"
+> >
+> > This error is something I have not expected.
+> >
+> > Error message suggests, there already exists a file named "new-filename". This
+> > is not true at all. There is no file named "new-filename" in the entire
+> > repository. Not in any directory of any branch.
+> 
+> You are correct; the wording of the error message here is suboptimal
+> and seems to have been focused more on the git-add case (the error
+> message is shared by git-add, git-mv, and git-rm).  Thanks for
+> pointing it out!  We could improve that wording, perhaps with
+> something like:
+> 
+>     The following paths and/or pathspecs match paths that are
+>     outside of your sparse-checkout definition, so will not be
+>     updated:
+> 
+> Which is still slightly slanted towards git-add and git-rm cases, but
+> I hope it works better than the current message.  Thoughts?
 
-I was a bit torn myself when writing this. I can also see a potential
-future where we would drop the hardcoded list of locations altogether in
-favor of always using PATH. After all we already rely on PATH to resolve
-other tools as well, so why should httpd be special there?
+Yes, the wording was pretty much confusing me, since i could not find a file
+named "new-file" anywhere in the repo.
 
-But in the end I opted to use the more conservative approach of using
-both PATH and the static list as I didn't want to break other distros. I
-don't mind to make this even more conservative and resolve via PATH as a
-last resort, only.
 
-Patrick
+There are more things confusing concerning sparse mode:
 
-> I know "command -v" is in POSIX, and on both bash and dash (the two
-> shells most distros use), it works as this patch expects, but its
-> portability is also a bit worrysome, especially because the whole
-> point of this patch is to support a platform that is, eh, on the
-> fringe.
->=20
-> So, I dunno.
+- It is not clear from git-sparse-checkout(1) when changes to
+  $GIT_DIR/info/sparse-checkout are catched up. In my case: would it be enough
+  to add the new pathname just before git-mv or would a fresh git-checkout be
+  needed after modifying $GIT_DIR/info/sparse-checkout? You have clarified
+  this in your response, but shouldn't this be clear from the manpage?
 
---YqWe118U3Okirj4R
-Content-Type: application/pgp-signature; name="signature.asc"
+- git-sparse-checkout(1) refers to "skip-worktree bit". This concept is
+  potentially not very familiar to the average git user which uses mostly
+  porcelain. Thus, edge cases remain to be unclear.
 
------BEGIN PGP SIGNATURE-----
+- The pathspecs refers to .gitignore (which by itself is not very clear). But
+  there are differences:
+  1. giignore is relative to containing directoy, which don't seem to make
+     much sense for sparse mode
+  2. sparse specs are the opposite of gitignore, which seems to have different
+     meaning in some edge-cases.
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVLZf4ACgkQVbJhu7ck
-PpR8Rg/8DmEu5zPNP9NeLhoz/+O67X/ztCRoiSQJkcLpiPlMWJ7vE50d1bIO/tr0
-29129unAF7sARJVlvSGXMEamfrsqZSv2SYxPI3lKUcqoBtrTWD9YsYONpFjcOHYA
-ccVyOOjOPKq0s0vKrq8ysdT5XTmCAimebeKhZr9tAdyktx0458UMuWzH8UZFswAN
-jd5ZZOSh8E205OjhslgrIDW4ILunKzKi1h/g2jwbn1xcnvPJgiO8/jdKRe6zwEno
-dVGmosGAVY2uge4D29bcG/zslIqeyrqGPWE5s/KLBzDyBsgW/HruoqjiJt41qMMo
-S+6DaUEcV3k0mFJ+txWGc9p6NBvsMwltX4FqzlGSb3KFRHSRQsQgAnh+hQSXqEKX
-n6zfCxnDKbSMiKiWbPghOZSI76ZaiXmNlFEvV9uxn0sk5k7CgKjC0Dv4wMQsj6/3
-mfBy4xWxgL0+WZ0/kvF6k5v7B8+hitB4CFb95cH+c3Zcv5XZ4a+INHaFWNaZskjY
-CU04GFuj39uclHJ7rfrJLuPtu+j3Dji056kMfFFeu2c+VtmT2m5O+hW1Yz/wa/WN
-6lcuIF5dc1ZqL79fJEE6UhdZRQt996NXEftSNkKWgvSrEEMOmYVp9km7ub9V8Z9t
-96vo9GmRZ6m5BmeP5EHs2nW8bhQn5WovIq+itLjTa0kAom42wpo=
-=bL+q
------END PGP SIGNATURE-----
+- For cone, it is not clear how the two "accepted patterns" look like what the
+  semantics are. I understand that specifying a directory adds siblings
+  recursively. But what does the "Parent" mode mean exactly and when/how is
+  this recognized? I guess, this is just a mis-namer? IMHO, parent of /a/b/c would
+  be /a/b and not /a/b/c/* (as git-sparse-chekout(1) suggests).
 
---YqWe118U3Okirj4R--
+I guess all this is very clear to the core-developers. But for the occasional
+user like myself, all this is pretty much confusing.
+
+
+-- 
+Josef Wolf
+jw@raven.inka.de
