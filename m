@@ -1,106 +1,112 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 971336AB6
-	for <git@vger.kernel.org>; Wed,  8 Nov 2023 08:01:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97CAC101F2
+	for <git@vger.kernel.org>; Wed,  8 Nov 2023 10:01:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="WbR9QnL3"
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00257192
-	for <git@vger.kernel.org>; Wed,  8 Nov 2023 00:01:07 -0800 (PST)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 866D6212E5;
-	Wed,  8 Nov 2023 03:01:07 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=HdNofpsg7clcsoqSfEbO3Yjyr2QGfe3nmKNr3c
-	nMLZ0=; b=WbR9QnL3vhftsgWYnvEGNjRbytiPp+2HKbTcMNVOcVFpPRfXEo2d2k
-	S8wZ7JP8zcOgxV9/AWv30MQFSTSHX9Wl5s/7bScgyRpcLmru+nxAPd7yVMxPl1VO
-	0kofH55pTCyl/QCndeklY+OJbr/eKF9a10IzBQTuBt7FyNn+SUy2M=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 7EEE4212E4;
-	Wed,  8 Nov 2023 03:01:07 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.67.28])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 160D7212DF;
-	Wed,  8 Nov 2023 03:01:04 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/3] t/lib-httpd: stop using legacy crypt(3) for
- authentication
-In-Reply-To: <23835763002c5f5cd68db7bdc9e4c083dda3558f.1699428122.git.ps@pks.im>
-	(Patrick Steinhardt's message of "Wed, 8 Nov 2023 08:30:01 +0100")
-References: <cover.1699428122.git.ps@pks.im>
-	<23835763002c5f5cd68db7bdc9e4c083dda3558f.1699428122.git.ps@pks.im>
-Date: Wed, 08 Nov 2023 17:01:02 +0900
-Message-ID: <xmqq8r787jy9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="lM8uSrw2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HIYnsoGW"
+Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 121821722
+	for <git@vger.kernel.org>; Wed,  8 Nov 2023 02:01:29 -0800 (PST)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.west.internal (Postfix) with ESMTP id 1FFB2320046E;
+	Wed,  8 Nov 2023 05:01:28 -0500 (EST)
+Received: from imap49 ([10.202.2.99])
+  by compute1.internal (MEProxy); Wed, 08 Nov 2023 05:01:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:sender:subject:subject:to:to;
+	 s=fm2; t=1699437687; x=1699524087; bh=td3lip12beuhkWoWmx0gdkkZt
+	eqEm22oiQM5qZ+MKio=; b=lM8uSrw2KTbQaijndHjRHkeXPsfnR7ER7qrJjfo+h
+	UXlYDEpe/EJZ42nkBX6pctNU3UTHZOqk4jZLdnQK/49WbaMU0hYB8S0lJw+jeSgw
+	YVmWjbFBQor7WfRqtSwyvUKr6dBb4zSSpJRryF+YrLrjXi15CbvBiOmB6re87n5k
+	8IjiP63gDlIGx0YuxckPEcjkOJcAtP9Nt03SHeNOs7N+FJ0eK3DghR+RDBYPbrS+
+	MrVn+JCT8JsVsJsUnB5L0j1r2ECKLHq6Au+89NR+wiz+tAFvySgmcYyNA1Rxhn3w
+	kZWsDe9NrO2nVkafPerLAedLQimfRpWVVy74NI98ygUKA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:sender:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1699437687; x=1699524087; bh=td3lip12beuhkWoWmx0gdkkZteqEm22oiQM
+	5qZ+MKio=; b=HIYnsoGWnIE+lYS59xG/Ingab/aUrB4XTKU6oRd1Mp4HEHV6o5v
+	FB1DnZSSyD/kx0Can3x0nosBwxo6kytTDFvKkwwAFCjVN5EGTWFP+B0XumzSnxLz
+	0HrwERzssq79bdnzP8r9jcXFTXX/l8W8ORg93aNXmhFbb9HbyK6Wa2F9X89JNzZe
+	Oiw52gf4ZUOTWY8xR1tL+GJHmo+HcTszLkpTVd6MPe3ufomNOpkcTo1PzcbimQ+X
+	3tyaRxxp9h2r1zRal4QN5hykdBdEzz4FKsLurVNkGzoEseBYll/txjiT3yWs5Obq
+	fQJgqdAuUPfDYIHaF3Kv5qkWeK42YOvVw6w==
+X-ME-Sender: <xms:d1xLZbOOvnnpUTYTDtXfRq7TneFgmpV2mqzdDd6UZNWBChUXwmr4Da8>
+    <xme:d1xLZV-wURms2BBW3glm_xeXsrei5GhfAJN1_PJKrWUwDWxtqXEgb72Q3ueRfcUSi
+    2dBuD5-8eTsc6BR5g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudduledguddtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfm
+    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
+    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedvveehiedufeehffdvteeuveekhefh
+    leeigfektdeifeduteeuheeufeetffefudenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:d1xLZaTKMR0zgZRAZwOrhORmBZ_o6hX67Pu2HU4uZzYrN-0V6Wp5xQ>
+    <xmx:d1xLZfsLVna_PRNoZfHVwjz6aaALHsavXp17_pLvTwpH-8FVlZ8pCA>
+    <xmx:d1xLZTdgDqMC-DW55CORUYui_MYvNZ8fKFYpcc2YbU-JGTn3hy4GwQ>
+    <xmx:d1xLZbF7Jm6KSAKtpaIegZXE5aMSdGF9YjNebejdExNfMguSGmkSVQ>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 4DEF815A0091; Wed,  8 Nov 2023 05:01:27 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-1108-g3a29173c6d-fm-20231031.005-g3a29173c
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- F6D72992-7E0C-11EE-A0EC-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Message-Id: <674aa6c8-ccc7-4120-a864-57cce657f6a9@app.fastmail.com>
+In-Reply-To: 
+ <CAFaJEquUBYUO=scjHw2qrUyP-4wZJWtdmWAtRrW0mH9x9PbZZw@mail.gmail.com>
+References: 
+ <88eba4146cd250fcabfb9ffa9b410ce912a82ce7.1699320362.git.gitgitgadget@gmail.com>
+ <20231107192326.48296-1-oystwa@gmail.com>
+ <e166abeb-3566-4acf-a252-bc493ee37f41@github.com>
+ <CAFaJEquUBYUO=scjHw2qrUyP-4wZJWtdmWAtRrW0mH9x9PbZZw@mail.gmail.com>
+Date: Wed, 08 Nov 2023 11:00:59 +0100
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: =?UTF-8?Q?=C3=98ystein_Walle?= <oystwa@gmail.com>
+Cc: "Josh Soref" <gitgitgadget@gmail.com>, git@vger.kernel.org,
+ "Victoria Dye" <vdye@github.com>
+Subject: Re: [PATCH 2/9] for-each-ref: clarify interaction of --omit-empty & --count
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Wed, Nov 8, 2023, at 08:53, =C3=98ystein Walle wrote:
+> On Tue, 7 Nov 2023 at 20:30, Victoria Dye <vdye@github.com> wrote:
+>
+>> Since the interaction isn't clearly defined at the moment, we could p=
+robably
+>> still update it to work like you're describing here. I'm happy to dro=
+p this
+>> patch and implement your recommendation in a follow-up series. Let me=
+ know
+>> what you think!
+>
+> Regardless of whether the logic is changed in a follow-up series or not
+> I think the current behavior is worth documenting even if it doesn't
+> exist for much longer in the tree. So I am favor of having this patch =
+as
+> part of this series.
 
-> When setting up httpd for our tests, we also install a passwd and
-> proxy-passwd file that contain the test user's credentials. These
-> credentials currently use crypt(3) as the password encryption schema.
->
-> This schema can be considered deprecated nowadays as it is not safe
-> anymore. Quoting Apache httpd's documentation [1]:
->
->> Unix only. Uses the traditional Unix crypt(3) function with a
->> randomly-generated 32-bit salt (only 12 bits used) and the first 8
->> characters of the password. Insecure.
->
-> This is starting to cause issues in modern Linux distributions. glibc
-> has deprecated its libcrypt library that used to provide crypt(3) in
-> favor of the libxcrypt library. This newer replacement provides a
-> compile time switch to disable insecure password encryption schemata,
-> which causes crypt(3) to always return `EINVAL`. The end result is that
-> httpd tests that exercise authentication will fail on distros that use
-> libxcrypt without these insecure encryption schematas.
->
-> Regenerate the passwd files to instead use the default password
-> encryption schema, which is md5. While it feels kind of funny that an
-> MD5-based encryption schema should be more secure than anything else, it
-> is the current default and supported by all platforms. Furthermore, it
-> really doesn't matter all that much given that these files are only used
-> for testing purposes anyway.
+The funny thing though is that once it=E2=80=99s documented then you als=
+o kind of
+commit yourself to it, right? That it=E2=80=99s how it=E2=80=99s suppose=
+d to behave.[1] If
+you instead change the behavior (to the correct one) and document it in
+the same series then there is no in-between time when people can claim to
+rely on it via the documentation.
 
-This step makes quite a lot of sense, as we are changing this not at
-all for security but for portability ;-)
-
->
-> [1]: https://httpd.apache.org/docs/2.4/misc/password_encryptions.html
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  t/lib-httpd/passwd       | 2 +-
->  t/lib-httpd/proxy-passwd | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/t/lib-httpd/passwd b/t/lib-httpd/passwd
-> index 99a34d64874..d9c122f3482 100644
-> --- a/t/lib-httpd/passwd
-> +++ b/t/lib-httpd/passwd
-> @@ -1 +1 @@
-> -user@host:xb4E8pqD81KQs
-> +user@host:$apr1$LGPmCZWj$9vxEwj5Z5GzQLBMxp3mCx1
-> diff --git a/t/lib-httpd/proxy-passwd b/t/lib-httpd/proxy-passwd
-> index 77c25138e07..2ad7705d9a3 100644
-> --- a/t/lib-httpd/proxy-passwd
-> +++ b/t/lib-httpd/proxy-passwd
-> @@ -1 +1 @@
-> -proxuser:2x7tAukjAED5M
-> +proxuser:$apr1$RxS6MLkD$DYsqQdflheq4GPNxzJpx5.
+[1] Modulo =E2=80=9Csubject to change=E2=80=9D hedging, but it seems tha=
+t even
+    experimental commands who are documented as that are now resistant to
+    change in practice.
