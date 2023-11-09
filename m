@@ -1,136 +1,272 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51CD4C7F
-	for <git@vger.kernel.org>; Thu,  9 Nov 2023 07:09:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58829211D
-	for <git@vger.kernel.org>; Wed,  8 Nov 2023 23:09:49 -0800 (PST)
-Received: (qmail 25253 invoked by uid 109); 9 Nov 2023 07:09:48 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 09 Nov 2023 07:09:48 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20460 invoked by uid 111); 9 Nov 2023 07:09:52 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 Nov 2023 02:09:52 -0500
-Authentication-Results: peff.net; auth=none
-Date: Thu, 9 Nov 2023 02:09:48 -0500
-From: Jeff King <peff@peff.net>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75477469F
+	for <git@vger.kernel.org>; Thu,  9 Nov 2023 07:09:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Y6gtwtwY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="haqs3RFV"
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7C97211D
+	for <git@vger.kernel.org>; Wed,  8 Nov 2023 23:09:51 -0800 (PST)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.nyi.internal (Postfix) with ESMTP id 400585C02B0;
+	Thu,  9 Nov 2023 02:09:51 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute2.internal (MEProxy); Thu, 09 Nov 2023 02:09:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to; s=fm3; t=1699513791; x=1699600191; bh=Qc
+	nLZ7PeoQXNydCM8mTZhAhzsN2gJAgASSqR7rBMxt4=; b=Y6gtwtwYlR1l78cFuw
+	DJ/ehBMHRfq3SbaWkh1qqP4BqYQoegwrfDnjig2A51g59uZOq93cUqhhhRjgu9RI
+	ZaogZPZIq7xPTx+B7UuMXyeed/os58i3cVGo2IJvGv7npZbIcrNTPa75TsD6OCyO
+	zNK7x9e5r5uqxQRsgSMMtTLOFAGZQPV13CoK8iPJIeUr1W/6WxR30FVXFi6JKkED
+	eyJNVsrgMxmVxkZI8Ut5tV+wyo3WOyqStlEWmy4EQtaj7Znqujoo6oLAkctZ/xzB
+	g8eoGtTAe3ajqTe4ykXs/p2NXLcHKmrrlWt82ey+gN1SnAIYQLFBpzYXreGc7Fdk
+	YiPw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm3; t=1699513791; x=1699600191; bh=QcnLZ7PeoQXNy
+	dCM8mTZhAhzsN2gJAgASSqR7rBMxt4=; b=haqs3RFVEkiRt4DOpusO7lY2zXHIb
+	O4DNHTYE5BjxoXy2xQzKtIAh++CdN9qmig15bxxqIoFeFZCC5a5gIzfT9D3cpCfp
+	4Xsd0YLwRalW3+5Ibd/NThZft3T0Wlfsyyde/1Eie1c1co36cis+6t72mgtz23LI
+	yrz+F0FLPpB6J0ZYBD6FvcuhOzgLKtTLPHqrZMbDzrsFedEsybNpeS0Q4vDc5tiP
+	dCMu+MOlwqqCe3m0JLHLIB+6VmWM9BmGFMBntP1QtNmjSOwSRScLpo77CiSHjQ7j
+	J6S4PBmM7aZFYkKGUIj546W2XfHyqrfGEU0Hbgl4BRhm1S9Pw/NW+n4Aw==
+X-ME-Sender: <xms:v4VMZUbNc1vRU2VWreq9mzoXNStUhm2uHl-oBqZUEn72dzJSv0w3nQ>
+    <xme:v4VMZfZmOTPAJODfkIWuKPWo_I00hWUzpBaSg6umkwtnt8FIMQDDzyZPOPLwA3TYU
+    JaHU4Q64F4NPQ3KZQ>
+X-ME-Received: <xmr:v4VMZe8yGphjfMTmiLH76Qg8Wy2RldUV3jf6cN8PqRw1Zpp-ZeXiV5StVcbW6-g6bATIoWUFGPMNKdbntXq3U6_wdxG7ID1ZFIf68pFW1B-PD6Pn>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddvtddguddtudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
+    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
+    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepvdehteeggfevueevhedtleelveeigf
+    efieduiefgvdfffeegvdeitefgteevveeunecuffhomhgrihhnpehhthhtphgurdhshhen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhm
+X-ME-Proxy: <xmx:v4VMZerVIcjdHesLhu5kpWkan7JuQ5MPZuPKmtVBkgbugF9TZOAw8g>
+    <xmx:v4VMZfoUlPgtYfZG5FUR8hdtvVV2GteDb9ejk822K2B5v9RxUux_gg>
+    <xmx:v4VMZcQmRIUj_YSBKZWXZHhQWTg_m7r8cSToyLg3CoageskB_-LYeQ>
+    <xmx:v4VMZYD0YSzPP4-em3jcyUrYYIjRlt_dd5u8eewk0d4Hm6MpCxT_fQ>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 9 Nov 2023 02:09:50 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 9df4bb1e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 9 Nov 2023 07:09:22 +0000 (UTC)
+Date: Thu, 9 Nov 2023 08:09:47 +0100
+From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Cc: Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH 1/9] commit-graph: handle overflow in chunk_size checks
-Message-ID: <20231109070948.GA2698043@coredump.intra.peff.net>
-References: <20231109070310.GA2697602@coredump.intra.peff.net>
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v3 0/3] t: improve compatibility with NixOS
+Message-ID: <cover.1699513524.git.ps@pks.im>
+References: <cover.1699428122.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="yLryp0d/ezJPONCm"
 Content-Disposition: inline
-In-Reply-To: <20231109070310.GA2697602@coredump.intra.peff.net>
+In-Reply-To: <cover.1699428122.git.ps@pks.im>
 
-We check the size of chunks with fixed records by multiplying the width
-of each record by the number of commits in the file. Like:
 
-  if (chunk_size != g->num_commits * GRAPH_DATA_WIDTH)
+--yLryp0d/ezJPONCm
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-If this multiplication overflows, we may not notice a chunk is too small
-(which could later lead to out-of-bound reads).
+Hi,
 
-In the current code this is only possible for the CDAT chunk, but the
-reasons are quite subtle. We compute g->num_commits by dividing the size
-of the OIDL chunk by the hash length (since it consists of a bunch of
-hashes). So we know that any size_t multiplication that uses a value
-smaller than the hash length cannot overflow. And the CDAT records are
-the only ones that are larger (the others are just 4-byte records). So
-it's worth fixing all of these, to make it clear that they're not
-subject to overflow (without having to reason about seemingly unrelated
-code).
+this is the third version of my patch series to improve compatibility of
+our tests with NixOS.
 
-The obvious thing to do is add an st_mult(), like:
+Changes compared to v2:
 
-  if (chunk_size != st_mult(g->num_commits, GRAPH_DATA_WIDTH))
+    - Patch 1: We now check for both httpd and apache2 binaries via
+      PATH.
 
-And that certainly works, but it has one downside: if we detect an
-overflow, we'll immediately die(). But the commit graph is an optional
-file; if we run into other problems loading it, we'll generally return
-an error and fall back to accessing the full objects. Using st_mult()
-means a malformed file will abort the whole process.
+    - Patch 1: We're a bit more defensive and will check whether
+      variables are empty before passing them to either `test -d` or
+      `test -x`.
 
-So instead, we can do a division like this:
+    - Patch 3: Clarified why PATH is unset.
 
-  if (chunk_size / GRAPH_DATA_WIDTH != g->num_commits)
+    - Patch 3: Instead of writing PATH into the hook we now write it
+      into the `hook-env` configuration file read by Subversion.
 
-where there's no possibility of overflow. We do lose a little bit of
-precision; due to integer division truncation we'd allow up to an extra
-GRAPH_DATA_WIDTH-1 bytes of data in the chunk. That's OK. Our main goal
-here is making sure we don't have too _few_ bytes, which would cause an
-out-of-bounds read (we could actually replace our "!=" with "<", but I
-think it's worth being a little pedantic, as a large mismatch could be a
-sign of other problems).
+Patrick
 
-I didn't add a test here. We'd need to generate a very large graph file
-in order to get g->num_commits large enough to cause an overflow. And a
-later patch in this series will use this same division technique in a
-way that is much easier to trigger in the tests.
+Patrick Steinhardt (3):
+  t/lib-httpd: dynamically detect httpd and modules path
+  t/lib-httpd: stop using legacy crypt(3) for authentication
+  t9164: fix inability to find basename(1) in Subversion hooks
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-There are still several st_mult() calls within commit-graph.c, unrelated
-to my jk/chunk-bounds series. I suspect they're all redundant, as the
-chunk-size checks give a stricter bound. But checking and removing them
-is a separate topic.
+ t/lib-httpd.sh                        | 17 +++++++++++++----
+ t/lib-httpd/passwd                    |  2 +-
+ t/lib-httpd/proxy-passwd              |  2 +-
+ t/t9164-git-svn-dcommit-concurrent.sh |  9 ++++++++-
+ 4 files changed, 23 insertions(+), 7 deletions(-)
 
-I think the midx code has similar st_mult() problems, but it's quite
-happy to die() on any error already. So I've left auditing that for
-another day.
+Range-diff against v2:
+1:  cee8fbebf84 ! 1:  e4c75c492dd t/lib-httpd: dynamically detect httpd and=
+ modules path
+    @@ t/lib-httpd.sh: fi
+      HTTPD_PARA=3D""
+     =20
+     -for DEFAULT_HTTPD_PATH in '/usr/sbin/httpd' '/usr/sbin/apache2'
+    -+for DEFAULT_HTTPD_PATH in '/usr/sbin/httpd' '/usr/sbin/apache2' "$(co=
+mmand -v httpd)"
+    ++for DEFAULT_HTTPD_PATH in '/usr/sbin/httpd' \
+    ++			  '/usr/sbin/apache2' \
+    ++			  "$(command -v httpd)" \
+    ++			  "$(command -v apache2)"
+      do
+    - 	if test -x "$DEFAULT_HTTPD_PATH"
+    +-	if test -x "$DEFAULT_HTTPD_PATH"
+    ++	if test -n "$DEFAULT_HTTPD_PATH" -a -x "$DEFAULT_HTTPD_PATH"
+      	then
+    -@@ t/lib-httpd.sh: do
+    + 		break
+      	fi
+      done
+     =20
+    @@ t/lib-httpd.sh: do
+     +				 '/usr/libexec/httpd' \
+     +				 "${DETECTED_HTTPD_ROOT:+${DETECTED_HTTPD_ROOT}/modules}"
+      do
+    - 	if test -d "$DEFAULT_HTTPD_MODULE_PATH"
+    +-	if test -d "$DEFAULT_HTTPD_MODULE_PATH"
+    ++	if test -n "$DEFAULT_HTTPD_MODULE_PATH" -a -d "$DEFAULT_HTTPD_MODULE=
+_PATH"
+      	then
+    + 		break
+    + 	fi
+2:  f4c6c754f1e =3D 2:  3dce76da477 t/lib-httpd: stop using legacy crypt(3)=
+ for authentication
+3:  361f1bd9c88 ! 3:  6891e254155 t9164: fix inability to find basename(1) =
+in hooks
+    @@ Metadata
+     Author: Patrick Steinhardt <ps@pks.im>
+    =20
+      ## Commit message ##
+    -    t9164: fix inability to find basename(1) in hooks
+    +    t9164: fix inability to find basename(1) in Subversion hooks
+    =20
+    -    The post-commit hook in t9164 is executed with a default environme=
+nt.
+    -    To work around this issue we already write the current `PATH` valu=
+e into
+    -    the hook script. But this is done at a point where we already trie=
+d to
+    -    execute non-built-in commands, namely basename(1). While this seem=
+s to
+    -    work alright on most platforms, it fails on NixOS.
+    +    Hooks executed by Subversion are spawned with an empty environment=
+=2E By
+    +    default, not even variables like PATH will be propagated to them. =
+In
+    +    order to ensure that we're still able to find required executables=
+, we
+    +    thus write the current PATH variable into the hook script itself a=
+nd
+    +    then re-export it in t9164.
+    =20
+    -    Set the `PATH` variable earlier to fix this issue. Note that we do=
+ this
+    -    via two separate heredocs. This is done because in the first one w=
+e do
+    -    want to expand variables, whereas in the second one we don't.
+    +    This happens too late in the script though, as we already tried to
+    +    execute the basename(1) utility before exporting the PATH variable=
+=2E This
+    +    tends to work on most platforms as the fallback value of PATH for =
+Bash
+    +    (see `getconf PATH`) is likely to contain this binary. But on more
+    +    exotic platforms like NixOS this is not the case, and thus the test
+    +    fails.
+    +
+    +    While we could work around this issue by simply setting PATH earli=
+er, it
+    +    feels fragile to inject a user-controlled value into the script an=
+d have
+    +    the shell interpret it. Instead, we can refactor the hook setup to=
+ write
+    +    a `hooks-env` file that configures PATH for us. Like this, Subvers=
+ion
+    +    will know to set up the environment as expected for all hooks.
+    =20
+         Signed-off-by: Patrick Steinhardt <ps@pks.im>
+    =20
+      ## t/t9164-git-svn-dcommit-concurrent.sh ##
+     @@ t/t9164-git-svn-dcommit-concurrent.sh: setup_hook()
+    + 			"passed to setup_hook" >&2 ; return 1; }
+      	echo "cnt=3D$skip_revs" > "$hook_type-counter"
+      	rm -f "$rawsvnrepo/hooks/"*-commit # drop previous hooks
+    - 	hook=3D"$rawsvnrepo/hooks/$hook_type"
+    --	cat > "$hook" <<- 'EOF1'
+    -+	cat >"$hook" <<-EOF
+    - 		#!/bin/sh
+    - 		set -e
+    -+
+    -+		PATH=3D\"$PATH\"
+    -+		export PATH
+    -+	EOF
+     +
+    -+	cat >>"$hook" <<-'EOF'
+    - 		cd "$1/.."  # "$1" is repository location
+    - 		exec >> svn-hook.log 2>&1
+    - 		hook=3D"$(basename "$0")"
+    -@@ t/t9164-git-svn-dcommit-concurrent.sh: setup_hook()
+    - 		cnt=3D"$(($cnt - 1))"
+    - 		echo "cnt=3D$cnt" > ./$hook-counter
+    - 		[ "$cnt" =3D "0" ] || exit 0
+    --EOF1
+    ++	# Subversion hooks run with an empty environment by default. We thus
+    ++	# need to propagate PATH so that we can find executables.
+    ++	cat >"$rawsvnrepo/conf/hooks-env" <<-EOF
+    ++	[default]
+    ++	PATH =3D ${PATH}
+     +	EOF
+     +
+    + 	hook=3D"$rawsvnrepo/hooks/$hook_type"
+    + 	cat > "$hook" <<- 'EOF1'
+    + 		#!/bin/sh
+    +@@ t/t9164-git-svn-dcommit-concurrent.sh: EOF1
+      	if [ "$hook_type" =3D "pre-commit" ]; then
+      		echo "echo 'commit disallowed' >&2; exit 1" >>"$hook"
+      	else
 
-Another alternative to the division is introducing an st_mult() variant
-like:
+base-commit: dadef801b365989099a9929e995589e455c51fed
+--=20
+2.42.0
 
-  if (!st_mult(&out, &a, &b))
-        return error(...);
 
-We may want to go there in the long run as part of lib-ification, but I
-didn't want to get into it for this series.
+--yLryp0d/ezJPONCm
+Content-Type: application/pgp-signature; name="signature.asc"
 
- commit-graph.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+-----BEGIN PGP SIGNATURE-----
 
-diff --git a/commit-graph.c b/commit-graph.c
-index ee66098e07..5d7d7a89e5 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -344,7 +344,7 @@ static int graph_read_commit_data(const unsigned char *chunk_start,
- 				  size_t chunk_size, void *data)
- {
- 	struct commit_graph *g = data;
--	if (chunk_size != g->num_commits * GRAPH_DATA_WIDTH)
-+	if (chunk_size / GRAPH_DATA_WIDTH != g->num_commits)
- 		return error("commit-graph commit data chunk is wrong size");
- 	g->chunk_commit_data = chunk_start;
- 	return 0;
-@@ -354,7 +354,7 @@ static int graph_read_generation_data(const unsigned char *chunk_start,
- 				      size_t chunk_size, void *data)
- {
- 	struct commit_graph *g = data;
--	if (chunk_size != g->num_commits * sizeof(uint32_t))
-+	if (chunk_size / sizeof(uint32_t) != g->num_commits)
- 		return error("commit-graph generations chunk is wrong size");
- 	g->chunk_generation_data = chunk_start;
- 	return 0;
-@@ -364,7 +364,7 @@ static int graph_read_bloom_index(const unsigned char *chunk_start,
- 				  size_t chunk_size, void *data)
- {
- 	struct commit_graph *g = data;
--	if (chunk_size != g->num_commits * 4) {
-+	if (chunk_size / 4 != g->num_commits) {
- 		warning("commit-graph changed-path index chunk is too small");
- 		return -1;
- 	}
--- 
-2.43.0.rc1.572.g273fc7bed6
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVMhboACgkQVbJhu7ck
+PpSodQ//Zsq24Cw1i7kkVY9N4ndTCtA05Fku3IeOMG8x8HRhrkVSQg3RTgdCWmNf
+7Fe8btlWHS5zzQr1mzlY1i1UdSiShYplRQc65QH/CxwKfC4zMS2y0emH+P4ldW5J
+Qc86iSz8OPCoZZsu7cfN6GcUCScKggv60RmKnuYHkQFzj1PErNOWvY4DruPjRwqP
+ZQE1zkVhhBC0ghJ8lN44w0qw3eDgyWxngAQzlfKbRCDliBgTAkQQd4d+5yO9V82V
+8oWb1I9Wov0+GsFBC2UOMJA2GpZpV6Ar1vZVLvQZKqIfYLnB4CjD/fxZ15dSa0O0
+3XUgxzTW8aiV5dyRNxNfdrmh++6F4HaD4bnsVLywMFMWUzRJBdugjWdU4sGUtaga
+2qhqTPFA24SHMSG7u4nhHDxSI533LS2b5hheqdw1bIqw1jqkYIeXz+ASVC6x3eqj
+DgqxyuDVVfESnlPJY5MXyyC/r80BE8RjykNCY17zE6bSGp/LkFupyMCpydqhbFqA
+psHnmUlrUEO5tI+N5clbVxCg55IjgEvipm1aM6f9FY2dK2uEiN0zOg/jJL2uG6DH
+ZgjRjbVmSVxd11ET35r+vRnuxJdvSJcm2nOQ8S+/5rEbjQx4YpiGFfSiNwu2Pc6k
+JTtutZqld+YMCDQO6YetFpWvZ/MIO0HofL01D88Dv6bfR4okNYQ=
+=/dhj
+-----END PGP SIGNATURE-----
 
+--yLryp0d/ezJPONCm--
