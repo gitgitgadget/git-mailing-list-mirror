@@ -1,77 +1,75 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7A59FC0E
-	for <git@vger.kernel.org>; Thu,  9 Nov 2023 07:57:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88664101E4
+	for <git@vger.kernel.org>; Thu,  9 Nov 2023 08:05:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kq+JZBMk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mhpL13dg"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="r0A3O6Wc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="s7TrevVt"
 Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4A602712
-	for <git@vger.kernel.org>; Wed,  8 Nov 2023 23:57:44 -0800 (PST)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id 382F55C0330;
-	Thu,  9 Nov 2023 02:57:44 -0500 (EST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEEFF2590
+	for <git@vger.kernel.org>; Thu,  9 Nov 2023 00:05:26 -0800 (PST)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.nyi.internal (Postfix) with ESMTP id 5804E5C0321;
+	Thu,  9 Nov 2023 03:05:26 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Thu, 09 Nov 2023 02:57:44 -0500
+  by compute2.internal (MEProxy); Thu, 09 Nov 2023 03:05:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1699516664; x=1699603064; bh=lT
-	3nK7M/kNAFCc4BOTQLprfwIf+JSD9chYAOffBWGno=; b=kq+JZBMkBy3i2/vW8b
-	6wvssDEhHgp7N6Ie1rTz8g1MU6xJ1ei2Oma1cxoHlAHhtPJX4/Jo64wbUhn/U3ey
-	2cyFp6YzxhhYY0x5d4uiwqpdCBCNNnkUbYGOn9iYOIyrCpOKHcBbVRCW2vSjRraw
-	36/xb/WfzL6/6gVpzu2mLYNLMm1myWmGSiNw0Ec3gAqFFuHJmc7mvZhNtS3mz92d
-	G6wn+0CZeFC6VNY2vMlNe/OXQyLbsjv05jpLAlKHwFjsvn/cmqbdFRlHJB3JHIxH
-	wPl2i4XFZm3Pwz44ZdjN/rbd/5Hi9OGl4TNU5MJXgvWTL3hm8ilBiL62G0AfAv+h
-	vxng==
+	:subject:subject:to:to; s=fm3; t=1699517126; x=1699603526; bh=dG
+	YdfWRWmG8jln7J3Nz6YVUvE0CuvkYiRD4WpLr4hgA=; b=r0A3O6WcB+UmXqGy4+
+	Erw3hnCYHXdrJSpBmv1DIje6cXkLZgbc9GjEfPsq+/5t/HQaNaC5W7MeNcnYMc5I
+	FP9L/juCbpXzO0tSJ1KuWxjjdORFtihbq6pY38fJbuYlOdWGa/GwVVJKhHqC7Tc8
+	FRXjX7BXCFnia1+w+djmSdfJbbgSVentlzi8juJT07qpuYziHrBscjS6yBGSwahR
+	z86C2zZ8mUnlolJkaCbGGBkYB2Pe8/BHhTAW0/iiMHlHDLkt97RiO8dt1zq7nJzH
+	BiKWbJO47ojQGSdVeOXh8v4YSUVe2L0FGDASOKEjdnfZG40hA0Gjm7pdT1bgM4qE
+	bWlg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1699516664; x=1699603064; bh=lT3nK7M/kNAFC
-	c4BOTQLprfwIf+JSD9chYAOffBWGno=; b=mhpL13dgMWD5lsKY7lPMYQcsyMUBs
-	o9sPSgoTI97HEr9AEG55JmENaj+dlLuVhxhWMPMjM0Oghd9KjXtpiCuea6pllUEl
-	pGCYxg6qTvWkYTIDZsLAbp3mpL2clzwnmszRwI+fJFJLJPmjtPdKqiLy9iBjCeLx
-	8FN9fa4GvLGjpg1Qg4gTgha+QssCTUJ7CSSM2Q9+59ikqZRSJotes/JeqrPaG489
-	oYcb+NAHEziiKtC4+G6TOiyMQUf1Hdys+ftLWBTObwIL1MT3+A1S3wbh536TjMQo
-	+BgNWRuYGOBdnb/7RZhgAJHQsWUrRTdv1nnP4v4R/ofRtc0X9qQQUm3qQ==
-X-ME-Sender: <xms:-JBMZfCxyltXtlxaKAZYIN0ZYrLTkL8LcTpaU61cCfP86b9KO1ANLw>
-    <xme:-JBMZVh_YaKP_APgQCKi-1vbh8iRr8cE_rwbeKp6YQDQd6L-PYK5RAwEjWYlvsW_T
-    8VM7BNggzc8U6sYFQ>
-X-ME-Received: <xmr:-JBMZamgbGgT-Gp55_q3ZZbWMSsn448649tXWugTmwx_0fGM-5k2BZBvmODi0x8n89F_boH8DSBtMRJ5V6CM1KkQEQu41e7Lk_H8ohc03sasHkne>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddvtddgudduudcutefuodetggdotefrod
+	:x-sasl-enc; s=fm3; t=1699517126; x=1699603526; bh=dGYdfWRWmG8jl
+	n7J3Nz6YVUvE0CuvkYiRD4WpLr4hgA=; b=s7TrevVtEm21UfpPNxG3ZV8JTOCzQ
+	7ufSURanckl4awiMjlz+fTVgBwqujEMJB8WmXxHFm6Il8pLgV+qFs4nJUe/cx0WX
+	dzBetDRyJv4yAUWhl0n3tB75fPraJ1AQtV8VwEsGTxDyFlD6UEarXit7UfMBck5c
+	/dUaB2sRfNlkcTo+U26bBql+rgk3fv8U69nzwiJj6joZ9+EPU5bRNeT6+awDkRXY
+	mgD+e9gQTxwmfZribt4kBv7WO3SgDDNPJCWBdcu0NahvhMxizmiScsBfJPBg6jtT
+	8WGgfXQf8vTxg9RfcrP4iIxb1AV6/1ddRMe2UI+WGbKmaFNLN3lG9Dubw==
+X-ME-Sender: <xms:xpJMZeVU9i_QG2RBPQPsJfhX4RMPuYGftiW8CfAk26jvKdeDM8Ln-Q>
+    <xme:xpJMZan_Od0XTMfEHIY7H4uyGEVYPz2qmWvEpLuvq5hLskEmau27V5iR-JoNx_TYS
+    3LI-JLAgOnmndREPA>
+X-ME-Received: <xmr:xpJMZSYJkIJSL9ho9SscZAvNCXu_BC8cg2SjgU59fv5lMxv96dASx8SqoHn-NSzB-5jXpJDF8xxXxMPUGd2nhJsl-lIWGn_P9Y2XqbSIbWTgO8UG>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddvtddgudduvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
-    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
-    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepvdehteeggfevueevhedtleelveeigf
-    efieduiefgvdfffeegvdeitefgteevveeunecuffhomhgrihhnpehhthhtphgurdhshhen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhm
-X-ME-Proxy: <xmx:-JBMZRyqR_2kdFqs38hN_-ekPz2VJu2e7Z2H_n2Zgv9wAmYIpIzMBA>
-    <xmx:-JBMZURabJDSco7azEpuM5fQnxWIL9sEWVv_jYVZMhXj2EaSP90uhg>
-    <xmx:-JBMZUYj0oYkMdeE5olg_dbB0FAUazHP-j-9a9wMMJb7IDYhEjWhPA>
-    <xmx:-JBMZfJcRz5W-nvxJ6daQ_55EgX4mIwEq0mYUbLLqdYAh9LD3AvWMw>
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
+    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
+    gvrhhnpeevheeuvedvffdvgeekieffueeiveejleeiffefieegvdduheduleegudejfeei
+    udenucffohhmrghinhepghhithhlrggsrdgtohhmpdhhthhtphgurdhshhenucevlhhush
+    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:xpJMZVV1d6fVRSr-IA9ipnSzDYB3uvskIOQM9SAEs64UCk1BBI4ZmA>
+    <xmx:xpJMZYkX573vCe6SeYBjt_HrkAvW3ONVUSp1f0qsaMyykLFQVzwGmQ>
+    <xmx:xpJMZae3vHsl56PvLj-lCgG4xxvS7SvGFdJsY8RfMaJHLxKlU3CUSg>
+    <xmx:xpJMZXv2YVmUYvFnKXs-6slkYEpMeOUMxO92kyYLiKRFITphs1mnxA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 9 Nov 2023 02:57:43 -0500 (EST)
+ 9 Nov 2023 03:05:24 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 3f36c396 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 9 Nov 2023 07:57:15 +0000 (UTC)
-Date: Thu, 9 Nov 2023 08:57:40 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 0176f6c8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 9 Nov 2023 08:04:56 +0000 (UTC)
+Date: Thu, 9 Nov 2023 09:05:21 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH v3 1/3] t/lib-httpd: dynamically detect httpd and modules
- path
-Message-ID: <ZUyQ9DOLccTeJElf@tanuki>
-References: <cover.1699428122.git.ps@pks.im>
- <cover.1699513524.git.ps@pks.im>
- <e4c75c492dd89fd7464db2b3028b2bb9e6addbf8.1699513524.git.ps@pks.im>
- <20231109073250.GA2698227@coredump.intra.peff.net>
- <ZUyMFZ7c9_rlu5lk@tanuki>
- <xmqqzfzn1i9u.fsf@gitster.g>
+To: git@vger.kernel.org
+Cc: Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
+	Victoria Dye <vdye@github.com>,
+	Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH v6 0/8] ci: add GitLab CI definition
+Message-ID: <cover.1699514143.git.ps@pks.im>
+References: <cover.1698305961.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -79,95 +77,119 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="OWxjWq/UyzCEhbXO"
+	protocol="application/pgp-signature"; boundary="85isz1NaNj02/yAr"
 Content-Disposition: inline
-In-Reply-To: <xmqqzfzn1i9u.fsf@gitster.g>
+In-Reply-To: <cover.1698305961.git.ps@pks.im>
 
 
---OWxjWq/UyzCEhbXO
+--85isz1NaNj02/yAr
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Nov 09, 2023 at 04:46:05PM +0900, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->=20
-> > Yeah, I was grepping for it in our codebase and saw other occurrences,
-> > so I assumed it was fair game. If we're going to convert it to the
-> > below, how about I send another patch on top that also converts the
-> > preexisting instances so that the next one grepping for it isn't going
-> > to repeat the same mistake?
->=20
-> Yup, an independent clean-up would be fine.  Now we need to find a
-> way to give better visibility to CodingGuidelines, which already
-> says this:
+Hi,
 
-Okay, I'll send one in. Do you want me to send a v4 of this patch series
-or will you squash in below changes into patch 1/3?
+this is the 6th version of my patch series to introduce support for
+GitLab CI into the Git project.
 
->  - We do not write our "test" command with "-a" and "-o" and use "&&"
->    or "||" to concatenate multiple "test" commands instead, because
->    the use of "-a/-o" is often error-prone.  E.g.
->=20
->      test -n "$x" -a "$a" =3D "$b"
->=20
->    is buggy and breaks when $x is "=3D", but
->=20
->      test -n "$x" && test "$a" =3D "$b"
->=20
->    does not have such a problem.
+There's only a single change compared to v5 based on Chris' feedback,
+namely to move around a `return 1`. The newly extracted helper function
+`create_failed_test_artifacts()` indeed wasn't the correct place to put
+this error code.
 
-I did indeed spot this part of our coding style now. I didn't bother to
-look farther when I found other examples where we used `-a` and `-o`,
-but that issue will be gone once we've dropped all of these usages.
+A test run of this pipeline can be found at [1].
+
+Thanks!
 
 Patrick
 
--- >8 --
+[1]: https://gitlab.com/gitlab-org/git/-/pipelines/1066250852
 
-diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
-index 6ab8f273a3..0a74922d7f 100644
---- a/t/lib-httpd.sh
-+++ b/t/lib-httpd.sh
-@@ -60,7 +60,7 @@ for DEFAULT_HTTPD_PATH in '/usr/sbin/httpd' \
- 			  "$(command -v httpd)" \
- 			  "$(command -v apache2)"
- do
--	if test -n "$DEFAULT_HTTPD_PATH" -a -x "$DEFAULT_HTTPD_PATH"
-+	if test -n "$DEFAULT_HTTPD_PATH" && test -x "$DEFAULT_HTTPD_PATH"
- 	then
- 		break
- 	fi
-@@ -78,7 +78,7 @@ for DEFAULT_HTTPD_MODULE_PATH in '/usr/libexec/apache2' \
- 				 '/usr/libexec/httpd' \
- 				 "${DETECTED_HTTPD_ROOT:+${DETECTED_HTTPD_ROOT}/modules}"
- do
--	if test -n "$DEFAULT_HTTPD_MODULE_PATH" -a -d "$DEFAULT_HTTPD_MODULE_PATH"
-+	if test -n "$DEFAULT_HTTPD_MODULE_PATH" && test -d "$DEFAULT_HTTPD_MODULE=
-_PATH"
- 	then
- 		break
- 	fi
+Patrick Steinhardt (8):
+  ci: reorder definitions for grouping functions
+  ci: make grouping setup more generic
+  ci: group installation of Docker dependencies
+  ci: split out logic to set up failed test artifacts
+  ci: unify setup of some environment variables
+  ci: squelch warnings when testing with unusable Git repo
+  ci: install test dependencies for linux-musl
+  ci: add support for GitLab CI
+
+ .gitlab-ci.yml                    |  53 +++++++++
+ ci/install-docker-dependencies.sh |  23 +++-
+ ci/lib.sh                         | 190 ++++++++++++++++++++++--------
+ ci/print-test-failures.sh         |   6 +
+ t/lib-httpd.sh                    |  17 ++-
+ 5 files changed, 234 insertions(+), 55 deletions(-)
+ create mode 100644 .gitlab-ci.yml
+
+Range-diff against v5:
+1:  0ba396f2a33 =3D 1:  a1413b76422 ci: reorder definitions for grouping fu=
+nctions
+2:  821cfcd6125 =3D 2:  29039d7aa3a ci: make grouping setup more generic
+3:  6e5bcf143c8 =3D 3:  414655ffb2d ci: group installation of Docker depend=
+encies
+4:  2182acf5bfc ! 4:  96d710faec8 ci: split out logic to set up failed test=
+ artifacts
+    @@ ci/lib.sh: handle_failed_tests () {
+     +		cp "t/test-results/$test_name.out" t/failed-test-artifacts/
+     +		tar czf t/failed-test-artifacts/"$test_name".trash.tar.gz "$trash_d=
+ir"
+     +	done
+    -+	return 1
+     +}
+     +
+      # GitHub Action doesn't set TERM, which is required by tput
+    @@ ci/lib.sh: then
+     -			cp "t/test-results/$test_name.out" t/failed-test-artifacts/
+     -			tar czf t/failed-test-artifacts/"$test_name".trash.tar.gz "$trash_=
+dir"
+     -		done
+    --		return 1
+     +		create_failed_test_artifacts
+    + 		return 1
+      	}
+     =20
+    - 	cache_dir=3D"$HOME/none"
+5:  6078aea246d =3D 5:  486d4bbf8b0 ci: unify setup of some environment var=
+iables
+6:  d69bde92f2f =3D 6:  534b14f0262 ci: squelch warnings when testing with =
+unusable Git repo
+7:  b911c005bae =3D 7:  a060613f039 ci: install test dependencies for linux=
+-musl
+8:  5784d03a6f1 ! 8:  c05ff28cc2c ci: add support for GitLab CI
+    @@ ci/lib.sh: then
+     +	DONT_SKIP_TAGS=3Dt
+     +	handle_failed_tests () {
+     +		create_failed_test_artifacts
+    ++		return 1
+     +	}
+     +
+     +	cache_dir=3D"$HOME/none"
+
+base-commit: dadef801b365989099a9929e995589e455c51fed
+--=20
+2.42.0
 
 
---OWxjWq/UyzCEhbXO
+--85isz1NaNj02/yAr
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVMkPMACgkQVbJhu7ck
-PpTbXQ/+LPvpBqLFIbFjez6LJXMxKoDnEMGeZEW2CIaQYbA0MghVPJ1yFZknYRkS
-/MARwyt+63LPPwOZm1BINpu9z1nMyTxgBKSk+0sx+UpQv2GSz4wjV6T686Yztxul
-3rUReeJboiHiloZq0nTaBZXxdWyP9TAkjsdHrbo50o8blNz9/g51FQOkbBiEv4Qk
-afVpt5nVBHZbDHuBchAWB2QqlnfEhxk/3KLFE3vJW700EKeoyNtk0ZIqRV0HLxkt
-4c7CnEzSQ+qFiH8KsikFp0MHEtlaoLAdb429V2SAsoOd1hoEgewS28ZuSUmJNiHh
-x0Uzt3B8B9aUholIU5oP/PX3/x/jeTu+jkJ91lna75wwjoQRc8CJfz/2e6Sdd24F
-zmFowo51MxzdJvhzj6xL1zxOKc4Ms+rPYyPWTK+UORmcHxSNBWC86zVLysZK+NUP
-eDhogO8c7quVXczeC317jEjfKfxI22tVkx/OUxftUuz43wNUNoLR7Dw3ZooOgsxI
-zMO6zjyJeUXFl0VQPXxLR8fbp1vQKAGDASLZRurp6yOuGTf0oD1Yn1iLl8c4lR2q
-LdDtGTm28gEbGl8W6cf6TuZbwvEhiBtwVjp2BmK2rFNt+c+FNk1G420ujMLGLq3r
-DPMBJL8gH6oYlwpZ057QjBM+Nr32cc/+JJ9NgMDxa76JfMM4pNs=
-=Wfdj
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVMksAACgkQVbJhu7ck
+PpQCNBAAl+Jm7LL3nGGc8UQYQW3ggcPtl8GJCCz3gjulzWEsDFB/LLWmld5IepKo
+KFSj7EOxYSrEMhLWRsuS1HNNvkh6QznC/MsKjE7rEcVo6z6R4le6q5dkQoG0tXWR
+RlmM4kiEza5Kn6Al7EF29Vg+9eyBrlDNnGnb/EejfOGlWC6XECZvvTOyJqjDeS8z
+7d2kPKBADB/j72a6q5H/5oQsHYhzXRCc/OgV1tzyQcaoKEES54T4rkUbAX1jzl8X
+YwjgW6SojDZNkojd5L/vBSNhDdCkyEiUuoHAMzd44m2RuYB7o4Gj5S43sdBULHzN
+VB4tDoqvA+q/O6CT4rKa5mJsmnznWB/oTDPFFXs3DyigPutR4fMDTc9471/ssyUy
+9Gb/NOqXFUrBH4HYsnsxeDtWzQV1E2bWnXa4Ln9oHXdaTi6M31JrXI3xtUL26Yaz
+0qJaWhEyK1JLpJasC9VtLxyDwCUTAiBNdk7f5d5G8j6iYFra1Jfz5wWY7Q1LWEgD
+cdi9u4saPCUwkHGqThT7aht9Ne9DSbQJ67eIZx6MGUPqFzSkvYxl4Mn2LRpsRd09
+GD8sx59jO+s4TDayItlHrorzYg4IqTsA00dFBqNvOS+duzeu1IE9Y4GYWDW24nZy
+rfwGl8ekTLLAf/L+yKkQKHEEF5G3FQocr2dnB9Hjm6ORpEqIRQE=
+=Jii5
 -----END PGP SIGNATURE-----
 
---OWxjWq/UyzCEhbXO--
+--85isz1NaNj02/yAr--
