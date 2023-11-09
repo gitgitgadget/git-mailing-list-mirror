@@ -1,54 +1,54 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203F039856
-	for <git@vger.kernel.org>; Thu,  9 Nov 2023 22:34:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF2B439863
+	for <git@vger.kernel.org>; Thu,  9 Nov 2023 22:34:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="xov8Lq+2"
-Received: from mail-oo1-xc2a.google.com (mail-oo1-xc2a.google.com [IPv6:2607:f8b0:4864:20::c2a])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6FF42D63
-	for <git@vger.kernel.org>; Thu,  9 Nov 2023 14:34:23 -0800 (PST)
-Received: by mail-oo1-xc2a.google.com with SMTP id 006d021491bc7-586f68b78ddso764888eaf.2
-        for <git@vger.kernel.org>; Thu, 09 Nov 2023 14:34:23 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="YF/fpzTU"
+Received: from mail-oo1-xc34.google.com (mail-oo1-xc34.google.com [IPv6:2607:f8b0:4864:20::c34])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FC0F2D63
+	for <git@vger.kernel.org>; Thu,  9 Nov 2023 14:34:26 -0800 (PST)
+Received: by mail-oo1-xc34.google.com with SMTP id 006d021491bc7-5842a94feb2so773595eaf.0
+        for <git@vger.kernel.org>; Thu, 09 Nov 2023 14:34:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1699569262; x=1700174062; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1699569265; x=1700174065; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=E6uvJ8CYZIzc8Ud08TRsM4z79zgntDfUAlcG+b4Q9AU=;
-        b=xov8Lq+2xFIRCcoYoFDDPcYVHRwAMi0Vkz+m2RWYWAuiNWPY3EBrEStRr2oBZ7Aagr
-         ejYFdoTmAaYwZvfkiCZWCYx1tgOgvZEih0tI4m8fOOFJKY7OC5E/cx/R4S5yXa8VVTUW
-         j1uWDfvjXr2zFE/V11RBnZ10+Yb4WRWmeUpd49KLQF1r366BFkl/QstmtOOzDSX8G75s
-         ro1i30D+axMBMZYfa7oilOLzVwi+b0Hs0x0NxxrKSC9qYo4jPXA/DQ4/lFUK6QIJX7Q1
-         MX8By6kl4DYBysrNVWPRoHAtFlzLrdEXkeAm2OkOJeAZK0kxqtSiLuaCiwb15Y48vgiQ
-         quXA==
+        bh=3FDbHaI/JadI9HKCO6pbZxSp5CFQwHyNxGX4QDfRTwg=;
+        b=YF/fpzTUHeTRccj810FM+SAAEKU7QC0KloioIqTfaZYdluTyEJ2AMdfAb7Z9iT5LKh
+         46DGC+yo+JT2mtmWahOBeA1VY1jCzxsUd1FgoNwZG2+XUOWpeb+dhTa4+jRB8yh9rFQx
+         /odqizM//28Yr2djeqXel53tkSYbEcesFIbmyUbkDpUOy8ZkQLTs8U6E5tm1VaiWB0kT
+         iKISogcgY9PhEgiB5tccu5+4K1sZLwW5zsRuH6C0fnOwQ2hAMgIUaAwtT9x1rmh78X07
+         NSbogUeERrYhgBHOq5tivyQ7K3sUfpv5n8rpqY1c6sPppr+ygilmgTAr/Ug77ixt4AcL
+         v5Pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699569262; x=1700174062;
+        d=1e100.net; s=20230601; t=1699569265; x=1700174065;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=E6uvJ8CYZIzc8Ud08TRsM4z79zgntDfUAlcG+b4Q9AU=;
-        b=Wl9ex1W+qwXanAkQBgVh/YsYXTVTgtdopES8ivcm9AJaf6NgrcWCpdgxtRbMpP2Ktj
-         41P1/eBkyeFZTS5tBneBsFLwHsF/y+C3nJyAO8y7ZkJUV2CiQHM2oOGPO0FPMJmHYrHo
-         JYQDUchD0Ff9rSVLH+saQuDLFFu+jilxuS8smG7FnAUyCduJlfhQM2LdeSQMxrUdb9SM
-         w25z7+OdmyKvuj53wcghzOEKZWOvGqdMTWPuTk8NTmkR23IrkUJG7XZGGQUhqBU8cCh9
-         ikAc8axh/hVsX7L7sIs7R/jT5MOLzR4/rp97AtWUYxgXAf23U11TlOVfb+3EvOHiG/FS
-         9tDA==
-X-Gm-Message-State: AOJu0YzSe6HqPKisZPgCC0CSPXZnwV3KR9tEvMzuP6CW0WEwV8fE95A5
-	Zf4hZvH4JytRhk9EhICfsXEQRhuIuszCP/7Eq4HpYQ==
-X-Google-Smtp-Source: AGHT+IEaF+S66tzKTAurUALee7fDMqEwdXi4x/17Xf+LfMOPWMOUxSdT1vKfNqYRgdIf7fLtPapFPg==
-X-Received: by 2002:a05:6358:9392:b0:169:49f7:cb1c with SMTP id h18-20020a056358939200b0016949f7cb1cmr7514048rwb.8.1699569262584;
-        Thu, 09 Nov 2023 14:34:22 -0800 (PST)
+        bh=3FDbHaI/JadI9HKCO6pbZxSp5CFQwHyNxGX4QDfRTwg=;
+        b=wzZVU5uLIFXs46mwUO7ignjwZ5g8Q5bF4RbjEopx8QGItDn52HQ2uc0ERnf+EwMt74
+         53PSrJg64TZ/yXbmAVQ9/LUIjGAzqDVii1iqxMqatt7BlD1QM1e58jfv9mFY1I1znkvw
+         Cz+vFQEH/jL6LfzXjkWxD+h/cEVLamGGibdDFUnQqapxTXwqnrr90yM+Co/WFTeOpGzC
+         C/TXaVbraxKR/dQmyzk38FxGUjg44ZQ979B4GFKLKZLQzOGS30SdmOF1rjh5Cbq/JOEU
+         TOUYCrT9muQFygUtrKga2LaQijp3PVY5tDWQ+xp2dg0Os4fOqVN02XWBfWgESQfhx3yc
+         VAvA==
+X-Gm-Message-State: AOJu0YxWjNM3HYq3a2IIfNT4Qhq4vThJkZ0JkhD68nkrOcqlFvm9WDgx
+	hiW9ZcD112eQle4/wNl+O5P7ezduhQT3YCp5+r3b8Q==
+X-Google-Smtp-Source: AGHT+IGtoXtithsqJ1ROjpc8/upBKvYnzDpBZyWEFL/W+UH4FwY49w7EW+SqMiq5u3Nibfdyx8oMgg==
+X-Received: by 2002:a05:6358:5e0c:b0:169:9788:8741 with SMTP id q12-20020a0563585e0c00b0016997888741mr5423392rwn.27.1699569265209;
+        Thu, 09 Nov 2023 14:34:25 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id k20-20020ac84794000000b004179e79069asm2293857qtq.21.2023.11.09.14.34.22
+        by smtp.gmail.com with ESMTPSA id c16-20020ac853d0000000b0041eef6cacf4sm2298482qtq.81.2023.11.09.14.34.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Nov 2023 14:34:22 -0800 (PST)
-Date: Thu, 9 Nov 2023 17:34:21 -0500
+        Thu, 09 Nov 2023 14:34:25 -0800 (PST)
+Date: Thu, 9 Nov 2023 17:34:24 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 4/7] commit-graph: read `GDAT` chunk with
+Subject: [PATCH 5/7] commit-graph: read `BIDX` chunk with
  `pair_chunk_expect()`
-Message-ID: <dcde17455ceb135b5298e86e8256e62cf05ed124.1699569246.git.me@ttaylorr.com>
+Message-ID: <1f556f5b02d69bed688cc290d22ed8b7e646c4a7.1699569246.git.me@ttaylorr.com>
 References: <20231109070310.GA2697602@coredump.intra.peff.net>
  <cover.1699569246.git.me@ttaylorr.com>
 Precedence: bulk
@@ -61,50 +61,52 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1699569246.git.me@ttaylorr.com>
 
-The `GDAT` chunk can benefit from the new chunk-format API function
+The `BIDX` chunk can benefit from the new chunk-format API function
 described in the previous commit. Convert it to `pair_chunk_expect()`
 accordingly.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- commit-graph.c | 17 +++++------------
- 1 file changed, 5 insertions(+), 12 deletions(-)
+ commit-graph.c | 19 +++++--------------
+ 1 file changed, 5 insertions(+), 14 deletions(-)
 
 diff --git a/commit-graph.c b/commit-graph.c
-index 67ab0f2448..3b456d199f 100644
+index 3b456d199f..76d220508b 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -299,16 +299,6 @@ static int graph_read_oid_fanout(const unsigned char *chunk_start,
+@@ -299,18 +299,6 @@ static int graph_read_oid_fanout(const unsigned char *chunk_start,
  	return 0;
  }
  
--static int graph_read_generation_data(const unsigned char *chunk_start,
--				      size_t chunk_size, void *data)
+-static int graph_read_bloom_index(const unsigned char *chunk_start,
+-				  size_t chunk_size, void *data)
 -{
 -	struct commit_graph *g = data;
--	if (chunk_size / sizeof(uint32_t) != g->num_commits)
--		return error(_("commit-graph generations chunk is wrong size"));
--	g->chunk_generation_data = chunk_start;
+-	if (chunk_size / 4 != g->num_commits) {
+-		warning(_("commit-graph changed-path index chunk is too small"));
+-		return -1;
+-	}
+-	g->chunk_bloom_indexes = chunk_start;
 -	return 0;
 -}
 -
- static int graph_read_bloom_index(const unsigned char *chunk_start,
+ static int graph_read_bloom_data(const unsigned char *chunk_start,
  				  size_t chunk_size, void *data)
  {
-@@ -433,8 +423,11 @@ struct commit_graph *parse_commit_graph(struct repo_settings *s,
- 		   &graph->chunk_base_graphs_size);
+@@ -437,8 +425,11 @@ struct commit_graph *parse_commit_graph(struct repo_settings *s,
+ 	}
  
- 	if (s->commit_graph_generation_version >= 2) {
--		read_chunk(cf, GRAPH_CHUNKID_GENERATION_DATA,
--			   graph_read_generation_data, graph);
-+		if (pair_chunk_expect(cf, GRAPH_CHUNKID_GENERATION_DATA,
-+				      &graph->chunk_generation_data,
-+				      sizeof(uint32_t),
-+				      graph->num_commits))
-+			error(_("commit-graph generations chunk is wrong size"));
- 		pair_chunk(cf, GRAPH_CHUNKID_GENERATION_DATA_OVERFLOW,
- 			   &graph->chunk_generation_data_overflow,
- 			   &graph->chunk_generation_data_overflow_size);
+ 	if (s->commit_graph_read_changed_paths) {
+-		read_chunk(cf, GRAPH_CHUNKID_BLOOMINDEXES,
+-			   graph_read_bloom_index, graph);
++		int res = pair_chunk_expect(cf, GRAPH_CHUNKID_BLOOMINDEXES,
++				      &graph->chunk_bloom_indexes,
++				      sizeof(uint32_t), graph->num_commits);
++		if (res && res != CHUNK_NOT_FOUND)
++			warning(_("commit-graph changed-path index chunk is too small"));
+ 		read_chunk(cf, GRAPH_CHUNKID_BLOOMDATA,
+ 			   graph_read_bloom_data, graph);
+ 	}
 -- 
 2.43.0.rc0.39.g44bd344727
 
