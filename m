@@ -1,196 +1,94 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E370E1A731
-	for <git@vger.kernel.org>; Thu,  9 Nov 2023 11:41:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EA611DA54
+	for <git@vger.kernel.org>; Thu,  9 Nov 2023 13:15:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="icQzCxsk"
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73BD0269A
-	for <git@vger.kernel.org>; Thu,  9 Nov 2023 03:41:39 -0800 (PST)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id AC6D530137;
-	Thu,  9 Nov 2023 06:41:38 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=N41m0SvCNTR+5RDOKP143oEpYoH+uk/oFGugMV
-	CW+7o=; b=icQzCxskgKgrnXUOJbUZr3qrC0JUhppE9DzwO09hrz2mnv5yRIW3yQ
-	XgmJmHX5X7TlCNrmEdT2lEp5rPG/4TlUpW0xpA/PJ0EWLqGebS8bUGEq+4bMEMJo
-	x+elSKNWSMi5zXb2aLoiu1NGe9vadYqc89LHqo+CDYSVrSas4A33w=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id A45AA30136;
-	Thu,  9 Nov 2023 06:41:38 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.67.28])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 321543012D;
-	Thu,  9 Nov 2023 06:41:35 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/4] global: convert trivial usages of `test <expr>
- -a/-o <expr>`
-In-Reply-To: <c5e627eb3fef0df162da56723093a03bfd2321fb.1699526999.git.ps@pks.im>
-	(Patrick Steinhardt's message of "Thu, 9 Nov 2023 11:53:31 +0100")
-References: <cover.1699526999.git.ps@pks.im>
-	<c5e627eb3fef0df162da56723093a03bfd2321fb.1699526999.git.ps@pks.im>
-Date: Thu, 09 Nov 2023 20:41:33 +0900
-Message-ID: <xmqqpm0jyx02.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="2t2mBu8v"
+Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 719D630DC
+	for <git@vger.kernel.org>; Thu,  9 Nov 2023 05:15:13 -0800 (PST)
+Received: by mail-qk1-x72b.google.com with SMTP id af79cd13be357-77897c4ac1fso52622785a.3
+        for <git@vger.kernel.org>; Thu, 09 Nov 2023 05:15:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1699535712; x=1700140512; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=yk8Cxy7r/klmSuFReWW+f3jxitEczSstfjueCqGbFIs=;
+        b=2t2mBu8vWwOlXJE5X1QAlkPeBSqDhDe35/alciIHeFdQLDN1Yp3r3qhOBux0sylv2F
+         wCaUTj3wQOl1Tmw6YnP4Cy3e549lmuSeiuqNR5LPmcOw0C+5Bqr9CfRp9pxsSmnms0ex
+         94D/Rl/2fX+1YEAJeYxMmCv6lMS0I1A6Rbo0EF3UGFxTSn7IERyj3T2Fia1bgGv49IIp
+         7Hv5vG77GZvypKR4k002OVW4CcQX8L2CweOcGTPbX3LT/zsK0so/0fTkSUQRrLvl/HZW
+         x1kwDDKKx/AVKIpb2DaE/CKvbnzRdG1ynZtgDxT5byvECJpjT8ehy3vsYn0URjZMwNxD
+         K50w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699535712; x=1700140512;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yk8Cxy7r/klmSuFReWW+f3jxitEczSstfjueCqGbFIs=;
+        b=sJVgTOqc538rKQvK9ziqY7GBtt/2IofqXe4lQHqOa+up7IzjL0y3rP0tH2ooHtVtrb
+         SdScum2NsaBIDlBT/2wiJwsLUG5ai4MfU/S6mb6rLi/HwmD8DQkh57bZepT5QRaD8xQR
+         pU8Ax24OUt3n05ic4J4ZA6B5vhNtwVtYp/4B/QK6LtEKzEclDsJmMHM6JtNBWKwOVizI
+         czIpbCN3hGuEwLDKTGXxaWLJy9VIzjAwipYb27jwLsFH1ny9bMk20WRP/feymbcHX4MS
+         R7fpGLWiL+vhoxpJ9c4UY7FzaSE1c5mX9lnguhysYfmqn1AneuIG4hmP0LwJn5Ex1khr
+         X1ag==
+X-Gm-Message-State: AOJu0YxAUv4o+cK5KaKFXbhpr8XqgdonotrZDluCSkA2MCzqKLv6Q8rv
+	dkmk+qAFmBtySmHOi/9z75JvYw==
+X-Google-Smtp-Source: AGHT+IHCdOq4fRn8UnjjFjkPKGjkbSR2hGyv8e/+80Er7z3fLHmpPx7wW2bt9v/xdrxJQJmEc8eGeg==
+X-Received: by 2002:a05:620a:6605:b0:778:b559:4744 with SMTP id qf5-20020a05620a660500b00778b5594744mr4948740qkn.58.1699535712558;
+        Thu, 09 Nov 2023 05:15:12 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id oo21-20020a05620a531500b0077890c8896bsm1981875qkn.134.2023.11.09.05.15.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Nov 2023 05:15:12 -0800 (PST)
+Date: Thu, 9 Nov 2023 08:15:11 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Nov 2023, #04; Thu, 9)
+Message-ID: <ZUzbX1eiwYuWvkN5@nand.local>
+References: <xmqq34xg5ek3.fsf@gitster.g>
+ <20231109075052.GA2699557@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- EF9CF2AE-7EF4-11EE-852D-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20231109075052.GA2699557@coredump.intra.peff.net>
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Thu, Nov 09, 2023 at 02:50:52AM -0500, Jeff King wrote:
+> On Thu, Nov 09, 2023 at 02:40:28AM +0900, Junio C Hamano wrote:
+>
+> > * tb/pair-chunk-expect-size (2023-10-14) 8 commits
+> >  - midx: read `OOFF` chunk with `pair_chunk_expect()`
+> >  - midx: read `OIDL` chunk with `pair_chunk_expect()`
+> >  - midx: read `OIDF` chunk with `pair_chunk_expect()`
+> >  - commit-graph: read `BIDX` chunk with `pair_chunk_expect()`
+> >  - commit-graph: read `GDAT` chunk with `pair_chunk_expect()`
+> >  - commit-graph: read `CDAT` chunk with `pair_chunk_expect()`
+> >  - commit-graph: read `OIDF` chunk with `pair_chunk_expect()`
+> >  - chunk-format: introduce `pair_chunk_expect()` helper
+> >
+> >  Code clean-up for jk/chunk-bounds topic.
+> >
+> >  Comments?
+> >  source: <45cac29403e63483951f7766c6da3c022c68d9f0.1697225110.git.me@ttaylorr.com>
+> >  source: <cover.1697225110.git.me@ttaylorr.com>
+>
+> Sorry it took me a while to circle back to this topic. I posted a
+> competing series just now in:
+>
+>   https://lore.kernel.org/git/20231109070310.GA2697602@coredump.intra.peff.net/
+>
+> that I think should take precedence (and would require some reworking of
+> Taylor's patches, so you'd just eject them in the meantime).
 
-> diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
-> index e54492f8271..e4d31cbbd6a 100755
-> --- a/GIT-VERSION-GEN
-> +++ b/GIT-VERSION-GEN
-> @@ -11,7 +11,7 @@ LF='
->  if test -f version
->  then
->  	VN=$(cat version) || VN="$DEF_VER"
-> -elif test -d ${GIT_DIR:-.git} -o -f .git &&
-> +elif ( test -d ${GIT_DIR:-.git} || test -f .git ) &&
+ACK: that sounds like a good plan to me. Thanks for picking this back
+up, Peff!
 
-I do not think this is strictly necessary.
-
-Because the command line parser of "test" comes from left, notices
-"-d" and takes the next one to check if it is a directory.  There is
-no value in ${GIT_DIR} can make "test -d ${GIT_DIR} -o ..." fail the
-same way as the problem Peff pointed out during the discussion.
-
-I do not need a subshell for grouping, either.  Plain {} should do
-(but you may need a LF or semicolon after the statement)..
-
-> diff --git a/configure.ac b/configure.ac
-> index 276593cd9dd..d1a96da14eb 100644
-> --- a/configure.ac
-> +++ b/configure.ac
-> @@ -94,7 +94,7 @@ AC_DEFUN([GIT_PARSE_WITH_SET_MAKE_VAR],
->  [AC_ARG_WITH([$1],
->   [AS_HELP_STRING([--with-$1=VALUE], $3)],
->   if test -n "$withval"; then
-> -  if test "$withval" = "yes" -o "$withval" = "no"; then
-> +  if test "$withval" = "yes" || test "$withval" = "no"; then
-
-This is correct and is in line with the way generated ./configure
-protects "if $withval is yes or no, then do this" against a funny
-value like "-f" in "$withval" breaking the parsing.
-
-> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-> index e0c5d3b0de6..43b5fec7320 100755
-> --- a/contrib/subtree/git-subtree.sh
-> +++ b/contrib/subtree/git-subtree.sh
-> @@ -489,13 +489,13 @@ find_existing_splits () {
->  			;;
->  		END)
->  			debug "Main is: '$main'"
-> -			if test -z "$main" -a -n "$sub"
-> +			if test -z "$main" && test -n "$sub"
-
-This should be OK as-is, for the same reason "-d" operator would not
-be broken by arbitrary operand..
-
->  			then
->  				# squash commits refer to a subtree
->  				debug "  Squash: $sq from $sub"
->  				cache_set "$sq" "$sub"
->  			fi
-> -			if test -n "$main" -a -n "$sub"
-> +			if test -n "$main" && test -n "$sub"
-
-Ditto.
-
->  			then
->  				debug "  Prior: $main -> $sub"
->  				cache_set $main $sub
-> diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
-> index e7786775a90..b952e5024b4 100644
-> --- a/t/perf/perf-lib.sh
-> +++ b/t/perf/perf-lib.sh
-> @@ -31,7 +31,7 @@ unset GIT_CONFIG_NOSYSTEM
->  GIT_CONFIG_SYSTEM="$TEST_DIRECTORY/perf/config"
->  export GIT_CONFIG_SYSTEM
->  
-> -if test -n "$GIT_TEST_INSTALLED" -a -z "$PERF_SET_GIT_TEST_INSTALLED"
-> +if test -n "$GIT_TEST_INSTALLED" && test -z "$PERF_SET_GIT_TEST_INSTALLED"
-
-Ditto.
-
->  then
->  	error "Do not use GIT_TEST_INSTALLED with the perf tests.
->  
-> diff --git a/t/perf/run b/t/perf/run
-> index 34115edec35..486ead21980 100755
-> --- a/t/perf/run
-> +++ b/t/perf/run
-> @@ -91,10 +91,10 @@ set_git_test_installed () {
->  run_dirs_helper () {
->  	mydir=${1%/}
->  	shift
-> -	while test $# -gt 0 -a "$1" != -- -a ! -f "$1"; do
-> +	while test $# -gt 0 && test "$1" != -- && test ! -f "$1"; do
-
-As "$1" could be anything (including an insanity like "-n"), this
-change is prudent.
-
->  		shift
->  	done
-> -	if test $# -gt 0 -a "$1" = --; then
-> +	if test $# -gt 0 && test "$1" = --; then
-
-Ditto.
-
->  		shift
->  	fi
->  
-> @@ -124,7 +124,7 @@ run_dirs_helper () {
->  }
->  
->  run_dirs () {
-> -	while test $# -gt 0 -a "$1" != -- -a ! -f "$1"; do
-> +	while test $# -gt 0 && test "$1" != -- && test ! -f "$1"; do
->  		run_dirs_helper "$@"
->  		shift
->  	done
-> @@ -180,7 +180,8 @@ run_subsection () {
->  	GIT_PERF_AGGREGATING_LATER=t
->  	export GIT_PERF_AGGREGATING_LATER
->  
-> -	if test $# = 0 -o "$1" = -- -o -f "$1"; then
-> +	if test $# = 0 || test "$1" = -- || test -f "$1"
-> +	then
-
-Ditto.
-
->  		set -- . "$@"
->  	fi
->  
-> diff --git a/t/valgrind/valgrind.sh b/t/valgrind/valgrind.sh
-> index 669ebaf68be..9fbf90cee7c 100755
-> --- a/t/valgrind/valgrind.sh
-> +++ b/t/valgrind/valgrind.sh
-> @@ -23,7 +23,7 @@ memcheck)
->  	VALGRIND_MAJOR=$(expr "$VALGRIND_VERSION" : '[^0-9]*\([0-9]*\)')
->  	VALGRIND_MINOR=$(expr "$VALGRIND_VERSION" : '[^0-9]*[0-9]*\.\([0-9]*\)')
->  	test 3 -gt "$VALGRIND_MAJOR" ||
-> -	test 3 -eq "$VALGRIND_MAJOR" -a 4 -gt "$VALGRIND_MINOR" ||
-> +	( test 3 -eq "$VALGRIND_MAJOR" && test 4 -gt "$VALGRIND_MINOR" ) ||
-
-This should be OK as-is; once "3 --eq" is parsed the parameter
-reference would not be taken as anything but just a value.
-
->  	TOOL_OPTIONS="$TOOL_OPTIONS --track-origins=yes"
->  	;;
->  *)
+Thanks,
+Taylor
