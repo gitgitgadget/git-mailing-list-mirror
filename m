@@ -1,45 +1,45 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD19F374E0
-	for <git@vger.kernel.org>; Thu,  9 Nov 2023 23:02:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2040838DC5
+	for <git@vger.kernel.org>; Thu,  9 Nov 2023 23:15:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CZSk7A1H"
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EAF34239
-	for <git@vger.kernel.org>; Thu,  9 Nov 2023 15:02:35 -0800 (PST)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 95F951CCBA3;
-	Thu,  9 Nov 2023 18:02:34 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HSqGMKm6"
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 746C24496
+	for <git@vger.kernel.org>; Thu,  9 Nov 2023 15:15:10 -0800 (PST)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 33C841B84C;
+	Thu,  9 Nov 2023 18:15:07 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=/U7TGnbYBg2/tnW96I6B+sNcRWRcsTJenF2Nv/
-	YPlqU=; b=CZSk7A1HMoxEzmr2ABWgBwSsv+msXnZCQZLLtu06nIoABtGuEPgfTl
-	EsVBXE9s4Eg8ZqZ3DWT1XzJ1DWLkWc/p9avfi7nj8C8sBxalQbB3ZTf/BOPBTSm8
-	wTPC4KR9du6Eh7/xWMLLtob+49lyZQTAh3UmoUhiiKruSOyUnzyIw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8D2101CCBA2;
-	Thu,  9 Nov 2023 18:02:34 -0500 (EST)
+	:content-type; s=sasl; bh=hJaxHRYI67Z0vr5cQnWW9mwbuuP7a2AczrMETx
+	gTUUo=; b=HSqGMKm6i8MeKvLPtl3R5XhSTdGKkPQ9h9qhI/3dG6P0vBbb1jbmXm
+	aVvhZRjilIGwgG/hVWV8DRKi8m/Izsty0m8oiojE+Sf1ZD4slOqgiDqS2lagFG6A
+	c/I3yhGKACRqtYKtV2A0dJ6WlQ0mMSpy+d81XOWuBKPO/JXDc64lY=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 2C2551B84B;
+	Thu,  9 Nov 2023 18:15:07 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.67.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DB6641CCB9F;
-	Thu,  9 Nov 2023 18:02:33 -0500 (EST)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 93B781B847;
+	Thu,  9 Nov 2023 18:15:03 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
-Subject: Re: [PATCH 2/4] contrib/subtree: stop using `-o` to test for number
- of args
-In-Reply-To: <20231109185515.GD2711684@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 9 Nov 2023 13:55:15 -0500")
-References: <cover.1699526999.git.ps@pks.im>
-	<b1ea45b8a8884d09ab070bb0f099834447d28938.1699526999.git.ps@pks.im>
-	<20231109185515.GD2711684@coredump.intra.peff.net>
-Date: Fri, 10 Nov 2023 08:02:32 +0900
-Message-ID: <xmqq8r76zg1j.fsf@gitster.g>
+To: Josh Steadmon <steadmon@google.com>
+Cc: git@vger.kernel.org,  phillip.wood123@gmail.com,
+  oswald.buddenhagen@gmx.de,  christian.couder@gmail.com
+Subject: Re: [PATCH v10 1/3] unit tests: Add a project plan document
+In-Reply-To: <f706ba9b682e7c4070d49086ad3af582bf269c79.1699555664.git.steadmon@google.com>
+	(Josh Steadmon's message of "Thu, 9 Nov 2023 10:50:42 -0800")
+References: <0169ce6fb9ccafc089b74ae406db0d1a8ff8ac65.1688165272.git.steadmon@google.com>
+	<cover.1699555664.git.steadmon@google.com>
+	<f706ba9b682e7c4070d49086ad3af582bf269c79.1699555664.git.steadmon@google.com>
+Date: Fri, 10 Nov 2023 08:15:02 +0900
+Message-ID: <xmqq1qcyzfgp.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -49,52 +49,34 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 114B7ED4-7F54-11EE-9ED7-25B3960A682E-77302942!pb-smtp2.pobox.com
+ D0268A82-7F55-11EE-B591-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-Jeff King <peff@peff.net> writes:
+Josh Steadmon <steadmon@google.com> writes:
 
->>  # Usage: process_subtree_split_trailer SPLIT_HASH MAIN_HASH [REPOSITORY]
->>  process_subtree_split_trailer () {
->> -	assert test $# = 2 -o $# = 3
->> +	assert test $# -ge 2
->> +	assert test $# -le 3
+> In our current testing environment, we spend a significant amount of
+> effort crafting end-to-end tests for error conditions that could easily
+> be captured by unit tests (or we simply forgo some hard-to-setup and
+> rare error conditions). Describe what we hope to accomplish by
+> implementing unit tests, and explain some open questions and milestones.
+> Discuss desired features for test frameworks/harnesses, and provide a
+> comparison of several different frameworks. Finally, document our
+> rationale for implementing a custom framework.
 >
-> It took me a minute to figure out why we were swapping "=" for "-ge". It
-> is because we want to logical-OR the two conditions, but "assert"
-> requires that we test one at a time. I think that is probably worth
-> explaining in the commit message.
+> Co-authored-by: Calvin Wan <calvinwan@google.com>
+> Signed-off-by: Calvin Wan <calvinwan@google.com>
+> Signed-off-by: Josh Steadmon <steadmon@google.com>
+> ---
+>  Documentation/Makefile                 |   1 +
+>  Documentation/technical/unit-tests.txt | 240 +++++++++++++++++++++++++
+>  2 files changed, 241 insertions(+)
+>  create mode 100644 Documentation/technical/unit-tests.txt
 
-I wish we could write something like
+Looks good.  I'll downcase "Add" on the title to match what I have
+in my tree, but otherwise it looks OK to me.  Let's see if we can
+mark this round ready for 'next' and check if we hear complaints.
 
-	assert test $# -ge 2 && test $# -le 3
+I have to make sure I do not forget about the other topic that
+builds on top of this one.
 
-(and I'd allow double quoting the whole thing after assert if
-needed) but we cannot do so without tweaking the implementation of
-assert.
+Thanks.
 
->
->> @@ -916,7 +919,7 @@ cmd_split () {
->>  	if test $# -eq 0
->>  	then
->>  		rev=$(git rev-parse HEAD)
->> -	elif test $# -eq 1 -o $# -eq 2
->> +	elif test $# -eq 1 || test $# -eq 2
->
-> OK, this one is a straight-forward use of "||".
-
-Yes, but why not consistently use the range notation like the
-earlier one here, or below?
-
-	elif test $# -ge 1 && test $# -le 2
-
->>  cmd_merge () {
->> -	test $# -eq 1 -o $# -eq 2 ||
->> +	if test $# -lt 1 || test $# -gt 2
->> ...
-> (I am OK with either, it just took me a minute to verify that your
-> conversion was correct. But that is a one-time issue now while
-> reviewing, and I think the code is readable going forward).
-
-Yeah, the end result looks good.
-
-Thanks, both.
