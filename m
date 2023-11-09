@@ -1,46 +1,46 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6ABE199AF
-	for <git@vger.kernel.org>; Thu,  9 Nov 2023 10:53:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C64199AF
+	for <git@vger.kernel.org>; Thu,  9 Nov 2023 10:53:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Na7iqCUn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QTjR4kJG"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jOLji6r3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Wixc9MOk"
 Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F889D41
-	for <git@vger.kernel.org>; Thu,  9 Nov 2023 02:53:43 -0800 (PST)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id ABF585C031F;
-	Thu,  9 Nov 2023 05:53:42 -0500 (EST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 782C92590
+	for <git@vger.kernel.org>; Thu,  9 Nov 2023 02:53:49 -0800 (PST)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailout.nyi.internal (Postfix) with ESMTP id E33775C02EA;
+	Thu,  9 Nov 2023 05:53:48 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Thu, 09 Nov 2023 05:53:42 -0500
+  by compute6.internal (MEProxy); Thu, 09 Nov 2023 05:53:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1699527222; x=1699613622; bh=hb
-	prfUsjMxqU4r81HY1SLgu3wF4R+Tm+SjF+3YioTEA=; b=Na7iqCUnmUcNFBsQ50
-	ocBKA5XU2rwXBRw0Lk1vc1Y7O6ooxoiX+mgLV3T9OnfFQk+ebSJlv65hpuEht/1f
-	lCOmDQZpdJxn79j2+G17o8gq8cXRkQGzDgsiaFdT5BymiA/hk88KxEvyQ8q/cXX3
-	BfsstOqzwV7TXuPT/0PsRcNwIjmZ0fhAjSsvJ8kwSa6+P5rJq0zOmk9lSzcui2/x
-	6rnvcz5JYsJS/JbYMSe1Dy5gcYJmxo8Mya74QdonTdgywPyNDedrHtgTylARp7tH
-	IpAZj3con0AbIJZ2cy0Y1VU3t2VKL6nWgfE7SW4dYwMJc1AwluYHQuRqsmScE+bR
-	YuGw==
+	:subject:subject:to:to; s=fm3; t=1699527228; x=1699613628; bh=jz
+	AcxQy2WYq+p5Je+BJ7NS7xX7ylyMJIJvRiIR7HjCw=; b=jOLji6r3MO9RMe9eaA
+	g7NqsJZwvbfOaGJi7rhL1U0AwhMhaVXIsXo7FowHeOzni4ZZGEXBp3cyDTdq0oMD
+	XM+VtnV4naBl/l7o92wgkPJBbFflZp9GDPi7LMxoG6w99lhGswipJr2i29jxxBup
+	oHOT9nnhkYY8SRmkSFwselw9tdvtFyKk4LwOsE0Als9r3a9xEeUKzcwmqFk/Kswj
+	Y+go/Rwdk5n7wJLG+GQwsopeDm0t4vWvfWzZ7bRDONwSujqG7fhb6FaOnJfCcU45
+	fnzXAgZMkeTzosVp4fzZGXzBbXXdNXHm69m5VlpSuR+3KWavhZlw9eorddXllY0q
+	jaew==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1699527222; x=1699613622; bh=hbprfUsjMxqU4
-	r81HY1SLgu3wF4R+Tm+SjF+3YioTEA=; b=QTjR4kJGUgoMiobAKIM/5K00yQ8lm
-	7vZiTi/NZdxvszSwA/Y60vU8GLpZm/eh04ywJ122Jt4GYd30RpP8gyzxNISW1L4j
-	OzN07uRyzVBDfdZKQZ3BgEjC8ZyfZPzR+1lWWOW9TR0tgOuPSBgyzaGOCjgK6ADL
-	Wy5UhXUjzU18KitVwjIa4maqrGm0NmZUuirs31wlJfmSjKrUyB8ATT+MmwtlhD46
-	m0eNO1DU2dJwTbyBlxE/NpGBZX38JGkJ3HUattVZPiFk7+4cXW9o3tFJEmNFUcnh
-	Faef5xVZze6B4BoSk3zSJsr72wR4qnOOmuctXnxL4RmjFA+Y1PCHLB+SQ==
-X-ME-Sender: <xms:NrpMZTr-f8DWzYpId7FDrpNrs40VDsObWKFPsKZywqEfB-FnPcCLww>
-    <xme:NrpMZdp2VeYCAFOo7Q7nolcl0pGGSNG0g3VGdwgPnHMSbyFafLvzalJalH_ZS1k9Y
-    dPoqk2GuAjVj_sGtw>
-X-ME-Received: <xmr:NrpMZQPPg2-7Nd7i3g7R012y3NWBXm2_cd8XuDcgndPRj-U4V-FsoFNFU0T1cXRCWU_27yp-yBV5106ylmd3kUTbhcgD_Z5XS1gouG3UDrvdU8al>
+	:x-sasl-enc; s=fm3; t=1699527228; x=1699613628; bh=jzAcxQy2WYq+p
+	5Je+BJ7NS7xX7ylyMJIJvRiIR7HjCw=; b=Wixc9MOky9NEkXFINXwId2jbWO3fU
+	kd5aPyl5bMORZvYP5KkX23zAGuhnDRuIPu+6RRcnWc91v8TDgVCerJ23ckykDJkr
+	DifajUrsheLhElsA8OVtc0iWaPiOhDWbbewXf7zusK+bDUUp7KBb2AJ1fIjHs3Bq
+	SyMyYZ+iRncbzm9LsCtpCrcKJg45U0OMMwrdSx+O6FlNhgXd6CZYARQlJVRdmZMq
+	oM/5Okz2BQwMjqQdtXk9I+7n0QUTbNLLrnlt0yh4yRmqRlo5lM2SfeH9S6sIe12o
+	uuFAYh/EQCI+1d7Heaj6Ck0H+PfItmcsGA9DK+TdqDlG3V1T6xDQBmgfg==
+X-ME-Sender: <xms:PLpMZfJcrZu5B0kqfmdImpfJ64hOPdfWc29gOAUE00E7fQbmJIzJ9g>
+    <xme:PLpMZTIbYN2g_d4-GIVkcRBtFrL8ufJJaTE4LMYtWZ8T3Knc_tln---NYyayP1Uts
+    qP5MKkHD1NrKHRkAg>
+X-ME-Received: <xmr:PLpMZXvY0v-PnfY6DQkmA1sN2Rlu_kSVonUk78tFQS37Awt9QpgprKCZz1o-MqgPTvTWCL33o3wZXueBaaEIQ1Ksaef329d4-6s10pObgMbMB5m2>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddvuddgvddtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
@@ -48,23 +48,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddvuddgvddtucetufdoteggod
     phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
     eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
     rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:NrpMZW5Cw5xRhwN-4Q906K1YGmCllvhwW0QfmAKQRMeMV52KxJV4sg>
-    <xmx:NrpMZS7hfQoBzdoENNVvAuZaChWCtptXXotdWrrIPQ0dX5OodwZ_zQ>
-    <xmx:NrpMZejQNovoSAvNYUHAN1pCeC5hc0rxROnmROQhqBc1dhCMCXb1cw>
-    <xmx:NrpMZYTtqoJF6eWN3cDCokQYF8kKNiyY3-L0I4gORwMBNSE1tBVXXQ>
+X-ME-Proxy: <xmx:PLpMZYYajNtZ9cUfHhkkCZsUMyW3R1lS71LmcjfTowvqoO3tOns09A>
+    <xmx:PLpMZWZzRz4my9CqpME7M1d55dzgSM5WDdvZyltC6p5Pu4ynEdpuPA>
+    <xmx:PLpMZcBiCA1sp0lZL2gJ1GU-hHuSKHQhUUQNB6u1dVY33a8ANwMMhw>
+    <xmx:PLpMZZywPXxTgbU463mMjPFIajl956JgMY7b__7IhIiPfV8d0x_lMQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 9 Nov 2023 05:53:41 -0500 (EST)
+ 9 Nov 2023 05:53:47 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id e9d1b987 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 9 Nov 2023 10:53:13 +0000 (UTC)
-Date: Thu, 9 Nov 2023 11:53:39 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 738dddd7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 9 Nov 2023 10:53:20 +0000 (UTC)
+Date: Thu, 9 Nov 2023 11:53:45 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/4] contrib/subtree: convert subtree type check to use case
- statement
-Message-ID: <7c54d9070fac15b8f0504251d920d0e1fc1fb1f4.1699526999.git.ps@pks.im>
+Subject: [PATCH 4/4] Makefile: stop using `test -o` when unlinking duplicate
+ executables
+Message-ID: <bc9489ca5b815b1a83e24771f1d7449b865a7e02.1699526999.git.ps@pks.im>
 References: <cover.1699526999.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -73,76 +73,79 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="2oIdYLPgXljZo3uG"
+	protocol="application/pgp-signature"; boundary="R8xWEazQuOTQ9vF/"
 Content-Disposition: inline
 In-Reply-To: <cover.1699526999.git.ps@pks.im>
 
 
---2oIdYLPgXljZo3uG
+--R8xWEazQuOTQ9vF/
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The `subtree_for_commit ()` helper function asserts that the subtree
-identified by its parameters are either a commit or tree. This is done
-via the `-o` parameter of test, which is discouraged.
+When building executables we may end up with both `foo` and `foo.exe` in
+the project's root directory. This can cause issues on Cygwin, which is
+why we unlink the `foo` binary (see 6fc301bbf68 (Makefile: remove $foo
+when $foo.exe is built/installed., 2007-01-10)). This step is skipped if
+either:
 
-Refactor the code to instead use a switch statement over the type.
-Despite being aligned with our coding guidelines, the resulting code is
-arguably also easier to read.
+    - `foo` is a directory, which can happen when building Git on
+      Windows via MSVC (see ade2ca0ca9f (Do not try to remove
+      directories when removing old links, 2009-10-27)).
+
+    - `foo` is a hardlink to `foo.exe`, which can happen on Cygwin (see
+      0d768f7c8f1 (Makefile: building git in cygwin 1.7.0, 2008-08-15)).
+
+These two conditions are currently chained together via `test -o`, which
+is discouraged by our code style guide. Convert the recipe to instead
+use an `if` statement with `&&`'d conditions, which both matches our
+style guide and is easier to ready.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- contrib/subtree/git-subtree.sh | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index 8af0a81ba3f..3028029ac2d 100755
---- a/contrib/subtree/git-subtree.sh
-+++ b/contrib/subtree/git-subtree.sh
-@@ -641,10 +641,16 @@ subtree_for_commit () {
- 	while read mode type tree name
- 	do
- 		assert test "$name" =3D "$dir"
--		assert test "$type" =3D "tree" -o "$type" =3D "commit"
--		test "$type" =3D "commit" && continue  # ignore submodules
--		echo $tree
--		break
-+
-+		case "$type" in
-+		commit)
-+			continue;; # ignore submodules
-+		tree)
-+			echo $tree
-+			break;;
-+		*)
-+			die "fatal: tree entry is of type ${type}, expected tree or commit";;
-+		esac
- 	done || exit $?
- }
+diff --git a/Makefile b/Makefile
+index 03adcb5a480..1094a557711 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2342,7 +2342,7 @@ profile-fast: profile-clean
 =20
+ all:: $(ALL_COMMANDS_TO_INSTALL) $(SCRIPT_LIB) $(OTHER_PROGRAMS) GIT-BUILD=
+-OPTIONS
+ ifneq (,$X)
+-	$(QUIET_BUILT_IN)$(foreach p,$(patsubst %$X,%,$(filter %$X,$(ALL_COMMANDS=
+_TO_INSTALL) $(OTHER_PROGRAMS))), test -d '$p' -o '$p' -ef '$p$X' || $(RM) =
+'$p';)
++	$(QUIET_BUILT_IN)$(foreach p,$(patsubst %$X,%,$(filter %$X,$(ALL_COMMANDS=
+_TO_INSTALL) $(OTHER_PROGRAMS))), if test ! -d '$p' && test ! '$p' -ef '$p$=
+X'; then $(RM) '$p'; fi;)
+ endif
+=20
+ all::
 --=20
 2.42.0
 
 
---2oIdYLPgXljZo3uG
+--R8xWEazQuOTQ9vF/
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVMujIACgkQVbJhu7ck
-PpQ7BxAAqG1eUm9ZHLDsFf24jWNjFIQFdrvitr1fQ6Y8pgJ+v2Ks+V0jvFt9B9IC
-toS2OBGgNawoZX5Ug15QdvKaoCAn/ZNP1oBePk6K5hR6HWJrfPWqZOtd+OpnbeWu
-28nt917plb+AO1kxgPi7FE8htC674Ft0yUYwKQSi3BhCwg2YL0AHf8J73ppq3nP7
-avbn5Xa+e54uk9bK8D/eH/X7qAxMTPHK81SamkCj2NRSIQDcthk8osdG1xbNS7R6
-cUeLnNsAKnh/YqInMNEdikA1Rx9DS96J2JNrKMrGfbKC+Fh//HYS1q6vduTu3PkZ
-2fvOH4Wwkd2+wi5q5YEZX+BwsgoQ5dY1x9He5Oyz6ClSLSXhNpKR8dQbtT+7iuI/
-CZ9xS4iwiX17jGkwacacM9DHNvA81DQar727j1JedrnTPDRRpHMO3pjSgTTBvUQK
-qjeXiaFjjwHEtM9mbCnsBK3Uph4vbmODDe/IhM9ZtNS8vwYBg/sQo4FyEeC9FDSJ
-JVNkuXmn7Rr/CBOvSXOC8xACRifRoyeFEoWOrbEXsx2iN0TcLzj3MjQpLfPr+060
-vofO5vYyrWP3YUTVhZNvOL2UL3Jpu3zJjr82wa5q3dDlm4KJPKMZvYUhbAk+oevM
-R1dlb/P1JXFiyo6K0Z6K7t7JQbs3Qpd8BTKRC/94kRnxoCNsjn4=
-=bjli
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVMujgACgkQVbJhu7ck
+PpSK+g/9GS3ZLKN5iZSRnOHu9KbP3gMMS8qHnEpErqqLVjV5yww2chJa0DnrvO+d
+rk8L6+zfD/Rm7MFngOMxjhD37Ji5NcCqomOvKnjLS15HpetRisqYlNLeuOt38BsN
+78xiLsQEdVJGOz2GJ+9nZY1MiKxqcG3/pku1sWgd81v6F+PMkPe2+RybIQp0rOkL
+jCpbYCTMuXxCZKrYX0p2gAwJGSkjKGxfJHxvNuN2F3GavLahjhPgGO6kIPyoilY7
+oWikpnngWihrJWga5t8IjCJgvzMKwRmOC08WnbpFmM48A4zDw63/Rq8ssw4JGptC
+KezFJ1nc0ngfY3wuFPnMbtu/4NmsB6xSNFO6fcmik76Mns3bfBqQquIZZc07MlvT
+nFvym0J5QE4QMyzBbW4PhhJnhph9piZNJVzXQvhaaRzdu0vuL/jFgZVt/LORQzmi
+44FsHpsh7UKGsb7xA/NC4kZc5dyzX9yMuH6XRZa9mOewWth355mI+QPz0emP1Thf
+G++WOcQBw95gVYr8zcnkZQvBIZNh8+ln0UsSZbr0o9C7KuBCyaH64zDzXE/F3flr
+fWqoRNKL+g6dIS/YJAtqzTh3hwleP1gpR2XptEOQBckP0iKSTvVXU22DUFz2ImRl
+FlLPyvPSx0zzZLtglcrC/VYv3FUCZBs1I91DDjMQw+VnwBKCNcw=
+=gRhb
 -----END PGP SIGNATURE-----
 
---2oIdYLPgXljZo3uG--
+--R8xWEazQuOTQ9vF/--
