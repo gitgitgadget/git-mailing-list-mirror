@@ -1,75 +1,75 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D0B5101C1
-	for <git@vger.kernel.org>; Thu,  9 Nov 2023 06:30:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D71101FC
+	for <git@vger.kernel.org>; Thu,  9 Nov 2023 06:30:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="yYmgbkrs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kECJekz4"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lY++Uyqs";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZZgLjAjR"
 Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5023D2118
-	for <git@vger.kernel.org>; Wed,  8 Nov 2023 22:30:08 -0800 (PST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72D6C111
+	for <git@vger.kernel.org>; Wed,  8 Nov 2023 22:30:10 -0800 (PST)
 Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id E42E55C0303;
-	Thu,  9 Nov 2023 01:30:05 -0500 (EST)
+	by mailout.nyi.internal (Postfix) with ESMTP id E1E5C5C0301;
+	Thu,  9 Nov 2023 01:30:09 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Thu, 09 Nov 2023 01:30:05 -0500
+  by compute1.internal (MEProxy); Thu, 09 Nov 2023 01:30:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1699511405; x=1699597805; bh=NF
-	HAwbRrQkYWkDAYLUtdcx6ma08xg+p3WsBrBdfWueA=; b=yYmgbkrsu/EexEmW/M
-	aiAxFT+8iKQOivmE/6weWGH50/Ej9izIc0TfTjNOtG8UgVNvwIN8TFylbVmveR6Q
-	WXsT3Y1o12Ivq5KXjHg3MY5uFAi3Mnc2D56dPH723ASkeb9SPtbow+KqOZWW34mo
-	yk8egGpzMcOBLaOSKSoeybHISBxLDV8zLMwa+m/S4SibwG8gaIHE4uwVgdNE4y4Z
-	z8DaJ3b1GRldsOsSFI7KBLklLYyLS0dFVUVpVb099WKtm3mYiO/iXOt1LPQy8LS6
-	5SSLk9g9XTdFzhPMg/uKps3f8q61el0AH5S9H7sMufUIxjXcPqGcMR0UhvVIeypL
-	alQg==
+	:subject:subject:to:to; s=fm3; t=1699511409; x=1699597809; bh=73
+	cBPRGbULxFZVm3R+4y5TVyEyuM+K278GtTUvxo+Es=; b=lY++UyqskIhoefbchE
+	tJvnHGOZ4gHbazhNp9erEx/NVrr7FzGxknvJeKHj6d20MZ9VvNVYP5Hsu+nzVNbK
+	P/x8+UGxg7lxJs49H4NiFc7QrThzZyNjR7DMqP1tJGTqbcoa/x2KJxcSbQhDQpiA
+	myAmWJbgDjQgDFMjl/m29TPxdPT2N4Gu/w9dAIYoH2R75Lw3t2OWZQa9wKGH7FwD
+	MaYOBjIMgSDVDhkSXImZaSaxPpSXFAv3nXijAzyjlS+O8zQmG3dRSdnkvmauHpSa
+	FnC1TAmfEh8Qee3qHCjNxsETN0D7JVHKKHMNsSSKTnc26D00TyI8OvNuGDvJcmry
+	cj7g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1699511405; x=1699597805; bh=NFHAwbRrQkYWk
-	DAYLUtdcx6ma08xg+p3WsBrBdfWueA=; b=kECJekz413REQ/Hy9hyHX7c3KxT/l
-	VLcFQYzi3M26AzimYA0RtGReEyHdpn+xDUA+Q+pzMoi33olInhtadAnx32+6K+a0
-	qjKTWostPT7itWpf/tWqwo5E3a9l1IM58ZHcJSTU9ZnP8i+BSA67NoGpEugKxGPz
-	WJVEBnShTkdlL+2piXZj4zy89M4kNF8kmiFMmaTYdfgofqmwldoYy5e72usE1ofi
-	x1PY8uYtfFVl+XccwY3pTpkDyADY04CScyKWXcVxT+rxWiUuHj4ipxEylD6/9EkX
-	stsrjzOzXf7Mx8425vQ4GEPdaYaakuTKQ7CFjffuO6LLToTy7ONx2TKEw==
-X-ME-Sender: <xms:bXxMZdV2LNbdL9T49XGwk4q7OLuhJBALW3ssn6rI3XRXKL9uFLhWCQ>
-    <xme:bXxMZdkSBK7Yrns7x6huQf038ASccn8JZbPojpPNphoPhVwxszT9k_WezfbS-2Evm
-    jPLX-heuNJmJtxRog>
-X-ME-Received: <xmr:bXxMZZZUF0bDmumVrvQc5p6VLDPZJef5ddF2bvY1PhXqB24W6V4yTMU1fbX50ZkPqaOcgRY_wpqJsej_b2zDIMWi5TAekf-RNiDKATbKj_KdTyxS>
+	:x-sasl-enc; s=fm3; t=1699511409; x=1699597809; bh=73cBPRGbULxFZ
+	Vm3R+4y5TVyEyuM+K278GtTUvxo+Es=; b=ZZgLjAjRe+1gsj8/Z/ZfyTlUBlGNN
+	qbHJFmqWWA8APN7WtEhNapom6XLSNgWFw0yDlVKaGoCwJI1yYHdNPv3DCwzFIitu
+	wWPmNegh6CGogUwu0jOSD3vTQf4jmsHBuqkKvnSp0Oqfxjf7nroqIsIkaIMlF+Od
+	U/nWx52HH1TU3sHgGok36Et7w0fNGqlBKVQU4411ejMYrJjQEkw3WwBJMlD7QD5F
+	sD8nIZoo82jw3DHJv8vkIwO99FGtThhyyxqZnr0H698UzOKS5UvEzFJVPkSK44FZ
+	gmFQU+jY4BxnswjFvEMbwwMoJlVui234X/A09uEgda0vTImR9bQvTpfeA==
+X-ME-Sender: <xms:cXxMZWVsN_YRhWXoFB4wKB9uxR1CABAq05nai-C18O_-tuoS8vLhyg>
+    <xme:cXxMZSkBDmwjBRgxTqCSz602GEfLqy770X3miJGmRR3XoJYr2NhFsX13ONvDrDewJ
+    MLFyHNjJ6B04xHhhA>
+X-ME-Received: <xmr:cXxMZaasLS6ORs_czvWq6mqztruhTXiTMo0qiD3oujB_yK23xa2M8RVaKEtRcYorGfLhq4QskzCMueqqPcU1r-v0xcQ7ZZym2d2xyRSAW338AIEf>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddvtddgleegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeigfekvdetteefhedtveelgeejfeejfe
-    ekgfeigeegieehgeefhffggeehveekkeenucffohhmrghinheprhgvugdqsggvrghnrdgt
-    ohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepph
-    hssehpkhhsrdhimh
-X-ME-Proxy: <xmx:bXxMZQU0GSHLz6pld49l9forblDF2IcVYP_LycUjxf5jV0wzsWR5RA>
-    <xmx:bXxMZXloV0MIb3M5gytGRxcrL0Ov8wI0fbTVBWrARy3gPy8uASK4PA>
-    <xmx:bXxMZdfNhvJDpVFovH_sNZuNj2KStPbqg5TPw8vFCr0ATRJ7wnSmoA>
-    <xmx:bXxMZfvanqY4KbfQ9ItEjvADGTLXu1krzKph9BQHMrrrSfJ0UKyETQ>
+    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpedugfekjeevleejhfehvdetjedtteetge
+    eiteffgfdtkeeltdekteeghfduveefffenucffohhmrghinhephhhtthhpuggprhhoohht
+    mhhoughulhgvshgrnhihfigrhidrihhtnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:cXxMZdUSexTpIAtn83v0wio-pFzpSbbJQECM-Hl3XlM-Wy4WYIaqZw>
+    <xmx:cXxMZQkn8pmYpmPppvh-tXEtiA7kOx5kpkITBcH9cRfgkUup0_wq7g>
+    <xmx:cXxMZSdRX2ZT7waymWWs7m9hPmbZ-DibWL0E7c3JROhZy_2TRZX4aQ>
+    <xmx:cXxMZcvDrzOmsnjpduAG5St__8G1C3skd_F1lq5IS2X6Ib2ziTJvvQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 9 Nov 2023 01:30:04 -0500 (EST)
+ 9 Nov 2023 01:30:09 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 25ec17dc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 9 Nov 2023 06:29:36 +0000 (UTC)
-Date: Thu, 9 Nov 2023 07:30:01 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 247c807c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 9 Nov 2023 06:29:42 +0000 (UTC)
+Date: Thu, 9 Nov 2023 07:30:07 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] t9164: fix inability to find basename(1) in hooks
-Message-ID: <ZUx8adNt3Ky-U09W@tanuki>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/3] t/lib-httpd: dynamically detect httpd and modules
+ path
+Message-ID: <ZUx8b9LequWRRlz3@tanuki>
 References: <cover.1699428122.git.ps@pks.im>
  <cover.1699455383.git.ps@pks.im>
- <361f1bd9c88e3e6b7b135ba67b39d3bf4d70e322.1699455383.git.ps@pks.im>
- <20231108172125.GD1028115@coredump.intra.peff.net>
- <xmqqwmus3zvd.fsf@gitster.g>
+ <cee8fbebf84422f73c38d55b5730053121b74e0f.1699455383.git.ps@pks.im>
+ <20231108165426.GB1028115@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -77,86 +77,100 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="cWjD3fuGzNYLTeJV"
+	protocol="application/pgp-signature"; boundary="fjKxdrHDtUaUSxV+"
 Content-Disposition: inline
-In-Reply-To: <xmqqwmus3zvd.fsf@gitster.g>
+In-Reply-To: <20231108165426.GB1028115@coredump.intra.peff.net>
 
 
---cWjD3fuGzNYLTeJV
-Content-Type: text/plain; charset=utf-8
+--fjKxdrHDtUaUSxV+
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Nov 09, 2023 at 02:43:02AM +0900, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
+On Wed, Nov 08, 2023 at 11:54:26AM -0500, Jeff King wrote:
+> On Wed, Nov 08, 2023 at 03:57:19PM +0100, Patrick Steinhardt wrote:
 >=20
-> > ... But the more robust way to do it is:
-> >
-> >   # export ORIG_PATH, which presumably is not cleared the same way PATH
-> >   # is, so that the hook can access it
-> >   ORIG_PATH=3D$PATH &&
-> >   export ORIG_PATH &&
-> >
-> >   cat >"$hook" <<EOF
-> >   # pull the original path from the caller
-> >   PATH=3D$ORIG_PATH
-> >   export PATH
-> >
-> >   ...do other stuff...
-> >   EOF
-> >
-> > That's assuming that environment variables make it intact to the hook at
-> > all (it is not clear to me why the original $PATH doesn't).
+> > While it is possible to specify these paths via `LIB_HTTPD_PATH` and
+> > `LIB_HTTPD_MODULE_PATH`, it is not a nice experience for the developer
+> > to figure out how to set those up. And in fact we can do better by
+> > dynamically detecting both httpd and its module path at runtime:
+> >=20
+> >     - The httpd binary can be located via PATH.
+> >=20
+> >     - The module directory can (in many cases) be derived via the
+> >       `HTTPD_ROOT` compile-time variable.
+> >=20
+> > Amend the code to do so. The new runtime-detected paths will only be
+> > used in case none of the hardcoded paths are usable.
 >=20
-> Yeah, the parenthetical comment points at the crux of the issue.  I
-> can tell from the patch what issue the platform throws at us we are
-> trying to work around, but it is frustrating not to know why the
-> platform does such unpleasant things in the first place.
+> If these improve detection on your platform, I think that is a good
+> thing and they are worth doing. But as a generic mechanism, I have two
+> comments:
 >=20
-> Thanks.
+> > -for DEFAULT_HTTPD_PATH in '/usr/sbin/httpd' '/usr/sbin/apache2'
+> > +for DEFAULT_HTTPD_PATH in '/usr/sbin/httpd' '/usr/sbin/apache2' "$(com=
+mand -v httpd)"
+> >  do
+> >  	if test -x "$DEFAULT_HTTPD_PATH"
+> >  	then
+>=20
+> The binary goes under the name "httpd", but also "apache2". But the PATH
+> search only looks for "httpd". Should we check "command -v apache2" as
+> well?
 
-Indeed, I should've described this better in the commit message. Quoting
-[1]:
+Doesn't hurt to do it.
 
-> By default, Subversion executes hook scripts with an empty
-> environment=E2=80=94that is, no environment variables are set at all, not=
- even
-> $PATH (or %PATH%, under Windows). Because of this, many administrators
-> are baffled when their hook program runs fine by hand, but doesn't
-> work when invoked by Subversion. Administrators have historically
-> worked around this problem by manually setting all the environment
-> variables their hook scripts need in the scripts themselves.
+> This also means we may run "test -x" on an empty string, but that is
+> probably OK in practice (we could guard it with "test -n", though).
 
-So it's not an issue of the environment, but rather an implementation
-detail of how Subversion hooks work. It's surprising that this does not
-fail on other platforms -- maybe the shell has a default PATH there that
-allow us to locate basename(1)? I dunno.
+Fair, will do.
 
-Will add to the commit message.
+> > +if test -x "$DEFAULT_HTTPD_PATH"
+> > +then
+> > +	DETECTED_HTTPD_ROOT=3D"$("$DEFAULT_HTTPD_PATH" -V | sed -n 's/^ -D HT=
+TPD_ROOT=3D"\(.*\)"$/\1/p')"
+> > +fi
+>=20
+> I was really pleased to see this and hoped it could replace the
+> kitchen-sink list of paths in the hunk below. But sadly I think it
+> depends on having a configured apache setup. On my Debian system, for
+> example, I have the "apache2-bin" package installed but not "apache"
+> (because only the latter actually sets up a system apache daemon, which
+> I don't want). And thus there is no config:
+>=20
+>   $ /usr/sbin/apache2 -D HTTPD_ROOT
+>   apache2: Could not open configuration file /etc/apache2/apache2.conf: N=
+o such file or directory
+>=20
+> So without a system config file to act as a template for our custom
+> config, I think we are stuck with guessing where the installer might
+> have put them.
+
+Indeed. Also, paths like `/usr/libexec/apache2` wouldn't be possible to
+be discovered via `${HTTPD_ROOT}/modules` anyway. It's kind of a shame
+that there is no way (or at least no way I know of) to portably discover
+the default modules directory used by httpd.
 
 Patrick
 
-[1]: https://svnbook.red-bean.com/en/1.8/svn.reposadmin.create.html#svn.rep=
-osadmin.create.hooks
-
---cWjD3fuGzNYLTeJV
+--fjKxdrHDtUaUSxV+
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVMfGQACgkQVbJhu7ck
-PpS3IA//WIozh7d+5vQ6wzUeE3HOeNvUe8zKFWAJiFv2uZacrNcR9vQYtoa6C7Ch
-ucmRvFKddo6kAghUuim2TWgsXC4mZ3nE9uhY8K4nof7vEJ8Gwf47QH04tR4zbVZt
-CfG9f64kBMC9mlLXE6CmbdjDrFixEs33pAsOTkSgZiBxUjX8l7+uLHndZNwFWU2X
-4/rODRYCFI6rN7Mw4MaZ7dy2X/dXb55KrifV5nzK13B57FHQDGkiqKQEOV7FshsU
-XYS6QY6opl3sm68tbTGH+4OigmaK4+XKaQjqMZ+1M8YdB2YcNXyGBMzUapQgYdyo
-UN5MgzEojfPfW8eHzW6sRfmw6jDkvdt6NcD49tjgORzUeYnZvpi5ZlXwGNxvzeOW
-nHKF2LLGXIDCcpkwsLDJYiEQnvfrFofLOGZNZZHAOQDzIKtabHvBGdMqAQirKCcz
-5vQWd/2jUyt7pXczKl0l3MLwuOsWNrlrb24jglKQOZHc4RpvZ2nBpn/13Bccjcen
-Plwnr8HNzzlq+D/e3ZFIJZ2i3C+UKBHhAbfzKU71m+A+j9/hMm+gbbUGcE4Wy0uT
-rJ93JGMn2MLQtpdSK7L2T5agdaiOBp+u4o/VPws8mg0Ch0FPhvmQBbxEz/LlDxxV
-5rGIV2HMlZJXfcpXwdMTzTdXmkkOaBDLCu8EvNqkaUhiXMQF26o=
-=A8DC
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVMfG4ACgkQVbJhu7ck
+PpTydA/9Fe+ThPmkuw9bbdTAOY7Edik4PlpajF53z5uMo0xkArkU+s7PTzHkqkEg
+XEpNnE8jPGot2KHuIQXIIqeHMQZapx66sNbAk0cfqQijiw8wyQGN1upeQ9Rakqkt
+gFfbSD7G3LpXS6pRbNENCJ10Dt96iHd7Ma+HJWLZEXdrM2kbhlWuAyLvP17aQHUC
+eSzxylmgCxEnbSzpznauOQsOAO/1hcpUctlixaChzT4GkqAyQR/nmjfx2bgUHt8N
+cwL9ZP8VYTo94uy0tsqMa4u8MbQAikBn8byjc/58mmHMolH0aHdTLERICKTyuVhm
+87i8Cl+1b/HelC4zaB04PHy0NkKGv05VUH77cJ/YZaovM8lOpFjXTv71guIvb0o6
+LhIfVCg06jpnMpLRfmG1IRi4PrHRzZmnPurikyFyyJtmAJCGJx0nWA82vNokxs4O
+ixJ4BmrrHJPbsGaXeQKYPduGiZ0V3yGymOBMXf2gBTCzGLAg/klExLeS1apFm92G
+xgRrNsqPJvkkdaD2Iay1QNX0sRHxptzh0XCmlJHS5wdPRA+fa+n2OxSnKDHUJiQH
+RESGZOhtwQWFDeIln2+MQn+BAAGcP5z/D3yeY7JUvDDdK2UrBE0IskVwOGIbKC/2
+wVQW/tKDEcpevmXAxNASMhv7g+QWXcRJnmWs/4q9RGv6wjKdS8o=
+=yuhd
 -----END PGP SIGNATURE-----
 
---cWjD3fuGzNYLTeJV--
+--fjKxdrHDtUaUSxV+--
