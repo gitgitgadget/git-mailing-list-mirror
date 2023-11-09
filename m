@@ -1,125 +1,100 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 344D3374D5
-	for <git@vger.kernel.org>; Thu,  9 Nov 2023 23:00:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD19F374E0
+	for <git@vger.kernel.org>; Thu,  9 Nov 2023 23:02:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FWoSK9GE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F957C433C7;
-	Thu,  9 Nov 2023 23:00:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1699570819;
-	bh=TM+hMrRpOsm+dUSplVN3P2axB3HEAjx2Z/NuDL/T8P8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=FWoSK9GEXzWAh3JTxZr58HEDDAcC7p+Ms2O1dyg53hFCssyN1Iu2jADQva3bid17s
-	 dGGNPOjBtaEWk1zU0hZ5F1YLb+pJKP+sDnUmbQojVGLZfFOuwpgdYEQISfPv6i5lc6
-	 sB4BQ2OxiW0tSHRWcH3ltFW6J4tFF3kScic5g2lkdjEHoU1+YmFNcjPGQqlntc0jy6
-	 8zkAorOxiCTtnZ1kJeQ2qDDgQWBKPRnFT3jpL2j/On0aShhiQvWZ2o7Qo13Kq4A7fo
-	 /23rjAmUwAQNehelbiUpjdOG4Sf3Nl8qgdsb5pzpi+dFIWK/uqZC7qCIL1alU7hmRJ
-	 0S9UCGQ4Mu/lg==
-Date: Fri, 10 Nov 2023 00:00:16 +0100
-From: Alejandro Colomar <alx@kernel.org>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CZSk7A1H"
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EAF34239
+	for <git@vger.kernel.org>; Thu,  9 Nov 2023 15:02:35 -0800 (PST)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 95F951CCBA3;
+	Thu,  9 Nov 2023 18:02:34 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=/U7TGnbYBg2/tnW96I6B+sNcRWRcsTJenF2Nv/
+	YPlqU=; b=CZSk7A1HMoxEzmr2ABWgBwSsv+msXnZCQZLLtu06nIoABtGuEPgfTl
+	EsVBXE9s4Eg8ZqZ3DWT1XzJ1DWLkWc/p9avfi7nj8C8sBxalQbB3ZTf/BOPBTSm8
+	wTPC4KR9du6Eh7/xWMLLtob+49lyZQTAh3UmoUhiiKruSOyUnzyIw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8D2101CCBA2;
+	Thu,  9 Nov 2023 18:02:34 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.67.28])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DB6641CCB9F;
+	Thu,  9 Nov 2023 18:02:33 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: git-send-email: Send with mutt(1)
-Message-ID: <ZU1kgO1SppJdNjvY@debian>
-References: <ZUocFhmPHstwKCkZ@devuan>
- <20231107174803.GA507007@coredump.intra.peff.net>
- <ZUqDwnmu9d1dD1tb@devuan>
- <20231107201655.GA507701@coredump.intra.peff.net>
- <ZUv3gjjmuqvCaJEd@debian>
- <20231108212702.GA1586965@coredump.intra.peff.net>
- <ZUz6H3IqRc1YGPZM@debian>
- <20231109180308.GA2711684@coredump.intra.peff.net>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
+Subject: Re: [PATCH 2/4] contrib/subtree: stop using `-o` to test for number
+ of args
+In-Reply-To: <20231109185515.GD2711684@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 9 Nov 2023 13:55:15 -0500")
+References: <cover.1699526999.git.ps@pks.im>
+	<b1ea45b8a8884d09ab070bb0f099834447d28938.1699526999.git.ps@pks.im>
+	<20231109185515.GD2711684@coredump.intra.peff.net>
+Date: Fri, 10 Nov 2023 08:02:32 +0900
+Message-ID: <xmqq8r76zg1j.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="0SPfgO+/aOucPYnE"
-Content-Disposition: inline
-In-Reply-To: <20231109180308.GA2711684@coredump.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 114B7ED4-7F54-11EE-9ED7-25B3960A682E-77302942!pb-smtp2.pobox.com
 
+Jeff King <peff@peff.net> writes:
 
---0SPfgO+/aOucPYnE
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 10 Nov 2023 00:00:16 +0100
-From: Alejandro Colomar <alx@kernel.org>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: git-send-email: Send with mutt(1)
+>>  # Usage: process_subtree_split_trailer SPLIT_HASH MAIN_HASH [REPOSITORY]
+>>  process_subtree_split_trailer () {
+>> -	assert test $# = 2 -o $# = 3
+>> +	assert test $# -ge 2
+>> +	assert test $# -le 3
+>
+> It took me a minute to figure out why we were swapping "=" for "-ge". It
+> is because we want to logical-OR the two conditions, but "assert"
+> requires that we test one at a time. I think that is probably worth
+> explaining in the commit message.
 
-Hi Jeff,
+I wish we could write something like
 
-On Thu, Nov 09, 2023 at 01:03:08PM -0500, Jeff King wrote:
-> On Thu, Nov 09, 2023 at 04:26:23PM +0100, Alejandro Colomar wrote:
->=20
-> > I've tried something even simpler:
-> >=20
-> > ---8<---
-> > #!/bin/sh
-> >=20
-> > mutt -H -;
-> > --->8---
-> >=20
-> > I used it for sending a couple of patches to linux-man@, and it seems to
-> > work.  I don't have much experience with mutt, so maybe I'm missing some
-> > corner cases.  Do you expect it to not work for some case?  Otherwise,
-> > we might have a winner.  :)
->=20
-> Wow, I don't know how I missed that when I read the manual. That was
-> exactly the feature I was thinking that mutt would need. ;)
->=20
-> So yeah, that is obviously better than the "postponed" hackery I showed.
-> I notice that "-H" even causes mutt to ignore "-i" (a sendmail flag that
-> Git adds to sendemail.sendmailcmd). So you can just invoke it directly
-> from your config like:
->=20
->   git config sendemail.sendmailcmd "mutt -H -"
+	assert test $# -ge 2 && test $# -le 3
 
-Hmm great then!  Definitely a winner.  :)
+(and I'd allow double quoting the whole thing after assert if
+needed) but we cannot do so without tweaking the implementation of
+assert.
 
->=20
-> Annoyingly, "-E" doesn't work when reading over stdin (I guess mutt
-> isn't willing to re-open the tty itself). But if you're happy with not
-> editing as they go through, then "-H" is then that's enough (in my
-> workflow, I do the final proofread via mutt).
+>
+>> @@ -916,7 +919,7 @@ cmd_split () {
+>>  	if test $# -eq 0
+>>  	then
+>>  		rev=$(git rev-parse HEAD)
+>> -	elif test $# -eq 1 -o $# -eq 2
+>> +	elif test $# -eq 1 || test $# -eq 2
+>
+> OK, this one is a straight-forward use of "||".
 
-Since git-send-email allows editing, I usually edit with that.  Having
--E would be redundant (and in fact it felt like that to me with your
-suggested mutt-as-mta.sh) for my use case.
+Yes, but why not consistently use the range notation like the
+earlier one here, or below?
 
-Cheers,
-Alex
+	elif test $# -ge 1 && test $# -le 2
 
->=20
-> -Peff
+>>  cmd_merge () {
+>> -	test $# -eq 1 -o $# -eq 2 ||
+>> +	if test $# -lt 1 || test $# -gt 2
+>> ...
+> (I am OK with either, it just took me a minute to verify that your
+> conversion was correct. But that is a one-time issue now while
+> reviewing, and I think the code is readable going forward).
 
---=20
-<https://www.alejandro-colomar.es/>
+Yeah, the end result looks good.
 
---0SPfgO+/aOucPYnE
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEE6jqH8KTroDDkXfJAnowa+77/2zIFAmVNZIAACgkQnowa+77/
-2zKJ9Q//V/nMSV4EBIDcAz8NMKOodBu3E90Tokye7tiSL7pAIq9cU/hUqxYp1An3
-qWaAKAt9aaDmi1JrHx9a8SJCxaW71MjKRKLMuHj0HcceOQDb6S7PNev8sour6nS9
-SOxyG8T5QsXz2X2DN+5B9CvSNj3P6xdKbVmfgBJW4H43FLisN3eNN8vc3U2iC7H6
-ilR3du8D06IOE4FalG8xkenGPLZyq1zrsqGe/8ntngHx3bRpWVHmbmXDiLR7P9KB
-lKPb7OvjrkbyGZ8An/HvPAlVXGdWvGgvN8iPgdyEAdbw/FI5pwqAKG0zTIFq+vsf
-7Ar2d6icFCEL94lexFP7G+Rc3FEECBHCXFHnuZBkvXWCAcqXMVps3q5Z3ZLpCQyf
-N/MjRkeRxDBHv5vinSnkZ0zQMB9lkDEfKpADLwAca9IhCj9cGFJHBmMzfZL2yhLw
-YXsRDDaf6KK+YvqUIq1M4TqTcvAyd3ONydpqlnOB1sOuwLzfZ7+vfK4Odoc3eayp
-o3gzkeK7IUFLBn4q+k7vFdyUd/zy+pqQdch0ojzxlw3MSj++FMowyndnBauW9Jb9
-fkI2fpTwjbP8kCnpvOJtBwSGSAK5PKPZlG6+wu19k1Cy0etnoh3ntgaG9PmImVmj
-tCAdYi/UyLNIIKvH1cObbr42YNh8e4gTfaSY+LNO8PKoxvw6aVw=
-=qqc4
------END PGP SIGNATURE-----
-
---0SPfgO+/aOucPYnE--
+Thanks, both.
