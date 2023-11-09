@@ -1,32 +1,27 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E150F9F3
-	for <git@vger.kernel.org>; Thu,  9 Nov 2023 07:48:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D7F5FBE7
+	for <git@vger.kernel.org>; Thu,  9 Nov 2023 07:50:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dkim=none
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5B13268D
-	for <git@vger.kernel.org>; Wed,  8 Nov 2023 23:48:32 -0800 (PST)
-Received: (qmail 26040 invoked by uid 109); 9 Nov 2023 07:48:32 -0000
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4029B2D4F
+	for <git@vger.kernel.org>; Wed,  8 Nov 2023 23:50:54 -0800 (PST)
+Received: (qmail 26085 invoked by uid 109); 9 Nov 2023 07:50:53 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 09 Nov 2023 07:48:32 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 09 Nov 2023 07:50:53 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 21458 invoked by uid 111); 9 Nov 2023 07:48:36 -0000
+Received: (qmail 21548 invoked by uid 111); 9 Nov 2023 07:50:57 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 Nov 2023 02:48:36 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 Nov 2023 02:50:57 -0500
 Authentication-Results: peff.net; auth=none
-Date: Thu, 9 Nov 2023 02:48:31 -0500
+Date: Thu, 9 Nov 2023 02:50:52 -0500
 From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/3] t/lib-httpd: dynamically detect httpd and modules
- path
-Message-ID: <20231109074831.GA2699305@coredump.intra.peff.net>
-References: <cover.1699428122.git.ps@pks.im>
- <cover.1699513524.git.ps@pks.im>
- <e4c75c492dd89fd7464db2b3028b2bb9e6addbf8.1699513524.git.ps@pks.im>
- <20231109073250.GA2698227@coredump.intra.peff.net>
- <ZUyMFZ7c9_rlu5lk@tanuki>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+Subject: Re: What's cooking in git.git (Nov 2023, #04; Thu, 9)
+Message-ID: <20231109075052.GA2699557@coredump.intra.peff.net>
+References: <xmqq34xg5ek3.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -35,24 +30,32 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZUyMFZ7c9_rlu5lk@tanuki>
+In-Reply-To: <xmqq34xg5ek3.fsf@gitster.g>
 
-On Thu, Nov 09, 2023 at 08:36:53AM +0100, Patrick Steinhardt wrote:
+On Thu, Nov 09, 2023 at 02:40:28AM +0900, Junio C Hamano wrote:
 
-> > Sorry to be a pedant, but I'm not sure if we might have portability
-> > problems with "-a". It's an XSI extension, and POSIX labels it as
-> > obsolescent because it can create parsing ambiguities.
-> > 
-> > We do have a few instances, but only in corners of the test suite that
-> > probably don't get as much exposure (t/perf and valgrind/valgrind.sh).
-> > So maybe not worth worrying about, but it's easy to write it as:
+> * tb/pair-chunk-expect-size (2023-10-14) 8 commits
+>  - midx: read `OOFF` chunk with `pair_chunk_expect()`
+>  - midx: read `OIDL` chunk with `pair_chunk_expect()`
+>  - midx: read `OIDF` chunk with `pair_chunk_expect()`
+>  - commit-graph: read `BIDX` chunk with `pair_chunk_expect()`
+>  - commit-graph: read `GDAT` chunk with `pair_chunk_expect()`
+>  - commit-graph: read `CDAT` chunk with `pair_chunk_expect()`
+>  - commit-graph: read `OIDF` chunk with `pair_chunk_expect()`
+>  - chunk-format: introduce `pair_chunk_expect()` helper
 > 
-> Yeah, I was grepping for it in our codebase and saw other occurrences,
-> so I assumed it was fair game. If we're going to convert it to the
-> below, how about I send another patch on top that also converts the
-> preexisting instances so that the next one grepping for it isn't going
-> to repeat the same mistake?
+>  Code clean-up for jk/chunk-bounds topic.
+> 
+>  Comments?
+>  source: <45cac29403e63483951f7766c6da3c022c68d9f0.1697225110.git.me@ttaylorr.com>
+>  source: <cover.1697225110.git.me@ttaylorr.com>
 
-I would be very happy with that. :)
+Sorry it took me a while to circle back to this topic. I posted a
+competing series just now in:
+
+  https://lore.kernel.org/git/20231109070310.GA2697602@coredump.intra.peff.net/
+
+that I think should take precedence (and would require some reworking of
+Taylor's patches, so you'd just eject them in the meantime).
 
 -Peff
