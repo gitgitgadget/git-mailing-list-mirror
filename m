@@ -1,62 +1,215 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 996013D3BE
-	for <git@vger.kernel.org>; Fri, 10 Nov 2023 23:40:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2555F3C093
+	for <git@vger.kernel.org>; Fri, 10 Nov 2023 23:51:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="niyzTRaF"
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14E2E125
-	for <git@vger.kernel.org>; Fri, 10 Nov 2023 15:40:04 -0800 (PST)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id C1E0A2C48B;
-	Fri, 10 Nov 2023 18:40:03 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=qIN+blA0EbBf2wbTAZIknt3XQN8O1gcDOEQDgj
-	GULLc=; b=niyzTRaFF4NTuTXO8l2pbNm9a1zIWyNl/9y9pYpVIU9UrRZBnFr6RQ
-	7XHyTHT1EQ1PRDz/qAyzojtANCYNM2oSH3Ds6VB1DHHAgywqT/Q/nt3ck/ZeQCQm
-	/hEuLTydi3Br7qSQxRh3FbeNIuKqgzDph5Gp350OHVho1HEqchJ5E=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id BA3552C48A;
-	Fri, 10 Nov 2023 18:40:03 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.67.28])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A53C02C47E;
-	Fri, 10 Nov 2023 18:39:59 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Taylor Blau <me@ttaylorr.com>,  git@vger.kernel.org
-Subject: Re: [PATCH 1/7] chunk-format: introduce `pair_chunk_expect()` helper
-In-Reply-To: <20231110220142.GH2758295@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 10 Nov 2023 17:01:42 -0500")
-References: <20231109070310.GA2697602@coredump.intra.peff.net>
-	<cover.1699569246.git.me@ttaylorr.com>
-	<af5fe3b7237caeba8f970e967933db96c83a230e.1699569246.git.me@ttaylorr.com>
-	<xmqqedgyw6jv.fsf@gitster.g> <ZU5Z/Z4PcdNP5U1r@nand.local>
-	<20231110220142.GH2758295@coredump.intra.peff.net>
-Date: Sat, 11 Nov 2023 08:39:58 +0900
-Message-ID: <xmqq5y29uqi9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hF4Smtf7"
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52C8C3C3D
+	for <git@vger.kernel.org>; Fri, 10 Nov 2023 15:51:33 -0800 (PST)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-507a62d4788so3655189e87.0
+        for <git@vger.kernel.org>; Fri, 10 Nov 2023 15:51:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1699660291; x=1700265091; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DjuQ7ktpjb+mE6p8TSOd3YdUfH2GgDMOs87ls2G95oA=;
+        b=hF4Smtf7+VOsz5M78r9AqL+whdNfEIiFjvp1M08tRW86eCOaMqSXe3cE25nDG3elP+
+         hhlMYAowjn1n3SjyVhBTmF+8PpjlLJjVZVLbX9OIrgXDn/+8z3mQakFV+jyK9FutxOho
+         wUUzRJtbKPVFNMkn5MmaFZfeBNv9FeM6BUPnXKAPeQ5Q//CmVmCnx4JpxEVbzeWN/7Er
+         7Uh0yCRhC3ZoBxL1OvcChBaN0cXPmOiyS04k79hjAb7pp5S69oFF1u8rV5Bh4dg6EXLF
+         DMuD7p7077ZuVNT6UFiNJ0h93KzJhwn0cM9Oq0q6cSoi6v+kRhIuU4SyKtsDwp1MPt2W
+         UCxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699660291; x=1700265091;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=DjuQ7ktpjb+mE6p8TSOd3YdUfH2GgDMOs87ls2G95oA=;
+        b=xCSEbHucnuDsxXd0qJqHlDi5TfrkZyxoYdfhVK0RLkCbqN4bQ1MbNeom+vAIjq4qqF
+         rfA6w7+vNZXzQVLO3lDD0f5reTIpiOFjgViuZ8hm4fKDbKHlc6aVQJbbLz1y9Wh2t2qp
+         Kami52aa1PB0vYxkr684CjQDBTVuM/B+6ty1V78zQ0PPjNiHdOl8XLkEL2OoqFvidUUF
+         hyTXRFjfFQs98wuKFUO6RWbxoFgrT7ow3rUaFTxcED7JE48PWhmdVz0Fa2V3vnPtTNLf
+         srNJOMkKGxs2bjq9dHR8plyxjPc8wdhOgLMC48BlWl/X8OhqZLiqDsScKL+6fbCNERrx
+         hzZg==
+X-Gm-Message-State: AOJu0YxBh8+xgWv1PZCM3h8N4GX92/Bpw+YfleAX2oPBjQVmZHwSeZTS
+	h0g1H8b0a7lNTcn72rS+7S1QSIm5dEiah8WW1qTvPtxUm0gHQQ==
+X-Google-Smtp-Source: AGHT+IHU7jfL3OhVU+rq3nEXErnECpWBD2pYTlOYxsA9GSWwMMOP97OAHb/GIAh3hR+JHwvu3NHu5wsIzUD5OQA9a0E=
+X-Received: by 2002:a05:6512:36c1:b0:509:7301:5738 with SMTP id
+ e1-20020a05651236c100b0050973015738mr311081lfs.62.1699660291312; Fri, 10 Nov
+ 2023 15:51:31 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 764A9B7A-8022-11EE-88E0-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+References: <cover.1697736516.git.me@ttaylorr.com> <cover.1698101088.git.me@ttaylorr.com>
+ <3595db76a525fcebc3c896e231246704b044310c.1698101088.git.me@ttaylorr.com>
+In-Reply-To: <3595db76a525fcebc3c896e231246704b044310c.1698101088.git.me@ttaylorr.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Fri, 10 Nov 2023 15:51:18 -0800
+Message-ID: <CABPp-BEfy9VOvimP9==ry_rZXu=metOQ8s=_-XiG_Pdx9c06Ww@mail.gmail.com>
+Subject: Re: [PATCH v5 5/5] builtin/merge-tree.c: implement support for `--write-pack`
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, "Eric W. Biederman" <ebiederm@gmail.com>, Jeff King <peff@peff.net>, 
+	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Jeff King <peff@peff.net> writes:
+Hi,
 
-> I think dropping those is a bad direction. The point of adding
-> pair_chunk_expect() is that we could use it consistently.
+Sorry for taking so long to find some time to review.  And sorry for
+the bad news, but...
 
-I think so, too.  If we are adding a helper to avoid common
-mistakes, and if it cannot be used in some situations, then the
-helper needs to be improved.
+On Mon, Oct 23, 2023 at 3:45=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote=
+:
+>
+> When using merge-tree often within a repository[^1], it is possible to
+> generate a relatively large number of loose objects, which can result in
+> degraded performance, and inode exhaustion in extreme cases.
+>
+> Building on the functionality introduced in previous commits, the
+> bulk-checkin machinery now has support to write arbitrary blob and tree
+> objects which are small enough to be held in-core. We can use this to
+> write any blob/tree objects generated by ORT into a separate pack
+> instead of writing them out individually as loose.
+>
+> This functionality is gated behind a new `--write-pack` option to
+> `merge-tree` that works with the (non-deprecated) `--write-tree` mode.
+>
+> The implementation is relatively straightforward. There are two spots
+> within the ORT mechanism where we call `write_object_file()`, one for
+> content differences within blobs, and another to assemble any new trees
+> necessary to construct the merge. In each of those locations,
+> conditionally replace calls to `write_object_file()` with
+> `index_blob_bulk_checkin_incore()` or `index_tree_bulk_checkin_incore()`
+> depending on which kind of object we are writing.
+>
+> The only remaining task is to begin and end the transaction necessary to
+> initialize the bulk-checkin machinery, and move any new pack(s) it
+> created into the main object store.
+
+I believe the above is built on an assumption that any objects written
+will not need to be read until after the merge is completed.  And we
+might have a nesting issue too...
+
+> @@ -2108,10 +2109,19 @@ static int handle_content_merge(struct merge_opti=
+ons *opt,
+>                 if ((merge_status < 0) || !result_buf.ptr)
+>                         ret =3D error(_("failed to execute internal merge=
+"));
+>
+> -               if (!ret &&
+> -                   write_object_file(result_buf.ptr, result_buf.size,
+> -                                     OBJ_BLOB, &result->oid))
+> -                       ret =3D error(_("unable to add %s to database"), =
+path);
+> +               if (!ret) {
+> +                       ret =3D opt->write_pack
+> +                               ? index_blob_bulk_checkin_incore(&result-=
+>oid,
+> +                                                                result_b=
+uf.ptr,
+> +                                                                result_b=
+uf.size,
+> +                                                                path, 1)
+> +                               : write_object_file(result_buf.ptr,
+> +                                                   result_buf.size,
+> +                                                   OBJ_BLOB, &result->oi=
+d);
+> +                       if (ret)
+> +                               ret =3D error(_("unable to add %s to data=
+base"),
+> +                                           path);
+> +               }
+>
+>                 free(result_buf.ptr);
+>                 if (ret)
+
+This is unsafe; the object may need to be read later within the same
+merge.  Perhaps the simplest example related to your testcase is
+modifying the middle section of that testcase (I'll highlight where
+when I comment on the testcase) to read:
+
+    test_commit -C repo base file "$(test_seq 3 5)" &&
+    git -C repo branch -M main &&
+    git -C repo checkout -b side main &&
+    test_commit -C repo side-file file "$(test_seq 1 5)" &&
+    test_commit -C repo side-file2 file2 "$(test_seq 1 6)" &&
+    git -C repo checkout -b other main &&
+    test_commit -C repo other-file file "$(test_seq 3 7)" &&
+    git -C repo mv file file2 &&
+    git -C repo commit -m other-file2 &&
+
+    find repo/$packdir -type f -name "pack-*.idx" >packs.before &&
+    git -C repo merge-tree --write-pack side other &&
+
+In words, what I'm doing here is having both sides modify "file" (the
+same as you did) but also having one side rename "file"->"file2".  The
+side that doesn't rename "file" also introduces a new "file2".  ort
+needs to merge the three versions of "file" to get a new blob object,
+and then merge that with the content from the brand new "file2".  More
+complicated cases are possible, of course.  Anyway, with the modified
+testcase above, merge-tree will fail with:
+
+    fatal: unable to read blob object 06e567b11dfdafeaf7d3edcc89864149383ae=
+ab6
+
+I think (untested) that you could fix this by creating two packs
+instead of just one.  In particular, add a call to
+flush_odb_transcation() after the "redo_after_renames" block in
+merge_ort_nonrecursive_internal().  (It's probably easier to see that
+you could place the flush_odb_transaction() call inside
+detect_and_process_renames() just after the process_renames() call,
+but when redo_after_renames is true you'd end up with three packs
+instead of just two).
+
+What happens with the odb transaction stuff if no new objects are
+written before the call to flush_odb_transaction?  Will that be a
+problem?
+
+(Since any tree written will not be re-read within the same merge, the
+other write_object_file() call you changed does not have the same
+problem as the one here.)
+
+>@@ -4332,9 +4349,13 @@ static int process_entries(struct merge_options *op=
+t,
+>                fflush(stdout);
+>                BUG("dir_metadata accounting completely off; shouldn't hap=
+pen");
+>        }
+>-       if (write_tree(result_oid, &dir_metadata.versions, 0,
+>+       if (write_tree(opt, result_oid, &dir_metadata.versions, 0,
+>                       opt->repo->hash_algo->rawsz) < 0)
+>                ret =3D -1;
+>
+> +
+> +       if (opt->write_pack)
+> +               end_odb_transaction();
+> +
+
+Is the end_odb_transaction() here going to fail with an "Unbalanced
+ODB transaction nesting" when faced with a recursive merge?
+
+Perhaps flushing here, and then calling end_odb_transaction() in
+merge_finalize(), much as you do in your replay-and-write-pack series,
+should actually be moved to this commit and included here?
+
+This does mean that for a recursive merge, that you'll get up to 2*N
+packfiles, where N is the depth of the recursive merge.
+
+> +       test_commit -C repo base file "$(test_seq 3 5)" &&
+> +       git -C repo branch -M main &&
+> +       git -C repo checkout -b side main &&
+> +       test_commit -C repo side file "$(test_seq 1 5)" &&
+> +       git -C repo checkout -b other main &&
+> +       test_commit -C repo other file "$(test_seq 3 7)" &&
+> +
+> +       find repo/$packdir -type f -name "pack-*.idx" >packs.before &&
+> +       tree=3D"$(git -C repo merge-tree --write-pack \
+> +               refs/tags/side refs/tags/other)" &&
+
+These were the lines from your testcase that I replaced to show the bug.
