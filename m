@@ -1,205 +1,171 @@
-Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 362AB3B291
-	for <git@vger.kernel.org>; Fri, 10 Nov 2023 20:11:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5D8A3588A
+	for <git@vger.kernel.org>; Fri, 10 Nov 2023 21:06:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A5UUvJOM"
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F65349DA
-	for <git@vger.kernel.org>; Fri, 10 Nov 2023 12:11:54 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-507b96095abso3202251e87.3
-        for <git@vger.kernel.org>; Fri, 10 Nov 2023 12:11:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1699647113; x=1700251913; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Zs9BoFABgSymqo4NGVvwq4tLzEmRY0ZqsUnbaS5Hl58=;
-        b=A5UUvJOMkHPcmGFcf0ZnJOGOpN0mAU93E5EMDYk6E4xXwnnpn/qCzXQExwfhNorHzr
-         IcP4ayV6OezWm697DvLXIlGq6TVO5kmBicony2znC6wSFUxjFk/yN8OfJCdfHgUrbB/2
-         aV+5TZFoeHQQ11oPEyBizIS7BQfE5v2eL5w9IMmED9JseyZkPnwfwnL2yKXm4SU8h6o4
-         W+4sbayQLVrO7TpFfd4qCk+kMt1UFI5t8TJiZrL1pmJEUm1nFcwka4NIoGwAYUNhH7PA
-         kG19VV2YfGJxwZVn9x8mylalJmLFSEt8bHXHj7ctBjkdHlz8iHXNfdaj3QFQQ0cLo8ww
-         amGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699647113; x=1700251913;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Zs9BoFABgSymqo4NGVvwq4tLzEmRY0ZqsUnbaS5Hl58=;
-        b=em8HbUH+x0EJqnJFiSIipSCaogFzRoBjQJ+6fbUrZZZSEmLzL+Qce7PPzpwFIYKy97
-         Ab5GeX9WbGoNjDwDLPUYi3fm9s+wmEvfRXwRSsArlzQQZ8MvlHfoeDtYlusYh7rkm+XC
-         HEnGFTgq9T5KG07SEvTbsfCqMdlqYcGEklzqYJmbFlLdJmkyzedkvwRlQg0zzWjOpa5W
-         vxnbSSwUy1HHDA22td8a5cUgXAycsf3L0urRetlHw/xWqe2/9GhMdlDJ1OepOFZHI8Yq
-         ky5rBO2GntgSzDH1VDyYr65TyQGaX9AvpGPCO8SFlpG5CZGotHjDZcmMyGgQdAejNmH7
-         kR2Q==
-X-Gm-Message-State: AOJu0Yy0zAjb6nYwezpJwWNzRLfBmcIEASXPTlUoTlEO41u5yBiM+lej
-	hIjVwEmZbYSUfJVCcvjF6CUjxYwhNwYpdQteMoJ4o7kZ1lk=
-X-Google-Smtp-Source: AGHT+IE2tTK78ruNLToKdBNqMxSo+vePEuD8YfSswwK+C5eInkblIj0ZKG2YVF4xLEeOiVrUnzK4oYmgyjzgmX7IFLc=
-X-Received: by 2002:a05:6512:1153:b0:504:7cc6:1ad7 with SMTP id
- m19-20020a056512115300b005047cc61ad7mr173954lfg.1.1699647112461; Fri, 10 Nov
- 2023 12:11:52 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P8totqMF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62B55C433C8;
+	Fri, 10 Nov 2023 21:06:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1699650376;
+	bh=+nXU/cbw68fudoOJYTDsDBSc7lz+FrlZeeeKQHo/8r8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=P8totqMF7nxSdpbgWDB54XzU4kSqKJfYXtlPyCJMUWe8pygQtInjzuSsLEkKpQRzN
+	 IAFKEfNYC6SzwHNzhX6Ug7BgW2jsHGtGAta4/c+8MregAwS4IJrPIyPnBA7OYYF6B7
+	 K3GskMsMmlR7U5rq6Ovgp4XiFsf+d9J71utuA/ZZrCccdQgE5eeqe1aSlI4gVJQ8mf
+	 P/q28vX/llllgVRfEquK4xBRAA9wBhBqxsLIEVJmQt0riDfw/9ulKVG8TyNmujJ8q9
+	 hcShSXDVdp698/G+nbCvB+/U2+HBCQMkgJ3wD6ag5Pr/fIFGxXC27QecU7ZFS7FUyO
+	 bUsQE8vTXcVXg==
+Date: Fri, 10 Nov 2023 22:06:07 +0100
+From: Alejandro Colomar <alx@kernel.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: git-send-email: Send with mutt(1)
+Message-ID: <ZU6bRb-BXsQfn4ji@debian>
+References: <ZUocFhmPHstwKCkZ@devuan>
+ <20231107174803.GA507007@coredump.intra.peff.net>
+ <ZUqDwnmu9d1dD1tb@devuan>
+ <20231107201655.GA507701@coredump.intra.peff.net>
+ <ZUv3gjjmuqvCaJEd@debian>
+ <20231108212702.GA1586965@coredump.intra.peff.net>
+ <ZUz6H3IqRc1YGPZM@debian>
+ <vooebygemslmvmi4fzxtcl474wefcvxnigqeestmruzrsj5zsu@5kkq3pveol6c>
+ <ZU0aAQhVj7BQwr0q@debian>
+ <5yn2w52iymgnobesoi2jdwpyzaf5foc4sytxfdzl4vavlox62j@7att57ya6scz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231107130303.GS7041@raven.inka.de> <CABPp-BEAU8rPeNHphut0ZxcLdH0pzjh+Z_CF+rg2uhvVZoZfxg@mail.gmail.com>
- <20231108113636.GT7041@raven.inka.de>
-In-Reply-To: <20231108113636.GT7041@raven.inka.de>
-From: Elijah Newren <newren@gmail.com>
-Date: Fri, 10 Nov 2023 12:11:40 -0800
-Message-ID: <CABPp-BGRycdj5Z_YzPLvQ1CqBdz5Px797gHD6P8sf8mNfxghrQ@mail.gmail.com>
-Subject: Re: Error when "git mv" file in a sparsed checkout
-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="7WVc/cwe0i7Aty1B"
+Content-Disposition: inline
+In-Reply-To: <5yn2w52iymgnobesoi2jdwpyzaf5foc4sytxfdzl4vavlox62j@7att57ya6scz>
+
+
+--7WVc/cwe0i7Aty1B
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+Date: Fri, 10 Nov 2023 22:06:07 +0100
+From: Alejandro Colomar <alx@kernel.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: git-send-email: Send with mutt(1)
 
-Hi,
+Hi Konstantin,
 
-On Wed, Nov 8, 2023 at 3:38=E2=80=AFAM Josef Wolf <jw@raven.inka.de> wrote:
->
-> Thanks for the reply, Elijah!
->
-[...]
-> > > Error message suggests, there already exists a file named "new-filena=
-me". This
-> > > is not true at all. There is no file named "new-filename" in the enti=
-re
-> > > repository. Not in any directory of any branch.
-> >
-> > You are correct; the wording of the error message here is suboptimal
-> > and seems to have been focused more on the git-add case (the error
-> > message is shared by git-add, git-mv, and git-rm).  Thanks for
-> > pointing it out!  We could improve that wording, perhaps with
-> > something like:
-> >
-> >     The following paths and/or pathspecs match paths that are
-> >     outside of your sparse-checkout definition, so will not be
-> >     updated:
-> >
-> > Which is still slightly slanted towards git-add and git-rm cases, but
-> > I hope it works better than the current message.  Thoughts?
->
-> Yes, the wording was pretty much confusing me, since i could not find a f=
-ile
-> named "new-file" anywhere in the repo.
->
->
-> There are more things confusing concerning sparse mode:
+On Thu, Nov 09, 2023 at 12:59:23PM -0500, Konstantin Ryabitsev wrote:
+> On Thu, Nov 09, 2023 at 06:42:19PM +0100, Alejandro Colomar wrote:
+> > I haven't yet tried b4(1), and considered trying it some time ago, but
+> > really didn't find git-send-email(1) and mutt(1) so difficult to use
+> > that b4(1) would simplify much.
+>=20
+> Well, sending is only a small part of what b4 will do for you -- the core
+> benefits are really cover letter management, automatic versioning and
+> simplified list trailer collection. It's all tailored to kernel needs, bu=
+t it
+> will work for any project that depends on mailed patches.
+>=20
+> > But I have tried patatt(1) before, which is what I think b4(1) uses for
+> > signing.  Here are some of my concerns about patatt(4):
+> >=20
+> > It doesn't sign the mail, but just the patch.
+>=20
+> Well, no, it signs the entire thing, not just the patch, but it's true th=
+at
+> it's specifically targeted at patches (hence the name).
+>=20
+> > There's not much
+> > difference, if any, in authenticability terms, but there's a big
+> > difference in usability terms:
+> >=20
+> > To authenticate a given patch submitted to a mailing list, the receiver
+> > needs to also have patatt(1) configured.  Otherwise, it looks like a
+> > random message.
+>=20
+> Yes, but that's a feature.
+>=20
+> > MUAs normally don't show random headers (patatt(1)
+> > signs by adding the signature header), so unless one is searching for
+> > that header, it will be ignored.  This means, if I contribute to other
+> > projects, I need to tell them my patch is signed via patatt(1) in
+> > order for them to verify.  If instead, I sign the email as usual with my
+> > MUA, every MUA will recognize the signature by default and show it to
+> > the reader.
+>=20
+> I go into this in the FAQ for patatt:
+> https://github.com/mricon/patatt#why-not-simply-pgp-sign-all-patches
+>=20
+> Basically, developers really hated getting patches signed with PGP, either
+> inline or MIME, which is why it never took off. Putting it into the header
+> where it's not seen except by specialized tooling was a design choice.
 
-Sweet, thanks for taking the time to write these up.  It certainly
-helps confirm some of the directions we picked and changes we made to
-make things a little clearer, and helps us continue working in that
-direction.  Some comments below on individual points...
+It would be interesting if MUAs would support PGP signatures in a
+header.  Did you consider that option back then?  Maybe patching a
+mutt(1) or neomutt(1) to do that would have been simpler than developing
+patatt(1).
 
-> - It is not clear from git-sparse-checkout(1) when changes to
->   $GIT_DIR/info/sparse-checkout are catched up. In my case: would it be e=
-nough
->   to add the new pathname just before git-mv or would a fresh git-checkou=
-t be
->   needed after modifying $GIT_DIR/info/sparse-checkout? You have clarifie=
-d
->   this in your response, but shouldn't this be clear from the manpage?
+>=20
+> > It also doesn't allow encrypting mail, so let's say I send some patch
+> > fixing a security vulnerability, I'll need a custom tool to send it.  If
+> > instead, I use mutt(1) to send it signed+encrypted to a mailing list
+> > that provides a PGP public key, I can reuse my usual tools.
+>=20
+> Right, the goal was really *just* attestation. For encrypted patch exchan=
+ge we
+> have remail (https://korg.docs.kernel.org/remail.html), which worked
+> significantly better than any other alternative we've considered.
+>=20
+> > Also, and I don't know if b4(1) handles this automagically, but AFAIR,
+> > patatt(1) didn't: fo signing a patch, I had to configure per-directory
+> > with `patatt install-hook`.  I have more than a hundred git worktrees
+> > (think of dozens of git repositories, and half a dozen worktrees --see
+> > git-worktree(1)-- per repository).  If I need to configure every one of
+> > those worktrees to sign all of my patches, that's going to be
+> > cumbersome.  Also, I scrape and re-create worktrees for new branches
+> > all the time, so I'd need to be installing hooks for patatt(1) all the
+> > time.  Compare that to having mutt(1) configured once.  It doesn't
+> > scale that well.
+>=20
+> Also true -- patatt was really envisioned as a library for b4, where you =
+can
+> configure patch signing in your ~/.gitconfig for all projects.
 
-I believe at least part of this confusion is due to using the old
-style of handling sparse checkouts; namely, by actually editing
-$GIT_DIR/info/sparse-checkout.  We have taken pains to guide people
-away from that workflow, because it is both more work, and leads to
-more confusion.  If you instead do a
-   git sparse-checkout set --no-cone <pattern1> <pattern2> ... <patternN>
-or a
-   git sparse-checkout add <another-pattern>
-then the sparse-checkout command handles populating the
-$GIT_DIR/info/sparse-checkout for you as well as any needed checkout,
-meaning that there isn't a "catch up" step as there traditionally was.
-And it makes it a bit clearer that if you add some path to your
-sparse-checkout, then your sparse-checkout is ready to handle the
-additional path right away.
+Overall, I think mutt(1) works better for me than patatt(1) via b4(1)
+for crypto operations.  I don't use software that doesn't work with
+PGP/MIME, and it's more versatile.  I'm still curious about the other
+features of b4(1), so I'll try it for those.
 
-> - git-sparse-checkout(1) refers to "skip-worktree bit". This concept is
->   potentially not very familiar to the average git user which uses mostly
->   porcelain. Thus, edge cases remain to be unclear.
+Thanks!
+Alex
 
-I totally agree that the "skip-worktree bit" is something we should
-avoid exposing to the user.  I called it out previously:
-"""
-Most sparse checkout users are unaware of this implementation
-detail, and the term should generally be avoided in user-facing
-descriptions and command flags.  Unfortunately, prior to the
-`sparse-checkout` subcommand this low-level detail was exposed,
-and as of time of writing, is still exposed in various places.
-"""
+>=20
+> -K
 
-However, we should also note that you reported using v2.34.1, which is
-really quite old.  The current git-sparse-checkout(1) has been almost
-completely overhauled in the meantime:
+--=20
+<https://www.alejandro-colomar.es/>
 
-$ git show v2.34.1:Documentation/git-sparse-checkout.txt | wc -l
-263
-$ git diff --stat v2.34.1 v2.43.0-rc1 -- Documentation/git-sparse-checkout.=
-txt
- Documentation/git-sparse-checkout.txt | 446 +++++++++++++++++++++++++-----=
-----
- 1 file changed, 333 insertions(+), 113 deletions(-)
+--7WVc/cwe0i7Aty1B
+Content-Type: application/pgp-signature; name="signature.asc"
 
-And, in particular, "skip-worktree" doesn't appear until quite a bit
-later in the file, and then only appears in a section labelled
-"INTERNALS -- SPARSE CHECKOUT".
+-----BEGIN PGP SIGNATURE-----
 
-> - The pathspecs refers to .gitignore (which by itself is not very clear).=
- But
->   there are differences:
->   1. giignore is relative to containing directoy, which don't seem to mak=
-e
->      much sense for sparse mode
->   2. sparse specs are the opposite of gitignore, which seems to have diff=
-erent
->      meaning in some edge-cases.
+iQIzBAABCgAdFiEE6jqH8KTroDDkXfJAnowa+77/2zIFAmVOmz8ACgkQnowa+77/
+2zJVahAAqDkqNM1joJo82UPim0jgXOP8dG4wROhNTLi9DGybVYolXktxGmmiB31r
+zqNrA/OxELNiPqa41eGjd5Zmn51GRe+snFMH53Ou3OXA/aHmN19c7KD0ji5rcbjU
+Ub5I98Y1zGIi3jLt/VaCZPqTSE316OidxOviHPQ4omiQR4cpDe1y7IEquSMiVE8E
+O/UQxC+ucki+em1jld8imX7E7DjmB9DbAYEY30Y8Nm0zDZ+hAJXpBxgGgHn6/bd+
+JkKFHRyNUiZsp2mK7wQVTZqcLtE0L2ng+zd4/wKWYLNIdSiivDv2190raAa7rlU+
+gyO0jqkA6tfPeveJcPICdpjcGeRA0gBF9EPSuf7tHZzNASWDQHLaaGkkFaVjDeTz
+9bzr8zJc3grgfwxHSky/5Q2ttsvLAnqCFuUaGfQZ2QVIr5pSh57bOuRLGL9qBOC5
+LeZBN8XGe8+AqMBHNkoyJWuP/ZYLy8LIJSm1LaZBmWbFJ9Lx4hpj6C/pm2EpSAJI
+SMRWZvq8IwRcyISFmK8VyUSgwFYLDpbY3ryD43nPWEc8I2xwNM5ZHFohDYKC0idn
+kaZLjx/2osuBUr3sYcqTpXcNjfOsdQZu+32P8DdoOJf6BeZ8M01B+JJhy6EZXkbV
+G17c5NczUMAhSr4i6KKVBAR20FfyXiWW1/sCiQJBOiJNqB7IMRw=
+=P6wH
+-----END PGP SIGNATURE-----
 
-Yeah, copying .gitignore syntax and merely referring to the gitignore
-manual for specification of the patterns was a huge design mistake.
-I've hated it since the beginning.  The internals actually managed to
-make it *even more* confusing for quite some time as it referred to
-everything as "excludes", regardless of whether used for gitignore or
-sparse-checkout.  But yeah, these and other inherent problems with
-non-cone mode are called out in the "INTERNALS -- NON-CONE PROBLEMS"
-section of the manual, and is a big piece of why we recommend users
-migrate away from it if possible.
-
-> - For cone, it is not clear how the two "accepted patterns" look like wha=
-t the
->   semantics are.
-
-Yeah, it is a bit complex, and I advocated for just using a different
-control file for cone mode to help us step away from the blight of
-$GIT_DIR/info/sparse-checkout and its inherent tie to gitignore.  I
-didn't win that one.
-
-However, why does it actually matter?  You shouldn't be bothering with
-the patterns or editing the $GIT_DIR/info/sparse-checkout file for
-cone mode.  You just
-    git sparse-checkout set <directory1> <directory2> ... <directoryN>
-and then the file will be set up for you.
-
->  I understand that specifying a directory adds siblings
->   recursively. But what does the "Parent" mode mean exactly and when/how =
-is
->   this recognized? I guess, this is just a mis-namer? IMHO, parent of /a/=
-b/c would
->   be /a/b and not /a/b/c/* (as git-sparse-chekout(1) suggests).
-
-No, /a/b/c/* is not the parent, that's the portion that says that all
-things below a/b/c (i.e. all descendant files) should be included.
-
-The parent parts would be where it adds /a/b/ and /a/ as patterns to
-ensure things directly under a/ and directly under a/b/ are included.
-
-I think the newer version of the manual might explain this a little
-better, but honestly, attempting to explain it is a losing battle.
-Users shouldn't read or edit the sparse-checkout file in cone mode.
-We let them, but we strongly recommend against it.  Just pass the
-actual directory names to `git sparse-checkout {set,add}` and let it
-take care of the patterns for you.
+--7WVc/cwe0i7Aty1B--
