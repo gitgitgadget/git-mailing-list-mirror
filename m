@@ -1,172 +1,126 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D4C19BB6
-	for <git@vger.kernel.org>; Fri, 10 Nov 2023 13:30:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0963F1DFC8
+	for <git@vger.kernel.org>; Fri, 10 Nov 2023 16:27:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eyf9ZgHS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F30CC433C8;
-	Fri, 10 Nov 2023 13:30:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1699623052;
-	bh=2y/MLLlFtrWCnuC6U8tA4TgX5YkdlerQehcWAr4Iid4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=eyf9ZgHSgXyPQu+uTQKlyhaSzdsk485Ck1AWYCy5sCRpQsAeNqebCHfY6ukfZICLg
-	 zSmU8wLBMuhDMFJgFXvA6XF8eHnEl8Vsni604zvFKJKRwlaoKjAMRh43E3tkjLtqCx
-	 TO1ew/ZZBHQ+UgG0cY9Eb8KBbrYOSbulzsrYQ9xu+q5JAD6NMWE34XbY2IpwUtSYDT
-	 pwRXJ9C4Br1oK7WfxhWwDAyHk5ZllySYTKGUe/VD329TXYFO43uRUtF5TTE2ZfTx8t
-	 bjG2PhvxB7f1VWUisRxAiOdwiXyr/dPfheh6SNY5336euSqdcboZ+2h1M1GJ64jlJg
-	 Jxo68olQx5crw==
-Date: Fri, 10 Nov 2023 14:30:49 +0100
-From: Alejandro Colomar <alx@kernel.org>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: git-send-email: Send with mutt(1)
-Message-ID: <ZU4widBlHljjg9lL@debian>
-References: <ZUocFhmPHstwKCkZ@devuan>
- <20231107174803.GA507007@coredump.intra.peff.net>
- <ZUqDwnmu9d1dD1tb@devuan>
- <20231107201655.GA507701@coredump.intra.peff.net>
- <ZUv3gjjmuqvCaJEd@debian>
- <20231108212702.GA1586965@coredump.intra.peff.net>
- <ZUz6H3IqRc1YGPZM@debian>
- <20231109180308.GA2711684@coredump.intra.peff.net>
- <ZU1-l4PwMU5H4_VN@debian>
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="xkWc1rPB"
+Received: from mail-ua1-x92f.google.com (mail-ua1-x92f.google.com [IPv6:2607:f8b0:4864:20::92f])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EB2F3DC61
+	for <git@vger.kernel.org>; Fri, 10 Nov 2023 08:27:43 -0800 (PST)
+Received: by mail-ua1-x92f.google.com with SMTP id a1e0cc1a2514c-7bae8dd095cso840154241.3
+        for <git@vger.kernel.org>; Fri, 10 Nov 2023 08:27:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1699633662; x=1700238462; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=sFiuIphpQdOryaK42gcN2k93ROexv/qHHgJskBydPhU=;
+        b=xkWc1rPBJnFdHfKp5TyX0V5nPve8o4TXkfjoCXvD02Kr8/kxynEGuvZdw65uKyEf3K
+         6UfWFk5U8DYz3yNHtw815UhgnSMDaDWDHdaHDh/hYX6iKQ0w1U3OwWiJIgjmZehFNJas
+         vXkoIQdFG9uPxiKjCjwofsyhmwdk0KfrkYEOh0ADXBTIdqaIGbN2wExc/8ANaRk9/Sxk
+         4ZNtQuHGi+KRvNMevoTeH+0Q0inPIwNbEC0g2dKTr3fE26XorzoUzDiSXmqPWbVKwUGZ
+         FFC+7PX1FkYqHrMnJ0tTFaS1KWLVMlumfJyMa5u9SOBlR1hfCNbtctLR6xQlc/8k/bjd
+         bSYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699633662; x=1700238462;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sFiuIphpQdOryaK42gcN2k93ROexv/qHHgJskBydPhU=;
+        b=Sdk+sSTRzOsQ4dtYjz72DwsckY3c7j3YNSGnwvNxzy4+zDTufW9NC8DHh2hLK6Kryv
+         036oHZGJc2KJ5Bv+PjWDUVW0IAjRh1lVeLr/ITjhEyLrzZRdN4cHl9q+NDxBhitlltnn
+         U8rHPIG0K55DWXI9izRVbvDvbZ+ZOeQXNVguk9S8UYqJFk3yatapYEi7e8hEwkgJU3hv
+         7Iwvvhx93tlGoRrO96JzndgD+UYyxy92RH+wmUA5MvWaurf5axriD5IFoyTqX1nQjYKu
+         RXUoLvcmFyx6xLO/5rLESaXDNEYMfiErF9bnkceRlayFB4M0dEAzPy8r+BBIqCK5PSua
+         hslg==
+X-Gm-Message-State: AOJu0YxTMwMFDir+jsQokMWw+96/kZbroqFHRTEl/6I0XKTq9WQ/vMGF
+	1csAz81/fNW5c+hON36rIJCuzw==
+X-Google-Smtp-Source: AGHT+IHmuzQROCbqJ43fFVC6q2jp1o2ms31YTFctqpjIm/1mkBhtKyvzOX8kU7nt9yZM66yL+5e4sw==
+X-Received: by 2002:a67:ef07:0:b0:45f:b975:f717 with SMTP id j7-20020a67ef07000000b0045fb975f717mr3172796vsr.34.1699633662433;
+        Fri, 10 Nov 2023 08:27:42 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id t19-20020a0cea33000000b006648514e276sm2994816qvp.78.2023.11.10.08.27.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Nov 2023 08:27:42 -0800 (PST)
+Date: Fri, 10 Nov 2023 11:27:41 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/7] chunk-format: introduce `pair_chunk_expect()` helper
+Message-ID: <ZU5Z/Z4PcdNP5U1r@nand.local>
+References: <20231109070310.GA2697602@coredump.intra.peff.net>
+ <cover.1699569246.git.me@ttaylorr.com>
+ <af5fe3b7237caeba8f970e967933db96c83a230e.1699569246.git.me@ttaylorr.com>
+ <xmqqedgyw6jv.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="HnNnXcu8fVk243W4"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZU1-l4PwMU5H4_VN@debian>
+In-Reply-To: <xmqqedgyw6jv.fsf@gitster.g>
 
+On Fri, Nov 10, 2023 at 01:55:48PM +0900, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+>
+> > +static int pair_chunk_expect_fn(const unsigned char *chunk_start,
+> > +				size_t chunk_size,
+> > +				void *data)
+> > +{
+> > +	struct pair_chunk_data *pcd = data;
+> > +	if (chunk_size / pcd->record_size != pcd->record_nr)
+> > +		return -1;
+> > +	*pcd->p = chunk_start;
+> > +	return 0;
+> > +}
+>
+> I know one of the original places did the "divide the whole by
+> per-record size and see if it matches the number of records", the
+> same as we see above, but the check in the above could also be
+>
+> 	if (chunk_size != st_mult(pcd->record_size, pcd->record_nr))
+> 		return -1;
+>
+> which would also catch the case where chunk_size is not a multiple
+> of the record size.  Your conversion of OOFF in midx.c loses this
+> protection as the original uses the multiplication-and-compare, but
+> the rewrite to call pair_chunk_expect would call the above and
+> checks with the truncating-divide-and-compare.
 
---HnNnXcu8fVk243W4
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 10 Nov 2023 14:30:49 +0100
-From: Alejandro Colomar <alx@kernel.org>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: git-send-email: Send with mutt(1)
+Hmm. I was thinking of Peff's "commit-graph: handle overflow in
+chunk_size checks", but I think that I was overly eager in applying the
+same reasoning to the MIDX code.
 
-On Fri, Nov 10, 2023 at 01:51:34AM +0100, Alejandro Colomar wrote:
-> Hi Jeff,
->=20
-> On Thu, Nov 09, 2023 at 01:03:08PM -0500, Jeff King wrote:
-> > On Thu, Nov 09, 2023 at 04:26:23PM +0100, Alejandro Colomar wrote:
-> >=20
-> > > I've tried something even simpler:
-> > >=20
-> > > ---8<---
-> > > #!/bin/sh
-> > >=20
-> > > mutt -H -;
-> > > --->8---
-> > >=20
-> > > I used it for sending a couple of patches to linux-man@, and it seems=
- to
-> > > work.  I don't have much experience with mutt, so maybe I'm missing s=
-ome
-> > > corner cases.  Do you expect it to not work for some case?  Otherwise,
-> > > we might have a winner.  :)
-> >=20
-> > Wow, I don't know how I missed that when I read the manual. That was
-> > exactly the feature I was thinking that mutt would need. ;)
-> >=20
-> > So yeah, that is obviously better than the "postponed" hackery I showed.
-> > I notice that "-H" even causes mutt to ignore "-i" (a sendmail flag that
-> > Git adds to sendemail.sendmailcmd). So you can just invoke it directly
-> > from your config like:
-> >=20
-> >   git config sendemail.sendmailcmd "mutt -H -"
->=20
-> Having it directly in sendmailcmd causes some glitch: It repeats all CCs
-> in TO.  See a log:
->=20
-> 	Send this email? ([y]es|[n]o|[e]dit|[q]uit|[a]ll): y
-> 	OK. Log says:
-> 	Sendmail: mutt -H - -i kevin@8t8.us mutt-dev@mutt.org alx@kernel.org e.s=
-ovetkin@gmail.com neomutt-devel@neomutt.org
-> 	From: Alejandro Colomar <alx@kernel.org>
-> 	To: Kevin McCarthy <kevin@8t8.us>,
-> 		mutt-dev@mutt.org
-> 	Cc: Alejandro Colomar <alx@kernel.org>,
-> 		Jenya Sovetkin <e.sovetkin@gmail.com>,
-> 		neomutt-devel@neomutt.org
-> 	Subject: [PATCH] send.c: Allow crypto operations in batch and mailx mode=
-s.
-> 	Date: Fri, 10 Nov 2023 01:41:24 +0100
-> 	Message-ID: <20231110004128.5972-2-alx@kernel.org>
-> 	X-Mailer: git-send-email 2.42.0
-> 	MIME-Version: 1.0
-> 	Content-Transfer-Encoding: 8bit
->=20
-> 	Result: OK
->=20
-> The sent mail ended up being
->=20
-> 	From: Alejandro Colomar <alx@kernel.org>
-> 	To: Kevin McCarthy <kevin@8t8.us>, mutt-dev@mutt.org, alx@kernel.org,
-> 		e.sovetkin@gmail.com, neomutt-devel@neomutt.org
-> 	Cc: Alejandro Colomar <alx@kernel.org>,
-> 		Jenya Sovetkin <e.sovetkin@gmail.com>, neomutt-devel@neomutt.org
->=20
-> So maybe we need the wrapper script to ignore the arguments.
+The important piece of the rationale in that patch is as follows:
 
-Heh!  The following trick works as well, without needing a script:
+    In the current code this is only possible for the CDAT chunk, but
+    the reasons are quite subtle. We compute g->num_commits by dividing
+    the size of the OIDL chunk by the hash length (since it consists of
+    a bunch of hashes). So we know that any size_t multiplication that
+    uses a value smaller than the hash length cannot overflow. And the
+    CDAT records are the only ones that are larger (the others are just
+    4-byte records). So it's worth fixing all of these, to make it clear
+    that they're not subject to overflow (without having to reason about
+    seemingly unrelated code).
 
-[sendemail]
-	sendmailcmd =3D mutt -H - && true
+In particular, that g->num_commits is computed by dividing the length of
+the OIDL chunk by the hash length, thus any size_t multiplication of
+g->num_commits with a value smaller than that hash length cannot
+overflow.
 
-It probably relies too much on git-send-email(1)'s current
-implementation, but it works.  :)
+But I don't think we enjoy the same benefits in the MIDX scenario. In
+this case, the num_objects field is just:
 
-Cheers,
-Alex
+    m->num_objects = ntohl(m->chunk_oid_fanout[255])
 
->=20
-> Cheers,
-> Alex
->=20
-> >=20
-> > Annoyingly, "-E" doesn't work when reading over stdin (I guess mutt
-> > isn't willing to re-open the tty itself). But if you're happy with not
-> > editing as they go through, then "-H" is then that's enough (in my
-> > workflow, I do the final proofread via mutt).
-> >=20
-> > -Peff
->=20
-> --=20
-> <https://www.alejandro-colomar.es/>
+so I don't think we can make the same guarantees about what is and isn't
+save to compute under size_t arithmetic.
 
+I'd be curious what Peff has to say, but if he agrees with me, I'd
+recommend taking the first five patches, and dropping the two
+MIDX-related ones.
 
-
---=20
-<https://www.alejandro-colomar.es/>
-
---HnNnXcu8fVk243W4
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEE6jqH8KTroDDkXfJAnowa+77/2zIFAmVOMIkACgkQnowa+77/
-2zLHAhAAk0VnLHsoV0eifSymtSJtB24/KG345daPwLygaCi71J0mazSImbUkZpLR
-ueetYQ7+HYz2ZPb+s8GqcI0rtvihlkLlVGHzaIFCq6OsCzyEpcANF86gxwidg/c9
-9t/qnPnR9JBRwxpitxvy63RlGNveNgKX0idejw6Gk/OZRiLV5db6pqaH13xGMma6
-f8V8nVE0GJpNx9fAEpK3CFh++ksa5UJmMgxtLE3JsHHiDLeeuez2xb7AXtgGIay7
-AtfUf/9bPoIJM2GwXC5dzd4Iv8W4pq2AzatevArUaqcneHdQSsKWfhVxXYMascFg
-Z/18+Q05SIQEiSTbKqAPT5ha0CpWUIuNMw65ToJwVB1OnRRGlrxY4Exjs7S3cRvQ
-lAGslwmV4FDsCz1PRs7eDCB4LG2kFcZIwOjg7onlkdVnfOgpj7yJs6htfXqV4oDW
-6Ou/L4GrJeVUZ5ioZ5HvV7+Tb3SSrop/fX4K3e91meeOhtJ0hJRHIoI8zBO+yuMb
-kAAM267BugUdL9D1/7X0BsM10j0o8bQiTo5x5akJfP8hq9Am29/gfPvZyqJc2jrS
-DjvBFrNef0QbuiT8pfBi89dcCpmjso7YRk4WhOmbDbbY9o3pafejV7ijvGAfDlZ7
-Y9vAOAAJUNLqFc2/lEJiQI7bSygs+prx+/WwtbX0Iz6AgqUqcvI=
-=3pBd
------END PGP SIGNATURE-----
-
---HnNnXcu8fVk243W4--
+Thanks,
+Taylor
