@@ -1,205 +1,320 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33FEF63AD
-	for <git@vger.kernel.org>; Sat, 11 Nov 2023 04:02:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A45163AF
+	for <git@vger.kernel.org>; Sat, 11 Nov 2023 04:03:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WbxKIlcT"
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF2CD3868
-	for <git@vger.kernel.org>; Fri, 10 Nov 2023 20:02:23 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id ffacd0b85a97d-32d81864e3fso1492317f8f.2
-        for <git@vger.kernel.org>; Fri, 10 Nov 2023 20:02:23 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="kpYf/ROA"
+Received: from mail-qt1-x84a.google.com (mail-qt1-x84a.google.com [IPv6:2607:f8b0:4864:20::84a])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF7B33C0E
+	for <git@vger.kernel.org>; Fri, 10 Nov 2023 20:03:13 -0800 (PST)
+Received: by mail-qt1-x84a.google.com with SMTP id d75a77b69052e-421acfe16f6so16317031cf.2
+        for <git@vger.kernel.org>; Fri, 10 Nov 2023 20:03:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1699675342; x=1700280142; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=xa1kf0Q0fObpfuD+wuOmeiSrQMsXByfO8rnPJ75hv2I=;
-        b=WbxKIlcT++K1QMGvKBsySiGMm4vlECDJWMAVasOD5p+iIM91uvbqIRZPgMo9Wefumo
-         o2XkIhncFxkWndCVplNOEnPPOtxxmVzTXENJwK0Z5MmOPGJM9GddXeF/3R+Xr5pztj+D
-         fhlHzXXyjikR2h3xX6GFQueljvwv3zpX1vqMm5XP67AbB5uBljYg4hb2vN7Y670xAsCY
-         c0UepD/LFDBgG2+BSyW699PXZBmzQW0+VcuP78PGszbC7C96ZvKjBXpaQn6YyU+pH3TB
-         EKXnygkLavcPxNN/GDforBnJClTloi5uHXsQaGU2mCxo3LLhcVK51Mc/TaJt1RZKj4K5
-         TyPQ==
+        d=google.com; s=20230601; t=1699675393; x=1700280193; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:from:subject:message-id
+         :mime-version:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=UOthb7pBkUtSHKNMo4oVJNN2+7U+fWdC9Jw/6jKzxcU=;
+        b=kpYf/ROAayC8J2DwVMOi2LutFi0i2Be73AraTzbhekLHVX1kYzcWXlK2mQmcLbXkMh
+         83W7Zc5H48TM6xwgm+O1n5CPnus+RAHLlFtm1g4nT7xSUXmPAvdKL3n9yZZpb8Lnfatk
+         GpHz+SSkGUgM6W63uQW+JOTPzOcAsFJSS7ElNg5JKeirt2JMn24b30MQ8ACKn6fv8Njg
+         HYLhbBl/8FXiqnpbUIlT7FqPxXqyjDCSQXqUQtKMsHql+VXYqjo5UWKc3XSt4TffGGm7
+         +fd4Ebwr4mXtBRXVCRPv9euQQ7Q8TRJzUClQS7nyBc/cQUBBnqbrS6XstcxnFRG3/bSm
+         70Eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699675342; x=1700280142;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xa1kf0Q0fObpfuD+wuOmeiSrQMsXByfO8rnPJ75hv2I=;
-        b=M5/iSCTmVBwtRuf7SkMZoiQthLb7hnkm1SqsdH6EwzogqVCogaDu9cPXLYSe7G2ZBR
-         dmmlZ/Li84At49QFkUVR8Pz9nOaQ1/y38UODakg8wcfqmIlqqFfKD/iC7XgbhtVPA+yW
-         DNw3ttFQnWhjS+2av4/5QVKQc7W/iGHSiM6jvWwC7LVcE0+uaiYPyAYtgCgZ/EKMr8X8
-         ePUxm2oe6hdSZ40tJa+tVtc1Eq9T60sUkIO0L3FwQmkhYNxV9ielPDFJ44wn3pkKEWBm
-         0eoOr3SbECd1rZXm2jcoAqipgeB6/SXnsdxpTuLV+bhQsZCj2vYwuPF75uIaquV06CNv
-         gbtA==
-X-Gm-Message-State: AOJu0Yw0IqLat47OpFUvK8+oMGrJgtTVzlIA/a3YHUqBUeSXUiMnbsfG
-	0maoAV93nGFkrvPUsR4mpqAkA5kZ684=
-X-Google-Smtp-Source: AGHT+IEPAk71FoGLWe6gSrgOu0iSO+GhDSg+WHFjHowrT2SRS7UARMtvy9A8lZ9ckb+G1ksWqdmXaA==
-X-Received: by 2002:a5d:64c7:0:b0:32c:eeee:d438 with SMTP id f7-20020a5d64c7000000b0032ceeeed438mr669991wri.54.1699675341426;
-        Fri, 10 Nov 2023 20:02:21 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v2-20020adfa1c2000000b0032fc5f5abafsm636334wrv.96.2023.11.10.20.02.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Nov 2023 20:02:21 -0800 (PST)
-Message-ID: <pull.1611.git.1699675340400.gitgitgadget@gmail.com>
-From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 11 Nov 2023 04:02:20 +0000
-Subject: [PATCH] RelNotes: minor wording fixes in 2.43.0 release notes
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1699675393; x=1700280193;
+        h=content-transfer-encoding:cc:to:from:subject:message-id
+         :mime-version:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UOthb7pBkUtSHKNMo4oVJNN2+7U+fWdC9Jw/6jKzxcU=;
+        b=XbmoPmgoIfs2c7bhmBGS5QKAczi8SCmV79cdLkffkTWyMm9xy3MKbGo0giLfsRIzLI
+         3qqnv+Hve05O/GvWvqihwC3l2/bwwSwIRgg1BO5rTtZ/uuFhO/LJA8p9W4+RaUMSdppa
+         oUwVh0Rj/UODAgj6My0MvdZsWr/jk2E+8+Yn+OiTl1kzBtQl+wfE3lpjsrVo6wngGDAr
+         CBGyKbjA15nrAlYUX1kDd3JxgrPaNnkFW7pwJ1qQI9DsQ/zo6qUXwo9hurIIfl7YBKAG
+         /dDaWbHOfyHmZTnjIU0tO0BCEOb4yiIKsqjLmT103hZ+W2hn72noTdzvZAQmD8TWk9bQ
+         lSNg==
+X-Gm-Message-State: AOJu0YyiwQYb//wfOcyJia+pEznbpTHBsOK/7EuCkoDLrQQEplygTM0c
+	RHGDR7CAbkmclZnHz4iRcbiOuxbMbp/8PdyUPGEUFq9EKSHOScnLMyDcGl+8OmlpTtBYNKvka6u
+	TnL2v/eT9b5M2GRPpcPCD9GOMbrfFo6H8ViSD3ywjL61hieKjH/oh94nVPAoF
+X-Google-Smtp-Source: AGHT+IFPEusLuLN03E8A2R6lf1GSg9VksijRNE/JT1qqXpVCJHyXCAuWnmH+IKNIZyPhn6zZaHyFvhXaGghu
+X-Received: from jojwang1.c.googlers.com ([fda3:e722:ac3:cc00:2b:7d90:c0a8:3b1d])
+ (user=jojwang job=sendgmr) by 2002:ac8:1381:0:b0:41b:d0ea:b7b with SMTP id
+ h1-20020ac81381000000b0041bd0ea0b7bmr21729qtj.7.1699675392920; Fri, 10 Nov
+ 2023 20:03:12 -0800 (PST)
+Date: Sat, 11 Nov 2023 04:03:08 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.42.0.869.gea05f2083d-goog
+Message-ID: <20231111040309.2848560-1-jojwang@google.com>
+Subject: [PATCH 1/1] attr: add native file mode values support
+From: Joanna Wang <jojwang@google.com>
 To: git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>,
-    Elijah Newren <newren@gmail.com>
+Cc: Joanna Wang <jojwang@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Elijah Newren <newren@gmail.com>
+Gives all paths inherent 'mode' attribute values based on the paths'
+modes (one of 100644, 100755, 120000, 040000, 160000). Users may use
+this feature to filter by file types. For example a pathspec such as
+':(attr:mode=3D160000)' could filter for submodules without needing
+`mode=3D160000` to actually be specified for each subdmoule path in
+.gitattributes. The native mode values are also reflected in
+`git check-attr` results.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
+If there is any existing mode attribute for a path (e.g. there is
+!mode, -mode, mode, mode=3D<value> in .gitattributes) that setting will
+take precedence over the native mode value.
+
 ---
-    RelNotes: minor wording fixes in 2.43.0 release notes
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1611%2Fnewren%2Frelnotes-wording-improvements-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1611/newren/relnotes-wording-improvements-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1611
+I went with 'mode' because that is the word used in documentation
+(e.g. https://git-scm.com/book/sv/v2/Git-Internals-Git-Objects)
+and in the code (e.g. `ce_mode`). Please let me know what you think
+of this UX.
 
- Documentation/RelNotes/2.43.0.txt | 36 +++++++++++++++----------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+The implementation happens within git_check_attr() method which is
+the common mathod called for getting a pathspec attribute value.
 
-diff --git a/Documentation/RelNotes/2.43.0.txt b/Documentation/RelNotes/2.43.0.txt
-index 74f304b1b2b..770543c464e 100644
---- a/Documentation/RelNotes/2.43.0.txt
-+++ b/Documentation/RelNotes/2.43.0.txt
-@@ -27,14 +27,14 @@ UI, Workflows & Features
-    a branch that is checked out and protect it.  Rephrase the message
-    to say that the branch is in use.
- 
-- * Hourly and other schedule of "git maintenance" jobs are randomly
-+ * Hourly and other schedules of "git maintenance" jobs are randomly
-    distributed now.
- 
-  * "git cmd -h" learned to signal which options can be negated by
-    listing such options like "--[no-]opt".
- 
-- * The way authentication related data other than passwords (e.g.
--   oath token and password expiration data) are stored in libsecret
-+ * The way authentication related data other than passwords (e.g.,
-+   oauth token and password expiration data) are stored in libsecret
-    keyrings has been rethought.
- 
-  * Update the libsecret and wincred credential helpers to correctly
-@@ -60,7 +60,7 @@ UI, Workflows & Features
- 
-  * The default log message created by "git revert", when reverting a
-    commit that records a revert, has been tweaked, to encourage people
--   describe complex "revert of revert of revert" situation better in
-+   to describe complex "revert of revert of revert" situations better in
-    their own words.
- 
-  * The command-line completion support (in contrib/) learned to
-@@ -77,8 +77,8 @@ UI, Workflows & Features
- 
-  * The command line completion script (in contrib/) can be told to
-    complete aliases by including ": git <cmd> ;" in the alias to tell
--   it that the alias should be completed similar to how "git <cmd>" is
--   completed.  The parsing code for the alias as been loosened to
-+   it that the alias should be completed in a similar way to how "git <cmd>" is
-+   completed.  The parsing code for the alias has been loosened to
-    allow ';' without an extra space before it.
- 
-  * "git for-each-ref" and friends learned to apply mailmap to
-@@ -117,8 +117,8 @@ Performance, Internal Implementation, Development Support etc.
-  * Flaky "git p4" tests, as well as "git svn" tests, are now skipped
-    in the (rather expensive) sanitizer CI job.
- 
-- * Tests with LSan from time to time seem to emit harmless message
--   that makes our tests unnecessarily flaky; we work it around by
-+ * Tests with LSan from time to time seem to emit harmless messages
-+   that make our tests unnecessarily flaky; we work around it by
-    filtering the uninteresting output.
- 
-  * Unused parameters to functions are marked as such, and/or removed,
-@@ -135,7 +135,7 @@ Performance, Internal Implementation, Development Support etc.
- 
-  * Test coverage for trailers has been improved.
- 
-- * The code to iterate over loose references have been optimized to
-+ * The code to iterate over loose references has been optimized to
-    reduce the number of lstat() system calls.
- 
-  * The codepaths that read "chunk" formatted files have been corrected
-@@ -157,7 +157,7 @@ Fixes since v2.42
-    branch tips at the same time will not waste building and testing
-    the same thing twice.
- 
-- * The commit-graph verification code that detects mixture of zero and
-+ * The commit-graph verification code that detects a mixture of zero and
-    non-zero generation numbers has been updated.
- 
-  * "git diff -w --exit-code" with various options did not work
-@@ -170,20 +170,20 @@ Fixes since v2.42
-    the sequencer code has been cleaned up for consistency.
- 
-  * "git diff --no-such-option" and other corner cases around the exit
--   status of the "diff" command has been corrected.
-+   status of the "diff" command have been corrected.
- 
-  * "git for-each-ref --sort='contents:size'" sorts the refs according
-    to size numerically, giving a ref that points at a blob twelve-byte
-    (12) long before showing a blob hundred-byte (100) long.
- 
-- * We now limit depth of the tree objects and maximum length of
-+ * We now limit the depth of the tree objects and maximum length of
-    pathnames recorded in tree objects.
-    (merge 4d5693ba05 jk/tree-name-and-depth-limit later to maint).
- 
-  * Various fixes to the behavior of "rebase -i" when the command got
-    interrupted by conflicting changes.
- 
-- * References from description of the `--patch` option in various
-+ * References from a description of the `--patch` option in various
-    manual pages have been simplified and improved.
- 
-  * "git grep -e A --no-or -e B" is accepted, even though the negation
-@@ -203,8 +203,8 @@ Fixes since v2.42
-    information for a file when fsmonitor knows it is clean and ended
-    up behaving as if it is not clean, which has been corrected.
- 
-- * Clarify how "alias.foo = : git cmd ; aliased-command-string" should
--   be spelled with necessary whitespaces around punctuation marks to
-+ * Clarify how "alias.foo = : git cmd ; aliased-command-string" should be
-+   spelled with necessary whitespace around punctuation marks to
-    work.
- 
-  * HTTP Header redaction code has been adjusted for a newer version of
-@@ -256,9 +256,9 @@ Fixes since v2.42
-    by "git stash create" now errors out.
-    (merge d9b6634589 jc/fail-stash-to-store-non-stash later to maint).
- 
-- * The index file has room only for lower 32-bit of the file size in
-+ * The index file has room only for the lower 32-bit of the file size in
-    the cached stat information, which means cached stat information
--   will have 0 in its sd_size member for a file whose size is multiple
-+   will have 0 in its sd_size member for a file whose size is a multiple
-    of 4GiB.  This is mistaken for a racily clean path.  Avoid it by
-    storing a bogus sd_size value instead for such files.
-    (merge 5143ac07b1 bc/racy-4gb-files later to maint).
-@@ -281,7 +281,7 @@ Fixes since v2.42
-    20 months or so, which has been corrected.
- 
-  * "git send-email" did not have certain pieces of data computed yet
--   when it tried to validate the outging messages and its recipient
-+   when it tried to validate the outgoing messages and its recipient
-    addresses, which has been sorted out.
- 
-  * "git bugreport" learned to complain when it received a command line
+The previous discussed idea did not work with `git check-attr`.
+(https://lore.kernel.org/all/CAMmZTi8swsSMcLUcW+YwUDg8GcrY_ks2+i35-nsHE3o9M=
+NpsUQ@mail.gmail.com/).
 
-base-commit: dadef801b365989099a9929e995589e455c51fed
--- 
-gitgitgadget
+There are no tests for excluding based on pathspec attrs in subdirectories
+due to an existing bug. Since it is not specific to native mode, I thought
+it would be better to fix separately.
+https://lore.kernel.org/all/CAMmZTi89Un+bsLXdEdYs44oT8eLNp8y=3DPm8ywaurcQ7c=
+cRKGdQ@mail.gmail.com/
+
+ Documentation/gitattributes.txt | 10 +++++++
+ attr.c                          | 42 ++++++++++++++++++++++++--
+ t/t0003-attributes.sh           | 40 +++++++++++++++++++++++++
+ t/t6135-pathspec-with-attrs.sh  | 53 +++++++++++++++++++++++++++++++++
+ 4 files changed, 143 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.=
+txt
+index 8c1793c148..bb3c11f151 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -156,6 +156,16 @@ Unspecified::
+ Any other value causes Git to act as if `text` has been left
+ unspecified.
+=20
++`mode`
++^^^^^
++
++This attribute is for filtering files by their file bit modes
++(40000, 120000, 160000, 100755, 100644) and has native support in git,
++meaning values for this attribute are natively set (e.g. mode=3D100644) by
++git without having to specify them in .gitattributes. However, if
++'mode' is set in .gitattributest for some path, that value takes precenden=
+ce,
++whether it is 'set', 'unset', 'unspecified', or some other value.
++
+ `eol`
+ ^^^^^
+=20
+diff --git a/attr.c b/attr.c
+index e62876dfd3..95dc1cf695 100644
+--- a/attr.c
++++ b/attr.c
+@@ -1240,20 +1240,58 @@ static struct object_id *default_attr_source(void)
+ 	return &attr_source;
+ }
+=20
++
++/*
++ * This implements native file mode attr support.
++ * We always return the current mode of the path, not the mode stored
++ * in the index, unless the path is a directory where we check the index
++ * to see if it is a GITLINK. It is ok to rely on the index for GITLINK
++ * modes because a path cannot become a GITLINK (which is a git concept on=
+ly)
++ * without having it indexed with a GITLINK mode in git.
++ */
++static unsigned int native_mode_attr(struct index_state *istate, const cha=
+r *path)
++{
++	struct stat st;
++	unsigned int mode;
++	if (lstat(path, &st))
++		die_errno(_("unable to stat '%s'"), path);
++	mode =3D canon_mode(st.st_mode);
++	if (S_ISDIR(mode)) {
++		int pos =3D index_name_pos(istate, path, strlen(path));
++		if (pos >=3D 0)
++			if (S_ISGITLINK(istate->cache[pos]->ce_mode))
++				return istate->cache[pos]->ce_mode;
++	}
++	return mode;
++}
++
++
+ void git_check_attr(struct index_state *istate,
+ 		    const char *path,
+ 		    struct attr_check *check)
+ {
+ 	int i;
+ 	const struct object_id *tree_oid =3D default_attr_source();
++	struct strbuf sb =3D STRBUF_INIT;
+=20
+ 	collect_some_attrs(istate, tree_oid, path, check);
+=20
+ 	for (i =3D 0; i < check->nr; i++) {
+ 		unsigned int n =3D check->items[i].attr->attr_nr;
+ 		const char *value =3D check->all_attrs[n].value;
+-		if (value =3D=3D ATTR__UNKNOWN)
+-			value =3D ATTR__UNSET;
++		if (value =3D=3D ATTR__UNKNOWN){
++			if (strcmp(check->all_attrs[n].attr->name, "mode") =3D=3D 0) {
++				/*
++				 * If value is ATTR_UNKNOWN then it has not been set
++				 * anywhere with -mode (ATTR_FALSE), !mode (ATTR_UNSET),
++				 * mode (ATTR_TRUE), or an explicit value. We fill
++				 * value with the native mode value.
++				 */
++				strbuf_addf(&sb, "%06o", native_mode_attr(istate, path));
++				value =3D sb.buf;
++			} else
++				value =3D ATTR__UNSET;
++		}
+ 		check->items[i].value =3D value;
+ 	}
+ }
+diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
+index aee2298f01..9c2603d8e2 100755
+--- a/t/t0003-attributes.sh
++++ b/t/t0003-attributes.sh
+@@ -19,6 +19,15 @@ attr_check () {
+ 	test_must_be_empty err
+ }
+=20
++attr_check_mode () {
++	path=3D"$1" expect=3D"$2" git_opts=3D"$3" &&
++
++	git $git_opts check-attr mode -- "$path" >actual 2>err &&
++	echo "$path: mode: $expect" >expect &&
++	test_cmp expect actual &&
++	test_must_be_empty err
++}
++
+ attr_check_quote () {
+ 	path=3D"$1" quoted_path=3D"$2" expect=3D"$3" &&
+=20
+@@ -558,4 +567,35 @@ test_expect_success EXPENSIVE 'large attributes file i=
+gnored in index' '
+ 	test_cmp expect err
+ '
+=20
++test_expect_success 'submodule with .git file' '
++	mkdir sub &&
++	(cd sub &&
++	git init &&
++	mv .git .real &&
++	echo "gitdir: .real" >.git &&
++	test_commit first) &&
++	git update-index --add -- sub
++'
++
++test_expect_success 'native mode attributes work' '
++	>exec && chmod +x exec && attr_check_mode exec 100755 &&
++	>normal && attr_check_mode normal 100644 &&
++	mkdir dir && attr_check_mode dir 040000 &&
++	ln -s normal normal_sym && attr_check_mode normal_sym 120000 &&
++	attr_check_mode sub 160000
++'
++
++test_expect_success '.gitattributes mode values take precedence' '
++	(
++		echo "mode_value* mode=3Dmyownmode" &&
++		echo "mode_set* mode" &&
++		echo "mode_unset* -mode" &&
++		echo "mode_unspecified* !mode"
++	) >.gitattributes &&
++	>mode_value && attr_check_mode mode_value myownmode &&
++	>mode_unset && attr_check_mode mode_unset unset &&
++	>mode_unspecified && attr_check_mode mode_unspecified unspecified &&
++	>mode_set && attr_check_mode mode_set set
++'
++
+ test_done
+diff --git a/t/t6135-pathspec-with-attrs.sh b/t/t6135-pathspec-with-attrs.s=
+h
+index a9c1e4e0ec..fd9569d39b 100755
+--- a/t/t6135-pathspec-with-attrs.sh
++++ b/t/t6135-pathspec-with-attrs.sh
+@@ -64,6 +64,9 @@ test_expect_success 'setup .gitattributes' '
+ 	fileSetLabel label
+ 	fileValue label=3Dfoo
+ 	fileWrongLabel label=E2=98=BA
++	mode_set* mode=3D1234
++	mode_unset* -mode
++	mode_unspecified* !mode
+ 	EOF
+ 	echo fileSetLabel label1 >sub/.gitattributes &&
+ 	git add .gitattributes sub/.gitattributes &&
+@@ -295,4 +298,54 @@ test_expect_success 'reading from .gitattributes in a =
+subdirectory (3)' '
+ 	test_cmp expect actual
+ '
+=20
++test_expect_success 'mode attr is handled correctly for overriden values' =
+'
++	>mode_set_1 &&
++	>mode_unset_1 &&
++	>mode_unspecified_1 &&
++	>mode_regular_file_1 &&
++
++	git status -s ":(attr:mode=3D1234)mode*" >actual &&
++	cat <<-\EOF >expect &&
++	?? mode_set_1
++	EOF
++	test_cmp expect actual &&
++
++	git status -s ":(attr:-mode)mode*" >actual &&
++	echo ?? mode_unset_1 >expect &&
++	test_cmp expect actual &&
++
++	git status -s ":(attr:!mode)mode*" >actual &&
++	echo ?? mode_unspecified_1 >expect &&
++	test_cmp expect actual &&
++
++	git status -s ":(attr:mode=3D100644)mode*" >actual &&
++	echo ?? mode_regular_file_1 >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'mode attr values are current file modes, not indexed =
+modes' '
++	>mode_exec_file_1 &&
++
++	git status -s ":(attr:mode=3D100644)mode_exec_*" >actual &&
++	echo ?? mode_exec_file_1 >expect &&
++	test_cmp expect actual &&
++
++	git add mode_exec_file_1 && chmod +x mode_exec_file_1 &&
++	git status -s ":(attr:mode=3D100755)mode_exec_*" >actual &&
++	echo AM mode_exec_file_1 >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'mode attr can be excluded' '
++	>mode_1_regular &&
++	>mode_1_exec  && chmod +x mode_1_exec &&
++	git status -s ":(exclude,attr:mode=3D100644)" "mode_1_*" >actual &&
++	echo ?? mode_1_exec >expect &&
++	test_cmp expect actual &&
++
++	git status -s ":(exclude,attr:mode=3D100755)" "mode_1_*" >actual &&
++	echo ?? mode_1_regular >expect &&
++	test_cmp expect actual
++'
++
+ test_done
+--=20
+2.42.0.869.gea05f2083d-goog
+
