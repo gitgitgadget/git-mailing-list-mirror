@@ -1,50 +1,50 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7296714F61
-	for <git@vger.kernel.org>; Sat, 11 Nov 2023 14:08:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 463D615484
+	for <git@vger.kernel.org>; Sat, 11 Nov 2023 14:26:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zt7/JsA1"
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67F7A3A9E
-	for <git@vger.kernel.org>; Sat, 11 Nov 2023 06:08:09 -0800 (PST)
-Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2c50906f941so41764381fa.2
-        for <git@vger.kernel.org>; Sat, 11 Nov 2023 06:08:09 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ne7Ld9Vs"
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0E2BC4
+	for <git@vger.kernel.org>; Sat, 11 Nov 2023 06:26:55 -0800 (PST)
+Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-40859dee28cso23524805e9.0
+        for <git@vger.kernel.org>; Sat, 11 Nov 2023 06:26:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1699711687; x=1700316487; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1699712814; x=1700317614; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=M2cFouVTuEQcl7+HEppv1i7ANZ6XcTiTihyyqjE4axI=;
-        b=Zt7/JsA1MPcCURejl2gmfB32PdmUlqkro5kGP6ymWPfggXIIVFhIROIMxISnDnyicM
-         suCwHqZCeyGXpqxa//ud3vPae0QyUIKYpyXfAYxsyA4Q5t050Ge/cxD/fb3waf1rMTb0
-         ZLLdNozx4CTYGHljeYvH7tgmNBDcoRFxDSxP99Xc1ig2ZonLpFaberhiMEKkGmw7GxLe
-         W5zvKTLwp3b8siWvRjMCK+Ub7M3oWKueVypjQE5zLvMZjeKjKCWsVlLTu6VXATSwUAJv
-         DEYg8oxSZjt8hX9CKzxd03mtshrn7S6jT+wKwjnFP45030RSD/1N+zM8yoTK1CljcqPC
-         Ydig==
+        bh=0glItwY4dPdA3MF1b7tgtwULaeSW1SRdUfectNMtibM=;
+        b=ne7Ld9Vspk8ZJdHSWPpsKVxavCYbhAyrgXa9pZvw0Vf9ucg3KJ60hsF6F5QAvPgCpU
+         pANn6SvOU2VCPoDlbCfII0ZTsLwbIfCsimEXGSXnHuwG3pk6qKgxMcf/iB0WFpmYBFAh
+         v573HyRBSE8gLCYNrJvbJeC6+i5bjsaixSZl8wCKGRaQdUim+raU7dmyXkfEUIrP0VOt
+         /M6pOTpGzw2xKTGFDA8PxM0e0Gs+KxTemcri3aoI6qmXTEzv/yCLFe8A1zoC7cr6XP4m
+         sIZ3NJ0S2yQ1k4O9kcKVpbuNjXW2KsjfVRhwmdqjQGzzOjxifRRB58Eb2d7TgN7tbQ1I
+         V0Nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699711687; x=1700316487;
+        d=1e100.net; s=20230601; t=1699712814; x=1700317614;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=M2cFouVTuEQcl7+HEppv1i7ANZ6XcTiTihyyqjE4axI=;
-        b=RVZNOsrQWPRwf4Dr0nszm5ScOf2NB0fz+o/561bvgruR2tJhbtMTVMe4j0LKckteB3
-         /DMlUgPkk+1HRnSqMFups/v7jM+NJf+EjIGlNg1KbXsOzclAJAnee0Mo5hc6+Nrp6NkH
-         Ysp8XRDTNk9X/cMDCSLvR+g5OeX1SSg4Ew6Q6lM4kq/9Pd4IojvAh/67OOhVMgDXiH/b
-         RViwJDNPzgNMhsjcQFcgIv7HJV8z5p+5EZnWcid8XVoC2r/pAFe7TLyvux8SWS3oiU7n
-         P3FTe3hpW5YxH7ykdd72j0pkk7gk/NeZGynLjOSnDR6aa7WWa8qyr16u7wnqmhe8+VnI
-         2mKQ==
-X-Gm-Message-State: AOJu0YybqzZP3VZjAuDLyuQskTX7svDtmEMWWII/Unlwsiy7ZQT0HY3g
-	hSxUyFtOGU/x5vvxSfumLlPC1dLy7QsfoA==
-X-Google-Smtp-Source: AGHT+IFE2ZO1cvdk8/rA0TpQNslRCfc/SIr4213ritSf6AqSlFy3I9WVxlEQeT+iRnKQ1lkYQyHPPw==
-X-Received: by 2002:a2e:b528:0:b0:2c5:2184:c53d with SMTP id z8-20020a2eb528000000b002c52184c53dmr1308047ljm.25.1699711687055;
-        Sat, 11 Nov 2023 06:08:07 -0800 (PST)
+        bh=0glItwY4dPdA3MF1b7tgtwULaeSW1SRdUfectNMtibM=;
+        b=vdUA0sp+c45rTWg+vQvSkCxrClRKK24VJ3e6Le5u+5xPIy0mx6VF8VYzg9jNRlVgdL
+         OmVgzJq0VQPWDttNJMveTNhFKeanStrjrzs5+lEp5DPP47TBkvsnjmRHI5LWnaBXvJ2b
+         maqBNTl937xR/8KYQW9aO6vaHhwjFB33ZayOV4cWh+H2H/6gHvCG6t+sQ7pSxDgHSJZN
+         2odILFzElM3usC8sykxGatiPQ0/LQDYFP3Hk/avY8BpCBtV3jDAEE8Zm6WcjYJniwE2V
+         ITOb+IwCjXoA10D5KQbHQcU+ZFZI8p0PZ8m49Lwaw8OU+Wz4yOlp8AxmhB6LH2dZDUdR
+         Yq1A==
+X-Gm-Message-State: AOJu0Yyn0o5LJwElSDKGx1zMPCqpKVkxbBH343fzSbXtAqhexh+LVkBA
+	F8UxuPepRYG1aCcOvPsbuRs=
+X-Google-Smtp-Source: AGHT+IHP/2YNhB+KCVK9fDjzkDmQGWDgCOj9ZkC3skTX/AFHyT4sd7nuFhPhGD0sI2sqIf80pqN1dw==
+X-Received: by 2002:a5d:59a6:0:b0:32d:b2e0:ed76 with SMTP id p6-20020a5d59a6000000b0032db2e0ed76mr1779253wrr.49.1699712814032;
+        Sat, 11 Nov 2023 06:26:54 -0800 (PST)
 Received: from [192.168.0.17] (cpc105060-sgyl40-2-0-cust995.18-2.cable.virginm.net. [81.111.15.228])
-        by smtp.gmail.com with ESMTPSA id g26-20020adfa49a000000b0030647449730sm1566678wrb.74.2023.11.11.06.08.06
+        by smtp.gmail.com with ESMTPSA id c10-20020a5d63ca000000b0032d81837433sm1571371wrw.30.2023.11.11.06.26.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 11 Nov 2023 06:08:06 -0800 (PST)
-Message-ID: <8dba0a09-d5bf-46b8-835b-9855f4f4326a@gmail.com>
-Date: Sat, 11 Nov 2023 14:08:05 +0000
+        Sat, 11 Nov 2023 06:26:53 -0800 (PST)
+Message-ID: <307994aa-6a3d-41b8-86cb-c891abc13e52@gmail.com>
+Date: Sat, 11 Nov 2023 14:26:52 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -52,145 +52,66 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] rebase: support non-interactive autosquash
+Subject: Re: [PATCH v2 1/2] rebase: support non-interactive autosquash
 Content-Language: en-GB
-To: phillip.wood@dunelm.org.uk, git@vger.kernel.org
-Cc: gitster@pobox.com, newren@gmail.com
-References: <20231104220330.14577-1-andy.koppe@gmail.com>
- <20231105000808.10171-1-andy.koppe@gmail.com>
- <8c2bb219-127c-4128-99ed-158bc64b1dab@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, newren@gmail.com
+References: <20231103212958.18472-1-andy.koppe@gmail.com>
+ <20231104220330.14577-1-andy.koppe@gmail.com> <xmqqcywng0wu.fsf@gitster.g>
 From: Andy Koppe <andy.koppe@gmail.com>
-In-Reply-To: <8c2bb219-127c-4128-99ed-158bc64b1dab@gmail.com>
+In-Reply-To: <xmqqcywng0wu.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 06/11/2023 11:06, Phillip Wood wrote:
-> On 05/11/2023 00:08, Andy Koppe wrote:
->> So far, the rebase --autosquash option and rebase.autoSquash=true
->> config setting are quietly ignored when used without --interactive,
+On 06/11/2023 00:50, Junio C Hamano wrote:
+> Andy Koppe <andy.koppe@gmail.com> writes:
+> Our log
+> message convention is to first describe what happens in the system
+> in the present tense to illustrate why it is suboptimal, to prepare
+> readers' minds to anticipate the solution, which is described next.
 > 
-> Thanks for working on this, I agree that "--autosquash" being ignored 
-> without "--interactive" is something that we should address. I think 
-> there are several possible solutions
+> When asking reviews on a new iteration [PATCH v(N+1)], please
+> summarize the differences relative to [PATCH vN].  For explaining
+> such incremental changes for individual patches, here between the
+> three-dash line and the diffstat is the place to do so.  When you
+> have a cover letter [PATCH 0/X], it can be done in that messaage.
+> Either way is OK.  Doing both is also helpful as long as the
+> explanation done in two places do not contradict with each other.
+
+> If you tried to format the documentation before sending this patch,
+> you'd have seen the second paragraph formatted as if it were a code
+> snippet.  Dedent the second paragraph (and later ones if you had
+> more than one extra paragraphs), and turn the blank line between the
+> paragraphs into a line with "+" (and nothing else) on it.  See the
+> description of `--autosquash` option in Documentation/git-rebase.txt
+> for an example.
+
+Sad thing is that I knew most of that from reading the contribution 
+guidelines and previous experience, but obviously I don't always 
+remember. So thanks for you patience in re-explaining that.
+
+> OK, by clearing opts->config_autosquash in this function, you keep
+> the rebase.autosquash to be "the last one wins" as a whole.  If a
+> configuration file with lower precedence (e.g., /etc/gitconfig) says
+> "[rebase] autosquash" to set it to "interactive,no-interactive", a
+> separate setting in your ~/.gitconfig "[rebase] autosquash = false"
+> would override both bits.
 > 
-> 1 - make "--autosquash" imply "--interactive". This has the advantage
->      that the user gets to check the commits are going to be reordered as
->      they expect when they edit the todo list. It is hard to see how to
->      accommodate the config setting though - I don't think we want
->      "rebase.autosquash=true" to imply "--interactive".
+> A more involved design may let the users override these bits
+> independently by allowing something like "!no-i" (take whatever the
+> lower precedence configuration file says for the interactive case,
+> but disable autosquash when running a non-interactive rebase) as the
+> value, but I think the approach taken by this patch to allow replacing
+> as a whole is OK.  It is simpler to explain.
 > 
-> 2 - make "--autosquash" without "--interactive" an error. This would
->      prevent the user being surprised that their commits are not squashed
->      by a non-interactive rebase. Users who have set
->      "rebase.autosquash=true" would have to pass "--no-autosquash" to
->      perform any form of non-interactive rebase. This is similar to the
->      current behavior where the user has to pass "--no-autosquash" if
->      they want to use the apply backend with "rebase.autosquash=true".
-> 
-> 3 - make "--autosquash" rearrange and squash commits without
->      "--interactive". This is convenient but there is a risk in that the
->      user does not get a chance to check the todo list before the commits
->      are reordered and squashed. I think that risk is fairly small with
->      an explicit "--autosquash" on the commandline. This is the approach
->      taken by this patch. I do have some concerns about extending the
->      config setting to non-interactive rebases though. If the user has
->      commits that look like
-> 
->      fixup! foo (HEAD)
->      foo bar
->      foo
-> 
->      and runs "git -c rebase.autosquash=non-interactive rebase HEAD~2"
->      then we'll silently squash the fixup into the wrong commit due to a
->      prefix subject match.
+> Giving short-hands for often used command line options is one thing,
+> but I do not think a short-hand is warranted here, especially when
+> the other one needs to be a less-than-half legible "no-i" that does
+> not allow "no-int" and friends, for configuration variable values.
+> I'd strongly suggest dropping them.
 
-Good analysis. My order of preference is 3 (obviously), 1, 2.
-
->> except that they prevent fast-forward and that they trigger conflicts
->> with --apply and relatives, which is less than helpful particularly for
->> the config setting.
-> 
-> The behavior to make the config setting incompatible with the apply 
-> backend was implemented to avoid users being surprised that their 
-> commits are not squashed by that backend even when they have set 
-> "rebase.autosquash=true"[1]. I think one could consider "--autosquash" 
-> being silently ignored without "--interactive" to be an oversight in 
-> 796abac7e1 (rebase: add coverage of other incompatible options, 
-> 2023-01-25) that introduced that change.
-> 
-> [1] 
-> https://lore.kernel.org/git/pull.1466.v5.git.1674619434.gitgitgadget@gmail.com/
-> 
->> Since the "merge" backend used for interactive rebase also is the
->> default for non-interactive rebase, there doesn't appear to be a
->> reason not to do --autosquash without --interactive, so support that.
-> 
-> I think making "--autosquash" on the commandline work for 
-> non-interactive rebases is reasonable but I would be open to the 
-> argument that it would be better to make it an error and require 
-> "--interactive" to allow the user to check that the commits are going to 
-> be reordered as they expect.
-
-I found that once I got used to and started trusting the feature, 
-particularly in connection with the corresponding git-commit support, I 
-no longer felt the need to check the todo list as I'd inspect the log 
-afterwards anyway. And of course there's always resetting to ORIG_HEAD 
-when things do go wrong.
-
-So I think users should be trusted with this, especially as it's not a 
-particularly dangerous feature, given it requires the squash markers to 
-be present in the first place to do anything.
-
->> Turn rebase.autoSquash into a comma-separated list of flags, with
->> "interactive" or "i" enabling auto-squashing with --interactive, and
->> "no-interactive" or "no-i" enabling it without. Make boolean true mean
->> "interactive" for backward compatibility.
-> 
-> Please, please, please don't introduce abbreviated config settings, it 
-> just makes the interface more complicated. The user only has to set this 
-> once so I think the short names just add confusion.
-
-Duly noted.
-
-> I also think 
-> "non-interactive" would be a better name for the config setting 
-> corresponding to non-interactive rebases. Does this mean the user can 
-> request that commits are only rearranged when they do not pass 
-> "--interactive"?
-
-Yes. That doesn't seem useful.
-
-> As I said above I do have some concerns that the 
-> "rebase.autosquash=non-interactive" setting will catch people out. 
-
-I think you're right, so I've gone back to interpreting it as a boolean,
-but officially make it affect interactive mode only.
-
-> Having said that ignoring "rebase.autosquash=true" without 
-> "--interactive" as we do now is inconsistent with the behavior of 
-> "rebase.autosquash=true" with "--apply". One possibility would be to 
-> introduce "rebase.autosquash=interactive" which would not cause an error 
-> with "--apply" and always require an explicit "--autosquash" on the 
-> commandline to squash fixups without "--interactive"
-
-I don't think different error behaviour is worth a separate setting, as 
-we can't change rebase.autosquash=true to do auto-squashing without 
---interactive without surprising people.
-
->> Don't prevent fast-forwards or report conflicts with --apply options
->> when auto-squashing is not active.
-> 
-> I think this change deserves to be in a separate commit (which probably 
-> means separating out the config changes into that commit) as it is not 
-> directly related to fixing "--autosquash" without "--interactive" on the 
-> commandline.
-
-Done in v4.
-
-> In summary I like "--autosquash" working without "--interactive" but I'm 
-> unsure about the config changes.
-
-Thanks very much for the thoughtful review!
+Dropped in v4, along with the attempt to expand rebase.autoSquash, 
+following Phillip's review.
 
 Regards,
 Andy
