@@ -1,57 +1,75 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B0AD15D1
-	for <git@vger.kernel.org>; Sun, 12 Nov 2023 13:39:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 430CA14288
+	for <git@vger.kernel.org>; Sun, 12 Nov 2023 15:22:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="uw1u2O8A"
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18A1E469B
-	for <git@vger.kernel.org>; Sun, 12 Nov 2023 05:39:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b="QfmKsOF9"
+Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D94E92685
+	for <git@vger.kernel.org>; Sun, 12 Nov 2023 07:22:09 -0800 (PST)
+Received: from cwcc.thunk.org (pool-173-48-113-74.bstnma.fios.verizon.net [173.48.113.74])
+	(authenticated bits=0)
+        (User authenticated as tytso@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 3ACFLhxf032334
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 12 Nov 2023 10:21:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
+	t=1699802505; bh=KCD3K7NR+G0Jl10KL0usMrIUiA6yIKFTn7KHXYo1F/0=;
+	h=Date:From:Subject:Message-ID:MIME-Version:Content-Type;
+	b=QfmKsOF9+wG79t19otInGK/LBTdH0qYVtwMFy+aBBW+piMEp04+KrvMcEgTel8VmG
+	 ZwMsPBXGlJ0/E3yRmOfnuPRcYMZxicAFGrPcdXcoejwQNmpLSG7By9QYXGL67cQI3r
+	 FJPVFINXaRY+SkFcKa+Io2n3Xou2mzoOEgNjHsXKyfsg3zOZQnOvackhgMi8XRgYkR
+	 4bdYf7yYsOKiwGYis7xReq8nVj9MYjTNp4W0inuaM1wAU+JKHIjxXpXeD3o7cNSufL
+	 0MXcYGPvvrQpU44JRHPBTVlojmUvvOmfRYI906bgEvBZy6ffVesNbeJjbHee5DUuAw
+	 aF5gjswDZ2AYA==
+Received: by cwcc.thunk.org (Postfix, from userid 15806)
+	id 72E5715C02AA; Sun, 12 Nov 2023 10:21:43 -0500 (EST)
+Date: Sun, 12 Nov 2023 10:21:43 -0500
+From: "Theodore Ts'o" <tytso@mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Sandra Snan <sandra.snan@idiomdrottning.org>, git@vger.kernel.org,
+        Dragan Simic <dsimic@manjaro.org>, rsbecker@nexbridge.com
+Subject: Re: first-class conflicts?
+Message-ID: <20231112152143.GD35991@mit.edu>
+References: <87cywmintp.fsf@ellen.idiomdrottning.org>
+ <002901da1101$7d39a420$77acec60$@nexbridge.com>
+ <Gr..Y5kkszDx87g@idiomdrottning.org>
+ <ZUmJyFs7z7wdmLVK@mit.edu>
+ <xmqqh6ltrs6t.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1699796351;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Huzbi2jQr6D6GlKcCRYjcHxsvnNpXV+lMz041L640Bs=;
-	b=uw1u2O8AX56aQj5/WUgoqcv+tzUFVenH6rLShCZwHXKm0xvz1WiU7rZtgekFs+yEMZIT58
-	c9OuTNEv1YJ9KCGzILyxi65u/UJ0BtXJIkoj8/i3Bnf5wqCl+v9FBRpcd4G0fzr3fVYatI
-	QS8gywS/VRH3DqE0VeNuVzGz9eKTvaQbNkxngU/+fHJBSwqXH3Zi+oNftIBztCacUm1YJa
-	+YVQC5255lLj46rFESIOkgjcy54vEYP0mBoczOk55+iBsveMH4fasgKh7U8uVKC9d2kTTp
-	wxOm1uD0ifSu2dMOBERyW2TB2ecua/AIxa5WC3/ufRMW03CQ0W6kY68gvLdzsg==
-Date: Sun, 12 Nov 2023 14:39:10 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: =?UTF-8?Q?F=C3=A9lix_Pi=C3=A9dallu?= <felix@piedallu.me>
-Cc: git@vger.kernel.org
-Subject: Re: Declutter the home directory
-In-Reply-To: <cb89d863-12d4-412b-a25b-9eedce996708@piedallu.me>
-References: <cb89d863-12d4-412b-a25b-9eedce996708@piedallu.me>
-Message-ID: <4023bded47a39e10f28e30efad9c34d4@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqh6ltrs6t.fsf@gitster.g>
 
-On 2023-11-12 13:10, Félix Piédallu wrote:
-> ## Default to XDG paths instead of home directory
+On Sat, Nov 11, 2023 at 10:31:54AM +0900, Junio C Hamano wrote:
+> Correct but with a caveat: it is too easy for lazy folks to
+> circumvent the safety by mistake with "commit -a".
 > 
-> It would just swap the priority of the two possible paths. It would
-> also only impact new installations as, if ~/.gitconfig exists, it
-> would keep being used.
+> I wonder if it would help users to add a new configuration option
+> for those who want to live safer that tells "commit -a" to leave
+> unmerged paths alone and require the unmerged paths to be added
+> explicitly (which may have to extend to cover things like "add -u"
+> and "add .").
+> 
+> Perhaps not.  I often find myself doing "git add -u" after resolving
+> conflicts and re-reading the result, without an explicit pathspec.
 
-Quite frankly, some configuration files should remain in $HOME, and 
-~/.gitconfig is IMHO one of those.  It's used very frequently, not only 
-directly, but also while discussing or explaining various configuration 
-features or issues.  Thus, moving it somewhere else would only make 
-things more complicated and worse.
+Maybe the configuration option would also forbit "git add -u" from
+adding diffs with conflict markers unless --force is added?
 
-IOW, I think that the order/priority shouldn't be changed.
+I dunno.  I personally wouldn't use it myself, because I've always
+made a point of running "git diff", or "git status", and almost
+always, a command like "make -j16 && make -j16 check" (or an aliased
+equivalent) before commiting a merge.
+
+But that's because I'm a paranoid s.o.b. and in my long career, I've
+learned is that "you can't be paranoid enough", and "hope is not a
+strategy".  :-)
+
+					- Ted
