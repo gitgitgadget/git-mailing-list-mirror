@@ -1,49 +1,46 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F8BC18641
-	for <git@vger.kernel.org>; Sun, 12 Nov 2023 23:10:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C1A1BDC4
+	for <git@vger.kernel.org>; Sun, 12 Nov 2023 23:25:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="kEy0TW+C"
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0083ABE
-	for <git@vger.kernel.org>; Sun, 12 Nov 2023 15:09:59 -0800 (PST)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 83FDB1B75AE;
-	Sun, 12 Nov 2023 18:09:56 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HkGSrB+K"
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B4EBD4C
+	for <git@vger.kernel.org>; Sun, 12 Nov 2023 15:25:31 -0800 (PST)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 05CFC3686D;
+	Sun, 12 Nov 2023 18:25:31 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=uPwA9iEVx1V7BPfDseasbzwmXt4vUA2rcMKzoO
-	e+9Bk=; b=kEy0TW+Co7cljlVBtth1rZDKbBPN801MTKvyOM3EuOfF+3xFVP3lFu
-	QWwC3Ui1QxffKXfQbNVu2kHxcDQAFqx3zi7S4ZMUSYrCQWJSZ36/eS5TriOPVly+
-	/mkmxzpg1f3mVuZGn8UFtKtse1cuE9q/A+Foe/gewtqdo1wkpmRYo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6B3351B75AD;
-	Sun, 12 Nov 2023 18:09:56 -0500 (EST)
+	:content-type; s=sasl; bh=fqDY6Xc5Q4xL7rU9l9NwTYLSKFhsHzhsYWtE0M
+	Yk0tw=; b=HkGSrB+KVeJuNDtwAEwW9jK0qTRRGLi6c2UEQkFvsEb/VmvLB/FVws
+	sMaBc1qfM5+six+qpY0wahNS8NAhwVsrqsBrp+fni6IBety30aWUvjNxaCLtv/D5
+	A8tzEEscpopYpXAI4DLg1fA+zzKfW8cGGtgzGzNOMcfQBj7EcUXDg=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id DED8E3686C;
+	Sun, 12 Nov 2023 18:25:30 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.67.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BB5161B75AC;
-	Sun, 12 Nov 2023 18:09:54 -0500 (EST)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7047236867;
+	Sun, 12 Nov 2023 18:25:27 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: Philip Oakley <philipoakley@iee.email>,  Jeremy Pridmore
- <jpridmore@rdt.co.uk>,  "git@vger.kernel.org" <git@vger.kernel.org>,  Paul
- Baumgartner <pbaumgartner@rdt.co.uk>
-Subject: Re: Git Rename Detection Bug
-In-Reply-To: <CABPp-BEtva2WTGQG3Qs4EbZLK_RJC9vuA-2OYxkTPExgowwvqQ@mail.gmail.com>
-	(Elijah Newren's message of "Sat, 11 Nov 2023 07:13:28 -0800")
-References: <LO6P265MB6736043BE8FB607DB671D21EFAAAA@LO6P265MB6736.GBRP265.PROD.OUTLOOK.COM>
-	<CABPp-BHYaxa7QoXabM=7hW-93hQLK-=KayGtDHtWxxdAnJCcJw@mail.gmail.com>
-	<LO6P265MB6736F5F9E8368A9DE95D294FFAA9A@LO6P265MB6736.GBRP265.PROD.OUTLOOK.COM>
-	<CABPp-BHEX+SyophEfgRqDbNdrAS3=bptt_cKzHLBSutnBAxexw@mail.gmail.com>
-	<9baca4af-a570-4b7a-a1ee-de91b809e79c@iee.email>
-	<CABPp-BEtva2WTGQG3Qs4EbZLK_RJC9vuA-2OYxkTPExgowwvqQ@mail.gmail.com>
-Date: Mon, 13 Nov 2023 08:09:53 +0900
-Message-ID: <xmqqzfzimuv2.fsf@gitster.g>
+To: "Theodore Ts'o" <tytso@mit.edu>
+Cc: Sandra Snan <sandra.snan@idiomdrottning.org>,  git@vger.kernel.org,
+  Dragan Simic <dsimic@manjaro.org>,  rsbecker@nexbridge.com
+Subject: Re: first-class conflicts?
+In-Reply-To: <20231112152143.GD35991@mit.edu> (Theodore Ts'o's message of
+	"Sun, 12 Nov 2023 10:21:43 -0500")
+References: <87cywmintp.fsf@ellen.idiomdrottning.org>
+	<002901da1101$7d39a420$77acec60$@nexbridge.com>
+	<Gr..Y5kkszDx87g@idiomdrottning.org> <ZUmJyFs7z7wdmLVK@mit.edu>
+	<xmqqh6ltrs6t.fsf@gitster.g> <20231112152143.GD35991@mit.edu>
+Date: Mon, 13 Nov 2023 08:25:25 +0900
+Message-ID: <xmqqr0kumu56.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -53,31 +50,51 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 97E78EF2-81B0-11EE-BC7B-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+ C33CAFA4-81B2-11EE-8CC1-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Elijah Newren <newren@gmail.com> writes:
+"Theodore Ts'o" <tytso@mit.edu> writes:
 
->> Could I suggest that we are missing a piece of terminology, to wit,
->> BLOBSAME. It's a compatriot to TREESAME, as used in `git log` for
->> history simplification (based on a tree's pathspec, most commonly a
->> commit's top level path).
+> On Sat, Nov 11, 2023 at 10:31:54AM +0900, Junio C Hamano wrote:
+>> ... 
+>> I wonder if it would help users to add a new configuration option
+>> for those who want to live safer that tells "commit -a" to leave
+>> unmerged paths alone and require the unmerged paths to be added
+>> explicitly (which may have to extend to cover things like "add -u"
+>> and "add .").
+>> 
+>> Perhaps not.  I often find myself doing "git add -u" after resolving
+>> conflicts and re-reading the result, without an explicit pathspec.
 >
-> We could add it, but I'm not sure how it helps.  We already had 'exact
-> rename' which seems to fit the bill as well, and 'blob' is something
-> someone new to Git is unlikely to know.
+> Maybe the configuration option would also forbit "git add -u" from
+> adding diffs with conflict markers unless --force is added?
 
-Also, as Philip said, TREESAME is a concept foreign to rename
-detection codepath.  It is a property of a commit (not a tree) and
-tells us if it has the same tree object as its relevant parents (in
-which case it can be simplified away if it is a merge).  I do not
-mind rename codepath using a jargon (or two) to express "in trees A
-and B, this subtree of A records the same tree object as a subtree
-of B at a different path (i.e., the contents of these two subtrees
-at different paths are the same)" but the word used to express that
-should not be TREESAME to avoid confusion.  And the other word to
-express "this path in tree A records a blob object that is identical
-to this other path in tree B" should not be BLOBSAME, as the word
-strongly hints it is somehow related to TREESAME.
+Historically we left it to pre-commit hooks, but I agree that
+protection at the time of "git add" may be more helpful.
+
+I also alluded to being careful about "git add" with an overly vague
+pathspec (like "."  to add everything addable under the sun), but I
+do not think it is possible to define "overly vague" in a way that
+satisfies everybody (would "git add \*.h" be still overly vague when
+5% of your header files have conflicts in the merge you are
+concluding?) and keep the new users safe.
+
+Unless the configuration forbids patterns and say "each and every
+individual path must be named to add and resolve conflicted paths",
+that is.  Come to think of it, that may not be too bad.
+
+> I dunno.  I personally wouldn't use it myself, because I've always
+> made a point of running "git diff", or "git status", and almost
+> always, a command like "make -j16 && make -j16 check" (or an aliased
+> equivalent) before commiting a merge.
+>
+> But that's because I'm a paranoid s.o.b. and in my long career, I've
+> learned is that "you can't be paranoid enough", and "hope is not a
+> strategy".  :-)
+
+Being careful and paranoid is good ;-) I wouldn't use it myself,
+either, but the discussion started while trying to allay new users'
+worries about recording a half-resolved state by mistake, and in
+that context, I think it would have non-empty audiences.
 
 Thanks.
 
