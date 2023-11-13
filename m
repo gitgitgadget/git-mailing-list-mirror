@@ -1,51 +1,51 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25BC0224C0
-	for <git@vger.kernel.org>; Mon, 13 Nov 2023 17:01:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 110C9224C3
+	for <git@vger.kernel.org>; Mon, 13 Nov 2023 17:02:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ETnyxweq"
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4840D59
-	for <git@vger.kernel.org>; Mon, 13 Nov 2023 09:01:18 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-40790b0a224so36967005e9.0
-        for <git@vger.kernel.org>; Mon, 13 Nov 2023 09:01:18 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QpHJiiOq"
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1CEFD59
+	for <git@vger.kernel.org>; Mon, 13 Nov 2023 09:02:15 -0800 (PST)
+Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2c59a4dd14cso56406371fa.2
+        for <git@vger.kernel.org>; Mon, 13 Nov 2023 09:02:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1699894877; x=1700499677; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1699894934; x=1700499734; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=mJjdBrH4S+NffNbk+LJMo0yq30gYmvtnz66lULydIHU=;
-        b=ETnyxweq1yweEiMvrp7nrl6PjdhVwAuuvIARnCJrogt6gym/TCEr1R5S6rdagzwPdk
-         glxWp6JvnjRGC2WF3Rgi2SBBP4cAfcrK9Jo9Brbe80rYMOEyQnLlLW1afX2pPWHqVTxi
-         8pK3+C5BSi2/i+SK16u1V+rSljexyLNcmz8iZTs4zX9wqJIGSpOtsl/SjbP2R9qJIpkZ
-         txcMVy6HT5vhBMoAHmZhquQqyjiewAq54xiCh8S9DomsNNSiXdyyJl/Vhci2Sm/WsE1u
-         DwpYX+4iR5NGMTEFQXi5xfsQTMIh0XtchiBV1z4xz96bZde4s3M8ECJt0/RAQOdNbKky
-         bF/Q==
+        bh=e4hmbbPTJAMTmyNmijOuKWLletO76t5U1TF4ppkHg1w=;
+        b=QpHJiiOqcLvmDIITENtvhVlaRLSyeK7w8p8Rt3pWYZ9uzjSjOZtXSGnhCITrFpj1b9
+         3cksIr8yLlB8xXp0rDLtUcxYDOQactJphQPgVEeo2ufHvCmU8U+tOea5Ok9Zw5nIY3ch
+         PnAKBB3NvAtl5IBAI/en+8WJcpn56dbY56KtAThZoe7tx1h6snwIcakbldyoXnvRi9G+
+         R6c0Tdt9U4rvxIN4JJ+35YO/sItbcnUuD73GmJ9YEUMdlB3c7/pLYihAx3zu0MXaxpTB
+         OxZwz3+XriUwMNo+70mhByEhRKdBsrXgu7rTWMPXI19fNl6vfHK1OEOJTiBTkcivZTap
+         BcoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699894877; x=1700499677;
+        d=1e100.net; s=20230601; t=1699894934; x=1700499734;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=mJjdBrH4S+NffNbk+LJMo0yq30gYmvtnz66lULydIHU=;
-        b=FFL2dQUYF635XGr5C/cNiV5G6Yo7V/Wxo7ImSJ6SBw2guqZ9BFl/JzQvRrm97A/P4r
-         H9c5SPScvxmU6UlPqBPKupliLzmBA/NbN1fH37rQbBBxalo9fOAS/6IJSLOI3fmxiLWO
-         TR4vOYUhLxaQfMzWU0NhArlNElUAo196MLbfrBku6toCFIoGWlniMEtGsN2dOF3xuWvK
-         8md0QYbEeNJMXjXYEW9NNYfi0G4k2R9UdE9Vg+X1lnmM/0Qq2E/syr6KtONj8W36sXLe
-         OLc7gRGhBJTyfiEfVFJKv5hWcoRIgmC7U3RgRBF0xZxRDa4K4x0i0l7ympTLssoiJhqi
-         EWqA==
-X-Gm-Message-State: AOJu0YxSy7oZ4iL3RDcrL9cdrzwHTdAxhBdutPERXgvc10DJh7iz2eUR
-	2+s9d2XXQdU5BiZCO+WfKnEtMcZf8rs=
-X-Google-Smtp-Source: AGHT+IEyWnvUyvwD5r+D9UmXKZd71rdQL566FskhE6scj0chZSaPdOStFR3Z+EH2yHyZBgOj8itV6g==
-X-Received: by 2002:a7b:cbd0:0:b0:407:58e1:24ed with SMTP id n16-20020a7bcbd0000000b0040758e124edmr6136686wmi.39.1699894876974;
-        Mon, 13 Nov 2023 09:01:16 -0800 (PST)
+        bh=e4hmbbPTJAMTmyNmijOuKWLletO76t5U1TF4ppkHg1w=;
+        b=ttmFSrv1BZLzeWP1U1E4IpsifTQpux7HZrR5yRSEQUeA7/Wb8n/tUN5jvYG3sUhbPR
+         xsI9lYSrD9yJAiDRGc1OllGb1Jb+xuu2thQA0KMJKKNVtUwtf8PgKFtwDuvTDwFUvISj
+         NG44yZVvJ+IrtH/4052UvWSfPoA84WWEUHeFAjZOxWUYG6KMfFZbACmDARZc2wqKbwcE
+         kkDY/8KPnSKVq7xB/EcPyOh/xiI/+4wNqvWkhuSw/lVJwxql75BKMp1LMJmScWKZ1t1V
+         tuDtZXqFaJGyILrw/lOPTL9z9WIIwpoWw68Ki6XUhNgPyNvOo0Z3jIJSg93bxPUIrtrP
+         syZQ==
+X-Gm-Message-State: AOJu0Yz7BDFyCO472PpZa1RroMxMvh3e+ravDTWEb/LtsTzq+iU4Hbx/
+	m6QItizU6IaIklETkxwDWHGSMtKzFm4=
+X-Google-Smtp-Source: AGHT+IHa2FSNpl8awgtMYtiyJNb/13fQXwJS3Wsxmta90mQIqC8NpfXK4n7e4zoBbeUYqh7Us8jXFw==
+X-Received: by 2002:a2e:9b42:0:b0:2c6:ede0:9371 with SMTP id o2-20020a2e9b42000000b002c6ede09371mr5631965ljj.19.1699894933729;
+        Mon, 13 Nov 2023 09:02:13 -0800 (PST)
 Received: from [192.168.1.101] ([84.64.93.134])
-        by smtp.googlemail.com with ESMTPSA id m6-20020a05600c3b0600b004077219aed5sm14543234wms.6.2023.11.13.09.01.16
+        by smtp.googlemail.com with ESMTPSA id m6-20020a05600c3b0600b004077219aed5sm14543234wms.6.2023.11.13.09.02.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Nov 2023 09:01:16 -0800 (PST)
-Message-ID: <058eb5d9-35d9-4452-8d33-d9cfebb94347@gmail.com>
-Date: Mon, 13 Nov 2023 17:01:16 +0000
+        Mon, 13 Nov 2023 09:02:13 -0800 (PST)
+Message-ID: <93f5b051-1449-475e-8b7a-a145485eee4f@gmail.com>
+Date: Mon, 13 Nov 2023 17:02:13 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -54,34 +54,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 2/4] rebase: support --autosquash without -i
+Subject: Re: [PATCH v4 3/4] rebase: test autosquash with and without -i
 Content-Language: en-US
 To: Andy Koppe <andy.koppe@gmail.com>, git@vger.kernel.org
 Cc: gitster@pobox.com, newren@gmail.com
 References: <20231105000808.10171-1-andy.koppe@gmail.com>
  <20231111132720.78877-1-andy.koppe@gmail.com>
- <20231111132720.78877-3-andy.koppe@gmail.com>
+ <20231111132720.78877-4-andy.koppe@gmail.com>
 From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20231111132720.78877-3-andy.koppe@gmail.com>
+In-Reply-To: <20231111132720.78877-4-andy.koppe@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Andy
-
 On 11/11/2023 13:27, Andy Koppe wrote:
-> The --autosquash option prevents preemptive fast-forwarding and triggers
-> conflicts with amend backend options,
+> Amend t3415-rebase-autosquash.sh to test the --autosquash option and
+> rebase.autoSquash config with and without -i.
 
-"amend" should be "apply". While this sentence is true I'm not quite 
-sure how it relates to the change in this commit.
-
-> yet it only actually performs
-> auto-squashing when combined with the --interactive (or -i) option.
-> 
-> Remove the latter restriction and tweak the --autosquash description
-> accordingly.
-
-This seems like a reasonable change to me, thanks for working on it.
+Thanks for adding these tests. I'd be happy to see this squashed into 
+the previous commit, though that is probably not worth a re-roll on its own.
 
 Best Wishes
 
@@ -89,37 +79,87 @@ Phillip
 
 > Signed-off-by: Andy Koppe <andy.koppe@gmail.com>
 > ---
->   Documentation/git-rebase.txt | 2 +-
->   builtin/rebase.c             | 4 +---
->   2 files changed, 2 insertions(+), 4 deletions(-)
+>   t/t3415-rebase-autosquash.sh | 38 ++++++++++++++++++++++++++----------
+>   1 file changed, 28 insertions(+), 10 deletions(-)
 > 
-> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-> index b4526ca246..10548e715c 100644
-> --- a/Documentation/git-rebase.txt
-> +++ b/Documentation/git-rebase.txt
-> @@ -592,7 +592,7 @@ See also INCOMPATIBLE OPTIONS below.
->   	When the commit log message begins with "squash! ..." or "fixup! ..."
->   	or "amend! ...", and there is already a commit in the todo list that
->   	matches the same `...`, automatically modify the todo list of
-> -	`rebase -i`, so that the commit marked for squashing comes right after
-> +	`rebase`, so that the commit marked for squashing comes right after
->   	the commit to be modified, and change the action of the moved commit
->   	from `pick` to `squash` or `fixup` or `fixup -C` respectively. A commit
->   	matches the `...` if the commit subject matches, or if the `...` refers
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index a73de7892b..9f8192e0a5 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -710,10 +710,8 @@ static int run_specific_rebase(struct rebase_options *opts)
->   	if (opts->type == REBASE_MERGE) {
->   		/* Run sequencer-based rebase */
->   		setenv("GIT_CHERRY_PICK_HELP", resolvemsg, 1);
-> -		if (!(opts->flags & REBASE_INTERACTIVE_EXPLICIT)) {
-> +		if (!(opts->flags & REBASE_INTERACTIVE_EXPLICIT))
->   			setenv("GIT_SEQUENCE_EDITOR", ":", 1);
-> -			opts->autosquash = 0;
-> -		}
->   		if (opts->gpg_sign_opt) {
->   			/* remove the leading "-S" */
->   			char *tmp = xstrdup(opts->gpg_sign_opt + 2);
+> diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
+> index a364530d76..fcc40d6fe1 100755
+> --- a/t/t3415-rebase-autosquash.sh
+> +++ b/t/t3415-rebase-autosquash.sh
+> @@ -43,7 +43,7 @@ test_auto_fixup () {
+>   
+>   	git tag $1 &&
+>   	test_tick &&
+> -	git rebase $2 -i HEAD^^^ &&
+> +	git rebase $2 HEAD^^^ &&
+>   	git log --oneline >actual &&
+>   	if test -n "$no_squash"
+>   	then
+> @@ -61,15 +61,24 @@ test_auto_fixup () {
+>   }
+>   
+>   test_expect_success 'auto fixup (option)' '
+> -	test_auto_fixup final-fixup-option --autosquash
+> +	test_auto_fixup fixup-option --autosquash &&
+> +	test_auto_fixup fixup-option-i "--autosquash -i"
+>   '
+>   
+> -test_expect_success 'auto fixup (config)' '
+> +test_expect_success 'auto fixup (config true)' '
+>   	git config rebase.autosquash true &&
+> -	test_auto_fixup final-fixup-config-true &&
+> +	test_auto_fixup ! fixup-config-true &&
+> +	test_auto_fixup fixup-config-true-i -i &&
+>   	test_auto_fixup ! fixup-config-true-no --no-autosquash &&
+> +	test_auto_fixup ! fixup-config-true-i-no "-i --no-autosquash"
+> +'
+> +
+> +test_expect_success 'auto fixup (config false)' '
+>   	git config rebase.autosquash false &&
+> -	test_auto_fixup ! final-fixup-config-false
+> +	test_auto_fixup ! fixup-config-false &&
+> +	test_auto_fixup ! fixup-config-false-i -i &&
+> +	test_auto_fixup fixup-config-false-yes --autosquash &&
+> +	test_auto_fixup fixup-config-false-i-yes "-i --autosquash"
+>   '
+>   
+>   test_auto_squash () {
+> @@ -87,7 +96,7 @@ test_auto_squash () {
+>   	git commit -m "squash! first" -m "extra para for first" &&
+>   	git tag $1 &&
+>   	test_tick &&
+> -	git rebase $2 -i HEAD^^^ &&
+> +	git rebase $2 HEAD^^^ &&
+>   	git log --oneline >actual &&
+>   	if test -n "$no_squash"
+>   	then
+> @@ -105,15 +114,24 @@ test_auto_squash () {
+>   }
+>   
+>   test_expect_success 'auto squash (option)' '
+> -	test_auto_squash final-squash --autosquash
+> +	test_auto_squash squash-option --autosquash &&
+> +	test_auto_squash squash-option-i "--autosquash -i"
+>   '
+>   
+> -test_expect_success 'auto squash (config)' '
+> +test_expect_success 'auto squash (config true)' '
+>   	git config rebase.autosquash true &&
+> -	test_auto_squash final-squash-config-true &&
+> +	test_auto_squash ! squash-config-true &&
+> +	test_auto_squash squash-config-true-i -i &&
+>   	test_auto_squash ! squash-config-true-no --no-autosquash &&
+> +	test_auto_squash ! squash-config-true-i-no "-i --no-autosquash"
+> +'
+> +
+> +test_expect_success 'auto squash (config false)' '
+>   	git config rebase.autosquash false &&
+> -	test_auto_squash ! final-squash-config-false
+> +	test_auto_squash ! squash-config-false &&
+> +	test_auto_squash ! squash-config-false-i -i &&
+> +	test_auto_squash squash-config-false-yes --autosquash &&
+> +	test_auto_squash squash-config-false-i-yes "-i --autosquash"
+>   '
+>   
+>   test_expect_success 'misspelled auto squash' '
 
