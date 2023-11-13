@@ -1,46 +1,46 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 042D0125C2
-	for <git@vger.kernel.org>; Mon, 13 Nov 2023 07:12:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58711401F
+	for <git@vger.kernel.org>; Mon, 13 Nov 2023 07:15:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mO6SSXLX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ukGl5HBy"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gs8RgMih";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UhJXGP/A"
 Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7637B10E6
-	for <git@vger.kernel.org>; Sun, 12 Nov 2023 23:12:51 -0800 (PST)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.west.internal (Postfix) with ESMTP id 21DED32003CE;
-	Mon, 13 Nov 2023 02:12:48 -0500 (EST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A65EE10E6
+	for <git@vger.kernel.org>; Sun, 12 Nov 2023 23:15:11 -0800 (PST)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.west.internal (Postfix) with ESMTP id E565A3200034;
+	Mon, 13 Nov 2023 02:15:10 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Mon, 13 Nov 2023 02:12:48 -0500
+  by compute5.internal (MEProxy); Mon, 13 Nov 2023 02:15:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1699859567; x=1699945967; bh=Fd
-	Q+QbJkPCS9NJJoNs9tfJR7seEOaGksBYFdJeMh/oo=; b=mO6SSXLXuXs+lIpib1
-	LNa6qK0KYPgiN6k3TLKYtzFx5RNZfCYIYkptsfg7XYkUdvbve5/dKiJU70qbwwAS
-	CY4V75vPvqYQum5+tMglhXUNrHUWpmcOk5eWpZXHPPn3370bBeLSsZSuqUbr6ydj
-	KSmgSUCvQ0DVoLyS+qApKIE5tmX90QapudhqgMLksa+aTzw8QJTev63eknXR/l2+
-	z+fbtj+Cj7mVBeU7qurxPjVEfvhNilSpQIHQeMsFKa3PwVcKNqrxCvwl4XT83i4Q
-	9+s3qGt3Lr/rmvSaPFRvNYXDG+cCtHf1LduQM7omKlUaiiGIRtPDG5JgCvfmX0UL
-	3jgw==
+	:subject:subject:to:to; s=fm3; t=1699859710; x=1699946110; bh=bB
+	F/iOjmSfjSugeA5hr8/z0zEgb3nMO8/Ly/n4leCDA=; b=gs8RgMihcidhr04x6Y
+	9qoO3QSw/ZlQlnKvz1Qm+lXKvB4eqxqDVLI3WC1qQBP36+pSjmOeBum0gIS5ecTZ
+	6FJGy80TNgaiXtQFkoBMf9DLU4DOu7rVw0eSgZ2cMCICirKcseh7UsIMnykCKYOM
+	FQ3pUdcl+OmEmnLOBfVbsoKISNKH++NkmR3dVhAdxgjrhAXFuCoiJjQnMxryQVjp
+	xz+0QgCehW38vUBpONO0VCfhbMs2mK19PLCvCf3AJFjuUFISXV9oIr5tzxC/kBO0
+	iWzHQUe0r4FMjXsiMo/mQtbLORhNUDt3zG4s7821rDPyQHsnh1+BSIFSYacHq8bd
+	NWHg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1699859567; x=1699945967; bh=FdQ+QbJkPCS9N
-	JJoNs9tfJR7seEOaGksBYFdJeMh/oo=; b=ukGl5HByIhsPayAz92TSDqUDXgz3x
-	2lzTWeO+Sf2kmhXENYijWrCddhDwZFgtewZNedkHw+OVEeXHQj5v5Hss8X5Rr7Bx
-	L3RHqMsgUdSqgMFpZUqCEvuyhMj6Ce9yb0FVoUyomPticemD1xb2C1gtBQgtqaV7
-	+LnzY1gwA3OlY1mIJx8edJcOdtTSWy2bRxmNnWqvYuvvPrrCQAjlQjjyrH/EK2JW
-	f8Y6pEJLj6G4qXjpq9ZAxYiBhEX4rl+wF+wTNK2fbslHf3LX8kgxkGk8o45g+bch
-	vcqwQXsE0V5Pa3DF3sgAS4VEhtUL+fPEjq/kCbZjNq0bEyKdss8dLA4ZQ==
-X-ME-Sender: <xms:b8xRZWSM-XTnFBdM_S_jmQr7lV-jBHsfMYF19ybZXXZ_tmfOGvhnuw>
-    <xme:b8xRZby6iG4xZrvBDi17t9Z5pnPYbHkja18nCz_Sbw5416mv-t_ISkO81-9rYzqer
-    BNDqSl7_gcVZqA7FQ>
-X-ME-Received: <xmr:b8xRZT3CrAxv8n4_37TBY2qUoo3346L9nvKCBRctZbNXN8FC5o8wgi98xuFcqYIE6CYvnGoJJCTpo9Gr1oEwbWEjvd4rrWNVVgZSBKQDdkwuuXn_>
+	:x-sasl-enc; s=fm3; t=1699859710; x=1699946110; bh=bBF/iOjmSfjSu
+	geA5hr8/z0zEgb3nMO8/Ly/n4leCDA=; b=UhJXGP/AQ75YM1NUuFeW1ejM/Zim3
+	Qq7BdxT7fGB0QODGyckrDtDkAGEW/i/Cbv0dWZyXZ0Ud4/kbzuoTbQTimhmgR94o
+	24Vv51Y38LbLVvkRcfP4a17EnCgaIKE2f3RsF5uCvQJ++lym8YfrNULIOq2N1A2Y
+	lncJkRQ468zQS4UC6fC/r4MzP/94RrjoeKK1sfUNaSADsk+XKyraJ8E/PvAV1E/y
+	eyXrKhLvw9WJoAIYzne5VHNrmBlG6sDuC9+bHFzY1sHq76hBxOY8wp84GMof6O/T
+	0otsgcbhIxvdRKt31aupURpn78I6Uhtk/C3lyP1FgU7NAv2EQ9nlIkE5g==
+X-ME-Sender: <xms:_sxRZU0TH4bnlMDfqM4kkmrQ2FR4ymOOw0-RMLp5SnJxoV9AVJAKsw>
+    <xme:_sxRZfGBhN8y791UMeWkDNYZisKIwQYx_IAgGo3O3Jaj9jihcQLO0QL6naslXEbk9
+    YRY9GKwTiz7m-8YiQ>
+X-ME-Received: <xmr:_sxRZc4xtvcH0II8DiQddXEpYS_WTNHEDpDlMMJIgSczOTfhyQmAci90Xkl7cWTBcMIK0SsupC_kU-oNWaOD-jG-fRVu7DZQZDG8E4Sm0baSewWg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddvledguddthecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
@@ -48,29 +48,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddvledguddthecutefuodetgg
     sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeige
     ekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfr
     rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:b8xRZSDuMNe0MoEY0E1c-UdcFF0mzuT1kfkkEcusFPliBvvbiVtGlw>
-    <xmx:b8xRZfjniRdNl6B4I50cB13S48toJ0l2QCbQWuAi1NzsMH6ev0Idvg>
-    <xmx:b8xRZeowp1Ue_wo4KeG89_UdSANkyS0RjoSEYM5st8_TdPAGAKreOQ>
-    <xmx:b8xRZXadK4djrfjrsKnp5VjU02EZx1nP7ma1xhT0_mossJCZGc8A9A>
+X-ME-Proxy: <xmx:_sxRZd20Hfw_LO21oGpgEgBtm2ak6t6bDEXMT_7S-njC1a4ImHh0kA>
+    <xmx:_sxRZXFUJKdYBuxhZTNJ8jwwyfIeJ3p1EmiKB-FWtNFeRwL_AbFssg>
+    <xmx:_sxRZW8WaCUbACZtEEGMj9YYnWcx5BIday3koJvWMW0BF3Y3mTKMwg>
+    <xmx:_sxRZdOecXUWHDvg_lFA-vEcSVmT0qR-ll294h5vu0zZQRVJWSQSMA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Nov 2023 02:12:46 -0500 (EST)
+ 13 Nov 2023 02:15:09 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id f994e9a2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 13 Nov 2023 07:12:08 +0000 (UTC)
-Date: Mon, 13 Nov 2023 08:12:42 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 33bcc6e3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 13 Nov 2023 07:14:33 +0000 (UTC)
+Date: Mon, 13 Nov 2023 08:15:07 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH v2 1/4] global: convert trivial usages of `test <expr>
- -a/-o <expr>`
-Message-ID: <ZVHMaoHW_nxzWnRb@tanuki>
-References: <cover.1699526999.git.ps@pks.im>
- <cover.1699609940.git.ps@pks.im>
- <2967c8ebb460934eb4aaaaebe5941bff643d4a94.1699609940.git.ps@pks.im>
- <20231110214423.GC2758295@coredump.intra.peff.net>
- <xmqq34xdtac3.fsf@gitster.g>
- <xmqqr0kxrvij.fsf@gitster.g>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v4 0/3] t: improve compatibility with NixOS
+Message-ID: <ZVHM-0d7g45P3Uoj@tanuki>
+References: <cover.1699428122.git.ps@pks.im>
+ <cover.1699596457.git.ps@pks.im>
+ <xmqqh6lttaj4.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -78,73 +74,77 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Wq6IDQ+zE8nQubA/"
+	protocol="application/pgp-signature"; boundary="gj+s+FOMXjDPXcC+"
 Content-Disposition: inline
-In-Reply-To: <xmqqr0kxrvij.fsf@gitster.g>
+In-Reply-To: <xmqqh6lttaj4.fsf@gitster.g>
 
 
---Wq6IDQ+zE8nQubA/
+--gj+s+FOMXjDPXcC+
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Nov 11, 2023 at 09:20:04AM +0900, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+On Sat, Nov 11, 2023 at 09:10:23AM +0900, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 >=20
-> > I am not so surprised that this one was missed, though.  I didn't
-> > point this one out during my review of the previous round, either,
-> > and not everybody is as careful as you are.
+> > Three changes compared to v3:
+> >
+> >     - Switched from `test <expr> -a <expr>` to `test <expr> && test
+> >       <expr>`.
+> >
+> >     - Improved the commit message to explain why the new
+> >       runtime-detected paths are only used as a fallback.
+> >
+> >     - Rebased on top of 0e3b67e2aa (ci: add support for GitLab CI,
+> >       2023-11-09), which has been merged to `next` and caused conflicts.
 >=20
-> Ah, sorry, thist came out in a way I did not mean to.
+> Please, no.  "The other topic has been merged to 'next'" is *not* a
+> good reason to do this.  Before that, the other topic was in 'seen'
+> and causing conflicts already, so getting into 'next' did not create
+> any new reason for rebasing.
 >=20
-> I didn't mean "I did not point it out explicitly.  It is not
-> surprising if a contributor who was not careful did not find it on
-> their own and took initiative to fix it themselves".
->=20
-> I meant "I failed to spot it myself hence I didn't point it out in
-> my review---I was not being so careful to aim for thoroughly cover
-> and find all the similar issues".
->=20
-> In any case, I'll tweak it while queueing.  Thanks for noticing.
+> I'll manage this time, but please do not do such a rebase unless you
+> are asked to do so.  The rebase will force me to do (1) detach from
+> 'next' and apply these, (2) discard the result and detach from the
+> base of where the previous iteration is queued, (3) apply the new
+> iteration with "am -3" to undo the rebase, before I can compare the
+> new iteration with the old iteration.
 
-Thanks indeed, I missed this instance as well when I scanned for any
-additional subshells.
+Fair enough. I assumed that it would ease your workload instead of
+creating more work for you. But I'll keep in mind that it doesn't and
+refrain from doing this in the future.
+
+> > Technically speaking this series also depends on 0763c3a2c4 (http:
+> > update curl http/2 info matching for curl 8.3.0, 2023-09-15), without
+> > which the tests will fail on NixOS machines with a recent libcurl.
+>=20
+> Thanks for that note.  This topic has been queued on top of
+> v2.43.0-rc1 which has 0763c3a2c4, so we'd be safe.
+>=20
+> Will queue.
+
+Thanks.
 
 Patrick
 
-> diff --git i/t/valgrind/valgrind.sh w/t/valgrind/valgrind.sh
-> index 9fbf90cee7..3c8ee19975 100755
-> --- i/t/valgrind/valgrind.sh
-> +++ w/t/valgrind/valgrind.sh
-> @@ -23,7 +23,7 @@ memcheck)
->  	VALGRIND_MAJOR=3D$(expr "$VALGRIND_VERSION" : '[^0-9]*\([0-9]*\)')
->  	VALGRIND_MINOR=3D$(expr "$VALGRIND_VERSION" : '[^0-9]*[0-9]*\.\([0-9]*\=
-)')
->  	test 3 -gt "$VALGRIND_MAJOR" ||
-> -	( test 3 -eq "$VALGRIND_MAJOR" && test 4 -gt "$VALGRIND_MINOR" ) ||
-> +	{ test 3 -eq "$VALGRIND_MAJOR" && test 4 -gt "$VALGRIND_MINOR"; } ||
->  	TOOL_OPTIONS=3D"$TOOL_OPTIONS --track-origins=3Dyes"
->  	;;
->  *)
-
---Wq6IDQ+zE8nQubA/
+--gj+s+FOMXjDPXcC+
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVRzGUACgkQVbJhu7ck
-PpQNtQ/9Fhr49kB5WorEqynLRCW4RfxLThWQqL4f8TeO/BwAGhgp+A2zEQTitrJs
-g543WuPmEOSuu/8wSPVogW4THiFUhgfGrvHyKIAyd2dsMurdYCQq4REVW630baHH
-ZGs8lB11X9cbjZCnudZsXcf5XwhauSGvzeUW97SW2NT9aa6fVl19MOAQsb3viyRD
-EfNvtRTmuinGybcEFebsQodBnSM5xH5NZlBTUN66qSBVyUWBjSEeE/i11VTHJTmA
-cK+08NAX55CWOrd9tx7JHSDX1t+cfFTQadDVhkicAwT32iTXnOrwCvgfNHOTTiWQ
-IdbGSkFJNvdxv4+HPRYpEUWZbIqwKgGJKH8TcgA/Ws4V6EQvUKCaCEcFKAB8gMnS
-UyEylXQ6hrWZqifZ82x2fB1g26Gz/E/Uq0FTFhloQZ0x4WRVenby77MpA71b3Hcw
-bFmzieIG+54ifzlNX41aD4CkDrkc12nOuPEsBjFdB3+3JACSOw4qvD5d8igaZbOt
-A4UUrNVQv1rg2oblJGRyR9N3xbyDWOZ8GMRnAkFpYt5h5+XfpHifCd3Bx5L+5uZ4
-JCTdRxI2LwduyXcmG8d8vGtMGRH5wSXhE6h8XWTaGH4EjBIbEshsUgVthAei1fRq
-E7Lx44Jh/fX19er1u0i5bK7dezqSKDWdmB31smlgtKgfG9DLSRc=
-=MHFb
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVRzPoACgkQVbJhu7ck
+PpTITg/+J/o52BS/QPH2IQMTCmgAr9IauNbDIr0axjHhR5mlrgXSEVhFz711P67b
++gWuTrswo2IL5e29Nghljr9Jf7PxWQROSvhHy4DWwATlhR7TPNwwMYRKBkM6TakH
+K208ex1vgSan9j96hczAyvl1YUv4O8mONtQFuRT6ttkUZGeg08rzJk7zAFosf/ne
+j7w4n6si5vOkUmpQQOeagDmL40EkplUsdbb11G4SpWC9K+VhN42rJZIcb3hVrZS1
+qrLmQe3fjS7EHUPk8Xh4YWfquBJTkpg6l8KHAuykZTYN31EiBQ1X7uYbITwO6EGu
+BesphdsV2MFLpJhUr3TebWcY5aWrW1w5MhvLH/+cCDyw3iEzvb2aDBoO71SLTZij
+tAbTbxauo0GbnVmPRC1GWend5RRMRPD/cG+JElC1jh4G71/Af/lOPW/EgEMyaNBi
+nbN/lSwDlMHpMvahVkySlgx3qfEAVgzF7qnBfP7txajBhW6XbRPsAAKq78ho+mI0
+HNp5rUC01PIQn2NAAOYJWmqCTFa/qLZo9PSU4HcIJEuQDzstVR/fnX0LusRR6T7W
+doX24l36x8LpVs70ZCIa3oldjgwF+GZt76FALBDo3JDkjAqShDZsAh3HUm939YBm
+2mWltUu8mh2VJU8K7dA+K06W8QUhuRiUxedudQytqAa98c/baWE=
+=on7a
 -----END PGP SIGNATURE-----
 
---Wq6IDQ+zE8nQubA/--
+--gj+s+FOMXjDPXcC+--
