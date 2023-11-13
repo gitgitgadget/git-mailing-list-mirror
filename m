@@ -1,29 +1,31 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8289322EF8
-	for <git@vger.kernel.org>; Mon, 13 Nov 2023 18:49:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EA8D22F0B
+	for <git@vger.kernel.org>; Mon, 13 Nov 2023 19:00:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dkim=none
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AF6D10F4
-	for <git@vger.kernel.org>; Mon, 13 Nov 2023 10:49:10 -0800 (PST)
-Received: (qmail 20243 invoked by uid 109); 13 Nov 2023 18:49:10 -0000
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12B741702
+	for <git@vger.kernel.org>; Mon, 13 Nov 2023 11:00:28 -0800 (PST)
+Received: (qmail 20271 invoked by uid 109); 13 Nov 2023 19:00:28 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 13 Nov 2023 18:49:10 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 13 Nov 2023 19:00:28 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5230 invoked by uid 111); 13 Nov 2023 18:49:10 -0000
+Received: (qmail 5308 invoked by uid 111); 13 Nov 2023 19:00:29 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 13 Nov 2023 13:49:10 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 13 Nov 2023 14:00:29 -0500
 Authentication-Results: peff.net; auth=none
-Date: Mon, 13 Nov 2023 13:49:09 -0500
+Date: Mon, 13 Nov 2023 14:00:27 -0500
 From: Jeff King <peff@peff.net>
-To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc: Josh Steadmon <steadmon@google.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] ci: avoid running the test suite _twice_
-Message-ID: <20231113184909.GB3838361@coredump.intra.peff.net>
-References: <pull.1613.git.1699894837844.gitgitgadget@gmail.com>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Simon Ser <contact@emersion.fr>
+Subject: Re: [PATCH] format-patch: fix ignored encode_email_headers for cover
+ letter
+Message-ID: <20231113190027.GC3838361@coredump.intra.peff.net>
+References: <20231109111950.387219-1-contact@emersion.fr>
+ <20231109183506.GB2711684@coredump.intra.peff.net>
+ <0c0d685c-29e5-462c-a743-4573a56d7e04@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -32,49 +34,89 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <pull.1613.git.1699894837844.gitgitgadget@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <0c0d685c-29e5-462c-a743-4573a56d7e04@web.de>
 
-On Mon, Nov 13, 2023 at 05:00:37PM +0000, Johannes Schindelin via GitGitGadget wrote:
+On Sun, Nov 12, 2023 at 07:38:22PM +0100, René Scharfe wrote:
 
-> This is a late amendment of 19ec39aab54 (ci: stop linking the `prove`
-> cache, 2022-07-10), fixing a bug that had been hidden so far.
-
-We don't seem to have that commit in Junio's tree; it is only in
-git-for-windows.
-
-Not that we should not fix things if they are broken, but I am trying
-to understand if git/git is experiencing the same bug. It sounds like
-not yet, though from looking at 19ec39aab54, I would expect to get these
-doubled runs any time we store the prove state. But maybe without that
-commit our state-file symlink is going somewhere invalid, and prove
-fails to actually store anything?
-
-> But starting with that commit, we run `prove` _twice_ in CI, and with
-> completely different sets of tests to run. Due to the bug, the second
-> invocation re-runs all of the tests that were already run as part of the
-> first invocation. This not only wastes build minutes, it also frequently
-> causes the `osx-*` jobs to fail because they already take a long time
-> and now are likely to run into a timeout.
+> > Grepping for other
+> >      code that does the same thing, I see that show_log() and
+> >      cmd_format_patch() copy a lot more.
 > 
-> The worst part about it is that there is actually no benefit to keep
-> running with `--state=slow,save`, ever since we decided no longer to
-> try to reuse the Prove cache between CI runs.
+> show_log() copies almost half of the struct 6d167fd7cc members
+> from struct rev_info!
 > 
-> So let's just drop that Prove option and live happily ever after.
+> cmd_format_patch() doesn't seem have a struct pretty_print_context,
+> though...
 
-Yes, I think this is the right thing to do regardless. If we are not
-saving the state to use between two related runs, there is no point
-storing it in the first place.
+Doh, you're right. I grepped for spots setting encode_email_headers, but
+the one in cmd_format_patch() is copying it from the config-default into
+the rev_info, not into the pretty-print context.
 
-I do have to wonder, though, as somebody who did not follow the
-unit-test topic closely: why are the unit tests totally separate from
-the rest of the suite? I would think we'd want them run from one or more
-t/t*.sh scripts. That would make bugs like this impossible, but also:
+Which makes sense. It is going to call show_log() to show each commit,
+which is where the value is copied into the pretty-print context.
 
-  1. They'd be run via "make test", so developers don't have to remember
-     to run them separately.
+> > (For that matter, why doesn't
+> >      make_cover_letter() just use the context set up by
+> >      cmd_format_patch()?).
+> 
+> ... which answers this question, but did you perhaps mean a different
+> function?
 
-  2. They can be run in parallel with all of the other tests when using
-     "prove -j", etc.
+Right, I was just confused.
+
+> >   2. Why are we copying this stuff at all? When we introduced the
+> >      pretty-print context back in 6bf139440c (clean up calling
+> >      conventions for pretty.c functions, 2011-05-26), the idea was just
+> >      to keep all of the format options together. But later, 6d167fd7cc
+> >      (pretty: use fmt_output_email_subject(), 2017-03-01) added a
+> >      pointer to the rev_info directly.
+> 
+> Hmm.  Was sticking the rev_info pointer in unwise?  Does it tangle up
+> things that should be kept separate?  It uses force_in_body_from,
+> grep_filter, sources, nr, total and subject_prefix from struct rev_info.
+> That seems a lot, but is just a small fraction of its total members and
+> we could just copy those we need.  Or prepare the subject string and
+> pass it in, as before 6d167fd7cc.
+
+I don't know that it was unwise. I was mostly just noting the history
+because that explains why we _didn't_ simply refer to ctx->revs in
+6bf139440c. Has the separation between the two been valuable since then?
+I'm not sure. We do have some code paths that do not have a rev_info at
+all (e.g., pp_commit_easy(), which makes an ad-hoc empty context
+struct).
+
+> > So could/should we just be using
+> >      pp->rev->encode_email_headers here?
+> 
+> Perhaps.  If we want struct pretty_print_context to be a collection of
+> named parameters, though, then it makes sense to avoid using
+> complicated types to provide a nice interface to its callers, and
+> struct rev_info is one of our largest structs we have.
+
+Yeah, philosophically it may be better to keep the modules separated.
+But if we end up having to just copy a ton of fields, it may not be as
+practical. If we can at least factor that out into a single spot,
+though, it may not be so bad.
+
+> >      Or if that field is not always set (or we want to override some
+> >      elements), should there be a single helper function to initialize
+> >      the pretty_print_context from a rev_info, that could be shared
+> >      between spots like show_log() and make_cover_letter()?
+> 
+> That would help avoid forgetting to copy something.  But copying is
+> questionable in general, as you mentioned.  Given the extent of the
+> overlap, would it make sense to embed struct pretty_print_context in
+> struct rev_info instead?  Or a subset thereof?
+
+I had a similar thought, but the pretty_print_context carries both input
+options from the caller, as well as computed state used internally by
+the pretty-print code. So you'd have to split those two up, I would
+think. And now all of the pretty-print functions have to pass around
+_two_ contexts.
+
+That's more annoying, but arguably is a cleaner design (the internal
+struct can be a private thing that is not even defined outside of
+pretty.c). I dunno.
 
 -Peff
