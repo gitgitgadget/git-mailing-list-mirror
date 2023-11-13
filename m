@@ -1,144 +1,135 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72AC4249F5
-	for <git@vger.kernel.org>; Mon, 13 Nov 2023 22:26:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD7CF3D96F
+	for <git@vger.kernel.org>; Mon, 13 Nov 2023 22:34:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OvveJ833"
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05917D51
-	for <git@vger.kernel.org>; Mon, 13 Nov 2023 14:26:03 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-40906fc54fdso40817495e9.0
-        for <git@vger.kernel.org>; Mon, 13 Nov 2023 14:26:02 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="dWGqI5Po"
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E921D5A
+	for <git@vger.kernel.org>; Mon, 13 Nov 2023 14:34:45 -0800 (PST)
+Received: by mail-ot1-x335.google.com with SMTP id 46e09a7af769-6ce344fa7e4so3128204a34.0
+        for <git@vger.kernel.org>; Mon, 13 Nov 2023 14:34:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1699914361; x=1700519161; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=+4uS4hD+bdxkP46+UjPce6bPKLk5dOg+LsWplo8bKt4=;
-        b=OvveJ833tjYD3qXhZQRYLjC3sg4avmgXntz1gyoX3asdx1/3KrV1GGmFzBe/0ZuEca
-         uyOovfo6gNzvRUcRZFP7ifLWRzPqd81T1d8DDxMS5vzmClwH8z6s6TaEvloZSlzdKI8r
-         TgGhFk1yKWO2+OkyAPM/B2+bfl++TNATZL2g8HpRv5goeX0H8B89TY/aQ6z9O8WU3UD0
-         ve2ov7XxwPtsABPfZm8fxMzb6tfiTGLPwvboEhwph9gYsnZSpmNS72kW/0HTi0W8rXOq
-         hdnzd1j7bxMBMO8jQ22yiDGRE5J6L4xP2Ue8okED/OjWgCd0FysaxxvS2o8lnUtr/dfc
-         bwhA==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1699914884; x=1700519684; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=lLSMeMY6v5MMuOpw9gMD6mDRQV5iJt7OQjHcVqTH2Fw=;
+        b=dWGqI5Po91/aH8B9X2eteS4HWitxP+5Ev0jYrX27olcPrJM2UG2jUF0h6cmT6Eind4
+         g2GLF9AjZBug3ZmGi5xz2fKQJNIkZHodkv7U3Ffm3JkRfJOahAA3ZfvfcKmMoc5uExg9
+         /xRlFtYpmpo7Zfh0yyJOjPAEYzNAnQ2bRa8ENnkhediukDWLAHu3HMRpNuomf7tPIEcb
+         sSOkfEI4e4448kRB0n9NHMPtInEh0Ive+IDFtF1bK5yE8xKEZou+BvdzzYy8amOIqkJf
+         QR65S+UjNlO+viMCBq2lMKhq1+n2g45Xxdf6S4vugrk+M1SIqfQncS44lXQ7jrYwolGy
+         8PHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699914361; x=1700519161;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+4uS4hD+bdxkP46+UjPce6bPKLk5dOg+LsWplo8bKt4=;
-        b=LcHI3Kkye/Aa8zrAFlXGntEDRwdmxF24LChGjVBo5BA5BAkl31ZCsZSNSxuURXYI3H
-         rb+TpfRH/8bG83j/5Nbahn9q8uELlU21PWqOR2MEc8j+29X2pqMK/9qohWkr1entjf2e
-         vXP36LJvacRGuS3L4lVmPBPS+d1X6g29mLZZA9HVoB4GVKyl7JmPUSD9Fyg6mghu+m1q
-         PtTyn8z983+kijPgOA3/XXyyjBVQ1oeZ7eGu9N2suNGrrJ8bIHbdrZqcLgMVonEh3dGW
-         iVNIae1JnnZqb2mj0z+2+RBli0JFFFKkpPfa0Gkx6GHrHe9TbIng4xGkputIA5TAUCYj
-         mxZw==
-X-Gm-Message-State: AOJu0YzyrTtjARwXj1Ss+hsLs70BdOF+XqT6f37FeqE0SulLyZ3sGrDr
-	qXD+HkaHMt4mH9g1QszYC3Zcd5hzsQs=
-X-Google-Smtp-Source: AGHT+IE7Bx31GF9eiBuhBaNKIst7fvB4YOp4Oynb2QAvI2QNPahq462PyoWkNTvGe/6Cvz+eSCd2tw==
-X-Received: by 2002:a05:600c:4689:b0:406:53f1:d629 with SMTP id p9-20020a05600c468900b0040653f1d629mr6193993wmo.5.1699914361048;
-        Mon, 13 Nov 2023 14:26:01 -0800 (PST)
-Received: from localhost (94-21-23-134.pool.digikabel.hu. [94.21.23.134])
-        by smtp.gmail.com with ESMTPSA id v5-20020a05600c444500b003fefb94ccc9sm9274445wmn.11.2023.11.13.14.26.00
+        d=1e100.net; s=20230601; t=1699914884; x=1700519684;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lLSMeMY6v5MMuOpw9gMD6mDRQV5iJt7OQjHcVqTH2Fw=;
+        b=NoTAGuKqiu119NxAAAXq4Ty7vusVVF1queWtMyJ00rl4ekbMtfAy3wEn8AnUd/6c8R
+         byAsCB5EHn7EcUoGLNrDsbolp4pwbBovcAN4WtR8FFNYSj4M1P2Cgxm7IndA5DXGyga8
+         j+tlfk8/hKgZUK0yuqJT9IwTm4nx3kqiPZ9J+WQVUESV00gHSorafWQ8jbxYnt27UEIJ
+         iWZHEulgWvWRD6X5va2wpsWe4pLFAAw5qhrKoM9nou9cA4y++8Wc9/2g+QfFd+aMjQx4
+         apC4F6GqFvMO1inXGRFZbGnWX/aFn+ss1hxYH/utfg/9lwOsWGQ+RzmS8NthqtI8CUQm
+         gg5w==
+X-Gm-Message-State: AOJu0YwieY33tKG4h1prLBY0bc+EZyMu9V+xJlk361TxT/mzDjeaSy1s
+	RXb4z0QSwJW1XpdLuAoX73pODA==
+X-Google-Smtp-Source: AGHT+IFzwtph2nSjYIECpZFGHVWKSAYW7lkSHyhgeMAvE7ly9LzJ7s1Te5KGqoyQaXtHjo/RLPTTww==
+X-Received: by 2002:a05:6870:7986:b0:1e9:907b:1642 with SMTP id he6-20020a056870798600b001e9907b1642mr10457609oab.16.1699914883972;
+        Mon, 13 Nov 2023 14:34:43 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 3-20020ac85643000000b0041b9b6eb309sm2245840qtt.93.2023.11.13.14.34.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Nov 2023 14:26:00 -0800 (PST)
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To: git@vger.kernel.org
-Cc: Philippe Blain <levraiphilippeblain@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH] completion: add and use the __git_get_config_subsection helper function
-Date: Mon, 13 Nov 2023 23:25:27 +0100
-Message-ID: <20231113222528.62771-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.43.0.rc1.528.g8f9d60d041
+        Mon, 13 Nov 2023 14:34:43 -0800 (PST)
+Date: Mon, 13 Nov 2023 17:34:42 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Jeff King <peff@peff.net>
+Cc: Elijah Newren <newren@gmail.com>, git@vger.kernel.org,
+	"Eric W. Biederman" <ebiederm@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v5 5/5] builtin/merge-tree.c: implement support for
+ `--write-pack`
+Message-ID: <ZVKkgpiFaOwwDcdw@nand.local>
+References: <cover.1697736516.git.me@ttaylorr.com>
+ <cover.1698101088.git.me@ttaylorr.com>
+ <3595db76a525fcebc3c896e231246704b044310c.1698101088.git.me@ttaylorr.com>
+ <CABPp-BEfy9VOvimP9==ry_rZXu=metOQ8s=_-XiG_Pdx9c06Ww@mail.gmail.com>
+ <20231113220254.GA2065691@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20231113220254.GA2065691@coredump.intra.peff.net>
 
-Our Bash completion script recently learned to complete configured
-trailer key aliases for 'git config --trailer=<TAB>', but the helper
-function extracting the key alias from 'git config's output, i.e. the
-subsection from 'trailer.*.key', ended up more complex than necessary,
-with considerable overhead from executing four external processes in a
-pipe.
+On Mon, Nov 13, 2023 at 05:02:54PM -0500, Jeff King wrote:
+> On Fri, Nov 10, 2023 at 03:51:18PM -0800, Elijah Newren wrote:
+>
+> > This is unsafe; the object may need to be read later within the same
+> > merge. [...]
+> >
+> > I think (untested) that you could fix this by creating two packs
+> > instead of just one.  In particular, add a call to
+> > flush_odb_transcation() after the "redo_after_renames" block in
+> > merge_ort_nonrecursive_internal().
+>
+> It might not be too hard to just let in-process callers access the
+> objects we've written. A quick and dirty patch is below, which works
+> with the test you suggested (the test still fails because it finds a
+> conflict, but it gets past the "woah, I can't find that sha1" part).
 
-Replace those commands in the pipe with a simple shell loop using only
-a pair of parameter expansions and a builtin 'echo', which is easier
-to understand and should perform better (I assume that users don't
-have that many subsections in any particular section to make the
-processing with an external process (let alone four) worth it).
+That's a very slick idea, and I think that this series has some legs to
+stand on now as a result.
 
-And while at it, let's extract this loop into a generic
-__git_get_config_subsections() helper function, as it might be useful
-elsewhere in the future as well (at the moment it isn't, AFAICT).
+There are a few of interesting conclusions we can draw here:
 
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
- contrib/completion/git-completion.bash | 14 +++++++++++++-
- t/t9902-completion.sh                  | 13 +++++++++++++
- 2 files changed, 26 insertions(+), 1 deletion(-)
+  1. This solves the recursive merge problem that Elijah mentioned
+     earlier where we could generate up to 2^N packs (where N is the
+     maximum depth of the recursive merge).
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 13a39ebd2e..34bbb66f85 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1148,6 +1148,18 @@ __git_get_config_variables ()
- 	done
- }
- 
-+# Lists all subsections in the given section which contain the given
-+# config variable, with the section and variable names removed.
-+__git_get_config_subsections ()
-+{
-+	local section="$1" var="$2" i IFS=$'\n'
-+	for i in $(__git config --name-only --get-regexp "^$section\..*\.$var$"); do
-+		i=${i#$section.}
-+		i=${i%.$var}
-+		echo "$i"
-+	done
-+}
-+
- __git_pretty_aliases ()
- {
- 	__git_get_config_variables "pretty"
-@@ -1681,7 +1693,7 @@ __git_untracked_file_modes="all no normal"
- 
- __git_trailer_tokens ()
- {
--	__git config --name-only --get-regexp '^trailer\..*\.key$' | cut -d. -f 2- | rev | cut -d. -f2- | rev
-+	__git_get_config_subsections trailer key
- }
- 
- _git_commit ()
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index a7c3b4eb63..11ed83d0ed 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -2130,6 +2130,19 @@ test_expect_success '__git_get_config_variables' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success '__git_get_config_subsections' '
-+	cat >expect <<-\EOF &&
-+	subsection-1
-+	SubSection-2
-+	sub.section.3
-+	EOF
-+	test_config interesting.subsection-1.name good &&
-+	test_config Interesting.SubSection-2.Name good &&
-+	test_config interesting.sub.section.3.name good &&
-+	__git_get_config_subsections interesting name >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success '__git_pretty_aliases' '
- 	cat >expect <<-EOF &&
- 	author
--- 
-2.43.0.rc1.528.g8f9d60d041
+  2. This also solves the case where the merge-ort code needs to read an
+     object that it wrote earlier on in the same process without having
+     to flush out intermediate packs. So in the best case we need only a
+     single pack (instead of two).
 
+  3. This also solves the 'replay' issue, *and* allows us to avoid the
+     tmp-objdir thing there entirely, since we can simulate object reads
+     in the bulk-checkin pack.
+
+So I think that this is a direction worth pursuing.
+
+In terms of making those lookups faster, I think that what you'd want is
+an oidmap. The overhead is slightly unfortunate, but I think that any
+other solution which requires keeping the written array in sorted order
+would in practice be more expensive as you have to constantly reallocate
+and copy portions of the array around to maintain its invariant.
+
+> I don't know if that is sufficient, though. Would other spawned
+> processes (hooks, external merge drivers, and so on) need to be able to
+> see these objects, too?
+
+Interesting point. In theory those processes could ask about newly
+created objects, and if they were spawned before the bulk-checkin pack
+was flushed, those lookups would fail.
+
+But that requires that, e.g. for hooks, that we know a-priori the object
+ID of some newly-written objects. If you wanted to make those lookups
+succeed, I think there are a couple of options:
+
+  - teach child-processes about the bulk-checkin pack, and let them
+    perform the same fake lookup
+
+  - flush (but do not close) the bulk-checkin transaction
+
+In any event, I think that this is a sufficiently rare and niche case
+that we'd be OK to declare that you should not expect the above
+scenarios to work when using `--write-pack`. If someone does ask for
+that feature in the future, we could implement it relatively painlessly
+using one of the above options.
+
+Thanks,
+Taylor
