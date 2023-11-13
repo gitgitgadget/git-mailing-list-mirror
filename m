@@ -1,27 +1,27 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B9922F07
-	for <git@vger.kernel.org>; Mon, 13 Nov 2023 20:55:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9BE22421F
+	for <git@vger.kernel.org>; Mon, 13 Nov 2023 21:08:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dkim=none
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F55810E0
-	for <git@vger.kernel.org>; Mon, 13 Nov 2023 12:55:39 -0800 (PST)
-Received: (qmail 20812 invoked by uid 109); 13 Nov 2023 20:55:39 -0000
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 752AAD5E
+	for <git@vger.kernel.org>; Mon, 13 Nov 2023 13:08:21 -0800 (PST)
+Received: (qmail 20901 invoked by uid 109); 13 Nov 2023 21:08:21 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 13 Nov 2023 20:55:39 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 13 Nov 2023 21:08:21 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6576 invoked by uid 111); 13 Nov 2023 20:55:40 -0000
+Received: (qmail 6730 invoked by uid 111); 13 Nov 2023 21:08:22 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 13 Nov 2023 15:55:40 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 13 Nov 2023 16:08:22 -0500
 Authentication-Results: peff.net; auth=none
-Date: Mon, 13 Nov 2023 15:55:38 -0500
+Date: Mon, 13 Nov 2023 16:08:20 -0500
 From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: commit-graph paranoia performance, was Re: [ANNOUNCE] Git v2.43.0-rc1
-Message-ID: <20231113205538.GA2028092@coredump.intra.peff.net>
-References: <xmqq8r785ev1.fsf@gitster.g>
+To: Janik Haag <janik@aq0.de>
+Cc: git@vger.kernel.org
+Subject: Re: git-bisect reset not deleting .git/BISECT_LOG
+Message-ID: <20231113210820.GB2028092@coredump.intra.peff.net>
+References: <bef9d5b3-bb64-4662-8952-d000872c5244@aq0.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -30,49 +30,54 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq8r785ev1.fsf@gitster.g>
+In-Reply-To: <bef9d5b3-bb64-4662-8952-d000872c5244@aq0.de>
 
-On Thu, Nov 09, 2023 at 02:33:54AM +0900, Junio C Hamano wrote:
+On Mon, Nov 13, 2023 at 09:42:09PM +0100, Janik Haag wrote:
 
->  * The codepath to traverse the commit-graph learned to notice that a
->    commit is missing (e.g., corrupt repository lost an object), even
->    though it knows something about the commit (like its parents) from
->    what is in commit-graph.
->    (merge 7a5d604443 ps/do-not-trust-commit-graph-blindly-for-existence later to maint).
+> Thank you for filling out a Git bug report!
+> Please answer the following questions to help us understand your issue.
+> 
+> What did you do before the bug happened? (Steps to reproduce your issue)
+> ```bash
+> git init /tmp/reproduce-bisect-warning
+> cd /tmp/reproduce-bisect-warning
+> touch .git/BISECT_LOG
+> git bisect reset
+> git switch -c log
+> ```
+> 
+> What did you expect to happen? (Expected behavior)
+> 
+> `git-bisect reset` should have deleted .git/BISECT_LOG
+> 
+> What happened instead? (Actual behavior)
+> 
+> .git/BISECT_LOG is still there
 
-I happened to be timing "rev-list" for an unrelated topic today, and I
-noticed that this change had a rather large effect. The commit message
-for 7a5d604443 claims a 30% performance regression. But that's when
-using "--topo-order", and actually writing out the result.
+I don't think this is really specific to BISECT_LOG. In "bisect reset",
+we'll call bisect_clean_state(), which removes a bunch of files. The
+problem in your example is that "bisect reset" sees that we are not
+bisecting and bails early.
 
-Running "rev-list --count" on a copy of linux.git with a fully-built
-commit-graph shows that the run-time doubles:
+Which I can kind of see, as part of the "reset" process is to reset to
+the original pre-bisect commit. If it's not given on the command line,
+the default is to use BISECT_START, which of course does not exist.
 
-  Benchmark 1: git.v2.42.1 rev-list --count HEAD
-    Time (mean ± σ):     658.0 ms ±   5.2 ms    [User: 613.5 ms, System: 44.4 ms]
-    Range (min … max):   650.2 ms … 666.0 ms    10 runs
-  
-  Benchmark 2: git.v2.43.0-rc1 rev-list --count HEAD
-    Time (mean ± σ):      1.333 s ±  0.019 s    [User: 1.263 s, System: 0.069 s]
-    Range (min … max):    1.302 s …  1.361 s    10 runs
-  
-  Summary
-    git.v2.42.1 rev-list --count HEAD ran
-      2.03 ± 0.03 times faster than git.v2.43.0-rc1 rev-list --count HEAD
+  As a side note, "git bisect reset HEAD" will do what you want, because
+  it skips the BISECT_START check. But obviously that's not something
+  normal users should need to know about, and I think is even an
+  accidental side-effect of the conversion in 5e82c3dd22
+  (bisect--helper: `bisect_reset` shell function in C, 2019-01-02).
 
-Now in defense of that patch, this particular command is going to be one
-of the most sensitive in terms of percent change, simply because it
-isn't doing much besides walking the commits. And 650ms isn't _that_ big
-in an absolute sense. But it also doesn't quite feel like nothing, even
-tacked onto a command that might otherwise take 1000ms to run.
+So really, you just want the "clean" part of "bisect reset", but not the
+"reset". We could have a separate "bisect clean" that would do what you
+want (clean state without trying to reset HEAD). But I don't think it
+would be unreasonable to "reset" to just unconditionally clean. I think
+it would probably just be a few lines in bisect_reset() to avoid the
+early return, and skip the call to "checkout" when we have no branch to
+go back to.
 
-Should we default GIT_COMMIT_GRAPH_PARANOIA to "0"? Yes, some operations
-might miss a breakage, but that is true of so much of Git. For day to
-day commands we generally assume that the repository is not corrupted,
-and avoid looking at any data we can. Other commands (like "commit-graph
-verify", but maybe others) would probably want to be more careful
-(either by checking this case explicitly, or by enabling the paranoia
-flag themselves).
+Maybe a good simple patch for somebody interested in getting into Git
+development?
 
 -Peff
