@@ -1,123 +1,144 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D193249F5
-	for <git@vger.kernel.org>; Mon, 13 Nov 2023 22:22:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72AC4249F5
+	for <git@vger.kernel.org>; Mon, 13 Nov 2023 22:26:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="aky1mYI6"
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC451DC
-	for <git@vger.kernel.org>; Mon, 13 Nov 2023 14:22:51 -0800 (PST)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id A0700227D4;
-	Mon, 13 Nov 2023 17:22:49 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=Z0L3+ULZZ9Xo
-	G7XU3KBB1iXxZjnabl/HvZsERc9Ese0=; b=aky1mYI6woQDhLm007Kw3ieFuJZr
-	0WqiBJP4MVG5yU5k/V4YVsi24XTEQ1MR7uP0WlVYedRHpKC73J6OXjph9kY+ZUTc
-	iFal/y3GldeUpdxwCpp8pA7pYeORY2NYQOewcN08BAUjKNJJpnAvaUt+i2o6C1fA
-	Z4xgvjXg4qcWe84=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 99D69227D3;
-	Mon, 13 Nov 2023 17:22:49 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 37EB5227CE;
-	Mon, 13 Nov 2023 17:22:46 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc: Joanna Wang <jojwang@google.com>,  git@vger.kernel.org
-Subject: Re: [PATCH 1/1] attr: add native file mode values support
-In-Reply-To: <20231113165031.GA28778@tb-raspi4> ("Torsten =?utf-8?Q?B?=
- =?utf-8?Q?=C3=B6gershausen=22's?=
-	message of "Mon, 13 Nov 2023 17:50:31 +0100")
-References: <20231111040309.2848560-1-jojwang@google.com>
-	<20231113165031.GA28778@tb-raspi4>
-Date: Tue, 14 Nov 2023 07:22:44 +0900
-Message-ID: <xmqqo7fx5m4r.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OvveJ833"
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05917D51
+	for <git@vger.kernel.org>; Mon, 13 Nov 2023 14:26:03 -0800 (PST)
+Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-40906fc54fdso40817495e9.0
+        for <git@vger.kernel.org>; Mon, 13 Nov 2023 14:26:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1699914361; x=1700519161; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+4uS4hD+bdxkP46+UjPce6bPKLk5dOg+LsWplo8bKt4=;
+        b=OvveJ833tjYD3qXhZQRYLjC3sg4avmgXntz1gyoX3asdx1/3KrV1GGmFzBe/0ZuEca
+         uyOovfo6gNzvRUcRZFP7ifLWRzPqd81T1d8DDxMS5vzmClwH8z6s6TaEvloZSlzdKI8r
+         TgGhFk1yKWO2+OkyAPM/B2+bfl++TNATZL2g8HpRv5goeX0H8B89TY/aQ6z9O8WU3UD0
+         ve2ov7XxwPtsABPfZm8fxMzb6tfiTGLPwvboEhwph9gYsnZSpmNS72kW/0HTi0W8rXOq
+         hdnzd1j7bxMBMO8jQ22yiDGRE5J6L4xP2Ue8okED/OjWgCd0FysaxxvS2o8lnUtr/dfc
+         bwhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699914361; x=1700519161;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+4uS4hD+bdxkP46+UjPce6bPKLk5dOg+LsWplo8bKt4=;
+        b=LcHI3Kkye/Aa8zrAFlXGntEDRwdmxF24LChGjVBo5BA5BAkl31ZCsZSNSxuURXYI3H
+         rb+TpfRH/8bG83j/5Nbahn9q8uELlU21PWqOR2MEc8j+29X2pqMK/9qohWkr1entjf2e
+         vXP36LJvacRGuS3L4lVmPBPS+d1X6g29mLZZA9HVoB4GVKyl7JmPUSD9Fyg6mghu+m1q
+         PtTyn8z983+kijPgOA3/XXyyjBVQ1oeZ7eGu9N2suNGrrJ8bIHbdrZqcLgMVonEh3dGW
+         iVNIae1JnnZqb2mj0z+2+RBli0JFFFKkpPfa0Gkx6GHrHe9TbIng4xGkputIA5TAUCYj
+         mxZw==
+X-Gm-Message-State: AOJu0YzyrTtjARwXj1Ss+hsLs70BdOF+XqT6f37FeqE0SulLyZ3sGrDr
+	qXD+HkaHMt4mH9g1QszYC3Zcd5hzsQs=
+X-Google-Smtp-Source: AGHT+IE7Bx31GF9eiBuhBaNKIst7fvB4YOp4Oynb2QAvI2QNPahq462PyoWkNTvGe/6Cvz+eSCd2tw==
+X-Received: by 2002:a05:600c:4689:b0:406:53f1:d629 with SMTP id p9-20020a05600c468900b0040653f1d629mr6193993wmo.5.1699914361048;
+        Mon, 13 Nov 2023 14:26:01 -0800 (PST)
+Received: from localhost (94-21-23-134.pool.digikabel.hu. [94.21.23.134])
+        by smtp.gmail.com with ESMTPSA id v5-20020a05600c444500b003fefb94ccc9sm9274445wmn.11.2023.11.13.14.26.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Nov 2023 14:26:00 -0800 (PST)
+From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To: git@vger.kernel.org
+Cc: Philippe Blain <levraiphilippeblain@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH] completion: add and use the __git_get_config_subsection helper function
+Date: Mon, 13 Nov 2023 23:25:27 +0100
+Message-ID: <20231113222528.62771-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.43.0.rc1.528.g8f9d60d041
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 2BC7B1F2-8273-11EE-BB28-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+Our Bash completion script recently learned to complete configured
+trailer key aliases for 'git config --trailer=<TAB>', but the helper
+function extracting the key alias from 'git config's output, i.e. the
+subsection from 'trailer.*.key', ended up more complex than necessary,
+with considerable overhead from executing four external processes in a
+pipe.
 
-> On Sat, Nov 11, 2023 at 04:03:08AM +0000, Joanna Wang wrote:
->
-> Some thoughts and comments inline...
->
->> Gives all paths inherent 'mode' attribute values based on the paths'
->> modes (one of 100644, 100755, 120000, 040000, 160000). Users may use
->> this feature to filter by file types. For example a pathspec such as
->> ':(attr:mode=3D160000)' could filter for submodules without needing
->
-> My spontanous feeling is that filetype may be another choice:
->> ':(attr:filetype=3D160000)' could filter for submodules without needin=
-g
+Replace those commands in the pipe with a simple shell loop using only
+a pair of parameter expansions and a builtin 'echo', which is easier
+to understand and should perform better (I assume that users don't
+have that many subsections in any particular section to make the
+processing with an external process (let alone four) worth it).
 
-I do agree that "mode" invites "mode of what???" reaction, and that
-a term that narrows the scope would be preferrable.  "Filemode" is a
-bit questionable, though, as we give this permbits to non-files like
-submodules.  "ls-tree" documentation seems to call it %(objectmode).
+And while at it, let's extract this loop into a generic
+__git_get_config_subsections() helper function, as it might be useful
+elsewhere in the future as well (at the moment it isn't, AFAICT).
 
-> And having written this, we can think using something borrowed from
-> `find . -type f`
->
-> :(attr:filetype=3Df)' or :(attr:filetype=3Dx)' (for executable)
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ contrib/completion/git-completion.bash | 14 +++++++++++++-
+ t/t9902-completion.sh                  | 13 +++++++++++++
+ 2 files changed, 26 insertions(+), 1 deletion(-)
 
-This would not work for submodules, though.  Naively one might want
-to abuse 'd' but I suspect we would eventually want to be able to
-give the mode bits to an out-of-cone directory storeed in the index
-as a tree in a cone-mode sparse checkout, which would be 040000,
-which deserves 'd' more than submodules.
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 13a39ebd2e..34bbb66f85 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1148,6 +1148,18 @@ __git_get_config_variables ()
+ 	done
+ }
+ 
++# Lists all subsections in the given section which contain the given
++# config variable, with the section and variable names removed.
++__git_get_config_subsections ()
++{
++	local section="$1" var="$2" i IFS=$'\n'
++	for i in $(__git config --name-only --get-regexp "^$section\..*\.$var$"); do
++		i=${i#$section.}
++		i=${i%.$var}
++		echo "$i"
++	done
++}
++
+ __git_pretty_aliases ()
+ {
+ 	__git_get_config_variables "pretty"
+@@ -1681,7 +1693,7 @@ __git_untracked_file_modes="all no normal"
+ 
+ __git_trailer_tokens ()
+ {
+-	__git config --name-only --get-regexp '^trailer\..*\.key$' | cut -d. -f 2- | rev | cut -d. -f2- | rev
++	__git_get_config_subsections trailer key
+ }
+ 
+ _git_commit ()
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index a7c3b4eb63..11ed83d0ed 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -2130,6 +2130,19 @@ test_expect_success '__git_get_config_variables' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success '__git_get_config_subsections' '
++	cat >expect <<-\EOF &&
++	subsection-1
++	SubSection-2
++	sub.section.3
++	EOF
++	test_config interesting.subsection-1.name good &&
++	test_config Interesting.SubSection-2.Name good &&
++	test_config interesting.sub.section.3.name good &&
++	__git_get_config_subsections interesting name >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success '__git_pretty_aliases' '
+ 	cat >expect <<-EOF &&
+ 	author
+-- 
+2.43.0.rc1.528.g8f9d60d041
 
-> But then I missed the point why we need an attribute here?
-> The mode is already defined by the the file system (and Git),
-> is there a special reason that the user can define or re-define the
-> value here ?
-
-I think the idea is that "mode" being a too generic word can be used
-for totally different purposes in existing projects and the addition
-did not want to disturb their own use.  But stepping back a bit,
-such an application is likely marking selected few paths with the
-attribute, and paths for which "mode" was "unset" are now given
-these natural "mode"; it is inevitable to crash with such uses.  If
-we want to introduce "native" attributes of this kind, we would
-probably need to carve out namespaces a bit more clearaly.
-
-> May be there is, when working with pathspec.
-> But then "pathspec=3D" could be a better construction.
-> Since "mode" could make a reader think that Git does somewhat with the =
-file
-> when checking out.
-> My personal hope reading "mode=3D100755" in .gitattributes would
-> be that Git makes it executable when checking out, if if it is
-> recorded in Git as 100644, probably coming from a file-system that
-> doesn't support the executable bit in a Unix way.
-
-That is not the intended way this attribute is to be used.  Perhaps
-we should make it an error (or ignored) when certain built-in/native
-attributes are seen in the attribute file, but again that takes some
-namespace carved out to avoid crashing with end-user names.
-
->> If there is any existing mode attribute for a path (e.g. there is
->> !mode, -mode, mode, mode=3D<value> in .gitattributes) that setting wil=
-l
->> take precedence over the native mode value.
-
-Again, this has one hole, I think.  Paths that are not mentioned
-(not even with "!mode") would come to the function as ATTR__UNKNOWN
-and trigger the fallback behaviour, even when other paths are given
-end-user specified "mode" attribute values.
