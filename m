@@ -1,54 +1,54 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 780C11CF94
-	for <git@vger.kernel.org>; Mon, 13 Nov 2023 10:24:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CBB21D520
+	for <git@vger.kernel.org>; Mon, 13 Nov 2023 10:24:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EyX1Q2Xl"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GkTaavoK"
 Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 175A1D78
-	for <git@vger.kernel.org>; Mon, 13 Nov 2023 02:24:28 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-40907b82ab9so30081675e9.1
-        for <git@vger.kernel.org>; Mon, 13 Nov 2023 02:24:28 -0800 (PST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1340910DB
+	for <git@vger.kernel.org>; Mon, 13 Nov 2023 02:24:29 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-408425c7c10so34617995e9.0
+        for <git@vger.kernel.org>; Mon, 13 Nov 2023 02:24:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1699871066; x=1700475866; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1699871067; x=1700475867; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=IBAwLXzLynV8FWD86zN6hgjuOZ1WVpty4nnZ40f/Fts=;
-        b=EyX1Q2XlgOCtrKEcnDM2aoUkeLCmDhwJrl5ZLKrO1+Erwi/JnSOzTPAiCYe8xm53Qg
-         13wzd15m4z1igvpc+wgaN9etMGQa5TfGqvZ6A05pDSmjMlS+VmW6Si8M73CL3dm6u6FI
-         xDNGUeNSxv+NM/O706uIUjslR4mHhEJHd1w+ccqj0CapGmXEesQCTB+zbiIoFPkYBFkn
-         n1G3RvZ14yScck/uKdsEJR+Yz31xTRxscxHgwSeV7F1wweX5j7q1UHpd62/RH6T1i6fI
-         NpST2IBggcnwolxJ40V7xn45Rsj9EjkUOJxWPk/nNMM+GzMywXlQhNKiQ8Hxquox+FoF
-         7Azw==
+        bh=C6zxYu78Dvi4CJ0XqMTsYTMxgCmJo23KM7DAqdnAnGw=;
+        b=GkTaavoKm1AmfTxxWfCmpqP1OJxeayE0ZXrB1xG1l4deBjyDP+9rFoc3Max6iNTB5l
+         Fe9LIThG8nYMhM292lyYsSokSsAoxPOLEp1QLmLz8Rpea7LFcWBFfSWYaLRrBio7zTIe
+         eEGiUK5ysPDxauu8UqIy0gPRwGCDPiA4klmLVfIiLjnRdirZ4CMXXzSK7Up18ZqO2Kby
+         VkxSWV6nHXSi5OYYRIULwDbdK5hnXXchoXmCXNE2mcFLKZDa8BTXDcMaqj5Ldt91Pxj1
+         54E+XqCaSljrPSi+JrWUxlT49fBapMLuyiVD7n3oMXo7J8XYTRH0cUjv+ltnUrv0OZwx
+         wVEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699871066; x=1700475866;
+        d=1e100.net; s=20230601; t=1699871067; x=1700475867;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=IBAwLXzLynV8FWD86zN6hgjuOZ1WVpty4nnZ40f/Fts=;
-        b=N2mVaFAQqvV3lkkvZfjvntRgnPSxOUqBPdhLAVK25P1iaNVLAqgGoHsEBl/5xSSKwH
-         b0gW6e9zEeke8aTmruucq9Ee1kSAlaUrJmItM7UKXnaztuemS5BPSrHvfgxwd1ryxbSW
-         TsfDvYs0YUIeyhQ2rA9k6H1/Mya10aaTxbeQd6cfXyyQvFcpAHOMl4G7OUgLgPI4z43j
-         MuCI8pNPBb7wTyUe1fcjjdve22WzOMOndRKSfYPXtu0TGF5lMxmise+6WpSn64D7SWxy
-         9YC1hkhvH10yyVYuFlwY7FUlXNian22A6UyzV77M3ePG0cJww4LeuBir+4eiek/OR1g/
-         gNvQ==
-X-Gm-Message-State: AOJu0YwTnBGrw1Zter+5RaioeYqd39TUpUIAl6nTpB6fjXdM+G5LRNWo
-	CIZ47dgCK8cHU5MTpBAFDMXsE6Yzm8c=
-X-Google-Smtp-Source: AGHT+IGOfQLVaQQfBRpwQn8FoywSUmVnLd39l8JsK/7IOiEu0h8S0YOXAmwHYM1zC4iYPZfM5dLRMw==
-X-Received: by 2002:a05:600c:1d09:b0:400:5962:6aa9 with SMTP id l9-20020a05600c1d0900b0040059626aa9mr8960496wms.11.1699871065925;
-        Mon, 13 Nov 2023 02:24:25 -0800 (PST)
+        bh=C6zxYu78Dvi4CJ0XqMTsYTMxgCmJo23KM7DAqdnAnGw=;
+        b=tj3Tv/njlRZljouPZk4Gl8UGmsUcLPyNahb+3aqkPBmDU8s2HJo8VeXySQnzoWTdt/
+         yTx4O6TdQo6R9qsvITNBpBqzmvwDOyzPCa+fY7FR1a2qhXHBR9Vxc/1+coKlSeSgAAFb
+         H25egjoD9puA8Be5CqsScw99izm28APnNxH60IsNnwyofm3re251De6fVh+yT+pRqGBE
+         Ehg6H3y7RWf9C5XR7gQGqgaOxDq4McjdPDr9KNW1L8qubQT/CmecAV/JvIYQKmrIcslY
+         Qy2L66AC/+fDOUvho5FSXhlOeOlLdEvN45scO5K/KzIdoxOQ07LjY5ylQ791KGazC+Hs
+         a8Zg==
+X-Gm-Message-State: AOJu0YzQs95rWDOJY/1qtmEy6cqVIl04CWjW/TI7reG7ZVR9gI9fvhTj
+	V2/j+ooGPYjfEXGlgQ/4c9iML5pcmDw=
+X-Google-Smtp-Source: AGHT+IGFLizMPdux8IPv0KQc63wyVBNBFAwSmmZM4gzmXYaKyjhAoZk1xDFe2wkVtBHp2r4o/rA7tg==
+X-Received: by 2002:adf:ee51:0:b0:32d:a717:717a with SMTP id w17-20020adfee51000000b0032da717717amr4762810wro.40.1699871066997;
+        Mon, 13 Nov 2023 02:24:26 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id bi15-20020a05600c3d8f00b004095874f6d3sm7634582wmb.28.2023.11.13.02.24.25
+        by smtp.gmail.com with ESMTPSA id q2-20020a056000136200b003313a1e0ba1sm5075240wrz.89.2023.11.13.02.24.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Nov 2023 02:24:25 -0800 (PST)
-Message-ID: <63479fe36966bf3b1a8dbc3ae68f8558da4690bc.1699871056.git.gitgitgadget@gmail.com>
+        Mon, 13 Nov 2023 02:24:26 -0800 (PST)
+Message-ID: <25271363e573f05e390ec09bfd3906730cae30e6.1699871056.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1537.git.git.1699871056.gitgitgadget@gmail.com>
 References: <pull.1537.git.git.1699871056.gitgitgadget@gmail.com>
 From: "Haritha D via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 13 Nov 2023 10:24:12 +0000
-Subject: [PATCH 10/13] strncpy fix Handled git pipeline errors
+Date: Mon, 13 Nov 2023 10:24:13 +0000
+Subject: [PATCH 11/13] strncpy fix Handled git pipeline errors
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,39 +68,24 @@ This PR has fixes to enable build on z/OS
 
 Signed-off-by: Harithamma D <harithamma.d@ibm.com>
 ---
- convert.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ convert.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/convert.c b/convert.c
-index 78403de422d..ef44e6429da 100644
+index ef44e6429da..16173a1caf6 100644
 --- a/convert.c
 +++ b/convert.c
-@@ -1326,13 +1326,10 @@ static const char* get_platform(void) {
+@@ -1326,8 +1326,9 @@ static const char* get_platform(void) {
  	{
  		int index=0;
  		result = (char *)malloc(strlen(uname_info.sysname)+1);
--		while(index <= strlen(uname_info.sysname))
-+		while(result[index] = uname_info.sysname[index])
+-		while(result[index] = uname_info.sysname[index])
++		while(index <= strlen(uname_info.sysname))
  		{
--			*result = uname_info.sysname[index];
--			++result;
--			++index;
-+			index++;
++			result[index] = uname_info.sysname[index];
+ 			index++;
  		}
--		*result = '\0';
  	}
- #endif
- 
-@@ -1340,8 +1337,7 @@ static const char* get_platform(void) {
- 	if (!strcmp(uname_info.sysname, "OS/390"))
- 		result="zos";
- #endif
--
--	return result;
-+	return (char*)result;
- }
- 
- 
 -- 
 gitgitgadget
 
