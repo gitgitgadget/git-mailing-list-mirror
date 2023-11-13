@@ -1,210 +1,183 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D62B424A0A
-	for <git@vger.kernel.org>; Mon, 13 Nov 2023 20:25:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bvg4+3kI"
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D898810CE
-	for <git@vger.kernel.org>; Mon, 13 Nov 2023 12:25:11 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-4083f61322fso38015175e9.1
-        for <git@vger.kernel.org>; Mon, 13 Nov 2023 12:25:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1699907109; x=1700511909; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3oZeWSXfRB+Cds2vRcT/IHwdO90034fjc9arZYIwaQA=;
-        b=bvg4+3kI0rRAIAjell4/8DqK2+/8VoKPKjzJG65Y/3k44nv7RuQs9uSIVxalxUirE1
-         TlIleImn9vaQLRlL6TPqLONe19h0p1Pcun5ek46Z3VPSAeqbHynUSElCjbFLjDbsVma7
-         qP3o1EEKNy+/VlvK+xh/mVXVOD07FaLRtZthDXDD5YG4pYYsDtmUa4UNnES1ZGklekCo
-         4icFS7YMbWi5JG5Z7wbI1zdCvyHXqytTRhsOOBDCRmHeJC4bz25qhJmUeZ7yBroej0ZV
-         aMnaiD56MA5AcvolDdYsul8qgnccpasFTG0F2RKR317EeonPxODXZri2begXNDygnT8N
-         aOsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699907109; x=1700511909;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3oZeWSXfRB+Cds2vRcT/IHwdO90034fjc9arZYIwaQA=;
-        b=LNkMjxTZ3eu0KRJwDKpDzSkZpBHyZ4+NYYlfDa037Mj4rGqM3r0Z0ArmcuaHwthd9l
-         t/8+tFRxO1nr/vgclksUdNHzx/hSNJD13yHxCC5foh/hPugV+M7Ekt47lzjypk2bCs7r
-         XztaL2o27wxsF0EdtP+4KSB50XYm09n1J9s0iR4t5Mp5Mp9TGLIe9xT8APiJm2uJVd2K
-         ZGAn+AduMyhQ6MvZisv+1iTvm/z17wbDHLBADXhWyuA3iUrXC3u+VG+WcgEOQRdBypJc
-         JGIokpFRNtbHl4cg+V8/0L/TwmFU12xFB/amcpBqG/mXs3BiQJW6BNXmQlx7BtwkXtP+
-         /1VA==
-X-Gm-Message-State: AOJu0YyTYAUQkcEKM2RoR678qg/qiyLxflFjxDIP9yPPjG+dmGUkdRNE
-	w2fP3zpbnpWy7GpSgYAp3L1sj8hHCDs=
-X-Google-Smtp-Source: AGHT+IFnDhhaj2XlYytAdkuvRBCi5UQ29Ti2ji0qvy4IIGcdRBNsismRwpTionp0WDH5s8O6PQ8PsA==
-X-Received: by 2002:a1c:7502:0:b0:408:39d3:a26b with SMTP id o2-20020a1c7502000000b0040839d3a26bmr6434368wmc.40.1699907109411;
-        Mon, 13 Nov 2023 12:25:09 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 26-20020a05600c231a00b004064741f855sm8967945wmo.47.2023.11.13.12.25.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Nov 2023 12:25:09 -0800 (PST)
-Message-ID: <pull.1613.v2.git.1699907108371.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1613.git.1699894837844.gitgitgadget@gmail.com>
-References: <pull.1613.git.1699894837844.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 13 Nov 2023 20:25:08 +0000
-Subject: [PATCH v2] ci: avoid running the test suite _twice_
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 810E81944F
+	for <git@vger.kernel.org>; Mon, 13 Nov 2023 20:39:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C60E0D57
+	for <git@vger.kernel.org>; Mon, 13 Nov 2023 12:39:44 -0800 (PST)
+Received: (qmail 20681 invoked by uid 109); 13 Nov 2023 20:39:44 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 13 Nov 2023 20:39:44 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6464 invoked by uid 111); 13 Nov 2023 20:39:45 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 13 Nov 2023 15:39:45 -0500
+Authentication-Results: peff.net; auth=none
+Date: Mon, 13 Nov 2023 15:39:43 -0500
+From: Jeff King <peff@peff.net>
+To: Kevin Lyles <klyles@epic.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	"allred.sean@gmail.com" <allred.sean@gmail.com>
+Subject: Re: rev-list default order sometimes very slow (size and metadata
+ dependent)
+Message-ID: <20231113203943.GD3838361@coredump.intra.peff.net>
+References: <DM6PR17MB247594CF3A0511EF95893935AEADA@DM6PR17MB2475.namprd17.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <DM6PR17MB247594CF3A0511EF95893935AEADA@DM6PR17MB2475.namprd17.prod.outlook.com>
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Sat, Nov 11, 2023 at 04:17:17PM +0000, Kevin Lyles wrote:
 
-This is a late amendment of 4a6e4b960263 (CI: remove Travis CI support,
-2021-11-23), whereby the `.prove` file (being written by the `prove`
-command that is used to run the test suite) is no longer retained
-between CI builds: This feature was only ever used in the Travis CI
-builds, we tried for a while to do the same in Azure Pipelines CI runs
-(but I gave up on it after a while), and we never used that feature in
-GitHub Actions (nor does the new GitLab CI code use it).
+> If the archive branch is created with author/commit dates older than the
+> rest of the repository, we're able to run:
+> 
+>   $ git rev-list --count --all
+> 
+> in ~9-10 seconds on a mirror clone with a commit-graph.  However, if the
+> archive branch is instead created with author/commit dates newer than the
+> rest of the repository, it takes 4-5 minutes.
 
-Retaining the Prove cache has been fragile from the start, even though
-the idea seemed good at the time, the idea being that the `.prove` file
-caches information about previous `prove` runs (`save`) and uses them
-(`slow`) to run the tests in the order from longer-running to shorter
-ones, making optimal use of the parallelism implied by `--jobs=<N>`.
+Thanks for providing a reproduction script. I had trouble following the
+text explanation, but I can easily reproduce the issue using your
+script.
 
-However, using a Prove cache can cause some surprising behavior: When
-the `prove` caches information about a test script it has run,
-subsequent `prove` runs (with `--state=slow`) will run the same test
-script again even if said script is not specified on the `prove`
-command-line!
+Running the slow case under perf, it looks like we are spending most of
+the time in commit_list_insert_by_date(). Which makes sense. The queue
+of commits to visit during the traversal is kept as an ordered linked
+list that uses linear search for the insertion. So the worst case to
+insert N commits is quadratic.
 
-So far, this bug did not matter. Right until d8f416bbb87c (ci: run unit
-tests in CI, 2023-11-09) did it not matter.
+In practice, it tends not to be a big problem because we visit commits
+in roughly reverse-timestamp order as we traverse. So it's more like
+O(N*width), where "width" is the average number of simultaneous lines of
+history. And your archive graph is...very wide.
 
-But starting with that commit, we invoke `prove` _twice_ in CI, once to
-run the regular test suite of regression test scripts, and once to run
-the unit tests. Due to the bug, the second invocation re-runs all of the
-tests that were already run as part of the first invocation. This not
-only wastes build minutes, it also frequently causes the `osx-*` jobs to
-fail because they already take a long time and now are likely to run
-into a timeout.
+Playing with the commit timestamps helps your case because it just
+happens to reorder the queue in such a way that we put off looking at
+those huge archive merges until much later in the traversal, when our
+remaining "N" is much smaller.
 
-The worst part about it is that there is actually no benefit to keep
-running with `--state=slow,save`, ever since we decided no longer to
-try to reuse the Prove cache between CI runs.
+The right solution is obviously to switch to a better data structure.
+And some of the infrastructure is in place from the last time we dealt
+with a similar case:
 
-So let's just drop that Prove option and live happily ever after.
+  https://lore.kernel.org/git/HE1PR0702MB3788FCDAB764252D9CBB42E5B0560@HE1PR0702MB3788.eurprd07.prod.outlook.com/
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    ci: avoid running the test suite twice
-    
-    This
-    [https://github.com/git/git/actions/runs/6845537889/job/18614840166] is
-    an example of a osx-* job that times out. Here
-    [https://github.com/git/git/actions/runs/6845537889/job/18614840166#step:4:839],
-    it is running t0013, and here
-    [https://github.com/git/git/actions/runs/6845537889/job/18614840166#step:4:2765],
-    it is run again (in the middle of the entire test suite, as part of make
-    unit-tests).
-    
-    While this tries to fix a bug uncovered by js/doc-unit-tests, to avoid
-    merge conflicts, this is based on ps/ci-gitlab.
-    
-    Changes since v1:
-    
-     * Reworded the commit message, specifically avoiding a reference to a
-       patch that has not been upstreamed from Git for Windows yet.
+There we started using a priority queue instead of the linked list.
+That patch stopped shorting of replacing the main revs->commits
+traversal list, though, as it's referenced in a ton of places (some of
+which really care about its list-like nature). Here's a hacky patch that
+tries to lazily convert the list to a queue. It makes your case much
+faster, but it also causes a few failures in the test suite (related to
+commit ordering), so obviously it's violating some assumptions
+somewhere. I'm not sure if it's a fruitful direction or not.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1613%2Fdscho%2Favoid-running-test-suite-twice-in-ci-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1613/dscho/avoid-running-test-suite-twice-in-ci-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1613
+And as you noticed, using --topo-order does not suffer from the same
+problem. It follows a completely different path, which...you guessed it,
+uses a priority queue. I'm not sure what the current state of things is,
+but one of the promises of commit-graphs is that with stored generation
+numbers, we could compute topo-order incrementally and efficiently. So
+another possible route is that we'd simply enable it by default. But I'm
+not sure if there's more work that needs to be done to get there, or if
+there are other downsides.
 
-Range-diff vs v1:
-
- 1:  c74eda36246 ! 1:  880f2c19478 ci: avoid running the test suite _twice_
-     @@ Metadata
-       ## Commit message ##
-          ci: avoid running the test suite _twice_
-      
-     -    This is a late amendment of 19ec39aab54 (ci: stop linking the `prove`
-     -    cache, 2022-07-10), fixing a bug that had been hidden so far.
-     -
-     -    The bug is that the `.prove` cache stores information about previous
-     -    `prove` runs (`save`) and uses them (`slow`, to run the tests in the
-     -    order from longer-running to shorter ones).
-     -
-     -    This bug can cause some surprising behavior: when the Prove cache
-     -    contains a reference to a test script, subsequent `prove` runs (with
-     -    `--state=slow`) will run the same test script again even if said script
-     -    is not specified on the `prove` command-line!
-     +    This is a late amendment of 4a6e4b960263 (CI: remove Travis CI support,
-     +    2021-11-23), whereby the `.prove` file (being written by the `prove`
-     +    command that is used to run the test suite) is no longer retained
-     +    between CI builds: This feature was only ever used in the Travis CI
-     +    builds, we tried for a while to do the same in Azure Pipelines CI runs
-     +    (but I gave up on it after a while), and we never used that feature in
-     +    GitHub Actions (nor does the new GitLab CI code use it).
-     +
-     +    Retaining the Prove cache has been fragile from the start, even though
-     +    the idea seemed good at the time, the idea being that the `.prove` file
-     +    caches information about previous `prove` runs (`save`) and uses them
-     +    (`slow`) to run the tests in the order from longer-running to shorter
-     +    ones, making optimal use of the parallelism implied by `--jobs=<N>`.
-     +
-     +    However, using a Prove cache can cause some surprising behavior: When
-     +    the `prove` caches information about a test script it has run,
-     +    subsequent `prove` runs (with `--state=slow`) will run the same test
-     +    script again even if said script is not specified on the `prove`
-     +    command-line!
-      
-          So far, this bug did not matter. Right until d8f416bbb87c (ci: run unit
-     -    tests in CI, 2023-11-09) it did not matter.
-     -
-     -    But starting with that commit, we run `prove` _twice_ in CI, and with
-     -    completely different sets of tests to run. Due to the bug, the second
-     -    invocation re-runs all of the tests that were already run as part of the
-     -    first invocation. This not only wastes build minutes, it also frequently
-     -    causes the `osx-*` jobs to fail because they already take a long time
-     -    and now are likely to run into a timeout.
-     +    tests in CI, 2023-11-09) did it not matter.
-     +
-     +    But starting with that commit, we invoke `prove` _twice_ in CI, once to
-     +    run the regular test suite of regression test scripts, and once to run
-     +    the unit tests. Due to the bug, the second invocation re-runs all of the
-     +    tests that were already run as part of the first invocation. This not
-     +    only wastes build minutes, it also frequently causes the `osx-*` jobs to
-     +    fail because they already take a long time and now are likely to run
-     +    into a timeout.
-      
-          The worst part about it is that there is actually no benefit to keep
-          running with `--state=slow,save`, ever since we decided no longer to
-
-
- ci/lib.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 6dfc90d7f53..307a8df0b5a 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -281,7 +281,7 @@ else
- fi
+diff --git a/revision.c b/revision.c
+index 00d5c29bfc..62d33dbfee 100644
+--- a/revision.c
++++ b/revision.c
+@@ -3119,6 +3119,7 @@ void release_revisions(struct rev_info *revs)
+ 	clear_decoration(&revs->treesame, free);
+ 	line_log_free(revs);
+ 	oidset_clear(&revs->missing_commits);
++	clear_prio_queue(&revs->commitq);
+ }
  
- MAKEFLAGS="$MAKEFLAGS --jobs=$JOBS"
--GIT_PROVE_OPTS="--timer --jobs $JOBS --state=failed,slow,save"
-+GIT_PROVE_OPTS="--timer --jobs $JOBS"
+ static void add_child(struct rev_info *revs, struct commit *parent, struct commit *child)
+@@ -4161,6 +4162,36 @@ static void track_linear(struct rev_info *revs, struct commit *commit)
  
- GIT_TEST_OPTS="$GIT_TEST_OPTS --verbose-log -x"
- case "$CI_OS_NAME" in
-
-base-commit: 0e3b67e2aa25edb7e1a5c999c87b52a7b3a7649a
--- 
-gitgitgadget
+ static struct commit *get_revision_1(struct rev_info *revs)
+ {
++	/*
++	 * This is kind of hacky. We'll dynamically move commits from the
++	 * linear list over to our priority queue, which has better worst-case
++	 * behavior. Doing it here serves two purposes:
++	 *
++	 *   - we'll let all of the setup code still operate on the "commits"
++	 *     list, and then just move it over to the queue lazily. This
++	 *     probably could be done in prepare_revision_walk() or similar,
++	 *     but by doing it here we know we're catching all code paths.
++	 *
++	 *   - we'll likewise catch any code which tries to add new commits to
++	 *     the list _during_ the traversal. The main one would be
++	 *     process_parents() below, which we've taught to use the queue
++	 *     directly. But this will catch any other random bits of code,
++	 *     including callers of the revision API, which add to the
++	 *     traversal as they go.
++	 *
++	 * A cleaner solution would probably be to get rid of the "commits"
++	 * list entirely, but that's a much bigger task.
++	 */
++	if (revs->commits && !revs->topo_order) {
++		struct commit_list *p;
++		if (!revs->unsorted_input)
++			revs->commitq.compare = compare_commits_by_commit_date;
++		for (p = revs->commits; p; p = p->next)
++			prio_queue_put(&revs->commitq, p->item);
++		free_commit_list(revs->commits);
++		revs->commits = NULL;
++	}
++
+ 	while (1) {
+ 		struct commit *commit;
+ 
+@@ -4169,7 +4200,7 @@ static struct commit *get_revision_1(struct rev_info *revs)
+ 		else if (revs->topo_walk_info)
+ 			commit = next_topo_commit(revs);
+ 		else
+-			commit = pop_commit(&revs->commits);
++			commit = prio_queue_get(&revs->commitq);
+ 
+ 		if (!commit)
+ 			return NULL;
+@@ -4191,7 +4222,7 @@ static struct commit *get_revision_1(struct rev_info *revs)
+ 				try_to_simplify_commit(revs, commit);
+ 			else if (revs->topo_walk_info)
+ 				expand_topo_walk(revs, commit);
+-			else if (process_parents(revs, commit, &revs->commits, NULL) < 0) {
++			else if (process_parents(revs, commit, NULL, &revs->commitq) < 0) {
+ 				if (!revs->ignore_missing_links)
+ 					die("Failed to traverse parents of commit %s",
+ 						oid_to_hex(&commit->object.oid));
+diff --git a/revision.h b/revision.h
+index 94c43138bc..4301b825a0 100644
+--- a/revision.h
++++ b/revision.h
+@@ -12,6 +12,7 @@
+ #include "ident.h"
+ #include "list-objects-filter-options.h"
+ #include "strvec.h"
++#include "prio-queue.h"
+ 
+ /**
+  * The revision walking API offers functions to build a list of revisions
+@@ -124,6 +125,12 @@ struct rev_info {
+ 	struct object_array pending;
+ 	struct repository *repo;
+ 
++	/*
++	 * We'll use this queue during the actual traversal, rather than
++	 * adding and popping from the "commits" list.
++	 */
++	struct prio_queue commitq;
++
+ 	/* Parents of shown commits */
+ 	struct object_array boundary_commits;
+ 
