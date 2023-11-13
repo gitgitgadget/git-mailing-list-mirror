@@ -1,96 +1,78 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2CC12374B
-	for <git@vger.kernel.org>; Mon, 13 Nov 2023 20:52:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=aq0.de header.i=@aq0.de header.b="L9oBfS0l"
-X-Greylist: delayed 601 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 13 Nov 2023 12:52:14 PST
-Received: from mail.aq0.de (mail.aq0.de [IPv6:2a01:4f8:1c1b:c00e::1])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6BF8D5E
-	for <git@vger.kernel.org>; Mon, 13 Nov 2023 12:52:14 -0800 (PST)
-Message-ID: <bef9d5b3-bb64-4662-8952-d000872c5244@aq0.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aq0.de; s=mail;
-	t=1699908130; bh=zg+YGFuD/FqVj8AOxXeQgJzbtzvrBhFsnX0eG8jieXs=;
-	h=Date:To:From:Subject;
-	b=L9oBfS0lhu9qZp/NlMFiIAIcuJZTdPgNQMCCBeNKVn8ez2fP6t2VzVzQdUCThxDDE
-	 ZezV9hNJXjUhd7HUlHbU17YQr4hFl8QsoTFBvP0Y880qHuxO+H4at9CvxjLw2fdB9f
-	 3Ui6N8MPMh28cAGmvNl/4LXFY/leUM+d818e/Uck=
-Date: Mon, 13 Nov 2023 21:42:09 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B9922F07
+	for <git@vger.kernel.org>; Mon, 13 Nov 2023 20:55:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F55810E0
+	for <git@vger.kernel.org>; Mon, 13 Nov 2023 12:55:39 -0800 (PST)
+Received: (qmail 20812 invoked by uid 109); 13 Nov 2023 20:55:39 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 13 Nov 2023 20:55:39 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6576 invoked by uid 111); 13 Nov 2023 20:55:40 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 13 Nov 2023 15:55:40 -0500
+Authentication-Results: peff.net; auth=none
+Date: Mon, 13 Nov 2023 15:55:38 -0500
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Subject: commit-graph paranoia performance, was Re: [ANNOUNCE] Git v2.43.0-rc1
+Message-ID: <20231113205538.GA2028092@coredump.intra.peff.net>
+References: <xmqq8r785ev1.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Language: en-US
-To: git@vger.kernel.org
-From: Janik Haag <janik@aq0.de>
-Subject: git-bisect reset not deleting .git/BISECT_LOG
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqq8r785ev1.fsf@gitster.g>
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+On Thu, Nov 09, 2023 at 02:33:54AM +0900, Junio C Hamano wrote:
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-```bash
-git init /tmp/reproduce-bisect-warning
-cd /tmp/reproduce-bisect-warning
-touch .git/BISECT_LOG
-git bisect reset
-git switch -c log
-```
+>  * The codepath to traverse the commit-graph learned to notice that a
+>    commit is missing (e.g., corrupt repository lost an object), even
+>    though it knows something about the commit (like its parents) from
+>    what is in commit-graph.
+>    (merge 7a5d604443 ps/do-not-trust-commit-graph-blindly-for-existence later to maint).
 
-What did you expect to happen? (Expected behavior)
+I happened to be timing "rev-list" for an unrelated topic today, and I
+noticed that this change had a rather large effect. The commit message
+for 7a5d604443 claims a 30% performance regression. But that's when
+using "--topo-order", and actually writing out the result.
 
-`git-bisect reset` should have deleted .git/BISECT_LOG
+Running "rev-list --count" on a copy of linux.git with a fully-built
+commit-graph shows that the run-time doubles:
 
-What happened instead? (Actual behavior)
+  Benchmark 1: git.v2.42.1 rev-list --count HEAD
+    Time (mean ± σ):     658.0 ms ±   5.2 ms    [User: 613.5 ms, System: 44.4 ms]
+    Range (min … max):   650.2 ms … 666.0 ms    10 runs
+  
+  Benchmark 2: git.v2.43.0-rc1 rev-list --count HEAD
+    Time (mean ± σ):      1.333 s ±  0.019 s    [User: 1.263 s, System: 0.069 s]
+    Range (min … max):    1.302 s …  1.361 s    10 runs
+  
+  Summary
+    git.v2.42.1 rev-list --count HEAD ran
+      2.03 ± 0.03 times faster than git.v2.43.0-rc1 rev-list --count HEAD
 
-.git/BISECT_LOG is still there
+Now in defense of that patch, this particular command is going to be one
+of the most sensitive in terms of percent change, simply because it
+isn't doing much besides walking the commits. And 650ms isn't _that_ big
+in an absolute sense. But it also doesn't quite feel like nothing, even
+tacked onto a command that might otherwise take 1000ms to run.
 
-What's different between what you expected and what actually happened?
+Should we default GIT_COMMIT_GRAPH_PARANOIA to "0"? Yes, some operations
+might miss a breakage, but that is true of so much of Git. For day to
+day commands we generally assume that the repository is not corrupted,
+and avoid looking at any data we can. Other commands (like "commit-graph
+verify", but maybe others) would probably want to be more careful
+(either by checking this case explicitly, or by enabling the paranoia
+flag themselves).
 
-git switch and some external tools like shell prompts are relying on 
-that file to know if we are doing a bisect so switch printed a warning 
-that we are still bisecting. Funnily enough git checkout doesn't print 
-that warning.
-
-Anything else you want to add:
-
-In case you are wondering why I created the .git/BISECT_LOG file with 
-touch instead of using the git cli, I forgot how I ended up there in the 
-first place that was like a year ago and the warning didn't really 
-bother me, today someone told me to look for anything in .git namend 
-BISECT* and after deleting the log by hand it worked. So I figured 
-git-bisect reset should probably have done that after I ended up in that 
-unkown state. the content I had in BISECT_LOG before deleting it was:
-```
-# good: [e24028141f2] qdmr: fixup
-git bisect good e24028141f278590407dd5389330f23d01c89cff
-```
-
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.42.0
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: 
-/nix/store/lf0wpjrj8yx4gsmw2s3xfl58ixmqk8qa-bash-5.2-p15/bin/bash
-uname: Linux 6.1.61 #1-NixOS SMP PREEMPT_DYNAMIC Thu Nov  2 08:35:33 UTC 
-2023 x86_64
-compiler info: gnuc: 12.3
-libc info: glibc: 2.38
-$SHELL (typically, interactive shell): /run/current-system/sw/bin/zsh
-
-
-[Enabled Hooks]
-
+-Peff
