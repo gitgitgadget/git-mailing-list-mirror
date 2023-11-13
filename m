@@ -1,54 +1,54 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A949319BBD
-	for <git@vger.kernel.org>; Mon, 13 Nov 2023 10:24:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5903A1CA9F
+	for <git@vger.kernel.org>; Mon, 13 Nov 2023 10:24:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XB330UzV"
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1744310DB
-	for <git@vger.kernel.org>; Mon, 13 Nov 2023 02:24:22 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-4083cd3917eso34522845e9.3
-        for <git@vger.kernel.org>; Mon, 13 Nov 2023 02:24:22 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UhksqixC"
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FF2CD78
+	for <git@vger.kernel.org>; Mon, 13 Nov 2023 02:24:23 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id ffacd0b85a97d-32daeed7771so2402308f8f.3
+        for <git@vger.kernel.org>; Mon, 13 Nov 2023 02:24:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1699871060; x=1700475860; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1699871061; x=1700475861; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=YwDa/zirDJc5nfx2Jg49qoDCUK60ez7e62AeKwMOj8I=;
-        b=XB330UzVLnDWNbUJfx8A74xYAmnYVmz3n5LyC4IxVTsC28aN74yimtBhWQxnMm8ak5
-         6KAo2wATt+RJ/zXnLnybqS3aCmcpcy+CkKOPfENNqCXRyWeaJ35iPJCDRIrdATeKHXOx
-         McaeqtwxrZM15AWrp7Mk7opd9DcjEN6SrLMquorUZTI+6SOWA8e7ozA2EApL3XGFWpWH
-         beVkhxFVFIMOnAcC/kF75++FUnlBfjkGLJqMI/pNdKxSDqO4RQl1VA0SvMK1uXNZ/5RB
-         9yvO8s7K9quTOUOEx8zklyukgFESICK1GvPs5f7DDqSwgT4EqIiOI0o4OtPS9FjB2TxZ
-         /ilg==
+        bh=JLLoRClaRsY1Lr1KRBPf00edL9rjXGTDv1wSMzbaP0M=;
+        b=UhksqixCPWQ6OKnrJYp92dt5jvqsxLDx8MReK63lu45KrQwnRUsMaZTmCA3cezmsrn
+         QG79+6iv2hXCUrUI73TtPfETSrb1r19zUOrfs6RcmjwqzH9Rll2q3jTn5hb41evmLep1
+         USCdrevQSoHXhZLr2SKecLZDInYNnm6l5USxP182tg8wZKnBeCW8lMTbrDzRMG7v7zsr
+         R6xvWV8Pl4w4CguvvBXa8fCLIpNS/le/Y5bG/KKpcpZkxyu8isG9CGnlCLqrzEc4FvD2
+         q+iJk4F/6dF6h+M6ZjkHqElgkD6IqD0FFcCNa/4jrTVva18M4qFKLsJIiYcLtjC6Aecq
+         fsRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699871060; x=1700475860;
+        d=1e100.net; s=20230601; t=1699871061; x=1700475861;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=YwDa/zirDJc5nfx2Jg49qoDCUK60ez7e62AeKwMOj8I=;
-        b=qoBKmCWJBRlgjIZXAkzeXyiqHNp2xfZf4CcsFelYpskT4tFHbQI8Vp7w5FBsX9V/GS
-         YTSfd52jm80KsFcmmmZUH2XRQOGHIKzgrXDL4bIt/5Ct3EVoetrifJazWzG6XzqpTAqA
-         8/rfqm3ytxWaHmYtKdlHJmw3xFLNhY0zkrcnBsAUYf6Z6IxWF20ieev8V2++AkvLzfbj
-         BqEi/Iv4fnQiNhu6KyHHqEARziBqplg1a+0nqfmktRpBEoc4ZywwXhFjYj5rD7loVTJ8
-         X0uTFfL3aq6MF3CoIbQ12G1oMzKtcK7scQI5Y8jP1h9U3LL5N3Ab7dfwvMQ6A0oRCJg5
-         LwSw==
-X-Gm-Message-State: AOJu0YyMFyq+w9kyH0zfRpCj7i0XSZ73zanL3JY9ts3gdHiXZyl/4P6E
-	RbWRIlRB1K6nGj4wvdk3nTZL/egrEZ0=
-X-Google-Smtp-Source: AGHT+IFfjNvSHy4dLNK9YFHagGZP5725qzr6BCHPm7tHvh2FhK0vaniXd3CbX9mokNCCKhyKWZxYFg==
-X-Received: by 2002:a05:600c:6001:b0:409:7d0:d20b with SMTP id az1-20020a05600c600100b0040907d0d20bmr5143353wmb.24.1699871059593;
-        Mon, 13 Nov 2023 02:24:19 -0800 (PST)
+        bh=JLLoRClaRsY1Lr1KRBPf00edL9rjXGTDv1wSMzbaP0M=;
+        b=b2wFxRF8S0vgsX7LZxE9GtvtCOxZU6iS0qAamU3m/PYrd5XozMjNVXbfoYwsNA/J06
+         q7nfSu+QkDUNjRKrPPVFXAlIkyPw5+qp9JLyVcU+Ir6VnQr1Zm79fMaxL50FNBTNpVtv
+         KNprnsIfWETO+2UhMDI+Ta/sNkfbz49DAPXgKzyWNZ+7wcGm+djKhhYolxylG98Cb/Th
+         8FLRR6MnEogljRlwhBoETFF8QNVhuyj3Zdo1fNCPBAtZu4C3mlPz1dyGUBucKEgKfedf
+         v6u5/Npzt50rN32TQZaLm0f+3y/XVUPdRE1VxeuxP2gUic4ivC/f5JalGAowc5TYeHec
+         bXmA==
+X-Gm-Message-State: AOJu0YwUBAxEtElq9TDbpoCXs30TIyYAK+pcxAG78vD3GVaJN2ztmvI4
+	Kkb6s5w6UBMCo6rTOzw9AN/FlvOilRs=
+X-Google-Smtp-Source: AGHT+IFSSd76ceupoSRBEl9Of6/ephExeVzJ4Sz0TdoQ7Md6AvzHCqqgxyFryjpV/R9IZwCVAWcXLw==
+X-Received: by 2002:a5d:64ee:0:b0:32d:a0a9:4785 with SMTP id g14-20020a5d64ee000000b0032da0a94785mr4350853wri.7.1699871061023;
+        Mon, 13 Nov 2023 02:24:21 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y4-20020a5d4ac4000000b0032dbf32bd56sm5062384wrs.37.2023.11.13.02.24.19
+        by smtp.gmail.com with ESMTPSA id g26-20020adfa49a000000b0030647449730sm5157093wrb.74.2023.11.13.02.24.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 13 Nov 2023 02:24:19 -0800 (PST)
-Message-ID: <e31be0d764f47c21519016729259f8d74a53e21f.1699871056.git.gitgitgadget@gmail.com>
+Message-ID: <7bace397b4a4ea49c1ad5b931a0d07493fe44a16.1699871056.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1537.git.git.1699871056.gitgitgadget@gmail.com>
 References: <pull.1537.git.git.1699871056.gitgitgadget@gmail.com>
 From: "Haritha D via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 13 Nov 2023 10:24:05 +0000
-Subject: [PATCH 03/13] spaces and errors fix Handled git pipeline errors
+Date: Mon, 13 Nov 2023 10:24:06 +0000
+Subject: [PATCH 04/13] fixes for build errors Handled git pipeline errorse
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,141 +68,57 @@ This PR has fixes to enable build on z/OS
 
 Signed-off-by: Harithamma D <harithamma.d@ibm.com>
 ---
- builtin/hash-object.c |  6 +++---
- convert.c             | 22 +++++++++++++++++-----
- entry.c               | 22 +++++++++++-----------
- object-file.c         |  6 +++---
- 4 files changed, 34 insertions(+), 22 deletions(-)
+ convert.c          | 4 ++--
+ fetch-negotiator.h | 2 +-
+ fetch-pack.c       | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/hash-object.c b/builtin/hash-object.c
-index b33b32ff977..9129658a37c 100644
---- a/builtin/hash-object.c
-+++ b/builtin/hash-object.c
-@@ -62,8 +62,8 @@ static void hash_fd(int fd, const char *type, const char *path, unsigned flags,
- #  include <stdio.h>
- #  include <stdlib.h>
- 
--   int setbinaryfd(int fd)
--   {
-+int setbinaryfd(int fd)
-+{
-      attrib_t attr;
-      int rc;
- 
-@@ -74,7 +74,7 @@ static void hash_fd(int fd, const char *type, const char *path, unsigned flags,
- 
-      rc = __fchattr(fd, &attr, sizeof(attr));
-      return rc;
--   }
-+}
- #  endif
- #endif
- 
 diff --git a/convert.c b/convert.c
-index 4f14ff6f1ed..17cc849efed 100644
+index 17cc849efed..da05f6c2e51 100644
 --- a/convert.c
 +++ b/convert.c
-@@ -1315,15 +1315,28 @@ static struct attr_check *check;
+@@ -1313,13 +1313,13 @@ static int git_path_check_ident(struct attr_check_item *check)
  
- static const char* get_platform() {
+ static struct attr_check *check;
+ 
+-static const char* get_platform() {
++static const char* get_platform(void) {
  	struct utsname uname_info;
-+	char *result;
-+	if(!uname_info.sysname)
-+	{
+ 	char *result;
+ 	if(!uname_info.sysname)
+ 	{
+-		result = (char *)malloc(strlen(uname_info.sysname)+1);
+ 		int index=0;
 +		result = (char *)malloc(strlen(uname_info.sysname)+1);
-+		int index=0;
-+		while(index <= strlen(uname_info.sysname))
-+		{
-+			*result = uname_info.sysname[index];
-+			++result;
-+			++index;
-+		}
-+	}
+ 		while(index <= strlen(uname_info.sysname))
+ 		{
+ 			*result = uname_info.sysname[index];
+diff --git a/fetch-negotiator.h b/fetch-negotiator.h
+index e348905a1f0..2e19ef247f9 100644
+--- a/fetch-negotiator.h
++++ b/fetch-negotiator.h
+@@ -47,7 +47,7 @@ struct fetch_negotiator {
+ 	 */
+ 	int (*ack)(struct fetch_negotiator *, struct commit *);
  
- 	if (uname(&uname_info))
- 		die(_("uname() failed with error '%s' (%d)\n"),
- 			    strerror(errno),
- 			    errno);
+-	void (*release)(struct fetch_negotiator *);
++	void (*release_negotiator)(struct fetch_negotiator *);
  
--  if (!strcmp(uname_info.sysname, "OS/390"))
--    return "zos";
--  return uname_info.sysname;
-+	if (!strcmp(uname_info.sysname, "OS/390"))
-+		result="zos";
-+
-+	return result;
+ 	/* internal use */
+ 	void *data;
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 26999e3b659..f40b90dfa65 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -1232,7 +1232,7 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
+ 
+  all_done:
+ 	if (negotiator)
+-		negotiator->release(negotiator);
++		negotiator->release_negotiator(negotiator);
+ 	return ref;
  }
  
- 
-@@ -1331,11 +1344,10 @@ void convert_attrs(struct index_state *istate,
- 		   struct conv_attrs *ca, const char *path)
- {
- 	struct attr_check_item *ccheck = NULL;
--  struct strbuf platform_working_tree_encoding = STRBUF_INIT;
-+	struct strbuf platform_working_tree_encoding = STRBUF_INIT;
- 
- 	strbuf_addf(&platform_working_tree_encoding, "%s-working-tree-encoding", get_platform());
- 
--
- 	if (!check) {
- 		check = attr_check_initl("crlf", "ident", "filter",
- 					 "eol", "text", "working-tree-encoding", platform_working_tree_encoding.buf,
-diff --git a/entry.c b/entry.c
-index df6feb2234b..f2a7b2adbf5 100644
---- a/entry.c
-+++ b/entry.c
-@@ -130,17 +130,17 @@ int fstat_checkout_output(int fd, const struct checkout *state, struct stat *st)
- void tag_file_as_working_tree_encoding(struct index_state *istate, char* path, int fd) {
- 	struct conv_attrs ca;
- 	convert_attrs(istate, &ca, path);
--  if (ca.attr_action != CRLF_BINARY) {
--    if (ca.working_tree_encoding)
--      __chgfdcodeset(fd, ca.working_tree_encoding);
--    else
--      __setfdtext(fd);
--  }
--  else {
--    __setfdbinary(fd);
--  }
--
--  __disableautocvt(fd);
-+	if (ca.attr_action != CRLF_BINARY) {
-+		if (ca.working_tree_encoding)
-+			__chgfdcodeset(fd, ca.working_tree_encoding);
-+		else
-+			__setfdtext(fd);
-+	}
-+	else {
-+		__setfdbinary(fd);
-+	}
-+
-+	__disableautocvt(fd);
- }
- #endif
- 
-diff --git a/object-file.c b/object-file.c
-index 28e69ed1e33..562d1344422 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -2557,15 +2557,15 @@ int index_path(struct index_state *istate, struct object_id *oid,
- 	switch (st->st_mode & S_IFMT) {
- 	case S_IFREG:
- #ifdef __MVS__
--    validate_codeset(istate, path, &autocvtToASCII);
-+	validate_codeset(istate, path, &autocvtToASCII);
- #endif
- 		fd = open(path, O_RDONLY);
- 		if (fd < 0)
- 			return error_errno("open(\"%s\")", path);
- 
- #ifdef __MVS__
--   if (!autocvtToASCII)
--     __disableautocvt(fd);
-+	if (!autocvtToASCII)
-+		__disableautocvt(fd);
- #endif
- 
- 		if (index_fd(istate, oid, fd, st, OBJ_BLOB, path, flags) < 0)
 -- 
 gitgitgadget
 
