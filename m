@@ -1,139 +1,86 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38B817E
-	for <git@vger.kernel.org>; Tue, 14 Nov 2023 02:53:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32F887E
+	for <git@vger.kernel.org>; Tue, 14 Nov 2023 02:54:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="lh3dQB0s"
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F345812D
-	for <git@vger.kernel.org>; Mon, 13 Nov 2023 18:53:03 -0800 (PST)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 87E072C2E0;
-	Mon, 13 Nov 2023 21:53:03 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=Q2y2+XPYJRzMqboVM5WjeQa4tMId4z/cU4sgHR
-	us4VQ=; b=lh3dQB0sS1a2UF7G6zdh76ULW/9wfp9/Ob4eZej4/6rUx04YSPFXgg
-	yTHy7MY/tL3S/dEVwQfs+f6KlPRfQ/N2XDXIKEBMeSgFYUD7UPcy7arilm/+C3J/
-	ULGVIVX1lqcpDDLPJai81n4qFEx8OWzLssTr7jEb/8Sw9guytSbeg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 7273B2C2DF;
-	Mon, 13 Nov 2023 21:53:03 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id F2B392C2D6;
-	Mon, 13 Nov 2023 21:52:58 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Joanna Wang <jojwang@google.com>
-Cc: git@vger.kernel.org,  tboegi@web.de
-Subject: Re: [PATCH 1/1] attr: add native file mode values support
-In-Reply-To: <CAMmZTi-7=L6XOB9-MwZCpD5QaziTi0x6J7m-UTtwQ0S00wnVgQ@mail.gmail.com>
-	(Joanna Wang's message of "Mon, 13 Nov 2023 18:28:00 -0800")
-References: <CAMmZTi-7=L6XOB9-MwZCpD5QaziTi0x6J7m-UTtwQ0S00wnVgQ@mail.gmail.com>
-Date: Tue, 14 Nov 2023 11:52:57 +0900
-Message-ID: <xmqqbkbx11x2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jBFf7n2j"
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D3BB1A2
+	for <git@vger.kernel.org>; Mon, 13 Nov 2023 18:54:48 -0800 (PST)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-507962561adso8021723e87.0
+        for <git@vger.kernel.org>; Mon, 13 Nov 2023 18:54:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1699930486; x=1700535286; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7M2jnZbdiNAYGkNUecKACnjXnWIY910J/Npl8Nd03+Q=;
+        b=jBFf7n2jFUOTyP2dwJ2UshhqEfHiLH+38aaZHG6jAqi60Drg4rbqukvP0b87y2Ej41
+         k36ChJG4o/Hc/TV5pnuNcuU56an3f9787g+FnLJspGuL1oNafwlOof1JW8lNbDH/z8BI
+         flJAgGC+blSleyFZ4KJt5b2Q6M5uAlo8LuVR9+/sY5e7HflTfOv85MAvIyRLIhwATzhz
+         ENz6G6QSbWVyI7UWkKJeF8gnJcPFGV8N0GsKANynyenD5vqj/KPjZY2m78+PRqRHgeGs
+         dY1DtLZ8SATYCpYq43t0LNr0zsZ51Rr4TDKJkBKMlbfanfw48+w7z4fWEv6gxw87nXcm
+         6A/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699930486; x=1700535286;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7M2jnZbdiNAYGkNUecKACnjXnWIY910J/Npl8Nd03+Q=;
+        b=X3bbvWksqJJ9Bu20KgJxUT4T6UvMjr+u6bL/wNWO2uYp20PM29O5Gm2PxVDOxBlSx/
+         UW/2ZXDcTa7oyRj7sN/eupAgZeQGm8X4pWVlbKAm0VjxNsNvJmJmDQ2cuQFwJHBdW855
+         gL9WUvmBMyvjMlmwesvuPmwA3d4ygQhDz0uSWtyxHwUwA2p+Fbxrd0/Xt0o248xZz7so
+         TrS9Uyj1uglFBpH11LyKOpNU85AJkGvZjU0h3l8dXwteEwfwMUmn115UHKq67nST9F74
+         ABXW+2cMyn6HIzQovSpzF3NsqIGpguzkn/2ZB+ZYWq1tKSCC6z0rf5J4tsNR9mHPxVHS
+         Qa9A==
+X-Gm-Message-State: AOJu0Yx8J4KJ8yrJfDwUUVJsyStJmrYDjfyWLle2ooePgLUj4bVWv1ds
+	XOsC/WkKdYeglweU7Czei5a77p6K7mYZcpawLG4=
+X-Google-Smtp-Source: AGHT+IE6a9pj0zgEhxa7NrkZq3SayMvD9dC3ar8LH29Ll/sJmWG8h951wbkMa6JIdMYT7grDFYJODda5W+WpOCEjJlI=
+X-Received: by 2002:a05:6512:3608:b0:507:c871:7888 with SMTP id
+ f8-20020a056512360800b00507c8717888mr5846101lfs.9.1699930486312; Mon, 13 Nov
+ 2023 18:54:46 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- EBF0860A-8298-11EE-AAFB-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+References: <cover.1697736516.git.me@ttaylorr.com> <cover.1698101088.git.me@ttaylorr.com>
+ <3595db76a525fcebc3c896e231246704b044310c.1698101088.git.me@ttaylorr.com>
+ <CABPp-BEfy9VOvimP9==ry_rZXu=metOQ8s=_-XiG_Pdx9c06Ww@mail.gmail.com>
+ <ZU7X3N/rqCK/Y9cj@nand.local> <20231113220546.GB2065691@coredump.intra.peff.net>
+ <xmqqpm0d1591.fsf@gitster.g>
+In-Reply-To: <xmqqpm0d1591.fsf@gitster.g>
+From: Elijah Newren <newren@gmail.com>
+Date: Mon, 13 Nov 2023 18:54:33 -0800
+Message-ID: <CABPp-BGukcQVkzOOzuGLgcGSctrdzydMV5FSXn=gmUe9RQE=Hw@mail.gmail.com>
+Subject: Re: [PATCH v5 5/5] builtin/merge-tree.c: implement support for `--write-pack`
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org, 
+	"Eric W. Biederman" <ebiederm@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Joanna Wang <jojwang@google.com> writes:
+On Mon, Nov 13, 2023 at 5:41=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Jeff King <peff@peff.net> writes:
+>
+> > I posted an alternative in response to Elijah; the general idea being t=
+o
+> > allow the usual object-lookup code to access the in-progress pack. That
+> > would keep us limited to a single pack.
+>
+> If such a mechanism is done in a generic way, would we be able to
+> simplify fast-import a lot, I wonder?  IIRC, it had quite a lot of
+> code to remember what it has written to its output to work around
+> the exact issue your alternative tries to solve.  In fact, maybe we
+> could make fast-import a thin wrapper around the bulk checkin
+> infrastructure?
 
->>> Even if we assume that this code is currently meant to work only
->>> with GIT_ATTR_CHECKIN, I do not think this is what you want.  When
->>> asked to perform "git add . ':(exclude,mode=160000)'", you not only
->>> want to exclude the submodules that are already known to this
->>> superproject, but also a repository that _can_ become a submodule of
->>> this superproject when added, no?
-> Sorry, I was totally ignorant of ...
-
-Nothing to be sorry about, and if I sounded like I was upset or
-something, that wasn't my intention.  Reviewers and more experienced
-developers read posted patches to give pieces of advice exactly
-because no single human is perfect and knows everything.  We cover
-holes in each others' knowledge and attention.
-
->>> On the other hand, the GIT_ATTR_CHECKOUT direction is hopefully much
->>> simpler.  You'd see what the path in the index is, among a gitlink,
->>> a regular non-executable file, an executable file, or a symlink.
-> I noticed for both the GIT_ATTR_CHECKOUT and GIT_ATTR_CHECKIN directions,
-> in read_attr(), the indexed .gitattributes file is checked with the
-> actual file as fallback or vice versa.
-> I would think that we'd only want to use attributes from one state
-> (e.g. what's actually in the file)
-> or the other (e.g. what's indexed).
-> So I guess I'm still not sure what the "direction" concept is.
-> For GIT_ATTR_CHECKOUT, would we want to fallback to lstat?
-
-When checking things out of the index, the index should be the
-source of the truth.  If something is not in the index, is there a
-point in falling back to the workint tree state to decide if the
-thing should be checked out of the index?
-
->>> But stepping back a bit,
->>> such an application is likely marking selected few paths with the
->>> attribute, and paths for which "mode" was "unset" are now given
->>> these natural "mode"; it is inevitable to crash with such uses.
-> I'm confused. This does not match what I think is the current behavior
-> of my patch.
-> If "mode" was unset or removed for a path (meaning '<path> !mode' was
-> added to .gitattributes),
-> the code in my patch would respect that and not return the native mode.
-> It would return 'unspecified' or 'unset'.
-
-But the usual practice is *not* to cover all paths with explicit
-attribute definition, isn't it?  If somebody used the "foo"
-attribute in their project to decide certain paths are worth giving
-special treatments, there are paths with that attribute, perhaps
-(totally made up example):
-
-	*.c	foo=yes
-
-Now, if you add a new "built-in" attribute next to 'mode' that
-assigns "foo" in attr.c:git_check_attr() the same way to those paths
-whose value is still ATTR__UNKNOWN after collect_some_attrs returns,
-wouldn't a "hello.c" file get attribute 'foo' with value 'yes',
-while a "hello.h" file (not mentioned by .gitattributes) will get
-whatever value the built-in logic computed for it?  If that existing
-project were using "mode" (instead of "foo"), then doesn't this patch
-change the behaviour for them?
-
->>> Again, this has one hole, I think.  Paths that are not mentioned
->>> (not even with "!mode") would come to the function as ATTR__UNKNOWN
->>> and trigger the fallback behaviour, even when other paths are given
->>> end-user specified "mode" attribute values.
-> What you are describing sounds correct/what I intended.
-> So are you saying that the expected behavior is actually:
-> If the user sets 'mode' for 1+ paths in the repo, then the native mode
-> fallback should
-> NOT be used for all paths in the repo?
-
-That might be workable, but it breaks a well working system suddenly
-when somebody uses "mode" in their .gitattibutes and we do not even
-warn about the breakage, which is not ideal.
-
-I think, when we see such an attribute is defined while reading from
-.gitattributes and friends, we would probably want to warn and
-ignore their definition altogether and use *only* the computed
-value.  This cannot be done in a backward compatible way, so it
-would be better to carve out a namespace (and avoid overly generic
-word like "mode") for ourselves to define built-in attributes that
-do not overlap with end-user defined attribute names.
-
-Perhaps call this 'builtin-object-mode' or something and document
-that any attribute with a name that begins with 'builtin-' will
-always get a computed value (possibly "unset"), it is an error
-to define such an attribute in .gitattributes system, or something?
-
-
+fast-import also attempts to delta objects against previous ones as it
+writes them to the pack.  That's one thing still lacking from this
+solution, but aside from that, it also sounds to me like the bulk
+checkin infrastructure is getting closer to becoming a replacement for
+much of the fast-import code.
