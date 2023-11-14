@@ -1,71 +1,71 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8B0E15ACE
-	for <git@vger.kernel.org>; Tue, 14 Nov 2023 08:58:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D87016414
+	for <git@vger.kernel.org>; Tue, 14 Nov 2023 08:58:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XAYvf+Ul";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YNdyU6jr"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Uh5WLVyn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BO8W5zAt"
 Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 469C9A4
-	for <git@vger.kernel.org>; Tue, 14 Nov 2023 00:58:46 -0800 (PST)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailout.nyi.internal (Postfix) with ESMTP id A2BA55C0117;
-	Tue, 14 Nov 2023 03:58:45 -0500 (EST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74BDCA4
+	for <git@vger.kernel.org>; Tue, 14 Nov 2023 00:58:50 -0800 (PST)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id E345A5C0117;
+	Tue, 14 Nov 2023 03:58:49 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Tue, 14 Nov 2023 03:58:45 -0500
+  by compute5.internal (MEProxy); Tue, 14 Nov 2023 03:58:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm1; t=1699952325; x=1700038725; bh=VL
-	O1zHZx036srSc7DVRFwaPRXgE5IgC/eKk1JRsFr/0=; b=XAYvf+UlHiXnaccY2r
-	YFKF7iZ2YjuCFVTf/aMwmQalxwJ47jcI7oaYexH3xB39m8FWOp62fbxqKDeLxXed
-	N/IX89w/fSZTEjEi18QwO3Y0wz+lXT7DeJfDcbgGkz20tKQD3+yqb4dnmJT+Pxet
-	+JdL3eqaJOcO+V17/WUgsX5t8vWQOgniHuR6xccWziOgidJf3aJuq1Fpq1NK8PE1
-	rbidJ6K0oJ6kEXfXOY6zEmRUDdtOH8MuzJCLfEknyXvy7rpYj1nSQchdFiUNzKUa
-	6Ig0a0t3ajlPSh7ZoI13hQqTjomWC92q2F5ycjsSxmlEtwHlvdcPFHCDlK09Y5Nu
-	TUAw==
+	:subject:subject:to:to; s=fm1; t=1699952329; x=1700038729; bh=Iu
+	BiEhzXwNi4SZqlBHKdppXpLLO9BAJWCDEc3r6ODs4=; b=Uh5WLVynVlkDY2BdHq
+	VStlYcZHWFO7rVfcKrAPkEiqncfPWL/FCZ22yi4Y4OuopS1FY/qA1GoYijx7e12N
+	Mnn6Igjby7qMZ6jUICV2a/q2QUqrrif1MVnqukAzDsjpG/WhOVjpbJ07WE6aXQ5j
+	TI/gnStLYbtrmFzwfcsQCGsmLdMzn40LsgFHUOhH6LQHCy+Vfns2M3Xxs/KQdsw3
+	9FacoWICzJmASRsA/Y6tjtMmybDWtLxqdO7XxXNsfGvKLItPBuohTfiagd6/j/OK
+	dGPrr/V/x2AhdIy+VfYF8/ssWzu1FFTSfmAdSGDegcm0CyXpENNRylrbdBX8Jdtc
+	2x2g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm1; t=1699952325; x=1700038725; bh=VLO1zHZx036sr
-	Sc7DVRFwaPRXgE5IgC/eKk1JRsFr/0=; b=YNdyU6jrnRU+nAVkpdshUM/JEbbiT
-	yI+PRW6SKtbQai+zCoUS3PcWpJinbeAdZsZ+XADSRdN/rNq8ciTnuC9eWfwpwWJ7
-	cafK7sG5PkcUQXRTM3Pqzd3Ag3Yp7wodPuIfIcqZ+bLLKkMJuCGlj5tx/v1/yHA0
-	zpo4fYtqgDGXZexuWLpjQHyYYZgh4+Rd/Df6hkQnrMG/qGen7Jt+Je4xcJvukDOQ
-	RF6g29mro9Qao0Pw8ehIZf8NlMpK7YVLAccbKL3Rhpz0D/zQsynpqEBER6f8QwKi
-	QEdy0lBrgWtyR1cYeErH1DsNzmbrhRoikTKKLIE3jEmJVOQvKUseHotnQ==
-X-ME-Sender: <xms:xTZTZR8pyv0RblrXKv3elAY925q5mPDGrhZfgx-1eGgjSnYqpOYSyg>
-    <xme:xTZTZVt4j8ItoRFCCLTElVyq3FOyYgfkSXBRo6EK7Glvgt_FXPeU1NTtZCMlcV8S0
-    HaMKEy_dWaYUYZUkA>
-X-ME-Received: <xmr:xTZTZfBYfJIWZ84fD-KmsNlKn9BHzximKFC1mUWy1gjMBmKLUCIJ5Bpwu3bUPyQdxACNT-Z1Ls8i3vcQQ9osO556NC9Ryd8nc9jZoHUmltXQckk>
+	:x-sasl-enc; s=fm1; t=1699952329; x=1700038729; bh=IuBiEhzXwNi4S
+	ZqlBHKdppXpLLO9BAJWCDEc3r6ODs4=; b=BO8W5zAtlwQkSVuLqzm436MYjOR8y
+	gIu+Fl02TL1UgiVd8lUMaYu+n7M+cLXTBp3mrk3tkCMGDKA6cYsL4efLgOCI/5JG
+	OdUfIiy/dSFCqP4QkAaow5gSYZ5tdi1vaLrnh/sRXWaCGee1nH2fQ3e/JlcZg1X5
+	9/hCHmaGRx+AWjETusZuyzPaPxKcR+k80oAG94BcxxXnCRWCkR+tCBwks0d+husF
+	ic1fDlWxU/oxyOfdQafbxZyZJu6d+mw8E8Q6Ymu3sjQTP3O+V8j+4pZVsoyKUzQr
+	f078y9yd0ySkzvUEuRNPa+180ptzh+0Kh35b85xqJqymShEztzztTvznA==
+X-ME-Sender: <xms:yTZTZcvCDc1-Cu7DCI2wRGqcPFtIFbpkWKrGIhmVvorxL582E_C9xw>
+    <xme:yTZTZZdu-JAs6IXHLZH6KKrV3kHHjEt3BnhJhQ9534_5evILP_qaAeoDHdPIaT_lF
+    JRuIOnYsgsXA20SjQ>
+X-ME-Received: <xmr:yTZTZXwYt8mdsNmIrDqzSmcEJHJiN5S_E5C-pw-xvWoTIk4fO_hNBxRbLE4oJco8tMwesPcC0zeJ_a7yxHfbZdPTdSxu3f7INmrrFvz7NnDYdbo>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudefuddguddviecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefrrght
+    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
     rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeetueevhffhudefvdegieeuieelgedthfegfedtueevjeejtdfgjeehudejuedt
-    udenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
+    gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
+    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
     esphhkshdrihhm
-X-ME-Proxy: <xmx:xTZTZVfq_Hh7vmgvXO7WHybvzN0f5CuWB5J9Mr8xVhITiwRt54lpWA>
-    <xmx:xTZTZWO1sXRnL9nfPPbbv2SUlkDAv9hJVygV2404NOdJradmLGM23A>
-    <xmx:xTZTZXnJy-pqIdlv5L_ScA3tnWds6N6ffoUf7HnEeldVEOu1yMjANw>
-    <xmx:xTZTZY1JELH1hCUOReWEY92xfTFXajUIiaNHiZh_wnX1WczPxbn0VQ>
+X-ME-Proxy: <xmx:yTZTZfNAKMIGDkVsc1pPpaSrbZSno5SiMR6XOV8Rd52d7vLgSjSuSw>
+    <xmx:yTZTZc-9xauPZcsOAJgOX4VMGyf4uWywV5U-qMx4tmD_oVCAAebOXw>
+    <xmx:yTZTZXVndMlX-LtUhS3A9MhqrDNm0jF7RcXKVHq-RCDdY9iq0bzkBQ>
+    <xmx:yTZTZalX_XLVrnlKfnygtmWF9YRDcPJZXLV0CH_9V5i5ECIRpi7ezg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 14 Nov 2023 03:58:44 -0500 (EST)
+ 14 Nov 2023 03:58:48 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id cc10b4ed (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 14 Nov 2023 08:58:06 +0000 (UTC)
-Date: Tue, 14 Nov 2023 09:58:42 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id b2a66564 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 14 Nov 2023 08:58:10 +0000 (UTC)
+Date: Tue, 14 Nov 2023 09:58:46 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: David Turner <novalis@novalis.org>,
 	Han-Wen Nienhuys <hanwen@google.com>
-Subject: [PATCH 2/4] refs/files: use transactions to delete references
-Message-ID: <2cfa0245fb089ed9d85cd44dad38c7f261e2200a.1699951815.git.ps@pks.im>
+Subject: [PATCH 3/4] refs: deduplicate code to delete references
+Message-ID: <bb9f45543daf32e6485a57781e1a71e9503936f8.1699951815.git.ps@pks.im>
 References: <cover.1699951815.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -74,173 +74,60 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="VDRTQsY2iOnLHgbJ"
+	protocol="application/pgp-signature"; boundary="2Rb09e/IROKbvh+P"
 Content-Disposition: inline
 In-Reply-To: <cover.1699951815.git.ps@pks.im>
 
 
---VDRTQsY2iOnLHgbJ
-Content-Type: text/plain; charset=utf-8
+--2Rb09e/IROKbvh+P
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-In the `files_delete_refs()` callback function of the files backend we
-implement deletion of references. This is done in two steps:
-
-    1. We lock the packed-refs file and delete all references from it in
-       a single transaction.
-
-    2. We delete all loose references via separate calls to
-       `refs_delete_ref()`.
-
-These steps essentially duplicate the logic around locking and deletion
-order that we already have in the transactional interfaces, where we do
-know to lock and evict references from the packed-refs file. Despite the
-fact that we duplicate the logic, it's also less efficient than if we
-used a single generic transaction:
-
-    - The transactional interface knows to skip locking of the packed
-      refs in case they don't contain any of the refs which are about to
-      be deleted.
-
-    - We end up creating N+1 separate reference transactions, one for
-      the packed-refs file and N for the individual loose references.
-
-Refactor the code to instead delete references via a single transaction.
-As we don't assert the expected old object ID this is equivalent to the
-previous behaviour, and we already do the same in the packed-refs
-backend.
-
-Despite the fact that the result is simpler to reason about, this change
-also results in improved performance. The following benchmarks have been
-executed in linux.git:
-
-```
-$ hyperfine -n '{rev}, packed=3D{packed} refcount=3D{refcount}' \
-    -L packed true,false -L refcount 1,1000 -L rev master,pks-ref-store-gen=
-eric-delete-refs \
-    --setup 'git -C /home/pks/Development/git switch --detach {rev} && make=
- -C /home/pks/Development/git -j17' \
-    --prepare 'printf "create refs/heads/new-branch-%d HEAD\n" $(seq {refco=
-unt}) | git -C /home/pks/Reproduction/linux.git update-ref --stdin && if te=
-st {packed} =3D true; then git pack-refs --all; fi' \
-    --warmup=3D10 \
-    '/home/pks/Development/git/bin-wrappers/git -C /home/pks/Reproduction/l=
-inux.git branch -d new-branch-{1..{refcount}}'
-
-Benchmark 1: master packed=3Dtrue refcount=3D1
-  Time (mean =C2=B1 =CF=83):       7.8 ms =C2=B1   1.6 ms    [User: 3.4 ms,=
- System: 4.4 ms]
-  Range (min =E2=80=A6 max):     5.5 ms =E2=80=A6  11.0 ms    120 runs
-
-Benchmark 2: master packed=3Dfalse refcount=3D1
-  Time (mean =C2=B1 =CF=83):       7.0 ms =C2=B1   1.1 ms    [User: 3.2 ms,=
- System: 3.8 ms]
-  Range (min =E2=80=A6 max):     5.7 ms =E2=80=A6   9.8 ms    180 runs
-
-Benchmark 3: master packed=3Dtrue refcount=3D1000
-  Time (mean =C2=B1 =CF=83):     283.8 ms =C2=B1   5.2 ms    [User: 45.7 ms=
-, System: 231.5 ms]
-  Range (min =E2=80=A6 max):   276.7 ms =E2=80=A6 291.6 ms    10 runs
-
-Benchmark 4: master packed=3Dfalse refcount=3D1000
-  Time (mean =C2=B1 =CF=83):     284.4 ms =C2=B1   5.3 ms    [User: 44.2 ms=
-, System: 233.6 ms]
-  Range (min =E2=80=A6 max):   277.1 ms =E2=80=A6 293.3 ms    10 runs
-
-Benchmark 5: generic-delete-refs packed=3Dtrue refcount=3D1
-  Time (mean =C2=B1 =CF=83):       6.2 ms =C2=B1   1.8 ms    [User: 2.3 ms,=
- System: 3.9 ms]
-  Range (min =E2=80=A6 max):     4.1 ms =E2=80=A6  12.2 ms    142 runs
-
-Benchmark 6: generic-delete-refs packed=3Dfalse refcount=3D1
-  Time (mean =C2=B1 =CF=83):       7.1 ms =C2=B1   1.4 ms    [User: 2.8 ms,=
- System: 4.3 ms]
-  Range (min =E2=80=A6 max):     4.2 ms =E2=80=A6  10.8 ms    157 runs
-
-Benchmark 7: generic-delete-refs packed=3Dtrue refcount=3D1000
-  Time (mean =C2=B1 =CF=83):     198.9 ms =C2=B1   1.7 ms    [User: 29.5 ms=
-, System: 165.7 ms]
-  Range (min =E2=80=A6 max):   196.1 ms =E2=80=A6 201.4 ms    10 runs
-
-Benchmark 8: generic-delete-refs packed=3Dfalse refcount=3D1000
-  Time (mean =C2=B1 =CF=83):     199.7 ms =C2=B1   7.8 ms    [User: 32.2 ms=
-, System: 163.2 ms]
-  Range (min =E2=80=A6 max):   193.8 ms =E2=80=A6 220.7 ms    10 runs
-
-Summary
-  generic-delete-refs packed=3Dtrue refcount=3D1 ran
-    1.14 =C2=B1 0.37 times faster than master packed=3Dfalse refcount=3D1
-    1.15 =C2=B1 0.40 times faster than generic-delete-refs packed=3Dfalse r=
-efcount=3D1
-    1.26 =C2=B1 0.44 times faster than master packed=3Dtrue refcount=3D1
-   32.24 =C2=B1 9.17 times faster than generic-delete-refs packed=3Dtrue re=
-fcount=3D1000
-   32.36 =C2=B1 9.29 times faster than generic-delete-refs packed=3Dfalse r=
-efcount=3D1000
-   46.00 =C2=B1 13.10 times faster than master packed=3Dtrue refcount=3D1000
-   46.10 =C2=B1 13.13 times faster than master packed=3Dfalse refcount=3D10=
-00
-```
-
-Especially in the case where we have many references we can see a clear
-performance speedup of nearly 30%.
-
-This is in contrast to the stated objecive in a27dcf89b68 (refs: make
-delete_refs() virtual, 2016-09-04), where the virtual `delete_refs()`
-function was introduced with the intent to speed things up rather than
-making things slower. So it seems like we have outlived the need for a
-virtual function.
+Both the files and the packed-refs reference backends now use the same
+generic transactions-based code to delete references. Let's pull these
+implementations up into `refs_delete_refs()` to deduplicate the code.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs/files-backend.c | 66 +++++++++++++++++++++++---------------------
- 1 file changed, 34 insertions(+), 32 deletions(-)
+ refs.c                | 48 ++++++++++++++++++++++++++++++++++++++++---
+ refs/files-backend.c  | 46 +----------------------------------------
+ refs/packed-backend.c | 45 +---------------------------------------
+ 3 files changed, 47 insertions(+), 92 deletions(-)
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index db5c0c7a72..778d3a96ba 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -1268,49 +1268,51 @@ static int files_pack_refs(struct ref_store *ref_st=
-ore,
- static int files_delete_refs(struct ref_store *ref_store, const char *msg,
- 			     struct string_list *refnames, unsigned int flags)
+diff --git a/refs.c b/refs.c
+index fcae5dddc6..16bfa21df7 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2599,13 +2599,55 @@ void ref_transaction_for_each_queued_update(struct =
+ref_transaction *transaction,
+ int refs_delete_refs(struct ref_store *refs, const char *logmsg,
+ 		     struct string_list *refnames, unsigned int flags)
  {
--	struct files_ref_store *refs =3D
--		files_downcast(ref_store, REF_STORE_WRITE, "delete_refs");
 +	struct ref_transaction *transaction;
- 	struct strbuf err =3D STRBUF_INIT;
--	int i, result =3D 0;
++	struct strbuf err =3D STRBUF_INIT;
 +	struct string_list_item *item;
 +	int ret =3D 0, failures =3D 0;
+ 	char *msg;
+-	int retval;
++
++	if (!refnames->nr)
++		return 0;
 =20
- 	if (!refnames->nr)
- 		return 0;
-=20
--	if (packed_refs_lock(refs->packed_ref_store, 0, &err))
--		goto error;
--
--	if (refs_delete_refs(refs->packed_ref_store, msg, refnames, flags)) {
--		packed_refs_unlock(refs->packed_ref_store);
--		goto error;
+ 	msg =3D normalize_reflog_message(logmsg);
+-	retval =3D refs->be->delete_refs(refs, msg, refnames, flags);
++
 +	/*
 +	 * Since we don't check the references' old_oids, the
 +	 * individual updates can't fail, so we can pack all of the
 +	 * updates into a single transaction.
 +	 */
-+	transaction =3D ref_store_transaction_begin(ref_store, &err);
++	transaction =3D ref_store_transaction_begin(refs, &err);
 +	if (!transaction) {
 +		ret =3D error("%s", err.buf);
 +		goto out;
- 	}
-=20
--	packed_refs_unlock(refs->packed_ref_store);
--
--	for (i =3D 0; i < refnames->nr; i++) {
--		const char *refname =3D refnames->items[i].string;
--
--		if (refs_delete_ref(&refs->base, msg, refname, NULL, flags))
--			result |=3D error(_("could not remove reference %s"), refname);
++	}
++
 +	for_each_string_list_item(item, refnames) {
 +		ret =3D ref_transaction_delete(transaction, item->string,
 +					     NULL, flags, msg, &err);
@@ -250,23 +137,8 @@ ore,
 +			strbuf_reset(&err);
 +			failures =3D 1;
 +		}
- 	}
-=20
--	strbuf_release(&err);
--	return result;
--
--error:
--	/*
--	 * If we failed to rewrite the packed-refs file, then it is
--	 * unsafe to try to remove loose refs, because doing so might
--	 * expose an obsolete packed value for a reference that might
--	 * even point at an object that has been garbage collected.
--	 */
--	if (refnames->nr =3D=3D 1)
--		error(_("could not delete reference %s: %s"),
--		      refnames->items[0].string, err.buf);
--	else
--		error(_("could not delete references: %s"), err.buf);
++	}
++
 +	ret =3D ref_transaction_commit(transaction, &err);
 +	if (ret) {
 +		if (refnames->nr =3D=3D 1)
@@ -275,39 +147,155 @@ ore,
 +		else
 +			error(_("could not delete references: %s"), err.buf);
 +	}
-=20
++
 +out:
 +	if (!ret && failures)
 +		ret =3D -1;
 +	ref_transaction_free(transaction);
- 	strbuf_release(&err);
--	return -1;
++	strbuf_release(&err);
+ 	free(msg);
+-	return retval;
 +	return ret;
  }
 =20
+ int delete_refs(const char *msg, struct string_list *refnames,
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 778d3a96ba..8d28810e67 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -1268,51 +1268,7 @@ static int files_pack_refs(struct ref_store *ref_sto=
+re,
+ static int files_delete_refs(struct ref_store *ref_store, const char *msg,
+ 			     struct string_list *refnames, unsigned int flags)
+ {
+-	struct ref_transaction *transaction;
+-	struct strbuf err =3D STRBUF_INIT;
+-	struct string_list_item *item;
+-	int ret =3D 0, failures =3D 0;
+-
+-	if (!refnames->nr)
+-		return 0;
+-
+-	/*
+-	 * Since we don't check the references' old_oids, the
+-	 * individual updates can't fail, so we can pack all of the
+-	 * updates into a single transaction.
+-	 */
+-	transaction =3D ref_store_transaction_begin(ref_store, &err);
+-	if (!transaction) {
+-		ret =3D error("%s", err.buf);
+-		goto out;
+-	}
+-
+-	for_each_string_list_item(item, refnames) {
+-		ret =3D ref_transaction_delete(transaction, item->string,
+-					     NULL, flags, msg, &err);
+-		if (ret) {
+-			warning(_("could not delete reference %s: %s"),
+-				item->string, err.buf);
+-			strbuf_reset(&err);
+-			failures =3D 1;
+-		}
+-	}
+-
+-	ret =3D ref_transaction_commit(transaction, &err);
+-	if (ret) {
+-		if (refnames->nr =3D=3D 1)
+-			error(_("could not delete reference %s: %s"),
+-			      refnames->items[0].string, err.buf);
+-		else
+-			error(_("could not delete references: %s"), err.buf);
+-	}
+-
+-out:
+-	if (!ret && failures)
+-		ret =3D -1;
+-	ref_transaction_free(transaction);
+-	strbuf_release(&err);
+-	return ret;
++	return refs_delete_refs(ref_store, msg, refnames, flags);
+ }
+=20
  /*
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index 59c78d7941..1589577005 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -1691,50 +1691,7 @@ static int packed_initial_transaction_commit(struct =
+ref_store *ref_store UNUSED,
+ static int packed_delete_refs(struct ref_store *ref_store, const char *msg,
+ 			     struct string_list *refnames, unsigned int flags)
+ {
+-	struct packed_ref_store *refs =3D
+-		packed_downcast(ref_store, REF_STORE_WRITE, "delete_refs");
+-	struct strbuf err =3D STRBUF_INIT;
+-	struct ref_transaction *transaction;
+-	struct string_list_item *item;
+-	int ret;
+-
+-	(void)refs; /* We need the check above, but don't use the variable */
+-
+-	if (!refnames->nr)
+-		return 0;
+-
+-	/*
+-	 * Since we don't check the references' old_oids, the
+-	 * individual updates can't fail, so we can pack all of the
+-	 * updates into a single transaction.
+-	 */
+-
+-	transaction =3D ref_store_transaction_begin(ref_store, &err);
+-	if (!transaction)
+-		return -1;
+-
+-	for_each_string_list_item(item, refnames) {
+-		if (ref_transaction_delete(transaction, item->string, NULL,
+-					   flags, msg, &err)) {
+-			warning(_("could not delete reference %s: %s"),
+-				item->string, err.buf);
+-			strbuf_reset(&err);
+-		}
+-	}
+-
+-	ret =3D ref_transaction_commit(transaction, &err);
+-
+-	if (ret) {
+-		if (refnames->nr =3D=3D 1)
+-			error(_("could not delete reference %s: %s"),
+-			      refnames->items[0].string, err.buf);
+-		else
+-			error(_("could not delete references: %s"), err.buf);
+-	}
+-
+-	ref_transaction_free(transaction);
+-	strbuf_release(&err);
+-	return ret;
++	return refs_delete_refs(ref_store, msg, refnames, flags);
+ }
+=20
+ static int packed_pack_refs(struct ref_store *ref_store UNUSED,
 --=20
 2.42.0
 
 
---VDRTQsY2iOnLHgbJ
+--2Rb09e/IROKbvh+P
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVTNsEACgkQVbJhu7ck
-PpT7txAAlZm9fPwKR+O8bNwJElfdndlAsyMnSnSCW3GtcYQivvxpdIYJzKt9OnFL
-dCWXEp/FyT02vrmsg+k9JIPVnF4Oo1fsuzKCOVwgsQ19q8jj/F1uFMyPdN5Fc+i6
-4+cE7y97mYimGxPaJBM3yT/lAg/S10j7Z1/x3Y2Qh3ueps+FVpLdvQ/sBz1k2s1r
-w7WmlddRIhCs5grKbeDuSqcvWAPcka2NxG369VcaFe9lmK6/00g98AVh3dnEaSpT
-W9ce24dd4YzHEVVL/qHkV83OM92p+17lueYBS4gS2VQJbHOqPjs6fLltlBd0LXwM
-F+O3sJSPz06Rto6RMxlscvCeSfhpLJlJWIFA6+GYyDBWaIduqBCJRCGXY0ctm6FH
-tuNR8ZaUDc9CbsNWbvJfYZLX2lS17Q93OvxJ3ZGRuhsEyG+hss+eufjcdyewHzyY
-aISNZ8W7aNlC32gUxZ2QedFqeeipzjpFioN8h0HqCWx9HxIGcKqAsZ6gS3d7I4Qp
-xOR3erouKbZBvhmQawlI9riYdc2G+KgWU2TVdqXDpAWMWvooTijIB8OSaXUbV/fO
-79RP1P9nJN3riPL+SZ1Gn9BQqafGDzml6ZeXKjlHI2P09Xk6o0cX9tdk5tSIXoLR
-qIRzlDzfM7KN5HYNk96yy/e5qpMwvbKPeKGwYjMr4Nl6SquEGLU=
-=wCt5
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVTNsUACgkQVbJhu7ck
+PpQEAhAAg+gEd1VYO1699D+ZWF7GMTsvN0MaXgmzZQ+DrZweB6hGerIbbCNQXDeg
+oBusao05XStEf/Q1tdCyjbufke/2rWwrvj5qnDbQL14RxM2nifXj6rW03mPltxC3
+iSBbquRYyomDuGa2PPvh/FS2iUIUnpPFVJUm2QCYJYzA24FNgWf5OaW2WzMT1HNr
+tS0tyVADlnrRaC72vahQLqcpNZalCix7lPYmcYZc8iRQZzBINQZUbd2vB7UlpW6F
+EGx9FplAUSyL59sCZetwKLMs6+MAyn5EdNRcDzwc5LFCthofGEobtl5mirGRF+oP
+XDGYPGs2I/Hye6FD+5Y9MtcCcApxV9KgHvN+w8O6P9XFg3YxI78sB3MNb4R9d7Ut
+Zk5kIbrWK66Kyb77xscADdbawUCIAPfK+deu5+7E70cMP+3A9RLY5nCGAWSoyz+H
+2Dv7m1croXS/+s9iiroZAzdWQ4M6ReBfE6qF8iT+A6no8pt6lfji1npoIt/n/MOq
+o9yedPtt1YoFRmLSvb2lpm5MGfsOXe33VOITUeqtOVjsFzUsO4GNQyetduz+PeWV
+GJ8VMN9z8kF+DWuXiqUmNitayx9y4D7lSbu3zRMTW15wfTB1YLYd5jxzwuTwmnLS
+XfjdGYKuygGjSrUokR2VGkuTFQfJfurzE3DI+Da6CUOfolXLNTM=
+=awzX
 -----END PGP SIGNATURE-----
 
---VDRTQsY2iOnLHgbJ--
+--2Rb09e/IROKbvh+P--
