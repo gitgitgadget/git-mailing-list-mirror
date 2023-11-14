@@ -1,56 +1,56 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AA892FC3F
-	for <git@vger.kernel.org>; Tue, 14 Nov 2023 19:54:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92F732FC47
+	for <git@vger.kernel.org>; Tue, 14 Nov 2023 19:54:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B1T+OmwH"
-Received: from mail-qv1-xf32.google.com (mail-qv1-xf32.google.com [IPv6:2607:f8b0:4864:20::f32])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FFFCEB
-	for <git@vger.kernel.org>; Tue, 14 Nov 2023 11:54:14 -0800 (PST)
-Received: by mail-qv1-xf32.google.com with SMTP id 6a1803df08f44-66d24ccc6f2so1291006d6.0
-        for <git@vger.kernel.org>; Tue, 14 Nov 2023 11:54:14 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="By19hHLM"
+Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3BD2102
+	for <git@vger.kernel.org>; Tue, 14 Nov 2023 11:54:15 -0800 (PST)
+Received: by mail-qt1-x82e.google.com with SMTP id d75a77b69052e-41cd6e1d4fbso35150351cf.1
+        for <git@vger.kernel.org>; Tue, 14 Nov 2023 11:54:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1699991652; x=1700596452; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1699991654; x=1700596454; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Ch72ojuVCuaq6f8agFpDhGz2k0gHl0iioyjojQYsJR8=;
-        b=B1T+OmwHFnmlkNTs7hVzioR26fqFv/ugF0HgQu7Gg+VvbCw54TO3/OgInfU4Qw6k2H
-         02YM5qMFJ9Xwsk4cDOdkdeEHCWFI/WCEo9Dgv2qx2JPyj+RqNwHBhuexMZ2TBlFVXBay
-         JEvpqTlIKLwG6nYX4p0cjKhmctCwoahAZ24+qDDvZ/wBeO06IxcahozIYs/Ogylu7vKN
-         z6oCtRzlC4qpJWwKlNuEVHfBPm64FnfGXshlUaZK6i8XjGG1y2VHoVj5ydwGAuKUPWWA
-         sj4xhiZeZ0i1Qmxv0qWGCcp9PhCQ0qXtqcPAFyGIKPwjw05R7mLE3r9Tq1zbPSHBu4Jm
-         AN+Q==
+        bh=5XWd6sHPmyhluF5tAor/FSeqnyNOadFnP2v9XS/SCks=;
+        b=By19hHLMlbwX0Vnxx9FSPDxfDyWOpaMTvvEuF5XIoUV2XJZ2F+GDYLp9H6XrZhmIFY
+         8EKNEEeWh8awYZcefHtxAXtMmX6JBV+0q4OSR7xskfaMocpXjWHaofT2EWiBUvbboNv/
+         2p+vTvO4sPfCHw0K6kdhxK6z69nPXm99G1oNnW3TYz9T2y7SvpzzsoE90GbapDFxqQy6
+         lfz7of39VeQIuBrxChOLb4PoPtl+fRcOJHvWAkb0dB4+r7C6Y/KPnWQ2iUa3IA275/yo
+         DeGK3adEZyPc5Rpr23rP92V8H2cTcYb2Me8n6PdXTG+qy9MKRIB8h6L9FyQzjkATKQMe
+         pTwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699991652; x=1700596452;
+        d=1e100.net; s=20230601; t=1699991654; x=1700596454;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Ch72ojuVCuaq6f8agFpDhGz2k0gHl0iioyjojQYsJR8=;
-        b=ewku7HmTHIzEWwORcqlgYxxOqopvThwYeK2jVlc72KM3DNfDoLhmJvqjLzAP8nNaZ6
-         tk3iCraEqhL8t1gIQu0VyVDmVI91GYi/YmaDNUWlbtTh0RfcpHgjabnyQPr7NAWQngQM
-         XpQoymPWboHQZALfJyV/4imOLotrnSo0veutni7KeSR2ibOvgGLMNL42JSDG+aazUJbj
-         34B6n82asbU25fnICfCaKnziH7uNNZ+Bgxg0EFR43Jlx+PaLYoSc17cLLJSSJ9Hkn2NV
-         SnWYswBoRjWabYfH94107j6LtLgk5EvSwBVe0ZTvQGnx6+kEtZ2gcer8IQeThj/mbTif
-         lM4Q==
-X-Gm-Message-State: AOJu0YwlfGeuR7Asr9Lm/sYQuuTPZKuvbVyrXSBH6zitmPZATdLa/mN1
-	eoWnvT27KBKB2V4172dAw1kD/8VKUcY=
-X-Google-Smtp-Source: AGHT+IFSUBG6hQCTuURCXQ9aa6DpilvHtgSFrdG7UlhSAM7sXqhTMuMfhZg3yXpMkqJjG1bp6XsCqQ==
-X-Received: by 2002:a05:6214:d06:b0:66d:8752:b6cf with SMTP id 6-20020a0562140d0600b0066d8752b6cfmr5860156qvh.26.1699991652486;
-        Tue, 14 Nov 2023 11:54:12 -0800 (PST)
+        bh=5XWd6sHPmyhluF5tAor/FSeqnyNOadFnP2v9XS/SCks=;
+        b=Jdxi9prbnZOK2amWIHP+j6KdGueDBuxnZvsVMaG4Ff/JLCCSjPcmy/+BrS4TPkggzL
+         6LpQvhmaIMDe43VyA/EDJL9ST5Z1hY1fRkzz8IXA5EsWYgmEP8AYxK7k6MTI4GXG/boA
+         eNJITo8pFndys8P3z12RHAy0UV0NJjfqJLLONf+aa+sahfgEerBFWa/AXraVkJ9THsCT
+         13nmp/nGgx/p7p2M+2ABYN+uLSqucw5SwtTOPeiCqYp5kPC5lIwKXTIREujrmlBXbMjQ
+         2nJBfqsdWVVKZmfuyitbsfHUmwYS9ftCbUQiMTYpXZ8VJCxQWO9+t/dszs9x41zunB6t
+         rEjQ==
+X-Gm-Message-State: AOJu0YwHz1GN7rcMN4ty/TF1isdlPFMwUohXiAxe9Q12EQAh2w+orWyI
+	tv/3vf/GSdfuuwwikE7NDUQ4JT5u1I8=
+X-Google-Smtp-Source: AGHT+IHjvOaheHBmUTTdvmxARmEq5gZH+dDOaHFNwLGbyPTZQeB51Py+Jf51albUTwADckpAwkawAQ==
+X-Received: by 2002:a05:622a:1d6:b0:419:5b97:2fbb with SMTP id t22-20020a05622a01d600b004195b972fbbmr3398829qtw.34.1699991654380;
+        Tue, 14 Nov 2023 11:54:14 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c17-20020a0cd611000000b0064f4e0b2089sm3151014qvj.33.2023.11.14.11.54.11
+        by smtp.gmail.com with ESMTPSA id t19-20020ac865d3000000b0041ce9ebaad2sm2981304qto.43.2023.11.14.11.54.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Nov 2023 11:54:12 -0800 (PST)
-Message-ID: <633c0c74c2efb42e1491d53809a9825599690301.1699991638.git.gitgitgadget@gmail.com>
+        Tue, 14 Nov 2023 11:54:14 -0800 (PST)
+Message-ID: <91a77c1a834cfc2fbe0676222135c2beb6ed3e01.1699991638.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1609.v2.git.1699991638.gitgitgadget@gmail.com>
 References: <pull.1609.git.1699320361.gitgitgadget@gmail.com>
 	<pull.1609.v2.git.1699991638.gitgitgadget@gmail.com>
 From: "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 14 Nov 2023 19:53:54 +0000
-Subject: [PATCH v2 06/10] ref-filter.c: refactor to create common helper
- functions
+Date: Tue, 14 Nov 2023 19:53:55 +0000
+Subject: [PATCH v2 07/10] ref-filter.c: filter & format refs in the same
+ callback
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,238 +69,138 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Victoria Dye <vdye@github.com>
 
-Factor out parts of 'ref_array_push()', 'ref_filter_handler()', and
-'filter_refs()' into new helper functions:
+Update 'filter_and_format_refs()' to try to perform ref filtering &
+formatting in a single ref iteration, without an intermediate 'struct
+ref_array'. This can only be done if no operations need to be performed on a
+pre-filtered array; specifically, if the refs are
 
-* Extract the code to grow a 'struct ref_array' and append a given 'struct
-  ref_array_item *' to it from 'ref_array_push()' into 'ref_array_append()'.
-* Extract the code to filter a given ref by refname & object ID then create
-  a new 'struct ref_array_item *' from 'filter_one()' into
-  'apply_ref_filter()'.
-* Extract the code for filter pre-processing, contains cache creation, and
-  ref iteration from 'filter_refs()' into 'do_filter_refs()'.
+- filtered on reachability,
+- sorted, or
+- formatted with ahead-behind information
 
-In later patches, these helpers will be used by new ref-filter API
-functions. This patch does not result in any user-facing behavior changes or
-changes to callers outside of 'ref-filter.c'.
+they cannot be filtered & formatted in the same iteration. In that case,
+fall back on the current filter-then-sort-then-format flow.
+
+This optimization substantially improves memory usage due to no longer
+storing a ref array in memory. In some cases, it also dramatically reduces
+runtime (e.g. 'git for-each-ref --no-sort --count=1', which no longer loads
+all refs into a 'struct ref_array' to printing only the first ref).
 
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- ref-filter.c | 115 ++++++++++++++++++++++++++++++---------------------
- 1 file changed, 69 insertions(+), 46 deletions(-)
+ ref-filter.c | 88 ++++++++++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 82 insertions(+), 6 deletions(-)
 
 diff --git a/ref-filter.c b/ref-filter.c
-index 5186ee2687b..ff00ab4b8d8 100644
+index ff00ab4b8d8..48453db24f7 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -2716,15 +2716,18 @@ static struct ref_array_item *new_ref_array_item(const char *refname,
- 	return ref;
+@@ -2863,6 +2863,49 @@ static void free_array_item(struct ref_array_item *item)
+ 	free(item);
  }
  
-+static void ref_array_append(struct ref_array *array, struct ref_array_item *ref)
-+{
-+	ALLOC_GROW(array->items, array->nr + 1, array->alloc);
-+	array->items[array->nr++] = ref;
-+}
-+
- struct ref_array_item *ref_array_push(struct ref_array *array,
- 				      const char *refname,
- 				      const struct object_id *oid)
- {
- 	struct ref_array_item *ref = new_ref_array_item(refname, oid);
--
--	ALLOC_GROW(array->items, array->nr + 1, array->alloc);
--	array->items[array->nr++] = ref;
--
-+	ref_array_append(array, ref);
- 	return ref;
- }
- 
-@@ -2761,46 +2764,36 @@ static int filter_ref_kind(struct ref_filter *filter, const char *refname)
- 	return ref_kind_from_refname(refname);
- }
- 
--struct ref_filter_cbdata {
--	struct ref_array *array;
--	struct ref_filter *filter;
--};
--
--/*
-- * A call-back given to for_each_ref().  Filter refs and keep them for
-- * later object processing.
-- */
--static int filter_one(const char *refname, const struct object_id *oid, int flag, void *cb_data)
-+static struct ref_array_item *apply_ref_filter(const char *refname, const struct object_id *oid,
-+			    int flag, struct ref_filter *filter)
- {
--	struct ref_filter_cbdata *ref_cbdata = cb_data;
--	struct ref_filter *filter = ref_cbdata->filter;
- 	struct ref_array_item *ref;
- 	struct commit *commit = NULL;
- 	unsigned int kind;
- 
- 	if (flag & REF_BAD_NAME) {
- 		warning(_("ignoring ref with broken name %s"), refname);
--		return 0;
-+		return NULL;
- 	}
- 
- 	if (flag & REF_ISBROKEN) {
- 		warning(_("ignoring broken ref %s"), refname);
--		return 0;
-+		return NULL;
- 	}
- 
- 	/* Obtain the current ref kind from filter_ref_kind() and ignore unwanted refs. */
- 	kind = filter_ref_kind(filter, refname);
- 	if (!(kind & filter->kind))
--		return 0;
-+		return NULL;
- 
- 	if (!filter_pattern_match(filter, refname))
--		return 0;
-+		return NULL;
- 
- 	if (filter_exclude_match(filter, refname))
--		return 0;
-+		return NULL;
- 
- 	if (filter->points_at.nr && !match_points_at(&filter->points_at, oid, refname))
--		return 0;
-+		return NULL;
- 
- 	/*
- 	 * A merge filter is applied on refs pointing to commits. Hence
-@@ -2811,15 +2804,15 @@ static int filter_one(const char *refname, const struct object_id *oid, int flag
- 	    filter->with_commit || filter->no_commit || filter->verbose) {
- 		commit = lookup_commit_reference_gently(the_repository, oid, 1);
- 		if (!commit)
--			return 0;
-+			return NULL;
- 		/* We perform the filtering for the '--contains' option... */
- 		if (filter->with_commit &&
- 		    !commit_contains(filter, commit, filter->with_commit, &filter->internal.contains_cache))
--			return 0;
-+			return NULL;
- 		/* ...or for the `--no-contains' option */
- 		if (filter->no_commit &&
- 		    commit_contains(filter, commit, filter->no_commit, &filter->internal.no_contains_cache))
--			return 0;
-+			return NULL;
- 	}
- 
- 	/*
-@@ -2827,11 +2820,32 @@ static int filter_one(const char *refname, const struct object_id *oid, int flag
- 	 * to do its job and the resulting list may yet to be pruned
- 	 * by maxcount logic.
- 	 */
--	ref = ref_array_push(ref_cbdata->array, refname, oid);
-+	ref = new_ref_array_item(refname, oid);
- 	ref->commit = commit;
- 	ref->flag = flag;
- 	ref->kind = kind;
- 
-+	return ref;
-+}
-+
-+struct ref_filter_cbdata {
-+	struct ref_array *array;
++struct ref_filter_and_format_cbdata {
 +	struct ref_filter *filter;
++	struct ref_format *format;
++
++	struct ref_filter_and_format_internal {
++		int count;
++	} internal;
 +};
 +
-+/*
-+ * A call-back given to for_each_ref().  Filter refs and keep them for
-+ * later object processing.
-+ */
-+static int filter_one(const char *refname, const struct object_id *oid, int flag, void *cb_data)
++static int filter_and_format_one(const char *refname, const struct object_id *oid, int flag, void *cb_data)
 +{
-+	struct ref_filter_cbdata *ref_cbdata = cb_data;
++	struct ref_filter_and_format_cbdata *ref_cbdata = cb_data;
 +	struct ref_array_item *ref;
++	struct strbuf output = STRBUF_INIT, err = STRBUF_INIT;
 +
 +	ref = apply_ref_filter(refname, oid, flag, ref_cbdata->filter);
-+	if (ref)
-+		ref_array_append(ref_cbdata->array, ref);
++	if (!ref)
++		return 0;
 +
- 	return 0;
- }
- 
-@@ -2967,26 +2981,12 @@ void filter_ahead_behind(struct repository *r,
- 	free(commits);
- }
- 
--/*
-- * API for filtering a set of refs. Based on the type of refs the user
-- * has requested, we iterate through those refs and apply filters
-- * as per the given ref_filter structure and finally store the
-- * filtered refs in the ref_array structure.
-- */
--int filter_refs(struct ref_array *array, struct ref_filter *filter, unsigned int type)
-+static int do_filter_refs(struct ref_filter *filter, unsigned int type, each_ref_fn fn, void *cb_data)
- {
--	struct ref_filter_cbdata ref_cbdata;
--	int save_commit_buffer_orig;
- 	int ret = 0;
- 
--	ref_cbdata.array = array;
--	ref_cbdata.filter = filter;
--
- 	filter->kind = type & FILTER_REFS_KIND_MASK;
- 
--	save_commit_buffer_orig = save_commit_buffer;
--	save_commit_buffer = 0;
--
- 	init_contains_cache(&filter->internal.contains_cache);
- 	init_contains_cache(&filter->internal.no_contains_cache);
- 
-@@ -3001,20 +3001,43 @@ int filter_refs(struct ref_array *array, struct ref_filter *filter, unsigned int
- 		 * of filter_ref_kind().
- 		 */
- 		if (filter->kind == FILTER_REFS_BRANCHES)
--			ret = for_each_fullref_in("refs/heads/", filter_one, &ref_cbdata);
-+			ret = for_each_fullref_in("refs/heads/", fn, cb_data);
- 		else if (filter->kind == FILTER_REFS_REMOTES)
--			ret = for_each_fullref_in("refs/remotes/", filter_one, &ref_cbdata);
-+			ret = for_each_fullref_in("refs/remotes/", fn, cb_data);
- 		else if (filter->kind == FILTER_REFS_TAGS)
--			ret = for_each_fullref_in("refs/tags/", filter_one, &ref_cbdata);
-+			ret = for_each_fullref_in("refs/tags/", fn, cb_data);
- 		else if (filter->kind & FILTER_REFS_ALL)
--			ret = for_each_fullref_in_pattern(filter, filter_one, &ref_cbdata);
-+			ret = for_each_fullref_in_pattern(filter, fn, cb_data);
- 		if (!ret && (filter->kind & FILTER_REFS_DETACHED_HEAD))
--			head_ref(filter_one, &ref_cbdata);
-+			head_ref(fn, cb_data);
- 	}
- 
- 	clear_contains_cache(&filter->internal.contains_cache);
- 	clear_contains_cache(&filter->internal.no_contains_cache);
- 
-+	return ret;
++	if (format_ref_array_item(ref, ref_cbdata->format, &output, &err))
++		die("%s", err.buf);
++
++	if (output.len || !ref_cbdata->format->array_opts.omit_empty) {
++		fwrite(output.buf, 1, output.len, stdout);
++		putchar('\n');
++	}
++
++	strbuf_release(&output);
++	strbuf_release(&err);
++	free_array_item(ref);
++
++	/*
++	 * Increment the running count of refs that match the filter. If
++	 * max_count is set and we've reached the max, stop the ref
++	 * iteration by returning a nonzero value.
++	 */
++	if (ref_cbdata->format->array_opts.max_count &&
++	    ++ref_cbdata->internal.count >= ref_cbdata->format->array_opts.max_count)
++		return 1;
++
++	return 0;
 +}
 +
-+/*
-+ * API for filtering a set of refs. Based on the type of refs the user
-+ * has requested, we iterate through those refs and apply filters
-+ * as per the given ref_filter structure and finally store the
-+ * filtered refs in the ref_array structure.
-+ */
-+int filter_refs(struct ref_array *array, struct ref_filter *filter, unsigned int type)
+ /* Free all memory allocated for ref_array */
+ void ref_array_clear(struct ref_array *array)
+ {
+@@ -3046,16 +3089,49 @@ int filter_refs(struct ref_array *array, struct ref_filter *filter, unsigned int
+ 	return ret;
+ }
+ 
++static inline int can_do_iterative_format(struct ref_filter *filter,
++					  struct ref_sorting *sorting,
++					  struct ref_format *format)
 +{
-+	struct ref_filter_cbdata ref_cbdata;
-+	int save_commit_buffer_orig;
-+	int ret = 0;
++	/*
++	 * Filtering & formatting results within a single ref iteration
++	 * callback is not compatible with options that require
++	 * post-processing a filtered ref_array. These include:
++	 * - filtering on reachability
++	 * - sorting the filtered results
++	 * - including ahead-behind information in the formatted output
++	 */
++	return !(filter->reachable_from ||
++		 filter->unreachable_from ||
++		 sorting ||
++		 format->bases.nr);
++}
 +
-+	ref_cbdata.array = array;
-+	ref_cbdata.filter = filter;
+ void filter_and_format_refs(struct ref_filter *filter, unsigned int type,
+ 			    struct ref_sorting *sorting,
+ 			    struct ref_format *format)
+ {
+-	struct ref_array array = { 0 };
+-	filter_refs(&array, filter, type);
+-	filter_ahead_behind(the_repository, format, &array);
+-	ref_array_sort(sorting, &array);
+-	print_formatted_ref_array(&array, format);
+-	ref_array_clear(&array);
++	if (can_do_iterative_format(filter, sorting, format)) {
++		int save_commit_buffer_orig;
++		struct ref_filter_and_format_cbdata ref_cbdata = {
++			.filter = filter,
++			.format = format,
++		};
 +
-+	save_commit_buffer_orig = save_commit_buffer;
-+	save_commit_buffer = 0;
++		save_commit_buffer_orig = save_commit_buffer;
++		save_commit_buffer = 0;
 +
-+	ret = do_filter_refs(filter, type, filter_one, &ref_cbdata);
++		do_filter_refs(filter, type, filter_and_format_one, &ref_cbdata);
 +
- 	/*  Filters that need revision walking */
- 	reach_filter(array, &filter->reachable_from, INCLUDE_REACHED);
- 	reach_filter(array, &filter->unreachable_from, EXCLUDE_REACHED);
++		save_commit_buffer = save_commit_buffer_orig;
++	} else {
++		struct ref_array array = { 0 };
++		filter_refs(&array, filter, type);
++		filter_ahead_behind(the_repository, format, &array);
++		ref_array_sort(sorting, &array);
++		print_formatted_ref_array(&array, format);
++		ref_array_clear(&array);
++	}
+ }
+ 
+ static int compare_detached_head(struct ref_array_item *a, struct ref_array_item *b)
 -- 
 gitgitgadget
 
