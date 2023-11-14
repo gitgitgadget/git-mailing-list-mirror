@@ -1,205 +1,169 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B30011C8C
-	for <git@vger.kernel.org>; Tue, 14 Nov 2023 07:41:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDCEC10E9
+	for <git@vger.kernel.org>; Tue, 14 Nov 2023 08:46:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="cqUK4f57"
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5456CC
-	for <git@vger.kernel.org>; Mon, 13 Nov 2023 23:41:03 -0800 (PST)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 2CBCE35D63;
-	Tue, 14 Nov 2023 02:41:03 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=zEq+pMdFBucZ1TjeesCr9QEBZdd4yehBx/01US
-	HZkf8=; b=cqUK4f575g1HDp7zmcntaxoUNmbkF7265DhcnNh0ffavxvtp+ypaLN
-	F6PLzNCHqdBx9QdqmwK6IBXTwrBw9OVd1Z/yr/al7DScyoDcGE+VtY4EfEhEzgkt
-	jMFAqZRHpIAYAEn5eACoRTQSzo8mv8qHaGf0UxpEwgqi6vxNs58Mw=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 23FA435D62;
-	Tue, 14 Nov 2023 02:41:03 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B257335D5A;
-	Tue, 14 Nov 2023 02:40:59 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "M Hickford via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Taylor Blau
- <me@ttaylorr.com>,  Matthew John Cheetham <mjcheetham@outlook.com>,  M
- Hickford <mirth.hickford@gmail.com>
-Subject: Re: [PATCH v2] credential/wincred: store oauth_refresh_token
-In-Reply-To: <pull.1534.v2.git.1699251395093.gitgitgadget@gmail.com>
-	(M. Hickford via GitGitGadget's message of "Mon, 06 Nov 2023 06:16:34
-	+0000")
-References: <pull.1534.git.1684567247339.gitgitgadget@gmail.com>
-	<pull.1534.v2.git.1699251395093.gitgitgadget@gmail.com>
-Date: Tue, 14 Nov 2023 16:40:58 +0900
-Message-ID: <xmqqbkbwzss5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="M77S684b";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JSL/gzfW"
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 278A3173F
+	for <git@vger.kernel.org>; Tue, 14 Nov 2023 00:46:31 -0800 (PST)
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailout.nyi.internal (Postfix) with ESMTP id 71E265C028E;
+	Tue, 14 Nov 2023 03:46:30 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute7.internal (MEProxy); Tue, 14 Nov 2023 03:46:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to; s=fm1; t=1699951590; x=1700037990; bh=lR
+	HJF909xr+9bJKBtJdQXG3TnM6dPO0pNUaegokFVvA=; b=M77S684bl5EcFNt4SI
+	olQOi4NpxYMjthGWTUT4MB6QXiCMY8Xb3zQ0TSFILe0kAx+7gxoOWjivIqsx01UC
+	fCRCeUWA0j/HW9dRV1GeIQ0tIw+2pCS7gaqZMEAIZ8/DpUEDOfRYTTeZDaPyyj9k
+	yRwGqEsA5BcpREqMBjqcNp5ZsSCzlvMmqDLVcm+6Fpwv2wlVwecySGHyL5Ym8FWL
+	F3gSaAt5J9HxEfjl9xmibNg030HX1ApHr/2lK+DspldWVwjtz+erFSlVdp1bEt2d
+	bfSdGNquPk5ZHiwpY58UYpUbnXibUBPPtf8YcP2/mYXtHcyMJYScX+Cm9GaMSjbV
+	1DCA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm1; t=1699951590; x=1700037990; bh=lRHJF909xr+9b
+	JKBtJdQXG3TnM6dPO0pNUaegokFVvA=; b=JSL/gzfW1l1QagEe6716smiHoPcDU
+	gGnBFxd6+JGvFJws500jQ6qzkOK+tGwKP9WhkKMKlxoIV/UAxWsdVriUBTxfmixu
+	wgUnv+Nslv+F7vVlOSHm5Fg0CHITbv/jnIzoQNWkh9LaF86RMmd6KkGMbGu36lBm
+	5KIO3ZFZ2l5GbbCyDpxHQpx57WBkhViEFrmmT6iorDAuGMgQwJgUJ4QRVHLR+21V
+	BG4DnBPCuuUfCix6Rhf0vAJID5Dd+oodAw1zTMwMXEVo4uWqhpQZX3YTuhOb5R2j
+	IRebgY+z8+2JWLenG3JvUMSD8rkGJ0GtwavKEn48D/QYM2zq/c4xX7QPQ==
+X-ME-Sender: <xms:5jNTZVM6IlWI8nx075wZaUE0NuqaO8DgchH7DxQBuzlKGhUm80HjFw>
+    <xme:5jNTZX-DcwYjT733HwzQxGfH43HdPz_HqDgpY1M0DH2svIA7S0Edy0ttuWhfahGaz
+    apHtUBaPi2_dK6BXQ>
+X-ME-Received: <xmr:5jNTZURvx9muVne9iJZdeMWELUPDKRJLQbAhVbZfso6c0VdR8OAy3vUY81WvIVin2-kOD9L3Jv_N-zw_QuJ2tQO0obUzttBZXzXkqdf_N16_zxc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudefuddguddvgecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
+    dtreertddtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
+    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepteeuvefhhfdufedvgeeiueeileegtd
+    fhgeeftdeuveejjedtgfejhedujeeutddunecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:5jNTZRvkdLcDwf5GncZ_DV7jcD_bOk2J_WovEvF7sCZLDaDpkUsstA>
+    <xmx:5jNTZdcl3RDDnRFp914i-M3yuIAAYvHL52mPb811-J2JE25NVaAvMQ>
+    <xmx:5jNTZd3iQrMgJ233mPSCmxs1VEd-90H3d6etebArj7YczeqEC2_kuQ>
+    <xmx:5jNTZdE3_Bfr9I2_BieS1fGsphv9FoZ3KqZsUQcSmUgyCjCNmY-dpg>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 14 Nov 2023 03:46:29 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 64bbaebf (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 14 Nov 2023 08:45:50 +0000 (UTC)
+Date: Tue, 14 Nov 2023 09:46:26 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: commit-graph paranoia performance, was Re: [ANNOUNCE] Git
+ v2.43.0-rc1
+Message-ID: <ZVMz4iDWfC__H8Jp@tanuki>
+References: <xmqq8r785ev1.fsf@gitster.g>
+ <20231113205538.GA2028092@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 27765FC4-82C1-11EE-8751-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="c6UdL4TkP4+sbFGz"
+Content-Disposition: inline
+In-Reply-To: <20231113205538.GA2028092@coredump.intra.peff.net>
 
-"M Hickford via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> From: M Hickford <mirth.hickford@gmail.com>
->
-> a5c7656 (credential: new attribute oauth_refresh_token) introduced
-> a new confidential credential attribute for helpers to store.
->
-> We encode the new attribute in the CredentialBlob, separated by
-> newline:
->
->     hunter2
->     oauth_refresh_token=xyzzy
->
-> This is extensible and backwards compatible. The credential protocol
-> already assumes that attribute values do not contain newlines.
->
-> This fixes test "helper (wincred) gets oauth_refresh_token" when
-> t0303-credential-external.sh is run with
-> GIT_TEST_CREDENTIAL_HELPER=wincred. This test was added in a5c76569e7
-> (credential: new attribute oauth_refresh_token, 2023-04-21).
->
-> Alternatives considered: store oauth_refresh_token in a wincred
-> attribute. This would be insecure because wincred assumes attribute
-> values to be non-confidential.
+--c6UdL4TkP4+sbFGz
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Earlier, a5c76569 (credential: new attribute oauth_refresh_token,
-2023-04-21) built the "git" side support for the token, and taught
-credential-cache to store the necessary information.  Then 0ce02e2f
-(credential/libsecret: store new attributes, 2023-06-16) was written
-for libsecret to support the same interface.  
+On Mon, Nov 13, 2023 at 03:55:38PM -0500, Jeff King wrote:
+> On Thu, Nov 09, 2023 at 02:33:54AM +0900, Junio C Hamano wrote:
+>=20
+> >  * The codepath to traverse the commit-graph learned to notice that a
+> >    commit is missing (e.g., corrupt repository lost an object), even
+> >    though it knows something about the commit (like its parents) from
+> >    what is in commit-graph.
+> >    (merge 7a5d604443 ps/do-not-trust-commit-graph-blindly-for-existence=
+ later to maint).
+>=20
+> I happened to be timing "rev-list" for an unrelated topic today, and I
+> noticed that this change had a rather large effect. The commit message
+> for 7a5d604443 claims a 30% performance regression. But that's when
+> using "--topo-order", and actually writing out the result.
+>=20
+> Running "rev-list --count" on a copy of linux.git with a fully-built
+> commit-graph shows that the run-time doubles:
+>=20
+>   Benchmark 1: git.v2.42.1 rev-list --count HEAD
+>     Time (mean =C2=B1 =CF=83):     658.0 ms =C2=B1   5.2 ms    [User: 613=
+=2E5 ms, System: 44.4 ms]
+>     Range (min =E2=80=A6 max):   650.2 ms =E2=80=A6 666.0 ms    10 runs
+>  =20
+>   Benchmark 2: git.v2.43.0-rc1 rev-list --count HEAD
+>     Time (mean =C2=B1 =CF=83):      1.333 s =C2=B1  0.019 s    [User: 1.2=
+63 s, System: 0.069 s]
+>     Range (min =E2=80=A6 max):    1.302 s =E2=80=A6  1.361 s    10 runs
+>  =20
+>   Summary
+>     git.v2.42.1 rev-list --count HEAD ran
+>       2.03 =C2=B1 0.03 times faster than git.v2.43.0-rc1 rev-list --count=
+ HEAD
 
-And this one adds corresponding support for wincred.  Do I
-understand what is going on around this patch correctly?
+Ah, indeed. I thought I already benchmarked the worst-case behaviour by
+simply doing a full graph walk, but of course the performance hit is
+even worse when not outputting the commits at all but only counting
+them.
 
-I do not do Windows, but some people on this list certainly do and
-would be capable of giving the patch a necessary nudge ;-)
+> Now in defense of that patch, this particular command is going to be one
+> of the most sensitive in terms of percent change, simply because it
+> isn't doing much besides walking the commits. And 650ms isn't _that_ big
+> in an absolute sense. But it also doesn't quite feel like nothing, even
+> tacked onto a command that might otherwise take 1000ms to run.
+>=20
+> Should we default GIT_COMMIT_GRAPH_PARANOIA to "0"? Yes, some operations
+> might miss a breakage, but that is true of so much of Git. For day to
+> day commands we generally assume that the repository is not corrupted,
+> and avoid looking at any data we can. Other commands (like "commit-graph
+> verify", but maybe others) would probably want to be more careful
+> (either by checking this case explicitly, or by enabling the paranoia
+> flag themselves).
+>=20
+> -Peff
 
-Thanks.
+I'd be fine with that as a follow-up change, yes. I agree that in
+general we shouldn't see this kind of corruption, and it's good that the
+behaviour can be toggled so easily now.
 
->  .../wincred/git-credential-wincred.c          | 46 ++++++++++++++++---
->  1 file changed, 40 insertions(+), 6 deletions(-)
->
-> diff --git a/contrib/credential/wincred/git-credential-wincred.c b/contrib/credential/wincred/git-credential-wincred.c
-> index 4cd56c42e24..5c6a7d65d4a 100644
-> --- a/contrib/credential/wincred/git-credential-wincred.c
-> +++ b/contrib/credential/wincred/git-credential-wincred.c
-> @@ -35,7 +35,7 @@ static void *xmalloc(size_t size)
->  }
->  
->  static WCHAR *wusername, *password, *protocol, *host, *path, target[1024],
-> -	*password_expiry_utc;
-> +	*password_expiry_utc, *oauth_refresh_token;
->  
->  static void write_item(const char *what, LPCWSTR wbuf, int wlen)
->  {
-> @@ -140,6 +140,11 @@ static void get_credential(void)
->  	DWORD num_creds;
->  	int i;
->  	CREDENTIAL_ATTRIBUTEW *attr;
-> +	WCHAR *secret;
-> +	WCHAR *line;
-> +	WCHAR *remaining_lines;
-> +	WCHAR *part;
-> +	WCHAR *remaining_parts;
->  
->  	if (!CredEnumerateW(L"git:*", 0, &num_creds, &creds))
->  		return;
-> @@ -149,9 +154,23 @@ static void get_credential(void)
->  		if (match_cred(creds[i], 0)) {
->  			write_item("username", creds[i]->UserName,
->  				creds[i]->UserName ? wcslen(creds[i]->UserName) : 0);
-> -			write_item("password",
-> -				(LPCWSTR)creds[i]->CredentialBlob,
-> -				creds[i]->CredentialBlobSize / sizeof(WCHAR));
-> +			if (creds[i]->CredentialBlobSize > 0) {
-> +				secret = xmalloc(creds[i]->CredentialBlobSize);
-> +				wcsncpy_s(secret, creds[i]->CredentialBlobSize, (LPCWSTR)creds[i]->CredentialBlob, creds[i]->CredentialBlobSize / sizeof(WCHAR));
-> +				line = wcstok_s(secret, L"\r\n", &remaining_lines);
-> +				write_item("password", line, line ? wcslen(line) : 0);
-> +				while(line != NULL) {
-> +					part = wcstok_s(line, L"=", &remaining_parts);
-> +					if (!wcscmp(part, L"oauth_refresh_token")) {
-> +						write_item("oauth_refresh_token", remaining_parts, remaining_parts ? wcslen(remaining_parts) : 0);
-> +					}
-> +					line = wcstok_s(NULL, L"\r\n", &remaining_lines);
-> +				}
-> +			} else {
-> +				write_item("password",
-> +						(LPCWSTR)creds[i]->CredentialBlob,
-> +						creds[i]->CredentialBlobSize / sizeof(WCHAR));
-> +			}
->  			for (int j = 0; j < creds[i]->AttributeCount; j++) {
->  				attr = creds[i]->Attributes + j;
->  				if (!wcscmp(attr->Keyword, L"git_password_expiry_utc")) {
-> @@ -160,6 +179,7 @@ static void get_credential(void)
->  					break;
->  				}
->  			}
-> +			free(secret);
->  			break;
->  		}
->  
-> @@ -170,16 +190,26 @@ static void store_credential(void)
->  {
->  	CREDENTIALW cred;
->  	CREDENTIAL_ATTRIBUTEW expiry_attr;
-> +	WCHAR *secret;
-> +	int wlen;
->  
->  	if (!wusername || !password)
->  		return;
->  
-> +	if (oauth_refresh_token) {
-> +		wlen = _scwprintf(L"%s\r\noauth_refresh_token=%s", password, oauth_refresh_token);
-> +		secret = xmalloc(sizeof(WCHAR) * wlen);
-> +		_snwprintf_s(secret, sizeof(WCHAR) * wlen, wlen, L"%s\r\noauth_refresh_token=%s", password, oauth_refresh_token);
-> +	} else {
-> +		secret = _wcsdup(password);
-> +	}
-> +
->  	cred.Flags = 0;
->  	cred.Type = CRED_TYPE_GENERIC;
->  	cred.TargetName = target;
->  	cred.Comment = L"saved by git-credential-wincred";
-> -	cred.CredentialBlobSize = (wcslen(password)) * sizeof(WCHAR);
-> -	cred.CredentialBlob = (LPVOID)password;
-> +	cred.CredentialBlobSize = wcslen(secret) * sizeof(WCHAR);
-> +	cred.CredentialBlob = (LPVOID)_wcsdup(secret);
->  	cred.Persist = CRED_PERSIST_LOCAL_MACHINE;
->  	cred.AttributeCount = 0;
->  	cred.Attributes = NULL;
-> @@ -194,6 +224,8 @@ static void store_credential(void)
->  	cred.TargetAlias = NULL;
->  	cred.UserName = wusername;
->  
-> +	free(secret);
-> +
->  	if (!CredWriteW(&cred, 0))
->  		die("CredWrite failed");
->  }
-> @@ -265,6 +297,8 @@ static void read_credential(void)
->  			password = utf8_to_utf16_dup(v);
->  		else if (!strcmp(buf, "password_expiry_utc"))
->  			password_expiry_utc = utf8_to_utf16_dup(v);
-> +		else if (!strcmp(buf, "oauth_refresh_token"))
-> +			oauth_refresh_token = utf8_to_utf16_dup(v);
->  		/*
->  		 * Ignore other lines; we don't know what they mean, but
->  		 * this future-proofs us when later versions of git do
->
-> base-commit: bc5204569f7db44d22477485afd52ea410d83743
+I'm happy to write that patch if you don't plan to.
+
+Patrick
+
+--c6UdL4TkP4+sbFGz
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVTM+EACgkQVbJhu7ck
+PpT97BAAlehu2WmRVQY1u1uhdnWmwA8S4QTVBa60DwX/H3XmZeKmitYOTWIpdj5U
+eLKDPYJ8t0S8hoews5o3xmE3XCcTWiRBEZW6UCR1jG8TU34jkah04CxHte+MGRtX
+aWSDCdBXns4Qz5XUit4Bi3eVnd8h5FLjgJ+FLhpnKRgKjovfiXgTCEjhsbDZOLJr
+EQSPgc+xGi3leYxY0Ix+Z7uRqHnjdPpOvgrzRdWxMIp8Ogzc8kOeOugPj86QWgSa
+03UGx5Im8ubwtJ5OXL3Y0E5XWfbC2HpKZQjdCos8B7T6WflKKD5rV0eRtU3qLP1T
+/t2/iEPEKiXdB2zXGEw2EptCjhl1OnjRThQ965Sr3dJsANH7TUQekqE6mk3BcIS6
+DTx+DIu254X/Dxz+yf72CWztIe07NOtrCHvydd1IajDXwrDCkr6JHpf/3Xt7gEAk
+mirxj3M43BiCB3EzDB5yWXYolDTLxfhYe9KdUVUsbrvYOLFLsnR7T6P+bv96SLd4
+x89v+UHMymuilGsd9QUAGPqTBk01l7oQxpNiQjpHEXHgrGJWgBVLqkrIWdMzPz1U
+Uw1E5ILepxtHwVz1XiWw/wkj7MrZjIDR1u76tCvAozHB59/M5KKmR3zl/2WWWUfg
+UjEcOF/nx21h0pk355zzoOeUwi98PSpT36pWhIvhQ0XkysqYV5c=
+=1alR
+-----END PGP SIGNATURE-----
+
+--c6UdL4TkP4+sbFGz--
