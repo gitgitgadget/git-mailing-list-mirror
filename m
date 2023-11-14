@@ -1,611 +1,88 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CF0B13AF3
-	for <git@vger.kernel.org>; Tue, 14 Nov 2023 18:01:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vFHq/2Eq"
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E77B3FD
-	for <git@vger.kernel.org>; Tue, 14 Nov 2023 10:01:04 -0800 (PST)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 2CF1A22523;
-	Tue, 14 Nov 2023 13:01:04 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=T
-	Z6ZGoOM6rSQrhXyRMymYTIpim7QEw3n3N/dsVrTX7A=; b=vFHq/2Eq7pv9qa+Hh
-	5xlo70fgZjb3moW7zvDxFQZ8Ea0pkUC2smJOrvqUsg8JU9o0qZdEPaFysLFBZipx
-	hZMUgd8nq1soyMVW23wAOL85Rq7xVbcUz3PcYS6YTY7hoadsSpzmlUBy2xkEPgZl
-	5O+ykRxSzAwDfE67MlYt+7HF1Q=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 258B822522;
-	Tue, 14 Nov 2023 13:01:04 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.153.120])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id AF45F22516;
-	Tue, 14 Nov 2023 13:00:59 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: What's cooking in git.git (Nov 2023, #06; Tue, 14)
-X-master-at: cfb8a6e9a93adbe81efca66e6110c9b4d2e57169
-X-next-at: 8631bc74722bb0614b8db08fb17e94121449d13f
-Date: Wed, 15 Nov 2023 03:00:58 +0900
-Message-ID: <xmqq8r70xlid.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2645226ACF
+	for <git@vger.kernel.org>; Tue, 14 Nov 2023 19:43:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91AFF10D
+	for <git@vger.kernel.org>; Tue, 14 Nov 2023 11:43:12 -0800 (PST)
+Received: (qmail 2039 invoked by uid 109); 14 Nov 2023 19:43:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 14 Nov 2023 19:43:11 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 18708 invoked by uid 111); 14 Nov 2023 19:43:12 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Nov 2023 14:43:12 -0500
+Authentication-Results: peff.net; auth=none
+Date: Tue, 14 Nov 2023 14:43:10 -0500
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH] commit-graph: disable GIT_COMMIT_GRAPH_PARANOIA by
+ default
+Message-ID: <20231114194310.GC2092538@coredump.intra.peff.net>
+References: <7e2d300c4af9a7853201121d66f982afa421bbba.1699957350.git.ps@pks.im>
+ <ZVNNXNRfrwc_0Sj3@tanuki>
+ <xmqq7cmkz3fi.fsf@gitster.g>
+ <xmqqzfzgxops.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- C462950E-8317-11EE-AED0-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
-
-Here are the topics that have been cooking in my tree.  Commits
-prefixed with '+' are in 'next' (being in 'next' is a sign that a
-topic is stable enough to be used and are candidate to be in a
-future release).  Commits prefixed with '-' are only in 'seen', and
-aren't considered "accepted" at all and may be annotated with an URL
-to a message that raises issues but they are no means exhaustive.  A
-topic without enough support may be discarded after a long period of
-no activity (of course they can be resubmit when new interests
-arise).
-
-Git 2.43-rc2 has been tagged.
-
-Copies of the source code to Git live in many repositories, and the
-following is a list of the ones I push into or their mirrors.  Some
-repositories have only a subset of branches.
-
-With maint, master, next, seen, todo:
-
-	git://git.kernel.org/pub/scm/git/git.git/
-	git://repo.or.cz/alt-git.git/
-	https://kernel.googlesource.com/pub/scm/git/git/
-	https://github.com/git/git/
-	https://gitlab.com/git-vcs/git/
-
-With all the integration branches and topics broken out:
-
-	https://github.com/gitster/git/
-
-Even though the preformatted documentation in HTML and man format
-are not sources, they are published in these repositories for
-convenience (replace "htmldocs" with "manpages" for the manual
-pages):
-
-	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
-	https://github.com/gitster/git-htmldocs.git/
-
-Release tarballs are available at:
-
-	https://www.kernel.org/pub/software/scm/git/
-
---------------------------------------------------
-[New Topics]
-
-* js/ci-discard-prove-state (2023-11-14) 1 commit
-  (merged to 'next' on 2023-11-14 at fade3ba143)
- + ci: avoid running the test suite _twice_
- (this branch uses ps/ci-gitlab.)
-
- The way CI testing used "prove" could lead to running the test
- suite twice needlessly, which has been corrected.
-
- Will cook in 'next'.
- source: <pull.1613.git.1699894837844.gitgitgadget@gmail.com>
-
---------------------------------------------------
-[Stalled]
-
-* pw/rebase-sigint (2023-09-07) 1 commit
- - rebase -i: ignore signals when forking subprocesses
-
- If the commit log editor or other external programs (spawned via
- "exec" insn in the todo list) receive internactive signal during
- "git rebase -i", it caused not just the spawned program but the
- "Git" process that spawned them, which is often not what the end
- user intended.  "git" learned to ignore SIGINT and SIGQUIT while
- waiting for these subprocesses.
-
- Expecting a reroll.
- cf. <12c956ea-330d-4441-937f-7885ab519e26@gmail.com>
- source: <pull.1581.git.1694080982621.gitgitgadget@gmail.com>
-
-
-* tk/cherry-pick-sequence-requires-clean-worktree (2023-06-01) 1 commit
- - cherry-pick: refuse cherry-pick sequence if index is dirty
-
- "git cherry-pick A" that replays a single commit stopped before
- clobbering local modification, but "git cherry-pick A..B" did not,
- which has been corrected.
-
- Expecting a reroll.
- cf. <999f12b2-38d6-f446-e763-4985116ad37d@gmail.com>
- source: <pull.1535.v2.git.1685264889088.gitgitgadget@gmail.com>
-
-
-* jc/diff-cached-fsmonitor-fix (2023-09-15) 3 commits
- - diff-lib: fix check_removed() when fsmonitor is active
- - Merge branch 'jc/fake-lstat' into jc/diff-cached-fsmonitor-fix
- - Merge branch 'js/diff-cached-fsmonitor-fix' into jc/diff-cached-fsmonitor-fix
- (this branch uses jc/fake-lstat.)
-
- The optimization based on fsmonitor in the "diff --cached"
- codepath is resurrected with the "fake-lstat" introduced earlier.
-
- It is unknown if the optimization is worth resurrecting, but in case...
- source: <xmqqr0n0h0tw.fsf@gitster.g>
-
---------------------------------------------------
-[Cooking]
-
-* jk/chunk-bounds-more (2023-11-09) 9 commits
-  (merged to 'next' on 2023-11-13 at 3df4b18bea)
- + commit-graph: mark chunk error messages for translation
- + commit-graph: drop verify_commit_graph_lite()
- + commit-graph: check order while reading fanout chunk
- + commit-graph: use fanout value for graph size
- + commit-graph: abort as soon as we see a bogus chunk
- + commit-graph: clarify missing-chunk error messages
- + commit-graph: drop redundant call to "lite" verification
- + midx: check consistency of fanout table
- + commit-graph: handle overflow in chunk_size checks
- (this branch is used by tb/pair-chunk-expect.)
-
- Code clean-up for jk/chunk-bounds topic.
-
- Will cook in 'next'.
- source: <20231109070310.GA2697602@coredump.intra.peff.net>
-
-
-* ps/httpd-tests-on-nixos (2023-11-11) 3 commits
-  (merged to 'next' on 2023-11-13 at 81bd6f5334)
- + t9164: fix inability to find basename(1) in Subversion hooks
- + t/lib-httpd: stop using legacy crypt(3) for authentication
- + t/lib-httpd: dynamically detect httpd and modules path
-
- Portability tweak.
-
- Will cook in 'next'.
- source: <cover.1699596457.git.ps@pks.im>
-
-
-* ss/format-patch-use-encode-headers-for-cover-letter (2023-11-10) 1 commit
-  (merged to 'next' on 2023-11-14 at 1a4bd59e15)
- + format-patch: fix ignored encode_email_headers for cover letter
-
- "git format-patch --encode-email-headers" ignored the option when
- preparing the cover letter, which has been corrected.
-
- Will cook in 'next'.
- source: <20231109111950.387219-1-contact@emersion.fr>
-
-
-* ps/ban-a-or-o-operator-with-test (2023-11-11) 4 commits
-  (merged to 'next' on 2023-11-14 at d84471baab)
- + Makefile: stop using `test -o` when unlinking duplicate executables
- + contrib/subtree: convert subtree type check to use case statement
- + contrib/subtree: stop using `-o` to test for number of args
- + global: convert trivial usages of `test <expr> -a/-o <expr>`
-
- Test and shell scripts clean-up.
-
- Will cook in 'next'.
- source: <cover.1699609940.git.ps@pks.im>
-
-
-* vd/glossary-dereference-peel (2023-11-14) 1 commit
- - glossary: add definitions for dereference & peel
-
- "To dereference" and "to peel" were sometimes used in in-code
- comments and documentation but without description in the glossary.
-
- Will merge to 'next'.
- source: <pull.1610.v2.git.1699917471769.gitgitgadget@gmail.com>
-
-
-* ak/rebase-autosquash (2023-11-13) 4 commits
- - rebase: rewrite --(no-)autosquash documentation
- - rebase: test autosquash with and without -i
- - rebase: support --autosquash without -i
- - rebase: fully ignore rebase.autoSquash without -i
-
- "git rebase --autosquash" is now enabled for non-interactive rebase,
- but it is still incompatible with the apply backend.
-
- Expecting a (hopefully small and final) reroll.
- cf. <058eb5d9-35d9-4452-8d33-d9cfebb94347@gmail.com>
- source: <20231111132720.78877-1-andy.koppe@gmail.com>
-
-
-* vd/for-each-ref-unsorted-optimization (2023-11-07) 9 commits
- - t/perf: add perf tests for for-each-ref
- - for-each-ref: add option to fully dereference tags
- - ref-filter.c: filter & format refs in the same callback
- - ref-filter.c: refactor to create common helper functions
- - ref-filter.h: add functions for filter/format & format-only
- - ref-filter.h: move contains caches into filter
- - ref-filter.h: add max_count and omit_empty to ref_format
- - for-each-ref: clarify interaction of --omit-empty & --count
- - ref-filter.c: really don't sort when using --no-sort
-
- "git for-each-ref --no-sort" still sorted the refs alphabetically
- which paid non-trivial cost.  It has been redefined to show output
- in an unspecified order, to allow certain optimizations to take
- advantage of.
-
- Expecting a reroll.
- cf. <dbcbcf0e-aeee-4bb9-9e39-e2e85194d083@github.com>
- source: <pull.1609.git.1699320361.gitgitgadget@gmail.com>
-
-
-* jw/git-add-attr-pathspec (2023-11-04) 1 commit
-  (merged to 'next' on 2023-11-13 at b61be94e4d)
- + attr: enable attr pathspec magic for git-add and git-stash
-
- "git add" and "git stash" learned to support the ":(attr:...)"
- magic pathspec.
-
- Will cook in 'next'.
- source: <20231103163449.1578841-1-jojwang@google.com>
-
-
-* ps/ci-gitlab (2023-11-09) 8 commits
-  (merged to 'next' on 2023-11-10 at ea7ed67945)
- + ci: add support for GitLab CI
- + ci: install test dependencies for linux-musl
- + ci: squelch warnings when testing with unusable Git repo
- + ci: unify setup of some environment variables
- + ci: split out logic to set up failed test artifacts
- + ci: group installation of Docker dependencies
- + ci: make grouping setup more generic
- + ci: reorder definitions for grouping functions
- (this branch is used by js/ci-discard-prove-state.)
-
- Add support for GitLab CI.
-
- Will cook in 'next'.
- source: <cover.1699514143.git.ps@pks.im>
-
-
-* ps/ref-tests-update (2023-11-03) 10 commits
-  (merged to 'next' on 2023-11-13 at dc26e55d6f)
- + t: mark several tests that assume the files backend with REFFILES
- + t7900: assert the absence of refs via git-for-each-ref(1)
- + t7300: assert exact states of repo
- + t4207: delete replace references via git-update-ref(1)
- + t1450: convert tests to remove worktrees via git-worktree(1)
- + t: convert tests to not access reflog via the filesystem
- + t: convert tests to not access symrefs via the filesystem
- + t: convert tests to not write references via the filesystem
- + t: allow skipping expected object ID in `ref-store update-ref`
- + Merge branch 'ps/show-ref' into ps/ref-tests-update
-
- Update ref-related tests.
-
- Will cook in 'next'.
- source: <cover.1698914571.git.ps@pks.im>
-
-
-* jx/fetch-atomic-error-message-fix (2023-10-19) 2 commits
- - fetch: no redundant error message for atomic fetch
- - t5574: test porcelain output of atomic fetch
-
- "git fetch --atomic" issued an unnecessary empty error message,
- which has been corrected.
-
- Expecting an update.
- cf. <ZTjQIrCgSANAT8wR@tanuki>
- source: <ced46baeb1c18b416b4b4cc947f498bea2910b1b.1697725898.git.zhiyou.jx@alibaba-inc.com>
-
-
-* js/bugreport-in-the-same-minute (2023-10-16) 1 commit
- - bugreport: include +i in outfile suffix as needed
-
- Instead of auto-generating a filename that is already in use for
- output and fail the command, `git bugreport` learned to fuzz the
- filename to avoid collisions with existing files.
-
- Expecting a reroll.
- cf. <ZTtZ5CbIGETy1ucV.jacob@initialcommit.io>
- source: <20231016214045.146862-2-jacob@initialcommit.io>
-
-
-* kh/t7900-cleanup (2023-10-17) 9 commits
- - t7900: fix register dependency
- - t7900: factor out packfile dependency
- - t7900: fix `print-args` dependency
- - t7900: fix `pfx` dependency
- - t7900: factor out common schedule setup
- - t7900: factor out inheritance test dependency
- - t7900: create commit so that branch is born
- - t7900: setup and tear down clones
- - t7900: remove register dependency
-
- Test clean-up.
-
- Perhaps discard?
- cf. <655ca147-c214-41be-919d-023c1b27b311@app.fastmail.com>
- source: <cover.1697319294.git.code@khaugsbakk.name>
-
-
-* tb/merge-tree-write-pack (2023-10-23) 5 commits
- - builtin/merge-tree.c: implement support for `--write-pack`
- - bulk-checkin: introduce `index_tree_bulk_checkin_incore()`
- - bulk-checkin: introduce `index_blob_bulk_checkin_incore()`
- - bulk-checkin: generify `stream_blob_to_pack()` for arbitrary types
- - bulk-checkin: extract abstract `bulk_checkin_source`
-
- "git merge-tree" learned "--write-pack" to record its result
- without creating loose objects.
-
- Broken when an object created during a merge is needed to continue merge
- cf. <CABPp-BEfy9VOvimP9==ry_rZXu=metOQ8s=_-XiG_Pdx9c06Ww@mail.gmail.com>
- source: <cover.1698101088.git.me@ttaylorr.com>
-
-
-* tb/pair-chunk-expect (2023-11-10) 8 commits
- - midx: read `OOFF` chunk with `pair_chunk_expect()`
- - midx: read `OIDL` chunk with `pair_chunk_expect()`
- - commit-graph: read `BIDX` chunk with `pair_chunk_expect()`
- - commit-graph: read `GDAT` chunk with `pair_chunk_expect()`
- - commit-graph: read `CDAT` chunk with `pair_chunk_expect()`
- - commit-graph: read `OIDL` chunk with `pair_chunk_expect()`
- - chunk-format: introduce `pair_chunk_expect()` helper
- - Merge branch 'jk/chunk-bounds-more' into HEAD
- (this branch uses jk/chunk-bounds-more.)
-
- Further code clean-up.
-
- Needs review.
- source: <cover.1699569246.git.me@ttaylorr.com>
-
-
-* tb/path-filter-fix (2023-10-18) 17 commits
- - bloom: introduce `deinit_bloom_filters()`
- - commit-graph: reuse existing Bloom filters where possible
- - object.h: fix mis-aligned flag bits table
- - commit-graph: drop unnecessary `graph_read_bloom_data_context`
- - commit-graph.c: unconditionally load Bloom filters
- - bloom: prepare to discard incompatible Bloom filters
- - bloom: annotate filters with hash version
- - commit-graph: new filter ver. that fixes murmur3
- - repo-settings: introduce commitgraph.changedPathsVersion
- - t4216: test changed path filters with high bit paths
- - t/helper/test-read-graph: implement `bloom-filters` mode
- - bloom.h: make `load_bloom_filter_from_graph()` public
- - t/helper/test-read-graph.c: extract `dump_graph_info()`
- - gitformat-commit-graph: describe version 2 of BDAT
- - commit-graph: ensure Bloom filters are read with consistent settings
- - revision.c: consult Bloom filters for root commits
- - t/t4216-log-bloom.sh: harden `test_bloom_filters_not_used()`
-
- The Bloom filter used for path limited history traversal was broken
- on systems whose "char" is unsigned; update the implementation and
- bump the format version to 2.
-
- Needs (hopefully final and quick) review.
- source: <cover.1697653929.git.me@ttaylorr.com>
-
-
-* cc/git-replay (2023-11-03) 14 commits
- - replay: stop assuming replayed branches do not diverge
- - replay: add --contained to rebase contained branches
- - replay: add --advance or 'cherry-pick' mode
- - replay: use standard revision ranges
- - replay: make it a minimal server side command
- - replay: remove HEAD related sanity check
- - replay: remove progress and info output
- - replay: add an important FIXME comment about gpg signing
- - replay: change rev walking options
- - replay: introduce pick_regular_commit()
- - replay: die() instead of failing assert()
- - replay: start using parse_options API
- - replay: introduce new builtin
- - t6429: remove switching aspects of fast-rebase
-
- Introduce "git replay", a tool meant on the server side without
- working tree to recreate a history.
-
- Comments?
- source: <20231102135151.843758-1-christian.couder@gmail.com>
-
-
-* ak/color-decorate-symbols (2023-10-23) 7 commits
- - log: add color.decorate.pseudoref config variable
- - refs: exempt pseudorefs from pattern prefixing
- - refs: add pseudorefs array and iteration functions
- - log: add color.decorate.ref config variable
- - log: add color.decorate.symbol config variable
- - log: use designated inits for decoration_colors
- - config: restructure color.decorate documentation
-
- A new config for coloring.
-
- Needs review.
- source: <20231023221143.72489-1-andy.koppe@gmail.com>
-
-
-* js/update-urls-in-doc-and-comment (2023-09-26) 4 commits
- - doc: refer to internet archive
- - doc: update links for andre-simon.de
- - doc: update links to current pages
- - doc: switch links to https
-
- Stale URLs have been updated to their current counterparts (or
- archive.org) and HTTP links are replaced with working HTTPS links.
-
- Needs review.
- source: <pull.1589.v2.git.1695553041.gitgitgadget@gmail.com>
-
-
-* la/trailer-cleanups (2023-10-20) 3 commits
- - trailer: use offsets for trailer_start/trailer_end
- - trailer: find the end of the log message
- - commit: ignore_non_trailer computes number of bytes to ignore
-
- Code clean-up.
-
- Comments?
- source: <pull.1563.v5.git.1697828495.gitgitgadget@gmail.com>
-
-
-* eb/hash-transition (2023-10-02) 30 commits
- - t1016-compatObjectFormat: add tests to verify the conversion between objects
- - t1006: test oid compatibility with cat-file
- - t1006: rename sha1 to oid
- - test-lib: compute the compatibility hash so tests may use it
- - builtin/ls-tree: let the oid determine the output algorithm
- - object-file: handle compat objects in check_object_signature
- - tree-walk: init_tree_desc take an oid to get the hash algorithm
- - builtin/cat-file: let the oid determine the output algorithm
- - rev-parse: add an --output-object-format parameter
- - repository: implement extensions.compatObjectFormat
- - object-file: update object_info_extended to reencode objects
- - object-file-convert: convert commits that embed signed tags
- - object-file-convert: convert commit objects when writing
- - object-file-convert: don't leak when converting tag objects
- - object-file-convert: convert tag objects when writing
- - object-file-convert: add a function to convert trees between algorithms
- - object: factor out parse_mode out of fast-import and tree-walk into in object.h
- - cache: add a function to read an OID of a specific algorithm
- - tag: sign both hashes
- - commit: export add_header_signature to support handling signatures on tags
- - commit: convert mergetag before computing the signature of a commit
- - commit: write commits for both hashes
- - object-file: add a compat_oid_in parameter to write_object_file_flags
- - object-file: update the loose object map when writing loose objects
- - loose: compatibilty short name support
- - loose: add a mapping between SHA-1 and SHA-256 for loose objects
- - repository: add a compatibility hash algorithm
- - object-names: support input of oids in any supported hash
- - oid-array: teach oid-array to handle multiple kinds of oids
- - object-file-convert: stubs for converting from one object format to another
-
- Teach a repository to work with both SHA-1 and SHA-256 hash algorithms.
-
- Needs review.
- source: <878r8l929e.fsf@gmail.froward.int.ebiederm.org>
-
-
-* jx/remote-archive-over-smart-http (2023-10-04) 4 commits
- - archive: support remote archive from stateless transport
- - transport-helper: call do_take_over() in connect_helper
- - transport-helper: call do_take_over() in process_connect
- - transport-helper: no connection restriction in connect_helper
-
- "git archive --remote=<remote>" learned to talk over the smart
- http (aka stateless) transport.
-
- Needs review.
- source: <cover.1696432593.git.zhiyou.jx@alibaba-inc.com>
-
-
-* jx/sideband-chomp-newline-fix (2023-10-04) 3 commits
- - pkt-line: do not chomp newlines for sideband messages
- - pkt-line: memorize sideband fragment in reader
- - test-pkt-line: add option parser for unpack-sideband
-
- Sideband demultiplexer fixes.
-
- Needs review.
- source: <cover.1696425168.git.zhiyou.jx@alibaba-inc.com>
-
-
-* js/config-parse (2023-09-21) 5 commits
- - config-parse: split library out of config.[c|h]
- - config.c: accept config_parse_options in git_config_from_stdin
- - config: report config parse errors using cb
- - config: split do_event() into start and flush operations
- - config: split out config_parse_options
-
- The parsing routines for the configuration files have been split
- into a separate file.
-
- Needs review.
- source: <cover.1695330852.git.steadmon@google.com>
-
-
-* jc/fake-lstat (2023-09-15) 1 commit
- - cache: add fake_lstat()
- (this branch is used by jc/diff-cached-fsmonitor-fix.)
-
- A new helper to let us pretend that we called lstat() when we know
- our cache_entry is up-to-date via fsmonitor.
-
- Needs review.
- source: <xmqqcyykig1l.fsf@gitster.g>
-
-
-* js/doc-unit-tests (2023-11-10) 3 commits
-  (merged to 'next' on 2023-11-10 at 7d00ffd06b)
- + ci: run unit tests in CI
- + unit tests: add TAP unit test framework
- + unit tests: add a project plan document
- (this branch is used by js/doc-unit-tests-with-cmake.)
-
- Process to add some form of low-level unit tests has started.
-
- Will cook in 'next'.
- source: <cover.1699555664.git.steadmon@google.com>
-
-
-* js/doc-unit-tests-with-cmake (2023-11-10) 7 commits
-  (merged to 'next' on 2023-11-10 at b4503c9c8c)
- + cmake: handle also unit tests
- + cmake: use test names instead of full paths
- + cmake: fix typo in variable name
- + artifacts-tar: when including `.dll` files, don't forget the unit-tests
- + unit-tests: do show relative file paths
- + unit-tests: do not mistake `.pdb` files for being executable
- + cmake: also build unit tests
- (this branch uses js/doc-unit-tests.)
-
- Update the base topic to work with CMake builds.
-
- Will cook in 'next'.
- source: <pull.1579.v3.git.1695640836.gitgitgadget@gmail.com>
-
-
-* jc/rerere-cleanup (2023-08-25) 4 commits
- - rerere: modernize use of empty strbuf
- - rerere: try_merge() should use LL_MERGE_ERROR when it means an error
- - rerere: fix comment on handle_file() helper
- - rerere: simplify check_one_conflict() helper function
-
- Code clean-up.
-
- Not ready to be reviewed yet.
- source: <20230824205456.1231371-1-gitster@pobox.com>
-
-
-* rj/status-bisect-while-rebase (2023-10-16) 1 commit
- - status: fix branch shown when not only bisecting
-
- "git status" is taught to show both the branch being bisected and
- being rebased when both are in effect at the same time.
-
- Needs review.
- source: <2e24ca9b-9c5f-f4df-b9f8-6574a714dfb2@gmail.com>
-
---------------------------------------------------
-[Discarded]
-
-* jc/strbuf-comment-line-char (2023-11-01) 4 commits
- . strbuf: move env-using functions to environment.c
- . strbuf: make add_lines() public
- . strbuf_add_commented_lines(): drop the comment_line_char parameter
- . strbuf_commented_addf(): drop the comment_line_char parameter
-
- Code simplification that goes directly against a past libification
- topic.  It is hard to judge because the "libification" is done
- piecewise without seemingly clear design principle.
-
- Will discard.
- source: <cover.1698791220.git.jonathantanmy@google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqzfzgxops.fsf@gitster.g>
+
+On Wed, Nov 15, 2023 at 01:51:43AM +0900, Junio C Hamano wrote:
+
+> >> Both of these are expected failures: we knowingly corrupt the repository
+> >> and circumvent git-gc(1)/git-maintenance(1), thus no commit-graphs are
+> >> updated. If we stick with the new stance that repository corruption
+> >> should not require us to pessimize the common case,...
+> >
+> > Yeah, just like we try to be extra careful while running fsck,
+> > because "--missing" is about finding these "corrupt" cases,
+> > triggering the paranoia mode upon seeing the option would make
+> > sense, no?  It would fix the failure in 6022, right?
+> >
+> > Thanks for working on this.
+> 
+> Just to make sure we do not miscommunicate, I do not think we want
+> to trigger the paranoia mode only in our tests.  We want to be
+> paranoid to help real users who used "--missing" for their real use,
+> so enabling PARANOIA in the test script is a wrong approach.  We
+> should enable it inside "rev-list --missing" codepath.
+
+Yeah. Just like we auto-enabled GIT_REF_PARANOIA for git-gc, etc, I
+think we should do the same here.
+
+As we are closing in on the v2.43 release, there's one thing I'm not
+sure about regarding release planning. Are these test cases that _used_
+to detect the corruption, but now don't? I.e., I would have expected
+that disabling GIT_COMMIT_GRAPH_PARANOIA would take us back to the same
+state as v2.42. But I think it doesn't because of the hunk in e04838ea82
+(commit-graph: introduce envvar to disable commit existence checks,
+2023-10-31) that makes the has_object() call conditional (and now
+defaults to off).
+
+What I'm getting as it that I think we have three options for v2.43:
+
+  1. Ship what has been in the release candidates, which has a known
+     performance regression (though the severity is up for debate).
+
+  2. Flip the default to "0" (i.e., Patrick's patch in this thread). We
+     know that loosens some cases versus 2.42, which may be considered a
+     regression.
+
+  3. Sort it out before the release. We're getting pretty close to do
+     a lot new work there, but I think the changes should be small-ish.
+     The nuclear option is ejecting the topic and re-doing it in the
+     next cycle.
+
+I don't have a really strong preference between the three.
+
+-Peff
