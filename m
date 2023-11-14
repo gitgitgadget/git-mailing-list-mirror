@@ -1,29 +1,30 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58F3926AE2
-	for <git@vger.kernel.org>; Tue, 14 Nov 2023 20:00:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 900111CABB
+	for <git@vger.kernel.org>; Tue, 14 Nov 2023 20:18:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dkim=none
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B025CE
-	for <git@vger.kernel.org>; Tue, 14 Nov 2023 12:00:10 -0800 (PST)
-Received: (qmail 2092 invoked by uid 109); 14 Nov 2023 20:00:10 -0000
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F810F5
+	for <git@vger.kernel.org>; Tue, 14 Nov 2023 12:18:09 -0800 (PST)
+Received: (qmail 2194 invoked by uid 109); 14 Nov 2023 20:18:09 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 14 Nov 2023 20:00:10 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 14 Nov 2023 20:18:09 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19218 invoked by uid 111); 14 Nov 2023 20:00:11 -0000
+Received: (qmail 19441 invoked by uid 111); 14 Nov 2023 20:18:10 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Nov 2023 15:00:11 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Nov 2023 15:18:10 -0500
 Authentication-Results: peff.net; auth=none
-Date: Tue, 14 Nov 2023 15:00:09 -0500
+Date: Tue, 14 Nov 2023 15:18:08 -0500
 From: Jeff King <peff@peff.net>
-To: Todd Zullinger <tmz@pobox.com>
-Cc: git@vger.kernel.org,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	=?utf-8?B?T25kxZllaiBQb2hvxZllbHNrw70=?= <opohorel@redhat.com>
-Subject: Re: [PATCH] send-email: avoid duplicate specification warnings
-Message-ID: <20231114200009.GD2092538@coredump.intra.peff.net>
-References: <20231114163826.207267-1-tmz@pobox.com>
+To: phillip.wood@dunelm.org.uk
+Cc: Ondra Medek <xmedeko@gmail.com>, git@vger.kernel.org
+Subject: Re: Feature request: git status --branch-only
+Message-ID: <20231114201808.GE2092538@coredump.intra.peff.net>
+References: <CAJsoDaFX7YdncsTy7UsjxaM1GCKs36-H5RhJ6kzgBUFBJyoGZQ@mail.gmail.com>
+ <47fa8400-1e5f-437f-84b8-50bb09580325@gmail.com>
+ <CAJsoDaHX3t9bViq0F7gmJPD+PoE-ZqmJS5h=u-W900x9KEMmYA@mail.gmail.com>
+ <00033c86-dbd7-4c88-bfbd-8f6766cd66c9@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -32,48 +33,44 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20231114163826.207267-1-tmz@pobox.com>
+In-Reply-To: <00033c86-dbd7-4c88-bfbd-8f6766cd66c9@gmail.com>
 
-On Tue, Nov 14, 2023 at 11:38:19AM -0500, Todd Zullinger wrote:
+On Tue, Nov 14, 2023 at 03:02:04PM +0000, Phillip Wood wrote:
 
-> With perl-Getopt-Long >= 2.55, a warning is issued for options which are
-> specified more than once.  In addition to causing users to see warnings,
-> this results in test failures which compare the output.  An example,
-> from t9001-send-email.37:
+> Hi Ondra
+> 
+> On 14/11/2023 12:40, Ondra Medek wrote:
+> > Hi Phillip,
+> > 
+> > it does not work for a fresh clone of an empty repository
+> > 
+> >      git for-each-ref --format="%(upstream:short)" refs/heads/master
+> > 
+> > outputs nothing, while
+> 
+> Oh dear, that's a shame. I wonder if it is a bug because the documentation
+> says that
+> 
+> 	--format="%(upstream:track)"
+> 
+> should print "[gone]" whenever an unknown upstream ref is encountered but
+> trying that on a clone of an empty repository gives no output.
 
-This made me wonder if the warnings are new, or if the duplicated
-auto-negated options are new. I.e., were the manual "--no-foo" option
-specs doing something useful in the older versions (in which case we'd
-need to do something more complicated)?
+I think it would print "gone" if the upstream branch went missing. But
+in this case the actual local branch is missing. And for-each-ref will
+not show an entry at all for a ref that does not exist. The
+"refs/heads/master" on your command line is not a ref, but a pattern,
+and that pattern does not match anything. So it's working as intended.
 
-But I think the answer is no.  We've explicitly marked these with "!" to
-indicate that they're negatable. And certainly running with Getopt::Long
-2.52 (from perl 5.36, which is the current in Debian unstable) seems to
-support them.
+I think a more direct tool would be:
 
-It does make me wonder why some boolean options are not marked as
-negatable (even if just to countermand an earlier option), but that is
-outside the scope of your patch.
+  git rev-parse --symbolic-full-name master@{upstream}
 
-> I've run this through the full test suite.  I also compared the output of
-> --help to ensure it only differs in the removal of the "Duplicate
-> specification" warnings.  I _think_ that's a good sign that no other changes
-> will result.  But I would be grateful to anyone who can confirm or reject that
-> theory.
-
-I guess you meant "-h", not "--help", since the latter will just show
-the manpage. But isn't "-h" just dumping a static usage message we
-wrote, and not auto-generated by the code?
-
-The changes look good to me (even after double-checking Junio's question
-that they are all appropriately matched with their "positive" sides).
-This one is curious:
-
-> -		    "cc-cover|cc-cover!" => \$cover_cc,
-
-It was an alternate name for itself? I think somebody just misunderstood
-how the API was supposed to work. The "!" would applies to all names, if
-I understand correctly, so this really is doing nothing beyond just
-"cc-cover!", which is what your patch switches it to.
+That convinces branch_get_upstream() to return the value we want, but
+sadly it seems to get lost somewhere in the resolution process, and we
+spit out an error. Arguably that is a bug (with --symbolic or
+--symbolic-full-name, I think it would be OK to resolve names even if
+they don't point to something, but it's possible that would have other
+unexpected side effects).
 
 -Peff
