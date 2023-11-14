@@ -1,56 +1,56 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 974B633077
-	for <git@vger.kernel.org>; Tue, 14 Nov 2023 21:44:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CDD233078
+	for <git@vger.kernel.org>; Tue, 14 Nov 2023 21:44:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hpYAKBq9"
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01664D2
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PulumM5b"
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F362D3
 	for <git@vger.kernel.org>; Tue, 14 Nov 2023 13:44:29 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-32fdc5be26dso3779820f8f.2
-        for <git@vger.kernel.org>; Tue, 14 Nov 2023 13:44:28 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-40a5a444c3eso12294125e9.2
+        for <git@vger.kernel.org>; Tue, 14 Nov 2023 13:44:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1699998267; x=1700603067; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1699998268; x=1700603068; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Bi8B43KVOWSHH24dTUSErLWILUBZkOgPmGS+o/3WrBM=;
-        b=hpYAKBq9OxGiHZUor+t0vbjrUgRDP4KicveeNDAMNaNhgqtxm+HqxTcws9sQTNsOOO
-         ZDvGk7jxwyOdEzcZXhf7gB0cH/JDFyvvbow+HgbRz73CMqxOLPwHN8TIDfegHiQEuk50
-         d2R9iVwQvAvLt5yBPSXPg7CWaud0Vew4xXxXakMCT/lnMudeR8HnXSLGBRfwRXwOWy5Q
-         uIZdw3LFqXs8XWADUmjRDM9eCmb04be5CpOxqWAxbXCIXB/Ink73p/s05FZ9f2q4WycC
-         f9u3K/MtCZMp3jnxoFgUctsUKHWqQLgUzsM8CE+IjsZ/h9yinTwkH+5rL1pwW7T8V9iE
-         8soA==
+        bh=G/kc7ebNtMDDu9lzaSnamPuvKSPnpDUgfJ/ax6Fg8rs=;
+        b=PulumM5bS7ci4g2BhSQL2x3cuH6U4WyKqwcUcDUXArxsB0jdp/LNwNb7mi+RxYKyGR
+         +wQ/Z0K+aG9KFa/HB032/izqrdEnA+jcnxeXZ4BZn4kwyQIroVys1dgdWeXTM5NKIHMH
+         cPMZK9lcTFm7aNS0GH3zOrDwogbCwU7chf0pBX9Li77GwhpmfMossd4JK7jAnJcpdCZP
+         ipQLzia/iCQSDU4Ig49C0zXPje9rUWfVqWPs+Nt/oGo3f/y3E8+2MJ1i9Cv8hJTz/1DQ
+         coPzjnvrtm0rWlhm9mxaQiJoutw9Hol3Lq6qsq4KFuDlr9YMxBwBQ/vRBe+tErjat/O0
+         otVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699998267; x=1700603067;
+        d=1e100.net; s=20230601; t=1699998268; x=1700603068;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Bi8B43KVOWSHH24dTUSErLWILUBZkOgPmGS+o/3WrBM=;
-        b=nYPA/LIfvLbOz7Bs/S72gmDeMbs/60uOpvsLxzd3W4qmF6A+7hA2D/xJ22kMsdUwLD
-         sAAMvV465jtISloQiZd6grgdhy0cPMCJUc8dm+ZmC8dJv827q/UTGvobvJaWDdwSF9Cm
-         Jy70DFdI2yYUuNp4g79JFnWkz8YuOH7yI/TcnITZ2qRvyYXdkfgTlvoquzw6JxhD72LR
-         XQ0v1hbigiAVjvH5NxWzhV/fTLoDzdUGSBENSTMo5JwkXNI6eo9Dkn39tvupYbqaOJh1
-         yNiia/2Q0Dg976lwLzkX8lrAxB6fTOxRi0fv650n88FUWc6foFuKpFWP0vq7wYq/+bUe
-         IYhg==
-X-Gm-Message-State: AOJu0Yx6ZH7u8BG+yvQ4KFy2vho2HKba3vD2tPRNlPvhGzOFfHZa0jaj
-	rpK0Tuy86FqhwlfL6OxCS0C33sugsJNIuw==
-X-Google-Smtp-Source: AGHT+IHAYiZ/9QYx2qEd7dJxJaml8/AZrjfmK6IWSGLrrXWZvVtuUPOfWbdSyXNKV3auTo+p+3g2EA==
-X-Received: by 2002:adf:f58c:0:b0:329:6662:ac1d with SMTP id f12-20020adff58c000000b003296662ac1dmr8788450wro.24.1699998267066;
+        bh=G/kc7ebNtMDDu9lzaSnamPuvKSPnpDUgfJ/ax6Fg8rs=;
+        b=uQFlWVNcMNZkufkjElnUopezj79U7yoHqy4kHKs6uX1MgoVEdh9bxkol+hgz6EqS2H
+         TxKlpSRQfuVTbpWV0EEXqTNzHaLGYMhX2E4BJXLPymNiqVbFC2ws6Va+gqHw1S3lCQze
+         UdZkoQJg6GMYLIPhz3ufc9t1vfUdQMYc+sK+FWR1V5xgX8eLulAxSVAQXaWmIS7rjTmZ
+         ghhn/vu3i41peJK1oR83yZE78Fo03pzSchQSnApf0GSFMMx92Mkb+2Xu2FiQJIOG4/po
+         /+ifWJ32dGT8Y4SNgiMKv/rp1DcxgJCxs1PGUL0wIBJog18ddCAo3Y5V2h85MKbeVleq
+         Xk6Q==
+X-Gm-Message-State: AOJu0YyA9aIFg3EEwMaeLioMpuTjDMESoEXqSouJF2QpLmDP9zZMVN3Y
+	8q2SdPAL3FfOukRy92Cd84ugjQ2J4tm0TA==
+X-Google-Smtp-Source: AGHT+IHwgN2DeJ2H3iukN01VAmcWEIeUSPimFDbEFfVs1JVagCJ6+KAyxitRc/K5kAn+ejWo6QZ7CQ==
+X-Received: by 2002:a05:600c:350f:b0:3ff:233f:2cfb with SMTP id h15-20020a05600c350f00b003ff233f2cfbmr8234638wmq.23.1699998267722;
         Tue, 14 Nov 2023 13:44:27 -0800 (PST)
 Received: from localhost.localdomain (cpc105060-sgyl40-2-0-cust995.18-2.cable.virginm.net. [81.111.15.228])
-        by smtp.gmail.com with ESMTPSA id u7-20020a05600c19c700b0040651505684sm12804379wmq.29.2023.11.14.13.44.26
+        by smtp.gmail.com with ESMTPSA id u7-20020a05600c19c700b0040651505684sm12804379wmq.29.2023.11.14.13.44.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Nov 2023 13:44:26 -0800 (PST)
+        Tue, 14 Nov 2023 13:44:27 -0800 (PST)
 From: Andy Koppe <andy.koppe@gmail.com>
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
 	phillip.wood@dunelm.org.uk,
 	Andy Koppe <andy.koppe@gmail.com>
-Subject: [PATCH v5 1/3] rebase: fully ignore rebase.autoSquash without -i
-Date: Tue, 14 Nov 2023 21:43:37 +0000
-Message-ID: <20231114214339.10925-2-andy.koppe@gmail.com>
+Subject: [PATCH v5 2/3] rebase: support --autosquash without -i
+Date: Tue, 14 Nov 2023 21:43:38 +0000
+Message-ID: <20231114214339.10925-3-andy.koppe@gmail.com>
 X-Mailer: git-send-email 2.43.0-rc2
 In-Reply-To: <20231114214339.10925-1-andy.koppe@gmail.com>
 References: <20231111132720.78877-1-andy.koppe@gmail.com>
@@ -63,138 +63,134 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Setting the rebase.autoSquash config variable to true implies a couple
-of restrictions: it prevents preemptive fast-forwarding and it triggers
-conflicts with apply backend options. However, it only actually results
-in auto-squashing when combined with the --interactive (or -i) option,
-due to code in run_specific_rebase() that disables auto-squashing unless
-the REBASE_INTERACTIVE_EXPLICIT flag is set.
+The rebase --autosquash option is quietly ignored when used without
+--interactive (apart from preventing preemptive fast-forwarding and
+triggering conflicts with apply backend options).
 
-Doing autosquashing for rebase.autoSquash without --interactive would be
-problematic in terms of backward compatibility, but conversely, there is
-no need for the aforementioned restrictions without --interactive.
+Change that to support --autosquash without --interactive, by dropping
+its restriction to REBASE_INTERACTIVE_EXCPLICIT mode. When used this
+way, auto-squashing is done without opening the todo list editor.
 
-So drop the options.config_autosquash check from the conditions for
-clearing allow_preemptive_ff, as the case where it is combined with
---interactive is already covered by the REBASE_INTERACTIVE_EXPLICIT
-flag check above it.
-
-Also drop the "apply options are incompatible with rebase.autoSquash"
-error, because it is unreachable if it is restricted to --interactive,
-as apply options already cause an error when used with --interactive.
-Drop the tests for the error from t3422-rebase-incompatible-options.sh,
-which has separate tests for the conflicts of --interactive with apply
-options.
-
-When neither --autosquash nor --no-autosquash are given, only set
-options.autosquash to true if rebase.autosquash is combined with
---interactive.
-
-Don't initialize options.config_autosquash to -1, as there is no need to
-distinguish between rebase.autoSquash being unset or explicitly set to
-false.
-
-Finally, amend the rebase.autoSquash documentation to say it only
-affects interactive mode.
+Drop the -i requirement from the --autosquash description, and amend
+t3415-rebase-autosquash.sh to test the option and the rebase.autoSquash
+config variable with and without -i.
 
 Signed-off-by: Andy Koppe <andy.koppe@gmail.com>
 ---
- Documentation/config/rebase.txt        |  4 +++-
- builtin/rebase.c                       | 13 ++++++-------
- t/t3422-rebase-incompatible-options.sh | 12 ------------
- 3 files changed, 9 insertions(+), 20 deletions(-)
+ Documentation/git-rebase.txt |  2 +-
+ builtin/rebase.c             |  4 +---
+ t/t3415-rebase-autosquash.sh | 38 ++++++++++++++++++++++++++----------
+ 3 files changed, 30 insertions(+), 14 deletions(-)
 
-diff --git a/Documentation/config/rebase.txt b/Documentation/config/rebase.txt
-index 9c248accec..d59576dbb2 100644
---- a/Documentation/config/rebase.txt
-+++ b/Documentation/config/rebase.txt
-@@ -9,7 +9,9 @@ rebase.stat::
- 	rebase. False by default.
- 
- rebase.autoSquash::
--	If set to true enable `--autosquash` option by default.
-+	If set to true, enable the `--autosquash` option of
-+	linkgit:git-rebase[1] by default for interactive mode.
-+	This can be overridden with the `--no-autosquash` option.
- 
- rebase.autoStash::
- 	When set to true, automatically create a temporary stash entry
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index b4526ca246..10548e715c 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -592,7 +592,7 @@ See also INCOMPATIBLE OPTIONS below.
+ 	When the commit log message begins with "squash! ..." or "fixup! ..."
+ 	or "amend! ...", and there is already a commit in the todo list that
+ 	matches the same `...`, automatically modify the todo list of
+-	`rebase -i`, so that the commit marked for squashing comes right after
++	`rebase`, so that the commit marked for squashing comes right after
+ 	the commit to be modified, and change the action of the moved commit
+ 	from `pick` to `squash` or `fixup` or `fixup -C` respectively. A commit
+ 	matches the `...` if the commit subject matches, or if the `...` refers
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 043c65dccd..a73de7892b 100644
+index a73de7892b..9f8192e0a5 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -149,7 +149,6 @@ struct rebase_options {
- 		.reapply_cherry_picks = -1,             \
- 		.allow_empty_message = 1,               \
- 		.autosquash = -1,                       \
--		.config_autosquash = -1,                \
- 		.rebase_merges = -1,                    \
- 		.config_rebase_merges = -1,             \
- 		.update_refs = -1,                      \
-@@ -1405,7 +1404,6 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	if ((options.flags & REBASE_INTERACTIVE_EXPLICIT) ||
- 	    (options.action != ACTION_NONE) ||
- 	    (options.exec.nr > 0) ||
--	    (options.autosquash == -1 && options.config_autosquash == 1) ||
- 	    options.autosquash == 1) {
- 		allow_preemptive_ff = 0;
- 	}
-@@ -1508,8 +1506,6 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			if (is_merge(&options))
- 				die(_("apply options and merge options "
- 					  "cannot be used together"));
--			else if (options.autosquash == -1 && options.config_autosquash == 1)
--				die(_("apply options are incompatible with rebase.autoSquash.  Consider adding --no-autosquash"));
- 			else if (options.rebase_merges == -1 && options.config_rebase_merges == 1)
- 				die(_("apply options are incompatible with rebase.rebaseMerges.  Consider adding --no-rebase-merges"));
- 			else if (options.update_refs == -1 && options.config_update_refs == 1)
-@@ -1529,10 +1525,13 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	options.rebase_merges = (options.rebase_merges >= 0) ? options.rebase_merges :
- 				((options.config_rebase_merges >= 0) ? options.config_rebase_merges : 0);
+@@ -710,10 +710,8 @@ static int run_specific_rebase(struct rebase_options *opts)
+ 	if (opts->type == REBASE_MERGE) {
+ 		/* Run sequencer-based rebase */
+ 		setenv("GIT_CHERRY_PICK_HELP", resolvemsg, 1);
+-		if (!(opts->flags & REBASE_INTERACTIVE_EXPLICIT)) {
++		if (!(opts->flags & REBASE_INTERACTIVE_EXPLICIT))
+ 			setenv("GIT_SEQUENCE_EDITOR", ":", 1);
+-			opts->autosquash = 0;
+-		}
+ 		if (opts->gpg_sign_opt) {
+ 			/* remove the leading "-S" */
+ 			char *tmp = xstrdup(opts->gpg_sign_opt + 2);
+diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
+index a364530d76..fcc40d6fe1 100755
+--- a/t/t3415-rebase-autosquash.sh
++++ b/t/t3415-rebase-autosquash.sh
+@@ -43,7 +43,7 @@ test_auto_fixup () {
  
--	if (options.autosquash == 1)
-+	if (options.autosquash == 1) {
- 		imply_merge(&options, "--autosquash");
--	options.autosquash = (options.autosquash >= 0) ? options.autosquash :
--			     ((options.config_autosquash >= 0) ? options.config_autosquash : 0);
-+	} else if (options.autosquash == -1) {
-+		options.autosquash =
-+			options.config_autosquash &&
-+			(options.flags & REBASE_INTERACTIVE_EXPLICIT);
-+	}
+ 	git tag $1 &&
+ 	test_tick &&
+-	git rebase $2 -i HEAD^^^ &&
++	git rebase $2 HEAD^^^ &&
+ 	git log --oneline >actual &&
+ 	if test -n "$no_squash"
+ 	then
+@@ -61,15 +61,24 @@ test_auto_fixup () {
+ }
  
- 	if (options.type == REBASE_UNSPECIFIED) {
- 		if (!strcmp(options.default_backend, "merge"))
-diff --git a/t/t3422-rebase-incompatible-options.sh b/t/t3422-rebase-incompatible-options.sh
-index 2eba00bdf5..b40f26250b 100755
---- a/t/t3422-rebase-incompatible-options.sh
-+++ b/t/t3422-rebase-incompatible-options.sh
-@@ -100,12 +100,6 @@ test_rebase_am_only () {
- 		test_must_fail git rebase $opt --root A
- 	"
+ test_expect_success 'auto fixup (option)' '
+-	test_auto_fixup final-fixup-option --autosquash
++	test_auto_fixup fixup-option --autosquash &&
++	test_auto_fixup fixup-option-i "--autosquash -i"
+ '
  
--	test_expect_success "$opt incompatible with rebase.autosquash" "
--		git checkout B^0 &&
--		test_must_fail git -c rebase.autosquash=true rebase $opt A 2>err &&
--		grep -e --no-autosquash err
--	"
--
- 	test_expect_success "$opt incompatible with rebase.rebaseMerges" "
- 		git checkout B^0 &&
- 		test_must_fail git -c rebase.rebaseMerges=true rebase $opt A 2>err &&
-@@ -118,12 +112,6 @@ test_rebase_am_only () {
- 		grep -e --no-update-refs err
- 	"
+-test_expect_success 'auto fixup (config)' '
++test_expect_success 'auto fixup (config true)' '
+ 	git config rebase.autosquash true &&
+-	test_auto_fixup final-fixup-config-true &&
++	test_auto_fixup ! fixup-config-true &&
++	test_auto_fixup fixup-config-true-i -i &&
+ 	test_auto_fixup ! fixup-config-true-no --no-autosquash &&
++	test_auto_fixup ! fixup-config-true-i-no "-i --no-autosquash"
++'
++
++test_expect_success 'auto fixup (config false)' '
+ 	git config rebase.autosquash false &&
+-	test_auto_fixup ! final-fixup-config-false
++	test_auto_fixup ! fixup-config-false &&
++	test_auto_fixup ! fixup-config-false-i -i &&
++	test_auto_fixup fixup-config-false-yes --autosquash &&
++	test_auto_fixup fixup-config-false-i-yes "-i --autosquash"
+ '
  
--	test_expect_success "$opt okay with overridden rebase.autosquash" "
--		test_when_finished \"git reset --hard B^0\" &&
--		git checkout B^0 &&
--		git -c rebase.autosquash=true rebase --no-autosquash $opt A
--	"
--
- 	test_expect_success "$opt okay with overridden rebase.rebaseMerges" "
- 		test_when_finished \"git reset --hard B^0\" &&
- 		git checkout B^0 &&
+ test_auto_squash () {
+@@ -87,7 +96,7 @@ test_auto_squash () {
+ 	git commit -m "squash! first" -m "extra para for first" &&
+ 	git tag $1 &&
+ 	test_tick &&
+-	git rebase $2 -i HEAD^^^ &&
++	git rebase $2 HEAD^^^ &&
+ 	git log --oneline >actual &&
+ 	if test -n "$no_squash"
+ 	then
+@@ -105,15 +114,24 @@ test_auto_squash () {
+ }
+ 
+ test_expect_success 'auto squash (option)' '
+-	test_auto_squash final-squash --autosquash
++	test_auto_squash squash-option --autosquash &&
++	test_auto_squash squash-option-i "--autosquash -i"
+ '
+ 
+-test_expect_success 'auto squash (config)' '
++test_expect_success 'auto squash (config true)' '
+ 	git config rebase.autosquash true &&
+-	test_auto_squash final-squash-config-true &&
++	test_auto_squash ! squash-config-true &&
++	test_auto_squash squash-config-true-i -i &&
+ 	test_auto_squash ! squash-config-true-no --no-autosquash &&
++	test_auto_squash ! squash-config-true-i-no "-i --no-autosquash"
++'
++
++test_expect_success 'auto squash (config false)' '
+ 	git config rebase.autosquash false &&
+-	test_auto_squash ! final-squash-config-false
++	test_auto_squash ! squash-config-false &&
++	test_auto_squash ! squash-config-false-i -i &&
++	test_auto_squash squash-config-false-yes --autosquash &&
++	test_auto_squash squash-config-false-i-yes "-i --autosquash"
+ '
+ 
+ test_expect_success 'misspelled auto squash' '
 -- 
 2.43.0-rc2
 
