@@ -1,44 +1,44 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 916143D79
-	for <git@vger.kernel.org>; Tue, 14 Nov 2023 00:48:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E05513D87
+	for <git@vger.kernel.org>; Tue, 14 Nov 2023 00:48:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Af6jtfyK"
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A71AD4E
-	for <git@vger.kernel.org>; Mon, 13 Nov 2023 16:48:11 -0800 (PST)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id BCA041C4CFF;
-	Mon, 13 Nov 2023 19:48:10 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hESefiD+"
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1206D53
+	for <git@vger.kernel.org>; Mon, 13 Nov 2023 16:48:21 -0800 (PST)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2641B1C8ADA;
+	Mon, 13 Nov 2023 19:48:21 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=doqZUcl0qHACDqIcreB/lTE4A8llW1oZOKrrtB
-	coM7U=; b=Af6jtfyK/gAPRMhntpegmMxUxb2Ck5qD9B4l3ibYX2KQ07+L1Ku01q
-	RtUOvE1dK00ZKTzjbOKdvHjvACadapzRDry+1y5tQ48Npk8tpirnQL6/bH/ZfiZk
-	gkRwvXRVD4pv0BMLNv/+w2LFsJIIy2gTwtUSLQwDgUGc8dB9zO1kI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id B45E61C4CFE;
-	Mon, 13 Nov 2023 19:48:10 -0500 (EST)
+	:content-type; s=sasl; bh=SyNlT/Utny+v2fH6Yodlh8mt8Ls5dLTht3o8ss
+	Ow7jk=; b=hESefiD+QbPzDBsY52O+bohs8JOLDHotVZAX1hq4z/Z7jAE/nZ5k26
+	IkbcsUoW63axpM2/spLqN/PrRXT6aZ9XWgP/4Wcop2D5I8tK0KKHwMXtS1a09Zxl
+	amxFot4zcKnsuXgSvJnQYqABHsMZTf4xJcILzpTmUA8oNpGIwZOwE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1D6D91C8AD9;
+	Mon, 13 Nov 2023 19:48:21 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.153.120])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 221171C4CFC;
-	Mon, 13 Nov 2023 19:48:10 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 66A8E1C8AD7;
+	Mon, 13 Nov 2023 19:48:20 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Haritha D via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Haritha <harithamma.d@ibm.com>
-Subject: Re: [PATCH 02/13] Enable builds for z/OS.
-In-Reply-To: <098b9ca8ece4fdce45a9b48e576b474ed81dced1.1699871056.git.gitgitgadget@gmail.com>
-	(Haritha D. via GitGitGadget's message of "Mon, 13 Nov 2023 10:24:04
-	+0000")
-References: <pull.1537.git.git.1699871056.gitgitgadget@gmail.com>
-	<098b9ca8ece4fdce45a9b48e576b474ed81dced1.1699871056.git.gitgitgadget@gmail.com>
-Date: Tue, 14 Nov 2023 09:48:09 +0900
-Message-ID: <xmqqcywd2m9i.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Andy Koppe <andy.koppe@gmail.com>,  git@vger.kernel.org,  pclouds@gmail.com
+Subject: Re: [PATCH] checkout: add config variable checkout.autoDetach
+In-Reply-To: <0e37ee23-922c-4bbf-82c3-8f44e9216ab0@gmail.com> (Phillip Wood's
+	message of "Mon, 13 Nov 2023 15:07:15 +0000")
+References: <20231111224253.1923-1-andy.koppe@gmail.com>
+	<xmqqbkbzo6ba.fsf@gitster.g>
+	<0e37ee23-922c-4bbf-82c3-8f44e9216ab0@gmail.com>
+Date: Tue, 14 Nov 2023 09:48:19 +0900
+Message-ID: <xmqq7cml2m98.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -48,56 +48,31 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 7BA37A58-8287-11EE-8E29-25B3960A682E-77302942!pb-smtp2.pobox.com
+ 81C49AF2-8287-11EE-993D-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-"Haritha D via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> Subject: Re: [PATCH 02/13] Enable builds for z/OS.
+>> and good thing to help new users.  I do not know how others react to
+>> this kind of proliferation of configuration variables, but I do not
+>> mind this particular variable existing.
+>
+> I'm a bit wary of having a config variable that could break
+> scripts relying on the current behavior of "git checkout".  As far
+> as "git switch" goes I don't particularly mind this config
+> variable though I'm not sure it is that hard to type "--detach"
+> (especially with tab completion) and
 
-Documentation/CodingGuidelines and Documentation/SubmittingPatches
-would help here, I think.
+I do not have much sympathy myself to scripts that are not being
+defensive enough to write "--detach" explicitly, but I do understand
+and share your concern as the project maintainer.
 
->  # Define SHELL_PATH to a POSIX shell if your /bin/sh is broken.
->  #
-> +# Define SHELL_PATH_FOR_SCRIPTS to a POSIX shell if your /bin/sh is broken.
+> ... I do worry that we're making the UI more complex each
+> time we add something like this.
 
-The reason to exist for the _FOR_SCRIPTS variants is not justified
-anywhere in the proposed log message.
+Thanks for saying this---this is exactly the kind of reaction I as
+expecting to see.
 
-The former should be sufficient, and our policy is to let the
-builder specify exactly what binaries the build products depend on,
-(instead of random $PATH interfere with the choice by using
-"#!/bin/env tool" that also has to assume that everybody's "env" is
-installed in "/bin").
-
-This patch has too many #ifdefs in the primary codepaths.  Your
-porting strategy may need to be rethought.  Our usual convention is
-to encapsulate these platform differences as much as possible in
-git-compat-util.h and platform specific files in compat/ directory.
-
-> diff --git a/builtin/hash-object.c b/builtin/hash-object.c
-> index 5ffec99dcea..b33b32ff977 100644
-> --- a/builtin/hash-object.c
-> +++ b/builtin/hash-object.c
-> @@ -57,11 +57,39 @@ static void hash_fd(int fd, const char *type, const char *path, unsigned flags,
->  	maybe_flush_or_die(stdout, "hash to stdout");
->  }
->  
-> +#ifdef __MVS__
-> +#  if (__CHARSET_LIB == 1)
-> +#  include <stdio.h>
-> +#  include <stdlib.h>
-> +
-> +   int setbinaryfd(int fd)
-> +   {
-> +     attrib_t attr;
-> +     int rc;
-
-Ahh, OK, I saw [03/13] first and was utterly confused by this thing.
-Do not send in such a mess that introduces broken code in an early
-step that you need to later say "oops that one was broken and I need
-to fix it up with this patch".  "rebase -i" is your friend to clean
-up your mess into a logical progression to help readers better
-understand what you wrote.
-
-I'll stop here.
+>
+> Best Wishes
+>
+> Phillip
