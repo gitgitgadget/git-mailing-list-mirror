@@ -1,154 +1,139 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BA017E
-	for <git@vger.kernel.org>; Tue, 14 Nov 2023 02:50:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38B817E
+	for <git@vger.kernel.org>; Tue, 14 Nov 2023 02:53:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GHoUpMQ0"
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BEDDD4E
-	for <git@vger.kernel.org>; Mon, 13 Nov 2023 18:50:23 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-509c61e0cf4so6014091e87.2
-        for <git@vger.kernel.org>; Mon, 13 Nov 2023 18:50:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1699930221; x=1700535021; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6y3T0nSXmCWFXx/vi17q9C7ghJdpxvx6umNtD7wSc8U=;
-        b=GHoUpMQ0VGED1WP9ZdQpwhLXirOiizH5C9SN45USpCd2Gvdd7Fkt8VAqAj6WdVyMYw
-         B8ImTyyGYF7ku/M1Q/VXtjnYgn7pWpsjs+Dlig9mTl8WjF5h2Rv1WsF8Uz1fvqn0ZyVS
-         fxu+JVf3iCYDaGc3+aAEOt2BqfGEA+d1L8eXP556wDzWYgED2XnaGwuUvLfjTidF3fta
-         DaB1SoCsUvtQ13kFa7LaWzD7J8huBxzN/+QQLXEHvsGMtDJndamCHlC/FU/7Jxi1pyaQ
-         wjkucQGqQiuC1BuNFZyOFh3TU+R/24EBvL9tLldvNMPENWyLzYRcxdlTvSqXD4ytVEtr
-         xVkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699930221; x=1700535021;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=6y3T0nSXmCWFXx/vi17q9C7ghJdpxvx6umNtD7wSc8U=;
-        b=rYpngSzR6c1Rt6yz3BCKzb+L2TPV63JKm/B+1961+/lhTk5bwCsWX7KtRPTO1p6I6m
-         Ngffd76Ku3D029BCHRIf69GnP68y12p45HLOTVNQVnJVaQnehLOjiRyLrTsxnWa+Y62Q
-         UnjbzfgslL848/BB1OiYoCJ9Kr5cY96XggCrfmBDw0BtgZ4dDVyxOhPLJAupYOJDVwYi
-         WtCMWjBTbjzqTJRTMdiJ1wzKL6b8CCrKytEItPQNt85+Q6DEl+UgHrs6kBawMyMxwI9E
-         hk19xhBXsM5ZneeAIMrkR7lYHaSjtj/Ro/yzdB/Zmy5mY3ZKf7y64BN9hvu0oVBelx1W
-         S9WA==
-X-Gm-Message-State: AOJu0YygR8TvrMvPEejdIg7YN+I0BwFzJZNZpJPtgsMumxJxJHls18YI
-	zGq2xGzMQgU+MO07sR985eS/LXvhVNSwwaKENzY=
-X-Google-Smtp-Source: AGHT+IH5mxidAIpDhq3G0L+y4YLE515EgI/p0cjrIeCzq2iB0tQ0tyl1B+LXb/9g5eFtmRk90dOCbGSITopeeCWNSc0=
-X-Received: by 2002:ac2:4e05:0:b0:507:9ff7:2ed4 with SMTP id
- e5-20020ac24e05000000b005079ff72ed4mr6673144lfr.43.1699930220849; Mon, 13 Nov
- 2023 18:50:20 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="lh3dQB0s"
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F345812D
+	for <git@vger.kernel.org>; Mon, 13 Nov 2023 18:53:03 -0800 (PST)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 87E072C2E0;
+	Mon, 13 Nov 2023 21:53:03 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=Q2y2+XPYJRzMqboVM5WjeQa4tMId4z/cU4sgHR
+	us4VQ=; b=lh3dQB0sS1a2UF7G6zdh76ULW/9wfp9/Ob4eZej4/6rUx04YSPFXgg
+	yTHy7MY/tL3S/dEVwQfs+f6KlPRfQ/N2XDXIKEBMeSgFYUD7UPcy7arilm/+C3J/
+	ULGVIVX1lqcpDDLPJai81n4qFEx8OWzLssTr7jEb/8Sw9guytSbeg=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 7273B2C2DF;
+	Mon, 13 Nov 2023 21:53:03 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id F2B392C2D6;
+	Mon, 13 Nov 2023 21:52:58 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Joanna Wang <jojwang@google.com>
+Cc: git@vger.kernel.org,  tboegi@web.de
+Subject: Re: [PATCH 1/1] attr: add native file mode values support
+In-Reply-To: <CAMmZTi-7=L6XOB9-MwZCpD5QaziTi0x6J7m-UTtwQ0S00wnVgQ@mail.gmail.com>
+	(Joanna Wang's message of "Mon, 13 Nov 2023 18:28:00 -0800")
+References: <CAMmZTi-7=L6XOB9-MwZCpD5QaziTi0x6J7m-UTtwQ0S00wnVgQ@mail.gmail.com>
+Date: Tue, 14 Nov 2023 11:52:57 +0900
+Message-ID: <xmqqbkbx11x2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1697736516.git.me@ttaylorr.com> <cover.1698101088.git.me@ttaylorr.com>
- <3595db76a525fcebc3c896e231246704b044310c.1698101088.git.me@ttaylorr.com>
- <CABPp-BEfy9VOvimP9==ry_rZXu=metOQ8s=_-XiG_Pdx9c06Ww@mail.gmail.com>
- <20231113220254.GA2065691@coredump.intra.peff.net> <ZVKkgpiFaOwwDcdw@nand.local>
-In-Reply-To: <ZVKkgpiFaOwwDcdw@nand.local>
-From: Elijah Newren <newren@gmail.com>
-Date: Mon, 13 Nov 2023 18:50:08 -0800
-Message-ID: <CABPp-BEV8Mxu=4=TFN=0o9n+o69kKQfNZd_Rhr1swxqgKwd90g@mail.gmail.com>
-Subject: Re: [PATCH v5 5/5] builtin/merge-tree.c: implement support for `--write-pack`
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org, 
-	"Eric W. Biederman" <ebiederm@gmail.com>, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ EBF0860A-8298-11EE-AAFB-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-On Mon, Nov 13, 2023 at 2:34=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote=
-:
->
-> On Mon, Nov 13, 2023 at 05:02:54PM -0500, Jeff King wrote:
-> > On Fri, Nov 10, 2023 at 03:51:18PM -0800, Elijah Newren wrote:
-> >
-> > > This is unsafe; the object may need to be read later within the same
-> > > merge. [...]
-> > >
-> > > I think (untested) that you could fix this by creating two packs
-> > > instead of just one.  In particular, add a call to
-> > > flush_odb_transcation() after the "redo_after_renames" block in
-> > > merge_ort_nonrecursive_internal().
-> >
-> > It might not be too hard to just let in-process callers access the
-> > objects we've written. A quick and dirty patch is below, which works
-> > with the test you suggested (the test still fails because it finds a
-> > conflict, but it gets past the "woah, I can't find that sha1" part).
->
-> That's a very slick idea, and I think that this series has some legs to
-> stand on now as a result.
->
-> There are a few of interesting conclusions we can draw here:
->
->   1. This solves the recursive merge problem that Elijah mentioned
->      earlier where we could generate up to 2^N packs (where N is the
->      maximum depth of the recursive merge).
->
->   2. This also solves the case where the merge-ort code needs to read an
->      object that it wrote earlier on in the same process without having
->      to flush out intermediate packs. So in the best case we need only a
->      single pack (instead of two).
->
->   3. This also solves the 'replay' issue, *and* allows us to avoid the
->      tmp-objdir thing there entirely, since we can simulate object reads
->      in the bulk-checkin pack.
->
-> So I think that this is a direction worth pursuing.
+Joanna Wang <jojwang@google.com> writes:
 
-Agreed; this looks great.  It's basically bringing fast-import-like
-functionality -- writing objects to a single new packfile while making
-previous objects accessible to subsequent ones -- to additional
-callers.
+>>> Even if we assume that this code is currently meant to work only
+>>> with GIT_ATTR_CHECKIN, I do not think this is what you want.  When
+>>> asked to perform "git add . ':(exclude,mode=160000)'", you not only
+>>> want to exclude the submodules that are already known to this
+>>> superproject, but also a repository that _can_ become a submodule of
+>>> this superproject when added, no?
+> Sorry, I was totally ignorant of ...
 
-> In terms of making those lookups faster, I think that what you'd want is
-> an oidmap. The overhead is slightly unfortunate, but I think that any
-> other solution which requires keeping the written array in sorted order
-> would in practice be more expensive as you have to constantly reallocate
-> and copy portions of the array around to maintain its invariant.
+Nothing to be sorry about, and if I sounded like I was upset or
+something, that wasn't my intention.  Reviewers and more experienced
+developers read posted patches to give pieces of advice exactly
+because no single human is perfect and knows everything.  We cover
+holes in each others' knowledge and attention.
 
-When comparing the overhead of an oidmap to a bunch of inodes,
-however, it seems relatively cheap.  :-)
+>>> On the other hand, the GIT_ATTR_CHECKOUT direction is hopefully much
+>>> simpler.  You'd see what the path in the index is, among a gitlink,
+>>> a regular non-executable file, an executable file, or a symlink.
+> I noticed for both the GIT_ATTR_CHECKOUT and GIT_ATTR_CHECKIN directions,
+> in read_attr(), the indexed .gitattributes file is checked with the
+> actual file as fallback or vice versa.
+> I would think that we'd only want to use attributes from one state
+> (e.g. what's actually in the file)
+> or the other (e.g. what's indexed).
+> So I guess I'm still not sure what the "direction" concept is.
+> For GIT_ATTR_CHECKOUT, would we want to fallback to lstat?
 
-> > I don't know if that is sufficient, though. Would other spawned
-> > processes (hooks, external merge drivers, and so on) need to be able to
-> > see these objects, too?
->
-> Interesting point. In theory those processes could ask about newly
-> created objects, and if they were spawned before the bulk-checkin pack
-> was flushed, those lookups would fail.
+When checking things out of the index, the index should be the
+source of the truth.  If something is not in the index, is there a
+point in falling back to the workint tree state to decide if the
+thing should be checked out of the index?
 
-One of the big design differences that I was pushing really hard with
-git-replay was performance and things that came with it -- no
-worktree, no per-commit hooks (which are nearly ruled out by no
-worktree, but it's still worth calling out separately), etc.  A
-post-operation hook could be fine, but would also not get to assume a
-worktree.
+>>> But stepping back a bit,
+>>> such an application is likely marking selected few paths with the
+>>> attribute, and paths for which "mode" was "unset" are now given
+>>> these natural "mode"; it is inevitable to crash with such uses.
+> I'm confused. This does not match what I think is the current behavior
+> of my patch.
+> If "mode" was unset or removed for a path (meaning '<path> !mode' was
+> added to .gitattributes),
+> the code in my patch would respect that and not return the native mode.
+> It would return 'unspecified' or 'unset'.
 
-merge-tree is the same as far as hooks; I'd rather just not have them,
-but if we did, they'd be a post-operation hook.
+But the usual practice is *not* to cover all paths with explicit
+attribute definition, isn't it?  If somebody used the "foo"
+attribute in their project to decide certain paths are worth giving
+special treatments, there are paths with that attribute, perhaps
+(totally made up example):
 
-In both cases, that makes hooks not much of a sticking point.
+	*.c	foo=yes
 
-External merge drivers, however...
+Now, if you add a new "built-in" attribute next to 'mode' that
+assigns "foo" in attr.c:git_check_attr() the same way to those paths
+whose value is still ATTR__UNKNOWN after collect_some_attrs returns,
+wouldn't a "hello.c" file get attribute 'foo' with value 'yes',
+while a "hello.h" file (not mentioned by .gitattributes) will get
+whatever value the built-in logic computed for it?  If that existing
+project were using "mode" (instead of "foo"), then doesn't this patch
+change the behaviour for them?
 
-> But that requires that, e.g. for hooks, that we know a-priori the object
-> ID of some newly-written objects. If you wanted to make those lookups
-> succeed, I think there are a couple of options:
->
->   - teach child-processes about the bulk-checkin pack, and let them
->     perform the same fake lookup
->
->   - flush (but do not close) the bulk-checkin transaction
->
-> In any event, I think that this is a sufficiently rare and niche case
-> that we'd be OK to declare that you should not expect the above
-> scenarios to work when using `--write-pack`. If someone does ask for
-> that feature in the future, we could implement it relatively painlessly
-> using one of the above options.
+>>> Again, this has one hole, I think.  Paths that are not mentioned
+>>> (not even with "!mode") would come to the function as ATTR__UNKNOWN
+>>> and trigger the fallback behaviour, even when other paths are given
+>>> end-user specified "mode" attribute values.
+> What you are describing sounds correct/what I intended.
+> So are you saying that the expected behavior is actually:
+> If the user sets 'mode' for 1+ paths in the repo, then the native mode
+> fallback should
+> NOT be used for all paths in the repo?
 
-Seems reasonable to me.
+That might be workable, but it breaks a well working system suddenly
+when somebody uses "mode" in their .gitattibutes and we do not even
+warn about the breakage, which is not ideal.
+
+I think, when we see such an attribute is defined while reading from
+.gitattributes and friends, we would probably want to warn and
+ignore their definition altogether and use *only* the computed
+value.  This cannot be done in a backward compatible way, so it
+would be better to carve out a namespace (and avoid overly generic
+word like "mode") for ourselves to define built-in attributes that
+do not overlap with end-user defined attribute names.
+
+Perhaps call this 'builtin-object-mode' or something and document
+that any attribute with a name that begins with 'builtin-' will
+always get a computed value (possibly "unset"), it is an error
+to define such an attribute in .gitattributes system, or something?
+
+
