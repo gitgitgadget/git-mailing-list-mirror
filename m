@@ -1,72 +1,70 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDCEC10E9
-	for <git@vger.kernel.org>; Tue, 14 Nov 2023 08:46:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E976C125DA
+	for <git@vger.kernel.org>; Tue, 14 Nov 2023 08:58:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="M77S684b";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JSL/gzfW"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JrPVoORc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bp9giYb2"
 Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 278A3173F
-	for <git@vger.kernel.org>; Tue, 14 Nov 2023 00:46:31 -0800 (PST)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailout.nyi.internal (Postfix) with ESMTP id 71E265C028E;
-	Tue, 14 Nov 2023 03:46:30 -0500 (EST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C70301AC
+	for <git@vger.kernel.org>; Tue, 14 Nov 2023 00:58:39 -0800 (PST)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.nyi.internal (Postfix) with ESMTP id 41D715C029D;
+	Tue, 14 Nov 2023 03:58:39 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Tue, 14 Nov 2023 03:46:30 -0500
+  by compute2.internal (MEProxy); Tue, 14 Nov 2023 03:58:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm1; t=1699951590; x=1700037990; bh=lR
-	HJF909xr+9bJKBtJdQXG3TnM6dPO0pNUaegokFVvA=; b=M77S684bl5EcFNt4SI
-	olQOi4NpxYMjthGWTUT4MB6QXiCMY8Xb3zQ0TSFILe0kAx+7gxoOWjivIqsx01UC
-	fCRCeUWA0j/HW9dRV1GeIQ0tIw+2pCS7gaqZMEAIZ8/DpUEDOfRYTTeZDaPyyj9k
-	yRwGqEsA5BcpREqMBjqcNp5ZsSCzlvMmqDLVcm+6Fpwv2wlVwecySGHyL5Ym8FWL
-	F3gSaAt5J9HxEfjl9xmibNg030HX1ApHr/2lK+DspldWVwjtz+erFSlVdp1bEt2d
-	bfSdGNquPk5ZHiwpY58UYpUbnXibUBPPtf8YcP2/mYXtHcyMJYScX+Cm9GaMSjbV
-	1DCA==
+	:message-id:mime-version:reply-to:sender:subject:subject:to:to;
+	 s=fm1; t=1699952319; x=1700038719; bh=efY8GQtlBOa7xRStw4apSt7XO
+	vxZTUQyVrjFk7/CGeQ=; b=JrPVoORcmWJxeG8LOj+itzOiJe16qjJ0xNpGgv96B
+	5MT9/ybJ/Z0iYdAMd0WNEx9lLV/OVJPKOulXaNXpRz2Tqvok4fmEwiPKo2AvwrsV
+	in68K1+ydv4dp0nv6rvRd4+zolcU9JuNrnzPYmc/bvyc7w6huPaVE9Qd5Yt7Y9Fq
+	eRmC+ErAMjAAvsr8hobzkJY77XyMOZx6sFFAAFBQyB8wD6C43HQ1QiYTF1k6OVvr
+	olY59BSscx1PFttY39aXQOzgHqu2Bt1qSJeAWtIyi0QB3puK9DDqXxmZQHk5bbbD
+	/hNeQqv8NRtf3d7YUuFvzE35UpwSvuouAYBCVQlYnbNyw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm1; t=1699951590; x=1700037990; bh=lRHJF909xr+9b
-	JKBtJdQXG3TnM6dPO0pNUaegokFVvA=; b=JSL/gzfW1l1QagEe6716smiHoPcDU
-	gGnBFxd6+JGvFJws500jQ6qzkOK+tGwKP9WhkKMKlxoIV/UAxWsdVriUBTxfmixu
-	wgUnv+Nslv+F7vVlOSHm5Fg0CHITbv/jnIzoQNWkh9LaF86RMmd6KkGMbGu36lBm
-	5KIO3ZFZ2l5GbbCyDpxHQpx57WBkhViEFrmmT6iorDAuGMgQwJgUJ4QRVHLR+21V
-	BG4DnBPCuuUfCix6Rhf0vAJID5Dd+oodAw1zTMwMXEVo4uWqhpQZX3YTuhOb5R2j
-	IRebgY+z8+2JWLenG3JvUMSD8rkGJ0GtwavKEn48D/QYM2zq/c4xX7QPQ==
-X-ME-Sender: <xms:5jNTZVM6IlWI8nx075wZaUE0NuqaO8DgchH7DxQBuzlKGhUm80HjFw>
-    <xme:5jNTZX-DcwYjT733HwzQxGfH43HdPz_HqDgpY1M0DH2svIA7S0Edy0ttuWhfahGaz
-    apHtUBaPi2_dK6BXQ>
-X-ME-Received: <xmr:5jNTZURvx9muVne9iJZdeMWELUPDKRJLQbAhVbZfso6c0VdR8OAy3vUY81WvIVin2-kOD9L3Jv_N-zw_QuJ2tQO0obUzttBZXzXkqdf_N16_zxc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudefuddguddvgecutefuodetggdotefrod
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:sender:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1699952319; x=1700038719; bh=efY8GQtlBOa7xRStw4apSt7XOvxZTUQyVrj
+	Fk7/CGeQ=; b=bp9giYb22DUQTwctJKrPd5i4wWOcSPUaLvWtA9GXeu/fuVOaQCY
+	Qp9LLZbnaFFwKQpWYfK89ju1seahvWmNtVtM0ROSQ1dhox3nq8GYJBdNf4jD8UfU
+	yMX86edbm2TNyBT8ETNHPQmshtAsdVQY9NC2c7ivX+O4M0KjFTbyWE1ZinF/ZOYp
+	yGQJBf5dT8Ccrf7+v5+7atvZNqghItVgaOlNUk/tLzYGRqwQiPnTtO1OPuhKcpbJ
+	/hMxQjTQoytc7NB/39tFK/JDYoonx2lxRVItpfsEKH2zmDtcfKlE+W06mipnpKwM
+	cUk82GzB8Nvm66tAQu9doPx2om9bhPccDIg==
+X-ME-Sender: <xms:vzZTZR-rNGj8Ic1yIAFZ3X9uKupKANNN4czoV859LX1EeuTday-yaA>
+    <xme:vzZTZVvStJoh5OxkPNjuAYUzxbb78v1bijM5ZE7sNjGfSdyxUig65YWtrc1TCGqdh
+    WTpwrWlXi-MVNYu-w>
+X-ME-Received: <xmr:vzZTZfCqPyEMpzpyTsljhVzVGEDPe64RzFFgSQo7l09GO2GwYyX1VIQ4nOzpeeJPYl2Ageg0mXM7WcEVfvUMQR9ZsLlTaJLh9oC2VEGNSlBn4Xc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudefuddguddviecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
-    dtreertddtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
-    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepteeuvefhhfdufedvgeeiueeileegtd
-    fhgeeftdeuveejjedtgfejhedujeeutddunecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:5jNTZRvkdLcDwf5GncZ_DV7jcD_bOk2J_WovEvF7sCZLDaDpkUsstA>
-    <xmx:5jNTZdcl3RDDnRFp914i-M3yuIAAYvHL52mPb811-J2JE25NVaAvMQ>
-    <xmx:5jNTZd3iQrMgJ233mPSCmxs1VEd-90H3d6etebArj7YczeqEC2_kuQ>
-    <xmx:5jNTZdE3_Bfr9I2_BieS1fGsphv9FoZ3KqZsUQcSmUgyCjCNmY-dpg>
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpeffhffvvefukfggtggusehgtderredttddvnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeeugfeutdeuieehteelveegudejkeejheeljeejhffhgffhvefgkeeukeejtdeijeen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhm
+X-ME-Proxy: <xmx:vzZTZVfU0lW3w4qtLgnRcrrWcLNpRKEiz5VEAtB_n0CyHzVc3GXdtA>
+    <xmx:vzZTZWNXAmRcMyewk9-1MgX0YMfvT-yCHtTFA_z-dMaAZJelYuazVg>
+    <xmx:vzZTZXnDrJnM7bKEPiwynAdSYj5hE1Naju-fJIMyjUCHPGCJey-DUQ>
+    <xmx:vzZTZY1z-dYmO3J8TvJGxK07AiyDOLJrvJhqcXytgRzbGC5v1h_4dQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 14 Nov 2023 03:46:29 -0500 (EST)
+ 14 Nov 2023 03:58:38 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 64bbaebf (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 14 Nov 2023 08:45:50 +0000 (UTC)
-Date: Tue, 14 Nov 2023 09:46:26 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 84e5d7e6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 14 Nov 2023 08:57:58 +0000 (UTC)
+Date: Tue, 14 Nov 2023 09:58:34 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: commit-graph paranoia performance, was Re: [ANNOUNCE] Git
- v2.43.0-rc1
-Message-ID: <ZVMz4iDWfC__H8Jp@tanuki>
-References: <xmqq8r785ev1.fsf@gitster.g>
- <20231113205538.GA2028092@coredump.intra.peff.net>
+To: git@vger.kernel.org
+Cc: David Turner <novalis@novalis.org>,
+	Han-Wen Nienhuys <hanwen@google.com>
+Subject: [PATCH 0/4] refs: remove virtual `delete_refs()` function
+Message-ID: <cover.1699951815.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,96 +72,74 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="c6UdL4TkP4+sbFGz"
+	protocol="application/pgp-signature"; boundary="R0q51+ONooOM+2XN"
 Content-Disposition: inline
-In-Reply-To: <20231113205538.GA2028092@coredump.intra.peff.net>
 
 
---c6UdL4TkP4+sbFGz
-Content-Type: text/plain; charset=utf-8
+--R0q51+ONooOM+2XN
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Nov 13, 2023 at 03:55:38PM -0500, Jeff King wrote:
-> On Thu, Nov 09, 2023 at 02:33:54AM +0900, Junio C Hamano wrote:
->=20
-> >  * The codepath to traverse the commit-graph learned to notice that a
-> >    commit is missing (e.g., corrupt repository lost an object), even
-> >    though it knows something about the commit (like its parents) from
-> >    what is in commit-graph.
-> >    (merge 7a5d604443 ps/do-not-trust-commit-graph-blindly-for-existence=
- later to maint).
->=20
-> I happened to be timing "rev-list" for an unrelated topic today, and I
-> noticed that this change had a rather large effect. The commit message
-> for 7a5d604443 claims a 30% performance regression. But that's when
-> using "--topo-order", and actually writing out the result.
->=20
-> Running "rev-list --count" on a copy of linux.git with a fully-built
-> commit-graph shows that the run-time doubles:
->=20
->   Benchmark 1: git.v2.42.1 rev-list --count HEAD
->     Time (mean =C2=B1 =CF=83):     658.0 ms =C2=B1   5.2 ms    [User: 613=
-=2E5 ms, System: 44.4 ms]
->     Range (min =E2=80=A6 max):   650.2 ms =E2=80=A6 666.0 ms    10 runs
->  =20
->   Benchmark 2: git.v2.43.0-rc1 rev-list --count HEAD
->     Time (mean =C2=B1 =CF=83):      1.333 s =C2=B1  0.019 s    [User: 1.2=
-63 s, System: 0.069 s]
->     Range (min =E2=80=A6 max):    1.302 s =E2=80=A6  1.361 s    10 runs
->  =20
->   Summary
->     git.v2.42.1 rev-list --count HEAD ran
->       2.03 =C2=B1 0.03 times faster than git.v2.43.0-rc1 rev-list --count=
- HEAD
+Hi,
 
-Ah, indeed. I thought I already benchmarked the worst-case behaviour by
-simply doing a full graph walk, but of course the performance hit is
-even worse when not outputting the commits at all but only counting
-them.
+this patch series refactors the virtual `delete_refs()` function to
+instead be implemented generically via a single reference transaction.
 
-> Now in defense of that patch, this particular command is going to be one
-> of the most sensitive in terms of percent change, simply because it
-> isn't doing much besides walking the commits. And 650ms isn't _that_ big
-> in an absolute sense. But it also doesn't quite feel like nothing, even
-> tacked onto a command that might otherwise take 1000ms to run.
->=20
-> Should we default GIT_COMMIT_GRAPH_PARANOIA to "0"? Yes, some operations
-> might miss a breakage, but that is true of so much of Git. For day to
-> day commands we generally assume that the repository is not corrupted,
-> and avoid looking at any data we can. Other commands (like "commit-graph
-> verify", but maybe others) would probably want to be more careful
-> (either by checking this case explicitly, or by enabling the paranoia
-> flag themselves).
->=20
-> -Peff
+The main intent of this patch series is to reduce complexity that we
+have in the reference backends so that it becomes easier to implement
+new backends that have the same semantics as others. But at the same
+time, benchmarks show that the new generic code is even faster than the
+old backend-specific code. This is mostly because we avoid the overhead
+of per-reference transactions when deleting many references, but also
+because the transactional code in the files backend knows to avoid
+rewriting the packed-refs file in case it contains none of the refs that
+are to be deleted.
 
-I'd be fine with that as a follow-up change, yes. I agree that in
-general we shouldn't see this kind of corruption, and it's good that the
-behaviour can be toggled so easily now.
-
-I'm happy to write that patch if you don't plan to.
+So in the end we have less duplicate code in the files backend, make it
+easier to implement new backends, and have faster deletion of many refs
+in the files backend.
 
 Patrick
 
---c6UdL4TkP4+sbFGz
+Patrick Steinhardt (4):
+  t5510: ensure that the packed-refs file needs locking
+  refs/files: use transactions to delete references
+  refs: deduplicate code to delete references
+  refs: remove `delete_refs` callback from backends
+
+ refs.c                | 48 ++++++++++++++++++++++++++++++++++++++---
+ refs/debug.c          | 15 -------------
+ refs/files-backend.c  | 49 ------------------------------------------
+ refs/packed-backend.c | 50 -------------------------------------------
+ refs/refs-internal.h  |  3 ---
+ t/t5510-fetch.sh      |  1 +
+ 6 files changed, 46 insertions(+), 120 deletions(-)
+
+
+base-commit: e0939bec273052b1a8d69db4a3f7c87aaf83e220
+--=20
+2.42.0
+
+
+--R0q51+ONooOM+2XN
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVTM+EACgkQVbJhu7ck
-PpT97BAAlehu2WmRVQY1u1uhdnWmwA8S4QTVBa60DwX/H3XmZeKmitYOTWIpdj5U
-eLKDPYJ8t0S8hoews5o3xmE3XCcTWiRBEZW6UCR1jG8TU34jkah04CxHte+MGRtX
-aWSDCdBXns4Qz5XUit4Bi3eVnd8h5FLjgJ+FLhpnKRgKjovfiXgTCEjhsbDZOLJr
-EQSPgc+xGi3leYxY0Ix+Z7uRqHnjdPpOvgrzRdWxMIp8Ogzc8kOeOugPj86QWgSa
-03UGx5Im8ubwtJ5OXL3Y0E5XWfbC2HpKZQjdCos8B7T6WflKKD5rV0eRtU3qLP1T
-/t2/iEPEKiXdB2zXGEw2EptCjhl1OnjRThQ965Sr3dJsANH7TUQekqE6mk3BcIS6
-DTx+DIu254X/Dxz+yf72CWztIe07NOtrCHvydd1IajDXwrDCkr6JHpf/3Xt7gEAk
-mirxj3M43BiCB3EzDB5yWXYolDTLxfhYe9KdUVUsbrvYOLFLsnR7T6P+bv96SLd4
-x89v+UHMymuilGsd9QUAGPqTBk01l7oQxpNiQjpHEXHgrGJWgBVLqkrIWdMzPz1U
-Uw1E5ILepxtHwVz1XiWw/wkj7MrZjIDR1u76tCvAozHB59/M5KKmR3zl/2WWWUfg
-UjEcOF/nx21h0pk355zzoOeUwi98PSpT36pWhIvhQ0XkysqYV5c=
-=1alR
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVTNrkACgkQVbJhu7ck
+PpTWvg/7BwWVaGqKOkriYw7ROIrDUt35EZbSnsJGp6BSsJ1Bf44CdzhX6tDjgE04
+Zs41Y/uVxAqaesFhsgH4n8cWd2xUdZNt2ytfRsZeftJllareiYS9Uty/BC3h337k
+WuUGurZAz17axcKzegFjSuBlYkYjveCQIJLyDZXyP/Zzwie92SRyfN4yD0XKfdR7
+2RIMBkmP3U/onVwGM5SuEkHk36z9o5MXtajITQX6Rvnd6OyVegsWbd/gZobVLgbt
+HC3XRjgbGz9Z16tZESzS5KKiyz/pQSAnygqmTJn0rnOEmyLGCuoV4VhwmPdNuS96
+IcWJdvzY8eeVkU8dGO5CyhK4gk/oqtf5ht4p+aI4koVYaGyrEu/3rnBzPILIKzaR
+o2cArgiYX/uJowhYUIXRGL9TmbkI7v62A9NqO0h4PSk33aeIPiP0VIZtwVxdXnkC
+f3a5pk2soNDHrNRbhT7kkpiQfq7WCB5vk1whO2XrrV1Iscc3zW4UTTlK1Lf56EiU
+zatFxSoGXh5+TJAeOv1n/uaTRXWXm4bVkpftSjrc9X5fj45qqHuY3X8l3xnzKmit
+jMgqiEUE85HK1kHD/ws0FuctA6KGi7jThbES77tMLuPGfOrVgYOGzfKU38xj6lt7
+JEtR5GlVcsJUTvzomeCNFnWermBc3mLzZy32SdomiJX+cUl7x5Y=
+=48/X
 -----END PGP SIGNATURE-----
 
---c6UdL4TkP4+sbFGz--
+--R0q51+ONooOM+2XN--
