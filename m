@@ -1,88 +1,139 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2645226ACF
-	for <git@vger.kernel.org>; Tue, 14 Nov 2023 19:43:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91AFF10D
-	for <git@vger.kernel.org>; Tue, 14 Nov 2023 11:43:12 -0800 (PST)
-Received: (qmail 2039 invoked by uid 109); 14 Nov 2023 19:43:11 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 14 Nov 2023 19:43:11 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18708 invoked by uid 111); 14 Nov 2023 19:43:12 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Nov 2023 14:43:12 -0500
-Authentication-Results: peff.net; auth=none
-Date: Tue, 14 Nov 2023 14:43:10 -0500
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH] commit-graph: disable GIT_COMMIT_GRAPH_PARANOIA by
- default
-Message-ID: <20231114194310.GC2092538@coredump.intra.peff.net>
-References: <7e2d300c4af9a7853201121d66f982afa421bbba.1699957350.git.ps@pks.im>
- <ZVNNXNRfrwc_0Sj3@tanuki>
- <xmqq7cmkz3fi.fsf@gitster.g>
- <xmqqzfzgxops.fsf@gitster.g>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EAD926ACF
+	for <git@vger.kernel.org>; Tue, 14 Nov 2023 19:44:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Weo4L4bq"
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01013107
+	for <git@vger.kernel.org>; Tue, 14 Nov 2023 11:44:25 -0800 (PST)
+Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2c54c8934abso81866721fa.0
+        for <git@vger.kernel.org>; Tue, 14 Nov 2023 11:44:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1699991064; x=1700595864; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=QD2W9wpnaQKkpCQB00FW8kXoLjehhtZJWwVpymiU6rs=;
+        b=Weo4L4bqWPX/ZzAPyE+3eUmDo8iDyCNwfe+sydsxUAGeXM+Y0tNadCOxEzJR0j/+vN
+         UFGnfsq2Q9tCCXsRbni2YD6uuDTVqwKkNmwxso3+22xxnOhKOqHmCLqvfv1Bh9WYS4GY
+         FUCL/Xwl7d+WSvyuKzmDTFKVHP6mShqDilbDHn5Cpbfd5nCPrEN3X+kMkpKtZYYbTsym
+         sdsnM5cKDKrCiCGHx8E3hvtZNckc2TfMSGNfete4B9/HL1vboa4PVDw/y8HQtfRi/1xN
+         TWsla+Y3BOVUou6JN7yrxjzgxdFzN0M+ZcOpbYtF3HBGddpFeoU3Az9koF2Ue/fCxScX
+         Gpfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699991064; x=1700595864;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QD2W9wpnaQKkpCQB00FW8kXoLjehhtZJWwVpymiU6rs=;
+        b=fsaDTp+tGoAEn2dcmJlh6eUx16X5lG3BfByVfTq9SeOasLMu3CLM+O8KhVjzVIFrN2
+         N9RllXXcJ/vLgFID0s5DYPhwH1nVz3+nTgZCJzyZ+o8SNVE6br9F/rjP0+b/XmX7njzR
+         R2xvt3at3/kGAosbKeO0/7Y6Cda9OZ+z3vyoChTTMXGVpWqIvHfF84Xb0ShUWQzmNDED
+         drjMExk9XihABlFaNBvoc4kJeQUCyGv/yfqTMikEGeXL4AS7nq+1YUvJ7q0Mqa+vJjL/
+         t3rrnIgte9w0JtoD87suH8p04uXPBftb3tAj2cDj1fSnXHnsr+FlAlngOSoMiJNlqmNr
+         2yQg==
+X-Gm-Message-State: AOJu0YzRhta/UsA1YZAeq4yqhxlfJcqm9tOaRlxVQHFoEEgPv3LSMJHI
+	2PDwtUz3XpezjKkg1ekdjCfBG4pcKmioDX3H80Q3icPJ/sM=
+X-Google-Smtp-Source: AGHT+IEl+w115X7wzPJpY+S/zpAXjZT90+LaYuguPwmzpXHkDE8+YoZPeMRPGqMyhZDJT53tnx9+yyabE/FDAG2YU60=
+X-Received: by 2002:a05:651c:c7:b0:2c5:94a:ac96 with SMTP id
+ 7-20020a05651c00c700b002c5094aac96mr2652010ljr.9.1699991063863; Tue, 14 Nov
+ 2023 11:44:23 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqzfzgxops.fsf@gitster.g>
+References: <CAJsoDaFX7YdncsTy7UsjxaM1GCKs36-H5RhJ6kzgBUFBJyoGZQ@mail.gmail.com>
+ <47fa8400-1e5f-437f-84b8-50bb09580325@gmail.com> <CAJsoDaHX3t9bViq0F7gmJPD+PoE-ZqmJS5h=u-W900x9KEMmYA@mail.gmail.com>
+ <00033c86-dbd7-4c88-bfbd-8f6766cd66c9@gmail.com>
+In-Reply-To: <00033c86-dbd7-4c88-bfbd-8f6766cd66c9@gmail.com>
+From: Ondra Medek <xmedeko@gmail.com>
+Date: Tue, 14 Nov 2023 20:44:11 +0100
+Message-ID: <CAJsoDaG71Jrt=M7iTn8zTvevv5FA4iuDjd2otDNy4tS5RCyX-w@mail.gmail.com>
+Subject: Re: Feature request: git status --branch-only
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Nov 15, 2023 at 01:51:43AM +0900, Junio C Hamano wrote:
+Hi Phillip,
 
-> >> Both of these are expected failures: we knowingly corrupt the repository
-> >> and circumvent git-gc(1)/git-maintenance(1), thus no commit-graphs are
-> >> updated. If we stick with the new stance that repository corruption
-> >> should not require us to pessimize the common case,...
+even "[gone]" would not be much of help for me. I would need something
+like "origin/master [gone]" i.e. what "git status -b --porcelain"
+prints. (Note, I've written about "git status -b --porcelain=v2"
+before because v2 is better documented and parseable.)
+
+Regards
+Ondra Medek
+
+On Tue, 14 Nov 2023 at 16:02, Phillip Wood <phillip.wood123@gmail.com> wrote:
+>
+> Hi Ondra
+>
+> On 14/11/2023 12:40, Ondra Medek wrote:
+> > Hi Phillip,
 > >
-> > Yeah, just like we try to be extra careful while running fsck,
-> > because "--missing" is about finding these "corrupt" cases,
-> > triggering the paranoia mode upon seeing the option would make
-> > sense, no?  It would fix the failure in 6022, right?
+> > it does not work for a fresh clone of an empty repository
 > >
-> > Thanks for working on this.
-> 
-> Just to make sure we do not miscommunicate, I do not think we want
-> to trigger the paranoia mode only in our tests.  We want to be
-> paranoid to help real users who used "--missing" for their real use,
-> so enabling PARANOIA in the test script is a wrong approach.  We
-> should enable it inside "rev-list --missing" codepath.
-
-Yeah. Just like we auto-enabled GIT_REF_PARANOIA for git-gc, etc, I
-think we should do the same here.
-
-As we are closing in on the v2.43 release, there's one thing I'm not
-sure about regarding release planning. Are these test cases that _used_
-to detect the corruption, but now don't? I.e., I would have expected
-that disabling GIT_COMMIT_GRAPH_PARANOIA would take us back to the same
-state as v2.42. But I think it doesn't because of the hunk in e04838ea82
-(commit-graph: introduce envvar to disable commit existence checks,
-2023-10-31) that makes the has_object() call conditional (and now
-defaults to off).
-
-What I'm getting as it that I think we have three options for v2.43:
-
-  1. Ship what has been in the release candidates, which has a known
-     performance regression (though the severity is up for debate).
-
-  2. Flip the default to "0" (i.e., Patrick's patch in this thread). We
-     know that loosens some cases versus 2.42, which may be considered a
-     regression.
-
-  3. Sort it out before the release. We're getting pretty close to do
-     a lot new work there, but I think the changes should be small-ish.
-     The nuclear option is ejecting the topic and re-doing it in the
-     next cycle.
-
-I don't have a really strong preference between the three.
-
--Peff
+> >      git for-each-ref --format="%(upstream:short)" refs/heads/master
+> >
+> > outputs nothing, while
+>
+> Oh dear, that's a shame. I wonder if it is a bug because the
+> documentation says that
+>
+>         --format="%(upstream:track)"
+>
+> should print "[gone]" whenever an unknown upstream ref is encountered
+> but trying that on a clone of an empty repository gives no output.
+>
+> Best Wishes
+>
+> Phillip
+>
+>
+> >      git status -b --no-ahead-behind --porcelain=v2
+> >
+> > outputs
+> >
+> > # branch.oid (initial)
+> > # branch.head master
+> > # branch.upstream origin/master
+> >
+> > I.e. it outputs a proper upstream branch.
+> >
+> > Best regards
+> > Ondra
+> >
+> > Ondra Medek
+> >
+> >
+> > On Tue, 14 Nov 2023 at 13:28, Phillip Wood <phillip.wood123@gmail.com> wrote:
+> >>
+> >> Hi Ondra
+> >>
+> >> On 14/11/2023 10:16, Ondra Medek wrote:
+> >>> Hello,
+> >>> I am working on a tol which should fetch changes from a remote
+> >>> repository on a user click. I want to limit fetch on the current
+> >>> remote tracking branch (something like "origin/master"), but
+> >>> surprisingly, it's hard to get it for all corner cases like a fresh
+> >>> clone of an empty repository or detached head, etc. E.g see this SO
+> >>> thread https://stackoverflow.com/questions/171550/find-out-which-remote-branch-a-local-branch-is-tracking/52896538
+> >>
+> >> I think you can do this by calling
+> >>
+> >>          git symbolic-ref --quiet HEAD
+> >>
+> >> to get the full refname of the current branch. If HEAD is detached it
+> >> will print nothing and exit with exit code 1. Then you can call
+> >>
+> >>          git for-each-ref --format="%(upstream:short)" $refname
+> >>
+> >> to get the upstream branch
+> >>
+> >> Best Wishes
+> >>
+> >> Phillip
+> >
