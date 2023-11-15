@@ -1,48 +1,48 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4AF72DF67
-	for <git@vger.kernel.org>; Wed, 15 Nov 2023 14:33:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7C612FC5E
+	for <git@vger.kernel.org>; Wed, 15 Nov 2023 14:33:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EAYe6ZJi"
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FB73189
-	for <git@vger.kernel.org>; Wed, 15 Nov 2023 06:33:56 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-4083f61322fso53646315e9.1
-        for <git@vger.kernel.org>; Wed, 15 Nov 2023 06:33:56 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HWcIOmsi"
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B955187
+	for <git@vger.kernel.org>; Wed, 15 Nov 2023 06:33:58 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-4079ed65582so53328585e9.1
+        for <git@vger.kernel.org>; Wed, 15 Nov 2023 06:33:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700058834; x=1700663634; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1700058836; x=1700663636; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Ze0ZZh/TMWbCDcHijjRV14IrjUZbWlQ3RkhaWbRVZXI=;
-        b=EAYe6ZJi85IMVCbf5hq7kfWRAw2UDfjcoqjObmPxBHI2fVIAhx90s835aPH+YALCh2
-         qRAWJNyFpJtGSr0Ep6/pBOdZGfxYXAJHQcNrf5uJ3czKVIZDnDgz0mCdAo02qz1MHpt4
-         uTkkil/UmQQ9vkF3CqeaSe+PhfxEWqwZ995u3gSx9CnDwhg7lkLz5FQYPH8ikPogqpyE
-         qNGfVpJFtAa81WG0fY1vW1BTkRmTjJPf+4Uo5K0GKGWgFo81Mc5RWa1FQZnH7HuL8E30
-         s57rzVV0Q4YseqQ+jmh53sDA3u7p5aolqH89z3YFDTz9mWQFS3liN3M25nb1e4DKSKT9
-         qpwA==
+        bh=qlX1vPNSw+hqdLdu0xZ2UW5XuEXNe6kchLDblMoMQbo=;
+        b=HWcIOmsijaI8cPKkq3HC1kIidK4zg9Ela6V8Dsv97/nJq06Y0SoG1n9zbZB4B2NszM
+         q57FS4KmpiS3/MjeLOOt+JGBsSGerJVhxFsZN0D/V5U8mUd/hgZ1kqqfyJZ9dB7aF7tz
+         QFTMgNPtlCfI4QB9iXDi7TnnRUBRLCwS73C4nsKDB9jDDf78XgHNIZkyfzQkA9F/jWs5
+         SKe/oci1xLlxXELhJtJvZTzLJvFVz22QlnJSuPTKIPDNqEtnx/CIX2j+mkTOCbBdteHt
+         RBc8NT8d2HtGWPr0pD56+h4xVKI0jx/Trv89tTiaD+jiFilsM+vfipznmC43k5o/7grD
+         rQ9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700058834; x=1700663634;
+        d=1e100.net; s=20230601; t=1700058836; x=1700663636;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Ze0ZZh/TMWbCDcHijjRV14IrjUZbWlQ3RkhaWbRVZXI=;
-        b=HO8v7wvoflg3qTdKVKWbWujokJ58BIonC3OL6lmtqx3WiYC9X9m7F609y2s4jhpsua
-         QBxEUuPUTXybVxipVrDtJCiald4QyB/Hv7uVYvFYDrMI1GZERxcXk+7PXJ0bzHI+q0Ue
-         nhpX+h4H4GO8UXFYFSDO7DjaEQ9LmRDoSCINgMQJ/k2RrQQuU0bfSlMflT352WCT2QCL
-         i2/cAm5S9QRxvAK5Q1OtzEFHJU0n84V5gXA72OXyw9+84i5frsmK9hpWmGv4EDhchuO9
-         u5lEkxWk/fPCiWyvDoxs6pEKfrOrmxpIiwUsicKABzgmy3IwMhaUzG+OWybFvhG9lN0W
-         gs/g==
-X-Gm-Message-State: AOJu0YylZHpl0BYpXQ2tuDlemNVvCvF8ArWm63Zf3W8whTZhvLUJyB3m
-	in2Ge7yHsQ4Fa5IH7N1Wa+PglYW8Ypw=
-X-Google-Smtp-Source: AGHT+IG4zEuvIBgL9D7K/rCTwrBTdRleXGUdB2VScBuhFVzqYH7CFR5+UIWXR0U7UY7qcK9QUwbyew==
-X-Received: by 2002:a05:600c:34ce:b0:409:773:cf62 with SMTP id d14-20020a05600c34ce00b004090773cf62mr10494296wmq.39.1700058834206;
-        Wed, 15 Nov 2023 06:33:54 -0800 (PST)
+        bh=qlX1vPNSw+hqdLdu0xZ2UW5XuEXNe6kchLDblMoMQbo=;
+        b=FvayyGPCncMeoE5e3RL2ZXQTE0iFDGNeX4B6rTx946rzCvbxaxMF2epc7GKYHIqcGb
+         46ZKmIjEkhjh2XDlZkvBo8ivoxE8eIt1ImjbGea9+iEpWRLg+wlM5DxZN8p+d5iCxwUD
+         dzE42r9tpQOqQMHAIqiSYNdPMSpThZsuYdsAeneh20VRQkk5zs3OfgCT3NnNOpso9FyV
+         C+8o4bOlLJoY+vjXoj4SxIH+43tF0X88zxTfCADWwZVB1JnPMXsojGJiuc6M1PRMzA0q
+         mLz2n9HHUnuwWawzvXhhwCsxh2dQWr5q9s39Yhk4aXGJ0RVd8B7cgeqlYYi14OVn0jN6
+         RC/A==
+X-Gm-Message-State: AOJu0YxK13ufDAeO12bByNvPofumXJr7r5ysxx0ysjh704mGRKm+K58R
+	dSeR02ORbyujMaNqQA2AmsphQI1TwhI=
+X-Google-Smtp-Source: AGHT+IENChSEZFc89sn+HyZxk8pYPT+SOeY10fxq2UMDwSzlj4qOsZHYMjjiYw+mujyG4E3s7SHOfA==
+X-Received: by 2002:a05:600c:310e:b0:408:80bb:ae8d with SMTP id g14-20020a05600c310e00b0040880bbae8dmr10636916wmo.32.1700058835732;
+        Wed, 15 Nov 2023 06:33:55 -0800 (PST)
 Received: from localhost.localdomain ([2001:861:3f04:7ca0:a40b:e654:dd4c:2f5f])
-        by smtp.gmail.com with ESMTPSA id q15-20020a05600c46cf00b004060f0a0fd5sm15207643wmo.13.2023.11.15.06.33.52
+        by smtp.gmail.com with ESMTPSA id q15-20020a05600c46cf00b004060f0a0fd5sm15207643wmo.13.2023.11.15.06.33.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Nov 2023 06:33:52 -0800 (PST)
+        Wed, 15 Nov 2023 06:33:54 -0800 (PST)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -57,9 +57,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Dragan Simic <dsimic@manjaro.org>,
 	Linus Arver <linusa@google.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v7 06/14] replay: change rev walking options
-Date: Wed, 15 Nov 2023 15:33:19 +0100
-Message-ID: <20231115143327.2441397-7-christian.couder@gmail.com>
+Subject: [PATCH v7 07/14] replay: add an important FIXME comment about gpg signing
+Date: Wed, 15 Nov 2023 15:33:20 +0100
+Message-ID: <20231115143327.2441397-8-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.43.0.rc1.15.g29556bcc86
 In-Reply-To: <20231115143327.2441397-1-christian.couder@gmail.com>
 References: <20231102135151.843758-1-christian.couder@gmail.com>
@@ -74,97 +74,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Elijah Newren <newren@gmail.com>
 
-Let's force the rev walking options we need after calling
-setup_revisions() instead of before.
+We want to be able to handle signed commits in some way in the future,
+but we are not ready to do it now. So for the time being let's just add
+a FIXME comment to remind us about it.
 
-This might override some user supplied rev walking command line options
-though. So let's detect that and warn users by:
+These are different ways we could handle them:
 
-  a) setting the desired values, before setup_revisions(),
-  b) checking after setup_revisions() whether these values differ from
-     the desired values,
-  c) if so throwing a warning and setting the desired values again.
+  - in case of a cli user and if there was an interactive mode, we could
+    perhaps ask if the user wants to sign again
+  - we could add an option to just fail if there are signed commits
 
-We want the command to work from older commits to newer ones by default.
-Also we don't want history simplification, as we want to deal with all
-the commits in the affected range.
-
-Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Co-authored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Elijah Newren <newren@gmail.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/replay.c | 48 +++++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 41 insertions(+), 7 deletions(-)
+ builtin/replay.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/builtin/replay.c b/builtin/replay.c
-index 5c4cbd11db..8302d35eca 100644
+index 8302d35eca..2e1df83027 100644
 --- a/builtin/replay.c
 +++ b/builtin/replay.c
-@@ -173,22 +173,56 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 
- 	repo_init_revisions(the_repository, &revs, prefix);
- 
--	revs.verbose_header = 1;
--	revs.max_parents = 1;
--	revs.cherry_mark = 1;
--	revs.limited = 1;
-+	strvec_pushl(&rev_walk_args, "", argv[2], "--not", argv[1], NULL);
-+
-+	/*
-+	 * Set desired values for rev walking options here. If they
-+	 * are changed by some user specified option in setup_revisions()
-+	 * below, we will detect that below and then warn.
-+	 *
-+	 * TODO: In the future we might want to either die(), or allow
-+	 * some options changing these values if we think they could
-+	 * be useful.
-+	 */
- 	revs.reverse = 1;
--	revs.right_only = 1;
- 	revs.sort_order = REV_SORT_IN_GRAPH_ORDER;
- 	revs.topo_order = 1;
--
--	strvec_pushl(&rev_walk_args, "", argv[2], "--not", argv[1], NULL);
-+	revs.simplify_history = 0;
- 
- 	if (setup_revisions(rev_walk_args.nr, rev_walk_args.v, &revs, NULL) > 1) {
- 		ret = error(_("unhandled options"));
- 		goto cleanup;
- 	}
- 
-+	/*
-+	 * Detect and warn if we override some user specified rev
-+	 * walking options.
-+	 */
-+	if (revs.reverse != 1) {
-+		warning(_("some rev walking options will be overridden as "
-+			  "'%s' bit in 'struct rev_info' will be forced"),
-+			"reverse");
-+		revs.reverse = 1;
-+	}
-+	if (revs.sort_order != REV_SORT_IN_GRAPH_ORDER) {
-+		warning(_("some rev walking options will be overridden as "
-+			  "'%s' bit in 'struct rev_info' will be forced"),
-+			"sort_order");
-+		revs.sort_order = REV_SORT_IN_GRAPH_ORDER;
-+	}
-+	if (revs.topo_order != 1) {
-+		warning(_("some rev walking options will be overridden as "
-+			  "'%s' bit in 'struct rev_info' will be forced"),
-+			"topo_order");
-+		revs.topo_order = 1;
-+	}
-+	if (revs.simplify_history != 0) {
-+		warning(_("some rev walking options will be overridden as "
-+			  "'%s' bit in 'struct rev_info' will be forced"),
-+			"simplify_history");
-+		revs.simplify_history = 0;
-+	}
-+
- 	strvec_clear(&rev_walk_args);
- 
- 	if (prepare_revision_walk(&revs) < 0) {
+@@ -62,7 +62,7 @@ static struct commit *create_commit(struct tree *tree,
+ 	struct object *obj;
+ 	struct commit_list *parents = NULL;
+ 	char *author;
+-	char *sign_commit = NULL;
++	char *sign_commit = NULL; /* FIXME: cli users might want to sign again */
+ 	struct commit_extra_header *extra;
+ 	struct strbuf msg = STRBUF_INIT;
+ 	const char *out_enc = get_commit_output_encoding();
 -- 
 2.43.0.rc1.15.g29556bcc86
 
