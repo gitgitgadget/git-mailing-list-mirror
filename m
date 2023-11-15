@@ -1,266 +1,149 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C8BA33CC7
-	for <git@vger.kernel.org>; Wed, 15 Nov 2023 14:34:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557C733069
+	for <git@vger.kernel.org>; Wed, 15 Nov 2023 14:36:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mpCvSZzv"
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E359418E
-	for <git@vger.kernel.org>; Wed, 15 Nov 2023 06:34:07 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-40a5a444c3eso17610415e9.2
-        for <git@vger.kernel.org>; Wed, 15 Nov 2023 06:34:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700058846; x=1700663646; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HdYvPF40PLW9J9JPPdsPaTxSDxkzVO+P/vd76mIXd+o=;
-        b=mpCvSZzvsO/fjqs5Vke8nXeu7TNdUIdQ47g3VMeu8c9W4X3crw1G2leRzyFj4dC9qM
-         qtZ8MAmaRv3GLOCyW1vfPapaOPdiXkSjfLWd4Itl0q4XBYywXMCUTsAF5maCbdSpVrKA
-         LrVhHLTKGkVmGTfT+6+PDBfsCL5j6ShPOAQyJZpqWjENJXnodJ0KXj1ZNg+FcJl78TWw
-         vfAi0vbAJd3KEBN3fc9Q39bHsFzF2vYFwRnrdeeoWUqUaJSqH53F6oBeUxV5ZsD/ijun
-         PNvrgBcvS8VUvcaicmfMm8VraD0isMt9r1mVrFBsqugXEywjrj8AcNky/0iB1gAOZ2UO
-         C2mw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700058846; x=1700663646;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=HdYvPF40PLW9J9JPPdsPaTxSDxkzVO+P/vd76mIXd+o=;
-        b=CWAeR+JjekkxlVMaKgoWZY3mGCKx+8Owvhj3iSD+ap6JsUt6KNLDzEVR7xwIwjWWwi
-         3T9XAJaQPi1E4oR31+R5KLRGaNg1BqXiEMG1PBtOTwtU33arrDyI0EY+fkDA7zv7XIhI
-         zZ69fACV/xOQmlBmwFQmsKWOEttgeAaVH0G0+vamAiNqLBZP18gaNp/fhFoBPypN4dOJ
-         OT4O0yNRLmOCWuHWp0gU5V9+mwIIAcVq1giahrsMN415yrUy+TSgj2JORTJaI5UDkC3i
-         IKMYEZMgejgYYtZZal2sd6TKfu3s4dx6hl4ScrUYu2DdfvULt/iB7//lJ6/rKfifOnDi
-         jNYQ==
-X-Gm-Message-State: AOJu0YzXafAItaw1w5r+kdh9D3d+sIfLXmzROrpeLzqQ55b8Yf8d1i/a
-	TGTvYttaaixXPmtBh6miSZ385RbHVLM=
-X-Google-Smtp-Source: AGHT+IHkDpTGDyIlHzqcraJgBy33nL/DY39TnTkUKonucceE+4o2vElpbRoIdwuXpSnYuqjIER8qew==
-X-Received: by 2002:a05:600c:511d:b0:403:272:4414 with SMTP id o29-20020a05600c511d00b0040302724414mr11930992wms.0.1700058845804;
-        Wed, 15 Nov 2023 06:34:05 -0800 (PST)
-Received: from localhost.localdomain ([2001:861:3f04:7ca0:a40b:e654:dd4c:2f5f])
-        by smtp.gmail.com with ESMTPSA id q15-20020a05600c46cf00b004060f0a0fd5sm15207643wmo.13.2023.11.15.06.34.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Nov 2023 06:34:05 -0800 (PST)
-From: Christian Couder <christian.couder@gmail.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Elijah Newren <newren@gmail.com>,
-	John Cai <johncai86@gmail.com>,
-	Derrick Stolee <stolee@gmail.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Calvin Wan <calvinwan@google.com>,
-	Toon Claes <toon@iotcl.com>,
-	Dragan Simic <dsimic@manjaro.org>,
-	Linus Arver <linusa@google.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v7 14/14] replay: stop assuming replayed branches do not diverge
-Date: Wed, 15 Nov 2023 15:33:27 +0100
-Message-ID: <20231115143327.2441397-15-christian.couder@gmail.com>
-X-Mailer: git-send-email 2.43.0.rc1.15.g29556bcc86
-In-Reply-To: <20231115143327.2441397-1-christian.couder@gmail.com>
-References: <20231102135151.843758-1-christian.couder@gmail.com>
- <20231115143327.2441397-1-christian.couder@gmail.com>
+	dkim=pass (1024-bit key) header.d=iee.email header.i=@iee.email header.b="sxt6pEIp"
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 015EAAB
+	for <git@vger.kernel.org>; Wed, 15 Nov 2023 06:36:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=iee.email;
+	s=2023082200; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:To:Subject:MIME-Version:Date:Message-ID:Reply-To:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID; bh=d+pZO9/v2PTjXb3ifOLMjRekLAJIgUnLCBlcyUwnHYA=; b=sxt6pE
+	IpKhl8OEjIMYdGsRV+FPXMNiWuMClqmn5CP2vWZVa5KnYaVKRcaQYQqsYRc7C+UkWPTxzPhkef3Pp
+	MOMufH6Dqn9fpxZon5TJVvpiTDRa4t3t19I8TLOx4/yEMUBTNWNbZVrh8uHmr1vZ5VpWNPAJbMlrY
+	+GB61ZOFI+E=;
+Received: from host-2-103-195-242.as13285.net ([2.103.195.242] helo=[192.168.1.57])
+	by smtp.hosts.co.uk with esmtpa (Exim)
+	(envelope-from <philipoakley@iee.email>)
+	id 1r3H0E-0000Md-Dj;
+	Wed, 15 Nov 2023 14:36:26 +0000
+Message-ID: <781fc667-6597-4327-80d5-721fb273d2e2@iee.email>
+Date: Wed, 15 Nov 2023 14:36:27 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: Git Rename Detection Bug
+To: Elijah Newren <newren@gmail.com>
+Cc: Jeremy Pridmore <jpridmore@rdt.co.uk>,
+ "git@vger.kernel.org" <git@vger.kernel.org>,
+ Paul Baumgartner <pbaumgartner@rdt.co.uk>
+References: <LO6P265MB6736043BE8FB607DB671D21EFAAAA@LO6P265MB6736.GBRP265.PROD.OUTLOOK.COM>
+ <CABPp-BHYaxa7QoXabM=7hW-93hQLK-=KayGtDHtWxxdAnJCcJw@mail.gmail.com>
+ <LO6P265MB6736F5F9E8368A9DE95D294FFAA9A@LO6P265MB6736.GBRP265.PROD.OUTLOOK.COM>
+ <CABPp-BHEX+SyophEfgRqDbNdrAS3=bptt_cKzHLBSutnBAxexw@mail.gmail.com>
+ <9baca4af-a570-4b7a-a1ee-de91b809e79c@iee.email>
+ <CABPp-BEtva2WTGQG3Qs4EbZLK_RJC9vuA-2OYxkTPExgowwvqQ@mail.gmail.com>
+Content-Language: en-GB
+From: Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <CABPp-BEtva2WTGQG3Qs4EbZLK_RJC9vuA-2OYxkTPExgowwvqQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Elijah Newren <newren@gmail.com>
+Hi Elijah,
+sorry for the delay in replying.
 
-The replay command is able to replay multiple branches but when some of
-them are based on other replayed branches, their commit should be
-replayed onto already replayed commits.
+On 11/11/2023 15:13, Elijah Newren wrote:
+> Hi,
+> 
+> On Sat, Nov 11, 2023 at 3:08 AM Philip Oakley <philipoakley@iee.email> wrote:
+>>
+>> Hi all,
+>>
+>> On 11/11/2023 05:46, Elijah Newren wrote:
+>>> The fact that you were trying to "undo" renames and "redo the correct
+>>> ones" suggested there's something you still didn't understand about
+>>> rename detection, though.
+>>
+>>
+>> Could I suggest that we are missing a piece of terminology, to wit,
+>> BLOBSAME. It's a compatriot to TREESAME, as used in `git log` for
+>> history simplification (based on a tree's pathspec, most commonly a
+>> commit's top level path).
+> 
+> We could add it, but I'm not sure how it helps.  We already had 'exact
+> rename' which seems to fit the bill as well,
 
-For this purpose, let's store the replayed commit and its original
-commit in a key value store, so that we can easily find and reuse a
-replayed commit instead of the original one.
+My point was that we already had the confusion of mental models, with
+both sides essentially thinking they had an "exact rename", hence my
+thought was to add a rather distinct technical name which reflected the
+Git mind-shift. Without something to bring folks up short they'll
+continue, erroneously, with their prior mental models.
 
-Co-authored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Elijah Newren <newren@gmail.com>
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- builtin/replay.c         | 44 ++++++++++++++++++++++++++--------
- t/t3650-replay-basics.sh | 52 ++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 86 insertions(+), 10 deletions(-)
 
-diff --git a/builtin/replay.c b/builtin/replay.c
-index e14e33bcc5..f37e511d8e 100644
---- a/builtin/replay.c
-+++ b/builtin/replay.c
-@@ -223,20 +223,33 @@ static void determine_replay_mode(struct rev_cmdline_info *cmd_info,
- 	strset_clear(&rinfo.positive_refs);
- }
- 
-+static struct commit *mapped_commit(kh_oid_map_t *replayed_commits,
-+				    struct commit *commit,
-+				    struct commit *fallback)
-+{
-+	khint_t pos = kh_get_oid_map(replayed_commits, commit->object.oid);
-+	if (pos == kh_end(replayed_commits))
-+		return fallback;
-+	return kh_value(replayed_commits, pos);
-+}
-+
- static struct commit *pick_regular_commit(struct commit *pickme,
--					  struct commit *last_commit,
-+					  kh_oid_map_t *replayed_commits,
-+					  struct commit *onto,
- 					  struct merge_options *merge_opt,
- 					  struct merge_result *result)
- {
--	struct commit *base;
-+	struct commit *base, *replayed_base;
- 	struct tree *pickme_tree, *base_tree;
- 
- 	base = pickme->parents->item;
-+	replayed_base = mapped_commit(replayed_commits, base, onto);
- 
-+	result->tree = repo_get_commit_tree(the_repository, replayed_base);
- 	pickme_tree = repo_get_commit_tree(the_repository, pickme);
- 	base_tree = repo_get_commit_tree(the_repository, base);
- 
--	merge_opt->branch1 = short_commit_name(last_commit);
-+	merge_opt->branch1 = short_commit_name(replayed_base);
- 	merge_opt->branch2 = short_commit_name(pickme);
- 	merge_opt->ancestor = xstrfmt("parent of %s", merge_opt->branch2);
- 
-@@ -250,7 +263,7 @@ static struct commit *pick_regular_commit(struct commit *pickme,
- 	merge_opt->ancestor = NULL;
- 	if (!result->clean)
- 		return NULL;
--	return create_commit(result->tree, pickme, last_commit);
-+	return create_commit(result->tree, pickme, replayed_base);
- }
- 
- int cmd_replay(int argc, const char **argv, const char *prefix)
-@@ -266,6 +279,7 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 	struct merge_options merge_opt;
- 	struct merge_result result;
- 	struct strset *update_refs = NULL;
-+	kh_oid_map_t *replayed_commits;
- 	int ret = 0;
- 
- 	const char * const replay_usage[] = {
-@@ -362,21 +376,30 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 	init_merge_options(&merge_opt, the_repository);
- 	memset(&result, 0, sizeof(result));
- 	merge_opt.show_rename_progress = 0;
--
--	result.tree = repo_get_commit_tree(the_repository, onto);
- 	last_commit = onto;
-+	replayed_commits = kh_init_oid_map();
- 	while ((commit = get_revision(&revs))) {
- 		const struct name_decoration *decoration;
-+		khint_t pos;
-+		int hr;
- 
- 		if (!commit->parents)
- 			die(_("replaying down to root commit is not supported yet!"));
- 		if (commit->parents->next)
- 			die(_("replaying merge commits is not supported yet!"));
- 
--		last_commit = pick_regular_commit(commit, last_commit, &merge_opt, &result);
-+		last_commit = pick_regular_commit(commit, replayed_commits, onto,
-+						  &merge_opt, &result);
- 		if (!last_commit)
- 			break;
- 
-+		/* Record commit -> last_commit mapping */
-+		pos = kh_put_oid_map(replayed_commits, commit->object.oid, &hr);
-+		if (hr == 0)
-+			BUG("Duplicate rewritten commit: %s\n",
-+			    oid_to_hex(&commit->object.oid));
-+		kh_value(replayed_commits, pos) = last_commit;
-+
- 		/* Update any necessary branches */
- 		if (advance_name)
- 			continue;
-@@ -405,13 +428,14 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	merge_finalize(&merge_opt, &result);
--	ret = result.clean;
--
--cleanup:
-+	kh_destroy_oid_map(replayed_commits);
- 	if (update_refs) {
- 		strset_clear(update_refs);
- 		free(update_refs);
- 	}
-+	ret = result.clean;
-+
-+cleanup:
- 	release_revisions(&revs);
- 
- 	/* Return */
-diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
-index d6286f9580..389670262e 100755
---- a/t/t3650-replay-basics.sh
-+++ b/t/t3650-replay-basics.sh
-@@ -143,4 +143,56 @@ test_expect_success 'using replay on bare repo to also rebase a contained branch
- 	test_cmp expect result-bare
- '
- 
-+test_expect_success 'using replay to rebase multiple divergent branches' '
-+	git replay --onto main ^topic1 topic2 topic4 >result &&
-+
-+	test_line_count = 2 result &&
-+	cut -f 3 -d " " result >new-branch-tips &&
-+
-+	git log --format=%s $(head -n 1 new-branch-tips) >actual &&
-+	test_write_lines E D M L B A >expect &&
-+	test_cmp expect actual &&
-+
-+	git log --format=%s $(tail -n 1 new-branch-tips) >actual &&
-+	test_write_lines J I M L B A >expect &&
-+	test_cmp expect actual &&
-+
-+	printf "update refs/heads/topic2 " >expect &&
-+	printf "%s " $(head -n 1 new-branch-tips) >>expect &&
-+	git rev-parse topic2 >>expect &&
-+	printf "update refs/heads/topic4 " >>expect &&
-+	printf "%s " $(tail -n 1 new-branch-tips) >>expect &&
-+	git rev-parse topic4 >>expect &&
-+
-+	test_cmp expect result
-+'
-+
-+test_expect_success 'using replay on bare repo to rebase multiple divergent branches, including contained ones' '
-+	git -C bare replay --contained --onto main ^main topic2 topic3 topic4 >result &&
-+
-+	test_line_count = 4 result &&
-+	cut -f 3 -d " " result >new-branch-tips &&
-+
-+	>expect &&
-+	for i in 2 1 3 4
-+	do
-+		printf "update refs/heads/topic$i " >>expect &&
-+		printf "%s " $(grep topic$i result | cut -f 3 -d " ") >>expect &&
-+		git -C bare rev-parse topic$i >>expect || return 1
-+	done &&
-+
-+	test_cmp expect result &&
-+
-+	test_write_lines F C M L B A >expect1 &&
-+	test_write_lines E D C M L B A >expect2 &&
-+	test_write_lines H G F C M L B A >expect3 &&
-+	test_write_lines J I M L B A >expect4 &&
-+
-+	for i in 1 2 3 4
-+	do
-+		git -C bare log --format=%s $(grep topic$i result | cut -f 3 -d " ") >actual &&
-+		test_cmp expect$i actual || return 1
-+	done
-+'
-+
- test_done
--- 
-2.43.0.rc1.15.g29556bcc86
+ and 'blob' is something
+> someone new to Git is unlikely to know.
 
+I'd agree that BLOBSAME is new, but we should be proactive in ensuring
+folk do have the mind shift from the old centralised VCS misunderstandings.
+
+> 
+> Perhaps it's useful in some other context, though?
+> 
+>> File rename, at it's most basic, is when the blob associated with that
+>> changed path is identical, i.e. BLOBSAME. There is no need to 'record'
+>> the action of renaming, moving or whatever, the content sameness is
+>> right there, in plain sight, as an identical blob name.   After that
+>> (files with slight variations) it is a load of heuristics, but starting
+>> with BLOBSAME we see how easy the basic rename detection is, and why
+>> renames (and de-dup) don't need recording.
+> 
+> This is incorrect.  Let's say you have a file foo:
+>    * base version: foo has hash A
+>    * our version: foo has been renamed to bar, but bar still has hash A
+>    * their version: foo has been modified; it now has hash B
+> 
+> The foo->bar is an exact rename (or they are BLOBSAME if you prefer),
+> but the renaming/moving/whatever is a critical piece of information
+> because the changes to foo in 'their' version need to be applied to
+> bar to get the correct end results.
+
+Isn't that what I thought I'd said?
+Hash A = Hash A => identical content;
+Hash A != B => different content.
+
+> 
+> I do not know if in Jeremy's case foo has been modified on the
+> unrenamed side.  But the following hypothetical is exactly the type of
+> problem Jeremy is hitting: what should happen when 'our' version has
+> both a new 'bar' and a new 'baz' file that each have hash A?  In that
+> case, to which one was foo renamed?  It's inherently ambiguous.
+
+true, the terminology hasn't kept up with the methodology for blob
+content, and the independent meta-data. In previous 'ort' discussions I
+didn't really understand what the '1/2' renames (and other
+nomenclatures) really meant with respect to paths, filenames, content
+and the ours / theirs / base distinctions.
+> 
+>> The heuristics of 'rename with small change' is trickier, but for a
+>> basic understanding, starting at BLOBSAME (and TREESAME for directory
+>> renames) should make it easier to grasp the concepts.
+> 
+> Interesting; TREESAME isn't used within directory rename detection
+> currently; it is only used currently when two (or three) trees with
+> the same name are TREESAME, in order to potentially avoid recursing
+> into the tree.  But even then, having two trees with the same name be
+> TREESAME isn't enough on its own to avoid recursing into that tree,
+> because the other side could have added files within the same-named
+> tree and we need to know about those added files because they could be
+> part of renames involving other files outside that tree. 
+
+definitely easy to get confused on these cases...
+
+>      There would
+> probably be similar challenges to attempting to apply the concept of
+> TREESAME to directory rename detection to two trees of different
+> names, but it's at least an interesting idea.  Hmm....
+> 
+
+
+Thanks for the insights.
+
+Philip
