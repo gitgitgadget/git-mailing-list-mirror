@@ -1,45 +1,45 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2636564C
-	for <git@vger.kernel.org>; Wed, 15 Nov 2023 03:34:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B12CD801
+	for <git@vger.kernel.org>; Wed, 15 Nov 2023 03:34:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fud-cz.20230601.gappssmtp.com header.i=@fud-cz.20230601.gappssmtp.com header.b="BakDMowI"
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9775511C
-	for <git@vger.kernel.org>; Tue, 14 Nov 2023 19:34:53 -0800 (PST)
-Received: by mail-pj1-x1031.google.com with SMTP id 98e67ed59e1d1-2809748bdb0so893848a91.0
-        for <git@vger.kernel.org>; Tue, 14 Nov 2023 19:34:53 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=fud-cz.20230601.gappssmtp.com header.i=@fud-cz.20230601.gappssmtp.com header.b="LyiDF3SZ"
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF259189
+	for <git@vger.kernel.org>; Tue, 14 Nov 2023 19:34:55 -0800 (PST)
+Received: by mail-pj1-x102e.google.com with SMTP id 98e67ed59e1d1-280b06206f7so896238a91.1
+        for <git@vger.kernel.org>; Tue, 14 Nov 2023 19:34:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fud-cz.20230601.gappssmtp.com; s=20230601; t=1700019292; x=1700624092; darn=vger.kernel.org;
+        d=fud-cz.20230601.gappssmtp.com; s=20230601; t=1700019295; x=1700624095; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=pB42FogzZIShWy61ip3sLbcALrE9H7uxsGf5YnXUpJk=;
-        b=BakDMowID9fikTFfonziwxh6zRJwHb9ND4X20wc3cNGmYI3MWRYxPnFD8J3ZoziIjK
-         KA1/JlyNZ9qhouJq7hmhXAVBUmdNJ4ln/sGoKR3c/Cg+1ELZWHp8iLCPqabM3ofhlW7+
-         uewE0vo6LDHSzq70mE7HZhHvEBtWv6+xsT3G1B8BNgKYRtUvGLLKBKE7169QXP/Sg3+s
-         1PBb55KMAbOuydYwOEYtBBik0J7MKBBnlX3GXB+N2P1DqeIe7g+yvbh8lCsOUC+o+cNK
-         eEsbd5Fhe6L0YYULkXPkPCy4GBqFbGMZPfAlvnE+jLtKGjdHiOIUworQNsQnQruFna9r
-         /eRg==
+        bh=ZRYGsHh9ygz69tB7vbjgaQ9TYkpDYhG2a6X9oC16NDE=;
+        b=LyiDF3SZg2l5j9ZxmbilcgdpOPKfrCcgL/lf8UNeejJ1OYSC/BmcWE+bWU2BUSyi5M
+         eOgjSGVjYWKJseDmMICIh77aHTMyI3ir82gvRm98rDIZzt9gvD0trlyltr0yZy8MUhGn
+         rhRlgPz5tbRn0dcKE2p7WF8m19ZbrfWDQQ4zL8W78bbyp/9qVEQ1ffm1Ivs4s2PxdPVH
+         P6E4b3eY6++Gh1CZY8lj39l07mZmU62m2YIVpQvk47Q+mqVka82QY5wXVAsG579elvZN
+         JE2NNTkT78evnPnqEimhHYxAMgFy111RqEtAM7xQ0P+sC3pXxGZB0ugXFGDjqB0eyc2v
+         2yug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700019292; x=1700624092;
+        d=1e100.net; s=20230601; t=1700019295; x=1700624095;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pB42FogzZIShWy61ip3sLbcALrE9H7uxsGf5YnXUpJk=;
-        b=osjAJ4fRuHoAVtYp96Bg/w229D32YDH7rwmRA33ghctnZ6M8oEVI4+hQAa4H1hRJW3
-         +URX1UnymW9KIdsy3CcqYH8qlld6WpzoxI/uxFeZKXMHfBp5obGP0paT3owUfZbZCrzp
-         EKaadqFTpU+bqvhFZcuZhJiS+exEn5kps+zt4isABc7uTWr53twjHeA7Ul0GpBm0fE+c
-         N+DmcsWvvV+rNdXTLO9/Dgp27RIPWSOOlwCE/ZA9lEYAORE6suduBwMkC/Mk4P/qaIms
-         XBvOUHdFD3iDTqnGQCMLvVaM8qirErw77kLA9/emMQx5BQzvEZboIfHR1YPJAKVEr9ZB
-         gozg==
-X-Gm-Message-State: AOJu0Ywe30CaXaf9sQC8Qtd+Z2RxtrywV5+0n3R/URrXpAXkZo7KSQOe
-	3tqpO7cglVDm+mwMcwmZNNDx3ovdwvSHr4o2LBVvi6zNvwRzifpo2Kc=
-X-Google-Smtp-Source: AGHT+IFWS7ap/o1Wxr0xeA/eG0boBsnGRzy+qMGtTxZESypR1TAhMzX6eXG+F5BEOtClnW/Wlic5Z9mIf33mrdXnYuw=
-X-Received: by 2002:a17:90b:8d6:b0:283:5405:9e90 with SMTP id
- ds22-20020a17090b08d600b0028354059e90mr4035339pjb.3.1700019292481; Tue, 14
- Nov 2023 19:34:52 -0800 (PST)
+        bh=ZRYGsHh9ygz69tB7vbjgaQ9TYkpDYhG2a6X9oC16NDE=;
+        b=Q2hU+wKbo06l0i5Zzy+/d1gxRezbZB2gFeajzCMwRjh8hAaVQ659rmdi7aaPGvQMWN
+         cTc3A9YvvW+mAsnqees1GsUbtOxSZv/0Az8ZX40/Yswp3q+bPcA7zGqlbeLAyChM879u
+         KAveujki6jBbOQbmpsBfF7JM2ZfTmL49JYMIeoAwsATz8o8z8kKtpRzuo0l8RgBsT374
+         PH0RvT/mM+sJtoTO0/H/GXJjOvD+lwV6s6HxicWdx4jfU1Kop+p1h9h3S6oDJ+6GBf0V
+         El6W0kTqrebJAJz2f4af/4mtvL4iVkfYZ0zgEytZKhxZxxz67m2+OygUDa0rfPozgOa/
+         Zaqw==
+X-Gm-Message-State: AOJu0YxR5zyhd7Rw3YJcdgIoxx+4NNqFr0KQDu7dPUrNS0UYV7qBzkgG
+	Nb+U1CGuuq7wXplVIBP/rhK6soVQuFfCVX/3c90zyfJHy4UH0Q8jxfY=
+X-Google-Smtp-Source: AGHT+IEFzKo+xt/OQMBVKhFDoGL9OSmvkE6PKmDMFy8oREPy7C4iKnjscFNH1He0V8uYgGosogGDl6iUrE6xHV7Bzv8=
+X-Received: by 2002:a17:90b:3544:b0:281:291:a6e4 with SMTP id
+ lt4-20020a17090b354400b002810291a6e4mr4052619pjb.1.1700019295254; Tue, 14 Nov
+ 2023 19:34:55 -0800 (PST)
 Received: from 305313025478 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 14 Nov 2023 19:34:52 -0800
+ HTTPREST; Tue, 14 Nov 2023 19:34:54 -0800
 From: =?UTF-8?B?SmnFmcOtIEhydcWha2E=?= <jirka@fud.cz>
 X-Mailer: git-send-email 2.39.1.windows.1
 In-Reply-To: <20231115033121.939-1-jirka@fud.cz>
@@ -51,62 +51,128 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 14 Nov 2023 19:34:51 -0800
-Message-ID: <CAGE_+C4JWA0DrcV4rT7J6hXsbYPL2Po31wFPvLESe_sKq_16FQ@mail.gmail.com>
-Subject: [PATCH v2 1/5] remote-curl: avoid hang if curl asks for more data
- after eof
+Date: Tue, 14 Nov 2023 19:34:54 -0800
+Message-ID: <CAGE_+C7CEh63ThpJx2BvMQLb==v=h79pMKHC14t_wYeRowMfwQ@mail.gmail.com>
+Subject: [PATCH v2 4/5] remote-curl: simplify rpc_out() - less nesting and rename
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Jonathan Tan <jonathantanmy@google.com>, 
 	Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 
-It has been observed that under some circumstances, libcurl can call
-our `CURLOPT_READFUNCTION` callback `rpc_out()` again even after
-already getting a return value of zero (EOF) back once before.
+- Remove one indentation level in `rpc_out()`, as the conditions can be
+  combined into just one `if` statement without losing readability.
 
-Because `rpc->flush_read_but_not_sent` is reset to false immediately
-the first time an EOF is returned, the repeated call goes again to
-`rpc_read_from_out()`, which tries to read more from the child process
-pipe and the whole operation gets stuck - the child process is already
-trying to read a response back and will not write anything to the
-output pipe anymore, while the parent/remote process is now blocked
-waiting to read more too and never even finishes sending the request.
+  Skipping the resetting of `initial_buffer`/`len`/`pos` revealed a bug
+  in `stateless_connect()`, where `rpc.len` is reset to 0 after each
+  request, but not `rpc.pos`. Relying on `rpc_out()` always doing this
+  before has never been safe (it might have not finished cleanly, for
+  example). So better reset it there, just like `rpc.len`.
 
-The bug is fixed by moving the reset of the `flush_read_but_not_sent`
-flag to `post_rpc()`, only before `rpc_out()` would be potentially used
-the next time. This makes the callback behave like fread() and return
-a zero any number of times at the end of a finished upload.
+- Rename `flush_read_but_not_sent` to `read_from_out_done`. The name is
+  slightly misleading, because the "flush" might never be really "sent"
+  (depends on `write_line_lengths`), and this is not the most important
+  part anyway. The primary role of the flag is rather to signal that
+  `read_from_out()` is "done" and must not be called for this particular
+  RPC exchange anymore.
+
+- Update/add some related comments.
 
 Signed-off-by: Jiri Hruska <jirka@fud.cz>
 ---
- remote-curl.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ remote-curl.c | 46 ++++++++++++++++++++++++++++------------------
+ 1 file changed, 28 insertions(+), 18 deletions(-)
 
 diff --git a/remote-curl.c b/remote-curl.c
-index ef05752ca5..199c4615a5 100644
+index 690df2a43e..d5aa66a44c 100644
 --- a/remote-curl.c
 +++ b/remote-curl.c
-@@ -705,9 +705,10 @@ static size_t rpc_out(void *ptr, size_t eltsize,
- 			 * The line length either does not need to be sent at
- 			 * all or has already been completely sent. Now we can
- 			 * return 0, indicating EOF, meaning that the flush has
--			 * been fully sent.
-+			 * been fully sent. It is important to keep returning 0
-+			 * as long as needed in that case, as libcurl invokes
-+			 * the callback multiple times at EOF sometimes.
- 			 */
--			rpc->flush_read_but_not_sent = 0;
- 			return 0;
- 		}
+@@ -606,13 +606,14 @@ struct rpc_state {
+ 	unsigned write_line_lengths : 1;
+
+ 	/*
+-	 * Used by rpc_out; initialize to 0. This is true if a flush has been
+-	 * read, but the corresponding line length (if write_line_lengths is
+-	 * true) and EOF have not been sent to libcurl. Since each flush marks
+-	 * the end of a request, each flush must be completely sent before any
+-	 * further reading occurs.
++	 * Used by rpc_out; initialize to 0. This is true if a flush packet
++	 * has been read from the child process, signaling the end of the
++	 * current data to send. There might be still some bytes pending in
++	 * 'buf' (e.g. the corresponding line length, if write_line_lengths
++	 * is true), but no more reads can be performed on the 'out' pipe as
++	 * part of the current RPC exchange.
+ 	 */
+-	unsigned flush_read_but_not_sent : 1;
++	unsigned read_from_out_done : 1;
+ };
+
+ #define RPC_STATE_INIT { 0 }
+@@ -690,21 +691,29 @@ static size_t rpc_out(void *ptr, size_t eltsize,
+ 	size_t avail = rpc->len - rpc->pos;
+ 	enum packet_read_status status;
+
+-	if (!avail) {
++	/*
++	 * If there is no more data available in our buffer and the child
++	 * process is not done sending yet, read the next packet.
++	 */
++	if (!avail && !rpc->read_from_out_done) {
+ 		rpc->initial_buffer = 0;
+ 		rpc->len = 0;
+ 		rpc->pos = 0;
+-		if (!rpc->flush_read_but_not_sent) {
+-			if (!rpc_read_from_out(rpc, 0, &avail, &status))
+-				BUG("The entire rpc->buf should be larger than LARGE_PACKET_MAX");
+-			if (status == PACKET_READ_FLUSH)
+-				rpc->flush_read_but_not_sent = 1;
+-		}
++		if (!rpc_read_from_out(rpc, 0, &avail, &status))
++			BUG("The entire rpc->buf should be larger than LARGE_PACKET_MAX");
++
  		/*
-@@ -963,6 +964,7 @@ static int post_rpc(struct rpc_state *rpc, int
+-		 * If flush_read_but_not_sent is true, we have already read one
+-		 * full request but have not fully sent it + EOF, which is why
+-		 * we need to refrain from reading.
++		 * If a flush packet was read, it means the child process is
++		 * done sending this request. The buffer might be fully empty
++		 * at this point or contain a flush packet too, depending on
++		 * rpc->write_line_lengths.
++		 * In any case, we must refrain from reading any more, because
++		 * the child process already expects to receive a response back
++		 * instead. If both sides would try to read at once, they would
++		 * just hang waiting for each other.
+ 		 */
++		if (status == PACKET_READ_FLUSH)
++			rpc->read_from_out_done = 1;
+ 	}
+
+ 	/*
+@@ -967,7 +976,7 @@ static int post_rpc(struct rpc_state *rpc, int
 stateless_connect, int flush_rece
  		 */
  		headers = curl_slist_append(headers, "Transfer-Encoding: chunked");
  		rpc->initial_buffer = 1;
-+		rpc->flush_read_but_not_sent = 0;
+-		rpc->flush_read_but_not_sent = 0;
++		rpc->read_from_out_done = 0;
  		curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, rpc_out);
  		curl_easy_setopt(slot->curl, CURLOPT_INFILE, rpc);
  		curl_easy_setopt(slot->curl, CURLOPT_SEEKFUNCTION, rpc_seek);
+@@ -1487,7 +1496,7 @@ static int stateless_connect(const char *service_name)
+ 	rpc.gzip_request = 1;
+ 	rpc.initial_buffer = 0;
+ 	rpc.write_line_lengths = 1;
+-	rpc.flush_read_but_not_sent = 0;
++	rpc.read_from_out_done = 0;
+
+ 	/*
+ 	 * Dump the capability listing that we got from the server earlier
+@@ -1510,6 +1519,7 @@ static int stateless_connect(const char *service_name)
+ 			break;
+ 		/* Reset the buffer for next request */
+ 		rpc.len = 0;
++		rpc.pos = 0;
+ 	}
+
+ 	free(rpc.service_url);
 -- 
 2.42.1.5.g2f21867bd5
