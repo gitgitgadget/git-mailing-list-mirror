@@ -1,48 +1,48 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7C612FC5E
-	for <git@vger.kernel.org>; Wed, 15 Nov 2023 14:33:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85B4E3307E
+	for <git@vger.kernel.org>; Wed, 15 Nov 2023 14:34:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HWcIOmsi"
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B955187
-	for <git@vger.kernel.org>; Wed, 15 Nov 2023 06:33:58 -0800 (PST)
-Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-4079ed65582so53328585e9.1
-        for <git@vger.kernel.org>; Wed, 15 Nov 2023 06:33:57 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NM4Ieqtb"
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 531C3189
+	for <git@vger.kernel.org>; Wed, 15 Nov 2023 06:34:00 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-407da05f05aso51004225e9.3
+        for <git@vger.kernel.org>; Wed, 15 Nov 2023 06:34:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700058836; x=1700663636; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1700058837; x=1700663637; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=qlX1vPNSw+hqdLdu0xZ2UW5XuEXNe6kchLDblMoMQbo=;
-        b=HWcIOmsijaI8cPKkq3HC1kIidK4zg9Ela6V8Dsv97/nJq06Y0SoG1n9zbZB4B2NszM
-         q57FS4KmpiS3/MjeLOOt+JGBsSGerJVhxFsZN0D/V5U8mUd/hgZ1kqqfyJZ9dB7aF7tz
-         QFTMgNPtlCfI4QB9iXDi7TnnRUBRLCwS73C4nsKDB9jDDf78XgHNIZkyfzQkA9F/jWs5
-         SKe/oci1xLlxXELhJtJvZTzLJvFVz22QlnJSuPTKIPDNqEtnx/CIX2j+mkTOCbBdteHt
-         RBc8NT8d2HtGWPr0pD56+h4xVKI0jx/Trv89tTiaD+jiFilsM+vfipznmC43k5o/7grD
-         rQ9A==
+        bh=j0Lp+OwVfnW3WJA+jS6ViZyTYfL9erxx17/e1CCIZb0=;
+        b=NM4IeqtbNAVXedgNO7vQ/r9ZRTxn+ss216D0OMdLnaWrf6rXpNpMNsp85jv3Rvf5je
+         KtisgQLTlYW0A8/QG4ubw6YhqU3j1hkXE1qzu9ha7mcWyxr1bgi7UjtSNJyUVt+evDOQ
+         LN3w7KfYQLic31Kq8ZQrZZbl6J+jOXZSokm7WMfTvFBj2YiN3pFj+5xeKrIbr98Of4mj
+         S2Gk3UIdSyeRbDDC+qpdspxfy6/a3h6Uq9lD1OrdlqQFWgvC/1uTFPLdqY6Op5leWYb0
+         KNcbTDgzVS1+3OABFfVCIZsseH9KefFZtaFm3qrJSF+eRNrc6vVyaGHiWWDivB0ZgK+v
+         BivA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700058836; x=1700663636;
+        d=1e100.net; s=20230601; t=1700058837; x=1700663637;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=qlX1vPNSw+hqdLdu0xZ2UW5XuEXNe6kchLDblMoMQbo=;
-        b=FvayyGPCncMeoE5e3RL2ZXQTE0iFDGNeX4B6rTx946rzCvbxaxMF2epc7GKYHIqcGb
-         46ZKmIjEkhjh2XDlZkvBo8ivoxE8eIt1ImjbGea9+iEpWRLg+wlM5DxZN8p+d5iCxwUD
-         dzE42r9tpQOqQMHAIqiSYNdPMSpThZsuYdsAeneh20VRQkk5zs3OfgCT3NnNOpso9FyV
-         C+8o4bOlLJoY+vjXoj4SxIH+43tF0X88zxTfCADWwZVB1JnPMXsojGJiuc6M1PRMzA0q
-         mLz2n9HHUnuwWawzvXhhwCsxh2dQWr5q9s39Yhk4aXGJ0RVd8B7cgeqlYYi14OVn0jN6
-         RC/A==
-X-Gm-Message-State: AOJu0YxK13ufDAeO12bByNvPofumXJr7r5ysxx0ysjh704mGRKm+K58R
-	dSeR02ORbyujMaNqQA2AmsphQI1TwhI=
-X-Google-Smtp-Source: AGHT+IENChSEZFc89sn+HyZxk8pYPT+SOeY10fxq2UMDwSzlj4qOsZHYMjjiYw+mujyG4E3s7SHOfA==
-X-Received: by 2002:a05:600c:310e:b0:408:80bb:ae8d with SMTP id g14-20020a05600c310e00b0040880bbae8dmr10636916wmo.32.1700058835732;
-        Wed, 15 Nov 2023 06:33:55 -0800 (PST)
+        bh=j0Lp+OwVfnW3WJA+jS6ViZyTYfL9erxx17/e1CCIZb0=;
+        b=d6YOvMHDJV57pZmkX/P5yOA5uFPvcZJnqEvBT51/2ZDHHrne3Ig6hRlIa2xZalpacK
+         XP1rQghH8nSdoab1U+UkzerZwMoy/1onMAfB0jAwfDOdC0bhAME3TgP9kggjVur+o3NV
+         Oat3DBmlFjVtmHJyMW4RUH5LCclS2fvwzs5f+ZrHvkr8soiqcOPy4ifJ/5fascFP7SJz
+         b2YRTuPQTIWYZAdoyF+SfmstUrxTojcELX+w56R0nC52eIskm8xE6kcJHwFWL8pm0704
+         mjfg11eFBLwl4HjWBKY3dUgkOgqUQk0A/H4dAU+oYE2rA8HA6K0x15Nq1eM+uw+qKsZc
+         jaLg==
+X-Gm-Message-State: AOJu0YzxYZ1QyhxR3WhdC4CnnkiiX8M8Hi3atQOsnju31xIF9lYlTzlK
+	xZ9RsEbR+fzz97f/iVZ3daR+4wyKREg=
+X-Google-Smtp-Source: AGHT+IF1OGIZ0b7RF1wnVGD3PAeKPft4zdfqlBoQzuLK6d0POdQN+1hyoj72+pNU5ueEiHT0vPHQHg==
+X-Received: by 2002:a05:600c:2217:b0:408:3975:e225 with SMTP id z23-20020a05600c221700b004083975e225mr10749289wml.40.1700058837412;
+        Wed, 15 Nov 2023 06:33:57 -0800 (PST)
 Received: from localhost.localdomain ([2001:861:3f04:7ca0:a40b:e654:dd4c:2f5f])
-        by smtp.gmail.com with ESMTPSA id q15-20020a05600c46cf00b004060f0a0fd5sm15207643wmo.13.2023.11.15.06.33.54
+        by smtp.gmail.com with ESMTPSA id q15-20020a05600c46cf00b004060f0a0fd5sm15207643wmo.13.2023.11.15.06.33.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Nov 2023 06:33:54 -0800 (PST)
+        Wed, 15 Nov 2023 06:33:56 -0800 (PST)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -57,9 +57,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Dragan Simic <dsimic@manjaro.org>,
 	Linus Arver <linusa@google.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v7 07/14] replay: add an important FIXME comment about gpg signing
-Date: Wed, 15 Nov 2023 15:33:20 +0100
-Message-ID: <20231115143327.2441397-8-christian.couder@gmail.com>
+Subject: [PATCH v7 08/14] replay: remove progress and info output
+Date: Wed, 15 Nov 2023 15:33:21 +0100
+Message-ID: <20231115143327.2441397-9-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.43.0.rc1.15.g29556bcc86
 In-Reply-To: <20231115143327.2441397-1-christian.couder@gmail.com>
 References: <20231102135151.843758-1-christian.couder@gmail.com>
@@ -74,36 +74,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Elijah Newren <newren@gmail.com>
 
-We want to be able to handle signed commits in some way in the future,
-but we are not ready to do it now. So for the time being let's just add
-a FIXME comment to remind us about it.
+The replay command will be changed in a follow up commit, so that it
+will not update refs directly, but instead it will print on stdout a
+list of commands that can be consumed by `git update-ref --stdin`.
 
-These are different ways we could handle them:
+We don't want this output to be polluted by its current low value
+output, so let's just remove the latter.
 
-  - in case of a cli user and if there was an interactive mode, we could
-    perhaps ask if the user wants to sign again
-  - we could add an option to just fail if there are signed commits
+In the future, when the command gets an option to update refs by
+itself, it will make a lot of sense to display a progress meter, but
+we are not there yet.
 
 Co-authored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Elijah Newren <newren@gmail.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/replay.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/replay.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
 diff --git a/builtin/replay.c b/builtin/replay.c
-index 8302d35eca..2e1df83027 100644
+index 2e1df83027..1035435705 100644
 --- a/builtin/replay.c
 +++ b/builtin/replay.c
-@@ -62,7 +62,7 @@ static struct commit *create_commit(struct tree *tree,
- 	struct object *obj;
- 	struct commit_list *parents = NULL;
- 	char *author;
--	char *sign_commit = NULL;
-+	char *sign_commit = NULL; /* FIXME: cli users might want to sign again */
- 	struct commit_extra_header *extra;
- 	struct strbuf msg = STRBUF_INIT;
- 	const char *out_enc = get_commit_output_encoding();
+@@ -232,7 +232,7 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 
+ 	init_merge_options(&merge_opt, the_repository);
+ 	memset(&result, 0, sizeof(result));
+-	merge_opt.show_rename_progress = 1;
++	merge_opt.show_rename_progress = 0;
+ 	merge_opt.branch1 = "HEAD";
+ 	head_tree = repo_get_commit_tree(the_repository, onto);
+ 	result.tree = head_tree;
+@@ -240,9 +240,6 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 	while ((commit = get_revision(&revs))) {
+ 		struct commit *pick;
+ 
+-		fprintf(stderr, "Rebasing %s...\r",
+-			oid_to_hex(&commit->object.oid));
+-
+ 		if (!commit->parents)
+ 			die(_("replaying down to root commit is not supported yet!"));
+ 		if (commit->parents->next)
+@@ -261,7 +258,6 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 		exit(128);
+ 
+ 	if (result.clean) {
+-		fprintf(stderr, "\nDone.\n");
+ 		strbuf_addf(&reflog_msg, "finish rebase %s onto %s",
+ 			    oid_to_hex(&last_picked_commit->object.oid),
+ 			    oid_to_hex(&last_commit->object.oid));
+@@ -275,7 +271,6 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 		if (create_symref("HEAD", branch_name.buf, reflog_msg.buf) < 0)
+ 			die(_("unable to update HEAD"));
+ 	} else {
+-		fprintf(stderr, "\nAborting: Hit a conflict.\n");
+ 		strbuf_addf(&reflog_msg, "rebase progress up to %s",
+ 			    oid_to_hex(&last_picked_commit->object.oid));
+ 		if (update_ref(reflog_msg.buf, "HEAD",
 -- 
 2.43.0.rc1.15.g29556bcc86
 
