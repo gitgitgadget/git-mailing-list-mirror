@@ -1,45 +1,45 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8C6E647
-	for <git@vger.kernel.org>; Wed, 15 Nov 2023 03:34:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2636564C
+	for <git@vger.kernel.org>; Wed, 15 Nov 2023 03:34:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fud-cz.20230601.gappssmtp.com header.i=@fud-cz.20230601.gappssmtp.com header.b="Hk92TkTN"
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 168F6182
-	for <git@vger.kernel.org>; Tue, 14 Nov 2023 19:34:55 -0800 (PST)
-Received: by mail-pl1-x62a.google.com with SMTP id d9443c01a7336-1cc703d2633so7784965ad.0
-        for <git@vger.kernel.org>; Tue, 14 Nov 2023 19:34:55 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=fud-cz.20230601.gappssmtp.com header.i=@fud-cz.20230601.gappssmtp.com header.b="BakDMowI"
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9775511C
+	for <git@vger.kernel.org>; Tue, 14 Nov 2023 19:34:53 -0800 (PST)
+Received: by mail-pj1-x1031.google.com with SMTP id 98e67ed59e1d1-2809748bdb0so893848a91.0
+        for <git@vger.kernel.org>; Tue, 14 Nov 2023 19:34:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fud-cz.20230601.gappssmtp.com; s=20230601; t=1700019294; x=1700624094; darn=vger.kernel.org;
+        d=fud-cz.20230601.gappssmtp.com; s=20230601; t=1700019292; x=1700624092; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Zfpf1krU+8LQ1xtLDxEMWh3mlz6AhALevkjyZtKxMAE=;
-        b=Hk92TkTNmshA3Gnrqf/kenk+Jd4ki/zH0bdOV7pbA4V8OgcEEZdYxuXd+S4LYJ5hFw
-         NU1f9eSDdkSC+f/WwKPQUNAJ6Uw4HYwVQjc2IEKF1J5+7zx9gPWrAu4U1B9pVtRtLo6Y
-         c2A9OzZRpkhJwvS7U82BM9xJuLl99bPLVmAAz9q/JyPJl7zEFnGjqXPHgHNCKj/VCZzs
-         4H69+h8FeGJzC9X4zqq9ek2l2E9s7CJVdgTJZxCDCvdMh936ZgWMPfwkOLaHuBq9ZG43
-         zaDKQY1R2rYauLu/Xq+twhNT3wIpMaUcdSuLO4BggD1/zy43I2fzJNoE12o6o0zxKwdH
-         EgbA==
+        bh=pB42FogzZIShWy61ip3sLbcALrE9H7uxsGf5YnXUpJk=;
+        b=BakDMowID9fikTFfonziwxh6zRJwHb9ND4X20wc3cNGmYI3MWRYxPnFD8J3ZoziIjK
+         KA1/JlyNZ9qhouJq7hmhXAVBUmdNJ4ln/sGoKR3c/Cg+1ELZWHp8iLCPqabM3ofhlW7+
+         uewE0vo6LDHSzq70mE7HZhHvEBtWv6+xsT3G1B8BNgKYRtUvGLLKBKE7169QXP/Sg3+s
+         1PBb55KMAbOuydYwOEYtBBik0J7MKBBnlX3GXB+N2P1DqeIe7g+yvbh8lCsOUC+o+cNK
+         eEsbd5Fhe6L0YYULkXPkPCy4GBqFbGMZPfAlvnE+jLtKGjdHiOIUworQNsQnQruFna9r
+         /eRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700019294; x=1700624094;
+        d=1e100.net; s=20230601; t=1700019292; x=1700624092;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Zfpf1krU+8LQ1xtLDxEMWh3mlz6AhALevkjyZtKxMAE=;
-        b=G0ZAVSXx7l9BthRavvIqWs52WyWSDs9X+WBSruwYo4cjqEaDn7DbtdSatANpqfz3GK
-         bJY2KgA7hfkfUb8tcKIc1nHXQOwVm5Hn6bFXBZCr2VKfLhsL6GO8IeLQJP4WX0FtHMXC
-         X857ipsxPJ4kcxebFW1dWfsSuUIb3ZkHk8Sp+NnRfYau9bp+vHBeH37/7dTGTSboj9FU
-         US5jXvvPYKEOyEOnwKRCgZKrccFMnyeFrecmJ4QZb5UvFApkiUzTwlZhbJLqR2hUBtBt
-         1ZQFbn44V/LK/kKoCn1qdQx595zlCy9fs0ZBlX622fksX0hGY0IehYL7MUQ/LK+8Ro5Q
-         R4kQ==
-X-Gm-Message-State: AOJu0YwQkLGsPq1TkCmY5BAynDhxNC5wnUxDR5bmMt8fDH62xlh8tvUv
-	ZUZrn818m9GmJ230c3hvmPeCSCbTocMyjlDBtLufrcjOeA/2Pi8IKD4=
-X-Google-Smtp-Source: AGHT+IE5EMh3fw1FFAx4igPnw8+m7rvdDDIYePhveOGa/jnFizSqwE3hzt4x6YpZAMVVQ9OLnOWuBkwkWjzv+O0JTDs=
-X-Received: by 2002:a17:90a:488e:b0:280:4da8:97a2 with SMTP id
- b14-20020a17090a488e00b002804da897a2mr4123097pjh.3.1700019294301; Tue, 14 Nov
- 2023 19:34:54 -0800 (PST)
+        bh=pB42FogzZIShWy61ip3sLbcALrE9H7uxsGf5YnXUpJk=;
+        b=osjAJ4fRuHoAVtYp96Bg/w229D32YDH7rwmRA33ghctnZ6M8oEVI4+hQAa4H1hRJW3
+         +URX1UnymW9KIdsy3CcqYH8qlld6WpzoxI/uxFeZKXMHfBp5obGP0paT3owUfZbZCrzp
+         EKaadqFTpU+bqvhFZcuZhJiS+exEn5kps+zt4isABc7uTWr53twjHeA7Ul0GpBm0fE+c
+         N+DmcsWvvV+rNdXTLO9/Dgp27RIPWSOOlwCE/ZA9lEYAORE6suduBwMkC/Mk4P/qaIms
+         XBvOUHdFD3iDTqnGQCMLvVaM8qirErw77kLA9/emMQx5BQzvEZboIfHR1YPJAKVEr9ZB
+         gozg==
+X-Gm-Message-State: AOJu0Ywe30CaXaf9sQC8Qtd+Z2RxtrywV5+0n3R/URrXpAXkZo7KSQOe
+	3tqpO7cglVDm+mwMcwmZNNDx3ovdwvSHr4o2LBVvi6zNvwRzifpo2Kc=
+X-Google-Smtp-Source: AGHT+IFWS7ap/o1Wxr0xeA/eG0boBsnGRzy+qMGtTxZESypR1TAhMzX6eXG+F5BEOtClnW/Wlic5Z9mIf33mrdXnYuw=
+X-Received: by 2002:a17:90b:8d6:b0:283:5405:9e90 with SMTP id
+ ds22-20020a17090b08d600b0028354059e90mr4035339pjb.3.1700019292481; Tue, 14
+ Nov 2023 19:34:52 -0800 (PST)
 Received: from 305313025478 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 14 Nov 2023 19:34:53 -0800
+ HTTPREST; Tue, 14 Nov 2023 19:34:52 -0800
 From: =?UTF-8?B?SmnFmcOtIEhydcWha2E=?= <jirka@fud.cz>
 X-Mailer: git-send-email 2.39.1.windows.1
 In-Reply-To: <20231115033121.939-1-jirka@fud.cz>
@@ -51,58 +51,62 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 14 Nov 2023 19:34:53 -0800
-Message-ID: <CAGE_+C58LWwF5YAm+S3Ynev+mTnm_ZSVuir9sZsHmeB+56T1kA@mail.gmail.com>
-Subject: [PATCH v2 3/5] remote-curl: simplify rpc_out() - remove superfluous ifs
+Date: Tue, 14 Nov 2023 19:34:51 -0800
+Message-ID: <CAGE_+C4JWA0DrcV4rT7J6hXsbYPL2Po31wFPvLESe_sKq_16FQ@mail.gmail.com>
+Subject: [PATCH v2 1/5] remote-curl: avoid hang if curl asks for more data
+ after eof
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Jonathan Tan <jonathantanmy@google.com>, 
 	Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 
-Remove the second set of nested `if` statements and an early `return`
-in `rpc_out()`, because they accomplish nothing. The rest of the
-function would behave the same without any branching.
+It has been observed that under some circumstances, libcurl can call
+our `CURLOPT_READFUNCTION` callback `rpc_out()` again even after
+already getting a return value of zero (EOF) back once before.
+
+Because `rpc->flush_read_but_not_sent` is reset to false immediately
+the first time an EOF is returned, the repeated call goes again to
+`rpc_read_from_out()`, which tries to read more from the child process
+pipe and the whole operation gets stuck - the child process is already
+trying to read a response back and will not write anything to the
+output pipe anymore, while the parent/remote process is now blocked
+waiting to read more too and never even finishes sending the request.
+
+The bug is fixed by moving the reset of the `flush_read_but_not_sent`
+flag to `post_rpc()`, only before `rpc_out()` would be potentially used
+the next time. This makes the callback behave like fread() and return
+a zero any number of times at the end of a finished upload.
 
 Signed-off-by: Jiri Hruska <jirka@fud.cz>
 ---
- remote-curl.c | 24 ++++++------------------
- 1 file changed, 6 insertions(+), 18 deletions(-)
+ remote-curl.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/remote-curl.c b/remote-curl.c
-index 428dd70aa1..690df2a43e 100644
+index ef05752ca5..199c4615a5 100644
 --- a/remote-curl.c
 +++ b/remote-curl.c
-@@ -706,25 +706,13 @@ static size_t rpc_out(void *ptr, size_t eltsize,
- 		 * we need to refrain from reading.
+@@ -705,9 +705,10 @@ static size_t rpc_out(void *ptr, size_t eltsize,
+ 			 * The line length either does not need to be sent at
+ 			 * all or has already been completely sent. Now we can
+ 			 * return 0, indicating EOF, meaning that the flush has
+-			 * been fully sent.
++			 * been fully sent. It is important to keep returning 0
++			 * as long as needed in that case, as libcurl invokes
++			 * the callback multiple times at EOF sometimes.
+ 			 */
+-			rpc->flush_read_but_not_sent = 0;
+ 			return 0;
+ 		}
+ 		/*
+@@ -963,6 +964,7 @@ static int post_rpc(struct rpc_state *rpc, int
+stateless_connect, int flush_rece
  		 */
- 	}
--	if (rpc->flush_read_but_not_sent) {
--		if (!avail) {
--			/*
--			 * The line length either does not need to be sent at
--			 * all or has already been completely sent. Now we can
--			 * return 0, indicating EOF, meaning that the flush has
--			 * been fully sent. It is important to keep returning 0
--			 * as long as needed in that case, as libcurl invokes
--			 * the callback multiple times at EOF sometimes.
--			 */
--			return 0;
--		}
--		/*
--		 * If avail is non-zero, the line length for the flush still
--		 * hasn't been fully sent. Proceed with sending the line
--		 * length.
--		 */
--	}
-
-+	/*
-+	 * Copy data to the provided buffer. If there is nothing more to send,
-+	 * nothing gets written and the return value is 0 (EOF).
-+	 * It is important to keep returning 0 as long as needed in that case,
-+	 * as libcurl invokes the callback multiple times at EOF sometimes.
-+	 */
- 	if (max < avail)
- 		avail = max;
- 	memcpy(ptr, rpc->buf + rpc->pos, avail);
+ 		headers = curl_slist_append(headers, "Transfer-Encoding: chunked");
+ 		rpc->initial_buffer = 1;
++		rpc->flush_read_but_not_sent = 0;
+ 		curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, rpc_out);
+ 		curl_easy_setopt(slot->curl, CURLOPT_INFILE, rpc);
+ 		curl_easy_setopt(slot->curl, CURLOPT_SEEKFUNCTION, rpc_seek);
 -- 
 2.42.1.5.g2f21867bd5
