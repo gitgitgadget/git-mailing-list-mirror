@@ -1,48 +1,48 @@
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73BB32E624
-	for <git@vger.kernel.org>; Wed, 15 Nov 2023 14:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69A7D1EB34
+	for <git@vger.kernel.org>; Wed, 15 Nov 2023 14:33:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZksaWMfn"
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD487187
-	for <git@vger.kernel.org>; Wed, 15 Nov 2023 06:33:46 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-4083dbc43cfso49647145e9.3
-        for <git@vger.kernel.org>; Wed, 15 Nov 2023 06:33:46 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gLN4Jrj4"
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C23C18B
+	for <git@vger.kernel.org>; Wed, 15 Nov 2023 06:33:50 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-408425c7c10so55271775e9.0
+        for <git@vger.kernel.org>; Wed, 15 Nov 2023 06:33:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700058824; x=1700663624; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1700058827; x=1700663627; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WVGpAJo1q1H7vOsk0AACdMeeqgQHYfcUSQjVhufBvCM=;
-        b=ZksaWMfn79v7fAtcOdcDdsr4qm45WsMKInZdHzgnr4ycqiQ9RotMSS197uroXWjyRW
-         esfiO8p2gyVfD+G9Rr7pblU6sZbpe6CvRRKkKj2Vd5JPvzbWQQ6B35SlGvJQnovcWUp0
-         QKuJrWr4/bVaXS/+QjB8r2NaBX47rVwbe9er3m8nyvDm0f0rRdsX7VZW9/QpZq0Q7Kmu
-         sGlKQqf0oKMYvBfyLs5O17nQKShGm9cGec9SzqPUzNSyS+tCIzN2kRBdNJGlObnmxgfj
-         gH5nRbJQqCLBa1FZCQY2z9p41XWqMPzh+8jpP8+XkJ8KmcXknGFN4OL4nuEx+utqG0HT
-         haKw==
+        bh=FX28VuiAHyjr49ukA0LIztxLQEDq2DWCFixAQ99AYvY=;
+        b=gLN4Jrj40TV+ZyleRM5si7NXkV06M19+oL6sz+sZlEpjHbxHxnvrqtGe2bJJnHrYRo
+         ckyspVKN/j/B2ugqPUW35h4yWoHLsRRFq3Ak63BLXk8UGDOjF/8j+0/0QS/9hSi6Wzmj
+         /O4M1fbUqgGwVNkKYDhlGjaEMs3lCoF1J4/yU5JTmL3G2/raQqFZr1x2eMNzJXJhUYdD
+         5p/HQ/oiPDqhf+gCbGAoQ1FgbFnLje2gT4TfP68ft16ruYZWXCWBICkEgfTHamaQX87v
+         /AMKv2jTZ+1jJGiRE1ZhIdbBl/o9OwJWpw8MwcmLqvrvJXA25tBvA/HFzBvpwNzJeB9w
+         k+EQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700058824; x=1700663624;
+        d=1e100.net; s=20230601; t=1700058827; x=1700663627;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WVGpAJo1q1H7vOsk0AACdMeeqgQHYfcUSQjVhufBvCM=;
-        b=jhFCcScDvuNNHyZbugJlKKy8CKPoSijelbHjGK2sZnoBr5AIhH98z8daF7/dTtnpQ8
-         i5MOXCKobYnvsg5ZsntCFrHv0P1aNWQtXd4gIrPFXnhp6b7nMVcBPzLVApnHcCvYKifv
-         3iz4c0yXAYfE/sUu63d1U65ifUj8gKURTDmAHp+TFaVySzML+Kn9k6WTVsT57gxd6vBs
-         ig/2muhUdOINl4riFmUyObL2lkgn8y/4/3J+M3qOpNkXZHqv3MaDuHBOvUCXmYEVYEPy
-         YMGiAQnHm98O+TXLb5HF3zmlQQ6KQ2bgwoPBhUVw/2SLlyDvsT+P36EzXU2ld40XOVDJ
-         y5Gg==
-X-Gm-Message-State: AOJu0YwZvjJ34c4+2IjFqeQ6KJzLv0ngoT3qdxVpYzlCMuiHqlcAji9b
-	eaCc5GYe3HDFmiQWI5pOvwZyx63RPDs=
-X-Google-Smtp-Source: AGHT+IHw2e+E8BM7bFIh/jwBzJOb9yqWCwTk9QgxE8Oyf9RHAit6lif5bRb9UJvt1qW5pIHi/lo5sA==
-X-Received: by 2002:a05:600c:3b94:b0:408:5a1c:9de7 with SMTP id n20-20020a05600c3b9400b004085a1c9de7mr11472212wms.7.1700058823759;
-        Wed, 15 Nov 2023 06:33:43 -0800 (PST)
+        bh=FX28VuiAHyjr49ukA0LIztxLQEDq2DWCFixAQ99AYvY=;
+        b=gPJimRdl1vX0rmX8WBR11SXfFNIAgixYJPN4Tm+yt3hf3ouUgA3ijlBFptg2qnQgIf
+         0bE2JrsbxRrdPOj5p2UGPSSP3ksebDstpCcaLgFR9Heefgqm0L2/PRB9xbpQn43iRykU
+         6ySgIrCJiyaER39fmEFB2cVeYKfQ0K+GAr8IeNn5IyiSbQaN0Q54uOJVlT+HhSRUSl+x
+         /K17kaUeMFXYpkNiSt5sfRznWqz1cbv8kUTb1FnyCPJ8LBF8SjrtiAPDtPGWYo3pi4KJ
+         BSErShB3Gkn7kVPu3DzNGsWHmjGHkI4BtM8p5UWqu0JJ6Tgx5Dn7/g93lQHdAERwWmv6
+         x7hw==
+X-Gm-Message-State: AOJu0YwxvVuLxdWPl4aQ621vZFFm1xUkjzVnMJ9KSyQyCqXrCWjtXsU/
+	rfNZ58OHp3nb0KeBud4D/7MnSbyOjwk=
+X-Google-Smtp-Source: AGHT+IFnUeSl4IIatRr0CSAKD4mAUscLg931YGrH2vhQA3aNAdYZTcOF7MIGrNu9/XJpcAe98xfN2A==
+X-Received: by 2002:a05:600c:4446:b0:40a:392c:5b79 with SMTP id v6-20020a05600c444600b0040a392c5b79mr10729603wmn.14.1700058827235;
+        Wed, 15 Nov 2023 06:33:47 -0800 (PST)
 Received: from localhost.localdomain ([2001:861:3f04:7ca0:a40b:e654:dd4c:2f5f])
-        by smtp.gmail.com with ESMTPSA id q15-20020a05600c46cf00b004060f0a0fd5sm15207643wmo.13.2023.11.15.06.33.42
+        by smtp.gmail.com with ESMTPSA id q15-20020a05600c46cf00b004060f0a0fd5sm15207643wmo.13.2023.11.15.06.33.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Nov 2023 06:33:42 -0800 (PST)
+        Wed, 15 Nov 2023 06:33:45 -0800 (PST)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -56,13 +56,14 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Toon Claes <toon@iotcl.com>,
 	Dragan Simic <dsimic@manjaro.org>,
 	Linus Arver <linusa@google.com>,
-	Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v7 00/14] Introduce new `git replay` command
-Date: Wed, 15 Nov 2023 15:33:13 +0100
-Message-ID: <20231115143327.2441397-1-christian.couder@gmail.com>
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v7 02/14] replay: introduce new builtin
+Date: Wed, 15 Nov 2023 15:33:15 +0100
+Message-ID: <20231115143327.2441397-3-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.43.0.rc1.15.g29556bcc86
-In-Reply-To: <20231102135151.843758-1-christian.couder@gmail.com>
+In-Reply-To: <20231115143327.2441397-1-christian.couder@gmail.com>
 References: <20231102135151.843758-1-christian.couder@gmail.com>
+ <20231115143327.2441397-1-christian.couder@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,616 +72,414 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-# Intro
-
-`git replay` has initially been developed entirely by Elijah Newren
-mostly last year (2022) at:
-
-https://github.com/newren/git/commits/replay
-
-I took over this year to polish and upstream it as GitLab is
-interested in replacing libgit2, and for that purpose needs a command
-to do server side (so without using a worktree) rebases, cherry-picks
-and reverts.
-
-I reduced the number of commits and features in this patch series,
-compared to what Elijah already developed. Especially I stopped short
-of replaying merge commits and replaying interactively. These and
-other features might be upstreamed in the future after this patch
-series has graduated.
-
-The focus in this series is to make it a good plumbing command that
-can already be used server side and that replaces the "fast-rebase"
-test-tool command. So things to make it easier to use on the command
-line, and more advanced features (like replaying merges) are left out.
-
-It looks like GitHub has actually already been using version 3 of this
-patch series in production with good results. See:
-
-https://github.blog/2023-07-27-scaling-merge-ort-across-github/
-https://lore.kernel.org/git/304f2a49-5e05-7655-9f87-2011606df5db@gmx.de/
-
-# Content of this cover letter
-
-The "Quick Overview" and "Reasons for diverging from cherry-pick &
-rebase" sections just below are describing the purpose of the new
-command in the big scheme of things. They are taken from Elijah's
-design notes
-(https://github.com/newren/git/blob/replay/replay-design-notes.txt)
-and describe what we want this command to become and the reasons for
-that, not what the command is after only this patch series. Also these
-design notes were written at least one year ago, so parts of those 2
-sections are not true anymore. I have added Phillip Wood's or Felipe
-Contreras' notes (thanks to them) where that's the case, but some now
-flawed parts may have missed.
-
-After these two sections, starting with the "Important limitations"
-section, you will find sections describing what is actually in this
-patch series.
-
-More interesting material is available in Elijah's design notes like
-an "Intro via examples"
-(https://github.com/newren/git/blob/replay/replay-design-notes.txt#L37-L132),
-a discussion about "Preserving topology, replaying merges"
-(https://github.com/newren/git/blob/replay/replay-design-notes.txt#L264-L341)
-and a "Current status" section describing Elijah's work
-(https://github.com/newren/git/blob/replay/replay-design-notes.txt#L344-L392)
-before I started working on upstreaming it.
-
-I have not included this material here though, as the documentation
-added by this patch series for the `git replay` command already
-includes an "EXAMPLES" section, and other sections of Elijah's design
-notes might not be interesting for now. Also this cover letter is
-already pretty long.  But reviewers can refer to the links above if
-they think it can help.
-
-# Quick Overview (from Elijah's design notes)
-
-`git replay`, at a basic level, can perhaps be thought of as a
-"default-to-dry-run rebase" -- meaning no updates to the working tree,
-or to the index, or to any references.  However, it differs from
-rebase in that it:
-
-  * Works for branches that aren't checked out
-
-  * Works in a bare repository
-
-  * Can replay multiple branches simultaneously (with or without common
-    history in the range being replayed)
-
-  * Preserves relative topology by default (merges are replayed too in
-    Elijah's original work, not in this series)
-
-  * Focuses on performance
-
-  * Has several altered defaults as a result of the above
-
-I sometimes think of `git replay` as "fast-replay", a patch-based
-analogue to the snapshot-based fast-export & fast-import tools.
-
-# Reasons for diverging from cherry-pick & rebase (from Elijah's
-  design notes)
-
-There are multiple reasons to diverge from the defaults in cherry-pick and
-rebase.
-
-* Server side needs
-
-  * Both cherry-pick and rebase, via the sequencer, are heavily tied
-    to updating the working tree, index, some refs, and a lot of
-    control files with every commit replayed, and invoke a mess of
-    hooks[1] that might be hard to avoid for backward compatibility
-    reasons (at least, that's been brought up a few times on the
-    list).
-
-  * cherry-pick and rebase both fork various subprocesses
-    unnecessarily, but somewhat intrinsically in part to ensure the
-    same hooks are called that old scripted implementations would have
-    called.
-
-    Note: since 356ee4659bb (sequencer: try to commit without forking
-    'git commit', 2017-11-24) cherry-pick and rebase do not fork
-    subprocesses other than hooks for the cases covered by this patch
-    series (i.e. they do not fork "git commit" for simple picks).
-
-  * "Dry run" behavior, where there are no updates to worktree, index,
-    or even refs might be important.
-
-  * Should not assume users only want to operate on HEAD (see next
-    section)
-
-* Decapitate HEAD-centric assumptions
-
-  * cherry-pick forces commits to be played on top of HEAD;
-    inflexible.
-
-  * rebase assumes the range of commits to be replayed is
-    upstream..HEAD by default, though it allows one to replay
-    upstream..otherbranch -- but it still forcibly and needlessly
-    checks out 'otherbranch' before starting to replay things.
-
-    Note: since 767a9c417eb (rebase -i: stop checking out the tip of
-    the branch to rebase, 2020-01-24) it's not true that rebase
-    forcibly and needlessly checks out 'otherbranch'.
-
-  * Assuming HEAD is involved severely limits replaying multiple
-    (possibly divergent) branches.
-
-    Note: since 89fc0b53fdb (rebase: update refs from 'update-ref'
-    commands, 2022-07-19) the sequencer can update multiple
-    branches. The issue with divergent branch is with command line
-    arguments and the todo list generation rather than the
-    capabilities of the sequencer.
-
-  * Once you stop assuming HEAD has a certain meaning, there's not
-    much reason to have two separate commands anymore (except for the
-    funny extra not-necessarily-compatible options both have gained
-    over time).
-
-  * (Micro issue: Assuming HEAD is involved also makes it harder for
-    new users to learn what rebase means and does; it makes command
-    lines hard to parse.  Not sure I want to harp on this too much, as
-    I have a suspicion I might be creating a tool for experts with
-    complicated use cases, but it's a minor quibble.)
-
-* Performance
-
-  * jj is slaughtering us on rebase speed[2].  I would like us to become
-    competitive.  (I dropped a few comments in the link at [2] about why
-    git is currently so bad.)
-
-  * From [3], there was a simple 4-patch series in linux.git that took
-    53 seconds to rebase.  Switching to ort dropped it to 16 seconds.
-    While that sounds great, only 11 *milliseconds* were needed to do
-    the actual merges.  That means almost *all* the time (>99%) was
-    overhead!  Big offenders:
-
-    * --reapply-cherry-picks should be the default
-
-    * can_fast_forward() should be ripped out, and perhaps other extraneous
-      revision walks
-
-      Note: d42c9ffa0f (rebase: factor out branch_base calculation,
-      2022-10-17) might already deal with that (according to Felipe
-      Contreras).
-
-    * avoid updating working tree, index, refs, reflogs, and control
-      structures except when needed (e.g. hitting a conflict, or operation
-      finished)
-
-  * Other performance ideas (mostly for future work, not in this
-    series)
-
-    * single-file control structures instead of directory of files
-      (when doing interactive things which is in Elijah's original
-      work, but not in this series)
-
-    * avoid forking subprocesses unless explicitly requested (e.g.
-      --exec, --strategy, --run-hooks).  For example, definitely do not
-      invoke `git commit` or `git merge`.
-
-    * Sanitize hooks:
-
-      * dispense with all per-commit hooks for sure (pre-commit,
-        post-commit, post-checkout).
-
-      * pre-rebase also seems to assume exactly 1 ref is written, and
-        invoking it repeatedly would be stupid.  Plus, it's specific
-        to "rebase".  So...ignore?  (Stolee's --ref-update option for
-        rebase probably broke the pre-rebase assumptions already...)
-
-      * post-rewrite hook might make sense, but fast-import got
-        exempted, and I think of replay like a patch-based analogue
-        to the snapshot-based fast-import.
-
-    * When not running server side, resolve conflicts in a sparse-cone
-      sparse-index worktree to reduce number of files written to a
-      working tree.  (See below as well.)
-
-    * [High risk of possible premature optimization] Avoid large
-      numbers of newly created loose objects, when replaying large
-      numbers of commits.  Two possibilities: (1) Consider using
-      tmp-objdir and pack objects from the tmp-objdir at end of
-      exercise, (2) Lift code from git-fast-import to immediately
-      stuff new objects into a pack?
-
-* Multiple branches and non-checked out branches
-
-  * The ability to operate on non-checked out branches also implies
-    that we should generally be able to replay when in a dirty working
-    tree (exception being when we expect to update HEAD and any of the
-    dirty files is one that needs to be updated by the replay).
-
-  * Also, if we are operating locally on a non-checked out branch and
-    hit a conflict, we should have a way to resolve the conflict
-    without messing with the user's work on their current
-    branch. (This is not is this patch series though.)
-
-    * Idea: new worktree with sparse cone + sparse index checkout,
-      containing only files in the root directory, and whatever is
-      necessary to get the conflicts
-
-    * Companion to above idea: control structures should be written to
-      $GIT_COMMON_DIR/replay-${worktree}, so users can have multiple
-      replay sessions, and so we know which worktrees are associated
-      with which replay operations.
-
-  - [1] https://lore.kernel.org/git/pull.749.v3.git.git.1586044818132.gitgitgadget@gmail.com/
-  - [2] https://github.com/martinvonz/jj/discussions/49
-  - [3] https://lore.kernel.org/git/CABPp-BE48=97k_3tnNqXPjSEfA163F8hoE+HY0Zvz1SWB2B8EA@mail.gmail.com/
-
-# Important limitations
-
-* The code exits with code 1 if there are any conflict. No
-  resumability. No nice output. No interactivity. No special exit code
-  depending on the reason.
-
-* When a commit becomes empty as it is replayed, it is still replayed
-  as an empty commit, instead of being dropped.
-
-* No replaying merges, nor root commits. Only regular commits.
-
-* Signed commits are not properly handled. It's not clear what to do
-  to such commits when replaying on the server side.
-
-* Notes associated with replayed commits are not updated nor
-  duplicated. (Thanks to Phillip Wood for noticing.)
-
-# Commit overview
-
-* 1/14 t6429: remove switching aspects of fast-rebase
-
-    Preparatory commit to make it easier to later replace the
-    fast-rebase test-tool by `git replay` without breaking existing
-    tests.
-
-* 2/14 replay: introduce new builtin
-
-    This creates a minimal `git replay` command by moving the code
-    from the `fast-rebase` test helper from `t/helper/` into
-    `builtin/` and doing some renames and a few other needed changes.
-    Since v6, there are only a few doc improvements as suggested by
-    Dscho.
-
-* - 3/14 replay: start using parse_options API
-  - 4/14 replay: die() instead of failing assert()
-  - 5/14 replay: introduce pick_regular_commit()
-  - 6/14 replay: change rev walking options
-  - 7/14 replay: add an important FIXME comment about gpg signing
-  - 8/14 replay: remove progress and info output
-  - 9/14 replay: remove HEAD related sanity check
-
-    These slowly change the command to make it behave more like
-    regular commands and to start cleaning up its output. In patch
-    6/14 (replay: change rev walking options) there are some changes
-    compared to v6 as suggested by Elijah and Dscho. We are now
-    setting the rev walking bits we want before the call to
-    setup_revisions(). And then after that call we check if these bits
-    have been changed, and if that's the case we warn that we are
-    going to override those changes and we override the bits.
-
-* 10/14 replay: make it a minimal server side command
-
-    After the cleaning up in previous commits, it's now time to
-    radically change the way it works by stopping it to do ref
-    updates, to update the index and worktree, to consider HEAD as
-    special. Instead just make it output commands that should be
-    passed to `git update-ref --stdin`.
-
-* 11/14 replay: use standard revision ranges
-
-    Start adding new interesting features and also documentation and
-    tests, as the interface of the command is cristalizing into its
-    final form. Since v6 "Takes a range of commits" has been replaced
-    with "Takes ranges of commits" to reflect the fact that it can
-    accept more than one <revision-range>.
-
-* - 12/14 replay: add --advance or 'cherry-pick' mode
-  - 13/14 replay: add --contained to rebase contained branches
-
-    Add new options and features to the command.
-
-* 14/14 replay: stop assuming replayed branches do not diverge
-
-    This adds another interesting feature, as well as related
-    documentation and tests.
-
-# Notes about `fast-rebase`, tests and documentation
-
-The `fast-rebase` test-tool helper was developed by Elijah to
-experiment with a rebasing tool that would be developed from scratch
-based on his merge-ort work, could be used to test that merge-ort
-work, and would not have the speed and interface limitations of `git
-rebase` or `git cherry-pick`.
-
-This `fast-rebase` helper was used before this series in:
-
-t6429-merge-sequence-rename-caching.sh
-
-So when `git replay` is created from `fast-rebase` in patch 2/14, the
-t6429 test script is also converted to use `git replay`. This ensures
-that `git replay` doesn't break too badly during the first 10 patches
-in this patch series.
-
-Tests and documentation are introduced specifically for `git replay`
-as soon as patch 2/14, but they are not much improved since around
-11/14 as it doesn't make much sense to document and test behavior that
-we know is going to change soon.
-
-# Possibly controversial issues 
-
-* bare or not bare: this series works towards a plumbing command with
-  the end goal of it being usable and used first on bare repos,
-  contrary to existing commands like `git rebase` and `git
-  cherry-pick`. The tests check that the command works on both bare
-  and non-bare repo though.
-
-* exit status: a successful, non-conflicted replay exits with code
-  0. When the replay has conflicts, the exit status is 1. If the
-  replay is not able to complete (or start) due to some kind of error,
-  the exit status is something other than 0 or 1. There are a few
-  tests checking that. It has been suggested in an internal review
-  that conflicts might want to get a more specific error code as an
-  error code of 1 might be quite easy to return by accident. It
-  doesn't seem to me from their docs (which might want to be improved,
-  I didn't look at the code) that other commands like `git merge` and
-  `git rebase` exit with a special error code in case of conflict.
-
-* make worktree and index changes optional: commit 10/14 stops
-  updating the index and worktree, but it might be better especially
-  for cli users to make that optional. The issue is that this would
-  make the command more complex while we are developing a number of
-  important features so that the command can be used on bare repos. It
-  seems that this should rather be done in an iterative improvement
-  after the important features have landed.
-
-* --advance and --contained: these two advanced options might not
-  belong to this first series and could perhaps be added in a followup
-  series in separate commits. On the other hand the code for
-  --contained seems involved with the code of --advance and it's nice
-  to see soon that git replay can indeed do cherry-picking and rebase
-  many refs at once, and this way fullfil these parts of its promise.
-
-* replaying diverging branches: 14/14 the last patch in the series,
-  which allow replaying diverging branches, can be seen as a
-  fundamental fix or alternatively as adding an interesting
-  feature. So it's debatable if it should be in its own patch along
-  with its own tests as in this series, or if it should be merged into
-  a previous patch and which one.
-
-* only 2 patches: this patch series can be seen from a high level
-  point of view as 1) introducing the new `git replay` command, and 2)
-  using `git replay` to replace, and get rid of, the fast-rebase
-  test-tool command. The fact that not much of the original
-  fast-rebase code and interface is left would agree with that point
-  of view. On the other hand, fast-rebase can also be seen as a first
-  iteration towards `git replay`. So it can also make sense to see how
-  `git replay` evolved from it.
-
-# Changes between v6 and v7
-
-Thanks to Dscho, Linus Arver and Dragan Simic for their suggestions on
-the previous version! The few changes compared to v6 are:
-
-* The patch series was rebased onto master at dadef801b3 (Git
-  2.43-rc1, 2023-11-08). This is to make it stand on a possibly more
-  stable base.
-
-* In patch 2/14 (replay: introduce new builtin), there are a few doc
-  improvements as suggested by Dscho, as we now talk about the
-  <oldbase> and <branch> arguments in the description.
-
-* In patch 6/14 (replay: change rev walking options), as suggested by
-  Elijah and Dscho, we are now setting the rev walking bits we want
-  before the call to setup_revisions(). And then after that call we
-  check if these bits have been changed, and if that's the case we
-  warn that we are going to override those changes and we override the
-  bits.
-
-* In patch 11/14 (replay: use standard revision ranges), "Takes a
-  range of commits" has been replaced with "Takes ranges of commits"
-  to reflect the fact that it can accept more than one
-  <revision-range>.
-
-CI tests seem to pass according to:
-
-https://github.com/chriscool/git/actions/runs/6878406898
-
-(Except the "sparse" test, but failure doesn't seem to be related. And
-sorry I stopped waiting for the MacOS and ASAN tests to finish after
-23 minutes.)
-
-# Range-diff between v6 and v7
-
-(Sorry it looks like patch 6/14 in v7 is considered to be completely
-different from what it was in v6, so the range-diff is not showing
-differences between them.)
-
- 1:  fac0a9dff4 =  1:  cddcd967b2 t6429: remove switching aspects of fast-rebase
- 2:  bec2eb8928 !  2:  c8476fb093 replay: introduce new builtin
-    @@ Documentation/git-replay.txt (new)
-     +DESCRIPTION
-     +-----------
-     +
-    -+Takes a range of commits and replays them onto a new location.
-    ++Takes a range of commits, specified by <oldbase> and <branch>, and
-    ++replays them onto a new location (see `--onto` option below).
-     +
-     +THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
-     +
- 3:  b0cdfdc0c3 =  3:  43322abd1e replay: start using parse_options API
- 4:  c3403f0b9d =  4:  6524c7f045 replay: die() instead of failing assert()
- 5:  4188eeac30 =  5:  05d0efa3cb replay: introduce pick_regular_commit()
- 6:  b7b4d9001e <  -:  ---------- replay: change rev walking options
- -:  ---------- >  6:  c7a5aad3d6 replay: change rev walking options
- 7:  c57577a9b8 =  7:  01f35f924b replay: add an important FIXME comment about gpg signing
- 8:  e78be50f3d =  8:  1498b24bad replay: remove progress and info output
- 9:  e4c79b676f =  9:  6786fc147b replay: remove HEAD related sanity check
-10:  8d89f1b733 ! 10:  9a24dbb530 replay: make it a minimal server side command
-    @@ Commit message
-         Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-     
-      ## Documentation/git-replay.txt ##
-    -@@ Documentation/git-replay.txt: SYNOPSIS
-    - DESCRIPTION
-    +@@ Documentation/git-replay.txt: DESCRIPTION
-      -----------
-      
-    --Takes a range of commits and replays them onto a new location.
-    -+Takes a range of commits and replays them onto a new location. Leaves
-    -+the working tree and the index untouched, and updates no
-    -+references. The output of this command is meant to be used as input to
-    + Takes a range of commits, specified by <oldbase> and <branch>, and
-    +-replays them onto a new location (see `--onto` option below).
-    ++replays them onto a new location (see `--onto` option below). Leaves
-    ++the working tree and the index untouched, and updates no references.
-    ++The output of this command is meant to be used as input to
-     +`git update-ref --stdin`, which would update the relevant branches.
-      
-      THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
-    @@ builtin/replay.c: int cmd_replay(int argc, const char **argv, const char *prefix
-        struct merge_result result;
-     -  struct strbuf reflog_msg = STRBUF_INIT;
-        struct strbuf branch_name = STRBUF_INIT;
-    -   int i, ret = 0;
-    +   int ret = 0;
-      
-     @@ builtin/replay.c: int cmd_replay(int argc, const char **argv, const char *prefix)
-        onto = peel_committish(onto_name);
-11:  3d433a1322 ! 11:  ad6ca2fbef replay: use standard revision ranges
-    @@ Documentation/git-replay.txt: git-replay - EXPERIMENTAL: Replay commits on a new
-      
-      DESCRIPTION
-      -----------
-    -@@ Documentation/git-replay.txt: DESCRIPTION
-    - Takes a range of commits and replays them onto a new location. Leaves
-    - the working tree and the index untouched, and updates no
-    - references. The output of this command is meant to be used as input to
-    + 
-    +-Takes a range of commits, specified by <oldbase> and <branch>, and
-    +-replays them onto a new location (see `--onto` option below). Leaves
-    ++Takes ranges of commits and replays them onto a new location. Leaves
-    + the working tree and the index untouched, and updates no references.
-    + The output of this command is meant to be used as input to
-     -`git update-ref --stdin`, which would update the relevant branches.
-     +`git update-ref --stdin`, which would update the relevant branches
-     +(see the OUTPUT section below).
-    @@ builtin/replay.c: int cmd_replay(int argc, const char **argv, const char *prefix
-        struct merge_options merge_opt;
-        struct merge_result result;
-     -  struct strbuf branch_name = STRBUF_INIT;
-    -   int i, ret = 0;
-    +   int ret = 0;
-      
-        const char * const replay_usage[] = {
-     -          N_("git replay --onto <newbase> <oldbase> <branch> # EXPERIMENTAL"),
-    @@ builtin/replay.c: int cmd_replay(int argc, const char **argv, const char *prefix
-     -  strvec_pushl(&rev_walk_args, "", argv[2], "--not", argv[1], NULL);
-     -
-        /*
-    -    * TODO: For now, let's warn when we see an option that we are
-    -    * going to override after setup_revisions() below. In the
-    +    * Set desired values for rev walking options here. If they
-    +    * are changed by some user specified option in setup_revisions()
-     @@ builtin/replay.c: int cmd_replay(int argc, const char **argv, const char *prefix)
-    -                   warning(_("option '%s' will be overridden"), argv[i]);
-    -   }
-    +   revs.topo_order = 1;
-    +   revs.simplify_history = 0;
-      
-     -  if (setup_revisions(rev_walk_args.nr, rev_walk_args.v, &revs, NULL) > 1) {
-     -          ret = error(_("unhandled options"));
-    @@ builtin/replay.c: int cmd_replay(int argc, const char **argv, const char *prefix
-        }
-      
-     @@ builtin/replay.c: int cmd_replay(int argc, const char **argv, const char *prefix)
-    -   revs.topo_order = 1;
-    -   revs.simplify_history = 0;
-    +           revs.simplify_history = 0;
-    +   }
-      
-     -  strvec_clear(&rev_walk_args);
-     -
-12:  cca8105382 ! 12:  081864ed5f replay: add --advance or 'cherry-pick' mode
-    @@ builtin/replay.c: static struct commit *pick_regular_commit(struct commit *pickm
-        struct merge_options merge_opt;
-        struct merge_result result;
-     +  struct strset *update_refs = NULL;
-    -   int i, ret = 0;
-    +   int ret = 0;
-      
-        const char * const replay_usage[] = {
-     -          N_("git replay --onto <newbase> <revision-range>... # EXPERIMENTAL"),
-    @@ builtin/replay.c: int cmd_replay(int argc, const char **argv, const char *prefix
-      
-        /*
-     @@ builtin/replay.c: int cmd_replay(int argc, const char **argv, const char *prefix)
-    -   revs.topo_order = 1;
-    -   revs.simplify_history = 0;
-    +           revs.simplify_history = 0;
-    +   }
-      
-     +  determine_replay_mode(&revs.cmdline, onto_name, &advance_name,
-     +                        &onto, &update_refs);
-13:  92287a2cc8 ! 13:  19c4016c7c replay: add --contained to rebase contained branches
-    @@ builtin/replay.c: int cmd_replay(int argc, const char **argv, const char *prefix
-        struct rev_info revs;
-        struct commit *last_commit = NULL;
-     @@ builtin/replay.c: int cmd_replay(int argc, const char **argv, const char *prefix)
-    -   int i, ret = 0;
-    +   int ret = 0;
-      
-        const char * const replay_usage[] = {
-     -          N_("git replay (--onto <newbase> | --advance <branch>) <revision-range>... # EXPERIMENTAL"),
-14:  529a7fda40 ! 14:  29556bcc86 replay: stop assuming replayed branches do not diverge
-    @@ builtin/replay.c: int cmd_replay(int argc, const char **argv, const char *prefix
-        struct merge_result result;
-        struct strset *update_refs = NULL;
-     +  kh_oid_map_t *replayed_commits;
-    -   int i, ret = 0;
-    +   int ret = 0;
-      
-        const char * const replay_usage[] = {
-     @@ builtin/replay.c: int cmd_replay(int argc, const char **argv, const char *prefix)
-
-
-Elijah Newren (14):
-  t6429: remove switching aspects of fast-rebase
-  replay: introduce new builtin
-  replay: start using parse_options API
-  replay: die() instead of failing assert()
-  replay: introduce pick_regular_commit()
-  replay: change rev walking options
-  replay: add an important FIXME comment about gpg signing
-  replay: remove progress and info output
-  replay: remove HEAD related sanity check
-  replay: make it a minimal server side command
-  replay: use standard revision ranges
-  replay: add --advance or 'cherry-pick' mode
-  replay: add --contained to rebase contained branches
-  replay: stop assuming replayed branches do not diverge
-
- .gitignore                               |   1 +
- Documentation/git-replay.txt             | 127 +++++++
- Makefile                                 |   2 +-
- builtin.h                                |   1 +
- builtin/replay.c                         | 445 +++++++++++++++++++++++
- command-list.txt                         |   1 +
- git.c                                    |   1 +
- t/helper/test-fast-rebase.c              | 241 ------------
- t/helper/test-tool.c                     |   1 -
- t/helper/test-tool.h                     |   1 -
- t/t3650-replay-basics.sh                 | 198 ++++++++++
- t/t6429-merge-sequence-rename-caching.sh |  45 ++-
- 12 files changed, 800 insertions(+), 264 deletions(-)
+From: Elijah Newren <newren@gmail.com>
+
+For now, this is just a rename from `t/helper/test-fast-rebase.c` into
+`builtin/replay.c` with minimal changes to make it build appropriately.
+
+Let's add a stub documentation and a stub test script though.
+
+Subsequent commits will flesh out the capabilities of the new command
+and make it a more standard regular builtin.
+
+Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Co-authored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Elijah Newren <newren@gmail.com>
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ .gitignore                                    |  1 +
+ Documentation/git-replay.txt                  | 39 ++++++++++++
+ Makefile                                      |  2 +-
+ builtin.h                                     |  1 +
+ .../test-fast-rebase.c => builtin/replay.c    | 29 +++------
+ command-list.txt                              |  1 +
+ git.c                                         |  1 +
+ t/helper/test-tool.c                          |  1 -
+ t/helper/test-tool.h                          |  1 -
+ t/t3650-replay-basics.sh                      | 60 +++++++++++++++++++
+ t/t6429-merge-sequence-rename-caching.sh      | 27 +++------
+ 11 files changed, 122 insertions(+), 41 deletions(-)
  create mode 100644 Documentation/git-replay.txt
- create mode 100644 builtin/replay.c
- delete mode 100644 t/helper/test-fast-rebase.c
+ rename t/helper/test-fast-rebase.c => builtin/replay.c (87%)
  create mode 100755 t/t3650-replay-basics.sh
 
-
-base-commit: dadef801b365989099a9929e995589e455c51fed
-prerequisite-patch-id: 6df236178013b77ca82d22653c1ab78477e081ce
+diff --git a/.gitignore b/.gitignore
+index 5e56e471b3..612c0f6a0f 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -135,6 +135,7 @@
+ /git-remote-ext
+ /git-repack
+ /git-replace
++/git-replay
+ /git-request-pull
+ /git-rerere
+ /git-reset
+diff --git a/Documentation/git-replay.txt b/Documentation/git-replay.txt
+new file mode 100644
+index 0000000000..0349058b66
+--- /dev/null
++++ b/Documentation/git-replay.txt
+@@ -0,0 +1,39 @@
++git-replay(1)
++=============
++
++NAME
++----
++git-replay - EXPERIMENTAL: Replay commits on a new base, works with bare repos too
++
++
++SYNOPSIS
++--------
++[verse]
++'git replay' --onto <newbase> <oldbase> <branch> # EXPERIMENTAL
++
++DESCRIPTION
++-----------
++
++Takes a range of commits, specified by <oldbase> and <branch>, and
++replays them onto a new location (see `--onto` option below).
++
++THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
++
++OPTIONS
++-------
++
++--onto <newbase>::
++	Starting point at which to create the new commits.  May be any
++	valid commit, and not just an existing branch name.
++
++EXIT STATUS
++-----------
++
++For a successful, non-conflicted replay, the exit status is 0.  When
++the replay has conflicts, the exit status is 1.  If the replay is not
++able to complete (or start) due to some kind of error, the exit status
++is something other than 0 or 1.
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/Makefile b/Makefile
+index 03adcb5a48..3834bc1544 100644
+--- a/Makefile
++++ b/Makefile
+@@ -799,7 +799,6 @@ TEST_BUILTINS_OBJS += test-dump-split-index.o
+ TEST_BUILTINS_OBJS += test-dump-untracked-cache.o
+ TEST_BUILTINS_OBJS += test-env-helper.o
+ TEST_BUILTINS_OBJS += test-example-decorate.o
+-TEST_BUILTINS_OBJS += test-fast-rebase.o
+ TEST_BUILTINS_OBJS += test-find-pack.o
+ TEST_BUILTINS_OBJS += test-fsmonitor-client.o
+ TEST_BUILTINS_OBJS += test-genrandom.o
+@@ -1290,6 +1289,7 @@ BUILTIN_OBJS += builtin/remote-fd.o
+ BUILTIN_OBJS += builtin/remote.o
+ BUILTIN_OBJS += builtin/repack.o
+ BUILTIN_OBJS += builtin/replace.o
++BUILTIN_OBJS += builtin/replay.o
+ BUILTIN_OBJS += builtin/rerere.o
+ BUILTIN_OBJS += builtin/reset.o
+ BUILTIN_OBJS += builtin/rev-list.o
+diff --git a/builtin.h b/builtin.h
+index d560baa661..28280636da 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -211,6 +211,7 @@ int cmd_remote(int argc, const char **argv, const char *prefix);
+ int cmd_remote_ext(int argc, const char **argv, const char *prefix);
+ int cmd_remote_fd(int argc, const char **argv, const char *prefix);
+ int cmd_repack(int argc, const char **argv, const char *prefix);
++int cmd_replay(int argc, const char **argv, const char *prefix);
+ int cmd_rerere(int argc, const char **argv, const char *prefix);
+ int cmd_reset(int argc, const char **argv, const char *prefix);
+ int cmd_restore(int argc, const char **argv, const char *prefix);
+diff --git a/t/helper/test-fast-rebase.c b/builtin/replay.c
+similarity index 87%
+rename from t/helper/test-fast-rebase.c
+rename to builtin/replay.c
+index 2bfab66b1b..f2d8444417 100644
+--- a/t/helper/test-fast-rebase.c
++++ b/builtin/replay.c
+@@ -1,17 +1,11 @@
+ /*
+- * "git fast-rebase" builtin command
+- *
+- * FAST: Forking Any Subprocesses (is) Taboo
+- *
+- * This is meant SOLELY as a demo of what is possible.  sequencer.c and
+- * rebase.c should be refactored to use the ideas here, rather than attempting
+- * to extend this file to replace those (unless Phillip or Dscho say that
+- * refactoring is too hard and we need a clean slate, but I'm guessing that
+- * refactoring is the better route).
++ * "git replay" builtin command
+  */
+ 
+ #define USE_THE_INDEX_VARIABLE
+-#include "test-tool.h"
++#include "git-compat-util.h"
++
++#include "builtin.h"
+ #include "cache-tree.h"
+ #include "commit.h"
+ #include "environment.h"
+@@ -27,7 +21,8 @@
+ #include "sequencer.h"
+ #include "setup.h"
+ #include "strvec.h"
+-#include "tree.h"
++#include <oidset.h>
++#include <tree.h>
+ 
+ static const char *short_commit_name(struct commit *commit)
+ {
+@@ -94,7 +89,7 @@ static struct commit *create_commit(struct tree *tree,
+ 	return (struct commit *)obj;
+ }
+ 
+-int cmd__fast_rebase(int argc, const char **argv)
++int cmd_replay(int argc, const char **argv, const char *prefix)
+ {
+ 	struct commit *onto;
+ 	struct commit *last_commit = NULL, *last_picked_commit = NULL;
+@@ -110,14 +105,8 @@ int cmd__fast_rebase(int argc, const char **argv)
+ 	struct strbuf branch_name = STRBUF_INIT;
+ 	int ret = 0;
+ 
+-	/*
+-	 * test-tool stuff doesn't set up the git directory by default; need to
+-	 * do that manually.
+-	 */
+-	setup_git_directory();
+-
+ 	if (argc == 2 && !strcmp(argv[1], "-h")) {
+-		printf("Sorry, I am not a psychiatrist; I can not give you the help you need.  Oh, you meant usage...\n");
++		printf("git replay --onto <newbase> <oldbase> <branch> # EXPERIMENTAL\n");
+ 		exit(129);
+ 	}
+ 
+@@ -136,7 +125,7 @@ int cmd__fast_rebase(int argc, const char **argv)
+ 	if (repo_read_index(the_repository) < 0)
+ 		BUG("Could not read index");
+ 
+-	repo_init_revisions(the_repository, &revs, NULL);
++	repo_init_revisions(the_repository, &revs, prefix);
+ 	revs.verbose_header = 1;
+ 	revs.max_parents = 1;
+ 	revs.cherry_mark = 1;
+diff --git a/command-list.txt b/command-list.txt
+index 54b2a50f5f..c4cd0f352b 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -160,6 +160,7 @@ git-reflog                              ancillarymanipulators           complete
+ git-remote                              ancillarymanipulators           complete
+ git-repack                              ancillarymanipulators           complete
+ git-replace                             ancillarymanipulators           complete
++git-replay                              plumbingmanipulators
+ git-request-pull                        foreignscminterface             complete
+ git-rerere                              ancillaryinterrogators
+ git-reset                               mainporcelain           history
+diff --git a/git.c b/git.c
+index c67e44dd82..7068a184b0 100644
+--- a/git.c
++++ b/git.c
+@@ -594,6 +594,7 @@ static struct cmd_struct commands[] = {
+ 	{ "remote-fd", cmd_remote_fd, NO_PARSEOPT },
+ 	{ "repack", cmd_repack, RUN_SETUP },
+ 	{ "replace", cmd_replace, RUN_SETUP },
++	{ "replay", cmd_replay, RUN_SETUP },
+ 	{ "rerere", cmd_rerere, RUN_SETUP },
+ 	{ "reset", cmd_reset, RUN_SETUP },
+ 	{ "restore", cmd_restore, RUN_SETUP | NEED_WORK_TREE },
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index 876cd2dc31..37ba996539 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -30,7 +30,6 @@ static struct test_cmd cmds[] = {
+ 	{ "dump-untracked-cache", cmd__dump_untracked_cache },
+ 	{ "env-helper", cmd__env_helper },
+ 	{ "example-decorate", cmd__example_decorate },
+-	{ "fast-rebase", cmd__fast_rebase },
+ 	{ "find-pack", cmd__find_pack },
+ 	{ "fsmonitor-client", cmd__fsmonitor_client },
+ 	{ "genrandom", cmd__genrandom },
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index 70dd4eba11..8a1a7c63da 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -24,7 +24,6 @@ int cmd__dump_untracked_cache(int argc, const char **argv);
+ int cmd__dump_reftable(int argc, const char **argv);
+ int cmd__env_helper(int argc, const char **argv);
+ int cmd__example_decorate(int argc, const char **argv);
+-int cmd__fast_rebase(int argc, const char **argv);
+ int cmd__find_pack(int argc, const char **argv);
+ int cmd__fsmonitor_client(int argc, const char **argv);
+ int cmd__genrandom(int argc, const char **argv);
+diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
+new file mode 100755
+index 0000000000..36c1b5082a
+--- /dev/null
++++ b/t/t3650-replay-basics.sh
+@@ -0,0 +1,60 @@
++#!/bin/sh
++
++test_description='basic git replay tests'
++
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
++export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++
++. ./test-lib.sh
++
++GIT_AUTHOR_NAME=author@name
++GIT_AUTHOR_EMAIL=bogus@email@address
++export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL
++
++test_expect_success 'setup' '
++	test_commit A &&
++	test_commit B &&
++
++	git switch -c topic1 &&
++	test_commit C &&
++	git switch -c topic2 &&
++	test_commit D &&
++	test_commit E &&
++	git switch topic1 &&
++	test_commit F &&
++	git switch -c topic3 &&
++	test_commit G &&
++	test_commit H &&
++	git switch -c topic4 main &&
++	test_commit I &&
++	test_commit J &&
++
++	git switch -c next main &&
++	test_commit K &&
++	git merge -m "Merge topic1" topic1 &&
++	git merge -m "Merge topic2" topic2 &&
++	git merge -m "Merge topic3" topic3 &&
++	>evil &&
++	git add evil &&
++	git commit --amend &&
++	git merge -m "Merge topic4" topic4 &&
++
++	git switch main &&
++	test_commit L &&
++	test_commit M &&
++
++	git switch -c conflict B &&
++	test_commit C.conflict C.t conflict
++'
++
++test_expect_success 'using replay to rebase two branches, one on top of other' '
++	git switch main &&
++
++	git replay --onto main topic1 topic2 >result &&
++
++	git log --format=%s $(cut -f 3 -d " " result) >actual &&
++	test_write_lines E D M L B A >expect &&
++	test_cmp expect actual
++'
++
++test_done
+diff --git a/t/t6429-merge-sequence-rename-caching.sh b/t/t6429-merge-sequence-rename-caching.sh
+index 75d3fd2dba..7670b72008 100755
+--- a/t/t6429-merge-sequence-rename-caching.sh
++++ b/t/t6429-merge-sequence-rename-caching.sh
+@@ -71,9 +71,8 @@ test_expect_success 'caching renames does not preclude finding new ones' '
+ 
+ 		git switch upstream &&
+ 
+-		test-tool fast-rebase --onto HEAD upstream~1 topic &&
++		git replay --onto HEAD upstream~1 topic &&
+ 		git reset --hard topic &&
+-		#git cherry-pick upstream~1..topic
+ 
+ 		git ls-files >tracked-files &&
+ 		test_line_count = 2 tracked-files &&
+@@ -141,8 +140,7 @@ test_expect_success 'cherry-pick both a commit and its immediate revert' '
+ 		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
+ 		export GIT_TRACE2_PERF &&
+ 
+-		test-tool fast-rebase --onto HEAD upstream~1 topic &&
+-		#git cherry-pick upstream~1..topic &&
++		git replay --onto HEAD upstream~1 topic &&
+ 
+ 		grep region_enter.*diffcore_rename trace.output >calls &&
+ 		test_line_count = 1 calls
+@@ -200,9 +198,8 @@ test_expect_success 'rename same file identically, then reintroduce it' '
+ 		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
+ 		export GIT_TRACE2_PERF &&
+ 
+-		test-tool fast-rebase --onto HEAD upstream~1 topic &&
++		git replay --onto HEAD upstream~1 topic &&
+ 		git reset --hard topic &&
+-		#git cherry-pick upstream~1..topic &&
+ 
+ 		git ls-files >tracked &&
+ 		test_line_count = 2 tracked &&
+@@ -278,9 +275,8 @@ test_expect_success 'rename same file identically, then add file to old dir' '
+ 		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
+ 		export GIT_TRACE2_PERF &&
+ 
+-		test-tool fast-rebase --onto HEAD upstream~1 topic &&
++		git replay --onto HEAD upstream~1 topic &&
+ 		git reset --hard topic &&
+-		#git cherry-pick upstream~1..topic &&
+ 
+ 		git ls-files >tracked &&
+ 		test_line_count = 4 tracked &&
+@@ -356,8 +352,7 @@ test_expect_success 'cached dir rename does not prevent noticing later conflict'
+ 		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
+ 		export GIT_TRACE2_PERF &&
+ 
+-		test_must_fail test-tool fast-rebase --onto HEAD upstream~1 topic >output &&
+-		#git cherry-pick upstream..topic &&
++		test_must_fail git replay --onto HEAD upstream~1 topic >output &&
+ 
+ 		grep region_enter.*diffcore_rename trace.output >calls &&
+ 		test_line_count = 2 calls
+@@ -456,9 +451,8 @@ test_expect_success 'dir rename unneeded, then add new file to old dir' '
+ 		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
+ 		export GIT_TRACE2_PERF &&
+ 
+-		test-tool fast-rebase --onto HEAD upstream~1 topic &&
++		git replay --onto HEAD upstream~1 topic &&
+ 		git reset --hard topic &&
+-		#git cherry-pick upstream..topic &&
+ 
+ 		grep region_enter.*diffcore_rename trace.output >calls &&
+ 		test_line_count = 2 calls &&
+@@ -523,9 +517,8 @@ test_expect_success 'dir rename unneeded, then rename existing file into old dir
+ 		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
+ 		export GIT_TRACE2_PERF &&
+ 
+-		test-tool fast-rebase --onto HEAD upstream~1 topic &&
++		git replay --onto HEAD upstream~1 topic &&
+ 		git reset --hard topic &&
+-		#git cherry-pick upstream..topic &&
+ 
+ 		grep region_enter.*diffcore_rename trace.output >calls &&
+ 		test_line_count = 3 calls &&
+@@ -626,9 +619,8 @@ test_expect_success 'caching renames only on upstream side, part 1' '
+ 		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
+ 		export GIT_TRACE2_PERF &&
+ 
+-		test-tool fast-rebase --onto HEAD upstream~1 topic &&
++		git replay --onto HEAD upstream~1 topic &&
+ 		git reset --hard topic &&
+-		#git cherry-pick upstream..topic &&
+ 
+ 		grep region_enter.*diffcore_rename trace.output >calls &&
+ 		test_line_count = 1 calls &&
+@@ -685,9 +677,8 @@ test_expect_success 'caching renames only on upstream side, part 2' '
+ 		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
+ 		export GIT_TRACE2_PERF &&
+ 
+-		test-tool fast-rebase --onto HEAD upstream~1 topic &&
++		git replay --onto HEAD upstream~1 topic &&
+ 		git reset --hard topic &&
+-		#git cherry-pick upstream..topic &&
+ 
+ 		grep region_enter.*diffcore_rename trace.output >calls &&
+ 		test_line_count = 2 calls &&
 -- 
 2.43.0.rc1.15.g29556bcc86
 
