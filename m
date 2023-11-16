@@ -1,42 +1,40 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FvddmLZ0"
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E8A619B
-	for <git@vger.kernel.org>; Wed, 15 Nov 2023 16:07:05 -0800 (PST)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2A8AA1CF23E;
-	Wed, 15 Nov 2023 19:07:04 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="GqTGTA0l"
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42391125
+	for <git@vger.kernel.org>; Wed, 15 Nov 2023 16:27:49 -0800 (PST)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id C77711D573;
+	Wed, 15 Nov 2023 19:27:48 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=7aUg/2xClR5pqrLj3LiH2rbzDvudKQ/KDeIAb8
-	rNFFo=; b=FvddmLZ0KGKQtEbO2IzZ86XcFSi7hinC9fFLnm4T578qIHMNGbiRpE
-	DgihTllHGUK+TbPjm2BfCnpkjIx2BaxqE60P7xz9/qmwlYIPfi/6MXesxi6q+S86
-	uK0zOwflCgACTJau5ciXLMLli3de5x757nIsGHfEOGIqRRvODEKYY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 19F111CF23D;
-	Wed, 15 Nov 2023 19:07:04 -0500 (EST)
+	:content-type; s=sasl; bh=38EFxBIIoGbeVwnAnf7cDsZ2GP6izn7DBCM0MS
+	CShxs=; b=GqTGTA0lLQQoYnBGdYp5b8uPWOpkIR5Hv59vuff4Kxf1F9PWb/yexz
+	xXyXIEErpyly3kCzV5sk0zSjT3TvtArlo7ngsrh29E3M6dmOa8c4NUHnmENqn/SW
+	o4tNUq/m4yT5GUwIXRZFkDIjLC+aAc4Ya4Ify7BWMJW6xiAIE95cw=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id BF5EE1D572;
+	Wed, 15 Nov 2023 19:27:48 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.153.120])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 13B151CF23C;
-	Wed, 15 Nov 2023 19:07:03 -0500 (EST)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 67F2E1D570;
+	Wed, 15 Nov 2023 19:27:45 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org,  Karthik Nayak
- <karthik.188@gmail.com>
-Subject: Re: [PATCH] commit-graph: disable GIT_COMMIT_GRAPH_PARANOIA by default
-In-Reply-To: <ZVTJFOSnVonoPgZk@tanuki> (Patrick Steinhardt's message of "Wed,
-	15 Nov 2023 14:35:16 +0100")
-References: <7e2d300c4af9a7853201121d66f982afa421bbba.1699957350.git.ps@pks.im>
-	<ZVNNXNRfrwc_0Sj3@tanuki> <xmqq7cmkz3fi.fsf@gitster.g>
-	<xmqqzfzgxops.fsf@gitster.g>
-	<20231114194310.GC2092538@coredump.intra.peff.net>
-	<ZVTJFOSnVonoPgZk@tanuki>
-Date: Thu, 16 Nov 2023 09:07:01 +0900
-Message-ID: <xmqqh6lmwogq.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Andy Koppe <andy.koppe@gmail.com>,  git@vger.kernel.org,
+  phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v5 0/3] rebase: support --autosquash without -i
+In-Reply-To: <eb62435f-08ca-494d-bcc7-2568df2bd7fd@gmail.com> (Phillip Wood's
+	message of "Wed, 15 Nov 2023 15:09:12 +0000")
+References: <20231111132720.78877-1-andy.koppe@gmail.com>
+	<20231114214339.10925-1-andy.koppe@gmail.com>
+	<eb62435f-08ca-494d-bcc7-2568df2bd7fd@gmail.com>
+Date: Thu, 16 Nov 2023 09:27:43 +0900
+Message-ID: <xmqqcywawni8.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -46,39 +44,32 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 11FCD804-8414-11EE-BFE6-25B3960A682E-77302942!pb-smtp2.pobox.com
+ F67A48E8-8416-11EE-8622-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-Patrick Steinhardt <ps@pks.im> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
->> Yeah. Just like we auto-enabled GIT_REF_PARANOIA for git-gc, etc, I
->> think we should do the same here.
+> Hi Andy
+> ...
+> Thanks for the re-roll this version looks good to me
 >
-> I'm honestly still torn on this one. There are two cases that I can
-> think of where missing objects would be benign and where one wants to
-> use `git rev-list --missing`:
+> Best Wishes
 >
->     - Repositories with promisor remotes, to find the boundary of where
->       we need to fetch new objects.
+> Phillip
+
+Yup, looks good.  Thanks, both.
+
+Queued.
+
+
 >
->     - Quarantine directories where you only intend to list new objects
->       or find the boundary.
->
-> And in neither of those cases I can see a path for how the commit-graph
-> would contain such missing commits when using regular tooling to perform
-> repository maintenance.
-
-I can buy the promisor remotes use case---we may expect boundary
-objects missing without any repository corruption.  I do not know
-about the other one---where does our "rev-list --missing" start
-traversing in a quarantine directory is unclear.  Objects that are
-still in quarantine are not (yet) made reachable from any refs, so
-even "rev-list --missing --all" would not make a useful traversal,
-no?
-
-In any case, it sounds like you are not torn but are convinced that
-we should leave this loose by default ;-) and after thinking it over
-again, I tend to agree that it would be a better choice, as long as
-the feature "rev-list --missing" has any good use case other than
-corruption in repository.
-
-So,... thanks for pushing back.
+>> Andy Koppe (3):
+>>    rebase: fully ignore rebase.autoSquash without -i
+>>    rebase: support --autosquash without -i
+>>    rebase: rewrite --(no-)autosquash documentation
+>>   Documentation/config/rebase.txt        |  4 ++-
+>>   Documentation/git-rebase.txt           | 34 +++++++++++++----------
+>>   builtin/rebase.c                       | 17 +++++-------
+>>   t/t3415-rebase-autosquash.sh           | 38 +++++++++++++++++++-------
+>>   t/t3422-rebase-incompatible-options.sh | 12 --------
+>>   5 files changed, 58 insertions(+), 47 deletions(-)
+>> 
