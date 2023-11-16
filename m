@@ -1,144 +1,92 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="M7BXEuLc"
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46214A1
-	for <git@vger.kernel.org>; Thu, 16 Nov 2023 00:45:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-	t=1700124322; x=1700729122; i=johannes.schindelin@gmx.de;
-	bh=Af7+Ouk28JtYcwJtjzPB0+aWVAGpQ66MjiaQXzKGi9c=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:
-	 References;
-	b=M7BXEuLcYBLhncR3U2niJb1t97BbRJ4TtKsOdfNx8vkNq3OhNQeKIj01lIkog5fb
-	 /9en2/P1PzHnt9chhit6lAtd6+MH13/f80PGyShY/vUfHbh5Yd5XU6JWPWVXrX/XS
-	 b43jjqVLjUoVmw5QRJw41zYy385bh1EE9+l2zszPkzps8EohxF++TnB6HMKpWX56O
-	 GUxL3xIB9vvvJX17RcZOGJgxhahzSLOGvQeJpWaylWodoKLaPs+rZOGt6xqeWttxs
-	 yplW7t77VrI6RrarH8+Q7GtGiyaLdRE6t6jX3W7Pfw2fYLUsyucj5arFbvOhh665/
-	 K+c6JWBODLYD3ri6sQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.215.165]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MsYux-1rNQEc40C3-00u3Nt; Thu, 16
- Nov 2023 09:45:22 +0100
-Date: Thu, 16 Nov 2023 09:45:20 +0100 (CET)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Christian Couder <christian.couder@gmail.com>
-cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
-    Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>, 
-    John Cai <johncai86@gmail.com>, Derrick Stolee <stolee@gmail.com>, 
-    Phillip Wood <phillip.wood123@gmail.com>, 
-    Calvin Wan <calvinwan@google.com>, Toon Claes <toon@iotcl.com>, 
-    Dragan Simic <dsimic@manjaro.org>, Linus Arver <linusa@google.com>
-Subject: Re: [PATCH v6 00/14] Introduce new `git replay` command
-In-Reply-To: <CAP8UFD0Es4qai98WB6bpykisBT628JndPXG8jg1=_uUbn4zogA@mail.gmail.com>
-Message-ID: <0ddca907-6e64-b684-2e08-c7e95e737a3c@gmx.de>
-References: <20231010123847.2777056-1-christian.couder@gmail.com> <20231102135151.843758-1-christian.couder@gmail.com> <fcfacd1a-cf5a-a393-d2e0-3c0388ae3529@gmx.de> <CAP8UFD0Es4qai98WB6bpykisBT628JndPXG8jg1=_uUbn4zogA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GM2ysUtH"
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93129A1
+	for <git@vger.kernel.org>; Thu, 16 Nov 2023 00:52:38 -0800 (PST)
+Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-9df8d0c2505so108353866b.0
+        for <git@vger.kernel.org>; Thu, 16 Nov 2023 00:52:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1700124757; x=1700729557; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HRyAdckeFwV371diyRLCtOtkGqMTmKZSanAfKJFVqWM=;
+        b=GM2ysUtHdqRKTFnps3fOz2qhCfcx87gq76JYSggzbX5zQ7EsPRBHNaFsQFudxz25zE
+         z5XjsBzzPntIl9J0N6ArVCOOy8bxw7yojosKv/dSAfPtQPmj/7NoH7HZDPAHXeQxR5nr
+         BIAz7htxrnQvcFJcf6MSI3Zb1zudYWB4MZNHp4SBoefb6pOV+Vd4z14flT7Jy+Ed5bfe
+         WlOYUq9riQPm7etHQkgycMKKGOFyBaBOJcavOpuk1BxigpEpPq+xvR2JXIVxmbocOjn8
+         ypKkvnWIOyjwse4xNfla+mGNepotzAcajS5G2UbYkGiVNzBDPcJBXtUTRN1jMbVVXoDe
+         m45w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700124757; x=1700729557;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=HRyAdckeFwV371diyRLCtOtkGqMTmKZSanAfKJFVqWM=;
+        b=ZECpAnBWFJRC3a2HD04TBubP7fExDW2/4unpBPwyE/bp7vQdR2VSpln/52fLzRUyJR
+         2ypRVtZJe6Nvgazp0C7J4XK9ThHTEHHGqjPWVvwsO+ROvCoXtwKjxrNmBrSsIGkHeX6e
+         6zbppSYyVI7lj+Z6Tsnso7qSnnSjZ16z5l4VaSkRfKLFk8+VsT6GOrLch2lGuNgR/LM6
+         ovsphpNtwcCCP44Z7o358/KuHug1Y3MOh5MBYzeDLh8tvaQa2nWYwYGVjARMRFo5LlW6
+         oXa9U1F7aoZne3Tk08sqCYmaOSYIRThvSlBFtlJKsMRp1eWMqkYdToH1U+EuyAJoHrws
+         sPVA==
+X-Gm-Message-State: AOJu0YxokuuUhGrBjckQ0Aqq5c5plp++ZZTr6kpz4BjmgAKGH07GpXG4
+	Gvn0nJrl0HnTqOGW9Hh4QBXhFbEgaxoanapPl0K1NVX3/+k=
+X-Google-Smtp-Source: AGHT+IE9g3Fxy8qo9vvkMuL7iqzrueP03NxYaOON/TRvd93mctfB2U8ZSo4TSxrmv8gjaPhrFx0kLXciaAFj8OH2WC4=
+X-Received: by 2002:a17:906:f197:b0:9f4:53d9:2d66 with SMTP id
+ gs23-20020a170906f19700b009f453d92d66mr1061197ejb.5.1700124756643; Thu, 16
+ Nov 2023 00:52:36 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1870175547-1700124322=:482"
-X-Provags-ID: V03:K1:4O6fa+INjxU/jKctkiDzDHh1mS6r6+83OyIWsXSBog8LV3EZXK4
- A74oPDg2XGNKNOcsBNiK6f4WAfGRyz4myetMOIzTPcv1Vs4mWIx8nbcVzSzs3cJEbMjNu07
- KpWVGD17fcx2dvz5QHtfwkI0Bkt6SUlxfaC1sFCmvbkVKGZrrRrvlXkFf6oFhYWc90CWH2J
- Rsf0E01yXrHafEQt7LK3w==
-UI-OutboundReport: notjunk:1;M01:P0:M4YFYtU0eAY=;PIT68vDs9zztILEAn70TyGw+smq
- 1/EKk+lHG8Rq2Y+JK7mdqZmnK+Drdzx07EGZsMcNDVAVjj2bsAV1SIGncmi6IdZCf508f7v71
- EL255JrLHK0kLqDBiTdVBboR1hM6rEzpR3EFxbLvJRgvmkwaVDBUwMRJjt9TRmIROB5Ub8biC
- p4OrO9w86hNxTW0Q7yArNh+UxWhF5H5ylJtpiZ9GVaRjpuEme7RdcIWKLJcMFYAAYm2dmOdTx
- rNQCHBnmgRvzar8gwuH6cDm5bWnyDQW3Wow8U6ABHWIg5edZofr7n2wlEFnehFn3SP0JoNmFo
- ifPLWLCOpMZZExhFko4V6vaPdcHdBRf30fi0SKohdF47Tokucx/TRiPdp2MhbhqiJRCLnZAkS
- xUl96vsDaGz+cfPgr1ZM5yOQ/YZ1pq7YGVVCog2BA/mPm6cj8dlhFzDN/MX+mQdotEug2m2y+
- CA0fHx7GcDGIgz+pIgSjNqGI1AALHsyvIdySCiu54/b2/XZT2DqSo/BH+EuxEE709gbpov/t+
- shITeAhmaU8i2FHR/U0KG7CYnU4JGu+pNkBrvcIQ2tFI/7nSNKm8f/THhgjaTWO37U7cEWDcW
- jxKXU5Wp9hqVyE3nwXSB25bdwjcrYKtskenKHAtSymHa18cY1Q18j6GD2drCbaY4Srx0Gzfvy
- K1gwie4fhQF3tgnZHsWOnPcgkhof24aSWCDSZaiBRuqC2kI1y1+Fadn2ifuGJrqUDwLdw/hp0
- C9PFbPxCQHQ+yJEwXs72CgosDvikLiAexS37tecnfEJgUErvDKyNlyeOw9VUrxi0esIESA5np
- /4MEMBzec87K3gKJPK8guQeu0iEgwDBJTW4l+MWL8lwHp+pI98rEq/X9oSD16isndObNNqBH0
- 4dFMaQhJFc5BnIuQfoz10JWhimFBgOIo2mvVei4r5I3SCflFNelQwKtPFxhGtpyY2DugL3gk2
- /2oCQVwcyqwtxdZcZetjf1l9n1w=
-
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-1870175547-1700124322=:482
-Content-Type: text/plain; charset=UTF-8
+References: <20231010123847.2777056-1-christian.couder@gmail.com>
+ <20231102135151.843758-1-christian.couder@gmail.com> <fcfacd1a-cf5a-a393-d2e0-3c0388ae3529@gmx.de>
+ <CAP8UFD0Es4qai98WB6bpykisBT628JndPXG8jg1=_uUbn4zogA@mail.gmail.com> <0ddca907-6e64-b684-2e08-c7e95e737a3c@gmx.de>
+In-Reply-To: <0ddca907-6e64-b684-2e08-c7e95e737a3c@gmx.de>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Thu, 16 Nov 2023 09:52:24 +0100
+Message-ID: <CAP8UFD2hB5j2rZ-+WTXgju4mf58HGtEJR87LB08g3Hu3-G2joA@mail.gmail.com>
+Subject: Re: [PATCH v6 00/14] Introduce new `git replay` command
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
+	Elijah Newren <newren@gmail.com>, John Cai <johncai86@gmail.com>, 
+	Derrick Stolee <stolee@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>, 
+	Calvin Wan <calvinwan@google.com>, Toon Claes <toon@iotcl.com>, Dragan Simic <dsimic@manjaro.org>, 
+	Linus Arver <linusa@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Christian,
+Hi Dscho,
 
-On Wed, 15 Nov 2023, Christian Couder wrote:
+On Thu, Nov 16, 2023 at 9:45=E2=80=AFAM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> On Wed, 15 Nov 2023, Christian Couder wrote:
 
-> On Wed, Nov 8, 2023 at 1:47=E2=80=AFPM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > On Thu, 2 Nov 2023, Christian Couder wrote:
->
-> > >     + ## Documentation/git-replay.txt (new) ##
-> > >     +@@
-> > >     ++git-replay(1)
-> > >     ++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > >     ++
-> > >     ++NAME
-> > >     ++----
-> > >     ++git-replay - EXPERIMENTAL: Replay commits on a new base, works=
- with bare repos too
-> > >     ++
-> > >     ++
-> > >     ++SYNOPSIS
-> > >     ++--------
-> > >     ++[verse]
-> > >     ++'git replay' --onto <newbase> <revision-range>... # EXPERIMENT=
-AL
+> > I have fixed that in the v7 I just sent with the following:
 > >
-> > Technically, at this stage `git replay` requires precisely 5 arguments=
-, so
-> > the `<revision>...` is incorrect and should be `<upstream> <branch>`
-> > instead. But it's not worth a new iteration to fix this.
+> > +SYNOPSIS
+> > +--------
+> > +[verse]
+> > +'git replay' --onto <newbase> <oldbase> <branch> # EXPERIMENTAL
 >
-> It was actually:
+> I still think that the following would serve us better:
 >
-> 'git replay' --onto <newbase> <oldbase> <branch> # EXPERIMENTAL
-
-Right.
-
-> > >     ++
-> > >     ++DESCRIPTION
-> > >     ++-----------
-> > >     ++
-> > >     ++Takes a range of commits and replays them onto a new location.
-> > >     ++
-> > >     ++THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
-> > >     ++
-> > >     ++OPTIONS
-> > >     ++-------
-> > >     ++
-> > >     ++--onto <newbase>::
-> > >     ++  Starting point at which to create the new commits.  May be a=
-ny
-> > >     ++  valid commit, and not just an existing branch name.
-> > >     ++
-> >
-> > Traditionally, this would be a place to describe the `<revision>` argu=
-ment
-> > (or, in this patch, to reflect the current state of `builtin/replay.c`=
-,
-> > the `<upstream> <branch>` arguments instead).
+>         [verse]
+>         (EXPERIMENTAL!) 'git replay' --onto <newbase> <oldbase> <branch>
 >
-> I have fixed that in the v7 I just sent with the following:
->
-> +SYNOPSIS
-> +--------
-> +[verse]
-> +'git replay' --onto <newbase> <oldbase> <branch> # EXPERIMENTAL
+> But if nobody else feels as strongly, I won't bring this up again.
 
-I still think that the following would serve us better:
+For the tests to pass, the SYNOPSIS should be the same as the first
+line of the `git replay -h` output. After this series it is:
 
-	[verse]
-	(EXPERIMENTAL!) 'git replay' --onto <newbase> <oldbase> <branch>
+usage: git replay ([--contained] --onto <newbase> | --advance
+<branch>) <revision-range>... # EXPERIMENTAL
 
-But if nobody else feels as strongly, I won't bring this up again.
+As the usage is supposed to describe how the command should be used, I
+think it makes sense for "EXPERIMENTAL" to be in a shell comment after
+the command.
 
-Ciao,
-Johannes
-
---8323328-1870175547-1700124322=:482--
+Thanks,
+Christian.
