@@ -1,89 +1,88 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NP5n2QJV"
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 363B8187
-	for <git@vger.kernel.org>; Thu, 16 Nov 2023 04:06:46 -0800 (PST)
-Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2c594196344so9104361fa.3
-        for <git@vger.kernel.org>; Thu, 16 Nov 2023 04:06:46 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dIl5JJHQ"
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1E1F19D
+	for <git@vger.kernel.org>; Thu, 16 Nov 2023 07:05:23 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id ffacd0b85a97d-32f78dcf036so1311554f8f.0
+        for <git@vger.kernel.org>; Thu, 16 Nov 2023 07:05:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700136404; x=1700741204; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2U6g+KZu0ruRnBEISqzHkc6YhRbciHHO+Xuo7uTYa40=;
-        b=NP5n2QJVFmDZp+OxP4fVTHMmWF7HG8wncIDBRzoOGcRq8WXuMUrzkfeQY2JuJa9+uT
-         ErCeHJbz//iaLRs1PgXl7OIe2jzyn29ywki/x786+BV2GQV1XBLbBax7NQUw4PfLx2NP
-         UNA3ABbgP22SDJX8926Klb/yYy8HYcu1KoBViKF/dpvmbwzLK8Jtz/9Md1rA426F96jg
-         UBoted5hVsRbHftcBjkS7TfDFZb/XnuyBhkTi6usBAyD1Wb15QzWYmMs7nXEgWXTx5YJ
-         6EHOKbp1fxaR+Nr2uedfM8UYipCv5lo5cRnPC7Hhyao5E55fcrzoKtXXcvwpET8//nkL
-         CFCQ==
+        d=gmail.com; s=20230601; t=1700147122; x=1700751922; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=LfqNC+OD21KMb+qmibQ3nwyX/pZPCxczZxX7BAiCOdk=;
+        b=dIl5JJHQYA3kASGXhyamBel16XIdGzX3kTibdL/nbodyDBDMlIkQThVK0wUkTByixB
+         iKGDYcyJMBrfLfSQewwpwaQ8hD4Vp67ytMhPD24LykyOc4NiDI2IAqrhlNUKcTyaZXs2
+         FXPH5xBtXHNwi2+Myk0BjfYj/3DoGwFIwcVEHuqejzsRzCbk6taFXdvMKvn99KOGmRzc
+         KjKEOkEHuQ9F89wn19qpbOsiA0QsmTi7Gk7rgJmxuj8NpZWWee4vMJFpAvyQoYdUqFGU
+         E25YFC3hFQ7k5RIibSQCHvNMdm3Pwh4Vjl7kn9d0KFMCGIbSoAOFzcvRKvu1ITkoLMHc
+         I96Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700136404; x=1700741204;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2U6g+KZu0ruRnBEISqzHkc6YhRbciHHO+Xuo7uTYa40=;
-        b=llYS5B/I1sFd+2rwvVmFclXOTV0ld8JotdKJH62AVGeV90lHAo5M9xi1Z4dmU8oWM2
-         M2JzHHRLZ7cKVGp/9cVIm9uRFu6gisEgSRGWQx5CsgYKw733XL7yqpMN4jzNSCktF2vB
-         1SWjmFg5yjD2oWIdwGb30VZnhvIGh3aHbdBopYzslN7rBmHXI6kL49PqD+1BKeG/H3kK
-         uLseHvCb0yqAIbVOx88WhE03JAexkuxv0C6QMhxch0V7uWT19nKLBugKtv7ncYxy8VcN
-         QUGOUd7hoIONpdVKPjnAKGNzJeSehiIJ4in+4XM7pN8/1kEOAEpfZoIzoklNfjskkKaR
-         V9rw==
-X-Gm-Message-State: AOJu0YwvqP4Uozp+OG/5rQ/WMm5tPd323moGVY9jjrl91fHPJsfEQ0HJ
-	Z6faihcw7i/ndrmX6gW9S4E=
-X-Google-Smtp-Source: AGHT+IGgAqTox9Jqh2YJpOi38Cg3KAD5wjFe7zZgASlKGiX1V4Jo7tZGK7QlreJdpYDSCSEPJ5173Q==
-X-Received: by 2002:ac2:4831:0:b0:50a:72e6:96c7 with SMTP id 17-20020ac24831000000b0050a72e696c7mr1510081lft.3.1700136404176;
-        Thu, 16 Nov 2023 04:06:44 -0800 (PST)
-Received: from localhost.localdomain (ti0036q160-3744.bb.online.no. [95.34.202.203])
-        by smtp.gmail.com with ESMTPSA id v23-20020a05651203b700b0050097974ee0sm1938973lfp.224.2023.11.16.04.06.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Nov 2023 04:06:43 -0800 (PST)
-From: =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
-To: gitgitgadget@gmail.com
-Cc: code@khaugsbakk.name,
-	git@vger.kernel.org,
-	oystwa@gmail.com,
-	ps@pks.im,
-	vdye@github.com
-Subject: Re: [PATCH v2 02/10] ref-filter.h: add max_count and omit_empty to ref_format
-Date: Thu, 16 Nov 2023 13:06:27 +0100
-Message-Id: <20231116120627.3029-1-oystwa@gmail.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <adac101bc6022d5477371d6a94225f38da7fffee.1699991638.git.gitgitgadget@gmail.com>
-References: <adac101bc6022d5477371d6a94225f38da7fffee.1699991638.git.gitgitgadget@gmail.com>
+        d=1e100.net; s=20230601; t=1700147122; x=1700751922;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LfqNC+OD21KMb+qmibQ3nwyX/pZPCxczZxX7BAiCOdk=;
+        b=WMivX/xMpvLgTI3RP8Fx/3yMqEg78MPL9TtYGUhlKASXfthER3MaWaleHdyzxKh1wS
+         1tS/5rBiJLmBR53n9yeQktdt+gjDk4ipX8TRYChPzl8YgrhdkC8ppzF6R0H3D2ILW9Ux
+         UkrWGJC3iW2mmz/KbCvvkKWPnftdr8j5ojbrDrlEzRvJIGXI8MFvfJGlb9yyV3H976Ud
+         ruy9F5X1IS4XE/2Go1ypX5xcS6+xLxNWVNM8IdhVdcgmGBbCKuzMxlopwhfgTUTHoZ6z
+         roMlqyf0Nzm+2XQ8qil1cmCWhyXU56B+J7/05IromUr0s7woLUG60b5gwN0XcVDA7l7k
+         3yJw==
+X-Gm-Message-State: AOJu0Yyt+Gl8flLS6sSeMf7SojfuoJ4Lm/yRTu6mGNIRMYehwjbIpfuw
+	HcVyFM5/NLAxulqKPMzmY14=
+X-Google-Smtp-Source: AGHT+IE7aqj1dh6FqvcFs088RPXE1swgnyMFJs2dPnErHqX7aSuQRL5jm+Rswx/iiJ3GOCyxSEydWw==
+X-Received: by 2002:a05:6000:2ce:b0:32f:811c:dfc4 with SMTP id o14-20020a05600002ce00b0032f811cdfc4mr2507027wry.4.1700147121888;
+        Thu, 16 Nov 2023 07:05:21 -0800 (PST)
+Received: from [192.168.1.212] ([84.64.93.134])
+        by smtp.gmail.com with ESMTPSA id j16-20020a056000125000b0032f983f7306sm13846613wrx.78.2023.11.16.07.05.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 16 Nov 2023 07:05:21 -0800 (PST)
+Message-ID: <4d5f5b5f-d30e-4edc-976e-f11e837545f6@gmail.com>
+Date: Thu, 16 Nov 2023 15:05:19 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+From: phillip.wood123@gmail.com
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: Feasibility of folding `unit-tests` into `make test`, was Re:
+ [PATCH] ci: avoid running the test suite _twice_
+Content-Language: en-US
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Josh Steadmon <steadmon@google.com>
+Cc: Jeff King <peff@peff.net>,
+ Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
+References: <pull.1613.git.1699894837844.gitgitgadget@gmail.com>
+ <20231113184909.GB3838361@coredump.intra.peff.net>
+ <ZVU4EVcj0MDrSNcG@google.com> <850ea42c-f103-68d5-896b-9120e2628686@gmx.de>
+In-Reply-To: <850ea42c-f103-68d5-896b-9120e2628686@gmx.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Victoria Dye <vdye@github.com> writes:
+On 16/11/2023 08:42, Johannes Schindelin wrote:
+> On Wed, 15 Nov 2023, Josh Steadmon wrote:
+>> On 2023.11.13 13:49, Jeff King wrote:
+>> We could bundle all the unit tests into a single shell script, but then
+>> we lose parallelization and add hoops to jump through to determine what
+>> breaks. Or we could autogenerate a corresponding shell script to run
+>> each individual unit test, but that seems gross. Of course, these are
+>> hypothetical concerns for now, since we only have a single unit test at
+>> the moment.
+> 
+> I totally agree with you, Josh, that it makes little sense to
+> try to contort the unit tests to be run in the same `prove` run as the
+> regression tests that need to be invoked so totally differently.
 
-> diff --git a/ref-filter.h b/ref-filter.h
-> index 1524bc463a5..d87d61238b7 100644
-> --- a/ref-filter.h
-> +++ b/ref-filter.h
-> @@ -92,6 +92,11 @@ struct ref_format {
->  
->  	/* List of bases for ahead-behind counts. */
->  	struct string_list bases;
-> +
-> +	struct {
-> +		int max_count;
-> +		int omit_empty;
-> +	} array_opts;
->  };
+FWIW that's my feeling too. It makes sense for "make test" to run the 
+unit tests, but wrapping the unit tests in one or more shell scripts 
+adds unnecessary complexity.
 
-What the benefit of having them in a nested struct is compared to just
-two distinct members?
+Best Wishes
 
-Regardless this is the kind of deduplication I wanted to achieve when I
-added --omit-empty, but never did. Either way, I meant to ack this in
-the last round never got around to it. Nice work.
-
-Acked-by: Øystein Walle <oystwa@gmail.com>
-
-Øsse
+Phillip
