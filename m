@@ -1,97 +1,96 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SOp/6TNL"
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B686ED56
-	for <git@vger.kernel.org>; Fri, 17 Nov 2023 05:15:19 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id ffacd0b85a97d-3316c6e299eso239760f8f.1
-        for <git@vger.kernel.org>; Fri, 17 Nov 2023 05:15:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700226917; x=1700831717; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=KS3NzRUtkzVotQ+FbYCyTN9ZkLd2FaNxwLPaMyKneLw=;
-        b=SOp/6TNLMLE+FiYU4veRB0zRdzuGEyw9Hdi0sH9fY4aIF4u/u+4d+LTaIZuipqbOCD
-         0LkEKzVpP6nx+hqhA9ZR5znCw+IZpEUnk4Q4OvBrPV5SAJy9zPn2j94UgDDhFvrsF6a6
-         Ce693l6TuSIUsuDpy3iTwkdrut4HUtv6PcRKbzpV7Q5UHSdPvkWqbgSt1Vy9BCaMfcN/
-         rGyGtRRiV+sK9no29dNmxqJTsLl3PI3D4o6Gc39kj5ek2ahphKBTiStSjSrVYUzc7qFK
-         WUT9cQyF1+zkdon9ZRj3XdxChcFtgXN7uGh5zzNpcjfscvONiCyNL5vFbmiqfi+YqaMK
-         S7nQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700226917; x=1700831717;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KS3NzRUtkzVotQ+FbYCyTN9ZkLd2FaNxwLPaMyKneLw=;
-        b=CG9yKlzid+W4bXkA+5z6VloCrJTUfpAW2WwbxvS6jFFjBd+Tn+FXgDgxaM5wArLP3l
-         8nb0jzkJcGPMfRLqlF0V5vzmIn6vN2mfdENBnzzCwzz7P54qeMrrRXngL88+tiRhzeJ7
-         SfIhOOg9HczmeZ8KCrkHLmkJiSbu75uTcSXq+bRnrOs76seLhJS6SQdBKvPN6AnL2cJs
-         XzCMH5I3PugqhfEyoaKEB8PDt4iup9C/xC4J14lfmlPeYe1N9jNjQHwvN550bmK9+k1/
-         xacJ84zeKKZsAoz08KUyEC3KE89kEaYc8eleTFbBpKKgu9ua/jU8LXFJGZ9r5P0iZf4M
-         2s0Q==
-X-Gm-Message-State: AOJu0YwKWYlTBuyop6x+HCR9wT+uwbzuIXcECkSnZKNRd7yuG8fs9xfz
-	1alN/bxP7mQsQu0kDFTBF2wEr44ISNs=
-X-Google-Smtp-Source: AGHT+IF/Bpx8SzsQfcikeImOX8FM4hwcYzrrpR1HfTFAJomivQKeqWtjpvrfWd6AFsZtZ/Ciyex9Wg==
-X-Received: by 2002:a5d:4e85:0:b0:32f:7967:aa4d with SMTP id e5-20020a5d4e85000000b0032f7967aa4dmr13809911wru.68.1700226917199;
-        Fri, 17 Nov 2023 05:15:17 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x11-20020a5d60cb000000b00331697bbcf5sm2103756wrt.94.2023.11.17.05.15.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Nov 2023 05:15:16 -0800 (PST)
-Message-ID: <pull.1614.git.1700226915859.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 17 Nov 2023 13:15:15 +0000
-Subject: [PATCH] Fix a typo in `each_file_in_pack_dir_fn()`'s declaration
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="nbRjYz25"
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C03CD4B
+	for <git@vger.kernel.org>; Fri, 17 Nov 2023 05:25:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+	t=1700227544; x=1700832344; i=johannes.schindelin@gmx.de;
+	bh=euWXoNdkxang9MXko+ZL6mPr93QIU7+GJ0FHqGcdZWg=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject;
+	b=nbRjYz256KhYEcMk3t81mZy8Emm6NeO3vtGTNi9gxOxDM07OEsgFRpyXgfiP53y9
+	 DOv7hiKaOaBeq3gcjnEF9IKJI1sqxyHmqKPHMvm+Y26KtzEFvBf7qR8J4tQQzr02x
+	 VVfLGxmTAEGpfX+PWfznYSTuRRQokyPtQBt3koXf8DYtDrxCshWeAEbetWUWfZ+Fy
+	 Coqy7t0xtGmN+VnOyxvKN5/KrBUPAtmNjw2VpWgTNOU0Y3oSIIJOrUFCL/0+I8zbr
+	 tfWNoBAyDjsynnqz+/d2JRPgec0qAky5ZeAeIr3y96UFr7axeevQsscQWTaq5E4ac
+	 j/HfOBecsb8NHSJw6g==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.215.165]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MvK0R-1rLN4z3hD7-00rEHQ; Fri, 17
+ Nov 2023 14:25:44 +0100
+Date: Fri, 17 Nov 2023 14:25:43 +0100 (CET)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: git@vger.kernel.org
+cc: Matt Burke <spraints@gmail.com>, Victoria Dye <vdye@github.com>, 
+    =?UTF-8?Q?Matthias_A=C3=9Fhauer?= <mha1993@live.de>
+Subject: Migration of git-scm.com to a static web site: ready for
+ review/testing
+Message-ID: <6f7d20b4-a725-0ef9-f6d3-ff2810da9e7a@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: multipart/mixed; boundary="8323328-1617332796-1700227544=:482"
+X-Provags-ID: V03:K1:2YFZA6Zn8v8HMzNm7znwrn+4l4MLNx5uiv+pkFXpxfoQnWEpyhZ
+ p6bal394tid/F1jzHfuQ/qjaknN72NXZZ4mCY0Wy7wid1vY3hB8YnvVTBhV9f1IXl6rgp3f
+ NAmTdbi3010i4F9DJd0IF+z7gDW/zJio50jM5wTnr6i6E4pefx+MRUjRCDRbVKMKNdVzCPm
+ bl5HyUW570EmygCmPt9Ww==
+UI-OutboundReport: notjunk:1;M01:P0:U2bWWknUOvk=;4WLKCWUSlx0nMFK9N/x1hKzC7vG
+ TtjAqWp04Sra0TVsz/Wm5HkMuQKiNn8pf1eSNNKhtW6smLJwz5BOyWl9h39K7cDj4fzkbiZcV
+ x+0/QB7EMEO4ZuMabnrCAfcwyQBmFpnaTqRg6zKsA7aeMn1nfvKjbtCFmWlHpXwudcqr4TZq0
+ Aks8kkuanBlE/rQkaducE8LbfDVQLdFejqSVgG33QC2M84pvldg3YK6rrEqgKtT8HFwgO/Ynz
+ rilpb+syfBRndA2L1PUfgc8tIjoJBCbCiFC2UDZh/m9jm3dsOwSuN7j1vTOGR71pgWW/s/yLk
+ 2PiEWZ5WBXxS7HdLVvKUQ8y5l7L++tYYbhdJruE2DvlvhKBOlvxPVGPO2TaTQJ2NKBogmzLJz
+ SNBRxjFfxjOotYmn76+ilHKsTRHE3Q8vmhtaIo2GIgTBBjbLqxJ6EtVs/V+jhn88AD28UK15U
+ ZUxNV7u3fgnf+f5pPTHaFoP3QTIxNS6I+TGB0P+pKwUfAqA+e3g1QmFA5RIR7w8L8vDAnMuD8
+ wZ3bdkmahizzRqqmbdJrHg+sg9zTSim96yXDp3PAVDtW+KXZ/eifH/4K3uAqp6fPhVdlwXYfz
+ eTUQfTWnDF2o6Ma7BFJ+UER8bmwrhPYTbYSWig8c38hDPmtPF2+gt62FZz096bAFCqkiHkzg4
+ aniapm/wxqUh4tzptnj29KIm9vCrSMrkqhfqqiuwM3g0KmyN+7WET84tX5r+1QH017cUleKfw
+ Uj6kT/ObuWh2IciPv0d+FAJajQfDruzfAddoP5KazPq6XRHzSu9dWKXURXQexnyJ/s8ONwNB7
+ QrO+6chWK9OQk+5Rc6WYgcD9duW9Dl36YIK0USHGNQz3eNpgFmaY5xd1mG4QM5VgCdj3cF0aD
+ UV3dOtT7yuKSJ6l47UwOAFoSWhXfMAVvvtj3PhPv41ENLz/Fd4coG+06f8OMLj5a+P7mQ15hu
+ /3WMnQMFj2S4AE0gVJAOZETeq8A=
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-One parameter is called `file_pach`. On the face of it, this looks as if
-it was supposed to talk about a `path` instead of a `pach`.
+--8323328-1617332796-1700227544=:482
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-However, looking at the way this callback is called, it gets fed the
-`d_name` from a directory entry, which provides just the file name, not
-the full path. Therefore, let's fix this by calling the parameter
-`file_name` instead.
+Hi,
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    packfile.h: fix a typo
-    
-    I stumbled over this typo yesterday. Nothing about this patch is urgent,
-    of course, it can easily wait until v2.43.0 is released.
+the idea of migrating https://git-scm.com/ from a Rails app to a static
+site has been discussed several times on this list in the past.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1614%2Fdscho%2Fpackfile.h-typo-fix-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1614/dscho/packfile.h-typo-fix-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1614
+Thanks to the heroic, multi-year efforts of Matt Burke, Victoria Dye and
+Matthias A=C3=9Fhauer, there is now a Pull Request, ready for review:
+https://github.com/git/git-scm.com/pull/1804
 
- packfile.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+This Pull Request is not for the faint of heart, mainly because of the
+sheer amount of generated pages that are committed to the repository (such
+as the book, the manual pages, etc, a design decision necessary to run
+this as a static website).
 
-diff --git a/packfile.h b/packfile.h
-index c3692308b8d..28c8fd3e39a 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -54,7 +54,7 @@ const char *pack_basename(struct packed_git *p);
- struct packed_git *parse_pack_index(unsigned char *sha1, const char *idx_path);
- 
- typedef void each_file_in_pack_dir_fn(const char *full_path, size_t full_path_len,
--				      const char *file_pach, void *data);
-+				      const char *file_name, void *data);
- void for_each_file_in_pack_dir(const char *objdir,
- 			       each_file_in_pack_dir_fn fn,
- 			       void *data);
+These pages are generated by GitHub workflows that are intended to run on
+a schedule, and the scripts that generate them are part of the Pull
+Request. For that reason, I do not consider it necessary to review those
+generated pages, those reviews have been done in the upstream sources from
+which the pages were generated.
 
-base-commit: cfb8a6e9a93adbe81efca66e6110c9b4d2e57169
--- 
-gitgitgadget
+At this point, the patches are fairly robust and I am mainly hoping for
+help with verifying that the static site works as intended, that existing
+links will continue to work with the new site (essentially, find obscure
+references to the existing website, then insert `git.github.io/` in the
+URL and verify that it works as intended).
+
+To that end, I deployed this branch to GitHub Pages so that anyone
+interested (hopefully many!) can have a look at
+https://git.github.io/git-scm.com/ and compare to the existing
+https://git-scm.com/.
+
+Thank you,
+Johannes
+
+--8323328-1617332796-1700227544=:482--
