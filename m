@@ -1,96 +1,113 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="nbRjYz25"
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C03CD4B
-	for <git@vger.kernel.org>; Fri, 17 Nov 2023 05:25:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-	t=1700227544; x=1700832344; i=johannes.schindelin@gmx.de;
-	bh=euWXoNdkxang9MXko+ZL6mPr93QIU7+GJ0FHqGcdZWg=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject;
-	b=nbRjYz256KhYEcMk3t81mZy8Emm6NeO3vtGTNi9gxOxDM07OEsgFRpyXgfiP53y9
-	 DOv7hiKaOaBeq3gcjnEF9IKJI1sqxyHmqKPHMvm+Y26KtzEFvBf7qR8J4tQQzr02x
-	 VVfLGxmTAEGpfX+PWfznYSTuRRQokyPtQBt3koXf8DYtDrxCshWeAEbetWUWfZ+Fy
-	 Coqy7t0xtGmN+VnOyxvKN5/KrBUPAtmNjw2VpWgTNOU0Y3oSIIJOrUFCL/0+I8zbr
-	 tfWNoBAyDjsynnqz+/d2JRPgec0qAky5ZeAeIr3y96UFr7axeevQsscQWTaq5E4ac
-	 j/HfOBecsb8NHSJw6g==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.215.165]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MvK0R-1rLN4z3hD7-00rEHQ; Fri, 17
- Nov 2023 14:25:44 +0100
-Date: Fri, 17 Nov 2023 14:25:43 +0100 (CET)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: git@vger.kernel.org
-cc: Matt Burke <spraints@gmail.com>, Victoria Dye <vdye@github.com>, 
-    =?UTF-8?Q?Matthias_A=C3=9Fhauer?= <mha1993@live.de>
-Subject: Migration of git-scm.com to a static web site: ready for
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="thjh5+eZ"
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5AD2C2
+	for <git@vger.kernel.org>; Fri, 17 Nov 2023 08:26:44 -0800 (PST)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4B4A41D7C8F;
+	Fri, 17 Nov 2023 11:26:42 -0500 (EST)
+	(envelope-from tmz@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=date:from
+	:to:cc:subject:message-id:references:mime-version:content-type
+	:in-reply-to; s=sasl; bh=Zy2Zrxy8SzWps9qu/Wxz5JgmEOLE8HlcFyNqJm7
+	RrUQ=; b=thjh5+eZCA1G7l66n8aECV1dKiyLn7Y8lCFai2AwxZDpcLvp34axB++
+	j4xjBMCYjJrMcyCqXft1Owt227YRJ89rubO1RWwwxPUIsq+s4QT8vYRro4Dp66Wk
+	57j0wBvkQxUS2gi9vTYq6sYcjqObln+NvTfIV5ak7iJIqovyfewk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 42EE21D7C8E;
+	Fri, 17 Nov 2023 11:26:42 -0500 (EST)
+	(envelope-from tmz@pobox.com)
+Received: from pobox.com (unknown [108.15.224.39])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A7BA11D7C8C;
+	Fri, 17 Nov 2023 11:26:41 -0500 (EST)
+	(envelope-from tmz@pobox.com)
+Date: Fri, 17 Nov 2023 11:26:40 -0500
+From: Todd Zullinger <tmz@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: git@vger.kernel.org, Matt Burke <spraints@gmail.com>,
+	Victoria Dye <vdye@github.com>,
+	Matthias =?iso-8859-1?Q?A=DFhauer?= <mha1993@live.de>
+Subject: Re: Migration of git-scm.com to a static web site: ready for
  review/testing
-Message-ID: <6f7d20b4-a725-0ef9-f6d3-ff2810da9e7a@gmx.de>
+Message-ID: <ZVeUQEG5jIzKbvmT@pobox.com>
+References: <6f7d20b4-a725-0ef9-f6d3-ff2810da9e7a@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1617332796-1700227544=:482"
-X-Provags-ID: V03:K1:2YFZA6Zn8v8HMzNm7znwrn+4l4MLNx5uiv+pkFXpxfoQnWEpyhZ
- p6bal394tid/F1jzHfuQ/qjaknN72NXZZ4mCY0Wy7wid1vY3hB8YnvVTBhV9f1IXl6rgp3f
- NAmTdbi3010i4F9DJd0IF+z7gDW/zJio50jM5wTnr6i6E4pefx+MRUjRCDRbVKMKNdVzCPm
- bl5HyUW570EmygCmPt9Ww==
-UI-OutboundReport: notjunk:1;M01:P0:U2bWWknUOvk=;4WLKCWUSlx0nMFK9N/x1hKzC7vG
- TtjAqWp04Sra0TVsz/Wm5HkMuQKiNn8pf1eSNNKhtW6smLJwz5BOyWl9h39K7cDj4fzkbiZcV
- x+0/QB7EMEO4ZuMabnrCAfcwyQBmFpnaTqRg6zKsA7aeMn1nfvKjbtCFmWlHpXwudcqr4TZq0
- Aks8kkuanBlE/rQkaducE8LbfDVQLdFejqSVgG33QC2M84pvldg3YK6rrEqgKtT8HFwgO/Ynz
- rilpb+syfBRndA2L1PUfgc8tIjoJBCbCiFC2UDZh/m9jm3dsOwSuN7j1vTOGR71pgWW/s/yLk
- 2PiEWZ5WBXxS7HdLVvKUQ8y5l7L++tYYbhdJruE2DvlvhKBOlvxPVGPO2TaTQJ2NKBogmzLJz
- SNBRxjFfxjOotYmn76+ilHKsTRHE3Q8vmhtaIo2GIgTBBjbLqxJ6EtVs/V+jhn88AD28UK15U
- ZUxNV7u3fgnf+f5pPTHaFoP3QTIxNS6I+TGB0P+pKwUfAqA+e3g1QmFA5RIR7w8L8vDAnMuD8
- wZ3bdkmahizzRqqmbdJrHg+sg9zTSim96yXDp3PAVDtW+KXZ/eifH/4K3uAqp6fPhVdlwXYfz
- eTUQfTWnDF2o6Ma7BFJ+UER8bmwrhPYTbYSWig8c38hDPmtPF2+gt62FZz096bAFCqkiHkzg4
- aniapm/wxqUh4tzptnj29KIm9vCrSMrkqhfqqiuwM3g0KmyN+7WET84tX5r+1QH017cUleKfw
- Uj6kT/ObuWh2IciPv0d+FAJajQfDruzfAddoP5KazPq6XRHzSu9dWKXURXQexnyJ/s8ONwNB7
- QrO+6chWK9OQk+5Rc6WYgcD9duW9Dl36YIK0USHGNQz3eNpgFmaY5xd1mG4QM5VgCdj3cF0aD
- UV3dOtT7yuKSJ6l47UwOAFoSWhXfMAVvvtj3PhPv41ENLz/Fd4coG+06f8OMLj5a+P7mQ15hu
- /3WMnQMFj2S4AE0gVJAOZETeq8A=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6f7d20b4-a725-0ef9-f6d3-ff2810da9e7a@gmx.de>
+X-Pobox-Relay-ID:
+ 1732B44E-8566-11EE-BAFC-25B3960A682E-09356542!pb-smtp2.pobox.com
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hello,
 
---8323328-1617332796-1700227544=:482
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Johannes Schindelin wrote:
+> At this point, the patches are fairly robust and I am mainly hoping for
+> help with verifying that the static site works as intended, that existing
+> links will continue to work with the new site (essentially, find obscure
+> references to the existing website, then insert `git.github.io/` in the
+> URL and verify that it works as intended).
+> 
+> To that end, I deployed this branch to GitHub Pages so that anyone
+> interested (hopefully many!) can have a look at
+> https://git.github.io/git-scm.com/ and compare to the existing
+> https://git-scm.com/.
 
-Hi,
+This is nice.  Thanks to all for working on it!
 
-the idea of migrating https://git-scm.com/ from a Rails app to a static
-site has been discussed several times on this list in the past.
+For checking links, a tool like linkcheker[1] is very handy.
+This is run against the local docs in the Fedora package
+builds to catch broken links.
 
-Thanks to the heroic, multi-year efforts of Matt Burke, Victoria Dye and
-Matthias A=C3=9Fhauer, there is now a Pull Request, ready for review:
-https://github.com/git/git-scm.com/pull/1804
+I ran it against the test site and it turned up _a lot_ of
+broken links.  It's enough that saving and sharing the
+output is probably more work than having someone familiar
+with the migration give it a run directly.
 
-This Pull Request is not for the faint of heart, mainly because of the
-sheer amount of generated pages that are committed to the repository (such
-as the book, the manual pages, etc, a design decision necessary to run
-this as a static website).
+I ran `linkchecker https://git.github.io/git-scm.com/` and
+the eventual result was:
 
-These pages are generated by GitHub workflows that are intended to run on
-a schedule, and the scripts that generate them are part of the Pull
-Request. For that reason, I do not consider it necessary to review those
-generated pages, those reviews have been done in the upstream sources from
-which the pages were generated.
+  That's it. 13459 links in 14126 URLs checked. 0 warnings found. 6763 errors found.
+  Stopped checking at 2023-11-17 11:11:17-004 (1 hour, 19 minutes)
 
-At this point, the patches are fairly robust and I am mainly hoping for
-help with verifying that the static site works as intended, that existing
-links will continue to work with the new site (essentially, find obscure
-references to the existing website, then insert `git.github.io/` in the
-URL and verify that it works as intended).
+The default output reports failures in a format like this:
 
-To that end, I deployed this branch to GitHub Pages so that anyone
-interested (hopefully many!) can have a look at
-https://git.github.io/git-scm.com/ and compare to the existing
-https://git-scm.com/.
+  URL        `ch00/ch10-git-internals'
+  Name       `Git Internals'
+  Parent URL https://git.github.io/git-scm.com/book/tr/v2/Ek-b%C3%B6l%C3%BCm-C:-Git-Commands-Plumbing-Commands/, line 106, col 1318
+  Real URL   https://git.github.io/git-scm.com/book/tr/v2/Ek-b%C3%B6l%C3%BCm-C:-Git-Commands-Plumbing-Commands/ch00/ch10-git-internals
+  Check time 3.303 seconds
+  Size       1KB
+  Result     Error: 404 Not Found
 
-Thank you,
-Johannes
+LinkChecker can be run in a mode which directs the failures
+to a file.  That would be more like:
 
---8323328-1617332796-1700227544=:482--
+  linkchecker -F text/utf_8//tmp/git-scm-check.txt https://git.github.io/git-scm.com/
+
+The format of the -F option is TYPE[/ENCODING][/FILENAME]
+where TYPE can be text, html, sql, csv, gml, dot, xml,
+sitemap, none or failures.  The failures type is much more
+terse:
+
+  1 "('https://git.github.io/git-scm.com/book/en/v2/Appendix-C:-Git-Commands-Plumbing-Commands/', 'https://git.github.io/git-scm.com/book/en/v2/Appendix-C:-Git-Commands-Plumbing-Commands/ch00/ch10-git-internals')"
+
+I found the text type much more helpful in quickly spot
+checking some of the failures since it includes the text
+string used for the link.
+
+Running it against a local directory of the content would be
+a lot faster, if that's an option.  It's also worth bumping
+the default number of threads from 10 to increase the speed
+a bit.
+
+[1] https://linkchecker.github.io/linkchecker/
+
+-- 
+Todd
