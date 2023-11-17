@@ -1,22 +1,20 @@
 Authentication-Results: smtp.subspace.kernel.org; dkim=none
-X-Greylist: delayed 470 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 17 Nov 2023 12:33:11 PST
-Received: from mail.zombino.com (c3.zombino.com [IPv6:2a01:4f8:c012:9cdf::1])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33D01E5
-	for <git@vger.kernel.org>; Fri, 17 Nov 2023 12:33:11 -0800 (PST)
+X-Greylist: delayed 495 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 17 Nov 2023 12:33:35 PST
+Received: from mail.zombino.com (c3.zombino.com [91.107.222.152])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69459D4D
+	for <git@vger.kernel.org>; Fri, 17 Nov 2023 12:33:34 -0800 (PST)
 Received: from debian.desktop.box (port-92-195-213-20.dynamic.as20676.net [92.195.213.20])
-	by mail.zombino.com (Postfix) with ESMTPS id 83B118189C;
-	Fri, 17 Nov 2023 20:33:09 +0000 (UTC)
+	by mail.zombino.com (Postfix) with ESMTPS id E48B781895;
+	Fri, 17 Nov 2023 20:25:17 +0000 (UTC)
 Received: by debian.desktop.box (Postfix, from userid 1000)
-	id 0B6376019B; Fri, 17 Nov 2023 21:33:08 +0100 (CET)
+	id 9ABC56019B; Fri, 17 Nov 2023 21:25:17 +0100 (CET)
 From: Adam Majer <adamm@zombino.com>
 To: git@vger.kernel.org
 Cc: Adam Majer <adamm@zombino.com>
 Subject: [PATCH] setup: recognize bare repositories with packed-refs
-Date: Fri, 17 Nov 2023 21:32:53 +0100
-Message-ID: <20231117203253.21143-1-adamm@zombino.com>
+Date: Fri, 17 Nov 2023 21:25:13 +0100
+Message-ID: <20231117202513.20604-1-adamm@zombino.com>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231117202513.20604-1-adamm@zombino.com>
-References: <20231117202513.20604-1-adamm@zombino.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -25,11 +23,12 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In a garbage collected bare git repository, the refs/ subdirectory is
-empty.  In use-cases when such a repository is directly added into
-another repository, it no longer is detected as valid. Git doesn't
-preserve empty paths so refs/ subdirectory is not present. Simply
-creating an empty refs/ subdirectory fixes this problem.
+When a garbage collected bare git repository is added to another git
+repository, the refs/ subdirectory is empty.  In case-cases when such a
+repository is added into another repository directly, it no longer is
+detected as a valid. Git doesn't preserve empty paths so refs/
+subdirectory is not present in parent git.  Simply creating an empty
+refs/ subdirectory fixes this problem.
 
 Looking more carefully, there are two backends to handle various refs in
 git -- the files backend that uses refs/ subdirectory and the
