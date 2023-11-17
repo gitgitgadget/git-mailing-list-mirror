@@ -1,113 +1,254 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="thjh5+eZ"
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5AD2C2
-	for <git@vger.kernel.org>; Fri, 17 Nov 2023 08:26:44 -0800 (PST)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4B4A41D7C8F;
-	Fri, 17 Nov 2023 11:26:42 -0500 (EST)
-	(envelope-from tmz@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=date:from
-	:to:cc:subject:message-id:references:mime-version:content-type
-	:in-reply-to; s=sasl; bh=Zy2Zrxy8SzWps9qu/Wxz5JgmEOLE8HlcFyNqJm7
-	RrUQ=; b=thjh5+eZCA1G7l66n8aECV1dKiyLn7Y8lCFai2AwxZDpcLvp34axB++
-	j4xjBMCYjJrMcyCqXft1Owt227YRJ89rubO1RWwwxPUIsq+s4QT8vYRro4Dp66Wk
-	57j0wBvkQxUS2gi9vTYq6sYcjqObln+NvTfIV5ak7iJIqovyfewk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 42EE21D7C8E;
-	Fri, 17 Nov 2023 11:26:42 -0500 (EST)
-	(envelope-from tmz@pobox.com)
-Received: from pobox.com (unknown [108.15.224.39])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A7BA11D7C8C;
-	Fri, 17 Nov 2023 11:26:41 -0500 (EST)
-	(envelope-from tmz@pobox.com)
-Date: Fri, 17 Nov 2023 11:26:40 -0500
-From: Todd Zullinger <tmz@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: git@vger.kernel.org, Matt Burke <spraints@gmail.com>,
-	Victoria Dye <vdye@github.com>,
-	Matthias =?iso-8859-1?Q?A=DFhauer?= <mha1993@live.de>
-Subject: Re: Migration of git-scm.com to a static web site: ready for
- review/testing
-Message-ID: <ZVeUQEG5jIzKbvmT@pobox.com>
-References: <6f7d20b4-a725-0ef9-f6d3-ff2810da9e7a@gmx.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AB6ECJEl"
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81079A5
+	for <git@vger.kernel.org>; Fri, 17 Nov 2023 09:47:51 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-3316ad2bee5so519660f8f.1
+        for <git@vger.kernel.org>; Fri, 17 Nov 2023 09:47:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1700243269; x=1700848069; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=04FK1noSSnxP747cHrA/hwHn2NonOwENeJ6ayp3e+48=;
+        b=AB6ECJElCv5eJKIu9C86miss+FHAvrpdIsjr3r8DRVW6GzRWRFdDfJmqzM3K3CrSTh
+         aw5XasTsS7svglLL95GgAQaS7PWDqxr/iV6XMVxjoVErouasOrzJEXUKXj87Un1xvHQF
+         xsN8tC2I2ROYQxRPtFcO9NGeMf2CTCelwgsOboyHOlxmwDZoIGHJOv5aj/xuzqzeb6SP
+         9ZJZkoFNk8XCWBIPQeavSmirwoz+qkx4AQggrvRQMG3GPM5ZH8cD5hPN77DBsdVTsmtV
+         sZJwuAM821EapirTFk0K3XopHwdfrkZyQd6wskMCmYIOlTDMeCSP+96G9byWArrJtqbW
+         qdOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700243269; x=1700848069;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=04FK1noSSnxP747cHrA/hwHn2NonOwENeJ6ayp3e+48=;
+        b=oIId9z5gA2G1ZTgU0XA/ZO7WTM45Ec/CQGpMUupX10kpNhXf1yshGzh7b/7gYSeS7Z
+         owPfF5eXhjk8/RTIhAKtXs8qYUHsdZpAFaS2tPe/up21WHjZwuI/fmyMfymyt5kKERXS
+         1/Qe8bQ6hwwNdRrC9uSggVnG78mX9qxbgCDcx/R0glgE3oRbpxHrM0MGMx7tZdI5LP/w
+         LzaOk5jvsvXIaKaODdQxM/Mxsiap82UWF34PBZTSKfp5dvUfieZ/Ooi7kAEqL3PlmGbV
+         j9yHiNz2DDozsGBI6pCc4srvHcKBqvMiVnMDsmtWLmJo7UjzunDLTC7oByJIGF0ZvBNH
+         9tvA==
+X-Gm-Message-State: AOJu0Yyk7/ftPf6EShKrj6PcKDy4BzB3Shgyt64v+Mv/oKmxoV/zIcb/
+	f6U+sZ/ere5yrwbHx1yDc16gkl4z1eI=
+X-Google-Smtp-Source: AGHT+IGm5tM29ssoBsvQ5NAqLv2Vf/2BJkvCUwvSxWC9SX6dukfxQAtefcy3xZvoghs/YlDsNSplYA==
+X-Received: by 2002:a05:6000:18e:b0:32f:c3f0:f869 with SMTP id p14-20020a056000018e00b0032fc3f0f869mr13272208wrx.41.1700243269081;
+        Fri, 17 Nov 2023 09:47:49 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id c12-20020adffb0c000000b003316b38c625sm2110539wrr.99.2023.11.17.09.47.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 17 Nov 2023 09:47:48 -0800 (PST)
+Message-ID: <pull.1612.v4.git.1700243267653.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1612.v3.git.1699959186146.gitgitgadget@gmail.com>
+References: <pull.1612.v3.git.1699959186146.gitgitgadget@gmail.com>
+From: "Arthur Chan via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 17 Nov 2023 17:47:47 +0000
+Subject: [PATCH v4] fuzz: add new oss-fuzz fuzzer for date.c / date.h
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <6f7d20b4-a725-0ef9-f6d3-ff2810da9e7a@gmx.de>
-X-Pobox-Relay-ID:
- 1732B44E-8566-11EE-BAFC-25B3960A682E-09356542!pb-smtp2.pobox.com
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>,
+    Arthur Chan <arthur.chan@adalogics.com>,
+    Arthur Chan <arthur.chan@adalogics.com>
 
-Hello,
+From: Arthur Chan <arthur.chan@adalogics.com>
 
-Johannes Schindelin wrote:
-> At this point, the patches are fairly robust and I am mainly hoping for
-> help with verifying that the static site works as intended, that existing
-> links will continue to work with the new site (essentially, find obscure
-> references to the existing website, then insert `git.github.io/` in the
-> URL and verify that it works as intended).
-> 
-> To that end, I deployed this branch to GitHub Pages so that anyone
-> interested (hopefully many!) can have a look at
-> https://git.github.io/git-scm.com/ and compare to the existing
-> https://git-scm.com/.
+Signed-off-by: Arthur Chan <arthur.chan@adalogics.com>
+---
+    fuzz: add new oss-fuzz fuzzer for date.c / date.h
+    
+    This patch is aimed to add a new oss-fuzz fuzzer to the oss-fuzz
+    directory for fuzzing date.c / date.h in the base directory.
+    
+    The .gitignore of the oss-fuzz directory and the Makefile have been
+    modified to accommodate the new fuzzer fuzz-date.c.
+    
+    Fixed the objects order in .gitignore and Makefiles and fixed some of
+    the logic and formatting for the fuzz-date.c fuzzer in v2.
+    
+    Fixed the creation and memory allocation of the fuzzing str in v3. Also
+    fixed the tz type and sign-extended the data before passing to the tz
+    variable.
+    
+    Fixed the tz variable allocations and some of the bytes used for fuzzing
+    variables in v4.
+    
+    Comment: Yes, indeed. It is quite annoying to have that twice. Yes, the
+    tz should be considered as attacker controllable and thus negative
+    values should be considered. But it is tricky to fuzz it because the
+    date.c::gm_time_t() will call die() if the value is invalid and that
+    exit the fuzzer directly. OSS-Fuzz may consider it as an issue (or bug)
+    because the fuzzer exit "unexpectedly". I agree that if we consider the
+    tz as "attacker controllable, we should include negative values, but
+    since it will cause the fuzzer exit, I am not sure if it is the right
+    approach from the fuzzing perspective. Also, it is something that date.c
+    already take care of with the conditional checking, thus it may also be
+    worth to do some checking and exclude some invalid values before calling
+    date.c::show_date() but this may result in copying some conditional
+    checking code from date.c.
+    
+    Additional comment for v4: Thanks for the suggestion. Yes, that maybe
+    the easier approach. Since the new logic is only using 2 bytes for the
+    int16_t tz, thus the local and dmtype variable could use separate bytes
+    to increase "randomness".
 
-This is nice.  Thanks to all for working on it!
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1612%2Farthurscchan%2Fnew-fuzzer-date-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1612/arthurscchan/new-fuzzer-date-v4
+Pull-Request: https://github.com/gitgitgadget/git/pull/1612
 
-For checking links, a tool like linkcheker[1] is very handy.
-This is run against the local docs in the Fedora package
-builds to catch broken links.
+Range-diff vs v3:
 
-I ran it against the test site and it turned up _a lot_ of
-broken links.  It's enough that saving and sharing the
-output is probably more work than having someone familiar
-with the migration give it a run directly.
+ 1:  046bca32889 ! 1:  33a72d4c197 fuzz: add new oss-fuzz fuzzer for date.c / date.h
+     @@ oss-fuzz/fuzz-date.c (new)
+      +{
+      +	int local;
+      +	int num;
+     -+	int tz;
+      +	char *str;
+     -+	int8_t *tmp_data;
+     ++	int16_t tz;
+      +	timestamp_t ts;
+      +	enum date_mode_type dmtype;
+      +	struct date_mode *dm;
+      +
+      +	if (size <= 4)
+      +		/*
+     -+		 * we use the first byte to fuzz dmtype and local,
+     -+		 * then the next three bytes to fuzz tz	offset,
+     -+		 * and the remainder (at least one byte) is fed
+     -+		 * as end-user input to approxidate_careful().
+     ++		 * we use the first byte to fuzz dmtype and the
+     ++		 * second byte to fuzz local, then the next two
+     ++		 * bytes to fuzz tz offset. The remainder
+     ++		 * (at least one byte) is fed as input to
+     ++		 * approxidate_careful().
+      +		 */
+      +		return 0;
+      +
+     -+	local = !!(*data & 0x10);
+     -+	num = *data % DATE_UNIX;
+     ++	local = !!(*data++ & 0x10);
+     ++	num = *data++ % DATE_UNIX;
+      +	if (num >= DATE_STRFTIME)
+      +		num++;
+      +	dmtype = (enum date_mode_type)num;
+     -+	data++;
+     -+	size--;
+     ++	size -= 2;
+      +
+     -+	tmp_data = (int8_t*)data;
+     -+	tz = *tmp_data++;
+     -+	tz = (tz << 8) | *tmp_data++;
+     -+	tz = (tz << 8) | *tmp_data++;
+     -+	data += 3;
+     -+	size -= 3;
+     ++	tz = *data++;
+     ++	tz = (tz << 8) | *data++;
+     ++	size -= 2;
+      +
+      +	str = xmemdupz(data, size);
+      +
+     @@ oss-fuzz/fuzz-date.c (new)
+      +
+      +	dm = date_mode_from_type(dmtype);
+      +	dm->local = local;
+     -+	show_date(ts, tz, dm);
+     ++	show_date(ts, (int)tz, dm);
+      +
+      +	date_mode_release(dm);
+      +
 
-I ran `linkchecker https://git.github.io/git-scm.com/` and
-the eventual result was:
 
-  That's it. 13459 links in 14126 URLs checked. 0 warnings found. 6763 errors found.
-  Stopped checking at 2023-11-17 11:11:17-004 (1 hour, 19 minutes)
+ Makefile             |  1 +
+ oss-fuzz/.gitignore  |  1 +
+ oss-fuzz/fuzz-date.c | 49 ++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 51 insertions(+)
+ create mode 100644 oss-fuzz/fuzz-date.c
 
-The default output reports failures in a format like this:
+diff --git a/Makefile b/Makefile
+index 03adcb5a480..4b875ef6ce1 100644
+--- a/Makefile
++++ b/Makefile
+@@ -750,6 +750,7 @@ SCRIPTS = $(SCRIPT_SH_GEN) \
+ ETAGS_TARGET = TAGS
+ 
+ FUZZ_OBJS += oss-fuzz/fuzz-commit-graph.o
++FUZZ_OBJS += oss-fuzz/fuzz-date.o
+ FUZZ_OBJS += oss-fuzz/fuzz-pack-headers.o
+ FUZZ_OBJS += oss-fuzz/fuzz-pack-idx.o
+ .PHONY: fuzz-objs
+diff --git a/oss-fuzz/.gitignore b/oss-fuzz/.gitignore
+index 9acb74412ef..5b954088254 100644
+--- a/oss-fuzz/.gitignore
++++ b/oss-fuzz/.gitignore
+@@ -1,3 +1,4 @@
+ fuzz-commit-graph
++fuzz-date
+ fuzz-pack-headers
+ fuzz-pack-idx
+diff --git a/oss-fuzz/fuzz-date.c b/oss-fuzz/fuzz-date.c
+new file mode 100644
+index 00000000000..036378b946f
+--- /dev/null
++++ b/oss-fuzz/fuzz-date.c
+@@ -0,0 +1,49 @@
++#include "git-compat-util.h"
++#include "date.h"
++
++int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size);
++
++int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
++{
++	int local;
++	int num;
++	char *str;
++	int16_t tz;
++	timestamp_t ts;
++	enum date_mode_type dmtype;
++	struct date_mode *dm;
++
++	if (size <= 4)
++		/*
++		 * we use the first byte to fuzz dmtype and the
++		 * second byte to fuzz local, then the next two
++		 * bytes to fuzz tz offset. The remainder
++		 * (at least one byte) is fed as input to
++		 * approxidate_careful().
++		 */
++		return 0;
++
++	local = !!(*data++ & 0x10);
++	num = *data++ % DATE_UNIX;
++	if (num >= DATE_STRFTIME)
++		num++;
++	dmtype = (enum date_mode_type)num;
++	size -= 2;
++
++	tz = *data++;
++	tz = (tz << 8) | *data++;
++	size -= 2;
++
++	str = xmemdupz(data, size);
++
++	ts = approxidate_careful(str, &num);
++	free(str);
++
++	dm = date_mode_from_type(dmtype);
++	dm->local = local;
++	show_date(ts, (int)tz, dm);
++
++	date_mode_release(dm);
++
++	return 0;
++}
 
-  URL        `ch00/ch10-git-internals'
-  Name       `Git Internals'
-  Parent URL https://git.github.io/git-scm.com/book/tr/v2/Ek-b%C3%B6l%C3%BCm-C:-Git-Commands-Plumbing-Commands/, line 106, col 1318
-  Real URL   https://git.github.io/git-scm.com/book/tr/v2/Ek-b%C3%B6l%C3%BCm-C:-Git-Commands-Plumbing-Commands/ch00/ch10-git-internals
-  Check time 3.303 seconds
-  Size       1KB
-  Result     Error: 404 Not Found
-
-LinkChecker can be run in a mode which directs the failures
-to a file.  That would be more like:
-
-  linkchecker -F text/utf_8//tmp/git-scm-check.txt https://git.github.io/git-scm.com/
-
-The format of the -F option is TYPE[/ENCODING][/FILENAME]
-where TYPE can be text, html, sql, csv, gml, dot, xml,
-sitemap, none or failures.  The failures type is much more
-terse:
-
-  1 "('https://git.github.io/git-scm.com/book/en/v2/Appendix-C:-Git-Commands-Plumbing-Commands/', 'https://git.github.io/git-scm.com/book/en/v2/Appendix-C:-Git-Commands-Plumbing-Commands/ch00/ch10-git-internals')"
-
-I found the text type much more helpful in quickly spot
-checking some of the failures since it includes the text
-string used for the link.
-
-Running it against a local directory of the content would be
-a lot faster, if that's an option.  It's also worth bumping
-the default number of threads from 10 to increase the speed
-a bit.
-
-[1] https://linkchecker.github.io/linkchecker/
-
+base-commit: dadef801b365989099a9929e995589e455c51fed
 -- 
-Todd
+gitgitgadget
