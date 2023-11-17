@@ -1,89 +1,97 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="WSoE/JUP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OvCi7iwe"
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B8DB129
-	for <git@vger.kernel.org>; Fri, 17 Nov 2023 02:37:10 -0800 (PST)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id 1E1155C0186;
-	Fri, 17 Nov 2023 05:37:08 -0500 (EST)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Fri, 17 Nov 2023 05:37:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-type:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:sender:subject:subject:to:to; s=fm3; t=1700217428; x=
-	1700303828; bh=Op6p7cgf5pfRdse4OMcMIKwqwYxsRo3Bwoqin+1t694=; b=W
-	SoE/JUP7BpMBE0L5puIfaafsOdLQ7v5SebWEzp7U7b/CbmI5x09E8MxG20uyOd3+
-	sZ43lY59bq1GOFF996MOd/NVBrNBVm/bOvtTh1KRN6OC2mvNH6cr6a1SeCBLhk85
-	JhrViDQg+SnnSy7mcYtI7s3Oe2eZ8/fcpKo6WLA2y4Az9sfJRj+nLOG2McvB52Bx
-	we8dWI2/1MWWikleewxEbbPhGm2NI95wXyUIdPXJDR+Nznfjktgf6a8bwPNm+DP1
-	A7wwBggguocUDJM4ixuLymqrTv0H4TJtO8zZrr5FXVN6bhhx5quAXf9iqB8iCskN
-	dgKTpC6vG9MnMoQCB7icQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm1; t=1700217428; x=1700303828; bh=Op6p7cgf5pfRd
-	se4OMcMIKwqwYxsRo3Bwoqin+1t694=; b=OvCi7iwepfOFmyi8XneXakymwWepr
-	8OnJlY03GzVWQ/0t7QFKmMQBJmz6qZiAoF2jdl+wcpxfQcmPVGKfnKJa6yOWzkZH
-	9eiYavuOaJVyCLTc+dXO620BSe5BH5Oej7Q1KJCZYrgRWcAEzW2TG2GJK4nEvVRo
-	TK4RdR4uJDjBFSOuenyljyiAsHq2Ya9/VmN8dh/LXF4AAz93TURgY4dd4ao1N4Om
-	JjtIAu241P1hhjwt2FuiBQCLZDH2uaoxgeEYu2N9m1iYm8F+wLI41+Liz5x7jk+N
-	r+mK7/21okE3SRWwHO60s37JQa3LvuY6QiwJm+ZnmS33Tlm2DxCVrcLNw==
-X-ME-Sender: <xms:U0JXZUVKR2Hr1OfcfU8IZBDTz6vlTfHfE7IsGMzx1XnDzO7EY730GHQ>
-    <xme:U0JXZYm5pg15Bw6zmuucYmHW9R6XjgRoOqRZYXeJOZhVqNf3ghtSQuqAqUkpyd-Jj
-    L6zd__nho6D4vudqg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudegtddgudekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfgjfhffhffvvefutgesth
-    dtredtreertdenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdf
-    uceotghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpe
-    dtkedtjeeiffelteffheeiheeufffgheelueeftdejkeeufffgiefhgeekffffueenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskh
-    hhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:U0JXZYZtWmo6OCevd7zqtRHckxByxc9JVeAf7pGPIDCVZ2xqmVdImg>
-    <xmx:U0JXZTVyUvdNRYla_JcrrmE_fcJKMc3VZkHbYCUFDRvgsk-ALB4OKQ>
-    <xmx:U0JXZekC1tvPbiMwyi1cp7QQ9c_UHkr--oChuKSVADwZXSPHk74PNw>
-    <xmx:VEJXZYQ0S6c88FZmTe9kQeUQqWOb-6-hsG1lNP5eFv3ZskAESo6ODA>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id C2E3915A0091; Fri, 17 Nov 2023 05:37:07 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-1108-g3a29173c6d-fm-20231031.005-g3a29173c
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SOp/6TNL"
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B686ED56
+	for <git@vger.kernel.org>; Fri, 17 Nov 2023 05:15:19 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id ffacd0b85a97d-3316c6e299eso239760f8f.1
+        for <git@vger.kernel.org>; Fri, 17 Nov 2023 05:15:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1700226917; x=1700831717; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=KS3NzRUtkzVotQ+FbYCyTN9ZkLd2FaNxwLPaMyKneLw=;
+        b=SOp/6TNLMLE+FiYU4veRB0zRdzuGEyw9Hdi0sH9fY4aIF4u/u+4d+LTaIZuipqbOCD
+         0LkEKzVpP6nx+hqhA9ZR5znCw+IZpEUnk4Q4OvBrPV5SAJy9zPn2j94UgDDhFvrsF6a6
+         Ce693l6TuSIUsuDpy3iTwkdrut4HUtv6PcRKbzpV7Q5UHSdPvkWqbgSt1Vy9BCaMfcN/
+         rGyGtRRiV+sK9no29dNmxqJTsLl3PI3D4o6Gc39kj5ek2ahphKBTiStSjSrVYUzc7qFK
+         WUT9cQyF1+zkdon9ZRj3XdxChcFtgXN7uGh5zzNpcjfscvONiCyNL5vFbmiqfi+YqaMK
+         S7nQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700226917; x=1700831717;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KS3NzRUtkzVotQ+FbYCyTN9ZkLd2FaNxwLPaMyKneLw=;
+        b=CG9yKlzid+W4bXkA+5z6VloCrJTUfpAW2WwbxvS6jFFjBd+Tn+FXgDgxaM5wArLP3l
+         8nb0jzkJcGPMfRLqlF0V5vzmIn6vN2mfdENBnzzCwzz7P54qeMrrRXngL88+tiRhzeJ7
+         SfIhOOg9HczmeZ8KCrkHLmkJiSbu75uTcSXq+bRnrOs76seLhJS6SQdBKvPN6AnL2cJs
+         XzCMH5I3PugqhfEyoaKEB8PDt4iup9C/xC4J14lfmlPeYe1N9jNjQHwvN550bmK9+k1/
+         xacJ84zeKKZsAoz08KUyEC3KE89kEaYc8eleTFbBpKKgu9ua/jU8LXFJGZ9r5P0iZf4M
+         2s0Q==
+X-Gm-Message-State: AOJu0YwKWYlTBuyop6x+HCR9wT+uwbzuIXcECkSnZKNRd7yuG8fs9xfz
+	1alN/bxP7mQsQu0kDFTBF2wEr44ISNs=
+X-Google-Smtp-Source: AGHT+IF/Bpx8SzsQfcikeImOX8FM4hwcYzrrpR1HfTFAJomivQKeqWtjpvrfWd6AFsZtZ/Ciyex9Wg==
+X-Received: by 2002:a5d:4e85:0:b0:32f:7967:aa4d with SMTP id e5-20020a5d4e85000000b0032f7967aa4dmr13809911wru.68.1700226917199;
+        Fri, 17 Nov 2023 05:15:17 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id x11-20020a5d60cb000000b00331697bbcf5sm2103756wrt.94.2023.11.17.05.15.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 17 Nov 2023 05:15:16 -0800 (PST)
+Message-ID: <pull.1614.git.1700226915859.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 17 Nov 2023 13:15:15 +0000
+Subject: [PATCH] Fix a typo in `each_file_in_pack_dir_fn()`'s declaration
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <06af02a0-fb98-4a82-bb19-d2017581db3a@app.fastmail.com>
-In-Reply-To: <xmqqpm08pyrh.fsf@gitster.g>
-References: <xmqqpm08pyrh.fsf@gitster.g>
-Date: Fri, 17 Nov 2023 11:36:45 +0100
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Nov 2023, #07; Fri, 17)
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
-On Fri, Nov 17, 2023, at 09:30, Junio C Hamano wrote:
-> * kh/t7900-cleanup (2023-10-17) 9 commits
->  - t7900: fix register dependency
->  - t7900: factor out packfile dependency
->  - t7900: fix `print-args` dependency
->  - t7900: fix `pfx` dependency
->  - t7900: factor out common schedule setup
->  - t7900: factor out inheritance test dependency
->  - t7900: create commit so that branch is born
->  - t7900: setup and tear down clones
->  - t7900: remove register dependency
->
->  Test clean-up.
->
->  Perhaps discard?
->  cf. <655ca147-c214-41be-919d-023c1b27b311@app.fastmail.com>
->  source: <cover.1697319294.git.code@khaugsbakk.name>
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-There has been no interest in it so I say yes to discarding.
+One parameter is called `file_pach`. On the face of it, this looks as if
+it was supposed to talk about a `path` instead of a `pach`.
+
+However, looking at the way this callback is called, it gets fed the
+`d_name` from a directory entry, which provides just the file name, not
+the full path. Therefore, let's fix this by calling the parameter
+`file_name` instead.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+    packfile.h: fix a typo
+    
+    I stumbled over this typo yesterday. Nothing about this patch is urgent,
+    of course, it can easily wait until v2.43.0 is released.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1614%2Fdscho%2Fpackfile.h-typo-fix-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1614/dscho/packfile.h-typo-fix-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1614
+
+ packfile.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/packfile.h b/packfile.h
+index c3692308b8d..28c8fd3e39a 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -54,7 +54,7 @@ const char *pack_basename(struct packed_git *p);
+ struct packed_git *parse_pack_index(unsigned char *sha1, const char *idx_path);
+ 
+ typedef void each_file_in_pack_dir_fn(const char *full_path, size_t full_path_len,
+-				      const char *file_pach, void *data);
++				      const char *file_name, void *data);
+ void for_each_file_in_pack_dir(const char *objdir,
+ 			       each_file_in_pack_dir_fn fn,
+ 			       void *data);
+
+base-commit: cfb8a6e9a93adbe81efca66e6110c9b4d2e57169
+-- 
+gitgitgadget
