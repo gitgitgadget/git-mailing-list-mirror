@@ -1,85 +1,156 @@
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-X-Greylist: delayed 302 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 17 Nov 2023 13:47:10 PST
-Received: from mout.kundenserver.de (mout.kundenserver.de [217.72.192.73])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D747DBC
-	for <git@vger.kernel.org>; Fri, 17 Nov 2023 13:47:10 -0800 (PST)
-Received: from [192.168.178.189] ([79.246.86.112]) by mrelayeu.kundenserver.de
- (mreue106 [212.227.15.183]) with ESMTPSA (Nemesis) id
- 1M42Ss-1r46bG0a1o-0000gt for <git@vger.kernel.org>; Fri, 17 Nov 2023 22:42:06
- +0100
-Message-ID: <653b08fd-2df3-4a7a-8082-fdb809e87784@delpeuch.eu>
-Date: Fri, 17 Nov 2023 22:42:05 +0100
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="B/7eBWZ3"
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66EF5173B
+	for <git@vger.kernel.org>; Fri, 17 Nov 2023 17:14:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+	t=1700270078; x=1700874878; i=johannes.schindelin@gmx.de;
+	bh=/5SUCRLS1D3iOPeKswAhYgX0IET9DyAC2ea8Dd6EcQ8=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:
+	 References;
+	b=B/7eBWZ3Pbu5jsVI6ZmP/pI8099lDRRx4VKHzK1ZmmY1rgAWuWpcgLLC+g0cw5sz
+	 JadAS9FYoFfjhSxtAj52eqwL2USX0dcyeOSyBDzT0JGSW30ZBhixSaw3qNFg/M7BE
+	 4w84sSihf61ACYvZTBcRlarLnYbsmlDGEt+jq/4nMmxqf8HsfUfZCmGKwJpi2zZIn
+	 A3Wg++r9G3LvqpA1fOWHaBrbqLfc02gANt5M5VjXi+MDf9kvHihvq3/DS/2pwwm0N
+	 B1svlyYcWEqh/jcP7HcHDfJIQTv4jImFzLulzd/O6/h3BWJtd+GY4uvXyxeSSvy5a
+	 8uRCsEpLDZJu3wmtXQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.215.165]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MrhUK-1rj2Z03FR6-00nfSl; Sat, 18
+ Nov 2023 02:14:38 +0100
+Date: Sat, 18 Nov 2023 02:14:37 +0100 (CET)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Todd Zullinger <tmz@pobox.com>
+cc: git@vger.kernel.org, Matt Burke <spraints@gmail.com>, 
+    Victoria Dye <vdye@github.com>, 
+    =?UTF-8?Q?Matthias_A=C3=9Fhauer?= <mha1993@live.de>
+Subject: Re: Migration of git-scm.com to a static web site: ready for
+ review/testing
+In-Reply-To: <ZVeUQEG5jIzKbvmT@pobox.com>
+Message-ID: <4dd9b45d-b352-d8ba-3314-96ab48f7abf7@gmx.de>
+References: <6f7d20b4-a725-0ef9-f6d3-ff2810da9e7a@gmx.de> <ZVeUQEG5jIzKbvmT@pobox.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] merge-file: add --diff-algorithm option
-Content-Language: en-US
-To: git@vger.kernel.org
-References: <pull.1606.git.git.1699480494355.gitgitgadget@gmail.com>
-From: Antonin Delpeuch <antonin@delpeuch.eu>
-In-Reply-To: <pull.1606.git.git.1699480494355.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:3cYiVNe33j7KKIiF+1MJxP76+4lWkGRhC2OJZLdgHHJOfEs8mxb
- vOaW+Af4lfh+0taQc1funjKvGrTxUebtVSrZB9mDtvu+Y+RqwfobB+WmBjvefr7ptavOLWM
- c4U8qTzqlYD8X1IBWZrraZcW9kK2AmtGWu0z+SUEv0LOUYf7JKHuIGEFOze0eICcXoxH420
- wI9uZQhtznywQc1B2irzQ==
-UI-OutboundReport: notjunk:1;M01:P0:uusJXCezlHQ=;M41kDyehZfwLOjKu3ksizSpuDf3
- gSSplC+Uhtz6Ker9sZTMMP2N/+VkhB/lnoYbTGXZLSwRb5IUXQcR/cjDk2SW3NO/U8it9i+wD
- 3WQZP7ajWAjLqgeOOJLz6rAlH59R63XdNI1e1EHqJBT5RL/HDG8qQ+Ep47i5f6DqPCjc/f2oi
- M9D33GxwtoWuNAFZtXVlZkDsJ3QApgZUlojJNbAYHcozYkpYr5yl0IL3mQ5P90DN45q1m0+Rg
- feZxIx+602CWaYfhB8sWJsMqCFl9kZXe8Omf91flXJ9ardMuwJc5YVg71e8lRcdEdMoBSE/vA
- 85lh1IBod3OG6F7fRB1agrVvzLdw7hMbU89l+KTzfH6q55BjG5pZHZt3QloAJZilvY1KAfySv
- iTBMl6a7WzrxXy5JSjtpBudXQP6hRqDP+Yny9n+c1gWs/MzGHk+diPzXKefnjsb45eVK0nJBv
- 2jXhyaQV7q29DfZe7pHuCCqRe+zTFTEbH3jjUy4KoEJHOAHyDkmGJntc0UAlhc6zRK8r2frAA
- HiXfuSlH4jUkH+KRNQcFeG8/Hi/yPycGOURZyMfZsSHU6mFQ/wD5V5NeBFJaTEDFHR8paXxDe
- kLBAzLICSd4QQaRa+Fvf3oVCfMtN6Pl1fgwlZy4/CtYhhL4Ww7zLbHtpH5aTZADqZy723dqNL
- XZCJKofB4nVpqYvba4HdHiMIdJneLJphyTz3YE6oGABHm7pEOdaZS0VzzG37opsc/VChOQfAm
- 84gqN60uARXMmTKHzH8c9B0qmWIaSaTqbI/4w8r30Q/WRxk/TxQXNGZ8phjZWEgOr5aUZjbpE
- PRBNPSmLOiy2Gkg5oHq0uS9GgsRZiZ76X5vwSHihVIzjOBUK8QVmXw5ptSeUizKFicB/mgs8w
- qAbniOmX1ClifVA==
+Content-Type: multipart/mixed; boundary="8323328-2000277744-1700270078=:482"
+X-Provags-ID: V03:K1:5JoUtx8g2ptk702aCkZmhJqzbNzfbIG894X0JgJebHo+9tpy+ET
+ pWwos07HvidZWpYVrUFCOyi5r5zCMsliECNzQbWPMEuWnAB7JvL3nqlukRsH6G5gjregD6u
+ 481JDOeEMqqYzv6QhrURzblSSHx/nLnvpweumUSdGyF9nIvXD7Hib1kxlejbiX+XVkQvGjr
+ eojT+sfzPmE0xpGeqSi4A==
+UI-OutboundReport: notjunk:1;M01:P0:p9I0tpVe3CA=;7O+We/Vgab48LtxDEjyL0vNEZL1
+ MjxNKkD6dBUtNpYSKSUooBTtZuXSFbpYTfFq/P/dslzcDWiFzcixfogGfHKjiIl/cckAMH4GZ
+ 1I8+Kjh2t1JBPsMwustNeuAlmutgx5/gp1TLPfSzNeterBPvcAHL60hhgLlHfVzjMOFFM1w2K
+ mOpgEzi2C5rYf23HpnXuWg10gOvvzFL96akz5Iqxkiy4poHR14NGYG1AmsUrYRt5tNLB+2CjD
+ kVSazIaSHNY5NrM9OjN0uKcnN/7WXq8B7zdiaYgvc7o/WRr9NYWQbCVbOSh7mhBCleufniHLL
+ nWzuQidkrrNYV1IU7iQbALfUhGRCwEpG8QJ3NvWWJqHrR41gZNKmY4eUJbV9Rs1mqLfKgxkGa
+ rqYzVPDlVDPHmAqxz5m2u3R59NpBYRvZf05tmO30/vjLn1SPNKXbTEutnBykm3Ej1XXwTsyof
+ f4hGPO3w+a60wKDqKV3Ji3dwpRPdLbuv0OfejLDiaHDxvZeZ7ILWPLS3bocgEXxMHcXPAHr7t
+ 4SHKCV4DmFDhtx+6Ib0T+IqPClFEqXWT6M12gUEJ+5kiuve3o7wWhwLSqZWZeCsMfSLNLlDz+
+ ChtsueNMRg49izTSIf4g29LQkvviMw3FLgP1wdMUbqSdnRwOZYZXaTuVjJDRKtIAupraIBm4V
+ lCYwBIKoBjpHQRXuqEVWS75jAoO886w6+I2lce3KypeVuQtBvoQCsCpeFxNjcjBOq4myWTkln
+ nEzWoJmasB8DBX4Z7s3PNzMsRNqKflgfOTo4J3GBWj2sPX2vlO808DfebygQCPe3TdggrPhUA
+ XbMQUD94Xpxzp4HZPePVXaEAno9ZSjdR01PE+hLRoVLM6ra1h+G08+mo64NY7C+tZ0FUPvN55
+ qHxpbKgbWWC0wSRdcuwyjmOJxKtALcT14TqcTmEvmVP5d58Y7CAEOO9lz/Uz7lEbdZdDWZ2na
+ tIvBFg==
 
-Hi all,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Here a few more thoughts about this patch, to explain what brought me to 
-needing that. If this need is misguided, perhaps you could redirect me 
-to a better solution.
+--8323328-2000277744-1700270078=:482
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-I am writing a custom merge driver for Java files. This merge driver 
-internally calls git-merge-file and then solves the merge conflicts 
-which only consist of import statements (there might be cases where it 
-gets it wrong, but I can then use other tools to cleanup those import 
-statements). When testing this, I noticed that the merge driver 
-performed more poorly on other sorts of conflicts, compared to the 
-standard "ort" merge strategy. This is because "ort" uses the 
-"histogram" diff algorithm, which gives better results than the "myers" 
-diff algorithm that merge-file uses.
+Hi Todd,
 
-Intuitively, if "histogram" is the default diff algorithm used by "git 
-merge", then it would also make sense to have the same default for "git 
-merge-file", but I assume that changing this default could be considered 
-a bad breaking change. So I thought that making this diff algorithm 
-configurable would be an acceptable move, hence my patch.
+On Fri, 17 Nov 2023, Todd Zullinger wrote:
 
-Of course, the diffing could be configured in other ways, for instance 
-with its handling of whitespace or EOL (similarly to what the "git-diff" 
-command offers). I think those options would definitely be worth 
-exposing in merge-file as well. If you think this makes sense, then I 
-would be happy to work on a new version of this patch which would 
-attempt to include all the relevant options. I could also try to add the 
-corresponding tests.
+> Johannes Schindelin wrote:
+> > At this point, the patches are fairly robust and I am mainly hoping fo=
+r
+> > help with verifying that the static site works as intended, that exist=
+ing
+> > links will continue to work with the new site (essentially, find obscu=
+re
+> > references to the existing website, then insert `git.github.io/` in th=
+e
+> > URL and verify that it works as intended).
+> >
+> > To that end, I deployed this branch to GitHub Pages so that anyone
+> > interested (hopefully many!) can have a look at
+> > https://git.github.io/git-scm.com/ and compare to the existing
+> > https://git-scm.com/.
+>
+> This is nice.  Thanks to all for working on it!
 
-But perhaps my need is misguided? Could it be that I should not be 
-writing a custom merge driver, but instead use another extension point 
-to only process the conflicting hunks after execution of the existing 
-merge driver? I couldn't find such an extension point, but it can well 
-be that I missed it.
+=F0=9F=98=8A
 
-Thank you,
+> For checking links, a tool like linkcheker[1] is very handy.
+> This is run against the local docs in the Fedora package
+> builds to catch broken links.
 
-Antonin
+Hmm, `linkchecker` is really slow for me, even locally.
 
+> I ran it against the test site and it turned up _a lot_ of
+> broken links.  [...]
+>
+>   URL        `ch00/ch10-git-internals'
+>   Name       `Git Internals'
+>   Parent URL https://git.github.io/git-scm.com/book/tr/v2/Ek-b%C3%B6l%C3=
+%BCm-C:-Git-Commands-Plumbing-Commands/, line 106, col 1318
+>   Real URL   https://git.github.io/git-scm.com/book/tr/v2/Ek-b%C3%B6l%C3=
+%BCm-C:-Git-Commands-Plumbing-Commands/ch00/ch10-git-internals
+>   Check time 3.303 seconds
+>   Size       1KB
+>   Result     Error: 404 Not Found
+
+Good catch. I totally forgot to take care of the cross-references!
+
+This is now fixed, as of
+https://github.com/dscho/git-scm.com/commit/e599a57b2fadf8cb01e57af23fcb92=
+9b32e94bcb
+
+I kicked off the GitHub workflow to re-generate the books, and the updated
+GitHub Pages look fine (see e.g. the parent URL mentioned above and follow
+the "Pull Request Refs" link).
+
+> Running it against a local directory of the content would be
+> a lot faster, if that's an option.  It's also worth bumping
+> the default number of threads from 10 to increase the speed
+> a bit.
+>
+> [1] https://linkchecker.github.io/linkchecker/
+
+Unfortunately it is actually quite slow.
+
+Granted, the added cross-references now increase the number of hyperlinks
+to check, but after I let the program run for a bit over an hour to look
+at https://git-scm.com/ (for comparison), it is now running on the local
+build (i.e. the `public/` folder generated by Hugo, not even an HTTP
+server) for over 45 minutes and still not done:
+
+=2D- snip --
+[...]
+10 threads active, 112977 links queued, 206443 links in 100001 URLs checke=
+d, runtime 48 minutes, 46 seconds
+10 threads active, 113455 links queued, 206689 links in 100001 URLs checke=
+d, runtime 48 minutes, 52 seconds
+10 threads active, 113829 links queued, 206874 links in 100001 URLs checke=
+d, runtime 48 minutes, 57 seconds
+10 threads active, 114230 links queued, 207136 links in 100001 URLs checke=
+d, runtime 49 minutes, 3 seconds
+10 threads active, 114731 links queued, 207498 links in 100001 URLs checke=
+d, runtime 49 minutes, 9 seconds
+=2D- snap --
+
+Maybe something is going utterly wrong because the number of links seems
+to be dramatically larger than what the https://git-scm.com/ reported;
+Maybe linkchecker broke out of the `public/` directory and now indexes my
+entire harddrive ;-)
+
+Ciao,
+Johannes
+
+--8323328-2000277744-1700270078=:482--
