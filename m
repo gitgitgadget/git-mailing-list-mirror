@@ -1,78 +1,132 @@
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CC9B126
-	for <git@vger.kernel.org>; Sat, 18 Nov 2023 01:41:17 -0800 (PST)
-Received: from bsmtp.bon.at (unknown [192.168.181.101])
-	by bsmtp5.bon.at (Postfix) with ESMTPS id 4SXTL36Kkfz5v1K
-	for <git@vger.kernel.org>; Sat, 18 Nov 2023 10:41:15 +0100 (CET)
-Received: from [192.168.0.101] (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTPSA id 4SXTL00yJfz5tlB;
-	Sat, 18 Nov 2023 10:41:12 +0100 (CET)
-Message-ID: <39f863b9-fc81-43ca-93f5-89e341e8615d@kdbg.org>
-Date: Sat, 18 Nov 2023 10:41:11 +0100
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="A90UxDoT"
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CB83CE
+	for <git@vger.kernel.org>; Sat, 18 Nov 2023 01:46:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+	t=1700300783; x=1700905583; i=johannes.schindelin@gmx.de;
+	bh=JW9pUTJOVLyW74azuS0WJJA4Pz8HRQSR2e0+ezUqMO4=;
+	h=X-UI-Sender-Class:Date:From:To:CC:Subject:In-Reply-To:
+	 References;
+	b=A90UxDoTzkqiZt20c6TOy8FD0oIX9kdJ8LzfEjvaQTW3qgKzpm04gw0neExyWa63
+	 WX8mh9jGcW4f/wIdrQk0i3j8J1HAh9XnRHhRlViO5blC97F2ayzG9DHW8i5lgICby
+	 ZHeEjuQYgwLOYjbfV+yAV/28Vx3uRm7jZeFQIHdT/rdm1LDzJ1jbLsRKIpp8YE277
+	 v+hTilasgtBoUwvn4ENz7fSX9Vv9En9lhottE44ox+rdkJSYKhzw3RR2lYRD+KVWD
+	 r7jzc19zSKG57ryXQSV26pEdAChEshJMsB5bHzZjO/8CXBIFDDRo4Hp7kaZhVd2uW
+	 6xCnc00Maxsf5S6NOA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [127.0.0.1] ([89.1.215.165]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Ma24y-1qsIvL1LD2-00W0RI; Sat, 18
+ Nov 2023 10:46:23 +0100
+Date: Sat, 18 Nov 2023 10:46:19 +0100
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Johannes Sixt <j6t@kdbg.org>
+CC: git@vger.kernel.org, Matt Burke <spraints@gmail.com>,
+ Victoria Dye <vdye@github.com>,
+ =?ISO-8859-1?Q?Matthias_A=DFhauer?= <mha1993@live.de>
+Subject: =?US-ASCII?Q?Re=3A_Migration_of_git-scm=2Ecom_to_a_sta?= =?US-ASCII?Q?tic_web_site=3A_ready_for_review/testing?=
+User-Agent: K-9 Mail for Android
+In-Reply-To: <39f863b9-fc81-43ca-93f5-89e341e8615d@kdbg.org>
+References: <6f7d20b4-a725-0ef9-f6d3-ff2810da9e7a@gmx.de> <39f863b9-fc81-43ca-93f5-89e341e8615d@kdbg.org>
+Message-ID: <70C3012B-95A2-411F-8DEF-B3B81E1F2DFD@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Migration of git-scm.com to a static web site: ready for
- review/testing
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: git@vger.kernel.org, Matt Burke <spraints@gmail.com>,
- Victoria Dye <vdye@github.com>, =?UTF-8?Q?Matthias_A=C3=9Fhauer?=
- <mha1993@live.de>
-References: <6f7d20b4-a725-0ef9-f6d3-ff2810da9e7a@gmx.de>
-Content-Language: en-US
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <6f7d20b4-a725-0ef9-f6d3-ff2810da9e7a@gmx.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:lJqIR/aT4ReluFXDwBumhgQC+xg5DfXScEpn7cgKLASaoIupQDU
+ xPpGlvzPcENgw/EQtnznqlYnshsh/La4nfo9UOC7T0Fu8NSjSUyKgeBlvah0fQL4M6JFFTy
+ bo4/E6cpBQVRSz5hfmnP6Xp8uwRRYd8UtYf8NewctgoUAA8vpJWTtFYYfgpbnsRm6+6DfOz
+ u5kpoQtQtX+UE65obN4+A==
+UI-OutboundReport: notjunk:1;M01:P0:ZVNQ55myhBA=;oCTueiZ4hxFq2x3nPy0m42KYnRC
+ D9H7e1b+O2p0SA9KP3psF1Xmgw1XjwVSu2/JD5cQA34ipWVGRU7UEVnV4tpn+HLQTtUmmuOYx
+ gJY2jSLNaOQB93KutoXwNetYg60icDPh6tdqjDRwgUxxZ0EW/Kb82PS6/lNJ9p16MKqFqO4SE
+ fvA/q+j0LabVy7k8MtBX0h+kjqGCZIC/QO8P0YmxQl4pi1uth/zCzxZQYgyu6j/3Q1V1sniWV
+ 9+9bpgvz2O5TCX5YAjUYPviiho3k7VN313QI9yYHa2fL+gbpEoMslosgw7DZSLZe6a8uuZHbU
+ pcNALtGBh0darUzS3n2eqgT3KRLLC7eFgYpoX2Yng0a7PTpNAy2Vx/bHeByxyOlw/GaJLvDFQ
+ nl0GaAGXvbs2XjfBK8uJfYFabky7XsoXxikJ9p4smgVT49wkwXwgUfrz62pyGD84mFVlroJs8
+ J2quzpuoZ2DgxTqHoD/9k6TG73xFJO0JOIyzuZqzT/O6kRWoTbTd0TBlTRn0Jr4fXkIz+ozpF
+ jNq4pCY20qQdMhD5qAgV/moVn5xHUuTrt6DCNyW/PIjXkfcmBBUYFsRxSVSCy5LdwqLtXs8HA
+ k14wxHl77/eZf+vuXLFIiVMoF6Ea0fMYU+8fnPdDM5sO0ryWUpP1I3RlIkYXyx8JBTAFi2+Io
+ rW7U7h7Pn8czSs7wupTthau/QpRHvI6dK4xf420fDdZX7bj9HHg3u/1ga2uOKGOSvISHJsHwm
+ JbM2ZkMQNpgVbgWawtqrulb7M+M4QFB367ZOqebXy9TOAWAgnAXcZpto0yyukPKcSpjYAQWam
+ dg99yZgSw3hcs7DrpXZkWosdfIcHd/3SVb1/aeHC+ermOc7Rh0DGOHp5t8S2gfiDANG4I+Id7
+ qx+ykTtMrUM1jQRpXuuXdAMXRS2q/pA2O9wUAJ+mMikc9S06eXoc/BCSpds/P0hKc9jT1wGsF
+ FWFwVA==
 
-Am 17.11.23 um 14:25 schrieb Johannes Schindelin:
+Hi Hannes,
+
+Yes, keeping existing deep links working is very much a goal of this work=
+=2E
+
+Thank you,
+Johannes
+
+
+-------- Original Message --------
+From: Johannes Sixt <j6t@kdbg=2Eorg>
+Sent: November 18, 2023 10:41:11 AM GMT+01:00
+To: Johannes Schindelin <Johannes=2ESchindelin@gmx=2Ede>
+Cc: git@vger=2Ekernel=2Eorg, Matt Burke <spraints@gmail=2Ecom>, Victoria D=
+ye <vdye@github=2Ecom>, "Matthias A=C3=9Fhauer" <mha1993@live=2Ede>
+Subject: Re: Migration of git-scm=2Ecom to a static web site: ready for re=
+view/testing
+
+Am 17=2E11=2E23 um 14:25 schrieb Johannes Schindelin:
 > Hi,
-> 
-> the idea of migrating https://git-scm.com/ from a Rails app to a static
-> site has been discussed several times on this list in the past.
-> 
+>=20
+> the idea of migrating https://git-scm=2Ecom/ from a Rails app to a stati=
+c
+> site has been discussed several times on this list in the past=2E
+>=20
 > Thanks to the heroic, multi-year efforts of Matt Burke, Victoria Dye and
-> Matthias Aßhauer, there is now a Pull Request, ready for review:
-> https://github.com/git/git-scm.com/pull/1804
-> 
+> Matthias A=C3=9Fhauer, there is now a Pull Request, ready for review:
+> https://github=2Ecom/git/git-scm=2Ecom/pull/1804
+>=20
 > This Pull Request is not for the faint of heart, mainly because of the
-> sheer amount of generated pages that are committed to the repository (such
+> sheer amount of generated pages that are committed to the repository (su=
+ch
 > as the book, the manual pages, etc, a design decision necessary to run
-> this as a static website).
-> 
-> These pages are generated by GitHub workflows that are intended to run on
+> this as a static website)=2E
+>=20
+> These pages are generated by GitHub workflows that are intended to run o=
+n
 > a schedule, and the scripts that generate them are part of the Pull
-> Request. For that reason, I do not consider it necessary to review those
-> generated pages, those reviews have been done in the upstream sources from
-> which the pages were generated.
-> 
+> Request=2E For that reason, I do not consider it necessary to review tho=
+se
+> generated pages, those reviews have been done in the upstream sources fr=
+om
+> which the pages were generated=2E
+>=20
 > At this point, the patches are fairly robust and I am mainly hoping for
-> help with verifying that the static site works as intended, that existing
+> help with verifying that the static site works as intended, that existin=
+g
 > links will continue to work with the new site (essentially, find obscure
-> references to the existing website, then insert `git.github.io/` in the
-> URL and verify that it works as intended).
-> 
+> references to the existing website, then insert `git=2Egithub=2Eio/` in =
+the
+> URL and verify that it works as intended)=2E
+>=20
 > To that end, I deployed this branch to GitHub Pages so that anyone
 > interested (hopefully many!) can have a look at
-> https://git.github.io/git-scm.com/ and compare to the existing
-> https://git-scm.com/.
+> https://git=2Egithub=2Eio/git-scm=2Ecom/ and compare to the existing
+> https://git-scm=2Ecom/=2E
 
 When a transition to static pages happens, an important aspect is that
-external links that point into git-scm.com must not be invalidated.
-There are many such links in Stackoverflow answers, for example.
+external links that point into git-scm=2Ecom must not be invalidated=2E
+There are many such links in Stackoverflow answers, for example=2E
 
 I checked one link:
 
-https://git-scm.com/docs/git-rebase#Documentation/git-rebase.txt--r
-https://git.github.io/git-scm.com/docs/git-rebase#Documentation/git-rebase.txt--r
+https://git-scm=2Ecom/docs/git-rebase#Documentation/git-rebase=2Etxt--r
+https://git=2Egithub=2Eio/git-scm=2Ecom/docs/git-rebase#Documentation/git-=
+rebase=2Etxt--r
 
-and it is looking very good. Thank you! I assume that keeping links
-working is not just a happy accident, but part of the plan.
+and it is looking very good=2E Thank you! I assume that keeping links
+working is not just a happy accident, but part of the plan=2E
 
 -- Hannes
 
