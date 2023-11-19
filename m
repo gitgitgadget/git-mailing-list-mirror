@@ -1,46 +1,46 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eIU/wAkV"
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDAF411D
-	for <git@vger.kernel.org>; Sun, 19 Nov 2023 08:42:55 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id ffacd0b85a97d-331733acbacso1127721f8f.1
-        for <git@vger.kernel.org>; Sun, 19 Nov 2023 08:42:55 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Bj49uqRF"
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 754C3C2
+	for <git@vger.kernel.org>; Sun, 19 Nov 2023 08:43:22 -0800 (PST)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-507975d34e8so5040361e87.1
+        for <git@vger.kernel.org>; Sun, 19 Nov 2023 08:43:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700412174; x=1701016974; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=gmail.com; s=20230601; t=1700412201; x=1701017001; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:cc:from:references:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=ydETNSYWSIzNJlXYN8I9eso69G5Ey6mJwPc2byEUIlw=;
-        b=eIU/wAkVWS2czPxQmwmCAOqlV5aJJo6Khdl8B6HVMSFrUFpK4/YuheKwTVLHzWl/08
-         hx7sbeGqR9He873PnP4Yk9UAhcTbdhQqiMaG/6gY5zmt91RiY3j5tEVpvLtDqzmOJwHR
-         mtU5VmZIKBQhLiE4L2VKRzq9b4EQQa0aFp9LZ9hL6zuPwGctcSA85jmK52l28Jb7YBCE
-         FDLcqsbU/RXUt7m7dHrGAeeLSaSFK3myD1uFNRoDjS4GUSgC/0URQgCkKlVzcxxkBKEg
-         EwcS6GcrHX9kap05TA8YSP8WLgF7eKiW2U8xviG5DdoNIN+uGL0m5C5sPZUtLEw1bvJb
-         jFFg==
+        bh=hYBGJ/qs0l4u1syDkuOSBLOOkTKosVgX/f813QCVtFc=;
+        b=Bj49uqRF0aqHhuHFgtRu8/gy15Coij/iVtXyBTVBc9zNbRhC4tkwmjpXlO2ft3HWd9
+         HZ38RtPGY0xV8t8UJ9Y4NEOiS+MEJ1ayWnNsKzTQUhvL0Ryw3Sqdo/JvHk9ZyDyaxcAs
+         vQBhZki4VnGMTaLVnetwLhC5lkPxdafGYCDqc8KOQ6sv1C+5JZC4B0UFpVoAy/bZzsuB
+         HBMjbZhNCsjajIkPK+Y+5h0bF7PQ8AGBJ1s2EaiM2aImHJKtuzro7cha92Y+uYLBw+X5
+         Rt5by6oDeP/hQJm97iyeY8HbN/pnlXZF0yO2fM4cphPwewMCkmMpCgGoy2Qa5A2Ik5ws
+         PvDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700412174; x=1701016974;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=1e100.net; s=20230601; t=1700412201; x=1701017001;
+        h=content-transfer-encoding:in-reply-to:cc:from:references:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ydETNSYWSIzNJlXYN8I9eso69G5Ey6mJwPc2byEUIlw=;
-        b=KvMx47h75Df7uWURwzokf+SfP6mTmlkAE3R9EUSIti1rvT3SeatcgBeRniE3t6aAIH
-         xzlTxwUGZjlwLX5ABGjDuICCQrPtAJ3HxiRL99r2N5rR/sFYQ3RW1E0ZLtlajdXvcsW+
-         xwp3dGTG41bWtbhokYqZ7fP0GIi0nxEr6zfcIhTp+Vwytdh/Llf/vqBtiPk7KReNIS52
-         B+itIO3IRr7DWkuCdgXECc8tQo717dRr4lLDA1N2E2j0zUjS/hAfl1BG/DURHgS4oXrL
-         08CJDz6yS0KazM3SUoP+ehC2vRVy7r0PBr8wF4H+HTKodNiANneqyJ2+sJzZJ62t6ZEI
-         fNmw==
-X-Gm-Message-State: AOJu0Yy9UuKfdkA0/vLXgGowXOnQ3Q1qEwg0FH8dkzy92jtSlIY0yFUU
-	SqrKjh956Ye7DFHVBTXVvwo=
-X-Google-Smtp-Source: AGHT+IEMHaHt25tDumAIz+77rssKS5ynEzyJmoADHWpPwcR/nnnmvC2EWJWkSJmLu3PfWH/T+4uRXA==
-X-Received: by 2002:a05:6000:178d:b0:32d:a0d3:d681 with SMTP id e13-20020a056000178d00b0032da0d3d681mr3814859wrg.43.1700412174057;
-        Sun, 19 Nov 2023 08:42:54 -0800 (PST)
+        bh=hYBGJ/qs0l4u1syDkuOSBLOOkTKosVgX/f813QCVtFc=;
+        b=bknR4viaL+W83SNOx5g7yUI4G4Oc1+pjaPcaqOWqhmvBEzGDXyl0gu0YrWYohj7Ppo
+         Bg7bZN2YRtcmybRIYtJURDIarASPR/C+5povUeldhfEpPSNF5MwZr6bpm0YyLWf+dkeA
+         gYDwp6tw41bQsFu6CiY33Y9QiGmPkbdBR8QNiFOswuJztbAlOmoLpaDwWiu4rwAVJep5
+         tD7TepI8fi3HrTFo+meHY0sbXFPlN2or5Qyy2MlUVWeCF9MXtvb97ftQeXkYHhLOFmYa
+         DLbNxoy16oenX5euvNeQAAFFEqc1i+eHvtpLJcG4M+JXY8OmxqFRB2EqqG2EPthUP/Kq
+         zL9w==
+X-Gm-Message-State: AOJu0YzKjOhFGt5R/BJnMPgMnTru5iwwYZw56rKSMQZf/B4uu/N/Q2qE
+	37XgVRf0zNESJg/iV2FuhqmurEqn0OY=
+X-Google-Smtp-Source: AGHT+IHifshMg2tPoJQ5184Njqk80C+8v8SVxSyiqtcvPczcF64D6eL4ASgzrgTpFIFj4kVz4/hwkw==
+X-Received: by 2002:ac2:4a7c:0:b0:50a:93f9:d09f with SMTP id q28-20020ac24a7c000000b0050a93f9d09fmr4317651lfp.62.1700412200392;
+        Sun, 19 Nov 2023 08:43:20 -0800 (PST)
 Received: from [192.168.1.212] ([84.64.93.134])
-        by smtp.gmail.com with ESMTPSA id df10-20020a5d5b8a000000b00331a55d3875sm4397122wrb.38.2023.11.19.08.42.53
+        by smtp.gmail.com with ESMTPSA id df10-20020a5d5b8a000000b00331a55d3875sm4397122wrb.38.2023.11.19.08.43.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 19 Nov 2023 08:42:53 -0800 (PST)
-Message-ID: <a83321f0-7184-4779-82d2-854a1e324f92@gmail.com>
-Date: Sun, 19 Nov 2023 16:42:53 +0000
+        Sun, 19 Nov 2023 08:43:20 -0800 (PST)
+Message-ID: <de04aec0-a195-45da-8951-bb30f2a629a3@gmail.com>
+Date: Sun, 19 Nov 2023 16:43:19 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -51,115 +51,76 @@ User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
 Subject: Re: [PATCH] merge-file: add --diff-algorithm option
 Content-Language: en-US
-To: Antonin Delpeuch via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Antonin Delpeuch <antonin@delpeuch.eu>
+To: Antonin Delpeuch <antonin@delpeuch.eu>, git@vger.kernel.org
 References: <pull.1606.git.git.1699480494355.gitgitgadget@gmail.com>
+ <653b08fd-2df3-4a7a-8082-fdb809e87784@delpeuch.eu>
 From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <pull.1606.git.git.1699480494355.gitgitgadget@gmail.com>
+Cc: Elijah Newren <newren@gmail.com>
+In-Reply-To: <653b08fd-2df3-4a7a-8082-fdb809e87784@delpeuch.eu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 Hi Antonin
 
-On 08/11/2023 21:54, Antonin Delpeuch via GitGitGadget wrote:
-> From: Antonin Delpeuch <antonin@delpeuch.eu>
+On 17/11/2023 21:42, Antonin Delpeuch wrote:
+> Hi all,
 > 
-> This makes it possible to use other diff algorithms than the 'myers'
-> default algorithm, when using the 'git merge-file' command.
-
-I think being able to select the diff algorithm is reasonable. I might 
-be nice to mention the use of "git merge-file" in custom merge drivers 
-as a motivation in the commit message.
-
-> Signed-off-by: Antonin Delpeuch <antonin@delpeuch.eu>
-> ---
->      merge-file: add --diff-algorithm option
+> Here a few more thoughts about this patch, to explain what brought me to 
+> needing that. If this need is misguided, perhaps you could redirect me 
+> to a better solution.
 > 
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1606%2Fwetneb%2Fmerge_file_configurable_diff_algorithm-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1606/wetneb/merge_file_configurable_diff_algorithm-v1
-> Pull-Request: https://github.com/git/git/pull/1606
-> 
->   Documentation/git-merge-file.txt |  5 +++++
->   builtin/merge-file.c             | 28 ++++++++++++++++++++++++++++
->   2 files changed, 33 insertions(+)
-> 
-> diff --git a/Documentation/git-merge-file.txt b/Documentation/git-merge-file.txt
-> index 6a081eacb72..917535217c1 100644
-> --- a/Documentation/git-merge-file.txt
-> +++ b/Documentation/git-merge-file.txt
-> @@ -92,6 +92,11 @@ object store and the object ID of its blob is written to standard output.
->   	Instead of leaving conflicts in the file, resolve conflicts
->   	favouring our (or their or both) side of the lines.
->   
-> +--diff-algorithm <algorithm>::
-> +	Use a different diff algorithm while merging, which can help
-> +	avoid mismerges that occur due to unimportant matching lines
-> +	(such as braces from distinct functions).  See also
-> +	linkgit:git-diff[1] `--diff-algorithm`.
+> I am writing a custom merge driver for Java files. This merge driver 
+> internally calls git-merge-file and then solves the merge conflicts 
+> which only consist of import statements (there might be cases where it 
+> gets it wrong, but I can then use other tools to cleanup those import 
+> statements). When testing this, I noticed that the merge driver 
+> performed more poorly on other sorts of conflicts, compared to the 
+> standard "ort" merge strategy. This is because "ort" uses the 
+> "histogram" diff algorithm, which gives better results than the "myers" 
+> diff algorithm that merge-file uses.
 
-Perhaps we could list the available algorithms here so the user does not 
-have to go searching for them in another man page.
+I cannot comment on this particular use but I think in general calling 
+"git merge-file" from a custom merge driver is perfectly sensible. Have 
+you tested your driver with this patch to see if you get better results 
+with the histogram diff algorithm?
 
->   EXAMPLES
->   --------
-> diff --git a/builtin/merge-file.c b/builtin/merge-file.c
-> index 832c93d8d54..1f987334a31 100644
-> --- a/builtin/merge-file.c
-> +++ b/builtin/merge-file.c
-> @@ -1,5 +1,6 @@
->   #include "builtin.h"
->   #include "abspath.h"
-> +#include "diff.h"
->   #include "hex.h"
->   #include "object-name.h"
->   #include "object-store.h"
-> @@ -28,6 +29,30 @@ static int label_cb(const struct option *opt, const char *arg, int unset)
->   	return 0;
->   }
->   
-> +static int set_diff_algorithm(xpparam_t *xpp,
-> +			      const char *alg)
-> +{
-> +	long diff_algorithm = parse_algorithm_value(alg);
-> +	if (diff_algorithm < 0)
-> +		return -1;
-> +	xpp->flags = (xpp->flags & ~XDF_DIFF_ALGORITHM_MASK) | diff_algorithm;
-> +	return 0;
-> +}
-> +
-> +static int diff_algorithm_cb(const struct option *opt,
-> +				const char *arg, int unset)
-> +{
-> +	xpparam_t *xpp = opt->value;
-> +
-> +	BUG_ON_OPT_NEG(unset);
-> +
-> +	if (set_diff_algorithm(xpp, arg))
-> +		return error(_("option diff-algorithm accepts \"myers\", "
-> +			       "\"minimal\", \"patience\" and \"histogram\""));
-> +
-> +	return 0;
-> +}
-> +
->   int cmd_merge_file(int argc, const char **argv, const char *prefix)
->   {
->   	const char *names[3] = { 0 };
-> @@ -48,6 +73,9 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
->   			    XDL_MERGE_FAVOR_THEIRS),
->   		OPT_SET_INT(0, "union", &xmp.favor, N_("for conflicts, use a union version"),
->   			    XDL_MERGE_FAVOR_UNION),
-> +		OPT_CALLBACK_F(0, "diff-algorithm", &xmp.xpp, N_("<algorithm>"),
-> +			     N_("choose a diff algorithm"),
-> +			     PARSE_OPT_NONEG, diff_algorithm_cb),
->   		OPT_INTEGER(0, "marker-size", &xmp.marker_size,
->   			    N_("for conflicts, use this marker size")),
->   		OPT__QUIET(&quiet, N_("do not warn about conflicts")),
+> Intuitively, if "histogram" is the default diff algorithm used by "git 
+> merge", then it would also make sense to have the same default for "git 
+> merge-file", but I assume that changing this default could be considered 
+> a bad breaking change. So I thought that making this diff algorithm 
+> configurable would be an acceptable move, hence my patch.
 
-This patch looks sensible to me, it would be nice to have some tests though.
+I can see there's an argument for changing the default algorithm of "git 
+merge-file" to match what "ort" uses. I know Elijah found the histogram 
+algorithm gave better results in his testing when he was developing 
+"ort". While it would be a breaking change if on the average the new 
+default gives better conflicts it might be worth it. This patch would 
+mean that someone wanting to use the "myers" algorithm could still do so.
+
+> Of course, the diffing could be configured in other ways, for instance 
+> with its handling of whitespace or EOL (similarly to what the "git-diff" 
+> command offers). I think those options would definitely be worth 
+> exposing in merge-file as well. If you think this makes sense, then I 
+> would be happy to work on a new version of this patch which would 
+> attempt to include all the relevant options. I could also try to add the 
+> corresponding tests.
+
+It would be nice to see some tests for this patch, ideally using a test 
+case that gives different conflicts for "myers" and "histogram". We 
+could add the other options later if there is a demand.
 
 Best Wishes
 
 Phillip
 
-> base-commit: 98009afd24e2304bf923a64750340423473809ff
+> But perhaps my need is misguided? Could it be that I should not be 
+> writing a custom merge driver, but instead use another extension point 
+> to only process the conflicting hunks after execution of the existing 
+> merge driver? I couldn't find such an extension point, but it can well 
+> be that I missed it.
+> 
+> Thank you,
+> 
+> Antonin
+> 
+> 
