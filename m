@@ -1,90 +1,84 @@
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from mout.kundenserver.de (mout.kundenserver.de [217.72.192.73])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 273AB128
-	for <git@vger.kernel.org>; Sun, 19 Nov 2023 11:29:50 -0800 (PST)
-Received: from [192.168.178.189] ([79.246.82.42]) by mrelayeu.kundenserver.de
- (mreue109 [212.227.15.183]) with ESMTPSA (Nemesis) id
- 1MHX3X-1r9SJf1cNF-00DV36; Sun, 19 Nov 2023 20:29:46 +0100
-Message-ID: <5da59ea3-f814-4345-8206-856ae68be1c9@delpeuch.eu>
-Date: Sun, 19 Nov 2023 20:29:41 +0100
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Oa3Qn/v1"
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43393115
+	for <git@vger.kernel.org>; Sun, 19 Nov 2023 15:15:30 -0800 (PST)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id DDC7C1D275B;
+	Sun, 19 Nov 2023 18:15:26 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=7ErZ1CLCnca6yZmUT1s68ZwR4D0xcPgJRnGeEe
+	iT1cw=; b=Oa3Qn/v1/grsjpDsaDHe65razz5xi39wHXMS6boePpoa6Zw8e7hEI0
+	0Y/gZSgf/DU8Dp65GycKdL/9gr2ldaSyXm2k53SF2LYtP6k7zzGvl94IamMdhYLz
+	LMpkzk7DJtf/3zY79tytVtax8sCEzT6I39DLdmE2/vL4swJQdc5IU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id A538F1D2758;
+	Sun, 19 Nov 2023 18:15:26 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.153.120])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 127E01D2756;
+	Sun, 19 Nov 2023 18:15:26 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] Fix a typo in `each_file_in_pack_dir_fn()`'s declaration
+In-Reply-To: <pull.1614.git.1700226915859.gitgitgadget@gmail.com> (Johannes
+	Schindelin via GitGitGadget's message of "Fri, 17 Nov 2023 13:15:15
+	+0000")
+References: <pull.1614.git.1700226915859.gitgitgadget@gmail.com>
+Date: Mon, 20 Nov 2023 08:15:24 +0900
+Message-ID: <xmqqfs11pc6r.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] merge-file: add --diff-algorithm option
-To: phillip.wood@dunelm.org.uk, git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>
-References: <pull.1606.git.git.1699480494355.gitgitgadget@gmail.com>
- <653b08fd-2df3-4a7a-8082-fdb809e87784@delpeuch.eu>
- <de04aec0-a195-45da-8951-bb30f2a629a3@gmail.com>
-Content-Language: en-US
-From: Antonin Delpeuch <antonin@delpeuch.eu>
-In-Reply-To: <de04aec0-a195-45da-8951-bb30f2a629a3@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:B/bpAMo0UiOjGCP0KM5A2WhWv1XHMoFVkn9I1fc5PZtpVNSGrcC
- PV1Atn/X8nAb4FXdIu5Q043AuLGRozOA+kiOD8YS5xjdKQCyXF+5rIxQM7abxZUMwGOeNds
- NI7QOiHEgSha3ZNMqzKsthKSJVjMAC9OvoEEIivqotIWiLWvRhnGOXTulgl4VNOy7gmmsHR
- 88e2+/H69qFzUERGSkbVw==
-UI-OutboundReport: notjunk:1;M01:P0:qdS4YBFlo8g=;diXN3uf4nuihsRfh/seKi6hiqHq
- pqPHyL+OCTkwozajGtamdC/gQ+mkHis2dzPz1bCiPN/60979A6oNwNC6P8Xqn1Fz0HJ7H7mPe
- L/1LdsLXgqgimI2mr4GEvb3VEjqpdUZyzS8/s6fRoj7LNJ86lMla/O/4S076gk0wc9dLJUEpl
- IW+l/g6k+734Tgia1shSc5M/ka7Y5Ub07QJdxpMkoJEmSY7l+lH/aAheN0dYAx8czPoJxiDyp
- ZWqX/OyLCTcXfISqAznGdxeIdWEKc0LLd/kW5IfwkKfZ0zUsoF2bnvV8kD2Ofb54lLniqzWjn
- HlsAmXDEAbNdwijktUi0feoXnEU6wBsrL0j94OZZhmKQ3fkh5hFBpce4SmxAckn9pCIE2+K2X
- PL0ArKvB0mUSMcmT5/dQIVqAHy/1BACePcs+eZKx4asBNTDjKuZgJvalSReQIY3ieAWdwTsr0
- 1/2/xc96/pe0GQDmfiz6Qs+ohvINFqco+jHYREfr2FdpzmQohIek2m16JclHkFXCYai4JLQVV
- gUT35PkrB/f5cKD1/vulKIeTgqTF8p7ae8urRhl5PPbRFLGJ6Wj/sLvm5rYUKHGyrwt5I0pOP
- ZvbO9Rn0zR8v4dBS4wbNPlZx+misQ2aqx9sMXXzjH82yOc017Wsfy8uaJgVGDGcs8ep2azGL8
- V7Mn/NW46PVX99Dx2bV4uvymR1S8UDimEkcc4luUmqpAjhmfQNpHgCb+7qZOMQcFEBfV4XKt6
- HhhmQftZIMGDtWe0BRzkPLBt0wm66I2xAO7yOTWIwijT4NYWooG1ulszCf3EDNkxht7J1DaKx
- 1ojTGrHXItA8zV+vrUqAPYe4M8lduiQv576c6oI/WjkekEedrJ3JpPg3f0IUlSGrMY1YmhFsb
- w4ZMarTh4Gajk/w==
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 85AD9C00-8731-11EE-9794-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-Hi Phillip,
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-Thank you so much for taking the time to review this!
+> Subject: Re: [PATCH] Fix a typo in `each_file_in_pack_dir_fn()`'s declaration
 
-On 19/11/2023 17:43, Phillip Wood wrote:
-> I cannot comment on this particular use but I think in general calling 
-> "git merge-file" from a custom merge driver is perfectly sensible. 
-> Have you tested your driver with this patch to see if you get better 
-> results with the histogram diff algorithm?
+Let's have "packfile.[ch]: " before the title to tell what area the
+helper function is about.
 
-Yes, I can confirm that the results are better in my use case indeed.
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> One parameter is called `file_pach`. On the face of it, this looks as if
+> it was supposed to talk about a `path` instead of a `pach`.
+>
+> However, looking at the way this callback is called, it gets fed the
+> `d_name` from a directory entry, which provides just the file name, not
+> the full path. Therefore, let's fix this by calling the parameter
+> `file_name` instead.
+>  ...
+>  typedef void each_file_in_pack_dir_fn(const char *full_path, size_t full_path_len,
+> -				      const char *file_pach, void *data);
+> +				      const char *file_name, void *data);
 
-> I can see there's an argument for changing the default algorithm of 
-> "git merge-file" to match what "ort" uses. I know Elijah found the 
-> histogram algorithm gave better results in his testing when he was 
-> developing "ort". While it would be a breaking change if on the 
-> average the new default gives better conflicts it might be worth it. 
-> This patch would mean that someone wanting to use the "myers" 
-> algorithm could still do so.
+Very good observation.  We form a pathname to a file in a
+"objects/pack/" subdirectory by concatenating this parameter after
+the full_path/full_path_len parameter, which has the path to that
+subdirectory, so "file_name" definitely is a much better name.
 
-Agreed. I would be happy to submit a follow-up patch to change the 
-default. Or would you prefer to have it in the same patch (as a separate 
-commit)? I was worried this would make my patch less likely to get merged.
+The "full_path" that does not say full path to what directory may
+have room for improvement ("leading_path" or even "packdir"), but
+that's OK.
 
-> It would be nice to see some tests for this patch, ideally using a 
-> test case that gives different conflicts for "myers" and "histogram". 
-> We could add the other options later if there is a demand.
+Thanks for spotting.
 
-Will do.
-
-> Perhaps we could list the available algorithms here so the user does 
-> not have to go searching for them in another man page.
-
-This part is copied from "Documentation/merge-strategies.txt", which 
-redirects to the manual for git-diff in the same way. I assume it was 
-done so that whenever a new diff algorithm is introduced, it only needs 
-documenting in one place. But I agree it is definitely more 
-user-friendly to list the algorithms directly. Should I change the 
-documentation of merge strategies in the same way?
-
-Best wishes,
-
-Antonin
-
+>  void for_each_file_in_pack_dir(const char *objdir,
+>  			       each_file_in_pack_dir_fn fn,
+>  			       void *data);
+>
+> base-commit: cfb8a6e9a93adbe81efca66e6110c9b4d2e57169
