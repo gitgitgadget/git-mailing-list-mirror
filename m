@@ -1,116 +1,486 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="PBomzJdn"
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 278B3E8
-	for <git@vger.kernel.org>; Mon, 20 Nov 2023 11:01:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-	t=1700506886; x=1701111686; i=johannes.schindelin@gmx.de;
-	bh=putMZ0rVUn+xiXoCFjBS8cxVPS1NhVD3u7ZZv7R818w=;
-	h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
-	b=PBomzJdnhEoWrasw2PyI4sVVbYpCTIRvSNKHY3KhJHFCMuRNzcF6vXx7oi47nc+Q
-	 Vw3ztGeOewickMuVcBfu5XTVEGPVqtjvh0GmXQ/hKW2R+7ba2QvSfg/8Sjgujzve+
-	 bx5iI0Y+d/vpCJbwVas6OQLH5tMnkHODXNFgLFtwvxLQ6wIQCcdRdPTVcslqcI4CV
-	 xsQmFT8oPU1/LNXNeI9JfdyKAqPPYHHJd6DfZDVMVTaT5JVy8Mpx6AeQAOzh7nK5m
-	 Yywtp1v/oW9CH8tlxSfDpDynti28KHyY/mShnXuJkoeClLuL3uyQuOFcfaKGGAxb6
-	 WCeu53Zs/x3NaKD0iw==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from
- fv-az1435-256.w10t344lelvuxfmjd4pvrrtsxg.cx.internal.cloudapp.net
- ([20.57.13.220]) by mail.gmx.net (mrgmx105 [212.227.17.168]) with ESMTPSA
- (Nemesis) id 1Mwfac-1rFXq80eHS-00yANr; Mon, 20 Nov 2023 20:01:26 +0100
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-To: git-for-windows@googlegroups.com,
-	git@vger.kernel.org,
-	git-packagers@googlegroups.com
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.43.0
-Date: Mon, 20 Nov 2023 19:01:23 +0000
-Message-ID: <20231120190124.3694-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.42.0
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CHSuYHHo"
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C2AB13D
+	for <git@vger.kernel.org>; Mon, 20 Nov 2023 11:19:23 -0800 (PST)
+Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2c523ac38fbso60529771fa.0
+        for <git@vger.kernel.org>; Mon, 20 Nov 2023 11:19:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1700507961; x=1701112761; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JmlFnBj0HFsqk0XzN1cFxZadVdwnIh5ZdkyvwEBFrCs=;
+        b=CHSuYHHonnXkbAE6hKElnx19/K4X0nvmO451KwTUd5wm0CC1rrvaH52Sv5GYRbuQdz
+         Ng2ocfETqk6v2fYLhjxiFh2mt5fVZk/2TBGLVj6FEwAJDi+TFPPVRwIpYRYej5EGaeCr
+         Xdbqyyca33JcCufBBYEFhpXf+id2O8J84RuRzh2w7RxwHEDnCacV4UqjSiOc2POzZuxP
+         0qfdiFuUQPIc3n/PzOAEnLB++UDRG51Hea1EKGOpXMjPKPqGDzQxe5/B0pppdtI1ANt2
+         idLNFf+eWTXgnCDjIKJ9QqvvFw4tWAAl2XUXhE68WQmvBzPfxEsA2jVnmBdqNASvbkWX
+         Zv/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700507961; x=1701112761;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=JmlFnBj0HFsqk0XzN1cFxZadVdwnIh5ZdkyvwEBFrCs=;
+        b=PkW69JvhK93af+NvOd9KP43Vnet/7kZ23DwPnL8Atdd2hemFX+P3q4L5eDr8Z/4XEf
+         alBFA5mwYTQSNhbdgmdD9szmRfq9uSOqdac8v9LmQyWl06nb9/I6Ud/602qeYPW7Sqhf
+         undm6JlFH/IHAgfUb7r5d2juJ8MMyu1BiyftIDMe6kF9w7JzNcIOxa00z9/FBFWnG/5/
+         KHUlDX8lhI/djzaQRrToH/pIfLmD9Lk8IasFDAGzxb4rk1iWOb30deHIVMyQkq3rsGVQ
+         2fSDgH09+LsMFpXoI8pLDyF87D3a1XBEyhO1fKQDeIGAuHIKaB+46259r8/6otxKJyDX
+         Zffw==
+X-Gm-Message-State: AOJu0Yy1e0AKQfM+oiqfoEgNn7ehrM1IfZJISFRbhouoryvumXJ61V2t
+	c7di7HGhSSuJUX/qJNhfJs+0ILIkDZI=
+X-Google-Smtp-Source: AGHT+IGWNb6P0xYnRdh1tQ4DNjcyWZ4kxsAYCzGKWZ5C/h8yczO3NV7VZ5MqEMWX3dLgDpQRw9+gEQ==
+X-Received: by 2002:a2e:9157:0:b0:2c0:7d6:570a with SMTP id q23-20020a2e9157000000b002c007d6570amr5682790ljg.33.1700507960359;
+        Mon, 20 Nov 2023 11:19:20 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id j3-20020a056000124300b0032f7e832cabsm11993367wrx.90.2023.11.20.11.18.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Nov 2023 11:19:05 -0800 (PST)
+Message-ID: <pull.1606.v2.git.git.1700507932937.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1606.git.git.1699480494355.gitgitgadget@gmail.com>
+References: <pull.1606.git.git.1699480494355.gitgitgadget@gmail.com>
+From: "Antonin Delpeuch via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 20 Nov 2023 19:18:52 +0000
+Subject: [PATCH v2] merge-file: add --diff-algorithm option
+Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Fcc: Sent
-X-Provags-ID: V03:K1:wDkNjHPPatDeUTphR3FQplPe03pgy+zSp3YyBpRzr+UH1w/uSBn
- CUrBDW1ohohAZTlFKQscKk4+YVPLQD15KmVAzJKpgrWJvuUB1Scr/E9rDVr+LSIOtLdMlPd
- E2s3pjHmpAM2KGvuJQtKdOd7p7VUfH5ArBIJIVJRWStw6E62I8RtFeOGBVz7gslYXeOk/y6
- YKViCoKyLBmscvdhcU1Mw==
-UI-OutboundReport: notjunk:1;M01:P0:yubaSugOj90=;eqZdTiXwpXVxijDkLR5qsJ4X0cr
- YlcZ8b8CfOOZu7cWzfFDAP6X/mZ3+T/M2N8l9OZA7CcBYWucFrY2SJ0OOYQFW3E38mCLgYnEL
- bd/Dlwhl5OhHPwPvsS4q5DxjR79TnIdAXV1GVOChveAQfRa4zR8uLyLIm1tg7mAIc6XZU0OgH
- clN7AmSkH1/zedMZeC/MDf8i/dbJ+e0UUV6CP4g7Tw+3WlZcw6/t68ikrLvjOYmmsNTUZfNv/
- xDBbe/2BXcVi5CNWNO9tQhDcxXv1PgqPWUnAcpCOWhnt0a1z4J9ySWcTfcsU/5z0lHS4XmCUB
- G4fzWbg9up9TLyX5ASbqUPZNCcLCeEZPb+bv438leVzG8LhYoL/H4iiYQGd2yDEnQFgdWeaH/
- siNpcf3ZxCatR6nPUtggiy/YszVtid420RYyWJ4W4G6b7+Z4MhUP8HA6cH+igeLhAE0QOt0Z/
- FAW10K9GkSyaDi5mZ1JYAdsoivtPi0pYzjgkEYdD09kgv2lGEA0Te89PWY4dStmEDTo9cqRrj
- FcZAxy9lNnQukpL9wWXzZ/jR2TEL/yq1dixk6+w5YDLuKMVqYMS5/fS3cz7ELEqc9ITgQ2HXv
- HHQCE+6hxiYbkD0MXCC6fYMwWQ1aCM8X8jcKFgbWh8zIZ52tBnmLuZGK4CybjuQKoGrlCOAdk
- qKQiZQo1fZ39tuNN1OKHKZiB4nGa3FnODQ6eCkMv+Lu7Kl6WFLTN/M4eacdtY/l2ybjuEuDzs
- WQ/9R1LpfGFSF2eDMJwj7NrKE3rJjYlgFxcVMF9sfspUk/HBdmbozcfCKcx6g1R/mjmUt5iQ/
- j8apQZtelFEMAdPqwLrXg7MqLJtZKUtS/YcFDGSrP+UMBzMakdoAYkfJDxRR92AtXXEqOomcY
- TE5GgLbTCHWn8MOEmqBwIRY5ZOE2cWsvHNdbh1WZBEtc6iNCg9mMHQVm3WAObpE4vN6KYvWuG
- u2+jCA==
+To: git@vger.kernel.org
+Cc: Phillip Wood <phillip.wood123@gmail.com>,
+    Antonin Delpeuch <antonin@delpeuch.eu>,
+    Antonin Delpeuch <antonin@delpeuch.eu>
 
-Dear Git users,
+From: Antonin Delpeuch <antonin@delpeuch.eu>
 
-I hereby announce that Git for Windows 2.43.0 is available from:
+This makes it possible to use other diff algorithms than the 'myers'
+default algorithm, when using the 'git merge-file' command. This helps
+avoid spurious conflicts by selecting a more recent algorithm such as
+'histogram', for instance when using 'git merge-file' as part of a custom
+merge driver.
 
-    https://gitforwindows.org/
+Signed-off-by: Antonin Delpeuch <antonin@delpeuch.eu>
+Reviewed-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+    merge-file: add --diff-algorithm option
+    
+    Changes since v1:
+    
+     * improve commit message to mention the use case of custom merge
+       drivers
+     * improve documentation to show available options and recommend
+       switching to "histogram"
+     * add tests
+    
+    I have left out:
+    
+     * switching the default to "histogram", because it should only be done
+       in a subsequent release
+     * adding a configuration variable to control this option, because I was
+       not sure how to call it. Perhaps "merge-file.diffAlgorithm"?
 
-Changes since Git for Windows v2.42.0(2) (August 30th 2023)
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1606%2Fwetneb%2Fmerge_file_configurable_diff_algorithm-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1606/wetneb/merge_file_configurable_diff_algorithm-v2
+Pull-Request: https://github.com/git/git/pull/1606
 
-As announced previously, Git for Windows will drop support for Windows
-7 and for Windows 8 in one of the next versions, following Cygwin's and
-MSYS2's lead (Git for Windows relies on MSYS2 for components such as
-Bash and Perl).
+Range-diff vs v1:
 
-Following the footsteps of the MSYS2 and Cygwin projects on which Git
-for Windows depends, the 32-bit variant of Git for Windows is being
-phased out.
+ 1:  4aa453e30be ! 1:  842b5abf33c merge-file: add --diff-algorithm option
+     @@ Commit message
+          merge-file: add --diff-algorithm option
+      
+          This makes it possible to use other diff algorithms than the 'myers'
+     -    default algorithm, when using the 'git merge-file' command.
+     +    default algorithm, when using the 'git merge-file' command. This helps
+     +    avoid spurious conflicts by selecting a more recent algorithm such as
+     +    'histogram', for instance when using 'git merge-file' as part of a custom
+     +    merge driver.
+      
+          Signed-off-by: Antonin Delpeuch <antonin@delpeuch.eu>
+     +    Reviewed-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+      
+       ## Documentation/git-merge-file.txt ##
+      @@ Documentation/git-merge-file.txt: object store and the object ID of its blob is written to standard output.
+       	Instead of leaving conflicts in the file, resolve conflicts
+       	favouring our (or their or both) side of the lines.
+       
+     -+--diff-algorithm <algorithm>::
+     -+	Use a different diff algorithm while merging, which can help
+     ++--diff-algorithm={patience|minimal|histogram|myers}::
+     ++	Use a different diff algorithm while merging. The current default is "myers",
+     ++	but selecting more recent algorithm such as "histogram" can help
+      +	avoid mismerges that occur due to unimportant matching lines
+     -+	(such as braces from distinct functions).  See also
+     ++	(such as braces from distinct functions). See also
+      +	linkgit:git-diff[1] `--diff-algorithm`.
+       
+       EXAMPLES
+     @@ builtin/merge-file.c: int cmd_merge_file(int argc, const char **argv, const char
+       		OPT_INTEGER(0, "marker-size", &xmp.marker_size,
+       			    N_("for conflicts, use this marker size")),
+       		OPT__QUIET(&quiet, N_("do not warn about conflicts")),
+     +
+     + ## t/t6403-merge-file.sh ##
+     +@@ t/t6403-merge-file.sh: test_expect_success 'setup' '
+     + 	deduxit me super semitas jusitiae,
+     + 	EOF
+     + 
+     +-	printf "propter nomen suum." >>new4.txt
+     ++	printf "propter nomen suum." >>new4.txt &&
+     ++
+     ++	cat >base.c <<-\EOF &&
+     ++	int f(int x, int y)
+     ++	{
+     ++		if (x == 0)
+     ++		{
+     ++			return y;
+     ++		}
+     ++		return x;
+     ++	}
+     ++
+     ++	int g(size_t u)
+     ++	{
+     ++		while (u < 30)
+     ++		{
+     ++			u++;
+     ++		}
+     ++		return u;
+     ++	}
+     ++	EOF
+     ++
+     ++	cat >ours.c <<-\EOF &&
+     ++	int g(size_t u)
+     ++	{
+     ++		while (u < 30)
+     ++		{
+     ++			u++;
+     ++		}
+     ++		return u;
+     ++	}
+     ++
+     ++	int h(int x, int y, int z)
+     ++	{
+     ++		if (z == 0)
+     ++		{
+     ++			return x;
+     ++		}
+     ++		return y;
+     ++	}
+     ++	EOF
+     ++
+     ++	cat >theirs.c <<-\EOF
+     ++	int f(int x, int y)
+     ++	{
+     ++		if (x == 0)
+     ++		{
+     ++			return y;
+     ++		}
+     ++		return x;
+     ++	}
+     ++
+     ++	int g(size_t u)
+     ++	{
+     ++		while (u > 34)
+     ++		{
+     ++			u--;
+     ++		}
+     ++		return u;
+     ++	}
+     ++	EOF
+     + '
+     + 
+     + test_expect_success 'merge with no changes' '
+     +@@ t/t6403-merge-file.sh: test_expect_success '--object-id fails without repository' '
+     + 	grep "not a git repository" err
+     + '
+     + 
+     ++test_expect_success 'merging C files with "myers" diff algorithm creates some spurious conflicts' '
+     ++	cat >expect.c <<-\EOF &&
+     ++	int g(size_t u)
+     ++	{
+     ++		while (u < 30)
+     ++		{
+     ++			u++;
+     ++		}
+     ++		return u;
+     ++	}
+     ++
+     ++	int h(int x, int y, int z)
+     ++	{
+     ++	<<<<<<< ours.c
+     ++		if (z == 0)
+     ++	||||||| base.c
+     ++		while (u < 30)
+     ++	=======
+     ++		while (u > 34)
+     ++	>>>>>>> theirs.c
+     ++		{
+     ++	<<<<<<< ours.c
+     ++			return x;
+     ++	||||||| base.c
+     ++			u++;
+     ++	=======
+     ++			u--;
+     ++	>>>>>>> theirs.c
+     ++		}
+     ++		return y;
+     ++	}
+     ++	EOF
+     ++
+     ++	test_must_fail git merge-file -p --diff3 --diff-algorithm myers ours.c base.c theirs.c >myers_output.c &&
+     ++	test_cmp expect.c myers_output.c
+     ++'
+     ++
+     ++test_expect_success 'merging C files with "histogram" diff algorithm avoids some spurious conflicts' '
+     ++	cat >expect.c <<-\EOF &&
+     ++	int g(size_t u)
+     ++	{
+     ++		while (u > 34)
+     ++		{
+     ++			u--;
+     ++		}
+     ++		return u;
+     ++	}
+     ++
+     ++	int h(int x, int y, int z)
+     ++	{
+     ++		if (z == 0)
+     ++		{
+     ++			return x;
+     ++		}
+     ++		return y;
+     ++	}
+     ++	EOF
+     ++
+     ++	git merge-file -p --diff3 --diff-algorithm histogram ours.c base.c theirs.c >histogram_output.c &&
+     ++	test_cmp expect.c histogram_output.c
+     ++'
+     ++
+     + test_done
 
-New Features
 
-  * Comes with Git v2.43.0.
-  * Comes with MSYS2 runtime v3.4.9.
-  * Comes with GNU TLS v3.8.1.
-  * When installing into a Windows setup with Mandatory Address Space
-    Layout Randomization (ASLR) enabled, which is incompatible with the
-    MSYS2 runtime powering Git Bash, SSH and some other programs
-    distributed with Git for Windows, the Git for Windows installer now
-    offers to add exceptions that will allow those programs to work as
-    expected.
-  * Comes with OpenSSH v9.5.P1.
-  * Comes with cURL v8.4.0.
-  * Comes with OpenSSL v3.1.4.
-  * Comes with Git Credential Manager v2.4.1.
-  * Comes with Bash v5.2.21.
-  * Comes with MinTTY v3.7.0.
+ Documentation/git-merge-file.txt |   6 ++
+ builtin/merge-file.c             |  28 +++++++
+ t/t6403-merge-file.sh            | 124 ++++++++++++++++++++++++++++++-
+ 3 files changed, 157 insertions(+), 1 deletion(-)
 
-Bug Fixes
+diff --git a/Documentation/git-merge-file.txt b/Documentation/git-merge-file.txt
+index 6a081eacb72..71915a00fa4 100644
+--- a/Documentation/git-merge-file.txt
++++ b/Documentation/git-merge-file.txt
+@@ -92,6 +92,12 @@ object store and the object ID of its blob is written to standard output.
+ 	Instead of leaving conflicts in the file, resolve conflicts
+ 	favouring our (or their or both) side of the lines.
+ 
++--diff-algorithm={patience|minimal|histogram|myers}::
++	Use a different diff algorithm while merging. The current default is "myers",
++	but selecting more recent algorithm such as "histogram" can help
++	avoid mismerges that occur due to unimportant matching lines
++	(such as braces from distinct functions). See also
++	linkgit:git-diff[1] `--diff-algorithm`.
+ 
+ EXAMPLES
+ --------
+diff --git a/builtin/merge-file.c b/builtin/merge-file.c
+index 832c93d8d54..1f987334a31 100644
+--- a/builtin/merge-file.c
++++ b/builtin/merge-file.c
+@@ -1,5 +1,6 @@
+ #include "builtin.h"
+ #include "abspath.h"
++#include "diff.h"
+ #include "hex.h"
+ #include "object-name.h"
+ #include "object-store.h"
+@@ -28,6 +29,30 @@ static int label_cb(const struct option *opt, const char *arg, int unset)
+ 	return 0;
+ }
+ 
++static int set_diff_algorithm(xpparam_t *xpp,
++			      const char *alg)
++{
++	long diff_algorithm = parse_algorithm_value(alg);
++	if (diff_algorithm < 0)
++		return -1;
++	xpp->flags = (xpp->flags & ~XDF_DIFF_ALGORITHM_MASK) | diff_algorithm;
++	return 0;
++}
++
++static int diff_algorithm_cb(const struct option *opt,
++				const char *arg, int unset)
++{
++	xpparam_t *xpp = opt->value;
++
++	BUG_ON_OPT_NEG(unset);
++
++	if (set_diff_algorithm(xpp, arg))
++		return error(_("option diff-algorithm accepts \"myers\", "
++			       "\"minimal\", \"patience\" and \"histogram\""));
++
++	return 0;
++}
++
+ int cmd_merge_file(int argc, const char **argv, const char *prefix)
+ {
+ 	const char *names[3] = { 0 };
+@@ -48,6 +73,9 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
+ 			    XDL_MERGE_FAVOR_THEIRS),
+ 		OPT_SET_INT(0, "union", &xmp.favor, N_("for conflicts, use a union version"),
+ 			    XDL_MERGE_FAVOR_UNION),
++		OPT_CALLBACK_F(0, "diff-algorithm", &xmp.xpp, N_("<algorithm>"),
++			     N_("choose a diff algorithm"),
++			     PARSE_OPT_NONEG, diff_algorithm_cb),
+ 		OPT_INTEGER(0, "marker-size", &xmp.marker_size,
+ 			    N_("for conflicts, use this marker size")),
+ 		OPT__QUIET(&quiet, N_("do not warn about conflicts")),
+diff --git a/t/t6403-merge-file.sh b/t/t6403-merge-file.sh
+index 2c92209ecab..fb872c5a113 100755
+--- a/t/t6403-merge-file.sh
++++ b/t/t6403-merge-file.sh
+@@ -56,7 +56,67 @@ test_expect_success 'setup' '
+ 	deduxit me super semitas jusitiae,
+ 	EOF
+ 
+-	printf "propter nomen suum." >>new4.txt
++	printf "propter nomen suum." >>new4.txt &&
++
++	cat >base.c <<-\EOF &&
++	int f(int x, int y)
++	{
++		if (x == 0)
++		{
++			return y;
++		}
++		return x;
++	}
++
++	int g(size_t u)
++	{
++		while (u < 30)
++		{
++			u++;
++		}
++		return u;
++	}
++	EOF
++
++	cat >ours.c <<-\EOF &&
++	int g(size_t u)
++	{
++		while (u < 30)
++		{
++			u++;
++		}
++		return u;
++	}
++
++	int h(int x, int y, int z)
++	{
++		if (z == 0)
++		{
++			return x;
++		}
++		return y;
++	}
++	EOF
++
++	cat >theirs.c <<-\EOF
++	int f(int x, int y)
++	{
++		if (x == 0)
++		{
++			return y;
++		}
++		return x;
++	}
++
++	int g(size_t u)
++	{
++		while (u > 34)
++		{
++			u--;
++		}
++		return u;
++	}
++	EOF
+ '
+ 
+ test_expect_success 'merge with no changes' '
+@@ -447,4 +507,66 @@ test_expect_success '--object-id fails without repository' '
+ 	grep "not a git repository" err
+ '
+ 
++test_expect_success 'merging C files with "myers" diff algorithm creates some spurious conflicts' '
++	cat >expect.c <<-\EOF &&
++	int g(size_t u)
++	{
++		while (u < 30)
++		{
++			u++;
++		}
++		return u;
++	}
++
++	int h(int x, int y, int z)
++	{
++	<<<<<<< ours.c
++		if (z == 0)
++	||||||| base.c
++		while (u < 30)
++	=======
++		while (u > 34)
++	>>>>>>> theirs.c
++		{
++	<<<<<<< ours.c
++			return x;
++	||||||| base.c
++			u++;
++	=======
++			u--;
++	>>>>>>> theirs.c
++		}
++		return y;
++	}
++	EOF
++
++	test_must_fail git merge-file -p --diff3 --diff-algorithm myers ours.c base.c theirs.c >myers_output.c &&
++	test_cmp expect.c myers_output.c
++'
++
++test_expect_success 'merging C files with "histogram" diff algorithm avoids some spurious conflicts' '
++	cat >expect.c <<-\EOF &&
++	int g(size_t u)
++	{
++		while (u > 34)
++		{
++			u--;
++		}
++		return u;
++	}
++
++	int h(int x, int y, int z)
++	{
++		if (z == 0)
++		{
++			return x;
++		}
++		return y;
++	}
++	EOF
++
++	git merge-file -p --diff3 --diff-algorithm histogram ours.c base.c theirs.c >histogram_output.c &&
++	test_cmp expect.c histogram_output.c
++'
++
+ test_done
 
-  * Symbolic links whose target is an absolute path without the drive
-    prefix accidentally had a drive prefix added when checked out,
-    rendering them "eternally modified". This bug has been fixed.
-  * Git for Windows's installer is no longer confused by global GIT_*
-    environment variables.
-  * The installer no longer claims that "fast-forward or merge" is the
-    default git pull behavior: The default behavior has changed in Git
-    a while ago, to "fast-forward only".
-
-Git-2.43.0-64-bit.exe | a6058d7c4c16bfa5bcd6fde051a92de8c68535fd7ebade55fc0ab1c41be3c8d5
-Git-2.43.0-32-bit.exe | aee1587a4004c6a57b614c81fdc2ae1fa33de0daaf6b650cf6467e4253e024a9
-PortableGit-2.43.0-64-bit.7z.exe | c76216d032685fa972d129eca30f8c9fb957eb9f46ccbce954e70e07d6211961
-PortableGit-2.43.0-32-bit.7z.exe | c33f9aa7bf9c59e24db71b65e9d75b1e8532562175afef380119aa1eee90afd1
-MinGit-2.43.0-64-bit.zip | 1905d93068e986258fafc69517df8fddff829bb2a289c1fa4dcc6cdf720ddf36
-MinGit-2.43.0-32-bit.zip | d46fac9c17b55627f714aefa36c3b00d81651d2bb4076a12b4455b5f841f1a9e
-MinGit-2.43.0-busybox-64-bit.zip | 2bd705f2c378ccbbf25a9095432aada3ac9dd2d963eff51421944beaccdc3e0c
-MinGit-2.43.0-busybox-32-bit.zip | 70799d1f5b9d2469f44299ff33461efd7814531dd9bfb7ae912d1cbf83478162
-Git-2.43.0-64-bit.tar.bz2 | 4c19cc73003e55ec71d6f1ce4a961ab32ca22f9c57217d224982535161123f79
-Git-2.43.0-32-bit.tar.bz2 | 192f58080247f1eea2845fb61e37e91c05a89b44260c7e045b936ca3e45ac7f6
-
-Ciao,
-Johannes
+base-commit: 98009afd24e2304bf923a64750340423473809ff
+-- 
+gitgitgadget
