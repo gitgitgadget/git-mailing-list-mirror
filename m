@@ -1,9 +1,9 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=archlinux.org header.i=@archlinux.org header.b="ADjwBe0u";
-	dkim=permerror (0-bit key) header.d=archlinux.org header.i=@archlinux.org header.b="5ppAOcjC"
+	dkim=pass (4096-bit key) header.d=archlinux.org header.i=@archlinux.org header.b="ZNt06AWC";
+	dkim=permerror (0-bit key) header.d=archlinux.org header.i=@archlinux.org header.b="ex/Yi4Sh"
 Received: from mail.archlinux.org (mail.archlinux.org [95.216.189.61])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6C6FD47
-	for <git@vger.kernel.org>; Tue, 21 Nov 2023 12:34:23 -0800 (PST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B48971A3
+	for <git@vger.kernel.org>; Tue, 21 Nov 2023 12:34:26 -0800 (PST)
 From: "Jan Alexander Steffens (heftig)" <heftig@archlinux.org>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=archlinux.org;
 	s=dkim-rsa; t=1700598862;
@@ -11,26 +11,26 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=archlinux.org;
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=wBM3pheqAfvIwZ94WX+6jcakvF1IDMrEpgtOY6z9ixQ=;
-	b=ADjwBe0u1pXxp71tID5qcHh4sjigf/zT0vpv+CVeG8gplAFYxB96mIC1R2Uap8lsAkujqc
-	OC2O0HIHGk6O2r8JaOzAXCieFwDoH3QR7Inh5Om322vc9QuTna2ffBbj6l3XsRZhysmGdp
-	JG6ft0tJBgvjqiUFoUh03RgH7D/ZSgZ3EbBjKS7F/4FOcQ0QE9AutiEaS05AKLwlVTS6Ld
-	5BBfs6jvOo5dO2wOkP45C7b4TlPcHrF9ttcMnbiMnHoNQvjd7cmmBNmT2jCX6iPxOi5gg+
-	YioeXBHCA9xGcdhjMIH+V9Cqu/z/XKU5mtiYtv7PtTZbSwQDR98YiTjoanNQbvbhdjXE1A
-	MAC4oYj4ESs3rpFqNf/3kbo4SOwcCuHbDG7O8nmZXKrURpwpVfEPQ9RS87b3dpieImc0r/
-	EnaOhn/B1Sg7yDhyirmEzU2asMkoiOo8M9w/6027ofGb3zZt+8PNAt5ejzK1zuneuRwLD+
-	jgTUDvusEXMOQDvkMyYYrbzd8a3ANX2UIW3SDpqWxTetdlhIQEurBsftKqPlE6wAU0LDdJ
-	JEpyLS49Xdjenjcw3C1ozpnJuAycHq9Mz28LtHuXefzGgyZTNLxGthmTDE+d270RQ5ACRx
-	CGKqUMjnKjZW48PjHPawCxIsmfNOqMvlWQxY75Jbluu+y3PRI8J50=
+	bh=U17eXxRTr7NJp7PzSMwWnoxspEkh00JPf6CNEyYFse4=;
+	b=ZNt06AWC6YIomO8EFAmEqdZiTLJenr8aPG+id1WvWIh5xhRIKcuxwkmw5zAOtfbo8ocQmX
+	p76f8lC5aoDDZh8/sKbDWkx7AbBq1wDMYdpGVZGzJQvGoN8ndqOsgrx/v2WXYgS4on4qBS
+	BbKsNTa+DDj7FGjBJwYLza715QCUY3t/SDaQrfng2SgC6oXurnuDL0fVLl6beV7cpNVGCn
+	WIZ06ypHwVkCkHi5Ed2/GSVgZTt16JZUq1Wl+JgZQRUpi7nf7Q1dSswTxqAJch2HA0IEbl
+	sCDizcAncmTeFbBfq4apTP93cnkeCdvTjNG4G5GcHgVPX5uXraLq6ic/QkqvMStnGWOi+1
+	X3sgBbOz3cYpV7nzwf6ijjPDff4yXPOV1Y4nXlojTEhgFu1RKKY/Fw2hH4k3Uql7vXYJ0+
+	NqRHe5xPWbBPguoEWZyNw/SNjfi4YOiTNrpk6rw6i8C18ce1L2TS/mrJ8Jb6fwenfNXbzi
+	9dbU9SlhdxQo5KnsEZizfgIn7F+6CcVJbFIuuTvwM9g9wEef/5QXCrLjPUcqKDMvQDGIbO
+	SoTlgLqjWVfb2y4UYt0MsKPXOxSRZL+HtbxlhyTrjh4k84Qt5bd0psDHemacRBXiAMDIkV
+	P/FaNoXi6SOCkd7nsJUe56bJGeZdkLqieCyxAh9cLOAoEMSsyBpiw=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=archlinux.org;
 	s=dkim-ed25519; t=1700598862;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=wBM3pheqAfvIwZ94WX+6jcakvF1IDMrEpgtOY6z9ixQ=;
-	b=5ppAOcjCB45A+KF6ZcAxsKkAtWtewq1vaxeMXVOzBfof0wGtsnrnDTxdxE2hq/aKTR9kV2
-	kFzj+D9wR/aFaTCA==
+	bh=U17eXxRTr7NJp7PzSMwWnoxspEkh00JPf6CNEyYFse4=;
+	b=ex/Yi4ShWPrHjw3Scqbs+ImlqFdaV/wkY/qJj6dLCf6geau2sPMovYnv586hGUadpxPvHp
+	dGe5Dpnf7R402XDA==
 Authentication-Results: mail.archlinux.org;
 	auth=pass smtp.auth=heftig smtp.mailfrom=heftig@archlinux.org
 To: git@vger.kernel.org
@@ -39,9 +39,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
 	Denton Liu <liu.denton@gmail.com>,
 	"Jan Alexander Steffens (heftig)" <heftig@archlinux.org>
-Subject: [PATCH v2 5/6] t7419: test that we correctly handle renamed submodules
-Date: Tue, 21 Nov 2023 21:32:46 +0100
-Message-ID: <20231121203413.176414-5-heftig@archlinux.org>
+Subject: [PATCH v2 6/6] t7420: test that we correctly handle renamed submodules
+Date: Tue, 21 Nov 2023 21:32:47 +0100
+Message-ID: <20231121203413.176414-6-heftig@archlinux.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231121203413.176414-1-heftig@archlinux.org>
 References: <20231003185047.2697995-1-heftig@archlinux.org>
@@ -54,61 +54,78 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add the submodule again with an explicitly different name and path. Test
-that calling set-branch modifies the correct .gitmodules entries. Make
-sure we don't create a section named after the path instead of the name.
+Create a second submodule with a name that differs from its path. Test
+that calling set-url modifies the correct .gitmodules entries. Make sure
+we don't create a section named after the path instead of the name.
 
 Signed-off-by: Jan Alexander Steffens (heftig) <heftig@archlinux.org>
 ---
- t/t7419-submodule-set-branch.sh | 30 +++++++++++++++++++++++++++++-
- 1 file changed, 29 insertions(+), 1 deletion(-)
+ t/t7420-submodule-set-url.sh | 26 ++++++++++++++++++++++++--
+ 1 file changed, 24 insertions(+), 2 deletions(-)
 
-diff --git a/t/t7419-submodule-set-branch.sh b/t/t7419-submodule-set-branch.sh
-index 3cd30865a7..a5d1bc5c54 100755
---- a/t/t7419-submodule-set-branch.sh
-+++ b/t/t7419-submodule-set-branch.sh
-@@ -38,7 +38,8 @@ test_expect_success 'submodule config cache setup' '
- 	(cd super &&
+diff --git a/t/t7420-submodule-set-url.sh b/t/t7420-submodule-set-url.sh
+index aa63d806fe..bf7f15ee79 100755
+--- a/t/t7420-submodule-set-url.sh
++++ b/t/t7420-submodule-set-url.sh
+@@ -25,34 +25,56 @@ test_expect_success 'submodule config cache setup' '
+ 		git add file &&
+ 		git commit -ma
+ 	) &&
++	mkdir namedsubmodule &&
++	(
++		cd namedsubmodule &&
++		git init &&
++		echo 1 >file &&
++		git add file &&
++		git commit -m1
++	) &&
+ 	mkdir super &&
+ 	(
+ 		cd super &&
  		git init &&
  		git submodule add ../submodule &&
 -		git commit -m "add submodule"
-+		git submodule add --name thename ../submodule thepath &&
++		git submodule add --name thename ../namedsubmodule thepath &&
 +		git commit -m "add submodules"
  	)
  '
  
-@@ -100,4 +101,31 @@ test_expect_success 'test submodule set-branch -d' '
- 	)
+ test_expect_success 'test submodule set-url' '
+-	# add a commit and move the submodule (change the url)
++	# add commits and move the submodules (change the urls)
+ 	(
+ 		cd submodule &&
+ 		echo b >>file &&
+ 		git add file &&
+ 		git commit -mb
+ 	) &&
+ 	mv submodule newsubmodule &&
+ 
++	(
++		cd namedsubmodule &&
++		echo 2 >>file &&
++		git add file &&
++		git commit -m2
++	) &&
++	mv namedsubmodule newnamedsubmodule &&
++
+ 	git -C newsubmodule show >expect &&
++	git -C newnamedsubmodule show >>expect &&
+ 	(
+ 		cd super &&
+ 		test_must_fail git submodule update --remote &&
+ 		git submodule set-url submodule ../newsubmodule &&
+ 		test_cmp_config ../newsubmodule -f .gitmodules submodule.submodule.url &&
++		git submodule set-url thepath ../newnamedsubmodule &&
++		test_cmp_config ../newnamedsubmodule -f .gitmodules submodule.thename.url &&
++		test_cmp_config "" -f .gitmodules --default "" submodule.thepath.url &&
+ 		git submodule update --remote
+ 	) &&
+ 	git -C super/submodule show >actual &&
++	git -C super/thepath show >>actual &&
+ 	test_cmp expect actual
  '
  
-+test_expect_success 'test submodule set-branch --branch with named submodule' '
-+	(cd super &&
-+		git submodule set-branch --branch topic thepath &&
-+		test_cmp_config topic -f .gitmodules submodule.thename.branch &&
-+		test_cmp_config "" -f .gitmodules --default "" submodule.thepath.branch &&
-+		git submodule update --remote &&
-+		cat <<-\EOF >expect &&
-+		b
-+		EOF
-+		git -C thepath show -s --pretty=%s >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'test submodule set-branch --default with named submodule' '
-+	(cd super &&
-+		git submodule set-branch --default thepath &&
-+		test_cmp_config "" -f .gitmodules --default "" submodule.thename.branch &&
-+		git submodule update --remote &&
-+		cat <<-\EOF >expect &&
-+		a
-+		EOF
-+		git -C thepath show -s --pretty=%s >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
- test_done
 -- 
 2.43.0
 
