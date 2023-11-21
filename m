@@ -1,66 +1,66 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mXySXk++";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="noXh2FS3"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qDruGn10";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gB7PJR7T"
 Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AE2A90
-	for <git@vger.kernel.org>; Mon, 20 Nov 2023 23:04:38 -0800 (PST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B0B990
+	for <git@vger.kernel.org>; Mon, 20 Nov 2023 23:04:42 -0800 (PST)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.nyi.internal (Postfix) with ESMTP id 7A6B35C16B0;
-	Tue, 21 Nov 2023 02:04:37 -0500 (EST)
+	by mailout.nyi.internal (Postfix) with ESMTP id 789015C16F6;
+	Tue, 21 Nov 2023 02:04:41 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Tue, 21 Nov 2023 02:04:37 -0500
+  by compute3.internal (MEProxy); Tue, 21 Nov 2023 02:04:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm1; t=1700550277; x=1700636677; bh=OY
-	rVHvJw9rPBjDo146T+1ZsiZSRz31wEIj7NrpAnM5Y=; b=mXySXk++4W0hMEoKDA
-	bVXazZ8mL2nJ4DLfDrxGGOQvEjp0fx5XXkiNEIEQOKjxm06zwTorrusXD5G3xQIF
-	5GRO255Llrcw8xCeajGChL0hqCMXqjiwvlplSLTvZFHneFnd5rtUdi2iKLZziAqZ
-	9jsQAt8sxJEdC0ZIEGhK64acyYdfFwcVsNbPxtOR3SZJH/O7HENIDYQM8LKukp+e
-	I5NU5AxYX5YIJKIvgcvZiAgyxhFF5mHOaygw7nULX+i2DhQNCDXRsGvDhKxyRfFO
-	L9n/Rbt8bp9Wb5K13xxeQQk3kz700lu/EQ5eR1G2x9EFT1bNRTK7XyDX7bsdjhHw
-	5xcA==
+	:subject:subject:to:to; s=fm1; t=1700550281; x=1700636681; bh=q4
+	lEyws93ZJX6pimXEwvcwRWXb7+dfvNrihseQkQfm4=; b=qDruGn10inPacAyDji
+	MUtm8lti/rAm4JSLwrnHVHc5Zq6yY4zbXz6uuFQuT7RowSeAzIGG5enLZZK8rv5U
+	yKWBgyuTH1hTCxVWknJbFbRNVKbIP/EDOlEgQWmD1wXd4DOZvGcd6+d/rP412Ski
+	Fvz+fsV/HWG5BgVDQqz18atNBlm7g2VLY4xu9Axf+/w+TxCH+RZYcUXB3F3PnkxX
+	QCzJYFN5xGQUCzxnbQ7Pw6bwiaXAES7PmoZbHt8cIB/XPct0h2nG7w7GBZf3FXEK
+	aNQ+tvJNBP0zbxNB8PQCJMS7dhcv+oSQ0ElbBrH7U9L7RKcjmc+Bef/bdnQCRckQ
+	/wxg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm1; t=1700550277; x=1700636677; bh=OYrVHvJw9rPBj
-	Do146T+1ZsiZSRz31wEIj7NrpAnM5Y=; b=noXh2FS3mCbYtIqtoTq0od4nOUy9e
-	yknb5jZICGYQketZbWflXiGNBpkl9fuKs1uu913OgNYOslk6Y8sAvM7j3Y7baj/A
-	6eKR4DZzLttLJCCtmnJLf/U8roi67fAqm3hhw2ifFLldkSQVoPPzMU8yRNgDmwA5
-	f/G8ycEq1nJUX4Ut0i5fkpnNJpLuOSujUphs2LYBDORYvyEwcUSRsjFWLU7R/jFw
-	LIrzQ8JTir2YNy0A1ySaCsSZou9X8mXWJSu4m+ofKPvyByhpC70CRJkYn9HZDzTl
-	4jWuDfWiKRCkGxyxtLOr8TjTu8YG8ORENd9fvv4JsBX1F9XXor/zj3ZMQ==
-X-ME-Sender: <xms:hVZcZV4vwBG0i0jMcgtKqkIhUjnaHwBkvp9q4TkMpkzbmXYRUtIcUw>
-    <xme:hVZcZS67ALBMbBM9S_cBoFjmBk-ZFdZ5p7rUZIUwoN8aif0wnGQG5wMDYUskY6xdh
-    YlIEANPBbn8e2Bzvw>
-X-ME-Received: <xmr:hVZcZcdeQwIOs-uMo74Si6R1dr0m2Ac9PDbSgRmtlO45ashYggas5L4IFQl2UWty1QEznweJF1MlVjdda2dcOY2J2EN7mO4JzIc7lSojdU4D>
+	:x-sasl-enc; s=fm1; t=1700550281; x=1700636681; bh=q4lEyws93ZJX6
+	pimXEwvcwRWXb7+dfvNrihseQkQfm4=; b=gB7PJR7TIdnG3zEZoW5gGDJXuIheN
+	NkWk1Oy76fBMn433Krif9WhmKJuZFBbYDSdGR6OFfljade0rzYEoO/YdzPTOxlnM
+	lbvCOe92oBiqifYk2B6ID9+fUaVhLt2sLzPI9DxtgvLhKlb9GA5XbtDXUcWslPjC
+	YgP6ZyE4sw7TurPKaGfqtrr58KQgBarWBIy0JRO1BODMxJmo2ffwaU1bZFzTzIJf
+	rANm6JyW7+4E8cbR7AVjw04rRoQcLv+rSsiwCnQwNF195MS9+/OJ9hC/VNIplOj8
+	0Qxn18WljugH7QQJ2T5okz8IXy7foPjPjT7kBn+/PZaLF3DSxCob7OaiA==
+X-ME-Sender: <xms:iVZcZUUW3GtFiZjrOHmKP9-QcQWgOVFg149E2P4khzvpu0I1TUFpVw>
+    <xme:iVZcZYmVSU4u4wwQS2oazVsPDmmUsLV61DcW_mETjmBU1oWkClYpeEggPmDJfAZc7
+    Z55wV1zK0UqZvfCKQ>
+X-ME-Received: <xmr:iVZcZYYZWhGKvLBUdykxjm8S_mB01WTnZqE1knNhONQyNSewJFraJjLv4fLCcy7BtJPl_HMcjiJaKeMk-yajTPeCNwM8qXm1ZuhZfyA77X2j>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudegkedguddtfecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
     enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
     rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
     gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
-    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
+    teenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
     esphhkshdrihhm
-X-ME-Proxy: <xmx:hVZcZeKQLbQ5uCP4R_GLmjASg-axVfMnXvYjnBM1KbcmHMdoAxVu1g>
-    <xmx:hVZcZZKALXCuAX6PzLcSErWnHcl6hYVN0vWRsmRAX4FAd2c6c9bB_g>
-    <xmx:hVZcZXyGYUiAadlJ0A0GwApnpDt6l1D4g6vmNNzCv6VxV-bUKZkD2w>
-    <xmx:hVZcZXgW3fDXZjt4Agd-Ude9KNEwZ5BkykDvb0UORNvg94T42QLxSQ>
+X-ME-Proxy: <xmx:iVZcZTWutla6EWi2UdvZdtdZ7IwwFxpJ6wELHrJJH1HiMX4vyzTFPw>
+    <xmx:iVZcZemOa9eR-HDcsWjfOMjXZckdTbVdkTP1WOg9PkWqUvsheNftBQ>
+    <xmx:iVZcZYfL46gdEgkYuZKtAOQYO7HSLz4vo-uds2kvU2KTXlXjzwRZ4g>
+    <xmx:iVZcZStrv9ehV22qEAr1zfOPNG4NVtwZwC75HSEpi0BW8Ct5eNgl9w>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 21 Nov 2023 02:04:36 -0500 (EST)
+ 21 Nov 2023 02:04:40 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 6737a536 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 21 Nov 2023 07:03:44 +0000 (UTC)
-Date: Tue, 21 Nov 2023 08:04:35 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 6524aec5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 21 Nov 2023 07:03:48 +0000 (UTC)
+Date: Tue, 21 Nov 2023 08:04:39 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Han-Wen Nienhuys <hanwenn@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 7/8] reftable/merged: reuse buffer to compute record keys
-Message-ID: <23c060d1e21573581ca6c5db50ca756b61078e3e.1700549493.git.ps@pks.im>
+Subject: [PATCH 8/8] reftable/stack: fix stale lock when dying
+Message-ID: <065c8803ac18633313af264f70c83717c4f6e10c.1700549493.git.ps@pks.im>
 References: <cover.1700549493.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -69,107 +69,188 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="fQCZfEIeKmcLEGYV"
+	protocol="application/pgp-signature"; boundary="YFSkH5v+AcoGLgLT"
 Content-Disposition: inline
 In-Reply-To: <cover.1700549493.git.ps@pks.im>
 
 
---fQCZfEIeKmcLEGYV
+--YFSkH5v+AcoGLgLT
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When iterating over entries in the merged iterator's queue, we compute
-the key of each of the entries and write it into a buffer. We do not
-reuse the buffer though and thus re-allocate it on every iteration,
-which is wasteful given that we never transfer ownership of the
-allocated bytes outside of the loop.
+When starting a transaction via `reftable_stack_init_addition()`, we
+create a lockfile for the reftable stack itself which we'll write the
+new list of tables to. But if we terminate abnormally e.g. via a call to
+`die()`, then we do not remove the lockfile. Subsequent executions of
+Git which try to modify references will thus fail with an out-of-date
+error.
 
-Refactor the code to reuse the buffer. This also fixes a potential
-memory leak when `merged_iter_advance_subiter()` returns an error.
+Fix this bug by registering the lock as a `struct tempfile`, which
+ensures automatic cleanup for us.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/merged.c | 20 +++++++++-----------
- 1 file changed, 9 insertions(+), 11 deletions(-)
+ reftable/stack.c | 47 +++++++++++++++--------------------------------
+ 1 file changed, 15 insertions(+), 32 deletions(-)
 
-diff --git a/reftable/merged.c b/reftable/merged.c
-index 5ded470c08..cd03f6da13 100644
---- a/reftable/merged.c
-+++ b/reftable/merged.c
-@@ -85,7 +85,7 @@ static int merged_iter_advance_subiter(struct merged_iter=
- *mi, size_t idx)
- static int merged_iter_next_entry(struct merged_iter *mi,
- 				  struct reftable_record *rec)
- {
--	struct strbuf entry_key =3D STRBUF_INIT;
-+	struct strbuf entry_key =3D STRBUF_INIT, k =3D STRBUF_INIT;
- 	struct pq_entry entry =3D { 0 };
- 	int err =3D 0;
+diff --git a/reftable/stack.c b/reftable/stack.c
+index 2dd2373360..2f1494aef2 100644
+--- a/reftable/stack.c
++++ b/reftable/stack.c
+@@ -17,6 +17,8 @@ license that can be found in the LICENSE file or at
+ #include "reftable-merged.h"
+ #include "writer.h"
 =20
-@@ -108,30 +108,28 @@ static int merged_iter_next_entry(struct merged_iter =
-*mi,
- 	reftable_record_key(&entry.rec, &entry_key);
- 	while (!merged_iter_pqueue_is_empty(mi->pq)) {
- 		struct pq_entry top =3D merged_iter_pqueue_top(mi->pq);
--		struct strbuf k =3D STRBUF_INIT;
--		int err =3D 0, cmp =3D 0;
-+		int cmp =3D 0;
-=20
- 		reftable_record_key(&top.rec, &k);
-=20
- 		cmp =3D strbuf_cmp(&k, &entry_key);
--		strbuf_release(&k);
--
--		if (cmp > 0) {
-+		if (cmp > 0)
- 			break;
--		}
-=20
- 		merged_iter_pqueue_remove(&mi->pq);
- 		err =3D merged_iter_advance_subiter(mi, top.index);
--		if (err < 0) {
--			return err;
--		}
-+		if (err < 0)
-+			goto done;
- 		reftable_record_release(&top.rec);
- 	}
-=20
- 	reftable_record_copy_from(rec, &entry.rec, hash_size(mi->hash_id));
++#include "tempfile.h"
 +
-+done:
- 	reftable_record_release(&entry.rec);
- 	strbuf_release(&entry_key);
--	return 0;
-+	strbuf_release(&k);
-+	return err;
+ static int stack_try_add(struct reftable_stack *st,
+ 			 int (*write_table)(struct reftable_writer *wr,
+ 					    void *arg),
+@@ -440,8 +442,7 @@ static void format_name(struct strbuf *dest, uint64_t m=
+in, uint64_t max)
  }
 =20
- static int merged_iter_next(struct merged_iter *mi, struct reftable_record=
- *rec)
+ struct reftable_addition {
+-	int lock_file_fd;
+-	struct strbuf lock_file_name;
++	struct tempfile *lock_file;
+ 	struct reftable_stack *stack;
+=20
+ 	char **new_tables;
+@@ -449,24 +450,19 @@ struct reftable_addition {
+ 	uint64_t next_update_index;
+ };
+=20
+-#define REFTABLE_ADDITION_INIT                \
+-	{                                     \
+-		.lock_file_name =3D STRBUF_INIT \
+-	}
++#define REFTABLE_ADDITION_INIT {0}
+=20
+ static int reftable_stack_init_addition(struct reftable_addition *add,
+ 					struct reftable_stack *st)
+ {
++	struct strbuf lock_file_name =3D STRBUF_INIT;
+ 	int err =3D 0;
+ 	add->stack =3D st;
+=20
+-	strbuf_reset(&add->lock_file_name);
+-	strbuf_addstr(&add->lock_file_name, st->list_file);
+-	strbuf_addstr(&add->lock_file_name, ".lock");
++	strbuf_addf(&lock_file_name, "%s.lock", st->list_file);
+=20
+-	add->lock_file_fd =3D open(add->lock_file_name.buf,
+-				 O_EXCL | O_CREAT | O_WRONLY, 0666);
+-	if (add->lock_file_fd < 0) {
++	add->lock_file =3D create_tempfile(lock_file_name.buf);
++	if (!add->lock_file) {
+ 		if (errno =3D=3D EEXIST) {
+ 			err =3D REFTABLE_LOCK_ERROR;
+ 		} else {
+@@ -475,7 +471,7 @@ static int reftable_stack_init_addition(struct reftable=
+_addition *add,
+ 		goto done;
+ 	}
+ 	if (st->config.default_permissions) {
+-		if (chmod(add->lock_file_name.buf, st->config.default_permissions) < 0) {
++		if (chmod(lock_file_name.buf, st->config.default_permissions) < 0) {
+ 			err =3D REFTABLE_IO_ERROR;
+ 			goto done;
+ 		}
+@@ -495,6 +491,7 @@ static int reftable_stack_init_addition(struct reftable=
+_addition *add,
+ 	if (err) {
+ 		reftable_addition_close(add);
+ 	}
++	strbuf_release(&lock_file_name);
+ 	return err;
+ }
+=20
+@@ -512,15 +509,7 @@ static void reftable_addition_close(struct reftable_ad=
+dition *add)
+ 	add->new_tables =3D NULL;
+ 	add->new_tables_len =3D 0;
+=20
+-	if (add->lock_file_fd > 0) {
+-		close(add->lock_file_fd);
+-		add->lock_file_fd =3D 0;
+-	}
+-	if (add->lock_file_name.len > 0) {
+-		unlink(add->lock_file_name.buf);
+-		strbuf_release(&add->lock_file_name);
+-	}
+-
++	delete_tempfile(&add->lock_file);
+ 	strbuf_release(&nm);
+ }
+=20
+@@ -536,8 +525,10 @@ void reftable_addition_destroy(struct reftable_additio=
+n *add)
+ int reftable_addition_commit(struct reftable_addition *add)
+ {
+ 	struct strbuf table_list =3D STRBUF_INIT;
++	int lock_file_fd =3D get_tempfile_fd(add->lock_file);
+ 	int i =3D 0;
+ 	int err =3D 0;
++
+ 	if (add->new_tables_len =3D=3D 0)
+ 		goto done;
+=20
+@@ -550,28 +541,20 @@ int reftable_addition_commit(struct reftable_addition=
+ *add)
+ 		strbuf_addstr(&table_list, "\n");
+ 	}
+=20
+-	err =3D write_in_full(add->lock_file_fd, table_list.buf, table_list.len);
++	err =3D write_in_full(lock_file_fd, table_list.buf, table_list.len);
+ 	strbuf_release(&table_list);
+ 	if (err < 0) {
+ 		err =3D REFTABLE_IO_ERROR;
+ 		goto done;
+ 	}
+=20
+-	err =3D close(add->lock_file_fd);
+-	add->lock_file_fd =3D 0;
+-	if (err < 0) {
+-		err =3D REFTABLE_IO_ERROR;
+-		goto done;
+-	}
+-
+-	err =3D rename(add->lock_file_name.buf, add->stack->list_file);
++	err =3D rename_tempfile(&add->lock_file, add->stack->list_file);
+ 	if (err < 0) {
+ 		err =3D REFTABLE_IO_ERROR;
+ 		goto done;
+ 	}
+=20
+ 	/* success, no more state to clean up. */
+-	strbuf_release(&add->lock_file_name);
+ 	for (i =3D 0; i < add->new_tables_len; i++) {
+ 		reftable_free(add->new_tables[i]);
+ 	}
 --=20
 2.42.0
 
 
---fQCZfEIeKmcLEGYV
+--YFSkH5v+AcoGLgLT
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVcVoIACgkQVbJhu7ck
-PpQyYw/+LQm/G6cZfpX1Q/e+SdwvNx8aqJuJE7V0aWNXcrTOBxJQc5IgtA1vyVVv
-KXpnQqoqHaiimfwtI0yf5Vz3OcQMxpAmO4vWgEckp8IGtwb4CJ9M/0u1LKjtP4PX
-GWjldopyjKyhKeU0OHtZnVMb1i0zXFFNN1xmeTJx6vQVMH5XEZ7modXrrFsUJWdM
-FjS6KVPtQEwqb8ZXdnZsfOrvLO15Pz/07zH31HxlzIA7d8P3pcBlpwwjZqPVBffv
-+zRbAyZRq6FsVtFEkOwZeHPhmMTb5+LUlIZsLxNdjPg2dQ6tJt838wOvLQe+nLaE
-4AOe3XNox4UojaHYFnUWuq1BRq4NsmddkwGQNTccQ1L5ZKnYxbn+RAOW+XhNzdF6
-EKvIOSdyDfZDO7ZZwwq93jJddzmSj0FHwXZ1yl1zZbU579/g2qzYOZQsQcqeMmzW
-nxlUtagTybaDSp3jbp7IUsKu71YF2203YmRS82NO2G8haT57Ko5GWV0Ib9HAllra
-MvqATDrQZyfOH6ka6/aiLNI2tYlzZ1zkO4BZ/nTE33SDIC5CfFEHu0O/6JYe4Vfo
-x7LxZmw4MaPmYNJ9oisgfjoRePBqyYsBJg+yBeB2WUISn3ayL/R21O4EZiQPCtBF
-x9JF3QrJTg5TBQJkqNKf99UzyGxTkWH63aockBAjobsPvwL9SXg=
-=zBbF
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVcVoYACgkQVbJhu7ck
+PpQPsg/9H/pWflCiShhaPJjrelp3ve8NUMnmPwluK2QatZRreZqRpa1/3NyPmagr
++6G6shZBwNF9eDEzB3jFbcHLreEN5RUA0JiKlwE6MK1tP3nk4p5wM/1qQTqQ7GKF
+23tCvaDUB9q6mxS7BAvMXrXNoTgkJ+rRhFjhF9L74eEcncxh19HomgGHgMChV9mR
++ssFnbh45KsGfdMzRp30Wv5X4ZMLL0uxGLwG+0J+ucKJYvPb9p7KWOB1ZNM/2keM
+B98R4dmiwOVhoF6Gsc8qB+Qc8idnMk0UFsI05m2Lk3QDX6FKYvM4mgQY7V5yBYGC
+ynVdRb/yCfMRcNV0y/6Sdnj4GhIqUmBtq+I/ryk6UkyTFO6NoAiQYBPMSCBBHA/c
+wX66BpJ5SuKPD/EyiyAvWL9GoKD5ybHsWkpSl+Ekfpb9AGiHxbuEqxXnFlj3jDd1
+m1rB9CIwN7Uq50B/c2Jj/l9gitQCsl7uKu0XMz+CMWXhdbc9VVIBJnripPQROiJ3
+TCic6e0RyHtEhIiyP2tM1EnUi5yn+JzUR6BU6SgAp4U+zYs5CrE4g33NMqyj4qC5
+otf5MT/TC180ffr3fGxQbqskTZzHBkn/Q24MKRQb9tBSGAviykWgHKkAsO7fkBBJ
+6GYjcH43/QYwVpy0qTXvvGAClvHRe2sTE/BJhLeql+E6Co+t6eA=
+=KSTy
 -----END PGP SIGNATURE-----
 
---fQCZfEIeKmcLEGYV--
+--YFSkH5v+AcoGLgLT--
