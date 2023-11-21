@@ -1,206 +1,178 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Q2wgDh6T";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b+hhi54/"
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A66B21712
-	for <git@vger.kernel.org>; Tue, 21 Nov 2023 05:46:59 -0800 (PST)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id 1A0285C0E37;
-	Tue, 21 Nov 2023 08:46:57 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Tue, 21 Nov 2023 08:46:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:sender:subject:subject:to:to;
-	 s=fm1; t=1700574417; x=1700660817; bh=L+LewG991CCfdP/nGgGFJqkBL
-	/yT9XvilI42sJHU1jQ=; b=Q2wgDh6TpBG2RjLxPI1ljpo73MCX9u6/7JfzbbTc1
-	ZNGwhAprzZpUBhptku/OTUIB816R0Z75yqV81nfsA/INCLycy4i4Ttkekc62/Qaj
-	EJkMV1rnH8+aGonXmf26m57fqeMUHQjWj0FXfRPCTEUN+VOPLWnLI5uYq2WLUKOR
-	pD81woGCl8tERP+b2MsITtkSuBNrKN209Ffcx5DSgmzGtZIjikdQlh02jZVeQOQQ
-	qrj0q8IazbHA8R2wziukvmqondIm8SnYHP7fmfVX5xENkEeIV3lgoHyjfoZE8++X
-	2CYzdGjA+sfjgtsuss8gT1nRZmYCeDNws0KyKvzfeaVYg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:sender:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1700574417; x=1700660817; bh=L+LewG991CCfdP/nGgGFJqkBL/yT9XvilI4
-	2sJHU1jQ=; b=b+hhi54/b2fzaITQ+zvxih/AOrA3o9srvXLnGAy81oNUX/I2t/H
-	JRbnrgO2xkB0KIbl+7M2PqgHJ7VzPUFq0O8ZRV6NmDEmNBc8clG0RoVH+vzbBPDW
-	pJXpDhtDZbOR1FbDvbxZdVd5vjUEoXHxzPmm9SQSqOckd72XpLxLH7s5ZQb5Ntv9
-	bIotwrswhyx/aa/ujo7fKDo3STKefSzaSrPgsmaRvfHmD5VAed9fdmE5J2Asadju
-	5f+tzKkTjnMTN2ioMaeDPecx53ylmNE9r25gGJzWy7SgkyuT+mhjeFVNwb2e8cZx
-	vJXA7nwLcIhZUFCDkUlQE3IkiObunAYIjGA==
-X-ME-Sender: <xms:0LRcZeB_JI4rW_Y23ucjBXigYr7GPlR8ot4IVHsCYqeq1NvqPn8W5A>
-    <xme:0LRcZYjO47oAitvu5bcId72QxfCRHn6CLCwa637nLaOzfNCr61LPo6aBLOp-ld_jf
-    tWRoUCC1nJc8WzjXQ>
-X-ME-Received: <xmr:0LRcZRl4TYsaHdX0zBOB9MeNG3G9U7WcRg_DEQTdHBUcV-qcahgf2gxol1Ywjd7LHdiPoY1gTVwDhqZBzK5MpY5wn77ljheQ5Ga7PwdiQmDw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudegledggeelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkgggtugesghdtreertddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epuefguedtueeiheetleevgedujeekjeehleejjefhhffghfevgfekueekjedtieejnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimh
-X-ME-Proxy: <xmx:0LRcZcwE0pPW8vBSYlJMKOOm33sILr8hXD8xz7awXA79Gq8qatXSJg>
-    <xmx:0LRcZTQXDzF4G11DbP6yNIG9S82B0VT3yl_qRs-9EBCMl6vUb4uuwA>
-    <xmx:0LRcZXY1HG9rc6qkVArNlqMkHQPHQJ9TkV8GwS4HjTmAc0nkaUhoRQ>
-    <xmx:0bRcZedWqhUSCODKyO1ec6mILdi6urHy284K6p76e8eh8sZVqfCgsw>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 21 Nov 2023 08:46:55 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 68c557d3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 21 Nov 2023 13:46:01 +0000 (UTC)
-Date: Tue, 21 Nov 2023 14:46:52 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Han-Wen Nienhuys <hanwenn@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Terry Parker <tparker@google.com>
-Subject: reftable: How to represent deleted referees of symrefs in the reflog?
-Message-ID: <ZVy0zKcmc8tjmgzs@tanuki>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="CjRQ7xid"
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 188D81A3
+	for <git@vger.kernel.org>; Tue, 21 Nov 2023 06:25:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+	t=1700576720; x=1701181520; i=johannes.schindelin@gmx.de;
+	bh=5M6busmg9QBQTceGU5KEvr2Uppc9ZKW4IadgKzTnS3I=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:
+	 References;
+	b=CjRQ7xidz+mAiRuQevsMniZyx4KHVZQm2/eFJhaD4X/+LqwaL/LUv/Yl2nn9+J0O
+	 jbLUbmPkcE/8EMIFem7+ykfGemC4XQZOPzAPwR0GE+HUdubl2qScXkn6/kEKh6FAh
+	 sedHblcFaBYsWu+KmrK3/CSfzJ6zlQnp0QZx/ciAxGlLHn71DAp4mjx4u+XU1VZoj
+	 NOQB8n4VYvMkSsib1BXZ5tZMNhLmFqjpCVjCvTjORl4NPh6H//b/RAjqSfWwXRoUX
+	 vd2jgTm9zwYxAi1wpcsz9LAHRI4jxZ/CCLUxOaLMWzPJnr663TT3V6u3EvHlMp4ds
+	 L/FMXeLqgatl7JHZig==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.215.165]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MIx3C-1qmG780gVW-00KRuw; Tue, 21
+ Nov 2023 15:25:20 +0100
+Date: Tue, 21 Nov 2023 15:25:18 +0100 (CET)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Todd Zullinger <tmz@pobox.com>
+cc: git@vger.kernel.org, Matt Burke <spraints@gmail.com>, 
+    Victoria Dye <vdye@github.com>, 
+    =?UTF-8?Q?Matthias_A=C3=9Fhauer?= <mha1993@live.de>
+Subject: Re: Migration of git-scm.com to a static web site: ready for
+ review/testing
+In-Reply-To: <ZVgoKPAg6jKZk_M6@pobox.com>
+Message-ID: <1d83b8f8-b739-6277-ac4f-e7fe6ff2d2fe@gmx.de>
+References: <6f7d20b4-a725-0ef9-f6d3-ff2810da9e7a@gmx.de> <ZVeUQEG5jIzKbvmT@pobox.com> <4dd9b45d-b352-d8ba-3314-96ab48f7abf7@gmx.de> <ZVgoKPAg6jKZk_M6@pobox.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="A1JSs48Iwvy1Zmik"
-Content-Disposition: inline
+Content-Type: multipart/mixed; boundary="8323328-1593516225-1700576720=:482"
+X-Provags-ID: V03:K1:CYwI+5TWZoJ0QvLjAcH2jPE2Ukt82OKcpKmrzVxoqEWYT7QyMHa
+ 2gypzXXWVOE7Pae2YRXWzZtDYAYTeVYUO7LVw2eRIsrK432mQv6YCH9qsk3Zg2bO80R5F2E
+ SiX+gOfIBrFuPjXl92jVL1zExBKmR2WHQh9DKeljHRPbPFSBP/q/J3nO4pYvissC0+Pd5ED
+ Qh1+sE7Th+PrIkAKrAsRw==
+UI-OutboundReport: notjunk:1;M01:P0:dtFPcB24opY=;CZAdxI0jFMlnBuE22lJBnAG7pQ5
+ cVCUDkVSOD2OttR6finAyXJLhHDEnlM08yvGHqhtUrTTLqe1vvMNDY/JnMuJcyxRZg1i6lXvX
+ 9KmhUc31viCRvU/xhske7Ikb2Djd+RIEWR+wIhc0Jnx8To5CDxskwe8qorXJw0VKjC5LRl9Ld
+ 3fxRpaekDc8B1sN46XQoCubY9Ijg6nqjhFLq6+vDZcxWN0qTDhkUvBXH0HBr0MFNHrdw8cSNo
+ Fp0kp7dyXXkengng08Pr28ptMh3LC0d+/CrTUmK8N4MvH9uo4GIAXxW9I1mAJD9zVUxYBd+fe
+ K5EsLtUEq3Ay+H2QQgVawTFUy5abt4MQZp5NtfwS6lANQZitq+b92yNj63lv76OZrCEDDYfkX
+ BeNZIZTjWIL7jwQXzpM4AXM464UpbuVLudS3PBeBpU1sOiHPJEL5VV8tZZwqbRV8T2IoScZAX
+ J6P/3JJLKgprVeTRbubDGB53Eaj7aMRLYGcK3sSMyIhy1vpY5KljNdXb6gcMD+TfAmRsj37EN
+ kaFPryqu8lDb23mxx/QmexWm/Y9UkTpAKeUt5oMOCeOmb5AQQx2/CYZPY3LUUuAYJRNWyppWH
+ U6tVehKoWd0DQ5WnQEQEBtqk3yN3V0oTk8vDX11xFt2R2OTlbgFpdIycUeiOOBnu/h79VA+bw
+ yhEWCHrQNtU0SVO7/M7TKrSkRZcqFZOyLNlcnnMHviw6BIqHrOLTDIpM6pZ3TACJ9OlO3yhro
+ kPWjVzFqi3dQiVh99H73vn+oU+shunzxRAyV1u9g55U1dgPgI+87mpedbrIOUuWVt+zOG8gJC
+ NeYNIqyLUuI1+YMb4341awxy/5ZD+vX+DCAOZUxSUprr61atDkjU0hU3iILCGMjCk2fk2wtTD
+ 4npiF51WKnh6b5iNnifeJkhmkKR698b1fiI9wTRMOel0f494zXFDnTbnfY2YYZNh49QB3Olxa
+ MaU0Fl4k0PNpHKFlNDcRuWqvlm8=
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
---A1JSs48Iwvy1Zmik
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--8323328-1593516225-1700576720=:482
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+Hi Todd,
 
-I'm currently trying to fully understand how exactly reflogs and reflog
-entries are supposed to be deleted in the reftable backend. For ref
-records it's easy enough, as explained in the technical documentation
-for reftables that is part of our tree:
+On Fri, 17 Nov 2023, Todd Zullinger wrote:
 
-> Deletion of any reference can be explicitly stored by setting the type
-> to 0x0 and omitting the value field of the ref_record. This serves as
-> a tombstone, overriding any assertions about the existence of the
-> reference from earlier files in the stack.
+> Johannes Schindelin wrote:
+> >> For checking links, a tool like linkcheker[1] is very handy.
+> >> This is run against the local docs in the Fedora package
+> >> builds to catch broken links.
+> >
+> > Hmm, `linkchecker` is really slow for me, even locally.
+>
+> Yeah, it took an hour and a half to run for me, both on an
+> old laptop and a fast server with plenty of threads,
+> bandwidth, and memory.
+>
+> Checking the git HTML documentation takes under 30 seconds,
+> which is largely the only place I've used it.  It has been
+> very helpful in catching broken links in the docs during the
+> build and the time is short enough that I never minded.
 
-So you simply create a new ref record with type 0x0 and are done.
+I found https://lychee.cli.rs/#/ in the meantime and figured out how to
+use it in a local setup:
 
-For log records it seems to be a bit of a different story though.
-Again, quoting the technical documentation:
+First, I run:
 
-> The log_type = 0x0 is mostly useful for git stash drop, removing an
-> entry from the reflog of refs/stash in a transaction file (below),
-> without needing to rewrite larger files. Readers reading a stack of
-> reflogs must treat this as a deletion.
+	HUGO_TIMEOUT=3D777 HUGO_BASEURL=3D HUGO_UGLYURLS=3Dfalse time hugo
 
-To me it seems like deletions in this case only delete a particular log
-entry instead of the complete log for a particular reference. And some
-older discussion [1] seems to confirm my hunch that a complete reflog is
-deleted not with `log_type = 0x0`, but instead by writing the null
-object ID as new ID.
+The first `HUGO_*` setting is to make sure that even though I sometimes
+use all of the cores of my laptop's CPU it should not fail. The other two
+are to override settings from `hugo.yml` so that `lychee` can handle the
+output (`lychee` will not auto-append `.html`, unlike GitHub Pages, and
+would therefore mis-detect tons of broken links, without
+`HUGO_UGLYURLS=3Dfalse`).
 
-So: a single entry is deleted with `log_type = 0x0`, the complete reflog
-entry is deleted with the null object ID as new ID. Fair enough, even
-though the documentation could be updated to make this easier to
-understand. I'll happily do so if my understanding is correct here.
+In my setup, this command typically runs for something like half a minute,
+but sometimes takes for as long as 1 minute. (I noticed that it is much
+slower when I open the directory in VS Code because I'm running this in
+WSL and the filesystem watcher kind of eats all resources.)
 
-In any case though, this proposed behaviour is not sufficient to cover
-all cases that the files-based reflog supports. The following case may
-be weird, but we do have tests for it in t1400:
+After that, I run:
 
-```
- $ git init repo
-Initialized empty Git repository in /tmp/repo/.git/
- $ cd repo/
- $ git commit --allow-empty --message initial-commit
-[main (root-commit) 9f10b3f] initial-commit
- # Everything looks as expected up to this point.
- $ git reflog show HEAD
-9f10b3f (HEAD -> main) HEAD@{0}: commit (initial): initial-commit
+	time lychee --offline --exclude-mail \
+	        --exclude file:///path/to/repo.git/ \
+		--exclude file:///caminho/para/o/reposit%C3%B3rio.git/ \
+		--exclude file:///ruta/a/repositorio.git/ \
+		--exclude file:///sl%C3%B3%C3%B0/til/hirsla.git/ \
+		--exclude file:///Pfad/zum/Repo.git/ \
+		--exclude file:///chemin/du/d%C3%A9p%C3%B4t.git/ \
+		--exclude file:///srv/git/project.git \
+		--exclude "file://$PWD/public/pagefind/pagefind-ui.css" \
+		--format markdown -o lychee-local.md public/
 
- # This behaviour is a bit more on the weird side. We delete the
- # referee, and that causes the files backend to claim that the reflog
- # for HEAD is gone, as well. The reflog still exists though, as
- # demonstrated in the next command.
- $ git update-ref -m delete-main -d refs/heads/main
- $ git reflog show HEAD
-fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
-Use '--' to separate paths from revisions, like this:
-'git <command> [<revision>...] -- [<file>...]'
+Without `--offline`, there would be a couple of broken links (the
+http://git.or.cz/gitwiki/InterfacesFrontendsAndTools link leads to
+"Forbidden", it needs to be changed to https://).
 
- # We now re-create the referee, which revives the reflog _including_
- # the old entry.
- $ git update-ref -m recreate-main refs/heads/main 9f10b3f
- $ git reflog show HEAD
-9f10b3f (HEAD -> main) HEAD@{0}: recreate-main
-9f10b3f (HEAD -> main) HEAD@{2}: commit (initial): initial-commit
+The `file:///` URLs are all examples that are not expected to be valid.
+And we do not want to check the emails (tons of `xyz@example.com` would be
+"broken").
 
- $ cat .git/logs/HEAD
-0000000000000000000000000000000000000000 9f10b3f9b20962690fdeff76cd592722fbf57deb Patrick Steinhardt <ps@pks.im> 1700573003 +0100	commit (initial): initial-commit
-9f10b3f9b20962690fdeff76cd592722fbf57deb 0000000000000000000000000000000000000000 Patrick Steinhardt <ps@pks.im> 1700573060 +0100	delete-main
-0000000000000000000000000000000000000000 9f10b3f9b20962690fdeff76cd592722fbf57deb Patrick Steinhardt <ps@pks.im> 1700573078 +0100	recreate-main
-```
+This command typically takes another half minute, sometimes a bit longer.
 
-It kind of feels like the second step in the files backend where the
-reflog is claimed to not exist is buggy -- I'd have expected to still
-see the reflog, as the HEAD reference exists quite alright and has never
-stopped to exist. And in the third step, I'd have expected to see three
-reflog entries, including the deletion that is indeed still present in
-the on-disk logfile.
+Given those times and the configurability (and the lure of a GitHub
+Action that could be easily integrated into a GitHub workflow:
+https://github.com/marketplace/actions/lychee-broken-link-checker), I have
+up on linkchecker and focused exclusively on lychee.
 
-But with the reftable backend the problem becomes worse: we cannot even
-represent the fact that the reflog still exists, but that the deletion
-of the referee has caused the HEAD to point to the null OID, because the
-null OID indicates complete deletion of the reflog. Consequentially, if
-we wrote the null OID, we'd only be able to see the last log entry here.
+Now, when I started working on this on Friday, lychee reported about
+12,000 broken links.
 
-It may totally be that I'm missing something obvious here. But if not,
-it leaves us with a couple of options for how to fix it:
+There were a couple of legitimate mistakes I made (when feeding paths to
+Hugo's `relURL` function, the path must not have a leading slash or it
+will remain unchanged, for example). These are fixed.
 
-    1. Disregard this edge case and accept that the reftable backend
-       does not do exactly the same thing as the files backend in very
-       specific situations like this.
+But there were also many other issues such as some manual page translation
+being incomplete yet linking to not-yet-existing pages. In those cases, I
+changed he code to generate redirects to the English version. For example,
+https://git.github.io/git-scm.com/docs/git-clone/fr#_git has a link to
+`git[1]` that _should_ lead to the French version of the `git` manual
+page. However, that does not exist. So both the Rails App as well as the
+static website redirect to the English variant of that page.
 
-    2. Change the reftable format so that it can discern these cases,
-       e.g. by indicating deletion via a new log type.
+My most recent lychee run results in 0 broken links.
 
-    3. Change the files backend to adapt.
+As a bonus, some of the links that are currently broken on
+https://git-scm.com/ are fixed in https://git.github.io/git-scm.com/.
+For example, following the `Pull Request Referl=C9=99ri` link at the top o=
+f
+https://git-scm.com/book/az/v2/Appendix-C:-Git-%C6%8Fmrl%C9%99ri-Plumbing-=
+%C6%8Fmrl%C9%99ri/
+leads to a 404. But following it in
+https://git.github.io/git-scm.com/book/az/v2/Appendix-C:-Git-%C6%8Fmrl%C9%=
+99ri-Plumbing-%C6%8Fmrl%C9%99ri/
+directs the browser to the correct URL:
+https://git.github.io/git-scm.com/book/az/v2/GitHub-Bir-Layih%C9%99nin-Sax=
+lan%C4%B1lmas%C4%B1/#_pr_refs
 
-None of these alternatives feel particularly great to me. In my opinion
-(2) is likely the best option, but would require us to change the format
-format that's already in use by Google in the context of multiple
-projects. So I'm not quite sure how thrilled you folks at Google and
-other users of the reftable library are with this prospect.
+Another thing that is broken on https://git-scm.com/ are the footnotes in
+the Czech translation of the ProGit book. These were broken in the Hugo
+version, too, but now they are fixed. See e.g.
+https://dscho.github.io/git-scm.com/book/cs/v2/Z%C3%A1klady-pr%C3%A1ce-se-=
+syst%C3%A9mem-Git-Zobrazen%C3%AD-historie-reviz%C3%AD/#_footnotedef_7
+and note that the Rails App redirects to
+https://git-scm.com/book/cs/v2/Z%C3%A1klady-pr%C3%A1ce-se-syst%C3%A9mem-Gi=
+t-Zobrazen%C3%AD-historie-reviz%C3%AD/ch00/_footnotedef_7
+when clicking on the `[7]`, which 404s.
 
-Anyway, happy to hear about alternative takes or corrections.
+Could you double-check that the links in the current version?
 
-Patrick
+Thank you,
+Johannes
 
-[1]: <CAFQ2z_P-cf38yR-VyvfDSgPUO_d38mgsi32UkRSPWMZKJOmjZg@mail.gmail.com>
-
---A1JSs48Iwvy1Zmik
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVctMcACgkQVbJhu7ck
-PpSqKA/9GHgYallwO5wsSWu8qbtR/Nia83/5CZ5aTbFqbUpJHrQqt71nuGNRjflA
-d7fE/7+DX0zpk9dhppTI0jAui+F4c/4od1KILwkSexz1iG3x7x4CuRux4Cnbc60s
-Hl8HCDhDyrBNWjnZubD7RM3xAjz55uWbwp2BRPIn7M2dc0Y+monf9sGtZh2YEJaO
-lhRCdwufDY5N1XxYRF5r0oSF2wqUZXFBgXPZgNwAtSFIbJLA6KqlKViWi2foQPRs
-3zvX++PYW0fExwjZGqLpv3X0YYU8yjSn7XvV7SXA4Amw9hO6KMXsfjZ/JkFk2kBl
-MIIVW6XwlwsMrJDTEzbiUXqwPHV+0w4gbrVKWPZU5Io58ne9758wy0Q6CM3vFF9X
-6LbTkPurnVj36Xcw8khsZPgfsc1QFP/3MTmJlqo4uH3sgvEfi1FRZON9WBgWnzVE
-nOzEzW5LrY77g0OVJ3mb/NMznEXDOParM3o9WdBG+t8mImu5hP+hl9oBYd/38ZAN
-6IUJA/MGgSN3YBpVv0O88nbp51xRNl616hFTifWJ6obuL8wqiXHLj4PXQUztKVma
-tfZedab2Rj+8BstDwUOfI7qzal9paH+LTkapohO45BoAdx5IGZgzRtfS/UVH93me
-4c+J2ukDolGTdxaghUKT+zDuMk7OpIY9BF7zZUVV52ultpYeLJA=
-=7AVb
------END PGP SIGNATURE-----
-
---A1JSs48Iwvy1Zmik--
+--8323328-1593516225-1700576720=:482--
