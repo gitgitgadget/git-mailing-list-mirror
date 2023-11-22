@@ -1,131 +1,67 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=archlinux.org header.i=@archlinux.org header.b="ZNt06AWC";
-	dkim=permerror (0-bit key) header.d=archlinux.org header.i=@archlinux.org header.b="ex/Yi4Sh"
-Received: from mail.archlinux.org (mail.archlinux.org [95.216.189.61])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B48971A3
-	for <git@vger.kernel.org>; Tue, 21 Nov 2023 12:34:26 -0800 (PST)
-From: "Jan Alexander Steffens (heftig)" <heftig@archlinux.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=archlinux.org;
-	s=dkim-rsa; t=1700598862;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=U17eXxRTr7NJp7PzSMwWnoxspEkh00JPf6CNEyYFse4=;
-	b=ZNt06AWC6YIomO8EFAmEqdZiTLJenr8aPG+id1WvWIh5xhRIKcuxwkmw5zAOtfbo8ocQmX
-	p76f8lC5aoDDZh8/sKbDWkx7AbBq1wDMYdpGVZGzJQvGoN8ndqOsgrx/v2WXYgS4on4qBS
-	BbKsNTa+DDj7FGjBJwYLza715QCUY3t/SDaQrfng2SgC6oXurnuDL0fVLl6beV7cpNVGCn
-	WIZ06ypHwVkCkHi5Ed2/GSVgZTt16JZUq1Wl+JgZQRUpi7nf7Q1dSswTxqAJch2HA0IEbl
-	sCDizcAncmTeFbBfq4apTP93cnkeCdvTjNG4G5GcHgVPX5uXraLq6ic/QkqvMStnGWOi+1
-	X3sgBbOz3cYpV7nzwf6ijjPDff4yXPOV1Y4nXlojTEhgFu1RKKY/Fw2hH4k3Uql7vXYJ0+
-	NqRHe5xPWbBPguoEWZyNw/SNjfi4YOiTNrpk6rw6i8C18ce1L2TS/mrJ8Jb6fwenfNXbzi
-	9dbU9SlhdxQo5KnsEZizfgIn7F+6CcVJbFIuuTvwM9g9wEef/5QXCrLjPUcqKDMvQDGIbO
-	SoTlgLqjWVfb2y4UYt0MsKPXOxSRZL+HtbxlhyTrjh4k84Qt5bd0psDHemacRBXiAMDIkV
-	P/FaNoXi6SOCkd7nsJUe56bJGeZdkLqieCyxAh9cLOAoEMSsyBpiw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=archlinux.org;
-	s=dkim-ed25519; t=1700598862;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=U17eXxRTr7NJp7PzSMwWnoxspEkh00JPf6CNEyYFse4=;
-	b=ex/Yi4ShWPrHjw3Scqbs+ImlqFdaV/wkY/qJj6dLCf6geau2sPMovYnv586hGUadpxPvHp
-	dGe5Dpnf7R402XDA==
-Authentication-Results: mail.archlinux.org;
-	auth=pass smtp.auth=heftig smtp.mailfrom=heftig@archlinux.org
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Shourya Shukla <shouryashukla.oo@gmail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
-	Denton Liu <liu.denton@gmail.com>,
-	"Jan Alexander Steffens (heftig)" <heftig@archlinux.org>
-Subject: [PATCH v2 6/6] t7420: test that we correctly handle renamed submodules
-Date: Tue, 21 Nov 2023 21:32:47 +0100
-Message-ID: <20231121203413.176414-6-heftig@archlinux.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20231121203413.176414-1-heftig@archlinux.org>
-References: <20231003185047.2697995-1-heftig@archlinux.org>
- <20231121203413.176414-1-heftig@archlinux.org>
+	dkim=pass (2048-bit key) header.d=me.com header.i=@me.com header.b="iwgvkG3B"
+X-Greylist: delayed 413 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 21 Nov 2023 16:35:58 PST
+Received: from qs51p00im-qukt01080501.me.com (qs51p00im-qukt01080501.me.com [17.57.155.22])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B8E610E
+	for <git@vger.kernel.org>; Tue, 21 Nov 2023 16:35:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=1a1hai;
+	t=1700612944; bh=sQbRyWGMYXCgfsjLnjz8IXZPAxjxidlq9M7JJbC0HIo=;
+	h=From:Content-Type:Mime-Version:Date:Subject:Message-Id:To;
+	b=iwgvkG3BAW1DWsivG4AN/M6mwDVVDt/Sm3dqRdXdkEgOZo81K1HYBRVVAybRW1kZo
+	 ejAV+giDTuJJydk3nj+fVkoszVfxcurjuUgg3lYbWEFfy3pGE/dEiJ3XIc3C4IHxt4
+	 ZAIy/DmRDVMnCJe1kR/DkwSfL8REBz4Svwso0G8eteeVANwCQjzes3353QAHny9JNu
+	 KL3g1wtLfBS3PxJr/e1FIGxE6EXAnZcV2/5r555eAAwtp1Mr809wfk7WVoB9oycAer
+	 fx6+uW3VGUxkySlxEyaaAXAWRwktN13A1OMLIdOwuIEgauEUGtFelffAOgBDhd+CFg
+	 Lu/8qOTiYNnzA==
+Received: from smtpclient.apple (qs51p00im-dlb-asmtp-mailmevip.me.com [17.57.155.28])
+	by qs51p00im-qukt01080501.me.com (Postfix) with ESMTPSA id A8EB819803DB;
+	Wed, 22 Nov 2023 00:29:02 +0000 (UTC)
+From: Craig H Maynard <chmaynard@me.com>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.200.91.1.1\))
+Date: Tue, 21 Nov 2023 19:28:36 -0500
+Subject: Orphan branch not well-defined?
+Message-Id: <FE2AD666-88DE-4F70-8D6D-3A426689EB41@me.com>
+To: Git Community <git@vger.kernel.org>
+X-Mailer: Apple Mail (2.3774.200.91.1.1)
+X-Proofpoint-ORIG-GUID: obKtxcOtGXu_q8yaMbyGh_E1FaRpadSD
+X-Proofpoint-GUID: obKtxcOtGXu_q8yaMbyGh_E1FaRpadSD
+X-Proofpoint-Virus-Version: =?UTF-8?Q?vendor=3Dfsecure_engine=3D1.1.170-22c6f66c430a71ce266a39bfe25bc?=
+ =?UTF-8?Q?2903e8d5c8f:6.0.138,18.0.790,17.11.62.513.0000000_definitions?=
+ =?UTF-8?Q?=3D2022-01-12=5F02:2020-02-14=5F02,2022-01-12=5F02,2021-12-02?=
+ =?UTF-8?Q?=5F01_signatures=3D0?=
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1011 adultscore=0 mlxscore=0
+ mlxlogscore=863 suspectscore=0 malwarescore=0 spamscore=0 phishscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2311220000
 
-Create a second submodule with a name that differs from its path. Test
-that calling set-url modifies the correct .gitmodules entries. Make sure
-we don't create a section named after the path instead of the name.
+Team,
 
-Signed-off-by: Jan Alexander Steffens (heftig) <heftig@archlinux.org>
----
- t/t7420-submodule-set-url.sh | 26 ++++++++++++++++++++++++--
- 1 file changed, 24 insertions(+), 2 deletions(-)
+Recently I tried creating an orphan branch in an existing repo using =
+git-checkout and git-switch.=20
 
-diff --git a/t/t7420-submodule-set-url.sh b/t/t7420-submodule-set-url.sh
-index aa63d806fe..bf7f15ee79 100755
---- a/t/t7420-submodule-set-url.sh
-+++ b/t/t7420-submodule-set-url.sh
-@@ -25,34 +25,56 @@ test_expect_success 'submodule config cache setup' '
- 		git add file &&
- 		git commit -ma
- 	) &&
-+	mkdir namedsubmodule &&
-+	(
-+		cd namedsubmodule &&
-+		git init &&
-+		echo 1 >file &&
-+		git add file &&
-+		git commit -m1
-+	) &&
- 	mkdir super &&
- 	(
- 		cd super &&
- 		git init &&
- 		git submodule add ../submodule &&
--		git commit -m "add submodule"
-+		git submodule add --name thename ../namedsubmodule thepath &&
-+		git commit -m "add submodules"
- 	)
- '
- 
- test_expect_success 'test submodule set-url' '
--	# add a commit and move the submodule (change the url)
-+	# add commits and move the submodules (change the urls)
- 	(
- 		cd submodule &&
- 		echo b >>file &&
- 		git add file &&
- 		git commit -mb
- 	) &&
- 	mv submodule newsubmodule &&
- 
-+	(
-+		cd namedsubmodule &&
-+		echo 2 >>file &&
-+		git add file &&
-+		git commit -m2
-+	) &&
-+	mv namedsubmodule newnamedsubmodule &&
-+
- 	git -C newsubmodule show >expect &&
-+	git -C newnamedsubmodule show >>expect &&
- 	(
- 		cd super &&
- 		test_must_fail git submodule update --remote &&
- 		git submodule set-url submodule ../newsubmodule &&
- 		test_cmp_config ../newsubmodule -f .gitmodules submodule.submodule.url &&
-+		git submodule set-url thepath ../newnamedsubmodule &&
-+		test_cmp_config ../newnamedsubmodule -f .gitmodules submodule.thename.url &&
-+		test_cmp_config "" -f .gitmodules --default "" submodule.thepath.url &&
- 		git submodule update --remote
- 	) &&
- 	git -C super/submodule show >actual &&
-+	git -C super/thepath show >>actual &&
- 	test_cmp expect actual
- '
- 
--- 
-2.43.0
+Both commands have an --orphan option.
+
+The results were different:
+
+git checkout --orphan <newbranch> retained the entire working tree, =
+including subdirectories and their contents.
+
+git switch --orphan <newbranch> retained subdirectories but NOT their =
+content.
+
+Leaving aside the question of whether or not this is a bug, there =
+doesn't appear to be any formal definition of the term "orphan branch" =
+in the git documentation. Am I missing something?
+
+Thanks,
+Craig
+
 
