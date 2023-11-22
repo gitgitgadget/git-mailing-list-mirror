@@ -1,167 +1,98 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S47wXs/f"
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 556C2DD
-	for <git@vger.kernel.org>; Tue, 21 Nov 2023 17:42:55 -0800 (PST)
-Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-a0064353af8so72784366b.0
-        for <git@vger.kernel.org>; Tue, 21 Nov 2023 17:42:55 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M6Meq3lb"
+Received: from mail-oo1-xc2e.google.com (mail-oo1-xc2e.google.com [IPv6:2607:f8b0:4864:20::c2e])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4BCCBC
+	for <git@vger.kernel.org>; Tue, 21 Nov 2023 20:05:14 -0800 (PST)
+Received: by mail-oo1-xc2e.google.com with SMTP id 006d021491bc7-58a01a9fad0so219762eaf.1
+        for <git@vger.kernel.org>; Tue, 21 Nov 2023 20:05:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700617374; x=1701222174; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dTdGJ92t8A1xKjvgP9cs12gWE7B5/XnSG5LgkHYMUcI=;
-        b=S47wXs/fJdIbNH3cx5KKV4sIur9+WzE7UjFfDAilwcg0O33axUIWT1CHWdy/QPMUYx
-         eiZTRX4VUx/p92mQwqrBrq0KZcmUdg/M6Xd9LBQq4qOkw0r1vL3Z96+4RHy4TDI7KxM1
-         TP9rUC86y1qRaGOdkZE43E7wrDsgO/vZiPMqdNFKyoPzemFj1zqJyry0ZyNfW/YoM2kX
-         wxqYDf0cP5luW+PJkdaSPUtyHm3j1Q3muRpHlekwOYJy51rnoy7/gA1fYCcmCZmwAwEW
-         JcUzUIUHO/7CeoGYd+DyiQ7eGe4J5s78Y9PoG50U3R4tnGPk8D0bqxd7e5Qu64bgLP96
-         yTdA==
+        d=gmail.com; s=20230601; t=1700625914; x=1701230714; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=sHk0MFSRdlJSUX7WAzOiT/wUeyHggpVYqzLtNjIU058=;
+        b=M6Meq3lbyh9vrzeGWJFvHqnZXhjBC2t83bZ6XArSI/AFP8gfYg0VT5zzRNIZCWyj85
+         gWTYYr+RCFCJiDzSfxCUU3ytHn2FUadv0RCrL7TnkQ2f91HqYNZiBTOvrdBPb/0ZgIk7
+         4eS5Am5unneO/EyioKe/Nl7kdlDEj+Vn4ITxePJQFVQZQIiiQvIiJDLO9ZESSZehHuAF
+         iUkAPaWj9wGjQZVykPtFgBPK0ahUMgM6tWPzkFmZWqKv8LKeGC7OEd3vEQcUTAh2hoFT
+         BGqcRE8110WP6it5M0YfO4PU/5kxKs8bootIP3diEKqYbCeHVDiEYAJEKC1UABGpnlFx
+         Hnvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700617374; x=1701222174;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dTdGJ92t8A1xKjvgP9cs12gWE7B5/XnSG5LgkHYMUcI=;
-        b=JjRnviDy2EKWvCEegLfXEItFlXPgjn7yPeBPJUsUzo0Ggf4xUxCz0ClXO7Jv68xGoL
-         kgzWm/2fnC015Y1UFtptPOxvZAmPRfHDQobg1ukxOxPlXuGyU5bFP0Sc4B621RnaLQxb
-         Ib52A13T371g4W/wDzZmf/B62CsSLHuaMJ5wnlUv/bAg2ZZN4+tE4pU5OmvADqagQ0Wr
-         sneU0JVJvUQnmuus35FSO69I9xSP69PeZswaGcXrATVi4Xofh0H2S1XyO6f8CVNlHpOI
-         wHufoZevyM5GPo9LBpaDASo0kBdFexioYTUUCo/oA+UcEhnVr+Si4seHUxMavw4VapTT
-         711Q==
-X-Gm-Message-State: AOJu0YyIoVAdR7g03IeV2KI4GJITMiBqu8g9EhS9/jRNwpt0GZQkbzMe
-	Zr4s8lmEKLMI4BPbgZPIQayo4dQtrCksL86amLJuNp/ESkg=
-X-Google-Smtp-Source: AGHT+IGv9h+NXVkgyuEDYgFBGp6387s4//H1Sl7dDD3HT9kyN0rlFe8JGTSbfzes7W0s6+C/sXf7WLhRNT957eaBCdY=
-X-Received: by 2002:a17:906:d7:b0:9f4:53d9:2d66 with SMTP id
- 23-20020a17090600d700b009f453d92d66mr576678eji.5.1700617373425; Tue, 21 Nov
- 2023 17:42:53 -0800 (PST)
+        d=1e100.net; s=20230601; t=1700625914; x=1701230714;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=sHk0MFSRdlJSUX7WAzOiT/wUeyHggpVYqzLtNjIU058=;
+        b=BILQ+dbSQ6OGfrzqGFf+uY74mgbJM8u6paTOOpmoBxLPIVJKP0vYKgbn15EypaXj4T
+         q9RpIP7KWwvKhFLjDXuI+I4EolAzArEgr8LvONJ96vwN4pPdhr0hCpNo8Jr0tarE+iKv
+         Wxdf3yPS0bejp8+RxAF5TvT0kIbp7DF0koSUGnBGPwmR7dQS/cPuuHzaCJzmShgZUbdu
+         ZVsCFOg5OaqmmDWmFkhADOvUuhXZmQRukzk2s+PztgmtFRjlzKpT8E+lrJKu6v/J49JK
+         FKR7kyt/Hs18/F61TYXCQ/KIwJ0iYTjWHtV2jdkYNzF6jW/aUbQ5jmeCnl1T38QrIcH7
+         afSw==
+X-Gm-Message-State: AOJu0Yyk0Tgb93vgyQ/4wNEy0soV1oY02Wpm5M77+s+AFGNHyTlv9Xm+
+	AAxClNQz0Svn6Uk8nJ1ELCYUk+JZ5/64jKVDmu17csrcT0Y=
+X-Google-Smtp-Source: AGHT+IGdLGUPTYhKGF9KpOAyHZTAo30caDD+yUsR825/Z88TRmFOTWdB9uYC2FloZ2yRT1F0vJs/ydfa5rkDHbsSt5Q=
+X-Received: by 2002:a05:6820:1ca8:b0:589:dc3c:5773 with SMTP id
+ ct40-20020a0568201ca800b00589dc3c5773mr698232oob.0.1700625913974; Tue, 21 Nov
+ 2023 20:05:13 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <FE2AD666-88DE-4F70-8D6D-3A426689EB41@me.com>
-In-Reply-To: <FE2AD666-88DE-4F70-8D6D-3A426689EB41@me.com>
-From: Chris Torek <chris.torek@gmail.com>
-Date: Tue, 21 Nov 2023 17:42:42 -0800
-Message-ID: <CAPx1Gvf_meaEBq9XfS9aPg0yLja-2sAW5SUg0jx6f1jNyfmWHw@mail.gmail.com>
-Subject: Re: Orphan branch not well-defined?
-To: Craig H Maynard <chmaynard@me.com>
-Cc: Git Community <git@vger.kernel.org>
+From: ryenus <ryenus@gmail.com>
+Date: Wed, 22 Nov 2023 12:05:02 +0800
+Message-ID: <CAKkAvayLrYS1GQ_-Z7kWM=k4pCnNv1Q=NvYcvT8+wqYPkePVcw@mail.gmail.com>
+Subject: [commit-graph] v2.43.0 segfault with fetch.writeCommitGraph enabled
+ when fetch
+To: Git mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Tue, Nov 21, 2023 at 4:36=E2=80=AFPM Craig H Maynard <chmaynard@me.com> =
-wrote:
-> [git checkout and git switch treat --orphan differently]
+The issue appeared after updating to git v2.43.0, now git fetch would cause
+segmentation fault when commit graph is enabled. Though I only observed this
+issue in a repo with two submodules, regardless of whether the submodules are
+checked out or not. Meanwhile most other repos without submodules worked fine.
+
+> 15:57:10.660377 run-command.c:726                 child_start[2] git maintenance run --auto --no-quiet
+> 15:57:10.665870 common-main.c:55                  version 2.43.0
+> 15:57:10.666265 common-main.c:56                  start /opt/homebrew/opt/git/libexec/git-core/git maintenance run --auto --no-quiet
+> 15:57:10.666469 repository.c:143                  worktree /path/to/repo/sub/module2
+> 15:57:10.666649 git.c:464                         cmd_name maintenance (_run_dashed_/_run_git_alias_/pull/fetch/fetch/maintenance)
+> 15:57:10.668232 git.c:723                         exit elapsed:0.003405 code:0
+> 15:57:10.668241 trace2/tr2_tgt_normal.c:127       atexit elapsed:0.003415 code:0
+> 15:57:10.668611 run-command.c:979                 child_exit[2] pid:46018 code:0 elapsed:0.008227
+> 15:57:10.668635 git.c:723                         exit elapsed:1.837179 code:0
+> 15:57:10.668639 trace2/tr2_tgt_normal.c:127       atexit elapsed:1.837182 code:0
+> 15:57:10.669007 run-command.c:979                 child_exit[3] pid:46006 code:0 elapsed:1.843739
+> 15:57:10.671522 usage.c:80                        error fetch died of signal 11
+> error: fetch died of signal 11
+> 15:57:10.671645 run-command.c:979                 child_exit[1] pid:45980 code:139 elapsed:5.292927
+> 15:57:10.671658 git.c:723                         exit elapsed:5.337363 code:1
+> 15:57:10.671663 trace2/tr2_tgt_normal.c:127       atexit elapsed:5.337368 code:1
+> 15:57:10.672048 run-command.c:979                 child_exit[1] pid:45978 code:1 elapsed:5.345050
+> 15:57:10.672099 git.c:819                         exit elapsed:5.355644 code:1
+> 15:57:10.672105 trace2/tr2_tgt_normal.c:127       atexit elapsed:5.355649 code:1
+
+
+Subsequent `git fetch` would then fail due to the left over lock file:
+
+> 15:57:19.059375 run-command.c:726                 child_start[2] git maintenance run --auto --no-quiet
+> 15:57:19.065689 common-main.c:55                  version 2.43.0
+> 15:57:19.066027 common-main.c:56                  start /opt/homebrew/opt/git/libexec/git-core/git maintenance run --auto --no-quiet
+> 15:57:19.066206 repository.c:143                  worktree /path/to/repo/sub/module2
+> 15:57:19.066387 git.c:464                         cmd_name maintenance (_run_dashed_/_run_git_alias_/pull/fetch/fetch/maintenance)
+> 15:57:19.067888 git.c:723                         exit elapsed:0.003122 code:0
+> 15:57:19.067896 trace2/tr2_tgt_normal.c:127       atexit elapsed:0.003131 code:0
+> 15:57:19.068239 run-command.c:979                 child_exit[2] pid:46076 code:0 elapsed:0.008852
+> 15:57:19.068276 git.c:723                         exit elapsed:1.661854 code:0
+> 15:57:19.068281 trace2/tr2_tgt_normal.c:127       atexit elapsed:1.661858 code:0
+> 15:57:19.068714 run-command.c:979                 child_exit[3] pid:46065 code:0 elapsed:1.667321
+> 15:57:19.069327 usage.c:61                        error Unable to create '/path/to/repo/.git/objects/info/commit-graphs/commit-graph-chain.lock': File exists.
 >
-> Leaving aside the question of whether or not this is a bug,
+> Another git process seems to be running in this repository, e.g.
+> an editor opened by 'git commit'. Please make sure all processes
+> are terminated then try again. If it still fails, a git process
+> may have crashed in this repository earlier:
+> remove the file manually to continue.
+> fatal: Unable to create '/path/to/repo/.git/objects/info/commit-graphs/commit-graph-chain.lock': File exists.
 
-Just to answer the implied question: this is intentional.
-
-> there doesn't appear to be any formal definition of the term "orphan bran=
-ch"
-> in the git documentation. Am I missing something?
-
-Whether it's documented anywhere or not, it's not done well. This is
-not surprising: It is hard to do it well!  Git uses two phrases for
-this: "orphan branch" and "unborn branch". To understand them
-properly, let's start at the real beginning.  Bear with me for a
-moment here.
-
-In Git, the identity of a commit -- the way that Git locates the
-commit internally -- is its hash ID.  (Aside: until the SHA-256
-conversion, therewas only ever one hash ID for any commit ever made
-anywhere.  Now that Git supports both SHA-1 and SHA-256, there are two
-possible IDs, depending on which scheme you're using.)  It's possible,
-at least in theory, to use Git without ever creating a branch name:
-all you have to do is memorize these random-looking hash IDs.  But
-that's not how people's brains work, and it's quite impractical.  So
-Git offers us branch names, like "main" or "master", "dev" or
-"develop", and so on.
-
-In Git, a branch name is just a human-readable name for one of Git's
-internal hash IDs, with a special and very useful property that
-distinguishes it from a tag name.  Each tag name is a human-readable
-name for a hash ID too; they just lack the special property of the
-branch names.  We won't get into all the properties here though, and
-for the moment, we just need to know that the name stands in as a
-memorable version of the ID.
-
-As a result, a Git branch name literally cannot exist unless it
-identifies one specific commit!  We call that one specific commit the
-"tip commit" of that branch (which introduces a whole new confusion,
-of whether a "branch" is *one commit* or *many commits*, but again we
-won't get into this here).
-
-This leaves us with a big "chicken or egg" problem
-(https://en.wikipedia.org/wiki/Chicken_or_the_egg).  Suppose we've
-just created a new, empty repository, which by definition has no
-commits in it: it's *new*, and *empty*.  How many branch names can we
-have in this new, empty repository?  We've just claimed that a branch
-name must identify some specific commit, and we have no commits, so
-the answer is: none.  We cannot have any branch names at all.
-
-But -- here's the other paradox -- whenever we make a *new* commit,
-it's to be *added on to the current branch*.  But we have an empty
-repository, which cannot have any branch names, so how do we know what
-the "current branch" even *is*?
-
-** Unborn Branch is the better term **
-
-Now that we understand the basic problem -- that a new repository
-can't have any branches, but that we want Git to *create* a branch
-when we make that very first commit -- we can see what an "orphan" or
-"unborn" branch is all about.  It papers over our chicken-or-egg
-problem.  We simply save the *name we want Git to create* somewhere,
-then we make a new commit as usual.  When, eventually, we do make that
-commit, Git says: "OK, I should add this new commit to the current
-branch br1", or whatever the name is.  Git then creates the new commit
-*and* creates the branch name, all as one big operation.  Now the
-branch exists: it's born.
-
-When we have a normal (not-unborn) branch and create a new commit, Git
-creates the new commit as usual and then -- here's the unique property
-of *branch names* that makes them so special -- *updates* the branch
-name to hold the new commit's new hash ID.  Git also makes sure that
-the new commit we just made links back to the commit that *was* the
-tip commit of the branch, just a moment ago.  So this is how branches
-"grow" as you make commits.  The *name* holds only the *last* commit
-hash ID.  Each commit holds the *previous* hash ID, so that Git can
-start at the end of a branch and work backwards.  The previous, or
-parent, commit, has its own parent, which has another parent, all the
-way back to the beginning of time.
-
-This is also where the dual meaning of "branch" clears up somewhat: a
-branch is both the tip commit *and* the whole-chain-of-commits,
-starting at the tip and working backwards.  How do we know which
-meaning someone means?  Sometimes it's clear from context.  Sometimes
-it's not clear.  Sometimes whoever used the word isn't even aware of
-the issue!
-
-** The `--orphan` options **
-
-That weird problematic state for a *new* repository, where no branches
-can exist, yet you want to be "on" the branch you're going to create,
-only exists as a problem for a new and empty repository.  But given
-that Git has to solve that problem, Git can let you enter that weird
-state any time.  That's what `--orphan` was originally invented for:
-to go back into that state even if you have some commits.
-
-That is, `git checkout --orphan` meant: make the current branch name
-be an unborn branch, the way it is in a new and totally-empty
-repository.  Then when I make my next commit, that will create a new
-commit that has no parent commit.  Whether (and when and how) this is
-actually useful is another question entirely, as is the reason for
-switch and checkout behaving differently in terms of how they treat
-the index and working tree.  But this is the heart of the option: it
-means "go into the unborn branch state".
-
-(Side note: there are other ways to solve the "new repository"
-problem, and there are other ways to define "branch".  Other version
-control systems sometimes use other ways.  Git's rather peculiar
-definition of branch was rare, perhaps even unique, in the early days
-of Git.)
-
-Chris
+As a workaround, I disabled fetch.writeCommitGraph to get fetch work again.
