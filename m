@@ -1,93 +1,85 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WtrIQXoX"
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30B64D5A
-	for <git@vger.kernel.org>; Thu, 23 Nov 2023 13:33:56 -0800 (PST)
-Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2c50305c5c4so16731841fa.1
-        for <git@vger.kernel.org>; Thu, 23 Nov 2023 13:33:56 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nWIsWPFB"
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBA351B6
+	for <git@vger.kernel.org>; Thu, 23 Nov 2023 14:03:45 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-4083f613272so8996005e9.1
+        for <git@vger.kernel.org>; Thu, 23 Nov 2023 14:03:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700775234; x=1701380034; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=afDTyezBQWtOzPNE/xf/XSx1mVr4Tg7Qqk7cvfQfwV0=;
-        b=WtrIQXoXw3uepoUEsnq54VPz8vmlWjFo6Bn/N11tHeVUl5ndjlcmsmM2/MD7Fu5ER5
-         QweE3q/eEGDtk6QsD/s97x35vx7Vb+ZPPL6dHHSHNGRiM4exHF2lf2Gq19PqwNII7DTU
-         3WWoKChCSXb6i8cGP/6jGSyd0EbiL8Ey6AJxV17lFy/JUqZ9ylBf3fkGknXnNGjT7GCP
-         NZ/D8TibrUIV1u5J1ZBuEJLOjuX1N8qJsNxLZ10MVaMjwKdz036L7v9HhfZCJ7Sh31Fa
-         34NREyT1TtJQ9lYVLcti3XT9Mp+/IETaMxqaABoHGDng5oEvb+zZrFhrHQ2DiPCW35ti
-         j4mg==
+        d=gmail.com; s=20230601; t=1700777024; x=1701381824; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=gnegWnfp4kNP1SrQjqa6VTkUCT/SIEdgWzbFjCbh6Sw=;
+        b=nWIsWPFBgD18hJ1SJRvrIIcnSGmCVXbBMfC0SEHVBqCoPbktvdSXvj6ILnxZPOI9EF
+         rdLpedLdLvoj5IEkQZSBNUf3x+3kDcy+whhx5Hzry9Whmx+byxHk7l6YC9PZYjoPBqAD
+         LNBBKAxzlQsHeWHIdTJtDlyTWPe5iyJ+Ymkaa7HdXGMGGyz9BdYUkTU0t26qKs/rwaHw
+         DNo8hhzMnXCgk01IGPCXkLvKZyWmJTkAOqF+BOn/TTgFXjWYDQrdpVWOdUZGFaNN0/9a
+         k0VvibJ9Y8UooRRxqE1ZzIGNAqSblAtVgOiW1q/++5F3WqXwJw1SqOmMEzKTMFQ5rV0S
+         +sfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700775234; x=1701380034;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=afDTyezBQWtOzPNE/xf/XSx1mVr4Tg7Qqk7cvfQfwV0=;
-        b=lh9gaYNTEJ9k43yMINpSkIWdroZEg7oO9NeEwLp0bYvICMxLdeufwB9TVohEzpplom
-         SjTcGHupZTVzdiCVEElBoadLphEhATmbrevGZWHOJ8FHDrnkDf+TbQCuczvYdI6jY8Ph
-         euGMnMG4AVZofZoJNiruxWki5ceUyzy6+Coc3NBJcL7Yd4XuwgseNJy3Xdspeg2dKQ03
-         ydqn+2QhFM8kNxPyYPyx9dQeZQEUbhp+LYMi0pMAPd1e81QpsJQcQAnll/AXBQuLoLoj
-         AJ0PG2sAiKaNYkq1uZ69Nb+Ekb/pZky4/TcN+KVQ20a4WksKM07CepmakR5RxKuzopHM
-         gK4w==
-X-Gm-Message-State: AOJu0Yx9pAOE6s3jjF6AezjXh2HQ3pxystX7QjlfgqRkjfa7kEWNUTea
-	Va4UUn+5k2FT4HlIfIlZVDufHhw3fIy/sbTDSDhhXYanR6c=
-X-Google-Smtp-Source: AGHT+IFJfm2ABKg24e8c5778/Hx1P9h94DjQGNVZdlLgnvKRsiUr+CQsksVIqEssAZ4JePx4P/GG6GzzqnRsBVrtIWQ=
-X-Received: by 2002:a2e:3a19:0:b0:2c8:87bd:7c06 with SMTP id
- h25-20020a2e3a19000000b002c887bd7c06mr381218lja.13.1700775234292; Thu, 23 Nov
- 2023 13:33:54 -0800 (PST)
+        d=1e100.net; s=20230601; t=1700777024; x=1701381824;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gnegWnfp4kNP1SrQjqa6VTkUCT/SIEdgWzbFjCbh6Sw=;
+        b=C8kKdanvkeHGPVpt/60JAZktC0YIXJ/lZE6NqIcwIgR4kwKMCcFNhn3OiaShv7Fy5d
+         tnFJDkH7EN22AVwMRaPtVdolR+hw+vyhl2HI0kG0+3lKHF8enJ8P/IEUDpHaXohVm8JN
+         YgCj1BrSWKrlyByNVr89BhZ10uJgcP0yCQISyhP+xLRZNOH1ZcJX2ZgOAC8BZwiSDs/k
+         ZNgFyv+p1oyTeFganL62zrsSBn9EfaLn5YmOUn17cgMYBUxdGONhTGRZMKfhagDHRc7A
+         9gIL1qn2YV2hsjdyo75DhVK9vmHHQn9F3BLege1QXXYvb9XUAb+EBrPaIAPiZULE889Q
+         pbyQ==
+X-Gm-Message-State: AOJu0YwBal/zdzADGPFhhqCm2gK/AGZ29iRZ+tTDt+jc7CX2Ai+E7EM1
+	hzKTnc5i6bz11qBYoAlYgQk=
+X-Google-Smtp-Source: AGHT+IFDWCE7cwFMb71rXQpklhvffg6P/5bjJ/3PrxITyGyrrMV9n895hp3v9j/1peLPnntQfvLR0w==
+X-Received: by 2002:a05:600c:1d02:b0:40b:29f3:af02 with SMTP id l2-20020a05600c1d0200b0040b29f3af02mr667059wms.27.1700777024031;
+        Thu, 23 Nov 2023 14:03:44 -0800 (PST)
+Received: from [192.168.0.17] (cpc105060-sgyl40-2-0-cust995.18-2.cable.virginm.net. [81.111.15.228])
+        by smtp.gmail.com with ESMTPSA id r7-20020a05600c35c700b0040b30be6244sm3215816wmq.24.2023.11.23.14.03.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Nov 2023 14:03:43 -0800 (PST)
+Message-ID: <c8f3fcdc-a10c-4c24-b954-899cf413837e@gmail.com>
+Date: Thu, 23 Nov 2023 22:03:42 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1589.git.1695392027.gitgitgadget@gmail.com>
- <pull.1589.v2.git.1695553041.gitgitgadget@gmail.com> <9f0bba69492b345fe7b0c7f9529b025ed98c7e29.1695553043.git.gitgitgadget@gmail.com>
-In-Reply-To: <9f0bba69492b345fe7b0c7f9529b025ed98c7e29.1695553043.git.gitgitgadget@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Thu, 23 Nov 2023 13:33:00 -0800
-Message-ID: <CABPp-BFrVjzbVDBWv_zaeScFhZ4Z2v5whSLAVkU_SuerKcujVw@mail.gmail.com>
-Subject: Re: [PATCH v2 4/4] doc: refer to internet archive
-To: Josh Soref via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Josh Soref <jsoref@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: git checkout -B <branch> lets you checkout a branch that is
+ already checked out in another worktree Inbox
+To: Junio C Hamano <gitster@pobox.com>,
+ Willem Verstraeten <willem.verstraeten@gmail.com>
+Cc: git@vger.kernel.org
+References: <CAGX9RpFMCVLQV7RbK2u9AabusvkZD+RZNv_UD=R00cSUrjutBg@mail.gmail.com>
+ <xmqqjzq9cl70.fsf@gitster.g> <xmqqv89tau3r.fsf@gitster.g>
+Content-Language: en-GB
+From: Andy Koppe <andy.koppe@gmail.com>
+In-Reply-To: <xmqqv89tau3r.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sun, Sep 24, 2023 at 2:47=E2=80=AFPM Josh Soref via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Josh Soref <jsoref@gmail.com>
->
-> These pages are no longer reachable from their original locations,
-> which makes things difficult for readers. Instead, switch to linking to
-> the Internet Archive for the content.
+On 23/11/2023 05:58, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> I guess we could change the behaviour so that
+>>
+>>      git checkout -B <branch> [<start-point>]
+>>
+>> fails when <branch> is an existing branch that is in use in another
+>> worktree, and allow "-f" to be used to override the safety, i.e.,
+>>
+>>      git checkout -f -B <branch> [<start-point>]
+>>
+>> would allow the <branch> to be repointed to <start-point> (or HEAD)
+>> even when it is used elsewhere.
+> 
+> It turns out that for some reason "-f" is not how we decided to
+> override this one---there is "--ignore-other-worktrees" option.
 
-Thanks, these all look good, except on of the old links works for me.
-Maybe it was just down the day you checked?  More comments on that
-below...
+Presumably that's because -f means throwing away any local changes that 
+are in the way of checking out the new HEAD, which you wouldn't 
+necessarily want when trying to replace an existing branch.
 
->
-> Signed-off-by: Josh Soref <jsoref@gmail.com>
-> ---
->  gitweb/gitweb.perl       | 4 ++--
->  sha1dc/sha1.c            | 2 +-
->  t/lib-gpg.sh             | 2 +-
->  t/t9816-git-p4-locked.sh | 2 +-
->  4 files changed, 5 insertions(+), 5 deletions(-)
->
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index b6659410ef1..f12bed87db9 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -8192,8 +8192,8 @@ sub git_feed {
->         my $format =3D shift || 'atom';
->         my $have_blame =3D gitweb_check_feature('blame');
->
-> -       # Atom: http://www.atomenabled.org/developers/syndication/
-> -       # RSS:  http://www.notestips.com/80256B3A007F2692/1/NAMO5P9UPQ
-> +       # Atom: https://web.archive.org/web/20230815171113/https://www.at=
-omenabled.org/developers/syndication/
-> +       # RSS:  https://web.archive.org/web/20030729001534/http://www.not=
-estips.com/80256B3A007F2692/1/NAMO5P9UPQ
-
-The original www.atomenabled.org link works for me.
+Andy
