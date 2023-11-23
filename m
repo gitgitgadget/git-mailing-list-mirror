@@ -1,89 +1,143 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="obefEJFo"
-Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D34091AB
-	for <git@vger.kernel.org>; Wed, 22 Nov 2023 19:56:53 -0800 (PST)
-Received: by mail-qv1-xf33.google.com with SMTP id 6a1803df08f44-67a095fbe27so253516d6.1
-        for <git@vger.kernel.org>; Wed, 22 Nov 2023 19:56:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1700711813; x=1701316613; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=aO5uRjRlM4RnFk1N4boEpUVcuEi9fOmz2Yt6lJhilAc=;
-        b=obefEJFoQ0lF0B3NxKjFGo7rqhqrB4w+F/IE/3wKUyYq9rHsqlippgSVxLK3PzJSJy
-         GLqcS7qQS2JByHNEaO+OBbyeBX9T5TW42u6jo9johIq6gNNIbY7KN1bLd3503MCq8qGI
-         Auq7nglL1f4ficjvMpTqF+N8zYy2trLQJVcSU7a3omzZs3ONz+WjmOhJWnNhClzKdtvY
-         JSz3PRboet3lhi0gbvKXKiUAVEgwKUul85CcCbJQd5hB1HbVskXnohgCPpcWovcnkvjG
-         6dEm2kAomwbKRL4nq5NdHasB63fJeKreMDNA1EigHJGM5xsELOykPWjAdoMpnHgkOegD
-         7Rrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700711813; x=1701316613;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aO5uRjRlM4RnFk1N4boEpUVcuEi9fOmz2Yt6lJhilAc=;
-        b=njvQ0J8Nw9njGKipsUnbagjIrQUXVsL7rw/uxc3DouHRDREzqUgpYnClUf9q7biftm
-         ZST+xsaJwtjehE/0exnS3UPa5i+Xg/y90DJz6S8PwEC0188QkYLpcIIoijk24Kwt9muv
-         7EJjU1KiRjsjAmnSN65AKr6pcgjGATfUJqskHhewjptsaB8hlWeoBavHtJKoW1j2HLcu
-         SWWsEZjvaSzd3xa4oHYISRQCa2kvx/c1n7n4XTl1cQDv7GQme9uS7evBlMdfEKsARR+V
-         W+myrndtxSMO0sp1vFKkd3687LOBRl6BGpx5yx3Y7m0b9Ui1irDcchXHwyALHb3eRrEr
-         YCNw==
-X-Gm-Message-State: AOJu0YyRM/2nUY/Ix/OKQ/sYiiHVenvhamDaDQIy/Ms0zkefEbj47WZl
-	j2Qa5Ue6vfYv8lnwNm3OiVSHnMrEPeD8+0DxaNBrtw==
-X-Google-Smtp-Source: AGHT+IGli/eGaDCNXIgdULUEPwct90uYJRTGpdUV2+I3OVz/ZWQh9HyHtedHqBN1Xj3pKIL2ws0V+w==
-X-Received: by 2002:ad4:4049:0:b0:679:2f90:d02 with SMTP id r9-20020ad44049000000b006792f900d02mr2286829qvp.26.1700711812856;
-        Wed, 22 Nov 2023 19:56:52 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id u16-20020a0cf1d0000000b00679d8235a60sm154969qvl.135.2023.11.22.19.56.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Nov 2023 19:56:52 -0800 (PST)
-Date: Wed, 22 Nov 2023 22:56:51 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: ryenus <ryenus@gmail.com>
-Cc: Git mailing list <git@vger.kernel.org>
-Subject: Re: [commit-graph] v2.43.0 segfault with fetch.writeCommitGraph
- enabled when fetch
-Message-ID: <ZV7Ng29MReKGjrgi@nand.local>
-References: <CAKkAvayLrYS1GQ_-Z7kWM=k4pCnNv1Q=NvYcvT8+wqYPkePVcw@mail.gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZkUqYyo1"
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AB8D191
+	for <git@vger.kernel.org>; Wed, 22 Nov 2023 21:58:51 -0800 (PST)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 59F171C4DD1;
+	Thu, 23 Nov 2023 00:58:50 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=MF7QGpMx71g0vinSCrCOcYOeRP0Xyx/rAwyrrW
+	5uOyU=; b=ZkUqYyo1Ral3/VAVSys/JsuN8wWynIEasuwPI+udZMVxyv8zghYJsg
+	Nsj0o/+35ZpVmtvZLfqIFcQpqbPBYGjM2EKPMzV8g0QghwKcw7HnnmkWB0rC5aq8
+	ekwQX9B6OcRXHzSYxPaqd/9nB96nvq4orKEcgqlj3UHp3jLJ704Pc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 51C541C4DCF;
+	Thu, 23 Nov 2023 00:58:50 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B099C1C4DCE;
+	Thu, 23 Nov 2023 00:58:49 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Willem Verstraeten <willem.verstraeten@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: git checkout -B <branch> lets you checkout a branch that is
+ already checked out in another worktree Inbox
+In-Reply-To: <xmqqjzq9cl70.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+	23 Nov 2023 10:28:19 +0900")
+References: <CAGX9RpFMCVLQV7RbK2u9AabusvkZD+RZNv_UD=R00cSUrjutBg@mail.gmail.com>
+	<xmqqjzq9cl70.fsf@gitster.g>
+Date: Thu, 23 Nov 2023 14:58:48 +0900
+Message-ID: <xmqqv89tau3r.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAKkAvayLrYS1GQ_-Z7kWM=k4pCnNv1Q=NvYcvT8+wqYPkePVcw@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 5F6A9318-89C5-11EE-8603-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-On Wed, Nov 22, 2023 at 12:05:02PM +0800, ryenus wrote:
-> The issue appeared after updating to git v2.43.0, now git fetch would cause
-> segmentation fault when commit graph is enabled. Though I only observed this
-> issue in a repo with two submodules, regardless of whether the submodules are
-> checked out or not. Meanwhile most other repos without submodules worked fine.
+Junio C Hamano <gitster@pobox.com> writes:
+
+> I guess we could change the behaviour so that
 >
-> > 15:57:10.660377 run-command.c:726                 child_start[2] git maintenance run --auto --no-quiet
-> > 15:57:10.665870 common-main.c:55                  version 2.43.0
-> > 15:57:10.666265 common-main.c:56                  start /opt/homebrew/opt/git/libexec/git-core/git maintenance run --auto --no-quiet
-> > 15:57:10.666469 repository.c:143                  worktree /path/to/repo/sub/module2
-> > 15:57:10.666649 git.c:464                         cmd_name maintenance (_run_dashed_/_run_git_alias_/pull/fetch/fetch/maintenance)
-> > 15:57:10.668232 git.c:723                         exit elapsed:0.003405 code:0
-> > 15:57:10.668241 trace2/tr2_tgt_normal.c:127       atexit elapsed:0.003415 code:0
-> > 15:57:10.668611 run-command.c:979                 child_exit[2] pid:46018 code:0 elapsed:0.008227
-> > 15:57:10.668635 git.c:723                         exit elapsed:1.837179 code:0
-> > 15:57:10.668639 trace2/tr2_tgt_normal.c:127       atexit elapsed:1.837182 code:0
-> > 15:57:10.669007 run-command.c:979                 child_exit[3] pid:46006 code:0 elapsed:1.843739
-> > 15:57:10.671522 usage.c:80                        error fetch died of signal 11
-> > error: fetch died of signal 11
-> > 15:57:10.671645 run-command.c:979                 child_exit[1] pid:45980 code:139 elapsed:5.292927
-> > 15:57:10.671658 git.c:723                         exit elapsed:5.337363 code:1
-> > 15:57:10.671663 trace2/tr2_tgt_normal.c:127       atexit elapsed:5.337368 code:1
-> > 15:57:10.672048 run-command.c:979                 child_exit[1] pid:45978 code:1 elapsed:5.345050
-> > 15:57:10.672099 git.c:819                         exit elapsed:5.355644 code:1
-> > 15:57:10.672105 trace2/tr2_tgt_normal.c:127       atexit elapsed:5.355649 code:1
+>     git checkout -B <branch> [<start-point>]
+>
+> fails when <branch> is an existing branch that is in use in another
+> worktree, and allow "-f" to be used to override the safety, i.e.,
+>
+>     git checkout -f -B <branch> [<start-point>]
+>
+> would allow the <branch> to be repointed to <start-point> (or HEAD)
+> even when it is used elsewhere.
 
-I couldn't seem to find an easy reproduction for this bug. Would you
-mind sharing a copy of your repository and/or a script that reproduces
-this issue? Thanks.
+It turns out that for some reason "-f" is not how we decided to
+override this one---there is "--ignore-other-worktrees" option.
 
-Thanks,
-Taylor
+I'll attach the first step (preparatory refactoring) to this message
+below, and follow it up with the second step to implement and test
+the change.
+
+--- >8 ---
+From: Junio C Hamano <gitster@pobox.com>
+Date: Thu, 23 Nov 2023 14:11:41 +0900
+Subject: [PATCH 1/2] checkout: refactor die_if_checked_out() caller
+
+There is a bit dense logic to make a call to "die_if_checked_out()"
+while trying to check out a branch.  Extract it into a helper
+function and give it a bit of comment to describe what is going on.
+
+The most important part of the refactoring is the separation of the
+guarding logic before making the call to die_if_checked_out() into
+the caller specific part (e.g., the logic that decides that the
+caller is trying to check out an existing branch) and the bypass due
+to the "--ignore-other-worktrees" option.  The latter will be common
+no matter how the current or future callers decides they need this
+protection.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/checkout.c | 32 +++++++++++++++++++++++---------
+ 1 file changed, 23 insertions(+), 9 deletions(-)
+
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index f02434bc15..b4ab972c5a 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -1516,6 +1516,26 @@ static void die_if_some_operation_in_progress(void)
+ 	wt_status_state_free_buffers(&state);
+ }
+ 
++/*
++ * die if attempting to checkout an existing branch that is in use
++ * in another worktree, unless ignore-other-wortrees option is given.
++ * The check is bypassed when the branch is already the current one,
++ * as it will not make things any worse.
++ */
++static void die_if_switching_to_a_branch_in_use(struct checkout_opts *opts,
++						const char *full_ref)
++{
++	int flags;
++	char *head_ref;
++
++	if (opts->ignore_other_worktrees)
++		return;
++	head_ref = resolve_refdup("HEAD", 0, NULL, &flags);
++	if (head_ref && (!(flags & REF_ISSYMREF) || strcmp(head_ref, full_ref)))
++		die_if_checked_out(full_ref, 1);
++	free(head_ref);
++}
++
+ static int checkout_branch(struct checkout_opts *opts,
+ 			   struct branch_info *new_branch_info)
+ {
+@@ -1576,15 +1596,9 @@ static int checkout_branch(struct checkout_opts *opts,
+ 	if (!opts->can_switch_when_in_progress)
+ 		die_if_some_operation_in_progress();
+ 
+-	if (new_branch_info->path && !opts->force_detach && !opts->new_branch &&
+-	    !opts->ignore_other_worktrees) {
+-		int flag;
+-		char *head_ref = resolve_refdup("HEAD", 0, NULL, &flag);
+-		if (head_ref &&
+-		    (!(flag & REF_ISSYMREF) || strcmp(head_ref, new_branch_info->path)))
+-			die_if_checked_out(new_branch_info->path, 1);
+-		free(head_ref);
+-	}
++	/* "git checkout <branch>" */
++	if (new_branch_info->path && !opts->force_detach && !opts->new_branch)
++		die_if_switching_to_a_branch_in_use(opts, new_branch_info->path);
+ 
+ 	if (!new_branch_info->commit && opts->new_branch) {
+ 		struct object_id rev;
+-- 
+2.43.0
+
