@@ -1,203 +1,107 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="koRMsAZl"
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57B3911F
-	for <git@vger.kernel.org>; Wed, 22 Nov 2023 11:18:43 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id ffacd0b85a97d-32df66c691dso39153f8f.3
-        for <git@vger.kernel.org>; Wed, 22 Nov 2023 11:18:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700680721; x=1701285521; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gwi6GU9IrhbxpVTf408ITlx8/kBTgmpFzT72lxcYK4E=;
-        b=koRMsAZlJTrPfOAPfteoGSUwa80zS7TaOD0W70u6zHLdkK53F1su5th0ABcDej5/3S
-         cI4gWo2hYyh6ctfNvDL2yxNWx58vmZVTroQGlWipfQBe5oQegKYRoi5prAZ5MqSgh++B
-         +5rWNTxusTbCVqvhUpEuxR6D+IvaPs/IuioMktQroiMkVvkooSsmBqpMUoIValRszRHf
-         +OgXMTItrqj8pVruAjpbR/3aNlkylYZyEnNCJ8RFnhWdEijye11HcjOE7cku9DXVHw0e
-         VUWcnu0rbQzAHFUnDGD4dB2Xly+F1JTYt5s27IkGG95rcIsVzS6Um9Epja0te7h7aP6E
-         WrkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700680721; x=1701285521;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gwi6GU9IrhbxpVTf408ITlx8/kBTgmpFzT72lxcYK4E=;
-        b=OMdFa50xRY42uzg9UQCxiDBciGRPLO8i/A65w0XqzJAp8H7fiYFQum1KanNE6IDN+v
-         wHIcOrZgDAAjWRZSWAoqDIuLCx5r4x9EbhY06i3xNsi4dJcGB72I71locff18pS3AXfy
-         lGb++uauJoNIkZOLfFStYFgxYb63yFJHKcycX46OMqCItFYPC215ryE1exm20WFrsCo6
-         smGmIsvsIJbG2paZkDiz/daEwDpdDzAOhjzJItgNep9fDuWXGlb2PBCsJoYuJXjGeWaI
-         OsdsDS20iEbiW42MkbzmXtJse6CsWEO6d/nKxgG1g9sPYZ/4x+Q50eAI2Q/BJeAwFt2S
-         d5bA==
-X-Gm-Message-State: AOJu0YwQqClxFrVqDWWsZSEuD879Qqq4yTO6XNC1npFSQytkrnCxesni
-	sXSgQVEWVbj7UclDRuy9CQbtEuvGbvo=
-X-Google-Smtp-Source: AGHT+IG0EAJzURPebhq2mLBcmZge5GAFpmyynneWQqBgIEc6C7noPhiit541lh29K4KZJmJjhQ545A==
-X-Received: by 2002:a5d:468d:0:b0:332:c9f5:e5e6 with SMTP id u13-20020a5d468d000000b00332c9f5e5e6mr2294848wrq.17.1700680721352;
-        Wed, 22 Nov 2023 11:18:41 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id dh10-20020a0560000a8a00b0032d8eecf901sm150856wrb.3.2023.11.22.11.18.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Nov 2023 11:18:41 -0800 (PST)
-Message-ID: <9bfd00c5ecb26a25589c59a0282fce26f948b6a9.1700680717.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1616.git.1700680717.gitgitgadget@gmail.com>
-References: <pull.1616.git.1700680717.gitgitgadget@gmail.com>
-From: "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 22 Nov 2023 19:18:37 +0000
-Subject: [PATCH 4/4] t0212: test URL redacting in EVENT format
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="f0AuEc1n"
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BA0711F
+	for <git@vger.kernel.org>; Wed, 22 Nov 2023 17:28:23 -0800 (PST)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 299671C30FC;
+	Wed, 22 Nov 2023 20:28:21 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=WIIhDBuA8stf4wYZRXacPXdcyr5ujnkS2P1Her
+	4nloY=; b=f0AuEc1nBxaOTKrPGudwMGII0WdV8Fcnu0n0brA78qomGqLttuZu7Z
+	5WrTPWm4Yl4N1dlK+Jhd67fCumfUrRfEkeN6BEWtg13lzxA+H2zbHmVvplCt7nXs
+	j3Dr95H2vSUUMfB6bfK3Mr98+8wWF/lGyloBFInzpjMXuz7cKGDrg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 211A81C30FB;
+	Wed, 22 Nov 2023 20:28:21 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 84AD51C30FA;
+	Wed, 22 Nov 2023 20:28:20 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Willem Verstraeten <willem.verstraeten@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: git checkout -B <branch> lets you checkout a branch that is
+ already checked out in another worktree Inbox
+In-Reply-To: <CAGX9RpFMCVLQV7RbK2u9AabusvkZD+RZNv_UD=R00cSUrjutBg@mail.gmail.com>
+	(Willem Verstraeten's message of "Wed, 22 Nov 2023 20:08:36 +0100")
+References: <CAGX9RpFMCVLQV7RbK2u9AabusvkZD+RZNv_UD=R00cSUrjutBg@mail.gmail.com>
+Date: Thu, 23 Nov 2023 10:28:19 +0900
+Message-ID: <xmqqjzq9cl70.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Jeff Hostetler <jeffhostetler@github.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 96124364-899F-11EE-A35B-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-From: Jeff Hostetler <jeffhostetler@github.com>
+Willem Verstraeten <willem.verstraeten@gmail.com> writes:
 
-In the added tests cases, skip testing the `GIT_TRACE2_REDACT=0` case
-because we would need to exactly model the full JSON event stream like
-we did in the preceding basic tests and I do not think it is worth it.
+>     git checkout -b main #reports a fatal error, as expected
 
-Furthermore, the Trace2 routines print the same content in normal, perf,
-or event format, and in t0210 and t0211 we already tested the basic
-functionality, so no need to repeat it here.
+This is expected because "main" already exists, not because "main"
+is checked out elsewhere.
 
-In this test, we use the test-helper to unit test each of the event
-messages where URLs can appear and confirm that they are redacted in
-each event.
+>     git checkout -f main origin/main #also reports a fatal error, as expected
 
-Signed-off-by: Jeff Hostetler <jeffhostetler@github.com>
----
- t/helper/test-trace2.c  | 55 +++++++++++++++++++++++++++++++++++++++++
- t/t0212-trace2-event.sh | 40 ++++++++++++++++++++++++++++++
- 2 files changed, 95 insertions(+)
+This is expected because origin/main is taken as pathspec, and it is
+a request to checkout the paths that match the pathspec out of the
+named tree-ish (i.e., "main"), even when these paths have local
+changes, but you do not have paths that match "origin/main".  The
+failure is not because "main" is checked out elsewhere.
 
-diff --git a/t/helper/test-trace2.c b/t/helper/test-trace2.c
-index d5ca0046c89..1adac29a575 100644
---- a/t/helper/test-trace2.c
-+++ b/t/helper/test-trace2.c
-@@ -412,6 +412,56 @@ static int ut_201counter(int argc, const char **argv)
- 	return 0;
- }
- 
-+static int ut_300redact_start(int argc, const char **argv)
-+{
-+	if (!argc)
-+		die("expect <argv...>");
-+
-+	trace2_cmd_start(argv);
-+
-+	return 0;
-+}
-+
-+static int ut_301redact_child_start(int argc, const char **argv)
-+{
-+	struct child_process cmd = CHILD_PROCESS_INIT;
-+	int k;
-+
-+	if (!argc)
-+		die("expect <argv...>");
-+
-+	for (k = 0; argv[k]; k++)
-+		strvec_push(&cmd.args, argv[k]);
-+
-+	trace2_child_start(&cmd);
-+
-+	strvec_clear(&cmd.args);
-+
-+	return 0;
-+}
-+
-+static int ut_302redact_exec(int argc, const char **argv)
-+{
-+	if (!argc)
-+		die("expect <exe> <argv...>");
-+
-+	trace2_exec(argv[0], &argv[1]);
-+
-+	return 0;
-+}
-+
-+static int ut_303redact_def_param(int argc, const char **argv)
-+{
-+	struct key_value_info kvi = KVI_INIT;
-+
-+	if (argc < 2)
-+		die("expect <key> <value>");
-+
-+	trace2_def_param(argv[0], argv[1], &kvi);
-+
-+	return 0;
-+}
-+
- /*
-  * Usage:
-  *     test-tool trace2 <ut_name_1> <ut_usage_1>
-@@ -438,6 +488,11 @@ static struct unit_test ut_table[] = {
- 
- 	{ ut_200counter,  "200counter", "<v1> [<v2> [<v3> [...]]]" },
- 	{ ut_201counter,  "201counter", "<v1> <v2> <threads>" },
-+
-+	{ ut_300redact_start,       "300redact_start",       "<argv...>" },
-+	{ ut_301redact_child_start, "301redact_child_start", "<argv...>" },
-+	{ ut_302redact_exec,        "302redact_exec",        "<exe> <argv...>" },
-+	{ ut_303redact_def_param,   "303redact_def_param",   "<key> <value>" },
- };
- /* clang-format on */
- 
-diff --git a/t/t0212-trace2-event.sh b/t/t0212-trace2-event.sh
-index 6d3374ff773..147643d5826 100755
---- a/t/t0212-trace2-event.sh
-+++ b/t/t0212-trace2-event.sh
-@@ -323,4 +323,44 @@ test_expect_success 'discard traces when there are too many files' '
- 	head -n2 trace_target_dir/git-trace2-discard | tail -n1 | grep \"event\":\"too_many_files\"
- '
- 
-+# In the following "...redact..." tests, skip testing the GIT_TRACE2_REDACT=0
-+# case because we would need to exactly model the full JSON event stream like
-+# we did in the basic tests above and I do not think it is worth it.
-+
-+test_expect_success 'unsafe URLs are redacted by default in cmd_start events' '
-+	test_when_finished \
-+		"rm -r trace.event" &&
-+
-+	GIT_TRACE2_EVENT="$(pwd)/trace.event" \
-+		test-tool trace2 300redact_start git clone https://user:pwd@example.com/ clone2 &&
-+	! grep user:pwd trace.event
-+'
-+
-+test_expect_success 'unsafe URLs are redacted by default in child_start events' '
-+	test_when_finished \
-+		"rm -r trace.event" &&
-+
-+	GIT_TRACE2_EVENT="$(pwd)/trace.event" \
-+		test-tool trace2 301redact_child_start git clone https://user:pwd@example.com/ clone2 &&
-+	! grep user:pwd trace.event
-+'
-+
-+test_expect_success 'unsafe URLs are redacted by default in exec events' '
-+	test_when_finished \
-+		"rm -r trace.event" &&
-+
-+	GIT_TRACE2_EVENT="$(pwd)/trace.event" \
-+		test-tool trace2 302redact_exec git clone https://user:pwd@example.com/ clone2 &&
-+	! grep user:pwd trace.event
-+'
-+
-+test_expect_success 'unsafe URLs are redacted by default in def_param events' '
-+	test_when_finished \
-+		"rm -r trace.event" &&
-+
-+	GIT_TRACE2_EVENT="$(pwd)/trace.event" \
-+		test-tool trace2 303redact_def_param url https://user:pwd@example.com/ &&
-+	! grep user:pwd trace.event
-+'
-+
- test_done
--- 
-gitgitgadget
+A slight variant of the command
+
+    git checkout -f -b main origin/main
+
+still fails for the same reason as the first of your examples above.
+
+It is a tangent, but I suspect this failure may be a bit unexpected.
+In this example, "-f"orce could be overriding the usual failure from
+"-b" to switch to a branch that already exists, but that is what
+"-B" does, and "-f -b" does not work as a synonym for "-B".
+
+In any case, these example you marked "fail as expected" do fail as
+expected, but they fail for reasons that have nothing to do with the
+protection of branches that are used in other worktrees.
+
+>     git checkout -B main origin/main # ----> this succeeds, which is
+> unexpected <----
+
+I agree this may be undesirable.
+
+But it makes sort of sense, because "-B" is a forced form of "-b"
+(i.e., it tells git: even when "-b" would fail, take necessary
+measures to make it work), and we can view that it is part of
+"forcing" to override the protection over branches that are used
+elsewhere.
+
+I guess we could change the behaviour so that
+
+    git checkout -B <branch> [<start-point>]
+
+fails when <branch> is an existing branch that is in use in another
+worktree, and allow "-f" to be used to override the safety, i.e.,
+
+    git checkout -f -B <branch> [<start-point>]
+
+would allow the <branch> to be repointed to <start-point> (or HEAD)
+even when it is used elsewhere.
+
+Thoughts, whether they agree or disagree with what I just said, by
+other experienced contributors are very much welcome, before I can
+say "patches welcome" ;-).
+
+Willem, thanks for raising the issue.
+
+
+
