@@ -1,77 +1,114 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z68a9ow9"
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 466FED43
-	for <git@vger.kernel.org>; Thu, 23 Nov 2023 11:32:52 -0800 (PST)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-507bd19eac8so1571943e87.0
-        for <git@vger.kernel.org>; Thu, 23 Nov 2023 11:32:52 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="guO1sTly"
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9B9C130
+	for <git@vger.kernel.org>; Thu, 23 Nov 2023 13:21:01 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-5094727fa67so1752071e87.3
+        for <git@vger.kernel.org>; Thu, 23 Nov 2023 13:21:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700767970; x=1701372770; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1700774460; x=1701379260; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=W7u6LUTM5rWg4aE66nCFKc9I9kfzwXOzOCkInDb/msM=;
-        b=Z68a9ow90UZZH/k3un4XjqIR521gTIryaJDVu1lnhoTDs9NH3RfSDpB/5bVXa6Wq/a
-         HLMXZABNDjwsSdqQVUQluhvuoSB3f7jvQzdL4O+Wc1bzkLUNIcclMhEHml47lFGvJG8p
-         K1qAHjnghjDXDLzIfPjgelmsMALvQbGOJuVqN+tOHy22oPp6FbEv5Fu9gwRIGil8BnOo
-         kRdpkrJvKmqsN7d5AYIB7DJwGqXRyBBwk05kU4iy4hD7sjj+7p9Cttd6wIoaDQMdfFXL
-         JUPsiVmQP0WpHlfUqyfQKAOwfCOvaxKKbWDvX75esgGXZILlyUue5Yeacvg1GijpG3+6
-         mQeA==
+        bh=W1W9oaPR/Q2q+bd1xnRN9Ds6CY8oD9ShoZGHchlqG8c=;
+        b=guO1sTlybmSrmumN7k1pr9VvQQv6UhXM2HZMZqWdRQBzKX4Rx0YDkby4nI1ROXXiIS
+         YowZAatUK8YgQKAs9YJwPo0yNRMxeNbb0bKJcqwatbNpuqMPG4kwP8xLvj1ENH+faZfW
+         zuTKqjEuUuX25BAnwDHHsMzN4qLyo6sPOyjng9Ic2YrYKeMeb2Reds0VbCG3FkpVbBEU
+         8DSwM68slJsvdmtwXmpuHYU1Vn/so4tciSSkzhcm9M+bNtv2l2I5nGxsj4vqEZbPSrX/
+         wD4ZVU+XcY2i+PBxyXugTAXva4cfR5DQuTc0gu2g5XwSYdLm1AD7vQJsNRPV43xVSJ6d
+         BkBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700767970; x=1701372770;
+        d=1e100.net; s=20230601; t=1700774460; x=1701379260;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=W7u6LUTM5rWg4aE66nCFKc9I9kfzwXOzOCkInDb/msM=;
-        b=uIp0Z3Z1piHyMxIneOOLWwqmkb2XFy7S+bB5G2suHIEyP7Kpqx+Io0RtTHNz/mqYd2
-         VdGxxWRNtqz3s81ATiAXS7N4UaXeUBeUsvWdOJgbt8vdYWaOeDuejUAtZI1U7Syw6xtC
-         gDDqgpP3LsQCM9bdv0cj+gfIaND3u+JXppO1oiZjm6Y9+KRURqglmDEbpa+AaC0AS7nH
-         7X9V+75t21jZwR4iNYcZtkbBdzqB63Ws3FdzS3yF5XWaYbhHDPMEoeLLREdH0paFyNgl
-         xsmdqLH5TwVBBWEef7ZX6aBLykk8M8/8nu7iugvM1h2p0byKAbF6Mecn+5XLQheHRHoY
-         1xbw==
-X-Gm-Message-State: AOJu0YzEKZpVgPg3nDwQ+BwBwVKOq4QwvjA9fDJ5xuA5vZEXFb837Iyx
-	859RNoqSvHgNqe7WWtzlPxJBQZwf50xY8PAx+Rw=
-X-Google-Smtp-Source: AGHT+IFfBzeWcMdggqrbM1cMCVYgJsTHZzuSbWbVHlyb48kDEfOGMtgB3GgGmW+2Y4B1uGTFzuLDOFLaDARIQtce4rc=
-X-Received: by 2002:a05:6512:114d:b0:509:4599:12d9 with SMTP id
- m13-20020a056512114d00b00509459912d9mr225242lfg.6.1700767970226; Thu, 23 Nov
- 2023 11:32:50 -0800 (PST)
+        bh=W1W9oaPR/Q2q+bd1xnRN9Ds6CY8oD9ShoZGHchlqG8c=;
+        b=xPTRaks6u+dSDvOfznJjIN6NaJRxWvQRDQn4Mzgv1dp3lZYp/6ywDu08Gs+IvlRYoW
+         ZXoyX+F6iamZkyYci79yhw0JzjX5/WhLb8wpEm2MWBt8dZV/56I7lfhtBwuLV2ndaiu3
+         QF5twjhY98VMEB+zCUvAPZuQ0dMCF4l4gRGWXT8CrRkuxfoPG7u6KfVwz7g+04PEkm7L
+         ox+xU8IVbA/+akUZQWElAHMaA7B5+dvAoEas7pBzIEoa5zqTUlQPMAN5nUk62hxRKRU4
+         zph/SRPwhWtAnFLlEmNl6McQ/ak4dGVxhf5O0lccbdTEZHgITzWfyiZR2dH2jwYuMJ0+
+         jzMQ==
+X-Gm-Message-State: AOJu0YwG4hP8KyzW5BsjeO1RgqQ/lAr5IMNUiakEvntVow0uNvJiZdvO
+	tUpkYTwM7te9cfYdX/V8qleDcbq7jA9rdEgOZjsEFt4K2jc=
+X-Google-Smtp-Source: AGHT+IHUDWxbbXq8PDwrSlARh2+B/PeP+XzQ9187TcHJzE/AXn9XMz3kwHvUezy7QwID/46lpivR6WCdNUe/u1E/5dw=
+X-Received: by 2002:a19:c204:0:b0:50a:6f8a:6461 with SMTP id
+ l4-20020a19c204000000b0050a6f8a6461mr266597lfc.58.1700774459695; Thu, 23 Nov
+ 2023 13:20:59 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231102135151.843758-1-christian.couder@gmail.com>
- <20231115143327.2441397-1-christian.couder@gmail.com> <fb6eb685-0af1-082a-b20c-028b06b6914e@gmx.de>
-In-Reply-To: <fb6eb685-0af1-082a-b20c-028b06b6914e@gmx.de>
+References: <pull.1589.git.1695392027.gitgitgadget@gmail.com>
+ <pull.1589.v2.git.1695553041.gitgitgadget@gmail.com> <71ed1286d7f38ecc901b40a542508fba9777f02d.1695553042.git.gitgitgadget@gmail.com>
+In-Reply-To: <71ed1286d7f38ecc901b40a542508fba9777f02d.1695553042.git.gitgitgadget@gmail.com>
 From: Elijah Newren <newren@gmail.com>
-Date: Thu, 23 Nov 2023 11:32:37 -0800
-Message-ID: <CABPp-BFgJFeL4cUJ8+JZ2ZuM58F3rSYGYu_5w_mDLYWtzO4raw@mail.gmail.com>
-Subject: Re: [PATCH v7 00/14] Introduce new `git replay` command
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org, 
-	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, John Cai <johncai86@gmail.com>, 
-	Derrick Stolee <stolee@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>, 
-	Calvin Wan <calvinwan@google.com>, Toon Claes <toon@iotcl.com>, Dragan Simic <dsimic@manjaro.org>, 
-	Linus Arver <linusa@google.com>
+Date: Thu, 23 Nov 2023 13:19:00 -0800
+Message-ID: <CABPp-BEbfsss39-cENw2BwnQPp4edp9_JSN_O1e7vcci9XE+cQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] doc: switch links to https
+To: Josh Soref via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Josh Soref <jsoref@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Christian,
-
-On Thu, Nov 16, 2023 at 12:53=E2=80=AFAM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> On Wed, 15 Nov 2023, Christian Couder wrote:
+On Sun, Sep 24, 2023 at 5:53=E2=80=AFAM Josh Soref via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> > # Range-diff between v6 and v7
-> >
 [...]
-> Apart from the one little outstanding nit where I would love to see
-> `(EXPERIMENTAL!)` as the first word of the synopsis both in the manual
-> page and in the output of `git replay -h`, you have addressed all of my
-> concerns.
->
-> Thank you!
-> Johannes
+> diff --git a/Documentation/gitweb.conf.txt b/Documentation/gitweb.conf.tx=
+t
+> index 34b1d6e2243..1edabdfef36 100644
+> --- a/Documentation/gitweb.conf.txt
+> +++ b/Documentation/gitweb.conf.txt
+> @@ -820,7 +820,7 @@ filesystem (i.e. "$projectroot/$project"), `%h` to th=
+e current hash
+>  (\'h' gitweb parameter) and `%b` to the current hash base
+>  (\'hb' gitweb parameter); `%%` expands to \'%'.
+>  +
+> -For example, at the time this page was written, the http://repo.or.cz[]
+> +For example, at the time this page was written, the https://repo.or.cz[]
 
-Looks good to me too.  Thanks!
+Given the "at the time this page was written" comment, I'm not sure we
+should switch to https here.
+
+>  Git hosting site set it to the following to enable graphical log
+>  (using the third party tool *git-browser*):
+>  +
+> diff --git a/Documentation/gitweb.txt b/Documentation/gitweb.txt
+> index af6bf3c45ec..434893595a4 100644
+> --- a/Documentation/gitweb.txt
+> +++ b/Documentation/gitweb.txt
+> @@ -28,7 +28,7 @@ Gitweb provides a web interface to Git repositories.  I=
+ts features include:
+>    revisions one at a time, viewing the history of the repository.
+>  * Finding commits which commit messages matches given search term.
+>
+> -See http://repo.or.cz/w/git.git/tree/HEAD:/gitweb/[] for gitweb source c=
+ode,
+> +See https://repo.or.cz/w/git.git/tree/HEAD:/gitweb/[] for gitweb source =
+code,
+>  browsed using gitweb itself.
+
+The suggested link gives a "404 - No such tree".  Granted, the http:
+link also does that, but it'd be nicer to provide a non-broken link,
+which you can do by stripping the '/[]' from the end of the URL.
+
+> diff --git a/json-writer.h b/json-writer.h
+> index 209355e0f12..de140e54c98 100644
+> --- a/json-writer.h
+> +++ b/json-writer.h
+> @@ -3,7 +3,7 @@
+>
+>  /*
+>   * JSON data structures are defined at:
+> - * [1] http://www.ietf.org/rfc/rfc7159.txt
+> + * [1] https://www.ietf.org/rfc/rfc7159.txt
+>   * [2] http://json.org/
+
+As Eric commented on v1, the json.org link should also be converted to http=
+s.
+
+
+The rest of the patch that I didn't comment on looks fine.
