@@ -1,89 +1,77 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CR+4HJeO"
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F3751B2
-	for <git@vger.kernel.org>; Thu, 23 Nov 2023 11:08:24 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-507a98517f3so1541681e87.0
-        for <git@vger.kernel.org>; Thu, 23 Nov 2023 11:08:24 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z68a9ow9"
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 466FED43
+	for <git@vger.kernel.org>; Thu, 23 Nov 2023 11:32:52 -0800 (PST)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-507bd19eac8so1571943e87.0
+        for <git@vger.kernel.org>; Thu, 23 Nov 2023 11:32:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700766503; x=1701371303; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1700767970; x=1701372770; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=9kUe9w5jJalihZhpK0AK+gM/mfJC45KwjYbXpplrWY0=;
-        b=CR+4HJeO000MNToS2Fgzs0TBGiWcLHxtmMAjDKwvV3XrrMOfz7k/S7U1Z9L2xkESXj
-         BBNb+7KZXYuHuuywge59ERGZyGB8M5TEXK/oV7w39VzKfW9GyALchkT5C423uljoQ024
-         1BWPY15JeRwVGGeGixRxFhUDJGE/JWSSEADFfAPPkxjnnTOl5X1ZWggOWmyQwT7OFmNF
-         zv0VgqMJR58dFwJNTCQP0pb9hZdHlCWNWarPEvMk1UUDwYWZaHKwObe61l3IonTUYvn6
-         RTMaCPiZZ53c4Belu4d6ZDh64HyIc9CJMAKtHR0KgX8UdanZQWt2NnOdmsjf3lVGKVER
-         trzg==
+        bh=W7u6LUTM5rWg4aE66nCFKc9I9kfzwXOzOCkInDb/msM=;
+        b=Z68a9ow90UZZH/k3un4XjqIR521gTIryaJDVu1lnhoTDs9NH3RfSDpB/5bVXa6Wq/a
+         HLMXZABNDjwsSdqQVUQluhvuoSB3f7jvQzdL4O+Wc1bzkLUNIcclMhEHml47lFGvJG8p
+         K1qAHjnghjDXDLzIfPjgelmsMALvQbGOJuVqN+tOHy22oPp6FbEv5Fu9gwRIGil8BnOo
+         kRdpkrJvKmqsN7d5AYIB7DJwGqXRyBBwk05kU4iy4hD7sjj+7p9Cttd6wIoaDQMdfFXL
+         JUPsiVmQP0WpHlfUqyfQKAOwfCOvaxKKbWDvX75esgGXZILlyUue5Yeacvg1GijpG3+6
+         mQeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700766503; x=1701371303;
+        d=1e100.net; s=20230601; t=1700767970; x=1701372770;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=9kUe9w5jJalihZhpK0AK+gM/mfJC45KwjYbXpplrWY0=;
-        b=J1uiZgt6nQNz14oGgmrEWeRemgjsz0zF4hZrfN2hdrqJZeBOnT29iBUsf6WA2AxTtc
-         IuyH2vX3SRoqe0yiplfs9pDE+m35w3uBniwTH3ggFwkLQLDRdP0XZQh1n6rwRzsvuLnA
-         1bO8KN9T4gGFIKVOL7SBsJKlW5GNe8zUYXL60vXt+NhGtcXE1W84oqvsgDDvmIZYGFJM
-         zD7eE/P6vaj+BauovLOIbfASxElUBxopKGQK/bhQz2r6hz6u/0fn0q4kf5uL2e7YeXUV
-         V6p+swHxvIJuEcQ2E0kEcVo4/XfzU1P+YJjkw3OcNf9LVhPkGT5TweMTF1SGkiDXtpLO
-         NQiA==
-X-Gm-Message-State: AOJu0YxUNsP3HRQZTc8CSLYPMPOER9kRA640SfpBlM1PoKklHmbW9kUS
-	CoZRM8moCTj4gPwiBqp/OIAKYfHV7PyFErBBIwTqyfv+rGw=
-X-Google-Smtp-Source: AGHT+IGJBdtmPcjIzh7ZBsNy4JwPsgIINUCBBjfdoelCescid1C2MeFyIArgZ+CY54jyTWebPHzF27EFmts2UGDSQgA=
-X-Received: by 2002:a05:6512:1283:b0:50a:9f35:4fc7 with SMTP id
- u3-20020a056512128300b0050a9f354fc7mr141843lfs.2.1700766502563; Thu, 23 Nov
- 2023 11:08:22 -0800 (PST)
+        bh=W7u6LUTM5rWg4aE66nCFKc9I9kfzwXOzOCkInDb/msM=;
+        b=uIp0Z3Z1piHyMxIneOOLWwqmkb2XFy7S+bB5G2suHIEyP7Kpqx+Io0RtTHNz/mqYd2
+         VdGxxWRNtqz3s81ATiAXS7N4UaXeUBeUsvWdOJgbt8vdYWaOeDuejUAtZI1U7Syw6xtC
+         gDDqgpP3LsQCM9bdv0cj+gfIaND3u+JXppO1oiZjm6Y9+KRURqglmDEbpa+AaC0AS7nH
+         7X9V+75t21jZwR4iNYcZtkbBdzqB63Ws3FdzS3yF5XWaYbhHDPMEoeLLREdH0paFyNgl
+         xsmdqLH5TwVBBWEef7ZX6aBLykk8M8/8nu7iugvM1h2p0byKAbF6Mecn+5XLQheHRHoY
+         1xbw==
+X-Gm-Message-State: AOJu0YzEKZpVgPg3nDwQ+BwBwVKOq4QwvjA9fDJ5xuA5vZEXFb837Iyx
+	859RNoqSvHgNqe7WWtzlPxJBQZwf50xY8PAx+Rw=
+X-Google-Smtp-Source: AGHT+IFfBzeWcMdggqrbM1cMCVYgJsTHZzuSbWbVHlyb48kDEfOGMtgB3GgGmW+2Y4B1uGTFzuLDOFLaDARIQtce4rc=
+X-Received: by 2002:a05:6512:114d:b0:509:4599:12d9 with SMTP id
+ m13-20020a056512114d00b00509459912d9mr225242lfg.6.1700767970226; Thu, 23 Nov
+ 2023 11:32:50 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1616.git.1700680717.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1616.git.1700680717.gitgitgadget@gmail.com>
+References: <20231102135151.843758-1-christian.couder@gmail.com>
+ <20231115143327.2441397-1-christian.couder@gmail.com> <fb6eb685-0af1-082a-b20c-028b06b6914e@gmx.de>
+In-Reply-To: <fb6eb685-0af1-082a-b20c-028b06b6914e@gmx.de>
 From: Elijah Newren <newren@gmail.com>
-Date: Thu, 23 Nov 2023 11:08:10 -0800
-Message-ID: <CABPp-BHsWRPPdHzvZO+Wp01fB6yqo2fnqYsrSvk6_m932YkoeA@mail.gmail.com>
-Subject: Re: [PATCH 0/4] Redact unsafe URLs in the Trace2 output
-To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
+Date: Thu, 23 Nov 2023 11:32:37 -0800
+Message-ID: <CABPp-BFgJFeL4cUJ8+JZ2ZuM58F3rSYGYu_5w_mDLYWtzO4raw@mail.gmail.com>
+Subject: Re: [PATCH v7 00/14] Introduce new `git replay` command
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org, 
+	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, John Cai <johncai86@gmail.com>, 
+	Derrick Stolee <stolee@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>, 
+	Calvin Wan <calvinwan@google.com>, Toon Claes <toon@iotcl.com>, Dragan Simic <dsimic@manjaro.org>, 
+	Linus Arver <linusa@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Nov 22, 2023 at 11:18=E2=80=AFAM Johannes Schindelin via GitGitGadg=
-et
-<gitgitgadget@gmail.com> wrote:
->
-> The Trace2 output can contain secrets when a user issues a Git command wi=
-th
-> sensitive information in the command-line. A typical (if highly discourag=
-ed)
-> example is: git clone https://user:password@host.com/.
->
-> With this PR, the Trace2 output redacts passwords in such URLs by default=
-.
->
-> This series also includes a commit to temporarily disable leak checking o=
-n
-> t0210,t0211 because the tests uncover other unrelated bugs in Git.
->
-> These patches were integrated into Microsoft's fork of Git, as
-> https://github.com/microsoft/git/pull/616, and have been cooking there ev=
-er
-> since.
+Hi Christian,
 
-Thanks for making these changes.  Makes me wonder, back when we were
-logging trace2 data, if we had some of these leaks.  Eek.
+On Thu, Nov 16, 2023 at 12:53=E2=80=AFAM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> On Wed, 15 Nov 2023, Christian Couder wrote:
+>
+> > # Range-diff between v6 and v7
+> >
+[...]
+> Apart from the one little outstanding nit where I would love to see
+> `(EXPERIMENTAL!)` as the first word of the synopsis both in the manual
+> page and in the output of `git replay -h`, you have addressed all of my
+> concerns.
+>
+> Thank you!
+> Johannes
 
-As I commented in patch 2, I think this is a good start, but I'm
-curious if others would be willing to turn clone/fetch of such bad
-URLs into warnings for now and errors later.  The prevalence of
-AI-assist add-ons for various IDEs and the number of developers opting
-to use those IDEs and add-ons, and the fact that these tools sometimes
-include repository URLs in what they send off to third parties, makes
-me wonder if our recent infosec fire drill is soon going to be a
-widely shared experience by lots of other companies and individuals.
-Training users to not do bad things is hard, and it might be worth
-saving them from themselves.  Thoughts?
+Looks good to me too.  Thanks!
