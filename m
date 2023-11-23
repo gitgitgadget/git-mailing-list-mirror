@@ -1,46 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hIp3YQ6H"
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B56210C3
-	for <git@vger.kernel.org>; Thu, 23 Nov 2023 09:44:11 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-4079ed65582so7296785e9.1
-        for <git@vger.kernel.org>; Thu, 23 Nov 2023 09:44:11 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FuiynoiJ"
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5676010DC
+	for <git@vger.kernel.org>; Thu, 23 Nov 2023 09:44:12 -0800 (PST)
+Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2c8879a1570so14273261fa.1
+        for <git@vger.kernel.org>; Thu, 23 Nov 2023 09:44:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1700761450; x=1701366250; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=l2PJTPfbycDoDr93RRdPw74cIgzmF05P4xvYZkpcuTI=;
-        b=hIp3YQ6HRsF6z4++znT4UsUx4PcWHcjVjquJiAQ8EEANF+V2I8lVbmgdKFLgFP8gMP
-         ZBnBGhkIT4z3s5gvrxUUj10y6fmmHPJrpNCpU2hmL5UqkJW1oCH+cXXMr9+VOt31C3gS
-         GxbzGb8xr3uDKzGCxsQZmZe3mgJig2fr5GU3LTb507La6ddMf15PXrtMvBw1AV7aKT/6
-         sCFfgYLxPBCGALNmE6iMTbD6ieHsOSjAHFWOXrVVA9XfG9arcwQxXjfQJh+SAztMQYmu
-         zGhsmyZjrEC3jmMDEXklcj0vEL2bq4G5g8eJPi2+tsuRNRTQWfy2LzgSRvvyFYRos9yP
-         ib2Q==
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BhdjFcwMeFtf9KqLxqQNOAWKxKUu7DGHAtTISD+MFi0=;
+        b=FuiynoiJD/OnfQTnCr3Y2lvMor5QmR2zwwJX/65YaEtZzIIiHCkTiNYw/9cmdDX73G
+         fmnQ9FzdB5YmE3gSLyp1lWBYwV5oQYI5KJWt5KUfsS1Oar3TKhTwFts0wYY34ittdHK9
+         poTEUZVFqy/r+afYP45aUZKvCA3hpEBjdk1DzYvgiroHlB1qHA2Ur5PkDHWH7PPjw0hi
+         /D/68v5pJq+RuQapx03/p6mkr59ys0tFOsqw1E3gyjE1B3FL6Z7M5qFbKW7vi613HLTQ
+         dGMUOghKV0v+DWna9AHBI8K1rIakyu/47xqtOdxrtVyRyazegDn0bn7nKI2lBwtBcbfP
+         2Wug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1700761450; x=1701366250;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=l2PJTPfbycDoDr93RRdPw74cIgzmF05P4xvYZkpcuTI=;
-        b=i+zAxKqjDkIrIwlcIiwjbJK7zgvknf6wRwgDblnIJ7IGvwP0XLKlKDyVrPk0C+Vvv4
-         n6N3AJHCrAIOz0KW7MImrXDlfliZnecHdnesMOehuNYYPqW7F6jzOs7xhHqmXxfC1Yse
-         9yU7n/c6Siy7BKsIh20lUbwtN34Ffsdc994dd9a4ecUT+90cRw56uH9ZhJ5m+UGUZ+0V
-         LLrDO6RmqDHP0MWSyIoWKoWwY+rQVF251p5YZazgS9JOk51tJPT0vUBor6VV6TUVqRet
-         w5Z1nQbJrIDgw54qTHY4Td/MSN85nSBr5HeuRvm/FbvIHp4sxtLtlWyGYewKc7e1YOwU
-         YEFA==
-X-Gm-Message-State: AOJu0YzgeNdyUQyBrE1ITLjkp3Slb4RK6r9Rt3KA6xrXu8gdFj8FjNvQ
-	INSUUA9PlAYNapKdh47NZKGWtH/MQeg=
-X-Google-Smtp-Source: AGHT+IFYxBcO5e+9Ger1Fd8gYbG8F1UUyTDDxmaqU75hmx0Q3dZfYgsJKQu9K0lOM9CsdYjvRaurTw==
-X-Received: by 2002:a05:600c:470c:b0:402:8896:bb7b with SMTP id v12-20020a05600c470c00b004028896bb7bmr205739wmo.6.1700761449503;
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=BhdjFcwMeFtf9KqLxqQNOAWKxKUu7DGHAtTISD+MFi0=;
+        b=u8j7MmitcOQVwlWBoi0GV5XMCuuOM5R7g+9eUkVG7/VdSCRrSHzIH5jrqn843IKnLr
+         i8YVfCfvfAl3xdVx5xfE+DHgHePocpD9tHQ0GZkTBN1135ElYj/IZUf4xwdkOFEZQXTK
+         iFSifleBLHtzV9/deRKs3gzmMXIxX0CJJ9a/numt7vZtsZiaDlJfbDeBub/O/XvwMjy3
+         g8QQvTLZ6Mr3+afHhApvt9m80eTVqLbTKWpODei18NNE6fE+C73T4UL+TJ1p2tBXgceo
+         WCBQBiVp6rHlsef374kQuiRoueLvdd9I5RadsaRTTHtqK9eZzGPjgktmF1iKo64WUvIH
+         H/ug==
+X-Gm-Message-State: AOJu0YwbgoFmZRzGdSD2duK5CG+y5AlTEvPW7Vo/Hj1FvuisfP7aUZPe
+	WGXjQ+Kcx8W9w+/7bV99RXPilhFWsgE=
+X-Google-Smtp-Source: AGHT+IEumz3VLYpzb6zvAsqbEyl9Zz+qeon+Lz+uuUdlMiEgKqucs3fOlRnqmyq2GQut9e0RJQqBPQ==
+X-Received: by 2002:a2e:9d88:0:b0:2c4:fe14:a85 with SMTP id c8-20020a2e9d88000000b002c4fe140a85mr91907ljj.18.1700761449992;
         Thu, 23 Nov 2023 09:44:09 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c37-20020a05600c4a2500b003fee6e170f9sm2594515wmp.45.2023.11.23.09.44.09
+        by smtp.gmail.com with ESMTPSA id g9-20020a05600c310900b004094e565e71sm2680762wmo.23.2023.11.23.09.44.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 23 Nov 2023 09:44:09 -0800 (PST)
-Message-ID: <pull.1349.git.1700761448.gitgitgadget@gmail.com>
+Message-ID: <591c7b8d73b1a93feaa749d68156a198a7e32a9c.1700761448.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1349.git.1700761448.gitgitgadget@gmail.com>
+References: <pull.1349.git.1700761448.gitgitgadget@gmail.com>
 From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 23 Nov 2023 17:44:04 +0000
-Subject: [PATCH 0/4] Sparse checkout completion fixes
+Date: Thu, 23 Nov 2023 17:44:05 +0000
+Subject: [PATCH 1/4] completion: squelch stray errors in sparse-checkout
+ completion
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -51,39 +55,40 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>
+Cc: Elijah Newren <newren@gmail.com>,
+    Elijah Newren <newren@gmail.com>
 
-This fixes a few issues with tab completion for the sparse-checkout command,
-specifically with the "add" and "set" subcommands.
+From: Elijah Newren <newren@gmail.com>
 
-The 4th patch should probably be considered RFC; it is notable in that we
-previously discussed a much different proposal and the general problem
-area[1], though our discussion was from a limited vantage point and none of
-us (myself included) were aware of the full context at the time. In that
-thread, Junio gave some helpful general high-level guidelines for
-completion. I believe the existing completion rules fail Junio's guidelines
-pretty badly and that we thus need to do something else. See the lengthy
-commit message. I implement a simple though somewhat suboptimal choice for
-that something else (while arguing that it's at least much better than our
-current solution), while also documenting with a code comment a much more
-involved alternative solution that we could consider in the future. Comments
-on this choice welcome.
+If, in the root of a project, one types
 
-[1] https://lore.kernel.org/git/xmqqv8yjz5us.fsf@gitster.g/
+    git sparse-checkout set --cone ../<TAB>
 
-Elijah Newren (4):
-  completion: squelch stray errors in sparse-checkout completion
-  completion: fix logic for determining whether cone mode is active
-  completion: avoid misleading completions in cone mode
-  completion: avoid user confusion in non-cone mode
+then an error message of the form
 
- contrib/completion/git-completion.bash | 95 +++++++++++++++++++++++++-
- 1 file changed, 92 insertions(+), 3 deletions(-)
+    fatal: ../: '../' is outside repository at '/home/newren/floss/git'
 
+is written to stderr, which munges the users view of their own command.
+Squelch such messages.
 
-base-commit: 79f2338b3746d23454308648b2491e5beba4beff
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1349%2Fnewren%2Fsparse-checkout-completion-fixes-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1349/newren/sparse-checkout-completion-fixes-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1349
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ contrib/completion/git-completion.bash | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index ba5c395d2d8..6fced40d04c 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -3014,7 +3014,7 @@ __gitcomp_directories ()
+ 			COMPREPLY+=("$c/")
+ 			_found=1
+ 		fi
+-	done < <(git ls-tree -z -d --name-only HEAD $_tmp_dir)
++	done < <(git ls-tree -z -d --name-only HEAD $_tmp_dir 2>/dev/null)
+ 
+ 	if [[ $_found == 0 ]] && [[ "$cur" =~ /$ ]]; then
+ 		# No possible further completions any deeper, so assume we're at
 -- 
 gitgitgadget
+
