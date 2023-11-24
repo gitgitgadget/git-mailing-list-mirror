@@ -1,63 +1,27 @@
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5584928DC5
+	for <git@vger.kernel.org>; Fri, 24 Nov 2023 14:00:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="o/HPigsx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xq32Y5Kc"
-Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0036ECE
-	for <git@vger.kernel.org>; Fri, 24 Nov 2023 03:37:13 -0800 (PST)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.west.internal (Postfix) with ESMTP id 72A053200A3C
-	for <git@vger.kernel.org>; Fri, 24 Nov 2023 06:37:11 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Fri, 24 Nov 2023 06:37:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:sender:subject:subject:to:to;
-	 s=fm1; t=1700825830; x=1700912230; bh=0IZTtCCzTYk3/Muf6lT1bmVnO
-	TWZMXH+TxUJTTnKPto=; b=o/HPigsxNOb6UAeyuH8cQna6MQM8UkxNUQiUm7tw7
-	/iR+fS939K1gSkAUaDtenI9t5QKOeYzNtK+ufxSU1U7BCasrp5rYi6ccJAtStFlA
-	uBQgySMQrRpAB1qI+CNyhcbSrYjRQoLAnST30uOAsY5P9M6Ryd7mVwqEYGozJzO7
-	j80SyNUPGPUTqctWVcyHM6RgpcCiVkhkYFLgk4am8gzHYYWslCD2cJ6ONFsAsq9V
-	K1IOZMbMMz/mFOhMHI45hFp9SRMfaoH+q/M8hgJ9UMX99hQfcgMn7P5WcBL+RURP
-	utFPoS2JqW6ky3EVsNmf06eDrExJDp0Ni3B9n6rNDv13A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:sender:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1700825830; x=1700912230; bh=0IZTtCCzTYk3/Muf6lT1bmVnOTWZMXH+TxU
-	JTTnKPto=; b=xq32Y5Kc8RfJy5JJ+9iwujO5gfIJ1+TGUAwdF/Z+MuNWtFzKaYa
-	G/RBsT5yL9V+OFNALmsnr9e8yYuUREXAR6VoN8i5xSrGNyAlIeUgIv4BdW8EfegH
-	+KDfMJmV2FepxbPvYIN2ywX9G5bpzOt8V44/ZzTF/eoB4Dlxz1KICD7j37do90bR
-	d/5lWNUuTJgNC0kHPV0hbi5S3/UcXAqIxsbRewDAX9tanIAgrk9URZQSRYYowlP8
-	FRya/Mlo4Hb2YwT8F31yC5GXQZHylTfc7/HMMnLfB3eGxV3qf+qobS81Ujw9Kolu
-	TgsH/216SOblZ1Sur1khKih4r33cXBFs4AA==
-X-ME-Sender: <xms:5opgZU_732m7mRzvC6fsa0cHQn2UMP52Wcb71Vik1uFL4GktSSPffg>
-    <xme:5opgZcsW8cbrwT_x46SH1fvySvIBoIBxg-SdqseuY1frua2PU_tGr-ZvLKRlAUD-R
-    VNzb0AKM6MfyZMxww>
-X-ME-Received: <xmr:5opgZaBupVMaElkLdY00uoSzPUPunaV446roFV_IW04YeFqFHvo5l-JKtv9C4xmgp9wQ4f8tLaxBUjUoWT6KV6aXZgiRGp6IdDwU3msE1uqe2GY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudehhedgvdelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkgggtugesghdtreertd
-    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhepjeeifedvueelfffgjeduffdvgefhiefgjefgvd
-    dvfeduvefffeevfffhgfekieffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
-    pehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:5opgZUdGNz-lVj-o0xUFLzbmr6IXzg5MJMmS-vIDTUwp9HCdWyW0YA>
-    <xmx:5opgZZN6ZCvnvcVsooLRViUAUJhBCeUZ9cnbmdESv_nNcHXSqvuSeg>
-    <xmx:5opgZeneUroAI4xAeL1sYeOVKZCC_o8eH3puptppFcZRq-CCqh5bGQ>
-    <xmx:5opgZQY4VzKHOshxHLI9GPrZamOQfsacElyH3atprl7A9D_9k3TQ_w>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 24 Nov 2023 06:37:10 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 1a7ff13f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Fri, 24 Nov 2023 11:36:09 +0000 (UTC)
-Date: Fri, 24 Nov 2023 12:37:06 +0100
-From: Patrick Steinhardt <ps@pks.im>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Icz5+7QV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EF08C433C7
+	for <git@vger.kernel.org>; Fri, 24 Nov 2023 14:00:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1700834425;
+	bh=fOYxC33aCl20nncVO1N3FxwQnjn2fXFAbp4nc8ZEsdQ=;
+	h=Date:From:To:Subject:From;
+	b=Icz5+7QVYcgcNKVlxZvbDUKLJGSJ+Wz3ssaNvaU8vGFeAYYvKENXdG0tjINEjfBLB
+	 /wU5R4sVHVWSvAGJtFDqM/oQQMUEctsxraOpgsmNehhPrM5YytDYoIfQdwiNGDo3K6
+	 QdRONQgo3Xn1EdK9cp7fVQV9iOoaTHyaQItsCHgvKhytAxhiPQbDQWVaT8Suo9G5zE
+	 AkjhB1wyPclb8fbpbuOM6gR77qabEbkqR2whZwIVGElqhs3ld4s8IuhtUEBMe5PL9v
+	 UFOIDcPQJkHLE5ke7tZQ2T7zjThSurC9H8l11Xh9l4SxrIlmLXeetnHtNbdJMC4X3R
+	 m1yQ/4sMnVRlg==
+Date: Fri, 24 Nov 2023 15:00:22 +0100
+From: Alejandro Colomar <alx@kernel.org>
 To: git@vger.kernel.org
-Subject: [PATCH] git-prompt: stop manually parsing HEAD
-Message-ID: <cc902954f30c2faa92d1c5a4469f0dcc23e4acfe.1700825779.git.ps@pks.im>
+Subject: Running git(1) from within hooks/post-update
+Message-ID: <ZWCsd3cJZ3LAqOwg@debian>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -65,93 +29,83 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="KiILIaAHZSMWEOk3"
+	protocol="application/pgp-signature"; boundary="U6JUlIdAL/10pCma"
 Content-Disposition: inline
 
 
---KiILIaAHZSMWEOk3
-Content-Type: text/plain; charset=us-ascii
+--U6JUlIdAL/10pCma
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+Date: Fri, 24 Nov 2023 15:00:22 +0100
+From: Alejandro Colomar <alx@kernel.org>
+To: git@vger.kernel.org
+Subject: Running git(1) from within hooks/post-update
 
-We're manually parsing the HEAD reference in git-prompt to figure out
-whether it is a symbolic or direct reference. This makes it intimately
-tied to the on-disk format we use to store references and will stop
-working once we gain additional reference backends in the Git project.
+Hi,
 
-Refactor the code to always use git-symbolic-ref(1) to read HEAD, which
-is both simpler and compatible with alternate reference backends.
+I'm trying to set up a post-update hook to produce a build of the Linux
+man-pages PDF book after every push to my personal server to the 'main'
+branch, so that I can serve man-pages-HEAD.pdf at some URL, for users to
+be able to easily check the manual at git HEAD without having to clone
+the repo.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- contrib/completion/git-prompt.sh | 22 ++++++++++------------
- 1 file changed, 10 insertions(+), 12 deletions(-)
+I thought of having a git non-bare repo where I build it, so the script
+would be the following (the paths are tmp, because I'm still testing).
 
-diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prom=
-pt.sh
-index 2c030050ae..05de540e13 100644
---- a/contrib/completion/git-prompt.sh
-+++ b/contrib/completion/git-prompt.sh
-@@ -474,17 +474,10 @@ __git_ps1 ()
-=20
- 		if [ -n "$b" ]; then
- 			:
--		elif [ -h "$g/HEAD" ]; then
--			# symlink symbolic ref
--			b=3D"$(git symbolic-ref HEAD 2>/dev/null)"
- 		else
--			local head=3D""
--			if ! __git_eread "$g/HEAD" head; then
--				return $exit
--			fi
--			# is it a symbolic ref?
--			b=3D"${head#ref: }"
--			if [ "$head" =3D "$b" ]; then
-+			b=3D"$(git symbolic-ref HEAD 2>/dev/null)"
-+
-+			if test -z "$b"; then
- 				detached=3Dyes
- 				b=3D"$(
- 				case "${GIT_PS1_DESCRIBE_STYLE-}" in
-@@ -498,9 +491,14 @@ __git_ps1 ()
- 					git describe HEAD ;;
- 				(* | default)
- 					git describe --tags --exact-match HEAD ;;
--				esac 2>/dev/null)" ||
-+				esac 2>/dev/null)"
-+
-+				if test -z "$b"; then
-+					test -z "$short_sha" && return $exit
-+
-+					b=3D"$short_sha..."
-+				fi
-=20
--				b=3D"$short_sha..."
- 				b=3D"($b)"
- 			fi
- 		fi
+	$ cat post-update=20
+	#!/bin/sh
+
+	test "$1" =3D "refs/heads/main" || exit 0;
+
+	cd ~/tmp/man-pages/;
+
+	whoami; pwd; ls -ld .git/;  # This is for debugging.
+
+	git fetch srv			#>/dev/null 2>&1;
+	git reset srv/main --hard	#>/dev/null 2>&1;
+	git clean -dffx			#>/dev/null 2>&1;
+	scripts/LinuxManBook/build.sh	>~/tmp/LMB-HEAD.pdf &
+
+But it's not working.  The git(1) calls are failing, saying it's not a
+git repo, but it clearly is, and I have permissions, so I don't
+understand what's going wrong.  Here's the 'remote:' output of a push to
+that testing server:
+
+	remote: alx
+	remote: /home/alx/tmp/man-pages
+	remote: drwxr-xr-x 8 alx alx 4096 Nov 24 14:41 .git/
+	remote: fatal: not a git repository: '.'
+	remote: fatal: not a git repository: '.'
+	remote: fatal: not a git repository: '.'
+	remote: hooks/post-update: 12: ./scripts/LinuxManBook/build.sh: not found
+
+Can you please help?  :)
+
+Thanks,
+Alex
+
 --=20
-2.43.0
+<https://www.alejandro-colomar.es/>
 
-
---KiILIaAHZSMWEOk3
+--U6JUlIdAL/10pCma
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVgiuEACgkQVbJhu7ck
-PpT9Nw/+JDqe2phN4dyjAsNsAp1Uq5AFlA41ayxWWD7Z47AW2mIJ1H82JEHfA05D
-4hLMekYfDqiGLczQNgXf7CCsydqtb0iVFkL5U1hI4AUou0MdJYjoSVISMGvRdy1C
-ZKPJ5HdDNyW2LNGPyDQw7DhNVOgtz5uIw2lvbVa/Ne7Q+QxB+pUdD+CHzZzcBDa6
-brCi1F4nKqs15ApHpaKdpEM7amy6qxKGyfopSAtjZrVUTekDLmmjqolGBJz5xvMr
-7eE6QfG7crCPp6XNcfjZ8YQrnJhL6+q218AkQddtb4cqHlvmGvup66TUk2o2STfO
-a/0LCGKp6wC9Q+qtg6YeYi/i3qPnR61OtxoOjL8bc2VhWG+1crE5eO7NdNttMcJG
-1EGWVOSWT7Dup11vv0EygfIbwu6weDBDAiKpHr+A7RDVQn3Oex1gjpuwfXB/Xvrq
-cMpA662jaLXcWGXHA855UiMUd3MqWbKKxqSm+8RZXjggc6hyQE1bnPzYQk+m07ld
-+GKNZ8JVRTu2qz5yiSyt6bvsHYEUmlUZ9IITmOJN4qF9HXaeQ2ZQH45Un4scXb9N
-DTodeYh0OCF0wc0jpvvJERqlrV5+dxq+3ShtD3kT/oBpL7vuiCs3PhNO/fuCShNO
-+tlFKkvy0++nFtSsT47tCPW9zu6tZg6m/n3e0PcgMxaFQeiFFh0=
-=PIJp
+iQIzBAABCgAdFiEE6jqH8KTroDDkXfJAnowa+77/2zIFAmVgrHYACgkQnowa+77/
+2zL1DxAAjG/sLtbTO6QwzDXiRE99FqTEEMsZTUkXxDMDjjtcokAQC1sY2iSgpdwM
+GAw3x+8gZh6Nrjh95AE9Bm7ONVIUDhVZq89GByIdnJr9ki2U9jEbi6BHcXS0UABj
+xYbEPx1Wm5kqRzPTkrV5etx/1/Pci/HkRjWN3cucDECRCZeH9cF8D4eCht154Lkv
+UtXeMxHhHqGw6UKVmGs5VHMvr09ODQ2WoVWUCyGoJK+mRorZ77V8d+RtdS7RWz3b
+oj7/tRTwungakuA/ABVqlkBKXKE0gCCve0pnLRiYzf0G7gzrhbDHnONPUIy/M3o0
+gVZcDJFT01UcnoBnAV+IEMQlOZiFUueFGhH5QaxXJhsyux8x8gNZ9yv1GfZRNuv/
+quWJBgQ0R06jYDEEOGFKOGZXJdh5juZe0UjIdnzlv0Do5YIjJpEbSfUfCGaA9Hc0
+2vQjMBnxCqsmiVYzD0D1ClKwpL14GWZP4pO+Xh0Y08ryCui2RzxqjHWCN37BXxDf
+6kzMbWIzoc7dtRrHmcQr1I7CM5ID3YaX8ncDlO10YrkTP/kq7SiX6+KDaRaTq1+G
+2NRyF1w2/8Z03IvCioOB/XqUvMbiM7X5S3oiRmavWi4OqWmGwStZB0x6i7qtFhBA
++nOeXFTjzdt6hwywJF+tsLv9X4jDke/HqX7YWLqN8qTWUiX3GLA=
+=dBbE
 -----END PGP SIGNATURE-----
 
---KiILIaAHZSMWEOk3--
+--U6JUlIdAL/10pCma--
