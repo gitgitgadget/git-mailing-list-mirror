@@ -1,43 +1,43 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="II4FWOA5"
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E6F410E6
-	for <git@vger.kernel.org>; Fri, 24 Nov 2023 03:11:14 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-409299277bbso12113265e9.2
-        for <git@vger.kernel.org>; Fri, 24 Nov 2023 03:11:14 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T8YUk11x"
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC15A10F5
+	for <git@vger.kernel.org>; Fri, 24 Nov 2023 03:11:16 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-40859dee28cso14055295e9.0
+        for <git@vger.kernel.org>; Fri, 24 Nov 2023 03:11:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700824273; x=1701429073; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1700824275; x=1701429075; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=wqfHuRQQ9XSxFZP+uJl6/bkl3lDcR45k7PH3OT3D4OQ=;
-        b=II4FWOA5GMOiRzmVrScKQ3coWV3q9fTcRWaVoSCKldmlcU87Jg5vw4gODm83qqFMfu
-         z9Y6RJIjxYml1uusZig5RCFAn9oYy6AnDH5NosK6WN72+r8BxwxCOb0c8+e4HP8p37hP
-         v8MryfE+kJVOOhx+ts7rbiT5nvUIjFi2ygVVhnaSiJ+uIbO6TmhnGAqRzcd3gTh9FCvJ
-         KfV3TV9BcYOD7K7gbpFIN2vXtxlrnqh88zPIAMhCtiZ2pJUYyI+8GGH+VjFRtJcGZqH6
-         1Uj77rQzyDeh4nhv9Xhd0eaJ6Pyg47vDNaSjmP8inAz9wo/uPAZNkRWlomrxgfgtnqQa
-         HmHA==
+        bh=d56W4LTu8T/f8wrkGZU/GQXCEBm4Di2aR9F4V6M/74c=;
+        b=T8YUk11x8xGH3Q6hoA/xN4m6jd1pXf52mD804O7OZIQwB+Bj+v4d+rRni+jR2K+oJ7
+         75RaT6d71P10Im8monLBP7SQ9o11fdqUnZh33yNT7de7hl6aaLlQFKKk9gEg/ZDNsls4
+         mlfyQYuhUBTNvdsnF7vlag4IacgvjW5VMNMPimrq3ZZ42dQUdtl9CDV//WuM5FoWujRk
+         O6gp9pUS8+kyfBIkp6peQv5+6Pe4fE2/wYedbDGV3soTIe7zZ9kU9w8Frk5cJDIKd/lD
+         RiY5zZQyGqGyZRV3oHhbBF9K/301MjwccPYkeqRSZRP5egcIcvxa+MatSg363j4fPaoz
+         eMJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700824273; x=1701429073;
+        d=1e100.net; s=20230601; t=1700824275; x=1701429075;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=wqfHuRQQ9XSxFZP+uJl6/bkl3lDcR45k7PH3OT3D4OQ=;
-        b=RT2U+gorJ9wKQrN2Yjiy6Kb1NtG+tyK8PYcfvT/KhNg5jGjSohtsYGc7EwYndpdku1
-         OS6NSgWDp4vQ+ZGj0E+KoSmhYKR6fdqwSn2//CBCOH49yQ1Ikzlju0DHtFnWx4Sq15pi
-         7RsoNl0+NhNiowq6vjcpFLH0lAFq+MUdUr4wZmWCUoMmyXPLGha/FexYR5xtWtertqKx
-         07IaS/rBpftaF3xImkt2e2Y9sL9OgtKB3ytNdL2axa8JleKU+4v5K4qrEexe5/tq57/X
-         dAuCx0RuQpicP0Xa2c0kOC2nnTcFmbJ2vZo95X7XCxV1w9zqESaMYNGXHBCz++ZN0fEi
-         t5cA==
-X-Gm-Message-State: AOJu0YwfGE48CzHif5gycmSuhETAQU9TydK4rrJ7IU9XLAJwDdDUl/rK
-	comdA3rI53B+0/5FTBvzqTisGsMwbL8=
-X-Google-Smtp-Source: AGHT+IGYtYAILPCFF4NEpVln3J1DSOimlu+no6tUe9/c8YvOwz6sFTukawrL9Ks+ea7+K9vGUzZ4JA==
-X-Received: by 2002:a05:600c:a49:b0:401:daf2:2735 with SMTP id c9-20020a05600c0a4900b00401daf22735mr2009070wmq.31.1700824272963;
-        Fri, 24 Nov 2023 03:11:12 -0800 (PST)
+        bh=d56W4LTu8T/f8wrkGZU/GQXCEBm4Di2aR9F4V6M/74c=;
+        b=gYo77xHexruHNkpEJTP7ND3SY1R6bVJ0BfsLhD5zgdjGDGZDKkUB9XbA/qssq4wYdz
+         5FqqwE0+cgmL1EBTqN9RceU63YpcqahnqSlMPtwmYPG7l82pOI/gydy9gYwlYetQvYJY
+         0eHHCVibtBCyhlzhuNP3BlJp5BhSN+b55kPPtCS3vaXvcovBZm+6CFOttNb7MKFcx6d0
+         atmWFG+Wqhq6/elNTXtI15XPeIUKhTS+38xfSLIVSmX81D5rVEu6NvAR+5YiNIb4bXh/
+         9fFzUaqYCzjD1e1KLmHrUZkRJ3qxBW1tkdAUrzXDsZWsJPm2DeT1qBakOFNzaARIATMM
+         BuRQ==
+X-Gm-Message-State: AOJu0Yy2eOcBRIY2uS25KEs9qqCdxCPTZH560eQGsXVQB1SGEe2N46jF
+	7QDeloO2vKUw6zMO+D4bqozTu0VNwm0=
+X-Google-Smtp-Source: AGHT+IHZwUt90lAjEMcOh2uneUQCZBy6rG4wYorBpYWBY45p71OumBbq8kDsIsLv0vfQgRh/zpLuYA==
+X-Received: by 2002:a05:600c:19ca:b0:408:4978:b6ef with SMTP id u10-20020a05600c19ca00b004084978b6efmr1879190wmq.29.1700824274435;
+        Fri, 24 Nov 2023 03:11:14 -0800 (PST)
 Received: from localhost.localdomain ([2001:861:3f04:7ca0:c06d:3245:2b4d:9ec5])
-        by smtp.gmail.com with ESMTPSA id r4-20020a05600c458400b0040648217f4fsm5390295wmo.39.2023.11.24.03.11.11
+        by smtp.gmail.com with ESMTPSA id r4-20020a05600c458400b0040648217f4fsm5390295wmo.39.2023.11.24.03.11.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Nov 2023 03:11:11 -0800 (PST)
+        Fri, 24 Nov 2023 03:11:13 -0800 (PST)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -52,9 +52,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Dragan Simic <dsimic@manjaro.org>,
 	Linus Arver <linusa@google.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v8 08/14] replay: remove progress and info output
-Date: Fri, 24 Nov 2023 12:10:37 +0100
-Message-ID: <20231124111044.3426007-9-christian.couder@gmail.com>
+Subject: [PATCH v8 09/14] replay: remove HEAD related sanity check
+Date: Fri, 24 Nov 2023 12:10:38 +0100
+Message-ID: <20231124111044.3426007-10-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.43.0.14.g93e034faee
 In-Reply-To: <20231124111044.3426007-1-christian.couder@gmail.com>
 References: <20231115143327.2441397-1-christian.couder@gmail.com>
@@ -69,63 +69,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Elijah Newren <newren@gmail.com>
 
-The replay command will be changed in a follow up commit, so that it
-will not update refs directly, but instead it will print on stdout a
-list of commands that can be consumed by `git update-ref --stdin`.
+We want replay to be a command that can be used on the server side on
+any branch, not just the current one, so we are going to stop updating
+HEAD in a future commit.
 
-We don't want this output to be polluted by its current low value
-output, so let's just remove the latter.
-
-In the future, when the command gets an option to update refs by
-itself, it will make a lot of sense to display a progress meter, but
-we are not there yet.
+A "sanity check" that makes sure we are replaying the current branch
+doesn't make sense anymore. Let's remove it.
 
 Co-authored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Elijah Newren <newren@gmail.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/replay.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ builtin/replay.c         | 8 +-------
+ t/t3650-replay-basics.sh | 2 --
+ 2 files changed, 1 insertion(+), 9 deletions(-)
 
 diff --git a/builtin/replay.c b/builtin/replay.c
-index 384bb4ddd3..ca3867dc57 100644
+index ca3867dc57..bdec2f2b97 100644
 --- a/builtin/replay.c
 +++ b/builtin/replay.c
-@@ -232,7 +232,7 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+@@ -123,7 +123,6 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 	struct commit *onto;
+ 	const char *onto_name = NULL;
+ 	struct commit *last_commit = NULL, *last_picked_commit = NULL;
+-	struct object_id head;
+ 	struct lock_file lock = LOCK_INIT;
+ 	struct strvec rev_walk_args = STRVEC_INIT;
+ 	struct rev_info revs;
+@@ -162,11 +161,6 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 	onto = peel_committish(onto_name);
+ 	strbuf_addf(&branch_name, "refs/heads/%s", argv[2]);
  
- 	init_merge_options(&merge_opt, the_repository);
- 	memset(&result, 0, sizeof(result));
--	merge_opt.show_rename_progress = 1;
-+	merge_opt.show_rename_progress = 0;
- 	merge_opt.branch1 = "HEAD";
- 	head_tree = repo_get_commit_tree(the_repository, onto);
- 	result.tree = head_tree;
-@@ -240,9 +240,6 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 	while ((commit = get_revision(&revs))) {
- 		struct commit *pick;
- 
--		fprintf(stderr, "Rebasing %s...\r",
--			oid_to_hex(&commit->object.oid));
+-	/* Sanity check */
+-	if (repo_get_oid(the_repository, "HEAD", &head))
+-		die(_("Cannot read HEAD"));
+-	assert(oideq(&onto->object.oid, &head));
 -
- 		if (!commit->parents)
- 			die(_("replaying down to root commit is not supported yet!"));
- 		if (commit->parents->next)
-@@ -261,7 +258,6 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 		exit(128);
- 
- 	if (result.clean) {
--		fprintf(stderr, "\nDone.\n");
- 		strbuf_addf(&reflog_msg, "finish rebase %s onto %s",
- 			    oid_to_hex(&last_picked_commit->object.oid),
- 			    oid_to_hex(&last_commit->object.oid));
-@@ -275,7 +271,6 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 		if (create_symref("HEAD", branch_name.buf, reflog_msg.buf) < 0)
- 			die(_("unable to update HEAD"));
- 	} else {
--		fprintf(stderr, "\nAborting: Hit a conflict.\n");
- 		strbuf_addf(&reflog_msg, "rebase progress up to %s",
+ 	repo_hold_locked_index(the_repository, &lock, LOCK_DIE_ON_ERROR);
+ 	if (repo_read_index(the_repository) < 0)
+ 		BUG("Could not read index");
+@@ -275,7 +269,7 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
  			    oid_to_hex(&last_picked_commit->object.oid));
  		if (update_ref(reflog_msg.buf, "HEAD",
+ 			       &last_commit->object.oid,
+-			       &head,
++			       &onto->object.oid,
+ 			       REF_NO_DEREF, UPDATE_REFS_MSG_ON_ERR)) {
+ 			error(_("could not update %s"), argv[2]);
+ 			die("Failed to update %s", argv[2]);
+diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
+index 36c1b5082a..b5b9f9ade2 100755
+--- a/t/t3650-replay-basics.sh
++++ b/t/t3650-replay-basics.sh
+@@ -48,8 +48,6 @@ test_expect_success 'setup' '
+ '
+ 
+ test_expect_success 'using replay to rebase two branches, one on top of other' '
+-	git switch main &&
+-
+ 	git replay --onto main topic1 topic2 >result &&
+ 
+ 	git log --format=%s $(cut -f 3 -d " " result) >actual &&
 -- 
 2.43.0.14.g93e034faee
 
