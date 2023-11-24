@@ -1,153 +1,68 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98D2C31726
-	for <git@vger.kernel.org>; Fri, 24 Nov 2023 15:49:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c7FFMl/I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FACDC433C8
-	for <git@vger.kernel.org>; Fri, 24 Nov 2023 15:49:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1700840948;
-	bh=OJtCSFmEPRllwZc+DkkKHYRPALRcsGo3ZWXvR8JusME=;
-	h=Date:From:To:Subject:References:In-Reply-To:From;
-	b=c7FFMl/ITuRcZKCITANwnfg3g4vr2yU2fxYCNcIbp+9N5k2IG7322ItlOmA9sRMcJ
-	 +RkgZk4U5l27Kpcll3zYBLFXLVov4DCT2wBVgQbFL4sF3T4bwaftXLIuqFjTn6sXf5
-	 p/O4EGYgxZFAXy1FfMmreVlHO+BCVhW8cvoWIqM93+ztqEMjQEJPCYN98QyBDcSPR+
-	 hGpYOAUuU6hNMg48JAXcI/1/kIpXOF7G9/KemDFU7EwdA/K4TMSQ7b7M6DtjYKsToN
-	 GL48t0z8nM/QLKjunZLlpNFy0vMUSI10QiBylyytYs4kT3xfo9Pr+42VA0KUAY+XZz
-	 hcoUX/vsTP0WA==
-Date: Fri, 24 Nov 2023 16:49:05 +0100
-From: Alejandro Colomar <alx@kernel.org>
-To: git@vger.kernel.org
-Subject: Re: Running git(1) from within hooks/post-update
-Message-ID: <ZWDF8TBw_YM3UC6N@debian>
-References: <ZWCsd3cJZ3LAqOwg@debian>
- <ZWDEWDTtiFYAYp2P@debian>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RMRpsf8c"
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8710C19A3
+	for <git@vger.kernel.org>; Fri, 24 Nov 2023 08:03:25 -0800 (PST)
+Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2c50cf61f6dso25477111fa.2
+        for <git@vger.kernel.org>; Fri, 24 Nov 2023 08:03:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1700841804; x=1701446604; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=4IaH4Bu9frde8twj5w3cIqesi8PpNYXJGMIyU9FJfpE=;
+        b=RMRpsf8c16bMKP0qgE4Q97kZGRoLX0rN9rnlR4ciaHNr5DXHy3sGV02+erPMY/gnKc
+         tI4YSf7gE91mcnFvXPhth2uENEz1aChKi7KvBLF3TBK5PhU94013vsF7ZAk9izsr7vwZ
+         3ssaitJcJb9Y/sdLD+7eBJlPll7VDYt/ixNlbouxDKR2/DaoZxvpumLl4Ch3YrbyiiXh
+         1cEpkMYOSJMvapZK8j/PMehYBix7uoTWqaZlV2tIDJVBkpmzKYFG1BNXM7jhObp2fg3o
+         3Ob01ggbwDIvpeR2auLR2bboD6H1qzAG8gO1+jOiopYCzNsLa42oIx1hYmaHglqHoatj
+         NpEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700841804; x=1701446604;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4IaH4Bu9frde8twj5w3cIqesi8PpNYXJGMIyU9FJfpE=;
+        b=XDeQmoPeEvzvE+hMbu6WX3tizIH6IcQ3Mgic0/F+WbxvuX2JNseNiUhQGxKnh8Btia
+         0T3NgJWEe6Qvk/SJXHwubCpl99zy3o7lVLpbyNlotuGUyur/blnIWMWfFqgwUGdcI2lu
+         dfvAaxpoDpKvPUO+5w1dYvUqw7118FcGQHBbJmZ7A9KKii+kUPIgGRlm+3SfTIirB4f8
+         DnUQw18ZiKGpbU5/5bm2mhpmDAVUq56xjwaW1hpdtp9WFjMxGfl3Jk4O2Jef1cT21RWj
+         uvavdL+ua8y9zuu6DzqBzNaP9LSxa2bBaFGw38IGmC6CVq1WpEa1sYOHRzX8wZMvTESO
+         3n1Q==
+X-Gm-Message-State: AOJu0YyXDv/wnrNamf/yzbOBfcU/Yu5txZB3L8HKInAUU1SxY98mJIOI
+	nzmwgk7YZ3FO3m/UR/Vx4JYAL2LkGM2RDJv/0lE=
+X-Google-Smtp-Source: AGHT+IHRFQgbkcNpGPg4jgQCRSiCw+zM3iv3OYNboS6nEuuHhpz1SEdd+HpGFnGs59ANqsA3SnkkVvetT+N7j1vbgbk=
+X-Received: by 2002:a2e:934f:0:b0:2c5:32b:28ea with SMTP id
+ m15-20020a2e934f000000b002c5032b28eamr2372513ljh.32.1700841803142; Fri, 24
+ Nov 2023 08:03:23 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="mjHBs1irstkZgaMI"
-Content-Disposition: inline
-In-Reply-To: <ZWDEWDTtiFYAYp2P@debian>
+References: <pull.1589.v2.git.1695553041.gitgitgadget@gmail.com>
+ <pull.1589.v3.git.1700796916.gitgitgadget@gmail.com> <CABPp-BGhHivx9_R6fwL--K5nTvz1sh67JDMtWG7WajxmX=56Fg@mail.gmail.com>
+In-Reply-To: <CABPp-BGhHivx9_R6fwL--K5nTvz1sh67JDMtWG7WajxmX=56Fg@mail.gmail.com>
+From: Josh Soref <jsoref@gmail.com>
+Date: Fri, 24 Nov 2023 11:03:10 -0500
+Message-ID: <CACZqfqAq0ijtYO9-1q6h2KQMyxHgLpFOg--d4c9F4xT0nMkvUg@mail.gmail.com>
+Subject: Re: [PATCH v3 0/4] Switch links to https
+To: Elijah Newren <newren@gmail.com>
+Cc: Josh Soref via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
 
+Elijah Newren wrote:
+> As stated elsewhere, I'd be fine with using the archived link if the
+> justification presented in the series for using archived links was
+> consistent and mentioned both reasons for changes.  But, I think this
+> series is fine to merge down as-is if you don't want to go through the
+> trouble.  Especially given how long you've waited.
 
---mjHBs1irstkZgaMI
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 24 Nov 2023 16:49:05 +0100
-From: Alejandro Colomar <alx@kernel.org>
-To: git@vger.kernel.org
-Subject: Re: Running git(1) from within hooks/post-update
+I'm clearly still contributing, so I can come back later and cross
+that bridge...
 
-On Fri, Nov 24, 2023 at 04:42:16PM +0100, Alejandro Colomar wrote:
-> On Fri, Nov 24, 2023 at 03:00:22PM +0100, Alejandro Colomar wrote:
-> > Hi,
-> >=20
-> > I'm trying to set up a post-update hook to produce a build of the Linux
-> > man-pages PDF book after every push to my personal server to the 'main'
-> > branch, so that I can serve man-pages-HEAD.pdf at some URL, for users to
-> > be able to easily check the manual at git HEAD without having to clone
-> > the repo.
-> >=20
-> > I thought of having a git non-bare repo where I build it, so the script
-> > would be the following (the paths are tmp, because I'm still testing).
-> >=20
-> > 	$ cat post-update=20
-> > 	#!/bin/sh
-> >=20
-> > 	test "$1" =3D "refs/heads/main" || exit 0;
-> >=20
-> > 	cd ~/tmp/man-pages/;
-> >=20
-> > 	whoami; pwd; ls -ld .git/;  # This is for debugging.
-> >=20
-> > 	git fetch srv			#>/dev/null 2>&1;
-> > 	git reset srv/main --hard	#>/dev/null 2>&1;
-> > 	git clean -dffx			#>/dev/null 2>&1;
-> > 	scripts/LinuxManBook/build.sh	>~/tmp/LMB-HEAD.pdf &
->=20
-> The script works fine when called manually.  It seems it's calling it
-> as a hook that fails.  It seems it's running git(1) from within a
-> post-update hook that is problematic.  Is that expected, or is it a bug,
-> and can it be fixed?
+> Anyway, I checked through every link in this series; it all looks good to me.
 
-Ahh, after this I've found it documented in githooks(5):
-
-     Environment variables, such as GIT_DIR, GIT_WORK_TREE, etc., are
-     exported so that Git commands run by the hook can correctly
-     locate the repository. If your hook needs to invoke Git commands
-     in a foreign repository or in a different working tree of the
-     same repository, then it should clear these environment variables
-     so they do not interfere with Git operations at the foreign
-     location. For example:
-
-         local_desc=3D$(git describe)
-         foreign_desc=3D$(unset $(git rev-parse --local-env-vars); git -C .=
-=2E/foreign-repo describe)
-
-Never mind.
-
-Thanks,
-Alex
-
->=20
-> >=20
-> > But it's not working.  The git(1) calls are failing, saying it's not a
-> > git repo, but it clearly is, and I have permissions, so I don't
-> > understand what's going wrong.  Here's the 'remote:' output of a push to
-> > that testing server:
-> >=20
-> > 	remote: alx
-> > 	remote: /home/alx/tmp/man-pages
-> > 	remote: drwxr-xr-x 8 alx alx 4096 Nov 24 14:41 .git/
-> > 	remote: fatal: not a git repository: '.'
-> > 	remote: fatal: not a git repository: '.'
-> > 	remote: fatal: not a git repository: '.'
-> > 	remote: hooks/post-update: 12: ./scripts/LinuxManBook/build.sh: not fo=
-und
-> >=20
-> > Can you please help?  :)
-> >=20
-> > Thanks,
-> > Alex
-> >=20
-> > --=20
-> > <https://www.alejandro-colomar.es/>
->=20
->=20
->=20
-> --=20
-> <https://www.alejandro-colomar.es/>
-
-
-
---=20
-<https://www.alejandro-colomar.es/>
-
---mjHBs1irstkZgaMI
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEE6jqH8KTroDDkXfJAnowa+77/2zIFAmVgxfEACgkQnowa+77/
-2zLDlg/+OTX9MnOdTpHN32gXmXvARfMEQj4FwsnIpQ0v9bky/HluipGqAsyLgAE7
-JS4ZQheTfgHO2kL5xZtAyV5CTHBvNHWUgrvKI0NqHjrqwgS41HvSnUEr4PNDVLB7
-2Qx3t9wx4S2+jlW/jD373BiX1RtP8IY2I+KO846QfiwpIBo2BlbTFHOkjaxRHKbS
-KXuZMkEzW0YshkN1OMr3hR2JqtQ3ulYyiwDImEhC9jKAUzY3DSes5vycdxvKqT/o
-Pva6LITqzOk8Xt16fqTdRdPzr3MCjAjTtzISSHRwf7yyYIHiYVNqs/RRK4bCgNmT
-9SEbYCZbhFVuX2mYnoNkbjUyqcOsaC/l1Na1N8W8aPwdW3QV3seMrIz/tCvPIPv7
-pCK+sqUyZxqDzJqg4o4bM7DlnMSrbHer3/wHSd/iCRFB1rceZ1BzaiLcqLdAiDEt
-oOwbvLulrEKoBp2KuCKPfcMWU1YVOCJZ6zuwUp7R/aadd+d/7DZOCLVhxS5nXk5D
-r0vuUzKsyERFqEyFjHkb+oZovgHNv6rtFM6enI7ezVDFtowGrvBdj0IkR5tzrppi
-cVck0ge2g8mwH4Xhp3MVSSlhI8KMpIa2VcDx5fSs6Ft8wqoKuQxjhsj78Yq9MnFE
-B9/cHOWeiDeZyowiBJXLtoBI8rVqfEYhLAv7dOoxVKapjhXMXQ4=
-=HMIs
------END PGP SIGNATURE-----
-
---mjHBs1irstkZgaMI--
+Let's take this as-is. Thanks for taking the time to re-check every
+link, I know exactly how tedious that is :).
