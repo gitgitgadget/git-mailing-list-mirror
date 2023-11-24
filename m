@@ -1,75 +1,142 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GXqCvd/7"
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4C2CD43
-	for <git@vger.kernel.org>; Thu, 23 Nov 2023 19:25:00 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-50abbb23122so1882860e87.3
-        for <git@vger.kernel.org>; Thu, 23 Nov 2023 19:25:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XboQHHyp"
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE956D6C
+	for <git@vger.kernel.org>; Thu, 23 Nov 2023 19:35:23 -0800 (PST)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-50943ccbbaeso2007837e87.2
+        for <git@vger.kernel.org>; Thu, 23 Nov 2023 19:35:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700796299; x=1701401099; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=kCzFH3O8DwP0zZBG43UKSTMdXf4JKBUsp9r0NNbB6hQ=;
-        b=GXqCvd/7w7Xq9dqBkCQGnGP3luFNgEYk/8cIcGf6MKzBbGc6WQZOe3oS6+hFNssL1O
-         QJHsU6ozxSxM6uiAKK3xV0krGNmWydRTMWmRbS28dkeYXN30z64/NdwiKzW9Ba7aDzKn
-         qUV7UXWbnkV9yFtMBvjDLTUMit3AkZ2rcuwN7Wg/CDBhPOMifKY/n+sk4aMdZtOvcxyr
-         vqrNfNthOBl4mXkplik3gNy/yv3BkD5QC3VmxW22KaNQxiXnejb8NhCLa2ym1zY1kYFd
-         pGg3FlD6+3aImlSaRV9dZv8q5UJfHpMo3oC95Y0TOROQ+ySEEECdpF3ILZz+a/4z6bNJ
-         btdw==
+        d=gmail.com; s=20230601; t=1700796921; x=1701401721; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MwBXdyRTqAo3kOhCtwL4jQf8bnztXPotw3YylUMm43Y=;
+        b=XboQHHypzXX2aVBa7bXkQUnBzwOFtM4pDHmTzPWM7u2D1xgG6IzsD3P+viKSSowCMl
+         tDITlrWSP8PQ9Ian9EiWx7+65XSoNgNq5W6hmaWgglMngnZq+zBiwRY6glapVlSA8oGA
+         wp+btXuks+b2+x8SGvITfSdF6J0//wkiDNzL02vSIJVrvPZAVPR87MFhg7QYA7YB/gsE
+         /b+039xZw3/hVPkq1VmEGTh8BHZOxW6xoJoFwY5BwNut4hKf2Kwux7/e3RojDiEYL2qO
+         +LbGcqcShOwI4mvuCU9vG84ronLlFv//xidTjRR0pShTEmVouV77UwSLWsthqOjREMoc
+         UeFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700796299; x=1701401099;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kCzFH3O8DwP0zZBG43UKSTMdXf4JKBUsp9r0NNbB6hQ=;
-        b=UCJI9ARuCYwI249ovkBeXOYTSomYQaWba5jFruLH4CXdo9/CM2uu1cIEUVP6SCT35v
-         COFOZHaA/G52yhB0cBo7ySSIMJoojQhgY2xlD5WWsOTHTWmcWWCMQg+FkbPFEqixTtlt
-         kblQLx4POBd/kK81PS86KOzZziZoaf/hIqCwlWBOUqKBNefo2lxI6NZR5r9d+g7Ovk8O
-         kNNzQ4yaYZWLplgbli0Wrg/JiHiHl7SxpTZQq+MXzaOeJtY8sRy+CzCG5/PwWCN3iTo/
-         ukb+rP/qtSiVigsQD+005V4DGpzQrfgdhpAmXalIeyfO1vgF0eBTVt/tmX3caXLDW31O
-         rgSQ==
-X-Gm-Message-State: AOJu0YyhV1C86t7XaN/maoXQCMfrxQosdZYYQpLsBruEFw12Ej6a7QRk
-	Zz6/jj3CoR0aUo8C/U26C6nbwLD5XimY/ZHq9iE=
-X-Google-Smtp-Source: AGHT+IGSdHXAepeAoMwllpUqxxCNHCvkExUOT9ayJfyHzih4OATC6R1ha6Blpmg1uNBUfezZib2Z0bgsCTVYHh+nSG8=
-X-Received: by 2002:a05:6512:280d:b0:500:ac10:1641 with SMTP id
- cf13-20020a056512280d00b00500ac101641mr1027903lfb.46.1700796298725; Thu, 23
- Nov 2023 19:24:58 -0800 (PST)
+        d=1e100.net; s=20230601; t=1700796921; x=1701401721;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=MwBXdyRTqAo3kOhCtwL4jQf8bnztXPotw3YylUMm43Y=;
+        b=HRZcL5vdlfL6R2PO6QxuVrLsZewuYpeBKn8lnYVMY6xVHa3x3E0IeIM9JkWTXPpbxC
+         svqnDNpXgLp7gSPqxEPjLYsJcG3PNy3kNM/JfFgrnrokF8zVbubiGfjkc4ecSJNNf6In
+         fEI2mBzYGhJMWDAhDhmFOxbvf9olf5hb76rCsZJ/4JiN+ilAt/EYYoHMSDdpzy+gnmQH
+         gA6tqY1Z1qsEgi7mTgja7dCYgzDYHQ9YxDnvFSz9cJawt2DaVJFnSW0kQGka/QZtwYN6
+         YvHeSCOcKud7ybWyQCwkrYlobShGnOlxPHw7b3RSglorXPw3AVfDbzkR3JJaLxiFB+NH
+         1AEA==
+X-Gm-Message-State: AOJu0Yyb6eHZtcYaxDKS7+jOCvdLN9idvcjvAxPu/PDGbRYWPurLrp2s
+	lKM+uJi1TeIdY82SQs6LLV9f6PZ6H1M=
+X-Google-Smtp-Source: AGHT+IEPAmWS25VbFYN/qSkqVdLnV0QL6JA6B2gmhIj6hLrmk9KKVVdmI1mF4D31Y0PM0tLO3Rh6uQ==
+X-Received: by 2002:ac2:548e:0:b0:50a:a91b:1922 with SMTP id t14-20020ac2548e000000b0050aa91b1922mr658948lfk.47.1700796920948;
+        Thu, 23 Nov 2023 19:35:20 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id c3-20020a05600c0ac300b004064288597bsm3645719wmr.30.2023.11.23.19.35.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Nov 2023 19:35:20 -0800 (PST)
+Message-ID: <649ce9a9bd4f2542c3b80c651df92e5a635addcc.1700796916.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1589.v3.git.1700796916.gitgitgadget@gmail.com>
+References: <pull.1589.v2.git.1695553041.gitgitgadget@gmail.com>
+	<pull.1589.v3.git.1700796916.gitgitgadget@gmail.com>
+From: "Josh Soref via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 24 Nov 2023 03:35:14 +0000
+Subject: [PATCH v3 3/4] doc: update links for andre-simon.de
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1589.git.1695392027.gitgitgadget@gmail.com>
- <pull.1589.v2.git.1695553041.gitgitgadget@gmail.com> <9f0bba69492b345fe7b0c7f9529b025ed98c7e29.1695553043.git.gitgitgadget@gmail.com>
- <CABPp-BFrVjzbVDBWv_zaeScFhZ4Z2v5whSLAVkU_SuerKcujVw@mail.gmail.com>
-In-Reply-To: <CABPp-BFrVjzbVDBWv_zaeScFhZ4Z2v5whSLAVkU_SuerKcujVw@mail.gmail.com>
+To: git@vger.kernel.org
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+    Josh Soref <jsoref@gmail.com>,
+    Elijah Newren <newren@gmail.com>,
+    Josh Soref <jsoref@gmail.com>,
+    Josh Soref <jsoref@gmail.com>
+
 From: Josh Soref <jsoref@gmail.com>
-Date: Thu, 23 Nov 2023 22:24:47 -0500
-Message-ID: <CACZqfqCksg=uMh=URh-0KEoPA9cvjgDAKPhn+0WZti-y2A540Q@mail.gmail.com>
-Subject: Re: [PATCH v2 4/4] doc: refer to internet archive
-To: Elijah Newren <newren@gmail.com>
-Cc: Josh Soref via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
 
-Elijah Newren wrote:
-> Thanks, these all look good, except on of the old links works for me.
-> Maybe it was just down the day you checked?
+Beyond the fact that it's somewhat traditional to respect sites'
+self-identification, it's helpful for links to point to the things
+that people expect them to reference. Here that means linking to
+specific pages instead of a domain.
 
-> More comments on that below...
+Signed-off-by: Josh Soref <jsoref@gmail.com>
+---
+ Documentation/gitweb.conf.txt | 2 +-
+ gitweb/INSTALL                | 2 +-
+ gitweb/gitweb.perl            | 4 ++--
+ gitweb/static/gitweb.css      | 2 +-
+ 4 files changed, 5 insertions(+), 5 deletions(-)
 
-> > -       # Atom: http://www.atomenabled.org/developers/syndication/
-> > -       # RSS:  http://www.notestips.com/80256B3A007F2692/1/NAMO5P9UPQ
-> > +       # Atom: https://web.archive.org/web/20230815171113/https://www.atomenabled.org/developers/syndication/
-> > +       # RSS:  https://web.archive.org/web/20030729001534/http://www.notestips.com/80256B3A007F2692/1/NAMO5P9UPQ
->
-> The original www.atomenabled.org link works for me.
+diff --git a/Documentation/gitweb.conf.txt b/Documentation/gitweb.conf.txt
+index 20df3f0e253..59fc1d27419 100644
+--- a/Documentation/gitweb.conf.txt
++++ b/Documentation/gitweb.conf.txt
+@@ -242,7 +242,7 @@ $mimetypes_file::
+ 
+ $highlight_bin::
+ 	Path to the highlight executable to use (it must be the one from
+-	http://www.andre-simon.de[] due to assumptions about parameters and output).
++	http://andre-simon.de/zip/download.php[] due to assumptions about parameters and output).
+ 	By default set to 'highlight'; set it to full path to highlight
+ 	executable if it is not installed on your web server's PATH.
+ 	Note that 'highlight' feature must be set for gitweb to actually
+diff --git a/gitweb/INSTALL b/gitweb/INSTALL
+index a58e6b3c44b..0f8bc39ad84 100644
+--- a/gitweb/INSTALL
++++ b/gitweb/INSTALL
+@@ -203,7 +203,7 @@ You can specify the following configuration variables when building GIT:
+    created.  [Default: /etc/gitweb.conf]
+  * HIGHLIGHT_BIN
+    Path to the highlight executable to use (must be the one from
+-   http://www.andre-simon.de due to assumptions about parameters and output).
++   http://andre-simon.de/zip/download.php due to assumptions about parameters and output).
+    Useful if highlight is not installed on your webserver's PATH.
+    [Default: highlight]
+ 
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index d23468690ed..b6659410ef1 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -197,7 +197,7 @@ our @diff_opts = ('-M'); # taken from git_commit
+ our $prevent_xss = 0;
+ 
+ # Path to the highlight executable to use (must be the one from
+-# http://www.andre-simon.de due to assumptions about parameters and output).
++# http://andre-simon.de/zip/download.php due to assumptions about parameters and output).
+ # Useful if highlight is not installed on your webserver's PATH.
+ # [Default: highlight]
+ our $highlight_bin = "++HIGHLIGHT_BIN++";
+@@ -269,7 +269,7 @@ our %avatar_size = (
+ # Leave it undefined (or set to 'undef') to turn off load checking.
+ our $maxload = 300;
+ 
+-# configuration for 'highlight' (http://www.andre-simon.de/)
++# configuration for 'highlight' (http://andre-simon.de/doku/highlight/en/highlight.php)
+ # match by basename
+ our %highlight_basename = (
+ 	#'Program' => 'py',
+diff --git a/gitweb/static/gitweb.css b/gitweb/static/gitweb.css
+index 32126010326..48d2e510154 100644
+--- a/gitweb/static/gitweb.css
++++ b/gitweb/static/gitweb.css
+@@ -667,7 +667,7 @@ div.remote {
+ }
+ 
+ 
+-/* Style definition generated by highlight 2.4.5, http://www.andre-simon.de/ */
++/* Style definition generated by highlight 2.4.5, http://andre-simon.de/doku/highlight/en/highlight.php */
+ 
+ /* Highlighting theme definition: */
+ 
+-- 
+gitgitgadget
 
-That's odd. As you can see based on my archive.org link, at some point
-they had `https` support (their certificate expired Feb 7, 2021 UTC).
-
-Personally, as a former web browser developer, I'd rather people rely
-on archived authenticated content than content that could be rewritten
-in transit.
-
-That said, I'm going to drop this change.
