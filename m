@@ -1,137 +1,78 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Y9RbJnHj"
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83824D50
-	for <git@vger.kernel.org>; Thu, 23 Nov 2023 19:10:44 -0800 (PST)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id DE64B1B5A24;
-	Thu, 23 Nov 2023 22:10:43 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=rDWu6otsQ9srZk7YXMR011nxSqASA3dIEjNMDQ
-	HXbC4=; b=Y9RbJnHjnbVavcbxD2/zYgY3a5HJJJNb2w5F/0WJhdruuXcSy4FLHC
-	oowGBOxYKdWbgG+f9bGr8p2PCf9OVAfhSweqmNaVn1ufwru2sc7uemoWA+gvsBxZ
-	d/Ez2hiCT2oCy+GpYUlyFST4i2xmrRunAjVbaojh3oc4HK+B4WL/I=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D62441B5A22;
-	Thu, 23 Nov 2023 22:10:43 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4BD0F1B5A21;
-	Thu, 23 Nov 2023 22:10:43 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH 2/2] orphan/unborn: fix use of 'orphan' in end-user facing
- messages
-In-Reply-To: <xmqqbkbj97a9.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-	24 Nov 2023 12:09:18 +0900")
-References: <xmqqbkbj97a9.fsf@gitster.g>
-Date: Fri, 24 Nov 2023 12:10:42 +0900
-Message-ID: <xmqq4jhb977x.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SV6wGsjM"
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D21BFD6C
+	for <git@vger.kernel.org>; Thu, 23 Nov 2023 19:13:12 -0800 (PST)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-5094727fa67so2034318e87.3
+        for <git@vger.kernel.org>; Thu, 23 Nov 2023 19:13:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1700795591; x=1701400391; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=MhPGkzK5sVLPrBcdSIBlGv2OOPEa34w+B+jGHNt3Elk=;
+        b=SV6wGsjMvklHX7w05UpzAOsYtsjB7nlFb4/4B+pd2f6aUOQcCenjOoNOVHnqGNXfWR
+         cYUWEEtbQbxxinVdxbn/p9ivaWopMlxxmwlk+Rkq+OcsYveq52fGTz9MI3778mqkYvNP
+         X2o3wHn/KyFrV1m8Y/MSjvhgxXBjsSbb/lthcfRr7N27geBwVLNm7gBWG2fnBwmlC5Mt
+         LuzoedXvK83dnuzpPdGzIRsLiXWopmhdADrw4lOe8Fs5BPXJF7S+4Gw75tcl91SlYnjS
+         uUjNE8nY6WXT8BZ6sg2wBP/QbmhAwl4a8MZRVerto14gTDNJrFrwRUCga79EhJt2D63T
+         U6mA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700795591; x=1701400391;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=MhPGkzK5sVLPrBcdSIBlGv2OOPEa34w+B+jGHNt3Elk=;
+        b=I2bHNKfSvRCZLNCNcT4ZlkSqfu5dY1LERgtjcSnXSTQ8hctUKkRE8EFbE9iE94Rn2w
+         H4gKsLZTlS7A7cLswVsbZa+yDuhpBd7ktgozS2v7CVkQGMYify1ekfIit2AGFtQHsS28
+         LJ2FVnc0Z6DebFbjkjiIc5MIo+qokoCo7T4CUkYrp+eof9e+30QCh6zhcHcKKyfpzM3D
+         Zoo1oTYlSlgFxNdIUlAOiafkKljFvJbXAz0QDSLxeufo6T38GH1PD9J2rdHAMY856LcW
+         Cfrp8eHC+j/7oLvMWsHJB6ewJhwMSD9PCL2d5gcPO/sY7welyo2w2hw43BFz0vZFxqUL
+         WLPg==
+X-Gm-Message-State: AOJu0YytGZfvVLv9HeKgzIemECKm8yEbMstECGKapIJFbJnOz7WMECvv
+	5/uayq2B11G5E8kCnWULCGpL8awaqAU2Zl6FqYEbHuWiB5l/aw==
+X-Google-Smtp-Source: AGHT+IFE029/6FjXDfGBn6YLCRuNRLjK7KK9h93RYehjo4R9899SGPzQGX3bzsAQ2AeloWzhX1vgjvEVNfBTrSs3IGw=
+X-Received: by 2002:a05:6512:3c8f:b0:509:4863:137d with SMTP id
+ h15-20020a0565123c8f00b005094863137dmr1048241lfv.7.1700795590750; Thu, 23 Nov
+ 2023 19:13:10 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 0DDB7B4A-8A77-11EE-8410-25B3960A682E-77302942!pb-smtp2.pobox.com
+References: <pull.1589.git.1695392027.gitgitgadget@gmail.com>
+ <pull.1589.v2.git.1695553041.gitgitgadget@gmail.com> <71ed1286d7f38ecc901b40a542508fba9777f02d.1695553042.git.gitgitgadget@gmail.com>
+ <CABPp-BEbfsss39-cENw2BwnQPp4edp9_JSN_O1e7vcci9XE+cQ@mail.gmail.com>
+In-Reply-To: <CABPp-BEbfsss39-cENw2BwnQPp4edp9_JSN_O1e7vcci9XE+cQ@mail.gmail.com>
+From: Josh Soref <jsoref@gmail.com>
+Date: Thu, 23 Nov 2023 22:12:58 -0500
+Message-ID: <CACZqfqD-M3NAb3=Y-StWfAk50r-XPkFRRLLJPe9RUek21+Lnsg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] doc: switch links to https
+To: Elijah Newren <newren@gmail.com>
+Cc: Josh Soref via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-"orphan branch" is not even grammatical ("orphaned branch" is), and
-we have been using "unborn branch" to mean the state where the HEAD
-points at a branch that does not yet exist.
+Elijah Newren wrote:
+> > -For example, at the time this page was written, the http://repo.or.cz[]
+> > +For example, at the time this page was written, the https://repo.or.cz[]
+>
+> Given the "at the time this page was written" comment, I'm not sure we
+> should switch to https here.
 
-Update end-user facing messages to correct them.  There are cases
-other random words are used (e.g., "unparented branch") but now we
-have a glossary entry, use the term "unborn branch" consistently.
+I claim that it refers to the file that is presented to the user,
+which is current as of the time it was delivered by the specific
+version of the git package.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/checkout.c      | 2 +-
- builtin/worktree.c      | 6 +++---
- t/t2400-worktree-add.sh | 6 +++---
- 3 files changed, 7 insertions(+), 7 deletions(-)
+> > -See http://repo.or.cz/w/git.git/tree/HEAD:/gitweb/[] for gitweb source code,
+> > +See https://repo.or.cz/w/git.git/tree/HEAD:/gitweb/[] for gitweb source code,
+> >  browsed using gitweb itself.
+>
+> The suggested link gives a "404 - No such tree".  Granted, the http:
+> link also does that, but it'd be nicer to provide a non-broken link,
+> which you can do by stripping the '/[]' from the end of the URL.
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index f53612f468..9d250587df 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1620,7 +1620,7 @@ static struct option *add_common_switch_branch_options(
- 			parse_opt_tracking_mode),
- 		OPT__FORCE(&opts->force, N_("force checkout (throw away local modifications)"),
- 			   PARSE_OPT_NOCOMPLETE),
--		OPT_STRING(0, "orphan", &opts->new_orphan_branch, N_("new-branch"), N_("new unparented branch")),
-+		OPT_STRING(0, "orphan", &opts->new_orphan_branch, N_("new-branch"), N_("new unborn branch")),
- 		OPT_BOOL_F(0, "overwrite-ignore", &opts->overwrite_ignore,
- 			   N_("update ignored files (default)"),
- 			   PARSE_OPT_NOCOMPLETE),
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 10db70b7ec..f0853a9927 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -49,14 +49,14 @@
- 	_("No possible source branch, inferring '--orphan'")
- 
- #define WORKTREE_ADD_ORPHAN_WITH_DASH_B_HINT_TEXT \
--	_("If you meant to create a worktree containing a new orphan branch\n" \
-+	_("If you meant to create a worktree containing a new unborn branch\n" \
- 	"(branch with no commits) for this repository, you can do so\n" \
- 	"using the --orphan flag:\n" \
- 	"\n" \
- 	"    git worktree add --orphan -b %s %s\n")
- 
- #define WORKTREE_ADD_ORPHAN_NO_DASH_B_HINT_TEXT \
--	_("If you meant to create a worktree containing a new orphan branch\n" \
-+	_("If you meant to create a worktree containing a new unborn branch\n" \
- 	"(branch with no commits) for this repository, you can do so\n" \
- 	"using the --orphan flag:\n" \
- 	"\n" \
-@@ -784,7 +784,7 @@ static int add(int ac, const char **av, const char *prefix)
- 			   N_("create a new branch")),
- 		OPT_STRING('B', NULL, &new_branch_force, N_("branch"),
- 			   N_("create or reset a branch")),
--		OPT_BOOL(0, "orphan", &opts.orphan, N_("create unborn/orphaned branch")),
-+		OPT_BOOL(0, "orphan", &opts.orphan, N_("create unborn branch")),
- 		OPT_BOOL('d', "detach", &opts.detach, N_("detach HEAD at named commit")),
- 		OPT_BOOL(0, "checkout", &opts.checkout, N_("populate the new working tree")),
- 		OPT_BOOL(0, "lock", &keep_locked, N_("keep the new working tree locked")),
-diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-index 051363acbb..3c12c3932b 100755
---- a/t/t2400-worktree-add.sh
-+++ b/t/t2400-worktree-add.sh
-@@ -414,7 +414,7 @@ test_wt_add_orphan_hint () {
- 		git -C repo switch --orphan noref &&
- 		test_must_fail git -C repo worktree add $opts foobar/ 2>actual &&
- 		! grep "error: unknown switch" actual &&
--		grep "hint: If you meant to create a worktree containing a new orphan branch" actual &&
-+		grep "hint: If you meant to create a worktree containing a new unborn branch" actual &&
- 		if [ $use_branch -eq 1 ]
- 		then
- 			grep -E "^hint: +git worktree add --orphan -b [^ ]+ [^ ]+$" actual
-@@ -435,7 +435,7 @@ test_expect_success "'worktree add' doesn't show orphan hint in bad/orphan HEAD
- 	(cd repo && test_commit commit) &&
- 	test_must_fail git -C repo worktree add --quiet foobar_branch foobar/ 2>actual &&
- 	! grep "error: unknown switch" actual &&
--	! grep "hint: If you meant to create a worktree containing a new orphan branch" actual
-+	! grep "hint: If you meant to create a worktree containing a new unborn branch" actual
- '
- 
- test_expect_success 'local clone from linked checkout' '
-@@ -708,7 +708,7 @@ test_expect_success 'git worktree --no-guess-remote option overrides config' '
- test_dwim_orphan () {
- 	local info_text="No possible source branch, inferring '--orphan'" &&
- 	local fetch_error_text="fatal: No local or remote refs exist despite at least one remote" &&
--	local orphan_hint="hint: If you meant to create a worktree containing a new orphan branch" &&
-+	local orphan_hint="hint: If you meant to create a worktree containing a new unborn branch" &&
- 	local invalid_ref_regex="^fatal: invalid reference: " &&
- 	local bad_combo_regex="^fatal: '[-a-z]*' and '[-a-z]*' cannot be used together" &&
- 
--- 
-2.43.0
+The `[]` is part of AsciiDoc's [1] notation. I tripped on this when I
+first looked into
+this series (as I'm much more familiar w/ Markdown and Restructured Text).
 
+[1] https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/
