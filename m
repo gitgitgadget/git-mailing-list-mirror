@@ -1,39 +1,39 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SV6wGsjM"
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D21BFD6C
-	for <git@vger.kernel.org>; Thu, 23 Nov 2023 19:13:12 -0800 (PST)
-Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-5094727fa67so2034318e87.3
-        for <git@vger.kernel.org>; Thu, 23 Nov 2023 19:13:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FGCJtH9d"
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28AA2D53
+	for <git@vger.kernel.org>; Thu, 23 Nov 2023 19:20:43 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-50aab0ca90aso2059402e87.0
+        for <git@vger.kernel.org>; Thu, 23 Nov 2023 19:20:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700795591; x=1701400391; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1700796041; x=1701400841; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=MhPGkzK5sVLPrBcdSIBlGv2OOPEa34w+B+jGHNt3Elk=;
-        b=SV6wGsjMvklHX7w05UpzAOsYtsjB7nlFb4/4B+pd2f6aUOQcCenjOoNOVHnqGNXfWR
-         cYUWEEtbQbxxinVdxbn/p9ivaWopMlxxmwlk+Rkq+OcsYveq52fGTz9MI3778mqkYvNP
-         X2o3wHn/KyFrV1m8Y/MSjvhgxXBjsSbb/lthcfRr7N27geBwVLNm7gBWG2fnBwmlC5Mt
-         LuzoedXvK83dnuzpPdGzIRsLiXWopmhdADrw4lOe8Fs5BPXJF7S+4Gw75tcl91SlYnjS
-         uUjNE8nY6WXT8BZ6sg2wBP/QbmhAwl4a8MZRVerto14gTDNJrFrwRUCga79EhJt2D63T
-         U6mA==
+        bh=/A/h/Dos6Pc10ddEMGoVNnojM6+b3o0y6NbP58McesM=;
+        b=FGCJtH9du5M3TiirP8iPwjf9YsDung35O04IhP2Z0PeMyONAgryTjWCIc6fanud/nC
+         g8XKr/nLslT3kD2F7oLKJqrVBvDeGf1kn9cTiy4YYFU2YHI07mM27PqOuxdpBrMKeCFb
+         cUbDn1AqKloM+lIEjtbnzaatzqMIDdF7B240KN1JCwD989frRgGRoFI2AUFF8mCtT2vV
+         OyqC8gQnPridNNZEXev9ijeVNvK9WlTjjJ56fAgTdICqiCqsAN2qP+Hwd6pRrGCjeKMo
+         K1MbdgopU1X5qWrzZmFPhe8+bla8xw1z237r4st4NwgWAm5y2LFbwy+fby673ybH1ACJ
+         KObA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700795591; x=1701400391;
+        d=1e100.net; s=20230601; t=1700796041; x=1701400841;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=MhPGkzK5sVLPrBcdSIBlGv2OOPEa34w+B+jGHNt3Elk=;
-        b=I2bHNKfSvRCZLNCNcT4ZlkSqfu5dY1LERgtjcSnXSTQ8hctUKkRE8EFbE9iE94Rn2w
-         H4gKsLZTlS7A7cLswVsbZa+yDuhpBd7ktgozS2v7CVkQGMYify1ekfIit2AGFtQHsS28
-         LJ2FVnc0Z6DebFbjkjiIc5MIo+qokoCo7T4CUkYrp+eof9e+30QCh6zhcHcKKyfpzM3D
-         Zoo1oTYlSlgFxNdIUlAOiafkKljFvJbXAz0QDSLxeufo6T38GH1PD9J2rdHAMY856LcW
-         Cfrp8eHC+j/7oLvMWsHJB6ewJhwMSD9PCL2d5gcPO/sY7welyo2w2hw43BFz0vZFxqUL
-         WLPg==
-X-Gm-Message-State: AOJu0YytGZfvVLv9HeKgzIemECKm8yEbMstECGKapIJFbJnOz7WMECvv
-	5/uayq2B11G5E8kCnWULCGpL8awaqAU2Zl6FqYEbHuWiB5l/aw==
-X-Google-Smtp-Source: AGHT+IFE029/6FjXDfGBn6YLCRuNRLjK7KK9h93RYehjo4R9899SGPzQGX3bzsAQ2AeloWzhX1vgjvEVNfBTrSs3IGw=
-X-Received: by 2002:a05:6512:3c8f:b0:509:4863:137d with SMTP id
- h15-20020a0565123c8f00b005094863137dmr1048241lfv.7.1700795590750; Thu, 23 Nov
- 2023 19:13:10 -0800 (PST)
+        bh=/A/h/Dos6Pc10ddEMGoVNnojM6+b3o0y6NbP58McesM=;
+        b=oHLQTXgmT1Xtg1V/GYLCZd++3wRzf3kIP/P8vPsVuZqPJkI5yRU4gJPd5BHUkReDdr
+         ZzKaug3jBhGVf+a19mQjVAgTWf3Y54YhKvPaPE6/vL1PKuFQE14tzgn0dJh02W6HRw2U
+         CF62NFkWwLjZyNXxiunM7oNOEIEMaEUqshbNxuO15A8NXl6KdNzq6WEyVSnEe3ZciAYU
+         XDVZYSYmgVE95YvbIrR0f8KnOma5zwO8fxmYqFcaomvBD7e78s0IiSToTVGddyeE3sOz
+         pQrrPWRzjOTwO6lk2NmYHGN+qb1C2aatrqCbYjOHQybceCKjY3OVdP/HtoyXRF61YU+L
+         wB/w==
+X-Gm-Message-State: AOJu0Yxn/hObdoLf2vD2B8/4SNUjlk+o60o+iaX/rLzfwhtdPfBMmV1X
+	s62Egbq5W/vCKqktyv/wnCOEZfIVTAbgbIPyQP4PC5J1WIc=
+X-Google-Smtp-Source: AGHT+IFofCx5tbJTykcIJzt1eWNOrtGc6k+3QQAeXW+b+6yYMHbJI/DMDAYzdXKLsoiNy8SmMvH2uuqJGcb+DlcHT94=
+X-Received: by 2002:ac2:4156:0:b0:509:471e:f111 with SMTP id
+ c22-20020ac24156000000b00509471ef111mr606470lfi.57.1700796041221; Thu, 23 Nov
+ 2023 19:20:41 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -41,38 +41,34 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <pull.1589.git.1695392027.gitgitgadget@gmail.com>
- <pull.1589.v2.git.1695553041.gitgitgadget@gmail.com> <71ed1286d7f38ecc901b40a542508fba9777f02d.1695553042.git.gitgitgadget@gmail.com>
- <CABPp-BEbfsss39-cENw2BwnQPp4edp9_JSN_O1e7vcci9XE+cQ@mail.gmail.com>
-In-Reply-To: <CABPp-BEbfsss39-cENw2BwnQPp4edp9_JSN_O1e7vcci9XE+cQ@mail.gmail.com>
+ <pull.1589.v2.git.1695553041.gitgitgadget@gmail.com> <80eb5da8ed45af4306e7bb28403e31e285efb3a9.1695553042.git.gitgitgadget@gmail.com>
+ <CABPp-BF4dEaa_Ha4uwzVi3fcVKuCuWO=JLHF5RoUANoNCOfk-w@mail.gmail.com>
+In-Reply-To: <CABPp-BF4dEaa_Ha4uwzVi3fcVKuCuWO=JLHF5RoUANoNCOfk-w@mail.gmail.com>
 From: Josh Soref <jsoref@gmail.com>
-Date: Thu, 23 Nov 2023 22:12:58 -0500
-Message-ID: <CACZqfqD-M3NAb3=Y-StWfAk50r-XPkFRRLLJPe9RUek21+Lnsg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] doc: switch links to https
+Date: Thu, 23 Nov 2023 22:20:29 -0500
+Message-ID: <CACZqfqDYrsvE5RMFTosjC+T-vGB+5GkwuVWGbeNTxqpvihxv7A@mail.gmail.com>
+Subject: Re: [PATCH v2 2/4] doc: update links to current pages
 To: Elijah Newren <newren@gmail.com>
 Cc: Josh Soref via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
 Elijah Newren wrote:
-> > -For example, at the time this page was written, the http://repo.or.cz[]
-> > +For example, at the time this page was written, the https://repo.or.cz[]
+> > It's somewhat traditional to respect sites' self-identification.
 >
-> Given the "at the time this page was written" comment, I'm not sure we
-> should switch to https here.
+> I don't understand this comment; was it meant for patch 1?
 
-I claim that it refers to the file that is presented to the user,
-which is current as of the time it was delivered by the specific
-version of the git package.
+I'm trying to say that these sites tend to redirect to these forms as
+opposed to the previous forms.
 
-> > -See http://repo.or.cz/w/git.git/tree/HEAD:/gitweb/[] for gitweb source code,
-> > +See https://repo.or.cz/w/git.git/tree/HEAD:/gitweb/[] for gitweb source code,
-> >  browsed using gitweb itself.
->
-> The suggested link gives a "404 - No such tree".  Granted, the http:
-> link also does that, but it'd be nicer to provide a non-broken link,
-> which you can do by stripping the '/[]' from the end of the URL.
+It applies to both commits.
 
-The `[]` is part of AsciiDoc's [1] notation. I tripped on this when I
-first looked into
-this series (as I'm much more familiar w/ Markdown and Restructured Text).
+The reason to retain two distinct commits is that ideally the https
+only commit should be easier to review as it's generally just adding
+an `s` (in one case I've added a trailing `/` before a `.` that was
+used to end a sentence and which would result in a broken link if a
+user clicked on it...).
 
-[1] https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/
+> Ah, you did fix the http/https thing for json, you just moved it to
+> patch 2 because you also added the 'www.'.  Got it.
+
+This confused too many people. I'm going to swap the order.
