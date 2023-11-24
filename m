@@ -1,49 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UpI3Yh/3"
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF677D6E
-	for <git@vger.kernel.org>; Thu, 23 Nov 2023 19:35:20 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-40b2b3da41eso10272845e9.3
-        for <git@vger.kernel.org>; Thu, 23 Nov 2023 19:35:20 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IaopbSlq"
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B852CD7D
+	for <git@vger.kernel.org>; Thu, 23 Nov 2023 19:35:24 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id 5b1f17b1804b1-4079ed65582so9942575e9.1
+        for <git@vger.kernel.org>; Thu, 23 Nov 2023 19:35:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700796919; x=1701401719; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1700796922; x=1701401722; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ZwcSJgwectIwlz0e6e5BFahoA8WIeNzTcvw1XLQaTy4=;
-        b=UpI3Yh/3wwN3hRLvgg8FEf9ePGFRz02BSv6IM8JDh3nXSSLS1i9yYz0oyxRwkIZfQX
-         LThTZwAPCGSXKZn6JHIIaSCTn63iG/ApO33cq4IRlumGvao0YnyE2QikLCb8OirfXjiW
-         a4dKM0niU+K2hvuFQLPg82njI/gVe18pFX+L4H1n3O0Xyyysli++ov2JxXRU8cH90obI
-         EQZjgiGOZHwERM5YRbOWEoESDTLkRqiqBiMkuyHqZkXN4UXt2ozJ6BCXZxesGvgxXmuG
-         J1Ks4v41L3z/SQ9khalJal4c8OyD9xloFq9qh5Xg8oiPyfdca6l04W0aOZMZjAFIFZTF
-         dmZw==
+        bh=Oq82+N+rJwfTEUZsLdvRFEbs0lYDdbBUAVc4r/ZjqOw=;
+        b=IaopbSlqAbUKHbEOR8ZPjpBH6O4k+2U54PSY70WBOBnQ4+V9o9MRKWz08zkLyufg5C
+         4wVfUVpwt73QQVY87hC/EuG79LJq0wSC4lhsSGMPg/4LNhfHs+LK7vSByqMwktgmOa3s
+         lBdZCwDu2sV/jjvNOd3IY1zzwGMp2i4p06OaySgPlsGSEp2vjOZVZAakzq/mybKdiyFK
+         cPS0oZVisCTwwhVtfpIPDL/qpiFp4KNanqNKQEPzzx2jb062qElNKbp2HK6Jll0Huqhd
+         zFDZzUQMtbEyYMFUMBveBrfTz7BztkwjZQ6qK7uGHQ7fFf4kO1844gUdvbZSO2QPUlTq
+         8BZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700796919; x=1701401719;
+        d=1e100.net; s=20230601; t=1700796922; x=1701401722;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ZwcSJgwectIwlz0e6e5BFahoA8WIeNzTcvw1XLQaTy4=;
-        b=gO4c/zIMfKZJINYX4IT6HIqIhofnpbgrZqIJbrOlpgsjYHEX1KgZghyg6OmfCEwcaO
-         NY4O3Jx5yuJzdG03u22ZlY95oP8+cxYph6BZNooZ4fGf5F1UH7aZY2sxNKZ+T885ooy3
-         OJlQmj8jgilzhI+TAtk3ZI0HQQtMOUGyp2y2joySnifWGOjEsXT38AqkxG8YAdtK+jHq
-         iV5E7i3BWgbgJssmLRMezBi+YZJ3905rNPpYjpUrzDIPVAWkKuAx5OonD53mzEgZK9tP
-         2LAhye3P6pRlxFaFMoTvaBJxmaAIRdpc56QcohkWbT/OYWpYp0qOy/ZmKXldyN8W9nyL
-         eLjw==
-X-Gm-Message-State: AOJu0Yy2Telx1fLfNVHob+CvjBuk2yFTgvdCyv61rv2Ue+a2q2TYL0Ab
-	F+HfzeZGGXwJF+xeZP74WcocVcXPqFQ=
-X-Google-Smtp-Source: AGHT+IEyp7kqm3/x0zNyeFWh8GR9qIh8Hj2XJgjEAXJExFe6kdp3RDj9TDX3ltH4gXYUBIRg06lEyw==
-X-Received: by 2002:a5d:484b:0:b0:331:82c4:929f with SMTP id n11-20020a5d484b000000b0033182c4929fmr767492wrs.27.1700796918696;
-        Thu, 23 Nov 2023 19:35:18 -0800 (PST)
+        bh=Oq82+N+rJwfTEUZsLdvRFEbs0lYDdbBUAVc4r/ZjqOw=;
+        b=UKq7C3MOXVK0RUfDRA6qMijcMS6tHPlvnwN4C4HUU9GcwlJF5NpE9pG2DhoCwgM5pV
+         lfSqutW1/nkMLXkppsgucstxpFNWUPX0aKuu7GC+2121G56noFL8JIFtzAcHR71dJ2Qn
+         Ow6ZJj0c88a3hJGKtLjmRutvH4zjiASKUQZ7Vf7Jbop9OU+C9GonW9+2q4feXYcTxYNB
+         3D9gO0SlOdaRuaHC5+/m22phKU1pn1vuIXvgaDPANTqF+J4YR2K9wcWUG2O7cqi+UgSl
+         uoQAz7mCUC3LsLkGmG3DWa60ixHi710Taj7Kyoe3g8PF71SAERb4wn6SuC2hRdOf9qcq
+         LxsA==
+X-Gm-Message-State: AOJu0YzFSD4mzY3LeXO0V/qIHVny7mWjD4iw1/LR7aJvadhjodGBHzJ3
+	5dEQSpxFR8bQJgBKFmObUBX3goXAAfQ=
+X-Google-Smtp-Source: AGHT+IFQg/E421O5WyKf7dFeYeiAWfYIQX+fwGOwcayVwAHSyBvzB989vkMRUorTzqQQVOseJef15w==
+X-Received: by 2002:adf:ef4e:0:b0:331:4e5e:d9e7 with SMTP id c14-20020adfef4e000000b003314e5ed9e7mr938711wrp.34.1700796922596;
+        Thu, 23 Nov 2023 19:35:22 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a4-20020adfeec4000000b0033130644c87sm3150007wrp.54.2023.11.23.19.35.18
+        by smtp.gmail.com with ESMTPSA id w3-20020a5d5443000000b003140f47224csm3138542wrv.15.2023.11.23.19.35.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Nov 2023 19:35:18 -0800 (PST)
-Message-ID: <pull.1589.v3.git.1700796916.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1589.v2.git.1695553041.gitgitgadget@gmail.com>
+        Thu, 23 Nov 2023 19:35:21 -0800 (PST)
+Message-ID: <6d614a00a97eb5b3bb2b62db1e24390854810c21.1700796917.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1589.v3.git.1700796916.gitgitgadget@gmail.com>
 References: <pull.1589.v2.git.1695553041.gitgitgadget@gmail.com>
+	<pull.1589.v3.git.1700796916.gitgitgadget@gmail.com>
 From: "Josh Soref via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 24 Nov 2023 03:35:11 +0000
-Subject: [PATCH v3 0/4] Switch links to https
+Date: Fri, 24 Nov 2023 03:35:15 +0000
+Subject: [PATCH v3 4/4] doc: refer to internet archive
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -57,244 +58,74 @@ To: git@vger.kernel.org
 Cc: Eric Sunshine <sunshine@sunshineco.com>,
     Josh Soref <jsoref@gmail.com>,
     Elijah Newren <newren@gmail.com>,
+    Josh Soref <jsoref@gmail.com>,
     Josh Soref <jsoref@gmail.com>
 
-There are a couple of categories of http links...
+From: Josh Soref <jsoref@gmail.com>
 
-There are four categories worth changing:
+These pages are no longer reachable from their original locations,
+which makes things difficult for readers. Instead, switch to linking to
+the Internet Archive for the content.
 
- * pages that have jittered a bit but are now available as https:
- * pages which exist at both http: and https: and can be safely switched
- * pages that have jittered a bit and are not available over https:
- * pages that are gone and for which the best source is
-   https://web.archive.org
+Signed-off-by: Josh Soref <jsoref@gmail.com>
+---
+ gitweb/gitweb.perl       | 2 +-
+ sha1dc/sha1.c            | 2 +-
+ t/lib-gpg.sh             | 2 +-
+ t/t9816-git-p4-locked.sh | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-And some categories that aren't being changed:
-
- * links that are required to be http: because they're copied from something
-   that mandates it (the apache license, xml namespaces, xsl docbook
-   things?)
- * urls that were imaginary (e.g. http://example.com/repo.git)
- * links in borrowed code where the http: form still works
-
-In order:
-
- * doc: update links to current pages -- I found the current pages for
-   these, it should be easy enough to verify these / reject them
- * doc: switch links to https -- the simplest
- * doc: update links for andre-simon.de -- I've split this out, I don't like
-   the idea of having to download binaries over http. If this were my
-   project, I'd be tempted to remove the feature or self-host w/ https...
- * doc: refer to internet archive -- the original urls are dead, I've found
-   internet archive date links for them. (There are some in git already, so
-   this seemed like a very reasonable choice.)
-
-Changes from v1:
-
- * Commit messages have been adjusted since v1
- * files were dropped based on feedback from Junio
-
-Changes from v2:
-
- * The first two commits have been swapped (favoring more complicated urls
-   over simply switching to https)
- * The archive.org link for atomenabled.org has been dropped, we'll risk
-   users getting hacked content from an arbitrary MITM instead of taking
-   archived authenticated content based on the last time their web site was
-   properly maintained.
-
-Josh Soref (4):
-  doc: update links to current pages
-  doc: switch links to https
-  doc: update links for andre-simon.de
-  doc: refer to internet archive
-
- Documentation/CodingGuidelines                         |  2 +-
- Documentation/MyFirstContribution.txt                  |  2 +-
- Documentation/RelNotes/1.6.2.txt                       |  2 +-
- Documentation/RelNotes/1.6.3.txt                       |  2 +-
- Documentation/RelNotes/1.6.4.txt                       |  2 +-
- Documentation/RelNotes/1.6.5.txt                       |  2 +-
- Documentation/RelNotes/1.6.6.txt                       |  2 +-
- Documentation/git-cvsimport.txt                        |  4 ++--
- Documentation/git-format-patch.txt                     |  4 ++--
- Documentation/git-imap-send.txt                        |  2 +-
- Documentation/git-send-email.txt                       |  2 +-
- Documentation/git.txt                                  |  2 +-
- Documentation/gitcore-tutorial.txt                     |  2 +-
- Documentation/gitprotocol-http.txt                     |  4 ++--
- Documentation/gitweb.conf.txt                          |  4 ++--
- Documentation/gitweb.txt                               |  2 +-
- Documentation/howto/keep-canonical-history-correct.txt |  2 +-
- Documentation/signoff-option.txt                       |  2 +-
- INSTALL                                                |  2 +-
- Makefile                                               |  4 ++--
- README.md                                              |  2 +-
- git-cvsimport.perl                                     |  2 +-
- git-gui/git-gui.sh                                     |  6 +++---
- git-gui/lib/encoding.tcl                               |  2 +-
- git-gui/po/README                                      |  2 +-
- git-instaweb.sh                                        |  4 ++--
- gitk-git/gitk                                          |  4 ++--
- gitweb/INSTALL                                         |  2 +-
- gitweb/gitweb.perl                                     | 10 +++++-----
- gitweb/static/gitweb.css                               |  2 +-
- gitweb/static/js/lib/common-lib.js                     | 10 +++++-----
- graph.h                                                |  4 ++--
- http.c                                                 |  2 +-
- imap-send.c                                            |  4 ++--
- json-writer.h                                          |  4 ++--
- kwset.c                                                |  2 +-
- kwset.h                                                |  2 +-
- list.h                                                 |  2 +-
- perl/FromCPAN/Error.pm                                 |  2 +-
- perl/Git/SVN.pm                                        |  2 +-
- protocol.h                                             |  2 +-
- sh-i18n--envsubst.c                                    |  4 ++--
- sha1dc/sha1.c                                          |  2 +-
- t/README                                               |  4 ++--
- t/helper/test-regex.c                                  |  2 +-
- t/lib-gpg.sh                                           |  2 +-
- t/perf/perf-lib.sh                                     |  2 +-
- t/t9114-git-svn-dcommit-merge.sh                       |  2 +-
- t/t9801-git-p4-branch.sh                               |  2 +-
- t/t9816-git-p4-locked.sh                               |  2 +-
- t/test-lib-functions.sh                                |  2 +-
- t/test-lib-github-workflow-markup.sh                   |  2 +-
- t/test-lib-junit.sh                                    |  2 +-
- t/test-lib.sh                                          |  2 +-
- trace.c                                                |  2 +-
- utf8.c                                                 |  2 +-
- utf8.h                                                 |  6 +++---
- 57 files changed, 81 insertions(+), 81 deletions(-)
-
-
-base-commit: 564d0252ca632e0264ed670534a51d18a689ef5d
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1589%2Fjsoref%2Fhttps-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1589/jsoref/https-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/1589
-
-Range-diff vs v2:
-
- 2:  80eb5da8ed4 ! 1:  54d3861aedf doc: update links to current pages
-     @@ Documentation/git-format-patch.txt: Approach #3 (external editor)
-       
-       The following Thunderbird extensions are needed:
-      -AboutConfig from http://aboutconfig.mozdev.org/ and
-     +-External Editor from http://globs.org/articles.php?lng=en&pg=8
-      +AboutConfig from https://mjg.github.io/AboutConfig/ and
-     - External Editor from https://globs.org/articles.php?lng=en&pg=8
-     ++External Editor from https://globs.org/articles.php?lng=en&pg=8
-       
-       1. Prepare the patch as a text file using your method of choice.
-     + 
-      
-       ## Documentation/git.txt ##
-      @@ Documentation/git.txt: Authors
-     @@ gitk-git/gitk: if {[tk windowingsystem] eq "aqua"} {
-       ## gitweb/static/js/lib/common-lib.js ##
-      @@ gitweb/static/js/lib/common-lib.js: function addCssRule(selector, style) {
-        *   http://www.dustindiaz.com/getelementsbyclass/
-     -  *   https://stackoverflow.com/questions/1818865/do-we-have-getelementsbyclassname-in-javascript
-     +  *   http://stackoverflow.com/questions/1818865/do-we-have-getelementsbyclassname-in-javascript
-        *
-      - * See also http://ejohn.org/blog/getelementsbyclassname-speed-comparison/
-      + * See also https://johnresig.com/blog/getelementsbyclassname-speed-comparison/
-     @@ json-writer.h
-      @@
-       /*
-        * JSON data structures are defined at:
-     -  * [1] https://www.ietf.org/rfc/rfc7159.txt
-     +  * [1] http://www.ietf.org/rfc/rfc7159.txt
-      - * [2] http://json.org/
-      + * [2] https://www.json.org/
-        *
- 1:  71ed1286d7f ! 2:  cd44658f408 doc: switch links to https
-     @@ Metadata
-       ## Commit message ##
-          doc: switch links to https
-      
-     -    It's somewhat traditional to respect sites' self-identification.
-     +    These sites offer https versions of their content.
-     +    Using the https versions provides some protection for users.
-      
-          Signed-off-by: Josh Soref <jsoref@gmail.com>
-      
-     - ## Documentation/CodingGuidelines ##
-     -@@ Documentation/CodingGuidelines: code.  For Git in general, a few rough rules are:
-     - 
-     -    "Once it _is_ in the tree, it's not really worth the patch noise to
-     -    go and fix it up."
-     --   Cf. http://lkml.iu.edu/hypermail/linux/kernel/1001.3/01069.html
-     -+   Cf. https://lkml.iu.edu/hypermail/linux/kernel/1001.3/01069.html
-     - 
-     -  - Log messages to explain your changes are as important as the
-     -    changes themselves.  Clearly written code and in-code comments
-     -
-       ## Documentation/MyFirstContribution.txt ##
-      @@ Documentation/MyFirstContribution.txt: Johannes Schindelin to make life as a Git contributor easier for those used to
-       the GitHub PR workflow. It allows contributors to open pull requests against its
-     @@ Documentation/git-cvsimport.txt: Problems related to tags:
-       GIT
-       ---
-      
-     - ## Documentation/git-format-patch.txt ##
-     -@@ Documentation/git-format-patch.txt: Approach #3 (external editor)
-     - 
-     - The following Thunderbird extensions are needed:
-     - AboutConfig from http://aboutconfig.mozdev.org/ and
-     --External Editor from http://globs.org/articles.php?lng=en&pg=8
-     -+External Editor from https://globs.org/articles.php?lng=en&pg=8
-     - 
-     - 1. Prepare the patch as a text file using your method of choice.
-     - 
-     -
-       ## Documentation/git-imap-send.txt ##
-      @@ Documentation/git-imap-send.txt: flames ridiculing you if you don't check this.
-       
-     @@ Documentation/gitweb.conf.txt: filesystem (i.e. "$projectroot/$project"), `%h` t
-       ## Documentation/gitweb.txt ##
-      @@ Documentation/gitweb.txt: Gitweb provides a web interface to Git repositories.  Its features include:
-         revisions one at a time, viewing the history of the repository.
-     - * Finding commits which commit messages matches given search term.
-     + * Finding commits whose commit messages match a given search term.
-       
-      -See http://repo.or.cz/w/git.git/tree/HEAD:/gitweb/[] for gitweb source code,
-      +See https://repo.or.cz/w/git.git/tree/HEAD:/gitweb/[] for gitweb source code,
-     @@ gitweb/static/js/lib/common-lib.js: function addCssRule(selector, style) {
-      - *   http://stackoverflow.com/questions/1818865/do-we-have-getelementsbyclassname-in-javascript
-      + *   https://stackoverflow.com/questions/1818865/do-we-have-getelementsbyclassname-in-javascript
-        *
-     -  * See also http://ejohn.org/blog/getelementsbyclassname-speed-comparison/
-     +  * See also https://johnresig.com/blog/getelementsbyclassname-speed-comparison/
-        *
-      
-       ## graph.h ##
-     @@ json-writer.h
-        * JSON data structures are defined at:
-      - * [1] http://www.ietf.org/rfc/rfc7159.txt
-      + * [1] https://www.ietf.org/rfc/rfc7159.txt
-     -  * [2] http://json.org/
-     +  * [2] https://www.json.org/
-        *
-        * The JSON-writer API allows one to build JSON data structures using a
-      
- 3:  7cfd7b244ea = 3:  649ce9a9bd4 doc: update links for andre-simon.de
- 4:  9f0bba69492 ! 4:  6d614a00a97 doc: refer to internet archive
-     @@ Commit message
-      
-       ## gitweb/gitweb.perl ##
-      @@ gitweb/gitweb.perl: sub git_feed {
-     - 	my $format = shift || 'atom';
-       	my $have_blame = gitweb_check_feature('blame');
-       
-     --	# Atom: http://www.atomenabled.org/developers/syndication/
-     + 	# Atom: http://www.atomenabled.org/developers/syndication/
-      -	# RSS:  http://www.notestips.com/80256B3A007F2692/1/NAMO5P9UPQ
-     -+	# Atom: https://web.archive.org/web/20230815171113/https://www.atomenabled.org/developers/syndication/
-      +	# RSS:  https://web.archive.org/web/20030729001534/http://www.notestips.com/80256B3A007F2692/1/NAMO5P9UPQ
-       	if ($format ne 'rss' && $format ne 'atom') {
-       		die_error(400, "Unknown web feed format");
-
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index b6659410ef1..6f139b8fc32 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -8193,7 +8193,7 @@ sub git_feed {
+ 	my $have_blame = gitweb_check_feature('blame');
+ 
+ 	# Atom: http://www.atomenabled.org/developers/syndication/
+-	# RSS:  http://www.notestips.com/80256B3A007F2692/1/NAMO5P9UPQ
++	# RSS:  https://web.archive.org/web/20030729001534/http://www.notestips.com/80256B3A007F2692/1/NAMO5P9UPQ
+ 	if ($format ne 'rss' && $format ne 'atom') {
+ 		die_error(400, "Unknown web feed format");
+ 	}
+diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
+index dede2cbddf9..f993ef9c690 100644
+--- a/sha1dc/sha1.c
++++ b/sha1dc/sha1.c
+@@ -88,7 +88,7 @@
+ /*
+  * Should define Big Endian for a whitelist of known processors. See
+  * https://sourceforge.net/p/predef/wiki/Endianness/ and
+- * http://www.oracle.com/technetwork/server-storage/solaris/portingtosolaris-138514.html
++ * https://web.archive.org/web/20140421151132/http://www.perforce.com/perforce/doc.current/manuals/p4sag/chapter.superuser.html
+  */
+ #define SHA1DC_BIGENDIAN
+ 
+diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
+index 83b83c9abb5..add11e88fc0 100644
+--- a/t/lib-gpg.sh
++++ b/t/lib-gpg.sh
+@@ -13,7 +13,7 @@ test_lazy_prereq GPG '
+ 	gpg_version=$(gpg --version 2>&1)
+ 	test $? != 127 || exit 1
+ 
+-	# As said here: http://www.gnupg.org/documentation/faqs.html#q6.19
++	# As said here: https://web.archive.org/web/20130212022238/https://www.gnupg.org/faq/gnupg-faq.html#why-does-gnupg-1.0.6-bail-out-on-keyrings-used-with-1.0.7
+ 	# the gpg version 1.0.6 did not parse trust packets correctly, so for
+ 	# that version, creation of signed tags using the generated key fails.
+ 	case "$gpg_version" in
+diff --git a/t/t9816-git-p4-locked.sh b/t/t9816-git-p4-locked.sh
+index 932841003cf..5e904ac80d8 100755
+--- a/t/t9816-git-p4-locked.sh
++++ b/t/t9816-git-p4-locked.sh
+@@ -9,7 +9,7 @@ test_expect_success 'start p4d' '
+ '
+ 
+ # See
+-# http://www.perforce.com/perforce/doc.current/manuals/p4sag/03_superuser.html#1088563
++# https://web.archive.org/web/20150602090517/http://www.perforce.com/perforce/doc.current/manuals/p4sag/chapter.superuser.html#superuser.basic.typemap_locking
+ # for suggestions on how to configure "sitewide pessimistic locking"
+ # where only one person can have a file open for edit at a time.
+ test_expect_success 'init depot' '
 -- 
 gitgitgadget
