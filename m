@@ -1,43 +1,43 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZX6xA9wS"
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48B40D59
-	for <git@vger.kernel.org>; Fri, 24 Nov 2023 03:11:10 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-40838915cecso12381615e9.2
-        for <git@vger.kernel.org>; Fri, 24 Nov 2023 03:11:10 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iI3cdjFP"
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2746D72
+	for <git@vger.kernel.org>; Fri, 24 Nov 2023 03:11:11 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-40b39d33fe0so4636295e9.0
+        for <git@vger.kernel.org>; Fri, 24 Nov 2023 03:11:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700824268; x=1701429068; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1700824270; x=1701429070; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=55UfTATPmaTTrs1J6snK2Oj8frBggV9uL0Kjh3KxBks=;
-        b=ZX6xA9wSFLyjcQvyJhePYNWJzNkiSLwydLnh60CJ5pwW0AzoItcMhqe+FenwHld+gS
-         iZfxy33rGrAfsFbeo2+xLWDJ0VlSjyl2Rwb4PS9CdO33fBLYPsOFHghPvx4lLiYRCk0R
-         GRfplN9M5Xu5WmHUQd1tp5pMx5VXl3m4LkzMWWV5DvtK0j7hO1QTmskvO7gfL8SoQYIX
-         HsmlaxxDv5YC1O4a15kGhuQInq07IWf+ac545jpX+E0IbkrqapFhlfwnz4D9T1jb4Ae6
-         4SspFxY49FoQeN30pFTFrCYb87O/z3Nw2dxqzqwY/Dmh7+347WwjEwc6F3UCcuVtudXb
-         ry3Q==
+        bh=oBVVnZ6kjgNi2Syu+AtDhT1o9WE1YPHMcqPfrZTtyNc=;
+        b=iI3cdjFPjdoHYYUoLsCe9dtKg2NAYEmSQRVKtm5oVm7l6aOLmEBsm6QVtGLXaBSNPT
+         trY9etFe/prl0iPk4Lfu7ksTGda/cY6pp7QvWmEsGap1XfAoAP1CAE/QTFS8B3FgS4rD
+         NfS5KmsN2bAZt9F0ZkQoc1g/iqinLgawbKAJCPwrwF8B9Ba3GtZRswp83FSw0oLVpdGK
+         Kj5JovvdFv++cliT3cYhdAGqzsnMMYJxnJsQj+OOh7L8H8MD+HzYgX6vGq1unSSikjNf
+         holnh2nt3VV17sVs7rRrssMDrN044eE5LAEzv9kC+vd8f/H/drwK0zz812hFkPDlyMQj
+         ptlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700824268; x=1701429068;
+        d=1e100.net; s=20230601; t=1700824270; x=1701429070;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=55UfTATPmaTTrs1J6snK2Oj8frBggV9uL0Kjh3KxBks=;
-        b=ADS3PvmUBGpB23yE7HWLTbhRrKsBv7dgYY1DbqRfXL6yLXgR9oZ8lkFtgo06atW4+r
-         jnyuqe4niATYJJPdqTp9a8HatYrnnIXSKThEBwtyp5b5idUorDxz0lt++y5hAJlmexgs
-         eumxCOATEls3uDx9GOBII/SHGI7OZ/CaZcKORTdV3sVa4Z+4geZ1aruvcYBGUZqeSf2m
-         5We4FLZ4DXb0I76VNNoxepiXIzYZaxenSlM/Hbx4N0XGw2xstxeH4MTL7zdMKKaY/dNB
-         BvnPm1uwyIKm49oD7jB5PYnSEqEEDCimWC2qg3rMBUzWoNGoMYX5LEPqk8dl06N7sk18
-         fmDA==
-X-Gm-Message-State: AOJu0YyBD1ZomGbvs09i/Oqb1/r0GBQtul5KXQF6P0k7KGKfnVNj/Kk6
-	qdyRY+753sNtKP8e/I/pQCRVNFj9yYY=
-X-Google-Smtp-Source: AGHT+IGNt7tF6Gi8F8raFnhtsF7cULlQFfRvyPfufkHjg90R5y6cS2vDAQt8OxoxgOys+NKFpeyYZg==
-X-Received: by 2002:a05:600c:3ca0:b0:40a:48af:4820 with SMTP id bg32-20020a05600c3ca000b0040a48af4820mr2238922wmb.30.1700824268025;
-        Fri, 24 Nov 2023 03:11:08 -0800 (PST)
+        bh=oBVVnZ6kjgNi2Syu+AtDhT1o9WE1YPHMcqPfrZTtyNc=;
+        b=rfInsQnPFUXdF+mYYSCH+EPnjgFq7yv9WoVFA6nflp6xHv4w9K+JTYVPZJsRmBQqHt
+         cQSSSrEpd73t/lUixSLwvFdnos+yTXvocgJcsmxWHJfGq66spDrgFY8LDciIbaX+vNA+
+         7PWb+OctwsKi2D+jmGC7uExyCEmH+HgKFhmlRM6inmHBxPz+dSvjYrbFPvPdSW1NkapR
+         7GK71pBThs/n65/ojvmqeSODX30bUHUORKjzRCD4Dz02Lobif4t7S3wN++AVE6MkWv4v
+         gG8k80SMnnnigBSai4VINOVVPkG42h3lrgzLIBaaH9Es6mHO37i6/PZZ/LNsCgHjnCpV
+         pL8Q==
+X-Gm-Message-State: AOJu0Yx3GtxkgjvawCMA5sdbidxfv1+RggHNaoyA4btnbSoWnzm+Wj3d
+	7vKqd/mFXrM1VASjQqnONiEEJTFGgzE=
+X-Google-Smtp-Source: AGHT+IFBnp0h11NSUb8ge2SdqXA9E23vgVtrj66RqfjtIH9oEpuGfzx9e+EKW4fMfmoCeXtfOvK+cA==
+X-Received: by 2002:a05:600c:4ed0:b0:40b:2b86:c886 with SMTP id g16-20020a05600c4ed000b0040b2b86c886mr2023184wmq.31.1700824269806;
+        Fri, 24 Nov 2023 03:11:09 -0800 (PST)
 Received: from localhost.localdomain ([2001:861:3f04:7ca0:c06d:3245:2b4d:9ec5])
-        by smtp.gmail.com with ESMTPSA id r4-20020a05600c458400b0040648217f4fsm5390295wmo.39.2023.11.24.03.11.07
+        by smtp.gmail.com with ESMTPSA id r4-20020a05600c458400b0040648217f4fsm5390295wmo.39.2023.11.24.03.11.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Nov 2023 03:11:07 -0800 (PST)
+        Fri, 24 Nov 2023 03:11:08 -0800 (PST)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -52,9 +52,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Dragan Simic <dsimic@manjaro.org>,
 	Linus Arver <linusa@google.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v8 05/14] replay: introduce pick_regular_commit()
-Date: Fri, 24 Nov 2023 12:10:34 +0100
-Message-ID: <20231124111044.3426007-6-christian.couder@gmail.com>
+Subject: [PATCH v8 06/14] replay: change rev walking options
+Date: Fri, 24 Nov 2023 12:10:35 +0100
+Message-ID: <20231124111044.3426007-7-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.43.0.14.g93e034faee
 In-Reply-To: <20231124111044.3426007-1-christian.couder@gmail.com>
 References: <20231115143327.2441397-1-christian.couder@gmail.com>
@@ -69,108 +69,97 @@ Content-Transfer-Encoding: 8bit
 
 From: Elijah Newren <newren@gmail.com>
 
-Let's refactor the code to handle a regular commit (a commit that is
-neither a root commit nor a merge commit) into a single function instead
-of keeping it inside cmd_replay().
+Let's force the rev walking options we need after calling
+setup_revisions() instead of before.
 
-This is good for separation of concerns, and this will help further work
-in the future to replay merge commits.
+This might override some user supplied rev walking command line options
+though. So let's detect that and warn users by:
 
+  a) setting the desired values, before setup_revisions(),
+  b) checking after setup_revisions() whether these values differ from
+     the desired values,
+  c) if so throwing a warning and setting the desired values again.
+
+We want the command to work from older commits to newer ones by default.
+Also we don't want history simplification, as we want to deal with all
+the commits in the affected range.
+
+Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Co-authored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Elijah Newren <newren@gmail.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/replay.c | 54 ++++++++++++++++++++++++++++++------------------
- 1 file changed, 34 insertions(+), 20 deletions(-)
+ builtin/replay.c | 48 +++++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 41 insertions(+), 7 deletions(-)
 
 diff --git a/builtin/replay.c b/builtin/replay.c
-index f48c5ed255..d039467cd4 100644
+index d039467cd4..2f664218be 100644
 --- a/builtin/replay.c
 +++ b/builtin/replay.c
-@@ -89,6 +89,35 @@ static struct commit *create_commit(struct tree *tree,
- 	return (struct commit *)obj;
- }
+@@ -173,22 +173,56 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
  
-+static struct commit *pick_regular_commit(struct commit *pickme,
-+					  struct commit *last_commit,
-+					  struct merge_options *merge_opt,
-+					  struct merge_result *result)
-+{
-+	struct commit *base;
-+	struct tree *pickme_tree, *base_tree;
-+
-+	base = pickme->parents->item;
-+
-+	pickme_tree = repo_get_commit_tree(the_repository, pickme);
-+	base_tree = repo_get_commit_tree(the_repository, base);
-+
-+	merge_opt->branch2 = short_commit_name(pickme);
-+	merge_opt->ancestor = xstrfmt("parent of %s", merge_opt->branch2);
-+
-+	merge_incore_nonrecursive(merge_opt,
-+				  base_tree,
-+				  result->tree,
-+				  pickme_tree,
-+				  result);
-+
-+	free((char*)merge_opt->ancestor);
-+	merge_opt->ancestor = NULL;
-+	if (!result->clean)
-+		return NULL;
-+	return create_commit(result->tree, pickme, last_commit);
-+}
-+
- int cmd_replay(int argc, const char **argv, const char *prefix)
- {
- 	struct commit *onto;
-@@ -100,7 +129,7 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 	struct rev_info revs;
- 	struct commit *commit;
- 	struct merge_options merge_opt;
--	struct tree *next_tree, *base_tree, *head_tree;
-+	struct tree *head_tree;
- 	struct merge_result result;
- 	struct strbuf reflog_msg = STRBUF_INIT;
- 	struct strbuf branch_name = STRBUF_INIT;
-@@ -175,7 +204,7 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 	result.tree = head_tree;
- 	last_commit = onto;
- 	while ((commit = get_revision(&revs))) {
--		struct commit *base;
-+		struct commit *pick;
+ 	repo_init_revisions(the_repository, &revs, prefix);
  
- 		fprintf(stderr, "Rebasing %s...\r",
- 			oid_to_hex(&commit->object.oid));
-@@ -185,26 +214,11 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 		if (commit->parents->next)
- 			die(_("replaying merge commits is not supported yet!"));
+-	revs.verbose_header = 1;
+-	revs.max_parents = 1;
+-	revs.cherry_mark = 1;
+-	revs.limited = 1;
++	strvec_pushl(&rev_walk_args, "", argv[2], "--not", argv[1], NULL);
++
++	/*
++	 * Set desired values for rev walking options here. If they
++	 * are changed by some user specified option in setup_revisions()
++	 * below, we will detect that below and then warn.
++	 *
++	 * TODO: In the future we might want to either die(), or allow
++	 * some options changing these values if we think they could
++	 * be useful.
++	 */
+ 	revs.reverse = 1;
+-	revs.right_only = 1;
+ 	revs.sort_order = REV_SORT_IN_GRAPH_ORDER;
+ 	revs.topo_order = 1;
+-
+-	strvec_pushl(&rev_walk_args, "", argv[2], "--not", argv[1], NULL);
++	revs.simplify_history = 0;
  
--		base = commit->parents->item;
--
--		next_tree = repo_get_commit_tree(the_repository, commit);
--		base_tree = repo_get_commit_tree(the_repository, base);
--
--		merge_opt.branch2 = short_commit_name(commit);
--		merge_opt.ancestor = xstrfmt("parent of %s", merge_opt.branch2);
--
--		merge_incore_nonrecursive(&merge_opt,
--					  base_tree,
--					  result.tree,
--					  next_tree,
--					  &result);
--
--		free((char*)merge_opt.ancestor);
--		merge_opt.ancestor = NULL;
--		if (!result.clean)
-+		pick = pick_regular_commit(commit, last_commit, &merge_opt, &result);
-+		if (!pick)
- 			break;
-+		last_commit = pick;
- 		last_picked_commit = commit;
--		last_commit = create_commit(result.tree, commit, last_commit);
+ 	if (setup_revisions(rev_walk_args.nr, rev_walk_args.v, &revs, NULL) > 1) {
+ 		ret = error(_("unhandled options"));
+ 		goto cleanup;
  	}
  
- 	merge_finalize(&merge_opt, &result);
++	/*
++	 * Detect and warn if we override some user specified rev
++	 * walking options.
++	 */
++	if (revs.reverse != 1) {
++		warning(_("some rev walking options will be overridden as "
++			  "'%s' bit in 'struct rev_info' will be forced"),
++			"reverse");
++		revs.reverse = 1;
++	}
++	if (revs.sort_order != REV_SORT_IN_GRAPH_ORDER) {
++		warning(_("some rev walking options will be overridden as "
++			  "'%s' bit in 'struct rev_info' will be forced"),
++			"sort_order");
++		revs.sort_order = REV_SORT_IN_GRAPH_ORDER;
++	}
++	if (revs.topo_order != 1) {
++		warning(_("some rev walking options will be overridden as "
++			  "'%s' bit in 'struct rev_info' will be forced"),
++			"topo_order");
++		revs.topo_order = 1;
++	}
++	if (revs.simplify_history != 0) {
++		warning(_("some rev walking options will be overridden as "
++			  "'%s' bit in 'struct rev_info' will be forced"),
++			"simplify_history");
++		revs.simplify_history = 0;
++	}
++
+ 	strvec_clear(&rev_walk_args);
+ 
+ 	if (prepare_revision_walk(&revs) < 0) {
 -- 
 2.43.0.14.g93e034faee
 
