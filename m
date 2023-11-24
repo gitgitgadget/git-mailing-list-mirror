@@ -1,43 +1,43 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iI3cdjFP"
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2746D72
-	for <git@vger.kernel.org>; Fri, 24 Nov 2023 03:11:11 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-40b39d33fe0so4636295e9.0
-        for <git@vger.kernel.org>; Fri, 24 Nov 2023 03:11:11 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XnFx8tmy"
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B4CCD67
+	for <git@vger.kernel.org>; Fri, 24 Nov 2023 03:11:13 -0800 (PST)
+Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2c8769edd9fso23708941fa.0
+        for <git@vger.kernel.org>; Fri, 24 Nov 2023 03:11:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700824270; x=1701429070; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1700824271; x=1701429071; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=oBVVnZ6kjgNi2Syu+AtDhT1o9WE1YPHMcqPfrZTtyNc=;
-        b=iI3cdjFPjdoHYYUoLsCe9dtKg2NAYEmSQRVKtm5oVm7l6aOLmEBsm6QVtGLXaBSNPT
-         trY9etFe/prl0iPk4Lfu7ksTGda/cY6pp7QvWmEsGap1XfAoAP1CAE/QTFS8B3FgS4rD
-         NfS5KmsN2bAZt9F0ZkQoc1g/iqinLgawbKAJCPwrwF8B9Ba3GtZRswp83FSw0oLVpdGK
-         Kj5JovvdFv++cliT3cYhdAGqzsnMMYJxnJsQj+OOh7L8H8MD+HzYgX6vGq1unSSikjNf
-         holnh2nt3VV17sVs7rRrssMDrN044eE5LAEzv9kC+vd8f/H/drwK0zz812hFkPDlyMQj
-         ptlQ==
+        bh=NIMR9n8WB+umJgli/mZV9bKVyOPlbUX2cG72GsmpZ3E=;
+        b=XnFx8tmypXnkcS4BYFlJ8aaHrN6E1GoSAdpfhxOV/N/dOPrH9g4K3qLwROc411VnGF
+         68dezxbJHduMcI8xGlwv9Tj+HGcG60/DAuxax/YJFX8Jwvl/VuQW4nJLaNtrOC1cAceT
+         vK4ZAR6H44PMUn0zvqkgRTegT9Wa/oOFZmoaYw6TrwIZ9F7cR32L/UiJYMO+HbeKMuYv
+         z/xwDAa++XNv4IChIrYz4s3N4TenqvakGESzlfRTH7ZGGpyoIYOcxiVT/fW9vi9U7BBR
+         QOxoyfR3gyFUqczbWOy1veLF9QlRbtvMcZw5rrDuBg5EY49JnkNhor38o8bIGMAHTx6r
+         S3EQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700824270; x=1701429070;
+        d=1e100.net; s=20230601; t=1700824271; x=1701429071;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=oBVVnZ6kjgNi2Syu+AtDhT1o9WE1YPHMcqPfrZTtyNc=;
-        b=rfInsQnPFUXdF+mYYSCH+EPnjgFq7yv9WoVFA6nflp6xHv4w9K+JTYVPZJsRmBQqHt
-         cQSSSrEpd73t/lUixSLwvFdnos+yTXvocgJcsmxWHJfGq66spDrgFY8LDciIbaX+vNA+
-         7PWb+OctwsKi2D+jmGC7uExyCEmH+HgKFhmlRM6inmHBxPz+dSvjYrbFPvPdSW1NkapR
-         7GK71pBThs/n65/ojvmqeSODX30bUHUORKjzRCD4Dz02Lobif4t7S3wN++AVE6MkWv4v
-         gG8k80SMnnnigBSai4VINOVVPkG42h3lrgzLIBaaH9Es6mHO37i6/PZZ/LNsCgHjnCpV
-         pL8Q==
-X-Gm-Message-State: AOJu0Yx3GtxkgjvawCMA5sdbidxfv1+RggHNaoyA4btnbSoWnzm+Wj3d
-	7vKqd/mFXrM1VASjQqnONiEEJTFGgzE=
-X-Google-Smtp-Source: AGHT+IFBnp0h11NSUb8ge2SdqXA9E23vgVtrj66RqfjtIH9oEpuGfzx9e+EKW4fMfmoCeXtfOvK+cA==
-X-Received: by 2002:a05:600c:4ed0:b0:40b:2b86:c886 with SMTP id g16-20020a05600c4ed000b0040b2b86c886mr2023184wmq.31.1700824269806;
-        Fri, 24 Nov 2023 03:11:09 -0800 (PST)
+        bh=NIMR9n8WB+umJgli/mZV9bKVyOPlbUX2cG72GsmpZ3E=;
+        b=MsLhOnzsIlecZsKlD0RSQhoDQdrp690a9wJzVhS15CF4xke913SrcHpN6cOb/WJELu
+         hXKci8ulEYhmGFfMLstfjFdURtAMJRQbiqKxlf2TWBsZ1Z0iYCE5DpZpAyt3+MOKlkDS
+         ogDFUT0MH3SKD3yJ5QTQMgLZ3wnd64pKbO9MkDITo6fhpfAOOwRC+tMamkFNBlg4qvFU
+         vfydHVXaMdkW69Oka/1G3kZwX/i583qi32plsLOxULTOKYziuGyA5Tzv09IP3HfOpqCO
+         d4WLa9DLSjod1zcKKUA9S8ky/+0xpRqaVHpSSslALniBTDlZcVopNIbe/N9jZxJiLVa1
+         qRag==
+X-Gm-Message-State: AOJu0YzoWyFajfWQa2bsQzy+LM84PMmlGKH45GXFSBPRKZdpu5iNL3Ed
+	vq+Hj7XhCeXXGm9ZZzUBKwNSeK1YBnc=
+X-Google-Smtp-Source: AGHT+IGV2n3RRGFKLff7FNY9/3a+WlAOWiicyh2fuHUQ15/VMrAmEIL7MKsZYHwfk7qCiCVyECT8uw==
+X-Received: by 2002:a2e:7c09:0:b0:2c8:323b:9207 with SMTP id x9-20020a2e7c09000000b002c8323b9207mr1617606ljc.11.1700824271374;
+        Fri, 24 Nov 2023 03:11:11 -0800 (PST)
 Received: from localhost.localdomain ([2001:861:3f04:7ca0:c06d:3245:2b4d:9ec5])
-        by smtp.gmail.com with ESMTPSA id r4-20020a05600c458400b0040648217f4fsm5390295wmo.39.2023.11.24.03.11.08
+        by smtp.gmail.com with ESMTPSA id r4-20020a05600c458400b0040648217f4fsm5390295wmo.39.2023.11.24.03.11.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Nov 2023 03:11:08 -0800 (PST)
+        Fri, 24 Nov 2023 03:11:10 -0800 (PST)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -52,9 +52,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Dragan Simic <dsimic@manjaro.org>,
 	Linus Arver <linusa@google.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v8 06/14] replay: change rev walking options
-Date: Fri, 24 Nov 2023 12:10:35 +0100
-Message-ID: <20231124111044.3426007-7-christian.couder@gmail.com>
+Subject: [PATCH v8 07/14] replay: add an important FIXME comment about gpg signing
+Date: Fri, 24 Nov 2023 12:10:36 +0100
+Message-ID: <20231124111044.3426007-8-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.43.0.14.g93e034faee
 In-Reply-To: <20231124111044.3426007-1-christian.couder@gmail.com>
 References: <20231115143327.2441397-1-christian.couder@gmail.com>
@@ -69,97 +69,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Elijah Newren <newren@gmail.com>
 
-Let's force the rev walking options we need after calling
-setup_revisions() instead of before.
+We want to be able to handle signed commits in some way in the future,
+but we are not ready to do it now. So for the time being let's just add
+a FIXME comment to remind us about it.
 
-This might override some user supplied rev walking command line options
-though. So let's detect that and warn users by:
+These are different ways we could handle them:
 
-  a) setting the desired values, before setup_revisions(),
-  b) checking after setup_revisions() whether these values differ from
-     the desired values,
-  c) if so throwing a warning and setting the desired values again.
+  - in case of a cli user and if there was an interactive mode, we could
+    perhaps ask if the user wants to sign again
+  - we could add an option to just fail if there are signed commits
 
-We want the command to work from older commits to newer ones by default.
-Also we don't want history simplification, as we want to deal with all
-the commits in the affected range.
-
-Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Co-authored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Elijah Newren <newren@gmail.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/replay.c | 48 +++++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 41 insertions(+), 7 deletions(-)
+ builtin/replay.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/builtin/replay.c b/builtin/replay.c
-index d039467cd4..2f664218be 100644
+index 2f664218be..384bb4ddd3 100644
 --- a/builtin/replay.c
 +++ b/builtin/replay.c
-@@ -173,22 +173,56 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 
- 	repo_init_revisions(the_repository, &revs, prefix);
- 
--	revs.verbose_header = 1;
--	revs.max_parents = 1;
--	revs.cherry_mark = 1;
--	revs.limited = 1;
-+	strvec_pushl(&rev_walk_args, "", argv[2], "--not", argv[1], NULL);
-+
-+	/*
-+	 * Set desired values for rev walking options here. If they
-+	 * are changed by some user specified option in setup_revisions()
-+	 * below, we will detect that below and then warn.
-+	 *
-+	 * TODO: In the future we might want to either die(), or allow
-+	 * some options changing these values if we think they could
-+	 * be useful.
-+	 */
- 	revs.reverse = 1;
--	revs.right_only = 1;
- 	revs.sort_order = REV_SORT_IN_GRAPH_ORDER;
- 	revs.topo_order = 1;
--
--	strvec_pushl(&rev_walk_args, "", argv[2], "--not", argv[1], NULL);
-+	revs.simplify_history = 0;
- 
- 	if (setup_revisions(rev_walk_args.nr, rev_walk_args.v, &revs, NULL) > 1) {
- 		ret = error(_("unhandled options"));
- 		goto cleanup;
- 	}
- 
-+	/*
-+	 * Detect and warn if we override some user specified rev
-+	 * walking options.
-+	 */
-+	if (revs.reverse != 1) {
-+		warning(_("some rev walking options will be overridden as "
-+			  "'%s' bit in 'struct rev_info' will be forced"),
-+			"reverse");
-+		revs.reverse = 1;
-+	}
-+	if (revs.sort_order != REV_SORT_IN_GRAPH_ORDER) {
-+		warning(_("some rev walking options will be overridden as "
-+			  "'%s' bit in 'struct rev_info' will be forced"),
-+			"sort_order");
-+		revs.sort_order = REV_SORT_IN_GRAPH_ORDER;
-+	}
-+	if (revs.topo_order != 1) {
-+		warning(_("some rev walking options will be overridden as "
-+			  "'%s' bit in 'struct rev_info' will be forced"),
-+			"topo_order");
-+		revs.topo_order = 1;
-+	}
-+	if (revs.simplify_history != 0) {
-+		warning(_("some rev walking options will be overridden as "
-+			  "'%s' bit in 'struct rev_info' will be forced"),
-+			"simplify_history");
-+		revs.simplify_history = 0;
-+	}
-+
- 	strvec_clear(&rev_walk_args);
- 
- 	if (prepare_revision_walk(&revs) < 0) {
+@@ -62,7 +62,7 @@ static struct commit *create_commit(struct tree *tree,
+ 	struct object *obj;
+ 	struct commit_list *parents = NULL;
+ 	char *author;
+-	char *sign_commit = NULL;
++	char *sign_commit = NULL; /* FIXME: cli users might want to sign again */
+ 	struct commit_extra_header *extra;
+ 	struct strbuf msg = STRBUF_INIT;
+ 	const char *out_enc = get_commit_output_encoding();
 -- 
 2.43.0.14.g93e034faee
 
