@@ -1,43 +1,43 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bl8DyCKg"
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 180F3D72
-	for <git@vger.kernel.org>; Fri, 24 Nov 2023 03:11:06 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-40838915cecso12381215e9.2
-        for <git@vger.kernel.org>; Fri, 24 Nov 2023 03:11:06 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZMhzr6JQ"
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2A5110D7
+	for <git@vger.kernel.org>; Fri, 24 Nov 2023 03:11:07 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id 5b1f17b1804b1-40838915cecso12381365e9.2
+        for <git@vger.kernel.org>; Fri, 24 Nov 2023 03:11:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700824264; x=1701429064; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1700824265; x=1701429065; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=dkdCu8/OoGSyjhuowRK6v3KIRWH7Q5md/PvbDb6mGDM=;
-        b=bl8DyCKgbdW7sZp7tT1QurDngr/V2L2qgm1v5O9TmNezcb92GjpwEhLY10iUS4ZCdo
-         fIhkRWmDrxtm3WqmNeQaI5o07FnTNov61/fTv0Mxw6pVL2blK7cXMX7p22rUdGeyPZ2e
-         z8uR/7Ylv41j3X0kY2almIHrpvKzQb1UnU7U5tmfd6iF6f0V2S9sbTvVtzoEWsNDyM9a
-         JgjyjLlHMUm1tPsCZQ0UMjFUJRum2Au80cmkvsrujmt49S7G5xzzAth6vc3IAxYhn8Hd
-         wKAfOhezqyKnY7ZqU27S66EXsSWb7v8b+A6k7B5Fllg+Je/KwLsxx/5RozJhei1I8Cf1
-         7oOw==
+        bh=seWVrHYt7gjjYKLrqq9EHA2lVkjpouKA61HglcNJuhw=;
+        b=ZMhzr6JQQbZ2uaBuwZGwHMH+3SVF68xO/igW1UsB8+linz/kreAyogJHG8+h51w1GZ
+         e4sfQzdoKwBljtR2SRoP+NudQnIPLBIWk0OdOFJNcTIfr/PsF10TNlhW6lAFMnbP8naP
+         +AaaW+DqWUyOp2/BXHbhpjOoznHdGXMusCFmGVxfmIX/fG1o6hYgngeenUDxjOru7mP7
+         eC/S1WHzA0ekV7N6uyEtSpNl0/SrB9dLk0SB4myTwlWOyOCuLtNvwG4CKNKnrL7A3XLt
+         UOPVe3iUZkgKOFtYKeAJTDiOdCqL4Oj8tgV550EhmONL5YL3dHGcO7VcGGrha8ik0s19
+         6elA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700824264; x=1701429064;
+        d=1e100.net; s=20230601; t=1700824265; x=1701429065;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=dkdCu8/OoGSyjhuowRK6v3KIRWH7Q5md/PvbDb6mGDM=;
-        b=GTSSd4OYP8IAcArEh3ArXspqNSk0vsJxoBvwNxVs4cDnPpJ2zigu9MXKcP4Myn7ePp
-         wvKfw77XsT3775vjwoAUDA/QWw1ps2HfiiLF4N8K1s7Qc8T11rsZBlfWezKXOydAA6zY
-         Jng5fW4TCALb6RrMrVZbjwBCqaqcEeCKJoXR9fEm34SCbyacvSPteQIJOpv207Rvbh3t
-         emChbF7nDIZuk0YqlHXWOSIeRS7HxN6D/EBv3YtSKpqGXj1SZCPMmbmOggeRR2TDzcWU
-         UHBGpf8jInfTbuaVSpeWqRWXUJt32FGX6sUgOjJK+KAV8XakmwrvCE3GZ1L53qp1LALJ
-         bUFw==
-X-Gm-Message-State: AOJu0Yy/sj7XA/BU0j05kfz/VJKC5Oz/qM64HkmpakCxPdy/KEF4JGUr
-	Pq3pbRDqxMrsXsUgZqdFx8K5PC1YUDY=
-X-Google-Smtp-Source: AGHT+IGBqq0FyU9b3ENRROyqqqNpB51qMpsF13FmVnbtGR0BnaTZURFUkOz/nnsa99CmjBNerJHwYg==
-X-Received: by 2002:a05:600c:1d13:b0:409:c1e:7fe8 with SMTP id l19-20020a05600c1d1300b004090c1e7fe8mr1983545wms.19.1700824263945;
-        Fri, 24 Nov 2023 03:11:03 -0800 (PST)
+        bh=seWVrHYt7gjjYKLrqq9EHA2lVkjpouKA61HglcNJuhw=;
+        b=LFW3vIuaKgrQqdQBa6bk92RB9PopdQBLGmebyAYPhzEDboN0sb2FAq4zSL6wd3gopU
+         MdNAhu9zcoHICvYDR/TxvUBQ3cfUERphZApcmM+RR0bG1BUMf8NKajlD+ijD+tyq8iMb
+         SKrh/q+WNIgftXd/znVttS8ngFfUitXrjbKKtSh5swOo/nxPvf+SjUvqLybi7o4pagCu
+         VHn1LcQnzuk8jg+Je8x2Z3OO0tNIuelspuoOOPI6NjTWUXhSNgHiRoeEWgU9BOEELYKT
+         uvYlxvX4GT934bjmHjVRb60ru6HeTfUw3xQ3mn6Hnar4w/qV1hS35ubIuCw+adTl8XN1
+         F2yQ==
+X-Gm-Message-State: AOJu0YxM5VvDkn5IK1pWsLXV9BW/fiUk9i0tGBfGSvcbJh/OCk44o05P
+	5TtxbsDDeuEK4gAfsf+fjeOIiTjV98Y=
+X-Google-Smtp-Source: AGHT+IHo20/lQHrydomHSLm/H3dtUl8qfvHrmOV6ysiLSZvwxrkwU7dhqoamrPHHct3d4aBX6VWXSQ==
+X-Received: by 2002:a05:600c:45c6:b0:40a:2796:618f with SMTP id s6-20020a05600c45c600b0040a2796618fmr1798129wmo.40.1700824265574;
+        Fri, 24 Nov 2023 03:11:05 -0800 (PST)
 Received: from localhost.localdomain ([2001:861:3f04:7ca0:c06d:3245:2b4d:9ec5])
-        by smtp.gmail.com with ESMTPSA id r4-20020a05600c458400b0040648217f4fsm5390295wmo.39.2023.11.24.03.11.02
+        by smtp.gmail.com with ESMTPSA id r4-20020a05600c458400b0040648217f4fsm5390295wmo.39.2023.11.24.03.11.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Nov 2023 03:11:02 -0800 (PST)
+        Fri, 24 Nov 2023 03:11:04 -0800 (PST)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -52,9 +52,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Dragan Simic <dsimic@manjaro.org>,
 	Linus Arver <linusa@google.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v8 02/14] replay: introduce new builtin
-Date: Fri, 24 Nov 2023 12:10:31 +0100
-Message-ID: <20231124111044.3426007-3-christian.couder@gmail.com>
+Subject: [PATCH v8 03/14] replay: start using parse_options API
+Date: Fri, 24 Nov 2023 12:10:32 +0100
+Message-ID: <20231124111044.3426007-4-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.43.0.14.g93e034faee
 In-Reply-To: <20231124111044.3426007-1-christian.couder@gmail.com>
 References: <20231115143327.2441397-1-christian.couder@gmail.com>
@@ -69,412 +69,126 @@ Content-Transfer-Encoding: 8bit
 
 From: Elijah Newren <newren@gmail.com>
 
-For now, this is just a rename from `t/helper/test-fast-rebase.c` into
-`builtin/replay.c` with minimal changes to make it build appropriately.
+Instead of manually parsing arguments, let's start using the parse_options
+API. This way this new builtin will look more standard, and in some
+upcoming commits will more easily be able to handle more command line
+options.
 
-Let's add a stub documentation and a stub test script though.
+Note that we plan to later use standard revision ranges instead of
+hardcoded "<oldbase> <branch>" arguments. When we will use standard
+revision ranges, it will be easier to check if there are no spurious
+arguments if we keep ARGV[0], so let's call parse_options() with
+PARSE_OPT_KEEP_ARGV0 even if we don't need ARGV[0] right now to avoid
+some useless code churn.
 
-Subsequent commits will flesh out the capabilities of the new command
-and make it a more standard regular builtin.
-
-Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Co-authored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Elijah Newren <newren@gmail.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- .gitignore                                    |  1 +
- Documentation/git-replay.txt                  | 39 ++++++++++++
- Makefile                                      |  2 +-
- builtin.h                                     |  1 +
- .../test-fast-rebase.c => builtin/replay.c    | 29 +++------
- command-list.txt                              |  1 +
- git.c                                         |  1 +
- t/helper/test-tool.c                          |  1 -
- t/helper/test-tool.h                          |  1 -
- t/t3650-replay-basics.sh                      | 60 +++++++++++++++++++
- t/t6429-merge-sequence-rename-caching.sh      | 27 +++------
- 11 files changed, 122 insertions(+), 41 deletions(-)
- create mode 100644 Documentation/git-replay.txt
- rename t/helper/test-fast-rebase.c => builtin/replay.c (87%)
- create mode 100755 t/t3650-replay-basics.sh
+ builtin/replay.c | 45 ++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 32 insertions(+), 13 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index 5e56e471b3..612c0f6a0f 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -135,6 +135,7 @@
- /git-remote-ext
- /git-repack
- /git-replace
-+/git-replay
- /git-request-pull
- /git-rerere
- /git-reset
-diff --git a/Documentation/git-replay.txt b/Documentation/git-replay.txt
-new file mode 100644
-index 0000000000..2ca7ca5fd8
---- /dev/null
-+++ b/Documentation/git-replay.txt
-@@ -0,0 +1,39 @@
-+git-replay(1)
-+=============
-+
-+NAME
-+----
-+git-replay - EXPERIMENTAL: Replay commits on a new base, works with bare repos too
-+
-+
-+SYNOPSIS
-+--------
-+[verse]
-+(EXPERIMENTAL!) 'git replay' --onto <newbase> <oldbase> <branch>
-+
-+DESCRIPTION
-+-----------
-+
-+Takes a range of commits, specified by <oldbase> and <branch>, and
-+replays them onto a new location (see `--onto` option below).
-+
-+THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
-+
-+OPTIONS
-+-------
-+
-+--onto <newbase>::
-+	Starting point at which to create the new commits.  May be any
-+	valid commit, and not just an existing branch name.
-+
-+EXIT STATUS
-+-----------
-+
-+For a successful, non-conflicted replay, the exit status is 0.  When
-+the replay has conflicts, the exit status is 1.  If the replay is not
-+able to complete (or start) due to some kind of error, the exit status
-+is something other than 0 or 1.
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite
-diff --git a/Makefile b/Makefile
-index 03adcb5a48..3834bc1544 100644
---- a/Makefile
-+++ b/Makefile
-@@ -799,7 +799,6 @@ TEST_BUILTINS_OBJS += test-dump-split-index.o
- TEST_BUILTINS_OBJS += test-dump-untracked-cache.o
- TEST_BUILTINS_OBJS += test-env-helper.o
- TEST_BUILTINS_OBJS += test-example-decorate.o
--TEST_BUILTINS_OBJS += test-fast-rebase.o
- TEST_BUILTINS_OBJS += test-find-pack.o
- TEST_BUILTINS_OBJS += test-fsmonitor-client.o
- TEST_BUILTINS_OBJS += test-genrandom.o
-@@ -1290,6 +1289,7 @@ BUILTIN_OBJS += builtin/remote-fd.o
- BUILTIN_OBJS += builtin/remote.o
- BUILTIN_OBJS += builtin/repack.o
- BUILTIN_OBJS += builtin/replace.o
-+BUILTIN_OBJS += builtin/replay.o
- BUILTIN_OBJS += builtin/rerere.o
- BUILTIN_OBJS += builtin/reset.o
- BUILTIN_OBJS += builtin/rev-list.o
-diff --git a/builtin.h b/builtin.h
-index d560baa661..28280636da 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -211,6 +211,7 @@ int cmd_remote(int argc, const char **argv, const char *prefix);
- int cmd_remote_ext(int argc, const char **argv, const char *prefix);
- int cmd_remote_fd(int argc, const char **argv, const char *prefix);
- int cmd_repack(int argc, const char **argv, const char *prefix);
-+int cmd_replay(int argc, const char **argv, const char *prefix);
- int cmd_rerere(int argc, const char **argv, const char *prefix);
- int cmd_reset(int argc, const char **argv, const char *prefix);
- int cmd_restore(int argc, const char **argv, const char *prefix);
-diff --git a/t/helper/test-fast-rebase.c b/builtin/replay.c
-similarity index 87%
-rename from t/helper/test-fast-rebase.c
-rename to builtin/replay.c
-index 2bfab66b1b..1998134683 100644
---- a/t/helper/test-fast-rebase.c
+diff --git a/builtin/replay.c b/builtin/replay.c
+index 1998134683..7998f6ed04 100644
+--- a/builtin/replay.c
 +++ b/builtin/replay.c
-@@ -1,17 +1,11 @@
- /*
-- * "git fast-rebase" builtin command
-- *
-- * FAST: Forking Any Subprocesses (is) Taboo
-- *
-- * This is meant SOLELY as a demo of what is possible.  sequencer.c and
-- * rebase.c should be refactored to use the ideas here, rather than attempting
-- * to extend this file to replace those (unless Phillip or Dscho say that
-- * refactoring is too hard and we need a clean slate, but I'm guessing that
-- * refactoring is the better route).
-+ * "git replay" builtin command
-  */
- 
- #define USE_THE_INDEX_VARIABLE
--#include "test-tool.h"
-+#include "git-compat-util.h"
-+
-+#include "builtin.h"
- #include "cache-tree.h"
- #include "commit.h"
- #include "environment.h"
-@@ -27,7 +21,8 @@
+@@ -15,7 +15,7 @@
+ #include "lockfile.h"
+ #include "merge-ort.h"
+ #include "object-name.h"
+-#include "read-cache-ll.h"
++#include "parse-options.h"
+ #include "refs.h"
+ #include "revision.h"
  #include "sequencer.h"
- #include "setup.h"
- #include "strvec.h"
--#include "tree.h"
-+#include <oidset.h>
-+#include <tree.h>
- 
- static const char *short_commit_name(struct commit *commit)
- {
-@@ -94,7 +89,7 @@ static struct commit *create_commit(struct tree *tree,
- 	return (struct commit *)obj;
- }
- 
--int cmd__fast_rebase(int argc, const char **argv)
-+int cmd_replay(int argc, const char **argv, const char *prefix)
+@@ -92,6 +92,7 @@ static struct commit *create_commit(struct tree *tree,
+ int cmd_replay(int argc, const char **argv, const char *prefix)
  {
  	struct commit *onto;
++	const char *onto_name = NULL;
  	struct commit *last_commit = NULL, *last_picked_commit = NULL;
-@@ -110,14 +105,8 @@ int cmd__fast_rebase(int argc, const char **argv)
+ 	struct object_id head;
+ 	struct lock_file lock = LOCK_INIT;
+@@ -105,16 +106,32 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
  	struct strbuf branch_name = STRBUF_INIT;
  	int ret = 0;
  
--	/*
--	 * test-tool stuff doesn't set up the git directory by default; need to
--	 * do that manually.
--	 */
--	setup_git_directory();
--
- 	if (argc == 2 && !strcmp(argv[1], "-h")) {
--		printf("Sorry, I am not a psychiatrist; I can not give you the help you need.  Oh, you meant usage...\n");
-+		printf("usage: (EXPERIMENTAL!) git replay --onto <newbase> <oldbase> <branch>\n");
- 		exit(129);
+-	if (argc == 2 && !strcmp(argv[1], "-h")) {
+-		printf("usage: (EXPERIMENTAL!) git replay --onto <newbase> <oldbase> <branch>\n");
+-		exit(129);
++	const char * const replay_usage[] = {
++		N_("(EXPERIMENTAL!) git replay --onto <newbase> <oldbase> <branch>"),
++		NULL
++	};
++	struct option replay_options[] = {
++		OPT_STRING(0, "onto", &onto_name,
++			   N_("revision"),
++			   N_("replay onto given commit")),
++		OPT_END()
++	};
++
++	argc = parse_options(argc, argv, prefix, replay_options, replay_usage,
++			     PARSE_OPT_KEEP_ARGV0 | PARSE_OPT_KEEP_UNKNOWN_OPT);
++
++	if (!onto_name) {
++		error(_("option --onto is mandatory"));
++		usage_with_options(replay_usage, replay_options);
  	}
  
-@@ -136,7 +125,7 @@ int cmd__fast_rebase(int argc, const char **argv)
- 	if (repo_read_index(the_repository) < 0)
+-	if (argc != 5 || strcmp(argv[1], "--onto"))
+-		die("usage: read the code, figure out how to use it, then do so");
++	if (argc != 3) {
++		error(_("bad number of arguments"));
++		usage_with_options(replay_usage, replay_options);
++	}
+ 
+-	onto = peel_committish(argv[2]);
+-	strbuf_addf(&branch_name, "refs/heads/%s", argv[4]);
++	onto = peel_committish(onto_name);
++	strbuf_addf(&branch_name, "refs/heads/%s", argv[2]);
+ 
+ 	/* Sanity check */
+ 	if (repo_get_oid(the_repository, "HEAD", &head))
+@@ -126,6 +143,7 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
  		BUG("Could not read index");
  
--	repo_init_revisions(the_repository, &revs, NULL);
-+	repo_init_revisions(the_repository, &revs, prefix);
+ 	repo_init_revisions(the_repository, &revs, prefix);
++
  	revs.verbose_header = 1;
  	revs.max_parents = 1;
  	revs.cherry_mark = 1;
-diff --git a/command-list.txt b/command-list.txt
-index 54b2a50f5f..c4cd0f352b 100644
---- a/command-list.txt
-+++ b/command-list.txt
-@@ -160,6 +160,7 @@ git-reflog                              ancillarymanipulators           complete
- git-remote                              ancillarymanipulators           complete
- git-repack                              ancillarymanipulators           complete
- git-replace                             ancillarymanipulators           complete
-+git-replay                              plumbingmanipulators
- git-request-pull                        foreignscminterface             complete
- git-rerere                              ancillaryinterrogators
- git-reset                               mainporcelain           history
-diff --git a/git.c b/git.c
-index c67e44dd82..7068a184b0 100644
---- a/git.c
-+++ b/git.c
-@@ -594,6 +594,7 @@ static struct cmd_struct commands[] = {
- 	{ "remote-fd", cmd_remote_fd, NO_PARSEOPT },
- 	{ "repack", cmd_repack, RUN_SETUP },
- 	{ "replace", cmd_replace, RUN_SETUP },
-+	{ "replay", cmd_replay, RUN_SETUP },
- 	{ "rerere", cmd_rerere, RUN_SETUP },
- 	{ "reset", cmd_reset, RUN_SETUP },
- 	{ "restore", cmd_restore, RUN_SETUP | NEED_WORK_TREE },
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index 876cd2dc31..37ba996539 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -30,7 +30,6 @@ static struct test_cmd cmds[] = {
- 	{ "dump-untracked-cache", cmd__dump_untracked_cache },
- 	{ "env-helper", cmd__env_helper },
- 	{ "example-decorate", cmd__example_decorate },
--	{ "fast-rebase", cmd__fast_rebase },
- 	{ "find-pack", cmd__find_pack },
- 	{ "fsmonitor-client", cmd__fsmonitor_client },
- 	{ "genrandom", cmd__genrandom },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index 70dd4eba11..8a1a7c63da 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -24,7 +24,6 @@ int cmd__dump_untracked_cache(int argc, const char **argv);
- int cmd__dump_reftable(int argc, const char **argv);
- int cmd__env_helper(int argc, const char **argv);
- int cmd__example_decorate(int argc, const char **argv);
--int cmd__fast_rebase(int argc, const char **argv);
- int cmd__find_pack(int argc, const char **argv);
- int cmd__fsmonitor_client(int argc, const char **argv);
- int cmd__genrandom(int argc, const char **argv);
-diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
-new file mode 100755
-index 0000000000..36c1b5082a
---- /dev/null
-+++ b/t/t3650-replay-basics.sh
-@@ -0,0 +1,60 @@
-+#!/bin/sh
+@@ -134,7 +152,8 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 	revs.right_only = 1;
+ 	revs.sort_order = REV_SORT_IN_GRAPH_ORDER;
+ 	revs.topo_order = 1;
+-	strvec_pushl(&rev_walk_args, "", argv[4], "--not", argv[3], NULL);
 +
-+test_description='basic git replay tests'
-+
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+
-+. ./test-lib.sh
-+
-+GIT_AUTHOR_NAME=author@name
-+GIT_AUTHOR_EMAIL=bogus@email@address
-+export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL
-+
-+test_expect_success 'setup' '
-+	test_commit A &&
-+	test_commit B &&
-+
-+	git switch -c topic1 &&
-+	test_commit C &&
-+	git switch -c topic2 &&
-+	test_commit D &&
-+	test_commit E &&
-+	git switch topic1 &&
-+	test_commit F &&
-+	git switch -c topic3 &&
-+	test_commit G &&
-+	test_commit H &&
-+	git switch -c topic4 main &&
-+	test_commit I &&
-+	test_commit J &&
-+
-+	git switch -c next main &&
-+	test_commit K &&
-+	git merge -m "Merge topic1" topic1 &&
-+	git merge -m "Merge topic2" topic2 &&
-+	git merge -m "Merge topic3" topic3 &&
-+	>evil &&
-+	git add evil &&
-+	git commit --amend &&
-+	git merge -m "Merge topic4" topic4 &&
-+
-+	git switch main &&
-+	test_commit L &&
-+	test_commit M &&
-+
-+	git switch -c conflict B &&
-+	test_commit C.conflict C.t conflict
-+'
-+
-+test_expect_success 'using replay to rebase two branches, one on top of other' '
-+	git switch main &&
-+
-+	git replay --onto main topic1 topic2 >result &&
-+
-+	git log --format=%s $(cut -f 3 -d " " result) >actual &&
-+	test_write_lines E D M L B A >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_done
-diff --git a/t/t6429-merge-sequence-rename-caching.sh b/t/t6429-merge-sequence-rename-caching.sh
-index 75d3fd2dba..7670b72008 100755
---- a/t/t6429-merge-sequence-rename-caching.sh
-+++ b/t/t6429-merge-sequence-rename-caching.sh
-@@ -71,9 +71,8 @@ test_expect_success 'caching renames does not preclude finding new ones' '
++	strvec_pushl(&rev_walk_args, "", argv[2], "--not", argv[1], NULL);
  
- 		git switch upstream &&
- 
--		test-tool fast-rebase --onto HEAD upstream~1 topic &&
-+		git replay --onto HEAD upstream~1 topic &&
- 		git reset --hard topic &&
--		#git cherry-pick upstream~1..topic
- 
- 		git ls-files >tracked-files &&
- 		test_line_count = 2 tracked-files &&
-@@ -141,8 +140,7 @@ test_expect_success 'cherry-pick both a commit and its immediate revert' '
- 		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
- 		export GIT_TRACE2_PERF &&
- 
--		test-tool fast-rebase --onto HEAD upstream~1 topic &&
--		#git cherry-pick upstream~1..topic &&
-+		git replay --onto HEAD upstream~1 topic &&
- 
- 		grep region_enter.*diffcore_rename trace.output >calls &&
- 		test_line_count = 1 calls
-@@ -200,9 +198,8 @@ test_expect_success 'rename same file identically, then reintroduce it' '
- 		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
- 		export GIT_TRACE2_PERF &&
- 
--		test-tool fast-rebase --onto HEAD upstream~1 topic &&
-+		git replay --onto HEAD upstream~1 topic &&
- 		git reset --hard topic &&
--		#git cherry-pick upstream~1..topic &&
- 
- 		git ls-files >tracked &&
- 		test_line_count = 2 tracked &&
-@@ -278,9 +275,8 @@ test_expect_success 'rename same file identically, then add file to old dir' '
- 		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
- 		export GIT_TRACE2_PERF &&
- 
--		test-tool fast-rebase --onto HEAD upstream~1 topic &&
-+		git replay --onto HEAD upstream~1 topic &&
- 		git reset --hard topic &&
--		#git cherry-pick upstream~1..topic &&
- 
- 		git ls-files >tracked &&
- 		test_line_count = 4 tracked &&
-@@ -356,8 +352,7 @@ test_expect_success 'cached dir rename does not prevent noticing later conflict'
- 		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
- 		export GIT_TRACE2_PERF &&
- 
--		test_must_fail test-tool fast-rebase --onto HEAD upstream~1 topic >output &&
--		#git cherry-pick upstream..topic &&
-+		test_must_fail git replay --onto HEAD upstream~1 topic >output &&
- 
- 		grep region_enter.*diffcore_rename trace.output >calls &&
- 		test_line_count = 2 calls
-@@ -456,9 +451,8 @@ test_expect_success 'dir rename unneeded, then add new file to old dir' '
- 		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
- 		export GIT_TRACE2_PERF &&
- 
--		test-tool fast-rebase --onto HEAD upstream~1 topic &&
-+		git replay --onto HEAD upstream~1 topic &&
- 		git reset --hard topic &&
--		#git cherry-pick upstream..topic &&
- 
- 		grep region_enter.*diffcore_rename trace.output >calls &&
- 		test_line_count = 2 calls &&
-@@ -523,9 +517,8 @@ test_expect_success 'dir rename unneeded, then rename existing file into old dir
- 		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
- 		export GIT_TRACE2_PERF &&
- 
--		test-tool fast-rebase --onto HEAD upstream~1 topic &&
-+		git replay --onto HEAD upstream~1 topic &&
- 		git reset --hard topic &&
--		#git cherry-pick upstream..topic &&
- 
- 		grep region_enter.*diffcore_rename trace.output >calls &&
- 		test_line_count = 3 calls &&
-@@ -626,9 +619,8 @@ test_expect_success 'caching renames only on upstream side, part 1' '
- 		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
- 		export GIT_TRACE2_PERF &&
- 
--		test-tool fast-rebase --onto HEAD upstream~1 topic &&
-+		git replay --onto HEAD upstream~1 topic &&
- 		git reset --hard topic &&
--		#git cherry-pick upstream..topic &&
- 
- 		grep region_enter.*diffcore_rename trace.output >calls &&
- 		test_line_count = 1 calls &&
-@@ -685,9 +677,8 @@ test_expect_success 'caching renames only on upstream side, part 2' '
- 		GIT_TRACE2_PERF="$(pwd)/trace.output" &&
- 		export GIT_TRACE2_PERF &&
- 
--		test-tool fast-rebase --onto HEAD upstream~1 topic &&
-+		git replay --onto HEAD upstream~1 topic &&
- 		git reset --hard topic &&
--		#git cherry-pick upstream..topic &&
- 
- 		grep region_enter.*diffcore_rename trace.output >calls &&
- 		test_line_count = 2 calls &&
+ 	if (setup_revisions(rev_walk_args.nr, rev_walk_args.v, &revs, NULL) > 1) {
+ 		ret = error(_("unhandled options"));
+@@ -197,8 +216,8 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 			       &last_commit->object.oid,
+ 			       &last_picked_commit->object.oid,
+ 			       REF_NO_DEREF, UPDATE_REFS_MSG_ON_ERR)) {
+-			error(_("could not update %s"), argv[4]);
+-			die("Failed to update %s", argv[4]);
++			error(_("could not update %s"), argv[2]);
++			die("Failed to update %s", argv[2]);
+ 		}
+ 		if (create_symref("HEAD", branch_name.buf, reflog_msg.buf) < 0)
+ 			die(_("unable to update HEAD"));
+@@ -210,8 +229,8 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 			       &last_commit->object.oid,
+ 			       &head,
+ 			       REF_NO_DEREF, UPDATE_REFS_MSG_ON_ERR)) {
+-			error(_("could not update %s"), argv[4]);
+-			die("Failed to update %s", argv[4]);
++			error(_("could not update %s"), argv[2]);
++			die("Failed to update %s", argv[2]);
+ 		}
+ 	}
+ 	ret = (result.clean == 0);
 -- 
 2.43.0.14.g93e034faee
 
