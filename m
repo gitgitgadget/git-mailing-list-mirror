@@ -1,110 +1,154 @@
 Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from outbound.soverin.net (outbound.soverin.net [IPv6:2a10:de80:1:4091:b9e9:2214:0:1])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CA2E10CA
-	for <git@vger.kernel.org>; Sat, 25 Nov 2023 01:45:52 -0800 (PST)
-Received: from smtp.freedom.nl (c04cst-smtp-frd02.int.sover.in [10.10.4.108])
+X-Greylist: delayed 382 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 25 Nov 2023 01:52:05 PST
+Received: from outbound.soverin.net (outbound.soverin.net [IPv6:2a10:de80:1:4092:b9e9:2292:0:1])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F229F10D2
+	for <git@vger.kernel.org>; Sat, 25 Nov 2023 01:52:05 -0800 (PST)
+Received: from smtp.freedom.nl (c04cst-smtp-frd01.int.sover.in [10.10.4.107])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits))
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by outbound.soverin.net (Postfix) with ESMTPS id 4Scn670BVSzS0;
-	Sat, 25 Nov 2023 09:45:51 +0000 (UTC)
-Received: from smtp.freedom.nl (smtp.freedom.nl [10.10.4.108]) by freedom.nl (Postfix) with ESMTPSA id 4Scn660ZGCz2xCS;
-	Sat, 25 Nov 2023 09:45:50 +0000 (UTC)
+	by outbound.soverin.net (Postfix) with ESMTPS id 4Scn5x5P5MzHB;
+	Sat, 25 Nov 2023 09:45:41 +0000 (UTC)
+Received: from smtp.freedom.nl (smtp.freedom.nl [10.10.4.107]) by freedom.nl (Postfix) with ESMTPSA id 4Scn5x2Ykkz1g;
+	Sat, 25 Nov 2023 09:45:41 +0000 (UTC)
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=freedom.nl;
-	s=default; t=1700905550;
+	s=default; t=1700905541;
 	h=from:from:sender:reply-to:subject:subject:date:date:
-	 message-id:message-id:to:to:cc:mime-version:mime-version:
-	 content-type:content-type:content-transfer-encoding:
+	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+	 content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=g7Xud2rGfP88EhkWyMun1RHkdgrwcIqq1HYEtms4QhQ=;
-	b=iE8R2glMmXFZgJ8Z3LOIPVM/xKcSubyYfDuBVTWwGr3sM6Q/unmeNYkkl+vxJEl3jkBxGk
-	zidXMJ1ryu8GLQMdwUPPfLZXoXNVJBpVXpxmdDZhEf0sAefGEOm3eM+CZVmNRlmbQPseYF
-	2kDGrx5T1Z+oVYpYt1fnGA/jAd6iMaY=
+	bh=KhJHI6tr592TC2QR8PjsLNa16qpnTd/Lkrl41OEeznE=;
+	b=PGm/RT31CdJZ2tflv24p0b+epDTtzCJojXTyXxjNxkuCfmUYED7EyYmRpuh3re60A34dz1
+	RhkzUdnwfoR6xsmmoZ1VFgvjfeeaGpl8nKw/lQLUv4Z+Ps28kZgFayDTyHvQQUMMhF24sK
+	+lQclGAKWqkreoCUKnkpEvosNbYoKkE=
+ARC-Seal: i=1; s=default; d=freedom.nl; t=1700905541; a=rsa-sha256;
+	cv=none;
+	b=ySZX7nk8P7tPaHsR2CFrJA/boSEGkjaXFlXm9aiLwZZqU5syG+THRp8+jZHoJqIJ4Czdxf
+	NrZvCuGofcDzpl8IbNn8az3t3t8uGi8rT2wscxpvdkMasGPvFDjCrPLDuKMxAXoZBrr5jp
+	mHAuYGAHDZtjLUp88xetBEMFh0XPRxY=
 ARC-Authentication-Results: i=1;
 	smtp.freedom.nl;
-	auth=pass smtp.mailfrom=linux@tux.freedom.nl
-ARC-Seal: i=1; s=default; d=freedom.nl; t=1700905550; a=rsa-sha256;
-	cv=none;
-	b=sXg4ob1zfuxweK70U/BcMb/vGWYWeVCONi06ReQxl09mWaHeDjLhnRwyN4uAEOP+o2MsmD
-	nieFaIw+Z3zAjXYqS0wRxntAYbINAhX32zvi9YFTc1q3HWLwQJCsKroOnL/m0UjiZpqBTF
-	YMHIcaPfo0qi6mhhR+Fg1sfqSxluaYc=
-Date: Sat, 25 Nov 2023 10:45:22 +0100
+	auth=pass smtp.mailfrom=merijn@tux.freedom.nl
+Received: by tux (Postfix, from userid 203)
+	id 4A03D8CACD8CC; Sat, 25 Nov 2023 10:45:41 +0100 (CET)
 X-Soverin-Authenticated: true
-From: "H.Merijn Brand" <linux@tux.freedom.nl>
-To: Bagas Sanjaya <bagasdotme@gmail.com>, Git Mailing List
- <git@vger.kernel.org>
-Subject: Re: Fix git-send-email.perl w.r.t. recent Getopt::Long update
-Message-ID: <20231125104211.5b7fe0be@pc09>
-In-Reply-To: <ZWFaZcgzwEP13geI@archie.me>
-References: <20231124103932.31ca7688@pc09>
-	<ZWFaZcgzwEP13geI@archie.me>
+From: "H.Merijn Brand - Tux" <linux@tux.freedom.nl>
+To: git@vger.kernel.org
+Cc: "H.Merijn Brand - Tux" <linux@tux.freedom.nl>
+Subject: [PATCH 1/1] git-send-email causes failures because of wrong option specifications
+Date: Sat, 25 Nov 2023 10:44:29 +0100
+Message-ID: <20231125094429.12025-2-linux@tux.freedom.nl>
+In-Reply-To: <20231125094429.12025-1-linux@tux.freedom.nl>
+References: <20231125094429.12025-1-linux@tux.freedom.nl>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/mlTJDGx_mE8hFSl6o/hsqoP";
- protocol="application/pgp-signature"; micalg=pgp-sha256
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
---Sig_/mlTJDGx_mE8hFSl6o/hsqoP
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+From the Getopt::Long changes:
+```
+Changes in version 2.55
+-----------------------
+* Fix long standing bug that duplicate options were not detected when
+  the options differ in case while ignore_case is in effect.
+  This will now yield a warning and become a fatal error in a future
+  release.
+```
 
-On Sat, 25 Nov 2023 09:22:29 +0700, Bagas Sanjaya <bagasdotme@gmail.com> wr=
-ote:
+Current version is 2.57
 
-> On Fri, Nov 24, 2023 at 10:39:32AM +0100, H.Merijn Brand wrote:
-> > Patch attached =20
->=20
-> Do not send patches as attachments; send them inline instead. See
-> Documentation/SubmittingPatches for more info (hint: send patches
-> with git-send-email(1)).
+```
+git-2.43.0 🐧 perl -Iperl git-send-email.perl --help
+Duplicate specification "cc-cover|cc-cover!" for option "cc-cover"
+Duplicate specification "no-cc-cover" for option "no-cc-cover"
+Duplicate specification "to-cover|to-cover!" for option "to-cover"
+Duplicate specification "no-annotate" for option "no-annotate"
+Duplicate specification "no-format-patch" for option "no-format-patch"
+Duplicate specification "no-signed-off-cc|no-signed-off-by-cc" for option "no-signed-off-cc"
+Duplicate specification "no-signed-off-cc|no-signed-off-by-cc" for option "no-signed-off-by-cc"
+Duplicate specification "no-validate" for option "no-validate"
+Duplicate specification "no-chain-reply-to" for option "no-chain-reply-to"
+```
 
-As I am used to PR's by now on all OSS projects I am involved in, or
-use git commits or merges directly on the repo, I *never* use
-format-patch and/or send-email.
+`"option!" => \$value`
 
-These docs - yes I read them - do not offer a concise cut-n-paste
-example for people like me. In order to have my relative simple patch
-submitted (I already had the PR ready, but that came with a huge
-warning that PR's are not accepted) I did it the way I did it. Now I
-need to read and learn two new commands> I don't think that is very
-user-friendly, but that might be just me.
+*automatically* supports both `--option` and `--no-option` and `--nooption`
 
-Ironically, this patch is about the mail part of git.
+See the docs for Getopt::Long:
+```
+ The argument specification can be
 
-I suggest adding a small example like
+ !   The option does not take an argument and may be negated by
+     prefixing it with "no" or "no-". E.g. "foo!" will allow "--foo" (a
+     value of 1 will be assigned) as well as "--nofoo" and "--no-foo" (a
+     value of 0 will be assigned). If the option has aliases, this
+     applies to the aliases as well.
 
- # Create the patch basics
- $ git format-patch --cover-letter -M origin/master -o outgoing
- # Fix the subject
- $ $VISUAL outgoing/0000-cover-letter.patch
- # Send the mail
- $ git send-email --to=3Dgit@vger.kernel.org outgoing/*
+     Using negation on a single letter option when bundling is in effect
+     is pointless and will result in a warning.
+```
 
-> Thanks.
+Signed-off-by: H.Merijn Brand - Tux <linux@tux.freedom.nl>
+---
+ git-send-email.perl | 14 ++------------
+ 1 file changed, 2 insertions(+), 12 deletions(-)
 
---=20
-H.Merijn Brand  https://tux.nl   Perl Monger   http://amsterdam.pm.org/
-using perl5.00307 .. 5.37        porting perl5 on HP-UX, AIX, and Linux
-https://tux.nl/email.html http://qa.perl.org https://www.test-smoke.org
-                          =20
+diff --git a/git-send-email.perl b/git-send-email.perl
+index d24e981d61..125f49cd08 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -491,7 +491,6 @@ sub config_regexp {
+ 		    "bcc=s" => \@getopt_bcc,
+ 		    "no-bcc" => \$no_bcc,
+ 		    "chain-reply-to!" => \$chain_reply_to,
+-		    "no-chain-reply-to" => sub {$chain_reply_to = 0},
+ 		    "sendmail-cmd=s" => \$sendmail_cmd,
+ 		    "smtp-server=s" => \$smtp_server,
+ 		    "smtp-server-option=s" => \@smtp_server_options,
+@@ -506,36 +505,27 @@ sub config_regexp {
+ 		    "smtp-auth=s" => \$smtp_auth,
+ 		    "no-smtp-auth" => sub {$smtp_auth = 'none'},
+ 		    "annotate!" => \$annotate,
+-		    "no-annotate" => sub {$annotate = 0},
+ 		    "compose" => \$compose,
+ 		    "quiet" => \$quiet,
+ 		    "cc-cmd=s" => \$cc_cmd,
+ 		    "header-cmd=s" => \$header_cmd,
+ 		    "no-header-cmd" => \$no_header_cmd,
+ 		    "suppress-from!" => \$suppress_from,
+-		    "no-suppress-from" => sub {$suppress_from = 0},
+ 		    "suppress-cc=s" => \@suppress_cc,
+ 		    "signed-off-cc|signed-off-by-cc!" => \$signed_off_by_cc,
+-		    "no-signed-off-cc|no-signed-off-by-cc" => sub {$signed_off_by_cc = 0},
+-		    "cc-cover|cc-cover!" => \$cover_cc,
+-		    "no-cc-cover" => sub {$cover_cc = 0},
+-		    "to-cover|to-cover!" => \$cover_to,
+-		    "no-to-cover" => sub {$cover_to = 0},
++		    "cc-cover!" => \$cover_cc,
++		    "to-cover!" => \$cover_to,
+ 		    "confirm=s" => \$confirm,
+ 		    "dry-run" => \$dry_run,
+ 		    "envelope-sender=s" => \$envelope_sender,
+ 		    "thread!" => \$thread,
+-		    "no-thread" => sub {$thread = 0},
+ 		    "validate!" => \$validate,
+-		    "no-validate" => sub {$validate = 0},
+ 		    "transfer-encoding=s" => \$target_xfer_encoding,
+ 		    "format-patch!" => \$format_patch,
+-		    "no-format-patch" => sub {$format_patch = 0},
+ 		    "8bit-encoding=s" => \$auto_8bit_encoding,
+ 		    "compose-encoding=s" => \$compose_encoding,
+ 		    "force" => \$force,
+ 		    "xmailer!" => \$use_xmailer,
+-		    "no-xmailer" => sub {$use_xmailer = 0},
+ 		    "batch-size=i" => \$batch_size,
+ 		    "relogin-delay=i" => \$relogin_delay,
+ 		    "git-completion-helper" => \$git_completion_helper,
+-- 
+2.42.1
 
---Sig_/mlTJDGx_mE8hFSl6o/hsqoP
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEGolmczWuFi3lJEbAA6FHoT5dwJgFAmVhwjIACgkQA6FHoT5d
-wJiaAQf+LDekzJ7mpHTx6VALAaaQew/4tRFPhITkXwfpd97v+3OfsHJ2Vj3eSvrx
-AnEIc4kiPjYUz76cPzkPhq6zqEbF525ysz/RWSD6TcK6AtRpINFfL+C/MHg2qQ+w
-qIyFlqsvcKPlJqGrQVNeUMedALt6VzH2Hrm5vogU/YHFyoAIRMJef2Yq0tS2BXHL
-XjR46E6NMSqHXuyMYWM4DdRwdDwKdSZFm+Dl5uoUOp6lCFdQ5kd1COOdzoK/HfiE
-JdJtLJQQS6TqBBUdFOIeCuyRXo0OPb9q4qK1YrNpCZDVgg4xcd4AgAxF795eIkIa
-PEQBFcWtv7qaXN6OqdojfwMuxKQ4Rw==
-=cNLW
------END PGP SIGNATURE-----
-
---Sig_/mlTJDGx_mE8hFSl6o/hsqoP--
