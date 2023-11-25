@@ -1,92 +1,110 @@
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R/XYg7nP"
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F11871BD0
-	for <git@vger.kernel.org>; Fri, 24 Nov 2023 18:22:34 -0800 (PST)
-Received: by mail-pf1-x42c.google.com with SMTP id d2e1a72fcca58-6be0277c05bso2239498b3a.0
-        for <git@vger.kernel.org>; Fri, 24 Nov 2023 18:22:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700878954; x=1701483754; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=pJNy7sGD7u1Vton5LINcP5gkYF/3SFwFDXGUQHIGGPs=;
-        b=R/XYg7nP4GZwa7aaZIFXUpKsG6xE4bajl5ETCM/Hcp1A4Zz5y0nA9LRJBKWoQySOMh
-         xfGWIqyA4DpCs+9hKLdPVJIgFmJS5bm7tke1CSc9d2niIOrdCwiF3Y+v3LH7ciDclMRR
-         niX9C0A9XGygdiOA2BewqtQ/DSFXju2dvXtPvXcV+Iotc2QfROCYZj9ewaC/HLPmAD+0
-         p/aIk7hBJmnU2+QXS/Dh0WzxgpD5hnRvFPZqSNrwxAix2af9nivKRn9AIdNFLAcT0jtQ
-         tpzzyOvXOaZ0O01Xw3CcydySGbEok7uGpUXg2Uu5LtEPRMHiM0Pz02ojkCXYhzXgRhUr
-         5F5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700878954; x=1701483754;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pJNy7sGD7u1Vton5LINcP5gkYF/3SFwFDXGUQHIGGPs=;
-        b=sdDzzXZAEKybn/2jCxjC7UBefleE4yciYO95QroINJiMM7lKkibbspiajRbCjbwJrn
-         AstuAben6SSJkj0kcsE7p2fQyUy7AMH3aXVDOLTtJCEiCupSNEBNXrLK0KDKX4DERypf
-         xC/4bvNkzurU9Mn/lMLlevKu57/PfVwb56ZkcJJiSlN2S3M/WTkai2u5wBnECRHkcc/O
-         IvE/tKKaRH+fbFGkApC2HeVQNco3ne3V/GdckKf+ihtyVHv9wp4olt2mLDIBQOdpujMw
-         sKsH8KBff65aIZzNHH0z/OZNG2nxggXgpcTSwHedcReIXSID/GZc0+xGC9jgmOd2OLo7
-         mAtg==
-X-Gm-Message-State: AOJu0YyJOXkPUWjUakbQHuY+ZcgjXzm0FIcZTphf5Ymnz5Gn1cqGevAP
-	815p/6kZKg2kgnEc/ZiwqE8=
-X-Google-Smtp-Source: AGHT+IFW1/g5fFqIJM0YQRiFfOubDSQj0k4GIT3X+Xlp7PfjUpF5z+yPenlJ6dvcfT99fkPG3gu76g==
-X-Received: by 2002:a05:6a20:9145:b0:18b:5a8a:4333 with SMTP id x5-20020a056a20914500b0018b5a8a4333mr5700041pzc.19.1700878954180;
-        Fri, 24 Nov 2023 18:22:34 -0800 (PST)
-Received: from archie.me ([103.131.18.64])
-        by smtp.gmail.com with ESMTPSA id x5-20020a170902ec8500b001cfa718039bsm1718224plg.216.2023.11.24.18.22.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Nov 2023 18:22:33 -0800 (PST)
-Received: by archie.me (Postfix, from userid 1000)
-	id 80BFB104B6639; Sat, 25 Nov 2023 09:22:29 +0700 (WIB)
-Date: Sat, 25 Nov 2023 09:22:29 +0700
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-To: "H.Merijn Brand" <linux@tux.freedom.nl>,
-	Git Mailing List <git@vger.kernel.org>
-Cc: Todd Zullinger <tmz@pobox.com>,
-	Michael Strawbridge <michael.strawbridge@amd.com>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+Received: from outbound.soverin.net (outbound.soverin.net [IPv6:2a10:de80:1:4091:b9e9:2214:0:1])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CA2E10CA
+	for <git@vger.kernel.org>; Sat, 25 Nov 2023 01:45:52 -0800 (PST)
+Received: from smtp.freedom.nl (c04cst-smtp-frd02.int.sover.in [10.10.4.108])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits))
+	(No client certificate requested)
+	by outbound.soverin.net (Postfix) with ESMTPS id 4Scn670BVSzS0;
+	Sat, 25 Nov 2023 09:45:51 +0000 (UTC)
+Received: from smtp.freedom.nl (smtp.freedom.nl [10.10.4.108]) by freedom.nl (Postfix) with ESMTPSA id 4Scn660ZGCz2xCS;
+	Sat, 25 Nov 2023 09:45:50 +0000 (UTC)
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=freedom.nl;
+	s=default; t=1700905550;
+	h=from:from:sender:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:mime-version:mime-version:
+	 content-type:content-type:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=g7Xud2rGfP88EhkWyMun1RHkdgrwcIqq1HYEtms4QhQ=;
+	b=iE8R2glMmXFZgJ8Z3LOIPVM/xKcSubyYfDuBVTWwGr3sM6Q/unmeNYkkl+vxJEl3jkBxGk
+	zidXMJ1ryu8GLQMdwUPPfLZXoXNVJBpVXpxmdDZhEf0sAefGEOm3eM+CZVmNRlmbQPseYF
+	2kDGrx5T1Z+oVYpYt1fnGA/jAd6iMaY=
+ARC-Authentication-Results: i=1;
+	smtp.freedom.nl;
+	auth=pass smtp.mailfrom=linux@tux.freedom.nl
+ARC-Seal: i=1; s=default; d=freedom.nl; t=1700905550; a=rsa-sha256;
+	cv=none;
+	b=sXg4ob1zfuxweK70U/BcMb/vGWYWeVCONi06ReQxl09mWaHeDjLhnRwyN4uAEOP+o2MsmD
+	nieFaIw+Z3zAjXYqS0wRxntAYbINAhX32zvi9YFTc1q3HWLwQJCsKroOnL/m0UjiZpqBTF
+	YMHIcaPfo0qi6mhhR+Fg1sfqSxluaYc=
+Date: Sat, 25 Nov 2023 10:45:22 +0100
+X-Soverin-Authenticated: true
+From: "H.Merijn Brand" <linux@tux.freedom.nl>
+To: Bagas Sanjaya <bagasdotme@gmail.com>, Git Mailing List
+ <git@vger.kernel.org>
 Subject: Re: Fix git-send-email.perl w.r.t. recent Getopt::Long update
-Message-ID: <ZWFaZcgzwEP13geI@archie.me>
+Message-ID: <20231125104211.5b7fe0be@pc09>
+In-Reply-To: <ZWFaZcgzwEP13geI@archie.me>
 References: <20231124103932.31ca7688@pc09>
+	<ZWFaZcgzwEP13geI@archie.me>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="u6itdnZ/jKeaDf6z"
-Content-Disposition: inline
-In-Reply-To: <20231124103932.31ca7688@pc09>
+Content-Type: multipart/signed; boundary="Sig_/mlTJDGx_mE8hFSl6o/hsqoP";
+ protocol="application/pgp-signature"; micalg=pgp-sha256
 
-
---u6itdnZ/jKeaDf6z
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+--Sig_/mlTJDGx_mE8hFSl6o/hsqoP
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Nov 24, 2023 at 10:39:32AM +0100, H.Merijn Brand wrote:
-> Patch attached
+On Sat, 25 Nov 2023 09:22:29 +0700, Bagas Sanjaya <bagasdotme@gmail.com> wr=
+ote:
 
-Do not send patches as attachments; send them inline instead. See
-Documentation/SubmittingPatches for more info (hint: send patches
-with git-send-email(1)).
+> On Fri, Nov 24, 2023 at 10:39:32AM +0100, H.Merijn Brand wrote:
+> > Patch attached =20
+>=20
+> Do not send patches as attachments; send them inline instead. See
+> Documentation/SubmittingPatches for more info (hint: send patches
+> with git-send-email(1)).
 
-Thanks.
+As I am used to PR's by now on all OSS projects I am involved in, or
+use git commits or merges directly on the repo, I *never* use
+format-patch and/or send-email.
+
+These docs - yes I read them - do not offer a concise cut-n-paste
+example for people like me. In order to have my relative simple patch
+submitted (I already had the PR ready, but that came with a huge
+warning that PR's are not accepted) I did it the way I did it. Now I
+need to read and learn two new commands> I don't think that is very
+user-friendly, but that might be just me.
+
+Ironically, this patch is about the mail part of git.
+
+I suggest adding a small example like
+
+ # Create the patch basics
+ $ git format-patch --cover-letter -M origin/master -o outgoing
+ # Fix the subject
+ $ $VISUAL outgoing/0000-cover-letter.patch
+ # Send the mail
+ $ git send-email --to=3Dgit@vger.kernel.org outgoing/*
+
+> Thanks.
 
 --=20
-An old man doll... just what I always wanted! - Clara
+H.Merijn Brand  https://tux.nl   Perl Monger   http://amsterdam.pm.org/
+using perl5.00307 .. 5.37        porting perl5 on HP-UX, AIX, and Linux
+https://tux.nl/email.html http://qa.perl.org https://www.test-smoke.org
+                          =20
 
---u6itdnZ/jKeaDf6z
-Content-Type: application/pgp-signature; name="signature.asc"
+--Sig_/mlTJDGx_mE8hFSl6o/hsqoP
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYKAB0WIQQZO/gRNchuWgPJR+Z7tWyQc2rTCAUCZWFaYAAKCRB7tWyQc2rT
-CNjRAP4hiuqG5vmJVTbuhnm4Oi/2B7YQ7hLddSZ+kX0uZFojrwEAtTyDWZvZGiup
-umA6t2viSsKh1L1blvzx0amN4sHHTgM=
-=9iiH
+iQEzBAEBCAAdFiEEGolmczWuFi3lJEbAA6FHoT5dwJgFAmVhwjIACgkQA6FHoT5d
+wJiaAQf+LDekzJ7mpHTx6VALAaaQew/4tRFPhITkXwfpd97v+3OfsHJ2Vj3eSvrx
+AnEIc4kiPjYUz76cPzkPhq6zqEbF525ysz/RWSD6TcK6AtRpINFfL+C/MHg2qQ+w
+qIyFlqsvcKPlJqGrQVNeUMedALt6VzH2Hrm5vogU/YHFyoAIRMJef2Yq0tS2BXHL
+XjR46E6NMSqHXuyMYWM4DdRwdDwKdSZFm+Dl5uoUOp6lCFdQ5kd1COOdzoK/HfiE
+JdJtLJQQS6TqBBUdFOIeCuyRXo0OPb9q4qK1YrNpCZDVgg4xcd4AgAxF795eIkIa
+PEQBFcWtv7qaXN6OqdojfwMuxKQ4Rw==
+=cNLW
 -----END PGP SIGNATURE-----
 
---u6itdnZ/jKeaDf6z--
+--Sig_/mlTJDGx_mE8hFSl6o/hsqoP--
