@@ -1,50 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EIGs+puS"
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 958D7111
-	for <git@vger.kernel.org>; Sat, 25 Nov 2023 23:51:32 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-3316c6e299eso2172436f8f.1
-        for <git@vger.kernel.org>; Sat, 25 Nov 2023 23:51:32 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lUt8AshL"
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97B9C110
+	for <git@vger.kernel.org>; Sat, 25 Nov 2023 23:51:33 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-3316d3d11e1so1773037f8f.0
+        for <git@vger.kernel.org>; Sat, 25 Nov 2023 23:51:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700985090; x=1701589890; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1700985091; x=1701589891; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yyzT933Lv+I2eJ6KcLdgufUGswSUXXJts+i+4YrqxEk=;
-        b=EIGs+puSHfbBoYoub2e0NLwXDe7al355eyx8FqGTnfHBa+qVop8pvVJo5ut5S4suzi
-         kB0pnjOl3HJ1V0OmZeQa7ttgxPOgs25Vaz6iHXWU4/5uUgy0Bg4mu31F8bUBo4owzSTa
-         4Uz6VAKIkMy3zlIr6Eb4ln5ph2WJfcBtLb/ND0naBTpbHDKzQyfwZADoQEwqcg49zGIH
-         ceTlOz4UAfzjsdqOM6fMOy+Gg9IMb2oV0Cuisw4c3H3JHag50VfzpR0vatYKk5o+/PPT
-         2PsuV2T5BnlfIX04PJJKK2Vb5CgzP4UuRwVa/v2u3ukZbyJuRGk5ViFJfH4yRI1/NTRP
-         ytLw==
+        bh=oKiDs4wzEqpOjm8KyGGlsKLM9q8ZY3CW5U8mhRr+mGU=;
+        b=lUt8AshLn5rbNNCvNGmk5+LVQlN5sX2xrT1yJXcYMqaD4RIhhM6rCk9W1G9nEL9vK+
+         ivwdqv72svznpmy/Foeuof0E9wMb+k44WWrzA1KI1wl5YuhmN7sGfelsseHBXak2QnCe
+         bb9kczWyIeiN7QtT9e4M6sOzpWxE7H6ke+cSxO/s4b0vmJ73KlXOtOshhZ1Hfh8Af4Z3
+         jzj3s7eEAy/TdX2rSfwrBQGHWAeZicwqs9jeuKD0vpOnZZkWcJcQ1gpG3dtYlUYlsbww
+         atr6qrXMBGboENvVyaHxcwdtNXrszS1crGDrBkAFRrH7386tFjwWBx6Vh6f2oUMbHEeH
+         UxsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700985090; x=1701589890;
+        d=1e100.net; s=20230601; t=1700985091; x=1701589891;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=yyzT933Lv+I2eJ6KcLdgufUGswSUXXJts+i+4YrqxEk=;
-        b=kuDJPa2tu3XXjwETPCNqrM7YXc44Mco6AZFCDEBjh+MoZMOT4HwvrfywzVhRbvNt9W
-         vD44KizuVXduGcemR6GIz4RcawIdhxAuECOokOX53LW2Tbh87P7gSBGARBnKmi9vhqLk
-         ujgq4rQfSub18VmUTad+HEN2mrcYvCS1xp/bPkkEv50DAEqJgTGnYVgR68wSs7UHskFs
-         AMNRmxRLAWrYBfeXAcwst0Zb9vzAKq92qPqrR60stPBX83MHOKmQdbSwt1WkUJRwf1Ln
-         M9XnUncUXRS30loxXh67i5jzZQdBKj6Ry/7lXEXhesqBJ/iK3ffC9OGg7y6QkhveUdA+
-         boBg==
-X-Gm-Message-State: AOJu0YyFUkUL5BlT3nIVz8XOXFI6Gu/6tc46t8g1tflCnPavD0HsPSVU
-	T285DMCpQk1x1k1TDCjyWSTW6n8nDlI=
-X-Google-Smtp-Source: AGHT+IGRsniUWVP+Gu6QYJ/0V7pyijV0cSq7EcS1ZPpGTMKQ51NchG+EjD3/awkjSgbk67Inh5iYfg==
-X-Received: by 2002:adf:fc52:0:b0:332:c9ba:f29c with SMTP id e18-20020adffc52000000b00332c9baf29cmr6112656wrs.58.1700985090380;
-        Sat, 25 Nov 2023 23:51:30 -0800 (PST)
+        bh=oKiDs4wzEqpOjm8KyGGlsKLM9q8ZY3CW5U8mhRr+mGU=;
+        b=npRi0XNlyr+fUIzWAcDKuZLbl8eXDF7018zqv9tnftYUOZa55mhmEi0wE/f8pmYdyG
+         DUU/vKfL6ENICBrG0JTEq/4N7UstB1parKNXSSLO6JyPjcwrKbwqAsMenJkinj2d3fCm
+         vRnvmf1Wku2FMFh4cdkPCirTL6hdVV5D+HQ0AngWRDB+8vDWDbxT8+edtuXGzVv9ighP
+         0LE7ZTetzgnkslUjSXrnF3uaaoi3xAjksYDbPZXz/H4/JSj8RkMLA1wnbIoREV8FPZHW
+         YhP6d2uNkMjtu7jffFV888zBhA2TWa/OgCs81fRmkSy1XkXkgPpOHVxOwFRxeOY6egWL
+         V4rQ==
+X-Gm-Message-State: AOJu0YzY0cMHFtT8Qj0evT/R9fodzJK7707xhYbdR6SUMDDVwH81ws4d
+	TyjtgVhZW1QE90A5Xh9S/YUri4osvfc=
+X-Google-Smtp-Source: AGHT+IErJ9zyxCqbdUsOfm4RYuUdvBjhT0oJNV5mQAdjBJ9EEpPrw1XsfsweLGA4Vq8S7V2BwVOwYg==
+X-Received: by 2002:a05:6000:120c:b0:332:e64a:5b7c with SMTP id e12-20020a056000120c00b00332e64a5b7cmr8143881wrx.26.1700985091484;
+        Sat, 25 Nov 2023 23:51:31 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e16-20020adffc50000000b00332cb561c8dsm8580894wrs.112.2023.11.25.23.51.30
+        by smtp.gmail.com with ESMTPSA id f9-20020a0560001b0900b003143867d2ebsm8583144wrz.63.2023.11.25.23.51.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sat, 25 Nov 2023 23:51:30 -0800 (PST)
-Message-ID: <1cbbcd9097c96b7646fb0c756c3964413f2a021f.1700985086.git.gitgitgadget@gmail.com>
+Message-ID: <604f21dc827ab8f3378ff84e7ce7939ef82d78cd.1700985086.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1349.v2.git.1700985086.gitgitgadget@gmail.com>
 References: <pull.1349.git.1700761448.gitgitgadget@gmail.com>
 	<pull.1349.v2.git.1700985086.gitgitgadget@gmail.com>
 From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 26 Nov 2023 07:51:25 +0000
-Subject: [PATCH v2 3/4] completion: avoid misleading completions in cone mode
+Date: Sun, 26 Nov 2023 07:51:26 +0000
+Subject: [PATCH v2 4/4] completion: avoid user confusion in non-cone mode
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -62,53 +62,158 @@ Cc: Elijah Newren <newren@gmail.com>,
 
 From: Elijah Newren <newren@gmail.com>
 
-The "set" and "add" subcommands of "sparse-checkout", when in cone mode,
-should only complete on directories.  For bash_completion in general,
-when no completions are returned for any subcommands, it will often fall
-back to standard completion of files and directories as a substitute.
-That is not helpful here.  Since we have already looked for all valid
-completions, if none are found then falling back to standard bash file
-and directory completion is at best actively misleading.  In fact, there
-are three different ways it can be actively misleading.  Add a long
-comment in the code about how that fallback behavior can deceive, and
-disable the fallback by returning a fake result as the sole completion.
+It is tempting to think of "files and directories" of the current
+directory as valid inputs to the add and set subcommands of git
+sparse-checkout.  However, in non-cone mode, they often aren't and using
+them as potential completions leads to *many* forms of confusion:
+
+Issue #1. It provides the *wrong* files and directories.
+
+For
+    git sparse-checkout add
+we always want to add files and directories not currently in our sparse
+checkout, which means we want file and directories not currently present
+in the current working tree.  Providing the files and directories
+currently present is thus always wrong.
+
+For
+    git sparse-checkout set
+we have a similar problem except in the subset of cases where we are
+trying to narrow our checkout to a strict subset of what we already
+have.  That is not a very common scenario, especially since it often
+does not even happen to be true for the first use of the command; for
+years we required users to create a sparse-checkout via
+    git sparse-checkout init
+    git sparse-checkout set <args...>
+(or use a clone option that did the init step for you at clone time).
+The init command creates a minimal sparse-checkout with just the
+top-level directory present, meaning the set command has to be used to
+expand the checkout.  Thus, only in a special and perhaps unusual cases
+would any of the suggestions from normal file and directory completion
+be appropriate.
+
+Issue #2: Suggesting patterns that lead to warnings is unfriendly.
+
+If the user specifies any regular file and omits the leading '/', then
+the sparse-checkout command will warn the user that their command is
+problematic and suggest they use a leading slash instead.
+
+Issue #3: Completion gets confused by leading '/', and provides wrong paths.
+
+Users often want to anchor their patterns to the toplevel of the
+repository, especially when listing individual files.  There are a
+number of reasons for this, but notably even sparse-checkout encourages
+them to do so (as noted above).  However, if users do so (via adding a
+leading '/' to their pattern), then bash completion will interpret the
+leading slash not as a request for a path at the toplevel of the
+repository, but as a request for a path at the root of the filesytem.
+That means at best that completion cannot help with such paths, and if
+it does find any completions, they are almost guaranteed to be wrong.
+
+Issue #4: Suggesting invalid patterns from subdirectories is unfriendly.
+
+There is no per-directory equivalent to .gitignore with
+sparse-checkouts.  There is only a single worktree-global
+$GIT_DIR/info/sparse-checkout file.  As such, paths to files must be
+specified relative to the toplevel of a repository.  Providing
+suggestions of paths that are relative to the current working directory,
+as bash completion defaults to, is wrong when the current working
+directory is not the worktree toplevel directory.
+
+Issue #5: Paths with special characters will be interpreted incorrectly
+
+The entries in the sparse-checkout file are patterns, not paths.  While
+most paths also qualify as patterns (though even in such cases it would
+be better for users to not use them directly but prefix them with a
+leading '/'), there are a variety of special characters that would need
+special escaping beyond the normal shell escaping: '*', '?', '\', '[',
+']', and any leading '#' or '!'.  If completion suggests any such paths,
+users will likely expect them to be treated as an exact path rather than
+as a pattern that might match some number of files other than 1.
+
+Because of the combination of the above issues, turn completion off for
+the `set` and `add` subcommands of `sparse-checkout` when in non-cone
+mode, but leave a NEEDSWORK comment specifying what could theoretically
+be done if someone wanted to provide completion rules that were more
+helpful than harmful.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- contrib/completion/git-completion.bash | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ contrib/completion/git-completion.bash | 62 ++++++++++++++++++++++++++
+ 1 file changed, 62 insertions(+)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 7aa66c19ede..c614e5d4f07 100644
+index c614e5d4f07..1e07dc8b73e 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -3090,6 +3090,26 @@ __gitcomp_directories ()
- 		# No possible further completions any deeper, so assume we're at
- 		# a leaf directory and just consider it complete
- 		__gitcomp_direct_append "$cur "
-+	elif [[ $_found == 0 ]]; then
-+		# No possible completions found.  Avoid falling back to
-+		# bash's default file and directory completion, because all
-+		# valid completions have already been searched and the
-+		# fallbacks can do nothing but mislead.  In fact, they can
-+		# mislead in three different ways:
-+		#    1) Fallback file completion makes no sense when asking
-+		#       for directory completions, as this function does.
-+		#    2) Fallback directory completion is bad because
-+		#       e.g. "/pro" is invalid and should NOT complete to
-+		#       "/proc".
-+		#    3) Fallback file/directory completion only completes
-+		#       on paths that exist in the current working tree,
-+		#       i.e. which are *already* part of their
-+		#       sparse-checkout.  Thus, normal file and directory
-+		#       completion is always useless for "git
-+		#       sparse-checkout add" and is also probelmatic for
-+		#       "git sparse-checkout set" unless using it to
-+		#       strictly narrow the checkout.
-+		COMPREPLY=( "" )
- 	fi
+@@ -3138,6 +3138,68 @@ _git_sparse_checkout ()
+ 		fi
+ 		if [[ "$using_cone" == "true" ]]; then
+ 			__gitcomp_directories
++		else
++			# NEEDSWORK: It might be useful to provide a
++			# completion function which:
++			#
++			#     1. Provides completions based on
++			#        files/directories that exist in HEAD (or in
++			#        the index since sparse-index isn't possible
++			#        in non-cone mode), not just those currently
++			#        present in the working tree.  Bash's
++			#        default file and directory completion is
++			#        totally useless for "git sparse-checkout
++			#        add" because of this.  It is likewise
++			#        problematic for "git sparse-checkout set"
++			#        except in those subset of cases when trying
++			#        to narrow scope to a strict subset of what
++			#        you already have checked out.
++			#
++			#     2. Always provides file/directory completions
++			#        with a prepended leading '/', so that
++			#        files/directories are only searched at the
++			#        relevant level rather than throughout all
++			#        trees in the hierarchy.  Doing this also
++			#        avoids suggesting the user run a
++			#        sparse-checkout command that will result in
++			#        a warning be thrown at the user.
++			#
++			#     3. Does not accidentally search the root of
++			#        the filesystem when a path with a leading
++			#        slash is specified.  ("git sparse-checkout
++			#        add /ho<TAB>" should not complete to
++			#        "/home" but to e.g. "/hooks" if there is a
++			#        "hooks" in the top of the repository.)
++			#
++			#     4. Provides no completions when run from a
++			#        subdirectory of the repository root.  (If we
++			#        did provide file/directory completions, the
++			#        user would just get a "please run from the
++			#        toplevel directory" error message when they
++			#        ran it.  *Further*, if the user did rerun
++			#        the command from the toplevel, the
++			#        completions we previously provided would
++			#        likely be wrong as they'd be relative to the
++			#        subdirectory rather than the repository
++			#        root.  That could lead to users getting a
++			#        nasty surprise based on trying to use a
++			#        command we helped them create.)
++			#
++			#     5. Provides escaped completions for any paths
++			#        containing a '*', '?', '\', '[', ']', or
++			#        leading '#' or '!'.  (These characters might
++			#        already be escaped to protect from the
++			#        shell, but they need an *extra* layer of
++			#        escaping to prevent the pattern parsing in
++			#        Git from seeing them as special characters.)
++			#
++			# Of course, this would be a lot of work, so for now,
++			# just avoid the many forms of user confusion that
++			# could be caused by providing bad completions by
++			# providing a fake completion to avoid falling back to
++			# bash's normal file and directory completion.
++
++			COMPREPLY=( "" )
+ 		fi
+ 	esac
  }
- 
 -- 
 gitgitgadget
-
