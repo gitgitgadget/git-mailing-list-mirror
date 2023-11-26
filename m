@@ -1,145 +1,80 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CWrIhTIS"
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBB7FEE
-	for <git@vger.kernel.org>; Sat, 25 Nov 2023 06:54:22 -0800 (PST)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2c8880fbb33so36640441fa.0
-        for <git@vger.kernel.org>; Sat, 25 Nov 2023 06:54:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700924061; x=1701528861; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lJRBar7Aag8lxX7ODi42XwSdN1MFRMOqoz7mU7/l13w=;
-        b=CWrIhTISgYz1bNCJ2nhtURVysdn577Eu22RGTtXzxNpz7vk10QEz9JNZVbk6UQzsq9
-         +ne5rAvymyLisBil8XeEHBuw2lsIpH+pHWuiewLMi8NhTs9LtrG28UWWKNRdcg7EsuEM
-         TINyRosqxYjaiiE+8S2JaXGoq/rBBmNlFz6XqJnkuQe+DHK5IdE1EosvWdDlOQskalC4
-         lVmG+qXW1jH/KdY8kzb2EF/88muP5Ey+/9kj4H7ktuVaIGtDwshXDCGWlQ0YwrH0dwDU
-         Fds5pXyDPaqhO71b9dB+vTZDwAXnMxOxJv/bJIVCdeeLMRWSfXAA0OgLu2IiGKtknk4t
-         UryQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700924061; x=1701528861;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lJRBar7Aag8lxX7ODi42XwSdN1MFRMOqoz7mU7/l13w=;
-        b=na/LLJQqMph2pqGfhaqi+DXJaWJh5g4hO7zs6TIqgJF/XCPr4Fg2WpOwxHw0X74GiR
-         HUXchY9mlLYQ5NpbKU0CMNQ3PuC+kxDeLug/kV1WvZng4eucKVKJrb9fKVyur5Ha6ZM1
-         Kt2VUtv45L2a9mrJlqTYb7Za7dcjrbOeBaB4v8ZTZfzNNhxT/nnWsqEhi1E2hIAnBNTh
-         ZMwNxJxtaPTG+8QriCXeX7yTIPf1m49TZxWaVjAM7tDMcwOobzi4EzRyyLkGzFjBUi09
-         SiTV5WO1Xa13HJiO5V0K+TuJzs0qS9N0aylHVqNxu/C2TOGH+b1X1bCMetMLmniFauIz
-         PPPw==
-X-Gm-Message-State: AOJu0Yyy9mVv+m2VSFq3aQNvMgrPl40RzRooAlW9yNsQV6dEi5dlvaCE
-	K8BbiHnt3O8J2+QMEJgBBHbS+XjVfuDWM/tEKH4=
-X-Google-Smtp-Source: AGHT+IHg+X1ta/D4SGHYUZHiSYF49m8qpWfBq3hq8cXYJBEMpihcJ7WEucp5oJDim+rqYucd25zh6B4AZI2U4E4q4KU=
-X-Received: by 2002:a05:651c:1548:b0:2c9:996b:3b54 with SMTP id
- y8-20020a05651c154800b002c9996b3b54mr557226ljp.53.1700924060822; Sat, 25 Nov
- 2023 06:54:20 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=brob.st header.i=josh@brob.st header.b="JTjaL215"
+X-Greylist: delayed 904 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 25 Nov 2023 16:24:03 PST
+Received: from sender4-of-o51.zoho.com (sender4-of-o51.zoho.com [136.143.188.51])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15AB0110
+	for <git@vger.kernel.org>; Sat, 25 Nov 2023 16:24:02 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1700957336; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=iUSXsGWrRdecjSuL+6Fwf07j9F6aiIQsKxZmFWTbgRBIIhCk63OM/WAyiLufhkz3LpHYayFSLrl0Lt504d819IqH8PvzY2rSoxRsgpNKHrZkwxxRdTO1YXyT6UI+HSqqTQ0WFaU+4Lz6aG4t7boADPWf96XBcCmcEB4pBmEI/eA=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1700957336; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=cB+Kd1QotK32Oeqf5GMkOcwUU8KqWxh7HaU5GOi24Dg=; 
+	b=JyYFkC8FR9DgCxZJe+Ce8ruO4XQkmqgDLzk0eSFLbZMR+/NNpH/3+qwH1B6VEV2zGi0ivNOk0hJCFeBaC3/0CY4GUgqYeLCK/8/rWUrBYA2zZO/BaQvvGEMndwAnHYZtxDTrUy2+5gKJmfAFsIhNZxKooM36fsByv18xLvJdqQA=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=brob.st;
+	spf=pass  smtp.mailfrom=josh@brob.st;
+	dmarc=pass header.from=<josh@brob.st>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1700957336;
+	s=df; d=brob.st; i=josh@brob.st;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=cB+Kd1QotK32Oeqf5GMkOcwUU8KqWxh7HaU5GOi24Dg=;
+	b=JTjaL215AgCjW1Z1gA3vxrh89QwxZfRWN/qatntja1S0yrUp/wqWVB+F4g4B6eaN
+	tM70HkzBkSrwD31EI0TiuGBxfl/t5TkiW+x/cfyCwPlTyttxWdXDOvZJfRo/Lfib6eA
+	wBHoiqEfGDHqe4GebKnc1hgQgW9cXIPbJ1xuxQFQ=
+Received: from localhost.localdomain (104.223.118.51 [104.223.118.51]) by mx.zohomail.com
+	with SMTPS id 1700957333695182.92040930819962; Sat, 25 Nov 2023 16:08:53 -0800 (PST)
+From: Josh Brobst <josh@brob.st>
+To: git@vger.kernel.org
+Cc: Josh Brobst <josh@brob.st>
+Subject: [PATCH] builtin/reflog.c: fix dry-run option short name
+Date: Sat, 25 Nov 2023 19:05:14 -0500
+Message-ID: <20231126000514.85509-1-josh@brob.st>
+X-Mailer: git-send-email 2.42.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAH1-q0iV+E73RrUDA8jcoFgNEfQDNwRnX5P5Z7r3Qj3GESV_7g@mail.gmail.com>
- <ZQb9Thxa5X-Fo5mj@debian.me>
-In-Reply-To: <ZQb9Thxa5X-Fo5mj@debian.me>
-From: Javier Mora <cousteaulecommandant@gmail.com>
-Date: Sat, 25 Nov 2023 14:54:09 +0000
-Message-ID: <CAH1-q0jGQBPZVYja3Sg2Xv4YGAxcUsnb1rL4MALKxCoywi0B=A@mail.gmail.com>
-Subject: Re: [BUG] `git push` sends unnecessary objects
-To: Bagas Sanjaya <bagasdotme@gmail.com>
-Cc: Git Mailing List <git@vger.kernel.org>, Derrick Stolee <dstolee@microsoft.com>, 
-	Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
-Apparently if I do that in two commits (one to move the dir, and a
-second one add the file), and then push all that after the second
-commit, this doesn't happen -- the resulting push will only contain 6
-objects (2 commits, 3 trees, and 1 file), and be a few bytes large.
+The documentation for reflog states that the --dry-run option of the
+expire and delete subcommands has a corresponding short name, -n.
+However, 33d7bdd645 (builtin/reflog.c: use parse-options api for expire,
+delete subcommands, 2022-01-06) did not include this short name in the
+new options parsing.
 
-El dom, 17 sept 2023 a las 14:21, Bagas Sanjaya
-(<bagasdotme@gmail.com>) escribi=C3=B3:
->
-> On Wed, Sep 13, 2023 at 11:59:35PM +0100, Javier Mora wrote:
-> > I came across this issue accidentally when trying to move a directory
-> > containing a very large file, and deleting another file in that
-> > directory while I was at it.
-> > It seems to be caused by `pack.useSparse=3Dtrue` being the default sinc=
-e
-> > v2.27 (which I found out after spending quite a while manually
-> > bisecting and compiling git since I noticed that this didn't happen in
-> > v2.25; commit de3a864 introduces this regression).
-> >
-> > * Expected:
-> >     Pushing a commit that moves a file without modifying it shouldn't
-> > require sending a blob object for that file, since the remote server
-> > already has that blob object.
-> > * Observed:
-> >     Pushing a commit that moves a directory containing a file and also
-> > adds/deletes other files in that directory will for some reason also
-> > send blobs for all the files in that directory, even the ones that
-> > were already in the remote.
-> > * Consequences:
-> >     This has a very big impact in push times for very small commits
-> > that just move around files, if those files are very big (I had this
-> > happen with a >100MB file over a problematic connection... yikes!)
-> > * Note:
-> >     The commit introducing the regression does warn about possible
-> > scenarios involving a special arrangement of exact copies across
-> > directories, but these are not "copies", I just moved a file, which
-> > seems like a rather common operation.
-> >
-> > Code snippet for reproduction:
-> > ```
-> > mkdir TEST_git
-> > cd TEST_git
-> >
-> > mkdir -p local remote/origin.git
-> > cd remote/origin.git
-> > git init --bare
-> > cd ../../local
-> > git init
-> > git remote add origin file://"${PWD%/*}"/remote/origin.git
-> >
-> > mkdir zig
-> > for i in a b c d e; do
-> >     dd if=3D/dev/urandom of=3Dzig/"$i" bs=3D1M count=3D1
-> > done
-> > git add .
-> > git commit -m 'Add big files'
-> > git push -u origin master
-> > #>> Writing objects: 100% (8/8), 5.00 MiB | 13.27 MiB/s, done.
-> > #^ makes sense: 1 commit + 2 trees (/ and /zig) + 5 files =3D 8;
-> > #  5 MiB in total for the 5x 1 MiB binary files
-> >
-> > git mv zig zag
-> > git commit -m 'Move zig'
-> > git push
-> > #>> Writing objects: 100% (2/2), 233 bytes | 233.00 KiB/s, done.
-> > #^ makes sense: 1 commit + 1 tree (/ renames /zig to /zag) =3D 2;
-> > #  a,b,c,d,e objects already in remote
-> >
-> > git mv zag zog
-> > touch zog/f
-> > git add zog/f
-> > git commit -m 'For great justice'
-> > git push
-> > #>> Writing objects: 100% (9/9), 5.00 MiB | 24.63 MiB/s, done.
-> > #^ It re-uploaded the 5x 1 MiB blobs
-> > #  even though remote already had them.
-> > ```
-> >
-> > Note that the latter doesn't happen if I use `git -c pack.useSparse=3Df=
-alse push`.
->
-> I can reproduce this regression on v2.42.0 (self-compiled) on my Debian
-> testing system.
->
-> Cc'ing Derrick and Junio.
->
-> Thanks for the report!
->
-> --
-> An old man doll... just what I always wanted! - Clara
+Re-add the short name in the new dry-run option definitions.
+
+Signed-off-by: Josh Brobst <josh@brob.st>
+---
+ builtin/reflog.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/reflog.c b/builtin/reflog.c
+index df63a5892e..a39962df69 100644
+--- a/builtin/reflog.c
++++ b/builtin/reflog.c
+@@ -248,7 +248,7 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+ 	int verbose = 0;
+ 	reflog_expiry_should_prune_fn *should_prune_fn = should_expire_reflog_ent;
+ 	const struct option options[] = {
+-		OPT_BIT(0, "dry-run", &flags, N_("do not actually prune any entries"),
++		OPT_BIT('n', "dry-run", &flags, N_("do not actually prune any entries"),
+ 			EXPIRE_REFLOGS_DRY_RUN),
+ 		OPT_BIT(0, "rewrite", &flags,
+ 			N_("rewrite the old SHA1 with the new SHA1 of the entry that now precedes it"),
+@@ -368,7 +368,7 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
+ 	int verbose = 0;
+ 
+ 	const struct option options[] = {
+-		OPT_BIT(0, "dry-run", &flags, N_("do not actually prune any entries"),
++		OPT_BIT('n', "dry-run", &flags, N_("do not actually prune any entries"),
+ 			EXPIRE_REFLOGS_DRY_RUN),
+ 		OPT_BIT(0, "rewrite", &flags,
+ 			N_("rewrite the old SHA1 with the new SHA1 of the entry that now precedes it"),
+-- 
+2.42.0
+
