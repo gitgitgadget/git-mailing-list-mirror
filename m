@@ -1,51 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YeFQO5KF"
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B939A101
-	for <git@vger.kernel.org>; Sat, 25 Nov 2023 23:51:31 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-332c0c32d19so2241072f8f.3
-        for <git@vger.kernel.org>; Sat, 25 Nov 2023 23:51:31 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EIGs+puS"
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 958D7111
+	for <git@vger.kernel.org>; Sat, 25 Nov 2023 23:51:32 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-3316c6e299eso2172436f8f.1
+        for <git@vger.kernel.org>; Sat, 25 Nov 2023 23:51:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1700985090; x=1701589890; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/gDsstomIT0hYG7RuKOvZTnJ9cX/gRG40cwI2P+Nco0=;
-        b=YeFQO5KFFjdz6/jgSZnZsGMuYEqqPo9oYIARgFPG7ceyTz7CV5PMokTposqR+bnpXU
-         7mgTS1c/oNe6AlJV8+zMnL9RT+9YExQuoHMW+h7aIPVgXxblSTKWfzkj9vhdNFkL30E5
-         EqOf6f2hPXx9arGTmmRxCV15VZFWuipH84SMOMkvesHZuQiyWpxhAnfsflgtFLzkLekE
-         BjR/FXDQyC97LapyhzYzpSH4aJur+tpYLYcoeapRYUvXjit+CSpCzgmCdW3OsyJ2xOHo
-         UtBXty8s+O8LUvOhG1QLXPWZS/WZUgNM1Jmw0lRZsB1fG8Q/DONeKwhcy4XcBwtXEpho
-         TGxw==
+        bh=yyzT933Lv+I2eJ6KcLdgufUGswSUXXJts+i+4YrqxEk=;
+        b=EIGs+puSHfbBoYoub2e0NLwXDe7al355eyx8FqGTnfHBa+qVop8pvVJo5ut5S4suzi
+         kB0pnjOl3HJ1V0OmZeQa7ttgxPOgs25Vaz6iHXWU4/5uUgy0Bg4mu31F8bUBo4owzSTa
+         4Uz6VAKIkMy3zlIr6Eb4ln5ph2WJfcBtLb/ND0naBTpbHDKzQyfwZADoQEwqcg49zGIH
+         ceTlOz4UAfzjsdqOM6fMOy+Gg9IMb2oV0Cuisw4c3H3JHag50VfzpR0vatYKk5o+/PPT
+         2PsuV2T5BnlfIX04PJJKK2Vb5CgzP4UuRwVa/v2u3ukZbyJuRGk5ViFJfH4yRI1/NTRP
+         ytLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1700985090; x=1701589890;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/gDsstomIT0hYG7RuKOvZTnJ9cX/gRG40cwI2P+Nco0=;
-        b=TSIkBkj9xpvS/sDVLXWAfGT4yrqtMvg7fsSQNenTs67VVlZWT6hXjDCmvHWrP7dxo/
-         Q8FnRHleuCFnH1V3p+l5TzhmH59BgxRm6sXUhZk1G7CwRy/5s02vjLsmvnaJHtffL+f5
-         mhlTt1GsXriomHxuWli3wNBBSHOkSGBi6p8MsXYqVeH5mPDgyUAOHr10R4bJ3lU/rqJx
-         ZlCuEkJVuAYb3nznrcTO+Yg7mFHyYhtpETaGw3XRwVhQv27ibc3ZulVOawtCuDzXKJUP
-         73+TOzb7xXkj1+lYS9md7yTUHlvKUQmeTwPyxSH/s9iQDp1/qbMP3VZu5zuOmZNodATX
-         zDXg==
-X-Gm-Message-State: AOJu0YyAdayS7ISPUTIX83kn4XXENF9CbKf+/B/GXNZp4b2jsN0SaMKc
-	z1M/7NR9IzvxLP7ivI/Uz+SgRN2t4dI=
-X-Google-Smtp-Source: AGHT+IEV7NmrZwdddxuzsF5CpvfERvJ9BrUNxYC+7z4SwLq4TDqTQ1qMyZSYOAiFYWoEZbRItoT4nw==
-X-Received: by 2002:a5d:6a42:0:b0:32f:8a7f:f00f with SMTP id t2-20020a5d6a42000000b0032f8a7ff00fmr6074451wrw.60.1700985089718;
-        Sat, 25 Nov 2023 23:51:29 -0800 (PST)
+        bh=yyzT933Lv+I2eJ6KcLdgufUGswSUXXJts+i+4YrqxEk=;
+        b=kuDJPa2tu3XXjwETPCNqrM7YXc44Mco6AZFCDEBjh+MoZMOT4HwvrfywzVhRbvNt9W
+         vD44KizuVXduGcemR6GIz4RcawIdhxAuECOokOX53LW2Tbh87P7gSBGARBnKmi9vhqLk
+         ujgq4rQfSub18VmUTad+HEN2mrcYvCS1xp/bPkkEv50DAEqJgTGnYVgR68wSs7UHskFs
+         AMNRmxRLAWrYBfeXAcwst0Zb9vzAKq92qPqrR60stPBX83MHOKmQdbSwt1WkUJRwf1Ln
+         M9XnUncUXRS30loxXh67i5jzZQdBKj6Ry/7lXEXhesqBJ/iK3ffC9OGg7y6QkhveUdA+
+         boBg==
+X-Gm-Message-State: AOJu0YyFUkUL5BlT3nIVz8XOXFI6Gu/6tc46t8g1tflCnPavD0HsPSVU
+	T285DMCpQk1x1k1TDCjyWSTW6n8nDlI=
+X-Google-Smtp-Source: AGHT+IGRsniUWVP+Gu6QYJ/0V7pyijV0cSq7EcS1ZPpGTMKQ51NchG+EjD3/awkjSgbk67Inh5iYfg==
+X-Received: by 2002:adf:fc52:0:b0:332:c9ba:f29c with SMTP id e18-20020adffc52000000b00332c9baf29cmr6112656wrs.58.1700985090380;
+        Sat, 25 Nov 2023 23:51:30 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 2-20020a5d47a2000000b00332ff137c29sm326822wrb.79.2023.11.25.23.51.28
+        by smtp.gmail.com with ESMTPSA id e16-20020adffc50000000b00332cb561c8dsm8580894wrs.112.2023.11.25.23.51.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 25 Nov 2023 23:51:28 -0800 (PST)
-Message-ID: <212ba35ed469b63fc75c51b61588025c303a162d.1700985086.git.gitgitgadget@gmail.com>
+        Sat, 25 Nov 2023 23:51:30 -0800 (PST)
+Message-ID: <1cbbcd9097c96b7646fb0c756c3964413f2a021f.1700985086.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1349.v2.git.1700985086.gitgitgadget@gmail.com>
 References: <pull.1349.git.1700761448.gitgitgadget@gmail.com>
 	<pull.1349.v2.git.1700985086.gitgitgadget@gmail.com>
 From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 26 Nov 2023 07:51:24 +0000
-Subject: [PATCH v2 2/4] completion: fix logic for determining whether cone
- mode is active
+Date: Sun, 26 Nov 2023 07:51:25 +0000
+Subject: [PATCH v2 3/4] completion: avoid misleading completions in cone mode
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -63,61 +62,53 @@ Cc: Elijah Newren <newren@gmail.com>,
 
 From: Elijah Newren <newren@gmail.com>
 
-_git_sparse_checkout() was checking whether we were in cone mode by
-checking whether either:
-
-    A) core.sparseCheckoutCone was "true"
-    B) "--cone" was specified on the command line
-
-This code has 2 bugs I didn't catch in my review at the time
-
-    1) core.sparseCheckout must be "true" for core.sparseCheckoutCone to
-       be relevant (which matters since "git sparse-checkout disable"
-       only unsets core.sparseCheckout, not core.sparseCheckoutCone)
-    2) The presence of "--no-cone" should override any config setting
-
-Further, I forgot to update this logic as part of 2d95707a02
-("sparse-checkout: make --cone the default", 2022-04-22) for the new
-default.
-
-Update the code for the new default and make it be more careful in
-determining whether to complete based on cone mode or non-cone mode.
+The "set" and "add" subcommands of "sparse-checkout", when in cone mode,
+should only complete on directories.  For bash_completion in general,
+when no completions are returned for any subcommands, it will often fall
+back to standard completion of files and directories as a substitute.
+That is not helpful here.  Since we have already looked for all valid
+completions, if none are found then falling back to standard bash file
+and directory completion is at best actively misleading.  In fact, there
+are three different ways it can be actively misleading.  Add a long
+comment in the code about how that fallback behavior can deceive, and
+disable the fallback by returning a fake result as the sole completion.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- contrib/completion/git-completion.bash | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ contrib/completion/git-completion.bash | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index b8661701718..7aa66c19ede 100644
+index 7aa66c19ede..c614e5d4f07 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -3097,6 +3097,7 @@ _git_sparse_checkout ()
- {
- 	local subcommands="list init set disable add reapply"
- 	local subcommand="$(__git_find_on_cmdline "$subcommands")"
-+	local using_cone=true
- 	if [ -z "$subcommand" ]; then
- 		__gitcomp "$subcommands"
- 		return
-@@ -3107,8 +3108,15 @@ _git_sparse_checkout ()
- 		__gitcomp_builtin sparse-checkout_$subcommand "" "--"
- 		;;
- 	set,*|add,*)
--		if [ "$(__git config core.sparseCheckoutCone)" == "true" ] ||
--		[ -n "$(__git_find_on_cmdline --cone)" ]; then
-+		if [[ "$(__git config core.sparseCheckout)" == "true" &&
-+		      "$(__git config core.sparseCheckoutCone)" == "false" &&
-+		      -z "$(__git_find_on_cmdline --cone)" ]]; then
-+			using_cone=false
-+		fi
-+		if [[ -n "$(__git_find_on_cmdline --no-cone)" ]]; then
-+			using_cone=false
-+		fi
-+		if [[ "$using_cone" == "true" ]]; then
- 			__gitcomp_directories
- 		fi
- 	esac
+@@ -3090,6 +3090,26 @@ __gitcomp_directories ()
+ 		# No possible further completions any deeper, so assume we're at
+ 		# a leaf directory and just consider it complete
+ 		__gitcomp_direct_append "$cur "
++	elif [[ $_found == 0 ]]; then
++		# No possible completions found.  Avoid falling back to
++		# bash's default file and directory completion, because all
++		# valid completions have already been searched and the
++		# fallbacks can do nothing but mislead.  In fact, they can
++		# mislead in three different ways:
++		#    1) Fallback file completion makes no sense when asking
++		#       for directory completions, as this function does.
++		#    2) Fallback directory completion is bad because
++		#       e.g. "/pro" is invalid and should NOT complete to
++		#       "/proc".
++		#    3) Fallback file/directory completion only completes
++		#       on paths that exist in the current working tree,
++		#       i.e. which are *already* part of their
++		#       sparse-checkout.  Thus, normal file and directory
++		#       completion is always useless for "git
++		#       sparse-checkout add" and is also probelmatic for
++		#       "git sparse-checkout set" unless using it to
++		#       strictly narrow the checkout.
++		COMPREPLY=( "" )
+ 	fi
+ }
+ 
 -- 
 gitgitgadget
 
