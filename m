@@ -1,103 +1,99 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="cENQoDDE"
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14BF710D
-	for <git@vger.kernel.org>; Sat, 25 Nov 2023 19:04:39 -0800 (PST)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id C47761C9A9B;
-	Sat, 25 Nov 2023 22:04:35 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=qPreL0vQGrGo9ksDjy3i/BB5BVVaGTBE6IVcDq
-	Bsm3o=; b=cENQoDDEQ2zlbFxzpEEzNyLBJFb5wf0t17ICwRC7cWcZkP5O0EREux
-	o05XzHlHRTgNEr48XXR3m6pg2WoHp9NK+2rj0wAP673HsbGvF7xntaj7n2QALJD+
-	Dewma0raKJ/ZauUyiuRIdz0nG8B+RCpQNlucsoJxFetQKL/43+9Po=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id AA9E31C9A9A;
-	Sat, 25 Nov 2023 22:04:35 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 077001C9A99;
-	Sat, 25 Nov 2023 22:04:34 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Marcel Krause <mk+copyleft@pimpmybyte.de>
-Cc: git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH] doc: make the gitfile syntax easier to discover
-In-Reply-To: <20231124194711.563720-1-mk+copyleft@pimpmybyte.de> (Marcel
-	Krause's message of "Fri, 24 Nov 2023 20:47:12 +0100")
-References: <20231124194711.563720-1-mk+copyleft@pimpmybyte.de>
-Date: Sun, 26 Nov 2023 12:04:33 +0900
-Message-ID: <xmqqr0kd5i66.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qui1Sb5O"
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC39F110
+	for <git@vger.kernel.org>; Sat, 25 Nov 2023 23:51:30 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-4083f613275so25073395e9.2
+        for <git@vger.kernel.org>; Sat, 25 Nov 2023 23:51:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1700985088; x=1701589888; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XlKqH4Ex5Hz0DcVmbkbwp1b+sjR9qljU7Rkjy86OiGo=;
+        b=Qui1Sb5OeYWKy3eJ7Yacx5keoJm1EjsenvilD5PmUCU8eC1RFBRQJbpZdhuqGkZ5k4
+         +vwDJ6TYczeYJXuxlJpSYGgNWwRYH8DfRDs1yxcY+6zOxPjidE4snZBOg9LnTBQ8YL/4
+         7fpYI26aruKxlKtT58XKy5JLIpxZPQAFIBMprGQkeHp0afWzzS+RQJL9sRL+wsTPhzJc
+         KE6MZP2XbQ4SGG1y4kbZBBZJm7ddyKLaG/VQUPKd+CYr2HOS5HiYlDhOgZgsVOWBvpSb
+         yz6YBWWAWTQN76clbKPj2bWY7/fUmezQShjCAh1w/mrILPUlzXcrBl5aF2GJqAnsiDu1
+         tsiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700985088; x=1701589888;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=XlKqH4Ex5Hz0DcVmbkbwp1b+sjR9qljU7Rkjy86OiGo=;
+        b=mpnPE+hNi0idPIb9DUcTvwTPA3vP2a5E4T5QFCOSb4hG/EkUO6bbW45nf3dxi3rM8j
+         xTr8o0PwWRyEiv4jsf4a9rYgwBRwUeDOwLw9e7eyM2DQBM0G+3Vlq99bCMmMw1zdPqY2
+         NlzKC4ktdW6O4cJf2acCTwx4ERQ0cDYrK/u4ChTKeQ+5C/LGnO2LSG2sXVsLcYl8gnAn
+         sjA5FnmQSvLXrxGM0Z5KY0snOFePPIKpLutbBZhx3QpBeyBtGeHHeAkT2KMUSmmcCRdF
+         3MixWB4HZfgPD02Ratpt+MGJehrCyI4hgGrwBHtRYcLbMZvUv4O0T8diUYVi2b2IvRvD
+         IAoA==
+X-Gm-Message-State: AOJu0YxPPDjZxg1uNhX+QM2l26nzOnS/9rCr895lERon3OnEWKWaYJ3y
+	gCSNVi2y9GkcxaM9lmY5KkmfUeVuASs=
+X-Google-Smtp-Source: AGHT+IFEHjuD4T0Mq+cQRA4L4+IoEq/kaMxxDB3CsHkyMDNqcBdAOwRWu6CRvH3G7Bnf3Rc3hDDg3w==
+X-Received: by 2002:a05:600c:1987:b0:409:1841:3f42 with SMTP id t7-20020a05600c198700b0040918413f42mr6075979wmq.13.1700985088266;
+        Sat, 25 Nov 2023 23:51:28 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id v17-20020a05600c445100b0040b3d33ab55sm5527653wmn.47.2023.11.25.23.51.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 25 Nov 2023 23:51:28 -0800 (PST)
+Message-ID: <97e20e3b99d8261815450e8a7c137938caaf5a6e.1700985086.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1349.v2.git.1700985086.gitgitgadget@gmail.com>
+References: <pull.1349.git.1700761448.gitgitgadget@gmail.com>
+	<pull.1349.v2.git.1700985086.gitgitgadget@gmail.com>
+From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 26 Nov 2023 07:51:23 +0000
+Subject: [PATCH v2 1/4] completion: squelch stray errors in sparse-checkout
+ completion
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 872B54E2-8C08-11EE-A3AE-25B3960A682E-77302942!pb-smtp2.pobox.com
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>,
+    SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+    Elijah Newren <newren@gmail.com>,
+    Elijah Newren <newren@gmail.com>
 
-Marcel Krause <mk+copyleft@pimpmybyte.de> writes:
+From: Elijah Newren <newren@gmail.com>
 
-> It took way too long for me to find the syntax expected for a gitfile.
-> My search engine found the gitglossary manpage which defined the term
-> but had no hints about syntax.
-> Thus here I add a mention of gitrepository-layout.
+If, in the root of a project, one types
 
-Everything you wrote is not very interesting or relevant story we
-want to see in order to explain and justify this change.  The title
-itself is sufficient, i.e. it had poor visibility, and you fix it by
-giving it better visibility.
+    git sparse-checkout set --cone ../<TAB>
 
-A more relevant is why you needed to find out what the former should
-be in the first place.  "git submodule init" and "git worktree add"
-would create them as necessary without you needing to know about the
-exact implementation.
+then an error message of the form
 
-> Signed-off-by: Marcel Krause <mk+copyleft@pimpmybyte.de>
-> ---
->  Documentation/gitrepository-layout.txt | 8 ++++----
->  Documentation/glossary-content.txt     | 1 +
->  2 files changed, 5 insertions(+), 4 deletions(-)
->
-> diff --git a/Documentation/gitrepository-layout.txt b/Documentation/gitrepository-layout.txt
-> index 1a2ef4c150..c52b8564e3 100644
-> --- a/Documentation/gitrepository-layout.txt
-> +++ b/Documentation/gitrepository-layout.txt
-> @@ -23,10 +23,10 @@ A Git repository comes in two different flavours:
->  
->  *Note*: Also you can have a plain text file `.git` at the root of
->  your working tree, containing `gitdir: <path>` to point at the real
-> -directory that has the repository.  This mechanism is often used for
-> -a working tree of a submodule checkout, to allow you in the
-> -containing superproject to `git checkout` a branch that does not
-> -have the submodule.  The `checkout` has to remove the entire
-> +directory that has the repository.  This mechanism is called a 'gitfile'
-> +and is often used for a working tree of a submodule checkout, to allow
-> +you in the containing superproject to `git checkout` a branch that
-> +does not have the submodule.  The `checkout` has to remove the entire
->  submodule working tree, without losing the submodule repository.
+    fatal: ../: '../' is outside repository at '/home/newren/floss/git'
 
-Do not unnecessary rewrap existing text, only to insert a few words,
-to force reviewers read a lot more than needed.
+is written to stderr, which munges the users view of their own command.
+Squelch such messages by using the __git() wrapper, designed for this
+purpose; see commit e15098a314 (completion: consolidate silencing errors
+from git commands, 2017-02-03) for more on the wrapper.
 
-> diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
-> index 5a537268e2..e5f55bf670 100644
-> --- a/Documentation/glossary-content.txt
-> +++ b/Documentation/glossary-content.txt
-> @@ -184,6 +184,7 @@ current branch integrates with) obviously do not work, as there is no
->  [[def_gitfile]]gitfile::
->  	A plain file `.git` at the root of a working tree that
->  	points at the directory that is the real repository.
-> +	See linkgit:gitrepository-layout for the syntax.
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ contrib/completion/git-completion.bash | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Running "git grep linkgit:gitrepository-layout" would help you find
-the right way to spell this one, I think.
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 13a39ebd2e7..b8661701718 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -3084,7 +3084,7 @@ __gitcomp_directories ()
+ 			COMPREPLY+=("$c/")
+ 			_found=1
+ 		fi
+-	done < <(git ls-tree -z -d --name-only HEAD $_tmp_dir)
++	done < <(__git ls-tree -z -d --name-only HEAD $_tmp_dir)
+ 
+ 	if [[ $_found == 0 ]] && [[ "$cur" =~ /$ ]]; then
+ 		# No possible further completions any deeper, so assume we're at
+-- 
+gitgitgadget
 
-Thanks.
