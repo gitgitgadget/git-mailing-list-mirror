@@ -1,226 +1,71 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="HAxMikc0"
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9B4BF5
-	for <git@vger.kernel.org>; Sun, 26 Nov 2023 03:57:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-	t=1700999863; x=1701604663; i=l.s.r@web.de;
-	bh=3WLRXjmGr2sZkzUHGGi6mmmZoAHZ2UACQnnE13vJ3Ns=;
-	h=X-UI-Sender-Class:Date:To:From:Subject:Cc;
-	b=HAxMikc0XBiNQPLSC4SIrIxzYCU2F+G5cqWGIOY2SVCNzL+I2W9oInPRuG5y9n/Y
-	 QTaTHb7H8OYw2ldTAmhQyBoWJQ2B9OPXHD6LuaI7kV8g9mOOasXbmdzH4osEn9p4a
-	 fSV3Xf0mHOoMwxcR8hDtpHfTi2XkrT4jV3rXlrMHu15vnvLDr0lCLP5mrHrTmxvyX
-	 l0QadH1VrJvPZYsFFH6+4WNTWMQHJYD77fp/86DeskCQK4lmgCTMPCjDepjfkU9xQ
-	 7qF10UWEMpWwUtYMxMLBwN5f2GcxdIcriD7nW3rKBy+MQxKo/BwR7zZzyQ6AtyP8y
-	 oYWdgxjALDcl46/sTw==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.159.220]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1N0qv3-1rUErK1E6n-00wMdt; Sun, 26
- Nov 2023 12:57:43 +0100
-Message-ID: <e6eb12e4-bb63-473c-9c2f-965a4d5981ad@web.de>
-Date: Sun, 26 Nov 2023 12:57:43 +0100
+	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="OzaJ57wq"
+Received: from sonic306-20.consmr.mail.ne1.yahoo.com (sonic306-20.consmr.mail.ne1.yahoo.com [66.163.189.82])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DC13FC
+	for <git@vger.kernel.org>; Sun, 26 Nov 2023 04:08:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1701000484; bh=9oLIMmJY+W2w/uETEGUqnFHbjl4tLJoWb/FdEftqh0M=; h=Date:From:To:Subject:References:From:Subject:Reply-To; b=OzaJ57wqi+Ddh3NdCbJzqpHsH4VvKlIXC/tl1wmM9It/w+aU75laRYrnj0aV3b+uI0h1yFbSVUPUA5n3Cx8w7vQmLWZR3rZ4GTH7m6DGk4y8A4s5pee9yyGP1MmVvjOu9LzwCf6A8UVLt+FUo+FMO8BDxprgP4YkHpRuQIT+EGai71Hb2+rQSv/MsF5uCq42N+dB6G7EYya8WZ5WaHSxJQ4QK5LTcC4S0rMVvnOFjDrT60Es3P9p5kqalz9nZCtjqMTMDhYdCMz8Oz4aMawN1Tq/Qs2i0q+8MmV/Li5B1HvrvdxzVKAhUgFQBbYDLlLT/tJNh2cqOnM2hx5to9L/UQ==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1701000484; bh=823N5cC4VR4KhdI/HixF1YWw1DKUmL1z4L86BzlWWg3=; h=X-Sonic-MF:Date:From:To:Subject:From:Subject; b=Mqo9weSy8dQhnMZeF/03p/FNfSk723FUaorO304nYOISaD/6X4LvqdQDKV5LpV9+7qkiIVZKgElO3DDT+qj8JkzkzPsddCGaUtOCcNJ8Bhvsb6XvNVEB4GsFdzJP325K8BJwrohVJ5eK/fNfY7TX9+SeJdochxlqK/vpOdmy3jkeW+2ywpMQAuCAFHGtz7m588WkfK4c6Gz+w66h8jV5tLMUHENAQUMpoO9HFBQRaiQD1J0yHzud6ipjx+ZW3ATa3lb0hMwrlRUtFH4MgcT2Yiuy4bry9b8vbM9e0Kz3hHTgiP1UOtpaTDmBFjEz9lZOnpx+1ep2midi7mBBCB1CGg==
+X-YMail-OSG: B.t_7VIVM1l21S2qfvlC6PwFG.85YuQAArduG3tZ_jvMj8Paz9uU8pz3EQRRNhg
+ xDOvxycr2eMNddQgNnvZD2vOr7eYxcbCD9zSsjaXszlUqFB3DwxXwhxdis2dm9XmnVjnO3xdcpJS
+ ezDVQjVOf1Xbj8IinUh7ftTA4Ba0CWv74RPN_Ht6QlmM6RdeKh.MFA6rWQ3GQolVGEQD3MrXn5rC
+ NoYdo4sTExbHLfL6m67OyQASX9lgowDmdbtVwHhPn8i05WFPOiehTtf1VBtONlmCTGSyvrghUbhq
+ htZXosDyNgpFeLGXCGvUlPMWKRkPFNezgauCg1EZybvfISUlITSdX.hYf4PHLKn21f5s6H0Fh8MB
+ _yrywXNfeXrfpobRTD_WrwyFE3L_m7oO8QhaHzur0pAJCD9BwtkXMz60i3XHHrEceuGxnPX4VD.b
+ 8mflQijW1xEWbWqoOpACq6buZ9qDFYWKugOfgMurtX30T6rBGow3N8OXKhY17lHlG0t0uO8TFIHH
+ 0sCj4DZE3q3mRnUypae0Xfr5KI4ma4LzdR6ShAOuhJP1vLfIznviBHvPWpb7lH97_A0xFTlMbjum
+ F5BmesQ0Ikt__0.cpnHcn0VG80oUViqUyAZRjEBr0.diZ9ip4tV3LAYNAeorGKpVmM1LRakrdVtF
+ 52rrQvK1bWerYZ.ykqy9xp.VAX1tJfSFZAASEZAprsOkNVg6zwr5mDlEWm5BlpKepLk6iO2u4Z3.
+ rZY5DIdewX3b6qRLJTpv_bB.wk_st.5CZO7or.EsnbAAZra3TQRwl4bCg_VL4ifabQBDCB8wj140
+ R32gyPTwVHAhWB_n0Zk6jqJ9CG4.lkqPvNLy5lvP6QAmmHTa0gyWuTO5gyF0qcDlRnch4kwh.CRW
+ XSUJxriCF3adTVLNxcGGHoNcunttrBjZaiBi30amC51KpymzaKP8RKVldVERP8J5hQ8mlilVky.3
+ i6brILJDki0qEZi3qtjhHab_blAa032Wq7OBdT9q87dzGaqMzqhv6ELjBpeLBWMXIGp7OUI5xD4D
+ vEnhm.I8rH4lqYQaxpJIkbtYZC6VDQ08WwvS2g.58Y2LC.vpUUjnz20pW3NocK1Av1sKkRP067Mq
+ vqR0zNFCAIddcOSbFPh7fud1GSD.9cqPI0xAtHiS4IA8nJNvy7nK8KMpoQzY409JD_pOFjNX4iSK
+ yI13tzdMQFiqPah_Ip4oZyWWDKnH6m8rOSoYYyuh9zgVgw_qjcW7Jfs.yNUyx77bBbYTpmBHfmGW
+ OVhCguHo.gkMVhCHP7lxWXWNri1SqExYEzlKSnGCkgIcplOsfEDUSQIeKPmkMPB0sZbbhmcxq8_F
+ EHaagR_V4F9LzroOVgob6Hv6j8OOdhRtzfAQ2ElOqwSPHYiIIPZzoGf5qbYZa2MsjCsPCn7I6BhF
+ SyTYS4YSbvnpHdTgMt70brxiZjOONpExQ9RICZEzIFW6PGYZELNqzuHGB10A3tWQwdC6N.zpbVYl
+ nyMWJWnJE8li4ZPApx7AZs6Z_LP5oMtAOJ.mgNWtXFlEWjG6Xcmxr7sLcRUEyHjPeLOnT6Dh5Bse
+ hm5FCcMvYRplKN4tRw5et1TiqoapOhuQT_n4h1xUyVDXy1.oudOC4RwGpky2ksK48tpdIskCUV3c
+ .og.W41hu_Zg.Ygqc6g9hRWFABjQdxIWSO_GAI9ZrNGQRlTV9bUr9.VAD2T4DFNip9lcOrfiWHom
+ sZw7QoONFGEH7JJT_oyFcp9HkdR0_matbMnZYr7as6cKfFndwmNjXHWp.olLJ.cN6VlD0jm95A2I
+ ZMF7Mfb0UjKKmuL3YK0uang2uKQdYKhCnf6JGftUZQ6Y9UAQFa6ySmpQhAmZS2X9uch72knoW87Y
+ YcZ3skfyij_6WT7mSxBWNKpNoD.zLhGZDgj6Prj_Pr5kzlInieM3aEvTFTi31DXx4Mi6kGDE4KUb
+ s7W8Y7Dh_60A1vFC4w990iJrjOLvHcqUArtZx5HwNdjeuCmQxQ2j9FUAyZnAYX._rcV5MnDPARGi
+ q.iKFwn.mXDngfVgtGZmaUcjyJaOTpOK9MjWvGaHnSGI0NfJtv5zPEyPi_7JbMfmUzFKBuAE_L__
+ kxbjL3TiP9fvCbLQ0ied3xcmHM2Yaqi9eFM_sARkEAjId4pGX.0PSwUZOx5yMjL_l
+X-Sonic-MF: <qa23d-git@yahoo.com>
+X-Sonic-ID: 658ebd94-403c-4b05-aaca-bd6c2001c84d
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic306.consmr.mail.ne1.yahoo.com with HTTP; Sun, 26 Nov 2023 12:08:04 +0000
+Date: Sun, 26 Nov 2023 12:08:01 +0000 (UTC)
+From: Vovodroid <qa23d-git@yahoo.com>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+Message-ID: <511253473.8084883.1701000481697@mail.yahoo.com>
+Subject: No automatic continue of rebasing with rerere
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: Git List <git@vger.kernel.org>
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] i18n: factorize even more 'incompatible options' messages
-Cc: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:MMozrEwl0CgJPCGjdBWrKywEnBn2/1MulOvhIKQOIFY+p5nbxzF
- T1fH7H+wfIng7v3zgL1ujPA1W1WzEDSVpiXFZoNeEnwBgGinJ1bCEkXq7PHGNx9aOore/Vy
- Rx93QYTvG2YOhOq67p8FiOkjWEelo6KMrU1Rtfo/go4lSgA02J+o1v49MSlvbdaN76k89no
- lWodi5joWyYAlCU3FFmzg==
-UI-OutboundReport: notjunk:1;M01:P0:gJdaj6NLxdc=;1JD2e7PeHgQi9IDoMApC/zX4QGz
- GmxWHGAe/zWH3wVIEPeb2xJl/C+1W5d+/NU3bDFZK+NLfX/1/MUALmxdVt30/71jdA7YUZICA
- EEL2toEzr7GxVpGDQ4Sg4vByHNDalFWDJioqoxA/vdGDe6rDjT88S2TCS4eNjHcmfZAy3cmpq
- yBh4AhmjkAGDtOfcFrGVfaRs8csKy5g4wJoDXBEmtF4FUUcxeXTxGA3XQ4jNobeov2pzebL5/
- S2AkUqx+xXHJ5hX+c4ebX8chgKPN7eBxVuDZMkFaItCUyuU+8I2y8tXKKuI2ufV5VS10rnHuF
- gHQD2HohdYCl1kWurgQLbVoOGzCZViefu2L89VjfJmaKXcSM1Cuh4BQkoRoxJooKoQLYcCUcZ
- 4kz9pc30e7JLzSOj5sw3v5mKmoQPg9UU5NvGQnjd6Xr2OWAhuvWOc2W2Y0yzeVYhq/VXW6ivi
- 92EnEgVeyNulnjlKycItHgGMv9J4c2pLxXeMT51TklGzia4RhHhyHJ5VmigwY3ywDrav4+fwA
- ydCIlTMUt7++idflIoqjbG9BGjJvY/PoULl27d5EYxJvV5EvfpQt0FRngUWBqqV8DxZMnMs8L
- TwZAnjSiO0M4bsUyZrXRJ6/xsA3QoGVdJfBGvZvTBO5cXqcBG8fbeZYq2l99XqFV6QXm9pjfK
- fsRwN0sCyElO6BTBQjxOJJfF0YrF0ZY8xYiXtcOeCbB7bY8Q892S9/tcaSlaCMshZAXSKAUjP
- siPY9gE1/gTgo8kvOw6VNPFQU9g+GtFtSvNZ0M5Wjc5/iNdKFOf6PQJfj4MYPTRbe/lE/zNb5
- rh3+wq8y0ei604SeB+5bopP9HfXA9gvmMBzp2c1jVYYUhvfY6vSjvlORxZ3qC7sGxWgOtB699
- X98LJChqMKnuDzEQ0zlVFCUptE1DosT2PBwvjlWD4/+ZVHG+cWya/aKRwB8BhCEpiInTf8OBz
- jBefJA==
+References: <511253473.8084883.1701000481697.ref@mail.yahoo.com>
+X-Mailer: WebService/1.1.21896 YMailNorrin
 
-Continue the work of 12909b6b8a (i18n: turn "options are incompatible"
-into "cannot be used together", 2022-01-05) and a699367bb8 (i18n:
-factorize more 'incompatible options' messages, 2022-01-31) to use the
-same parameterized error message for reporting incompatible command line
-options.  This reduces the number of strings to translate and makes the
-UI slightly more consistent.
+Hi,
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- builtin/clone.c                  | 4 +++-
- builtin/merge-tree.c             | 3 ++-
- parse-options.c                  | 3 ++-
- revision.c                       | 4 ++--
- t/t0040-parse-options.sh         | 8 ++++----
- t/t1006-cat-file.sh              | 2 +-
- t/t4301-merge-tree-write-tree.sh | 2 +-
- t/t5606-clone-options.sh         | 2 +-
- 8 files changed, 16 insertions(+), 12 deletions(-)
+when running non-interactive rebasing (i.e. no -i option) with rerere turne=
+d on, already resolved conflicts and recorded conflicts causing Git to retu=
+rn exit code 1, as if error occurred.
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index c6357af949..45a5070268 100644
-=2D-- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -965,7 +965,9 @@ int cmd_clone(int argc, const char **argv, const char =
-*prefix)
- 	}
+Also "git.exe rebase --continue" still opens log editor unless GIT_EDITOR e=
+nvironment variable is set to true.
 
- 	if (bundle_uri && deepen)
--		die(_("--bundle-uri is incompatible with --depth, --shallow-since, and =
---shallow-exclude"));
-+		die(_("options '%s' and '%s' cannot be used together"),
-+		    "--bundle-uri",
-+		    "--depth/--shallow-since/--shallow-exclude");
+Such behavior causes to user to perform a lot of unnecessary Git runs, or c=
+licking if some GUI shell,=C2=A0like in GitExtension, is used.
 
- 	repo_name =3D argv[0];
+See https://github.com/gitextensions/gitextensions/issues/11382 for discuss=
+ion and screenshots.
 
-diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-index a35e0452d6..a4aa6013c5 100644
-=2D-- a/builtin/merge-tree.c
-+++ b/builtin/merge-tree.c
-@@ -577,7 +577,8 @@ int cmd_merge_tree(int argc, const char **argv, const =
-char *prefix)
- 		if (o.mode =3D=3D MODE_TRIVIAL)
- 			die(_("--trivial-merge is incompatible with all other options"));
- 		if (merge_base)
--			die(_("--merge-base is incompatible with --stdin"));
-+			die(_("options '%s' and '%s' cannot be used together"),
-+			    "--merge-base", "--stdin");
- 		line_termination =3D '\0';
- 		while (strbuf_getline_lf(&buf, stdin) !=3D EOF) {
- 			struct strbuf **split;
-diff --git a/parse-options.c b/parse-options.c
-index e0c94b0546..c3955847f4 100644
-=2D-- a/parse-options.c
-+++ b/parse-options.c
-@@ -279,7 +279,8 @@ static enum parse_opt_result get_value(struct parse_op=
-t_ctx_t *p,
-
- 	opt_name =3D optnamearg(opt, arg, flags);
- 	other_opt_name =3D optnamearg(elem->opt, elem->arg, elem->flags);
--	error(_("%s is incompatible with %s"), opt_name, other_opt_name);
-+	error(_("options '%s' and '%s' cannot be used together"),
-+	      opt_name, other_opt_name);
- 	free(opt_name);
- 	free(other_opt_name);
- 	return -1;
-diff --git a/revision.c b/revision.c
-index 00d5c29bfc..b2861474b1 100644
-=2D-- a/revision.c
-+++ b/revision.c
-@@ -2384,8 +2384,8 @@ static int handle_revision_opt(struct rev_info *revs=
-, int argc, const char **arg
- 		revs->left_right =3D 1;
- 	} else if (!strcmp(arg, "--left-only")) {
- 		if (revs->right_only)
--			die("--left-only is incompatible with --right-only"
--			    " or --cherry");
-+			die(_("options '%s' and '%s' cannot be used together"),
-+			    "--left-only", "--right-only/--cherry");
- 		revs->left_only =3D 1;
- 	} else if (!strcmp(arg, "--right-only")) {
- 		if (revs->left_only)
-diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
-index 8fdef88b65..ec974867e4 100755
-=2D-- a/t/t0040-parse-options.sh
-+++ b/t/t0040-parse-options.sh
-@@ -376,7 +376,7 @@ test_expect_success 'OPT_CMDMODE() detects incompatibi=
-lity (1)' '
- 	test_must_be_empty output &&
- 	test_grep "mode1" output.err &&
- 	test_grep "mode2" output.err &&
--	test_grep "is incompatible with" output.err
-+	test_grep "cannot be used together" output.err
- '
-
- test_expect_success 'OPT_CMDMODE() detects incompatibility (2)' '
-@@ -384,7 +384,7 @@ test_expect_success 'OPT_CMDMODE() detects incompatibi=
-lity (2)' '
- 	test_must_be_empty output &&
- 	test_grep "mode2" output.err &&
- 	test_grep "set23" output.err &&
--	test_grep "is incompatible with" output.err
-+	test_grep "cannot be used together" output.err
- '
-
- test_expect_success 'OPT_CMDMODE() detects incompatibility (3)' '
-@@ -392,7 +392,7 @@ test_expect_success 'OPT_CMDMODE() detects incompatibi=
-lity (3)' '
- 	test_must_be_empty output &&
- 	test_grep "mode2" output.err &&
- 	test_grep "set23" output.err &&
--	test_grep "is incompatible with" output.err
-+	test_grep "cannot be used together" output.err
- '
-
- test_expect_success 'OPT_CMDMODE() detects incompatibility (4)' '
-@@ -401,7 +401,7 @@ test_expect_success 'OPT_CMDMODE() detects incompatibi=
-lity (4)' '
- 	test_must_be_empty output &&
- 	test_grep "mode2" output.err &&
- 	test_grep "mode34.3" output.err &&
--	test_grep "is incompatible with" output.err
-+	test_grep "cannot be used together" output.err
- '
-
- test_expect_success 'OPT_COUNTUP() with PARSE_OPT_NODASH works' '
-diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index d73a0be1b9..271c5e4fd3 100755
-=2D-- a/t/t1006-cat-file.sh
-+++ b/t/t1006-cat-file.sh
-@@ -6,7 +6,7 @@ test_description=3D'git cat-file'
-
- test_cmdmode_usage () {
- 	test_expect_code 129 "$@" 2>err &&
--	grep "^error:.*is incompatible with" err
-+	grep "^error: .* cannot be used together" err
- }
-
- for switches in \
-diff --git a/t/t4301-merge-tree-write-tree.sh b/t/t4301-merge-tree-write-t=
-ree.sh
-index b2c8a43fce..12ac436873 100755
-=2D-- a/t/t4301-merge-tree-write-tree.sh
-+++ b/t/t4301-merge-tree-write-tree.sh
-@@ -887,7 +887,7 @@ test_expect_success '--stdin with both a successful an=
-d a conflicted merge' '
- test_expect_success '--merge-base is incompatible with --stdin' '
- 	test_must_fail git merge-tree --merge-base=3Dside1 --stdin 2>expect &&
-
--	grep "^fatal: --merge-base is incompatible with --stdin" expect
-+	grep "^fatal: .*merge-base.*stdin.* cannot be used together" expect
- '
-
- # specify merge-base as parent of branch2
-diff --git a/t/t5606-clone-options.sh b/t/t5606-clone-options.sh
-index fc4bbd9daf..a400bcca62 100755
-=2D-- a/t/t5606-clone-options.sh
-+++ b/t/t5606-clone-options.sh
-@@ -64,7 +64,7 @@ test_expect_success 'disallows --bundle-uri with shallow=
- options' '
- 	for option in --depth=3D1 --shallow-since=3D01-01-2000 --shallow-exclude=
-=3DHEAD
- 	do
- 		test_must_fail git clone --bundle-uri=3Dbundle $option from to 2>err &&
--		grep "bundle-uri is incompatible" err || return 1
-+		grep "bundle-uri.* cannot be used together" err || return 1
- 	done
- '
-
-=2D-
-2.43.0
+Regards.
