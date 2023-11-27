@@ -1,77 +1,91 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="EQP8bt5L"
-Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 028FD198
-	for <git@vger.kernel.org>; Mon, 27 Nov 2023 10:26:22 -0800 (PST)
-Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-5cfd2325a06so22156157b3.1
-        for <git@vger.kernel.org>; Mon, 27 Nov 2023 10:26:21 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="P85abbcP"
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 370E4AA
+	for <git@vger.kernel.org>; Mon, 27 Nov 2023 11:42:50 -0800 (PST)
+Received: by mail-pf1-x42a.google.com with SMTP id d2e1a72fcca58-6cd8ce7bf7fso1327316b3a.0
+        for <git@vger.kernel.org>; Mon, 27 Nov 2023 11:42:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1701109581; x=1701714381; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:from:subject:message-id
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mMoo+pOzLBszy01/uJzh8B4IAfIAzHxaB+ZpFSs+v2M=;
-        b=EQP8bt5LzX6CZJtC15JtkxEUyxbjGaCn2f/lhPC0WpzQC8WJz3CZDQX/Qkuv5jXw4I
-         2+S+ObCJ6EBa7JJRw1SGLNPxdFbnylqlfDSgJZcer4jCLyAqZyqiRTSOujlMYr+PDJLH
-         IijyIUg4XNtjSN6WYuL2QjFozxbKcOoi6r5UgYKh38vWCqLqim/idgwtVpjTxNBxMuhD
-         3FtD296cFmHYaKJwMV0/08XKBduJ2q89zYqGZ9D0fwskWj/hTZDlr2sCNT8UY7czq05b
-         AXupXAGkvGkCPqw/P34yMytPKb+0uZHdbYQZzScbaGOziL9BBEJtIhxW5ss/gG6QohpV
-         xamA==
+        d=google.com; s=20230601; t=1701114170; x=1701718970; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:mail-followup-to:message-id:subject:cc:to
+         :from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=pAXySqyC5MXVMR2eIkMSO1xraE99/6Pc4Anlg3hIxZE=;
+        b=P85abbcPMQ3Hghi32g6KTsoAXoCKF8i5M8faj9aJgLoN3MgvL89lLK6N0ugwYELDpX
+         u2ckasEQOIiBtgMGpH4ogIVZ+ZYqp3Jm5ERUUoAy6ZHDHVEIRaYrpAgKKVmvUBCGOcb6
+         5Cs+gY+fmQxmh1tlxs0V7g8/Ps9TOdVUK5ycX5U642armSw0tVIcpu7jNLwHUJY7Ngdt
+         o6pwYkFgAny6V0UMBdVl6oZS3iaBNPl1J/d65lsj7Aj3RnHns89N2Y5NI7InQlY1dLxM
+         NncVRacBvKiVKPBCOcqKCiYC+gudUC+I1yowSBFBz2Itkog9faZyqU7u5M6pemd7k1xn
+         41eA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701109581; x=1701714381;
-        h=content-transfer-encoding:cc:to:from:subject:message-id
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=mMoo+pOzLBszy01/uJzh8B4IAfIAzHxaB+ZpFSs+v2M=;
-        b=mL/uwTIBCtSpka8VNnethkeN8WOZNPEr8aAuV5yzeuK6IvQmYECjXBVRUUYbcOdcex
-         DUGh+ub5iWkLMJky0VlgwGiYRBX08U95f1RpKof+EPqCibCZy2t+flJ7bzE4EmgYSrzp
-         ud3QfcDG/xO0BuxdzYwQ7Aegs9DfXvmIolh/hXFeqLmqdvPAOTymWXRSw/yWa/eDuO3S
-         eiCXcLz+fNR4iefWPFltAAu9frfi+pUs1spZkdPR08LFz3hcnkBb/lo+zaGso+OcFlq5
-         s6C7AD+siHxo1uBinBlTDFVh61E1Ofq4+yBr9qxMHtITufoH6sG1g14wWdUFBIxdlpYR
-         8FAQ==
-X-Gm-Message-State: AOJu0Yy8kRNMsnTNk74x/qt88tILsGUWRfN/Ia45RJHrU+sDeJGkhepl
-	Oqg1cX4ITyQGhaja86CVZ//ogci1sd5qtfYXUdxS
-X-Google-Smtp-Source: AGHT+IGbvBcQjdI4Ak8z0ulwqJH77nmsGTgoGio3FIkuduyXLzL9NaqPYKmqRXJXefQf2ytWX6cqj6wIKB74D/Vv3CqO
-X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:cd35:e99f:a751:de05])
- (user=jonathantanmy job=sendgmr) by 2002:a05:690c:470e:b0:5cb:d80c:3d34 with
- SMTP id gz14-20020a05690c470e00b005cbd80c3d34mr247513ywb.8.1701109581239;
- Mon, 27 Nov 2023 10:26:21 -0800 (PST)
-Date: Mon, 27 Nov 2023 10:26:18 -0800
-In-Reply-To: <CAGE_+C4B=zjPqNV+fGt9gaA0O8qmqmK3CDh-eLBPmXx+ChzXAQ@mail.gmail.com>
+        d=1e100.net; s=20230601; t=1701114170; x=1701718970;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:mail-followup-to:message-id:subject:cc:to
+         :from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pAXySqyC5MXVMR2eIkMSO1xraE99/6Pc4Anlg3hIxZE=;
+        b=uCAJQWw5LcB8CY+P9mD6NshkUCU0/rwHq3GTCZ2n7nn9mqW5tHcAt2HWWn77lzXBoB
+         8t8BBy+ifhUtGt3KvmKPbBwVCqV2DDvmAVoefEOpie7f5W7iVl8sEy1ihivR3mlEplB6
+         cD4O3FW59cBwredVE3SETArrKS17mM9LRpghl+th/uX2OFH4A+JwBD3/HjoYVFYS2ViF
+         /64/dPJRALccOtAunJUxlcUodGLJZaWZ7vi5QkAqQbrHKy+CSdTjyIszlzG6+nAC+di9
+         a7lU5+D+yY9u+ITXL7Nv9sA9zYvUyDsott/Im9C7e/JVELPrwX47++RG8185PekGD8DO
+         +mCA==
+X-Gm-Message-State: AOJu0YwIZyRzbkAzMKDKL22IKCGG6gf6Q45a/qicJ5njIF0T0vY71pXQ
+	Kr6K8M7qvbQEUZ/Z9x9gSTf4kZ4B4k8mBDQf1zEZFw==
+X-Google-Smtp-Source: AGHT+IGnFbrjY/k2VHcjb88i9sDDgFFCVdi53yubweynVIv6nLDYxv1WIkySDgmatRGveMCAbleQWg==
+X-Received: by 2002:a05:6a20:3941:b0:18b:8d6c:d63 with SMTP id r1-20020a056a20394100b0018b8d6c0d63mr12398620pzg.7.1701114169589;
+        Mon, 27 Nov 2023 11:42:49 -0800 (PST)
+Received: from google.com ([2620:15c:2d3:204:d2e9:e3fe:4455:513f])
+        by smtp.gmail.com with ESMTPSA id f35-20020a631023000000b005ac384b71cbsm7848034pgl.60.2023.11.27.11.42.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Nov 2023 11:42:49 -0800 (PST)
+Date: Mon, 27 Nov 2023 11:42:44 -0800
+From: Josh Steadmon <steadmon@google.com>
+To: Glen Choo <glencbz@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Adam Majer <adamm@zombino.com>
+Subject: Re: [PATCH] setup: recognize bare repositories with packed-refs
+Message-ID: <ZWTxNBcF1wLufJPj@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+	Glen Choo <glencbz@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org, Adam Majer <adamm@zombino.com>
+References: <20231117202513.20604-1-adamm@zombino.com>
+ <20231117203253.21143-1-adamm@zombino.com>
+ <xmqqbkbppbrd.fsf@gitster.g>
+ <CA+we5Gqp2nhoXyqJKJiXQMDx-ZXcnNGHu3wnwERWREng2XHHuQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.43.0.rc1.413.gea7ed67945-goog
-Message-ID: <20231127182618.212901-1-jonathantanmy@google.com>
-Subject: Re: [PATCH v2 0/5] Avoid hang if curl needs eof twice + minor related improvements
-From: Jonathan Tan <jonathantanmy@google.com>
-To: "=?UTF-8?q?Ji=C5=99=C3=AD=20Hru=C5=A1ka?=" <jirka@fud.cz>
-Cc: Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org, 
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CA+we5Gqp2nhoXyqJKJiXQMDx-ZXcnNGHu3wnwERWREng2XHHuQ@mail.gmail.com>
 
-Ji=C5=99=C3=AD Hru=C5=A1ka <jirka@fud.cz> writes:
-> > I've already reviewed 1/5 so I'll summarize what I think of the rest.
-> Thank you for your time looking at everything, Jonathan.
->=20
-> I'm sorry for the delay in my reply, I was away for a while and also tryi=
-ng
-> to get clarity from the cURL side, summarized in [1].
->=20
-> [1] https://lore.kernel.org/git/CAGE_+C5u9H8m5faK1vXKk6QTyjcHgKHqxOZy5ptz=
-sYbF_0yrCQ@mail.gmail.com/
->=20
-> Most importantly, the bug has been apparently in libcurl only for ~1 year=
- and
-> it can no longer manifest for a few months. Therefore, the main point of =
-my
-> changes is a bit moot and we might reconsider what is useful and what is =
-not.
+On 2023.11.20 17:31, Glen Choo wrote:
+> On Mon, Nov 20, 2023 at 7:24 AM Junio C Hamano <gitster@pobox.com> wrote:
+> >
+> > Adam Majer <adamm@zombino.com> writes:
+> >
+> > > In a garbage collected bare git repository, the refs/ subdirectory is
+> > > empty.  In use-cases when such a repository is directly added into
+> > > another repository, it no longer is detected as valid.
+> >
+> > Josh & Glen [*], isn't this a layout that we  explicitly discourage and
+> > eventually plan to forbid anyway?
+> 
+> If my recollection of [1] serves me correctly, we didn't come to a
+> strong conclusion on whether or not to forbid bare repositories in the
+> working tree, particularly because it would leave existing repos (like
+> Git LFS) high and dry. Though personally, I'd be happy to see a
+> version of Git that forbade bare repositories in the working tree.
+> 
+> I don't really recall the bare repo tracing bits, so I'll leave that to Josh.
+> 
+> [1] https://lore.kernel.org/git/kl6lsfqpygsj.fsf@chooglen-macbookpro.roam.corp.google.com/
 
-Thanks for following up with the Curl side. Even if the Curl bug is
-fixed now, for what it's worth, I still think that it's worth including
-this mitigation in Git.
+Yeah, my understanding was that we don't want to forbid bare
+repositories outright, which is why we have the config option to let
+end-users choose what to do with them.
