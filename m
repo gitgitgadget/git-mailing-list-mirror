@@ -1,105 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cs-ware.de header.i=@cs-ware.de header.b="lLt0H9eQ"
-X-Greylist: delayed 419 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 27 Nov 2023 03:29:50 PST
-Received: from srv1.79p.de (srv1.79p.de [IPv6:2a01:4f8:222:1281::2])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 876F4B8
-	for <git@vger.kernel.org>; Mon, 27 Nov 2023 03:29:50 -0800 (PST)
-X-Virus-Scanned: Debian amavisd-new at srv1.79p.de
-Received: from [192.168.0.21] (i5C75E161.versanet.de [92.117.225.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Spfuqy+0"
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38347E1
+	for <git@vger.kernel.org>; Mon, 27 Nov 2023 04:05:01 -0800 (PST)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7D7C01BC326;
+	Mon, 27 Nov 2023 07:04:58 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=e4J37cz2UviQ
+	0S6sAcM7GTEjBppzFp/XBRS+wpyK8fg=; b=Spfuqy+0TRsvOwoW6uC9bzXo4a5e
+	AZ4sxsKfR+11sDzFk+CJ43XaQaL3DdDOz6UtVPNhOrjehIGJ5PryFa16MFCIjfW+
+	Nf92xkheox7grOKhARATMGN6vmfDj0LMaxXAALKMY0B89CWoy3lAlTo1qEYniIft
+	OUCXiN/QyQL2dhI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 74D0A1BC324;
+	Mon, 27 Nov 2023 07:04:58 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	(Authenticated sender: sven@cs-ware.de)
-	by srv1.79p.de (Postfix) with ESMTPSA id 300D2600093
-	for <git@vger.kernel.org>; Mon, 27 Nov 2023 12:22:47 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=cs-ware.de;
-	s=mail2023; t=1701084167;
-	bh=/CIkI6Tt7oI6Nnck6PB2OKw3dSLzWWNygXirAo2crik=;
-	h=Date:To:From:Subject:From;
-	b=lLt0H9eQbZ7B7vU4r4ywdQCZ2OWxpV+DOb5031SwPsp3z+68bSRb/cVLg5BxjmkoS
-	 oYHzx6d5aIA9GC4vny1qICnkcF7OdLQipMaNX2eQFtKAPHnJdjZSyRIGoierqULXKf
-	 6W01KVjKMvrMcWIn6Gh598/S/cnJY1KOrKxOWntGIaGn6bxOzUPCEzfeg908IAbwpT
-	 m7c9ikB4Qr9OqxvPoo5HlA0EKSvNu8E40owsrkBayr6wLEY4Okagj0VXajhdTo8jol
-	 QVQ2tiXWtvSPd5CatZU6/CVAUbBwESbSfqnjZleWd/W9HK4BtqAp7ZGytULwul/V4t
-	 acvWceRRmQacg==
-Message-ID: <4d944fe3-d31d-4859-8ed2-6c1da64410fe@cs-ware.de>
-Date: Mon, 27 Nov 2023 12:22:44 +0100
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CEF0D1BC323;
+	Mon, 27 Nov 2023 07:04:57 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc: Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] column: release strbuf and string_list after use
+In-Reply-To: <f087137d-a5aa-487e-a1cb-0ad7117b38ed@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+	message of "Sun, 26 Nov 2023 12:57:36 +0100")
+References: <f087137d-a5aa-487e-a1cb-0ad7117b38ed@web.de>
+Date: Mon, 27 Nov 2023 21:04:56 +0900
+Message-ID: <xmqqr0kb2yhj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: git <git@vger.kernel.org>
-From: Sven Strickroth <sven@cs-ware.de>
-Subject: --end-of-options inconsistently available?!
-Autocrypt: addr=sven@cs-ware.de; keydata=
- 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
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 2F168DBA-8D1D-11EE-A324-25B3960A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-gitcli(7) states:
-> Because -- disambiguates revisions and paths in some commands, it cannot be used for those commands to separate options and revisions. You can use --end-of-options for this (it also works for commands that do not distinguish between revisions in paths, in which case it is simply an alias for --).
+> Releasing strbuf and string_list just before exiting is not strictly
+> necessary, but it gets rid of false positives reported by leak checkers=
+,
+> which can then be more easily used to show that the column-printing
+> machinery behind print_columns() are free of leaks.
 
-However, when I use this for certain commands it fails:
-
-$ git reset --end-of-options HEAD --
-fatal: option '--end-of-options' must come before non-option arguments
-
-$ git rev-parse --symbolic-full-name --end-of-options master
---end-of-options
-refs/heads/master
-
-Here, the output also contains "--end-of-options" as if it is a 
-reference (same for "--")
-
-$ git checkout -f --end-of-options HEAD~1 -- afile.txt
-fatal: only one reference expected, 2 given.
-
-Best,
-  Sven
+Thanks for being careful.  Will queue.
