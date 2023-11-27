@@ -1,66 +1,69 @@
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D154BE6
-	for <git@vger.kernel.org>; Sun, 26 Nov 2023 09:49:25 -0800 (PST)
-Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-db4364ecd6aso2793264276.2
-        for <git@vger.kernel.org>; Sun, 26 Nov 2023 09:49:25 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701020965; x=1701625765;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nCpK2AuqyM8T0XZ4TLwPK/F2AWZyd1QYK+N+ZmRFZZc=;
-        b=q1G8MgXsLNnL2QKMs+waRYCapOSeqLQa4dgZcJ05Zg6RFeemwV5h5KIJFHJVbSSY+x
-         QWvK5Nmp1QxyCNN7ivHfNzHp07nbfzNrGt3qRXkdRT9Wye1ZvhIoTfv/i67+PS7RkP4i
-         6eUVEnoNDASPmLEaTFhFcoQ2mSA1Rt6bDgk9lBhLVlslQTGkabDQD/6gDEMvZg+Vnoas
-         0nrhWJdmS/7RVnghp5u971MGGpsyrQ4ujOH6iGbxGurvsNLHK/x/6KhzO19PN+C2mmD/
-         q7mUqq89BIXP5Imf+jtpmzwoZ6PFJRi1aGtEkJLk91hMNoDiWPh3lfwtSP/x3qINSWZU
-         6vvQ==
-X-Gm-Message-State: AOJu0YylepEMFOWOSL/OjYR0KLc17lRnb/bLY6McF1wnWhcHe9anO89U
-	o6bReA/gzK+1H8AYm5z5XPut9GPy+k8yolMHMoGaLUQnMraAnw==
-X-Google-Smtp-Source: AGHT+IH3YmPQpGQfwZEDcyT0ke2SZDMyTGsBO0j1VnqnE8izVlBu2sYtLTwiSRyj+HNnjQ6zPYNuqckv1JCzk6pxqCA=
-X-Received: by 2002:a5b:309:0:b0:db0:232c:451c with SMTP id
- j9-20020a5b0309000000b00db0232c451cmr6743748ybp.10.1701020964746; Sun, 26 Nov
- 2023 09:49:24 -0800 (PST)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="eG6QFjin"
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF162123
+	for <git@vger.kernel.org>; Sun, 26 Nov 2023 16:49:26 -0800 (PST)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 9F42736D6C;
+	Sun, 26 Nov 2023 19:49:25 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=FfcekrOfCUUgJkxQiI59EWPSFpZ3JS0VmpoiGN
+	f9ezE=; b=eG6QFjinI2SammIPdFprRPHrD4Ovi6iNT8MGwopuGwYhA/3TGwI0mH
+	cXUwkKv0a0N9JHq3QpGviRUDJmQnqf6c3Kw9RdM1GMWlk0VaqIz3DP9pitxDNd7z
+	bxmQ6eGwHvBUpz5WyOqqgieP1bT/qV57lulg6Gb+RsW5hhIOlC3nw=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 9895036D6B;
+	Sun, 26 Nov 2023 19:49:25 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3F9B136D69;
+	Sun, 26 Nov 2023 19:49:22 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Josh Soref <jsoref@gmail.com>
+Cc: Elijah Newren <newren@gmail.com>,  Josh Soref via GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Eric Sunshine
+ <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 0/4] Switch links to https
+In-Reply-To: <CACZqfqAq0ijtYO9-1q6h2KQMyxHgLpFOg--d4c9F4xT0nMkvUg@mail.gmail.com>
+	(Josh Soref's message of "Fri, 24 Nov 2023 11:03:10 -0500")
+References: <pull.1589.v2.git.1695553041.gitgitgadget@gmail.com>
+	<pull.1589.v3.git.1700796916.gitgitgadget@gmail.com>
+	<CABPp-BGhHivx9_R6fwL--K5nTvz1sh67JDMtWG7WajxmX=56Fg@mail.gmail.com>
+	<CACZqfqAq0ijtYO9-1q6h2KQMyxHgLpFOg--d4c9F4xT0nMkvUg@mail.gmail.com>
+Date: Mon, 27 Nov 2023 09:49:20 +0900
+Message-ID: <xmqqedgc58bz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <e6eb12e4-bb63-473c-9c2f-965a4d5981ad@web.de>
-In-Reply-To: <e6eb12e4-bb63-473c-9c2f-965a4d5981ad@web.de>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Sun, 26 Nov 2023 12:49:13 -0500
-Message-ID: <CAPig+cR5PKkyC24LkOU4+yzng1xeBOBbADTBHXH61xkAR7kymw@mail.gmail.com>
-Subject: Re: [PATCH] i18n: factorize even more 'incompatible options' messages
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc: Git List <git@vger.kernel.org>, =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ CDFE8E5A-8CBE-11EE-B270-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-On Sun, Nov 26, 2023 at 6:57=E2=80=AFAM Ren=C3=A9 Scharfe <l.s.r@web.de> wr=
-ote:
-> Continue the work of 12909b6b8a (i18n: turn "options are incompatible"
-> into "cannot be used together", 2022-01-05) and a699367bb8 (i18n:
-> factorize more 'incompatible options' messages, 2022-01-31) to use the
-> same parameterized error message for reporting incompatible command line
-> options.  This reduces the number of strings to translate and makes the
-> UI slightly more consistent.
+Josh Soref <jsoref@gmail.com> writes:
 
-Thanks for tackling this.
+> Elijah Newren wrote:
+>> As stated elsewhere, I'd be fine with using the archived link if the
+>> justification presented in the series for using archived links was
+>> consistent and mentioned both reasons for changes.  But, I think this
+>> series is fine to merge down as-is if you don't want to go through the
+>> trouble.  Especially given how long you've waited.
+>
+> I'm clearly still contributing, so I can come back later and cross
+> that bridge...
+>
+>> Anyway, I checked through every link in this series; it all looks good to me.
+>
+> Let's take this as-is. Thanks for taking the time to re-check every
+> link, I know exactly how tedious that is :).
 
-A couple additional instances recently slipped into `show-ref.c` which
-were caught during review[1,2] but nevertheless made it to
-"master"[3,4]. This patch, of course, doesn't need to address those,
-but if rerolling for some other reason, perhaps they can be included,
-as well(?).
+Thanks, both.  Will queue.
 
-[1]: https://lore.kernel.org/git/CAPig+cSrp7vZuy7D_ENHKZKZzF4OSmCtfYNHPGMtS=
-1Hj6gArDw@mail.gmail.com/
-[2]: https://lore.kernel.org/git/CAPig+cRTOMie0rUf=3DMhbo9e2EXf-_2kQyMeqpB9=
-OCRB1MZZ1rw@mail.gmail.com/
-[3]: 199970e72f (builtin/show-ref: ensure mutual exclusiveness of
-subcommands, 2023-10-31)
-[4]: 9080a7f178 (builtin/show-ref: add new mode to check for reference
-existence, 2023-10-31)
