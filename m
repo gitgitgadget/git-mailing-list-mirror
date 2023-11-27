@@ -1,30 +1,25 @@
 Authentication-Results: smtp.subspace.kernel.org; dkim=none
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9532131
-	for <git@vger.kernel.org>; Mon, 27 Nov 2023 13:31:16 -0800 (PST)
-Received: (qmail 25813 invoked by uid 109); 27 Nov 2023 21:31:16 -0000
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE216C1
+	for <git@vger.kernel.org>; Mon, 27 Nov 2023 13:38:44 -0800 (PST)
+Received: (qmail 25883 invoked by uid 109); 27 Nov 2023 21:38:44 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 27 Nov 2023 21:31:16 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 27 Nov 2023 21:38:44 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3936 invoked by uid 111); 27 Nov 2023 21:31:18 -0000
+Received: (qmail 3993 invoked by uid 111); 27 Nov 2023 21:38:46 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 27 Nov 2023 16:31:18 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 27 Nov 2023 16:38:46 -0500
 Authentication-Results: peff.net; auth=none
-Date: Mon, 27 Nov 2023 16:31:15 -0500
+Date: Mon, 27 Nov 2023 16:38:43 -0500
 From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>,
-	Willem Verstraeten <willem.verstraeten@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH 2/2] checkout: forbid "-B <branch>" from touching a
- branch used elsewhere
-Message-ID: <20231127213115.GB87495@coredump.intra.peff.net>
-References: <CAGX9RpFMCVLQV7RbK2u9AabusvkZD+RZNv_UD=R00cSUrjutBg@mail.gmail.com>
- <xmqqjzq9cl70.fsf@gitster.g>
- <xmqqv89tau3r.fsf@gitster.g>
- <xmqqpm01au0w.fsf_-_@gitster.g>
- <bf848477-b4dd-49d3-8e4b-de0fc3948570@gmail.com>
- <xmqqwmu42ccb.fsf@gitster.g>
+To: "H.Merijn Brand" <linux@tux.freedom.nl>
+Cc: Bagas Sanjaya <bagasdotme@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: Re: Fix git-send-email.perl w.r.t. recent Getopt::Long update
+Message-ID: <20231127213843.GC87495@coredump.intra.peff.net>
+References: <20231124103932.31ca7688@pc09>
+ <ZWFaZcgzwEP13geI@archie.me>
+ <20231125104211.5b7fe0be@pc09>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -33,49 +28,30 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqwmu42ccb.fsf@gitster.g>
+In-Reply-To: <20231125104211.5b7fe0be@pc09>
 
-On Mon, Nov 27, 2023 at 10:51:00AM +0900, Junio C Hamano wrote:
+On Sat, Nov 25, 2023 at 10:45:22AM +0100, H.Merijn Brand wrote:
 
-> >> +	if (opts->new_branch_force) {
-> >> +		char *full_ref = xstrfmt("refs/heads/%s", opts->new_branch);
-> >> +		die_if_switching_to_a_branch_in_use(opts, full_ref);
-> >> +		free(full_ref);
-> >
-> > At the moment this is academic as neither of the test scripts changed
-> > by this patch are leak free and so I don't think we need to worry
-> > about it but it raises an interesting question about how we should
-> > handle memory leaks when dying. Leaving the leak when dying means that
-> > a test script that tests an expected failure will never be leak free
-> > but using UNLEAK() would mean we miss a leak being introduced in the
-> > successful case should the call to "free()" ever be removed.
+> As I am used to PR's by now on all OSS projects I am involved in, or
+> use git commits or merges directly on the repo, I *never* use
+> format-patch and/or send-email.
 > 
-> Is there a leak here?  The piece of memory is pointed at by an on-stack
-> variable full_ref when leak sanitizer starts scanning the heap and
-> the stack just before the process exits due to die, so I do not see
-> a reason to worry about this particular variable over all the other
-> on stack variables we accumulated before the control reached this
-> point of the code.
+> These docs - yes I read them - do not offer a concise cut-n-paste
+> example for people like me. In order to have my relative simple patch
+> submitted (I already had the PR ready, but that came with a huge
+> warning that PR's are not accepted) I did it the way I did it. Now I
+> need to read and learn two new commands> I don't think that is very
+> user-friendly, but that might be just me.
 
-Right, I think the only reasonable approach here is to not consider this
-a leak. We've discussed this in the past. Here's a link into a relevant
-thread for reference, but I don't think it's really worth anybody's
-time to re-visit:
+These days you can use GitGitGadget to submit a PR to the mailing list:
 
-  https://lore.kernel.org/git/Y0+i1G5ybdhUGph2@coredump.intra.peff.net/
+  https://gitgitgadget.github.io/
 
-> Are you worried about optimizing compilers that behave more cleverly
-> than their own good to somehow lose the on-stack reference to
-> full_ref while calling die_if_switching_to_a_branch_in_use()?  We
-> might need to squelch them with UNLEAK() but that does not mean we
-> have to remove the free() we see above, and I suspect a more
-> productive use of our time to solve that issue is ensure that our
-> leak-sanitizing build will not triger such an unwanted optimization
-> anyway.
+The PR template mentions this, as well as the "about" text for git/git,
+but I won't be surprised if there are other spots that should be updated
+to mention it. If you found a message that would benefit from mentioning
+it, let us know so we can update it.
 
-We did have that problem, but it should no longer be the case after
-d3775de074 (Makefile: force -O0 when compiling with SANITIZE=leak,
-2022-10-18). If that is not sufficient for some compiler/code combo, I'd
-be interested to hear about it.
+Thanks.
 
 -Peff
