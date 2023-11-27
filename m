@@ -1,143 +1,105 @@
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-X-Greylist: delayed 522 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 27 Nov 2023 00:47:05 PST
-Received: from outbound.soverin.net (outbound.soverin.net [IPv6:2a10:de80:1:4092:b9e9:2292:0:1])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2FB210A
-	for <git@vger.kernel.org>; Mon, 27 Nov 2023 00:47:05 -0800 (PST)
-Received: from smtp.freedom.nl (c04cst-smtp-frd02.int.sover.in [10.10.4.108])
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=cs-ware.de header.i=@cs-ware.de header.b="lLt0H9eQ"
+X-Greylist: delayed 419 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 27 Nov 2023 03:29:50 PST
+Received: from srv1.79p.de (srv1.79p.de [IPv6:2a01:4f8:222:1281::2])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 876F4B8
+	for <git@vger.kernel.org>; Mon, 27 Nov 2023 03:29:50 -0800 (PST)
+X-Virus-Scanned: Debian amavisd-new at srv1.79p.de
+Received: from [192.168.0.21] (i5C75E161.versanet.de [92.117.225.97])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits))
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by outbound.soverin.net (Postfix) with ESMTPS id 4SdzWH3LvHzJ5;
-	Mon, 27 Nov 2023 08:38:19 +0000 (UTC)
-Received: from smtp.freedom.nl (smtp.freedom.nl [10.10.4.108]) by freedom.nl (Postfix) with ESMTPSA id 4SdzWG6Pxzz2xqm;
-	Mon, 27 Nov 2023 08:38:18 +0000 (UTC)
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=freedom.nl;
-	s=default; t=1701074299;
-	h=from:from:sender:reply-to:subject:subject:date:date:
-	 message-id:message-id:to:to:cc:mime-version:mime-version:
-	 content-type:content-type:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=2DheC75w1zyblh0K+Mh/QkDV0bfgeqceny8KByIcYdk=;
-	b=ZLDLJdfqBwxwpfv1P3E/teZ7Z+ZYBwRcD8xfUcnkr35SwqVqvdgzJEi5uh5cqKDiddkBBr
-	H4iI4jCayX8FOddYanHMpZu9/0AoTNTyTIEuBrM61knA0+NeNTJpccqPQktdH3d6/vSB1R
-	Qx+jDipmWfdwUGtwyq+/kh/NRLZYDjU=
-ARC-Authentication-Results: i=1;
-	smtp.freedom.nl;
-	auth=pass smtp.mailfrom=linux@tux.freedom.nl
-ARC-Seal: i=1; s=default; d=freedom.nl; t=1701074299; a=rsa-sha256;
-	cv=none;
-	b=eshLajqt5AYCAAwdl61TgRkZaU346Jat4s5PWZlfccssFB32JncNFjJH5TMFVUsg6hmoXY
-	xKFDFS22xCNJTgogLIbyE+LUC6RHbxFiNkbyeXZnDw9S/L9rN5djDynwN6a/iK2kmpitWj
-	ab1VJIDFfb+WpvvLLPdy8S16bg2Cm3s=
-Date: Mon, 27 Nov 2023 09:38:10 +0100
-X-Soverin-Authenticated: true
-From: "H.Merijn Brand" <linux@tux.freedom.nl>
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: Fix git-send-email.perl w.r.t. recent Getopt::Long update
-Message-ID: <20231127093810.2092fe1d@pc09>
-In-Reply-To: <xmqqzfz03tbn.fsf@gitster.g>
-References: <20231124103932.31ca7688@pc09>
-	<xmqqzfz03tbn.fsf@gitster.g>
+	(Authenticated sender: sven@cs-ware.de)
+	by srv1.79p.de (Postfix) with ESMTPSA id 300D2600093
+	for <git@vger.kernel.org>; Mon, 27 Nov 2023 12:22:47 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=cs-ware.de;
+	s=mail2023; t=1701084167;
+	bh=/CIkI6Tt7oI6Nnck6PB2OKw3dSLzWWNygXirAo2crik=;
+	h=Date:To:From:Subject:From;
+	b=lLt0H9eQbZ7B7vU4r4ywdQCZ2OWxpV+DOb5031SwPsp3z+68bSRb/cVLg5BxjmkoS
+	 oYHzx6d5aIA9GC4vny1qICnkcF7OdLQipMaNX2eQFtKAPHnJdjZSyRIGoierqULXKf
+	 6W01KVjKMvrMcWIn6Gh598/S/cnJY1KOrKxOWntGIaGn6bxOzUPCEzfeg908IAbwpT
+	 m7c9ikB4Qr9OqxvPoo5HlA0EKSvNu8E40owsrkBayr6wLEY4Okagj0VXajhdTo8jol
+	 QVQ2tiXWtvSPd5CatZU6/CVAUbBwESbSfqnjZleWd/W9HK4BtqAp7ZGytULwul/V4t
+	 acvWceRRmQacg==
+Message-ID: <4d944fe3-d31d-4859-8ed2-6c1da64410fe@cs-ware.de>
+Date: Mon, 27 Nov 2023 12:22:44 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/2V6K0LtRBTPit_/bRPk=TaO";
- protocol="application/pgp-signature"; micalg=pgp-sha256
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: git <git@vger.kernel.org>
+From: Sven Strickroth <sven@cs-ware.de>
+Subject: --end-of-options inconsistently available?!
+Autocrypt: addr=sven@cs-ware.de; keydata=
+ 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
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---Sig_/2V6K0LtRBTPit_/bRPk=TaO
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-On Mon, 27 Nov 2023 09:58:52 +0900, Junio C Hamano <gitster@pobox.com> wrot=
-e:
+gitcli(7) states:
+> Because -- disambiguates revisions and paths in some commands, it cannot be used for those commands to separate options and revisions. You can use --end-of-options for this (it also works for commands that do not distinguish between revisions in paths, in which case it is simply an alias for --).
 
-> "H.Merijn Brand" <linux@tux.freedom.nl> writes:
->=20
-> > From the Getopt::Long changes:
-> > ```
-> > Changes in version 2.55
-> > -----------------------
-> > * Fix long standing bug that duplicate options were not detected when
-> >   the options differ in case while ignore_case is in effect.
-> >   This will now yield a warning and become a fatal error in a future
-> >   release.
-> > ```
-> >
-> > Current version is 2.57 =20
->=20
-> This patch looks like duplicate of
->=20
->   https://lore.kernel.org/git/20231116193014.470420-1-tmz@pobox.com/
->=20
-> perhaps independently discovered and worked on.  Thanks for caring.
->=20
-> One downside of unconditional upgrade of the call is, of course,
-> that it would no longer work for those with older Getopt::Long that
-> did not support the "!" suffix.  Fortunately, Getopt::Long 2.33
-> started shipping with Perl 5.8.1 that is more than 20 years old, so
-> with the series we accepted, we also have a change to bump the
-> required version of Perl from 5.8.0 to 5.8.1 to make it clear that
-> it is deliberate that we drop the support for anything older at the
-> same time.
+However, when I use this for certain commands it fails:
 
-The is a no-issue ...
+$ git reset --end-of-options HEAD --
+fatal: option '--end-of-options' must come before non-option arguments
 
-Just the 'use Getopt::Long' is enough to guarantee a working version:
+$ git rev-parse --symbolic-full-name --end-of-options master
+--end-of-options
+refs/heads/master
 
-The '!' was already implemented in version 2.10 (April 1997):
---8<---
-=3Ditem !
+Here, the output also contains "--end-of-options" as if it is a 
+reference (same for "--")
 
-Option does not take an argument and may be negated, i.e. prefixed by
-"no". E.g. "foo!" will allow B<--foo> (with value 1) and B<-nofoo>
-(with value 0).
-The option variable will be set to 1, or 0 if negated.
--->8---
+$ git checkout -f --end-of-options HEAD~1 -- afile.txt
+fatal: only one reference expected, 2 given.
 
-Looking at the ChangeLog,  a reliable behavior of '!' was available
-since version 2.22 (march 2000):
---8<---
-Changes in version 2.22
------------------------
-
-* Fixes a bug in the combination of aliases and negation.
-
-  Old:  "foo|bar!" allowed negation on foo, but not on bar.
-  New:  "foo|bar!" allows negation on foo and bar.
-
-  Caveat: "foo|f!", with bundling, issues the warning that negation on
-  a short option is ignored. To obtain the desired behaviour, use
-
-        "foo!" =3D> \$opt_foo, "f" =3D> \$opt_foo
-  or
-        "foo|f" =3D> \$opt_foo, "nofoo" =3D> sub { $opt_foo =3D 0 }
-
-  Remember that this is _only_ required when bundling is in effect.
--->8---
-
---=20
-H.Merijn Brand  https://tux.nl   Perl Monger   http://amsterdam.pm.org/
-using perl5.00307 .. 5.37        porting perl5 on HP-UX, AIX, and Linux
-https://tux.nl/email.html http://qa.perl.org https://www.test-smoke.org
-                          =20
-
---Sig_/2V6K0LtRBTPit_/bRPk=TaO
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEGolmczWuFi3lJEbAA6FHoT5dwJgFAmVkVXIACgkQA6FHoT5d
-wJjTVgf+LuiDAP6nWo8ZlkxBZmUIdxclKfeBwrOlb24o0SezU1lAjx6giT7o0RTA
-KZdrF0f5A9CH5o8GltGbty/BJrjMoMsvNV7HbiUBewtDy3Z6mpu09bMGshKrBXyo
-GDPpKZ3PE2um1kP3/CvBqjswyycXE+sQaEvXhkSgLFuYIIRiv/S0lYoD9P32Aiqq
-EgRK23lbCEPGNO25AjwsCzUBvQJgmAb87iumujeEW0d4yBIl/h1kEIDMnsaZO0ue
-oqozgWQSnUWzvALfhFeJKV+nIFN8djQnMhSWIv9j0PUHYd8EKUSFHvUi+tHFQjVn
-Ig8JJvUMPd96HIKTb8Uf4tUAAG2Tpg==
-=28ac
------END PGP SIGNATURE-----
-
---Sig_/2V6K0LtRBTPit_/bRPk=TaO--
+Best,
+  Sven
