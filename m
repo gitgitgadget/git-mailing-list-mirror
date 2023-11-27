@@ -1,22 +1,30 @@
 Authentication-Results: smtp.subspace.kernel.org; dkim=none
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51E6E1B8
-	for <git@vger.kernel.org>; Mon, 27 Nov 2023 13:22:56 -0800 (PST)
-Received: (qmail 25740 invoked by uid 109); 27 Nov 2023 21:22:55 -0000
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9532131
+	for <git@vger.kernel.org>; Mon, 27 Nov 2023 13:31:16 -0800 (PST)
+Received: (qmail 25813 invoked by uid 109); 27 Nov 2023 21:31:16 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 27 Nov 2023 21:22:55 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 27 Nov 2023 21:31:16 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3862 invoked by uid 111); 27 Nov 2023 21:22:57 -0000
+Received: (qmail 3936 invoked by uid 111); 27 Nov 2023 21:31:18 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 27 Nov 2023 16:22:57 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 27 Nov 2023 16:31:18 -0500
 Authentication-Results: peff.net; auth=none
-Date: Mon, 27 Nov 2023 16:22:54 -0500
+Date: Mon, 27 Nov 2023 16:31:15 -0500
 From: Jeff King <peff@peff.net>
-To: Sven Strickroth <sven@cs-ware.de>
-Cc: git <git@vger.kernel.org>
-Subject: Re: --end-of-options inconsistently available?!
-Message-ID: <20231127212254.GA87495@coredump.intra.peff.net>
-References: <4d944fe3-d31d-4859-8ed2-6c1da64410fe@cs-ware.de>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>,
+	Willem Verstraeten <willem.verstraeten@gmail.com>,
+	git@vger.kernel.org
+Subject: Re: [PATCH 2/2] checkout: forbid "-B <branch>" from touching a
+ branch used elsewhere
+Message-ID: <20231127213115.GB87495@coredump.intra.peff.net>
+References: <CAGX9RpFMCVLQV7RbK2u9AabusvkZD+RZNv_UD=R00cSUrjutBg@mail.gmail.com>
+ <xmqqjzq9cl70.fsf@gitster.g>
+ <xmqqv89tau3r.fsf@gitster.g>
+ <xmqqpm01au0w.fsf_-_@gitster.g>
+ <bf848477-b4dd-49d3-8e4b-de0fc3948570@gmail.com>
+ <xmqqwmu42ccb.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -25,127 +33,49 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <4d944fe3-d31d-4859-8ed2-6c1da64410fe@cs-ware.de>
+In-Reply-To: <xmqqwmu42ccb.fsf@gitster.g>
 
-On Mon, Nov 27, 2023 at 12:22:44PM +0100, Sven Strickroth wrote:
+On Mon, Nov 27, 2023 at 10:51:00AM +0900, Junio C Hamano wrote:
 
-> Hi,
+> >> +	if (opts->new_branch_force) {
+> >> +		char *full_ref = xstrfmt("refs/heads/%s", opts->new_branch);
+> >> +		die_if_switching_to_a_branch_in_use(opts, full_ref);
+> >> +		free(full_ref);
+> >
+> > At the moment this is academic as neither of the test scripts changed
+> > by this patch are leak free and so I don't think we need to worry
+> > about it but it raises an interesting question about how we should
+> > handle memory leaks when dying. Leaving the leak when dying means that
+> > a test script that tests an expected failure will never be leak free
+> > but using UNLEAK() would mean we miss a leak being introduced in the
+> > successful case should the call to "free()" ever be removed.
 > 
-> gitcli(7) states:
-> > Because -- disambiguates revisions and paths in some commands, it cannot be used for those commands to separate options and revisions. You can use --end-of-options for this (it also works for commands that do not distinguish between revisions in paths, in which case it is simply an alias for --).
-> 
-> However, when I use this for certain commands it fails:
-> 
-> $ git reset --end-of-options HEAD --
-> fatal: option '--end-of-options' must come before non-option arguments
+> Is there a leak here?  The piece of memory is pointed at by an on-stack
+> variable full_ref when leak sanitizer starts scanning the heap and
+> the stack just before the process exits due to die, so I do not see
+> a reason to worry about this particular variable over all the other
+> on stack variables we accumulated before the control reached this
+> point of the code.
 
-This one seems like a bug. Handling of --end-of-options usually happens
-via the parse_options() API. But in this case, cmd_reset() calls it with
-PARSE_OPT_KEEP_DASHDASH, which retains the --end-of-options marker. But
-then the caller is not ready to deal with that string being left in
-argv[0] (it is OK with "--", but not anything else).
+Right, I think the only reasonable approach here is to not consider this
+a leak. We've discussed this in the past. Here's a link into a relevant
+thread for reference, but I don't think it's really worth anybody's
+time to re-visit:
 
-So at first glance, it feels like parse-options should avoid leaving it
-in place, like:
+  https://lore.kernel.org/git/Y0+i1G5ybdhUGph2@coredump.intra.peff.net/
 
-diff --git a/parse-options.c b/parse-options.c
-index e0c94b0546..5c07ad47ec 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -931,7 +931,7 @@ enum parse_opt_result parse_options_step(struct parse_opt_ctx_t *ctx,
- 
- 		if (!arg[2] /* "--" */ ||
- 		    !strcmp(arg + 2, "end-of-options")) {
--			if (!(ctx->flags & PARSE_OPT_KEEP_DASHDASH)) {
-+			if (arg[2] || !(ctx->flags & PARSE_OPT_KEEP_DASHDASH)) {
- 				ctx->argc--;
- 				ctx->argv++;
- 			}
+> Are you worried about optimizing compilers that behave more cleverly
+> than their own good to somehow lose the on-stack reference to
+> full_ref while calling die_if_switching_to_a_branch_in_use()?  We
+> might need to squelch them with UNLEAK() but that does not mean we
+> have to remove the free() we see above, and I suspect a more
+> productive use of our time to solve that issue is ensure that our
+> leak-sanitizing build will not triger such an unwanted optimization
+> anyway.
 
-But I think that confuses other callers. For example, t4202 fails
-because we try (with a ref called refs/heads/--source) to run:
-
-  git log --end-of-options --source
-
-expecting it it to be resolved as a ref. With the patch above, it gets
-confused. So I think we may need to teach KEEP_DASHDASH callers to
-handle end-of-options themselves. In the case of git-log, it is done by
-the revision machinery, but reset doesn't use that.
-
-So something like this works:
-
-diff --git a/builtin/reset.c b/builtin/reset.c
-index 4b018d20e3..a0d801179a 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -259,6 +259,9 @@ static void parse_args(struct pathspec *pathspec,
- 	 * At this point, argv points immediately after [-opts].
- 	 */
- 
-+	if (argv[0] && !strcmp(argv[0], "--end-of-options"))
-+		argv++;
-+
- 	if (argv[0]) {
- 		if (!strcmp(argv[0], "--")) {
- 			argv++; /* reset to HEAD, possibly with paths */
-
-but it feels like a maintenance problem that we'd have to audit every
-caller that uses KEEP_DASHDASH.
-
-On the other hand, I do think the callers need to be a bit aware of the
-issue to make things work seamlessly. In particular, this now does what
-you'd expect:
-
-  git reset --end-of-options foo -- bar
-
-But if we do this:
-
-  git reset --end-of-options --foo
-
-it works if "--foo" can be resolved, but otherwise complains "option
-'--foo' must come before non-option arguments", even if it exists as a
-file! IOW, the do-what-I-mean handling of "--" is too picky; in
-verify_filename() it complains about things that look like options, not
-realizing we already made sure to avoid those.
-
-OTOH that is also true of "git log --end-of-options --foo". And maybe
-not that big a deal in practice. If you are truly being careful you'd
-always do:
-
-  git log --end-of-options --foo -- --bar
-
-anyway, which is unambiguous.
-
-So I dunno. I'm not sure there's a central fix, and we may have to just
-fix this spot and look for others.
-
-> $ git rev-parse --symbolic-full-name --end-of-options master
-> --end-of-options
-> refs/heads/master
-> 
-> Here, the output also contains "--end-of-options" as if it is a reference
-> (same for "--")
-
-This one is intentional. rev-parse in its default mode is not just
-spitting out revisions, but also options that are meant to be passed
-along to the revision machinery via other commands (like rev-list). So
-for example:
-
-  $ git rev-parse --foo HEAD
-  --foo
-  564d0252ca632e0264ed670534a51d18a689ef5d
-
-And it does understand end-of-options explicitly, so:
-
-  $ git rev-parse --end-of-options --foo --
-  --end-of-options
-  fatal: bad revision '--foo'
-
-If you just want to parse a name robustly, use --verify.
-
-> $ git checkout -f --end-of-options HEAD~1 -- afile.txt
-> fatal: only one reference expected, 2 given.
-
-I think this is the same KEEP_DASHDASH problem as with git-reset.
+We did have that problem, but it should no longer be the case after
+d3775de074 (Makefile: force -O0 when compiling with SANITIZE=leak,
+2022-10-18). If that is not sufficient for some compiler/code combo, I'd
+be interested to hear about it.
 
 -Peff
