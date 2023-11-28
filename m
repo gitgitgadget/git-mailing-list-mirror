@@ -1,49 +1,49 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="ApWRMuPQ"
-Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D1AED66
-	for <git@vger.kernel.org>; Tue, 28 Nov 2023 11:08:07 -0800 (PST)
-Received: by mail-qt1-x831.google.com with SMTP id d75a77b69052e-4239f2c1209so23772181cf.2
-        for <git@vger.kernel.org>; Tue, 28 Nov 2023 11:08:07 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="Tl5dz+v6"
+Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0985410EC
+	for <git@vger.kernel.org>; Tue, 28 Nov 2023 11:08:12 -0800 (PST)
+Received: by mail-qk1-x72c.google.com with SMTP id af79cd13be357-778ac9c898dso276704385a.0
+        for <git@vger.kernel.org>; Tue, 28 Nov 2023 11:08:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1701198486; x=1701803286; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1701198492; x=1701803292; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=NT0SmoFD7rUuFip4tMJQaG/hpI4OvIVp7m3Ixsk9Xg4=;
-        b=ApWRMuPQAyer/5bbnjaoJypJdwP4rZVCEYNfYOSihjZ0C41yFMAE8kG11DCMQIQ9cz
-         xDYkhj7Mpo7rheZix9LzkZpgbZliQbFHaysytXQDRmuUV5694u5vwBg99Jf2PY0gd0ml
-         zHxnK7NxairA18Yrn2GWYwORvFE3CWntmDwfqjnGG4pGU9xxjTzCOIFQGqPj2XymjWup
-         rpY7e912vFxG+PVweD+W4P/8/IIpH8oBkQ+mg5R2K7mklVeNypMQsLdtLqk2KmEpU5v3
-         UHWHiLUkplngIO9xsmotIgCzDOcypPPKTB/XEuztmZ5bZovIYT8Qwwd15jN8XKQ/UVIi
-         AFwA==
+        bh=GEDtWcgKkKFMfj4d8K6Y4PlGFqXS3yAeCGaW38EJJH8=;
+        b=Tl5dz+v6fpKCwd1IHrvwBkP9bGNQHH9lKBnlUWK2zQ7WlGaVzsWMrkejoEXlPU4lZA
+         tL7Y5o23O4vij/707OyScX4afkvZnvjhvl6R6PVrFOiIqq9UknyQOtNzHEqShZGc90dV
+         MtfqhHU3nlA5wmklVP5Vk+lAxqEkQUS6uuYaCU4QHFo4i9WBxSSiWd1DWwqyPfk/iib3
+         Uc1L3VGaLgPSNeiitduuvrh8AGC1XDVxUADy3URP/DHGSn2LpcDVdDko3oDuPgimgG/b
+         2ubKuHQ8Na2pIWeyDl1xWYGxuyHeuOEG/lteoBGOtIBxU5Vr1vY/dJdei3stOFyMXmpz
+         hqBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701198486; x=1701803286;
+        d=1e100.net; s=20230601; t=1701198492; x=1701803292;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NT0SmoFD7rUuFip4tMJQaG/hpI4OvIVp7m3Ixsk9Xg4=;
-        b=OJ7RqCAdKVBLyTQuvAVm39gelzugsxeVIydc6fas4fwaRV1xrVf/GZ0V29sLoatCUP
-         ptcaaSzH5ceKu1hKcMPrcVOYpMi2E21bpH6NFQVOlkyIMPfLqKDsZpqsqJxo2RglyjWW
-         IQx3pahvyqmOgwYqCD4DzqD73akvz4kx9Bcp67nCP+KDpjoEhVSkNztg1lJrO+/Y3WDk
-         td5KfKzoKzBI1WShLZW4YABmzdKreVNrQ2mOMUqI6y3of6SbuXMpg9p4LGQRNsV9b2Mk
-         gX2dWLOvRCxxQD0u9JGjyM1PO8YQK/7YkD0Cxs4IO3JuqX8/uVX4AV3Qy9C0+UdvsD87
-         PGCw==
-X-Gm-Message-State: AOJu0YzKcOnXHmpqNs1qRwvZrHbCNTp4og0HNOeBMuENLCaIZtpopukn
-	Y/Z0u9NyPGbiDiq4GiDPS/Jv5hdNLTKjiM3AnPs=
-X-Google-Smtp-Source: AGHT+IHy3qRYO6uvmkojf0Z5ZlkmyoCy5dAya4XPLOLF1R6+1cNkIydlUUfyt/DVF/ZHdtS34MRSUw==
-X-Received: by 2002:ac8:7dcf:0:b0:41e:1b18:f4a2 with SMTP id c15-20020ac87dcf000000b0041e1b18f4a2mr21781682qte.36.1701198486343;
-        Tue, 28 Nov 2023 11:08:06 -0800 (PST)
+        bh=GEDtWcgKkKFMfj4d8K6Y4PlGFqXS3yAeCGaW38EJJH8=;
+        b=PVlNvXA5JUyTcxfCTCLzkzU5gFODUFBwzsB54SKdXOQkfQXMAFWSw8E9ykejRrjI/U
+         jz3PGu6p/dwyW1cn6HEAneFNt2GJCBiek1lJsJaO/aRNT6GYavRmgKcxG8ZR6XSzT9Gt
+         nKsjPeDcWsbri1x03QLD9Lsyx48Un3LRD/1/C1NtcicdFMWWcJ1/+pbw7hx1iTUdD2O8
+         JBdvjmnMFfassBBOxkl5VLSCHACVeHXi0BcN9XQ/xn4piFtmK/T+pme5lXM0CSpl94Mu
+         dn1qu5EzgOXem1xhqYBV2DAkap5M2mTrQp4XDsGa7Cuv/QCpnlUsN1+OV7PxLuKXdo+q
+         fpKA==
+X-Gm-Message-State: AOJu0YwMNB+9p7daGONd88lFofeA3DU4oSfm3EaQPDfzvpKi9TYF10TX
+	GxJvDbtCatwLfmNANrHuoEbxyepnQHo4s8L/0T4=
+X-Google-Smtp-Source: AGHT+IH6H6DgOw5Y7jLzNCRRfxul3ern0EAsO3FLTSo/OfWTr1neQ05GtUEUSReRHcUz6ohtIn+Isw==
+X-Received: by 2002:a05:620a:1992:b0:77d:bbb7:4690 with SMTP id bm18-20020a05620a199200b0077dbbb74690mr4263950qkb.12.1701198491804;
+        Tue, 28 Nov 2023 11:08:11 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id o1-20020ac84281000000b0041cb8947ed2sm4810354qtl.26.2023.11.28.11.08.06
+        by smtp.gmail.com with ESMTPSA id dt32-20020a05620a47a000b0077d71d46887sm4702414qkb.112.2023.11.28.11.08.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Nov 2023 11:08:06 -0800 (PST)
-Date: Tue, 28 Nov 2023 14:08:05 -0500
+        Tue, 28 Nov 2023 11:08:11 -0800 (PST)
+Date: Tue, 28 Nov 2023 14:08:10 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 04/24] midx: factor out `fill_pack_info()`
-Message-ID: <ccf1337305db60f1c8174e9b309e2a9e04ce1487.1701198172.git.me@ttaylorr.com>
+Subject: [PATCH 06/24] midx: implement `midx_locate_pack()`
+Message-ID: <541fbb442b78942dd6319821a340b2298c836138.1701198172.git.me@ttaylorr.com>
 References: <cover.1701198172.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -55,119 +55,83 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1701198172.git.me@ttaylorr.com>
 
-When selecting which packfiles will be written while generating a MIDX,
-the MIDX internals fill out a 'struct pack_info' with various pieces of
-book-keeping.
+The multi-pack index API exposes a `midx_contains_pack()` function that
+takes in a string ending in either ".idx" or ".pack" and returns whether
+or not the MIDX contains a given pack corresponding to that string.
 
-Instead of filling out each field of the `pack_info` structure
-individually in each of the two spots that modify the array of such
-structures (`ctx->info`), extract a common routine that does this for
-us.
+There is no corresponding function to locate the position of a pack
+within the MIDX's pack order (sorted lexically by pack filename).
 
-This reduces the code duplication by a modest amount. But more
-importantly, it zero-initializes the structure before assigning values
-into it. This hardens us for a future change which will add additional
-fields to this structure which (until this patch) was not
-zero-initialized.
+We could add an optional out parameter to `midx_contains_pack()` that is
+filled out with the pack's position when the parameter is non-NULL. To
+minimize the amount of fallout from this change, instead introduce a new
+function by renaming `midx_contains_pack()` to `midx_locate_pack()`,
+adding that output parameter, and then reimplementing
+`midx_contains_pack()` in terms of it.
 
-As a result, any new fields added to the `pack_info` structure need only
-be updated in a single location, instead of at each spot within midx.c.
-
-There are no functional changes in this patch.
+Future patches will make use of this new function.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- midx.c | 35 +++++++++++++++++++----------------
- 1 file changed, 19 insertions(+), 16 deletions(-)
+ midx.c | 13 +++++++++++--
+ midx.h |  5 ++++-
+ 2 files changed, 15 insertions(+), 3 deletions(-)
 
 diff --git a/midx.c b/midx.c
-index 3b727dc633..591b3c636e 100644
+index f55020072f..65ba0c70fe 100644
 --- a/midx.c
 +++ b/midx.c
-@@ -464,6 +464,17 @@ struct pack_info {
- 	unsigned expired : 1;
- };
+@@ -413,7 +413,8 @@ static int cmp_idx_or_pack_name(const char *idx_or_pack_name,
+ 	return strcmp(idx_or_pack_name, idx_name);
+ }
  
-+static void fill_pack_info(struct pack_info *info,
-+			   struct packed_git *p, char *pack_name,
-+			   uint32_t orig_pack_int_id)
+-int midx_contains_pack(struct multi_pack_index *m, const char *idx_or_pack_name)
++int midx_locate_pack(struct multi_pack_index *m, const char *idx_or_pack_name,
++		     uint32_t *pos)
+ {
+ 	uint32_t first = 0, last = m->num_packs;
+ 
+@@ -424,8 +425,11 @@ int midx_contains_pack(struct multi_pack_index *m, const char *idx_or_pack_name)
+ 
+ 		current = m->pack_names[mid];
+ 		cmp = cmp_idx_or_pack_name(idx_or_pack_name, current);
+-		if (!cmp)
++		if (!cmp) {
++			if (pos)
++				*pos = mid;
+ 			return 1;
++		}
+ 		if (cmp > 0) {
+ 			first = mid + 1;
+ 			continue;
+@@ -436,6 +440,11 @@ int midx_contains_pack(struct multi_pack_index *m, const char *idx_or_pack_name)
+ 	return 0;
+ }
+ 
++int midx_contains_pack(struct multi_pack_index *m, const char *idx_or_pack_name)
 +{
-+	memset(info, 0, sizeof(struct pack_info));
-+
-+	info->orig_pack_int_id = orig_pack_int_id;
-+	info->pack_name = pack_name;
-+	info->p = p;
++	return midx_locate_pack(m, idx_or_pack_name, NULL);
 +}
 +
- static int pack_info_compare(const void *_a, const void *_b)
+ int prepare_multi_pack_index_one(struct repository *r, const char *object_dir, int local)
  {
- 	struct pack_info *a = (struct pack_info *)_a;
-@@ -504,6 +515,7 @@ static void add_pack_to_midx(const char *full_path, size_t full_path_len,
- 			     const char *file_name, void *data)
- {
- 	struct write_midx_context *ctx = data;
-+	struct packed_git *p;
+ 	struct multi_pack_index *m;
+diff --git a/midx.h b/midx.h
+index cdd16a8378..a6e969c2ea 100644
+--- a/midx.h
++++ b/midx.h
+@@ -70,7 +70,10 @@ struct object_id *nth_midxed_object_oid(struct object_id *oid,
+ 					struct multi_pack_index *m,
+ 					uint32_t n);
+ int fill_midx_entry(struct repository *r, const struct object_id *oid, struct pack_entry *e, struct multi_pack_index *m);
+-int midx_contains_pack(struct multi_pack_index *m, const char *idx_or_pack_name);
++int midx_contains_pack(struct multi_pack_index *m,
++		       const char *idx_or_pack_name);
++int midx_locate_pack(struct multi_pack_index *m, const char *idx_or_pack_name,
++		     uint32_t *pos);
+ int prepare_multi_pack_index_one(struct repository *r, const char *object_dir, int local);
  
- 	if (ends_with(file_name, ".idx")) {
- 		display_progress(ctx->progress, ++ctx->pack_paths_checked);
-@@ -530,17 +542,14 @@ static void add_pack_to_midx(const char *full_path, size_t full_path_len,
- 
- 		ALLOC_GROW(ctx->info, ctx->nr + 1, ctx->alloc);
- 
--		ctx->info[ctx->nr].p = add_packed_git(full_path,
--						      full_path_len,
--						      0);
--
--		if (!ctx->info[ctx->nr].p) {
-+		p = add_packed_git(full_path, full_path_len, 0);
-+		if (!p) {
- 			warning(_("failed to add packfile '%s'"),
- 				full_path);
- 			return;
- 		}
- 
--		if (open_pack_index(ctx->info[ctx->nr].p)) {
-+		if (open_pack_index(p)) {
- 			warning(_("failed to open pack-index '%s'"),
- 				full_path);
- 			close_pack(ctx->info[ctx->nr].p);
-@@ -548,9 +557,8 @@ static void add_pack_to_midx(const char *full_path, size_t full_path_len,
- 			return;
- 		}
- 
--		ctx->info[ctx->nr].pack_name = xstrdup(file_name);
--		ctx->info[ctx->nr].orig_pack_int_id = ctx->nr;
--		ctx->info[ctx->nr].expired = 0;
-+		fill_pack_info(&ctx->info[ctx->nr], p, xstrdup(file_name),
-+			       ctx->nr);
- 		ctx->nr++;
- 	}
- }
-@@ -1310,11 +1318,6 @@ static int write_midx_internal(const char *object_dir,
- 		for (i = 0; i < ctx.m->num_packs; i++) {
- 			ALLOC_GROW(ctx.info, ctx.nr + 1, ctx.alloc);
- 
--			ctx.info[ctx.nr].orig_pack_int_id = i;
--			ctx.info[ctx.nr].pack_name = xstrdup(ctx.m->pack_names[i]);
--			ctx.info[ctx.nr].p = ctx.m->packs[i];
--			ctx.info[ctx.nr].expired = 0;
--
- 			if (flags & MIDX_WRITE_REV_INDEX) {
- 				/*
- 				 * If generating a reverse index, need to have
-@@ -1330,10 +1333,10 @@ static int write_midx_internal(const char *object_dir,
- 				if (open_pack_index(ctx.m->packs[i]))
- 					die(_("could not open index for %s"),
- 					    ctx.m->packs[i]->pack_name);
--				ctx.info[ctx.nr].p = ctx.m->packs[i];
- 			}
- 
--			ctx.nr++;
-+			fill_pack_info(&ctx.info[ctx.nr++], ctx.m->packs[i],
-+				       xstrdup(ctx.m->pack_names[i]), i);
- 		}
- 	}
- 
+ /*
 -- 
 2.43.0.24.g980b318f98
 
