@@ -1,131 +1,217 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cs-ware.de header.i=@cs-ware.de header.b="IonfrYBE"
-X-Greylist: delayed 76640 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 28 Nov 2023 00:40:13 PST
-Received: from srv1.79p.de (srv1.79p.de [213.239.234.118])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 214589D
-	for <git@vger.kernel.org>; Tue, 28 Nov 2023 00:40:13 -0800 (PST)
-X-Virus-Scanned: Debian amavisd-new at srv1.79p.de
-Received: from [IPV6:2001:9e8:2bf4:7300:783b:600d:72e6:ec24] (unknown [IPv6:2001:9e8:2bf4:7300:783b:600d:72e6:ec24])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: sven@cs-ware.de)
-	by srv1.79p.de (Postfix) with ESMTPSA id CB36B600094;
-	Tue, 28 Nov 2023 09:40:09 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=cs-ware.de;
-	s=mail2023; t=1701160809;
-	bh=Fl89Yy7bd8+vDD7IkYjV4Ypy1HkNRtSC891PBmV3ZoE=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=IonfrYBEHcA5+Z7eS0etx/4aRWjp2N9acLk9Q8Z0w8qmMVddb406aSM5HqpelkQU4
-	 iKMjX/f0/VT3EXXVUZRE7yNHgS/+vxZQCyJByoSwtYt7b3Q/HOrwel5/XYHukcLoLf
-	 Eqi2a8zDQ/ndvELm67RxGDMAWYu7M3jczyu7wzCx/8SPgukOLetTlzPyYhBtoao9Hn
-	 alDn2MxmnQ05s1zwIOIV1NK9vmx/pAWOT0AIRdSgvUpPtatcOFUumpE3t2JJnyTHuf
-	 5WBLC1DkVzsKGj6J/Wayf7poYs6pHaeTsfIjx2noTBgXMriHOdB7is1qSFwUNp+3e+
-	 JFOI5VvHgFhgA==
-Message-ID: <ab14260c-d515-425e-8ef6-5739d3d6ca4e@cs-ware.de>
-Date: Tue, 28 Nov 2023 09:40:08 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tiJofdHo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xnjyDizl"
+Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E666BD4B
+	for <git@vger.kernel.org>; Tue, 28 Nov 2023 04:33:51 -0800 (PST)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.west.internal (Postfix) with ESMTP id E703D3200BE0;
+	Tue, 28 Nov 2023 07:33:50 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Tue, 28 Nov 2023 07:33:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to; s=fm1; t=1701174830; x=1701261230; bh=o6
+	QX0OEp7PFa4I8GB2OAFFUHrElFlt/3OlXrL9szi4g=; b=tiJofdHoAeZT/UPinK
+	CnJEfg6btxVEHdgkC5QOYmANFej+IyfyqGwRUDdMsfaIriTHdGAto29/I58UY7pV
+	wtWlPHIwGSBY9ImbKMmH3ZwblyBV+bq2hFHRnbg5XAyCjLVbthw4ELBUNf3EV7TX
+	dSt1IY9RzVjhmHvBFWdG9GJsKdmEfkWnEpWOt6tbvUVxIRosYzrRu6hwtRXcParq
+	m4vXLfeZ3cl+ByYiki4QmkK1/DYBDI/7ZZOgwOUvHTGQoEX28CZ2qfdYPwbe5h7+
+	AnxaNXb0mVBT0lF+qqus19gXPZ18XbjXwqjRLHh4f1c6Xu5EWXXaf5ZWWS4m0jNK
+	o+Zw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm1; t=1701174830; x=1701261230; bh=o6QX0OEp7PFa4
+	I8GB2OAFFUHrElFlt/3OlXrL9szi4g=; b=xnjyDizl/8gmSSGIljTOafNhQYMSH
+	96abrf7hqSh0qB9PA90ZLu/TqTibuCscOHMcy05ZUNdwYXVBKNtunOF84lWFnt4L
+	mP179JLhNSA+t7fR8DeZ31T881tkEDhDRBjPaOpmYpUzCGGBK2+VGbpUmJh4pG/Z
+	lMqJ1N/0K9RMpQMtCLePgbidj2TVuMbBhaD/3jy3sbIAmrtLq/4TPN8kaFJ21mOn
+	mn3stkj0vKH0SmpGU4cQ/TFhcpOyog11wkgQU3rPuzs5y8U3oYDB8ql8wQLwCFFS
+	McdM58IRZSMf3NSk2IGo13fF96xD750Nejm2bO5Ku7/uHy6f6oQVGZmYA==
+X-ME-Sender: <xms:Ld5lZeCn8px8xQTHcGlvBfkpd0BSf6RkhHxkwugQnXp0nF3yQucaCg>
+    <xme:Ld5lZYjWmiCoeZYlBFPNoKmvml9I2DS8Shw7EOvLcExOcKVhAngTsOzRdUOj2k0p6
+    gbJiYtIPZaAP7iLZw>
+X-ME-Received: <xmr:Ld5lZRnga6uLpa1PsqOTTJH1QoCF9KlsbYYg0Sv7twFooo2sN561c_CFn4X1sKYW-mQMwQmW8Fg7WXmWQ4b0yBu_CnuRgZ3MiuPh7Vmps8lsqg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudeifedggeduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtroertddtjeenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepvdeuteeukefgvdfhvddtudejiefhffeggeeiffdtudfhleeijeelkeffhedtheeu
+    necuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtne
+    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:Ld5lZcxMNHI7MC2aZZVqe5B77LaYsYF6Z8N1DR6RffkxXePEFxnMmA>
+    <xmx:Ld5lZTS_l4339cAZ6nCym_N5Ep68MdMcZERYNp0rm1GvNHXKHGACXg>
+    <xmx:Ld5lZXa9O3yBKU88O4D6EBRgQae6hRdMkeOGSxKlRANDBQrbZ_gKqA>
+    <xmx:Lt5lZdcbFrD1spZW2YOYUHfKTk_Bvm0DZPrhX9Sn26CFKO-7949xMw>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 28 Nov 2023 07:33:48 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 0d79f994 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 28 Nov 2023 12:32:38 +0000 (UTC)
+Date: Tue, 28 Nov 2023 13:33:45 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	=?iso-8859-1?Q?Jean-No=EBl?= Avila <jn.avila@free.fr>,
+	Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] i18n: factorize even more 'incompatible options' messages
+Message-ID: <ZWXeKYHOCbwEOvnR@tanuki>
+References: <e6eb12e4-bb63-473c-9c2f-965a4d5981ad@web.de>
+ <CAPig+cR5PKkyC24LkOU4+yzng1xeBOBbADTBHXH61xkAR7kymw@mail.gmail.com>
+ <d1f28272-635d-4638-b0f4-76d64013b0d5@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: --end-of-options inconsistently available?!
-Content-Language: en-US
-To: Jeff King <peff@peff.net>
-Cc: git <git@vger.kernel.org>
-References: <4d944fe3-d31d-4859-8ed2-6c1da64410fe@cs-ware.de>
- <20231127212254.GA87495@coredump.intra.peff.net>
-From: Sven Strickroth <sven@cs-ware.de>
-Autocrypt: addr=sven@cs-ware.de; keydata=
- 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
-In-Reply-To: <20231127212254.GA87495@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="tQ+ge/bC+sOOGmhV"
+Content-Disposition: inline
+In-Reply-To: <d1f28272-635d-4638-b0f4-76d64013b0d5@web.de>
 
-Am 27.11.2023 um 22:22 schrieb Jeff King:
->> $ git rev-parse --symbolic-full-name --end-of-options master
->> --end-of-options
->> refs/heads/master
->>
->> Here, the output also contains "--end-of-options" as if it is a reference
->> (same for "--")
-> 
-> This one is intentional. rev-parse in its default mode is not just
-> spitting out revisions, but also options that are meant to be passed
-> along to the revision machinery via other commands (like rev-list). So
-> for example:
-> 
->    $ git rev-parse --foo HEAD
->    --foo
->    564d0252ca632e0264ed670534a51d18a689ef5d
-> 
-> And it does understand end-of-options explicitly, so:
-> 
->    $ git rev-parse --end-of-options --foo --
->    --end-of-options
->    fatal: bad revision '--foo'
-> 
-> If you just want to parse a name robustly, use --verify.
 
-I would expect that -- and --end-of-options are handled in a special way 
-here so that rev-parse can also be used in scripts. I need to check 
-whether --verify works for me (from the manual I thought I need to 
-specify full reference names).
+--tQ+ge/bC+sOOGmhV
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->> $ git checkout -f --end-of-options HEAD~1 -- afile.txt
->> fatal: only one reference expected, 2 given.
-> 
-> I think this is the same KEEP_DASHDASH problem as with git-reset.
+On Mon, Nov 27, 2023 at 06:39:41PM +0100, Ren=C3=A9 Scharfe wrote:
+> Am 26.11.23 um 18:49 schrieb Eric Sunshine:
+> > On Sun, Nov 26, 2023 at 6:57=E2=80=AFAM Ren=C3=A9 Scharfe <l.s.r@web.de=
+> wrote:
+> >> Continue the work of 12909b6b8a (i18n: turn "options are incompatible"
+> >> into "cannot be used together", 2022-01-05) and a699367bb8 (i18n:
+> >> factorize more 'incompatible options' messages, 2022-01-31) to use the
+> >> same parameterized error message for reporting incompatible command li=
+ne
+> >> options.  This reduces the number of strings to translate and makes the
+> >> UI slightly more consistent.
+> >
+> > Thanks for tackling this.
+> >
+> > A couple additional instances recently slipped into `show-ref.c` which
+> > were caught during review[1,2] but nevertheless made it to
+> > "master"[3,4]. This patch, of course, doesn't need to address those,
+> > but if rerolling for some other reason, perhaps they can be included,
+> > as well(?).
 
-I also found another problem:
-$ git format-patch --end-of-options -1
-fatal: option '-1' must come before non-option arguments
+Ah, I wasn't aware of these new wrappers, either. The below patch looks
+good to me, thanks for the fixup.
 
-Where -1 is the number of commits here...
+Patrick
 
-Best,
-  Sven
+> > [1]: https://lore.kernel.org/git/CAPig+cSrp7vZuy7D_ENHKZKZzF4OSmCtfYNHP=
+GMtS1Hj6gArDw@mail.gmail.com/
+> > [2]: https://lore.kernel.org/git/CAPig+cRTOMie0rUf=3DMhbo9e2EXf-_2kQyMe=
+qpB9OCRB1MZZ1rw@mail.gmail.com/
+> > [3]: 199970e72f (builtin/show-ref: ensure mutual exclusiveness of
+> > subcommands, 2023-10-31)
+> > [4]: 9080a7f178 (builtin/show-ref: add new mode to check for reference
+> > existence, 2023-10-31)
+>=20
+> [4] changes the message added by [3], so that's one instance, right?
+>=20
+> --- >8 ---
+> Subject: [PATCH] show-ref: use die_for_incompatible_opt3()
+>=20
+> Use the standard message for reporting the use of multiple mutually
+> exclusive options by calling die_for_incompatible_opt3() instead of
+> rolling our own.  This has the benefits of showing only the actually
+> given options, reducing the number of strings to translate and making
+> the UI slightly more consistent.
+>=20
+> Adjust the test to no longer insist on a specific order of the
+> reported options, as this implementation detail does not affect the
+> usefulness of the error message.
+>=20
+> Reported-by: Eric Sunshine <sunshine@sunshineco.com>
+> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+> ---
+>  builtin/show-ref.c  |  6 +++---
+>  t/t1403-show-ref.sh | 16 +++++++++-------
+>  2 files changed, 12 insertions(+), 10 deletions(-)
+>=20
+> diff --git a/builtin/show-ref.c b/builtin/show-ref.c
+> index 7aac525a87..59d2291cbf 100644
+> --- a/builtin/show-ref.c
+> +++ b/builtin/show-ref.c
+> @@ -315,9 +315,9 @@ int cmd_show_ref(int argc, const char **argv, const c=
+har *prefix)
+>  	argc =3D parse_options(argc, argv, prefix, show_ref_options,
+>  			     show_ref_usage, 0);
+>=20
+> -	if ((!!exclude_existing_opts.enabled + !!verify + !!exists) > 1)
+> -		die(_("only one of '%s', '%s' or '%s' can be given"),
+> -		    "--exclude-existing", "--verify", "--exists");
+> +	die_for_incompatible_opt3(exclude_existing_opts.enabled, "--exclude-exi=
+sting",
+> +				  verify, "--verify",
+> +				  exists, "--exists");
+>=20
+>  	if (exclude_existing_opts.enabled)
+>  		return cmd_show_ref__exclude_existing(&exclude_existing_opts);
+> diff --git a/t/t1403-show-ref.sh b/t/t1403-show-ref.sh
+> index b50ae6fcf1..d477689e33 100755
+> --- a/t/t1403-show-ref.sh
+> +++ b/t/t1403-show-ref.sh
+> @@ -197,18 +197,20 @@ test_expect_success 'show-ref --verify with danglin=
+g ref' '
+>  '
+>=20
+>  test_expect_success 'show-ref sub-modes are mutually exclusive' '
+> -	cat >expect <<-EOF &&
+> -	fatal: only one of ${SQ}--exclude-existing${SQ}, ${SQ}--verify${SQ} or =
+${SQ}--exists${SQ} can be given
+> -	EOF
+> -
+>  	test_must_fail git show-ref --verify --exclude-existing 2>err &&
+> -	test_cmp expect err &&
+> +	grep "verify" err &&
+> +	grep "exclude-existing" err &&
+> +	grep "cannot be used together" err &&
+>=20
+>  	test_must_fail git show-ref --verify --exists 2>err &&
+> -	test_cmp expect err &&
+> +	grep "verify" err &&
+> +	grep "exists" err &&
+> +	grep "cannot be used together" err &&
+>=20
+>  	test_must_fail git show-ref --exclude-existing --exists 2>err &&
+> -	test_cmp expect err
+> +	grep "exclude-existing" err &&
+> +	grep "exists" err &&
+> +	grep "cannot be used together" err
+>  '
+>=20
+>  test_expect_success '--exists with existing reference' '
+> --
+> 2.43.0
 
+--tQ+ge/bC+sOOGmhV
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVl3iQACgkQVbJhu7ck
+PpQFNA//Uyy3Qzuh5I7kNtPFEaZXQ8ItC2Re5RZkSnWyY5ZwYDFwvYWluAPPjySI
++hA2e2InX15RJQlzZIuwC+trDeTLkrVODNKat5Q7OLA/rja2eI2jlTEIpDE3Ec/8
+Qt6x7lvJV1QRAyf7EO/BvctfZyoqIr/Tw7o8yjCout7aRyvryoKyRRDJhzw7oVle
+PNh+0jm9/ohLQscmcuXJgPoiEr01B2K0IvuBYFpbqWLvq0UzF5oHiE/+jS/Kn/Cq
+0FZnAoq98CDjOEtCtXiIZqNxQuAWDkFu+xOGlXwhYWnkRIt0jhME0/yjJEG28cSO
+Rgfez8KMPS3q67W06AyiBsbN1eVfQAohYHv3zf1Jo09c8H0D4IWxrZxA1Hoq3Q62
+sgv1F83qC58QGtFNbM95p4aSsGvs7RUwwZMHStmEpC2vRtU0lkNb1aG7pDvqbhTr
+Xy7XAuhORENg2dILMDZpWlvvFTIKC4iBoZbZ/Rh2Dlq6iCZ8uwwlHUa/3gTlEIPf
+OhBBEToVQ8jKzSKkabttdMSFTTyMXTFg6WrLMz5vEV7VPha4LTB9hWTQZ3+sjmBG
+5qz4ewrHx9MA66JInNgeGxf98L6+s5xl5WDnHWiuMsyQWYRtDgAYxEIzBZEbKUSI
+9K/CTXH5yEeRhmTJz3ewcGEGiNiRpDv1nYz1344nBXab90MYVIY=
+=z97O
+-----END PGP SIGNATURE-----
+
+--tQ+ge/bC+sOOGmhV--
