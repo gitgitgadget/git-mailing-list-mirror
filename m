@@ -1,49 +1,49 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="dXQRAjS1"
-Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65EE910FB
-	for <git@vger.kernel.org>; Tue, 28 Nov 2023 11:08:18 -0800 (PST)
-Received: by mail-qv1-xf2f.google.com with SMTP id 6a1803df08f44-67a42549764so14889936d6.1
-        for <git@vger.kernel.org>; Tue, 28 Nov 2023 11:08:18 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="AsSDdN3+"
+Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42CCAC3
+	for <git@vger.kernel.org>; Tue, 28 Nov 2023 11:08:21 -0800 (PST)
+Received: by mail-qk1-x736.google.com with SMTP id af79cd13be357-77d85cf1ff5so218532385a.0
+        for <git@vger.kernel.org>; Tue, 28 Nov 2023 11:08:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1701198497; x=1701803297; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1701198500; x=1701803300; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=4IxPIRJ5+f4FdzHV3JPmJVntgL2kpL2TSGZ7bDzH3iY=;
-        b=dXQRAjS196hWaueofLs3CRaZwF+JVbguAFCTVAhhGQKZgRO5FFA3wZc7p3/7/+cGjV
-         C6LMZUCS1k6FyaPqNSS+5NtpqTN9clb0j2K67+bnGlOzUNQ+7ZLugQoDfjb//idxN3XY
-         mNPYWnaa49MomioNxk7/SO/IQGZrS4X3OP0FMoviwmkQva/vij5bBZA+knb1jfaq0X8O
-         UBrvPZAxPxeF5Wx3jEMYeJQgiPpSUIXjVy4ueWJbPrHsymtcjz+0silu6euMYt5hr7kl
-         WHTNQfyqNmXeHq/jUuF0LmTOG9wi96pVj0GbAEUbuR749HQMcmY0KfYB8i0eFw7CagB+
-         ynrw==
+        bh=lHpbPyq4Mhf3Mg0XIfRDWzZwaFUDI2lMyaTsUTp389w=;
+        b=AsSDdN3+C3fuSPHUjpZVoWLBZPh7xfFa01Xd9kk6tHfxv3dMyI8F+zHRFlbCJSZVl4
+         CGRaBROQoYiunQQrGMzcgVPzzKABtTVCkvYnVx28vCsIThGwywqxYhbcBUsORkRi5i5G
+         VTvSdtNQEzKhwWLFWbp/8U4IoslAzwvv7uhnWJeODB8JIjXj8WCJ8Gnbw20bTOdY/118
+         IyW4dt/y7I+Mu4MkK6jHFoqCwO4WdiIaw2Hh0NldWTJ9D5idae8vrtFZzeXVSUFIcqwQ
+         pOfa77evzTS3fNJMV5N+KFdMkACuUZvH1ROuM4vlPrn3RG05V8PAVh/3xPeepwMIaXJ4
+         YECw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701198497; x=1701803297;
+        d=1e100.net; s=20230601; t=1701198500; x=1701803300;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4IxPIRJ5+f4FdzHV3JPmJVntgL2kpL2TSGZ7bDzH3iY=;
-        b=MLaquVk2OQ4fCPdp8RamumWOBN+yRRydQH2MX7d3YlzxZylEaz5HPofEDJ+DvbqCq2
-         ce6WNxlsTzHZ4D+oo9fy5NaMyKBLLyGWnP9qa4WQZLJiRMebTCawTxqpnbfmA3QsnyNq
-         0r1hQYLJtLH/momutwyR4HsDKDqLHdKzklDdE6MHVu3aZwI33LlVbxCidRlwOdiu7v05
-         Od0l0otZu8VKIiouDt+K5WL4PDcl/zRfL6qfA1h6+kS0uMzqD2t+eK22Zy6ywJq8L215
-         N1i34sSpcJOnaMlBkDK/nEoNro9jtos9u642X+P+UgyF1yo5gFfhBQEcFBBI9j4s0qe4
-         j1bg==
-X-Gm-Message-State: AOJu0YyJod9m1aZYYIEQwd7sjWWUjtlDKTxweX/RaA1BnfyiPGO6l3YQ
-	jcMishJv7jfbCYw3nawF4H0IJuzsVnwo8eHlUow=
-X-Google-Smtp-Source: AGHT+IE9PFFszQ0tdmoya3hoLm/zpF+WKxo1hcUIZw8EoUWuQ1JySZ2PdrjQ/FY7z5g6HooqZbiTKw==
-X-Received: by 2002:a0c:e950:0:b0:67a:35f5:bdea with SMTP id n16-20020a0ce950000000b0067a35f5bdeamr10814242qvo.43.1701198497172;
-        Tue, 28 Nov 2023 11:08:17 -0800 (PST)
+        bh=lHpbPyq4Mhf3Mg0XIfRDWzZwaFUDI2lMyaTsUTp389w=;
+        b=Zg7k4se8+K4syu7tKRAsbSCYPGRY3v0wbgPyA4rCwicr9nElL6mlveuP2CybZwrmrC
+         w76Zy9we+2UyCtWB3TxSXD4EH/OklbjqIOtJHvD8sAyO9LNmQvVBWzIRvoR9CJVAkUHT
+         xiavMLB6JDWNFF3JayCSmHXJWZCVTk97RxXixCdEapPJJpa/vOzJOGV89Q8jL83NmWGU
+         A0oOKCo8tVHhqLVjIWZ46nTF4CZcsDwKxO8qx6rBDLSwXs9D7Yu2YwADUdJl2AszxKlj
+         a7osItUrNiOcbhVouR1Rz250SudyXzeqwvpm6VE84440e+OMemTnoUOfxq3JYoQv76Dx
+         oraA==
+X-Gm-Message-State: AOJu0Yy2ybc6aVtKNctxgRWcl754fYOCwO74Q7ki+cWxuOhRgSz6n8UN
+	ogfgBzYimByZ5iZN6qHW5XW7x0RwRJK9AD1S9M0=
+X-Google-Smtp-Source: AGHT+IF45aEaCdR1d8KaKcrk9Hvu+vvrJsFNlVY4CFhhKxHQUr/qTk+pdY8OYzIXHUzUyPf/6Z8oOQ==
+X-Received: by 2002:a05:620a:113b:b0:76c:da86:3169 with SMTP id p27-20020a05620a113b00b0076cda863169mr16573251qkk.40.1701198499963;
+        Tue, 28 Nov 2023 11:08:19 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id h17-20020a0cedb1000000b0067a3ad49979sm2562517qvr.96.2023.11.28.11.08.16
+        by smtp.gmail.com with ESMTPSA id y25-20020a37e319000000b0077d74f884d9sm2147133qki.117.2023.11.28.11.08.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Nov 2023 11:08:16 -0800 (PST)
-Date: Tue, 28 Nov 2023 14:08:16 -0500
+        Tue, 28 Nov 2023 11:08:19 -0800 (PST)
+Date: Tue, 28 Nov 2023 14:08:18 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 08/24] pack-objects: implement `--ignore-disjoint` mode
-Message-ID: <0368f7ab37669163b50b82185725935bde5bc946.1701198172.git.me@ttaylorr.com>
+Subject: [PATCH 09/24] repack: implement `--extend-disjoint` mode
+Message-ID: <b75869befba26899d88d6c6d413cc756aeadbd80.1701198172.git.me@ttaylorr.com>
 References: <cover.1701198172.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -55,371 +55,439 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1701198172.git.me@ttaylorr.com>
 
-Before multi-pack reachability bitmaps learn how to perform pack reuse
-over the set of disjoint packs, we will need a way to generate packs
-that are known to be disjoint with respect to the currently marked set
-of disjoint packs.
+Now that we can generate packs which are disjoint with respect to the
+set of currently-disjoint packs, implement a mode of `git repack` which
+extends the set of disjoint packs with any new (non-cruft) pack(s)
+generated during the repack.
 
-In other words, we want a way to make a pack which does not have any
-objects contained in the union of the set of packs which are currently
-marked as disjoint.
+The idea is mostly straightforward, with a couple of gotcha's. The
+straightforward part is to make sure that any new packs are disjoint
+with respect to the set of currently disjoint packs which are _not_
+being removed from the repository as a result of the repack.
 
-There are a various ways that we could go about this, for example:
+If a pack which is currently marked as disjoint is, on the other hand,
+about to be removed from the repository, it is OK (and expected) that
+new pack(s) will contain some or all of its objects. Since the pack
+originally marked as disjoint will be removed, it will necessarily leave
+the disjoint set, making room for new packs with its same objects to
+take its place. In other words, the resulting set of disjoint packs will
+be disjoint with respect to one another.
 
-  - passing `--unpacked`, which would exclude all packed objects (and
-    thus would not contain any objects from the disjoint pack)
+The gotchas mostly have to do with making sure that we do not generate a
+disjoint pack in the following scenarios:
 
-  - passing `--stdin-packs` with the set of packs currently marked as
-    disjoint as "excluded", indicating that `pack-objects` should
-    discard any objects present in any of the excluded packs (thus
-    producing a disjoint pack)
+  - promisor packs
+  - cruft packs (which may necessarily need to include an object from a
+    disjoint pack in order to freshen it in certain circumstances)
+  - all-into-one repacks without '-d'
+  - `--filter-to`, which conceptually could work with the new
+    `--extend-disjoint` option, but only in limited circumstances
 
-  - marking each of the disjoint packs as kept in-core with the
-    `--keep-pack` flag, and then passing `--honor-pack-keep` to
-    similarly ignore any object(s) from kept packs (thus also producing
-    a pack which is disjoint with respect to the current set)
-
-`git repack` is the main entry-point to generating a new pack, by
-invoking `pack-objects` and then adding the new pack to the set of
-disjoint packs if generating a new MIDX. However, `repack` has a number
-of ways to invoke `pack-objects` (e.g., all-into-one repacks, geometric
-repacks, incremental repacks, etc.), all of which would require careful
-reasoning in order to prove that the resulting set of packs is disjoint.
-
-The most appealing option of the above would be to pass the set of
-disjoint packs as kept (via `--keep-pack`) and then ignore their
-contents (with `--honor-pack-keep`), doing so for all kinds of
-`pack-objects` invocations. But there may be more disjoint packs than we
-can easily fit into the command-line arguments.
-
-Instead, teach `pack-objects` a special `--ignore-disjoint` which is the
-moral equivalent of marking the set of disjoint packs as kept, and
-ignoring their contents, even if it would have otherwise been packed. In
-fact, this similarity extends down to the implementation, where each
-disjoint pack is first loaded, then has its `pack_keep_in_core` bit set.
-
-With this in place, we can use the kept-pack cache from 20b031fede
-(packfile: add kept-pack cache for find_kept_pack_entry(), 2021-02-22),
-which looks up objects first in a cache containing just the set of kept
-(in this case, disjoint) packs. Assuming that the set of disjoint packs
-is a relatively small portion of the entire repository (which should be
-a safe assumption to make), each object lookup will be very inexpensive.
-
-The only place we want to avoid using `--ignore-disjoint` is in
-conjunction with `--cruft`, since doing so may cause us to omit an
-object which would have been included in a new cruft pack in order to
-freshen it. In other words, failing to do so might cause that object to
-be pruned from the repository earlier than expected.
-
-Otherwise, `--ignore-disjoint` is compatible with most other modes of
-`pack-objects`. These various combinations are tested below. As a
-result, `repack` will be able to unconditionally (except for the cruft
-pack) pass `--ignore-disjoint` when trying to add a new pack to the
-disjoint set, and the result will be usable, without having to carefully
-consider and reason about each individual case.
+Otherwise, we mark which packs were created as disjoint by using a new
+bit in the `generated_pack_data` struct, and then marking those pack(s)
+as disjoint accordingly when generating the MIDX. Non-deleted packs
+which are marked as disjoint are retained as such by passing the
+equivalent of `--retain-disjoint` when calling the MIDX API to update
+the MIDX.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Documentation/git-pack-objects.txt |   8 ++
- builtin/pack-objects.c             |  31 +++++-
- t/lib-disjoint.sh                  |  11 ++
- t/t5331-pack-objects-stdin.sh      | 156 +++++++++++++++++++++++++++++
- 4 files changed, 203 insertions(+), 3 deletions(-)
+ Documentation/git-repack.txt      |  12 +++
+ builtin/repack.c                  |  57 +++++++++---
+ t/t7700-repack.sh                 |   4 +-
+ t/t7705-repack-extend-disjoint.sh | 142 ++++++++++++++++++++++++++++++
+ 4 files changed, 203 insertions(+), 12 deletions(-)
+ create mode 100755 t/t7705-repack-extend-disjoint.sh
 
-diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
-index e32404c6aa..592c4ce742 100644
---- a/Documentation/git-pack-objects.txt
-+++ b/Documentation/git-pack-objects.txt
-@@ -96,6 +96,14 @@ base-name::
- Incompatible with `--revs`, or options that imply `--revs` (such as
- `--all`), with the exception of `--unpacked`, which is compatible.
+diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
+index c902512a9e..50ba5e7f9c 100644
+--- a/Documentation/git-repack.txt
++++ b/Documentation/git-repack.txt
+@@ -249,6 +249,18 @@ linkgit:git-multi-pack-index[1]).
+ 	Write a multi-pack index (see linkgit:git-multi-pack-index[1])
+ 	containing the non-redundant packs.
  
-+--ignore-disjoint::
-+	This flag causes an object that appears in any pack marked as
-+	"disjoint" by the multi-pack index to be ignored, even if it
-+	would have otherwise been packed. When used with
-+	`--stdin-packs`, objects from disjoint packs may be included if
-+	and only if a disjoint pack is explicitly given as an input pack
-+	to `--stdin-packs`. Incompatible with `--cruft`.
++--extend-disjoint::
++	Extends the set of disjoint packs. All new non-cruft pack(s)
++	generated are constructed to be disjoint with respect to the set
++	of currently disjoint packs, excluding any packs that will be
++	removed as a result of the repack operation. For more on
++	disjoint packs, see the details in linkgit:gitformat-pack[5],
++	under the section "`DISP` chunk and disjoint packs".
+++
++Useful only with the combination of `--write-midx` and
++`--write-bitmap-index`. Incompatible with `--filter-to`. Incompatible
++with `-A`, `-a`, or `--cruft` unless `-d` is given.
 +
- --cruft::
- 	Packs unreachable objects into a separate "cruft" pack, denoted
- 	by the existence of a `.mtimes` file. Typically used by `git
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index bfa60359d4..107154db34 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -207,6 +207,7 @@ static int have_non_local_packs;
- static int incremental;
- static int ignore_packed_keep_on_disk;
- static int ignore_packed_keep_in_core;
-+static int ignore_midx_disjoint_packs;
- static int allow_ofs_delta;
- static struct pack_idx_option pack_idx_opts;
- static const char *base_name;
-@@ -1403,7 +1404,8 @@ static int want_found_object(const struct object_id *oid, int exclude,
- 	/*
- 	 * Then handle .keep first, as we have a fast(er) path there.
- 	 */
--	if (ignore_packed_keep_on_disk || ignore_packed_keep_in_core) {
-+	if (ignore_packed_keep_on_disk || ignore_packed_keep_in_core ||
-+	    ignore_midx_disjoint_packs) {
- 		/*
- 		 * Set the flags for the kept-pack cache to be the ones we want
- 		 * to ignore.
-@@ -1415,7 +1417,7 @@ static int want_found_object(const struct object_id *oid, int exclude,
- 		unsigned flags = 0;
- 		if (ignore_packed_keep_on_disk)
- 			flags |= ON_DISK_KEEP_PACKS;
--		if (ignore_packed_keep_in_core)
-+		if (ignore_packed_keep_in_core || ignore_midx_disjoint_packs)
- 			flags |= IN_CORE_KEEP_PACKS;
+ CONFIGURATION
+ -------------
  
- 		if (ignore_packed_keep_on_disk && p->pack_keep)
-@@ -3389,6 +3391,7 @@ static void read_packs_list_from_stdin(void)
- 			die(_("could not find pack '%s'"), item->string);
- 		if (!is_pack_valid(p))
- 			die(_("packfile %s cannot be accessed"), p->pack_name);
-+		p->pack_keep_in_core = 0;
+diff --git a/builtin/repack.c b/builtin/repack.c
+index edaee4dbec..0601bd16c4 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -58,6 +58,7 @@ struct pack_objects_args {
+ 	int no_reuse_object;
+ 	int quiet;
+ 	int local;
++	int ignore_disjoint;
+ 	struct list_objects_filter_options filter_options;
+ };
+ 
+@@ -293,6 +294,8 @@ static void prepare_pack_objects(struct child_process *cmd,
+ 		strvec_push(&cmd->args,  "--local");
+ 	if (args->quiet)
+ 		strvec_push(&cmd->args,  "--quiet");
++	if (args->ignore_disjoint)
++		strvec_push(&cmd->args,  "--ignore-disjoint");
+ 	if (delta_base_offset)
+ 		strvec_push(&cmd->args,  "--delta-base-offset");
+ 	strvec_push(&cmd->args, out);
+@@ -334,9 +337,11 @@ static struct {
+ 
+ struct generated_pack_data {
+ 	struct tempfile *tempfiles[ARRAY_SIZE(exts)];
++	unsigned disjoint : 1;
+ };
+ 
+-static struct generated_pack_data *populate_pack_exts(const char *name)
++static struct generated_pack_data *populate_pack_exts(const char *name,
++						      unsigned disjoint)
+ {
+ 	struct stat statbuf;
+ 	struct strbuf path = STRBUF_INIT;
+@@ -353,6 +358,8 @@ static struct generated_pack_data *populate_pack_exts(const char *name)
+ 		data->tempfiles[i] = register_tempfile(path.buf);
  	}
  
- 	/*
-@@ -4266,6 +4269,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 			 N_("create packs suitable for shallow fetches")),
- 		OPT_BOOL(0, "honor-pack-keep", &ignore_packed_keep_on_disk,
- 			 N_("ignore packs that have companion .keep file")),
-+		OPT_BOOL(0, "ignore-disjoint", &ignore_midx_disjoint_packs,
-+			 N_("ignore packs that are marked disjoint in the MIDX")),
- 		OPT_STRING_LIST(0, "keep-pack", &keep_pack_list, N_("name"),
- 				N_("ignore this pack")),
- 		OPT_INTEGER(0, "compression", &pack_compression_level,
-@@ -4412,7 +4417,9 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 		if (use_internal_rev_list)
- 			die(_("cannot use internal rev list with --cruft"));
- 		if (stdin_packs)
--			die(_("cannot use --stdin-packs with --cruft"));
-+			die(_("cannot use %s with %s"), "--stdin-packs", "--cruft");
-+		if (ignore_midx_disjoint_packs)
-+			die(_("cannot use %s with %s"), "--ignore-disjoint", "--cruft");
- 	}
- 
- 	/*
-@@ -4452,6 +4459,24 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 		if (!p) /* no keep-able packs found */
- 			ignore_packed_keep_on_disk = 0;
- 	}
-+	if (ignore_midx_disjoint_packs) {
-+		struct multi_pack_index *m = get_multi_pack_index(the_repository);
-+		struct bitmapped_pack pack;
-+		unsigned any_disjoint = 0;
-+		uint32_t i;
++	data->disjoint = disjoint;
 +
-+		for (i = 0; m && m->chunk_disjoint_packs && i < m->num_packs; i++) {
-+			if (nth_bitmapped_pack(the_repository, m, &pack, i) < 0)
-+				die(_("could not load bitmapped pack %i"), i);
-+			if (pack.disjoint) {
-+				pack.p->pack_keep_in_core = 1;
-+				any_disjoint = 1;
-+			}
-+		}
-+
-+		if (!any_disjoint) /* no disjoint packs to ignore */
-+			ignore_midx_disjoint_packs = 0;
-+	}
- 	if (local) {
- 		/*
- 		 * unlike ignore_packed_keep_on_disk above, we do not
-diff --git a/t/lib-disjoint.sh b/t/lib-disjoint.sh
-index c6c6e74aba..c802ca6940 100644
---- a/t/lib-disjoint.sh
-+++ b/t/lib-disjoint.sh
-@@ -36,3 +36,14 @@ test_must_be_disjoint () {
- test_must_not_be_disjoint () {
- 	test_disjoint_1 "$1" "no"
+ 	strbuf_release(&path);
+ 	return data;
  }
+@@ -379,6 +386,8 @@ static void repack_promisor_objects(const struct pack_objects_args *args,
+ 	prepare_pack_objects(&cmd, args, packtmp);
+ 	cmd.in = -1;
+ 
++	strvec_pushf(&cmd.args, "--no-ignore-disjoint");
 +
-+# packed_contents </path/to/pack-$XYZ.idx [...]>
-+#
-+# Prints the set of objects packed in the given pack indexes.
-+packed_contents () {
-+	for idx in "$@"
-+	do
-+		git show-index <$idx || return 1
-+	done >tmp &&
-+	cut -d" " -f2 <tmp | sort -u
-+}
-diff --git a/t/t5331-pack-objects-stdin.sh b/t/t5331-pack-objects-stdin.sh
-index 2dcf1eecee..e522aa3f7d 100755
---- a/t/t5331-pack-objects-stdin.sh
-+++ b/t/t5331-pack-objects-stdin.sh
-@@ -6,6 +6,7 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 	/*
+ 	 * NEEDSWORK: Giving pack-objects only the OIDs without any ordering
+ 	 * hints may result in suboptimal deltas in the resulting pack. See if
+@@ -421,7 +430,7 @@ static void repack_promisor_objects(const struct pack_objects_args *args,
+ 					  line.buf);
+ 		write_promisor_file(promisor_name, NULL, 0);
  
- TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-disjoint.sh
+-		item->util = populate_pack_exts(item->string);
++		item->util = populate_pack_exts(item->string, 0);
  
- packed_objects () {
- 	git show-index <"$1" >tmp-object-list &&
-@@ -237,4 +238,159 @@ test_expect_success 'pack-objects --stdin with packfiles from main and alternate
- 	test_cmp expected-objects actual-objects
+ 		free(promisor_name);
+ 	}
+@@ -731,8 +740,13 @@ static void midx_included_packs(struct string_list *include,
+ 
+ 	for_each_string_list_item(item, &existing->kept_packs)
+ 		string_list_insert(include, xstrfmt("%s.idx", item->string));
+-	for_each_string_list_item(item, names)
+-		string_list_insert(include, xstrfmt("pack-%s.idx", item->string));
++	for_each_string_list_item(item, names) {
++		const char *marker = "";
++		struct generated_pack_data *data = item->util;
++		if (data->disjoint)
++			marker = "+";
++		string_list_insert(include, xstrfmt("%spack-%s.idx", marker, item->string));
++	}
+ 	if (geometry->split_factor) {
+ 		struct strbuf buf = STRBUF_INIT;
+ 		uint32_t i;
+@@ -788,7 +802,8 @@ static int write_midx_included_packs(struct string_list *include,
+ 				     struct pack_geometry *geometry,
+ 				     struct string_list *names,
+ 				     const char *refs_snapshot,
+-				     int show_progress, int write_bitmaps)
++				     int show_progress, int write_bitmaps,
++				     int exclude_disjoint)
+ {
+ 	struct child_process cmd = CHILD_PROCESS_INIT;
+ 	struct string_list_item *item;
+@@ -852,6 +867,9 @@ static int write_midx_included_packs(struct string_list *include,
+ 	if (refs_snapshot)
+ 		strvec_pushf(&cmd.args, "--refs-snapshot=%s", refs_snapshot);
+ 
++	if (exclude_disjoint)
++		strvec_push(&cmd.args, "--retain-disjoint");
++
+ 	ret = start_command(&cmd);
+ 	if (ret)
+ 		return ret;
+@@ -895,7 +913,7 @@ static void remove_redundant_bitmaps(struct string_list *include,
+ 
+ static int finish_pack_objects_cmd(struct child_process *cmd,
+ 				   struct string_list *names,
+-				   int local)
++				   int local, int disjoint)
+ {
+ 	FILE *out;
+ 	struct strbuf line = STRBUF_INIT;
+@@ -913,7 +931,7 @@ static int finish_pack_objects_cmd(struct child_process *cmd,
+ 		 */
+ 		if (local) {
+ 			item = string_list_append(names, line.buf);
+-			item->util = populate_pack_exts(line.buf);
++			item->util = populate_pack_exts(line.buf, disjoint);
+ 		}
+ 	}
+ 	fclose(out);
+@@ -970,7 +988,7 @@ static int write_filtered_pack(const struct pack_objects_args *args,
+ 		fprintf(in, "%s%s.pack\n", caret, item->string);
+ 	fclose(in);
+ 
+-	return finish_pack_objects_cmd(&cmd, names, local);
++	return finish_pack_objects_cmd(&cmd, names, local, 0);
+ }
+ 
+ static int existing_cruft_pack_cmp(const void *va, const void *vb)
+@@ -1098,7 +1116,7 @@ static int write_cruft_pack(const struct pack_objects_args *args,
+ 		fprintf(in, "%s.pack\n", item->string);
+ 	fclose(in);
+ 
+-	return finish_pack_objects_cmd(&cmd, names, local);
++	return finish_pack_objects_cmd(&cmd, names, local, 0);
+ }
+ 
+ static const char *find_pack_prefix(const char *packdir, const char *packtmp)
+@@ -1190,6 +1208,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 			   N_("pack prefix to store a pack containing pruned objects")),
+ 		OPT_STRING(0, "filter-to", &filter_to, N_("dir"),
+ 			   N_("pack prefix to store a pack containing filtered out objects")),
++		OPT_BOOL(0, "extend-disjoint", &po_args.ignore_disjoint,
++			 N_("add new packs to the set of disjoint ones")),
+ 		OPT_END()
+ 	};
+ 
+@@ -1255,6 +1275,16 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 		strbuf_release(&path);
+ 	}
+ 
++	if (po_args.ignore_disjoint) {
++		if (filter_to)
++			die(_("options '%s' and '%s' cannot be used together"),
++			    "--filter-to", "--extend-disjoint");
++		if (pack_everything && !delete_redundant)
++			die(_("cannot use '--extend-disjoint' with '%s' but not '-d'"),
++			    pack_everything & LOOSEN_UNREACHABLE ? "-A" :
++			    pack_everything & PACK_CRUFT ? "--cruft" : "-a");
++	}
++
+ 	packdir = mkpathdup("%s/pack", get_object_directory());
+ 	packtmp_name = xstrfmt(".tmp-%d-pack", (int)getpid());
+ 	packtmp = mkpathdup("%s/%s", packdir, packtmp_name);
+@@ -1308,6 +1338,9 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	if (pack_everything & ALL_INTO_ONE) {
+ 		repack_promisor_objects(&po_args, &names);
+ 
++		if (delete_redundant)
++			strvec_pushf(&cmd.args, "--no-ignore-disjoint");
++
+ 		if (has_existing_non_kept_packs(&existing) &&
+ 		    delete_redundant &&
+ 		    !(pack_everything & PACK_CRUFT)) {
+@@ -1364,7 +1397,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 		fclose(in);
+ 	}
+ 
+-	ret = finish_pack_objects_cmd(&cmd, &names, 1);
++	ret = finish_pack_objects_cmd(&cmd, &names, 1, po_args.ignore_disjoint);
+ 	if (ret)
+ 		goto cleanup;
+ 
+@@ -1387,6 +1420,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 
+ 		cruft_po_args.local = po_args.local;
+ 		cruft_po_args.quiet = po_args.quiet;
++		cruft_po_args.ignore_disjoint = 0;
+ 
+ 		ret = write_cruft_pack(&cruft_po_args, packtmp, pack_prefix,
+ 				       cruft_expiration, &names,
+@@ -1487,7 +1521,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 
+ 		ret = write_midx_included_packs(&include, &geometry, &names,
+ 						refs_snapshot ? get_tempfile_path(refs_snapshot) : NULL,
+-						show_progress, write_bitmaps > 0);
++						show_progress, write_bitmaps > 0,
++						po_args.ignore_disjoint);
+ 
+ 		if (!ret && write_bitmaps)
+ 			remove_redundant_bitmaps(&include, packdir);
+diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+index d2975e6c93..277f1ff1d7 100755
+--- a/t/t7700-repack.sh
++++ b/t/t7700-repack.sh
+@@ -6,6 +6,7 @@ test_description='git repack works correctly'
+ . "${TEST_DIRECTORY}/lib-bitmap.sh"
+ . "${TEST_DIRECTORY}/lib-midx.sh"
+ . "${TEST_DIRECTORY}/lib-terminal.sh"
++. "${TEST_DIRECTORY}/lib-disjoint.sh"
+ 
+ commit_and_pack () {
+ 	test_commit "$@" 1>&2 &&
+@@ -525,7 +526,8 @@ test_expect_success '--filter works with --max-pack-size' '
  '
  
-+objdir=.git/objects
+ objdir=.git/objects
+-midx=$objdir/pack/multi-pack-index
 +packdir=$objdir/pack
++midx=$packdir/multi-pack-index
+ 
+ test_expect_success 'setup for --write-midx tests' '
+ 	git init midx &&
+diff --git a/t/t7705-repack-extend-disjoint.sh b/t/t7705-repack-extend-disjoint.sh
+new file mode 100755
+index 0000000000..0c8be1cb3f
+--- /dev/null
++++ b/t/t7705-repack-extend-disjoint.sh
+@@ -0,0 +1,142 @@
++#!/bin/sh
 +
-+test_expect_success 'loose objects also in disjoint packs are ignored' '
-+	test_when_finished "rm -fr repo" &&
++test_description='git repack --extend-disjoint works correctly'
++
++. ./test-lib.sh
++. "${TEST_DIRECTORY}/lib-disjoint.sh"
++
++packdir=.git/objects/pack
++
++GIT_TEST_MULTI=0
++GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=0
++
++test_expect_success 'repack --extend-disjoint creates new disjoint packs' '
 +	git init repo &&
 +	(
 +		cd repo &&
 +
-+		# create a pack containing the objects in each commit below, but
-+		# do not delete their loose copies
-+		test_commit base &&
-+		base_pack="$(echo base | git pack-objects --revs $packdir/pack)" &&
++		test_commit A &&
++		test_commit B &&
 +
-+		test_commit other &&
-+		other_pack="$(echo base..other | git pack-objects --revs $packdir/pack)" &&
++		A="$(echo A | git pack-objects --revs $packdir/pack)" &&
++		B="$(echo A..B | git pack-objects --revs $packdir/pack)" &&
 +
-+		cat >in <<-EOF &&
-+		pack-$base_pack.idx
-+		+pack-$other_pack.idx
-+		EOF
-+		git multi-pack-index write --stdin-packs --bitmap <in &&
-+
-+		test_commit more &&
-+		out="$(git pack-objects --all --ignore-disjoint $packdir/pack)" &&
-+
-+		# gather all objects in "all", and objects from the disjoint
-+		# pack in "disjoint"
-+		git cat-file --batch-all-objects --batch-check="%(objectname)" >all &&
-+		packed_contents "$packdir/pack-$other_pack.idx" >disjoint &&
-+
-+		# make sure that the set of objects we just generated matches
-+		# "all \ disjoint"
-+		packed_contents "$packdir/pack-$out.idx" >got &&
-+		comm -23 all disjoint >want &&
-+		test_cmp want got
-+	)
-+'
-+
-+test_expect_success 'objects in disjoint packs are ignored (--unpacked)' '
-+	test_when_finished "rm -fr repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+
-+		for c in A B
-+		do
-+			test_commit "$c" || return 1
-+		done &&
-+
-+		A="$(echo "A" | git pack-objects --revs $packdir/pack)" &&
-+		B="$(echo "A..B" | git pack-objects --revs $packdir/pack)" &&
++		git prune-packed &&
 +
 +		cat >in <<-EOF &&
 +		pack-$A.idx
 +		+pack-$B.idx
 +		EOF
-+		git multi-pack-index write --stdin-packs --bitmap <in &&
++		git multi-pack-index write --bitmap --stdin-packs <in &&
 +
 +		test_must_not_be_disjoint "pack-$A.pack" &&
 +		test_must_be_disjoint "pack-$B.pack" &&
 +
 +		test_commit C &&
 +
-+		got="$(git pack-objects --all --unpacked --ignore-disjoint $packdir/pack)" &&
-+		packed_contents "$packdir/pack-$got.idx" >actual &&
++		find $packdir -type f -name "*.idx" | sort >packs.before &&
++		git repack --write-midx --write-bitmap-index --extend-disjoint &&
++		find $packdir -type f -name "*.idx" | sort >packs.after &&
 +
-+		git rev-list --objects --no-object-names B..C >expect.raw &&
-+		sort <expect.raw >expect &&
++		comm -13 packs.before packs.after >packs.new &&
 +
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'objects in disjoint packs are ignored (--stdin-packs)' '
-+	# Create objects in three separate packs:
-+	#
-+	#   - pack A (midx, non disjoint)
-+	#   - pack B (midx, disjoint)
-+	#   - pack C (non-midx)
-+	#
-+	# Then create a new pack with `--stdin-packs` and `--ignore-disjoint`
-+	# including packs A, B, and C. The resulting pack should contain
-+	# only the objects from packs A, and C, excluding those from
-+	# pack B as it is marked as disjoint.
-+	test_when_finished "rm -fr repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+
-+		for c in A B C
-+		do
-+			test_commit "$c" || return 1
-+		done &&
-+
-+		A="$(echo "A" | git pack-objects --revs $packdir/pack)" &&
-+		B="$(echo "A..B" | git pack-objects --revs $packdir/pack)" &&
-+		C="$(echo "B..C" | git pack-objects --revs $packdir/pack)" &&
-+
-+		cat >in <<-EOF &&
-+		pack-$A.idx
-+		+pack-$B.idx
-+		EOF
-+		git multi-pack-index write --stdin-packs --bitmap <in &&
++		test_line_count = 1 packs.new &&
 +
 +		test_must_not_be_disjoint "pack-$A.pack" &&
 +		test_must_be_disjoint "pack-$B.pack" &&
-+
-+		# Generate a pack with `--stdin-packs` using packs "A" and "C",
-+		# but excluding objects from "B". The objects from pack "B" are
-+		# expected to be omitted from the generated pack for two
-+		# reasons:
-+		#
-+		#   - because it was specified as a negated tip via
-+		#     `--stdin-packs`
-+		#   - because it is a disjoint pack.
-+		cat >in <<-EOF &&
-+		pack-$A.pack
-+		^pack-$B.pack
-+		pack-$C.pack
-+		EOF
-+		got="$(git pack-objects --stdin-packs --ignore-disjoint $packdir/pack <in)" &&
-+
-+		packed_contents "$packdir/pack-$got.idx" >actual &&
-+		packed_contents "$packdir/pack-$A.idx" \
-+				"$packdir/pack-$C.idx" >expect &&
-+		test_cmp expect actual &&
-+
-+		# Generate another pack with `--stdin-packs`, this time
-+		# using packs "B" and "C". The objects from pack "B" are
-+		# expected to be in the final pack, despite it being a
-+		# disjoint pack, because "B" was mentioned explicitly
-+		# via `stdin-packs`.
-+		cat >in <<-EOF &&
-+		pack-$B.pack
-+		pack-$C.pack
-+		EOF
-+		got="$(git pack-objects --stdin-packs --ignore-disjoint $packdir/pack <in)" &&
-+
-+		packed_contents "$packdir/pack-$got.idx" >actual &&
-+		packed_contents "$packdir/pack-$B.idx" \
-+				"$packdir/pack-$C.idx" >expect &&
-+		test_cmp expect actual
++		test_must_be_disjoint "$(basename $(cat packs.new) .idx).pack"
 +	)
 +'
 +
-+test_expect_success '--cruft is incompatible with --ignore-disjoint' '
-+	test_must_fail git pack-objects --cruft --ignore-disjoint --stdout \
-+		</dev/null >/dev/null 2>actual &&
-+	cat >expect <<-\EOF &&
-+	fatal: cannot use --ignore-disjoint with --cruft
++test_expect_success 'repack --extend-disjoint combines existing disjoint packs' '
++	(
++		cd repo &&
++
++		test_commit D &&
++
++		git repack -a -d --write-midx --write-bitmap-index --extend-disjoint &&
++
++		find $packdir -type f -name "*.pack" >packs &&
++		test_line_count = 1 packs &&
++
++		test_must_be_disjoint "$(basename $(cat packs))"
++
++	)
++'
++
++test_expect_success 'repack --extend-disjoint with --geometric' '
++	git init disjoint-geometric &&
++	(
++		cd disjoint-geometric &&
++
++		test_commit_bulk 8 &&
++		base="$(basename $(ls $packdir/pack-*.idx))" &&
++		echo "+$base" >>in &&
++
++		test_commit A &&
++		A="$(echo HEAD^.. | git pack-objects --revs $packdir/pack)" &&
++		test_commit B &&
++		B="$(echo HEAD^.. | git pack-objects --revs $packdir/pack)" &&
++
++		git prune-packed &&
++
++		cat >>in <<-EOF &&
++		+pack-$A.idx
++		+pack-$B.idx
++		EOF
++		git multi-pack-index write --bitmap --stdin-packs <in &&
++
++		test_must_be_disjoint "pack-$A.pack" &&
++		test_must_be_disjoint "pack-$B.pack" &&
++		test_must_be_disjoint "${base%.idx}.pack" &&
++
++		test_commit C &&
++
++		find $packdir -type f -name "*.pack" | sort >packs.before &&
++		git repack --geometric=2 -d --write-midx --write-bitmap-index --extend-disjoint &&
++		find $packdir -type f -name "*.pack" | sort >packs.after &&
++
++		comm -12 packs.before packs.after >packs.unchanged &&
++		comm -23 packs.before packs.after >packs.removed &&
++		comm -13 packs.before packs.after >packs.new &&
++
++		cat >expect <<-EOF &&
++		$packdir/${base%.idx}.pack
++		EOF
++		test_cmp expect packs.unchanged &&
++
++		sort >expect <<-EOF &&
++		$packdir/pack-$A.pack
++		$packdir/pack-$B.pack
++		EOF
++		test_cmp expect packs.removed &&
++
++		test_line_count = 1 packs.new &&
++
++		test_must_be_disjoint "$(basename $(cat packs.new))" &&
++		test_must_be_disjoint "${base%.idx}.pack"
++	)
++'
++
++for flag in "-A" "-a" "--cruft"
++do
++	test_expect_success "repack --extend-disjoint incompatible with $flag without -d" '
++		test_must_fail git repack $flag --extend-disjoint \
++			--write-midx --write-bitmap-index 2>actual &&
++		cat >expect <<-EOF &&
++		fatal: cannot use $SQ--extend-disjoint$SQ with $SQ$flag$SQ but not $SQ-d$SQ
++		EOF
++		test_cmp expect actual
++	'
++done
++
++test_expect_success 'repack --extend-disjoint is incompatible with --filter-to' '
++	test_must_fail git repack --extend-disjoint --filter-to=dir 2>actual &&
++
++	cat >expect <<-EOF &&
++	fatal: options $SQ--filter-to$SQ and $SQ--extend-disjoint$SQ cannot be used together
 +	EOF
 +	test_cmp expect actual
 +'
 +
- test_done
++test_done
 -- 
 2.43.0.24.g980b318f98
 
