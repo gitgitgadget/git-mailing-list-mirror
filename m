@@ -1,217 +1,131 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tiJofdHo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xnjyDizl"
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E666BD4B
-	for <git@vger.kernel.org>; Tue, 28 Nov 2023 04:33:51 -0800 (PST)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.west.internal (Postfix) with ESMTP id E703D3200BE0;
-	Tue, 28 Nov 2023 07:33:50 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Tue, 28 Nov 2023 07:33:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm1; t=1701174830; x=1701261230; bh=o6
-	QX0OEp7PFa4I8GB2OAFFUHrElFlt/3OlXrL9szi4g=; b=tiJofdHoAeZT/UPinK
-	CnJEfg6btxVEHdgkC5QOYmANFej+IyfyqGwRUDdMsfaIriTHdGAto29/I58UY7pV
-	wtWlPHIwGSBY9ImbKMmH3ZwblyBV+bq2hFHRnbg5XAyCjLVbthw4ELBUNf3EV7TX
-	dSt1IY9RzVjhmHvBFWdG9GJsKdmEfkWnEpWOt6tbvUVxIRosYzrRu6hwtRXcParq
-	m4vXLfeZ3cl+ByYiki4QmkK1/DYBDI/7ZZOgwOUvHTGQoEX28CZ2qfdYPwbe5h7+
-	AnxaNXb0mVBT0lF+qqus19gXPZ18XbjXwqjRLHh4f1c6Xu5EWXXaf5ZWWS4m0jNK
-	o+Zw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm1; t=1701174830; x=1701261230; bh=o6QX0OEp7PFa4
-	I8GB2OAFFUHrElFlt/3OlXrL9szi4g=; b=xnjyDizl/8gmSSGIljTOafNhQYMSH
-	96abrf7hqSh0qB9PA90ZLu/TqTibuCscOHMcy05ZUNdwYXVBKNtunOF84lWFnt4L
-	mP179JLhNSA+t7fR8DeZ31T881tkEDhDRBjPaOpmYpUzCGGBK2+VGbpUmJh4pG/Z
-	lMqJ1N/0K9RMpQMtCLePgbidj2TVuMbBhaD/3jy3sbIAmrtLq/4TPN8kaFJ21mOn
-	mn3stkj0vKH0SmpGU4cQ/TFhcpOyog11wkgQU3rPuzs5y8U3oYDB8ql8wQLwCFFS
-	McdM58IRZSMf3NSk2IGo13fF96xD750Nejm2bO5Ku7/uHy6f6oQVGZmYA==
-X-ME-Sender: <xms:Ld5lZeCn8px8xQTHcGlvBfkpd0BSf6RkhHxkwugQnXp0nF3yQucaCg>
-    <xme:Ld5lZYjWmiCoeZYlBFPNoKmvml9I2DS8Shw7EOvLcExOcKVhAngTsOzRdUOj2k0p6
-    gbJiYtIPZaAP7iLZw>
-X-ME-Received: <xmr:Ld5lZRnga6uLpa1PsqOTTJH1QoCF9KlsbYYg0Sv7twFooo2sN561c_CFn4X1sKYW-mQMwQmW8Fg7WXmWQ4b0yBu_CnuRgZ3MiuPh7Vmps8lsqg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudeifedggeduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtroertddtjeenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepvdeuteeukefgvdfhvddtudejiefhffeggeeiffdtudfhleeijeelkeffhedtheeu
-    necuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:Ld5lZcxMNHI7MC2aZZVqe5B77LaYsYF6Z8N1DR6RffkxXePEFxnMmA>
-    <xmx:Ld5lZTS_l4339cAZ6nCym_N5Ep68MdMcZERYNp0rm1GvNHXKHGACXg>
-    <xmx:Ld5lZXa9O3yBKU88O4D6EBRgQae6hRdMkeOGSxKlRANDBQrbZ_gKqA>
-    <xmx:Lt5lZdcbFrD1spZW2YOYUHfKTk_Bvm0DZPrhX9Sn26CFKO-7949xMw>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 28 Nov 2023 07:33:48 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 0d79f994 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 28 Nov 2023 12:32:38 +0000 (UTC)
-Date: Tue, 28 Nov 2023 13:33:45 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	=?iso-8859-1?Q?Jean-No=EBl?= Avila <jn.avila@free.fr>,
-	Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] i18n: factorize even more 'incompatible options' messages
-Message-ID: <ZWXeKYHOCbwEOvnR@tanuki>
-References: <e6eb12e4-bb63-473c-9c2f-965a4d5981ad@web.de>
- <CAPig+cR5PKkyC24LkOU4+yzng1xeBOBbADTBHXH61xkAR7kymw@mail.gmail.com>
- <d1f28272-635d-4638-b0f4-76d64013b0d5@web.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jVJZht0V"
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FCF3D60
+	for <git@vger.kernel.org>; Tue, 28 Nov 2023 04:40:59 -0800 (PST)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-507c5249d55so8124865e87.3
+        for <git@vger.kernel.org>; Tue, 28 Nov 2023 04:40:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1701175257; x=1701780057; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Z0xSm3ssuhXB9Dbs/i3I3UysmM/8Z3+kVFydY4+llJ4=;
+        b=jVJZht0VZAqpgFimY79XcQ4WYc57wV643dOd2K+Ap41NjqH+iyHqF3stOBZYqrF9cY
+         EzAzGdhTt69VmZ0Qn/B16EuzXn49SAf32g3DDAVr64k0NUZJA2FjMOhuICF4HaZ/3yMp
+         tc1AbG6iEfalODF4F0Cwxg5maEdTxvbHsisPgoDaImYRYJd8qLQS1ZBHoLcDxMV2hYv5
+         egG9YKLlesuNMNfqABc/osRyilIV0l+nZmqeslB4tcOkhkkHgm3GgV4oFprEO3QAKHB1
+         Zyrz5Q24lhxH5MWoH4lFlDHOdWbA6Bi+/Y0v6bpAL4e9bVWyEryx6pzEo6CbIyxme2YV
+         fKFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701175257; x=1701780057;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Z0xSm3ssuhXB9Dbs/i3I3UysmM/8Z3+kVFydY4+llJ4=;
+        b=pkVddpxWkU9sl0xlNo6oQ4zIF5siLgx7a5svwOnWHAo3tughHJK5cDEke4TsjKQ3yO
+         DdG4q1WWIc7Ex0TqcBEEX3XNRVoGx27iB3YfG4Sbhh40CXXzHLB2sHi8DMDoJdGFxTNd
+         lJmAhTDINtst6v9n/HYO/oZqf+oHeilPUJ/pCEG3Y/JYtQOOcR9RgXssY67s+wp3ll+/
+         Eqj4JBpX+bxn4gfm6jD3rievkyRW07dK0oJgExAbeXbShVBDB5zQLuNJa1WXehYdPdy1
+         MxACEnXRu6JtRgJ2dUlufGxU5zSX8G3DiJUlIW4DT6otocVZ4EwviD3uMhyPy9x+Yxwk
+         fp4Q==
+X-Gm-Message-State: AOJu0YxgSl2ltxyWuRcQsXa64AUo7uYRjwkqmWA5UnVAP1f/CJt2iXj7
+	kVbDlWZTEhMSQ5hHU0HPswE=
+X-Google-Smtp-Source: AGHT+IGrLlfr8LQsEVakNuDUi+DUGtBVPWAAsWHs8KKAKfEKG5ZGXVHcAMg2+XxcfE7sv+OZrGUphw==
+X-Received: by 2002:a05:6512:31c3:b0:50a:a6d2:b5cd with SMTP id j3-20020a05651231c300b0050aa6d2b5cdmr14141109lfe.53.1701175256954;
+        Tue, 28 Nov 2023 04:40:56 -0800 (PST)
+Received: from localhost (92-249-246-133.pool.digikabel.hu. [92.249.246.133])
+        by smtp.gmail.com with ESMTPSA id g18-20020a05600c4ed200b0040b4ccdcffbsm2028441wmq.2.2023.11.28.04.40.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Nov 2023 04:40:56 -0800 (PST)
+Date: Tue, 28 Nov 2023 13:40:54 +0100
+From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH] completion: add and use the __git_get_config_subsection
+ helper function
+Message-ID: <20231128124054.GA1964@szeder.dev>
+References: <20231113222528.62771-1-szeder.dev@gmail.com>
+ <xmqqzfzh16qp.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="tQ+ge/bC+sOOGmhV"
-Content-Disposition: inline
-In-Reply-To: <d1f28272-635d-4638-b0f4-76d64013b0d5@web.de>
-
-
---tQ+ge/bC+sOOGmhV
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqzfzh16qp.fsf@gitster.g>
 
-On Mon, Nov 27, 2023 at 06:39:41PM +0100, Ren=C3=A9 Scharfe wrote:
-> Am 26.11.23 um 18:49 schrieb Eric Sunshine:
-> > On Sun, Nov 26, 2023 at 6:57=E2=80=AFAM Ren=C3=A9 Scharfe <l.s.r@web.de=
-> wrote:
-> >> Continue the work of 12909b6b8a (i18n: turn "options are incompatible"
-> >> into "cannot be used together", 2022-01-05) and a699367bb8 (i18n:
-> >> factorize more 'incompatible options' messages, 2022-01-31) to use the
-> >> same parameterized error message for reporting incompatible command li=
-ne
-> >> options.  This reduces the number of strings to translate and makes the
-> >> UI slightly more consistent.
-> >
-> > Thanks for tackling this.
-> >
-> > A couple additional instances recently slipped into `show-ref.c` which
-> > were caught during review[1,2] but nevertheless made it to
-> > "master"[3,4]. This patch, of course, doesn't need to address those,
-> > but if rerolling for some other reason, perhaps they can be included,
-> > as well(?).
+On Tue, Nov 14, 2023 at 10:08:46AM +0900, Junio C Hamano wrote:
+> SZEDER Gábor <szeder.dev@gmail.com> writes:
+> 
+> > +# Lists all subsections in the given section which contain the given
+> > +# config variable, with the section and variable names removed.
+> > +__git_get_config_subsections ()
+> > +{
+> > +	local section="$1" var="$2" i IFS=$'\n'
+> > +	for i in $(__git config --name-only --get-regexp "^$section\..*\.$var$"); do
+> > +		i=${i#$section.}
+> > +		i=${i%.$var}
+> 
+> As this script is allowed bash-isms, I wondered if we can use
+> a single pattern substitution instead of two remove pre/suffix
+> pattern substitution, but I guess it would not work, and the above
+> is perfectly readable.
 
-Ah, I wasn't aware of these new wrappers, either. The below patch looks
-good to me, thanks for the fixup.
+Yeah, I don't think it's possible to remove the prefix and suffix with
+Bash builtins in a single operation.
 
-Patrick
+> > +		echo "$i"
+> 
+> As the subsection is designed to contain unbounded set of end-user
+> controlled names, we probably should do
+> 
+> 		printf "%s\n" "$i"
+> 
+> instead to protect us from interesting names (e.g. ones that begin
+> with a dash).
 
-> > [1]: https://lore.kernel.org/git/CAPig+cSrp7vZuy7D_ENHKZKZzF4OSmCtfYNHP=
-GMtS1Hj6gArDw@mail.gmail.com/
-> > [2]: https://lore.kernel.org/git/CAPig+cRTOMie0rUf=3DMhbo9e2EXf-_2kQyMe=
-qpB9OCRB1MZZ1rw@mail.gmail.com/
-> > [3]: 199970e72f (builtin/show-ref: ensure mutual exclusiveness of
-> > subcommands, 2023-10-31)
-> > [4]: 9080a7f178 (builtin/show-ref: add new mode to check for reference
-> > existence, 2023-10-31)
->=20
-> [4] changes the message added by [3], so that's one instance, right?
->=20
-> --- >8 ---
-> Subject: [PATCH] show-ref: use die_for_incompatible_opt3()
->=20
-> Use the standard message for reporting the use of multiple mutually
-> exclusive options by calling die_for_incompatible_opt3() instead of
-> rolling our own.  This has the benefits of showing only the actually
-> given options, reducing the number of strings to translate and making
-> the UI slightly more consistent.
->=20
-> Adjust the test to no longer insist on a specific order of the
-> reported options, as this implementation detail does not affect the
-> usefulness of the error message.
->=20
-> Reported-by: Eric Sunshine <sunshine@sunshineco.com>
-> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-> ---
->  builtin/show-ref.c  |  6 +++---
->  t/t1403-show-ref.sh | 16 +++++++++-------
->  2 files changed, 12 insertions(+), 10 deletions(-)
->=20
-> diff --git a/builtin/show-ref.c b/builtin/show-ref.c
-> index 7aac525a87..59d2291cbf 100644
-> --- a/builtin/show-ref.c
-> +++ b/builtin/show-ref.c
-> @@ -315,9 +315,9 @@ int cmd_show_ref(int argc, const char **argv, const c=
-har *prefix)
->  	argc =3D parse_options(argc, argv, prefix, show_ref_options,
->  			     show_ref_usage, 0);
->=20
-> -	if ((!!exclude_existing_opts.enabled + !!verify + !!exists) > 1)
-> -		die(_("only one of '%s', '%s' or '%s' can be given"),
-> -		    "--exclude-existing", "--verify", "--exists");
-> +	die_for_incompatible_opt3(exclude_existing_opts.enabled, "--exclude-exi=
-sting",
-> +				  verify, "--verify",
-> +				  exists, "--exists");
->=20
->  	if (exclude_existing_opts.enabled)
->  		return cmd_show_ref__exclude_existing(&exclude_existing_opts);
-> diff --git a/t/t1403-show-ref.sh b/t/t1403-show-ref.sh
-> index b50ae6fcf1..d477689e33 100755
-> --- a/t/t1403-show-ref.sh
-> +++ b/t/t1403-show-ref.sh
-> @@ -197,18 +197,20 @@ test_expect_success 'show-ref --verify with danglin=
-g ref' '
->  '
->=20
->  test_expect_success 'show-ref sub-modes are mutually exclusive' '
-> -	cat >expect <<-EOF &&
-> -	fatal: only one of ${SQ}--exclude-existing${SQ}, ${SQ}--verify${SQ} or =
-${SQ}--exists${SQ} can be given
-> -	EOF
-> -
->  	test_must_fail git show-ref --verify --exclude-existing 2>err &&
-> -	test_cmp expect err &&
-> +	grep "verify" err &&
-> +	grep "exclude-existing" err &&
-> +	grep "cannot be used together" err &&
->=20
->  	test_must_fail git show-ref --verify --exists 2>err &&
-> -	test_cmp expect err &&
-> +	grep "verify" err &&
-> +	grep "exists" err &&
-> +	grep "cannot be used together" err &&
->=20
->  	test_must_fail git show-ref --exclude-existing --exists 2>err &&
-> -	test_cmp expect err
-> +	grep "exclude-existing" err &&
-> +	grep "exists" err &&
-> +	grep "cannot be used together" err
->  '
->=20
->  test_expect_success '--exists with existing reference' '
-> --
-> 2.43.0
+Indeed, will do.
 
---tQ+ge/bC+sOOGmhV
-Content-Type: application/pgp-signature; name="signature.asc"
+> > +	done
+> > +}
+> 
+> Interesting to see that we do not need to bother deduplicating the
+> output from here.
 
------BEGIN PGP SIGNATURE-----
+Bash will sort and deduplicate the completion words anyway, so we
+don't have to.  Sometimes we do deduplicate them, though, but either
+to make testing easier or for performance reasons; in this case
+neither of them applies.
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVl3iQACgkQVbJhu7ck
-PpQFNA//Uyy3Qzuh5I7kNtPFEaZXQ8ItC2Re5RZkSnWyY5ZwYDFwvYWluAPPjySI
-+hA2e2InX15RJQlzZIuwC+trDeTLkrVODNKat5Q7OLA/rja2eI2jlTEIpDE3Ec/8
-Qt6x7lvJV1QRAyf7EO/BvctfZyoqIr/Tw7o8yjCout7aRyvryoKyRRDJhzw7oVle
-PNh+0jm9/ohLQscmcuXJgPoiEr01B2K0IvuBYFpbqWLvq0UzF5oHiE/+jS/Kn/Cq
-0FZnAoq98CDjOEtCtXiIZqNxQuAWDkFu+xOGlXwhYWnkRIt0jhME0/yjJEG28cSO
-Rgfez8KMPS3q67W06AyiBsbN1eVfQAohYHv3zf1Jo09c8H0D4IWxrZxA1Hoq3Q62
-sgv1F83qC58QGtFNbM95p4aSsGvs7RUwwZMHStmEpC2vRtU0lkNb1aG7pDvqbhTr
-Xy7XAuhORENg2dILMDZpWlvvFTIKC4iBoZbZ/Rh2Dlq6iCZ8uwwlHUa/3gTlEIPf
-OhBBEToVQ8jKzSKkabttdMSFTTyMXTFg6WrLMz5vEV7VPha4LTB9hWTQZ3+sjmBG
-5qz4ewrHx9MA66JInNgeGxf98L6+s5xl5WDnHWiuMsyQWYRtDgAYxEIzBZEbKUSI
-9K/CTXH5yEeRhmTJz3ewcGEGiNiRpDv1nYz1344nBXab90MYVIY=
-=z97O
------END PGP SIGNATURE-----
+> > diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+> > index a7c3b4eb63..11ed83d0ed 100755
+> > --- a/t/t9902-completion.sh
+> > +++ b/t/t9902-completion.sh
+> > @@ -2130,6 +2130,19 @@ test_expect_success '__git_get_config_variables' '
+> >  	test_cmp expect actual
+> >  '
+> >  
+> > +test_expect_success '__git_get_config_subsections' '
+> > +	cat >expect <<-\EOF &&
+> > +	subsection-1
+> > +	SubSection-2
+> > +	sub.section.3
+> > +	EOF
+> > +	test_config interesting.subsection-1.name good &&
+> > +	test_config Interesting.SubSection-2.Name good &&
+> > +	test_config interesting.sub.section.3.name good &&
+> > +	__git_get_config_subsections interesting name >actual &&
+> > +	test_cmp expect actual
+> > +'
+> 
+> Good to see an uppercase character is used here ;-).
 
---tQ+ge/bC+sOOGmhV--
+That's just for good measure, but not really necessasry here, as that
+primarily tests that 'git config' lists the section and variable names
+(but not the subsection!) normalized to lowercase, no matter what
+CaMeLCase the user might have written them.
+
