@@ -1,50 +1,49 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="KRIFk0JR"
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A921C3
-	for <git@vger.kernel.org>; Tue, 28 Nov 2023 11:08:42 -0800 (PST)
-Received: by mail-qk1-x730.google.com with SMTP id af79cd13be357-77d90497b86so184410185a.0
-        for <git@vger.kernel.org>; Tue, 28 Nov 2023 11:08:42 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="nvVTDDYK"
+Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A74C92
+	for <git@vger.kernel.org>; Tue, 28 Nov 2023 11:08:44 -0800 (PST)
+Received: by mail-ot1-x336.google.com with SMTP id 46e09a7af769-6d817ccaa6dso2067134a34.2
+        for <git@vger.kernel.org>; Tue, 28 Nov 2023 11:08:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1701198521; x=1701803321; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1701198523; x=1701803323; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=EbKNY7VNNH+QCW70ZspylXD6r6Zjz9ZM4nRfzSIaKf4=;
-        b=KRIFk0JR3s2PZOZZ+U8XvECgp/JmR3zGCGTRJP8uDOKAsV3DMMKuYZo1HJQQzCYH4c
-         SZCqErDdkG6U+4P9m20r9DVQsWTS6MIdmwOTDJNW83DTR5XjbHPOfwwVv4PPLOCc+vR/
-         WoEPs1rmy6D1nk3PCNsnl4/J5tFPTRAlvfup+lCAWG4cX7UARTlTvQxLVxdFMMGmGdJt
-         s+hNYwvymNs4LJykDts9otWzILcnqR3JgmGB7M5rnhAUFqzPLVF1SO0yeSu2lZCsMgQ2
-         l1htOkK7hC3vXtoL7Xefuf+8Xc3oh3ZEUVnCpgt4TJWJfGMIy69g0x4zKGtKCI+syork
-         Y4yA==
+        bh=3XYPYw4QcsT+ncSJlBUK7JQLmFa9VjpCKiOD0dkIe5E=;
+        b=nvVTDDYKLWokrI+7ZpDK/djx2AkY60cG+oRpiJk5QBL1gjv3T/QbSKVEkCG7wEsapk
+         KbnY/dPb3czGoC6COMxqqiXDLTlvd1tovtIf+tmjSWu9SiIEEsrd8Auz40MfvX5s7oGK
+         nvFQAZCnppgCxPVxMZomkNR2NW2wMfiP55SpMSLZOGtbL6vMSGjWaBJ6CNyNH2OLvS5R
+         KqDrC3UspK+OXkv7PYjBp7u1//nXetm4fIsMjcMjOF/Wjk0d8l43D2ITkyoKRiGg2Tq2
+         qLqYhg0D7nQ3OpO47fXfQEEDPsZWahqm4S8G1jdcYrL2MO6T3IwgfVdoCXsfmh1HyB/x
+         yZQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701198521; x=1701803321;
+        d=1e100.net; s=20230601; t=1701198523; x=1701803323;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EbKNY7VNNH+QCW70ZspylXD6r6Zjz9ZM4nRfzSIaKf4=;
-        b=DQYmYzMPIwK4yX4B8rexb4bKN/d30NXRGqmej0X466CL2WjkeyrRwBHrc3rmJENuBl
-         xG0su9AzFOV1OSshrNOrYAXDavqhuuJgPPvxiaWkTe4geIWyr4wOWUs8mBuDAkzgRTVJ
-         iVKJ4mtgE5SDKY4Is+734fIDQyWASSorZWnffck2dv1wJf0noVVUJDe4qeAYEfU15CDB
-         HnlhdctXJzLEc4WLzarxpHF6ttKzQrCzYxY5TJ/6WoEbsSSEfyJLCu2m+4/mPQzFwGxv
-         0tTiIVSQ2GuwdDQv3MZyLms9uILpQRmVcFR0aPPgOmV+NSgwZUgCBd/Z6vjO7CzQx+as
-         J6SQ==
-X-Gm-Message-State: AOJu0YzDqJM/a7wdXG5gYGr/sDreugLWY8xDGwtgazRRoAuen/iF2+Qd
-	9zGIwFzFEy3ZaIYqCbj/5eP73u0D1hkeTWHkbe8=
-X-Google-Smtp-Source: AGHT+IHks86Jl2+dFFRowpcz9ARa1ei7WhDjOqPmzqLwsNMJMXYjxIKXvXoz23XWptWyT7JcypR77w==
-X-Received: by 2002:a05:620a:1455:b0:77d:73fd:c79 with SMTP id i21-20020a05620a145500b0077d73fd0c79mr15964483qkl.53.1701198520953;
-        Tue, 28 Nov 2023 11:08:40 -0800 (PST)
+        bh=3XYPYw4QcsT+ncSJlBUK7JQLmFa9VjpCKiOD0dkIe5E=;
+        b=uptQas0y6hUs5bpughkMBZrNx3OfPluJSHJvftE0bNxwfJZQN9bN4kq/qzWtmIBDp5
+         eOakbC0fzez9wcpwlhsYD6N134I7A8tNgA+WIuZH0+lP4PrPHe2ZnOgXVSPGYB5kbgaC
+         ZgwnWqz+bAyaQfJE+QB0Lfmy6g9dqlafO8dnxu1Gf+IBO3hq+xfxcRGxApnzAAImRV7U
+         PplcnKBJvdsw5+BIkljy+0UzF45/pkg7R7HqaGOltafo5tQLlFt+5LY+5fYiv1gZsCmx
+         QqRKTgiXpBvlr9HYJOI7sU/FKoJRfW7MGx9slvij0oyhBPSH/V/et4/YkMKPBC9uya9x
+         +HlA==
+X-Gm-Message-State: AOJu0Yx8niMX80Fn9Tv0xhpyjFsRmAy/mpelbbPTLtPz0NYRGcjeakUA
+	NqpzwXvgXOWGBeGx0X+ijYuyR7l4OwVS/H5ZGrerwA==
+X-Google-Smtp-Source: AGHT+IFMTfbOGU/R2LDK7fQF+9EIK1fL/ZBJ18szCO7R2j9yATrQ+lLLzwbVG/PLfs511GAVdJ8e/g==
+X-Received: by 2002:a9d:7382:0:b0:6d7:f8c7:1a73 with SMTP id j2-20020a9d7382000000b006d7f8c71a73mr17675235otk.24.1701198523508;
+        Tue, 28 Nov 2023 11:08:43 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id bi40-20020a05620a31a800b0077da68b8801sm2066973qkb.65.2023.11.28.11.08.40
+        by smtp.gmail.com with ESMTPSA id gv9-20020a056214262900b0067a2354f8besm3808396qvb.91.2023.11.28.11.08.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Nov 2023 11:08:40 -0800 (PST)
-Date: Tue, 28 Nov 2023 14:08:40 -0500
+        Tue, 28 Nov 2023 11:08:43 -0800 (PST)
+Date: Tue, 28 Nov 2023 14:08:42 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 17/24] pack-objects: prepare `write_reused_pack_verbatim()`
- for multi-pack reuse
-Message-ID: <1f766648df5f80a178d6eae31cb25fc8484ef84e.1701198172.git.me@ttaylorr.com>
+Subject: [PATCH 18/24] pack-objects: include number of packs reused in output
+Message-ID: <4cd9f99bfdda0fa7db2372ca194572df1000304f.1701198172.git.me@ttaylorr.com>
 References: <cover.1701198172.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,135 +55,48 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1701198172.git.me@ttaylorr.com>
 
-The function `write_reused_pack_verbatim()` within
-`builtin/pack-objects.c` is responsible for writing out a continuous
-set of objects beginning at the start of the reuse packfile.
-
-In the existing implementation, we did something like:
-
-    while (pos < reuse_packfile_bitmap->word_alloc &&
-           reuse_packfile_bitmap->words[pos] == (eword_t)~0)
-      pos++;
-
-    if (pos)
-      /* write first `pos * BITS_IN_WORD` objects from pack */
-
-as an optimization to record a single chunk for the longest continuous
-prefix of objects wanted out of the reuse pack, instead of having a
-chunk for each individual object. For more details, see bb514de356
-(pack-objects: improve partial packfile reuse, 2019-12-18).
-
-In order to retain this optimization in a multi-pack reuse world, we can
-no longer assume that the first object in a pack is on a word boundary
-in the bitmap storing the set of reusable objects.
-
-Assuming that all objects from the beginning of the reuse packfile up to
-the object corresponding to the first bit on a word boundary are part of
-the result, consume whole words at a time until the last whole word
-belonging to the reuse packfile. Copy those objects to the resulting
-packfile, and track that we reused them by recording a single chunk.
+In addition to including the number of objects reused verbatim from a
+reuse-pack, include the number of packs from which objects were reused.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/pack-objects.c | 73 ++++++++++++++++++++++++++++++++++--------
- 1 file changed, 60 insertions(+), 13 deletions(-)
+ builtin/pack-objects.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index b5e6f6377a..e37509568b 100644
+index e37509568b..902e70abc5 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -1098,31 +1098,78 @@ static void write_reused_pack_one(struct packed_git *reuse_packfile,
+@@ -224,6 +224,7 @@ static struct progress *progress_state;
  
- static size_t write_reused_pack_verbatim(struct bitmapped_pack *reuse_packfile,
- 					 struct hashfile *out,
--					 off_t pack_start UNUSED,
-+					 off_t pack_start,
- 					 struct pack_window **w_curs)
- {
--	size_t pos = 0;
-+	size_t pos = reuse_packfile->bitmap_pos;
-+	size_t end;
+ static struct bitmapped_pack *reuse_packfiles;
+ static size_t reuse_packfiles_nr;
++static size_t reuse_packfiles_used_nr;
+ static uint32_t reuse_packfile_objects;
+ static struct bitmap *reuse_packfile_bitmap;
  
--	while (pos < reuse_packfile_bitmap->word_alloc &&
--			reuse_packfile_bitmap->words[pos] == (eword_t)~0)
--		pos++;
-+	if (pos % BITS_IN_EWORD) {
-+		size_t word_pos = (pos / BITS_IN_EWORD);
-+		size_t offset = pos % BITS_IN_EWORD;
-+		size_t last;
-+		eword_t word = reuse_packfile_bitmap->words[word_pos];
+@@ -1266,6 +1267,8 @@ static void write_pack_file(void)
+ 			for (j = 0; j < reuse_packfiles_nr; j++) {
+ 				reused_chunks_nr = 0;
+ 				write_reused_pack(&reuse_packfiles[j], f);
++				if (reused_chunks_nr)
++					reuse_packfiles_used_nr++;
+ 			}
+ 			offset = hashfile_total(f);
+ 		}
+@@ -4612,9 +4615,10 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 		fprintf_ln(stderr,
+ 			   _("Total %"PRIu32" (delta %"PRIu32"),"
+ 			     " reused %"PRIu32" (delta %"PRIu32"),"
+-			     " pack-reused %"PRIu32),
++			     " pack-reused %"PRIu32" (from %"PRIuMAX")"),
+ 			   written, written_delta, reused, reused_delta,
+-			   reuse_packfile_objects);
++			   reuse_packfile_objects,
++			   (uintmax_t)reuse_packfiles_used_nr);
  
--	if (pos) {
--		off_t to_write;
-+		if (offset + reuse_packfile->bitmap_nr < BITS_IN_EWORD)
-+			last = offset + reuse_packfile->bitmap_nr;
-+		else
-+			last = BITS_IN_EWORD;
- 
--		written = (pos * BITS_IN_EWORD);
--		to_write = pack_pos_to_offset(reuse_packfile->p, written)
--			- sizeof(struct pack_header);
-+		for (; offset < last; offset++) {
-+			if (word >> offset == 0)
-+				return word_pos;
-+			if (!bitmap_get(reuse_packfile_bitmap,
-+					word_pos * BITS_IN_EWORD + offset))
-+				return word_pos;
-+		}
-+
-+		pos += BITS_IN_EWORD - (pos % BITS_IN_EWORD);
-+	}
-+
-+	/*
-+	 * Now we're going to copy as many whole eword_t's as possible.
-+	 * "end" is the index of the last whole eword_t we copy, but
-+	 * there may be additional bits to process. Those are handled
-+	 * individually by write_reused_pack().
-+	 *
-+	 * Begin by advancing to the first word boundary in range of the
-+	 * bit positions occupied by objects in "reuse_packfile". Then
-+	 * pick the last word boundary in the same range. If we have at
-+	 * least one word's worth of bits to process, continue on.
-+	 */
-+	end = reuse_packfile->bitmap_pos + reuse_packfile->bitmap_nr;
-+	if (end % BITS_IN_EWORD)
-+		end -= end % BITS_IN_EWORD;
-+	if (pos >= end)
-+		return reuse_packfile->bitmap_pos / BITS_IN_EWORD;
-+
-+	while (pos < end &&
-+	       reuse_packfile_bitmap->words[pos / BITS_IN_EWORD] == (eword_t)~0)
-+		pos += BITS_IN_EWORD;
-+
-+	if (pos > end)
-+		pos = end;
-+
-+	if (reuse_packfile->bitmap_pos < pos) {
-+		off_t pack_start_off = pack_pos_to_offset(reuse_packfile->p, 0);
-+		off_t pack_end_off = pack_pos_to_offset(reuse_packfile->p,
-+							pos - reuse_packfile->bitmap_pos);
-+
-+		written += pos - reuse_packfile->bitmap_pos;
- 
- 		/* We're recording one chunk, not one object. */
--		record_reused_object(sizeof(struct pack_header), 0);
-+		record_reused_object(pack_start_off,
-+				     pack_start_off - (hashfile_total(out) - pack_start));
- 		hashflush(out);
- 		copy_pack_data(out, reuse_packfile->p, w_curs,
--			sizeof(struct pack_header), to_write);
-+			pack_start_off, pack_end_off - pack_start_off);
- 
- 		display_progress(progress_state, written);
- 	}
--	return pos;
-+	if (pos % BITS_IN_EWORD)
-+		BUG("attempted to jump past a word boundary to %"PRIuMAX,
-+		    (uintmax_t)pos);
-+	return pos / BITS_IN_EWORD;
- }
- 
- static void write_reused_pack(struct bitmapped_pack *reuse_packfile,
+ cleanup:
+ 	free_packing_data(&to_pack);
 -- 
 2.43.0.24.g980b318f98
 
