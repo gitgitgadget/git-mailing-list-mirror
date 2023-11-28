@@ -1,88 +1,43 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dZiKeG/5"
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A400C3
-	for <git@vger.kernel.org>; Mon, 27 Nov 2023 18:07:08 -0800 (PST)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id D5DBF25001;
-	Mon, 27 Nov 2023 21:07:07 -0500 (EST)
-	(envelope-from tmz@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=date:from
-	:to:cc:subject:message-id:references:mime-version:content-type
-	:in-reply-to; s=sasl; bh=7Tsw5dCh7ZAgvI8rZ1OCdH6stV9AjyhBnVIOkfu
-	oW1g=; b=dZiKeG/58Zg0q9qgfiFoKZs8kcbSv0d/l7Mym0KAvAu1QgCzHR8B25z
-	n9sR+rE/cOrBDArVFFDzHGDd+7z14SSA5ABYytA56vOQYLUpxnL5PCUUXtvLfSOE
-	tWaqtijWKuHtvCsRLsP5qRwiArbNg9SHXgZIw5f9UzE9XwRygE8Y=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id CE45525000;
-	Mon, 27 Nov 2023 21:07:07 -0500 (EST)
-	(envelope-from tmz@pobox.com)
-Received: from pobox.com (unknown [108.15.224.39])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3170824FFD;
-	Mon, 27 Nov 2023 21:07:03 -0500 (EST)
-	(envelope-from tmz@pobox.com)
-Date: Mon, 27 Nov 2023 21:07:00 -0500
-From: Todd Zullinger <tmz@pobox.com>
-To: "H.Merijn Brand" <linux@tux.freedom.nl>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: Fix git-send-email.perl w.r.t. recent Getopt::Long update
-Message-ID: <ZWVLRIfARhRhz-7L@pobox.com>
-References: <20231124103932.31ca7688@pc09>
- <xmqqzfz03tbn.fsf@gitster.g>
- <20231127093810.2092fe1d@pc09>
+	dkim=pass (1024-bit key) header.d=pimpmybyte.de header.i=@pimpmybyte.de header.b="L5EHQhzw"
+Received: from pimpmybyte.de (kalmar.hosting.pimpmybyte.de [212.227.234.178])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C892FD5D
+	for <git@vger.kernel.org>; Mon, 27 Nov 2023 21:55:42 -0800 (PST)
+Received: from [127.0.0.1] (ip-176-199-210-019.um44.pools.vodafone-ip.de [176.199.210.19])
+	by kalmar.hosting.pimpmybyte.de (Postfix) with ESMTPSA id 3B8377E90A;
+	Tue, 28 Nov 2023 05:55:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pimpmybyte.de;
+	s=default; t=1701150941;
+	bh=Sxx3o48yLMouXPLByXXIfJdIAxtMhkSgVxFl6ER2OBw=; h=Subject:To:From;
+	b=L5EHQhzwr7ob7QenhxmoyAmtbkCgR5vPnfKPMD0ovylHIb5VnTjc8NK+F5ddYkDk0
+	 wWH4+T9RCxMk1/KD8YG4z/M5YEoFJk2mNcH6yXlYSwl+//aoryRUeTpD/m4jbtpozC
+	 q43tm113fqRozRM/o6PnLtl37TPr7HhvPlzd2Qxk=
+Authentication-Results: kalmar.hosting.pimpmybyte.de;
+        spf=pass (sender IP is 176.199.210.19) smtp.mailfrom=mk+copyleft@pimpmybyte.de smtp.helo=[127.0.0.1]
+Received-SPF: pass (kalmar.hosting.pimpmybyte.de: connection is authenticated)
+Subject: Re: [PATCH] doc: make the gitfile syntax easier to discover
+To: git mailing list <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+ Marcel Krause <mk+copyleft@pimpmybyte.de>
+References: <20231124194711.563720-1-mk+copyleft@pimpmybyte.de>
+ <xmqqr0kd5i66.fsf@gitster.g>
+ <70125a8e-57ed-2ac6-1260-2aaa10cbc851@pimpmybyte.de>
+From: Marcel Krause <mk+copyleft@pimpmybyte.de>
+Message-ID: <182d290a-86e5-b361-87a1-6860641fc726@pimpmybyte.de>
+Date: Tue, 28 Nov 2023 06:55:40 +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231127093810.2092fe1d@pc09>
-X-Pobox-Relay-ID:
- D2ADC040-8D92-11EE-8ECF-A19503B9AAD1-09356542!pb-smtp21.pobox.com
+In-Reply-To: <70125a8e-57ed-2ac6-1260-2aaa10cbc851@pimpmybyte.de>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 
-Hi,
-
-H.Merijn Brand wrote:
-> On Mon, 27 Nov 2023 09:58:52 +0900, Junio C Hamano <gitster@pobox.com> wrote:
->> One downside of unconditional upgrade of the call is, of course,
->> that it would no longer work for those with older Getopt::Long that
->> did not support the "!" suffix.  Fortunately, Getopt::Long 2.33
->> started shipping with Perl 5.8.1 that is more than 20 years old, so
->> with the series we accepted, we also have a change to bump the
->> required version of Perl from 5.8.0 to 5.8.1 to make it clear that
->> it is deliberate that we drop the support for anything older at the
->> same time.
-> 
-> The is a no-issue ...
-> 
-> Just the 'use Getopt::Long' is enough to guarantee a working version:
-> 
-> The '!' was already implemented in version 2.10 (April 1997):
-> --8<---
-> =item !
-> 
-> Option does not take an argument and may be negated, i.e. prefixed by
-> "no". E.g. "foo!" will allow B<--foo> (with value 1) and B<-nofoo>
-> (with value 0).
-> The option variable will be set to 1, or 0 if negated.
-> -->8---
-
-The real issue is the lack of support for the '--no-' prefix
-when used with the '!' parameter.  The '--no-' form is what
-has always been documented by git-send-email(1).  It was not
-supported until Getopt::Long 2.33, included in perl 5.8.1.
-
-Prior, 'foo!' provided --foo and --nofoo but not --no-foo.
-
-But as Junio said, we can accept requiring a perl which was
-released sometime in the past 2 decades in order to run the
-most recent git release. ;)
-
-Thanks for noticing this and sending a patch!
-
--- 
-Todd
+Sorry for being slow on understanding your "git worktree add" hint.
+I agree that discoverability of that command is at least as important
+as discoverability of the syntax. I'll add a line about that, too.
