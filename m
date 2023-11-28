@@ -1,40 +1,101 @@
 Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from mail.zombino.com (c3.zombino.com [91.107.222.152])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35405C1
-	for <git@vger.kernel.org>; Tue, 28 Nov 2023 06:15:01 -0800 (PST)
-Received: from [10.168.5.44] (unknown [81.95.8.245])
-	by mail.zombino.com (Postfix) with ESMTPS id 3C48193D1E;
-	Tue, 28 Nov 2023 14:14:59 +0000 (UTC)
-Message-ID: <2e5e3225-6e94-43ff-ab7b-18aed2048372@zombino.com>
-Date: Tue, 28 Nov 2023 15:14:58 +0100
+Received: from mail.zombino.com (c3.zombino.com [IPv6:2a01:4f8:c012:9cdf::1])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA75418D
+	for <git@vger.kernel.org>; Tue, 28 Nov 2023 06:28:48 -0800 (PST)
+Received: from adamm.localdomain (unknown [81.95.8.245])
+	by mail.zombino.com (Postfix) with ESMTPS id C297693D20;
+	Tue, 28 Nov 2023 14:28:46 +0000 (UTC)
+Received: by adamm.localdomain (Postfix, from userid 1000)
+	id 94FD29AAC51A; Tue, 28 Nov 2023 15:28:46 +0100 (CET)
+From: Adam Majer <adamm@zombino.com>
+To: git@vger.kernel.org
+Cc: Adam Majer <adamm@zombino.com>
+Subject: [PATCH] setup: recognize bare repositories with packed-refs
+Date: Tue, 28 Nov 2023 15:28:45 +0100
+Message-ID: <20231128142845.11523-1-adamm@zombino.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20231117203253.21143-1-adamm@zombino.com>
+References: <20231117203253.21143-1-adamm@zombino.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] setup: recognize bare repositories with packed-refs
-Content-Language: en-US
-To: Josh Steadmon <steadmon@google.com>, git@vger.kernel.org
-References: <20231117202513.20604-1-adamm@zombino.com>
- <20231117203253.21143-1-adamm@zombino.com> <ZWTxuBV1DGieo6n2@google.com>
-From: Adam Majer <adamm@zombino.com>
-In-Reply-To: <ZWTxuBV1DGieo6n2@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 11/27/23 20:44, Josh Steadmon wrote:> Two suggestions for the test here:
-> 1) Can you give the test a more descriptive name, such as "GCed bare 
-> repos still recognized"?
-Thanks, adjusted. I've also added that empty refs/ directory is not there.
+In a garbage collected bare git repository, the refs/ subdirectory is
+empty.  In use-cases when such a repository is directly added into
+another repository, it no longer is detected as valid. Git doesn't
+preserve empty paths so refs/ subdirectory is not present. Simply
+creating an empty refs/ subdirectory fixes this problem.
 
-> 2) Can you add a check that bare.git/packed-refs exists?
-Done.
+Looking more carefully, there are two backends to handle various refs in
+git -- the files backend that uses refs/ subdirectory and the
+packed-refs backend that uses packed-refs file. If references are not
+found in refs/ subdirectory (or directory doesn't exist), the
+packed-refs directory will be consulted. Garbage collected repository
+will have all its references in packed-refs file.
 
-I've also removed the -C parameter since we actually need GIT_DIR= in
-all cases to prevent git from going up directory tree. -C is then
-superflous. In addition, I've changed the hardcoded object id to master
-branch to make it less magical looking.
+To allow the use-case when packed-refs is the only source of refs and
+refs/ subdirectory is simply not present, augment 'is_git_directory()'
+setup function to look for packed-refs file as an alternative to refs/
+subdirectory.
 
-- Adam
+Signed-off-by: Adam Majer <adamm@zombino.com>
+---
+ setup.c       | 10 +++++++---
+ t/t6500-gc.sh |  9 +++++++++
+ 2 files changed, 16 insertions(+), 3 deletions(-)
+
+diff --git a/setup.c b/setup.c
+index fc592dc6dd..2a6dda6ae9 100644
+--- a/setup.c
++++ b/setup.c
+@@ -348,7 +348,7 @@ int get_common_dir_noenv(struct strbuf *sb, const char *gitdir)
+  *
+  *  - either an objects/ directory _or_ the proper
+  *    GIT_OBJECT_DIRECTORY environment variable
+- *  - a refs/ directory
++ *  - a refs/ directory or packed-refs file
+  *  - either a HEAD symlink or a HEAD file that is formatted as
+  *    a proper "ref:", or a regular file HEAD that has a properly
+  *    formatted sha1 object name.
+@@ -384,8 +384,12 @@ int is_git_directory(const char *suspect)
+ 
+ 	strbuf_setlen(&path, len);
+ 	strbuf_addstr(&path, "/refs");
+-	if (access(path.buf, X_OK))
+-		goto done;
++	if (access(path.buf, X_OK)) {
++		strbuf_setlen(&path, len);
++		strbuf_addstr(&path, "/packed-refs");
++		if (access(path.buf, R_OK))
++			goto done;
++	}
+ 
+ 	ret = 1;
+ done:
+diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
+index 18fe1c25e6..4ad1690817 100755
+--- a/t/t6500-gc.sh
++++ b/t/t6500-gc.sh
+@@ -214,6 +214,15 @@ test_expect_success 'gc.repackFilter launches repack with a filter' '
+ 	grep -E "^trace: (built-in|exec|run_command): git repack .* --filter=blob:none ?.*" trace.out
+ '
+ 
++test_expect_success 'GCed bare repos without empty refs/ still recognized' '
++	GIT_DIR="$PWD"/bare.git git cat-file -e master &&
++	test_dir_is_empty bare.git/refs/heads &&
++	test_dir_is_empty bare.git/refs/tags &&
++	test_file_not_empty bare.git/packed-refs &&
++	rm -r bare.git/refs &&
++	GIT_DIR="$PWD"/bare.git git cat-file -e master
++'
++
+ test_expect_success 'gc.repackFilterTo store filtered out objects' '
+ 	test_when_finished "rm -rf bare.git filtered.git" &&
+ 
+-- 
+2.43.0.1.g67290e5b65
+
