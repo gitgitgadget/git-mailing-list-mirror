@@ -1,22 +1,22 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pimpmybyte.de header.i=@pimpmybyte.de header.b="laAEF7Pw"
+	dkim=pass (1024-bit key) header.d=pimpmybyte.de header.i=@pimpmybyte.de header.b="mIGeHEKP"
 Received: from pimpmybyte.de (kalmar.hosting.pimpmybyte.de [212.227.234.178])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86C9B113
-	for <git@vger.kernel.org>; Mon, 27 Nov 2023 22:52:06 -0800 (PST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD95CD0
+	for <git@vger.kernel.org>; Mon, 27 Nov 2023 22:59:17 -0800 (PST)
 Received: by kalmar.hosting.pimpmybyte.de (Postfix, from userid 1000)
-	id 361BA7E94A; Tue, 28 Nov 2023 06:52:05 +0000 (UTC)
+	id 8C7BC7E97D; Tue, 28 Nov 2023 06:59:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pimpmybyte.de;
-	s=default; t=1701154325;
-	bh=2JdL5ZcpGQNdi6Wbqi/w3pPMCdl1o+rjJ/hx0vDDd08=; h=From:To:Subject;
-	b=laAEF7Pwp6fYczIBphmEhPY3SOVSXwyY77ElwPur8qypcRdj3xeNBPMkCbkVNbC/V
-	 AgxY0HAAi+c3w1mkS16l4ZpEhKWBQoRnbrC/wTL0zpXLFKl0BT2pEx5ToYVQKQGstL
-	 CTPXia3uO7j/4izbmJg/pcZiga9iuQBSkCXZxAEs=
+	s=default; t=1701154756;
+	bh=f19W7xsmsWvrQNGd405ZCGJRVO7yGOsA3LzA9TW1PVE=; h=From:To:Subject;
+	b=mIGeHEKPQWWe1gGfayTdItFH2kF6RWbcPaar6iHc7WGnETdXKpDitj95fYSgXVwoK
+	 tFbtXlJdWDUsMpxGWh56tzNrwvtvDy9weybEXme9dnF+8MTOPfwVbCeOW1B1/0X0IV
+	 KjS+NJuqI5Is0ubhUsdVqvXKevIcxwIVzCT2VXhs=
 From: Marcel Krause <mk+copyleft@pimpmybyte.de>
 To: git mailing list <git@vger.kernel.org>
 Cc: Junio C Hamano <gitster@pobox.com>, Marcel Krause <mk+copyleft@pimpmybyte.de>
 Subject: [PATCH] doc: make the gitfile syntax easier to discover
-Date: Tue, 28 Nov 2023 07:48:21 +0100
-Message-Id: <20231128064821.1059728-1-mk+copyleft@pimpmybyte.de>
+Date: Tue, 28 Nov 2023 07:55:58 +0100
+Message-Id: <20231128065558.1061206-1-mk+copyleft@pimpmybyte.de>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <182d290a-86e5-b361-87a1-6860641fc726@pimpmybyte.de>
 References: <182d290a-86e5-b361-87a1-6860641fc726@pimpmybyte.de>
@@ -28,6 +28,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
+Signed-off-by: Marcel Krause <mk+copyleft@pimpmybyte.de>
 ---
  Documentation/gitrepository-layout.txt | 4 +++-
  Documentation/glossary-content.txt     | 2 ++
