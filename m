@@ -1,73 +1,141 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IVTkqV8V"
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AEBD1AE
-	for <git@vger.kernel.org>; Tue, 28 Nov 2023 10:33:05 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-40b479ec4a3so18355495e9.2
-        for <git@vger.kernel.org>; Tue, 28 Nov 2023 10:33:04 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="crRl/liI"
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01202109
+	for <git@vger.kernel.org>; Tue, 28 Nov 2023 10:45:50 -0800 (PST)
+Received: by mail-pl1-x62e.google.com with SMTP id d9443c01a7336-1cfc9c4acb6so22060115ad.0
+        for <git@vger.kernel.org>; Tue, 28 Nov 2023 10:45:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701196383; x=1701801183; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TxT+sy7A9MOWcjV183bAx/p7GpVw3r13IVnK6ATwedc=;
-        b=IVTkqV8VA1sFbzbeJywivyhgkPUrdVmfvaoXXukG1X3BQZ5q5RXIko0f/WT42lu93p
-         L4l2e6TV+5Onyr30SA7TuoegHAZZAv9kK/+Tr4/eEwYSufrLBhNgmTANT21jLCPXOuTk
-         g2BlrEzzkwh6IXOF7n1AMlHPu6M8XFyTIqKvishudZ/W6gHQ+1qvbiOepcmrTtvr68mv
-         QycquqFs/axNq3yMYzdYL6KoAMyC+GZzcL5FZn+DDEL6D2u8qk+Wnm8MuZSzhHy+D5ey
-         iaEP0B1t58jPRMsLlLrzknpwiFCAl9UAuv09Depd2eFSRNDQ8T3ztUMPfPLXmSM4HKLY
-         lKpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701196383; x=1701801183;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=google.com; s=20230601; t=1701197150; x=1701801950; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=TxT+sy7A9MOWcjV183bAx/p7GpVw3r13IVnK6ATwedc=;
-        b=W+/yU4jj5IDi8XpF0MBUgO81w2leKNkr5AAy446lpQY9E1ccn7YDUVGFbd/bddq16p
-         1RqYIcJAkTiF1iw36ZUsBtwIfoGT+leD2vKnd/Qr/7boGj/jnegMMYVYuoh+zM29bfKz
-         iDynCVJRrRc6VpsBm55U917VIYOaGBKZ/GcUDBwKYnd55nb5qu0qwdtO41xR60ukxPMk
-         dGC7yx6Nr3dOW0P/YQFZQrZxz1+NHmG8FJYhMODHZZ15k3N7+D6ZhzirvPxpzO1ReYBt
-         D5AO6+vNLN3omOw8LG0pCu+qHjeqOx/Ck2WRayXwb5ULUJKgjzJOppHUw+/YTCal9iIR
-         yz2w==
-X-Gm-Message-State: AOJu0YzOX3QlSoL1zZXi2yRHo63veOSyofWmpXNRgToiIZybylQsoM28
-	l1UJSZ6NOTx4FTVEH+fPXea2rTsTmVU=
-X-Google-Smtp-Source: AGHT+IGppWb828bjVKugnzABYeWEjcErI79RDbowBF8mFoFDOQl8xBAK2LGAaFa2hLeUAMwKxrENFg==
-X-Received: by 2002:a5d:4804:0:b0:32f:7b89:2675 with SMTP id l4-20020a5d4804000000b0032f7b892675mr11854093wrq.65.1701196383264;
-        Tue, 28 Nov 2023 10:33:03 -0800 (PST)
-Received: from localhost.localdomain ([2a01:11:f30:4040:4d56:70a3:1b54:a168])
-        by smtp.gmail.com with ESMTPSA id l9-20020adffe89000000b003330a1d35a8sm3005593wrr.43.2023.11.28.10.33.02
+        bh=7NMWhnYGandxpl0FOm5NXy43aRrKUhGnL5Gf7f0Fo2E=;
+        b=crRl/liIMiBxUDKQ8A24E8NHp7qRAsZ/n4IBGgJEM4dlebNTMZgDQhH56h+CdlhzAG
+         nmp+4/c/xmNWI5ZXbazSE/dS3Xi/S4AU85cHpk1Fq+4DHFdGqaTeOtErS0X49F7O2/1x
+         upIq7zgXrCUExSGd+u/UKjY5vckfXPZFSUXptHt6U5AP3LzN/VOSPhByEzS7lMnB2ca6
+         MmPFDOvJpdHpGsMwpYm+9YD60QQIXrgrMVKYtv44mJ4zmK+PIBkVE2PWeiUoy3irxMAB
+         Y6etPjdsMLRk8r6uibZieeYb2qhc2OHemWGNBd6DlQLRmc3OTVJpYKqeVspUZuK4OOEZ
+         mbUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701197150; x=1701801950;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7NMWhnYGandxpl0FOm5NXy43aRrKUhGnL5Gf7f0Fo2E=;
+        b=q4gWQ8fO0abwWs/1UN9ntJc69nyA3t4qo9rU5QEcFmHIBdSQ+Zu0D2n04UHjRfbmaE
+         uAUV9AjrkoyyR65Xi2MZ1Zugx9R0gp8865vfEVB6LBkMJbDiT/Rh01IqROF0G6IvpuBZ
+         uXIYkK4V0p1nOQG+DIaW6+LSlXkPLKW/NzA6f08fWs0jo3PRg7d6dur16McIE0Idoq1p
+         nucn3N2VsFf3HJ+SG8BucaV3IJ2lXxhVvT44hJcR2+9n/Ev31AivFsMEngeu06Ko9eVD
+         /dveKmSWjkFBpX/W7cncmz0n5oqmTBEdeZOdGbDuQBDkWJNQXLWqHCMojgEKgoZFCdxv
+         G9OQ==
+X-Gm-Message-State: AOJu0YwtdbaH57XEjYfZlBbTpGsTerpk9ZqIqxw2EcIeAkuI83/HeLWx
+	HeAFM8QgXveYlyqdu+Kc1jjiGEosYxthBGqYt1mYmw==
+X-Google-Smtp-Source: AGHT+IGBf08HwD3Byy83tocC09RoetpzX8QvyG3jjTuO0tL5dPjRP9F6eKdUge3FAlTlEHBzJj/gsw==
+X-Received: by 2002:a17:902:e750:b0:1cf:c02f:6cea with SMTP id p16-20020a170902e75000b001cfc02f6ceamr8710248plf.69.1701197150250;
+        Tue, 28 Nov 2023 10:45:50 -0800 (PST)
+Received: from google.com ([2620:15c:2d3:204:d2e9:e3fe:4455:513f])
+        by smtp.gmail.com with ESMTPSA id jf7-20020a170903268700b001ce6649d088sm10685616plb.195.2023.11.28.10.45.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Nov 2023 10:33:02 -0800 (PST)
-From: Ricardo Abreu <ricardolafabreu@gmail.com>
-To: scott@tannewt.org
+        Tue, 28 Nov 2023 10:45:49 -0800 (PST)
+Date: Tue, 28 Nov 2023 10:45:45 -0800
+From: Josh Steadmon <steadmon@google.com>
+To: Adam Majer <adamm@zombino.com>
 Cc: git@vger.kernel.org
-Subject: Re: Submodule update fetching with outer repo's default branch
-Date: Tue, 28 Nov 2023 18:32:53 +0000
-Message-ID: <20231128183253.134480-1-ricardolafabreu@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <111c2777-6fd4-45ab-8418-9d064999661c@app.fastmail.com>
-References: <111c2777-6fd4-45ab-8418-9d064999661c@app.fastmail.com>
+Subject: Re: [PATCH] setup: recognize bare repositories with packed-refs
+Message-ID: <ZWY1WSUL11Y6990U@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+	Adam Majer <adamm@zombino.com>, git@vger.kernel.org
+References: <20231117203253.21143-1-adamm@zombino.com>
+ <20231128142845.11523-1-adamm@zombino.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231128142845.11523-1-adamm@zombino.com>
 
-I have the same problem. Here is a generic recipe to reproduce, assuming a repository X with a submodule Y (set with an `https` URL):
+On 2023.11.28 15:28, Adam Majer wrote:
+> In a garbage collected bare git repository, the refs/ subdirectory is
+> empty.  In use-cases when such a repository is directly added into
+> another repository, it no longer is detected as valid. Git doesn't
+> preserve empty paths so refs/ subdirectory is not present. Simply
+> creating an empty refs/ subdirectory fixes this problem.
+> 
+> Looking more carefully, there are two backends to handle various refs in
+> git -- the files backend that uses refs/ subdirectory and the
+> packed-refs backend that uses packed-refs file. If references are not
+> found in refs/ subdirectory (or directory doesn't exist), the
+> packed-refs directory will be consulted. Garbage collected repository
+> will have all its references in packed-refs file.
+> 
+> To allow the use-case when packed-refs is the only source of refs and
+> refs/ subdirectory is simply not present, augment 'is_git_directory()'
+> setup function to look for packed-refs file as an alternative to refs/
+> subdirectory.
+> 
+> Signed-off-by: Adam Majer <adamm@zombino.com>
+> ---
+>  setup.c       | 10 +++++++---
+>  t/t6500-gc.sh |  9 +++++++++
+>  2 files changed, 16 insertions(+), 3 deletions(-)
+> 
+> diff --git a/setup.c b/setup.c
+> index fc592dc6dd..2a6dda6ae9 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -348,7 +348,7 @@ int get_common_dir_noenv(struct strbuf *sb, const char *gitdir)
+>   *
+>   *  - either an objects/ directory _or_ the proper
+>   *    GIT_OBJECT_DIRECTORY environment variable
+> - *  - a refs/ directory
+> + *  - a refs/ directory or packed-refs file
+>   *  - either a HEAD symlink or a HEAD file that is formatted as
+>   *    a proper "ref:", or a regular file HEAD that has a properly
+>   *    formatted sha1 object name.
+> @@ -384,8 +384,12 @@ int is_git_directory(const char *suspect)
+>  
+>  	strbuf_setlen(&path, len);
+>  	strbuf_addstr(&path, "/refs");
+> -	if (access(path.buf, X_OK))
+> -		goto done;
+> +	if (access(path.buf, X_OK)) {
+> +		strbuf_setlen(&path, len);
+> +		strbuf_addstr(&path, "/packed-refs");
+> +		if (access(path.buf, R_OK))
+> +			goto done;
+> +	}
+>  
+>  	ret = 1;
+>  done:
+> diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
+> index 18fe1c25e6..4ad1690817 100755
+> --- a/t/t6500-gc.sh
+> +++ b/t/t6500-gc.sh
+> @@ -214,6 +214,15 @@ test_expect_success 'gc.repackFilter launches repack with a filter' '
+>  	grep -E "^trace: (built-in|exec|run_command): git repack .* --filter=blob:none ?.*" trace.out
+>  '
+>  
+> +test_expect_success 'GCed bare repos without empty refs/ still recognized' '
+> +	GIT_DIR="$PWD"/bare.git git cat-file -e master &&
+> +	test_dir_is_empty bare.git/refs/heads &&
+> +	test_dir_is_empty bare.git/refs/tags &&
+> +	test_file_not_empty bare.git/packed-refs &&
+> +	rm -r bare.git/refs &&
+> +	GIT_DIR="$PWD"/bare.git git cat-file -e master
+> +'
+> +
+>  test_expect_success 'gc.repackFilterTo store filtered out objects' '
+>  	test_when_finished "rm -rf bare.git filtered.git" &&
+>  
+> -- 
+> 2.43.0.1.g67290e5b65
 
-1. `git clone ... X`
-2. `cd X`
-3. `git submodule sync`
-4. `git submodule update --init --recursive`
-5. `git remote rename origin remotex` # rename the remote in X, not Y
-6. Elsewhere, add a new commit to Y and create a branch "update-y" in X, pointing the submodule to that commit. Suppose the hash of the new commit in Y is `abc1abc`.
-7. `git fetch remotex`
-8. `git checkout update-y`
-9. `git submodule sync`
-10. `GIT_TRACE=1 git submodule update --init --recursive`
-  - observe: 
-    * the command in the last trace message to be `git fetch remotex abc1abc` (should be `git fetch origin abc1abc`, because that is still the name of the submodule's remote)
-    * the wrong error message complaining about 'file' protocol (which isn't involved anywhere)
+Thanks for the fixes. This looks good to me. BTW, in the future please
+add a version number when you send updated patches (e.g. add "-v 2" to
+your command-line if you're using git-format-patch).
 
+Reviewed-by: Josh Steadmon <steadmon@google.com>
