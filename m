@@ -1,182 +1,608 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="SbaF+87Y"
-Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1F5F19A6
-	for <git@vger.kernel.org>; Tue, 28 Nov 2023 11:09:00 -0800 (PST)
-Received: by mail-qk1-x72e.google.com with SMTP id af79cd13be357-778a6c440faso275189785a.3
-        for <git@vger.kernel.org>; Tue, 28 Nov 2023 11:09:00 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=apollographql.com header.i=@apollographql.com header.b="vq3iynbG"
+Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FEB1198D
+	for <git@vger.kernel.org>; Tue, 28 Nov 2023 13:04:40 -0800 (PST)
+Received: by mail-qt1-x829.google.com with SMTP id d75a77b69052e-42033328ad0so33353451cf.0
+        for <git@vger.kernel.org>; Tue, 28 Nov 2023 13:04:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1701198540; x=1701803340; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=yyjU3+2aACcGusXPzHPS4F+h43r7SvevI+1svAuY+R8=;
-        b=SbaF+87Yl4pFHRI5d8jjYXIPqj8iTMfK7lrBc/G/5zzyBw9UT2Hj/LqT6/+iGoypm/
-         72Lk2cfCli34Lcvu7fu6+hj/BnzUBhd9h+0kxa6YZ5qPrx6IB/4z5z+x7c5ixloxQ4nR
-         0RNWn09Xh996zHBJK+fqTM1kEjJWxMSvX+zCgDU/qtHLi4UyOL+L95RET4QtsZOEiib2
-         4jQKRAzvOQLmoDwWOVYQJZ1zDuEQN1wfJ4McTgZJG/XSFwc9EKd8gzRcnGuWCp6UURau
-         xM8Ajul7cwuFumVLd256+BYjtMV+/SJ2cED8S3S8WRLujKXUA1iw0/OWQgS1UsynCsrr
-         gQZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701198540; x=1701803340;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=apollographql.com; s=google; t=1701205480; x=1701810280; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yyjU3+2aACcGusXPzHPS4F+h43r7SvevI+1svAuY+R8=;
-        b=IDEZO1Gq/8pbdanKMzO7rXTlmseS5ekkGBd8lAWVy8AeWrkGo11/OhfJnoTUcugiqb
-         D2Vt/oV1JNtOGuoBpq/NMP0poTtt5mYEOpkCbNXZEEJXmIyqZ71DVsgKNfldoit/mW4c
-         paKHfaSmCqpv4SjBsB7lGbPFfWyrINoEq5CWY7JWRZIpj1uFIN8gpUj/pBfrT9Bl1z7O
-         4mfPcSvDN0NOJezlvIMnRnfg/fbM1igP9x6gbk2k1Yjd7CqgB56sFI+Hk0Ko2TC5fPfQ
-         eUZa5Xxgk9wlGnmNDm3SV1fcqkL7d1Ymg/6rqSdJb8Hu2kMIPFXGAUGNGO571mOYf89n
-         N/9A==
-X-Gm-Message-State: AOJu0YzPN3z6vQUv33k0LipWaL4CZlocOxSMOqnVu/ifyF6G56+5p2DU
-	zuFuegC6ySPrP9T2pEF9IwyazrgJ25jdix23H3k=
-X-Google-Smtp-Source: AGHT+IHHE5lXlE61vzqUDnstW5pQJdSlLw58Y1XqlmtuuJ+/AjUdUB2MsHn0SNrnAB5ofMxDRZ43DA==
-X-Received: by 2002:a05:6214:90c:b0:67a:2969:dd3e with SMTP id dj12-20020a056214090c00b0067a2969dd3emr10055928qvb.62.1701198539824;
-        Tue, 28 Nov 2023 11:08:59 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id x5-20020a0ce785000000b0067a5571bca6sm1078464qvn.74.2023.11.28.11.08.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Nov 2023 11:08:59 -0800 (PST)
-Date: Tue, 28 Nov 2023 14:08:58 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 24/24] t/perf: add performance tests for multi-pack reuse
-Message-ID: <980b318f98143d8ba26443127e515c0c98a2bd6b.1701198172.git.me@ttaylorr.com>
-References: <cover.1701198172.git.me@ttaylorr.com>
+        bh=FphPD3XJwosnq+1cz6vgcHTlHB+GVfnwV4k4yngua/g=;
+        b=vq3iynbGcnXkEkPEnZV55d7L6YZN/lRhfsw72VY6UjNmKEQyP17n+7hgI4qT/lK56/
+         od00xR2W+TZi5MeeCrxiNc0HEHR6IpCB/JYH0ytZ8tt/cq+okvkXzKUnZnQZ+0G2ma89
+         npA18cMwXNGYAtnLHwUU03FNkvSZ6GRbKz4OE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701205480; x=1701810280;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=FphPD3XJwosnq+1cz6vgcHTlHB+GVfnwV4k4yngua/g=;
+        b=V6u6l0KZsN8cVAy32EJFOVG4WfYWAHczf4iN5i2OWsROdMQbkOdJ6Rppl2vbvrNFHO
+         9AeKelq/iyDWU5+WcDVDcsVfnyzWs4ghtriJPxrTUxFePCnkbSBOvsTCSKiHME6JFa1w
+         vspdJALidwQ6sj4mrrQKX77p7pM9hKJ0a12pNrwxSj1ZJRCdBstLYoCbFrRPYJHLUNd4
+         ylHciiB/E/XbwAoHH5GGpyLL1m4cow5Z5T6w8eT36ofE5sEEo+A9PMufeetJUsieTMgT
+         G/XUD6UDoIfJnggYx4FfNoZCO6Yyq+XmNqcs2zVU4ZGBayCmlKjmro4KkY7c6DEgInA0
+         YEsQ==
+X-Gm-Message-State: AOJu0Yy2KcIaLDvnDTXsT0O0gdeP6AdvUVKVuQ28M7zRxJafmcjhMM7X
+	J5QiGJcwnvG7kdGo7tTRLsUdeKkV/Enw7KtroFN7qA==
+X-Google-Smtp-Source: AGHT+IH9JFr+L/WySVzOwP0CiBc1kceNCwyzqRLAzlvkp7qX8wl/7ED7QwFt1loF5RSyblp0j1X8g0d3OiRKe99kUpI=
+X-Received: by 2002:a05:622a:1808:b0:423:6f8e:8973 with SMTP id
+ t8-20020a05622a180800b004236f8e8973mr23575735qtc.0.1701205479580; Tue, 28 Nov
+ 2023 13:04:39 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1701198172.git.me@ttaylorr.com>
+References: <pull.1587.v3.git.1696019580.gitgitgadget@gmail.com>
+ <pull.1587.v4.git.1698347871200.gitgitgadget@gmail.com> <CAP8UFD18Hh=m8HQibAgZW1KNAn6zg_rxe9asg0ViC5z27W=Smw@mail.gmail.com>
+In-Reply-To: <CAP8UFD18Hh=m8HQibAgZW1KNAn6zg_rxe9asg0ViC5z27W=Smw@mail.gmail.com>
+From: Zach FettersMoore <zach.fetters@apollographql.com>
+Date: Tue, 28 Nov 2023 16:04:28 -0500
+Message-ID: <CAEWN6q3BHECpJtfr-ZiGoJtpt8n65h2r+DKsu8Yg2ZWb8_SgKQ@mail.gmail.com>
+Subject: Re: [PATCH v4] subtree: fix split processing with multiple subtrees present
+To: Christian Couder <christian.couder@gmail.com>
+Cc: Zach FettersMoore via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-To ensure that we don't regress either the size or runtime performance
-of multi-pack reuse, add a performance test to measure both of these.
+>> In the diagram below, 'M' represents the mainline repo branch, 'A'
+>> represents one subtree, and 'B' represents another. M3 and B1 represent
+>> a split commit for subtree B that was created from commit M4. M2 and A1
+>> represent a split commit made from subtree A that was also created
+>> based on changes back to and including M4. M1 represents new changes to
+>> the repo, in this scenario if you try to run a 'git subtree split
+>> --rejoin' for subtree B, commits M1, M2, and A1, will be included in
+>> the processing of changes for the new split commit since the last
+>> split/rejoin for subtree B was at M3. The issue is that by having A1
+>> included in this processing the command ends up needing to processing
+>> every commit down tree A even though none of that is needed or relevant
+>> to the current command and result.
+>>
+>> M1
+>>  |        \       \
+>> M2         |       |
+>>  |        A1       |
+>> M3         |       |
+>>  |         |      B1
+>> M4         |       |
 
-The test partitions the objects in GIT_TEST_PERF_LARGE_REPO into 1, 10,
-and 100 packs, and then tries to perform a "clone" at each stage with
-both single- and multi-pack reuse enabled.
+> About the above, Junio already commented the following:
+>
+> -> The above paragraph explains which different things you drew in the
+> -> diagram are representing, but it is not clear how they relate to
+> -> each other.  Do they for example depict parent-child commit
+> -> relationship?  What are the wide gaps between these three tracks and
+> -> what are the short angled lines leaning to the left near the tip?
+> -> Is the time/topology flowing from bottom to top?
+>
+> and it doesn't look like you have addressed that comment.
+>
+> When you say "M3 and B1 represent a split commit for subtree B that
+> was created from commit M4." I am not sure what it means exactly.
+> Could you give example commands that could have created the M3 and B1
+> commits?
 
-Note that the `repack_into_n_chunks()` function in this new test script
-differs from the existing `repack_into_n()`. The former partitions the
-repository into N equal-sized chunks, while the latter produces N packs
-of five commits each (plus their objects), and then another pack with
-the remainder.
+I removed the diagram from the commit message since it seems a little
+unclear, and in its place I added an example of an open source repo
+(which I am currently using the fix in) and the commands to replicate
+the issue. Hopefully that better illustrates how I came across the issue
+and what it is.
 
-On git.git, I can produce the following results on my machine:
+>> So this commit makes a change to the processing of commits for the split
+>> command in order to ignore non-mainline commits from other subtrees such
+>> as A1 in the diagram by adding a new function
+>> 'should_ignore_subtree_commit' which is called during
+>> 'process_split_commit'. This allows the split/rejoin processing to still
+>> function as expected but removes all of the unnecessary processing that
+>> takes place currently which greatly inflates the processing time.
 
-    Test                                                            this tree
-    --------------------------------------------------------------------------------
-    5332.3: clone for 1-pack scenario (single-pack reuse)           1.57(2.99+0.15)
-    5332.4: clone size for 1-pack scenario (single-pack reuse)               231.8M
-    5332.5: clone for 1-pack scenario (multi-pack reuse)            1.79(2.96+0.21)
-    5332.6: clone size for 1-pack scenario (multi-pack reuse)                231.7M
-    5332.9: clone for 10-pack scenario (single-pack reuse)          3.89(16.75+0.35)
-    5332.10: clone size for 10-pack scenario (single-pack reuse)             209.9M
-    5332.11: clone for 10-pack scenario (multi-pack reuse)          1.56(2.99+0.17)
-    5332.12: clone size for 10-pack scenario (multi-pack reuse)              224.4M
-    5332.15: clone for 100-pack scenario (single-pack reuse)        8.24(54.31+0.59)
-    5332.16: clone size for 100-pack scenario (single-pack reuse)            278.3M
-    5332.17: clone for 100-pack scenario (multi-pack reuse)         2.13(2.44+0.33)
-    5332.18: clone size for 100-pack scenario (multi-pack reuse)             357.9M
+> Could you tell a bit more what kind of processing time reduction is or
+> would be possible on what kind of repo? Have you benchmark-ed or just
+> timed this somehow on one of your repos or better on an open source
+> repo (so that we could reproduce if we wanted)?
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- t/perf/p5332-multi-pack-reuse.sh | 81 ++++++++++++++++++++++++++++++++
- 1 file changed, 81 insertions(+)
- create mode 100755 t/perf/p5332-multi-pack-reuse.sh
+I added some extra info for this to the commit message as well, but to
+answer your question yes I discovered and benchmarked this issue in a
+repo I help maintain. I was seeing splits take upwards of 12 minutes
+before the fix, and after they were taking only seconds. Also provided
+infor on the repo and how to reproduce in the updated commit message.
 
-diff --git a/t/perf/p5332-multi-pack-reuse.sh b/t/perf/p5332-multi-pack-reuse.sh
-new file mode 100755
-index 0000000000..5c6c575d62
---- /dev/null
-+++ b/t/perf/p5332-multi-pack-reuse.sh
-@@ -0,0 +1,81 @@
-+#!/bin/sh
-+
-+test_description='tests pack performance with multi-pack reuse'
-+
-+. ./perf-lib.sh
-+. "${TEST_DIRECTORY}/perf/lib-pack.sh"
-+
-+packdir=.git/objects/pack
-+
-+test_perf_large_repo
-+
-+find_pack () {
-+	for idx in $packdir/pack-*.idx
-+	do
-+		if git show-index <$idx | grep -q "$1"
-+		then
-+			basename $idx
-+		fi || return 1
-+	done
-+}
-+
-+repack_into_n_chunks () {
-+	git repack -adk &&
-+
-+	test "$1" -eq 1 && return ||
-+
-+	find $packdir -type f | sort >packs.before &&
-+
-+	# partition the repository into $1 chunks of consecutive commits, and
-+	# then create $1 packs with the objects reachable from each chunk
-+	# (excluding any objects reachable from the previous chunks)
-+	sz="$(($(git rev-list --count --all) / $1))"
-+	for rev in $(git rev-list --all | awk "NR % $sz == 0" | tac)
-+	do
-+		pack="$(echo "$rev" | git pack-objects --revs \
-+			--honor-pack-keep --delta-base-offset $packdir/pack)" &&
-+		touch $packdir/pack-$pack.keep || return 1
-+	done
-+
-+	# grab any remaining objects not packed by the previous step(s)
-+	git pack-objects --revs --all --honor-pack-keep --delta-base-offset \
-+		$packdir/pack &&
-+
-+	find $packdir -type f | sort >packs.after &&
-+
-+	# and install the whole thing
-+	for f in $(comm -12 packs.before packs.after)
-+	do
-+		rm -f "$f" || return 1
-+	done
-+	rm -fr $packdir/*.keep
-+}
-+
-+for nr_packs in 1 10 100
-+do
-+	test_expect_success "create $nr_packs-pack scenario" '
-+		repack_into_n_chunks $nr_packs
-+	'
-+
-+	test_expect_success "setup bitmaps for $nr_packs-pack scenario" '
-+		find $packdir -type f -name "*.idx" | sed -e "s/.*\/\(.*\)$/+\1/g" |
-+		git multi-pack-index write --stdin-packs --bitmap \
-+			--preferred-pack="$(find_pack $(git rev-parse HEAD))"
-+	'
-+
-+	for reuse in single multi
-+	do
-+		test_perf "clone for $nr_packs-pack scenario ($reuse-pack reuse)" "
-+			git for-each-ref --format='%(objectname)' refs/heads refs/tags >in &&
-+			git -c pack.allowPackReuse=$reuse pack-objects \
-+				--revs --delta-base-offset --use-bitmap-index \
-+				--stdout <in >result
-+		"
-+
-+		test_size "clone size for $nr_packs-pack scenario ($reuse-pack reuse)" '
-+			wc -c <result
-+		'
-+	done
-+done
-+
-+test_done
--- 
-2.43.0.24.g980b318f98
+>> Added a test to validate that the proposed fix
+>> solves the issue.
+>>
+>> The test accomplishes this by checking the output
+>> of the split command to ensure the output from
+>> the progress of 'process_split_commit' function
+>> that represents the 'extracount' of commits
+>> processed does not increment.
+
+> Does not increment compared to what?
+
+I reworded this to say the 'extracount' remains at 0 since
+there should be no extra processed commits from the second subtree
+in the test.
+
+>> This was tested against the original functionality
+>> to show the test failed, and then with this fix
+>> to show the test passes.
+>>
+>> This illustrated that when using multiple subtrees,
+>> A and B, when doing a split on subtree B, the
+>> processing does not traverse the entire history
+>> of subtree A which is unnecessary and would cause
+>> the 'extracount' of processed commits to climb
+>> based on the number of commits in the history of
+>> subtree A.
+
+> Does this mean that the test checks that the extracount is the same
+> when subtree A exists as when it doesn't exist?
+
+This means the test is checking that the 'extracount' remains at
+0, because anything above 0 would mean commits from subtree A were
+being processed, which is where the issue stems from.
+
+>>  contrib/subtree/git-subtree.sh     | 29 ++++++++++++++++++++-
+>>  contrib/subtree/t/t7900-subtree.sh | 42 ++++++++++++++++++++++++++++++
+>>  2 files changed, 70 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtre=
+e=3D
+>.sh
+>> index e0c5d3b0de6..e69991a9d80 100755
+>> --- a/contrib/subtree/git-subtree.sh
+>> +++ b/contrib/subtree/git-subtree.sh
+>> @@ -778,6 +778,20 @@ ensure_valid_ref_format () {
+>>                 die "fatal: '$1' does not look like a ref"
+>>  }
+>>
+>> +# Usage: check if a commit from another subtree should be
+>> +# ignored from processing for splits
+>> +should_ignore_subtree_split_commit () {
+
+> Maybe adding:
+>
+>     assert test $# =3D3D 1
+>     local rev=3D3D"$1"
+>
+> here, and using $rev instead of $1 in this function could make things
+> a bit clearer and similar to what is done in other functions.
+
+Updated.
+
+>> +  if test -n "$(git log -1 --grep=3D3D"git-subtree-dir:" $1)"
+>> +  then
+>> +    if test -z "$(git log -1 --grep=3D3D"git-subtree-mainline:" $1)" &&
+>> +                       test -z "$(git log -1 --grep=3D3D"git-subtree-di=
+r: =3D
+>>  $arg_prefix$" $1)"
+>> +    then
+>> +      return 0
+>> +    fi
+>> +  fi
+>> +  return 1
+>> +}
+
+> The above doesn't seem to be properly indented. We use tabs not spaces.
+
+Fixed.
+
+>>  # Usage: process_split_commit REV PARENTS
+>>  process_split_commit () {
+>>         assert test $# =3D3D 2
+>> @@ -963,7 +977,20 @@ cmd_split () {
+>>         eval "$grl" |
+>>         while read rev parents
+>>         do
+>> -               process_split_commit "$rev" "$parents"
+>> +               if should_ignore_subtree_split_commit "$rev"
+>> +               then
+>> +                       continue
+>> +               fi
+>> +               parsedParents=3D3D''
+
+> It seems to me that we name variables "parsed_parents" (or sometimes
+> "parsedparents") rather than "parsedParents".
+
+Fixed.
+
+>> +               for parent in $parents
+>> +               do
+>> +                       should_ignore_subtree_split_commit "$parent"
+>> +                       if test $? -eq 1
+
+> I think the 2 lines above could be replaced by:
+>
+> +                       if ! should_ignore_subtree_split_commit "$parent"
+
+Updated.
+
+>> +                       then
+>> +                               parsedParents+=3D3D"$parent "
+
+> It doesn't seem to me that we use "+=3D3D" much in our shell scripts.
+> https://www.shellcheck.net/ emits the following:
+>
+> (warning): In POSIX sh, +=3D3D is undefined.
+>
+> so I guess we don't use it because it's not available in some usual shell=
+s.
+>
+> (I haven't checked the script with https://www.shellcheck.net/ before
+> and after your patch, but it might help avoid bash-isms and such
+> issues.)
+
+Updated this to remove the '+=3D' usage.
+
+>> +                       fi
+>> +               done
+>> +               process_split_commit "$rev" "$parsedParents"
+>>         done || exit $?
+
+> It looks like we use "exit $?" a lot in git-subtree.sh while we use
+> just "exit" most often elsewhere. Not sure why.
+
+Yea I am unsure of the reasoning of that, I was just trying to follow the
+what the existing script was already doing.
+
+>>         latest_new=3D3D$(cache_get latest_new) || exit $?
+>> diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t790=
+0=3D
+>> -subtree.sh
+>> index 49a21dd7c9c..87d59afd761 100755
+>> --- a/contrib/subtree/t/t7900-subtree.sh
+>> +++ b/contrib/subtree/t/t7900-subtree.sh
+>> @@ -385,6 +385,48 @@ test_expect_success 'split sub dir/ with --rejoin' =
+'
+>>         )
+>>  '
+>>
+>> +test_expect_success 'split with multiple subtrees' '
+>> +       subtree_test_create_repo "$test_count" &&
+>> +       subtree_test_create_repo "$test_count/subA" &&
+>> +       subtree_test_create_repo "$test_count/subB" &&
+>> +       test_create_commit "$test_count" main1 &&
+>> +       test_create_commit "$test_count/subA" subA1 &&
+>> +       test_create_commit "$test_count/subA" subA2 &&
+>> +       test_create_commit "$test_count/subA" subA3 &&
+>> +       test_create_commit "$test_count/subB" subB1 &&
+>> +       (
+>> +               cd "$test_count" &&
+>> +               git fetch ./subA HEAD &&
+>> +               git subtree add --prefix=3D3DsubADir FETCH_HEAD
+>> +       ) &&
+>> +       (
+>> +               cd "$test_count" &&
+>> +               git fetch ./subB HEAD &&
+>> +               git subtree add --prefix=3D3DsubBDir FETCH_HEAD
+>> +       ) &&
+>> +       test_create_commit "$test_count" subADir/main-subA1 &&
+>> +       test_create_commit "$test_count" subBDir/main-subB1 &&
+>> +       (
+>> +               cd "$test_count" &&
+>> +               git subtree split --prefix=3D3DsubADir --squash --rejoin=
+ -m=3D
+>> "Sub A Split 1"
+>> +       ) &&
+
+> Not sure why there are so many sub-shells used, and why the -C option
+> is not used instead to tell Git to work in a subdirectory. I guess you
+> copied what most existing (old) tests in this test script do.
+>
+> For example perhaps the 4 line above could be replaced by just:
+>
+> +               git -C "$test_count" subtree split --prefix=3D3DsubADir
+> --squash --rejoin -m "Sub A Split 1" &&
+
+Yea I was following what was being done in other existing tests, although
+this seems like a better way to do this so I updated the test to remove
+the extra sub-shells.
+
+>> +       (
+>> +               cd "$test_count" &&
+>> +               git subtree split --prefix=3D3DsubBDir --squash --rejoin=
+ -m=3D
+>> "Sub B Split 1"
+>> +       ) &&
+>> +       test_create_commit "$test_count" subADir/main-subA2 &&
+>> +       test_create_commit "$test_count" subBDir/main-subB2 &&
+>> +       (
+>> +               cd "$test_count" &&
+>> +               git subtree split --prefix=3D3DsubADir --squash --rejoin=
+ -m=3D
+>> "Sub A Split 2"
+>> +       ) &&
+>> +       (
+>> +               cd "$test_count" &&
+>> +               test "$(git subtree split --prefix=3D3DsubBDir --squash =
+--r=3D
+>> ejoin \
+>> +                -d -m "Sub B Split 1" 2>&1 | grep -w "\[1\]")" =3D3D ""
+>> +       )
+>> +'
+
+> It's not clear to me what the test is doing. Maybe you could split it
+> into 2 tests. Perhaps one setting up a repo with multiple subtrees and
+> one checking that a new split ignores other subtree split commits.
+> Perhaps adding a few comments would help too.
+
+Added some comments before the test to describe the steps the test is takin=
+g in
+order to verify the desired behavior.
+
+
+On Sat, Nov 18, 2023 at 6:28=E2=80=AFAM Christian Couder
+<christian.couder@gmail.com> wrote:
+>
+> On Thu, Oct 26, 2023 at 9:18=E2=80=AFPM Zach FettersMoore via GitGitGadge=
+t
+> <gitgitgadget@gmail.com> wrote:
+> >
+> > From: Zach FettersMoore <zach.fetters@apollographql.com>
+> >
+> > When there are multiple subtrees present in a repository and they are
+> > all using 'git subtree split', the 'split' command can take a
+> > significant (and constantly growing) amount of time to run even when
+> > using the '--rejoin' flag. This is due to the fact that when processing
+> > commits to determine the last known split to start from when looking
+> > for changes, if there has been a split/merge done from another subtree
+> > there will be 2 split commits, one mainline and one subtree, for the
+> > second subtree that are part of the processing. The non-mainline
+> > subtree split commit will cause the processing to always need to search
+> > the entire history of the given subtree as part of its processing even
+> > though those commits are totally irrelevant to the current subtree
+> > split being run.
+>
+> Thanks for your continued work on this!
+>
+> I am not familiar with git subtree so I might miss obvious things. On
+> the other hand, my comments might help increase a bit the number of
+> people who could review this patch.
+>
+> > In the diagram below, 'M' represents the mainline repo branch, 'A'
+> > represents one subtree, and 'B' represents another. M3 and B1 represent
+> > a split commit for subtree B that was created from commit M4. M2 and A1
+> > represent a split commit made from subtree A that was also created
+> > based on changes back to and including M4. M1 represents new changes to
+> > the repo, in this scenario if you try to run a 'git subtree split
+> > --rejoin' for subtree B, commits M1, M2, and A1, will be included in
+> > the processing of changes for the new split commit since the last
+> > split/rejoin for subtree B was at M3. The issue is that by having A1
+> > included in this processing the command ends up needing to processing
+> > every commit down tree A even though none of that is needed or relevant
+> > to the current command and result.
+> >
+> > M1
+> >  |        \       \
+> > M2         |       |
+> >  |        A1       |
+> > M3         |       |
+> >  |         |      B1
+> > M4         |       |
+>
+> About the above, Junio already commented the following:
+>
+> -> The above paragraph explains which different things you drew in the
+> -> diagram are representing, but it is not clear how they relate to
+> -> each other.  Do they for example depict parent-child commit
+> -> relationship?  What are the wide gaps between these three tracks and
+> -> what are the short angled lines leaning to the left near the tip?
+> -> Is the time/topology flowing from bottom to top?
+>
+> and it doesn't look like you have addressed that comment.
+>
+> When you say "M3 and B1 represent a split commit for subtree B that
+> was created from commit M4." I am not sure what it means exactly.
+> Could you give example commands that could have created the M3 and B1
+> commits?
+>
+> > So this commit makes a change to the processing of commits for the spli=
+t
+> > command in order to ignore non-mainline commits from other subtrees suc=
+h
+> > as A1 in the diagram by adding a new function
+> > 'should_ignore_subtree_commit' which is called during
+> > 'process_split_commit'. This allows the split/rejoin processing to stil=
+l
+> > function as expected but removes all of the unnecessary processing that
+> > takes place currently which greatly inflates the processing time.
+>
+> Could you tell a bit more what kind of processing time reduction is or
+> would be possible on what kind of repo? Have you benchmark-ed or just
+> timed this somehow on one of your repos or better on an open source
+> repo (so that we could reproduce if we wanted)?
+>
+> > Added a test to validate that the proposed fix
+> > solves the issue.
+> >
+> > The test accomplishes this by checking the output
+> > of the split command to ensure the output from
+> > the progress of 'process_split_commit' function
+> > that represents the 'extracount' of commits
+> > processed does not increment.
+>
+> Does not increment compared to what?
+>
+> > This was tested against the original functionality
+> > to show the test failed, and then with this fix
+> > to show the test passes.
+> >
+> > This illustrated that when using multiple subtrees,
+> > A and B, when doing a split on subtree B, the
+> > processing does not traverse the entire history
+> > of subtree A which is unnecessary and would cause
+> > the 'extracount' of processed commits to climb
+> > based on the number of commits in the history of
+> > subtree A.
+>
+> Does this mean that the test checks that the extracount is the same
+> when subtree A exists as when it doesn't exist?
+>
+> [...]
+>
+> >  contrib/subtree/git-subtree.sh     | 29 ++++++++++++++++++++-
+> >  contrib/subtree/t/t7900-subtree.sh | 42 ++++++++++++++++++++++++++++++
+> >  2 files changed, 70 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtr=
+ee.sh
+> > index e0c5d3b0de6..e69991a9d80 100755
+> > --- a/contrib/subtree/git-subtree.sh
+> > +++ b/contrib/subtree/git-subtree.sh
+> > @@ -778,6 +778,20 @@ ensure_valid_ref_format () {
+> >                 die "fatal: '$1' does not look like a ref"
+> >  }
+> >
+> > +# Usage: check if a commit from another subtree should be
+> > +# ignored from processing for splits
+> > +should_ignore_subtree_split_commit () {
+>
+> Maybe adding:
+>
+>     assert test $# =3D 1
+>     local rev=3D"$1"
+>
+> here, and using $rev instead of $1 in this function could make things
+> a bit clearer and similar to what is done in other functions.
+>
+> > +  if test -n "$(git log -1 --grep=3D"git-subtree-dir:" $1)"
+> > +  then
+> > +    if test -z "$(git log -1 --grep=3D"git-subtree-mainline:" $1)" &&
+> > +                       test -z "$(git log -1 --grep=3D"git-subtree-dir=
+: $arg_prefix$" $1)"
+> > +    then
+> > +      return 0
+> > +    fi
+> > +  fi
+> > +  return 1
+> > +}
+>
+> The above doesn't seem to be properly indented. We use tabs not spaces.
+>
+> >  # Usage: process_split_commit REV PARENTS
+> >  process_split_commit () {
+> >         assert test $# =3D 2
+> > @@ -963,7 +977,20 @@ cmd_split () {
+> >         eval "$grl" |
+> >         while read rev parents
+> >         do
+> > -               process_split_commit "$rev" "$parents"
+> > +               if should_ignore_subtree_split_commit "$rev"
+> > +               then
+> > +                       continue
+> > +               fi
+> > +               parsedParents=3D''
+>
+> It seems to me that we name variables "parsed_parents" (or sometimes
+> "parsedparents") rather than "parsedParents".
+>
+> > +               for parent in $parents
+> > +               do
+> > +                       should_ignore_subtree_split_commit "$parent"
+> > +                       if test $? -eq 1
+>
+> I think the 2 lines above could be replaced by:
+>
+> +                       if ! should_ignore_subtree_split_commit "$parent"
+>
+> > +                       then
+> > +                               parsedParents+=3D"$parent "
+>
+> It doesn't seem to me that we use "+=3D" much in our shell scripts.
+> https://www.shellcheck.net/ emits the following:
+>
+> (warning): In POSIX sh, +=3D is undefined.
+>
+> so I guess we don't use it because it's not available in some usual shell=
+s.
+>
+> (I haven't checked the script with https://www.shellcheck.net/ before
+> and after your patch, but it might help avoid bash-isms and such
+> issues.)
+>
+> > +                       fi
+> > +               done
+> > +               process_split_commit "$rev" "$parsedParents"
+> >         done || exit $?
+>
+> It looks like we use "exit $?" a lot in git-subtree.sh while we use
+> just "exit" most often elsewhere. Not sure why.
+>
+> >         latest_new=3D$(cache_get latest_new) || exit $?
+> > diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t79=
+00-subtree.sh
+> > index 49a21dd7c9c..87d59afd761 100755
+> > --- a/contrib/subtree/t/t7900-subtree.sh
+> > +++ b/contrib/subtree/t/t7900-subtree.sh
+> > @@ -385,6 +385,48 @@ test_expect_success 'split sub dir/ with --rejoin'=
+ '
+> >         )
+> >  '
+> >
+> > +test_expect_success 'split with multiple subtrees' '
+> > +       subtree_test_create_repo "$test_count" &&
+> > +       subtree_test_create_repo "$test_count/subA" &&
+> > +       subtree_test_create_repo "$test_count/subB" &&
+> > +       test_create_commit "$test_count" main1 &&
+> > +       test_create_commit "$test_count/subA" subA1 &&
+> > +       test_create_commit "$test_count/subA" subA2 &&
+> > +       test_create_commit "$test_count/subA" subA3 &&
+> > +       test_create_commit "$test_count/subB" subB1 &&
+> > +       (
+> > +               cd "$test_count" &&
+> > +               git fetch ./subA HEAD &&
+> > +               git subtree add --prefix=3DsubADir FETCH_HEAD
+> > +       ) &&
+> > +       (
+> > +               cd "$test_count" &&
+> > +               git fetch ./subB HEAD &&
+> > +               git subtree add --prefix=3DsubBDir FETCH_HEAD
+> > +       ) &&
+> > +       test_create_commit "$test_count" subADir/main-subA1 &&
+> > +       test_create_commit "$test_count" subBDir/main-subB1 &&
+> > +       (
+> > +               cd "$test_count" &&
+> > +               git subtree split --prefix=3DsubADir --squash --rejoin =
+-m "Sub A Split 1"
+> > +       ) &&
+>
+> Not sure why there are so many sub-shells used, and why the -C option
+> is not used instead to tell Git to work in a subdirectory. I guess you
+> copied what most existing (old) tests in this test script do.
+>
+> For example perhaps the 4 line above could be replaced by just:
+>
+> +               git -C "$test_count" subtree split --prefix=3DsubADir
+> --squash --rejoin -m "Sub A Split 1" &&
+>
+> > +       (
+> > +               cd "$test_count" &&
+> > +               git subtree split --prefix=3DsubBDir --squash --rejoin =
+-m "Sub B Split 1"
+> > +       ) &&
+> > +       test_create_commit "$test_count" subADir/main-subA2 &&
+> > +       test_create_commit "$test_count" subBDir/main-subB2 &&
+> > +       (
+> > +               cd "$test_count" &&
+> > +               git subtree split --prefix=3DsubADir --squash --rejoin =
+-m "Sub A Split 2"
+> > +       ) &&
+> > +       (
+> > +               cd "$test_count" &&
+> > +               test "$(git subtree split --prefix=3DsubBDir --squash -=
+-rejoin \
+> > +                -d -m "Sub B Split 1" 2>&1 | grep -w "\[1\]")" =3D ""
+> > +       )
+> > +'
+>
+> It's not clear to me what the test is doing. Maybe you could split it
+> into 2 tests. Perhaps one setting up a repo with multiple subtrees and
+> one checking that a new split ignores other subtree split commits.
+> Perhaps adding a few comments would help too.
+>
+> Best,
+> Christian.
