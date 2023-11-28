@@ -1,49 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="AsSDdN3+"
-Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42CCAC3
-	for <git@vger.kernel.org>; Tue, 28 Nov 2023 11:08:21 -0800 (PST)
-Received: by mail-qk1-x736.google.com with SMTP id af79cd13be357-77d85cf1ff5so218532385a.0
-        for <git@vger.kernel.org>; Tue, 28 Nov 2023 11:08:21 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="DriYqYCx"
+Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFAF41702
+	for <git@vger.kernel.org>; Tue, 28 Nov 2023 11:08:23 -0800 (PST)
+Received: by mail-qk1-x731.google.com with SMTP id af79cd13be357-77d8d1b7952so186903885a.2
+        for <git@vger.kernel.org>; Tue, 28 Nov 2023 11:08:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1701198500; x=1701803300; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1701198502; x=1701803302; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=lHpbPyq4Mhf3Mg0XIfRDWzZwaFUDI2lMyaTsUTp389w=;
-        b=AsSDdN3+C3fuSPHUjpZVoWLBZPh7xfFa01Xd9kk6tHfxv3dMyI8F+zHRFlbCJSZVl4
-         CGRaBROQoYiunQQrGMzcgVPzzKABtTVCkvYnVx28vCsIThGwywqxYhbcBUsORkRi5i5G
-         VTvSdtNQEzKhwWLFWbp/8U4IoslAzwvv7uhnWJeODB8JIjXj8WCJ8Gnbw20bTOdY/118
-         IyW4dt/y7I+Mu4MkK6jHFoqCwO4WdiIaw2Hh0NldWTJ9D5idae8vrtFZzeXVSUFIcqwQ
-         pOfa77evzTS3fNJMV5N+KFdMkACuUZvH1ROuM4vlPrn3RG05V8PAVh/3xPeepwMIaXJ4
-         YECw==
+        bh=0LBgFElpi9Acco6bJTnDZid/m0EVpOrN/ZoGoWrUS4A=;
+        b=DriYqYCxrF6XmGFhEkTil2JL4hVOVA5jie+hCoxS1fuCZs7FMnvLipFQ0fcbQ2QBMG
+         y1dqH7dUvK2Sjv7f2ghUjYXORJaimQy0iUJPkkiG+E+Ui6ocrh15DsNM38V/D3DUmpFH
+         FxCRle4IaOc0X587Q102cq6Yi/yPCI9RzZQgQnQo68IV5b+HJh1Ryx3v0hfLiMxfQ2wK
+         OK9SClq6vwBs9XqG94ls7Mmn0c7apFaaA9nxgNAlfMCbDKyNYYNEFingOufinyNcdchp
+         5QZIuwBD/3FHqSV0n8bwCmuzKyfkN5gok8Rm6IIdvm0xoXWL7h0aEsPUpjRzYjnDNbsm
+         gy5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701198500; x=1701803300;
+        d=1e100.net; s=20230601; t=1701198502; x=1701803302;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lHpbPyq4Mhf3Mg0XIfRDWzZwaFUDI2lMyaTsUTp389w=;
-        b=Zg7k4se8+K4syu7tKRAsbSCYPGRY3v0wbgPyA4rCwicr9nElL6mlveuP2CybZwrmrC
-         w76Zy9we+2UyCtWB3TxSXD4EH/OklbjqIOtJHvD8sAyO9LNmQvVBWzIRvoR9CJVAkUHT
-         xiavMLB6JDWNFF3JayCSmHXJWZCVTk97RxXixCdEapPJJpa/vOzJOGV89Q8jL83NmWGU
-         A0oOKCo8tVHhqLVjIWZ46nTF4CZcsDwKxO8qx6rBDLSwXs9D7Yu2YwADUdJl2AszxKlj
-         a7osItUrNiOcbhVouR1Rz250SudyXzeqwvpm6VE84440e+OMemTnoUOfxq3JYoQv76Dx
-         oraA==
-X-Gm-Message-State: AOJu0Yy2ybc6aVtKNctxgRWcl754fYOCwO74Q7ki+cWxuOhRgSz6n8UN
-	ogfgBzYimByZ5iZN6qHW5XW7x0RwRJK9AD1S9M0=
-X-Google-Smtp-Source: AGHT+IF45aEaCdR1d8KaKcrk9Hvu+vvrJsFNlVY4CFhhKxHQUr/qTk+pdY8OYzIXHUzUyPf/6Z8oOQ==
-X-Received: by 2002:a05:620a:113b:b0:76c:da86:3169 with SMTP id p27-20020a05620a113b00b0076cda863169mr16573251qkk.40.1701198499963;
-        Tue, 28 Nov 2023 11:08:19 -0800 (PST)
+        bh=0LBgFElpi9Acco6bJTnDZid/m0EVpOrN/ZoGoWrUS4A=;
+        b=eGCwPmb/j4T1070ic2VuBvA1W/Zqjv1vowKjn1XbA2JVsR265TrqInFH4mzsZftfEi
+         +HE8ENEMycjSFcfsMbwMwOz9CuTVbggvUoYj/ZMJf4kPpDL2lKMDCQc0zZoD6642qFCh
+         AN/DxkGicazW9nCBZboFkT056stAZnmIfkclJJF157+uEHGUmWbyuvkRixM4da2d/n6f
+         zfoula44nUpwIQZYXrZqOKXzxZfA3CwRxXeAqo5zEfgncz/nm3IwPyX1ieOT1ZglcOxB
+         O8g8YC/XLgIkNmI0Ic9XWx6aR6KyIYFw0lFNwNhyeV0PPZydPQSx01lh4HB75HSXPCHb
+         onoQ==
+X-Gm-Message-State: AOJu0Yxv+l7jvpeVyELvND0TzSpMEsOQl210ws3SkJ3xGeJYvgvZMIxF
+	p8mmz87KUw+Ei/I4J9I0dvgD5wLbW+7hmOecIf0=
+X-Google-Smtp-Source: AGHT+IHlY/nj8Vay3d7RIk0XjVPY5EQshc40yl0vsBiwuxv7EjL3EiP4EtsvxYDQlOjlsKKkftD1Mg==
+X-Received: by 2002:a05:620a:1087:b0:77b:d8aa:6756 with SMTP id g7-20020a05620a108700b0077bd8aa6756mr16216898qkk.49.1701198502533;
+        Tue, 28 Nov 2023 11:08:22 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id y25-20020a37e319000000b0077d74f884d9sm2147133qki.117.2023.11.28.11.08.19
+        by smtp.gmail.com with ESMTPSA id g15-20020a05620a278f00b0077d7649ef06sm4527922qkp.14.2023.11.28.11.08.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Nov 2023 11:08:19 -0800 (PST)
-Date: Tue, 28 Nov 2023 14:08:18 -0500
+        Tue, 28 Nov 2023 11:08:22 -0800 (PST)
+Date: Tue, 28 Nov 2023 14:08:21 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 09/24] repack: implement `--extend-disjoint` mode
-Message-ID: <b75869befba26899d88d6c6d413cc756aeadbd80.1701198172.git.me@ttaylorr.com>
+Subject: [PATCH 10/24] pack-bitmap: pass `bitmapped_pack` struct to
+ pack-reuse functions
+Message-ID: <970bd9eaeae038adb6e7d4c399c9b033668a8864.1701198172.git.me@ttaylorr.com>
 References: <cover.1701198172.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -55,439 +56,257 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1701198172.git.me@ttaylorr.com>
 
-Now that we can generate packs which are disjoint with respect to the
-set of currently-disjoint packs, implement a mode of `git repack` which
-extends the set of disjoint packs with any new (non-cruft) pack(s)
-generated during the repack.
+When trying to assemble a pack with bitmaps using `--use-bitmap-index`,
+`pack-objects` asks the pack-bitmap machinery for a bitmap which
+indicates the set of objects we can "reuse" verbatim from on-disk.
 
-The idea is mostly straightforward, with a couple of gotcha's. The
-straightforward part is to make sure that any new packs are disjoint
-with respect to the set of currently disjoint packs which are _not_
-being removed from the repository as a result of the repack.
+This set is roughly comprised of: a prefix of objects in the bitmapped
+pack (or preferred pack, in the case of a multi-pack reachability
+bitmap), plus any other objects not included in the prefix, excluding
+any deltas whose base we are not sending in the resulting pack.
 
-If a pack which is currently marked as disjoint is, on the other hand,
-about to be removed from the repository, it is OK (and expected) that
-new pack(s) will contain some or all of its objects. Since the pack
-originally marked as disjoint will be removed, it will necessarily leave
-the disjoint set, making room for new packs with its same objects to
-take its place. In other words, the resulting set of disjoint packs will
-be disjoint with respect to one another.
+The pack-bitmap machinery is responsible for computing this bitmap, and
+does so with the following functions:
 
-The gotchas mostly have to do with making sure that we do not generate a
-disjoint pack in the following scenarios:
+  - reuse_partial_packfile_from_bitmap()
+  - try_partial_reuse()
 
-  - promisor packs
-  - cruft packs (which may necessarily need to include an object from a
-    disjoint pack in order to freshen it in certain circumstances)
-  - all-into-one repacks without '-d'
-  - `--filter-to`, which conceptually could work with the new
-    `--extend-disjoint` option, but only in limited circumstances
+In the existing implementation, the first function is responsible for
+(a) marking the prefix of objects in the reusable pack, and then (b)
+calling try_partial_reuse() on any remaining objects to ensure that they
+are also reusable (and removing them from the bitmapped set if they are
+not).
 
-Otherwise, we mark which packs were created as disjoint by using a new
-bit in the `generated_pack_data` struct, and then marking those pack(s)
-as disjoint accordingly when generating the MIDX. Non-deleted packs
-which are marked as disjoint are retained as such by passing the
-equivalent of `--retain-disjoint` when calling the MIDX API to update
-the MIDX.
+Likewise, the `try_partial_reuse()` function is responsible for checking
+whether an isolated object (that is, an object from the bitmapped
+pack/preferred pack not contained in the prefix from earlier) may be
+reused, i.e. that it isn't a delta of an object that we are not sending
+in the resulting pack.
+
+These functions are based on two core assumptions, which we will unwind
+in this and the following commits:
+
+  1. There is only a single pack from the bitmap which is eligible for
+     verbatim pack-reuse. For single-pack bitmaps, this is trivially the
+     bitmapped pack. For multi-pack bitmaps, this is (currently) the
+     MIDX's preferred pack.
+
+  2. The pack eligible for reuse has its first object in bit position 0,
+     and all objects from that pack follow in pack-order from that first
+     bit position.
+
+In order to perform verbatim pack reuse over multiple packs, we must
+unwind these two assumptions. Most notably, in order to reuse bits from
+a given packfile, we need to know the first bit position occupied by
+an object form that packfile. To propagate this information around, pass
+a `struct bitmapped_pack *` anywhere we previously passed a `struct
+packed_git *`, since the former contains the bitmap position we're
+interested in (as well as a pointer to the latter).
+
+As an additional step, factor out a sub-routine from the main
+`reuse_partial_packfile_from_bitmap()` function, called
+`reuse_partial_packfile_from_bitmap_1()`. This new function will be
+responsible for figuring out which objects may be reused from a single
+pack, and the existing function will dispatch multiple calls to its new
+helper function for each reusable pack.
+
+Consequently, `reuse_partial_packfile_from_bitmap()` will now maintain
+an array of reusable packs instead of a single such pack. We currently
+expect that array to have only a single element, so this awkward state
+is short-lived. It will serve as useful scaffolding in subsequent
+commits as we begin to work towards enabling multi-pack reuse.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Documentation/git-repack.txt      |  12 +++
- builtin/repack.c                  |  57 +++++++++---
- t/t7700-repack.sh                 |   4 +-
- t/t7705-repack-extend-disjoint.sh | 142 ++++++++++++++++++++++++++++++
- 4 files changed, 203 insertions(+), 12 deletions(-)
- create mode 100755 t/t7705-repack-extend-disjoint.sh
+ pack-bitmap.c | 105 +++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 74 insertions(+), 31 deletions(-)
 
-diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
-index c902512a9e..50ba5e7f9c 100644
---- a/Documentation/git-repack.txt
-+++ b/Documentation/git-repack.txt
-@@ -249,6 +249,18 @@ linkgit:git-multi-pack-index[1]).
- 	Write a multi-pack index (see linkgit:git-multi-pack-index[1])
- 	containing the non-redundant packs.
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index d2f1306960..2ebe2c314e 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -1836,7 +1836,7 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
+  * -1 means "stop trying further objects"; 0 means we may or may not have
+  * reused, but you can keep feeding bits.
+  */
+-static int try_partial_reuse(struct packed_git *pack,
++static int try_partial_reuse(struct bitmapped_pack *pack,
+ 			     size_t pos,
+ 			     struct bitmap *reuse,
+ 			     struct pack_window **w_curs)
+@@ -1868,11 +1868,11 @@ static int try_partial_reuse(struct packed_git *pack,
+ 	 * preferred pack precede all bits from other packs.
+ 	 */
  
-+--extend-disjoint::
-+	Extends the set of disjoint packs. All new non-cruft pack(s)
-+	generated are constructed to be disjoint with respect to the set
-+	of currently disjoint packs, excluding any packs that will be
-+	removed as a result of the repack operation. For more on
-+	disjoint packs, see the details in linkgit:gitformat-pack[5],
-+	under the section "`DISP` chunk and disjoint packs".
-++
-+Useful only with the combination of `--write-midx` and
-+`--write-bitmap-index`. Incompatible with `--filter-to`. Incompatible
-+with `-A`, `-a`, or `--cruft` unless `-d` is given.
-+
- CONFIGURATION
- -------------
+-	if (pos >= pack->num_objects)
++	if (pos >= pack->p->num_objects)
+ 		return -1; /* not actually in the pack or MIDX preferred pack */
  
-diff --git a/builtin/repack.c b/builtin/repack.c
-index edaee4dbec..0601bd16c4 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -58,6 +58,7 @@ struct pack_objects_args {
- 	int no_reuse_object;
- 	int quiet;
- 	int local;
-+	int ignore_disjoint;
- 	struct list_objects_filter_options filter_options;
- };
+-	offset = delta_obj_offset = pack_pos_to_offset(pack, pos);
+-	type = unpack_object_header(pack, w_curs, &offset, &size);
++	offset = delta_obj_offset = pack_pos_to_offset(pack->p, pos);
++	type = unpack_object_header(pack->p, w_curs, &offset, &size);
+ 	if (type < 0)
+ 		return -1; /* broken packfile, punt */
  
-@@ -293,6 +294,8 @@ static void prepare_pack_objects(struct child_process *cmd,
- 		strvec_push(&cmd->args,  "--local");
- 	if (args->quiet)
- 		strvec_push(&cmd->args,  "--quiet");
-+	if (args->ignore_disjoint)
-+		strvec_push(&cmd->args,  "--ignore-disjoint");
- 	if (delta_base_offset)
- 		strvec_push(&cmd->args,  "--delta-base-offset");
- 	strvec_push(&cmd->args, out);
-@@ -334,9 +337,11 @@ static struct {
- 
- struct generated_pack_data {
- 	struct tempfile *tempfiles[ARRAY_SIZE(exts)];
-+	unsigned disjoint : 1;
- };
- 
--static struct generated_pack_data *populate_pack_exts(const char *name)
-+static struct generated_pack_data *populate_pack_exts(const char *name,
-+						      unsigned disjoint)
- {
- 	struct stat statbuf;
- 	struct strbuf path = STRBUF_INIT;
-@@ -353,6 +358,8 @@ static struct generated_pack_data *populate_pack_exts(const char *name)
- 		data->tempfiles[i] = register_tempfile(path.buf);
- 	}
- 
-+	data->disjoint = disjoint;
-+
- 	strbuf_release(&path);
- 	return data;
- }
-@@ -379,6 +386,8 @@ static void repack_promisor_objects(const struct pack_objects_args *args,
- 	prepare_pack_objects(&cmd, args, packtmp);
- 	cmd.in = -1;
- 
-+	strvec_pushf(&cmd.args, "--no-ignore-disjoint");
-+
- 	/*
- 	 * NEEDSWORK: Giving pack-objects only the OIDs without any ordering
- 	 * hints may result in suboptimal deltas in the resulting pack. See if
-@@ -421,7 +430,7 @@ static void repack_promisor_objects(const struct pack_objects_args *args,
- 					  line.buf);
- 		write_promisor_file(promisor_name, NULL, 0);
- 
--		item->util = populate_pack_exts(item->string);
-+		item->util = populate_pack_exts(item->string, 0);
- 
- 		free(promisor_name);
- 	}
-@@ -731,8 +740,13 @@ static void midx_included_packs(struct string_list *include,
- 
- 	for_each_string_list_item(item, &existing->kept_packs)
- 		string_list_insert(include, xstrfmt("%s.idx", item->string));
--	for_each_string_list_item(item, names)
--		string_list_insert(include, xstrfmt("pack-%s.idx", item->string));
-+	for_each_string_list_item(item, names) {
-+		const char *marker = "";
-+		struct generated_pack_data *data = item->util;
-+		if (data->disjoint)
-+			marker = "+";
-+		string_list_insert(include, xstrfmt("%spack-%s.idx", marker, item->string));
-+	}
- 	if (geometry->split_factor) {
- 		struct strbuf buf = STRBUF_INIT;
- 		uint32_t i;
-@@ -788,7 +802,8 @@ static int write_midx_included_packs(struct string_list *include,
- 				     struct pack_geometry *geometry,
- 				     struct string_list *names,
- 				     const char *refs_snapshot,
--				     int show_progress, int write_bitmaps)
-+				     int show_progress, int write_bitmaps,
-+				     int exclude_disjoint)
- {
- 	struct child_process cmd = CHILD_PROCESS_INIT;
- 	struct string_list_item *item;
-@@ -852,6 +867,9 @@ static int write_midx_included_packs(struct string_list *include,
- 	if (refs_snapshot)
- 		strvec_pushf(&cmd.args, "--refs-snapshot=%s", refs_snapshot);
- 
-+	if (exclude_disjoint)
-+		strvec_push(&cmd.args, "--retain-disjoint");
-+
- 	ret = start_command(&cmd);
- 	if (ret)
- 		return ret;
-@@ -895,7 +913,7 @@ static void remove_redundant_bitmaps(struct string_list *include,
- 
- static int finish_pack_objects_cmd(struct child_process *cmd,
- 				   struct string_list *names,
--				   int local)
-+				   int local, int disjoint)
- {
- 	FILE *out;
- 	struct strbuf line = STRBUF_INIT;
-@@ -913,7 +931,7 @@ static int finish_pack_objects_cmd(struct child_process *cmd,
+@@ -1888,11 +1888,11 @@ static int try_partial_reuse(struct packed_git *pack,
+ 		 * and the normal slow path will complain about it in
+ 		 * more detail.
  		 */
- 		if (local) {
- 			item = string_list_append(names, line.buf);
--			item->util = populate_pack_exts(line.buf);
-+			item->util = populate_pack_exts(line.buf, disjoint);
- 		}
- 	}
- 	fclose(out);
-@@ -970,7 +988,7 @@ static int write_filtered_pack(const struct pack_objects_args *args,
- 		fprintf(in, "%s%s.pack\n", caret, item->string);
- 	fclose(in);
+-		base_offset = get_delta_base(pack, w_curs, &offset, type,
++		base_offset = get_delta_base(pack->p, w_curs, &offset, type,
+ 					     delta_obj_offset);
+ 		if (!base_offset)
+ 			return 0;
+-		if (offset_to_pack_pos(pack, base_offset, &base_pos) < 0)
++		if (offset_to_pack_pos(pack->p, base_offset, &base_pos) < 0)
+ 			return 0;
  
--	return finish_pack_objects_cmd(&cmd, names, local);
-+	return finish_pack_objects_cmd(&cmd, names, local, 0);
- }
- 
- static int existing_cruft_pack_cmp(const void *va, const void *vb)
-@@ -1098,7 +1116,7 @@ static int write_cruft_pack(const struct pack_objects_args *args,
- 		fprintf(in, "%s.pack\n", item->string);
- 	fclose(in);
- 
--	return finish_pack_objects_cmd(&cmd, names, local);
-+	return finish_pack_objects_cmd(&cmd, names, local, 0);
- }
- 
- static const char *find_pack_prefix(const char *packdir, const char *packtmp)
-@@ -1190,6 +1208,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 			   N_("pack prefix to store a pack containing pruned objects")),
- 		OPT_STRING(0, "filter-to", &filter_to, N_("dir"),
- 			   N_("pack prefix to store a pack containing filtered out objects")),
-+		OPT_BOOL(0, "extend-disjoint", &po_args.ignore_disjoint,
-+			 N_("add new packs to the set of disjoint ones")),
- 		OPT_END()
- 	};
- 
-@@ -1255,6 +1275,16 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 		strbuf_release(&path);
+ 		/*
+@@ -1915,14 +1915,14 @@ static int try_partial_reuse(struct packed_git *pack,
+ 		 * to REF_DELTA on the fly. Better to just let the normal
+ 		 * object_entry code path handle it.
+ 		 */
+-		if (!bitmap_get(reuse, base_pos))
++		if (!bitmap_get(reuse, pack->bitmap_pos + base_pos))
+ 			return 0;
  	}
  
-+	if (po_args.ignore_disjoint) {
-+		if (filter_to)
-+			die(_("options '%s' and '%s' cannot be used together"),
-+			    "--filter-to", "--extend-disjoint");
-+		if (pack_everything && !delete_redundant)
-+			die(_("cannot use '--extend-disjoint' with '%s' but not '-d'"),
-+			    pack_everything & LOOSEN_UNREACHABLE ? "-A" :
-+			    pack_everything & PACK_CRUFT ? "--cruft" : "-a");
+ 	/*
+ 	 * If we got here, then the object is OK to reuse. Mark it.
+ 	 */
+-	bitmap_set(reuse, pos);
++	bitmap_set(reuse, pack->bitmap_pos + pos);
+ 	return 0;
+ }
+ 
+@@ -1934,29 +1934,13 @@ uint32_t midx_preferred_pack(struct bitmap_index *bitmap_git)
+ 	return nth_midxed_pack_int_id(m, pack_pos_to_midx(bitmap_git->midx, 0));
+ }
+ 
+-int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
+-				       struct packed_git **packfile_out,
+-				       uint32_t *entries,
+-				       struct bitmap **reuse_out)
++static void reuse_partial_packfile_from_bitmap_1(struct bitmap_index *bitmap_git,
++						 struct bitmapped_pack *pack,
++						 struct bitmap *reuse)
+ {
+-	struct repository *r = the_repository;
+-	struct packed_git *pack;
+ 	struct bitmap *result = bitmap_git->result;
+-	struct bitmap *reuse;
+ 	struct pack_window *w_curs = NULL;
+ 	size_t i = 0;
+-	uint32_t offset;
+-	uint32_t objects_nr;
+-
+-	assert(result);
+-
+-	load_reverse_index(r, bitmap_git);
+-
+-	if (bitmap_is_midx(bitmap_git))
+-		pack = bitmap_git->midx->packs[midx_preferred_pack(bitmap_git)];
+-	else
+-		pack = bitmap_git->pack;
+-	objects_nr = pack->num_objects;
+ 
+ 	while (i < result->word_alloc && result->words[i] == (eword_t)~0)
+ 		i++;
+@@ -1969,15 +1953,15 @@ int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
+ 	 * we use it instead of another pack. In single-pack bitmaps, the choice
+ 	 * is made for us.
+ 	 */
+-	if (i > objects_nr / BITS_IN_EWORD)
+-		i = objects_nr / BITS_IN_EWORD;
++	if (i > pack->p->num_objects / BITS_IN_EWORD)
++		i = pack->p->num_objects / BITS_IN_EWORD;
+ 
+-	reuse = bitmap_word_alloc(i);
+ 	memset(reuse->words, 0xFF, i * sizeof(eword_t));
+ 
+ 	for (; i < result->word_alloc; ++i) {
+ 		eword_t word = result->words[i];
+ 		size_t pos = (i * BITS_IN_EWORD);
++		size_t offset;
+ 
+ 		for (offset = 0; offset < BITS_IN_EWORD; ++offset) {
+ 			if ((word >> offset) == 0)
+@@ -2002,6 +1986,65 @@ int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
+ 
+ done:
+ 	unuse_pack(&w_curs);
++}
++
++int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
++				       struct packed_git **packfile_out,
++				       uint32_t *entries,
++				       struct bitmap **reuse_out)
++{
++	struct repository *r = the_repository;
++	struct bitmapped_pack *packs = NULL;
++	struct bitmap *result = bitmap_git->result;
++	struct bitmap *reuse;
++	size_t i;
++	size_t packs_nr = 0, packs_alloc = 0;
++	size_t word_alloc;
++	uint32_t objects_nr = 0;
++
++	assert(result);
++
++	load_reverse_index(r, bitmap_git);
++
++	if (bitmap_is_midx(bitmap_git)) {
++		for (i = 0; i < bitmap_git->midx->num_packs; i++) {
++			struct bitmapped_pack pack;
++			if (nth_bitmapped_pack(r, bitmap_git->midx, &pack, i) < 0) {
++				warning(_("unable to load pack: '%s', disabling pack-reuse"),
++					bitmap_git->midx->pack_names[i]);
++				free(packs);
++				return -1;
++			}
++			if (!pack.bitmap_nr)
++				continue; /* no objects from this pack */
++			if (pack.bitmap_pos)
++				continue; /* not preferred pack */
++
++			ALLOC_GROW(packs, packs_nr + 1, packs_alloc);
++			memcpy(&packs[packs_nr++], &pack, sizeof(pack));
++
++			objects_nr += pack.p->num_objects;
++		}
++	} else {
++		ALLOC_GROW(packs, packs_nr + 1, packs_alloc);
++
++		packs[packs_nr].p = bitmap_git->pack;
++		packs[packs_nr].bitmap_pos = 0;
++		packs[packs_nr].bitmap_nr = bitmap_git->pack->num_objects;
++		packs[packs_nr].disjoint = 1;
++
++		objects_nr = packs[packs_nr++].p->num_objects;
 +	}
 +
- 	packdir = mkpathdup("%s/pack", get_object_directory());
- 	packtmp_name = xstrfmt(".tmp-%d-pack", (int)getpid());
- 	packtmp = mkpathdup("%s/%s", packdir, packtmp_name);
-@@ -1308,6 +1338,9 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	if (pack_everything & ALL_INTO_ONE) {
- 		repack_promisor_objects(&po_args, &names);
++	word_alloc = objects_nr / BITS_IN_EWORD;
++	if (objects_nr % BITS_IN_EWORD)
++		word_alloc++;
++	reuse = bitmap_word_alloc(word_alloc);
++
++	if (packs_nr != 1)
++		BUG("pack reuse not yet implemented for multiple packs");
++
++	reuse_partial_packfile_from_bitmap_1(bitmap_git, packs, reuse);
  
-+		if (delete_redundant)
-+			strvec_pushf(&cmd.args, "--no-ignore-disjoint");
-+
- 		if (has_existing_non_kept_packs(&existing) &&
- 		    delete_redundant &&
- 		    !(pack_everything & PACK_CRUFT)) {
-@@ -1364,7 +1397,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 		fclose(in);
- 	}
- 
--	ret = finish_pack_objects_cmd(&cmd, &names, 1);
-+	ret = finish_pack_objects_cmd(&cmd, &names, 1, po_args.ignore_disjoint);
- 	if (ret)
- 		goto cleanup;
- 
-@@ -1387,6 +1420,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 
- 		cruft_po_args.local = po_args.local;
- 		cruft_po_args.quiet = po_args.quiet;
-+		cruft_po_args.ignore_disjoint = 0;
- 
- 		ret = write_cruft_pack(&cruft_po_args, packtmp, pack_prefix,
- 				       cruft_expiration, &names,
-@@ -1487,7 +1521,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 
- 		ret = write_midx_included_packs(&include, &geometry, &names,
- 						refs_snapshot ? get_tempfile_path(refs_snapshot) : NULL,
--						show_progress, write_bitmaps > 0);
-+						show_progress, write_bitmaps > 0,
-+						po_args.ignore_disjoint);
- 
- 		if (!ret && write_bitmaps)
- 			remove_redundant_bitmaps(&include, packdir);
-diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-index d2975e6c93..277f1ff1d7 100755
---- a/t/t7700-repack.sh
-+++ b/t/t7700-repack.sh
-@@ -6,6 +6,7 @@ test_description='git repack works correctly'
- . "${TEST_DIRECTORY}/lib-bitmap.sh"
- . "${TEST_DIRECTORY}/lib-midx.sh"
- . "${TEST_DIRECTORY}/lib-terminal.sh"
-+. "${TEST_DIRECTORY}/lib-disjoint.sh"
- 
- commit_and_pack () {
- 	test_commit "$@" 1>&2 &&
-@@ -525,7 +526,8 @@ test_expect_success '--filter works with --max-pack-size' '
- '
- 
- objdir=.git/objects
--midx=$objdir/pack/multi-pack-index
-+packdir=$objdir/pack
-+midx=$packdir/multi-pack-index
- 
- test_expect_success 'setup for --write-midx tests' '
- 	git init midx &&
-diff --git a/t/t7705-repack-extend-disjoint.sh b/t/t7705-repack-extend-disjoint.sh
-new file mode 100755
-index 0000000000..0c8be1cb3f
---- /dev/null
-+++ b/t/t7705-repack-extend-disjoint.sh
-@@ -0,0 +1,142 @@
-+#!/bin/sh
-+
-+test_description='git repack --extend-disjoint works correctly'
-+
-+. ./test-lib.sh
-+. "${TEST_DIRECTORY}/lib-disjoint.sh"
-+
-+packdir=.git/objects/pack
-+
-+GIT_TEST_MULTI=0
-+GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=0
-+
-+test_expect_success 'repack --extend-disjoint creates new disjoint packs' '
-+	git init repo &&
-+	(
-+		cd repo &&
-+
-+		test_commit A &&
-+		test_commit B &&
-+
-+		A="$(echo A | git pack-objects --revs $packdir/pack)" &&
-+		B="$(echo A..B | git pack-objects --revs $packdir/pack)" &&
-+
-+		git prune-packed &&
-+
-+		cat >in <<-EOF &&
-+		pack-$A.idx
-+		+pack-$B.idx
-+		EOF
-+		git multi-pack-index write --bitmap --stdin-packs <in &&
-+
-+		test_must_not_be_disjoint "pack-$A.pack" &&
-+		test_must_be_disjoint "pack-$B.pack" &&
-+
-+		test_commit C &&
-+
-+		find $packdir -type f -name "*.idx" | sort >packs.before &&
-+		git repack --write-midx --write-bitmap-index --extend-disjoint &&
-+		find $packdir -type f -name "*.idx" | sort >packs.after &&
-+
-+		comm -13 packs.before packs.after >packs.new &&
-+
-+		test_line_count = 1 packs.new &&
-+
-+		test_must_not_be_disjoint "pack-$A.pack" &&
-+		test_must_be_disjoint "pack-$B.pack" &&
-+		test_must_be_disjoint "$(basename $(cat packs.new) .idx).pack"
-+	)
-+'
-+
-+test_expect_success 'repack --extend-disjoint combines existing disjoint packs' '
-+	(
-+		cd repo &&
-+
-+		test_commit D &&
-+
-+		git repack -a -d --write-midx --write-bitmap-index --extend-disjoint &&
-+
-+		find $packdir -type f -name "*.pack" >packs &&
-+		test_line_count = 1 packs &&
-+
-+		test_must_be_disjoint "$(basename $(cat packs))"
-+
-+	)
-+'
-+
-+test_expect_success 'repack --extend-disjoint with --geometric' '
-+	git init disjoint-geometric &&
-+	(
-+		cd disjoint-geometric &&
-+
-+		test_commit_bulk 8 &&
-+		base="$(basename $(ls $packdir/pack-*.idx))" &&
-+		echo "+$base" >>in &&
-+
-+		test_commit A &&
-+		A="$(echo HEAD^.. | git pack-objects --revs $packdir/pack)" &&
-+		test_commit B &&
-+		B="$(echo HEAD^.. | git pack-objects --revs $packdir/pack)" &&
-+
-+		git prune-packed &&
-+
-+		cat >>in <<-EOF &&
-+		+pack-$A.idx
-+		+pack-$B.idx
-+		EOF
-+		git multi-pack-index write --bitmap --stdin-packs <in &&
-+
-+		test_must_be_disjoint "pack-$A.pack" &&
-+		test_must_be_disjoint "pack-$B.pack" &&
-+		test_must_be_disjoint "${base%.idx}.pack" &&
-+
-+		test_commit C &&
-+
-+		find $packdir -type f -name "*.pack" | sort >packs.before &&
-+		git repack --geometric=2 -d --write-midx --write-bitmap-index --extend-disjoint &&
-+		find $packdir -type f -name "*.pack" | sort >packs.after &&
-+
-+		comm -12 packs.before packs.after >packs.unchanged &&
-+		comm -23 packs.before packs.after >packs.removed &&
-+		comm -13 packs.before packs.after >packs.new &&
-+
-+		cat >expect <<-EOF &&
-+		$packdir/${base%.idx}.pack
-+		EOF
-+		test_cmp expect packs.unchanged &&
-+
-+		sort >expect <<-EOF &&
-+		$packdir/pack-$A.pack
-+		$packdir/pack-$B.pack
-+		EOF
-+		test_cmp expect packs.removed &&
-+
-+		test_line_count = 1 packs.new &&
-+
-+		test_must_be_disjoint "$(basename $(cat packs.new))" &&
-+		test_must_be_disjoint "${base%.idx}.pack"
-+	)
-+'
-+
-+for flag in "-A" "-a" "--cruft"
-+do
-+	test_expect_success "repack --extend-disjoint incompatible with $flag without -d" '
-+		test_must_fail git repack $flag --extend-disjoint \
-+			--write-midx --write-bitmap-index 2>actual &&
-+		cat >expect <<-EOF &&
-+		fatal: cannot use $SQ--extend-disjoint$SQ with $SQ$flag$SQ but not $SQ-d$SQ
-+		EOF
-+		test_cmp expect actual
-+	'
-+done
-+
-+test_expect_success 'repack --extend-disjoint is incompatible with --filter-to' '
-+	test_must_fail git repack --extend-disjoint --filter-to=dir 2>actual &&
-+
-+	cat >expect <<-EOF &&
-+	fatal: options $SQ--filter-to$SQ and $SQ--extend-disjoint$SQ cannot be used together
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_done
+ 	*entries = bitmap_popcount(reuse);
+ 	if (!*entries) {
+@@ -2014,7 +2057,7 @@ int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
+ 	 * need to be handled separately.
+ 	 */
+ 	bitmap_and_not(result, reuse);
+-	*packfile_out = pack;
++	*packfile_out = packs[0].p;
+ 	*reuse_out = reuse;
+ 	return 0;
+ }
 -- 
 2.43.0.24.g980b318f98
 
