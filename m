@@ -1,50 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="F77eVjgY"
-Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 531EC1BC
-	for <git@vger.kernel.org>; Tue, 28 Nov 2023 11:08:26 -0800 (PST)
-Received: by mail-qk1-x72d.google.com with SMTP id af79cd13be357-77d895c298eso197719085a.3
-        for <git@vger.kernel.org>; Tue, 28 Nov 2023 11:08:26 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="ZijxkSRC"
+Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4E3592
+	for <git@vger.kernel.org>; Tue, 28 Nov 2023 11:08:28 -0800 (PST)
+Received: by mail-qt1-x832.google.com with SMTP id d75a77b69052e-42033328ad0so32729931cf.0
+        for <git@vger.kernel.org>; Tue, 28 Nov 2023 11:08:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1701198505; x=1701803305; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1701198508; x=1701803308; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=D3NH9e0B7TEOaLke+IJC8tguC6phHHxMJ1QTwr176tI=;
-        b=F77eVjgYi7k3DIP5obR9R3peA73pUO26Y5kNMULYwnwG/XMtwmpvXAuWINf3GrWDeM
-         mDxmu7BUcVIgnjgogNUGOazIEm+wQv8Kvdalz/0wM1iQXt3sfnKoXHNubE9RqCc06qo8
-         5Kba5/YycW+7I0XqquJUujEFT8/B8sxLINfuN/t/SeDt8a5+WbkLYM444K7gezz5H2Uv
-         oRe7UN1S3gMYP/an+RTzCmLtlwpGak2Da/vpQmwYM90klmkz1YXN2pXRbscpWGGJMHVP
-         Hyl6tg3ZgeiRVrriQHPxqCxc/FKkLoxvNZbn8w+/cu5T7YwBZyX6kSeYIAfRbyEkqFio
-         U+7w==
+        bh=ilkXkGh4UQ+/aeFm6DMB3/MRHBoihpCdwNtE5FkgYiA=;
+        b=ZijxkSRCa+MVoufQw8pX1zEPDmbJQHMIc7ryEPNYdxRW7uE1elAtPSEoO6TO2fdL3C
+         YYQJaFPp7+XmVgUuPBLsbh8kUw7SKdejWYyghinEmlcDe0ULhtA4MtIqR+jEN2WlinHT
+         rQR4rmtfQIe+M14yTYYVAo/CiHl6BtQ7g8BeE9AjKV0icbDZr85XZipLoE5eQ/zLcrOA
+         qq6Tj17eJ8pSn1YjOQTW9YbR6/34H1KTm3kmb+xrriLIfhgDr5sWZExCw/RkRJt6cLvF
+         qUjuUgvkfcuJD0BY8W1g6soQTICypHyEZWBA0EEUACro/YqszjDcPamlITZYdOO88J3I
+         N9Eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701198505; x=1701803305;
+        d=1e100.net; s=20230601; t=1701198508; x=1701803308;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=D3NH9e0B7TEOaLke+IJC8tguC6phHHxMJ1QTwr176tI=;
-        b=A3zWpnFUWtXo4BsmZw3VkcfkIWUtSVixnjuKNRRfFv1MkDbWRppWqRpCSB62xhOUTO
-         WZnVQJ8r87M/1H7V+eFwJgbF4ucEsCjfWTe1Mr50drP1OrGOaw/wHgHKyCQhwvib6pFb
-         5ueoUMshmOLASCWt4MR3xeYsOo/hak4u+Jt6f3o0GTu6ARo85hW1o4GKedKmaYJuHxr2
-         vGH79d0pP6RqULMF049RpGp4FoEeVf0HVpr55pw/QOsyG6fSIpNFkgjsh0NW9DhTjnvD
-         VZzy9N+tCobc888plIe6EIGnZzLWE86GNsfn8xavfbwFnjXLHjxQE+K4q+ySNy8YHWPZ
-         3mSw==
-X-Gm-Message-State: AOJu0YyEfC0PafDRcWjYs4q18mi7Podvu559/1nFifOdpC7Bs0PWIlk9
-	vdHQ4y5okuGwyB1J9cGLGm0Ky9N7v7X/N3DCr4E=
-X-Google-Smtp-Source: AGHT+IE/Jdvi1/gu2vWjA3AwPysC0qMpYuMIOc+27FVn+9ToiXT9Hto4bbVBpfdZCB9NHQwlra4B3w==
-X-Received: by 2002:a05:620a:6507:b0:76d:aa3b:ac9c with SMTP id qb7-20020a05620a650700b0076daa3bac9cmr18861838qkn.46.1701198505176;
-        Tue, 28 Nov 2023 11:08:25 -0800 (PST)
+        bh=ilkXkGh4UQ+/aeFm6DMB3/MRHBoihpCdwNtE5FkgYiA=;
+        b=NE6fw6dyDPggY6zRVv/CLXMPR1R+e6gvEFLNFbp2pOh9xG4RA2kXKRZN8OuEXchcRO
+         A2WDrinb8GgvJnY1lZyT05ru36H1G3qYt2iNoWzaDYU2eYk5EEMYEBZRob7Tij8eiIbq
+         J8mIgR8OBEpYuW7yZTy1eZA/NEIf3Y+rIB+jDhoY1cttvRkVdLsxjbc5OYIEHDB/bKVc
+         uiKtoRrlhiOiq0r0OKjJEKELKihgdDog4qBh1EGriVNQ/MEan+q4doOrpdwqEOZLMdXV
+         OKPH1feufGbFuwnt/4JIwDeSofdllGO41B1/QRuWg0hWBcBhLXen0hy7GnEec6dMv0fd
+         ZJSA==
+X-Gm-Message-State: AOJu0Yyjk4yTKABNoGhCZrL0SktZgZkI8Uv8btj2J9q8n2UrpT0WiPJ4
+	IpRGO0nraH+IQS8T30RRVmH/mecsovGXWMryuEw=
+X-Google-Smtp-Source: AGHT+IEGpHLFMvQAcGb5Zz6cRwfBxzkgLcTjbWXuREtroKUjuMbHF8V8wVZ0zR6J4StKXf6JL7HAoA==
+X-Received: by 2002:a05:622a:7188:b0:423:a3c9:8e70 with SMTP id jd8-20020a05622a718800b00423a3c98e70mr15553662qtb.17.1701198507813;
+        Tue, 28 Nov 2023 11:08:27 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id h19-20020a05620a285300b0077d897deb89sm3345508qkp.127.2023.11.28.11.08.24
+        by smtp.gmail.com with ESMTPSA id w26-20020ac86b1a000000b0041e383d527esm4754403qts.66.2023.11.28.11.08.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Nov 2023 11:08:25 -0800 (PST)
-Date: Tue, 28 Nov 2023 14:08:24 -0500
+        Tue, 28 Nov 2023 11:08:27 -0800 (PST)
+Date: Tue, 28 Nov 2023 14:08:26 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 11/24] pack-bitmap: simplify
- `reuse_partial_packfile_from_bitmap()` signature
-Message-ID: <432854b27c6731bd6ab1fa739b3a086ec0a90be8.1701198172.git.me@ttaylorr.com>
+Subject: [PATCH 12/24] pack-bitmap: return multiple packs via
+ `reuse_partial_packfile_from_bitmap()`
+Message-ID: <36b794d9e1eaa413b3b87eb7e5a0d82098d05dca.1701198172.git.me@ttaylorr.com>
 References: <cover.1701198172.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,125 +56,101 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1701198172.git.me@ttaylorr.com>
 
-The signature of `reuse_partial_packfile_from_bitmap()` currently takes
-in a bitmap, as well as three output parameters (filled through
-pointers, and passed as arguments), and also returns an integer result.
+Further prepare for enabling verbatim pack-reuse over multiple packfiles
+by changing the signature of reuse_partial_packfile_from_bitmap() to
+populate an array of `struct bitmapped_pack *`'s instead of a pointer to
+a single packfile.
 
-The output parameters are filled out with: (a) the packfile used for
-pack-reuse, (b) the number of objects from that pack that we can reuse,
-and (c) a bitmap indicating which objects we can reuse. The return value
-is either -1 (when there are no objects to reuse), or 0 (when there is
-at least one object to reuse).
+Since the array we're filling out is sized dynamically[^1], add an
+additional `size_t *` parameter which will hold the number of reusable
+packs (equal to the number of elements in the array).
 
-Some of these parameters are redundant. Notably, we can infer from the
-bitmap how many objects are reused by calling bitmap_popcount(). And we
-can similar compute the return value based on that number as well.
+Note that since we still have not implemented true multi-pack reuse,
+these changes aren't propagated out to the rest of the caller in
+builtin/pack-objects.c.
 
-As such, clean up the signature of this function to drop the "*entries"
-parameter, as well as the int return value, since the single caller of
-this function can infer these values themself.
+In the interim state, we expect that the array has a single element, and
+we use that element to fill out the static `reuse_packfile` variable
+(which is a bog-standard `struct packed_git *`). Future commits will
+continue to push this change further out through the pack-objects code.
+
+[^1]: That is, even though we know the number of packs which are
+  candidates for pack-reuse, we do not know how many of those
+  candidates we can actually reuse.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/pack-objects.c | 16 +++++++++-------
- pack-bitmap.c          | 16 +++++++---------
- pack-bitmap.h          |  7 +++----
- 3 files changed, 19 insertions(+), 20 deletions(-)
+ builtin/pack-objects.c | 9 +++++++--
+ pack-bitmap.c          | 6 ++++--
+ pack-bitmap.h          | 5 +++--
+ 3 files changed, 14 insertions(+), 6 deletions(-)
 
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 107154db34..2bb1b64e8f 100644
+index 2bb1b64e8f..89de23f39a 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -3946,13 +3946,15 @@ static int get_object_list_from_bitmap(struct rev_info *revs)
+@@ -3943,14 +3943,19 @@ static int pack_options_allow_reuse(void)
+ 
+ static int get_object_list_from_bitmap(struct rev_info *revs)
+ {
++	struct bitmapped_pack *packs = NULL;
++	size_t packs_nr = 0;
++
  	if (!(bitmap_git = prepare_bitmap_walk(revs, 0)))
  		return -1;
  
--	if (pack_options_allow_reuse() &&
--	    !reuse_partial_packfile_from_bitmap(
--			bitmap_git,
--			&reuse_packfile,
--			&reuse_packfile_objects,
--			&reuse_packfile_bitmap)) {
--		assert(reuse_packfile_objects);
-+	if (pack_options_allow_reuse())
-+		reuse_partial_packfile_from_bitmap(bitmap_git, &reuse_packfile,
-+						   &reuse_packfile_bitmap);
-+
-+	if (reuse_packfile) {
-+		reuse_packfile_objects = bitmap_popcount(reuse_packfile_bitmap);
-+		if (!reuse_packfile_objects)
-+			BUG("expected non-empty reuse bitmap");
-+
- 		nr_result += reuse_packfile_objects;
- 		nr_seen += reuse_packfile_objects;
- 		display_progress(progress_state, nr_seen);
+ 	if (pack_options_allow_reuse())
+-		reuse_partial_packfile_from_bitmap(bitmap_git, &reuse_packfile,
++		reuse_partial_packfile_from_bitmap(bitmap_git, &packs,
++						   &packs_nr,
+ 						   &reuse_packfile_bitmap);
+ 
+-	if (reuse_packfile) {
++	if (packs) {
++		reuse_packfile = packs[0].p;
+ 		reuse_packfile_objects = bitmap_popcount(reuse_packfile_bitmap);
+ 		if (!reuse_packfile_objects)
+ 			BUG("expected non-empty reuse bitmap");
 diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 2ebe2c314e..614fc09a4e 100644
+index 614fc09a4e..670deec909 100644
 --- a/pack-bitmap.c
 +++ b/pack-bitmap.c
-@@ -1988,10 +1988,9 @@ static void reuse_partial_packfile_from_bitmap_1(struct bitmap_index *bitmap_git
- 	unuse_pack(&w_curs);
+@@ -1989,7 +1989,8 @@ static void reuse_partial_packfile_from_bitmap_1(struct bitmap_index *bitmap_git
  }
  
--int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
--				       struct packed_git **packfile_out,
--				       uint32_t *entries,
--				       struct bitmap **reuse_out)
-+void reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
-+					struct packed_git **packfile_out,
-+					struct bitmap **reuse_out)
+ void reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
+-					struct packed_git **packfile_out,
++					struct bitmapped_pack **packs_out,
++					size_t *packs_nr_out,
+ 					struct bitmap **reuse_out)
  {
  	struct repository *r = the_repository;
- 	struct bitmapped_pack *packs = NULL;
-@@ -2013,7 +2012,7 @@ int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
- 				warning(_("unable to load pack: '%s', disabling pack-reuse"),
- 					bitmap_git->midx->pack_names[i]);
- 				free(packs);
--				return -1;
-+				return;
- 			}
- 			if (!pack.bitmap_nr)
- 				continue; /* no objects from this pack */
-@@ -2046,10 +2045,10 @@ int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
- 
- 	reuse_partial_packfile_from_bitmap_1(bitmap_git, packs, reuse);
- 
--	*entries = bitmap_popcount(reuse);
--	if (!*entries) {
-+	if (!bitmap_popcount(reuse)) {
-+		free(packs);
- 		bitmap_free(reuse);
--		return -1;
-+		return;
- 	}
- 
- 	/*
-@@ -2059,7 +2058,6 @@ int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
+@@ -2056,7 +2057,8 @@ void reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
+ 	 * need to be handled separately.
+ 	 */
  	bitmap_and_not(result, reuse);
- 	*packfile_out = packs[0].p;
+-	*packfile_out = packs[0].p;
++	*packs_out = packs;
++	*packs_nr_out = packs_nr;
  	*reuse_out = reuse;
--	return 0;
  }
  
- int bitmap_walk_contains(struct bitmap_index *bitmap_git,
 diff --git a/pack-bitmap.h b/pack-bitmap.h
-index b7fa1a42a9..5bc1ca5b65 100644
+index 5bc1ca5b65..901a3b86ed 100644
 --- a/pack-bitmap.h
 +++ b/pack-bitmap.h
-@@ -78,10 +78,9 @@ int test_bitmap_hashes(struct repository *r);
+@@ -78,8 +78,9 @@ int test_bitmap_hashes(struct repository *r);
  struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
  					 int filter_provided_objects);
  uint32_t midx_preferred_pack(struct bitmap_index *bitmap_git);
--int reuse_partial_packfile_from_bitmap(struct bitmap_index *,
--				       struct packed_git **packfile,
--				       uint32_t *entries,
--				       struct bitmap **reuse_out);
-+void reuse_partial_packfile_from_bitmap(struct bitmap_index *,
-+					struct packed_git **packfile,
-+					struct bitmap **reuse_out);
+-void reuse_partial_packfile_from_bitmap(struct bitmap_index *,
+-					struct packed_git **packfile,
++void reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
++					struct bitmapped_pack **packs_out,
++					size_t *packs_nr_out,
+ 					struct bitmap **reuse_out);
  int rebuild_existing_bitmaps(struct bitmap_index *, struct packing_data *mapping,
  			     kh_oid_map_t *reused_bitmaps, int show_progress);
- void free_bitmap_index(struct bitmap_index *);
 -- 
 2.43.0.24.g980b318f98
 
