@@ -1,50 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="DriYqYCx"
-Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFAF41702
-	for <git@vger.kernel.org>; Tue, 28 Nov 2023 11:08:23 -0800 (PST)
-Received: by mail-qk1-x731.google.com with SMTP id af79cd13be357-77d8d1b7952so186903885a.2
-        for <git@vger.kernel.org>; Tue, 28 Nov 2023 11:08:23 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="F77eVjgY"
+Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 531EC1BC
+	for <git@vger.kernel.org>; Tue, 28 Nov 2023 11:08:26 -0800 (PST)
+Received: by mail-qk1-x72d.google.com with SMTP id af79cd13be357-77d895c298eso197719085a.3
+        for <git@vger.kernel.org>; Tue, 28 Nov 2023 11:08:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1701198502; x=1701803302; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1701198505; x=1701803305; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=0LBgFElpi9Acco6bJTnDZid/m0EVpOrN/ZoGoWrUS4A=;
-        b=DriYqYCxrF6XmGFhEkTil2JL4hVOVA5jie+hCoxS1fuCZs7FMnvLipFQ0fcbQ2QBMG
-         y1dqH7dUvK2Sjv7f2ghUjYXORJaimQy0iUJPkkiG+E+Ui6ocrh15DsNM38V/D3DUmpFH
-         FxCRle4IaOc0X587Q102cq6Yi/yPCI9RzZQgQnQo68IV5b+HJh1Ryx3v0hfLiMxfQ2wK
-         OK9SClq6vwBs9XqG94ls7Mmn0c7apFaaA9nxgNAlfMCbDKyNYYNEFingOufinyNcdchp
-         5QZIuwBD/3FHqSV0n8bwCmuzKyfkN5gok8Rm6IIdvm0xoXWL7h0aEsPUpjRzYjnDNbsm
-         gy5Q==
+        bh=D3NH9e0B7TEOaLke+IJC8tguC6phHHxMJ1QTwr176tI=;
+        b=F77eVjgYi7k3DIP5obR9R3peA73pUO26Y5kNMULYwnwG/XMtwmpvXAuWINf3GrWDeM
+         mDxmu7BUcVIgnjgogNUGOazIEm+wQv8Kvdalz/0wM1iQXt3sfnKoXHNubE9RqCc06qo8
+         5Kba5/YycW+7I0XqquJUujEFT8/B8sxLINfuN/t/SeDt8a5+WbkLYM444K7gezz5H2Uv
+         oRe7UN1S3gMYP/an+RTzCmLtlwpGak2Da/vpQmwYM90klmkz1YXN2pXRbscpWGGJMHVP
+         Hyl6tg3ZgeiRVrriQHPxqCxc/FKkLoxvNZbn8w+/cu5T7YwBZyX6kSeYIAfRbyEkqFio
+         U+7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701198502; x=1701803302;
+        d=1e100.net; s=20230601; t=1701198505; x=1701803305;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0LBgFElpi9Acco6bJTnDZid/m0EVpOrN/ZoGoWrUS4A=;
-        b=eGCwPmb/j4T1070ic2VuBvA1W/Zqjv1vowKjn1XbA2JVsR265TrqInFH4mzsZftfEi
-         +HE8ENEMycjSFcfsMbwMwOz9CuTVbggvUoYj/ZMJf4kPpDL2lKMDCQc0zZoD6642qFCh
-         AN/DxkGicazW9nCBZboFkT056stAZnmIfkclJJF157+uEHGUmWbyuvkRixM4da2d/n6f
-         zfoula44nUpwIQZYXrZqOKXzxZfA3CwRxXeAqo5zEfgncz/nm3IwPyX1ieOT1ZglcOxB
-         O8g8YC/XLgIkNmI0Ic9XWx6aR6KyIYFw0lFNwNhyeV0PPZydPQSx01lh4HB75HSXPCHb
-         onoQ==
-X-Gm-Message-State: AOJu0Yxv+l7jvpeVyELvND0TzSpMEsOQl210ws3SkJ3xGeJYvgvZMIxF
-	p8mmz87KUw+Ei/I4J9I0dvgD5wLbW+7hmOecIf0=
-X-Google-Smtp-Source: AGHT+IHlY/nj8Vay3d7RIk0XjVPY5EQshc40yl0vsBiwuxv7EjL3EiP4EtsvxYDQlOjlsKKkftD1Mg==
-X-Received: by 2002:a05:620a:1087:b0:77b:d8aa:6756 with SMTP id g7-20020a05620a108700b0077bd8aa6756mr16216898qkk.49.1701198502533;
-        Tue, 28 Nov 2023 11:08:22 -0800 (PST)
+        bh=D3NH9e0B7TEOaLke+IJC8tguC6phHHxMJ1QTwr176tI=;
+        b=A3zWpnFUWtXo4BsmZw3VkcfkIWUtSVixnjuKNRRfFv1MkDbWRppWqRpCSB62xhOUTO
+         WZnVQJ8r87M/1H7V+eFwJgbF4ucEsCjfWTe1Mr50drP1OrGOaw/wHgHKyCQhwvib6pFb
+         5ueoUMshmOLASCWt4MR3xeYsOo/hak4u+Jt6f3o0GTu6ARo85hW1o4GKedKmaYJuHxr2
+         vGH79d0pP6RqULMF049RpGp4FoEeVf0HVpr55pw/QOsyG6fSIpNFkgjsh0NW9DhTjnvD
+         VZzy9N+tCobc888plIe6EIGnZzLWE86GNsfn8xavfbwFnjXLHjxQE+K4q+ySNy8YHWPZ
+         3mSw==
+X-Gm-Message-State: AOJu0YyEfC0PafDRcWjYs4q18mi7Podvu559/1nFifOdpC7Bs0PWIlk9
+	vdHQ4y5okuGwyB1J9cGLGm0Ky9N7v7X/N3DCr4E=
+X-Google-Smtp-Source: AGHT+IE/Jdvi1/gu2vWjA3AwPysC0qMpYuMIOc+27FVn+9ToiXT9Hto4bbVBpfdZCB9NHQwlra4B3w==
+X-Received: by 2002:a05:620a:6507:b0:76d:aa3b:ac9c with SMTP id qb7-20020a05620a650700b0076daa3bac9cmr18861838qkn.46.1701198505176;
+        Tue, 28 Nov 2023 11:08:25 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id g15-20020a05620a278f00b0077d7649ef06sm4527922qkp.14.2023.11.28.11.08.22
+        by smtp.gmail.com with ESMTPSA id h19-20020a05620a285300b0077d897deb89sm3345508qkp.127.2023.11.28.11.08.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Nov 2023 11:08:22 -0800 (PST)
-Date: Tue, 28 Nov 2023 14:08:21 -0500
+        Tue, 28 Nov 2023 11:08:25 -0800 (PST)
+Date: Tue, 28 Nov 2023 14:08:24 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 10/24] pack-bitmap: pass `bitmapped_pack` struct to
- pack-reuse functions
-Message-ID: <970bd9eaeae038adb6e7d4c399c9b033668a8864.1701198172.git.me@ttaylorr.com>
+Subject: [PATCH 11/24] pack-bitmap: simplify
+ `reuse_partial_packfile_from_bitmap()` signature
+Message-ID: <432854b27c6731bd6ab1fa739b3a086ec0a90be8.1701198172.git.me@ttaylorr.com>
 References: <cover.1701198172.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,257 +56,125 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1701198172.git.me@ttaylorr.com>
 
-When trying to assemble a pack with bitmaps using `--use-bitmap-index`,
-`pack-objects` asks the pack-bitmap machinery for a bitmap which
-indicates the set of objects we can "reuse" verbatim from on-disk.
+The signature of `reuse_partial_packfile_from_bitmap()` currently takes
+in a bitmap, as well as three output parameters (filled through
+pointers, and passed as arguments), and also returns an integer result.
 
-This set is roughly comprised of: a prefix of objects in the bitmapped
-pack (or preferred pack, in the case of a multi-pack reachability
-bitmap), plus any other objects not included in the prefix, excluding
-any deltas whose base we are not sending in the resulting pack.
+The output parameters are filled out with: (a) the packfile used for
+pack-reuse, (b) the number of objects from that pack that we can reuse,
+and (c) a bitmap indicating which objects we can reuse. The return value
+is either -1 (when there are no objects to reuse), or 0 (when there is
+at least one object to reuse).
 
-The pack-bitmap machinery is responsible for computing this bitmap, and
-does so with the following functions:
+Some of these parameters are redundant. Notably, we can infer from the
+bitmap how many objects are reused by calling bitmap_popcount(). And we
+can similar compute the return value based on that number as well.
 
-  - reuse_partial_packfile_from_bitmap()
-  - try_partial_reuse()
-
-In the existing implementation, the first function is responsible for
-(a) marking the prefix of objects in the reusable pack, and then (b)
-calling try_partial_reuse() on any remaining objects to ensure that they
-are also reusable (and removing them from the bitmapped set if they are
-not).
-
-Likewise, the `try_partial_reuse()` function is responsible for checking
-whether an isolated object (that is, an object from the bitmapped
-pack/preferred pack not contained in the prefix from earlier) may be
-reused, i.e. that it isn't a delta of an object that we are not sending
-in the resulting pack.
-
-These functions are based on two core assumptions, which we will unwind
-in this and the following commits:
-
-  1. There is only a single pack from the bitmap which is eligible for
-     verbatim pack-reuse. For single-pack bitmaps, this is trivially the
-     bitmapped pack. For multi-pack bitmaps, this is (currently) the
-     MIDX's preferred pack.
-
-  2. The pack eligible for reuse has its first object in bit position 0,
-     and all objects from that pack follow in pack-order from that first
-     bit position.
-
-In order to perform verbatim pack reuse over multiple packs, we must
-unwind these two assumptions. Most notably, in order to reuse bits from
-a given packfile, we need to know the first bit position occupied by
-an object form that packfile. To propagate this information around, pass
-a `struct bitmapped_pack *` anywhere we previously passed a `struct
-packed_git *`, since the former contains the bitmap position we're
-interested in (as well as a pointer to the latter).
-
-As an additional step, factor out a sub-routine from the main
-`reuse_partial_packfile_from_bitmap()` function, called
-`reuse_partial_packfile_from_bitmap_1()`. This new function will be
-responsible for figuring out which objects may be reused from a single
-pack, and the existing function will dispatch multiple calls to its new
-helper function for each reusable pack.
-
-Consequently, `reuse_partial_packfile_from_bitmap()` will now maintain
-an array of reusable packs instead of a single such pack. We currently
-expect that array to have only a single element, so this awkward state
-is short-lived. It will serve as useful scaffolding in subsequent
-commits as we begin to work towards enabling multi-pack reuse.
+As such, clean up the signature of this function to drop the "*entries"
+parameter, as well as the int return value, since the single caller of
+this function can infer these values themself.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-bitmap.c | 105 +++++++++++++++++++++++++++++++++++---------------
- 1 file changed, 74 insertions(+), 31 deletions(-)
+ builtin/pack-objects.c | 16 +++++++++-------
+ pack-bitmap.c          | 16 +++++++---------
+ pack-bitmap.h          |  7 +++----
+ 3 files changed, 19 insertions(+), 20 deletions(-)
 
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 107154db34..2bb1b64e8f 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -3946,13 +3946,15 @@ static int get_object_list_from_bitmap(struct rev_info *revs)
+ 	if (!(bitmap_git = prepare_bitmap_walk(revs, 0)))
+ 		return -1;
+ 
+-	if (pack_options_allow_reuse() &&
+-	    !reuse_partial_packfile_from_bitmap(
+-			bitmap_git,
+-			&reuse_packfile,
+-			&reuse_packfile_objects,
+-			&reuse_packfile_bitmap)) {
+-		assert(reuse_packfile_objects);
++	if (pack_options_allow_reuse())
++		reuse_partial_packfile_from_bitmap(bitmap_git, &reuse_packfile,
++						   &reuse_packfile_bitmap);
++
++	if (reuse_packfile) {
++		reuse_packfile_objects = bitmap_popcount(reuse_packfile_bitmap);
++		if (!reuse_packfile_objects)
++			BUG("expected non-empty reuse bitmap");
++
+ 		nr_result += reuse_packfile_objects;
+ 		nr_seen += reuse_packfile_objects;
+ 		display_progress(progress_state, nr_seen);
 diff --git a/pack-bitmap.c b/pack-bitmap.c
-index d2f1306960..2ebe2c314e 100644
+index 2ebe2c314e..614fc09a4e 100644
 --- a/pack-bitmap.c
 +++ b/pack-bitmap.c
-@@ -1836,7 +1836,7 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
-  * -1 means "stop trying further objects"; 0 means we may or may not have
-  * reused, but you can keep feeding bits.
-  */
--static int try_partial_reuse(struct packed_git *pack,
-+static int try_partial_reuse(struct bitmapped_pack *pack,
- 			     size_t pos,
- 			     struct bitmap *reuse,
- 			     struct pack_window **w_curs)
-@@ -1868,11 +1868,11 @@ static int try_partial_reuse(struct packed_git *pack,
- 	 * preferred pack precede all bits from other packs.
- 	 */
- 
--	if (pos >= pack->num_objects)
-+	if (pos >= pack->p->num_objects)
- 		return -1; /* not actually in the pack or MIDX preferred pack */
- 
--	offset = delta_obj_offset = pack_pos_to_offset(pack, pos);
--	type = unpack_object_header(pack, w_curs, &offset, &size);
-+	offset = delta_obj_offset = pack_pos_to_offset(pack->p, pos);
-+	type = unpack_object_header(pack->p, w_curs, &offset, &size);
- 	if (type < 0)
- 		return -1; /* broken packfile, punt */
- 
-@@ -1888,11 +1888,11 @@ static int try_partial_reuse(struct packed_git *pack,
- 		 * and the normal slow path will complain about it in
- 		 * more detail.
- 		 */
--		base_offset = get_delta_base(pack, w_curs, &offset, type,
-+		base_offset = get_delta_base(pack->p, w_curs, &offset, type,
- 					     delta_obj_offset);
- 		if (!base_offset)
- 			return 0;
--		if (offset_to_pack_pos(pack, base_offset, &base_pos) < 0)
-+		if (offset_to_pack_pos(pack->p, base_offset, &base_pos) < 0)
- 			return 0;
- 
- 		/*
-@@ -1915,14 +1915,14 @@ static int try_partial_reuse(struct packed_git *pack,
- 		 * to REF_DELTA on the fly. Better to just let the normal
- 		 * object_entry code path handle it.
- 		 */
--		if (!bitmap_get(reuse, base_pos))
-+		if (!bitmap_get(reuse, pack->bitmap_pos + base_pos))
- 			return 0;
- 	}
- 
- 	/*
- 	 * If we got here, then the object is OK to reuse. Mark it.
- 	 */
--	bitmap_set(reuse, pos);
-+	bitmap_set(reuse, pack->bitmap_pos + pos);
- 	return 0;
- }
- 
-@@ -1934,29 +1934,13 @@ uint32_t midx_preferred_pack(struct bitmap_index *bitmap_git)
- 	return nth_midxed_pack_int_id(m, pack_pos_to_midx(bitmap_git->midx, 0));
+@@ -1988,10 +1988,9 @@ static void reuse_partial_packfile_from_bitmap_1(struct bitmap_index *bitmap_git
+ 	unuse_pack(&w_curs);
  }
  
 -int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
 -				       struct packed_git **packfile_out,
 -				       uint32_t *entries,
 -				       struct bitmap **reuse_out)
-+static void reuse_partial_packfile_from_bitmap_1(struct bitmap_index *bitmap_git,
-+						 struct bitmapped_pack *pack,
-+						 struct bitmap *reuse)
++void reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
++					struct packed_git **packfile_out,
++					struct bitmap **reuse_out)
  {
--	struct repository *r = the_repository;
--	struct packed_git *pack;
- 	struct bitmap *result = bitmap_git->result;
--	struct bitmap *reuse;
- 	struct pack_window *w_curs = NULL;
- 	size_t i = 0;
--	uint32_t offset;
--	uint32_t objects_nr;
--
--	assert(result);
--
--	load_reverse_index(r, bitmap_git);
--
--	if (bitmap_is_midx(bitmap_git))
--		pack = bitmap_git->midx->packs[midx_preferred_pack(bitmap_git)];
--	else
--		pack = bitmap_git->pack;
--	objects_nr = pack->num_objects;
+ 	struct repository *r = the_repository;
+ 	struct bitmapped_pack *packs = NULL;
+@@ -2013,7 +2012,7 @@ int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
+ 				warning(_("unable to load pack: '%s', disabling pack-reuse"),
+ 					bitmap_git->midx->pack_names[i]);
+ 				free(packs);
+-				return -1;
++				return;
+ 			}
+ 			if (!pack.bitmap_nr)
+ 				continue; /* no objects from this pack */
+@@ -2046,10 +2045,10 @@ int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
  
- 	while (i < result->word_alloc && result->words[i] == (eword_t)~0)
- 		i++;
-@@ -1969,15 +1953,15 @@ int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
- 	 * we use it instead of another pack. In single-pack bitmaps, the choice
- 	 * is made for us.
- 	 */
--	if (i > objects_nr / BITS_IN_EWORD)
--		i = objects_nr / BITS_IN_EWORD;
-+	if (i > pack->p->num_objects / BITS_IN_EWORD)
-+		i = pack->p->num_objects / BITS_IN_EWORD;
+ 	reuse_partial_packfile_from_bitmap_1(bitmap_git, packs, reuse);
  
--	reuse = bitmap_word_alloc(i);
- 	memset(reuse->words, 0xFF, i * sizeof(eword_t));
+-	*entries = bitmap_popcount(reuse);
+-	if (!*entries) {
++	if (!bitmap_popcount(reuse)) {
++		free(packs);
+ 		bitmap_free(reuse);
+-		return -1;
++		return;
+ 	}
  
- 	for (; i < result->word_alloc; ++i) {
- 		eword_t word = result->words[i];
- 		size_t pos = (i * BITS_IN_EWORD);
-+		size_t offset;
- 
- 		for (offset = 0; offset < BITS_IN_EWORD; ++offset) {
- 			if ((word >> offset) == 0)
-@@ -2002,6 +1986,65 @@ int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
- 
- done:
- 	unuse_pack(&w_curs);
-+}
-+
-+int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
-+				       struct packed_git **packfile_out,
-+				       uint32_t *entries,
-+				       struct bitmap **reuse_out)
-+{
-+	struct repository *r = the_repository;
-+	struct bitmapped_pack *packs = NULL;
-+	struct bitmap *result = bitmap_git->result;
-+	struct bitmap *reuse;
-+	size_t i;
-+	size_t packs_nr = 0, packs_alloc = 0;
-+	size_t word_alloc;
-+	uint32_t objects_nr = 0;
-+
-+	assert(result);
-+
-+	load_reverse_index(r, bitmap_git);
-+
-+	if (bitmap_is_midx(bitmap_git)) {
-+		for (i = 0; i < bitmap_git->midx->num_packs; i++) {
-+			struct bitmapped_pack pack;
-+			if (nth_bitmapped_pack(r, bitmap_git->midx, &pack, i) < 0) {
-+				warning(_("unable to load pack: '%s', disabling pack-reuse"),
-+					bitmap_git->midx->pack_names[i]);
-+				free(packs);
-+				return -1;
-+			}
-+			if (!pack.bitmap_nr)
-+				continue; /* no objects from this pack */
-+			if (pack.bitmap_pos)
-+				continue; /* not preferred pack */
-+
-+			ALLOC_GROW(packs, packs_nr + 1, packs_alloc);
-+			memcpy(&packs[packs_nr++], &pack, sizeof(pack));
-+
-+			objects_nr += pack.p->num_objects;
-+		}
-+	} else {
-+		ALLOC_GROW(packs, packs_nr + 1, packs_alloc);
-+
-+		packs[packs_nr].p = bitmap_git->pack;
-+		packs[packs_nr].bitmap_pos = 0;
-+		packs[packs_nr].bitmap_nr = bitmap_git->pack->num_objects;
-+		packs[packs_nr].disjoint = 1;
-+
-+		objects_nr = packs[packs_nr++].p->num_objects;
-+	}
-+
-+	word_alloc = objects_nr / BITS_IN_EWORD;
-+	if (objects_nr % BITS_IN_EWORD)
-+		word_alloc++;
-+	reuse = bitmap_word_alloc(word_alloc);
-+
-+	if (packs_nr != 1)
-+		BUG("pack reuse not yet implemented for multiple packs");
-+
-+	reuse_partial_packfile_from_bitmap_1(bitmap_git, packs, reuse);
- 
- 	*entries = bitmap_popcount(reuse);
- 	if (!*entries) {
-@@ -2014,7 +2057,7 @@ int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
- 	 * need to be handled separately.
- 	 */
+ 	/*
+@@ -2059,7 +2058,6 @@ int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
  	bitmap_and_not(result, reuse);
--	*packfile_out = pack;
-+	*packfile_out = packs[0].p;
+ 	*packfile_out = packs[0].p;
  	*reuse_out = reuse;
- 	return 0;
+-	return 0;
  }
+ 
+ int bitmap_walk_contains(struct bitmap_index *bitmap_git,
+diff --git a/pack-bitmap.h b/pack-bitmap.h
+index b7fa1a42a9..5bc1ca5b65 100644
+--- a/pack-bitmap.h
++++ b/pack-bitmap.h
+@@ -78,10 +78,9 @@ int test_bitmap_hashes(struct repository *r);
+ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
+ 					 int filter_provided_objects);
+ uint32_t midx_preferred_pack(struct bitmap_index *bitmap_git);
+-int reuse_partial_packfile_from_bitmap(struct bitmap_index *,
+-				       struct packed_git **packfile,
+-				       uint32_t *entries,
+-				       struct bitmap **reuse_out);
++void reuse_partial_packfile_from_bitmap(struct bitmap_index *,
++					struct packed_git **packfile,
++					struct bitmap **reuse_out);
+ int rebuild_existing_bitmaps(struct bitmap_index *, struct packing_data *mapping,
+ 			     kh_oid_map_t *reused_bitmaps, int show_progress);
+ void free_bitmap_index(struct bitmap_index *);
 -- 
 2.43.0.24.g980b318f98
 
