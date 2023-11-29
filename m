@@ -1,66 +1,68 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fNxe9dI4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O4G6ySN0"
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8355D19BA
-	for <git@vger.kernel.org>; Wed, 29 Nov 2023 00:14:28 -0800 (PST)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.nyi.internal (Postfix) with ESMTP id EB2CD5C019A;
-	Wed, 29 Nov 2023 03:14:27 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Wed, 29 Nov 2023 03:14:27 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ouMtrtLr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iwGiCnxS"
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76FD21BD3
+	for <git@vger.kernel.org>; Wed, 29 Nov 2023 02:13:23 -0800 (PST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id CD2875C025A;
+	Wed, 29 Nov 2023 05:13:22 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute3.internal (MEProxy); Wed, 29 Nov 2023 05:13:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm1; t=1701245667; x=1701332067; bh=xK
-	27o7VDe27hnbVqwWdMmD2PtEEFxQ3Fzpl8cSgo7wM=; b=fNxe9dI4qMjl6Xzl+V
-	JM1j0kyoC3Ti0DwWZw0PN7p1qFP1iXeGXEm2cx6cdPaXUTgBSt0/PqRSmu2NIvEx
-	9vr70pB0ANCGFIGN9fy41q+gUavQnYCI/lLbgvQHMBdbsnkNB9DBltpLR4hNA1Rd
-	Pl4wE63IjOw2qeJJW7oX9qJ7W3GOLmkglJrf/RoKgbRSsgvKhM4QHVEGz81hMMj1
-	MIOX88LnFx4T04fxnJH3BlWlFMYZFBBGhLC6x181fuHBq2OIUTjfwjvBoV55H0Gj
-	HFySiJG7Y5jVWoY4N2a9HRmfD98KE0oKgUP4upF8Ouxth3mCUTCJSu6b+hDqi97d
-	RkSw==
+	:subject:subject:to:to; s=fm1; t=1701252802; x=1701339202; bh=2y
+	EUanXJpFiUaNtujmRfLRzNBSG+eHkTHBtC00kVQuU=; b=ouMtrtLrykBuGuXWSd
+	/r8LJc/o4VLG3x55viPBD0lbUWTAbBLB/E28x6s5Fa2bZNdN8zYa7jdJ9143o5eC
+	PWumShzl2SpgApGGupTyHuBM1XoM81Qx0wyLLSRI7cO6gXGCrksqxAUontH1q1oS
+	0nblcEhfhq+3edg/Ofe4Z9FsWQSUeykGODfkUkoPipt0/WmIBxICb0a/CAnU+Ysw
+	PAPn91F5PAyblnjOK720yerfD5yZYozmwTJlEE5lpQtXKFoRgl4E+hhEjx8zI4hH
+	ZKyuWDHBYcAE7ndl6dtuSNGbAbHwNwDa5RBFcM9ejX1bI5oVYKK+haadbqxr1NAN
+	RVkA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm1; t=1701245667; x=1701332067; bh=xK27o7VDe27hn
-	bVqwWdMmD2PtEEFxQ3Fzpl8cSgo7wM=; b=O4G6ySN01JQJdO7Le6TKJglEUCVbh
-	xA0YcLVWghguoaTD92qOg2Jm8KZM0Abe7NHkbeALFtai3ADOcix6/HRO60WBUuoI
-	ahbna0159knqr59XLNAU2riwU0Mr0FxEfPXpiNN+4+FAZLdm7l/LsF9PXxjUNPhJ
-	QrTtVHa3POv+8RyCaW0eIkUEzknvJ8kT/bpp2i5G3N5O62pL+8LcN/viCwHgGWHc
-	Q8rtHR3OIeyAgFiq8WG+PmW2Egv0nfm2T0yAHVlAFMdOEyGW5r3fhSnM8JyCGx3U
-	Y7sYU/HgvQO0NW++ACpWFbXfMUXl//pnF/RuLQwI6ujW4MYLa6mFW45Zw==
-X-ME-Sender: <xms:4_JmZenSJrygLp6YGO_w5i6uBiI_OVMieMnoeEIJspjRyPp4OotZuQ>
-    <xme:4_JmZV0_x8IIj-uWn8-Myo6Kte4hVDL0uKunFSrFbmIrjP4K72Onq6cXcoA7Nyw2g
-    z1W6f4FqWPMcgSevw>
-X-ME-Received: <xmr:4_JmZcrg3_iIOZ2_wkdcSCerBySAM0bOA-fe-gPP6mTveyMgtmiXf2AGd2--M6jpWqYLKwoA-vIdSde_hyfueLsEsRNbMU6311bZhFhdZ0iHCRph>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudeigedgudduiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
-    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
-    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeige
-    ekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:4_JmZSmeY8YtzERQUdayBmbhJ3fQfWamotI79Oo2r4FTjr7E0IV83w>
-    <xmx:4_JmZc3xkpBNFryY4V-oj3yfB7ocRoHpmTh0SGmexPiAhwuzvV1mPA>
-    <xmx:4_JmZZu-scPYJhHMRg9rFz_RjESzTl1qBaSzleSzxiZp6NYsNArRHQ>
-    <xmx:4_JmZR-N-DzXAQ9V7_myG1nC8inUQysaEbDeX7Bl1YFkvbRfdVx_eg>
+	:x-sasl-enc; s=fm1; t=1701252802; x=1701339202; bh=2yEUanXJpFiUa
+	NtujmRfLRzNBSG+eHkTHBtC00kVQuU=; b=iwGiCnxS6vLgSGzh87+jaX29XucA+
+	WbwreGimWWVNsiP78WPfBbRORDkIjC6B8zkWYmEB7yPPWNvIlIIjwpSzbUSuUslC
+	vsuOQFLTBZ1GZao2BYgTsTlHpakmIySP76EMVUwLW4nwXX7UnNqDsm49UCEEfDGE
+	Kjv7dfO/Bra+ZL74O/CqXVWgt5YjmCjmeb5U8dPwyNcleRVXJyiK+wYrzSdoPO8+
+	BzU+DGmQQ2jctgAAaj1eZHeemiyD8j9pTTcEtwuxEO05k/ik1fma2ZiEMS5h/NCk
+	5mergTiCFxWxcoW+aCrTm6oktE8jNbBP1oD1OwLUmtmRz/D1xuIaOQcQA==
+X-ME-Sender: <xms:wg5nZY1vfNKD22xCoCXdNfLvsNqe0yS8PhN92ALyYVNLQQcqcVN01Q>
+    <xme:wg5nZTFJJs8e7QVEO9nmZLkJ_ZqcNzt2UyMD2Ixp7M_61IA1cwioFsHG9JUmB09nm
+    YO2WR-pMoCjmApeww>
+X-ME-Received: <xmr:wg5nZQ6Im4d97QB_s4x3_mppVwfNjeCl4vthfgeceF_ujdQjceCQliYFaimvcvHdWtoBDBRUBgoXcXhM-5X-pvSG4BzDE8tNvslHds7vcGJ0mDFW>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudeihedgudduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:wg5nZR3uQE9JpwyBqqyT2TiHsNO5YgYbkYm1YbBNPWst4PVizDEJ7g>
+    <xmx:wg5nZbE0k_n0cSE4zaoWlf0ZXtuqXyThKV8H7qAmVcGG2bLTPqpEzg>
+    <xmx:wg5nZa8RFxeE0Qm-4WlmkhVJIlfymqnZx_Lbgg9AjRIwTbZ3AmO_vg>
+    <xmx:wg5nZRPAyhO5potl2sgbc0XpcUgRkeUd0VB94u1AJva-ma_5eziflw>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 29 Nov 2023 03:14:27 -0500 (EST)
+ 29 Nov 2023 05:13:21 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c18b7d75 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 29 Nov 2023 08:13:16 +0000 (UTC)
-Date: Wed, 29 Nov 2023 09:14:24 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 0e19bc8b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 29 Nov 2023 10:12:09 +0000 (UTC)
+Date: Wed, 29 Nov 2023 11:13:18 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: hanwenn@gmail.com
-Subject: [PATCH 4/4] bisect: consistently write BISECT_EXPECTED_REV via the
- refdb
-Message-ID: <c7ab26fb7e9e24b12b83dc26fbc17ff4d96e206c.1701243201.git.ps@pks.im>
-References: <cover.1701243201.git.ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: Adam Majer <adamm@zombino.com>, git@vger.kernel.org
+Subject: Re: [PATCH] setup: recognize bare repositories with packed-refs
+Message-ID: <ZWcOvjGPVS_CMUAk@tanuki>
+References: <20231117203253.21143-1-adamm@zombino.com>
+ <20231128142845.11523-1-adamm@zombino.com>
+ <20231128190446.GA10477@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,190 +70,149 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="lEo4YCPgV7HHHxyM"
+	protocol="application/pgp-signature"; boundary="Pt9SxFT0sJ5p7Q/3"
 Content-Disposition: inline
-In-Reply-To: <cover.1701243201.git.ps@pks.im>
+In-Reply-To: <20231128190446.GA10477@coredump.intra.peff.net>
 
 
---lEo4YCPgV7HHHxyM
+--Pt9SxFT0sJ5p7Q/3
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-We're inconsistently writing BISECT_EXPECTED_REV both via the filesystem
-and via the refdb, which violates the newly established rules for how
-special refs must be treated. This works alright in practice with the
-reffiles reference backend, but will cause bugs once we gain additional
-backends.
+On Tue, Nov 28, 2023 at 02:04:46PM -0500, Jeff King wrote:
+> On Tue, Nov 28, 2023 at 03:28:45PM +0100, Adam Majer wrote:
+>=20
+> > In a garbage collected bare git repository, the refs/ subdirectory is
+> > empty.  In use-cases when such a repository is directly added into
+> > another repository, it no longer is detected as valid. Git doesn't
+> > preserve empty paths so refs/ subdirectory is not present. Simply
+> > creating an empty refs/ subdirectory fixes this problem.
+>=20
+> I understand your use case, but I still have a vague feeling that this
+> is bending some assumptions in a way that may create problems or
+> confusion later. In particular:
+>=20
+> > Looking more carefully, there are two backends to handle various refs in
+> > git -- the files backend that uses refs/ subdirectory and the
+> > packed-refs backend that uses packed-refs file. If references are not
+> > found in refs/ subdirectory (or directory doesn't exist), the
+> > packed-refs directory will be consulted. Garbage collected repository
+> > will have all its references in packed-refs file.
+>=20
+> This second paragraph doesn't seem totally accurate to me. There are not
+> really two backends that Git can use. For production use, there is just
+> one, the "files" backend, which happens to also use packed-refs under
+> the hood (and a convenient way for the code to structure this was a
+> subordinate backend). But it has never been possible to have a repo that
+> just uses packed-refs.
+>=20
+> There is also the experimental reftable, of course. And there we have
+> not yet loosened is_git_directory(), and it has to create an unused
+> "refs/" directory (there has been some discussion about allowing it to
+> be an empty file, though no patches have been merged).
 
-Fix this issue and consistently write BISECT_EXPECTED_REV via the refdb
-so that it is no longer a special ref.
+As I'm currently working on the reftable backend this thought has also
+crossed my mind. The reftable backend doesn't only create "refs/", but
+it also creates "HEAD" with contents "ref: refs/heads/.invalid" so that
+Git commands recognize the Git directory properly. Longer-term I would
+really love to see us doing a better job of detecting Git repositories
+so that we don't have to carry this legacy baggage around.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- bisect.c                    | 25 ++++---------------------
- builtin/bisect.c            |  8 ++------
- refs.c                      |  2 +-
- t/t6030-bisect-porcelain.sh |  2 +-
- 4 files changed, 8 insertions(+), 29 deletions(-)
+I can see different ways for how to do this:
 
-diff --git a/bisect.c b/bisect.c
-index 1be8e0a271..985b96ed13 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -471,7 +471,6 @@ static int read_bisect_refs(void)
- }
-=20
- static GIT_PATH_FUNC(git_path_bisect_names, "BISECT_NAMES")
--static GIT_PATH_FUNC(git_path_bisect_expected_rev, "BISECT_EXPECTED_REV")
- static GIT_PATH_FUNC(git_path_bisect_ancestors_ok, "BISECT_ANCESTORS_OK")
- static GIT_PATH_FUNC(git_path_bisect_run, "BISECT_RUN")
- static GIT_PATH_FUNC(git_path_bisect_start, "BISECT_START")
-@@ -707,26 +706,10 @@ static enum bisect_error error_if_skipped_commits(str=
-uct commit_list *tried,
-=20
- static int is_expected_rev(const struct object_id *oid)
- {
--	const char *filename =3D git_path_bisect_expected_rev();
--	struct stat st;
--	struct strbuf str =3D STRBUF_INIT;
--	FILE *fp;
--	int res =3D 0;
--
--	if (stat(filename, &st) || !S_ISREG(st.st_mode))
-+	struct object_id expected_oid;
-+	if (read_ref("BISECT_EXPECTED_REV", &expected_oid))
- 		return 0;
--
--	fp =3D fopen_or_warn(filename, "r");
--	if (!fp)
--		return 0;
--
--	if (strbuf_getline_lf(&str, fp) !=3D EOF)
--		res =3D !strcmp(str.buf, oid_to_hex(oid));
--
--	strbuf_release(&str);
--	fclose(fp);
--
--	return res;
-+	return oideq(oid, &expected_oid);
- }
-=20
- enum bisect_error bisect_checkout(const struct object_id *bisect_rev,
-@@ -1185,10 +1168,10 @@ int bisect_clean_state(void)
- 	struct string_list refs_for_removal =3D STRING_LIST_INIT_NODUP;
- 	for_each_ref_in("refs/bisect", mark_for_removal, (void *) &refs_for_remov=
-al);
- 	string_list_append(&refs_for_removal, xstrdup("BISECT_HEAD"));
-+	string_list_append(&refs_for_removal, xstrdup("BISECT_EXPECTED_REV"));
- 	result =3D delete_refs("bisect: remove", &refs_for_removal, REF_NO_DEREF);
- 	refs_for_removal.strdup_strings =3D 1;
- 	string_list_clear(&refs_for_removal, 0);
--	unlink_or_warn(git_path_bisect_expected_rev());
- 	unlink_or_warn(git_path_bisect_ancestors_ok());
- 	unlink_or_warn(git_path_bisect_log());
- 	unlink_or_warn(git_path_bisect_names());
-diff --git a/builtin/bisect.c b/builtin/bisect.c
-index 35938b05fd..4e2c43daf5 100644
---- a/builtin/bisect.c
-+++ b/builtin/bisect.c
-@@ -17,7 +17,6 @@
- #include "revision.h"
-=20
- static GIT_PATH_FUNC(git_path_bisect_terms, "BISECT_TERMS")
--static GIT_PATH_FUNC(git_path_bisect_expected_rev, "BISECT_EXPECTED_REV")
- static GIT_PATH_FUNC(git_path_bisect_ancestors_ok, "BISECT_ANCESTORS_OK")
- static GIT_PATH_FUNC(git_path_bisect_start, "BISECT_START")
- static GIT_PATH_FUNC(git_path_bisect_log, "BISECT_LOG")
-@@ -921,7 +920,6 @@ static enum bisect_error bisect_state(struct bisect_ter=
-ms *terms, int argc,
- 	const char *state;
- 	int i, verify_expected =3D 1;
- 	struct object_id oid, expected;
--	struct strbuf buf =3D STRBUF_INIT;
- 	struct oid_array revs =3D OID_ARRAY_INIT;
-=20
- 	if (!argc)
-@@ -976,10 +974,8 @@ static enum bisect_error bisect_state(struct bisect_te=
-rms *terms, int argc,
- 		oid_array_append(&revs, &commit->object.oid);
- 	}
-=20
--	if (strbuf_read_file(&buf, git_path_bisect_expected_rev(), 0) < the_hash_=
-algo->hexsz ||
--	    get_oid_hex(buf.buf, &expected) < 0)
-+	if (read_ref("BISECT_EXPECTED_REV", &expected))
- 		verify_expected =3D 0; /* Ignore invalid file contents */
--	strbuf_release(&buf);
-=20
- 	for (i =3D 0; i < revs.nr; i++) {
- 		if (bisect_write(state, oid_to_hex(&revs.oid[i]), terms, 0)) {
-@@ -988,7 +984,7 @@ static enum bisect_error bisect_state(struct bisect_ter=
-ms *terms, int argc,
- 		}
- 		if (verify_expected && !oideq(&revs.oid[i], &expected)) {
- 			unlink_or_warn(git_path_bisect_ancestors_ok());
--			unlink_or_warn(git_path_bisect_expected_rev());
-+			delete_ref(NULL, "BISECT_EXPECTED_REV", NULL, REF_NO_DEREF);
- 			verify_expected =3D 0;
- 		}
- 	}
-diff --git a/refs.c b/refs.c
-index 2d39d3fe80..0290bb0c67 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1845,6 +1845,7 @@ static int is_special_ref(const char *refname)
- 	 * There are some exceptions that you might expect to see on this list
- 	 * but which are handled exclusively via the reference backend:
- 	 *
-+	 * - BISECT_EXPECTED_REV
- 	 * - CHERRY_PICK_HEAD
- 	 * - HEAD
- 	 * - ORIG_HEAD
-@@ -1855,7 +1856,6 @@ static int is_special_ref(const char *refname)
- 	 */
- 	const char * const special_refs[] =3D {
- 		"AUTO_MERGE",
--		"BISECT_EXPECTED_REV",
- 		"FETCH_HEAD",
- 		"MERGE_AUTOSTASH",
- 		"MERGE_HEAD",
-diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index 2a5b7d8379..792c1504bc 100755
---- a/t/t6030-bisect-porcelain.sh
-+++ b/t/t6030-bisect-porcelain.sh
-@@ -1176,7 +1176,7 @@ test_expect_success 'git bisect reset cleans bisectio=
-n state properly' '
- 	git bisect bad $HASH4 &&
- 	git bisect reset &&
- 	test -z "$(git for-each-ref "refs/bisect/*")" &&
--	test_path_is_missing ".git/BISECT_EXPECTED_REV" &&
-+	test_ref_missing BISECT_EXPECTED_REV &&
- 	test_path_is_missing ".git/BISECT_ANCESTORS_OK" &&
- 	test_path_is_missing ".git/BISECT_LOG" &&
- 	test_path_is_missing ".git/BISECT_RUN" &&
---=20
-2.43.0
+    - Either we iterate through all known reference backends, asking
+      each of them whether they recognize the directory as something
+      they understand.
 
+    - Or we start parsing the gitconfig of the repository so that we can
+      learn about which reference backend to expect, and then ask that
+      specific backend whether it thinks that the directory indeed looks
+      like something it can handle.
 
---lEo4YCPgV7HHHxyM
+I'd personally prefer the latter, but I'm not sure whether we really
+want to try and parse any file that happens to be called "config".
+
+> So with regards to the loosening in your patch, my questions would be:
+>=20
+>   - if we are going to change the rules for repository detection, is
+>     this where we want to end up? We haven't changed them (yet) for
+>     reftables. If we are going to do so, should we have a scheme that
+>     will work for that transition, too? The "refs is an empty file"
+>     scheme would fix your use case, too (though see below).
+>=20
+>   - is the rest of Git ready to handle a missing "refs/" directory? It
+>     looks like making a ref will auto-create it (since we may have to
+>     make refs/foo/bar/... anyway).
+>=20
+>   - what about other implementations? Your embedded repos will
+>     presumably not work with libgit2, jgit, etc, until they also get
+>     similar patches.
+>=20
+>   - what about empty repositories? In that case there will be no "refs/"
+>     file and no "packed-refs" file (such a repository is less likely, of
+>     course, but it may contain objects but no refs, or the point may be
+>     to have an empty repo as a test vector). Likewise, it is possible
+>     for a repository to have an empty "objects" directory (even with a
+>     non-empty refs directory, if there are only symrefs), and your patch
+>     doesn't address that.
+
+Just throwing this out there, but we could use this as an excuse to
+introduce "extensions.refFormat". If it's explicitly configured to be
+"reffiles" then we accept repositories even if they don't have the
+"refs/" directory or a "packed-refs" file. This would still require work
+in alternative implementations of Git, but this work will need to happen
+anyway when the reftable backend lands.
+
+I'd personally love for this extension to be introduced before I'm
+sending the reftable backend upstream so that we can have discussions
+around it beforehand.
+
+Patrick
+
+> > To allow the use-case when packed-refs is the only source of refs and
+> > refs/ subdirectory is simply not present, augment 'is_git_directory()'
+> > setup function to look for packed-refs file as an alternative to refs/
+> > subdirectory.
+>=20
+> Getting back to your use case, I'd suggest one of:
+>=20
+>   - do the usual "touch refs/.gitignore" trick to explicitly track the
+>     empty directory. It looks like the ref code will ignore this (we
+>     don't allow ref names to start with "." in a path component)
+>=20
+>   - whatever is consuming the embedded repos could "mkdir -p refs
+>     objects" as needed. This is a minor pain, but I think in the long
+>     term we are moving to a world where you have to explicitly do
+>     "GIT_DIR=3D$PWD/embedded.git" to access an embedded bare repo. So
+>     they're already special and require some setup; adding an extra step
+>     may not be so bad.
+>=20
+> Now it may be that neither of those solutions is acceptable for various
+> reasons. But it is probably worth detailing those reasons in your commit
+> message.
+>=20
+> -Peff
+>=20
+
+--Pt9SxFT0sJ5p7Q/3
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVm8uAACgkQVbJhu7ck
-PpTjzQ/+OuTkCE2PyxIQb2a3bSQicsam+d0zqGAmMp/e1OfJ0W3LM6AD14kgQqt7
-dEo6Cl1opL7kG3oEcmcbcGNW/jELqlarHV0jai/UH3p+jvnMMXRdEbVvbgIs/NLG
-ObgKkQmHvDPlqN+rGbQquZ77i8su34ME9MsqZrq+wmyGpP9vPfMmK4PGNSCR+t+s
-B/v0Ppet8dV8uk3GYJ0ySg8viu3jKQdZ8itYTdA+oPyGU1LNZD83JY/uTh1hEwNI
-M0M5Yqe2JsyNF7w8S4W1dQ6g/QHmsjMLk4O7ShmameCI2tP9wya6qQCZ8W+Id+Zu
-a4/ikcB0AUjwWKOX9YlMnhIlmaJ8Ibjzo5rX+KiQ6WbyyJBlOQf7c7JdeDTMh6iA
-wZwu7XWYlUQ73j0H42/TefF6x7WRJmElEUnQGrzjxHxZBcH38gTqj9QFnYdLVhQ5
-1oLvHvPY3EPFXG2C7z/0kID9waDmxGo5z4qnxSNDFMv8AtlWrGQMlW/pSFg90Svz
-tiUPSaJMFtVJZDljUiK54si3zqeIbcZcitLebME20M+E1bvZObH9TWW0c5H0a8Zz
-fmEXEqtH8yCD7De4DfrNNpdOmhB4+RnnkRU3Xs+RwJX3z8Pz230/t2ggLe6mmHhq
-lAEP1bdMNni7IFBpJu0UGxnWnA8jhlH4P8MHrI6cyE9kANW7wJU=
-=YwHI
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVnDr0ACgkQVbJhu7ck
+PpTJUA//fQLHQoPtC3VfmBb01o4NIErqqTGXPtnw7QlplZCzmKzvC/a+9xxuGuCi
+qOdeQc6fIOIt4Rju68jJ6HjvRDJOQGMBiOINMlU+o8W+XXEExoV8Kp5m+Ed4UBB3
+RmvcOixH5IjNv2pAiido9O9cxdEpuBGFUh/QtgHRpNUKsnkFB1ElOvuECBRP6S54
+VLMI7wBoeGCDBzu7R12FYlHwyU9h6aCISwNg2GpLxb62EDlHTdYmWAA/wQuOm0lb
+AOmtc6bmRJi7Hl/YiHFOe+zq/GU51aR1Djydjnk7P6f8KzByAVclBKOZf3IyJ0ei
+2hVTzDAFo3HmYUDNEZ64p+LWDFFdgi2p+OeoeFA/sxWH6c6CG87ohvHr+jvN11OO
+wkOoCMqCTsf6Byi/For5tUD2lKuE3JUqcX+lZThD49myxjSv3o58DMehLK39WW0a
+mwiKN3yw8VAOdPJ+g6yC764GfbI/3Ij43y3rwYv6pyArM4wh7vWmK1IcGYSxQHik
+ZVLT8wyuytyKwIaF3Y4xlRRwTCAqPxavz6BcSADbN9kb8he2px6BlYOG7D66niS6
+Hh6ZEeT5Kd2qOVvkS8TqJjFT4xB9UXBtPsueGkFBI+N7DGCp7cvwziK5yYt1bd0J
+OFktRjt0Shu7kRu4nZ25PSRED5oN8x3iOccBWWgP5H9IaWi6wAE=
+=xGsA
 -----END PGP SIGNATURE-----
 
---lEo4YCPgV7HHHxyM--
+--Pt9SxFT0sJ5p7Q/3--
