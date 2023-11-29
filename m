@@ -1,50 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="WbC67N3N"
-Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1ABEEA3
-	for <git@vger.kernel.org>; Wed, 29 Nov 2023 14:19:16 -0800 (PST)
-Received: by mail-qt1-x833.google.com with SMTP id d75a77b69052e-423b8a41061so1438061cf.3
-        for <git@vger.kernel.org>; Wed, 29 Nov 2023 14:19:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="US4upZGs"
+Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBEE810D3
+	for <git@vger.kernel.org>; Wed, 29 Nov 2023 14:26:12 -0800 (PST)
+Received: by mail-qt1-x82c.google.com with SMTP id d75a77b69052e-423ed5fb48eso1829701cf.3
+        for <git@vger.kernel.org>; Wed, 29 Nov 2023 14:26:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1701296355; x=1701901155; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1701296772; x=1701901572; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=iGjAwR4fJj9QL9dYgK4lHr0+Yen7QVlNESFlO30/VsM=;
-        b=WbC67N3N1ZMD55b7+m07hjoFmqjuS2tcNbVyq5ww28ei0jVKhQ6PqAI4/kUHwPM7E0
-         QrSlsrp85YI1jAmMwMKlQ+o29lrbmhIX4yyErKkOlmXdhUHP66zcxDNthERCRmaOf6dr
-         JbSCMGrhL6yXrGBxaGFkw42LJK3oeLvaH461J91laRBWOJWO4LI+AVkohvozYmMim6Ms
-         /lgyY4iyMPJHtu/7Xk8PBYrjqD4/YLuLN+xbM02obumUuNKOG3HYkNYqfieeTdCNMvke
-         59ul873Eu5QW/cLZ8A3u1qHuM93pHYKWVA4OU7pTdwnU17NGpmrYcMVb/O2NEAL01zMY
-         bVDg==
+        bh=D0EYf4fjEqMMccSL0nMmZcgqOWSLRknOKS8efDIBJ0E=;
+        b=US4upZGs9ACfpFPjJOavBe2fNdwlpmsNAZuvS7Zx2ywsvDYUVBB/GE96Ok7z/lzGvH
+         3EIl5gDHCzCMhB9AGE/Jwc/dWgdO+GxQhjl4aYkJnbbAd13LgUgKTb2tQb+Bzo1abd4Q
+         NVDOrIVGoEjGF/DKi25XX7UncXBB7gH09+JY0Gr2/ekLYrqAc8FdDhnIi9Hma0zLI42V
+         hn3IAOt5tgXEmIqO88xYusGrV9z32FzFRkpaV8M7Vcmgc4rvUvNopFbd2ypCvNDbX+Ug
+         jSCp+3GZl+6VNyiEbVybOPNRFA+RCNW4oltgClpTkP9UCdgmVFD+x1RaFueuoT2VmYcq
+         DXhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701296355; x=1701901155;
+        d=1e100.net; s=20230601; t=1701296772; x=1701901572;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=iGjAwR4fJj9QL9dYgK4lHr0+Yen7QVlNESFlO30/VsM=;
-        b=bH9M4EKmdx3T9Rlmh3vV+dHFdhOL3ha41z6GESOrXp+TxawMhLGl4tfuDStlH5pi2D
-         jKwTV7ZJ+I4E77LnUVgEhPPpmyRdBy7vp7Ra8jmq8DbNujKN8n2A6JzanJz46DMx6YVR
-         NLg/f7l47KMiVHyEfdFpfNCYY0S1WT7nmlfI1Ko389JqLK8fGnUHopeEgGcAUgmCTuwU
-         wmVXCOeesddh5gcb1CIm+O6iyz5JK8rK9/U/eEQxRthlV5eHUgmktQZVvzwj9tqXU86j
-         ijO3mcBhYWV9IaGbmdtPCqbJ9+zn0+wzuKE/kVOZSV5tGdAYadJS1oIryY55Rim87nut
-         WCZQ==
-X-Gm-Message-State: AOJu0YzkMur+LKHg7w+sYni3fkx7w5o3Y/Ee78tOY4BIcKV47Vm8qh7r
-	8ZOJvth7i+W7W84Yc/NT88cCXGmXd8TmNue+pg8=
-X-Google-Smtp-Source: AGHT+IFCzNoZmu7BPaMvktLKXC5DOr32ob5FRc1pYhG/Frka6FybdtTqbFkUOkDostp1s7ZsofF9kA==
-X-Received: by 2002:ac8:5307:0:b0:423:a6dc:f964 with SMTP id t7-20020ac85307000000b00423a6dcf964mr14550061qtn.28.1701296355213;
-        Wed, 29 Nov 2023 14:19:15 -0800 (PST)
+        bh=D0EYf4fjEqMMccSL0nMmZcgqOWSLRknOKS8efDIBJ0E=;
+        b=wX7FC6eMBVgxrgjAfAjZ7jFNrUkoytZyStWsUSldtL8sAQkt1Ui2WFMFVKB5zHRUFZ
+         NW7jn6tK+dUto29mBsEn9z3mAPMu4Dj3OWjseDZjCXox34paUIcBDfpbe8EUHDlekTsC
+         oZ6LPLaB3ZOEUnj/8oNnCZoGdeT650M8MEJJDpi5g+y20M230Abkfpa5QmfQUXZNqvbT
+         UyMQH61wDOL8wuSmU/RKiRcRhiwbkcMVB5TBxIrxLpd6cQvkW8kXHBpU0wbsEofhGwP2
+         80CmuDeeIOqfN+uJ2CpyuVVsJjeystmlvsUszMdq8Gn1GYjVgp+EeQc58L0YaHr2LYAH
+         ZGaQ==
+X-Gm-Message-State: AOJu0YyVxO56Sqh9kMjoHa5HPaysHh5T25E85cVh3y0kvv/yAybdVWny
+	TY5Fw2v5zRbqUtJNAM1SlS6TuwoAJn92AjDtMMY=
+X-Google-Smtp-Source: AGHT+IGd10TBfO8Pj26r8Qw2TmA2BcPua4vpvvx8uxYLQRgZK/POAvPpduonyY28i+d4re4Q5Jvq1A==
+X-Received: by 2002:ac8:5789:0:b0:421:ba91:f590 with SMTP id v9-20020ac85789000000b00421ba91f590mr24820171qta.1.1701296771901;
+        Wed, 29 Nov 2023 14:26:11 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id e13-20020ac845cd000000b004194c21ee85sm5976478qto.79.2023.11.29.14.19.14
+        by smtp.gmail.com with ESMTPSA id l9-20020ac84589000000b00421c31faf05sm5963722qtn.1.2023.11.29.14.26.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Nov 2023 14:19:14 -0800 (PST)
-Date: Wed, 29 Nov 2023 17:19:14 -0500
+        Wed, 29 Nov 2023 14:26:11 -0800 (PST)
+Date: Wed, 29 Nov 2023 17:26:10 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 01/10] t0410: mark tests to require the reffiles backend
-Message-ID: <ZWe44hBxBCX50TIs@nand.local>
+Subject: Re: [PATCH 09/10] t5551: stop writing packed-refs directly
+Message-ID: <ZWe6goJHliFZrOAZ@nand.local>
 References: <cover.1701242407.git.ps@pks.im>
- <53c6348035360912a9d720448dceb17895703da2.1701242407.git.ps@pks.im>
+ <2ab24ea5633be6b4855567d126a184d54c624f62.1701242407.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -53,36 +53,41 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <53c6348035360912a9d720448dceb17895703da2.1701242407.git.ps@pks.im>
+In-Reply-To: <2ab24ea5633be6b4855567d126a184d54c624f62.1701242407.git.ps@pks.im>
 
-On Wed, Nov 29, 2023 at 08:24:40AM +0100, Patrick Steinhardt wrote:
-> Two of our tests in t0410 verify whether partial clones end up with the
-> correct repository format version and extensions. These checks require
-> the reffiles backend because every other backend would by necessity bump
-> the repository format version to be at least 1.
+On Wed, Nov 29, 2023 at 08:25:14AM +0100, Patrick Steinhardt wrote:
+> We have multiple tests in t5551 that write thousands of tags. To do so
+> efficiently we generate the tags by writing the `packed-refs` file
+> directly, which of course assumes that the reference database is backed
+> by the files backend.
 >
-> Mark the tests accordingly.
+> Refactor the code to instead use a single `git update-ref --stdin`
+> command to write the tags. While the on-disk end result is not the same
+> as we now have a bunch of loose refs instead of a single packed-refs
+> file, the distinction shouldn't really matter for any of the tests that
+> use this helper.
 >
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  t/t0410-partial-clone.sh | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>  t/t5551-http-fetch-smart.sh | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 >
-> diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
-> index 5b7bee888d..6b6424b3df 100755
-> --- a/t/t0410-partial-clone.sh
-> +++ b/t/t0410-partial-clone.sh
-> @@ -49,7 +49,7 @@ test_expect_success 'convert shallow clone to partial clone' '
->  	test_cmp_config -C client 1 core.repositoryformatversion
->  '
+> diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
+> index 8a41adf1e1..e069737b80 100755
+> --- a/t/t5551-http-fetch-smart.sh
+> +++ b/t/t5551-http-fetch-smart.sh
+> @@ -359,7 +359,9 @@ create_tags () {
 >
-> -test_expect_success SHA1 'convert to partial clone with noop extension' '
-> +test_expect_success SHA1,REFFILES 'convert to partial clone with noop extension' '
+>  	# now assign tags to all the dangling commits we created above
+>  	tag=$(perl -e "print \"bla\" x 30") &&
+> -	sed -e "s|^:\([^ ]*\) \(.*\)$|\2 refs/tags/$tag-\1|" <marks >>packed-refs
+> +	sed -e "s|^:\([^ ]*\) \(.*\)$|create refs/tags/$tag-\1 \2|" <marks >input &&
+> +	git update-ref --stdin <input &&
+> +	rm input
 
-I thought for a second that the SHA1 prerequisite would cover this
-already, but that's not right since you can be in SHA1 mode even if your
-repositoryformatversion is 1. So this change makes sense to me and is
-well-reasoned.
+Same note here as in the previous patch, although here I think we'd
+prefer to pipe from sed to git update-ref directly, rather than writing
+an intermediate file which we have to clean up afterwords.
 
 Thanks,
 Taylor
