@@ -1,63 +1,65 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BYX5S+CA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HpiwY35z"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="o8B5hg8F";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GsnrRv/u"
 Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F49A172E
-	for <git@vger.kernel.org>; Wed, 29 Nov 2023 00:14:13 -0800 (PST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAF8710F0
+	for <git@vger.kernel.org>; Wed, 29 Nov 2023 00:14:15 -0800 (PST)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.nyi.internal (Postfix) with ESMTP id 75EB95C0213;
-	Wed, 29 Nov 2023 03:14:12 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Wed, 29 Nov 2023 03:14:12 -0500
+	by mailout.nyi.internal (Postfix) with ESMTP id 14CE05C0213;
+	Wed, 29 Nov 2023 03:14:15 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute3.internal (MEProxy); Wed, 29 Nov 2023 03:14:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:sender:subject:subject:to:to;
-	 s=fm1; t=1701245652; x=1701332052; bh=Pn/SlI4zTXS1A7eosTrDqlte7
-	bieOnW83fkgMdhNQ5k=; b=BYX5S+CAA8bkk9+GviplBLZd/VDi6W02rw0KXj1NY
-	etPfMOMvhDOwMVegObrrMiICVtdIo73CdenIFKREOG5meq56t3Cnc1HC7J4I8WnM
-	NQ+0Czn1ipECuK5mdFMJXFhFRzGCFY2Chvq6X8VuMBS6Cup+FBYOBqwChsZQgGj9
-	JEgVWHnFa7sRr9+UiMmQVgwDFI5JLJCOymt3Cba4wMf3W3PQrxkQsr71jN67ipHT
-	MskNMXeYYLR+lzcqQRqFG7GQKR+WfSnt2CygJkzT3s4tNWbT1Gwp7+Ar8XasShy/
-	+W8bcGU48ViuBgRF9WW+RESs/EuOuvyupeUGxgy1/jWvg==
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to; s=fm1; t=1701245655; x=1701332055; bh=ch
+	3hBqL0Mdl1re3JnoFPKO1kmtlhgH4hk5aGF8olVnY=; b=o8B5hg8Fpd5UzIPwMQ
+	BFkbDhrmnf1B4E5TtCIXwtkeNW2Xr9+OdjTs70WqoQqHftwOcmStLPp97OLAmfzM
+	dHEJGjaVbkZr7GmHKiiGw2ZFguEJN18b4YlwfQrkcyb0jsEst79j6COXsD9yRqkA
+	WOJggFFkQJJj0UJfqn4VvJ9uBPvZHjPLrNYVjnQae0i5ZFAtwfGMWQA2kTLa5dAs
+	cC5BRrezrl/aDJlabtVC7jlFk/MCL0hULW8wSxPFRFNfl6yByvxEyH2pNmmXw8t4
+	74NxD3VnxZYkZBpCS+S90fKn9GsrKI3UXZFbWsCbINAmePxmUJvsk6vKN7AUmPKz
+	N7vw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:sender:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1701245652; x=1701332052; bh=Pn/SlI4zTXS1A7eosTrDqlte7bieOnW83fk
-	gMdhNQ5k=; b=HpiwY35zW/ezs9bWSh6eFhB6yx1MfOQ2WDY3vqfoRh6pWJHnpeA
-	Iqd04pPXdyTZWHvC7mkX1FS0Tx7vdmpLhgLprsibEq+fLl1Mx9CnHyezEoko78Sy
-	PUrTU72pogCb0f+gZ4zK6TdjUzM3fU3reRNcBRe+OFZucSi6/7zmV6kvC2B5pUgr
-	oahtT7zJxoA2kgipKXe66sUzGcT/4dXKuyu0EUvraaoyy6V1vQLYk+liU3Yp7v8n
-	InSPuhTFGAkxYtr/sIgher+rWkJ5Oz0hLArgyvFcJuVj98kViD+WACCQAC119Ypj
-	ivfqLHMR1nZS7CR33CW+CB6BdgmRhoPpLPQ==
-X-ME-Sender: <xms:1PJmZc3m1sYLVF5bA2zPTiL49nINgF-VjgD2A9u9gsAS1qkqhs_wGA>
-    <xme:1PJmZXGPzo8LI22kLZrYcBaLyJeGz5G71Dry1V3siQsE1OMmga4ZR16iyTdaEG5Rf
-    sw20vfZ9tFVCm9yqA>
-X-ME-Received: <xmr:1PJmZU7xXgFn0Yf3z4r5Ocl_PG5RXCQPNmiSxFoRVF9WFiGK79tQO3b86Jn3OUcPcnkj11JREkzYx3xI6MEAHnDM5Vi-pVO--GlzXAssW_yHBep8>
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm1; t=1701245655; x=1701332055; bh=ch3hBqL0Mdl1r
+	e3JnoFPKO1kmtlhgH4hk5aGF8olVnY=; b=GsnrRv/uIgky+u7+D7XUy7FtesbDV
+	Mfn5vEjbMhfB2aJUK3o0r9UMLeWezDKKmY2L4RZ8mnOs2VgdmkQleT3yXHiRahye
+	8RtparAkTwsU15rwoqPJGxwbJCcy6eJgLZoQx4PEOpvTfrQ1d83QXq/Yeskt7aNo
+	SMkk57wwkLOLM5UGhDqd+bU3kZcA+jHIuJoTD2+e/xaJii6uv+ATzWhIdf1GeH1z
+	5S+SaJAD0UqX3hazXkH8+CHMtaR8dLWIlrA+UxWJDL3rV0g1XhBElaMhwyiqMKqJ
+	2a52o7sedjHf5LMz/T6HASdUjFKcajpdAQLQg/xpm2zysISaqTd+kwL8g==
+X-ME-Sender: <xms:1vJmZVuqJgyyMi7GSpXuzqxkbSoSDrygxep2u9IDvpWl_OAHQLeqlA>
+    <xme:1vJmZedmXie23seEr_EcxM7GcJZGq5pFIasmvpBl00_uD7ZaDJCI1RqODCQRN-7IU
+    2S6P61rJP2ut-D9lw>
+X-ME-Received: <xmr:1vJmZYyy-bm3THLbv-r1ptZohRin3t9LgwVcV3tLyxcklxbCIMhYVs1VwzQPiSl3Qu6_8fUhpHFTCFT3tjNwSui2LRda6M_mtmTbBrta0e2yMut2>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudeigedgudduiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkgggtugesghdtre
-    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepuefguedtueeiheetleevgedujeekjeehle
-    ejjefhhffghfevgfekueekjedtieejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:1PJmZV0-BD89MdOXSTJCEeGAAIBWRl2ZQF3k8parKwdhCnz3xQ2UyA>
-    <xmx:1PJmZfHf1QQ0sTiqQvjXk7nIHvDFjfTRwhn7lLrmtyBHiaHt3TMi3Q>
-    <xmx:1PJmZe97VScMc-Z9Ksl28tHOlzIXXPzVFMyQfL8OIxAlgFIWJrVWqQ>
-    <xmx:1PJmZSOqr5_RiYLoFLafo1Bp-KQRwb7XHtoh0izsKDAx4SlsQSjv7A>
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
+    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
+    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeige
+    ekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:1vJmZcM5rstsPSAau4mOmB9lAex8mkWRfUeJ5bNd3kh7CC1lq2d8Zw>
+    <xmx:1vJmZV-OG9eJJBl7Psyc_AshSQMa1fECAe2s2LgsjziBz63AbXK7oA>
+    <xmx:1vJmZcWUH3uwmuZMl66bVn6WFzFtKb16YOJ697llmPftWZbO9aSqfA>
+    <xmx:1_JmZSEVnvmJV5-vtOIZSVbqJ9s6rfHsaWxiDeKKfjk5McJtK6feGg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 29 Nov 2023 03:14:11 -0500 (EST)
+ 29 Nov 2023 03:14:14 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 53f5895f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 29 Nov 2023 08:12:59 +0000 (UTC)
-Date: Wed, 29 Nov 2023 09:14:07 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id d3fd99be (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 29 Nov 2023 08:13:03 +0000 (UTC)
+Date: Wed, 29 Nov 2023 09:14:12 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: hanwenn@gmail.com
-Subject: [PATCH 0/4] refs: improve handling of special refs
-Message-ID: <cover.1701243201.git.ps@pks.im>
+Subject: [PATCH 1/4] wt-status: read HEAD and ORIG_HEAD via the refdb
+Message-ID: <35b74eb972eed7e08190e826fabcf6b7a241f285.1701243201.git.ps@pks.im>
+References: <cover.1701243201.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -65,87 +67,105 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="DY5vuTYh2AF+wzzV"
+	protocol="application/pgp-signature"; boundary="gmjbi/CM+gghUbj5"
 Content-Disposition: inline
+In-Reply-To: <cover.1701243201.git.ps@pks.im>
 
 
---DY5vuTYh2AF+wzzV
+--gmjbi/CM+gghUbj5
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+We read both the HEAD and ORIG_HEAD references directly from the
+filesystem in order to figure out whether we're currently splitting a
+commit. If both of the following are true:
 
-there are a bunch of "special" refs in Git that sometimes behave like a
-normal reference and sometimes they don't. These references are written
-to directly via the filesystem without going through the reference
-backend, but the expectation is that those references can then be read
-by things like git-rev-parse(1).
+  - HEAD points to the same object as "rebase-merge/amend".
 
-We do not currently have a single source of truth for what those special
-refs are, and we also don't have clear rules for how they should be
-written to. This works in the context of the files backend, because it
-is able to read back such manually-written loose references just fine.
-But once the reftable backend lands this will stop working.
+  - ORIG_HEAD points to the same object as "rebase-merge/orig-head".
 
-This patch series tries to improve this state by doing two things:
+Then we are currently splitting commits.
 
-    1. We explicitly mark these references as special by introducing a
-       new `is_special_ref()` function. This serves as documentation,
-       but will also cause us to explicitly read all of these special
-       refs via loose files regardless of the actual backend.
+The current code only works by chance because we only have a single
+reference backend implementation. Refactor it to instead read both refs
+via the refdb layer so that we'll also be compatible with alternate
+reference backends.
 
-    2. We document a new rule around writing refs. Namely, normal
-       references are _always_ written via the reference backend,
-       whereas special references are _always_ written directly via the
-       filesystem. This rule is not enforced anywhere, but at least it's
-       now made more explicit.
+Note that we pass `RESOLVE_REF_NO_RECURSE` to `read_ref_full()`. This is
+because we didn't resolve symrefs before either, and in practice none of
+the refs in "rebase-merge/" would be symbolic. We thus don't want to
+resolve symrefs with the new code either to retain the old behaviour.
 
-The last patch fixes one of the instances where we treat a reference
-inconsistently by converting it to a normal reference. We can eventually
-migrate more of the special refs to become normal refs as we deem fit,
-but I consider this to be out of scope for this patch series.
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ wt-status.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-These patches improve compatibility with the new reftable backend.
-
-Patrick
-
-Patrick Steinhardt (4):
-  wt-status: read HEAD and ORIG_HEAD via the refdb
-  refs: propagate errno when reading special refs fails
-  refs: complete list of special refs
-  bisect: consistently write BISECT_EXPECTED_REV via the refdb
-
- bisect.c                    | 25 +++------------
- builtin/bisect.c            |  8 ++---
- refs.c                      | 64 +++++++++++++++++++++++++++++++++++--
- t/t1403-show-ref.sh         |  9 ++++++
- t/t6030-bisect-porcelain.sh |  2 +-
- wt-status.c                 | 17 +++++-----
- 6 files changed, 86 insertions(+), 39 deletions(-)
-
+diff --git a/wt-status.c b/wt-status.c
+index 9f45bf6949..fe9e590b80 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1295,26 +1295,27 @@ static char *read_line_from_git_path(const char *fi=
+lename)
+ static int split_commit_in_progress(struct wt_status *s)
+ {
+ 	int split_in_progress =3D 0;
+-	char *head, *orig_head, *rebase_amend, *rebase_orig_head;
++	struct object_id head_oid, orig_head_oid;
++	char *rebase_amend, *rebase_orig_head;
+=20
+ 	if ((!s->amend && !s->nowarn && !s->workdir_dirty) ||
+ 	    !s->branch || strcmp(s->branch, "HEAD"))
+ 		return 0;
+=20
+-	head =3D read_line_from_git_path("HEAD");
+-	orig_head =3D read_line_from_git_path("ORIG_HEAD");
++	if (read_ref_full("HEAD", RESOLVE_REF_NO_RECURSE, &head_oid, NULL) ||
++	    read_ref_full("ORIG_HEAD", RESOLVE_REF_NO_RECURSE, &orig_head_oid, NU=
+LL))
++		return 0;
++
+ 	rebase_amend =3D read_line_from_git_path("rebase-merge/amend");
+ 	rebase_orig_head =3D read_line_from_git_path("rebase-merge/orig-head");
+=20
+-	if (!head || !orig_head || !rebase_amend || !rebase_orig_head)
++	if (!rebase_amend || !rebase_orig_head)
+ 		; /* fall through, no split in progress */
+ 	else if (!strcmp(rebase_amend, rebase_orig_head))
+-		split_in_progress =3D !!strcmp(head, rebase_amend);
+-	else if (strcmp(orig_head, rebase_orig_head))
++		split_in_progress =3D !!strcmp(oid_to_hex(&head_oid), rebase_amend);
++	else if (strcmp(oid_to_hex(&orig_head_oid), rebase_orig_head))
+ 		split_in_progress =3D 1;
+=20
+-	free(head);
+-	free(orig_head);
+ 	free(rebase_amend);
+ 	free(rebase_orig_head);
+=20
 --=20
 2.43.0
 
 
---DY5vuTYh2AF+wzzV
+--gmjbi/CM+gghUbj5
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVm8s4ACgkQVbJhu7ck
-PpTQ6w/+LHzHtgFThwd8tW+GsIrYFfFUuKdJzISlQmbRx9tOlPPwN2kscCHrN8jw
-dUpEmFxfU/g0sIvCNph0sW8Kjg8w6+LOR9/tOKAxEX4Ufeda/Otc2VbSbTRPmqbn
-pu8MvUTDxik+vueeatEysEYBlYFdCYU0261vcN+gdOPDaP6HqarDNSCfCiJOvgoY
-nCP6zO9NPXJkRRaNWDqJ5v/ukHr8Vo7MSZsNDtcCszYSWfTFgSPcfy7cJ9Huas6n
-BYVrSuwfnqA0Xt78Al5VlHS6T9y2WhiwZWlMyrgNRHj6V8aUaqnOjoY2i5+rM1JO
-81RtHngDwq57rRcB/7QEcqdZRqHe+MZhe62dA92lYyx03cWTf5DnZlouqh/Nv9fn
-eISWdbcNyKiwwfY3/v+O7Ief6cI6pk1xiKNKLcaA3DDOIQZ6lCqKOkj8vXxhA7nO
-zP1F6kdGdERxc2scetk/MbNS3J5bxPszdW7VJ1DjL7X2ixHMm/5u9V9hk9KuT83n
-nnqc/a7L47138Ee0IFKuNlxrWakfQiW7Iz1L+/OAxJHJfBYNzqr6DSKN2taA+IVs
-Z81ojBRmfWYw5RkwYB/QX5/fgzRIF1x5t+P5KtBDzzjLlfyhOgwmKhrs0Wbn2bVY
-gJ1wiSjs+N+wxoovM63t+Eb+XT5ne3mm/1yKhq5kZHeVFBQ10K0=
-=PDyc
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVm8tMACgkQVbJhu7ck
+PpTDxhAApxVymHK1HWgG/5agg/1drv7u/+f7pQLN8+eMIstElcfpNX533FZx3ibb
+1RvVlJ9Z/BtCw+210COdLEzbyNKVAp08ab1ZgjXxJejbGo1SViSRGXxLHAp7Rhar
+fG6NZrNBOTSkRRhypLoOct87xD3lwYNtJMa7T3SIUSHesAKopYcXF3kJxuPiTECl
+qawjwHUCP3tLuV0QVUuLDmAN2qhXo+PM2Ovo/Im4EtojOXnzcsVIJ8jw8UYiTIeP
+aXUfN0d1sL5z81rQej0CZvWHy47KKUFH4f+0bDMOUa4kp7bu8yoICeJTgm/PFWtQ
+1zbmiEbFBJECimD65B4rl7ues8df5c+5hazTRu2AyEXhFK7dYbafdqJ5BCKKQFm0
+lSwIFOXCHCUH8MNBUSteLXjKNf52aB1cA+k03u4I5ZR548N541KFjYIqAp9ZcSHT
+uEmiWpgBlwOax6cXjSYFpaPSBMSPBfnXtgBo7pWaZHLYrLxRJMG1J/JbLJI4rpqU
+lzNSB8jc1PZeBEvepd1G5obVPaTnX594yd6Zd6u8y1aA/D7bEFO0NFfXPQzJf3Z3
+R5A8a7VWNOKBOt3PybKshfkJU5i+1R0lJnOa99e3Q04Tf58WPJHV/Ftw4lGxAZs9
+w6jPNRPSmKP0hzpyoDECVwFnaSl4U3aSGnYEj61AW+u4vGrfsEM=
+=0Lvb
 -----END PGP SIGNATURE-----
 
---DY5vuTYh2AF+wzzV--
+--gmjbi/CM+gghUbj5--
