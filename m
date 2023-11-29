@@ -1,64 +1,64 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="uLnJhr71";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hRtSAQpj"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bKYjLzqt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ama083t1"
 Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A10719B9
-	for <git@vger.kernel.org>; Tue, 28 Nov 2023 23:25:09 -0800 (PST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1440BE1
+	for <git@vger.kernel.org>; Tue, 28 Nov 2023 23:25:13 -0800 (PST)
 Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.nyi.internal (Postfix) with ESMTP id A37425C0207
-	for <git@vger.kernel.org>; Wed, 29 Nov 2023 02:25:08 -0500 (EST)
+	by mailout.nyi.internal (Postfix) with ESMTP id 7AA7D5C01B9
+	for <git@vger.kernel.org>; Wed, 29 Nov 2023 02:25:12 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Wed, 29 Nov 2023 02:25:08 -0500
+  by compute6.internal (MEProxy); Wed, 29 Nov 2023 02:25:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm1; t=1701242708; x=1701329108; bh=kM
-	jHqLZsKZxr51e05oQ5AoedGlLN86blNcbquA8Nx44=; b=uLnJhr71CHstw8G9RF
-	MLjwdk7QhjSWhLIvKmIDmYLzabdOLJLMFQ67F+DBNyjGfB2+eBD4q4pceGqqqYni
-	xZwySb1oP9pls7MoBJbB5emcMdSGGjYrfRtVHEaq4LJ77XhvHUw66ifD0GyaiaGE
-	vPQ+eS67KXnJoxoWD16RDbrfvSH4Sk8bb1U+SlttsBsP7BectvHekH3Mw9+KaHXo
-	W4dsg7JiloGouGvloDWTgnZV+DxajHbZo91hLMP001BIKKMMvPuyNDX1zF+gme3h
-	hkpRwUJOEfuRV8EPowkbOCwGC42CGqRMyxwEdaHH2nc2xcPQy4ult/5MMI8ar2Qi
-	Du+g==
+	:subject:subject:to:to; s=fm1; t=1701242712; x=1701329112; bh=ST
+	9eLU3dEIro+p0zfLW0kvaq9OekSOLgwRm4nuhWibI=; b=bKYjLzqtEL2pXaviqD
+	wsBpjCoEA8919jdncM0J1SVCmy00bNuXekxZWaP/4sPtaLCoUILfrt488GwIhkxp
+	jo5uBfMBi56HvTVj7D72fqRTkToLdEeo2kMLmekg5BbwFuv5CMKC36k00VWzcT/J
+	bmslo5GahLtal/JzcN30u7PcWyrawqg5BuBQz3T0ZT2BfIL96ItJkDZaxti6qGtP
+	/40VC4idI75TxEAd8ey4JW9VPyLxc86sg+LbRZ9BW43FDPeFgcyyLCT5c4zwUZON
+	ir7kPE7ovXhoTR9MjCdyf6H0V1N4NdjYFtM69kxbkBM9eoHz05ahXqNQRO1Aq9bJ
+	dPBw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm1; t=1701242708; x=1701329108; bh=kMjHqLZsKZxr5
-	1e05oQ5AoedGlLN86blNcbquA8Nx44=; b=hRtSAQpjd9Uj/TC8srduwD3akPjLf
-	/erteuI4aN+GlN2uCq/YJRfuTKamCdaDyuGJor/pVYDDRt3Yes1opvRx5HQOzHAv
-	bkMXhvWH3r854YVkHpnd8L8OEbektH0/P34D9sCSh6SZ4OqJO5JaLUPnRvGnqCST
-	9DkN+LkrmKWVvshEd2tdxJOu7XtTrAthQ/9PidDhOXJOCgT3OFiLFThaeK6PGatr
-	WR212sh9atZae2n3WWYRNsX1VmEbI2mUx7AYX0I9L8Z4ReSN9XL8ZSEcMJlConnn
-	cINxvLUXHjGc3JEBihZEmKEcdnVKLKEBcol961Cb4Vutxy9c7nAH2hDug==
-X-ME-Sender: <xms:VOdmZXwqnjN2rQZNGgzxEZ9KwdKjZkIlDZgKiyceylb_qWJ--4cVmA>
-    <xme:VOdmZfSayQ7zyLKe5ZShznkaN8HE7JgCraWC_ZJxhpwCqx9puCYzYFffKqvdOQdi-
-    NF7w8EA63prFAGAEQ>
-X-ME-Received: <xmr:VOdmZRWKXtW8XWjeSepSv_Y5KnGLVTglAq22ZUgUVy7NX70egoNUusfYp11cKacaVia1bajSxoctpFSRzoBgrzdemRJ4R4kbhAfMhatlhMfSwP9U>
+	:x-sasl-enc; s=fm1; t=1701242712; x=1701329112; bh=ST9eLU3dEIro+
+	p0zfLW0kvaq9OekSOLgwRm4nuhWibI=; b=ama083t1VDGvi8jLkb0Puk4nUdKrn
+	RUUPy3nX0KZRKtnl7zC0V6MhyF3mO1zxEl74A9Agw0AYv13iFhR2rIEOlPPJiiCw
+	FrkOP9D9YK/5ZqLBovJzvZRdyzyxMIg+1rk8fL6UD2OxKzhaherYzuwqLurlg9KY
+	OuRPj0m0W5SFTvfpC8/CcceriaS8UIFww3CJUsSHd+KmtQV89qBevLXe5pM6k+TD
+	A22je8ns740hDLBxXt/ZLTgbFoYA/bdNeJfGZJhlfJLCYvh+oq4hKlwUUQ2uOBLl
+	w8qHGLaO4UDNtHrCVaWmT6nEoXWQ470+DaLBfgRQ8zTmooiwj9wa1QYBg==
+X-ME-Sender: <xms:WOdmZcJDkie8Ujo5QGwOOAnNZwV6uzWHj568ORpRbbUN5o80yipPDg>
+    <xme:WOdmZcJB9Tw0LqSopfP1filWrv16_A5tqa9el1k3pl0tegesLL3og45Q2IRz6509a
+    lAX4KEIuA6WSl4jMA>
+X-ME-Received: <xmr:WOdmZcujuR-MnbjJYwkyHe9sSRTv3G37jdEQjoS7q36G-uqdD7CKGWr0-3sxojiVOtdBlopyFgjDHRDEHIV2vnL_lXXj3As36GGgAe2Yd2yGrN2l>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudeigedguddtiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeehgefhtdefueffheekgfffudelffejtd
-    fhvdejkedthfehvdelgfetgfdvtedthfenucevlhhushhtvghrufhiiigvpedunecurfgr
+    erredttdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeehgfejueevjeetudehgffffeffvdejfe
+    ejiedvkeffgfekuefgheevteeufeelkeenucevlhhushhtvghrufhiiigvpedtnecurfgr
     rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:VOdmZRgVj4_jrbTEI9McatOu5-ODKESZJ-sFQguGLGKA-t8_9QhDrg>
-    <xmx:VOdmZZBPQysCGCXytrsqyr5uuQ8YVAgYLEpc777BLDtz0ZoMQ5KnSw>
-    <xmx:VOdmZaLcyp73M_mrvHxggh424lAx3lHgjrDmkKiy6dsBpJkjMNxuKA>
-    <xmx:VOdmZU-4QoBVyDauaD9422V7WjlPxciO9JBzg-529heLJ9yBowb0wg>
+X-ME-Proxy: <xmx:WOdmZZaLOpkTCnbGbX311G4Scg_IYUjIdEP5uQIvfBMe9cH6gg3_Gg>
+    <xmx:WOdmZTb34dXzySE-rls3gtPOTsdLvxoR6wVGjBSvMFCMu-27LEPaHA>
+    <xmx:WOdmZVBi_08nIfw3Lx1-MdVOwYSO_jgzJAmECtjGRu5BiZH4C2kM-A>
+    <xmx:WOdmZd0qQ57BVHDPnKXqiLKs3mc_q8TSF3prGnCSJhWOSvkd2pDXWA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 29 Nov 2023 02:25:08 -0500 (EST)
+ <git@vger.kernel.org>; Wed, 29 Nov 2023 02:25:11 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id f0566d6d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id f7f7e95c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Wed, 29 Nov 2023 07:23:57 +0000 (UTC)
-Date: Wed, 29 Nov 2023 08:25:05 +0100
+	Wed, 29 Nov 2023 07:24:01 +0000 (UTC)
+Date: Wed, 29 Nov 2023 08:25:09 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 07/10] t4013: simplify magic parsing and drop "failure"
-Message-ID: <3b16c2cd7bd66c0eb56d33a6b91914500a1c24dd.1701242407.git.ps@pks.im>
+Subject: [PATCH 08/10] t5401: speed up creation of many branches
+Message-ID: <f674119c7801e355cd08a651450abd67947d7456.1701242407.git.ps@pks.im>
 References: <cover.1701242407.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -67,108 +67,84 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="3MwJ7QK2+Q6h+MG5"
+	protocol="application/pgp-signature"; boundary="uT2fYw1L6nb/5PmL"
 Content-Disposition: inline
 In-Reply-To: <cover.1701242407.git.ps@pks.im>
 
 
---3MwJ7QK2+Q6h+MG5
-Content-Type: text/plain; charset=us-ascii
+--uT2fYw1L6nb/5PmL
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-In t14013, we have various different tests that verify whether certain
-diffs are generated as expected. As much of the logic is the same across
-many of the tests we some common code in there that generates the actual
-test cases for us.
+One of the tests in t5401 creates a bunch of branches by calling
+git-branch(1) for every one of them. This is quite inefficient and takes
+a comparatively long time even on Unix systems where spawning processes
+is comparatively fast. Refactor it to instead use git-update-ref(1),
+which leads to an almost 10-fold speedup:
 
-As some diffs are more special than others depending on the command line
-parameters passed to git-diff(1), these tests need to adapt behaviour to
-the specific test case sometimes. This is done via colon-prefixed magic
-commands, of which we currently know "failure" and "noellipses". The
-logic to parse this magic is a bit convoluted though and hard to grasp,
-also due to the rather unnecessary nesting.
+```
+Benchmark 1: ./t5401-update-hooks.sh (rev =3D HEAD)
+  Time (mean =C2=B1 =CF=83):     983.2 ms =C2=B1  97.6 ms    [User: 328.8 m=
+s, System: 679.2 ms]
+  Range (min =E2=80=A6 max):   882.9 ms =E2=80=A6 1078.0 ms    3 runs
 
-Un-nest the cases so that it becomes a bit more straightfoward. The
-logic is further simplified by removing support for the "failure" magic,
-which is not actually used anymore.
+Benchmark 2: ./t5401-update-hooks.sh (rev =3D HEAD~)
+  Time (mean =C2=B1 =CF=83):      9.312 s =C2=B1  0.398 s    [User: 2.766 s=
+, System: 6.617 s]
+  Range (min =E2=80=A6 max):    8.885 s =E2=80=A6  9.674 s    3 runs
+
+Summary
+  ./t5401-update-hooks.sh (rev =3D HEAD) ran
+    9.47 =C2=B1 1.02 times faster than ./t5401-update-hooks.sh (rev =3D HEA=
+D~)
+```
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t4013-diff-various.sh | 27 ++++++++++++---------------
- 1 file changed, 12 insertions(+), 15 deletions(-)
+ t/t5401-update-hooks.sh | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index 5cc17c2e0d..76b8619e2e 100755
---- a/t/t4013-diff-various.sh
-+++ b/t/t4013-diff-various.sh
-@@ -178,32 +178,29 @@ process_diffs () {
- V=3D$(git version | sed -e 's/^git version //' -e 's/\./\\./g')
- while read magic cmd
- do
--	status=3Dsuccess
- 	case "$magic" in
- 	'' | '#'*)
- 		continue ;;
--	:*)
--		magic=3D${magic#:}
-+	:noellipses)
-+		magic=3Dnoellipses
- 		label=3D"$magic-$cmd"
--		case "$magic" in
--		noellipses) ;;
--		failure)
--			status=3Dfailure
--			magic=3D
--			label=3D"$cmd" ;;
--		*)
--			BUG "unknown magic $magic" ;;
--		esac ;;
-+		;;
-+	:*)
-+		BUG "unknown magic $magic"
-+		;;
- 	*)
--		cmd=3D"$magic $cmd" magic=3D
--		label=3D"$cmd" ;;
-+		cmd=3D"$magic $cmd"
-+		magic=3D
-+		label=3D"$cmd"
-+		;;
- 	esac
-+
- 	test=3D$(echo "$label" | sed -e 's|[/ ][/ ]*|_|g')
- 	pfx=3D$(printf "%04d" $test_count)
- 	expect=3D"$TEST_DIRECTORY/t4013/diff.$test"
- 	actual=3D"$pfx-diff.$test"
+diff --git a/t/t5401-update-hooks.sh b/t/t5401-update-hooks.sh
+index 001b7a17ad..8b8bc47dc0 100755
+--- a/t/t5401-update-hooks.sh
++++ b/t/t5401-update-hooks.sh
+@@ -133,10 +133,8 @@ test_expect_success 'pre-receive hook that forgets to =
+read its input' '
+ 	EOF
+ 	rm -f victim.git/hooks/update victim.git/hooks/post-update &&
 =20
--	test_expect_$status "git $cmd # magic is ${magic:-(not used)}" '
-+	test_expect_success "git $cmd # magic is ${magic:-(not used)}" '
- 		{
- 			echo "$ git $cmd"
- 			case "$magic" in
+-	for v in $(test_seq 100 999)
+-	do
+-		git branch branch_$v main || return
+-	done &&
++	printf "create refs/heads/branch_%d main\n" $(test_seq 100 999) >input &&
++	git update-ref --stdin <input &&
+ 	git push ./victim.git "+refs/heads/*:refs/heads/*"
+ '
+=20
 --=20
 2.43.0
 
 
---3MwJ7QK2+Q6h+MG5
+--uT2fYw1L6nb/5PmL
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVm51EACgkQVbJhu7ck
-PpSSuw//RD4I0szP647mpTDOcwTkgOiKEjqj3tS5OQFz0V2vBpyBnBo/MJ4bn67l
-WjRFz2TWM1obvzPjWiNnrI75zJEk0brhdxWv2R0qx5LNDMvyUSgO9ai8i8EG00f0
-FmvgFAkHm6M1C9lHGs4QaRr1vuiMKCUalRy2a9oyAKtS7NvgaVjxDplHJzxY2XBx
-jH5LFjDZNEhjkwTU4LlEcgYfoxiSSit9xLxu/whIKjcTHm59dfGV5x5LylkcqBNR
-7zc/nWuOKawhfM1rg+synJaJp+6cY4ZKUA4Fa+1yRcVQ+RUNCTvbvrjhZORAcxC2
-1owytDhbGE59cgij0Ws9GNjWGSbYkl4KtMKB5rNTm91ZsqrQMAjMIgGrkHdHA+hy
-TNRU1+KLy/+ONU2OpVJdvoY3a1h1qfzExe4QZS53cc4Y7mxyi23B66CCbC4kTRct
-q+pfC+vkQornvpvohXqGJOBdpAQjvF5TJnBTG8S5E/lczvOSRiPz1HIeOmoAdMu0
-ar55AJUWIF/hsQtD9oeTbmSo4xI2W/XJj3oIKqL1GCCQT5zR4C2SNrShiA56CMX9
-BslrQlTJpHKJ3MDPPXYFf17QJe0NKsGt2Fi6czB3FFB2jb/YAQoXkjqiW86AQDgW
-5h1idAg7gAs/FDG8Jwtq6y9DU2WTJMvDwrtCOna+MiMfXkK1I4Y=
-=QWwg
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVm51UACgkQVbJhu7ck
+PpQguA//QWUvnkWjda98+hGC96fEHWc798f3lMKyrkT2nCFyb+RxDXpwIkXUrkdR
+8H8PJY+XjIoUjkSjXWjwfs5boDTXSz1ioZIG2r8MJCu3mnrC6Zo2IvRvAxU+kEeC
+5UcQbF2NxtrJGAs5z3r4Te3XSwPqYsh+SkGBc5uPK/to1hib3x8N6isrwlsDJfVs
+qbIDnBjy/s1jUfwAot5WK3WrTBJYWxuGPASwb1v2VVcIk8tRSlyndWgCc6O1Wotr
+n6NPmrGcKu8qsp7oaXiaCQnosDXrhnd7vgMnyiDLFwBazLTAFh/oBKRELJyMpuHQ
+t2Z/9Jj6mb/qhu3IwPktSNMJCE/jyiV9PTSZL0pkwxb6qdoO/5+4g0E66IUM2jfq
+9m9F6NCoZDIxxgl6CaoPgTsKfo6E+Zz2DNWAOLoNJsjEEFbj/GAEghNQ2j/XaDRC
+jeQlnT66pcPExCxfW3wLjP4HUGPCWmih9fAV2lScgRmEqKyXUK9lHw0Wuz3azD/s
+F3d6AGGu0lQb7uBC9UTFZ67hjZS4crM//RJeigrKBtesGdJqx53aAJtsOnPORhAe
+noR/puVpTwAuzqXtb4mHLs1KeNJHYjFNnsMRrOI/v0C6We8WkG/EmxHzSNI1wRdp
++ZwrSUQELF2ERYjnRTRpAlNWn+gZY2oUUJ1nG+PoeGGx26hUPWg=
+=05Y2
 -----END PGP SIGNATURE-----
 
---3MwJ7QK2+Q6h+MG5--
+--uT2fYw1L6nb/5PmL--
