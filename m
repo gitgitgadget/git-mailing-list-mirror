@@ -1,65 +1,65 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HZiI1H8L";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SFDSIE5j"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Qvux8dDI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pWH4gdOH"
 Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDE45C9
-	for <git@vger.kernel.org>; Tue, 28 Nov 2023 23:25:16 -0800 (PST)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailout.nyi.internal (Postfix) with ESMTP id 534A85C01B9
-	for <git@vger.kernel.org>; Wed, 29 Nov 2023 02:25:16 -0500 (EST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6EE2C9
+	for <git@vger.kernel.org>; Tue, 28 Nov 2023 23:25:21 -0800 (PST)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailout.nyi.internal (Postfix) with ESMTP id 2D1305C01BD
+	for <git@vger.kernel.org>; Wed, 29 Nov 2023 02:25:21 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Wed, 29 Nov 2023 02:25:16 -0500
+  by compute6.internal (MEProxy); Wed, 29 Nov 2023 02:25:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm1; t=1701242716; x=1701329116; bh=Jp
-	aCdMq3Yvr+4aJv4U+w+iGQ9tmFxp4esDvJtl2w+Xc=; b=HZiI1H8LUOl4d6t0m9
-	bAIZU+BmC5lB+1Bex0vPLELQ5rRNJnBGT/BQr9Lb8smlIM9/rdTP/TxUTGFGMJs2
-	H3n6/sb+avjFo+PvwS+yIB72cUmKdYb5lkN4tFekkQ0sTkWXo/SCs83XxNQoWSYO
-	YliypCLc9CeIczqLlC5rOb2tupxDQxpKDFuOnw4iWUfNeE1x598a98dr7R/jMpx9
-	KdSAopzhcOefzrnZ/wIPH9maBrLI4ENIr6I896eZudyxmlEqCdwlBfx9CTe+X7mb
-	5V5d7PHUp/Gtk7slU1OQiYR7In70dq8Hk8IU9MvpWh2xZdQ8lQH9i6tChDNXTtvf
-	wMDQ==
+	:subject:subject:to:to; s=fm1; t=1701242721; x=1701329121; bh=sc
+	3/L+1ThrFBgHzQgfHSmwz3Oy722pUuGAUEge/Phoc=; b=Qvux8dDISMspegEwd7
+	9QJE34DTTEVK5+qAj01uM5HhPNnpyYewnBVNTBqFLFuMr0Y1chDG3mxJQGmyrMAQ
+	H5OdU+9b2PEstdHqWFLeXyi+FPSCBx0UAuV7MXtsn/6WErJyFAQ8V7Pf/fL0mRyD
+	GNij3pj/pOeDctG9KAQrQPaihqGYC6ufhd50A4ib+NLwp1ayufTIZqeLa/Mxkpso
+	VtxVuw2SzCCvhgk0fA807RRDTmNqQOEs0es1PZP1J6wG67yNzxguadJgpWI2RVba
+	OW2CX0fW5gafRkr5LI/Z27LGTgPo7A9poFLYRObXS2nyuVzUnNE2NtbWE93bdJBV
+	goYA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm1; t=1701242716; x=1701329116; bh=JpaCdMq3Yvr+4
-	aJv4U+w+iGQ9tmFxp4esDvJtl2w+Xc=; b=SFDSIE5jRMG9/VF3UaaADUqKRHSYE
-	pH3WGNqbxCTGe9s0CH/0kpQyCDRui2uag+XLGuolkRVIOh+6wAWH1o/Ecv+hwvvz
-	M+6hhMgXstpgyBjaKS417St26JlFCT0GhbbCIBfbUnwC7mmsB5bn/IrcVTvwWx0C
-	aZzbD9tD9FdmHk45E1wO/UCwd07Su6VIQ5Q7rjIvdA9LZa0+W5XUwDcZCRHl95y6
-	/9YhR/Vu2++Eed6k1E5K5973D+qE8/Al97CQYKYoFwyigCJa4B+JJQTxu/1Syz+B
-	LTL+JA6Gix4wXXfB1YUJims5wZDJoAg0dy8qXXAXtq/R3kz11kPAcg2xA==
-X-ME-Sender: <xms:XOdmZcueQpnNvxwLo4BKMtS6mmNVekZhRcX8Nj7ryx80qNN-KEG3YQ>
-    <xme:XOdmZZcaItH7CJ3gfjvEyyw_ERlmK3rYv9kVx_wy6QIKLNzavZR2WMtzPK4Dk_n_x
-    NaamvgmatLCg2nQrA>
-X-ME-Received: <xmr:XOdmZXxU_RvI5RIcNKy4TqgVhZVM1W3EYeHZD1w53nS7NO1K-DFULlHmBAAURbKgz9wSMwwfBsh2QJWUwC2J9xP7XKsFRMOzsNcPc0p-eh6HnyEc>
+	:x-sasl-enc; s=fm1; t=1701242721; x=1701329121; bh=sc3/L+1ThrFBg
+	HzQgfHSmwz3Oy722pUuGAUEge/Phoc=; b=pWH4gdOHWwqHk3q79BVzf5ebX4aO7
+	dWUKLthx19kE0pZoU5gPS3I5MYf4FqIQpMTD7NnKy1eJqNfmTNmrsAKLRbVq8gPM
+	OmEbNEs9743Md65oGWvInVdNNoyN2dVEmU2e8YgovFzip7Xl0jvWcbOlgqsvghxR
+	KVyBKRBbwbC/TLI4+Q/t5D9XmhU/yohC1PQlcTe+DRCFhHw75IiwLjxV6FN7HzBz
+	3SADmNZcNqnr0V0Ftkthc9xLwb3n8fwW1oACoop2PM6UwLxpxBgBFBVVmiRGUO1l
+	dLREl0RaRcZfni7ccc84d7exngFUcaZVJ/JN3Dgh3HibF4+cy2Bzegl2A==
+X-ME-Sender: <xms:YOdmZeygDDjBQreG8GLDNmanlY9HD-2zdUm25SPBiyBX8W1BlZbRxA>
+    <xme:YOdmZaSoen_ESC8tdgEhqEKrn5F-7Yq34IA9WxRYVJQabtl7V8HnOVH0p5ZjUTbQl
+    fFB6QBmIrvwtC-4cA>
+X-ME-Received: <xmr:YOdmZQV-TSEg7zpg7zoAP4fjtVhY8bYS7OIlUxpFyjV0DA3kqKEjh14dvWluwtyVVKsHkyG8vq8JovJ2ElmrhHe6oaQ4q6sqcufudmOoJ20uzl8c>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudeigedguddtiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtd
     erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeuleekhfehtdehtdfhffegveetffffje
-    ettedvieeifeeggfdufeeiteejkeehleenucffohhmrghinhephhhtthhpqdhfvghttghh
-    qdhsmhgrrhhtrdhshhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
-    hlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:XOdmZfPM9zOkfPkqZWUyDCoMUBqtOdQPPRysG6ldES-eaN3sW5ILfw>
-    <xmx:XOdmZc9Z7KiB3fnkTxo-eOJ9PlDkdWJFWOnT8t783kQK_l6Z1pdZxg>
-    <xmx:XOdmZXXTDBP-ipsZkDfa4-Yesrmx8XUPtoiAvGOpzszBKewipoUB2Q>
-    <xmx:XOdmZVJpgDQkl2B-wyMx5U-1uFCxN7RxyBmoho97VrmDnVwIEdiT-g>
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeehgefhtdefueffheekgfffudelffejtd
+    fhvdejkedthfehvdelgfetgfdvtedthfenucevlhhushhtvghrufhiiigvpedvnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:YedmZUiStpQ2MW0cqjdkZUBlymAGk2e177lH5TZOksktGlRPCIBNYg>
+    <xmx:YedmZQC9zN8KNdege9vwbOVK12LsrhTf83S3ntAkmuezmo5TNd2ZaQ>
+    <xmx:YedmZVIV4fjW1RI5DDNTRhvvGml0eKAPLRJ-B7kAur7BvZgZgcibsA>
+    <xmx:YedmZf_LBUnq7MKrglm9niHnoxD7Tc7ik_cKajnkdrC-rbwv6kMdig>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 29 Nov 2023 02:25:15 -0500 (EST)
+ <git@vger.kernel.org>; Wed, 29 Nov 2023 02:25:20 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id cd4ec091 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 2b0e8051 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Wed, 29 Nov 2023 07:24:05 +0000 (UTC)
-Date: Wed, 29 Nov 2023 08:25:14 +0100
+	Wed, 29 Nov 2023 07:24:09 +0000 (UTC)
+Date: Wed, 29 Nov 2023 08:25:18 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 09/10] t5551: stop writing packed-refs directly
-Message-ID: <2ab24ea5633be6b4855567d126a184d54c624f62.1701242407.git.ps@pks.im>
+Subject: [PATCH 10/10] t6301: write invalid object ID via `test-tool
+ ref-store`
+Message-ID: <281d9a719d39c03572de53bce5388acc7236b274.1701242407.git.ps@pks.im>
 References: <cover.1701242407.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -68,70 +68,102 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="1ZticYLbTAoE2v/Q"
+	protocol="application/pgp-signature"; boundary="m3Y6ahgizBsQzZi4"
 Content-Disposition: inline
 In-Reply-To: <cover.1701242407.git.ps@pks.im>
 
 
---1ZticYLbTAoE2v/Q
+--m3Y6ahgizBsQzZi4
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-We have multiple tests in t5551 that write thousands of tags. To do so
-efficiently we generate the tags by writing the `packed-refs` file
-directly, which of course assumes that the reference database is backed
-by the files backend.
+One of the tests in t6301 verifies that the reference backend correctly
+warns about the case where a reference points to a non-existent object.
+This is done by writing the object ID into the loose reference directly,
+which is quite intimate with how the files backend works.
 
-Refactor the code to instead use a single `git update-ref --stdin`
-command to write the tags. While the on-disk end result is not the same
-as we now have a bunch of loose refs instead of a single packed-refs
-file, the distinction shouldn't really matter for any of the tests that
-use this helper.
+Refactor the code to instead use `test-tool ref-store` to write the
+reference, which is backend-agnostic.
+
+There are two more tests in this file which write loose files directly,
+as well. But both of them are indeed quite specific to the loose files
+backend and cannot be easily ported to other backends. We thus mark them
+as requiring the REFFILES prerequisite.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t5551-http-fetch-smart.sh | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ t/t6301-for-each-ref-errors.sh | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
-index 8a41adf1e1..e069737b80 100755
---- a/t/t5551-http-fetch-smart.sh
-+++ b/t/t5551-http-fetch-smart.sh
-@@ -359,7 +359,9 @@ create_tags () {
+diff --git a/t/t6301-for-each-ref-errors.sh b/t/t6301-for-each-ref-errors.sh
+index 2667dd13fe..83b8a19d94 100755
+--- a/t/t6301-for-each-ref-errors.sh
++++ b/t/t6301-for-each-ref-errors.sh
+@@ -15,7 +15,7 @@ test_expect_success setup '
+ 	git for-each-ref --format=3D"%(objectname) %(refname)" >brief-list
+ '
 =20
- 	# now assign tags to all the dangling commits we created above
- 	tag=3D$(perl -e "print \"bla\" x 30") &&
--	sed -e "s|^:\([^ ]*\) \(.*\)$|\2 refs/tags/$tag-\1|" <marks >>packed-refs
-+	sed -e "s|^:\([^ ]*\) \(.*\)$|create refs/tags/$tag-\1 \2|" <marks >input=
+-test_expect_success 'Broken refs are reported correctly' '
++test_expect_success REFFILES 'Broken refs are reported correctly' '
+ 	r=3Drefs/heads/bogus &&
+ 	: >.git/$r &&
+ 	test_when_finished "rm -f .git/$r" &&
+@@ -25,7 +25,7 @@ test_expect_success 'Broken refs are reported correctly' '
+ 	test_cmp broken-err err
+ '
+=20
+-test_expect_success 'NULL_SHA1 refs are reported correctly' '
++test_expect_success REFFILES 'NULL_SHA1 refs are reported correctly' '
+ 	r=3Drefs/heads/zeros &&
+ 	echo $ZEROS >.git/$r &&
+ 	test_when_finished "rm -f .git/$r" &&
+@@ -39,15 +39,14 @@ test_expect_success 'NULL_SHA1 refs are reported correc=
+tly' '
+ '
+=20
+ test_expect_success 'Missing objects are reported correctly' '
+-	r=3Drefs/heads/missing &&
+-	echo $MISSING >.git/$r &&
+-	test_when_finished "rm -f .git/$r" &&
+-	echo "fatal: missing object $MISSING for $r" >missing-err &&
++	test_when_finished "git update-ref -d refs/heads/missing" &&
++	test-tool ref-store main update-ref msg refs/heads/missing "$MISSING" "$Z=
+ERO_OID" REF_SKIP_OID_VERIFICATION &&
++	echo "fatal: missing object $MISSING for refs/heads/missing" >missing-err=
  &&
-+	git update-ref --stdin <input &&
-+	rm input
- }
-=20
- test_expect_success 'create 2,000 tags in the repo' '
+ 	test_must_fail git for-each-ref 2>err &&
+ 	test_cmp missing-err err &&
+ 	(
+ 		cat brief-list &&
+-		echo "$MISSING $r"
++		echo "$MISSING refs/heads/missing"
+ 	) | sort -k 2 >missing-brief-expected &&
+ 	git for-each-ref --format=3D"%(objectname) %(refname)" >brief-out 2>brief=
+-err &&
+ 	test_cmp missing-brief-expected brief-out &&
 --=20
 2.43.0
 
 
---1ZticYLbTAoE2v/Q
+--m3Y6ahgizBsQzZi4
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVm51kACgkQVbJhu7ck
-PpQ8lA//a2eFFMOvdQ1c4zLItk6xaavL2Q/aKaqFssXoBuOWCOpGHIth62IxrtRo
-BZUhP+igKEif/0tAwpfbynp4n/r9912SHdh5Om3cpeKwmLtMQfrkbKhqL4M1Kowj
-sfx3TveXhvqApKenVAZv/RAkoChXnYb0bbhPhjXySIh3IlYa+JGmMkf+ly6j+0Fp
-wIUcxFeWBvfvvZvZ/1PzUG2q5TO5SbVGJYZZnQMDiJG1hpdEvOIakkg6VoUVVs/N
-SFfXkedPjl2BDW+2SDBHKZ0D02F7hzwIh/w7pn9dKtJK9CWADM6ysx8LeLURMB8L
-tlGo12M2cQQwhqHFkgiqZb2ElSC04Eg6IEH/1Zg4hkofaQhAUZR1Htjr2SmUzH6z
-wENhoN5+A+TjXWmB+qsRtM8Zda8DuRvswG3s4QsuSAwdNmNvdto1rWp64p3RK85v
-pI5ZWz0p/YpUAD1LAUStcK1cMq6q6plhBauxAhJ71fB2eFn+EWaz0JZL4993VTza
-EQQQa5RP5zVwaiYXvNzz72dPrWC3Vo4oMDZLOyozpVJQkJ7gUA7YMva/HjuMbgMl
-q6yo75V3wQjgBeTsTPJjwxWWfe7LzKmo1NGxACGadEY08rVO8ZBpJd0zx1Ea11MD
-S0J/lGaPNpO1Xe7DonXAoR8cPZXAFNlZYWewynGz6JoF2J1t0aw=
-=oUln
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVm510ACgkQVbJhu7ck
+PpRSCRAAj4A5tFdc102vqHEyVgmgOnqa3ivIvxzXDLGwnsgXh2urrNHCWmOgQvtq
+Vcn1rfc7qRFb8S7cUV3FbrzjCPPug4t2pnpRxeT/L5Tj9mb49eQ9GpmYiwg3/zI5
+CGG1cHjBqaMz1fxbDi2A2BsmTlJDlccGDnf027uA7QkQOuBpLO6E/zuv0azyTsDh
+0MRHzkjH/ChfbNIY0c1ScE2BXT8MABVIkKRRccB1VFIqEgDT+fyku7FptdX9wbH4
+GlKVTexeSd9V9gclyHbgvdTmKjP91vMwclKJZsJfooXMvpaPeUgcgs+oOs3OFV9K
+uiCmrSKkJSkfnv2xI5efEsAyaGTgBHaaskTBeKrVqQhrs1rV+hJMhQzxGNcIDrfc
+qw6oTvsJmnOoQ62KHpfjfnauyt0LXDMArCXrka2eHn8460hQA6qS9p6pCWDN6l1e
+0y8WPmUw6gih+aB4RdmyUSdccLaBQEoHte97eVvDYWWEEywI4pTyVjyViu5TmD7Y
+OsLi7GQtGWFDmjn/Cwo3cXZI5hYl0RKecGqR5hLLolWSJ4OJEjwzfy3Kvxn1jQEC
+Vl3adm9+BBZcLA5LQHMcwJzEgAP1fep/4A7oE4nB9Jx3bdDstEz0WQhxG8M1eKiv
+CcEMQ0R33OtSliMmhczl38xuL+tzQ7JNsJGlTHhD5g697L+17/U=
+=xYOo
 -----END PGP SIGNATURE-----
 
---1ZticYLbTAoE2v/Q--
+--m3Y6ahgizBsQzZi4--
