@@ -1,50 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="UAKdEPiz"
-Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCEC3170E
-	for <git@vger.kernel.org>; Wed, 29 Nov 2023 13:45:02 -0800 (PST)
-Received: by mail-qt1-x82e.google.com with SMTP id d75a77b69052e-423f4a6144fso1590671cf.0
-        for <git@vger.kernel.org>; Wed, 29 Nov 2023 13:45:02 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="rqbfGhaS"
+Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 326B010C8
+	for <git@vger.kernel.org>; Wed, 29 Nov 2023 13:51:15 -0800 (PST)
+Received: by mail-qt1-x82b.google.com with SMTP id d75a77b69052e-423e95c2d54so1484621cf.3
+        for <git@vger.kernel.org>; Wed, 29 Nov 2023 13:51:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1701294302; x=1701899102; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1701294674; x=1701899474; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=v3FXFMCGgMc4SEBFo9pGF14PMf9ubfdNKpSimFPvbUw=;
-        b=UAKdEPiz4Ky0SgC4W5xqRIZGHYmvO5Ip1FEMwu53Xk7oTG0IrU6ROyi9ClXF4T2xeC
-         xWmPMrwSu8Zt62xFISgM3nOHTkxconCFf80m29Ir1wtbTcChEQm5Xx6ofLWZc61a2ErB
-         hbQFH0a19/snj78wxP7z5vDAp2kxyT1GkVJTwEv+onC28bTRkLezk9uECxUJaZ+YMswM
-         4WMw2jaMkgcU8N4wlozA5tfRZBxAXIuJbFMVmgE3P7OWp33bRTFC8L4tYAOLCFl//71x
-         Ci49mNggl/UrMe49jWT/T4TNKJLx1OZASn9M5/6ZI1AtDQjbtuaOGNANQbDdjOuXrab7
-         ft8Q==
+        bh=4sCHIS3aypNTiv0aNKQy2odWn809dN221nZA2xXf4KA=;
+        b=rqbfGhaSb2i34OCwZuZoQ7SzfyRgxrK8c3RP2R8gZccRLs96F7T7GcB3Yqv+TKU4w/
+         OOvVO5eaYzoEKDx7bw1FnZMWVVyCaoOmgt8zfyN3PxmzkygPgKSUt7KKkybpkrV992kG
+         xnRVE7kAtOHtp+sRvHwDeMjeYdd07zPrmoX20D9bAg5hOTexKB0C1ZZPMj6UUeRdNDCK
+         bWXP0bYLPC/crqTnhh4O57wSWNXx+X20ZYaoZ6cORPVjendZshJbjl6Vug9q007nHbVe
+         ODtpcAScLXfvDbG1eGLD+GQnJTYlbsu1jPKb3I8QLrdBi4vzgKf1YK2YHC0MzPY/DhsB
+         F9Dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701294302; x=1701899102;
+        d=1e100.net; s=20230601; t=1701294674; x=1701899474;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=v3FXFMCGgMc4SEBFo9pGF14PMf9ubfdNKpSimFPvbUw=;
-        b=QfqluDXtgxATK/YDJzaIcUwsAOzDvFbx0WtatmAaH8ZjaVFKewdwCaszB7tAb9sDDl
-         Zud+jtPEdijMgH6tTJbE9XDSX7PSWWnZo42ALuhIUIjz0CoiY7JPrTZQowBvjuQ1mO/u
-         ZSnLNSr6YFtCgRVy9awCz1WOTOfbtAsBoeY4004uZhjW9Fm0HyLqKhcYr9YmAkA2R16f
-         GWLCrzvYFXW/xGoyKkn5FV6WsV7Xzd0dnK21P4D9PbDbv7MyzmBkVraHKZYp5g4EHxV6
-         olZHD8i1t2tsAvU9SOknjJT1T9xIOv0RrHfsKzfRY4Kwudnr0LgxKz/1kh09Yexn+5Rk
-         T/FA==
-X-Gm-Message-State: AOJu0Yyy+RzHIKWLgLszPAJtAt+pkpv66tM6YcpOU7bTBfTKpE6GsbXW
-	tkFF9WRw9+qEReAey5ysvX67HjjYc1bLJfP3WE0=
-X-Google-Smtp-Source: AGHT+IF0mD2KbhbUXOtUmCEtrtfX+xkDKPK+1LEDAo1aSRI8/5NuEzYkXotyIlngVfEGRZVfYk1jUQ==
-X-Received: by 2002:ac8:5e47:0:b0:412:395c:e794 with SMTP id i7-20020ac85e47000000b00412395ce794mr24703181qtx.50.1701294301769;
-        Wed, 29 Nov 2023 13:45:01 -0800 (PST)
+        bh=4sCHIS3aypNTiv0aNKQy2odWn809dN221nZA2xXf4KA=;
+        b=eEaOmEhMx/pvRwWKCtYMkY5ajMlXsPzwLygG/5i9QRcIphHlD5CMbpeEAYn0Q4Qz0H
+         5iE1hdtqOd4I0ljBISxIz51eef3yiBn2W9S3Zv4QYHWlCeoFJu1zHdvqZvW4pMq3jIAF
+         q+C9EGry48wtF64wJfnTh7htxKUMZY5U/g/+xbnwntTz1LY8mMAv96oEq7PZ1jR1yZPi
+         yt0Sq4jn+MglZ7MfrrsBI0g6wtDFsYnxTGydeEDBNc+cFUzcohBH73yXhsZGhQ6symd4
+         vA95K4ELaPsdlNYpe0TMqphHcKgrEfB6nwQYeCrffjbr+8zgZ/b12UsU9Aq+LyMfF345
+         WEtg==
+X-Gm-Message-State: AOJu0Yz61H9I9QOBA2yIDNR42ImIhEfG/6x51/JVj/u8iejpnchvsMkz
+	zD3uD3vE++omH7O3ZApWj9ELNOKxvApthDY9lFs=
+X-Google-Smtp-Source: AGHT+IFblCGmjAjZS6My8msa3Z3aHcoOyiNXwG0uCvQKih0aaDKpjhIjv7oT8VaPDqhm2i2vxQ54eQ==
+X-Received: by 2002:ac8:7606:0:b0:423:9f01:7e12 with SMTP id t6-20020ac87606000000b004239f017e12mr15103423qtq.26.1701294674218;
+        Wed, 29 Nov 2023 13:51:14 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id gc4-20020a05622a59c400b00423f08bf12bsm691592qtb.63.2023.11.29.13.45.01
+        by smtp.gmail.com with ESMTPSA id bq6-20020a05622a1c0600b00423e0952d7fsm1535930qtb.95.2023.11.29.13.51.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Nov 2023 13:45:01 -0800 (PST)
-Date: Wed, 29 Nov 2023 16:45:00 -0500
+        Wed, 29 Nov 2023 13:51:14 -0800 (PST)
+Date: Wed, 29 Nov 2023 16:51:13 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, hanwenn@gmail.com
-Subject: Re: [PATCH 1/4] wt-status: read HEAD and ORIG_HEAD via the refdb
-Message-ID: <ZWew3CP4QJ4XDnHj@nand.local>
+Subject: Re: [PATCH 2/4] refs: propagate errno when reading special refs fails
+Message-ID: <ZWeyUU/NqmGUvyOL@nand.local>
 References: <cover.1701243201.git.ps@pks.im>
- <35b74eb972eed7e08190e826fabcf6b7a241f285.1701243201.git.ps@pks.im>
+ <691552a17ec587b0c03e758437c33d58767803aa.1701243201.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -53,86 +53,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <35b74eb972eed7e08190e826fabcf6b7a241f285.1701243201.git.ps@pks.im>
+In-Reply-To: <691552a17ec587b0c03e758437c33d58767803aa.1701243201.git.ps@pks.im>
 
-On Wed, Nov 29, 2023 at 09:14:12AM +0100, Patrick Steinhardt wrote:
-> We read both the HEAD and ORIG_HEAD references directly from the
-> filesystem in order to figure out whether we're currently splitting a
-> commit. If both of the following are true:
+On Wed, Nov 29, 2023 at 09:14:16AM +0100, Patrick Steinhardt wrote:
+> diff --git a/refs.c b/refs.c
+> index fcae5dddc6..7d4a057f36 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -1806,8 +1806,12 @@ static int refs_read_special_head(struct ref_store *ref_store,
+>  	int result = -1;
+>  	strbuf_addf(&full_path, "%s/%s", ref_store->gitdir, refname);
 >
->   - HEAD points to the same object as "rebase-merge/amend".
->
->   - ORIG_HEAD points to the same object as "rebase-merge/orig-head".
->
-> Then we are currently splitting commits.
->
-> The current code only works by chance because we only have a single
-> reference backend implementation. Refactor it to instead read both refs
-> via the refdb layer so that we'll also be compatible with alternate
-> reference backends.
->
-> Note that we pass `RESOLVE_REF_NO_RECURSE` to `read_ref_full()`. This is
-> because we didn't resolve symrefs before either, and in practice none of
-> the refs in "rebase-merge/" would be symbolic. We thus don't want to
-> resolve symrefs with the new code either to retain the old behaviour.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  wt-status.c | 17 +++++++++--------
->  1 file changed, 9 insertions(+), 8 deletions(-)
->
-> diff --git a/wt-status.c b/wt-status.c
-> index 9f45bf6949..fe9e590b80 100644
-> --- a/wt-status.c
-> +++ b/wt-status.c
-> @@ -1295,26 +1295,27 @@ static char *read_line_from_git_path(const char *filename)
->  static int split_commit_in_progress(struct wt_status *s)
->  {
->  	int split_in_progress = 0;
-> -	char *head, *orig_head, *rebase_amend, *rebase_orig_head;
-> +	struct object_id head_oid, orig_head_oid;
-> +	char *rebase_amend, *rebase_orig_head;
->
->  	if ((!s->amend && !s->nowarn && !s->workdir_dirty) ||
->  	    !s->branch || strcmp(s->branch, "HEAD"))
->  		return 0;
->
-> -	head = read_line_from_git_path("HEAD");
-> -	orig_head = read_line_from_git_path("ORIG_HEAD");
-> +	if (read_ref_full("HEAD", RESOLVE_REF_NO_RECURSE, &head_oid, NULL) ||
-> +	    read_ref_full("ORIG_HEAD", RESOLVE_REF_NO_RECURSE, &orig_head_oid, NULL))
+> -	if (strbuf_read_file(&content, full_path.buf, 0) < 0)
+> +	errno = 0;
 
-Switching to read_ref_full() here is going to have some slightly
-different behavior than just reading out the contents of
-"$GIT_DIR/HEAD", but I think that it should be OK.
+Do we need to set errno to 0 here? Looking at the implementation of
+strbuf_read_file(), it looks like we return early in two cases. Either
+open() fails, in which errno is set for us, or strbuf_read() fails, in
+which case we set errno to whatever it was right after the failed read
+(preventing the subsequent close() call from tainting the value of errno).
 
-Before we would not have complained, if, for example, the contents of
-"$GIT_DIR/HEAD" were malformed, but now we will. I think that's OK,
-especially given that if that file is bogus, we'll have other problems
-before we get here ;-).
+So I think in either case, we have the right value in errno, and don't
+need to worry about setting it to "0" ahead of time.
 
-Are there any other gotchas that we should be thinking about?
+> +test_expect_success '--exists with existing special ref' '
+> +	git rev-parse HEAD >.git/FETCH_HEAD &&
+> +	git show-ref --exists FETCH_HEAD
+> +'
 
-> +		return 0;
-> +
->  	rebase_amend = read_line_from_git_path("rebase-merge/amend");
->  	rebase_orig_head = read_line_from_git_path("rebase-merge/orig-head");
->
-> -	if (!head || !orig_head || !rebase_amend || !rebase_orig_head)
-> +	if (!rebase_amend || !rebase_orig_head)
->  		; /* fall through, no split in progress */
->  	else if (!strcmp(rebase_amend, rebase_orig_head))
-> -		split_in_progress = !!strcmp(head, rebase_amend);
-> -	else if (strcmp(orig_head, rebase_orig_head))
-> +		split_in_progress = !!strcmp(oid_to_hex(&head_oid), rebase_amend);
-> +	else if (strcmp(oid_to_hex(&orig_head_oid), rebase_orig_head))
-
-I did a double take at these strcmp(oid_to_hex(...)) calls, but I think
-that they are the best that we can do given that we're still reading the
-contents of "rebase-merge/amend" and "rebase-merge/orig-head" directly.
-
-I suppose we could go the other way and turn their contents into
-object_ids and then use oidcmp(), but it doesn't seem worth it IMHO.
+I don't think that it matters here, but do we need to worry about
+cleaning up .git/FETCH_HEAD for future tests?
 
 Thanks,
 Taylor
