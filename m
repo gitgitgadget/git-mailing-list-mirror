@@ -1,70 +1,75 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NWhz7IxN"
-Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D178D7D
-	for <git@vger.kernel.org>; Thu, 30 Nov 2023 08:57:09 -0800 (PST)
-Received: by mail-ej1-x644.google.com with SMTP id a640c23a62f3a-a18b478e4e9so119641066b.1
-        for <git@vger.kernel.org>; Thu, 30 Nov 2023 08:57:09 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="HGskWpQX"
+Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90B3610F2
+	for <git@vger.kernel.org>; Thu, 30 Nov 2023 09:35:36 -0800 (PST)
+Received: by mail-qk1-x731.google.com with SMTP id af79cd13be357-77d6f853ba0so192487685a.0
+        for <git@vger.kernel.org>; Thu, 30 Nov 2023 09:35:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701363427; x=1701968227; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YJtccBgN8pDbrZDUqCHdjspH8j77n8MAVP/30uEvqQE=;
-        b=NWhz7IxNqPAodwxLW9MOH2oIbekVjPVC358F+Riz4t/WV6uNfuuAGh+0D6P4av3z8C
-         UTdaWoLgny0QYyYNPh0J2V0dYY4QEkq9upf91TreA5PIIlwDsSFEgQsEJlC1MzBfYQN3
-         fr5ZA+le/j1EcDLcio1F3xLMw57cj2f0XeDkaslL7e/gNNSKfgaBTH6nOb2mlEABhfY5
-         X15Uif2ywYft2mCFcSo5G96wFq18u9I1+57yQO/R9rggZv4zILh/Pn+lsKHr1UoYE8jM
-         sTi3qD6WsgUOAmQV/fyZaIW8ct/Of2letjuvFLTeiXgAWhT+kqmNHVbQUqJf/+Kg0XJn
-         EfsQ==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1701365735; x=1701970535; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=pv2QfNpOn2Yt4R8nY1YsK9TA7/AlEJr4dSlWuKRJJxM=;
+        b=HGskWpQXWc1CcVtIlkki+iac2eWwX2BYQcV/EjgKGyuHU48BBPH4LphzI/xPzMI1kR
+         5jPYYdy00ta00UWKs5RGR+eUeSU7ZWObz7kLtrQdeg+ovmh3IyezOcoTO5jn0ThX3EJD
+         T9oOQVlmjnNjVcoxzPcslFcfz6+u6xaGcgmwYo8leC661dzsssTml66kkK4DFChJIqfH
+         aLRm2wCEs+VpoHu4I1ItLHsbSxJp5aNeajzAqn0DGpg+OD1DqeelqLvQiAmMyQzUJLyC
+         6XXRkg73jBAa9AssOTV7gDxaWvWpLcpr6YZ7fbH28WYTfXc6sD8FgLaRoI1Bh760jSbU
+         75dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701363427; x=1701968227;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YJtccBgN8pDbrZDUqCHdjspH8j77n8MAVP/30uEvqQE=;
-        b=YwZBDOUUjgxKE9igIdfSEpS0IGwP2RuyErNF0KNTIhBaWbkoGx5AKs0MPEuMA6u8vZ
-         fSp0IY607Z0NzuBpAaYtsqt4DY/vFpYqv1i2GlsGqpX+fTepMapnq8DZiQDBrlP6WUMB
-         05dz7YdqO5ipwQjZBQH9lpUDvWcuu7FaJZ1IPk/qMvSz0rTCMh4g0AUCRclQz76G9j4X
-         CzQZ2vRG2xoSfKhh55AHMNbF3sgA4Bj7H2t4b5nYlj9i8eP8tl4z2eSK7l8TtXspF+qi
-         gKskMW4lhMmUSgugg1HngHoqIbR9/BSmSGYYo1rwwUhHbJeBOKTMJ/yilU9hPF8R/TtL
-         SkHw==
-X-Gm-Message-State: AOJu0YxyL2tOutm2JE5QFv1tk43EqCaQbY1CThunfZYo9iHFRCJ+cpXo
-	8AhVlBv4VV8QJLQHckItSsl06IbAVrI1wA==
-X-Google-Smtp-Source: AGHT+IHnLrIJuIJ/NyU5lrJaBUpgJyCyEBXbVp9WOWUx6x8WfRobfHkR0k+g/YP3FqB+egYNaM1RKA==
-X-Received: by 2002:aa7:cf89:0:b0:54b:2a9e:3b28 with SMTP id z9-20020aa7cf89000000b0054b2a9e3b28mr6256edx.22.1701363296541;
-        Thu, 30 Nov 2023 08:54:56 -0800 (PST)
-Received: from localhost.localdomain ([102.244.155.37])
-        by smtp.gmail.com with ESMTPSA id a20-20020a50ff14000000b0054b1360dd03sm711671edu.58.2023.11.30.08.54.51
+        d=1e100.net; s=20230601; t=1701365735; x=1701970535;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pv2QfNpOn2Yt4R8nY1YsK9TA7/AlEJr4dSlWuKRJJxM=;
+        b=YJgjSSVKV4ugNJpAMuLLrTb/VST5Yvp9iRieCML9UQ9KDSY9hPHSz6KpOoV+/0L97l
+         cvJSk3kiAwJt2Ta4xiyHYEPFmQR5bSar/pxWNhJ909f6saf20P8Cw7buL0qWhlx2Ey4Z
+         Nqhp3DZTSoOx6jiSSJqD0/UQGhiJBLabyfzaW9Z1ys49SzNBAjFA8CLZ3bPIc9wKI/0A
+         ggIFCvTIWs4dJxGSjF4jxGnrRImjeT906vX6x3J9nQJm/a6N2hW5uxBvlMTZxT+F8Q8h
+         0XkDF+6i2tjyP/E5y39cKiCXsNoh7r447VmMBCO2rEzBr5L8bMAlJe82RBilLPcoH4OE
+         MScA==
+X-Gm-Message-State: AOJu0Ywuv8fdRuywOsMtB6gl7Ch3rD7+zoS/Gn54JJVMu3KcQm1JPcJa
+	W0NFBjjo4Cf47ZuOvHn5u8DLPg==
+X-Google-Smtp-Source: AGHT+IF4zi0ubXK+dSMVq9XjoxvLgIwYvsQ5O4nv65bEfRfCyIRc+M2Fhf0+1+7buy/C0J00EN0ijw==
+X-Received: by 2002:ae9:c110:0:b0:77d:a740:9170 with SMTP id z16-20020ae9c110000000b0077da7409170mr17999699qki.4.1701365735576;
+        Thu, 30 Nov 2023 09:35:35 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id a3-20020a05620a124300b0077d78afc513sm673643qkl.110.2023.11.30.09.35.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Nov 2023 08:54:56 -0800 (PST)
-From: Achu Luma <ach.lumap@gmail.com>
-To: git@vger.kernel.org
-Cc: Achu Luma <ach.lumap@gmail.com>
-Subject: [PATCH v2 0/1] *** Avoid using Pipes ***
-Date: Thu, 30 Nov 2023 17:54:28 +0100
-Message-ID: <20231130165429.2595-1-ach.lumap@gmail.com>
-X-Mailer: git-send-email 2.42.0.windows.2
-In-Reply-To: <20231003174853.1732-1-ach.lumap@gmail.com>
-References: <20231003174853.1732-1-ach.lumap@gmail.com>
+        Thu, 30 Nov 2023 09:35:35 -0800 (PST)
+Date: Thu, 30 Nov 2023 12:35:34 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, hanwenn@gmail.com
+Subject: Re: [PATCH 0/4] refs: improve handling of special refs
+Message-ID: <ZWjH5kOiHKR8RGkX@nand.local>
+References: <cover.1701243201.git.ps@pks.im>
+ <ZWe3z59WGE0+8gXN@nand.local>
+ <ZWg97gfn80jeB3-_@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ZWg97gfn80jeB3-_@tanuki>
 
-*** BLURB HERE ***
+On Thu, Nov 30, 2023 at 08:46:54AM +0100, Patrick Steinhardt wrote:
+> On Wed, Nov 29, 2023 at 05:14:39PM -0500, Taylor Blau wrote:
+> > These all look pretty good to me. I had a few minor questions on the
+> > first three patches, but I don't think they necessarily require a
+> > reroll.
+>
+> I agree that none of the comments really require a reroll, but I'll
+> address them if there will be another iteration of this patch series.
+>
+> Thanks for your review!
 
-Achu Luma (1):
-  t2400: avoid using pipes
+No problem on either. I doubt that there will be another iteration of
+this series since it is already good, so no need to worry too much about
+these changes.
 
- t/t2400-worktree-add.sh | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
-
-
-base-commit: d0e8084c65cbf949038ae4cc344ac2c2efd77415
--- 
-2.41.0.windows.1
-
+Thanks,
+Taylor
