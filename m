@@ -1,46 +1,46 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EruiCfcM"
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CB8310F1
-	for <git@vger.kernel.org>; Thu, 30 Nov 2023 07:22:35 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-40b595bf5d2so6358055e9.2
-        for <git@vger.kernel.org>; Thu, 30 Nov 2023 07:22:35 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iExm/UPc"
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44B6383
+	for <git@vger.kernel.org>; Thu, 30 Nov 2023 07:42:09 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-32faea0fa1fso654496f8f.1
+        for <git@vger.kernel.org>; Thu, 30 Nov 2023 07:42:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701357754; x=1701962554; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
+        d=gmail.com; s=20230601; t=1701358928; x=1701963728; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=+wNaIIP37e7+SDICH/Xb92wKAAxFAm+tOahN+LEkF9A=;
-        b=EruiCfcMXyCm4d/dJtNC8iCO+i+NIAuF7riJAkkgP8YU2fKnCdgNQS+JMlaeFwuzNR
-         2B+ajV33NV2uFxbbHgVV7eOy8eaW3lMfz/B8UvMvhdnITGQAZ8t0WuM7In3KI2wpJvmh
-         MJokJfy9x5zZujSyU+V+hk5vAd5ka4Hdt5rVFVLyljnX7Vj6Oi4/YZBkNS26e6fl2u3G
-         gTnfS95MtbPZFXeSP5kNYqVLLN7juJS/rjr+wJjItz4jSr0ji5WQAqwCjqD0F87AhQvh
-         11i5t18Zur+hpxeMsLAmnco/iplhG2SLKDQaUY+9iTola7+Ph5EJKPfKuM1syWCUARId
-         /Zag==
+        bh=l9XqebOMjyLtuOf7vwBmEtTv5F/MOqxBRl+5LNMwvnI=;
+        b=iExm/UPctnzEnUEwBeV/c/wUGtFFvdKfoleKYzX5ym+8HRT0+cL42ZjB60Ymwi1ttJ
+         Zfy9sseZwubVt+m8yDo9zj8yIWqMMceny+bz1MY7kciSH/c+Biz4dGSSjFQsVXefO3Fd
+         yeDVy49cp44Ahg3KhBCs5L5Okr4kgdJtfqDrZl96OvlXust+FSQqOp50NwWe9ocqTCfx
+         q7ApYe+8noY9wLfVJyBFUbFwMQyZZtP2GgL/o2d8W5fQU6UsjyqbmBLty3QR74eQtJWn
+         46mM3KdGULHLy96QpRhDTuI7TtMufDKpCNfA34M2I75EyopJHrrqP8w4q+o5m9UXBx2L
+         FbGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701357754; x=1701962554;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
+        d=1e100.net; s=20230601; t=1701358928; x=1701963728;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=+wNaIIP37e7+SDICH/Xb92wKAAxFAm+tOahN+LEkF9A=;
-        b=pr+WuM9uDCHRgPTqM6v2cY5iOLrhfsmf0UMbk4tYRHRKafDh/BIS+7rbgH0GCEI9U4
-         dRQTO1zy526NEW3YzYiL6/6Ex5H1/2ne0pFbfu8aqlfFszfxbdPutOYzhFMOEcmvfNTK
-         15sN9Sg5v/Xr+FoA6ZrzfTLRriSlc149mGnymjKiAhP//QvWEV8kx/e2O1r2yeURLvVZ
-         weq163yP30HsmP2YyK+BkgIT+92z5HV7JdcuKd/n4m5L2I8CL3177XUTmwo2maf0K+Kr
-         /FB9IKWWgKzjHd98383jjESbqCsx5kU7g/oYLvHpA3tSxl7OfaAjV5qUstamCBwTdDct
-         qhdg==
-X-Gm-Message-State: AOJu0YxFv93j2RfCwPskn68fg0wTRZ/pjwQrMkhSy7/u0RXXm6VPiP88
-	+R+cvWhJ+jdzUFWTNBGjIgE=
-X-Google-Smtp-Source: AGHT+IHozLnMEJ+Ry8U9RCNqhqN6KiVqgIpMnvJ3+Hho1B8kNDc/S/6NsUl5XrArxlNg/Ksji6zB9A==
-X-Received: by 2002:a1c:4b01:0:b0:40b:3417:a667 with SMTP id y1-20020a1c4b01000000b0040b3417a667mr13827667wma.12.1701357753804;
-        Thu, 30 Nov 2023 07:22:33 -0800 (PST)
+        bh=l9XqebOMjyLtuOf7vwBmEtTv5F/MOqxBRl+5LNMwvnI=;
+        b=DU28key044qcT2ZIizmR0g30v35qnlPayS7pPUul4kp9fobiGV9fBv5rbjv4i+oU53
+         brarYxIy6y2t2aiCq7PX1c1eHf7mYCm7oyQcIxzHpDw813xgnq61tMwj6lYDbzCRYjcq
+         ix7AghE0RXw3Y2UzXu5n4Pc0/1ZSRrfyIdhqgk2nxgN5n0pyVtVefSjTZ5Pv6pLpE9jV
+         JebNzLWt1Ocobekb/QhcWpQSw/ujykxMaSjyWpfEpTXk1GVZtkmTHtynU/AmkJ2WZAg5
+         RpX4pROjJG5Xz1kC7R+0khrPbQm1BC5AiYiH6OG+eWL+jPUKfy7o9Y7X9cn/WYRmMYz0
+         4Z9g==
+X-Gm-Message-State: AOJu0YyRgj+xW7dGort4S3y9n4I9lvDkW22ln9VXiMPbbbfjOWYibFHw
+	K0J12OPE6yyBrCJEWyVs6f0=
+X-Google-Smtp-Source: AGHT+IF1ZGlJ/GdxCz5FJ/NnsIIhv+nqYYB28wsh2SMFt/vmRHUPbYQKTwK/bbbbh4a2T3+Tgmh1NQ==
+X-Received: by 2002:a5d:4887:0:b0:333:1b9f:dc3c with SMTP id g7-20020a5d4887000000b003331b9fdc3cmr4167306wrq.2.1701358927619;
+        Thu, 30 Nov 2023 07:42:07 -0800 (PST)
 Received: from [192.168.1.212] ([90.247.162.103])
-        by smtp.gmail.com with ESMTPSA id o18-20020a05600c511200b004064e3b94afsm5958493wms.4.2023.11.30.07.22.33
+        by smtp.gmail.com with ESMTPSA id o5-20020a5d6705000000b003316ad360c1sm1828233wru.24.2023.11.30.07.42.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Nov 2023 07:22:33 -0800 (PST)
-Message-ID: <b3532261-3cf4-4666-9cbd-4ce668cd2e49@gmail.com>
-Date: Thu, 30 Nov 2023 15:22:32 +0000
+        Thu, 30 Nov 2023 07:42:07 -0800 (PST)
+Message-ID: <15f67e21-c05f-4a72-9557-2a09a1311f25@gmail.com>
+Date: Thu, 30 Nov 2023 15:42:06 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -48,57 +48,88 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 2/2] checkout: forbid "-B <branch>" from touching a branch
- used elsewhere
+Subject: Re: [PATCH 3/4] refs: complete list of special refs
 Content-Language: en-US
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Willem Verstraeten <willem.verstraeten@gmail.com>, git@vger.kernel.org,
- Jeff King <peff@peff.net>
-References: <CAGX9RpFMCVLQV7RbK2u9AabusvkZD+RZNv_UD=R00cSUrjutBg@mail.gmail.com>
- <xmqqjzq9cl70.fsf@gitster.g> <xmqqv89tau3r.fsf@gitster.g>
- <xmqqpm01au0w.fsf_-_@gitster.g>
- <bf848477-b4dd-49d3-8e4b-de0fc3948570@gmail.com> <xmqqwmu42ccb.fsf@gitster.g>
-In-Reply-To: <xmqqwmu42ccb.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: hanwenn@gmail.com
+References: <cover.1701243201.git.ps@pks.im>
+ <0e38103114a206bedbbbd7ea97cb77fa05fd3c29.1701243201.git.ps@pks.im>
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <0e38103114a206bedbbbd7ea97cb77fa05fd3c29.1701243201.git.ps@pks.im>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Junio
+Hi Patrick
 
-On 27/11/2023 01:51, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->> At the moment this is academic as neither of the test scripts changed
->> by this patch are leak free and so I don't think we need to worry
->> about it but it raises an interesting question about how we should
->> handle memory leaks when dying. Leaving the leak when dying means that
->> a test script that tests an expected failure will never be leak free
->> but using UNLEAK() would mean we miss a leak being introduced in the
->> successful case should the call to "free()" ever be removed.
-> 
-> Is there a leak here?  The piece of memory is pointed at by an on-stack
-> variable full_ref when leak sanitizer starts scanning the heap and
-> the stack just before the process exits due to die, so I do not see
-> a reason to worry about this particular variable over all the other
-> on stack variables we accumulated before the control reached this
-> point of the code.
+Thanks for working on this. I've left a couple of thought below.
 
-Oh, good point. I was thinking "we exit without calling free() so it is 
-leaked" but as you say the leak checker (thankfully) does not consider 
-it a leak as there is still a reference to the allocation on the stack.
+On 29/11/2023 08:14, Patrick Steinhardt wrote:
+> +static int is_special_ref(const char *refname)
+> +{
+> +	/*
+> +	 * Special references get written and read directly via the filesystem
+> +	 * by the subsystems that create them. Thus, they must not go through
+> +	 * the reference backend but must instead be read directly. It is
+> +	 * arguable whether this behaviour is sensible, or whether it's simply
+> +	 * a leaky abstraction enabled by us only having a single reference
+> +	 * backend implementation. But at least for a subset of references it
+> +	 * indeed does make sense to treat them specially:
+> +	 *
+> +	 * - FETCH_HEAD may contain multiple object IDs, and each one of them
+> +	 *   carries additional metadata like where it came from.
+> +	 *
+> +	 * - MERGE_HEAD may contain multiple object IDs when merging multiple
+> +	 *   heads.
+> +	 *
+> +	 * - "rebase-apply/" and "rebase-merge/" contain all of the state for
+> +	 *   rebases, where keeping it closely together feels sensible.
 
-Sorry for the noise
+I'd really like to get away from treating these files as refs. I think 
+their use as refs is purely historic and predates the reflog and 
+possibly ORIG_HEAD. These days I'm not sure there is a good reason to be 
+running
+
+     git rev-parse rebase-merge/orig-head
+
+One reason for not wanting to treat them as refs is that we do not 
+handle multi-level refs that do not begin with "refs/" consistently.
+
+     git update-ref foo/bar HEAD
+
+succeeds and creates .git/foo/bar but
+
+     git update-ref -d foo/bar
+
+fails with
+
+     error: refusing to update ref with bad name 'foo/bar'
+
+To me it would make sense to refuse to create 'foo/bar' but allow an 
+existing ref named 'foo/bar' to be deleted but the current behavior is 
+the opposite of that.
+
+I'd be quite happy to see us refuse to treat anything that fails
+
+     if (starts_with(refname, "refs/") || refname_is_safe(refname))
+
+as a ref but I don't know how much pain that would cause.
+
+> +	const char * const special_refs[] = {
+> +		"AUTO_MERGE",
+
+Is there any reason to treat this specially in the long term? It points 
+to a tree rather than a commit but unlike MERGE_HEAD and FETCH_HEAD it 
+is effectively a "normal" ref.
+
+> +		"BISECT_EXPECTED_REV",
+> +		"FETCH_HEAD",
+> +		"MERGE_AUTOSTASH",
+
+Should we be treating this as a ref? I thought it was written as an 
+implementation detail of the autostash implementation rather than to 
+provide a ref for users and scripts.
+
+Best Wishes
 
 Phillip
-
-> Are you worried about optimizing compilers that behave more cleverly
-> than their own good to somehow lose the on-stack reference to
-> full_ref while calling die_if_switching_to_a_branch_in_use()?  We
-> might need to squelch them with UNLEAK() but that does not mean we
-> have to remove the free() we see above, and I suspect a more
-> productive use of our time to solve that issue is ensure that our
-> leak-sanitizing build will not triger such an unwanted optimization
-> anyway.
-> 
-> Thanks.
