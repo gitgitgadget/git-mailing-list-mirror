@@ -1,135 +1,135 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iExm/UPc"
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44B6383
-	for <git@vger.kernel.org>; Thu, 30 Nov 2023 07:42:09 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-32faea0fa1fso654496f8f.1
-        for <git@vger.kernel.org>; Thu, 30 Nov 2023 07:42:09 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q7D5CVrN"
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A407010F1
+	for <git@vger.kernel.org>; Thu, 30 Nov 2023 08:13:59 -0800 (PST)
+Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2c8880f14eeso15576671fa.3
+        for <git@vger.kernel.org>; Thu, 30 Nov 2023 08:13:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701358928; x=1701963728; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=l9XqebOMjyLtuOf7vwBmEtTv5F/MOqxBRl+5LNMwvnI=;
-        b=iExm/UPctnzEnUEwBeV/c/wUGtFFvdKfoleKYzX5ym+8HRT0+cL42ZjB60Ymwi1ttJ
-         Zfy9sseZwubVt+m8yDo9zj8yIWqMMceny+bz1MY7kciSH/c+Biz4dGSSjFQsVXefO3Fd
-         yeDVy49cp44Ahg3KhBCs5L5Okr4kgdJtfqDrZl96OvlXust+FSQqOp50NwWe9ocqTCfx
-         q7ApYe+8noY9wLfVJyBFUbFwMQyZZtP2GgL/o2d8W5fQU6UsjyqbmBLty3QR74eQtJWn
-         46mM3KdGULHLy96QpRhDTuI7TtMufDKpCNfA34M2I75EyopJHrrqP8w4q+o5m9UXBx2L
-         FbGw==
+        d=gmail.com; s=20230601; t=1701360837; x=1701965637; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vM2pY1TpKfxU3GBYTpX/Ha9uGd3sphvgJxUfJTJXkXs=;
+        b=Q7D5CVrNNqVa4sBACn+PI2+hvgkAQWB3wLQUI72IJUAONAHwOa9Ud/y2TQmKehh0Sf
+         3VY4nFcshBF5je3X7nVwwZFrYhiP92ZWsJFHkOlFhCbQldxErcMXVbfk6KCmX0Qxer1V
+         jy7n9wEzVarJ4kcwVAOJZy1qGPcWmpeB7qDpsiKY3WuOOBLBZM9T/b9LpLpfu6NMFmqP
+         mab08e4+ALBY7kGGnLrWqQ+9hw4q6cihsCGrtvxCKbcRC3IgZxyHsBXIQfj03i6MFzAp
+         T95uuyWmFBkAys60uO/dr73zyfe148yn/0mXmP7HlmkcGL1sC7bkTRFSX7eADZNSjgP3
+         og7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701358928; x=1701963728;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=l9XqebOMjyLtuOf7vwBmEtTv5F/MOqxBRl+5LNMwvnI=;
-        b=DU28key044qcT2ZIizmR0g30v35qnlPayS7pPUul4kp9fobiGV9fBv5rbjv4i+oU53
-         brarYxIy6y2t2aiCq7PX1c1eHf7mYCm7oyQcIxzHpDw813xgnq61tMwj6lYDbzCRYjcq
-         ix7AghE0RXw3Y2UzXu5n4Pc0/1ZSRrfyIdhqgk2nxgN5n0pyVtVefSjTZ5Pv6pLpE9jV
-         JebNzLWt1Ocobekb/QhcWpQSw/ujykxMaSjyWpfEpTXk1GVZtkmTHtynU/AmkJ2WZAg5
-         RpX4pROjJG5Xz1kC7R+0khrPbQm1BC5AiYiH6OG+eWL+jPUKfy7o9Y7X9cn/WYRmMYz0
-         4Z9g==
-X-Gm-Message-State: AOJu0YyRgj+xW7dGort4S3y9n4I9lvDkW22ln9VXiMPbbbfjOWYibFHw
-	K0J12OPE6yyBrCJEWyVs6f0=
-X-Google-Smtp-Source: AGHT+IF1ZGlJ/GdxCz5FJ/NnsIIhv+nqYYB28wsh2SMFt/vmRHUPbYQKTwK/bbbbh4a2T3+Tgmh1NQ==
-X-Received: by 2002:a5d:4887:0:b0:333:1b9f:dc3c with SMTP id g7-20020a5d4887000000b003331b9fdc3cmr4167306wrq.2.1701358927619;
-        Thu, 30 Nov 2023 07:42:07 -0800 (PST)
-Received: from [192.168.1.212] ([90.247.162.103])
-        by smtp.gmail.com with ESMTPSA id o5-20020a5d6705000000b003316ad360c1sm1828233wru.24.2023.11.30.07.42.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Nov 2023 07:42:07 -0800 (PST)
-Message-ID: <15f67e21-c05f-4a72-9557-2a09a1311f25@gmail.com>
-Date: Thu, 30 Nov 2023 15:42:06 +0000
+        d=1e100.net; s=20230601; t=1701360837; x=1701965637;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vM2pY1TpKfxU3GBYTpX/Ha9uGd3sphvgJxUfJTJXkXs=;
+        b=oTCPEH5podgOqX7I0awl+B009loT9jday1Ui1ZVe3gV2ZWLOh2nSGL0Sg1g5ssXIJw
+         js8UQ09J+1mZn5EwJnpvIfYXuNjpbgGf7jVNvxyXskYFFYGz6XuvamahuJADG0K3C2qr
+         GTy9MQHT2vwpS1eRwl8pmcqfl2yxDDoF0zJAOmyVcmhhdI9NOnZXBMhAomLrGEpSHrzh
+         ptdf0Qi0/IlgxBljzy6jmne0eVa/FhPt1nwYxEAc8riytIW8QwHEPoTLQtL/d3PcU3YK
+         2Dj8iMSTOuGpd3N9QKvJLIgOETYOjacs9cG2FGDudhTf9aXxqXl0bnWpXIKaJxN0bmi1
+         2Slg==
+X-Gm-Message-State: AOJu0Yz4hBw8w0VNIpVdmdO6+SGsHqBGomargRkfbsbkP7JRruxNgBRc
+	7Lq3SlnFIwazc9OG3erk1XUBJFkaPQc=
+X-Google-Smtp-Source: AGHT+IHJzAr3own0cS0GsoutkdIjn9L9g1GhnllridK5mA4oRLO1Jj2a7nU+XCbOHYofsLR6fu1wVg==
+X-Received: by 2002:a2e:9557:0:b0:2c9:b623:ddf1 with SMTP id t23-20020a2e9557000000b002c9b623ddf1mr6049094ljh.51.1701360837285;
+        Thu, 30 Nov 2023 08:13:57 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id he10-20020a05600c540a00b0040a4751efaasm2449312wmb.17.2023.11.30.08.13.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 Nov 2023 08:13:57 -0800 (PST)
+Message-ID: <pull.1291.v2.git.git.1701360836307.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1291.git.git.1657837073372.gitgitgadget@gmail.com>
+References: <pull.1291.git.git.1657837073372.gitgitgadget@gmail.com>
+From: "Julian Prein via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 30 Nov 2023 16:13:56 +0000
+Subject: [PATCH v2] hooks--pre-commit: detect non-ASCII when renaming
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 3/4] refs: complete list of special refs
-Content-Language: en-US
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: hanwenn@gmail.com
-References: <cover.1701243201.git.ps@pks.im>
- <0e38103114a206bedbbbd7ea97cb77fa05fd3c29.1701243201.git.ps@pks.im>
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <0e38103114a206bedbbbd7ea97cb77fa05fd3c29.1701243201.git.ps@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+Cc: Julian Prein <druckdev@protonmail.com>,
+    Julian Prein <druckdev@protonmail.com>
 
-Hi Patrick
+From: Julian Prein <druckdev@protonmail.com>
 
-Thanks for working on this. I've left a couple of thought below.
+When diff.renames is turned on, the diff-filter will not return renamed
+files (or copied ones with diff.renames=copy) and potential non-ASCII
+characters would not be caught by this hook.
 
-On 29/11/2023 08:14, Patrick Steinhardt wrote:
-> +static int is_special_ref(const char *refname)
-> +{
-> +	/*
-> +	 * Special references get written and read directly via the filesystem
-> +	 * by the subsystems that create them. Thus, they must not go through
-> +	 * the reference backend but must instead be read directly. It is
-> +	 * arguable whether this behaviour is sensible, or whether it's simply
-> +	 * a leaky abstraction enabled by us only having a single reference
-> +	 * backend implementation. But at least for a subset of references it
-> +	 * indeed does make sense to treat them specially:
-> +	 *
-> +	 * - FETCH_HEAD may contain multiple object IDs, and each one of them
-> +	 *   carries additional metadata like where it came from.
-> +	 *
-> +	 * - MERGE_HEAD may contain multiple object IDs when merging multiple
-> +	 *   heads.
-> +	 *
-> +	 * - "rebase-apply/" and "rebase-merge/" contain all of the state for
-> +	 *   rebases, where keeping it closely together feels sensible.
+Use the plumbing command diff-index instead of the porcelain one to not
+be affected by diff.rename.
 
-I'd really like to get away from treating these files as refs. I think 
-their use as refs is purely historic and predates the reflog and 
-possibly ORIG_HEAD. These days I'm not sure there is a good reason to be 
-running
+Signed-off-by: Julian Prein <druckdev@protonmail.com>
+---
+    hooks--pre-commit: detect non-ASCII when renaming
+    
+    A bit later than I expected, but here is v2.
+    
+    Changes since v1:
+    
+     * Switched to using diff-index and back to just the A filter as
+       suggested by Junio C Hamano
 
-     git rev-parse rebase-merge/orig-head
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1291%2Fdruckdev%2Fpre-commit-renames-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1291/druckdev/pre-commit-renames-v2
+Pull-Request: https://github.com/git/git/pull/1291
 
-One reason for not wanting to treat them as refs is that we do not 
-handle multi-level refs that do not begin with "refs/" consistently.
+Range-diff vs v1:
 
-     git update-ref foo/bar HEAD
+ 1:  101f327a040 ! 1:  1f6ca0dd3eb hooks--pre-commit: detect non-ASCII when renaming
+     @@ Metadata
+       ## Commit message ##
+          hooks--pre-commit: detect non-ASCII when renaming
+      
+     -    Currently the diff-filter that is used to check for non-ASCII characters
+     -    in filenames only checks new additions.
+     +    When diff.renames is turned on, the diff-filter will not return renamed
+     +    files (or copied ones with diff.renames=copy) and potential non-ASCII
+     +    characters would not be caught by this hook.
+      
+     -    Extend the diff-filter in the pre-commit sample to include `CR` as well.
+     -    This way non-ASCII character in filenames are detected on a rename/copy
+     -    as well.
+     +    Use the plumbing command diff-index instead of the porcelain one to not
+     +    be affected by diff.rename.
+      
+          Signed-off-by: Julian Prein <druckdev@protonmail.com>
+      
+     @@ templates/hooks--pre-commit.sample: if [ "$allownonascii" != "true" ] &&
+       	# even required, for portability to Solaris 10's /usr/bin/tr), since
+       	# the square bracket bytes happen to fall in the designated range.
+      -	test $(git diff --cached --name-only --diff-filter=A -z $against |
+     -+	test $(git diff --cached --name-only --diff-filter=ACR -z $against |
+     ++	test $(git diff-index --cached --name-only --diff-filter=A -z $against |
+       	  LC_ALL=C tr -d '[ -~]\0' | wc -c) != 0
+       then
+       	cat <<\EOF
 
-succeeds and creates .git/foo/bar but
 
-     git update-ref -d foo/bar
+ templates/hooks--pre-commit.sample | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-fails with
+diff --git a/templates/hooks--pre-commit.sample b/templates/hooks--pre-commit.sample
+index e144712c85c..29ed5ee486a 100755
+--- a/templates/hooks--pre-commit.sample
++++ b/templates/hooks--pre-commit.sample
+@@ -28,7 +28,7 @@ if [ "$allownonascii" != "true" ] &&
+ 	# Note that the use of brackets around a tr range is ok here, (it's
+ 	# even required, for portability to Solaris 10's /usr/bin/tr), since
+ 	# the square bracket bytes happen to fall in the designated range.
+-	test $(git diff --cached --name-only --diff-filter=A -z $against |
++	test $(git diff-index --cached --name-only --diff-filter=A -z $against |
+ 	  LC_ALL=C tr -d '[ -~]\0' | wc -c) != 0
+ then
+ 	cat <<\EOF
 
-     error: refusing to update ref with bad name 'foo/bar'
-
-To me it would make sense to refuse to create 'foo/bar' but allow an 
-existing ref named 'foo/bar' to be deleted but the current behavior is 
-the opposite of that.
-
-I'd be quite happy to see us refuse to treat anything that fails
-
-     if (starts_with(refname, "refs/") || refname_is_safe(refname))
-
-as a ref but I don't know how much pain that would cause.
-
-> +	const char * const special_refs[] = {
-> +		"AUTO_MERGE",
-
-Is there any reason to treat this specially in the long term? It points 
-to a tree rather than a commit but unlike MERGE_HEAD and FETCH_HEAD it 
-is effectively a "normal" ref.
-
-> +		"BISECT_EXPECTED_REV",
-> +		"FETCH_HEAD",
-> +		"MERGE_AUTOSTASH",
-
-Should we be treating this as a ref? I thought it was written as an 
-implementation detail of the autostash implementation rather than to 
-provide a ref for users and scripts.
-
-Best Wishes
-
-Phillip
+base-commit: 61a22ddaf0626111193a17ac12f366bd6d167dff
+-- 
+gitgitgadget
