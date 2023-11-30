@@ -1,132 +1,93 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c1TDHbNL"
-Received: from mail-qv1-xf32.google.com (mail-qv1-xf32.google.com [IPv6:2607:f8b0:4864:20::f32])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DFB41B3
-	for <git@vger.kernel.org>; Thu, 30 Nov 2023 10:16:24 -0800 (PST)
-Received: by mail-qv1-xf32.google.com with SMTP id 6a1803df08f44-67a0d865738so6978876d6.1
-        for <git@vger.kernel.org>; Thu, 30 Nov 2023 10:16:24 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="3KiZOTJq"
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 505C210DE
+	for <git@vger.kernel.org>; Thu, 30 Nov 2023 11:07:24 -0800 (PST)
+Received: by mail-oi1-x230.google.com with SMTP id 5614622812f47-3b83ed78a91so814728b6e.1
+        for <git@vger.kernel.org>; Thu, 30 Nov 2023 11:07:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701368183; x=1701972983; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OZGatRIkuULyg1CRUoyqZ6bZeRhjEG5ofhYp8qBz/wU=;
-        b=c1TDHbNLNjn4qMrSN4zrUU79DJSibZ2QiIoEpWSuqEHLuiqHxHR7VQT9e9HcyTkVoK
-         YKTvMavoQyv3CjoN5vr0g5XFba2l1tUh2l8QkBN67j2dJKEmxZ6EEccpJCACfLX21TGA
-         z71q7ci2oOh+FxfPyHgpieFOCh1++14QZu4yWc8Bn8haJ4glMApm0rlTvpmhVyRjzGmC
-         sxQc3psfM4FX0tiYOR3QJi7IpOZLrKQVr+fAGRcGDrn3wEK0vwXggcKvyAsslnULtnWR
-         RCP6jBd8HspnGm1oDP5HuH0Bv53EFqbayCj/P7YvjI9jkdZnWDI9HSoTowKa/q4yjc4u
-         P16g==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1701371243; x=1701976043; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=eRxeBH/55X5Rushdm4dCoNOwRXO2nu1VzFWOwrZZc3U=;
+        b=3KiZOTJq2lCCgst5rLo2nTSgEN3bHN4Qtw3tEkpSWHsalDqNGQb+V39jcKt+AqDdld
+         3gefpCXPELHHOhqLkSYaRMcy9MONCuq2TxGZe+w9Y8WfJwuxXBrh3Ggjm9yrtDgNPZl0
+         QZNRGJMabzB8gcP/voZDx7/vsZI+cnBRjmOyGaDXK8iyHR6Ubqoe7znFAGy+258Wn+16
+         /ZBV4hXgpcHfccdnWBieo/Xdyi8J/1oMEnK42EaUGAXHPy+Uhwuw4hu6dFESy1iaDV1E
+         jGd0MXcmfzSkui/bUu0IVZKgpHv36lt6RfyptoXTi/ow7ROPuoosASfUQ5Y5WfrrBj5j
+         s9hQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701368183; x=1701972983;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=OZGatRIkuULyg1CRUoyqZ6bZeRhjEG5ofhYp8qBz/wU=;
-        b=WTZwNy5SfrERsrGhHHED2+h9ae/2JQKbU+Rk5Q8k3MJ2WMTrEwHOe49qyTjEj05Ug4
-         1yPcajJlzby88wX2t9NXs/h+pf/tSNpti6nvMPieZebFnHeRNdV27uXl6ykckyPgFK1A
-         bzTsAgfnKl76X3HCXq0dzNeHYZtC/CL5ne9nfsoRuPVHSocvb5MsnSpNMoXw6HK0cR7/
-         TyPa+0t/d0k+01pP8ke2zSxcXZFcAchEprqU6lsdLQMdGUmcO71oq6v3YEMg7BC9+Jg/
-         SS/DDo8H+xxT12RCKoYIZKAPPIqSG/EY5Nw39mU9w4Mx8Q0NgA/BmCJiDX6PyrxIl6qV
-         0igA==
-X-Gm-Message-State: AOJu0YxrqucqgwK//pFjyqAHnfstEpywaQKmx8EMLOcb0sLZOntYyqzC
-	rbOqEwjKHYzIOXyvvIbCmUC7B5QrBgt7/5bggj/LmtfBvzg=
-X-Google-Smtp-Source: AGHT+IE+wRfdDvekoL7Q1tGh4I8omVto2vIeXZqHJ/NHrfxEBR/rR6VYJEbq5iubh/p5Yoa2c3/GbhBjNu2mQjeDOCE=
-X-Received: by 2002:ad4:50c4:0:b0:67a:900c:3a3d with SMTP id
- e4-20020ad450c4000000b0067a900c3a3dmr986802qvq.26.1701368183457; Thu, 30 Nov
- 2023 10:16:23 -0800 (PST)
+        d=1e100.net; s=20230601; t=1701371243; x=1701976043;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=eRxeBH/55X5Rushdm4dCoNOwRXO2nu1VzFWOwrZZc3U=;
+        b=Q+XAaDgOqLRGZB7CoKsD9V84ZvRwl7MQLtF1g0c5F8uiZBtI1kpvWByS4Akv0z0Hf7
+         Aj4TjPIrsbDQuNJqEZ/Qq2pKr7GIlgCsoJXYr/WJWUeMMW+dY725QyjcM2RwjMUfeYot
+         /tDl12GSehdVmjhfeHMrnjIekV7Cih2P2G+Gh4OgxHkbrclecpoqECO8U6mwZItCmusi
+         ihuro6UGnOk8sgzVUIAlLWO8LiPpS+O16ISsce53bW61Oo5A3zoIOoXTxFfckKwT3YBu
+         esY2QIvxHY1ADy6BLCN3mtobS9ipmi5cc7VWKTUPuHdfQ01qnVt2zOyGdaFYy2M8KLuJ
+         +4JQ==
+X-Gm-Message-State: AOJu0YxuP0qB2dEGw9gthCwV0cQNaI6/DXA5/+Ipnc4aF41y5pxtpvgH
+	dhEDhayhk28Y4HWuHxFWimwQORRHhren5PbZ8gk=
+X-Google-Smtp-Source: AGHT+IFk5LKStgFxwId7SaafomrPmsPH+WWIKnUAB3GhsizU3gwlsiPtd5hVQYMOhbDU4VVAzn4Z7w==
+X-Received: by 2002:a05:6808:e87:b0:3b5:66af:f8e3 with SMTP id k7-20020a0568080e8700b003b566aff8e3mr644872oil.37.1701371243633;
+        Thu, 30 Nov 2023 11:07:23 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id dt55-20020a05620a47b700b00774350813ccsm742215qkb.118.2023.11.30.11.07.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 Nov 2023 11:07:23 -0800 (PST)
+Date: Thu, 30 Nov 2023 14:07:22 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Jonny Grant <jg@jguk.org>
+Cc: git@vger.kernel.org
+Subject: Re: Consider dropping the decimal places for KiB/s 52.00 KiB/s
+Message-ID: <ZWjdatp3SRb4mN6G@nand.local>
+References: <637be919-0b04-4e5c-8f2e-43340521e6d1@jguk.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231003174853.1732-1-ach.lumap@gmail.com> <20231130165429.2595-1-ach.lumap@gmail.com>
- <20231130165429.2595-2-ach.lumap@gmail.com>
-In-Reply-To: <20231130165429.2595-2-ach.lumap@gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Thu, 30 Nov 2023 19:16:09 +0100
-Message-ID: <CAP8UFD0KDdwoJw6AzLUpqos=bLumcmDax59_MfQ9TUFqmmpcoA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] t2400: avoid using pipes
-To: Achu Luma <ach.lumap@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <637be919-0b04-4e5c-8f2e-43340521e6d1@jguk.org>
 
-Hi Luma,
-
-On Thu, Nov 30, 2023 at 6:37=E2=80=AFPM Achu Luma <ach.lumap@gmail.com> wro=
-te:
+On Thu, Nov 30, 2023 at 06:11:57PM +0000, Jonny Grant wrote:
+> Hello
 >
-> The exit code of the preceding command in a pipe is disregarded,
-> so it's advisable to refrain from relying on it. Instead, by
-> saving the output of a Git command to a file, we gain the
-> ability to examine the exit codes of both commands separately.
->
-> Signed-off-by: achluma <ach.lumap@gmail.com>
+> May I suggest taking off the .00 KiB/s suffix, has that been
+> considered? As the decimal places don't appear to change, they're
+> stuck on .00.
 
-I think the issue with merging your patch (in
-https://lore.kernel.org/git/xmqqedibzgi1.fsf@gitster.g/) was that this
-"Signed-off-by: ..." line didn't show your full real name and didn't
-match your name in your email address.
+I wonder if you have a throttled connection that is locked to 52KiB/s
+exactly. The progress code that generates the throughput is in
+progress.c::display_throughput(), which computes the rate. It's computed
+in bytes/misec, and then passed to throughput_string() (really,
+`strbuf_humanise_rate()`), which formats it appropriately.
 
-Assuming that "Achu Luma" is your full real name, you should replace
-"achluma" with "Achu Luma" in the "Signed-off-by: ..." line.
+If you're in the KiB range, it will print the decimal component, which
+is:
 
-Also it's better not to send a cover letter patch like
-https://lore.kernel.org/git/20231130165429.2595-1-ach.lumap@gmail.com/
-with no content for small patches like this.
+    ((bytes & ((1<<10)-1)) * 100) >> 10
 
-When you resend, please also make sure to use [Outreachy] in the patch
-subject and to increment the version number of the patch, using for
-example "[PATCH v3]".
+> $ git clone git://gcc.gnu.org/git/gcc.git git_1
+> Cloning into 'git_1'...
+> remote: Enumerating objects: 2949348, done.
+> remote: Counting objects: 100% (209238/209238), done.
+> remote: Compressing objects: 100% (14579/14579), done.
+> Receiving objects:   7% (210878/2949348), 76.33 MiB | 52.00 KiB/s
 
-It would be nice too if after the line starting with --- below, you
-could describe in a few lines the changes in the new version of the
-patch compared to the previous version.
+On my machine:
 
-> ---
+    $ git.compile clone git://gcc.gnu.org/git/gcc.git
+    [...]
+    Receiving objects:  11% (342176/2949348), 108.09 MiB | 24.01 MiB/s
 
-Here (after the line starting with --- above) is the place where you
-can tell what changed in the patch compared to the previous version.
-
-Note that when there is a cover letter patch, it's better to talk
-about changes in the new version in the cover letter, but I dont think
-it's worth sending a cover letter patch.
+I suppose we could consider dropping the decimal component if it's a
+round number, but I think that it may produce awkward flickering if the
+rate oscillates between a round number and a non-round number.
 
 Thanks,
-Christian.
-
->  t/t2400-worktree-add.sh | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
->
-> diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-> index df4aff7825..7ead05bb98 100755
-> --- a/t/t2400-worktree-add.sh
-> +++ b/t/t2400-worktree-add.sh
-> @@ -468,7 +468,8 @@ test_expect_success 'put a worktree under rebase' '
->                 cd under-rebase &&
->                 set_fake_editor &&
->                 FAKE_LINES=3D"edit 1" git rebase -i HEAD^ &&
-> -               git worktree list | grep "under-rebase.*detached HEAD"
-> +               git worktree list >actual &&
-> +               grep "under-rebase.*detached HEAD" actual
->         )
->  '
->
-> @@ -509,7 +510,8 @@ test_expect_success 'checkout a branch under bisect' =
-'
->                 git bisect start &&
->                 git bisect bad &&
->                 git bisect good HEAD~2 &&
-> -               git worktree list | grep "under-bisect.*detached HEAD" &&
-> +               git worktree list >actual &&
-> +               grep "under-bisect.*detached HEAD" actual &&
->                 test_must_fail git worktree add new-bisect under-bisect &=
-&
->                 ! test -d new-bisect
->         )
-> --
-> 2.41.0.windows.1
->
->
+Taylor
