@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="kIBkGh6O"
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E10010DF
-	for <git@vger.kernel.org>; Thu, 30 Nov 2023 11:19:55 -0800 (PST)
-Received: by mail-pf1-x42f.google.com with SMTP id d2e1a72fcca58-6cdfb721824so115462b3a.3
-        for <git@vger.kernel.org>; Thu, 30 Nov 2023 11:19:55 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="JZo3VyiA"
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6298510EF
+	for <git@vger.kernel.org>; Thu, 30 Nov 2023 11:27:27 -0800 (PST)
+Received: by mail-qk1-x730.google.com with SMTP id af79cd13be357-77d89b4cb96so112045885a.0
+        for <git@vger.kernel.org>; Thu, 30 Nov 2023 11:27:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1701371994; x=1701976794; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1701372446; x=1701977246; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=99joWaELC5DmRxFYPujP5VRS322P28XaQznt2EJYB18=;
-        b=kIBkGh6OMF6U+eztlNCIrRFfn/2A+aR1csVCeBrJRN+6lSvj1/iKttG+P1ryIgeLqJ
-         qxfnlYei+DMD9lhoJvezuwsjHe/O0juU08N7DsxYn1QSEQUtAM5O5hQmqgkDzxvmnlbA
-         hZCfbKIHVeNcgxV8f9OaLwW9I/z17HQdA1fHwfdMAvCd1QcgQPAeMslwrwe757RkDVeO
-         oHP86rZgSMxqFILrFbiH8eZ4xHgtfGR7PCrC3EjK7JAry7raL+ts0IycDJTd7sGzeohC
-         /EVNNvBBsjFEYlSJEbdYVdELpk9oo3pSyAzBNeAvKOEBA9Sby1xp2ybk/octrZrprSaK
-         xOQw==
+        bh=Co6SuyhGgOATJqSCMSaVB+0sT1vifDD7yujspSZbeOM=;
+        b=JZo3VyiAMY+L8q96857RleMS6zilSmEAMjpWi2Hgubt2+b3mjjiHzdB+p8uviJATP4
+         eDhLNKX6aIWF+Q7ZsDuje2IlmsKRyHr0drgTF675lo+gpJTnxh956/tF1RY+W1s+NPid
+         yUmlKBxilSTjNifaiNAE0PSPnV194i8qxIuuwRH211rynr9DjG3B70JAVzhe9pebH5Ki
+         ICpuLdhtGDLr7psGsNqP0Od/EG5YiRx8gr/dXVBYE3WFWqJOW2g7cAL8/y4OyOSMBFrn
+         uy03cNzY/vrm7J7uf4d3qfotmG/OJr8WgeQhZsV/CkTeRUlpEQts5WsJ4M3VWfAyY1jt
+         XWvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701371994; x=1701976794;
+        d=1e100.net; s=20230601; t=1701372446; x=1701977246;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=99joWaELC5DmRxFYPujP5VRS322P28XaQznt2EJYB18=;
-        b=VSqUsY2P3ANzknjwAECMnujKMe+V+xbJ7jsaJQCY+IP2DI3IepR1Xq3Bj5HcsNe3S2
-         iWGWucTCwPWuBoYC601huFtuNTf24T8EdUf0wv9Ktf/5oaTJGPV8Num82a+uF7FvIYs+
-         tx4+kjKsmLDw1+Dq1bzFCNgfn72EjviTQzYwSwKQs/ThjklFW1klAJTLbrpS+qrKzc0m
-         z5aAN58A4XGlaNcCcyZuAYAGPrCysZ4XyhNCGs8MTavHoUNzhTamx0n8jT4fOe4eVj5g
-         MQ5APcpNLPv7r+qE+Na0/75tLLTs8CHl9a0299YHUG0cnBiehlY181Wu9qvjwqSMvMS7
-         cvJA==
-X-Gm-Message-State: AOJu0Yy1kBTrtzi0Z508vp7EctHgVKgz8Z3yC0FN0VttxDSAq1M46h62
-	Be2E4+DqdseOHGdcDrs7jWJ/qNAvO2ErEABo31s=
-X-Google-Smtp-Source: AGHT+IFVd/iuV8xTUuWqgTRDAOjEy1eQKvLaVpJFKnCi2qdZedzkNIk0Rx0x07xiMYvOBPNNAA9c+Q==
-X-Received: by 2002:a05:6870:5ba3:b0:1fa:3be6:3b2a with SMTP id em35-20020a0568705ba300b001fa3be63b2amr18880691oab.30.1701371982790;
-        Thu, 30 Nov 2023 11:19:42 -0800 (PST)
+        bh=Co6SuyhGgOATJqSCMSaVB+0sT1vifDD7yujspSZbeOM=;
+        b=EdJNjlgVlS4runyirH0/4X/AeKCu8BbMmegSv6BSJARQ5cVQnQy7pcjjZnCVC7Kel/
+         R13hCk/NVeUf62+KDGrzcNbWZbNDvmRyS3yBuQA8jIcwk9TsGG7xx6fYdB/J3s4aWMer
+         ZxbkQZKIqSv8fimRRsruETT0zeBhRFmQLcczSAzBZYjhglPNSYydwan7dl2lhmGhWGcC
+         CgVBl8Qkfx9LI3SnOJBiVe98ogL4AelktwWNaoGNPVBA+tjZPX5Ul7SG7m7HZ/BCYrXq
+         rr62JJgJYowMrV2cXxeYqL89iQ7Tb0Sd3wp0mo0e9r//iCYAWuB77s6TLwENmlL/AjcC
+         zz9w==
+X-Gm-Message-State: AOJu0Yzx8ldjF/TR1N6ahmvnCURodtZa+PKBDfD5LVIl1ueZ3rA52MVy
+	F5Oq14gxtXdCaZSgijXj3C2JBQ==
+X-Google-Smtp-Source: AGHT+IFqBEAmHxwA2k6JTfjc83zF7Afy34w5paR7Trjvb9ce0Ed8SpoA9jE5JdNXW52VCZA/CrXigw==
+X-Received: by 2002:a05:620a:3954:b0:773:aa77:91d5 with SMTP id qs20-20020a05620a395400b00773aa7791d5mr38271665qkn.33.1701372446273;
+        Thu, 30 Nov 2023 11:27:26 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id v15-20020a05620a122f00b0077d606bec92sm749529qkj.108.2023.11.30.11.19.42
+        by smtp.gmail.com with ESMTPSA id pf20-20020a05620a859400b0077dcd786533sm767614qkn.16.2023.11.30.11.27.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Nov 2023 11:19:42 -0800 (PST)
-Date: Thu, 30 Nov 2023 14:19:41 -0500
+        Thu, 30 Nov 2023 11:27:25 -0800 (PST)
+Date: Thu, 30 Nov 2023 14:27:25 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 04/24] midx: factor out `fill_pack_info()`
-Message-ID: <ZWjgTfz0ufVoPgbw@nand.local>
+Subject: Re: [PATCH 05/24] midx: implement `DISP` chunk
+Message-ID: <ZWjiHe/roQCqpjsu@nand.local>
 References: <cover.1701198172.git.me@ttaylorr.com>
- <ccf1337305db60f1c8174e9b309e2a9e04ce1487.1701198172.git.me@ttaylorr.com>
- <ZWhhfXoovgYzIYE0@tanuki>
+ <c52d7e7b27a9add4f58b8334db4fe4498af1c90f.1701198172.git.me@ttaylorr.com>
+ <ZWhhhaXiF_wC3er7@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -55,128 +55,120 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZWhhfXoovgYzIYE0@tanuki>
+In-Reply-To: <ZWhhhaXiF_wC3er7@tanuki>
 
-On Thu, Nov 30, 2023 at 11:18:37AM +0100, Patrick Steinhardt wrote:
-> On Tue, Nov 28, 2023 at 02:08:05PM -0500, Taylor Blau wrote:
-> > When selecting which packfiles will be written while generating a MIDX,
-> > the MIDX internals fill out a 'struct pack_info' with various pieces of
-> > book-keeping.
+On Thu, Nov 30, 2023 at 11:18:45AM +0100, Patrick Steinhardt wrote:
+> > diff --git a/Documentation/gitformat-pack.txt b/Documentation/gitformat-pack.txt
+> > index 9fcb29a9c8..658682ddd5 100644
+> > --- a/Documentation/gitformat-pack.txt
+> > +++ b/Documentation/gitformat-pack.txt
+> > @@ -396,6 +396,22 @@ CHUNK DATA:
+> >  	    is padded at the end with between 0 and 3 NUL bytes to make the
+> >  	    chunk size a multiple of 4 bytes.
 > >
-> > Instead of filling out each field of the `pack_info` structure
-> > individually in each of the two spots that modify the array of such
-> > structures (`ctx->info`), extract a common routine that does this for
-> > us.
-> >
-> > This reduces the code duplication by a modest amount. But more
-> > importantly, it zero-initializes the structure before assigning values
-> > into it. This hardens us for a future change which will add additional
-> > fields to this structure which (until this patch) was not
-> > zero-initialized.
-> >
-> > As a result, any new fields added to the `pack_info` structure need only
-> > be updated in a single location, instead of at each spot within midx.c.
-> >
-> > There are no functional changes in this patch.
-> >
-> > Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> > ---
-> >  midx.c | 35 +++++++++++++++++++----------------
-> >  1 file changed, 19 insertions(+), 16 deletions(-)
-> >
-> > diff --git a/midx.c b/midx.c
-> > index 3b727dc633..591b3c636e 100644
-> > --- a/midx.c
-> > +++ b/midx.c
-> > @@ -464,6 +464,17 @@ struct pack_info {
-> >  	unsigned expired : 1;
-> >  };
-> >
-> > +static void fill_pack_info(struct pack_info *info,
-> > +			   struct packed_git *p, char *pack_name,
-> > +			   uint32_t orig_pack_int_id)
-> > +{
-> > +	memset(info, 0, sizeof(struct pack_info));
+> > +	Disjoint Packfiles (ID: {'D', 'I', 'S', 'P'})
+> > +	    Stores a table of three 4-byte unsigned integers in network order.
+> > +	    Each table entry corresponds to a single pack (in the order that
+> > +	    they appear above in the `PNAM` chunk). The values for each table
+> > +	    entry are as follows:
+> > +	    - The first bit position (in psuedo-pack order, see below) to
+>
+> s/psuedo/pseudo/
+
+Good catch, thanks. Not sure how that escaped my spell-checker...
+
+> > +=== `DISP` chunk and disjoint packs
 > > +
-> > +	info->orig_pack_int_id = orig_pack_int_id;
-> > +	info->pack_name = pack_name;
-> > +	info->p = p;
-> > +}
+> > +The Disjoint Packfiles (`DISP`) chunk encodes additional information
+> > +about the objects in the multi-pack index's reachability bitmap. Recall
+> > +that objects from the MIDX are arranged in "pseudo-pack" order (see:
 >
-> Nit: all callers manually call `xstrdup(pack_name)` and pass that to
-> `fill_pack_info()`. We could consider doing this in here instead so that
-> ownership of the string becomes a tad clearer.
+> The colon feels a bit out-of-place here, so: s/see:/see/
 
-That's a great idea. I think we'd also want to mark the pack_name
-argument as const, not just because xstrdup() requires it, but also
-because it communicates the ownership more clearly.
+Thanks, I'll fix that up.
 
-I'll squash something like this in:
-
---- >8 ---
-diff --git a/midx.c b/midx.c
-index b8b3f41024..6fb5e237b7 100644
---- a/midx.c
-+++ b/midx.c
-@@ -465,13 +465,13 @@ struct pack_info {
- };
-
- static void fill_pack_info(struct pack_info *info,
--			   struct packed_git *p, char *pack_name,
-+			   struct packed_git *p, const char *pack_name,
- 			   uint32_t orig_pack_int_id)
- {
- 	memset(info, 0, sizeof(struct pack_info));
-
- 	info->orig_pack_int_id = orig_pack_int_id;
--	info->pack_name = pack_name;
-+	info->pack_name = xstrdup(pack_name);
- 	info->p = p;
- }
-
-@@ -557,8 +557,7 @@ static void add_pack_to_midx(const char *full_path, size_t full_path_len,
- 			return;
- 		}
-
--		fill_pack_info(&ctx->info[ctx->nr], p, xstrdup(file_name),
--			       ctx->nr);
-+		fill_pack_info(&ctx->info[ctx->nr], p, file_name, ctx->nr);
- 		ctx->nr++;
- 	}
- }
-@@ -1336,7 +1335,7 @@ static int write_midx_internal(const char *object_dir,
- 			}
-
- 			fill_pack_info(&ctx.info[ctx.nr++], ctx.m->packs[i],
--				       xstrdup(ctx.m->pack_names[i]), i);
-+				       ctx.m->pack_names[i], i);
- 		}
- 	}
---- 8< ---
-
-> > -		if (open_pack_index(ctx->info[ctx->nr].p)) {
-> > +		if (open_pack_index(p)) {
-> >  			warning(_("failed to open pack-index '%s'"),
-> >  				full_path);
-> >  			close_pack(ctx->info[ctx->nr].p);
+> > +above) for reachability bitmaps.
+> > +
+> > +From the example above, suppose we have packs "a", "b", and "c", with
+> > +10, 15, and 20 objects, respectively. In pseudo-pack order, those would
+> > +be arranged as follows:
+> > +
+> > +    |a,0|a,1|...|a,9|b,0|b,1|...|b,14|c,0|c,1|...|c,19|
+> > +
+> > +When working with single-pack bitmaps (or, equivalently, multi-pack
+> > +reachability bitmaps without any packs marked as disjoint),
+> > +linkgit:git-pack-objects[1] performs ``verbatim'' reuse, attempting to
+> > +reuse chunks of the existing packfile instead of adding objects to the
+> > +packing list.
 >
-> Isn't `ctx->info[ctx->nr].p` still uninitialized at this point?
+> I'm not sure I full understand this paragraph. In the context of a
+> single pack bitmap it's clear enough. But I stumbled over the MIDX case,
+> because here we potentially have multiple packfiles, so it's not exactly
+> clear to me what you refer to with "the existing packfile" in that case.
+> I'd think that we perform verbatim reuse of the preferred packfile,
+> right? If so, we might want to make that a bit more explicit.
 
-Great catch, thank you!
+Yep, sorry, I can see how that would be confusing. Since we're talking
+about the existing behavior at this point in the series (before
+multi-pack reuse is implemented), I changed this to:
 
-> > @@ -1330,10 +1333,10 @@ static int write_midx_internal(const char *object_dir,
-> >  				if (open_pack_index(ctx.m->packs[i]))
-> >  					die(_("could not open index for %s"),
-> >  					    ctx.m->packs[i]->pack_name);
-> > -				ctx.info[ctx.nr].p = ctx.m->packs[i];
+  "reuse chunks of the bitmapped or preferred packfile [...]"
+
+Thanks for carefully reading and spotting my errors ;-).
+
+> > +object. This introduces an additional constraint over the set of packs
+> > +we may want to reuse. The most straightforward approach is to mandate
+> > +that the set of packs is disjoint with respect to the set of objects
+> > +contained in each pack. In other words, for each object `o` in the union
+> > +of all objects stored by the disjoint set of packs, `o` is contained in
+> > +exactly one pack from the disjoint set.
 >
-> Just to make sure I'm not missing anything, but this assignment here was
-> basically redundant before this patch already, right?
+> Is this a property that usually holds for our normal housekeeping, or
+> does it require careful managing by the user/admin? How about geometric
+> repacking?
 
-I think that's right, but in either case we're assigning the pack once
-at the end of each loop iteration via a single call to fill_pack_info().
-Since we're using ctx.m->packs[i] in both places (after a call to
-prepare_midx_pack()), we should be OK here.
+At this point in the series, it would require careful managing to ensure
+that this is the case. In practice MIDX'd packs generated with a
+geometric repack are mostly disjoint, but definitely not guaranteed to
+be.
+
+Further down in this series we'll introduce new options to generate
+packs which are guaranteed to be disjoint with respect to the
+currently-marked set of packs in the DISP chunk.
+
+> > @@ -764,14 +807,22 @@ static struct pack_midx_entry *get_sorted_entries(struct multi_pack_index *m,
+> >  		 * Take only the first duplicate.
+> >  		 */
+> >  		for (cur_object = 0; cur_object < fanout.nr; cur_object++) {
+> > -			if (cur_object && oideq(&fanout.entries[cur_object - 1].oid,
+> > -						&fanout.entries[cur_object].oid))
+> > -				continue;
+> > +			struct pack_midx_entry *ours = &fanout.entries[cur_object];
+> > +			if (cur_object) {
+> > +				struct pack_midx_entry *prev = &fanout.entries[cur_object - 1];
+> > +				if (oideq(&prev->oid, &ours->oid)) {
+> > +					if (prev->disjoint && ours->disjoint)
+> > +						die(_("duplicate object '%s' among disjoint packs '%s', '%s'"),
+> > +						    oid_to_hex(&prev->oid),
+> > +						    info[prev->pack_int_id].pack_name,
+> > +						    info[ours->pack_int_id].pack_name);
+>
+> Shouldn't we die if `prev->disjoint || ours->disjoint` instead of `&&`?
+> Even if one of the packs isn't marked as disjoint, it's still wrong if
+> the other one is and one of its objects exists in multiple packs.
+>
+> Or am I misunderstanding, and we only guarantee the disjoint property
+> across packfiles that are actually marked as such?
+
+Right, we only guarantee disjointed-ness among the set of packs that are
+marked disjoint. It's fine for the same object to appear in a disjoint
+and non-disjoint pack, and for both of those packs to end up in the
+MIDX. But that is only because we'll use the disjoint copy in our
+bitmap.
+
+If there were two packs that are marked as supposedly disjoint, but
+contain at least one duplicate of an object, then we will reject those
+packs as non-disjoint.
 
 Thanks,
 Taylor
