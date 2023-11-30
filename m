@@ -1,100 +1,124 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PJ7vKxI4"
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A7501A5
-	for <git@vger.kernel.org>; Wed, 29 Nov 2023 16:24:54 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-40b4f6006d5so2860405e9.1
-        for <git@vger.kernel.org>; Wed, 29 Nov 2023 16:24:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701303893; x=1701908693; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=+CmRCCHA9zdDbEts/0JPouoKBTMsX0oz6YclPFFbnHg=;
-        b=PJ7vKxI40XdzcP4ttst8tlN3aLy5DqKBlA3RgC+M+cscsk4TVvA89Wsz3lfKZ9dy7l
-         pb/siwE4w2Ekb6SgYAF9kRNS07TrdfAS1vCx74JFhBxPDWps0GEMrs1RVUBb1U+I3aMG
-         vgo7OVQwmSgipmtvrzTuM0gdgWtqwZ/M8fXZPalG30e16mWq5UoOqECwSKoEMoxd6ank
-         AbZqc0iUZH0cHsVr1ofnmg5mcygUFZs6vHNlNVHp9Oir20960SstKKRikYjSDxEh32TZ
-         D9jFLXFlpZa3UocOaFWz1MVy8RVO7nMslqa2UC0sP4g13bZcCg2S2PeN6OrBFZx8u/XB
-         w3oA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701303893; x=1701908693;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+CmRCCHA9zdDbEts/0JPouoKBTMsX0oz6YclPFFbnHg=;
-        b=uTHWn/8vgL7qhlL7k1KcEeH+kcMhHNeI10a804Yk6GDXCJWk+/g8pB9eW4ktFT3Bow
-         eh5ggRJqPcop6fIr7gcxSdWWtuDBiL00pemz2xrToaonxrRXvNUNZuG5zsFKOWCSK4xJ
-         14ZNdvKmuv04/JgauwIVMtgJsDXdtl2T0DradvDnl/q8ncEWj1DWVLlE++YKY0TBrJB4
-         Pb5o8z6RMlwc0tkZDHw+s4JWlZ91UIbGzBqLAWewK5O18pfiOt7/7E6NKdjp9EiTWoqJ
-         eXoXQzrDwxAiEfoiVIg8vw5+Lpm0KcE+cDg9w7ptLeQVWUEAibss1slslv6lTZq5QXEy
-         cejQ==
-X-Gm-Message-State: AOJu0Yz2raY9xWsZz/XF5U6HRiBQUQvXls7gTgC4/E8216/X2FrKgZ6a
-	vmJAWuvJ/lx6k3gxWeXhQF16TuTAlVA=
-X-Google-Smtp-Source: AGHT+IE1EqGtKaI0iPEupBKJK7DwlC5AsALk50r+Y3+r+PIhmtsow+zGDd3zcxVgQuWxHHmOvUJR0w==
-X-Received: by 2002:a05:600c:46cc:b0:402:e68f:8896 with SMTP id q12-20020a05600c46cc00b00402e68f8896mr11325217wmo.0.1701303892532;
-        Wed, 29 Nov 2023 16:24:52 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id az27-20020a05600c601b00b003fc0505be19sm68930wmb.37.2023.11.29.16.24.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Nov 2023 16:24:52 -0800 (PST)
-Message-ID: <pull.1613.git.git.1701303891791.gitgitgadget@gmail.com>
-From: "Clarence =?UTF-8?Q?=22Sparr=22?= Risher via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 30 Nov 2023 00:24:51 +0000
-Subject: [PATCH] Mention default oldbranch in git-branch doc
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WGJNb4J+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ErDWb/wI"
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34EBB1A6
+	for <git@vger.kernel.org>; Wed, 29 Nov 2023 23:06:52 -0800 (PST)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id 02B385C0159;
+	Thu, 30 Nov 2023 02:06:49 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute5.internal (MEProxy); Thu, 30 Nov 2023 02:06:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to; s=fm1; t=1701328008; x=1701414408; bh=T+
+	AVLV8/HOJ3VNh7r6H4EFdaUq8no9X61E9ncgKEozk=; b=WGJNb4J+tQPJSqx187
+	rXbcr9/P2nnlXH16T2x1EU0BSrAogKo6PqLR38mgRVIAYu/Xyq8UtZ8WCtkGYYfg
+	UCAnVgrDMq6tJSDJ0n03uSHqDtTDdCsrpm79N4IJ6e/9R7IEx10Nd5Win2FrmtCp
+	qYc8JtglsV36NnMd77KWY9m0ANvvzZl2zAgje/emEq7Y1SXNMQI46tAGDnK4+Nlt
+	G8gXdsdn4EaSVvGywqDHwgC7p9R0n0vz0vPafudve1T+xjLWoSlK2FlGfOkAjkHh
+	CeOZkuYnKDc5qx2PLH72HOAkzN6JHkBW0pUGL1xq3bc9sC6JEPQcLWoKF/ZgBkWZ
+	R8eA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm1; t=1701328008; x=1701414408; bh=T+AVLV8/HOJ3V
+	Nh7r6H4EFdaUq8no9X61E9ncgKEozk=; b=ErDWb/wIQKoX0Q/w3G0vzZZR9ZcqG
+	sUOLJRKF12GNkJ1uvOSku4CaaeND/mXLrxuVJzdOF45oBLKORTZyTupXLzQJYn3n
+	r7lFZG/sRaDwJjS23Uc3uaGWw4Ea9w3OUuLYXEA+g9DdbHhLp0RyoFf02Tg872DY
+	dqu02zZ1U+6k7EK+vnholuHMsmAfDAjibXvIQ/s5lzwzNsHXaJAwAUcpRe3Wlrsp
+	6iDNJv2nEevZCN0iledL/tRqD2TtRlhCwTd4Iu1GRELGwCLSq3gqPJbaEeZieeKG
+	CWni4F7ggBDL3sWToPdlPC29r+eMZtRF0Wu39ntLkRdCaD3rFYDBEHAbw==
+X-ME-Sender: <xms:iDRoZVYhePbptm6zfFVf27uyuQFj3XO04WX1nzEIDflVWBnPwVtVlQ>
+    <xme:iDRoZcaRV3Y6sr6U8NHSSOVMR76_j5bm0ICXAdX6AsGbQaDN19mMpRVc5vWL_74kC
+    Jrp3ijBIXqLAqLwpw>
+X-ME-Received: <xmr:iDRoZX9NKR7HuDn7_yzlpF-WJ6uTbu--09L8Gi0cN_APDeo5J38Xg1-X5Av43VO-4wTFy8mr87sDuVuTsRaxNUXupHlmC0M_FxzPb8TLu2fEYUqY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudeiiedguddtfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
+    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
+    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeige
+    ekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:iDRoZTqFLctqDnMIDogdXfJ1GO5rPPHrcG-rNgquvBQyT3PGxspW0Q>
+    <xmx:iDRoZQqaz8G1pooba0h0iJ_UjG6QtCiEa6u2BJPH7Hj91Qz5KJ3Oiw>
+    <xmx:iDRoZZQu6DdseN64dtcJncwAa9C-xAjoqEncdO5UjKxbOEH080wK4g>
+    <xmx:iDRoZXT7HMd63RFabS6QuzRItmISY-pb881_vLzGy5HczsK_Y9briw>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 30 Nov 2023 02:06:48 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 520308fa (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 30 Nov 2023 07:05:33 +0000 (UTC)
+Date: Thu, 30 Nov 2023 08:06:44 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 00/10] t: more compatibility fixes with reftables
+Message-ID: <ZWg0hJNsIR---SVI@tanuki>
+References: <cover.1701242407.git.ps@pks.im>
+ <ZWfJp80vzVhbdH89@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Clarence =?UTF-8?Q?=22Sparr=22?= Risher <sparr0@gmail.com>,
-    "Clarence \"Sparr\" Risher" <sparr0@gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="TqQsdnKqRlYZwU4s"
+Content-Disposition: inline
+In-Reply-To: <ZWfJp80vzVhbdH89@nand.local>
 
-From: "Clarence \"Sparr\" Risher" <sparr0@gmail.com>
 
-`git branch -m` has an optional first argument, the branch to rename.
-If omitted, it defaults to the current branch. This behavior is not
-currently described in the documentation. While it can be determined
-relatively easily through experimentation, and less so through viewing
-the source code (builtin/branch.c:897), it is not obvious what such a
-command will do when encountered in a less interactive context.
+--TqQsdnKqRlYZwU4s
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-This patch adds one sentence to the git-branch documentation, with
-wording based on another optional argument described earlier in the
-same doc.
+On Wed, Nov 29, 2023 at 06:30:47PM -0500, Taylor Blau wrote:
+> On Wed, Nov 29, 2023 at 08:24:36AM +0100, Patrick Steinhardt wrote:
+> > Hi,
+> >
+> > this is the second patch series that refactors tests to become
+> > compatible with the upcoming reftables backend. It's in the same spirit
+> > as the first round of patches [1], where most of the refactorings are to
+> > use plumbing tools to access refs or the reflog instead of modifying
+> > on-disk data structures directly.
+>=20
+> All looks good to me. Thanks for a pleasant read :-).
+>=20
+> Thanks,
+> Taylor
 
-The same behavior applies to -M, -c, and -C, which are all covered by
-this same section of the documentation.
+If you don't mind, I'll refrain from sending a v2 only to start piping
+output into git-update-ref(1) directly. I'll incorporate that feedback
+though if there is a need for v2 due to other reasons.
 
-Signed-off-by: Clarence Risher <clarence@kira-learning.com>
-Signed-off-by: Clarence "Sparr" Risher <sparr0@gmail.com>
----
-    Mention default oldbranch in git-branch doc
+Thanks for your review!
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1613%2Fsparr%2Fdoc_branch_rename_one_param-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1613/sparr/doc_branch_rename_one_param-v1
-Pull-Request: https://github.com/git/git/pull/1613
+Patrick
 
- Documentation/git-branch.txt | 1 +
- 1 file changed, 1 insertion(+)
+--TqQsdnKqRlYZwU4s
+Content-Type: application/pgp-signature; name="signature.asc"
 
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-index 4395aa93543..affed1b17a4 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -73,6 +73,7 @@ overridden by using the `--track` and `--no-track` options, and
- changed later using `git branch --set-upstream-to`.
- 
- With a `-m` or `-M` option, <oldbranch> will be renamed to <newbranch>.
-+If the <oldbranch> argument is missing it defaults to the current branch.
- If <oldbranch> had a corresponding reflog, it is renamed to match
- <newbranch>, and a reflog entry is created to remember the branch
- renaming. If <newbranch> exists, -M must be used to force the rename
+-----BEGIN PGP SIGNATURE-----
 
-base-commit: 564d0252ca632e0264ed670534a51d18a689ef5d
--- 
-gitgitgadget
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVoNH4ACgkQVbJhu7ck
+PpTDUA//ZTws4LfLSYsUnZxYn0ZHCwmWMKJYO4D/H6E27uhHlZGJ9bfM69yO/G7w
+oDyoOLgz6e5rzUofBSVDPIhmfPQj3HYRgohSRHfOIkDO+9xml3tg9zp/pyHnnUbs
+lbgkHFkKSDR9+jLII1cyCNLWeUcQW85fAnA1idqQO65S9RyCquAAPuyYnvHjX2+M
+oBEnZzHuM+rSWoTYtjLcg2FHVBVn5hENzHxRC9FvxiOESyibq59Z6vKLYzeh87UB
+1Ga9ZvC4KHc/0MOdFtyqH5s0YjOk0B1X7eiEg3I4ZIy16TKjKyseXDnq2yX0lq9Q
+uyILaiJl/3n9z9YMNDgrnzZEC3u5D+1NI3qsk+9mJGcZIC91zyKy85AhvdBTY6qR
+AGXjZjoebz6PU+vNw1CNmHX1zdNnKSEhYUWi6FN5HHByXPm84K8KuHGokxfpctC3
+QI/ml5YPIiZwWuVg+w0OVBazMaEoe2wcnLkjduSPfig4GEgLnsmxveJ1K6MFnebZ
+N+lKnSCPr6/0GhMBMpL+R+DyeXunPJ9MzE2SsPnKWmhVE8di6gdbcDeYtnV4SoHr
++Zqa+y1aU032S++ap9bgthipY6cj48txFACx5rCXLDcrthWgLBlmeoTNQm0eGRU0
+haNp86tYUz+1fYpuQExfQfaMUBQuq2KEKJ0ofk815mQS3FL6CM4=
+=+uSy
+-----END PGP SIGNATURE-----
+
+--TqQsdnKqRlYZwU4s--
