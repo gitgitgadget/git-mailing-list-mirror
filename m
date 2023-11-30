@@ -1,95 +1,77 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JHcUxCJy"
-Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63701197
-	for <git@vger.kernel.org>; Thu, 30 Nov 2023 09:37:11 -0800 (PST)
-Received: by mail-ed1-x541.google.com with SMTP id 4fb4d7f45d1cf-54af4f2838dso1300842a12.2
-        for <git@vger.kernel.org>; Thu, 30 Nov 2023 09:37:11 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=jguk.org header.i=@jguk.org header.b="Vdg62u/7"
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B491D6C
+	for <git@vger.kernel.org>; Thu, 30 Nov 2023 10:14:07 -0800 (PST)
+Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2c9c39b7923so16275531fa.0
+        for <git@vger.kernel.org>; Thu, 30 Nov 2023 10:14:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701365829; x=1701970629; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=jguk.org; s=google; t=1701368045; x=1701972845; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:from:to:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ll9aUAXk2aRm/C025KdPWLPd3yDTxT6JJTLTAuCYD4k=;
-        b=JHcUxCJyyZpiSVlM/Perf08i2DMfDb74CSPq3x9LRd6wkJZrNm3hye/B36JIuHk9ar
-         Khsi8iM2p7orV+wHCSMt7sMBBTZrCZBBQc2kWq/d3eXrhD1l8O2e86ushQL6djDE/EGS
-         v4kdejzunTM3Ac8LAYAcC3YulpwI1aZ+aJb/XOWmahF2aolvs/5ckmVoMXDtRmIp6Bfx
-         SIKDxveeW1p2p+dFpd3j14tBJf7dF5JSB2SN1IMpwn5qPSU5Jyrf+dEfOIoKtUGqVhMk
-         mtBqA+Ub9lyDJpverPvgnlkDvfBrjm5x6VWfKnyl1cenffrm3adHQ44OoiwUzLFoxVWT
-         NYNA==
+        bh=XYpkHCaIJmB/iT/OfV3Kzg2pfHGNMIk40xs9twZ7QUQ=;
+        b=Vdg62u/7m+ZgA2/AFliO8/HiRt4fSlYaF+nUNO0ZFgVOKOqgQRKpkF97zB+Rdo81Wb
+         ZvCrlaqeZPKn1z30nhYQY6mzzCi9ko10fLFrU2hepSS6p1Ocn5ewqowu4c9eWmGxnyiw
+         7apXchcdPxle75kb6YveWQlzOL16w8FQ7DPcl/7PuPpse5h9NDFse9g3b+JN7lkbCaVe
+         3tDZx5t4QReHB3Qr0n8dNOuPhS6860+Um56BPyQwmERdTmZFz9ya7H5MtAL4fN5XbT4F
+         F6hmC9sqCtDltxZaJV18tdKLP5UBy4pzU9L1nEIBEp8rvsHKNW3qiLsNbqWlNSVumu+z
+         6GMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701365829; x=1701970629;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ll9aUAXk2aRm/C025KdPWLPd3yDTxT6JJTLTAuCYD4k=;
-        b=hZyiJgEExiFD34Khwf6kEQ3yF3L7ua5ghhnnvbVJvMRf9KsBlODKzFICU7gfmCGvz1
-         jo5nAUAikG3QoP+/bnuJZKP/jk5uaveQRl7CjPFKzoxj1p3jPmal0CteXDr+7DwDd5VD
-         KK/jA8sM5hGgnM14pz/kikvQ1w/eNro/V5yx6Z/PTB9/zhDP3bL5DMfNyfuoyzQ49qjP
-         hJWlEiNgpOcsRLUHUoQasulKzAVsUt070OtiB4SYBoUcuNgGXtNwOoiPMPDC74t31Eva
-         DGyT71I0pexB3SzVKHdXiErQkexkgjxbPM4Ia5UxZTqZXXeExAruhltP+LUFApzId3ze
-         OGbg==
-X-Gm-Message-State: AOJu0YzuNyn68G+lMXIbF/1KzLxpDTMjq4Dpm5jwky9ojc85G9AAcHGl
-	Vtx0edNprvETCs4333uT+epRrp85UI+FxQ==
-X-Google-Smtp-Source: AGHT+IFe103fAPGtBfEQ3Kg5mO1ICteuecCv/oadcOAic11ziW8TPWMoRgnCGVt1dkoOLHwjzG0dHw==
-X-Received: by 2002:a05:6512:3b2:b0:509:5d4b:742f with SMTP id v18-20020a05651203b200b005095d4b742fmr80760lfp.20.1701363320429;
-        Thu, 30 Nov 2023 08:55:20 -0800 (PST)
-Received: from localhost.localdomain ([102.244.155.37])
-        by smtp.gmail.com with ESMTPSA id a20-20020a50ff14000000b0054b1360dd03sm711671edu.58.2023.11.30.08.55.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Nov 2023 08:55:20 -0800 (PST)
-From: Achu Luma <ach.lumap@gmail.com>
-To: git@vger.kernel.org
-Cc: Achu Luma <ach.lumap@gmail.com>
-Subject: [PATCH v2 1/1] t2400: avoid using pipes
-Date: Thu, 30 Nov 2023 17:54:29 +0100
-Message-ID: <20231130165429.2595-2-ach.lumap@gmail.com>
-X-Mailer: git-send-email 2.42.0.windows.2
-In-Reply-To: <20231130165429.2595-1-ach.lumap@gmail.com>
-References: <20231003174853.1732-1-ach.lumap@gmail.com>
- <20231130165429.2595-1-ach.lumap@gmail.com>
+        d=1e100.net; s=20230601; t=1701368045; x=1701972845;
+        h=content-transfer-encoding:subject:from:to:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=XYpkHCaIJmB/iT/OfV3Kzg2pfHGNMIk40xs9twZ7QUQ=;
+        b=tY+XkWZTEEK1h1YFtUOBxF115sM/e7wZ/8i3In9Ej6BHuQuwepuFGHYzwrpRV5gyqm
+         ytDUVIfmkyCw3ZOuNX6gACv4J0jhFT+6KcBcEr00/bQERAM/DJNGEkEau1y8lq6eMwpQ
+         f1VF5twYmh9C4pcBBDaYU2D0drYjDsmVTj6Xmc1OhstDNL94Zc/Vp95TUNksKWvyX0m+
+         c0mCge56+v3k1dHPxIaTOEyJGaGOp2gJpVz3AUjMegS2vPi0oi6KBfa4SOg5WFDcUyvu
+         7wx376fUA21ZSNuLlC2USNqnIWcpH4gVDhjeEBIKBpe3MSGxW7mlFVR1COpUFNj41DQB
+         tNxQ==
+X-Gm-Message-State: AOJu0YztjI/jBnBSZVkDRLO56z3tFedyr7aM5REEqzWCxtl/7tUm50Ug
+	1noCsoJOV6HdIb1Q9nXKeRK21KkVp/KL8CkJXfE=
+X-Google-Smtp-Source: AGHT+IEdrxhUzlObQPxdch/4mn+yi+fnYeM9cZOvhS3JTUNbpWEY6dbXmIbss1wxRD35PrTWCm7oUw==
+X-Received: by 2002:a5d:4fd1:0:b0:333:1b9e:624a with SMTP id h17-20020a5d4fd1000000b003331b9e624amr3021wrw.47.1701367918449;
+        Thu, 30 Nov 2023 10:11:58 -0800 (PST)
+Received: from [192.168.0.12] (cpc87345-slou4-2-0-cust172.17-4.cable.virginm.net. [81.101.252.173])
+        by smtp.gmail.com with ESMTPSA id d9-20020a056000114900b00332e8dd713fsm2139101wrx.74.2023.11.30.10.11.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 30 Nov 2023 10:11:58 -0800 (PST)
+Message-ID: <637be919-0b04-4e5c-8f2e-43340521e6d1@jguk.org>
+Date: Thu, 30 Nov 2023 18:11:57 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Content-Language: en-GB
+To: git@vger.kernel.org
+From: Jonny Grant <jg@jguk.org>
+Subject: Consider dropping the decimal places for KiB/s 52.00 KiB/s
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-The exit code of the preceding command in a pipe is disregarded,
-so it's advisable to refrain from relying on it. Instead, by
-saving the output of a Git command to a file, we gain the
-ability to examine the exit codes of both commands separately.
+Hello
 
-Signed-off-by: achluma <ach.lumap@gmail.com>
----
- t/t2400-worktree-add.sh | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+May I suggest taking off the .00 KiB/s suffix, has that been considered? As the decimal places don't appear to change, they're stuck on .00.
 
-diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-index df4aff7825..7ead05bb98 100755
---- a/t/t2400-worktree-add.sh
-+++ b/t/t2400-worktree-add.sh
-@@ -468,7 +468,8 @@ test_expect_success 'put a worktree under rebase' '
- 		cd under-rebase &&
- 		set_fake_editor &&
- 		FAKE_LINES="edit 1" git rebase -i HEAD^ &&
--		git worktree list | grep "under-rebase.*detached HEAD"
-+		git worktree list >actual && 
-+		grep "under-rebase.*detached HEAD" actual
- 	)
- '
- 
-@@ -509,7 +510,8 @@ test_expect_success 'checkout a branch under bisect' '
- 		git bisect start &&
- 		git bisect bad &&
- 		git bisect good HEAD~2 &&
--		git worktree list | grep "under-bisect.*detached HEAD" &&
-+		git worktree list >actual && 
-+		grep "under-bisect.*detached HEAD" actual &&
- 		test_must_fail git worktree add new-bisect under-bisect &&
- 		! test -d new-bisect
- 	)
--- 
-2.41.0.windows.1
+I noticed the KiB/s is neatly rounded to the kibibyte.
 
+Apologies I'm not using latest release. 
+git version 2.40.1
+
+
+$ git clone git://gcc.gnu.org/git/gcc.git git_1
+Cloning into 'git_1'...
+remote: Enumerating objects: 2949348, done.
+remote: Counting objects: 100% (209238/209238), done.
+remote: Compressing objects: 100% (14579/14579), done.
+Receiving objects:   7% (210878/2949348), 76.33 MiB | 52.00 KiB/s
+
+
+Meanwhile I'll keep waiting for this slow server.
+
+Kind regards, Jonny
