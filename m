@@ -1,163 +1,107 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="jTSUnRZK"
-Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 229B7D67
-	for <git@vger.kernel.org>; Thu, 30 Nov 2023 11:39:44 -0800 (PST)
-Received: by mail-qv1-xf31.google.com with SMTP id 6a1803df08f44-67a73619fc4so7538826d6.2
-        for <git@vger.kernel.org>; Thu, 30 Nov 2023 11:39:44 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=jguk.org header.i=@jguk.org header.b="OadCyLYh"
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1195D194
+	for <git@vger.kernel.org>; Thu, 30 Nov 2023 12:19:13 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-4079ed65582so13092975e9.1
+        for <git@vger.kernel.org>; Thu, 30 Nov 2023 12:19:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1701373183; x=1701977983; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ciqqzFjMiG/up5E3qpYMK9t+Vkf21R+w7dpwIWzAb/g=;
-        b=jTSUnRZKZ8Kl1uzLjL8tdwktuIDicJBWhQIf5dFd4NuxbFeg0E4TUu2VBmtrtUVq0m
-         AeKc1UxQ9yThhOBqiVT9EYB6ietFAiSCNb8QHv/M+h3PjS8iGfArUKoJkx3fc35ZMXb5
-         3e164srKqIDOJHirIgbn23/8rI3MxO3GGS41gDkni2J0upJ5KJ46VhyVJLvdZBOYI1PE
-         N5mlmY8KGrkshMnDZUp1oWMdQi6vTCJok6XegRNaVQlGGyOmefNgFe8DWZcpLmJJ+wLP
-         GhIT4sVNju4hvGTsoGvjcwGfCoVMYFcxj9gE7EgPVT6+ukI9BNoAyEXxiw85S67SkSM5
-         soiQ==
+        d=jguk.org; s=google; t=1701375551; x=1701980351; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wMQAJwGcXQVah6GLaL6geSOl653G6WLDMv4NuFewwVE=;
+        b=OadCyLYhWVE3B3ggRyXYx/INiEO3r+nRVCcPlS3ue97VF0prWOEOvCR4yq6kOteNIi
+         FxdseiNmQHXvH2sc9cePVQIL+vuLqTi4ciURmfyiNhnc/frKVpIJyIZk/lRLwyCCTHrU
+         MpKVQQ6B5q09tVrsW2xsmyMn5MRpgnYBGhNGJbsKcw5JqWW5Sgi6vdgnsO/3m+fhYRAY
+         stWXd97gSBz8ExOT8HxTdCfSB1FHOqAZGYKnYHnsOwYALWSsrCk34ELr2GpPTLabB22O
+         prV2osycfel4PH53TkRX1d1yQunjxaQMafN6iCCUFMuTkK9E5EuSWPo5Rq1cpLvC3uyi
+         5UrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701373183; x=1701977983;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ciqqzFjMiG/up5E3qpYMK9t+Vkf21R+w7dpwIWzAb/g=;
-        b=ImINt2hI0/hMjCZg+DdpuX8CTPs2m13J9rmerVSnjreAlkGY7eYCqE1B1+Trd7Xjg/
-         S11GT+o4HYTdnyv3jW82Mt8mentIErtHNjLJjU9hoPggGYlDjYceWrNnUE4p/20v0eZH
-         jEmQmVNb7TNKxJnGPaKS363HYkDhlBos14jCd4EcAfdgDrpTTbisKsSX0+vu69J0IGch
-         0yZmBuWbBV8ClTUkLAV+dsav60O4LWfQFGDSM5oiU6w+VqJ9JEtLC/rM+rNcFH3zTwRb
-         iwWlwvJK5QVKyhOhfrOmnAtBQ6ftGFKcHDw8Rym+veIN/kqPRiycMtJqsIK5Ta8YSJpe
-         UESw==
-X-Gm-Message-State: AOJu0YwhQoesKaNeGg0C/Zi9W7r1HZ8zXt1Gz2FSaiiIjlX5z1kDwh6V
-	gQhC1CLgzvh2vPNQZIrM0bCfOg==
-X-Google-Smtp-Source: AGHT+IHe06aBbh9cJYmhqakMWZst6wfeunpERpdFX37tNWm9qlXgiyZOLVNhqtDJeCb17FIz6tXzTQ==
-X-Received: by 2002:a0c:f541:0:b0:67a:93b3:cae3 with SMTP id p1-20020a0cf541000000b0067a93b3cae3mr335262qvm.42.1701373183189;
-        Thu, 30 Nov 2023 11:39:43 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id b11-20020a0cb3cb000000b0067a6c448f55sm771465qvf.22.2023.11.30.11.39.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Nov 2023 11:39:42 -0800 (PST)
-Date: Thu, 30 Nov 2023 14:39:41 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/24] pack-objects: multi-pack verbatim reuse
-Message-ID: <ZWjk/TYzsrdHefgy@nand.local>
-References: <cover.1701198172.git.me@ttaylorr.com>
- <ZWhha2h2zzZWCXrw@tanuki>
+        d=1e100.net; s=20230601; t=1701375551; x=1701980351;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wMQAJwGcXQVah6GLaL6geSOl653G6WLDMv4NuFewwVE=;
+        b=SOpzuNy6qvvGO1aP5fRbooGVxh+1motwT8PafEfCnobYMi20WsehpY9g66Gz9fvOJL
+         b2CCs9sFcn5aNlKm9cfdCt6+yI90Dq2Nsy9QHThwupUwWYZMIhxxH1Js31/6Yp9u+x7t
+         LAWm1b7pdjrvD+UNcPvOh48Y4VdTg0d+15jqwldk2QnzTInkkoI/59iFxITn1U3USd1b
+         cCrD1u7L0QlHS/vz1YlZhcTEGrmG+9vAzB1IBJuZw5+FcnHOp/5YKK/zH83yOGJnr18q
+         hyrWze0qj8Bv5sH8S5bNumYlHithUZh2ce22ufvKLaEtovoJXNkyNPOEl7sClv0YCkUW
+         g0GQ==
+X-Gm-Message-State: AOJu0YxzH0PWEE7GyXHK2/3F4PrU3IZAadTBNCOa9QONrI33VV7ShZQ1
+	735x8APp91TWk/w627dqzNUNZwN+S3tLbYD33oc=
+X-Google-Smtp-Source: AGHT+IEo7baYt18WfXuhXoWfAkGNYJZKxR3HPgrArQv28Q0GYh6qEXsWNDNg1rxdye63k0bMP4uL6w==
+X-Received: by 2002:adf:fd12:0:b0:333:2fd2:51d5 with SMTP id e18-20020adffd12000000b003332fd251d5mr71350wrr.78.1701375551462;
+        Thu, 30 Nov 2023 12:19:11 -0800 (PST)
+Received: from [192.168.0.12] (cpc87345-slou4-2-0-cust172.17-4.cable.virginm.net. [81.101.252.173])
+        by smtp.gmail.com with ESMTPSA id i15-20020a5d584f000000b003331c7b409asm2398841wrf.78.2023.11.30.12.19.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 30 Nov 2023 12:19:11 -0800 (PST)
+Message-ID: <c3efb95a-7317-421a-bc87-fcc234be16c0@jguk.org>
+Date: Thu, 30 Nov 2023 20:19:09 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZWhha2h2zzZWCXrw@tanuki>
+User-Agent: Mozilla Thunderbird
+Subject: Re: Consider dropping the decimal places for KiB/s 52.00 KiB/s
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org
+References: <637be919-0b04-4e5c-8f2e-43340521e6d1@jguk.org>
+ <ZWjdatp3SRb4mN6G@nand.local>
+Content-Language: en-GB
+From: Jonny Grant <jg@jguk.org>
+In-Reply-To: <ZWjdatp3SRb4mN6G@nand.local>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu, Nov 30, 2023 at 11:18:19AM +0100, Patrick Steinhardt wrote:
-> > Performing verbatim pack reuse naturally trades off between CPU time and
-> > the resulting pack size. In the above example, the single-pack reuse
-> > case produces a clone size of ~194 MB on my machine, while the
-> > multi-pack reuse case produces a clone size closer to ~266 MB, which is
-> > a ~37% increase in clone size.
->
-> Quite exciting, and a tradeoff that may be worth it for Git hosters. I
-> expect that this is going to be an extreme example of the benefits
-> provided by your patch series -- do you by any chance also have "real"
-> numbers that make it possible to quantify the effect a bit better?
->
-> No worry if you don't, I'm just curious.
 
-I don't have a great sense, no. I haven't run these patches yet in
-production, although would like to do so soon for internal repositories
-to get a better sense here.
 
-There are some performance tests at the end which try and give you a
-sense of at least the relative speed-up depending on how many disjoint
-packs you have (IIRC, we test for 1, 10, and 100 disjoint packs).
+On 30/11/2023 19:07, Taylor Blau wrote:
+> On Thu, Nov 30, 2023 at 06:11:57PM +0000, Jonny Grant wrote:
+>> Hello
+>>
+>> May I suggest taking off the .00 KiB/s suffix, has that been
+>> considered? As the decimal places don't appear to change, they're
+>> stuck on .00.
+> 
+> I wonder if you have a throttled connection that is locked to 52KiB/s
+> exactly.
 
-> > I think there is still some opportunity to close this gap, since the
-> > "packing" strategy here is extremely naive. In a production setting, I'm
-> > sure that there are more well thought out repacking strategies that
-> > would produce more similar clone sizes.
-> >
-> > I considered breaking this series up into smaller chunks, but was
-> > unsatisfied with the result. Since this series is rather large, if you
-> > have alternate suggestions on better ways to structure this, please let
-> > me know.
->
-> The series is indeed very involved to review. I only made it up to patch
-> 8/24 and already spent quite some time on it. So I'd certainly welcome
-> it if this was split up into smaller parts, but don't have a suggestion
-> as to how this should be done (also because I didn't yet read the other
-> 16 patches).
+You're right - I changed to https and it went to 6 MiB/s. Seems throttled on git://
+I should have checked that first.
 
-I suppose that one way to break it up might be:
+>  The progress code that generates the throughput is in
+> progress.c::display_throughput(), which computes the rate. It's computed
+> in bytes/misec, and then passed to throughput_string() (really,
+> `strbuf_humanise_rate()`), which formats it appropriately.
+> 
+> If you're in the KiB range, it will print the decimal component, which
+> is:
+> 
+>     ((bytes & ((1<<10)-1)) * 100) >> 10
+> 
+>> $ git clone git://gcc.gnu.org/git/gcc.git git_1
+>> Cloning into 'git_1'...
+>> remote: Enumerating objects: 2949348, done.
+>> remote: Counting objects: 100% (209238/209238), done.
+>> remote: Compressing objects: 100% (14579/14579), done.
+>> Receiving objects:   7% (210878/2949348), 76.33 MiB | 52.00 KiB/s
+> 
+> On my machine:
+> 
+>     $ git.compile clone git://gcc.gnu.org/git/gcc.git
+>     [...]
+>     Receiving objects:  11% (342176/2949348), 108.09 MiB | 24.01 MiB/s
+> 
+> I suppose we could consider dropping the decimal component if it's a
+> round number, but I think that it may produce awkward flickering if the
+> rate oscillates between a round number and a non-round number.
 
-    pack-objects: free packing_data in more places
-    pack-bitmap-write: deep-clear the `bb_commit` slab
-    pack-bitmap: plug leak in find_objects()
+Now I can see the advantage of it as it is. wget is similar.
+Kind regards, Jonny
 
-    midx: factor out `fill_pack_info()`
-    midx: implement `DISP` chunk
-    midx: implement `midx_locate_pack()`
-    midx: implement `--retain-disjoint` mode
 
-    pack-objects: implement `--ignore-disjoint` mode
-    repack: implement `--extend-disjoint` mode
-
-    pack-bitmap: pass `bitmapped_pack` struct to pack-reuse functions
-    pack-bitmap: simplify `reuse_partial_packfile_from_bitmap()` signature
-    pack-bitmap: return multiple packs via `reuse_partial_packfile_from_bitmap()`
-    pack-objects: parameterize pack-reuse routines over a single pack
-    pack-objects: keep track of `pack_start` for each reuse pack
-    pack-objects: pass `bitmapped_pack`'s to pack-reuse functions
-    pack-objects: prepare `write_reused_pack()` for multi-pack reuse
-    pack-objects: prepare `write_reused_pack_verbatim()` for multi-pack reuse
-    pack-objects: include number of packs reused in output
-    pack-bitmap: prepare to mark objects from multiple packs for reuse
-
-    pack-objects: add tracing for various packfile metrics
-    t/test-lib-functions.sh: implement `test_trace2_data` helper
-    pack-objects: allow setting `pack.allowPackReuse` to "single"
-    pack-bitmap: reuse objects from all disjoint packs
-    t/perf: add performance tests for multi-pack reuse
-
-Then you'd have five patch series, where each series does roughly the
-following:
-
-  1. Preparatory clean-up.
-  2. Implementing the DISP chunk, as well as --retain-disjoint, without
-     a way to generate such packs.
-  3. Implement a way to generate such packs, but without actually being
-     able to reuse more than one of them.
-  4. Implement multi-pack reuse, but without actually reusing any packs.
-  5. Enable multi-pack reuse (and implement the required scaffolding to
-     do so), and test it.
-
-That's the most sensible split that I could come up with, at least. But
-I still find it relatively unsatisfying for a couple of reasons:
-
-  - With the exception of the last group of patches, none of the earlier
-    series enable any new, useful behavior on their own. IOW, if we just
-    merged the first three series and then forgot about this topic, we
-    wouldn't have done anything useful ;-).
-
-  - The fourth series (which actually implements multi-pack reuse) still
-    remains the most complicated, and would likely be the most difficult
-    to review. So I think you'd still have one difficult series to
-    review, plus four other series which are slightly less difficult to
-    review ;-).
-
-It's entirely possible that I'm just too close to these patches to see a
-better split, so if you (or others) have any suggestions on how to break
-this up, please don't hesitate to share them.
-
-> I'll review the remaining patches at a later point in time.
-
-Thanks, I'll look forward to more of your review as usual :-).
-
-Thanks,
-Taylor
