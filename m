@@ -1,137 +1,173 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kWo8Rny6"
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 438B5194
-	for <git@vger.kernel.org>; Thu, 30 Nov 2023 17:25:56 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id ffacd0b85a97d-33332096330so3606f8f.1
-        for <git@vger.kernel.org>; Thu, 30 Nov 2023 17:25:56 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="J0k2tUcN"
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D94C1717
+	for <git@vger.kernel.org>; Thu, 30 Nov 2023 20:02:07 -0800 (PST)
+Received: by mail-ot1-x335.google.com with SMTP id 46e09a7af769-6d855efb920so71315a34.1
+        for <git@vger.kernel.org>; Thu, 30 Nov 2023 20:02:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701393955; x=1701998755; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=EAVd1pclsuh6sWekql8Gc9TYsqhjVkoY7Q3OLVceKRM=;
-        b=kWo8Rny67yscf9XvLE4qoB3DawjP5MMU6QCLorvsXUpdBSCKvX+jcgp6HDta2eRZZE
-         yG3ykRqqWaAFQvpa225/Bw/tm1E5J3UzChqfmZKHmMj2o2zqv2l60uIm1xLtbAOB9REm
-         Eip79vEhbhzwrFJ5YuAHOqx3TQQ1ciFbsnPJf9ZjPD7gR4SD5MHCCG1zTRhWggxOws6q
-         4ljUt9LxVLKHP28mMaNhfb8cXX8c50MM2XEQJqUP7ae+hZzFEYxyE53Gbazqh5s/IW48
-         9FE6UE1G5fUeebfJPgmP4Xl1SfscSZXkLCiPQWxk4n1Vn/6xZBZGj8M1Vk1uI7VubNLn
-         JvCg==
+        d=google.com; s=20230601; t=1701403326; x=1702008126; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yvxTV2IKW/zCHJVeuurENvZ8VstuIQFxnt24z3exz0o=;
+        b=J0k2tUcN1lH7CcDyBpddbt6/cnZNws2MZe6slnBxvfgiil2WT66hPF4mryAEE8J6AH
+         5oCIHzTOsqB6/juBKyVkS58TqR78Uihq8cgfu0H7yiKyumf4BrBGQ+OrzCrAPoXQHDMU
+         CtXMy5ND29cv6fpTHButRdUwlpAGXZfFHh8nAYgtHG1eCnTcwsYnWbsl9T6kEIKC1vgX
+         0yL2FkGnWnuEcSAIPD0lbc1BBrR0W9Io/PdgEcMyeseXNhnG0cs/GjCOhQ0N7dr0v68f
+         BtuRQ8jcyGo5NIbUT3UysV9kxH3+Bcq+E9Y9RMNEGF4Il7QUEEAv87EmTBAcLG9Xi7iR
+         kjJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701393955; x=1701998755;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EAVd1pclsuh6sWekql8Gc9TYsqhjVkoY7Q3OLVceKRM=;
-        b=spEV0UkoLF1Jo8SFaONXB6D2cCuSCKBwn0HT49GyrZcB1xduy055y45Qd/z2Ee8Mgo
-         fKz2LmpzDFcdw5kIYw+kmBy/HjlFIcHADnX9TXLzSUy81me128Df6CFoU/6z5e8JguUF
-         gvyzLngRLX92RYOTppFU/daxMkwm85y5fbFKdmmktx3w+eRC5NB59bKcmoe2ffDdRb6I
-         P/EVtVnNpgN42Wt3+qWZ22DrSnW2bSnqSpgbSxobQGu4biUDOGPIySXTLFHkzptz10+z
-         v3Kaf7TjnBD9mAT4I/F7xVie+P8LVt1FndArMPZed/DkJ2jWSYorWDjGEwx+jQFzxo1m
-         PF5Q==
-X-Gm-Message-State: AOJu0Ywl8SOejPY5/a6BbUXd+H7VHqdtWdA3VrQTbYvzAQX327mX8drF
-	FsZ5xZGoE1cF5z7nGC99O3I=
-X-Google-Smtp-Source: AGHT+IGVmDaa8Q9c398Tv0Q5sUTnvKTUMfAF9abiRlHLSeGO0glUFy0n4Degy0vkJtOaqlk6GU2Qgg==
-X-Received: by 2002:adf:e3cb:0:b0:332:f501:8b56 with SMTP id k11-20020adfe3cb000000b00332f5018b56mr235440wrm.23.1701393954505;
-        Thu, 30 Nov 2023 17:25:54 -0800 (PST)
-Received: from gmail.com (254.red-88-14-47.dynamicip.rima-tde.net. [88.14.47.254])
-        by smtp.gmail.com with ESMTPSA id a7-20020a5d53c7000000b00332ff21038fsm2803220wrw.106.2023.11.30.17.25.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Nov 2023 17:25:53 -0800 (PST)
-Message-ID: <ba8c814c-cb93-49cb-9df0-8f4599e68e9e@gmail.com>
-Date: Fri, 1 Dec 2023 02:25:26 +0100
+        d=1e100.net; s=20230601; t=1701403326; x=1702008126;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=yvxTV2IKW/zCHJVeuurENvZ8VstuIQFxnt24z3exz0o=;
+        b=BwgZDKRt7gKL4FPS6gSHqPFsgQfMyuyagilhecGTPrrQJ/QQCyKn2N/lO4SjI6PITj
+         emoh4CoUMFoTUDBsDnYZcQVVrcVkpLiBXYZ/eWo3Xb/OaE1GPD3AWuFQn9dO58+AJoY/
+         iKeFdkQygprnQn6s1jk1Yhxwf82eBouI2nB5DCE13PZ/U3vcX82hblWMUJ4C5IoP7y3m
+         cZlcX3J+JrSa3tvAsTROJNfn0ULYtxTZ9n3JrSc/7VRBnpML48iLsoUhiQx41LqpP8o3
+         9WXCvMd3ZHLOMz9GCK1ihDqWDgZqgH5GmXkorOT6473ZaeQPzOVo7HaX6/1mF49X5RvC
+         8PPA==
+X-Gm-Message-State: AOJu0YxRQLRLDAoeOrrfh3Zw1kvCqx5eFMJKu/99vJBTw4625vn5coho
+	8yQ8iplta5dZD0a82kwl4B0gtL7TPsXWA2tSufXCM9tKCt0DowNddtdFaIWI
+X-Google-Smtp-Source: AGHT+IFsOPeXZHPtAc2scStIKZh1bw6zvIuJfqibLShrZmOaUIjV3zenusN1ujROyvg/Cnor2NtK/0vQ6WdJ6q/ZdqU=
+X-Received: by 2002:a05:6870:d0c9:b0:1ea:2d58:46e3 with SMTP id
+ k9-20020a056870d0c900b001ea2d5846e3mr27745929oaa.33.1701403326249; Thu, 30
+ Nov 2023 20:02:06 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Mention default oldbranch in git-branch doc
-Content-Language: en-US
-To: "Clarence \"Sparr\" Risher via GitGitGadget" <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: "Clarence \"Sparr\" Risher" <sparr0@gmail.com>
-References: <pull.1613.git.git.1701303891791.gitgitgadget@gmail.com>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-In-Reply-To: <pull.1613.git.git.1701303891791.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <xmqqttpmtnn5.fsf@gitster.g> <20231116054437.2343549-1-jojwang@google.com>
+ <xmqqsf56ql14.fsf@gitster.g> <xmqqil62qfvr.fsf@gitster.g>
+In-Reply-To: <xmqqil62qfvr.fsf@gitster.g>
+From: Joanna Wang <jojwang@google.com>
+Date: Fri, 1 Dec 2023 12:01:54 +0800
+Message-ID: <CAMmZTi-U_ufzoBLCDWKbrf=3GZzGszxnM1_Pu6ufBeoYjj7Gdw@mail.gmail.com>
+Subject: Re: [PATCH 1/1] attr: add builtin objectmode values support
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, sunshine@sunshineco.com, tboegi@web.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 30-nov-2023 00:24:51, Clarence "Sparr" Risher via GitGitGadget wrote:
-> From: "Clarence \"Sparr\" Risher" <sparr0@gmail.com>
-> 
-> `git branch -m` has an optional first argument, the branch to rename.
-> If omitted, it defaults to the current branch. This behavior is not
-> currently described in the documentation.
+> Cumulatively, aside from the removal of the t/#t* file, here is what
+> I ended up with so far.
 
-Good catch.
-
-> While it can be determined
-> relatively easily through experimentation, and less so through viewing
-> the source code (builtin/branch.c:897)
-
-Some people will find it easier by reading the code than through
-experimentation ;-)
-
-> it is not obvious what such a
-> command will do when encountered in a less interactive context.
-
-Certainly, I agree.
-
-> 
-> This patch adds one sentence to the git-branch documentation, with
-> wording based on another optional argument described earlier in the
-> same doc.
-> 
-> The same behavior applies to -M, -c, and -C
-
-Good.
-
-> 
-> Signed-off-by: Clarence Risher <clarence@kira-learning.com>
-> Signed-off-by: Clarence "Sparr" Risher <sparr0@gmail.com>
-
-Are you both?  If that is the case, IMO it is unusual in this project to
-have two different signatures for the same person in one commit.
-
-> 
-> diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-> index 4395aa93543..affed1b17a4 100644
-> --- a/Documentation/git-branch.txt
-> +++ b/Documentation/git-branch.txt
-> @@ -73,6 +73,7 @@ overridden by using the `--track` and `--no-track` options, and
->  changed later using `git branch --set-upstream-to`.
->  
->  With a `-m` or `-M` option, <oldbranch> will be renamed to <newbranch>.
-> +If the <oldbranch> argument is missing it defaults to the current branch.
-
-Sounds good.  But IMHO this information fits better below, where the
-term "<oldbranch>" is described.  Something like:
-
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-index 4395aa9354..9c17df9f4d 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -312,7 +312,8 @@ superproject's "origin/main", but tracks the submodule's "origin/main".
-        option is omitted, the current HEAD will be used instead.
-
- <oldbranch>::
--       The name of an existing branch to rename.
-+       The name of an existing branch to rename or copy.  If this
-+       option is omitted, the current branch will be used instead.
-
-Completing while we're here, what we missed when -c was introduced in
-52d59cc645 (branch: add a --copy (-c) option to go with --move (-m),
-2017-06-18).
-
->  If <oldbranch> had a corresponding reflog, it is renamed to match
->  <newbranch>, and a reflog entry is created to remember the branch
->  renaming. If <newbranch> exists, -M must be used to force the rename
-> 
-> base-commit: 564d0252ca632e0264ed670534a51d18a689ef5d
-> -- 
-> gitgitgadget
+I want to double check if I should followup here.
+I assumed that you had already applied these final fixes on my behalf,
+similar to my patch for enabling attr for `git-add`. But if I was wrong,
+I'm happy to send another update with all the fixes.
 
 
-Thank you for working on this.
+On Thu, Nov 16, 2023 at 4:08=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+> > Other than the removal of that file, I locally applied the following
+> > fix-up while checking the difference relative to the previous
+> > iteration.
+>
+> Cumulatively, aside from the removal of the t/#t* file, here is what
+> I ended up with so far.
+>
+> Subject: [PATCH] SQUASH???
+>
+> ---
+>  Documentation/gitattributes.txt |  2 +-
+>  neue                            |  0
+>  t/t0003-attributes.sh           |  5 +++--
+>  t/t6135-pathspec-with-attrs.sh  | 10 ++++++----
+>  4 files changed, 10 insertions(+), 7 deletions(-)
+>  create mode 100644 neue
+>
+> diff --git a/Documentation/gitattributes.txt b/Documentation/gitattribute=
+s.txt
+> index 784aa9d4de..201bdf5edb 100644
+> --- a/Documentation/gitattributes.txt
+> +++ b/Documentation/gitattributes.txt
+> @@ -108,7 +108,7 @@ user defined attributes under this namespace will be =
+ignored and
+>  trigger a warning.
+>
+>  `builtin_objectmode`
+> -^^^^^^^^^^^^^^^^^^^^
+> +~~~~~~~~~~~~~~~~~~~~
+>  This attribute is for filtering files by their file bit modes (40000,
+>  120000, 160000, 100755, 100644). e.g. ':(attr:builtin_objectmode=3D16000=
+0)'.
+>  You may also check these values with `git check-attr builtin_objectmode =
+-- <file>`.
+> diff --git a/neue b/neue
+> new file mode 100644
+> index 0000000000..e69de29bb2
+> diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
+> index 86f8681570..774b52c298 100755
+> --- a/t/t0003-attributes.sh
+> +++ b/t/t0003-attributes.sh
+> @@ -580,12 +580,13 @@ test_expect_success 'builtin object mode attributes=
+ work (dir and regular paths)
+>  '
+>
+>  test_expect_success POSIXPERM 'builtin object mode attributes work (exec=
+utable)' '
+> -       >exec && chmod +x exec &&
+> +       >exec &&
+> +       chmod +x exec &&
+>         attr_check_object_mode exec 100755
+>  '
+>
+>  test_expect_success SYMLINKS 'builtin object mode attributes work (symli=
+nks)' '
+> -       >to_sym ln -s to_sym sym &&
+> +       ln -s to_sym sym &&
+>         attr_check_object_mode sym 120000
+>  '
+>
+> diff --git a/t/t6135-pathspec-with-attrs.sh b/t/t6135-pathspec-with-attrs=
+.sh
+> index b08a32ea68..f6403ebbda 100755
+> --- a/t/t6135-pathspec-with-attrs.sh
+> +++ b/t/t6135-pathspec-with-attrs.sh
+> @@ -295,22 +295,24 @@ test_expect_success 'reading from .gitattributes in=
+ a subdirectory (3)' '
+>         test_cmp expect actual
+>  '
+>
+> -test_expect_success 'pathspec with builtin_objectmode attr can be used' =
+'
+> +test_expect_success POSIXPERM 'pathspec with builtin_objectmode attr can=
+ be used' '
+>         >mode_exec_file_1 &&
+>
+>         git status -s ":(attr:builtin_objectmode=3D100644)mode_exec_*" >a=
+ctual &&
+>         echo ?? mode_exec_file_1 >expect &&
+>         test_cmp expect actual &&
+>
+> -       git add mode_exec_file_1 && chmod +x mode_exec_file_1 &&
+> +       git add mode_exec_file_1 &&
+> +       chmod +x mode_exec_file_1 &&
+>         git status -s ":(attr:builtin_objectmode=3D100755)mode_exec_*" >a=
+ctual &&
+>         echo AM mode_exec_file_1 >expect &&
+>         test_cmp expect actual
+>  '
+>
+> -test_expect_success 'builtin_objectmode attr can be excluded' '
+> +test_expect_success POSIXPERM 'builtin_objectmode attr can be excluded' =
+'
+>         >mode_1_regular &&
+> -       >mode_1_exec  && chmod +x mode_1_exec &&
+> +       >mode_1_exec  &&
+> +       chmod +x mode_1_exec &&
+>         git status -s ":(exclude,attr:builtin_objectmode=3D100644)" "mode=
+_1_*" >actual &&
+>         echo ?? mode_1_exec >expect &&
+>         test_cmp expect actual &&
+> --
+> 2.43.0-rc2
+>
