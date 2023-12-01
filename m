@@ -1,67 +1,69 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fr2cj24H";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mxvg9tDz"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="A3crMGXM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Vt+UyHbg"
 Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DA99131
-	for <git@vger.kernel.org>; Thu, 30 Nov 2023 22:43:56 -0800 (PST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1289A1B2
+	for <git@vger.kernel.org>; Thu, 30 Nov 2023 23:34:20 -0800 (PST)
 Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.west.internal (Postfix) with ESMTP id D966D3200B50;
-	Fri,  1 Dec 2023 01:43:53 -0500 (EST)
+	by mailout.west.internal (Postfix) with ESMTP id 439B03200AF7;
+	Fri,  1 Dec 2023 02:34:19 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Fri, 01 Dec 2023 01:43:54 -0500
+  by compute6.internal (MEProxy); Fri, 01 Dec 2023 02:34:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm1; t=1701413033; x=1701499433; bh=j4
-	grmPtLXjYHAECp14bMB91PtGo3a/DCJeIGD0XQQ2M=; b=fr2cj24HKieGpuShk/
-	kl8NDC1loTGT4GArvj9RuCF+MXO9bDl1QPHjUSQS7OsnYQ8Uyjm07foegz7QnHBj
-	pOL74i0rgAE7i7qQ3czK9WHHwKJPUSIwYHxezTKkkuH0S78YoWVdwnaYGgz4qBhI
-	uuM9duyKB1G8nbvLgxRATJuR+to7l0w5eSpxzU0MOypZmPsrimviOdE16dQgNQ4D
-	kAU8iXN7bGe40BBTjlqXYLkIWur0WZQyKEXi4xFax5DwJCVOEvmkN5pZq4eCHdua
-	Gt7xc5cr4q3HRzZu3/jPdijKt0c9iQqXeMawzB2vbmGLFhMoTjfFGpsSrG42LAiv
-	yCow==
+	:subject:subject:to:to; s=fm1; t=1701416058; x=1701502458; bh=0B
+	s4wh/ouWMMq2zv3B2sNBGUzHJ6AgmYZlrjzgVklew=; b=A3crMGXMnI71AVNL61
+	ptyQvDBgWdABrTAGVvit0G0vnr734jMvFMJ5gTxNBFI1KbTuD/QqURoebuYvCjQa
+	10sAjwLg+f8GsSkfoVWuEgKX+fu8v7YxBnGggOZfRPIE1ZGwdpAvufhzd3h/f0S2
+	eSFkLdIucMqwN0WGyF6Mo3UkhgdzmHIEfXoANN/3hUNfME9p4sUX4WeDNcgdU2Z6
+	lsEYoqVMgClUJUlzO+5U1Fh09efvjM4dvk59+gD+8iTYwswqNp1dyxI4mdwvsFRg
+	IngUKFE6BLzIR0XHjPRZ2MIW8zF4RzAbVPheuRF/DQw/7YWhGkwLX5B1tSGcRgQg
+	VhoQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm1; t=1701413033; x=1701499433; bh=j4grmPtLXjYHA
-	ECp14bMB91PtGo3a/DCJeIGD0XQQ2M=; b=mxvg9tDzBHhQGhdeGNrBQBRZCcR+m
-	mUb5dIJlv5jG2WNl1sASrhoLibCmIDQEVGuMD3x7Go3GNLfKM6ottyeJj5c0LfVw
-	s6GEDgFu6/phV4Eq9Pj5xwUrM0CtDRuHTrwx+nbDsZDOULnyfEG0botNXZRiOaT5
-	lOX/6BCUdD+UoHhQojqA/QGvyPQoCn2mDjlSikZ8ItiXl4i+yjnODlKxfPeFQ1/v
-	sFhNxh3rW/7sVLXyjhzYcEJRtU2SA/BJmm/sPRKd1MeB6dcCuP+sWmSlTLpvBZMa
-	5m7RlhxYCI4THzDKODJAGHAYO+1+ZS947Eyw90wsXiu65+o+AwUtuA2nw==
-X-ME-Sender: <xms:pIBpZfzDQ1rbugI7vHu7o76TpnRY92lKEigG8Auf_66owchAiaURpg>
-    <xme:pIBpZXT2NM39eyh4Xk6s0nVvhMnfkw_FDAxpmYykETvO5WICLQ6e5ZTlvVIT0of0c
-    BHsiS53fjwwKVDcdg>
-X-ME-Received: <xmr:pIBpZZV_Sbe8qrsZZ6svTWkyLKos2pP-Z9UJYylQRH39-JKQOJDalmx5XzdPY3u5HVX-A6EVU1LLlcnKaDADxtS9Xz1q2vmpsfuDNomJw-CuZrw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudeikedgleeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
-    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:pIBpZZicKisGZFomiOZ-VTqINaUBw5w4jWjMRI9t0YoZx-ivCmIjNw>
-    <xmx:pIBpZRABORLQKM4dyN61g5aoV5Sbp0isnnz7v0zLf_6TX0HzdSRZhg>
-    <xmx:pIBpZSJw4FTYY5kSFkL60aX3JX268EB6sirkGX1DoHpqYqbskvvV7A>
-    <xmx:qYBpZe6iDy2SJWQzhqGrcXeYQ5v_u_QH1A2ZDO3969eaI78rVb4RTQ>
+	:x-sasl-enc; s=fm1; t=1701416058; x=1701502458; bh=0Bs4wh/ouWMMq
+	2zv3B2sNBGUzHJ6AgmYZlrjzgVklew=; b=Vt+UyHbg/5eaFDjvqlBU54H3kEphu
+	YUc4eRfZ8hZ3MsRjto9b82kCLgSa3pO8feka+sD1P51MqFF80+fU+/oEO7ZcDsuk
+	vcFBoDahsdIo68IEOjC7Dm+2RdwIEg+RG6u74i4BpnPT+TZLwohx2T24QkSBg6ko
+	mktg9CdpZasf8KKrY2ee70VnHVm4r1j6qldW0+Ag4THAn9m+ZHJB3vkjCBLoB0CW
+	+N6+V4BYrnuR1+jAo1oh3chq5kGvp+BIPv+s1ll9b/KVd8gulpyfGyWOC6Xme9d5
+	NFf99NQcih/N2dEnMAN9d9jOIuSCjUnUIi9K/9faqTNYlSDa/XLGc31LQ==
+X-ME-Sender: <xms:eoxpZfgU5B-uCzlZE2A89Ab5hIAGgxAsY1lMhL_uznmnxjugWPkaFA>
+    <xme:eoxpZcDZiStwgGVWwMGBH856pxRW_Bubf2-xelh9Wzs7c65CWAzNRSHTG7cicvQWB
+    9fbiW4e-wcTtQgYwg>
+X-ME-Received: <xmr:eoxpZfGOtJcGOMLPXnkNT6_04FE0W4tPlyOQDBGfYxxYXxpuuWNEarro3CyyZhCtbzkFOE9jf3PnyRgPCV0VXjyMKlG8pIoaBrpoJkaj9OPogyk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudeikedguddtiecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefrrght
+    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
+    gvrhhnpeetgfektdehvdekjeettddtheegfeehheetgfduteehuddufeekgfdtgfegjeeg
+    tdenucffohhmrghinhepphhusghlihgtqdhinhgsohigrdhorhhgnecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:eoxpZcTOXNnkx3i3tS2ngyixraVq09_02gHOfYGvGU4QuPR499n70g>
+    <xmx:eoxpZczlO7-ytzTZQlNbLLubM49KbjDnNMIsF94OIYwz8G2RmskS7Q>
+    <xmx:eoxpZS687H1aNrGDxNY6KFSRh62nciyVptPG5HsUB9tN-Jpfcinm_A>
+    <xmx:eoxpZX9guYHWRviBlnHF25Q2af2HaXRUnFDqYANmYlqyZxYqvhzxBA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 1 Dec 2023 01:43:47 -0500 (EST)
+ 1 Dec 2023 02:34:17 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 9d804cac (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 1 Dec 2023 06:42:30 +0000 (UTC)
-Date: Fri, 1 Dec 2023 07:43:43 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 6b37c1fe (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 1 Dec 2023 07:33:01 +0000 (UTC)
+Date: Fri, 1 Dec 2023 08:34:14 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, hanwenn@gmail.com
-Subject: Re: [PATCH 3/4] refs: complete list of special refs
-Message-ID: <ZWmAn20UYWBo9i8C@tanuki>
-References: <cover.1701243201.git.ps@pks.im>
- <0e38103114a206bedbbbd7ea97cb77fa05fd3c29.1701243201.git.ps@pks.im>
- <15f67e21-c05f-4a72-9557-2a09a1311f25@gmail.com>
+To: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
+	Stan Hu <stanhu@gmail.com>
+Subject: Re: [PATCH] git-prompt: stop manually parsing HEAD
+Message-ID: <ZWmMdjh4_25GIzjy@tanuki>
+References: <cc902954f30c2faa92d1c5a4469f0dcc23e4acfe.1700825779.git.ps@pks.im>
+ <CAPig+cSa9zxEhKXtXHrVuB3Eb6=vnD1Ppnfj59rA+nPEO-9j-w@mail.gmail.com>
+ <20231124182803.GA11157@szeder.dev>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,140 +71,111 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="gX+5wrGGPPL0YJxR"
+	protocol="application/pgp-signature"; boundary="w+N721b+YbsoRXxE"
 Content-Disposition: inline
-In-Reply-To: <15f67e21-c05f-4a72-9557-2a09a1311f25@gmail.com>
+In-Reply-To: <20231124182803.GA11157@szeder.dev>
 
 
---gX+5wrGGPPL0YJxR
-Content-Type: text/plain; charset=us-ascii
+--w+N721b+YbsoRXxE
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Nov 30, 2023 at 03:42:06PM +0000, Phillip Wood wrote:
-> Hi Patrick
+On Fri, Nov 24, 2023 at 07:28:03PM +0100, SZEDER G=C3=A1bor wrote:
+> On Fri, Nov 24, 2023 at 01:09:03PM -0500, Eric Sunshine wrote:
+> > On Fri, Nov 24, 2023 at 6:37=E2=80=AFAM Patrick Steinhardt <ps@pks.im> =
+wrote:
+> > > We're manually parsing the HEAD reference in git-prompt to figure out
+> > > whether it is a symbolic or direct reference. This makes it intimately
+> > > tied to the on-disk format we use to store references and will stop
+> > > working once we gain additional reference backends in the Git project.
+> > >
+> > > Refactor the code to always use git-symbolic-ref(1) to read HEAD, whi=
+ch
+> > > is both simpler and compatible with alternate reference backends.
+> >=20
+> > This may get some push-back from Windows folks due to high
+> > process-creation cost on that platform. As I recall, over the years, a
+> > good deal of effort has been put into reducing the number of programs
+> > run each time the prompt is displayed, precisely because invoking Git
+> > (or other programs) multiple times became unbearably slow. In
+> > particular, optimizations efforts have focussed on computing as much
+> > as possible within the shell itself rather than invoking external
+> > programs for the same purpose. Thus, this seems to be taking a step
+> > backwards in that regard for the common or status quo case.
+> >=20
+> > Would it be possible instead to, within shell, detect if the historic
+> > file-based backend is being used in the current repository, thus
+> > continue using the existing shell code for that case, and only employ
+> > git-symbolic-ref if some other backend is in use?
 >=20
-> Thanks for working on this. I've left a couple of thought below.
+> Thanks for sharing my worries :)
 >=20
-> On 29/11/2023 08:14, Patrick Steinhardt wrote:
-> > +static int is_special_ref(const char *refname)
-> > +{
-> > +	/*
-> > +	 * Special references get written and read directly via the filesystem
-> > +	 * by the subsystems that create them. Thus, they must not go through
-> > +	 * the reference backend but must instead be read directly. It is
-> > +	 * arguable whether this behaviour is sensible, or whether it's simply
-> > +	 * a leaky abstraction enabled by us only having a single reference
-> > +	 * backend implementation. But at least for a subset of references it
-> > +	 * indeed does make sense to treat them specially:
-> > +	 *
-> > +	 * - FETCH_HEAD may contain multiple object IDs, and each one of them
-> > +	 *   carries additional metadata like where it came from.
-> > +	 *
-> > +	 * - MERGE_HEAD may contain multiple object IDs when merging multiple
-> > +	 *   heads.
-> > +	 *
-> > +	 * - "rebase-apply/" and "rebase-merge/" contain all of the state for
-> > +	 *   rebases, where keeping it closely together feels sensible.
+> I sent a patch a while ago to Han-Wen to make our Bash prompt script
+> work with the reftable backend without incurring the overhead of extra
+> subshells or processes when using the files based refs backend.  He
+> picked it up and used to include it in rerolls of the reftable patch
+> series; the last version of that patch is I believe at:
 >=20
-> I'd really like to get away from treating these files as refs. I think th=
-eir
-> use as refs is purely historic and predates the reflog and possibly
-> ORIG_HEAD. These days I'm not sure there is a good reason to be running
->=20
->     git rev-parse rebase-merge/orig-head
->=20
-> One reason for not wanting to treat them as refs is that we do not handle
-> multi-level refs that do not begin with "refs/" consistently.
->=20
->     git update-ref foo/bar HEAD
->=20
-> succeeds and creates .git/foo/bar but
->=20
->     git update-ref -d foo/bar
->=20
-> fails with
->=20
->     error: refusing to update ref with bad name 'foo/bar'
->=20
-> To me it would make sense to refuse to create 'foo/bar' but allow an
-> existing ref named 'foo/bar' to be deleted but the current behavior is the
-> opposite of that.
->=20
-> I'd be quite happy to see us refuse to treat anything that fails
->=20
->     if (starts_with(refname, "refs/") || refname_is_safe(refname))
->=20
-> as a ref but I don't know how much pain that would cause.
+>   https://public-inbox.org/git/patch-v4-21.28-443bdebfb5d-20210823T120208=
+Z-avarab@gmail.com/
 
-Well, we already do use these internally as references, but I don't
-disagree with you. I think the current state is extremely confusing,
-which is why my first approach was to simply document what falls into
-the category of these "special" references.
+Fair enough, I'm sure I can roll something similar into my patch series.
+I do wonder whether it's fine to already submit those patches now where
+the reftable backend doesn't exist yet. But I'd hope so, because it
+would make it significantly easier for us to upstream the backend if we
+can only focus on the backend itself, whereas all the other parts were
+already addressed in preliminary refactorings.
 
-In my mind, this patch series here is a first step towards addressing
-the problem more generally. For now it is more or less only documenting
-_what_ is a special ref and why they are special, while also ensuring
-that these refs are compatible with the reftable backend. But once this
-lands, I'd certainly want to see us continue to iterate on this.
+One question though is what the right way to detect the reference format
+would be. Reading HEAD and comparing it to "ref: refs/heads/.invalid" is
+okay for now, but doesn't really feel like a good fit in the long term
+as there has been discussion around dropping the requirement for HEAD to
+exist altogether [1] in the future. There are some alternatives:
 
-Most importantly, I'd love to see us address two issues:
+  - Check for the existence of `reftables/` via `test -d`. This is easy
+    enough to do, but also doesn't feel all that robust.
 
-  - Start to refuse writing these special refs via the refdb so that
-    the rules I've now layed out are also enforced. This would also
-    address your point about things being inconsistent.
+  - Extend git-rev-parse(1) to support a new `--show-reference-format`
+    option. We already have `--show-object-format`, so this would be a
+    natural fit.
 
-  - Gradually reduce the list of special refs so that they are reduced
-    to a bare minimum and so that most refs are simply that, a normal
-    ref.
+In the long term I'd aim for the second solution -- it's the most robust
+solution and would also scale if there ever were additional backends.
+Furthermore, we already execute git-rev-parse(1) unconditionally anyway.
+So there wouldn't be a performance hit here.
 
-> > +	const char * const special_refs[] =3D {
-> > +		"AUTO_MERGE",
->=20
-> Is there any reason to treat this specially in the long term? It points t=
-o a
-> tree rather than a commit but unlike MERGE_HEAD and FETCH_HEAD it is
-> effectively a "normal" ref.
-
-No, I'd love to see this and others converted to become a normal ref
-eventually. The goal of this patch series was mostly to document what we
-already have, and address those cases which are inconsistent with the
-new rules. But I'd be happy to convert more of these special refs to
-become normal refs after it lands.
-
-> > +		"BISECT_EXPECTED_REV",
-> > +		"FETCH_HEAD",
-> > +		"MERGE_AUTOSTASH",
->=20
-> Should we be treating this as a ref? I thought it was written as an
-> implementation detail of the autostash implementation rather than to prov=
-ide
-> a ref for users and scripts.
-
-Yes, we have to in the context of the reftable backend. There's a bunch
-of tests that exercise our ability to parse this as a ref, and they
-would otherwise fail with the reftable backend.
+While I plan to introduce the `extensions.refStorage` format before
+upstreaming the new backend itself, I think it's still going to be some
+time until I submit that patch series. Until then, I'd say we simply use
+the proposed way of parsing HEAD and second-guessing that it might
+indicate the reftable backend, like Stan also does at [2] for our Bash
+completion code. I'll make a mental note to refactor these once we have
+the extension ready.
 
 Patrick
 
---gX+5wrGGPPL0YJxR
+[1]: <ZWcOvjGPVS_CMUAk@tanuki>
+[2]: <20231130202404.89791-1-stanhu@gmail.com>
+
+--w+N721b+YbsoRXxE
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVpgJkACgkQVbJhu7ck
-PpScVhAAnmqW3moYjRLFGfO7kjpGZvFkLECo68u+TWSTIfxlTC87ZrEeqaPexbHa
-zIjdZ7ohDoEkkTcnHnp5S8wxqdiogOduhM6wsfNehLIqvz6A7ZItkrl41ojAdnBv
-44pjHabJYbYz3PK5N6yKto444zwRa5vmuQsVCWh+2uIY85S914ieae8hl8VUxHqo
-NoNFRfDXcy4fvSkrKdUdt2MbqSm7elxmjWvzGja3Wjb7LUPJCrLshxflSrIPufqU
-yJcyvKXQes1qV2yFc5KMEM27QxmoBmbUg7fZu5icdWuF5Ozpd12g+lX4FKbx9oN1
-iSNEOTkgg9Gr1C3WX19WQdJln19L+i7AYE9Q8b+IORKuRTGOaWxt0qu0YmXJGtz1
-ZY5qtGfQAopFFqMpazs2z1ZPD+mt2TbYyxCwDCsZGsFqQXqgpISGfhbjSWrSKKJh
-s87frZHnKHgVI0dmiqHeEo1RNiAhZ4XGXtCfLwWTvUXJaaV4FC2m7t/MoX0YUiNt
-/BcJY6WnckVAWgct8H/w2wWWEyJ/o8FDXMOr1Z7hXrmfkyIuiqzqEsSe33ZEc2s1
-hMnnRBLh/f9pYTcIxuWQxWVIyDFgtBp7s6NRJ7JtZQAAk4df6dvxevNOmMQ3XVeU
-a0AocGSlUGFbBhlyBN+hFkvudUzmq4FA2guzgji7O1UcasHpXO0=
-=fnxf
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVpjHUACgkQVbJhu7ck
+PpSPZg//SZahSt/7ELYZzx7iPe76reVwfsatiOx2JtKGByuewPIKO214nd3EOiPY
+a+tpYzau5q20qDEqYJJ5h64eQaGjVqbkL3qHiW/AdZT0tK0AX65cjR4EBGr+nfHy
+jzPj4seC4rUb1Ba339GyZkMWsBw7oxeDrYYOcudS41Vq0Swo8ej5LBTN6A1jRqUj
+XNw0VC4A77FxL2/2ES8rEo7KWMOtoLFNYcRm6JFKgSblrR9BWBVO818dYJwcgTig
+BLZK1o+QNa2Y+p3Jw8v9Nv37bWhcWwshAU4Bs1oA6Vsxn2aYZhrXOpi6ndUPTAFo
+VgG3Kx8xwc3VfV5nA2nb0q4T9Ybb+nnDhGv6/b7pMFoU2WX5rzYPPhaew0pVOapa
+xTR1pn/ii6/pFa1frUxe6wIFmxLmzJ8Cnjo5Du5FzRq0ND9OVdzKx6aaDAlcd9NM
+B4UwNORfm9KsXGxABCCAZdwQQ0ff+N9lbYCFK3ILwdkSHs9a2kz+5PPS9BaMKu2v
+mN6hrxM0s4UgnLf1cpFtY33dpW74LxvM67wIULiVsC2cd+SBZT2WcTLQUjQgphKa
+Vt1uXB8Srvso2D0uQpmQfr59podX9oBbAEHW16HJTfspvpWom2Fe6gM6PiMig/bg
+PUuj1YjPEymwnIc/fxs2npSiXJ9zt9cPXoxzMRFFXnB8bx2tuP4=
+=NuHZ
 -----END PGP SIGNATURE-----
 
---gX+5wrGGPPL0YJxR--
+--w+N721b+YbsoRXxE--
