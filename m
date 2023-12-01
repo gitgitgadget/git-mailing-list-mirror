@@ -1,69 +1,69 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cWwkk3fh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="n6QHFopM"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OdEGd4V9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pSJk/3r9"
 Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63A5010F8
-	for <git@vger.kernel.org>; Fri,  1 Dec 2023 00:02:14 -0800 (PST)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.west.internal (Postfix) with ESMTP id 92A023200B47;
-	Fri,  1 Dec 2023 03:02:13 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Fri, 01 Dec 2023 03:02:13 -0500
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B7C810FF
+	for <git@vger.kernel.org>; Fri,  1 Dec 2023 00:17:46 -0800 (PST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.west.internal (Postfix) with ESMTP id 6CD803200ACD;
+	Fri,  1 Dec 2023 03:17:45 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute3.internal (MEProxy); Fri, 01 Dec 2023 03:17:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm1; t=1701417733; x=1701504133; bh=9D
-	i8qqsxvAaeKMn8bWMt+EA2zCYFdNsYIz/FG4HTNOc=; b=cWwkk3fhDhaHpD1Z/W
-	OaJTqlP8GRiDq7/aFdejfsYh9VghqNhBIW+JnO2rqwaUbxjWObnhaBYMuGY6hDlQ
-	evXE6uQIRma3ksYvZOSr3tJDRDM5ogn1Kj7F/O0CoeetQUWzlXR794XmGwU59hDs
-	ykrweqUy9V3dn1muT10NUXALrI05Lxgk6lFeXx49vU2l4hwwn9Bfv0zMaLlkT6Jj
-	Kq2diGr3bisu/BvdLcrHKeYk+OsR8UAKONXiE+DQv1NrVWQzn740H2nQVg/oKRAc
-	PgmXRE7vDQD+rNfgaVZF5CXiY0l/oadEfzbd6f/12zt8tn3C0b0pCLdY+A6RwfAv
-	/3/Q==
+	:subject:subject:to:to; s=fm1; t=1701418664; x=1701505064; bh=M3
+	x4AxreTJHgBBFQdetoCCtSEZ1+fM5S7ADa+xG/nYs=; b=OdEGd4V9Fpm2LKvlHt
+	pDyxXuKCiG3dWxUp6lH9iHWTXUNTA9813w+S7pxI0IvU6KoCxQ6/0Kk9K0upSrzh
+	0CJOhcdhGktr/8m9v2aB+kWl6TvaQoRHfrX4GZCYS9xoHOs3lEvVV1Wv0c1e97IB
+	wjElqPp/SnC6k+/cZUeKguw9EAzRmHXqZ2l9XuR4udV1RUx0q8K+A0IKVzGYKB+c
+	b9oKZiXWiiCPCfsiXZf2Nu9xLVTsBvgPkZbO3PhVVgc2vwt1GyaxLjYo7963TBfo
+	ZFPxRmmkL/gUYKzda3Tdm4pGR5TWJ3fMA4xgvMzLsC79TWJbxBucXC117V9a4b10
+	/FFw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm1; t=1701417733; x=1701504133; bh=9Di8qqsxvAaeK
-	Mn8bWMt+EA2zCYFdNsYIz/FG4HTNOc=; b=n6QHFopMM7hEUgm7aX69Fw71i8n9K
-	N39kclJyUvNtEnT4dZ0ulE4dOoHm8k44rQfdpEXJgTsGItx+YOg2WgrIgxG1Xsvo
-	h/xVR00r7VKDrCY074iZacUe6W1GTXbQ3poBLAqrHjD46a2/5G/EB/46NmprQ5JA
-	nUYfK+UTZnV+qYZ/LaDmGrf1LWiMUw6kekyl1TLhtTHQDJd33pO8ltKO+Ms5yOPw
-	n97BDS2NextAfKh96fIL4+b493b4w73duGGd/2x/FVsk1DXZbye57huvBRu2BXmv
-	R3W6eUH0DuMkvM1cdI1D1L1U/Oszjn0OueR2B6+ekJp2WS+8A9Nv1tPQw==
-X-ME-Sender: <xms:BJNpZVYfzcPe4hwBfR-j2AGyIeOu1A6_eWUmngSb68utbcq_22ELDw>
-    <xme:BJNpZca3u2fv1h2gPqBZ0M--o5owX0Vn2nQfA9t4g_--GhmNGYc3hl-wDKYs7-ZB6
-    umrtnAyPpwqlLNelQ>
-X-ME-Received: <xmr:BJNpZX978edoYhVo18fFd5ay5Npey0ob2eqy52ySeP2X7fdBmfDHhfqsV48czybHLt3RA-uHumu3ktWmohLgFeZv3TGwOCReROA7Dw9LjVagJGA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudeikedgudduudcutefuodetggdotefrod
+	:x-sasl-enc; s=fm1; t=1701418664; x=1701505064; bh=M3x4AxreTJHgB
+	BFQdetoCCtSEZ1+fM5S7ADa+xG/nYs=; b=pSJk/3r9osdZ3byjX11fTHUUuggsk
+	474wveXzInKtpFjatXmmvD72hQewPWeTdV8fpCrlNVHQyERbVg9w9LdDbvsgMsh0
+	OgwflhEp+IIz3fyPU5FbrjfvEf55eZ0MW9qPM9mwyKQH4TBtl5vcNCuYcDbIvUAf
+	ZXhHu1AahFYNCQYsF+Jw/KOFcw3UIa5v4BP9S6XTelEaOwZk2/EhOpSU0udaaMzW
+	E9+E7EUOl7XXzHgrqjRmw+332+GyiSXf38yQ82B5ATM5WyMkRO4O16EtrOImcJWx
+	vJnxagMN89gxiW9ytO15C6ZeIY7RVVTY6cWV88Yf1O1CK7SaC5VU4YOdA==
+X-ME-Sender: <xms:qJZpZVKC7GCK1hgaplOBDcec70aYI5vV4vP42nSFvrTr8MQemW6Y7A>
+    <xme:qJZpZRJFV0lYxIx8FeXmj1AV_X5W5PLaTDJf3www1BcliHVxpazPWLP3mBJhB7raW
+    cQwzse-AcMNc58mxQ>
+X-ME-Received: <xmr:qJZpZdvsLuIbxqbNFEnWvze5hLO9niZp9vzDx3Wda6WWMsBCZH3RfTbFHejCGZdy8NQkZjfSEzLGCUDxD_yMDKgYr19o3QYb3QcV-iorooz28K8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudeikedguddugecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
     dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
     sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeige
     ekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfr
     rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:BJNpZTobvfaFyrG2giiuty1Wgln8s9UBENqYunE_jPMoULjzL7fVqw>
-    <xmx:BJNpZQp4tpbWVZ-NwfQZInDRYRH-P18EpsoFjgiMiPDFLdSR7MfZsQ>
-    <xmx:BJNpZZS0qPGD7M8dRAOzxpQcN8nXbEL346rFgbM05sImdtZLyAdW6A>
-    <xmx:BZNpZX28UA706OhKJKKYVy_m8jQHimuxQdnbM78xwnoc6PVBFDOKzg>
+X-ME-Proxy: <xmx:qJZpZWYHj_9WVrObzqXy241xMxQD--212h2YDwaQBveA0XlZdu4ZKw>
+    <xmx:qJZpZcaO19JmYpOM7h-cFcGWTtrMlCRCt9sby8EgZBAZ6dwA36y-jg>
+    <xmx:qJZpZaBKfEOJYQh1yfdtz9ir0rb_cK_cTlbD_u3V1m7Z6VAbOJtn0A>
+    <xmx:qJZpZblu32giChrVm_cy_dXxEJ_oP-FdnePUWYJ1lxc9FSRVYnrB7w>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 1 Dec 2023 03:02:11 -0500 (EST)
+ 1 Dec 2023 03:17:43 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 91c3214d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 1 Dec 2023 08:00:55 +0000 (UTC)
-Date: Fri, 1 Dec 2023 09:02:08 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 1ff3c702 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 1 Dec 2023 08:16:25 +0000 (UTC)
+Date: Fri, 1 Dec 2023 09:17:38 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 07/24] midx: implement `--retain-disjoint` mode
-Message-ID: <ZWmTAO_OfR_g3-3p@tanuki>
+Subject: Re: [PATCH 08/24] pack-objects: implement `--ignore-disjoint` mode
+Message-ID: <ZWmWojF6BlOTzkcc@tanuki>
 References: <cover.1701198172.git.me@ttaylorr.com>
- <3019738b52ba8cd78ea696a3b800fa91e722eb66.1701198172.git.me@ttaylorr.com>
- <ZWhhi15VpeCRflDB@tanuki>
- <ZWjisIgiuziMvBph@nand.local>
+ <0368f7ab37669163b50b82185725935bde5bc946.1701198172.git.me@ttaylorr.com>
+ <ZWhhkdnVZ9w7tDBv@tanuki>
+ <ZWjjSOJHw6Q1qQ+y@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,84 +71,107 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="xTE5iXfl1DUMr/F2"
+	protocol="application/pgp-signature"; boundary="Fv4saU0ev/1W88jM"
 Content-Disposition: inline
-In-Reply-To: <ZWjisIgiuziMvBph@nand.local>
+In-Reply-To: <ZWjjSOJHw6Q1qQ+y@nand.local>
 
 
---xTE5iXfl1DUMr/F2
+--Fv4saU0ev/1W88jM
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Nov 30, 2023 at 02:29:52PM -0500, Taylor Blau wrote:
-> On Thu, Nov 30, 2023 at 11:18:51AM +0100, Patrick Steinhardt wrote:
-> > > diff --git a/Documentation/git-multi-pack-index.txt b/Documentation/g=
-it-multi-pack-index.txt
-> > > index d130e65b28..ac0c7b124b 100644
-> > > --- a/Documentation/git-multi-pack-index.txt
-> > > +++ b/Documentation/git-multi-pack-index.txt
-> > > @@ -54,6 +54,14 @@ write::
-> > >  		"disjoint". See the "`DISP` chunk and disjoint packs"
-> > >  		section in linkgit:gitformat-pack[5] for more.
+On Thu, Nov 30, 2023 at 02:32:24PM -0500, Taylor Blau wrote:
+> On Thu, Nov 30, 2023 at 11:18:57AM +0100, Patrick Steinhardt wrote:
+> > > Instead, teach `pack-objects` a special `--ignore-disjoint` which is =
+the
+> > > moral equivalent of marking the set of disjoint packs as kept, and
+> > > ignoring their contents, even if it would have otherwise been packed.=
+ In
+> > > fact, this similarity extends down to the implementation, where each
+> > > disjoint pack is first loaded, then has its `pack_keep_in_core` bit s=
+et.
 > > >
-> > > +	--retain-disjoint::
-> > > +		When writing a multi-pack index with a reachability
-> > > +		bitmap, keep any packs marked as disjoint in the
-> > > +		existing MIDX (if any) as such in the new MIDX. Existing
-> > > +		disjoint packs which are removed (e.g., not listed via
-> > > +		`--stdin-packs`) are ignored. This option works in
-> > > +		addition to the '+' marker for `--stdin-packs`.
+> > > With this in place, we can use the kept-pack cache from 20b031fede
+> > > (packfile: add kept-pack cache for find_kept_pack_entry(), 2021-02-22=
+),
+> > > which looks up objects first in a cache containing just the set of ke=
+pt
+> > > (in this case, disjoint) packs. Assuming that the set of disjoint pac=
+ks
+> > > is a relatively small portion of the entire repository (which should =
+be
+> > > a safe assumption to make), each object lookup will be very inexpensi=
+ve.
 > >
-> > I'm trying to understand when you're expected to pass this flag and when
-> > you're expected not to pass it. This documentation could also help in
-> > the documentation here so that the user can make a more informed
-> > decision.
+> > This cought me by surprise a bit. I'd have expected that in the end,
+> > most of the packfiles in a repository would be disjoint. Using for
+> > example geometric repacks, my expectation was that all of the packs that
+> > get written via geometric repacking would eventually become disjoint
+> > whereas new packs added to the repository would initially not be.
 >=20
-> I think there are multiple reasons that you may or may not want to pass
-> that flag. Certainly if you're not using disjoint packs (and instead
-> only care about single-pack verbatim reuse over the MIDX's preferred
-> packfile), then you don't need to pass it.
->=20
-> But if you are using disjoint packs, you may want to pass it if you are
-> adding packs to the MIDX which are disjoint, _and_ you want to hold onto
-> the existing set of disjoint packs.
->=20
-> But if you want to change the set of disjoint packs entirely, you would
-> want to omit this flag (unless you knew a-priori that you were going to
-> drop all of the currently marked disjoint packs from the new MIDX you
-> are writing, e.g. with --stdin-packs).
->=20
-> If you think it would be useful, I could try and distill some of this
-> down, but I think that there is likely too much detail here for it to be
-> useful in user-facing documentation.
+> Which part are you referring to here? If you're referring to the part
+> where I say that the set of disjoint packs is relatively small in
+> proposition to the rest of the packs, I think I know where the confusion
+> is.
 
-Yeah, this indeed feels too detailed to be added here. I was hoping for
-a simple "Never do this if"-style rule that points out why it is unwise
-under some circumstances, but seems like it's not as simple as that.
+Yeah, that's what I was referring to.
 
-Well, so be it. Thanks!
+> I'm not saying that the set of disjoint packs is small in comparison to
+> the rest of the repository by object count, but rather by count of packs
+> overall. You're right that packs from pushes will not be guaranteed to
+> be disjoint upon entering the repository, but will become disjoint when
+> geometrically repacked (assuming that the caller uses --ignore-disjoint
+> when repacking).
+
+I was actually thinking about it in the number of packfiles, not number
+of objects. I'm mostly coming from the angle of geometric repacking
+here, where it is totally expected that you have a comparatively large
+number of packfiles when your repository is big. With a geometric factor
+of 2, you'll have up to `log2($numobjects)` many packfiles in your repo
+while keeping the geometric sequence intact.
+
+In something like linux.git with almost 10M objects that boils down to
+23 packfiles, and I'd assume that all of these would be disjoint in the
+best case. So if you gain new packfiles by pushing into the repository
+then I'd think that it's quite likely that the number of non-disjoint
+packfiles is smaller than the number of disjoint ones.
+
+I do realize though that in absolute numbers, this isn't all that many.
+I was also thinking ahead though to a future where we have something
+like geometric repacking with maximum packfile sizes working well
+together so that we'll be able to merge packfiles together until they
+reach a certain maximum size, and afterwards they are just left alone.
+This would help to avoid those "surprise" repack cases where everything
+is again packed into a single packfile for the biggest repositories out
+there. But it would of course also lead to an increase in packfiles in
+those huge repositories.
+
+Anyway, I feel like I'm rambling. In the end it's probably going to be
+fine, I was simply surprised by your assumption that the number of
+disjoint packfiles should usually be much smaller than the number of
+non-disjoint ones.
 
 Patrick
 
---xTE5iXfl1DUMr/F2
+--Fv4saU0ev/1W88jM
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVpkv8ACgkQVbJhu7ck
-PpQkIBAAqBLf6Y+vwm9OPiFVT6K5iiDNw6zwpyzLrCwaa3zEPNxrDevr++faENhN
-AwjBNRNX7K6F+xhuh4fjplDRPjn/zQeSabNW0rxFtdDShqlBsdtpamwm/MgQ58ZF
-tnIwQS0CtiPElxThcDrTyIiwredAXWg/NaZqHrMmM1f9OymNuuL4sG0NUFKbnO1x
-4jp0QliLx1MJ0m4a42IaYVZP0fHWNBeyJB8kVPSTZUwwylqa8VA23kqCAuxLWXAt
-ByP5TTbm+R2CVq9E/ozEWCT7m2tTq6SVG5TU9WQvRKPBWuGMLgqft3zMldUcXYPY
-bVx8WAEQUJk14dVnTXqNlEE9MQ3tSE+fKAACCBL9g7iZyGxMaveQBhp0nz4mQ4XR
-Z8hf9QUEW2XkfCOmCAaUwZ2GqmZxlWfxkal4R8NpbF+khxntgfTn8GeYwePhMtAg
-Nx7u90Ec66jrPfECnyao2gHAPREYpH/Oa5sszelVO0GD5SFL/08ciFE3BFarvg8/
-IuH8SJ+r9JcjgBZKitzD6k5krLFhodpGZbCw4BnKulvRQuYRWUg+TrG+XwbBn6Fj
-AnG/iDydy3BSTKtIhfkjFnA1HWeo8agPS/ER0a/E0ds15kULPy65RwroWrWjQWF9
-2oXRWISJmleCnzUlv+w5Nc5fR6iq32zCMHQJPjnQyHJkYGV5/tI=
-=x+hl
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVplqEACgkQVbJhu7ck
+PpTNkA//ZJcgANOveHQ/FoylgUgoXV9u22a9BR3vXjfUZ/PMzYphyoIKu3B6OZz0
+ZhAR8MauOEb0ICBx0nn6DehVxXRUeNXroQFfrZPwyKSfm82d24eVqMKfNONvCbUE
+COfgNB6ag826kRWMwbAFMYWjGzl23xoHAeo5EJevrKmyORHQlNph/jvwP3eAunRf
+HX8TvvYkbfiA5KmeKMWhv795kaWZ33fVA850dKxSXS8cWvHyXkxMPQmB4fPGmf/W
+hRb1JaXypjKp5S9ctJO370cWMLq6zcXEN+FPB59zKmffKY2rZdeww5whGhmwFVCR
+JHTzcUE2/5R/waqhmBJHqPNAeEXrqY/O/je9eCRzUhSKAYSEnasOnHaT6VhsnoeH
+yrFL2xP7tax9HIxjwMGPbO07OVrpq8fMqopj2caVJutomOxcf8tcd3Wj85nB+/BV
+QJCanvFHOm4h+NAvpjBZ33m2caTJpnY/VluthAIHog9lQtOOlbX750QecUFC1+Gs
+DY0E5Z//aTnFR9fgs7tKXZYAg3kbwpdDsdjLJUrogDJ1x0ufrglev8PSGdPvy0UR
+5RU99uvaa+8qYAdgjKKo6FllReo6vMESp+eCr56lszKWte27QMjTm5AGO4c7vr6e
+ko27DXLn8feNf49mzasgK+a/6sV8bqzDEIoefy1eoEF7dfZ5ZiY=
+=ZRZt
 -----END PGP SIGNATURE-----
 
---xTE5iXfl1DUMr/F2--
+--Fv4saU0ev/1W88jM--
