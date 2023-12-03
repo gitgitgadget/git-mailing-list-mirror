@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="Cg6PucVN"
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 841FCFC
-	for <git@vger.kernel.org>; Sun,  3 Dec 2023 05:39:33 -0800 (PST)
-Received: by mail-pf1-x435.google.com with SMTP id d2e1a72fcca58-6cdcef787ffso3959001b3a.0
-        for <git@vger.kernel.org>; Sun, 03 Dec 2023 05:39:33 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KHH4r/uf"
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8606E6
+	for <git@vger.kernel.org>; Sun,  3 Dec 2023 08:56:04 -0800 (PST)
+Received: by mail-ot1-x32a.google.com with SMTP id 46e09a7af769-6d87501d6e6so1300964a34.1
+        for <git@vger.kernel.org>; Sun, 03 Dec 2023 08:56:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1701610772; x=1702215572; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IHK+vVu5ipNW149NlqulqGnnHdAIPxaJYBu04rkWNCc=;
-        b=Cg6PucVNQHjD1VuX33xF1RLJrQn5SuGpvKNH79pDURnl09mv/KanrFm+CT1j0jadP4
-         xrZ1GQVSpvYx3K68hRdSCoEx/U4eYE8tuW71fjQ9dA+Nu2Ds6VR8+SKcUbPzWOOZIGHK
-         HiJQ2bv4unLFLOVlj5tkbYzctY9Z1Fby5WEhjv9+rxihquryit7Qw1dLf8AwnTjzMd5u
-         i+t8IP7LpcY4VhBkBKy3nYi2SUu82uJk34S9iVqAQodlwNnpT3fZTGb7grLRZwlrBRGZ
-         C0Oe0QeCpQtsVSrfzRCkwBH6dnf0GyfwdOTKpipMTpsYafUGJSGweC1AY6ZIqFYn6MnD
-         EDCQ==
+        d=gmail.com; s=20230601; t=1701622564; x=1702227364; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=bszifoqlI8O3DxEVNdXs+mzZZYGbMsUd0bkkHdVP8QU=;
+        b=KHH4r/ufIl7EbcwwfwFttEFuT2KV+7by1E3BO/CWSpTjzGv24BUrNnVbXpnvcqX5tV
+         ZFrKevWRBrv6gEdbY/E1i6UugZvxrhmC0saeccE2oGqgImzOvs0BoFpBwK4vb6BghJ+Y
+         sDOW+KToDHE0adU/B3GSFz6yVZT3vUglNPLXYyFCvD9oBPzdafCrnSm/e3JxSFGmQ1Xq
+         lTKyvHi8O6DdC4V7inU5UxuDDuueo/JRL0WWLs1Ees+UCRZsHyN9TEYTMvkJOftSQgv7
+         /c/JeN9yWXsmj/IEEIrlIgXaDUs0peYSS57DKa3MP3IOP4wbpUmFP3JrfqZorL8jsQ7U
+         Dp+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701610773; x=1702215573;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=IHK+vVu5ipNW149NlqulqGnnHdAIPxaJYBu04rkWNCc=;
-        b=ARIn+axHWOfKFpnjmUkYAyGf/5xNjiXl3W9UHf9CAiNvsUePxyeI7P/LJ1CE3kvWKW
-         bMbpAg7Gc/7RUeMCWEeEUchKMoxpp5yILQbTNq4iHCtuUM2gEh20kr72Rd6b0e35ggsU
-         giEiKlvnqB1/T+M9qCdlXdLq75bWpSS4NqB9fA6psHnJ7t46C/7a2LV36Rp4m7Yko2KH
-         lrppbA7nksJiKfG+QMI5Vc+C4CmzgQF07if+0Gc925esES6T8n8pXWrddrQzAyTJvIh4
-         KKNoTcOdODB21fnQecNgTbuKWL6s1GSVJuD3ZojBK1Y27yWTG3PcN06r/Ffiz/Cy84Ej
-         ZLNQ==
-X-Gm-Message-State: AOJu0YyRWt9vNX6no6asdJixqtRHoPG1aj3Jw9OqVtvYE0SuEpGUFxKo
-	+UHGg87ouWnoynnCv+qmEmg2BJs3/czyGgEf83A=
-X-Google-Smtp-Source: AGHT+IEoRee87/6F2GBxdLF6X/WiYmGzP/uNEm8IjK54ASUgXU5vUyocBN0oniOAnaEVUdqU8UlNnA==
-X-Received: by 2002:a05:6a20:6a23:b0:18f:97c:9758 with SMTP id p35-20020a056a206a2300b0018f097c9758mr3490124pzk.64.1701610772754;
-        Sun, 03 Dec 2023 05:39:32 -0800 (PST)
-Received: from localhost.localdomain ([139.177.225.236])
-        by smtp.gmail.com with ESMTPSA id s4-20020a637704000000b005c65e82a0cbsm2515110pgc.17.2023.12.03.05.39.30
+        d=1e100.net; s=20230601; t=1701622564; x=1702227364;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bszifoqlI8O3DxEVNdXs+mzZZYGbMsUd0bkkHdVP8QU=;
+        b=moRBPs7uP3s8cfq5ZietHW5wxn+uw98gNeF51/BzT2JnpBp16tYHfAW9+BKK8QlOPP
+         jZILKXg75R2sBKsnBNjiubmXEJDp9ZFWbzfvySPs3n1Kg8RxRS9UEI/LhoTf21C+kNEv
+         D0OsdPBX0FojqNjLkPmXcncY7kvPPK6o4vP424FMZrbMbMcC2Wkretph+ncM48K5AL4V
+         S4RQ6EsvpWOaUbn0uTq3AZOSl4hMm33l2hkZmdygZrX2XrlxEZgIMOsnSJP3c3bYWkuB
+         Q2I6rKau4IXn16qAfrsxMxSFwdUVNXIHJJEdg4gY1eMSZkLY304omuf0kDUD3REi++qD
+         +mwQ==
+X-Gm-Message-State: AOJu0Yx0ya/rP2ISEshHiJhzk152PcI7QioOQFrzu5R6/0ie7SW8k/7K
+	F9X2cValWJ3bm2r60uJMiQyoXs6paT8=
+X-Google-Smtp-Source: AGHT+IEoUJyk7jF6YC3lNSCOmmlA5d2WJTv5NtPq3mo8koMezx7kXDdz3aIpk+Zdgf8PhUzf2iXG2g==
+X-Received: by 2002:a05:6870:ab0d:b0:1fb:3241:be3c with SMTP id gu13-20020a056870ab0d00b001fb3241be3cmr928536oab.34.1701622563763;
+        Sun, 03 Dec 2023 08:56:03 -0800 (PST)
+Received: from localhost.localdomain ([2401:4900:1f38:f8b:64f3:df46:3399:9fcc])
+        by smtp.gmail.com with ESMTPSA id a1-20020a656041000000b005891f3af36asm5506575pgp.87.2023.12.03.08.56.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 03 Dec 2023 05:39:32 -0800 (PST)
-From: Han Young <hanyang.tony@bytedance.com>
-X-Google-Original-From: Han Young <hanyoung@protonmail.com>
+        Sun, 03 Dec 2023 08:56:03 -0800 (PST)
+From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
 To: git@vger.kernel.org
-Cc: Han Young <hanyang.tony@bytedance.com>
-Subject: [RFC PATCH 4/4] unpack-trees: introduce parallel_unlink
-Date: Sun,  3 Dec 2023 21:39:11 +0800
-Message-ID: <20231203133911.41594-5-hanyoung@protonmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20231203133911.41594-1-hanyoung@protonmail.com>
-References: <20231203133911.41594-1-hanyoung@protonmail.com>
+Cc: five231003@gmail.com,
+	gitster@pobox.com,
+	shreyp135 <shreyanshpaliwalcmsmn@gmail.com>,
+	Shreyansh Paliwal <Shreyanshpaliwalcmsmn@gmail.com>
+Subject: 
+Date: Sun,  3 Dec 2023 22:21:43 +0530
+Message-ID: <20231203165539.341-1-shreyanshpaliwalcmsmn@gmail.com>
+X-Mailer: git-send-email 2.43.0.windows.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -56,54 +55,39 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Han Young <hanyang.tony@bytedance.com>
+From: shreyp135 <shreyanshpaliwalcmsmn@gmail.com>
 
-We have parallel_checkout option since 04155bdad, but the unlink is still executed single threaded. On very large repo, checkout across directory rename or restructure commit can lead to large amount of unlinked entries. In some instance, the unlink operation can be slower than the parallel checkout. This commit add parallel unlink support, parallel unlink uses multithreaded removal of entries.
+Subject: [PATCH v2] test-lib-functions.sh: fix test_grep fail message wording
+
+In the recent commit
+2e87fca189 (test framework: further deprecate test_i18ngrep, 2023-10-31),
+the test_i18ngrep() function was deprecated.
+
+So if a test employing this function fails,
+the error messages may be confusing due to wording issues.
+
+It's important to address these wording changes to ensure smooth transitions
+for developers adapting to the deprecation of test_i18ngrep,
+and to maintain the effectiveness of the testing process.
+
+Signed-off-by: Shreyansh Paliwal <Shreyanshpaliwalcmsmn@gmail.com>
 ---
-Unlink operation by itself is way faster than checkout, the default threshold should be way higher
-than parallel_checkout. I hardcoded the threshold to be 100 times higher, probably need to introduce
-a new config option with sensible default.
-To discover how many entries to remove require us to iterate index->cache, this is fast even for large
-number of entries compare to filesystem operation.
-I think we can reuse checkout.workers as the main switch for parallel_unlink, since it's also part of
-checkout process.
+ t/test-lib-functions.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- unpack-trees.c | 15 ++-------------
- 1 file changed, 2 insertions(+), 13 deletions(-)
-
-diff --git a/unpack-trees.c b/unpack-trees.c
-index c2b20b80d5..53589cde8a 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -452,17 +452,8 @@ static int check_updates(struct unpack_trees_options *o,
- 	if (should_update_submodules())
- 		load_gitmodules_file(index, NULL);
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 9c3cf12b26..8737c95e0c 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -1277,7 +1277,7 @@ test_grep () {
+ 	if test $# -lt 2 ||
+ 	   { test "x!" = "x$1" && test $# -lt 3 ; }
+ 	then
+-		BUG "too few parameters to test_i18ngrep"
++		BUG "too few parameters to test_grep"
+ 	fi
  
--	for (i = 0; i < index->cache_nr; i++) {
--		const struct cache_entry *ce = index->cache[i];
--
--		if (ce->ce_flags & CE_WT_REMOVE) {
--			display_progress(progress, ++cnt);
--			unlink_entry(ce, o->super_prefix);
--		}
--	}
--
--	remove_marked_cache_entries(index, 0);
--	remove_scheduled_dirs();
-+	get_parallel_checkout_configs(&pc_workers, &pc_threshold);
-+	cnt = run_parallel_unlink(index, progress, o->super_prefix, pc_workers, pc_threshold * 100, cnt);
- 
- 	if (should_update_submodules())
- 		load_gitmodules_file(index, &state);
-@@ -474,8 +465,6 @@ static int check_updates(struct unpack_trees_options *o,
- 		 */
- 		prefetch_cache_entries(index, must_checkout);
- 
--	get_parallel_checkout_configs(&pc_workers, &pc_threshold);
--
- 	enable_delayed_checkout(&state);
- 	if (pc_workers > 1)
- 		init_parallel_checkout();
+ 	if test "x!" = "x$1"
 -- 
-2.43.0
+2.43.0.1
 
