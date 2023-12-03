@@ -1,147 +1,130 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jjaXbzHK"
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC24A116
-	for <git@vger.kernel.org>; Sun,  3 Dec 2023 00:22:12 -0800 (PST)
-Received: by mail-pl1-x633.google.com with SMTP id d9443c01a7336-1d0897e99e0so808105ad.3
-        for <git@vger.kernel.org>; Sun, 03 Dec 2023 00:22:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701591732; x=1702196532; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=pYRTSlJfQlbdyROcC6VWnV9jXr8Wb1iTx+j93/0JHQs=;
-        b=jjaXbzHKIIuf9k65+BbNfFUX7RverF0tRbPFWcTKm8J70r1kWUqT5aWk9aglerrFwa
-         sQoikJB2eZRPbWo1gDiHezxkc2bvNo61wrfyUwFFytUmnXI29fC2gB+606X0Z3unRl90
-         C4Ex1Opd4W2bpcMtTBOeQ6SKrFw9O12y9WQGR5FIEw4cCWmdGW1vBkIioedDzqLnWxBH
-         39luIejAFc5s5HWjHsfeUYvl8FlNuq1S3WbWLFPSnqXeHjhLWtl4vfm3XJp0de4ACFCr
-         geiH0tgovR9yB0hbYlVr+ZZUWSyaaLdpl9H93vl9MSmnCB5MHSa7/eAGj0ZYcRYGRaN9
-         p/KQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701591732; x=1702196532;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pYRTSlJfQlbdyROcC6VWnV9jXr8Wb1iTx+j93/0JHQs=;
-        b=ZdQMobG9LocJRTz9qClHLo5PBDY7oalzmMMacPt6Vji4Y+gVAX50r3e4Y2cW/gW/Cs
-         CuKexaAw1rG+UxD0JCNRS+ZhNEz84SE2cpBElT1WmJVANJ1R42eE6QLAprudZbCFS8/I
-         gXy0zSTs7KMZGo/cKGDocjvR4k0/bYdgUDz0VC1n3Mnc9TE77UoeZEGQtA5v1Pyqq/6Z
-         7+brBtT5WMg2sZdQ47ML5qVEd7DvkipDxHLDHPHwt+Q41HqVsJIKnQniBYFARiIaCdwM
-         J7GmCt2X18A42CYIwCbyQqJ3P9Hz3BM2BGMt/lmHG11Gmpd85yb2BnMs9N2gED7DxfWr
-         NRqQ==
-X-Gm-Message-State: AOJu0Yxla+X2YltuqbiGZQQXYIri4sf3lVI3WqXTLQy3vH2p6+KnCSW7
-	YDrrv/1zK/IKA1R9iD/NKm4=
-X-Google-Smtp-Source: AGHT+IFJ0yKFzXtO4Gdu2mMqZh9UY99l29DAUfavQ31xZr+yHGzZ2x2w6U3K9o+SJrRFzgmPl13OkQ==
-X-Received: by 2002:a05:6a20:914e:b0:187:d44:59f1 with SMTP id x14-20020a056a20914e00b001870d4459f1mr595845pzc.31.1701591731982;
-        Sun, 03 Dec 2023 00:22:11 -0800 (PST)
-Received: from five231003 ([202.65.154.98])
-        by smtp.gmail.com with ESMTPSA id j20-20020a170902759400b001c74df14e6fsm6251232pll.284.2023.12.03.00.22.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 03 Dec 2023 00:22:11 -0800 (PST)
-Date: Sun, 3 Dec 2023 13:52:07 +0530
-From: Kousik Sanagavarapu <five231003@gmail.com>
-To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [Patch] test-lib-functions.sh : change test_i18ngrep to test_grep
-Message-ID: <ZWw6r2EDGkpgyYEM@five231003>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="UFRSDXdJ"
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4999CE6
+	for <git@vger.kernel.org>; Sun,  3 Dec 2023 05:15:11 -0800 (PST)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EA4871B595C;
+	Sun,  3 Dec 2023 08:15:07 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=OY1fNG7FnK6aqGLAuCGxuzp6ozKh4FY8XWLYst
+	lyinE=; b=UFRSDXdJEbSmjP7nUmqBU0sO4/LlRKgiORp4jVWjhUvH0x9dU044em
+	rF15f0EhU9kWJtPRbutCDJ2iECoK9L9uuIvwUMEJ5x6PgNbGCKD99jIuPPRCRl1n
+	lHDUz4M4vwTJXLI6j9+yvt2X0/lyVL/q+aILg+jXNQ5cXvSTmyxpQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DEFB91B595B;
+	Sun,  3 Dec 2023 08:15:07 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.103.223])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CD3F81B595A;
+	Sun,  3 Dec 2023 08:15:06 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 02/12] treewide: remove unnecessary includes in source
+ files
+In-Reply-To: <dbfb108214d71ab29c29230eed3c4d40fe4b42b7.1701585682.git.gitgitgadget@gmail.com>
+	(Elijah Newren via GitGitGadget's message of "Sun, 03 Dec 2023
+	06:41:11 +0000")
+References: <pull.1617.git.1701585682.gitgitgadget@gmail.com>
+	<dbfb108214d71ab29c29230eed3c4d40fe4b42b7.1701585682.git.gitgitgadget@gmail.com>
+Date: Sun, 03 Dec 2023 22:15:05 +0900
+Message-ID: <xmqq1qc35sx2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAPYXD64yCuMta_iGE+ZwgxrJn0U5shcwcB9jaiNkFhvff=R7MQ@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ FA52C15A-91DD-11EE-8B5C-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com> wrote:
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Subject: [Patch] test-lib-functions.sh : change test_i18ngrep to test_grep
+> diff --git a/trace2.c b/trace2.c
+> index 6dc74dff4c7..d4220af9ae1 100644
+> --- a/trace2.c
+> +++ b/trace2.c
+> @@ -1,12 +1,8 @@
+>  #include "git-compat-util.h"
+> -#include "config.h"
+> -#include "json-writer.h"
+> -#include "quote.h"
+>  #include "repository.h"
+>  #include "run-command.h"
+>  #include "sigchain.h"
+>  #include "thread-utils.h"
+> -#include "version.h"
+>  #include "trace.h"
+>  #include "trace2.h"
+>  #include "trace2/tr2_cfg.h"
 
-For anyone reading the subject, I think reading
+An in-flight topic seem to want to see git_env_bool() that is
+declared in parse.h that is pulled in via inclusion of config.h
+hence this hunk breaks 'seen'.
 
-	change test_i18ngrep to test_grep
+> diff --git a/t/helper/test-trace2.c b/t/helper/test-trace2.c
+> index d5ca0046c89..a0032ee3964 100644
+> --- a/t/helper/test-trace2.c
+> +++ b/t/helper/test-trace2.c
+> @@ -2,7 +2,6 @@
+>  #include "strvec.h"
+>  #include "run-command.h"
+>  #include "exec-cmd.h"
+> -#include "config.h"
+>  #include "repository.h"
+>  #include "trace2.h"
 
-would be confusing, as from the looks of it, the patch does remove
-test_i18ngrep() and replace it with test_grep (I mean the plan is to
-remove test_i18ngrep only after we are sure that it doesn't exist in the
-code anywhere, anymore) but only making a change in the wording of an
-error message within test_grep().
+An in-flight topic starts using "struct key_value_info" that is
+available via the inclusion of "config.h", hence this hunk breaks
+the build of 'seen'.
 
-Also I think we can drop the SP after "related topic" part of the patch
-and the colon (but have the SP after the colon), that is
+> diff --git a/t/helper/test-fast-rebase.c b/t/helper/test-fast-rebase.c
+> index cac20a72b3f..f9472c99143 100644
+> --- a/t/helper/test-fast-rebase.c
+> +++ b/t/helper/test-fast-rebase.c
+> @@ -24,7 +24,6 @@
+>  #include "read-cache-ll.h"
+>  #include "refs.h"
+>  #include "revision.h"
+> -#include "sequencer.h"
+>  #include "setup.h"
+>  #include "strvec.h"
+>  #include "tree.h"
 
-	"test-lib-functions.sh: ..."
+I'll register the following evil merge as the merge-fix/ for this
+topic.
 
-Also, nit, but I think we should have [PATCH] instead of [Patch]. I'm not
-really sure if Junio's setup treats [PATCH] and [Patch] to be same :)
+In addition, t/helper/test-fast-rebase.c that is touched by this
+step will simply disappear with the cc/git-replay topic, so it may
+not be a bad idea to exclude it from the patchset.
 
-> Recently the test_i18ngrep was deprecated from the source code and
-> test_grep was implemented but in the test-lib-functions.sh file , in
-> the test_grep() function definition,
+Thanks.
 
-This recent deprecation was made in the commit,
-2e87fca189 (test framework: further deprecate test_i18ngrep, 2023-10-31)
-and it makes sense to include it in the commit message as the following
-change is essentially something that the previous commit seems to have
-forgotten to do.
-
-> it is written BUG "too few parameters to test_i18ngrep".
-
-I think it is not necessary to mention what is the current code
-in _this case_ as it can be read in the change itself :)
-
-> So the following patch solves the minor problem.
-
-What exactly is the problem? I think it should be mentioned in the commit
-message that the wording of the error message causes confusion ;) as when
-test_grep() is used in a test and this test fails. That the change is - it
-would be clear to see
-
-	"too few parameters to test_grep"
-
-instead of
-
-	"too few parameters to test_i18ngrep"
-
-> Signed-off-by: Shreyansh Paliwal <Shreyanshpaliwalcmsmn@gmail.com>
-> ---
->  t/test-lib-functions.sh | 2 +-
->  1 file changed, 1 insertions(+), 1 deletions(-)
-> 
->  t/test-lib-functions.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)diff --git
-> a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> index 9c3cf12b26..8737c95e0c 100644
-> --- a/t/test-lib-functions.sh
-> --- a/t/test-lib-functions.sh
-> +++ b/t/test-lib-functions.sh
-> @@ -1277,7 +1277,7 @@ test_grep () {
->         if test $# -lt 2 ||
->            { test "x!" = "x$1" && test $# -lt 3 ; }
->         then
-> -               BUG "too few parameters to test_i18ngrep"
-> +               BUG "too few parameters to test_grep"
->         fi
-> 
->         if test "x!" = "x$1"
-> --
-> 2.43
-
-The diff format doesn't seem proper (some repeated lines and no newlines
-at the required places).
-
-If you have no go-to tool to send patches through email then git-send-email
-is a really good tool to do it. It handles most of the work for you.
-"MyFirstContribution" has a guide to do so
-
-	https://git-send-email.io/ (also has setup with GMail)
-	https://git-scm.com/docs/MyFirstContribution#howto-git-send-email
-
-Another good resource which is not linked often is
-
-	https://flusp.ime.usp.br/git/sending-patches-by-email-with-git/
-
-by Matheus Tavares, also a Git Contributor. It also has other useful links
-which are worth a read.
-
-Thanks
+diff --git a/t/helper/test-trace2.c b/t/helper/test-trace2.c
+index 16089f04e1..55c06e4269 100644
+--- a/t/helper/test-trace2.c
++++ b/t/helper/test-trace2.c
+@@ -1,4 +1,5 @@
+ #include "test-tool.h"
++#include "config-parse.h"
+ #include "strvec.h"
+ #include "run-command.h"
+ #include "exec-cmd.h"
+diff --git a/trace2.c b/trace2.c
+index 4fa059199c..452428b09b 100644
+--- a/trace2.c
++++ b/trace2.c
+@@ -1,4 +1,5 @@
+ #include "git-compat-util.h"
++#include "parse.h"
+ #include "repository.h"
+ #include "run-command.h"
+ #include "sigchain.h"
