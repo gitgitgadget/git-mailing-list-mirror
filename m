@@ -1,49 +1,49 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b8moxfwh"
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4FE0F3
-	for <git@vger.kernel.org>; Sat,  2 Dec 2023 22:41:29 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id ffacd0b85a97d-3316d09c645so3297146f8f.0
-        for <git@vger.kernel.org>; Sat, 02 Dec 2023 22:41:29 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DdAtyFTe"
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3DD4F4
+	for <git@vger.kernel.org>; Sat,  2 Dec 2023 22:41:30 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-3333224c7b9so1517406f8f.1
+        for <git@vger.kernel.org>; Sat, 02 Dec 2023 22:41:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701585687; x=1702190487; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1701585689; x=1702190489; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=eKpv5ZFzjn3B1VgPJnotlQlSa+AAZOHqDH7ko024YjQ=;
-        b=b8moxfwhTZ7w90KCnY1v4ABWpZHyNkUiIiAGTYfZjT+AUdERywoc3vInJ1IBSyEEft
-         4SQl0QPwNrHZm1rCV7jp13nn0nPiO1QvGAlNjsmv0d0Fn81a2mM+qMPbnXYr8LeejUnh
-         KwkoTzan8T7r58oFW/cxwjxx5F/tr2lspZGw73/2u/6wtwKndyvS4ymj+T+qWM18m7hA
-         bpMrdXpUZMC++rhO6HDRrlt2Xmutej3a0W01qUwjOYcwJBSqZGElCkUWBI1iwCRIKiJ+
-         n5TciSZg2oY8p4ZfEmrWNSHFDae6nhXve3CkDHIp8Efnro3XXyb87xQPXQfk/q+QUMm4
-         c2ow==
+        bh=wSCkfIpGZxL9WKaqL8EtN8rgM9Yovl63d21O0EWr+bw=;
+        b=DdAtyFTeKFUh+KHi7AGIIoqEbL0QR7gkMMf4JKvuULqhGnEQLFSJgRbtojUFlNqToZ
+         7WWpR7M7D8nyxZdKTbcUftbdDbLGHt6czokSqdAT1KZtYj25MacKnGtiJgg8yua01vei
+         3bz74ZpPFJQMklN/lqUCMVMkGeA+08x9YPgBNmP5Vmm+dR5tzcx4rRhSuZ2V0w7d30ml
+         qXDKpXIIlTDFHwDmGQMeYa8HINvmQbumcmY86aN7BK0HNddPUXlf4cGv1/ovl+wAoNoi
+         Wkyfzy4plLFF3xts+tJDcJaaVd5OIDD1/+48lohARhiaF/oGtygjLr1KEQw27Nzxkaeg
+         BoWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701585687; x=1702190487;
+        d=1e100.net; s=20230601; t=1701585689; x=1702190489;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=eKpv5ZFzjn3B1VgPJnotlQlSa+AAZOHqDH7ko024YjQ=;
-        b=um0lf79q8H5fhDwkL1Jcu2V1qDsPnZhsGwvVHvmpx1PZIZnxvnO0/tU1QYPCGMj8ZK
-         7BJBl4F02VbbyH0MHNeugFzy6tqP1F8e4uCe31cjArgbboiSlu52TltO2isF7IAuJY5r
-         DPL/9sWSBcEXcd+8oxFeq2vQPmaWSFoj1mVc8ZckhbyBxXcAu4EWUk1BiKjEK70MW3qr
-         nm/LYIVbq9RxVc4Dq2byK81bKQdUF2lhBFmZEzHDw68O1ru9U28QqjlcQKwELkXTMHCk
-         sccEg1sRgQdy6t3FpLZ3G1S3spiLiEY8FFrzWPd7TLiiJe0b6d5lWEvA0ftHczP48HGL
-         n7dA==
-X-Gm-Message-State: AOJu0YxBrufjgQ/qpbGC6YWsK74SlSTSSZP5Rwe8FG01q4zl1fdk/KZu
-	hY/1DSEEqJywiC+bppC8jiNXh97YTbk=
-X-Google-Smtp-Source: AGHT+IEj9S34jnkgUBr/WmiiHx3Y0zMxHqYhv1ipcNVHUn3NYR4W2uunMYOLwp16tfche8GORCbvnQ==
-X-Received: by 2002:a5d:550f:0:b0:333:434b:5fb7 with SMTP id b15-20020a5d550f000000b00333434b5fb7mr208764wrv.66.1701585687638;
-        Sat, 02 Dec 2023 22:41:27 -0800 (PST)
+        bh=wSCkfIpGZxL9WKaqL8EtN8rgM9Yovl63d21O0EWr+bw=;
+        b=XLWJSK8ONpRr4+kGJcEac9a0KJg6CqgTfuJnN14s8koEkcK7xDSYYqARhauPuxIAXX
+         ZO3RQCq/9UDxa+qKqedJ6TQ9nJWAwzUqESfMcSAYgJpnNWPOpLsnT2TsW/S8qeK6nhaE
+         EXCCiX9/gvRVzeKkdRu/phLNgu4TYRSeeSUgEl5zE7slQnBan4N9LBw051BoFQ/q2npc
+         HGduGpqvf959Rpowt3FdsUiQHvBmpVoEoXMmNv+rfYSRcm/EZMxs6rNVdpPSK4s9KH89
+         so66ReRhqXwzAMKtS4Uu88GsT4mcH8+LDEgcqBTR+OHYcAMjnZOf/0P3ddPCBn59LFfI
+         1/ag==
+X-Gm-Message-State: AOJu0Yw90ChpGWe4uax7pQqdfWMnt3Ou/+d5vZ53gj+l1H05/MrrQemM
+	0X0uaR+YUhdEdeUfnW0jxoUIR7O8sa4=
+X-Google-Smtp-Source: AGHT+IFPLttA+7rU7MduIBYL+AkPgKIe16VujzT0Rl2QRs07o2Mq/MHrFtpx2yqUdhxoKLMztD3oVw==
+X-Received: by 2002:a05:6000:1372:b0:332:fbd4:1f98 with SMTP id q18-20020a056000137200b00332fbd41f98mr2171339wrz.38.1701585688716;
+        Sat, 02 Dec 2023 22:41:28 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o13-20020a5d648d000000b00332e67d6564sm8451481wri.67.2023.12.02.22.41.27
+        by smtp.gmail.com with ESMTPSA id q11-20020a5d658b000000b003333298eb4bsm5498870wru.61.2023.12.02.22.41.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sat, 02 Dec 2023 22:41:27 -0800 (PST)
-Message-ID: <bd69a954e9ada2822188bbfb8797fe198964adba.1701585683.git.gitgitgadget@gmail.com>
+Message-ID: <a2e4bcc56fb7a25c2b55213d95b4fffe074f6e91.1701585683.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1617.git.1701585682.gitgitgadget@gmail.com>
 References: <pull.1617.git.1701585682.gitgitgadget@gmail.com>
 From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 03 Dec 2023 06:41:13 +0000
-Subject: [PATCH 04/12] blame.h: remove unnecessary includes
+Date: Sun, 03 Dec 2023 06:41:14 +0000
+Subject: [PATCH 05/12] fsmonitor--daemon.h: remove unnecessary includes
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -65,47 +65,84 @@ source files explicitly include the headers they need.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- blame.c | 2 ++
- blame.h | 3 ---
- 2 files changed, 2 insertions(+), 3 deletions(-)
+ builtin/fsmonitor--daemon.c          | 2 ++
+ compat/fsmonitor/fsm-health-win32.c  | 1 +
+ compat/fsmonitor/fsm-listen-darwin.c | 1 +
+ compat/fsmonitor/fsm-listen-win32.c  | 1 +
+ fsmonitor--daemon.h                  | 4 +---
+ 5 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/blame.c b/blame.c
-index 141756975bf..1a16d4eb6a5 100644
---- a/blame.c
-+++ b/blame.c
-@@ -3,6 +3,7 @@
- #include "object-store-ll.h"
- #include "cache-tree.h"
- #include "mergesort.h"
-+#include "commit.h"
- #include "convert.h"
- #include "diff.h"
- #include "diffcore.h"
-@@ -10,6 +11,7 @@
- #include "hex.h"
- #include "path.h"
- #include "read-cache.h"
-+#include "revision.h"
- #include "setup.h"
- #include "tag.h"
+diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
+index 5d01db5c029..7260604534f 100644
+--- a/builtin/fsmonitor--daemon.c
++++ b/builtin/fsmonitor--daemon.c
+@@ -1,6 +1,7 @@
+ #include "builtin.h"
+ #include "abspath.h"
+ #include "config.h"
++#include "dir.h"
+ #include "environment.h"
+ #include "gettext.h"
+ #include "parse-options.h"
+@@ -14,6 +15,7 @@
+ #include "simple-ipc.h"
+ #include "khash.h"
+ #include "pkt-line.h"
++#include "run-command.h"
+ #include "trace.h"
  #include "trace2.h"
-diff --git a/blame.h b/blame.h
-index 31ddc85f19e..5b4e47d44c6 100644
---- a/blame.h
-+++ b/blame.h
-@@ -1,12 +1,9 @@
- #ifndef BLAME_H
- #define BLAME_H
  
--#include "commit.h"
- #include "oidset.h"
- #include "xdiff-interface.h"
--#include "revision.h"
- #include "prio-queue.h"
--#include "diff.h"
+diff --git a/compat/fsmonitor/fsm-health-win32.c b/compat/fsmonitor/fsm-health-win32.c
+index 2d4e245beb1..2aa8c219ace 100644
+--- a/compat/fsmonitor/fsm-health-win32.c
++++ b/compat/fsmonitor/fsm-health-win32.c
+@@ -4,6 +4,7 @@
+ #include "fsm-health.h"
+ #include "fsmonitor--daemon.h"
+ #include "gettext.h"
++#include "simple-ipc.h"
  
- #define PICKAXE_BLAME_MOVE		01
- #define PICKAXE_BLAME_COPY		02
+ /*
+  * Every minute wake up and test our health.
+diff --git a/compat/fsmonitor/fsm-listen-darwin.c b/compat/fsmonitor/fsm-listen-darwin.c
+index 11b56d3ef12..2fc67442eb5 100644
+--- a/compat/fsmonitor/fsm-listen-darwin.c
++++ b/compat/fsmonitor/fsm-listen-darwin.c
+@@ -29,6 +29,7 @@
+ #include "fsmonitor--daemon.h"
+ #include "fsmonitor-path-utils.h"
+ #include "gettext.h"
++#include "simple-ipc.h"
+ #include "string-list.h"
+ #include "trace.h"
+ 
+diff --git a/compat/fsmonitor/fsm-listen-win32.c b/compat/fsmonitor/fsm-listen-win32.c
+index 90a24122844..5a21dade7b8 100644
+--- a/compat/fsmonitor/fsm-listen-win32.c
++++ b/compat/fsmonitor/fsm-listen-win32.c
+@@ -4,6 +4,7 @@
+ #include "fsm-listen.h"
+ #include "fsmonitor--daemon.h"
+ #include "gettext.h"
++#include "simple-ipc.h"
+ #include "trace2.h"
+ 
+ /*
+diff --git a/fsmonitor--daemon.h b/fsmonitor--daemon.h
+index 673f80d2aad..5cbbec8d940 100644
+--- a/fsmonitor--daemon.h
++++ b/fsmonitor--daemon.h
+@@ -3,9 +3,7 @@
+ 
+ #ifdef HAVE_FSMONITOR_DAEMON_BACKEND
+ 
+-#include "dir.h"
+-#include "run-command.h"
+-#include "simple-ipc.h"
++#include "hashmap.h"
+ #include "thread-utils.h"
+ #include "fsmonitor-path-utils.h"
+ 
 -- 
 gitgitgadget
 
