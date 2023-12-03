@@ -1,39 +1,38 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="sveZQqCb"
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65759E6
-	for <git@vger.kernel.org>; Sun,  3 Dec 2023 05:15:21 -0800 (PST)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 0FD9F2D1A2;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="uA9F6lpX"
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12C9AFD
+	for <git@vger.kernel.org>; Sun,  3 Dec 2023 05:15:22 -0800 (PST)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7E9761B5965;
 	Sun,  3 Dec 2023 08:15:21 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=Cd3dDcMDLjuJ+TC/r9usFgFdCfs4s6ym9zbjQf
-	lceso=; b=sveZQqCboapQacZR6Ez+BwsEWv1lgVbLTs7DAnsyuSDh0JMUGQcKoA
-	NmVmKHxIzSK32FHlj5l9TTAOzLPHxFEeUq4zGdW0jJjDaGmEZGVLPNWAY34xT6vY
-	Y2w/e880W0kf2NZVesmdrdokMH/AGNIcHXvG5tamd9guMqlUyNbgA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 082472D1A1;
+	:content-type; s=sasl; bh=Ue8wtc1fUOUkMQhIIxnEbEks6gt3eVK4RwTMBh
+	CbCtQ=; b=uA9F6lpX7kJ2mSBKw0G1tZ80PjHWdHQabd0hbKoXza2W6uRP2Z8uay
+	g3p2V++FiSeHLyKUqP3fP/JsDGOGovRS5gLBJo+IvUWFuTMfdwlWjBVKeK6Mg6W3
+	Ii3ibj6Iuh5A9FSg5xNOeS8iwtQxu6rlpXLrSkTczg/XGAUTQK8Gk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 75D971B5964;
 	Sun,  3 Dec 2023 08:15:21 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.103.223])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D419B2D1A0;
-	Sun,  3 Dec 2023 08:15:16 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DF9671B5963;
+	Sun,  3 Dec 2023 08:15:20 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Stan Hu <stanhu@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Christian Couder
- <christian.couder@gmail.com>
-Subject: Re: [PATCH 1/2] completion: refactor existence checks for special refs
-In-Reply-To: <20231130202404.89791-2-stanhu@gmail.com> (Stan Hu's message of
-	"Thu, 30 Nov 2023 12:24:03 -0800")
-References: <20231130202404.89791-1-stanhu@gmail.com>
-	<20231130202404.89791-2-stanhu@gmail.com>
-Date: Sun, 03 Dec 2023 22:15:15 +0900
-Message-ID: <xmqqedg34ecc.fsf@gitster.g>
+To: Marcel Krause <mk+copyleft@pimpmybyte.de>
+Cc: git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH] doc: make the gitfile syntax easier to discover
+In-Reply-To: <20231128065558.1061206-1-mk+copyleft@pimpmybyte.de> (Marcel
+	Krause's message of "Tue, 28 Nov 2023 07:55:58 +0100")
+References: <182d290a-86e5-b361-87a1-6860641fc726@pimpmybyte.de>
+	<20231128065558.1061206-1-mk+copyleft@pimpmybyte.de>
+Date: Sun, 03 Dec 2023 22:15:19 +0900
+Message-ID: <xmqq8r6b4ec8.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -43,71 +42,14 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 004C7542-91DE-11EE-B9AB-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ 02B5AEF2-91DE-11EE-9668-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Stan Hu <stanhu@gmail.com> writes:
+Marcel Krause <mk+copyleft@pimpmybyte.de> writes:
 
-> In preparation for the reftable backend, this commit introduces a
-> '__git_ref_exists' function that continues to use 'test -f' to
-> determine whether a given ref exists in the local filesystem.
-
-I do not think git_ref_exists is a good name for what this one does.
-The name adds undue cognitive load on readers.  As far as I can
-tell, with this helper function, you are interested in handling only
-pseudorefs like $GIT_DIR/FOOBAR_HEAD (oh, retitle the patch to call
-them "pseudorefs", not "special refs", by the way), and that is why
-you can get away with a simple
-
-    [ -f "$__git_repo_path/$ref" ]
-
-without bothering to check the packed-refs file.  The checks this
-patch replace to calls to this helper functions in the original make
-it clear, simply because they spell out what they are checking, like
-"CHERRY_PICK_HEAD", why a mere filesystem check was sufficient, but
-once you give an overly generic name like "ref-exists", it becomes
-tempting to (ab|mis)use it to check for branches and tags, which is
-not your intention at all, and the implementation does not work well
-for that purpose.
-
-> Each caller of '__git_ref_exists' must call '__git_find_repo_path`
-> first. '_git_restore' already used 'git rev-parse HEAD', but to use
-> '__git_ref_exists' insert a '__git_find_repo_path' at the start.
-
-To whom do you think the above piece of information is essential for
-them to work?  Whoever updates the completion script, finds existing
-use of __git_ref_exists, and thinks the helper would be useful for
-their own use.  To them, the above needs be in the in-code comment
-to make it discoverable.  It is OK to have it also in the proposed
-log message, but it is not as essential, especially if you have it
-in-code anyway.
-
-Another thing you would need to make sure that the potential users
-of this helpers understand is of course this is meant to be used
-only on pseudorefs.  You can of course do so with an additional
-in-code comment, but giving a more appropriate name to the helper
-would be the easiest and simplest, e.g. __git_pseudoref_exists or
-something.
-
-> Reviewed-by: Patrick Steinhardt <ps@pks.im>
-> Reviewed-by: Christian Couder <christian.couder@gmail.com>
-> Signed-off-by: Stan Hu <stanhu@gmail.com>
+> Signed-off-by: Marcel Krause <mk+copyleft@pimpmybyte.de>
 > ---
->  contrib/completion/git-completion.bash | 20 +++++++++++++++-----
->  1 file changed, 15 insertions(+), 5 deletions(-)
->
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index 13a39ebd2e..9fbdc13f9a 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -122,6 +122,15 @@ __git ()
->  		${__git_dir:+--git-dir="$__git_dir"} "$@" 2>/dev/null
->  }
->  
-> +# Runs git in $__git_repo_path to determine whether a ref exists.
-> +# 1: The ref to search
-> +__git_ref_exists ()
-> +{
-> +	local ref=$1
-> +
-> +	[ -f "$__git_repo_path/$ref" ]
-> +}
+>  Documentation/gitrepository-layout.txt | 4 +++-
+>  Documentation/glossary-content.txt     | 2 ++
+>  2 files changed, 5 insertions(+), 1 deletion(-)
+
+Looking good.  Will queue.  Thanks.
