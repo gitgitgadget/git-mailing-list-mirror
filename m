@@ -1,50 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="i5D9iWZo"
-Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEB7FF2
-	for <git@vger.kernel.org>; Sun,  3 Dec 2023 05:39:30 -0800 (PST)
-Received: by mail-pg1-x533.google.com with SMTP id 41be03b00d2f7-5c27ee9c36bso1747425a12.1
-        for <git@vger.kernel.org>; Sun, 03 Dec 2023 05:39:30 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="Cg6PucVN"
+Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 841FCFC
+	for <git@vger.kernel.org>; Sun,  3 Dec 2023 05:39:33 -0800 (PST)
+Received: by mail-pf1-x435.google.com with SMTP id d2e1a72fcca58-6cdcef787ffso3959001b3a.0
+        for <git@vger.kernel.org>; Sun, 03 Dec 2023 05:39:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1701610770; x=1702215570; darn=vger.kernel.org;
+        d=bytedance.com; s=google; t=1701610772; x=1702215572; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GMUjySH3u9UK+l6BUcuuMftVY/wlV19i/Ue6UnYzbso=;
-        b=i5D9iWZoytUZZBtFv5aiTIVPy7YMyoK8pf6MZEoXjVf5R2tQlQAa/ViFf5XqMkpB0x
-         PNtrYQuaG5F63OkmcvioKQOfP4UkCzgTNyqiNLdC+LwxgtnboRFqqPQ8gfDbuX6WEcy5
-         yuJiPiaL5wZlyw/wyD62z49GdU3eQ+9hP20g4DXdH0CS2ngBF0Ux+fyOo8Eywrr+74Q+
-         kjTSa2jGan8lrdYJ+EZj4HhootBu7FvfACrZJY4+FMtlEQUJ+AJQOBLXivs96SnE4xuj
-         bTLQHywngBl6ILSla6lyKTNDn/0dr2b2YMym4zQgGQhvP4eVc66sG7O8JSewh9JCGLeG
-         stEA==
+        bh=IHK+vVu5ipNW149NlqulqGnnHdAIPxaJYBu04rkWNCc=;
+        b=Cg6PucVNQHjD1VuX33xF1RLJrQn5SuGpvKNH79pDURnl09mv/KanrFm+CT1j0jadP4
+         xrZ1GQVSpvYx3K68hRdSCoEx/U4eYE8tuW71fjQ9dA+Nu2Ds6VR8+SKcUbPzWOOZIGHK
+         HiJQ2bv4unLFLOVlj5tkbYzctY9Z1Fby5WEhjv9+rxihquryit7Qw1dLf8AwnTjzMd5u
+         i+t8IP7LpcY4VhBkBKy3nYi2SUu82uJk34S9iVqAQodlwNnpT3fZTGb7grLRZwlrBRGZ
+         C0Oe0QeCpQtsVSrfzRCkwBH6dnf0GyfwdOTKpipMTpsYafUGJSGweC1AY6ZIqFYn6MnD
+         EDCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701610770; x=1702215570;
+        d=1e100.net; s=20230601; t=1701610773; x=1702215573;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=GMUjySH3u9UK+l6BUcuuMftVY/wlV19i/Ue6UnYzbso=;
-        b=wV3hI0enDrRNoH5p3TaQ5VtRvyYRNmlolQWPlvdtJkEVpPJYms9w3/0sy/y7jA6zQI
-         YNqPLGPWlpO3Iz0q6Zmta1IN2m49Oi5cHOYOWNZq3/EjUA32hjt6HGLqdzlg24dc9WmZ
-         F/Y0L/myoHkQpPYqmfvvtHWQLLYQHCEU59PcnZo4dfLC0Qcr0Gnr1RhuKLklzyrtrlir
-         3uh7LI33dfpJx0OfK/BgydNj++/KWuU0tcZzwsRxmHvlwaQnHcogps/iW7f4xPfxGayb
-         IusFasFODqhs/5zzCBP6X6UO+SBKVzZqy0XwkRiNw2lmGgn2THk0VaBnZRgRDP3FWHvS
-         fN+A==
-X-Gm-Message-State: AOJu0Yx0mzYGgbw6n9F3+ugxreKLUDrXYSvQsDT8jhWpNG3DGoYKFUmd
-	cV/ZEl3VVUr3enmphx44juhHM7tE3U7BaQw1548=
-X-Google-Smtp-Source: AGHT+IFDEzpmcEyUYp3svCJBx1P7laerlLEAqokTqUjf/oTsioD/HqQmGkENaipZJtMq2cg4IcXeCA==
-X-Received: by 2002:a05:6a20:de14:b0:18c:b133:dea4 with SMTP id kz20-20020a056a20de1400b0018cb133dea4mr2569163pzb.42.1701610770116;
-        Sun, 03 Dec 2023 05:39:30 -0800 (PST)
+        bh=IHK+vVu5ipNW149NlqulqGnnHdAIPxaJYBu04rkWNCc=;
+        b=ARIn+axHWOfKFpnjmUkYAyGf/5xNjiXl3W9UHf9CAiNvsUePxyeI7P/LJ1CE3kvWKW
+         bMbpAg7Gc/7RUeMCWEeEUchKMoxpp5yILQbTNq4iHCtuUM2gEh20kr72Rd6b0e35ggsU
+         giEiKlvnqB1/T+M9qCdlXdLq75bWpSS4NqB9fA6psHnJ7t46C/7a2LV36Rp4m7Yko2KH
+         lrppbA7nksJiKfG+QMI5Vc+C4CmzgQF07if+0Gc925esES6T8n8pXWrddrQzAyTJvIh4
+         KKNoTcOdODB21fnQecNgTbuKWL6s1GSVJuD3ZojBK1Y27yWTG3PcN06r/Ffiz/Cy84Ej
+         ZLNQ==
+X-Gm-Message-State: AOJu0YyRWt9vNX6no6asdJixqtRHoPG1aj3Jw9OqVtvYE0SuEpGUFxKo
+	+UHGg87ouWnoynnCv+qmEmg2BJs3/czyGgEf83A=
+X-Google-Smtp-Source: AGHT+IEoRee87/6F2GBxdLF6X/WiYmGzP/uNEm8IjK54ASUgXU5vUyocBN0oniOAnaEVUdqU8UlNnA==
+X-Received: by 2002:a05:6a20:6a23:b0:18f:97c:9758 with SMTP id p35-20020a056a206a2300b0018f097c9758mr3490124pzk.64.1701610772754;
+        Sun, 03 Dec 2023 05:39:32 -0800 (PST)
 Received: from localhost.localdomain ([139.177.225.236])
-        by smtp.gmail.com with ESMTPSA id s4-20020a637704000000b005c65e82a0cbsm2515110pgc.17.2023.12.03.05.39.28
+        by smtp.gmail.com with ESMTPSA id s4-20020a637704000000b005c65e82a0cbsm2515110pgc.17.2023.12.03.05.39.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 03 Dec 2023 05:39:29 -0800 (PST)
+        Sun, 03 Dec 2023 05:39:32 -0800 (PST)
 From: Han Young <hanyang.tony@bytedance.com>
 X-Google-Original-From: Han Young <hanyoung@protonmail.com>
 To: git@vger.kernel.org
 Cc: Han Young <hanyang.tony@bytedance.com>
-Subject: [RFC PATCH 3/4] parallel-checkout: add parallel_unlink
-Date: Sun,  3 Dec 2023 21:39:10 +0800
-Message-ID: <20231203133911.41594-4-hanyoung@protonmail.com>
+Subject: [RFC PATCH 4/4] unpack-trees: introduce parallel_unlink
+Date: Sun,  3 Dec 2023 21:39:11 +0800
+Message-ID: <20231203133911.41594-5-hanyoung@protonmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231203133911.41594-1-hanyoung@protonmail.com>
 References: <20231203133911.41594-1-hanyoung@protonmail.com>
@@ -58,154 +58,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Han Young <hanyang.tony@bytedance.com>
 
-Add parallel_unlink to parallel-checkout, parallel_unlink uses multiple threads to unlink entries. Because the path to be removed is sorted, each thread iterate through the entry list interleaved to distribute the workload as evenly as possible. Due to the multithread nature, it's not possible to remove all the dirs in one pass. The dir one thread is about to remove may have item that are being removed by another thread. Whenever we failed to remove the dir, we save it in a hashset. When every thread has finished its job, we remove all the entries in the hashset.
+We have parallel_checkout option since 04155bdad, but the unlink is still executed single threaded. On very large repo, checkout across directory rename or restructure commit can lead to large amount of unlinked entries. In some instance, the unlink operation can be slower than the parallel checkout. This commit add parallel unlink support, parallel unlink uses multithreaded removal of entries.
 ---
-Note that we display progress after thread join, the progress count is updated for every thread instead of every path.
-During testing, threads almost finished at around the same time. This caused the abrupt progress update.
-We can use a mutex to display the progress, but that nullified the optimization on environment with fast file deletion time.
+Unlink operation by itself is way faster than checkout, the default threshold should be way higher
+than parallel_checkout. I hardcoded the threshold to be 100 times higher, probably need to introduce
+a new config option with sensible default.
+To discover how many entries to remove require us to iterate index->cache, this is fast even for large
+number of entries compare to filesystem operation.
+I think we can reuse checkout.workers as the main switch for parallel_unlink, since it's also part of
+checkout process.
 
- parallel-checkout.c | 80 +++++++++++++++++++++++++++++++++++++++++++++
- parallel-checkout.h | 25 ++++++++++++++
- 2 files changed, 105 insertions(+)
+ unpack-trees.c | 15 ++-------------
+ 1 file changed, 2 insertions(+), 13 deletions(-)
 
-diff --git a/parallel-checkout.c b/parallel-checkout.c
-index b5a714c711..6e62e044d8 100644
---- a/parallel-checkout.c
-+++ b/parallel-checkout.c
-@@ -328,6 +328,24 @@ static int close_and_clear(int *fd)
- 	return ret;
- }
+diff --git a/unpack-trees.c b/unpack-trees.c
+index c2b20b80d5..53589cde8a 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -452,17 +452,8 @@ static int check_updates(struct unpack_trees_options *o,
+ 	if (should_update_submodules())
+ 		load_gitmodules_file(index, NULL);
  
-+void *parallel_unlink_proc(void *_data)
-+{
-+	struct parallel_unlink_data *data = _data;
-+	struct cache_def cache = CACHE_DEF_INIT;
-+	int i = data->start;
-+	data->cnt = 0;
-+
-+	while (i < data->len) {
-+		const struct cache_entry *ce = data->cache[i];
-+		if (ce->ce_flags & CE_WT_REMOVE) {
-+			++data->cnt;
-+			threaded_unlink_entry(ce, data->super_prefix, data->removal_cache, &cache);
-+		}
-+		i += data->step;
-+	}
-+	return &data->cnt;
-+}
-+
- void write_pc_item(struct parallel_checkout_item *pc_item,
- 		   struct checkout *state)
- {
-@@ -678,3 +696,65 @@ int run_parallel_checkout(struct checkout *state, int num_workers, int threshold
- 	finish_parallel_checkout();
- 	return ret;
- }
-+
-+unsigned run_parallel_unlink(struct index_state *index,
-+			  struct progress *progress,
-+			  const char *super_prefix, int num_workers, int threshold,
-+			  unsigned cnt)
-+{
-+	int i, use_parallel = 0, errs = 0;
-+	if (num_workers > 1 && index->cache_nr >= threshold) {
-+		int unlink_cnt = 0;
-+		for (i = 0; i < index->cache_nr; i++) {
-+			const struct cache_entry *ce = index->cache[i];
-+			if (ce->ce_flags & CE_WT_REMOVE) {
-+				unlink_cnt++;
-+			}
-+		}
-+		if (unlink_cnt >= threshold) {
-+			use_parallel = 1;
-+		}
-+	}
-+	if (use_parallel) {
-+		struct parallel_unlink_data *unlink_data;
-+		CALLOC_ARRAY(unlink_data, num_workers);
-+		threaded_init_remove_scheduled_dirs();
-+		struct strbuf removal_caches[num_workers];
-+		for (i = 0; i < num_workers; i++) {
-+			struct parallel_unlink_data *data = &unlink_data[i];
-+			strbuf_init(&removal_caches[i], 50);
-+			data->start = i;
-+			data->cache = index->cache;
-+			data->len = index->cache_nr;
-+			data->step = num_workers;
-+			data->super_prefix = super_prefix;
-+			data->removal_cache = &removal_caches[i];
-+			errs = pthread_create(&data->pthread, NULL, parallel_unlink_proc, data);
-+			if (errs)
-+				die(_("unable to create parallel_checkout thread: %s"), strerror(errs));
-+		}
-+		for (i = 0; i < num_workers; i++) {
-+			void *t_cnt;
-+			if (pthread_join(unlink_data[i].pthread, &t_cnt))
-+				die("unable to join parallel_unlink_thread");
-+			cnt += *((unsigned *)t_cnt);
-+			display_progress(progress, cnt);
-+		}
-+		threaded_remove_scheduled_dirs_clean_up();
-+		for (i = 0; i < num_workers; i++) {
-+			threaded_remove_scheduled_dirs(&removal_caches[i]);
-+		}
-+		remove_marked_cache_entries(index, 0);
-+	} else {
-+		for (i = 0; i < index->cache_nr; i++) {
-+			const struct cache_entry *ce = index->cache[i];
-+			if (ce->ce_flags & CE_WT_REMOVE) {
-+				display_progress(progress, ++cnt);
-+				unlink_entry(ce, super_prefix);
-+			}
-+		}
-+		remove_marked_cache_entries(index, 0);
-+	    remove_scheduled_dirs();
-+	}
-+	return cnt;
-+}
-diff --git a/parallel-checkout.h b/parallel-checkout.h
-index c575284005..e851b773d9 100644
---- a/parallel-checkout.h
-+++ b/parallel-checkout.h
-@@ -43,6 +43,18 @@ size_t pc_queue_size(void);
- int run_parallel_checkout(struct checkout *state, int num_workers, int threshold,
- 			  struct progress *progress, unsigned int *progress_cnt);
+-	for (i = 0; i < index->cache_nr; i++) {
+-		const struct cache_entry *ce = index->cache[i];
+-
+-		if (ce->ce_flags & CE_WT_REMOVE) {
+-			display_progress(progress, ++cnt);
+-			unlink_entry(ce, o->super_prefix);
+-		}
+-	}
+-
+-	remove_marked_cache_entries(index, 0);
+-	remove_scheduled_dirs();
++	get_parallel_checkout_configs(&pc_workers, &pc_threshold);
++	cnt = run_parallel_unlink(index, progress, o->super_prefix, pc_workers, pc_threshold * 100, cnt);
  
-+/*
-+ * Unlink all the unlink entries in the index, returning the number of entries
-+ * unlinked plus the origin value of cnt. If the number of entries
-+ * to be removed is smaller than the specified threshold, the operation
-+ * is performed sequentially.
-+ */
-+unsigned run_parallel_unlink(struct index_state *index,
-+			  struct progress *progress,
-+			  const char *super_prefix,
-+			  int num_workers, int threshold,
-+			  unsigned cnt);
-+
- /****************************************************************
-  * Interface with checkout--worker
-  ****************************************************************/
-@@ -76,6 +88,19 @@ struct parallel_checkout_item {
- 	struct stat st;
- };
+ 	if (should_update_submodules())
+ 		load_gitmodules_file(index, &state);
+@@ -474,8 +465,6 @@ static int check_updates(struct unpack_trees_options *o,
+ 		 */
+ 		prefetch_cache_entries(index, must_checkout);
  
-+struct parallel_unlink_data {
-+	pthread_t pthread;
-+	struct cache_entry **cache;
-+	struct strbuf *removal_cache;
-+	size_t len;
-+	int start;
-+	size_t step;
-+	unsigned cnt;
-+	const char *super_prefix;
-+};
-+
-+void *parallel_unlink_proc(void *_data);
-+
- /*
-  * The fixed-size portion of `struct parallel_checkout_item` that is sent to the
-  * workers. Following this will be 2 strings: ca.working_tree_encoding and
+-	get_parallel_checkout_configs(&pc_workers, &pc_threshold);
+-
+ 	enable_delayed_checkout(&state);
+ 	if (pc_workers > 1)
+ 		init_parallel_checkout();
 -- 
 2.43.0
 
