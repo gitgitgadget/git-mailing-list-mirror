@@ -1,49 +1,49 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DdAtyFTe"
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3DD4F4
-	for <git@vger.kernel.org>; Sat,  2 Dec 2023 22:41:30 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-3333224c7b9so1517406f8f.1
-        for <git@vger.kernel.org>; Sat, 02 Dec 2023 22:41:30 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gWgHkTrs"
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0ACB4E6
+	for <git@vger.kernel.org>; Sat,  2 Dec 2023 22:41:32 -0800 (PST)
+Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-40b479ec4a3so33866865e9.2
+        for <git@vger.kernel.org>; Sat, 02 Dec 2023 22:41:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701585689; x=1702190489; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1701585690; x=1702190490; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=wSCkfIpGZxL9WKaqL8EtN8rgM9Yovl63d21O0EWr+bw=;
-        b=DdAtyFTeKFUh+KHi7AGIIoqEbL0QR7gkMMf4JKvuULqhGnEQLFSJgRbtojUFlNqToZ
-         7WWpR7M7D8nyxZdKTbcUftbdDbLGHt6czokSqdAT1KZtYj25MacKnGtiJgg8yua01vei
-         3bz74ZpPFJQMklN/lqUCMVMkGeA+08x9YPgBNmP5Vmm+dR5tzcx4rRhSuZ2V0w7d30ml
-         qXDKpXIIlTDFHwDmGQMeYa8HINvmQbumcmY86aN7BK0HNddPUXlf4cGv1/ovl+wAoNoi
-         Wkyfzy4plLFF3xts+tJDcJaaVd5OIDD1/+48lohARhiaF/oGtygjLr1KEQw27Nzxkaeg
-         BoWA==
+        bh=ttkeYFSt4eNhwg/B0nagXg282CBMg4rUewvl4yzbtls=;
+        b=gWgHkTrsvq7Ae5OlmuC8pTXbEhfWhkU+788+1ll7MmRBdKcN5Cd4ZntBcp8KF6t5ki
+         uHPVw1gsikN1SYm8VO+p8+pWvi1LgLSIbttSBGR2V4NBV2rs/3p/gaXHlSrKyvn2zQaP
+         Pa4cxbyFx9FzLk/zOQLhCfphoE0Z6M4bDObOnm26S/11qu/begH1ufbjy9Bh13GlBQZW
+         k5ui/nXneI4PfRPQSqyizjHYfLVjxnrLVGhhkaxAw9svEob2LRlF9pgqaJT8EUZ0tuAH
+         rQa/bgdSyPIWenA5XdWNAzX391FBi7GuWBaITaHjsPYeUDZrQVcHHwcGt3G5/1qvGbl+
+         ZbLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701585689; x=1702190489;
+        d=1e100.net; s=20230601; t=1701585690; x=1702190490;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=wSCkfIpGZxL9WKaqL8EtN8rgM9Yovl63d21O0EWr+bw=;
-        b=XLWJSK8ONpRr4+kGJcEac9a0KJg6CqgTfuJnN14s8koEkcK7xDSYYqARhauPuxIAXX
-         ZO3RQCq/9UDxa+qKqedJ6TQ9nJWAwzUqESfMcSAYgJpnNWPOpLsnT2TsW/S8qeK6nhaE
-         EXCCiX9/gvRVzeKkdRu/phLNgu4TYRSeeSUgEl5zE7slQnBan4N9LBw051BoFQ/q2npc
-         HGduGpqvf959Rpowt3FdsUiQHvBmpVoEoXMmNv+rfYSRcm/EZMxs6rNVdpPSK4s9KH89
-         so66ReRhqXwzAMKtS4Uu88GsT4mcH8+LDEgcqBTR+OHYcAMjnZOf/0P3ddPCBn59LFfI
-         1/ag==
-X-Gm-Message-State: AOJu0Yw90ChpGWe4uax7pQqdfWMnt3Ou/+d5vZ53gj+l1H05/MrrQemM
-	0X0uaR+YUhdEdeUfnW0jxoUIR7O8sa4=
-X-Google-Smtp-Source: AGHT+IFPLttA+7rU7MduIBYL+AkPgKIe16VujzT0Rl2QRs07o2Mq/MHrFtpx2yqUdhxoKLMztD3oVw==
-X-Received: by 2002:a05:6000:1372:b0:332:fbd4:1f98 with SMTP id q18-20020a056000137200b00332fbd41f98mr2171339wrz.38.1701585688716;
-        Sat, 02 Dec 2023 22:41:28 -0800 (PST)
+        bh=ttkeYFSt4eNhwg/B0nagXg282CBMg4rUewvl4yzbtls=;
+        b=KRoYeJGqVjhAfnmT6lvavPB+Lw5aDz5TtPgT+h417i78JdfX7h5NRyNbc34Zs4w8PE
+         dnaDkBEmQ/Kz5bNWXszI06egFXsJL0CBJMjWVcQlAFXXLw4i4KKndF2459qIoUdPBmSS
+         iTfd6g5tEbLP7x6cxNu4r6MI+baaUWrCV5/C6IHn9QeNkLK6w43ZD03jYtfIAoTN3RRf
+         76Pj5y4Ok/hJ/XKENYwLG1LyvhKA5xz7W9l/mfyzLQa0gEj5WU++v7tgDiv8fcJCKgje
+         dOAdhgN6jWq2g5k6QK8mSmKJCyFFpOEvypsk9a0iZowNmPHfBn7Y4IUTlO/lX0i9sSIv
+         DBsA==
+X-Gm-Message-State: AOJu0Yy2Ah5dgZdwIoW3Fp653PwwGYq8l3BNkZHYr9Qxoutic4kU8geh
+	7wuDFrMzRF9BCNXap0JWdg/N1G6sGJI=
+X-Google-Smtp-Source: AGHT+IHFlPG6Gqte7/UfudynU5PGhK/BnLPM/pUJiX6hWUC0OlCubD7ITqACmYQy+ijL2aulGqWBXQ==
+X-Received: by 2002:a05:600c:1914:b0:40b:5e1b:549f with SMTP id j20-20020a05600c191400b0040b5e1b549fmr1959175wmq.43.1701585689770;
+        Sat, 02 Dec 2023 22:41:29 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q11-20020a5d658b000000b003333298eb4bsm5498870wru.61.2023.12.02.22.41.27
+        by smtp.gmail.com with ESMTPSA id z3-20020a05600c0a0300b0040839fcb217sm10957989wmp.8.2023.12.02.22.41.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Dec 2023 22:41:27 -0800 (PST)
-Message-ID: <a2e4bcc56fb7a25c2b55213d95b4fffe074f6e91.1701585683.git.gitgitgadget@gmail.com>
+        Sat, 02 Dec 2023 22:41:29 -0800 (PST)
+Message-ID: <393c5ca3a1dc26fb56a0ef54c010930ba33d546c.1701585683.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1617.git.1701585682.gitgitgadget@gmail.com>
 References: <pull.1617.git.1701585682.gitgitgadget@gmail.com>
 From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 03 Dec 2023 06:41:14 +0000
-Subject: [PATCH 05/12] fsmonitor--daemon.h: remove unnecessary includes
+Date: Sun, 03 Dec 2023 06:41:15 +0000
+Subject: [PATCH 06/12] http.h: remove unnecessary include
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -65,84 +65,60 @@ source files explicitly include the headers they need.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/fsmonitor--daemon.c          | 2 ++
- compat/fsmonitor/fsm-health-win32.c  | 1 +
- compat/fsmonitor/fsm-listen-darwin.c | 1 +
- compat/fsmonitor/fsm-listen-win32.c  | 1 +
- fsmonitor--daemon.h                  | 4 +---
- 5 files changed, 6 insertions(+), 3 deletions(-)
+ http-fetch.c  | 1 +
+ http-push.c   | 1 +
+ http.h        | 1 -
+ remote-curl.c | 1 +
+ 4 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-index 5d01db5c029..7260604534f 100644
---- a/builtin/fsmonitor--daemon.c
-+++ b/builtin/fsmonitor--daemon.c
-@@ -1,6 +1,7 @@
- #include "builtin.h"
- #include "abspath.h"
- #include "config.h"
-+#include "dir.h"
- #include "environment.h"
- #include "gettext.h"
- #include "parse-options.h"
-@@ -14,6 +15,7 @@
- #include "simple-ipc.h"
- #include "khash.h"
- #include "pkt-line.h"
-+#include "run-command.h"
- #include "trace.h"
+diff --git a/http-fetch.c b/http-fetch.c
+index 93695a440ad..bec94988bbe 100644
+--- a/http-fetch.c
++++ b/http-fetch.c
+@@ -6,6 +6,7 @@
+ #include "walker.h"
+ #include "setup.h"
+ #include "strvec.h"
++#include "url.h"
+ #include "urlmatch.h"
  #include "trace2.h"
  
-diff --git a/compat/fsmonitor/fsm-health-win32.c b/compat/fsmonitor/fsm-health-win32.c
-index 2d4e245beb1..2aa8c219ace 100644
---- a/compat/fsmonitor/fsm-health-win32.c
-+++ b/compat/fsmonitor/fsm-health-win32.c
-@@ -4,6 +4,7 @@
- #include "fsm-health.h"
- #include "fsmonitor--daemon.h"
- #include "gettext.h"
-+#include "simple-ipc.h"
+diff --git a/http-push.c b/http-push.c
+index 329513270c8..b4d0b2a6aa3 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -15,6 +15,7 @@
+ #include "strvec.h"
+ #include "tree.h"
+ #include "tree-walk.h"
++#include "url.h"
+ #include "packfile.h"
+ #include "object-store-ll.h"
+ #include "commit-reach.h"
+diff --git a/http.h b/http.h
+index 3a409bccd4e..3af19a8bf53 100644
+--- a/http.h
++++ b/http.h
+@@ -10,7 +10,6 @@ struct packed_git;
  
- /*
-  * Every minute wake up and test our health.
-diff --git a/compat/fsmonitor/fsm-listen-darwin.c b/compat/fsmonitor/fsm-listen-darwin.c
-index 11b56d3ef12..2fc67442eb5 100644
---- a/compat/fsmonitor/fsm-listen-darwin.c
-+++ b/compat/fsmonitor/fsm-listen-darwin.c
-@@ -29,6 +29,7 @@
- #include "fsmonitor--daemon.h"
- #include "fsmonitor-path-utils.h"
- #include "gettext.h"
-+#include "simple-ipc.h"
- #include "string-list.h"
- #include "trace.h"
+ #include "strbuf.h"
+ #include "remote.h"
+-#include "url.h"
  
-diff --git a/compat/fsmonitor/fsm-listen-win32.c b/compat/fsmonitor/fsm-listen-win32.c
-index 90a24122844..5a21dade7b8 100644
---- a/compat/fsmonitor/fsm-listen-win32.c
-+++ b/compat/fsmonitor/fsm-listen-win32.c
-@@ -4,6 +4,7 @@
- #include "fsm-listen.h"
- #include "fsmonitor--daemon.h"
- #include "gettext.h"
-+#include "simple-ipc.h"
+ #define DEFAULT_MAX_REQUESTS 5
+ 
+diff --git a/remote-curl.c b/remote-curl.c
+index 204feebabe4..55eefa70f97 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -21,6 +21,7 @@
+ #include "quote.h"
  #include "trace2.h"
+ #include "transport.h"
++#include "url.h"
+ #include "write-or-die.h"
  
- /*
-diff --git a/fsmonitor--daemon.h b/fsmonitor--daemon.h
-index 673f80d2aad..5cbbec8d940 100644
---- a/fsmonitor--daemon.h
-+++ b/fsmonitor--daemon.h
-@@ -3,9 +3,7 @@
- 
- #ifdef HAVE_FSMONITOR_DAEMON_BACKEND
- 
--#include "dir.h"
--#include "run-command.h"
--#include "simple-ipc.h"
-+#include "hashmap.h"
- #include "thread-utils.h"
- #include "fsmonitor-path-utils.h"
- 
+ static struct remote *remote;
 -- 
 gitgitgadget
 
