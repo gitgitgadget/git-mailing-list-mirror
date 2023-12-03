@@ -1,49 +1,49 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LffRNO7q"
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A359F2
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b8moxfwh"
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4FE0F3
 	for <git@vger.kernel.org>; Sat,  2 Dec 2023 22:41:29 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id ffacd0b85a97d-3332f1512e8so1999802f8f.2
+Received: by mail-wr1-x432.google.com with SMTP id ffacd0b85a97d-3316d09c645so3297146f8f.0
         for <git@vger.kernel.org>; Sat, 02 Dec 2023 22:41:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1701585687; x=1702190487; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=N3TGCI/YCgWfYljSZYwF1mWsCWRqnsoG9BODzgV1+jA=;
-        b=LffRNO7qPyP44cIxnKY5YxCI0ieuVQoJ0InISdM4bH0uyJPlVaO2N4yiC5T7Xzp86n
-         o/1aNjygg6gnSE0PWbu4ocX9tUZ/AGOirhUgFAs4mD8U3Yq7Y4T7qW+s+NvfsdE+d95K
-         MprK5yGhFASKav8eDnSoQozausiDMtHJJIWHmCXo+2RzF2XjF5xG+cWuyvKt5ijXkM1m
-         IC+49nMV6r3wItvXPLwxTtGyHA3W9/UtmeB9sIlC7akFOGtVFjCW4SPCb9XUyMTemg6K
-         BRvtLoKUOaCkLtHXSLP9jZg4cIx64fAsnCnb72dU+f9ZzjmUZypPSmIbBrqomWZF9ukN
-         dNXg==
+        bh=eKpv5ZFzjn3B1VgPJnotlQlSa+AAZOHqDH7ko024YjQ=;
+        b=b8moxfwhTZ7w90KCnY1v4ABWpZHyNkUiIiAGTYfZjT+AUdERywoc3vInJ1IBSyEEft
+         4SQl0QPwNrHZm1rCV7jp13nn0nPiO1QvGAlNjsmv0d0Fn81a2mM+qMPbnXYr8LeejUnh
+         KwkoTzan8T7r58oFW/cxwjxx5F/tr2lspZGw73/2u/6wtwKndyvS4ymj+T+qWM18m7hA
+         bpMrdXpUZMC++rhO6HDRrlt2Xmutej3a0W01qUwjOYcwJBSqZGElCkUWBI1iwCRIKiJ+
+         n5TciSZg2oY8p4ZfEmrWNSHFDae6nhXve3CkDHIp8Efnro3XXyb87xQPXQfk/q+QUMm4
+         c2ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1701585687; x=1702190487;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=N3TGCI/YCgWfYljSZYwF1mWsCWRqnsoG9BODzgV1+jA=;
-        b=JVvctg2yeJY7E1ATZhnJ3dSuP4ZILrXb295bZOspqb4AE0Np6cvFtqAVdlxJA6PJyA
-         7SQ/MTNyj4CzvzXSxgiSoJQaxLCM9uOrzhukoo6s9NztQHz+K1LuOTDHD/W58mPdyVD6
-         YZNW0yTylTc4y/u+YiqzUpSvOdZVRAQWny9R4oTEaFOizibfhiHbOO0g5lwsQlTMyUQE
-         no7mri6IL2ViaUaP4CD60J4SlqjPvpaecO0h04DGJ3i3Gpz3gLHDKPXO81vtex0P9+FG
-         Pm7hBbg0BZq0AzBUIoBVNjFjFlCxglOA326rAS/uY/saKDnGU72IDJ8b9kzcAeIyjkf6
-         OYZQ==
-X-Gm-Message-State: AOJu0Yy+FjDBeQZoQYciVuEUVs02CQSlc5J6GcS4N93k+lqk39vKmSjH
-	PohfM4yz4exTnKQnEcWalY6oMv6ZUZg=
-X-Google-Smtp-Source: AGHT+IFVLdammyN+sTRPUDzQCkwJZl/llBQsAr1BuJbmUrZA5SoVWFjZ8ZHy2fowMhkYFqlPo7GcFQ==
-X-Received: by 2002:a5d:4908:0:b0:332:fe4c:2204 with SMTP id x8-20020a5d4908000000b00332fe4c2204mr2043226wrq.50.1701585687206;
+        bh=eKpv5ZFzjn3B1VgPJnotlQlSa+AAZOHqDH7ko024YjQ=;
+        b=um0lf79q8H5fhDwkL1Jcu2V1qDsPnZhsGwvVHvmpx1PZIZnxvnO0/tU1QYPCGMj8ZK
+         7BJBl4F02VbbyH0MHNeugFzy6tqP1F8e4uCe31cjArgbboiSlu52TltO2isF7IAuJY5r
+         DPL/9sWSBcEXcd+8oxFeq2vQPmaWSFoj1mVc8ZckhbyBxXcAu4EWUk1BiKjEK70MW3qr
+         nm/LYIVbq9RxVc4Dq2byK81bKQdUF2lhBFmZEzHDw68O1ru9U28QqjlcQKwELkXTMHCk
+         sccEg1sRgQdy6t3FpLZ3G1S3spiLiEY8FFrzWPd7TLiiJe0b6d5lWEvA0ftHczP48HGL
+         n7dA==
+X-Gm-Message-State: AOJu0YxBrufjgQ/qpbGC6YWsK74SlSTSSZP5Rwe8FG01q4zl1fdk/KZu
+	hY/1DSEEqJywiC+bppC8jiNXh97YTbk=
+X-Google-Smtp-Source: AGHT+IEj9S34jnkgUBr/WmiiHx3Y0zMxHqYhv1ipcNVHUn3NYR4W2uunMYOLwp16tfche8GORCbvnQ==
+X-Received: by 2002:a5d:550f:0:b0:333:434b:5fb7 with SMTP id b15-20020a5d550f000000b00333434b5fb7mr208764wrv.66.1701585687638;
         Sat, 02 Dec 2023 22:41:27 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o14-20020a056000010e00b00333359b522dsm4130309wrx.77.2023.12.02.22.41.26
+        by smtp.gmail.com with ESMTPSA id o13-20020a5d648d000000b00332e67d6564sm8451481wri.67.2023.12.02.22.41.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sat, 02 Dec 2023 22:41:27 -0800 (PST)
-Message-ID: <43222a4dac44a4b1f740d6c9737cb6a5f9c4ac49.1701585683.git.gitgitgadget@gmail.com>
+Message-ID: <bd69a954e9ada2822188bbfb8797fe198964adba.1701585683.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1617.git.1701585682.gitgitgadget@gmail.com>
 References: <pull.1617.git.1701585682.gitgitgadget@gmail.com>
 From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 03 Dec 2023 06:41:12 +0000
-Subject: [PATCH 03/12] archive.h: remove unnecessary include
+Date: Sun, 03 Dec 2023 06:41:13 +0000
+Subject: [PATCH 04/12] blame.h: remove unnecessary includes
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -65,60 +65,47 @@ source files explicitly include the headers they need.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- archive-tar.c | 1 +
- archive-zip.c | 1 +
- archive.c     | 1 +
- archive.h     | 1 -
- 4 files changed, 3 insertions(+), 1 deletion(-)
+ blame.c | 2 ++
+ blame.h | 3 ---
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/archive-tar.c b/archive-tar.c
-index 07269968399..f2a0ed77523 100644
---- a/archive-tar.c
-+++ b/archive-tar.c
-@@ -9,6 +9,7 @@
- #include "tar.h"
- #include "archive.h"
+diff --git a/blame.c b/blame.c
+index 141756975bf..1a16d4eb6a5 100644
+--- a/blame.c
++++ b/blame.c
+@@ -3,6 +3,7 @@
  #include "object-store-ll.h"
-+#include "strbuf.h"
- #include "streaming.h"
- #include "run-command.h"
- #include "write-or-die.h"
-diff --git a/archive-zip.c b/archive-zip.c
-index 7229e3e454f..fd1d3f816d3 100644
---- a/archive-zip.c
-+++ b/archive-zip.c
-@@ -10,6 +10,7 @@
- #include "streaming.h"
- #include "utf8.h"
- #include "object-store-ll.h"
-+#include "strbuf.h"
- #include "userdiff.h"
- #include "write-or-die.h"
- #include "xdiff-interface.h"
-diff --git a/archive.c b/archive.c
-index 4562a69a0cc..50fd35bd27b 100644
---- a/archive.c
-+++ b/archive.c
-@@ -5,6 +5,7 @@
- #include "environment.h"
- #include "gettext.h"
+ #include "cache-tree.h"
+ #include "mergesort.h"
++#include "commit.h"
+ #include "convert.h"
+ #include "diff.h"
+ #include "diffcore.h"
+@@ -10,6 +11,7 @@
  #include "hex.h"
-+#include "object-name.h"
  #include "path.h"
- #include "pretty.h"
+ #include "read-cache.h"
++#include "revision.h"
  #include "setup.h"
-diff --git a/archive.h b/archive.h
-index 3a4bdfbd078..bbe65ba0f90 100644
---- a/archive.h
-+++ b/archive.h
-@@ -1,7 +1,6 @@
- #ifndef ARCHIVE_H
- #define ARCHIVE_H
+ #include "tag.h"
+ #include "trace2.h"
+diff --git a/blame.h b/blame.h
+index 31ddc85f19e..5b4e47d44c6 100644
+--- a/blame.h
++++ b/blame.h
+@@ -1,12 +1,9 @@
+ #ifndef BLAME_H
+ #define BLAME_H
  
--#include "object-name.h"
- #include "pathspec.h"
- #include "string-list.h"
+-#include "commit.h"
+ #include "oidset.h"
+ #include "xdiff-interface.h"
+-#include "revision.h"
+ #include "prio-queue.h"
+-#include "diff.h"
  
+ #define PICKAXE_BLAME_MOVE		01
+ #define PICKAXE_BLAME_COPY		02
 -- 
 gitgitgadget
 
