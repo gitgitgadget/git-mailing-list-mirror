@@ -1,49 +1,49 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VozquvV2"
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D863EB
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MiEc8Ns0"
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4ACBF2
 	for <git@vger.kernel.org>; Sat,  2 Dec 2023 22:41:33 -0800 (PST)
-Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-40a4848c6e1so33605335e9.1
+Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-40b54261524so39329355e9.3
         for <git@vger.kernel.org>; Sat, 02 Dec 2023 22:41:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701585691; x=1702190491; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1701585692; x=1702190492; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=iNi9JTg7O8mXiHhbMn/8YgHPkgzDveZ7qNVf8534OA0=;
-        b=VozquvV22GDEGRtLz3xZijQz/FLWPbxsPh299Y6YYdN7jqaRlBeftkrKsWp9M+7VH5
-         NXRf+LfkF1MFzqe4WKaKz2iEGbu8QsbOkr0R3BfOXmv5kizo4nOQRjSjzvNl61uF5EBs
-         KUDMSGbgxyY/1zIyAYGvDr5gB8pOaNy3fnCdy0uROFBCoIt+/PnuvPE80ZRPujOSKwvo
-         D7v2whGlicPykln8b2HCatM54ekcwwFRn6sUH0sVz93vx3pKKp8KKvHDem/soTE8JkZ/
-         6PiqwRx7weLMHCJh7+VHlbp6u7t1hDiwHNIJiunUr5H92y+qm9cPTY7+beBwMyK9JbXT
-         IqzA==
+        bh=xSzRHp5BbQ8RHnANLkfpKqCzWCpWXu9TeHXFY5OAtwo=;
+        b=MiEc8Ns0N3vFyuLnZ+Wbl/N0Gce08fC13NJ3mDX9+z4VuKmRjfWW7Gg62vVWUL3DEU
+         yHdTFb5XiYvg3H1ue2lH8AdHjgVRHMcBSFx0S2/L8LaEKt+VwlGv3Z3TVmF9CRbNItXr
+         5AIQZijLFpf3JcWkxBDdpp0JWOXmBSYDk7otatMGvEspF4QvCKx5TOtEePVVAi0LK2CO
+         v6y4tuqnArrFwsC1eEufRHSey8j7QmSTwxhNoNoxcJRvs8shjfGaXyOG8SLkeE7aHQTF
+         vAwcCgsRwI3jLnvKMCxA1+ae79Va6Dq1dlCcY8uDme79pLCd7Ui5/LmvCael1/stPFpC
+         AU0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701585691; x=1702190491;
+        d=1e100.net; s=20230601; t=1701585692; x=1702190492;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=iNi9JTg7O8mXiHhbMn/8YgHPkgzDveZ7qNVf8534OA0=;
-        b=WvBJHXXnc0+UKBjRgKcDX6X44bwVzQyWrH9RBUODrr1VfxJyKFWTmqaaQfn1RnaaEd
-         ZVLI+wPaU040LO4UNUqDcqh04Jmk2op4cueNg0/MJ5jLCCY2v27xVYc23wkmQrAwmnT3
-         P8JKGMazlxJ36SAG4qvDAZSc/YZ9eKRBGFh/h5pRhMCb+jrhr1Xef92qEkVtf+wYYUGy
-         UDiuwVD4+J/oOs15NZtAxTB3aZ23lGLjyb0tphcsdqZvuM6tBBepMuL/sLkQs6or3yEw
-         m4zDPT1DmrDlkFOY0pfnBq6r2wSuz/TAOPdU3D/fGk0nTIgm1oRkUzMX4A8T/uxzpsXC
-         Cs2g==
-X-Gm-Message-State: AOJu0Yz5XHJSsRoL2Ww3xpEq8j+Pud11pHAYHu6u3nt35MvKqAy8vvhd
-	SNLLM0HUoIDO18fj2gAtnGzaePLka8U=
-X-Google-Smtp-Source: AGHT+IG7w4Pd9+zx6NUEtmoUceDPb5ptpbg1KBwkRkZEL2v4wpkb7ZVgjHM8DMJs5v8skXhIfUmyzw==
-X-Received: by 2002:a05:600c:2195:b0:40c:909:58f4 with SMTP id e21-20020a05600c219500b0040c090958f4mr189518wme.235.1701585691060;
-        Sat, 02 Dec 2023 22:41:31 -0800 (PST)
+        bh=xSzRHp5BbQ8RHnANLkfpKqCzWCpWXu9TeHXFY5OAtwo=;
+        b=TfQto+QpeA5e5SbCCu9p6Ajd362FYCgobGEFVtH7rrO01oTCX4W2gkXJvA5cZXyv1y
+         8WVVNioiVikP3ATSGcQK5l3S0CDlvsWk2r9nXvc2zWIAk/jvp8cU/avQBM4L/bkJ8ZMB
+         e6N0JcPt2F0H7fHl2G7z6N0bCXnyzSLYhGmzxt8Gfo7GotcoYx66RDoy5yUeFNpj9s7a
+         tNKYh8p8/9VGewK2slSEH6hiE/NvDM+FEcBDKn1D8EmHIiYmj1FgG/YPPu9khJTjTngP
+         IYSoGp7hVnmaCGrGXmqhy+N8EQ1m3lEBjAz32S0TSJErsmZ73XU/jSTSf50OtvnrnASZ
+         qgVQ==
+X-Gm-Message-State: AOJu0YyNYqRXFfxU6riAtkkJnxxgEnuGJ5CF7xBsZ31Mq+mnG9miwQhZ
+	tySyIPrzcTLVmN0s6+CsL+BqeqBZ5NI=
+X-Google-Smtp-Source: AGHT+IG6YVDBCanmQaBiN4CLvVD4Wug2iYYfchYVhQTEw/y9NrWTXUue7hnacrcyDka/F5D0Cql1Bg==
+X-Received: by 2002:a1c:790c:0:b0:40b:5e21:dd48 with SMTP id l12-20020a1c790c000000b0040b5e21dd48mr220631wme.118.1701585692069;
+        Sat, 02 Dec 2023 22:41:32 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f18-20020a05600c155200b004094d4292aesm10802345wmg.18.2023.12.02.22.41.30
+        by smtp.gmail.com with ESMTPSA id v1-20020a5d6781000000b003333f9200d8sm2152539wru.84.2023.12.02.22.41.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Dec 2023 22:41:30 -0800 (PST)
-Message-ID: <5f8014882e07682787adb6ccd59829f1ab01bd84.1701585683.git.gitgitgadget@gmail.com>
+        Sat, 02 Dec 2023 22:41:31 -0800 (PST)
+Message-ID: <bc1fe09e996374868e8381a62ee5882df6b91223.1701585683.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1617.git.1701585682.gitgitgadget@gmail.com>
 References: <pull.1617.git.1701585682.gitgitgadget@gmail.com>
 From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 03 Dec 2023 06:41:16 +0000
-Subject: [PATCH 07/12] line-log.h: remove unnecessary include
+Date: Sun, 03 Dec 2023 06:41:17 +0000
+Subject: [PATCH 08/12] pkt-line.h: remove unnecessary include
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -65,46 +65,47 @@ source files explicitly include the headers they need.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- line-log.c | 1 +
- line-log.h | 2 --
- log-tree.c | 1 +
- 3 files changed, 2 insertions(+), 2 deletions(-)
+ pkt-line.c               | 1 +
+ pkt-line.h               | 1 -
+ t/helper/test-pkt-line.c | 1 +
+ 3 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/line-log.c b/line-log.c
-index a878cb7810a..c276ccec549 100644
---- a/line-log.c
-+++ b/line-log.c
-@@ -1,4 +1,5 @@
- #include "git-compat-util.h"
-+#include "diffcore.h"
- #include "line-range.h"
+diff --git a/pkt-line.c b/pkt-line.c
+index af83a19f4df..236dd3a3ee1 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -4,6 +4,7 @@
+ #include "gettext.h"
  #include "hex.h"
- #include "tag.h"
-diff --git a/line-log.h b/line-log.h
-index 4291da8d792..e9dadbc1a58 100644
---- a/line-log.h
-+++ b/line-log.h
-@@ -1,8 +1,6 @@
- #ifndef LINE_LOG_H
- #define LINE_LOG_H
+ #include "run-command.h"
++#include "sideband.h"
+ #include "trace.h"
+ #include "write-or-die.h"
  
--#include "diffcore.h"
--
- struct rev_info;
- struct commit;
- struct string_list;
-diff --git a/log-tree.c b/log-tree.c
-index 504da6b519e..337b9334cdb 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -2,6 +2,7 @@
- #include "commit-reach.h"
- #include "config.h"
- #include "diff.h"
-+#include "diffcore.h"
- #include "environment.h"
- #include "hex.h"
- #include "object-name.h"
+diff --git a/pkt-line.h b/pkt-line.h
+index 954eec87197..aedef56286f 100644
+--- a/pkt-line.h
++++ b/pkt-line.h
+@@ -2,7 +2,6 @@
+ #define PKTLINE_H
+ 
+ #include "strbuf.h"
+-#include "sideband.h"
+ 
+ /*
+  * Write a packetized stream, where each line is preceded by
+diff --git a/t/helper/test-pkt-line.c b/t/helper/test-pkt-line.c
+index f4d134a1452..77e99c37df0 100644
+--- a/t/helper/test-pkt-line.c
++++ b/t/helper/test-pkt-line.c
+@@ -1,6 +1,7 @@
+ #include "git-compat-util.h"
+ #include "test-tool.h"
+ #include "pkt-line.h"
++#include "sideband.h"
+ #include "write-or-die.h"
+ 
+ static void pack_line(const char *line)
 -- 
 gitgitgadget
 
