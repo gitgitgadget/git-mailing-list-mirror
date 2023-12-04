@@ -1,99 +1,107 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RZy2LHdF"
-Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72D94E6
-	for <git@vger.kernel.org>; Mon,  4 Dec 2023 07:38:00 -0800 (PST)
-Received: by mail-ej1-x643.google.com with SMTP id a640c23a62f3a-a1a58fbe5e1so276462266b.2
-        for <git@vger.kernel.org>; Mon, 04 Dec 2023 07:38:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ilZsPZgG"
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54A42CA
+	for <git@vger.kernel.org>; Mon,  4 Dec 2023 10:43:32 -0800 (PST)
+Received: by mail-pg1-x535.google.com with SMTP id 41be03b00d2f7-5c1f8b0c149so1735492a12.3
+        for <git@vger.kernel.org>; Mon, 04 Dec 2023 10:43:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701704279; x=1702309079; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jebEjCkqDx0npI6CyhFW+KXav1iFRUJHu0NAv5Sw99c=;
-        b=RZy2LHdFlMFNFzzPS0bD9gR3jBxJh7fY9FSsOBov1sndzhf8uOZPPpzvsLcbVfSQOH
-         bQL3yiG8g05d6MFIcV1Z4RF9N0q4QaNbFt2le+T0DQgJ/CYHycVI2eSIDiZf6KTMkNP5
-         vbGYW3hz4Wro/hzqUe5Q9xyEHndAvMEmzL2LcT8Vtmq+Q0BG91Jfi0wM4TD6a7XzMeA3
-         h5+qBkLae+N7C1Wm9GgG0+NiZdJgWNE3LxGIJSHjpSaQfSYlUIII74OZCe+eJ+bMNora
-         ZmAqLbjg+3ZoIAdGsL+cqx+kSoLDR59LtQxI4+Qoa6o7k3WYL2MFYXtK7b+bWeJhVMAN
-         L/pw==
+        d=gmail.com; s=20230601; t=1701715412; x=1702320212; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=z0dJIJLj71DEFFHyaub+HQtg/1clHmLhDn6WRnPM3zg=;
+        b=ilZsPZgGRg0zJ7PjVqMvDZWRs6a6OU2ucQtz0jA8fE4bbAdUaud4TLTKtEXcD1KIGR
+         pETRxV2rwvzWEGHJBHsMwBPoXyEP7S4QEHVfo58Ax1t/aMVyBtoBBK5kWYRaw78MfwVN
+         OxN9OLm5QIHBkUu+7FFDPm8JjG2yitYxzT2cIyryOSh4J4qPS/9G5D6h1uFzMWtINqHy
+         AtpnzlIyzFSGzH0kFlVPSad3pz9r+9FjjqJyod1jGZJ3alkQDQCj5sZbQ7NRqwv7Aq3o
+         o0XkuwYxyufbLO5gz7pYAHNj0DGvsPsHP4Bqtj5kV/4NBdDNoAdi00ErkWwEYxtzcLwz
+         9RnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701704279; x=1702309079;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=jebEjCkqDx0npI6CyhFW+KXav1iFRUJHu0NAv5Sw99c=;
-        b=CoLlU7jJUo5H82HveSUtuQQxXbHTDv+2wvWiJ0jQMsI4e+WfX9a045WP95HCjxT//K
-         bgh1b1IIWRETPZo4yZKnTbPhUVbGCfdX2AdQzb/ME5pcU8RBxMCiawglok2mO9of31sZ
-         hQ1fem8vLIBYh/COUAobukvSgUegNaWvVgftxt3owVI9auk6a+wEwZvTp/Faldtziza/
-         wXuU2HuYrAiECQXiDph1RJVSkIWRDQFE4e6zdgrDTFVSSOn/DCY161D1fUTcKKfZp3Mx
-         cixsjCKGV4GBquhYg8wguA+TuyOVs56vwhOYU2PaDAavS9qd3qsG7fD2ZIJvzbelE2MO
-         w8lg==
-X-Gm-Message-State: AOJu0YxiDEaCaD5fvDLbHJ1ZcO2XF9CqGsZ9P8ZO6ZL+cpXnpPNY1vb9
-	M1l5YZAl+DhOESs0Z9LQlaGzCrGGEGB+Uw==
-X-Google-Smtp-Source: AGHT+IFnJDxZrHeOdfat9O8+x+NHvWpyYqr48JyFvoFYk7GIOUGRfOJx8TzLJ/dzCTXWCXhxsH0jwg==
-X-Received: by 2002:a17:906:2c6:b0:a1b:d9d4:26db with SMTP id 6-20020a17090602c600b00a1bd9d426dbmr165384ejk.124.1701704278609;
-        Mon, 04 Dec 2023 07:37:58 -0800 (PST)
-Received: from localhost.localdomain ([41.202.207.147])
-        by smtp.gmail.com with ESMTPSA id se26-20020a170906ce5a00b009fea232316bsm5367281ejb.193.2023.12.04.07.37.56
+        d=1e100.net; s=20230601; t=1701715412; x=1702320212;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=z0dJIJLj71DEFFHyaub+HQtg/1clHmLhDn6WRnPM3zg=;
+        b=cqU+XPf1YZWLP7cs6JG5K8yEz0o9iXsNzzBF4ax/rZ8H36iRSq8PBM4guVX5/mZ8Ou
+         LdeB07/CQXYLrjojQnW2hmytkO/PlHn4ebb5XO561iDhp/rKzt+yptIcuW+brV20jdaS
+         zzecvfOtJh6OsS9B6j4h5sgWpvDVlHR+oxWh69rDoW87KiSsqro/JFtwMgGchOvC37Ae
+         2u8OflTqPF4sbYZou/Bsc7nkEsu/amTjRIL9Uey+oTBdUHGEuywqjlwd/3qBgtxbMBr0
+         nFRtia1chny0cCoSt83hLboW9fga1Kd1zSdikhNK+Scf92nGAknG1zO/uQUWMXUV8vU1
+         Nreg==
+X-Gm-Message-State: AOJu0YxcCO94Jr0nYComLu4xKFUaprLIozYx9YS/p4qWoOUl71wZq9M2
+	vrLbTpDHzFVUXqv03TlhL1Kmzgg6FOz5bw==
+X-Google-Smtp-Source: AGHT+IEXJMnkda1HGjfJsiD1mkFYy4kMbvRBEZJpO4rWnYjc1gRB3r9hs/0/YT9vfXz5Ms54JNS0iQ==
+X-Received: by 2002:a05:6a20:8f15:b0:18c:159b:777 with SMTP id b21-20020a056a208f1500b0018c159b0777mr30686272pzk.26.1701715411542;
+        Mon, 04 Dec 2023 10:43:31 -0800 (PST)
+Received: from five231003 ([2405:201:c006:31fd:3de8:3115:babd:d7d2])
+        by smtp.gmail.com with ESMTPSA id it4-20020a056a00458400b006cdd6792faesm7948713pfb.43.2023.12.04.10.43.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Dec 2023 07:37:58 -0800 (PST)
-From: Achu Luma <ach.lumap@gmail.com>
-To: christian.couder@gmail.com
-Cc: ach.lumap@gmail.com,
-	git@vger.kernel.org
-Subject: [Outreachy][PATCH v3] t2400: avoid using pipes
-Date: Mon,  4 Dec 2023 16:37:40 +0100
-Message-ID: <20231204153740.2992-1-ach.lumap@gmail.com>
-X-Mailer: git-send-email 2.42.0.windows.2
-In-Reply-To: <CAP8UFD0KDdwoJw6AzLUpqos=bLumcmDax59_MfQ9TUFqmmpcoA@mail.gmail.com>
-References: <CAP8UFD0KDdwoJw6AzLUpqos=bLumcmDax59_MfQ9TUFqmmpcoA@mail.gmail.com>
+        Mon, 04 Dec 2023 10:43:31 -0800 (PST)
+Date: Tue, 5 Dec 2023 00:13:28 +0530
+From: Kousik Sanagavarapu <five231003@gmail.com>
+To: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] test-lib-functions.sh: fix test_grep fail message
+ wording
+Message-ID: <ZW4d0M3X4MB6FpON@five231003>
+References: <CAPYXD64yCuMta_iGE+ZwgxrJn0U5shcwcB9jaiNkFhvff=R7MQ@mail.gmail.com>
+ <20231203171956.771-1-shreyanshpaliwalcmsmn@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20231203171956.771-1-shreyanshpaliwalcmsmn@gmail.com>
 
-The exit code of the preceding command in a pipe is disregarded,
-so it's advisable to refrain from relying on it. Instead, by
-saving the output of a Git command to a file, we gain the
-ability to examine the exit codes of both commands separately.
+On Sun, Dec 03, 2023 at 10:47:59PM +0530, Shreyansh Paliwal wrote:
+> From: shreyp135 <shreyanshpaliwalcmsmn@gmail.com>
+> 
+> In the recent commit
+> 2e87fca189 (test framework: further deprecate test_i18ngrep, 2023-10-31),
+> the test_i18ngrep() function was deprecated.
 
-Signed-off-by: Achu Luma <ach.lumap@gmail.com>
----
- Since v2 I don't send a cover  letter anymore, and I changed 
- my "Signed-of-by: ..." line so that it
- contains my full real name and I added "Outreachy" to the subject.
+s/In the/In a
 
- t/t2400-worktree-add.sh | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+is gramatically correct, but probably not worth a reroll.
 
-diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-index df4aff7825..7ead05bb98 100755
---- a/t/t2400-worktree-add.sh
-+++ b/t/t2400-worktree-add.sh
-@@ -468,7 +468,8 @@ test_expect_success 'put a worktree under rebase' '
- 		cd under-rebase &&
- 		set_fake_editor &&
- 		FAKE_LINES="edit 1" git rebase -i HEAD^ &&
--		git worktree list | grep "under-rebase.*detached HEAD"
-+		git worktree list >actual && 
-+		grep "under-rebase.*detached HEAD" actual
- 	)
- '
- 
-@@ -509,7 +510,8 @@ test_expect_success 'checkout a branch under bisect' '
- 		git bisect start &&
- 		git bisect bad &&
- 		git bisect good HEAD~2 &&
--		git worktree list | grep "under-bisect.*detached HEAD" &&
-+		git worktree list >actual && 
-+		grep "under-bisect.*detached HEAD" actual &&
- 		test_must_fail git worktree add new-bisect under-bisect &&
- 		! test -d new-bisect
- 	)
--- 
-2.41.0.windows.1
+> So if a test employing this function fails,
+> the error messages may be confusing due to wording issues.
 
+Isn't the confusion due to test_i18ngrep being displayed in place of
+test_grep and not the other way around? Because the formation of the
+sentence makes it look like the latter.
+
+> It's important to address these wording changes to ensure smooth transitions
+> for developers adapting to the deprecation of test_i18ngrep,
+> and to maintain the effectiveness of the testing process.
+> 
+> Signed-off-by: Shreyansh Paliwal <Shreyanshpaliwalcmsmn@gmail.com>
+> ---
+>  t/test-lib-functions.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+> index 9c3cf12b26..8737c95e0c 100644
+> --- a/t/test-lib-functions.sh
+> +++ b/t/test-lib-functions.sh
+> @@ -1277,7 +1277,7 @@ test_grep () {
+>  	if test $# -lt 2 ||
+>  	   { test "x!" = "x$1" && test $# -lt 3 ; }
+>  	then
+> -		BUG "too few parameters to test_i18ngrep"
+> +		BUG "too few parameters to test_grep"
+>  	fi
+>  
+>  	if test "x!" = "x$1"
+> -- 
+> 2.43.0.1
+
+Rest looks good.
+
+Have a great time at the vacation Junio (and sorry for pinging in the
+first place... although this email will indirectly ping too :P).
+
+Thanks
