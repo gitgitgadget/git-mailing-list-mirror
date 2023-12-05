@@ -1,182 +1,182 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 659EE107
-	for <git@vger.kernel.org>; Mon,  4 Dec 2023 13:46:54 -0800 (PST)
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-67a8a745c43so36810876d6.0
-        for <git@vger.kernel.org>; Mon, 04 Dec 2023 13:46:54 -0800 (PST)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="Xu5esnEa"
+Received: from mail-oo1-xc33.google.com (mail-oo1-xc33.google.com [IPv6:2607:f8b0:4864:20::c33])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F02B21A4
+	for <git@vger.kernel.org>; Tue,  5 Dec 2023 11:26:20 -0800 (PST)
+Received: by mail-oo1-xc33.google.com with SMTP id 006d021491bc7-58d54612d9cso3970734eaf.1
+        for <git@vger.kernel.org>; Tue, 05 Dec 2023 11:26:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1701804380; x=1702409180; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=wXR1WxesSwmwZpuXzWq1EHNnpF6gmcvEMig3/rE/6hc=;
+        b=Xu5esnEaClDo9+mQh+GBL7fDIM758TqBfqZtaUowhkNPXRwygNfJFY1bS5p+la9Kxx
+         ShIT5HhVsVVjbay8mMwEnWmJNcydli1YDLvWx0TTVOUVKuce01pTgz2/gAByvh9h54nO
+         XWw9+CBHTOjty2/xzq3CL1+iEi4DTOTFtcWwJK1GRFErEwjH5/+gZqpTXRE8giToQnMq
+         VTdL9VGpIB+1YBmzfmAjE0ObpfBYpPkhqTPDP+SVBam9tlEHot2wGE4UIL3LJGqM2JCn
+         2V1ABqFrCi/aa/qfpgwZSqFqMg2ESyEnzjRj71PneJbfQ8zKZd1xnKWDbk+DOZGwbFzy
+         0W0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701726413; x=1702331213;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FY5CPC3EQ7s5BASoNg1jOxiqqJ0CjslpHzGoKgcjGnQ=;
-        b=I5t5F95v49q1bFmG7Ay2YxUBX0F0ldad5peUC0GdyfWYIM7SgZ4cBrbGQVrk4bkPKl
-         qmWrnQnz3vjUolIf4oBFjPM1B6QmP8I4eXoU8osOnlFpwPnSWsOvsXsoXTeOGLsRwZjD
-         bUKrpkJ+4g91vBe5iE5Izw/8RAzl46sViSKL8vWk8uPjo9dozcsv1cXHQ5+DlAHzCHhY
-         ZddyVIaupb6AbhJv2DZgDlQihP/5HoXsDXb4k+umIK8q0sc/IuoCegOyTWdcZY+Y2zls
-         ZO+U9A2cB+m/yz+mD9O9KKxYDwaUFbJF13OKNVVuApjIoKm0QnOm1XQfkuNFHsGxmHjp
-         AJcQ==
-X-Gm-Message-State: AOJu0YzBRzCEp5b85WcZlb79BcNyyGRYRlHohTEnqnzQzdj/HVcd9pD3
-	LK1MYQNgrvHXjrzLZm0Kv5F7jl7obRBZqnu4aWTPfpYKfdMkBw==
-X-Google-Smtp-Source: AGHT+IGJ5l9TILYCoaTdKLpe/cvPNO/Siq8RtJdyqpRF73RUzJYMm3poM0/UpTOd5h2kUaLjngfMQDu1WH5EHGe6Wfk=
-X-Received: by 2002:a0c:e494:0:b0:67a:a72d:fbb4 with SMTP id
- n20-20020a0ce494000000b0067aa72dfbb4mr315115qvl.50.1701726413463; Mon, 04 Dec
- 2023 13:46:53 -0800 (PST)
+        d=1e100.net; s=20230601; t=1701804380; x=1702409180;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wXR1WxesSwmwZpuXzWq1EHNnpF6gmcvEMig3/rE/6hc=;
+        b=J56d+oB0Q/wkr6CKSjJ6EQw2WFK6Hkr6FMEeOg/04QmMJQN6gBhSB24mbU7guokm7+
+         tkOC/WVwfXRD8frigj7/UhcKQDokCJypy/t2s4IYJ0WkzqqHOqgtslf+37cdz+KrszWf
+         gTXK0I1Tix3gSTSHnqrvqTKNS/BnLgIAqYwg0361puNFf78Ha0nWBXkvBegTIyL8z0f/
+         Q39pIDOeuI3Snv6fOE/rSzarChv4PJFFbOZAg5OlxQPxXQkEn0o6pYVIL9vCp9f1zgQT
+         +skjRpmhryCMMfmpsQUGO2vV2fQ50eJHMmV8g7bHexhGMFxiX+jLj/psUu/flMeZdb9c
+         hzTg==
+X-Gm-Message-State: AOJu0Yy2qERRRZ0quVtHSd2772jY4iPssfKDTIJBteb49i/iHymCxEbm
+	+pg2sUNsGn+9dYzDsl7kpCR/5LELu3ByMu8AsNY=
+X-Google-Smtp-Source: AGHT+IGFa4jEAMi1JYXsMVPmkkF2rbW+Yi1t7jvaQA12KdFFdRQ0XShKlUVBvnAl5nPc9SQPEHLZ2A==
+X-Received: by 2002:a05:6358:60c1:b0:170:697:a3c3 with SMTP id i1-20020a05635860c100b001700697a3c3mr5819207rwi.9.1701804380115;
+        Tue, 05 Dec 2023 11:26:20 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id w2-20020a0c9c42000000b0067a4a0a7e6fsm2149667qve.108.2023.12.05.11.26.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Dec 2023 11:26:19 -0800 (PST)
+Date: Tue, 5 Dec 2023 14:26:17 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 05/24] midx: implement `DISP` chunk
+Message-ID: <ZW95WSErCXvkfrAG@nand.local>
+References: <cover.1701198172.git.me@ttaylorr.com>
+ <c52d7e7b27a9add4f58b8334db4fe4498af1c90f.1701198172.git.me@ttaylorr.com>
+ <xmqqjzpv4ecg.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1537.git.git.1699871056.gitgitgadget@gmail.com> <pull.1537.v2.git.git.1701699574054.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1537.v2.git.git.1701699574054.gitgitgadget@gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Mon, 4 Dec 2023 16:46:42 -0500
-Message-ID: <CAPig+cQ8eEU0TOoBf2KavTyf0OLhNtmOzs8+WqZy9JMXa=ydPQ@mail.gmail.com>
-Subject: Re: [PATCH v2] This PR enables a successful git build on z/OS.
-To: Haritha via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>, 
-	Haritha D <harithamma.d@ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqjzpv4ecg.fsf@gitster.g>
 
-On Mon, Dec 4, 2023 at 9:19=E2=80=AFAM Haritha via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> Rename functions like "release" and "fetch"
-> due to conflict in z/OS standard C libraries.
-> Also disables autoconversion facility on z/OS
-> and relies on iconv.
-> New files created in binary format are also
-> tagged as binary.
+On Sun, Dec 03, 2023 at 10:15:11PM +0900, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
 >
-> Signed-off-by: Haritha D <harithamma.d@ibm.com>
-> ---
->     Enabling z/OS workflow for git
+> > diff --git a/Documentation/git-multi-pack-index.txt b/Documentation/git-multi-pack-index.txt
+> > index 3696506eb3..d130e65b28 100644
+> > --- a/Documentation/git-multi-pack-index.txt
+> > +++ b/Documentation/git-multi-pack-index.txt
+> > @@ -49,6 +49,10 @@ write::
+> >  	--stdin-packs::
+> >  		Write a multi-pack index containing only the set of
+> >  		line-delimited pack index basenames provided over stdin.
+> > +		Lines beginning with a '+' character (followed by the
+> > +		pack index basename as before) have their pack marked as
+> > +		"disjoint". See the "`DISP` chunk and disjoint packs"
+> > +		section in linkgit:gitformat-pack[5] for more.
 >
->     z/OS is an IBM mainframe operating system, also known as OS/390. Our
->     team has been actively involved in porting Git to z/OS and we have ma=
-de
->     significant modifications to facilitate this process. The patch below=
- is
->     the initial configuration for z/OS. I also have few follow up changes
->     and I will send that after these changes are approved. Please let me
->     know if there are any concerns.
+> Makes one wonder who computes the set of packfiles, decides to
+> prefix '+' to which ones, and how it does so, none of which appear
+> in this step (which is understandable).  As the flow of information
+> is from the producer of individual "disjoint" packs (not in this
+> step) to this new logic in "--stdin-packs" to the new "DISP" chunk
+> writer (the primary focus of this step) to the final consumer of
+> "DISP" chunk (not in this step), we are digging from the middle
+> (hopefully to both directions in other steps).  It is probably the
+> easiest way to explain the idea to start from the primary data
+> structures and "DISP" seems to be a good place to start.
 
-It's fairly unlikely that this patch will be accepted as-is. Please
-see brian's[1] and Junio's[2] valuable review comments in response to
-your v1. They contain important suggestions which will give you a
-better chance of landing these changes.
+Thanks. I found that laying out this series was rather tricky, since all
+of the individual pieces really depend on the end state in order to make
+any sense.
 
-Generally speaking, the patch's commit message lacks sufficient detail
-to allow a reviewer (or future reader) to understand why the changes
-are being made. Moreover, this single patch seems to be addressing at
-least three separate issues, hence should be split into three or more
-patches, each standalone and tackling a single issue, and each easily
-digested by a reviewer. The commit message of each patch should fully
-explain and justify the changes made by the patch, keeping in mind
-that most reviewers probably aren't familiar with z/OS, thus will need
-extra hand-holding. More below...
+Hopefully you're satisfied with the way things are split up and
+organized currently, but if you have suggestions on other ways I could
+slice or dice this, please let me know.
 
-[1]: https://lore.kernel.org/git/ZVKrWSv7JguKTSYw@tapette.crustytoothpaste.=
-net/
-[2]: https://lore.kernel.org/git/xmqqcywd2m9i.fsf@gitster.g/
+> > +	    Two packs are "disjoint" with respect to one another when they have
+> > +	    disjoint sets of objects.
+> > + In other words, any object found in a pack
+> > +	    contained in the set of disjoint packfiles is guaranteed to be
+> > +	    uniquely located among those packs.
+>
+> I often advise people to rethink what they wrote _before_ "In other
+> words", because the use of that phrase is a sign that the author
+> considers the statement is hard to grok and needs rephrasing, in
+> which case, the rephrased version may be a better way to explain the
+> concept being presented without the harder-to-grok version.
+>
+> But I do not think this one is a good example to apply the advice.
+> It is because "In other words," is somewhat misused in the sentence.
+> Two "disjoint" packs do not store any common object (which is how
+> you defined the adjective "disjoint" in the first sentence).  "As a
+> consequence"/"Hence", an object found in one pack among many
+> "disjoint" packs will not appear in others.
 
-> diff --git a/builtin/archive.c b/builtin/archive.c
-> @@ -14,6 +14,15 @@
->  static void create_output_file(const char *output_file)
->  {
->         int output_fd =3D xopen(output_file, O_CREAT | O_WRONLY | O_TRUNC=
-, 0666);
-> +#ifdef __MVS__
-> +       /*
-> +        * Since the data is in binary format,
-> +        * we need to set the z/OS file tag
-> +        * to binary to disable autoconversion
-> +        */
-> +       if (__setfdbinary(output_fd))
-> +               die_errno(_("could not tag archive file '%s'"), output_fi=
-le);
-> +#endif
+Thanks, I'll replace this with "As a consequence", and try to follow
+that general advice more often in the future ;-).
 
-As mentioned in an earlier review, the project generally doesn't want
-#ifdef's littering the code and prefer that this sort of
-platform-specific specialization be wrapped up in its own "compat"
-file/function. For instance, perhaps you could create a
-platform-specific specialization of xopen() and then `#define xopen`
-to reference your specialized version. Your custom xopen() might first
-call the xopen() which Git defines and then perform whatever extra
-special work is needed for your platform. That way, you would not have
-to muck around either in the code which calls xopen() or in the
-Git-supplied xopen(). See, for example, how git-compat-util.h
-overriedes certain functions, such as stat(), fstat(), etc. using an
-#undefine/#define dance.
+> OK, so it seems they really need to be strictly disjoint in order to
+> participate in the reuse of the existing packdata.
 
-> diff --git a/combine-diff.c b/combine-diff.c
-> @@ -1082,6 +1082,14 @@ static void show_patch_diff(struct combine_diff_pa=
-th *elem, int num_parent,
-> +               #ifdef __MVS__
-> +                       /*
-> +                        * Disable implicit autconversion on z/os,
-> +                        * rely on conversion from iconv
-> +                        */
-> +                       __disableautocvt(fd);
-> +               #endif
->                         elem->mode =3D canon_mode(st.st_mode);
+I think that's generally true, though there are some exceptions.
 
-Similar comment. Try to find an abstraction which allows you to
-perform this specialization in a way which does not require #ifdef's
-within the main source code if possible.
+I think the real condition here is that the *reused sections* must be
+disjoint with respect to one another, not necessarily the packs
+themselves. So having the packs be disjoint is a sufficient condition,
+since we know that no matter which section(s) we reuse, they are
+guaranteed to be disjoint.
 
-> diff --git a/fetch-negotiator.h b/fetch-negotiator.h
-> @@ -47,7 +47,7 @@ struct fetch_negotiator {
-> -       void (*release)(struct fetch_negotiator *);
-> +       void (*release_negotiator)(struct fetch_negotiator *);> diff --gi=
-t a/fetch-pack.c b/fetch-pack.c
-> @@ -1232,7 +1232,7 @@ static struct ref *do_fetch_pack(struct fetch_pack_=
-args *args,
->         if (negotiator)
-> -               negotiator->release(negotiator);
-> +               negotiator->release_negotiator(negotiator);
->         return ref;
->  }
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> @@ -223,7 +223,15 @@ struct strbuf;
-> +#ifdef __MVS__
-> +       #define release stdlib_release
-> +       #define fetch stdlib_fetch
-> +#endif
->  #include <stdlib.h>
-> +#ifdef __MVS__
-> +       #undef fetch
-> +       #undef release
-> +#endif
+I think that there is opportunity to be more clever here, e.g., by
+allowing for different disjoint "groups" of packs, or mandating that you
+can only reuse certain sections from different combinations of packs in
+order to satisfy this property.
 
-So, the problem is that z/OS is polluting the C namespace or the
-preprocessor namespace with names "release" and "fetch"? When we've
-run across this problem on other platforms, we modify
-git-compat-util.h or some other files in compat/ to suppress the
-pollution introduced by the platform headers rather than "fixing" the
-Git source code. For instance, if "release" and "fetch" are macros on
-z/OS, then you may be able to simply #undef them after pulling in
-whichever z/OS header defines them. If they are actual system
-functions (rather than macros), you may be able to employ the
-#undef/#define dance to rename them to something else, such as
-"zos_release" and "zos_fetch" _before_ including the system header
-which declares those functions.
+That's part of the reason why I left more space than is needed for the
+"disjoint" state in the DISP chunk (it is 32 bits, of which we're only
+using one of them). I'm not sure that we would want more relaxed
+constraints here, since they'd be harder to satisfy. But my hope is that
+we would be able to learn from running this in production to figure out
+whether or not such a thing would be useful.
 
-> diff --git a/read-cache.c b/read-cache.c
-> @@ -205,6 +205,14 @@ static int ce_compare_data(struct index_state *istat=
-e,
->         int fd =3D git_open_cloexec(ce->name, O_RDONLY);
->         if (fd >=3D 0) {
-> +       #ifdef __MVS__
-> +               /*
-> +                * Since the data is in binary format,
-> +                * we need to set the z/OS file tag to
-> +                * binary to disable autoconversion
-> +                */
-> +               __disableautocvt(fd);
-> +       #endif
+> > +  - All objects stored as offset- or reference-deltas also include their
+> > +    base object in the resulting pack.
+>
+> Are thin packs obsolete?
 
-Same comment as above about encapsulating this in a platform-specific
-specialization function in compat/ rather than polluting the code with
-#ifdef.
+No, I think I should clarify this to make it more obvious that this only
+applies to non-thin packs.
+
+> > +		find $objdir/pack -type f -name "*.idx" | xargs -n 1 basename | sort >packs &&
+>
+> That is an overly-long line.
+
+Thanks for spotting.
+
+> > +test_expect_success 'non-disjoint packs are detected' '
+> > +	test_when_finished "rm -fr repo" &&
+> > +	git init repo &&
+> > +	(
+> > +		cd repo &&
+> > +
+> > +		test_commit base &&
+> > +		git repack -d &&
+> > +		test_commit other &&
+> > +		git repack -a &&
+> > +
+> > +		ls -la .git/objects/pack/ &&
+>
+> Is this line a leftover debugging aid?
+
+Indeed, thanks.
+
+> > +		find $objdir/pack -type f -name "*.idx" |
+> > +			sed -e "s/.*\/\(.*\)$/+\1/g" >in &&
+>
+> Lose "g"; it adds unnecessary cognitive burden to the readers if the
+> patterh is expected to match multiple times, and you know that is
+> not possible (your pattern is right anchored at the end).  This may
+> apply equally to other uses of "sed" in this patch.
+
+Thanks, I dropped the 'g' in both instances.
+
+Thanks,
+Taylor
