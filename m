@@ -1,28 +1,28 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="B4CUyaYr"
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="DQ+jfd2Z"
 Received: from mout.web.de (mout.web.de [217.72.192.78])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90AC5269F
-	for <git@vger.kernel.org>; Wed,  6 Dec 2023 03:52:20 -0800 (PST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8A5D2694
+	for <git@vger.kernel.org>; Wed,  6 Dec 2023 03:52:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-	t=1701863537; x=1702468337; i=l.s.r@web.de;
-	bh=6bTPJiNA+Mi1lrwk0KTi0BGp1K1afYsH2/D0QAhzAXY=;
+	t=1701863536; x=1702468336; i=l.s.r@web.de;
+	bh=e30VSexU6iTY4JnyBJisySZzkyqUVTSP6NRtOFAYujQ=;
 	h=X-UI-Sender-Class:From:To:Subject:Date:In-Reply-To:References;
-	b=B4CUyaYr9b/H5A0QJuaHjlOBvN8JHVZfzwg2nzc2++jK8MsNwDC5XZqza3bAc8x/
-	 QkDMCR18BAYlGhXh7v8be+QeSL36zlS7cw4NFRbuIaTDfxYFx6ZvpqKh907t3zpWm
-	 1KGRNAoDMceiftOW4Wuzkb73dudr+vPvpmeq4SvMxFm3GVptsYujk4Ye9orScx+wr
-	 6pbeqvMUgk0nnzHDuGisiC2AcsdDVHvGhWqrKe5xbNeehrlkKuIe7gLSVPW6PVC1d
-	 nybrqHcUL4S9tX9R/JssfftDuE6Pe1BLEMHS1J7XUQi58DTIVkb2VOiKvfRxLSjRJ
-	 RC5M9gIWLlcQJdt9OA==
+	b=DQ+jfd2ZuUlBlJiCcRBAO0w6OqtZlZz6YNqQlAr3GhXzG656TSdtWvLSiXwhuJt9
+	 euOK3tQq7BAhdTOxu1eUUO9o3uxZKil5MxOAH5pAqBJ9Vs+nSjs38OxMnnm5YuDfu
+	 CZ3/shYbnJCEkgIi2OgfzlHFRMuY2op7lCMBs8y4XkHe/bFjyzEBurJt5a05/+9wN
+	 FTjXdwhpp19s68ieHHA52gT0N+aDONjSgZjytPDU5tJSEcqX+huXsYsn9aUwoGd5I
+	 9O18IMiIDdbSBJ7vmzvDBf88HLR5wcc9Bq7r3wT3j+s8l5vbcSNnxWaVUKe50oRRZ
+	 +JWtU9vxMbBuxUNEjQ==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from Mini-von-Rene.fritz.box ([79.203.29.38]) by smtp.web.de
  (mrweb106 [213.165.67.124]) with ESMTPSA (Nemesis) id
- 1MhWkj-1rgctO0Tfn-00eaDC for <git@vger.kernel.org>; Wed, 06 Dec 2023 12:52:17
+ 1N0qr9-1rPViP1dgL-00wnJs for <git@vger.kernel.org>; Wed, 06 Dec 2023 12:52:16
  +0100
 From: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>
 To: git@vger.kernel.org
-Subject: [PATCH 6/7] worktree: standardize incompatibility messages
-Date: Wed,  6 Dec 2023 12:52:00 +0100
-Message-ID: <20231206115215.94467-7-l.s.r@web.de>
+Subject: [PATCH 1/7] push: use die_for_incompatible_opt4() for --delete/--tags/--all/--mirror
+Date: Wed,  6 Dec 2023 12:51:55 +0100
+Message-ID: <20231206115215.94467-2-l.s.r@web.de>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231206115215.94467-1-l.s.r@web.de>
 References: <20231206115215.94467-1-l.s.r@web.de>
@@ -34,95 +34,84 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:I8SB8o8bwuwcdSxsp3m++j9CZILjSILBmD4NBPaKa8NNAupDJMQ
- gXIbiOkXz4pRRgSONGLQrsfxggDxBDQXAhdTLgi7QCWKMM61WeKZkTKNGEymCyWI7lA8bAm
- bdk8lc2m8Fw45pwHO883UynbBBiyKruye43A8xi+sC8A2tz7JdY71071Odjh23lTMRuNrhX
- ovsxjXlWKRY5BxkGsEzAw==
-UI-OutboundReport: notjunk:1;M01:P0:4K4FP00/rkc=;50MBU669GK0oog3ZvxFLn1DSopp
- VS+rHZNXRP3Q0NBWPPYc1E6t9IQIG/jR/v9KINHqcGssJ6VuSoXUQSGP2FGNbMBbGhKrXHt7Q
- zSSim6L5MaLY26gJnms8McDsHiALD9U9dcSPuda/Sz4lK965nj0BZNhE5/BH+1LfB5DuPKmPl
- nvs1njIQUaNrO/1lzKFgpq8NhD/zJbKV9E5dud0Vvjhlh3/BybqAixloj9nX7YP7UAJC0qhLJ
- fxJr2kdyirxHpxHH4c3KDN0IpomwI1LmRnir9Q30+62++x5oye8MK3Jp/RaNeXL0FWOMsrtWV
- wzUxZ9caOblKPngtK1LQv5Ys7XOQyFI4KMjNUzsZSHxweXOYpUfOKBsxMNAbXIqnipo31EtmX
- GpfBtd4rFE03MhSKXQ3WSZB/wUDCfO/8bjADm1aogAQ1knqyiQ5jDDySTIVt3TtEQ6s/DGpqt
- CtsNyjtLhA9Ns12L+0i+BM+34IwyGlnOvdvd5Gzvj+wOXOWHZowSGINDIqBYIJrivrsY/HCSk
- a+mhJRrhKGlteB5hTJy8fEyWyotn3IqbSVNc4MWs7e1pp9FE+7eYoi02M6lvRe61cZSEjogTd
- x1jHqCMxgVPMw8WA7yHxTOprTGv0rXPqiw5gSGyBXQw2eNy2CmDX0lfs2F1lmobxM30NNQiRE
- teQuuuOZ3TLuoprXlTWupU/oe3ZaPOqjs+BfmgYF0VmI5KAKfuvEcZVVPkj0x8EveE8spKKl7
- AgVqnDeRoUiskNSvrEH4WvLVk9+Tb67oQYaXkHWIgTA/bmnufeCmFJAXRBRLzkCu72sIULcHb
- JIulfTf4GpkmkganRQPP65NPvAg0eI1pervgaGUJeowWL3fIx3S+divqDeZ/80lKhVo9KwX2v
- mh6b6XM96CyNjfLfDwgdcXq7hqvAGcy38rYDZIE06zOmhMZYbk+RqAhZCy0qRQlAQqPkvK/1w
- 6ZiNOMulNe+dHVSYCNnlJfxQ+Q8=
+X-Provags-ID: V03:K1:fM6cV4jVYi+djW8zTjZNNv31ViK4u50xEpWV0RMMtyd6BD+Tudb
+ HHHwU0Gpd3Z8O6pdpFa7WYYsF0ZDw5mK1UDM/a6t5s5i5K0Kfa4fr0rMoB++ELEYXk4ecZg
+ R+iyvkpfJqMZm2qd6qF62tBN9KVxJtG2jIxo26MmgJ17mNeVcooOrILoWK0LXJoK3NLoYZ2
+ YUiD9UkqbQQXm0Bl1PRdw==
+UI-OutboundReport: notjunk:1;M01:P0:ZBePyZbcw/k=;Q3OAU/s2aF+7RwtZX4zjQWJoVhT
+ Gvj9RIHNBNnjKAW0vpz9RyE8sLMm6BeFF7ahJVxA0ema+mmdklR+SG9MBSVEpPG2otyZjBEmx
+ /9j9BVf2Szw6aMSqor2QW/krdMRSD1UXexg/11MogaU6t8os7WAIrgE8iRZYigVlm+Fm8v0fe
+ +6iXpXoCJYydPfJ6cj5rRnxCEhriRrLcL90xXJbQwRTfDUQEKrrS+rwyFv8hD2PeuxKzXmce8
+ ShAnmJWSjJdsfitH1hqbhsqOm6U0TN4KQbYT+wDdwthF6Ew/YKud7wXdXN6fTdxeEh4lbphQg
+ 5WQwe3msIoY687QN3My8uh4oqV60klkhgr9L32OFNYi7rqO+kcqvxjAS840iA7m6ocS1ThP4O
+ oqFvRquvm/d03PR+msKuYwkp9SizThQTRqn4OIENUKW1K4XS+snAUwLmEc+Pn5ZPrRoaDbeMp
+ lFZQVBCaSTZzzZptX7WBkyewAgHjUf/q/8QCUKTugcb7UhqASidyrO9SkAhjjepv64N4TcfVj
+ mPYZh2Tiq4LVbV5LN4E96UBdM4gcK332Jnt0rd32S31tJs/zHzBQVe6XVgk/fE0lh4KtfcTax
+ tJAVZt4Egxae1LGpmMN78O4Yiq8Lz4WeR4WEtWR7MTGCwkMjqQfZ1eJWm63AjtJZ3C4JsZdhp
+ S1BgCO5r+a2qR9tikFwRmz8HCFCKorv8qKm6jcC8feDKXyfKHSflzGyBUj0N+8R3CBftLHQ2a
+ 7VU2gfja1Pt0zYDq41QMWk2bSCc6KhQnn7Tc/dGnN+bXxvh50cbK/9MTuhj3JCjx1eG4MprPL
+ yg9ilcrA+BdWXIJY2R41CE3JwyZR4l7PwCuFZjgwxMcF1HAPfbPcmUeq84jusQt+cJIxwHscB
+ 2FEKnxnpqu/hG3wRb2QzemaAlB6giydnaJ0ETfmSpqsrdqz4VUnMRwENZRukPmFwNurUWSMMq
+ 1LuIOxuZzvm75jCJbT9mWzvwtnw=
 
-Use the standard parameterized message for reporting incompatible
-options for worktree add.  This reduces the number of strings to
-translate and makes the UI slightly more consistent.
+The push option --delete is incompatible with --all, --mirror, and
+=2D-tags; --tags is incompatible with --all and --mirror; --all is
+incompatible with --mirror.  This means they are all incompatible with
+each other.  And --branches is an alias for --all.
+
+Use the function for checking four mutually incompatible options,
+die_for_incompatible_opt4(), to perform this check in one place and
+without repetition.  This is shorter and clearer.
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- builtin/worktree.c      | 17 +++++++++--------
- t/t2400-worktree-add.sh |  2 +-
- 2 files changed, 10 insertions(+), 9 deletions(-)
+ builtin/push.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 62b7e26f4b..036ceaa981 100644
-=2D-- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -730,11 +730,11 @@ static int dwim_orphan(const struct add_opts *opts, =
-int opt_track, int remote)
+diff --git a/builtin/push.c b/builtin/push.c
+index 2e708383c2..f77f424324 100644
+=2D-- a/builtin/push.c
++++ b/builtin/push.c
+@@ -639,8 +639,10 @@ int cmd_push(int argc, const char **argv, const char =
+*prefix)
+ 		: &push_options_config);
+ 	set_push_cert_flags(&flags, push_cert);
+
+-	if (deleterefs && (tags || (flags & (TRANSPORT_PUSH_ALL | TRANSPORT_PUSH=
+_MIRROR))))
+-		die(_("options '%s' and '%s' cannot be used together"), "--delete", "--=
+all/--branches/--mirror/--tags");
++	die_for_incompatible_opt4(deleterefs, "--delete",
++				  tags, "--tags",
++				  flags & TRANSPORT_PUSH_ALL, "--all/--branches",
++				  flags & TRANSPORT_PUSH_MIRROR, "--mirror");
+ 	if (deleterefs && argc < 2)
+ 		die(_("--delete doesn't make sense without any refs"));
+
+@@ -677,19 +679,13 @@ int cmd_push(int argc, const char **argv, const char=
+ *prefix)
+ 		flags |=3D (TRANSPORT_PUSH_MIRROR|TRANSPORT_PUSH_FORCE);
+
+ 	if (flags & TRANSPORT_PUSH_ALL) {
+-		if (tags)
+-			die(_("options '%s' and '%s' cannot be used together"), "--all", "--ta=
+gs");
+ 		if (argc >=3D 2)
+ 			die(_("--all can't be combined with refspecs"));
  	}
-
- 	if (opt_track) {
--		die(_("'%s' and '%s' cannot be used together"), "--orphan",
--		    "--track");
-+		die(_("options '%s' and '%s' cannot be used together"),
-+		    "--orphan", "--track");
- 	} else if (!opts->checkout) {
--		die(_("'%s' and '%s' cannot be used together"), "--orphan",
--		    "--no-checkout");
-+		die(_("options '%s' and '%s' cannot be used together"),
-+		    "--orphan", "--no-checkout");
+ 	if (flags & TRANSPORT_PUSH_MIRROR) {
+-		if (tags)
+-			die(_("options '%s' and '%s' cannot be used together"), "--mirror", "-=
+-tags");
+ 		if (argc >=3D 2)
+ 			die(_("--mirror can't be combined with refspecs"));
  	}
- 	return 1;
- }
-@@ -806,13 +806,14 @@ static int add(int ac, const char **av, const char *=
-prefix)
- 	if (!!opts.detach + !!new_branch + !!new_branch_force > 1)
- 		die(_("options '%s', '%s', and '%s' cannot be used together"), "-b", "-=
-B", "--detach");
- 	if (opts.detach && opts.orphan)
--		die(_("options '%s', and '%s' cannot be used together"),
-+		die(_("options '%s' and '%s' cannot be used together"),
- 		    "--orphan", "--detach");
- 	if (opts.orphan && opt_track)
--		die(_("'%s' and '%s' cannot be used together"), "--orphan", "--track");
-+		die(_("options '%s' and '%s' cannot be used together"),
-+		    "--orphan", "--track");
- 	if (opts.orphan && !opts.checkout)
--		die(_("'%s' and '%s' cannot be used together"), "--orphan",
--		    "--no-checkout");
-+		die(_("options '%s' and '%s' cannot be used together"),
-+		    "--orphan", "--no-checkout");
- 	if (opts.orphan && ac =3D=3D 2)
- 		die(_("'%s' and '%s' cannot be used together"), "--orphan",
- 		    _("<commit-ish>"));
-diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-index df4aff7825..245656b53a 100755
-=2D-- a/t/t2400-worktree-add.sh
-+++ b/t/t2400-worktree-add.sh
-@@ -711,7 +711,7 @@ test_dwim_orphan () {
- 	local fetch_error_text=3D"fatal: No local or remote refs exist despite a=
-t least one remote" &&
- 	local orphan_hint=3D"hint: If you meant to create a worktree containing =
-a new orphan branch" &&
- 	local invalid_ref_regex=3D"^fatal: invalid reference: " &&
--	local bad_combo_regex=3D"^fatal: '[-a-z]*' and '[-a-z]*' cannot be used =
-together" &&
-+	local bad_combo_regex=3D"^fatal: options '[-a-z]*' and '[-a-z]*' cannot =
-be used together" &&
+-	if ((flags & TRANSPORT_PUSH_ALL) && (flags & TRANSPORT_PUSH_MIRROR))
+-		die(_("options '%s' and '%s' cannot be used together"), "--all", "--mir=
+ror");
 
- 	local git_ns=3D"repo" &&
- 	local dashc_args=3D"-C $git_ns" &&
+ 	if (!is_empty_cas(&cas) && (flags & TRANSPORT_PUSH_FORCE_IF_INCLUDES))
+ 		cas.use_force_if_includes =3D 1;
 =2D-
 2.43.0
 
