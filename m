@@ -1,29 +1,31 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="TqyudQv7"
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="Oy6Qxg0+"
 Received: from mout.web.de (mout.web.de [212.227.17.11])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F024D2696
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEB782695
 	for <git@vger.kernel.org>; Wed,  6 Dec 2023 03:52:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
 	t=1701863536; x=1702468336; i=l.s.r@web.de;
-	bh=6dp/H8/n3Sf0DL5jnLphpHtiL4BPVggEQTU9/WwvbT0=;
-	h=X-UI-Sender-Class:From:To:Subject:Date;
-	b=TqyudQv78PQkENtgEmwMbzPAfFNvlob8pI/3hUxkD6DPPP0XqO+U+PCjaUCFciLh
-	 iBBtgP/hm/dkx/4Yxh1nd61KwdYwFpZQ6rP++ZXbpddSgDwzOOQM8SbvDevmNssle
-	 XgowYnM98fdH/w8QAzFIzqalOqjarBnGg8T12uQ65ORfYoORirJtbkZmBYHWo1eUF
-	 QvZFXqC9tKFeWVLsm6ZGy3O4Y9jNfhOh16kzGTUbhWddaIJZ77UGxQ7L14JvBOLLz
-	 YEpDRYbuCsgwBqLfZ1MCH3mIZKpbMHFozoKcOgRPWPoUdzJidBFDgew/fCVu8jbRa
-	 MWkqj+knpPDAEpaFEg==
+	bh=MgY8AnrtULKrhNi/5xQfrcBwgq4tGWjiO4zFtcsRquI=;
+	h=X-UI-Sender-Class:From:To:Subject:Date:In-Reply-To:References;
+	b=Oy6Qxg0+IeA8+NWLjW8i2M21eyQiRApV1SF27UQwloR3wU+snwrg68RtQkR3nC7m
+	 PHIVsvl5fpbr5XwJ0vZqlUVJ+jCtWiEa8uiqnRMLaNjXpEsZ0n64N7iFIRGKo2Pxc
+	 e/7JZjETk8CPeai7H0vlNiSUSIVWFzkI2NuOGgCngULRGGqemQOKlvO3mMlWhNkl8
+	 2SZ2DWL9vsZs5KKDQgFf7cgJXWPwXq3giphOVakErgcF4m42aF2wu4bQbRYJ0f7ln
+	 gGuv8DSzOAboHgDTyPVFIng0Hqg7nOZ2kK7YN/4CBTQr7G4Bsx7EPMr8Lnq9OqQ8Z
+	 5ehJRtAPaWCE8JJbXA==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from Mini-von-Rene.fritz.box ([79.203.29.38]) by smtp.web.de
  (mrweb106 [213.165.67.124]) with ESMTPSA (Nemesis) id
- 1MN6Bb-1quYcP17oL-00J2eq for <git@vger.kernel.org>; Wed, 06 Dec 2023 12:52:16
+ 1Ml4B4-1reex22I60-00lTiP for <git@vger.kernel.org>; Wed, 06 Dec 2023 12:52:16
  +0100
 From: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>
 To: git@vger.kernel.org
-Subject: [PATCH 0/7] standardize incompatibility messages
-Date: Wed,  6 Dec 2023 12:51:54 +0100
-Message-ID: <20231206115215.94467-1-l.s.r@web.de>
+Subject: [PATCH 2/7] repack: use die_for_incompatible_opt3() for -A/-k/--cruft
+Date: Wed,  6 Dec 2023 12:51:56 +0100
+Message-ID: <20231206115215.94467-3-l.s.r@web.de>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20231206115215.94467-1-l.s.r@web.de>
+References: <20231206115215.94467-1-l.s.r@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -31,50 +33,73 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-X-Provags-ID: V03:K1:lqsxaosgEx4o92BAgKGybGXQ3OOouYZdDox7j2qpoIk6XORg5hL
- iYjZzfVPNQ9CBCYKHRRVK0igEdzOyX5HwE3+zK8cuwiB6Es2rx7vA6XtjHhrDx1bKM4XSMF
- /+QJDFPhy6eLhxuPhYakr1GaQ7eVfkFsujP91IiONUecT6f/ipwQdsncEeVDQx/NTI0NCa1
- LirU2WkRandK9i2/dqRNw==
-UI-OutboundReport: notjunk:1;M01:P0:5FtfCNVGP4Y=;Pdw2IQd7cdbAihCIuOuD5HPOz01
- Hp0lE3t+wFUjFpTWW+a7w4TBMWtV27Q1rVbUiLv6f9cVcOxGHXhH8nCAYOkweqpHSIarKQvXr
- GqE2l5w2fcEc/x6/Lki1YmwTpO8TbgVo9/GWsmO8VHNhB23spwxL0MycLh6zjk3k+sLJFr8SL
- K2RC2EWSGdaE5eWT7U3q7q0o4LbeiOqCc5LdcgcY5TUz0qyMmbRFb4ec5paJ1+Gl4exZSHMqO
- di+WPzNqyicyv3WDSkxrOr6Rckagqv4U6PLZ6M9XKAuTR+IxzG2c4M+vkDAMJFgdKTKdNTy2i
- w03tnkG2ZIBBW2g08anJ15vprFpi9fRse3x4UDPnAeSqzvKq5xV0Gl/HEAn67pnowtDYxZzZv
- zS0h5qCGHHzpgzQn6WqjKr0KecQsRG6q6mmFt3XtiP+tD3wcIYTdIvyqiTE6PFKiSmPadXRKc
- IWOmDu5QDoUYd/gctm1fIu1LEUvTJ5PnPtbepegBLmpka+hAdROLPT1yyNHJM5mnmrv0fg4cm
- Pp/rmFLf0iFWPaSQKwupsPV6vk7Qe7PebgWsD2BNsuAGLckYJb2DmKvdb2+W2ONOPYaQCE/3s
- MEoH+4HEub4FLoMeyHOkVFnDIl4WO+YYqZxbDa9dhY2LFNDqLc2Tdspg2v0yJlb8RdSMJ0VJQ
- pY9/+LCfnJZLt/9gptXN7Rf6Vcao7L/M/W+1KEtThAz1yo+qiGJGF3lo+4ug6TuTmAWThDAmd
- QPWLej6vaKTetRm8+drql+meDLg8Qqz7+ugbmPaasLX3ZUq1ovdGwk9XTroMhpoWChTBxIchP
- huZiR9R1k5IM5TmLnNdvUx97OwoCY4ghFav4D/PzAo0pD+zANJuV6BYvIt786VdhhtZkS4DEL
- V5Xr5buHm9wfT05RHBgbM8F5izwW8xV4JcEqP2q0hbozdH5JF68pW2BJNgypKxOBva9UzVyyv
- Z9y5Aw==
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:H6FEy+PKOlySeQPAbkO01xQ1OZzLUijXUY2dVl9krw9fa7rrrPV
+ 54XkG/RSY0gSd07kDdKnRsRc38+chBiqK4I3Tdj90SmdSinQDf7BpnrBWXqmvVoo8r+j5XW
+ GIDabja3GLTi9CVkrSxxT+5KziJo5E8OdFBQpGpGeOoopM9O0K2USD+7UkxyZNfO09Qe14s
+ yBNkfdrS6O6XWRsqo72gw==
+UI-OutboundReport: notjunk:1;M01:P0:OE0HOpX42rc=;E1+UuiKpkXqoKki98yp7w0KnjGT
+ enOERYAO5gH0SdwDQydIvoMNJT0J8JUezRtr4YFmv2ofopqLUXpnYNNWR1Idnwyioeqz3uQnp
+ cH/c5cgijgYoap/0YOWestyuouDnMr+8JzOz6fDFTOexaJ5qrzZPGxTja5/KEcyAP3dEq0zJp
+ /FtnTdV5OWdefrWm+hpZ+9Jz6XfXMG0tYY3Xj5AHMei4Vfz8N1JqEE8Z6HHweutux3yhtckna
+ XtrxBKNwI9nKm+xTUVuNlCPGwHchxmoldDB0t5m756oUFxn7u4sBeDavDIHc57htWjIzwj5++
+ pxO8JaajzYi7/pTaE7OC0dvJmqO+BUqfslRjB1ShmSYqe/izesxW1DSsS1ejzvGwp2i4OH599
+ 4XMR1UW24av15a2IrXzr31DUhSlnFt0eZwW7YmNg/o47rqds7qcFMg9RRcWyUk3Xb3/p7TCHx
+ o5SJiGJHsRm64YHl+3v52+dR+i49T6XmPv45nwPlIumcbljb/FD27wFX/2MLRyJo7DYQDD8T9
+ +An0EmECNo9IIw4zuY8S3BcnOZBRBMKkxMdFts98fttccPD0sTCNPuJ1jv/Sc9VR0ufSm9EHp
+ 8Pj07a7w2gE5+P8ChtfjQWRwg1kzPRodxomtzedlXTtPFIX56fjvnoQqHhOKrOn9bK+Q0x7Tc
+ A36NebTo5tvsZNG83ntMwbYGty8Amk4CNhtWusSRzPVNmbR+tnUHyvbtsFGD6MbPbNQjvM9Gp
+ 6SmShJUykC8j6fA/mgUWs0yKCBVvH6hN7DWfiSPEv6jHxt3NYB2mVnGZhm2kJwtVlf/d9rRMn
+ VbZTtg9XBZnrNl4WAicC+0kyD9gujd0/kXCwy7FKoWXGpeh9TgLpECGKPbixVkqomcZTU8PyO
+ 8HtnZD6IqlL6i4GfavbHBjkVqCuGKTy9wxFIYmnkEY5jymGwMclkihLZHbXyleO9dSnvrpSFX
+ yVbQcQ==
 
-More of what a699367bb8 (i18n: factorize more 'incompatible options'
-messages, 2022-01-31) did: Simplify checks for multiple mutually
-exclusive options, reduce the number of strings to translate, improve UI
-consistency a bit.
+The repack option --keep-unreachable is incompatible with -A, --cruft is
+incompatible with -A and -k, and -k is short for --keep-unreachable.  So
+they are all incompatible with each other.
 
-  push: use die_for_incompatible_opt4() for --delete/--tags/--all/--mirror
-  repack: use die_for_incompatible_opt3() for -A/-k/--cruft
-  revision: use die_for_incompatible_opt3() for --graph/--reverse/--walk-reflogs
-  revision, rev-parse: factorize incompatibility messages about --exclude-hidden
-  clean: factorize incompatibility message
-  worktree: standardize incompatibility messages
-  worktree: simplify incompatibility message for --orphan and commit-ish
+Use the function for checking three mutually incompatible options,
+die_for_incompatible_opt3(), to perform this check in one place and
+without repetition.  This is shorter and clearer.
 
- builtin/clean.c                    |  2 +-
- builtin/push.c                     | 12 ++++--------
- builtin/repack.c                   | 14 ++++----------
- builtin/rev-parse.c                |  9 ++++++---
- builtin/worktree.c                 | 21 +++++++++++----------
- revision.c                         | 27 +++++++++++++++------------
- t/t2400-worktree-add.sh            |  2 +-
- t/t6018-rev-list-glob.sh           |  6 ++----
- t/t6021-rev-list-exclude-hidden.sh |  4 ++--
- 9 files changed, 46 insertions(+), 51 deletions(-)
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ builtin/repack.c | 14 ++++----------
+ 1 file changed, 4 insertions(+), 10 deletions(-)
 
---
+diff --git a/builtin/repack.c b/builtin/repack.c
+index edaee4dbec..c54777bbe5 100644
+=2D-- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -1203,19 +1203,13 @@ int cmd_repack(int argc, const char **argv, const =
+char *prefix)
+ 	if (delete_redundant && repository_format_precious_objects)
+ 		die(_("cannot delete packs in a precious-objects repo"));
+
+-	if (keep_unreachable &&
+-	    (unpack_unreachable || (pack_everything & LOOSEN_UNREACHABLE)))
+-		die(_("options '%s' and '%s' cannot be used together"), "--keep-unreach=
+able", "-A");
++	die_for_incompatible_opt3(unpack_unreachable || (pack_everything & LOOSE=
+N_UNREACHABLE), "-A",
++				  keep_unreachable, "-k/--keep-unreachable",
++				  pack_everything & PACK_CRUFT, "--cruft");
+
+-	if (pack_everything & PACK_CRUFT) {
++	if (pack_everything & PACK_CRUFT)
+ 		pack_everything |=3D ALL_INTO_ONE;
+
+-		if (unpack_unreachable || (pack_everything & LOOSEN_UNREACHABLE))
+-			die(_("options '%s' and '%s' cannot be used together"), "--cruft", "-A=
+");
+-		if (keep_unreachable)
+-			die(_("options '%s' and '%s' cannot be used together"), "--cruft", "-k=
+");
+-	}
+-
+ 	if (write_bitmaps < 0) {
+ 		if (!write_midx &&
+ 		    (!(pack_everything & ALL_INTO_ONE) || !is_bare_repository()))
+=2D-
 2.43.0
 
