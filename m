@@ -1,41 +1,41 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oXcoq62n";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="3fTq4D4B"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nkg6s4u4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vpHKIrdp"
 Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34F85AC
-	for <git@vger.kernel.org>; Wed,  6 Dec 2023 05:08:03 -0800 (PST)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id 6A6AF5C0288;
-	Wed,  6 Dec 2023 08:08:02 -0500 (EST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68C021BF
+	for <git@vger.kernel.org>; Wed,  6 Dec 2023 05:08:07 -0800 (PST)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id 814965C02A7;
+	Wed,  6 Dec 2023 08:08:06 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Wed, 06 Dec 2023 08:08:02 -0500
+  by compute1.internal (MEProxy); Wed, 06 Dec 2023 08:08:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm1; t=1701868082; x=1701954482; bh=4k
-	WYBn2X1PdrJN/8R2mxd8gIIdtBs1KSm4wrQof3iOk=; b=oXcoq62nUpQvqkpYKi
-	FVIY5WcLoMj5Q3/WuwYW70QWfBz/NVIN8D2KG6EfzJfibQTqmEX1JLn3D3THAdjW
-	/EqmlpYInlxBgwo9J/JD4lMG/h962/OIsj4RcAUy2pqJf6MJk5Br9fspg93CZp3E
-	N2VZxGAY7W6Mb6E2xZmU3yNvSY05lY7d2jXSAvmyYrsqnh9W0VHHNEBpoqsDuH7r
-	qyvHF3plVI34jZ9B90lkR6xJvi7/ZXKn00hvkJxn1iCYoR/ZPysIyIyaQ0bbDd11
-	1cR5GMH8nSKf2ra+Sv8zhu11CFJp5oXi639TyOp3A6kTBjNPNqhtrb4MgNXTlhkm
-	SmFA==
+	:subject:subject:to:to; s=fm1; t=1701868086; x=1701954486; bh=JM
+	k7CaB/UecPtzgRv3bCzrtz/CuXxe8GRwf/2QPmsMI=; b=nkg6s4u4/ZBf/tuS1D
+	pwVe1KpIJUh7Zf5/qbMUZwbvX+UvCD6i0Xq3CDnAzHdzEQsWcr6cLywGs1vPTR1H
+	DWn5hK6TGD9nAi2ZQMzhqeMyU3ISGu/3PycXtgtY5GQiUsj/FGTxDqJxh6/6iR4z
+	OqLC27Ey3qQ5J+EhrxnSlc1BAMtrpSGSDFSleUZmXASBxgAOWlyivKjjBvg6yRHq
+	ox/ttsOJ1uaibqYhYLL80pq3uLRg5X53yG4in0ZnbOHXmrE2yqluKFcfbHUvpu6S
+	7p923hTVMWrNatH3BusPhuB9UjcCj/3Q8e3dm0F6STn87DRFycD6eczpK7Q4ppdz
+	4Ufg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm1; t=1701868082; x=1701954482; bh=4kWYBn2X1PdrJ
-	N/8R2mxd8gIIdtBs1KSm4wrQof3iOk=; b=3fTq4D4BLnMydWJasOC6AB2/5+LFo
-	OiDFO+P5EH2lFiRnQ8F6qfEwsHFkHv15tkwZ3+cCqLLD7DpWXa7EqmpNN57E0C3l
-	a+5DN9o2lEsH7LX56MWX/Phlry3VaQ2tC436c/Gl79OsnOrCRQeJUASYGQEpO17d
-	dwot7mk7ompndONSKVf929sLcMre1wXxPdCprKrMl1I9Xw6erc1njgE8VawH3jLY
-	NpN+0QI+wmQ2KbM2kje+N8eC6Mmfw4S+phVTmHFxmAhTN9Fxmmzc5iQQbj/9ILpH
-	NO49z6EYbxM65ZGO08ZsluwfHgW9joPooV4eG+VSWqsqVUKSq2X2xNNNg==
-X-ME-Sender: <xms:MnJwZQPE4-A2PQzAJaLgn_RFoJwLtPkeLW0Usw24F0iwGbHK1wdegA>
-    <xme:MnJwZW9Dz_d-1Mqhn4hhKiyTp0LqIi0pO-lMf-16vQt879MrA5gsT_dBudrF9K5r3
-    F1YzzOjzEGL_09IHw>
-X-ME-Received: <xmr:MnJwZXTIiR1ECLO9gPdccjr6VTakLa_4EH_v7pp9l97F0Qz1runDTxLslO2f8qr5hPBPYOpoEFsl5kjzT1FS_Vflt7zP9BaDpsUUOPWtYsG0SHg>
+	:x-sasl-enc; s=fm1; t=1701868086; x=1701954486; bh=JMk7CaB/UecPt
+	zgRv3bCzrtz/CuXxe8GRwf/2QPmsMI=; b=vpHKIrdpBtv86ymNu2CVldedXemMk
+	6CMY5s2B2BNjrbZjfDUKDqy/2FPG3gboeh5Bz6GkhzROiCVWQShdxbJzH4/vn6Lv
+	vD4ygYMPy0RVYS70xkgganRb9ZeEAXg2OQg2Nlx7uWCeacXcJwd780HTL+w31QLp
+	oWKM1WUEYhpTnLz7zcnsoWY02O7mzyTNL5D9RuMXn5yK9sjaWRBJetG8dHA4TCsL
+	1Ved1D9onRON34w6mBGn44+cqrsTPsyjxYRl78krHoS+SlzvFHZVLKnbx4SZ3ECX
+	GUng0SCZeJj411BRVR43vgORVzsovzcXNBUa7TKu/r0dGSkzbXeNPH4Yg==
+X-ME-Sender: <xms:NnJwZahiqV2MUwe5mMDuhE-R0yPVHwAbY51plnTrmmx_a1uJPFtFgA>
+    <xme:NnJwZbANmPoEsmHArBb3NrK8Ui3dVrG7BXoGcZ6Pwa5zjf0obAWdDUY90bUh6j5U5
+    n0nXLI5tyrYEk7tNg>
+X-ME-Received: <xmr:NnJwZSFMqoR07Anc3LvyiRIzhLCYIvCTVj6ZDOZgJgTpWbWrAXspM6JgAE3gybxWs8e880tj3NpxNoix9SDTxKLLA0QjqK_GdLSvL08k_fyk74M>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudektddggeelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
@@ -43,23 +43,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudektddggeelucetufdoteggod
     phhkshdrihhmqeenucggtffrrghtthgvrhhnpeefvdelfeeuteegiedtkeehleffkeekgf
     ffudfhuddvfefftdehkeeihfekjeekheenucevlhhushhtvghrufhiiigvpedtnecurfgr
     rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:MnJwZYv9lQUXPQT_1N0ukSF8LQHqvuZUBRCoRr4eLeUw-e07d1ADtA>
-    <xmx:MnJwZYeaD6WcPX5MGpNlM7cDFtdionvl8A9AHTS-nKFPZfnUoldUEQ>
-    <xmx:MnJwZc2x1FNGjrG-uYIEgaq7dQsJ-NHv9TgaJjQTyjst7d8zCiEjww>
-    <xmx:MnJwZQkAVI8LNQjwtqBUOqCKh8qrtvQusw7xYFFyf1xmtsz_sFFp5g>
+X-ME-Proxy: <xmx:NnJwZTR8N47kX_v_AiyxTiaugBjPc7ec6CeWVtOEM5ce2SALRuuCdw>
+    <xmx:NnJwZXxeajvKKx0VhN30TCTc3V2-XiB35-BMLVhHMDHVb8_Oq3VTkA>
+    <xmx:NnJwZR4_ZADdzqCuvfaWcWdsAXn_6Dkgu4ZolPOIXyyOvrTYmyTwyw>
+    <xmx:NnJwZVZsTofed_mU5Lpn7DIQcVy8SrLAwcm4LyWqwiuK6E3Bu0NJnA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 6 Dec 2023 08:08:01 -0500 (EST)
+ 6 Dec 2023 08:08:05 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 6934543d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 6 Dec 2023 13:06:33 +0000 (UTC)
-Date: Wed, 6 Dec 2023 14:07:58 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id b8d39f6d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 6 Dec 2023 13:06:39 +0000 (UTC)
+Date: Wed, 6 Dec 2023 14:08:04 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/7] standardize incompatibility messages
-Message-ID: <ZXByLkAtp_J0nGa0@tanuki>
+Subject: Re: [PATCH 3/7] revision: use die_for_incompatible_opt3() for
+ --graph/--reverse/--walk-reflogs
+Message-ID: <ZXByNGuQTaOQ3sKW@tanuki>
 References: <20231206115215.94467-1-l.s.r@web.de>
+ <20231206115215.94467-4-l.s.r@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,71 +69,82 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="4sEXzf4E0+H8K8uo"
+	protocol="application/pgp-signature"; boundary="wS4zgi0GGZhmxBx2"
 Content-Disposition: inline
-In-Reply-To: <20231206115215.94467-1-l.s.r@web.de>
+In-Reply-To: <20231206115215.94467-4-l.s.r@web.de>
 
 
---4sEXzf4E0+H8K8uo
+--wS4zgi0GGZhmxBx2
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Dec 06, 2023 at 12:51:54PM +0100, Ren=E9 Scharfe wrote:
-> More of what a699367bb8 (i18n: factorize more 'incompatible options'
-> messages, 2022-01-31) did: Simplify checks for multiple mutually
-> exclusive options, reduce the number of strings to translate, improve UI
-> consistency a bit.
+On Wed, Dec 06, 2023 at 12:51:57PM +0100, Ren=E9 Scharfe wrote:
+> The revision options --reverse is incompatibel with --walk-reflogs and
+> --graph is incompatible with both --reverse and --walk-reflogs.  So they
+> are all incompatible with each other.
+>=20
+> Use the function for checking three mutually incompatible options,
+> die_for_incompatible_opt3(), to perform this check in one place and
+> without repetition.  This is shorter and clearer.
+>=20
+> Signed-off-by: Ren=E9 Scharfe <l.s.r@web.de>
+> ---
+>  revision.c | 9 +++------
+>  1 file changed, 3 insertions(+), 6 deletions(-)
+>=20
+> diff --git a/revision.c b/revision.c
+> index b2861474b1..1b7e1af6c6 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -3036,8 +3036,6 @@ int setup_revisions(int argc, const char **argv, st=
+ruct rev_info *revs, struct s
+>  		revs->grep_filter.ignore_locale =3D 1;
+>  	compile_grep_patterns(&revs->grep_filter);
+>=20
+> -	if (revs->reverse && revs->reflog_info)
+> -		die(_("options '%s' and '%s' cannot be used together"), "--reverse", "=
+--walk-reflogs");
+>  	if (revs->reflog_info && revs->limited)
+>  		die("cannot combine --walk-reflogs with history-limiting options");
+>  	if (revs->rewrite_parents && revs->children.name)
+> @@ -3048,11 +3046,10 @@ int setup_revisions(int argc, const char **argv, =
+struct rev_info *revs, struct s
+>  	/*
+>  	 * Limitations on the graph functionality
+>  	 */
+> -	if (revs->reverse && revs->graph)
+> -		die(_("options '%s' and '%s' cannot be used together"), "--reverse", "=
+--graph");
+> +	die_for_incompatible_opt3(!!revs->graph, "--graph",
+> +				  !!revs->reverse, "--reverse",
+> +				  !!revs->reflog_info, "--walk-reflogs");
 
-Thanks for working on this! The patch series looks mostly good to me,
-I've only got two questions.
+I've been wondering why we use `!!` here, as `die_for_incompatible_*()`
+doesn't care for the actual value but only checks that it is non-zero.
+Is it because of the type mismatch, where these flags here use unsigned
+ints whereas `die_for_incompatible_*()` expect ints?
 
 Patrick
 
->   push: use die_for_incompatible_opt4() for --delete/--tags/--all/--mirror
->   repack: use die_for_incompatible_opt3() for -A/-k/--cruft
->   revision: use die_for_incompatible_opt3() for --graph/--reverse/--walk-=
-reflogs
->   revision, rev-parse: factorize incompatibility messages about --exclude=
--hidden
->   clean: factorize incompatibility message
->   worktree: standardize incompatibility messages
->   worktree: simplify incompatibility message for --orphan and commit-ish
->=20
->  builtin/clean.c                    |  2 +-
->  builtin/push.c                     | 12 ++++--------
->  builtin/repack.c                   | 14 ++++----------
->  builtin/rev-parse.c                |  9 ++++++---
->  builtin/worktree.c                 | 21 +++++++++++----------
->  revision.c                         | 27 +++++++++++++++------------
->  t/t2400-worktree-add.sh            |  2 +-
->  t/t6018-rev-list-glob.sh           |  6 ++----
->  t/t6021-rev-list-exclude-hidden.sh |  4 ++--
->  9 files changed, 46 insertions(+), 51 deletions(-)
->=20
-> --
-> 2.43.0
->=20
->=20
-
---4sEXzf4E0+H8K8uo
+--wS4zgi0GGZhmxBx2
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVwci0ACgkQVbJhu7ck
-PpTCvA//YdICCXgz0blnja+7vnAVCIN/TuzcNQG8/YT70f+91DwiH3yLVAIuBV8V
-VdfQWbV6HJeLFx15oBQLJT3Um/QS2Ds5nL4Ifo8BHsT6yBjvc0sjoQi1fhjGU/2p
-d0leumHvqD1UMrO2hjsX7A7AcALedviGawnC4cUv7aNWmSbAq2lTxwmD1/KUfdlK
-Tu8dNV7NKW2cIhKtfj2+AYKnPo3qOyS+ZmHJA43OHIDt6tuJ7QCbk9ciNmOzgD8R
-8ALUNyt0ekLqHxVPdHwqlZWrxBCCkkJuAGFwzmtO1RoBQEZ8ha576HxmECVTsQZN
-7Zlkv9S+SYKbiwb+Ur3arkz36qljArPbZTBNlu6NkS1y/Beco+Bge1DlIU2YmC6G
-sHxMhUYZmQVBhEWD6v4zzQlBM5FcJXf4Fb+LvmDzmhONyW57P/p9CFqYRkl+jpif
-Mn8MpofMlLgMAzVGwkGHwykAeesDKjIgq731cPX4tluGllPoOJr4d8Pqei/v9uLl
-YJDvggEUdyZvPzOOdur36aZc9H93P6M5BQXwShS5M2f6cCZIB3BpziLQXGx6Y1G6
-WVYj2e2c7OO5A+CLFkNytfNd8w6L8yAU4jMUeMMSYo8pFLfvqO7Q7EZBOobXQhRp
-IR8yu8RlpEX/XOnK2xF3tx9FQri4ChvDQFShWq8XRz+FavMl2A4=
-=06au
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVwcjMACgkQVbJhu7ck
+PpQLPg/9HKKkI6mnzRW1a9bWCVT9eLE6EDZ/J3TOBvW9fu9iOMPfw12oox4ZqnXf
+2nB+dikmjlxMKKPyStjEGH4tlMhdqE9NLONEyE6HoQQVSBynvBMr1pFoEphIF4Tk
+Xp5qWS5+mriTofNwDc8GEyyJ4pGcrfdds1hmssjc8ZTh81w8M0YyOuqIv9JvODHz
+/dfEXM+CAmoxMUHYwzToqnXs6m0rlyJNoeIBZq4aXPY5+j1PzaOI23Noa8Sqc/JG
+2uDaBEOPu8G7eYr5MaK7jLS9gaO35x6VOJsIuCtLISmFXERYxOe1yqMQO6iB9h/g
+vbIih2/L2iPI11oNn9EgtOB6D/582S4cQYHEJPbYdXPFv7nCa9qPncv0G1rdkIZ4
+IL6W12660V45iUY7bQx6Kn82kRxcuFCWJXZvXPg0gCf6YCGe+GV68ygv321uezvh
+WNazqzY7zZ8CvszJ0WSxE+OHyRWGBHN15kt+C6JZBQSjpCvHc6iloPjdPy5fHJWw
+0TsTY2qD+zNpkMi8/yOwXX1AQMTdGB+hq5qikfsrdlbKDhbiEVgop0gcPUhjjZFY
+zvByAKx+zg2vRWcWje/b5SYWn9rY6SA3cjipjZs9O38nPJuzbo6TMZ4UqA7x/5pO
+j9sGYC/6fbmUWjKrzFrcTfAhYfgzB8tiuZ/M6EgXkouDMXAPGCs=
+=o1+l
 -----END PGP SIGNATURE-----
 
---4sEXzf4E0+H8K8uo--
+--wS4zgi0GGZhmxBx2--
