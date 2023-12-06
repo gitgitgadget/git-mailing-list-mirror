@@ -1,57 +1,67 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 779C8D5F
-	for <git@vger.kernel.org>; Wed,  6 Dec 2023 14:36:13 -0800 (PST)
-Received: (qmail 6014 invoked by uid 109); 6 Dec 2023 22:36:13 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 06 Dec 2023 22:36:13 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29241 invoked by uid 111); 6 Dec 2023 22:36:14 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 06 Dec 2023 17:36:14 -0500
-Authentication-Results: peff.net; auth=none
-Date: Wed, 6 Dec 2023 17:36:12 -0500
-From: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-Subject: Re: t7900 fails with recent debian systemd?
-Message-ID: <20231206223612.GA650770@coredump.intra.peff.net>
-References: <20231206223145.GA638844@coredump.intra.peff.net>
+Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB5CED59
+	for <git@vger.kernel.org>; Wed,  6 Dec 2023 14:41:11 -0800 (PST)
+Received: by mail-ua1-f44.google.com with SMTP id a1e0cc1a2514c-7bb4b7eb808so12547241.3
+        for <git@vger.kernel.org>; Wed, 06 Dec 2023 14:41:11 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701902471; x=1702507271;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=IbgAiZzCHMQPbq3aJcGYpOFJxuaH41fNwrDODa2e3jM=;
+        b=lGHEtZQWDk5+J3nLO6POtMKrO+mw5SuBpMwksMOXRdoQ7Fvz5JAuPj3bFgcuId9X2k
+         HntqkUh38YzyPe/LPURtsxoMgdbDVGifcpRkSIRxTS6mb5llAG0Q/iJkL+wklqezKR2E
+         Oi7p8X/K6o/GVCDrVYqiGkw9dloVYxvIoHTmKl563T8zdetOb+/zA14n+XDcEgNm4iSo
+         e+WlCUOukY5oGsw6sUlYJDM1LhUOSiOzuigo6NpaPsPy9xs9Ey1UZOSm34JpGYICkTO0
+         GnjfeNf6z/lqQZJpocMwSjx6x3sT+PM244eFPfGkRUDYjyhAaTcTXrDHGIkXsnf80/pL
+         cUKQ==
+X-Gm-Message-State: AOJu0YxyeTyYeHuaZLwcpns93IFzgFeKuPMIQ2yKTd27PJxtcTwRMXtI
+	plhbs79WzOF8QUSlC/VhRxRg1bUdQOabpIKmGY8=
+X-Google-Smtp-Source: AGHT+IGf0NGfQP2Kcc71NkIH9RGTxgBW6BMr7hUAFWKkiwm6aQN9GPg2MF01BZ6ilUzWd5vWZYX+EfThIK2zLTNoixs=
+X-Received: by 2002:a05:6102:1613:b0:465:2fec:24fd with SMTP id
+ cu19-20020a056102161300b004652fec24fdmr1894402vsb.65.1701902470836; Wed, 06
+ Dec 2023 14:41:10 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20231206223145.GA638844@coredump.intra.peff.net>
+References: <20231206223145.GA638844@coredump.intra.peff.net> <20231206223612.GA650770@coredump.intra.peff.net>
+In-Reply-To: <20231206223612.GA650770@coredump.intra.peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Wed, 6 Dec 2023 17:40:59 -0500
+Message-ID: <CAPig+cT-vCraf2tfA3t3Rh6mLNTr0rB5mApmz0vu2MCRvssaVw@mail.gmail.com>
+Subject: Re: t7900 fails with recent debian systemd?
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Dec 06, 2023 at 05:31:45PM -0500, Jeff King wrote:
+On Wed, Dec 6, 2023 at 5:36=E2=80=AFPM Jeff King <peff@peff.net> wrote:
+> After stracing, it is indeed looking for:
+>
+>   trash directory.t7900-maintenance/systemd/user/git-maintenance@hourly.s=
+ervice
+>
+> but that file doesn't exist. We installed git-maintenance@hourly.timer,
+> and git-maintenance@.service. Is the latter supposed to be a wildcard of
+> some kind? Maybe the rules changed. I don't really know anything about
+> systemd.
 
-> I noticed t7900 failing today. The failure looks like this:
-> 
->   $ ./t7900-maintenance.sh -v -i -x
->   [...]
->   + systemd-analyze verify systemd/user/git-maintenance@hourly.service
->   Unit git-maintenance@hourly.service not found.
->   error: last command exited with $?=1
->   not ok 36 - start and stop Linux/systemd maintenance
-> 
-> The problem started after upgrading my Debian unstable system to the
-> systemd 255~rc4-2 deb. Downgrading back to 254.5-1 makes the test pass
-> again.
-> 
-> I'm sure it's something silly with finding paths in XDG_CONFIG_HOME or
-> something like that. I haven't dug further, but I thought I'd post this
-> to save somebody else going through the same initial debugging. (And of
-> course any wisdom or further debugging is greatly appreciated).
+Apparently, that's intentional. From builtin/gc.c:
 
-After stracing, it is indeed looking for:
+    /*
+     * No matter the schedule, we use the same service and can make
+     * use of the templating system. When installing
+     * git-maintenance@<schedule>.timer, systemd will notice that
+     * git-maintenance@.service exists as a template and will use this
+     * file and insert the <schedule> into the template at the
+     * position of "%i".
+     */
+    static int systemd_timer_write_service_template(const char *exec_path)
+    {
+        char *local_service_name =3D xstrfmt(SYSTEMD_UNIT_FORMAT, "", "serv=
+ice");
 
-  trash directory.t7900-maintenance/systemd/user/git-maintenance@hourly.service
-
-but that file doesn't exist. We installed git-maintenance@hourly.timer,
-and git-maintenance@.service. Is the latter supposed to be a wildcard of
-some kind? Maybe the rules changed. I don't really know anything about
-systemd.
-
--Peff
+I'm not sure why the comment is talking about "%i", though.
