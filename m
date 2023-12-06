@@ -1,66 +1,65 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HwdzjbNc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kXpbIAbs"
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7363911F
-	for <git@vger.kernel.org>; Wed,  6 Dec 2023 04:40:18 -0800 (PST)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.nyi.internal (Postfix) with ESMTP id E09135C029B
-	for <git@vger.kernel.org>; Wed,  6 Dec 2023 07:40:17 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Wed, 06 Dec 2023 07:40:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oXcoq62n";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="3fTq4D4B"
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34F85AC
+	for <git@vger.kernel.org>; Wed,  6 Dec 2023 05:08:03 -0800 (PST)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.nyi.internal (Postfix) with ESMTP id 6A6AF5C0288;
+	Wed,  6 Dec 2023 08:08:02 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Wed, 06 Dec 2023 08:08:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm1; t=1701866417; x=1701952817; bh=Si
-	NMrssfWAqK6wKLQudCbA7utvmo8GD+9E6sFgkqLN0=; b=HwdzjbNc3MNq/tEFVq
-	PR8aoS8IdJ/TN6kNp8kyBeq3RrJ07auvbQlfNP63IHXIz8oRvZNkuh/AhkunRW8b
-	HfPYNX/4w6zQtHMFW1odPVKfUzOI+v9Uuu0JqDXs3p9XtEHMbDFpr00IGrHJS9Ji
-	rucYxIGjOvxQ9QK73seW7cF5rAtpVXXlHqTlcn9Np8MDN+DQ/f6a+9LEowvjmOxo
-	stdzHqWJJ2B1kvZxjmXueWfDRT8FkrUJWlbWHk0yi2An9MGjApQM2WaNTIKbgD1H
-	mUjAi9YOzfjRT7vvWfXrcIP6aV6niHDeEr7ys1cI4nicAMhjhfWCZZIYAR/ebAAl
-	QPqQ==
+	:subject:subject:to:to; s=fm1; t=1701868082; x=1701954482; bh=4k
+	WYBn2X1PdrJN/8R2mxd8gIIdtBs1KSm4wrQof3iOk=; b=oXcoq62nUpQvqkpYKi
+	FVIY5WcLoMj5Q3/WuwYW70QWfBz/NVIN8D2KG6EfzJfibQTqmEX1JLn3D3THAdjW
+	/EqmlpYInlxBgwo9J/JD4lMG/h962/OIsj4RcAUy2pqJf6MJk5Br9fspg93CZp3E
+	N2VZxGAY7W6Mb6E2xZmU3yNvSY05lY7d2jXSAvmyYrsqnh9W0VHHNEBpoqsDuH7r
+	qyvHF3plVI34jZ9B90lkR6xJvi7/ZXKn00hvkJxn1iCYoR/ZPysIyIyaQ0bbDd11
+	1cR5GMH8nSKf2ra+Sv8zhu11CFJp5oXi639TyOp3A6kTBjNPNqhtrb4MgNXTlhkm
+	SmFA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm1; t=1701866417; x=1701952817; bh=SiNMrssfWAqK6
-	wKLQudCbA7utvmo8GD+9E6sFgkqLN0=; b=kXpbIAbsXuRQsTIGAYzkPGyPEaLTW
-	lY3HYJHjGpPYw15wAtYodPJTT2BW+8/HrZTG58rcW/8qElGuLD6pTcuK9l81BoBr
-	5Bpk79EAazHkcijRsWThtud6/LGJKVeKavNLhD766pQdn7TMAoLht5K9QYF9UZGN
-	6VDI8GCYUMbNj++AMg+0w0RoK5PPwHCibic1lJUPjGf3hvMcK3XUv/Z/qfKuNvUu
-	txX3/Np9aTJWN5pjPPDrNJdcCEBu22vzYFpI1nMDb21oU4cR3UGw/5p1Z/HKl1qf
-	RDrdMHE9DvZjklynx9lMtVrE5CFgyjKv7mYksI6K1OY32dj7+ohgC4xmA==
-X-ME-Sender: <xms:sWtwZR0WFeEzq5-JHRSnikHuFV12LILP7Gv7VrloBeS4VUB9KQv3pQ>
-    <xme:sWtwZYGUiphch7XPjwAnsDPrNQzkq3DF2dqMll4eJ8vFzt-anl4JFawiPex9XS5rY
-    XDvcvjXQ0diNCXWXw>
-X-ME-Received: <xmr:sWtwZR55uTA_gCNKNy4ms30ea9dTX_0JjvxDe2i5bcRoWcUYH9Sx080wwI9eBFKnobwYWe_Gb9fxyXxI-eWM5Xj2bN7q9uUsF6Myw9byaIe4rk8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudektddggeegucetufdoteggodetrfdotf
+	:x-sasl-enc; s=fm1; t=1701868082; x=1701954482; bh=4kWYBn2X1PdrJ
+	N/8R2mxd8gIIdtBs1KSm4wrQof3iOk=; b=3fTq4D4BLnMydWJasOC6AB2/5+LFo
+	OiDFO+P5EH2lFiRnQ8F6qfEwsHFkHv15tkwZ3+cCqLLD7DpWXa7EqmpNN57E0C3l
+	a+5DN9o2lEsH7LX56MWX/Phlry3VaQ2tC436c/Gl79OsnOrCRQeJUASYGQEpO17d
+	dwot7mk7ompndONSKVf929sLcMre1wXxPdCprKrMl1I9Xw6erc1njgE8VawH3jLY
+	NpN+0QI+wmQ2KbM2kje+N8eC6Mmfw4S+phVTmHFxmAhTN9Fxmmzc5iQQbj/9ILpH
+	NO49z6EYbxM65ZGO08ZsluwfHgW9joPooV4eG+VSWqsqVUKSq2X2xNNNg==
+X-ME-Sender: <xms:MnJwZQPE4-A2PQzAJaLgn_RFoJwLtPkeLW0Usw24F0iwGbHK1wdegA>
+    <xme:MnJwZW9Dz_d-1Mqhn4hhKiyTp0LqIi0pO-lMf-16vQt879MrA5gsT_dBudrF9K5r3
+    F1YzzOjzEGL_09IHw>
+X-ME-Received: <xmr:MnJwZXTIiR1ECLO9gPdccjr6VTakLa_4EH_v7pp9l97F0Qz1runDTxLslO2f8qr5hPBPYOpoEFsl5kjzT1FS_Vflt7zP9BaDpsUUOPWtYsG0SHg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudektddggeelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
-    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
-    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgepudenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:sWtwZe3xVFIr0PAabts0DfqfsIRnOHtmX650Qq4hdPojOIdMfpbFGw>
-    <xmx:sWtwZUG0RSh5Gy-D2qac9ODicWjKgXqr_4cwSzojHc5l4lqKtUWddg>
-    <xmx:sWtwZf_BctCHGuVs1M3cvckWaHewxyM3PjVuaIsoenniEWQJv89DCg>
-    <xmx:sWtwZXx2gsHeWPAzumbx3BK4b8fxTNocUhsXkntBnCTt9y_YAWcE3g>
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
+    erredttddunecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeefvdelfeeuteegiedtkeehleffkeekgf
+    ffudfhuddvfefftdehkeeihfekjeekheenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:MnJwZYv9lQUXPQT_1N0ukSF8LQHqvuZUBRCoRr4eLeUw-e07d1ADtA>
+    <xmx:MnJwZYeaD6WcPX5MGpNlM7cDFtdionvl8A9AHTS-nKFPZfnUoldUEQ>
+    <xmx:MnJwZc2x1FNGjrG-uYIEgaq7dQsJ-NHv9TgaJjQTyjst7d8zCiEjww>
+    <xmx:MnJwZQkAVI8LNQjwtqBUOqCKh8qrtvQusw7xYFFyf1xmtsz_sFFp5g>
 Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 6 Dec 2023 07:40:17 -0500 (EST)
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 6 Dec 2023 08:08:01 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 482bd64b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Wed, 6 Dec 2023 12:38:51 +0000 (UTC)
-Date: Wed, 6 Dec 2023 13:40:15 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 6934543d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 6 Dec 2023 13:06:33 +0000 (UTC)
+Date: Wed, 6 Dec 2023 14:07:58 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Subject: [PATCH 7/7] builtin/clone: create the refdb with the correct object
- format
-Message-ID: <eb5530e6a8760c5023340766c0103f1a7a2ebf3b.1701863960.git.ps@pks.im>
-References: <cover.1701863960.git.ps@pks.im>
+To: =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 0/7] standardize incompatibility messages
+Message-ID: <ZXByLkAtp_J0nGa0@tanuki>
+References: <20231206115215.94467-1-l.s.r@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,121 +67,71 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="aQue9KY4UXezgYAY"
+	protocol="application/pgp-signature"; boundary="4sEXzf4E0+H8K8uo"
 Content-Disposition: inline
-In-Reply-To: <cover.1701863960.git.ps@pks.im>
+In-Reply-To: <20231206115215.94467-1-l.s.r@web.de>
 
 
---aQue9KY4UXezgYAY
-Content-Type: text/plain; charset=us-ascii
+--4sEXzf4E0+H8K8uo
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-We're currently creating the reference database with a potentially
-incorrect object format when the remote repository's object format is
-different from the local default object format. This works just fine for
-now because the files backend never records the object format anywhere.
-But this logic will fail with any new reference backend that encodes
-this information in some form either on-disk or in-memory.
+On Wed, Dec 06, 2023 at 12:51:54PM +0100, Ren=E9 Scharfe wrote:
+> More of what a699367bb8 (i18n: factorize more 'incompatible options'
+> messages, 2022-01-31) did: Simplify checks for multiple mutually
+> exclusive options, reduce the number of strings to translate, improve UI
+> consistency a bit.
 
-The preceding commits have reshuffled code in git-clone(1) so that there
-is no code path that will access the reference database before we have
-detected the remote's object format. With these refactorings we can now
-defer initialization of the reference database until after we have
-learned the remote's object format and thus initialize it with the
-correct format from the get-go.
+Thanks for working on this! The patch series looks mostly good to me,
+I've only got two questions.
 
-These refactorings are required to make git-clone(1) work with the
-upcoming reftable backend when cloning repositories with the SHA256
-object format.
+Patrick
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- builtin/clone.c | 9 ++++++++-
- setup.c         | 2 +-
- setup.h         | 1 +
- 3 files changed, 10 insertions(+), 2 deletions(-)
+>   push: use die_for_incompatible_opt4() for --delete/--tags/--all/--mirror
+>   repack: use die_for_incompatible_opt3() for -A/-k/--cruft
+>   revision: use die_for_incompatible_opt3() for --graph/--reverse/--walk-=
+reflogs
+>   revision, rev-parse: factorize incompatibility messages about --exclude=
+-hidden
+>   clean: factorize incompatibility message
+>   worktree: standardize incompatibility messages
+>   worktree: simplify incompatibility message for --orphan and commit-ish
+>=20
+>  builtin/clean.c                    |  2 +-
+>  builtin/push.c                     | 12 ++++--------
+>  builtin/repack.c                   | 14 ++++----------
+>  builtin/rev-parse.c                |  9 ++++++---
+>  builtin/worktree.c                 | 21 +++++++++++----------
+>  revision.c                         | 27 +++++++++++++++------------
+>  t/t2400-worktree-add.sh            |  2 +-
+>  t/t6018-rev-list-glob.sh           |  6 ++----
+>  t/t6021-rev-list-exclude-hidden.sh |  4 ++--
+>  9 files changed, 46 insertions(+), 51 deletions(-)
+>=20
+> --
+> 2.43.0
+>=20
+>=20
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 06966c5d4c..fd052b8b54 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -1097,8 +1097,14 @@ int cmd_clone(int argc, const char **argv, const cha=
-r *prefix)
- 		}
- 	}
-=20
-+	/*
-+	 * Initialize the repository, but skip initializing the reference
-+	 * database. We do not yet know about the object format of the
-+	 * repository, and reference backends may persist that information into
-+	 * their on-disk data structures.
-+	 */
- 	init_db(git_dir, real_git_dir, option_template, GIT_HASH_UNKNOWN, NULL,
--		do_not_override_repo_unix_permissions, INIT_DB_QUIET);
-+		do_not_override_repo_unix_permissions, INIT_DB_QUIET | INIT_DB_SKIP_REFD=
-B);
-=20
- 	if (real_git_dir) {
- 		free((char *)git_dir);
-@@ -1282,6 +1288,7 @@ int cmd_clone(int argc, const char **argv, const char=
- *prefix)
- 	hash_algo =3D hash_algo_by_ptr(transport_get_hash_algo(transport));
- 	initialize_repository_version(hash_algo, 1);
- 	repo_set_hash_algo(the_repository, hash_algo);
-+	create_reference_database(NULL, 1);
-=20
- 	/*
- 	 * Before fetching from the remote, download and install bundle
-diff --git a/setup.c b/setup.c
-index a80fc09b9c..e1d0ce29c6 100644
---- a/setup.c
-+++ b/setup.c
-@@ -1897,7 +1897,7 @@ static int is_reinit(void)
- 	return ret;
- }
-=20
--static void create_reference_database(const char *initial_branch, int quie=
-t)
-+void create_reference_database(const char *initial_branch, int quiet)
- {
- 	struct strbuf err =3D STRBUF_INIT;
- 	int reinit =3D is_reinit();
-diff --git a/setup.h b/setup.h
-index cbf538286b..3f0f17c351 100644
---- a/setup.h
-+++ b/setup.h
-@@ -178,6 +178,7 @@ int init_db(const char *git_dir, const char *real_git_d=
-ir,
- 	    const char *initial_branch, int init_shared_repository,
- 	    unsigned int flags);
- void initialize_repository_version(int hash_algo, int reinit);
-+void create_reference_database(const char *initial_branch, int quiet);
-=20
- /*
-  * NOTE NOTE NOTE!!
---=20
-2.43.0
-
-
---aQue9KY4UXezgYAY
+--4sEXzf4E0+H8K8uo
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVwa64ACgkQVbJhu7ck
-PpTkUQ/+KCHyPz4755BcMBQVv3EJj9drM3EAIMfdLRTZsXvlzRj9+E/+5cililfn
-Ubc8uEz+CsEnSOTq00/vsCQXweQtO8WgQswFSZJoCxOmH9EBSsLRSLKBgptcukzH
-KauVE/1NRSpX/0mW1uoow0kZq258sZuCFV561/+/kg+gRhPZC+2frEwyl+bUt6KD
-iepZ6WehInqcSbyXd+K4IE6aos7ePSukynWh4DJwojdeHgNsfH49DU8+9U745sap
-BYKvEgQg+dlcTyX5qHK67eLxx2KappWkpXOPy6wPOH/mCBG3cbTmTJUU+3jnIM7C
-koSq+dwxXRTLFxOxp+WhhT81dcfZfORLQX58ENTKQG4pkFIteaj52Oj4g1EyS2wq
-4lqqGqcKQlFRU7yImwmnHEK9jSWcWMfaqc11zBKFBO0+MHgkdNXck7ZfVxreTFOw
-2RLQ80QwpiCQNZjpXc7JkCVb/L9+OdoLB6z1rdr+AE5Wa5bGAS+AV828jT+LJ78k
-VnmVFcrWqG07qpSSkYzHdd/dvX6Byi3IeAOgPuWKpuLZBh7dDsGehHHEw3gYqEiU
-1UjHf9rdJixW/M2WLNfZJlAqa27bRvRkIlpYCEjAVvFGa5BK8gH3836nNsiipGsL
-50DurgqPRsRZH/dwQ9If31uPE2D1XD/Wux/a4X1frNNeuYDEDEs=
-=9epu
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVwci0ACgkQVbJhu7ck
+PpTCvA//YdICCXgz0blnja+7vnAVCIN/TuzcNQG8/YT70f+91DwiH3yLVAIuBV8V
+VdfQWbV6HJeLFx15oBQLJT3Um/QS2Ds5nL4Ifo8BHsT6yBjvc0sjoQi1fhjGU/2p
+d0leumHvqD1UMrO2hjsX7A7AcALedviGawnC4cUv7aNWmSbAq2lTxwmD1/KUfdlK
+Tu8dNV7NKW2cIhKtfj2+AYKnPo3qOyS+ZmHJA43OHIDt6tuJ7QCbk9ciNmOzgD8R
+8ALUNyt0ekLqHxVPdHwqlZWrxBCCkkJuAGFwzmtO1RoBQEZ8ha576HxmECVTsQZN
+7Zlkv9S+SYKbiwb+Ur3arkz36qljArPbZTBNlu6NkS1y/Beco+Bge1DlIU2YmC6G
+sHxMhUYZmQVBhEWD6v4zzQlBM5FcJXf4Fb+LvmDzmhONyW57P/p9CFqYRkl+jpif
+Mn8MpofMlLgMAzVGwkGHwykAeesDKjIgq731cPX4tluGllPoOJr4d8Pqei/v9uLl
+YJDvggEUdyZvPzOOdur36aZc9H93P6M5BQXwShS5M2f6cCZIB3BpziLQXGx6Y1G6
+WVYj2e2c7OO5A+CLFkNytfNd8w6L8yAU4jMUeMMSYo8pFLfvqO7Q7EZBOobXQhRp
+IR8yu8RlpEX/XOnK2xF3tx9FQri4ChvDQFShWq8XRz+FavMl2A4=
+=06au
 -----END PGP SIGNATURE-----
 
---aQue9KY4UXezgYAY--
+--4sEXzf4E0+H8K8uo--
