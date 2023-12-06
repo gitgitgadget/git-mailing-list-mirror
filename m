@@ -1,28 +1,28 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="Oy6Qxg0+"
-Received: from mout.web.de (mout.web.de [212.227.17.11])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEB782695
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="KeEdlKW6"
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EB552699
 	for <git@vger.kernel.org>; Wed,  6 Dec 2023 03:52:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-	t=1701863536; x=1702468336; i=l.s.r@web.de;
-	bh=MgY8AnrtULKrhNi/5xQfrcBwgq4tGWjiO4zFtcsRquI=;
+	t=1701863537; x=1702468337; i=l.s.r@web.de;
+	bh=NxOpT11+q7hNGVCSOPVILaxBvK7225Koc9zvX+NQf8I=;
 	h=X-UI-Sender-Class:From:To:Subject:Date:In-Reply-To:References;
-	b=Oy6Qxg0+IeA8+NWLjW8i2M21eyQiRApV1SF27UQwloR3wU+snwrg68RtQkR3nC7m
-	 PHIVsvl5fpbr5XwJ0vZqlUVJ+jCtWiEa8uiqnRMLaNjXpEsZ0n64N7iFIRGKo2Pxc
-	 e/7JZjETk8CPeai7H0vlNiSUSIVWFzkI2NuOGgCngULRGGqemQOKlvO3mMlWhNkl8
-	 2SZ2DWL9vsZs5KKDQgFf7cgJXWPwXq3giphOVakErgcF4m42aF2wu4bQbRYJ0f7ln
-	 gGuv8DSzOAboHgDTyPVFIng0Hqg7nOZ2kK7YN/4CBTQr7G4Bsx7EPMr8Lnq9OqQ8Z
-	 5ehJRtAPaWCE8JJbXA==
+	b=KeEdlKW6kVjnitxeFyrbmkJrwxgoFEtn7rfv2j+nwf4xQI8GMDZUackXAsE1gjZ4
+	 5+/1oGqHNyff25BmbSyEVfRKleN4mkxtkDctRayipZIvf/O0Y+FjtvnRFVtGhtm8e
+	 oJ/a/WXJAGUnbij/JTJbWwM39svm651FMyzu4aI6jDuPGYvoJEBolV5IQtIDksviw
+	 AeUuT+8rlqo0wqyZTXkCvRScmzvQ3OQcELBrSvsFmkYtwrSbhVpcXYU+hUQyv74jR
+	 v+aawpe2bhMhMVaaeE6Puf3YWtQEXukT/9oKGSnnRaNRvmxSKkhrG+zaPWMcyCBUv
+	 2kODZbR9BVoycmLdPA==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from Mini-von-Rene.fritz.box ([79.203.29.38]) by smtp.web.de
  (mrweb106 [213.165.67.124]) with ESMTPSA (Nemesis) id
- 1Ml4B4-1reex22I60-00lTiP for <git@vger.kernel.org>; Wed, 06 Dec 2023 12:52:16
+ 1MbCHy-1rmOC105d2-00bY53 for <git@vger.kernel.org>; Wed, 06 Dec 2023 12:52:17
  +0100
 From: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>
 To: git@vger.kernel.org
-Subject: [PATCH 2/7] repack: use die_for_incompatible_opt3() for -A/-k/--cruft
-Date: Wed,  6 Dec 2023 12:51:56 +0100
-Message-ID: <20231206115215.94467-3-l.s.r@web.de>
+Subject: [PATCH 5/7] clean: factorize incompatibility message
+Date: Wed,  6 Dec 2023 12:51:59 +0100
+Message-ID: <20231206115215.94467-6-l.s.r@web.de>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231206115215.94467-1-l.s.r@web.de>
 References: <20231206115215.94467-1-l.s.r@web.de>
@@ -34,72 +34,50 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:H6FEy+PKOlySeQPAbkO01xQ1OZzLUijXUY2dVl9krw9fa7rrrPV
- 54XkG/RSY0gSd07kDdKnRsRc38+chBiqK4I3Tdj90SmdSinQDf7BpnrBWXqmvVoo8r+j5XW
- GIDabja3GLTi9CVkrSxxT+5KziJo5E8OdFBQpGpGeOoopM9O0K2USD+7UkxyZNfO09Qe14s
- yBNkfdrS6O6XWRsqo72gw==
-UI-OutboundReport: notjunk:1;M01:P0:OE0HOpX42rc=;E1+UuiKpkXqoKki98yp7w0KnjGT
- enOERYAO5gH0SdwDQydIvoMNJT0J8JUezRtr4YFmv2ofopqLUXpnYNNWR1Idnwyioeqz3uQnp
- cH/c5cgijgYoap/0YOWestyuouDnMr+8JzOz6fDFTOexaJ5qrzZPGxTja5/KEcyAP3dEq0zJp
- /FtnTdV5OWdefrWm+hpZ+9Jz6XfXMG0tYY3Xj5AHMei4Vfz8N1JqEE8Z6HHweutux3yhtckna
- XtrxBKNwI9nKm+xTUVuNlCPGwHchxmoldDB0t5m756oUFxn7u4sBeDavDIHc57htWjIzwj5++
- pxO8JaajzYi7/pTaE7OC0dvJmqO+BUqfslRjB1ShmSYqe/izesxW1DSsS1ejzvGwp2i4OH599
- 4XMR1UW24av15a2IrXzr31DUhSlnFt0eZwW7YmNg/o47rqds7qcFMg9RRcWyUk3Xb3/p7TCHx
- o5SJiGJHsRm64YHl+3v52+dR+i49T6XmPv45nwPlIumcbljb/FD27wFX/2MLRyJo7DYQDD8T9
- +An0EmECNo9IIw4zuY8S3BcnOZBRBMKkxMdFts98fttccPD0sTCNPuJ1jv/Sc9VR0ufSm9EHp
- 8Pj07a7w2gE5+P8ChtfjQWRwg1kzPRodxomtzedlXTtPFIX56fjvnoQqHhOKrOn9bK+Q0x7Tc
- A36NebTo5tvsZNG83ntMwbYGty8Amk4CNhtWusSRzPVNmbR+tnUHyvbtsFGD6MbPbNQjvM9Gp
- 6SmShJUykC8j6fA/mgUWs0yKCBVvH6hN7DWfiSPEv6jHxt3NYB2mVnGZhm2kJwtVlf/d9rRMn
- VbZTtg9XBZnrNl4WAicC+0kyD9gujd0/kXCwy7FKoWXGpeh9TgLpECGKPbixVkqomcZTU8PyO
- 8HtnZD6IqlL6i4GfavbHBjkVqCuGKTy9wxFIYmnkEY5jymGwMclkihLZHbXyleO9dSnvrpSFX
- yVbQcQ==
+X-Provags-ID: V03:K1:hessLX5cjneo1Rc4JYK2ayLuyvJN+Q1BHmgeNzJRU/hq/eZmY4K
+ lXqCUSnWf/tJ5QNZk4qdLb3fJqpJMm1iKArx7DcHLbD+LRHhEB50tjljvRfQTuHmbJjKESP
+ qjHyz1/nCDnKJmFEdwY/pYkYYE3jjcqXABKmy7mTWuoJ40T/931V2FXaqH9atWA+FeMBDTa
+ DH0aKS1oiJXs5ltBCPYdQ==
+UI-OutboundReport: notjunk:1;M01:P0:7VencJWmXy4=;7YxQv4GnNFh/VxOU/D871AQB59y
+ IVMEoTX71iGxOZxVZL7t++SAzCEwRp8LxxXSwhu39OIscJKhrPqHfM6PXc1ZRuHGmk1ZtLPhv
+ Wn0thc/NzPUf2ru0KIoXTb5ptekhl3JB9KPHBn3wXdlvdVxc25bYikQ+2ydW34EYa5r/Dblpn
+ 8Sz/xnORPq4RRj/W3IAdym/rTfoL6Vy8gbKsGQBTwCGKHmHNId1E5oaoztx9OVOGlr4fNwu/m
+ qBCOmc/1bOK1+4e7jn9FvpZGMLtlKyx6asmmbb/NNHVExEyNBxSCJWDKA9+bd7b7FidcSS3d1
+ h5WoFQ7vFNzwkbOdDJ94lxmZKwF/+GO3qqAvQOoRndjlqZqEBAJUXfgXSQXR6RBDAXDSX8FZx
+ nm8rOSkyLv33Tiwj+EVStyvtx+3lnfsXPcFn/Negx5RUWgj3GCMY2RxK9j4APEjUCCFsp0c8e
+ Ovk2BPDta4sYfq3fTbt3hP7DUbYz1cBNybX8EL/q3Do547UR5YzcxRI9aQaOFISemU9mfFBN2
+ 9DYEKEYrYQinsA4/In/3qwuUhWi3RSqEfL/aGCO/qS1rpoF9wmh0zLdCzy5b6yfynvoc6+8r+
+ 8NC0GUsBG61BOgx/+CNHOiL3Szeq/tbplu76ah7OFmnbdxAVtVpBbO3COkQXZdsUJlnRMzcp1
+ +nHvH0sPW80wQH4EjZlDn5E/7nkNUCsI1LAxT17hA7+C5Gel32Dk3a8jvyzoesI1iwYNRZooG
+ NSl6s2LXAN0kiEEugQsQywOyC+UisFLZ5mwkiJPi0rgMQmlu4ZyXjKynDfv5xfoP6AWkM/Fw9
+ TGiZdIS2fxn93tpvNodZZcx+rwGX+au0Fk2jPnojsKsIDNV5iC3J2JIICmJNP7kTzqD/tsEJj
+ WDOcrm+OAIRCg+pPVRC2uaRUF5xP5HUNLp7N6DoCRg5ImOnXlmfkywXx0qgrsZOcS3Oip6T8x
+ xJr+ig==
 
-The repack option --keep-unreachable is incompatible with -A, --cruft is
-incompatible with -A and -k, and -k is short for --keep-unreachable.  So
-they are all incompatible with each other.
-
-Use the function for checking three mutually incompatible options,
-die_for_incompatible_opt3(), to perform this check in one place and
-without repetition.  This is shorter and clearer.
+Use the standard parameterized message for reporting incompatible
+options to inform users that they can't use -x and -X together.  This
+reduces the number of strings to translate and makes the UI slightly
+more consistent.
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- builtin/repack.c | 14 ++++----------
- 1 file changed, 4 insertions(+), 10 deletions(-)
+ builtin/clean.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index edaee4dbec..c54777bbe5 100644
-=2D-- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -1203,19 +1203,13 @@ int cmd_repack(int argc, const char **argv, const =
-char *prefix)
- 	if (delete_redundant && repository_format_precious_objects)
- 		die(_("cannot delete packs in a precious-objects repo"));
+diff --git a/builtin/clean.c b/builtin/clean.c
+index 49c224e626..d90766cad3 100644
+=2D-- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -971,7 +971,7 @@ int cmd_clean(int argc, const char **argv, const char =
+*prefix)
+ 	dir.flags |=3D DIR_SHOW_OTHER_DIRECTORIES;
 
--	if (keep_unreachable &&
--	    (unpack_unreachable || (pack_everything & LOOSEN_UNREACHABLE)))
--		die(_("options '%s' and '%s' cannot be used together"), "--keep-unreach=
-able", "-A");
-+	die_for_incompatible_opt3(unpack_unreachable || (pack_everything & LOOSE=
-N_UNREACHABLE), "-A",
-+				  keep_unreachable, "-k/--keep-unreachable",
-+				  pack_everything & PACK_CRUFT, "--cruft");
-
--	if (pack_everything & PACK_CRUFT) {
-+	if (pack_everything & PACK_CRUFT)
- 		pack_everything |=3D ALL_INTO_ONE;
-
--		if (unpack_unreachable || (pack_everything & LOOSEN_UNREACHABLE))
--			die(_("options '%s' and '%s' cannot be used together"), "--cruft", "-A=
-");
--		if (keep_unreachable)
--			die(_("options '%s' and '%s' cannot be used together"), "--cruft", "-k=
-");
--	}
--
- 	if (write_bitmaps < 0) {
- 		if (!write_midx &&
- 		    (!(pack_everything & ALL_INTO_ONE) || !is_bare_repository()))
+ 	if (ignored && ignored_only)
+-		die(_("-x and -X cannot be used together"));
++		die(_("options '%s' and '%s' cannot be used together"), "-x", "-X");
+ 	if (!ignored)
+ 		setup_standard_excludes(&dir);
+ 	if (ignored_only)
 =2D-
 2.43.0
 
