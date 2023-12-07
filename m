@@ -1,19 +1,19 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CF27137
-	for <git@vger.kernel.org>; Wed,  6 Dec 2023 23:24:06 -0800 (PST)
-Received: (qmail 10000 invoked by uid 109); 7 Dec 2023 07:24:05 -0000
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50E9ED5E
+	for <git@vger.kernel.org>; Wed,  6 Dec 2023 23:24:51 -0800 (PST)
+Received: (qmail 10009 invoked by uid 109); 7 Dec 2023 07:24:50 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 07 Dec 2023 07:24:05 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 07 Dec 2023 07:24:50 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1039 invoked by uid 111); 7 Dec 2023 07:24:09 -0000
+Received: (qmail 1045 invoked by uid 111); 7 Dec 2023 07:24:54 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 07 Dec 2023 02:24:09 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 07 Dec 2023 02:24:54 -0500
 Authentication-Results: peff.net; auth=none
-Date: Thu, 7 Dec 2023 02:24:04 -0500
+Date: Thu, 7 Dec 2023 02:24:49 -0500
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-Subject: [PATCH 1/9] config: reject bogus values for core.checkstat
-Message-ID: <20231207072404.GA1277973@coredump.intra.peff.net>
+Subject: [PATCH 2/9] git_xmerge_config(): prefer error() to die()
+Message-ID: <20231207072449.GB1277973@coredump.intra.peff.net>
 References: <20231207072338.GA1277727@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -25,39 +25,61 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20231207072338.GA1277727@coredump.intra.peff.net>
 
-If you feed nonsense config like:
+When parsing merge config, a few code paths die on error. It's
+preferable for us to call error() here, because the resulting error
+message from the config parsing code contains much more detail.
 
-  git -c core.checkstat=foobar status
+For example, before:
 
-we'll silently ignore the unknown value, rather than reporting an error.
-This goes all the way back to c08e4d5b5c (Enable minimal stat checking,
-2013-01-22).
+  fatal: unknown style 'bogus' given for 'merge.conflictstyle'
 
-Detecting and complaining now is technically a backwards-incompatible
-change, but I don't think anybody has any reason to use an invalid value
-here. There are no historical values we'd want to allow for backwards
-compatibility or anything like that. We are better off loudly telling
-the user that their config may not be doing what they expect.
+and after:
+
+  error: unknown style 'bogus' given for 'merge.conflictstyle'
+  fatal: bad config variable 'merge.conflictstyle' in file '.git/config' at line 7
+
+Since we're touching these lines, I also marked them for translation.
+There's no reason they shouldn't behave like most other config-parsing
+errors.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- config.c | 3 +++
- 1 file changed, 3 insertions(+)
+Before anyone mentions config_error_nonbool(), yes, the first hunk here
+gets simplified to that in a later patch.
 
-diff --git a/config.c b/config.c
-index 18085c7e38..d997c55e33 100644
---- a/config.c
-+++ b/config.c
-@@ -1392,6 +1392,9 @@ static int git_default_core_config(const char *var, const char *value,
- 			check_stat = 1;
- 		else if (!strcasecmp(value, "minimal"))
- 			check_stat = 0;
-+		else
-+			return error(_("invalid value for '%s': '%s'"),
-+				     var, value);
+ xdiff-interface.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/xdiff-interface.c b/xdiff-interface.c
+index adcea109fa..05d6475a09 100644
+--- a/xdiff-interface.c
++++ b/xdiff-interface.c
+@@ -1,4 +1,5 @@
+ #include "git-compat-util.h"
++#include "gettext.h"
+ #include "config.h"
+ #include "hex.h"
+ #include "object-store-ll.h"
+@@ -313,7 +314,7 @@ int git_xmerge_config(const char *var, const char *value,
+ {
+ 	if (!strcmp(var, "merge.conflictstyle")) {
+ 		if (!value)
+-			die("'%s' is not a boolean", var);
++			return error(_("'%s' is not a boolean"), var);
+ 		if (!strcmp(value, "diff3"))
+ 			git_xmerge_style = XDL_MERGE_DIFF3;
+ 		else if (!strcmp(value, "zdiff3"))
+@@ -325,8 +326,8 @@ int git_xmerge_config(const char *var, const char *value,
+ 		 * git-completion.bash when you add new merge config
+ 		 */
+ 		else
+-			die("unknown style '%s' given for '%s'",
+-			    value, var);
++			return error(_("unknown style '%s' given for '%s'"),
++				     value, var);
+ 		return 0;
  	}
- 
- 	if (!strcmp(var, "core.quotepath")) {
+ 	return git_default_config(var, value, ctx, cb);
 -- 
 2.43.0.664.ga12c899002
 
