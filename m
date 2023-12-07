@@ -1,73 +1,156 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nbUqiaT1"
-Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84228D4B
-	for <git@vger.kernel.org>; Wed,  6 Dec 2023 14:58:16 -0800 (PST)
-Received: by mail-oo1-xc32.google.com with SMTP id 006d021491bc7-58dd5193db4so39934eaf.1
-        for <git@vger.kernel.org>; Wed, 06 Dec 2023 14:58:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=dubsado.com header.i=@dubsado.com header.b="p1w+XxQu"
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01C1E1A5
+	for <git@vger.kernel.org>; Wed,  6 Dec 2023 18:20:05 -0800 (PST)
+Received: by mail-pl1-x62e.google.com with SMTP id d9443c01a7336-1cfc9c4acb6so3433925ad.0
+        for <git@vger.kernel.org>; Wed, 06 Dec 2023 18:20:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701903495; x=1702508295; darn=vger.kernel.org;
-        h=mime-version:message-id:date:subject:to:from:user-agent:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1PJ1qUDo4Jk5JHWsuchCMSOU6aVqMbMn3/MXHhprrTg=;
-        b=nbUqiaT1pLrE/ZbECfxOKbjY/RI0UNYoMaTCQ+s04UpKx6yfviZGAxcxF3gDPFYeF1
-         gifImcIcF/unOL/Dy8iB+qVBcfPTyDjiUBpr0GJR2sok5h4AiqqsWS3kI+mWJE2acsxW
-         4Ow9DiyNDGIN2QMMuKRVy2pBHNIj6JkF3KN3EqWrwePVXNfqA384DnKTDpFf5q+sEsc4
-         spg7ACfF24J6BsDz302y316w3e+7NF+c+VDe2D9uzvDAUwTjYJ1xSlWu/p1wx4h9jaSh
-         6vWoR6JGQg2uaygyIp+ooQWnfzEE95OjW630oIRRmlChNnAHD5Gh0tiu4hg8zF4s5uIt
-         vA4g==
+        d=dubsado.com; s=google; t=1701915604; x=1702520404; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wrhKObJg9nzfMEQ8m3I4bCjzkk2dplRAFzb1KlbFbUE=;
+        b=p1w+XxQumw7/SLClcfPeXpkD7bFZ0Qi5CVnHp0m8ky9YvHs6H21mEyZEnSLlrQKM+K
+         GJuKEeiRmzJMTWSxEnW/7YurKkYlsoHJlbWxoObC1ytIG1HavN8MDzxqmJi0Ns4OK+43
+         t0QHUHeyxjBtnFrczG64UtRjTAvytK9HujM0zTTOLMCiNyKxO0zTuiEO1DS6aHChE7ux
+         r88cumR54XV3xO/D2nP/zzCgCJwfbbzTuoDH9fiR1LISwCMoDiefyiZ+5XB1hqqaOivh
+         fKc7HToudUdFJO9ctjiHUzm4pdtvJe/KBtwj2rg2li/5lOwdEz9GgHrdCGQJe5IN8Pxe
+         jNTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701903495; x=1702508295;
-        h=mime-version:message-id:date:subject:to:from:user-agent
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1PJ1qUDo4Jk5JHWsuchCMSOU6aVqMbMn3/MXHhprrTg=;
-        b=nyyDXOSt+kqtEDbMUEnjoyjdW3nlGPSENoYckYo3t6fkAARt/aiSwFZtTCzAphsU/I
-         TyNp/YL7xuqf8PLitpXVz4SozYY1yKEUWa6HE2G386X0apPr9jHmuquYMvqBD7IKUGhJ
-         8HXNVgImmSgG6f5PhvJMsO2aWoX8ly4EsS6lV2Vpl9iAlriKvMDMJ7bwJiEPFlh1R9t3
-         rW0aEvzsMXo6NCjS1t1zawRiRBZttPTKTEXqD4RYnvsf365olHKkL4NyabjM3aIFnXl3
-         OerR95VgYXNziCxaLk3gsOKUF8AQZOQ516KOX5HkqXA3yvH9SP0lyi8A1uKmVU3UKXQM
-         2NeQ==
-X-Gm-Message-State: AOJu0YzU440x5BJpeq02qn6wW7nOqzUe4yS2SLqL/BT8ySorXF3UXGK5
-	gaE3SeGc6eVCih9M98ycHCEZbpNXZ4U=
-X-Google-Smtp-Source: AGHT+IG2IKUwVnbMfeBUaSZYR1JSjpoOqIg1jDvHi7ocToeTs9bZsiaR5w+qqWkwzXsDvsTzGja81g==
-X-Received: by 2002:a05:6870:b4a0:b0:1fb:5e42:5096 with SMTP id y32-20020a056870b4a000b001fb5e425096mr2883080oap.5.1701903495485;
-        Wed, 06 Dec 2023 14:58:15 -0800 (PST)
-Received: from epic96565.epic.com (pat-verona-j.epic.com. [199.204.56.215])
-        by smtp.gmail.com with ESMTPSA id r19-20020ac87953000000b00423b5cf305bsm1638qtt.65.2023.12.06.14.58.14
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Dec 2023 14:58:15 -0800 (PST)
-User-agent: mu4e 1.10.8; emacs 29.1
-From: Sean Allred <allred.sean@gmail.com>
-To: git <git@vger.kernel.org>
-Subject: What's the recommendation for forgetting all rerere's records?
-Date: Wed, 06 Dec 2023 16:37:23 -0600
-Message-ID: <m0y1e7kkft.fsf@epic96565.epic.com>
+        d=1e100.net; s=20230601; t=1701915604; x=1702520404;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=wrhKObJg9nzfMEQ8m3I4bCjzkk2dplRAFzb1KlbFbUE=;
+        b=DmNePkZv48YDvQsNybUF/WJ9WeD0H7S/NiM7B5Dpik/yCOBLVG3jY//aTZywGO9KXF
+         RkCTVFHrM5LH2lnbyhNH14VPCuUAXJ8wtxmg4LyuVFV8c00+jjo56B5TQfNcd2oFH0bl
+         cHCALM1tKICky1YB3Lk70HO/Ht+uEeMjE6T2M84vxZYBSLyz5IHAJgMnQPWUPIpdz+l8
+         pnu0wr8hW/i9g42c1A3IE8Ib0nAx+/HYQ5fSR7PUHCL7HG8uokTlwQnoZWin/+dxkqd8
+         fm3LHt4cd6Jr5OqMi1dX1N7Pph2cVP7hvDUTz9CNaMDqu7dY4CE1tokCUlIseNp4BJP8
+         C2hA==
+X-Gm-Message-State: AOJu0YyCV71BhsL08pivxudADjDkOZRF0Paymg33eytg0Euh+D2SnyZq
+	g8SBk+V3rhm/Q6wWs+C4xo3o4zWcyyIDuILfuiP3gA==
+X-Google-Smtp-Source: AGHT+IHZTSOcZL/j/NTjzfC23XrBfXKlCp1AtQQJrzoVxZOMqj7sgV59G2UoVuA/k4+HYU5ufmNifw==
+X-Received: by 2002:a17:902:f546:b0:1d0:c4d8:3e50 with SMTP id h6-20020a170902f54600b001d0c4d83e50mr1761323plf.74.1701915604229;
+        Wed, 06 Dec 2023 18:20:04 -0800 (PST)
+Received: from smtpclient.apple ([198.59.164.90])
+        by smtp.gmail.com with ESMTPSA id e21-20020a170902d39500b001d055328e1dsm132041pld.223.2023.12.06.18.20.03
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 06 Dec 2023 18:20:03 -0800 (PST)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.3\))
+Subject: Re: git switch has fatal dependency on default fetch config
+From: "Jeremiah Steele (Jerry)" <jeremiah@dubsado.com>
+In-Reply-To: <20231206191148.GA103708@coredump.intra.peff.net>
+Date: Wed, 6 Dec 2023 18:20:02 -0800
+Cc: git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <94F78A2F-8AAA-49FE-A0A0-D63F1DAE3D31@dubsado.com>
+References: <634F40AF-25F8-4FE6-BDE3-08798E699A9E@dubsado.com>
+ <20231206191148.GA103708@coredump.intra.peff.net>
+To: Jeff King <peff@peff.net>
+X-Mailer: Apple Mail (2.3696.120.41.1.3)
 
-Hi all,
+For me, the main convenience of upstream tracking is for "git status" =
+ahead/behind info, which requires you to have already fetched changes =
+from the remote. For my "normal" work, I have a small set of branches =
+set as default fetch refs. When I need to work on a branch not in that =
+set, I fetch that specific branch. (I'm not interested in downloading =
+and creating hundreds of branches when I only need one.)
 
-When outside the context of a conflict (no rebase/merge in progress),
-what's the intended workflow to clear out the contents of
-$GIT_DIR/rr-cache?
+The requirement to reverse-engineer from the *default* fetch refspec =
+seems like an odd implementation choice and a major shortcoming for =
+storing tracking configuration. The vast majority of the time, =
+origin/branch will map to refs/heads/branch on the remote anyhow. When I =
+have a command that sets up tracking configuration, I would expect to be =
+able to specify the remote refspec somehow, rather than having a hard =
+dependency on a configuration value for default behavior. I feel like =
+the following sequence should work as expected (with a limited default =
+fetch spec), but there are several things that go wrong:
 
-We have developers who'd like to discard their faulty resolutions after
-completing a rebase gone awry (but not aborted). There doesn't seem to
-be a recommendation in git-rerere(1) for how to deal with this
-situation. (git-rerere-forget seems to only work in the context of an
-active conflict -- and is documented as such.)
+% git fetch origin feature # should fetch to refs/remotes/origin/feature
+% git switch feature # should find origin/feature, create a local branch =
+with the same name, and set up tracking
 
-I'm wary of recommending `rm -rf "$(git rev-parse --git-dir)/rr-cache"`
--- it's hard to describe this as anything but hacky when the rest of the
-experience is handled in porcelain.
+Oh well.
 
-Thanks!
+Thanks for the response and the explanation.
 
---
-Sean Allred
+> On Dec 6, 2023, at 11:11 AM, Jeff King <peff@peff.net> wrote:
+>=20
+> On Tue, Dec 05, 2023 at 07:41:28PM -0800, Jeremiah Steele (Jerry) =
+wrote:
+>=20
+>> Changing the default fetch refspec for a remote breaks git switch:
+>>=20
+>> % git branch -r
+>>  origin/HEAD -> origin/master
+>>  origin/feature
+>>  origin/master
+>> % git remote set-branches origin master
+>> % git switch -c feature --track origin/feature
+>> fatal: cannot set up tracking information; starting point =
+'origin/feature' is not a branch
+>> % git remote set-branches --add origin feature
+>> % git switch -c feature --track origin/feature
+>> branch 'feature' set up to track 'origin/feature'.
+>> Switched to a new branch 'feature'
+>>=20
+>> It seems like I should be able to fetch a remote branch and track it
+>> without having to monkey around with my default fetch config. Is =
+there
+>> a reason git switch has a hard dependency on the default remote fetch
+>> refspec configuration?
+>=20
+> I think it's required by the form of the tracking config, which is
+> defined by a named remote and a remote branch, like:
+>=20
+>  [branch "foo"]
+>  remote =3D origin
+>  merge =3D refs/heads/foo
+>=20
+> You explicitly asked to track "origin/feature", which means that Git =
+has
+> to be able to turn that into config as above. It can handle two cases:
+>=20
+>  1. It's a local branch in refs/heads/, in which case the remote is =
+"."
+>     and the "merge" field is the name of the branch.
+>=20
+>  2. It's a ref that can be found by reversing a fetch refspec. With =
+the
+>     default remote.origin.fetch refspec of =
+refs/heads/*:refs/remotes/origin/*,
+>     we know that "refs/remotes/origin/feature" comes from =
+"refs/heads/feature"
+>     on the "origin" remote.
+>=20
+>     But since you used "remote set-branches" to limit that refspec, we
+>     can't do that same reversal. And "origin/feature", while we do
+>     still have it as a ref, does not correspond to any remote ref we'd
+>     fetch. So we don't know how to set up the tracking config.
+>=20
+> The notion of "tracking" really came about as defining what "git pull"
+> does. And without a remote that fetches, "git pull" does not really =
+make
+> much sense.
+>=20
+> I'd guess that you are more interested in being able to just use
+> @{upstream}, especially as the default for things like rebase, etc. =
+And
+> that could work without being able to actually fetch the ref. But =
+those
+> two things are intertwined in Git. You obviously can still base a =
+branch
+> off of "origin/feature", but you'll have to specify it manually when
+> doing rebase, etc.
+>=20
+> -Peff
+
