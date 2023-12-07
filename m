@@ -1,19 +1,19 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50E9ED5E
-	for <git@vger.kernel.org>; Wed,  6 Dec 2023 23:24:51 -0800 (PST)
-Received: (qmail 10009 invoked by uid 109); 7 Dec 2023 07:24:50 -0000
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8A9C137
+	for <git@vger.kernel.org>; Wed,  6 Dec 2023 23:24:59 -0800 (PST)
+Received: (qmail 10012 invoked by uid 109); 7 Dec 2023 07:24:59 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 07 Dec 2023 07:24:50 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 07 Dec 2023 07:24:59 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1045 invoked by uid 111); 7 Dec 2023 07:24:54 -0000
+Received: (qmail 1080 invoked by uid 111); 7 Dec 2023 07:25:03 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 07 Dec 2023 02:24:54 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 07 Dec 2023 02:25:03 -0500
 Authentication-Results: peff.net; auth=none
-Date: Thu, 7 Dec 2023 02:24:49 -0500
+Date: Thu, 7 Dec 2023 02:24:58 -0500
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-Subject: [PATCH 2/9] git_xmerge_config(): prefer error() to die()
-Message-ID: <20231207072449.GB1277973@coredump.intra.peff.net>
+Subject: [PATCH 3/9] imap-send: don't use git_die_config() inside callback
+Message-ID: <20231207072458.GC1277973@coredump.intra.peff.net>
 References: <20231207072338.GA1277727@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -25,61 +25,47 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20231207072338.GA1277727@coredump.intra.peff.net>
 
-When parsing merge config, a few code paths die on error. It's
-preferable for us to call error() here, because the resulting error
-message from the config parsing code contains much more detail.
+The point of git_die_config() is to let configset users mention the
+file/line info for invalid config, like:
 
-For example, before:
+  if (!git_config_get_int("foo.bar", &value)) {
+	if (!is_ok(value))
+		git_die_config("foo.bar");
+  }
 
-  fatal: unknown style 'bogus' given for 'merge.conflictstyle'
+Using it from within a config callback is unnecessary, because we can
+simply return an error, at which point the config machinery will mention
+the file/line of the offending variable. Worse, using git_die_config()
+can actually produce the wrong location when the key is found in
+multiple spots. For instance, with config like:
 
-and after:
+  [imap]
+  host
+  host = foo
 
-  error: unknown style 'bogus' given for 'merge.conflictstyle'
-  fatal: bad config variable 'merge.conflictstyle' in file '.git/config' at line 7
+we'll report the line number of the "host = foo" line, but the problem
+is on the implicit-bool "host" line.
 
-Since we're touching these lines, I also marked them for translation.
-There's no reason they shouldn't behave like most other config-parsing
-errors.
+We can fix it by just returning an error code.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-Before anyone mentions config_error_nonbool(), yes, the first hunk here
-gets simplified to that in a later patch.
+ imap-send.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- xdiff-interface.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
-
-diff --git a/xdiff-interface.c b/xdiff-interface.c
-index adcea109fa..05d6475a09 100644
---- a/xdiff-interface.c
-+++ b/xdiff-interface.c
-@@ -1,4 +1,5 @@
- #include "git-compat-util.h"
-+#include "gettext.h"
- #include "config.h"
- #include "hex.h"
- #include "object-store-ll.h"
-@@ -313,7 +314,7 @@ int git_xmerge_config(const char *var, const char *value,
- {
- 	if (!strcmp(var, "merge.conflictstyle")) {
- 		if (!value)
--			die("'%s' is not a boolean", var);
-+			return error(_("'%s' is not a boolean"), var);
- 		if (!strcmp(value, "diff3"))
- 			git_xmerge_style = XDL_MERGE_DIFF3;
- 		else if (!strcmp(value, "zdiff3"))
-@@ -325,8 +326,8 @@ int git_xmerge_config(const char *var, const char *value,
- 		 * git-completion.bash when you add new merge config
- 		 */
- 		else
--			die("unknown style '%s' given for '%s'",
--			    value, var);
-+			return error(_("unknown style '%s' given for '%s'"),
-+				     value, var);
- 		return 0;
- 	}
- 	return git_default_config(var, value, ctx, cb);
+diff --git a/imap-send.c b/imap-send.c
+index 996651e4f8..5b0fe4f95a 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -1346,7 +1346,7 @@ static int git_imap_config(const char *var, const char *val,
+ 		server.port = git_config_int(var, val, ctx->kvi);
+ 	else if (!strcmp("imap.host", var)) {
+ 		if (!val) {
+-			git_die_config("imap.host", "Missing value for 'imap.host'");
++			return error("Missing value for 'imap.host'");
+ 		} else {
+ 			if (starts_with(val, "imap:"))
+ 				val += 5;
 -- 
 2.43.0.664.ga12c899002
 
