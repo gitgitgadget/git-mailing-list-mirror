@@ -1,41 +1,41 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Xba7AAy2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Hj9kYvjY"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="C5v9yDee";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XDsQeayA"
 Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B322128
-	for <git@vger.kernel.org>; Thu,  7 Dec 2023 05:13:16 -0800 (PST)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailout.nyi.internal (Postfix) with ESMTP id 5F80F5C0172;
-	Thu,  7 Dec 2023 08:13:13 -0500 (EST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D6D4128
+	for <git@vger.kernel.org>; Thu,  7 Dec 2023 05:13:22 -0800 (PST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id 04ECC5C00B7;
+	Thu,  7 Dec 2023 08:13:22 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Thu, 07 Dec 2023 08:13:13 -0500
+  by compute3.internal (MEProxy); Thu, 07 Dec 2023 08:13:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm1; t=1701954793; x=1702041193; bh=uP
-	u5wN5/Oeb/lOvzI3M8KQ1vMRYBqO2gy1tNgqP4T4s=; b=Xba7AAy2R6F/bBA13m
-	oTNKwVsJaTMhU5DSNEgxhoJah7yWk/bZaaVrseN0mijmy2Jlw7e6K6MPuYbwW7xz
-	FIPQIkK1eUoFm5cd4POGj+33FG+clDqOodw5h8wepWZxIwKhn+WzYLZLokUd5Jxc
-	Sa4Mu4xAcFMhop2d45EqVAUX6TdMv+UhRXiCYoTw0eEcaPBoOg++SaRgm4xipxF/
-	PLhYV7XVsF5/YKdMFLCH1eXKmEYY27eWdVbTmRmDfsqOVnYFgkKtJhxiop33jn5R
-	uhYAg8NT8PIKNsEBCUjLh/XnB4gwahsd4jBsN5hqbGSG2xCS/QLIwSoc/AVvQnE4
-	yrNA==
+	:subject:subject:to:to; s=fm1; t=1701954801; x=1702041201; bh=Lo
+	a5bse0w9GYCv9RX9VoV4KS80V0kQOwpWu8yvPiXbU=; b=C5v9yDee7QdpBDtvrW
+	gB84R5CCQPwHWlJQS6UIKunujXKX7UUCv2dAM9NYVxIla/R3k2vAMGAU3hZtURuv
+	wVM7KfRFA6QIeddu0cRzklI5Q5W50Tc+8HVyzv+fv/Zp4xcFM9gUTWSLICGilC/b
+	fs28dit4RWY4pQBqvuSIE5LgjrXV9JMZB+TkMxFLS7awUPRg+bYr1RwWgp19++Bf
+	g/kz2QJ9v2VfmL7bNFgqkXaApc++mgM6NZgXjDXT/dOZ8zATPpKIS4sC+89jaPsd
+	V9+7x/PcBR5ZDMGKyjXwdeApZCDI/CjtFUJPDgo0h7MolZ/IXWRbRGw8rrsQ4Ffz
+	k27g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm1; t=1701954793; x=1702041193; bh=uPu5wN5/Oeb/l
-	OvzI3M8KQ1vMRYBqO2gy1tNgqP4T4s=; b=Hj9kYvjYxtVn4rXDmDPQBCvsu9ATr
-	Ug2TX6DxrRlsOcUyjOGSf0DoVb40WWXaJMafUcW1aBhgLejDsgPTyigPs24xxP8B
-	rQBCwCD+m+1n8RWpZo/R+sjmUb7asy3wMqxUlalz8SLGilNS86FYP0iR5Hxf0LwS
-	PF1fsFO3k1Cf24KeDHvVuQNkqcbKwQuJJfyXoRzYsdxkcoJXFdKNvxnIqiUpyTX6
-	aHiwNMv4IwAh+QoTL/tPnUY6+cHr0ZFwCUUt1INo6lfOOrKU77fWJS3wsfJiVEMy
-	EaLXA5L7+tYHfFyyeSSgNaFAzPMtxrME3x6mWWg65eBPOg72XY3nqzjvA==
-X-ME-Sender: <xms:6cRxZUfcrOWUhKDPUdQKP5oGjmvGNszXOG3FIU8WxAEtGW9briIkYQ>
-    <xme:6cRxZWOw6wPqDZXhvuLnjxc3-PBA4x1pSZFv0GGBNI0SO89b_Bnb2z_d_rk1dXGD7
-    DbpBFx4hdzIM0twxA>
-X-ME-Received: <xmr:6cRxZVhkd9grFoulk8-i9884g44sk1ICkNCtMisT3CXRkZt1uzUQKgBOoUSt29d1c6KvmQN6aOEOIoclqLf4p1sfVeatAwGHD2X8haVDvGGbZlw>
+	:x-sasl-enc; s=fm1; t=1701954801; x=1702041201; bh=Loa5bse0w9GYC
+	v9RX9VoV4KS80V0kQOwpWu8yvPiXbU=; b=XDsQeayAMPxfvroyLYMv3XVv7ia2t
+	2wAbk7HDQ46Ky4mSusReZ5ipVlC5MBmboXctsbRS6fOTtnGZ9Cxe3Wfn08IsPmru
+	l6gpTBEHQwxdUv8xN3Mktyk7/2Dv0Aa5SszhFJr9hOYt5AOenEYVgqhXOotPRGd9
+	l5lHD2setBj7cqiftZBni6jJbER9YVVBjSHd8utc6Y0mQMqs04A9md/Q7mXSQ35U
+	HG/DjBgsMGcpBkJuhKqubCmSd4zhyVKlD5fRhk7roFgVLDX98T4k1lMPPQ+DR5oa
+	oL9JQFTo/n4IcqQxRlnmOvpEitoYX65Smidnjg/80gXMHVqBhA+3nSj2g==
+X-ME-Sender: <xms:8cRxZUyXiFoqYFFpEBodAUbjR1Sb6NMaH-c9XKL27Bnm3bY3hRexCQ>
+    <xme:8cRxZYTPHO7OTbwK0u0uFOrc9HImFgoYUX1sPD9-ET33rnimBAc9AJbzdF6-z43yy
+    ibxOOCwXMjlZjrXUQ>
+X-ME-Received: <xmr:8cRxZWVLxQEbbbBb5IO6S5DYvto_Pg-V43d-tfan6f3Sb1AIeXLQWO9cSxmFBZwtyYx2Lyke3e3jyCosIMeBbK4gUULHcQ4M-YRFTx042WYdvXY>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudekvddghedtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
@@ -43,25 +43,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudekvddghedtucetufdoteggod
     phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
     eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
     rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:6cRxZZ81AIU0_a-26_8O3XS1ih_7NJJ0R2N_pFn4-FesHPmAibOmvg>
-    <xmx:6cRxZQtzG16Es6XBjC8w0N2HuKpXFEFaMFUldUwWpuMig2ZBP75s2w>
-    <xmx:6cRxZQF6FtRCoSI6_fa1wwhWUXNPF-iU7K6Zsma7sRWWEG4jXlLPLQ>
-    <xmx:6cRxZZ62X2CIgeYWYeYxG5nYbBOgMPNzLYvOHsAvcLwSMLCfPD2XYw>
+X-ME-Proxy: <xmx:8cRxZShEvV4EUP-gL95NETN_lkwehCQlygjYwJ1nbKv7-JKgk5OXqA>
+    <xmx:8cRxZWC59SKbuhlCCkV4lgrgElsICQ2C9bB1Fk9rzfBOmrReeP9FBw>
+    <xmx:8cRxZTLKkkwFmJsBbbaM1ZYHlwwrG6q5lbFE2m8pw_nc3AUr0s-94g>
+    <xmx:8cRxZZOSekcFjJko7Y4BCGse0F0z088rQWPzZA6fZ_qRSBc-WMXzOg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 7 Dec 2023 08:13:12 -0500 (EST)
+ 7 Dec 2023 08:13:20 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 5828691f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 7 Dec 2023 13:11:42 +0000 (UTC)
-Date: Thu, 7 Dec 2023 14:13:08 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id a03f0a26 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 7 Dec 2023 13:11:52 +0000 (UTC)
+Date: Thu, 7 Dec 2023 14:13:19 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 09/24] repack: implement `--extend-disjoint` mode
-Message-ID: <ZXHE5Lce_6CAWKFT@tanuki>
+Subject: Re: [PATCH 11/24] pack-bitmap: simplify
+ `reuse_partial_packfile_from_bitmap()` signature
+Message-ID: <ZXHE7_KwukSRBET1@tanuki>
 References: <cover.1701198172.git.me@ttaylorr.com>
- <b75869befba26899d88d6c6d413cc756aeadbd80.1701198172.git.me@ttaylorr.com>
+ <432854b27c6731bd6ab1fa739b3a086ec0a90be8.1701198172.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,103 +70,94 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="XLc+KCMRBudSpgFU"
+	protocol="application/pgp-signature"; boundary="lKFgrdXPUokdYIhL"
 Content-Disposition: inline
-In-Reply-To: <b75869befba26899d88d6c6d413cc756aeadbd80.1701198172.git.me@ttaylorr.com>
+In-Reply-To: <432854b27c6731bd6ab1fa739b3a086ec0a90be8.1701198172.git.me@ttaylorr.com>
 
 
---XLc+KCMRBudSpgFU
+--lKFgrdXPUokdYIhL
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Nov 28, 2023 at 02:08:18PM -0500, Taylor Blau wrote:
-> Now that we can generate packs which are disjoint with respect to the
-> set of currently-disjoint packs, implement a mode of `git repack` which
-> extends the set of disjoint packs with any new (non-cruft) pack(s)
-> generated during the repack.
+On Tue, Nov 28, 2023 at 02:08:24PM -0500, Taylor Blau wrote:
+> The signature of `reuse_partial_packfile_from_bitmap()` currently takes
+> in a bitmap, as well as three output parameters (filled through
+> pointers, and passed as arguments), and also returns an integer result.
 >=20
-> The idea is mostly straightforward, with a couple of gotcha's. The
-> straightforward part is to make sure that any new packs are disjoint
-> with respect to the set of currently disjoint packs which are _not_
-> being removed from the repository as a result of the repack.
+> The output parameters are filled out with: (a) the packfile used for
+> pack-reuse, (b) the number of objects from that pack that we can reuse,
+> and (c) a bitmap indicating which objects we can reuse. The return value
+> is either -1 (when there are no objects to reuse), or 0 (when there is
+> at least one object to reuse).
 >=20
-> If a pack which is currently marked as disjoint is, on the other hand,
-> about to be removed from the repository, it is OK (and expected) that
-> new pack(s) will contain some or all of its objects. Since the pack
-> originally marked as disjoint will be removed, it will necessarily leave
-> the disjoint set, making room for new packs with its same objects to
-> take its place. In other words, the resulting set of disjoint packs will
-> be disjoint with respect to one another.
+> Some of these parameters are redundant. Notably, we can infer from the
+> bitmap how many objects are reused by calling bitmap_popcount(). And we
+> can similar compute the return value based on that number as well.
 >=20
-> The gotchas mostly have to do with making sure that we do not generate a
-> disjoint pack in the following scenarios:
+> As such, clean up the signature of this function to drop the "*entries"
+> parameter, as well as the int return value, since the single caller of
+> this function can infer these values themself.
+>=20
+> Signed-off-by: Taylor Blau <me@ttaylorr.com>
+> ---
+>  builtin/pack-objects.c | 16 +++++++++-------
+>  pack-bitmap.c          | 16 +++++++---------
+>  pack-bitmap.h          |  7 +++----
+>  3 files changed, 19 insertions(+), 20 deletions(-)
+>=20
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index 107154db34..2bb1b64e8f 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -3946,13 +3946,15 @@ static int get_object_list_from_bitmap(struct rev=
+_info *revs)
+>  	if (!(bitmap_git =3D prepare_bitmap_walk(revs, 0)))
+>  		return -1;
+> =20
+> -	if (pack_options_allow_reuse() &&
+> -	    !reuse_partial_packfile_from_bitmap(
+> -			bitmap_git,
+> -			&reuse_packfile,
+> -			&reuse_packfile_objects,
+> -			&reuse_packfile_bitmap)) {
+> -		assert(reuse_packfile_objects);
+> +	if (pack_options_allow_reuse())
+> +		reuse_partial_packfile_from_bitmap(bitmap_git, &reuse_packfile,
+> +						   &reuse_packfile_bitmap);
+> +
+> +	if (reuse_packfile) {
+> +		reuse_packfile_objects =3D bitmap_popcount(reuse_packfile_bitmap);
+> +		if (!reuse_packfile_objects)
+> +			BUG("expected non-empty reuse bitmap");
 
-Okay, let me verify whether I understand the reasons:
+We're now re-computing `bitmap_popcount()` for the bitmap a second time.
+But I really don't think this is ever going to be a problem in practice
+given that it only does a bunch of math. Any performance regression
+would thus ultimately be drowned out by everything else.
 
->   - promisor packs
-
-Which is because promisor packs actually don't contain any objects?
-
->   - cruft packs (which may necessarily need to include an object from a
->     disjoint pack in order to freshen it in certain circumstances)
-
-This one took me a while to figure out. If we'd mark crufts as disjoint,
-then it would mean that new packfiles cannot be marked as disjoint if
-objects which were previously unreachable do become reachable again.
-So we'd be pessimizing packfiles for live objects in favor of others
-which aren't.
-
->   - all-into-one repacks without '-d'
-
-Because here the old packfiles that this would make redundant aren't
-deleted and thus the objects are duplicate now.
-
->   - `--filter-to`, which conceptually could work with the new
->     `--extend-disjoint` option, but only in limited circumstances
-
-We're probably also not properly set up to handle the new alternate
-object directory and exclude objects that are part of a potentially
-disjoint packfile that exists already. Also, the current MIDX may not
-even cover the alternate.
-
-> Otherwise, we mark which packs were created as disjoint by using a new
-> bit in the `generated_pack_data` struct, and then marking those pack(s)
-> as disjoint accordingly when generating the MIDX. Non-deleted packs
-> which are marked as disjoint are retained as such by passing the
-> equivalent of `--retain-disjoint` when calling the MIDX API to update
-> the MIDX.
-
-Okay. I had a bit of trouble to sift through the various different
-flags like "--retain-disjoint", "--extend-disjoint", "--ignore-disjoint"
-and so on. But well, they do different things and it's been a few days
-since I've reviewed the preceding patches, so this is probably fine.
-
-One thing I wondered: do we need to consider the `-l` flag? When using
-an alternate object directory it is totally feasible that the alternate
-may be creating new disjoint packages without us knowing, and thus we
-may not be able to guarantee the disjoint property anymore.
+In other words: this is probably fine.
 
 Patrick
 
---XLc+KCMRBudSpgFU
+--lKFgrdXPUokdYIhL
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVxxOMACgkQVbJhu7ck
-PpR9xw//dbbgRo54pyNKzrrSbe+/LzMav2mfXSlIwcDdtrU+mruuiFgv5NKUhQQG
-PZR64wfhig2nxCSd5ZXtcNRPwK4ndWjdXG0xiLBEqXWGC6tsYMnXX7StiEbilCeO
-Y8UejcHUGyZOdhwTk3lNKl+SEruv+NFr0wsPeoACxFs4/A+AUaImL4XWBWF7i43H
-wdQG575ZQnDLgVYh34nnZTHQLgU2eto9i+ideoIpITlvXE5UTMMoCSIEL8SRkH/n
-WlyQw5TXIva92iouilBeIgV/LcOlOxFS/6tUlGbvbGwmAYh5AVKUxYfWCMs2zlQj
-Stf+It/tHaUs9xIsy+EvpEF7Ml/W8vK9f3AxxB+CaqtS4RlLiAxbjr23mlfoMy9S
-k14qcZ1IdXBGOHqG8UBIRWMLjdGigmrVynWmavVWJs+u4iCEa/yJzDqHW21e/r7u
-WpqyQhmQaD09qYPcfUfENZAw8xsR9JafxEVywYeW5xqinlzKSIUdYfBLNt9bqK1k
-Tm9wjOwXsB7MbhYXn2PxCS8t2GgT8gl5XCBFQUATAO4CP/5RaEjCfaNj/d5k1ojI
-nDfhUpaHv4lnIGlSrzy7wBv/EPAcXSdrI43BjAOXSr8osko4nNp0c2ThGHUdaiti
-wv9ShKOh4DWpdhpy9YTGgfDU9YehYyNJu391waVyFQU50tm/njk=
-=iqrE
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVxxO4ACgkQVbJhu7ck
+PpQ+ShAAqHQI/2wreMPXFHigBwkx0VqLlQJS+2eZHJ2MzrW/a68SqZX8fHg2oE2o
+ObP2uHFWYOldp5lLAUpJZlFxktk9OSrmmwu3ZSMcRQne4tQIn0trkeH4Hg1yDpRo
+qf8kMO4+qpCRH2VfsVsz+gorb9UAxifuyeeYJsf6OqJ1xw8SjCB05KWR0ojjdysF
+781P+M3W0BjJfOqHKw2unYCSSkxRbFYAVfvRNyY35vn1gmUZw41RoNjasRgLAaht
+XgfMq4cw0dHHgVrosJ8QxDWi4jIldnDSESbAIhIAy+dERYTgwEhGPCK7dcs3SzeX
+ytxpDm3156pU8xUWOt3ZSCNSyNRA4E6OQ2iZ133fS7o4n/3eqduYmwu88pbVwLbS
+OcFLCYTJd3bcD2u2jlj/zmmevmTpP81Gw3xH/cjH5qhn5OTgtZDOyz26m5X3f3Nv
+7DcUzejx4PsdTD/k8fYlRNdU4h8y4QxzikOXQRHSHkaI7dI/CmGVoUPP16rgi6KU
+xkolAUdfu8OKPrhIFF5+iPE2PGDnPfBARTwarlg6cmbiAo/PxG6YBwytTvzI0K0Q
+3CzIe0V/k4Wl0yyxtNiw5+JCiRv/N12Go4/reyPHTsOXTeXNkoDlvPqnUUxlDMt9
+gfshCHeWmqz9MyjU++1qMpQFtCFQM1yGOBwzeNEIkHsS+H4hFqk=
+=xaUt
 -----END PGP SIGNATURE-----
 
---XLc+KCMRBudSpgFU--
+--lKFgrdXPUokdYIhL--
