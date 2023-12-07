@@ -1,69 +1,68 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="T5us/jAE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="v9hHm8hA"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="V9EMbxOS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JzeX27q7"
 Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8954E137
-	for <git@vger.kernel.org>; Wed,  6 Dec 2023 23:22:55 -0800 (PST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89053D44
+	for <git@vger.kernel.org>; Wed,  6 Dec 2023 23:23:03 -0800 (PST)
 Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.west.internal (Postfix) with ESMTP id E37ED32009FA;
-	Thu,  7 Dec 2023 02:22:54 -0500 (EST)
+	by mailout.west.internal (Postfix) with ESMTP id E2F4A3200A1A;
+	Thu,  7 Dec 2023 02:23:02 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Thu, 07 Dec 2023 02:22:55 -0500
+  by compute2.internal (MEProxy); Thu, 07 Dec 2023 02:23:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm1; t=1701933774; x=1702020174; bh=6y
-	jpx4FvZuIcuwTdZmULOqKG0AoVbiFf8pzuBHkJdvg=; b=T5us/jAEpGHZtpFYDz
-	cL+/Ds3FfvsdIv1Byg3/m9KXtGHulLBejzpzwopuaOKYk2J3dUzBGsWLOiaRnhPa
-	anTK34mSSH/02o1MvKbdZpWuz2ruhWsOU2GMhT+I/LgKD0lpClbCLkVIuXOINHcV
-	r52FhE+cIAeKnViFEmLCRamtaCkET04DzCvpMkim7+MuCs5fOeI88hghMKY8XgDj
-	ZycuOKGks0WwH8fqiAfnf1AwT1itLafNFyWP+oj0RuDi9xlz/SbBQNZSE974/ed3
-	jloYRLRZ6uDpR0oXDDWCM/uXEHPsrFCrSGCA9704scft5TV1epRZnB+zyEgpmnCa
-	zNZg==
+	:subject:subject:to:to; s=fm1; t=1701933782; x=1702020182; bh=zJ
+	RSBo4m9Sdnkr8/XlPOLkxbZKmguGsUbEVTduI2u1Q=; b=V9EMbxOSY3NRXl0hGT
+	3RFFQqzzJ5bvstHH2FNdEnN9ByCWXBr7LKyYFWDbCfLMn3mH3j56wljL3Q5WrpD3
+	XYeJgOqhHjDm1FbweSXjY8lkAos73ncej1qDvUT8r/AhpuhzTfz94JGZdmqPSvLG
+	HuF0LCfxca9siPL9R7TKyfhDmGNCRlHeUf6UN6RC+9By5WF9dQrY5zcfyVZSrhWk
+	4eROYkJ2K/7hyxnD/rvvpvjY2LEvhVgtar1KP3ttu4Lgs2un2XGqGfMMxUCmF6FQ
+	VLpJKqphXehn8x7sJ3J00tdx28gpbg2iRSEH7lsb9X7g0w9m7bYwl/xsw6dvSxSH
+	oLfA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm1; t=1701933774; x=1702020174; bh=6yjpx4FvZuIcu
-	wTdZmULOqKG0AoVbiFf8pzuBHkJdvg=; b=v9hHm8hAa0TBJ+90npuVaVj22xkLG
-	Awa0YEktoUsUq5uZN8aflbosAZW/DRnznOiPvsCO0QcANOBtVlQwQZeyFb/K0zPS
-	f2W822nA7HJvCFp1h9RvbmmRRzedHhJJTbOPrB8BOG+p4v2DApUXSElwQ1JE0uSj
-	wKFOFamjgxFK4xZ0i5A0MfUFZBIIU6H1/3ynvr/RP+YbHarkRZBxFd9LGWHG9TTf
-	KtDjnDkXQDBPwkFJXpwuQHEGt1O9oUVxnMvKcDJv4lJK6Zh0lgNLtc1LEIhC/cBq
-	lQ8K311c+zV/qthajBcBKnKurK2lfjSPIXhYO5ZAVYeoLacGK+A6SaDVg==
-X-ME-Sender: <xms:znJxZX3ff7ll6Yjvkw-sF8QxJiZnlBJknVAFS_FRLgsCycLk8ntUug>
-    <xme:znJxZWGSbpM3MeKAGP6Nd4e1NDXWimcULc0rKPy2NtGbSyjO7Kjxh9RINzPksnxFm
-    _S1c4mXnjbYbV9jFg>
-X-ME-Received: <xmr:znJxZX7RYyQKlsE0ezp_77VK5NKyltnzWtCAG8BJ8Ltt3LulJ2SmfpijgNqaDhqYhJFRJ3-DsGtY2AgX--v_eeJ_dbrwevMbmM5Z-3Fsxhs0gmU>
+	:x-sasl-enc; s=fm1; t=1701933782; x=1702020182; bh=zJRSBo4m9Sdnk
+	r8/XlPOLkxbZKmguGsUbEVTduI2u1Q=; b=JzeX27q7+y3mEl9t/9OMe0HyQsZ3M
+	JdGM0aAv9dVOPNk9dcF8nkJ4GFHskgsIpQdhcQPWAWxPVxwA7qG66WokfVmaTKvY
+	ci+CrQCYL2HOBJwYLkh3fRQ4Hca+DFk9PW4TaLERWg8cZKXsefO2HQzi+0bRrnXg
+	visP33xWaqujRVWeI0Yi7QpkbkD2DES0RzB4rTRqlKaVzcD7/gM7Lk3Uua90qSn8
+	bMUeNVBRjxncdiwGDl0i+ZxMVTdlfmu9tu116+eFMiIeykuIa5HwiwCPINbHc3qo
+	5+YI5djxMj0jn2ZZQdIFNmdsaxQDMAFQ3NaxYe/nJTFRWeLua1VQNCx+Q==
+X-ME-Sender: <xms:1nJxZQ6ERJFae7mo9a4HNz739qnL3e2RaHNpDjmI9Cp5HLogY-hzaw>
+    <xme:1nJxZR7qrpGyj0RmFBvXKixX10MVS0EhSDby2fODnPCKlnb4o-wkOvcr0Ry7Wo3bD
+    5dMnPr79jlTfGK1QQ>
+X-ME-Received: <xmr:1nJxZff62Pw6UPg5mamdbYWVpKlL0Uh0ihRjebHsgFjrBtHLQVoL3_W9xWKMnjOxk-bKrK8nONRnY6Cb-X4QBFSnN7NAGDDUjMkxKqIGxyng9AA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudekuddguddtiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
     enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefrrght
     rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
     gvrhhnpeetueevhffhudefvdegieeuieelgedthfegfedtueevjeejtdfgjeehudejuedt
-    udenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
+    udenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
     esphhkshdrihhm
-X-ME-Proxy: <xmx:znJxZc3SwtWv2v1toLC1liHycdC_pD_7Q8vn7CW8Va45r4F7uKP7Bg>
-    <xmx:znJxZaGzl2Rf_6cpRNmLaajL6R_MXCIb7i2_npHW5FS-UUmRsyR_Bg>
-    <xmx:znJxZd-9TNe1oUgH0r9651pFc5FeajQFm4a2xTHgPNz7n02M5W999A>
-    <xmx:znJxZVNgfmFpwhhNiTgxTk3asHrGzuwqRidCtILlgz_KFfisPjNxGw>
+X-ME-Proxy: <xmx:1nJxZVIxdGwms4eXip1Mx_rN6fDqjvliVngzp3j7rhasVgEmINu6Pg>
+    <xmx:1nJxZUJwpGHCnFci0gDVlsMua7N9uZO3hhieO6RHZddKRRJofhf8ug>
+    <xmx:1nJxZWy0nYliuntrMiaVr7nFLf75bYH_rbNPZs9NMxR5uDqO4o5QFw>
+    <xmx:1nJxZezf1zJctUJmJIBpMN_9agk8pi_OrQbBSGK1TLOzteBePM3t4A>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 7 Dec 2023 02:22:53 -0500 (EST)
+ 7 Dec 2023 02:23:01 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 562d2119 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 7 Dec 2023 07:21:24 +0000 (UTC)
-Date: Thu, 7 Dec 2023 08:22:50 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id e571505c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 7 Dec 2023 07:21:34 +0000 (UTC)
+Date: Thu, 7 Dec 2023 08:22:59 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 4/7] builtin/clone: fix bundle URIs with mismatching
- object formats
-Message-ID: <ZXFyylqzNgXwc4Lz@tanuki>
+Subject: Re: [PATCH 1/7] setup: extract function to create the refdb
+Message-ID: <ZXFy0_T1AZLh058g@tanuki>
 References: <cover.1701863960.git.ps@pks.im>
- <c7a9d6ef74ff39e660f80e2e104a96b7c875845d.1701863960.git.ps@pks.im>
- <CAOLa=ZQc=7Z3w9JAdzS23P=c=KSYZJR6gJSLOHdU-d92Y3kJ5A@mail.gmail.com>
+ <b69c57d27269c9b40c9e4394861dffd8a8b9860c.1701863960.git.ps@pks.im>
+ <CAOLa=ZSZztJUF9nmSzGdOW0oWBRUp2sw8QyuZO_q06cNymad3Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,54 +70,89 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="AAwM7rbJFAaEpnd+"
+	protocol="application/pgp-signature"; boundary="ksc/XEwIr+HIie1g"
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZQc=7Z3w9JAdzS23P=c=KSYZJR6gJSLOHdU-d92Y3kJ5A@mail.gmail.com>
+In-Reply-To: <CAOLa=ZSZztJUF9nmSzGdOW0oWBRUp2sw8QyuZO_q06cNymad3Q@mail.gmail.com>
 
 
---AAwM7rbJFAaEpnd+
+--ksc/XEwIr+HIie1g
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Dec 06, 2023 at 10:13:43PM +0100, Karthik Nayak wrote:
+On Wed, Dec 06, 2023 at 10:10:37PM +0100, Karthik Nayak wrote:
 > On Wed, Dec 6, 2023 at 1:40=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wro=
 te:
-> > The first Git step where we expect the repository to be fully initalized
-> > is when we fetch bundles via bundle URIs. Funny enough, the comments
-> > there also state that "the_repository must match the cloned repo", which
-> > is indeed not necessarily the case for the hash algorithm right now. So
-> > in practice it is the right thing to detect the remote's object format
-> > before downloading bundle URIs anyway, and not doing so causes clones
-> > with bundle URIS to fail when the local default object format does not
-> > match the remote repository's format.
-> >
+> > +static void create_reference_database(const char *initial_branch, int =
+quiet)
+> > +{
+> > +       struct strbuf err =3D STRBUF_INIT;
+> > +       int reinit =3D is_reinit();
+> > +
+> > +       /*
+> > +        * We need to create a "refs" dir in any case so that older
+> > +        * versions of git can tell that this is a repository.
+> > +        */
 >=20
-> Nit: s/URIS/URIs
+> How does this work though, even if an earlier version of git can tell
+> that this is a repository, it still won't be able to read the reftable
+> backend. In that sense, what do we achieve here?
 
-Thanks, fixed locally. Will wait with v2 though until there are more
-review comments.
+This is a good question, and there is related ongoing discussion about
+this topic in the thread starting at [1]. There are a few benefits to
+letting clients discover such repos even if they don't understand the
+new reference backend format:
+
+  - They know to stop walking up the parent-directory chain. Otherwise a
+    client might end up detecting a Git repository in the parent dir.
+
+  - The user gets a proper error message why the repository cannot be
+    accessed. Instead of failing to detect the repository altogether we
+    instead say that we don't understand the "extensions.refFormat"
+    extension.
+
+Maybe there are other cases I can't think of right now.
+
+> > +       safe_create_dir(git_path("refs"), 1);
+> > +       adjust_shared_perm(git_path("refs"));
+> > +
+>=20
+> Not related to your commit per se, but we ignore the return value
+> here, shouldn't we die in this case?
+
+While the end result wouldn't be quite what the user asks for, the only
+negative consequence is that the repository is inaccessible to others. I
+think this failure mode is comparatively benign -- if it were the other
+way round and we'd over-share the repository it would more severe.
+
+So while I don't think that dying makes much sense here, I could
+certainly see us adding a warning so that the user at least knows that
+something went wrong. I'd rather want to keep this out of the current
+patch series, but could certainly see such a warning added in a follow
+up patch series.
 
 Patrick
 
---AAwM7rbJFAaEpnd+
+[1]: <ZWcOvjGPVS_CMUAk@tanuki>
+
+--ksc/XEwIr+HIie1g
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVxcskACgkQVbJhu7ck
-PpQY5g//fYX1F+UgEkiBlx/OX8VgCB//0rn4tB2JQXNQfwbGHYQouvl1sKr8BWiC
-l3ev0uzUe4UXxgehuaGJzLdz0kv0Jss0POfJZAW493bj/vocnJJcTxcFZG8IdXqb
-Q+53QaBYkEhmasvetLovlQ6rbxeG7Viwr9x6Yxu1zjt1dLnnf1v4+S1PFPZH4GlG
-hmE3UIHmpAo3EaGnIlcjmu2Y9tnjOsF47CWbhE+yQBf3s8nIStRC51YmQkuq9V/1
-y95dUJZt84RXresu0eltlByAv/l0E1LZ3dRsYaVXJaKnJxDxrth4/ehDgnHLPE4M
-6P0yO6ZrTidGOmGR8crOxIJyas/P6CGRp8/RbDNqo2XX0VTOlKNVAiTos4G4k8DF
-9VVqYGLnV9jo0I73OK4u199+SRlQ1QrtPt2Hp6klffgnWq/FIV7ZFWIlJ5WgV+RU
-mQI2u4EqNHLcLKT/tpASrIwBT9KZhGrVHch8mkGVvI+Uf/fByTRZ8PmqnR2Srypq
-+cGE3xQZ06J2SMCdM/4Q35xdYRPZV8npi5PQwVgiE2SEErYQ8g23ZmmpDoTiWJdk
-Ifa3mUxi4ynus74yapKjGa7LM6kXur6sK7CJX7JxsjPVe9RodhYDSHKlirjed15r
-48Kpf0DTUbliDhtV1Al989txF8x88ewDvu4E8kKq2EGQlqJyXBc=
-=rAI3
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVxctIACgkQVbJhu7ck
+PpQESg//ZFTUii3TMUxoHAF8l011Y732exhcHHiKMCAVbFMI2dzo31uwKED6cKAu
+h54bTs9tJJrIkOgKD6YvafvQrOAjcOanoKXVodGkRUSvMQbI7/1AzmWLzbeZwEAp
+EhEWQGN51fPFKhYvmA4JichyP4wWj1e1qx04/zGig55dRtPGYJCPjM8CmZd5UKo+
+W2I4ziDFYwRJpu3XdE1gMYPkIZo00URyqd30HNgRORo5w5OX//7B1HumFiNfT0G5
+kviQz/ftyfq2jscBBsE/fHKkB6Paqh4nRa8hzie9VbrvZedCW5dyVgIQxmdCfxc1
+wEhXkGHRilmknEVZseUVu12QGe5Rvu2UfDWdXzbmZ8bIAPRdD5aeaPepY0TNZmFL
+kWs3wPRlNLpNLxCBMsq7FD0LJhauFIlLOK+516YNSAM8eO74a9CbviYCyMq2mkIS
+64gZOVBZjR0zXJNKyzXWcSFalgNfxP3X46FglyBfJMPelORBejgpxZamVBgOzL62
+6yWdKc1CA/F5oUCf15R0E+h2Czo2PN/sMjKoo0nYB+qqqoaPowrkXljMENJEn7Y5
+9Iv6ZbJvANXBHrSy89gfR+Fw72yye2vFmnEmTBNsaWcn/qee2yT7nwK9crcan7Ls
+xu/zZuA5BFcjF4zhuWP68WK9swyga/+flVEmcQcJoBAOaQwydf0=
+=c+p3
 -----END PGP SIGNATURE-----
 
---AAwM7rbJFAaEpnd+--
+--ksc/XEwIr+HIie1g--
