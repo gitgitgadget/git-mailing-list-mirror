@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="O2cOXDA2"
-Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 515BD126
-	for <git@vger.kernel.org>; Thu,  7 Dec 2023 12:28:24 -0800 (PST)
-Received: by mail-qv1-xf2c.google.com with SMTP id 6a1803df08f44-67aa00ea853so7990206d6.2
-        for <git@vger.kernel.org>; Thu, 07 Dec 2023 12:28:24 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="fuvhLPiZ"
+Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com [IPv6:2607:f8b0:4864:20::f30])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B09B171D
+	for <git@vger.kernel.org>; Thu,  7 Dec 2023 12:34:55 -0800 (PST)
+Received: by mail-qv1-xf30.google.com with SMTP id 6a1803df08f44-67a894ccb4eso7951596d6.3
+        for <git@vger.kernel.org>; Thu, 07 Dec 2023 12:34:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1701980903; x=1702585703; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1701981294; x=1702586094; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=GCtiDkVOSYYa2bQpzzzixBuN5BkA3xJ3cmTCmAybmuk=;
-        b=O2cOXDA2vDtsLwhoc42Zr2kjNCkiyu/9bk8MHFpZ0t6gmHq7jDOhR2WjEcjn6pcX+w
-         xTByf27mvn79/MElDeYDrDHbh9UrXqfZXEKff/3JpD6hAc/8EZIVPAQ7HkHoypkBvMX2
-         jbcGCYnnS+QvQm24S7qbXlDdHZlOLquecKwajdkVfeFiAqDCm8ypLk8AWUuQoNJoCjCk
-         9BMPG2h6oHiFGQDq5B28i6Zq5dLmXYnnfWaAO6h1xO1h1x7P46SstkeVg3e+GttOlWMb
-         7Ei28Uod/w4jiGzx1mTS8y1QM7Hf3GZyDg+g+zxHD88Foezr4FgzjofvnPKWNYS0VeWD
-         rilg==
+        bh=9S5FRAd5+Cc0WOx1kz/ZBj/kPtPpdS5jF45/XQWvdXw=;
+        b=fuvhLPiZVuoPDRro0fwv9sm4zu2GIW1fzlqopU/XBZ4M5H+CH84y21crwtIXFWYSdr
+         W1acnzSp13x+HW5SYFL+tFi2mcKSB1MMyhuIQNW28OOltRQKmPpykVJaXFQKhj9U/WBY
+         HXpXsF1d+5gHtOr4Lra+YFUle8hPBvxri16NgT3keNaFYM390UaJkUIdQ88aP2PRQ88B
+         id9KxMO+tYjcAntPsywcUNRtSP3zf3l++xT6z2zgG+vod0PGtf4e4RHnZy0llhlq+LSq
+         zOmtlE+esOtuLvSKMfotEwhgTrgRzmCWtuJMx38DVJAJ/QgL4a5hlEuWEJlxvsqlXekT
+         geuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701980903; x=1702585703;
+        d=1e100.net; s=20230601; t=1701981294; x=1702586094;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GCtiDkVOSYYa2bQpzzzixBuN5BkA3xJ3cmTCmAybmuk=;
-        b=uXC4Va/NRbAj5/f6nllndSP/QL+E/1rMQGX3ZZo5TZdVsT7PLUfZTuNOa43dO2xZJ3
-         UXrva8+zTPik4LeOFbsbgSmibYm3xWeA+PUB5SpUuPFfzgvR/e6RQZkXOTYDzNVgh2kD
-         N7iKBHlglLfYh5X7B69JXYkO+YwONdDq+Ey5rbxm1llK5ZJ4cMIC2kf9JQapllM5bc+M
-         MHyzESumCGU82YDAyRyyA695DsSet49sN/D/9wX1InYjig8m8Z5GHt5uAiosu6YqFL1B
-         qWKivXHWbwcV0hHNBQIMQrZj2rcbMCeoL9zKi9L4JegDnzQ1Xq6Kvu9B/P4DD8qcNp/D
-         IXOA==
-X-Gm-Message-State: AOJu0YykZ6m1cRSj1iaJx7/nw+S8vnZzzUsTp6a96mMPwcHgK0amIZEK
-	/NIZPRzp24rrzwrSckeUriGcNA==
-X-Google-Smtp-Source: AGHT+IHYjjpNWLltOnEqwx8prTpZUdRtCqjbsd38iI0f8JJeP39/OgkFEDgXi3UDDfE9WLvKAux++g==
-X-Received: by 2002:a05:6214:5ca:b0:679:e3aa:362c with SMTP id t10-20020a05621405ca00b00679e3aa362cmr3253057qvz.29.1701980903401;
-        Thu, 07 Dec 2023 12:28:23 -0800 (PST)
+        bh=9S5FRAd5+Cc0WOx1kz/ZBj/kPtPpdS5jF45/XQWvdXw=;
+        b=euLpXkJ6ncSkzLPZozkwhRWZInSnu2mwmE5mz2W23vG6yLbzwjEbj8GB6wVhA2gUaC
+         efUeMaXKcbl5H4+zDwG22keknHm0H+C6M2juSVxrCukzU2V0zrSZ9qmSttPTuiAGV4dJ
+         6/Y1rg3zoDbLRs7WPiyXnoYS9R2tZ2MShnbfNuxBnZjseWjb9m3wXtI4MnpyHtIvLZSv
+         vQFmO7PUWZYroqtBFm0ZN5JjTziVZF2B4+lXeGx/ATiitwtSqKlZhQJ3k0+Dv9ObSvGU
+         h6Y45xxqpwmynQP9VBGoYk9VsbbpDrvStbrSTaIns6Nm2biOiRNwTnhJSFhC49hy7pKX
+         14Hg==
+X-Gm-Message-State: AOJu0YyQEiqEs8CV5K+JOLPLjaCLoPOexH8tT7RkCh+JX4tJ+Pm2DZSZ
+	kPBjDK5lgOGtAk+9+uCpEhv7hfv46Su4J0lBQjA=
+X-Google-Smtp-Source: AGHT+IGBUc/lHWAtdIphynBLiD1PKU/hkrZLDal3VSvBjDIdg9mdZV+2xF9ZbhRIKpl6tBKMZHy0KA==
+X-Received: by 2002:ad4:42af:0:b0:67e:a9cf:d575 with SMTP id e15-20020ad442af000000b0067ea9cfd575mr187977qvr.83.1701981294168;
+        Thu, 07 Dec 2023 12:34:54 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id w22-20020a05620a0e9600b0077589913a8bsm152748qkm.132.2023.12.07.12.28.22
+        by smtp.gmail.com with ESMTPSA id w11-20020a0cfc4b000000b0067abdf75926sm186740qvp.14.2023.12.07.12.34.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Dec 2023 12:28:23 -0800 (PST)
-Date: Thu, 7 Dec 2023 15:28:18 -0500
+        Thu, 07 Dec 2023 12:34:53 -0800 (PST)
+Date: Thu, 7 Dec 2023 15:34:52 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 09/24] repack: implement `--extend-disjoint` mode
-Message-ID: <ZXIq4mjDUoqlGvgW@nand.local>
+Subject: Re: [PATCH 10/24] pack-bitmap: pass `bitmapped_pack` struct to
+ pack-reuse functions
+Message-ID: <ZXIsbO++u9n/yDYi@nand.local>
 References: <cover.1701198172.git.me@ttaylorr.com>
- <b75869befba26899d88d6c6d413cc756aeadbd80.1701198172.git.me@ttaylorr.com>
- <ZXHE5Lce_6CAWKFT@tanuki>
+ <970bd9eaeae038adb6e7d4c399c9b033668a8864.1701198172.git.me@ttaylorr.com>
+ <ZXHE6Ym3CICtNxFd@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -55,94 +56,69 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZXHE5Lce_6CAWKFT@tanuki>
+In-Reply-To: <ZXHE6Ym3CICtNxFd@tanuki>
 
-On Thu, Dec 07, 2023 at 02:13:08PM +0100, Patrick Steinhardt wrote:
-> > The gotchas mostly have to do with making sure that we do not generate a
-> > disjoint pack in the following scenarios:
+On Thu, Dec 07, 2023 at 02:13:13PM +0100, Patrick Steinhardt wrote:
+> > +	if (bitmap_is_midx(bitmap_git)) {
+> > +		for (i = 0; i < bitmap_git->midx->num_packs; i++) {
+> > +			struct bitmapped_pack pack;
+> > +			if (nth_bitmapped_pack(r, bitmap_git->midx, &pack, i) < 0) {
+> > +				warning(_("unable to load pack: '%s', disabling pack-reuse"),
+> > +					bitmap_git->midx->pack_names[i]);
+> > +				free(packs);
+> > +				return -1;
+> > +			}
+> > +			if (!pack.bitmap_nr)
+> > +				continue; /* no objects from this pack */
+> > +			if (pack.bitmap_pos)
+> > +				continue; /* not preferred pack */
+> > +
+> > +			ALLOC_GROW(packs, packs_nr + 1, packs_alloc);
+> > +			memcpy(&packs[packs_nr++], &pack, sizeof(pack));
+> > +
+> > +			objects_nr += pack.p->num_objects;
+> > +		}
+> > +	} else {
+> > +		ALLOC_GROW(packs, packs_nr + 1, packs_alloc);
+> > +
+> > +		packs[packs_nr].p = bitmap_git->pack;
+> > +		packs[packs_nr].bitmap_pos = 0;
+> > +		packs[packs_nr].bitmap_nr = bitmap_git->pack->num_objects;
+> > +		packs[packs_nr].disjoint = 1;
+> > +
+> > +		objects_nr = packs[packs_nr++].p->num_objects;
+> > +	}
+> > +
+> > +	word_alloc = objects_nr / BITS_IN_EWORD;
+> > +	if (objects_nr % BITS_IN_EWORD)
+> > +		word_alloc++;
+> > +	reuse = bitmap_word_alloc(word_alloc);
+> > +
+> > +	if (packs_nr != 1)
+> > +		BUG("pack reuse not yet implemented for multiple packs");
 >
-> Okay, let me verify whether I understand the reasons:
->
-> >   - promisor packs
->
-> Which is because promisor packs actually don't contain any objects?
+> Can't it happen that we have no pack here? In the MIDX-case we skip all
+> packs that either do not have a bitmap or are not preferred. So does it
+> mean that in reverse, every preferred packfile must have a a bitmap? I'd
+> think that to not be true in case bitmaps are turned off.
 
-Right.
+It's subtle, but this state is indeed not possible. If we have a MIDX
+and it has a bitmap, we know that there is at least one object at least
+one pack.
 
-> >   - cruft packs (which may necessarily need to include an object from a
-> >     disjoint pack in order to freshen it in certain circumstances)
->
-> This one took me a while to figure out. If we'd mark crufts as disjoint,
-> then it would mean that new packfiles cannot be marked as disjoint if
-> objects which were previously unreachable do become reachable again.
-> So we'd be pessimizing packfiles for live objects in favor of others
-> which aren't.
+On the "at least one object front", that check was added in eb57277ba3
+(midx: prevent writing a .bitmap without any objects, 2022-02-09). And
+we know that our preferred pack (either explicitly given or the one we
+infer automatically) is non-empty, via the check added in 5d3cd09a80
+(midx: reject empty `--preferred-pack`'s, 2021-08-31).
 
-Yeah, that's right, too. There are a couple of cases where more than one
-cruft pack may contain the same object, one of them being the
-flip-flopping between reachable and unreachable as you suggest above.
-Another is that you have a non-prunable unreachable object which is
-already in a cruft pack. If the object's mtime gets updated (and still
-cannot be pruned), we'll end up freshening the object loose, and then
-packing it again (with the more recent mtime) into a new cruft pack.
+(As a fun/non-fun aside, looking these up gave me some serious deja-vu
+and reminded me of how painful discovering and fixing those bugs was!)
 
-That aside, I actually think that there are ways to mark cruft packs
-disjoint. But they're complicated, and moreover, I don't think you'd
-ever *want* to mark a cruft pack as disjoint. Cruft packs usually
-contain garbage, which is unlikely to be useful to any fetches/clones.
-
-If we did mark them as disjoint, it would mean that we could reuse
-verbatim sections of the cruft pack in our output, but we would likely
-end up with very few such sections.
-
-> >   - all-into-one repacks without '-d'
->
-> Because here the old packfiles that this would make redundant aren't
-> deleted and thus the objects are duplicate now.
-
-Yep.
-
-> > Otherwise, we mark which packs were created as disjoint by using a new
-> > bit in the `generated_pack_data` struct, and then marking those pack(s)
-> > as disjoint accordingly when generating the MIDX. Non-deleted packs
-> > which are marked as disjoint are retained as such by passing the
-> > equivalent of `--retain-disjoint` when calling the MIDX API to update
-> > the MIDX.
->
-> Okay. I had a bit of trouble to sift through the various different
-> flags like "--retain-disjoint", "--extend-disjoint", "--ignore-disjoint"
-> and so on. But well, they do different things and it's been a few days
-> since I've reviewed the preceding patches, so this is probably fine.
-
-Yeah, I am definitely open to better naming conventions here? I figured
-that:
-
-  - --retain-disjoint was a good name for the MIDX option, since it is
-    retaining existing disjoint packs in the new MIDX
-  - --extend-disjoint was a good name for the repack option, since it is
-    extending the set of disjoint packs
-  - --ignore-disjoint was a good name for the pack-objects option, since
-    it is ignoring objects in disjoint packs
-
-Writing this out, I think that you could make an argument that
-`--exclude-disjoint` is a better name for the last option. So I'm
-definitely open to suggestions here, but I don't want to get too bogged
-down on command-line option naming (so long as we're all reasonably
-happy with the result).
-
-> One thing I wondered: do we need to consider the `-l` flag? When using
-> an alternate object directory it is totally feasible that the alternate
-> may be creating new disjoint packages without us knowing, and thus we
-> may not be able to guarantee the disjoint property anymore.
-
-I don't think so. We'd only care about one direction of this (that
-alternates do not create disjoint packs which overlap with ours, instead
-of the other way around), but since we don't put non-local packs in the
-MIDX, I think we're OK.
-
-I suppose that you might run into trouble if you use the chained MIDX
-thing (via its `->next` pointer). I haven't used that feature myself, so
-I'd have to play around with it.
+So we're OK here. We could add a comment which captures what I wrote
+above here, but since this is a temporary state (and we're going to
+change how we select which packs are reuse candidates in a later patch),
+I think it's OK to avoid (but please let me know if you feel differently).
 
 Thanks,
 Taylor
