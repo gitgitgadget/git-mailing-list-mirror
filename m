@@ -1,19 +1,20 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69203D53
-	for <git@vger.kernel.org>; Wed,  6 Dec 2023 23:23:39 -0800 (PST)
-Received: (qmail 9993 invoked by uid 109); 7 Dec 2023 07:23:38 -0000
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CF27137
+	for <git@vger.kernel.org>; Wed,  6 Dec 2023 23:24:06 -0800 (PST)
+Received: (qmail 10000 invoked by uid 109); 7 Dec 2023 07:24:05 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 07 Dec 2023 07:23:38 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 07 Dec 2023 07:24:05 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1028 invoked by uid 111); 7 Dec 2023 07:23:42 -0000
+Received: (qmail 1039 invoked by uid 111); 7 Dec 2023 07:24:09 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 07 Dec 2023 02:23:42 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 07 Dec 2023 02:24:09 -0500
 Authentication-Results: peff.net; auth=none
-Date: Thu, 7 Dec 2023 02:23:38 -0500
+Date: Thu, 7 Dec 2023 02:24:04 -0500
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-Subject: [PATCH 0/9] bonus config cleanups
-Message-ID: <20231207072338.GA1277727@coredump.intra.peff.net>
+Subject: [PATCH 1/9] config: reject bogus values for core.checkstat
+Message-ID: <20231207072404.GA1277973@coredump.intra.peff.net>
+References: <20231207072338.GA1277727@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -22,38 +23,41 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <20231207072338.GA1277727@coredump.intra.peff.net>
 
-While looking carefully at various config callbacks for the series at:
+If you feed nonsense config like:
 
-  https://lore.kernel.org/git/20231207071030.GA1275835@coredump.intra.peff.net/
+  git -c core.checkstat=foobar status
 
-I noticed a bunch of other small bugs/cleanups. I split these into their
-own series here, which should be applied on top (it could go straight to
-"master", but there is a small conflict in patch 6, as the option it
-touches was fixed in the other series). I'm happy to prepare it as an
-independent series if we prefer.
+we'll silently ignore the unknown value, rather than reporting an error.
+This goes all the way back to c08e4d5b5c (Enable minimal stat checking,
+2013-01-22).
 
-  [1/9]: config: reject bogus values for core.checkstat
-  [2/9]: git_xmerge_config(): prefer error() to die()
-  [3/9]: imap-send: don't use git_die_config() inside callback
-  [4/9]: config: use config_error_nonbool() instead of custom messages
-  [5/9]: diff: give more detailed messages for bogus diff.* config
-  [6/9]: config: use git_config_string() for core.checkRoundTripEncoding
-  [7/9]: push: drop confusing configset/callback redundancy
-  [8/9]: gpg-interface: drop pointless config_error_nonbool() checks
-  [9/9]: sequencer: simplify away extra git_config_string() call
+Detecting and complaining now is technically a backwards-incompatible
+change, but I don't think anybody has any reason to use an invalid value
+here. There are no historical values we'd want to allow for backwards
+compatibility or anything like that. We are better off loudly telling
+the user that their config may not be doing what they expect.
 
- builtin/push.c      | 31 +++++++++++++------------------
- builtin/send-pack.c | 27 ++++++++++++---------------
- config.c            | 11 +++++------
- convert.h           |  2 +-
- diff.c              |  8 ++++++--
- environment.c       |  2 +-
- gpg-interface.c     | 15 +++------------
- imap-send.c         |  2 +-
- merge-ll.c          |  2 +-
- sequencer.c         | 21 ++++++++-------------
- xdiff-interface.c   |  7 ++++---
- 11 files changed, 55 insertions(+), 73 deletions(-)
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ config.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
--Peff
+diff --git a/config.c b/config.c
+index 18085c7e38..d997c55e33 100644
+--- a/config.c
++++ b/config.c
+@@ -1392,6 +1392,9 @@ static int git_default_core_config(const char *var, const char *value,
+ 			check_stat = 1;
+ 		else if (!strcasecmp(value, "minimal"))
+ 			check_stat = 0;
++		else
++			return error(_("invalid value for '%s': '%s'"),
++				     var, value);
+ 	}
+ 
+ 	if (!strcmp(var, "core.quotepath")) {
+-- 
+2.43.0.664.ga12c899002
+
