@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="fuvhLPiZ"
-Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com [IPv6:2607:f8b0:4864:20::f30])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B09B171D
-	for <git@vger.kernel.org>; Thu,  7 Dec 2023 12:34:55 -0800 (PST)
-Received: by mail-qv1-xf30.google.com with SMTP id 6a1803df08f44-67a894ccb4eso7951596d6.3
-        for <git@vger.kernel.org>; Thu, 07 Dec 2023 12:34:55 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="h9bxDkFJ"
+Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22C6A1713
+	for <git@vger.kernel.org>; Thu,  7 Dec 2023 12:43:48 -0800 (PST)
+Received: by mail-qk1-x733.google.com with SMTP id af79cd13be357-77f4b8bbe0eso9038685a.1
+        for <git@vger.kernel.org>; Thu, 07 Dec 2023 12:43:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1701981294; x=1702586094; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1701981827; x=1702586627; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=9S5FRAd5+Cc0WOx1kz/ZBj/kPtPpdS5jF45/XQWvdXw=;
-        b=fuvhLPiZVuoPDRro0fwv9sm4zu2GIW1fzlqopU/XBZ4M5H+CH84y21crwtIXFWYSdr
-         W1acnzSp13x+HW5SYFL+tFi2mcKSB1MMyhuIQNW28OOltRQKmPpykVJaXFQKhj9U/WBY
-         HXpXsF1d+5gHtOr4Lra+YFUle8hPBvxri16NgT3keNaFYM390UaJkUIdQ88aP2PRQ88B
-         id9KxMO+tYjcAntPsywcUNRtSP3zf3l++xT6z2zgG+vod0PGtf4e4RHnZy0llhlq+LSq
-         zOmtlE+esOtuLvSKMfotEwhgTrgRzmCWtuJMx38DVJAJ/QgL4a5hlEuWEJlxvsqlXekT
-         geuA==
+        bh=NqkVLeoKqodn9ajU02euS+0+vg/pQScXI4dduuEKI5Q=;
+        b=h9bxDkFJEykMOFYAMui6DTC7ZWmEZghZGcjQ7VSbm2/yvrwTRaqkHYE2AzSputdFfq
+         qafZvrux8Hf2gkt1/XIvfDq9ljiSMyJF7qGg0xSVz90M7G0NwCnKI6cizdTvQNRJeegC
+         us0AhGiRlueJw1CU4MRicVaaoBjYBXQ0eh9jgPSFvtwkHUQk22wvhBqT3lmtxxPCPziK
+         rdpSR6Av4+SVPuKzv1rCjLoH5sBPtqbJ1UXb79o81cIiyO3wTIjdagdoaNZA8Qihc6+g
+         bpVrPDbpls+LUrSenPnUQuhlC/Z9kLzbQn7ke5Ucu6VVv/GlCAnhpAXsnWzqabrsiaiZ
+         zeew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701981294; x=1702586094;
+        d=1e100.net; s=20230601; t=1701981827; x=1702586627;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=9S5FRAd5+Cc0WOx1kz/ZBj/kPtPpdS5jF45/XQWvdXw=;
-        b=euLpXkJ6ncSkzLPZozkwhRWZInSnu2mwmE5mz2W23vG6yLbzwjEbj8GB6wVhA2gUaC
-         efUeMaXKcbl5H4+zDwG22keknHm0H+C6M2juSVxrCukzU2V0zrSZ9qmSttPTuiAGV4dJ
-         6/Y1rg3zoDbLRs7WPiyXnoYS9R2tZ2MShnbfNuxBnZjseWjb9m3wXtI4MnpyHtIvLZSv
-         vQFmO7PUWZYroqtBFm0ZN5JjTziVZF2B4+lXeGx/ATiitwtSqKlZhQJ3k0+Dv9ObSvGU
-         h6Y45xxqpwmynQP9VBGoYk9VsbbpDrvStbrSTaIns6Nm2biOiRNwTnhJSFhC49hy7pKX
-         14Hg==
-X-Gm-Message-State: AOJu0YyQEiqEs8CV5K+JOLPLjaCLoPOexH8tT7RkCh+JX4tJ+Pm2DZSZ
-	kPBjDK5lgOGtAk+9+uCpEhv7hfv46Su4J0lBQjA=
-X-Google-Smtp-Source: AGHT+IGBUc/lHWAtdIphynBLiD1PKU/hkrZLDal3VSvBjDIdg9mdZV+2xF9ZbhRIKpl6tBKMZHy0KA==
-X-Received: by 2002:ad4:42af:0:b0:67e:a9cf:d575 with SMTP id e15-20020ad442af000000b0067ea9cfd575mr187977qvr.83.1701981294168;
-        Thu, 07 Dec 2023 12:34:54 -0800 (PST)
+        bh=NqkVLeoKqodn9ajU02euS+0+vg/pQScXI4dduuEKI5Q=;
+        b=NKLsviesrZ6SXuA+VnfyyEeC93owussZJU/9bCHahcFC7/bOXe9Poz2sFpAjt2MEvw
+         7Gt1/kecMthiY+3IRI3NNofhn7c1XDKg1+N07FIi+Gp2muVRoXQXAIgqyhDo8BvdKTBK
+         QMygEJtXCrnjhiPd4uCdgsmIwLch+nFj5i75YsbxLai+V8CTdhKvRnA+bvTInKRaIBOW
+         kN7g15v5yZhvPvVcRhtM/L1ECtfBHxFYp/hR1Aa6oCIUghV5JmVXBKDuSPVKJwwcb7Zu
+         02553Q8feJDfST0xjs63J8WKtWw9PM7SskV78GI8dCfpf8LibEwtHarprEFZlTA32cJB
+         lx2A==
+X-Gm-Message-State: AOJu0YxA6rp+LM/yAI4k+fx42VshxkNZQ4gN6oiflEztupo7Ojkrs2+2
+	SSXV1US8ikXC3pjC1qwkBmwoZA==
+X-Google-Smtp-Source: AGHT+IGGYWZVJVutLPUcZsKzmNNNwsS8cAKr1zEbWHridaDTcMmrlaBzgUZ1qtB0D7DpLUbr0cgyeg==
+X-Received: by 2002:a05:620a:6d87:b0:77f:3f7d:b4a8 with SMTP id um7-20020a05620a6d8700b0077f3f7db4a8mr1182981qkn.79.1701981827192;
+        Thu, 07 Dec 2023 12:43:47 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id w11-20020a0cfc4b000000b0067abdf75926sm186740qvp.14.2023.12.07.12.34.53
+        by smtp.gmail.com with ESMTPSA id qf4-20020a05620a660400b0077d66e5b2e6sm174067qkn.3.2023.12.07.12.43.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Dec 2023 12:34:53 -0800 (PST)
-Date: Thu, 7 Dec 2023 15:34:52 -0500
+        Thu, 07 Dec 2023 12:43:46 -0800 (PST)
+Date: Thu, 7 Dec 2023 15:43:46 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 10/24] pack-bitmap: pass `bitmapped_pack` struct to
- pack-reuse functions
-Message-ID: <ZXIsbO++u9n/yDYi@nand.local>
+Subject: Re: [PATCH 14/24] pack-objects: keep track of `pack_start` for each
+ reuse pack
+Message-ID: <ZXIugoH4Py3Ie3WT@nand.local>
 References: <cover.1701198172.git.me@ttaylorr.com>
- <970bd9eaeae038adb6e7d4c399c9b033668a8864.1701198172.git.me@ttaylorr.com>
- <ZXHE6Ym3CICtNxFd@tanuki>
+ <6f4fba861b59f909148775ee64c3ba89afc872b5.1701198172.git.me@ttaylorr.com>
+ <ZXHE9L7iqXQAit_1@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -56,69 +56,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZXHE6Ym3CICtNxFd@tanuki>
+In-Reply-To: <ZXHE9L7iqXQAit_1@tanuki>
 
-On Thu, Dec 07, 2023 at 02:13:13PM +0100, Patrick Steinhardt wrote:
-> > +	if (bitmap_is_midx(bitmap_git)) {
-> > +		for (i = 0; i < bitmap_git->midx->num_packs; i++) {
-> > +			struct bitmapped_pack pack;
-> > +			if (nth_bitmapped_pack(r, bitmap_git->midx, &pack, i) < 0) {
-> > +				warning(_("unable to load pack: '%s', disabling pack-reuse"),
-> > +					bitmap_git->midx->pack_names[i]);
-> > +				free(packs);
-> > +				return -1;
-> > +			}
-> > +			if (!pack.bitmap_nr)
-> > +				continue; /* no objects from this pack */
-> > +			if (pack.bitmap_pos)
-> > +				continue; /* not preferred pack */
-> > +
-> > +			ALLOC_GROW(packs, packs_nr + 1, packs_alloc);
-> > +			memcpy(&packs[packs_nr++], &pack, sizeof(pack));
-> > +
-> > +			objects_nr += pack.p->num_objects;
-> > +		}
-> > +	} else {
-> > +		ALLOC_GROW(packs, packs_nr + 1, packs_alloc);
-> > +
-> > +		packs[packs_nr].p = bitmap_git->pack;
-> > +		packs[packs_nr].bitmap_pos = 0;
-> > +		packs[packs_nr].bitmap_nr = bitmap_git->pack->num_objects;
-> > +		packs[packs_nr].disjoint = 1;
-> > +
-> > +		objects_nr = packs[packs_nr++].p->num_objects;
-> > +	}
-> > +
-> > +	word_alloc = objects_nr / BITS_IN_EWORD;
-> > +	if (objects_nr % BITS_IN_EWORD)
-> > +		word_alloc++;
-> > +	reuse = bitmap_word_alloc(word_alloc);
-> > +
-> > +	if (packs_nr != 1)
-> > +		BUG("pack reuse not yet implemented for multiple packs");
+On Thu, Dec 07, 2023 at 02:13:24PM +0100, Patrick Steinhardt wrote:
+> > In order to compute this value correctly, we need to know not only where
+> > we are in the packfile we're assembling (with `hashfile_total(f)`) but
+> > also the position of the first byte of the packfile that we are
+> > currently reusing.
+> >
+> > Together, these two allow us to compute the reused chunk's offset
+> > difference relative to the start of the reused pack, as desired.
 >
-> Can't it happen that we have no pack here? In the MIDX-case we skip all
-> packs that either do not have a bitmap or are not preferred. So does it
-> mean that in reverse, every preferred packfile must have a a bitmap? I'd
-> think that to not be true in case bitmaps are turned off.
+> Hm. I'm not quite sure I fully understand the motivation here. Is this
+> something that was broken all along? Why does it become a problem now?
+> Sorry if I'm missing the obvious here.
 
-It's subtle, but this state is indeed not possible. If we have a MIDX
-and it has a bitmap, we know that there is at least one object at least
-one pack.
+No worries, I should have explained this better. Indeed we do have to
+worry about patching deltas today when reusing objects from a pack. But
+we have to extend the implementation in order to perform reuse over
+multiple packs when any of them (excluding the first, which would work
+with the existing logic) have delta/base pairs on either side of a gap.
 
-On the "at least one object front", that check was added in eb57277ba3
-(midx: prevent writing a .bitmap without any objects, 2022-02-09). And
-we know that our preferred pack (either explicitly given or the one we
-infer automatically) is non-empty, via the check added in 5d3cd09a80
-(midx: reject empty `--preferred-pack`'s, 2021-08-31).
+I'll try to make it a little clearer, thanks for pointing that out.
 
-(As a fun/non-fun aside, looking these up gave me some serious deja-vu
-and reminded me of how painful discovering and fixing those bugs was!)
+> > @@ -1126,10 +1129,12 @@ static void write_reused_pack(struct packed_git *reuse_packfile,
+> >  {
+> >  	size_t i = 0;
+> >  	uint32_t offset;
+> > +	off_t pack_start = hashfile_total(f) - sizeof(struct pack_header);
+>
+> Given that this patch in its current state doesn't seem to do anything
+> yet, am I right in assuming that `hashfile_total(f) - sizeof(struct
+> pack_header)` is always expected to be zero for now?
 
-So we're OK here. We could add a comment which captures what I wrote
-above here, but since this is a temporary state (and we're going to
-change how we select which packs are reuse candidates in a later patch),
-I think it's OK to avoid (but please let me know if you feel differently).
+Yep, that's right.
 
 Thanks,
 Taylor
