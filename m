@@ -1,66 +1,68 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="poigMU2p";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lfQIiHWE"
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBF8219A
-	for <git@vger.kernel.org>; Thu,  7 Dec 2023 00:58:07 -0800 (PST)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.west.internal (Postfix) with ESMTP id 297643200312;
-	Thu,  7 Dec 2023 03:58:07 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Thu, 07 Dec 2023 03:58:07 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JB2DebSz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mO405Cdy"
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B72DD54
+	for <git@vger.kernel.org>; Thu,  7 Dec 2023 05:13:17 -0800 (PST)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.nyi.internal (Postfix) with ESMTP id AE2465C01A6;
+	Thu,  7 Dec 2023 08:13:16 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute2.internal (MEProxy); Thu, 07 Dec 2023 08:13:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm1; t=1701939486; x=1702025886; bh=b4
-	YMTk5wiixeVQRBO8NvtC3qenp4aNtQRvhY5W2kBRI=; b=poigMU2pP9CL94Qnrm
-	aP+XRCsA+/7u0Bsanc8A1w0rtnK2W0T8k6+E4cST9f8HaoZM5L11WHbfjkM3hrfK
-	JoyCmWxSfOxYMVS2VUjh4WpDD2fp225EOKV8t3Esqtk30JI0HAaYivFTm2zzFhWj
-	4W8WMjsFNukspO5DYqvtCvyo/Y4QKLcba9drXCBaIl/8tcI6wwS1bU/4JUjQ7vcA
-	TepM1/KHRakDAJ26pgWQsrw3FZ+QbaHbsBPKwx6szaRiVLCCNk7Ep7wt79PLWZq2
-	zskr599+n/4a4+pJF7sENFo+uaF4w/JThdRDFPBPLNj+7WlqPvMF8Zgkb+L2vEvh
-	xQSA==
+	:subject:subject:to:to; s=fm1; t=1701954796; x=1702041196; bh=Te
+	cFvTPi8fozhs6s29RlCr6ORFfhASKfTjydh3MV6rA=; b=JB2DebSzSyEGDT0tgs
+	KLVFruews7C7Y1gCQuDBN8bFAprgkm2NJSIIoJ6v6WKIsXSVRD3K39CRNHHIa3hw
+	5+7c+mBN2yD+s5Euxcx3sdOZN1as5WYFCHRov5Ew16v7gRQB6oT4LCCikJgQ85Pb
+	bi9lYUvkzGmrcXL5UYYovGtmLF1G49tKJlgpo7ftqbWHf1hAAzrjUGV7ksUZv/WM
+	ow2oZHZwNPYYe3dw527yO7v5zsI41o6ap8vF101MW1XxM0nv8S2Kwt3YYdCGCbyG
+	1yyH3XblD5DAOH8TTD/egGx9NOzeyNel2kLEkvWZrltdCsOjhXZW6kJbrJTSP5Ax
+	p+Dg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm1; t=1701939486; x=1702025886; bh=b4YMTk5wiixeV
-	QRBO8NvtC3qenp4aNtQRvhY5W2kBRI=; b=lfQIiHWE66RZ4HZ8ehqYmt2yshycO
-	uttAAVdukXJZqlfmQWymYIkkB4spuYPP9TWiBEiFBITU75q9spoNQ+LMBX8prgba
-	abqxCUIQTHMXVpSEx0ZoafF6+Jd/UVtN3LV29usB2C3mx6N3dEEnyz5d7aHG3s3i
-	L8MDBSstkaUq2KynZKtGIhn58UhqeCIBvEkjdvagL7NJvGN2Kih1niOo35609SHY
-	1h68YEpRpoQ5ep7FbneGVXJURdOXIzb6ApqyY505WlRb8Gsqj+Ee5PnCNUWB6gRb
-	69edFrZRmbos0ZZNav3ogXljGuRUGf4nP+ciyj09YpF6CVDUH8zzMAkIA==
-X-ME-Sender: <xms:HolxZQ4tUfXfeWQAdI_cTfh02fKHCpaGdlmbLB_GTXB6rBtf76nLow>
-    <xme:HolxZR7f6FbRWjF5P7jmB6k0VfCSmYE7Kn19hBakpzyQSVUG1dtasQUIAkjajUfjp
-    HKJffrA8dzr8_feUQ>
-X-ME-Received: <xmr:HolxZfdLpOSyWLD23_I1t2VjtmoB190HFCTIeWECgBZzQ291aY3_euNsj3NON0Q_2r5xX6Yc7gqI49poCOIEOvFwkGVZ1qm7mKdDlOUjCCUlRkI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudekuddguddvhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
-    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
-    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepieevkedtgffgleeugfdvledvfedthf
-    egueegfeevjeelueefkeegfeffhefglefgnecuffhomhgrihhnpehkvghrnhgvlhdrohhr
-    ghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
-    esphhkshdrihhm
-X-ME-Proxy: <xmx:HolxZVKuy3SLNekgSMo-XoFoU3cNXUi-BMg_q2tWGMmSffHdoIacTw>
-    <xmx:HolxZUKpMsXah_OxeQ4IUm-ZyGl2ebuQ2DgnguHWlnVysGWsdAlnhQ>
-    <xmx:HolxZWz5YUCxyMJ99V52GB4yEtiAYogFOIkk9o2h9_6myXFaMeVZpA>
-    <xmx:HolxZexQXBCN4HX_OZp9lSJWzzZ65_gHN7mg4aBZiQ719Hot8MsBRQ>
+	:x-sasl-enc; s=fm1; t=1701954796; x=1702041196; bh=TecFvTPi8fozh
+	s6s29RlCr6ORFfhASKfTjydh3MV6rA=; b=mO405CdyHqONj1dFj5k73dhuoHL58
+	wJrIrBLYZLwV06G+bajU7fpB/9FAZTPdzij6mItA/+R/I7KNJ3t3ZcKqx+IBgo+L
+	roqDSKqrU0+QiUSP1I5U7o6zpcNHsOZudAQM5+BjWwdk5UN7sS5uyOITpUK++/nk
+	ttO0ACigQ+U30+bobDvU2o/KvQCQD7DG+LibhmZJ9kG1ustFYowfC9uqROdMp7Mo
+	crMSjIRFiZCjE08oAxmI4EKPwhUc5CVXDN7zyZbiean07b4nH+JnFCaRRpHeDZu+
+	xZu6T22d72lnOvb4NZjQZcbC2bzowI6Fi0Is777oUQ74W3FoSpWgK6RXw==
+X-ME-Sender: <xms:7MRxZfNaxGqV5_PZ5XO0aYDy7vrENIxP3RRUfJPoJSZxKEA-djg1oQ>
+    <xme:7MRxZZ8nS7kY5WKbvYABaB-zIy7kzyAv6UJQ1WDWpZ9L-l6L7CGlfRQD052XjVMJU
+    7t51gFuh3oQj_Jblw>
+X-ME-Received: <xmr:7MRxZeQQjcov2_lks2hOArCQV3agITIBT72bBTmrOv1cDlfAGk7hO_4CR2T4NMnbADPyzTzgI2RCl6QsQMHOPU2yefvwkvoeV_WTy4XwKlh-lkM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudekvddghedtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
+    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
+    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:7MRxZTt1UIpZa9Hj0ttXQ8rY7tHnYsfg8gNsyiGmLS4QimVzDhgdLA>
+    <xmx:7MRxZXewPKaar9G3tSBeAQlnW9wWe1iIVycNJ8CjvHnRj0f6OT-kSg>
+    <xmx:7MRxZf2o_K6fCnToKJwp5IJFpGyXUhc5riPWiZalk1Op5zQqaEXKkQ>
+    <xmx:7MRxZYq1akbJOSQh0K_UJnGF3SCIhPYod33uHc7IsOXLw9qRHCvw4A>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 7 Dec 2023 03:58:05 -0500 (EST)
+ 7 Dec 2023 08:13:15 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 5c357342 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 7 Dec 2023 08:56:37 +0000 (UTC)
-Date: Thu, 7 Dec 2023 09:58:02 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id ea1092b2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 7 Dec 2023 13:11:47 +0000 (UTC)
+Date: Thu, 7 Dec 2023 14:13:13 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/9] bonus config cleanups
-Message-ID: <ZXGJGv2i1WQRjVOl@tanuki>
-References: <20231207072338.GA1277727@coredump.intra.peff.net>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 10/24] pack-bitmap: pass `bitmapped_pack` struct to
+ pack-reuse functions
+Message-ID: <ZXHE6Ym3CICtNxFd@tanuki>
+References: <cover.1701198172.git.me@ttaylorr.com>
+ <970bd9eaeae038adb6e7d4c399c9b033668a8864.1701198172.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,76 +70,106 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="BOT1Gv6Ia59JTS/C"
+	protocol="application/pgp-signature"; boundary="H0w6TjIoPk4Wa1/J"
 Content-Disposition: inline
-In-Reply-To: <20231207072338.GA1277727@coredump.intra.peff.net>
+In-Reply-To: <970bd9eaeae038adb6e7d4c399c9b033668a8864.1701198172.git.me@ttaylorr.com>
 
 
---BOT1Gv6Ia59JTS/C
+--H0w6TjIoPk4Wa1/J
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Dec 07, 2023 at 02:23:38AM -0500, Jeff King wrote:
-> While looking carefully at various config callbacks for the series at:
->=20
->   https://lore.kernel.org/git/20231207071030.GA1275835@coredump.intra.pef=
-f.net/
->=20
-> I noticed a bunch of other small bugs/cleanups. I split these into their
-> own series here, which should be applied on top (it could go straight to
-> "master", but there is a small conflict in patch 6, as the option it
-> touches was fixed in the other series). I'm happy to prepare it as an
-> independent series if we prefer.
+On Tue, Nov 28, 2023 at 02:08:21PM -0500, Taylor Blau wrote:
+[snip]
+> @@ -2002,6 +1986,65 @@ int reuse_partial_packfile_from_bitmap(struct bitm=
+ap_index *bitmap_git,
+> =20
+>  done:
+>  	unuse_pack(&w_curs);
+> +}
+> +
+> +int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
+> +				       struct packed_git **packfile_out,
+> +				       uint32_t *entries,
+> +				       struct bitmap **reuse_out)
+> +{
+> +	struct repository *r =3D the_repository;
+> +	struct bitmapped_pack *packs =3D NULL;
+> +	struct bitmap *result =3D bitmap_git->result;
+> +	struct bitmap *reuse;
+> +	size_t i;
+> +	size_t packs_nr =3D 0, packs_alloc =3D 0;
+> +	size_t word_alloc;
+> +	uint32_t objects_nr =3D 0;
+> +
+> +	assert(result);
+> +
+> +	load_reverse_index(r, bitmap_git);
+> +
+> +	if (bitmap_is_midx(bitmap_git)) {
+> +		for (i =3D 0; i < bitmap_git->midx->num_packs; i++) {
+> +			struct bitmapped_pack pack;
+> +			if (nth_bitmapped_pack(r, bitmap_git->midx, &pack, i) < 0) {
+> +				warning(_("unable to load pack: '%s', disabling pack-reuse"),
+> +					bitmap_git->midx->pack_names[i]);
+> +				free(packs);
+> +				return -1;
+> +			}
+> +			if (!pack.bitmap_nr)
+> +				continue; /* no objects from this pack */
+> +			if (pack.bitmap_pos)
+> +				continue; /* not preferred pack */
+> +
+> +			ALLOC_GROW(packs, packs_nr + 1, packs_alloc);
+> +			memcpy(&packs[packs_nr++], &pack, sizeof(pack));
+> +
+> +			objects_nr +=3D pack.p->num_objects;
+> +		}
+> +	} else {
+> +		ALLOC_GROW(packs, packs_nr + 1, packs_alloc);
+> +
+> +		packs[packs_nr].p =3D bitmap_git->pack;
+> +		packs[packs_nr].bitmap_pos =3D 0;
+> +		packs[packs_nr].bitmap_nr =3D bitmap_git->pack->num_objects;
+> +		packs[packs_nr].disjoint =3D 1;
+> +
+> +		objects_nr =3D packs[packs_nr++].p->num_objects;
+> +	}
+> +
+> +	word_alloc =3D objects_nr / BITS_IN_EWORD;
+> +	if (objects_nr % BITS_IN_EWORD)
+> +		word_alloc++;
+> +	reuse =3D bitmap_word_alloc(word_alloc);
+> +
+> +	if (packs_nr !=3D 1)
+> +		BUG("pack reuse not yet implemented for multiple packs");
 
-The whole patch series looks good to me, thanks!
+Can't it happen that we have no pack here? In the MIDX-case we skip all
+packs that either do not have a bitmap or are not preferred. So does it
+mean that in reverse, every preferred packfile must have a a bitmap? I'd
+think that to not be true in case bitmaps are turned off.
 
 Patrick
 
->   [1/9]: config: reject bogus values for core.checkstat
->   [2/9]: git_xmerge_config(): prefer error() to die()
->   [3/9]: imap-send: don't use git_die_config() inside callback
->   [4/9]: config: use config_error_nonbool() instead of custom messages
->   [5/9]: diff: give more detailed messages for bogus diff.* config
->   [6/9]: config: use git_config_string() for core.checkRoundTripEncoding
->   [7/9]: push: drop confusing configset/callback redundancy
->   [8/9]: gpg-interface: drop pointless config_error_nonbool() checks
->   [9/9]: sequencer: simplify away extra git_config_string() call
->=20
->  builtin/push.c      | 31 +++++++++++++------------------
->  builtin/send-pack.c | 27 ++++++++++++---------------
->  config.c            | 11 +++++------
->  convert.h           |  2 +-
->  diff.c              |  8 ++++++--
->  environment.c       |  2 +-
->  gpg-interface.c     | 15 +++------------
->  imap-send.c         |  2 +-
->  merge-ll.c          |  2 +-
->  sequencer.c         | 21 ++++++++-------------
->  xdiff-interface.c   |  7 ++++---
->  11 files changed, 55 insertions(+), 73 deletions(-)
->=20
-> -Peff
->=20
-
---BOT1Gv6Ia59JTS/C
+--H0w6TjIoPk4Wa1/J
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVxiRoACgkQVbJhu7ck
-PpTMoBAAnbZ9fHtwfOYY7XF3Ka8Cv0adW40qlWBFyUtFKuhIBneNytjmO9DbkRgd
-+0waKVm2pHCss+xgY/PliEvpSIb8q6JG1fbGgAOPQPHTQM0gDmniTlOLll2p5eOa
-uh3Psft48BhiNtLnIbTt/bYFamubBP09cHOyfu9qoy/Q3KV9Z/yK9QxqHJzYAgtP
-c7Th3MulaxRK1VZ+rV7ZHOWrWq5fDzy0AeH3xCNBwvhmnjYzvOwAc3fFoB7M9we7
-jNc9SzormNVNyS/ZEKSMF+H6J5gSUf6Rw5Is89YZPcKtAgVsBLhoh5byBrbSXvv+
-OQJqkODYN6mmrnoBwv1O4ZojymaB8WtJsm7/M24218E+eVmPoPPQw+6YtOnFhepG
-Ap0U4OwcjVHF5MaB32vaCWkGSVkZEGT8WYeCE4E1cMnTatxzW0VsmTR1V4GQHH0T
-dfGx5rxiSJY7cokUoXGDyOJeQh9W+hK8kYA1G/EEZOouO8TxKZnnHBYv4J7eMsAH
-QgMZcORgoZkMZxJlZlZDBACoGSTWZI+UtwkzurJSAbNV1c2C9R0oRvIsouW9RYRE
-+dYiR2VsUZ5qa9ysz9Abx0SNkX5O0ckYDUBpCs7/B/sVDIfcsSIAk+bo5mFsCW0z
-Xte9BLc32KZ/NNAZhqdofT7d2+uhFaWP7MOZ6lvT1C3qXvEFDyQ=
-=FVrI
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVxxOgACgkQVbJhu7ck
+PpQCHg//ZvHj1UJEHfdgIRkjSC/10ED8vljEwFpc2r/rnn95pEJ3n5Q7z01R4+1Q
+dZ9gkHCaPA/OIFEu8zRT01LHSX7VWpLtNt8M6jwLDFOLsZs9q/NM3jePyYSqxoV3
+so6xUdhHWcmAPaRhjgdk0VXBAguVVwv7a3hEamNhtkSXOPTbhoBtSR+hfELjXc8M
+qwXzQ1My2+Nl/dClqYCgKyFt7JpUXIS2GyhMBHD5MQxXpCyszhCMKcQD1TfIKVwg
+ZbpssynahHHxy3cJxJLeaRbC56Swk8lwdioF1JzmhFwIh41+gyC7lUn/YpIaQBUx
+xds4rxu4tP4QkmPHoBtJ1Yi8Bpv6L5Y0CaCMliJHsE354km6HTobl7W8Pctv0nKl
+TzmxpHG5OF4WcZqTb/uDexRg3r1w5Amr1QXui5lv07//SfmRvab8pEBm5Awc3oF/
+ZioP/CJhOxPTXiDG7X+h+J1J3IRzC1nA4smQpBpN4mPWk0VG+dOuQJOCFGcETXAZ
+InBzaunUm3uYkvKZZMtku6+/5i8f0zxlF34vKxxpj4gQ5cMz9oiHl6xYVQ7Wq3TR
+pPdYGow5hpJz3QWdVHbmxgSkgJZjH6YcV0Q3xBEptSObiDZeKGGq/BRQZ83cRSOm
+6RLUsqtoea8YUWzlP/e9gl4qPF4v7gr0RIWdNxGRjA3EfXD88ek=
+=PlFW
 -----END PGP SIGNATURE-----
 
---BOT1Gv6Ia59JTS/C--
+--H0w6TjIoPk4Wa1/J--
