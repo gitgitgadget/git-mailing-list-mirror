@@ -1,41 +1,41 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lCJqYm1n";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SAzwcaEM"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HoW8/7Rr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vC3vJpUW"
 Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0B7610EB
-	for <git@vger.kernel.org>; Thu,  7 Dec 2023 05:13:27 -0800 (PST)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.nyi.internal (Postfix) with ESMTP id 567ED5C010E;
-	Thu,  7 Dec 2023 08:13:27 -0500 (EST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C1FD10CC
+	for <git@vger.kernel.org>; Thu,  7 Dec 2023 05:13:33 -0800 (PST)
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailout.nyi.internal (Postfix) with ESMTP id B350A5C01BD;
+	Thu,  7 Dec 2023 08:13:32 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Thu, 07 Dec 2023 08:13:27 -0500
+  by compute7.internal (MEProxy); Thu, 07 Dec 2023 08:13:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm1; t=1701954807; x=1702041207; bh=ki
-	SJce3V9YLGIX7s13Oq4wPPBI8iyECMkxocTJPtYGU=; b=lCJqYm1nVhwgFBgotn
-	L4nVEfZr2kBn+ueDSs4a1C4/1iS1y1iShIRQUZbMg+dMfOgK9JKUGl3B+vO13BAu
-	4FSDcbVGhB8QVKq+M0Y8LhjGUPcVHjv3eR54QAuf6S/dZ8ApNTbeYKM9+OnaNvmK
-	uwulO6f+QWnVuXv5WGQoDToTkT9U9571kqmCEhhfXHgx6XLhy4uGgOSdMeTeEPjk
-	obKkqFv7ZXXUJKQ4dsXs44/m1ihJ1fPhLKl3VQ9/b3Bnycb4f93m3Mc96lNpQwlw
-	zndWYCo3R7AxRN1Ms1TGMWdiM8YXPuV2a7Ikx1qqSAgz24nJ/18G9uMvC0uaCOU6
-	7eFA==
+	:subject:subject:to:to; s=fm1; t=1701954812; x=1702041212; bh=PK
+	U5el/4t7zKOEImcQqRK7x4/QvfdtExH0gH/CwLxqk=; b=HoW8/7Rr3IijJopyC8
+	7YhEGs8ErXo9j+KuvBgdt3bETA0mDVChUtTdpzJRjj0q8Q8Cxk1DTHTrlhOpHqJM
+	ffuvNHRcPgbgiJ136CV0CYDLRvki7bIS0XhuVXWZ+VM/8Nvt7CwXvvU+9xpo3uEc
+	KzZawnOB/3AjdUEuCXHDEvWNMGItWFv6eo8IWwjU3Bd/5Mn9wuR/58qLxRzHrGc3
+	wfn+OO29ogZX/cP7ykkxDoIbYUOMqGLSzH2BBUWQWJ/P6MFV5pvP5zKwGTQRZ96r
+	xFsVMmrgFaSNRTwZnLpqs3Hl6beQryI3FSaZHSL1nFKb350grlbcxZ1PkiFGXuFr
+	15Kw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm1; t=1701954807; x=1702041207; bh=kiSJce3V9YLGI
-	X7s13Oq4wPPBI8iyECMkxocTJPtYGU=; b=SAzwcaEMzbwB3O0o1DPBdRp3XJZF1
-	aPgNCz6zUJgKff6YC7y9oCd3jo2XcohFNo1BobO8y2+idbu1CkB9EMgnDA+8prRx
-	imcUHZTVFtlXvN/LBGqlK/4CgTGM1I+0RjkXc5VPAzPVD1JzZZrUIkCPmTUqXRaL
-	N8nrjWBJ9IAcmBk5Dxs6UQV5Wvvhc2LjPsXA0jMUueY5g0WAHpP0uIzhxnIMFRTx
-	4HJjIRWtLy/MPufC5h7wjju/e5qUNkzcuIXEsKwjVa/DCnB1Jt8VOkzY0/0ZgrkS
-	Ez16EzbzfC0dhbXeaQFxKGMZUGpfKftcVqVKW4Z2+Hg14qYBmkROR1pHw==
-X-ME-Sender: <xms:98RxZe5ABtTg-eka_8B4XlJjj0luyLBm2jW634AaDeYF7j6cNqJDPQ>
-    <xme:98RxZX6VXWyBGLQu53ECqBApx87xOTxKqefQGgrT_AqakLftO8x_eu86iBMuz9bdO
-    RKIpV0x-BD4Qs38aQ>
-X-ME-Received: <xmr:98RxZdcysENnBb8h-bCLesUE548yVdLNjJltCI4ttfbr0igYaNTM2mpI4vaCVwgRI3nPU9v7JAxDwb61iYC4Es2EUukQlA2RDUOfQ5MgNUH9Qvw>
+	:x-sasl-enc; s=fm1; t=1701954812; x=1702041212; bh=PKU5el/4t7zKO
+	EImcQqRK7x4/QvfdtExH0gH/CwLxqk=; b=vC3vJpUW/z6hBHEFcpG3Pf928pdH/
+	i6uH0Pc+4mX9gqpB4d06WKTD565a31slgZfJsTomnglSATWeC7mQPgMBqvIfKFk7
+	IrWB5dNWDh4m3YM9CU3x4ckraxDD49300AcbSHgnJku7p0+/4ZMnoJVZ9S/Fxg9v
+	MLDd6NmhSTfRQHOYvqFRDPAfU71IBQSF92jguCxFC9ojSEBxJBBylIGf6jWiN+Oj
+	9FLhOOKWQQottoMe0xHNyzirvhxDNpqmjtwSDMw4bLP3z6ooMzuf9hNXSlbVwd65
+	c7ySgCbitEMl7CMZm/gd8gatVw44mcRcL8/vvq7fW2akjf7F6TQwHppKA==
+X-ME-Sender: <xms:_MRxZRdpzuJg0wHHsDJb6D6SgMmAfmOuheOUXV7sCDfASS2vDt9WLw>
+    <xme:_MRxZfOEdx-VRnbaZX25xVvxombG_0HuerHpZ210EbW2Erfwcxa_HPj3dOW98oDhh
+    egeooFPcCXb6ZMRbg>
+X-ME-Received: <xmr:_MRxZahFughtUDAMW1WLJbn59C7navoC2YaKkHKujXlSmjhypESKyCPzegRP_cBdGwMrQSAP4jmjFNtVYTLjeBCNoGNhtL4OijjXW4ScoiYWe8Q>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudekvddghedtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
@@ -43,26 +43,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudekvddghedtucetufdoteggod
     phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
     eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedunecurfgr
     rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:98RxZbI7yrQG6nJaS7NEgkDT02VPAUM8VYlP3Ffl2vtpM7J9NbT3TA>
-    <xmx:98RxZSIbGUzcCPWiMUzdncHLiCwOBkQ-Xc0HlzO3hUPJ2sWyV0qWnw>
-    <xmx:98RxZcy1T_VIhvjN-ftXrPf6wKYO5Dky2aeCuSxPm6zmXwk_4_yekQ>
-    <xmx:98RxZZWqyy2k1noqJnjwYqbwWHTb4vIOEqG0vN0iDvTjP7G9eJzriQ>
+X-ME-Proxy: <xmx:_MRxZa8EqD0_wzVtfR5JNKwWqqvQCZT7EQSEAcbl4VH1NoIfh2KRLg>
+    <xmx:_MRxZdv8VoTd09UGFa3E4FLnHU00P0U5SpwUtKdyX1b5seYijDitrA>
+    <xmx:_MRxZZEHAQUVju6DJdBV41D5z6lT94xRevY9J1aUXHtTZkleqSKyVw>
+    <xmx:_MRxZW6qtGMIE9d6_8llZE-2mXC6iWAVY5TQokRH2x_ZM3OCvueCkA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 7 Dec 2023 08:13:26 -0500 (EST)
+ 7 Dec 2023 08:13:31 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 49ea5e67 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 7 Dec 2023 13:11:58 +0000 (UTC)
-Date: Thu, 7 Dec 2023 14:13:24 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 2a0c8257 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 7 Dec 2023 13:12:03 +0000 (UTC)
+Date: Thu, 7 Dec 2023 14:13:29 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 14/24] pack-objects: keep track of `pack_start` for each
- reuse pack
-Message-ID: <ZXHE9L7iqXQAit_1@tanuki>
+Subject: Re: [PATCH 16/24] pack-objects: prepare `write_reused_pack()` for
+ multi-pack reuse
+Message-ID: <ZXHE-cLrP7iRHWHY@tanuki>
 References: <cover.1701198172.git.me@ttaylorr.com>
- <6f4fba861b59f909148775ee64c3ba89afc872b5.1701198172.git.me@ttaylorr.com>
+ <67a8196978244b56d4f60861f140b78c59d15e30.1701198172.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,133 +70,59 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="tjrvsalqpBhUH9Wy"
+	protocol="application/pgp-signature"; boundary="weMgyVlWs/m+aesh"
 Content-Disposition: inline
-In-Reply-To: <6f4fba861b59f909148775ee64c3ba89afc872b5.1701198172.git.me@ttaylorr.com>
+In-Reply-To: <67a8196978244b56d4f60861f140b78c59d15e30.1701198172.git.me@ttaylorr.com>
 
 
---tjrvsalqpBhUH9Wy
+--weMgyVlWs/m+aesh
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Nov 28, 2023 at 02:08:32PM -0500, Taylor Blau wrote:
-> When reusing objects from a pack, we keep track of a set of one or more
-> `reused_chunk`s, corresponding to sections of one or more object(s) from
-> a source pack that we are reusing. Each chunk contains two pieces of
-> information:
+On Tue, Nov 28, 2023 at 02:08:37PM -0500, Taylor Blau wrote:
+> The function `write_reused_pack()` within `builtin/pack-objects.c` is
+> responsible for performing pack-reuse on a single pack, and has two main
+> functions:
 >=20
->   - the offset of the first object in the source pack (relative to the
->     beginning of the source pack)
->   - the difference between that offset, and the corresponding offset in
->     the pack we're generating
+>   - it dispatches a call to `write_reused_pack_verbatim()` to see if we
+>     can reuse portions of the packfile in whole-word chunks
 >=20
-> The purpose of keeping track of these is so that we can patch an
-> OFS_DELTAs that cross over a section of the reuse pack that we didn't
-> take.
+>   - for any remaining objects (that is, any objects that appear after
+>     the first "gap" in the bitmap), call write_reused_pack_one() on that
+>     object to record it for reuse.
 >=20
-> For instance, consider a hypothetical pack as shown below:
->=20
->                                                 (chunk #2)
->                                                 __________...
->                                                /
->                                               /
->       +--------+---------+-------------------+---------+
->   ... | <base> | <other> |      (unused)     | <delta> | ...
->       +--------+---------+-------------------+---------+
->        \                /
->         \______________/
->            (chunk #1)
->=20
-> Suppose that we are sending objects "base", "other", and "delta", and
-> that the "delta" object is stored as an OFS_DELTA, and that its base is
-> "base". If we don't send any objects in the "(unused)" range, we can't
-> copy the delta'd object directly, since its delta offset includes a
-> range of the pack that we didn't copy, so we have to account for that
-> difference when patching and reassembling the delta.
->=20
-> In order to compute this value correctly, we need to know not only where
-> we are in the packfile we're assembling (with `hashfile_total(f)`) but
-> also the position of the first byte of the packfile that we are
-> currently reusing.
->=20
-> Together, these two allow us to compute the reused chunk's offset
-> difference relative to the start of the reused pack, as desired.
+> Prepare this function for multi-pack reuse by removing the assumption
+> that the bit position corresponding to the first object being reused
+> from a given pack may not be at bit position zero.
 
-Hm. I'm not quite sure I fully understand the motivation here. Is this
-something that was broken all along? Why does it become a problem now?
-Sorry if I'm missing the obvious here.
+Is this double-negation intended? We remove the assumption that we start
+reading at position zero, but the paragraph here states that we remove
+the assumption that we do _not_ start at bit zero.
 
-> Helped-by: Jeff King <peff@peff.net>
-> Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> ---
->  builtin/pack-objects.c | 11 ++++++++---
->  1 file changed, 8 insertions(+), 3 deletions(-)
->=20
-> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> index 7682bd65bb..eb8be514d1 100644
-> --- a/builtin/pack-objects.c
-> +++ b/builtin/pack-objects.c
-> @@ -1016,6 +1016,7 @@ static off_t find_reused_offset(off_t where)
-> =20
->  static void write_reused_pack_one(struct packed_git *reuse_packfile,
->  				  size_t pos, struct hashfile *out,
-> +				  off_t pack_start,
->  				  struct pack_window **w_curs)
->  {
->  	off_t offset, next, cur;
-> @@ -1025,7 +1026,8 @@ static void write_reused_pack_one(struct packed_git=
- *reuse_packfile,
->  	offset =3D pack_pos_to_offset(reuse_packfile, pos);
->  	next =3D pack_pos_to_offset(reuse_packfile, pos + 1);
-> =20
-> -	record_reused_object(offset, offset - hashfile_total(out));
-> +	record_reused_object(offset,
-> +			     offset - (hashfile_total(out) - pack_start));
-> =20
->  	cur =3D offset;
->  	type =3D unpack_object_header(reuse_packfile, w_curs, &cur, &size);
-> @@ -1095,6 +1097,7 @@ static void write_reused_pack_one(struct packed_git=
- *reuse_packfile,
-> =20
->  static size_t write_reused_pack_verbatim(struct packed_git *reuse_packfi=
-le,
->  					 struct hashfile *out,
-> +					 off_t pack_start UNUSED,
->  					 struct pack_window **w_curs)
->  {
->  	size_t pos =3D 0;
-> @@ -1126,10 +1129,12 @@ static void write_reused_pack(struct packed_git *=
-reuse_packfile,
->  {
->  	size_t i =3D 0;
->  	uint32_t offset;
-> +	off_t pack_start =3D hashfile_total(f) - sizeof(struct pack_header);
-
-Given that this patch in its current state doesn't seem to do anything
-yet, am I right in assuming that `hashfile_total(f) - sizeof(struct
-pack_header)` is always expected to be zero for now?
+I'll stop reviewing here and will come back to this series somewhen next
+week.
 
 Patrick
 
---tjrvsalqpBhUH9Wy
+--weMgyVlWs/m+aesh
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVxxPMACgkQVbJhu7ck
-PpTSFw/9EX2HO3hAYawUYmZIcVkrnRh/zk9U0tuVvWXKlDg+vNyfjGPDlHNec0Vh
-qbzdk4+eBnMhGJlzlz116Z6Glhiv6LB1fIz3tfgt98H5MVEfaYsW9byH1mDL0NKJ
-EVc2IYM29EucFs6ovhAai2weTjxVOvghNqTyJGefqEA2L8UfGMtLbXlOIUxQoQzz
-rSwTrO6x045aU2ehI/wybKxlVAU51oyxlo9Mh+3+Tip9MylyLpFCTSIk6dD9eDkV
-ovJboBzrQB5uPRPLmwpiqerHZagQpp1hjPMqmDb6Igee9WRct2cmcxhhXsLx3wFv
-QF+mXgteAvr1COITFUUdnWtFC2SNA2gcXa6XMShQ6umjPCSxHim7TLKmbL131MNv
-kqVUhQHCwBt0sXaGBhjVViUuu+5vMMvxoCAYd8o6V00Mp+felK/DXT7QJGL7uTaG
-znemjk1wU2Xm4el2GGXfFbpuaAQUp4uMTW+EK8+Vmj36lMwOHSOksOOaqth0h/0v
-tx/KFo4FxhhXgnH7dCkBZeDnEeha+g2x7g2Po6D9vxh6TKSBEBR4sVwPTDrFxaSy
-Tywt7LdkqZDqP5ntBfoec8rIatM86x1LemCQ80epyuL5OERoakcREeNz7oqcMKEP
-X+aip8yodnJjIVMzek2YKWU3YgO2qJ/qEHMlsumDNbtJecmyHaA=
-=NEmT
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVxxPgACgkQVbJhu7ck
+PpR1nxAAn3XCbnIrQgM/MrtTS3gilHDBY5/UFFUAYwQ29utPnfLvg7TPRFI32Tr9
+gM6q8AdxwG+iW6gh09CEqo9xQITmO6cbGpjkpuQun20vvTXl0lQlS/VVP4WdW4N0
+0xGVLtZPQaTdfbuWjLrGcW18ki2gvsb0XNNFpVQYXOusSxjaj4xBk/gGiptDYqmO
+ek+I4a7WurQOaRW7PXofGu87OtPEVFuTVIKKp2D7IEsnn8PbMni03fmH3v/zPIZ6
+Z7/4wglzlSIlknrqUfw34i2d0tzxqwxD/Y9GM1vZvP3XD8zMnAHzQhq0n3coUO0r
+zNsucbZq8yH9KMIIeK2KtsU8y6RjZOEcKbeSLmoUExPF0oL8oyvrbDi2xnyKdQJ8
+7Lfp3cr2N/l4g1jYSfiJC8lJuiiFol6J/76lMBnaZBjxicicGJAcoZpyi2p7/lWl
+6pBFZytutcxD7SALXC9/ajES004MmtL6jQMKidD66nfIseG/2nheA7Umoe9CyaKh
+Gx1gHncmI9kieTbsZr5am0IiqDDRvuVkRGwJizJMZudolv4JDvYO5Uo1/3lZB7Rr
+w3SAQ8ZCMpfZLtKimU9pb1fuH+KXZR3UmaCdgrgwkFaDY/P9v17U2lmJnKSJxA3W
+D1+Cm2RlF20cB5Ma/uZ23b1ye46tHD1AYZVinPsFdPH1W8Fm6Tg=
+=gRr1
 -----END PGP SIGNATURE-----
 
---tjrvsalqpBhUH9Wy--
+--weMgyVlWs/m+aesh--
