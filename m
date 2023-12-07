@@ -1,19 +1,20 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5B9B137
-	for <git@vger.kernel.org>; Wed,  6 Dec 2023 23:25:24 -0800 (PST)
-Received: (qmail 10020 invoked by uid 109); 7 Dec 2023 07:25:24 -0000
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 044EB137
+	for <git@vger.kernel.org>; Wed,  6 Dec 2023 23:26:12 -0800 (PST)
+Received: (qmail 10026 invoked by uid 109); 7 Dec 2023 07:26:12 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 07 Dec 2023 07:25:24 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 07 Dec 2023 07:26:12 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1088 invoked by uid 111); 7 Dec 2023 07:25:28 -0000
+Received: (qmail 1092 invoked by uid 111); 7 Dec 2023 07:26:16 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 07 Dec 2023 02:25:28 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 07 Dec 2023 02:26:16 -0500
 Authentication-Results: peff.net; auth=none
-Date: Thu, 7 Dec 2023 02:25:23 -0500
+Date: Thu, 7 Dec 2023 02:26:11 -0500
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-Subject: [PATCH 5/9] diff: give more detailed messages for bogus diff.* config
-Message-ID: <20231207072523.GE1277973@coredump.intra.peff.net>
+Subject: [PATCH 6/9] config: use git_config_string() for
+ core.checkRoundTripEncoding
+Message-ID: <20231207072611.GF1277973@coredump.intra.peff.net>
 References: <20231207072338.GA1277727@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -25,62 +26,77 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20231207072338.GA1277727@coredump.intra.peff.net>
 
-The config callbacks for a few diff.* variables simply return -1 when we
-encounter an error. The message you get mentions the offending location,
-like:
+Since this code path was recently converted to check for a NULL value,
+it now behaves exactly like git_config_string(). We can shorten the code
+a bit by using that helper.
 
-  fatal: bad config variable 'diff.algorithm' in file '.git/config' at line 7
-
-but is vague about "bad" (as it must be, since the message comes from
-the generic config code). Most callbacks add their own messages here, so
-let's do the same. E.g.:
-
-  error: unknown value for config 'diff.algorithm': foo
-  fatal: bad config variable 'diff.algorithm' in file '.git/config' at line 7
-
-I've written the string in a way that should be reusable for
-translators, and matches another similar message in transport.c (there
-doesn't yet seem to be a popular generic message to reuse here, so
-hopefully this will get the ball rolling).
-
-Note that in the case of diff.algorithm, our parse_algorithm_value()
-helper does detect a NULL value string. But it's still worth detecting
-it ourselves here, since we can give a more specific error message (and
-which is the usual one for unexpected implicit-bool values).
+Note that git_config_string() takes a const pointer, but our storage
+variable is non-const. We're better off making this "const", though,
+since the default value points to a string literal (and thus it would be
+an error if anybody tried to write to it).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- diff.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+An observant reader may notice that this means duplicate config like:
 
-diff --git a/diff.c b/diff.c
-index 5b213a4b44..a2def45644 100644
---- a/diff.c
-+++ b/diff.c
-@@ -445,9 +445,12 @@ int git_diff_ui_config(const char *var, const char *value,
- 	}
- 
- 	if (!strcmp(var, "diff.algorithm")) {
-+		if (!value)
-+			return config_error_nonbool(var);
- 		diff_algorithm = parse_algorithm_value(value);
- 		if (diff_algorithm < 0)
--			return -1;
-+			return error(_("unknown value for config '%s': %s"),
-+				     var, value);
+  [core]
+  checkRoundTripEncoding = foo
+  checkRoundTripEncoding = bar
+
+will leak the string for "foo". That is true before this patch, too, and
+is true of all callers of git_config_string(). I'm going to punt on that
+for now, and look into it as a separate series.
+
+ config.c      | 8 ++------
+ convert.h     | 2 +-
+ environment.c | 2 +-
+ 3 files changed, 4 insertions(+), 8 deletions(-)
+
+diff --git a/config.c b/config.c
+index d997c55e33..00a11b5d98 100644
+--- a/config.c
++++ b/config.c
+@@ -1551,12 +1551,8 @@ static int git_default_core_config(const char *var, const char *value,
  		return 0;
  	}
  
-@@ -486,7 +489,8 @@ int git_diff_basic_config(const char *var, const char *value,
- 			return config_error_nonbool(var);
- 		val = parse_ws_error_highlight(value);
- 		if (val < 0)
--			return -1;
-+			return error(_("unknown value for config '%s': %s"),
-+				     var, value);
- 		ws_error_highlight_default = val;
- 		return 0;
- 	}
+-	if (!strcmp(var, "core.checkroundtripencoding")) {
+-		if (!value)
+-			return config_error_nonbool(var);
+-		check_roundtrip_encoding = xstrdup(value);
+-		return 0;
+-	}
++	if (!strcmp(var, "core.checkroundtripencoding"))
++		return git_config_string(&check_roundtrip_encoding, var, value);
+ 
+ 	if (!strcmp(var, "core.notesref")) {
+ 		if (!value)
+diff --git a/convert.h b/convert.h
+index d925589444..ab8b4fa68d 100644
+--- a/convert.h
++++ b/convert.h
+@@ -92,7 +92,7 @@ void convert_attrs(struct index_state *istate,
+ 		   struct conv_attrs *ca, const char *path);
+ 
+ extern enum eol core_eol;
+-extern char *check_roundtrip_encoding;
++extern const char *check_roundtrip_encoding;
+ const char *get_cached_convert_stats_ascii(struct index_state *istate,
+ 					   const char *path);
+ const char *get_wt_convert_stats_ascii(const char *path);
+diff --git a/environment.c b/environment.c
+index 9e37bf58c0..90632a39bc 100644
+--- a/environment.c
++++ b/environment.c
+@@ -64,7 +64,7 @@ const char *excludes_file;
+ enum auto_crlf auto_crlf = AUTO_CRLF_FALSE;
+ enum eol core_eol = EOL_UNSET;
+ int global_conv_flags_eol = CONV_EOL_RNDTRP_WARN;
+-char *check_roundtrip_encoding = "SHIFT-JIS";
++const char *check_roundtrip_encoding = "SHIFT-JIS";
+ enum branch_track git_branch_track = BRANCH_TRACK_REMOTE;
+ enum rebase_setup_type autorebase = AUTOREBASE_NEVER;
+ enum push_default_type push_default = PUSH_DEFAULT_UNSPECIFIED;
 -- 
 2.43.0.664.ga12c899002
 
