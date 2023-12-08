@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Su6S/xTI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yduoodw8"
-Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E1BF172D
-	for <git@vger.kernel.org>; Fri,  8 Dec 2023 00:24:12 -0800 (PST)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.west.internal (Postfix) with ESMTP id B5EFE3200A73;
-	Fri,  8 Dec 2023 03:24:11 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Fri, 08 Dec 2023 03:24:11 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="J8x4m//Z";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kWAPfDp6"
+Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C64F49F9
+	for <git@vger.kernel.org>; Fri,  8 Dec 2023 06:53:01 -0800 (PST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.west.internal (Postfix) with ESMTP id DD9313200A1E;
+	Fri,  8 Dec 2023 09:53:00 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute3.internal (MEProxy); Fri, 08 Dec 2023 09:53:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm1; t=1702023851; x=1702110251; bh=gQ
-	MrucMK6KNVRQd3RDJeMHny+aTfnUE/8b4mphtXpPM=; b=Su6S/xTIGCB+B2+1dh
-	HD1T8NtNynGWo6F+NRJDIaouFYqpyxgPhvh2jkm24ncEt9pNtXmRNBiQIZ0r6HSF
-	w/G5syTFT3xXJt4PfhYt6TkLDBVBoq7RbdI/KKtl7onXJrRNoFWy6Kyd5Iu44ddZ
-	ZFX8H3OEGnL1okoo3xtPnKIkNsHXcjpF4C9zPdGWrzTQpoAxYnrDxq8I1Vo3cphi
-	NezsNrbYD5eBiltnJWXAH56x2Nn+yJbHmQ9LKPliO2gfN/XLG2a/g4e3m++YAzoF
-	9aVQBijgDVXXnPji+lwk6OMyKMOjm4h6TyGkiEgrkILXALsRRTvzsRmhrNE5oUXM
-	f78w==
+	:subject:subject:to:to; s=fm1; t=1702047180; x=1702133580; bh=Zz
+	0iv8TEZagcxXQ9PtKJFySXBoGfoSd0GOGycMwMR04=; b=J8x4m//ZZ4WeXD9Lyx
+	Yxo13WxJs8K5kGiwzHlleatPL3DxlySVxeOxF2OmCaUQ3pZBePylde5lsAUnjTEC
+	Suw/9F0C57w1e7l9VRUWzYl/LpXiKDIOjV94/Gy/06gGB/B0i1Pfv7PlihT7ExMd
+	uPIQowknges/wzsSNwGRme406Bu0mJqNbKAIxgzjvFQkVS7Y4A2O7A1bR7uXxAR8
+	2G3VpZsoBTWveHiu8nffZCyWC/8HrsgWnEqK5ysvdSv4MlBpzXpNaGu1k/eYovI1
+	BqfD+3YRrfGh3yP+l3+sE375fnTWzoVe+OXjQcT7IKCz11EODukgKuIm1+rPoVZ3
+	SXXw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm1; t=1702023851; x=1702110251; bh=gQMrucMK6KNVR
-	Qd3RDJeMHny+aTfnUE/8b4mphtXpPM=; b=yduoodw8IuMDt1Kc+bL7k5n644+ma
-	EubxqPXmWjJnZLBN+deoLR81cjsotSVhIO9RsnNY3U5vPIdfSlraD9WQg37uakc4
-	leQWUxL/DjtSA8X3lAKUWZx6Zhwlxi63X6YcBlVJbgbB22EdN/MGJI0p/pbnHd1T
-	ErhqLv0syK5VCXu3WB22PGei8l76BYkR3XOxAld0JSgxoc1ozexyEX1u6WqAiUtJ
-	ZOWw2CaQ1DT4N3PIK+x1N9LKLcXOU9koteZaKd5L+px8RAndy1tYf/Jn9TkPy6aK
-	k7FvvMHxGFi9vNAzWmecdfc/JOeI3ztkTpArTC5L74HQFq8mqTzUW5Q/A==
-X-ME-Sender: <xms:q9JyZXT6Dj69gfmAszL3i8ZYeqdVt-IXmSoVmrFaVHgTyXmx_FmlAg>
-    <xme:q9JyZYz3SqTDimZ_cNua-ypzy-rqHC6h7Z490K0XR3yQgJJN4g1LNBwyN7Tx40hZf
-    eYvhqbmNjNRDlWHmg>
-X-ME-Received: <xmr:q9JyZc2Gw-KF3OJ2QXyv5bS748gAmjZ54qlPmWAAKhpcgrWUxgH88d-8BVJkDOZ7fTz-Rwqze7xkDH84N9HOcDEfpcYXZIiojqrlI1piytyQb6c>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudekhedgieehucetufdoteggodetrfdotf
+	:x-sasl-enc; s=fm1; t=1702047180; x=1702133580; bh=Zz0iv8TEZagcx
+	XQ9PtKJFySXBoGfoSd0GOGycMwMR04=; b=kWAPfDp6qL9sbRwP0ZHk+CcEIr+fh
+	1tT3NKGMEYfIsbWpNjfPCn8M6y8VVvflxVg8UvK0xHX6NjQcsW3jCEUhKIJKCrz4
+	besGhoffoXeSYwn3PNuBHcvxA5fUCab0zm6kK+AEVhlhlqjSfv5zmbNBCmCB/s6B
+	T+rRueI2sgAEKRnF8+zQGZxzT5J5lMxhQrbExRk4QN9hWiDfxMa1BWcNgyiG98Y3
+	CyJC0jb41mwdLJSr2Af377RcflwCnxDaN2HIEBmcwgYUP8NmdpVgMPQJqwsSU+cL
+	4prpuxMG6wbak8KTf8GTq6EIcQNXVNNr5cdTBPK/vYTTscSRctJ72x3KQ==
+X-ME-Sender: <xms:zC1zZVoOviJNqcJqlicaDlh4SfwG9SP_jO5MGxEaDyIS7NVnlAI3cg>
+    <xme:zC1zZXoUvxq7ZOgkn1NnxM3-igQB-Ag002AVk2-6w1ATcY3lFXn8UeDNlBT-vNCvz
+    5xp9fZ2u9O6xklexg>
+X-ME-Received: <xmr:zC1zZSOsmbMhxL9rhLy5E79VoyPlFdmZ03nm8NQKwgeP6X3vkIQ9NxXxjaCN9HsZtBmjvv5Yoth6QlXMj0atJJ9BN9Avr4RRoTMZAOp9f7xiajw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudekiedgjeduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
@@ -44,25 +44,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudekhedgieehucetufdoteggod
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
     necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:q9JyZXD_O4gyYYcTHqDo5DwI3Hx0UaMK85cQpxF1R6BvLB_FrRnXaw>
-    <xmx:q9JyZQgnjsBJVh0p1nb1vOmJez7O_yZ7yIsyIBr1dFDuH1af44zCVQ>
-    <xmx:q9JyZbpq3h_7u1zLjbsSDikAh1_9BIQxAIMY04ycGVZhwt49MhWQDA>
-    <xmx:q9JyZYLQ26ILW3zKYJE3ZzcN2aN-TR6-n4_CSzcTUD-v-adL-72fRA>
+X-ME-Proxy: <xmx:zC1zZQ4pPdhBrCSgF3hk1BfNMT74Yj1_aqS1pXTNQockJa0GApPmKQ>
+    <xmx:zC1zZU7TGD7yB9cRqHREFKOX0zSUjMXcSk8GnXFZAg0u-5fOdFwpCQ>
+    <xmx:zC1zZYioOK9qnhTvDemi9-_kpbegAWWdnBncT8rNAUdDssFtzB0NfQ>
+    <xmx:zC1zZSQIv5hNHhHkJcMPPLby5RR7ipvcUAcnq5UjU20GAoosBBqz1Q>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 8 Dec 2023 03:24:10 -0500 (EST)
+ 8 Dec 2023 09:52:59 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id f379a1cf (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 8 Dec 2023 08:22:39 +0000 (UTC)
-Date: Fri, 8 Dec 2023 09:24:07 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 0d60eb7e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 8 Dec 2023 14:51:28 +0000 (UTC)
+Date: Fri, 8 Dec 2023 15:52:57 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Stan Hu <stanhu@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] completion: refactor existence checks for
- pseudorefs
-Message-ID: <ZXLSpyE5ZW0ANmsi@tanuki>
-References: <cover.1701928891.git.stanhu@gmail.com>
- <1c6a747691f36ede4224b6d4c2e0c8fd4c0575fd.1701928891.git.stanhu@gmail.com>
+To: git@vger.kernel.org
+Cc: Han-Wen Nienhuys <hanwenn@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH v2 01/11] reftable: wrap EXPECT macros in do/while
+Message-ID: <0ebbb02d32e1f1f483c21157fe076c0890665f69.1702047081.git.ps@pks.im>
+References: <cover.1700549493.git.ps@pks.im>
+ <cover.1702047081.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,65 +70,134 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="mreX2BZ2KwUPR1XG"
+	protocol="application/pgp-signature"; boundary="B2hrub5rLcuPLfK4"
 Content-Disposition: inline
-In-Reply-To: <1c6a747691f36ede4224b6d4c2e0c8fd4c0575fd.1701928891.git.stanhu@gmail.com>
+In-Reply-To: <cover.1702047081.git.ps@pks.im>
 
 
---mreX2BZ2KwUPR1XG
+--B2hrub5rLcuPLfK4
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Dec 06, 2023 at 10:06:39PM -0800, Stan Hu wrote:
-> In preparation for the reftable backend, this commit introduces a
-> '__git_pseudoref_exists' function that continues to use 'test -f' to
-> determine whether a given pseudoref exists in the local filesystem.
->=20
-> Signed-off-by: Stan Hu <stanhu@gmail.com>
-> ---
->  contrib/completion/git-completion.bash | 20 +++++++++++++++-----
->  1 file changed, 15 insertions(+), 5 deletions(-)
->=20
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/=
-git-completion.bash
-> index 13a39ebd2e..9fbdc13f9a 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -122,6 +122,15 @@ __git ()
->  		${__git_dir:+--git-dir=3D"$__git_dir"} "$@" 2>/dev/null
->  }
-> =20
-> +# Runs git in $__git_repo_path to determine whether a ref exists.
-> +# 1: The ref to search
-> +__git_ref_exists ()
+The `EXPECT` macros used by the reftable test framework are all using a
+single `if` statement with the actual condition. This results in weird
+syntax when using them in if/else statements like the following:
 
-I first thought that you missed Junio's point that `__git_ref_exists`
-may better be renamed to something lkie `__git_pseudoref_exists`. But
-you do indeed change the name in the second patch. I'd propose to
-instead squash the rename into the first patch so that the series
-becomes easier to read.
+```
+if (foo)
+	EXPECT(foo =3D=3D 2)
+else
+	EXPECT(bar =3D=3D 2)
+```
 
-Patrick
+Note that there need not be a trailing semicolon. Furthermore, it is not
+immediately obvious whether the else now belongs to the `if (foo)` or
+whether it belongs to the expanded `if (foo =3D=3D 2)` from the macro.
 
---mreX2BZ2KwUPR1XG
+Fix this by wrapping the macros in a do/while loop.
+
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ reftable/test_framework.h | 58 +++++++++++++++++++++------------------
+ 1 file changed, 32 insertions(+), 26 deletions(-)
+
+diff --git a/reftable/test_framework.h b/reftable/test_framework.h
+index 774cb275bf..ee44f735ae 100644
+--- a/reftable/test_framework.h
++++ b/reftable/test_framework.h
+@@ -12,32 +12,38 @@ license that can be found in the LICENSE file or at
+ #include "system.h"
+ #include "reftable-error.h"
+=20
+-#define EXPECT_ERR(c)                                                  \
+-	if (c !=3D 0) {                                                  \
+-		fflush(stderr);                                        \
+-		fflush(stdout);                                        \
+-		fprintf(stderr, "%s: %d: error =3D=3D %d (%s), want 0\n",  \
+-			__FILE__, __LINE__, c, reftable_error_str(c)); \
+-		abort();                                               \
+-	}
+-
+-#define EXPECT_STREQ(a, b)                                               \
+-	if (strcmp(a, b)) {                                              \
+-		fflush(stderr);                                          \
+-		fflush(stdout);                                          \
+-		fprintf(stderr, "%s:%d: %s (%s) !=3D %s (%s)\n", __FILE__, \
+-			__LINE__, #a, a, #b, b);                         \
+-		abort();                                                 \
+-	}
+-
+-#define EXPECT(c)                                                         =
+ \
+-	if (!(c)) {                                                        \
+-		fflush(stderr);                                            \
+-		fflush(stdout);                                            \
+-		fprintf(stderr, "%s: %d: failed assertion %s\n", __FILE__, \
+-			__LINE__, #c);                                     \
+-		abort();                                                   \
+-	}
++#define EXPECT_ERR(c)                                                     =
+     \
++	do {                                                                   \
++		if (c !=3D 0) {                                                  \
++			fflush(stderr);                                        \
++			fflush(stdout);                                        \
++			fprintf(stderr, "%s: %d: error =3D=3D %d (%s), want 0\n",  \
++				__FILE__, __LINE__, c, reftable_error_str(c)); \
++			abort();                                               \
++		}                                                              \
++	} while (0)
++
++#define EXPECT_STREQ(a, b)                                                =
+       \
++	do {                                                                     \
++		if (strcmp(a, b)) {                                              \
++			fflush(stderr);                                          \
++			fflush(stdout);                                          \
++			fprintf(stderr, "%s:%d: %s (%s) !=3D %s (%s)\n", __FILE__, \
++				__LINE__, #a, a, #b, b);                         \
++			abort();                                                 \
++		}                                                                \
++	} while (0)
++
++#define EXPECT(c)                                                         =
+         \
++	do {                                                                     =
+  \
++		if (!(c)) {                                                        \
++			fflush(stderr);                                            \
++			fflush(stdout);                                            \
++			fprintf(stderr, "%s: %d: failed assertion %s\n", __FILE__, \
++				__LINE__, #c);                                     \
++			abort();                                                   \
++		}                                                                  \
++	} while (0)
+=20
+ #define RUN_TEST(f)                          \
+ 	fprintf(stderr, "running %s\n", #f); \
+--=20
+2.43.0
+
+
+--B2hrub5rLcuPLfK4
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVy0qYACgkQVbJhu7ck
-PpTNWRAAkeePKbjVr8dUVey20OSotZwhplKN+7lxeWMHWDViHBzvQQXOYhjDsmX8
-I6c6cyHLMCbDwtEFnH0ZLTh9HqDatMllSbmF1GX3MeJMY8a/AZMVlbe41IzDan0a
-qmjv2tFoW4rEPH6O3M0To916RenBVTwA/3Rn27uBRWie9pFBGRbShcWMGpGUzqkR
-u03qDK8OA1w3TgQQ9/gBcgI1A8tvsus+18SF5t4XoCDdLVcljyCsa5cVcjGAd/29
-dtTC86AbA6pfDfOUNfITXPwHpTL6dTGQnatLkCNpuXzcMfaxx8WE4iQP7Dz3EJwk
-WjjPh3sDdvQn7Aw5z8ZWSKzkHRg9e20vW11seTBXlisU940st6HCiduHe/jVxgbL
-42qRY2dVS5LybGznJK1mLMLxtsMLAWq5LUd1IHrQzhnNSjKyvovNbf/W5V5O2B9S
-Nj1ZJcq4em3htfH2CGguVVIaEHHTEnTA1FQfMI7BZ10ipZtXrXrrnPmcJjwwUg8L
-J4+nROcjeIOw4lP3eMwD/S4L1swGE1CGF8xwGy7utBAgA71tptrULZ6tnQlcAvFP
-oA9s29imCBT8mGQMOSL/Pgsxyt8bXYWF+KI9wenczxAREf9e7WbqBiENg28e1xm9
-3FUeLTU1r4ZA2VlieRtPnvxEVnqBpdfRoCnVapYlKk64hvLNAx8=
-=n+xM
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVzLcgACgkQVbJhu7ck
+PpTMww/8C6sxIZaKEsr+/Uz5VFx4yn0l7etmN2LenmBqtuuegxspLXMZ4YrS+KAw
+sb3yzZT2HkgxklZi3aPVy/d2pV4AMo6WiqJXlmNrzQLYbPIt1xbhE9R7dLK/pNZN
+Rd9a9jZJvdZvB4EMtW37d4w9V1RvQVoEsiW7C9E2SOasCQkYbjElD82UmOLVhsRn
+zXqEuC/qMVutfNmsAx+eDCQ8U1C90Q6NsbyTTSyiWosOUpf6TsUOyLdP7mtzY/HL
+rBBSMMLYq6I087UBk4wy1HT+ZbagSgfu6ZWZ5dTNILDJcnRItvQRCfGPkVb0QDfd
+CpQXsxPIpAunMgSHXqomHWPgTh7PALRPOsbmbdLnS49rVNmE1PdblUuTmWH0P+8b
+iJjr892DrGfDHO1pbZgOM1d77NyS2z97JC2sjfLHXYlwDQeOHyzjkkbx1EL8PvXQ
+JTt/FTMmgrIEBpGxmco/D8H8SfdWA1E3HGYSUWlqoVofl0GS3xTNH316Nsm5aJ/C
+87qQ/AqopQyQ6RVwYNDf69+gih2EwoCuglhTiR+cYXwmjHdlzTYMn3UX2l0XTAWk
++0m9v3m/N1YWsgOTNVd672amFW90zmqhAVwCZCKNDF75cZpPD5Yw2xBILhtbHSzW
+RLU0mByIiOAJvw88h/tSXtgxVR3nFK/OsIQizwU1TK9JDiYsEKg=
+=BMr3
 -----END PGP SIGNATURE-----
 
---mreX2BZ2KwUPR1XG--
+--B2hrub5rLcuPLfK4--
