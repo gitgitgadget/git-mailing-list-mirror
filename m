@@ -1,62 +1,128 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=idiomdrottning.org header.i=@idiomdrottning.org header.b="LRs/kk3Y"
-Received: from halsen.idiomdrottning.org (halsen.idiomdrottning.org [74.207.231.133])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2970611F
-	for <git@vger.kernel.org>; Fri,  8 Dec 2023 10:57:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=idiomdrottning.org;
-	s=idiomdrottningorg; t=1702061855;
-	bh=jQlNkBay/ftY39DvvjZnXbcDbWV9FInJFWPrG2NIUnQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-	b=LRs/kk3YZmcaSY9dj31CADMDJM++WrvoTburFSStmmhgtZtJzaHMBgZ8ui0oLZ6X/
-	 B0GnaXcoHGVvbZ3FGpOYbTHdmoCKVJmOGlYPRbIA0kmzS0wFwyULMA6v35n1e9zl/m
-	 15yIVLp0ZndKE+UMFMExKJ58tVxp8eGQFiymC2pKUFajHXXG5oIt+dkmS0TW7yVnfl
-	 m+w4clokwcl2Kp4EEFXlM4QHZroYLyZ9WPS3tiAbKPz7Sfgn5OkxgIdrSijAH0XaN0
-	 ZJABP2Ly+9qh0RK4Z+4y0luzgDAPVFzd7tvPqczAJrxwietMs6X37hkVHSMoudhxpU
-	 VZfdDA/oX0+EA==
-Received: from localhost (31-211-247-254.customers.ownit.se [31.211.247.254])
-	by halsen.idiomdrottning.org (Postfix) with ESMTPSA id C67C51FA98;
-	Fri,  8 Dec 2023 19:57:34 +0100 (CET)
-From: Sandra Snan <sandra.snan@idiomdrottning.org>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: git@vger.kernel.org
-Subject: Re: getting git send-email patches from someone who is behind
-In-Reply-To: <20231208-amusing-vengeful-raptor-e71a8b@meerkat>
-References: <87h6ksk2hk.fsf@ellen.idiomdrottning.org>
- <20231208-amusing-vengeful-raptor-e71a8b@meerkat>
-Autocrypt: addr=sandra.snan@idiomdrottning.org; prefer-encrypt=mutual; keydata=
- mDMEZWEIEhYJKwYBBAHaRw8BAQdAahVPtpoqkiV62AL3GSY4JaPS0i3Bu3fhbe5WIFQG9pa0LFNh
- bmRyYSBTbmFuIDxzYW5kcmEuc25hbkBpZGlvbWRyb3R0bmluZy5vcmc+iJMEExYIADsCGwMFCwkI
- BwIGFQoJCAsCBBYCAwECHgECF4AWIQSM+QwgZjV9IBEt0Difw0TKEvFISgUCZWJbSgIZAQAKCRCf
- w0TKEvFIShsYAPsFMXn+tFcAwdI2hrkqqQY8I5EC9UWYC9t57VjiYv2uYQD+PUNVHVSBGQDycf3V
- /nXqXvZvTfcFMOz0PVMzibPl0AiIkAQTFggAOBYhBIz5DCBmNX0gES3QOJ/DRMoS8UhKBQJlYQgS
- AhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEJ/DRMoS8UhK07EA/iV2B5e3r8t8/StJT38d
- x9YbuoSBmbYZJ6JHH9hoyv0hAPwMiH1M8zZUeQK/TQDqkg2Hjk0xL+U7i9ggocLJEAWQDbg4BGVh
- CBISCisGAQQBl1UBBQEBB0BqHjRRmoXeZmeeUZOqL1ebAflzYFA3jHwxl2sLMLlMCgMBCAeIeAQY
- FggAIBYhBIz5DCBmNX0gES3QOJ/DRMoS8UhKBQJlYQgSAhsMAAoJEJ/DRMoS8UhK4o0BAOB7ChkN
- Jc0oxRDg9WvrbUCnpLU/QdjMFcC8ymLRdzxaAP4gZVL0JQfxulc/JAxotCevk1PAF+UXpY8QalTI
- dooaAA==
-Date: Fri, 08 Dec 2023 19:57:33 +0100
-Message-ID: <87a5qkjzdu.fsf@ellen.idiomdrottning.org>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KUnRVM9v"
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EE461732
+	for <git@vger.kernel.org>; Fri,  8 Dec 2023 12:36:37 -0800 (PST)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 5178830F29;
+	Fri,  8 Dec 2023 15:36:35 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=uf8JQ3FTgfB9DbU2iGI+rCyvT+cRkU3raCfuA3
+	gVovE=; b=KUnRVM9vqSqXadYmkuOHlFXGgKOsMH/ksaDFeamlsz0lEF5iG2QYR/
+	EaGXZEnH8+wNGGLg/zqf0Ewc+KiBE5U18vfjo9B1KSWo6ttujSmcWkCJwxKkLll6
+	sU/SUg+xGbGF0YmHDomobjwej1m21ahs9d0kpS0s0iUWw6o66+qlE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 49E1630F28;
+	Fri,  8 Dec 2023 15:36:35 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.103.223])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E078E30F27;
+	Fri,  8 Dec 2023 15:36:31 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: Britton Kerin <britton.kerin@gmail.com>
+Subject: Re: [BUG] rev-list doesn't validate arguments to -n option
+In-Reply-To: <CAC4O8c-nuOTS=a0sVp1603KaM2bZjs+yNZzdAaa5CGTNGFE7hQ@mail.gmail.com>
+	(Britton Kerin's message of "Thu, 7 Dec 2023 13:12:01 -0900")
+References: <CAC4O8c-nuOTS=a0sVp1603KaM2bZjs+yNZzdAaa5CGTNGFE7hQ@mail.gmail.com>
+Date: Sat, 09 Dec 2023 05:36:30 +0900
+Message-ID: <xmqqy1e41lf5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 78B9294C-9609-11EE-A633-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Konstantin Ryabitsev <konstantin@linuxfoundation.org> writes:
-> Yes, setting base-commit is the right solution here -- it will 
-> tell you exactly where in the tree it belongs.
+Britton Kerin <britton.kerin@gmail.com> writes:
 
-I didn't know that before today and that's good advice when 
-sending patches, but if I'm receiving patches without that field 
-set, I wonder how people are dealing with that.
+> It tolerates non-numeric arguments and garbage after a number:
+>
+> For example:
+>
+> $ # -n 1 means same as -n 0:
+> $ git rev-list -n q newest_commit
+> $ git rev-list -n 0 newest_commit
+> $ # Garbage after number is tolerated:
+> $ git rev-list -n 1q newest_commit
+> 3be33f83695088d968cf084a1a08bdcde25a8d7a
+> $ git rev-list -n 2q newest_commit
+> 3be33f83695088d968cf084a1a08bdcde25a8d7a
+> 286e62e1b68e39334978e6222cbff187ecc17bcf
 
-> In its absence, tools like b4 will also try to guess where the 
-> series might belong by comparing the file index information 
-> mentioned in the patches.
+Indeed, unlike the option parsing for most commands, "rev-list" and
+"log" family of commands in the oldest part of the system still use
+hand-crafted option parsing and most notably use atoi() instead of a
+more robust strtol() family of functions.  The same issue is present
+for parsing things like "--max-count=1q" and "--skip=1q".
 
-Ah, this! https://b4.docs.kernel.org/en/latest/
+Perhaps a change along this line, plus a few new tests, would
+suffice.  There are others (like "--max-age" we see in the post
+context of the patch) that use atoi() but they probably should not
+share the same machinery (most importantly, the type of the value)
+as "--max-count", so I didn't touch it in the below.
 
-This looks wonderful, thank you!
+ revision.c | 21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
+
+diff --git c/revision.c w/revision.c
+index 00d5c29bfc..99e838bbd1 100644
+--- c/revision.c
++++ w/revision.c
+@@ -2223,6 +2223,15 @@ static void add_message_grep(struct rev_info *revs, const char *pattern)
+ 	add_grep(revs, pattern, GREP_PATTERN_BODY);
+ }
+ 
++static int parse_count(const char *arg)
++{
++	int count;
++
++	if (strtol_i(arg, 10, &count) < 0 || count < 0)
++		die("'%s': not a non-negative integer", arg);
++	return count;
++}
++
+ static int handle_revision_opt(struct rev_info *revs, int argc, const char **argv,
+ 			       int *unkc, const char **unkv,
+ 			       const struct setup_revision_opt* opt)
+@@ -2249,26 +2258,24 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 	}
+ 
+ 	if ((argcount = parse_long_opt("max-count", argv, &optarg))) {
+-		revs->max_count = atoi(optarg);
++		revs->max_count = parse_count(optarg);
+ 		revs->no_walk = 0;
+ 		return argcount;
+ 	} else if ((argcount = parse_long_opt("skip", argv, &optarg))) {
+-		revs->skip_count = atoi(optarg);
++		revs->skip_count = parse_count(optarg);
+ 		return argcount;
+ 	} else if ((*arg == '-') && isdigit(arg[1])) {
+ 		/* accept -<digit>, like traditional "head" */
+-		if (strtol_i(arg + 1, 10, &revs->max_count) < 0 ||
+-		    revs->max_count < 0)
+-			die("'%s': not a non-negative integer", arg + 1);
++		revs->max_count = parse_count(arg + 1);
+ 		revs->no_walk = 0;
+ 	} else if (!strcmp(arg, "-n")) {
+ 		if (argc <= 1)
+ 			return error("-n requires an argument");
+-		revs->max_count = atoi(argv[1]);
++		revs->max_count = parse_count(argv[1]);
+ 		revs->no_walk = 0;
+ 		return 2;
+ 	} else if (skip_prefix(arg, "-n", &optarg)) {
+-		revs->max_count = atoi(optarg);
++		revs->max_count = parse_count(optarg);
+ 		revs->no_walk = 0;
+ 	} else if ((argcount = parse_long_opt("max-age", argv, &optarg))) {
+ 		revs->max_age = atoi(optarg);
