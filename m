@@ -1,116 +1,115 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="EcZGuLOu"
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7730BD
-	for <git@vger.kernel.org>; Fri,  8 Dec 2023 13:00:12 -0800 (PST)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id C49B51C8A53;
-	Fri,  8 Dec 2023 16:00:11 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=b52TXXM/NFapGjRlH0AOThs/BqNKELI/cNmchi
-	7+11I=; b=EcZGuLOuOeU6MqVaa+UEs08+6kt6I696kiIrU+Frm7mDWh0m45JIJT
-	o/O+HBNYDmnCCoOhingri07ebiRBAT3KbStGvDLzp1pRDEuo/6jQ3HOUT7GxVGEY
-	a34wLBld+xqTk2YPWvgichH6RJVvHuTYw3HGCDDcv1FRzrpLacaqw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id B928F1C8A52;
-	Fri,  8 Dec 2023 16:00:11 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.103.223])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 06BB21C8A4E;
-	Fri,  8 Dec 2023 16:00:10 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Achu Luma <ach.lumap@gmail.com>
-Cc: christian.couder@gmail.com,  git@vger.kernel.org
-Subject: Re: [Outreachy][PATCH v3] t2400: avoid using pipes
-In-Reply-To: <20231204153740.2992-1-ach.lumap@gmail.com> (Achu Luma's message
-	of "Mon, 4 Dec 2023 16:37:40 +0100")
-References: <CAP8UFD0KDdwoJw6AzLUpqos=bLumcmDax59_MfQ9TUFqmmpcoA@mail.gmail.com>
-	<20231204153740.2992-1-ach.lumap@gmail.com>
-Date: Sat, 09 Dec 2023 06:00:09 +0900
-Message-ID: <xmqqr0jw1kbq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="YYQorTIB"
+Received: from mail-oo1-xc2b.google.com (mail-oo1-xc2b.google.com [IPv6:2607:f8b0:4864:20::c2b])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83A9A193
+	for <git@vger.kernel.org>; Fri,  8 Dec 2023 13:09:08 -0800 (PST)
+Received: by mail-oo1-xc2b.google.com with SMTP id 006d021491bc7-59063f8455eso1276704eaf.3
+        for <git@vger.kernel.org>; Fri, 08 Dec 2023 13:09:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1702069748; x=1702674548; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=kcrKtuBxZvWf6Ry4c19X1NX7UIj8PCOGSQRlbb3Nxpc=;
+        b=YYQorTIBSxbPgxZvMQaMMX9KIoZ2+BflDdLJR2Cg7IexKr1z9cOyTqnSBONDHo3wco
+         tx0IIS6SyT41SKzM+A8qH359nHob9D/HjS0K1blR9etmvFZfNWk9LcKin3hYkUbWGWeb
+         jyu5pMPUaXuyB/IWydkyy7t5g0ByUqTgbJ3UUjVVqKy0baWX6TjcXkTA8ubhCRK6Akyi
+         hkLQcc/+TTXNOSV2J42oTnCam7jDDCxNSRcTv9W5MktQQbuQtYDg6te2x0TXAFei0hvP
+         fVpMBM06bLe4OnLFfppIWHHpQCAATMhMr4AWzzCEghzrboWzZruTqnJ75zkBqUBsrVqn
+         Y07Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702069748; x=1702674548;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kcrKtuBxZvWf6Ry4c19X1NX7UIj8PCOGSQRlbb3Nxpc=;
+        b=os52fhItLPv52VxovLQCh74BxhjJXeYY65r37UiZcZpPphrin7MzBhZBjj7xhwzn8O
+         o40Nd4b5a0PZX8iCaqyKz0pdVE4uKQEJlwseWW8+0Tp3OzlAUTz1iaxI2U+/NI05hppa
+         jagy7Gp+sWTvv3qmOcdfb1AwQv+Th3DQxLvBh/3L/OzHH2E6iDf28KoFIvUPg0pDC6sM
+         maBpxBuz2WMQx6MynLfGGnlC293VPNxSo4hWUEPMyPBh9IANyxz3+/m8eq3tgfFGwvcj
+         vbESPQk0lnBJv7ir2IUXmpSBvyB2tP76DZyrKmqjJOlme/x0DZ+XWaUtl0obVTpFEyde
+         pYTg==
+X-Gm-Message-State: AOJu0YwP0qGUev6RFdj19f7e5CkrjXzFsVLxHxJgF5RCZVeNIx7VaehJ
+	b1eIc7DVInt4oV3B1XemsNJOJtUQxjmFwQ4UTGs=
+X-Google-Smtp-Source: AGHT+IEpKuHIKJvJpaZBivMfiw9+11LMHrLxvOh971QdtDMxwMoHKP0YOI7gNLYdpKN+spNI8u1lUg==
+X-Received: by 2002:a05:6359:294:b0:170:17eb:2056 with SMTP id ek20-20020a056359029400b0017017eb2056mr541880rwb.63.1702069747732;
+        Fri, 08 Dec 2023 13:09:07 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id w5-20020a0cef85000000b0067ac1806881sm1090803qvr.85.2023.12.08.13.09.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Dec 2023 13:09:07 -0800 (PST)
+Date: Fri, 8 Dec 2023 16:09:03 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Jeff King <peff@peff.net>
+Cc: Adam Majer <adamm@zombino.com>, git@vger.kernel.org
+Subject: Re: [PATCH] setup: recognize bare repositories with packed-refs
+Message-ID: <ZXOF75NwxI187QDQ@nand.local>
+References: <20231117203253.21143-1-adamm@zombino.com>
+ <20231128142845.11523-1-adamm@zombino.com>
+ <20231128190446.GA10477@coredump.intra.peff.net>
+ <ZWethlRRtuQLDRlJ@nand.local>
+ <20231206210836.GA106480@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- C694D6B8-960C-11EE-816B-25B3960A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20231206210836.GA106480@coredump.intra.peff.net>
 
-Achu Luma <ach.lumap@gmail.com> writes:
-
-> Subject: Re: [Outreachy][PATCH v3] t2400: avoid using pipes
-
-"avoid using pipes" is a means to an end.  And it is more important
-to tell readers what that "end" is.  With this patch, what are we
-trying to achieve?  Cater to platforms that lack pipes?  Help
-platforms that cannot run two processes at the same time, so let one
-run and store the result in a file, and then let the other one run,
-to reduce the CPU load?
-
-If we run a "git" command, especially a command we are testing, on
-the upstream side of a pipe, we lose information.  We cannot tell
-what exit status the command exited with.  That is what we care
-about.
-
-So, it is better to say that in the title, e.g.,
-
-    Subject: [PATCH] t2400: avoid losing exit status to pipes
-
-> The exit code of the preceding command in a pipe is disregarded,
-> so it's advisable to refrain from relying on it.
-
-It is unclear what "it" refers to here.  We cannot rely on the exit
-code of the command on the upstream side of a pipe, obviously.
-
-> Instead, by
-> saving the output of a Git command to a file, we gain the
-> ability to examine the exit codes of both commands separately.
-
-Surely.  I personally think that the title that says what the
-purpose of the patch is clearly should be sufficient without any
-further description in the body, though.
+On Wed, Dec 06, 2023 at 04:08:36PM -0500, Jeff King wrote:
+> On Wed, Nov 29, 2023 at 04:30:46PM -0500, Taylor Blau wrote:
 >
-> Signed-off-by: Achu Luma <ach.lumap@gmail.com>
-> ---
->  Since v2 I don't send a cover  letter anymore, and I changed 
->  my "Signed-of-by: ..." line so that it
->  contains my full real name and I added "Outreachy" to the subject.
-
-Nicely done.
-
+> > On Tue, Nov 28, 2023 at 02:04:46PM -0500, Jeff King wrote:
+> > >   - whatever is consuming the embedded repos could "mkdir -p refs
+> > >     objects" as needed. This is a minor pain, but I think in the long
+> > >     term we are moving to a world where you have to explicitly do
+> > >     "GIT_DIR=$PWD/embedded.git" to access an embedded bare repo. So
+> > >     they're already special and require some setup; adding an extra step
+> > >     may not be so bad.
+> >
+> > I hope not. I suppose that using embedded bare repositories in a test
+> > requires additional setup at least to "cd" into the directory (if they
+> > are not using `$GIT_DIR` or `--git-dir` already). But I fear that
+> > imposing even a small change like this is too tall an order for how many
+> > millions of these exist in the wild across all sorts of projects.
 >
->  t/t2400-worktree-add.sh | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
->
-> diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-> index df4aff7825..7ead05bb98 100755
-> --- a/t/t2400-worktree-add.sh
-> +++ b/t/t2400-worktree-add.sh
-> @@ -468,7 +468,8 @@ test_expect_success 'put a worktree under rebase' '
->  		cd under-rebase &&
->  		set_fake_editor &&
->  		FAKE_LINES="edit 1" git rebase -i HEAD^ &&
-> -		git worktree list | grep "under-rebase.*detached HEAD"
-> +		git worktree list >actual && 
-> +		grep "under-rebase.*detached HEAD" actual
->  	)
->  '
->  
-> @@ -509,7 +510,8 @@ test_expect_success 'checkout a branch under bisect' '
->  		git bisect start &&
->  		git bisect bad &&
->  		git bisect good HEAD~2 &&
-> -		git worktree list | grep "under-bisect.*detached HEAD" &&
-> +		git worktree list >actual && 
-> +		grep "under-bisect.*detached HEAD" actual &&
->  		test_must_fail git worktree add new-bisect under-bisect &&
->  		! test -d new-bisect
->  	)
+> I dunno. I am skeptical that there are millions of these. Who really
+> wants to embed bare git repos except for projects related to Git itself,
+> which want test vectors? Is there a use case I'm missing?
+
+Just picking on GitHub as an example, my copy has a fair number of
+embedded bare repositories:
+
+    $ find . -mindepth 2 -type d -name '*.git' | wc -l
+    279
+
+That might be an unfair example in general, since GitHub probably has a
+greater need to embed bare repositories than most other projects. But I
+think that we shouldn't make our decision here based on volume of
+embedded bare repositories, but rather on the number of projects which
+have >1 embedded bare repository.
+
+In other words, the cost of migrating a single project's embedded bare
+repositories is roughly the same whether there are 1 or 279 of them. So
+the effort scales with the number of projects, not repositories.
+
+Perhaps I'm over-estimating how difficult this transition would be to
+impose on users. But it does make me very leery to make this kind of a
+change without having a better sense of how many of them exist in the
+wild.
+
+Searching just on GitHub for `path:**/*.git/config` [^1], it looks like
+there are ~1,400 results. That provides us an upper-bound on the number
+of projects which have embedded bare repositories, so perhaps I really
+am overestimating the burden we'd be imposing on other projects.
+
+I dunno :-).
+
+Thanks,
+Taylor
+
+[^1]: Searching for "path:**/*.git" doesn't quite work, since GitHub's
+  search doesn't match directories here. So the search I actually used
+  isn't perfect, but it should give us a rough approximation.
