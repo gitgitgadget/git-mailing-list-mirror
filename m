@@ -1,57 +1,83 @@
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hh2vGJHV"
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A00A90
-	for <git@vger.kernel.org>; Fri,  8 Dec 2023 15:19:20 -0800 (PST)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D43461CA6EC;
-	Fri,  8 Dec 2023 18:19:19 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=i0N0UJTI6fSw8lM/GCzTf1olKy/Wo4XJcBIe8/
-	St/AY=; b=hh2vGJHVM+kCe0X4e8f0mD3AjCJapV3X1YoaT/oT0oqYCPMvIJ6Eaf
-	bro4hT4g3112vM916b4Bsls6c1WXYzWaNT4i7A9Kp3A1c5DZ+76rNIUEmrTM5jCl
-	5oyrhhhDEENnsQRIhI2qp3muMFuWLMfbU6lkeuZTFUFF2fSEfF7ww=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CB7CA1CA6EB;
-	Fri,  8 Dec 2023 18:19:19 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.103.223])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 402991CA6EA;
-	Fri,  8 Dec 2023 18:19:19 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Sean Allred <allred.sean@gmail.com>
-Cc: git <git@vger.kernel.org>
-Subject: Re: What's the recommendation for forgetting all rerere's records?
-In-Reply-To: <m0y1e7kkft.fsf@epic96565.epic.com> (Sean Allred's message of
-	"Wed, 06 Dec 2023 16:37:23 -0600")
-References: <m0y1e7kkft.fsf@epic96565.epic.com>
-Date: Sat, 09 Dec 2023 08:19:18 +0900
-Message-ID: <xmqqcyvgz3ih.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD783171C
+	for <git@vger.kernel.org>; Fri,  8 Dec 2023 15:46:46 -0800 (PST)
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-5d7692542beso25319447b3.3
+        for <git@vger.kernel.org>; Fri, 08 Dec 2023 15:46:46 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702079206; x=1702684006;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=kLjBdDLFH8k+Pxgi3f2Z90Ii80ADD0I3k/WJRmZByOo=;
+        b=QsXAecvAtWH9/gm/KhH1gYaF0mSjtybV4Kllf+RE2RBIq5QcJGjKq5kL/wE/q+c0SJ
+         0h4gxw/McnFDK+QSRYR5aNNOs/dZCFyMhryeiChpjWIT2Akt5ziaMzOolckEiBeNOwA7
+         ECiTtyoV9QXlG1lBFpN2iZSQP9U+aTWRvs5McQBHf59PCzdNGDETDM7tVqT9sWm9XiAV
+         0B9lpBQrnljBSkLZTl1E18IF30WLslhdp4MXtulklf9Y+DPDUqpcC1JBCMGFy+vgR96w
+         aJBkROyXyxYLp5FeijEX8hkNGefPxNHiBuMiEwfqA07MmF5fBdefBliEh49ASXQWJM9m
+         QQ9A==
+X-Gm-Message-State: AOJu0Yzfdvm9enNMn3KaQ8Lr+BeCXHauNCuxa4AT8ImDhg6Te/8pHCZa
+	Fsyl795U1aYRvL5SBeFri7adIBQoGxnum3YX5Ow=
+X-Google-Smtp-Source: AGHT+IE1jpiBykC9luz3aVoJHorSJOdY8+9iHuoWVaBX/XdTBoLj3POSBo07J3v2LQN/phl/ZFMgOf0C6tZpwLh0DA4=
+X-Received: by 2002:a81:4a85:0:b0:5d7:a00d:62e7 with SMTP id
+ x127-20020a814a85000000b005d7a00d62e7mr721551ywa.50.1702079205880; Fri, 08
+ Dec 2023 15:46:45 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 36837F2A-9620-11EE-A121-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+References: <cover.1700549493.git.ps@pks.im> <cover.1702047081.git.ps@pks.im>
+ <8061b9d2fcb3e8c3d1fd641e705b9a8879e452f4.1702047081.git.ps@pks.im> <ZXOML2pcqVnVo0oX@nand.local>
+In-Reply-To: <ZXOML2pcqVnVo0oX@nand.local>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Fri, 8 Dec 2023 18:46:33 -0500
+Message-ID: <CAPig+cRGZvyhSs9=3-tkBKRZDjDUsb-VDs+dzOaZof__qyBjbA@mail.gmail.com>
+Subject: Re: [PATCH v2 04/11] reftable/stack: verify that `reftable_stack_add()`
+ uses auto-compaction
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>, 
+	Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Sean Allred <allred.sean@gmail.com> writes:
+On Fri, Dec 8, 2023 at 4:35=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote:
+> On Fri, Dec 08, 2023 at 03:53:10PM +0100, Patrick Steinhardt wrote:
+> > +static void test_reftable_stack_add_performs_auto_compaction(void)
+> > +{
+> > +             char name[100];
+> > +             snprintf(name, sizeof(name), "branch%04d", i);
+> > +             ref.refname =3D name;
+>
+> Is there a reason that we have to use snprintf() here and not a strbuf?
+>
+> I would have expected to see something like:
+>
+>     struct strbuf buf =3D STRBUF_INIT;
+>     /* ... */
+>     strbuf_addf(&buf, "branch%04d", i);
+>     ref.refname =3D strbuf_detach(&buf, NULL);
 
-> When outside the context of a conflict (no rebase/merge in progress),
-> what's the intended workflow to clear out the contents of
-> $GIT_DIR/rr-cache?
+If I'm reading the code correctly, this use of strbuf would leak each
+time through the loop.
 
-You could "rm -fr .git/rr-cache/??*" if you want.
+> I guess it doesn't matter too much, but I think if we can avoid using
+> snprintf(), it's worth doing. If we must use snprintf() here, we should
+> probably use Git's xsnprintf() instead.
 
-The "intended" workflow is there will no need to "clear out" at all;
-you may notice mistaken resolution, and you will remove it when you
-notice one, but the bulk of the remaining database entries ought to
-be still correct.
+xstrfmt() from strbuf.h would be even simpler if the intention is to
+allocate a new string which will be freed later.
+
+In this case, though, assuming I understand the intent, I think the
+more common and safe idiom in this codebase is something like this:
+
+    struct strbuf name =3D STRBUF_INIT;
+    strbuf_addstr(&name, "branch");
+    size_t len =3D name.len;
+    for (...) {
+        strbuf_setlen(&name, len);
+        strbuf_addf(&name, "%04d", i);
+        ref.refname =3D name.buf;
+        ...
+    }
+    strbuf_release(&name);
