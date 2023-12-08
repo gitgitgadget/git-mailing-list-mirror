@@ -1,50 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="nIy3pvpY"
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8ED22AC
-	for <git@vger.kernel.org>; Fri,  8 Dec 2023 14:50:17 -0800 (PST)
-Received: by mail-oi1-x22a.google.com with SMTP id 5614622812f47-3b9e1a3e3f0so1342256b6e.1
-        for <git@vger.kernel.org>; Fri, 08 Dec 2023 14:50:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1702075817; x=1702680617; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=IedD90TL4dAiVnjZXChY5K/dL77qr5ky8tSlqXzQUSQ=;
-        b=nIy3pvpYDDLN9eW6JSee3wpWhjA6E5ddmMbveTH42r8Jje2X45wgd1xD5yTLk3PJ1m
-         uK4xdf4TdVT8qQvTTsJn9afpqd20POuqH9gWFIcLfUzN12vzta0gF2gbRQ0+jNLli5Oi
-         Z0+8NXwnS2QGxKMqjN1aLerKIIr52K4x6/6AZ57tiWXjK9FaEQwitrNSgjHG96h8UMFU
-         Iis9vi1u5CkZZPQHFMHFYmIDENyenu0fi7Lx1BYBSUyS8wp+vaDjjLGNY4DH1mCaLt9d
-         HGQCZwQqTXWfefhwQL6Tc7cvRhaPYD9Bz4qBKIii5VwwjkJ+KkwkEyVlvHsBMzH7UgqL
-         UexA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702075817; x=1702680617;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IedD90TL4dAiVnjZXChY5K/dL77qr5ky8tSlqXzQUSQ=;
-        b=rqxIGRprKxhATxGSMuJ3jW+aPVYx3FUvpy+CbRaxuQnesdDz2DJKr1F9bDG564NgVT
-         0QgpuiyxHeU2IPevvTAJL3mGWqkbup+AQczT5al6PMTiroqL8WzEvIplV6L78RxKoCoC
-         iJBO9730Ga8mgjO+Amr8QqkOico6GTA1hRPSDNXoBjamyjnYcJk6vUIOELNccz7gr6qM
-         TN4uG67HySxWRAW49pq5sj8ItpLqSdrhv1ZNLSvunAyWb6uznpBKCYZcGGut/s7Pu6Kc
-         4/jFz6JavU5TS9sYaFGbjvenj8LyG/6xd3sWb3cQ+4ZHuXqZwRoMqXhpPoe0sM99FCVd
-         wXIw==
-X-Gm-Message-State: AOJu0YwNh0zOxpYvU5sQq8PwxWaaKyzLT7bdsWG3M+N4jVy639lL3hmq
-	Q9JVlbAtCeVH+0I+GV2xYMH2y3gH1OZvIRaiabA=
-X-Google-Smtp-Source: AGHT+IHTFesdDnnrhyiDzrfms/I61DTtlhiK3aJhivA4dMsD7gaID0mnS1xK3Nro6NDYaxHaixGhxg==
-X-Received: by 2002:a05:6808:1817:b0:3b9:f016:fb89 with SMTP id bh23-20020a056808181700b003b9f016fb89mr942240oib.53.1702075816937;
-        Fri, 08 Dec 2023 14:50:16 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id o1-20020a05620a228100b00775bb02893esm1008235qkh.96.2023.12.08.14.50.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Dec 2023 14:50:16 -0800 (PST)
-Date: Fri, 8 Dec 2023 17:50:15 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/9] config: reject bogus values for core.checkstat
-Message-ID: <ZXOdp+uHCe+Daz4O@nand.local>
-References: <20231207072338.GA1277727@coredump.intra.peff.net>
- <20231207072404.GA1277973@coredump.intra.peff.net>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="bnL7ZwbE"
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5FD4122
+	for <git@vger.kernel.org>; Fri,  8 Dec 2023 14:54:59 -0800 (PST)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 5F82F1C73F;
+	Fri,  8 Dec 2023 17:54:59 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=vQrIalxt8dPx
+	iHBvTaL5GxqySMEovO7sWqvVq/mBP0k=; b=bnL7ZwbEH7S65acuLkgYv7m49WpY
+	DrOU3ciDRNXBGxQtRjSL3QQveoS0Oy1+89L8hSqSMn4nkjFvfh6gu74gcwQu9fyZ
+	QDEdfzjnNnf3BMEetP8JazgNINPEGOoDG8YJqibInyF/9WktKEDK5MoubPI2gF27
+	ZhR/036zZDASzo4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 57D0D1C73E;
+	Fri,  8 Dec 2023 17:54:59 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.103.223])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 184FC1C73D;
+	Fri,  8 Dec 2023 17:54:54 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Karthik Nayak <karthik.188@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH 1/7] setup: extract function to create the refdb
+In-Reply-To: <ZXFy0_T1AZLh058g@tanuki> (Patrick Steinhardt's message of "Thu,
+	7 Dec 2023 08:22:59 +0100")
+References: <cover.1701863960.git.ps@pks.im>
+	<b69c57d27269c9b40c9e4394861dffd8a8b9860c.1701863960.git.ps@pks.im>
+	<CAOLa=ZSZztJUF9nmSzGdOW0oWBRUp2sw8QyuZO_q06cNymad3Q@mail.gmail.com>
+	<ZXFy0_T1AZLh058g@tanuki>
+Date: Sat, 09 Dec 2023 07:54:52 +0900
+Message-ID: <xmqq1qbw1f0j.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -52,29 +44,43 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20231207072404.GA1277973@coredump.intra.peff.net>
+X-Pobox-Relay-ID:
+ CD35B734-961C-11EE-922F-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Dec 07, 2023 at 02:24:04AM -0500, Jeff King wrote:
-> If you feed nonsense config like:
+Patrick Steinhardt <ps@pks.im> writes:
+
+> On Wed, Dec 06, 2023 at 10:10:37PM +0100, Karthik Nayak wrote:
+>> On Wed, Dec 6, 2023 at 1:40=E2=80=AFPM Patrick Steinhardt <ps@pks.im> =
+wrote:
+>> > +static void create_reference_database(const char *initial_branch, i=
+nt quiet)
+>> > +{
+>> > +       struct strbuf err =3D STRBUF_INIT;
+>> > +       int reinit =3D is_reinit();
+>> > +
+>> > +       /*
+>> > +        * We need to create a "refs" dir in any case so that older
+>> > +        * versions of git can tell that this is a repository.
+>> > +        */
+>>=20
+>> How does this work though, even if an earlier version of git can tell
+>> that this is a repository, it still won't be able to read the reftable
+>> backend. In that sense, what do we achieve here?
 >
->   git -c core.checkstat=foobar status
+> This is a good question, and there is related ongoing discussion about
+> this topic in the thread starting at [1]. There are a few benefits to
+> letting clients discover such repos even if they don't understand the
+> new reference backend format:
 >
-> we'll silently ignore the unknown value, rather than reporting an error.
-> This goes all the way back to c08e4d5b5c (Enable minimal stat checking,
-> 2013-01-22).
+>   - They know to stop walking up the parent-directory chain. Otherwise =
+a
+>     client might end up detecting a Git repository in the parent dir.
 >
-> Detecting and complaining now is technically a backwards-incompatible
-> change, but I don't think anybody has any reason to use an invalid value
-> here. There are no historical values we'd want to allow for backwards
-> compatibility or anything like that. We are better off loudly telling
-> the user that their config may not be doing what they expect.
+>   - The user gets a proper error message why the repository cannot be
+>     accessed. Instead of failing to detect the repository altogether we
+>     instead say that we don't understand the "extensions.refFormat"
+>     extension.
 
-I think this is a good instance of "yes, this is a backwards
-incompatible change, but the behavior we're breaking is so obviously
-broken already that it's not worth maintaining compatibility."
-
-Well reasoned, I am definitely in favor here.
-
-Thanks,
-Taylor
+Yup, both are very good reasons.  Would it help to sneak a condensed
+version of it in the in-code comment, perhaps?
