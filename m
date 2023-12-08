@@ -1,218 +1,157 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="W9Nyo+9G";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C7cE9wxd"
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D95F226A9
-	for <git@vger.kernel.org>; Fri,  8 Dec 2023 06:53:44 -0800 (PST)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.west.internal (Postfix) with ESMTP id 25BD93200A26;
-	Fri,  8 Dec 2023 09:53:44 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Fri, 08 Dec 2023 09:53:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm1; t=1702047223; x=1702133623; bh=MR
-	8/vdeKYlYQpksNgtUNJ5uwcpcroH1Gk4ksTnYEmuM=; b=W9Nyo+9GmALbV7PkKG
-	tdsqY+QjR20tXmjDMjtX6Z+M/w9F0E/uYA2Wt5K6UTUtqgqKN5GdZPnVba+Fhtqf
-	ABb5Qegx+XI1FnvNfgIwVg2zRpiynhooU2vobDlalb3obubMUY3oJismMvGxtQx/
-	o9piGmuli744FdkiXkfWQpIE0Ox0WlO6x2hPfm4ey0J4Hkc9Hvalt1g0x5PU8cbf
-	i6c84VFriHS++hXi+k1jon5/OtaNkwzZ9u+VgkWa3xbe/8mGzcakYicBkrKOMYBn
-	g14QpnbmXXrZ3qiU6ZMiy5zjU1xFMG8MKhVGfj06Ql7f1Y6hXabsCxdqia+cu0/E
-	N01w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm1; t=1702047223; x=1702133623; bh=MR8/vdeKYlYQp
-	ksNgtUNJ5uwcpcroH1Gk4ksTnYEmuM=; b=C7cE9wxdxCKFOZ/VDbMouxcCZ4So0
-	yGQHOkygBNksb0tSMeoeW+drop9TL6RL7gBzXGe91L/QR9Bl4Yy6IgOVWlz6wR43
-	nOVIU5RPH1oa7q2PickN1vgRyAoGr7wbH2QQ4sp9qP4qHCrDnfu5r97wtvdwEC5M
-	BJEhYtDL7Ootese/DFnrmqCE3R/yq9NFwaUhVzzJgYNO/8AgJ5BjSy/mcGtRk0J6
-	eS8W4dRGno2JYOwPeHkQsByMbbxgTqmoHFMq2PHv5d/Pu9qamDxHxGeo54Wnp1dg
-	8kyBGjlnt0Y4r/s0gkL6YWsFSTqxuEjCFd8Iq5oR51W8ed/uNioJdMH5w==
-X-ME-Sender: <xms:9y1zZdlfLQuzuU_KP-A20kO1V5YaP46G4BSCfxCAFVUBCG5-qgTNPw>
-    <xme:9y1zZY3hcFiOFLc97ZWJBRsg85goovJDqhLxvew81p-WTa-rJZUlsZtZc-BmbdJQU
-    nXXSJNjU_zdCcRAyQ>
-X-ME-Received: <xmr:9y1zZToPET6LjFHgTk57DaKTWUJnOsiphhaaLAn-BjZZMvjkZffHInf90ln0APnlAR9gHsZMohDCfF3IIDL-RVN0rUzzgzRwA1GrGMjgUlMkw_s>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudekiedgjedvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:9y1zZdkDTVtag2x7NiXTSEi5Y7_3ajr81JSvvZiQWi2XCbK_Hc6x0A>
-    <xmx:9y1zZb1djwdIuFKSbKJzxzMAqv3H1Aur1tcHhWmevGIteUQWhWOL-Q>
-    <xmx:9y1zZctTZddRQXz6LnwhcvDgd_fOhbEtK6T4-rwLZ-_vIf4EClWpNA>
-    <xmx:9y1zZU9RBQsawg0xL7hD6QFGJYrPa-CHShU0eGRJFujTjWGCwp0MZQ>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 8 Dec 2023 09:53:42 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id be602c60 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 8 Dec 2023 14:52:11 +0000 (UTC)
-Date: Fri, 8 Dec 2023 15:53:40 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Han-Wen Nienhuys <hanwenn@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH v2 11/11] reftable/block: reuse buffer to compute record keys
-Message-ID: <02b11f3a80608ba8748a0d0e2294f432e02464e5.1702047081.git.ps@pks.im>
-References: <cover.1700549493.git.ps@pks.im>
- <cover.1702047081.git.ps@pks.im>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wHYELfPH"
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A96781BC3
+	for <git@vger.kernel.org>; Fri,  8 Dec 2023 09:13:23 -0800 (PST)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C47781C7EBE;
+	Fri,  8 Dec 2023 12:13:20 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=pOGUv2P50oVxTXC1w9vTzQ5AYuMtTQiYkAaO+s
+	+LBuU=; b=wHYELfPHONv08697XNPiKSRO9J+ZvLhXxForPVQMzTIxbZxcNt0aQZ
+	p2cOG3E8+hTCDzKwSoIEnEZqyMfLYT9W8MLE/ypb/vP6CKUCJ32AikyCmf3Gl1jp
+	sH6kvcBNxXCUIaS7MAZI20CFh2QqyNcmDXWDB2FhQkNlkQn5aD58A=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id BB0101C7EBC;
+	Fri,  8 Dec 2023 12:13:20 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.103.223])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2B8241C7EBB;
+	Fri,  8 Dec 2023 12:13:20 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Willem Verstraeten <willem.verstraeten@gmail.com>,
+  phillip.wood@dunelm.org.uk,  git@vger.kernel.org,  Jeff King
+ <peff@peff.net>
+Subject: Re: [PATCH 2/2] checkout: forbid "-B <branch>" from touching a
+ branch used elsewhere
+In-Reply-To: <CAPig+cSGF+vQrnD0f99cbdpQOOC7X6ULa9tFe+FwVrG0SF4PGg@mail.gmail.com>
+	(Eric Sunshine's message of "Mon, 4 Dec 2023 16:06:50 -0500")
+References: <CAGX9RpFMCVLQV7RbK2u9AabusvkZD+RZNv_UD=R00cSUrjutBg@mail.gmail.com>
+	<xmqqjzq9cl70.fsf@gitster.g> <xmqqv89tau3r.fsf@gitster.g>
+	<xmqqpm01au0w.fsf_-_@gitster.g>
+	<bf848477-b4dd-49d3-8e4b-de0fc3948570@gmail.com>
+	<xmqqwmu42ccb.fsf@gitster.g>
+	<b3532261-3cf4-4666-9cbd-4ce668cd2e49@gmail.com>
+	<CAGX9RpH0RJfBADQwJ=c7PCHU955vOqd0Wdc7Yi7XUuAQQW_FNQ@mail.gmail.com>
+	<CAPig+cSGF+vQrnD0f99cbdpQOOC7X6ULa9tFe+FwVrG0SF4PGg@mail.gmail.com>
+Date: Sat, 09 Dec 2023 02:13:18 +0900
+Message-ID: <xmqqsf4c39e9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="rcSWnUvkTeCkS+1Q"
-Content-Disposition: inline
-In-Reply-To: <cover.1702047081.git.ps@pks.im>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 15E1BD1E-95ED-11EE-BBC6-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
---rcSWnUvkTeCkS+1Q
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>    Needs review and documentation updates.
+>
+> I'm not sure if the "Needs review" comment is still applicable since
+> the patch did get some review comments, however, the mentioned
+> documentation update is probably still needed for this series to
+> graduate.
 
-When iterating over entries in the block iterator we compute the key of
-each of the entries and write it into a buffer. We do not reuse the
-buffer though and thus re-allocate it on every iteration, which is
-wasteful.
+Thanks.  I think "-B" being defined as "branch -f <branch>" followed
+by "checkout <branch>" makes it technically unnecessary to add any
+new documentation (because "checkout <branch>" will refuse, so it
+naturally follows that "checkout -B <branch>" should), but giving
+the failure mode a bit more explicit mention would be more helpful
+to readers.
 
-Refactor the code to reuse the buffer.
+Here is to illustrate what I have in mind.  The mention of the
+"transactional" was already in the documentation for the "checkout"
+back when switch was described at d787d311 (checkout: split part of
+it to new command 'switch', 2019-03-29), but somehow was left out in
+the documentation of the "switch".  While it is not incorrect to say
+that it is a convenient short-cut, it is more important to say what
+happens when one of them fails, so I am tempted to port that
+description over to the "switch" command, and give the "used elsewhere"
+as a sample failure mode.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- reftable/block.c | 19 ++++++++-----------
- reftable/block.h |  2 ++
- 2 files changed, 10 insertions(+), 11 deletions(-)
+The test has been also enhanced to check the "transactional" nature.
 
-diff --git a/reftable/block.c b/reftable/block.c
-index 8c6a8c77fc..1df3d8a0f0 100644
---- a/reftable/block.c
-+++ b/reftable/block.c
-@@ -323,30 +323,28 @@ int block_iter_next(struct block_iter *it, struct ref=
-table_record *rec)
- 		.len =3D it->br->block_len - it->next_off,
- 	};
- 	struct string_view start =3D in;
--	struct strbuf key =3D STRBUF_INIT;
- 	uint8_t extra =3D 0;
- 	int n =3D 0;
-=20
- 	if (it->next_off >=3D it->br->block_len)
- 		return 1;
-=20
--	n =3D reftable_decode_key(&key, &extra, it->last_key, in);
-+	n =3D reftable_decode_key(&it->key, &extra, it->last_key, in);
- 	if (n < 0)
- 		return -1;
-=20
--	if (!key.len)
-+	if (!it->key.len)
- 		return REFTABLE_FORMAT_ERROR;
-=20
- 	string_view_consume(&in, n);
--	n =3D reftable_record_decode(rec, key, extra, in, it->br->hash_size);
-+	n =3D reftable_record_decode(rec, it->key, extra, in, it->br->hash_size);
- 	if (n < 0)
- 		return -1;
- 	string_view_consume(&in, n);
-=20
- 	strbuf_reset(&it->last_key);
--	strbuf_addbuf(&it->last_key, &key);
-+	strbuf_addbuf(&it->last_key, &it->key);
- 	it->next_off +=3D start.len - in.len;
--	strbuf_release(&key);
- 	return 0;
- }
-=20
-@@ -377,6 +375,7 @@ int block_iter_seek(struct block_iter *it, struct strbu=
-f *want)
- void block_iter_close(struct block_iter *it)
- {
- 	strbuf_release(&it->last_key);
-+	strbuf_release(&it->key);
- }
-=20
- int block_reader_seek(struct block_reader *br, struct block_iter *it,
-@@ -387,7 +386,6 @@ int block_reader_seek(struct block_reader *br, struct b=
-lock_iter *it,
- 		.r =3D br,
- 	};
- 	struct reftable_record rec =3D reftable_new_record(block_reader_type(br));
--	struct strbuf key =3D STRBUF_INIT;
- 	int err =3D 0;
- 	struct block_iter next =3D BLOCK_ITER_INIT;
-=20
-@@ -414,8 +412,8 @@ int block_reader_seek(struct block_reader *br, struct b=
-lock_iter *it,
- 		if (err < 0)
- 			goto done;
-=20
--		reftable_record_key(&rec, &key);
--		if (err > 0 || strbuf_cmp(&key, want) >=3D 0) {
-+		reftable_record_key(&rec, &it->key);
-+		if (err > 0 || strbuf_cmp(&it->key, want) >=3D 0) {
- 			err =3D 0;
- 			goto done;
- 		}
-@@ -424,8 +422,7 @@ int block_reader_seek(struct block_reader *br, struct b=
-lock_iter *it,
- 	}
-=20
- done:
--	strbuf_release(&key);
--	strbuf_release(&next.last_key);
-+	block_iter_close(&next);
- 	reftable_record_release(&rec);
-=20
- 	return err;
-diff --git a/reftable/block.h b/reftable/block.h
-index 51699af233..17481e6331 100644
---- a/reftable/block.h
-+++ b/reftable/block.h
-@@ -84,10 +84,12 @@ struct block_iter {
-=20
- 	/* key for last entry we read. */
- 	struct strbuf last_key;
-+	struct strbuf key;
- };
-=20
- #define BLOCK_ITER_INIT { \
- 	.last_key =3D STRBUF_INIT, \
-+	.key =3D STRBUF_INIT, \
- }
-=20
- /* initializes a block reader. */
---=20
-2.43.0
+ Documentation/git-checkout.txt |  4 +++-
+ Documentation/git-switch.txt   |  9 +++++++--
+ t/t2400-worktree-add.sh        | 18 ++++++++++++++++--
+ 3 files changed, 26 insertions(+), 5 deletions(-)
 
-
---rcSWnUvkTeCkS+1Q
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmVzLfMACgkQVbJhu7ck
-PpRvlRAApdB5LW89+kk+HTReJ0QYMDrGOLgPNxn3/RwE6NJwD87N1yj1cEiJtmv7
-u9TPCv7q1plAbyWfMowFZTPB+XBeFBb/iZKI76+oshDI2FYh5PTySz/y6MocTinU
-MKQ1Nhd6RJnGW8oijBDnN7cxkeoJ+NALsKzeVFhBxIg/X2272pta0DtG2Hos8xaa
-z0MnIfvzFxrcOznW7HMsLZcTmug1CMhKjJaUZyADTBHc94Bu0Wf9Sxe+AT1xoxVq
-c4UB8+efGANp5twD7k2j8d/pi5fhbX6v5r+O2c3rADmiNQY0R4ekG6/2anxL/YX7
-U1yxxtEPnxU2bks+vyL1B/7QtQiKPjZDKV+4c+Ln4HzOI/YDkMIS8MtQpt1Ve6f1
-V/+xjVOtHovpZAzVmtav27MoJK7ArEjesbgoDuCarGWQ4Vnc6w3TU3S0ZyubtE5H
-q/wrt/numUfwJiT8ofJpktEopK0ovr3Bu78x+BNXGoiyRAtaxpCX9GF8rumDsXVl
-w1Bhb47fA4WH8Z2QBF4dlaPdKYUXawh2U4InEsqHwOSsoehLu1M5pVQ+rt09+1B2
-aXCeCoLNEk0UWYUAtocAl/Uxi0adJL/C6NEq6TrZ5l4dQ5VOfQhfddisNAum4h2E
-FaS2/n3L5pzp3+oESLHjS8D0k6VTSNemOmR3KCBye/biWb3bM4E=
-=CaHN
------END PGP SIGNATURE-----
-
---rcSWnUvkTeCkS+1Q--
+diff --git c/Documentation/git-checkout.txt w/Documentation/git-checkout.txt
+index 240c54639e..55a50b5b23 100644
+--- c/Documentation/git-checkout.txt
++++ w/Documentation/git-checkout.txt
+@@ -63,7 +63,9 @@ $ git checkout <branch>
+ ------------
+ +
+ that is to say, the branch is not reset/created unless "git checkout" is
+-successful.
++successful (e.g., when the branch is in use in another worktree, not
++just the current branch stays the same, but the branch is not reset to
++the start-point, either).
+ 
+ 'git checkout' --detach [<branch>]::
+ 'git checkout' [--detach] <commit>::
+diff --git c/Documentation/git-switch.txt w/Documentation/git-switch.txt
+index c60fc9c138..6137421ede 100644
+--- c/Documentation/git-switch.txt
++++ w/Documentation/git-switch.txt
+@@ -59,13 +59,18 @@ out at most one of `A` and `B`, in which case it defaults to `HEAD`.
+ -c <new-branch>::
+ --create <new-branch>::
+ 	Create a new branch named `<new-branch>` starting at
+-	`<start-point>` before switching to the branch. This is a
+-	convenient shortcut for:
++	`<start-point>` before switching to the branch. This is the
++	transactional equivalent of
+ +
+ ------------
+ $ git branch <new-branch>
+ $ git switch <new-branch>
+ ------------
+++
++that is to say, the branch is not reset/created unless "git switch" is
++successful (e.g., when the branch is in use in another worktree, not
++just the current branch stays the same, but the branch is not reset to
++the start-point, either).
+ 
+ -C <new-branch>::
+ --force-create <new-branch>::
+diff --git c/t/t2400-worktree-add.sh w/t/t2400-worktree-add.sh
+index bbcb2d3419..5d5064e63d 100755
+--- c/t/t2400-worktree-add.sh
++++ w/t/t2400-worktree-add.sh
+@@ -129,8 +129,22 @@ test_expect_success 'die the same branch is already checked out' '
+ test_expect_success 'refuse to reset a branch in use elsewhere' '
+ 	(
+ 		cd here &&
+-		test_must_fail git checkout -B newmain 2>actual &&
+-		grep "already used by worktree at" actual
++
++		# we know we are on detached HEAD but just in case ...
++		git checkout --detach HEAD &&
++		git rev-parse --verify HEAD >old.head &&
++
++		git rev-parse --verify refs/heads/newmain >old.branch &&
++		test_must_fail git checkout -B newmain 2>error &&
++		git rev-parse --verify refs/heads/newmain >new.branch &&
++		git rev-parse --verify HEAD >new.head &&
++
++		grep "already used by worktree at" error &&
++		test_cmp old.branch new.branch &&
++		test_cmp old.head new.head &&
++
++		# and we must be still on the same detached HEAD state
++		test_must_fail git symbolic-ref HEAD
+ 	)
+ '
+ 
