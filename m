@@ -1,126 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="YWrz3VPm"
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3407613A
-	for <git@vger.kernel.org>; Sat,  9 Dec 2023 08:13:52 -0800 (PST)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7E86B1CFF14;
-	Sat,  9 Dec 2023 11:13:51 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=aSoFJSi1OCy08LXa+S01NajrbSspm9RdraFPfH
-	+Qic8=; b=YWrz3VPmF3nxFgP47GoyFKtHlKJvzbzS8R0m8zKpvDXRWesMhO8l79
-	QfWfcl/BghJSFKZXuf5/wyS0BsLxsfzlzs+jV0ICpSzoFKbhoTNB7zRdH7cVo4BA
-	UoQzKq1CVSbwMgnOiLVbVP1k7pqOG1fFoScJpkcVmmn/WaUhodPmc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 767691CFF13;
-	Sat,  9 Dec 2023 11:13:51 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.103.223])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D223F1CFF12;
-	Sat,  9 Dec 2023 11:13:50 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Britton Kerin <britton.kerin@gmail.com>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-    Matthieu Moy <git@matthieu-moy.fr>
-Subject: Re* [BUG] git-bisect man page description of terms command doesn't
- mention old/new support
-In-Reply-To: <CAC4O8c9ieZC4SBJf54ZuTfAvnkhGuDaibBQ-m9Zw_n5VhUFPag@mail.gmail.com>
-	(Britton Kerin's message of "Sat, 9 Dec 2023 02:58:37 -0900")
-References: <CAC4O8c9ieZC4SBJf54ZuTfAvnkhGuDaibBQ-m9Zw_n5VhUFPag@mail.gmail.com>
-Date: Sat, 09 Dec 2023 08:13:49 -0800
-Message-ID: <xmqqzfyjmk02.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VVfjSyIC"
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68CA410C4
+	for <git@vger.kernel.org>; Sat,  9 Dec 2023 08:20:46 -0800 (PST)
+Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-a1da1017a09so369002166b.3
+        for <git@vger.kernel.org>; Sat, 09 Dec 2023 08:20:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1702138844; x=1702743644; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=UF8RjLNXJrKIN/tS6NgqU/52Tft5AkBHEeMdJqwjiZA=;
+        b=VVfjSyICKJ50ngVldJjtliLlp74TtFJgK4grKaJAnpiy/yYijsCLjf484hLMm+2xiq
+         2DPsNegC7TkvjrVhxN/eG8WkGb3dq1uMPfFRTiaIUFopqcR4kfxAaCK+54POwZYaqtq5
+         NuJ75ikNekMJpIeSeCXfEIJ3kNKVF4av5rdK2g8P9m0FxOwQ1tm+HfwpVRIyJDblMKXD
+         McqGyUaqjAl4ZIcf2HySFq6Oubyi6AW24wAfJEaVpKJZfj3R3UOA/h8lvxHMYQ1L/agr
+         67GjawfhfeCyVpzw2r/TNNsLuxKhIY452GnzXYW0pphoRatQlKkNZKuY3EvA9tsa9NBO
+         Xukg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702138844; x=1702743644;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UF8RjLNXJrKIN/tS6NgqU/52Tft5AkBHEeMdJqwjiZA=;
+        b=DQ/7cTX/Si7n8v3q8dQZhP0FiiNa7N8AgUEKBeCXQZ94aI59D7V82NKqG2o+txb0Pk
+         J81rX8V8N2dkvW9Fay0ZWK7Sdg+QLwW4QXm096DFV58pLfDLuy4cSXhxCjuKelF1BQe6
+         50CqQIn7eNoK9RhLDi0lz8U6wiREjXGf3EGKu2l8+wnZXmJmPepGWCF2h9Gfs/7AjCc/
+         xFdmihi36XqjZSZ3uMZRXbtwWHj0IzeeL0ZuyX2fhekp0m6ZrS4IgpX3ec2OxdqhCFKQ
+         Q814X/aGQ5n3ljL+YNPlGiSgMgzfxYQCiYNi/pmSpiM9ZkEOIl1cGIdgeX5rxsosgLCB
+         wwPQ==
+X-Gm-Message-State: AOJu0YzxV9QXTrettdF08gBLOglelEXNImo8F0O1R4H9as9+enr5P3MU
+	NINSYnha5g5cb5KcltyFG3nDw1se9IcfnYRAkD+y0yi93iw=
+X-Google-Smtp-Source: AGHT+IFMAa2fXBmVWzYKpOpZIz4MC2OTXqQrTJl1L/YJCOAEUAenSEkKzsY/7WKD2m1IQZXjU7N3W7v9d6eR8hkUplU=
+X-Received: by 2002:a17:907:7d8c:b0:9b2:cf77:a105 with SMTP id
+ oz12-20020a1709077d8c00b009b2cf77a105mr1231912ejc.15.1702138843799; Sat, 09
+ Dec 2023 08:20:43 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- F0D13B96-96AD-11EE-9F09-25B3960A682E-77302942!pb-smtp2.pobox.com
+From: Britton Kerin <britton.kerin@gmail.com>
+Date: Sat, 9 Dec 2023 07:20:31 -0900
+Message-ID: <CAC4O8c--k5ajjRMqumfE0LHnLDGYjL0jnBvJkP1oqrcWLyjL2Q@mail.gmail.com>
+Subject: [BUG] description of bit bisect start wrongly mentions <paths>
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Britton Kerin <britton.kerin@gmail.com> writes:
+It should be <path>... and not <paths>... in this:
 
-> It's a very small issue but it seems that git bisect terms does
-> support --term-old and --term-new options, however the man page says:
->
->     git bisect terms [--term-good | --term-bad]
->
-> The description for the start subcommand does document the support for
-> the more general terms correctly:
->
->     git bisect start [--term-{new,bad}=<term> --term-{old,good}=<term>]
->
-> so maybe it's worth fixing the git bisect terms documentation.
+     git bisect start [--term-(new|bad)=<term-new> --term-(old|good)=<term-old>]
+                            [--no-checkout] [--first-parent] [<bad>
+[<good>...]] [--] [<paths>...]
 
-In the description, we see
+This is worth fixing not only for consistency but because path is
+mentioned in the subsequent text and paths is not.
 
-    To get a reminder of the currently used terms, use
-
-    ------------------------------------------------
-    git bisect terms
-    ------------------------------------------------
-
-    You can get just the old (respectively new) term with `git bisect terms
-    --term-old` or `git bisect terms --term-good`.
-
-so you could read that
-
-	git bisect terms --term-good
-	git bisect terms --term-old
-
-are the same thing, and when you squint your eyes, you can probably
-guess that
-
-	git bisect terms --term-bad
-	git bisect terms --term-new
-
-are the same.  But I agree that the documentation should not force
-you to guess.  This dates back to 21b55e33 (bisect: add 'git bisect
-terms' to view the current terms, 2015-06-29).
-
------------- >8 ------------ >8 ------------ >8 ------------
-Subject: [PATCH] bisect: document "terms" subcommand more fully
-
-The documentation for "git bisect terms", although it did not hide
-any information, was a bit incomplete and forced readers to fill in
-the blanks to get the complete picture.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-bisect.txt | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
-
-diff --git c/Documentation/git-bisect.txt w/Documentation/git-bisect.txt
-index 191b4a42b6..16daa09c78 100644
---- c/Documentation/git-bisect.txt
-+++ w/Documentation/git-bisect.txt
-@@ -20,7 +20,7 @@ on the subcommand:
- 		  [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<paths>...]
-  git bisect (bad|new|<term-new>) [<rev>]
-  git bisect (good|old|<term-old>) [<rev>...]
-- git bisect terms [--term-good | --term-bad]
-+ git bisect terms [--term-(good|old) | --term-(bad|new)]
-  git bisect skip [(<rev>|<range>)...]
-  git bisect reset [<commit>]
-  git bisect (visualize|view)
-@@ -165,8 +165,10 @@ To get a reminder of the currently used terms, use
- git bisect terms
- ------------------------------------------------
- 
--You can get just the old (respectively new) term with `git bisect terms
----term-old` or `git bisect terms --term-good`.
-+You can get just the old term with `git bisect terms --term-old`
-+or `git bisect terms --term-good`; `git bisect terms --term-new`
-+and `git bisect terms --term-bad` can be used to learn how to call
-+the commits more recent than the sought change.
- 
- If you would like to use your own terms instead of "bad"/"good" or
- "new"/"old", you can choose any names you like (except existing bisect
-
+Britton
