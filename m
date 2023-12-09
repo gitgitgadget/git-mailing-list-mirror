@@ -1,83 +1,64 @@
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD783171C
-	for <git@vger.kernel.org>; Fri,  8 Dec 2023 15:46:46 -0800 (PST)
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-5d7692542beso25319447b3.3
-        for <git@vger.kernel.org>; Fri, 08 Dec 2023 15:46:46 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702079206; x=1702684006;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kLjBdDLFH8k+Pxgi3f2Z90Ii80ADD0I3k/WJRmZByOo=;
-        b=QsXAecvAtWH9/gm/KhH1gYaF0mSjtybV4Kllf+RE2RBIq5QcJGjKq5kL/wE/q+c0SJ
-         0h4gxw/McnFDK+QSRYR5aNNOs/dZCFyMhryeiChpjWIT2Akt5ziaMzOolckEiBeNOwA7
-         ECiTtyoV9QXlG1lBFpN2iZSQP9U+aTWRvs5McQBHf59PCzdNGDETDM7tVqT9sWm9XiAV
-         0B9lpBQrnljBSkLZTl1E18IF30WLslhdp4MXtulklf9Y+DPDUqpcC1JBCMGFy+vgR96w
-         aJBkROyXyxYLp5FeijEX8hkNGefPxNHiBuMiEwfqA07MmF5fBdefBliEh49ASXQWJM9m
-         QQ9A==
-X-Gm-Message-State: AOJu0Yzfdvm9enNMn3KaQ8Lr+BeCXHauNCuxa4AT8ImDhg6Te/8pHCZa
-	Fsyl795U1aYRvL5SBeFri7adIBQoGxnum3YX5Ow=
-X-Google-Smtp-Source: AGHT+IE1jpiBykC9luz3aVoJHorSJOdY8+9iHuoWVaBX/XdTBoLj3POSBo07J3v2LQN/phl/ZFMgOf0C6tZpwLh0DA4=
-X-Received: by 2002:a81:4a85:0:b0:5d7:a00d:62e7 with SMTP id
- x127-20020a814a85000000b005d7a00d62e7mr721551ywa.50.1702079205880; Fri, 08
- Dec 2023 15:46:45 -0800 (PST)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KOukITdc"
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F92F1734
+	for <git@vger.kernel.org>; Fri,  8 Dec 2023 17:40:34 -0800 (PST)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 7C96A1CFE4;
+	Fri,  8 Dec 2023 20:40:34 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=C8P9W56o1JyFkDtCZlP6TGsmGYjv/9udeWKnTt
+	uUCw0=; b=KOukITdcwPYJowdWz55CuHD6fZ7H/Jyyn8/ZWGImrhjOdaraJE+nwi
+	lnczJKlrU1oSqlNf0p7SQ/TxW4cd0V2HANrVC0dZ4kX0AngsiUqCY5An7JBcf1bu
+	rB6L/zaaXKrHjWMvfm2bDG1wZ/RWpUafnWiUC1RCfDqz9A1wV9E50=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 7469B1CFE3;
+	Fri,  8 Dec 2023 20:40:34 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.103.223])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 1B5D41CFE2;
+	Fri,  8 Dec 2023 20:40:31 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Patrick Steinhardt
+ <ps@pks.im>
+Subject: Re: [PATCH 05/24] midx: implement `DISP` chunk
+In-Reply-To: <ZW95WSErCXvkfrAG@nand.local> (Taylor Blau's message of "Tue, 5
+	Dec 2023 14:26:17 -0500")
+References: <cover.1701198172.git.me@ttaylorr.com>
+	<c52d7e7b27a9add4f58b8334db4fe4498af1c90f.1701198172.git.me@ttaylorr.com>
+	<xmqqjzpv4ecg.fsf@gitster.g> <ZW95WSErCXvkfrAG@nand.local>
+Date: Fri, 08 Dec 2023 17:40:29 -0800
+Message-ID: <xmqqlea4nofm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1700549493.git.ps@pks.im> <cover.1702047081.git.ps@pks.im>
- <8061b9d2fcb3e8c3d1fd641e705b9a8879e452f4.1702047081.git.ps@pks.im> <ZXOML2pcqVnVo0oX@nand.local>
-In-Reply-To: <ZXOML2pcqVnVo0oX@nand.local>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Fri, 8 Dec 2023 18:46:33 -0500
-Message-ID: <CAPig+cRGZvyhSs9=3-tkBKRZDjDUsb-VDs+dzOaZof__qyBjbA@mail.gmail.com>
-Subject: Re: [PATCH v2 04/11] reftable/stack: verify that `reftable_stack_add()`
- uses auto-compaction
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>, 
-	Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ F02175D2-9633-11EE-9CA3-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-On Fri, Dec 8, 2023 at 4:35=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote:
-> On Fri, Dec 08, 2023 at 03:53:10PM +0100, Patrick Steinhardt wrote:
-> > +static void test_reftable_stack_add_performs_auto_compaction(void)
-> > +{
-> > +             char name[100];
-> > +             snprintf(name, sizeof(name), "branch%04d", i);
-> > +             ref.refname =3D name;
->
-> Is there a reason that we have to use snprintf() here and not a strbuf?
->
-> I would have expected to see something like:
->
->     struct strbuf buf =3D STRBUF_INIT;
->     /* ... */
->     strbuf_addf(&buf, "branch%04d", i);
->     ref.refname =3D strbuf_detach(&buf, NULL);
+Taylor Blau <me@ttaylorr.com> writes:
 
-If I'm reading the code correctly, this use of strbuf would leak each
-time through the loop.
+> Hopefully you're satisfied with the way things are split up and
+> organized currently, but if you have suggestions on other ways I could
+> slice or dice this, please let me know.
 
-> I guess it doesn't matter too much, but I think if we can avoid using
-> snprintf(), it's worth doing. If we must use snprintf() here, we should
-> probably use Git's xsnprintf() instead.
-
-xstrfmt() from strbuf.h would be even simpler if the intention is to
-allocate a new string which will be freed later.
-
-In this case, though, assuming I understand the intent, I think the
-more common and safe idiom in this codebase is something like this:
-
-    struct strbuf name =3D STRBUF_INIT;
-    strbuf_addstr(&name, "branch");
-    size_t len =3D name.len;
-    for (...) {
-        strbuf_setlen(&name, len);
-        strbuf_addf(&name, "%04d", i);
-        ref.refname =3D name.buf;
-        ...
-    }
-    strbuf_release(&name);
+I did wonder how expensive to recompute and validate the "distinct"
+information (in other words, is it too expensive for the consumers
+of an existing midx file to see which packs are distinct on demand
+before they stream contents out of the underlying packs?), as the
+way the packs are marked as distinct looked rather error prone (you
+can very easily list packfiles with overlaps with "+" prefix and the
+DISK chunk writer does not even notice that you lied to it).  As long
+as "git fsck" catches when two packs that are marked as distinct share
+an object, that is OK, but the arrangement did look rather brittle
+to me.
