@@ -1,67 +1,70 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IrKIcLVL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="z5nSBCzB"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BDmC8J4Q";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BF5H6s9s"
 Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2AD9BE
-	for <git@vger.kernel.org>; Mon, 11 Dec 2023 03:34:46 -0800 (PST)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.west.internal (Postfix) with ESMTP id 1BF213200B33;
-	Mon, 11 Dec 2023 06:34:44 -0500 (EST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01321BE
+	for <git@vger.kernel.org>; Mon, 11 Dec 2023 03:34:53 -0800 (PST)
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailout.west.internal (Postfix) with ESMTP id 472643200C19;
+	Mon, 11 Dec 2023 06:34:52 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Mon, 11 Dec 2023 06:34:44 -0500
+  by compute7.internal (MEProxy); Mon, 11 Dec 2023 06:34:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm1; t=1702294483; x=1702380883; bh=LJ
-	Bw7IBFTPqMkRHRWow1STBptulOUaAmeARjfD7vx+4=; b=IrKIcLVLG8Q1E2iYDk
-	IEujC73pLxHxEaxpZS5Cre7oQBwbrqgelZExjlBnSmjIEmhcOPgH37QZp//+3Evd
-	izQcYtKyxpb7nA2AtKmqLGXmQpbED182yn4polxNtDIqNAMwYSBtaH2gzkG4FaQU
-	CUF/FYjwTHQjkgXWKCeYcEG+Woy5xdm8BMdksPsd6vpX1t2Xkx7m0bfcErcGH125
-	DQsSsvwKrWcvqEvPsmyVvqpd3+znD7u3BGkGyMSS0TaHEYEU8SIJuORBjmocdZ9M
-	tvk/Ze5F7nb38eVWXHbpw6zx8U37CRQzLDuc7dHey1ZoeZrFKdTdGFxKf4yMBGUq
-	HR8A==
+	:subject:subject:to:to; s=fm1; t=1702294491; x=1702380891; bh=io
+	vw0downmEm/jrfgzDB9sg8b2GdU0puIdABFUsHpUw=; b=BDmC8J4QhszkWr0lHP
+	qVRNU8Xest9k1RIqOPxms1BTo1rT1A3GPqwOu6zFu63IR99HJ/iAmfBwda2k3qun
+	WfRZgxFk250lBIMIet4YVDx2MsR2Sq9sZT4Pi6K+f8YiStGDQqTxuIWM1m8tHoql
+	Hd2crUC495da+ub8VBoQghZGP9MfW8Kf/aslm4sGK9sUPxnsfj6cqyXoBsq3t6j1
+	J5P2qISO3O6rYaf8Lpl1zGGtTn/hOGHoLmOOwX2W875ejZxH7IyUi9hwnJg9MtIJ
+	uB707DJdbest8V0TYl9affGMPO0px4NjIgE7hwFGuehS3walAU6zoHHDwsGv+Oed
+	KWTg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm1; t=1702294483; x=1702380883; bh=LJBw7IBFTPqMk
-	RHRWow1STBptulOUaAmeARjfD7vx+4=; b=z5nSBCzBKbt1wZ8AtE/yhjnTbANKS
-	9XuvAtsj6O9etynLzgsYM4Xq82VR10GGMKxdrZshDb7QwIWS7hn5+lYzcB84JczI
-	At1x/F5NlfVpt6nDzHW3qV6aTa3jIM35Ysv6IpO/lqCrTVvc+3sIvmICE5x3kyx8
-	8+G6nRWFkVAubNJdOW1UL2If8n+KjGapHBHOyroTMxDfpDixwKjPojkOBWk1Iqsf
-	EI5/JroGcsE6PzD7cIjknE8f5FALomU7rL3GtD/i9tM90YTUu3EkQTo23+kEQf4g
-	WabI8ZCzCvwr1AAkNbZ1lxalUiTwbBPObmvJEWi/1cCvz2uBKjFhvbGUw==
-X-ME-Sender: <xms:0_N2ZZdH35aenrcVu3uzFjllCXMaLYh87DwMu6hRmkydfgpbSaV9Yw>
-    <xme:0_N2ZXNBjRCSBF2j3wC-QQ9hwwPI98VSgKCkEHyF-MY8eVhKTcwY-8RoQaUNjmX9K
-    qx4NEvLw7aDFunExw>
-X-ME-Received: <xmr:0_N2ZSiIVvxLOYdgJrjWP6rcTg-hoEs6UYfCGn1s72jW0KdYlOAA0VYCbICIaatTt0kV15L1_N5DcbF_xNvpj7vxBgi_GhP7CY0gy2Dts2F4mA>
+	:x-sasl-enc; s=fm1; t=1702294491; x=1702380891; bh=iovw0downmEm/
+	jrfgzDB9sg8b2GdU0puIdABFUsHpUw=; b=BF5H6s9snsoUw8XB67+EOAFZTcaq4
+	O2QuFt5FlfhkblG2sAZwotgSTJ1B7eH7xmsj6eUzDQ8B5cLHcKmJJPOrvlnIYZR/
+	nD6NzEzDSCuS39CGLrGgeqT/D5JLMluBWM6/ZZv2M9e1qEMkbZT3i7RWIUFHEsEx
+	jqCZngOmOjzjsGAhcoQnIJoMX4e2M5ht2eS+unKv4sJRGJm9FIlwGqoF1Jw0ICyu
+	RWO3zcrdMRxMj5s7zjAlZNaX+EXQvTT0xiO7Tk/1SdVbxx42LhpKbOcJig9vjxHu
+	mjiovDZcu6oJSmmojcL6Dj9x3Qd/dsob4b5nYoQTUWEzCLXJEXnzFLfyw==
+X-ME-Sender: <xms:2_N2ZYyG4SE1qTsCBYi1mB1UPQByPuZvgF5pcv7YLhaTXCx0OwmlRQ>
+    <xme:2_N2ZcQt7sRb9MYLiEeEeFHuFPW2zFnzKSOLYXowWhOGOvEUNnB9f7i6TPLx_vpT2
+    8jfgC6FBcEpNW3ysw>
+X-ME-Received: <xmr:2_N2ZaXsl_Y-qBFuMryqDFUj89GNW2lkj0KwKjP-XviTEkLHIw8d9-g5CE6pf9G3Ogy3ZhF68mYVMGebdVSd8RxMSZKS3yqQ17XVPbSXZHG-VA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudelvddgfeduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeiffdvffeuuddvvdefkefgffeiudetfe
-    fhveegveeiieejueeileeuleefheejjeenucffohhmrghinhephhhtthhpqdhfvghttghh
-    qdguuhhmsgdrshhhpdhgihhtlhgrsgdrtghomhenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:0_N2ZS9V76gr2cWJavR4JwZ8EbGl3nFbRGxf5dzRvXPmISXXiwItrQ>
-    <xmx:0_N2ZVtDB3pHWYpPsPaYN9SxnU1PbcLhIpH2BSevG-o-tgvtWwWc2A>
-    <xmx:0_N2ZREMZv48DJb5U8btJPW--TCjQhsRaspBSCidnYIfvxb2UKeHXQ>
-    <xmx:0_N2ZWU35Ah_jRU2uETh-vqvjgrkS5EB1r1J8NojUj9hqNrUMEq-NA>
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepteeuvefhhfdufedvgeeiueeileegtdfhgeeftdeuveejjedtgfejhedujeeutddu
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:2_N2ZWhsSwBlJG0djiv4D8yvnYev8T7nooBFZ3TQZcTxzWnvjEclrg>
+    <xmx:2_N2ZaBcpj80zYuuUnEttw0JsbL_Zkf0ZxncuaJi7jo1Zazby7FCWw>
+    <xmx:2_N2ZXLMczW4Kq6yV05pF9hQgh5S3WQwmpvqkM9KzYI04j8vpZoO0Q>
+    <xmx:2_N2Zb6cbEATwzrz659w1Fn3p2zOfMC6H7H8f3axzbsrEo00fRPfQw>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 Dec 2023 06:34:42 -0500 (EST)
+ 11 Dec 2023 06:34:50 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 14288bef (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 11 Dec 2023 11:33:03 +0000 (UTC)
-Date: Mon, 11 Dec 2023 12:34:38 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id b90f186f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 11 Dec 2023 11:33:14 +0000 (UTC)
+Date: Mon, 11 Dec 2023 12:34:49 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH 0/7] clone: fix init of refdb with wrong object format
-Message-ID: <ZXbzzlyWC3HTUyDA@tanuki>
+Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/7] setup: extract function to create the refdb
+Message-ID: <ZXbz2eQoz0ReP_IF@tanuki>
 References: <cover.1701863960.git.ps@pks.im>
- <xmqq7clmn3w1.fsf@gitster.g>
+ <b69c57d27269c9b40c9e4394861dffd8a8b9860c.1701863960.git.ps@pks.im>
+ <CAOLa=ZSZztJUF9nmSzGdOW0oWBRUp2sw8QyuZO_q06cNymad3Q@mail.gmail.com>
+ <ZXFy0_T1AZLh058g@tanuki>
+ <xmqq1qbw1f0j.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,145 +72,76 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="9zUZdsJB7L7d+VII"
+	protocol="application/pgp-signature"; boundary="nRm7xGFL+4DlT/dR"
 Content-Disposition: inline
-In-Reply-To: <xmqq7clmn3w1.fsf@gitster.g>
+In-Reply-To: <xmqq1qbw1f0j.fsf@gitster.g>
 
 
---9zUZdsJB7L7d+VII
-Content-Type: text/plain; charset=us-ascii
+--nRm7xGFL+4DlT/dR
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Dec 09, 2023 at 07:16:30PM -0800, Junio C Hamano wrote:
+On Sat, Dec 09, 2023 at 07:54:52AM +0900, Junio C Hamano wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
 >=20
-> > While at it I noticed that this actually fixes a bug with bundle URIs
-> > when the object formats diverge in this way.
-> > ...
-> > This patch series is actually the last incompatibility for the reftable
-> > backend that I have found. All tests except for the files-backend
-> > specific ones pass now with the current state I have at [1], which is
-> > currently at e6f2f592b7 (t: skip tests which are incompatible with
-> > reftable, 2023-11-24)
+> > On Wed, Dec 06, 2023 at 10:10:37PM +0100, Karthik Nayak wrote:
+> >> On Wed, Dec 6, 2023 at 1:40=E2=80=AFPM Patrick Steinhardt <ps@pks.im> =
+wrote:
+> >> > +static void create_reference_database(const char *initial_branch, i=
+nt quiet)
+> >> > +{
+> >> > +       struct strbuf err =3D STRBUF_INIT;
+> >> > +       int reinit =3D is_reinit();
+> >> > +
+> >> > +       /*
+> >> > +        * We need to create a "refs" dir in any case so that older
+> >> > +        * versions of git can tell that this is a repository.
+> >> > +        */
+> >>=20
+> >> How does this work though, even if an earlier version of git can tell
+> >> that this is a repository, it still won't be able to read the reftable
+> >> backend. In that sense, what do we achieve here?
+> >
+> > This is a good question, and there is related ongoing discussion about
+> > this topic in the thread starting at [1]. There are a few benefits to
+> > letting clients discover such repos even if they don't understand the
+> > new reference backend format:
+> >
+> >   - They know to stop walking up the parent-directory chain. Otherwise a
+> >     client might end up detecting a Git repository in the parent dir.
+> >
+> >   - The user gets a proper error message why the repository cannot be
+> >     accessed. Instead of failing to detect the repository altogether we
+> >     instead say that we don't understand the "extensions.refFormat"
+> >     extension.
 >=20
-> An existing test
->=20
->     $ make && cd t && GIT_TEST_DEFAULT_HASH=3Dsha256 sh t5550-http-fetch-=
-dumb.sh
->=20
-> passes with vanilla Git 2.43, but with these patches applied, it
-> fails the "7 - empty dumb HTTP" step.
+> Yup, both are very good reasons.  Would it help to sneak a condensed
+> version of it in the in-code comment, perhaps?
 
-Indeed -- now that the GitLab CI definitions have landed in your master
-branch I can also see this failure as part of our CI job [1]. And with
-the NixOS httpd refactorings I'm actually able to run these tests in the
-first place. Really happy to see that things come together like this, as
-it means that we'll detect such issues before we send the series to the
-mailing list from now on.
-
-Anyway, regarding the test itself. I think the refactorings in this
-patch series uncover a preexisting and already-known issue with empty
-repositories when using the dumb HTTP protocol: there is no proper way
-to know about the hash function that the remote repository uses [2].
-
-Before my refactorings we used to fall back to the local default hash
-format with which we've already initialized the repository, which is
-wrong. Now we use the hash format we detected via the remote, which we
-cannot detect because the remote is empty and does not advertise the
-hash function, so we fall back to SHA1 and thus also do the wrong thing.
-The only correct thing here would be to use the actual hash function
-that the remote repository uses, but we have no to do so. So we're kind
-of stuck here and can only choose between two different wrong ways to
-pick the hash function.
-
-We can restore the previous wrong behaviour by honoring GIT_DEFAULT_HASH
-in git-remote-curl(1) in the case where we do not have a repository set
-up yet. So something similar in spirit to the following:
-
-```
-diff --git a/remote-curl.c b/remote-curl.c
-index fc29757b65..7e97c9c2e9 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -27,6 +27,7 @@
- static struct remote *remote;
- /* always ends with a trailing slash */
- static struct strbuf url =3D STRBUF_INIT;
-+static int nongit;
-=20
- struct options {
- 	int verbosity;
-@@ -275,8 +276,30 @@ static const struct git_hash_algo *detect_hash_algo(st=
-ruct discovery *heads)
- {
- 	const char *p =3D memchr(heads->buf, '\t', heads->len);
- 	int algo;
--	if (!p)
--		return the_hash_algo;
-+
-+	if (!p) {
-+		const char *env;
-+
-+		if (!nongit)
-+			return the_hash_algo;
-+
-+		/*
-+		 * In case the remote neither advertises the hash format nor
-+		 * any references we have no way to detect the correct hash
-+		 * format. We can thus only guess what the remote is using,
-+		 * where the best guess is to fall back to the default hash.
-+		 */
-+		env =3D getenv("GIT_DEFAULT_HASH");
-+		if (env) {
-+			algo =3D hash_algo_by_name(env);
-+			if (algo =3D=3D GIT_HASH_UNKNOWN)
-+				die(_("unknown hash algorithm '%s'"), env);
-+		} else {
-+			algo =3D GIT_HASH_SHA1;
-+		}
-+
-+		return &hash_algos[algo];
-+	}
-=20
- 	algo =3D hash_algo_by_length((p - heads->buf) / 2);
- 	if (algo =3D=3D GIT_HASH_UNKNOWN)
-@@ -1521,7 +1544,6 @@ static int stateless_connect(const char *service_name)
- int cmd_main(int argc, const char **argv)
- {
- 	struct strbuf buf =3D STRBUF_INIT;
--	int nongit;
- 	int ret =3D 1;
-=20
- 	setup_git_directory_gently(&nongit);
-```
-
-+Cc brian, as he's the author of [2].
+Sure, let's do so. I failed to condense this meaningfully, but hope that
+the result will be okay regardless of that.
 
 Patrick
 
-[1]: https://gitlab.com/gitlab-org/git/-/jobs/5723052108
-[2]: ac093d0790 (remote-curl: detect algorithm for dumb HTTP by size, 2020-=
-06-19)
-
---9zUZdsJB7L7d+VII
+--nRm7xGFL+4DlT/dR
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmV2880ACgkQVbJhu7ck
-PpSe9A//YWAECBxMB+1ubE+bZ9T56b9Eej/M2YItDXL7u4KSV5RANQEUMEb6PA+l
-DW9A469HBomdOXo01dk3++PHxcTJcSHqkXrvflIvo+X6egx16YpDq2pQdviUNnKa
-TmRZMGfGKBZwYaoG3fM1bXoC3a4tn+7wepbCcxKUgg+Uya+F7evIrhlIwXh3eP9c
-CSFAl/rS8AYgMVpttDROotZetLW6QU7qt2cKxYZSJZ+srIvI3FAP8K9XYBrMuLkJ
-MLADBmqVkNhZHc/nV54MRdJoYNKeUJb49WfJ7owF7rI3FGmhZ9zYsc3WnuaDb9yS
-n6L9PhT8ESPgnEZY8d/sE8pSdsViVBF2k97Jn61mUx8DB86cqlfacIfIkTJk348x
-XsWqOmT+URUQOu7hT5NEhkz+RPUaR+eEsv5FRA48DP2lpZPSpQIgLf3Gu0CWpKH4
-jibr/O3WcAvYJ7tAinaCNJ0OQK0Bhsj0+mmp8wMsCjAsWZJd3IQbvlM3vdYmPxct
-RVEPHU4S93yTaFN1e+So4YEeRg/J0ZoBzOA13XhSo+GRRKFBSVaU2QvX/7Ctj/WC
-N5iXgQ7GktH9aVQOHTVWCIcf7oOU5Hsa+qZw4xmKIAEQl+k2Kw+xPziDpbG7U1me
-hxdsxfH27i6uKxxJgJ36Ym+S7vUnKA6g+PfL/ejB3/pYFEC0PwA=
-=8zZu
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmV289gACgkQVbJhu7ck
+PpRy1BAAnJH4bUEsTCHK6wkxeDMQjWqGlNJzboUUM4h14imgFko2YqDEaJaeeN7P
++HZflLlJfEuVtuaEk7cI9BV31uWLlhIZ7DcKpX8g2cqcCkmSeHuAbk1QxaZqAVeG
+XV+aW0RObJ7RXP+nq84jKYNyHrvWkQ1nfUt+5xu6lYa5ystEFdI/Hnsbdl1hOeck
+5ilNKwMyn/kNeTQ31nkIhc48Vztkkc5hxVHffkUQirSfgZ35gVIpUiY6K+ByEtja
+Xh6CuDZ+5is2tDPBqxg94NbSUSiELMGo+311oF0D9eiHPBsage6dk2tJePsb4Hgf
+j+TSmCnJJ8Zntx9rv2plL3sogX8HwJ+6vhlOh/s1y3hvkT0mynOac2jIwqusvmxd
+7Ks0oHQYqNq7LaWV65akCmXJUU+GryTCFr6pTwKsBHthMT0bp/SxEnB80lC0Ynjp
+bKw3/tFC1A2VTZJ+WEDlwjHgqLmHi8kaB8fahJAs/6HvKZhPPazlBq0UAK72dexs
+uq6K0omvqqo9ikwJjLnjvX/n4T0KOQq23pz6THq3mPC0Ka+gwJLAfz9jomiBlIXC
+PPfNyhAPemahr22hLrdStoXeKSm1eBs9fZdGoLkStrhEsCfT9ejuiLqTkjICCi7S
+LZUxzbr6sMm9X/3DOevNXQICWGqA+5AmLSv46e/50oZdP+4KAt8=
+=061C
 -----END PGP SIGNATURE-----
 
---9zUZdsJB7L7d+VII--
+--nRm7xGFL+4DlT/dR--
