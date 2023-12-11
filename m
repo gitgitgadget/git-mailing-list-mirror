@@ -1,41 +1,41 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oEf3zfjk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qhZNrB92"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TgubDAcw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aYDw7/5c"
 Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1DA7D9
-	for <git@vger.kernel.org>; Mon, 11 Dec 2023 01:07:46 -0800 (PST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BF66D9
+	for <git@vger.kernel.org>; Mon, 11 Dec 2023 01:07:51 -0800 (PST)
 Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailout.west.internal (Postfix) with ESMTP id E92BE3202677;
-	Mon, 11 Dec 2023 04:07:45 -0500 (EST)
+	by mailout.west.internal (Postfix) with ESMTP id 66022320268D;
+	Mon, 11 Dec 2023 04:07:50 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute7.internal (MEProxy); Mon, 11 Dec 2023 04:07:46 -0500
+  by compute7.internal (MEProxy); Mon, 11 Dec 2023 04:07:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm1; t=1702285665; x=1702372065; bh=8g
-	bLZFvksjaSZCwzhiJWV1hMVJc7TCifkkebfE7qm+w=; b=oEf3zfjk0wMuSDDM2l
-	D/J4Hzd3E9Y1J7kUT4+6YbJIXvNRZ68Kh5eZtPR/AkMzGjz5zkn/jsmyTIoC0wNZ
-	sP2bWhCcv17wlKCEGXPcuYZ1jYbLQnlYOSDuYyrQQ6v5SdK/0ZohR+2gZGsTKRdu
-	70SdL+JaLJYR+0/2aKXEjhbn/eso7geJ2Cnt2vLp3D/XndLsr8QJUTRFC7ko/GIf
-	bZwwqgbfQz96LZmDfq6ebRj7eUR6ONFNH0yXqePp1oKJ8oHEZh0pzRRZVxH1CtmV
-	vZdYpoxNnjUNI2kTUwTC9prAqD9UDfpuixkOjdZY70msh0I1pD5fXh1soTfuVYMg
-	jEiA==
+	:subject:subject:to:to; s=fm1; t=1702285669; x=1702372069; bh=e8
+	uVX+p/aIJqUt9uBvRrCYzrQgoLhUP0CGh3m2N1vDQ=; b=TgubDAcwRGKcvAXzOE
+	/FbE7ppsShUi8prU0B4Ji6iBYnRwEHvna7t92Pk/bnYA1FggP0Ju9ZkQ26MR2h3M
+	0tpDT+hhQX82JJNe6L2qha7fKv+GDERgDYUipAzVBapfVEO6kLUzNlqXktyzRpkK
+	ELO09Dyt38eHuDbzp0+mTmE8MKhfc3Bp6zKA7W6kuyRnaUQzmpNiDNq7pjqyDU/K
+	joZfpezRiQZxmiA55c9vaoPEIJx4/qieVhQFW9gYE0sLXywX+GeK11n9RUiBgdLz
+	iluBWg3V87qYls9O2NEaeoDHqKRUvuaU5kP0WMm6buxEywN3SCBktOJVunv+ZdXS
+	xBcw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm1; t=1702285665; x=1702372065; bh=8gbLZFvksjaSZ
-	CwzhiJWV1hMVJc7TCifkkebfE7qm+w=; b=qhZNrB92NMvJQawF2mb63GxYpjT9M
-	/E3ifIbJik3MFSx+rKR8nz2LN/FWdc0TZtXe4bVpyukBtuZsTUC4YEoaVMocGcW+
-	dTEEOMUjoC42WQvvVohCQ85F0dG8S91sooEuhI91tEM2vBSoPV4q3yb3iUE12CLS
-	jDM2o7JZJvPUgvMt1n61JWpT7FZDOx3k32QmD9SmjOe5IOS9GxvD39rnEZyt6C1H
-	vMQntFpSPociOorayC8FjUyBO4nfYFtUgvmfxqKmjvlG9xkydUmbNyWqNfzSk57+
-	Kr59cQbbQBv73aKbtIgqtviq5aaqmzhSn8gsWZbduisByUzwgkRSqAG/w==
-X-ME-Sender: <xms:YdF2ZcZ_c6qjfcVZqtZK2Pe8QXUCRKBEp1MaPXmskT-Kbm1n9sG20g>
-    <xme:YdF2ZXZndx7JmO1LpBew5_KCz30uQK6CwtZCnLdrdedwyn1oabHKuG5iFDOwS73c8
-    lFyIWyiYuyktUZOFQ>
-X-ME-Received: <xmr:YdF2ZW9p8-ufpmMaA-Hf2u7dogoeiRR7I6-Pc_tTgvzEwcFHemD1ZSHJE83y786GHYPvtNG-GxnjXzfJ8-hCqXRDoYKsytSb_xtjDX_DxqDcHA>
+	:x-sasl-enc; s=fm1; t=1702285669; x=1702372069; bh=e8uVX+p/aIJqU
+	t9uBvRrCYzrQgoLhUP0CGh3m2N1vDQ=; b=aYDw7/5c84889yEA7M+Eu+EY7nUZM
+	jFRlqaEJ8Z6l3D5px4RlUIBmm6Y71UFeKvA/0khKlOeManUdrp4+Xee9Y9TzBAlL
+	mRC0hBbXK7GadiqAV99CCm3uc635XglZELqH5pF2MDnPQnTnFQiqHbfMidTFLLql
+	SIyEg5xnfBa7XiVp4mC09hojMjlcrHoTfkuL2G49wRnebB71xT963QtFzNHCyD2H
+	VaIr1f+bR3xPr9NF0yZ9YlR89At71/oJ58R2N5t49NbQyr0hVdW41b1JgaovAeS9
+	MS5z9SVK+kLw4zIKMNj8Zo0UpekQiwyMsTV6/8l9TRsZAx8OIImhTDiuA==
+X-ME-Sender: <xms:ZdF2ZSn4oYdi6oWNNNGCjIdcc7YpV_Vz3zSZZK6iT9hhQDFIp7rq8A>
+    <xme:ZdF2ZZ2breCiA5Dj8SrgT5VOpXBCPbfozVUbpy_qwEkE3VQrp4ks5ssfRsTmztEIj
+    NtVCoV-Mqndy485lw>
+X-ME-Received: <xmr:ZdF2ZQqo1jUu_juTDtYtCBnNUHgbtj_0oUHl2wP-YmM8sZs8yv4MvSau9MAu73zbBSxbY-7A44ntMHZVn2Zn4mmUBKVXXx-sBRQgm0Dl-5ShHQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudeluddguddvlecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
@@ -44,25 +44,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudeluddguddvlecutefuodetgg
     gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
     teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
     esphhkshdrihhm
-X-ME-Proxy: <xmx:YdF2ZWoKleCbx7n8sqC_-L6ec2Jz8fmin9zWW0apyRuvI2zP7j9o3w>
-    <xmx:YdF2ZXpvzEgGzRmosUyt57ILda_ZvDIgCOOrr9ZwJe-ncIQuGzBT-Q>
-    <xmx:YdF2ZUSvkbwhcML9Y_jGc9cEvDYRGclFml5QECitwn76K0DmgCvEqQ>
-    <xmx:YdF2ZWU5H0HIf14OxrY1sfFhbFfxVJilVI_kpvL8lzo-WU5i92-ftA>
+X-ME-Proxy: <xmx:ZdF2ZWn0eaGUkGljNcyOL9PTS2P4jolOg5U-gdfy7tk__Q7lxv9P0Q>
+    <xmx:ZdF2ZQ0rk-0PQVq-z-spDekR7pasp8Wovx1qIB9qvsI5f8rIMagJLg>
+    <xmx:ZdF2ZdueOdcngnrqJ4h6bOlGls0y2U3cUfxHMX7AdeB1Qnfi5aq_iQ>
+    <xmx:ZdF2ZdzkZmiJbVvoJHQaG3e7Cg0Ab_EdVH3Ifmt1DKW39WI-wIfDGQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 Dec 2023 04:07:44 -0500 (EST)
+ 11 Dec 2023 04:07:48 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 63b172e6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 11 Dec 2023 09:06:07 +0000 (UTC)
-Date: Mon, 11 Dec 2023 10:07:42 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 1d1e06ba (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 11 Dec 2023 09:06:12 +0000 (UTC)
+Date: Mon, 11 Dec 2023 10:07:46 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Han-Wen Nienhuys <hanwenn@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>, Taylor Blau <me@ttaylorr.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v3 04/11] reftable/stack: verify that `reftable_stack_add()`
- uses auto-compaction
-Message-ID: <5e27d0a5566d90969734e92984cfafe6048924f4.1702285387.git.ps@pks.im>
+Subject: [PATCH v3 05/11] reftable/stack: perform auto-compaction with
+ transactional interface
+Message-ID: <dd180eba40d41e8b0ddf8b9422720c0883cc04b8.1702285387.git.ps@pks.im>
 References: <cover.1700549493.git.ps@pks.im>
  <cover.1702285387.git.ps@pks.im>
 Precedence: bulk
@@ -72,41 +72,79 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="dtPs6pD4PmxySBvG"
+	protocol="application/pgp-signature"; boundary="5in2knYdqNjKANlJ"
 Content-Disposition: inline
 In-Reply-To: <cover.1702285387.git.ps@pks.im>
 
 
---dtPs6pD4PmxySBvG
+--5in2knYdqNjKANlJ
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-While we have several tests that check whether we correctly perform
-auto-compaction when manually calling `reftable_stack_auto_compact()`,
-we don't have any tests that verify whether `reftable_stack_add()` does
-call it automatically. Add one.
+Whenever updating references or reflog entries in the reftable stack, we
+need to add a new table to the stack, thus growing the stack's length by
+one. The stack can grow to become quite long rather quickly, leading to
+performance issues when trying to read records. But besides performance
+issues, this can also lead to exhaustion of file descriptors very
+rapidly as every single table requires a separate descriptor when
+opening the stack.
+
+While git-pack-refs(1) fixes this issue for us by merging the tables, it
+runs too irregularly to keep the length of the stack within reasonable
+limits. This is why the reftable stack has an auto-compaction mechanism:
+`reftable_stack_add()` will call `reftable_stack_auto_compact()` after
+its added the new table, which will auto-compact the stack as required.
+
+But while this logic works alright for `reftable_stack_add()`, we do not
+do the same in `reftable_addition_commit()`, which is the transactional
+equivalent to the former function that allows us to write multiple
+updates to the stack atomically. Consequentially, we will easily run
+into file descriptor exhaustion in code paths that use many separate
+transactions like e.g. non-atomic fetches.
+
+Fix this issue by calling `reftable_stack_auto_compact()`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/stack_test.c | 49 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 49 insertions(+)
+ reftable/stack.c      |  6 +++++
+ reftable/stack_test.c | 56 +++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 62 insertions(+)
 
+diff --git a/reftable/stack.c b/reftable/stack.c
+index f0cadad490..f5d18a842a 100644
+--- a/reftable/stack.c
++++ b/reftable/stack.c
+@@ -584,6 +584,12 @@ int reftable_addition_commit(struct reftable_addition =
+*add)
+ 	add->new_tables_len =3D 0;
+=20
+ 	err =3D reftable_stack_reload(add->stack);
++	if (err)
++		goto done;
++
++	if (!add->stack->disable_auto_compact)
++		err =3D reftable_stack_auto_compact(add->stack);
++
+ done:
+ 	reftable_addition_close(add);
+ 	return err;
 diff --git a/reftable/stack_test.c b/reftable/stack_test.c
-index 0644c8ad2e..52b4dc3b14 100644
+index 52b4dc3b14..14a3fc11ee 100644
 --- a/reftable/stack_test.c
 +++ b/reftable/stack_test.c
-@@ -850,6 +850,54 @@ static void test_reftable_stack_auto_compaction(void)
+@@ -289,6 +289,61 @@ static void test_reftable_stack_transaction_api(void)
  	clear_dir(dir);
  }
 =20
-+static void test_reftable_stack_add_performs_auto_compaction(void)
++static void test_reftable_stack_transaction_api_performs_auto_compaction(v=
+oid)
 +{
-+	struct reftable_write_options cfg =3D { 0 };
-+	struct reftable_stack *st =3D NULL;
-+	struct strbuf refname =3D STRBUF_INIT;
 +	char *dir =3D get_tmp_dir(__LINE__);
-+	int err, i, n =3D 20;
++	struct reftable_write_options cfg =3D {0};
++	struct reftable_addition *add =3D NULL;
++	struct reftable_stack *st =3D NULL;
++	int i, n =3D 20, err;
 +
 +	err =3D reftable_new_stack(&st, dir, cfg);
 +	EXPECT_ERR(err);
@@ -117,6 +155,10 @@ index 0644c8ad2e..52b4dc3b14 100644
 +			.value_type =3D REFTABLE_REF_SYMREF,
 +			.value.symref =3D "master",
 +		};
++		char name[100];
++
++		snprintf(name, sizeof(name), "branch%04d", i);
++		ref.refname =3D name;
 +
 +		/*
 +		 * Disable auto-compaction for all but the last runs. Like this
@@ -125,12 +167,16 @@ index 0644c8ad2e..52b4dc3b14 100644
 +		 */
 +		st->disable_auto_compact =3D i !=3D n;
 +
-+		strbuf_reset(&refname);
-+		strbuf_addf(&refname, "branch-%04d", i);
-+		ref.refname =3D refname.buf;
-+
-+		err =3D reftable_stack_add(st, &write_test_ref, &ref);
++		err =3D reftable_stack_new_addition(&add, st);
 +		EXPECT_ERR(err);
++
++		err =3D reftable_addition_add(add, &write_test_ref, &ref);
++		EXPECT_ERR(err);
++
++		err =3D reftable_addition_commit(add);
++		EXPECT_ERR(err);
++
++		reftable_addition_destroy(add);
 +
 +		/*
 +		 * The stack length should grow continuously for all runs where
@@ -144,43 +190,42 @@ index 0644c8ad2e..52b4dc3b14 100644
 +	}
 +
 +	reftable_stack_destroy(st);
-+	strbuf_release(&refname);
 +	clear_dir(dir);
 +}
 +
- static void test_reftable_stack_compaction_concurrent(void)
+ static void test_reftable_stack_validate_refname(void)
  {
  	struct reftable_write_options cfg =3D { 0 };
-@@ -960,6 +1008,7 @@ int stack_test_main(int argc, const char *argv[])
- 	RUN_TEST(test_reftable_stack_add);
- 	RUN_TEST(test_reftable_stack_add_one);
- 	RUN_TEST(test_reftable_stack_auto_compaction);
-+	RUN_TEST(test_reftable_stack_add_performs_auto_compaction);
- 	RUN_TEST(test_reftable_stack_compaction_concurrent);
- 	RUN_TEST(test_reftable_stack_compaction_concurrent_clean);
- 	RUN_TEST(test_reftable_stack_hash_id);
+@@ -1016,6 +1071,7 @@ int stack_test_main(int argc, const char *argv[])
+ 	RUN_TEST(test_reftable_stack_log_normalize);
+ 	RUN_TEST(test_reftable_stack_tombstone);
+ 	RUN_TEST(test_reftable_stack_transaction_api);
++	RUN_TEST(test_reftable_stack_transaction_api_performs_auto_compaction);
+ 	RUN_TEST(test_reftable_stack_update_index_check);
+ 	RUN_TEST(test_reftable_stack_uptodate);
+ 	RUN_TEST(test_reftable_stack_validate_refname);
 --=20
 2.43.0
 
 
---dtPs6pD4PmxySBvG
+--5in2knYdqNjKANlJ
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmV20V0ACgkQVbJhu7ck
-PpQkPQ//VfEzNL6VIA9RGYzv+Ej8I1y4dapSA6uxhnlC4m3PN7pCd9ndjgBPNx4V
-OZuPSVkQVc7OSYxqE25wVXAxBkRWjuW7DMvVZPKWosfVkNUd8KshnDqbp+0FWXfc
-+pTeWBLuGD6Jw61g6WqNemYuOslZrgDmVuj6JHaZRbinzW/pTYLUmYDDpAUibrdM
-HCwTPE+OFvypgIJBYuNdIF58WYHj2ZaGEVwjbNXi77/jGQEYDf+o9a26tu36F+Hh
-IHwtwpZPi7X9xsFE7S7F4Mkng60pYQM+7hGxfiBTSe71WzQh2tVPVYq9wVvbRYAj
-EKtPFkrIXpOurlC+EYAJvZZvk5uLLUlFmgaaprRHQVzbsj+psmC468ke5s4FAd1N
-XuloycTp7Y0PuI7Z1bi95T9OLeN+4vD7ACnn12xdJbZpgS2cLwZk/WDLQo0OcyeT
-j7Fktg5EVVOTxLKZ9Qbp85bLsFuuZhB5iiVBg2PSVuTrZqp3e+YYSUkkLCb34GFg
-Bip0mElSLzGL4DxkuGcKRGTXqCZHCjFMjF9F/m+NpYk+dnUPgoirhi0stuhuFw0R
-QPy+Cx3toJGexUHjTILImlLMI0wXkv3Ccq34ifxxo/8/JlRMOiLHTOQ6sIFBMCYD
-AMIWytamcA2CDZXge4TJjJ9/ePX0O2xTXBCPS3TXUruTkR3dU2U=
-=EOyv
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmV20WEACgkQVbJhu7ck
+PpQGKRAAq0GRwBY5lpu6lQYS7jY5QhlMoF0K5iuoj5im4BQji4yDv1n4n+fDHVep
+UKO8aYVlxWOGbvcn49/R2N+HHYIU4XpxVqr/lUtLDstoErIdKMSwIlFSaGYnNJBA
+7PIAWq5G/iPAXhlse9jxAd/3p6RbwGl8yY30mXd7uwe/0gokGG5DxCSFWwSgR6kU
+w+IljnYDUzk6BQFgWDRirFFS3jz82eGzREINb6kP/m8PhTKCvDws0buJyNdEDr4g
+mA/Ns5snLHaESQdeuBT7Bb5DLLy6i17LSqKLoNV2q1Zw4Hx2BalyORI7be51EkiW
+/xl3gGlPFuLS7cLwx0hlhW0uRwGmxh8dM65yPztz0JcwCVju9XCq9FR7JGORcyBQ
+iAV3ETFiAnlht01YvIK/az03mMZDQw+rBYteaeDIvEFdIGMSMWeU7atgwoz+uaaa
+WV1UGqMSIh6hJvd4w2TvoGFoUxJcTB2Q7rFLEjd2gQ9rEsYvSQMyLQQDDwDOr15C
+1W25qRnBF/XjBpVuX5RwGhCJZ6SwZXr0V/MA0PN9CP51MvewkTcLcahZjW+oNaL1
+jiuiieawHrYDhv1aRnzAJFpMNxDewNdtqUAd8rSXdpRFD5DIRFG11DTilFHh0g0L
+fY7c2QuUqLPDIx0b37P83ovNn6bflT+v1vlAGGks7CjQpddqywc=
+=H93t
 -----END PGP SIGNATURE-----
 
---dtPs6pD4PmxySBvG--
+--5in2knYdqNjKANlJ--
