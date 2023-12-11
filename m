@@ -1,68 +1,69 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EjodkgbY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WHdx8MbX"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Go7MMFve";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bEDBbi0t"
 Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4FEAD9
-	for <git@vger.kernel.org>; Mon, 11 Dec 2023 01:07:34 -0800 (PST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.west.internal (Postfix) with ESMTP id 2AF893202619;
-	Mon, 11 Dec 2023 04:07:31 -0500 (EST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08014DF
+	for <git@vger.kernel.org>; Mon, 11 Dec 2023 01:07:38 -0800 (PST)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.west.internal (Postfix) with ESMTP id 2288F320261E;
+	Mon, 11 Dec 2023 04:07:37 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Mon, 11 Dec 2023 04:07:31 -0500
+  by compute1.internal (MEProxy); Mon, 11 Dec 2023 04:07:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm1; t=1702285650; x=1702372050; bh=LJ
-	/g0545/x/e+4Xu5F2PbRkxU6v3O9UdggpGZOihIps=; b=EjodkgbY+KA3NM1ltX
-	zgvGvnbnkx7RiOZPqo+lAk3Ju2onG7Pb/VwQ3X+/nAlUnHY72h4STrdliYBn2bGt
-	vBvWT5i13Gl+9Ufnw8ZZLU9f1ENsK+uAE/5B9YjslZ0HTYuJQua4t1E+iSOMQ9Pp
-	tS6L4yj/fJ14gAV7ch6BRpdHh3k110tNx2tpz4CBct3XcX7GUQ5jqL3uxZPnvOKs
-	7ovlmDBaLiUGSpYA/uFDvcNnamhYt2sAAmq1KRZRoSLD9bbUZFAO3+2l5/v/rE+Y
-	DZvaVjidmW1IkAeEVV+4DMjKYkv5EUXKvsIFPVLx+ixIKl5TgwP+FCsg2zL1notE
-	ZJ8A==
+	:subject:subject:to:to; s=fm1; t=1702285656; x=1702372056; bh=3K
+	FSWMNUw2QtyMjQHIzOfM74ETwtxfNqimrqZipOlhU=; b=Go7MMFveDvoHzPI+DE
+	zw8oT5l5+HEA5xxeWGjDIy2PHRDI2P6Z03JpNjVNeU5I/ndC+EHioWyjsPESi+a3
+	JEQBaqdTKiCD4IYx5huq2gcexw18nmS/WjfQU+tUgAOp75jLSyw+GAWMM4yjP6oJ
+	kSLLI0tnSNJdsNkS5y0Ut4PwOo+/2eA407sQUBuCZscBYWSruEp4aDjiPKvy4q0I
+	JvdEydi1uqGANL0A4wwdyxPv2kDF6DkwRoOv6mZslH2vqroNOH4jlosZQ/hIB++k
+	qO/Db60Px95ZJYeVm1bcSJen+e5fsKYF958gmT0R/wbp+GviJ5FWuB3LuQtLaNk7
+	W91g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm1; t=1702285650; x=1702372050; bh=LJ/g0545/x/e+
-	4Xu5F2PbRkxU6v3O9UdggpGZOihIps=; b=WHdx8MbXPKN7kPW2k4qqkQFkvsFEA
-	FpsvI+tM2HzI1TR3f8I2J804LRr8Mykov2Wi06sVeiX0uCalAk3cjUTUw7ABn0IL
-	u/bp2nzw2khoMGBbd78XdvVFVSByH7bHvHupSbQ0+K3gIDcaeqx0ehuWKM1WTkWy
-	STk5ecA59dM5yGvnU8U5pSGmLW4l97D26r0gECt1OWvgm9z1cgqw3A1q7VbiqnOo
-	aPrfSk5I7rqVFrYaAHe1ZvIWLPcWW+vb9LtZtF+LbC9jGhF6mKrZygAMP9H3TC+Z
-	g9HbpTrH8epa1JHKRD7jUmRWA/vudrCM9IzJRuQ8PrKHC8Bd0I6yw7oYA==
-X-ME-Sender: <xms:UtF2ZQunh2JJBOQA0kF0fjfcYHzM9uuN9SrB2nrLCxhTINxGuNFofA>
-    <xme:UtF2Zdcd8KMn8vfjjennxoXf8pPrXmBK9oHQghqx_uDgKr8fC_tXAt-b3lycNFL7Z
-    VfPcPdzqq0vTJTIKw>
-X-ME-Received: <xmr:UtF2Zbw2oHN24kkl2TejL1Mow2mU80My9yZJMKsawMKw94HP1kcEweVt8L3Cjl9M5GpBGHV9INvDphznbu2w5vg8iEyGOQnezbJtev9uZhbIVw>
+	:x-sasl-enc; s=fm1; t=1702285656; x=1702372056; bh=3KFSWMNUw2Qty
+	MjQHIzOfM74ETwtxfNqimrqZipOlhU=; b=bEDBbi0tNjkw6g2gsahRKquJSbOyt
+	HlwFsTsz5TJIqbJsIOE+fIBub0fQZ4xlIYvLWe6/GuJ5kmavY7MDDP68cCwoZK4y
+	a3pgYCd95WLVPb8mu+AueS/RDPvyPWoG2yQTaAmGBXo4a9FgbDhXbIDdT0DDA1bd
+	3UJEYL9VzTU0jbic5ms0BeOgyFA/U9T9UHSe72dZ4SParTe13SdIWloXQk5eEb4O
+	1OAxSl0Xl/lLx1RSSeS9qpqE5FsTNrHA0bBpp8Q0CTuDLYy4UHRHeJd0p8T3RFlP
+	LZc4jZ9cQrLNF3aMVZF1cdG7yasgULJ6jpkcuNfXjYlT4voRA29Gf5kOg==
+X-ME-Sender: <xms:WNF2ZZB24OKooqMW-mKom-dUUjotYXUlFdfb2m2LJLQhUsJuOEYLfw>
+    <xme:WNF2ZXj3zbgomzA5oY3Bp9uNPMIEttjMbqGl7xTL698_0x1Z6JbCSXcioS9ztP6Zq
+    waPd_SryZzbpGaPcg>
+X-ME-Received: <xmr:WNF2ZUmGCOY3HLPoJSGwR4X6B_GxAyZVNy6IQLVZE3JEj6JpCAaaYd_c6xPTFIcyToapEsRj9G69sVRBKQXtvv4FeG1oCG29Zofz5B5xz7pKzw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudeluddguddvlecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
     enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
     rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
     gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
-    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
+    teenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
     esphhkshdrihhm
-X-ME-Proxy: <xmx:UtF2ZTOil-77IovUoE1YnpzLabj0iCXjZmSrQplmsoshqtK5pGv9oQ>
-    <xmx:UtF2ZQ-mkc_nKowdmaS9gPcnEgxpX7SMRTQglZERN3SMvLULzmTRKA>
-    <xmx:UtF2ZbXK79T92tfDQD-WQ4AyvqbS32B-fJCh3ROFabzJdEQpvfVnuw>
-    <xmx:UtF2ZfbxoP6YzSDhzNcgzDKAU247Ffa13mPzPwa464lkXAy7SwBZMA>
+X-ME-Proxy: <xmx:WNF2ZTwvdvjdQAU2WptAkRLelDSvNf7ntMyX72FkUyGGdvL46LibYA>
+    <xmx:WNF2ZeTIVci05bsHFoImGZCmnlkmRlnNypi0VCX1LRUQ8syq_5SoUw>
+    <xmx:WNF2ZWb9GcqJ0IyYIYH45JxByUmKGcn5cAlHeL5rAzw3Z_T8pSt2tw>
+    <xmx:WNF2ZcdpIhF0hszaCVPBB3CglvViT2zcA99aEBTnMvrbGLP8ZP2Uyw>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 Dec 2023 04:07:29 -0500 (EST)
+ 11 Dec 2023 04:07:35 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 73453bf6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 11 Dec 2023 09:05:51 +0000 (UTC)
-Date: Mon, 11 Dec 2023 10:07:25 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id b88dbf0d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 11 Dec 2023 09:05:59 +0000 (UTC)
+Date: Mon, 11 Dec 2023 10:07:34 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Han-Wen Nienhuys <hanwenn@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>, Taylor Blau <me@ttaylorr.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v3 00/11] reftable: small set of fixes
-Message-ID: <cover.1702285387.git.ps@pks.im>
+Subject: [PATCH v3 02/11] reftable: handle interrupted reads
+Message-ID: <3e8e63ece52c507296b012be6632dbed568ff97d.1702285387.git.ps@pks.im>
 References: <cover.1700549493.git.ps@pks.im>
+ <cover.1702285387.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,196 +71,75 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="pET5hpg3VaekS7HB"
+	protocol="application/pgp-signature"; boundary="gm6mPv+x6/8FqvtZ"
 Content-Disposition: inline
-In-Reply-To: <cover.1700549493.git.ps@pks.im>
+In-Reply-To: <cover.1702285387.git.ps@pks.im>
 
 
---pET5hpg3VaekS7HB
+--gm6mPv+x6/8FqvtZ
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+There are calls to pread(3P) and read(3P) where we don't properly handle
+interrupts. Convert them to use `pread_in_full()` and `read_in_full()`,
+respectively.
 
-this is the third version of my patch series that addresses several
-smallish issues in the reftable backend.
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ reftable/blocksource.c | 2 +-
+ reftable/stack.c       | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-There's only a small set of changes compared to v2:
-
-  - Patch 4: convert to use a `struct strbuf` instead of `snprintf()`.
-
-  - Patch 5: improve commit message.
-
-  - Patch 6: note that `stack_filename()` resets the `struct strbuf` in
-    the commit message.
-
-  - Patch 7: use the `struct filelock`'s lock path instead of the
-    temporary buffer.
-
-Thanks for your suggestions, Taylor and Eric!
-
-Patrick
-
-Patrick Steinhardt (11):
-  reftable: wrap EXPECT macros in do/while
-  reftable: handle interrupted reads
-  reftable: handle interrupted writes
-  reftable/stack: verify that `reftable_stack_add()` uses
-    auto-compaction
-  reftable/stack: perform auto-compaction with transactional interface
-  reftable/stack: reuse buffers when reloading stack
-  reftable/stack: fix stale lock when dying
-  reftable/stack: fix use of unseeded randomness
-  reftable/merged: reuse buffer to compute record keys
-  reftable/block: introduce macro to initialize `struct block_iter`
-  reftable/block: reuse buffer to compute record keys
-
- reftable/block.c          |  23 ++++----
- reftable/block.h          |   6 +++
- reftable/block_test.c     |   4 +-
- reftable/blocksource.c    |   2 +-
- reftable/iter.h           |   8 +--
- reftable/merged.c         |  31 +++++------
- reftable/merged.h         |   2 +
- reftable/reader.c         |   7 ++-
- reftable/readwrite_test.c |   6 +--
- reftable/stack.c          |  73 +++++++++++---------------
- reftable/stack_test.c     | 107 +++++++++++++++++++++++++++++++++++++-
- reftable/test_framework.h |  58 ++++++++++++---------
- 12 files changed, 213 insertions(+), 114 deletions(-)
-
-Range-diff against v2:
- 1:  0ebbb02d32 =3D  1:  5b2a64ca9f reftable: wrap EXPECT macros in do/while
- 2:  b404fdf066 =3D  2:  3e8e63ece5 reftable: handle interrupted reads
- 3:  8c1d78b12b =3D  3:  1700d00d1c reftable: handle interrupted writes
- 4:  8061b9d2fc !  4:  5e27d0a556 reftable/stack: verify that `reftable_sta=
-ck_add()` uses auto-compaction
-    @@ reftable/stack_test.c: static void test_reftable_stack_auto_compacti=
-on(void)
-     +{
-     +	struct reftable_write_options cfg =3D { 0 };
-     +	struct reftable_stack *st =3D NULL;
-    ++	struct strbuf refname =3D STRBUF_INIT;
-     +	char *dir =3D get_tmp_dir(__LINE__);
-     +	int err, i, n =3D 20;
-     +
-    @@ reftable/stack_test.c: static void test_reftable_stack_auto_compacti=
-on(void)
-     +			.value_type =3D REFTABLE_REF_SYMREF,
-     +			.value.symref =3D "master",
-     +		};
-    -+		char name[100];
-     +
-     +		/*
-     +		 * Disable auto-compaction for all but the last runs. Like this
-    @@ reftable/stack_test.c: static void test_reftable_stack_auto_compacti=
-on(void)
-     +		 */
-     +		st->disable_auto_compact =3D i !=3D n;
-     +
-    -+		snprintf(name, sizeof(name), "branch%04d", i);
-    -+		ref.refname =3D name;
-    ++		strbuf_reset(&refname);
-    ++		strbuf_addf(&refname, "branch-%04d", i);
-    ++		ref.refname =3D refname.buf;
-     +
-     +		err =3D reftable_stack_add(st, &write_test_ref, &ref);
-     +		EXPECT_ERR(err);
-    @@ reftable/stack_test.c: static void test_reftable_stack_auto_compacti=
-on(void)
-     +	}
-     +
-     +	reftable_stack_destroy(st);
-    ++	strbuf_release(&refname);
-     +	clear_dir(dir);
-     +}
-     +
- 5:  77b9ae8aa6 !  5:  dd180eba40 reftable/stack: perform auto-compaction w=
-ith transactional interface
-    @@ Commit message
-    =20
-         Whenever updating references or reflog entries in the reftable sta=
-ck, we
-         need to add a new table to the stack, thus growing the stack's len=
-gth by
-    -    one. It can thus happen quite fast that the stack grows very long,=
- which
-    -    results in performance issues when trying to read records. But bes=
-ides
-    -    performance issues, this can also lead to exhaustion of file descr=
-iptors
-    -    very rapidly as every single table requires a separate descriptor =
-when
-    +    one. The stack can grow to become quite long rather quickly, leadi=
-ng to
-    +    performance issues when trying to read records. But besides perfor=
-mance
-    +    issues, this can also lead to exhaustion of file descriptors very
-    +    rapidly as every single table requires a separate descriptor when
-         opening the stack.
-    =20
-         While git-pack-refs(1) fixes this issue for us by merging the tabl=
-es, it
- 6:  f797feff8d !  6:  6ed9ba60db reftable/stack: reuse buffers when reload=
-ing stack
-    @@ Commit message
-         of the allocated buffer outside of the loop.
-    =20
-         Refactor the code to instead reuse the buffers to reduce the numbe=
-r of
-    -    allocations we need to do.
-    +    allocations we need to do. Note that we do not have to manually re=
-set
-    +    the buffer because `stack_filename()` does this for us already.
-    =20
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-    =20
- 7:  e82a68aecd !  7:  fbd9efa56d reftable/stack: fix stale lock when dying
-    @@ reftable/stack.c: static int reftable_stack_init_addition(struct ref=
-table_additi
-      	}
-      	if (st->config.default_permissions) {
-     -		if (chmod(add->lock_file_name.buf, st->config.default_permissions) =
-< 0) {
-    -+		if (chmod(lock_file_name.buf, st->config.default_permissions) < 0) {
-    ++		if (chmod(add->lock_file->filename.buf, st->config.default_permissi=
-ons) < 0) {
-      			err =3D REFTABLE_IO_ERROR;
-      			goto done;
-      		}
- 8:  bab4fb93df =3D  8:  5598460b81 reftable/stack: fix use of unseeded ran=
-domness
- 9:  cbf77ec45a =3D  9:  79e0382603 reftable/merged: reuse buffer to comput=
-e record keys
-10:  c9a1405a9a =3D 10:  8574ad7635 reftable/block: introduce macro to init=
-ialize `struct block_iter`
-11:  02b11f3a80 =3D 11:  eeb6c35823 reftable/block: reuse buffer to compute=
- record keys
-
-base-commit: 564d0252ca632e0264ed670534a51d18a689ef5d
+diff --git a/reftable/blocksource.c b/reftable/blocksource.c
+index 8331b34e82..a1ea304429 100644
+--- a/reftable/blocksource.c
++++ b/reftable/blocksource.c
+@@ -109,7 +109,7 @@ static int file_read_block(void *v, struct reftable_blo=
+ck *dest, uint64_t off,
+ 	struct file_block_source *b =3D v;
+ 	assert(off + size <=3D b->size);
+ 	dest->data =3D reftable_malloc(size);
+-	if (pread(b->fd, dest->data, size, off) !=3D size)
++	if (pread_in_full(b->fd, dest->data, size, off) !=3D size)
+ 		return -1;
+ 	dest->len =3D size;
+ 	return size;
+diff --git a/reftable/stack.c b/reftable/stack.c
+index ddbdf1b9c8..ed108a929b 100644
+--- a/reftable/stack.c
++++ b/reftable/stack.c
+@@ -92,7 +92,7 @@ static int fd_read_lines(int fd, char ***namesp)
+ 	}
+=20
+ 	buf =3D reftable_malloc(size + 1);
+-	if (read(fd, buf, size) !=3D size) {
++	if (read_in_full(fd, buf, size) !=3D size) {
+ 		err =3D REFTABLE_IO_ERROR;
+ 		goto done;
+ 	}
 --=20
 2.43.0
 
 
---pET5hpg3VaekS7HB
+--gm6mPv+x6/8FqvtZ
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmV20UwACgkQVbJhu7ck
-PpRhng/+PgkWoJdYYzEQxHAIaico7nAdh/V0F5ByYNq4EOWww1TDtymXmVxKu48G
-+wkHUhJhEQX+/+KIazwLCrwBbsW1ryf9J3lhMGkJAGEO2l212wakFkUgjYcHJfGE
-kbzxqfMoiNtii/2nksVf7aanJvY2KL6sb6gdeDZL2CVnhjBPv1GdirXSSQElpFua
-ZzMAtawVLUJE9s1ov2jpUS5B9acMdQRB/Z6x8nbZticOvVEzIF9Gn4o8HP/c7QJd
-UxgctDOKFaE3RSpPThfpmH+1/awdVJNtpqPBeQ1C7H66P8oNEI5WNMwopdXXhXek
-Babfw+97X25OXt3yKChMWZ0UrudVUB+EgVP3jJ9jBkBOK+VjHc3ilEqHjDIaarAG
-YRHl12EvgiUqOqi6ccf1DnaKSXnajWMocQnmx7ri6keuGUGTteZfx0KufPcqa5uA
-5nAqWl3U7TwSYEipD8BoZXIiXoT1iRP8yajuIB5fgG7A6Z6GgCuOSp11GZgbRbyh
-WsIrWK03M0gxjyTp/esaq/q4Z4d+TzEV5R2AONECxjK1oDjKLfU5x7y1Rfc8Y21e
-8Q1tphN9PQ/r6Ls6cQ6Py7xOXPIfardTCcmFkOQ2pBAIKdUDhNXNxCNzospxbBPf
-CTdlU32p39yJI9gC+bb0+s0jpl/3W66g6jcK25vcTqdpV/Ceikg=
-=GNcc
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmV20VUACgkQVbJhu7ck
+PpRrnQ/7BiRJBXtilkfW6/rQC2fxKVe5JrztEmn9u+76jdt75zjsgCqVBxOmjTp0
+Buhs//sDMgPlZrm1PH1q/O6RV+462D0JA7aV4DL1i3WUAD/g162ALdhjECtl5AJt
+dyPAQpz7K1eqZjACH5IAlK/BtMfTwvqTCB64QNWb66dKMB5L87Po9cAjpayqjlrV
+hIme0hHWNlsqBW8VAOhUh1j41CmyiRMco6AtOubwDjPPY8wcKVohJV7Vp3dDEqlG
+QL65o3ZSPVrKOaXdfQX3Inud0vEN1+P68TekIMk8OaRHbaSOpKVR2QR9RKVSIo1c
+aBDx4L6qORYi8MIp/5puzoYkltkQde8xrQdTo6Z4d1TZO7/fXkKYpcnF/R8BgABT
+Kg7ZKP0iTOQE5z/Xb8kKt10maNk/NULcoqS7ddii1PsThJ2Sz9XdY2ohkkt5xxEA
+s4t6ZlWbPIxm6Sk7l91NlCayI7wcKlIYi4rv/SZy79ItafDU4roKJdlHv2LQaCxw
+h1H/FyHRodGFd6Z5RKQlV3E2fUI+Kvu+VYA23wNaPFiZxEiTApeps8aE6b/fYxqe
+YsBXtmR4kchStT2EAtC+a6p+Y0LnW7lizu8SrFveBYv31xOd9pVlo/3/NfRzz3/q
+3JtDbp2cEw6QBD5SRw85dWb/wwNnR66z8t2pQJxOJRsTJ7vPK60=
+=PUsU
 -----END PGP SIGNATURE-----
 
---pET5hpg3VaekS7HB--
+--gm6mPv+x6/8FqvtZ--
