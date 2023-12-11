@@ -1,152 +1,110 @@
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="E/D+21J0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rH7R/yC4"
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5810DB6
-	for <git@vger.kernel.org>; Mon, 11 Dec 2023 03:35:05 -0800 (PST)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.west.internal (Postfix) with ESMTP id 4F3BE3200DC4;
-	Mon, 11 Dec 2023 06:35:03 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Mon, 11 Dec 2023 06:35:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm1; t=1702294502; x=1702380902; bh=dd
-	CzOQrHoV/a1bTKCFiPDVB62zAOmDHki91UNm8mARY=; b=E/D+21J0Xm/X0hoHLt
-	uZMGc4MJRelmFQIXN5zEmfvzUnCsF6UKWJOnDvKpxqO3j+bZ7PLpg+gqNojI9UEm
-	SvPY7ir45up3bsija05K+iNVi1T+kQSTwXX8Fuxq/DT7ZhjV0AK5TC3RiHkiZwG+
-	adGojwanbVkAdX5WulG7+iciMpzqS56MwwUnU6zRXnNmGu9PWIJULlJ+dZ6Xv/BB
-	e12WbDXQmAR9Krv19BvjtDeQqnvA+frLOOHMczVeyA82KA8BqjpzlKO3U6gy3Y2y
-	5umo+bQ9x7Cpq12nhB0UA0KduLyr/1FRUDZrRNUjeWNuzTZBRxFBSs5Zf1tUI5CF
-	oGrg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm1; t=1702294502; x=1702380902; bh=ddCzOQrHoV/a1
-	bTKCFiPDVB62zAOmDHki91UNm8mARY=; b=rH7R/yC4hmcpf+tlKdHHPkrcQw2px
-	o4gGswn6OPA1ZYbKpzaHKV9qTNtz5dWSMEznmckPYkQF4Qg9N2ag1iyE5DlVC4Ez
-	aiDbf3eZ1+VG5EB//tPKRQJFStDY+Zl3KYzIevRDbdCDfXmNKw2Cg+VysnIR+YRy
-	9GciwQfT6c7vIxxDRnrYpxkWv2AfsoCCWAKQZLVlOsu6/m//OQEr5U1tKDIb+one
-	7A7TT9GWkZTQxLAUGRwVuELuMpXBLOZexRdYGuvz3D1VbnyUQaW9rXfRvtW5VuOZ
-	4SWbsEAv7Gyc99Ejy6sZsa93GleQc/jdIxz4fIum7eOgvJQ9qp6uVoOlQ==
-X-ME-Sender: <xms:5vN2ZYEQA7Lte_uXO4aDt-ZgecOq9VrapbQYuTZvU6WPX2_1IBMv8w>
-    <xme:5vN2ZRUJBOn8GKdPAEMB77HT5K8Uwfe6l0jH5vkkgLXV03ibgFqoW0u5iMMWfnr3d
-    9ITTHn0zx5XBEeWZg>
-X-ME-Received: <xmr:5vN2ZSIUnWNeOddxQXij_k9KVCm-t7VxlwvlZnEvxJ6ddtj_P3kN_xN7_WWauPThHY6qr_eRhAooxmwYNmkAvfVnj2UhrEz_CObbIU3sTesN3Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudelvddgfeduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
-    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:5vN2ZaGKM9oeLpJrvoocPV2YIVDR9INw82gSR4qZ4m0JQIxAFwIdAA>
-    <xmx:5vN2ZeVwLt1LJRJ33p9Qq37wJIs3C34LBPKvIJ0hzoORN3HVazN3Ng>
-    <xmx:5vN2ZdNrNhBOw4Y7cYqoe3XNNELOdIYHLTYG5QfgwZwlaHw9mdOzWg>
-    <xmx:5vN2ZXfT95UI2SzT_ql7tXq_WxjXDMwF_pJVumr7PC8xYH-Zn-hD-A>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 Dec 2023 06:35:01 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 0d74108f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 11 Dec 2023 11:33:25 +0000 (UTC)
-Date: Mon, 11 Dec 2023 12:35:00 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/7] remote-curl: rediscover repository when fetching refs
-Message-ID: <ZXbz5KbvgrL5u1yW@tanuki>
-References: <cover.1701863960.git.ps@pks.im>
- <a1b86a0cbbedcc6610b2c563e9e38d439338869d.1701863960.git.ps@pks.im>
- <xmqqmsukz3yr.fsf@gitster.g>
+X-Greylist: delayed 1444 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 11 Dec 2023 04:58:21 PST
+Received: from mut-mta1-se01a-zose1-rescue-fr.yulpa.io (mut-mta1-se01a-zose1-rescue-fr.yulpa.io [185.49.21.247])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F97EBA
+	for <git@vger.kernel.org>; Mon, 11 Dec 2023 04:58:21 -0800 (PST)
+Received: from [185.217.155.54] (helo=mut-zose1-mta-hub-outmua01b-fr.yulpa.io)
+	by mut-mta1-se01a-fr.yulpa.io with esmtps (TLSv1.3:TLS_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <git@matthieu-moy.fr>)
+	id 1rCfUA-000RfT-3T; Mon, 11 Dec 2023 13:34:12 +0100
+Received: from localhost (localhost [127.0.0.1])
+	by mut-zose1-mta-hub-outmua01b-fr.yulpa.io (Postfix) with ESMTP id C68BD1017BA;
+	Mon, 11 Dec 2023 13:34:08 +0100 (CET)
+Received: from mut-zose1-mta-hub-outmua01b-fr.yulpa.io ([127.0.0.1])
+	by localhost (mut-zose1-mta-hub-outmua01b-fr.yulpa.io [127.0.0.1]) (amavisd-new, port 10032)
+	with ESMTP id rNKGuVJx-Sh8; Mon, 11 Dec 2023 13:34:07 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by mut-zose1-mta-hub-outmua01b-fr.yulpa.io (Postfix) with ESMTP id D0AB81017C5;
+	Mon, 11 Dec 2023 13:34:07 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mut-zose1.yulpa.io
+Received: from mut-zose1-mta-hub-outmua01b-fr.yulpa.io ([127.0.0.1])
+	by localhost (mut-zose1-mta-hub-outmua01b-fr.yulpa.io [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id VqN5pV99cp52; Mon, 11 Dec 2023 13:34:07 +0100 (CET)
+Received: from [134.214.142.79] (nautfst12.univ-lyon1.fr [134.214.142.79])
+	(Authenticated sender: matthieu.moy@matthieu-moy.fr)
+	by mut-zose1-mta-hub-outmua01b-fr.yulpa.io (Postfix) with ESMTPSA id 3E7331017BA;
+	Mon, 11 Dec 2023 13:34:07 +0100 (CET)
+Message-ID: <24a42fa6-7bc4-4a3b-8bf4-a0ef85dc457a@matthieu-moy.fr>
+Date: Mon, 11 Dec 2023 13:34:05 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="NMI8nzQJBUP1uANm"
-Content-Disposition: inline
-In-Reply-To: <xmqqmsukz3yr.fsf@gitster.g>
+User-Agent: Mozilla Thunderbird
+Subject: Re: Re* [BUG] git-bisect man page description of terms command
+ doesn't mention old/new support
+Content-Language: fr
+To: Junio C Hamano <gitster@pobox.com>,
+ Britton Kerin <britton.kerin@gmail.com>
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
+References: <CAC4O8c9ieZC4SBJf54ZuTfAvnkhGuDaibBQ-m9Zw_n5VhUFPag@mail.gmail.com>
+ <xmqqzfyjmk02.fsf@gitster.g>
+From: Matthieu Moy <git@matthieu-moy.fr>
+In-Reply-To: <xmqqzfyjmk02.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-yulPa-Domain: mut-zose1.yulpa.io
+X-yulPa-Username: 185.217.155.54
+Authentication-Results: yulpa.io; auth=pass smtp.auth=185.217.155.54@mut-zose1.yulpa.io
+X-yulPa-Outgoing-Class: ham
+X-yulPa-Outgoing-Evidence: Combined (0.09)
+X-Recommended-Action: accept
+X-Filter-ID: Pt3MvcO5N4iKaDQ5O6lkdGlMVN6RH8bjRMzItlySaT+f6pv7mGzVolObcR6FH4W5PUtbdvnXkggZ
+ 3YnVId/Y5jcf0yeVQAvfjHznO7+bT5yTJ7LxQF64CHhQpUvabvAJ+MjBInvU3LaEVMeEjEqsCy3C
+ ueNfqMJBYzPoh8qXShALoRkLTrjMt9ms9ecPYK2/TFFcpMF0/CzLBR+oLw/EucrTe0zrzdDWGq2t
+ L69jBpdnJp9a1tpqjSEs3z+e5Y5IgaIklYgfSyUWpjLOA4/D8rfgLSpDJEMwTgKguln1W71mJFia
+ ikvVxgjp0/k+1t1ZqjX7HlbR20JWrC3DWMQHNV2Oa7QzFrg6D3juj9vUlkF9B8fUuqtRpRzuX5VG
+ bRJnxi8bExZ09S6HjTDouvl2AK8k3iPNM/IUbeMvHjH9X9NVyymfg6B6tC4se5nVh7xdPwFjw4xN
+ vFYo1FJlAgQJq1wbKojRqtiBqzV6/8TU4C7V8GDOb5Y/I6ziSUV3GNc6DA5Y1S9u6TrFXJx1DE44
+ trkVV4P+GIk7DjCmMhgneKTYZ00gWnYa9olzNq56OPL0/nS4Mip/YUa5e3+XzCBIJOWBOXp8nHKe
+ 0R+FkIqN7hnTQMoKDphoUVvpZKwCZd10t1b0nbm6rQ6/kz4UWOYpThpRgmiLUqI+bb7cseB9FrjY
+ 5Qx4fJOk03R5fJtf/Dv/102E2X3w1lFuRDggRmmwg/+S3KUQNLB4HA+aJMIzcAg/vy0/Q3Mx9w1p
+ gQ+E6nteXAh4Z4SdDw0tMBFHk8VqmrIDC99jzjTUlR+8183XBmoP/VRg8DyOkrVLuYR3uOKEHyt6
+ YA4pqOucBHCwLpRe32UAxv4l0RRNh7vApgFH4R49vz1ahYQzHhHCjBpTAJ/xZe8qW/92W6XbiMJN
+ gk8ETu3O5tpcV4zMjKpBfM0x6dkhu1/rdU1t/SWu+yxj6TsAFrmdem8qac7iyHa9gVEQWzYksH5x
+ znejQRGIVacrOaU5iIEVdtbW+u5+Lw9u4E5iJryKhGLyc7V+sTkdC7001n/RVD7V77GVoESrF1Xc
+ DxGEM0Fy1htTjUl7elPAE5eaEN72vxxny+8/iOyLyb1ALWe/ZaBVhrOmh41CfYezVULTBjHr1VSj
+ YpMC0NH6vxTrLyJg76LajsxKEAfE0DyOLbkEMWWDci/2nplSOlA+h1o=
+X-Report-Abuse-To: spam@mut-mta1-se01a-fr.yulpa.io
 
+On 12/9/23 17:13, Junio C Hamano wrote:
 
---NMI8nzQJBUP1uANm
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> so you could read that
+> 
+> 	git bisect terms --term-good
+> 	git bisect terms --term-old
+> 
+> are the same thing, and when you squint your eyes, you can probably
+> guess that
+> 
+> 	git bisect terms --term-bad
+> 	git bisect terms --term-new
+> 
+> are the same.  But I agree that the documentation should not force
+> you to guess.
 
-On Sat, Dec 09, 2023 at 08:09:32AM +0900, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->=20
-> > We're about to change git-clone(1) so that we set up the reference
-> > database at a later point. This change will cause git-remote-curl(1) to
-> > not detect the repository anymore due to "HEAD" not having been created
-> > yet at the time it spawns, and thus causes it to error out once it is
-> > asked to fetch the references.
-> >
-> > We can address this issue by trying to re-discover the Git repository in
-> > case none was detected at startup time. With this change, the clone will
-> > look as following:
-> >
-> >   1. git-clone(1) sets up the initial repository, excluding the
-> >      reference database.
-> >
-> >   2. git-clone(1) spawns git-remote-curl(1), which will be unable to
-> >      detect the repository due to a missing "HEAD".
-> >
-> >   3. git-clone(1) asks git-remote-curl(1) to list remote references.
-> >      This works just fine as this step does not require a local
-> >      repository
-> >
-> >   4. git-clone(1) creates the reference database as it has now learned
-> >      about the object format.
->=20
-> Sorry, but I am not sure I understand this step.  I assume you mean
-> by "the object format" what hash function is used to index the
-> objects (which can be learned from the remote "origin" in step 2 and
-> we can choose to use the one they use), not what ref backend is used
-> (which is purely a local matter and we do not need to know what is
-> used at the "origin").
+Agreed.
+> --- c/Documentation/git-bisect.txt
+> +++ w/Documentation/git-bisect.txt
+> @@ -20,7 +20,7 @@ on the subcommand:
+>   		  [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<paths>...]
+>    git bisect (bad|new|<term-new>) [<rev>]
+>    git bisect (good|old|<term-old>) [<rev>...]
+> - git bisect terms [--term-good | --term-bad]
+> + git bisect terms [--term-(good|old) | --term-(bad|new)]
 
-Yes, exactly. I'm never quite sure whether I should be saying "hash
-function" or "object format". I'll convert the message to say "hash
-function" instead to clarify.
+Nit: just above we have the description for `bisect start` saying:
 
-> Why do we need to wait initializing ref backend until we learn what
-> hash is being in use?
+--term-{new,bad}=<term> --term-{old,good}=<term>
 
-This is because of the reftable backend. With the files backend it never
-mattered much, because we do not encode the object format anywhere. But
-with the reftable backend we do indeed encode the object format in the
-tables' header, so it's important to initialize it with the correct
-format right from the start.
+it probably makes sense to make both homogeneous (start with the same 
+alternative, and make the {...,...} vs (...|...) notations consistent. 
+The (...|...) notation seems the most common).
 
-I'll amend the commit message.
+In any case, the patch looks good to me, thanks.
 
-Patrick
-
---NMI8nzQJBUP1uANm
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmV28+MACgkQVbJhu7ck
-PpSvFQ//fH4IgKzQ4KXHzpaZ2UUScfSXo45di9oIwtGjYfhoElpDUyiLp0a9+qrL
-yE6d22Odk4V3UnCqB2qtab95/yMqG/EICkbYGNYFMGi403y73JkjayPE0CyHSiAQ
-mZnnQE3v6qAmJH7wGdosgSLIU/ncnVNCNYEqld6ab68jqI23gpgDW7a6EhmLazLN
-q0Zclpf7/hb4rdmVXWI8jVBlkB4BBpHGBC0JmOn3w4x2ZRPJIqnmt1Vzmq6xgvFp
-LwXeytSEVzKowG3RS9x2zhK526gPinAUeHEmCCzyNLSh89pUeZe+Lse8xtiRvvfM
-s6NCR35j3hDicinTy8GAcac3AJ0v2T3MYCPA9ew7VxHTWqGC0lnBsPqkhIsmsdeJ
-2HRH26HnuRVaFsrII9fy9x3xtu5dX4agEtJ/BlAmFMkqH1r0AYF+moX/JaewCVlr
-AjlwPaKQVYt+bPis3fDnZoH5QmQlQAtQSahfoO/RdszdWXaRo+njSQLo31L5RHx3
-5ZWyTRrCFGR1cvD0aTzfZrKLhOTWL3sdKpeh4uoyZZHa1zCDcGd3/b6RyS8rfWI9
-eQ7ItzBqixU+J+VxkrZ1k3aLfDtR9e618ot8XiseaWxMCuAf9gZAgOpbpXdvmaoV
-og/W2z1FOMazOAS8vSaEV7iwcpzTMRWgAp968e0pbtMCOKXjXs4=
-=wUGD
------END PGP SIGNATURE-----
-
---NMI8nzQJBUP1uANm--
+-- 
+Matthieu Moy
+https://matthieu-moy.fr/
