@@ -1,132 +1,138 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZjoNdKdg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TOGat/qy"
-Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFFC0DB
-	for <git@vger.kernel.org>; Sun, 10 Dec 2023 23:43:41 -0800 (PST)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.west.internal (Postfix) with ESMTP id 066113201F2C;
-	Mon, 11 Dec 2023 02:43:40 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Mon, 11 Dec 2023 02:43:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm1; t=1702280620; x=1702367020; bh=Fn
-	SYx0CZvyP2xTbaQJeqlh3t7JNvyaicXgf0X08YtTs=; b=ZjoNdKdgrK8mG//Di5
-	mjKO2pfSWtYPZp3dYG/pwQRbbt/+X/TGN2++KpWsXXFfl0ZgR0gHO/S8OaeWW9rz
-	MeFaD3ifni2dro1NtydjRb/dMTXXbghG/3cBRO0PHxVbZ5vLp1Tt9XU4uZyyN0DE
-	hBF5umm6Qzsx3lXn7GGXobhVQLN8YjIsWIUo175rR0fEMsKe1k8WIkYuZ67VdIfh
-	cE/YAePDpWdWbqKWpvI7MXMBqDilyrbsGqh2AXWD+BpZFDOD+1lKZoSJd8n8VElo
-	g5Q6cC/Rkf/Xl53m+jV72CUttAMaq5Lhz+lQRuu/XzcwLifqC7aFMtWgawZbpfkz
-	seVQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm1; t=1702280620; x=1702367020; bh=FnSYx0CZvyP2x
-	TbaQJeqlh3t7JNvyaicXgf0X08YtTs=; b=TOGat/qyc9xMIEdWM6RsRBDZrpD2k
-	sEpDxlfwjtDsdcF+13rs2s4i6lTuhG+WqCUvqEBSdyCm0xleccOMn/vHrFC28Guj
-	TVim1pHXdjPIZgPUI4ZcIBue4/3sQOwsM7i3GD2hfZ4eELEAaeQMDGGA+qnqHBHw
-	79Gx0WMX+iWlpY4uVqA0lLSU+TEuMaa9fZE3JTEtGiUP/ONyCB7ZtuyOyBdEbXPK
-	Qzlrwu4OeGBYLHuth4d97cqJQoILGBrYr+S1wFzauwDdT0rfu1uHtXULuHPp6QsA
-	VqUa6a4bSZIE4JGlFdQ9T0PJ+oR4e/HNRebQdVTjoyXiU2tNM2Qs5wACQ==
-X-ME-Sender: <xms:rL12Zc0_w0KTm7RfqH6TDKGjg8EWQcYyJPxo7AzMxG8ZuO8wTPHAYw>
-    <xme:rL12ZXF0Zrdz3P8oKxF6boTIRKjMmmmuImI2oyVTl7NbzZ3uV8zxyO9NTWeKhxZvc
-    b94ACEYbOD4ZQIWkA>
-X-ME-Received: <xmr:rL12ZU5yyXBqY_rOy_qrkVPrD94YdjE_VW3343zjMWpLHqwQ_VI5Ix__EZrXfVdgFh0Jc2zdNaBJTcG6e8BFFGipGFftgya3QCjuwVLo7JhTUw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudeluddguddufecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
-    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
-    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeige
-    ekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:rL12ZV0rQ0tZVfjGIaG04ecjt3Fh9hyTCcDeoYpQiNQjbDl2JoE5mg>
-    <xmx:rL12ZfHIjkBKrKvRwDU4ziQAbh1Bx86c5ffvKuVve7Rj4TIP99fIcA>
-    <xmx:rL12Ze-wZoItCaMc3m1AlfoLiLwTHZllGWGPM6g9y29Kpex3L3puZg>
-    <xmx:rL12ZVNlX44CUNkBMWCshD1DIHOmDY-WAR6kkvXkuNxOrhU4j9cacQ>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 Dec 2023 02:43:39 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 1318b0f1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 11 Dec 2023 07:42:01 +0000 (UTC)
-Date: Mon, 11 Dec 2023 08:43:35 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH 3/9] imap-send: don't use git_die_config() inside callback
-Message-ID: <ZXa9pz65O2B6Gwjp@tanuki>
-References: <20231207072338.GA1277727@coredump.intra.peff.net>
- <20231207072458.GC1277973@coredump.intra.peff.net>
- <ZXGJE-pkb3BjlO-d@tanuki>
- <ZXOfrKYsmOjOHGmj@nand.local>
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="TN9Exrh+"
+X-Greylist: delayed 308 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 11 Dec 2023 00:14:47 PST
+Received: from mout.web.de (mout.web.de [212.227.15.14])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23EAEB4
+	for <git@vger.kernel.org>; Mon, 11 Dec 2023 00:14:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+	t=1702282485; x=1702887285; i=l.s.r@web.de;
+	bh=ta4CWcUKvT1VbtceUNH4u090AnQRNMdH8rFDEyu36eU=;
+	h=X-UI-Sender-Class:Date:From:Subject:To:Cc:References:
+	 In-Reply-To;
+	b=TN9Exrh+wkwwrLqaYql6WTfQt973e6r+Jdi7sn4TmQbGopYDeyI7MB1ySP4v3s/x
+	 +dl9YzoCWzZ5RtNqnuXvljcyTSMl8nARMOdByVuHhKfXaU6UssMwv6oNnbZnvN2I5
+	 TyT1u2ve0BXcboNpO46H9YdqhtLkhuGY3ffuqIJW7ikaIdspvoi8gi+sJEGNsSkI3
+	 L74LT8Hi47Lv4LRmr2VK7tk/7wkoHfbvyfQLPCKPUTfLNA2WAbniu4D09265wQysJ
+	 tATQHIxm+WafX9KcC3Vd6A/Ss5/hL6Ryq4yKEbJYRpbqaMzIqOPo+jieeyJoz/a76
+	 B8cRdcHuT/PBapNqtg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([79.203.29.38]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MHmq2-1qxo233Dny-00FIbA; Mon, 11
+ Dec 2023 09:09:29 +0100
+Message-ID: <e5304253-3347-4900-bbf2-d3c6ee3fb976@web.de>
+Date: Mon, 11 Dec 2023 09:09:28 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="MggqxVcHMPLQHjuQ"
-Content-Disposition: inline
-In-Reply-To: <ZXOfrKYsmOjOHGmj@nand.local>
-
-
---MggqxVcHMPLQHjuQ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH][RESEND] show-ref: use die_for_incompatible_opt3()
+To: Git List <git@vger.kernel.org>
+Cc: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>,
+ Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
+ Eric Sunshine <sunshine@sunshineco.com>
+References: <e6eb12e4-bb63-473c-9c2f-965a4d5981ad@web.de>
+ <CAPig+cR5PKkyC24LkOU4+yzng1xeBOBbADTBHXH61xkAR7kymw@mail.gmail.com>
+Content-Language: en-US
+In-Reply-To: <CAPig+cR5PKkyC24LkOU4+yzng1xeBOBbADTBHXH61xkAR7kymw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:9kFy4Sk7rA+tKNqWagGPFHTclklmQnlKBVZwYhWLOnnz/cd1GIw
+ HwkxGz7hSDDPFvF9XPQCfRG/Dps1mLul6bEsRtw3ekUxSRtwsQT6pDrhlVDFZAsZW1b1cre
+ CasWqw9aLCqu0WGYfl/h0EYaG4gl6mTXSdUKxVbZQPzRXOJU3N6YRRXTGOKHjNA+8BO248o
+ 6+y0tLha2l78srfJFTcjA==
+UI-OutboundReport: notjunk:1;M01:P0:qlbVHdeBltY=;YuGdZzwaPH2iIvIjAJk2FKvLmpr
+ WcHHSwUZNOaTYpF8l48H4vR0Xtgj48WWWiHRA8NOd++lTuDP8jryUiHslr7u0qPiJ76/Mcy7E
+ As6iYRS8K9qI8/ltfAuiklG0lVH9BDLEWllKSGqwkY+kSyWtevxetFnreig6WBL8WBzs3UzgF
+ PCxSN5a2bk0n8BUNpbHih4DfRdy6+59CqgIELMlN1kXBN3Cw4heYGAOpHm55e8PioWlXNsaQi
+ XdLHw/4VTNktyrHTNmYPUOH6hWgp4Lzr0yWrCo+xHZHKkzntqoxTZx+v9WeNUTjN+kGxw4wVQ
+ lRO3zUyrdEOhL4nbfcR1z9L7H2nA+yiWVbyj2vy41PCIqOGRFICgEygSglSrWux4hmZA3NAnA
+ BU78+/zUjqrE9yzwRdBpMMOuzdI7pQCzvwcZKiBKNZmJOG6izw2bke3OwmIGOETWDKZWAVxDH
+ E1B8j3XKRyzsux4MILqGSc5KjQ8/J79C0XzBIfTlLcrAdauW1NuN6Mex+L+17FzlDX9AtE4uv
+ 1XlgTg0Q6xhhtGqa86oxMtiGBtfedQX6YtfXD6leqIImK7jNn1GvYAuScyImT7zORNdyRFQB2
+ 9qQgQIAK1rOt8L7WD5uLNWOORIyrtqEaToQUsbc5Zl4UskCZ7zEN/I6uIgCMcVcihVEEfpl8R
+ fcqLpbayfwpuxgfI+scGkrL+eWHNDnTMGqKoQeOnspdianpM9FoAWv2mOzndKkFg648QZ/W5V
+ 5/2UwOK2FfGWkZraKtJohXedOPleibmbqT/zNA9E7ETs23JgnKXdwjGs07hLErLYd/0L57fY0
+ L+CwK/EZtnv/clFd8AHhzhyuEUZmSNzjah3dnU1QE2K50tpxyizIO1wVBcx5783T0u6fmpUPQ
+ vCviRF3ATs1/3NhQDgd9EZ/diHxNIzKzb9hsUKynOWNd/S9sRVUdqkQKJxDmiIStvoI+hrC0Y
+ JuQ9LYpITYXW9s7+20B2kUfbj64=
 
-On Fri, Dec 08, 2023 at 05:58:52PM -0500, Taylor Blau wrote:
-> On Thu, Dec 07, 2023 at 09:57:55AM +0100, Patrick Steinhardt wrote:
-> > On Thu, Dec 07, 2023 at 02:24:58AM -0500, Jeff King wrote:
-> > [snip]
-> > > diff --git a/imap-send.c b/imap-send.c
-> > > index 996651e4f8..5b0fe4f95a 100644
-> > > --- a/imap-send.c
-> > > +++ b/imap-send.c
-> > > @@ -1346,7 +1346,7 @@ static int git_imap_config(const char *var, con=
-st char *val,
-> > >  		server.port =3D git_config_int(var, val, ctx->kvi);
-> > >  	else if (!strcmp("imap.host", var)) {
-> > >  		if (!val) {
-> > > -			git_die_config("imap.host", "Missing value for 'imap.host'");
-> > > +			return error("Missing value for 'imap.host'");
-> >
-> > Nit: while at it we might also mark this error for translation. Not
-> > worth a reroll on its own though.
->=20
-> This string goes away entirely in the next patch, so I don't think we
-> need to mark it here.
->=20
-> Thanks,
-> Taylor
+Use the standard message for reporting the use of multiple mutually
+exclusive options by calling die_for_incompatible_opt3() instead of
+rolling our own.  This has the benefits of showing only the actually
+given options, reducing the number of strings to translate and making
+the UI slightly more consistent.
 
-Ah, true. Never mind in that case.
+Adjust the test to no longer insist on a specific order of the
+reported options, as this implementation detail does not affect the
+usefulness of the error message.
 
-Patrick
+Reported-by: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+Reviewed-by: Patrick Steinhardt <ps@pks.im>
+=2D--
+Original submission:
+https://lore.kernel.org/git/d1f28272-635d-4638-b0f4-76d64013b0d5@web.de/
 
---MggqxVcHMPLQHjuQ
-Content-Type: application/pgp-signature; name="signature.asc"
+ builtin/show-ref.c  |  6 +++---
+ t/t1403-show-ref.sh | 16 +++++++++-------
+ 2 files changed, 12 insertions(+), 10 deletions(-)
 
------BEGIN PGP SIGNATURE-----
+diff --git a/builtin/show-ref.c b/builtin/show-ref.c
+index 7aac525a87..59d2291cbf 100644
+=2D-- a/builtin/show-ref.c
++++ b/builtin/show-ref.c
+@@ -315,9 +315,9 @@ int cmd_show_ref(int argc, const char **argv, const ch=
+ar *prefix)
+ 	argc =3D parse_options(argc, argv, prefix, show_ref_options,
+ 			     show_ref_usage, 0);
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmV2vaIACgkQVbJhu7ck
-PpQmzw/+KzqxCmvYYps44eiXpDGGz9lR6GxcBeCH999YJ95uI2gvL/sZit/3xf6G
-cL1gGhQgFo/YIcJbuGxtEM1yyMZ2i7R5S7Si65adG/tdL+YHpOuzOF7rWnm7gwyf
-VUgIYb51IRxM1KbKVNO3tV+SBg+rAos/CmK1M6xaZziYFGTToSmOeQdnlY4SxDLi
-bXCqU/9QbUYCEIFUASf3aaqhmfN1fhBQnv4TtlToCUu36MdJDlsXCzfBf25/y7tK
-ITb5P69niDyxpxrqp70LJ5Vio09lqwRWLZA7iwA6BaCWmLCk9S4N42RovoiCl2bx
-bZbiIid+MEsC3bV/bnUX4qq4CftHJbvZC44Kg/PQF7AJtSuAbIg4EQeo+9sdjKdK
-sgdtlKtEntXTBeB29Ip8uF0qXi1gR8xQHz8nJatisePXTmMv4+/VcNWiaPy9hQVq
-oGbAVPb2qxGYeOrJThHKbBAjG/75Nwtlhd2c9M87/SPMf63g0HjFwhsHKQYK//zw
-amhmP+iRNda2ZbwzXsl9CXQbD++wCvCWe4f7ta9TOfoIJdNZIDi7XNh9SdKPp2lo
-kAh2Y+zYJy3Jb0JiLTTkiDwXuz3IUz73dU1aSff/LvcNgiTpEkykVeRTYfP9Kib4
-NYUK8YhcO3G2GbhgW6T6lLKFWTqU+IlOZ5Ba84Evz2xcSEJ4yzw=
-=tTJX
------END PGP SIGNATURE-----
+-	if ((!!exclude_existing_opts.enabled + !!verify + !!exists) > 1)
+-		die(_("only one of '%s', '%s' or '%s' can be given"),
+-		    "--exclude-existing", "--verify", "--exists");
++	die_for_incompatible_opt3(exclude_existing_opts.enabled, "--exclude-exis=
+ting",
++				  verify, "--verify",
++				  exists, "--exists");
 
---MggqxVcHMPLQHjuQ--
+ 	if (exclude_existing_opts.enabled)
+ 		return cmd_show_ref__exclude_existing(&exclude_existing_opts);
+diff --git a/t/t1403-show-ref.sh b/t/t1403-show-ref.sh
+index b50ae6fcf1..d477689e33 100755
+=2D-- a/t/t1403-show-ref.sh
++++ b/t/t1403-show-ref.sh
+@@ -197,18 +197,20 @@ test_expect_success 'show-ref --verify with dangling=
+ ref' '
+ '
+
+ test_expect_success 'show-ref sub-modes are mutually exclusive' '
+-	cat >expect <<-EOF &&
+-	fatal: only one of ${SQ}--exclude-existing${SQ}, ${SQ}--verify${SQ} or $=
+{SQ}--exists${SQ} can be given
+-	EOF
+-
+ 	test_must_fail git show-ref --verify --exclude-existing 2>err &&
+-	test_cmp expect err &&
++	grep "verify" err &&
++	grep "exclude-existing" err &&
++	grep "cannot be used together" err &&
+
+ 	test_must_fail git show-ref --verify --exists 2>err &&
+-	test_cmp expect err &&
++	grep "verify" err &&
++	grep "exists" err &&
++	grep "cannot be used together" err &&
+
+ 	test_must_fail git show-ref --exclude-existing --exists 2>err &&
+-	test_cmp expect err
++	grep "exclude-existing" err &&
++	grep "exists" err &&
++	grep "cannot be used together" err
+ '
+
+ test_expect_success '--exists with existing reference' '
+=2D-
+2.43.0
