@@ -1,115 +1,89 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=apollographql.com header.i=@apollographql.com header.b="LoPkiOcy"
-Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 664D2101
-	for <git@vger.kernel.org>; Mon, 11 Dec 2023 07:39:50 -0800 (PST)
-Received: by mail-qt1-x836.google.com with SMTP id d75a77b69052e-425c3e14380so10589501cf.3
-        for <git@vger.kernel.org>; Mon, 11 Dec 2023 07:39:50 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J+Y5BAQF"
+Received: from mail-oa1-x2e.google.com (mail-oa1-x2e.google.com [IPv6:2001:4860:4864:20::2e])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E354BBF
+	for <git@vger.kernel.org>; Mon, 11 Dec 2023 07:50:18 -0800 (PST)
+Received: by mail-oa1-x2e.google.com with SMTP id 586e51a60fabf-1fb13a0951bso1697405fac.3
+        for <git@vger.kernel.org>; Mon, 11 Dec 2023 07:50:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=apollographql.com; s=google; t=1702309189; x=1702913989; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=C0Q7k+E0PbjFLtNxbtDXuvJIfwDQfjJfQOhZ501mKAI=;
-        b=LoPkiOcy0wc2vJDP1MA79B2AyYHHVjX5pej5rT0wg504ja02v7XbE0DH1tnWh8aVrZ
-         A4TH/XoBdiNL1ytndtzZBfXgocUq/HKr7OZm5fs1Y6zYapHhWRtf8ZC/Klym1XH4eylb
-         yqc/aJZsZBfeVeVpfG2u5qoPou45vHkt46diU=
+        d=gmail.com; s=20230601; t=1702309818; x=1702914618; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date
+         :mime-version:references:in-reply-to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PeLZ4oiwnGforEJaZ6BuyCTpiDAwlkqvJeDtkzlZz98=;
+        b=J+Y5BAQFnCSy5AwnJSoDyW7sFljMYh7F6Ck0cJJS7pQR8WngzDAK/MDXCpfG/NQxjq
+         DVS40T0rF05g3z7NwaSDsw/7kNsXGwPfZvpE+ZbCk9Ybe3GCK07NcfThB4aAh63VQHKt
+         4IWpzIK8vPB/kN5hD6t/QSAbV3ZYFCbsTX9DhqHJT66DnniDGS2Zmpa944/W+NPgxT9r
+         wUz+J8cJq/gnguBi3VKIN4e1nnmX6Lf0nNcv9E1i5f+cHFhR4pz8aBQio+1im0+zRdXh
+         HhHaiuhmBx0GTS+NuQP8eX+kABkEOq7gnChITpYqmNRJ01BDM5L4GEgGa0Cjur/4CWDf
+         5vaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702309189; x=1702913989;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=C0Q7k+E0PbjFLtNxbtDXuvJIfwDQfjJfQOhZ501mKAI=;
-        b=AdnqZd4xSsKkQA+lIA4pNco1IowHtlWOepdcxtfuBDFjKc4r4iyPXc9fQhYPfChnaq
-         ITkXSxnIFg+5ee2WVxTT2cae3O5TAN6mAvD9j71xo/ZHfmvLvp+hXVKd3qXq1lOmRguI
-         rBVoa6a8Gow2qBeOoMki/SEqfqUdIfa1QRbUGufLP88d4hz1LhArye6VX6RCdldLyBYj
-         RBwluFzIHdgdZZpVXIdim7KC4Dvd+p80DTTkCNGkABaBJf7e06RFwS+5OjwtGrc4OTFY
-         M94MtZozHnOuxC8DtX0WUR6Gg6jTxoDd/NUdJXsVAmyIUrI3VTD+ieV4Yei284ZY7krY
-         quLw==
-X-Gm-Message-State: AOJu0YyjlVOsLXk+1+EEguNZb8gfuNecNIQ5NoPL06fER0kBNQwp0quJ
-	6tEeFecAUh4ngqpuCL+7hG0M2+zjXZB/iWdMOTs3mQ==
-X-Google-Smtp-Source: AGHT+IFcBDpMg2eCqm6w222E47iUwHiPXuTErbNM19FkesrZun4Ujw9/cxc2ieQe83rQsYUf84sMt10oJHXNSBCRdHo=
-X-Received: by 2002:ac8:5c90:0:b0:425:4043:96e9 with SMTP id
- r16-20020ac85c90000000b00425404396e9mr7208695qta.118.1702309189412; Mon, 11
- Dec 2023 07:39:49 -0800 (PST)
+        d=1e100.net; s=20230601; t=1702309818; x=1702914618;
+        h=content-transfer-encoding:cc:to:subject:message-id:date
+         :mime-version:references:in-reply-to:from:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=PeLZ4oiwnGforEJaZ6BuyCTpiDAwlkqvJeDtkzlZz98=;
+        b=dXNr7rxu8t+5X3LuwFtzQC2OCrGRc7s59YGcMHeIDkmFxlQAAkdZUQSrVFbsdW6OJW
+         lLXLOt7uGB7ufRl4K3JJTmjHru4cElY67NsWhl3ZFO2LSMCn2hHxcs4Eu+OiXSHFU4hm
+         NclglTZP5HTFnp0CH52/Uing8hn9F16AtWqZWTM5bWGH0TO70osO5wcthIA79RrzW7d/
+         CnEOE08tjDSO1r34L2RrShyBq0x0IRC1PJBsbBYtJVgis/Ku1D7A9DQUYTRap49eTPW2
+         zcFouev6bwZNMzOrN4eVruVaL4z9bu+KKM0Lq4F9QQH207VlA8pa3HJlrOYkDsbtVcxR
+         QHnQ==
+X-Gm-Message-State: AOJu0YwvhL5QdJal9CyvXHFM0ueErBpbfTtIQWUPmqfUMquqN2JLO3Sz
+	cMJHRVMZb2XR3BCsnBiIFSry0o+aIYKU4XbLmwVhXKcx4AY=
+X-Google-Smtp-Source: AGHT+IGkPYe4kpvpw+FWuQAwCh65jdexYiferGgOfRnJaNrbnI6LawejWyUWonEu0zN0WbyUv1E1XfDY7cSl1ZYGnPM=
+X-Received: by 2002:a05:6870:6ec7:b0:1fb:75b:2ba4 with SMTP id
+ qv7-20020a0568706ec700b001fb075b2ba4mr2563679oab.96.1702309818086; Mon, 11
+ Dec 2023 07:50:18 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 11 Dec 2023 07:50:17 -0800
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <ZXFy0_T1AZLh058g@tanuki>
+References: <cover.1701863960.git.ps@pks.im> <b69c57d27269c9b40c9e4394861dffd8a8b9860c.1701863960.git.ps@pks.im>
+ <CAOLa=ZSZztJUF9nmSzGdOW0oWBRUp2sw8QyuZO_q06cNymad3Q@mail.gmail.com> <ZXFy0_T1AZLh058g@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1587.v5.git.1701206267300.gitgitgadget@gmail.com>
- <pull.1587.v6.git.1701442494319.gitgitgadget@gmail.com> <CAP8UFD3FzP6QW4dJ9yiG1BAytLcsk+zGE+CBeArRJBJ8gsaDMQ@mail.gmail.com>
-In-Reply-To: <CAP8UFD3FzP6QW4dJ9yiG1BAytLcsk+zGE+CBeArRJBJ8gsaDMQ@mail.gmail.com>
-From: Zach FettersMoore <zach.fetters@apollographql.com>
-Date: Mon, 11 Dec 2023 10:39:38 -0500
-Message-ID: <CAEWN6q3RTbVuMb0VyCYz196ZL+OGAAHbJLZ2-MnW1RVVabg7Mw@mail.gmail.com>
-Subject: Re: [PATCH v6] subtree: fix split processing with multiple subtrees present
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Zach FettersMoore via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Date: Mon, 11 Dec 2023 07:50:17 -0800
+Message-ID: <CAOLa=ZRTQ3X7+PnNHaAeM5vKh=x3Vq9C_H1emUNzJB6PUBBwEA@mail.gmail.com>
+Subject: Re: [PATCH 1/7] setup: extract function to create the refdb
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Patrick Steinhardt <ps@pks.im> writes:
+
+> On Wed, Dec 06, 2023 at 10:10:37PM +0100, Karthik Nayak wrote:
+>> On Wed, Dec 6, 2023 at 1:40=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wr=
+ote:
+>> > +       /*
+>> > +        * We need to create a "refs" dir in any case so that older
+>> > +        * versions of git can tell that this is a repository.
+>> > +        */
 >>
->> From: Zach FettersMoore <zach.fetters@apollographql.com>
->>
->> When there are multiple subtrees present in a repository and they are
->> all using 'git subtree split', the 'split' command can take a
->> significant (and constantly growing) amount of time to run even when
->> using the '--rejoin' flag. This is due to the fact that when processing
->> commits to determine the last known split to start from when looking
->> for changes, if there has been a split/merge done from another subtree
->> there will be 2 split commits, one mainline and one subtree, for the
->> second subtree that are part of the processing. The non-mainline
->> subtree split commit will cause the processing to always need to search
->> the entire history of the given subtree as part of its processing even
->> though those commits are totally irrelevant to the current subtree
->> split being run.
->>
->> To see this in practice you can use the open source GitHub repo
->> 'apollo-ios-dev' and do the following in order:
->>
->> -Make a changes to a file in 'apollo-ios' and 'apollo-ios-codegen'
->> directories
->> -Create a commit containing these changes
->> -Do a split on apollo-ios-codegen
->> - Do a fetch on the subtree repo
->> - git fetch git@github.com:apollographql/apollo-ios-codegen.git
->> - git subtree split --prefix=apollo-ios-codegen --squash --rejoin
-
-> Now I get the following without your patch at this step:
+>> How does this work though, even if an earlier version of git can tell
+>> that this is a repository, it still won't be able to read the reftable
+>> backend. In that sense, what do we achieve here?
 >
-> $ git subtree split --prefix=apollo-ios-codegen --squash --rejoin
-> [...]/libexec/git-core/git-subtree: 318: Maximum function recursion
-> depth (1000) reached
+> This is a good question, and there is related ongoing discussion about
+> this topic in the thread starting at [1]. There are a few benefits to
+> letting clients discover such repos even if they don't understand the
+> new reference backend format:
 >
-> Line 318 in git-subtree.sh contains the following:
+>   - They know to stop walking up the parent-directory chain. Otherwise a
+>     client might end up detecting a Git repository in the parent dir.
 >
-> missed=$(cache_miss "$@") || exit $?
+>   - The user gets a proper error message why the repository cannot be
+>     accessed. Instead of failing to detect the repository altogether we
+>     instead say that we don't understand the "extensions.refFormat"
+>     extension.
 >
-> With your patch it seems to work:
->
-> $ git subtree split --prefix=apollo-ios-codegen --squash --rejoin
-> Merge made by the 'ort' strategy.
-> e274aed3ba6d0659fb4cc014587cf31c1e8df7f4
+> Maybe there are other cases I can't think of right now.
+> [1]: <ZWcOvjGPVS_CMUAk@tanuki>
 
-Looking into this some it looks like it could be a bash config
-difference? My machine always runs it all the way through vs
-failing for recursion depth. Although that would also be an issue
-which is solved by this fix.
-
->> - Depending on the current state of the 'apollo-ios-dev' repo
->> you may see the issue at this point if the last split was on
->> apollo-ios
-
-> I guess I see it, but it seems a bit different for me than what you describe.
->
-> Otherwise your patch looks good to me now.
-
-Yea I hadn't accounted for/realized that some folks may see a recursion
-depth error vs it just taking a long time like it does for me. Also what
-I was saying with the apollo-ios-dev repo is you may not need all the steps
-to see the issue, because its possible the state of the repo is already
-in a position to display the issue just by doing a split on
-apollo-ios-codegen.
-
-Great! Thanks again for all the feedback and guidance! Is there anything
-else I need to do to get this across the finish line and merged in?
+Thank Patrick, this does indeed make a lot of sense now. +1 that this
+would be super useful as a comment here.
