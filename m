@@ -1,138 +1,194 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="TN9Exrh+"
-X-Greylist: delayed 308 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 11 Dec 2023 00:14:47 PST
-Received: from mout.web.de (mout.web.de [212.227.15.14])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23EAEB4
-	for <git@vger.kernel.org>; Mon, 11 Dec 2023 00:14:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-	t=1702282485; x=1702887285; i=l.s.r@web.de;
-	bh=ta4CWcUKvT1VbtceUNH4u090AnQRNMdH8rFDEyu36eU=;
-	h=X-UI-Sender-Class:Date:From:Subject:To:Cc:References:
-	 In-Reply-To;
-	b=TN9Exrh+wkwwrLqaYql6WTfQt973e6r+Jdi7sn4TmQbGopYDeyI7MB1ySP4v3s/x
-	 +dl9YzoCWzZ5RtNqnuXvljcyTSMl8nARMOdByVuHhKfXaU6UssMwv6oNnbZnvN2I5
-	 TyT1u2ve0BXcboNpO46H9YdqhtLkhuGY3ffuqIJW7ikaIdspvoi8gi+sJEGNsSkI3
-	 L74LT8Hi47Lv4LRmr2VK7tk/7wkoHfbvyfQLPCKPUTfLNA2WAbniu4D09265wQysJ
-	 tATQHIxm+WafX9KcC3Vd6A/Ss5/hL6Ryq4yKEbJYRpbqaMzIqOPo+jieeyJoz/a76
-	 B8cRdcHuT/PBapNqtg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.29.38]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MHmq2-1qxo233Dny-00FIbA; Mon, 11
- Dec 2023 09:09:29 +0100
-Message-ID: <e5304253-3347-4900-bbf2-d3c6ee3fb976@web.de>
-Date: Mon, 11 Dec 2023 09:09:28 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="K+U/4Ti3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fhTvpCse"
+Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C75CE5
+	for <git@vger.kernel.org>; Mon, 11 Dec 2023 00:18:39 -0800 (PST)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.west.internal (Postfix) with ESMTP id 5CACA32021B8;
+	Mon, 11 Dec 2023 03:18:38 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Mon, 11 Dec 2023 03:18:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to; s=fm1; t=1702282717; x=1702369117; bh=ac
+	EIVAJ8Wez09uhyJTiT+54xy30Hu+mm26jDYLJrd+M=; b=K+U/4Ti3LWlPJi5Ki7
+	2qu7iRQHbtDoUxL8l236PQkEr4R4HZNgHD3kXPyWqHW0xNjoYb9kZYqg9yr/CGvf
+	WgD/RLLiFN8o8NYemeRDFSSTTtITTL/qVKgcXtBFK+0oPigOMqrSXSQxl0KRGAdx
+	t5LR3bendad7Fsv23W7fRWceAMHBOcYCwhynXxGRlKyHUW398eAzOTeCsa7iF9ei
+	cGm1nB+EpOguy/J+kxTJCM2ptXC4KbzHPuvXlisWWUsi+inPmvMtu7LjF7oiySH4
+	L5J0pVa+VS/tt2wBHZnpQJ2QQjdZVybBPeigQvwFjpvuXm34NcbFkun5EWpVFL89
+	KujA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm1; t=1702282717; x=1702369117; bh=acEIVAJ8Wez09
+	uhyJTiT+54xy30Hu+mm26jDYLJrd+M=; b=fhTvpCsei+THy9bBd6wMcxlklmMy2
+	srZdZjo1+hi8XCZlp0j3EH4Nhj2R+FY5yw4B0RC42P1fGEqygQHdUotYjm9LJh5o
+	jWqPX3Dx8FGJbCzZ+rZfNj2JRuFYNlZwYgVbR09iFmwdB9azxsepDakGFmnVpU1D
+	pVua7ruoRqDnD2SlKhVc9WrZMVV4ZNK2xrHsSmoUGLescM6mqkvWZMDsAApcSHUQ
+	36a2rlgq+FEkjYeu+5iI1wNPYImWkpEx5q3IfsmP9AcCb7WQMd8TcbH+a+Nf4NBt
+	rR6DQ0vzhesMLpMSppr/Tj00GieTQ9VcweYdtkfu4/4kB/fDPrZERfQHQ==
+X-ME-Sender: <xms:3cV2ZRJ-7UWuVetLdStCXYA1r02qhMSGfhVeOt5bcib_pmT0TMD2BA>
+    <xme:3cV2ZdL18EHFVq0ig9tXJHJ4zadVcXwb9uPWwJIQA1hGSuPRpOHYsiuCmwz-_jKyW
+    0kpR-pKULUHmRAH2A>
+X-ME-Received: <xmr:3cV2ZZuua0FmRXfZeSW7cnaye1Uit1cV9M66TtbOh4dA_v0sc9MRizP3lpw-zSmGDzWq_OQqol7XvdBXZRv4wfRa1vqkr_9c6XRQMwoNr4Mp9g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudeluddguddvtdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
+    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
+    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeige
+    ekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:3cV2ZSYGgD9HsBqLbbU76s5WgPPFlQysxzAUFL7qUOr_zgGk3u6cwA>
+    <xmx:3cV2ZYaGVOq9gaoBzc_VJPpZsYwcNAEgDiqFE1iewAHA8-p1MItHsg>
+    <xmx:3cV2ZWBHSG93iF4bOEwVxqmW8lLc56GQg2hCGtJASz8zF9TerYhDvQ>
+    <xmx:3cV2ZXmemxwJzgVRSKAsT021xG6fDVAxzJzub-sTcfUQFFu2y9eTdA>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 11 Dec 2023 03:18:36 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 7a3e2d05 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 11 Dec 2023 08:16:58 +0000 (UTC)
+Date: Mon, 11 Dec 2023 09:18:32 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 09/24] repack: implement `--extend-disjoint` mode
+Message-ID: <ZXbF2O4qjIr2L7b8@tanuki>
+References: <cover.1701198172.git.me@ttaylorr.com>
+ <b75869befba26899d88d6c6d413cc756aeadbd80.1701198172.git.me@ttaylorr.com>
+ <ZXHE5Lce_6CAWKFT@tanuki>
+ <ZXIq4mjDUoqlGvgW@nand.local>
+ <ZXLRjeu66qE6J1K1@tanuki>
+ <ZXOdPLotcS5daNke@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH][RESEND] show-ref: use die_for_incompatible_opt3()
-To: Git List <git@vger.kernel.org>
-Cc: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>,
- Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
- Eric Sunshine <sunshine@sunshineco.com>
-References: <e6eb12e4-bb63-473c-9c2f-965a4d5981ad@web.de>
- <CAPig+cR5PKkyC24LkOU4+yzng1xeBOBbADTBHXH61xkAR7kymw@mail.gmail.com>
-Content-Language: en-US
-In-Reply-To: <CAPig+cR5PKkyC24LkOU4+yzng1xeBOBbADTBHXH61xkAR7kymw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="5WW4dz3tKGbmJrBN"
+Content-Disposition: inline
+In-Reply-To: <ZXOdPLotcS5daNke@nand.local>
+
+
+--5WW4dz3tKGbmJrBN
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:9kFy4Sk7rA+tKNqWagGPFHTclklmQnlKBVZwYhWLOnnz/cd1GIw
- HwkxGz7hSDDPFvF9XPQCfRG/Dps1mLul6bEsRtw3ekUxSRtwsQT6pDrhlVDFZAsZW1b1cre
- CasWqw9aLCqu0WGYfl/h0EYaG4gl6mTXSdUKxVbZQPzRXOJU3N6YRRXTGOKHjNA+8BO248o
- 6+y0tLha2l78srfJFTcjA==
-UI-OutboundReport: notjunk:1;M01:P0:qlbVHdeBltY=;YuGdZzwaPH2iIvIjAJk2FKvLmpr
- WcHHSwUZNOaTYpF8l48H4vR0Xtgj48WWWiHRA8NOd++lTuDP8jryUiHslr7u0qPiJ76/Mcy7E
- As6iYRS8K9qI8/ltfAuiklG0lVH9BDLEWllKSGqwkY+kSyWtevxetFnreig6WBL8WBzs3UzgF
- PCxSN5a2bk0n8BUNpbHih4DfRdy6+59CqgIELMlN1kXBN3Cw4heYGAOpHm55e8PioWlXNsaQi
- XdLHw/4VTNktyrHTNmYPUOH6hWgp4Lzr0yWrCo+xHZHKkzntqoxTZx+v9WeNUTjN+kGxw4wVQ
- lRO3zUyrdEOhL4nbfcR1z9L7H2nA+yiWVbyj2vy41PCIqOGRFICgEygSglSrWux4hmZA3NAnA
- BU78+/zUjqrE9yzwRdBpMMOuzdI7pQCzvwcZKiBKNZmJOG6izw2bke3OwmIGOETWDKZWAVxDH
- E1B8j3XKRyzsux4MILqGSc5KjQ8/J79C0XzBIfTlLcrAdauW1NuN6Mex+L+17FzlDX9AtE4uv
- 1XlgTg0Q6xhhtGqa86oxMtiGBtfedQX6YtfXD6leqIImK7jNn1GvYAuScyImT7zORNdyRFQB2
- 9qQgQIAK1rOt8L7WD5uLNWOORIyrtqEaToQUsbc5Zl4UskCZ7zEN/I6uIgCMcVcihVEEfpl8R
- fcqLpbayfwpuxgfI+scGkrL+eWHNDnTMGqKoQeOnspdianpM9FoAWv2mOzndKkFg648QZ/W5V
- 5/2UwOK2FfGWkZraKtJohXedOPleibmbqT/zNA9E7ETs23JgnKXdwjGs07hLErLYd/0L57fY0
- L+CwK/EZtnv/clFd8AHhzhyuEUZmSNzjah3dnU1QE2K50tpxyizIO1wVBcx5783T0u6fmpUPQ
- vCviRF3ATs1/3NhQDgd9EZ/diHxNIzKzb9hsUKynOWNd/S9sRVUdqkQKJxDmiIStvoI+hrC0Y
- JuQ9LYpITYXW9s7+20B2kUfbj64=
 
-Use the standard message for reporting the use of multiple mutually
-exclusive options by calling die_for_incompatible_opt3() instead of
-rolling our own.  This has the benefits of showing only the actually
-given options, reducing the number of strings to translate and making
-the UI slightly more consistent.
+On Fri, Dec 08, 2023 at 05:48:28PM -0500, Taylor Blau wrote:
+> On Fri, Dec 08, 2023 at 09:19:25AM +0100, Patrick Steinhardt wrote:
+> > > > One thing I wondered: do we need to consider the `-l` flag? When us=
+ing
+> > > > an alternate object directory it is totally feasible that the alter=
+nate
+> > > > may be creating new disjoint packages without us knowing, and thus =
+we
+> > > > may not be able to guarantee the disjoint property anymore.
+> > >
+> > > I don't think so. We'd only care about one direction of this (that
+> > > alternates do not create disjoint packs which overlap with ours, inst=
+ead
+> > > of the other way around), but since we don't put non-local packs in t=
+he
+> > > MIDX, I think we're OK.
+> > >
+> > > I suppose that you might run into trouble if you use the chained MIDX
+> > > thing (via its `->next` pointer). I haven't used that feature myself,=
+ so
+> > > I'd have to play around with it.
+> >
+> > We do use this feature at GitLab for forks, where forks connect to a
+> > common alternate object directory to deduplicate objects. As both the
+> > fork repository and the alternate object directory use an MIDX I think
+> > they would be set up exactly like that.
+>=20
+> Yep, that's right. I wasn't sure whether or not this feature had been
+> used extensively in production or not (we don't use it at GitHub, since
+> objects only live in their fork repositories for a short while before
+> moving to the fork network repository).
+>=20
+> > I guess the only really viable solution here is to ignore disjoint packs
+> > in the main repo that connects to the alternate in the case where the
+> > alternate has any disjoint packs itself.
+>=20
+> I think the behavior you'd get here is that we'd only look for disjoint
+> packs in the first MIDX in the chain (which is always the local one),
+> and we'd only recognizes packs from that MIDX as being potentially
+> disjoint.
+>=20
+> If you have the bulk of your repositories in the alternate, then I think
+> you might want to consider how we combine the two.=20
 
-Adjust the test to no longer insist on a specific order of the
-reported options, as this implementation detail does not affect the
-usefulness of the error message.
+Yes, in the general case the bulk of objects is indeed contained in the
+alternate.
 
-Reported-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-Reviewed-by: Patrick Steinhardt <ps@pks.im>
-=2D--
-Original submission:
-https://lore.kernel.org/git/d1f28272-635d-4638-b0f4-76d64013b0d5@web.de/
+> My sense is that you'd want to be disjoint with respect to anything
+> downstream of you.
 
- builtin/show-ref.c  |  6 +++---
- t/t1403-show-ref.sh | 16 +++++++++-------
- 2 files changed, 12 insertions(+), 10 deletions(-)
+Ideally yes, but this is unfortunately not easily achievable in the
+general case. It's one of the many painpoints that alternates bring with
+them.
 
-diff --git a/builtin/show-ref.c b/builtin/show-ref.c
-index 7aac525a87..59d2291cbf 100644
-=2D-- a/builtin/show-ref.c
-+++ b/builtin/show-ref.c
-@@ -315,9 +315,9 @@ int cmd_show_ref(int argc, const char **argv, const ch=
-ar *prefix)
- 	argc =3D parse_options(argc, argv, prefix, show_ref_options,
- 			     show_ref_usage, 0);
+Suppose two forks A and B are connected to the same alternate. Both A
+and B now gain the same set of objects via whatever means. At this point
+these objects can be stored in disjoint packs in each of the repos as
+they are not yet deduplicated via the alternate. But if you were to pull
+objects from either A or B into the alternate then you cannot ensure
+disjointedness at all anymore because you would first have to repack
+objects in both A and B.
 
--	if ((!!exclude_existing_opts.enabled + !!verify + !!exists) > 1)
--		die(_("only one of '%s', '%s' or '%s' can be given"),
--		    "--exclude-existing", "--verify", "--exists");
-+	die_for_incompatible_opt3(exclude_existing_opts.enabled, "--exclude-exis=
-ting",
-+				  verify, "--verify",
-+				  exists, "--exists");
+For two forks this might still seem manageable. But as soon as your fork
+network grows larger it's clear that this becomes almost impossible to
+do. So ultimately, I don't see an alternative to ignoring disjointedness
+bits in either of the two linked-together repos.
 
- 	if (exclude_existing_opts.enabled)
- 		return cmd_show_ref__exclude_existing(&exclude_existing_opts);
-diff --git a/t/t1403-show-ref.sh b/t/t1403-show-ref.sh
-index b50ae6fcf1..d477689e33 100755
-=2D-- a/t/t1403-show-ref.sh
-+++ b/t/t1403-show-ref.sh
-@@ -197,18 +197,20 @@ test_expect_success 'show-ref --verify with dangling=
- ref' '
- '
+> Whether or not this is a feature that you/others need, I definitely
+> think we should leave it out of this series, since I am (a) fairly
+> certain that this is possible to do, and (b) already feel like this
+> series on its own is complicated enough.
 
- test_expect_success 'show-ref sub-modes are mutually exclusive' '
--	cat >expect <<-EOF &&
--	fatal: only one of ${SQ}--exclude-existing${SQ}, ${SQ}--verify${SQ} or $=
-{SQ}--exists${SQ} can be given
--	EOF
--
- 	test_must_fail git show-ref --verify --exclude-existing 2>err &&
--	test_cmp expect err &&
-+	grep "verify" err &&
-+	grep "exclude-existing" err &&
-+	grep "cannot be used together" err &&
+I'm perfectly fine if we say that the benefits of your patch series
+cannot yet be applied to repositories with alternates. But from my point
+of view it's a requirement that this patch series does not silently
+break this usecase due to Git starting to generate disjointed packs
+where it cannot ensure that the disjointedness property holds.
 
- 	test_must_fail git show-ref --verify --exists 2>err &&
--	test_cmp expect err &&
-+	grep "verify" err &&
-+	grep "exists" err &&
-+	grep "cannot be used together" err &&
+As I haven't yet read through this whole patch series, the question is
+boils down to whether the end result is opt-in or opt-out. If it was
+opt-out then I could see the above usecase breaking silently. If it was
+opt-in then things should be fine and we can address this ommission in a
+follow up patch series. We at GitLab would definitely be interested in
+helping out with this given that it directly affects us and that the
+demonstrated savings seem very promising.
 
- 	test_must_fail git show-ref --exclude-existing --exists 2>err &&
--	test_cmp expect err
-+	grep "exclude-existing" err &&
-+	grep "exists" err &&
-+	grep "cannot be used together" err
- '
+Patrick
 
- test_expect_success '--exists with existing reference' '
-=2D-
-2.43.0
+--5WW4dz3tKGbmJrBN
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmV2xdcACgkQVbJhu7ck
+PpS52g//eottqsbo3ZNKg6fxKoWcQ4KlYt3dpVnXUprnCG39jUTX09aJl3SwnmAI
+U+rBcqcXEn0YGDZBqb0RwQdW6aKf//+LYKO6aHmTeJRHLwJv5eKkPUS+OJqtRwBG
+//ttKpuLVMh9drBVgsEPK4MDmCwz5Wh/jE4hDI8pKXFXVT+pN4/Z1PZ4wQMaGtq0
+yZKfeSq5jqz4WjR+ykaRBvgYhF+55pNW1q6XMCwYHsZScaN+Z3eMrOm8DoNLfpN/
+kpchAVZ0i+ssebT5LKyGy+lqp9J58XfgEk1AOwJu+Ciqca+d8j+B1A5wfI0cjRCp
+9k5raaII+I5r7eOwVBC7BXbRq9IW3/6T+W22LwpLxn+0aUcIOkbz+efewIQpeKIb
+Qzb4oRcWz/DaJP6LjUJwIUfPWXd1Y/rHnqbGcpmdN/H3KogkKs8g48duKmseVPyS
+5czK1KwBkTJKlodyPyRd0dCIl74XamWefoHguc8xklowXyc62L4/T39/cl+eFofO
+PY/2CsDCPFBU/l0xxqFUc8nd92VlfJeCRoVkhsPqCMLlAyxA3RAMocs48rtdqRtC
+NIjdjyP6wn8LqQqBzJPt2u6wR9IL6Bj92vwOY9cqy6OcPTShD6cVud4NjsuuHuuM
+6yiHxu0lJNg6+GmcNm4iwlX/L8frC51xzU3O+3isfiJsblMjxgY=
+=HJbg
+-----END PGP SIGNATURE-----
+
+--5WW4dz3tKGbmJrBN--
