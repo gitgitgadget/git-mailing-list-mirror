@@ -1,71 +1,69 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="K+U/4Ti3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fhTvpCse"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RVqA1L5e";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pNf6SHDY"
 Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C75CE5
-	for <git@vger.kernel.org>; Mon, 11 Dec 2023 00:18:39 -0800 (PST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2B0AC3
+	for <git@vger.kernel.org>; Mon, 11 Dec 2023 01:07:34 -0800 (PST)
 Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.west.internal (Postfix) with ESMTP id 5CACA32021B8;
-	Mon, 11 Dec 2023 03:18:38 -0500 (EST)
+	by mailout.west.internal (Postfix) with ESMTP id 997F13202629;
+	Mon, 11 Dec 2023 04:07:33 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Mon, 11 Dec 2023 03:18:38 -0500
+  by compute1.internal (MEProxy); Mon, 11 Dec 2023 04:07:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm1; t=1702282717; x=1702369117; bh=ac
-	EIVAJ8Wez09uhyJTiT+54xy30Hu+mm26jDYLJrd+M=; b=K+U/4Ti3LWlPJi5Ki7
-	2qu7iRQHbtDoUxL8l236PQkEr4R4HZNgHD3kXPyWqHW0xNjoYb9kZYqg9yr/CGvf
-	WgD/RLLiFN8o8NYemeRDFSSTTtITTL/qVKgcXtBFK+0oPigOMqrSXSQxl0KRGAdx
-	t5LR3bendad7Fsv23W7fRWceAMHBOcYCwhynXxGRlKyHUW398eAzOTeCsa7iF9ei
-	cGm1nB+EpOguy/J+kxTJCM2ptXC4KbzHPuvXlisWWUsi+inPmvMtu7LjF7oiySH4
-	L5J0pVa+VS/tt2wBHZnpQJ2QQjdZVybBPeigQvwFjpvuXm34NcbFkun5EWpVFL89
-	KujA==
+	:subject:subject:to:to; s=fm1; t=1702285653; x=1702372053; bh=MP
+	Px12L6ZY4rNKw5Pnejundaqx57AtRza1Skh5nhY9M=; b=RVqA1L5epVoMOueHKq
+	womMqcK4TjE/vDjlmQ+9duB3b8Zf97zzEKx5nQ5mqZI7wWkoBlVlrKdm7wMVaDtA
+	BnKyTt9hz5cPJzPGKuvGlVGim7WIZfcplIU8/PyiI7ByMzJwNmjFEl5D8M5fXkji
+	P7GjIgOLrXrYOkdwTq/8bMO3gP2WV1lkbEZEehPPEYY69Hhb5oHCQ+nzZ355Y/Ce
+	AiagE/+gTjOuJ2YLxAlz9IYfiFElBSOOZctJqVM0W/pLyL9VgmEMWaCWy9AlG1uv
+	eHe0Nk/Wp+ZXcGVYVo6s2wjGw5+d6UhMHTxEQfCKhc7IbRLD2/tT83H1FPTb8FqA
+	mCeQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm1; t=1702282717; x=1702369117; bh=acEIVAJ8Wez09
-	uhyJTiT+54xy30Hu+mm26jDYLJrd+M=; b=fhTvpCsei+THy9bBd6wMcxlklmMy2
-	srZdZjo1+hi8XCZlp0j3EH4Nhj2R+FY5yw4B0RC42P1fGEqygQHdUotYjm9LJh5o
-	jWqPX3Dx8FGJbCzZ+rZfNj2JRuFYNlZwYgVbR09iFmwdB9azxsepDakGFmnVpU1D
-	pVua7ruoRqDnD2SlKhVc9WrZMVV4ZNK2xrHsSmoUGLescM6mqkvWZMDsAApcSHUQ
-	36a2rlgq+FEkjYeu+5iI1wNPYImWkpEx5q3IfsmP9AcCb7WQMd8TcbH+a+Nf4NBt
-	rR6DQ0vzhesMLpMSppr/Tj00GieTQ9VcweYdtkfu4/4kB/fDPrZERfQHQ==
-X-ME-Sender: <xms:3cV2ZRJ-7UWuVetLdStCXYA1r02qhMSGfhVeOt5bcib_pmT0TMD2BA>
-    <xme:3cV2ZdL18EHFVq0ig9tXJHJ4zadVcXwb9uPWwJIQA1hGSuPRpOHYsiuCmwz-_jKyW
-    0kpR-pKULUHmRAH2A>
-X-ME-Received: <xmr:3cV2ZZuua0FmRXfZeSW7cnaye1Uit1cV9M66TtbOh4dA_v0sc9MRizP3lpw-zSmGDzWq_OQqol7XvdBXZRv4wfRa1vqkr_9c6XRQMwoNr4Mp9g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudeluddguddvtdcutefuodetggdotefrod
+	:x-sasl-enc; s=fm1; t=1702285653; x=1702372053; bh=MPPx12L6ZY4rN
+	Kw5Pnejundaqx57AtRza1Skh5nhY9M=; b=pNf6SHDYtO4DytvT3j8oz9Z9Z2DB9
+	izYAGDI8KVxsvR7S71ERnyFGlJS7lGgtkbcCAZGkDdUcItvB2oltcUX6HSBu664e
+	z9qkvCEvuukH4auziN73UNC/JIvr/+SM32qvVZAWWeRbBCwGOt+De9ZZbM0h3P9K
+	LV7AdMH+I757VykvGZSnkWkYgghnaoHldeb+nu3wgWwiotyR+8NlYSlvl7vmhwKr
+	PXkm+MBeMdR7tQrKHB3dvJjQC2aR0eLqKYWrZ69OH9qkdzoI6v1p/8CAEe3cspA9
+	M0/4H5kab7UFISXz1tENb3twQ0CmZ2/5gWBO+oYOyk9PcZMz+px+pjpcQ==
+X-ME-Sender: <xms:VNF2ZSLaZGrT9fg2-dch4_i4ag74qg5Ths8zNumw-lKAFNUZD6uDag>
+    <xme:VNF2ZaKIOcS0LgfqXWNIkxO6gE3kvuM8pF-WFicLarcoAGlNz7tZiOGlKIGdAjEdr
+    eL5ytumdZpuTttacA>
+X-ME-Received: <xmr:VNF2ZSsR-aWd0EbfphuHgO6FdMlnfXd7YYFfaW25a4vq1WZ3tXvBerNAMe4nW-K3DQoW0zeyAfn1dtllAseXQD-IpepkIZhlMtnXx6v4P9UcGQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudeluddguddvlecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
-    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
-    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeige
-    ekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:3cV2ZSYGgD9HsBqLbbU76s5WgPPFlQysxzAUFL7qUOr_zgGk3u6cwA>
-    <xmx:3cV2ZYaGVOq9gaoBzc_VJPpZsYwcNAEgDiqFE1iewAHA8-p1MItHsg>
-    <xmx:3cV2ZWBHSG93iF4bOEwVxqmW8lLc56GQg2hCGtJASz8zF9TerYhDvQ>
-    <xmx:3cV2ZXmemxwJzgVRSKAsT021xG6fDVAxzJzub-sTcfUQFFu2y9eTdA>
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
+    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
+    gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
+    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
+    esphhkshdrihhm
+X-ME-Proxy: <xmx:VNF2ZXZdANPmTmoW1Ywz5IadU3Tk8Q39teKjLFcdVwwYz25DVhxb2g>
+    <xmx:VNF2ZZaTK-RHMXqXGVnoNCx4djsCRsspEIgkloNqyr1UCw5UJXMAtg>
+    <xmx:VNF2ZTA3VfDJWAyu5MiWfqw5RNRb5ZNwtRiSgldksiReBILMx1MKrw>
+    <xmx:VdF2ZdFS25fA5brL1VTi96XGT6uLRVtsUk1iG8JcpDCJ6gJwdP8tqA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 Dec 2023 03:18:36 -0500 (EST)
+ 11 Dec 2023 04:07:31 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 7a3e2d05 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 11 Dec 2023 08:16:58 +0000 (UTC)
-Date: Mon, 11 Dec 2023 09:18:32 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id e701bf95 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 11 Dec 2023 09:05:55 +0000 (UTC)
+Date: Mon, 11 Dec 2023 10:07:29 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 09/24] repack: implement `--extend-disjoint` mode
-Message-ID: <ZXbF2O4qjIr2L7b8@tanuki>
-References: <cover.1701198172.git.me@ttaylorr.com>
- <b75869befba26899d88d6c6d413cc756aeadbd80.1701198172.git.me@ttaylorr.com>
- <ZXHE5Lce_6CAWKFT@tanuki>
- <ZXIq4mjDUoqlGvgW@nand.local>
- <ZXLRjeu66qE6J1K1@tanuki>
- <ZXOdPLotcS5daNke@nand.local>
+To: git@vger.kernel.org
+Cc: Han-Wen Nienhuys <hanwenn@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, Taylor Blau <me@ttaylorr.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH v3 01/11] reftable: wrap EXPECT macros in do/while
+Message-ID: <5b2a64ca9fa1d290b5b7838ad15c0894b65ae777.1702285387.git.ps@pks.im>
+References: <cover.1700549493.git.ps@pks.im>
+ <cover.1702285387.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -73,122 +71,134 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="5WW4dz3tKGbmJrBN"
+	protocol="application/pgp-signature"; boundary="k9W//2jLMlKCchB7"
 Content-Disposition: inline
-In-Reply-To: <ZXOdPLotcS5daNke@nand.local>
+In-Reply-To: <cover.1702285387.git.ps@pks.im>
 
 
---5WW4dz3tKGbmJrBN
+--k9W//2jLMlKCchB7
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Dec 08, 2023 at 05:48:28PM -0500, Taylor Blau wrote:
-> On Fri, Dec 08, 2023 at 09:19:25AM +0100, Patrick Steinhardt wrote:
-> > > > One thing I wondered: do we need to consider the `-l` flag? When us=
-ing
-> > > > an alternate object directory it is totally feasible that the alter=
-nate
-> > > > may be creating new disjoint packages without us knowing, and thus =
-we
-> > > > may not be able to guarantee the disjoint property anymore.
-> > >
-> > > I don't think so. We'd only care about one direction of this (that
-> > > alternates do not create disjoint packs which overlap with ours, inst=
-ead
-> > > of the other way around), but since we don't put non-local packs in t=
-he
-> > > MIDX, I think we're OK.
-> > >
-> > > I suppose that you might run into trouble if you use the chained MIDX
-> > > thing (via its `->next` pointer). I haven't used that feature myself,=
- so
-> > > I'd have to play around with it.
-> >
-> > We do use this feature at GitLab for forks, where forks connect to a
-> > common alternate object directory to deduplicate objects. As both the
-> > fork repository and the alternate object directory use an MIDX I think
-> > they would be set up exactly like that.
->=20
-> Yep, that's right. I wasn't sure whether or not this feature had been
-> used extensively in production or not (we don't use it at GitHub, since
-> objects only live in their fork repositories for a short while before
-> moving to the fork network repository).
->=20
-> > I guess the only really viable solution here is to ignore disjoint packs
-> > in the main repo that connects to the alternate in the case where the
-> > alternate has any disjoint packs itself.
->=20
-> I think the behavior you'd get here is that we'd only look for disjoint
-> packs in the first MIDX in the chain (which is always the local one),
-> and we'd only recognizes packs from that MIDX as being potentially
-> disjoint.
->=20
-> If you have the bulk of your repositories in the alternate, then I think
-> you might want to consider how we combine the two.=20
+The `EXPECT` macros used by the reftable test framework are all using a
+single `if` statement with the actual condition. This results in weird
+syntax when using them in if/else statements like the following:
 
-Yes, in the general case the bulk of objects is indeed contained in the
-alternate.
+```
+if (foo)
+	EXPECT(foo =3D=3D 2)
+else
+	EXPECT(bar =3D=3D 2)
+```
 
-> My sense is that you'd want to be disjoint with respect to anything
-> downstream of you.
+Note that there need not be a trailing semicolon. Furthermore, it is not
+immediately obvious whether the else now belongs to the `if (foo)` or
+whether it belongs to the expanded `if (foo =3D=3D 2)` from the macro.
 
-Ideally yes, but this is unfortunately not easily achievable in the
-general case. It's one of the many painpoints that alternates bring with
-them.
+Fix this by wrapping the macros in a do/while loop.
 
-Suppose two forks A and B are connected to the same alternate. Both A
-and B now gain the same set of objects via whatever means. At this point
-these objects can be stored in disjoint packs in each of the repos as
-they are not yet deduplicated via the alternate. But if you were to pull
-objects from either A or B into the alternate then you cannot ensure
-disjointedness at all anymore because you would first have to repack
-objects in both A and B.
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ reftable/test_framework.h | 58 +++++++++++++++++++++------------------
+ 1 file changed, 32 insertions(+), 26 deletions(-)
 
-For two forks this might still seem manageable. But as soon as your fork
-network grows larger it's clear that this becomes almost impossible to
-do. So ultimately, I don't see an alternative to ignoring disjointedness
-bits in either of the two linked-together repos.
+diff --git a/reftable/test_framework.h b/reftable/test_framework.h
+index 774cb275bf..ee44f735ae 100644
+--- a/reftable/test_framework.h
++++ b/reftable/test_framework.h
+@@ -12,32 +12,38 @@ license that can be found in the LICENSE file or at
+ #include "system.h"
+ #include "reftable-error.h"
+=20
+-#define EXPECT_ERR(c)                                                  \
+-	if (c !=3D 0) {                                                  \
+-		fflush(stderr);                                        \
+-		fflush(stdout);                                        \
+-		fprintf(stderr, "%s: %d: error =3D=3D %d (%s), want 0\n",  \
+-			__FILE__, __LINE__, c, reftable_error_str(c)); \
+-		abort();                                               \
+-	}
+-
+-#define EXPECT_STREQ(a, b)                                               \
+-	if (strcmp(a, b)) {                                              \
+-		fflush(stderr);                                          \
+-		fflush(stdout);                                          \
+-		fprintf(stderr, "%s:%d: %s (%s) !=3D %s (%s)\n", __FILE__, \
+-			__LINE__, #a, a, #b, b);                         \
+-		abort();                                                 \
+-	}
+-
+-#define EXPECT(c)                                                         =
+ \
+-	if (!(c)) {                                                        \
+-		fflush(stderr);                                            \
+-		fflush(stdout);                                            \
+-		fprintf(stderr, "%s: %d: failed assertion %s\n", __FILE__, \
+-			__LINE__, #c);                                     \
+-		abort();                                                   \
+-	}
++#define EXPECT_ERR(c)                                                     =
+     \
++	do {                                                                   \
++		if (c !=3D 0) {                                                  \
++			fflush(stderr);                                        \
++			fflush(stdout);                                        \
++			fprintf(stderr, "%s: %d: error =3D=3D %d (%s), want 0\n",  \
++				__FILE__, __LINE__, c, reftable_error_str(c)); \
++			abort();                                               \
++		}                                                              \
++	} while (0)
++
++#define EXPECT_STREQ(a, b)                                                =
+       \
++	do {                                                                     \
++		if (strcmp(a, b)) {                                              \
++			fflush(stderr);                                          \
++			fflush(stdout);                                          \
++			fprintf(stderr, "%s:%d: %s (%s) !=3D %s (%s)\n", __FILE__, \
++				__LINE__, #a, a, #b, b);                         \
++			abort();                                                 \
++		}                                                                \
++	} while (0)
++
++#define EXPECT(c)                                                         =
+         \
++	do {                                                                     =
+  \
++		if (!(c)) {                                                        \
++			fflush(stderr);                                            \
++			fflush(stdout);                                            \
++			fprintf(stderr, "%s: %d: failed assertion %s\n", __FILE__, \
++				__LINE__, #c);                                     \
++			abort();                                                   \
++		}                                                                  \
++	} while (0)
+=20
+ #define RUN_TEST(f)                          \
+ 	fprintf(stderr, "running %s\n", #f); \
+--=20
+2.43.0
 
-> Whether or not this is a feature that you/others need, I definitely
-> think we should leave it out of this series, since I am (a) fairly
-> certain that this is possible to do, and (b) already feel like this
-> series on its own is complicated enough.
 
-I'm perfectly fine if we say that the benefits of your patch series
-cannot yet be applied to repositories with alternates. But from my point
-of view it's a requirement that this patch series does not silently
-break this usecase due to Git starting to generate disjointed packs
-where it cannot ensure that the disjointedness property holds.
-
-As I haven't yet read through this whole patch series, the question is
-boils down to whether the end result is opt-in or opt-out. If it was
-opt-out then I could see the above usecase breaking silently. If it was
-opt-in then things should be fine and we can address this ommission in a
-follow up patch series. We at GitLab would definitely be interested in
-helping out with this given that it directly affects us and that the
-demonstrated savings seem very promising.
-
-Patrick
-
---5WW4dz3tKGbmJrBN
+--k9W//2jLMlKCchB7
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmV2xdcACgkQVbJhu7ck
-PpS52g//eottqsbo3ZNKg6fxKoWcQ4KlYt3dpVnXUprnCG39jUTX09aJl3SwnmAI
-U+rBcqcXEn0YGDZBqb0RwQdW6aKf//+LYKO6aHmTeJRHLwJv5eKkPUS+OJqtRwBG
-//ttKpuLVMh9drBVgsEPK4MDmCwz5Wh/jE4hDI8pKXFXVT+pN4/Z1PZ4wQMaGtq0
-yZKfeSq5jqz4WjR+ykaRBvgYhF+55pNW1q6XMCwYHsZScaN+Z3eMrOm8DoNLfpN/
-kpchAVZ0i+ssebT5LKyGy+lqp9J58XfgEk1AOwJu+Ciqca+d8j+B1A5wfI0cjRCp
-9k5raaII+I5r7eOwVBC7BXbRq9IW3/6T+W22LwpLxn+0aUcIOkbz+efewIQpeKIb
-Qzb4oRcWz/DaJP6LjUJwIUfPWXd1Y/rHnqbGcpmdN/H3KogkKs8g48duKmseVPyS
-5czK1KwBkTJKlodyPyRd0dCIl74XamWefoHguc8xklowXyc62L4/T39/cl+eFofO
-PY/2CsDCPFBU/l0xxqFUc8nd92VlfJeCRoVkhsPqCMLlAyxA3RAMocs48rtdqRtC
-NIjdjyP6wn8LqQqBzJPt2u6wR9IL6Bj92vwOY9cqy6OcPTShD6cVud4NjsuuHuuM
-6yiHxu0lJNg6+GmcNm4iwlX/L8frC51xzU3O+3isfiJsblMjxgY=
-=HJbg
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmV20VAACgkQVbJhu7ck
+PpStAA//S8jbLoQ56jDcxyBZaCXqqX1LjBIGQAVJ8ptLGd7thPOikiFR5RYXifsm
+xSs+UxqEhDhFu/og45o3AkTKmRn4M5EFKlRmfeFyf/BVKBRneiUXKTtFBenq7Pbl
+ID+h0vEn32flZYVYbMqe7IDME7zAJHOqZAsUKZII8rgoFMTCZQjkYRUcqwnaLQTt
+2yn0ooQjLvmtQo/GnvgQUTa1TR2+EmCJsz7XN18QCSsiBGvx5Nei4xN/yqf36HaV
+cmYB5Sgc2YPSe7wPGrsu1uQ8EMZSLVV9SJm0yQvrcHRjBzlKMFhvEvMPmq8bj+Nd
+NXV99vmEESw2Ofz+dP2ezx45u3JoXqFsbOa8PBx+7z8XNcvqlDaysqrd4P6RpJfn
+W+FRKu/HfVXguXagoN03pIhvfpuw5H2F1q2RKJNsKfwQgZBPD+70HGNO17gPaVoq
+efrDBYkVV/QFBhHuKuSZn0xy8HudiC/C3H84wW3Xw97kw24Ej9epzwFg0yWKeva3
+KeJ9moIgn6uhq/8hJaix7d8sEEZzR0tbXtH53M8isJYBKJ5ZNoN9WO0iNDW1GVkQ
+0RJcjZj69ZmNqIoIT0ji6ZsqdE1ORlspms09RFS2dIh9bUx6QjzVgevQElp+1Y+g
+i/YyFPF+e9qSefSEzewq1au2yJ2xmAiFtMV9MBZriaXyIciSfew=
+=DNpj
 -----END PGP SIGNATURE-----
 
---5WW4dz3tKGbmJrBN--
+--k9W//2jLMlKCchB7--
