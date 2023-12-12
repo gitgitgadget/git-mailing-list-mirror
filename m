@@ -1,40 +1,40 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SuD/ujgI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UQFlQJKg"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lXQz73RQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bD1ebJYC"
 Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76A68BF
-	for <git@vger.kernel.org>; Mon, 11 Dec 2023 23:00:45 -0800 (PST)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.west.internal (Postfix) with ESMTP id 968E83200B0D
-	for <git@vger.kernel.org>; Tue, 12 Dec 2023 02:00:44 -0500 (EST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50E2AEA
+	for <git@vger.kernel.org>; Mon, 11 Dec 2023 23:00:50 -0800 (PST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.west.internal (Postfix) with ESMTP id BFE913200B0D
+	for <git@vger.kernel.org>; Tue, 12 Dec 2023 02:00:49 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Tue, 12 Dec 2023 02:00:45 -0500
+  by compute3.internal (MEProxy); Tue, 12 Dec 2023 02:00:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1702364444; x=1702450844; bh=RVCFxbqxGG
-	igBFmpRxUNARlaKsM2nm5sEe/v4bUe39I=; b=SuD/ujgIy1TLMqJJhHs6EEa/LR
-	OB/X2OgGmTjg2NU/6O0exdanFE5qWJKs8BT/ok3u4s/ATfFJ+FiiZbysZjEGm4O/
-	5Jye1k8JyaS0Kgj3Fh6iYOCVlu8XLhJxImiza/W56EIq8uhO7WE2a3FzoGIjn6ja
-	UEIscx8uSLpCK/ZEAi1EaQeBEgY25UFZD57tF2GakpPybMSnjlP6EvD8aOuhkeFQ
-	VhjmHgYVBpOyDg7K/WUZhwg/jpMr0pS4kmqJXx7qa9Ah2jvt2RQmTaaBeSKfwBVH
-	Th7glpwBVnF60YCQZQcefyXhg78j6ljYN6XnT/vGY7SW3snVqNLqhqw5lHmg==
+	:subject:to:to; s=fm1; t=1702364449; x=1702450849; bh=uni2VhHKzH
+	YX2vT2EIiLdh+SES9Aqq3D9YONPvF6eQQ=; b=lXQz73RQSRUqQ9sxZmCI7rivsZ
+	jkExxPAEZ+c5OhdXO029c/ujt53LomInHTZmu1ffzgpIVM04viSHPDJgH6+nfwyA
+	PQ/NqKtvVYgviEUOEbl301a25TmrSyoC1D4hoBu7Ja7Yr8e12bdVyPwUXMbM9GFe
+	snROwf7b9zFTKjDZ10Fy7RfBlAOMsThIfjmkmBWgLLPwu2BJd2qi3h+WT9Wbmoda
+	rW3VyDk4ieAw/NCNisJz/GUI+sS5pRWuSuU+lUDipxgfRqa9la2GSHjdeCqGrMjZ
+	nL6VJB2l1F440EmOTg9o6r4vi99qWmuM95nFVFETE7MnOnbp7dvNQKYiF0Bw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1702364444; x=1702450844; bh=RVCFxbqxGGigBFmpRxUNARlaKsM2
-	nm5sEe/v4bUe39I=; b=UQFlQJKgY/bwqk924Q9GqLpo8qstGGWdnaRNuft1dUTR
-	WD1fQXf0+AYnmPrcSdxRIw4rEvnWkRqS57jgbRFkHnzx6nfYLdwwQ1NR7sSX+h80
-	265DAhXFDhuK+TkxnrJGx7owH2bu9pJrRlaLENxw1agclGZvUFkShg/GX5Ro/pB7
-	3mxhBxe/VTMEEp1hoqMG8UQAxR2j6oVJXOSgu6Qif7QMvlZl453ptkonebQG+vPt
-	Oj2WcaCSYdCpkzEFOXhHFxW4UxwVVOsqY/A1NkT+FzgpjmVaZc4UCVJ+CX9QAyzo
-	674k4KH4kTKIPRsPjqQFudyn+Mmxwm43IPt/9PEH8A==
-X-ME-Sender: <xms:GwV4ZV_1C5_Zgi4bNndH46E7TlQ61rFo500pyIteNSXQZ8cBCk7USw>
-    <xme:GwV4ZZvvFFT4SH23gu7VW4CoOBiH7u0aeEY9yvzOUR7BxwkWhIVek1duuALK4PWUA
-    v50qs40s_NIsBfIBA>
-X-ME-Received: <xmr:GwV4ZTCfc-DzepclgNBz72GOlRJAJysrCvCGVq0Glk3kJu2wmvxv4lYUnuEu1GqTpPSkggps2A_iqadC-rYaYQGgQk2mHcg8h6p9xyY7Ln96oWA>
+	fm1; t=1702364449; x=1702450849; bh=uni2VhHKzHYX2vT2EIiLdh+SES9A
+	qq3D9YONPvF6eQQ=; b=bD1ebJYCv94HU9544ncD5tAAxqIdEIjHZeEEF8CnpL6L
+	661z+6nECIX7GEA51OleW96Ohx/CB7F5mzQaz2wcrbTgsGjfoNaL8bccGVzBT29U
+	c0LXqsSYezlr4INX4u7U4f9AGoHjqTixMdmsp0rq3iUF88gl31l3KjzmkOSYdHSq
+	bwJTZQebPupSt3fDCg0oWQyP65UXh2lJhvTZpsXKpfyViwqv3PRbVfNRFFLBsH5i
+	wogt/0x/c9es03ZE1eBcBxoO4SMll3FX1/T3FCFRosT5F7xwW/qADgslQYacL9FZ
+	duYV/D9d0Rf0xO2XeVjHkkr3uueFbcUKpRjEyxTnQw==
+X-ME-Sender: <xms:IAV4ZUQ-zIx9SUKnnVweKdmqjjbPbJgL_ucjYsHpJcczyNlefCyFeQ>
+    <xme:IAV4ZRy3jRlL38yjFxphWak5S_CPPa9wQud3htCnP-ZjH8n_s-FBFr9d1Lzn5K8lk
+    6tekbAH0_jsgbWCpw>
+X-ME-Received: <xmr:IAV4ZR13CkERmqdmJGdhIIBbOCqqso1prJRDukLn_mkhMXenKhyOrLyDalqfgUqQRXaYYiOI4962qmR6rXpRDGRIa6mzUdGYq_Y1R2375QPfMZ8>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudelfedguddtfecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtd
@@ -42,22 +42,22 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudelfedguddtfecutefuodetgg
     phhkshdrihhmqeenucggtffrrghtthgvrhhnpeehgefhtdefueffheekgfffudelffejtd
     fhvdejkedthfehvdelgfetgfdvtedthfenucevlhhushhtvghrufhiiigvpedtnecurfgr
     rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:GwV4ZZdTYxcpe4z0E5F0tH9cH-BrMrM_RX9ZmSvyX4s4ApZq2OX6AA>
-    <xmx:GwV4ZaMF3G9uCecyS5rl7FMscAc6v9QrKQ6vbu0VcylltyElZqtAGQ>
-    <xmx:GwV4Zbl06VrZxCQ08JbtWEfLPM6oOujIp_kF6AZfAEq5DbgqsXfGTw>
-    <xmx:HAV4ZdZary1BH5IEKa_-BsQHY5CL5Jm6ubQLQNyPrkguIdOAL5Hoyw>
+X-ME-Proxy: <xmx:IAV4ZYAxGFIshW_kmAQtfLC7_FL7Wbmcf9qrA5R0yNG1hgJkVRfyzg>
+    <xmx:IAV4ZdjXCY-fl-QwzGaRz3NkjamsRQjxGazaitGs5bE4oQkCTeOn7g>
+    <xmx:IAV4ZUqTI4vHFjot1x8dwI5CP7f9WHQNiDKXNufNT5Qsji9jk50V-g>
+    <xmx:IQV4ZXcxz5pd7hAzIU5MIPZX4kEgpCEnRmXEXZBJvBfXNVvuAzAanQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 12 Dec 2023 02:00:43 -0500 (EST)
+ <git@vger.kernel.org>; Tue, 12 Dec 2023 02:00:48 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 849dabb8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 94eb4b6d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 12 Dec 2023 06:59:04 +0000 (UTC)
-Date: Tue, 12 Dec 2023 08:00:41 +0100
+	Tue, 12 Dec 2023 06:59:09 +0000 (UTC)
+Date: Tue, 12 Dec 2023 08:00:46 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH v2 1/7] setup: extract function to create the refdb
-Message-ID: <2f34daa0823ccb5cfee355758ee00da22bb17c03.1702361370.git.ps@pks.im>
+Subject: [PATCH v2 2/7] setup: allow skipping creation of the refdb
+Message-ID: <40005ac1f14c8d0c1fc474351554ebe4fdec1cf4.1702361370.git.ps@pks.im>
 References: <cover.1701863960.git.ps@pks.im>
  <cover.1702361370.git.ps@pks.im>
 Precedence: bulk
@@ -67,201 +67,116 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="h8uuinG8oIvCLpJg"
+	protocol="application/pgp-signature"; boundary="Ps+zen20DyxrPGPd"
 Content-Disposition: inline
 In-Reply-To: <cover.1702361370.git.ps@pks.im>
 
 
---h8uuinG8oIvCLpJg
+--Ps+zen20DyxrPGPd
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-We're about to let callers skip creation of the reference database when
-calling `init_db()`. Extract the logic into a standalone function so
-that it becomes easier to do this refactoring.
+Allow callers to skip creation of the reference database via a new flag
+`INIT_DB_SKIP_REFDB`, which is required for git-clone(1) so that we can
+create it at a later point once the object format has been discovered
+=66rom the remote repository.
 
-While at it, expand the comment that explains why we always create the
-"refs/" directory.
+Note that we also uplift the call to `create_reference_database()` into
+`init_db()`, which makes it easier to handle the new flag for us. This
+changes the order in which we do initialization so that we now set up
+the Git configuration before we create the reference database. In
+practice this move should not result in any change in behaviour.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- setup.c | 103 +++++++++++++++++++++++++++++++++++---------------------
- 1 file changed, 65 insertions(+), 38 deletions(-)
+ setup.c | 13 +++++--------
+ setup.h |  5 +++--
+ 2 files changed, 8 insertions(+), 10 deletions(-)
 
 diff --git a/setup.c b/setup.c
-index fc592dc6dd..865cfe6743 100644
+index 865cfe6743..d6a1c59b7b 100644
 --- a/setup.c
 +++ b/setup.c
-@@ -1885,6 +1885,68 @@ void initialize_repository_version(int hash_algo, in=
-t reinit)
- 		git_config_set_gently("extensions.objectformat", NULL);
- }
+@@ -1949,11 +1949,9 @@ static void create_reference_database(const char *in=
+itial_branch, int quiet)
 =20
-+static int is_reinit(void)
-+{
-+	struct strbuf buf =3D STRBUF_INIT;
-+	char junk[2];
-+	int ret;
-+
-+	git_path_buf(&buf, "HEAD");
-+	ret =3D !access(buf.buf, R_OK) || readlink(buf.buf, junk, sizeof(junk) - =
-1) !=3D -1;
-+	strbuf_release(&buf);
-+	return ret;
-+}
-+
-+static void create_reference_database(const char *initial_branch, int quie=
-t)
-+{
-+	struct strbuf err =3D STRBUF_INIT;
-+	int reinit =3D is_reinit();
-+
-+	/*
-+	 * We need to create a "refs" dir in any case so that older versions of
-+	 * Git can tell that this is a repository. This serves two main purposes:
-+	 *
-+	 * - Clients will know to stop walking the parent-directory chain when
-+	 *   detecting the Git repository. Otherwise they may end up detecting
-+	 *   a Git repository in a parent directory instead.
-+	 *
-+	 * - Instead of failing to detect a repository with unknown reference
-+	 *   format altogether, old clients will print an error saying that
-+	 *   they do not understand the reference format extension.
-+	 */
-+	safe_create_dir(git_path("refs"), 1);
-+	adjust_shared_perm(git_path("refs"));
-+
-+	if (refs_init_db(&err))
-+		die("failed to set up refs db: %s", err.buf);
-+
-+	/*
-+	 * Point the HEAD symref to the initial branch with if HEAD does
-+	 * not yet exist.
-+	 */
-+	if (!reinit) {
-+		char *ref;
-+
-+		if (!initial_branch)
-+			initial_branch =3D git_default_branch_name(quiet);
-+
-+		ref =3D xstrfmt("refs/heads/%s", initial_branch);
-+		if (check_refname_format(ref, 0) < 0)
-+			die(_("invalid initial branch name: '%s'"),
-+			    initial_branch);
-+
-+		if (create_symref("HEAD", ref, NULL) < 0)
-+			exit(1);
-+		free(ref);
-+	}
-+
-+	if (reinit && initial_branch)
-+		warning(_("re-init: ignored --initial-branch=3D%s"),
-+			initial_branch);
-+
-+	strbuf_release(&err);
-+}
-+
  static int create_default_files(const char *template_path,
  				const char *original_git_dir,
- 				const char *initial_branch,
-@@ -1896,10 +1958,8 @@ static int create_default_files(const char *template=
-_path,
+-				const char *initial_branch,
+ 				const struct repository_format *fmt,
+ 				int prev_bare_repository,
+-				int init_shared_repository,
+-				int quiet)
++				int init_shared_repository)
+ {
  	struct stat st1;
  	struct strbuf buf =3D STRBUF_INIT;
- 	char *path;
--	char junk[2];
- 	int reinit;
- 	int filemode;
--	struct strbuf err =3D STRBUF_INIT;
- 	const char *init_template_dir =3D NULL;
- 	const char *work_tree =3D get_git_work_tree();
-=20
-@@ -1919,6 +1979,8 @@ static int create_default_files(const char *template_=
+@@ -2024,7 +2022,6 @@ static int create_default_files(const char *template_=
 path,
- 	reset_shared_repository();
- 	git_config(git_default_config, NULL);
-=20
-+	reinit =3D is_reinit();
-+
- 	/*
- 	 * We must make sure command-line options continue to override any
- 	 * values we might have just re-read from the config.
-@@ -1962,39 +2024,7 @@ static int create_default_files(const char *template=
-_path,
  		adjust_shared_perm(get_git_dir());
  	}
 =20
--	/*
--	 * We need to create a "refs" dir in any case so that older
--	 * versions of git can tell that this is a repository.
--	 */
--	safe_create_dir(git_path("refs"), 1);
--	adjust_shared_perm(git_path("refs"));
--
--	if (refs_init_db(&err))
--		die("failed to set up refs db: %s", err.buf);
--
--	/*
--	 * Point the HEAD symref to the initial branch with if HEAD does
--	 * not yet exist.
--	 */
--	path =3D git_path_buf(&buf, "HEAD");
--	reinit =3D (!access(path, R_OK)
--		  || readlink(path, junk, sizeof(junk)-1) !=3D -1);
--	if (!reinit) {
--		char *ref;
--
--		if (!initial_branch)
--			initial_branch =3D git_default_branch_name(quiet);
--
--		ref =3D xstrfmt("refs/heads/%s", initial_branch);
--		if (check_refname_format(ref, 0) < 0)
--			die(_("invalid initial branch name: '%s'"),
--			    initial_branch);
--
--		if (create_symref("HEAD", ref, NULL) < 0)
--			exit(1);
--		free(ref);
--	}
--
-+	create_reference_database(initial_branch, quiet);
+-	create_reference_database(initial_branch, quiet);
  	initialize_repository_version(fmt->hash_algo, 0);
 =20
  	/* Check filemode trustability */
-@@ -2158,9 +2188,6 @@ int init_db(const char *git_dir, const char *real_git=
-_dir,
- 				      prev_bare_repository,
- 				      init_shared_repository,
- 				      flags & INIT_DB_QUIET);
--	if (reinit && initial_branch)
--		warning(_("re-init: ignored --initial-branch=3D%s"),
--			initial_branch);
+@@ -2184,11 +2181,11 @@ int init_db(const char *git_dir, const char *real_g=
+it_dir,
+ 	validate_hash_algorithm(&repo_fmt, hash);
 =20
+ 	reinit =3D create_default_files(template_dir, original_git_dir,
+-				      initial_branch, &repo_fmt,
+-				      prev_bare_repository,
+-				      init_shared_repository,
+-				      flags & INIT_DB_QUIET);
++				      &repo_fmt, prev_bare_repository,
++				      init_shared_repository);
+=20
++	if (!(flags & INIT_DB_SKIP_REFDB))
++		create_reference_database(initial_branch, flags & INIT_DB_QUIET);
  	create_object_directory();
 =20
+ 	if (get_shared_repository()) {
+diff --git a/setup.h b/setup.h
+index b48cf1c43b..cbf538286b 100644
+--- a/setup.h
++++ b/setup.h
+@@ -169,8 +169,9 @@ int verify_repository_format(const struct repository_fo=
+rmat *format,
+  */
+ void check_repository_format(struct repository_format *fmt);
+=20
+-#define INIT_DB_QUIET 0x0001
+-#define INIT_DB_EXIST_OK 0x0002
++#define INIT_DB_QUIET      (1 << 0)
++#define INIT_DB_EXIST_OK   (1 << 1)
++#define INIT_DB_SKIP_REFDB (1 << 2)
+=20
+ int init_db(const char *git_dir, const char *real_git_dir,
+ 	    const char *template_dir, int hash_algo,
 --=20
 2.43.GIT
 
 
---h8uuinG8oIvCLpJg
+--Ps+zen20DyxrPGPd
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmV4BRgACgkQVbJhu7ck
-PpRJ+g//SMNAn7IH3316yz0ldhy7fdM8olukN1NMICceTfB9h7+Vaz2X2rrLBfdZ
-Ue3MKuvgXNbreVXU81Qs+Jbeb5Cs5MoRGo2qoh01ZlQnBpnjuCmZ07djrRBfQho5
-7KZvJIJtd+sAQGIXPPqaPYrodAxNjvPPJkYsQeU96qb+rx0bFON3uGGsW0whdnOS
-M3BN4OCcYUCsQcLPhB4/RXMNlZs7kPl/8je4b7e++hLFQiDugl3b+ixahe1sl0S/
-Y3Qskohzz1sw3eDVIEeX01rixI4qONcQthIU50Ajt814Z/PscUTS8W+eDyDLqfAp
-2iHxKXuh19Vi/wNEnc1RR9GPRWioTypImehhF7mXWkMt+xCE5HTxOg6i2+eLi1o1
-O5UguiPTiJ905qDrSur9i2SJg37RZu1etguvsfLcvp2cerdlkfgILEogCM7k4kV2
-qt29K5XIct99qF2zm1t3nBldryw1H63NmabTyxx+MEqYkZua+xfLcpgFVUtmadJP
-3yNJ1TgTxyL6lQieMsFD8i54Miq9yPK4LdQ+uF3EXCHGwsQtbB4Ppd5d1bm99ZzY
-hcRAb/NYw+yRobyDPZVXIHjtBNrNP0tmjQ9l3Qs8MlykXA08rzAwV47YM5R8q1IJ
-62NaFx02hYdKR/VkHS/wffNkWsd1TgmOdYDwG/VVbarGwumTdC0=
-=2Dxi
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmV4BR0ACgkQVbJhu7ck
+PpTsgBAAguVfnmc2+Dmmjm1GScYcbVk/XQCcFGXWuBliycjExXCyYbcP05lKvxBj
+z8fbmy32VfWOqOA1utqZys3xs99VQg3t49eSdmJ0vcdxgCqF5E/NxkrMEcBXg4zO
+7wpwTSCSHVPaB2Z9GQw//5BWqnp6urAld+5D8fyTJ89gKkFVDfQG979pWZulc0b2
+nGYmCuKBDTXy/UebChew3xydF+o0Y3OaDAnfks/oeEfALSkoMU/eHzmtUoePNAy4
+SJbSjt7UWxeXfEaWmF2zimExNEthK7VZhD7mH4nyE6VJsNb9GfuGV3/9XPkqDR2t
+xfFGfohshfcVThj0nvsf2cW7657nNJxEot4xVK5LK7B26ADkWsXDD0zpFPbCfeWD
+gYzM6+Jm5OWesctxoLZ4qFucmwwTN98jzWsxxs+4RYHyOz+QNM6QXiBITzB+SrCB
+dJLPI5fmQY1ZPIwlajK+1n4OKdsUizdD5jSGldpkyAgKuhpsNNu/7VxvTf/GzeAJ
+xCeMsx6Lwn0hgoMfJXaZZF3PWEfEqEDuRKBr4HgteIJO3yLLR5Q6GKoNi/zpoOpo
+tBIRjBkqZpAqkWQGTscQjpfbGDE8R/dDn73KDPfgRO4vkOXOc4idFWH57XB6ECqr
+sLUcNQyXm9xPyRKVnFNW3w0Raxh7VbiodT95pfU1Tzxa8S21/KU=
+=k2Q5
 -----END PGP SIGNATURE-----
 
---h8uuinG8oIvCLpJg--
+--Ps+zen20DyxrPGPd--
