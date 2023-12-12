@@ -1,89 +1,113 @@
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="iZFl//Mt"
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1618B9F
-	for <git@vger.kernel.org>; Tue, 12 Dec 2023 11:30:28 -0800 (PST)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id BA1192EB0E;
-	Tue, 12 Dec 2023 14:30:27 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=HQThWD/t1l2mCyITjEjYC+wv1sylJaJh1jNe0Q
-	1043I=; b=iZFl//MtCQS1/2L+WrPmu0q2+i0zExBr+5vRkMsYxT7yzzJSNFjVt3
-	OG/EVPw5YFUvbDPE5OfNAk9pXMoNxyUTmw3NJKYVkhOPuhzSmpG3ap+I7IwfPVc4
-	L0DvLHym54bDL9dMxod6yCIqLatJZUCfuNAJb/V3KYmikRqpLMiUE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id B20762EB0D;
-	Tue, 12 Dec 2023 14:30:27 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.193.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5C08E2EAD8;
-	Tue, 12 Dec 2023 14:30:24 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] tests: prefer host Git to verify chainlint self-checks
-In-Reply-To: <4112adbe467c14a8f22a87ea41aa4705f8760cf6.1702380646.git.ps@pks.im>
-	(Patrick Steinhardt's message of "Tue, 12 Dec 2023 12:32:50 +0100")
-References: <4112adbe467c14a8f22a87ea41aa4705f8760cf6.1702380646.git.ps@pks.im>
-Date: Tue, 12 Dec 2023 11:30:22 -0800
-Message-ID: <xmqq8r5zrzg1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 643DC8E
+	for <git@vger.kernel.org>; Tue, 12 Dec 2023 12:01:55 -0800 (PST)
+Received: (qmail 16541 invoked by uid 109); 12 Dec 2023 20:01:54 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Dec 2023 20:01:54 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 18690 invoked by uid 111); 12 Dec 2023 20:01:54 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Dec 2023 15:01:54 -0500
+Authentication-Results: peff.net; auth=none
+Date: Tue, 12 Dec 2023 15:01:53 -0500
+From: Jeff King <peff@peff.net>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc: Ondrej Pohorelsky <opohorel@redhat.com>, git@vger.kernel.org,
+	"brian m . carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: Test breakage with zlib-ng
+Message-ID: <20231212200153.GB1127366@coredump.intra.peff.net>
+References: <CA+B51BEpSh1wT627Efpysw3evVocpiDCoQ3Xaza6jKE3B62yig@mail.gmail.com>
+ <9feeb6cf-aabf-4002-917f-3f6c27547bc8@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- E5897856-9924-11EE-A109-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <9feeb6cf-aabf-4002-917f-3f6c27547bc8@web.de>
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Tue, Dec 12, 2023 at 06:04:55PM +0100, René Scharfe wrote:
 
-> To accomodate for cases where the host system has no Git installation we
-> use the locally-compiled version of Git. This can result in problems
-> though when the Git project's repository is using extensions that the
-> locally-compiled version of Git doesn't understand. It will refuse to
-> run and thus cause the checks to fail.
->
-> Fix this issue by prefering the host's Git resolved via PATH. If it
-> doesn't exist, then we fall back to the locally-compiled Git version and
-> diff as before.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->
-> I've started to dogfood the reftable backend on my local machine and
-> have converted many repositories to use the reftable backend. This
-> surfaced the described issue because the repository now sets up the
-> "extensions.refStorage" extension, and thus "check-chainlint" fails
-> depending on which versions of Git I'm trying to compile and test.
+> Subject: [PATCH] t6300: avoid hard-coding object sizes
+> 
+> f4ee22b526 (ref-filter: add tests for objectsize:disk, 2018-12-24)
+> hard-coded the expected object sizes.  Coincidentally the size of commit
+> and tag is the same with zlib at the default compression level.
+> 
+> 1f5f8f3e85 (t6300: abstract away SHA-1-specific constants, 2020-02-22)
+> encoded the sizes as a single value, which coincidentally also works
+> with sha256.
+> 
+> Different compression libraries like zlib-ng may arrive at different
+> values.  Get them from the file system instead of hard-coding them to
+> make switching the compression library (or changing the compression
+> level) easier.
 
-I do not think "prefer host Git" is necessarily a good idea; falling
-back to use host Git is perfectly fine, of course.
+Yeah, this is definitely the right solution here. I'm surprised the
+hard-coded values didn't cause problems before now. ;)
 
-Other than that, I agree with the motivation.
+The patch looks good to me, but a few small comments:
 
->  t/Makefile | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
->
-> diff --git a/t/Makefile b/t/Makefile
-> index 225aaf78ed..8b7f7aceaa 100644
-> --- a/t/Makefile
-> +++ b/t/Makefile
-> @@ -111,7 +111,9 @@ check-chainlint:
->  	if test -f ../GIT-BUILD-OPTIONS; then \
->  		. ../GIT-BUILD-OPTIONS; \
->  	fi && \
-> -	if test -x ../git$$X; then \
-> +	if command -v git >/dev/null 2>&1; then \
-> +		DIFFW="git --no-pager diff -w --no-index"; \
-> +	elif test -x ../git$$X; then \
->  		DIFFW="../git$$X --no-pager diff -w --no-index"; \
->  	else \
->  		DIFFW="diff -w -u"; \
+> +test_object_file_size () {
+> +	oid=$(git rev-parse "$1")
+> +	path=".git/objects/$(test_oid_to_path $oid)"
+> +	test_file_size "$path"
+> +}
+
+Here we're assuming the objects are loose. I think that's probably OK
+(and certainly the test will notice if that changes).
+
+We're covering the formatting code paths along with the underlying
+implementation that fills in object_info->disk_sizep for loose objects.
+Which I think is plenty for this particular script, which is about
+for-each-ref.
+
+It would be nice to have coverage of the packed_object_info() code path,
+though. Back when it was added in a4ac106178 (cat-file: add
+%(objectsize:disk) format atom, 2013-07-10), I cowardly punted on this,
+writing:
+
+  This patch does not include any tests, as the exact numbers
+  returned are volatile and subject to zlib and packing
+  decisions. We cannot even reliably guarantee that the
+  on-disk size is smaller than the object content (though in
+  general this should be the case for non-trivial objects).
+
+I don't think it's that big a deal, but I guess we could do something
+like:
+
+  prev=
+  git show-index <$pack_idx |
+  sort -n |
+  grep -A1 $oid |
+  while read ofs oid csum
+  do
+    test -n "$prev" && echo "$((ofs - prev))"
+    prev=$ofs
+  done
+
+It feels a little redundant with what Git is doing under the hood, but
+at least is exercising the code (and we're using the idx directly, so
+we're confirming that the revindex is right).
+
+Anyway, that is all way beyond the scope of your patch, but I wonder if
+it's worth doing on top.
+
+> @@ -129,7 +129,7 @@ test_atom head push:strip=1 remotes/myfork/main
+>  test_atom head push:strip=-1 main
+>  test_atom head objecttype commit
+>  test_atom head objectsize $((131 + hexlen))
+> -test_atom head objectsize:disk $disklen
+> +test_atom head objectsize:disk $(test_object_file_size refs/heads/main)
+
+These test_object_file_size calls are happening outside of any
+test_expect_* block, so we'd miss failing exit codes (and also the
+helper is not &&-chained), and any stderr would leak to the output.
+That's probably OK in practice, though (if something goes wrong then the
+expected value output will be bogus and the test itself will fail).
+
+-Peff
