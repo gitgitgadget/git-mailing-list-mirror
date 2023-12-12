@@ -1,69 +1,67 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ficvKrHL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R/km26vj"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Z5nAFTl6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DeTbi1uH"
 Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61CA9B3
-	for <git@vger.kernel.org>; Mon, 11 Dec 2023 19:45:10 -0800 (PST)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.nyi.internal (Postfix) with ESMTP id CCCD85C0275;
-	Mon, 11 Dec 2023 22:45:09 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Mon, 11 Dec 2023 22:45:09 -0500
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C91B4B0
+	for <git@vger.kernel.org>; Mon, 11 Dec 2023 20:10:05 -0800 (PST)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.nyi.internal (Postfix) with ESMTP id 3622C5C02D7;
+	Mon, 11 Dec 2023 23:10:05 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute2.internal (MEProxy); Mon, 11 Dec 2023 23:10:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1702352709; x=1702439109; bh=C87Fj7bx+f
-	P5NumpauDJHxatinvwnWmfijQg/ZUWxhg=; b=ficvKrHLFcQCvSELde53Ekarex
-	bYcJl4QOIGyr3gfN0PRPm5F3ZZ5aq9St8Jyk8l3Qp8pth/g9TGdLBw+gL8MYmKE7
-	4YTtSfHu3AL/f1uPgbP6JnCy0XX5RIF2IhTwQk2vNKw/dIZOV1TZ3narpcvw1Bf/
-	vNG0wOPNDWBZTkUEsv8Zc9zXs6uIPu5I0JW0nKeL/QW4/2Ru3DPNodx5pAtqVgRH
-	lW6wDGvAuQacWeBgN4o7mZOO1wgowY8XWMnaHgnQozwsfZm3ss0JR7iivtRYXUKB
-	62pI/JHnuh/RoLRDRye6fhKQ6S6TESSBn6QlZeVkCo3lttc9JjtofZAHGi1w==
+	:subject:to:to; s=fm1; t=1702354205; x=1702440605; bh=NJ2WL6pKJt
+	Mac2pGBsKsFuWcR6B61cLK2J9RGPnsxTE=; b=Z5nAFTl6+YV7wQmqCpIcpxfmju
+	pIDphhBBQcbqnN0+5Tzn/HC869xNOmJzOqioh4em9k/waS1olU6muD4a7s6mffcN
+	FTppPAYn/HdRVDhHvmulj6b7GRqP/T4UHhoxYql813xgl5/rmyCmcaSAHpi/dUQV
+	XZdURTcGRna1ubMhZsJ4hKp2aiC//itP6kv4TYhNRoxYWRYAxNhzckkzpL/nm26f
+	2q+VY8wNm26FVK+Af2MlDA1WgXaXclmzAdL4iiIa5EOaEqyf9gR78pi7v7YVZZ3V
+	eq2+glhq5y0cKwuXZW3o3PEOMVofIgAUqOTA97nvLaRMkY8QCaQb4A+Q6usA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1702352709; x=1702439109; bh=C87Fj7bx+fP5NumpauDJHxatinvw
-	nWmfijQg/ZUWxhg=; b=R/km26vj42SH6emLNpG9T3Y0QRhJXDyPDfA2ZnsszQRm
-	WRnb//xTlAOIN3hhfgUn1Zw5yrkTEJJpaKmiuPAo5tDq5TlIb4VvCe5WqoQhl2SR
-	habm/vb9RACsSlr46sGh5NvhZmO0shriH4dBWcwTJRHgMziUUiv3XCCL4umycFxd
-	hQgwWfgKe2aNa18EJgZ4TLJEoIV4AsW8sH2QbqVL13+8wltFrx95l9LjBwOQBwGc
-	IeNlduPl54HGYoktyxgmpLWb2pLPD9MIdEKJktb9Db2e5YIqDU1c9ui8kqfC324J
-	SDgWaPnn5XK7+QiwLzTlb0q3xMPbnDYhp9TUhDxEGw==
-X-ME-Sender: <xms:Rdd3Ze7F4AMXZ6raohRz0rt15ffR3lCRqL3X0yth6GFH8tO5elRVxw>
-    <xme:Rdd3ZX425ruZSOFZWkozFGpkDo0m33F1S1FOZNp-rJ_7QGgy-wMAfZDo_wl1m2kMJ
-    -W2wgvWteo9fqYTeg>
-X-ME-Received: <xmr:Rdd3Zde_gk0D8SjBgXZEizSW3zhIORT9F2mqLPz9rUpg8nR-IEdEk_MyPKdNuUEk1nIBWHoAT5Hk1lrVwvpTH7dbA7ZZ1zUB77wsVvAIo26k9lE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudelfedgieefucetufdoteggodetrfdotf
+	fm1; t=1702354205; x=1702440605; bh=NJ2WL6pKJtMac2pGBsKsFuWcR6B6
+	1cLK2J9RGPnsxTE=; b=DeTbi1uHdVzE8lSupmgiTcYJ/vRlqrfQ5sIY7VgKRJfH
+	4eq40zXABWSmwIbA/bHLNkw+rv7+6+G6kVHizo+gRlt26vcKBLoq8V4t2sn4wKjB
+	ExR/gKYKInv/4w/reyWbijfsrD3MxanBvJqupJ4SVSXzQdTp+qsyIIu1WYMru0Hh
+	o+yAKTXyEpH268ysZbINGqhO97+SeF4KlNx20/Fnx7fmJ4QsUlUD8a/8pwP90hA/
+	cYkOwARfmwUrseE4tXKs4tqJiqF9prhqpagjbzeh2DAso0g/RLiIWrnR+s/F0sEp
+	eXqZT9CLtfcJvLOTCJa+resWdZ8OPW+E4DpT0glf3w==
+X-ME-Sender: <xms:Hd13ZbyvoPBgeU0uy3-C8NoRHy8U3cj92JVYbm4tQUmWjrJo5CpE2A>
+    <xme:Hd13ZTTXkyM6MMqzF-ONFQl8UBeDleLGS4FDPrxBOMUgE6B1k7vfu7yRemMd7LVAh
+    eaGzJjjBTpvDuF3LQ>
+X-ME-Received: <xmr:Hd13ZVWxm2wHcDFmbupEeVbIX6DpoybMEAi4Wv4OBpYHra9ZEfZcrlXAsAqpfeMI5EWtPwBukKKHMtD9EUsAVl54T0LbDSgBqMsdfgXVnImtQlI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudelfedgieejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:Rdd3ZbJEHgo8ZfckmI_W7Y8MuT4uaPOZ78JcZihc8rVN0yTQP6wtPw>
-    <xmx:Rdd3ZSLw9myo-uEYDc-5wODl4chO3DLpxJwA5o5lgalyaEUkBx3t1A>
-    <xmx:Rdd3ZcxmIZ2cSRSy_D8fflwtfWPPZ3KFEy-Tf9y4O1V5Jr_5Ofz2LA>
-    <xmx:Rdd3Ze1ZS3WhsST5pILJY3BVKtJi6fxISpBcW-XhCS19wPXx_nqRMQ>
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
+    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
+    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:Hd13ZVhL3JSGHygOKzCMpqm8jJkJMdIhzzwwvYf2xxUMlpW0Mg0V-w>
+    <xmx:Hd13ZdDo4E5vHHn75kDBBsoo9ATXHM8-80AzEtf_D1bEKULZooHXog>
+    <xmx:Hd13ZeKclCfXwl9GqQ7JIs3hA97Gulh3QV05iu77nS2Jf_E2Au5chA>
+    <xmx:Hd13Za5pQKqWJ02kBxJoiOBx2IDB8ctl-q3Gz6MU6vECoAylTKAqZQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 Dec 2023 22:45:08 -0500 (EST)
+ 11 Dec 2023 23:10:04 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 81232e75 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 12 Dec 2023 03:43:30 +0000 (UTC)
-Date: Tue, 12 Dec 2023 04:45:06 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 8fc653e8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 12 Dec 2023 04:08:25 +0000 (UTC)
+Date: Tue, 12 Dec 2023 05:10:01 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 00/11] reftable: small set of fixes
-Message-ID: <ZXfXQrNVReK9-RLP@tanuki>
-References: <cover.1700549493.git.ps@pks.im>
- <cover.1702285387.git.ps@pks.im>
- <ZXduGvCJIa25eldZ@nand.local>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org,
+	Carlos =?iso-8859-1?Q?Andr=E9s_Ram=EDrez_Cata=F1o?= <antaigroupltda@gmail.com>
+Subject: Re: [PATCH 0/7] fix segfaults with implicit-bool config
+Message-ID: <ZXfdGYUyJz4bnkQ0@tanuki>
+References: <20231207071030.GA1275835@coredump.intra.peff.net>
+ <ZXF-7AMZ_SBltplk@tanuki>
+ <20231212005228.GB376323@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,59 +69,62 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="myrKhHFhKsh4xDh3"
+	protocol="application/pgp-signature"; boundary="ijHytg+LI4Yj1MSE"
 Content-Disposition: inline
-In-Reply-To: <ZXduGvCJIa25eldZ@nand.local>
+In-Reply-To: <20231212005228.GB376323@coredump.intra.peff.net>
 
 
---myrKhHFhKsh4xDh3
+--ijHytg+LI4Yj1MSE
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Dec 11, 2023 at 03:16:26PM -0500, Taylor Blau wrote:
-> On Mon, Dec 11, 2023 at 10:07:25AM +0100, Patrick Steinhardt wrote:
-> >  reftable/block.c          |  23 ++++----
-> >  reftable/block.h          |   6 +++
-> >  reftable/block_test.c     |   4 +-
-> >  reftable/blocksource.c    |   2 +-
-> >  reftable/iter.h           |   8 +--
-> >  reftable/merged.c         |  31 +++++------
-> >  reftable/merged.h         |   2 +
-> >  reftable/reader.c         |   7 ++-
-> >  reftable/readwrite_test.c |   6 +--
-> >  reftable/stack.c          |  73 +++++++++++---------------
-> >  reftable/stack_test.c     | 107 +++++++++++++++++++++++++++++++++++++-
-> >  reftable/test_framework.h |  58 ++++++++++++---------
-> >  12 files changed, 213 insertions(+), 114 deletions(-)
-> >
-> > Range-diff against v2:
+On Mon, Dec 11, 2023 at 07:52:28PM -0500, Jeff King wrote:
+> On Thu, Dec 07, 2023 at 09:14:36AM +0100, Patrick Steinhardt wrote:
 >=20
-> I had one small question on the new version of the fourth patch, but
-> otherwise this version LGTM.
+> > Thanks for working on this topic! I've left a couple of comments, most
+> > of which are about whether we should retain previous behaviour where we
+> > generate a warning instead of raising an error for unknown values.
+>=20
+> Thanks for taking a look. I see what you're saying about the warnings,
+> but IMHO it's not worth the extra complexity. Returning early means the
+> existing code can proceed without worrying about NULLs. Though I suppose
+> we could have a "warn_error_nonbool()" which issues a warning and
+> returns 0.
+>=20
+> Still, the "return config_error_nonbool()" pattern is pretty
+> well-established and used for most options. I would go so far as to say
+> the ones that warn for invalid values are the odd ones out, and probably
+> should be returning errors as well (though doing so now may not be worth
+> the trouble and risk of annoyance).
+>=20
+> And certainly there should be no regressions in this series; every case
+> is currently a segfault, so returning an error is a strict improvement.
+> I'd just as soon stay strict there, as it's easier to loosen later if we
+> choose than to tighten.
 
-Thanks for your review!
+Fair enough, I'm perfectly fine with this reasoning. Thanks!
 
 Patrick
 
---myrKhHFhKsh4xDh3
+--ijHytg+LI4Yj1MSE
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmV310EACgkQVbJhu7ck
-PpTd9Q/+N2uzunvcTl5dyEK92ZtOEeMCp+Z4a0cjfriESZ1kTeT7qGVciwTb6qwe
-c7/jR7xx9LUQK8GLS4aNCGFhNYx4rJOHtxXlYdIcOXL2BTMDaGQcQCpD2HKxzAdv
-GZ56qY4p0uLqwkLRBXas2NsAuSKAfI/rnCQo4MSWgw3kKpdUTbEZhecWdT0Vg2tG
-4Menfx+HQGtSlfahPfPDVI0wMxpvOevlxr71G4EmkMdgLhAQx9yg68+ERY1OcRrd
-PVgDjKGq2MyrIohP6a0+esMbUsstAiRLgEnss067y0dzY4klR4sZ0LufzStZwFaB
-TNcQnxrKHWWSm31gUucrI5c6xtmUAUK4BEmk686+CJ0SR/Po9ahxILwdJ2uOo2rw
-s/9ZX+GYjGLxVcyUEEUA7VjlIT2aVNYPiLn+SZ6kr/D5EGaNqR934drLEyxul2aH
-18/npbPFW3iosluepKJTM9Y7B9Ui/+Q56i54mYirzQp/roWFtvkogGTwb3gquQ7O
-QXskYiL+I8zBxts22zQECyhRWCF+xyv0BpSHHfrq3p1UKNdlvwBPBwC37WbDUT6u
-bzv4gtSbz4++ji08cx8zA8ztF1xleTGc5FW40SsMoW3nhwwwDv4ZtV/BxgtNSJNq
-8YroB54ijPdXndpM6cfdLmfyorIWmB4XvLE9JyzF8+s5l2yWaXU=
-=P7ua
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmV33RgACgkQVbJhu7ck
+PpREwQ//as54RShdVPw0w13VQVhLyC2NWZ2oPOHvKsL9xbHeCvTQaL3qjr8Y1u6s
+24urkKhyMi28QRWtLLsRG0jN4uCpm6j06nGsh88ky99bhhXUzMArX5vsxH6675Zz
+czX+1Duh5n8Unw/wzUvH/nYI3umQeGQAiJqzEXGR5GTxpgav1s5gMCxZteCWNni9
+c4x8E3x2mpSWqtM8PCL3cInah9B7m+C9cOjXMSQYVVkxliExSCylyPQ1qEKGK8RP
+fFABajialzH6IJG7l6cyJg3Zt4y3v2gy2ggpZPCPSZz/Tzc+G6M0T3fLhOxFoWIx
+tMpqSZvPYUpp7YMo8nkuGfXHMwaqSGSduF4CXRSNdxeP8vLNzNWHdFGLtBVHI3m3
+ahAT7nVIIPYWKC/LeL0X135aJ/wchDrM26Iq+TP7WU34hrQvbnvN+e3XSnqu2IUY
+12Qnt7IdwOrTevYg3+yqdlKZPVZe83sowynXrJ3GC73BD4+5lzrAy0R/nIbFYwuZ
+6SbvIsW9aMG3DvoTEc2kijC1baAPnNXzbIOQQjehnSIxmISS4/FnjMlMbZuEJcQd
+UQWrkVGdMiIIPKQUXAtG0DugLtjQM6DRij29N9+kaCAJ8MfTCfwe3ib4sbCOxX0I
+M9u0rv2+i2VRiimBz6ffymPlqBLF3fH35OGh1CmCchrnAjYdgpA=
+=Sm9S
 -----END PGP SIGNATURE-----
 
---myrKhHFhKsh4xDh3--
+--ijHytg+LI4Yj1MSE--
