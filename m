@@ -1,181 +1,139 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="GWJT6cBl"
-Received: from mout.web.de (mout.web.de [212.227.15.3])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 119D095
-	for <git@vger.kernel.org>; Tue, 12 Dec 2023 09:05:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-	t=1702400696; x=1703005496; i=l.s.r@web.de;
-	bh=URbXSDoB6HydDHTHEbtm5z9uGkP9fu/GVXHAY50RpTs=;
-	h=X-UI-Sender-Class:Date:Subject:To:References:From:Cc:
-	 In-Reply-To;
-	b=GWJT6cBl2jX90QZA4zKgPlwypjT/cmKJPK/hL0gLEosY9zxQAkAuM0TBYW7ZJeTW
-	 LcCQaae8T343BozQ6YWgZb51dRRXVvSdPq9kZD9Up77EcMPLjOwpjSQGyiPy+r/ZC
-	 k6ZsZdcJJV2k6Q+MB9XpsL61qATy9VzPgnZmI9rdaNk28pc0sTwfrBkK9Sk1Adwc9
-	 TMTvziqcjVW6c/Czv3CBaQ3cel8TPEv7KVPgqh5lPi/8onZlgtBR/SSE0FjwYLpKJ
-	 XJsTHEtENsFVLmRagTC9rDF+FUNIH3Kwxu7wUkq7K8d6aXRIMO6I/SGnzmzGycXh4
-	 4e82rRf6HmO2GsRBLw==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.29.38]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MoeYH-1rX3qr0aPR-00odEz; Tue, 12
- Dec 2023 18:04:56 +0100
-Message-ID: <9feeb6cf-aabf-4002-917f-3f6c27547bc8@web.de>
-Date: Tue, 12 Dec 2023 18:04:55 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iT8Ux/LA"
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB93299
+	for <git@vger.kernel.org>; Tue, 12 Dec 2023 09:17:51 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-333536432e0so5491043f8f.3
+        for <git@vger.kernel.org>; Tue, 12 Dec 2023 09:17:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1702401469; x=1703006269; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=cwj6H6SdgVphOX9gaXmHYAhAtsnq1720msbOnRHnb+U=;
+        b=iT8Ux/LAOC6F+L3WB0Zn7wch3wlJCMBliZQgZq8f4dqVP3f7bFLnqUCOXZnLAUtPVB
+         /MJjpdeDXiMr6kmREf/6JPT9+xvJ9DCjn1JCh3YWdJ9wPnx804R6wyFM4Utuu5O8Fqc/
+         zLEJUOnzZ1JLBYt4WG0accrhS/T8jcRUQhI50Mr1tRBFhiwiPf4wsu1knl4EuGkjJExL
+         Gffqfoh8aOwAV1xxDaT/sGxyHJCoz136on4Xo6VQLzgPKZLbkbGQ93uVd6FrQ6j+aqBX
+         jX1TMlsHgJL8vJg5xsBEdi1tPzY/i+dFOcjOXee2Or+AUDHT0wsIETkvG2MiWCziK1qQ
+         SqTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702401469; x=1703006269;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cwj6H6SdgVphOX9gaXmHYAhAtsnq1720msbOnRHnb+U=;
+        b=qYcwQHu1p+cGm5/m1oZPVKrklRAbDSNR+Pr8nABN3BKN2qc9HHuFWkwOOB+vtxdX/0
+         Y80XvXSaO5QdkLJ8QaTmHQ2OnCpIsEH48c/hvmawCYJh6Qf8pbrtl1WZ87wwGt2D5yJG
+         iHg8wU3H17r/Pv/qoEeS0zx2QDJIWgLJsNFAmBaW4k5ZkuvYvgnO92YWjXyPDvfy1FgO
+         qE7HPik8AG5GRIRdmK06WuVT+6g/q13R7Xeo+dh9yYtQksrHnTDA45PjiHHAi63zWXUa
+         V8ZUQBzY6BKWyRFz5/1iPM1iQrZh7Ikntgtfvt25erPZja2+3vUcaZOOKafFR9RTW12V
+         J5sQ==
+X-Gm-Message-State: AOJu0YwkszOupvCCN9a6rmPwuKSVe42mAEFZlFgCONW9v5pj0Flg5gnl
+	/KwRq9Gd9bowP4ZzFNOnF25hS5Jgl/g=
+X-Google-Smtp-Source: AGHT+IFcgeVYot7YXtrUI78VMiXmvb7xBsEvQ7PlqA564Xx0LYrhQdCAgnCwnKvEV+c4MCNzNgm4hw==
+X-Received: by 2002:a05:600c:511a:b0:405:37bb:d942 with SMTP id o26-20020a05600c511a00b0040537bbd942mr3070434wms.4.1702401468975;
+        Tue, 12 Dec 2023 09:17:48 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id k40-20020a05600c1ca800b0040b45356b72sm19439405wms.33.2023.12.12.09.17.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Dec 2023 09:17:48 -0800 (PST)
+Message-ID: <pull.1620.git.git.1702401468082.gitgitgadget@gmail.com>
+From: "AtariDreams via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 12 Dec 2023 17:17:47 +0000
+Subject: [PATCH] Use ^=1 to toggle between 0 and 1
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Test breakage with zlib-ng
-To: Ondrej Pohorelsky <opohorel@redhat.com>, git@vger.kernel.org
-References: <CA+B51BEpSh1wT627Efpysw3evVocpiDCoQ3Xaza6jKE3B62yig@mail.gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc: "brian m . carlson" <sandals@crustytoothpaste.net>,
- Junio C Hamano <gitster@pobox.com>
-In-Reply-To: <CA+B51BEpSh1wT627Efpysw3evVocpiDCoQ3Xaza6jKE3B62yig@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:PamiLm7519arX1AHujvWQwskYzEzwP681X23VBDCJVBnUyplZJV
- y7njH5Wv2SMTz6J6W6fmvuZB4ppjkyDXO75VMeyYi7qzwZkRUpBLOdatHhKdr7us+lR9XxF
- rE121FisQm8UCwKakMCkew78YkY2MwaeTTC3IkEEWF2GfyD450j4a/Ilgkb3Jk7fdojuFAp
- tlSjeKM7mMQt/gGnldiLw==
-UI-OutboundReport: notjunk:1;M01:P0:sUQCqH7A3aw=;GvsEG32GdQ59xiY/2/RuMg/88jn
- e6WPiJU21YumV5zq0mxAGFbs42P51IJR+gzZduRRFNLTS0NeB3bAkjhLSQi9T/ZpHT2+URGfB
- SOQdzWrYgrhwVIMTlhlomRQLc0DtceWpciH5dHnBV+0IomxywfvHQrbuMt9n4FYX5hoHKLlVN
- xBYcYGNeXX6jjFIz4raYSkejcviy9Sxljv0w2Ci0X/nL3vvWhaR/PRROyDtR6dap2cfh9Ox2C
- 39dT42lZlCjeH/q1mDhYFS7hstEg/NLXBCd4DxXkWhlpMPrhb49mA0BGReNesO5mFM1/OBOAP
- V360BH/ZyAQiAopOwSUljmk+7+9h99hCUyp36NdzbhL0qLtBU/GsV1Ngri+ucUApy9hDCwBIv
- OOSn9nccQ3ppYaejsW3LsJEFVZPCvfbwgS+77TXrkFbyEmy1vYpn5PcGA4PQTakwQqeIPbumB
- +uXAV6zArVSU2YZNfTYOsdo4+bmHkh/lFTz+bybxqdyp54l6BfrriBuF9VD8Le0fRAsqvRTET
- 7d+jLd2TiWENpG9jxdpk1VBZb/cFB0/P5erQ5/bsT9+z/Sslw3vDQ4spG+rowoiiJ+1YwIxDE
- L/u5/n8j3BzUK7fF4GESc7PuUeQ16PJ1GUPKZoo1odqO5sQ40vzrMjw1HlbnWZ1gWbzV53Lrt
- Vf913lSn4+6aOOy96RTkzMnMkaEUAY4pAYEKKVQOUU/tVkkfr5Mcnrzre8UR8xdEByys2nY01
- 1njxoJ0+/aZgxiKUa4H0eOismZXUirlAmVfbXq4JOnM/u6Lb905UUlh2o4YMyqx4bsTgS0Adj
- Wn44rkx1y31p/kny1RYoQhbNxuHmTPDL/lxBgakj3tHk0duDEP9ZdcPDejT286FBBTG6r0qTu
- j9rkgLj5XPVpfQf9zX+n/95DoMwgkD10GifLeqqzlF0XUIsnz//BdkBVNLkRjJ051gU16AFFn
- ahSHdw==
+To: git@vger.kernel.org
+Cc: AtariDreams <83477269+AtariDreams@users.noreply.github.com>,
+    Seija Kijin <doremylover123@gmail.com>
 
-Am 12.12.23 um 15:16 schrieb Ondrej Pohorelsky:
-> Hi everyone,
->
-> As some might have heard, there is a proposal for Fedora 40 to
-> transition from zlib to zlib-ng[0]. Because of this, there has been a
-> rebuild of all packages to ensure every package works under zlib-ng.
->
-> Git test suit has three breakages in t6300-for-each-ref.sh.
-> To be precise, it is:
->
-> not ok 35 - basic atom: refs/heads/main objectsize:disk
-> not ok 107 - basic atom: refs/tags/testtag objectsize:disk
-> not ok 108 - basic atom: refs/tags/testtag *objectsize:disk
->
->
-> All of these tests are atomic, and they compare the result against
-> $disklen.
+From: Seija Kijin <doremylover123@gmail.com>
 
-Why do these three objects (HEAD commit of main, testtag and testtag
-target) have the same size?  Half of the answer is that testtag points
-to the HEAD of main.  But the other half is pure coincidence as far as I
-can see.
+If it is known that an int is either 1 or 0,
+doing an exclusive or to switch instead of a
+modulus makes more sense and is more efficient.
 
-> I can easily patch these tests in Fedora to be compatible with zlib-ng
-> only by not comparing to $disklen, but a concrete value, however I
-> would like to have a universal solution that works with both zlib and
-> zlib-ng. So if anyone has an idea on how to do it, please let me know.
+Signed-off-by: Seija Kijin doremylover123@gmail.com
+---
+    Use ^=1 to toggle between 0 and 1
+    
+    If it is known that an int is either 1 or 0, doing an exclusive or to
+    switch instead of a modulus makes more sense and is more efficient.
+    
+    Signed-off-by: Seija Kijin doremylover123@gmail.com
 
-The test stores the expected values at the top, in the following lines,
-for the two possible repository formats:
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1620%2FAtariDreams%2Fbuffer-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1620/AtariDreams/buffer-v1
+Pull-Request: https://github.com/git/git/pull/1620
 
-	test_expect_success setup '
-		test_oid_cache <<-EOF &&
-		disklen sha1:138
-		disklen sha256:154
-		EOF
+ builtin/fast-export.c      | 4 ++--
+ diff.c                     | 2 +-
+ ident.c                    | 2 +-
+ t/helper/test-path-utils.c | 2 +-
+ 4 files changed, 5 insertions(+), 5 deletions(-)
 
-So it's using hard-coded values already, which breaks when the
-compression rate changes.
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index 70aff515acb..f9f2c9dd850 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -593,8 +593,8 @@ static void anonymize_ident_line(const char **beg, const char **end)
+ 	struct ident_split split;
+ 	const char *end_of_header;
+ 
+-	out = &buffers[which_buffer++];
+-	which_buffer %= ARRAY_SIZE(buffers);
++	out = &buffers[which_buffer];
++	which_buffer ^= 1;
+ 	strbuf_reset(out);
+ 
+ 	/* skip "committer", "author", "tagger", etc */
+diff --git a/diff.c b/diff.c
+index 2c602df10a3..91842b54753 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1191,7 +1191,7 @@ static void mark_color_as_moved(struct diff_options *o,
+ 							    &pmb_nr);
+ 
+ 			if (contiguous && pmb_nr && moved_symbol == l->s)
+-				flipped_block = (flipped_block + 1) % 2;
++				flipped_block ^= 1;
+ 			else
+ 				flipped_block = 0;
+ 
+diff --git a/ident.c b/ident.c
+index cc7afdbf819..188826eed63 100644
+--- a/ident.c
++++ b/ident.c
+@@ -459,7 +459,7 @@ const char *fmt_ident(const char *name, const char *email,
+ 	int want_name = !(flag & IDENT_NO_NAME);
+ 
+ 	struct strbuf *ident = &ident_pool[index];
+-	index = (index + 1) % ARRAY_SIZE(ident_pool);
++	index ^= 1;
+ 
+ 	if (!email) {
+ 		if (whose_ident == WANT_AUTHOR_IDENT && git_author_email.len)
+diff --git a/t/helper/test-path-utils.c b/t/helper/test-path-utils.c
+index 70396fa3845..241136148a5 100644
+--- a/t/helper/test-path-utils.c
++++ b/t/helper/test-path-utils.c
+@@ -185,7 +185,7 @@ static int check_dotfile(const char *x, const char **argv,
+ 	int res = 0, expect = 1;
+ 	for (; *argv; argv++) {
+ 		if (!strcmp("--not", *argv))
+-			expect = !expect;
++			expect ^= 1;
+ 		else if (expect != (is_hfs(*argv) || is_ntfs(*argv)))
+ 			res = error("'%s' is %s.git%s", *argv,
+ 				    expect ? "not " : "", x);
 
-We could set core.compression to 0 to take compression out of the
-picture.
-
-Or we could get the sizes of the objects by checking their files,
-which would not require  hard-coding anymore.  Patch below.
-
-=2D-- >8 ---
-Subject: [PATCH] t6300: avoid hard-coding object sizes
-
-f4ee22b526 (ref-filter: add tests for objectsize:disk, 2018-12-24)
-hard-coded the expected object sizes.  Coincidentally the size of commit
-and tag is the same with zlib at the default compression level.
-
-1f5f8f3e85 (t6300: abstract away SHA-1-specific constants, 2020-02-22)
-encoded the sizes as a single value, which coincidentally also works
-with sha256.
-
-Different compression libraries like zlib-ng may arrive at different
-values.  Get them from the file system instead of hard-coding them to
-make switching the compression library (or changing the compression
-level) easier.
-
-Reported-by: Ondrej Pohorelsky <opohorel@redhat.com>
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- t/t6300-for-each-ref.sh | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
-
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index 54e2281259..843a7fe143 100755
-=2D-- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -20,12 +20,13 @@ setdate_and_increment () {
-     export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
- }
-
--test_expect_success setup '
--	test_oid_cache <<-EOF &&
--	disklen sha1:138
--	disklen sha256:154
--	EOF
-+test_object_file_size () {
-+	oid=3D$(git rev-parse "$1")
-+	path=3D".git/objects/$(test_oid_to_path $oid)"
-+	test_file_size "$path"
-+}
-
-+test_expect_success setup '
- 	# setup .mailmap
- 	cat >.mailmap <<-EOF &&
- 	A Thor <athor@example.com> A U Thor <author@example.com>
-@@ -94,7 +95,6 @@ test_atom () {
- }
-
- hexlen=3D$(test_oid hexsz)
--disklen=3D$(test_oid disklen)
-
- test_atom head refname refs/heads/main
- test_atom head refname: refs/heads/main
-@@ -129,7 +129,7 @@ test_atom head push:strip=3D1 remotes/myfork/main
- test_atom head push:strip=3D-1 main
- test_atom head objecttype commit
- test_atom head objectsize $((131 + hexlen))
--test_atom head objectsize:disk $disklen
-+test_atom head objectsize:disk $(test_object_file_size refs/heads/main)
- test_atom head deltabase $ZERO_OID
- test_atom head objectname $(git rev-parse refs/heads/main)
- test_atom head objectname:short $(git rev-parse --short refs/heads/main)
-@@ -203,8 +203,8 @@ test_atom tag upstream ''
- test_atom tag push ''
- test_atom tag objecttype tag
- test_atom tag objectsize $((114 + hexlen))
--test_atom tag objectsize:disk $disklen
--test_atom tag '*objectsize:disk' $disklen
-+test_atom tag objectsize:disk $(test_object_file_size refs/tags/testtag)
-+test_atom tag '*objectsize:disk' $(test_object_file_size refs/heads/main)
- test_atom tag deltabase $ZERO_OID
- test_atom tag '*deltabase' $ZERO_OID
- test_atom tag objectname $(git rev-parse refs/tags/testtag)
-=2D-
-2.43.0
-
+base-commit: 1a87c842ece327d03d08096395969aca5e0a6996
+-- 
+gitgitgadget
