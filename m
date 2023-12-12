@@ -1,103 +1,62 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="XYW6/DNo"
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E14AE4
-	for <git@vger.kernel.org>; Tue, 12 Dec 2023 07:09:08 -0800 (PST)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 03F131BC4F2;
-	Tue, 12 Dec 2023 10:09:07 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=7+lKjSi95kZpYVFx+qyha3OL/0l/dpsdOz/4kV
-	3qfFU=; b=XYW6/DNoc0DaCv7U8y33hFlzWrLHQNvjHr/YvPxWS/3HkwoLg5TH1D
-	OfVFY/XNRevrnQ1ARmgT7ectrKdVvNbOJVKpIS/MRa6pVcI2luzd5BiL8fFyQLpM
-	r3RdOCfW6O/CxFZeRIYspikM4k8hg1PqRtKkUAM9HwygXhdiCz+zA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id DEF401BC4F1;
-	Tue, 12 Dec 2023 10:09:06 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.193.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 683DD1BC4ED;
-	Tue, 12 Dec 2023 10:09:05 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org,  Britton Kerin <britton.kerin@gmail.com>
-Subject: Re: [PATCH] revision: parse integer arguments to --max-count,
- --skip, etc., more carefully
-In-Reply-To: <20231212013045.GE376323@coredump.intra.peff.net> (Jeff King's
-	message of "Mon, 11 Dec 2023 20:30:45 -0500")
-References: <CAC4O8c-nuOTS=a0sVp1603KaM2bZjs+yNZzdAaa5CGTNGFE7hQ@mail.gmail.com>
-	<xmqqy1e41lf5.fsf@gitster.g> <xmqq5y181fx0.fsf_-_@gitster.g>
-	<20231212013045.GE376323@coredump.intra.peff.net>
-Date: Tue, 12 Dec 2023 07:09:02 -0800
-Message-ID: <xmqqjzpjsbjl.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kX4fJOBy"
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC0B9EB
+	for <git@vger.kernel.org>; Tue, 12 Dec 2023 07:18:22 -0800 (PST)
+Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2ca0715f0faso80653971fa.0
+        for <git@vger.kernel.org>; Tue, 12 Dec 2023 07:18:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1702394300; x=1702999100; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Uldy2KcMb4NF5TOvj4CUWiY6v85K0PRtnlMfjTo9dgw=;
+        b=kX4fJOByr55BXM7K/ZRNhhRkzxxxJBI2BteQs8lPdvCrbj9sFtCRZLe73M6O9/oZqC
+         oQsxdG9f8oYVjgsuA+r/BxGHrA+shSBDUFTS0WygegnmH8vDdhjtqS2Lx3RuPI2B/JQ6
+         efhwW39A3TsgLYw5VgJi4X3lYpLLZ964eJjfYxcI0vUtAV3p3PbEfdmD9KkZY7vWEuJG
+         cTobXX1b7oCn83bjqsgVMY10cvx3iRRqFnHvWUeU8XaJdKKWjUQ9wDl8hLISIp6Y7nBu
+         T+fUcW2RvPRRnu1iyzYn/Mt4aOVwaHAEZJi0fnPGy66pNFAiXI5NIUYKiCa10dNC5WQX
+         XGDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702394300; x=1702999100;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Uldy2KcMb4NF5TOvj4CUWiY6v85K0PRtnlMfjTo9dgw=;
+        b=Bi6MFqY7crEH+mpdJM6ctjQzkyTg50RW6qqlvPYrxo65JXePfODZA/oOIabJj0diXx
+         PrPHRrLpz/oG4IzBGS4FNJlmAxBXwfdapHCfb2Q20bhG606HkCMyPtIPmVrqJsKJFyRH
+         3WR5h0sKFvBs4+QiF2+6BxUWQQbr+KrG0zLXtmi+YdlE341VtupLw2FmwNSYBNdMaQAx
+         qpeblhwFaT/Hn3ckkVVSlmW4OTQFoNifMfAOyoF8zDN3y84eFdm8gygGw2wQwLmamMck
+         i2LUuP5jkUYKMX0CZ1Ni1cDWbHW+97AeqOOM5WLqoFtH8rMCH1Gzu8lFxj0zwajnVczd
+         M/jg==
+X-Gm-Message-State: AOJu0YxgfcuGvduPbhmaznUt5PpRddUm4RFX90T4s4ra9E0zqZ3gjq7V
+	baqEf0LCDlz3OG4KjXZ9BnMoqCke7Izh7R9PjMrOgFWWigrkoQ==
+X-Google-Smtp-Source: AGHT+IHWjcMlCc+gCvlg3COFCUyqkFvynpnb2he/8rsBF2iQ4edpQ/qUS+f1qXOFMozeRrkmjxENINlDu7cUczLohiw=
+X-Received: by 2002:a2e:a267:0:b0:2cc:1ff3:f37f with SMTP id
+ k7-20020a2ea267000000b002cc1ff3f37fmr1431910ljm.96.1702394300253; Tue, 12 Dec
+ 2023 07:18:20 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 64365DC4-9900-11EE-A7C0-25B3960A682E-77302942!pb-smtp2.pobox.com
+From: Miguel de Dios Matias <tres.14159@gmail.com>
+Date: Tue, 12 Dec 2023 16:18:09 +0100
+Message-ID: <CAFXSV2rXGmEJB08V8ZgPqBprQOfCRmxmbyATWLjSdR+90cJ=7g@mail.gmail.com>
+Subject: Feature Request: Add confirm message when executed prune
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Jeff King <peff@peff.net> writes:
+Hi.
 
-> This all looks pretty reasonable to me.
->
-> I couldn't help but think, though, that surely we have some helpers for
-> this already? But the closest seems to be git_parse_int(), which also
-> allows unit factors. I'm not sure if allowing "-n 1k" would be a feature
-> or a bug. ;)
+I accidentallly did a git push --prune --all in a git from the company
+where I am working (and hope I will be working...well sorry for the
+joke), because it is simple I mistook git pull with git push and I
+deleted all branches of my jobmates.
 
-The change in question is meant to be a pure fix to replace a careless
-use of atoi().  I do not mind to see a separate patch to add such a
-feature later on top.
+I thing it might be a good idea to add by default a confirmation
+message (can disabled by conf).
 
-> I guess "strtol_i()" maybe is that helper already, though I did not even
-> know it existed. Looks like it goes back to 2007, and is seldom used.
+Or add a parameter such as rm --interactive for to avoid or minimice
+(depends of coffe level) these kind mistakes.
 
-I didn't know about it, either ;-) I used it only because there is
-one use of it, among places that used atoi() I wanted to tighten.
-
-> I wonder if there are more spots that could benefit.
-
-"git grep -e 'atoi('" would give somebody motivated a decent set of
-#microproject ideas, but many hits are not suited for strtol_i(),
-which is designed to parse an integer at the end of a string.  Some
-places use atoi() immediately followed by strspn() to skip over
-digits, which means they are parsing an integer and want to continue
-reading after the integer, which is incompatible with what
-strtol_i() wants to do.  They need either a separate helper or an
-updated strtol_i() that optionally allows you to parse the prefix
-and report where the integer ended, e.g., something like:
-
-#define strtol_i(s,b,r) strtol_i2((s), (b), (r), NULL)
-static inline int strtol_i2(char const *s, int base, int *result, char **endp)
-{
-	long ul;
-        char *dummy = NULL;
-
-        if (!endp)
-		endp = &dummy;
-	errno = 0;
-	ul = strtol(s, &endp, base);
-	if (errno ||
-	    /*
-	     * if we are told to parse to the end of the string by
-	     * passing NULL to endp, it is an error to have any
-	     * remaining character after the digits.
-	     */
-            (dummy && *dummy) ||
-	    endp == s || (int) ul != ul)
-		return -1;
-	*result = ul;
-	return 0;
-}
-
-perhaps.
+Regards.
