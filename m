@@ -1,259 +1,142 @@
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UN9qxQbV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iSf+xFYS"
-Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 940DAA1
-	for <git@vger.kernel.org>; Mon, 11 Dec 2023 23:19:04 -0800 (PST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.west.internal (Postfix) with ESMTP id D97893200AB3;
-	Tue, 12 Dec 2023 02:19:03 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Tue, 12 Dec 2023 02:19:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1702365543; x=1702451943; bh=ZwCofbSKxS
-	i8NrVBA2eoxfdHO4uFsNIYjPn75hm1VRw=; b=UN9qxQbVvNAqRkVcN7EMb68BEa
-	xEkH2aZkOiT5vLByIcTut9YLiDU22yhRg+ybrkkMztUvVlonp8goXsmcoas9hFB3
-	Fr6WISiulHE6ANAnG2XseIZjgSuQbjprrX8Lt4k2kIjOFLp+1UyiZYGVe0iKSmfE
-	p2TlJ7ALztvpqkqX2SM3mGq/fzJRq6/TcBfvHc09tpl6Zp1S13AdHsEY3TLV/ChB
-	DaV3ePMo/9P5jLpHTS7M9zSxfOyjUg0xhczXkNNpp5cxvsRsu/EuVmEMAekh25K4
-	fiEKBs18hFMJhb9SPG1i6cQLOoUTbtdHt5uqkv74GpUS+zPXuDKcwCfpa0MQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1702365543; x=1702451943; bh=ZwCofbSKxSi8NrVBA2eoxfdHO4uF
-	sNIYjPn75hm1VRw=; b=iSf+xFYSxdaXS+S7CEoOQ+9Sg9n56cz6GYs5qiOJ7XIO
-	xthar8IRLtKpxRmXivyuRapKYIxiv+0ExC0lYvx0A2qVQEu7Fu811wcn2SFy4SD8
-	pmdQRctLcXPnx6upnkHpx+rIMjj5sJLj5q9J/zBpA699JoWZVSXNgL4tNMkiS9W7
-	CXdID2QiOZXfYlvrIONQ6ZO1Fy7z/E12S568Wkv/mh6HZG1cjlNAuEEh+dlhn21v
-	J9/tbcIiSFJQfAN6hvtqTiBJY7ScOLKqgzgvT4CRlnXd18IHq/OD3dpMZxgY45T6
-	9+z+ZDs2nsPIVebKF3wZYwbUV/mXMuLQBC6yjvanRQ==
-X-ME-Sender: <xms:Zwl4ZUQaiEmEO4P0aJlfHxWiZIUVGuYw1qJZPSQARSYN5hJcEH7weA>
-    <xme:Zwl4ZRxjMg3m0lNck98mtX9W3EscY998X6wzkRR_FgqHoytignqxsJGQ4jLyCljUI
-    fABuz7ECQNcAjSIsw>
-X-ME-Received: <xmr:Zwl4ZR2zr4B1dqCtoLfLMNJXrViU8-y7vl5da6VhTJlst8m6Mtwmi4sl5KUMqimxldURh_yGgKx_3GEPdTubk6drqUhmIjfmqGjB20B4X_WXL9Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudelfedguddtkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
-    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
-    teenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
-    esphhkshdrihhm
-X-ME-Proxy: <xmx:Zwl4ZYC9Wi86zL11R3G9NpD9Hlje0iJ4R143lDCNbRcZT1-vqzMzoQ>
-    <xmx:Zwl4ZdhzJ55o_o5xzR_ZdG9BuVstQZbxkmhVTf2PRFc1n3kLcJn4sQ>
-    <xmx:Zwl4ZUr_5mSsnhJpAufnVfEqLjZj3pToGwWPGdgH2VNKc2wrugnGJw>
-    <xmx:Zwl4Zdb4O3UByD6rbahE0gozKLkd77x3_8NpKUqtkOP5pVw6af1p0g>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 12 Dec 2023 02:19:02 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 9b9ee6fe (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 12 Dec 2023 07:17:24 +0000 (UTC)
-Date: Tue, 12 Dec 2023 08:19:01 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Taylor Blau <me@ttaylorr.com>, Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v2 4/4] bisect: consistently write BISECT_EXPECTED_REV via
- the refdb
-Message-ID: <4a4447a3f5ba9ddef1c81703ef9231ee597c2946.1702365291.git.ps@pks.im>
-References: <cover.1701243201.git.ps@pks.im>
- <cover.1702365291.git.ps@pks.im>
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F1AAA0
+	for <git@vger.kernel.org>; Tue, 12 Dec 2023 00:03:34 -0800 (PST)
+Received: (qmail 9291 invoked by uid 109); 12 Dec 2023 08:03:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Dec 2023 08:03:33 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12287 invoked by uid 111); 12 Dec 2023 08:03:33 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Dec 2023 03:03:33 -0500
+Authentication-Results: peff.net; auth=none
+Date: Tue, 12 Dec 2023 03:03:32 -0500
+From: Jeff King <peff@peff.net>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 05/24] midx: implement `DISP` chunk
+Message-ID: <20231212080332.GC1117953@coredump.intra.peff.net>
+References: <cover.1701198172.git.me@ttaylorr.com>
+ <c52d7e7b27a9add4f58b8334db4fe4498af1c90f.1701198172.git.me@ttaylorr.com>
+ <xmqqjzpv4ecg.fsf@gitster.g>
+ <ZW95WSErCXvkfrAG@nand.local>
+ <xmqqlea4nofm.fsf@gitster.g>
+ <ZXPRL5yCTQKr0k7e@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="dMSRJQzq6TPuI51J"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1702365291.git.ps@pks.im>
+In-Reply-To: <ZXPRL5yCTQKr0k7e@nand.local>
 
+On Fri, Dec 08, 2023 at 09:30:07PM -0500, Taylor Blau wrote:
 
---dMSRJQzq6TPuI51J
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> > I did wonder how expensive to recompute and validate the "distinct"
+> > information (in other words, is it too expensive for the consumers
+> > of an existing midx file to see which packs are distinct on demand
+> > before they stream contents out of the underlying packs?), as the
+> > way the packs are marked as distinct looked rather error prone (you
+> > can very easily list packfiles with overlaps with "+" prefix and the
+> > DISK chunk writer does not even notice that you lied to it).  As long
+> > as "git fsck" catches when two packs that are marked as distinct share
+> > an object, that is OK, but the arrangement did look rather brittle
+> > to me.
+> 
+> It's likely too expensive to do on the reading side for every
+> pack-objects operation or MIDX load.
 
-We're inconsistently writing BISECT_EXPECTED_REV both via the filesystem
-and via the refdb, which violates the newly established rules for how
-special refs must be treated. This works alright in practice with the
-reffiles reference backend, but will cause bugs once we gain additional
-backends.
+This made me think a bit. Obviously we can check for disjointedness in
+O(n log k), where n is the total number of objects and k is the number
+of packs, by doing a k-merge of the sorted lists. But that's a
+non-starter, because we may be serving a request that is much smaller
+than all "n" objects (e.g., any small fetch, but also even clones when
+the pack contains a bunch of irrelevant objects).
 
-Fix this issue and consistently write BISECT_EXPECTED_REV via the refdb
-so that it is no longer a special ref.
+But we can relax our condition a bit. The packs only need to be disjoint
+with respect to the set of objects that we are going to output (we'll
+call that "m"). So at the very least, you can do O(mk) lookups (each one
+itself "log n", of course). We know that the work is already going to
+be linear in "m". In theory we want to generally keep "k" small, but
+part of the point of using midx in this way is to let "k" grow a bit.
+So that might turn out pretty bad in practice.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- bisect.c                    | 25 ++++---------------------
- builtin/bisect.c            |  8 ++------
- refs.c                      |  3 ++-
- t/t6030-bisect-porcelain.sh |  2 +-
- 4 files changed, 9 insertions(+), 29 deletions(-)
+So let's take one more step back. One thing I didn't feel like I saw
+either in this patch or the cover letter is exactly why we care about
+disjointedness. IIRC, the main issue is making sure that for any object
+X we send verbatim, it is either a non-delta or its delta base is
+viable. And the two reasons I can think of for the base to be non-viable
+are:
 
-diff --git a/bisect.c b/bisect.c
-index 1be8e0a271..985b96ed13 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -471,7 +471,6 @@ static int read_bisect_refs(void)
- }
-=20
- static GIT_PATH_FUNC(git_path_bisect_names, "BISECT_NAMES")
--static GIT_PATH_FUNC(git_path_bisect_expected_rev, "BISECT_EXPECTED_REV")
- static GIT_PATH_FUNC(git_path_bisect_ancestors_ok, "BISECT_ANCESTORS_OK")
- static GIT_PATH_FUNC(git_path_bisect_run, "BISECT_RUN")
- static GIT_PATH_FUNC(git_path_bisect_start, "BISECT_START")
-@@ -707,26 +706,10 @@ static enum bisect_error error_if_skipped_commits(str=
-uct commit_list *tried,
-=20
- static int is_expected_rev(const struct object_id *oid)
- {
--	const char *filename =3D git_path_bisect_expected_rev();
--	struct stat st;
--	struct strbuf str =3D STRBUF_INIT;
--	FILE *fp;
--	int res =3D 0;
--
--	if (stat(filename, &st) || !S_ISREG(st.st_mode))
-+	struct object_id expected_oid;
-+	if (read_ref("BISECT_EXPECTED_REV", &expected_oid))
- 		return 0;
--
--	fp =3D fopen_or_warn(filename, "r");
--	if (!fp)
--		return 0;
--
--	if (strbuf_getline_lf(&str, fp) !=3D EOF)
--		res =3D !strcmp(str.buf, oid_to_hex(oid));
--
--	strbuf_release(&str);
--	fclose(fp);
--
--	return res;
-+	return oideq(oid, &expected_oid);
- }
-=20
- enum bisect_error bisect_checkout(const struct object_id *bisect_rev,
-@@ -1185,10 +1168,10 @@ int bisect_clean_state(void)
- 	struct string_list refs_for_removal =3D STRING_LIST_INIT_NODUP;
- 	for_each_ref_in("refs/bisect", mark_for_removal, (void *) &refs_for_remov=
-al);
- 	string_list_append(&refs_for_removal, xstrdup("BISECT_HEAD"));
-+	string_list_append(&refs_for_removal, xstrdup("BISECT_EXPECTED_REV"));
- 	result =3D delete_refs("bisect: remove", &refs_for_removal, REF_NO_DEREF);
- 	refs_for_removal.strdup_strings =3D 1;
- 	string_list_clear(&refs_for_removal, 0);
--	unlink_or_warn(git_path_bisect_expected_rev());
- 	unlink_or_warn(git_path_bisect_ancestors_ok());
- 	unlink_or_warn(git_path_bisect_log());
- 	unlink_or_warn(git_path_bisect_names());
-diff --git a/builtin/bisect.c b/builtin/bisect.c
-index 35938b05fd..4e2c43daf5 100644
---- a/builtin/bisect.c
-+++ b/builtin/bisect.c
-@@ -17,7 +17,6 @@
- #include "revision.h"
-=20
- static GIT_PATH_FUNC(git_path_bisect_terms, "BISECT_TERMS")
--static GIT_PATH_FUNC(git_path_bisect_expected_rev, "BISECT_EXPECTED_REV")
- static GIT_PATH_FUNC(git_path_bisect_ancestors_ok, "BISECT_ANCESTORS_OK")
- static GIT_PATH_FUNC(git_path_bisect_start, "BISECT_START")
- static GIT_PATH_FUNC(git_path_bisect_log, "BISECT_LOG")
-@@ -921,7 +920,6 @@ static enum bisect_error bisect_state(struct bisect_ter=
-ms *terms, int argc,
- 	const char *state;
- 	int i, verify_expected =3D 1;
- 	struct object_id oid, expected;
--	struct strbuf buf =3D STRBUF_INIT;
- 	struct oid_array revs =3D OID_ARRAY_INIT;
-=20
- 	if (!argc)
-@@ -976,10 +974,8 @@ static enum bisect_error bisect_state(struct bisect_te=
-rms *terms, int argc,
- 		oid_array_append(&revs, &commit->object.oid);
- 	}
-=20
--	if (strbuf_read_file(&buf, git_path_bisect_expected_rev(), 0) < the_hash_=
-algo->hexsz ||
--	    get_oid_hex(buf.buf, &expected) < 0)
-+	if (read_ref("BISECT_EXPECTED_REV", &expected))
- 		verify_expected =3D 0; /* Ignore invalid file contents */
--	strbuf_release(&buf);
-=20
- 	for (i =3D 0; i < revs.nr; i++) {
- 		if (bisect_write(state, oid_to_hex(&revs.oid[i]), terms, 0)) {
-@@ -988,7 +984,7 @@ static enum bisect_error bisect_state(struct bisect_ter=
-ms *terms, int argc,
- 		}
- 		if (verify_expected && !oideq(&revs.oid[i], &expected)) {
- 			unlink_or_warn(git_path_bisect_ancestors_ok());
--			unlink_or_warn(git_path_bisect_expected_rev());
-+			delete_ref(NULL, "BISECT_EXPECTED_REV", NULL, REF_NO_DEREF);
- 			verify_expected =3D 0;
- 		}
- 	}
-diff --git a/refs.c b/refs.c
-index 8fe34d51e4..c76ce86bef 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1840,6 +1840,8 @@ static int is_special_ref(const char *refname)
- 	 * There are some exceptions that you might expect to see on this list
- 	 * but which are handled exclusively via the reference backend:
- 	 *
-+	 * - BISECT_EXPECTED_REV
-+	 *
- 	 * - CHERRY_PICK_HEAD
- 	 *
- 	 * - HEAD
-@@ -1857,7 +1859,6 @@ static int is_special_ref(const char *refname)
- 	 */
- 	static const char * const special_refs[] =3D {
- 		"AUTO_MERGE",
--		"BISECT_EXPECTED_REV",
- 		"FETCH_HEAD",
- 		"MERGE_AUTOSTASH",
- 		"MERGE_HEAD",
-diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index 2a5b7d8379..792c1504bc 100755
---- a/t/t6030-bisect-porcelain.sh
-+++ b/t/t6030-bisect-porcelain.sh
-@@ -1176,7 +1176,7 @@ test_expect_success 'git bisect reset cleans bisectio=
-n state properly' '
- 	git bisect bad $HASH4 &&
- 	git bisect reset &&
- 	test -z "$(git for-each-ref "refs/bisect/*")" &&
--	test_path_is_missing ".git/BISECT_EXPECTED_REV" &&
-+	test_ref_missing BISECT_EXPECTED_REV &&
- 	test_path_is_missing ".git/BISECT_ANCESTORS_OK" &&
- 	test_path_is_missing ".git/BISECT_LOG" &&
- 	test_path_is_missing ".git/BISECT_RUN" &&
---=20
-2.43.GIT
+  1. We are not sending the base at all.
 
+  2. The base is in another pack, and we are worried about creating a
+     cycle (i.e., in pack A we have X as a delta against Y, and in pack
+     B we have Y as a delta against X, and we send both deltas).
 
---dMSRJQzq6TPuI51J
-Content-Type: application/pgp-signature; name="signature.asc"
+We already deal with (1) for the single-pack case by finding the base
+object offset, converting it to a pack position, and then making sure
+that position is also marked for verbatim reuse.
 
------BEGIN PGP SIGNATURE-----
+The interesting one is (2), which is new for midx (since a single pack
+cannot have two copies of an object). But I'm not sure if it's possible.
+The verbatim reuse code depends on using bitmaps in the first place. And
+there is already a preference-order to the packs in the midx bitmaps.
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmV4CWQACgkQVbJhu7ck
-PpQy/xAAiVxjRzdxqxhhiybmP7RjX40pdvXfhwdEDrs2PzyAzFSFCdw57fYt8N9b
-CgqBklraT4wUWbfXZVdFf4aV/vnIIJpaDGbddkCNdVeZimf9kkoyGXY5THE4xjOT
-6fcnFSBl2+r1d7075gtmAmcCXjMIHFnGapqeGRxnQ8p5F/+B6l2aPnwQG2nQvC8H
-U9K5IkOBJ3Nm1s5ly/DJe73rt5FKxGrCudNV52+yjGeHuf09aWTGH/Qm+7iZxmzu
-wFp7Qa4f3+qu/OpsgNORVWfK09J4pl38j5ECjs1t3jlxY1KVYx/uVzevxUuUgYt7
-ybZIpm5WWP8WsF5HTglXH5Bovw2QL2WuEyCc20T18EnZbhyWmQ9umgvbKtljRsZe
-YgozkLb7728XexIs4G1N8ywkjgKNjIIuKrawKhg4KIkkcMttGrTe+1TrCqdfeH3g
-P7fK1UX6Qy1I6O/DHwwgNGGZf70Fwae01Q+/xX6KsmCzXbNmLnT0dTSShsgxHDXz
-isHTsZ7bMdRcCf9LOJGvBDv9HqhQHz+SAdC3Gom80R2qJk/H6txateYS5ZwXPRUa
-W7xi+ogYXb3Ogjth2w4Y6DdW2umaRKmEjKjw80JYZjSjYk1G9LBVXC9j9aupo/nz
-vb0W7nTD/sju5lx42G7MIlDVRGlGjodvjQiUcA7IXTNunDX7Zyg=
-=HCtg
------END PGP SIGNATURE-----
+That is, we'll choose all of the objects for pack A over any duplicates
+in B, and duplicates from B over C, and so on. If we likewise try
+verbatim reuse in that order, then we know that an object in pack A can
+never have a base that is selected from pack B or C (because if they do
+have duplicates, we'd have selected A's copy to put in the midx bitmap).
+And likewise, a copy of an object in pack B will always have its base
+either in A or B, but never in C.
 
---dMSRJQzq6TPuI51J--
+So it kind of seems to me that this would "just work" if
+try_partial_reuse() did something like for the midx case:
+
+  - convert offset of base object into an object id hash using the pack
+    revindex (similar to offset_to_pack_pos)
+
+  - look up the object id in the midx to get a pack/offset combo
+
+  - use the midx revindex to convert that into a bit position
+
+  - check if that bit is marked for verbatim reuse
+
+The assumption there is that in the second step, the midx has resolved
+duplicates by putting all of pack A before pack B, and so on, as above.
+It also assumes that we are trying verbatim reuse in the same order
+(though a different order would not produce wrong results, it would only
+result in less verbatim reuse).
+
+All of which makes me think I'm missing some other case that is a
+problem. While I wait for you to explain it, though, let's continue our
+thought experiment for a moment.
+
+If we assume that any cross-pack deltas are a problem, we could always
+just skip them for verbatim reuse. That is, once we look up the object
+id in the midx, we can see if it's in the same pack we're currently
+processing. If not, we could punt and let the non-verbatim code paths
+handle it as usual.
+
+That still leaves the problem of realizing we skipped over a chunk of
+the packfile (say we are pulling object X from pack B, and it is a delta
+of Y, but we already decided to reuse Y from pack A). But the reuse code
+already has to accommodate gaps. I think it happens naturally in
+write_reused_pack_one(), where we feed the actual byte offsets into
+record_reused_object(). You'd have to take some care not to go past gaps
+in the blind copy that happens write_reused_pack_verbatim(). So you
+might need to mark the first such gap somehow (if it's hard, I'd suggest
+just skipping write_reused_pack_verbatim() entirely; it is a fairly
+minor optimization compared to the rest of it).
+
+And of course there's a bunch of hard work teaching all of those
+functions about midx's and multiple packs in the first place, but you
+already had to do all that in the latter part of your series, and it
+would still be applicable.
+
+OK, this is the part where you tell me what I'm missing. ;)
+
+-Peff
