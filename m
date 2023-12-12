@@ -1,129 +1,90 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="JfdS4I4v"
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1933C10F0
-	for <git@vger.kernel.org>; Tue, 12 Dec 2023 15:17:45 -0800 (PST)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2BCC41C03BE;
-	Tue, 12 Dec 2023 18:17:42 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=Mud1f0vr3hx7nV4T11jp28RdmJ7szOtwf2gnz9
-	58Y7Y=; b=JfdS4I4v+6RfUsMg1uLjosin7aor/+dWU+S+fm+rVjFt19AwAMT/tr
-	fevQrlJvQHqNgRCDJ3oi7sJHmOlzedU3TsbL5clsIIx0DCT8SJE/IjVio6EauvZI
-	vPhcMjCiry72G6UIJYGn0+uMDVromnRyixldgiN5mFr98gofrUAAE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 22FFF1C03BD;
-	Tue, 12 Dec 2023 18:17:42 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.193.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 818631C03BA;
-	Tue, 12 Dec 2023 18:17:41 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Joanna Wang <jojwang@google.com>
-Cc: git@vger.kernel.org,  sunshine@sunshineco.com,  tboegi@web.de
-Subject: Re: [PATCH 1/1] attr: add builtin objectmode values support
-In-Reply-To: <CAMmZTi-U_ufzoBLCDWKbrf=3GZzGszxnM1_Pu6ufBeoYjj7Gdw@mail.gmail.com>
-	(Joanna Wang's message of "Fri, 1 Dec 2023 12:01:54 +0800")
-References: <xmqqttpmtnn5.fsf@gitster.g>
-	<20231116054437.2343549-1-jojwang@google.com>
-	<xmqqsf56ql14.fsf@gitster.g> <xmqqil62qfvr.fsf@gitster.g>
-	<CAMmZTi-U_ufzoBLCDWKbrf=3GZzGszxnM1_Pu6ufBeoYjj7Gdw@mail.gmail.com>
-Date: Tue, 12 Dec 2023 15:17:40 -0800
-Message-ID: <xmqqedfrovsb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="dOuxLuR3"
+X-Greylist: delayed 181 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 12 Dec 2023 15:35:42 PST
+Received: from avasout-peh-001.plus.net (avasout-peh-001.plus.net [212.159.14.17])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E2DCB3
+	for <git@vger.kernel.org>; Tue, 12 Dec 2023 15:35:42 -0800 (PST)
+Received: from [10.0.2.15] ([146.198.40.91])
+	by smtp with ESMTPA
+	id DCEvrCN69hCx7DCExrO9N2; Tue, 12 Dec 2023 23:32:39 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1702423959; bh=pQ4kpKFgFpUUxvEiasNoAumqL4LUJAMwopHI0VLTGbM=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=dOuxLuR3QtOM9uJSyLCw+iq8P2kIj+ru9VH90OQS+gJ/yI2his2fQUTvrBvTq9x42
+	 mcMwYJJGn/rkviWw5VptBc/gQafJ8Cf8rJ2YsTX7VUTjcwMkOiPiuy0N9Q1CEb42f2
+	 046Ts3u9q74vYpcphHO/Mbmw0ULkUJ0LP9z46tWKKhVn9Cigrk+O/AZMhp3W3tBqie
+	 rbnwbGqLXwgHGsSAXkiNcLpGJDP7io+HuGIOByCzSiX5ZCcbNANxAThTpMfsgv08gI
+	 f96SoXM8l3OeHWVyRUVqTvXAaFT3V4SoS8BqmYWI4f2cZ+pHy3NleXMMXHQkuEZ5P5
+	 TZOBUz5IkbExg==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=WPRs41gR c=1 sm=1 tr=0 ts=6578ed97
+ a=KA9ncW3+NP+rNtcBcdh9kA==:117 a=KA9ncW3+NP+rNtcBcdh9kA==:17
+ a=IkcTkHD0fZMA:10 a=UKRohDYpd0TQNoytAM0A:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Message-ID: <ac84b1b9-2381-406a-b459-6728bf9f8704@ramsayjones.plus.com>
+Date: Tue, 12 Dec 2023 23:32:37 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- A5E9E1B6-9944-11EE-9CBB-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/4] wt-status: read HEAD and ORIG_HEAD via the refdb
+To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+ Phillip Wood <phillip.wood123@gmail.com>
+References: <cover.1701243201.git.ps@pks.im> <cover.1702365291.git.ps@pks.im>
+ <1db3eb3945432964aabe1c559db4c3ac251e83fd.1702365291.git.ps@pks.im>
+ <xmqqle9zqidj.fsf@gitster.g>
+Content-Language: en-GB
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <xmqqle9zqidj.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfMbiW5gS1Z97h3sFfSBWjKCb9TKs0Lm/dOqp59PWFhhgzTkVykYhoMBsHgWv6bzgMapF0A28CaPLjEiNywrq50MbyxnXlM+hpQXYgJi3zQ8MaJRU2nOj
+ OMEe3JCmeo+feIITlGlQbYhk3GmXbQH4ir7zv/ilH04FddwB8e5qzgcshYw8qgBnIV2Od9e1805LgiToAzMADcEAm8gqXSoKCAs=
 
-Joanna Wang <jojwang@google.com> writes:
 
->> Cumulatively, aside from the removal of the t/#t* file, here is what
->> I ended up with so far.
->
-> I want to double check if I should followup here.
-> I assumed that you had already applied these final fixes on my behalf,
-> similar to my patch for enabling attr for `git-add`. But if I was wrong,
-> I'm happy to send another update with all the fixes.
 
-I've squashed the fix in, so no need to resend only to patch up what
-I pointed out earlier.
+On 12/12/2023 20:24, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+>> The current code only works by chance because we only have a single
+>> reference backend implementation. Refactor it to instead read both refs
+>> via the refdb layer so that we'll also be compatible with alternate
+>> reference backends.
+> 
+> "via the refdb" -> "via the refs API" or something here and on the
+> title, and possibly elsewhere in the proposed log messages and
+> in-code comments in patches in this series, as I've never seen a
+> word "refdb" used in the context of this project.
+> 
+> I agree it is bad manners to be intimate with the implementation
+> details of the how files-backend stores HEAD and ORIG_HEAD.
 
-The end result fails t0003 under GIT_TEST_PASSING_SANITIZE_LEAK
-though.  As the synthetic attribute values are allocated without
-being in the hashmap based on the value read from .gitattributes
-files, somebody needs to hold pointers to them *and* we need to
-avoid allocating unbounded number of them.
+Hmm, I have never thought of the 'pseudo-refs' as being a part of
+the 'reference database' at all. ;)
 
-The attached is one possible way to plug the leak; I am not sure if
-it is the best one, though.  One thing I like about the solution is
-that the approach makes sure that the mode attributes we would ever
-return are very tightly controlled and does not allow a buggy code
-to come up with "mode" to be passed to this new helper function to
-pass random and unsupported mode bits without triggering the BUG().
+We seem to have pseudo-refs, special pseudo-refs and (recently)
+ex-pseudo-refs!
 
- attr.c | 30 +++++++++++++++++++++++++++---
- 1 file changed, 27 insertions(+), 3 deletions(-)
+This patch (well series) changes the 'status' of some, *but not all*,
+pseudo-refs; some graduate to full-blown refs stored as part of *a*
+reference database (ie reftable).
 
-diff --git c/attr.c w/attr.c
-index b03c20f768..679e42258c 100644
---- c/attr.c
-+++ w/attr.c
-@@ -1250,10 +1250,34 @@ static struct object_id *default_attr_source(void)
- 	return &attr_source;
- }
- 
-+static const char *interned_mode_string(unsigned int mode)
-+{
-+	static struct {
-+		unsigned int val;
-+		char str[7];
-+	} mode_string[] = {
-+		{ .val = 0040000 },
-+		{ .val = 0100644 },
-+		{ .val = 0100755 },
-+		{ .val = 0120000 },
-+		{ .val = 0160000 },
-+	};
-+	int i;
-+
-+	for (i = 0; i < ARRAY_SIZE(mode_string); i++) {
-+		if (mode_string[i].val != mode)
-+			continue;
-+		if (!*mode_string[i].str)
-+			snprintf(mode_string[i].str, sizeof(mode_string[i].str),
-+				 "%06o", mode);
-+		return mode_string[i].str;
-+	}
-+	BUG("Unsupported mode 0%o", mode);
-+}
-+
- static const char *builtin_object_mode_attr(struct index_state *istate, const char *path)
- {
- 	unsigned int mode;
--	struct strbuf sb = STRBUF_INIT;
- 
- 	if (direction == GIT_ATTR_CHECKIN) {
- 		struct object_id oid;
-@@ -1287,8 +1311,8 @@ static const char *builtin_object_mode_attr(struct index_state *istate, const ch
- 		else
- 			return ATTR__UNSET;
- 	}
--	strbuf_addf(&sb, "%06o", mode);
--	return strbuf_detach(&sb, NULL);
-+
-+	return interned_mode_string(mode);
- }
- 
- 
+As far as I recall, this has not been discussed on the ML. Why are
+only some chosen to become 'full' refs and others not? This is not
+discussed in any of the commit messages.
+
+The '.invalid' HEAD hack featured in a recent completion patch as well.
+[If this is because the JAVA implementation does it this way, I think
+it needs some thought before including it in the Git project].
+
+Anyway, I haven't had the time to study the details here, so please
+ignore my uninformed ramblings!
+
+ATB,
+Ramsay Jones
 
