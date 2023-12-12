@@ -1,24 +1,26 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F564B3
-	for <git@vger.kernel.org>; Mon, 11 Dec 2023 16:58:08 -0800 (PST)
-Received: (qmail 5105 invoked by uid 109); 12 Dec 2023 00:58:08 -0000
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B51FFAF
+	for <git@vger.kernel.org>; Mon, 11 Dec 2023 17:22:21 -0800 (PST)
+Received: (qmail 5741 invoked by uid 109); 12 Dec 2023 01:22:21 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Dec 2023 00:58:08 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Dec 2023 01:22:21 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8721 invoked by uid 111); 12 Dec 2023 00:58:07 -0000
+Received: (qmail 8850 invoked by uid 111); 12 Dec 2023 01:22:20 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 11 Dec 2023 19:58:07 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 11 Dec 2023 20:22:20 -0500
 Authentication-Results: peff.net; auth=none
-Date: Mon, 11 Dec 2023 19:58:07 -0500
+Date: Mon, 11 Dec 2023 20:22:20 -0500
 From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,
-	Carlos =?utf-8?B?QW5kcsOpcyBSYW3DrXJleiBDYXRhw7Fv?= <antaigroupltda@gmail.com>
-Subject: Re: [PATCH 1/7] config: handle NULL value when parsing non-bools
-Message-ID: <20231212005807.GC376323@coredump.intra.peff.net>
-References: <20231207071030.GA1275835@coredump.intra.peff.net>
- <20231207071114.GA1276005@coredump.intra.peff.net>
- <ZXF-8iNH0qaJSVl9@tanuki>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Adam Majer <adamm@zombino.com>, git@vger.kernel.org
+Subject: Re: [PATCH] setup: recognize bare repositories with packed-refs
+Message-ID: <20231212012220.GD376323@coredump.intra.peff.net>
+References: <20231117203253.21143-1-adamm@zombino.com>
+ <20231128142845.11523-1-adamm@zombino.com>
+ <20231128190446.GA10477@coredump.intra.peff.net>
+ <ZWethlRRtuQLDRlJ@nand.local>
+ <20231206210836.GA106480@coredump.intra.peff.net>
+ <ZXOF75NwxI187QDQ@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -27,42 +29,61 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZXF-8iNH0qaJSVl9@tanuki>
+In-Reply-To: <ZXOF75NwxI187QDQ@nand.local>
 
-On Thu, Dec 07, 2023 at 09:14:42AM +0100, Patrick Steinhardt wrote:
+On Fri, Dec 08, 2023 at 04:09:03PM -0500, Taylor Blau wrote:
 
-> >  	if (!strcmp(k, "uploadpack.blobpackfileuri")) {
-> [...]
-> This isn't part of the diff and not a new issue, but why don't we
-> `return 0` when parsing this config correctly? We fall through to
-> `git_default_config()` even if we've successfully parsed the config key,
-> which seems like a bug to me.
-
-I don't think it's a functional bug, but merely a pessimization. We can
-return early if we know we've handled the option, but the rest of the
-code would simply fail to match it. So we are just wasting a few strcmp
-calls (and an unknown key already wastes the same number).
-
-So I think it is a good practice to return, but not really a bug if we
-don't.
-
-> >  	if (!strcmp(var, "core.checkstat")) {
-> > +		if (!value)
-> > +			return config_error_nonbool(var);
-> >  		if (!strcasecmp(value, "default"))
-> >  			check_stat = 1;
-> >  		else if (!strcasecmp(value, "minimal"))
+> > I dunno. I am skeptical that there are millions of these. Who really
+> > wants to embed bare git repos except for projects related to Git itself,
+> > which want test vectors? Is there a use case I'm missing?
 > 
-> We would ignore `true` here, so should we ignore implicit `true`, as
-> well?
+> Just picking on GitHub as an example, my copy has a fair number of
+> embedded bare repositories:
+> 
+>     $ find . -mindepth 2 -type d -name '*.git' | wc -l
+>     279
+> 
+> That might be an unfair example in general, since GitHub probably has a
+> greater need to embed bare repositories than most other projects. But I
+> think that we shouldn't make our decision here based on volume of
+> embedded bare repositories, but rather on the number of projects which
+> have >1 embedded bare repository.
 
-IMHO the lack of a final "else" in the strcasecmp if-cascade is a bug
-(and I sent a fix as part of the "config fixes on top" series). Even if
-we want to leave it for historical reasons, I think it's still worth
-returning an error for the NULL case (since we know it would have
-segfaulted previously).
+Right, I meant "I am skeptical there are a lot of projects that have
+embedded repositories". It is useful if your project is related to
+working on Git itself and you store your test vectors that way. So
+github.git is not alone there (there is libgit2, other forges, and so
+on). But I don't think it is representative in general.
 
-(I snipped the rest of your mail, as I think my response to the cover
-letter covers the general discussion).
+> Perhaps I'm over-estimating how difficult this transition would be to
+> impose on users. But it does make me very leery to make this kind of a
+> change without having a better sense of how many of them exist in the
+> wild.
+
+Just to be clear: I am not proposing any transition here. It is already
+the case that your "refs/" directory is necessary for Git to recognize
+the bare repo, and you risk committing a broken state if you have no
+loose refs in it.
+
+There's been a proposal elsewhere to require extra steps to recognize an
+embedded bare repo. Which I agree will be a pain for folks who use them,
+but may be worth it for the security benefit. But here I was only saying
+that _if_ we do that other change, then adding extra steps might not be
+too bad on top. :)
+
+(BTW, I think libgit2 already faces this problem, because it wants
+non-bare repos; so there is some magic where it stores ".gitted"
+directories, and then renames them on the fly).
+
+> Searching just on GitHub for `path:**/*.git/config` [^1], it looks like
+> there are ~1,400 results. That provides us an upper-bound on the number
+> of projects which have embedded bare repositories, so perhaps I really
+> am overestimating the burden we'd be imposing on other projects.
+
+Thanks, that's an interesting number, and matches my intuition.
+
+Of course it's not a true upper bound anyway. It wouldn't count private
+projects (though maybe it hits github.git in your case), not to mention
+stuff that isn't hosted on GitHub.
 
 -Peff
