@@ -1,26 +1,22 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65C23B3
-	for <git@vger.kernel.org>; Tue, 12 Dec 2023 14:05:07 -0800 (PST)
-Received: (qmail 19375 invoked by uid 109); 12 Dec 2023 22:05:06 -0000
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F125B3
+	for <git@vger.kernel.org>; Tue, 12 Dec 2023 14:12:45 -0800 (PST)
+Received: (qmail 19408 invoked by uid 109); 12 Dec 2023 22:12:45 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Dec 2023 22:05:06 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Dec 2023 22:12:45 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19953 invoked by uid 111); 12 Dec 2023 22:05:06 -0000
+Received: (qmail 20028 invoked by uid 111); 12 Dec 2023 22:12:44 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Dec 2023 17:05:06 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Dec 2023 17:12:44 -0500
 Authentication-Results: peff.net; auth=none
-Date: Tue, 12 Dec 2023 17:05:05 -0500
+Date: Tue, 12 Dec 2023 17:12:43 -0500
 From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Britton Kerin <britton.kerin@gmail.com>
-Subject: Re: [PATCH] revision: parse integer arguments to --max-count,
- --skip, etc., more carefully
-Message-ID: <20231212220505.GA1220605@coredump.intra.peff.net>
-References: <CAC4O8c-nuOTS=a0sVp1603KaM2bZjs+yNZzdAaa5CGTNGFE7hQ@mail.gmail.com>
- <xmqqy1e41lf5.fsf@gitster.g>
- <xmqq5y181fx0.fsf_-_@gitster.g>
- <20231212013045.GE376323@coredump.intra.peff.net>
- <xmqqjzpjsbjl.fsf@gitster.g>
+To: git@vger.kernel.org
+Cc: Taylor Blau <me@ttaylorr.com>,
+	Carlos =?utf-8?B?QW5kcsOpcyBSYW3DrXJleiBDYXRhw7Fv?= <antaigroupltda@gmail.com>
+Subject: [PATCH] mailinfo: fix out-of-bounds memory reads in
+ unquote_quoted_pair()
+Message-ID: <20231212221243.GA1656116@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -29,40 +25,112 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqjzpjsbjl.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Dec 12, 2023 at 07:09:02AM -0800, Junio C Hamano wrote:
+When processing a header like a "From" line, mailinfo uses
+unquote_quoted_pair() to handle double-quotes and rfc822 parenthesized
+comments. It takes a NUL-terminated string on input, and loops over the
+"in" pointer until it sees the NUL. When it finds the start of an
+interesting block, it delegates to helper functions which also increment
+"in", and return the updated pointer.
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > This all looks pretty reasonable to me.
-> >
-> > I couldn't help but think, though, that surely we have some helpers for
-> > this already? But the closest seems to be git_parse_int(), which also
-> > allows unit factors. I'm not sure if allowing "-n 1k" would be a feature
-> > or a bug. ;)
-> 
-> The change in question is meant to be a pure fix to replace a careless
-> use of atoi().  I do not mind to see a separate patch to add such a
-> feature later on top.
+But there's a bug here: the helpers find the NUL with a post-increment
+in the loop condition, like:
 
-Oh, I mostly meant that I would have turned to git_parse_int() as that
-already-existing helper, but it is not suitable because of the extra
-unit-handling. I think your patch draws the line in the right place.
+   while ((c = *in++) != 0)
 
-> > I wonder if there are more spots that could benefit.
-> 
-> "git grep -e 'atoi('" would give somebody motivated a decent set of
-> #microproject ideas, but many hits are not suited for strtol_i(),
-> which is designed to parse an integer at the end of a string.  Some
-> places use atoi() immediately followed by strspn() to skip over
-> digits, which means they are parsing an integer and want to continue
-> reading after the integer, which is incompatible with what
-> strtol_i() wants to do.  They need either a separate helper or an
-> updated strtol_i() that optionally allows you to parse the prefix
-> and report where the integer ended, e.g., something like:
+So when they do see a NUL (rather than the correct termination of the
+quote or comment section), they return "in" as one _past_ the NUL
+terminator. And thus the outer loop in unquote_quoted_pair() does not
+realize we hit the NUL, and keeps reading past the end of the buffer.
 
-Yeah, I agree this might be a good microproject (or leftoverbits) area,
-and the semantics for the helper you propose make sense to me.
+We should instead make sure to return "in" positioned at the NUL, so
+that the caller knows to stop their loop, too. A hacky way to do this is
+to return "in - 1" after leaving the inner loop. But a slightly cleaner
+solution is to avoid incrementing "in" until we are sure it contained a
+non-NUL byte (i.e., doing it inside the loop body).
 
--Peff
+The two tests here show off the problem. Since we check the output,
+they'll _usually_ report a failure in a normal build, but it depends on
+what garbage bytes are found after the heap buffer. Building with
+SANITIZE=address reliably notices the problem. The outcome (both the
+exit code and the exact bytes) are just what Git happens to produce for
+these cases today, and shouldn't be taken as an endorsement. It might be
+reasonable to abort on an unterminated string, for example. The priority
+for this patch is fixing the out-of-bounds memory access.
+
+Reported-by: Carlos Andrés Ramírez Cataño <antaigroupltda@gmail.com>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This was reported to the security list, but because it's just an
+out-of-bounds read, we won't do a coordinated disclosure.
+
+ mailinfo.c          |  8 ++++----
+ t/t5100-mailinfo.sh | 22 ++++++++++++++++++++++
+ 2 files changed, 26 insertions(+), 4 deletions(-)
+
+diff --git a/mailinfo.c b/mailinfo.c
+index a07d2da16d..737b9e5e13 100644
+--- a/mailinfo.c
++++ b/mailinfo.c
+@@ -58,12 +58,12 @@ static void parse_bogus_from(struct mailinfo *mi, const struct strbuf *line)
+ 
+ static const char *unquote_comment(struct strbuf *outbuf, const char *in)
+ {
+-	int c;
+ 	int take_next_literally = 0;
+ 
+ 	strbuf_addch(outbuf, '(');
+ 
+-	while ((c = *in++) != 0) {
++	while (*in) {
++		int c = *in++;
+ 		if (take_next_literally == 1) {
+ 			take_next_literally = 0;
+ 		} else {
+@@ -88,10 +88,10 @@ static const char *unquote_comment(struct strbuf *outbuf, const char *in)
+ 
+ static const char *unquote_quoted_string(struct strbuf *outbuf, const char *in)
+ {
+-	int c;
+ 	int take_next_literally = 0;
+ 
+-	while ((c = *in++) != 0) {
++	while (*in) {
++		int c = *in++;
+ 		if (take_next_literally == 1) {
+ 			take_next_literally = 0;
+ 		} else {
+diff --git a/t/t5100-mailinfo.sh b/t/t5100-mailinfo.sh
+index db11cababd..654d8cf3ee 100755
+--- a/t/t5100-mailinfo.sh
++++ b/t/t5100-mailinfo.sh
+@@ -268,4 +268,26 @@ test_expect_success 'mailinfo warn CR in base64 encoded email' '
+ 	test_must_be_empty quoted-cr/0002.err
+ '
+ 
++test_expect_success 'from line with unterminated quoted string' '
++	echo "From: bob \"unterminated string smith <bob@example.com>" >in &&
++	git mailinfo /dev/null /dev/null <in >actual &&
++	cat >expect <<-\EOF &&
++	Author: bob unterminated string smith
++	Email: bob@example.com
++
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'from line with unterminated comment' '
++	echo "From: bob (unterminated comment smith <bob@example.com>" >in &&
++	git mailinfo /dev/null /dev/null <in >actual &&
++	cat >expect <<-\EOF &&
++	Author: bob (unterminated comment smith
++	Email: bob@example.com
++
++	EOF
++	test_cmp expect actual
++'
++
+ test_done
+-- 
+2.43.0.310.g85bf1f633d
