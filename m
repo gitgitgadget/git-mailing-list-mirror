@@ -1,142 +1,103 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rjrNt1PI"
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA559BD
-	for <git@vger.kernel.org>; Tue, 12 Dec 2023 14:30:43 -0800 (PST)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 9E7492F9D8;
-	Tue, 12 Dec 2023 17:30:43 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=XzBzfs1U994y
-	04gQsdLNraCXB9OzkDZb+DXTuyfI4+I=; b=rjrNt1PIkdZxUIXMSgfEINwvC1De
-	yYrIT3DwFLGBh27aOr8KRAo/imgH7uQ9RxMWpzouu0TUMfUrBMIlSdxhpln5Kgrp
-	+a2lwLIUePknuPax4TosEFPgwlPyhSomFvcudRUZ6pTeugIx8SsfyBthr3Vgp2sf
-	9K921TrHH103xLs=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 96C4D2F9D7;
-	Tue, 12 Dec 2023 17:30:43 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.193.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 37B532F9D5;
-	Tue, 12 Dec 2023 17:30:40 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc: Ondrej Pohorelsky <opohorel@redhat.com>,  git@vger.kernel.org,  "brian m
- . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: Test breakage with zlib-ng
-In-Reply-To: <9feeb6cf-aabf-4002-917f-3f6c27547bc8@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-	message of "Tue, 12 Dec 2023 18:04:55 +0100")
-References: <CA+B51BEpSh1wT627Efpysw3evVocpiDCoQ3Xaza6jKE3B62yig@mail.gmail.com>
-	<9feeb6cf-aabf-4002-917f-3f6c27547bc8@web.de>
-Date: Tue, 12 Dec 2023 14:30:38 -0800
-Message-ID: <xmqqv893oxyp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="qMzYj3Nc"
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FDF39C
+	for <git@vger.kernel.org>; Tue, 12 Dec 2023 14:30:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+	t=1702420204; x=1703025004; i=l.s.r@web.de;
+	bh=XsB2pyZoN53cAG/YEYu1ouJ7oOQ1Q3kQn3w9EEIABKs=;
+	h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
+	 In-Reply-To;
+	b=qMzYj3Ncb17BZVYW8McQuZXGWdCpq1yRJ0VIqDxXM/KUACht63Dx/SIP2jeiNUWp
+	 GnMn8YjXQNi/FddW4kc0dEV1tW07QU9fCc1IZrsl2GPaaZyiLE+Xtq4KAXtAgsUgj
+	 mU5aM2bc0aogOxxNDQUmSVCm89A2xjsivYs0AbdAiQkl8bW7kzQBruhy19avry08I
+	 rpSf+dWbdS6Wn714fd4RuJACS3DSK0wDQZmitDZPsONivNDJy5ocmsqC/Jpd4s35g
+	 r4Zc5hYajPC/fyNRrRt45/uIfo9bCDm5DvelWyPiQ+3aZbvhrIQuCbE24nuExWmEV
+	 puoAcLdkDGdLkC/Oyg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([79.203.29.38]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1Mvbik-1rWDRy2p8Q-00sj8d; Tue, 12
+ Dec 2023 23:30:04 +0100
+Message-ID: <8bea38fe-38a3-412a-b189-541a6596d623@web.de>
+Date: Tue, 12 Dec 2023 23:30:03 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 144971FA-993E-11EE-B374-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Use ^=1 to toggle between 0 and 1
+Content-Language: en-US
+To: Jeff King <peff@peff.net>,
+ AtariDreams via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,
+ AtariDreams <83477269+AtariDreams@users.noreply.github.com>,
+ Seija Kijin <doremylover123@gmail.com>
+References: <pull.1620.git.git.1702401468082.gitgitgadget@gmail.com>
+ <20231212200920.GC1127366@coredump.intra.peff.net>
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <20231212200920.GC1127366@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:lVWx6OQCUj+SG+2ThWmhnoTJkHV5WsVAVEqDE1/mlo5nNXlfo2q
+ RtsUoJRQNZ+2bZH6IFc2Dj8HFpBMQNg1njM2eowqRVV/urM4edevnTNvNZAqFgEGcRW9mUA
+ cTtu4L1zJz6WZzW8+sxkh79+xqxqqYyRyIAoZlzxzz7Ol+2xc+hVQrsYyUNZOEJYV7z2WY9
+ yQ1mbItn6QUR6cwIIf6Yw==
+UI-OutboundReport: notjunk:1;M01:P0:sR09TUhWbLo=;8Wjchiz6Dks7YKHJfCH+bqeR22V
+ B35m/0kPE4YjxrgDLi8lD0GNy+hFDwtoMYKCmD1Pr3A9kh+dv0en5ybxrNnB70dww9OVzau6H
+ yH2Jl730VD1tdzAsp0BwGZ3pdQk3J1yUP43B61GDJ/sxHnk30w95iiERc/HRGllejwfw+epg6
+ 7oxh9QdwZ2to1SflGYPdjbJ1MwmjtdQQ2Dyecsgxc5AS7Qy8dbN5RV8TXoGkAB5AoeZF2Lxpd
+ h96APRYwmu8vOuQNzRyQN24qs5FU+kwqv70Jmj4UwDhOvCnP6nVEylyhx7JOj2krh2uzIfaHf
+ FAkReU/ymQEEZuYeKHxmw72/+QwNf6Uk7Ra+R3AL4ktKHkoL5HauSfbm/Boyp54C+xysMPpHJ
+ A/NhrwdBCv3Wyng/bfPN75RDLv8xXP3As5nKDSWla3VSqgkbiar2Y1In4Al9VJNJvroAaMOG5
+ XHlbeyLqJOAnn7Mud0sRtORHBFbq03RPn8g6pyCe/dmnEZiitSKfPGwTEro19PLl3com56pet
+ 547qLNs+4qssfIAyBTu4Z+vIANBShZRy6XBuds+8f1foj5k4lQXiRgPBn222a46zRidn7sWkv
+ I4IjDWTpUrjtmmks65Ax/MeOg2o1nU19KL9Y5FWC7nYOzRLr6w5G6tXVzD16XoLqWB1tp6N4r
+ EKBZW5SPpZRVpcQsaxp6gptXAoJHfkHi0piI4mUpzn9mUkjUsYX19z1Lwu8CiT74OBCFfG9PG
+ 0IHMNL03jsQVY95PwYsCiIHi8kxbVLVU1J27FfCCYqgNCNowVbdc1SBbewncD1akPSTw5goVc
+ hq6WEhxWLWNJlANjgGvHApd0vPvdJ52FMnC56utVEA+Bhaoa45atvF5RVwAoikbPwxQuFl7ub
+ fAeEgoX7+iZ89HtDCeYxc/clhuKybf1DMEUxaC7mrjjrviBU55UQyhWYNultD5JZH+u8x4D7c
+ OPOeHZRiM2SryIfHP3SEtBR7Qzg=
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+Am 12.12.23 um 21:09 schrieb Jeff King:
+> On Tue, Dec 12, 2023 at 05:17:47PM +0000, AtariDreams via GitGitGadget w=
+rote:
+>
+>> diff --git a/diff.c b/diff.c
+>> index 2c602df10a3..91842b54753 100644
+>> --- a/diff.c
+>> +++ b/diff.c
+>> @@ -1191,7 +1191,7 @@ static void mark_color_as_moved(struct diff_optio=
+ns *o,
+>>  							    &pmb_nr);
+>>
+>>  			if (contiguous && pmb_nr && moved_symbol =3D=3D l->s)
+>> -				flipped_block =3D (flipped_block + 1) % 2;
+>> +				flipped_block ^=3D 1;
+>>  			else
+>>  				flipped_block =3D 0;
+>
+> This one I do not see any problem with changing, though I think it is a
+> matter of opinion on which is more readable (I actually tend to think of
+> "x =3D 0 - x" as idiomatic for flipping).
 
-> Or we could get the sizes of the objects by checking their files,
-> which would not require  hard-coding anymore.  Patch below.
+Did you mean "x =3D 1 - x"?
 
-That was my first reaction to seeing the original report.  It is a
-bit surprising that the necessary fix is so small and makes me wonder
-why we initially did the hardcoded values, which feels more work to
-initially write the test vector.
+    x 0 - x 1 - x
+   -- ----- -----
+   -1    +1    +2
+    0     0    +1
+   +1    -1     0
 
-Looking good.  Thanks.
+I don't particular like this; it repeats x and seems error-prone. ;-)
 
-> --- >8 ---
-> Subject: [PATCH] t6300: avoid hard-coding object sizes
->
-> f4ee22b526 (ref-filter: add tests for objectsize:disk, 2018-12-24)
-> hard-coded the expected object sizes.  Coincidentally the size of commi=
-t
-> and tag is the same with zlib at the default compression level.
->
-> 1f5f8f3e85 (t6300: abstract away SHA-1-specific constants, 2020-02-22)
-> encoded the sizes as a single value, which coincidentally also works
-> with sha256.
->
-> Different compression libraries like zlib-ng may arrive at different
-> values.  Get them from the file system instead of hard-coding them to
-> make switching the compression library (or changing the compression
-> level) easier.
->
-> Reported-by: Ondrej Pohorelsky <opohorel@redhat.com>
-> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-> ---
->  t/t6300-for-each-ref.sh | 18 +++++++++---------
->  1 file changed, 9 insertions(+), 9 deletions(-)
->
-> diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-> index 54e2281259..843a7fe143 100755
-> --- a/t/t6300-for-each-ref.sh
-> +++ b/t/t6300-for-each-ref.sh
-> @@ -20,12 +20,13 @@ setdate_and_increment () {
->      export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
->  }
->
-> -test_expect_success setup '
-> -	test_oid_cache <<-EOF &&
-> -	disklen sha1:138
-> -	disklen sha256:154
-> -	EOF
-> +test_object_file_size () {
-> +	oid=3D$(git rev-parse "$1")
-> +	path=3D".git/objects/$(test_oid_to_path $oid)"
-> +	test_file_size "$path"
-> +}
->
-> +test_expect_success setup '
->  	# setup .mailmap
->  	cat >.mailmap <<-EOF &&
->  	A Thor <athor@example.com> A U Thor <author@example.com>
-> @@ -94,7 +95,6 @@ test_atom () {
->  }
->
->  hexlen=3D$(test_oid hexsz)
-> -disklen=3D$(test_oid disklen)
->
->  test_atom head refname refs/heads/main
->  test_atom head refname: refs/heads/main
-> @@ -129,7 +129,7 @@ test_atom head push:strip=3D1 remotes/myfork/main
->  test_atom head push:strip=3D-1 main
->  test_atom head objecttype commit
->  test_atom head objectsize $((131 + hexlen))
-> -test_atom head objectsize:disk $disklen
-> +test_atom head objectsize:disk $(test_object_file_size refs/heads/main=
-)
->  test_atom head deltabase $ZERO_OID
->  test_atom head objectname $(git rev-parse refs/heads/main)
->  test_atom head objectname:short $(git rev-parse --short refs/heads/mai=
-n)
-> @@ -203,8 +203,8 @@ test_atom tag upstream ''
->  test_atom tag push ''
->  test_atom tag objecttype tag
->  test_atom tag objectsize $((114 + hexlen))
-> -test_atom tag objectsize:disk $disklen
-> -test_atom tag '*objectsize:disk' $disklen
-> +test_atom tag objectsize:disk $(test_object_file_size refs/tags/testta=
-g)
-> +test_atom tag '*objectsize:disk' $(test_object_file_size refs/heads/ma=
-in)
->  test_atom tag deltabase $ZERO_OID
->  test_atom tag '*deltabase' $ZERO_OID
->  test_atom tag objectname $(git rev-parse refs/tags/testtag)
-> --
-> 2.43.0
+I agree with your assessment of the other three cases in the patch.
+
+Can we salvage something from this bikeshedding exercise?  I wonder if
+it's time to use the C99 type _Bool in our code.  It would allow
+documenting that only two possible values exist in cases like the one
+above.  That would be even more useful for function returns, I assume.
+
+Ren=C3=A9
+
