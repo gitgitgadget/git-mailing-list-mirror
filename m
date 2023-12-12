@@ -1,24 +1,21 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA76FCE
-	for <git@vger.kernel.org>; Mon, 11 Dec 2023 17:30:46 -0800 (PST)
-Received: (qmail 5879 invoked by uid 109); 12 Dec 2023 01:30:46 -0000
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB340E4
+	for <git@vger.kernel.org>; Mon, 11 Dec 2023 17:32:30 -0800 (PST)
+Received: (qmail 5908 invoked by uid 109); 12 Dec 2023 01:32:30 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Dec 2023 01:30:46 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Dec 2023 01:32:30 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8985 invoked by uid 111); 12 Dec 2023 01:30:45 -0000
+Received: (qmail 8995 invoked by uid 111); 12 Dec 2023 01:32:29 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 11 Dec 2023 20:30:45 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 11 Dec 2023 20:32:29 -0500
 Authentication-Results: peff.net; auth=none
-Date: Mon, 11 Dec 2023 20:30:45 -0500
+Date: Mon, 11 Dec 2023 20:32:29 -0500
 From: Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Britton Kerin <britton.kerin@gmail.com>
-Subject: Re: [PATCH] revision: parse integer arguments to --max-count,
- --skip, etc., more carefully
-Message-ID: <20231212013045.GE376323@coredump.intra.peff.net>
-References: <CAC4O8c-nuOTS=a0sVp1603KaM2bZjs+yNZzdAaa5CGTNGFE7hQ@mail.gmail.com>
- <xmqqy1e41lf5.fsf@gitster.g>
- <xmqq5y181fx0.fsf_-_@gitster.g>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Dec 2023, #01; Sat, 9)
+Message-ID: <20231212013229.GF376323@coredump.intra.peff.net>
+References: <xmqqa5qknnej.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -27,42 +24,21 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq5y181fx0.fsf_-_@gitster.g>
+In-Reply-To: <xmqqa5qknnej.fsf@gitster.g>
 
-On Sat, Dec 09, 2023 at 07:35:23AM +0900, Junio C Hamano wrote:
+On Fri, Dec 08, 2023 at 06:02:44PM -0800, Junio C Hamano wrote:
 
-> The "rev-list" and other commands in the "log" family, being the
-> oldest part of the system, use their own custom argument parsers,
-> and integer values of some options are parsed with atoi(), which
-> allows a non-digit after the number (e.g., "1q") to be silently
-> ignored.  As a natural consequence, an argument that does not begin
-> with a digit (e.g., "q") silently becomes zero, too.
+> * jk/end-of-options (2023-12-09) 1 commit
+>  - parse-options: decouple "--end-of-options" and "--"
 > 
-> Switch to use strtol_i() and parse_timestamp() appropriately to
-> catch bogus input.
+>  "git log --end-of-options --rev -- --path" learned to interpret
+>  "--rev" as a rev, and "--path" as a path, as expected.
 > 
-> Note that one may naïvely expect that --max-count, --skip, etc., to
-> only take non-negative values, but we must allow them to also take
-> negative values, as an escape hatch to countermand a limit set by an
-> earlier option on the command line; the underlying variables are
-> initialized to (-1) and "--max-count=-1", for example, is a
-> legitimate way to reinitialize the limit.
+>  Will merge to 'next'.
+>  source: <20231206222145.GA136253@coredump.intra.peff.net>
 
-This all looks pretty reasonable to me.
-
-I couldn't help but think, though, that surely we have some helpers for
-this already? But the closest seems to be git_parse_int(), which also
-allows unit factors. I'm not sure if allowing "-n 1k" would be a feature
-or a bug. ;)
-
-I guess "strtol_i()" maybe is that helper already, though I did not even
-know it existed. Looks like it goes back to 2007, and is seldom used. I
-wonder if there are more spots that could benefit.
-
-I don't think there is any such helper for timestamps, but the checks in
-your parser look good (strtol_i() checks for overflow as we cast to int,
-but I don't think we need to do the same here since timestamp_t and
-parse_timestamp() should be matched).
+A minor correction here (since this will eventually go to the release
+notes): "log --end-of-options --rev -- --path" always worked. It is "git
+reset" that is fixed (along with "checkout" and many other programs).
 
 -Peff
