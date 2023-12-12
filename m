@@ -1,154 +1,129 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="fUrPdCsw"
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C50A0AA
-	for <git@vger.kernel.org>; Tue, 12 Dec 2023 14:54:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-	t=1702421676; x=1703026476; i=l.s.r@web.de;
-	bh=NVXq3IKw6JYGTqbtuZLyROKa+w1oXWKOwjvoUATyrEs=;
-	h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
-	 In-Reply-To;
-	b=fUrPdCsw47z8QB0v7j4ahRRDlXlI9K1QwlGxIMMTHlMu93cQLs2V2+KCjvFtUDar
-	 u3bY/5LE3KXNnXKWq86iutc4gQwQjJgINSLW3s4bd5P70Aj9QDLeyNEd6Ic5j1NMN
-	 0r5+hj4gMJWPfMwKvOhZPQoXUjRHxawathvEiF6hDKIa0KQ7sscNDPZKi/0uSMah+
-	 jvWQhPNJcU/oOFN30ew4PbADj5bLMVaICjS/unGssi5Xc5ATVKKVKJbQQMRasqIMz
-	 YcWW36w//a1THYvHUCfvddSsPnQJHSZIrNWQ98YlgYysUjcjvu83YTzDnPzmsxdPJ
-	 gj2qxGBbmQ1RzB4SuA==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.29.38]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1N7xaR-1rIBtw3yjr-014exi; Tue, 12
- Dec 2023 23:54:35 +0100
-Message-ID: <ff735aac-b60b-4d52-a6dc-180ab504fc8d@web.de>
-Date: Tue, 12 Dec 2023 23:54:34 +0100
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="JfdS4I4v"
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1933C10F0
+	for <git@vger.kernel.org>; Tue, 12 Dec 2023 15:17:45 -0800 (PST)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2BCC41C03BE;
+	Tue, 12 Dec 2023 18:17:42 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=Mud1f0vr3hx7nV4T11jp28RdmJ7szOtwf2gnz9
+	58Y7Y=; b=JfdS4I4v+6RfUsMg1uLjosin7aor/+dWU+S+fm+rVjFt19AwAMT/tr
+	fevQrlJvQHqNgRCDJ3oi7sJHmOlzedU3TsbL5clsIIx0DCT8SJE/IjVio6EauvZI
+	vPhcMjCiry72G6UIJYGn0+uMDVromnRyixldgiN5mFr98gofrUAAE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 22FFF1C03BD;
+	Tue, 12 Dec 2023 18:17:42 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.193.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 818631C03BA;
+	Tue, 12 Dec 2023 18:17:41 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Joanna Wang <jojwang@google.com>
+Cc: git@vger.kernel.org,  sunshine@sunshineco.com,  tboegi@web.de
+Subject: Re: [PATCH 1/1] attr: add builtin objectmode values support
+In-Reply-To: <CAMmZTi-U_ufzoBLCDWKbrf=3GZzGszxnM1_Pu6ufBeoYjj7Gdw@mail.gmail.com>
+	(Joanna Wang's message of "Fri, 1 Dec 2023 12:01:54 +0800")
+References: <xmqqttpmtnn5.fsf@gitster.g>
+	<20231116054437.2343549-1-jojwang@google.com>
+	<xmqqsf56ql14.fsf@gitster.g> <xmqqil62qfvr.fsf@gitster.g>
+	<CAMmZTi-U_ufzoBLCDWKbrf=3GZzGszxnM1_Pu6ufBeoYjj7Gdw@mail.gmail.com>
+Date: Tue, 12 Dec 2023 15:17:40 -0800
+Message-ID: <xmqqedfrovsb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Test breakage with zlib-ng
-Content-Language: en-US
-To: Jeff King <peff@peff.net>
-Cc: Ondrej Pohorelsky <opohorel@redhat.com>, git@vger.kernel.org,
- "brian m . carlson" <sandals@crustytoothpaste.net>,
- Junio C Hamano <gitster@pobox.com>
-References: <CA+B51BEpSh1wT627Efpysw3evVocpiDCoQ3Xaza6jKE3B62yig@mail.gmail.com>
- <9feeb6cf-aabf-4002-917f-3f6c27547bc8@web.de>
- <20231212200153.GB1127366@coredump.intra.peff.net>
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <20231212200153.GB1127366@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:Pbba54Wkt5EacqiwJtc4Q0Xhi5GXGzy5KnztZQLLgjvOrLmR8hN
- LOoEDgVhVKp4ZFPbIbPzvNKepT+EFn+GQXipmn8m+3aAD1wCC1QKSt30h9udXGEa3ZJUDNH
- cH2GwaszITaRmGWhXviTiFll/xFAd6ZcylZE4C1KdAi5S2yTOcRf7vCVgFl793ir/XgynzS
- mSDEhCLVCjgTWjiE/Q89Q==
-UI-OutboundReport: notjunk:1;M01:P0:yqHtluq3qhU=;FUvf+u08n1edVViCtB7uRG3jB8v
- 7Hr1onUKiw+ihYoMiPHkzP9L8/UDbDu2qDneKzLPd2kVdEf4XLinYxslCMloI5ZndI+emD4Ap
- 3i9QNgpmx0jnj7r/xdoiWMp2rpgxhi+GBio+WhKe1g3KLfFQe/Aexl5fP3swndSaxEDzENzZ+
- wl9d4DxJ8pfbNJZLsurzwbXrOPcu+W4GfMCPelb0G+rc3Y6YTArY+16SY4n7PDrgbV+J/6f+9
- ATX1RQhWrrb7vNht5TYei3+VeZIsGsvSVzJyQsHYjc/hB3NdEqgipjZe8yr1zyq1B6CqGbMeA
- A0HCFWFlvx/+1LPTj9THz/gmSD15BqjfhflsaueOzG5fuHPYxuldOhEtwNhIVC3krBrhPPCtV
- TBfgGp1Ro6mgD3gM1wKHbNYCibz99LWV2gyBRdpRTh61iXC3jxVLK7jxKOKdK58lMK8YI1XV+
- xamO9nmL6mQknRkI3+vSmYQsjIfi4ywJ6tP+Ejd9YWRCd+c0m6N2m0kPRHA8wSwOJhAYVDQK6
- ldp/QpRbEl4hgF5U/UGPm3br1zKXqzY1Szv1Q2TBM5YBF1Kh6eC0tT5B+7W65k9yFLSYdWi7W
- EU0uzEJDM4s7Y6KdtGhehZYvL32FFA+RL/3OsrdsIDwJZhkFUgJ1S2O/yBBLUv+HLJlWUPquF
- pUNVHI1UzL8ITszSdyjkDShREzIr3toGo0MDUN7bCGmxPinFNiFH9LWJfdUOd08jVeL9iUq7W
- uKobcMUKuT7B996o4YJdN5Pzo/DlRVsxANwirubw0+swDFOAPzJ6Hc3JyYjWJF5QRAUTMPYyI
- H3QTdyI84/4eHRWJ8aNhpSdjDlCgyeTaWxIHfuZVkecfdhyKC9e1sLtXuNwt6xlHyjdIJT28r
- Cf+3Nt4hwFzH1zZbv8ojyq4wlTdo4dg0+6YOvMxtnbxLHBykhNfB793MYCYaA7fBnWbrfboHv
- /Lr6lP1jCkNhapwzmrc/oEkU3FQ=
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ A5E9E1B6-9944-11EE-9CBB-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Am 12.12.23 um 21:01 schrieb Jeff King:
-> On Tue, Dec 12, 2023 at 06:04:55PM +0100, Ren=C3=A9 Scharfe wrote:
->
->> Subject: [PATCH] t6300: avoid hard-coding object sizes
->>
->> f4ee22b526 (ref-filter: add tests for objectsize:disk, 2018-12-24)
->> hard-coded the expected object sizes.  Coincidentally the size of commi=
-t
->> and tag is the same with zlib at the default compression level.
->>
->> 1f5f8f3e85 (t6300: abstract away SHA-1-specific constants, 2020-02-22)
->> encoded the sizes as a single value, which coincidentally also works
->> with sha256.
->>
->> Different compression libraries like zlib-ng may arrive at different
->> values.  Get them from the file system instead of hard-coding them to
->> make switching the compression library (or changing the compression
->> level) easier.
->
-> Yeah, this is definitely the right solution here. I'm surprised the
-> hard-coded values didn't cause problems before now. ;)
->
-> The patch looks good to me, but a few small comments:
->
->> +test_object_file_size () {
->> +	oid=3D$(git rev-parse "$1")
->> +	path=3D".git/objects/$(test_oid_to_path $oid)"
->> +	test_file_size "$path"
->> +}
->
-> Here we're assuming the objects are loose. I think that's probably OK
-> (and certainly the test will notice if that changes).
->
-> We're covering the formatting code paths along with the underlying
-> implementation that fills in object_info->disk_sizep for loose objects.
-> Which I think is plenty for this particular script, which is about
-> for-each-ref.
->
-> It would be nice to have coverage of the packed_object_info() code path,
-> though. Back when it was added in a4ac106178 (cat-file: add
-> %(objectsize:disk) format atom, 2013-07-10), I cowardly punted on this,
-> writing:
->
->   This patch does not include any tests, as the exact numbers
->   returned are volatile and subject to zlib and packing
->   decisions. We cannot even reliably guarantee that the
->   on-disk size is smaller than the object content (though in
->   general this should be the case for non-trivial objects).
->
-> I don't think it's that big a deal, but I guess we could do something
-> like:
->
->   prev=3D
->   git show-index <$pack_idx |
->   sort -n |
->   grep -A1 $oid |
->   while read ofs oid csum
->   do
->     test -n "$prev" && echo "$((ofs - prev))"
->     prev=3D$ofs
->   done
->
-> It feels a little redundant with what Git is doing under the hood, but
-> at least is exercising the code (and we're using the idx directly, so
-> we're confirming that the revindex is right).
+Joanna Wang <jojwang@google.com> writes:
 
-A generic object size function based on both methods could live in the
-test lib and be used for e.g. cat-file tests as well.  Getting such a
-function polished and library-worthy is probably more work than I
-naively imagine, however -- due to our shunning of pipes alone.
-
-> Anyway, that is all way beyond the scope of your patch, but I wonder if
-> it's worth doing on top.
+>> Cumulatively, aside from the removal of the t/#t* file, here is what
+>> I ended up with so far.
 >
->> @@ -129,7 +129,7 @@ test_atom head push:strip=3D1 remotes/myfork/main
->>  test_atom head push:strip=3D-1 main
->>  test_atom head objecttype commit
->>  test_atom head objectsize $((131 + hexlen))
->> -test_atom head objectsize:disk $disklen
->> +test_atom head objectsize:disk $(test_object_file_size refs/heads/main=
-)
->
-> These test_object_file_size calls are happening outside of any
-> test_expect_* block, so we'd miss failing exit codes (and also the
-> helper is not &&-chained), and any stderr would leak to the output.
-> That's probably OK in practice, though (if something goes wrong then the
-> expected value output will be bogus and the test itself will fail).
+> I want to double check if I should followup here.
+> I assumed that you had already applied these final fixes on my behalf,
+> similar to my patch for enabling attr for `git-add`. But if I was wrong,
+> I'm happy to send another update with all the fixes.
 
-Right.  We could also set variables during setup, though, to put
-readers' minds at rest.
+I've squashed the fix in, so no need to resend only to patch up what
+I pointed out earlier.
 
-Ren=C3=A9
+The end result fails t0003 under GIT_TEST_PASSING_SANITIZE_LEAK
+though.  As the synthetic attribute values are allocated without
+being in the hashmap based on the value read from .gitattributes
+files, somebody needs to hold pointers to them *and* we need to
+avoid allocating unbounded number of them.
+
+The attached is one possible way to plug the leak; I am not sure if
+it is the best one, though.  One thing I like about the solution is
+that the approach makes sure that the mode attributes we would ever
+return are very tightly controlled and does not allow a buggy code
+to come up with "mode" to be passed to this new helper function to
+pass random and unsupported mode bits without triggering the BUG().
+
+ attr.c | 30 +++++++++++++++++++++++++++---
+ 1 file changed, 27 insertions(+), 3 deletions(-)
+
+diff --git c/attr.c w/attr.c
+index b03c20f768..679e42258c 100644
+--- c/attr.c
++++ w/attr.c
+@@ -1250,10 +1250,34 @@ static struct object_id *default_attr_source(void)
+ 	return &attr_source;
+ }
+ 
++static const char *interned_mode_string(unsigned int mode)
++{
++	static struct {
++		unsigned int val;
++		char str[7];
++	} mode_string[] = {
++		{ .val = 0040000 },
++		{ .val = 0100644 },
++		{ .val = 0100755 },
++		{ .val = 0120000 },
++		{ .val = 0160000 },
++	};
++	int i;
++
++	for (i = 0; i < ARRAY_SIZE(mode_string); i++) {
++		if (mode_string[i].val != mode)
++			continue;
++		if (!*mode_string[i].str)
++			snprintf(mode_string[i].str, sizeof(mode_string[i].str),
++				 "%06o", mode);
++		return mode_string[i].str;
++	}
++	BUG("Unsupported mode 0%o", mode);
++}
++
+ static const char *builtin_object_mode_attr(struct index_state *istate, const char *path)
+ {
+ 	unsigned int mode;
+-	struct strbuf sb = STRBUF_INIT;
+ 
+ 	if (direction == GIT_ATTR_CHECKIN) {
+ 		struct object_id oid;
+@@ -1287,8 +1311,8 @@ static const char *builtin_object_mode_attr(struct index_state *istate, const ch
+ 		else
+ 			return ATTR__UNSET;
+ 	}
+-	strbuf_addf(&sb, "%06o", mode);
+-	return strbuf_detach(&sb, NULL);
++
++	return interned_mode_string(mode);
+ }
+ 
+ 
+
