@@ -1,94 +1,68 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="NBpgnszH"
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A77EBAA
-	for <git@vger.kernel.org>; Tue, 12 Dec 2023 14:18:38 -0800 (PST)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="pkdyaX4k"
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38608D0
+	for <git@vger.kernel.org>; Tue, 12 Dec 2023 14:28:13 -0800 (PST)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 8AAE82F973;
+	Tue, 12 Dec 2023 17:28:12 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=waf+nM5oQ0s/MBxVo8klHoFaEYJ5hWodz3Fhl1
+	KSYZM=; b=pkdyaX4kAFrwiKhscvAANhbzGvVTHhlDPOHVFYHsup7pxFyquKYzre
+	rcdQqfj7u7OgyZsew2Je7A5iZzk/eMdpUSAk2dLJwPwrwqp3/Ahed/X/f1QggEZb
+	vfBvMC411tblPmfs5uucuD4RSBF5WMRcylnvmg+V1o3PMkW4j60Q4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 832BF2F972;
+	Tue, 12 Dec 2023 17:28:12 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.193.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 7D9755B118;
-	Tue, 12 Dec 2023 22:18:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1702419517;
-	bh=nr96RlCu1RvtJId9vPjpmMyYLwgHHFOIF/DDwtPEg2Q=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=NBpgnszHm3DP/CKfEH/sQBTVOfor3bgkdhhCP4zaHAsy1sX7nBjQknfJ8/ZSIhzfW
-	 qx4R+Wla4QjAYQV1J0wGrDntffg7h+Qi2zEGit26MXkTDlTU4qR7kg43c+bIiKOyps
-	 fJxZyJi7oyDFrOcDYmVx0T0RNmoU7lVdGvPnxV8QXz8xn/EM4xBEsR/TOla2smmyuB
-	 6PWPIdVsaeGrM1nJd3O8DtNxBBM+j122zJ59janG9GHX4BC0HsgHkElYklOLWVfAwO
-	 rvmfJaU2CkanH6rYQPFUS/YNoLYTo+NFUfjmK2Jyl1lF9R3aRaNCGl5YlOKeAHH8xZ
-	 Vhb6T43dpzRPjLMh6cLEHGIHQ1V8KzXnlQCFOM+wk0jbIGYiX3BT6GY0PfPVC/V3KU
-	 5EhUaoyFrNaw6hxdCzy0uFHLkegtB8Twjpu30AEuGDL3d6AtHZZVZ0BmqTCO1ZwGoN
-	 pYl0C8B7mt9kHI4n5Yd9OyNZT1TSBqCLIACG3Kn6fgCPbEVVGeu
-Date: Tue, 12 Dec 2023 22:18:34 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc: Ondrej Pohorelsky <opohorel@redhat.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: Test breakage with zlib-ng
-Message-ID: <ZXjcOtQ8s60X8FEQ@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	Ondrej Pohorelsky <opohorel@redhat.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-References: <CA+B51BEpSh1wT627Efpysw3evVocpiDCoQ3Xaza6jKE3B62yig@mail.gmail.com>
- <9feeb6cf-aabf-4002-917f-3f6c27547bc8@web.de>
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D4F152F971;
+	Tue, 12 Dec 2023 17:28:08 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: Zach FettersMoore <zach.fetters@apollographql.com>,  Zach FettersMoore
+ via GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH v6] subtree: fix split processing with multiple subtrees
+ present
+In-Reply-To: <CAP8UFD19phFz54d8fDM=MBRMSD9Rz4R0_463KgptN8eeFs7MnQ@mail.gmail.com>
+	(Christian Couder's message of "Tue, 12 Dec 2023 17:06:38 +0100")
+References: <pull.1587.v5.git.1701206267300.gitgitgadget@gmail.com>
+	<pull.1587.v6.git.1701442494319.gitgitgadget@gmail.com>
+	<CAP8UFD3FzP6QW4dJ9yiG1BAytLcsk+zGE+CBeArRJBJ8gsaDMQ@mail.gmail.com>
+	<CAEWN6q3RTbVuMb0VyCYz196ZL+OGAAHbJLZ2-MnW1RVVabg7Mw@mail.gmail.com>
+	<CAP8UFD19phFz54d8fDM=MBRMSD9Rz4R0_463KgptN8eeFs7MnQ@mail.gmail.com>
+Date: Tue, 12 Dec 2023 14:28:07 -0800
+Message-ID: <xmqqzfyfoy2w.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="w0WbDfJ9PQ1cEDFB"
-Content-Disposition: inline
-In-Reply-To: <9feeb6cf-aabf-4002-917f-3f6c27547bc8@web.de>
-User-Agent: Mutt/2.2.12 (2023-09-09)
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ BA125B7A-993D-11EE-B323-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
+Christian Couder <christian.couder@gmail.com> writes:
 
---w0WbDfJ9PQ1cEDFB
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>> > $ git subtree split --prefix=apollo-ios-codegen --squash --rejoin
+>> > Merge made by the 'ort' strategy.
+>> > e274aed3ba6d0659fb4cc014587cf31c1e8df7f4
+>>
+>> Looking into this some it looks like it could be a bash config
+>> difference? My machine always runs it all the way through vs
+>> failing for recursion depth. Although that would also be an issue
+>> which is solved by this fix.
+>
+> I use Ubuntu where /bin/sh is dash so my current guess is that dash
+> might have a smaller recursion limit than bash.
 
-On 2023-12-12 at 17:04:55, Ren=C3=A9 Scharfe wrote:
-> --- >8 ---
-> Subject: [PATCH] t6300: avoid hard-coding object sizes
->=20
-> f4ee22b526 (ref-filter: add tests for objectsize:disk, 2018-12-24)
-> hard-coded the expected object sizes.  Coincidentally the size of commit
-> and tag is the same with zlib at the default compression level.
->=20
-> 1f5f8f3e85 (t6300: abstract away SHA-1-specific constants, 2020-02-22)
-> encoded the sizes as a single value, which coincidentally also works
-> with sha256.
->=20
-> Different compression libraries like zlib-ng may arrive at different
-> values.  Get them from the file system instead of hard-coding them to
-> make switching the compression library (or changing the compression
-> level) easier.
-
-This definitely seems like the right thing to do.  I was a bit lazy at
-the time and probably could have improved it then, but it's at least
-good that we're doing it now.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---w0WbDfJ9PQ1cEDFB
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.3 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZXjcOgAKCRB8DEliiIei
-gW4ZAQD7kzVh/YMOtTAIwFMT5tOl5/x6CRZaJ5G3obO/A2yxbQD/fCSJIyU3AFm5
-kXSMe6ND7AN6gflm5+u4OvGhzOyTPwc=
-=BFOA
------END PGP SIGNATURE-----
-
---w0WbDfJ9PQ1cEDFB--
+That sounds quite bad.  Does it have to be recursive (iow, if we can
+rewrite the logic to be iterative instead, that would be a much better
+way to fix the issue)?
