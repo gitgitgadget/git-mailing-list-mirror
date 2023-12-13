@@ -1,95 +1,83 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Qi9PwbOg"
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6428B0
-	for <git@vger.kernel.org>; Tue, 12 Dec 2023 16:36:29 -0800 (PST)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 2D03A301BA;
-	Tue, 12 Dec 2023 19:36:29 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=G4ifb5fRWm3MfqhyBbodaEt8lJwxvnPy2kpO0+
-	mTgoY=; b=Qi9PwbOgbkqww7RPElhMpCtw3TPNWst3fgSWhNuOWFH4BAu4Mze0YN
-	yv0dmrZ6e4Mv8sodfYdHe6nP/lD41COEyV/YJOD4Q7JEQZmX/hVSl8YQ+qSKuXoj
-	5RHjxE5xxaTt+Wpk9GwAYeMOCT3GfqM6lW63i/kxi+E8MJVUyRwbM=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 26547301B9;
-	Tue, 12 Dec 2023 19:36:29 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.193.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C3213301B7;
-	Tue, 12 Dec 2023 19:36:25 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Taylor Blau
- <me@ttaylorr.com>,  Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v2 1/4] wt-status: read HEAD and ORIG_HEAD via the refdb
-In-Reply-To: <ac84b1b9-2381-406a-b459-6728bf9f8704@ramsayjones.plus.com>
-	(Ramsay Jones's message of "Tue, 12 Dec 2023 23:32:37 +0000")
-References: <cover.1701243201.git.ps@pks.im> <cover.1702365291.git.ps@pks.im>
-	<1db3eb3945432964aabe1c559db4c3ac251e83fd.1702365291.git.ps@pks.im>
-	<xmqqle9zqidj.fsf@gitster.g>
-	<ac84b1b9-2381-406a-b459-6728bf9f8704@ramsayjones.plus.com>
-Date: Tue, 12 Dec 2023 16:36:24 -0800
-Message-ID: <xmqq34w7os53.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C00FRWAS"
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5F3AD0
+	for <git@vger.kernel.org>; Tue, 12 Dec 2023 20:17:20 -0800 (PST)
+Received: by mail-pj1-x1034.google.com with SMTP id 98e67ed59e1d1-28ad7a26f4aso834478a91.0
+        for <git@vger.kernel.org>; Tue, 12 Dec 2023 20:17:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1702441040; x=1703045840; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=4pGDoL5r2bhMVRGKoxghGklBDBycvViqmlej0wdiTeI=;
+        b=C00FRWASNCQgzdR8pilSqiPqwHZBM6h7RhKrBpx9YoFVI4ka26TOaT/q2Dl3sqssHU
+         oIqSOUF384LBvr+0lhWm4ys31pzqze6Cqoo/1tw8v+PUij4mkH2e46PZuFxKMd8tJEPD
+         g9HvLappvZjWixW8/q45FtjpYCZFKRtU3pkaa/i2LbRLyHzmJ1EKG13FcP/qpDg9N7/P
+         iP/Uqg0/Z1catQW5OgTFHBu5HiDA2/0Y7lcb9LnU3mbn8tQlpOSwa7tDvHwY2iXn8DyM
+         5mq0hraf96VZAnbMq1nocvGZHkV9yIKbgKO3ewkKNWamGmBwSmdXhu9WtTO436BfLqg2
+         ffjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702441040; x=1703045840;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=4pGDoL5r2bhMVRGKoxghGklBDBycvViqmlej0wdiTeI=;
+        b=ai0d/biyjs1eCCsxLhxMtSyzQxKr2W1L/Picz1BcbJD+yZ/ncdyppWwJRQHpJnIARs
+         JAyl9lDUNGKwA8B94noavuw4pPKeCcJW4qk8yN+piw0APgcmMDLzqnxMLWpcvfyOctc3
+         1z8kXQ86xxJpoEXmxZbIndi59cVHBZlLfkScyqZQjIu0RMVv0V7aHwq1CJjDpzJ20sEV
+         2oEF23PkLZ+32XFvFHeWVSQ7eupUGITrkG8UXu7TyRWbrwPcYIs0rRsjd6VpH32pUXg4
+         oXvvuWPiK/H6+6i5GFgpcTU3U8RgfFOBVfSMiG0Rxc8OBEESDcMDQc9mykSreQQR6fQD
+         FRbQ==
+X-Gm-Message-State: AOJu0YxSEG1/T5b8/Yd1W5WD4CT80wBwIQgmz8V3pmnUqXE/+kZJhmeU
+	Lwk2DCpznUxbNd11a/EfI2Gu7iWS+IE=
+X-Google-Smtp-Source: AGHT+IGxWIqFPEN6XnzA4I9i7tPaG2XWx/arIRLcz+RUUwaXijUNTRrslw66dkJ1gEplBtMyBUCeBQ==
+X-Received: by 2002:a17:90a:be06:b0:286:bb92:196c with SMTP id a6-20020a17090abe0600b00286bb92196cmr5811485pjs.18.1702441039994;
+        Tue, 12 Dec 2023 20:17:19 -0800 (PST)
+Received: from localhost ([14.191.94.177])
+        by smtp.gmail.com with ESMTPSA id px6-20020a17090b270600b002609cadc56esm9992867pjb.11.2023.12.12.20.17.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Dec 2023 20:17:19 -0800 (PST)
+Date: Wed, 13 Dec 2023 11:17:17 +0700
+From: =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh <congdanhqx@gmail.com>
+To: Haritha D <Harithamma.D@ibm.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Propose a change in open for passing in the file type.
+Message-ID: <ZXkwTYD9nmPYn9UW@danh.dev>
+References: <E1D54D98-3836-41CA-84B5-32AEAF7642D8@ibm.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- A5CC37A0-994F-11EE-9A1E-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <E1D54D98-3836-41CA-84B5-32AEAF7642D8@ibm.com>
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+On 2023-12-12 14:46:04+0000, Haritha D <Harithamma.D@ibm.com> wrote:
+> Hi Everyone,
+>  
+> Am working on porting git to z/OS. For reference, the pull request am working on https://github.com/git/git/pull/1537.
+>  
+> On z/OS there is a notion of file tag attributes. Files can be
+> tagged as binary, ASCII, UTF8, EBCDIC, etc. z/OS uses these
+> attributes to determine if auto-conversion is necessary. It was
+> recommended in PR that we add logic directly to xopen . In order for
+> me to do this in xopen , I have to pass an extra parameter to xopen
+> that specifies the file type. 
+>  
+> Ex: 
+> xopen(output_file, O_CREAT | O_WRONLY | O_TRUNC, 0666);
+>  
+> To :
+> xopen(output_file, O_CREAT | O_WRONLY | O_TRUNC, 0666, BINARY);
+>  
+> BINARY: would be an enum value.
 
->> "via the refdb" -> "via the refs API" or something here and on the
->> title, and possibly elsewhere in the proposed log messages and
->> in-code comments in patches in this series, as I've never seen a
->> word "refdb" used in the context of this project.
->> 
->> I agree it is bad manners to be intimate with the implementation
->> details of the how files-backend stores HEAD and ORIG_HEAD.
->
-> Hmm, I have never thought of the 'pseudo-refs' as being a part of
-> the 'reference database' at all. ;)
+Would it work if you always open the file as BINARY? And let's all the
+conversion done by git via some configs (core.encoding?)?
 
-Me neither, but once you start thinking about getting rid of the
-need to use one-file-per-ref filesystem, being able to maintain all
-refs, including the pseudo refs, in one r/w store backend, becomes a
-very tempting goal.  From that point of view, I do not have problem
-with the idea to move _all_ pseudorefs to reftable.
-
-But I do have reservations on what Patrick, and the code he
-inherited from Han-Wen, calls "special refs" (which is not defined
-in the glossary at all), namely, refs.c:is_special_ref() and its
-callers.  Neither am I very much sympathetic to the hardcoded list
-of "known" pseudorefs, refs.c:pseudorefs[].  I cannot quite see why
-we need anything more than
-
-    any string that passes refs.c:is_pseudoref_syntax() is a
-    pseudoref, is per worktree, and ref backends can store them like
-    any other refs.  Many of them have specific meaning and uses
-    (e.g. HEAD is "the current branch").
-
-Enumerating existing pseudorefs in files backend may need to
-opendir(".git") + readdir() filtered with is_pseudoref_syntax(),
-and a corresponding implementation for reftable backend may be much
-simpler (because there won't be "other cruft" stored there, unlike
-files backend that needs to worry about files that are not refs,
-like ".git/config" file.
-
-> We seem to have pseudo-refs, special pseudo-refs and (recently)
-> ex-pseudo-refs!
->
-> This patch (well series) changes the 'status' of some, *but not all*,
-> pseudo-refs; some graduate to full-blown refs stored as part of *a*
-> reference database (ie reftable).
-
-Yeah, that leaves bad taste in my mouth, too.
+-- 
+Danh
