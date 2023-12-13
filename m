@@ -1,86 +1,110 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IAxVLc0y"
-Received: from mail-yw1-x1133.google.com (mail-yw1-x1133.google.com [IPv6:2607:f8b0:4864:20::1133])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 605C719B
-	for <git@vger.kernel.org>; Wed, 13 Dec 2023 06:01:46 -0800 (PST)
-Received: by mail-yw1-x1133.google.com with SMTP id 00721157ae682-5e297a5799aso8652757b3.0
-        for <git@vger.kernel.org>; Wed, 13 Dec 2023 06:01:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1702476105; x=1703080905; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6FSTVtuUNGssj7bHqSlPpebQLI4Ka+uymU7y1nahHOA=;
-        b=IAxVLc0yWMo/PNnPy2sckTE91LwsCtiIvzMKxSpZ8HXvHnkDHFEb2OWqbeIU75PI4g
-         UcyEAcFDMV9hHhVn0pdROQ/+Ly2YRORgSx5YtHD89mk8Ycff/SI+V6MwAT7zg17XErA0
-         /KGhGsqxYFIKz9Zccu05dP6Cn4PLGhq8PEUgkjQcBbUB6Y1ThJIqWn9QP0cl9CNm1ByO
-         m7jzzckkXQYARXyogRu1NUsZ6+JxzZZ7DPmzzLD6H8n+cwniuQhTefqmLXMFgSdRNUtX
-         zUr5pyXGz8P6kzGJcckUmSjRaFtzEiT8RUkT7k8oCjRc2ojwoKK4jfKgC6LEgQV3oyNX
-         FnIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702476105; x=1703080905;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=6FSTVtuUNGssj7bHqSlPpebQLI4Ka+uymU7y1nahHOA=;
-        b=tJFRaZJ1SJVgWDwFbtgGaja8+1sbgfKj6C0PuiLqIG09UH22U+YWB44yA82v24HezV
-         4PBg4WqUDrI4zrAyC9z0MbNdARQnn0QlGkXDoECrGS2YmMHR2zgjR2sXto41VtNHJTrE
-         ltI1BOlCtBHnYBB3DSFCSPHd1EkCwHSK1ed3afEP/Fgq3d/xV2/+VdM7Gf8C9m+7P7Jc
-         iclYz1aCafuIUpZV8/Gxf05F81HjGwIuehfYIi1U1hqLR3N8MVfEPRw3I6G+KythajkJ
-         6mEM4egVUlxSg/kKcImp9nQE7x5nAzx3MHgSB4Es6h4Hv58V8kO8WNmR8DugzTgMpem0
-         +V7Q==
-X-Gm-Message-State: AOJu0YxB7ZUSuXOoN9dzyJf5AhOCHZuktGcTJkDkq61ReODFgTe3nCRC
-	zfSExZ+Snomf4uhphPjM/PRiqvUFfk1r1mUgg1U=
-X-Google-Smtp-Source: AGHT+IF+Mc8GpdkzcmA1+gSiMn7gsd4p+zd4E93NP/h1j0rQgkBTfK78NToIfv4YQITNXfdZvZG6/DwSsYXkOGdXK3o=
-X-Received: by 2002:a81:8786:0:b0:5d7:1941:ab1 with SMTP id
- x128-20020a818786000000b005d719410ab1mr6089770ywf.76.1702476104962; Wed, 13
- Dec 2023 06:01:44 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="lVIM2iH4"
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BCA9B0
+	for <git@vger.kernel.org>; Wed, 13 Dec 2023 06:54:08 -0800 (PST)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 73CB332F2E;
+	Wed, 13 Dec 2023 09:54:08 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=L0baNStqwGB9h1nuMd128m+DtEbj2R+c3rMeHN
+	xD6uY=; b=lVIM2iH4Q/2WRt9zNsI1FwURGGWrMFvHqgQc8rrqCdt8pDklYD7xVI
+	dfW+pWXyNnj5RLEh8qBwfEUNE0OYvTw74Fdyz8wsMujD9apyarrVR7eS7LmG84pZ
+	6TqsWGbiFhfn+SO1L1uRGBWeiGbgS+5HbghrnD3Gy2pPAPeeSwVUc=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 6BD6532F2D;
+	Wed, 13 Dec 2023 09:54:08 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.193.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0D65532F2C;
+	Wed, 13 Dec 2023 09:54:05 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org,  Taylor Blau
+ <me@ttaylorr.com>,  Carlos =?utf-8?Q?Andr=C3=A9s_Ram=C3=ADrez_Cata=C3=B1o?=
+ <antaigroupltda@gmail.com>
+Subject: Re: [PATCH] mailinfo: fix out-of-bounds memory reads in
+ unquote_quoted_pair()
+In-Reply-To: <ZXlYIZ0Hb1kN84NU@tanuki> (Patrick Steinhardt's message of "Wed,
+	13 Dec 2023 08:07:21 +0100")
+References: <20231212221243.GA1656116@coredump.intra.peff.net>
+	<ZXlYIZ0Hb1kN84NU@tanuki>
+Date: Wed, 13 Dec 2023 06:54:03 -0800
+Message-ID: <xmqqy1dynofo.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAMP44s3qa_CoM_4--UmwYQTgO-5dHh6=jogH-rxF7OXEWr53Lw@mail.gmail.com>
- <802ca62b9d9672e9553ab064452d46e0d72dfc76.1702116416.git.zhiyou.jx@alibaba-inc.com>
- <xmqqcyvfmccr.fsf@gitster.g>
-In-Reply-To: <xmqqcyvfmccr.fsf@gitster.g>
-From: Jiang Xin <worldhello.net@gmail.com>
-Date: Wed, 13 Dec 2023 22:01:33 +0800
-Message-ID: <CANYiYbGUo6TsOBHLGNF7onRgM1fsE3CU3=8=vwJsiuXnsnuLog@mail.gmail.com>
-Subject: Re: New attempt to export test-lib from Git, maybe Sharness2?
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jiang Xin <zhiyou.jx@alibaba-inc.com>, 
-	Mathias Lafeldt <mathias.lafeldt@gmail.com>, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 75E770B8-99C7-11EE-B637-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-On Sun, Dec 10, 2023 at 2:59=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
-> Is it a viable option to stick to the name "test-lib" (or possibly,
-> "git-test-lib" to make it more prominent to say where it came from)?
+Patrick Steinhardt <ps@pks.im> writes:
 
-Will rename the project to "git-test-lib".
-
-> If you do not plan to coordinate with those who work on (the remnant
-> of) the original sharness based on an ancient version of our test
-> framework, and do not plan to actively transition its users to your
-> version, it is less confusing if you named yours differently, as it
-> avoids hinting that your version is a successor of theirs.
+>>  static const char *unquote_quoted_string(struct strbuf *outbuf, const char *in)
+>>  {
+>> -	int c;
+>>  	int take_next_literally = 0;
+>>  
+>> -	while ((c = *in++) != 0) {
+>> +	while (*in) {
+>> +		int c = *in++;
+>>  		if (take_next_literally == 1) {
+>>  			take_next_literally = 0;
+>>  		} else {
 >
-> I am not sure if reusing the history of our project verbatim using
-> filter-repo is really a good way to help those who are interested in
-> the test framework, by the way.
+> I was wondering whether we want to convert `unquote_quoted_pair()` in
+> the same way. It's not subject to the same issue because it doesn't
+> return `in` to its callers. But it would lower the cognitive overhead a
+> bit by keeping the coding style consistent. But please feel free to
+> ignore this remark.
 
-If all historical commits were squashed, it would be difficult to
-track future changes of test-lib in the Git project. Futhermore, who
-will be the author of the squashed commit?
+Yeah, I was wondering about the value of establishing a pattern that
+can be followed safely and with clarity, too.  I also briefly
+wondered how bad if we picked the "compensate for the increment done
+by the last iteration before leaving the loop by returning (in-1)"
+idiom (which Peff called "a hacky way") to be that universal
+pattern, but this bug was a clear enough evidence that it does not
+work very well in developers' minds.
 
-> and unedited filter-repo result will describe such a commit
-> primarily to explain why the changes in the commit was made on Git
-> side.  Most of the changes described in the resulting commit message
-> are discarded by filter-repo and the resulting history becomes hard
-> to follow.
+I actually had trouble with the proposed update, and wondered if
 
-One solution is to add notes in the README file and users can refer to
-the commit history of the git project.
+-	while ((c = *in++) != 0) {
++	while ((c = *in)) {
++		in++;
+
+is easier to follow, but then was hit by the possibility that the
+same "we have incremented 'in' a bit too early" may exist if such
+a loop wants to use 'in' in its body.  Wouldn't it mean that
+
+-	while ((c = *in++) != 0) {
++	for (; c = *in; in++) {
+
+would be even a better rewrite?
+
+Enough bikeshedding...
+
+> Another thing I was wondering about is the recursive nature of these
+> functions, and whether it can lead to similar issues like we recently
+> had when parsing revisions with stack exhaustion. I _think_ this should
+> not be much of a problem in this case though, as we're talking about
+> mail headers here. While the length of header values isn't restricted
+> per se (the line length is restricted to 1000, but with Comment Folding
+> Whitespace values can span multiple lines), but mail provdiers will sure
+> clamp down on mails with a "From:" header that is megabytes in size.
+
+Good thinking, and I think Peff's iterative rewrite would be a good
+way to deal with it if it ever becomes an issue.
+
+> So taken together, this looks good to me.
+
+Thanks, both, for writing and reviewing.
+
