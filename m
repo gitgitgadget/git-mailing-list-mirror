@@ -1,41 +1,41 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OwlqRqaD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gCovFpNb"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="prQnZY4+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C9gBwr3x"
 Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B65C10F
-	for <git@vger.kernel.org>; Tue, 12 Dec 2023 23:28:51 -0800 (PST)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.west.internal (Postfix) with ESMTP id 59EC73200A2C;
-	Wed, 13 Dec 2023 02:28:50 -0500 (EST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F86DBD
+	for <git@vger.kernel.org>; Tue, 12 Dec 2023 23:38:42 -0800 (PST)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailout.west.internal (Postfix) with ESMTP id ECBFA3200A80;
+	Wed, 13 Dec 2023 02:38:38 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Wed, 13 Dec 2023 02:28:50 -0500
+  by compute6.internal (MEProxy); Wed, 13 Dec 2023 02:38:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1702452529; x=1702538929; bh=ztioVCfcIv
-	O/i+gfZROXIBAP0LNn4Z8GGcqzcquT0h8=; b=OwlqRqaDOKiVJhcqTCT+Vf2+b8
-	cQAqzjMYEn2miXu3e+jjW20cLgB/PwaXkQKvc9oacnzoMIGFfViIqdCijr4ju9WU
-	cYSbZYyX+zlUeH6XESU4YrWyxF8TL+Nh3WRIvUYVami1UIAEPMd/nSmfU+1A8uMt
-	nzWpDI/6jnWfYQTp/8uRkMOzZ1KYvAHwkmHmTbqvFUcMA6TGz2ns/Z3RnP8uQPiE
-	fZjf4jfj7vaEjCA76G3mx2OP1We4Vl4w/6+kkOcqhbekEpRaQYqOv6PfzMClTAf7
-	8rBQ0ZL+XH5LoI0JAZl9qb64rkFcNSxqJ950Z2TVGD3yEqlVYnmyFQX68nww==
+	:subject:to:to; s=fm1; t=1702453118; x=1702539518; bh=gjRffRiznd
+	qe03G+fMArBECUM9ohN+noy4caCPpfnpc=; b=prQnZY4+g9gxfKnf6fCKH3W+FU
+	yYyt50XZLsJY8i6gzjEAnkaol8oF904EFFNH7txqoYp0Jqjqb4hdUdzrBQzSqIBD
+	UjGbpdQ2dkXw0qMCTZvSNA++8srCJhmwq7/hlcKWIEZAJkFCu5+yXadlgv3rijxm
+	evwyFoFTgrEjbxu7m2ktHTobFx5xTWg+AHcbZY/+rLEkmTgGJd15R6kbiTEiZLEc
+	xbVa8ZDEAo+G29FLkq71xanBeIeWn8BgoOXEQB9Kok5gZj1ttadne6R8yDl6Wrw/
+	hc2LMRts7EmEw+KZ+wJjFU0mRJ1sO4FiHSQdHoylt5VRcWygCnNlmz+7oewA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1702452529; x=1702538929; bh=ztioVCfcIvO/i+gfZROXIBAP0LNn
-	4Z8GGcqzcquT0h8=; b=gCovFpNbT4b3TKH+hFgd3k/9X5/XXduTzrAW2HgYmfVp
-	rCbXGmZNdwsftaYl2j+XEwR9X0W2JRbR0SBnAzUtS3wEK64qr2oeBalagrzB1WoK
-	ieeZXMCqoV9P9AFaTVVxX3K9NjAmuLHhmMjzaJpRvqT/4aXEAMMmIDV25wSB5gOl
-	N0cK/FTTRF8MeTvXB64dhTW0PTqiTNtSUDi6kwkqCbrgLcQ95xzBCacQQaR/p1z1
-	t6PNsV/2a2GA0pgG8zyNFjPoioA2TnxFcqPKgQauVropjEH1s2waq9pnBM6r1yeW
-	OxiOH+R8LyLwUfeI0s+xxaF9scWRofG6l/9/yER/mQ==
-X-ME-Sender: <xms:MV15ZYdxPWdbaZi509USHwvLqY2jcJg5Iw_CRiBTAV41qvqXXKtDoA>
-    <xme:MV15ZaO8kivQNkbYmXdqEdw7Z5zPqT3561QqjhWYq8LZ849fCC5NbsxkYLaHAl-FT
-    2XBNcRHzW6G1GN7dw>
-X-ME-Received: <xmr:MV15ZZgbmZpbBUL5mgvqoLoQm4kmQrwdUYbMScxwws4IYRihImQofmRT8ACMGHOwPjkLoF_vjcqqOoFfRx1GUuYR7CUtWjsU1qGokIeeYvh0Lg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudelhedguddtlecutefuodetggdotefrod
+	fm1; t=1702453118; x=1702539518; bh=gjRffRizndqe03G+fMArBECUM9oh
+	N+noy4caCPpfnpc=; b=C9gBwr3xlkvSNoTOYh+wYYfPAOQjxYqnEXicKz2rjeG2
+	Cx0lgok3zd6JRHLXDYLFl+k88HGI6/L2NUeJTmppqv60MUajnyP0W++8dgjj+u80
+	sxrUNb+HuHBdJGbyrHuCCu5dZnJKZq9pCCcnhXHbbL0O5Yx3erZb67G5XBcKKRQm
+	M1he0kV4Qsq6TmvNe/P4yE7qVt//E5d9tZ8OAyOPkBtDOuZPqa/uilku4pf0kqb1
+	EOXf8m7cDUL8TC4Qengi34iwOLb154M2r89PtlfnXptYv7I12lIAtoszaXOxpQpl
+	JtxEEIYaM1aEM319NWZE0+ya9mlq6ut2VIfEkfFQhQ==
+X-ME-Sender: <xms:fl95ZZuKC9iqAlcXzRZblID-yuZv4w4BEpN07_rYpUKKUZorCt-AhQ>
+    <xme:fl95ZSdiS9TBhGJavorpG4z2rohU8uAn1Kjnqbr5fgOEp-LtITr16-X9n8Es-LVKC
+    TQJ1PwGLN3I_LwIMg>
+X-ME-Received: <xmr:fl95ZcwsnGMAu44G0WmI6hjeRH5-ujy0BhnX4NtMKw_rS-ZY8mBVZslquQUq91rxWmyrRLTK7pcqtHT8N9-5b1F0Z56rdZYIXuT0xd_YWlF3jA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudelhedgudduudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
     enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
@@ -43,28 +43,30 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudelhedguddtlecutefuodetgg
     gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
     teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
     esphhkshdrihhm
-X-ME-Proxy: <xmx:MV15Zd-7_uaclxhLP3ZfC7MTqhQWTfK6xvP1CCpg63azESOMPKJWJA>
-    <xmx:MV15ZUscGAedq_93J6TUsG1oxPnUvTgJBoBAdoftH2Auh--gBqQ7nQ>
-    <xmx:MV15ZUEKuk7FCCAJyzU2oF2nmLbxNjDImWZKE95EJj4os9NDLsKc2Q>
-    <xmx:MV15Zd5HUExUn6r_LrhSHozto0Zh4NSb5He8ydONyNMexLoyMDlMjw>
+X-ME-Proxy: <xmx:fl95ZQPHsTJGFye-a8Y5W7-MlZInarn2tr_gVzIfBopHxr2qRJ_deQ>
+    <xmx:fl95ZZ8yhpvr3gftyMrfK1XIBU-PAbzuBglRcbgwGNQWMm4gFqScSA>
+    <xmx:fl95ZQUEGdeusAXw7o0jAOSq688ZaF5NxTfn_rmZkYfENiZKuUsdSA>
+    <xmx:fl95ZUYFGtlBQKRMt8ysJQivtCNa5U_Ks_dAqRlhoGve29ikVnFiTQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 13 Dec 2023 02:28:48 -0500 (EST)
+ 13 Dec 2023 02:38:37 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 75d75e2f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 13 Dec 2023 07:27:06 +0000 (UTC)
-Date: Wed, 13 Dec 2023 08:28:45 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id b0f721e5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 13 Dec 2023 07:36:54 +0000 (UTC)
+Date: Wed, 13 Dec 2023 08:38:33 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org,
+	Taylor Blau <me@ttaylorr.com>,
 	Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v2 2/4] refs: propagate errno when reading special refs
- fails
-Message-ID: <ZXldLTofO3tt5JWo@tanuki>
+Subject: Re: [PATCH v2 1/4] wt-status: read HEAD and ORIG_HEAD via the refdb
+Message-ID: <ZXlfeWtDgr1GQFCL@tanuki>
 References: <cover.1701243201.git.ps@pks.im>
  <cover.1702365291.git.ps@pks.im>
- <24032a62e54fb37dad46c3ede7151efc8a7a8818.1702365291.git.ps@pks.im>
- <xmqqfs07qi66.fsf@gitster.g>
+ <1db3eb3945432964aabe1c559db4c3ac251e83fd.1702365291.git.ps@pks.im>
+ <xmqqle9zqidj.fsf@gitster.g>
+ <ac84b1b9-2381-406a-b459-6728bf9f8704@ramsayjones.plus.com>
+ <xmqq34w7os53.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -72,68 +74,110 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="h/le15IbdVB65P00"
+	protocol="application/pgp-signature"; boundary="fOzE1TUqu6hIohFv"
 Content-Disposition: inline
-In-Reply-To: <xmqqfs07qi66.fsf@gitster.g>
+In-Reply-To: <xmqq34w7os53.fsf@gitster.g>
 
 
---h/le15IbdVB65P00
+--fOzE1TUqu6hIohFv
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Dec 12, 2023 at 12:28:49PM -0800, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Tue, Dec 12, 2023 at 04:36:24PM -0800, Junio C Hamano wrote:
+> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 >=20
-> > Some refs in Git are more special than others due to reasons explained
-> > in the next commit. These refs are read via `refs_read_special_head()`,
-> > but this function doesn't behave the same as when we try to read a
-> > normal ref. Most importantly, we do not propagate `failure_errno` in the
-> > case where the reference does not exist, which is behaviour that we rely
-> > on in many parts of Git.
+> >> "via the refdb" -> "via the refs API" or something here and on the
+> >> title, and possibly elsewhere in the proposed log messages and
+> >> in-code comments in patches in this series, as I've never seen a
+> >> word "refdb" used in the context of this project.
+> >>=20
+> >> I agree it is bad manners to be intimate with the implementation
+> >> details of the how files-backend stores HEAD and ORIG_HEAD.
 > >
-> > Fix this bug by propagating errno when `strbuf_read_file()` fails.
+> > Hmm, I have never thought of the 'pseudo-refs' as being a part of
+> > the 'reference database' at all. ;)
 >=20
-> Hmph, I thought, judging from what [1/4] did, that your plan was to
-> use the refs API, instead of peeking directly into the filesystem,
-> to access these pseudo refs, and am a bit puzzled if it makes all
-> that much difference to fix errno handling while still reading
-> directly from the filesystem.  Perhaps such a conversion happens in
-> later steps of this series (or a follow on series after this series
-> lands)?
+> Me neither, but once you start thinking about getting rid of the
+> need to use one-file-per-ref filesystem, being able to maintain all
+> refs, including the pseudo refs, in one r/w store backend, becomes a
+> very tempting goal.  From that point of view, I do not have problem
+> with the idea to move _all_ pseudorefs to reftable.
 
-Yes, that's ultimately the goal. The patch series here is only setting
-the stage by recording what we have, and addressing cases where we are
-inconsistently accessing refs via the filesystem _and_ via the ref API.
-Once this lands I do want create a follow up patch series that converts
-all refs to be non-special to the extent possible.
+Yes, we're in agreement.
 
-I say "to the extent possible" though because in the end there will be
-two refs that we must continue to treat specially: FETCH_HEAD and
-MERGE_HEAD, which we were treating special before this patch series
-already. Both of these are not normal refs because they may contain
-multiple values with annotations, so they will need to stay special.
+> But I do have reservations on what Patrick, and the code he
+> inherited from Han-Wen, calls "special refs" (which is not defined
+> in the glossary at all), namely, refs.c:is_special_ref() and its
+> callers.
+
+I do not want to add "special refs" to the glossary because ultimately
+they should go away, with two exceptions: FETCH_HEAD and MERGE_HEAD.
+Once we're there we can of course discuss whether we want to explicitly
+point them out in the glossary and give them a special name.
+
+> Neither am I very much sympathetic to the hardcoded list
+> of "known" pseudorefs, refs.c:pseudorefs[].  I cannot quite see why
+> we need anything more than
+
+
+>     any string that passes refs.c:is_pseudoref_syntax() is a
+>     pseudoref, is per worktree, and ref backends can store them like
+>     any other refs.  Many of them have specific meaning and uses
+>     (e.g. HEAD is "the current branch").
+>=20
+> Enumerating existing pseudorefs in files backend may need to
+> opendir(".git") + readdir() filtered with is_pseudoref_syntax(),
+> and a corresponding implementation for reftable backend may be much
+> simpler (because there won't be "other cruft" stored there, unlike
+> files backend that needs to worry about files that are not refs,
+> like ".git/config" file.
+>=20
+> > We seem to have pseudo-refs, special pseudo-refs and (recently)
+> > ex-pseudo-refs!
+> >
+> > This patch (well series) changes the 'status' of some, *but not all*,
+> > pseudo-refs; some graduate to full-blown refs stored as part of *a*
+> > reference database (ie reftable).
+>=20
+> Yeah, that leaves bad taste in my mouth, too.
+
+I'm taking an iterative approach to things, which means that we're at
+times going to be in an in-between state. I want to avoid changing too
+many things at once and overwhelming potential reviewers. But I realize
+that I should've done a better job of explaining that this patch series
+is not the end goal, but rather a step towards that goal.
+
+The patch series at hand merely records the status quo and rectifies any
+inconsistencies we have with accessing such "special" refs. The natural
+next step here would be to reduce the list of special refs (like e.g. we
+do in patch 4) so that in the end it will only contain those refs which
+really are special (FETCH_HEAD, MERGE_HEAD).
+
+Please let me know in case you strongly disagree with my iterative
+approach, or whether the issue is rather that I didn't make myself
+sufficiently clear.
 
 Patrick
 
---h/le15IbdVB65P00
+--fOzE1TUqu6hIohFv
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmV5XSwACgkQVbJhu7ck
-PpRSFw//fsizReFc7Ol3dELgBMArreUmrA1IgK7jib75MxwCBRlL+96f/ZqMyQPO
-iqRUj8qWL4LaQOBNYx964qzU2D2HSP501lgXgXEiUo36lsTQPj68yuVGQpSaKDcC
-mTtsq59oyjsrkgutMgfaRvDFDNtXuJ8GF5uqsT6GGFvVFdthcuVbu3CE0VmilD/c
-qy1VXFVJCapL0/VU9+on6qL4NQcLrNTa0DG4c8m6qBPQ3+ZqMAF2WL4MJ7q5+fbw
-AS2Raq+Bqao75mNiTxE/uI63WfYPvsq8khkVIM/NyfjWMOH0q9nnXdXiXURhPM79
-D6KxZqEKwrsm7F1c2WVoUg/0pMn0VWS5e8GH00UxN/NH6OducVxpbkJLeg8ba1ob
-uvFzm5pROi1UAJxsZVAGJtorV3XjYF2J+OH0IxB4yD14sRHDzmGMcNqoeOhW/KAN
-5v9Nlladx5O7Bf4G4HvFFNX6ysCch2KoSPQgDkiKwSGpbBpUeDuULNJcMMaROFlG
-7Q0FivoqbYu4oPU4NsgM0wvWQYTpUrDyAWjaei/2IT/gdQl4KSosk2CXBVbanpxY
-xCzUrFdl11HSGDjGjH8zWeYNN0luEb6O31vgJsS84zumASdmISGxzAqlO9IEK7y+
-yWfpkmorr3H/YqbNyRMQOd6R9y8gQhyTeuUp8FbDGlEX4fmj5I4=
-=Mv+u
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmV5X3gACgkQVbJhu7ck
+PpRxOA/7BBdzExf9iPW+40iNmNjcz7GN86LBkQttcLgjszUGhLm3hzFMu6GlXHg7
+UCVEyhXCZ3kjSb/sc5fMCD81QtX3ucHRZN/8DoL3Hm45iXm2VF6z8ZsSB2v2ygWN
+6Noa89+p3u77dJiIJoYwXYJOwvNn07cBWNHPjxcW7OdnRI03PX/hMJ2gT3YQabVC
+ZPuyMwPtBtI+SzwOerIJi2LYemQbgr8CAIlJ4iJfWKleAauU2CfI5Sozpzdhs9GY
+X3G00ajlOrZJF6OrhAQ99UozmQcYTxJSFqPInVYAIBg55kuNsSpIMi1GWsGXSg2J
+3PMlDd8yDFRf48kqebgpd8EHdayuyS7Gs8hHGI9aKb/YHj2mAiY6e7oda0HeXoAu
+24X4luFl1WEITtXLCaMXPxozST1dhvsQHDMIR7WDEYSCxkqt5U6N1zuG3H7Hzx6/
+tOqzgOkJLn6l/cr0of+z00TmRCohHeoEDDlOF1ceJB+IFDkcHBaHwo5kejGXRbBK
+XcD9Rl5V9orUGNb3JZdgzD3wRx5vdIsg1XK3jRr/4yzjIfvXqpChf8SDo3VPUTc+
+A1sPCJCH27jdlOjteQZnQ2IEfGFTYzctv2m0ywuDthGL8aaoDJbhM4SDcclQ2aCc
+xGj+VwQ04VWQTAO+5FNqA1YEMO9TKJ/NY+wU2NJN70pIZY4zMXo=
+=6dal
 -----END PGP SIGNATURE-----
 
---h/le15IbdVB65P00--
+--fOzE1TUqu6hIohFv--
