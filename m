@@ -1,71 +1,75 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="km801F/y"
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F3A2F4
-	for <git@vger.kernel.org>; Wed, 13 Dec 2023 01:54:34 -0800 (PST)
-Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2ca00dffc23so84824641fa.2
-        for <git@vger.kernel.org>; Wed, 13 Dec 2023 01:54:34 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GzU7PASk"
+Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFB5A1AB
+	for <git@vger.kernel.org>; Wed, 13 Dec 2023 03:07:55 -0800 (PST)
+Received: by mail-yb1-xb2c.google.com with SMTP id 3f1490d57ef6-db981947bf9so1038707276.0
+        for <git@vger.kernel.org>; Wed, 13 Dec 2023 03:07:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1702461272; x=1703066072; darn=vger.kernel.org;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ktMZFq6CTm/6OBr5JACmsDlnhqSrArSojtdhkLoVF7E=;
-        b=km801F/ycFoL/Qe1rVGKmpRuW/Vnem7eAwwM+xVpzQJWOxwsqF2oGuoY89mFTqYiJF
-         mn1NI8LfBy1Q6AY7o3VQrleXzRaAXNaAdUDTL/ddWWpgLd0uQ8RVbvueAc+v9ybBGHv/
-         BPMiomZz4Xz/fexra9hnqIRLpF3zjpyPq3AnvASEeLcsV/KSzf7ZSylh1isUsOdwuy+L
-         HnaeGWp+tt/HmTglpyB6KPncO1JK7gvmwQV96qvRCK6hyqfVf1Ur7xjDhjCBgMWBWh3o
-         b7F7IJm/a6iTwapHoNT9QmTZ0zWp22xdhSePYCTq3ybwbOVmnrra9nonezm9N8v3YGGl
-         TY0w==
+        d=gmail.com; s=20230601; t=1702465674; x=1703070474; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=AkgApsKvkM4Xpyzzmn5QxDHQH4DgmwKWj1iJBwEzfAo=;
+        b=GzU7PASkRl73lLXY4pIb3Ep83y+AeYmOTyVZUYXi8SuC2+N4VDaHak3ZXepvzF0dVp
+         lot5aZQ/dDlKTtdsuVyKTnK0C7/+HpbL8UKaXPwPoS8HQCcR8eJnv0nZWLM2qkzieiAl
+         SrBo3DVtOcDNjZhkBLdg5METcfJUOcRuEzE+y+8tPppYeDYZeE1pLsTlVDziIERpNDb/
+         h4b2b838her9kfTAh+IpCWDIdkzU8IM8Lj52ua/HlI6YxXL8Kwh88KmbSZfVw4AFvN5v
+         BBrLbmuwKAz/Tyms1Wk7sVRqZeeMDKJ/ZcfVaOlgwFKxISDFJBcWHL4E5WpXa+363Bjq
+         tMfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702461272; x=1703066072;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ktMZFq6CTm/6OBr5JACmsDlnhqSrArSojtdhkLoVF7E=;
-        b=FwxqspM6VLWARmz+sxfRMoOeIt4FJtHB6iJ6C8miy6K9qNcRaWVgHff1vxnR6JIGtp
-         Ittj3bXK7l7cM8NOGuiATo/5nCN6KROQx6scqPKpjeKVx8nJph5Yhq02FzgRQnBVEjby
-         k5tgw3YEuUrRyE1rzAZPMnfdgQIzznfsb1dbpPkAf4iF9M5ojo4vXW4Y6bVLqmx9GLiZ
-         V6QE/9yc6TZNQDyxSbNmA66TYqwJaoEX1SZkvA33bp2ur1O12ch7EU/ZuY/64ONy6aI8
-         FS7GLzY2ydatBeAfUEXAWk3/6S4XjCgnqELw246FMb4d2RUeNirT/3DgKCkJLNO8L1IW
-         xDpw==
-X-Gm-Message-State: AOJu0YyPzZb/W3yg4kifW0DhzwCRYh03WsCPpd4xFUAVxj95qNL1xd6A
-	5slBbOPgNhKSCxaH69pW+I+37AEzKQA=
-X-Google-Smtp-Source: AGHT+IHzHG6Gtcdlcj/X3fDEApHm0yxqWlf22Ztht8k8aHPlNf4UAdBkpNAd2FgWaCcXXalBMq+VOQ==
-X-Received: by 2002:a2e:a103:0:b0:2cb:54a9:77d6 with SMTP id s3-20020a2ea103000000b002cb54a977d6mr4257722ljl.7.1702461272194;
-        Wed, 13 Dec 2023 01:54:32 -0800 (PST)
-Received: from [192.168.0.5] ([62.33.138.36])
-        by smtp.gmail.com with ESMTPSA id m19-20020a2e97d3000000b002c9f90021ebsm1785311ljj.29.2023.12.13.01.54.31
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Dec 2023 01:54:31 -0800 (PST)
-Message-ID: <71f2b28b-3e27-4773-8408-2f4c13757b73@gmail.com>
-Date: Wed, 13 Dec 2023 12:54:30 +0300
+        d=1e100.net; s=20230601; t=1702465674; x=1703070474;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=AkgApsKvkM4Xpyzzmn5QxDHQH4DgmwKWj1iJBwEzfAo=;
+        b=tWmDAhuesuw+HtJWxakzsWSM8OqayX42oec2zp8sKRTycDLLX9ANg52im7gDjx3BKb
+         PfnDvJwhlyEdh5GGIilLyB9JhcNQ0pkB3DEph1xhEevb+ZYuIcxE1+B7IYCk1FSYO9FO
+         qeJQeLc+XdvrwOVYXJTP6XwVDfgo7W+qI8bOD1UleRGZT1iwDYiKwsucNoFvNzPxY5Qy
+         /u5AzWeEnUw37cYMU45nz6q+z/C9npk3rKEC8fXosuFsdBwJGOYfGKj+QjzHpUvPcQq+
+         6/Bj1Xf1XLXUllXPFjWuFTgZCH8EKMSCxH88Tk9/uUUF5zeOpEOba2/7rMSLJ7OqtVih
+         qSnA==
+X-Gm-Message-State: AOJu0YxlB3TvzF+AoHM8Ss9LB5I03qnbqwnQ//NzvORGZRXKAiKNuGsJ
+	K227QEylLMJKwDkHvBKyuG5aNAygGqNzIXp2NZn9Keu5SL5hog==
+X-Google-Smtp-Source: AGHT+IHjqdmawDDF+Kpa0E2Pw6nR1SLyyWagXWFCAJ1zaJcVhoSSYLAHEUB7zOVZ0OG+PZrnmaePuzi+g7iSdx822SY=
+X-Received: by 2002:a5b:7c8:0:b0:daf:f747:4a43 with SMTP id
+ t8-20020a5b07c8000000b00daff7474a43mr7658054ybq.0.1702465674084; Wed, 13 Dec
+ 2023 03:07:54 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
+From: Alexey Murz Korepov <murznn@gmail.com>
+Date: Wed, 13 Dec 2023 15:07:43 +0400
+Message-ID: <CAL5pyKseyxEfLbgEkDHSqWQVLGkrrcZU=BzRx2zZOaCdQbMaoA@mail.gmail.com>
+Subject: Allow adding files from git submodule to parent git repo if they are
+ in .gitignore in the submodule
 To: git@vger.kernel.org
-From: Alexander Zhirov <azhirov1991@gmail.com>
-Subject: Communication channel interruption
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="UTF-8"
 
-When cloning a repository from GitHub, I have a channel break, although 
-the connection is stable. What could be the problem?
+Git submodules are pretty often used to "import" some external git
+repository into your git repository, to not manage its files in your
+git tree, that's good.
 
-# git clone https://github.com/Thinstation/thinstation.git
-Cloning into 'thinstation'...
-remote: Enumerating objects: 79839, done.
-remote: Counting objects: 100% (535/535), done.
-remote: Compressing objects: 100% (319/319), done.
-error: RPC failed; curl 92 HTTP/2 stream 5 was not closed cleanly: 
-CANCEL (err 8)
-error: 7473 bytes of body are still expected
-fetch-pack: unexpected disconnect while reading sideband packet
-fatal: early EOF
-fatal: fetch-pack: invalid index-pack output
+But very often we need to add some file to that submodule and manage
+it in our local git repository, and this file is usually in .gitignore
+in the submodule's git.
+
+So, the example task is:
+
+Copy a mysubmodule/config.example.yaml to mysubmodule/config.yaml
+(which is in .gitignore in the mysubmodule), make local changes, and
+store it in the local (parent) root git repo.
+
+But the problem is that we can't add this mysubmodule/config.yaml file
+to our root git repository, because receiving an error:
+```
+$ git add -f mysubmodule/config.yaml
+fatal: Pathspec 'mysubmodule/config.yaml' is in submodule 'mysubmodule'
+```
+But I see no problems with doing this, if the file is in .gitignore of
+the mysubmodule submodule.
+
+So, let's discuss the approach of how we can allow this in git?
+
+Or will be glad to hear and discuss alternatives and workarounds for this task.
