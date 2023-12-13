@@ -1,75 +1,71 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GzU7PASk"
-Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFB5A1AB
-	for <git@vger.kernel.org>; Wed, 13 Dec 2023 03:07:55 -0800 (PST)
-Received: by mail-yb1-xb2c.google.com with SMTP id 3f1490d57ef6-db981947bf9so1038707276.0
-        for <git@vger.kernel.org>; Wed, 13 Dec 2023 03:07:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1702465674; x=1703070474; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=AkgApsKvkM4Xpyzzmn5QxDHQH4DgmwKWj1iJBwEzfAo=;
-        b=GzU7PASkRl73lLXY4pIb3Ep83y+AeYmOTyVZUYXi8SuC2+N4VDaHak3ZXepvzF0dVp
-         lot5aZQ/dDlKTtdsuVyKTnK0C7/+HpbL8UKaXPwPoS8HQCcR8eJnv0nZWLM2qkzieiAl
-         SrBo3DVtOcDNjZhkBLdg5METcfJUOcRuEzE+y+8tPppYeDYZeE1pLsTlVDziIERpNDb/
-         h4b2b838her9kfTAh+IpCWDIdkzU8IM8Lj52ua/HlI6YxXL8Kwh88KmbSZfVw4AFvN5v
-         BBrLbmuwKAz/Tyms1Wk7sVRqZeeMDKJ/ZcfVaOlgwFKxISDFJBcWHL4E5WpXa+363Bjq
-         tMfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702465674; x=1703070474;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=AkgApsKvkM4Xpyzzmn5QxDHQH4DgmwKWj1iJBwEzfAo=;
-        b=tWmDAhuesuw+HtJWxakzsWSM8OqayX42oec2zp8sKRTycDLLX9ANg52im7gDjx3BKb
-         PfnDvJwhlyEdh5GGIilLyB9JhcNQ0pkB3DEph1xhEevb+ZYuIcxE1+B7IYCk1FSYO9FO
-         qeJQeLc+XdvrwOVYXJTP6XwVDfgo7W+qI8bOD1UleRGZT1iwDYiKwsucNoFvNzPxY5Qy
-         /u5AzWeEnUw37cYMU45nz6q+z/C9npk3rKEC8fXosuFsdBwJGOYfGKj+QjzHpUvPcQq+
-         6/Bj1Xf1XLXUllXPFjWuFTgZCH8EKMSCxH88Tk9/uUUF5zeOpEOba2/7rMSLJ7OqtVih
-         qSnA==
-X-Gm-Message-State: AOJu0YxlB3TvzF+AoHM8Ss9LB5I03qnbqwnQ//NzvORGZRXKAiKNuGsJ
-	K227QEylLMJKwDkHvBKyuG5aNAygGqNzIXp2NZn9Keu5SL5hog==
-X-Google-Smtp-Source: AGHT+IHjqdmawDDF+Kpa0E2Pw6nR1SLyyWagXWFCAJ1zaJcVhoSSYLAHEUB7zOVZ0OG+PZrnmaePuzi+g7iSdx822SY=
-X-Received: by 2002:a5b:7c8:0:b0:daf:f747:4a43 with SMTP id
- t8-20020a5b07c8000000b00daff7474a43mr7658054ybq.0.1702465674084; Wed, 13 Dec
- 2023 03:07:54 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="BWtOnDYj"
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7275BB0
+	for <git@vger.kernel.org>; Wed, 13 Dec 2023 03:56:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+	t=1702468597; x=1703073397; i=johannes.schindelin@gmx.de;
+	bh=6ZQkw6q8jxhPG7nY1q0zrLv+KlWRPyjUbcT7QATK1i4=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:
+	 References;
+	b=BWtOnDYjxohEuQhsuUnYlapJ3b2ez9/XUgJABTap3opD2d0yKG1vpnbNyGQUVgme
+	 V0EA1SuwNX6XOgwRWtjaESqbk275X8M/FzybHUvhkk0SAs4YDEXXorao0Nv15iZ6B
+	 nS6YRcyXAOYgdTlIAa/gs8UgYq2kLSjyks5ehXCfvc/LC+pSn0oPk2EwmyubB7w02
+	 hxjJHXcdyr44YD+L3XfjHN6z5k+PpBinSOUhGhegu5rXhRM7d+/gXKZyOzDmCWVrV
+	 1E29BgjaCdVuIQOeDJI9a0l1v1TKinseobDi0wBVtao5l8d644EcZZQCM2+EnzKyF
+	 ySepWPuZUKWsLdOygQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.214.125]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MryXN-1ra5bc12Zx-00ny2X; Wed, 13
+ Dec 2023 12:56:37 +0100
+Date: Wed, 13 Dec 2023 12:56:35 +0100 (CET)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Ragesh Krishna <ragesh@rageshkrishna.com>
+cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Problems with Windows + schannel + http.sslCert
+In-Reply-To: <TY0PR06MB544239787E909DD4EAC1CA42D189A@TY0PR06MB5442.apcprd06.prod.outlook.com>
+Message-ID: <710affcd-f6bf-371c-d7e3-8bce3b01da3c@gmx.de>
+References: <TY0PR06MB544239787E909DD4EAC1CA42D189A@TY0PR06MB5442.apcprd06.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Alexey Murz Korepov <murznn@gmail.com>
-Date: Wed, 13 Dec 2023 15:07:43 +0400
-Message-ID: <CAL5pyKseyxEfLbgEkDHSqWQVLGkrrcZU=BzRx2zZOaCdQbMaoA@mail.gmail.com>
-Subject: Allow adding files from git submodule to parent git repo if they are
- in .gitignore in the submodule
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:1MTdoUu/RSr3ojLZWLhriaJ427jBpqrkJTKvlzfloQXJLEHzuVP
+ 4spJG7TGSCVrYyKv4qM/DEIIYNahSFq++nkBNnnKQMkTKWNVKuqF08VyjzyUDDOsM6ftDAe
+ PhCT0zaDO70hTzvEcO/NgHONgE2mxaV3GgEGfmf0o9YMIJW/V+XqUNcVno9tFoZE2vjfLED
+ hKGDKPTArOa/JIRwp0MSA==
+UI-OutboundReport: notjunk:1;M01:P0:FLjYjRytmeY=;N9GLgLpT7pUK7Rx1aECLtNF9MN2
+ Pk70bhJJg4g4P05dxfHkLnd3h/5h9xw/YmAtuutvr82k87odT/s/O6EU9h3qdd7fxZeEcI51Q
+ nFDVB4VyCYpFED1EPCujL39D+hCnzAJHYelq8dOFmw+bmEkzp5WrKwS6c+kLzsnr7zMMPhet3
+ nRkpoSwqZPTfWtfVIpJGfirigp83/2933Gw9bpoWucxwX0hvzRO0RtZP5aLmDcXJlIwH+Luss
+ N/dph8hzqgF9Xcr+oLEGHj38KDzedrReXkIOKRHDlIK+FhD90ePZB6FlZ2XrLkhyQ7mD5/P/a
+ Os9q0vbmNkIHffjmzhVj0svWV6vtydsQnBTo/tF+QUBRRAUIHhDP77XMFphyBldv/ozopDMUp
+ wTUD4FLtxIWZtaA/uHSa68dHyznz0OUJGlIzKpoC+kMbnD8Kr18aCOl+7XEdykxL8VA5w17xr
+ WNGWaIHRbzImt0jgVQPbRbZ0RRXaQZ7PezAGvz4vSOsI1oyaOFPIZ2nIWzxCO1oRzYC55PhLI
+ 2LOBKzZ2FVs6xboglQ/vMpBX7nWNmrl1EPrWwXbCU425K7GR5POLhCbTDWLAFq8xgGiwGu7V+
+ GCw9+zyymXFcEQX/nBIBnwXqjdRrTER+5x9njUPPj28GfoZas/0zteg3a/gHOMCKTTMX6dA//
+ xXWSyd/45qmRSorfVGs0jt5hru1cLe8kEP6cZguRxKa+Bti1V8o0W3Nxr4ujt8/eqHCqvQejE
+ 5U8HvhJUS1AgV9EfCJ/o7LEMI5UjOWu/bAfmAidygJ0SGX6w6wfTXROBW+D6s6HmJcS6gkmjd
+ XLUzfUqK2Xjc0xVYyqci7gJSv00PsdXHMFMCTnGEROCnL8jwB2UzCc6k822fOU46tnT/ZunPF
+ DR9x/gaHcqLN2SYA46SvNLMwvbchZJwfmuRFHfrHK+zrCyTy/mO2hDsFNRh9fuMSx5iRL4udz
+ Ns42Lg==
 
-Git submodules are pretty often used to "import" some external git
-repository into your git repository, to not manage its files in your
-git tree, that's good.
+Hi Ragesh,
 
-But very often we need to add some file to that submodule and manage
-it in our local git repository, and this file is usually in .gitignore
-in the submodule's git.
+On Sat, 9 Dec 2023, Ragesh Krishna wrote:
 
-So, the example task is:
+> I'm trying to use SSL client auth on Windows. My git installation
+> currently lists only schannel as the supported backend.
 
-Copy a mysubmodule/config.example.yaml to mysubmodule/config.yaml
-(which is in .gitignore in the mysubmodule), make local changes, and
-store it in the local (parent) root git repo.
+There is a reason why only Secure Channel is listed as supported backend,
+and it is a relatively boring one: DLL hell.
 
-But the problem is that we can't add this mysubmodule/config.yaml file
-to our root git repository, because receiving an error:
-```
-$ git add -f mysubmodule/config.yaml
-fatal: Pathspec 'mysubmodule/config.yaml' is in submodule 'mysubmodule'
-```
-But I see no problems with doing this, if the file is in .gitignore of
-the mysubmodule submodule.
+However, contrary to what `git -c http.sslBackend=list ls-remote <url>`
+says on Windows, `git -c http.sslBackend=openssl ls-remote <url>` should
+work, too.
 
-So, let's discuss the approach of how we can allow this in git?
-
-Or will be glad to hear and discuss alternatives and workarounds for this task.
+Ciao,
+Johannes
