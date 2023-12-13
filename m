@@ -1,73 +1,81 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="axNyXduQ"
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BC27EA
-	for <git@vger.kernel.org>; Wed, 13 Dec 2023 07:17:03 -0800 (PST)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 61FAF1C6966;
-	Wed, 13 Dec 2023 10:17:02 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=kOUBDRpbBkfKJPlMjYlPpaObsl7yGPdb2C3Dx5
-	iEHLM=; b=axNyXduQqotfLhMXwq5dAZplm3Cw1vioG4HZcwei9BZhjhIPwtxqU6
-	Zz3lvLCV3voYO1/NVBP1WgWWy0iPA56F39RbFOF7v7AhbkNxUxOo2AzGeJumPHJy
-	RXxod6OxQXUAyQBf3pVBk5FaMmfv4p3RfAeuwMLr7wbzLbt+Qgi00=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 598A41C6965;
-	Wed, 13 Dec 2023 10:17:02 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.193.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A91BB1C6963;
-	Wed, 13 Dec 2023 10:17:01 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,  AtariDreams via
- GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Seija Kijin
- <doremylover123@gmail.com>
-Subject: Re: [PATCH] Use ^=1 to toggle between 0 and 1
-In-Reply-To: <20231213080143.GA1684525@coredump.intra.peff.net> (Jeff King's
-	message of "Wed, 13 Dec 2023 03:01:43 -0500")
-References: <pull.1620.git.git.1702401468082.gitgitgadget@gmail.com>
-	<20231212200920.GC1127366@coredump.intra.peff.net>
-	<8bea38fe-38a3-412a-b189-541a6596d623@web.de>
-	<20231213080143.GA1684525@coredump.intra.peff.net>
-Date: Wed, 13 Dec 2023 07:17:00 -0800
-Message-ID: <xmqqil52nndf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=apollographql.com header.i=@apollographql.com header.b="tFqO8dyv"
+Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBB6AAF
+	for <git@vger.kernel.org>; Wed, 13 Dec 2023 07:20:49 -0800 (PST)
+Received: by mail-qt1-x833.google.com with SMTP id d75a77b69052e-4258026a9fdso43192411cf.0
+        for <git@vger.kernel.org>; Wed, 13 Dec 2023 07:20:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=apollographql.com; s=google; t=1702480849; x=1703085649; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=oW4Hsk+TV2+Mha8mMatSWWxB/0+cZZXwNW8Cwwrs/hM=;
+        b=tFqO8dyvvxVog2g/4knhQxYCWlubZg5jY2CVZ1noJ7LS8OEDGMxFoMWb1ZcqIPSjDY
+         oXZyroA9D4R/ORBayZuLyP4KBTc8UnQDBgvK4BmVhSmqUxPWuvmwc79xROw1xKsyQ6qO
+         RVGyp+UwWByno5hIhm9ppZ5XU/VerYT9viVpY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702480849; x=1703085649;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=oW4Hsk+TV2+Mha8mMatSWWxB/0+cZZXwNW8Cwwrs/hM=;
+        b=YPRjlyO8S7rM5FRM0pKtf3AaoAqJDh+51V7HOVgg882plv3qPcPH86cNSvIiyHon3I
+         OhpsKDfApSBKY54dBST/XQNR93uULb3urqoGTtsRqEtBL0GnzYOI/+TL6YlFlFvbCPRg
+         6Ie9df7C2co/G8YH2RsOCfqPuGLjwhVvKV9A4gNnbYkJe32PCxnwuqlgDHjMzTlIaPAU
+         MXs6eb9wNe35iD0a0Mbgnvazw/InSn/XXw0ZE3W5uJqMek6mIrNV0F9aTRp84S/6ku1H
+         j98DKItlB1n56Lqn76ZjBL82kGSQkgI5pQWPACh9xm0H7Rdj47hE2Q4SEvl9BluOuTtC
+         /9sw==
+X-Gm-Message-State: AOJu0YxbmsOo4OUOeYg/Roz4+X4Xu1nJtiUZo2M8mV2smdKADzMz48XE
+	PPKySVJ9gU+MaujZotJWFHoMcos7VVMzJCA0dZbBX66jKEluB8SlLgw=
+X-Google-Smtp-Source: AGHT+IF17VTXLtbqqB5na+mcELve2dp9zUhEcx672sQcnY1xU5ZZH5JgN0bQh2U/rrTESM6qaiOj1bmdyHuiQNcdZ1g=
+X-Received: by 2002:a05:622a:58a:b0:425:e419:42fa with SMTP id
+ c10-20020a05622a058a00b00425e41942famr3276444qtb.75.1702480848897; Wed, 13
+ Dec 2023 07:20:48 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- AA7562CE-99CA-11EE-8B99-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+References: <pull.1587.v5.git.1701206267300.gitgitgadget@gmail.com>
+ <pull.1587.v6.git.1701442494319.gitgitgadget@gmail.com> <CAP8UFD3FzP6QW4dJ9yiG1BAytLcsk+zGE+CBeArRJBJ8gsaDMQ@mail.gmail.com>
+ <CAEWN6q3RTbVuMb0VyCYz196ZL+OGAAHbJLZ2-MnW1RVVabg7Mw@mail.gmail.com>
+ <CAP8UFD19phFz54d8fDM=MBRMSD9Rz4R0_463KgptN8eeFs7MnQ@mail.gmail.com> <xmqqzfyfoy2w.fsf@gitster.g>
+In-Reply-To: <xmqqzfyfoy2w.fsf@gitster.g>
+From: Zach FettersMoore <zach.fetters@apollographql.com>
+Date: Wed, 13 Dec 2023 10:20:38 -0500
+Message-ID: <CAEWN6q2XeDDLvSM-ik_-HVqpeyYZLWpPwoj2SUyB9L9NyMJPLw@mail.gmail.com>
+Subject: Re: [PATCH v6] subtree: fix split processing with multiple subtrees present
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Christian Couder <christian.couder@gmail.com>, 
+	Zach FettersMoore via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Jeff King <peff@peff.net> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> Without digging into the code, I had just assumed that flipped_block was
-> used as an array index. But it really is a boolean, so I actually think
-> "flipped_block = !flipped_block" would probably be the most clear (but
-> IMHO not really worth the churn).
-
-;-)
-
-> I don't even know that we'd need much of a weather-balloon patch. I
-> think it would be valid to do:
+>>> > $ git subtree split --prefix=apollo-ios-codegen --squash --rejoin
+>>> > Merge made by the 'ort' strategy.
+>>> > e274aed3ba6d0659fb4cc014587cf31c1e8df7f4
+>>>
+>>> Looking into this some it looks like it could be a bash config
+>>> difference? My machine always runs it all the way through vs
+>>> failing for recursion depth. Although that would also be an issue
+>>> which is solved by this fix.
+>>
+>> I use Ubuntu where /bin/sh is dash so my current guess is that dash
+>> might have a smaller recursion limit than bash.
 >
->   #ifndef bool
->   #define bool int
->
-> to handle pre-C99 compilers (if there even are any these days). Of
-> course we probably need some conditional magic to try to "#include
-> <stdbool.h>" for the actual C99. I guess we could assume C99 by default
-> and then add NO_STDBOOL as an escape hatch if anybody complains.
+> That sounds quite bad. Does it have to be recursive (iow, if we can
+> rewrite the logic to be iterative instead, that would be a much better
+> way to fix the issue)?
 
-Sounds good.
-
+I don't think an iterative vs recursive approach fixes this
+particular issue, the root of the issue this patch is fixing
+is that lots of commits from the history of subtrees not
+being acted upon are being processed when they don't need to
+be. So the iterative approach would likely resolve the
+recursion limit issue for some shells, but in my instance
+I don't see a recursion limit error, it just takes an
+extraordinary amount of time to run the split command
+because of all the unnecessary processing which needs to be
+avoided which this patch fixes.
