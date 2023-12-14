@@ -1,104 +1,122 @@
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="0+DpLgiH"
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E643E4
-	for <git@vger.kernel.org>; Wed, 13 Dec 2023 18:27:17 -0800 (PST)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 728AD5B11A;
-	Thu, 14 Dec 2023 02:27:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1702520836;
-	bh=8iJlvkDpY+a3dPYufUW6LmoEpxuu4rOfd0+KKoaWIks=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=0+DpLgiHGDP4Bl26JPyp4gfqw/g4gQqwSKMbDYu6XxmogxwV2bB4GFG9+IIcltxMs
-	 s8s1PUs4DjvdIdpPI8ZlVz2qn4H3p4JQNTpeiIKbVofbaLgYLSrTTDDMKU1AX3aWMl
-	 YgAEmHONtqDHGpfEkMczWDD0Fm8i2tgVfEU7WFDJyJXzJeqDRtNnVM1xw9hd6kWkFN
-	 sAavyOc40eJsDYY5mi+4qzyOblgIXzShdSbbiy6/IS3c/0iWsOyhmw0AgXbSjfiwEs
-	 JjN9QiNh7ahM+lCzPjQsM91CWRKshAgxqNz/hbDhUPUf9OxvYNKHljH5gDVL3VrGUL
-	 i1Sc+rkZqOWk3m6t4S0jHEjhd2suMLSAUT7MI0ktQF2oGIDl46+f2M4VtXwQm98JvX
-	 TztdVjIvmIe9TYydwOcspZ6yyQSNFOwk4kNQoR51kH/ZDc82SPlhWeioDYDUakYWK5
-	 P891GN7nnRfo/8jzUm7lVQcpOMyOhpqakUK7iPyQdrrYQ9uWkGI
-Date: Thu, 14 Dec 2023 02:27:13 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Alexander Zhirov <azhirov1991@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Communication channel interruption
-Message-ID: <ZXpoAVZ5BP9WqiZi@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Alexander Zhirov <azhirov1991@gmail.com>, git@vger.kernel.org
-References: <71f2b28b-3e27-4773-8408-2f4c13757b73@gmail.com>
+X-Greylist: delayed 90 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 13 Dec 2023 19:25:05 PST
+Received: from impout006.msg.chrl.nc.charter.net (impout006aa.msg.chrl.nc.charter.net [47.43.20.30])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABAEDB0
+	for <git@vger.kernel.org>; Wed, 13 Dec 2023 19:25:05 -0800 (PST)
+Received: from localhost.localdomain ([97.71.114.58])
+	by cmsmtp with ESMTPA
+	id DcJtr5lVm46f3DcJxrUCMq; Thu, 14 Dec 2023 03:23:34 +0000
+Authentication-Results: charter.net; auth=pass (LOGIN)
+ smtp.auth=ericsunshine@charter.net
+X-Authority-Analysis: v=2.4 cv=RNOgoqu+ c=1 sm=1 tr=0 ts=657a7536
+ a=4h87Vkt5vDwEBqoyvSX4iA==:117 a=4h87Vkt5vDwEBqoyvSX4iA==:17 a=BCjA09oAAAAA:8
+ a=VwQbUJbxAAAA:8 a=l3aKIBErMCrECHyjdeQA:9 a=jYKBPJSq9nmHKCndOPe9:22
+ a=AjGcO6oz07-iQ99wixmX:22
+From: Eric Sunshine <ericsunshine@charter.net>
+To: git@vger.kernel.org
+Cc: Eric Sunshine <ericsunshine@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH] tests: drop dependency on `git diff` in check-chainlint
+Date: Wed, 13 Dec 2023 22:22:48 -0500
+Message-ID: <20231214032248.1615-1-ericsunshine@charter.net>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="2lzGKmOwxKyikRbc"
-Content-Disposition: inline
-In-Reply-To: <71f2b28b-3e27-4773-8408-2f4c13757b73@gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4xfNi3LrTaYeryUjPY4BOXGgWvPLvMlTmrC7/vG/G4EPzJc2B3rOlgU2qI3ChNTY/NDiOWbP0zjk4NEPBi1cSQaRxHW3E0qLXwNm1uCMoinukcYEhsnBks
+ W51ETZzlKs83su0qGWov8rrbQ2sBE16h2I6CCPzE68Q5la1WTYaK/iLaggtQV/6/Jqcj/7n6nYc6tbOrMZkfCzlpRXmTZ/DM2Ytq/0c1DCfiyqyYQMLfbQAx
+ xm/pXQSa4oRHBFJFcQRaYxngY1SWy3exh9C/rkZlbHlcHo2m1O4NqrXMMfit2eW0txyz/zqEGPnMGVbwfhJbhQ==
 
+From: Eric Sunshine <sunshine@sunshineco.com>
 
---2lzGKmOwxKyikRbc
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The "check-chainlint" target runs automatically when running tests and
+performs self-checks to verify that the chainlinter itself produces the
+expected output. Originally, the chainlinter was implemented via sed,
+but the infrastructure has been rewritten in fb41727b7e (t: retire
+unused chainlint.sed, 2022-09-01) to use a Perl script instead.
 
-On 2023-12-13 at 09:54:30, Alexander Zhirov wrote:
-> When cloning a repository from GitHub, I have a channel break, although t=
-he
-> connection is stable. What could be the problem?
->=20
-> # git clone https://github.com/Thinstation/thinstation.git
-> Cloning into 'thinstation'...
-> remote: Enumerating objects: 79839, done.
-> remote: Counting objects: 100% (535/535), done.
-> remote: Compressing objects: 100% (319/319), done.
-> error: RPC failed; curl 92 HTTP/2 stream 5 was not closed cleanly: CANCEL
-> (err 8)
-> error: 7473 bytes of body are still expected
-> fetch-pack: unexpected disconnect while reading sideband packet
-> fatal: early EOF
-> fatal: fetch-pack: invalid index-pack output
+The rewrite caused some slight whitespace changes in the output that are
+ultimately not of much importance. In order to be able to assert that
+the actual chainlinter errors match our expectations we thus have to
+ignore whitespace characters when diffing them. As the `-w` flag is not
+in POSIX we try to use `git diff -w --no-index` before we fall back to
+non-standard `diff -w -u`.
 
-It would be helpful to know what version of Git, libcurl, and operating
-system you're using.  This type of error is often caused by proxies,
-including non-default antivirus or firewall programs (very especially on
-Windows), TLS middleboxes, and monitoring software.  If you have such
-software, it should be completely uninstalled and you should reboot, and
-usually that will fix the problem.  (Simply disabling it often does not
-fix things.)
+To accommodate for cases where the host system has no Git installation
+we use the locally-compiled version of Git. This can result in problems
+though when the Git project's repository is using extensions that the
+locally-compiled version of Git doesn't understand, in which case `git`
+may refuse to run and thus cause the checks to fail.
 
-I should point out that while I'm aware that this does occur for many
-people, I have never, ever seen it when using GitHub, nor do I believe
-it is actually sent by GitHub servers.  Thus, my experience leads me to
-believe the problem lies elsewhere.  It is theoretically possible that
-libcurl or one of its dependencies has a bug in your version, but
-without more details, it's hard to tell.
+Work around this issue by normalizing whitespace via sed before invoking
+diff, which allows any platform diff implementation to be used, thus
+eliminating the dependency upon `git diff` and the non-POSIX `-w` flag.
 
-As Junio suggested, you could try forcing HTTP/1.1 and see if that fixes
-the problem for you as well.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+Reported-by: Patrick Steinhardt <ps@pks.im>
+Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+---
 
---2lzGKmOwxKyikRbc
-Content-Type: application/pgp-signature; name="signature.asc"
+This is an alternative solution to the issue Patrick's patch[1]
+addresses. Hopefully, this approach should avoid the sort of push-back
+Patrick's patch received[2].
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.3 (GNU/Linux)
+I shamelessly stole most of Patrick's commit message.
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZXpoAQAKCRB8DEliiIei
-gQJdAQCCJ3VhePouPBkFeRo3Ax9KFSmiGthsuz8OU3MZCQjsAgEA6cP7DyXRfx/5
-fuXdfsImpTSoNoRSjHqoEPTuQF+aPgM=
-=Ar8V
------END PGP SIGNATURE-----
+The sed expressions for normalizing whitespace prior to `diff` may look
+a bit hairy, but they are simple enough in concept:
 
---2lzGKmOwxKyikRbc--
+* collapse runs of whitespace to a single SP
+* drop blank lines (this step is not new)
+* fold out possible SP at beginning and end of each line
+* fold out SP surrounding common punctuation characters used in shell
+  scripts, such as `>`, `|`, `;`, etc.
+
+By the way, I'm somewhat surprised that this issue crops up at all
+considering that --no-index is being used with git-diff. As such, I
+would have thought that the local repository's format would not have
+been interrogated at all. If that's a bug in `git diff --no-index`, then
+fixing that could be considered yet another alternative solution to the
+issue raised here.
+
+[1]: https://lore.kernel.org/git/4112adbe467c14a8f22a87ea41aa4705f8760cf6.1702380646.git.ps@pks.im/
+[2]: https://lore.kernel.org/git/xmqqr0jqnnmn.fsf@gitster.g/
+
+ t/Makefile | 14 +++-----------
+ 1 file changed, 3 insertions(+), 11 deletions(-)
+
+diff --git a/t/Makefile b/t/Makefile
+index 225aaf78ed..656ff10afa 100644
+--- a/t/Makefile
++++ b/t/Makefile
+@@ -103,20 +103,12 @@ check-chainlint:
+ 		echo "# chainlint: $(CHAINLINTTMP_SQ)/tests" && \
+ 		for i in $(CHAINLINTTESTS); do \
+ 			echo "# chainlint: $$i" && \
+-			sed -e '/^[ 	]*$$/d' chainlint/$$i.expect; \
++			sed -e 's/[ 	][ 	]*/ /g;/^ *$$/d;s/^ //;s/ $$//;s/\([<>|();&]\) /\1/g;s/ \([<>|();&]\)/\1/g' chainlint/$$i.expect; \
+ 		done \
+ 	} >'$(CHAINLINTTMP_SQ)'/expect && \
+ 	$(CHAINLINT) --emit-all '$(CHAINLINTTMP_SQ)'/tests | \
+-		sed -e 's/^[1-9][0-9]* //;/^[ 	]*$$/d' >'$(CHAINLINTTMP_SQ)'/actual && \
+-	if test -f ../GIT-BUILD-OPTIONS; then \
+-		. ../GIT-BUILD-OPTIONS; \
+-	fi && \
+-	if test -x ../git$$X; then \
+-		DIFFW="../git$$X --no-pager diff -w --no-index"; \
+-	else \
+-		DIFFW="diff -w -u"; \
+-	fi && \
+-	$$DIFFW '$(CHAINLINTTMP_SQ)'/expect '$(CHAINLINTTMP_SQ)'/actual
++		sed -e 's/^[1-9][0-9]* //;s/[ 	][ 	]*/ /g;/^ *$$/d;s/^ //;s/ $$//;s/\([<>|();&]\) /\1/g;s/ \([<>|();&]\)/\1/g' >'$(CHAINLINTTMP_SQ)'/actual && \
++	diff -u '$(CHAINLINTTMP_SQ)'/expect '$(CHAINLINTTMP_SQ)'/actual
+ 
+ test-lint: test-lint-duplicates test-lint-executable test-lint-shell-syntax \
+ 	test-lint-filenames
+-- 
+2.43.0
+
