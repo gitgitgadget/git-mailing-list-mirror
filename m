@@ -1,31 +1,30 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB006DCF7
-	for <git@vger.kernel.org>; Thu, 14 Dec 2023 21:06:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47CC66DD05
+	for <git@vger.kernel.org>; Thu, 14 Dec 2023 21:40:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 8721 invoked by uid 109); 14 Dec 2023 20:59:37 -0000
+Received: (qmail 8778 invoked by uid 109); 14 Dec 2023 21:40:58 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 14 Dec 2023 20:59:37 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 14 Dec 2023 21:40:58 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11277 invoked by uid 111); 14 Dec 2023 20:59:36 -0000
+Received: (qmail 11607 invoked by uid 111); 14 Dec 2023 21:40:57 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 14 Dec 2023 15:59:36 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 14 Dec 2023 16:40:57 -0500
 Authentication-Results: peff.net; auth=none
-Date: Thu, 14 Dec 2023 15:59:36 -0500
+Date: Thu, 14 Dec 2023 16:40:57 -0500
 From: Jeff King <peff@peff.net>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc: git@vger.kernel.org, Ondrej Pohorelsky <opohorel@redhat.com>,
-	"brian m . carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/1] test-lib-functions: add object size functions
-Message-ID: <20231214205936.GA2272813@coredump.intra.peff.net>
-References: <CA+B51BEpSh1wT627Efpysw3evVocpiDCoQ3Xaza6jKE3B62yig@mail.gmail.com>
- <9feeb6cf-aabf-4002-917f-3f6c27547bc8@web.de>
- <20231212200153.GB1127366@coredump.intra.peff.net>
- <ff735aac-b60b-4d52-a6dc-180ab504fc8d@web.de>
- <65557f2d-9de0-49ae-a858-80476aa52b68@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	Taylor Blau <me@ttaylorr.com>,
+	Carlos =?utf-8?B?QW5kcsOpcyBSYW3DrXJleiBDYXRhw7Fv?= <antaigroupltda@gmail.com>
+Subject: Re: [PATCH] mailinfo: fix out-of-bounds memory reads in
+ unquote_quoted_pair()
+Message-ID: <20231214214057.GA2297853@coredump.intra.peff.net>
+References: <20231212221243.GA1656116@coredump.intra.peff.net>
+ <ZXlYIZ0Hb1kN84NU@tanuki>
+ <xmqqy1dynofo.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -34,78 +33,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <65557f2d-9de0-49ae-a858-80476aa52b68@web.de>
+In-Reply-To: <xmqqy1dynofo.fsf@gitster.g>
 
-On Wed, Dec 13, 2023 at 01:28:56PM +0100, René Scharfe wrote:
+On Wed, Dec 13, 2023 at 06:54:03AM -0800, Junio C Hamano wrote:
 
-> Add test_object_size and its helpers test_loose_object_size and
-> test_packed_object_size, which allow determining the size of a Git
-> object using only the low-level Git commands rev-parse and show-index.
+> I actually had trouble with the proposed update, and wondered if
 > 
-> Use it in t6300 to replace the bare-bones function test_object_file_size
-> as a motivating example.  There it provides the expected output of the
-> high-level Git command for-each-ref.
+> -	while ((c = *in++) != 0) {
+> +	while ((c = *in)) {
+> +		in++;
+> 
+> is easier to follow, but then was hit by the possibility that the
+> same "we have incremented 'in' a bit too early" may exist if such
+> a loop wants to use 'in' in its body.  Wouldn't it mean that
+> 
+> -	while ((c = *in++) != 0) {
+> +	for (; c = *in; in++) {
+> 
+> would be even a better rewrite?
 
-This adds a packed-object function, but I doubt anybody actually calls
-it. If we're going to do that, it's probably worth adding some tests for
-"cat-file --batch-check" or similar.
+No, the "for" loop wouldn't work, because the loop body actually depends
+on "in" having already been incremented. If we find the end of the
+comment or quoted string, we return "in", and the caller is expecting it
+to have moved past the closing quote. So that would have to become
+"return in+1".
 
-At which point I wonder if rather than having a function for a single
-object, we are better off just testing the result of:
-
-  git cat-file --batch-all-objects --unordered --batch-check='%(objectsize:disk)'
-
-against a single post-processed "show-index" invocation.
-
-> So how about this?  I'm a bit nervous about all the rules about output
-> descriptors and error propagation and whatnot in the test library, but
-> this implementation seems simple enough and might be useful in more than
-> one test.  No idea how to add support for alternate object directories,
-> but I doubt we'll ever need it.
-
-I'm not sure that we need to do anything special with output
-redirection. Shouldn't these functions just send errors to stderr as
-usual? If they are run inside a test_expect block, that goes to
-descriptor 4 (which is either /dev/null or the original stderr,
-depending on whether "-v" was used).
-
-> +test_loose_object_size () {
-> +	test "$#" -ne 1 && BUG "1 param"
-> +	local path=$(test_oid_to_path "$1")
-> +	test_file_size "$(git rev-parse --git-path "objects/$path")" 2>&4
-> +}
-
-OK. We lose the exit code from "rev-parse" but that is probably OK for
-our purposes.
-
-> +test_packed_object_size () {
-> +	test "$#" -ne 2 && BUG "2 params"
-> +	local oid=$1 idx=$2 packsize rawsz end
-> +
-> +	packsize=$(test_file_size "${idx%.idx}.pack")
-> +	rawsz=$(test_oid rawsz)
-> +	end=$(($packsize - $rawsz))
-
-OK, this $end is the magic required for the final entry. Makes sense.
-
-> +	git show-index <"$idx" |
-> +	awk -v oid="$oid" -v end="$end" '
-> +		$2 == oid {start = $1}
-> +		{offsets[$1] = 1}
-> +		END {
-> +			if (!start || start >= end)
-> +				exit 1
-> +			for (o in offsets)
-> +				if (start < o && o < end)
-> +					end = o
-> +			print end - start
-> +		}
-> +	' && return 0
-
-I was confused at first, because I didn't see any sorting happening. But
-if I understand correctly, you're just looking for the smallest "end"
-that comes after the start of the object we're looking for. Which I
-think works.
+IOW, the issue is that the normal end-of-quote parsing and hitting
+end-of-string are fundamentally different. So we either need to
+differentiate the returns (either with "+1" on one, or "-1" on the
+other). Or we need to choose to increment "in" based on which we found
+(which is what my patch does).
 
 -Peff
