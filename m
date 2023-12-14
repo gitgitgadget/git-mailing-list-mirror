@@ -1,95 +1,74 @@
-Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5962910F
-	for <git@vger.kernel.org>; Thu, 14 Dec 2023 10:11:00 -0800 (PST)
-Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-67f01b911c5so9825146d6.0
-        for <git@vger.kernel.org>; Thu, 14 Dec 2023 10:11:00 -0800 (PST)
+Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 512E510F
+	for <git@vger.kernel.org>; Thu, 14 Dec 2023 10:37:54 -0800 (PST)
+Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-67efd2cde42so7882156d6.0
+        for <git@vger.kernel.org>; Thu, 14 Dec 2023 10:37:54 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702577459; x=1703182259;
+        d=1e100.net; s=20230601; t=1702579073; x=1703183873;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=CPanjACgAm2kkZsuzRBno6jeiNvYqWnJpt0STELsmB8=;
-        b=iTZq9cStBnZV+yM0Ky9ip5FfolxxVdzV0fN2xA41a2d8+zAzNzNuBo309BCsJvm9qq
-         wzPtVlaqFIWNEyaQSwrgmg+BYZi7jS7pVBmMv3GMTxpvozA6flO/hac+K5RlKEmqQpJx
-         oY2XJ7IDj0tiRT9RySUou4OhmUGB74y8r7KmhKNQe3CZYtu7pjwiSTXwggT8943+cbUj
-         rcZobhKpt7A+GIrA8/XjatrPgo+42INDVwzjWHcyY8GGBq9yfwPIRGcU+5Yri8gHX4Pd
-         HZkfkLAJc212VnFPRwJZSN4k+Ppfb9wk0BQoVc5C8OCzkqrXfURSe45KsE44ZMatgJ7M
-         oLiQ==
-X-Gm-Message-State: AOJu0YyNJmNdscry8jr5G0zAiN6BrBAv9f/qebGoR6DMRSm1LoKURQcz
-	bdHnfXJVEWB72oYoFu2YaAbqryMJWHq8w5KKAwNpWuQPBi8=
-X-Google-Smtp-Source: AGHT+IFnmyTkfbeKP6OoR60aiSlk1rHny2G0Dx95fZ68H8bTSpZL3Cpq3QbG+a2jTg+RWaI8d6SZgNMU+SgVVUl08pM=
-X-Received: by 2002:a05:6214:f27:b0:67f:efc:476d with SMTP id
- iw7-20020a0562140f2700b0067f0efc476dmr1230862qvb.44.1702577459189; Thu, 14
- Dec 2023 10:10:59 -0800 (PST)
+        bh=BoSQlP2Ey9UXdPrg4ZXdvj/UEVVOYYT6WAw26owD+U0=;
+        b=dFgd47e+EZk5B40h1KLjH9/eeC435/Wwv/ccDALjC6RrqnDjIVosOl2RuZD6Q9ugOc
+         3YUkHH7MqdVrVcoapfR3zi+T6UBP78+4YUCGTJKDpcTay43318PUShi/gwzeR7etZTPM
+         JsPIykYMboh9SLhnc2x392091IUtYJlevTgUEtJUwHXf36RhxrB1QA5DuAq0YaXYbtbJ
+         wjtJI5fcrrh+YzZo5+fZP1y+xjkpu4XJzl7SyFqL8DqM4uXLSiRKk0kn/hqROc9SzL8G
+         84fqJVTI5PltLqsuHJ1MvVK2S1AnI7hNhFr0OSao8rY1gGwm9RPatwvVJvVYZkJELl1W
+         IwdQ==
+X-Gm-Message-State: AOJu0YzBATXZHRftOFUeA+z/Q7k90B+Bg0SCmAdszTsU4QfMfIwSF3V4
+	7cyRA5Axq+Lbniv73bkQ705Ihle+R6XDhyRSiFz9RZVmfwc=
+X-Google-Smtp-Source: AGHT+IGldstkbhb7lKTbIopwnWkSFG3wEmP3nsmzMU1wsMnf9I1aOQbWh4GVN2/F0fnSPDjVKOlyt4vgOdCtGFcG7Ko=
+X-Received: by 2002:ad4:4ea8:0:b0:67f:1599:f004 with SMTP id
+ ed8-20020ad44ea8000000b0067f1599f004mr97761qvb.59.1702579073414; Thu, 14 Dec
+ 2023 10:37:53 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <4112adbe467c14a8f22a87ea41aa4705f8760cf6.1702380646.git.ps@pks.im>
- <xmqq8r5zrzg1.fsf@gitster.g> <ZXlbNlG28e1sAYPU@tanuki> <xmqqr0jqnnmn.fsf@gitster.g>
- <CAPig+cRc2hW_xhJRPJmEVYik71zWLDQ_EFjBFw095OgPGYrWGg@mail.gmail.com>
- <ZXq5GL723v4E3_IH@tanuki> <CAPig+cQ2-PB24n0xfcoSy_1UT-VbEZUXXJ9QbA8FBA8Vfyd6Ng@mail.gmail.com>
- <xmqqbkaspxn6.fsf@gitster.g>
-In-Reply-To: <xmqqbkaspxn6.fsf@gitster.g>
+References: <CAN0Ui1RM-R+yX=LK+ir_WEzAYRJnT-WTn427JbNJjTNTiQfa4w@mail.gmail.com>
+In-Reply-To: <CAN0Ui1RM-R+yX=LK+ir_WEzAYRJnT-WTn427JbNJjTNTiQfa4w@mail.gmail.com>
 From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Thu, 14 Dec 2023 13:10:48 -0500
-Message-ID: <CAPig+cQvcSeSKVE=0kDyNiSztNAgVwhfAzoL5K7uYHEKe=0f_A@mail.gmail.com>
-Subject: Re: [PATCH] tests: prefer host Git to verify chainlint self-checks
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Date: Thu, 14 Dec 2023 13:37:42 -0500
+Message-ID: <CAPig+cRt4A3xtXGQCApNY8H+DFjGmFQuPh4hGcurHCkX4U5Rvw@mail.gmail.com>
+Subject: Re: completing an existing patch
+To: Marzi Esipreh <marzi.esipreh@uber.com>
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Dec 14, 2023 at 11:16=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
- wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
-> > I sent a reply[1] in the other thread explaining why I'm still leaning
-> > toward `sed` to smooth over these minor differences rather than
-> > churning the "expect" files, especially since the minor differences
-> > are not significant to what is actually being tested.
->
-> If it is just one time bulk conversion under t/chainlint/ to match
-> what the chainlint.pl script produces, with the possibility of
-> similar bulk updates in the future when the script gets updated, I
-> tend to agree with Patrick that getting rid of the fuzzy comparison
-> will be the best way forward.
+On Thu, Dec 14, 2023 at 8:21=E2=80=AFAM Marzi Esipreh <marzi.esipreh@uber.c=
+om> wrote:
+> We came across this PR: https://github.com/git/git/pull/1352 that is
+> improving git status performance on linux platforms, we tried it out,
+> and we are happy with the result.
+> I was in contact with the author of this patch, and I addressed the PR
+> comments as well.
+> Please let me know how I can proceed? Shall I create a new fresh PR,
+> and refer to existing one in the descriptions?
 
-Okay, that's fine. If we take this approach, though, then it would
-make sense to eliminate _all_ gratuitous postprocessing of the
-"expect" files[1] so that we really are comparing the direct output of
-chainlint.pl with the "expect" files, rather than merely munging the
-inline whitespace of the "expect" files slightly as Patrick's proposed
-patch does[2].
+The general answer is that you can take over a stalled patch series in
+order to move it forward by rerolling the series with changes which
+address reviewer comments from the previous rounds, and send the
+series to the mailing list with a cover letter explaining the
+situation and enumerating the changes you made since the previous
+version. Standard practice is to retain the original authorship of the
+patches[1] and keep the original author's Signed-off-by:. Add your
+Signed-off-by: below the author's Signed-of-by: on all patches, not
+just the patches you changed. After submitting, respond to reviewer
+comments on the new version, and reroll as necessary to address those
+comments.
 
-(The only postprocessing of "expect" files which needs to stay is the
-bit which removes the "# LINT:" comments which litter the "expect"
-files explaining to human readers why the linter should insert a
-"???FOO???" annotation at that particular point.)
+Somebody more familiar with GitHub and/or GitGitGadget will have to
+answer the more specific part of your question about whether you can
+push your version to the same PR or if you instead need to open a new
+PR. If you are able to push to the existing PR, then you also need to
+update the PR's description since that becomes the cover letter for
+the series. Or you can just send the patch series directly to the
+mailing list, skipping GitGitGadget altogether.
 
-> Especially if the fuzzy comparison is done only to hide differences
-> between what the old chainlint.sed used to produce and what the
-> current version produces, that is.  If for some reason the script
-> started to create subtly different output for other reasons (e.g.,
-> it may produce different whitespaces on a particular platform, or
-> with a specific version of perl interpreter), we'd better be aware
-> of it, instead of blindly ignoring the differences without
-> inspecting them and verifying that they are benign.
->
-> By going through the single conversion pain, it will force us to
-> think twice before breaking its output stability while updating
-> chainlint.pl, which would also be a good thing.
-
-The chainlint self-tests were never meant to be about its general
-output stability. They were intended to ensure that the "???FOO???"
-annotations are: (1) indeed inserted for the set of linting problems
-the tool detects, and (2) inserted at the correct spot in the emitted
-output relative to the shell tokens to which the annotation applies.
-Minor differences in the tool's output (whether over time or between
-platforms) should be immaterial in respect to those correctness goals.
-
-[1]: https://lore.kernel.org/git/CAPig+cTZmiXdPZEVO-F2UzV9YaP6c7r2MfPTC3QWk=
-sJa+rM7VA@mail.gmail.com/
-[2]: https://lore.kernel.org/git/aec86a15c69aa276eee4875fad208ee2fc57635a.1=
-702542564.git.ps@pks.im/
+[1]: That is, unless you change a patch so substantially that little
+of the author's original work is present, in which case you make
+yourself the author and typically credit the original author with an
+Original-patch-by: or Helped-by:.
