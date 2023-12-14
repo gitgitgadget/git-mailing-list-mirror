@@ -1,74 +1,78 @@
-Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 512E510F
-	for <git@vger.kernel.org>; Thu, 14 Dec 2023 10:37:54 -0800 (PST)
-Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-67efd2cde42so7882156d6.0
-        for <git@vger.kernel.org>; Thu, 14 Dec 2023 10:37:54 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702579073; x=1703183873;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=BoSQlP2Ey9UXdPrg4ZXdvj/UEVVOYYT6WAw26owD+U0=;
-        b=dFgd47e+EZk5B40h1KLjH9/eeC435/Wwv/ccDALjC6RrqnDjIVosOl2RuZD6Q9ugOc
-         3YUkHH7MqdVrVcoapfR3zi+T6UBP78+4YUCGTJKDpcTay43318PUShi/gwzeR7etZTPM
-         JsPIykYMboh9SLhnc2x392091IUtYJlevTgUEtJUwHXf36RhxrB1QA5DuAq0YaXYbtbJ
-         wjtJI5fcrrh+YzZo5+fZP1y+xjkpu4XJzl7SyFqL8DqM4uXLSiRKk0kn/hqROc9SzL8G
-         84fqJVTI5PltLqsuHJ1MvVK2S1AnI7hNhFr0OSao8rY1gGwm9RPatwvVJvVYZkJELl1W
-         IwdQ==
-X-Gm-Message-State: AOJu0YzBATXZHRftOFUeA+z/Q7k90B+Bg0SCmAdszTsU4QfMfIwSF3V4
-	7cyRA5Axq+Lbniv73bkQ705Ihle+R6XDhyRSiFz9RZVmfwc=
-X-Google-Smtp-Source: AGHT+IGldstkbhb7lKTbIopwnWkSFG3wEmP3nsmzMU1wsMnf9I1aOQbWh4GVN2/F0fnSPDjVKOlyt4vgOdCtGFcG7Ko=
-X-Received: by 2002:ad4:4ea8:0:b0:67f:1599:f004 with SMTP id
- ed8-20020ad44ea8000000b0067f1599f004mr97761qvb.59.1702579073414; Thu, 14 Dec
- 2023 10:37:53 -0800 (PST)
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E75BE6929A
+	for <git@vger.kernel.org>; Thu, 14 Dec 2023 19:15:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="pcgvz5Yl"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 620B21E270;
+	Thu, 14 Dec 2023 14:13:20 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=T/50iFnch0iz2gbTB0Hr6UodRT3PN2ddMcX0y8
+	ivblA=; b=pcgvz5Yl4YDBh7YnF5ktZ2SSdb0EsyEIkKTu9tl+gNkihYWLImGb8C
+	db1fy1bpw3G2wIgDgQoJOWJ42asjVTkCf+ISMJBs9GzOi4aqZoOtUkM4+dnVkzyZ
+	GKsWCJ5WN3hNql5+CxTVBirLUzFDooQAMb3/sN4+1DgslPila0ShI=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 5B9AB1E26F;
+	Thu, 14 Dec 2023 14:13:20 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.193.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 062BD1E26E;
+	Thu, 14 Dec 2023 14:13:16 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
+Subject: Re: [PATCH] tests: prefer host Git to verify chainlint self-checks
+In-Reply-To: <CAPig+cQvcSeSKVE=0kDyNiSztNAgVwhfAzoL5K7uYHEKe=0f_A@mail.gmail.com>
+	(Eric Sunshine's message of "Thu, 14 Dec 2023 13:10:48 -0500")
+References: <4112adbe467c14a8f22a87ea41aa4705f8760cf6.1702380646.git.ps@pks.im>
+	<xmqq8r5zrzg1.fsf@gitster.g> <ZXlbNlG28e1sAYPU@tanuki>
+	<xmqqr0jqnnmn.fsf@gitster.g>
+	<CAPig+cRc2hW_xhJRPJmEVYik71zWLDQ_EFjBFw095OgPGYrWGg@mail.gmail.com>
+	<ZXq5GL723v4E3_IH@tanuki>
+	<CAPig+cQ2-PB24n0xfcoSy_1UT-VbEZUXXJ9QbA8FBA8Vfyd6Ng@mail.gmail.com>
+	<xmqqbkaspxn6.fsf@gitster.g>
+	<CAPig+cQvcSeSKVE=0kDyNiSztNAgVwhfAzoL5K7uYHEKe=0f_A@mail.gmail.com>
+Date: Thu, 14 Dec 2023 11:13:15 -0800
+Message-ID: <xmqqfs04oawk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAN0Ui1RM-R+yX=LK+ir_WEzAYRJnT-WTn427JbNJjTNTiQfa4w@mail.gmail.com>
-In-Reply-To: <CAN0Ui1RM-R+yX=LK+ir_WEzAYRJnT-WTn427JbNJjTNTiQfa4w@mail.gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Thu, 14 Dec 2023 13:37:42 -0500
-Message-ID: <CAPig+cRt4A3xtXGQCApNY8H+DFjGmFQuPh4hGcurHCkX4U5Rvw@mail.gmail.com>
-Subject: Re: completing an existing patch
-To: Marzi Esipreh <marzi.esipreh@uber.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ D6034772-9AB4-11EE-A7A4-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-On Thu, Dec 14, 2023 at 8:21=E2=80=AFAM Marzi Esipreh <marzi.esipreh@uber.c=
-om> wrote:
-> We came across this PR: https://github.com/git/git/pull/1352 that is
-> improving git status performance on linux platforms, we tried it out,
-> and we are happy with the result.
-> I was in contact with the author of this patch, and I addressed the PR
-> comments as well.
-> Please let me know how I can proceed? Shall I create a new fresh PR,
-> and refer to existing one in the descriptions?
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-The general answer is that you can take over a stalled patch series in
-order to move it forward by rerolling the series with changes which
-address reviewer comments from the previous rounds, and send the
-series to the mailing list with a cover letter explaining the
-situation and enumerating the changes you made since the previous
-version. Standard practice is to retain the original authorship of the
-patches[1] and keep the original author's Signed-off-by:. Add your
-Signed-off-by: below the author's Signed-of-by: on all patches, not
-just the patches you changed. After submitting, respond to reviewer
-comments on the new version, and reroll as necessary to address those
-comments.
+> (The only postprocessing of "expect" files which needs to stay is the
+> bit which removes the "# LINT:" comments which litter the "expect"
+> files explaining to human readers why the linter should insert a
+> "???FOO???" annotation at that particular point.)
 
-Somebody more familiar with GitHub and/or GitGitGadget will have to
-answer the more specific part of your question about whether you can
-push your version to the same PR or if you instead need to open a new
-PR. If you are able to push to the existing PR, then you also need to
-update the PR's description since that becomes the cover letter for
-the series. Or you can just send the patch series directly to the
-mailing list, skipping GitGitGadget altogether.
+Yup, that matches my understanding.
 
-[1]: That is, unless you change a patch so substantially that little
-of the author's original work is present, in which case you make
-yourself the author and typically credit the original author with an
-Original-patch-by: or Helped-by:.
+> The chainlint self-tests were never meant to be about its general
+> output stability. They were intended to ensure that the "???FOO???"
+> annotations are: (1) indeed inserted for the set of linting problems
+> the tool detects, and (2) inserted at the correct spot in the emitted
+> output relative to the shell tokens to which the annotation applies.
+
+Yup.
+
+> Minor differences in the tool's output (whether over time or between
+> platforms) should be immaterial in respect to those correctness goals.
+
+But there is no reason to make such immaterial changes to the output
+gratuitously when we are updating the tool to improve it, no?
