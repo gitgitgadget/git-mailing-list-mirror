@@ -1,120 +1,102 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Pj0KwJPX"
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB370118
-	for <git@vger.kernel.org>; Thu, 14 Dec 2023 04:33:21 -0800 (PST)
-Received: by mail-pj1-x102b.google.com with SMTP id 98e67ed59e1d1-28aea039fb4so429920a91.1
-        for <git@vger.kernel.org>; Thu, 14 Dec 2023 04:33:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1702557201; x=1703162001; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YSQ23ZL5fxsbD8hQx0hhLk5imHtQooiO5IgxlsT2p2Q=;
-        b=Pj0KwJPXrbG8z8D5VvGCpCHrk6FD5ozhaFQM6sa/xSpEabx+Ocmc3ccMwfOUZp9p06
-         nhiQRwIqLMZ56XaSNRLtwgm6uInj5uCf28DI8ujCfe+L4GoCE8MROqqfzItJrO3+XM7H
-         J0pBsULZQEZTnH6g8SGfJUnuG4IhqFuH5zA1kRUhnbIRrhLLAMBijN5a9xrtQCuozMGj
-         Q73d+/T795OPd116Ee0TH5xrfdaQ/3oq5vpjCYA2hbfab1XO/AZ/mEzFAjvLSAt2c9UA
-         j8OA11c90XjDeZgotZWdF8fN0rQRmo1NLs4BhseIrAEcM1R0pTmRpOQ254R830EWMadM
-         QgEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702557201; x=1703162001;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YSQ23ZL5fxsbD8hQx0hhLk5imHtQooiO5IgxlsT2p2Q=;
-        b=hdkF+sh9i4vuZNfga3yhMSHKOvrXCJoDtOFfvYM52LheRftHhdz4KPhVezc6jxsFse
-         XTWonyVZHqRD6zLTUcBlm/C30/mdIqJ6sS4S4K3TNd8iA4zidSMN8F7fDQcdkQuI/Ewf
-         rTj6UkvmMjZHRuj/RypcyoUhO45P6HOk4rtXw55++VZuN4I+yhEkAw0fxolcNHa94VwG
-         HbbUaSfA9RPCvQ6P05QI7CufNktvk4SY4LRbJKoS2croir98mWuRytnEsmG4yZhQLCsG
-         wrsIxcmpwuQO9JqVmfBme6GmVGNaCILb9O97RJRrgbm0/sG8gWebjLAH/F5ZlnFLqHuM
-         Yx1A==
-X-Gm-Message-State: AOJu0Yybon2xRzmtDDHBwtZl5a/qEIggj9CKWywF9wrQYuqglf9Riult
-	/nzVEHkDllo/mvNgfEPMMc/nz3qA2d8=
-X-Google-Smtp-Source: AGHT+IHfqZrlbHYAfmZ4GI9r7B80cBNYlB/yA4YOsJju/BdRzQREXyXsFKBYibCKxBX/pujH6Z//rw==
-X-Received: by 2002:a17:90b:33cb:b0:286:7529:3598 with SMTP id lk11-20020a17090b33cb00b0028675293598mr12122585pjb.13.1702557200950;
-        Thu, 14 Dec 2023 04:33:20 -0800 (PST)
-Received: from tigtog-proxy.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id j8-20020a17090a734800b0028ae9cb6ce0sm3112368pjs.6.2023.12.14.04.33.20
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 14 Dec 2023 04:33:20 -0800 (PST)
-From: Jiang Xin <worldhello.net@gmail.com>
-To: Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>
-Cc: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v2 2/2] fetch: no redundant error message for atomic fetch
-Date: Thu, 14 Dec 2023 20:33:12 +0800
-Message-Id: <6fb83a00000563a79f3948f9087c634ae507b9f5.1702556642.git.zhiyou.jx@alibaba-inc.com>
-X-Mailer: git-send-email 2.32.0.rc3
-In-Reply-To: <cover.1702556642.git.zhiyou.jx@alibaba-inc.com>
-References: <38b0b22038399265407f7fc5f126f471dcc6f1a3.1697725898.git.zhiyou.jx@alibaba-inc.com> <cover.1702556642.git.zhiyou.jx@alibaba-inc.com>
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="tUM6iONU"
+Received: from mout.web.de (mout.web.de [217.72.192.78])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20E53113
+	for <git@vger.kernel.org>; Thu, 14 Dec 2023 05:08:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+	t=1702559311; x=1703164111; i=l.s.r@web.de;
+	bh=IwDwYAZ+nzWB24V/BH624zVUlC+NZT7y1EgD1+dnbOo=;
+	h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
+	 In-Reply-To;
+	b=tUM6iONUy1SVN4UEYlrCOlyQNyljmZplnvNfpe1RfeQ4EO1gByXy4d2/3J6jsKac
+	 N8oDP2oIjiwdrPZIu4DhJXSR3TbDn3/W8VBiw+eN6ipORfY9LW9T+h0lC/5S/Fli+
+	 muqcYl61TwxMQof+RQKuAJTtGjAUjjw49l/AUBuPLqZ6Ept1Ace2Urqoj7NgMALF7
+	 e7iPWxIyAYEt3SJoBr0c7EkQWMmuDZj15t0kMJ/b3bgm4Ui+LMpn81iVqVndC4C0d
+	 hIXl55F3kxXhoHuRxHYUyrOLjskcP/2I6MJcHVwkEdwxyCQVL8sWSSKCSQ3p49cQl
+	 eoEUomVo8SfdJympXQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([79.203.23.9]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MsJOq-1rSOeb3QZ0-00taLJ; Thu, 14
+ Dec 2023 14:08:31 +0100
+Message-ID: <4d0b2a5f-305b-4350-b164-44923cb250d8@web.de>
+Date: Thu, 14 Dec 2023 14:08:31 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Use ^=1 to toggle between 0 and 1
+Content-Language: en-US
+To: Jeff King <peff@peff.net>
+Cc: AtariDreams via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Seija Kijin <doremylover123@gmail.com>
+References: <pull.1620.git.git.1702401468082.gitgitgadget@gmail.com>
+ <20231212200920.GC1127366@coredump.intra.peff.net>
+ <8bea38fe-38a3-412a-b189-541a6596d623@web.de>
+ <20231213080143.GA1684525@coredump.intra.peff.net>
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <20231213080143.GA1684525@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:5GXYPFl8PhDM5jC4JYiFboVd+klz7oDfRupI6B0lmHW9IH+C2m4
+ YA11aEwEuzqJrEpw8WCbf7nDyZcNBKwufn8UjcCwfReXuD3rKa5HLWPf2zQgtU5FjKXKqTa
+ 6AHt0+K6My7V1Dhn+azAd2tFIES+XLwIVEiH2LIz+9XQwIMAKpdNzuuPwgNYFXNf+YnRq6x
+ ZVZnnMwGwWnRpZYOvc1Ew==
+UI-OutboundReport: notjunk:1;M01:P0:l/50tTy2A8w=;nK+0p4Xe08EQsXRRoXLKpz7wLh/
+ thBlfi7VmYb6H+i/De+C7kAp1TQm1U2NKb/ThxHyhqHnmALDULvM7kIfzstWNs5OIRxgSIOxN
+ WIXIYyG7GSNlK7icHm0jEzANRk21BFMvUw4drsZ+el2RH7f0cjWINMZ1sxUZDtg0K16RCrpsw
+ jQ8CvrHQkfCuZCuFVIyEWBol/AM5pULvkX1DPHRxX2kZDQQRn+4VoLlevi8n6Yuc7fAzKNy3u
+ 52+0FK23kGu1tObCuw2U9UdCt0yqcphhef5o6zh4wOYjptJfsX3YPkIA2N69HzOql7ZOOqtgi
+ PKPAun9MMdFB7gOYXuARDS3EzOt1Z2/tyJoQ7MpYy0aw6eTVrA9qF1lMSV2yqrZE0pz2fEE1m
+ ocNqfeGewe7uYd7qVrMyQCF3QNucfUr4LJQ+UWLaU6sf7N8svLTiGH0oShJoGtyDcB31tf1p7
+ Rkm1Vq5SSxTxy3EUMoti1U4o6HeUj1KAfBYgTx73Dt+aBQZfcTCt/bfBgcqw/kfBXjbiFvBb2
+ fDTI6JrgiMwj0W2Ka1fJIYeQfhf9IkDGBFmLmzAULeVDElcd/WGPwzJ0FTe8G3ZDmZhDx8YEX
+ 9LQOFTnVtAlyNf97Yr5DFLqqDdVIVq6kGCAheZiaGu8+INmWxGl7LoBoNbD7NnbDNtFtgsWdc
+ F8fJVuOtONhZ51x2oHacDwKBdpGX6IYTSWyJhHP7QGho+BpcIPf5593o0T8+xEkkUl9xU1AUZ
+ hz76LKc6bzBkKXtoEYh1cZFN9WRV6NkkQvuGc5CDjZvdrTdo6YzQYX+yx91xPmlL/2OpLBoEe
+ /CqfisMLOEj9qJyeXLiyNin9f50BSKRMrhTuWmC0Te8uUgzVle1jHZfzVXEKTyvIcdalnM5xN
+ NYc5janTVxDkjqMYcd7ucl+20H9MBDYOU89EwK7vUJ69ytjIwoTyoJwBFlwvlmeTuLSJ6wTaX
+ kuynnuY0badYalVB6d9tT5PBm0o=
 
-From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Am 13.12.23 um 09:01 schrieb Jeff King:
+> On Tue, Dec 12, 2023 at 11:30:03PM +0100, Ren=C3=A9 Scharfe wrote:
+>
+>> I wonder if
+>> it's time to use the C99 type _Bool in our code.  It would allow
+>> documenting that only two possible values exist in cases like the one
+>> above.  That would be even more useful for function returns, I assume.
 
-If an error occurs during an atomic fetch, a redundant error message
-will appear at the end of do_fetch(). It was introduced in b3a804663c
-(fetch: make `--atomic` flag cover backfilling of tags, 2022-02-17).
+> I don't even know that we'd need much of a weather-balloon patch. I
+> think it would be valid to do:
+>
+>   #ifndef bool
+>   #define bool int
+>
+> to handle pre-C99 compilers (if there even are any these days). Of
+> course we probably need some conditional magic to try to "#include
+> <stdbool.h>" for the actual C99. I guess we could assume C99 by default
+> and then add NO_STDBOOL as an escape hatch if anybody complains.
 
-In function do_fetch(), a failure message is already shown before the
-retcode is set, so we should not call additional error() at the end of
-this function.
+The semantics are slightly different in edge cases, so that fallback
+would not be fully watertight.  E.g. consider:
 
-We can remove the redundant error() function, because we know that
-the function ref_transaction_abort() never fails. While we can find a
-common pattern for calling ref_transaction_abort() by running command
-"git grep -A1 ref_transaction_abort", e.g.:
+   bool b(bool cond) {return cond =3D=3D true;}
+   bool b2(void) {return b(2);}
 
-    if (ref_transaction_abort(transaction, &error))
-        error("abort: %s", error.buf);
+b() returns false if you give it false and true for anything else. b2()
+returns true.
 
-We can fix this issue follow this pattern, and the test case "fetch
-porcelain output (atomic)" in t5574 will also be fixed. If in the future
-we decide that we don't need to check the return value of the function
-ref_transaction_abort(), this change can be fixed along with it.
+With int as the fallback this becomes:
 
-Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
----
- builtin/fetch.c         | 4 +---
- t/t5574-fetch-output.sh | 2 +-
- 2 files changed, 2 insertions(+), 4 deletions(-)
+   int b(int cond) {return cond =3D=3D 1;}
+   int b2(void) {return b(2);}
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index fd134ba74d..01a573cf8d 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1775,10 +1775,8 @@ static int do_fetch(struct transport *transport,
- 	}
- 
- cleanup:
--	if (retcode && transaction) {
--		ref_transaction_abort(transaction, &err);
-+	if (retcode && transaction && ref_transaction_abort(transaction, &err))
- 		error("%s", err.buf);
--	}
- 
- 	display_state_release(&display_state);
- 	close_fetch_head(&fetch_head);
-diff --git a/t/t5574-fetch-output.sh b/t/t5574-fetch-output.sh
-index bc747efefc..8d01e36b3d 100755
---- a/t/t5574-fetch-output.sh
-+++ b/t/t5574-fetch-output.sh
-@@ -98,7 +98,7 @@ do
- 		opt=
- 		;;
- 	esac
--	test_expect_failure "fetch porcelain output ${opt:+(atomic)}" '
-+	test_expect_success "fetch porcelain output ${opt:+(atomic)}" '
- 		test_when_finished "rm -rf porcelain" &&
- 
- 		# Clone and pre-seed the repositories. We fetch references into two
--- 
-2.41.0.232.g2f6f0bca4f.agit.8.0.4.dev
+Now only 1 is recognized as true, b2() returns 0 (false).
 
+A coding rule to not compare bools could mitigate that.  Or a rule to
+only use the values true and false in bool context and to only use
+logical operators on them.
+
+Ren=C3=A9
