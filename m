@@ -1,65 +1,75 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hh015N5n"
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A5E88E
-	for <git@vger.kernel.org>; Thu, 14 Dec 2023 08:44:51 -0800 (PST)
-Received: by mail-oi1-x233.google.com with SMTP id 5614622812f47-3ba00fe4e94so4220040b6e.1
-        for <git@vger.kernel.org>; Thu, 14 Dec 2023 08:44:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1702572290; x=1703177090; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=+U1ig27Pu/KO/nKF7gIMLDVVF4o+6dlInPGfbZ5wbsE=;
-        b=hh015N5n2XOYkX6sOSVHgjj+UhYskkpEl+REOclmRYy0mRZ+3gTaVwzXbTJzXM1WZL
-         9x/OTVoSAL2I+u3/mDMkWMczgO1cP1kgUOEkq3St5FX8shdN7bNYl7n/3RxmbDXTvFxv
-         6mDsqMwbP20d0WVG41AiHSi92bN5pHakCqrWgAjLSXy7OxsbS7fnOFn7LtsRSGhE2jrm
-         tuN7tm2zmk7Ifjegb+tRWpDTAuDpUZgBDH+nVS4FSPjAw/jl04oQfaJyeulzcrZN0Xzu
-         RQ5JgCU8k0k/zMy6nSg0PlBp5lCiA7uiRsIJs4YAxlhCWzcueyYqTUFKF5dqbdpD4Z96
-         dsFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702572290; x=1703177090;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=+U1ig27Pu/KO/nKF7gIMLDVVF4o+6dlInPGfbZ5wbsE=;
-        b=Xgj7W2lpyA3m1tQbpvVlzZetlTb9O4riUcOTh6SHEU7kP2jO0tDbJ7hZj5Hl066Z9g
-         HIJaJpHzohNkTb37axVwqchncrPgijXuZmUsHUy5vYy43F6BvJH6zm+7bFTAydDd8BHq
-         XkaBdEbdunsQd2zPcFP+vFiEzpBHqSy3PjF7GOhxa0roBSlDkLDftzdMmCffSzLkxnTP
-         Af5u1rD/038h+9gTKSvMxi5dp7mNvfMitLvufb/xkSbwcr+hq8MFBO01uBBQssXkq9Yc
-         7mu8wLxcp63crUYuoTROqyhscPEwKr3VaKvtT98RRmJJu6Mjn9Jg0TXhBBX0JlhVHphj
-         ZNXg==
-X-Gm-Message-State: AOJu0YyWME8l90EZHQ1hmn0/OisDVVkloT8c75yi5Fw803tpupR5Qw+I
-	CFPAttDoenk546b7GhShyqE8GLXj/gcwc7qtL+kmCRtfofU=
-X-Google-Smtp-Source: AGHT+IEhoKHq+XJv5VX7LpwuQUf5YHjs/1v1XyMz6rN8WdCQ/cZfLMaj386JTXJhNjsjdc5KRY7jWOqtHHfiyIkpyJk=
-X-Received: by 2002:a05:6808:209e:b0:3b9:e153:a610 with SMTP id
- s30-20020a056808209e00b003b9e153a610mr12577924oiw.59.1702572290307; Thu, 14
- Dec 2023 08:44:50 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hpzCZv3E"
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 327A28E
+	for <git@vger.kernel.org>; Thu, 14 Dec 2023 08:49:55 -0800 (PST)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id E11C51CBDA;
+	Thu, 14 Dec 2023 11:49:54 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=LU+GZ3YBT+MBXv1eESYhnDY2TkD5xnYR7pdUQm
+	atUfk=; b=hpzCZv3Ef4mxy2j085GFfCOg1781Y5YrMNB4sYqrMWPa5cMKwvuI2b
+	KXUXYlf6ju8OC4OXFTAOjXgJ3cj+Uh175/2RUscVk3es+vS2BMNqA67fYWOTYjYw
+	EbTahYB6MA4EDwAmHvK9U4dNnM++ubDP3mr5OCcL6bctuuAlnUMaA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id DA1041CBD9;
+	Thu, 14 Dec 2023 11:49:54 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.193.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 82DCE1CBD8;
+	Thu, 14 Dec 2023 11:49:51 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Eric Sunshine <ericsunshine@charter.net>,  git@vger.kernel.org,  Eric
+ Sunshine <ericsunshine@gmail.com>,  Eric Sunshine
+ <sunshine@sunshineco.com>
+Subject: Re: [PATCH] tests: drop dependency on `git diff` in check-chainlint
+In-Reply-To: <ZXq3YdK2RSKF3npE@tanuki> (Patrick Steinhardt's message of "Thu,
+	14 Dec 2023 09:05:53 +0100")
+References: <20231214032248.1615-1-ericsunshine@charter.net>
+	<ZXq3YdK2RSKF3npE@tanuki>
+Date: Thu, 14 Dec 2023 08:49:49 -0800
+Message-ID: <xmqqo7esohjm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Andreas Scholz <andr3asr@gmail.com>
-Date: Thu, 14 Dec 2023 17:44:41 +0100
-Message-ID: <CAHDWvZyHDbjOnnCYCkfMY+HPWobrcgP6c1kkWFrRgWV4fHED=w@mail.gmail.com>
-Subject: Question regarding Git updater
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ CCBE34C4-9AA0-11EE-85C2-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Hi
+Patrick Steinhardt <ps@pks.im> writes:
 
-I hope you can help me with answering my question regarding the update
-mechanism for Git after it has been installed.
+> This strongly reminds me of the thread at [1], where a similar issue was
+> discussed for git-grep(1). Quoting Junio: 
+>
+>> I actually do not think these "we are allowing Git tools to be used
+>> on random garbage" is a good idea to begin with X-<.  If we invented
+>> something nice for our variant in "git grep" and wish we can use it
+>> outside the repository, contributing the feature to implementations
+>> of "grep" would have been the right way to move forward, instead of
+>> contaminating the codebase with things that are not related to Git.
+>
+> So this might not be the best way to go.
 
-1) Does the updater autonomously figure out if there is a newer
-version than the current one that is installed?
+That is not a conclusion I want people to draw.
 
-2) Or does the updater only ask, when the user actively uses a command
-to ask Git to check for a newer version?
+Like it or not, "git diff --no-index" will be with us to stay, and
+"--no-index" being "we have abused the rest of Git code to implement
+'diff' that works _outside_ a Git repository---now go and do your
+thing", we would eventually want to correct it, if it is misbehaving
+when a repository it finds is in a shape it does not like, no?
 
-3) In both cases, what information about the user/system is sent with
-the request? Is this information stored on a server or database etc.?
-
-BR
-
-Andreas
+We should have what you quoted in mind as a general principle, and
+think twice when we are tempted to hoard useful features for another
+tool we initially wrote for Git and allow them to be used with the
+"--no-index" option, instead of contributing them to the tool that
+does not know or care "git" repositories (like "diff" and "grep").
