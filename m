@@ -1,54 +1,53 @@
-Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
+Received: from mail-oo1-f46.google.com (mail-oo1-f46.google.com [209.85.161.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E73FE66AC4
-	for <git@vger.kernel.org>; Thu, 14 Dec 2023 22:24:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3D2D67208
+	for <git@vger.kernel.org>; Thu, 14 Dec 2023 22:24:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="0dSclZ5q"
-Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-6d9f879f784so60338a34.2
-        for <git@vger.kernel.org>; Thu, 14 Dec 2023 14:24:06 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="AosW+pcm"
+Received: by mail-oo1-f46.google.com with SMTP id 006d021491bc7-58e256505f7so55345eaf.3
+        for <git@vger.kernel.org>; Thu, 14 Dec 2023 14:24:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1702592645; x=1703197445; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1702592640; x=1703197440; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=lt9BCHjvdrmObONlTkDEC+OLN2lDb4n9PEi2jy5LUrs=;
-        b=0dSclZ5qlfX44SmLucj43/mdzJAshHwCgEezrWOlLgS734dTgxJp7rY1+6Y4O7ih91
-         LKP4HGq9rWQfMJkSVOKoV63SD41PttUo6CD0R7KAQCEFVMLYz9DtqZ2WT6aYl1dhGGRG
-         2rpBe5G6rAJDcnQFlR7BLAF6NkFKdSzDNspcJiGx8AH0+uQmbPjrxv0aiuea+4dH4n1h
-         4O8TkhPd9HniSbi4+kCNAoICMicJujX8XsYZlmpT6S88Y5AgCKmJbSvbq1pFrdmJLb5D
-         klX/Tbrl91+nXus4MYxtpGyRiYEoxNwkFvhvHqMpTaMZnHJe9qTqHTYowPVkvxv4s7hF
-         fJyA==
+        bh=295UZYPZbV1wJAB8tzl5D02ZNn0sA5tomkIqFAKeBtw=;
+        b=AosW+pcmwBWo61EGodvDBHlIO/9wuUxPt7epPmWvkwKnZw7IbrWUVFrtZLFhxxaIcf
+         UWO9I3B/gY311XpsfA/8JYNKzPADMniPDhWOLbDnkzPJ1UBS2f1FLw/Je6KEZWXb0HiX
+         M9a/RoTG8ChGoYCNUe4qpnLp+1vKgMGEBR0nAYbY84ivBKzWjI161J8WkJH+A4zSB6/N
+         LduaoKABKRcYiafCw6JdMQqXyAIeA/J4+2ToZ/RlvkKXgyZSHgRPkzjaOxBzI81UoP+Y
+         j6VzRp0xqlYMo9hvlqBkeS/9vbSFuL+ItOF1TAGfR5cR+91YgOMZtXSON2snAn/ISfYR
+         SCPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702592645; x=1703197445;
+        d=1e100.net; s=20230601; t=1702592640; x=1703197440;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lt9BCHjvdrmObONlTkDEC+OLN2lDb4n9PEi2jy5LUrs=;
-        b=FDd6rMXIBSB7VKuqX99jWalKUzlnbOhiTRyhfj0x0/tHQjDYoMbW0TqGKg5ZreIMMm
-         yWdFgR1tiVDn3RqHuPY4sGWQv50rvbRX6gcGpo2PV95ZlgnzYqSUIN9+KZbz/KxUgu5k
-         ihvxJSymwqQl1GnI+kZPrLGmP5RzdolnQme4e0B+qRZdXuig15tMmb1WuAhDyUIIcSeT
-         7CaPGEyUjv4x8mCyb3MiBSxrkuD5CzZkk1/hVMg3PPMwF6DqIn+k7OzKUCet/8XFj1gz
-         bkE8rulD1eQAEZiyZMHdDUDCz0R0vB+VQ3zLjqQneslbT/Ho/pihtOronLvheAKkJAAz
-         KsQw==
-X-Gm-Message-State: AOJu0YxuG3Xm2yj13ReJuBtLv33Q7jZaiA98I9VAuhAlkxNlJDyhX943
-	/oOwZoN+IINfaUL6WjIzrIBT1W2eQfZ3ZgvYCnST4w==
-X-Google-Smtp-Source: AGHT+IGOVzyHRaunzRx8BM1ChCZ5VzOp3+kyGJS5FgtIZ/JNs3bbSAazbwDZOXCgHQSSSepJ7I202g==
-X-Received: by 2002:a9d:6a10:0:b0:6d9:e01c:6b79 with SMTP id g16-20020a9d6a10000000b006d9e01c6b79mr10756559otn.30.1702592645492;
-        Thu, 14 Dec 2023 14:24:05 -0800 (PST)
+        bh=295UZYPZbV1wJAB8tzl5D02ZNn0sA5tomkIqFAKeBtw=;
+        b=EwZoe3Q81y2LzwX7LKft3JWOWskclt+H+X3jrplsmLU1qrJFjlwgLpWEM9KZzZdFYU
+         rSRzdtTWJDgggml0YtDBuBNuZ5seX5ZfDSp8N677wnVPHgKGcNRhZ65i1V4c6s0Jshen
+         eQdO1oEwrm3DxadJXOqZ15vW8DTPhBmmNRvS4yjxsm//T7g7a4a7RTNnPZ25F+kxa6sQ
+         oOjXrb2ow6TcZbwgCyZHJbfuoXPzJEOx+bejjYAvAcRgh5pzlF25hrikkI1GJWkxgaoj
+         ZJTxozdrjOAC6Bj5/hdVL5koXwkoQzAbM05rAIguAt9+8fmcc9fWHuoyNdzP75QRsM9W
+         CpMw==
+X-Gm-Message-State: AOJu0YyK8Wh92zv9ZSVjHVizU4tGLIdryzQRBIPQQfDg0mNb3eVbyfn5
+	TC1kViJ/KmJTpswV+DLwSQ/xqRuWXPSHXeNG3Y94Zw==
+X-Google-Smtp-Source: AGHT+IFdL7sGkj9ZtjanbR7a31e2f7sxAkUjOIy/Eotr201Xim6RDeoHh+hRCgfX8mjCPlP951SFdw==
+X-Received: by 2002:a4a:1d86:0:b0:58e:1c47:879b with SMTP id 128-20020a4a1d86000000b0058e1c47879bmr7574223oog.16.1702592640295;
+        Thu, 14 Dec 2023 14:24:00 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id da15-20020a0568306a8f00b006ce28044207sm1098118otb.58.2023.12.14.14.24.05
+        by smtp.gmail.com with ESMTPSA id l26-20020a4a855a000000b0058d1f2e1c8csm3692368ooh.40.2023.12.14.14.23.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Dec 2023 14:24:05 -0800 (PST)
-Date: Thu, 14 Dec 2023 17:24:04 -0500
+        Thu, 14 Dec 2023 14:24:00 -0800 (PST)
+Date: Thu, 14 Dec 2023 17:23:59 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 10/26] pack-bitmap: return multiple packs via
- `reuse_partial_packfile_from_bitmap()`
-Message-ID: <f551892bab54f855556ca6a35168717285ce4e75.1702592604.git.me@ttaylorr.com>
+Subject: [PATCH v2 08/26] ewah: implement `bitmap_is_empty()`
+Message-ID: <595b3b698615cd341cef49623523c0d3ea1b6802.1702592604.git.me@ttaylorr.com>
 References: <cover.1701198172.git.me@ttaylorr.com>
  <cover.1702592603.git.me@ttaylorr.com>
 Precedence: bulk
@@ -61,101 +60,54 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1702592603.git.me@ttaylorr.com>
 
-Further prepare for enabling verbatim pack-reuse over multiple packfiles
-by changing the signature of reuse_partial_packfile_from_bitmap() to
-populate an array of `struct bitmapped_pack *`'s instead of a pointer to
-a single packfile.
+In a future commit, we will want to check whether or not a bitmap has
+any bits set in any of its words. The best way to do this (prior to the
+existence of this patch) is to call `bitmap_popcount()` and check
+whether the result is non-zero.
 
-Since the array we're filling out is sized dynamically[^1], add an
-additional `size_t *` parameter which will hold the number of reusable
-packs (equal to the number of elements in the array).
+But this is semi-wasteful, since we do not need to know the exact number
+of bits set, only whether or not there is at least one of them.
 
-Note that since we still have not implemented true multi-pack reuse,
-these changes aren't propagated out to the rest of the caller in
-builtin/pack-objects.c.
+Implement a new helper function to check just that.
 
-In the interim state, we expect that the array has a single element, and
-we use that element to fill out the static `reuse_packfile` variable
-(which is a bog-standard `struct packed_git *`). Future commits will
-continue to push this change further out through the pack-objects code.
-
-[^1]: That is, even though we know the number of packs which are
-  candidates for pack-reuse, we do not know how many of those
-  candidates we can actually reuse.
-
+Suggested-by: Patrick Steinhardt <ps@pks.im>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/pack-objects.c | 9 +++++++--
- pack-bitmap.c          | 6 ++++--
- pack-bitmap.h          | 5 +++--
- 3 files changed, 14 insertions(+), 6 deletions(-)
+ ewah/bitmap.c | 9 +++++++++
+ ewah/ewok.h   | 1 +
+ 2 files changed, 10 insertions(+)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index c3df6d9657..87e16636a8 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -3940,14 +3940,19 @@ static int pack_options_allow_reuse(void)
+diff --git a/ewah/bitmap.c b/ewah/bitmap.c
+index 7b525b1ecd..ac7e0af622 100644
+--- a/ewah/bitmap.c
++++ b/ewah/bitmap.c
+@@ -169,6 +169,15 @@ size_t bitmap_popcount(struct bitmap *self)
+ 	return count;
+ }
  
- static int get_object_list_from_bitmap(struct rev_info *revs)
- {
-+	struct bitmapped_pack *packs = NULL;
-+	size_t packs_nr = 0;
++int bitmap_is_empty(struct bitmap *self)
++{
++	size_t i;
++	for (i = 0; i < self->word_alloc; i++)
++		if (self->words[i])
++			return 0;
++	return 1;
++}
 +
- 	if (!(bitmap_git = prepare_bitmap_walk(revs, 0)))
- 		return -1;
- 
- 	if (pack_options_allow_reuse())
--		reuse_partial_packfile_from_bitmap(bitmap_git, &reuse_packfile,
-+		reuse_partial_packfile_from_bitmap(bitmap_git, &packs,
-+						   &packs_nr,
- 						   &reuse_packfile_bitmap);
- 
--	if (reuse_packfile) {
-+	if (packs) {
-+		reuse_packfile = packs[0].p;
- 		reuse_packfile_objects = bitmap_popcount(reuse_packfile_bitmap);
- 		if (!reuse_packfile_objects)
- 			BUG("expected non-empty reuse bitmap");
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index c75a83e9cc..4d5a484678 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -2001,7 +2001,8 @@ static int bitmapped_pack_cmp(const void *va, const void *vb)
- }
- 
- void reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
--					struct packed_git **packfile_out,
-+					struct bitmapped_pack **packs_out,
-+					size_t *packs_nr_out,
- 					struct bitmap **reuse_out)
+ int bitmap_equals(struct bitmap *self, struct bitmap *other)
  {
- 	struct repository *r = the_repository;
-@@ -2069,7 +2070,8 @@ void reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
- 	 * need to be handled separately.
- 	 */
- 	bitmap_and_not(result, reuse);
--	*packfile_out = packs[0].p;
-+	*packs_out = packs;
-+	*packs_nr_out = packs_nr;
- 	*reuse_out = reuse;
- }
+ 	struct bitmap *big, *small;
+diff --git a/ewah/ewok.h b/ewah/ewok.h
+index 7eb8b9b630..c11d76c6f3 100644
+--- a/ewah/ewok.h
++++ b/ewah/ewok.h
+@@ -189,5 +189,6 @@ void bitmap_or_ewah(struct bitmap *self, struct ewah_bitmap *other);
+ void bitmap_or(struct bitmap *self, const struct bitmap *other);
  
-diff --git a/pack-bitmap.h b/pack-bitmap.h
-index ab3fdcde6b..7a12a2ce81 100644
---- a/pack-bitmap.h
-+++ b/pack-bitmap.h
-@@ -78,8 +78,9 @@ int test_bitmap_hashes(struct repository *r);
- struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
- 					 int filter_provided_objects);
- uint32_t midx_preferred_pack(struct bitmap_index *bitmap_git);
--void reuse_partial_packfile_from_bitmap(struct bitmap_index *,
--					struct packed_git **packfile,
-+void reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
-+					struct bitmapped_pack **packs_out,
-+					size_t *packs_nr_out,
- 					struct bitmap **reuse_out);
- int rebuild_existing_bitmaps(struct bitmap_index *, struct packing_data *mapping,
- 			     kh_oid_map_t *reused_bitmaps, int show_progress);
+ size_t bitmap_popcount(struct bitmap *self);
++int bitmap_is_empty(struct bitmap *self);
+ 
+ #endif
 -- 
 2.43.0.102.ga31d690331.dirty
 
