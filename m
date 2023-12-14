@@ -1,78 +1,111 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E75BE6929A
-	for <git@vger.kernel.org>; Thu, 14 Dec 2023 19:15:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="pcgvz5Yl"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 620B21E270;
-	Thu, 14 Dec 2023 14:13:20 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=T/50iFnch0iz2gbTB0Hr6UodRT3PN2ddMcX0y8
-	ivblA=; b=pcgvz5Yl4YDBh7YnF5ktZ2SSdb0EsyEIkKTu9tl+gNkihYWLImGb8C
-	db1fy1bpw3G2wIgDgQoJOWJ42asjVTkCf+ISMJBs9GzOi4aqZoOtUkM4+dnVkzyZ
-	GKsWCJ5WN3hNql5+CxTVBirLUzFDooQAMb3/sN4+1DgslPila0ShI=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 5B9AB1E26F;
-	Thu, 14 Dec 2023 14:13:20 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.193.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 062BD1E26E;
-	Thu, 14 Dec 2023 14:13:16 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
-Subject: Re: [PATCH] tests: prefer host Git to verify chainlint self-checks
-In-Reply-To: <CAPig+cQvcSeSKVE=0kDyNiSztNAgVwhfAzoL5K7uYHEKe=0f_A@mail.gmail.com>
-	(Eric Sunshine's message of "Thu, 14 Dec 2023 13:10:48 -0500")
-References: <4112adbe467c14a8f22a87ea41aa4705f8760cf6.1702380646.git.ps@pks.im>
-	<xmqq8r5zrzg1.fsf@gitster.g> <ZXlbNlG28e1sAYPU@tanuki>
-	<xmqqr0jqnnmn.fsf@gitster.g>
-	<CAPig+cRc2hW_xhJRPJmEVYik71zWLDQ_EFjBFw095OgPGYrWGg@mail.gmail.com>
-	<ZXq5GL723v4E3_IH@tanuki>
-	<CAPig+cQ2-PB24n0xfcoSy_1UT-VbEZUXXJ9QbA8FBA8Vfyd6Ng@mail.gmail.com>
-	<xmqqbkaspxn6.fsf@gitster.g>
-	<CAPig+cQvcSeSKVE=0kDyNiSztNAgVwhfAzoL5K7uYHEKe=0f_A@mail.gmail.com>
-Date: Thu, 14 Dec 2023 11:13:15 -0800
-Message-ID: <xmqqfs04oawk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB006DCF7
+	for <git@vger.kernel.org>; Thu, 14 Dec 2023 21:06:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 8721 invoked by uid 109); 14 Dec 2023 20:59:37 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 14 Dec 2023 20:59:37 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11277 invoked by uid 111); 14 Dec 2023 20:59:36 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 14 Dec 2023 15:59:36 -0500
+Authentication-Results: peff.net; auth=none
+Date: Thu, 14 Dec 2023 15:59:36 -0500
+From: Jeff King <peff@peff.net>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc: git@vger.kernel.org, Ondrej Pohorelsky <opohorel@redhat.com>,
+	"brian m . carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/1] test-lib-functions: add object size functions
+Message-ID: <20231214205936.GA2272813@coredump.intra.peff.net>
+References: <CA+B51BEpSh1wT627Efpysw3evVocpiDCoQ3Xaza6jKE3B62yig@mail.gmail.com>
+ <9feeb6cf-aabf-4002-917f-3f6c27547bc8@web.de>
+ <20231212200153.GB1127366@coredump.intra.peff.net>
+ <ff735aac-b60b-4d52-a6dc-180ab504fc8d@web.de>
+ <65557f2d-9de0-49ae-a858-80476aa52b68@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- D6034772-9AB4-11EE-A7A4-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <65557f2d-9de0-49ae-a858-80476aa52b68@web.de>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+On Wed, Dec 13, 2023 at 01:28:56PM +0100, René Scharfe wrote:
 
-> (The only postprocessing of "expect" files which needs to stay is the
-> bit which removes the "# LINT:" comments which litter the "expect"
-> files explaining to human readers why the linter should insert a
-> "???FOO???" annotation at that particular point.)
+> Add test_object_size and its helpers test_loose_object_size and
+> test_packed_object_size, which allow determining the size of a Git
+> object using only the low-level Git commands rev-parse and show-index.
+> 
+> Use it in t6300 to replace the bare-bones function test_object_file_size
+> as a motivating example.  There it provides the expected output of the
+> high-level Git command for-each-ref.
 
-Yup, that matches my understanding.
+This adds a packed-object function, but I doubt anybody actually calls
+it. If we're going to do that, it's probably worth adding some tests for
+"cat-file --batch-check" or similar.
 
-> The chainlint self-tests were never meant to be about its general
-> output stability. They were intended to ensure that the "???FOO???"
-> annotations are: (1) indeed inserted for the set of linting problems
-> the tool detects, and (2) inserted at the correct spot in the emitted
-> output relative to the shell tokens to which the annotation applies.
+At which point I wonder if rather than having a function for a single
+object, we are better off just testing the result of:
 
-Yup.
+  git cat-file --batch-all-objects --unordered --batch-check='%(objectsize:disk)'
 
-> Minor differences in the tool's output (whether over time or between
-> platforms) should be immaterial in respect to those correctness goals.
+against a single post-processed "show-index" invocation.
 
-But there is no reason to make such immaterial changes to the output
-gratuitously when we are updating the tool to improve it, no?
+> So how about this?  I'm a bit nervous about all the rules about output
+> descriptors and error propagation and whatnot in the test library, but
+> this implementation seems simple enough and might be useful in more than
+> one test.  No idea how to add support for alternate object directories,
+> but I doubt we'll ever need it.
+
+I'm not sure that we need to do anything special with output
+redirection. Shouldn't these functions just send errors to stderr as
+usual? If they are run inside a test_expect block, that goes to
+descriptor 4 (which is either /dev/null or the original stderr,
+depending on whether "-v" was used).
+
+> +test_loose_object_size () {
+> +	test "$#" -ne 1 && BUG "1 param"
+> +	local path=$(test_oid_to_path "$1")
+> +	test_file_size "$(git rev-parse --git-path "objects/$path")" 2>&4
+> +}
+
+OK. We lose the exit code from "rev-parse" but that is probably OK for
+our purposes.
+
+> +test_packed_object_size () {
+> +	test "$#" -ne 2 && BUG "2 params"
+> +	local oid=$1 idx=$2 packsize rawsz end
+> +
+> +	packsize=$(test_file_size "${idx%.idx}.pack")
+> +	rawsz=$(test_oid rawsz)
+> +	end=$(($packsize - $rawsz))
+
+OK, this $end is the magic required for the final entry. Makes sense.
+
+> +	git show-index <"$idx" |
+> +	awk -v oid="$oid" -v end="$end" '
+> +		$2 == oid {start = $1}
+> +		{offsets[$1] = 1}
+> +		END {
+> +			if (!start || start >= end)
+> +				exit 1
+> +			for (o in offsets)
+> +				if (start < o && o < end)
+> +					end = o
+> +			print end - start
+> +		}
+> +	' && return 0
+
+I was confused at first, because I didn't see any sorting happening. But
+if I understand correctly, you're just looking for the smallest "end"
+that comes after the start of the object we're looking for. Which I
+think works.
+
+-Peff
