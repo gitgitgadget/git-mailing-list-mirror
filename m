@@ -1,260 +1,141 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GdvpayY9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KBcAqtDi"
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A51FD118
-	for <git@vger.kernel.org>; Thu, 14 Dec 2023 05:37:18 -0800 (PST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.nyi.internal (Postfix) with ESMTP id 191C15C01B7;
-	Thu, 14 Dec 2023 08:37:18 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Thu, 14 Dec 2023 08:37:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1702561038; x=1702647438; bh=izuZYshyx+
-	gHoMxy+8YwIOYTB9TabCJeQTAjhEfklnk=; b=GdvpayY9NbLGkYRX7SwyMnnbB+
-	X7hBEpoHiVDO40eq4sssIqyS+VNCuEjtPnAr1OB2hTpiUsGHLLENahToShxI3apq
-	0Rr3sPBXeYwhlNU4bhXNHgidXG6gl+sMOzIw5g1Ibmfb1dEzXgurQvhqYaaNo8q7
-	WS8GdydAwsMK9H5HSerTu9potOA+mqiTV+5k4bRj8AgbHGQq80kcEmQuAhu4qsyb
-	HUbVGSOqj+raxirIoHiE3H89vjEeixy1XDkvkQ31wqh2qUWaZ1rS4VrhYU35/XdA
-	YrkPTvH/i7r24BOekpw1K2fqNYEoqU89AOaHjzt7YMwWDZmq9pz5V2dnJmdw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1702561038; x=1702647438; bh=izuZYshyx+gHoMxy+8YwIOYTB9Ta
-	bCJeQTAjhEfklnk=; b=KBcAqtDiP/ad3V5JZeK2Et2SKe13iHsIsgi8jc0ZkE30
-	42FG5B8dMhpYb2EK+e9thEEdKDTuDd6A+vaHPD743whvwF+bztkJAraxcGrh5xeY
-	nw5+ZEd8YNaL4E6Xu+F0mjzt7TqkwMwwINIz6YCjs461JgxVgRUL54pPpmMABsTm
-	nKWQht6THoWZbKzJmtJw7IhqiD6zYe6HbuiMr7WA66/hsHOChfhJoOswCTDhkq0d
-	1e3/G2V6VsSwsGDkUqVpA1RArnV4SCRWVbXpNe7wKy3/nN6OP0sMbSH0Y+ayd/uv
-	Te/coCIMdLwaiyww7KtzdTIcRp3gAqWKbsnSCiSi2A==
-X-ME-Sender: <xms:DQV7ZdwyVX_RC1FmkoXgden_vOKQFccvbCAU3SbAtJDGZ87lzr8VTg>
-    <xme:DQV7ZdRrvrUNoP-4jDN2HTMTVnh1FjqrbZtzO1vTh8XVppWXBDXkuZ6N5wq4Blzbp
-    pdKqrEqHrr60zuVTg>
-X-ME-Received: <xmr:DQV7ZXW5xK0GZlGNvuUwD3FHgwMsL74piL2fFraGTzlYY3jU-kQoHC2TbsF5aC9l9JSaoV5_9iQze31hkigfjPOm58p1DR7Fd6pUPiiN4BI8sc4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudelledgheefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:DQV7ZfiAIW4IMyMJC4PTbiEAOM9WXUkmyzLdzAa38cdoNwYkhQftPQ>
-    <xmx:DQV7ZfB9Bi9zPhR6l-6-_edNK9FErkV8BqSVPgIRRPGGbd_raAZdzQ>
-    <xmx:DQV7ZYLbD5X_nAN7d4ciM7JMSV0vQGsY_h-eaggcMLhzh91IoRpkbA>
-    <xmx:DgV7ZSNZiRjK2lltj-b_zMvoRJGQifcixf6P1AV_HAF0wL7M9S8WRg>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 14 Dec 2023 08:37:16 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 95bca8e9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 14 Dec 2023 13:35:33 +0000 (UTC)
-Date: Thu, 14 Dec 2023 14:37:13 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Taylor Blau <me@ttaylorr.com>, Phillip Wood <phillip.wood123@gmail.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v3 4/4] bisect: consistently write BISECT_EXPECTED_REV via
- the refdb
-Message-ID: <324467816187a8d29407f03006c936b5938f811c.1702560829.git.ps@pks.im>
-References: <cover.1701243201.git.ps@pks.im>
- <cover.1702560829.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EU+wYA3S"
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF0E69C
+	for <git@vger.kernel.org>; Thu, 14 Dec 2023 06:13:48 -0800 (PST)
+Received: by mail-pf1-x433.google.com with SMTP id d2e1a72fcca58-6ce94f62806so4660621b3a.1
+        for <git@vger.kernel.org>; Thu, 14 Dec 2023 06:13:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1702563228; x=1703168028; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Qb8eMO+r2EX9wgE+XrVSIkJfXNeVFSb+ROeu76BH6Nw=;
+        b=EU+wYA3SPrs/8yuvRFWrz6XWVp2U+DKgbLPXKDZAYRzPtlVaNbsHyJrktvcq1EXKY8
+         lHz3mnIa3fkv7Vk7WfCv49q4O+gAXoAhqi5NH7H8v124FqVlwHR0+WQoYHnI3KmzLj+E
+         KExcWmvZL+NDTfCZVCKRNHkNzlJtT6rRaZgpngrrHLKKRbzNU6r+OxcMirtlT1iCifmu
+         jMZdSGYnyusiuQ/Kso6Aa+BiX59jaAIiVTLDheFyH9vtqRDm0EU2l4+sWckgGSM3zk8a
+         XCG2wFo3WL+q8Lumn1QtmXz98LLyZH/DLTOV8TSKyFx96x0oxnwCCZs94ss3t6YnGMUB
+         gi2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702563228; x=1703168028;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Qb8eMO+r2EX9wgE+XrVSIkJfXNeVFSb+ROeu76BH6Nw=;
+        b=fpqqq6e6hDMLR7SXlFH6wnVHfc9m+xjnw4s7tJBMCruP6QPo9iej2AqHHVao8QeB+d
+         zUyze7eFvPxFzlz9pKdo9sUVPpUWF83cByPOu51gwUa0NP6v56hFhaD9raWCEelG7S75
+         WLsvwp/CBaPsg4kjOHl7E706WVCwgItTExYKWGiAlg5Weila3GXaSuuGotIhMqy3Tyfq
+         VHe7rd4IyZdPiirRKh47DGMDXYXoqNkDLK4O8SW/LC1b8nSKBuPULQU7stuoYQe/SgGO
+         QmEzafauyvhQfyC7AIpFbBvXNgUkXLWfHB8ULoGWvjmEY1A8tyLPqFkdtPrt6CSDnzte
+         kBbQ==
+X-Gm-Message-State: AOJu0YwWbfsjSo2s22ynuNa12ibzi+7exHQfIqCaG6XBbGQkJRNzEtCx
+	PQbwOISCvKz7XmVDSsRt8zPRNbczL9Y=
+X-Google-Smtp-Source: AGHT+IHdtjy+oaA7aG8QFEFc8p8Ec1O0z8BOjctdbAcs+c4M1DLErEg0byw3sm0LNMs09vuVsEcS5Q==
+X-Received: by 2002:a05:6a00:2401:b0:6ce:2731:c235 with SMTP id z1-20020a056a00240100b006ce2731c235mr6045920pfh.36.1702563228040;
+        Thu, 14 Dec 2023 06:13:48 -0800 (PST)
+Received: from tigtog-proxy.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
+        by smtp.gmail.com with ESMTPSA id 16-20020a056a00071000b006ce921da705sm11806232pfl.136.2023.12.14.06.13.47
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 14 Dec 2023 06:13:47 -0800 (PST)
+From: Jiang Xin <worldhello.net@gmail.com>
+To: Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+Cc: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: [PATCH v4 0/4] support remote archive via stateless transport
+Date: Thu, 14 Dec 2023 22:13:41 +0800
+Message-Id: <cover.1702562879.git.zhiyou.jx@alibaba-inc.com>
+X-Mailer: git-send-email 2.32.0.rc3
+In-Reply-To: <cover.1696432593.git.zhiyou.jx@alibaba-inc.com>
+References: <cover.1696432593.git.zhiyou.jx@alibaba-inc.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="KsUGRoWdhMrbnBZ0"
-Content-Disposition: inline
-In-Reply-To: <cover.1702560829.git.ps@pks.im>
+Content-Transfer-Encoding: 8bit
 
+From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
---KsUGRoWdhMrbnBZ0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+# Change since v3:
 
-We're inconsistently writing BISECT_EXPECTED_REV both via the filesystem
-and via the refdb, which violates the newly established rules for how
-special refs must be treated. This works alright in practice with the
-reffiles reference backend, but will cause bugs once we gain additional
-backends.
+1. Update commit message of patch 2/4.
+2. Add comments in t5003.
 
-Fix this issue and consistently write BISECT_EXPECTED_REV via the refdb
-so that it is no longer a special ref.
+# range-diff v3...v4
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- bisect.c                    | 25 ++++---------------------
- builtin/bisect.c            |  8 ++------
- refs.c                      |  3 ++-
- t/t6030-bisect-porcelain.sh |  2 +-
- 4 files changed, 9 insertions(+), 29 deletions(-)
+1:  1818d8e30e = 1:  d343585cb5 transport-helper: no connection restriction in connect_helper
+2:  b57524bc91 ! 2:  65fb67523c transport-helper: call do_take_over() in process_connect
+    @@ Commit message
+         where the return value from process_connect() is the return value of the
+         call it makes to process_connect_service().
+     
+    -    It is safe to make a refactor by moving the call of do_take_over()
+    -    into the function process_connect().
+    +    Move the call of do_take_over() inside process_connect(), so that
+    +    calling the process_connect() function is more concise and will not
+    +    miss do_take_over().
+     
+         Suggested-by: Junio C Hamano <gitster@pobox.com>
+         Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+3:  7ce60e3b9a = 3:  109a1fffde transport-helper: call do_take_over() in connect_helper
+4:  626f903508 ! 4:  eb905259fe archive: support remote archive from stateless transport
+    @@ Commit message
+     
+         Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+         Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+    @@ t/t5003-archive-zip.sh: check_zip with_untracked2
+      check_added with_untracked2 untracked one/untracked
+      check_added with_untracked2 untracked two/untracked
+      
+    ++# Test remote archive over HTTP protocol.
+    ++#
+    ++# Note: this should be the last part of this test suite, because
+    ++# by including lib-httpd.sh, the test may end early if httpd tests
+    ++# should not be run.
+    ++#
+     +. "$TEST_DIRECTORY"/lib-httpd.sh
+     +start_httpd
+     +
+    @@ t/t5003-archive-zip.sh: check_zip with_untracked2
+     +setup_askpass_helper
+     +
+     +test_expect_success 'remote archive does not work with protocol v1' '
+    -+	test_when_finished "rm -f d5.zip" &&
+     +	test_must_fail git -c protocol.version=1 archive \
+     +		--remote="$HTTPD_URL/auth/smart/bare.git" \
+    -+		--output=d5.zip HEAD >actual 2>&1 &&
+    ++		--output=remote-http.zip HEAD >actual 2>&1 &&
+     +	cat >expect <<-EOF &&
+     +	fatal: can${SQ}t connect to subservice git-upload-archive
+     +	EOF
+    @@ t/t5003-archive-zip.sh: check_zip with_untracked2
+     +'
+     +
+     +test_expect_success 'archive remote http repository' '
+    -+	test_when_finished "rm -f d5.zip" &&
+     +	git archive --remote="$HTTPD_URL/auth/smart/bare.git" \
+    -+		--output=d5.zip HEAD &&
+    -+	test_cmp_bin d.zip d5.zip
+    ++		--output=remote-http.zip HEAD &&
+    ++	test_cmp_bin d.zip remote-http.zip
+     +'
+     +
+      test_done
 
-diff --git a/bisect.c b/bisect.c
-index 1be8e0a271..985b96ed13 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -471,7 +471,6 @@ static int read_bisect_refs(void)
- }
-=20
- static GIT_PATH_FUNC(git_path_bisect_names, "BISECT_NAMES")
--static GIT_PATH_FUNC(git_path_bisect_expected_rev, "BISECT_EXPECTED_REV")
- static GIT_PATH_FUNC(git_path_bisect_ancestors_ok, "BISECT_ANCESTORS_OK")
- static GIT_PATH_FUNC(git_path_bisect_run, "BISECT_RUN")
- static GIT_PATH_FUNC(git_path_bisect_start, "BISECT_START")
-@@ -707,26 +706,10 @@ static enum bisect_error error_if_skipped_commits(str=
-uct commit_list *tried,
-=20
- static int is_expected_rev(const struct object_id *oid)
- {
--	const char *filename =3D git_path_bisect_expected_rev();
--	struct stat st;
--	struct strbuf str =3D STRBUF_INIT;
--	FILE *fp;
--	int res =3D 0;
--
--	if (stat(filename, &st) || !S_ISREG(st.st_mode))
-+	struct object_id expected_oid;
-+	if (read_ref("BISECT_EXPECTED_REV", &expected_oid))
- 		return 0;
--
--	fp =3D fopen_or_warn(filename, "r");
--	if (!fp)
--		return 0;
--
--	if (strbuf_getline_lf(&str, fp) !=3D EOF)
--		res =3D !strcmp(str.buf, oid_to_hex(oid));
--
--	strbuf_release(&str);
--	fclose(fp);
--
--	return res;
-+	return oideq(oid, &expected_oid);
- }
-=20
- enum bisect_error bisect_checkout(const struct object_id *bisect_rev,
-@@ -1185,10 +1168,10 @@ int bisect_clean_state(void)
- 	struct string_list refs_for_removal =3D STRING_LIST_INIT_NODUP;
- 	for_each_ref_in("refs/bisect", mark_for_removal, (void *) &refs_for_remov=
-al);
- 	string_list_append(&refs_for_removal, xstrdup("BISECT_HEAD"));
-+	string_list_append(&refs_for_removal, xstrdup("BISECT_EXPECTED_REV"));
- 	result =3D delete_refs("bisect: remove", &refs_for_removal, REF_NO_DEREF);
- 	refs_for_removal.strdup_strings =3D 1;
- 	string_list_clear(&refs_for_removal, 0);
--	unlink_or_warn(git_path_bisect_expected_rev());
- 	unlink_or_warn(git_path_bisect_ancestors_ok());
- 	unlink_or_warn(git_path_bisect_log());
- 	unlink_or_warn(git_path_bisect_names());
-diff --git a/builtin/bisect.c b/builtin/bisect.c
-index 35938b05fd..4e2c43daf5 100644
---- a/builtin/bisect.c
-+++ b/builtin/bisect.c
-@@ -17,7 +17,6 @@
- #include "revision.h"
-=20
- static GIT_PATH_FUNC(git_path_bisect_terms, "BISECT_TERMS")
--static GIT_PATH_FUNC(git_path_bisect_expected_rev, "BISECT_EXPECTED_REV")
- static GIT_PATH_FUNC(git_path_bisect_ancestors_ok, "BISECT_ANCESTORS_OK")
- static GIT_PATH_FUNC(git_path_bisect_start, "BISECT_START")
- static GIT_PATH_FUNC(git_path_bisect_log, "BISECT_LOG")
-@@ -921,7 +920,6 @@ static enum bisect_error bisect_state(struct bisect_ter=
-ms *terms, int argc,
- 	const char *state;
- 	int i, verify_expected =3D 1;
- 	struct object_id oid, expected;
--	struct strbuf buf =3D STRBUF_INIT;
- 	struct oid_array revs =3D OID_ARRAY_INIT;
-=20
- 	if (!argc)
-@@ -976,10 +974,8 @@ static enum bisect_error bisect_state(struct bisect_te=
-rms *terms, int argc,
- 		oid_array_append(&revs, &commit->object.oid);
- 	}
-=20
--	if (strbuf_read_file(&buf, git_path_bisect_expected_rev(), 0) < the_hash_=
-algo->hexsz ||
--	    get_oid_hex(buf.buf, &expected) < 0)
-+	if (read_ref("BISECT_EXPECTED_REV", &expected))
- 		verify_expected =3D 0; /* Ignore invalid file contents */
--	strbuf_release(&buf);
-=20
- 	for (i =3D 0; i < revs.nr; i++) {
- 		if (bisect_write(state, oid_to_hex(&revs.oid[i]), terms, 0)) {
-@@ -988,7 +984,7 @@ static enum bisect_error bisect_state(struct bisect_ter=
-ms *terms, int argc,
- 		}
- 		if (verify_expected && !oideq(&revs.oid[i], &expected)) {
- 			unlink_or_warn(git_path_bisect_ancestors_ok());
--			unlink_or_warn(git_path_bisect_expected_rev());
-+			delete_ref(NULL, "BISECT_EXPECTED_REV", NULL, REF_NO_DEREF);
- 			verify_expected =3D 0;
- 		}
- 	}
-diff --git a/refs.c b/refs.c
-index 8fe34d51e4..c76ce86bef 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1840,6 +1840,8 @@ static int is_special_ref(const char *refname)
- 	 * There are some exceptions that you might expect to see on this list
- 	 * but which are handled exclusively via the reference backend:
- 	 *
-+	 * - BISECT_EXPECTED_REV
-+	 *
- 	 * - CHERRY_PICK_HEAD
- 	 *
- 	 * - HEAD
-@@ -1857,7 +1859,6 @@ static int is_special_ref(const char *refname)
- 	 */
- 	static const char * const special_refs[] =3D {
- 		"AUTO_MERGE",
--		"BISECT_EXPECTED_REV",
- 		"FETCH_HEAD",
- 		"MERGE_AUTOSTASH",
- 		"MERGE_HEAD",
-diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index 2a5b7d8379..792c1504bc 100755
---- a/t/t6030-bisect-porcelain.sh
-+++ b/t/t6030-bisect-porcelain.sh
-@@ -1176,7 +1176,7 @@ test_expect_success 'git bisect reset cleans bisectio=
-n state properly' '
- 	git bisect bad $HASH4 &&
- 	git bisect reset &&
- 	test -z "$(git for-each-ref "refs/bisect/*")" &&
--	test_path_is_missing ".git/BISECT_EXPECTED_REV" &&
-+	test_ref_missing BISECT_EXPECTED_REV &&
- 	test_path_is_missing ".git/BISECT_ANCESTORS_OK" &&
- 	test_path_is_missing ".git/BISECT_LOG" &&
- 	test_path_is_missing ".git/BISECT_RUN" &&
---=20
-2.43.GIT
+Jiang Xin (4):
+  transport-helper: no connection restriction in connect_helper
+  transport-helper: call do_take_over() in process_connect
+  transport-helper: call do_take_over() in connect_helper
+  archive: support remote archive from stateless transport
 
+ http-backend.c         | 15 +++++++++++----
+ remote-curl.c          | 14 +++++++++++---
+ t/t5003-archive-zip.sh | 34 ++++++++++++++++++++++++++++++++++
+ transport-helper.c     | 29 +++++++++++++----------------
+ 4 files changed, 69 insertions(+), 23 deletions(-)
 
---KsUGRoWdhMrbnBZ0
-Content-Type: application/pgp-signature; name="signature.asc"
+-- 
+2.41.0.232.g2f6f0bca4f.agit.8.0.4.dev
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmV7BQgACgkQVbJhu7ck
-PpTRyRAAlb9EANSBlXvD14S7LNdAclFrzrNBDbJhoI6xmZOZUxDFr1Zl/WMkocM6
-235izPxbUZR+dq/7vnM4dRkBivzk9XxWmUXZMK+j3jiMWMvjjsvXeS8SMl/d0Lki
-BChH+OyTOPRNbXoWA3lgCIr6Q7Lr1i2o12rE/cHQqoflrPnw9G2GsTNqFJlJazIr
-LPKld+GiXYncdAuA5ocjIfMKTptdr6mQEnuDbwQKfI8mej+DZMFnfVbGM9wx8kF3
-1/uTlLc/65MbX3VFUsxnxs2lU/tQwVdhQgNERaFLw0paHTU0nJX/QC3x+TGoup8a
-cYY3BhsGPBCLXzaC88SW/t9Lg4dGQVF5sm0RBIX5Lac5SHCBuisYDFR86kG3fGcm
-pGeu+rKIj/p217cKkSG32qUNuSBmM3Amd/nQAD9ZCzx8CyOV/VC2TaOA3Uy23rfj
-nSlk0xGlg3zBw0XKVYJcAe+1o/xJjBAw4/lv1cMrCtrDRtRUQutJyG9VmLTJ7r0i
-7MH1dhCOmcUXQZZZYzwQNJplHa6lGZ/PLnKyqn2vTp+nJMx2uLH31+almplJMpAS
-70jbdoXk2URLr26tn0kCshx1Xu3As5eMl2kdt5oZPvpmagzJLHHTbT0VU3xcTQgn
-xUJphGIqvkiWiue2GKVnmOGK7hkx5XHFRoi39+9D5aw8UX0nEuI=
-=YLQy
------END PGP SIGNATURE-----
-
---KsUGRoWdhMrbnBZ0--
