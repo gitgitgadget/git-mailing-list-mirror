@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EU+wYA3S"
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF0E69C
-	for <git@vger.kernel.org>; Thu, 14 Dec 2023 06:13:48 -0800 (PST)
-Received: by mail-pf1-x433.google.com with SMTP id d2e1a72fcca58-6ce94f62806so4660621b3a.1
-        for <git@vger.kernel.org>; Thu, 14 Dec 2023 06:13:48 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QHVnJWwx"
+Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9185A7
+	for <git@vger.kernel.org>; Thu, 14 Dec 2023 06:13:49 -0800 (PST)
+Received: by mail-pg1-x531.google.com with SMTP id 41be03b00d2f7-5ca29c131ebso3300205a12.0
+        for <git@vger.kernel.org>; Thu, 14 Dec 2023 06:13:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1702563228; x=1703168028; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1702563229; x=1703168029; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Qb8eMO+r2EX9wgE+XrVSIkJfXNeVFSb+ROeu76BH6Nw=;
-        b=EU+wYA3SPrs/8yuvRFWrz6XWVp2U+DKgbLPXKDZAYRzPtlVaNbsHyJrktvcq1EXKY8
-         lHz3mnIa3fkv7Vk7WfCv49q4O+gAXoAhqi5NH7H8v124FqVlwHR0+WQoYHnI3KmzLj+E
-         KExcWmvZL+NDTfCZVCKRNHkNzlJtT6rRaZgpngrrHLKKRbzNU6r+OxcMirtlT1iCifmu
-         jMZdSGYnyusiuQ/Kso6Aa+BiX59jaAIiVTLDheFyH9vtqRDm0EU2l4+sWckgGSM3zk8a
-         XCG2wFo3WL+q8Lumn1QtmXz98LLyZH/DLTOV8TSKyFx96x0oxnwCCZs94ss3t6YnGMUB
-         gi2A==
+        bh=adGc6EGVmjIPNKTg+encN8li33DZ1VDLOfTu31s9f6E=;
+        b=QHVnJWwx8wm17GV5IXYZcexRW5Wrouhe81fohmUM2kyiHMtdqcW2DX4kwLdoe95yCl
+         yQMWWe2D23HZx8huxoq3GeRqVwwJUWTuxQFv9Ln6Go3AHhOqK0ThoSN/5sjvhTR4lJHl
+         Oig+YhTZwabsOFP3temMXclVL5yogAjM18saCi+HDZGiY0GMN6Sthz1NnfA2KLwt5l6A
+         J53uYRbozP7VeSQ1Vg9VHqN5jxnk7r8973wj75r/oIjocG1vGlgXN0Jkhe49lnvxX3V8
+         cX0hY9SJbkOXxoxvbb/lw4OqINg9OadCCpHCe9DeXsBwjg/8R/JO/L+FPFEmOgtoPfJa
+         9m3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702563228; x=1703168028;
+        d=1e100.net; s=20230601; t=1702563229; x=1703168029;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Qb8eMO+r2EX9wgE+XrVSIkJfXNeVFSb+ROeu76BH6Nw=;
-        b=fpqqq6e6hDMLR7SXlFH6wnVHfc9m+xjnw4s7tJBMCruP6QPo9iej2AqHHVao8QeB+d
-         zUyze7eFvPxFzlz9pKdo9sUVPpUWF83cByPOu51gwUa0NP6v56hFhaD9raWCEelG7S75
-         WLsvwp/CBaPsg4kjOHl7E706WVCwgItTExYKWGiAlg5Weila3GXaSuuGotIhMqy3Tyfq
-         VHe7rd4IyZdPiirRKh47DGMDXYXoqNkDLK4O8SW/LC1b8nSKBuPULQU7stuoYQe/SgGO
-         QmEzafauyvhQfyC7AIpFbBvXNgUkXLWfHB8ULoGWvjmEY1A8tyLPqFkdtPrt6CSDnzte
-         kBbQ==
-X-Gm-Message-State: AOJu0YwWbfsjSo2s22ynuNa12ibzi+7exHQfIqCaG6XBbGQkJRNzEtCx
-	PQbwOISCvKz7XmVDSsRt8zPRNbczL9Y=
-X-Google-Smtp-Source: AGHT+IHdtjy+oaA7aG8QFEFc8p8Ec1O0z8BOjctdbAcs+c4M1DLErEg0byw3sm0LNMs09vuVsEcS5Q==
-X-Received: by 2002:a05:6a00:2401:b0:6ce:2731:c235 with SMTP id z1-20020a056a00240100b006ce2731c235mr6045920pfh.36.1702563228040;
-        Thu, 14 Dec 2023 06:13:48 -0800 (PST)
+        bh=adGc6EGVmjIPNKTg+encN8li33DZ1VDLOfTu31s9f6E=;
+        b=EXyoi7jAtvFuVreTK9M1/v5fhb8N/ejt5TLz7ROosbMPAXTtcOTDvj8gJEnF59ZyXX
+         rQsgxtASg+y/lVIv0pX1S6ZrloAsV7/oe781JDYsbSyJqMjD5bYnn3Sdd7q19TBYw0gf
+         RKY44BzvrDRJP/Mev1xSXXvze8lQmcGDhXvhL4slRUJQYmz/QaLEQPmVaazY6FQrwjw0
+         +ZpJ0q9UGwFiOII20+0YJ+2Tx2KUKaEwp8rqig2GYrRtwUJtmfhyQlm6cgyrxEcwmDkI
+         lXePW1lNfLckmp9IaAFgeYu20OMoEcILHUEDuDWPTRBKLNBjEI2v3QoadFqQ7SLA3jnU
+         ykrw==
+X-Gm-Message-State: AOJu0Ywq889ppEZMfXuu4sF2QLLWT6KQKMypY27EsPPow5AFwE2IAULw
+	C6nsp7sXX+z+ZQ523cf9rtd/6H1INmQ=
+X-Google-Smtp-Source: AGHT+IFuaaHA+vwUPKzLEFhKLRkL4LQyjQQBD3ggFBrKSEb7+SuYzV591X4ia3achs+t+g/rCddGcw==
+X-Received: by 2002:a05:6a20:7f9b:b0:18f:97c:8a3b with SMTP id d27-20020a056a207f9b00b0018f097c8a3bmr13662317pzj.102.1702563229009;
+        Thu, 14 Dec 2023 06:13:49 -0800 (PST)
 Received: from tigtog-proxy.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id 16-20020a056a00071000b006ce921da705sm11806232pfl.136.2023.12.14.06.13.47
+        by smtp.gmail.com with ESMTPSA id 16-20020a056a00071000b006ce921da705sm11806232pfl.136.2023.12.14.06.13.48
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 14 Dec 2023 06:13:47 -0800 (PST)
+        Thu, 14 Dec 2023 06:13:48 -0800 (PST)
 From: Jiang Xin <worldhello.net@gmail.com>
 To: Git List <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>
 Cc: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v4 0/4] support remote archive via stateless transport
-Date: Thu, 14 Dec 2023 22:13:41 +0800
-Message-Id: <cover.1702562879.git.zhiyou.jx@alibaba-inc.com>
+Subject: [PATCH v4 1/4] transport-helper: no connection restriction in connect_helper
+Date: Thu, 14 Dec 2023 22:13:42 +0800
+Message-Id: <d343585cb5e696f521c2ee1dd6c0f0c2d86de113.1702562879.git.zhiyou.jx@alibaba-inc.com>
 X-Mailer: git-send-email 2.32.0.rc3
-In-Reply-To: <cover.1696432593.git.zhiyou.jx@alibaba-inc.com>
-References: <cover.1696432593.git.zhiyou.jx@alibaba-inc.com>
+In-Reply-To: <cover.1702562879.git.zhiyou.jx@alibaba-inc.com>
+References: <cover.1696432593.git.zhiyou.jx@alibaba-inc.com> <cover.1702562879.git.zhiyou.jx@alibaba-inc.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -58,84 +58,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-# Change since v3:
+When commit b236752a (Support remote archive from all smart transports,
+2009-12-09) added "remote archive" support for "smart transports", it
+was for transport that supports the ".connect" method. The
+"connect_helper()" function protected itself from getting called for a
+transport without the method before calling process_connect_service(),
+which did not work with such a transport.
 
-1. Update commit message of patch 2/4.
-2. Add comments in t5003.
+Later, commit edc9caf7 (transport-helper: introduce stateless-connect,
+2018-03-15) added a way for a transport without the ".connect" method
+to establish a "stateless" connection in protocol-v2, which
+process_connect_service() was taught to handle the "stateless"
+connection, making the old safety valve in its caller that insisted
+that ".connect" method must be defined too strict, and forgot to loosen
+it.
 
-# range-diff v3...v4
+Remove the restriction in the "connect_helper()" function and give the
+function "process_connect_service()" the opportunity to establish a
+connection using ".connect" or ".stateless_connect" for protocol v2. So
+we can connect with a stateless-rpc and do something useful. E.g., in a
+later commit, implements remote archive for a repository over HTTP
+protocol.
 
-1:  1818d8e30e = 1:  d343585cb5 transport-helper: no connection restriction in connect_helper
-2:  b57524bc91 ! 2:  65fb67523c transport-helper: call do_take_over() in process_connect
-    @@ Commit message
-         where the return value from process_connect() is the return value of the
-         call it makes to process_connect_service().
-     
-    -    It is safe to make a refactor by moving the call of do_take_over()
-    -    into the function process_connect().
-    +    Move the call of do_take_over() inside process_connect(), so that
-    +    calling the process_connect() function is more concise and will not
-    +    miss do_take_over().
-     
-         Suggested-by: Junio C Hamano <gitster@pobox.com>
-         Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-3:  7ce60e3b9a = 3:  109a1fffde transport-helper: call do_take_over() in connect_helper
-4:  626f903508 ! 4:  eb905259fe archive: support remote archive from stateless transport
-    @@ Commit message
-     
-         Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-         Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-    @@ t/t5003-archive-zip.sh: check_zip with_untracked2
-      check_added with_untracked2 untracked one/untracked
-      check_added with_untracked2 untracked two/untracked
-      
-    ++# Test remote archive over HTTP protocol.
-    ++#
-    ++# Note: this should be the last part of this test suite, because
-    ++# by including lib-httpd.sh, the test may end early if httpd tests
-    ++# should not be run.
-    ++#
-     +. "$TEST_DIRECTORY"/lib-httpd.sh
-     +start_httpd
-     +
-    @@ t/t5003-archive-zip.sh: check_zip with_untracked2
-     +setup_askpass_helper
-     +
-     +test_expect_success 'remote archive does not work with protocol v1' '
-    -+	test_when_finished "rm -f d5.zip" &&
-     +	test_must_fail git -c protocol.version=1 archive \
-     +		--remote="$HTTPD_URL/auth/smart/bare.git" \
-    -+		--output=d5.zip HEAD >actual 2>&1 &&
-    ++		--output=remote-http.zip HEAD >actual 2>&1 &&
-     +	cat >expect <<-EOF &&
-     +	fatal: can${SQ}t connect to subservice git-upload-archive
-     +	EOF
-    @@ t/t5003-archive-zip.sh: check_zip with_untracked2
-     +'
-     +
-     +test_expect_success 'archive remote http repository' '
-    -+	test_when_finished "rm -f d5.zip" &&
-     +	git archive --remote="$HTTPD_URL/auth/smart/bare.git" \
-    -+		--output=d5.zip HEAD &&
-    -+	test_cmp_bin d.zip d5.zip
-    ++		--output=remote-http.zip HEAD &&
-    ++	test_cmp_bin d.zip remote-http.zip
-     +'
-     +
-      test_done
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+---
+ transport-helper.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-Jiang Xin (4):
-  transport-helper: no connection restriction in connect_helper
-  transport-helper: call do_take_over() in process_connect
-  transport-helper: call do_take_over() in connect_helper
-  archive: support remote archive from stateless transport
-
- http-backend.c         | 15 +++++++++++----
- remote-curl.c          | 14 +++++++++++---
- t/t5003-archive-zip.sh | 34 ++++++++++++++++++++++++++++++++++
- transport-helper.c     | 29 +++++++++++++----------------
- 4 files changed, 69 insertions(+), 23 deletions(-)
-
+diff --git a/transport-helper.c b/transport-helper.c
+index 49811ef176..2e127d24a5 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -662,8 +662,6 @@ static int connect_helper(struct transport *transport, const char *name,
+ 
+ 	/* Get_helper so connect is inited. */
+ 	get_helper(transport);
+-	if (!data->connect)
+-		die(_("operation not supported by protocol"));
+ 
+ 	if (!process_connect_service(transport, name, exec))
+ 		die(_("can't connect to subservice %s"), name);
 -- 
 2.41.0.232.g2f6f0bca4f.agit.8.0.4.dev
 
