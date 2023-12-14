@@ -1,53 +1,53 @@
-Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
+Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04A4366ACB
-	for <git@vger.kernel.org>; Thu, 14 Dec 2023 22:24:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 979DC671E8
+	for <git@vger.kernel.org>; Thu, 14 Dec 2023 22:24:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="MfawSoxB"
-Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-3ba1be5ad0aso51708b6e.0
-        for <git@vger.kernel.org>; Thu, 14 Dec 2023 14:24:46 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="ALvmIvgN"
+Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-6da1b71a085so48266a34.2
+        for <git@vger.kernel.org>; Thu, 14 Dec 2023 14:24:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1702592686; x=1703197486; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1702592688; x=1703197488; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=CkXBRJmZ/gCGMW3Z/EKezE9boZCgs6DFU8gHUaHQTCk=;
-        b=MfawSoxBZBEPOA3GAY7Zl/NXok/W5BEhWfBE/p1WioG92I+oWYE2OB82nF/X3CZ3QL
-         hkEhNgdoMuha3Jd17Qj0ErcfN8FZJ7KXAqVz6FZmXLIDwM6+1tC4X/NWpY9eMDB4lia+
-         SbvpRGn/Ud0+QVCCIFsn3qEh0BuJ3Nt2ab/BmfAlYo16Gr/T0QjP7UyACj8gTkzMWqDO
-         vJBuwqokH0KcuRBsVPkADwUvqIbM3dOlv7s2MANIatKFqRNmJmOmxAtgUiF8SRD1FHa0
-         JRRGKfVqdnW3Qv20ZajH/22V8Aj/QYb3dxdwLixpvtJDtlgdIWKgvAxlcdJ8heGD1e+b
-         GjAA==
+        bh=WO7jHHA81HsziybRHje3jIUVkg0779cnJFsesAoqDpc=;
+        b=ALvmIvgNxxKondmlaxXalGet04lSBK3ohZ0aovhwe8FJ6+akVFlnU3AwL0TtVfe4wu
+         YdUSu3O/Eg4RUmTVICh3ATzT8WZQ5frkF6HZ7dmvxLSFhOPydc8xqgHpMKngEKZcgyBq
+         aq/nlvObXCB7DEZlyOodiu+gtYm20bTLwukfLjcYJR7wxxYt6xmAVNX8d4OzOGKcveMp
+         nnjh+vDb9C00q9aiIzs1JE2TFIynIiaAOm/l41KCRv3GMOe8ruVQdzQd06MJ/IPLMGHm
+         AN7X3yHVDmUitpCA0XcOiqn1bStwnhdDGt/SiuNi5c6RG1lgg58Ovk96GrGl4LNsCMM7
+         43tQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702592686; x=1703197486;
+        d=1e100.net; s=20230601; t=1702592688; x=1703197488;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=CkXBRJmZ/gCGMW3Z/EKezE9boZCgs6DFU8gHUaHQTCk=;
-        b=iRtXeZr4Knq6tPg8cjIVMTYF7f2ac9LNyCHhFQ4OBgwpDvGeBReL00GgrFaBxZ5CrR
-         3RAmO46qaE3S8t04ow13dfL+4VYUfMmtpTX4tEbqTZb7oh0dYZ1MXGN3OGnL6zIf5OIb
-         0BBc/SnhC1pHJ32aHjV2SMzYM3wlUUbrN8QYOlPdp86XW6Yxr5tjoB1DZRn86pjxwEZX
-         Bl8LmICAoupZ5w0/b3+EPzZkH0caZopkTI837JDKFUm9FTjKeW19kLPqtkZ7I58LQO0B
-         4LKfBedh9kqPBJtmUPHWK8VVVG5raUV64KsGKJ5R+68/QN88Lve3xHezuSulVAYfmgQ+
-         n32g==
-X-Gm-Message-State: AOJu0YwrCljEH0X31e+bhgYpAwM8V4gYYyLjA548JothEoVhwptahV/8
-	XFdCKXTBjV4uSUx6t+TaTfh0JI5tVBMKgvhWjsWRyw==
-X-Google-Smtp-Source: AGHT+IGbZ5eqjFMV+bV96YXxwsh/65EcEVZz3RYoGMn1zM0EW2jAcR9EMLnExHO2gFel5/xpHGQs9g==
-X-Received: by 2002:a05:6808:f91:b0:3b8:b063:5d65 with SMTP id o17-20020a0568080f9100b003b8b0635d65mr12166463oiw.76.1702592685700;
-        Thu, 14 Dec 2023 14:24:45 -0800 (PST)
+        bh=WO7jHHA81HsziybRHje3jIUVkg0779cnJFsesAoqDpc=;
+        b=OP1WjMNG8EDQsEMeLZNuCxq5itUClb/S/Gmw/V3fP9OfoOWjd6BtDwRfYD9S81L8Kw
+         3dPlO9VT+Z/l2N8HIKL6KeJOF50A5SfHjjuw4gna/XQBtz9rdZeN8ioMkPS8+1xU5ACj
+         Yn4LgBleUZl6zgtJa134RrhrS9AGUEP/o4lEF+IKiz8U6ieEiQUb46W8TZXpAXXt0Ozl
+         Aiv1cZrf0ISknHFFcu5frw9dnGxzuUCXooKYXGqhVXPTGRteyBDaK9t1SIl8yEevBjyG
+         65l8KACe6GfqBPPfzT8DNTMINIs/WNrl8jqdK2Ek9xuoxYR8auCgzGY7OZSOUXLugNHl
+         +hKA==
+X-Gm-Message-State: AOJu0YxblFwPrBdaE/70gf0nsyfJTpaSNXuYnV0iVBRG92VNUREIV4za
+	Zl2RA8/6FY5wfOdAFqYuNvLyNQB5N4qojMivgibU0w==
+X-Google-Smtp-Source: AGHT+IERGBvQ2y9xKwNU4auQn/K0v/wV2kIXr4ZhWtuclsY6iwltDqAIOuCulOefv4/4bdNaQcX8ZA==
+X-Received: by 2002:a9d:6f85:0:b0:6d8:7a7a:2d7f with SMTP id h5-20020a9d6f85000000b006d87a7a2d7fmr6422041otq.41.1702592688302;
+        Thu, 14 Dec 2023 14:24:48 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id i26-20020a54409a000000b003b2e2d134a5sm3562554oii.35.2023.12.14.14.24.45
+        by smtp.gmail.com with ESMTPSA id a25-20020a056830009900b006d7f3e00bc2sm3349472oto.52.2023.12.14.14.24.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Dec 2023 14:24:45 -0800 (PST)
-Date: Thu, 14 Dec 2023 17:24:44 -0500
+        Thu, 14 Dec 2023 14:24:48 -0800 (PST)
+Date: Thu, 14 Dec 2023 17:24:47 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 25/26] pack-bitmap: enable reuse from all bitmapped packs
-Message-ID: <7002cf08fe301f1de28137b798fab3c8c32337fa.1702592604.git.me@ttaylorr.com>
+Subject: [PATCH v2 26/26] t/perf: add performance tests for multi-pack reuse
+Message-ID: <94e5ae4cf6e0f53d4141fc486f32d73d168cf993.1702592604.git.me@ttaylorr.com>
 References: <cover.1701198172.git.me@ttaylorr.com>
  <cover.1702592603.git.me@ttaylorr.com>
 Precedence: bulk
@@ -60,384 +60,128 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1702592603.git.me@ttaylorr.com>
 
-Now that both the pack-bitmap and pack-objects code are prepared to
-handle marking and using objects from multiple bitmapped packs for
-verbatim reuse, allow marking objects from all bitmapped packs as
-eligible for reuse.
+To ensure that we don't regress either the size or runtime performance
+of multi-pack reuse, add a performance test to measure both of these.
 
-Within the `reuse_partial_packfile_from_bitmap()` function, we no longer
-only mark the pack whose first object is at bit position zero for reuse,
-and instead mark any pack contained in the MIDX as a reuse candidate.
+The test partitions the objects in GIT_TEST_PERF_LARGE_REPO into 1, 10,
+and 100 packs, and then tries to perform a "clone" at each stage with
+both single- and multi-pack reuse enabled.
 
-Provide a handful of test cases in a new script (t5332) exercising
-interesting behavior for multi-pack reuse to ensure that we performed
-all of the previous steps correctly.
+Note that the `repack_into_n_chunks()` function in this new test script
+differs from the existing `repack_into_n()`. The former partitions the
+repository into N equal-sized chunks, while the latter produces N packs
+of five commits each (plus their objects), and then another pack with
+the remainder.
+
+On git.git, I can produce the following results on my machine:
+
+    Test                                                            this tree
+    --------------------------------------------------------------------------------
+    5332.3: clone for 1-pack scenario (single-pack reuse)           1.57(2.99+0.15)
+    5332.4: clone size for 1-pack scenario (single-pack reuse)               231.8M
+    5332.5: clone for 1-pack scenario (multi-pack reuse)            1.79(2.96+0.21)
+    5332.6: clone size for 1-pack scenario (multi-pack reuse)                231.7M
+    5332.9: clone for 10-pack scenario (single-pack reuse)          3.89(16.75+0.35)
+    5332.10: clone size for 10-pack scenario (single-pack reuse)             209.9M
+    5332.11: clone for 10-pack scenario (multi-pack reuse)          1.56(2.99+0.17)
+    5332.12: clone size for 10-pack scenario (multi-pack reuse)              224.4M
+    5332.15: clone for 100-pack scenario (single-pack reuse)        8.24(54.31+0.59)
+    5332.16: clone size for 100-pack scenario (single-pack reuse)            278.3M
+    5332.17: clone for 100-pack scenario (multi-pack reuse)         2.13(2.44+0.33)
+    5332.18: clone size for 100-pack scenario (multi-pack reuse)             357.9M
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Documentation/config/pack.txt |  16 ++-
- builtin/pack-objects.c        |   6 +-
- pack-bitmap.c                 |  34 ++++--
- pack-bitmap.h                 |   3 +-
- t/t5332-multi-pack-reuse.sh   | 203 ++++++++++++++++++++++++++++++++++
- 5 files changed, 245 insertions(+), 17 deletions(-)
- create mode 100755 t/t5332-multi-pack-reuse.sh
+ t/perf/p5332-multi-pack-reuse.sh | 81 ++++++++++++++++++++++++++++++++
+ 1 file changed, 81 insertions(+)
+ create mode 100755 t/perf/p5332-multi-pack-reuse.sh
 
-diff --git a/Documentation/config/pack.txt b/Documentation/config/pack.txt
-index fe100d0fb7..9c630863e6 100644
---- a/Documentation/config/pack.txt
-+++ b/Documentation/config/pack.txt
-@@ -28,11 +28,17 @@ all existing objects. You can force recompression by passing the -F option
- to linkgit:git-repack[1].
- 
- pack.allowPackReuse::
--	When true or "single", and when reachability bitmaps are enabled,
--	pack-objects will try to send parts of the bitmapped packfile
--	verbatim. This can reduce memory and CPU usage to serve fetches,
--	but might result in sending a slightly larger pack. Defaults to
--	true.
-+	When true or "single", and when reachability bitmaps are
-+	enabled, pack-objects will try to send parts of the bitmapped
-+	packfile verbatim. When "multi", and when a multi-pack
-+	reachability bitmap is available, pack-objects will try to send
-+	parts of all packs in the MIDX.
-++
-+	If only a single pack bitmap is available, and
-+	`pack.allowPackReuse` is set to "multi", reuse parts of just the
-+	bitmapped packfile. This can reduce memory and CPU usage to
-+	serve fetches, but might result in sending a slightly larger
-+	pack. Defaults to true.
- 
- pack.island::
- 	An extended regular expression configuring a set of delta
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 684698f679..5d3c42035b 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -232,6 +232,7 @@ static int use_bitmap_index = -1;
- static enum {
- 	NO_PACK_REUSE = 0,
- 	SINGLE_PACK_REUSE,
-+	MULTI_PACK_REUSE,
- } allow_pack_reuse = SINGLE_PACK_REUSE;
- static enum {
- 	WRITE_BITMAP_FALSE = 0,
-@@ -3251,6 +3252,8 @@ static int git_pack_config(const char *k, const char *v,
- 		if (res < 0) {
- 			if (!strcasecmp(v, "single"))
- 				allow_pack_reuse = SINGLE_PACK_REUSE;
-+			else if (!strcasecmp(v, "multi"))
-+				allow_pack_reuse = MULTI_PACK_REUSE;
- 			else
- 				die(_("invalid pack.allowPackReuse value: '%s'"), v);
- 		} else if (res) {
-@@ -4029,7 +4032,8 @@ static int get_object_list_from_bitmap(struct rev_info *revs)
- 		reuse_partial_packfile_from_bitmap(bitmap_git,
- 						   &reuse_packfiles,
- 						   &reuse_packfiles_nr,
--						   &reuse_packfile_bitmap);
-+						   &reuse_packfile_bitmap,
-+						   allow_pack_reuse == MULTI_PACK_REUSE);
- 
- 	if (reuse_packfiles) {
- 		reuse_packfile_objects = bitmap_popcount(reuse_packfile_bitmap);
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 242a5908f7..229a11fb00 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -2040,7 +2040,8 @@ static int bitmapped_pack_cmp(const void *va, const void *vb)
- void reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
- 					struct bitmapped_pack **packs_out,
- 					size_t *packs_nr_out,
--					struct bitmap **reuse_out)
-+					struct bitmap **reuse_out,
-+					int multi_pack_reuse)
- {
- 	struct repository *r = the_repository;
- 	struct bitmapped_pack *packs = NULL;
-@@ -2064,15 +2065,30 @@ void reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
- 				free(packs);
- 				return;
- 			}
-+
- 			if (!pack.bitmap_nr)
--				continue; /* no objects from this pack */
--			if (pack.bitmap_pos)
--				continue; /* not preferred pack */
-+				continue;
-+
-+			if (!multi_pack_reuse && pack.bitmap_pos) {
-+				/*
-+				 * If we're only reusing a single pack, skip
-+				 * over any packs which are not positioned at
-+				 * the beginning of the MIDX bitmap.
-+				 *
-+				 * This is consistent with the existing
-+				 * single-pack reuse behavior, which only reuses
-+				 * parts of the MIDX's preferred pack.
-+				 */
-+				continue;
-+			}
- 
- 			ALLOC_GROW(packs, packs_nr + 1, packs_alloc);
- 			memcpy(&packs[packs_nr++], &pack, sizeof(pack));
- 
- 			objects_nr += pack.p->num_objects;
-+
-+			if (!multi_pack_reuse)
-+				break;
- 		}
- 
- 		QSORT(packs, packs_nr, bitmapped_pack_cmp);
-@@ -2080,10 +2096,10 @@ void reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
- 		ALLOC_GROW(packs, packs_nr + 1, packs_alloc);
- 
- 		packs[packs_nr].p = bitmap_git->pack;
--		packs[packs_nr].bitmap_pos = 0;
- 		packs[packs_nr].bitmap_nr = bitmap_git->pack->num_objects;
-+		packs[packs_nr].bitmap_pos = 0;
- 
--		objects_nr = packs[packs_nr++].p->num_objects;
-+		objects_nr = packs[packs_nr++].bitmap_nr;
- 	}
- 
- 	word_alloc = objects_nr / BITS_IN_EWORD;
-@@ -2091,10 +2107,8 @@ void reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
- 		word_alloc++;
- 	reuse = bitmap_word_alloc(word_alloc);
- 
--	if (packs_nr != 1)
--		BUG("pack reuse not yet implemented for multiple packs");
--
--	reuse_partial_packfile_from_bitmap_1(bitmap_git, packs, reuse);
-+	for (i = 0; i < packs_nr; i++)
-+		reuse_partial_packfile_from_bitmap_1(bitmap_git, &packs[i], reuse);
- 
- 	if (bitmap_is_empty(reuse)) {
- 		free(packs);
-diff --git a/pack-bitmap.h b/pack-bitmap.h
-index 179b343912..c7dea13217 100644
---- a/pack-bitmap.h
-+++ b/pack-bitmap.h
-@@ -80,7 +80,8 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
- void reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
- 					struct bitmapped_pack **packs_out,
- 					size_t *packs_nr_out,
--					struct bitmap **reuse_out);
-+					struct bitmap **reuse_out,
-+					int multi_pack_reuse);
- int rebuild_existing_bitmaps(struct bitmap_index *, struct packing_data *mapping,
- 			     kh_oid_map_t *reused_bitmaps, int show_progress);
- void free_bitmap_index(struct bitmap_index *);
-diff --git a/t/t5332-multi-pack-reuse.sh b/t/t5332-multi-pack-reuse.sh
+diff --git a/t/perf/p5332-multi-pack-reuse.sh b/t/perf/p5332-multi-pack-reuse.sh
 new file mode 100755
-index 0000000000..2ba788b042
+index 0000000000..5c6c575d62
 --- /dev/null
-+++ b/t/t5332-multi-pack-reuse.sh
-@@ -0,0 +1,203 @@
++++ b/t/perf/p5332-multi-pack-reuse.sh
+@@ -0,0 +1,81 @@
 +#!/bin/sh
 +
-+test_description='pack-objects multi-pack reuse'
++test_description='tests pack performance with multi-pack reuse'
 +
-+. ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-bitmap.sh
++. ./perf-lib.sh
++. "${TEST_DIRECTORY}/perf/lib-pack.sh"
 +
-+objdir=.git/objects
-+packdir=$objdir/pack
++packdir=.git/objects/pack
 +
-+test_pack_reused () {
-+	test_trace2_data pack-objects pack-reused "$1"
-+}
++test_perf_large_repo
 +
-+test_packs_reused () {
-+	test_trace2_data pack-objects packs-reused "$1"
-+}
-+
-+
-+# pack_position <object> </path/to/pack.idx
-+pack_position () {
-+	git show-index >objects &&
-+	grep "$1" objects | cut -d" " -f1
-+}
-+
-+test_expect_success 'preferred pack is reused for single-pack reuse' '
-+	test_config pack.allowPackReuse single &&
-+
-+	for i in A B
++find_pack () {
++	for idx in $packdir/pack-*.idx
 +	do
-+		test_commit "$i" &&
-+		git repack -d || return 1
-+	done &&
++		if git show-index <$idx | grep -q "$1"
++		then
++			basename $idx
++		fi || return 1
++	done
++}
 +
-+	git multi-pack-index write --bitmap &&
-+
-+	: >trace2.txt &&
-+	GIT_TRACE2_EVENT="$PWD/trace2.txt" \
-+		git pack-objects --stdout --revs --all >/dev/null &&
-+
-+	test_pack_reused 3 <trace2.txt &&
-+	test_packs_reused 1 <trace2.txt
-+'
-+
-+test_expect_success 'enable multi-pack reuse' '
-+	git config pack.allowPackReuse multi
-+'
-+
-+test_expect_success 'reuse all objects from subset of bitmapped packs' '
-+	test_commit C &&
-+	git repack -d &&
-+
-+	git multi-pack-index write --bitmap &&
-+
-+	cat >in <<-EOF &&
-+	$(git rev-parse C)
-+	^$(git rev-parse A)
-+	EOF
-+
-+	: >trace2.txt &&
-+	GIT_TRACE2_EVENT="$PWD/trace2.txt" \
-+		git pack-objects --stdout --revs <in >/dev/null &&
-+
-+	test_pack_reused 6 <trace2.txt &&
-+	test_packs_reused 2 <trace2.txt
-+'
-+
-+test_expect_success 'reuse all objects from all packs' '
-+	: >trace2.txt &&
-+	GIT_TRACE2_EVENT="$PWD/trace2.txt" \
-+		git pack-objects --stdout --revs --all >/dev/null &&
-+
-+	test_pack_reused 9 <trace2.txt &&
-+	test_packs_reused 3 <trace2.txt
-+'
-+
-+test_expect_success 'reuse objects from first pack with middle gap' '
-+	for i in D E F
-+	do
-+		test_commit "$i" || return 1
-+	done &&
-+
-+	# Set "pack.window" to zero to ensure that we do not create any
-+	# deltas, which could alter the amount of pack reuse we perform
-+	# (if, for e.g., we are not sending one or more bases).
-+	D="$(git -c pack.window=0 pack-objects --all --unpacked $packdir/pack)" &&
-+
-+	d_pos="$(pack_position $(git rev-parse D) <$packdir/pack-$D.idx)" &&
-+	e_pos="$(pack_position $(git rev-parse E) <$packdir/pack-$D.idx)" &&
-+	f_pos="$(pack_position $(git rev-parse F) <$packdir/pack-$D.idx)" &&
-+
-+	# commits F, E, and D, should appear in that order at the
-+	# beginning of the pack
-+	test $f_pos -lt $e_pos &&
-+	test $e_pos -lt $d_pos &&
-+
-+	# Ensure that the pack we are constructing sorts ahead of any
-+	# other packs in lexical/bitmap order by choosing it as the
-+	# preferred pack.
-+	git multi-pack-index write --bitmap --preferred-pack="pack-$D.idx" &&
-+
-+	cat >in <<-EOF &&
-+	$(git rev-parse E)
-+	^$(git rev-parse D)
-+	EOF
-+
-+	: >trace2.txt &&
-+	GIT_TRACE2_EVENT="$PWD/trace2.txt" \
-+		git pack-objects --stdout --delta-base-offset --revs <in >/dev/null &&
-+
-+	test_pack_reused 3 <trace2.txt &&
-+	test_packs_reused 1 <trace2.txt
-+'
-+
-+test_expect_success 'reuse objects from middle pack with middle gap' '
-+	rm -fr $packdir/multi-pack-index* &&
-+
-+	# Ensure that the pack we are constructing sort into any
-+	# position *but* the first one, by choosing a different pack as
-+	# the preferred one.
-+	git multi-pack-index write --bitmap --preferred-pack="pack-$A.idx" &&
-+
-+	cat >in <<-EOF &&
-+	$(git rev-parse E)
-+	^$(git rev-parse D)
-+	EOF
-+
-+	: >trace2.txt &&
-+	GIT_TRACE2_EVENT="$PWD/trace2.txt" \
-+		git pack-objects --stdout --delta-base-offset --revs <in >/dev/null &&
-+
-+	test_pack_reused 3 <trace2.txt &&
-+	test_packs_reused 1 <trace2.txt
-+'
-+
-+test_expect_success 'omit delta with uninteresting base (same pack)' '
++repack_into_n_chunks () {
 +	git repack -adk &&
 +
-+	test_seq 32 >f &&
-+	git add f &&
-+	test_tick &&
-+	git commit -m "delta" &&
-+	delta="$(git rev-parse HEAD)" &&
++	test "$1" -eq 1 && return ||
 +
-+	test_seq 64 >f &&
-+	test_tick &&
-+	git commit -a -m "base" &&
-+	base="$(git rev-parse HEAD)" &&
++	find $packdir -type f | sort >packs.before &&
 +
-+	test_commit other &&
++	# partition the repository into $1 chunks of consecutive commits, and
++	# then create $1 packs with the objects reachable from each chunk
++	# (excluding any objects reachable from the previous chunks)
++	sz="$(($(git rev-list --count --all) / $1))"
++	for rev in $(git rev-list --all | awk "NR % $sz == 0" | tac)
++	do
++		pack="$(echo "$rev" | git pack-objects --revs \
++			--honor-pack-keep --delta-base-offset $packdir/pack)" &&
++		touch $packdir/pack-$pack.keep || return 1
++	done
 +
-+	git repack -d &&
++	# grab any remaining objects not packed by the previous step(s)
++	git pack-objects --revs --all --honor-pack-keep --delta-base-offset \
++		$packdir/pack &&
 +
-+	have_delta "$(git rev-parse $delta:f)" "$(git rev-parse $base:f)" &&
++	find $packdir -type f | sort >packs.after &&
 +
-+	git multi-pack-index write --bitmap &&
++	# and install the whole thing
++	for f in $(comm -12 packs.before packs.after)
++	do
++		rm -f "$f" || return 1
++	done
++	rm -fr $packdir/*.keep
++}
 +
-+	cat >in <<-EOF &&
-+	$(git rev-parse other)
-+	^$base
-+	EOF
++for nr_packs in 1 10 100
++do
++	test_expect_success "create $nr_packs-pack scenario" '
++		repack_into_n_chunks $nr_packs
++	'
 +
-+	: >trace2.txt &&
-+	GIT_TRACE2_EVENT="$PWD/trace2.txt" \
-+		git pack-objects --stdout --delta-base-offset --revs <in >/dev/null &&
++	test_expect_success "setup bitmaps for $nr_packs-pack scenario" '
++		find $packdir -type f -name "*.idx" | sed -e "s/.*\/\(.*\)$/+\1/g" |
++		git multi-pack-index write --stdin-packs --bitmap \
++			--preferred-pack="$(find_pack $(git rev-parse HEAD))"
++	'
 +
-+	# We can only reuse the 3 objects corresponding to "other" from
-+	# the latest pack.
-+	#
-+	# This is because even though we want "delta", we do not want
-+	# "base", meaning that we have to inflate the delta/base-pair
-+	# corresponding to the blob in commit "delta", which bypasses
-+	# the pack-reuse mechanism.
-+	#
-+	# The remaining objects from the other pack are similarly not
-+	# reused because their objects are on the uninteresting side of
-+	# the query.
-+	test_pack_reused 3 <trace2.txt &&
-+	test_packs_reused 1 <trace2.txt
-+'
++	for reuse in single multi
++	do
++		test_perf "clone for $nr_packs-pack scenario ($reuse-pack reuse)" "
++			git for-each-ref --format='%(objectname)' refs/heads refs/tags >in &&
++			git -c pack.allowPackReuse=$reuse pack-objects \
++				--revs --delta-base-offset --use-bitmap-index \
++				--stdout <in >result
++		"
 +
-+test_expect_success 'omit delta from uninteresting base (cross pack)' '
-+	cat >in <<-EOF &&
-+	$(git rev-parse $base)
-+	^$(git rev-parse $delta)
-+	EOF
-+
-+	P="$(git pack-objects --revs $packdir/pack <in)" &&
-+
-+	git multi-pack-index write --bitmap --preferred-pack="pack-$P.idx" &&
-+
-+	: >trace2.txt &&
-+	GIT_TRACE2_EVENT="$PWD/trace2.txt" \
-+		git pack-objects --stdout --delta-base-offset --all >/dev/null &&
-+
-+	packs_nr="$(find $packdir -type f -name "pack-*.pack" | wc -l)" &&
-+	objects_nr="$(git rev-list --count --all --objects)" &&
-+
-+	test_pack_reused $(($objects_nr - 1)) <trace2.txt &&
-+	test_packs_reused $packs_nr <trace2.txt
-+'
++		test_size "clone size for $nr_packs-pack scenario ($reuse-pack reuse)" '
++			wc -c <result
++		'
++	done
++done
 +
 +test_done
 -- 
 2.43.0.102.ga31d690331.dirty
-
