@@ -1,169 +1,163 @@
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UQTKyOEz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="z2+kA3xB"
-Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B572710A
-	for <git@vger.kernel.org>; Thu, 14 Dec 2023 01:05:07 -0800 (PST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.west.internal (Postfix) with ESMTP id 0A3DE3200A98;
-	Thu, 14 Dec 2023 04:05:03 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Thu, 14 Dec 2023 04:05:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1702544703; x=1702631103; bh=Vf6tbEperG
-	Z9crmyUBsIGqyqSKk8vee4yGKN7Gtni+k=; b=UQTKyOEzemD2157WpjEWGaSO25
-	6gr6SNdcMs+ENOPJiX/5Gii1C2rpOvDcEoEQkRU88/JBtJz4QZZ/txsBe6Q17xSL
-	gETGs1z7bah432mBuArLz9ok/qfakYJBJrYvo+E/y2QjeLypDWi8uMla7sHKl0EK
-	aS019HModDuDEDsgacSFTDqwG1ioJwEqHMmw9MqX1mdCKjQ2Bbo8JTQ6GvpWOR7T
-	cyRFKt+jX+//upjerypi0oPi1txNYKSmOt67qBUg/5aNr03nXqHSTvgSDet3Ogwt
-	O3+E2UeDUJXmUB6IOqpsXW8Gl/yjekXxo7QTHUt+1HopGzif8UceOwH/Xp9w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1702544703; x=1702631103; bh=Vf6tbEperGZ9crmyUBsIGqyqSKk8
-	vee4yGKN7Gtni+k=; b=z2+kA3xBJ53fNdD5eq+y8cdDo0yUzxr+8uVUvEBvn9wT
-	fEF0ZS8DyVJgNipgry7Q1I5Ia4m2EfDxlOT3l9YpU4LzQoMfkCqihB93LKbEp+5R
-	Q40Wn0yPbwjgU+Nb+efoWADADG7pbSVuX/aHrfNfQJ600Nl5IWtAfilUfLG1J5I0
-	Jt+iTxEdIEbPreAaYXbC25BShwgk0m5KF/oBNX0mXcBpTDBRrRcnHASH9QL56glR
-	T/jc1XUu8iXD9EjvyIGA6DyRi3UNZNnm0MBoANWCNsdd3jMzPsPfVBseXHD3O+9T
-	THkJDXMnK6TJ2EoykH/eF+7cSAZHH9IAhBCtFdrTmA==
-X-ME-Sender: <xms:PsV6ZexH024evmeP0Ilzxxj9BMWCIzpQkknzABJXt3d4P1G-OQlBZw>
-    <xme:PsV6ZaTDGUDdqxERNC2y2eHe4nFCegXOmrfq6gz-vcuubkqU1NF8lvbY28mxIG-l-
-    V8e0O8nITVUVvQjfA>
-X-ME-Received: <xmr:PsV6ZQX9Tfu-zS8yvoYqQWpejop4zeSBlnVJm2gNLuCXgKK9ncVQrV552jltuV-Ou44zrOdepvI9jzjHZDEFm5R_gn721PYhJ5vWQS4UzRAJFVE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudelkedguddvjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
-    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeelgfeitdffkedvteffgeduuedvffdtffehteefleffvedvffehvdffgeelgeeg
-    ieenucffohhmrghinhepghhithhlrggsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:PsV6ZUilBu1nYIktbAKBVKFILEeUpu3UqNuVrm6Ka1Hxvqz0sE2tGQ>
-    <xmx:PsV6ZQDU9u4FEGAr0Ss8lAWiWt2inykzDhcuWsPRBbwVPOLTlBd1eQ>
-    <xmx:PsV6ZVLgdnLtiQ8p9Ng3qM_aTIuBPKDnjz7q-p4tseUUl8nR26fqcA>
-    <xmx:P8V6ZTM-KNY8dUZLQfGtmZ07gxWj4NPLJh6DfhV6Qkxdi8no8ErhMg>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 14 Dec 2023 04:05:01 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 84c64c7c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 14 Dec 2023 09:03:17 +0000 (UTC)
-Date: Thu, 14 Dec 2023 10:04:58 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org,
-	Taylor Blau <me@ttaylorr.com>,
-	Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v2 1/4] wt-status: read HEAD and ORIG_HEAD via the refdb
-Message-ID: <ZXrFOtKNLxyT8Csj@tanuki>
-References: <cover.1701243201.git.ps@pks.im>
- <cover.1702365291.git.ps@pks.im>
- <1db3eb3945432964aabe1c559db4c3ac251e83fd.1702365291.git.ps@pks.im>
- <xmqqle9zqidj.fsf@gitster.g>
- <ac84b1b9-2381-406a-b459-6728bf9f8704@ramsayjones.plus.com>
- <xmqq34w7os53.fsf@gitster.g>
- <ZXlfeWtDgr1GQFCL@tanuki>
- <xmqqmsuennfu.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nm/CH4n9"
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C69B5113
+	for <git@vger.kernel.org>; Thu, 14 Dec 2023 04:33:19 -0800 (PST)
+Received: by mail-pj1-x102a.google.com with SMTP id 98e67ed59e1d1-28b012f93eeso734841a91.0
+        for <git@vger.kernel.org>; Thu, 14 Dec 2023 04:33:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1702557199; x=1703161999; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4gqcnUdaHkI9uNCyTBp370Qe6IgwebSWcd3Ab8C3WfE=;
+        b=nm/CH4n9gxOeSzdyplNRPI7QrDLNa6P+IZPcqOcroOLOs9S5gZMyT3fHWetXyLhGkG
+         20UM/xmAvAxi/9lnIcmMwNWLX7oJY8/69MoH7guKszG6oZAHuoGPhtVHcfyS51ehk0RG
+         ya8BWHtoA00NTCdjo+1BhMKU6c8I/URr2vcvQPtizXSuIycu+LqSaW/WDne3eJIFUtXY
+         adBovLtwX92FB8NrpYKVDOQpslHVKWHcAArTGNgERt41aLhW2BcXQW2WUSVfJ4AnHDb+
+         RDa42hlYCeAo9KSBSdch5MnbpMf9ns2qWs8AUF7cwNmOaOddFIR9LPxqlCJQu3AOEP07
+         5qkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702557199; x=1703161999;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=4gqcnUdaHkI9uNCyTBp370Qe6IgwebSWcd3Ab8C3WfE=;
+        b=BxtjmQ8vIe6nTyBPUuobyYBphigyP5DG6t3rZI+Vy+EnCCPC0S1evh9yG3yaBjtnFa
+         /lPPjyYHhaeggUH/xYSCZVWIefL0yntQ5biHa3F4SwTgHrTrUaOk93fuuBfSBgXRNsf0
+         ZPYwOZBo0RwbS+9ZjFOlJOKw7PNwWFuyf3sTYze7e38sCBmsWa7kNdjNWqtf+KT5UDj3
+         +ZWiLHf+9xAQicrYX39qwQTKoLE95wYRv7OCLCex0iSjtyYaCFowlcTg2S/NMZU1Lrcl
+         pRMCazGaVq2apwUL+C2OYbh/M/h7h+f3G6/o1xdCWv8+wEf2lB45YwA5YBf9Sd9y9iu3
+         m82Q==
+X-Gm-Message-State: AOJu0YxsRaj1uRqTxFCDAXm5XKNZydkcOMYuYcxsnjXAYDfAN5AYShNC
+	bquExAeiSRTCTJQBtq97FyyKuURAznE=
+X-Google-Smtp-Source: AGHT+IFiddYVHgolwtqQSkooW0cwgYXuuPwrhc3F1MI9ZoFxHX3l9MQssy8D3G/ntP8/twoHDHfzJQ==
+X-Received: by 2002:a17:90a:6fc5:b0:28a:f2cc:e008 with SMTP id e63-20020a17090a6fc500b0028af2cce008mr1057788pjk.54.1702557198826;
+        Thu, 14 Dec 2023 04:33:18 -0800 (PST)
+Received: from tigtog-proxy.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
+        by smtp.gmail.com with ESMTPSA id j8-20020a17090a734800b0028ae9cb6ce0sm3112368pjs.6.2023.12.14.04.33.17
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 14 Dec 2023 04:33:18 -0800 (PST)
+From: Jiang Xin <worldhello.net@gmail.com>
+To: Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>
+Cc: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: [PATCH v2 0/2] jx/fetch-atomic-error-message-fix
+Date: Thu, 14 Dec 2023 20:33:10 +0800
+Message-Id: <cover.1702556642.git.zhiyou.jx@alibaba-inc.com>
+X-Mailer: git-send-email 2.32.0.rc3
+In-Reply-To: <38b0b22038399265407f7fc5f126f471dcc6f1a3.1697725898.git.zhiyou.jx@alibaba-inc.com>
+References: <38b0b22038399265407f7fc5f126f471dcc6f1a3.1697725898.git.zhiyou.jx@alibaba-inc.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="jpOQoKQcfPW+PL+p"
-Content-Disposition: inline
-In-Reply-To: <xmqqmsuennfu.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
+
+From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+
+# Changes since v1:
+
+1. Add a "test_commit ..." command in test case of t5574, so we can run
+   test cases 4-6 individually.
+
+2. Improve commit logs.
 
 
---jpOQoKQcfPW+PL+p
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+# range-diff v1...v2
 
-On Wed, Dec 13, 2023 at 07:15:33AM -0800, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->=20
-> >> Me neither, but once you start thinking about getting rid of the
-> >> need to use one-file-per-ref filesystem, being able to maintain all
-> >> refs, including the pseudo refs, in one r/w store backend, becomes a
-> >> very tempting goal.  From that point of view, I do not have problem
-> >> with the idea to move _all_ pseudorefs to reftable.
-> >
-> > Yes, we're in agreement.
-> >
-> >> But I do have reservations on what Patrick, and the code he
-> >> inherited from Han-Wen, calls "special refs" (which is not defined
-> >> in the glossary at all), namely, refs.c:is_special_ref() and its
-> >> callers.
-> >
-> > I do not want to add "special refs" to the glossary because ultimately
-> > they should go away, with two exceptions: FETCH_HEAD and MERGE_HEAD.
-> > Once we're there we can of course discuss whether we want to explicitly
-> > point them out in the glossary and give them a special name.
->=20
-> OK, I somehow got a (wrong) impression that you are very close to
-> the finish line.
+1:  8c85f83e66 ! 1:  210191917b t5574: test porcelain output of atomic fetch
+    @@ Commit message
+     
+             test_must_be_empty stderr
+     
+    -    Refactor this test case to run it twice. The first time will be run
+    -    using non-atomic fetch and the other time will be run using atomic
+    -    fetch. We can see that the above assertion fails for atomic get, as
+    -    shown below:
+    +    But this assertion fails if using atomic fetch. Refactor this test case
+    +    to use different fetch options by splitting it into three test cases.
+     
+    +      1. "setup for fetch porcelain output".
+    +
+    +      2. "fetch porcelain output": for non-atomic fetch.
+    +
+    +      3. "fetch porcelain output (atomic)": for atomic fetch.
+    +
+    +    Add new command "test_commit ..." in the first test case, so that if we
+    +    run these test cases individually (--run=4-6), "git rev-parse HEAD~"
+    +    command will work properly. Run the above test cases, we can find that
+    +    one test case has a known breakage, as shown below:
+    +
+    +        ok 4 - setup for fetch porcelain output
+             ok 5 - fetch porcelain output  # TODO known breakage vanished
+             not ok 6 - fetch porcelain output (atomic) # TODO known breakage
+     
+    -    The failed test case had an error message with only the error prompt but
+    +    The failed test case has an error message with only the error prompt but
+         no message body, as follows:
+     
+             'stderr' is not empty, it contains:
+    @@ Commit message
+         In a later commit, we will fix this issue.
+     
+         Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+     
+      ## t/t5574-fetch-output.sh ##
+     @@ t/t5574-fetch-output.sh: test_expect_success 'fetch compact output' '
+    @@ t/t5574-fetch-output.sh: test_expect_success 'fetch compact output' '
+     +test_expect_success 'setup for fetch porcelain output' '
+      	# Set up a bunch of references that we can use to demonstrate different
+      	# kinds of flag symbols in the output format.
+    ++	test_commit commit-for-porcelain-output &&
+      	MAIN_OLD=$(git rev-parse HEAD) &&
+    + 	git branch "fast-forward" &&
+    + 	git branch "deleted-branch" &&
+     @@ t/t5574-fetch-output.sh: test_expect_success 'fetch porcelain output' '
+      	FORCE_UPDATED_OLD=$(git rev-parse HEAD) &&
+      	git checkout main &&
+2:  d3184a9d0f ! 2:  6fb83a0000 fetch: no redundant error message for atomic fetch
+    @@ Commit message
+         will appear at the end of do_fetch(). It was introduced in b3a804663c
+         (fetch: make `--atomic` flag cover backfilling of tags, 2022-02-17).
+     
+    -    Instead of displaying the error message unconditionally, the final error
+    -    output should follow the pattern in update-ref.c and files-backend.c as
+    -    follows:
+    +    In function do_fetch(), a failure message is already shown before the
+    +    retcode is set, so we should not call additional error() at the end of
+    +    this function.
+    +
+    +    We can remove the redundant error() function, because we know that
+    +    the function ref_transaction_abort() never fails. While we can find a
+    +    common pattern for calling ref_transaction_abort() by running command
+    +    "git grep -A1 ref_transaction_abort", e.g.:
+     
+             if (ref_transaction_abort(transaction, &error))
+                 error("abort: %s", error.buf);
+     
+    -    This will fix the test case "fetch porcelain output (atomic)" in t5574.
+    +    We can fix this issue follow this pattern, and the test case "fetch
+    +    porcelain output (atomic)" in t5574 will also be fixed. If in the future
+    +    we decide that we don't need to check the return value of the function
+    +    ref_transaction_abort(), this change can be fixed along with it.
+     
+         Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+     
+      ## builtin/fetch.c ##
+     @@ builtin/fetch.c: static int do_fetch(struct transport *transport,
 
-You mean with the reftable backend? I indeed am quite close, I've just
-finished the last prerequisite ("extensions.refFormat" and related
-tooling) today. I will send that patch series upstream for review once
-my patches that fix repo initialization with git-clone(1) land in the
-"next" branch. The current state at [1] passes CI, even though there
-will of course still be bugs which aren't covered by the test suite.
+Jiang Xin (2):
+  t5574: test porcelain output of atomic fetch
+  fetch: no redundant error message for atomic fetch
 
-So once all prerequisites that are currently in flight plus the pending
-"extensions.refFormat" series have landed I will send the reftable
-backend implementation in for review. If things continue to go smoothly
-I expect that this may happen at the end of January/start of February.
+ builtin/fetch.c         |  4 +-
+ t/t5574-fetch-output.sh | 97 ++++++++++++++++++++++++-----------------
+ 2 files changed, 59 insertions(+), 42 deletions(-)
 
-Anyway. This patch series here is in fact already sufficient to make
-reftables work with those special refs. The only thing that we require
-in this context is that refs are either exclusively routed through the
-filesystem, or exclusively routed through the ref API. If that property
-holds then things work just fine.
+-- 
+2.41.0.232.g2f6f0bca4f.agit.8.0.4.dev
 
-But still, I do want to clean up the remaining special refs regardless
-of that, even though it is not a mandatory prerequisite. I find that the
-current state is just plain confusing with all these special cases, and
-I'd really love for it to be simplified. Also, I think there is benefit
-in having those refs in reftables because it does allow for proper
-atomic updates.
-
-> If the intention is to leave many others still in
-> the "special" category (for only the reasons of inertia), with a
-> vision that some selected few must remain "special" with their own
-> good reasons, then I am perfectly fine.
-
-Okay.
-
-Patrick
-
-[1]: https://gitlab.com/gitlab-org/git/-/merge_requests/58
-
---jpOQoKQcfPW+PL+p
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmV6xTkACgkQVbJhu7ck
-PpRmohAAj6E5Ovg/qtCkyDeH3BBixLL5oQnDDD601PL7cXc90of79gTHTMyhPUDk
-oTiXl8WTA2rYebsPhrwTfxaMjcNkODfHPANNUko3kCSqiN/W83GnG53ibRyJ998e
-sa6Yvt8CWGbUJZk1zmjcIxne5hMQPo1DVaCPqlnhpURdr9jb8PiVxmaEYcertLic
-g6SRwcFeZMPkBtrghC5bEyt7Mdr2h6p1iIPZhk/tX4n3MKXleZmQtM5oyxA7E7CQ
-GAO+lyjH63nnxx70r0iFZhMve9EJ9p2gmdEsxTGppiF9358mEcDc11SCkBPle0lo
-xpRQ1DU0+A6lsatiAgKM4qxmRhGBzi6Z9FW2JNkKQUwJMjh5Re8VqIAPXHXX9xr2
-4kRbAMYymlVED0hJta0cB9Vau7OWlx7RBzT/iriVy9hDzvTEoFwwWQlLgbf0EgJR
-kluT9N4QqFic8qHZbmbC35lbQGkE6fiRhrV4gJN8lIiU8T6o4yXpVMWlAKJ0vyw4
-dq+0T15fLdwXJ1WO0zfCuvPLF8oTB5YenEjJH4PoI5hf+zzQ0F2SjHXzlIZpEMXj
-nXCvgjoT+WXL6dZENdj+80diMxnuDCVAUxQh53wDBpBwygLTcWgVT6dth2rrLhGN
-uSvHa050CdO6qIR7K9fE1VaoD3NIVWsielETlWYFNrBvGtkn0JE=
-=9OSB
------END PGP SIGNATURE-----
-
---jpOQoKQcfPW+PL+p--
