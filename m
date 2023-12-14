@@ -1,54 +1,54 @@
-Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
+Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA806720B
-	for <git@vger.kernel.org>; Thu, 14 Dec 2023 22:24:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E73FE66AC4
+	for <git@vger.kernel.org>; Thu, 14 Dec 2023 22:24:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="NDqSAlKb"
-Received: by mail-ot1-f48.google.com with SMTP id 46e09a7af769-6d9f9fbfd11so61217a34.2
-        for <git@vger.kernel.org>; Thu, 14 Dec 2023 14:24:11 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="0dSclZ5q"
+Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-6d9f879f784so60338a34.2
+        for <git@vger.kernel.org>; Thu, 14 Dec 2023 14:24:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1702592651; x=1703197451; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1702592645; x=1703197445; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=IhGfCoK2tH7CSsD31Uea+efJ+DNSx0N9h9XZ47wrw/8=;
-        b=NDqSAlKbMExTVmQze3Hq4goJEsanXcRA7TsntaRbwki6o5YCG1vrYFLtA4oLnqEzo5
-         lKU06P4p3EwoyVQNk/ZhXFq+P9fNWwvoIv1pGL10sVOBE550aZU8bwNkj0u7F9gyZgAg
-         lr9AXnk/7zDPlN18xQ8hByE66PewnyENC+faIci8r+Uiuzto8fhVPIRdjkJTJiYWSs0J
-         q/BC4CsB4XPKUjbUPbz1ZmrN+yg0Ps/yaLjIRgvqL5gUX8bMw55fulvh5tAAbIC/E9Qf
-         LK2ZZ4ORy8glF25rLI5ZaoeyS7v8/5iCAc0Ic4HSZrHUgUnfLRJ14iWtKmQYGI+3fjGF
-         gzzA==
+        bh=lt9BCHjvdrmObONlTkDEC+OLN2lDb4n9PEi2jy5LUrs=;
+        b=0dSclZ5qlfX44SmLucj43/mdzJAshHwCgEezrWOlLgS734dTgxJp7rY1+6Y4O7ih91
+         LKP4HGq9rWQfMJkSVOKoV63SD41PttUo6CD0R7KAQCEFVMLYz9DtqZ2WT6aYl1dhGGRG
+         2rpBe5G6rAJDcnQFlR7BLAF6NkFKdSzDNspcJiGx8AH0+uQmbPjrxv0aiuea+4dH4n1h
+         4O8TkhPd9HniSbi4+kCNAoICMicJujX8XsYZlmpT6S88Y5AgCKmJbSvbq1pFrdmJLb5D
+         klX/Tbrl91+nXus4MYxtpGyRiYEoxNwkFvhvHqMpTaMZnHJe9qTqHTYowPVkvxv4s7hF
+         fJyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702592651; x=1703197451;
+        d=1e100.net; s=20230601; t=1702592645; x=1703197445;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=IhGfCoK2tH7CSsD31Uea+efJ+DNSx0N9h9XZ47wrw/8=;
-        b=G2lJybYh2VJ1Z9VqwlydzhB006K+HXu2q+JGdkjv2jIdpTUoRX5TyldwTbdq6hScMD
-         FT60pfhTr+UbtHyjxFjQCD18/SKIAGynE0tDDXWqjvpMzLWFovJyPhTvYIK3AzQ36cE7
-         QfR7qpEuCjy67OVbH+0kmlaClARxjI2hjrPopRtgnZsnfSsDd2wr0EE4jvLGXwxLOjS4
-         OG1shVrRMMWLviAX8MbA1SguLuz6KtB6CPbANjEANvYUbRKXWF3mR4xtwoVvZWoKdI9k
-         kEnMzICV5Fd820H2WR/d2MKn/VrKciYLEvi6uz2B7K5Pmweg5KKobDR4DavR5PHSi2Ko
-         WE8g==
-X-Gm-Message-State: AOJu0Yy2+MqjgpCmMs3LjCA0/92VCPTHBapFlaLHs3jMY8QL4QAITuTs
-	d3UAlj+qcazC6zXzESYxXUqcOqonxtgMxh/KxKkr5A==
-X-Google-Smtp-Source: AGHT+IGC6oS2gmVri538ikrtq0Co2V9TNixeYvSH6cThmAt5OjmjsK/6kjOyVaBSJshjYmTp5txW9A==
-X-Received: by 2002:a05:6830:1395:b0:6d8:7a4e:37c1 with SMTP id d21-20020a056830139500b006d87a4e37c1mr9095638otq.9.1702592650784;
-        Thu, 14 Dec 2023 14:24:10 -0800 (PST)
+        bh=lt9BCHjvdrmObONlTkDEC+OLN2lDb4n9PEi2jy5LUrs=;
+        b=FDd6rMXIBSB7VKuqX99jWalKUzlnbOhiTRyhfj0x0/tHQjDYoMbW0TqGKg5ZreIMMm
+         yWdFgR1tiVDn3RqHuPY4sGWQv50rvbRX6gcGpo2PV95ZlgnzYqSUIN9+KZbz/KxUgu5k
+         ihvxJSymwqQl1GnI+kZPrLGmP5RzdolnQme4e0B+qRZdXuig15tMmb1WuAhDyUIIcSeT
+         7CaPGEyUjv4x8mCyb3MiBSxrkuD5CzZkk1/hVMg3PPMwF6DqIn+k7OzKUCet/8XFj1gz
+         bkE8rulD1eQAEZiyZMHdDUDCz0R0vB+VQ3zLjqQneslbT/Ho/pihtOronLvheAKkJAAz
+         KsQw==
+X-Gm-Message-State: AOJu0YxuG3Xm2yj13ReJuBtLv33Q7jZaiA98I9VAuhAlkxNlJDyhX943
+	/oOwZoN+IINfaUL6WjIzrIBT1W2eQfZ3ZgvYCnST4w==
+X-Google-Smtp-Source: AGHT+IGOVzyHRaunzRx8BM1ChCZ5VzOp3+kyGJS5FgtIZ/JNs3bbSAazbwDZOXCgHQSSSepJ7I202g==
+X-Received: by 2002:a9d:6a10:0:b0:6d9:e01c:6b79 with SMTP id g16-20020a9d6a10000000b006d9e01c6b79mr10756559otn.30.1702592645492;
+        Thu, 14 Dec 2023 14:24:05 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id cn14-20020a056830658e00b006d87e38f91asm920385otb.56.2023.12.14.14.24.10
+        by smtp.gmail.com with ESMTPSA id da15-20020a0568306a8f00b006ce28044207sm1098118otb.58.2023.12.14.14.24.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Dec 2023 14:24:10 -0800 (PST)
-Date: Thu, 14 Dec 2023 17:24:09 -0500
+        Thu, 14 Dec 2023 14:24:05 -0800 (PST)
+Date: Thu, 14 Dec 2023 17:24:04 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 12/26] pack-objects: keep track of `pack_start` for each
- reuse pack
-Message-ID: <9a5c38514bb6dedc44c28bab71a98fe1c0150ecb.1702592604.git.me@ttaylorr.com>
+Subject: [PATCH v2 10/26] pack-bitmap: return multiple packs via
+ `reuse_partial_packfile_from_bitmap()`
+Message-ID: <f551892bab54f855556ca6a35168717285ce4e75.1702592604.git.me@ttaylorr.com>
 References: <cover.1701198172.git.me@ttaylorr.com>
  <cover.1702592603.git.me@ttaylorr.com>
 Precedence: bulk
@@ -61,113 +61,101 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1702592603.git.me@ttaylorr.com>
 
-When reusing objects from a pack, we keep track of a set of one or more
-`reused_chunk`s, corresponding to sections of one or more object(s) from
-a source pack that we are reusing. Each chunk contains two pieces of
-information:
+Further prepare for enabling verbatim pack-reuse over multiple packfiles
+by changing the signature of reuse_partial_packfile_from_bitmap() to
+populate an array of `struct bitmapped_pack *`'s instead of a pointer to
+a single packfile.
 
-  - the offset of the first object in the source pack (relative to the
-    beginning of the source pack)
-  - the difference between that offset, and the corresponding offset in
-    the pack we're generating
+Since the array we're filling out is sized dynamically[^1], add an
+additional `size_t *` parameter which will hold the number of reusable
+packs (equal to the number of elements in the array).
 
-The purpose of keeping track of these is so that we can patch an
-OFS_DELTAs that cross over a section of the reuse pack that we didn't
-take.
+Note that since we still have not implemented true multi-pack reuse,
+these changes aren't propagated out to the rest of the caller in
+builtin/pack-objects.c.
 
-For instance, consider a hypothetical pack as shown below:
+In the interim state, we expect that the array has a single element, and
+we use that element to fill out the static `reuse_packfile` variable
+(which is a bog-standard `struct packed_git *`). Future commits will
+continue to push this change further out through the pack-objects code.
 
-                                                (chunk #2)
-                                                __________...
-                                               /
-                                              /
-      +--------+---------+-------------------+---------+
-  ... | <base> | <other> |      (unused)     | <delta> | ...
-      +--------+---------+-------------------+---------+
-       \                /
-        \______________/
-           (chunk #1)
+[^1]: That is, even though we know the number of packs which are
+  candidates for pack-reuse, we do not know how many of those
+  candidates we can actually reuse.
 
-Suppose that we are sending objects "base", "other", and "delta", and
-that the "delta" object is stored as an OFS_DELTA, and that its base is
-"base". If we don't send any objects in the "(unused)" range, we can't
-copy the delta'd object directly, since its delta offset includes a
-range of the pack that we didn't copy, so we have to account for that
-difference when patching and reassembling the delta.
-
-In order to compute this value correctly, we need to know not only where
-we are in the packfile we're assembling (with `hashfile_total(f)`) but
-also the position of the first byte of the packfile that we are
-currently reusing. Currently, this works just fine, since when reusing
-only a single pack those two values are always identical (because
-verbatim reuse is the first thing pack-objects does when enabled after
-writing the pack header).
-
-But when reusing multiple packs which have one or more gaps, we'll need
-to account for these two values diverging.
-
-Together, these two allow us to compute the reused chunk's offset
-difference relative to the start of the reused pack, as desired.
-
-Helped-by: Jeff King <peff@peff.net>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/pack-objects.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ builtin/pack-objects.c | 9 +++++++--
+ pack-bitmap.c          | 6 ++++--
+ pack-bitmap.h          | 5 +++--
+ 3 files changed, 14 insertions(+), 6 deletions(-)
 
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 102fe9a4f8..f51b86d99f 100644
+index c3df6d9657..87e16636a8 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -1015,6 +1015,7 @@ static off_t find_reused_offset(off_t where)
+@@ -3940,14 +3940,19 @@ static int pack_options_allow_reuse(void)
  
- static void write_reused_pack_one(struct packed_git *reuse_packfile,
- 				  size_t pos, struct hashfile *out,
-+				  off_t pack_start,
- 				  struct pack_window **w_curs)
+ static int get_object_list_from_bitmap(struct rev_info *revs)
  {
- 	off_t offset, next, cur;
-@@ -1024,7 +1025,8 @@ static void write_reused_pack_one(struct packed_git *reuse_packfile,
- 	offset = pack_pos_to_offset(reuse_packfile, pos);
- 	next = pack_pos_to_offset(reuse_packfile, pos + 1);
++	struct bitmapped_pack *packs = NULL;
++	size_t packs_nr = 0;
++
+ 	if (!(bitmap_git = prepare_bitmap_walk(revs, 0)))
+ 		return -1;
  
--	record_reused_object(offset, offset - hashfile_total(out));
-+	record_reused_object(offset,
-+			     offset - (hashfile_total(out) - pack_start));
+ 	if (pack_options_allow_reuse())
+-		reuse_partial_packfile_from_bitmap(bitmap_git, &reuse_packfile,
++		reuse_partial_packfile_from_bitmap(bitmap_git, &packs,
++						   &packs_nr,
+ 						   &reuse_packfile_bitmap);
  
- 	cur = offset;
- 	type = unpack_object_header(reuse_packfile, w_curs, &cur, &size);
-@@ -1094,6 +1096,7 @@ static void write_reused_pack_one(struct packed_git *reuse_packfile,
+-	if (reuse_packfile) {
++	if (packs) {
++		reuse_packfile = packs[0].p;
+ 		reuse_packfile_objects = bitmap_popcount(reuse_packfile_bitmap);
+ 		if (!reuse_packfile_objects)
+ 			BUG("expected non-empty reuse bitmap");
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index c75a83e9cc..4d5a484678 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -2001,7 +2001,8 @@ static int bitmapped_pack_cmp(const void *va, const void *vb)
+ }
  
- static size_t write_reused_pack_verbatim(struct packed_git *reuse_packfile,
- 					 struct hashfile *out,
-+					 off_t pack_start UNUSED,
- 					 struct pack_window **w_curs)
+ void reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
+-					struct packed_git **packfile_out,
++					struct bitmapped_pack **packs_out,
++					size_t *packs_nr_out,
+ 					struct bitmap **reuse_out)
  {
- 	size_t pos = 0;
-@@ -1125,10 +1128,12 @@ static void write_reused_pack(struct packed_git *reuse_packfile,
- {
- 	size_t i = 0;
- 	uint32_t offset;
-+	off_t pack_start = hashfile_total(f) - sizeof(struct pack_header);
- 	struct pack_window *w_curs = NULL;
+ 	struct repository *r = the_repository;
+@@ -2069,7 +2070,8 @@ void reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
+ 	 * need to be handled separately.
+ 	 */
+ 	bitmap_and_not(result, reuse);
+-	*packfile_out = packs[0].p;
++	*packs_out = packs;
++	*packs_nr_out = packs_nr;
+ 	*reuse_out = reuse;
+ }
  
- 	if (allow_ofs_delta)
--		i = write_reused_pack_verbatim(reuse_packfile, f, &w_curs);
-+		i = write_reused_pack_verbatim(reuse_packfile, f, pack_start,
-+					       &w_curs);
- 
- 	for (; i < reuse_packfile_bitmap->word_alloc; ++i) {
- 		eword_t word = reuse_packfile_bitmap->words[i];
-@@ -1145,7 +1150,7 @@ static void write_reused_pack(struct packed_git *reuse_packfile,
- 			 * for why.
- 			 */
- 			write_reused_pack_one(reuse_packfile, pos + offset, f,
--					      &w_curs);
-+					      pack_start, &w_curs);
- 			display_progress(progress_state, ++written);
- 		}
- 	}
+diff --git a/pack-bitmap.h b/pack-bitmap.h
+index ab3fdcde6b..7a12a2ce81 100644
+--- a/pack-bitmap.h
++++ b/pack-bitmap.h
+@@ -78,8 +78,9 @@ int test_bitmap_hashes(struct repository *r);
+ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
+ 					 int filter_provided_objects);
+ uint32_t midx_preferred_pack(struct bitmap_index *bitmap_git);
+-void reuse_partial_packfile_from_bitmap(struct bitmap_index *,
+-					struct packed_git **packfile,
++void reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
++					struct bitmapped_pack **packs_out,
++					size_t *packs_nr_out,
+ 					struct bitmap **reuse_out);
+ int rebuild_existing_bitmaps(struct bitmap_index *, struct packing_data *mapping,
+ 			     kh_oid_map_t *reused_bitmaps, int show_progress);
 -- 
 2.43.0.102.ga31d690331.dirty
 
