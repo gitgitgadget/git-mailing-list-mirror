@@ -1,99 +1,72 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2F04671E9
-	for <git@vger.kernel.org>; Thu, 14 Dec 2023 21:49:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 8815 invoked by uid 109); 14 Dec 2023 21:49:00 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 14 Dec 2023 21:49:00 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11686 invoked by uid 111); 14 Dec 2023 21:48:59 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 14 Dec 2023 16:48:59 -0500
-Authentication-Results: peff.net; auth=none
-Date: Thu, 14 Dec 2023 16:48:59 -0500
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-	Carlos =?utf-8?B?QW5kcsOpcyBSYW3DrXJleiBDYXRhw7Fv?= <antaigroupltda@gmail.com>
-Subject: [PATCH 2/2] mailinfo: avoid recursion when unquoting From headers
-Message-ID: <20231214214859.GB2798346@coredump.intra.peff.net>
-References: <20231214214444.GB2297853@coredump.intra.peff.net>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1010F671F7
+	for <git@vger.kernel.org>; Thu, 14 Dec 2023 21:56:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmx.com header.i=lightsparkle@gmx.com header.b="swlAYhGH"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.com;
+	s=s31663417; t=1702591012; x=1703195812; i=lightsparkle@gmx.com;
+	bh=ijUUTwxDjEhPvvQcO3SuyGHFVJOVR77A+Bu++f/1Kws=;
+	h=X-UI-Sender-Class:From:To:Subject:Date;
+	b=swlAYhGH0vam048BHjTTH8KShp4t7JCDjkzUsUfXKwzmKzrrY5Bc3rxBqOPlgIcZ
+	 9ZYsdXIC6/oAGzE7brcaxKjEBenwCnTvrTqB7HYI3+nsd1Xp1cJxPEOt6gj+ImiMb
+	 N+dUXW3hlP8hbpmtUVs9Cw0FrZok+Bz8ovcEpz8Hal/GJtfnxrPornCNmE9q1degx
+	 /ibVmYXcC2Gt8bg04JDiDA8Yc32RxG23q9d+BG3xdPtoLwpqPO/3Jbys/7kZrhYl3
+	 WGZRxILbvN4Ftgal2Mzh3iZShcjHqul/XHfllzibHVdmbJc4Aovnyhv08uIZCuZRD
+	 BQUUTzEvCV/MFK93ag==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [10.236.11.4] ([10.236.11.4]) by msvc-mesg-gmx001.server.lan
+ (via HTTP); Thu, 14 Dec 2023 22:56:52 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20231214214444.GB2297853@coredump.intra.peff.net>
+Message-ID: <trinity-03cfdffb-8cdf-4da0-a050-dbf7b6590b4d-1702591012663@msvc-mesg-gmx026>
+From: luigi cerbai <lightsparkle@gmx.com>
+To: git@vger.kernel.org
+Subject: Serving an .html web page from inside a git repository
+Content-Type: text/plain; charset=UTF-8
+Importance: normal
+Sensitivity: Normal
+Date: Thu, 14 Dec 2023 22:56:52 +0100
+X-Priority: 3
+X-Provags-ID: V03:K1:tSblAP82eCQFkpSnfpIimoQw6obPmZI1Pa6jtGMHou6tAsHchjGVWzXlYRY4hjcENbTnP
+ TQfe3qTi9KcseyiRZ0+GuMbdIj3+YDSn5ASBi+QYZ2YDpDoZEEwqz/VSoDcBLrHVWQgLzgWyJl5b
+ H9E3mNIS6fkHmAlxCI05S/JB/KQdJXbf7CeevT7E0kRNvxfxqkKIp4HbfZIOllQx2ZCpM2M8moXw
+ vjEh+LYWyR4TfuO3sOSupoFOtLKFRgKpcFhorflKg6Bokwj8IA6g5X6sWbmvIi+JSaek/eZ1b/af
+ Ns=
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:jTSy3Adrow0=;yXIKS3cVxlhjtORdATDnDbFmjfa
+ zydbC7spJws1WO/t7SnkeDi9AKXue5Ek8kM+rz2sYzolrRmrdbyFK4xunc682bG51vkh9Nmup
+ uBESZsUfIv1VRPwS34f1Pg1klXwHpduVIJ4lL/E2zUUKadmw3PANhyDJSkCi3CvRPhtpFc4b+
+ 6I2cWZl4zaVxSBLIbEoma1hkx8vzbQc2t54QhqlbJMoMr51tztLTJ36dld/23jWEHT5wJTQFI
+ mqFBJSIxrh5xZLXho4XAKFxMh5s0w55vEm1YPJLM7ob47RXu8I/pY0DWNOF959r46NJpptx9i
+ adLkTPBTjZYb/VdNQ/Ls1RARmnZV7bXFF36CQaazFLSMCG+HMuTpdyM2Qra1IWf5EJZlYH8YJ
+ +gbqAnkOAMjmeTrlqnppbCLYGsMnM/EvHYjd1a3g0U99UGzg2vXa5vGNPp5buM5a7QgS7/+7g
+ XdUPvXbokPHQoznmI2/K4p2iY1WJTQj3SX8rUbT7cU2b0sBr1JoRjYZu+5jZxEs/87HtXToXh
+ J92rxxmJPljVPbkuZk4LuQkdFqxhfz2OJ2zYLSBKAtm7gsNlALRoosPxGUA3BW5j/xTgw4YsR
+ 1tdwJ2z9XXeQA4OCCJi+DEKyttGoZRqaDT2+FcEP6NZEgqPoYlFXcDhMtzPcnBg9b4dXsPMQr
+ 1/96D+nKDu20e8gizidRKUzqxPvLmZkVGNwbQZlrvvX2cHv5O2XkkTIOQXP5iJM3Hn8nx6QnI
+ w4taFOtJJUUbiLOMDWqSNcZUIQQTPOopJaRXpW8/RHrSfjBCPdrrzuf2Jf1RwngXhL+mANg9b
+ RtS/RQx/xmj74tMFUXeyctPA==
+Content-Transfer-Encoding: quoted-printable
 
-Our unquote_comment() function is recursive; when it sees a comment
-within a comment, like:
+Hello, I have a technical question to ask regarding serving an .html webpa=
+ge from inside a git repository.
+In this setup, I have to make the .html page contents viewable on a browse=
+r open to outside traffic without
+using web server programs hosted on my local machine. The role of my local=
+ machine is to push newer files
+to the git repository while the software located inside that directory ser=
+ves the content to the outside world
+that can be accessed by clicking or typing their own co-respective URLs on=
+ their browser.
 
-  (this is an (embedded) comment)
-
-it recurses to handle the inner comment. This is fine for practical use,
-but it does mean that you can easily run out of stack space with a
-malicious header. For example:
-
-  perl -e 'print "From: ", "(" x 2**18;' |
-  git mailinfo /dev/null /dev/null
-
-segfaults on my system. And since mailinfo is likely to be fed untrusted
-input from the Internet (if not by human users, who might recognize a
-garbage header, but certainly there are automated systems that apply
-patches from a list) it may be possible for an attacker to trigger the
-problem.
-
-That said, I don't think there's an interesting security vulnerability
-here. All an attacker can do is make it impossible to parse their email
-and apply their patch, and there are lots of ways to generate bogus
-emails. So it's more of an annoyance than anything.
-
-But it's pretty easy to fix it. The recursion is not helping us preserve
-any particular state from each level. The only flag in our parsing is
-take_next_literally, and we can never recurse when it is set (since the
-start of a new comment implies it was not backslash-escaped). So it is
-really only useful for finding the end of the matched pair of
-parentheses. We can do that easily with a simple depth counter.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- mailinfo.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
-
-diff --git a/mailinfo.c b/mailinfo.c
-index 737b9e5e13..db236f9f9f 100644
---- a/mailinfo.c
-+++ b/mailinfo.c
-@@ -59,6 +59,7 @@ static void parse_bogus_from(struct mailinfo *mi, const struct strbuf *line)
- static const char *unquote_comment(struct strbuf *outbuf, const char *in)
- {
- 	int take_next_literally = 0;
-+	int depth = 1;
- 
- 	strbuf_addch(outbuf, '(');
- 
-@@ -72,11 +73,14 @@ static const char *unquote_comment(struct strbuf *outbuf, const char *in)
- 				take_next_literally = 1;
- 				continue;
- 			case '(':
--				in = unquote_comment(outbuf, in);
-+				strbuf_addch(outbuf, '(');
-+				depth++;
- 				continue;
- 			case ')':
- 				strbuf_addch(outbuf, ')');
--				return in;
-+				if (!--depth)
-+					return in;
-+				continue;
- 			}
- 		}
- 
--- 
-2.43.0.363.g1d22a8f302
+I want to test this setup in order to learn how websites works but I have =
+no idea how to pull this off, do you
+have any directions to provide in order to help me build this setup?
