@@ -1,96 +1,94 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from avasout-ptp-004.plus.net (avasout-ptp-004.plus.net [84.93.230.250])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D351346556
-	for <git@vger.kernel.org>; Fri, 15 Dec 2023 21:21:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1074D5F878
+	for <git@vger.kernel.org>; Fri, 15 Dec 2023 22:00:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="lR/Dk8qe"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 5CA3C28143;
-	Fri, 15 Dec 2023 16:21:15 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=p0lkbi91EfoLuA2Q6FNaGC7c1lOp8Z4Ksju14G
-	JsDeU=; b=lR/Dk8qegbxMS6e0FJDl5KGXYWkS1JrqvqWCGwLPDx5t9Vj3+Frcbc
-	VIV/DNf7hBJKrfT5SE4GjwP8h5+miSzPrHccxh5F2qV0RFhy23QZnuJ9KB1LnNtD
-	LuGmFYGHsnQ62dF9F05Q99tjF6UD81D05iinmBVZEvl8Cpgsa9FW8=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 54F6128142;
-	Fri, 15 Dec 2023 16:21:15 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.193.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EFE3928141;
-	Fri, 15 Dec 2023 16:21:11 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 0/5] make room for "special ref"
-In-Reply-To: <20231215203245.3622299-1-gitster@pobox.com> (Junio C. Hamano's
-	message of "Fri, 15 Dec 2023 12:32:40 -0800")
-References: <20231215203245.3622299-1-gitster@pobox.com>
-Date: Fri, 15 Dec 2023 13:21:10 -0800
-Message-ID: <xmqq5y0zkvqx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="iq0TQZZQ"
+Received: from [10.0.2.15] ([146.198.40.91])
+	by smtp with ESMTPA
+	id EGBErrjXuJsy1EGBFrKTJO; Fri, 15 Dec 2023 21:57:13 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1702677433; bh=POVUQngQE3dNVHwXnN9zFLag4O40Kqf6ntz60gbBXv4=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=iq0TQZZQY33b8PcW/T1jPvWM95MSor2a1449+FavreRg8fwyKccb35WziuF6lWAzC
+	 wclW0j0h4Zy/4qZCt6sd7YhuSDSVkZIQjr5/p7kzMxowMaf3WN5d5iyWDDP4znU7uk
+	 dTAJfUSIaVgYsixKiRTDLpQ6fFvS4He+NSI2n1es9q6qtVFCWoZIwapT5rzISExKei
+	 MUSPs/mqPRy2t7aDkkOefKO/23bXx/l3HSkpz3CVJ0DZljkD3PYZRLFIp/mrASK/KW
+	 Ejn+4xQOD6gXOLvLSlSuwvniw7uesZ7RkoMjiadb16CgRriFnQurzhtHznbV0xVdmd
+	 5uWa/S6Jb4DSA==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=AOje/3mm c=1 sm=1 tr=0 ts=657ccbb9
+ a=KA9ncW3+NP+rNtcBcdh9kA==:117 a=KA9ncW3+NP+rNtcBcdh9kA==:17
+ a=IkcTkHD0fZMA:10 a=ybZZDoGAAAAA:8 a=EWlnYHABesc_bmPxTqAA:9 a=QEXdDO2ut3YA:10
+ a=0RhZnL1DYvcuLYC8JZ5M:22
+X-AUTH: ramsayjones@:2500
+Message-ID: <0c93d426-17c3-434c-bbd0-866c31c23f9d@ramsayjones.plus.com>
+Date: Fri, 15 Dec 2023 21:57:11 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- DF0EB7DA-9B8F-11EE-A8BB-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/5] git.txt: HEAD is not that special
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>
+References: <20231215203245.3622299-1-gitster@pobox.com>
+ <20231215203245.3622299-2-gitster@pobox.com>
+Content-Language: en-GB
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <20231215203245.3622299-2-gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfEEiBKRy8oWlL2F7sxBPPlnYHpWiHN6Y2ykSblMeUMRTqN69BFVZ3YbIAu67o7g/CkUegvQfw2BxFe0e1KGZie6V89Q0mO69RKWXoqel4rzO9BvUZgkT
+ gUe234vuU1J1hMs5TZ+yuVXJeV0YUwwNTonCgPI4uIaIsUXFiQbKobUlY7WkXa/8M0gZ7bHG3XExNuNdpY23Kf/2DEPQepWYfYU=
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> ...  For example, FETCH_HEAD currently stores not
-> just a single object name, but can and is used to store multiple
-> object names, each with annotations to record where they came from.
-> There indeed may be a need to introduce a new term to refer to such
-> "special refs".
 
-The "may be" here vaguely hints another possibility.  If we manage
-to get rid of the "special refs", we do not even have to mention
-"special refs", and more importantly, we do not need extra code to
-deal with them.
+On 15/12/2023 20:32, Junio C Hamano wrote:
+> The introductory text in "git help git" that describes HEAD called
+> it "a special ref".  It is special compared to the more regular refs
+> like refs/heads/master and refs/tags/v1.0.0, but not that special,
+> unlike truly special ones like FETCH_HEAD.
+> 
+> Rewrite a few sentences to also introduce the distinction between a
+> regular ref that contain the object name and a symbolic ref that
+> contain the name of another ref.  Update the description of HEAD
+> that point at the current branch to use the more correct term, a
+> "symbolic ref".
+> 
+> This was found as part of auditing the documentation and in-code
+> comments for uses of "special ref" that refer merely a "pseudo ref".
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  Documentation/git.txt | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
+> 
+> diff --git a/Documentation/git.txt b/Documentation/git.txt
+> index 2535a30194..880cdc5d7f 100644
+> --- a/Documentation/git.txt
+> +++ b/Documentation/git.txt
+> @@ -1025,10 +1025,11 @@ When first created, objects are stored in individual files, but for
+>  efficiency may later be compressed together into "pack files".
+>  
+>  Named pointers called refs mark interesting points in history.  A ref
+> -may contain the SHA-1 name of an object or the name of another ref.  Refs
+> -with names beginning `ref/head/` contain the SHA-1 name of the most
+> +may contain the SHA-1 name of an object or the name of another ref (the
+> +latter is called a "symbolic ref").
+> +Refs with names beginning `ref/head/` contain the SHA-1 name of the most
 
-For FETCH_HEAD, for example, I wonder if an update along this line
-is possible:
+Hmm, s:ref/head:refs/heads: right?
 
- * Teach "git fetch" to store what it writes to FETCH_HEAD to a
-   different file, under a distinctly different filename (e.g.,
-   $GIT_DIR/fetched-tips).  Demote FETCH_HEAD to a pseudoref, and
-   store the first object name in that "fetched-tips" file to it.
-
- * Teach "git pull" to learn what it used to learn from FETCH_HEAD
-   (i.e., list of fetched tips, each annotated with what ref at what
-   repository it came from and if it is to be merged) from the new
-   "fetched-tips" file.
-
-The "special" ness of FETCH_HEAD is really an implementation detail
-of how "git pull" works and how the findings of "git fetch" are
-communicated to "git pull".  The general refs API should not have to
-worry about it, and the refs backends should not have to worry about
-storing more than just an object name (or if it is a symbolic ref,
-the target refname).
-
-An end-user command like "git log ORIG_HEAD..FETCH_HEAD" would not
-be affected by changes along the above line, because the current
-FETCH_HEAD, when used as a revision, will work as if it stores the
-single object name that is listed first in the file.
-
-If somebody is reading FETCH_HEAD and acting on its contents (rather
-than merely consuming it as a ref of the first object), perhaps
-feeding it to "git fmt-merge-msg", they will be broken by such a
-change (indeed, our own "git pull" will be broken by the change to
-"git fetch", and the second bullet point above is about fixing the
-exact fallout from it), but I am not sure if that is a use case worth
-worrying about.
-
-Hmm?
+>  recent commit (or "head") of a branch under development.  SHA-1 names of
+> -tags of interest are stored under `ref/tags/`.  A special ref named
+> +tags of interest are stored under `ref/tags/`.  A symbolic ref named
+>  `HEAD` contains the name of the currently checked-out branch.
+>  
+>  The index file is initialized with a list of all paths and, for each
