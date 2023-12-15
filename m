@@ -1,64 +1,96 @@
-Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51DBD49F62
-	for <git@vger.kernel.org>; Fri, 15 Dec 2023 21:04:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-67f07090053so7954076d6.2
-        for <git@vger.kernel.org>; Fri, 15 Dec 2023 13:04:27 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702674266; x=1703279066;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=z2dmt11+UcVakviNutyrBbAbyE9a8xEB06cEUBNANLo=;
-        b=tF7SdMcRbp9DbAd8Ay3x1MBqn9fS7+ivnOlaeJQEbtNAdMVVvty376P/D34Kqv043Z
-         82M63AE8mYhwC8311FJSxsAKj+kUi7SCNn/NlkKESL3hvuksIN8eCdz5hpmRGB2T1z5Y
-         WA/cUQ/ojYXGvy74yZzgvAlT3VbOXvBUbKX9V0UsvHYcRDCjfyga6sJkgs54L1dV0fTt
-         QdQHgdASjDEPOUnjrC0enFJl/NKDgqhw+gl0U4lGNc7vcOsP7gUzWm9MFn3DtJa1Jwlw
-         tPcJ8u+WAG/fU1Qvb68DgTW/lEqlLYTS/pY7WFPiWO4TFfin1nLNQzNr5Bq5YQYhoBac
-         8cVQ==
-X-Gm-Message-State: AOJu0YySfWlYJKuJW6xQXTr8b7HUPcGdaL5YkErb1WO31XUtHR5NATc7
-	SopfFscGjrMFKp2VRGwLWlBv1Un1KSwfyS4ZQkc=
-X-Google-Smtp-Source: AGHT+IGBVj9v0HWQ2dFoxWo+TU+E8UisXvs/IknuOQddkINZb8jmHJBe/EnkggLdsEwJFEuOUCMittEfGRfL6sYzG7o=
-X-Received: by 2002:a0c:c210:0:b0:67e:f58a:d6b0 with SMTP id
- l16-20020a0cc210000000b0067ef58ad6b0mr5492271qvh.27.1702674266189; Fri, 15
- Dec 2023 13:04:26 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D351346556
+	for <git@vger.kernel.org>; Fri, 15 Dec 2023 21:21:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="lR/Dk8qe"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 5CA3C28143;
+	Fri, 15 Dec 2023 16:21:15 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=p0lkbi91EfoLuA2Q6FNaGC7c1lOp8Z4Ksju14G
+	JsDeU=; b=lR/Dk8qegbxMS6e0FJDl5KGXYWkS1JrqvqWCGwLPDx5t9Vj3+Frcbc
+	VIV/DNf7hBJKrfT5SE4GjwP8h5+miSzPrHccxh5F2qV0RFhy23QZnuJ9KB1LnNtD
+	LuGmFYGHsnQ62dF9F05Q99tjF6UD81D05iinmBVZEvl8Cpgsa9FW8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 54F6128142;
+	Fri, 15 Dec 2023 16:21:15 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.193.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EFE3928141;
+	Fri, 15 Dec 2023 16:21:11 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 0/5] make room for "special ref"
+In-Reply-To: <20231215203245.3622299-1-gitster@pobox.com> (Junio C. Hamano's
+	message of "Fri, 15 Dec 2023 12:32:40 -0800")
+References: <20231215203245.3622299-1-gitster@pobox.com>
+Date: Fri, 15 Dec 2023 13:21:10 -0800
+Message-ID: <xmqq5y0zkvqx.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAM=w4Pn46nTcWA1e=n4Rms76gCx7iqbRmOWf3=vRmKgtbhqQmA@mail.gmail.com>
- <20231215204333.1253-1-ericsunshine@charter.net> <xmqqjzpfkwnr.fsf@gitster.g>
-In-Reply-To: <xmqqjzpfkwnr.fsf@gitster.g>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Fri, 15 Dec 2023 16:04:15 -0500
-Message-ID: <CAPig+cS3Yb2n4e7ZxmSFFxYbHWn7wcMBXG=nCigCKst-GzGLLQ@mail.gmail.com>
-Subject: Re: [PATCH] git-add.txt: add missing short option -A to synopsis
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Eric Sunshine <ericsunshine@charter.net>, git@vger.kernel.org, 
-	Benjamin Lehmann <ben.lehmann@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ DF0EB7DA-9B8F-11EE-A8BB-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-On Fri, Dec 15, 2023 at 4:01=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
-> Eric Sunshine <ericsunshine@charter.net> writes:
-> > With one exception, the synopsis for `git add` consistently lists the
-> > short counterpart alongside the long-form of each option (for instance,
-> > "[--edit | -e]"). The exception is that -A is not mentioned alongside
-> > --all. Fix this inconsistency
->
-> I dug the history just in case we deliberately wanted to leave this
-> out of the synopsis section, but the side branch leading to the
-> merge at 378335b3 (Merge branch 'jc/add-addremove', 2008-07-20) does
-> not say we wanted to discourage "-A" (and encourage "--all").  This
-> would be a welcome change.
+Junio C Hamano <gitster@pobox.com> writes:
 
-I also dug through the history for the same reason and, like you, did
-not find any indication that -A was omitted from the synopsis
-deliberately. I probably should have stated as much in the patch
-commentary.
+> ...  For example, FETCH_HEAD currently stores not
+> just a single object name, but can and is used to store multiple
+> object names, each with annotations to record where they came from.
+> There indeed may be a need to introduce a new term to refer to such
+> "special refs".
+
+The "may be" here vaguely hints another possibility.  If we manage
+to get rid of the "special refs", we do not even have to mention
+"special refs", and more importantly, we do not need extra code to
+deal with them.
+
+For FETCH_HEAD, for example, I wonder if an update along this line
+is possible:
+
+ * Teach "git fetch" to store what it writes to FETCH_HEAD to a
+   different file, under a distinctly different filename (e.g.,
+   $GIT_DIR/fetched-tips).  Demote FETCH_HEAD to a pseudoref, and
+   store the first object name in that "fetched-tips" file to it.
+
+ * Teach "git pull" to learn what it used to learn from FETCH_HEAD
+   (i.e., list of fetched tips, each annotated with what ref at what
+   repository it came from and if it is to be merged) from the new
+   "fetched-tips" file.
+
+The "special" ness of FETCH_HEAD is really an implementation detail
+of how "git pull" works and how the findings of "git fetch" are
+communicated to "git pull".  The general refs API should not have to
+worry about it, and the refs backends should not have to worry about
+storing more than just an object name (or if it is a symbolic ref,
+the target refname).
+
+An end-user command like "git log ORIG_HEAD..FETCH_HEAD" would not
+be affected by changes along the above line, because the current
+FETCH_HEAD, when used as a revision, will work as if it stores the
+single object name that is listed first in the file.
+
+If somebody is reading FETCH_HEAD and acting on its contents (rather
+than merely consuming it as a ref of the first object), perhaps
+feeding it to "git fmt-merge-msg", they will be broken by such a
+change (indeed, our own "git pull" will be broken by the change to
+"git fetch", and the second bullet point above is about fixing the
+exact fallout from it), but I am not sure if that is a use case worth
+worrying about.
+
+Hmm?
