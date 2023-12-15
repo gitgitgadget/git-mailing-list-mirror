@@ -1,75 +1,75 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from impout003.msg.chrl.nc.charter.net (impout003aa.msg.chrl.nc.charter.net [47.43.20.27])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77ACE482EC
-	for <git@vger.kernel.org>; Fri, 15 Dec 2023 20:33:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="aGolkbC1"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 018CA27BB2;
-	Fri, 15 Dec 2023 15:33:04 -0500 (EST)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references:mime-version
-	:content-transfer-encoding; s=sasl; bh=8uzN5/GO8OTRPgT7KPwlxPD/w
-	UXVwZ8lS1vq9fTGu1A=; b=aGolkbC1knrmHD4bi3P/uGlTq8L69vwYFNeXB/INN
-	8L143+ij/xT/QZ7lp1BLK7l0skijL9entr01V78txdSTlNTp4p3itlnETv/GKW/X
-	Qs/qUrPxrCP/nfH8DFrZYpcVYKBB4bXvbpNu5Cu/t7A5d28NB56eoF8LF5qyHc8L
-	3U=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id EEA4727BB1;
-	Fri, 15 Dec 2023 15:33:03 -0500 (EST)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.193.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9E9BD27BAE;
-	Fri, 15 Dec 2023 15:33:00 -0500 (EST)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D7745974
+	for <git@vger.kernel.org>; Fri, 15 Dec 2023 20:46:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=charter.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=charter.net
+Received: from localhost.localdomain ([97.71.114.58])
+	by cmsmtp with ESMTPA
+	id EF2prKfhsAB4kEF2rrpKsz; Fri, 15 Dec 2023 20:44:29 +0000
+Authentication-Results: charter.net; auth=pass (LOGIN)
+ smtp.auth=ericsunshine@charter.net
+X-Authority-Analysis: v=2.4 cv=LdEvVxTi c=1 sm=1 tr=0 ts=657cbaae
+ a=4h87Vkt5vDwEBqoyvSX4iA==:117 a=4h87Vkt5vDwEBqoyvSX4iA==:17 a=BCjA09oAAAAA:8
+ a=pGLkceISAAAA:8 a=ux2r5jEI9VBPf_-RbnIA:9 a=jYKBPJSq9nmHKCndOPe9:22
+From: Eric Sunshine <ericsunshine@charter.net>
 To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 5/5] docs: MERGE_AUTOSTASH is not that special
-Date: Fri, 15 Dec 2023 12:32:45 -0800
-Message-ID: <20231215203245.3622299-6-gitster@pobox.com>
-X-Mailer: git-send-email 2.43.0-76-g1a87c842ec
-In-Reply-To: <20231215203245.3622299-1-gitster@pobox.com>
-References: <20231215203245.3622299-1-gitster@pobox.com>
+Cc: Benjamin Lehmann <ben.lehmann@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH] git-add.txt: add missing short option -A to synopsis
+Date: Fri, 15 Dec 2023 15:43:33 -0500
+Message-ID: <20231215204333.1253-1-ericsunshine@charter.net>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <CAM=w4Pn46nTcWA1e=n4Rms76gCx7iqbRmOWf3=vRmKgtbhqQmA@mail.gmail.com>
+References: <CAM=w4Pn46nTcWA1e=n4Rms76gCx7iqbRmOWf3=vRmKgtbhqQmA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Pobox-Relay-ID:
- 23B0CB8C-9B89-11EE-878F-A19503B9AAD1-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4xfMN95I1BpHDcl8Bt+xI4N7QzmgGBmdGHUVCvQdvwNyoX9ydsLqzcRrTxrVETktf5VPsThxWAscG+iyJclaRjzHcLotyYW3kVTt3J4XXNPPSGj7+Y6q8c
+ 1zN2j/vSz6XI7/TFXaeM9wGP/RJ1Bfm173XQvGMFMCl+GeB8Yux2XMeMISVAm6v5Oh91vOrsBds/5Lsb9cVm1aMGPn+vkk9De1e8IwcWl2PFTzGk2VVCBO3R
+ DeKxIl2xMCrNHHPJ2s1B//oynpfwZgxIdGBZ76ivn7A=
 
-A handful of manual pages called MERGE_AUTOSTASH a "special ref",
-but there is nothing special about it.  It merely is yet another
-pseudoref.
+From: Eric Sunshine <sunshine@sunshineco.com>
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+With one exception, the synopsis for `git add` consistently lists the
+short counterpart alongside the long-form of each option (for instance,
+"[--edit | -e]"). The exception is that -A is not mentioned alongside
+--all. Fix this inconsistency
+
+Reported-by: Benjamin Lehmann <ben.lehmann@gmail.com>
+Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- Documentation/merge-options.txt | 2 +-
+
+An alternative would be to collapse the synopsis to:
+
+    'git add' <options> [--] [<pathspec>...]
+
+as has been done for other command documentation, however doing so would
+throw away at-a-glance clues about which options are mutually exclusive,
+so adding the missing -A to the synopsis seems preferable (for now, at
+least).
+
+ Documentation/git-add.txt | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/merge-options.txt b/Documentation/merge-option=
-s.txt
-index d8f7cd7ca0..3eaefc4e94 100644
---- a/Documentation/merge-options.txt
-+++ b/Documentation/merge-options.txt
-@@ -191,7 +191,7 @@ endif::git-pull[]
- --autostash::
- --no-autostash::
- 	Automatically create a temporary stash entry before the operation
--	begins, record it in the special ref `MERGE_AUTOSTASH`
-+	begins, record it in the ref `MERGE_AUTOSTASH`
- 	and apply it after the operation ends.  This means
- 	that you can run the operation on a dirty worktree.  However, use
- 	with care: the final stash application after a successful
---=20
-2.43.0-76-g1a87c842ec
+diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+index ed44c1cb31..3d2e670716 100644
+--- a/Documentation/git-add.txt
++++ b/Documentation/git-add.txt
+@@ -9,7 +9,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git add' [--verbose | -v] [--dry-run | -n] [--force | -f] [--interactive | -i] [--patch | -p]
+-	  [--edit | -e] [--[no-]all | --[no-]ignore-removal | [--update | -u]] [--sparse]
++	  [--edit | -e] [--[no-]all | -A | --[no-]ignore-removal | [--update | -u]] [--sparse]
+ 	  [--intent-to-add | -N] [--refresh] [--ignore-errors] [--ignore-missing] [--renormalize]
+ 	  [--chmod=(+|-)x] [--pathspec-from-file=<file> [--pathspec-file-nul]]
+ 	  [--] [<pathspec>...]
+-- 
+2.43.0
 
