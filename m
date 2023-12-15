@@ -1,75 +1,76 @@
-Received: from impout003.msg.chrl.nc.charter.net (impout003aa.msg.chrl.nc.charter.net [47.43.20.27])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f46.google.com (mail-oo1-f46.google.com [209.85.161.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D7745974
-	for <git@vger.kernel.org>; Fri, 15 Dec 2023 20:46:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=charter.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=charter.net
-Received: from localhost.localdomain ([97.71.114.58])
-	by cmsmtp with ESMTPA
-	id EF2prKfhsAB4kEF2rrpKsz; Fri, 15 Dec 2023 20:44:29 +0000
-Authentication-Results: charter.net; auth=pass (LOGIN)
- smtp.auth=ericsunshine@charter.net
-X-Authority-Analysis: v=2.4 cv=LdEvVxTi c=1 sm=1 tr=0 ts=657cbaae
- a=4h87Vkt5vDwEBqoyvSX4iA==:117 a=4h87Vkt5vDwEBqoyvSX4iA==:17 a=BCjA09oAAAAA:8
- a=pGLkceISAAAA:8 a=ux2r5jEI9VBPf_-RbnIA:9 a=jYKBPJSq9nmHKCndOPe9:22
-From: Eric Sunshine <ericsunshine@charter.net>
-To: git@vger.kernel.org
-Cc: Benjamin Lehmann <ben.lehmann@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH] git-add.txt: add missing short option -A to synopsis
-Date: Fri, 15 Dec 2023 15:43:33 -0500
-Message-ID: <20231215204333.1253-1-ericsunshine@charter.net>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <CAM=w4Pn46nTcWA1e=n4Rms76gCx7iqbRmOWf3=vRmKgtbhqQmA@mail.gmail.com>
-References: <CAM=w4Pn46nTcWA1e=n4Rms76gCx7iqbRmOWf3=vRmKgtbhqQmA@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D7247761
+	for <git@vger.kernel.org>; Fri, 15 Dec 2023 20:49:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oo1-f46.google.com with SMTP id 006d021491bc7-591341db3a1so768259eaf.3
+        for <git@vger.kernel.org>; Fri, 15 Dec 2023 12:49:14 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702673354; x=1703278154;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=gQkgMYPT8lswMBKkcOLJIGw5t87RDyiIstqIqIabxzk=;
+        b=PL5YoURLlS669CW7++h44MhdXN+6godV2YYdHnz2qYJPauAv91Bjj4fKXlvQQMge2D
+         I/F3/4MnRW1kFhK/pCvG6pmvxCipr8r3mvGyK2zPyW5Oa4yzOiu07R1KQypGhauaMBiS
+         hnPLWUS746zSDh2GS78br9idCVlGvNLqTxuBK3eIPNa/kiG8n7AUu5JHQl1Bb6QpRzZh
+         yofB5SS6qv3L6aWZ4tKYGHdOBIDDX8gQB56YuSKLZS5AjkNC7iTilE4kBRyb2kQgVm1T
+         wDG2q8hGNxfC+oQDNFJA0Eln16VM7ZqmS0Oyw3DgPuuDcqlhuWqqycPVLv1xstIvnOoR
+         EFwg==
+X-Gm-Message-State: AOJu0YzGONxgRNIP1IYaoEZF7hVOpSglytimrKzPo4kdLvg5HRqhhUwn
+	ZxrH1rAVWe4cN8Y0zJqLowXAtzZUwS3bT9JvwJg=
+X-Google-Smtp-Source: AGHT+IEzVpuUDT6mTZ1HGPnrJXzrfqmt88Pgy1+5CMtQd3xuXsOLEDyZ873uClTKD0S+S1eAz/1pccpACTG2Jgv06RQ=
+X-Received: by 2002:a05:6358:c8b:b0:170:17eb:b3b with SMTP id
+ o11-20020a0563580c8b00b0017017eb0b3bmr14881649rwj.37.1702673353415; Fri, 15
+ Dec 2023 12:49:13 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4xfMN95I1BpHDcl8Bt+xI4N7QzmgGBmdGHUVCvQdvwNyoX9ydsLqzcRrTxrVETktf5VPsThxWAscG+iyJclaRjzHcLotyYW3kVTt3J4XXNPPSGj7+Y6q8c
- 1zN2j/vSz6XI7/TFXaeM9wGP/RJ1Bfm173XQvGMFMCl+GeB8Yux2XMeMISVAm6v5Oh91vOrsBds/5Lsb9cVm1aMGPn+vkk9De1e8IwcWl2PFTzGk2VVCBO3R
- DeKxIl2xMCrNHHPJ2s1B//oynpfwZgxIdGBZ76ivn7A=
-
+References: <CAM=w4Pn46nTcWA1e=n4Rms76gCx7iqbRmOWf3=vRmKgtbhqQmA@mail.gmail.com>
+In-Reply-To: <CAM=w4Pn46nTcWA1e=n4Rms76gCx7iqbRmOWf3=vRmKgtbhqQmA@mail.gmail.com>
 From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Fri, 15 Dec 2023 15:49:02 -0500
+Message-ID: <CAPig+cSkzJpufEG_XhFdSho89itLOuvCwMaTkXXAjryNnWteQQ@mail.gmail.com>
+Subject: Re: Bug | Documentation | git add -all | Synopsis has minor mistake
+To: Benjamin Lehmann <ben.lehmann@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-With one exception, the synopsis for `git add` consistently lists the
-short counterpart alongside the long-form of each option (for instance,
-"[--edit | -e]"). The exception is that -A is not mentioned alongside
---all. Fix this inconsistency
+On Fri, Dec 15, 2023 at 7:38=E2=80=AFAM Benjamin Lehmann <ben.lehmann@gmail=
+.com> wrote:
+> The mistake can be found in the synopsis here:
+> https://git-scm.com/docs/git-add#Documentation/git-add.txt--A
+>
+> In the synopsys, the options -all currently reads:
+>
+> [--[no-]all | --[no-]ignore-removal |
+>
+> You can see that there is no mention of -A, which is the main way that
+> people would use -all perhaps, so it really ought to be included
+> correctly in the synopsis.
 
-Reported-by: Benjamin Lehmann <ben.lehmann@gmail.com>
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
----
+This seems to be a simple oversight when the --all option was added by
+da98053aa6 (git-add --all: documentation, 2008-07-19).
 
-An alternative would be to collapse the synopsis to:
+> In addition, the closing square-bracket is missing.
 
-    'git add' <options> [--] [<pathspec>...]
+I think this is inaccurate. If you look closely, you will find the
+closing bracket after the -u option:
 
-as has been done for other command documentation, however doing so would
-throw away at-a-glance clues about which options are mutually exclusive,
-so adding the missing -A to the synopsis seems preferable (for now, at
-least).
+    [--[no-]all | --[no-]ignore-removal | [--update | -u]]
 
- Documentation/git-add.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+meaning that --all, --ignore-removal, and --update are mutually exclusive.
 
-diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-index ed44c1cb31..3d2e670716 100644
---- a/Documentation/git-add.txt
-+++ b/Documentation/git-add.txt
-@@ -9,7 +9,7 @@ SYNOPSIS
- --------
- [verse]
- 'git add' [--verbose | -v] [--dry-run | -n] [--force | -f] [--interactive | -i] [--patch | -p]
--	  [--edit | -e] [--[no-]all | --[no-]ignore-removal | [--update | -u]] [--sparse]
-+	  [--edit | -e] [--[no-]all | -A | --[no-]ignore-removal | [--update | -u]] [--sparse]
- 	  [--intent-to-add | -N] [--refresh] [--ignore-errors] [--ignore-missing] [--renormalize]
- 	  [--chmod=(+|-)x] [--pathspec-from-file=<file> [--pathspec-file-nul]]
- 	  [--] [<pathspec>...]
--- 
-2.43.0
+> Hope this was the right place to report this - seemed to be the only opti=
+on.
 
+This is the correct place. I posted a patch[1] addressing the issue.
+
+[1]: https://lore.kernel.org/git/20231215204333.1253-1-ericsunshine@charter=
+.net/
