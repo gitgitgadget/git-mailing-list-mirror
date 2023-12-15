@@ -1,147 +1,156 @@
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC7CC339AE
-	for <git@vger.kernel.org>; Fri, 15 Dec 2023 14:46:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD7F39FC3
+	for <git@vger.kernel.org>; Fri, 15 Dec 2023 15:38:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZVR7KIDl"
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3364b049467so623347f8f.1
-        for <git@vger.kernel.org>; Fri, 15 Dec 2023 06:46:39 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="KGOwRALQ"
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-77f3183f012so52593385a.0
+        for <git@vger.kernel.org>; Fri, 15 Dec 2023 07:38:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1702651598; x=1703256398; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=sorMhbAixFW7Zcs5Q3QgO7psk1rR/yT0T2RXmnZNzAA=;
-        b=ZVR7KIDlaF1swVTm311agyDFGYHTWh1HFsjmtdqzf1B1jB1TtShuy3y9p7FW3Whbuq
-         NNlFxD0D9pBWH7ZWCbcRH1+HOefMlKdyaMI4zGSieAvLeEo3K+jnxJPXHP1SZg5NNaFG
-         l85DET+neFEVCoKHlP27WmN45ie+w0Y4HmZzbWyn1zDUdn+oRh3RF45LupyvNIucQvua
-         Hgl70KZOFPwhAQHQ2qczKc3R6QATx2R4U3/Xq+XD9Y45oVOSsaFyN7YPfKE/mKYGkmlh
-         zeNc1w11ixxC8cDD5D8NDX0jZEtrwec4NTK3gz7SJYBpCJtKKnUwmEcevsU8rZFEgJgV
-         Tf7w==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1702654679; x=1703259479; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=D47SlVVhvtKR6uSe3fgM5+65R+eX0UMWRos2jjilPek=;
+        b=KGOwRALQaC9rwlVL581Zm55ttL2zmnMeef2V6BXn3936fwLmZnJC5D7tb67fViUo2r
+         Vh7eeDlJUqvKhEKP2pRcap0FIGUqWCu4qcPohSTv4aNJD1YGrIuq6+uoBBhMFdBCIehM
+         Wfiv1U+IPl/4v0ZBjjtppVgR9b7gcMeex4U2CKZdVdno2/USpBoplELHa1RKEKskLvRH
+         brh3mdrq7HSWkE1Tpc+lBNt3Otb5z6dG2B3Nt0Nfik6EwRNqIZ2vZ+YVSBw4x/VAJ1Vh
+         Zy/xXbXZPfL0ULRZrwubnu4mHACE16SJycWpt5RwP1Huspj2ZH7zX2FCBAetJAVpzv3h
+         j5Vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702651598; x=1703256398;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=sorMhbAixFW7Zcs5Q3QgO7psk1rR/yT0T2RXmnZNzAA=;
-        b=Zx7A3wXqZePxuTx/hbegWF16rOOZ8LiNno2s3MZkFq700/aJVCaZ1+QNiF3n8WK7NJ
-         4L6lPrcbZ8EZgsrL1m9ZtER7bJMGn9tEUWTjJa0SWS/VjCVWQsh4WPKOFYjuBC66Rwcy
-         SNAzQUOGxr4ldoS6rYCYK95+X2Gd6v+aLy065aY0NHSJP5oswqAY2ok0TiSqnH4xXB7d
-         TjHdIk77y/JCbEfEMGqbZl+mnvCIgplxpY7OLcTaZMgodB6cYI20oU1JecKkf7kucanZ
-         jA895jTzkCSTu/QMncn8QC8RjsnSwTAsXw/kVGNJ07hdDLdtvPDV9cI6J9MunJESkZ+0
-         T4RA==
-X-Gm-Message-State: AOJu0YyNdVPBc9HmrBLRCnxal1LND60KoNTBQa2UBVcbX6AfdUG+78Wk
-	XwP3CecaXERDLHXHpGQy8GI=
-X-Google-Smtp-Source: AGHT+IE7mu0leEvILNf61NM1IAH0ks4yDpxOud8jPpOWMIrlIzNdlpQ4NUzL4vev7rwyJyZY/01ztw==
-X-Received: by 2002:a5d:4a50:0:b0:336:4b3e:e0bc with SMTP id v16-20020a5d4a50000000b003364b3ee0bcmr1399614wrs.27.1702651597698;
-        Fri, 15 Dec 2023 06:46:37 -0800 (PST)
-Received: from [192.168.1.212] ([84.64.64.237])
-        by smtp.gmail.com with ESMTPSA id l6-20020a5d4bc6000000b00333381c6e12sm18985892wrt.40.2023.12.15.06.46.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Dec 2023 06:46:37 -0800 (PST)
-Message-ID: <99b3a727-36fd-4fa5-a6be-60ae6fc5911e@gmail.com>
-Date: Fri, 15 Dec 2023 14:46:36 +0000
+        d=1e100.net; s=20230601; t=1702654679; x=1703259479;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=D47SlVVhvtKR6uSe3fgM5+65R+eX0UMWRos2jjilPek=;
+        b=dNzmd6FyFG/vlJSqVIkGTihYYUgGsRozzZYX2gFGTjPxS7lCnzfLhCNCIIOwUOX1Qw
+         p5v4Oq/OZPML7/6+YAAsrVDGSkcPxKlrQtp+7OD03qXpap6yIl+QvXjy2d7gSVYLS1xg
+         PXLUwiXu/TTCPfSn2vMT9qTGi4v6rokn6MSwm5iMrjpaEPIOSrouVkzE4Fi07S86ofgg
+         m33FDDbmIyv1251ZGq36u+URkTy8I8G+e+rolBV7XpyofH8OAoP7cLn8dXzB8oZeaGWY
+         d9p7anmnjgTvkZqSdRzfeAJxcJAWDIoUxEaQ6gjxD/o5x35i8/QCOjrXfxM+SWDdRBaj
+         mUdA==
+X-Gm-Message-State: AOJu0YxcJm+T4dwGFc3yf+77Xh2NwkyhZnD2TwDl5lZkOhM6vpEC9kG1
+	nH5MP2zl/4fWOxJcMPGQh4hOcg==
+X-Google-Smtp-Source: AGHT+IFhoInLTJafxNzZuEHP2JMMz6Nf1bHiHgCux5pp5I0hK7R5ogSIyXQ+U6i8ApLYoo+0K9gBBA==
+X-Received: by 2002:ad4:40c5:0:b0:67f:21a:d4eb with SMTP id x5-20020ad440c5000000b0067f021ad4ebmr4080884qvp.43.1702654679065;
+        Fri, 15 Dec 2023 07:37:59 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id z7-20020a0ce607000000b0067ac431a369sm3034015qvm.17.2023.12.15.07.37.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 15 Dec 2023 07:37:58 -0800 (PST)
+Date: Fri, 15 Dec 2023 10:37:57 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 00/24] pack-objects: multi-pack verbatim reuse
+Message-ID: <ZXxy1USjjjAbBi++@nand.local>
+References: <cover.1701198172.git.me@ttaylorr.com>
+ <20231212081238.GD1117953@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] Use ^=1 to toggle between 0 and 1
-Content-Language: en-US
-To: Jeff King <peff@peff.net>, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc: AtariDreams via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Seija Kijin <doremylover123@gmail.com>
-References: <pull.1620.git.git.1702401468082.gitgitgadget@gmail.com>
- <20231212200920.GC1127366@coredump.intra.peff.net>
- <8bea38fe-38a3-412a-b189-541a6596d623@web.de>
- <20231213080143.GA1684525@coredump.intra.peff.net>
- <4d0b2a5f-305b-4350-b164-44923cb250d8@web.de>
- <20231214220503.GA3320432@coredump.intra.peff.net>
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20231214220503.GA3320432@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20231212081238.GD1117953@coredump.intra.peff.net>
 
-On 14/12/2023 22:05, Jeff King wrote:
-> On Thu, Dec 14, 2023 at 02:08:31PM +0100, René Scharfe wrote:
-> 
->>> I don't even know that we'd need much of a weather-balloon patch. I
->>> think it would be valid to do:
->>>
->>>    #ifndef bool
->>>    #define bool int
->>>
->>> to handle pre-C99 compilers (if there even are any these days). Of
->>> course we probably need some conditional magic to try to "#include
->>> <stdbool.h>" for the actual C99. I guess we could assume C99 by default
->>> and then add NO_STDBOOL as an escape hatch if anybody complains.
->>
->> The semantics are slightly different in edge cases, so that fallback
->> would not be fully watertight.  E.g. consider:
->>
->>     bool b(bool cond) {return cond == true;}
->>     bool b2(void) {return b(2);}
+On Tue, Dec 12, 2023 at 03:12:38AM -0500, Jeff King wrote:
+> So my question is: how much of what you're seeing is from (1) and (2),
+> and how much is from (3)? Because there are other ways to trigger (3),
+> such as lowering the window size. For example, if you try your same
+> packing example with --window=0, how do the CPU and output size compare
+> to the results of your series? (I'd also check peak memory usage).
 
-Thanks for bring this up René, I had similar concerns when I saw the 
-suggestion of using "int" as a fallback.
+Interesting question! Here are some preliminary numbers on my machine
+(which runs Debian unstable with a Intel Xenon W-2255 CPU @ 3.70GHz and
+64GB of RAM).
 
-> Yeah. b2() is wrong for passing "2" to a bool.
+I ran the following hyperfine command on my testing repository, which
+has the Git repository broken up into ~75 packs or so:
 
-I think it depends what you mean by "wrong" §6.3.1.2 of standard is 
-quite clear that when any non-zero scalar value is converted to _Bool 
-the result is "1"
+    $ hyperfine -L v single,multi -L window 0,10 \
+      --show-output \
+      -n '{v}-pack reuse, pack.window={window}' \
+      'git.compile \
+        -c pack.allowPackReuse={v} \
+        -c pack.window={window} \
+        pack-objects --revs --stdout --use-bitmap-index --delta-base-offset <in 2>/dev/null | wc -c'
 
-> I assumed that the
-> compiler would warn of that (at least for people on modern C99
-> compilers, not the fallback code), but it doesn't seem to. It's been a
-> long time since I've worked on a code base that made us of "bool", but I
-> guess that idea is that silently coercing a non-zero int to a bool is
-> reasonable in many cases (e.g., "bool found_foo = count_foos()").
+Which gave the following results for runtime:
 
-I guess it is also consistent with the way "if" and "while" consider a 
-non-zero scalar value to be "true".
+    Benchmark 1: single-pack reuse, pack.window=0
+    [...]
+      Time (mean ± σ):      1.248 s ±  0.004 s    [User: 1.160 s, System: 0.188 s]
+      Range (min … max):    1.244 s …  1.259 s    10 runs
 
-> I guess one could argue that b() is also sub-optimal, as it should just
-> say "return cond" or "return !cond" rather than explicitly comparing to
-> true/false. But I won't be surprised if it happens from time to time.
+    Benchmark 2: multi-pack reuse, pack.window=0
+    [...]
+      Time (mean ± σ):      1.075 s ±  0.005 s    [User: 0.990 s, System: 0.188 s]
+      Range (min … max):    1.071 s …  1.088 s    10 runs
 
-Even if it unlikely that we would directly compare a boolean variable to 
-"true" or "false" it is certainly conceivable that we'd compare two 
-boolean variables directly. For the integer fallback to be safe we'd 
-need to write
+    Benchmark 3: single-pack reuse, pack.window=10
+    [...]
+      Time (mean ± σ):      6.281 s ±  0.024 s    [User: 43.727 s, System: 0.492 s]
+      Range (min … max):    6.252 s …  6.326 s    10 runs
 
-	if (!cond_a == !cond_b)
+    Benchmark 4: multi-pack reuse, pack.window=10
+    [...]
+      Time (mean ± σ):      1.028 s ±  0.002 s    [User: 1.150 s, System: 0.184 s]
+      Range (min … max):    1.026 s …  1.032 s    10 runs
 
-rather than
+Here are the average numbers for the resulting "clone" size in each of
+the above configurations:
 
-	if (cond_a == cond_b)
+    Benchmark 1: single-pack reuse, pack.window=0
+    264.443 MB
+    Benchmark 2: multi-pack reuse, pack.window=0
+    268.670 MB
+    Benchmark 3: single-pack reuse, pack.window=10
+    194.355 MB
+    Benchmark 4: multi-pack reuse, pack.window=10
+    266.473 MB
 
->> A coding rule to not compare bools could mitigate that.  Or a rule to
->> only use the values true and false in bool context and to only use
->> logical operators on them.
-> 
-> That seems more complex than we want if our goal is just supporting
-> legacy systems that may or may not even exist. Given your example, I'd
-> be more inclined to just do a weather-balloon adding <stdbool.h> to
-> git-compat-util.h, and using "bool" in a single spot in the code. If
-> nobody screams after a few releases, we can consider it OK. If they do,
-> it's a trivial patch to convert back.
+So it looks like setting pack.window=0 (with both single and multi-pack
+reuse) yields a similarly sized pack output as multi-pack reuse with any
+window setting.
 
-A weather-balloon seems like the safest route forward. We have been 
-requiring C99 for two years now [1], hopefully there aren't any 
-compilers out that claim to support C99 but don't provide "<stdbool.h>" 
-(I did check online and the compiler on NonStop does support _Bool).
+Running the same benchmark as above again, but this time sending the
+pack output to /dev/null and instead capturing the maximum RSS value
+from `/usr/bin/time -v` gives us the following (averages, in MB):
 
-Best Wishes
+    Benchmark 1: single-pack reuse, pack.window=0
+    354.224 MB (max RSS)
+    Benchmark 2: multi-pack reuse, pack.window=0
+    315.730 MB (max RSS)
+    Benchmark 3: single-pack reuse, pack.window=10
+    470.651 MB (max RSS)
+    Benchmark 4: multi-pack reuse, pack.window=10
+    328.786 MB (max RSS)
 
-Phillip
+So memory usage is similar between runs except for the single-pack reuse
+case with a window size of 10.
 
-[1] 7bc341e21b (git-compat-util: add a test balloon for C99 support, 
-2021-12-01)
+It looks like the sweet spot is probably multi-pack reuse with a
+small-ish window size, which achieves the best of both worlds (small
+pack size, relative to other configurations that reuse large portions of
+the pack, and low memory usage).
+
+It's pretty close between multi-pack reuse with a window size of 0 and
+a window size of 10. If you want to optimize for pack size, you could
+trade a ~4% reduction in pack size for a ~1% increase in peak memory
+usage.
+
+Of course, YMMV depending on the repository, packing strategy, and
+pack.window configuration (among others) while packing. But this should
+give you a general idea of what to expect.
+
+Thanks,
+Taylor
