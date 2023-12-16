@@ -1,86 +1,87 @@
-Received: from mout.web.de (mout.web.de [212.227.17.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F9424B37
-	for <git@vger.kernel.org>; Sat, 16 Dec 2023 13:28:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD9B2C69F
+	for <git@vger.kernel.org>; Sat, 16 Dec 2023 13:45:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="DCADK7gF"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-	t=1702733325; x=1703338125; i=tboegi@web.de;
-	bh=6N7g5KyhdQ6yCY3p6fKVCHXWg/4pa6r7NcMZq4Y4oJQ=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:
-	 In-Reply-To;
-	b=DCADK7gFS0cf9ZkOQJiE4jpCJUxoHF4QKXQU8SVI0mzLS/b8oBupPpI0UERSK4Yi
-	 QMR/XfPywPIOvMAKsxMC5oI+b7PKL7jDymLnG95OUaCE8Uv5Q+5+mcsuHz2dBf3M4
-	 4BRCTtpvkhz1HRGgi6rLv4QwNaC05gHfcEneKD1Gn8l3YCoorWwUxh4Q3d4RHcZaD
-	 YrEklHNjN09C+WSc+m5GSvYmB3SfrqUiiWMdKJN1wEMk10il6+V0sMcSkTPEHxYeY
-	 9CXmDkb3+SzGNdmAglKjd+I15jRGT21WAZ7jnD1ylwcPJDv2D1THRBtY4iwHf/oSg
-	 6J9/fTae6aYWNNs42Q==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from localhost ([195.198.253.159]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MOlwj-1qpYoc1Sf9-00Q1of; Sat, 16
- Dec 2023 14:28:45 +0100
-Date: Sat, 16 Dec 2023 14:28:44 +0100
-From: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To: =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh <congdanhqx@gmail.com>
-Cc: Haritha D <Harithamma.D@ibm.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Propose a change in open for passing in the file type.
-Message-ID: <20231216132844.GA10935@tb-raspi4>
-References: <E1D54D98-3836-41CA-84B5-32AEAF7642D8@ibm.com>
- <ZXkwTYD9nmPYn9UW@danh.dev>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e+CO94be"
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-50e2ce4fb22so262724e87.1
+        for <git@vger.kernel.org>; Sat, 16 Dec 2023 05:45:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1702734332; x=1703339132; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=tlOOSqdh8HfNjZD97fPLAW7o/274N4c9ePeL7bca2fA=;
+        b=e+CO94bempklK4E6f1HW+6x3wjYeIDFVjMRX7+faFPvl5BkUPWqyF5wYmzTyIZdMMG
+         YVG+VwVOqNlQ4opJCgtvCQPxY2IJF+Dn7/ZEjGCwqCeQd615O6sqs+exhZfvm1nmtZCz
+         7NJ6j3xfLsvRRxiOSDwF60eQ3vyG1pd+KFh4NSmWFii5o2i2qWoMribdOFNxIX4gV6LM
+         u2YEoBURA0P61aYt5fXmY7WeB+GBewYE08qR8wq89QlnL8EEmSUhfYmhroaBTQI1kV6O
+         Nk2D3eoP5pZeaAYm+g0pRCMF4g0ABC4p5VKQt3UuB9f3QCnFoum+Z2o/Lw+pVos9huHE
+         wrSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702734332; x=1703339132;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=tlOOSqdh8HfNjZD97fPLAW7o/274N4c9ePeL7bca2fA=;
+        b=HuYR6jwQcpQJv0A64f92Bdba2mVnDmTsPVA+pgVQIi4p1sm5iwFW5K0kbX52z+qp6r
+         RfkiDMUXXMzEgx7vCptdbZwJlxX8cWKXy7dpUyL7il/NVmdr0K1ssWsGFjvK275k5Sso
+         wyJmGU0yqYtMfCI3ppWvRh0l6W6nujOp+R1Phq13HI3HHAZjR/4+1CNn7DOc4SPD5hyq
+         0341Vo07jWtaIY1UJUlVxCkfLQ2i2kTe8JyUNsj1+QkSEP/7VGU5+NlHCuD8yJ/YfTEh
+         TRE39PN+SQmKU8+ukc7sNXgz/JaKZCEtEQ2aNYkVnTb8QSiSuaChHUny9JxO7vCOdOFz
+         Mf1Q==
+X-Gm-Message-State: AOJu0YxzwF+IU2PWUE7ml4xEvYfl7TLK5RJH8+SMMaB/NtZeqxUnZZYZ
+	PxthF2uoa0P5CFsjcBJPwAf+G4yiwVbASss7G19L7eVboqs=
+X-Google-Smtp-Source: AGHT+IGV6ZEgJcRJyP3xdPe1j8NErI5w33TSTu6Ki/kzoDSiSgfyiwdeYrKAUtdRSQSOBxQiaCm3RZFb48nXLKB5Qp0=
+X-Received: by 2002:a05:6512:203:b0:50e:1b2e:5888 with SMTP id
+ a3-20020a056512020300b0050e1b2e5888mr1920036lfo.42.1702734331467; Sat, 16 Dec
+ 2023 05:45:31 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <ZXkwTYD9nmPYn9UW@danh.dev>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Provags-ID: V03:K1:Re71JCuEl6iVytyTotr/glEJSp+UinxV9qiaypwvXOvR4Rd9CVA
- QjKaHJ7rMGaJY82d4+D5rfe2cNEohcT3AW742o7xVZYSLL8iYwM8zJaXW9k3ya5bqlIf1SI
- zCsEPH4KKNtPMsFgeY6IcL/Yyi5iy0swIXA9naDNkLg6FBFlIebukTYHCf6uS7TFu1BZYge
- WwyAM6QqobibITMDLBU3A==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:geVEB9on3u8=;VaedUuh9upflmhspKa9EhrR+2NP
- LY20FcErZtKUks18yxUCdb/JK7ytJDCELFc2n03eyyMBYD4YpFADiepYt3UhOQHChudnggIne
- UwxsOrlqLSYhmkAJqk+3kI+xKTs1tI3VmYztfoQPYYUYUjMzWQ95Ch+z1M94yeYChQ27I0tSR
- R2OqV6rxF7KRpEBuRHQaWin+F28aQRfOzADcM6dOZ1+ZEF4YMUSQIuPm/BcYi0HSv4tRz1Yv1
- YJtsGU0E7lOYTpa+XpUTYwhQ4Zf8dDBWaEFE8GpSN+y9Zr9Q0+XyHtRNSiSRWTUzdJdnf9azh
- y7I3v2l20H+1GIZAs36HNDZZPH638ez1+ijD9K0HB/2Z/RcLxjZAzryHcS1spvYm+QRn2GivV
- BZuPVWBlGfe3TReSiyXmWeGxzN/dET0/A9Zfz8eWDz7wd+KNNRhmrd9rq6jR2wjP7byjL2R/U
- jlHbkFffgCWLvmIi0xOPpod0KQ2ydvJC6Jml3MI7Ojz+SvjTs7sJEOP4JYpD1FPXvccfh67iW
- txNfG6SbBpOpXMJ0U+u3q12oLECA76DGveBu7eL7klhoL5NHKErzNq8lx2UVM2n3BXOnel8sr
- S6h8jFyeqOjZ5y/R82TxS/FP882i+XJ9MM5CcZ6ZzsBpmQQjQhLsoZnI3rJEt7sFGuztbIEbt
- Xu1Q9bYXxE4F8GoFebQBNw6vNtqC/aofB0/uLI+NSjVHk1xMwupq62XRVifQDauoMlGiuiLtT
- w8i0Gyk7lrs1qPM6GKMgCZkB0ZucbwphS/lGCiXvm0RAHcAVJBmck9My8O7inl/tQHPmIUBbm
- Fzgsnp6+jUr3cX8tyfpqrdhA6kqiI0hP47+ixFq6u2fvJSdr3kzH5GFG7pvoJBCSIJyC32JRz
- rAHYUJ0r+aMN7A5ga6YpsTiKb5AAXSASnrJmK7zRI0es+yfShsoabcaU8U/A6BLy0YYLl9Zle
- WtyuMPV/avSjEXmrPdCVx3yBZ/o=
+From: Vinayak Dev <vinayakdev.sci@gmail.com>
+Date: Sat, 16 Dec 2023 19:15:20 +0530
+Message-ID: <CADE8NaqwR8JA809k9AN_fm8EEcE5-cXgD0PnXf3hatxcYimU1g@mail.gmail.com>
+Subject: MyFirstContribution.txt leaks memory
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Dec 13, 2023 at 11:17:17AM +0700, =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=
-=B4ng Danh wrote:
-[]
-> Would it work if you always open the file as BINARY?
-Yes, I think so.
+Hello everyone!
+I was going through the MyFirstContribution tutorial and implemented
+its code as an exercise to warm up my git skills.
+However, when I pushed the code to my fork on GitHub, I noticed that
+it fails the linux-leaks test.
+So I fired up the leaks checker that MacOS provides and got a number
+of leaks in the tutorial code.
+One was that the strbuf commitline was not released, so I was able to
+fix that trivially.
 
-> And let's all the
-> conversion done by git via some configs (core.encoding?)?
-We already have an attribute, "working-tree-encoding", that
-can tell Git to do the encoding/reencoding.
-The advantage of the .gitattributes file is, that it is
-typically commit into the repo, and travels with `git push`
-and `git fetch` or `git pull` to the different work stations,
-so that everybody has the same settings.
+However, the stack trace for the second leak shows that the memory
+leaks  when git_config() is called on the wt_status struct, which in turn
+calls the git_default_config() function. As it must go through my
+.gitconfig, I noticed that when it checks for "core.editor", it calls
+git_config_string(), where the string is duplicated into the
+editor_program variable.
 
-In opposite, config files are always local.
-So that everybody should do the same (local) git config.
-If that is forgotten for some reason, then different
-configurations leads often to some kind of chaos.
+This is precisely where the leak seems to be, as pointed out by the
+stack of function calls. I thought that maybe freeing dest as in
+free((void *)*dest) in git_config_string() before calling xstrdup()
+might free up the leakage (this has been done in a number of places in
+the code-base).
 
-But I don't have a z/os sytem to test on.
+While this does free up the leakage, I am getting a number of failures in
+the test suite(some of which are occurring even without the changes),
+particularly related to setting up bare repositories.
+
+Also, as only the tutorial code's binary(./bin-wrappers/git psuh) that I
+implemented leaks memory, I suspect that it is my fault somewhere.
+
+Could anyone point out what is the correct way to free up memory in this case?
+Or would the situation warrant adding the call to free() in git_config_string()?
+
+Thanks a lot!
+Vinayak
