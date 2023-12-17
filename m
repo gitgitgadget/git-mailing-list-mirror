@@ -1,66 +1,75 @@
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB2144C7B
-	for <git@vger.kernel.org>; Sun, 17 Dec 2023 15:32:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 777C445BF2
+	for <git@vger.kernel.org>; Sun, 17 Dec 2023 17:15:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LtToQC4i"
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-6ceb2501f1bso1997636b3a.0
-        for <git@vger.kernel.org>; Sun, 17 Dec 2023 07:32:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1702827138; x=1703431938; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=n6DuMh7fl/WlO/37pfbxy/TmDxynAxHbqfdESe2wpiM=;
-        b=LtToQC4iS1y6J74UFwagkKYqp07NQfY1Lv0zhy+YMa5+gsekbESA8aHoZJj6EThfWu
-         bz8DFTEdftyTSvGlByA/YYEZWmZTYpp/zVLpc1RDL9b7rXc4WR+dC6UA9rE7rNs+g7SF
-         NcHwRwRPZRfDdTUCHuhjv0tZ4hBYgMG7yntq1JZoNlIxaS3LzN8HoDtcS0TE9RK5LcJx
-         AkGIISdAM2KLZEddif07xmSQnFMtHVn8z8uZ7lSbouBwomjLToBsK2TK77e4uaoCMrgG
-         GqhR/M12Bloi3JFREm4F5xvkKn5bdsvqL0Bp+0zYkEQmZSsKNuFTKJl2hMvMM0TBU8Bi
-         DvBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702827138; x=1703431938;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=n6DuMh7fl/WlO/37pfbxy/TmDxynAxHbqfdESe2wpiM=;
-        b=PqF0z52Q60cZ09gfFwPgzn71A4N+R5rrwaYKHrwsCZAaTeBNAnMacsggMCeoGzlr1P
-         5x1B1OzrvArlruIcJu5yahSQd7bNxcy+bagiAeOzlwp46uWSBIAhNbroHcgrmsC6N7ra
-         gzkkhHFXPmQbmi/n+5ShSjdyQq4JIyHlLbim4oSasUv26J2DitV65Bjka85kN6i9n3Fe
-         Sw3gPLimiENq749Rd0nVLSGlXUyjznup9KLlkJIKQVn+u3p8J0DgltC3VkTHQoUvNkjn
-         hhkZkVq9MBw1TOn3cQ+IQJKshQ0ER08/meOKBmcF90xYbGoxLqdUVZBFEqpCLV8Mr15G
-         EYTg==
-X-Gm-Message-State: AOJu0Yx1txiZIONULTLifrSm/H2zsb8j2Pb1id2n9oXdq5ZWl/CXRkSA
-	MgpSxzDUzw7n/pxe493NBuen8s4qVM8=
-X-Google-Smtp-Source: AGHT+IHB/UkgmeO7Y3X1Li188qoDwDlqHxLQ22QRaOPwGZrUvtAjOoL+KockckbA/y6Qngs7e1JWtA==
-X-Received: by 2002:a05:6a20:8e0a:b0:18d:10d7:3313 with SMTP id y10-20020a056a208e0a00b0018d10d73313mr20229000pzj.20.1702827137761;
-        Sun, 17 Dec 2023 07:32:17 -0800 (PST)
-Received: from localhost.localdomain ([2401:4900:1f38:28d8:e9c0:dfd4:c72c:c508])
-        by smtp.gmail.com with ESMTPSA id ka24-20020a056a00939800b006ce39a397b9sm1319680pfb.48.2023.12.17.07.32.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 17 Dec 2023 07:32:17 -0800 (PST)
-From: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>
-To: git@vger.kernel.org
-Cc: five231003@gmail.com,
-	gitster@pobox.com,
-	shreyp135 <shreyanshpaliwalcmsmn@gmail.com>
-Subject: Re: [PATCH v2] test-lib-functions.sh: fix test_grep fail message wording
-Date: Sun, 17 Dec 2023 20:37:04 +0530
-Message-ID: <20231217153140.1831-1-shreyanshpaliwalcmsmn@gmail.com>
-X-Mailer: git-send-email 2.43.0.windows.1
-In-Reply-To: <20231203171956.771-1-shreyanshpaliwalcmsmn@gmail.com>
-References: <20231203171956.771-1-shreyanshpaliwalcmsmn@gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="OMXZGvOO"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id C746B1CFBA6;
+	Sun, 17 Dec 2023 12:15:50 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=FXGV8HdkJ4crD3lpNzcnkxEegG3Jh4h4C4/r3X
+	+bQT8=; b=OMXZGvOOzkMvXD/eQAR5X8wHDsaegErEAYaw24yFU+BzcPhu7RGEXR
+	Pdp5HBpxHlDARzC/YO0HnnEZCThitrqdvvXkXfhNGD41/xRjC/mz2aWovT0a1VVb
+	EcxMOSPKiu4wxRqADxqUq8r3bBHArSM+QBMA7EYuLamQqcWWKgzDI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id B06FA1CFBA4;
+	Sun, 17 Dec 2023 12:15:50 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.193.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0B3DD1CFBA3;
+	Sun, 17 Dec 2023 12:15:49 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?ROaXoOaVsA==?= <wushuripple@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: End-of-line comments are prompted with "is not a valid
+ attribute name"
+In-Reply-To: <xmqqsf45nbzm.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
+	13 Dec 2023 11:22:53 -0800")
+References: <CAOQ=bxz8txyOt6p5L0qfx5DFKfxUhWvHW0pJP+YTbWVfBpvYxg@mail.gmail.com>
+	<xmqqsf45nbzm.fsf@gitster.g>
+Date: Sun, 17 Dec 2023 09:15:48 -0800
+Message-ID: <xmqqo7eoiwcb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ ECED570A-9CFF-11EE-B8F0-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-From: shreyp135 <shreyanshpaliwalcmsmn@gmail.com>
+Junio C Hamano <gitster@pobox.com> writes:
 
-ping.
+> This is totally expected; nothing to see here.
+
+To put it another way, we do not have "end-of-line comment"
+(i.e. the leading part of a line has payload, but the line is
+chomped in the middle with a comment character and the remainder of
+the line is ignored) at all.  We have "commented line" (in other
+words, a line that is totally commented out and gets ignored).
+
+I think it is very clearly documented in "git help attributes":
+
+    A `gitattributes` file is a simple text file that gives
+    `attributes` to pathnames.
+
+    Each line in `gitattributes` file is of form:
+
+            pattern attr1 attr2 ...
+
+    That is, a pattern followed by an attributes list,
+    separated by whitespaces. Leading and trailing whitespaces are
+    ignored. Lines that begin with '#' are ignored. Patterns
+    that begin with a double quote are quoted in C style.
+
