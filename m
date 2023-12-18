@@ -1,73 +1,69 @@
 Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22161111B9
-	for <git@vger.kernel.org>; Mon, 18 Dec 2023 08:41:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1C3F9D1
+	for <git@vger.kernel.org>; Mon, 18 Dec 2023 08:46:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QX2OkDDe";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="K2vD0yjz"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id 0EA345C0078;
-	Mon, 18 Dec 2023 03:41:48 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DnLKEUJ/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="l7c+Vqud"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id 2B06F5C008E;
+	Mon, 18 Dec 2023 03:46:04 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Mon, 18 Dec 2023 03:41:48 -0500
+  by compute3.internal (MEProxy); Mon, 18 Dec 2023 03:46:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1702888908; x=1702975308; bh=B3kke9JY7p
-	t9Ac5zAHxTILKCMTXZp0UWlWa51x+icII=; b=QX2OkDDeNGCKhzNYsYMbCTMh7i
-	yTKjKH+atVEo1pS5Zm9Gx6/7qwKYWi1OpwuWVlnvj4GA88ST5rd4jGvd7Yu7Nsvs
-	pfZzHb+ut4o/b6Nych0fkiLvsxPWUgVft23kHgvu6AkP+AMtq+ElRf2CxrMLiSRd
-	p1x21Re5a4IVkP2ojIjWEJ2R3kcQ5EtlEWnJhxG67kYZlOQiaJszOI9ZIzasPG/g
-	ctd8Wmuv8fwAlF55rgHnsT1d1PRRuIxJwN1RdpE4yh/hhGBT++zPeBQTNSZHMdOF
-	vavYUZO7HrnAV1KEmsUPqlxwxX+9Mm8sbWVEFh4KgFb/zuoV0obMEsympx2Q==
+	:subject:to:to; s=fm2; t=1702889164; x=1702975564; bh=dlVX8Kec1H
+	2ac0FpS935wJhH4KMExuTdps/esz4p1BQ=; b=DnLKEUJ/pvoT7wVE5gLMNo8Ih9
+	ntufm9EsVahqO+UdmwwpRNukq0Z0n9Q4PltmjnbgmBT5aD6HqxocvQbjINvl+HZm
+	ax7qOjPU2czNcoZcdpJ5a6vtuCN//LCWFxQhUX32m+U7NEA1mB2Eg4riUPH/fei1
+	BqBJcrtPHmzKufzHizExJA6wPVyCL5/kXGorLN962rnvadkF3XlB6GDdPyVMIPfK
+	BQPDNlBkn00Fon8uihdoklNjejQ6m67XW7vNi2bnQ8vvQnZ+IpiMCqlfJ4X4BXkG
+	RnLmehhB/p+a+jsozs6j9AU4kY1eqxlJZlS7vI1N89PXhVrcsIQQJkLiFc5w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1702888908; x=1702975308; bh=B3kke9JY7pt9Ac5zAHxTILKCMTXZ
-	p0UWlWa51x+icII=; b=K2vD0yjzQoOhikpiSPji9e/h5kFfDvyZLQAsFJz31Faz
-	e269UUuzh42nQyufnfEZ1zXoi5CkHdCxByuHWhgkE6fCoLTFkWN1+k7LGqYbdV7P
-	vnDC0M7Kzr8rPh+Npa5rY1snjWN5A+GeDIUfjwUaLGtGGCZtBCImXVUWTfP2Ry/A
-	b9UCDCCJo1KW1QNS/+AnDwduNksQVp+fre9J0lQrCTexDIZ0HL3OvWcDPNhWWND+
-	EYUmaUSY5E2y7tIQv2wAD2K6LYOkoCSvjJ9q77q+OvjqgF4+uvi2U/Dog8UxvAJk
-	B6K4t0Q8erxKLmDkTiqWwm5tvyoL72ThyrcwczWeTg==
-X-ME-Sender: <xms:ywWAZYaIxg37lwkANnp9z30ZiMGHK2Ut8LKhfH-ANBtb8ktAdDsQsg>
-    <xme:ywWAZTahrpNZgUI_dtE_ltWpkD6M57cbrwqx4LiNqaV4kqqBob_CCwGuy77bo7vVe
-    YxeBD5avhRbUS2iKw>
-X-ME-Received: <xmr:ywWAZS-AWS8wontefzCccU_A7w0yfY5ZxFfxVn_1CE1EHVtan-VKD_bevWtYpajXZ0VyD_rTMF5CUPi1kpeOanZQBkVLRiunM2Oo0GloLqez4Bk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvddtjedguddvfecutefuodetggdotefrod
+	fm2; t=1702889164; x=1702975564; bh=dlVX8Kec1H2ac0FpS935wJhH4KME
+	xuTdps/esz4p1BQ=; b=l7c+Vqud5O9cJQ7f5ExWxPY3kH4UFj/Wjt/m9bbEi4Er
+	IZQrJC4tjpC1RSjbaaTxIWf90UmaXbbIyPAdIXF7Fj/ZdvxBOqdw48ipjutimA20
+	rOJK8Oh3CWLLsyKnGWcGlk7cFiQEut2RkLjMtOpZXxkU6mRt9SMxsb8jYYG0Ji9n
+	2mLV7UvYc0myWjdHzOI9DiLqHlMfvEaQW/ImukX/GGpoaYC41J+RCT9BmLsFBR71
+	snTln9klxA1RjFWqGLKBVPQ+zKlYhX0+Ct8PrjRXw2lmgVGYbsPC2xpIzDK4ouzB
+	Vym9HhuJMIaWqd/50wwZw+/bk+GhrTTcB78QPI5Aeg==
+X-ME-Sender: <xms:ywaAZS80UCIlx8vCFavnaJKs06RWLBsq7N6rfPIy6_dF2EJMBOXcWA>
+    <xme:ywaAZSuOUtDJbckzHEwExNuqVZqoZPavOBaiQ050HswGSR2Qo7EOG-HzUdNud8Zfa
+    wkuJdbysb4sNuk6TQ>
+X-ME-Received: <xmr:ywaAZYCC5S-X0uxKV6_3VdzWZXeoEfZu4er0hZnU5uhrr6MpXBez3gg5gigtIJEfVJdSWMU5FjDHsU6PWDlldgIkXKsBgUWywqcO7S3NuWSWm-A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvddtjedguddvgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
-    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
-    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
-    esphhkshdrihhm
-X-ME-Proxy: <xmx:ywWAZSo6fcRDMxHX1t6UxEmpxHx0ykb4WUXwUovxwBO1KyQAq_FZyA>
-    <xmx:ywWAZTpEj3Kjcjl1IBA3xouWX5VY010tetyuzUzzTCKJPeOjzXs5qg>
-    <xmx:ywWAZQTFqjCxhuC5s6zZz-XoFGXtuvXf5VAzox_ScWLfLl-1XXTAFw>
-    <xmx:zAWAZa3eBF84RdtDVuZjUTpkdETLFumF_5VLnfmjTTF_hKYH-hSYgA>
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
+    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
+    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeige
+    ekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:zAaAZaf82iq_qV3xr_S3Mi8eiTDi6TlC9te0-7elfLsSlBCdQiIxtA>
+    <xmx:zAaAZXNhc_Z27IKIQ5v6mZLPUaVu_ZuWXf7u75ilPPCJNiu89Ihwbw>
+    <xmx:zAaAZUlsmKkprR2CDibdfjrsBpNbIDLv85U0P8eFWqR_3pSaf00hjw>
+    <xmx:zAaAZZVvcD1hn7C9mI2VgJwr7RFpSwDJ0AB8VZpHhGL79Qg_58K5QQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 18 Dec 2023 03:41:46 -0500 (EST)
+ 18 Dec 2023 03:46:03 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id ce4912e6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 18 Dec 2023 08:39:54 +0000 (UTC)
-Date: Mon, 18 Dec 2023 09:41:43 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id ad46fb63 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 18 Dec 2023 08:44:12 +0000 (UTC)
+Date: Mon, 18 Dec 2023 09:46:00 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org,
-	Andy Koppe <andy.koppe@gmail.com>
-Subject: Re: [PATCH 0/5] make room for "special ref"
-Message-ID: <ZYAFx9gfppkS2Oey@tanuki>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/5] git.txt: HEAD is not that special
+Message-ID: <ZYAGyLH4nm4TebA_@tanuki>
 References: <20231215203245.3622299-1-gitster@pobox.com>
- <xmqq5y0zkvqx.fsf@gitster.g>
- <321b8084-fddb-4b5d-86af-7f88cb3edf7b@ramsayjones.plus.com>
- <xmqq7clfj7r4.fsf@gitster.g>
+ <20231215203245.3622299-2-gitster@pobox.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,106 +71,85 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="B05OqX5ZiDVPJLhX"
+	protocol="application/pgp-signature"; boundary="76hIK4E59uift2hq"
 Content-Disposition: inline
-In-Reply-To: <xmqq7clfj7r4.fsf@gitster.g>
+In-Reply-To: <20231215203245.3622299-2-gitster@pobox.com>
 
 
---B05OqX5ZiDVPJLhX
+--76hIK4E59uift2hq
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Dec 15, 2023 at 04:44:47PM -0800, Junio C Hamano wrote:
-> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+On Fri, Dec 15, 2023 at 12:32:41PM -0800, Junio C Hamano wrote:
+> The introductory text in "git help git" that describes HEAD called
+> it "a special ref".  It is special compared to the more regular refs
+> like refs/heads/master and refs/tags/v1.0.0, but not that special,
+> unlike truly special ones like FETCH_HEAD.
 >=20
-> > Yes, I was going to suggest exactly this, after Patrick pointed out
-> > that there were only two 'special psuedo-refs' (I had a vague feeling
-> > there were some more than that) FETCH_HEAD and MERGE_HEAD.
+> Rewrite a few sentences to also introduce the distinction between a
+> regular ref that contain the object name and a symbolic ref that
+> contain the name of another ref.  Update the description of HEAD
+> that point at the current branch to use the more correct term, a
+> "symbolic ref".
+>=20
+> This was found as part of auditing the documentation and in-code
+> comments for uses of "special ref" that refer merely a "pseudo ref".
+>=20
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  Documentation/git.txt | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
+>=20
+> diff --git a/Documentation/git.txt b/Documentation/git.txt
+> index 2535a30194..880cdc5d7f 100644
+> --- a/Documentation/git.txt
+> +++ b/Documentation/git.txt
+> @@ -1025,10 +1025,11 @@ When first created, objects are stored in individ=
+ual files, but for
+>  efficiency may later be compressed together into "pack files".
+> =20
+>  Named pointers called refs mark interesting points in history.  A ref
+> -may contain the SHA-1 name of an object or the name of another ref.  Refs
+> -with names beginning `ref/head/` contain the SHA-1 name of the most
+> +may contain the SHA-1 name of an object or the name of another ref (the
+> +latter is called a "symbolic ref").
 
-I don't think there are more special refs than those two. Andy pointed
-out CHERRY_PICK_HEAD and REVERT_HEAD, but both of them actually get
-accessed via the ref backend exclusively and thus cannot be special in
-any way. Also, the test suite of Git passes with only those two refs
-marked as special refs with the reftable backend, which is another good
-indicator that I didn't miss anything here because we definitely can't
-store special information in the reftable backend.
+On a tangent: While we have a name for symbolic refs, do we also have a
+name for non-symbolic refs? I often use the term "direct ref" to clearly
+distinguish them from symbolic refs, but it's of course not defined in
+our glossary.
 
-It's of course still possible that our test suite has a blind spot and
-that I missed any special refs. If so, I would love to hear about them.
+> +Refs with names beginning `ref/head/` contain the SHA-1 name of the most
+>  recent commit (or "head") of a branch under development.  SHA-1 names of
+> -tags of interest are stored under `ref/tags/`.  A special ref named
+> +tags of interest are stored under `ref/tags/`.  A symbolic ref named
+>  `HEAD` contains the name of the currently checked-out branch.
 
-> Glad to see that I am not alone.  We should be able to treat
-> MERGE_HEAD similarly.  It is used to communicate the list of "other
-> parents" from "git merge" that stops in the middle (either for merge
-> conflict, or in response to the "--no-commit" command line option)
-> to "git commit" that concludes such an unfinished merge.  Many
-> commands merely use the presence of MERGE_HEAD as a sign that a
-> merge is in progress (e.g. "git status"), which would not break if
-> we just started to record the first parent in a pseudoref MERGE_HEAD
-> and wrote the other octopus parents elsewhere, but some commands do
-> need all these parents from MERGE_HEAD (e.g. "git blame" that
-> synthesizes a fake starting commit out of the working tree state).
-
-I would certainly love to drop the "specialness" of both FETCH_HEAD and
-MERGE_HEAD, but I am a bit pessimistic about whether we really can. The
-format of those refs has been around for quite a long time already, and
-I do expect that there is tooling out there that parses those files.
-
-I would claim that it's especially likely that FETCH_HEAD is getting
-parsed by external tools. Historically, there has not been a way to
-really figure out which refs have been updated in git-fetch(1). So any
-scripts that perform a fetch and want to learn about what was updated
-would very likely resort to parsing FETCH_HEAD. This has changed a bit
-with the introduction of the machine-parsable interface of git-fetch(1),
-but it has only been introduced rather recently with Git v2.42.
-
-> If we cannot get rid of all "special refs" anyway, however, I think
-> there is little that we can gain from doing such "make FETCH_HEAD
-> and MERGE_HEAD into a single-object pseudoref, and write other info
-> in separate files" exercise.  We can treat the current FETCH_HEAD
-> and MERGE_HEAD as "file that is not and is more than a ref", which
-> is what the current code is doing anyway, which means we would
-> declare that they have to stay to be files under $GIT_DIR/ and will
-> be accessed via the filesystem access.
-
-I'd like for it to be otherwise, but I think this is the only sensible
-thing to do. I think it was a mistake to introduce those special refs
-like this and treat them almost like a real ref, but that's always easy
-to say in hindsight.
-
-> At that point, calling them "special ref" might even be more
-> misleading than its worth and we may be better off to admit that they
-> are not even refs but a datafile some commands can use to obtain input
-> from, but the phrase we use to refer to them, be it "special ref" or
-> some random datafile, does not make a fundamental change on anything.
-
-Well, the problem is that these do indeed behave like a ref for most of
-the part: you can ask for them via git-rev-parse(1) and we'll resolve
-them just fine, even though we only ever return the first object ID. So
-even though I'm not a huge fan of calling them "special ref", I think we
-should at least highlight the reflike-nature in whatever we want to call
-them.
+I was briefly wondering whether we also want to replace SHA-1 with
+"object hash" while at it, but it's certainly out of the scope of this
+patch series.
 
 Patrick
 
---B05OqX5ZiDVPJLhX
+--76hIK4E59uift2hq
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWABcYACgkQVbJhu7ck
-PpQxdBAAi9Z5oSAgIKSUiH0PWO0pp8s6tt2wVyjOrlkNBflyQpu247YD7Ynqce+8
-R0Jc+O59kpBUDcq5Egr3O1ihjve+unqt4EBtf3vSXbFr4jjI5Ulm4mDw0jhigLXk
-Jw75L617fUd16TsQm4ewx73Wmm5L8QkNcpmQBdd2TRe1E0GMdcMJOpiSlT4iXIwx
-W/es22vOqi2mJZ/O1KDWIMfMaonbtvaYu9L6N3KWJAFHmXIx8ELLZnj89uPe6kk/
-5n6PUeIzSVJrz5E/vpMkuhirxVnPoKnH19S6NzOOPKA4HmlQTrVtOFOBQ/GTUAWu
-bQhiWAmaymRhjZcJKju1x09ZJDdYW6lzIB7vAWO3fYjzxWY4nmRnyRM9ubRLoqku
-hB8yx0Yqu/d1YqLzZ18VEBU5uwEkMjckei0URk1S2c+sq6Ahl2xbGb1r+1x+JaWw
-k04RYzkNxgqlQ54w6k3zWe5KPV9K2ZV27Uk9wXFlVhjmfhVISmOY0M+DI2plJF4l
-faioa3sQxLty9mg/3FhRa4bWr2sRb8ZmZ5InhD3oRHudOSMCjoBqycwHPR/fwOTC
-KJfmbsXSjhN83Dg+OVM6XcEzXJJvaMx7ykO8Gj2+IPgKmVcYHnxdM7ZmW6Zqjk7N
-DYtmUpOYROSy1l0Asewp7+WpiAxDtFoTwV3co7xMUTQtRosduOE=
-=ACGK
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWABsgACgkQVbJhu7ck
+PpQ/iA//fkZqOpW4ipGArhD+l9QszBpswdoJQcnU0803CxN1mZy30b1jhZIPew1V
+umEddcfhNBeHydJAkr+lGpD0B38UabtTL0kTc0auvOAz8Cu1IHOnQnJgW6QYTOiY
+scvrMBRwHgi9sgha4KeFdsy6/X0IzEvtTzBRoswkYrK9Vi9CD+T7fRa4EiTUld7F
+T8wMWvdOrZs3WEQhkRMIjsaMWdARG6Hlf4Sex+KkerK5WDBoPEijqLPZBKdV5QUL
+0Plj2rj1nXnsYuZAIAAUKfIZw351DI3hbDFLS0qBjVAKlWeDkhXvZJSZUiKZr2d2
+tfQs/WGo/6NlcMEZS1JbcMu/9XSEsQUJS0x7PN8k3ZT81vp6T2SSCpsQzRQVjPf2
+l80bPDNRj3ASjqXLVmV5NTY2TYafba3gUNhx3NbkoaZNiC8kT89uE2gFHkK8Emq1
+BXMmuQ2mCtO7OzNpg3fJZzyCsmW8Cx8GA68FUtkmyzSsDRvjHsL1ZeotfdwtegbJ
+Mjn0JHE6ODsNR0hMPltdTaHVv0opO1vwAKKuVH4Axg9Cb+8Du6lUiZaBWCDKUUAB
+jw0iTtUCg7bxHbINwbh96Xy4MN/X7e0BxRHQbJ4Qg2XJiCod4ByuWG534KitkZss
+50le3j3J3kcU4hdkHv+ZUKXFSC2Kz5zKvyBZKnNnwXPlzAw/FEQ=
+=NDFG
 -----END PGP SIGNATURE-----
 
---B05OqX5ZiDVPJLhX--
+--76hIK4E59uift2hq--
