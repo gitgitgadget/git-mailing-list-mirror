@@ -1,127 +1,80 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90C641DFF9
-	for <git@vger.kernel.org>; Mon, 18 Dec 2023 16:32:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8139642392
+	for <git@vger.kernel.org>; Mon, 18 Dec 2023 16:34:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OQFi/+fm"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-336437ae847so3392295f8f.2
-        for <git@vger.kernel.org>; Mon, 18 Dec 2023 08:32:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1702917154; x=1703521954; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=lWj0dIqT+s+2GOdbd4i8m30BcCYWKxKjyq2+1uAYkVU=;
-        b=OQFi/+fmbc2/vHLMARW8kmBMNiOj47kU4tWEMgoVHgNEUwadCLb/FDERZc6w3rG2QZ
-         nRBOSpGmfh4ktTXyBKOFAp35X+E1R0FCvmbpq2kFlX+UvL6ttVI75ep+vef3ufpt0Adj
-         uMNdBNYiL4em/4D2oRIKFy+72je3lHUyWjLwCfT76T5rT+TezEw0H0CHBpTj4VcmEqFY
-         JikhnvtDbHTf1UTPJ3DqzXziU4XQYxhYH/v78pdFsTbtt6wPPYm8INBnJ0vVF8CJE7ZK
-         owlaXqLqHJA87kXISjdatOW+N39VIIGw0zstx8e1V8Px7+mVltVYFXVkzgenkOX6G1w0
-         Yp7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702917154; x=1703521954;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=lWj0dIqT+s+2GOdbd4i8m30BcCYWKxKjyq2+1uAYkVU=;
-        b=nVfwqtiI1KCy6uEFkRtFzyAzqKk49lSneuDrUKRjxrQDiZAY1pEULUYpfS6l9ImU+9
-         R2Z9Ek34+QLJ2nbDeb4GJLk8EaLGdrxM/jG2saxKAIZgVPRjftZaF7/zt0zbID6g9xDj
-         tRI3zG7xhBqHT+I9mUkuKVS4JzTSGDrxr/136ph7ab0aosO85WqCynvsyyhsi3hzBH4s
-         wJLJKD3KujQc2OQpChnFVUl6Uea2/eEhZRnNsEGteA0Y2l2p+uXn6xwplyIuhhBGTTvR
-         NRejrR25zy3Ns7gpOynL0X7aom99kzKtdvBpTBOZ2oSzZqKhOP75EavrS9NhYJQx8XZf
-         4J7A==
-X-Gm-Message-State: AOJu0Yz/+cxNgVKKpv5GJPORGR+bsSh2RkxPEo3QgL5RefCzl7jtc9MD
-	phjFV1Qv9K5gmuEzF0zChl4=
-X-Google-Smtp-Source: AGHT+IEJn6p3EUbv6HTyCT9Oz22SZmsSPN3E2n7QL1p+NR0lMnRkQ43ZjOgnG7LzmrueNnCIqHBmEQ==
-X-Received: by 2002:a5d:4943:0:b0:336:4fe5:6068 with SMTP id r3-20020a5d4943000000b003364fe56068mr3281648wrs.137.1702917153590;
-        Mon, 18 Dec 2023 08:32:33 -0800 (PST)
-Received: from [192.168.1.212] ([84.64.64.237])
-        by smtp.gmail.com with ESMTPSA id z1-20020a056000110100b0033668b27f8fsm2932045wrw.4.2023.12.18.08.32.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Dec 2023 08:32:33 -0800 (PST)
-Message-ID: <c2489476-f23b-4c03-8651-d6a8799ff67c@gmail.com>
-Date: Mon, 18 Dec 2023 16:32:32 +0000
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="c3IITvua"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 0178B1E215;
+	Mon, 18 Dec 2023 11:34:51 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=O3dpZ6T9sBl0
+	t0xFa4CWIuRA7XwxpoYa6syjg6155Jw=; b=c3IITvuaVDE7kHjN9wvzm1tdv3MF
+	8ISaUa05Fy5jtv5O3X1IOBI6Hf5LbjgCHwa4MAGzUdBHBYQ3sakE4ppPeiA07u8o
+	dd3KlGS8K1ypbJIR+FKPfKbSlNxGFzOJurd9ZOq1lPolziGN9HohCIyS3B4cH9SH
+	889x6JzO4Y0y6AQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id EE0941E214;
+	Mon, 18 Dec 2023 11:34:50 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.193.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2EF661E213;
+	Mon, 18 Dec 2023 11:34:47 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Shreyansh Paliwal <shreyanshpaliwalcmsmn@gmail.com>,
+  git@vger.kernel.org,  five231003@gmail.com
+Subject: Re: [PATCH v2] test-lib-functions.sh: fix test_grep fail message
+ wording
+In-Reply-To: <CAPig+cSJ=RcJtYKzT0Kj1-0nJT0YxA=KPYV=5H80_inJYS_Vnw@mail.gmail.com>
+	(Eric Sunshine's message of "Sun, 17 Dec 2023 19:51:23 -0500")
+References: <20231203171956.771-1-shreyanshpaliwalcmsmn@gmail.com>
+	<20231217153140.1831-1-shreyanshpaliwalcmsmn@gmail.com>
+	<CAPig+cSJ=RcJtYKzT0Kj1-0nJT0YxA=KPYV=5H80_inJYS_Vnw@mail.gmail.com>
+Date: Mon, 18 Dec 2023 08:34:45 -0800
+Message-ID: <xmqqjzpbh3kq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] rebase-interactive: show revert option and add single
- letter shortcut
-Content-Language: en-US
-To: Michael Lohmann <mial.lohmann@gmail.com>, git@vger.kernel.org
-Cc: Michael Lohmann <mi.al.lohmann@gmail.com>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <3e71666c-22a0-f52b-4025-dddb096e7e6c@gmx.de>
- <20231218152313.72896-1-mi.al.lohmann@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20231218152313.72896-1-mi.al.lohmann@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 5B5D6964-9DC3-11EE-BCCA-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-Hi Michael
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Thanks for the patch, I'm wondering why you want to revert a commit when 
-you're rebasing. I think it would be helpful to explain that in the 
-commit message. In particular why it is necessary to revert a commit 
-rather than simply dropping it (presumably you're using rebase to do 
-something more that just rework a series of commits)
+> On Sun, Dec 17, 2023 at 10:32=E2=80=AFAM Shreyansh Paliwal
+> <shreyanshpaliwalcmsmn@gmail.com> wrote:
+>> ping.
+>
+> Junio was on vacation at the time[1] that this patch was submitted, so
+> it's quite possible that it simply got overlooked or he hasn't gotten
+> through the backlog of emails which accumulated while he was away.
 
-Best Wishes
+It was dropped due to automated filter that noticed that the address
+on its in-body From: line does not appear on any of its Signed-off-by:
+line ;-)
 
-Phillip
+I'll see if that is the only glitch in the patch (in which case I'll
+manually adjust the authorship and apply) or respond on list
+(otherwise).
 
-On 18/12/2023 15:23, Michael Lohmann wrote:
-> Signed-off-by: Michael Lohmann <mi.al.lohmann@gmail.com>
-> ---
->   Documentation/git-rebase.txt | 3 +++
->   rebase-interactive.c         | 1 +
->   sequencer.c                  | 2 +-
->   3 files changed, 5 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-> index 1dd6555f66..75f6fe39a1 100644
-> --- a/Documentation/git-rebase.txt
-> +++ b/Documentation/git-rebase.txt
-> @@ -911,6 +911,9 @@ commit, the message from the final one is used.  You can also use
->   "fixup -C" to get the same behavior as "fixup -c" except without opening
->   an editor.
->   
-> +To revert a commit, add a line starting with "revert" followed by the commit
-> +name.
-> +
->   `git rebase` will stop when "pick" has been replaced with "edit" or
->   when a command fails due to merge errors. When you are done editing
->   and/or resolving conflicts you can continue with `git rebase --continue`.
-> diff --git a/rebase-interactive.c b/rebase-interactive.c
-> index d9718409b3..e1fd1e09e3 100644
-> --- a/rebase-interactive.c
-> +++ b/rebase-interactive.c
-> @@ -53,6 +53,7 @@ void append_todo_help(int command_count,
->   "                   commit's log message, unless -C is used, in which case\n"
->   "                   keep only this commit's message; -c is same as -C but\n"
->   "                   opens the editor\n"
-> +"v, revert <commit> = revert the changes introduced by that commit\n"
->   "x, exec <command> = run command (the rest of the line) using shell\n"
->   "b, break = stop here (continue rebase later with 'git rebase --continue')\n"
->   "d, drop <commit> = remove commit\n"
-> diff --git a/sequencer.c b/sequencer.c
-> index d584cac8ed..3c18f71ed6 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -1767,7 +1767,7 @@ static struct {
->   	const char *str;
->   } todo_command_info[] = {
->   	[TODO_PICK] = { 'p', "pick" },
-> -	[TODO_REVERT] = { 0,   "revert" },
-> +	[TODO_REVERT] = { 'v', "revert" },
->   	[TODO_EDIT] = { 'e', "edit" },
->   	[TODO_REWORD] = { 'r', "reword" },
->   	[TODO_FIXUP] = { 'f', "fixup" },
+Thanks for pinging and ponging.
+
+> So,
+> pinging is indeed the correct thing to do, and the patch is obviously
+> an improvement, so hopefully it will be picked up soon.
+>
+> [1]: https://lore.kernel.org/git/xmqq34wj4e55.fsf@gitster.g/
