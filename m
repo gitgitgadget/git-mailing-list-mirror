@@ -1,222 +1,103 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04027498BE
-	for <git@vger.kernel.org>; Mon, 18 Dec 2023 16:23:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D171D498B9
+	for <git@vger.kernel.org>; Mon, 18 Dec 2023 16:26:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iyP7EzKm"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-33663adf953so1214714f8f.3
-        for <git@vger.kernel.org>; Mon, 18 Dec 2023 08:23:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1702916602; x=1703521402; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=tiej/g8WCtEX6iUPrYqtvXb15jsi3nuvt3AxL0HbsFg=;
-        b=iyP7EzKmHGMH/rFkExCmNW+Wt6S91dnoDLrEbTIGADb48HQWit8rrxphUfyy6tx7UM
-         e/FFJ7AuE2Dce/ICMxuY+UU+WkiO6EHjpfV/Cp5f4kLFVjpPDBNfhr/pyg1gXbNkxjj5
-         pKa0dzpTw31RT0xaN2PFWE/NB4B8z6l2klaqCRUAFpgKWIqNvCDt3EGsQqNfWPbDZm5p
-         gojHrScR3CnhE5ERkv2Xt3dWs8RRsWnR/Vw7WO+AGqpDVFyg0gMG8dPVB1t9yNZzE5ve
-         yHoK76R2NmTWA/71NU0hLJo30EwnA39AISDdfo8IIevmYyQfxjy8poFkm5BxXkDlEbB/
-         mzEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702916602; x=1703521402;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=tiej/g8WCtEX6iUPrYqtvXb15jsi3nuvt3AxL0HbsFg=;
-        b=vhBukuc/uclpD27obeEUbgSrbmDi99dDRCE0KWA/9N+GT4xb6whsej9VFQEF4Emtv9
-         BnBDpKoYmdp4na2xZvnhyRtK3wsZafjfUXlo0cXSfsbmRNlkF8N5ecHKukG0TOo+H1Y8
-         kiaOt/Zv2OSFYqsjGN8Fd5Fpwr8XM/PO65Ky92c3LI2TVqzu/piBvRO0qDghOxupOt6j
-         y6oF9HiD/JNfScR61UB3hhfdQEUqwY4YQW5+lNu3cARulMha/101Bs6Mk+WPnOs29Gfx
-         dT0YTqVL1FEVqFu4xpj8bYy1AhyWbhBUwBiJgSxJ4xerdM/U8n4F0kX7IL3MmEa9J9WJ
-         cvHg==
-X-Gm-Message-State: AOJu0YwuYz+pPKHsrjSjgLpo5xjIUZWOiAQFofPQV3WdqvcnVzzoDvas
-	wirt5cK2NbGY0UIB2/VvLoQ=
-X-Google-Smtp-Source: AGHT+IEFn00FklzwQMJ3S5kLIONyubDycl9p/fNlQf+InCbtRKwiYZyoEsfdyAj+XVwlBlQU+9vNaA==
-X-Received: by 2002:a05:600c:30d2:b0:40c:4378:f110 with SMTP id h18-20020a05600c30d200b0040c4378f110mr7461569wmn.54.1702916600345;
-        Mon, 18 Dec 2023 08:23:20 -0800 (PST)
-Received: from [192.168.1.212] ([84.64.64.237])
-        by smtp.gmail.com with ESMTPSA id p8-20020a05600c358800b0040d18fdfe96sm5623155wmq.44.2023.12.18.08.23.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Dec 2023 08:23:20 -0800 (PST)
-Message-ID: <b7a56625-46d5-4d77-b4bf-5595a6fb2aef@gmail.com>
-Date: Mon, 18 Dec 2023 16:23:19 +0000
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Z6tRuGyB"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id A56CF1E152;
+	Mon, 18 Dec 2023 11:26:45 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=CWQ/FMQVoJsuLy439WKgOMgVEOsNu18fYVtHrr
+	+iwKY=; b=Z6tRuGyBDV8ffCWAW3GbuhNk8V3T1QUzkUmZvNnm0Lx36d8cKoIepn
+	P021bhZrZgzVkctLabd8g7qRsxok2LTd8dzubPzCdbgLAeGrHVqCtvjcHDgop+At
+	4UCrYBoRGtQa6WF/9lQbprKnE1qKqL9UhPls57CLKDd6BA22oyJRc=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 9D1AE1E151;
+	Mon, 18 Dec 2023 11:26:45 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.193.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D2F8F1E150;
+	Mon, 18 Dec 2023 11:26:41 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/5] git.txt: HEAD is not that special
+In-Reply-To: <ZYAGyLH4nm4TebA_@tanuki> (Patrick Steinhardt's message of "Mon,
+	18 Dec 2023 09:46:00 +0100")
+References: <20231215203245.3622299-1-gitster@pobox.com>
+	<20231215203245.3622299-2-gitster@pobox.com> <ZYAGyLH4nm4TebA_@tanuki>
+Date: Mon, 18 Dec 2023 08:26:40 -0800
+Message-ID: <xmqqplz3h3y7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] git-compat-util: convert skip_{prefix,suffix}{,_mem} to
- bool
-Content-Language: en-US
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, git@vger.kernel.org
-Cc: AtariDreams via GitGitGadget <gitgitgadget@gmail.com>,
- Seija Kijin <doremylover123@gmail.com>, Junio C Hamano <gitster@pobox.com>,
- Jeff King <peff@peff.net>, Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <pull.1620.git.git.1702401468082.gitgitgadget@gmail.com>
- <20231212200920.GC1127366@coredump.intra.peff.net>
- <8bea38fe-38a3-412a-b189-541a6596d623@web.de>
- <20231213080143.GA1684525@coredump.intra.peff.net>
- <4d0b2a5f-305b-4350-b164-44923cb250d8@web.de>
- <20231214220503.GA3320432@coredump.intra.peff.net>
- <99b3a727-36fd-4fa5-a6be-60ae6fc5911e@gmail.com>
- <2d30dc36-6091-4b47-846f-92d3f4a8b135@web.de>
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <2d30dc36-6091-4b47-846f-92d3f4a8b135@web.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 3A15F132-9DC2-11EE-B6EB-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-Hi René
+Patrick Steinhardt <ps@pks.im> writes:
 
-On 16/12/2023 10:47, René Scharfe wrote:
-> Use the data type bool and its values true and false to document the
-> binary return value of skip_prefix() and friends more explicitly.
-> 
-> This first use of stdbool.h, introduced with C99, is meant to check
-> whether there are platforms that claim support for C99, as tested by
-> 7bc341e21b (git-compat-util: add a test balloon for C99 support,
-> 2021-12-01), but still lack that header for some reason.
-> 
-> A fallback based on a wider type, e.g. int, would have to deal with
-> comparisons somehow to emulate that any non-zero value is true:
-> 
->     bool b1 = 1;
->     bool b2 = 2;
->     if (b1 == b2) puts("This is true.");
-> 
->     int i1 = 1;
->     int i2 = 2;
->     if (i1 == i2) puts("Not printed.");
->     #define BOOLEQ(a, b) (!(a) == !(b))
->     if (BOOLEQ(i1, i2)) puts("This is true.");
-> 
-> So we'd be better off using bool everywhere without a fallback, if
-> possible.  That's why this patch doesn't include any.
+>>  Named pointers called refs mark interesting points in history.  A ref
+>> -may contain the SHA-1 name of an object or the name of another ref.  Refs
+>> -with names beginning `ref/head/` contain the SHA-1 name of the most
+>> +may contain the SHA-1 name of an object or the name of another ref (the
+>> +latter is called a "symbolic ref").
+>
+> On a tangent: While we have a name for symbolic refs, do we also have a
+> name for non-symbolic refs? I often use the term "direct ref" to clearly
+> distinguish them from symbolic refs, but it's of course not defined in
+> our glossary.
 
-Thanks for the comprehensive commit message, I agree that we'd be better 
-off avoiding adding a fallback. The patch looks good, I did wonder if we 
-really need to covert all of these functions for a test-balloon but the 
-patch is still pretty small overall.
+You may find me saying "normal ref", "regular ref", or somesuch when
+it is not clear from the context if you dig the list archive.
+"direct" is a nice word, especially it would give us a good pair of
+terms if we are to change "symbolic" to "indirect", but since we are
+not going to do so, I am not sure the contrast between "direct" and
+"symbolic" would make such a good pair.
 
-Best Wishes
+But quite honestly I rarely felt a need for a specific term, as it
+is fairly clear from the context, e.g.
 
-Phillip
+ * "From a ref, we locate an object using the object name it
+   records and use the object"
 
-> Signed-off-by: René Scharfe <l.s.r@web.de>
-> ---
->   git-compat-util.h | 42 ++++++++++++++++++++++--------------------
->   1 file changed, 22 insertions(+), 20 deletions(-)
-> 
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index 3e7a59b5ff..603c97e3b3 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -225,6 +225,7 @@ struct strbuf;
->   #include <stddef.h>
->   #include <stdlib.h>
->   #include <stdarg.h>
-> +#include <stdbool.h>
->   #include <string.h>
->   #ifdef HAVE_STRINGS_H
->   #include <strings.h> /* for strcasecmp() */
-> @@ -684,11 +685,11 @@ report_fn get_warn_routine(void);
->   void set_die_is_recursing_routine(int (*routine)(void));
-> 
->   /*
-> - * If the string "str" begins with the string found in "prefix", return 1.
-> + * If the string "str" begins with the string found in "prefix", return true.
->    * The "out" parameter is set to "str + strlen(prefix)" (i.e., to the point in
->    * the string right after the prefix).
->    *
-> - * Otherwise, return 0 and leave "out" untouched.
-> + * Otherwise, return false and leave "out" untouched.
->    *
->    * Examples:
->    *
-> @@ -699,57 +700,58 @@ void set_die_is_recursing_routine(int (*routine)(void));
->    *   [skip prefix if present, otherwise use whole string]
->    *   skip_prefix(name, "refs/heads/", &name);
->    */
-> -static inline int skip_prefix(const char *str, const char *prefix,
-> -			      const char **out)
-> +static inline bool skip_prefix(const char *str, const char *prefix,
-> +			       const char **out)
->   {
->   	do {
->   		if (!*prefix) {
->   			*out = str;
-> -			return 1;
-> +			return true;
->   		}
->   	} while (*str++ == *prefix++);
-> -	return 0;
-> +	return false;
->   }
-> 
->   /*
->    * Like skip_prefix, but promises never to read past "len" bytes of the input
->    * buffer, and returns the remaining number of bytes in "out" via "outlen".
->    */
-> -static inline int skip_prefix_mem(const char *buf, size_t len,
-> -				  const char *prefix,
-> -				  const char **out, size_t *outlen)
-> +static inline bool skip_prefix_mem(const char *buf, size_t len,
-> +				   const char *prefix,
-> +				   const char **out, size_t *outlen)
->   {
->   	size_t prefix_len = strlen(prefix);
->   	if (prefix_len <= len && !memcmp(buf, prefix, prefix_len)) {
->   		*out = buf + prefix_len;
->   		*outlen = len - prefix_len;
-> -		return 1;
-> +		return true;
->   	}
-> -	return 0;
-> +	return false;
->   }
-> 
->   /*
-> - * If buf ends with suffix, return 1 and subtract the length of the suffix
-> - * from *len. Otherwise, return 0 and leave *len untouched.
-> + * If buf ends with suffix, return true and subtract the length of the suffix
-> + * from *len. Otherwise, return false and leave *len untouched.
->    */
-> -static inline int strip_suffix_mem(const char *buf, size_t *len,
-> -				   const char *suffix)
-> +static inline bool strip_suffix_mem(const char *buf, size_t *len,
-> +				    const char *suffix)
->   {
->   	size_t suflen = strlen(suffix);
->   	if (*len < suflen || memcmp(buf + (*len - suflen), suffix, suflen))
-> -		return 0;
-> +		return false;
->   	*len -= suflen;
-> -	return 1;
-> +	return true;
->   }
-> 
->   /*
-> - * If str ends with suffix, return 1 and set *len to the size of the string
-> - * without the suffix. Otherwise, return 0 and set *len to the size of the
-> + * If str ends with suffix, return true and set *len to the size of the string
-> + * without the suffix. Otherwise, return false and set *len to the size of the
->    * string.
->    *
->    * Note that we do _not_ NUL-terminate str to the new length.
->    */
-> -static inline int strip_suffix(const char *str, const char *suffix, size_t *len)
-> +static inline bool strip_suffix(const char *str, const char *suffix,
-> +				size_t *len)
->   {
->   	*len = strlen(str);
->   	return strip_suffix_mem(str, len, suffix);
-> --
-> 2.43.0
-> 
+   A statement written from the point of view of the consumer of
+   object name, it does not matter if the object name is directly
+   found in the ref, or indirection is involved to find such a
+   concrete ref that records an object name by following the
+   original symbolic ref.
+
+ * "A ref usually stores an object name, but it can also be a
+   symbolic ref that points at another ref, in which case, asking
+   what object such a symbolic ref points at would yield the object
+   the other ref points at".
+
+So I dunno.
+
+>> +Refs with names beginning `ref/head/` contain the SHA-1 name of the most
+>>  recent commit (or "head") of a branch under development.  SHA-1 names of
+>> -tags of interest are stored under `ref/tags/`.  A special ref named
+>> +tags of interest are stored under `ref/tags/`.  A symbolic ref named
+>>  `HEAD` contains the name of the currently checked-out branch.
+>
+> I was briefly wondering whether we also want to replace SHA-1 with
+> "object hash" while at it, but it's certainly out of the scope of this
+> patch series.
+
+Yup, there still are too many reference to SHA-1 (and "sha1", which
+is even worse), and it is not a focus of this series.
+
+Thanks.
