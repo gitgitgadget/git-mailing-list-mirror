@@ -1,35 +1,35 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 961D13D0BD
-	for <git@vger.kernel.org>; Mon, 18 Dec 2023 10:54:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F1D19458
+	for <git@vger.kernel.org>; Mon, 18 Dec 2023 11:21:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="oXQOt7aG"
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="L53Onz/N"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-	t=1702896838; x=1703501638; i=johannes.schindelin@gmx.de;
-	bh=KKQUTKKW6aLwPNQEuraKFS5EVDpuAzscBWsgwW2FsN0=;
+	t=1702898500; x=1703503300; i=johannes.schindelin@gmx.de;
+	bh=TACMikBcQogTwUEV8+HiHqZTWVv6U5ak5bfzmjPVS/8=;
 	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:
 	 References;
-	b=oXQOt7aGCDbFtw+UKm6Z93IA2AElyNzv4npgBNW0iDmF3qEtT3oxzaQjrsyY8oE5
-	 yylvsyDaNS6wpg2QxogS7khs/K0Vcbyol8YaDfQeAEGpOofSRBlzYYJj9grVcNwyy
-	 cZhQOC4ytHVNsHFxBGgYbwQnM/p7l5TAFj3lnSJEKP8JMz7f9cURoE/ngM42KCATr
-	 unHvWVO0TtybF8V8NxFwA9+0uHZuvqTv0cHxzP5v4Dpyv4SNLGMlQ2BLfTuFWUmYF
-	 pAmRj7TyuA2lmpjl0zFqZwg10guSdX0VTuzYAq5BLti5rqIRWSdd4CFhpNHc66+Jz
-	 iZdWD+ovB6ztIF4Jww==
+	b=L53Onz/NRUibue5QTb2Qbce6QdkSP4EuMjPy/QYXQg6S37KON2XAJzPL+BLYC4Bu
+	 ivxfvHQMypTG7Lu+RkC2l+qpMJE/fZZR/V7SZJBhhV7YGpFjRir3TmD6ckJQnCa+y
+	 f7LeP2bhfJDYbGP6K+z+UzrgSQIEI70fTMjJ9xa/jeBXrlU7D1oPeRO49oyQrz2vx
+	 RXO+ItGl3uyvfowQmrLXG6QrjUTHCBbH91EeqRZwQ/0vRJKFJewNe4sj8D113R2jV
+	 XLNuD2ZeqJIKTRo6SlJhd8frBKGC4OUyR1b7dJ4sUb1qszN5XcL/lp9aQ1uilcJc/
+	 AVJREPUSEO2iLWFabw==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.214.125]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MFsUv-1rWUkj3MGV-00HQ0A; Mon, 18
- Dec 2023 11:53:58 +0100
-Date: Mon, 18 Dec 2023 11:53:57 +0100 (CET)
+Received: from [172.23.242.68] ([89.1.214.125]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MZTmY-1rlgmo1Ic2-00WaC1; Mon, 18
+ Dec 2023 12:21:40 +0100
+Date: Mon, 18 Dec 2023 12:21:39 +0100 (CET)
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Michael Lohmann <mial.lohmann@gmail.com>
-cc: git@vger.kernel.org, Michael Lohmann <mi.al.lohmann@gmail.com>
-Subject: Re: Why is `revert` undocumented in interactive rebase todo help?
-In-Reply-To: <20231218065313.55725-1-mi.al.lohmann@gmail.com>
-Message-ID: <3e71666c-22a0-f52b-4025-dddb096e7e6c@gmx.de>
-References: <20231218065313.55725-1-mi.al.lohmann@gmail.com>
+To: Andreas Scholz <andr3asr@gmail.com>
+cc: git@vger.kernel.org
+Subject: Re: Question regarding Git updater
+In-Reply-To: <CAHDWvZyHDbjOnnCYCkfMY+HPWobrcgP6c1kkWFrRgWV4fHED=w@mail.gmail.com>
+Message-ID: <20f16646-7bb4-b8bc-dcda-861c1e3fe2a6@gmx.de>
+References: <CAHDWvZyHDbjOnnCYCkfMY+HPWobrcgP6c1kkWFrRgWV4fHED=w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -37,83 +37,82 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:+BY3jQQYHZCV01koIwDh0EAU2n8//cUuB6s8IKohVK5wCaRoc5Z
- E1FGiT9PVL95wZFG8+y7U8t/tevZJZ/GoEtYSOvH/XWx8Z16jjVfMdl+vN8I805yR7+rokl
- ZNWjVLfB3dRQ532NypaqYU16Qbf+ua+VWDSkgw7kbkLrIEkcG42tMA4JFav9rgHXtrEDSr8
- Pv1siSw6uHxyW7uoF1nRw==
+X-Provags-ID: V03:K1:gGkgDF/0s6qKbKl7AAW2oRNvVXSkptvjkigQK/+A8NJFqqfT1iF
+ Sp75B3EaS+VhnHKviAXxfA611i279OIPkkyCmM3gBW5iK/94/QCCGP6eNTJUH9qvHvEeFjn
+ p2aRtv+ga1VtWFkacYY289CrpWTAiGD1zyuyKiOUPql2SqWnUKy1CMPiQZ7eqazDyV0uA7i
+ dnVjxIKV64j8ED0qVTxaw==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:Flirvx/1r5s=;ekBzD/tTy4r3gcSFyzQ4HlAK7T5
- GYB+2b19EH6fWNdTD4VZMpH/cDQuESAc/NXXHf1aku9vuxMd9+IwnrDJ3foWKvgFOTVYOHOTD
- lYa94BJ1PoXVYzIoRrmrGc+jqixLGrMIAiXcvmEyw9SDw8GXdL4pKgHuSGJZJOsI5BMhDkC8g
- bJidK6WZMCI9eLu7Yp6XW7jXiASfcQtSWONMbNYiswEm7HNCZYsQwuChegg1mN1E6FQyK3pwc
- nzVwks78CeJjN15UkDPpSLeOuzmcmN53ZOgnClLFuK4U+K9gAsQMChypYxnQfELwGl1bJS9D9
- WXCatMrEJ3fR3RTdp+Y+bacioiLg8QNBRhZvTfpO4qelWoCKBin/BPdjqsMNLUfliPQ83TdZh
- DmLUU2IQtrodPWo1XgneAFypqBhwSTcnJuqbOnKYooTMzPCmfPNAI6ysUGmC52/a+Yj0TNh/J
- nMQDxa2Juiyawq1wMIcZL76eYulxevm1dQgU+X7HRbLFuoLrtdNDsQTVIpN4U3BLcc6gD05tQ
- 6TaBH6v5Pv/WFRwyFWRRqqfHqJs0ACvNo1L7WmWzp9PXtFvRMePOflz9A/eF0b5uCImq9ORT2
- u9YI9nqXnXP570c3/a6ARN01ToUMET7C7Ag38EJsgug3W/wPLQkrpTyADjY9aT2vhY5tfvYYg
- zUoqsW/sLgp8P/zNUcQkVUKL50MHYgnZ+gnMGrxpprsaC7w42prTWufhAH9J+jA+s+5d018aG
- vSnBrdzOweizvL4ZAViUteARP/QdZ8TedVicqWku1213XiJe1JEyRY2s7vrRHiAT3WW+fVORz
- ENNLuLktYyboxg5M5ur8GRfuxdPklRrAYlPEuTg/CyugTXh9V3AFM/hu9+Igqnvtg4eyqEint
- OFrkn/rf918NExyqYytpLcIhffoML2ZktvevOJyhzAbSZRHfHrEeApmlJ0Imo2YDajkLptqYD
- olraOQ==
+UI-OutboundReport: notjunk:1;M01:P0:1HUWQrm5Y/c=;eXaYfCAs6Sv0l/LuPShpDnJ5oDt
+ kNZuCTcTxyjmirT5yvMqiaqM2UUsCZ0AE5GkxyrvCfK1lCv39VygsEErfcgm5zvGCCnxLT/g8
+ lK1D3Zit4hIUxMlAXRx4Tuc1TgCRpOhwz30ZAcjjqtlhPqjFnymE56whvZh+d3BVkNAULiSLy
+ HDAiA5vt2qT3WG26IBGbfOnE6rRHA9by0iYCjcqSuhqt1V/hSOkKQhidM1RK4TiVyuf/+haVM
+ U7hLg2dabFUulhsQjB8+kxyFQARWJbrkz0t4mN7hj14ioEZP5KcE+Kr0Mu4ysdsQUdQW0nEQv
+ gADsVMEMiIrissnZ+bKY5y4ASB6hFMjfTzA3M0s/3J4CjjCmwfmLLRkySgQdtIbzaBBQSE5Yp
+ z9u2Ax2wi6fAbBwx4RBN1hbAx41ojvTGFoHQM21UEi5VDZHzxpXktX11gyY6rYegTRVRkpaGJ
+ OzPBy3p+1j0LyvRLLCFgVvACyC0DuAq6w2BYwenwa37NoPzikAcuP7yeB1fJslsB/wWi+3Dmt
+ 5AEh8ioKaxe8JGBOidwsp85oNPPYVNOEV4ZLiQy+VO08F7KaeGW+xyOl1rrfbkQWstQiOGI3c
+ H3dj9gmkkiHjC56BTNKY+1qG/+pSTHf9Xb6jwGLhLHVMuHDO4PmO0Gg2GRw3MWSsvvrRYUOyr
+ 2A9iqEx0uBGJ5P2OY5C1VJO3XimAvRTJR54NpeTnHGha+70XRRpwYLmT26gjOsm8ggzp9WixG
+ hX9G9oXEytr3UMDali8VfbwTo/SoUu3srH9a4LEPFj98ozklWhBxaABx7scoehXNgS49oJbcP
+ 23GIgPzBVWo8Bel+6QFIUDnIxc8iFOAg8ZUrhTkUm6OhvzYudS5Z6U1+3ck8Fxk0d/KOq+7Gj
+ HklLeU+/D8/MxOLd9QNjrsZJOXzAtkpQcjpnxmGKkAei6GWlh4/qyF131Tz6sVZ00e6GMJB8t
+ N1Nv3g==
 
-Hi Michael,
+Hi Andreas,
 
-On Mon, 18 Dec 2023, Michael Lohmann wrote:
+On Thu, 14 Dec 2023, Andreas Scholz wrote:
 
-> I wanted to align rebase and revert/cherry-pick a bit more (for the
-> latter I am currently finishing my patch for --show-current-patch and
-> then looked into possibly implementing --edit-todo). To avoid code
-> duplication I wanted to reuse the existing interactive-rebase code as
-> much as possible and ended up at the todo script parsing in the
-> sequencer. I was a bit surprised to find that the file could already
-> handle the command `revert`, even though it isn't documented in
-> `append_todo_help` of rebase-interactive.c - is that by choice or just
-> missing documentation?
+> I hope you can help me with answering my question regarding the update
+> mechanism for Git after it has been installed.
 
-The reason that it is not documented, and that it has no single-letter
-"short command", is that it is more of a historic accident than design
-that interactive rebases support the "revert" command: In 004fefa754a4
-(sequencer: completely revamp the "todo" script parsing, 2016-10-21), I
-revamped sequencer's parsing of the "todo script", in preparation for
-teaching it the trick to parse full-blown todo scripts of interactive
-rebases in addition to parsing the (hitherto quite limited) `cherry-pick`
-and `revert` "scripts", a trick that was completed with cca3be6ea15b
-(Merge branch 'js/prepare-sequencer', 2016-10-27). These days, `git rebase
---interactive` uses that code to parse todo scripts.
+Assuming that you mean Git for Windows and its updater that you can enable
+by checking the "Check daily for Git for Windows updates" option on the
+Components page, I will provide answers below (if you are not talking
+about Git for Windows, I apologize, and ask for clarification):
 
-Naturally, to be able to continue parsing the "revert scripts", the
-`revert` command needed to be supported, and I never thought of disabling
-it specifically for interactive rebases.
+> 1) Does the updater autonomously figure out if there is a newer
+> version than the current one that is installed?
 
-> Whenever I wanted to achieve this I used `break` and then manually did
-> the revert, which obviously works fine, but it is much nicer to put the
-> command in the todo file... (Now that I think about it I could also have
-> done it with `exec`, but that is also not the nicest solution :D ).
+Git for Windows' updater is backed by a Unix shell script:
+https://github.com/git-for-windows/build-extra/blob/HEAD/git-extra/git-update-git-for-windows
 
+When configured to run regularly via a scheduled task, it will be called
+with the options `--quiet --gui`. It starts by determining the latest tag:
+https://github.com/git-for-windows/build-extra/blob/15b05c2399f152783d1fe9f167692dd5cd8ae1e1/git-extra/git-update-git-for-windows#L222
+which downloads https://gitforwindows.org/latest-tag.txt, a file that is
+hosted on GitHub Pages and that is updated as part of every Git for
+Windows release.
 
-Right. I often find myself adding commands like this one:
+The script then continues by determining the local version:
+https://github.com/git-for-windows/build-extra/blob/15b05c2399f152783d1fe9f167692dd5cd8ae1e1/git-extra/git-update-git-for-windows#L248
+and comparing both versions:
+https://github.com/git-for-windows/build-extra/blob/15b05c2399f152783d1fe9f167692dd5cd8ae1e1/git-extra/git-update-git-for-windows#L257-L262
+exiting with success if they match.
 
-	x git revert -n <reverse-fixup> && git commit --amend --no-edit
+Most notably, it does _not_ verify that the remote version is newer,
+meaning: If you build and install a custom Git version that reports a
+version number, say, 100.100.100, the updater will still propose to update
+from that, even if the current version is v2.43.0.
 
-to amend a commit with a reversal of another commit, most prominently when
-I squashed a fixup into another commit than I had originally intended and
-now need to fix that.
+> 2) Or does the updater only ask, when the user actively uses a command
+> to ask Git to check for a newer version?
 
-> The only other command not mentioned is `noop` which is obviously not
-> too useful apart from distinguishing an empty list and aborting, so I
-> totally understand it missing.
+Users are welcome to run `git update-git-for-windows` manually. If
+aforementioned checkbox was checked during installation, this won't be
+necessary, strictly speaking.
 
-Correct, that one is intentionally not described, for the reasons you
-described.
+> 3) In both cases, what information about the user/system is sent with
+> the request? Is this information stored on a server or database etc.?
 
-> Yes - in contrast to all the other options it does not have a single
-> char notation (and 'r' is obviously already taken und 'u' for undo as
-> well or 't' for the last letter), but why not show it in the list
-> without it? Or maybe add 'v' for "reVert"?
-
-Sure ;-)
+The information that is sent is the IP address and the HTTP headers sent
+by `curl` in
+https://github.com/git-for-windows/build-extra/blob/15b05c2399f152783d1fe9f167692dd5cd8ae1e1/git-extra/git-update-git-for-windows#L120-L125
+i.e. a User-Agent (`curl` does not seem to include the current OS there),
+but not the current Git for Windows version (an information that, if
+available, would actually help me perform my role of Git for Windows
+maintainer a lot better). Since the request goes to GitHub Pages, which
+does not store any information, all of that information vanishes right
+after the HTTP response is sent.
 
 Ciao,
 Johannes
