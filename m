@@ -1,112 +1,178 @@
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BFAC3D564
-	for <git@vger.kernel.org>; Mon, 18 Dec 2023 15:23:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20A06E57C
+	for <git@vger.kernel.org>; Mon, 18 Dec 2023 16:16:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z3Ek1DW+"
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-55322dbabf6so1607097a12.0
-        for <git@vger.kernel.org>; Mon, 18 Dec 2023 07:23:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1702913014; x=1703517814; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+NQdMZmbkSqkwjgqueEB9zCmFqJTXV5M3Jt56ko1/Lg=;
-        b=Z3Ek1DW+l4x8jnlnXqyUsBQeaoL/vj3TddVVsPwAJ8sn2+gO0PFW3qpyKcKZVkqHBq
-         yf4DceYFENNkajgbgAvmi02GMCcRQOicFAY/4J7RKnm6TGMMMvNFbaLVUzo23gkD4GwJ
-         Y6uoxHXSC/Co1ctGDsCL3n+NTcubSgvpOo5kaITcL9X6UfB4ioF7W/4WiPHKrnr8VNzz
-         js4d29UlV+bwVlujvmfqFW3+2nJDSGiig33Gybjmwq6KJb1ifkrhhzOSYzCjhELkHZog
-         k9PG7S+xzsRVcMcZgNoQPEnLfGKFvbFMFq7ANnO0AMaYPVE4F5eQTG3T5gxGEXwTbZU8
-         y/Dw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702913014; x=1703517814;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+NQdMZmbkSqkwjgqueEB9zCmFqJTXV5M3Jt56ko1/Lg=;
-        b=erhT7weAHOqPfLWNGQKVHbTjs5dYvore5OksTPqyo+/5Um4t4q/K+Osb7YsEUTD654
-         UR0og2iMnbpOXKfTaVwhS5v2xGJj6ddMvezPlY/JbMXOPXVaTtsWZws/rokaqQouUIJk
-         LJx2at+8P9e8iJGjoa9U6hUnBgiaDczrsTOsN1CFHp6Up9YwKaaJRdQTVE/MSBF9cyeO
-         nVxqQB1cBqvG2tTqHRQYSOBZaZR8O9swVx3vsZyd+57QkSN1ei3nFf48dK5Fuy5/4mTx
-         JSHDBtjftJ6QU7PdhVKW9tYqE4SK1tQAlrIpCh9lwcF8E1juljM+jx1qwwrvz7wks9Nf
-         knBw==
-X-Gm-Message-State: AOJu0YxX1nGemWrZXdszg62kfA//gY2NClhI81dfPlPe9n5U3kRIfayL
-	gvmZboK6ovm0YcwCaU0qcpNNoWalQ35deQ==
-X-Google-Smtp-Source: AGHT+IEMqZxeTsCnxLlWN1VO0Q3KbXhQpYWvPCilAXRqK9KBOBcc07QWG46Na5Q1+dOeRaORtn+VZg==
-X-Received: by 2002:a17:906:2c3:b0:a23:2ee5:e02a with SMTP id 3-20020a17090602c300b00a232ee5e02amr1621167ejk.20.1702913014285;
-        Mon, 18 Dec 2023 07:23:34 -0800 (PST)
-Received: from Michaels-MBP.fritz.box (2001-4dd7-e0bf-0-39a6-bdd4-29ba-7091.ipv6dyn.netcologne.de. [2001:4dd7:e0bf:0:39a6:bdd4:29ba:7091])
-        by smtp.gmail.com with ESMTPSA id k13-20020a1709067acd00b00a2361104d5asm811847ejo.221.2023.12.18.07.23.33
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 18 Dec 2023 07:23:33 -0800 (PST)
-From: Michael Lohmann <mial.lohmann@gmail.com>
-X-Google-Original-From: Michael Lohmann <mi.al.lohmann@gmail.com>
-To: git@vger.kernel.org
-Cc: Michael Lohmann <mi.al.lohmann@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] rebase-interactive: show revert option and add single letter shortcut
-Date: Mon, 18 Dec 2023 16:23:13 +0100
-Message-Id: <20231218152313.72896-1-mi.al.lohmann@gmail.com>
-X-Mailer: git-send-email 2.39.3 (Apple Git-145)
-In-Reply-To: <3e71666c-22a0-f52b-4025-dddb096e7e6c@gmx.de>
-References: <3e71666c-22a0-f52b-4025-dddb096e7e6c@gmx.de>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="XXXGYagf"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 521521D83C3;
+	Mon, 18 Dec 2023 11:16:03 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=5/S2z1Fd5pCX
+	wfcjmSeBQmvhyQMcln93b7wR9wmEPb8=; b=XXXGYagf7oc8ak5wSPbHbQ5FuGLR
+	Rnpi97KTGMrsgR5UwUa1AVFW27wvN33IB4vSBViPzjeD6OcQ69lYzpY4vmMQl8LI
+	8Dt4EKNmWq+1d8Sl5wlDCwOq9JM+OmD7WWDls/U1x67JvSXvx0ZmV3L5P7E+CmAf
+	NjgT58fS99nwIx4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 47DA81D83C2;
+	Mon, 18 Dec 2023 11:16:03 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.193.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 384E11D83C0;
+	Mon, 18 Dec 2023 11:16:02 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>, Jiang Xin <worldhello.net@gmail.com>
+Cc: git@vger.kernel.org,  Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH] doc: format.notes specify a ref under refs/notes/
+ hierarchy
+In-Reply-To: <ZX_9nRYKVq0jT0Lp@tanuki> (Patrick Steinhardt's message of "Mon,
+	18 Dec 2023 09:06:53 +0100")
+References: <20231215203245.3622299-1-gitster@pobox.com>
+	<20231215203245.3622299-2-gitster@pobox.com>
+	<0c93d426-17c3-434c-bbd0-866c31c23f9d@ramsayjones.plus.com>
+	<xmqq1qbnktnl.fsf@gitster.g> <xmqqttojjegr.fsf@gitster.g>
+	<xmqqjzpfje33.fsf_-_@gitster.g> <ZX_9nRYKVq0jT0Lp@tanuki>
+Date: Mon, 18 Dec 2023 08:16:00 -0800
+Message-ID: <xmqq1qbjij0f.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ BCEC533C-9DC0-11EE-A747-25B3960A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Michael Lohmann <mi.al.lohmann@gmail.com>
----
- Documentation/git-rebase.txt | 3 +++
- rebase-interactive.c         | 1 +
- sequencer.c                  | 2 +-
- 3 files changed, 5 insertions(+), 1 deletion(-)
+Patrick Steinhardt <ps@pks.im> writes:
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 1dd6555f66..75f6fe39a1 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -911,6 +911,9 @@ commit, the message from the final one is used.  You can also use
- "fixup -C" to get the same behavior as "fixup -c" except without opening
- an editor.
- 
-+To revert a commit, add a line starting with "revert" followed by the commit
-+name.
-+
- `git rebase` will stop when "pick" has been replaced with "edit" or
- when a command fails due to merge errors. When you are done editing
- and/or resolving conflicts you can continue with `git rebase --continue`.
-diff --git a/rebase-interactive.c b/rebase-interactive.c
-index d9718409b3..e1fd1e09e3 100644
---- a/rebase-interactive.c
-+++ b/rebase-interactive.c
-@@ -53,6 +53,7 @@ void append_todo_help(int command_count,
- "                   commit's log message, unless -C is used, in which case\n"
- "                   keep only this commit's message; -c is same as -C but\n"
- "                   opens the editor\n"
-+"v, revert <commit> = revert the changes introduced by that commit\n"
- "x, exec <command> = run command (the rest of the line) using shell\n"
- "b, break = stop here (continue rebase later with 'git rebase --continue')\n"
- "d, drop <commit> = remove commit\n"
-diff --git a/sequencer.c b/sequencer.c
-index d584cac8ed..3c18f71ed6 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1767,7 +1767,7 @@ static struct {
- 	const char *str;
- } todo_command_info[] = {
- 	[TODO_PICK] = { 'p', "pick" },
--	[TODO_REVERT] = { 0,   "revert" },
-+	[TODO_REVERT] = { 'v', "revert" },
- 	[TODO_EDIT] = { 'e', "edit" },
- 	[TODO_REWORD] = { 'r', "reword" },
- 	[TODO_FIXUP] = { 'f', "fixup" },
--- 
-2.43.0.77.g0ff82d959c
+> On Fri, Dec 15, 2023 at 02:28:00PM -0800, Junio C Hamano wrote:
+>> There is no 'ref/notes/' hierarchy.  '[format] notes =3D foo' uses not=
+es
+>> that are found in 'refs/notes/foo'.
+>>=20
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>> ---
+>>  * According to my eyeballing "git grep refs/ Documentation" result,
+>>    this was the only remaining mention of "ref/" in Documentation/
+>>    hierarchy that misspells "refs/".
+>
+> This made me look for additional instances where we were referring to
+> "ref/". Turns out it's only a very limited set, see the below diff.
 
+Yup, I did the same grep, but I tend to avoid churning what we
+published long ago (and kept in Documentation/RelNotes/), my patches
+only covered documents that are still relevant.
+
+> the translation changes with a big grain of salt though,
+
+Hopefully pinging Jiang would be sufficient to ask help from the
+French, Chinese, and Taiwaneese translation teams.
+
+> diff --git a/po/fr.po b/po/fr.po
+> index ee2e610ef1..744550b056 100644
+> --- a/po/fr.po
+> +++ b/po/fr.po
+> @@ -19773,7 +19773,7 @@ msgid ""
+>  "Neither worked, so we gave up. You must fully qualify the ref."
+>  msgstr ""
+>  "La destination que vous avez fournie n'est pas un nom de r=C3=A9f=C3=A9=
+rence compl=C3=A8te\n"
+> -"(c'est-=C3=A0-dire commen=C3=A7ant par \"ref/\"). Essai d'approximati=
+on par=C2=A0:\n"
+> +"(c'est-=C3=A0-dire commen=C3=A7ant par \"refs/\"). Essai d'approximat=
+ion par=C2=A0:\n"
+>  "\n"
+>  "- Recherche d'une r=C3=A9f=C3=A9rence qui correspond =C3=A0 '%s' sur =
+le serveur distant.\n"
+>  "- V=C3=A9rification si la <source> en cours de pouss=C3=A9e ('%s')\n"
+> diff --git a/po/zh_CN.po b/po/zh_CN.po
+> index 86402725b2..eb47e8f9b7 100644
+> --- a/po/zh_CN.po
+> +++ b/po/zh_CN.po
+> @@ -13224,8 +13224,8 @@ msgid ""
+>  msgid_plural ""
+>  "Note: Some branches outside the refs/remotes/ hierarchy were not remo=
+ved;\n"
+>  "to delete them, use:"
+> -msgstr[0] "=E6=B3=A8=E6=84=8F=EF=BC=9Aref/remotes =E5=B1=82=E7=BA=A7=E4=
+=B9=8B=E5=A4=96=E7=9A=84=E4=B8=80=E4=B8=AA=E5=88=86=E6=94=AF=E6=9C=AA=E8=A2=
+=AB=E7=A7=BB=E9=99=A4=E3=80=82=E8=A6=81=E5=88=A0=E9=99=A4=E5=AE=83=EF=BC=8C=
+=E4=BD=BF=E7=94=A8=EF=BC=9A"
+> -msgstr[1] "=E6=B3=A8=E6=84=8F=EF=BC=9Aref/remotes =E5=B1=82=E7=BA=A7=E4=
+=B9=8B=E5=A4=96=E7=9A=84=E4=B8=80=E4=BA=9B=E5=88=86=E6=94=AF=E6=9C=AA=E8=A2=
+=AB=E7=A7=BB=E9=99=A4=E3=80=82=E8=A6=81=E5=88=A0=E9=99=A4=E5=AE=83=E4=BB=AC=
+=EF=BC=8C=E4=BD=BF=E7=94=A8=EF=BC=9A"
+> +msgstr[0] "=E6=B3=A8=E6=84=8F=EF=BC=9Arefs/remotes =E5=B1=82=E7=BA=A7=E4=
+=B9=8B=E5=A4=96=E7=9A=84=E4=B8=80=E4=B8=AA=E5=88=86=E6=94=AF=E6=9C=AA=E8=A2=
+=AB=E7=A7=BB=E9=99=A4=E3=80=82=E8=A6=81=E5=88=A0=E9=99=A4=E5=AE=83=EF=BC=8C=
+=E4=BD=BF=E7=94=A8=EF=BC=9A"
+> +msgstr[1] "=E6=B3=A8=E6=84=8F=EF=BC=9Arefs/remotes =E5=B1=82=E7=BA=A7=E4=
+=B9=8B=E5=A4=96=E7=9A=84=E4=B8=80=E4=BA=9B=E5=88=86=E6=94=AF=E6=9C=AA=E8=A2=
+=AB=E7=A7=BB=E9=99=A4=E3=80=82=E8=A6=81=E5=88=A0=E9=99=A4=E5=AE=83=E4=BB=AC=
+=EF=BC=8C=E4=BD=BF=E7=94=A8=EF=BC=9A"
+> =20
+>  #: builtin/remote.c
+>  #, c-format
+> diff --git a/po/zh_TW.po b/po/zh_TW.po
+> index f777a0596f..b2a79cdd93 100644
+> --- a/po/zh_TW.po
+> +++ b/po/zh_TW.po
+> @@ -13109,7 +13109,7 @@ msgid ""
+>  msgid_plural ""
+>  "Note: Some branches outside the refs/remotes/ hierarchy were not remo=
+ved;\n"
+>  "to delete them, use:"
+> -msgstr[0] "=E6=B3=A8=E6=84=8F=EF=BC=9Aref/remotes =E5=B1=A4=E7=B4=9A=E4=
+=B9=8B=E5=A4=96=E7=9A=84=E4=B8=80=E5=80=8B=E5=88=86=E6=94=AF=E6=9C=AA=E8=A2=
+=AB=E7=A7=BB=E9=99=A4=E3=80=82=E8=A6=81=E5=88=AA=E9=99=A4=E5=AE=83=EF=BC=8C=
+=E4=BD=BF=E7=94=A8=EF=BC=9A"
+> +msgstr[0] "=E6=B3=A8=E6=84=8F=EF=BC=9Arefs/remotes =E5=B1=A4=E7=B4=9A=E4=
+=B9=8B=E5=A4=96=E7=9A=84=E4=B8=80=E5=80=8B=E5=88=86=E6=94=AF=E6=9C=AA=E8=A2=
+=AB=E7=A7=BB=E9=99=A4=E3=80=82=E8=A6=81=E5=88=AA=E9=99=A4=E5=AE=83=EF=BC=8C=
+=E4=BD=BF=E7=94=A8=EF=BC=9A"
+> =20
+>  #: builtin/remote.c
+>  #, c-format
+
+> Also, the test is
+> interesting because it would fail even if we didn't pass an invalid ato=
+m
+> to git-for-each-ref(1).
+
+It is interesting but not surprising.  It is not an error to use ref
+patterns that do not match any ref.  It is a mere pattern to filtering
+what are in refs/ for the ones to be output.
+
+> diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+> index 54e2281259..e68f7bec8e 100755
+> --- a/t/t6300-for-each-ref.sh
+> +++ b/t/t6300-for-each-ref.sh
+> @@ -841,7 +841,7 @@ test_expect_success 'err on bad describe atom arg' =
+'
+>  		EOF
+>  		test_must_fail git for-each-ref \
+>  			--format=3D"%(describe:tags,qux=3D1,abbrev=3D14)" \
+> -			ref/heads/master 2>actual &&
+> +			refs/heads/master 2>actual &&
+>  		test_cmp expect actual
+>  	)
+>  '
+
+The "for-each-ref" family's "--format" string is first parsed and
+sanity-checked before it is applied.  The bogus ref pattern may not
+yield any ref to apply the format string, but we do not optimize out
+the parsing and checking, even though we could, as it would be
+optimizing for a wrong case.  So regardless of the ref pattern at
+the end of the command line does not make a difference to the
+outcome of this test.
