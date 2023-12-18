@@ -1,103 +1,127 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D171D498B9
-	for <git@vger.kernel.org>; Mon, 18 Dec 2023 16:26:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90C641DFF9
+	for <git@vger.kernel.org>; Mon, 18 Dec 2023 16:32:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Z6tRuGyB"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id A56CF1E152;
-	Mon, 18 Dec 2023 11:26:45 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=CWQ/FMQVoJsuLy439WKgOMgVEOsNu18fYVtHrr
-	+iwKY=; b=Z6tRuGyBDV8ffCWAW3GbuhNk8V3T1QUzkUmZvNnm0Lx36d8cKoIepn
-	P021bhZrZgzVkctLabd8g7qRsxok2LTd8dzubPzCdbgLAeGrHVqCtvjcHDgop+At
-	4UCrYBoRGtQa6WF/9lQbprKnE1qKqL9UhPls57CLKDd6BA22oyJRc=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 9D1AE1E151;
-	Mon, 18 Dec 2023 11:26:45 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.193.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D2F8F1E150;
-	Mon, 18 Dec 2023 11:26:41 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/5] git.txt: HEAD is not that special
-In-Reply-To: <ZYAGyLH4nm4TebA_@tanuki> (Patrick Steinhardt's message of "Mon,
-	18 Dec 2023 09:46:00 +0100")
-References: <20231215203245.3622299-1-gitster@pobox.com>
-	<20231215203245.3622299-2-gitster@pobox.com> <ZYAGyLH4nm4TebA_@tanuki>
-Date: Mon, 18 Dec 2023 08:26:40 -0800
-Message-ID: <xmqqplz3h3y7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OQFi/+fm"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-336437ae847so3392295f8f.2
+        for <git@vger.kernel.org>; Mon, 18 Dec 2023 08:32:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1702917154; x=1703521954; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=lWj0dIqT+s+2GOdbd4i8m30BcCYWKxKjyq2+1uAYkVU=;
+        b=OQFi/+fmbc2/vHLMARW8kmBMNiOj47kU4tWEMgoVHgNEUwadCLb/FDERZc6w3rG2QZ
+         nRBOSpGmfh4ktTXyBKOFAp35X+E1R0FCvmbpq2kFlX+UvL6ttVI75ep+vef3ufpt0Adj
+         uMNdBNYiL4em/4D2oRIKFy+72je3lHUyWjLwCfT76T5rT+TezEw0H0CHBpTj4VcmEqFY
+         JikhnvtDbHTf1UTPJ3DqzXziU4XQYxhYH/v78pdFsTbtt6wPPYm8INBnJ0vVF8CJE7ZK
+         owlaXqLqHJA87kXISjdatOW+N39VIIGw0zstx8e1V8Px7+mVltVYFXVkzgenkOX6G1w0
+         Yp7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702917154; x=1703521954;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lWj0dIqT+s+2GOdbd4i8m30BcCYWKxKjyq2+1uAYkVU=;
+        b=nVfwqtiI1KCy6uEFkRtFzyAzqKk49lSneuDrUKRjxrQDiZAY1pEULUYpfS6l9ImU+9
+         R2Z9Ek34+QLJ2nbDeb4GJLk8EaLGdrxM/jG2saxKAIZgVPRjftZaF7/zt0zbID6g9xDj
+         tRI3zG7xhBqHT+I9mUkuKVS4JzTSGDrxr/136ph7ab0aosO85WqCynvsyyhsi3hzBH4s
+         wJLJKD3KujQc2OQpChnFVUl6Uea2/eEhZRnNsEGteA0Y2l2p+uXn6xwplyIuhhBGTTvR
+         NRejrR25zy3Ns7gpOynL0X7aom99kzKtdvBpTBOZ2oSzZqKhOP75EavrS9NhYJQx8XZf
+         4J7A==
+X-Gm-Message-State: AOJu0Yz/+cxNgVKKpv5GJPORGR+bsSh2RkxPEo3QgL5RefCzl7jtc9MD
+	phjFV1Qv9K5gmuEzF0zChl4=
+X-Google-Smtp-Source: AGHT+IEJn6p3EUbv6HTyCT9Oz22SZmsSPN3E2n7QL1p+NR0lMnRkQ43ZjOgnG7LzmrueNnCIqHBmEQ==
+X-Received: by 2002:a5d:4943:0:b0:336:4fe5:6068 with SMTP id r3-20020a5d4943000000b003364fe56068mr3281648wrs.137.1702917153590;
+        Mon, 18 Dec 2023 08:32:33 -0800 (PST)
+Received: from [192.168.1.212] ([84.64.64.237])
+        by smtp.gmail.com with ESMTPSA id z1-20020a056000110100b0033668b27f8fsm2932045wrw.4.2023.12.18.08.32.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 18 Dec 2023 08:32:33 -0800 (PST)
+Message-ID: <c2489476-f23b-4c03-8651-d6a8799ff67c@gmail.com>
+Date: Mon, 18 Dec 2023 16:32:32 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 3A15F132-9DC2-11EE-B6EB-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] rebase-interactive: show revert option and add single
+ letter shortcut
+Content-Language: en-US
+To: Michael Lohmann <mial.lohmann@gmail.com>, git@vger.kernel.org
+Cc: Michael Lohmann <mi.al.lohmann@gmail.com>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <3e71666c-22a0-f52b-4025-dddb096e7e6c@gmx.de>
+ <20231218152313.72896-1-mi.al.lohmann@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20231218152313.72896-1-mi.al.lohmann@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+Hi Michael
 
->>  Named pointers called refs mark interesting points in history.  A ref
->> -may contain the SHA-1 name of an object or the name of another ref.  Refs
->> -with names beginning `ref/head/` contain the SHA-1 name of the most
->> +may contain the SHA-1 name of an object or the name of another ref (the
->> +latter is called a "symbolic ref").
->
-> On a tangent: While we have a name for symbolic refs, do we also have a
-> name for non-symbolic refs? I often use the term "direct ref" to clearly
-> distinguish them from symbolic refs, but it's of course not defined in
-> our glossary.
+Thanks for the patch, I'm wondering why you want to revert a commit when 
+you're rebasing. I think it would be helpful to explain that in the 
+commit message. In particular why it is necessary to revert a commit 
+rather than simply dropping it (presumably you're using rebase to do 
+something more that just rework a series of commits)
 
-You may find me saying "normal ref", "regular ref", or somesuch when
-it is not clear from the context if you dig the list archive.
-"direct" is a nice word, especially it would give us a good pair of
-terms if we are to change "symbolic" to "indirect", but since we are
-not going to do so, I am not sure the contrast between "direct" and
-"symbolic" would make such a good pair.
+Best Wishes
 
-But quite honestly I rarely felt a need for a specific term, as it
-is fairly clear from the context, e.g.
+Phillip
 
- * "From a ref, we locate an object using the object name it
-   records and use the object"
-
-   A statement written from the point of view of the consumer of
-   object name, it does not matter if the object name is directly
-   found in the ref, or indirection is involved to find such a
-   concrete ref that records an object name by following the
-   original symbolic ref.
-
- * "A ref usually stores an object name, but it can also be a
-   symbolic ref that points at another ref, in which case, asking
-   what object such a symbolic ref points at would yield the object
-   the other ref points at".
-
-So I dunno.
-
->> +Refs with names beginning `ref/head/` contain the SHA-1 name of the most
->>  recent commit (or "head") of a branch under development.  SHA-1 names of
->> -tags of interest are stored under `ref/tags/`.  A special ref named
->> +tags of interest are stored under `ref/tags/`.  A symbolic ref named
->>  `HEAD` contains the name of the currently checked-out branch.
->
-> I was briefly wondering whether we also want to replace SHA-1 with
-> "object hash" while at it, but it's certainly out of the scope of this
-> patch series.
-
-Yup, there still are too many reference to SHA-1 (and "sha1", which
-is even worse), and it is not a focus of this series.
-
-Thanks.
+On 18/12/2023 15:23, Michael Lohmann wrote:
+> Signed-off-by: Michael Lohmann <mi.al.lohmann@gmail.com>
+> ---
+>   Documentation/git-rebase.txt | 3 +++
+>   rebase-interactive.c         | 1 +
+>   sequencer.c                  | 2 +-
+>   3 files changed, 5 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+> index 1dd6555f66..75f6fe39a1 100644
+> --- a/Documentation/git-rebase.txt
+> +++ b/Documentation/git-rebase.txt
+> @@ -911,6 +911,9 @@ commit, the message from the final one is used.  You can also use
+>   "fixup -C" to get the same behavior as "fixup -c" except without opening
+>   an editor.
+>   
+> +To revert a commit, add a line starting with "revert" followed by the commit
+> +name.
+> +
+>   `git rebase` will stop when "pick" has been replaced with "edit" or
+>   when a command fails due to merge errors. When you are done editing
+>   and/or resolving conflicts you can continue with `git rebase --continue`.
+> diff --git a/rebase-interactive.c b/rebase-interactive.c
+> index d9718409b3..e1fd1e09e3 100644
+> --- a/rebase-interactive.c
+> +++ b/rebase-interactive.c
+> @@ -53,6 +53,7 @@ void append_todo_help(int command_count,
+>   "                   commit's log message, unless -C is used, in which case\n"
+>   "                   keep only this commit's message; -c is same as -C but\n"
+>   "                   opens the editor\n"
+> +"v, revert <commit> = revert the changes introduced by that commit\n"
+>   "x, exec <command> = run command (the rest of the line) using shell\n"
+>   "b, break = stop here (continue rebase later with 'git rebase --continue')\n"
+>   "d, drop <commit> = remove commit\n"
+> diff --git a/sequencer.c b/sequencer.c
+> index d584cac8ed..3c18f71ed6 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -1767,7 +1767,7 @@ static struct {
+>   	const char *str;
+>   } todo_command_info[] = {
+>   	[TODO_PICK] = { 'p', "pick" },
+> -	[TODO_REVERT] = { 0,   "revert" },
+> +	[TODO_REVERT] = { 'v', "revert" },
+>   	[TODO_EDIT] = { 'e', "edit" },
+>   	[TODO_REWORD] = { 'r', "reword" },
+>   	[TODO_FIXUP] = { 'f', "fixup" },
