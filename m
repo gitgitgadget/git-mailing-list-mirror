@@ -1,73 +1,73 @@
 Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06C9111CA7
-	for <git@vger.kernel.org>; Mon, 18 Dec 2023 08:24:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22161111B9
+	for <git@vger.kernel.org>; Mon, 18 Dec 2023 08:41:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MgyJd6oe";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mBQA8MqE"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QX2OkDDe";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="K2vD0yjz"
 Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id C3AA75C010C;
-	Mon, 18 Dec 2023 03:24:38 -0500 (EST)
+	by mailout.nyi.internal (Postfix) with ESMTP id 0EA345C0078;
+	Mon, 18 Dec 2023 03:41:48 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Mon, 18 Dec 2023 03:24:38 -0500
+  by compute2.internal (MEProxy); Mon, 18 Dec 2023 03:41:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1702887878; x=1702974278; bh=b5qgF3no70
-	RJbp+jayLq8O2qRp9W8FYDBcyNMdiU4Gk=; b=MgyJd6oeUSK105XMeIAJiL4uFG
-	WGmmRnyftcXSWzg0RovxAu7UXhym3PuxdAozHUWEFXhnq9ejGdDFbrkH9onURFhr
-	ZmJ29paogP7b/EotqEs4LXSRTjhhQ378oXL2mhKn3RQ7RmuOAZ4h4zCHd0l7l0ce
-	DSbmUooCYym7sTW4N2Rka46b4mbIHGMGt/3x++F8hZfYzqlUqFwBtEtjXWgImVrn
-	acKr/bJd7Fi5FmEwS09WHH4LHfjB+JwexT72VvQbXNPdtVJNi1Z1PZjgZYEA62PS
-	D15GJhLv95+OxYL8iaH/hPf6jTnkp1GyMEyyy+RbAYQocHdFlv1E3tHE5z1w==
+	:subject:to:to; s=fm2; t=1702888908; x=1702975308; bh=B3kke9JY7p
+	t9Ac5zAHxTILKCMTXZp0UWlWa51x+icII=; b=QX2OkDDeNGCKhzNYsYMbCTMh7i
+	yTKjKH+atVEo1pS5Zm9Gx6/7qwKYWi1OpwuWVlnvj4GA88ST5rd4jGvd7Yu7Nsvs
+	pfZzHb+ut4o/b6Nych0fkiLvsxPWUgVft23kHgvu6AkP+AMtq+ElRf2CxrMLiSRd
+	p1x21Re5a4IVkP2ojIjWEJ2R3kcQ5EtlEWnJhxG67kYZlOQiaJszOI9ZIzasPG/g
+	ctd8Wmuv8fwAlF55rgHnsT1d1PRRuIxJwN1RdpE4yh/hhGBT++zPeBQTNSZHMdOF
+	vavYUZO7HrnAV1KEmsUPqlxwxX+9Mm8sbWVEFh4KgFb/zuoV0obMEsympx2Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1702887878; x=1702974278; bh=b5qgF3no70RJbp+jayLq8O2qRp9W
-	8FYDBcyNMdiU4Gk=; b=mBQA8MqEIwSzhGWfZ8vjrx9pAhgPyRALWuHSGXD5fH5w
-	ETgP0kuzE093QDH3p41CVBNPiQYd7lWK2qsRT8YDsw1wGhVwB6Lk8/BroKY5OyqQ
-	T0HGah8WyE/e7RfwU7iE9YPCocMy1/lsgEju23o2z6+oHzsb7k4x8oEtEUHR7IFK
-	2Ia0W4Qabyo3ZaiibX0+gmxQazhfhYGj1xJZV60u3KaDw+8n696HRZbAKRwE1tcz
-	jfWjLajkLGc05EBzTNF53kPM81cPL954znOGTDQ1eqtj0CZVQ5oomxwGr8l27gxu
-	c466MNXOx7zSVbEqHSFgo7oxoPvpowqQDtHSGFBMnw==
-X-ME-Sender: <xms:xgGAZeaeD1OZFmk8zf5v_XJujef4UecCHHCGxvjQzpEKSwvmGZ2Q9Q>
-    <xme:xgGAZRZoZ56dQRYGGnafOXEtq8nFmXa8I5WQYqF3Adjx-hc4Vo9o8UkVP29vMYAPF
-    ti3B3TYaZOEKjVDXQ>
-X-ME-Received: <xmr:xgGAZY9tM1ktxWX7Z13XvLP8GG4CyAkrmyEfrMnBBNZaUURRQ4v5Fi8KyxAtpQWp7YrtJ1-JjPURb10cZRuI-BAd8hx58o2VE5YgJx0KZeW4EDc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvddtjedguddvtdcutefuodetggdotefrod
+	fm2; t=1702888908; x=1702975308; bh=B3kke9JY7pt9Ac5zAHxTILKCMTXZ
+	p0UWlWa51x+icII=; b=K2vD0yjzQoOhikpiSPji9e/h5kFfDvyZLQAsFJz31Faz
+	e269UUuzh42nQyufnfEZ1zXoi5CkHdCxByuHWhgkE6fCoLTFkWN1+k7LGqYbdV7P
+	vnDC0M7Kzr8rPh+Npa5rY1snjWN5A+GeDIUfjwUaLGtGGCZtBCImXVUWTfP2Ry/A
+	b9UCDCCJo1KW1QNS/+AnDwduNksQVp+fre9J0lQrCTexDIZ0HL3OvWcDPNhWWND+
+	EYUmaUSY5E2y7tIQv2wAD2K6LYOkoCSvjJ9q77q+OvjqgF4+uvi2U/Dog8UxvAJk
+	B6K4t0Q8erxKLmDkTiqWwm5tvyoL72ThyrcwczWeTg==
+X-ME-Sender: <xms:ywWAZYaIxg37lwkANnp9z30ZiMGHK2Ut8LKhfH-ANBtb8ktAdDsQsg>
+    <xme:ywWAZTahrpNZgUI_dtE_ltWpkD6M57cbrwqx4LiNqaV4kqqBob_CCwGuy77bo7vVe
+    YxeBD5avhRbUS2iKw>
+X-ME-Received: <xmr:ywWAZS-AWS8wontefzCccU_A7w0yfY5ZxFfxVn_1CE1EHVtan-VKD_bevWtYpajXZ0VyD_rTMF5CUPi1kpeOanZQBkVLRiunM2Oo0GloLqez4Bk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvddtjedguddvfecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvvefukfhfgggtuggjsehgtdorredttddvnecuhfhrohhmpefrrght
+    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
     rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeehfefhuedtvedtfeeiteeugefgfeelgeelveehffeukeelfefhieekteevudfh
-    ffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
+    gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
+    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
     esphhkshdrihhm
-X-ME-Proxy: <xmx:xgGAZQqMC3Zm09T-ubKt4IR-j7U0axpDbEWVPGeY_UDI0fbSfODJ5g>
-    <xmx:xgGAZZpgN6Q1WNTs_0VW-AJa0eH8QLYlJD_ROD5yuuLEJ2vEz3kGEg>
-    <xmx:xgGAZeQZPcdzgvM7oc7qHeL8m55ifFDHwc9922chVOjZ1uiRxjjdXg>
-    <xmx:xgGAZQ0nMOmaPtQkZsSGYWxevlgk3wlsBGzR2IBXcFDApUl6uHDn6w>
+X-ME-Proxy: <xmx:ywWAZSo6fcRDMxHX1t6UxEmpxHx0ykb4WUXwUovxwBO1KyQAq_FZyA>
+    <xmx:ywWAZTpEj3Kjcjl1IBA3xouWX5VY010tetyuzUzzTCKJPeOjzXs5qg>
+    <xmx:ywWAZQTFqjCxhuC5s6zZz-XoFGXtuvXf5VAzox_ScWLfLl-1XXTAFw>
+    <xmx:zAWAZa3eBF84RdtDVuZjUTpkdETLFumF_5VLnfmjTTF_hKYH-hSYgA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 18 Dec 2023 03:24:37 -0500 (EST)
+ 18 Dec 2023 03:41:46 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id e0988555 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 18 Dec 2023 08:22:45 +0000 (UTC)
-Date: Mon, 18 Dec 2023 09:24:34 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id ce4912e6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 18 Dec 2023 08:39:54 +0000 (UTC)
+Date: Mon, 18 Dec 2023 09:41:43 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Andy Koppe <andy.koppe@gmail.com>
-Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org,
+	Andy Koppe <andy.koppe@gmail.com>
 Subject: Re: [PATCH 0/5] make room for "special ref"
-Message-ID: <ZYABwulbgbAwDewD@tanuki>
+Message-ID: <ZYAFx9gfppkS2Oey@tanuki>
 References: <20231215203245.3622299-1-gitster@pobox.com>
  <xmqq5y0zkvqx.fsf@gitster.g>
  <321b8084-fddb-4b5d-86af-7f88cb3edf7b@ramsayjones.plus.com>
- <132a3daf-23fa-4575-a77f-bdf0a96fb5d8@gmail.com>
+ <xmqq7clfj7r4.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,62 +75,106 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="mwaWFDRAs4QXd9ix"
+	protocol="application/pgp-signature"; boundary="B05OqX5ZiDVPJLhX"
 Content-Disposition: inline
-In-Reply-To: <132a3daf-23fa-4575-a77f-bdf0a96fb5d8@gmail.com>
+In-Reply-To: <xmqq7clfj7r4.fsf@gitster.g>
 
 
---mwaWFDRAs4QXd9ix
+--B05OqX5ZiDVPJLhX
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Dec 16, 2023 at 10:20:09AM +0000, Andy Koppe wrote:
-> On 15/12/2023 22:44, Ramsay Jones wrote:
-> > On 15/12/2023 21:21, Junio C Hamano wrote:
+On Fri, Dec 15, 2023 at 04:44:47PM -0800, Junio C Hamano wrote:
+> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 >=20
-> > > If somebody is reading FETCH_HEAD and acting on its contents (rather
-> > > than merely consuming it as a ref of the first object), perhaps
-> > > feeding it to "git fmt-merge-msg", they will be broken by such a
-> > > change (indeed, our own "git pull" will be broken by the change to
-> > > "git fetch", and the second bullet point above is about fixing the
-> > > exact fallout from it), but I am not sure if that is a use case worth
-> > > worrying about.
-> >=20
 > > Yes, I was going to suggest exactly this, after Patrick pointed out
 > > that there were only two 'special psuedo-refs' (I had a vague feeling
 > > there were some more than that) FETCH_HEAD and MERGE_HEAD.
->=20
-> According to the pseudoref entry of gitglossary, CHERRY_PICK_HEAD also
-> stores additional data (which would imply that REVERT_HEAD does too).
-> Looking at CHERRY_PICK_HEAD during a pick though, I only see a single has=
-h,
-> even when picking multiple commits.
 
-Both CHERRY_PICK_HEAD and REVERT_HEAD are only ever updated via the refs
-API, so neither of them ever contains anything other than a normal ref.
-I guess we should update the glossary accordingly.
+I don't think there are more special refs than those two. Andy pointed
+out CHERRY_PICK_HEAD and REVERT_HEAD, but both of them actually get
+accessed via the ref backend exclusively and thus cannot be special in
+any way. Also, the test suite of Git passes with only those two refs
+marked as special refs with the reftable backend, which is another good
+indicator that I didn't miss anything here because we definitely can't
+store special information in the reftable backend.
+
+It's of course still possible that our test suite has a blind spot and
+that I missed any special refs. If so, I would love to hear about them.
+
+> Glad to see that I am not alone.  We should be able to treat
+> MERGE_HEAD similarly.  It is used to communicate the list of "other
+> parents" from "git merge" that stops in the middle (either for merge
+> conflict, or in response to the "--no-commit" command line option)
+> to "git commit" that concludes such an unfinished merge.  Many
+> commands merely use the presence of MERGE_HEAD as a sign that a
+> merge is in progress (e.g. "git status"), which would not break if
+> we just started to record the first parent in a pseudoref MERGE_HEAD
+> and wrote the other octopus parents elsewhere, but some commands do
+> need all these parents from MERGE_HEAD (e.g. "git blame" that
+> synthesizes a fake starting commit out of the working tree state).
+
+I would certainly love to drop the "specialness" of both FETCH_HEAD and
+MERGE_HEAD, but I am a bit pessimistic about whether we really can. The
+format of those refs has been around for quite a long time already, and
+I do expect that there is tooling out there that parses those files.
+
+I would claim that it's especially likely that FETCH_HEAD is getting
+parsed by external tools. Historically, there has not been a way to
+really figure out which refs have been updated in git-fetch(1). So any
+scripts that perform a fetch and want to learn about what was updated
+would very likely resort to parsing FETCH_HEAD. This has changed a bit
+with the introduction of the machine-parsable interface of git-fetch(1),
+but it has only been introduced rather recently with Git v2.42.
+
+> If we cannot get rid of all "special refs" anyway, however, I think
+> there is little that we can gain from doing such "make FETCH_HEAD
+> and MERGE_HEAD into a single-object pseudoref, and write other info
+> in separate files" exercise.  We can treat the current FETCH_HEAD
+> and MERGE_HEAD as "file that is not and is more than a ref", which
+> is what the current code is doing anyway, which means we would
+> declare that they have to stay to be files under $GIT_DIR/ and will
+> be accessed via the filesystem access.
+
+I'd like for it to be otherwise, but I think this is the only sensible
+thing to do. I think it was a mistake to introduce those special refs
+like this and treat them almost like a real ref, but that's always easy
+to say in hindsight.
+
+> At that point, calling them "special ref" might even be more
+> misleading than its worth and we may be better off to admit that they
+> are not even refs but a datafile some commands can use to obtain input
+> from, but the phrase we use to refer to them, be it "special ref" or
+> some random datafile, does not make a fundamental change on anything.
+
+Well, the problem is that these do indeed behave like a ref for most of
+the part: you can ask for them via git-rev-parse(1) and we'll resolve
+them just fine, even though we only ever return the first object ID. So
+even though I'm not a huge fan of calling them "special ref", I think we
+should at least highlight the reflike-nature in whatever we want to call
+them.
 
 Patrick
 
---mwaWFDRAs4QXd9ix
+--B05OqX5ZiDVPJLhX
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWAAcEACgkQVbJhu7ck
-PpQ19w//SbwGyUTQPidgmxMqjhCMEo5nMfMHicGu+nf1d7Hlxf8RJQD64Q++miHa
-BHRi0XUAt8R56CiLHyAHSCOyxk5S9zHaDg54FFoRrwXoBkz1xTQyHQO4gYs/SI9i
-CoXAjPryhMN+MVf82VLwFOBjfpNr8tp46my8NNmXD4a2nVI2Zgb9IYTWWNNoYVbu
-DvCbb0ujNHuyofpzXnZ/JNu5b23F6yQ6bPW6VXrUXZktG3DqeIPlLD3gu6u3u1UQ
-ek/ghf0kqa/a8m4g2BQEW0qBw1JYkieSuQU30piJC7bP8RR9eAMQ4+4s0Pp+udyP
-iF5TLSb6mTA1wMbufrY9i6OC6ZJ299SXoFE23bim2iCmSqgyJB9e+j66oBkHyQTH
-lFsAeOl8DZQ1xQXJpBNG2q6rCiY7pPMm4GiT8vxSPJEUoeJz7WraYwQ6ug/4LP15
-TCrYWXKIljQnEY1LS2NEEmZyqPHjmwHW4pTcFxhACioYBX/wcohMR5XTaPEOBrfJ
-82SyXbC93G3XmZ54Xae9lXsY4qIi8SjJ8XwviQnAmWixENrS003Wq1GshxS4kwMz
-QqkArNWQfFCO06LI/hQ5BcgbsG/+KhuY1EziPmOrX/N2g7lN6cHL0w5AZ3v4JCVm
-FstmWy1Zc1WVEuV4sycUWj8lFhoYvm8VXeTTwZkS9hEYwMmkkro=
-=8bff
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWABcYACgkQVbJhu7ck
+PpQxdBAAi9Z5oSAgIKSUiH0PWO0pp8s6tt2wVyjOrlkNBflyQpu247YD7Ynqce+8
+R0Jc+O59kpBUDcq5Egr3O1ihjve+unqt4EBtf3vSXbFr4jjI5Ulm4mDw0jhigLXk
+Jw75L617fUd16TsQm4ewx73Wmm5L8QkNcpmQBdd2TRe1E0GMdcMJOpiSlT4iXIwx
+W/es22vOqi2mJZ/O1KDWIMfMaonbtvaYu9L6N3KWJAFHmXIx8ELLZnj89uPe6kk/
+5n6PUeIzSVJrz5E/vpMkuhirxVnPoKnH19S6NzOOPKA4HmlQTrVtOFOBQ/GTUAWu
+bQhiWAmaymRhjZcJKju1x09ZJDdYW6lzIB7vAWO3fYjzxWY4nmRnyRM9ubRLoqku
+hB8yx0Yqu/d1YqLzZ18VEBU5uwEkMjckei0URk1S2c+sq6Ahl2xbGb1r+1x+JaWw
+k04RYzkNxgqlQ54w6k3zWe5KPV9K2ZV27Uk9wXFlVhjmfhVISmOY0M+DI2plJF4l
+faioa3sQxLty9mg/3FhRa4bWr2sRb8ZmZ5InhD3oRHudOSMCjoBqycwHPR/fwOTC
+KJfmbsXSjhN83Dg+OVM6XcEzXJJvaMx7ykO8Gj2+IPgKmVcYHnxdM7ZmW6Zqjk7N
+DYtmUpOYROSy1l0Asewp7+WpiAxDtFoTwV3co7xMUTQtRosduOE=
+=ACGK
 -----END PGP SIGNATURE-----
 
---mwaWFDRAs4QXd9ix--
+--B05OqX5ZiDVPJLhX--
