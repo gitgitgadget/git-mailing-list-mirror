@@ -1,72 +1,92 @@
-Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8AE263A3
-	for <git@vger.kernel.org>; Mon, 18 Dec 2023 01:02:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EBCBE55E
+	for <git@vger.kernel.org>; Mon, 18 Dec 2023 06:53:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-67f3f602bd5so5176566d6.3
-        for <git@vger.kernel.org>; Sun, 17 Dec 2023 17:02:51 -0800 (PST)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P2KZAIsm"
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a1f33c13ff2so206201166b.3
+        for <git@vger.kernel.org>; Sun, 17 Dec 2023 22:53:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1702882416; x=1703487216; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=2KFOuhLcn2sIAVdfEBIWWZoeBFmade2nOP5e3/znLoc=;
+        b=P2KZAIsm2tiEZte/XIUnPMda1w3YXzHJ/lnaixO0qDVSrxQseHy61jKaMB5tSXXdeO
+         dmfXjveORG6Rr+akRcRd2B67WRYL7DI2AQEUoHFb05cbcfyPuD32eH9vVmZC7Nppj8NB
+         BYS5xz5jl+xdrmJlXJjpM6djBDYEs5+o+3koPs/HnbJkt0U4QBB1J1qvPLkc//INKdP+
+         DNCRVZaKcANI+yilNRNJ4yzpy2v1uR9alZQe+fpRTWGd974rASajCBqU0Fq3A3vZsg4R
+         n9KGz7VrllDT5tltFBbyBSRxofvDf3kxlrHutY+FvrxXeLLhQOthSg90yImUxKabwOzE
+         nc7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702861371; x=1703466171;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=c4qLVJ0ouPESBqUj62Gwd9fVoTpX04I0PU/Fx4YJukg=;
-        b=Z1PRHj9xA8ZIC1UDiCHGk7cZe4f8X+EgNtgUPTXXgeG902aBdW788t87eZ0iL5qBmY
-         UTXY8FdBmNIpV2xrE7Ls7XXFx+82+ZLNWV0BW/paCzcVTkUd8+7Zediq0jMJqlYJeLek
-         nQAS/ngtCXzzA2tQlRh3by/TYi7VooUc6Bpj0dmPbqlb4MZD4GuyGkIWbE4ULcRSt+uK
-         ry+cVSIBdxywCm1NCwdAPG6meAmdWj5sprdq7BWbi8AR9aQBVRtNPw2RRyeSBF6OcY0P
-         3R2wPlscOHR+vSiJWTEc1zMuyUxy+++cE7JiOfE9QYDKsme+1iniIiI18+rPTgCb9IO5
-         vH8A==
-X-Gm-Message-State: AOJu0Yx5TMAUofNdoWIeCnYjGZ5Rqxm9zYT9SIMxMfH8v1nPUVlPN1QM
-	GyXrMxyFncbFZslYrRR4MF4byVBUIUpA4JiwdLmYVhthafg=
-X-Google-Smtp-Source: AGHT+IGfFwTeVpaU4xPGRp7xnF38woaaKERoyKjPCRsQSopnnKMRNIrTo4m9ITjc/y1c4LDqFXDyPR/8S7gtE+6W628=
-X-Received: by 2002:ad4:5aeb:0:b0:67f:763:1480 with SMTP id
- c11-20020ad45aeb000000b0067f07631480mr13915366qvh.51.1702861370782; Sun, 17
- Dec 2023 17:02:50 -0800 (PST)
+        d=1e100.net; s=20230601; t=1702882416; x=1703487216;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2KFOuhLcn2sIAVdfEBIWWZoeBFmade2nOP5e3/znLoc=;
+        b=t94biol6Kbo+2UkOYdZ6fMju1KePfQIJz/RuvBc5pIuhJUgD7wf7AbeL1geY/rbIIF
+         ksw58vQhM4JblkQIgQVMmvqb2HmABWLkLYfSSVdQuiOVYiOaQf1AbQve5elWNRsaaRJb
+         9qUGERvBtwkF0MxvTo1s80YeKbKGbMYw64Pcdu2yDKL5fGeG9n5wDcYZh+LzsJA+hkUJ
+         vbJujeMJqmbpdv2n2nQxCZHrJKAG/Mt7FvxZe+i20fL4pR2w0WlKCnwVk0TFjSn9/v9m
+         RPaQ9oBCDA309cONew2zUplnrwNdcQAjWW9EfzajqkB6uShUB7qDrQhAvmHKT5xVQdTW
+         NCSA==
+X-Gm-Message-State: AOJu0YyOe1auYFVKd7KRvYD82sLvk1sTlTDo5O+RyRH+oZA0tRK5+fjT
+	nSu/u41QMMIND5spkpG032mMrveLGCtjdQ==
+X-Google-Smtp-Source: AGHT+IEgTjpmfOJIsC4TcPg+bI4zweDITvpodEMQu07vFm0PICvYGYxE9cOkJGM3A+pg/ruMd2m2Vg==
+X-Received: by 2002:a17:906:84:b0:a23:499c:75b2 with SMTP id 4-20020a170906008400b00a23499c75b2mr756646ejc.70.1702882415559;
+        Sun, 17 Dec 2023 22:53:35 -0800 (PST)
+Received: from Michaels-MBP.fritz.box (2001-4dd7-e0bf-0-39a6-bdd4-29ba-7091.ipv6dyn.netcologne.de. [2001:4dd7:e0bf:0:39a6:bdd4:29ba:7091])
+        by smtp.gmail.com with ESMTPSA id hx14-20020a170906846e00b00a235c133583sm600165ejc.126.2023.12.17.22.53.35
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Sun, 17 Dec 2023 22:53:35 -0800 (PST)
+From: Michael Lohmann <mial.lohmann@gmail.com>
+X-Google-Original-From: Michael Lohmann <mi.al.lohmann@gmail.com>
+To: git@vger.kernel.org
+Cc: Michael Lohmann <mi.al.lohmann@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Why is `revert` undocumented in interactive rebase todo help?
+Date: Mon, 18 Dec 2023 07:53:13 +0100
+Message-Id: <20231218065313.55725-1-mi.al.lohmann@gmail.com>
+X-Mailer: git-send-email 2.39.3 (Apple Git-145)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <IA1PR12MB604488A775E3390E9B7E56BEB891A@IA1PR12MB6044.namprd12.prod.outlook.com>
-In-Reply-To: <IA1PR12MB604488A775E3390E9B7E56BEB891A@IA1PR12MB6044.namprd12.prod.outlook.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Sun, 17 Dec 2023 20:02:39 -0500
-Message-ID: <CAPig+cTEmiQzD7D7qEKDsyGf+08AtNQzy=GfPZDrRtM2ytKnUw@mail.gmail.com>
-Subject: Re: Unable to install git-2.43.0 from source on macOS Big Sur 11.7.10
-To: Jonathan Abrams <jonathansabrams@outlook.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Sun, Dec 17, 2023 at 5:54=E2=80=AFPM Jonathan Abrams
-<jonathansabrams@outlook.com> wrote:
-> I am trying to install git-2.43.0 from source on macOS Big Sur 11.7.10.  =
-I have Xcode 13.2.1 installed.  I have read https://github.com/git/git/blob=
-/master/INSTALL.
->
-> The command that will not complete successfully is sudo make all doc.  Th=
-e Terminal output before the error is as follows.
+Hi!
+I wanted to align rebase and revert/cherry-pick a bit more (for the
+latter I am currently finishing my patch for --show-current-patch and
+then looked into possibly implementing --edit-todo). To avoid code
+duplication I wanted to reuse the existing interactive-rebase code as
+much as possible and ended up at the todo script parsing in the
+sequencer. I was a bit surprised to find that the file could already
+handle the command `revert`, even though it isn't documented in
+`append_todo_help` of rebase-interactive.c - is that by choice or just
+missing documentation?
 
-What steps did you take to build the project? Did you simply use `make
-all` alone, or did you run `configure` first? Generally speaking,
-running `configure` should be unnecessary on most platforms.
+Whenever I wanted to achieve this I used `break` and then manually did
+the revert, which obviously works fine, but it is much nicer to put the
+command in the todo file... (Now that I think about it I could also have
+done it with `exec`, but that is also not the nicest solution :D ). The
+only other command not mentioned is `noop` which is obviously not too
+useful apart from distinguishing an empty list and aborting, so I
+totally understand it missing.
 
-> Undefined symbols for architecture x86_64:
->   "_libiconv", referenced from:
->       _precompose_utf8_readdir in libgit.a(precompose_utf8.o)
->       _reencode_string_iconv in libgit.a(utf8.o)
+Yes - in contrast to all the other options it does not have a single
+char notation (and 'r' is obviously already taken und 'u' for undo as
+well or 't' for the last letter), but why not show it in the list
+without it? Or maybe add 'v' for "reVert"?
 
-It looks like it's not linking against `libiconv`. Aside from
-answering the above question (and reporting the contents of
-"config.mak.autogen" if you did run `configure`), you can also run
-make as:
+Cheers
+Michael
 
-    make V=3D1 all
-
-to see the actual command it's running at the point of failure. If you
-paste that command, then we can find out whether or not it's trying to
-link against `libiconv`.
+P.S.: @Johannes Schindelin I saw your work of making the todo files in
+the sequencer more reusable and the many reworks/improvements, so I
+added you in cc - I hope that was alright (otherwise I'll buy you a
+Kölsch as an apology ;) )...
