@@ -1,120 +1,102 @@
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B21A225A5
-	for <git@vger.kernel.org>; Tue, 19 Dec 2023 16:54:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6BBA37D13
+	for <git@vger.kernel.org>; Tue, 19 Dec 2023 17:07:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XVkUfvDH"
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2ca02def690so55416941fa.3
-        for <git@vger.kernel.org>; Tue, 19 Dec 2023 08:54:08 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GINlrw9I"
+Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-3ba2e03e21cso3223460b6e.0
+        for <git@vger.kernel.org>; Tue, 19 Dec 2023 09:07:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1703004846; x=1703609646; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
+        d=gmail.com; s=20230601; t=1703005657; x=1703610457; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZvAE3Su2pwykJ9SUDLPeC/l3i/XOMbQOwIxv4CiYTyY=;
-        b=XVkUfvDHApTtV4cYt002/uXXYenWDR2+o2VYFXcy/Gr/NTnQit3wLHMbcti9CCaKxE
-         gP/sSdZMXWen2Kr//IUDtxxpk+PD1kHC46Ci76Jh3vLE50RZIEDScybHo8yoPQ3r0IvS
-         2oujk7LJr9yzDftFydy/QmmeoWRrGMpsK2EGMcBffJQvfOC5g8QOOBS2UzC55MKAT11C
-         4wvqsEMYfnWzPsmo2t2nY88jHhWGUNAVhT+nzpMRRTwHm/a5n6RCgaMxzfP4Zb+nmOAF
-         Qas2hr26Lt4t6FZr6F+mC6pcVhx1s5M2Z4zFeuv6okqVBo0mvrNG7qmTNMiar9P5wxVE
-         jB3A==
+        bh=gHUqrJZeNif+kRhIusaIPMbUONmBVOVmQaWEq7f2fvw=;
+        b=GINlrw9IfUeY89q7oq/QaC7I9hpz2WctUDMSEdFZVqoBsj6atGTX7pY+JCBwvBzC45
+         91+lHmZUWvCnmR8eeJ07WrJvvlfL8jZDUmf3ow/8TPKLK+dRmMEjQMQ7ZJdgJgbwivUi
+         c2RbijtJPRIQo+mfG/1gtZhpopNHmLrzSbOpsUBDe+3Jr4JJpzTRlv1YxEPiYeNaqx35
+         osMd3uiHLmwMVC5HAE4T4uwsb66OUsW3KInk2ixyy4HH8nIO8p9w3aA4ykHAe7kkioK7
+         p2crhn0y0e1/EORAuHBpsJqzXg4xMmsvbdcpiYtXUeizTyuH/JdYgqBQoI5xb2WH7jP7
+         cXJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703004846; x=1703609646;
-        h=content-transfer-encoding:to:subject:message-id:date:from
+        d=1e100.net; s=20230601; t=1703005657; x=1703610457;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ZvAE3Su2pwykJ9SUDLPeC/l3i/XOMbQOwIxv4CiYTyY=;
-        b=HyRTrBw4U3R4auUZgVu01JADleVxOq2LYPiktMMPhS6nUwHjag0gTxSkM8iyFHsZpP
-         W4xmD04kzqQbtkf5CEhA3ebvgRhCQ6/FRbSns3XbK4JuXXDifU9vJ+nUEY6ayJT00tKM
-         smYhNv+1tGQguxEoDXjFAkrmnotktVHSi75s2HjwXkkRkBq0hkB6k79NIgBdPMQ5RsI2
-         aUke5Txm59B3KGaSwibn0FLFEjr6/ULEzpyanakGs7HXq7Dw/KjojQf1Z3kklnUvDUJ0
-         ubtfY+xliwJB78ogCd4h6bHCqQ3zJpQokpTyPpTbeTHaqAq0MJH2X4UAqxi5+0690yBb
-         T72Q==
-X-Gm-Message-State: AOJu0YzuP2BhrYLX1FfziNi/+WHkoRafEUBFe6LzX4vjzoGPJ2qeXxQ3
-	ITn4+8xTDsCaxxv2auRrYlmM1ITI+CxPqBqAd4O6KCv5O/8=
-X-Google-Smtp-Source: AGHT+IFRrq54q8P/Z9FT4v7z686yMwvu3hT5c+Yc2/dsZLZxXI5yyHeRBzcpu9Albe589+A6LiyN9R4RNt36OH+KlB0=
-X-Received: by 2002:a05:651c:a0e:b0:2cc:8481:f213 with SMTP id
- k14-20020a05651c0a0e00b002cc8481f213mr674640ljq.36.1703004846243; Tue, 19 Dec
- 2023 08:54:06 -0800 (PST)
+        bh=gHUqrJZeNif+kRhIusaIPMbUONmBVOVmQaWEq7f2fvw=;
+        b=lCA4txtv5t+hSj7VzaaKIJBm25y3g6tYN4Sg82xaXfSkneUhrBLUpoH2c7KaBr5Xyk
+         ZPgW0kx/WLkUiWtkiH9nUQEfdfw5fVequABYjRO4lyy8Ucx4hscPPT8aqolBFQ0WDsVy
+         dn2EnpXrelu1n9W6keQKsH0ovO9c7vqlPkCH+Y60La4H3e9iwx0vUkqZ1XgXC4+ns2kb
+         kht1CkLZY3w8oGhDJO1fNyDS0dNtzgTWeR9FOS1o7eyoUPO47w/ervviGZXru6s96huP
+         ff6SFVIsPaGeX/GVC04/eFHNpy+lH+io3cEMr5iUXLk02KbGddOu9ImsZ6wmY+HCsoB+
+         AB9Q==
+X-Gm-Message-State: AOJu0Yys3YHExx6ELk5NYt6Cd+dlbn/Fatpc0L5+XxoxaRP+PLfculst
+	Coj0kJYcaPHrymT7e/Bjw6Ahqm0YvkqZ04ccbySE8TjtS+M=
+X-Google-Smtp-Source: AGHT+IEFUPQW0WVtsEQZjajo3bEwhfOsggzloFxBTMuMrF7t67zClIi0vi9BIueiN2boQVrPhE25zKcPcTLaEzvswss=
+X-Received: by 2002:a05:6808:398c:b0:3b8:b063:6672 with SMTP id
+ gq12-20020a056808398c00b003b8b0636672mr17711940oib.105.1703005657516; Tue, 19
+ Dec 2023 09:07:37 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Josh Reed <jriddy@gmail.com>
-Date: Tue, 19 Dec 2023 11:53:54 -0500
-Message-ID: <CAELOy+5AsRyLEs-WdYw1spqkmMDKjKSQzbogAoRBFe-zGLjvXg@mail.gmail.com>
-Subject: git diff-files bug
-To: git@vger.kernel.org
+References: <pull.1620.git.1702908568890.gitgitgadget@gmail.com>
+ <xmqqle9rfkvd.fsf@gitster.g> <xmqqbkanfkjy.fsf@gitster.g>
+In-Reply-To: <xmqqbkanfkjy.fsf@gitster.g>
+From: Chandra Pratap <chandrapratap3519@gmail.com>
+Date: Tue, 19 Dec 2023 22:37:26 +0530
+Message-ID: <CA+J6zkQVcSqpi8yRirEJn6Vbe9WkvhtWE5_YRZVzq7bNrFoFPA@mail.gmail.com>
+Subject: Re: [PATCH] Teach git apply to respect core.fileMode settings
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Chandra Pratap via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+Thanks for the review, Junio. I have considered your feedback and
+will adjust the patch as such. The mail formatting issues seem to
+have arisen from my invigilant use of GitGitGadget.
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+> IOW, I am wondering if the above should look more like
+>
+>        if (!state->cached && !previous) {
+>                if (!trust_executable_bit) {
+>                        if (*ce)
+>                                st_mode = (*ce)->ce_mode;
+>                        else
+>                                st_mode = patch->old_mode;
+>                } else {
+>                       st_mode = ce_mode_from_stat(*ce, st->st_mode);
+>                }
+>      }
 
-> bash
-=E2=AC=A2[jreed@toolbox example-project]$ git diff-files --exit-code --patc=
-h; echo $?
-0
-=E2=AC=A2[jreed@toolbox example-project]$ chmod g+w README.md
-=E2=AC=A2[jreed@toolbox example-project]$ git diff-files --exit-code --patc=
-h; echo $?
-1
-=E2=AC=A2[jreed@toolbox example-project]$ git diff --exit-code --patch; ech=
-o $?
-0
-=E2=AC=A2[jreed@toolbox example-project]$ git diff-files --exit-code --patc=
-h; echo $?
-0
+You're right, we should prioritise the file mode info from the
+existing cache entry (if one exists) instead of blindly assigning
+the one from the incoming patch. It's more robust that way.
 
+> Perhaps we would want to check with "git ls-files -s script.sh" what
+> its mode bits are (hopefully it would be executable).
+>
+> Similarly, check with "git ls-tree -r HEAD script.sh" what its mode>
+> bits are?
+>
+> Check that the patch expects script.sh to have its executable bit
+> here, too?
 
-What did you expect to happen? (Expected behavior)
+I assume we're doing all this filemode checking to ensure that the
+executable bit doesn't get lost due to any other git command?
 
-Git diff-files should likely ignore group permissions changes, or at least
-its output should be stable across the same worktree/index state.
+> The code change in this patch is primarily about making the code
+> work better for folks without trustworthy filemode support.
+> Emulating what happens by setting core.fileMode to false on a
+> platform with capable filesystems may be a way to test the code, but
+> we should have a test specific to folks without FILEMODE
+> prerequisites and make sure it works well, no?
+>
+> IOW, shouldn't we drom FILEMODE prerequisite from this test?
 
-What happened instead? (Actual behavior)
-
-The command `git diff-files --exit-code --patch` fails with no exit code wh=
-en
-a file mode has changed in a way that the rest of git commands ignored.
-Furthermore, subsequent git commands seem to change the behavior of `git
-diff-files` in this regard, so it's hard to tell what is the expected behav=
-ior.
-
-What's different between what you expected and what actually happened?
-
-The `git diff-files --exit-code` command is inconsistent in how it behaves.
-I suspect it should ignore irrelavant mode changes like `g+w`, but even if
-it should report them, they should produce a patch or at least have stable
-results when we re-run the command.
-
-Anything else you want to add:
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.41.0
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 6.5.10-200.fc38.x86_64 #1 SMP PREEMPT_DYNAMIC Thu Nov  2
-19:59:55 UTC 2023 x86_64
-compiler info: gnuc: 13.1
-libc info: glibc: 2.37
-$SHELL (typically, interactive shell): /usr/bin/fish
-
-
-[Enabled Hooks]
-pre-commit
-pre-push
+I will keep that in mind.
