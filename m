@@ -1,136 +1,81 @@
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61D5D12B6E
-	for <git@vger.kernel.org>; Tue, 19 Dec 2023 07:42:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="GroErZ9i"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-	t=1702971738; x=1703576538; i=l.s.r@web.de;
-	bh=Qh07KF/xEGDs8SA5+69tVQXmza3y0dqx53oyoDMqrt8=;
-	h=X-UI-Sender-Class:Date:To:From:Subject;
-	b=GroErZ9iakKBCmAXx/mwUIavwnNsGffIWAf1A2K1ASlv4mx7G7XmsDItocMOMFWt
-	 2qbbfOJlbiWUNtUlnv3sOZODPG/S51uHGeHhIwINCtI73fSGP106zHzEdi+Hl+rW7
-	 CECNpcRQUB2xYt2f7T69XOD+2gnoWRDsmJT5uBvUxd174zHXgL75n/ZTFZeQHL9IJ
-	 qvt8UTG5W2fSdl9Ndr+OCAzmYgoXG5H7F/Rzf6tOUugTgKKq+HVnoe173Rqo0I4Cn
-	 gJMBOiBH405wHHYU9S1hpkLRFXEUzsVXrIw7BtVoy40yCG/dVxe5ELwSuTH0+CVpV
-	 vpFmXBRfE0VQ6qVzJA==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.23.9]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1Mdf89-1qg9vP1gn3-00ZDxT for
- <git@vger.kernel.org>; Tue, 19 Dec 2023 08:42:18 +0100
-Message-ID: <4ab7431c-6c1b-448c-b4d2-e8b9be0e4eef@web.de>
-Date: Tue, 19 Dec 2023 08:42:18 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BADF311700
+	for <git@vger.kernel.org>; Tue, 19 Dec 2023 07:55:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-5c85e8fdd2dso34256027b3.2
+        for <git@vger.kernel.org>; Mon, 18 Dec 2023 23:55:17 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702972517; x=1703577317;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZYyyr4lZWOHdXTmy/k1eN6PII6V80104S9A6lGaVE64=;
+        b=KmYFqJERRQPW1N9/D6FzhHgiux9Z1Bi0E9LkMTuCfG2Fb93zU/iPZPcDDKYkEu4Yq8
+         1XQ0M4AFl/DpQJ4jU+X5TqG7B8JnByq3p1kiSeO+Q6ZWdElucEMYJNsgSxLZzST/dKE8
+         jkSxKohis/5MxQHBMU1X7OUrXytDPEUWJ9XIJqvmzwVhSdvBDhGlha6Yy92C9qdATbHo
+         /g7dui21SkdxinA8A+/pJWG5P5IvYc97MvqaT/+GFqjmbszXgBcdmE29sJmih2vPFrNc
+         vO+LRI8AnOIdk8aJ+GnCgtF6pSEj91ECWgsXlYK43EC318yW4slfYRzmFm4fH0WmwOI7
+         SjBw==
+X-Gm-Message-State: AOJu0Yxcdn8ira8PnTcquq6J2eqAddvSQkXD8pSWg60Z63Mh+8Q9RKwE
+	EgpfUID5aU3iXmpetzJPU8RE8LuBzSTCIkttg/Sdts+Q
+X-Google-Smtp-Source: AGHT+IEJ47m93ZGDG4FI4hARNFFsrBT+X+tzT2yyOLO6bUJ3eJKAKJfIqleLNd+C5eGRljBH18aYHqK5aXhbmrj/4Hk=
+X-Received: by 2002:a25:9b08:0:b0:dbc:c592:5a3c with SMTP id
+ y8-20020a259b08000000b00dbcc5925a3cmr6966876ybn.2.1702972516656; Mon, 18 Dec
+ 2023 23:55:16 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: Git List <git@vger.kernel.org>
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] rebase: use strvec_pushf() for format-patch revisions
-Content-Type: text/plain; charset=UTF-8
+References: <IA1PR12MB604488A775E3390E9B7E56BEB891A@IA1PR12MB6044.namprd12.prod.outlook.com>
+ <CAPig+cTEmiQzD7D7qEKDsyGf+08AtNQzy=GfPZDrRtM2ytKnUw@mail.gmail.com> <IA1PR12MB60445F50DD0F844B2B779BA8B890A@IA1PR12MB6044.namprd12.prod.outlook.com>
+In-Reply-To: <IA1PR12MB60445F50DD0F844B2B779BA8B890A@IA1PR12MB6044.namprd12.prod.outlook.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Tue, 19 Dec 2023 02:55:05 -0500
+Message-ID: <CAPig+cQgTNq8rKiXm_dDha+Rz-=Z9O4_gvWLWdcPJe1yp=hQ8Q@mail.gmail.com>
+Subject: Re: Unable to install git-2.43.0 from source on macOS Big Sur 11.7.10
+To: Jonathan Abrams <jonathansabrams@outlook.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:U94jBF/eWDU7tHsz/Bp1I003luMZyrVnsiSkOFrWKtsA6mZ8iyz
- Xqpuwn252cZpCwrmcuuSxiEuOyGxpMkyd/sjnhJHl8RHvGpo4ECRbNigYH1B+d8kJO4KiVC
- vCb4CbXp6SGYEo9RUVs79Vtrye0sEEUXSEv5+FHVHtoPKxugNqSPkXmrrtjiqWuO9bc0MVA
- 7uV0tUkX4oXEiH3fXUCkA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:PO82wwY+DPA=;hTFbhoiGmeCDgmvpJLjJ4LoQ0kK
- Our4cQRw4mHCFO0lQg2zTJOQ1syAq9cQyXUxNUIw15Iz7DRWSJ2TNE7G7inWgUTzHSEmODEeD
- M6hn8E0WhxEr+B1uNrxBrx68Onkb7nOI4b/2YNYFDe7LEmRNpEuZwbbPf8t8UbeTrzkdc8aOp
- SpUmo1LXV7TILINKoyanGIwl9IPymi8LNSjCPnbaqoPBfb3BiHV9OHSkzv9hFG7FVouEqswp0
- 85nR1seoIll+m2iipxkw4PVE9yY+tuZNitm1WH06SQVb1cUzxrV8NvhdP9dmC6lqHSEAM0Fom
- xzy1XuUxFKmHhGSm5VhgZ6ekFKkGS/lG49GEc62aiokcQPNQAThTW89f+EtTgSrArCKaB1rbw
- bluV5xZoJP/PiYlcOxf5R1Arja4oSnVFANtLJqjRTyMuA7vg7tuoT5o7/zIHSzG0rGx24snCB
- XeQITBD9JhUDXYgH3Du7VCiRCFWQt2MB9/HWoVCk/3A8ddG+RZTE5qVuhq1XVrLI6xDOtJNVH
- MspMHrkgmmHFaJ7CZAeZmrvMpT4vOGZP5Dq9KTPocFZVQrLc0hjnHooHjrMld1SSpDX392ENX
- OsAProC93Y58KWr7n8d1vobx24nNZxYP5Qn7JGftm5b07hIum1x/hJmACgDmOChYBGR3neYya
- SmcuWYd3CWyHhBFFzPdvPRos2lFdD2qL/GjRNitJ0mf9JANQH1zfEv+nh7LtcWvUamQUGClkp
- awL/FQgqBHDKeGV1mqpclA85h8GV7+anOvzbc7B8vQ/55ZDIWLAQtubyTlbBpS0KVXJ8z6z/T
- por1pZ6eHVm2x3dqC4La9pnRTGNZvR3kC3kwUd8i+zlryOwyAAwrQst+1SfOsqV85W4IUBecB
- +E7bymsoc3uFMh6mbMyRGJF6pnNoQJrPtXtI0pZA/30H9kLNzC1BxlPc9t2WvLRoSYMXoUkNi
- NtOi6g==
 
-In run_am(), a strbuf is used to create a revision argument that is then
-added to the argument list for git format-patch using strvec_push().
-Use strvec_pushf() to add it directly instead, simplifying the code.
+On Mon, Dec 18, 2023 at 7:03=E2=80=AFAM Jonathan Abrams
+<jonathansabrams@outlook.com> wrote:
+> The contents of "config.mak.autogen" are as follows:
+> --
+> CURL_LDFLAGS=3D-L/Users/jonathana/opt/anaconda3/lib -lcurl
+> CHARSET_LIB=3D-liconv
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
-Formatted with --inter-hunk-context=3D14 for easier review.
+So, 'configure' found a "libiconv". Okay.
 
- builtin/rebase.c | 17 ++++++-----------
- 1 file changed, 6 insertions(+), 11 deletions(-)
+> The last output of make V=3D1 all is as follows.
+> --
+> gcc   -g -O2 -I. -o git-daemon daemon.o common-main.o libgit.a xdiff/lib.=
+a reftable/libreftable.a libgit.a -lz  -liconv  -liconv
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 9f8192e0a5..ddde4cbb87 100644
-=2D-- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -582,7 +582,6 @@ static int run_am(struct rebase_options *opts)
- {
- 	struct child_process am =3D CHILD_PROCESS_INIT;
- 	struct child_process format_patch =3D CHILD_PROCESS_INIT;
--	struct strbuf revisions =3D STRBUF_INIT;
- 	int status;
- 	char *rebased_patches;
+And it's linking against "libiconv" (the "-iconv" part). Good.
 
-@@ -615,34 +614,32 @@ static int run_am(struct rebase_options *opts)
- 		return run_command(&am);
- 	}
+> Undefined symbols for architecture x86_64:
+>   "_libiconv", referenced from:
+>       _precompose_utf8_readdir in libgit.a(precompose_utf8.o)
+>       _reencode_string_iconv in libgit.a(utf8.o)
 
--	strbuf_addf(&revisions, "%s...%s",
--		    oid_to_hex(opts->root ?
--			       /* this is now equivalent to !opts->upstream */
--			       &opts->onto->object.oid :
--			       &opts->upstream->object.oid),
--		    oid_to_hex(&opts->orig_head->object.oid));
--
- 	rebased_patches =3D xstrdup(git_path("rebased-patches"));
- 	format_patch.out =3D open(rebased_patches,
- 				O_WRONLY | O_CREAT | O_TRUNC, 0666);
- 	if (format_patch.out < 0) {
- 		status =3D error_errno(_("could not open '%s' for writing"),
- 				     rebased_patches);
- 		free(rebased_patches);
- 		strvec_clear(&am.args);
- 		return status;
- 	}
+But it doesn't seem to like your "libiconv" for some reason.
 
- 	format_patch.git_cmd =3D 1;
- 	strvec_pushl(&format_patch.args, "format-patch", "-k", "--stdout",
- 		     "--full-index", "--cherry-pick", "--right-only",
- 		     "--default-prefix", "--no-renames",
- 		     "--no-cover-letter", "--pretty=3Dmboxrd", "--topo-order",
- 		     "--no-base", NULL);
- 	if (opts->git_format_patch_opt.len)
- 		strvec_split(&format_patch.args,
- 			     opts->git_format_patch_opt.buf);
--	strvec_push(&format_patch.args, revisions.buf);
-+	strvec_pushf(&format_patch.args, "%s...%s",
-+		     oid_to_hex(opts->root ?
-+				/* this is now equivalent to !opts->upstream */
-+				&opts->onto->object.oid :
-+				&opts->upstream->object.oid),
-+		     oid_to_hex(&opts->orig_head->object.oid));
- 	if (opts->restrict_revision)
- 		strvec_pushf(&format_patch.args, "^%s",
- 			     oid_to_hex(&opts->restrict_revision->object.oid));
-@@ -665,10 +662,8 @@ static int run_am(struct rebase_options *opts)
- 			"As a result, git cannot rebase them."),
- 		      opts->revisions);
+I notice that you seem to have an Anaconda environment active. Do you
+know if this "libiconv" happens to reside within the Anaconda
+environment? If so, what version is it and from where was it installed
+("conda-forge", "anaconda", some other)?
 
--		strbuf_release(&revisions);
- 		return status;
- 	}
--	strbuf_release(&revisions);
+Have you tried deactivating the Anaconda environment ("conda
+deactivate") before building Git? Also, I would suggest trying without
+even running the configure script at all. So, for instance:
 
- 	am.in =3D open(rebased_patches, O_RDONLY);
- 	if (am.in < 0) {
-=2D-
-2.43.0
+  % cd git
+  % conda deactivate
+  % make distclean
+  % make all
