@@ -1,88 +1,131 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from APC01-PSA-obe.outbound.protection.outlook.com (mail-psaapc01on2082.outbound.protection.outlook.com [40.107.255.82])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 656C513ADE
-	for <git@vger.kernel.org>; Tue, 19 Dec 2023 08:42:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BA5F14295
+	for <git@vger.kernel.org>; Tue, 19 Dec 2023 10:18:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rageshkrishna.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rageshkrishna.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XbGgwN75"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-40d12b56a38so33258295e9.2
-        for <git@vger.kernel.org>; Tue, 19 Dec 2023 00:42:10 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=rageshkrishna.onmicrosoft.com header.i=@rageshkrishna.onmicrosoft.com header.b="HIGmMDlT"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=USgGIESe3dzVOVgnEs39pi9JmeR1RZVLIAsRGurlRI6osfGlFjAKKKB8v6hZZDQA8mGqozwAPElT2+/ng6aWHrFIXh5nKfEkKDx4L/T6k64tkaa30pDlP4CMrTID6mBT+z1nlLmR43GWEwpLqhEP22Bo3XCEFo5SDKO/TbGmzRiIyukSQ2ghSnvNs2L9VX3bGNuv/YhX+vvdFa7h4EeEpHno8mIOLL1GPlU7sVrPWVqdggZcCUi/+c0zLEmHDiJNwTCeBVa8M0av9Xec0iJQiyz5GLpEwIuht1YowNPsAcqOKw8HF39zKOQNEvkYDsffh/DEn/5xc/CCvBT8JyGDPw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=1mvZvZnFXsfGjytE/1NWd/vSyXOm4yEqI3NVGY8BByU=;
+ b=ehLS4srQl3cCr0MNAgL3odWHg6ZX6cpQk9pPZRlKCy3p+veMQil3cJ/MNEIbuTyaDl0VrieU9pyzJybcVJVpkhRcKJDMtiAxGptF2DMsQWRcQvn/2NWJXqX6OkZKSY+eSDpHe4e5hazLC0xv8ku6SixkpMQv9JyjiWnToXh100Hq6wD4g62asYNGXLfBMyFsvXh8BhmpEjYAFETBBX+yhdV7xvyy07HRGE6U48+HXV60cghMKtEohmTr/bexqQ7RIzyX1BZH1WCl0th1+EXE2qrx6s6Fbdals2zbkDZCrVBugF4pbkuhXCVTYvnFTjXj681AyMRzylFEK8dFz2iY3A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=rageshkrishna.com; dmarc=pass action=none
+ header.from=rageshkrishna.com; dkim=pass header.d=rageshkrishna.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1702975328; x=1703580128; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cgKA2Zz3ci6RKvd4YBkO6M/PwiKD3KRRYNdreB/ehfI=;
-        b=XbGgwN75z94Ds+GamPGn+dVZbhG80gWQhqgeuqBIWDBVNkWhyTiv5Y+WpJ/6g8hw6o
-         2drZUw+xx2tWT6aSWuFNfzm+ocktj3Dvm06K/X4AJwd+yRphnr0wxNWBoOctdVT6azg7
-         cmuHCTz+wv6P9U6iWG/5eJ/MUqYAZ/7EbNNJ/zayg9cTwOc1Dzm9sUlsxzQ+faO27fsY
-         /w01bIRPfm9C51sChaO+sXwPk51MME/hGpUknB8eFHKnKIVcrc5K2haFi/CgMYm1JjVI
-         O73gABaHBpIBeawb+cQmifFzzon127oVWpVVvWKVeXgaOWkY3dMGm3lxdK4IISg+X5Ly
-         BRTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702975328; x=1703580128;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cgKA2Zz3ci6RKvd4YBkO6M/PwiKD3KRRYNdreB/ehfI=;
-        b=oYbUKnYRowZtp4ghNi+1Jivlqjia3zhxO15+voPBJflX3w5cOLtGjKPlS0OdL7v40o
-         B1sinWiZqZwgVWOijaPM2EZPbRnU9zaweYZ85mdNGAYckHYjQNc5EpksBf14T0/NioAB
-         gAvkua0oAobX0J7WaRzIWszBr7FaFMZj1QBtSzg41W5rAhXEGMLXpy3g3Zu/kTzfsjRJ
-         xDNMT4QaXT9MFHQSOTYpD6ni96IUdawwNAJs1qxM4TUDrDQMnmjHAhoFAEFqknkijBZC
-         vK4xVcHTcCmQyVMe+qBfJDOcf90U3nfniVf0d5mA2u2huIaaV43PfeREl3CipV39wBuI
-         3xqw==
-X-Gm-Message-State: AOJu0Yws2q2brfhFWoKC5aP9YHg6YFaTV6FtHsykJB6mvdI6y326ODYe
-	BuNA2f7jlVqlr8icQAGLuZuhpuednmA=
-X-Google-Smtp-Source: AGHT+IEihPhnblG3clHAMvAA04Lyl91jwFu56rvCC0Hvt5fH943rbbJDJRSmeevJsXL0LTv8YXAU2Q==
-X-Received: by 2002:a05:600c:4d0e:b0:40b:5e1c:2fac with SMTP id u14-20020a05600c4d0e00b0040b5e1c2facmr4285628wmp.60.1702975328117;
-        Tue, 19 Dec 2023 00:42:08 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m34-20020a05600c3b2200b004042dbb8925sm1764231wms.38.2023.12.19.00.42.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Dec 2023 00:42:07 -0800 (PST)
-Message-ID: <92469324813702418a9db0b2e760580518b225cd.1702975320.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1623.git.1702975319.gitgitgadget@gmail.com>
-References: <pull.1623.git.1702975319.gitgitgadget@gmail.com>
-From: "Josh Soref via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 19 Dec 2023 08:41:59 +0000
-Subject: [PATCH 8/8] SubmittingPatches: hyphenate non-ASCII
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+ d=rageshkrishna.onmicrosoft.com; s=selector2-rageshkrishna-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=1mvZvZnFXsfGjytE/1NWd/vSyXOm4yEqI3NVGY8BByU=;
+ b=HIGmMDlT1fe6CqHn/bNzf5SnAGANoQdJJqYhkedemsNHBjB/Xdoei8eqdhWzlgxP84sKPjQrzndi/40HD6rl13C3zbCScHZ4aQ7orvgBFsprTy3q6CGIQ8V7NHhC18F1gmIuZY5vpJUCCpF2MLeO6nrehlKVHarzO40YMbKEgGE=
+Received: from TY0PR06MB5442.apcprd06.prod.outlook.com (2603:1096:400:31e::11)
+ by TY0PR06MB5029.apcprd06.prod.outlook.com (2603:1096:400:1bf::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7091.37; Tue, 19 Dec
+ 2023 10:18:24 +0000
+Received: from TY0PR06MB5442.apcprd06.prod.outlook.com
+ ([fe80::f8a7:e213:c1b8:dc97]) by TY0PR06MB5442.apcprd06.prod.outlook.com
+ ([fe80::f8a7:e213:c1b8:dc97%7]) with mapi id 15.20.7091.034; Tue, 19 Dec 2023
+ 10:18:24 +0000
+From: Ragesh Krishna <ragesh@rageshkrishna.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+CC: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: Problems with Windows + schannel + http.sslCert
+Thread-Topic: Problems with Windows + schannel + http.sslCert
+Thread-Index: AdoqxlN6hY5l/8FIQF+TIZhwEG8Y/QC9Rg6AASo5eIA=
+Date: Tue, 19 Dec 2023 10:18:23 +0000
+Message-ID:
+ <TY0PR06MB54426B92E745B3035F0CC2DFD197A@TY0PR06MB5442.apcprd06.prod.outlook.com>
+References:
+ <TY0PR06MB544239787E909DD4EAC1CA42D189A@TY0PR06MB5442.apcprd06.prod.outlook.com>
+ <710affcd-f6bf-371c-d7e3-8bce3b01da3c@gmx.de>
+In-Reply-To: <710affcd-f6bf-371c-d7e3-8bce3b01da3c@gmx.de>
+Accept-Language: en-IN, en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=rageshkrishna.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TY0PR06MB5442:EE_|TY0PR06MB5029:EE_
+x-ms-office365-filtering-correlation-id: 0bec6452-03c6-4cde-827c-08dc007bd510
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:
+ EueHeENUpTLY1qiUO4vMEgjGsGMnBfs52OnHnw6Qtxl3c8VnwXK0ZYAFnpJqkHaBAQP3lGahNNNqAYSflqx0TJcOHODqBpTAwROBHCCqkk+cvohyzz+EdFaq6jOxH+P6jyUvxQ9TpxzN/kiRxWOCfoQ+53vGtixD6zGM6yhphGjH1w5xLIK4WvofB8owMljJ8o82RhR3VVN88JrebnKnjxPgMUDFxVrXgIKpAucSxEpAyQZzCAITswr8iFSqWn5fBl06nYRCMZWdvOmBmpYaUivvKEOWeuOvxJBJnG/C7zKdNdtoNbdcCydcoE+AyowqtYZxjd/70qJqxkMZ74QZNi5GVNNUrsYyWlnhyDaMwOJOsUez6mpH5uCL6GPmxewrRNELDEzU4Yc19INC8BdMwwyEz1ZBWDnymu8gaWBJE+sxukk3wt0tiEejPxwl2dcFGh1HBxEsUndJSG1E4YbjHRkUyeL7USo34BjpjwjA9P0SBWXRmyVOcVzOL2E421YuteFQ0uGEzavS5vLKSqRN6OkIgttWCzLafLvEhaQiXj1VmPaDiywKhi4M3zqbwK1+ZS7Tj1fsydc30OmcEz14ZBdNgUfkSznWrmuix08AguUKHzIMibJPdASpITJkPPzW
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY0PR06MB5442.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(366004)(396003)(376002)(346002)(136003)(39830400003)(230922051799003)(1800799012)(64100799003)(451199024)(186009)(71200400001)(8676002)(316002)(8936002)(6916009)(66446008)(66476007)(64756008)(9686003)(4326008)(66946007)(55016003)(66556008)(6506007)(4744005)(7696005)(52536014)(26005)(76116006)(478600001)(122000001)(2906002)(5660300002)(38100700002)(41300700001)(86362001)(33656002)(38070700009);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?OHn/U0TgcyKbfXkhIA6zYzwT433bCt1n6LKa3OIG98+6tC8EUwNrJCinwhW6?=
+ =?us-ascii?Q?291yZcChV9Dhk3V+597hM/dLJoUn3Y3OjHBxIKn06XVJOWggaTB5Qx50+nUF?=
+ =?us-ascii?Q?OuR055Ag2Zmc6NaK2oxqfVVG6xStxxJ5F1F43iC+tze9W9FFBpGPAqhv7EAO?=
+ =?us-ascii?Q?ETgH/rzXvM3d4mwW+bItj1ldMAI+RNH7o0KnoVXZlI99QQJmiJWbLrmj2RpL?=
+ =?us-ascii?Q?7mnq/fzGRAUnk6VCm88PaLJACZTgp9UL5eOTl9Lborv04qh122eAZMx096+l?=
+ =?us-ascii?Q?dwl5pGokO0SOW5uedjC+L2GvtWIH4+nRiv0j9zgd4c3qkDFeFla7V52rWXPL?=
+ =?us-ascii?Q?H+692ONU88oeeitjuiujcsdR2Y3Od34V/K1s+6vwYOzVCPMZmymxZGBTSUIj?=
+ =?us-ascii?Q?TlbLCqrquMELCLk0gTmsKpaX27jb/iRWwL4H+UiqLffMDCf18K5KT9mpU9S6?=
+ =?us-ascii?Q?7ejWjeUFngqoo/Fuj2Ye6rWHd6LOGXIyvOrhbYWzIghI6Lx04BamN4CghVix?=
+ =?us-ascii?Q?HB5cmOhVSgY7yRgnY/CuuNnbXxuy29GzHpaa6LlHxZ3TmXUqw22DCKCQsLo9?=
+ =?us-ascii?Q?dSn1n3ZNej03J0mQKRBXdRI9jJnaSBIbAvZxfGwZOSnvs3oloix5muHR4oyg?=
+ =?us-ascii?Q?gmu1AicSoPRvLOO/m6KKYK8wj4DbKzRrPHKdChq6Evd4bz+rYvVRZ8lcJjV+?=
+ =?us-ascii?Q?zoyhjQ7TlO0s/X3ImxY7MI1hA5tWd1iLV1S8wyRfwwCFv1VE9mvHaU8Xafk6?=
+ =?us-ascii?Q?TUPJk7N0Vlup0Xy1JiECYGfNH2o4uqx6DXbR6bKaSuXvpQRAWGuPBqTeCXRB?=
+ =?us-ascii?Q?vS0PrGkU27FeO4sw4LuCd4+7zI9UUtETk69TJsBTwEUq03ZWvwiF0uRBUE1N?=
+ =?us-ascii?Q?MUTH6xGKFkN2CzxrPJ/Bs5bGNUw+8QHmeARCX4wIgmRYK29ko2rTfNfrthDN?=
+ =?us-ascii?Q?LbPNl3vsVHCCVr4hH11OQUOuzE0L0n8piDbuM8lWUW4d/lT3rbgF+O9rP6qr?=
+ =?us-ascii?Q?BqX7KTPgI81XEgcTRxb9aEDPH2DoocHwLD6fLlE4GFeHLdWsvGh3rK4TS8hB?=
+ =?us-ascii?Q?fF1mgbnxGGWsxYZY9qog9RTiI1472PAAT767ZPg+ZxKviuj+oVwvw9lEqduF?=
+ =?us-ascii?Q?e0oE8X2b9/hRq+6+3XXHXDgD9Fol5DUKFKec07loh3qsuE7+DA8ZOc1kgc6O?=
+ =?us-ascii?Q?CRXkQkywcd4iyAq2xbNXp4jwRh1W3VTtlySlgM0xdSeuWgFNwxWe5IhxdJ80?=
+ =?us-ascii?Q?t9ptRRcXWyUhrMV7Oku9iFwR0O1M3/mktO9CCngMFwRgBI/06WlpHpZr89b7?=
+ =?us-ascii?Q?luC+1nSbJbxRUY2czsRG5cm5HAdlTJpE83KyDYrziLmol6+a9IhnhJ/91Z0Q?=
+ =?us-ascii?Q?6Pf53ie2T+gdnaU6r7xffLjiuMDdPO4G4zZK3BUDoOE8AAa+UvTXdfV7hqf2?=
+ =?us-ascii?Q?QYmbWYGC2lqOOmIwFuFuc5HYZCH5NrOLeRuIkQotU+RAi5X+BL69zuuNsi3t?=
+ =?us-ascii?Q?cSbuEI1hAkI8EOyPRnov/YnwrEWXByg4L/nZsHJtVRsLfCbXAKiKGKjpgtgj?=
+ =?us-ascii?Q?TqesR8qowPDH+pRLgMQMLy/mfdRsD4lqofgZO5Ek?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>,
-    Josh Soref <jsoref@gmail.com>,
-    Josh Soref <jsoref@gmail.com>
+X-OriginatorOrg: rageshkrishna.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TY0PR06MB5442.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0bec6452-03c6-4cde-827c-08dc007bd510
+X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Dec 2023 10:18:23.5329
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: bb23b077-6391-471e-8a55-ab9f219e59ad
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: ddoUH51+8d9+kmAp3eOjiU+tByQqSoGdXovKfqIOQ1alT1B5wpcjt2tZqShghEA6yG0JuC1lZau9I7crF6DWIxKR+en7eIxZkkyvnBBA44Y=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY0PR06MB5029
 
-From: Josh Soref <jsoref@gmail.com>
+Hi Johannes,
 
-Git documentation does this with the exception of ancient release notes.
+> However, contrary to what `git -c http.sslBackend=3Dlist ls-remote <url>`=
+ says on Windows, `git -c http.sslBackend=3Dopenssl ls-remote <url>` should=
+ work, too.
 
-Signed-off-by: Josh Soref <jsoref@gmail.com>
----
- Documentation/SubmittingPatches | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Thanks for the tip! Although I haven't made any further attempts to try and=
+ force openssl, I was able to get client auth to work with Git for Windows =
+by ensuring the client cert and root cert are present in the Windows certif=
+icate store and then setting "http.sslCert" to "CurrentUser\\MY\\{certifica=
+te thumbprint}}". This gets everything to fall into place and I suspect tha=
+t it is the "correct" way, for better or worse, to make it work on Windows.
 
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index b4fa52ae348..3c53592cfc8 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -700,7 +700,7 @@ message to an external program, and this is a handy way to drive
- `git am`.  However, if the message is MIME encoded, what is
- piped into the program is the representation you see in your
- `*Article*` buffer after unwrapping MIME.  This is often not what
--you would want for two reasons.  It tends to screw up non ASCII
-+you would want for two reasons.  It tends to screw up non-ASCII
- characters (most notably in people's names), and also
- whitespaces (fatal in patches).  Running "C-u g" to display the
- message in raw form before using "|" to run the pipe can work
--- 
-gitgitgadget
+One thing that tripped me up was that my root CA was using ed25519 for sign=
+atures, and my installation of Windows did not seem to like that one bit. S=
+witching to ECDSA seemed to fix it. I suppose that's another rabbit hole I =
+need to jump into, but it has nothing to do with Git :)
+
+Regards,
+-- Ragesh.
