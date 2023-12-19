@@ -1,102 +1,122 @@
-Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6BBA37D13
-	for <git@vger.kernel.org>; Tue, 19 Dec 2023 17:07:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B6FF374D0
+	for <git@vger.kernel.org>; Tue, 19 Dec 2023 17:12:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GINlrw9I"
-Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-3ba2e03e21cso3223460b6e.0
-        for <git@vger.kernel.org>; Tue, 19 Dec 2023 09:07:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1703005657; x=1703610457; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=gHUqrJZeNif+kRhIusaIPMbUONmBVOVmQaWEq7f2fvw=;
-        b=GINlrw9IfUeY89q7oq/QaC7I9hpz2WctUDMSEdFZVqoBsj6atGTX7pY+JCBwvBzC45
-         91+lHmZUWvCnmR8eeJ07WrJvvlfL8jZDUmf3ow/8TPKLK+dRmMEjQMQ7ZJdgJgbwivUi
-         c2RbijtJPRIQo+mfG/1gtZhpopNHmLrzSbOpsUBDe+3Jr4JJpzTRlv1YxEPiYeNaqx35
-         osMd3uiHLmwMVC5HAE4T4uwsb66OUsW3KInk2ixyy4HH8nIO8p9w3aA4ykHAe7kkioK7
-         p2crhn0y0e1/EORAuHBpsJqzXg4xMmsvbdcpiYtXUeizTyuH/JdYgqBQoI5xb2WH7jP7
-         cXJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703005657; x=1703610457;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gHUqrJZeNif+kRhIusaIPMbUONmBVOVmQaWEq7f2fvw=;
-        b=lCA4txtv5t+hSj7VzaaKIJBm25y3g6tYN4Sg82xaXfSkneUhrBLUpoH2c7KaBr5Xyk
-         ZPgW0kx/WLkUiWtkiH9nUQEfdfw5fVequABYjRO4lyy8Ucx4hscPPT8aqolBFQ0WDsVy
-         dn2EnpXrelu1n9W6keQKsH0ovO9c7vqlPkCH+Y60La4H3e9iwx0vUkqZ1XgXC4+ns2kb
-         kht1CkLZY3w8oGhDJO1fNyDS0dNtzgTWeR9FOS1o7eyoUPO47w/ervviGZXru6s96huP
-         ff6SFVIsPaGeX/GVC04/eFHNpy+lH+io3cEMr5iUXLk02KbGddOu9ImsZ6wmY+HCsoB+
-         AB9Q==
-X-Gm-Message-State: AOJu0Yys3YHExx6ELk5NYt6Cd+dlbn/Fatpc0L5+XxoxaRP+PLfculst
-	Coj0kJYcaPHrymT7e/Bjw6Ahqm0YvkqZ04ccbySE8TjtS+M=
-X-Google-Smtp-Source: AGHT+IEFUPQW0WVtsEQZjajo3bEwhfOsggzloFxBTMuMrF7t67zClIi0vi9BIueiN2boQVrPhE25zKcPcTLaEzvswss=
-X-Received: by 2002:a05:6808:398c:b0:3b8:b063:6672 with SMTP id
- gq12-20020a056808398c00b003b8b0636672mr17711940oib.105.1703005657516; Tue, 19
- Dec 2023 09:07:37 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xSB1vbJf"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 31DDD1B16BE;
+	Tue, 19 Dec 2023 12:12:35 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=K09GFRsqbSnx
+	c1TrcZN24VCZt00Id4Min1buy6rSepg=; b=xSB1vbJfTXXbo/VhR0eZYjQmkUYk
+	CKugDMYFZxayVM/fWn3hmqu45ipuzgQy5tmVLcCCqyCGELurR1C3uRPZvDUrScs4
+	Wn39T7lI36duQM5vi28OFqbhKCVhlqPYMVfO26PgR6g+5i6l+/a8sygV72SYgTOk
+	0fSn6dj2b027N7M=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 296881B16BC;
+	Tue, 19 Dec 2023 12:12:35 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.193.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 85BBC1B16BA;
+	Tue, 19 Dec 2023 12:12:34 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc: Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] rebase: use strvec_pushf() for format-patch revisions
+In-Reply-To: <4ab7431c-6c1b-448c-b4d2-e8b9be0e4eef@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+	message of "Tue, 19 Dec 2023 08:42:18 +0100")
+References: <4ab7431c-6c1b-448c-b4d2-e8b9be0e4eef@web.de>
+Date: Tue, 19 Dec 2023 09:12:33 -0800
+Message-ID: <xmqqmsu6ce0u.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1620.git.1702908568890.gitgitgadget@gmail.com>
- <xmqqle9rfkvd.fsf@gitster.g> <xmqqbkanfkjy.fsf@gitster.g>
-In-Reply-To: <xmqqbkanfkjy.fsf@gitster.g>
-From: Chandra Pratap <chandrapratap3519@gmail.com>
-Date: Tue, 19 Dec 2023 22:37:26 +0530
-Message-ID: <CA+J6zkQVcSqpi8yRirEJn6Vbe9WkvhtWE5_YRZVzq7bNrFoFPA@mail.gmail.com>
-Subject: Re: [PATCH] Teach git apply to respect core.fileMode settings
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Chandra Pratap via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ CD3A475E-9E91-11EE-BD08-25B3960A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-Thanks for the review, Junio. I have considered your feedback and
-will adjust the patch as such. The mail formatting issues seem to
-have arisen from my invigilant use of GitGitGadget.
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+> In run_am(), a strbuf is used to create a revision argument that is the=
+n
+> added to the argument list for git format-patch using strvec_push().
+> Use strvec_pushf() to add it directly instead, simplifying the code.
 >
-> IOW, I am wondering if the above should look more like
+> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+> ---
+
+Makes sense.  Between the location of the original strbuf_addf()
+call and the new strvec_pushf() call, nobody mucks with *opts so
+this change won't affect the correctness.  We no longer use the
+extra strbuf, and upon failing to open the rebased-patches file,
+we no longer leak the contents of it.  Good.
+
+> @@ -615,34 +614,32 @@ static int run_am(struct rebase_options *opts)
+>  		return run_command(&am);
+>  	}
 >
->        if (!state->cached && !previous) {
->                if (!trust_executable_bit) {
->                        if (*ce)
->                                st_mode = (*ce)->ce_mode;
->                        else
->                                st_mode = patch->old_mode;
->                } else {
->                       st_mode = ce_mode_from_stat(*ce, st->st_mode);
->                }
->      }
-
-You're right, we should prioritise the file mode info from the
-existing cache entry (if one exists) instead of blindly assigning
-the one from the incoming patch. It's more robust that way.
-
-> Perhaps we would want to check with "git ls-files -s script.sh" what
-> its mode bits are (hopefully it would be executable).
+> -	strbuf_addf(&revisions, "%s...%s",
+> -		    oid_to_hex(opts->root ?
+> -			       /* this is now equivalent to !opts->upstream */
+> -			       &opts->onto->object.oid :
+> -			       &opts->upstream->object.oid),
+> -		    oid_to_hex(&opts->orig_head->object.oid));
+> -
+>  	rebased_patches =3D xstrdup(git_path("rebased-patches"));
+>  	format_patch.out =3D open(rebased_patches,
+>  				O_WRONLY | O_CREAT | O_TRUNC, 0666);
+>  	if (format_patch.out < 0) {
+>  		status =3D error_errno(_("could not open '%s' for writing"),
+>  				     rebased_patches);
+>  		free(rebased_patches);
+>  		strvec_clear(&am.args);
+>  		return status;
+>  	}
 >
-> Similarly, check with "git ls-tree -r HEAD script.sh" what its mode>
-> bits are?
+>  	format_patch.git_cmd =3D 1;
+>  	strvec_pushl(&format_patch.args, "format-patch", "-k", "--stdout",
+>  		     "--full-index", "--cherry-pick", "--right-only",
+>  		     "--default-prefix", "--no-renames",
+>  		     "--no-cover-letter", "--pretty=3Dmboxrd", "--topo-order",
+>  		     "--no-base", NULL);
+>  	if (opts->git_format_patch_opt.len)
+>  		strvec_split(&format_patch.args,
+>  			     opts->git_format_patch_opt.buf);
+> -	strvec_push(&format_patch.args, revisions.buf);
+> +	strvec_pushf(&format_patch.args, "%s...%s",
+> +		     oid_to_hex(opts->root ?
+> +				/* this is now equivalent to !opts->upstream */
+> +				&opts->onto->object.oid :
+> +				&opts->upstream->object.oid),
+> +		     oid_to_hex(&opts->orig_head->object.oid));
+>  	if (opts->restrict_revision)
+>  		strvec_pushf(&format_patch.args, "^%s",
+>  			     oid_to_hex(&opts->restrict_revision->object.oid));
+> @@ -665,10 +662,8 @@ static int run_am(struct rebase_options *opts)
+>  			"As a result, git cannot rebase them."),
+>  		      opts->revisions);
 >
-> Check that the patch expects script.sh to have its executable bit
-> here, too?
-
-I assume we're doing all this filemode checking to ensure that the
-executable bit doesn't get lost due to any other git command?
-
-> The code change in this patch is primarily about making the code
-> work better for folks without trustworthy filemode support.
-> Emulating what happens by setting core.fileMode to false on a
-> platform with capable filesystems may be a way to test the code, but
-> we should have a test specific to folks without FILEMODE
-> prerequisites and make sure it works well, no?
+> -		strbuf_release(&revisions);
+>  		return status;
+>  	}
+> -	strbuf_release(&revisions);
 >
-> IOW, shouldn't we drom FILEMODE prerequisite from this test?
-
-I will keep that in mind.
+>  	am.in =3D open(rebased_patches, O_RDONLY);
+>  	if (am.in < 0) {
+> --
+> 2.43.0
