@@ -1,188 +1,111 @@
-Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
+Received: from mout.web.de (mout.web.de [212.227.15.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7F4D18E0E
-	for <git@vger.kernel.org>; Tue, 19 Dec 2023 12:25:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A15D91A27A
+	for <git@vger.kernel.org>; Tue, 19 Dec 2023 13:36:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SHQHysFV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lBk3XKv4"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.west.internal (Postfix) with ESMTP id 689CC3200A7A;
-	Tue, 19 Dec 2023 07:25:37 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Tue, 19 Dec 2023 07:25:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1702988736; x=1703075136; bh=A4jMJKGxcL
-	+hgFubRI6rbx0lvjy7Jy6PHjI3v2DSCQ8=; b=SHQHysFVDdV82O2/H5AqXfcRQT
-	QoEyAYHBmnfYV18VnqZ6KEXM/okmYWx0i6uX4gF8QGc7mlzuusxm1l5E90T71cXA
-	/ouOikHx151TwFLHtwJlgoxv8WfHxoPGQEis1XSZfy0duVcItocDli3hYmxW0xnt
-	TpN3QRctOKobepftJtSxbduzkQPfVENdEkxP73fJku3TNmJegh7Jw272IlRyDGek
-	wiYAqqniHGtvs+v8YXcNb+6O42XC7MQvawuqHeKF9QKPELgco0pIIAx9eqb46fB9
-	Eoefh7S9XoHP6Cn3R7tlwCanhkyojst8IPQLGPUapBLlwTm+QS31UT4wWQAA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1702988736; x=1703075136; bh=A4jMJKGxcL+hgFubRI6rbx0lvjy7
-	Jy6PHjI3v2DSCQ8=; b=lBk3XKv4mW/nCx0Ues/Gr2L+hXLKHzlhQKSBYLdYD61M
-	9dDaPFL8Y0zCL8RaOWzIgR4RKoaPKAwGaQPp39/ERVBTUDmvOsil69DCj3bY0VPY
-	8T9Ahax50XaSI+nMK5SAcT2jeb25sjKCTpDVraoMfONQLNamAUchWKtm71xgUqcK
-	xAJk7jMy898//o9qptOhwktpuXSnlbD5kRfta8mur7sHDKqMmxWx6n2xRD5CyI0r
-	GAZilSMxEu92xntqUb2PytbL5iSD0g9zucpDXYTAqtiCfvshEtJW64OdgvyfVujt
-	ehZ1VSBNUAo5rPu/3g14twjPbv+oKBcbVhORSFLjJw==
-X-ME-Sender: <xms:wIuBZctLxTaieJy5N6cmOffSWEDMxJTYMNOqhM5OY2KOAPMbn2bBzg>
-    <xme:wIuBZZfDM8U3g8xLVVvunCPKtn9Gamf87pU02DdIgSVRRJmb8UaLWyKWb3_IacLqo
-    gjfkjMU2Dd1bqnR5Q>
-X-ME-Received: <xmr:wIuBZXxJWLFUkG9KAKiRTD2LETejrN_RlGU6YxVW0Q9QJ82a6pye8cni0TWmZRbJWEaomEBA-rVMLSfDjnqDCaamDmgCMQH7xU1eC0Y4J5flOA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvddutddgfeelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttddunecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeefvdelfeeuteegiedtkeehleffkeekgf
-    ffudfhuddvfefftdehkeeihfekjeekheenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:wIuBZfMd0F9RTOhOd0oOwuUxxwU5b-i_fQEXK3VxcJNpqvTGWQTHew>
-    <xmx:wIuBZc_WzFhNRLb3CS3KfT0NmmGfVnapWD4T63J_QPscRgSigGlGAg>
-    <xmx:wIuBZXUM8OHLxdjN1gytiHuDZDm46MrSDWIqEo-6uM6NTEgYVq5Upg>
-    <xmx:wIuBZRGaPn08pybbfznycsMjA2vT-QLjPPP82gutMI637SKrA4B_Uw>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 19 Dec 2023 07:25:35 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id b92d9ead (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 19 Dec 2023 12:23:41 +0000 (UTC)
-Date: Tue, 19 Dec 2023 13:25:32 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
-Cc: Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] rebase: use strvec_pushf() for format-patch revisions
-Message-ID: <ZYGLvKYQe6DhP3Uf@tanuki>
-References: <4ab7431c-6c1b-448c-b4d2-e8b9be0e4eef@web.de>
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="GKFG7Yw8"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+	t=1702992962; x=1703597762; i=l.s.r@web.de;
+	bh=cPIgI4epBkS2an0Wp3o8KHnvUic5iNAalWdKuTI4H0c=;
+	h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
+	 In-Reply-To;
+	b=GKFG7Yw80iW+kwKfp/aN+yWcFtUaCrZL6bn6m5YSB3blkhr4pKyX/ThKfjURSSlZ
+	 /mmbSsv3i++QxII2k8D5om1uz90zqwjhBKQtBwlkOrRAsNk/ZZdQ9j2vDkk0s2TPF
+	 RUY1pp6nrE/Ofr1+Uw2ihlm9qufCeaN6OxMMqEIDs/Kmuwimc3Jp35Elq03JYFhZr
+	 hnj2CAbor7jvPW0tDtJFpAmfit6qA7SY8VmAQR4rNWzqHpzGe3DRrdrQSAGzhjO64
+	 ND3qUCWSRMQHA78cl6C/ROYzWGkEioDzmCY9MiH90StJH13ItEA13d2G+h+q3XERE
+	 5dDQTXWBSq31Vg0hnQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([79.203.23.9]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MpCqh-1qx1yf2kjn-00qNm2; Tue, 19
+ Dec 2023 14:36:02 +0100
+Message-ID: <aa9e4e07-03d8-4f4e-a63c-f393e1b56c92@web.de>
+Date: Tue, 19 Dec 2023 14:36:01 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="r7Apu/Io8BVPb4N1"
-Content-Disposition: inline
-In-Reply-To: <4ab7431c-6c1b-448c-b4d2-e8b9be0e4eef@web.de>
-
-
---r7Apu/Io8BVPb4N1
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] git-compat-util: convert skip_{prefix,suffix}{,_mem} to
+ bool
+Content-Language: en-US
+To: Junio C Hamano <gitster@pobox.com>,
+ Phillip Wood <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org, AtariDreams via GitGitGadget
+ <gitgitgadget@gmail.com>, Seija Kijin <doremylover123@gmail.com>,
+ Jeff King <peff@peff.net>, Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <pull.1620.git.git.1702401468082.gitgitgadget@gmail.com>
+ <20231212200920.GC1127366@coredump.intra.peff.net>
+ <8bea38fe-38a3-412a-b189-541a6596d623@web.de>
+ <20231213080143.GA1684525@coredump.intra.peff.net>
+ <4d0b2a5f-305b-4350-b164-44923cb250d8@web.de>
+ <20231214220503.GA3320432@coredump.intra.peff.net>
+ <99b3a727-36fd-4fa5-a6be-60ae6fc5911e@gmail.com>
+ <2d30dc36-6091-4b47-846f-92d3f4a8b135@web.de>
+ <b7a56625-46d5-4d77-b4bf-5595a6fb2aef@gmail.com> <xmqqa5q7e00q.fsf@gitster.g>
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <xmqqa5q7e00q.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:bV81ibq8BJULR+l0+BeTVLcWFjPo51scKhJGHT92EvocpPObDtH
+ UWk4UPZ90MeRr39MdEnESp7yO5pJgDmgaBJfvdKwzslCKpujs/VAezGcq+fBtdayxcg4gJ5
+ zVxUUAavEbQk8euqYsLiSQBidAjh1NjaMt8C38vHjUiWhfV2m/mUAcgPJcozHcCgbnbSCUo
+ H2favPleP9HI1kwBFPpGA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:VAEVbyzsihA=;qnBZhQbWc0tHaDLzxpQzBV+9Fok
+ qQzd4NnwbuVUH7BQpgbIQZWC/nTSGIIcejk+v36CM1XwcJ8C9MMQ0PibOToKCuddN3Ja7YXNl
+ dmFbUwG1DQlTg/ioC/kIaLh2wDj7jXvmvPd98gHVx8HeopW0Rd+pBpBNZBnO6y0dnR3QpIwNg
+ Twe/jlJwV4jooxwDsQeUFNwMNV/hktZYFi6SwFCntGtbuP2lcpHWlNsVqduLLfo28+59H9rHl
+ 3iM3EFbnvaEu82y/+heGeJ4JBVYnkUbOInhjx9Q4e2JHFx5ad70fBnyagaa/zfU8u+Wg+EJ2L
+ NJNfcTKrRkrLRj53tk34IEFSWxZZ1NeNd/4GWzFneXmAwi0Rm6w4sWC2L1V0gxb1aHravwkM8
+ Tqhvc5d9xWX/nMvcFgALkvjP5QvPFAI+Rvh1ndUud011HNVTWqvJ0gFXMx9BXyPsM6oLkixdU
+ sNfQcgI5HS0HyKf29XwgEXO1oVbnlgkbv9K0yo/bDMa/+xc2iE9wFVCwV0t+g0rH1bQSCgiio
+ gB8wasSxNMU/jPZ1amNYmd8hhPacne/3OoDdcYSnu+S4cc7K/GH7k3b6S3dp6q45/cU8dKNc1
+ SXKcz7fIf+8a2RbCW8qnShhG3Dcu/hVppcbWX64wp2Mlhfd+zBUfxG0P0dYtw2kn2t8rus626
+ waAiFSp/nSjihTxs22s/OnEdfycK+CeWXyswa9P5QYZ0aT4a+ZcRxb4p+SgztdrtXZk0okOYr
+ 4L0wRDVYb2RsNK/+DiqVrW3CNGbu3a8wdHUce7f7EH1uhH6qfXu2eD+MApJ8tny2f5jKwfVSB
+ 2910z5EbQ9+Dx3qCJLxoAStO3Obab3iTaLDgVgWi5Ql4YQIB4r9Mg3SuD+S5NUmnwQQaF2zI0
+ VElAgRT6SCvOQh3g1tZdcwFFuG5srRXkMYcfatmxw42ce9HnmeBONM20nXMhh6NYNmdpTRMD0
+ 1GgHeQ==
 
-On Tue, Dec 19, 2023 at 08:42:18AM +0100, Ren=E9 Scharfe wrote:
-> In run_am(), a strbuf is used to create a revision argument that is then
-> added to the argument list for git format-patch using strvec_push().
-> Use strvec_pushf() to add it directly instead, simplifying the code.
->=20
-> Signed-off-by: Ren=E9 Scharfe <l.s.r@web.de>
+Am 18.12.23 um 21:19 schrieb Junio C Hamano:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+>
+>> Thanks for the comprehensive commit message, I agree that we'd be
+>> better off avoiding adding a fallback. The patch looks good, I did
+>> wonder if we really need to covert all of these functions for a
+>> test-balloon but the patch is still pretty small overall.
+>
+> I do have to wonder, though, if we want to be a bit more careful
+> than just blindly trusting the platform (i.e. <stdbool.h> might
+> exist and __STDC_VERSION__ may say C99, but under the hood their
+> implementation may be buggy and coerce the result of an assignment
+> of 2 to be different from assigning true).
 
-Thanks, this simplification looks good to me!
+We could add a compile-time check like below.  I can't decide if this
+would be prudent or paranoid.  It's cheap, though, so perhaps just add
+this tripwire for non-conforming compilers without making a judgement?
 
-Patrick
+Ren=C3=A9
 
-> ---
-> Formatted with --inter-hunk-context=3D14 for easier review.
->=20
->  builtin/rebase.c | 17 ++++++-----------
->  1 file changed, 6 insertions(+), 11 deletions(-)
->=20
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index 9f8192e0a5..ddde4cbb87 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -582,7 +582,6 @@ static int run_am(struct rebase_options *opts)
->  {
->  	struct child_process am =3D CHILD_PROCESS_INIT;
->  	struct child_process format_patch =3D CHILD_PROCESS_INIT;
-> -	struct strbuf revisions =3D STRBUF_INIT;
->  	int status;
->  	char *rebased_patches;
->=20
-> @@ -615,34 +614,32 @@ static int run_am(struct rebase_options *opts)
->  		return run_command(&am);
->  	}
->=20
-> -	strbuf_addf(&revisions, "%s...%s",
-> -		    oid_to_hex(opts->root ?
-> -			       /* this is now equivalent to !opts->upstream */
-> -			       &opts->onto->object.oid :
-> -			       &opts->upstream->object.oid),
-> -		    oid_to_hex(&opts->orig_head->object.oid));
-> -
->  	rebased_patches =3D xstrdup(git_path("rebased-patches"));
->  	format_patch.out =3D open(rebased_patches,
->  				O_WRONLY | O_CREAT | O_TRUNC, 0666);
->  	if (format_patch.out < 0) {
->  		status =3D error_errno(_("could not open '%s' for writing"),
->  				     rebased_patches);
->  		free(rebased_patches);
->  		strvec_clear(&am.args);
->  		return status;
->  	}
->=20
->  	format_patch.git_cmd =3D 1;
->  	strvec_pushl(&format_patch.args, "format-patch", "-k", "--stdout",
->  		     "--full-index", "--cherry-pick", "--right-only",
->  		     "--default-prefix", "--no-renames",
->  		     "--no-cover-letter", "--pretty=3Dmboxrd", "--topo-order",
->  		     "--no-base", NULL);
->  	if (opts->git_format_patch_opt.len)
->  		strvec_split(&format_patch.args,
->  			     opts->git_format_patch_opt.buf);
-> -	strvec_push(&format_patch.args, revisions.buf);
-> +	strvec_pushf(&format_patch.args, "%s...%s",
-> +		     oid_to_hex(opts->root ?
-> +				/* this is now equivalent to !opts->upstream */
-> +				&opts->onto->object.oid :
-> +				&opts->upstream->object.oid),
-> +		     oid_to_hex(&opts->orig_head->object.oid));
->  	if (opts->restrict_revision)
->  		strvec_pushf(&format_patch.args, "^%s",
->  			     oid_to_hex(&opts->restrict_revision->object.oid));
-> @@ -665,10 +662,8 @@ static int run_am(struct rebase_options *opts)
->  			"As a result, git cannot rebase them."),
->  		      opts->revisions);
->=20
-> -		strbuf_release(&revisions);
->  		return status;
->  	}
-> -	strbuf_release(&revisions);
->=20
->  	am.in =3D open(rebased_patches, O_RDONLY);
->  	if (am.in < 0) {
-> --
-> 2.43.0
->=20
 
---r7Apu/Io8BVPb4N1
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWBi7sACgkQVbJhu7ck
-PpQDEBAAms2qh5kA4uYR0On3O39J2M2pk8TzCB9D5AechoWQERtVT2Sgw9QBiP5g
-MkTGqYhLNkP07fQuyIK806V+42Z/c6Ep+I44nqajP2XFW5rfJ0gFlMkRqJSI9qLE
-MpyRYeXKylzVdwG2ooftlokpyv9jKxnGvMhO9KlJJGN6+8WnJxfLIIwCZoFaKci8
-uVMQx051UtDcQZUEftKKWqUrN4AY1mOksIhmlr7F+rXspLWGsEGhkd0jHeFM/xSB
-/nfw0y5mBvq/HJvaC7L0OUbCiElUJkHJi68brAQlvYP/gzm27S16Xy2/ReI0mOXD
-KAXqMiEp04ngmzf/w/Yor5k6NjhB10qMTpjbxK/lhC4AiDlrIGiWgd3SY7gGgtwI
-/FBjolNCkKygYwxtthF0PNO18lbZd8sp9hYKV5lx/yZuSzHTO+NA9RngLo3Aiv4D
-pYY04qVc8ZZSYycRT5Y1udmXEobhqDsDW3VdMkUx65Wn57ukFWts1XadJkGUSTU1
-Bloy+1q+lDM5lzaRxiR6hC2sbswr98EtAc+xavZlrLvdDgFtFFLXMiSBeSChCisr
-TRQNGCRKlpdimXiHBR5tKTUVoORzCvJ3PsHZYHCvR8E7P/0TxxmBgTrWjXr5pCnt
-7YRHBkpwkBhZeli6kKBsaR4GPVDS4TsQ0oRxjonUpojbPWVi96k=
-=nZ5D
------END PGP SIGNATURE-----
-
---r7Apu/Io8BVPb4N1--
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 603c97e3b3..8212feaa37 100644
+=2D-- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -705,7 +705,7 @@ static inline bool skip_prefix(const char *str, const =
+char *prefix,
+ {
+ 	do {
+ 		if (!*prefix) {
+-			*out =3D str;
++			*out =3D str + BUILD_ASSERT_OR_ZERO((bool)1 =3D=3D (bool)2);
+ 			return true;
+ 		}
+ 	} while (*str++ =3D=3D *prefix++);
