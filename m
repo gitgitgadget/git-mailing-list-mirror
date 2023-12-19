@@ -1,107 +1,144 @@
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35B9A1CA80
-	for <git@vger.kernel.org>; Tue, 19 Dec 2023 14:44:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 279FA1CF9A
+	for <git@vger.kernel.org>; Tue, 19 Dec 2023 15:33:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="AO4wF+9a"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-	t=1702997070; x=1703601870; i=l.s.r@web.de;
-	bh=yDVXG4KOSfHHM0wButNnpFYHi+aHNVXuCdWFuxei0eE=;
-	h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
-	 In-Reply-To;
-	b=AO4wF+9aye6mD/liv4WlZvFSKWktBtMoN8Xb9oC9aTcczxhka3N0+S2xud2pOqWy
-	 Uie3FX9IUcgvIe8KR0lB1bpuIDe4RYRYyO2jaZRYcmHS5+PrwvaForQ/eya/heBR/
-	 PI00fcUenXFzf6BYzIQNO8mmLeDga822r58VKbp+rffsyDCGlYf4pReVj2VGKLQgm
-	 xdAQlq5ilSVduJmz+/WTtnPA3CYPLLeDSPu6tKaK5JDvMk85yaj2Ayd4z3OJhLGBp
-	 WegpZsdzQ3nL8f1yJiuqKCcIRwufw2HMFYTHWoHrfelgfTr8mmO30WIvKZoRhW8JZ
-	 P0sq//avOV8y/YohfQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.23.9]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MiMAE-1qmKam2WsI-00fcDK; Tue, 19
- Dec 2023 15:44:30 +0100
-Message-ID: <e788cf7b-56c7-48c2-ad4f-65d9c9e73ad5@web.de>
-Date: Tue, 19 Dec 2023 15:44:30 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jkUegLpq"
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-5e778e484dbso11298927b3.0
+        for <git@vger.kernel.org>; Tue, 19 Dec 2023 07:33:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1702999995; x=1703604795; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=T8xhfm+b0tavGU3AyrVIVtwdSt7YmfwxhOAyDI3SkbI=;
+        b=jkUegLpq8y+ZR0vXTBYUHsJTTUM0qasjcLDiCUdtGdu8ThtDGBl2XrhzXISmnyoXPP
+         QkXe5C/QwmsaTn+aeW3oWXvu+tpEBFttqIxacE/lhx2Kpw7B6ZliVC0reFLTdEc80Wbb
+         TVlPABSwp0A+vllR2k3yYjV9PA9bAqHzQqGTKqarxfkH5/m0QpFfoKIMRvUvMqsdybHl
+         R31BWNs29xV5WmLFm6kw35wluPZz2C6B8rS2KdKcSwIy+Tv5a9wy4tkYAw6S9DxOaO3n
+         NLroeMHIzXUUz/Lq+Gh0wUR4OmY5xedDds91MIku234QGiqhREV2VKq9JT2S2kIG8sgs
+         YthA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702999995; x=1703604795;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=T8xhfm+b0tavGU3AyrVIVtwdSt7YmfwxhOAyDI3SkbI=;
+        b=rL+MxLA7L0iCWtav4GChRa+gmuJd+Fo5vhpht8vI1pX6876BbtjmK0t+1lgemd/H8h
+         YrjNpu1f8MtNq5pBoclw4A33GaMK3YAf0lLzRN6Lwn+hNpPp1ZQK8OoL/v5hQorx2lIw
+         7vswJeYBcmQy4WNtrfrlnylRMMJoPZErNx9ecGrLI/TFSZLjnQDzZZLJjtdRfbVV+MlP
+         1zeedxuEVD60qB9BUDkUu2c5OaqTCYLLzrv/aGVwSQJiGjZyTbrpvcgPA2sg5IHDp7VI
+         DoGPUmuMzuaT+Klk1ysRGMfX4sfA7fSw1LxumGhIe0GTiEesXr6NaphBvlV0gLMzMQlf
+         lWIA==
+X-Gm-Message-State: AOJu0Yxj9/W0iPjeWj5Q5ldf3aDUx7j43dWnTuVXps0r7cpsIGsIWN2b
+	B/Q7hMXgVEaMpHF67e8U67ycs5nt7MJ4/gsSxTE=
+X-Google-Smtp-Source: AGHT+IH1IJkiEbwLlXvlFo0252aosj9CKtmWyM2adFJzrGVV+H4XgPOhwQOCmajENqgtZxnzkijelefod6c3wVQ0Cb4=
+X-Received: by 2002:a81:7c45:0:b0:5d9:50cc:b8ed with SMTP id
+ x66-20020a817c45000000b005d950ccb8edmr13603588ywc.86.1702999995057; Tue, 19
+ Dec 2023 07:33:15 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/8] SubmittingPatches: clarify GitHub visual
-Content-Language: en-US
-To: Josh Soref via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>, Josh Soref <jsoref@gmail.com>
-References: <pull.1623.git.1702975319.gitgitgadget@gmail.com>
- <043d2a24202d39c5564e4a4369c86ae4648dd721.1702975320.git.gitgitgadget@gmail.com>
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <043d2a24202d39c5564e4a4369c86ae4648dd721.1702975320.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+References: <20231215203245.3622299-1-gitster@pobox.com> <20231215203245.3622299-2-gitster@pobox.com>
+ <0c93d426-17c3-434c-bbd0-866c31c23f9d@ramsayjones.plus.com>
+ <xmqq1qbnktnl.fsf@gitster.g> <xmqqttojjegr.fsf@gitster.g> <xmqqjzpfje33.fsf_-_@gitster.g>
+ <ZX_9nRYKVq0jT0Lp@tanuki> <xmqq1qbjij0f.fsf@gitster.g>
+In-Reply-To: <xmqq1qbjij0f.fsf@gitster.g>
+From: Jiang Xin <worldhello.net@gmail.com>
+Date: Tue, 19 Dec 2023 23:33:03 +0800
+Message-ID: <CANYiYbHFA+1R1JdN-o6TAJqDbh7iSmELjpc2kK8HkHJ7RQLgGA@mail.gmail.com>
+Subject: Re: [PATCH] doc: format.notes specify a ref under refs/notes/ hierarchy
+To: Junio C Hamano <gitster@pobox.com>, Teng Long <dyroneteng@gmail.com>, 
+	=?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>, 
+	Peter Pan <pan93412@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
+	Ramsay Jones <ramsay@ramsayjones.plus.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:a87ez9ZhrnwC2Pa6xL4cVM+5d/dETh8wwEIn5DYqajb+t488zQa
- 507sg8v8zzG1UyfKTho08zpRF6QdJR1i3a8Yhb9r0X9/YP95408+ACRNkB8Ry5zBtyj4NZ9
- 5DlrZkv1na65v3PebuSyshvOyftzXJlW81/7pHHJu97unplIDuxYQ79gwqCHIsUAvFozkjJ
- 8FenmIDACFX55wlJzGJSQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:Hg6GNIRGc/8=;Dwnz7Zs/bRH6HnPCcL//NnDUHud
- UVpXPMIM0WwD3jFY7llFZmTPZ1o+jj1/3ZrusHi6/uRabDB0oyZ1GMvVt880OKGGD+OzxeGzH
- O9eNYbs4fg2Bm5JPO1Xhs2nxau8lPCRqLaUXChUL7U8E5VO/L1EzPCr32mgLfTTBDQbbOfL2z
- uo76+neSwtlWRk2VDlT6VbbBOGX50RUdt47IZspSvUh1O0fSyGEEIiVvkz7rGvVmWtsHf7NE6
- U6Jk/QFGD6LE1++zIz7dLZXA/H/i2/F/hrYXYjTbj5F/PntmTgnORFvsgiG3YeHay/qoBdDxF
- 03evbafFX2Sb5xxDLmS3N5OTOoeY8Wo/t0N9Bo42IkPaV1ali/1DVqjXvmTQSuWvGHOkJcMJL
- gbsOpcfCyDLULJ8s/cxg4Lx6USxc1dCGRx7NelhjAOfq27tmxmf2n5OQaK4dkbRgoae1728HX
- zwZMIURmNyVKhXRC5OSenWuernPOiM9W2v34yVPIWUfP0gMf5RBPgFfQXuGBb2AV0jb9ewfHX
- gtT5Aqb59vEyIX66tHR+HxaV3bXmPDzCnfCFM0418Qr1nGv5KwFpi3F/uE0rDW9D7voefuAPW
- I7n4hmoGqd2VxvZm42PRmbruN6Imw3fUL83fWGrEixJa6/kaGore3f7qUzCp3encdiUM/yA/3
- 8uvsQUDO1Hu/35kYqunhT7JAfUBm/jyHd09X8vW0/quwLK4J/P/eJZT5TJYGJdErK46FlWMQr
- XI8QgPBAgbMsyPbeEW64R+NhxSl7lZ0AWHOjq/ED8qI3idrBUo46prNPwf9ziT1f9d8TAyG/V
- jcbjDEwXRZ/f6xLpLK8hnh2cgvQcwo7ZkCrUSztet49sHVMm+tdh4pyS0vCV7wo8N80UYrw1+
- Iihi/HL13KWbFhK7ZX4mSjSD91G1++eHhpRU90wF3h5kKrv0NLIPMa9Cf1w5DCo/yOWVmWFL3
- cTJ/Yg==
 
-Am 19.12.23 um 09:41 schrieb Josh Soref via GitGitGadget:
-> From: Josh Soref <jsoref@gmail.com>
+On Tue, Dec 19, 2023 at 12:16=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
+ wrote:
 >
-> Some people would expect a cross to be upright, and potentially have
-> unequal lengths...
-
-There are lots of types of crosses.  And while looking them up on
-Wikipedia I learned today that an x-cross is called "saltire" in
-English.  I only knew it as St. Andrew's cross before.
-
-> GitHub uses a white x overlaying a solid red circle to indicate failure.
-
-They call it "x-circle-fill"
-(https://primer.github.io/octicons/x-circle-fill-16).
-
+> Patrick Steinhardt <ps@pks.im> writes:
+> > the translation changes with a big grain of salt though,
 >
-> Signed-off-by: Josh Soref <jsoref@gmail.com>
-> ---
->  Documentation/SubmittingPatches | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingP=
-atches
-> index d7a84f59478..8e19c7f82e4 100644
-> --- a/Documentation/SubmittingPatches
-> +++ b/Documentation/SubmittingPatches
-> @@ -604,7 +604,7 @@ to your fork of Git on GitHub.  You can monitor the =
-test state of all your
->  branches here: `https://github.com/<Your GitHub handle>/git/actions/wor=
-kflows/main.yml`
->
->  If a branch did not pass all test cases then it is marked with a red
-> -cross. In that case you can click on the failing job and navigate to
-> ++x+. In that case you can click on the failing job and navigate to
+> Hopefully pinging Jiang would be sufficient to ask help from the
+> French, Chinese, and Taiwaneese translation teams.
 
-In the commit message you say the x is white, here it's red, so what is
-it?  IIUC the circle is red and the x-cross inside is the same color as
-the background, i.e. white in light mode and black in dark mode.  No
-idea how to express that in one word.  Perhaps "red circle containing
-and x-cross"?
+The l10n team has a command line tool called git-po-helper that can
+check for spelling errors in translations, such as mismatched command
+names, configuration variables. A new pattern will be added to find
+mismatched reference prefixes, and the following typos will be fixed
+during the next localization window.
 
-Ren=C3=A9
-
+> > diff --git a/po/fr.po b/po/fr.po
+> > index ee2e610ef1..744550b056 100644
+> > --- a/po/fr.po
+> > +++ b/po/fr.po
+> > @@ -19773,7 +19773,7 @@ msgid ""
+> >  "Neither worked, so we gave up. You must fully qualify the ref."
+> >  msgstr ""
+> >  "La destination que vous avez fournie n'est pas un nom de r=C3=A9f=C3=
+=A9rence compl=C3=A8te\n"
+> > -"(c'est-=C3=A0-dire commen=C3=A7ant par \"ref/\"). Essai d'approximati=
+on par :\n"
+> > +"(c'est-=C3=A0-dire commen=C3=A7ant par \"refs/\"). Essai d'approximat=
+ion par :\n"
+> >  "\n"
+> >  "- Recherche d'une r=C3=A9f=C3=A9rence qui correspond =C3=A0 '%s' sur =
+le serveur distant.\n"
+> >  "- V=C3=A9rification si la <source> en cours de pouss=C3=A9e ('%s')\n"
+> > diff --git a/po/zh_CN.po b/po/zh_CN.po
+> > index 86402725b2..eb47e8f9b7 100644
+> > --- a/po/zh_CN.po
+> > +++ b/po/zh_CN.po
+> > @@ -13224,8 +13224,8 @@ msgid ""
+> >  msgid_plural ""
+> >  "Note: Some branches outside the refs/remotes/ hierarchy were not remo=
+ved;\n"
+> >  "to delete them, use:"
+> > -msgstr[0] "=E6=B3=A8=E6=84=8F=EF=BC=9Aref/remotes =E5=B1=82=E7=BA=A7=
+=E4=B9=8B=E5=A4=96=E7=9A=84=E4=B8=80=E4=B8=AA=E5=88=86=E6=94=AF=E6=9C=AA=E8=
+=A2=AB=E7=A7=BB=E9=99=A4=E3=80=82=E8=A6=81=E5=88=A0=E9=99=A4=E5=AE=83=EF=BC=
+=8C=E4=BD=BF=E7=94=A8=EF=BC=9A"
+> > -msgstr[1] "=E6=B3=A8=E6=84=8F=EF=BC=9Aref/remotes =E5=B1=82=E7=BA=A7=
+=E4=B9=8B=E5=A4=96=E7=9A=84=E4=B8=80=E4=BA=9B=E5=88=86=E6=94=AF=E6=9C=AA=E8=
+=A2=AB=E7=A7=BB=E9=99=A4=E3=80=82=E8=A6=81=E5=88=A0=E9=99=A4=E5=AE=83=E4=BB=
+=AC=EF=BC=8C=E4=BD=BF=E7=94=A8=EF=BC=9A"
+> > +msgstr[0] "=E6=B3=A8=E6=84=8F=EF=BC=9Arefs/remotes =E5=B1=82=E7=BA=A7=
+=E4=B9=8B=E5=A4=96=E7=9A=84=E4=B8=80=E4=B8=AA=E5=88=86=E6=94=AF=E6=9C=AA=E8=
+=A2=AB=E7=A7=BB=E9=99=A4=E3=80=82=E8=A6=81=E5=88=A0=E9=99=A4=E5=AE=83=EF=BC=
+=8C=E4=BD=BF=E7=94=A8=EF=BC=9A"
+> > +msgstr[1] "=E6=B3=A8=E6=84=8F=EF=BC=9Arefs/remotes =E5=B1=82=E7=BA=A7=
+=E4=B9=8B=E5=A4=96=E7=9A=84=E4=B8=80=E4=BA=9B=E5=88=86=E6=94=AF=E6=9C=AA=E8=
+=A2=AB=E7=A7=BB=E9=99=A4=E3=80=82=E8=A6=81=E5=88=A0=E9=99=A4=E5=AE=83=E4=BB=
+=AC=EF=BC=8C=E4=BD=BF=E7=94=A8=EF=BC=9A"
+> >
+> >  #: builtin/remote.c
+> >  #, c-format
+> > diff --git a/po/zh_TW.po b/po/zh_TW.po
+> > index f777a0596f..b2a79cdd93 100644
+> > --- a/po/zh_TW.po
+> > +++ b/po/zh_TW.po
+> > @@ -13109,7 +13109,7 @@ msgid ""
+> >  msgid_plural ""
+> >  "Note: Some branches outside the refs/remotes/ hierarchy were not remo=
+ved;\n"
+> >  "to delete them, use:"
+> > -msgstr[0] "=E6=B3=A8=E6=84=8F=EF=BC=9Aref/remotes =E5=B1=A4=E7=B4=9A=
+=E4=B9=8B=E5=A4=96=E7=9A=84=E4=B8=80=E5=80=8B=E5=88=86=E6=94=AF=E6=9C=AA=E8=
+=A2=AB=E7=A7=BB=E9=99=A4=E3=80=82=E8=A6=81=E5=88=AA=E9=99=A4=E5=AE=83=EF=BC=
+=8C=E4=BD=BF=E7=94=A8=EF=BC=9A"
+> > +msgstr[0] "=E6=B3=A8=E6=84=8F=EF=BC=9Arefs/remotes =E5=B1=A4=E7=B4=9A=
+=E4=B9=8B=E5=A4=96=E7=9A=84=E4=B8=80=E5=80=8B=E5=88=86=E6=94=AF=E6=9C=AA=E8=
+=A2=AB=E7=A7=BB=E9=99=A4=E3=80=82=E8=A6=81=E5=88=AA=E9=99=A4=E5=AE=83=EF=BC=
+=8C=E4=BD=BF=E7=94=A8=EF=BC=9A"
+> >
+> >  #: builtin/remote.c
+> >  #, c-format
