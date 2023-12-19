@@ -1,122 +1,81 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B6FF374D0
-	for <git@vger.kernel.org>; Tue, 19 Dec 2023 17:12:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CEEF37D1D
+	for <git@vger.kernel.org>; Tue, 19 Dec 2023 17:25:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xSB1vbJf"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 31DDD1B16BE;
-	Tue, 19 Dec 2023 12:12:35 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=K09GFRsqbSnx
-	c1TrcZN24VCZt00Id4Min1buy6rSepg=; b=xSB1vbJfTXXbo/VhR0eZYjQmkUYk
-	CKugDMYFZxayVM/fWn3hmqu45ipuzgQy5tmVLcCCqyCGELurR1C3uRPZvDUrScs4
-	Wn39T7lI36duQM5vi28OFqbhKCVhlqPYMVfO26PgR6g+5i6l+/a8sygV72SYgTOk
-	0fSn6dj2b027N7M=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 296881B16BC;
-	Tue, 19 Dec 2023 12:12:35 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.193.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 85BBC1B16BA;
-	Tue, 19 Dec 2023 12:12:34 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc: Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] rebase: use strvec_pushf() for format-patch revisions
-In-Reply-To: <4ab7431c-6c1b-448c-b4d2-e8b9be0e4eef@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-	message of "Tue, 19 Dec 2023 08:42:18 +0100")
-References: <4ab7431c-6c1b-448c-b4d2-e8b9be0e4eef@web.de>
-Date: Tue, 19 Dec 2023 09:12:33 -0800
-Message-ID: <xmqqmsu6ce0u.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DWB4mKFj"
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-a233a60f8feso368479766b.0
+        for <git@vger.kernel.org>; Tue, 19 Dec 2023 09:25:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1703006730; x=1703611530; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=cLVlQuBPZj0dUNvQERf80urR5YkOVWNm2TpBKPJMhkk=;
+        b=DWB4mKFjZ+Z1qp3UEFEzsndB8LICr8RU2wEnzq4MyHDlFdupcrPGGmGOj/AQn63U7k
+         mqrakUVi57EORqp9ZA1q8Z4v5f0fDZkzBLUoofHBJdpomQYSI0M5Tqkrj3OW90CximAk
+         iLpTmvUvUUXZaVYgnKTmJfx43OntfZT/r4J3xt2UzbdJETSje8EMI1yhSoaqGE9X2fbd
+         dO/L9bH5o+LVrpCKVogqOPtI52/9nzVClWX2OT9daGx6XAV3D/ym5Lstqv8BW0CUqk3/
+         3KlLDNVRL/xXJ6DDnpbQ3qk4TgCdtQNzh6rIfyrEYMAk7RBRwFI4BrljCmBkfe8D9PXd
+         HfdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703006730; x=1703611530;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cLVlQuBPZj0dUNvQERf80urR5YkOVWNm2TpBKPJMhkk=;
+        b=RWoaHBBVVVpW8EcCVfgHMP2nfTrbit3gCQ4ovOXn6ZO/8Jz8aM4jaQwgmCNIxML/du
+         V0JWAPYMjiZJ/ugax3hZw1JwR60rt2mSmuqQxnNmTYf78ZJE73l9AA/EUso1OdpzisgM
+         rrxfJH6QDy4MbAEaKP3siWLSx6XcT4QiPhoTtY05rhqRj+3/39W2JIpexqZL0FDWTnMx
+         AdQuUvAIzykr+sP2blZGKe4f7nhNVz1d/hvVbsgVmLkxlJPkh9Q4W3hn24TRCKagC2Uz
+         IzuhXzZSI9iqwGA7IEEeTsbJeRBXIltYPZHqajlAUQs1KIhmaG9KA5+x7sDjKrQPNr1j
+         PJqQ==
+X-Gm-Message-State: AOJu0YxlZfGKu97MWIH1JFrzH/dND8llQ9uZK2eKA9FXfniSeGKdiyup
+	vA4edpliyWKKxSZMLFkNmoS/JCJ3eGuD4Lo9qXJrG4ZGu7E=
+X-Google-Smtp-Source: AGHT+IF2HMuYmafHzkj0365GAZ+uOfvrifqhs6jaHwbQ9aZ82awWpEDYTf3cjHiaTF+M/RYKqhP241FomzVEQpbXeJY=
+X-Received: by 2002:a17:907:968c:b0:9ff:5b5c:12a6 with SMTP id
+ hd12-20020a170907968c00b009ff5b5c12a6mr10463333ejc.40.1703006729445; Tue, 19
+ Dec 2023 09:25:29 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- CD3A475E-9E91-11EE-BD08-25B3960A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <CAPMMpohbQK+3o46iiY+0o=vS+UC_HBB=CxsNT_hAb5dDz+514Q@mail.gmail.com>
+In-Reply-To: <CAPMMpohbQK+3o46iiY+0o=vS+UC_HBB=CxsNT_hAb5dDz+514Q@mail.gmail.com>
+From: Mike Castle <dalgoda@gmail.com>
+Date: Tue, 19 Dec 2023 09:25:18 -0800
+Message-ID: <CA+t9iMyrLAekwQHNky4w9nWD6WwxidxwfSmbqCpSRnkJgoQ0LA@mail.gmail.com>
+Subject: Re: Is --minimal ever not the right thing?
+To: Tao Klerks <tao@klerks.biz>
+Cc: git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+I believe that the diff algorithms available are the same one's in GNU
+diff.  From https://www.gnu.org/software/diffutils/manual/html_node/diff-Performance.html:
+"""
+The way that GNU diff determines which lines have changed always comes
+up with a near-minimal set of differences. Usually it is good enough
+for practical purposes. If the diff output is large, you might want
+diff to use a modified algorithm that sometimes produces a smaller set
+of differences. The --minimal (-d) option does this; however, it can
+also cause diff to run more slowly than usual, so it is not the
+default behavior.
+"""
 
-> In run_am(), a strbuf is used to create a revision argument that is the=
-n
-> added to the argument list for git format-patch using strvec_push().
-> Use strvec_pushf() to add it directly instead, simplifying the code.
->
-> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-> ---
+Since it has been that way decades before git even existed, I suspect
+(but do not know) that, yes, analysis has been performed, and it makes
+sense to keep the current default.
 
-Makes sense.  Between the location of the original strbuf_addf()
-call and the new strvec_pushf() call, nobody mucks with *opts so
-this change won't affect the correctness.  We no longer use the
-extra strbuf, and upon failing to open the rebased-patches file,
-we no longer leak the contents of it.  Good.
+Then again, in the decades sense, the entire stack from hardware to
+compilers has improved, and maybe it does deserve a revisit.  You
+could check whatever email archives is used for diffutils and see if
+there has been any discussion on it recently (say, last 5 years?).
 
-> @@ -615,34 +614,32 @@ static int run_am(struct rebase_options *opts)
->  		return run_command(&am);
->  	}
->
-> -	strbuf_addf(&revisions, "%s...%s",
-> -		    oid_to_hex(opts->root ?
-> -			       /* this is now equivalent to !opts->upstream */
-> -			       &opts->onto->object.oid :
-> -			       &opts->upstream->object.oid),
-> -		    oid_to_hex(&opts->orig_head->object.oid));
-> -
->  	rebased_patches =3D xstrdup(git_path("rebased-patches"));
->  	format_patch.out =3D open(rebased_patches,
->  				O_WRONLY | O_CREAT | O_TRUNC, 0666);
->  	if (format_patch.out < 0) {
->  		status =3D error_errno(_("could not open '%s' for writing"),
->  				     rebased_patches);
->  		free(rebased_patches);
->  		strvec_clear(&am.args);
->  		return status;
->  	}
->
->  	format_patch.git_cmd =3D 1;
->  	strvec_pushl(&format_patch.args, "format-patch", "-k", "--stdout",
->  		     "--full-index", "--cherry-pick", "--right-only",
->  		     "--default-prefix", "--no-renames",
->  		     "--no-cover-letter", "--pretty=3Dmboxrd", "--topo-order",
->  		     "--no-base", NULL);
->  	if (opts->git_format_patch_opt.len)
->  		strvec_split(&format_patch.args,
->  			     opts->git_format_patch_opt.buf);
-> -	strvec_push(&format_patch.args, revisions.buf);
-> +	strvec_pushf(&format_patch.args, "%s...%s",
-> +		     oid_to_hex(opts->root ?
-> +				/* this is now equivalent to !opts->upstream */
-> +				&opts->onto->object.oid :
-> +				&opts->upstream->object.oid),
-> +		     oid_to_hex(&opts->orig_head->object.oid));
->  	if (opts->restrict_revision)
->  		strvec_pushf(&format_patch.args, "^%s",
->  			     oid_to_hex(&opts->restrict_revision->object.oid));
-> @@ -665,10 +662,8 @@ static int run_am(struct rebase_options *opts)
->  			"As a result, git cannot rebase them."),
->  		      opts->revisions);
->
-> -		strbuf_release(&revisions);
->  		return status;
->  	}
-> -	strbuf_release(&revisions);
->
->  	am.in =3D open(rebased_patches, O_RDONLY);
->  	if (am.in < 0) {
-> --
-> 2.43.0
+As you pointed out, you can set it yourself and see what happens over time.
+
+Cheers,
+mrc
