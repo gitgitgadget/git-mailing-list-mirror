@@ -1,161 +1,120 @@
-Received: from mout.web.de (mout.web.de [212.227.15.14])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F06B208D5
-	for <git@vger.kernel.org>; Tue, 19 Dec 2023 16:43:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B21A225A5
+	for <git@vger.kernel.org>; Tue, 19 Dec 2023 16:54:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="nfqJ6zP0"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-	t=1703004160; x=1703608960; i=l.s.r@web.de;
-	bh=AyOTQK69YDwuXumc4yuD+tRYQxPNOH7/N0y7+hOBjOg=;
-	h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
-	 In-Reply-To;
-	b=nfqJ6zP07/uQNrX67QUUeSx0c6Ok6Ct5hMUZApmV2pRf4rGI7GWE6/lOErzJtt/k
-	 nslwARb/TEBPLsOf/237z9c2466sjbcwff1244g4PBAUIwC4jbq9vHdN9J5rnTiuA
-	 u/bTv5m/bkiClbmESlk4Lms5agZwY+n1E3sLw+6K5bb9YcAcDgdb/vak9FNXfRs3s
-	 CYozwYrPSseMgoKdYvbISIaka0BVZVASej6OFBiw43BqiJ6xjh06PsWVorcdUUvO/
-	 Khkcc4srDGM2xk+9Y7wC6etgqFaQ9SjWDjJdOf4q13luFBJ8Nz+yAZ4oMWmusgBGf
-	 36O51aRmh2WG8jhmew==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.23.9]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1Mkmvj-1qshhf34Rj-00luF5; Tue, 19
- Dec 2023 17:42:40 +0100
-Message-ID: <6750c93c-78d0-46b5-bfc2-0774156ed2ed@web.de>
-Date: Tue, 19 Dec 2023 17:42:39 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XVkUfvDH"
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2ca02def690so55416941fa.3
+        for <git@vger.kernel.org>; Tue, 19 Dec 2023 08:54:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1703004846; x=1703609646; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZvAE3Su2pwykJ9SUDLPeC/l3i/XOMbQOwIxv4CiYTyY=;
+        b=XVkUfvDHApTtV4cYt002/uXXYenWDR2+o2VYFXcy/Gr/NTnQit3wLHMbcti9CCaKxE
+         gP/sSdZMXWen2Kr//IUDtxxpk+PD1kHC46Ci76Jh3vLE50RZIEDScybHo8yoPQ3r0IvS
+         2oujk7LJr9yzDftFydy/QmmeoWRrGMpsK2EGMcBffJQvfOC5g8QOOBS2UzC55MKAT11C
+         4wvqsEMYfnWzPsmo2t2nY88jHhWGUNAVhT+nzpMRRTwHm/a5n6RCgaMxzfP4Zb+nmOAF
+         Qas2hr26Lt4t6FZr6F+mC6pcVhx1s5M2Z4zFeuv6okqVBo0mvrNG7qmTNMiar9P5wxVE
+         jB3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703004846; x=1703609646;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZvAE3Su2pwykJ9SUDLPeC/l3i/XOMbQOwIxv4CiYTyY=;
+        b=HyRTrBw4U3R4auUZgVu01JADleVxOq2LYPiktMMPhS6nUwHjag0gTxSkM8iyFHsZpP
+         W4xmD04kzqQbtkf5CEhA3ebvgRhCQ6/FRbSns3XbK4JuXXDifU9vJ+nUEY6ayJT00tKM
+         smYhNv+1tGQguxEoDXjFAkrmnotktVHSi75s2HjwXkkRkBq0hkB6k79NIgBdPMQ5RsI2
+         aUke5Txm59B3KGaSwibn0FLFEjr6/ULEzpyanakGs7HXq7Dw/KjojQf1Z3kklnUvDUJ0
+         ubtfY+xliwJB78ogCd4h6bHCqQ3zJpQokpTyPpTbeTHaqAq0MJH2X4UAqxi5+0690yBb
+         T72Q==
+X-Gm-Message-State: AOJu0YzuP2BhrYLX1FfziNi/+WHkoRafEUBFe6LzX4vjzoGPJ2qeXxQ3
+	ITn4+8xTDsCaxxv2auRrYlmM1ITI+CxPqBqAd4O6KCv5O/8=
+X-Google-Smtp-Source: AGHT+IFRrq54q8P/Z9FT4v7z686yMwvu3hT5c+Yc2/dsZLZxXI5yyHeRBzcpu9Albe589+A6LiyN9R4RNt36OH+KlB0=
+X-Received: by 2002:a05:651c:a0e:b0:2cc:8481:f213 with SMTP id
+ k14-20020a05651c0a0e00b002cc8481f213mr674640ljq.36.1703004846243; Tue, 19 Dec
+ 2023 08:54:06 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/1] test-lib-functions: add object size functions
-Content-Language: en-US
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Ondrej Pohorelsky <opohorel@redhat.com>,
- "brian m . carlson" <sandals@crustytoothpaste.net>,
- Junio C Hamano <gitster@pobox.com>
-References: <CA+B51BEpSh1wT627Efpysw3evVocpiDCoQ3Xaza6jKE3B62yig@mail.gmail.com>
- <9feeb6cf-aabf-4002-917f-3f6c27547bc8@web.de>
- <20231212200153.GB1127366@coredump.intra.peff.net>
- <ff735aac-b60b-4d52-a6dc-180ab504fc8d@web.de>
- <65557f2d-9de0-49ae-a858-80476aa52b68@web.de>
- <20231214205936.GA2272813@coredump.intra.peff.net>
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <20231214205936.GA2272813@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
+From: Josh Reed <jriddy@gmail.com>
+Date: Tue, 19 Dec 2023 11:53:54 -0500
+Message-ID: <CAELOy+5AsRyLEs-WdYw1spqkmMDKjKSQzbogAoRBFe-zGLjvXg@mail.gmail.com>
+Subject: git diff-files bug
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:xWOmLxv9w+Ot+1pxxEFYAp33fgEFUCVtAX0lBsTDWUULIXgG4nE
- lKPo1eQnZh4zkLlmZbr5lwsBQFPxzu1BYhuG/hXIFU/aP8bqINKpuGK+uohQ72mPT8xta+y
- 1qUNLhPmcA8Szp6s4m3ZHMktd9rKEBHX1SVIk3ewjltji8DTlW+yQeQrs3dZG7y9aAQRl5e
- br422uN3RxtyntlqyP2bg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:NIi8+OWWsIU=;Gn1NgIQ9+sv4PQzAbLjE3koTKWa
- 8HxkoNENC4R6FI4yKIjyB0CmUFFUW65j9d2ghdyKuzafnswfkNPZ/uF9I8m0Nxs8vITxrnf0W
- b9hzUFEIYK+9oVPNOAPevupV6zxLS8hvbjCkCW6w8cylejYyTCE7uy0Qtr8j22eJEjvPlZsxm
- UbD1yw89xZIDR9uG3B66jraZaDFMBMbYGJfB/mKW7fOmMsZ3aULXazjkDMB1m1hTebK9AbGLh
- /DtNZDvBbpiwaMkE0WPCgQHy/AKh64Io0ZpM0JkFbEU4as05V3NpQ5w2wCHjJObED8RZEB4Jz
- HvpXUGQfkXU6k0vy7Ne9IJsoEr20JP/KhIGQzifnURCXjX/Fzri4N3xFiFFxmS1i4A/DDmRFk
- +8/X6MbxoG9nSvkJtzVGfSnzI2MFawNa1h3UmrODE66yzv8AueAJLqi7PkepVsRsm+6D9h+rt
- yI75UTQPVBfhtSYmPzHIuw/Zh11QoSoxx/8HPQztIrH6EJxLYjorLu18CLnBpjRvNVJyMn8az
- iPQA8r84LQqcE+0MjdbQn4XZYBccpEnsY63pOGP4plwj/wCwtSyjY6nnv53IjP76oSL+JDTws
- Aa22LfN4Wm+xBlV6583fk/tyVjLpaS/viBA8YoY4pBeUzBnJfVAXHIJ3F+Nmk/Z4JKjuzD/+H
- UaM4eSohxj6kJT/rzY6PUguu+jXrgzYMuroITlPMG+gTxvKxTH+qPHifQjJg2FUUmCI+0OfXS
- OC9XNBqTl45qca9hNxPlg+fPPX8IDoq+ze/wSLU6XdGNLQPWYfctkNRmnpdowUjQokZ+rr9Ns
- 0Abvm0d0Sv2IbqE7iasi4UwIxZGUcB/DmUKg78ESws6PQl+5Bf4Fq5Mir1apQwPxaqfL53fBl
- ICteD382NDcpEZA5ynqUp6Gm+pKQ0229ZuJSbARB57EcKZRMS3cEsqBVU+EfE/kPqPSa2W9C6
- xF2HJg==
 
-Am 14.12.23 um 21:59 schrieb Jeff King:
-> On Wed, Dec 13, 2023 at 01:28:56PM +0100, Ren=C3=A9 Scharfe wrote:
->
->> Add test_object_size and its helpers test_loose_object_size and
->> test_packed_object_size, which allow determining the size of a Git
->> object using only the low-level Git commands rev-parse and show-index.
->>
->> Use it in t6300 to replace the bare-bones function test_object_file_siz=
-e
->> as a motivating example.  There it provides the expected output of the
->> high-level Git command for-each-ref.
->
-> This adds a packed-object function, but I doubt anybody actually calls
-> it. If we're going to do that, it's probably worth adding some tests for
-> "cat-file --batch-check" or similar.
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-Yes, and I was assuming that someone else would be eager to add such
-tests. *ahem*
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-> At which point I wonder if rather than having a function for a single
-> object, we are better off just testing the result of:
->
->   git cat-file --batch-all-objects --unordered --batch-check=3D'%(object=
-size:disk)'
->
-> against a single post-processed "show-index" invocation.
+> bash
+=E2=AC=A2[jreed@toolbox example-project]$ git diff-files --exit-code --patc=
+h; echo $?
+0
+=E2=AC=A2[jreed@toolbox example-project]$ chmod g+w README.md
+=E2=AC=A2[jreed@toolbox example-project]$ git diff-files --exit-code --patc=
+h; echo $?
+1
+=E2=AC=A2[jreed@toolbox example-project]$ git diff --exit-code --patch; ech=
+o $?
+0
+=E2=AC=A2[jreed@toolbox example-project]$ git diff-files --exit-code --patc=
+h; echo $?
+0
 
-Sure, we might want to optimize for bulk-processing and possibly end up
-only checking the size of single objects in t6300, making new library
-functions unnecessary.
 
-When dumping size information of multiple objects, it's probably a good
-idea to include "%(objectname)" as well in the format.
+What did you expect to happen? (Expected behavior)
 
-You'd need one show-index call for each .idx file.  A simple test would
-only have a single one; a library function might need to handle multiple
-packs.
+Git diff-files should likely ignore group permissions changes, or at least
+its output should be stable across the same worktree/index state.
 
->> So how about this?  I'm a bit nervous about all the rules about output
->> descriptors and error propagation and whatnot in the test library, but
->> this implementation seems simple enough and might be useful in more tha=
-n
->> one test.  No idea how to add support for alternate object directories,
->> but I doubt we'll ever need it.
->
-> I'm not sure that we need to do anything special with output
-> redirection. Shouldn't these functions just send errors to stderr as
-> usual? If they are run inside a test_expect block, that goes to
-> descriptor 4 (which is either /dev/null or the original stderr,
-> depending on whether "-v" was used).
+What happened instead? (Actual behavior)
 
-Good point.  My bad excuse is that I copied the redirection to fd 4 from
-test_grep.
+The command `git diff-files --exit-code --patch` fails with no exit code wh=
+en
+a file mode has changed in a way that the rest of git commands ignored.
+Furthermore, subsequent git commands seem to change the behavior of `git
+diff-files` in this regard, so it's hard to tell what is the expected behav=
+ior.
 
->> +	git show-index <"$idx" |
->> +	awk -v oid=3D"$oid" -v end=3D"$end" '
->> +		$2 =3D=3D oid {start =3D $1}
->> +		{offsets[$1] =3D 1}
->> +		END {
->> +			if (!start || start >=3D end)
->> +				exit 1
->> +			for (o in offsets)
->> +				if (start < o && o < end)
->> +					end =3D o
->> +			print end - start
->> +		}
->> +	' && return 0
->
-> I was confused at first, because I didn't see any sorting happening. But
-> if I understand correctly, you're just looking for the smallest "end"
-> that comes after the start of the object we're looking for. Which I
-> think works.
+What's different between what you expected and what actually happened?
 
-Yes, calculating the minimum offset suffices when handling a single
-object -- no sorting required.  For bulk mode we'd better sort, of
-course:
+The `git diff-files --exit-code` command is inconsistent in how it behaves.
+I suspect it should ignore irrelavant mode changes like `g+w`, but even if
+it should report them, they should produce a patch or at least have stable
+results when we re-run the command.
 
-	git show-index <"$idx" |
-	sort -n |
-	awk -v end=3D"$end" '
-		NR > 1 {print oid, $1 - start}
-		{start =3D $1; oid =3D $2}
-		END {print oid, end - start}
-	'
+Anything else you want to add:
 
-No idea how to make such a thing robust against malformed or truncated
-output from show-index, but perhaps that's not necessary, depending on
-how the result is used.
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
 
-Ren=C3=A9
 
+[System Info]
+git version:
+git version 2.41.0
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 6.5.10-200.fc38.x86_64 #1 SMP PREEMPT_DYNAMIC Thu Nov  2
+19:59:55 UTC 2023 x86_64
+compiler info: gnuc: 13.1
+libc info: glibc: 2.37
+$SHELL (typically, interactive shell): /usr/bin/fish
+
+
+[Enabled Hooks]
+pre-commit
+pre-push
