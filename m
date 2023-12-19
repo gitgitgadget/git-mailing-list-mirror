@@ -1,50 +1,53 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655CA101EF
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 883D91170E
 	for <git@vger.kernel.org>; Tue, 19 Dec 2023 08:42:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HJljmrYh"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-40c3f68b69aso40662855e9.1
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MOjKIILD"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-40d190df5d0so24802665e9.3
         for <git@vger.kernel.org>; Tue, 19 Dec 2023 00:42:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1702975321; x=1703580121; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=yXCdZWchH/MNI9GgukJev+rwH4EXMHXvejSN3wbjeto=;
-        b=HJljmrYh2ka53mK6jO9Dqb7wDDpBwHbqndGr3GHyE6ugA2Pd9Z5SOxWvf30e06kV2H
-         chTgT16+N6HHj2coyvWz9SfS/ho5oLjkX9mIF1Q7NYC+UCtyTuZlfNXybHBVQJZo/di1
-         ApQyCoHRO0t07xB4UtnI3rwMAy2fC+EmFiODSUaa0zz1/Klibekb/0Ot1h4AH8euqpf8
-         ySlKbAyZHj+3bF0b3TZXiXU5EcjbNYNLZDqkOfRZSoCiTfxqtJK9zlyaWlAMsPTB55OG
-         YoUuh/ZSLbE2qssnz/ks/eouwkCIWunSGSPjkEKGy4oAZwai0cyeTWV+QNctMTDDTies
-         ffEQ==
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=AcI2SqQQB4Jltt9lH8a1zFwnKso4M1EWV/+giKCyLKc=;
+        b=MOjKIILDRBvy8YV+n/HbLDcN9AeEJR5XiCnytQdljiQq0S4FIy5raUGB8DbYDPPv+c
+         7H6T1itmXqazcTwJ+agP9WKQ6w18FixB8qhbph79uuWIxaQa9vBCMQWzNYyU3La9d2Vf
+         VSkIUch6Q7L2Qcp8nJ0XbOmcgEWa8B/JqNDnFGXZHki0yNIG0vpGff1/nUnCQJqy9MIQ
+         TaVSV99oKQXjcaQIl9wd15evWfLTHVW3dwjur3DyxfoCsbYxl7i7BuZF+xxhWcePdL8U
+         XOazBKQuNP/HLsEevLptTvwIa4GIH2DPe7JkrkOLgfRrfaLW65USFV6qr2o0/agxATfU
+         29qQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1702975321; x=1703580121;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yXCdZWchH/MNI9GgukJev+rwH4EXMHXvejSN3wbjeto=;
-        b=eE5KBaxJzbcqjOpSuRNQb3gCNVFJt0mjMeLDMI5sOPioouhj3FDlkT6UPiAPIBxxCG
-         mkXvV287yhbC5tti3ayr9T29e21rLt6a6RWDwtDOM/Sq46M2aPpxBqbDxH4ow7idhQq5
-         Uta1TM+/uDBoumvyGF9+iibAWdbh1s+lSifiqQ31d2Ocvn0hb/aAYCVAOmTayw38sZxl
-         DD3WbKI/0GxgCYhPqBV24sAUY6oyWh3RvOYhjgAfRRWqjQdy5h9DUUwyWYwAW1rr2c95
-         exiOWwSTmMxVxx4LlwIpv3ggu6DxPxn4aFUpJI1vFqra+I8GnE2kJqw8GUU/VfWVhTlz
-         ztHg==
-X-Gm-Message-State: AOJu0Yy8Aq23ccfBWXwBmxPKsM+v6GAm+UiGUo+GdYEZVWPsBp0mx4ei
-	jQ3unKtEbj34fKhTDX723TF5cLo5k5Y=
-X-Google-Smtp-Source: AGHT+IF/TTc6z9fCUr5npR0AJNIGt4TRMsYL5WBf+YqQoHoiuYMx1V391tThEDHh3U6hNx5a3YA3jg==
-X-Received: by 2002:a05:600c:3784:b0:40b:5e1b:54a8 with SMTP id o4-20020a05600c378400b0040b5e1b54a8mr9563288wmr.52.1702975320862;
-        Tue, 19 Dec 2023 00:42:00 -0800 (PST)
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=AcI2SqQQB4Jltt9lH8a1zFwnKso4M1EWV/+giKCyLKc=;
+        b=fSejz8GDyshvenDgHS1+OncbyDQLJK45zBLZ1hSdTdSAolndZFvDh+6mXOeuCV6VQy
+         eFQPLTbfRCWGJVTRv+rmP8lgUWiALt+hS0pbH47gn+cmSfTdzcIPIeyBaEAv6L0LAmfF
+         rppdUbdMaRM7/gNyEk7gkA2UrqPmU5knDrvescvSJNYqmvH1FwTrHZQwFBN2VMugE0Wk
+         WF7Lj0Rsm64HVk6hve2ujimlNkeRc6cfR6CPZxtBLV4FwJH3O+vNK683u7C0R7mxRiMg
+         Jx1pAnBFAs6H45fvbX3A5MiywvG1JmRcp/DzpUWw7KM9iUsPCIFfhTd/LeMmGBFUU8aK
+         qUHw==
+X-Gm-Message-State: AOJu0YxMaQHhU3cQraHDICSIdLBq25/Rsn4S2h7fA8izBXkyEUaqXUcV
+	orbo0woQF4eVQrMyOke/3te9zJkmQAg=
+X-Google-Smtp-Source: AGHT+IGbAT07fA+oijPLQoZelS6rOOZ2XGfUC6R5Mr0bsh/6Mu6A4OLA8c9LU9WvaCcWLlCwr7MT8g==
+X-Received: by 2002:a7b:c3d5:0:b0:40c:3774:8ae9 with SMTP id t21-20020a7bc3d5000000b0040c37748ae9mr9936102wmj.7.1702975321325;
+        Tue, 19 Dec 2023 00:42:01 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f13-20020a05600c4e8d00b0040c4535f1a2sm1774504wmq.39.2023.12.19.00.42.00
+        by smtp.gmail.com with ESMTPSA id m39-20020a05600c3b2700b0040d23cea7bcsm615527wms.1.2023.12.19.00.42.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Dec 2023 00:42:00 -0800 (PST)
-Message-ID: <pull.1623.git.1702975319.gitgitgadget@gmail.com>
+        Tue, 19 Dec 2023 00:42:01 -0800 (PST)
+Message-ID: <b9a8eb6aa4e87cd96fbf2b5d514350508076d756.1702975319.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1623.git.1702975319.gitgitgadget@gmail.com>
+References: <pull.1623.git.1702975319.gitgitgadget@gmail.com>
 From: "Josh Soref via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 19 Dec 2023 08:41:51 +0000
-Subject: [PATCH 0/8] Minor improvements to CodingGuidelines and SubmittingPatches
+Date: Tue, 19 Dec 2023 08:41:52 +0000
+Subject: [PATCH 1/8] CodingGuidelines: move period inside parentheses
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -56,39 +59,34 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: Elijah Newren <newren@gmail.com>,
+    Josh Soref <jsoref@gmail.com>,
     Josh Soref <jsoref@gmail.com>
 
-These are a bunch of things I've run into over my past couple of attempts to
-contribute to Git.
+From: Josh Soref <jsoref@gmail.com>
 
- * Incremental punctuation/grammatical improvements
- * Update extra tags suggestions based on common usage
- * drop reference to an article that was discontinued over a decade ago
- * update GitHub references
- * harmonize non-ASCII while I'm here
+The contents within parenthesis should be omittable without resulting
+in broken text.
 
-Note that I'm trying to do things "in the neighborhood". It'll be slower
-than me replacing things topically, but hopefully easier for others to
-digest. My current estimate is a decade or two :).
+Eliding the parenthesis left a period to end a run without any content.
 
-Josh Soref (8):
-  CodingGuidelines: move period inside parentheses
-  CodingGuidelines: write punctuation marks
-  SubmittingPatches: drop ref to "What's in git.git"
-  SubmittingPatches: update extra tags list
-  SubmittingPatches: improve extra tags advice
-  SubmittingPatches: clarify GitHub visual
-  SubmittingPatches: clarify GitHub artifact format
-  SubmittingPatches: hyphenate non-ASCII
+Signed-off-by: Josh Soref <jsoref@gmail.com>
+---
+ Documentation/CodingGuidelines | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- Documentation/CodingGuidelines  |  4 ++--
- Documentation/SubmittingPatches | 24 +++++++++++++++++++-----
- 2 files changed, 21 insertions(+), 7 deletions(-)
-
-
-base-commit: 624eb90fa8f65a79396615f3c2842ac5a3743350
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1623%2Fjsoref%2Fdocumentation-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1623/jsoref/documentation-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1623
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index 8ed517a5ca0..af94ed3a75d 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -450,7 +450,7 @@ For C programs:
+    one of the approved headers that includes it first for you.  (The
+    approved headers currently include "builtin.h",
+    "t/helper/test-tool.h", "xdiff/xinclude.h", or
+-   "reftable/system.h").  You do not have to include more than one of
++   "reftable/system.h".)  You do not have to include more than one of
+    these.
+ 
+  - A C file must directly include the header files that declare the
 -- 
 gitgitgadget
+
