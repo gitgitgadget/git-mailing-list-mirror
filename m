@@ -1,50 +1,29 @@
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 524941945C
-	for <git@vger.kernel.org>; Tue, 19 Dec 2023 13:39:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=elecard.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=elecard.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35B9A1CA80
+	for <git@vger.kernel.org>; Tue, 19 Dec 2023 14:44:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=elecard-com.20230601.gappssmtp.com header.i=@elecard-com.20230601.gappssmtp.com header.b="EHlYUNN0"
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-50d176eb382so6100365e87.2
-        for <git@vger.kernel.org>; Tue, 19 Dec 2023 05:39:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=elecard-com.20230601.gappssmtp.com; s=20230601; t=1702993175; x=1703597975; darn=vger.kernel.org;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sETaOohgW2mYzLhWm2jqBpVQHD7iYEwEzMT3Bvh+EMQ=;
-        b=EHlYUNN03g0Viv+0I1ywB66MVVvhNzYzbdEgO1egPaoENvxCDx5ltlXRKO6BHkESdk
-         P0HEGLuzZ0iLEC3Iz5HWwdul1f3pp5XDK+FDPs82K4tbBv82O8NKGHmvqPKRi3oUyTxl
-         L2pdl5KR21gQ3HNSR90gDHDA9FhP8FylT0VnyRwQMhIE/HJBDTC7rs/H2Eadfn9x3LGZ
-         HwElW5Le1Ldjw3b/OZ2CDRTiIF5UgvAr4v3Tad8V7vR9AcTuEZaJRu/6slpj4owbbxuG
-         JRxt+d77j1XkLIb27k7fQOW5IiT5+mGLpcHxIPTw8UgytK4Ex3gZckaAE4FE4ghkcV6S
-         Y2ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702993175; x=1703597975;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=sETaOohgW2mYzLhWm2jqBpVQHD7iYEwEzMT3Bvh+EMQ=;
-        b=t8wtGPZ/6MZpD5LCssbBurH1Cr4ia13mXaSJQeE8Q33trPXVZXyzji0/Se1BKkDSBa
-         FmlYt1On3g7lQ7vObgZEl0CrkMLFArvy0R8wjzljjbgL8e0sotHNNqVFrFktTVef08ep
-         CFVz5BZUKEOMwm852roA6e32S1CFeM35/pJjXtBXS9TRBigv7Jj5mLKytMfnaFSJezif
-         gP1vh/ihPKmPI/Wci/wUSgq0HQgY0iS/Z5rdgOEUij4PRqQ7Mb1EeVWYvGGzxiveyqB0
-         4yglsQGuee/z5qeV3cldPaBeSIiRoDt56TvP5sNGPFCkpZp0cLshmkPd3Tk+rGLJAoqm
-         E/rw==
-X-Gm-Message-State: AOJu0YwuASv10EybKscqyzRlJosbbXT2sItQQB8sWQJ895MhKeWec3R9
-	m09Gw7BoktFCWgyHvRx0gcHDjXySNOx7yNWlwog=
-X-Google-Smtp-Source: AGHT+IG5XisbpFjndw0jlBvBQLJG50bO0sFvY8UDTtt+Eo/EN00+UoC47+Rw7SdvZYhGa7kaed3a9Q==
-X-Received: by 2002:a05:6512:3d1b:b0:50b:fa7f:6ebe with SMTP id d27-20020a0565123d1b00b0050bfa7f6ebemr11262963lfv.20.1702993175388;
-        Tue, 19 Dec 2023 05:39:35 -0800 (PST)
-Received: from [172.16.3.59] (gate.elecard.ru. [93.91.165.2])
-        by smtp.gmail.com with ESMTPSA id b26-20020ac2563a000000b0050e399c2a50sm547662lff.141.2023.12.19.05.39.34
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Dec 2023 05:39:35 -0800 (PST)
-Message-ID: <535d231b-3351-499d-abf0-b571dbd3c965@elecard.com>
-Date: Tue, 19 Dec 2023 20:39:34 +0700
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="AO4wF+9a"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+	t=1702997070; x=1703601870; i=l.s.r@web.de;
+	bh=yDVXG4KOSfHHM0wButNnpFYHi+aHNVXuCdWFuxei0eE=;
+	h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
+	 In-Reply-To;
+	b=AO4wF+9aye6mD/liv4WlZvFSKWktBtMoN8Xb9oC9aTcczxhka3N0+S2xud2pOqWy
+	 Uie3FX9IUcgvIe8KR0lB1bpuIDe4RYRYyO2jaZRYcmHS5+PrwvaForQ/eya/heBR/
+	 PI00fcUenXFzf6BYzIQNO8mmLeDga822r58VKbp+rffsyDCGlYf4pReVj2VGKLQgm
+	 xdAQlq5ilSVduJmz+/WTtnPA3CYPLLeDSPu6tKaK5JDvMk85yaj2Ayd4z3OJhLGBp
+	 WegpZsdzQ3nL8f1yJiuqKCcIRwufw2HMFYTHWoHrfelgfTr8mmO30WIvKZoRhW8JZ
+	 P0sq//avOV8y/YohfQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([79.203.23.9]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MiMAE-1qmKam2WsI-00fcDK; Tue, 19
+ Dec 2023 15:44:30 +0100
+Message-ID: <e788cf7b-56c7-48c2-ad4f-65d9c9e73ad5@web.de>
+Date: Tue, 19 Dec 2023 15:44:30 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -52,101 +31,77 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6/8] SubmittingPatches: clarify GitHub visual
 Content-Language: en-US
-To: git@vger.kernel.org
-From: Anton Sergeev <anton.sergeev@elecard.com>
-Subject: Problem with commit-graph verify
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+To: Josh Soref via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>, Josh Soref <jsoref@gmail.com>
+References: <pull.1623.git.1702975319.gitgitgadget@gmail.com>
+ <043d2a24202d39c5564e4a4369c86ae4648dd721.1702975320.git.gitgitgadget@gmail.com>
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <043d2a24202d39c5564e4a4369c86ae4648dd721.1702975320.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:a87ez9ZhrnwC2Pa6xL4cVM+5d/dETh8wwEIn5DYqajb+t488zQa
+ 507sg8v8zzG1UyfKTho08zpRF6QdJR1i3a8Yhb9r0X9/YP95408+ACRNkB8Ry5zBtyj4NZ9
+ 5DlrZkv1na65v3PebuSyshvOyftzXJlW81/7pHHJu97unplIDuxYQ79gwqCHIsUAvFozkjJ
+ 8FenmIDACFX55wlJzGJSQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:Hg6GNIRGc/8=;Dwnz7Zs/bRH6HnPCcL//NnDUHud
+ UVpXPMIM0WwD3jFY7llFZmTPZ1o+jj1/3ZrusHi6/uRabDB0oyZ1GMvVt880OKGGD+OzxeGzH
+ O9eNYbs4fg2Bm5JPO1Xhs2nxau8lPCRqLaUXChUL7U8E5VO/L1EzPCr32mgLfTTBDQbbOfL2z
+ uo76+neSwtlWRk2VDlT6VbbBOGX50RUdt47IZspSvUh1O0fSyGEEIiVvkz7rGvVmWtsHf7NE6
+ U6Jk/QFGD6LE1++zIz7dLZXA/H/i2/F/hrYXYjTbj5F/PntmTgnORFvsgiG3YeHay/qoBdDxF
+ 03evbafFX2Sb5xxDLmS3N5OTOoeY8Wo/t0N9Bo42IkPaV1ali/1DVqjXvmTQSuWvGHOkJcMJL
+ gbsOpcfCyDLULJ8s/cxg4Lx6USxc1dCGRx7NelhjAOfq27tmxmf2n5OQaK4dkbRgoae1728HX
+ zwZMIURmNyVKhXRC5OSenWuernPOiM9W2v34yVPIWUfP0gMf5RBPgFfQXuGBb2AV0jb9ewfHX
+ gtT5Aqb59vEyIX66tHR+HxaV3bXmPDzCnfCFM0418Qr1nGv5KwFpi3F/uE0rDW9D7voefuAPW
+ I7n4hmoGqd2VxvZm42PRmbruN6Imw3fUL83fWGrEixJa6/kaGore3f7qUzCp3encdiUM/yA/3
+ 8uvsQUDO1Hu/35kYqunhT7JAfUBm/jyHd09X8vW0/quwLK4J/P/eJZT5TJYGJdErK46FlWMQr
+ XI8QgPBAgbMsyPbeEW64R+NhxSl7lZ0AWHOjq/ED8qI3idrBUo46prNPwf9ziT1f9d8TAyG/V
+ jcbjDEwXRZ/f6xLpLK8hnh2cgvQcwo7ZkCrUSztet49sHVMm+tdh4pyS0vCV7wo8N80UYrw1+
+ Iihi/HL13KWbFhK7ZX4mSjSD91G1++eHhpRU90wF3h5kKrv0NLIPMa9Cf1w5DCo/yOWVmWFL3
+ cTJ/Yg==
 
-Hi folks,
+Am 19.12.23 um 09:41 schrieb Josh Soref via GitGitGadget:
+> From: Josh Soref <jsoref@gmail.com>
+>
+> Some people would expect a cross to be upright, and potentially have
+> unequal lengths...
 
-I have a problem with 'commit-graph verify' in poco repository ([1]).
-A commit appeared there with an odd timestamp and time zone ([2]):
+There are lots of types of crosses.  And while looking them up on
+Wikipedia I learned today that an x-cross is called "saltire" in
+English.  I only knew it as St. Andrew's cross before.
 
-     git show --no-patch --pretty=%ai 
-381ac1d9a82c9682a5046dd51802a687a81ace91
-     # 2106-02-07 06:28:18 -11309508
+> GitHub uses a white x overlaying a solid red circle to indicate failure.
 
-The main problem is that the 'commit-graph verify' return error:
+They call it "x-circle-fill"
+(https://primer.github.io/octicons/x-circle-fill-16).
 
-     git commit-graph write
-     git commit-graph verify
-     # commit-graph generation for commit 
-1763a5017d8c0a9af6094fde91c43a5722bbde4c is 1699836629 < 4702109779
-     # Verifying commits in commit graph: 100% (9489/9489), done.
+>
+> Signed-off-by: Josh Soref <jsoref@gmail.com>
+> ---
+>  Documentation/SubmittingPatches | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingP=
+atches
+> index d7a84f59478..8e19c7f82e4 100644
+> --- a/Documentation/SubmittingPatches
+> +++ b/Documentation/SubmittingPatches
+> @@ -604,7 +604,7 @@ to your fork of Git on GitHub.  You can monitor the =
+test state of all your
+>  branches here: `https://github.com/<Your GitHub handle>/git/actions/wor=
+kflows/main.yml`
+>
+>  If a branch did not pass all test cases then it is marked with a red
+> -cross. In that case you can click on the failing job and navigate to
+> ++x+. In that case you can click on the failing job and navigate to
 
-     echo $?
-     # 1
+In the commit message you say the x is white, here it's red, so what is
+it?  IIUC the circle is red and the x-cross inside is the same color as
+the background, i.e. white in light mode and black in dark mode.  No
+idea how to express that in one word.  Perhaps "red circle containing
+and x-cross"?
 
-And this results in an error on fsck:
-
-     git fsck
-     # ...
-     # error in commit 381ac1d9a82c9682a5046dd51802a687a81ace91: 
-badTimezone: invalid author/committer line - bad time zone
-     # ...
-     # commit-graph generation for commit 
-1763a5017d8c0a9af6094fde91c43a5722bbde4c is 1699836629 < 4702109779
-     # ...
-
-     echo $?
-     # 20
-
-I found that first error can be masked using 'fsck.skiplist' file. But 
-can't find how to mask the second.
-Is there a workaround for this case?
-
-System info:
-* git version: 2.43.0
-* OS: Debian GNU/Linux 11 (bullseye), x86_64
-
-Notes:
-* This error originally occurred on a local GitLab installation, that 
-periodically run fsck on all repos. And the poco repo mirror in our 
-GitLab instance is now marked as failed.
-* Another strange thing about this commit is that git can't find any 
-belonging branch for it, but parent and child commits are has ones:
-
-     git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short 
--n10 4261-move-autocommit-abstractsession
-     # ac7e39ff8 2023-11-14 | Fixed indentation in ci.yml 
-(4261-move-autocommit-abstractsession) [Friedrich Wilckens]
-     # 543ea150a 2023-11-14 | Github workflow: re-activated 
-linux-gcc-make-postgres [Friedrich Wilckens]
-     # a2d10dffe 2023-11-13 | PostgreSQL SessionImpl: reuse autocommit 
-flag of AbstractSessionImpl. [Friedrich Wilckens]
-     # d32f62031 2023-11-13 | MySQL SessionImpl: make sure autocommit 
-mode is on when session is openend or reset. [Friedrich Wilckens]
-     # c919b7f79 2023-11-13 | chore(CI): re-enable mysql [Alex Fabijanic]
-     # ffd0007f2 2023-11-13 | fix(Data::AbstracSessionImpl): protect 
-autocommit feature handlers #4261 [Alex Fabijanic]
-     # 1763a5017 2023-11-12 | Brought MySQL backend in line with 
-_autoCommit flag of AbstractSessionImpl. [Friedrich Wilckens]
-     # 381ac1d9a 2106-02-07 | feat(Data::AbstractSessionImpl): add 
-autoCommit property and tests #4261 [Alex Fabijanic] <---
-     # 18eea1bb7 2023-11-11 | temporarily comment failing mysql ci until 
-fixed [Aleksandar Fabijanic]
-     # 6a5387ec2 2023-11-11 | add visitor pattern implementation for 
-Poco::Dynamic::Var (#4144) [Alexander B]
-
-     for _c in 1763a5017 381ac1d9a 18eea1bb7; do
-       echo "* $_c:";
-       git branch --contains=$_c | sed 's/^/  /';
-     done
-     # * 1763a5017:
-     #     4261-move-autocommit-abstractsession
-     # * 381ac1d9a:
-     # * 18eea1bb7:
-     # 
-2366-pocoprocesslaunch-unix-possible-memory-leak-when-launching-invalid-command
-     #     4261-move-autocommit-abstractsession
-     #     569-DateTimeParser-cherry-pick
-     #     devel
-
-Links:
-[1]: https://github.com/pocoproject/poco
-[2]: 
-https://github.com/pocoproject/poco/commit/381ac1d9a82c9682a5046dd51802a687a81ace91
-
+Ren=C3=A9
 
