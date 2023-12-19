@@ -1,53 +1,53 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B059D12B80
-	for <git@vger.kernel.org>; Tue, 19 Dec 2023 08:42:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE2A612E73
+	for <git@vger.kernel.org>; Tue, 19 Dec 2023 08:42:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MfQY9hMP"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-40d13e4f7abso24936075e9.2
-        for <git@vger.kernel.org>; Tue, 19 Dec 2023 00:42:07 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ivHYkXGs"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-40c39e936b4so48884575e9.1
+        for <git@vger.kernel.org>; Tue, 19 Dec 2023 00:42:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1702975326; x=1703580126; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GvKhy32dP9r4we7s5Og96tKp8wPOp+8SHwgf4ZtHLMM=;
-        b=MfQY9hMPQc3lNsjlK79/fYTrfxMKxnAZ8zBXkq+X7HFvbRdQkquS2JJ3keFaSSCPgv
-         6jHG5SRM6NtgHhhamR3Fd5QFiK7sk+14455k9HOhfEfLfpneWriELDNGI3TzFVnn/oWA
-         hpcCaMroPQmTVNVhWRl+8fC/JhcTRYsI1/gTkBbrEzULN/w0VAE07Ik+nlNo3XhFytaJ
-         ox++s5DI5A6vpuVUCrffmT2d48/k8PYlOLNUQ+VF+dp6GLLyRsG7SCdR5E6DOShWO2A9
-         VhYQGVG45a0zR9xUeR2+WD9N+Bh0pyVkOEsOJaouZz+rzR4GeOYOOr2777i1/q/QwgNI
-         KUAA==
+        bh=EEk8w6zLthh6eU9WJj7lAhdI382V9ytLfLho6ibFBNY=;
+        b=ivHYkXGshNqPZcCM8NnWpefkb+T8VXXfmk92IF7fcy7INJSt7pc83uhxQBj/ows7+h
+         blS81dJFta4k10jjBwj6qDISlc1fTcsLA7LV2USrv8hvCQ/tYknHF9Z44dBKDQvTyLmx
+         BoI/Wwe+YOAg6F1U0Km3NUkTyF2P6j5z+FjQmSJ5m2VB/4SWJvY0lDP/e15XIeOT6Gjr
+         daQQoMh/iIoOC9o7eF6dm/cCo5dxakxjlSFym+FvPdj3V3q6COjKptol2/W16QlhDPH6
+         AU47ASnxyCOn07qiI5NCBDImpS59x7fbRG+SHcIzIfzgolFf8LmBsCHDKLUo7jiuty5p
+         Cz8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1702975326; x=1703580126;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=GvKhy32dP9r4we7s5Og96tKp8wPOp+8SHwgf4ZtHLMM=;
-        b=asJBD2MMwoqAnqo15xXhZIPo9InYe8NPIsLBgrsVbt4lMg9TfmqSQdOUKD0PUCnenZ
-         FF0TUjPP4VIP26XPK/mAjsEd1yXNP+hqcTlGlqYjfniVWV0k8ruoXJ0J1sfzLZ0Vgelz
-         aSFN05gsRWuYsBEhyPfWH/LOxnhHkug7RqZzLZAD7f93lJJsNVa5N9F41z0PuK8rOLzD
-         kNcYOGSEcKS3oEaDXK60t41ox31E/pKKuT919PxUf6rLNg5ZhSdneOSHkuyTtfiTonRq
-         WDEaZD9bLJlXXyNt8VNqx89143D5VKrauzXN/osqFii3pLvdF16dlU4qgffYQvF7lS3a
-         L5Gg==
-X-Gm-Message-State: AOJu0YxR9hiyc2uzOK+s+z8Ol9kj2/Yqi2HGUShiZpFCKg5JFbpKD6ae
-	RUz4tCah3VGIri5S2EL5u0hnd4Uv8JI=
-X-Google-Smtp-Source: AGHT+IEi273O9gBUu7USSxDwTUXQnSI6d9pNLdpoSdq3vbqXltIKWHjQFRr5YPX2JoBVs3xhHPWGFA==
-X-Received: by 2002:a05:600c:450e:b0:40c:2b4c:ea8 with SMTP id t14-20020a05600c450e00b0040c2b4c0ea8mr10833563wmo.113.1702975325877;
-        Tue, 19 Dec 2023 00:42:05 -0800 (PST)
+        bh=EEk8w6zLthh6eU9WJj7lAhdI382V9ytLfLho6ibFBNY=;
+        b=cU1LDlmoxs+F2y4fswqoCLyoIrGpUBxpWXkL5eAW4+GgsvJk5Q/AdLHnZKTUatiFhh
+         eMv6FOcJ91z+gtFlhoobXBwUbgf4ivFGIPHHimNdAKm6xoGcYZDsDKipBqY/y5t/3hH4
+         5i6VxqfmnNHK06Zv3MY+NpNKOYKSSdbbJCLZngGo9LiQKOwgP3GyRUnLhmqKq92k4biA
+         90wGuNk7CDjlqgvrCIfBBseP4c30GGQwIB15fHaZAmNM2BREO3gysr68GZODJ8Yo64gh
+         nvmgN/NVwPbsnEF3G5f9snrIPE/E9m+OQ12UBv6B0EuPe6UyyR1Q8q4zaXi2mTIRCKhz
+         PdpQ==
+X-Gm-Message-State: AOJu0YyXNzoJ76DTjjXDqLoEHLHNm77ZsRqOVmCpkYCEqg0ntph3GeTP
+	0PbW0bjhVE8HRUCVxQ+Dn4Q6Qt4URSE=
+X-Google-Smtp-Source: AGHT+IH4QcgqA5ComtUB2X/5KHm11JelDX54Aj+D0nPwQXwAyg+ZzS2TWx+vRPQPLmg9ObV2XiQxDw==
+X-Received: by 2002:a7b:c40d:0:b0:40c:31f1:144c with SMTP id k13-20020a7bc40d000000b0040c31f1144cmr4425366wmi.87.1702975326536;
+        Tue, 19 Dec 2023 00:42:06 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ay10-20020a05600c1e0a00b0040d1bd0e716sm1794304wmb.9.2023.12.19.00.42.04
+        by smtp.gmail.com with ESMTPSA id i7-20020a05600c354700b0040d2805d158sm1260537wmq.48.2023.12.19.00.42.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Dec 2023 00:42:05 -0800 (PST)
-Message-ID: <11688e4360c1698e56b3485e3df4e171397d3c3c.1702975320.git.gitgitgadget@gmail.com>
+        Tue, 19 Dec 2023 00:42:06 -0800 (PST)
+Message-ID: <043d2a24202d39c5564e4a4369c86ae4648dd721.1702975320.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1623.git.1702975319.gitgitgadget@gmail.com>
 References: <pull.1623.git.1702975319.gitgitgadget@gmail.com>
 From: "Josh Soref via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 19 Dec 2023 08:41:56 +0000
-Subject: [PATCH 5/8] SubmittingPatches: improve extra tags advice
+Date: Tue, 19 Dec 2023 08:41:57 +0000
+Subject: [PATCH 6/8] SubmittingPatches: clarify GitHub visual
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -64,39 +64,29 @@ Cc: Elijah Newren <newren@gmail.com>,
 
 From: Josh Soref <jsoref@gmail.com>
 
-Current statistics show a strong preference to only capitalize the first
-letter in a hyphenated tag, but that some guidance would be helpful:
+Some people would expect a cross to be upright, and potentially have
+unequal lengths...
 
-git log |
-  perl -ne 'next unless /^\s+(?:Signed-[oO]ff|Acked)-[bB]y:/;
-    s/^\s+//;s/:.*/:/;print'|
-  sort|uniq -c|sort -n
-   2 Signed-off-By:
-   4 Signed-Off-by:
-  22 Acked-By:
-  47 Signed-Off-By:
-2202 Acked-by:
-95315 Signed-off-by:
+GitHub uses a white x overlaying a solid red circle to indicate failure.
 
 Signed-off-by: Josh Soref <jsoref@gmail.com>
 ---
- Documentation/SubmittingPatches | 3 +++
- 1 file changed, 3 insertions(+)
+ Documentation/SubmittingPatches | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index 694a7bafb68..d7a84f59478 100644
+index d7a84f59478..8e19c7f82e4 100644
 --- a/Documentation/SubmittingPatches
 +++ b/Documentation/SubmittingPatches
-@@ -369,6 +369,9 @@ If you like, you can put extra tags at the end:
- You can also create your own tag or use one that's in common usage
- such as "Thanks-to:", "Based-on-patch-by:", or "Improved-by:".
+@@ -604,7 +604,7 @@ to your fork of Git on GitHub.  You can monitor the test state of all your
+ branches here: `https://github.com/<Your GitHub handle>/git/actions/workflows/main.yml`
  
-+Extra tags should only capitalize the very first letter, i.e. favor
-+"Signed-off-by" over "Signed-Off-By" and "Acked-by:" over "Acked-By".
-+
- [[git-tools]]
- === Generate your patch using Git tools out of your commits.
- 
+ If a branch did not pass all test cases then it is marked with a red
+-cross. In that case you can click on the failing job and navigate to
+++x+. In that case you can click on the failing job and navigate to
+ "ci/run-build-and-tests.sh" and/or "ci/print-test-failures.sh". You
+ can also download "Artifacts" which are tarred (or zipped) archives
+ with test data relevant for debugging.
 -- 
 gitgitgadget
 
