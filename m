@@ -1,116 +1,152 @@
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8F3646431
-	for <git@vger.kernel.org>; Wed, 20 Dec 2023 16:25:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A1074776B
+	for <git@vger.kernel.org>; Wed, 20 Dec 2023 16:29:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NDllX/8b"
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-50dfac6c0beso7419052e87.2
-        for <git@vger.kernel.org>; Wed, 20 Dec 2023 08:25:22 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eiGBoIaF"
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-50e34a72660so4919965e87.1
+        for <git@vger.kernel.org>; Wed, 20 Dec 2023 08:29:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1703089520; x=1703694320; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1703089788; x=1703694588; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=eX9AaqWpMbBCaaMi/8cvCj1TFJn+L+R5w2JpZoYTDJY=;
-        b=NDllX/8bxM7VcLiNGbki56wYh9Kf6K6FJot/H5DHllG5Juvuy5kmeR3VNf/VPgbadA
-         k87Clf5KtFtP6DXfQDlLAF05cODMs+xFa59buRhbQ4NZ2DK7lJ0BbmsO7Qz/13kQX9wc
-         2un4nqjn1Cqo3kxy61MRLaNno+8GO+Dgx3XDbDLSeSA9cwu1PlhELD7YPEj23CdetHuX
-         iG+/WlJmXQWGuRFNWje3HS7W92BkYELwYhRtyI2TQ9vqPkNxzVvecyPdabUl5Yx/SuQc
-         6ylY6vqBoT7hxxsrJZxltQLv2IYDTDcSE8rJUAZjUo3iotvAKzahvk8RkLHn/8REgnAo
-         lq1g==
+        bh=Q1B1P+D01p3WI6SY00oEGuCV29paAOeF6MsCYk/tJ64=;
+        b=eiGBoIaFkjFSW5ZF/pGybYp9kCtFdbOwfuxnIourG9flINMLO/0pw3nYMMe7Olc6m6
+         OxNwU0sIwp3FKudhb1IaL7k1w7o/2U6YldV4RqYIV2OYyYGKaO4muxkDdYysbE5WbN4G
+         AH1Z06eS/IfYoWGh6PFlI4auqM/ngZ+1cqeUEwlrdnhOJxpsXPwq6A9hn6lOoDcTuE0G
+         ouzjoa+Gckd18bGdYFH/eZw4uEImbXyv9UaVXJa18qRxt3VkZ8iGbOXytf+LsCFA79KI
+         9snb6Bm/9v5Q9mK7rv8rlrNA65v7WgaIxkoirqEuSpf2DrzZ6dBf/Vb04/+BnvDGy22d
+         ZnpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703089520; x=1703694320;
+        d=1e100.net; s=20230601; t=1703089788; x=1703694588;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=eX9AaqWpMbBCaaMi/8cvCj1TFJn+L+R5w2JpZoYTDJY=;
-        b=fLXfT94jsPnw46eZEp+hpLtEYybhOcQ0MhkKGP/Sol1K1XslqlBqm5JFt5K1bwcHQt
-         aBLj6WJT0Qv+ElTkHZRkMSHq31mOKCRkVcZBsH1A/u/UJLV1nSA8u1jCahugeWq39L9o
-         en1Dh7Q+52Pi69lvHUJtjBAN8A7X0YcXCNvNB0vIKRBEh8WSmtSRNKlaFav3JkhMt8F8
-         7Rt17LaCRjhys+c/Fv9nZjViLgmM5IlCixMfFynOARj1CsKPld7lUTdbvZo8t5XFzmW0
-         AG2QQ2xzLifultUqQg8gH/ecsEJzS3o1eLFL1tJYSEn//9jduQWu8tO6hjj9LZ7+ioBX
-         mAHw==
-X-Gm-Message-State: AOJu0Yz1LFpJaMZql82QJQScbocfxpLyX0KiYzbtv22yyiirr/XGWeo5
-	km8N0t160eSMoZKMCSwq1jZfmdHxfPAZMIAWL0T5++2W8TY=
-X-Google-Smtp-Source: AGHT+IF29fS84XP9M7rTQxw5nZZrbyAheDfhMoewMXwKnk7HcEGQmIJR7wD9yLJlh+vlfgMb4RedlUiohVt0LuBBeBY=
-X-Received: by 2002:ac2:4e07:0:b0:50e:1943:e8e5 with SMTP id
- e7-20020ac24e07000000b0050e1943e8e5mr6439712lfr.136.1703089520148; Wed, 20
- Dec 2023 08:25:20 -0800 (PST)
+        bh=Q1B1P+D01p3WI6SY00oEGuCV29paAOeF6MsCYk/tJ64=;
+        b=QrAj3ZrHeuO+tzaMupNxiXO6ixxrZZF9rGdIL+YOVk7kFq18f0kjrcRdi80TjwsJL4
+         E1IyAXL2xpOIBIClxX9szAboi99WL0cLL/lvfLj2x/mcQofpPcNWG8TxysdcSw7hgyY2
+         CDIbjpWHljAZnYuX1XOSAXIKykxJGtdLu52DunzDMFpad9p/zrbQ+9+z6NkqBzSKbb28
+         3Dm1sBMI2dHJQJHUlmzEScGTaVBx1FnGFHN+VaL+hY/nN0114OSMFozUh9BFKMO/zWMV
+         tGPXlhWobyVPsENZ7q8bO8nufy+jKJUx2YwODLi/+sPthauTcrYJfGA3K5XpXsAlGOrC
+         bhXQ==
+X-Gm-Message-State: AOJu0YyK3Qe1yQeAzRWWBurxVJVG9Yx8Ewm81vRQVZRVGIOuKMRLPfF3
+	K5TjmcON2ni4q1AyiwPbuAgPqkU9ROSCTl2oTBs=
+X-Google-Smtp-Source: AGHT+IHg0CUeL3hOIM3DMg8ri2nHiEg7YkreDRKIP9Ku/02gbnbLjTLe0T4v/YWEMmt05ZK+9SltToaoYCu8bJMyigY=
+X-Received: by 2002:ac2:4902:0:b0:50e:31bd:14e3 with SMTP id
+ n2-20020ac24902000000b0050e31bd14e3mr2855584lfi.126.1703089788222; Wed, 20
+ Dec 2023 08:29:48 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1623.git.1702975319.gitgitgadget@gmail.com>
- <043d2a24202d39c5564e4a4369c86ae4648dd721.1702975320.git.gitgitgadget@gmail.com>
- <e788cf7b-56c7-48c2-ad4f-65d9c9e73ad5@web.de> <CABPp-BFU+4Xy8tVrU5qV3GX7Mr3-nOEtSgix3MSne5VVW2hz2Q@mail.gmail.com>
-In-Reply-To: <CABPp-BFU+4Xy8tVrU5qV3GX7Mr3-nOEtSgix3MSne5VVW2hz2Q@mail.gmail.com>
-From: Josh Soref <jsoref@gmail.com>
-Date: Wed, 20 Dec 2023 11:25:08 -0500
-Message-ID: <CACZqfqCM88M+saToOYVC7iXqFZdrivuq=KGLmh-Scx3H0ZSWrw@mail.gmail.com>
-Subject: Re: [PATCH 6/8] SubmittingPatches: clarify GitHub visual
-To: git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+References: <20231220070528.8049-1-mi.al.lohmann@gmail.com> <c6814a39-b4f9-4b1e-b81b-45ffe4aa7466@web.de>
+In-Reply-To: <c6814a39-b4f9-4b1e-b81b-45ffe4aa7466@web.de>
+From: Elijah Newren <newren@gmail.com>
+Date: Wed, 20 Dec 2023 08:29:36 -0800
+Message-ID: <CABPp-BHBncDqCSvGm6Ow2D2+JQLf_3htwnxZ-RWV+tsxiH1rhg@mail.gmail.com>
+Subject: Re: [PATCH] Documentation/git-merge.txt: fix reference to synopsys
+To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc: Michael Lohmann <mial.lohmann@gmail.com>, git@vger.kernel.org, 
+	Michael Lohmann <mi.al.lohmann@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Elijah Newren <newren@gmail.com> wrote:
-> On Tue, Dec 19, 2023 at 6:44=E2=80=AFAM Ren=C3=A9 Scharfe <l.s.r@web.de> =
-wrote:
-> > Am 19.12.23 um 09:41 schrieb Josh Soref via GitGitGadget:
-> > > From: Josh Soref <jsoref@gmail.com>
-> > > Some people would expect a cross to be upright, and potentially have
-> > > unequal lengths...
-> > There are lots of types of crosses.  And while looking them up on
-> > Wikipedia I learned today that an x-cross is called "saltire" in
-> > English.  I only knew it as St. Andrew's cross before.
+Hi,
+
+I'm getting in on the fun by adding a little nit-picking of my own.  :-)
+
+On Wed, Dec 20, 2023 at 7:46=E2=80=AFAM Ren=C3=A9 Scharfe <l.s.r@web.de> wr=
+ote:
+>
+> Am 20.12.23 um 08:05 schrieb Michael Lohmann:
+>
+> Thank you for this patch and sorry for the nitpicking below!
+>
+> > 437591a9d738 changed the synopsys from two separate lines for `--abort`
+>
+> "Synopsys" is a software company.  A "synopsis" is a brief outline.
+>
+> > and `--continue` to a single line (and it also simultaneously added
+> > `--quit`). That way the "enumeration" of the syntax for `--continue` is
+> > no longer valid. Since `--quit` is now also part of the same syntax
+> > line, a general statement cannot be made any more. Instead of trying to
+> > enumerate the synopsys, be explicit in the limitations of when
+> > respective actions are valid.
+>
+> Had to think a moment before I understood that "enumeration" refers to
+> "The second syntax" and "The third syntax", which have been combined
+> into this line:
+>
+>        git merge (--continue | --abort | --quit)
+>
+> And it does make sense that we can no longer say "second syntax" and
+> only refer to "git merge --abort", or "third syntax" and mean "git
+> merge --continue".  In other words: References by number are no longer
+> valid after a merge of some of the synopses.
+
+Thanks for explaining; I also missed that in reading over the original
+patch.  It'd be great if Michael could update the commit message to
+make this a bit more clear.
+
+> > This change also groups `--abort` and `--continue` together when
+> > explaining the circumstances under which they can be run in order to
+> > avoid duplication.
 > >
-> > > GitHub uses a white x overlaying a solid red circle to indicate failu=
-re.
+> > Signed-off-by: Michael Lohmann <mi.al.lohmann@gmail.com>
+> > ---
+> >  Documentation/git-merge.txt | 19 +++++++++----------
+> >  1 file changed, 9 insertions(+), 10 deletions(-)
 > >
-> > They call it "x-circle-fill"
-> > (https://primer.github.io/octicons/x-circle-fill-16).
-
-> > > diff --git a/Documentation/SubmittingPatches b/Documentation/Submitti=
-ngPatches
-> > > @@ -604,7 +604,7 @@ to your fork of Git on GitHub.  You can monitor t=
-he test state of all your
-> > >  branches here: `https://github.com/<Your GitHub handle>/git/actions/=
-workflows/main.yml`
-> > >
-> > >  If a branch did not pass all test cases then it is marked with a red
-> > > -cross. In that case you can click on the failing job and navigate to
-> > > ++x+. In that case you can click on the failing job and navigate to
+> > diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+> > index e8ab340319..d8863cc943 100644
+> > --- a/Documentation/git-merge.txt
+> > +++ b/Documentation/git-merge.txt
+> > @@ -46,21 +46,20 @@ a log message from the user describing the changes.=
+ Before the operation,
+> >      D---E---F---G---H master
+> >  ------------
 > >
-> > In the commit message you say the x is white, here it's red, so what is
-> > it?  IIUC the circle is red and the x-cross inside is the same color as
-> > the background, i.e. white in light mode and black in dark mode.  No
-> > idea how to express that in one word.  Perhaps "red circle containing
-> > and x-cross"?
+> > -The second syntax ("`git merge --abort`") can only be run after the
+> > -merge has resulted in conflicts. 'git merge --abort' will abort the
+> > -merge process and try to reconstruct the pre-merge state. However,
+> > -if there were uncommitted changes when the merge started (and
+> > -especially if those changes were further modified after the merge
+> > -was started), 'git merge --abort' will in some cases be unable to
+> > -reconstruct the original (pre-merge) changes. Therefore:
+> > +It is possible that a merge failure will prevent this process from bei=
+ng
+> > +completely automatic. "`git merge --continue`" and "`git merge --abort=
+`"
+>               ^^^^^^^^^
+>               automatically
 
-This was an oversimplification, which I deeply regret.
+Do you perhaps mean "completed automatically" (i.e. change both of the
+last two words in that sentence, and not just the last one)?  That
+would make sense to me, and I like that wording a little better.  But
+I think either you need to change both of the last two words of that
+sentence (my preference), or neither of them.
 
-It uses a simple red x (=E2=9D=8C) in some views, e.g.:
-https://github.com/gitgitgadget/git/pull/1620
+> > +can only be run after the merge has resulted in conflicts.
+>
+> The connection between these two sentences feels weak to me.
 
-And in other views it uses a red circle with what's actually a
-transparent x (white at the top if using light mode, gray fill if you
-select linux-leaks on the left, and dark gray fill in the log view):
-https://github.com/gitgitgadget/git/actions/runs/7265353611/job/19794849212=
-?pr=3D1620
+This sentence is a bit more problematic than that: Even when there are
+no conflicts, "git merge --no-commit" will also stop a merge, and one
+can then use either --abort or --continue.  So the assertion made by
+this sentence that you're reviewing is not accurate.
 
-> There's an "and" vs "an" typo there, I think.  I'm tempted to just
-> oversimplify ("...marked with red."), but am slightly concerned about
-> red/green color-blind folks.  I suspect they'd figure it out anyway by
-> comparing the checkmarks (within green) to the x's (within red), but
-> if we want to be more detailed, perhaps we drop the "cross" altogether
-> and just describe it literally: "...marked with a red circle
-> containing a white x."?
+>  Perhaps something like this:
+>
+>    A merge stops if there's a conflict that cannot be resolved
+>    automatically.  At that point you can run `git merge --abort` or
+>    `git merge --continue`.
 
-Your text aligns with what I drafted as a response but didn't send:
-
-I think it's simplest to say an `x`, or maybe "red color and an x".
+I like this alternative wording; it avoids the incorrect assertion and
+uses something equivalent to the "completed automatically" suggested
+above.
