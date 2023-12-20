@@ -1,142 +1,156 @@
-Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE9D02209B
-	for <git@vger.kernel.org>; Wed, 20 Dec 2023 10:55:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1215D3F8D0
+	for <git@vger.kernel.org>; Wed, 20 Dec 2023 15:18:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qFtWxmnQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="8qvDv5OQ"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id 3DB7C5C01B1
-	for <git@vger.kernel.org>; Wed, 20 Dec 2023 05:55:45 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Wed, 20 Dec 2023 05:55:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1703069745; x=1703156145; bh=UwKEfNoS1V
-	nz5xVoxKTG7/5/USu9zUoOfEj0TWhjq6Y=; b=qFtWxmnQx0ydlZI2RD3iiKZBRF
-	MlRsIBztUbB/zclKJbdy+tfL52+lf+lbP+oBNJEZVvb2F0AAabVKy/shpnUISV2p
-	9Tyd6K0OuUK9ElzGga2HkcS/msNouM5dVYJoT8IDfkkVy5b/X994LhqMwKQpt1FO
-	7drbDyyTIKgzm0V9MBBhkheOTmsj8gi1TLTmNVRjliSdHSCSDXOS7KyYWh7jLUNx
-	cRCHdzVtcUQvQzQ8tdOsPQghzUWqyxxIY2oEq0BjlfSc5+J+BUJ/F961mACs52vx
-	Ho71+6gkNoZGZROcCQeyS/E5FUKVafMwINn4e1Ql/2PUyvxu2Nt43BMzSesA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1703069745; x=1703156145; bh=UwKEfNoS1Vnz5xVoxKTG7/5/USu9
-	zUoOfEj0TWhjq6Y=; b=8qvDv5OQV+O28pwAxaIqCTTiemZFeJxwpIP9RbimqF1y
-	ltZ6AeoaGDvY1LhWap+SZih1LKq0H4uRKAvbTTV2U7VQpVy8LhwFNuzOOYB28GVN
-	kl44v/39geO5Ak+EWh0WNjNmev+RC/zqdjmnGoX41CJuLSwgEqmVWkVmZ7aCNV3B
-	lBWDZdxAmjtcLPyd8k5/wus9hwEmWQbKQtFa4EG0DWniWbsmIwzK30BZzXcKcV5R
-	Lqq62vOz/Ulks3ZzNlec2OL809VS2Ih25kM44PfQbXP9yowKHsAxk5sXl3nMSJjB
-	f1ygzh1SOs965ySXliAtLTAvg6SU+jHBoZWx8btDCg==
-X-ME-Sender: <xms:MciCZQrx7nXRniHMq-XA041eIrWcG0hISBPi579_gljCxenYmtqr5w>
-    <xme:MciCZWq5eQxfBNO6r9xovTCHB28rCKRJoCiZWC3FT-ZyLFdtJAK-tV9ctORTF0PKm
-    ac5pM0TdnnPihzg6A>
-X-ME-Received: <xmr:MciCZVOGgX06M1E0JH2FiAU5ooV6Lvl3L9ZR1tZ8Jek1bIVgmMvnI4tapKdGyDblbwla6t2BKAWkLBGOU0DXnA9nfyBuhXpGdisItpMf10L1KA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdduvddgvddvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
-    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
-    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgepudenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:MciCZX4vPOIhDM50ie-etCn3e97GhJxQp-2fUc529gdVJwoKrUB2Sg>
-    <xmx:MciCZf4wt67g7eUN2hEqjbpSdNrhOff4hXFixh4Jii823OkqPt6QTA>
-    <xmx:MciCZXisEultdNcpXya07OM2CrszXnubc0GfztyRpH-Hym6qvWNdng>
-    <xmx:MciCZYXv70cSKbX2uMMJfMGktRowbV96YgHGXbZo2379kuB6B5vMqQ>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 20 Dec 2023 05:55:44 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 2683b519 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Wed, 20 Dec 2023 10:53:49 +0000 (UTC)
-Date: Wed, 20 Dec 2023 11:55:42 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Subject: [PATCH 12/12] t9500: write "extensions.refstorage" into config
-Message-ID: <bbe2fbb15495ad6c8eb0824b4b4aaa7f3e6e2537.1703067989.git.ps@pks.im>
-References: <cover.1703067989.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I0sq1V67"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-40c2308faedso67581825e9.1
+        for <git@vger.kernel.org>; Wed, 20 Dec 2023 07:18:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1703085502; x=1703690302; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=UCQirOzAQPOYpZGevYo1Q0IEt66AMKiSIEPO4UiFSRw=;
+        b=I0sq1V67xjKxFU+FzYXJFeRs97PHlARi98UwtkmI9eJ9N2eD+SDFlHYApkRa2KgZmS
+         aI1iOfFgNdNyjzWxNF0+btvuu2rQ585+HcvI2CnFTP+9Gsor8Wd2QVLr5+D+uGAgWibo
+         YowhvzgCGaQxxX5rauT90+HKAxNgKLRVlmaTZQtcWm22irbgVNEx1m7bw4Ui50lvDco5
+         A4FOjeec3HvrcVMYuWbKBDHDPjBCU/RaAX/C23KbZQ9YP/aAvHQLTb8wg/t46f530rrP
+         fC9NxeWMCwl787UFcBMlVpX5ELpalie+t1rJjzzsvnNmvaqaj1LMjOjap4MpRPg74xPo
+         E5ow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703085502; x=1703690302;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=UCQirOzAQPOYpZGevYo1Q0IEt66AMKiSIEPO4UiFSRw=;
+        b=Ok+Iiy/arCJ3BEH5pUmbU07aEwIvAZ8g0FKtjuzB9BSSaSBD+weVlRQupoZWFYxTKH
+         ccfLv5Nx9vyVLgvzG7BKVQTCjjfWuSQHCYVykbQF4sJZCMIcIyc6GWcpQUrsv06Ofp3V
+         Vdsdzjrebh0FfEmSuUmOEIzhKoa2w9oUicdocMpuqaGjryUNsZCdILinEayN/VDyJJwQ
+         8JkqX5PNil3ECVDZpSWzFJCgO/5t/U2AX1MGnfjVN+1weum3EECCV8ur4rXASdcOTIrN
+         NONYjyUTF2D5nqLD9y8x1zkDxQtr+OkTdcd3SOdb96IngvEyPdSTPjCRaQNjkGI5SpS5
+         fr1A==
+X-Gm-Message-State: AOJu0Ywn9ISljSNVjW8zzf8jofWCgRuYxFpvN1CRb++sAs/y1rKBQw5s
+	Ko9CWrt1BGS2DN3orQiRo3BgZqbztxg=
+X-Google-Smtp-Source: AGHT+IFe9zoApDAfEQZdiD4WWALjNl8t2Q1LLVuzZCQm3GLcHRUR73Al4rq1RV/6wD+HurHn+MkU+w==
+X-Received: by 2002:a05:600c:45d0:b0:40c:4575:2044 with SMTP id s16-20020a05600c45d000b0040c45752044mr10107043wmo.174.1703085501971;
+        Wed, 20 Dec 2023 07:18:21 -0800 (PST)
+Received: from [192.168.1.212] ([84.64.64.237])
+        by smtp.gmail.com with ESMTPSA id cp6-20020a056000400600b003367ff4aadasm599119wrb.31.2023.12.20.07.18.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 Dec 2023 07:18:21 -0800 (PST)
+Message-ID: <35fc350d-018a-49cf-a28e-e5ce21fe7dec@gmail.com>
+Date: Wed, 20 Dec 2023 15:18:20 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="iluyBiIn36D71XhY"
-Content-Disposition: inline
-In-Reply-To: <cover.1703067989.git.ps@pks.im>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 4/8] SubmittingPatches: update extra tags list
+Content-Language: en-US
+To: Josh Soref via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>, Josh Soref <jsoref@gmail.com>
+References: <pull.1623.git.1702975319.gitgitgadget@gmail.com>
+ <e5c7f29af439c48f59b2f35af93a7972e66a5b6b.1702975320.git.gitgitgadget@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <e5c7f29af439c48f59b2f35af93a7972e66a5b6b.1702975320.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+Hi Josh
 
---iluyBiIn36D71XhY
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 19/12/2023 08:41, Josh Soref via GitGitGadget wrote:
+> From: Josh Soref <jsoref@gmail.com>
+> 
+> Add items with at least 100 uses:
+> - Co-authored-by
+> - Helped-by
+> - Mentored-by
+> - Suggested-by
 
-In t9500 we're writing a custom configuration that sets up gitweb. This
-requires us manually ensure that the repository format is configured as
-required, including both the repository format version and extensions.
-With the introduction of the "extensions.refStorage" extension we need
-to update the test to also write this new one.
+Thanks for adding these, they are widely used and should be documented. 
+The patch also adds a mention for "Noticed-by:" - I'm less convinced by 
+the need for that as I explain below.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- t/t9500-gitweb-standalone-no-errors.sh | 5 +++++
- 1 file changed, 5 insertions(+)
+> Updating the create suggestion to something less commonly used.
 
-diff --git a/t/t9500-gitweb-standalone-no-errors.sh b/t/t9500-gitweb-standa=
-lone-no-errors.sh
-index 0333065d4d..7679780fb8 100755
---- a/t/t9500-gitweb-standalone-no-errors.sh
-+++ b/t/t9500-gitweb-standalone-no-errors.sh
-@@ -627,6 +627,7 @@ test_expect_success \
- test_expect_success 'setup' '
- 	version=3D$(git config core.repositoryformatversion) &&
- 	algo=3D$(test_might_fail git config extensions.objectformat) &&
-+	refstorage=3D$(test_might_fail git config extensions.refstorage) &&
- 	cat >.git/config <<-\EOF &&
- 	# testing noval and alternate separator
- 	[gitweb]
-@@ -637,6 +638,10 @@ test_expect_success 'setup' '
- 	if test -n "$algo"
- 	then
- 		git config extensions.objectformat "$algo"
-+	fi &&
-+	if test -n "$refstorage"
-+	then
-+		git config extensions.refstorage "$refstorage"
- 	fi
- '
-=20
---=20
-2.43.GIT
+I'm not quite sure I understand what you mean by this sentence.
 
+> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+> index 32e90238777..694a7bafb68 100644
+> --- a/Documentation/SubmittingPatches
+> +++ b/Documentation/SubmittingPatches
+> @@ -348,6 +348,8 @@ If you like, you can put extra tags at the end:
+>   
+>   . `Reported-by:` is used to credit someone who found the bug that
+>     the patch attempts to fix.
+> +. `Noticed-by:` liked `Reported-by:` indicates someone who noticed
+> +  the item being fixed.
 
---iluyBiIn36D71XhY
-Content-Type: application/pgp-signature; name="signature.asc"
+I wonder if we really need a separate "Noticed-by" footer in addition to 
+"Reported-by". Personally I use the latter to acknowledge the person who 
+reported the issue being fix regards of weather I'm fixing a bug or some 
+other issue.
 
------BEGIN PGP SIGNATURE-----
+>   . `Acked-by:` says that the person who is more familiar with the area
+>     the patch attempts to modify liked the patch.
+>   . `Reviewed-by:`, unlike the other tags, can only be offered by the
+> @@ -355,9 +357,17 @@ If you like, you can put extra tags at the end:
+>     patch after a detailed analysis.
+>   . `Tested-by:` is used to indicate that the person applied the patch
+>     and found it to have the desired effect.
+> +. `Co-authored-by:` is used to indicate that multiple people
+> +  contributed to the work of a patch.
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWCyC0ACgkQVbJhu7ck
-PpThwg//ZSUqaknW1xvPkkyGsplt2Uxs5lJQZM4puKYQGPjtSCzoKK5w9YNHa3vF
-N3asGFBr1yT6smiHVBmDHaio49bmesoqugyc4eZIo4FNfK5GYj4Hn9jAw6towm13
-EpJ8sCcKWTBYZcALuYrtY89caKvx/HjM+qby2w75c1F1GY9eTS8E9o61YlLEBcck
-dK930RSEjEF8Ze9VWrZLCC6OdKWvNj+273mF9ZU1F4GUNnOhy5aOfus02jLljF64
-gs0OzvI2Wbk2ND0QWT39fllwmdy0jzQLKaaZgNGNswvjvPj+3/BNJwCLVYOrucgx
-YlpPiyEy5mF4Nk0r8jGKM3uUT5qb/KasA8YvbdI+5VgmUyQDH6Hno+wFjOASeITx
-KIVl2VfkkAGvxXdoFMCRDTCwTvVkttlw9VH3/ocyCTjLUVlUV05tTin9DHnTtJiU
-htytHRGEGSRLCTf87fSMyODlbAT9ascZPaC/98myhA0dFGEOHc9vFUmpWHUkTbN+
-uSlsySHMAzra5tsplWRipY/IxJcf8x7vtzNNGjSvsR2gFYiRqBdYtzGjigx9Vrw3
-bWfq/TlnObh4LA/aqbVoIHEaoAoR0SRRzZmIyjzUSglWFQeLm0F8gMe7yyQehgBK
-bUMnJccBgjfqhGhRvSvvj69BfKTYnNum4NlI+U8PKt0aYHhMBjw=
-=JuMx
------END PGP SIGNATURE-----
+Junio's comments in [1] may be helpful here
 
---iluyBiIn36D71XhY--
+     If co-authors closely worked together (possibly but not necessarily
+     outside the public view), exchanging drafts and agreeing on the
+     final version before sending it to the list, by one approving the
+     other's final draft, Co-authored-by may be appropriate.
+
+     I would prefer to see more use of Helped-by when suggestions for
+     improvements were made, possibly but not necessarily in a concrete
+     "squashable patch" form, the original author accepted before
+     sending the new version out, and the party who made suggestions saw
+     the updated version at the same time as the general public.
+
+So I think we should be clear that "Co-authored-by:" means that multiple 
+authors worked closely together on the patch, rather than just 
+contributed to it.
+
+[1] https://lore.kernel.org/git/xmqqmth8wwcf.fsf@gitster.g/
+
+> +. `Helped-by:` is used to credit someone with helping develop a
+> +  patch.
+> +. `Mentored-by:` is used to credit someone with helping develop a
+> +  patch.
+
+I think we use "Montored-by:" specifically to credit the mentor on 
+patches written by GSoC or Outreachy interns and "Helped-by:" for the 
+general case of someone helping the patch author.
+
+> +. `Suggested-by:` is used to credit someone with suggesting the idea
+> +  for a patch.
+>   
+>   You can also create your own tag or use one that's in common usage
+> -such as "Thanks-to:", "Based-on-patch-by:", or "Mentored-by:".
+> +such as "Thanks-to:", "Based-on-patch-by:", or "Improved-by:".
+
+What's the difference between "Improved-by:" and "Helped-by:"? In 
+general I'd prefer for us not to encourage new trailers where we already 
+have a suitable one in use.
+
+Thanks for working on this, it will be good to have better descriptions 
+of our common trailers.
+
+Best Wishes
+
+Phillip
