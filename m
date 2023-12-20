@@ -1,80 +1,87 @@
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDEF146544
-	for <git@vger.kernel.org>; Wed, 20 Dec 2023 17:00:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2421C47A7F
+	for <git@vger.kernel.org>; Wed, 20 Dec 2023 17:18:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="brkikbPd"
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2cc6c028229so48697611fa.2
-        for <git@vger.kernel.org>; Wed, 20 Dec 2023 09:00:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1703091633; x=1703696433; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hWAekF/LDtAoOb81fdzqkvbNcy1LnwjdCnl9SCfsKTY=;
-        b=brkikbPdbhzKD0fSotjTYMAc6GYpi40OxCO967SVgNU7bjOpthMPoSKhZyT9/rYUYU
-         mdSzFDL/8nCK1fsglxjk4sR2Fz0u6bozLNx1O47oQC0782z9rFqhNvdD1pNmfu5AMiVG
-         Uk9/CQVVz0IfazAQB6VuOn/coNebEYP3TOAQoQo7Tt4f4+0GIMxuSmWeU0LRDF/9C0zw
-         dR69mLWkmj+vZWh8yg2qMuXbL13AfCO4cd68oSuWOpq1sAtarmJtNfpqnOfu8mGnxUK8
-         S4eRbwxuhNCJ5gYlTjb2098T21c/HBtuaVCGQtiMM3KYBWQE3RgGyfEgN0jsOrmBdEqk
-         kFCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703091633; x=1703696433;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hWAekF/LDtAoOb81fdzqkvbNcy1LnwjdCnl9SCfsKTY=;
-        b=S0qrr6XMp/EAIvL4gPXJTo064fBXYqF0NT5mrxY5wBcYQQNzwo80kHjEuIchw0fBMu
-         GzlOPBvsyQGSXdc9gWduB0eDASmwLmT8l7DaCYpy6jkbKAfJ7WhtNrV3VEdC4pveIaz2
-         nFO3udft07etJ6gNFWFr2LPp4YfxthZ5Y32Xg/lmo/IxuUISSDGWEWHpQhLcWl3ULqcq
-         9xIk8sRoOU9Q7mK6Z8pIjFnZtAVNUP0gfoA07ZyNcarATfwpXiq8uVHvctz4LvYJ7lXf
-         m41Bz0NjC/5ECnRIjUaKPA42S4Wk+mQbQb8Ot9drK6NXVwvhIBrO1ObIRSRlZ8FnJZGZ
-         AeWA==
-X-Gm-Message-State: AOJu0Yz1UcdiiWe05pIM899h18xwpOhmv8gmZ/VGrxTwElMuyrW/21vd
-	953/JG5e6StF12jqjXuJNvWdbDrhHO8C78MASDk=
-X-Google-Smtp-Source: AGHT+IF3tTnydL3W96fUdMqBqRcWMFz54Tl5eWLD9y3UfUYOcaCov8Vm850MsbvCVG+Rdf32PHy5h8oaZVi9Bonq1Lo=
-X-Received: by 2002:ac2:5f7c:0:b0:50e:2275:59bb with SMTP id
- c28-20020ac25f7c000000b0050e227559bbmr4048093lfc.44.1703091632485; Wed, 20
- Dec 2023 09:00:32 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="E2pOJREF"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+	t=1703092697; x=1703697497; i=l.s.r@web.de;
+	bh=xJ17LjDmmejy/0qYod2GQkr8x1m94pf+9wwxAEZFajw=;
+	h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
+	 In-Reply-To;
+	b=E2pOJREFgyl7r/4wDwwK71JMHAtISlqngoMJZHX+QwlnY+f0Am38N+ls0e7ZXrdX
+	 BX/mpodk4lXeSRDCFr2JI6ANNW5AvSFdya55FH7Tc3oVGs9A9CCqSdjXDYaGiWla4
+	 3GiLRMTytEdzaqjmrdg2e2CyFoVNJYJmpXIa7B52DGMRF7HSjRgr2T2XmOtAYRJ2d
+	 9FHq9H9SgTTRsAbSRzg+AlLosgdTC30bkzllO6RPY2hszL5ih1vs1V0ZsFRSjP5i3
+	 +9us6Yo0UHBHUL0oyT5GNv1K2K55ey6VflHueDB3yY4g0uWBCEVAx/7+bFLxXXp7T
+	 H2QnbPOOtNzBf2G0ew==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([79.203.23.9]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mav6f-1qiKHa34ZP-00cKis; Wed, 20
+ Dec 2023 18:18:17 +0100
+Message-ID: <32270c4f-7ab8-48ea-bd07-455581b4a8af@web.de>
+Date: Wed, 20 Dec 2023 18:18:17 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1623.git.1702975319.gitgitgadget@gmail.com>
- <cdab65a425944e9d10f6aa6be378162cd5450c81.1702975320.git.gitgitgadget@gmail.com>
- <CABPp-BFbLN7dsKvm+___y6s8OWARhXB5BHq5N3sKWaf66RPzDg@mail.gmail.com> <CACZqfqDVBHyBCgUwAJDv838cvF4xTo_UobA-_s6hqTzTG1c9qg@mail.gmail.com>
-In-Reply-To: <CACZqfqDVBHyBCgUwAJDv838cvF4xTo_UobA-_s6hqTzTG1c9qg@mail.gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Wed, 20 Dec 2023 09:00:21 -0800
-Message-ID: <CABPp-BH+f_+hwTPF8-pivDKtFmzEyiw2NW1R9jiF24Koo1CEVw@mail.gmail.com>
-Subject: Re: [PATCH 7/8] SubmittingPatches: clarify GitHub artifact format
-To: Josh Soref <jsoref@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Documentation/git-merge.txt: fix reference to synopsys
+Content-Language: en-US
+To: Elijah Newren <newren@gmail.com>
+Cc: Michael Lohmann <mial.lohmann@gmail.com>, git@vger.kernel.org,
+ Michael Lohmann <mi.al.lohmann@gmail.com>
+References: <20231220070528.8049-1-mi.al.lohmann@gmail.com>
+ <c6814a39-b4f9-4b1e-b81b-45ffe4aa7466@web.de>
+ <CABPp-BHBncDqCSvGm6Ow2D2+JQLf_3htwnxZ-RWV+tsxiH1rhg@mail.gmail.com>
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <CABPp-BHBncDqCSvGm6Ow2D2+JQLf_3htwnxZ-RWV+tsxiH1rhg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:rgl7MmyWjcc5TdWwYea4OlW+rjs/CsKARnbYmY8en06StmivpWI
+ TLFH/UM5cZ8ViUMOMqD+mgHnjE1M04T/KRboZqcRqVrHubrkROdSP0tjbzwjBI8oVHWbeDZ
+ WIlejrWsWK/q9WYspoiuND8mMPLaeqvhetTBzYtD504yOXXl5183M8XGOtA1Zr5cIyXV7lS
+ WCEBwKhvcn/4HvKedGxkg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:dTqlRX78lYQ=;DuCcNNzBziMrFa0vEU6EuXmRDOd
+ ILg5097Sb6lCDZFtPYK52HUF81S0888dSKVvnG3tgt2G69Z84DJje1j9QTisySImbzfw7MuTF
+ aTpNq+9CP5etY5HxfEYOggQZhtYmwnosAZzb3jSqdpMHOZerSFoLv8b3N2sHX+EzSBwulMHJ+
+ ntT6ltMSksBAihliKChzUgCr9QVHIp3yHpKJ8FtsJeTcgZnfQObMfIVc5FOxI9MXEVtI7+NVM
+ tnBxTLwq/GtoOLvG4SS+0WRWXvm4rmqCk7681wfHEWIRbX9IwxUjo9HFLOEj6Ruy61uexEFi/
+ UGHagqn9AQuOdSjqEIIUukFclD9RxccTGWB4JIjqrCWQDVBONNm0cQnNQWqJqTMIAjUeiqcnd
+ J+rBuWM55IW0h167MbVX6AS/Rff+Jtwxj0hvZa0I9jvPmMLvRO2V+B5a4lfSwef7otyti/v2y
+ IG0ouafLXOkyY//S6YqxnDTdqz8GvuvdhM5Y4HOMSs8VAdgicbc9NBFWop8Z37Ybt4e/uhsgP
+ nY9QpLAJNokhB9uOwbbRkl6+RQevK9GTu8SuYVXfhPcX2xQj8v8aNOe/s2s2tJ3FLiLD6H2MJ
+ KUMW5YUgtsjO2k2xfpPLPIZWNDvntmNIBLNm+qk/i5/jqYGKVDo9uKkC3NpMkXMWGwGanwpJL
+ uhpb1iV+KlA6Pm0YJZmmaey27eZn9ofCCU8YnlNnOrn26RjwNXN7sbmmkmPX4DMLT3bwHYL4N
+ wQethSeY5gRp25A5nmyoNHOh9TBpLZWpdS0bYOgEqLzKEJ1EGT1Q1dQq3lvXPKT2EXsVKNJN7
+ 4xUFUNBJbeTjfQc7cFhNzHH4O28oXxMKiY2Cq23NDIya7l5D6/umOVD8u8/TrUDvF3YO7qiFq
+ RERjksPFqakVis9loVpkmhLiezQTF9Thf6SAkjQjeTOs0vjCM+PNwDFqoY/qgnpNNMZTsE/vy
+ 1CG99g==
 
-On Wed, Dec 20, 2023 at 8:16=E2=80=AFAM Josh Soref <jsoref@gmail.com> wrote=
-:
+Am 20.12.23 um 17:29 schrieb Elijah Newren:
 >
-> Elijah Newren <newren@gmail.com> wrote:
-> > > From: Josh Soref <jsoref@gmail.com>
-> > >
-> > > GitHub wraps artifacts generated by workflows in a .zip file.
-> > >
-> > > Internally workflows can package anything they like in them.
-> >
-> > s/Internally/Internal/?
+> On Wed, Dec 20, 2023 at 7:46=E2=80=AFAM Ren=C3=A9 Scharfe <l.s.r@web.de>=
+ wrote:
+>>
+>> Am 20.12.23 um 08:05 schrieb Michael Lohmann:
+>>
+>>> +It is possible that a merge failure will prevent this process from be=
+ing
+>>> +completely automatic. "`git merge --continue`" and "`git merge --abor=
+t`"
+>>               ^^^^^^^^^
+>>               automatically
 >
-> No, it's actually:
->
-> s/Internally/Internally,/
->
-> In that, what a workflow does to structure the contents of a .zip
-> artifact is an implementation decision of the workflow.
+> Do you perhaps mean "completed automatically" (i.e. change both of the
+> last two words in that sentence, and not just the last one)?
 
-Ah, that makes sense with the comma; thanks.
+Possibly.  This looks like a case of me making a mistake while criticizing
+someone else's grammar, though.  Which happens almost every time. o_O
+
+Ren=C3=A9
