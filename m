@@ -1,124 +1,104 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 283634879E
-	for <git@vger.kernel.org>; Wed, 20 Dec 2023 20:07:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A16D1DA49
+	for <git@vger.kernel.org>; Wed, 20 Dec 2023 20:42:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="i7bKoJK1"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 57BFB2F75A;
-	Wed, 20 Dec 2023 15:07:17 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=TdRE0btRIu6L7/gVTLv7gqrpTNzBMsVLEzPCxl
-	urOtE=; b=i7bKoJK1hhiaYS7pTLPz62NKkSaz2T49cHjgjvCX5KjYSIpu4CWrSk
-	sOjXwpwBxwborEEUOOTArJ77GTeHG+4N12rOpdJFdJJ8efCc03l2b1scBZ/W427E
-	iPnMW7ckCk+hKlzMkhwpG++6oMJrf6YfpwYmfdKTHjVRKDWQRwl8Q=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 3B0132F759;
-	Wed, 20 Dec 2023 15:07:17 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.193.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D62422F758;
-	Wed, 20 Dec 2023 15:07:13 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Joanna Wang <jojwang@google.com>,  sunshine@sunshineco.com,  tboegi@web.de
-Subject: Re: [PATCH 1/1] attr: add builtin objectmode values support
-In-Reply-To: <xmqqedfrovsb.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	12 Dec 2023 15:17:40 -0800")
-References: <xmqqttpmtnn5.fsf@gitster.g>
-	<20231116054437.2343549-1-jojwang@google.com>
-	<xmqqsf56ql14.fsf@gitster.g> <xmqqil62qfvr.fsf@gitster.g>
-	<CAMmZTi-U_ufzoBLCDWKbrf=3GZzGszxnM1_Pu6ufBeoYjj7Gdw@mail.gmail.com>
-	<xmqqedfrovsb.fsf@gitster.g>
-Date: Wed, 20 Dec 2023 12:07:12 -0800
-Message-ID: <xmqq5y0ssknj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ckCiBYQU"
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-50e305530baso138104e87.3
+        for <git@vger.kernel.org>; Wed, 20 Dec 2023 12:42:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1703104954; x=1703709754; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jsw7VRsejEWzcc0OZHP/vo4iDvc4o2FWqn5KwvX3gL4=;
+        b=ckCiBYQUPINi99AAMEi7+JjeK0jC87dTW9lud2IEdnSH9pL0qqmh1SVESEjqcJSs3C
+         tvg41FZw24foSmG0/XCq9GFnvn/E4S65zFAcx/2mByCtZ25d6Cq4qo80+S6vSITXd4bk
+         nVABKZ1RLZzhrXD+FVnvkClJGU/+XVyJWJLzdaeDIiAfO5WQ5oD9g3XeuoqUPec7QR1k
+         PdKHAJYX0+QppLe3gw3wR9Tci2ki7qwSXpLHgYsxwWNxJcxhH6nXvT6JGZ7mmJ6C3tmZ
+         mp4GIXY54JBdTVkqKSz6hHqB80ZWbFySyDX8ZslAj06AMy+TwTCVdygyCpjQamZ73IW6
+         holQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703104954; x=1703709754;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jsw7VRsejEWzcc0OZHP/vo4iDvc4o2FWqn5KwvX3gL4=;
+        b=Ul2EEDKU8m1k6TxC8DxpWk5G1Ni6P406jY9H3V3nvz0GYEFj7ZsfnFdrMiaIOuiUdI
+         Is9TVa/vWgbE16meckbehlvaspVGCGpZE9DRaGhW4Txn2ncHx85/lIFc4W0lW+ur+wBF
+         Fb7iJrdf6cGJSy7resxDb1M/prLDx4+/EhpJlTTnh0RFHKdmkYcBKe+lUTFdYMAf+TOZ
+         w1zBXckg4SdF4HUOYl+0XyDrUfMrMhlWX9xVGcPWew+t2xIqYJ57B6533ysa/b1SSbAo
+         bGiKuO2BwTRCm9i2x6vQ7EkM92LwqOugy7nAAQBc/dqE2mPlmaEO3r1FlWBngp0WaqmM
+         NEsw==
+X-Gm-Message-State: AOJu0Yx2w4k0kEOUTlnPt8GwahCF0ctxenEN8G5Vd2RCf+kXDPyDM8Gl
+	8ihPWwLCQDv8v6o2FN+MhQc26Bkt1t2nPiED+Tw=
+X-Google-Smtp-Source: AGHT+IFF+NNKG0NN/6GsCVrVCPB9wfOvb7gI+Zbo5/dR3utB39/3akbBq7nG5cZYjUftBuXMpWlOoRlVdpvHwLDYShw=
+X-Received: by 2002:a05:6512:3b97:b0:50e:3b2b:7912 with SMTP id
+ g23-20020a0565123b9700b0050e3b2b7912mr4293028lfv.21.1703104953981; Wed, 20
+ Dec 2023 12:42:33 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 5DCE803C-9F73-11EE-886A-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+References: <pull.1617.git.1701585682.gitgitgadget@gmail.com>
+ <dbfb108214d71ab29c29230eed3c4d40fe4b42b7.1701585682.git.gitgitgadget@gmail.com>
+ <xmqq1qc35sx2.fsf@gitster.g> <xmqqedfgsm6u.fsf@gitster.g>
+In-Reply-To: <xmqqedfgsm6u.fsf@gitster.g>
+From: Elijah Newren <newren@gmail.com>
+Date: Wed, 20 Dec 2023 12:42:22 -0800
+Message-ID: <CABPp-BF-ZN2RyXA6USNP5kubn1bJ76T-MwFfY7Tpf+x35aRdDA@mail.gmail.com>
+Subject: Re: [PATCH 02/12] treewide: remove unnecessary includes in source files
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> The attached is one possible way to plug the leak; I am not sure if
-> it is the best one, though.  One thing I like about the solution is
-> that the approach makes sure that the mode attributes we would ever
-> return are very tightly controlled and does not allow a buggy code
-> to come up with "mode" to be passed to this new helper function to
-> pass random and unsupported mode bits without triggering the BUG().
+On Wed, Dec 20, 2023 at 11:34=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
+ wrote:
 >
->  attr.c | 30 +++++++++++++++++++++++++++---
->  1 file changed, 27 insertions(+), 3 deletions(-)
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+> > "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> >
+> >> diff --git a/trace2.c b/trace2.c
+> >> index 6dc74dff4c7..d4220af9ae1 100644
+> >> --- a/trace2.c
+> >> ...
+> > An in-flight topic seem to want to see git_env_bool() that is
+> > declared in parse.h that is pulled in via inclusion of config.h
+> > hence this hunk breaks 'seen'.
+> >
+> >> diff --git a/t/helper/test-trace2.c b/t/helper/test-trace2.c
+> >> index d5ca0046c89..a0032ee3964 100644
+> >> --- a/t/helper/test-trace2.c
+> >> ...
+> > An in-flight topic starts using "struct key_value_info" that is
+> > available via the inclusion of "config.h", hence this hunk breaks
+> > the build of 'seen'.
+>
+> It seems that we have gained another topic in flight that gets
+> broken by this change.  I can keep piling merge-fixes on top, but it
+> does not look like a strategy that would scale well.
+>
+> Can we get this series thoroughly reviewed quickly to merge it down
+> via 'next' to 'master' soonish, so that other topics can be rebased
+> on the result, or is that too much to ask during the Winter lull?
+>
+> Thanks.
 
-Anybody who want to propose a better leakfix (we cannot afford to do
-with UNLEAK() as the number of leaked mode string will be unbounded)?
+The Winter lull is my winter surge, so I can certainly quickly make
+whatever changes are required (well, assuming I can shake this
+fever...).  But that doesn't help much with reviewing, since that
+should be done by someone other than the author.  However, these
+particular type of changes are pretty innocuous; there's really not
+anything clever going on, it's just a lot of gruntwork, and
+does-it-compile is most of the review.
 
-Otherwise, I'll squash it in to Jonanna's patch and merge it down to
-'next'.
-
-Thanks.
-
-> diff --git c/attr.c w/attr.c
-> index b03c20f768..679e42258c 100644
-> --- c/attr.c
-> +++ w/attr.c
-> @@ -1250,10 +1250,34 @@ static struct object_id *default_attr_source(void)
->  	return &attr_source;
->  }
->  
-> +static const char *interned_mode_string(unsigned int mode)
-> +{
-> +	static struct {
-> +		unsigned int val;
-> +		char str[7];
-> +	} mode_string[] = {
-> +		{ .val = 0040000 },
-> +		{ .val = 0100644 },
-> +		{ .val = 0100755 },
-> +		{ .val = 0120000 },
-> +		{ .val = 0160000 },
-> +	};
-> +	int i;
-> +
-> +	for (i = 0; i < ARRAY_SIZE(mode_string); i++) {
-> +		if (mode_string[i].val != mode)
-> +			continue;
-> +		if (!*mode_string[i].str)
-> +			snprintf(mode_string[i].str, sizeof(mode_string[i].str),
-> +				 "%06o", mode);
-> +		return mode_string[i].str;
-> +	}
-> +	BUG("Unsupported mode 0%o", mode);
-> +}
-> +
->  static const char *builtin_object_mode_attr(struct index_state *istate, const char *path)
->  {
->  	unsigned int mode;
-> -	struct strbuf sb = STRBUF_INIT;
->  
->  	if (direction == GIT_ATTR_CHECKIN) {
->  		struct object_id oid;
-> @@ -1287,8 +1311,8 @@ static const char *builtin_object_mode_attr(struct index_state *istate, const ch
->  		else
->  			return ATTR__UNSET;
->  	}
-> -	strbuf_addf(&sb, "%06o", mode);
-> -	return strbuf_detach(&sb, NULL);
-> +
-> +	return interned_mode_string(mode);
->  }
->  
->  
+Anyway, I'll reroll, dropping or holding back any changes that
+conflict with next or seen, and see if that encourages anyone to chime
+in.
