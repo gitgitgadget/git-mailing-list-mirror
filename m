@@ -1,156 +1,237 @@
-Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD131F5FC
-	for <git@vger.kernel.org>; Wed, 20 Dec 2023 09:25:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98CDD20B05
+	for <git@vger.kernel.org>; Wed, 20 Dec 2023 10:08:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JLA7hSnQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q8WaxHQ4"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id 39C645C01A6
-	for <git@vger.kernel.org>; Wed, 20 Dec 2023 04:25:18 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Wed, 20 Dec 2023 04:25:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1703064318; x=1703150718; bh=k5K03GOljj
-	94eBIBVPouY3rIMOYF88RGeHD8hYCnQ18=; b=JLA7hSnQqIMHQbnnUBpCWMEr3c
-	8B/BjSY734qAeTkZFB9BsbcULURt+lHS23F9YIIRXKPrKOG/Gh4JgKxHc8Mj2Cjh
-	oXlTc9SAEjU/4pBs4DK8HLzUsiTKJbhbnTVgIFLkwQSEe688f/ANuc29WAKtBkba
-	8LN+YbB2OgHTSiJVvjZwmXzf+clucui3vKUFByfxpjUXwIYZM1gTTE0NsMvhB3OZ
-	a3z+tf6C7kSdsChAo6UKy2omBbeSDHKf2k6opuKvzfK70RzwFc/0SuQ+K+SbHvmc
-	V4DVd9NdG9o6GCh6ASQZagPVGsiqRcNC6aNmmhdGR0LmvlPSo8nMHm4jP9pg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1703064318; x=1703150718; bh=k5K03GOljj94eBIBVPouY3rIMOYF
-	88RGeHD8hYCnQ18=; b=Q8WaxHQ4pbw/WP05notCsTuiVvq3YfYHfHPSlynCNfJ0
-	8AaCmtsx14cQIUs5f3KRgQxCUm3eLrJa9aXb97AGkEoFuCLq7te2Z6Gc751GgA+j
-	/hHfk03W6oLifr+rf4OOQT8VOEa6ffZuhIbjF0v9692c5ZgBQ8Czg3ZDqER8GUwb
-	ZRN3RPI8XhkVsIy70m3PIh7BkXt9S57GxIw3W12xWittpsZGYetzqUnAx3e0Pv0G
-	36NdwleISUSLCP8d4QHxOwv06WioV7TAxVZpgLU9BvASrD8BTNsQsiiS1u08Ald6
-	fioHNsQ8zHJAFQA5lwzbJG5ILYi9EJN1goE+ZBRodQ==
-X-ME-Sender: <xms:_rKCZbYnYBU6o3dc6tFkK7KJ51aIAA7bHp7_3G9MZFs_Ehq5fCiWwQ>
-    <xme:_rKCZaaIXDWJB9myWnYBmyRd3rooVTvlIPlalqTrRdVsJ0GFCUldcaNNU1FcZjLDe
-    xVajrypI_5YMfJJrQ>
-X-ME-Received: <xmr:_rKCZd-qk78TVLBjv8jHSOROQ7KchXAzdtok_N4LZNNUxSHI_yHPLC68kFOGy3rJ0TDpdAFnMYyPKa0LYCtbPcOC4cZJsqBAxE1ZrTx9-VvFMA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdduvddgtdehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
-    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
-    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:_rKCZRqH22k6Yc4EmqmNIYppkyPMN6w5RBiTB9Fae-aQK6RGYiKWjw>
-    <xmx:_rKCZWqmFaI7jmjl6dh-67dlFprXatalgvnc1eOYEsX3q5QalVXC7w>
-    <xmx:_rKCZXSzWU3nWDl31pSe3HdV0muI5zAHZ41nRaJ1G3doxqIaV-R3Zg>
-    <xmx:_rKCZUHqjqOQoeU65kymgWKNwbC2gMRizhwAwifhlrYkN540iOskNA>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 20 Dec 2023 04:25:17 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id bd11feb2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Wed, 20 Dec 2023 09:23:21 +0000 (UTC)
-Date: Wed, 20 Dec 2023 10:25:14 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Subject: Re: [PATCH 4/7] reftable/record: store "val1" hashes as static arrays
-Message-ID: <ZYKy-nnZ3xjXwUmV@tanuki>
-References: <cover.1703063544.git.ps@pks.im>
- <06c9eab67802ba933b44d32f5c8d11fddc216c26.1703063544.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="klB4TfQU"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3367f8f8cb0so12920f8f.2
+        for <git@vger.kernel.org>; Wed, 20 Dec 2023 02:08:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1703066894; x=1703671694; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UNW97VbFgxHtoA9hPCUy5hCn7nLMb/uvdm/hHntqwGw=;
+        b=klB4TfQU1UIRNEff3FoURExg0aiAbH+ZJmmQUvLWMMV2SsEarBlvGDjZ4PzS1igQPH
+         KQiE+HbZjO+nSuhNXwnZ7CDK/Itj7tp+9Rb6CwyQfoMDI2cQoR4DwbMfLK3nDX4IQyFT
+         ONoBewJ78XmVrDc/7kK858O5Y9WzZOt9piAQOQRAwkvmEu6a36vF249q93UjiDsHaNMJ
+         dX6SVVm9pOCtlCWTN8lMXACs6svIWAbevsihjslPn/8DEvenoWa85OMLw/+0Edx6RezI
+         X2CFtaMzfB9Cj5aNdmMmDOPQH0r4BaUBA/5Wdt7JlbFPOFU9qYmNV96APoyCFr2URvxd
+         f48w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703066894; x=1703671694;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=UNW97VbFgxHtoA9hPCUy5hCn7nLMb/uvdm/hHntqwGw=;
+        b=shhR+EXuNHRfX7ETG4mPsNpPN9Cl4OqyG77fLvQEjl6Le61mXTkNEHiUIvdt+Tw4qr
+         BgnoD57izHXHvws2mH65NxzvxcCy1FA2dpeJrSVVEI5Zq6rDEmA9CFJCL3TyibNPcWLi
+         QWKTzx8Kj3bOSzh5EC+ZNKFepzDTgBp7le/sSHoXDt0MruRdrkrSavAuo1XH+bC3NosF
+         2zlYlNQyx1VdYr7Fsak5SNVqTniF2uHDhfVViMc5mBDYvGTE1RDZu7VD13Ev6Hca264T
+         Xm4DXlADfXL7/+upgMly4V/16Qx9pzDKAEEtAn5ri18gMEsUSErdlMl6VN1Gov9RT/x+
+         IFDA==
+X-Gm-Message-State: AOJu0YyY3vDqMGOWkUb2H4eNpNmPb3wIyl8zmkRTynfouvz7bqAi0qBZ
+	6w94IIBZkcGHkdVD9U9XxnmgfZnRZTI=
+X-Google-Smtp-Source: AGHT+IGEGD7fBEfxxnpnHQKSzqANMUQYrPMxh0iOLlmyTphDGtCT3t1BuK+d24FCRam7DoRUQkVpQw==
+X-Received: by 2002:adf:e80c:0:b0:336:6f8a:2654 with SMTP id o12-20020adfe80c000000b003366f8a2654mr1566429wrm.138.1703066894539;
+        Wed, 20 Dec 2023 02:08:14 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id d13-20020a056000114d00b00336726bcc8dsm3891043wrx.7.2023.12.20.02.08.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 20 Dec 2023 02:08:14 -0800 (PST)
+Message-ID: <pull.1620.v3.git.1703066893657.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1620.v2.git.1703010646036.gitgitgadget@gmail.com>
+References: <pull.1620.v2.git.1703010646036.gitgitgadget@gmail.com>
+From: "Chandra Pratap via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 20 Dec 2023 10:08:13 +0000
+Subject: [PATCH v3] Teach git apply to respect core.fileMode settings
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="8tIOcgqIrI57VQWM"
-Content-Disposition: inline
-In-Reply-To: <06c9eab67802ba933b44d32f5c8d11fddc216c26.1703063544.git.ps@pks.im>
+To: git@vger.kernel.org
+Cc: Torsten =?UTF-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+    Chandra Pratap <chandrapratap376@gmail.com>,
+    Chandra Pratap <chandrapratap3519@gmail.com>
+
+From: Chandra Pratap <chandrapratap3519@gmail.com>
+
+When applying a patch that adds an executable file, git apply
+ignores the core.fileMode setting (core.fileMode in git config
+specifies whether the executable bit on files in the working tree
+should be honored or not) resulting in warnings like:
+
+warning: script.sh has type 100644, expected 100755
+
+even when core.fileMode is set to false, which is undesired. This
+is extra true for systems like Windows.
+
+Fix this by inferring the correct file mode from the existing
+index entry when core.filemode is set to false. Add a test case
+that verifies the change and prevents future regression.
+
+Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
+---
+    apply: make git apply respect core.fileMode settings
+    
+    Regarding this:
+    
+    > I am wondering if we want to be more strict about hiding error return
+    > code from "git ls-files" and "git ls-tree" behind pipes like these.
+    > Usually we encourage using a temporary file, e.g., ... git ls-files -s
+    > script.sh >ls-files-output && test_grep "^100755" ls-files-output &&
+    > ...
+    
+    I have modified the patch so that the output of git ls-files and git
+    ls-tree are stored in a temporary file instead of being directly piped
+    to grep but also noticed similar working in other test cases in the same
+    test file. For example,
+    
+    test_expect_success FILEMODE 'same mode (index only)' ' .... .... ....
+    git ls-files -s file | grep "^100755"
+    
+    and
+    
+    test_expect_success FILEMODE 'mode update (index only)' ' ... ... ...
+    git ls-files -s file | grep "^100755"
+    
+    Would we want to modify these scripts as well so they follow the same
+    convention as above or is it okay to let them be as is?
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1620%2FChand-ra%2Fdevel-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1620/Chand-ra/devel-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1620
+
+Range-diff vs v2:
+
+ 1:  29c8c6d120e ! 1:  9a3623edfd2 Teach git apply to respect core.fileMode settings
+     @@ Commit message
+          warning: script.sh has type 100644, expected 100755
+      
+          even when core.fileMode is set to false, which is undesired. This
+     -    is extra true for systems like Windows, which don't rely on "lsat()".
+     +    is extra true for systems like Windows.
+      
+          Fix this by inferring the correct file mode from the existing
+     -    index entry when core.filemode is set to false. The added
+     -    test case helps verify the change and prevents future regression.
+     +    index entry when core.filemode is set to false. Add a test case
+     +    that verifies the change and prevents future regression.
+      
+     -    Reviewed-by: Johannes Schindelin <johannes.schindelin@gmail.com>
+          Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
+      
+       ## apply.c ##
+     @@ t/t4129-apply-samemode.sh: test_expect_success POSIXPERM 'do not use core.shared
+       	)
+       '
+       
+     -+test_expect_success 'ensure git apply respects core.fileMode' '
+     ++test_expect_success 'git apply respects core.fileMode' '
+      +	test_config core.fileMode false &&
+      +	echo true >script.sh &&
+      +	git add --chmod=+x script.sh &&
+     -+	git ls-files -s script.sh | grep "^100755" &&
+     ++	git ls-files -s script.sh > ls-files-output &&
+     ++	test_grep "^100755" ls-files-output &&
+      +	test_tick && git commit -m "Add script" &&
+     -+	git ls-tree -r HEAD script.sh | grep "^100755" &&
+     ++	git ls-tree -r HEAD script.sh > ls-tree-output &&
+     ++	test_grep "^100755" ls-tree-output &&
+      +
+      +	echo true >>script.sh &&
+      +	test_tick && git commit -m "Modify script" script.sh &&
+      +	git format-patch -1 --stdout >patch &&
+     -+	grep "index.*100755" patch &&
+     ++	test_grep "^index.*100755$" patch &&
+      +
+      +	git switch -c branch HEAD^ &&
+      +	git apply --index patch 2>err &&
+     -+	! grep "has type 100644, expected 100755" err &&
+     -+	git restore -S script.sh && git restore script.sh &&
+     ++	test_grep ! "has type 100644, expected 100755" err &&
+     ++	git reset --hard &&
+      +
+      +	git apply patch 2>err &&
+     -+	! grep "has type 100644, expected 100755" err &&
+     ++	test_grep ! "has type 100644, expected 100755" err &&
+      +
+      +	git apply --cached patch 2>err &&
+     -+	! grep "has type 100644, expected 100755" err
+     ++	test_grep ! "has type 100644, expected 100755" err
+      +'
+      +
+       test_done
 
 
---8tIOcgqIrI57VQWM
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+ apply.c                   |  8 ++++++--
+ t/t4129-apply-samemode.sh | 27 +++++++++++++++++++++++++++
+ 2 files changed, 33 insertions(+), 2 deletions(-)
 
-On Wed, Dec 20, 2023 at 10:17:17AM +0100, Patrick Steinhardt wrote:
-> When reading ref records of type "val1" we store its object ID in an
-> allocated array. This results in an additional allocation for every
-> single ref record we read, which is rather inefficient especially when
-> iterating over refs.
->=20
-> Refactor the code to instead use a static array of `GIT_MAX_RAWSZ`
-> bytes. While this means that `struct ref_record` is bigger now, we
-> typically do not store all refs in an array anyway and instead only
-> handle a limited number of records at the same point in time.
->=20
-> Using `git show-ref --quiet` in a repository with ~350k refs this leads
-> to a significant drop in allocations. Before:
->=20
->     HEAP SUMMARY:
->         in use at exit: 21,098 bytes in 192 blocks
->       total heap usage: 2,116,683 allocs, 2,116,491 frees, 76,098,060 byt=
-es allocated
->=20
-> After:
->=20
->     HEAP SUMMARY:
->         in use at exit: 21,098 bytes in 192 blocks
->       total heap usage: 1,419,031 allocs, 1,418,839 frees, 62,145,036 byt=
-es allocated
->=20
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+diff --git a/apply.c b/apply.c
+index 3d69fec836d..58f26c40413 100644
+--- a/apply.c
++++ b/apply.c
+@@ -3778,8 +3778,12 @@ static int check_preimage(struct apply_state *state,
+ 		return error_errno("%s", old_name);
+ 	}
+ 
+-	if (!state->cached && !previous)
+-		st_mode = ce_mode_from_stat(*ce, st->st_mode);
++	if (!state->cached && !previous) {
++		if (!trust_executable_bit)
++			st_mode = *ce ? (*ce)->ce_mode : patch->old_mode;
++		else
++			st_mode = ce_mode_from_stat(*ce, st->st_mode);
++	}
+ 
+ 	if (patch->is_new < 0)
+ 		patch->is_new = 0;
+diff --git a/t/t4129-apply-samemode.sh b/t/t4129-apply-samemode.sh
+index e7a7295f1b6..ff0c1602fd5 100755
+--- a/t/t4129-apply-samemode.sh
++++ b/t/t4129-apply-samemode.sh
+@@ -101,4 +101,31 @@ test_expect_success POSIXPERM 'do not use core.sharedRepository for working tree
+ 	)
+ '
+ 
++test_expect_success 'git apply respects core.fileMode' '
++	test_config core.fileMode false &&
++	echo true >script.sh &&
++	git add --chmod=+x script.sh &&
++	git ls-files -s script.sh > ls-files-output &&
++	test_grep "^100755" ls-files-output &&
++	test_tick && git commit -m "Add script" &&
++	git ls-tree -r HEAD script.sh > ls-tree-output &&
++	test_grep "^100755" ls-tree-output &&
++
++	echo true >>script.sh &&
++	test_tick && git commit -m "Modify script" script.sh &&
++	git format-patch -1 --stdout >patch &&
++	test_grep "^index.*100755$" patch &&
++
++	git switch -c branch HEAD^ &&
++	git apply --index patch 2>err &&
++	test_grep ! "has type 100644, expected 100755" err &&
++	git reset --hard &&
++
++	git apply patch 2>err &&
++	test_grep ! "has type 100644, expected 100755" err &&
++
++	git apply --cached patch 2>err &&
++	test_grep ! "has type 100644, expected 100755" err
++'
++
+ test_done
 
-I screwed up the rebase. The following diff is required on top:
-
-diff --git a/reftable/readwrite_test.c b/reftable/readwrite_test.c
-index 56c0b4db5d..87b238105c 100644
---- a/reftable/readwrite_test.c
-+++ b/reftable/readwrite_test.c
-@@ -809,11 +809,10 @@ static void test_write_multiple_indices(void)
- 	writer =3D reftable_new_writer(&strbuf_add_void, &writer_buf, &opts);
- 	reftable_writer_set_limits(writer, 1, 1);
- 	for (i =3D 0; i < 100; i++) {
--		unsigned char hash[GIT_SHA1_RAWSZ] =3D {i};
- 		struct reftable_ref_record ref =3D {
- 			.update_index =3D 1,
- 			.value_type =3D REFTABLE_REF_VAL1,
--			.value.val1 =3D hash,
-+			.value.val1 =3D {i},
- 		};
-=20
- 		strbuf_reset(&buf);
-
-Will fix in v2 of this series.
-
-Patrick
-
---8tIOcgqIrI57VQWM
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWCsvkACgkQVbJhu7ck
-PpSKxQ//bMnBMZGI38vkzFbpP8fLLn/W8ILh/jC6UJWxY6n52Rfhtx5joMy0/G0/
-cpKKeCvROEiy8osP7kpV7GgrUf83IR4DwoisF4+czvHZD0MMXJBABTyoTtg/6+Zt
-RMURMYE66WWlPUy+fLPa5ecq2605ee3xjx5KOAprl4XjxXMgO8I0hRZpbmIaMzMj
-TZDo0L/dcnfaCwrgVzXp/GvlprjHhwmd5Q9X6X8PznbgqEh3N88SCBH/wSh5uXND
-8EL83RqQNPVLWyusHXQx3MqMihfCBTl16cvgnA1xROChOW6oLBKe7jZ23VEEB2nj
-V8ju1PpVbhG/U5N/9uWmZoeBIrux7o6LUVoWZrR0V75uiCNrrDJDZQANMSdWu3yU
-KpVS4+ACjRHabrl0Lzn6MvpinO8P9QEU/a+YMslyX4cGkxX4QuYD6fUUDGEN0wIZ
-jpkYi0jsHHDdspZ2Jn7AI+rbHCRbCOCW0MPktjPjBOl2lPSBHjGFTfeo+a3UTMvU
-xrjwdwQ6NElNGBoV1Tz6VjU808xZVh6x/GsFl+/Mrc3rlzbsNC49Pyfa5kACy0jt
-QyO5UiW26tGvjAfEY5B3Zt6JsZCrBlZdDL6DeHu6N1TgDaW0drgm11VM8q5RmOcz
-UWwVN3MvBkA4XYHiMvi9T1cMpGudEalwORAT8nxJi1zw0Peg9/c=
-=yKtm
------END PGP SIGNATURE-----
-
---8tIOcgqIrI57VQWM--
+base-commit: 1a87c842ece327d03d08096395969aca5e0a6996
+-- 
+gitgitgadget
