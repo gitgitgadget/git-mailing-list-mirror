@@ -1,44 +1,44 @@
 Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A52C200CD
-	for <git@vger.kernel.org>; Wed, 20 Dec 2023 09:17:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C255220313
+	for <git@vger.kernel.org>; Wed, 20 Dec 2023 09:17:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tfOUe7EY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ARoPZ730"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id 3A4B95C01E2
-	for <git@vger.kernel.org>; Wed, 20 Dec 2023 04:17:16 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="vW2M2PSf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="zNf160MB"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.nyi.internal (Postfix) with ESMTP id 229945C01E5
+	for <git@vger.kernel.org>; Wed, 20 Dec 2023 04:17:20 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Wed, 20 Dec 2023 04:17:16 -0500
+  by compute2.internal (MEProxy); Wed, 20 Dec 2023 04:17:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1703063836; x=1703150236; bh=sTI8hiXSak
-	S5gsZAiu+ASBpkk2qb2jMOHHdNmIf5/HM=; b=tfOUe7EY4cgcdfcHzlGYi40bHS
-	VQWqh7qDjgTvOrB6/qgBUnRR44TDQRO3IBukWSAHS1ZL9qRAglkBtHmR0yZj8HjA
-	w4LSHxIYrHD/vXcvKQodqHeMYJZnp+TIzmaw3864ofdPfXkOOKZuPA2L9zywUk7v
-	t4DMvOcqR60KKwqt17AB+1sihYpm7MU+2OEqu/u88VYUlsNZ+bba7Y/94QlvbG3K
-	PWO9oYeakZ503BqixIy8rABA8khVkt2E9ujuEA5p8CvOQ+RAMIkwuPfCLEOyUZdV
-	5b/leWi9ayWOUMqR4BwxJQMoP5xe7SoI1bZhGkAHbsJPuF4/PaMf3Osa4+Cg==
+	:subject:to:to; s=fm2; t=1703063840; x=1703150240; bh=nxEVCiPimo
+	C99N6wAyN+qy66ywNRNCzXda2GpyTZNQw=; b=vW2M2PSfI16+IcpR9cHFZqbhYp
+	sUe0O5261vdzz8+vgKS+GXth5ijbpIJ2+pC2zNMqDsiIJsFF1QNt6QjCKAOvn+TE
+	yZaH5TyoClza6RrBBy98n+ieL1PLwqMw12AWOq/3NIipDcYGEqE5niSVzAsLqLMu
+	mCUgUwb18QqziwuGoE+f5+kmr8bn4CLySN5ZmbSFyrNJZj/b8QPvkUo5G1F9l3GK
+	b7I6zMfdszh3Nkm7PbgOFVX5PddAF7kDU1ZH/Bys+2kuuKROcKpbzvZnSUeBJu86
+	lZVUwAutdda/BuSWt/3pTNisMq1UgTuqL6NqKVfVGID3/mzIMcR0Ki1fjDIQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1703063836; x=1703150236; bh=sTI8hiXSakS5gsZAiu+ASBpkk2qb
-	2jMOHHdNmIf5/HM=; b=ARoPZ730EWlMX6HDMmYuVu7vAIDh8So5Vg4MmRn1CrZG
-	7jHdzpFhlzp1mXcmqVGDaUZrH/WOTOIR6V2SeiiIt754T5wVPBoAcwqoj+Ef17n7
-	x91J/MMjN8a6i4P913pRPvx9CW8envtnBfOBxZiszr2S6bEocV1GRmx/BePyzV2z
-	QukN8v04UYnP0WhONiPEACKDW8TLh6JtpCb2uxAebHc+N12dorPnRpTbi3X8jwIK
-	v72Dh5CZQAJ+SRYWG5eH/RSGntwRZhDtSe4gty+8L2YXbSwRIAIDJbY8JWeUET/o
-	w7QcevNx/SOMSvdkEuZSNqFZvBBt8Hkdwj9nKXtagg==
-X-ME-Sender: <xms:HLGCZfkrbe5uTRdrCtQkWraYw-N7KopN9mCt7xWXUYVaqPdD0CUEgQ>
-    <xme:HLGCZS2Lf1mr3M6lHFxVVm4ryeEnzYn-z5wsDoiAQQEEvpIx5FqjlTHnqJCsPSJl0
-    I_5B9ZcuvIqf9nTsw>
-X-ME-Received: <xmr:HLGCZVoINf15QyqsV7AKC2zh49Ez7hn3BZPK0yeVzi2rB77neMJRv1qZvfAuVewEBoT_2VWsyzIfNMA6DUKTTsqaCbEEVnqOSpHk1_T41-tgJg>
+	fm2; t=1703063840; x=1703150240; bh=nxEVCiPimoC99N6wAyN+qy66ywNR
+	NCzXda2GpyTZNQw=; b=zNf160MBYdQytL+tmV4GygJh1gq87hpvMLHgsOV/zMW7
+	9xEMiYx+q/hUYAzlo1VCvFzbUTkIVAucRAV1YhVMep3h8pcZP5tYYp+i/OKYI2qZ
+	rDLxlnsecWZKtqUGZSXjjU54QKHcpUwrip2zOmb5sFfHdDE55H8tiQYe5W3aECo9
+	hwxY9whOriF3QPMUsW02v6Wn8cxVIqziRB2MofGmihAmKv5W8AEVEBUmkBTr0ekG
+	+SYwiblKXpRyQApGmCZKfXaPHrDSyTR856r0OGiNExOyzPCuHZAzJvbxKhqoEdi+
+	2ZPEAovml2oLzvFyGSdm6cTz5lARPRt76ma1BCA+Yw==
+X-ME-Sender: <xms:H7GCZYDg6YUfpf1dk5U8diCgq-ox_T46lC4vxZvu0y0XZ5h7cDfYKg>
+    <xme:H7GCZaiyPWLAZWpG0VvSEYYbUwPWQkQw0MpMowhuT4ggaH15xNtlhGaCjoptfqohA
+    Sh5YhMyuiG6e4hc3Q>
+X-ME-Received: <xmr:H7GCZblZCJ2KteP8EtXK4hVqlhVoUVesiILL38fXVjc6o547STcB6N5RLoZwqJZqR6QoGqfdLAydaOaPLx8cL1G2iyXJ9RKjsqZLcjwrUKup3Q>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdduvddgtdefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
@@ -46,22 +46,22 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdduvddgtdefucetufdoteggod
     khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
     dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:HLGCZXnW8HhZ7ZjuY8iXDx8MhW6NhYcfnV4L7VySWh3XEVLEUH_CkA>
-    <xmx:HLGCZd3LC8F3D51QtIdOgHoNjf2ZcYiEx9UeWQJpZvrgaAmKLdOMig>
-    <xmx:HLGCZWv30OHuGl8HaouruPU0eSY8lVqDSiHJhSO4-uIk3Sq6bv5KBw>
-    <xmx:HLGCZagWJ0FPd68GWAPZMraT-93O8OUFbi_ulba5Ae_SFhnGT2JBVw>
+X-ME-Proxy: <xmx:ILGCZezVmcYGauyMOcWoZ5BRxR8kSir5ML9Xfg2cc9-6Xhi8wPb_6A>
+    <xmx:ILGCZdThhd-ffemeFGyxmyX8qV6_EfPP4kdkOCfzlHzcz5vYr914ZA>
+    <xmx:ILGCZZY7PP3uWShwLPHfeQ55huguds0-_xmf6qIpsD5KCC7bBDPVXQ>
+    <xmx:ILGCZYOS9pXwqLnANbPtFaiHpSJqB7l3E195arHz1fZj5vq2_Ezolg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 20 Dec 2023 04:17:15 -0500 (EST)
+ <git@vger.kernel.org>; Wed, 20 Dec 2023 04:17:19 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 896d9411 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id b7aeaf71 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Wed, 20 Dec 2023 09:15:20 +0000 (UTC)
-Date: Wed, 20 Dec 2023 10:17:13 +0100
+	Wed, 20 Dec 2023 09:15:24 +0000 (UTC)
+Date: Wed, 20 Dec 2023 10:17:17 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 3/7] reftable/record: constify some parts of the interface
-Message-ID: <3ad4a0e5b9afd7ef841c2671ac4a8dd23b315e4b.1703063544.git.ps@pks.im>
+Subject: [PATCH 4/7] reftable/record: store "val1" hashes as static arrays
+Message-ID: <06c9eab67802ba933b44d32f5c8d11fddc216c26.1703063544.git.ps@pks.im>
 References: <cover.1703063544.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -70,113 +70,286 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="WMjm1hwRzb4tbl+x"
+	protocol="application/pgp-signature"; boundary="xyJkOnneEbbZ0lnu"
 Content-Disposition: inline
 In-Reply-To: <cover.1703063544.git.ps@pks.im>
 
 
---WMjm1hwRzb4tbl+x
+--xyJkOnneEbbZ0lnu
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-We're about to convert reftable records to stop storing their object IDs
-as allocated hashes. Prepare for this refactoring by constifying some
-parts of the interface that will be impacted by this.
+When reading ref records of type "val1" we store its object ID in an
+allocated array. This results in an additional allocation for every
+single ref record we read, which is rather inefficient especially when
+iterating over refs.
+
+Refactor the code to instead use a static array of `GIT_MAX_RAWSZ`
+bytes. While this means that `struct ref_record` is bigger now, we
+typically do not store all refs in an array anyway and instead only
+handle a limited number of records at the same point in time.
+
+Using `git show-ref --quiet` in a repository with ~350k refs this leads
+to a significant drop in allocations. Before:
+
+    HEAP SUMMARY:
+        in use at exit: 21,098 bytes in 192 blocks
+      total heap usage: 2,116,683 allocs, 2,116,491 frees, 76,098,060 bytes=
+ allocated
+
+After:
+
+    HEAP SUMMARY:
+        in use at exit: 21,098 bytes in 192 blocks
+      total heap usage: 1,419,031 allocs, 1,418,839 frees, 62,145,036 bytes=
+ allocated
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/record.c          | 8 ++++----
- reftable/reftable-record.h | 4 ++--
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ reftable/block_test.c      |  4 +---
+ reftable/merged_test.c     | 16 ++++++----------
+ reftable/readwrite_test.c  | 11 +++--------
+ reftable/record.c          |  3 ---
+ reftable/record_test.c     |  1 -
+ reftable/reftable-record.h |  2 +-
+ reftable/stack_test.c      |  2 --
+ 7 files changed, 11 insertions(+), 28 deletions(-)
 
+diff --git a/reftable/block_test.c b/reftable/block_test.c
+index c00bbc8aed..dedb05c7d8 100644
+--- a/reftable/block_test.c
++++ b/reftable/block_test.c
+@@ -49,13 +49,11 @@ static void test_block_read_write(void)
+=20
+ 	for (i =3D 0; i < N; i++) {
+ 		char name[100];
+-		uint8_t hash[GIT_SHA1_RAWSZ];
+ 		snprintf(name, sizeof(name), "branch%02d", i);
+-		memset(hash, i, sizeof(hash));
+=20
+ 		rec.u.ref.refname =3D name;
+ 		rec.u.ref.value_type =3D REFTABLE_REF_VAL1;
+-		rec.u.ref.value.val1 =3D hash;
++		memset(rec.u.ref.value.val1, i, GIT_SHA1_RAWSZ);
+=20
+ 		names[i] =3D xstrdup(name);
+ 		n =3D block_writer_add(&bw, &rec);
+diff --git a/reftable/merged_test.c b/reftable/merged_test.c
+index d08c16abef..b3927a5d73 100644
+--- a/reftable/merged_test.c
++++ b/reftable/merged_test.c
+@@ -123,13 +123,11 @@ static void readers_destroy(struct reftable_reader **=
+readers, size_t n)
+=20
+ static void test_merged_between(void)
+ {
+-	uint8_t hash1[GIT_SHA1_RAWSZ] =3D { 1, 2, 3, 0 };
+-
+ 	struct reftable_ref_record r1[] =3D { {
+ 		.refname =3D "b",
+ 		.update_index =3D 1,
+ 		.value_type =3D REFTABLE_REF_VAL1,
+-		.value.val1 =3D hash1,
++		.value.val1 =3D { 1, 2, 3, 0 },
+ 	} };
+ 	struct reftable_ref_record r2[] =3D { {
+ 		.refname =3D "a",
+@@ -165,26 +163,24 @@ static void test_merged_between(void)
+=20
+ static void test_merged(void)
+ {
+-	uint8_t hash1[GIT_SHA1_RAWSZ] =3D { 1 };
+-	uint8_t hash2[GIT_SHA1_RAWSZ] =3D { 2 };
+ 	struct reftable_ref_record r1[] =3D {
+ 		{
+ 			.refname =3D "a",
+ 			.update_index =3D 1,
+ 			.value_type =3D REFTABLE_REF_VAL1,
+-			.value.val1 =3D hash1,
++			.value.val1 =3D { 1 },
+ 		},
+ 		{
+ 			.refname =3D "b",
+ 			.update_index =3D 1,
+ 			.value_type =3D REFTABLE_REF_VAL1,
+-			.value.val1 =3D hash1,
++			.value.val1 =3D { 1 },
+ 		},
+ 		{
+ 			.refname =3D "c",
+ 			.update_index =3D 1,
+ 			.value_type =3D REFTABLE_REF_VAL1,
+-			.value.val1 =3D hash1,
++			.value.val1 =3D { 1 },
+ 		}
+ 	};
+ 	struct reftable_ref_record r2[] =3D { {
+@@ -197,13 +193,13 @@ static void test_merged(void)
+ 			.refname =3D "c",
+ 			.update_index =3D 3,
+ 			.value_type =3D REFTABLE_REF_VAL1,
+-			.value.val1 =3D hash2,
++			.value.val1 =3D { 2 },
+ 		},
+ 		{
+ 			.refname =3D "d",
+ 			.update_index =3D 3,
+ 			.value_type =3D REFTABLE_REF_VAL1,
+-			.value.val1 =3D hash1,
++			.value.val1 =3D { 1 },
+ 		},
+ 	};
+=20
+diff --git a/reftable/readwrite_test.c b/reftable/readwrite_test.c
+index 9c16e0504e..56c0b4db5d 100644
+--- a/reftable/readwrite_test.c
++++ b/reftable/readwrite_test.c
+@@ -60,18 +60,15 @@ static void write_table(char ***names, struct strbuf *b=
+uf, int N,
+ 	*names =3D reftable_calloc(sizeof(char *) * (N + 1));
+ 	reftable_writer_set_limits(w, update_index, update_index);
+ 	for (i =3D 0; i < N; i++) {
+-		uint8_t hash[GIT_SHA256_RAWSZ] =3D { 0 };
+ 		char name[100];
+ 		int n;
+=20
+-		set_test_hash(hash, i);
+-
+ 		snprintf(name, sizeof(name), "refs/heads/branch%02d", i);
+=20
+ 		ref.refname =3D name;
+ 		ref.update_index =3D update_index;
+ 		ref.value_type =3D REFTABLE_REF_VAL1;
+-		ref.value.val1 =3D hash;
++		set_test_hash(ref.value.val1, i);
+ 		(*names)[i] =3D xstrdup(name);
+=20
+ 		n =3D reftable_writer_add_ref(w, &ref);
+@@ -675,11 +672,10 @@ static void test_write_object_id_min_length(void)
+ 	struct strbuf buf =3D STRBUF_INIT;
+ 	struct reftable_writer *w =3D
+ 		reftable_new_writer(&strbuf_add_void, &buf, &opts);
+-	uint8_t hash[GIT_SHA1_RAWSZ] =3D {42};
+ 	struct reftable_ref_record ref =3D {
+ 		.update_index =3D 1,
+ 		.value_type =3D REFTABLE_REF_VAL1,
+-		.value.val1 =3D hash,
++		.value.val1 =3D {42},
+ 	};
+ 	int err;
+ 	int i;
+@@ -711,11 +707,10 @@ static void test_write_object_id_length(void)
+ 	struct strbuf buf =3D STRBUF_INIT;
+ 	struct reftable_writer *w =3D
+ 		reftable_new_writer(&strbuf_add_void, &buf, &opts);
+-	uint8_t hash[GIT_SHA1_RAWSZ] =3D {42};
+ 	struct reftable_ref_record ref =3D {
+ 		.update_index =3D 1,
+ 		.value_type =3D REFTABLE_REF_VAL1,
+-		.value.val1 =3D hash,
++		.value.val1 =3D {42},
+ 	};
+ 	int err;
+ 	int i;
 diff --git a/reftable/record.c b/reftable/record.c
-index fbaa1fbef5..5e258c734b 100644
+index 5e258c734b..a67a6b4d8a 100644
 --- a/reftable/record.c
 +++ b/reftable/record.c
-@@ -76,7 +76,7 @@ int reftable_is_block_type(uint8_t typ)
- 	return 0;
- }
-=20
--uint8_t *reftable_ref_record_val1(const struct reftable_ref_record *rec)
-+const unsigned char *reftable_ref_record_val1(const struct reftable_ref_re=
-cord *rec)
- {
- 	switch (rec->value_type) {
+@@ -219,7 +219,6 @@ static void reftable_ref_record_copy_from(void *rec, co=
+nst void *src_rec,
+ 	case REFTABLE_REF_DELETION:
+ 		break;
  	case REFTABLE_REF_VAL1:
-@@ -88,7 +88,7 @@ uint8_t *reftable_ref_record_val1(const struct reftable_r=
-ef_record *rec)
- 	}
- }
-=20
--uint8_t *reftable_ref_record_val2(const struct reftable_ref_record *rec)
-+const unsigned char *reftable_ref_record_val2(const struct reftable_ref_re=
-cord *rec)
- {
- 	switch (rec->value_type) {
+-		ref->value.val1 =3D reftable_malloc(hash_size);
+ 		memcpy(ref->value.val1, src->value.val1, hash_size);
+ 		break;
  	case REFTABLE_REF_VAL2:
-@@ -242,7 +242,7 @@ static char hexdigit(int c)
- 	return 'a' + (c - 10);
- }
+@@ -303,7 +302,6 @@ void reftable_ref_record_release(struct reftable_ref_re=
+cord *ref)
+ 		reftable_free(ref->value.val2.value);
+ 		break;
+ 	case REFTABLE_REF_VAL1:
+-		reftable_free(ref->value.val1);
+ 		break;
+ 	case REFTABLE_REF_DELETION:
+ 		break;
+@@ -394,7 +392,6 @@ static int reftable_ref_record_decode(void *rec, struct=
+ strbuf key,
+ 			return -1;
+ 		}
 =20
--static void hex_format(char *dest, uint8_t *src, int hash_size)
-+static void hex_format(char *dest, const unsigned char *src, int hash_size)
- {
- 	assert(hash_size > 0);
- 	if (src) {
-@@ -1164,7 +1164,7 @@ int reftable_record_equal(struct reftable_record *a, =
-struct reftable_record *b,
- 		reftable_record_data(a), reftable_record_data(b), hash_size);
- }
-=20
--static int hash_equal(uint8_t *a, uint8_t *b, int hash_size)
-+static int hash_equal(const unsigned char *a, const unsigned char *b, int =
-hash_size)
- {
- 	if (a && b)
- 		return !memcmp(a, b, hash_size);
+-		r->value.val1 =3D reftable_malloc(hash_size);
+ 		memcpy(r->value.val1, in.buf, hash_size);
+ 		string_view_consume(&in, hash_size);
+ 		break;
+diff --git a/reftable/record_test.c b/reftable/record_test.c
+index 70ae78feca..5c94d26e35 100644
+--- a/reftable/record_test.c
++++ b/reftable/record_test.c
+@@ -119,7 +119,6 @@ static void test_reftable_ref_record_roundtrip(void)
+ 		case REFTABLE_REF_DELETION:
+ 			break;
+ 		case REFTABLE_REF_VAL1:
+-			in.u.ref.value.val1 =3D reftable_malloc(GIT_SHA1_RAWSZ);
+ 			set_hash(in.u.ref.value.val1, 1);
+ 			break;
+ 		case REFTABLE_REF_VAL2:
 diff --git a/reftable/reftable-record.h b/reftable/reftable-record.h
-index 67104f8fbf..f7eb2d6015 100644
+index f7eb2d6015..44b5125445 100644
 --- a/reftable/reftable-record.h
 +++ b/reftable/reftable-record.h
-@@ -49,11 +49,11 @@ struct reftable_ref_record {
+@@ -38,7 +38,7 @@ struct reftable_ref_record {
+ #define REFTABLE_NR_REF_VALUETYPES 4
+ 	} value_type;
+ 	union {
+-		uint8_t *val1; /* malloced hash. */
++		unsigned char val1[GIT_MAX_RAWSZ];
+ 		struct {
+ 			uint8_t *value; /* first value, malloced hash  */
+ 			uint8_t *target_value; /* second value, malloced hash */
+diff --git a/reftable/stack_test.c b/reftable/stack_test.c
+index 14a3fc11ee..feab49d7f7 100644
+--- a/reftable/stack_test.c
++++ b/reftable/stack_test.c
+@@ -463,7 +463,6 @@ static void test_reftable_stack_add(void)
+ 		refs[i].refname =3D xstrdup(buf);
+ 		refs[i].update_index =3D i + 1;
+ 		refs[i].value_type =3D REFTABLE_REF_VAL1;
+-		refs[i].value.val1 =3D reftable_malloc(GIT_SHA1_RAWSZ);
+ 		set_test_hash(refs[i].value.val1, i);
 =20
- /* Returns the first hash, or NULL if `rec` is not of type
-  * REFTABLE_REF_VAL1 or REFTABLE_REF_VAL2. */
--uint8_t *reftable_ref_record_val1(const struct reftable_ref_record *rec);
-+const unsigned char *reftable_ref_record_val1(const struct reftable_ref_re=
-cord *rec);
+ 		logs[i].refname =3D xstrdup(buf);
+@@ -600,7 +599,6 @@ static void test_reftable_stack_tombstone(void)
+ 		refs[i].update_index =3D i + 1;
+ 		if (i % 2 =3D=3D 0) {
+ 			refs[i].value_type =3D REFTABLE_REF_VAL1;
+-			refs[i].value.val1 =3D reftable_malloc(GIT_SHA1_RAWSZ);
+ 			set_test_hash(refs[i].value.val1, i);
+ 		}
 =20
- /* Returns the second hash, or NULL if `rec` is not of type
-  * REFTABLE_REF_VAL2. */
--uint8_t *reftable_ref_record_val2(const struct reftable_ref_record *rec);
-+const unsigned char *reftable_ref_record_val2(const struct reftable_ref_re=
-cord *rec);
-=20
- /* returns whether 'ref' represents a deletion */
- int reftable_ref_record_is_deletion(const struct reftable_ref_record *ref);
 --=20
 2.43.GIT
 
 
---WMjm1hwRzb4tbl+x
+--xyJkOnneEbbZ0lnu
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWCsRgACgkQVbJhu7ck
-PpSW0hAAjPGiZ+/DDwQKrmc5kpwa3zGBcdYL2ZWKppfE71B53uF2pDFAVmxMTyx4
-MyKbdxH88mnJPBKdj1dEc35ofxEvULVcW2pTwI9QbbRs3JKSDpgKgtfKdLBjg8dz
-4rApI+tgzZ082srTBT4qw7KflNUt2ovlss++ca1NS0TqKAenkSNeIs9uqCCbJQn+
-e6JrgX0WVTigkbljzHSsWlmcYlQFLd5LEJtUKHev+NWX8pPAU4gbvA3sm+ha+lfv
-QJ65v4y+juBuxG4fpbDvmNrvfB5Zsz3wes9iwPykSb9Lz4j+n3Q9ArI2nlWphkCI
-kAwvzqqnCC3YWgEBZN+KGTNnmRhyVHUvy9hgXVDnUZdMaTRpz9jZhWBIetUzRETG
-6BoyPVAW8S5aICIFtM0Ncf6WDJjMBim1GwWBvAG9SIRUMTtNyuGnL/pO64N1Hk0v
-Prh9e32Pm7jb4UyMKLhWRE5T9615KOGHqkckiShFDNOvburnH3gQwiEKuya9AeTw
-fkdPVTlgPRonzl0v+xYzTUOVgnB97q1O9rnxIPUeI1O7Uu7FzpORPwqV/ImHWTSj
-wxZzzaGIszjh+6NJ688odzw3cdlcqeOULhxLGrcK3PThhxtcfGO+YbRFnQhhAtqg
-cx4rQl8PaEume1fK/cI7PqP8k1U+XvCdiCglLTkkZjrPmKIYAG4=
-=fJLN
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWCsRwACgkQVbJhu7ck
+PpRB2A/7B7W2BrNqG1BjazLUO3fyUmE35t+nsRfIxsRHMmjMIQL0Adk6uUxIYT1S
+5g0dmiKKNqxqzl/YadIB+a6zFjRudkyPCt7pD5HDp8fXnVrqDLPDRUaS1Wid4I0I
+iKY5HaAMyhBzr7dVkQp2dH7NHAyV1HKq+KjUbVUQNJX9f0c1G+ZqrOT8E66Q6zCi
+fNPQdNIKb4VJUndIh3LocMY89ZDHbcyRSAQUiBpXlSSCviS+VMCJ8WkIYtU31d95
+5NqAopR7U2NJO6ROg5ufXYjnh+ZCP6jivgx3xDm+gMjTM6P0wVVH0VIz1tUFYdM9
+lF68oRNb8qj5HeeslzdCEL/y4zHJa1H1w3J9uUJ2ABdSB0kCjiryE3QzZQInjJ7W
+1UVP8ZMXkrYHp63ZGpozyFU7GCYeKSFfhGJW3KBt0vuOxrGaXtMsFJcuFPaGiYo9
+T3dFaqEP8R4xsTjnBw059An7lMBteCKYwKO9rU/HtRsbicwi1qPjouUmXfT7S84Z
+ebjhfqGmNjEXWEnnaq3S1RQ2bLyZkPlA6Y3WItzNBhlLY64PCJn7CZRAUeMHyfaB
+t0Dqwh4LFQq30VHBLS15txyWFtQ4fE4oSFH4lJUZSlFXLo9rNPvMRu1lmyPHzzJR
+0TzEiawLU+Mrtlw1VQJ/OLWgqtMWT5hqxVKDqJrnYIemaeIrCt0=
+=EYW2
 -----END PGP SIGNATURE-----
 
---WMjm1hwRzb4tbl+x--
+--xyJkOnneEbbZ0lnu--
