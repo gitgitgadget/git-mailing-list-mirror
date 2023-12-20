@@ -1,66 +1,145 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01856F4E5
-	for <git@vger.kernel.org>; Wed, 20 Dec 2023 00:48:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC4B91773A
+	for <git@vger.kernel.org>; Wed, 20 Dec 2023 06:52:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Fj7gC7/b"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9D4CA1B433D;
-	Tue, 19 Dec 2023 19:48:41 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=dRJaODACqb7Mr1Opl+r5yXNdbp2I+PDaWjY17/
-	R52QI=; b=Fj7gC7/bq2h4Z0P9+9ByLuOofllazm8wz9YQSRxQEdT2kHz3aJahg8
-	Tm8FQGCOhs+6j2DEknjAGi1NlcDAVRYMORGv7SCw3DzaX275hP1j6qMpzZynIU2z
-	K81l4DHFYMBvyG6LJLYoJS8wfylsj3RMDxkMT3MaX1fYeSBLL4ls0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 94F4C1B433C;
-	Tue, 19 Dec 2023 19:48:41 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.193.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6C6821B433B;
-	Tue, 19 Dec 2023 19:48:38 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Stan Hu <stanhu@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Christian Couder
- <christian.couder@gmail.com>
-Subject: Re: [PATCH v3 0/2] completion: refactor and support reftables backend
-In-Reply-To: <cover.1703022850.git.stanhu@gmail.com> (Stan Hu's message of
-	"Tue, 19 Dec 2023 14:14:16 -0800")
-References: <20231130202404.89791-1-stanhu@gmail.com>
-	<cover.1703022850.git.stanhu@gmail.com>
-Date: Tue, 19 Dec 2023 16:48:37 -0800
-Message-ID: <xmqqsf3xu2ai.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RoQZDrCR"
+Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-3bb732e7d78so1670b6e.0
+        for <git@vger.kernel.org>; Tue, 19 Dec 2023 22:52:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1703055129; x=1703659929; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CkO4cYKt8OB5kMzj/7UwZK96Mr3N4G3IrQneWB8DnTw=;
+        b=RoQZDrCRttKESjHi/FAQPf3a3FnC2oESqX5MbuNvZaupfqiFTZH6NDMFqM2hx2gqVu
+         9iLSaOmlMF6S7pGQXqKzj+c9oJu4Caoh5/OI27Gnizj9WYMGwrYxKYvssAVQBwCYXCOp
+         Lh/CIyGrAZGZpEj7i5M2BLpD34sFYJ3MGa7bQQhmyw+v4tXsJ5J0bD7oADfRhxxDWLL4
+         N4qZibL4WQENga+fW0Ei+5eX2X9nRcgNN+wc268Vhv7zb5/T5O3kCp/QaSFPQ6NhMP0s
+         aqqy+1zZWmeIxFtNQDaJLdbgMkEFzZk68F2piXWactGU/itZ5fAhexN9xQcDErKhNYT7
+         YYZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703055129; x=1703659929;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=CkO4cYKt8OB5kMzj/7UwZK96Mr3N4G3IrQneWB8DnTw=;
+        b=GWzH9x84H3WmJMu6FPfydd+M5cB6fnGCBj0+z5gEYzfHEBwNd8CtQtQjFVqbV9Y+46
+         Uq92/ATYTCK3BhwL40aG4ktvNkRk15BZNXN12k73EaZLEfU3iiWOvdjQk0ZVqq/hhiLf
+         /votvuH6/0HCPLk2t98iCoi6g4yoEnnQprIXd3m7oTzMJ7AKzHU2k0ZZzl3U27GUcvFp
+         w2ov/20IOPZHEikcxpjHT5Xa0lBfqZ5DBwzrbJ+MHqG0wKD+qZSz5R3MDscOvJuxsFBg
+         vJ+/zmW7KnJkqA4+xRKJRw3IaEbKLZAb8q0UCQgRqWCDhOpmiuJidWqVOBfGCNxRawwN
+         Z0+A==
+X-Gm-Message-State: AOJu0YxmutS3ybFbvD+GMt0i25V7rqykAk8KJxi1Y3TcOj+i5+2L2hgc
+	pqOg7Zbm+J1bniNgv8CzfYgk1kffS/Uq0w==
+X-Google-Smtp-Source: AGHT+IGkXlvN9vMyEUgja02FjZoX6O5HgKgecdLCDOEvMD0BEBkLRmoecTLJRdqcXiysFFUk0eMm0g==
+X-Received: by 2002:a05:6808:220c:b0:3b9:d8bb:8ff6 with SMTP id bd12-20020a056808220c00b003b9d8bb8ff6mr19186555oib.31.1703055128627;
+        Tue, 19 Dec 2023 22:52:08 -0800 (PST)
+Received: from Michaels-MBP.fritz.box (2001-4dd7-e0bf-0-e5b0-3039-5d18-ec57.ipv6dyn.netcologne.de. [2001:4dd7:e0bf:0:e5b0:3039:5d18:ec57])
+        by smtp.gmail.com with ESMTPSA id e21-20020aca1315000000b003ba3b053eadsm2034031oii.52.2023.12.19.22.52.06
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 19 Dec 2023 22:52:08 -0800 (PST)
+From: Michael Lohmann <mial.lohmann@gmail.com>
+X-Google-Original-From: Michael Lohmann <mi.al.lohmann@gmail.com>
+To: phillip.wood123@gmail.com
+Cc: git@vger.kernel.org,
+	mi.al.lohmann@gmail.com,
+	mial.lohmann@gmail.com,
+	newren@gmail.com,
+	phillip.wood@dunelm.org.uk
+Subject: Re: Re: [PATCH 0/1] revert/cherry-pick: add --show-current-patch option
+Date: Wed, 20 Dec 2023 07:51:41 +0100
+Message-Id: <20231220065141.7599-1-mi.al.lohmann@gmail.com>
+X-Mailer: git-send-email 2.39.3 (Apple Git-145)
+In-Reply-To: <42ff6b11-f991-4a6d-ad68-ca8c5a3cd735@gmail.com>
+References: <42ff6b11-f991-4a6d-ad68-ca8c5a3cd735@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 8360DCAC-9ED1-11EE-905B-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: 8bit
 
-Stan Hu <stanhu@gmail.com> writes:
+Hi Phillip
 
-> This patch series addresses the review feedback:
->
-> 1. Renames the '__git_ref_exists' helper to '__git_pseudoref_exists' in
->    the first refactor patch.
->
-> Stan Hu (2):
->   completion: refactor existence checks for pseudorefs
->   completion: support pseudoref existence checks for reftables
->
->  contrib/completion/git-completion.bash | 43 +++++++++++++++++++++++---
->  1 file changed, 38 insertions(+), 5 deletions(-)
+On 18/12/2023 16:42, Phillip Wood wrote:
+> Thanks for bringing this up I agree it can be very helpful to look at
+> the original commit when resolving cherry-pick and revert conflicts.
+> I'm in two minds about this change though - I wonder if it'd be better
+> to improve the documentation for CHERRY_PICK_HEAD and REVERT_HEAD and
+> tell users to run "git show CHERRY_PICK_HEAD" instead. I think the
+> main reason we have a "--show-current-patch" option for "rebase" is
+> that there are two different implementations of that command and the
+> patched-based one of them does not support REBASE_HEAD. That reasoning
+> does not apply to "cherry-pick" and "revert" and
+> "--show-current-patch" suggests a patch-based implementation which is
+> also not the case for these commands.
 
-Thanks.  Will queue.
+I appreciate the urge of limiting the interface to the minimum needed
+and not to duplicate functionality that already exists. On the other
+hand, this would
+a) grant the user the same experience, not having to wonder about
+implementation details such as different backends for rebase, but not
+for revert/cherry-pick and
+b) (I know it is more indicative of me, but:) when I am looking for a
+feature in software and I look into the respective man page I tend to
+focus first on the synopsis instead of reading the whole page (or
+sometimes I even just rely on the shell autocompletion for
+discoverability).
+
+So yes, mentioning REVERT_HEAD and CHERRY_PICK_HEAD in the respective
+docs would technically be sufficient, but I don't think it is as
+discoverable to an average user (who does not know about the details of
+all the existing pseudo refs) as a toplevel action would be. But an
+assessment of the pros and cons is not on me to decide.
+
+I have to be honest: I have troubles distinguishing a "patch" and a
+"diff", the latter of which `git show <commit>` shows according to the
+documentation ("For commits it shows the log message and textual
+diff."), though my understanding was that a patch is a diff + context
+lines, which is what `git show` actually shows... I think this is
+probably why I don't feel so strong about the potential loose usage of
+the word here.
+
+Also the documentation of cherry-pick already uses the word "patch" in a
+(according to my understanding from a technical perspective) sloppy (but
+from a layman's point of view probably nevertheless helpful) way:
+
+> The following sequence attempts to backport a patch, bails out because
+> the code the patch applies to has changed too much, and then tries
+> again, this time exercising more care about matching up context lines.
+> 
+> ------------
+> $ git cherry-pick topic^             <1>
+> $ git diff                           <2>
+> $ git cherry-pick --abort            <3>
+> $ git cherry-pick -Xpatience topic^  <4>
+> ------------
+> <1> apply the change that would be shown by `git show topic^`.
+>     In this example, the patch does not apply cleanly, so
+>     information about the conflict is written to the index and
+>     working tree and no new commit results.
+
+Should that also be rephrased?
+
+
+Out of curiosity: The following from the rebase docs seems to imply that
+the apply backend will probably be removed in the future:
+> --apply
+>           Use applying strategies to rebase (calling git-am
+>           internally). This option may become a no-op in the future
+>           once the merge backend handles everything the apply one
+>           does.
+
+But I would expect the `rebase --show-current-patch` still to be
+working. Would that only be a legacy compatibility flag and instead also
+for rebases the recommended option would be to run
+`git show REBASE_HEAD`?
+
+Best Wishes
+
+Michael
