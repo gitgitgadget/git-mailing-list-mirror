@@ -1,124 +1,179 @@
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9153E3DB9C
-	for <git@vger.kernel.org>; Wed, 20 Dec 2023 15:25:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D9F41844
+	for <git@vger.kernel.org>; Wed, 20 Dec 2023 15:30:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DzY1vGyr"
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-5532b348d30so4668448a12.1
-        for <git@vger.kernel.org>; Wed, 20 Dec 2023 07:25:40 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i063us+4"
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-50e587fb62fso364599e87.2
+        for <git@vger.kernel.org>; Wed, 20 Dec 2023 07:30:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1703085939; x=1703690739; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1703086213; x=1703691013; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7anja+QsxuLd9NliG/NA0nK91Oi5yGkF0w/NCnYsqWg=;
-        b=DzY1vGyrhC/NYTEeYr2jlGyEou/gRan252UubA8Rf0DgzxQG8K0Kdsvwmc053AHePv
-         Jm0bfd7VhFA4y9nbN4BhT7Rqn56nRF1+mhcPzMxZXf7DkAeBN8+63lT2Bhm2oVzFxX1l
-         oKPLag1MkYKWABmXx9Cd+f3/LUht3jAVkhtK14GswmlBGNErsvbYBtxEqASboG9I0f0T
-         9Gy1r/BoZ4/LRZtKL6fGZlhLn9tQteYztUtD39ormOATnbuv/X5niLP+skJhcp8tCj6D
-         jidhzQ3zZnK7C9ThXlPly54Sp4cNSLuxzHV6NovUNwwlT8tX6suDZUn7l8gf85YWBA4v
-         9LXg==
+        bh=YKBeojx1djzJGpEXNhBoIsxmqj4X/EiO5LpnP0tVY9s=;
+        b=i063us+4oY8SX9qKI+pURmLto4MnBvdcpEpdXyNv7DDOJYNgGobfddqXfqMESkdgA/
+         HdrZgbGVQB4GKBgMM47UU37jhN5xkWeY41qZGYdZbmebyf93psTC4fMUTlo515MUGNui
+         hksp39HblhoMMWhy9HqROakfUHffchj2vxa44J648i7cju7H8jFmphHvXeeIqT20ub3p
+         F+4i2mpw9d0DPhx7aNa0P4/08+425XMDGOEtfwTh6VSENE3ysNPlxmKjIvPCEOj1A04D
+         TAUS15KP8Qekzq6esNG0sBnfbZRO7r5vAbRqj+LZLJ8MbIcBdxhjx8R7M58iQ1vFQroR
+         pOGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703085939; x=1703690739;
+        d=1e100.net; s=20230601; t=1703086213; x=1703691013;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=7anja+QsxuLd9NliG/NA0nK91Oi5yGkF0w/NCnYsqWg=;
-        b=pZJFHCoKtsirLPyZYhQNGPdLhgkv7JFR4T4p2jmBDbRcBiaRMhLZjAhGbyqyoLr4TW
-         T01cEQFJFQY79LmqTQgsTGaeCvjoDdiJnkMfXr4xlQqYla0VtME75QVUshdAkelXIg9q
-         qC6U06fGbLxRkB1SzD/SH9ib5Yb0iS8Lfz2OIj+0BEDaiqjeYUS+cqmjT2RZjQSdepw4
-         aaOrHGbVVsgRm4tW3aJokea03ZA4fjMaiUwTIsGFlsi7jXZc07rP+j0HdbLARyK6IO/O
-         W5tyUA7I6nHg4sc03gsBJiycF5wPyO95SqUwc8CuDkqkSBuLiJlDY3WyObrE0Cq3rJPd
-         k/QA==
-X-Gm-Message-State: AOJu0Yx7P8TWYVNryVAsJN0WZbsiHy+61LljXNvtivyiHq2mykNbekqf
-	M6p4ouXMVSgztDdctdu3lMlkTlbL6B9jRkayLnw=
-X-Google-Smtp-Source: AGHT+IFRUryzDxEG5yt+HoBa04x/olNsH2QDK/IxftujE2ldJUC7C/9aRtnBtOFYZPUF4nFh5tzwMl6ye4W/RBTlNdM=
-X-Received: by 2002:a50:8e17:0:b0:553:5648:ea38 with SMTP id
- 23-20020a508e17000000b005535648ea38mr2652916edw.24.1703085938454; Wed, 20 Dec
- 2023 07:25:38 -0800 (PST)
+        bh=YKBeojx1djzJGpEXNhBoIsxmqj4X/EiO5LpnP0tVY9s=;
+        b=qXj3nrbB1HN8FkJRxOW94EXJxMH0FsFWmwsAJv9hyaIUfbRjVoYcP5dqb8gAqlqtLT
+         Sco+G0Z0bf1x03ihS61efgCUP8OjHogG3TgvJu+pkAeOevg0w1zfihs1j2G5z7ZYxn+n
+         3Md1PgpYvpB44ejhNJNK4nkiSNVdpGr946hts2nK+VFuaR9I84OMZGh94Old2NAD96pV
+         svUGR0637ptiko/toTOkpfW6JzBLJvyohPyI4Rf62AnCw+OCHYJG6FZB64vc8ezRvuL8
+         MpWHVKe3TcvjLPDMGf8v4tlHQYKPe9FGVMAe9RQbBSpY1kmCsouFjmM3mRLPTIFDj2QP
+         2BhQ==
+X-Gm-Message-State: AOJu0YxGL28q/1AUENOlg+Bj5JJH6wzrziGhZvxZZupQnD7LCJjW/r9a
+	N/+wIM5ubRSgqFV3biZpLAsO1E/3SI0yquA4Sxs3HiKe
+X-Google-Smtp-Source: AGHT+IEHBET5yImBQgynkLbZqzPSBH5h5hypr1RRIwJMEKNh3tTdFzIdze8xus1FYoE0LWwNJHS+KQ8e3PCm+ywZCKI=
+X-Received: by 2002:a05:6512:39cb:b0:50b:f03c:1ea2 with SMTP id
+ k11-20020a05651239cb00b0050bf03c1ea2mr13780140lfu.84.1703086212967; Wed, 20
+ Dec 2023 07:30:12 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1587.v5.git.1701206267300.gitgitgadget@gmail.com>
- <pull.1587.v6.git.1701442494319.gitgitgadget@gmail.com> <CAP8UFD3FzP6QW4dJ9yiG1BAytLcsk+zGE+CBeArRJBJ8gsaDMQ@mail.gmail.com>
- <CAEWN6q3RTbVuMb0VyCYz196ZL+OGAAHbJLZ2-MnW1RVVabg7Mw@mail.gmail.com> <CAP8UFD19phFz54d8fDM=MBRMSD9Rz4R0_463KgptN8eeFs7MnQ@mail.gmail.com>
-In-Reply-To: <CAP8UFD19phFz54d8fDM=MBRMSD9Rz4R0_463KgptN8eeFs7MnQ@mail.gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 20 Dec 2023 16:25:26 +0100
-Message-ID: <CAP8UFD3b2y+55j3NMDm89hpVRNxX2TA-AdQS=zsboD30pZ1c4Q@mail.gmail.com>
-Subject: Re: [PATCH v6] subtree: fix split processing with multiple subtrees present
-To: Zach FettersMoore <zach.fetters@apollographql.com>
-Cc: Zach FettersMoore via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+References: <pull.1623.git.1702975319.gitgitgadget@gmail.com>
+ <e5c7f29af439c48f59b2f35af93a7972e66a5b6b.1702975320.git.gitgitgadget@gmail.com>
+ <35fc350d-018a-49cf-a28e-e5ce21fe7dec@gmail.com>
+In-Reply-To: <35fc350d-018a-49cf-a28e-e5ce21fe7dec@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Wed, 20 Dec 2023 07:30:01 -0800
+Message-ID: <CABPp-BH_iP2KjPi-5kW8ROQWfy8XoUmbGhyT-Y1dZGtCtZXQGQ@mail.gmail.com>
+Subject: Re: [PATCH 4/8] SubmittingPatches: update extra tags list
+To: phillip.wood@dunelm.org.uk
+Cc: Josh Soref via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Josh Soref <jsoref@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Dec 12, 2023 at 5:06=E2=80=AFPM Christian Couder
-<christian.couder@gmail.com> wrote:
+To add to what Phillip said...
+
+On Wed, Dec 20, 2023 at 7:18=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
+.com> wrote:
 >
-> On Mon, Dec 11, 2023 at 4:39=E2=80=AFPM Zach FettersMoore
-> <zach.fetters@apollographql.com> wrote:
+> Hi Josh
+>
+> On 19/12/2023 08:41, Josh Soref via GitGitGadget wrote:
+> > From: Josh Soref <jsoref@gmail.com>
 > >
-> > >>
-> > >> From: Zach FettersMoore <zach.fetters@apollographql.com>
+> > Add items with at least 100 uses:
+> > - Co-authored-by
+> > - Helped-by
+> > - Mentored-by
+> > - Suggested-by
 >
-> > >> To see this in practice you can use the open source GitHub repo
-> > >> 'apollo-ios-dev' and do the following in order:
-> > >>
-> > >> -Make a changes to a file in 'apollo-ios' and 'apollo-ios-codegen'
-> > >> directories
-> > >> -Create a commit containing these changes
-> > >> -Do a split on apollo-ios-codegen
-> > >> - Do a fetch on the subtree repo
-> > >> - git fetch git@github.com:apollographql/apollo-ios-codegen.git
-> > >> - git subtree split --prefix=3Dapollo-ios-codegen --squash --rejoin
+> Thanks for adding these, they are widely used and should be documented.
+> The patch also adds a mention for "Noticed-by:" - I'm less convinced by
+> the need for that as I explain below.
+>
+> > Updating the create suggestion to something less commonly used.
+>
+> I'm not quite sure I understand what you mean by this sentence.
+
+Same.
+
+> > diff --git a/Documentation/SubmittingPatches b/Documentation/Submitting=
+Patches
+> > index 32e90238777..694a7bafb68 100644
+> > --- a/Documentation/SubmittingPatches
+> > +++ b/Documentation/SubmittingPatches
+> > @@ -348,6 +348,8 @@ If you like, you can put extra tags at the end:
 > >
-> > > Now I get the following without your patch at this step:
-> > >
-> > > $ git subtree split --prefix=3Dapollo-ios-codegen --squash --rejoin
-> > > [...]/libexec/git-core/git-subtree: 318: Maximum function recursion
-> > > depth (1000) reached
-> > >
-> > > Line 318 in git-subtree.sh contains the following:
-> > >
-> > > missed=3D$(cache_miss "$@") || exit $?
-> > >
-> > > With your patch it seems to work:
-> > >
-> > > $ git subtree split --prefix=3Dapollo-ios-codegen --squash --rejoin
-> > > Merge made by the 'ort' strategy.
-> > > e274aed3ba6d0659fb4cc014587cf31c1e8df7f4
+> >   . `Reported-by:` is used to credit someone who found the bug that
+> >     the patch attempts to fix.
+> > +. `Noticed-by:` liked `Reported-by:` indicates someone who noticed
+> > +  the item being fixed.
+>
+> I wonder if we really need a separate "Noticed-by" footer in addition to
+> "Reported-by". Personally I use the latter to acknowledge the person who
+> reported the issue being fix regards of weather I'm fixing a bug or some
+> other issue.
+
+I'm not sure I'd mention both either; feels like we're making it hard
+for users to choose.  Also, I think there's a minor distinction
+between them, but it's hard to convey simply: To me, Reported-by
+suggests someone sent a mail to the list specifically about the bug or
+issue in question.  Also, to me, Noticed-by suggests that during a
+back-and-forth discussion of some sort on another topic, a fellow Git
+contributor noticed an issue and mentioned it as an aside.  But,
+that's how _I_ would have used them, I didn't do any digging to find
+out if that's really how they are used.
+
+Either way, if we're going to define them as synonyms, I'd rather we
+just left the less common one out.  If there's a distinction, and it's
+not a pain to describe, then maybe it'd be worth adding both.
+
+If we do add both, though, we at least need to fix "liked" to "like"
+in your description.
+
+> >   . `Acked-by:` says that the person who is more familiar with the area
+> >     the patch attempts to modify liked the patch.
+> >   . `Reviewed-by:`, unlike the other tags, can only be offered by the
+> > @@ -355,9 +357,17 @@ If you like, you can put extra tags at the end:
+> >     patch after a detailed analysis.
+> >   . `Tested-by:` is used to indicate that the person applied the patch
+> >     and found it to have the desired effect.
+> > +. `Co-authored-by:` is used to indicate that multiple people
+> > +  contributed to the work of a patch.
+>
+> Junio's comments in [1] may be helpful here
+>
+>      If co-authors closely worked together (possibly but not necessarily
+>      outside the public view), exchanging drafts and agreeing on the
+>      final version before sending it to the list, by one approving the
+>      other's final draft, Co-authored-by may be appropriate.
+>
+>      I would prefer to see more use of Helped-by when suggestions for
+>      improvements were made, possibly but not necessarily in a concrete
+>      "squashable patch" form, the original author accepted before
+>      sending the new version out, and the party who made suggestions saw
+>      the updated version at the same time as the general public.
+>
+> So I think we should be clear that "Co-authored-by:" means that multiple
+> authors worked closely together on the patch, rather than just
+> contributed to it.
+>
+> [1] https://lore.kernel.org/git/xmqqmth8wwcf.fsf@gitster.g/
+>
+> > +. `Helped-by:` is used to credit someone with helping develop a
+> > +  patch.
+> > +. `Mentored-by:` is used to credit someone with helping develop a
+> > +  patch.
+>
+> I think we use "Montored-by:" specifically to credit the mentor on
+> patches written by GSoC or Outreachy interns and "Helped-by:" for the
+> general case of someone helping the patch author.
+
+Yes; I'd like for these to be distinguished in this way or something simila=
+r.
+
+> > +. `Suggested-by:` is used to credit someone with suggesting the idea
+> > +  for a patch.
 > >
-> > Looking into this some it looks like it could be a bash config
-> > difference? My machine always runs it all the way through vs
-> > failing for recursion depth. Although that would also be an issue
-> > which is solved by this fix.
+> >   You can also create your own tag or use one that's in common usage
+> > -such as "Thanks-to:", "Based-on-patch-by:", or "Mentored-by:".
+> > +such as "Thanks-to:", "Based-on-patch-by:", or "Improved-by:".
 >
-> I use Ubuntu where /bin/sh is dash so my current guess is that dash
-> might have a smaller recursion limit than bash.
->
-> I just found https://stackoverflow.com/questions/69493528/git-subtree-max=
-imum-function-recursion-depth
-> which seems to agree.
->
-> I will try to test using bash soon.
+> What's the difference between "Improved-by:" and "Helped-by:"? In
+> general I'd prefer for us not to encourage new trailers where we already
+> have a suitable one in use.
 
-Sorry, to not have tried earlier before with bash.
+Agreed.
 
-Now I have tried it and yeah it works fine with you patch, while
-without it the last step of the reproduction recipe takes a lot of
-time and results in a core dump:
+> Thanks for working on this, it will be good to have better descriptions
+> of our common trailers.
 
-/home/christian/libexec/git-core/git-subtree: line 924: 857920 Done
-                eval "$grl"
-    857921 Segmentation fault      (core dumped) | while read rev parents; =
-do
-   process_split_commit "$rev" "$parents";
-done
-
-So overall I think your patch is great! Thanks!
+Agreed here as well; thanks for the work, Josh.
