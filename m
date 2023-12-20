@@ -1,67 +1,67 @@
 Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD4B21352
-	for <git@vger.kernel.org>; Wed, 20 Dec 2023 10:55:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A83321352
+	for <git@vger.kernel.org>; Wed, 20 Dec 2023 10:55:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ktvdBkle";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TS3/aUxw"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.nyi.internal (Postfix) with ESMTP id F12075C01DB
-	for <git@vger.kernel.org>; Wed, 20 Dec 2023 05:55:26 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hy5YpZTS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mmoQqJQo"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id BEFC65C01E1
+	for <git@vger.kernel.org>; Wed, 20 Dec 2023 05:55:30 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Wed, 20 Dec 2023 05:55:26 -0500
+  by compute5.internal (MEProxy); Wed, 20 Dec 2023 05:55:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1703069726; x=1703156126; bh=rbMvPN+HOI
-	8RwJGRVY4rmPQGIOt2MHNJK5mwxuMn5c4=; b=ktvdBkle3ynslgthxPPp5DQ3l3
-	c+dLM3KSpWqNpOoPsnDh0nKvLzYlE1Wb6MHK/Mg6m0AOhVJGNAfXr1jOSnZKcoJw
-	OSHM334mv63Uh2DClbEXCzeKex1fmgLaoLZ/o5PES8hDo0jRmgIjOjQ4dWuWAR8h
-	xfs5cMPgqWrs+TzKLxhm+n0kJ/sATe45pEkSn8QM61khx+XOY/Mk+VgnbTJOUJ4n
-	MSLhKASiDDeCl72QkqzEh2rdpsOtlc8kv2CzDF/CLjbcxhopv+EnhXqaxAxmfj7B
-	Sd2DGFcslaq4QTSRsYV8cqWA/2TRxX0tUrHnZUPURONTQwXbtL7aJHWuBHXw==
+	:subject:to:to; s=fm2; t=1703069730; x=1703156130; bh=W2MlkgtCWX
+	z61dPKmc1cNbUXpZ64KwuRmQxTU2CnuKE=; b=hy5YpZTSF7HjYRSebusPpJYE9z
+	Jq3m1mpiTmAoIJtS/pTPCJ7y28jQWCcsF7xfzVX9JuviPjcev2srMDU8JG8lru+x
+	Oy6WgjXZ8YNlpLjWJrqOue0YUE3mjjG4aKABjAM+Qm90wJwg7tGn61dIYF0gHNa/
+	G8bcagGvQFaZx4+y66pJO7itBqkf0s6si/oL3VSoTZwWdHlY8cc/PEdJTf5o4bjc
+	Lfa6S9gzngepYpw85e/UAZ/rXuXm3ayDgw762NimKDbyj5l+NPN4ujmKj2gn0Z1T
+	hJv2+quFOgbgO8rUcbQpPCVr/Wk9pv4fcjqSwdop5Rz2AAPi5miCX/zbtLLg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1703069726; x=1703156126; bh=rbMvPN+HOI8RwJGRVY4rmPQGIOt2
-	MHNJK5mwxuMn5c4=; b=TS3/aUxwN5rSQM7vznGCcHv3IERI/thsjFSEQvad9Pr7
-	9AuJ1q7yxSdUN7GTTGR+aBncCztvPEnkCaXSoQwlzVqIIMhYol7VTvubu2sdmzoB
-	fbVhJ3v5y9Jiyyc4vfKjqQ8rTTG2ZbEdrAptt83b5fZoEdRo5UwEXsVyoDXq2zPO
-	B9ciaGt4A9tT/ts/0XbX6dhNj9TcL1zsrPIcufvzDO0SitphlqIvw/HceGY3P4TK
-	YEU9iNDitaInJMd7miGLeME90HCy3WTNbKf7yR76FnIS+lf7fpGi9lrkh/r4/1tA
-	/wgzhkG2iNuCpmYB+2Fpszp0M57RpZQUDdVFKUc2tw==
-X-ME-Sender: <xms:HsiCZQAplD-vX4Ea0Um1nozA3JqQMv3KazKIjEvkBVs0k2ebg655RA>
-    <xme:HsiCZSiR4UL_wXopFePObsDQdEEhyhxglPSy2O-4S_sYJOJQZTRIFhi7wB5kMj-Bk
-    GL31IpfAhA7_SIVkQ>
-X-ME-Received: <xmr:HsiCZTkWtZrDoE2uz2IwdiRdfGfB2RvK4bUO-Rbq4wcuqVBKRQNP4Z2LWmZI_ZA9PqOXUfQ0MtBReCLmmKxQHbWFZwmWHIafpjeSyQ1cRikymQ>
+	fm2; t=1703069730; x=1703156130; bh=W2MlkgtCWXz61dPKmc1cNbUXpZ64
+	KwuRmQxTU2CnuKE=; b=mmoQqJQoS51P5i9cYAhHJC2XRs6m+DluAeOB1XYjPu8M
+	8IH8XkZpU3oS/Va5+OVnIDXUoJpZ70B7wV+n/2KipAv0Ob0SrMcyQnW0qk/YTFoY
+	dFwwB6ap5A2B9sdkaWq27ub6hOL1E3phzo1SBs7bLPCC7Ytpm0ggGwHHzqSBjCFm
+	oU2xKa6Ei6AJlJr1oHC1EPQC+gVAx+Hj8+atG8imzKY8njsNMRAvDQoiPHaKDyF1
+	Yi5rNPq6lrXnzwiojrkW7d7B64RZuxrF+y9dk3mI1++3FsUzRqyVhE2sWWzOpbom
+	g+Ftzbxl778BsHtdyCSWHX214hVVEc/kN/BCX6CTwg==
+X-ME-Sender: <xms:IsiCZQGp08IdiDmxasOf2MyzpsunOC1Jh88QJIWtRG0xegehDs8maQ>
+    <xme:IsiCZZX31xDjwsrjHlmuNf1puH0bSXgMG06DfwQD1HTl62Ux6TUd8IGvfTYsfyT8M
+    U6espst_ttvEI2ZBQ>
+X-ME-Received: <xmr:IsiCZaKgIJ_Bf4NWtx-Cng3ANmk5Acg-egjgtLyU6M5xJi1U6DPMkP_yLytwCQlPhccy_asNbRdMInzsp9V4WdFq2a_RxMVY1dBc4m4Fy8PGww>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdduvddgvddvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
     ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
     khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
-    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgepheenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:HsiCZWwYgcAxcp4teOqlBoZ_m3HIqzB3YpDHE9ARl2f8IHMXvzatlQ>
-    <xmx:HsiCZVQyvFpCZkHFRUMeoA39z37bSAowGUSZsBHRYpYZzFUL31HUkA>
-    <xmx:HsiCZRaCr3W63XF5Hxyo68oq4dKa0exRD5h2QDNazZvtBKOL2yCNuA>
-    <xmx:HsiCZQPBx_r8Zub7YDggHqZ2P8NU3yWcDFVXU62ya7mAP2yxicUoeg>
+X-ME-Proxy: <xmx:IsiCZSFdcecwUIiCHkCeUtidAMO9qQJsiwCOdbYgjQu4vijmLYhbhw>
+    <xmx:IsiCZWURoBk8LiRfOhQtsvSlQ-8XqkXAUrkesc5qD1MZ_Jd0ctBi2w>
+    <xmx:IsiCZVPCythHpCsTL7cwW5n4xWRojcxMKy5i-jsNEikaLu-9ZQK1xQ>
+    <xmx:IsiCZRCo6RGVmMuJ-8Xel85Prw-qtvGMhYt55W7l2IxV12AeHpJ0og>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 20 Dec 2023 05:55:26 -0500 (EST)
+ <git@vger.kernel.org>; Wed, 20 Dec 2023 05:55:30 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 50e8d6bb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id d80e0a26 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Wed, 20 Dec 2023 10:53:31 +0000 (UTC)
-Date: Wed, 20 Dec 2023 11:55:24 +0100
+	Wed, 20 Dec 2023 10:53:35 +0000 (UTC)
+Date: Wed, 20 Dec 2023 11:55:28 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 08/12] t: introduce GIT_TEST_DEFAULT_REF_FORMAT envvar
-Message-ID: <ed3bf008cdb043fa51bb6c1e211760f0e83a813c.1703067989.git.ps@pks.im>
+Subject: [PATCH 09/12] builtin/rev-parse: introduce `--show-ref-format` flag
+Message-ID: <8a3d950d692e6c86f980b79768719b3f0f622403.1703067989.git.ps@pks.im>
 References: <cover.1703067989.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -70,114 +70,109 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="N+fEypTkeLfA4APY"
+	protocol="application/pgp-signature"; boundary="PyNj3/AjeH52CtWH"
 Content-Disposition: inline
 In-Reply-To: <cover.1703067989.git.ps@pks.im>
 
 
---N+fEypTkeLfA4APY
+--PyNj3/AjeH52CtWH
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Introduce a new GIT_TEST_DEFAULT_REF_FORMAT environment variable that
-lets developers run the test suite with a different default ref format
-without impacting the ref format used by non-test Git invocations. This
-is modeled after GIT_TEST_DEFAULT_OBJECT_FORMAT, which does the same
-thing for the repository's object format.
-
-Adapt the setup of the `REFFILES` test prerequisite to be conditionally
-set based on the default ref format.
+Introduce a new `--show-ref-format` to git-rev-parse(1) that causes it
+to print the ref format used by a repository.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/README                |  3 +++
- t/test-lib-functions.sh |  5 +++++
- t/test-lib.sh           | 11 ++++++++++-
- 3 files changed, 18 insertions(+), 1 deletion(-)
+ Documentation/git-rev-parse.txt |  3 +++
+ builtin/rev-parse.c             |  4 ++++
+ t/t1500-rev-parse.sh            | 17 +++++++++++++++++
+ 3 files changed, 24 insertions(+)
 
-diff --git a/t/README b/t/README
-index 36463d0742..621d3b8c09 100644
---- a/t/README
-+++ b/t/README
-@@ -479,6 +479,9 @@ GIT_TEST_DEFAULT_HASH=3D<hash-algo> specifies which has=
-h algorithm to
- use in the test scripts. Recognized values for <hash-algo> are "sha1"
- and "sha256".
+diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.=
+txt
+index 912fab9f5e..546faf9017 100644
+--- a/Documentation/git-rev-parse.txt
++++ b/Documentation/git-rev-parse.txt
+@@ -307,6 +307,9 @@ The following options are unaffected by `--path-format`:
+ 	input, multiple algorithms may be printed, space-separated.
+ 	If not specified, the default is "storage".
 =20
-+GIT_TEST_DEFAULT_REF_FORMAT=3D<format> specifies which ref storage format
-+to use in the test scripts. Recognized values for <format> are "files".
++--show-ref-format::
++	Show the reference storage format used for the repository.
 +
- GIT_TEST_NO_WRITE_REV_INDEX=3D<boolean>, when true disables the
- 'pack.writeReverseIndex' setting.
 =20
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 03292602fb..61871b2a3b 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -1659,6 +1659,11 @@ test_detect_hash () {
- 	test_hash_algo=3D"${GIT_TEST_DEFAULT_HASH:-sha1}"
- }
+ Other Options
+ ~~~~~~~~~~~~~
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index fde8861ca4..99725a6ff1 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -1059,6 +1059,10 @@ int cmd_rev_parse(int argc, const char **argv, const=
+ char *prefix)
+ 				puts(the_hash_algo->name);
+ 				continue;
+ 			}
++			if (!strcmp(arg, "--show-ref-format")) {
++				puts(ref_storage_format_to_name(the_repository->ref_storage_format));
++				continue;
++			}
+ 			if (!strcmp(arg, "--end-of-options")) {
+ 				seen_end_of_options =3D 1;
+ 				if (filter & (DO_FLAGS | DO_REVS))
+diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
+index 3f9e7f62e4..a669e592f1 100755
+--- a/t/t1500-rev-parse.sh
++++ b/t/t1500-rev-parse.sh
+@@ -208,6 +208,23 @@ test_expect_success 'rev-parse --show-object-format in=
+ repo' '
+ 	grep "unknown mode for --show-object-format: squeamish-ossifrage" err
+ '
 =20
-+# Detect the hash algorithm in use.
-+test_detect_ref_format () {
-+	echo "${GIT_TEST_DEFAULT_REF_FORMAT:-files}"
-+}
++test_expect_success 'rev-parse --show-ref-format' '
++	test_detect_ref_format >expect &&
++	git rev-parse --show-ref-format >actual &&
++	test_cmp expect actual
++'
 +
- # Load common hash metadata and common placeholder object IDs for use with
- # test_oid.
- test_oid_init () {
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 4685cc3d48..fc93aa57e6 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -542,6 +542,8 @@ export EDITOR
-=20
- GIT_DEFAULT_HASH=3D"${GIT_TEST_DEFAULT_HASH:-sha1}"
- export GIT_DEFAULT_HASH
-+GIT_DEFAULT_REF_FORMAT=3D"${GIT_TEST_DEFAULT_REF_FORMAT:-files}"
-+export GIT_DEFAULT_REF_FORMAT
- GIT_TEST_MERGE_ALGORITHM=3D"${GIT_TEST_MERGE_ALGORITHM:-ort}"
- export GIT_TEST_MERGE_ALGORITHM
-=20
-@@ -1745,7 +1747,14 @@ parisc* | hppa*)
- 	;;
- esac
-=20
--test_set_prereq REFFILES
-+case "$GIT_DEFAULT_REF_FORMAT" in
-+files)
-+	test_set_prereq REFFILES;;
-+*)
-+	echo 2>&1 "error: unknown ref format $GIT_DEFAULT_REF_FORMAT"
-+	exit 1
-+	;;
-+esac
-=20
- ( COLUMNS=3D1 && test $COLUMNS =3D 1 ) && test_set_prereq COLUMNS_CAN_BE_1
- test -z "$NO_CURL" && test_set_prereq LIBCURL
++test_expect_success 'rev-parse --show-ref-format with invalid storage' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		git config extensions.refstorage broken &&
++		test_must_fail git rev-parse --show-ref-format 2>err &&
++		grep "error: invalid value for ${SQ}extensions.refstorage${SQ}: ${SQ}bro=
+ken${SQ}" err
++	)
++'
++
+ test_expect_success '--show-toplevel from subdir of working tree' '
+ 	pwd >expect &&
+ 	git -C sub/dir rev-parse --show-toplevel >actual &&
 --=20
 2.43.GIT
 
 
---N+fEypTkeLfA4APY
+--PyNj3/AjeH52CtWH
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWCyBsACgkQVbJhu7ck
-PpTQsQ//cWpsXgE7Bp6p8Uoy636wMGK+7flZHy4ifrmnfop974dhYRc9jNcDvBZS
-ly63LuxCjWjSSTvG8h4SAJsNNjMbhGhIPtabzo1IqrwjVnvasG0LRY0/Ai0HUFzD
-3e65RTVffK1ouCBjO5vgdTgrKoJtqGggKn4GWv5oNwfA9Ai+BT3vzaOGMZGlBss0
-ZQ75IXZ0JT/mVN/KBJj4fqthCeKnQC+1Y6fJWcXdMuZOTv2N5NQFnOciTIGjUsG8
-82CzF7/B2zNg6OE0z4f4VYz7ZDWqyZdc9/BFWS5Q3WKCwQSlZ+eRIfw8pQl+gnjs
-CHPi/9cp6z4giBkbRGvoyr5PtPZTiySE/NaINsvzW7mYSDeJzheA1uaLNZGk1tLF
-aM1mgaAp2JzoHqzZaAC1QS0yT/zLBvLQqL7D5KtSLztjqt4WgQKPNfmYnidfujmV
-0l736tsgKi6/u1MauPVPO4iUjKaJlhNzPq8S8RZFY7M8aNhkqy1XjNwNTFw+EF0X
-dryolzrrzIO5kVYW5Ho0SiJaTkgQ5kshS/eQ91mx/cLHz+kG6sWBLwJADeadqSVH
-2gBhs1qkYbn7aACY437W6orQS5RA/6+vGDwCh5QZYoZP7tiP32KSZbeysqoRG6FF
-y+EtN/q/BmAsjTi/0oAlODL1IVvUaZL00S76bhi2QQjWUzMAHNo=
-=YVE4
+iQIyBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWCyB8ACgkQVbJhu7ck
+PpR6Bg/4xjqrCx7clvs8a0fIIgbFywqOjERZrhLK0XfQ+kksLsGuv8QDvbhb2Jhp
+NjKMN8S6efm36n6GSUu2nuAhHiBA73k2YtXq0IRcQXYkywtAOheV/JUmnSa5MZS0
+23TnTFQDYlVulX/Xl8v6ZAucZEvSfag3iHzT3zL2BI4dNS3h2raZ60mNAidFgg3x
+Z/8D/P+Gi4ubuEm7mt7loQzHrY5i4iPQwIcfBaqn9GQ1EJ63cjlAXYNve2zei7/4
+RHBAaFCwbR6wOEExTbzPcyajCKpjfOTPERLM182i+v2Veh113ufJ5UTNsPEkSXdf
+obFK/W3FtrLx9+oEsSCdQinInkinaIaOelBcHlYKXXl+6oIdExsa/RQKpKybRJ46
+XL4xPfbrZXkz/i+eAM6LENY1Ho3fEKumNUvSa/EJxFjCXJ6z/3RUuluqYnb8XPcr
+1+K/G5bgF4x9qLnotsGCf3tBvf5IaXDCNIxWHFuv5uqE9c0ZmVu/+bDCeskNQCq0
+wo9pUYpXtl9PfdAP/sJ/IBHdADtuTEgN43OzEfx30QkbNTXwramfq1baGjqecQ78
+d0cZpDdX88Sm0Nj2XymneSvc4x34/D3rZqEww+5kjWuZZUslyAMIPfiMGrDWSZ0+
+y6df5PCfyv6GuXym+I7gyFUKeQZKCK+Tc0jA7kXaCFhJ17f7ag==
+=M2lZ
 -----END PGP SIGNATURE-----
 
---N+fEypTkeLfA4APY--
+--PyNj3/AjeH52CtWH--
