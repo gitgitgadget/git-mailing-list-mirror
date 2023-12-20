@@ -1,152 +1,70 @@
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A1074776B
-	for <git@vger.kernel.org>; Wed, 20 Dec 2023 16:29:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 960BD46558
+	for <git@vger.kernel.org>; Wed, 20 Dec 2023 16:32:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eiGBoIaF"
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-50e34a72660so4919965e87.1
-        for <git@vger.kernel.org>; Wed, 20 Dec 2023 08:29:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1703089788; x=1703694588; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Q1B1P+D01p3WI6SY00oEGuCV29paAOeF6MsCYk/tJ64=;
-        b=eiGBoIaFkjFSW5ZF/pGybYp9kCtFdbOwfuxnIourG9flINMLO/0pw3nYMMe7Olc6m6
-         OxNwU0sIwp3FKudhb1IaL7k1w7o/2U6YldV4RqYIV2OYyYGKaO4muxkDdYysbE5WbN4G
-         AH1Z06eS/IfYoWGh6PFlI4auqM/ngZ+1cqeUEwlrdnhOJxpsXPwq6A9hn6lOoDcTuE0G
-         ouzjoa+Gckd18bGdYFH/eZw4uEImbXyv9UaVXJa18qRxt3VkZ8iGbOXytf+LsCFA79KI
-         9snb6Bm/9v5Q9mK7rv8rlrNA65v7WgaIxkoirqEuSpf2DrzZ6dBf/Vb04/+BnvDGy22d
-         ZnpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703089788; x=1703694588;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Q1B1P+D01p3WI6SY00oEGuCV29paAOeF6MsCYk/tJ64=;
-        b=QrAj3ZrHeuO+tzaMupNxiXO6ixxrZZF9rGdIL+YOVk7kFq18f0kjrcRdi80TjwsJL4
-         E1IyAXL2xpOIBIClxX9szAboi99WL0cLL/lvfLj2x/mcQofpPcNWG8TxysdcSw7hgyY2
-         CDIbjpWHljAZnYuX1XOSAXIKykxJGtdLu52DunzDMFpad9p/zrbQ+9+z6NkqBzSKbb28
-         3Dm1sBMI2dHJQJHUlmzEScGTaVBx1FnGFHN+VaL+hY/nN0114OSMFozUh9BFKMO/zWMV
-         tGPXlhWobyVPsENZ7q8bO8nufy+jKJUx2YwODLi/+sPthauTcrYJfGA3K5XpXsAlGOrC
-         bhXQ==
-X-Gm-Message-State: AOJu0YyK3Qe1yQeAzRWWBurxVJVG9Yx8Ewm81vRQVZRVGIOuKMRLPfF3
-	K5TjmcON2ni4q1AyiwPbuAgPqkU9ROSCTl2oTBs=
-X-Google-Smtp-Source: AGHT+IHg0CUeL3hOIM3DMg8ri2nHiEg7YkreDRKIP9Ku/02gbnbLjTLe0T4v/YWEMmt05ZK+9SltToaoYCu8bJMyigY=
-X-Received: by 2002:ac2:4902:0:b0:50e:31bd:14e3 with SMTP id
- n2-20020ac24902000000b0050e31bd14e3mr2855584lfi.126.1703089788222; Wed, 20
- Dec 2023 08:29:48 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="h561lFgD"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 4152F2E127;
+	Wed, 20 Dec 2023 11:31:55 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=yTw7qzBLBujapFT3EKKWO0ny69Cmbbn96WiYZ4
+	jFzOc=; b=h561lFgDYCvuVmT2O+9Fgwi1chs/91eiThiKz693MyGgto2knRXmi2
+	Djdo8cEnV5XqSPH3U2zdeH1JyHenEcDLqnuVkFGWYHahJc58+BTAmFjuAbfGHgiB
+	fUcyKklHZWP/VBagobVwhXDzYoV4VDgSWb6YFyLSwyTRuzyDI9cBk=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 387072E126;
+	Wed, 20 Dec 2023 11:31:55 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.193.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 29A0E2E123;
+	Wed, 20 Dec 2023 11:31:50 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Josh Soref via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Josh Soref
+ <jsoref@gmail.com>
+Subject: Re: [PATCH 4/8] SubmittingPatches: update extra tags list
+In-Reply-To: <35fc350d-018a-49cf-a28e-e5ce21fe7dec@gmail.com> (Phillip Wood's
+	message of "Wed, 20 Dec 2023 15:18:20 +0000")
+References: <pull.1623.git.1702975319.gitgitgadget@gmail.com>
+	<e5c7f29af439c48f59b2f35af93a7972e66a5b6b.1702975320.git.gitgitgadget@gmail.com>
+	<35fc350d-018a-49cf-a28e-e5ce21fe7dec@gmail.com>
+Date: Wed, 20 Dec 2023 08:31:48 -0800
+Message-ID: <xmqqh6kcu96z.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231220070528.8049-1-mi.al.lohmann@gmail.com> <c6814a39-b4f9-4b1e-b81b-45ffe4aa7466@web.de>
-In-Reply-To: <c6814a39-b4f9-4b1e-b81b-45ffe4aa7466@web.de>
-From: Elijah Newren <newren@gmail.com>
-Date: Wed, 20 Dec 2023 08:29:36 -0800
-Message-ID: <CABPp-BHBncDqCSvGm6Ow2D2+JQLf_3htwnxZ-RWV+tsxiH1rhg@mail.gmail.com>
-Subject: Re: [PATCH] Documentation/git-merge.txt: fix reference to synopsys
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc: Michael Lohmann <mial.lohmann@gmail.com>, git@vger.kernel.org, 
-	Michael Lohmann <mi.al.lohmann@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 46AD36AA-9F55-11EE-8079-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Hi,
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-I'm getting in on the fun by adding a little nit-picking of my own.  :-)
+> What's the difference between "Improved-by:" and "Helped-by:"? In
+> general I'd prefer for us not to encourage new trailers where we
+> already have a suitable one in use.
 
-On Wed, Dec 20, 2023 at 7:46=E2=80=AFAM Ren=C3=A9 Scharfe <l.s.r@web.de> wr=
-ote:
->
-> Am 20.12.23 um 08:05 schrieb Michael Lohmann:
->
-> Thank you for this patch and sorry for the nitpicking below!
->
-> > 437591a9d738 changed the synopsys from two separate lines for `--abort`
->
-> "Synopsys" is a software company.  A "synopsis" is a brief outline.
->
-> > and `--continue` to a single line (and it also simultaneously added
-> > `--quit`). That way the "enumeration" of the syntax for `--continue` is
-> > no longer valid. Since `--quit` is now also part of the same syntax
-> > line, a general statement cannot be made any more. Instead of trying to
-> > enumerate the synopsys, be explicit in the limitations of when
-> > respective actions are valid.
->
-> Had to think a moment before I understood that "enumeration" refers to
-> "The second syntax" and "The third syntax", which have been combined
-> into this line:
->
->        git merge (--continue | --abort | --quit)
->
-> And it does make sense that we can no longer say "second syntax" and
-> only refer to "git merge --abort", or "third syntax" and mean "git
-> merge --continue".  In other words: References by number are no longer
-> valid after a merge of some of the synopses.
+I agree with the direction to limit the trailer tokens to common
+ones, as the repertoire we have sufficiently covers the needs
+already, and strongly discourage folks to waste their time trying to
+be "original".
 
-Thanks for explaining; I also missed that in reading over the original
-patch.  It'd be great if Michael could update the commit message to
-make this a bit more clear.
+It might be useful to run stats of trailers that were used in the
+past, say, 3 years and that may give us a good guide to decide which
+ones to limit ourselves to.
 
-> > This change also groups `--abort` and `--continue` together when
-> > explaining the circumstances under which they can be run in order to
-> > avoid duplication.
-> >
-> > Signed-off-by: Michael Lohmann <mi.al.lohmann@gmail.com>
-> > ---
-> >  Documentation/git-merge.txt | 19 +++++++++----------
-> >  1 file changed, 9 insertions(+), 10 deletions(-)
-> >
-> > diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-> > index e8ab340319..d8863cc943 100644
-> > --- a/Documentation/git-merge.txt
-> > +++ b/Documentation/git-merge.txt
-> > @@ -46,21 +46,20 @@ a log message from the user describing the changes.=
- Before the operation,
-> >      D---E---F---G---H master
-> >  ------------
-> >
-> > -The second syntax ("`git merge --abort`") can only be run after the
-> > -merge has resulted in conflicts. 'git merge --abort' will abort the
-> > -merge process and try to reconstruct the pre-merge state. However,
-> > -if there were uncommitted changes when the merge started (and
-> > -especially if those changes were further modified after the merge
-> > -was started), 'git merge --abort' will in some cases be unable to
-> > -reconstruct the original (pre-merge) changes. Therefore:
-> > +It is possible that a merge failure will prevent this process from bei=
-ng
-> > +completely automatic. "`git merge --continue`" and "`git merge --abort=
-`"
->               ^^^^^^^^^
->               automatically
+Thanks for reviewing.
 
-Do you perhaps mean "completed automatically" (i.e. change both of the
-last two words in that sentence, and not just the last one)?  That
-would make sense to me, and I like that wording a little better.  But
-I think either you need to change both of the last two words of that
-sentence (my preference), or neither of them.
-
-> > +can only be run after the merge has resulted in conflicts.
->
-> The connection between these two sentences feels weak to me.
-
-This sentence is a bit more problematic than that: Even when there are
-no conflicts, "git merge --no-commit" will also stop a merge, and one
-can then use either --abort or --continue.  So the assertion made by
-this sentence that you're reviewing is not accurate.
-
->  Perhaps something like this:
->
->    A merge stops if there's a conflict that cannot be resolved
->    automatically.  At that point you can run `git merge --abort` or
->    `git merge --continue`.
-
-I like this alternative wording; it avoids the incorrect assertion and
-uses something equivalent to the "completed automatically" suggested
-above.
