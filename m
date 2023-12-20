@@ -1,67 +1,67 @@
 Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 107A1219FE
-	for <git@vger.kernel.org>; Wed, 20 Dec 2023 10:55:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE9D02209B
+	for <git@vger.kernel.org>; Wed, 20 Dec 2023 10:55:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TTzn9Qgh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DJW5YEaw"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qFtWxmnQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="8qvDv5OQ"
 Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id 629FF5C01DB
-	for <git@vger.kernel.org>; Wed, 20 Dec 2023 05:55:40 -0500 (EST)
+	by mailout.nyi.internal (Postfix) with ESMTP id 3DB7C5C01B1
+	for <git@vger.kernel.org>; Wed, 20 Dec 2023 05:55:45 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Wed, 20 Dec 2023 05:55:40 -0500
+  by compute1.internal (MEProxy); Wed, 20 Dec 2023 05:55:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1703069740; x=1703156140; bh=Ym98eHZLxx
-	3xt98XHC2LIvE0+J3Xemu6myp0myEGudA=; b=TTzn9QghLtyKVi83YyLdVpe4He
-	AhjMujm4liomjnzIxtTfvONZMlu+dU+X3dChb7IGxErlNmbADVvAaAxllMA3TMAs
-	kDzK+ReHdg8L1C9BVyVyPfgK06zeT4uETCsR+IeFfvOiGltphnnqsrkkbpZz7R7q
-	FMG4BoVgIkVpDFRVvCNWFDmynKA5OuTCHh1FiJiB8wqxedwZF+YdJivgD6wH8Sy3
-	pYgE2zMVZevJq6nwCDAzHKCpMjJm16ySEmer5//4K6k+0sGNnoWqutFTjTqLd+cZ
-	LA9+6s0FMYlFewmlmS2cpFBeGSPqe38IO4JOAeboZLYfQT/QnPy/Sgbkmrmg==
+	:subject:to:to; s=fm2; t=1703069745; x=1703156145; bh=UwKEfNoS1V
+	nz5xVoxKTG7/5/USu9zUoOfEj0TWhjq6Y=; b=qFtWxmnQx0ydlZI2RD3iiKZBRF
+	MlRsIBztUbB/zclKJbdy+tfL52+lf+lbP+oBNJEZVvb2F0AAabVKy/shpnUISV2p
+	9Tyd6K0OuUK9ElzGga2HkcS/msNouM5dVYJoT8IDfkkVy5b/X994LhqMwKQpt1FO
+	7drbDyyTIKgzm0V9MBBhkheOTmsj8gi1TLTmNVRjliSdHSCSDXOS7KyYWh7jLUNx
+	cRCHdzVtcUQvQzQ8tdOsPQghzUWqyxxIY2oEq0BjlfSc5+J+BUJ/F961mACs52vx
+	Ho71+6gkNoZGZROcCQeyS/E5FUKVafMwINn4e1Ql/2PUyvxu2Nt43BMzSesA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1703069740; x=1703156140; bh=Ym98eHZLxx3xt98XHC2LIvE0+J3X
-	emu6myp0myEGudA=; b=DJW5YEawf1wN7wYKfXa9qg2u+4iWW+0JoJd3JUiJXGhX
-	78EeGm9fc8QAeNw+2dOZX3Cmb6P2HQcgE+mcNR8wG+H+hD4oC4aJS2ejRiHcnViV
-	/pqnbSxddnn8VLBGCefX7P1CuGrFRpKHSofpmf0M8ujaO87TGtoCuXX8UI3fYot5
-	qN1mXSTXwoHwsodWwdKLeEVdHw10aQeFOnUjfdyzz5gqG6WjFzX22h6q9dOr38eV
-	6Vuz8XH3o9C1ZL/yu4ItiKyJzbjZQD9EETUtCFP8Z54C+Os8dlXYbeyfCvlMPVn5
-	0NE4DqisB2+8V1HMvlin4OB6DS4M+zJCp09A9DBbOg==
-X-ME-Sender: <xms:LMiCZTdoRGHTGZXAuV9gdpgvCGyCGBFDytyo6Sz8rPmB8wqPuqMvfg>
-    <xme:LMiCZZPla-ys4CmEkpgnAC2svHDgmdtVPl7OdZoqubAiyyVrlNV8CpU6SgrGiYcEp
-    l2a2ZYVp_XjZhN5Sw>
-X-ME-Received: <xmr:LMiCZcgpF6_HCqazTF9-oc3PC40_ROX1OCBHcR2Z3vi85fCYEkncL3yq9vH_-yd6nOZv_uumpxXoYtgd_tz2SVwRMeBXddCQsOCF4ggX6I50xw>
+	fm2; t=1703069745; x=1703156145; bh=UwKEfNoS1Vnz5xVoxKTG7/5/USu9
+	zUoOfEj0TWhjq6Y=; b=8qvDv5OQV+O28pwAxaIqCTTiemZFeJxwpIP9RbimqF1y
+	ltZ6AeoaGDvY1LhWap+SZih1LKq0H4uRKAvbTTV2U7VQpVy8LhwFNuzOOYB28GVN
+	kl44v/39geO5Ak+EWh0WNjNmev+RC/zqdjmnGoX41CJuLSwgEqmVWkVmZ7aCNV3B
+	lBWDZdxAmjtcLPyd8k5/wus9hwEmWQbKQtFa4EG0DWniWbsmIwzK30BZzXcKcV5R
+	Lqq62vOz/Ulks3ZzNlec2OL809VS2Ih25kM44PfQbXP9yowKHsAxk5sXl3nMSJjB
+	f1ygzh1SOs965ySXliAtLTAvg6SU+jHBoZWx8btDCg==
+X-ME-Sender: <xms:MciCZQrx7nXRniHMq-XA041eIrWcG0hISBPi579_gljCxenYmtqr5w>
+    <xme:MciCZWq5eQxfBNO6r9xovTCHB28rCKRJoCiZWC3FT-ZyLFdtJAK-tV9ctORTF0PKm
+    ac5pM0TdnnPihzg6A>
+X-ME-Received: <xmr:MciCZVOGgX06M1E0JH2FiAU5ooV6Lvl3L9ZR1tZ8Jek1bIVgmMvnI4tapKdGyDblbwla6t2BKAWkLBGOU0DXnA9nfyBuhXpGdisItpMf10L1KA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdduvddgvddvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
     ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
     khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
-    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgepudenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:LMiCZU_mqZWFJC-sNv6--VrBdesrdr5uG_xJo96_PFUdcfl_8b4rZA>
-    <xmx:LMiCZfvNWW2Zck_J_O--Nt5T-3_yuMHXDJezc__0vhgTub9mpWhIOw>
-    <xmx:LMiCZTHSlkxvM2AblLzdKkkIWi4cRjSTcGUES0k5YDSal8z3sDEXMQ>
-    <xmx:LMiCZc4XgmiEBOyqHQ-286r7AH43BHi59gjkAV8cAE23ib5BLeYWZA>
+X-ME-Proxy: <xmx:MciCZX4vPOIhDM50ie-etCn3e97GhJxQp-2fUc529gdVJwoKrUB2Sg>
+    <xmx:MciCZf4wt67g7eUN2hEqjbpSdNrhOff4hXFixh4Jii823OkqPt6QTA>
+    <xmx:MciCZXisEultdNcpXya07OM2CrszXnubc0GfztyRpH-Hym6qvWNdng>
+    <xmx:MciCZYXv70cSKbX2uMMJfMGktRowbV96YgHGXbZo2379kuB6B5vMqQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 20 Dec 2023 05:55:39 -0500 (EST)
+ <git@vger.kernel.org>; Wed, 20 Dec 2023 05:55:44 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 35c0f9fa (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 2683b519 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Wed, 20 Dec 2023 10:53:44 +0000 (UTC)
-Date: Wed, 20 Dec 2023 11:55:38 +0100
+	Wed, 20 Dec 2023 10:53:49 +0000 (UTC)
+Date: Wed, 20 Dec 2023 11:55:42 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 11/12] builtin/clone: introduce `--ref-format=` value flag
-Message-ID: <71cf0ce82711189d8370ac47880f9e6cba0e06fd.1703067989.git.ps@pks.im>
+Subject: [PATCH 12/12] t9500: write "extensions.refstorage" into config
+Message-ID: <bbe2fbb15495ad6c8eb0824b4b4aaa7f3e6e2537.1703067989.git.ps@pks.im>
 References: <cover.1703067989.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -70,152 +70,73 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="CeW5uLHo40M8eR7J"
+	protocol="application/pgp-signature"; boundary="iluyBiIn36D71XhY"
 Content-Disposition: inline
 In-Reply-To: <cover.1703067989.git.ps@pks.im>
 
 
---CeW5uLHo40M8eR7J
+--iluyBiIn36D71XhY
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Introduce a new `--ref-format` value flag for git-clone(1) that allows
-the user to specify the ref format that is to be used for a newly
-initialized repository.
+In t9500 we're writing a custom configuration that sets up gitweb. This
+requires us manually ensure that the repository format is configured as
+required, including both the repository format version and extensions.
+With the introduction of the "extensions.refStorage" extension we need
+to update the test to also write this new one.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/git-clone.txt |  6 ++++++
- builtin/clone.c             | 12 +++++++++++-
- t/t5601-clone.sh            | 17 +++++++++++++++++
- 3 files changed, 34 insertions(+), 1 deletion(-)
+ t/t9500-gitweb-standalone-no-errors.sh | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index c37c4a37f7..6e43eb9c20 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -311,6 +311,12 @@ or `--mirror` is given)
- 	The result is Git repository can be separated from working
- 	tree.
-=20
-+--ref-format=3D<ref-format::
-+
-+Specify the given ref storage format for the repository. The valid values =
-are:
-++
-+include::ref-storage-format.txt[]
-+
- -j <n>::
- --jobs <n>::
- 	The number of submodules fetched at the same time.
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 20c161e94a..b635bbcb43 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -72,6 +72,7 @@ static char *remote_name =3D NULL;
- static char *option_branch =3D NULL;
- static struct string_list option_not =3D STRING_LIST_INIT_NODUP;
- static const char *real_git_dir;
-+static const char *ref_format;
- static char *option_upload_pack =3D "git-upload-pack";
- static int option_verbosity;
- static int option_progress =3D -1;
-@@ -157,6 +158,8 @@ static struct option builtin_clone_options[] =3D {
- 		    N_("any cloned submodules will be shallow")),
- 	OPT_STRING(0, "separate-git-dir", &real_git_dir, N_("gitdir"),
- 		   N_("separate git dir from working tree")),
-+	OPT_STRING(0, "ref-format", &ref_format, N_("format"),
-+		   N_("specify the reference format to use")),
- 	OPT_STRING_LIST('c', "config", &option_config, N_("key=3Dvalue"),
- 			N_("set config inside the new repository")),
- 	OPT_STRING_LIST(0, "server-option", &server_options,
-@@ -930,6 +933,7 @@ int cmd_clone(int argc, const char **argv, const char *=
-prefix)
- 	int submodule_progress;
- 	int filter_submodules =3D 0;
- 	int hash_algo;
-+	int ref_storage_format =3D REF_STORAGE_FORMAT_UNKNOWN;
- 	const int do_not_override_repo_unix_permissions =3D -1;
-=20
- 	struct transport_ls_refs_options transport_ls_refs_options =3D
-@@ -955,6 +959,12 @@ int cmd_clone(int argc, const char **argv, const char =
-*prefix)
- 	if (option_single_branch =3D=3D -1)
- 		option_single_branch =3D deepen ? 1 : 0;
-=20
-+	if (ref_format) {
-+		ref_storage_format =3D ref_storage_format_by_name(ref_format);
-+		if (ref_storage_format =3D=3D REF_STORAGE_FORMAT_UNKNOWN)
-+			die(_("unknown ref storage format '%s'"), ref_format);
-+	}
-+
- 	if (option_mirror)
- 		option_bare =3D 1;
-=20
-@@ -1106,7 +1116,7 @@ int cmd_clone(int argc, const char **argv, const char=
- *prefix)
- 	 * their on-disk data structures.
- 	 */
- 	init_db(git_dir, real_git_dir, option_template, GIT_HASH_UNKNOWN,
--		REF_STORAGE_FORMAT_UNKNOWN, NULL,
-+		ref_storage_format, NULL,
- 		do_not_override_repo_unix_permissions, INIT_DB_QUIET | INIT_DB_SKIP_REFD=
-B);
-=20
- 	if (real_git_dir) {
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 47eae641f0..fb1b9c686d 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -157,6 +157,23 @@ test_expect_success 'clone --mirror does not repeat ta=
-gs' '
-=20
+diff --git a/t/t9500-gitweb-standalone-no-errors.sh b/t/t9500-gitweb-standa=
+lone-no-errors.sh
+index 0333065d4d..7679780fb8 100755
+--- a/t/t9500-gitweb-standalone-no-errors.sh
++++ b/t/t9500-gitweb-standalone-no-errors.sh
+@@ -627,6 +627,7 @@ test_expect_success \
+ test_expect_success 'setup' '
+ 	version=3D$(git config core.repositoryformatversion) &&
+ 	algo=3D$(test_might_fail git config extensions.objectformat) &&
++	refstorage=3D$(test_might_fail git config extensions.refstorage) &&
+ 	cat >.git/config <<-\EOF &&
+ 	# testing noval and alternate separator
+ 	[gitweb]
+@@ -637,6 +638,10 @@ test_expect_success 'setup' '
+ 	if test -n "$algo"
+ 	then
+ 		git config extensions.objectformat "$algo"
++	fi &&
++	if test -n "$refstorage"
++	then
++		git config extensions.refstorage "$refstorage"
+ 	fi
  '
 =20
-+test_expect_success 'clone with files ref format' '
-+	test_when_finished "rm -rf ref-storage" &&
-+	git clone --ref-format=3Dfiles --mirror src ref-storage &&
-+	echo files >expect &&
-+	git -C ref-storage rev-parse --show-ref-format >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'clone with garbage ref format' '
-+	cat >expect <<-EOF &&
-+	fatal: unknown ref storage format ${SQ}garbage${SQ}
-+	EOF
-+	test_must_fail git clone --ref-format=3Dgarbage --mirror src ref-storage =
-2>err &&
-+	test_cmp expect err &&
-+	test_path_is_missing ref-storage
-+'
-+
- test_expect_success 'clone to destination with trailing /' '
-=20
- 	git clone src target-1/ &&
 --=20
 2.43.GIT
 
 
---CeW5uLHo40M8eR7J
+--iluyBiIn36D71XhY
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWCyCkACgkQVbJhu7ck
-PpQf2hAAg49PNrhVOnn3TgJrbBajx/F5JOmMbmMd/H/pLtprybxrQT1M73EXxigl
-O2LFtcJSH+TfccPwqU76o9PcK55Gg3+cH9I0s92wrhBhFMQgF2pFGDfR6lHIuFod
-89VlUj/ZNqnPEoC+PsnkKxXbFVtqVyRQsLmyekoar/2uh3oxgjeW9wQhbLB5qxPv
-HugB0C96i44fxO8ZLUoBegbI84FdJfnZmJp10OyGbVEdJMwpue92/uXiwESkN70T
-vqteXWbSRpMcEqsth2D6iOoP3B9pgumtr0jnKYQ2iTt8hGbLd8/4lV74os4ewLrH
-w1zpYGnpxpjCfkJr3gu/tt1vTgDUx6Iw7Z7OHv8ch6k0ufZizQ9iN6fPWfPzxIq1
-++/QgfPE9iwv/Y8vNSeQzYpFfvZBZ+jK4wju1jXn7i7c6cYN+6EITFNdwPKJcgkE
-P0A666eSOQqklCZIpZRd5CE6GG0QHFD34NgMpqYf2v95/vmLYfkjNGzOmiuUmIs9
-9zbdGEH/tgAPY1FTiNERC+CnNYJFz+uNwKnEBN+wRmwVL4zD1XFcN31YfrVHS7YE
-MkDpC+2jJsVvMTKnvjSAF8PMQomUN6vTXDVQu1vtXInvjTchY5zRToyiaC2zYhnj
-yJL8Pom47V1JfIUrBe+p907D1XuDQQb1HEy7wrt/ebUNqGkzd+Q=
-=sxnk
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWCyC0ACgkQVbJhu7ck
+PpThwg//ZSUqaknW1xvPkkyGsplt2Uxs5lJQZM4puKYQGPjtSCzoKK5w9YNHa3vF
+N3asGFBr1yT6smiHVBmDHaio49bmesoqugyc4eZIo4FNfK5GYj4Hn9jAw6towm13
+EpJ8sCcKWTBYZcALuYrtY89caKvx/HjM+qby2w75c1F1GY9eTS8E9o61YlLEBcck
+dK930RSEjEF8Ze9VWrZLCC6OdKWvNj+273mF9ZU1F4GUNnOhy5aOfus02jLljF64
+gs0OzvI2Wbk2ND0QWT39fllwmdy0jzQLKaaZgNGNswvjvPj+3/BNJwCLVYOrucgx
+YlpPiyEy5mF4Nk0r8jGKM3uUT5qb/KasA8YvbdI+5VgmUyQDH6Hno+wFjOASeITx
+KIVl2VfkkAGvxXdoFMCRDTCwTvVkttlw9VH3/ocyCTjLUVlUV05tTin9DHnTtJiU
+htytHRGEGSRLCTf87fSMyODlbAT9ascZPaC/98myhA0dFGEOHc9vFUmpWHUkTbN+
+uSlsySHMAzra5tsplWRipY/IxJcf8x7vtzNNGjSvsR2gFYiRqBdYtzGjigx9Vrw3
+bWfq/TlnObh4LA/aqbVoIHEaoAoR0SRRzZmIyjzUSglWFQeLm0F8gMe7yyQehgBK
+bUMnJccBgjfqhGhRvSvvj69BfKTYnNum4NlI+U8PKt0aYHhMBjw=
+=JuMx
 -----END PGP SIGNATURE-----
 
---CeW5uLHo40M8eR7J--
+--iluyBiIn36D71XhY--
