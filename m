@@ -1,74 +1,191 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B2CB46425
-	for <git@vger.kernel.org>; Wed, 20 Dec 2023 16:39:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD5F47765
+	for <git@vger.kernel.org>; Wed, 20 Dec 2023 16:50:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="JvzqNehu"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 85B2D2E1C3;
-	Wed, 20 Dec 2023 11:39:31 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=JAOF1VcwKAcUS2bsIeGpZX5hKIuWzZr6lVMUcr
-	ipJrg=; b=JvzqNehuQNtpN0y9gIev/kcVGquSYRdhrAGuffwOVBngHQVd1Aofj+
-	pS4bOArGukS7vg8+rAPHud/ZlcKlS37gSdsncOGQnaBtR+An2QLxqOB7D6aPwE+O
-	kCfgqyDefB/b85rVM0QkkM7XHg/6zlL1cB8A6sQdYitWdKeA2iyvk=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 7E1092E1C2;
-	Wed, 20 Dec 2023 11:39:31 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.193.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 279EC2E18D;
-	Wed, 20 Dec 2023 11:39:28 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,  Josh Soref via
- GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Josh Soref
- <jsoref@gmail.com>
-Subject: Re: [PATCH 6/8] SubmittingPatches: clarify GitHub visual
-In-Reply-To: <CABPp-BFU+4Xy8tVrU5qV3GX7Mr3-nOEtSgix3MSne5VVW2hz2Q@mail.gmail.com>
-	(Elijah Newren's message of "Wed, 20 Dec 2023 07:40:25 -0800")
-References: <pull.1623.git.1702975319.gitgitgadget@gmail.com>
-	<043d2a24202d39c5564e4a4369c86ae4648dd721.1702975320.git.gitgitgadget@gmail.com>
-	<e788cf7b-56c7-48c2-ad4f-65d9c9e73ad5@web.de>
-	<CABPp-BFU+4Xy8tVrU5qV3GX7Mr3-nOEtSgix3MSne5VVW2hz2Q@mail.gmail.com>
-Date: Wed, 20 Dec 2023 08:39:26 -0800
-Message-ID: <xmqq8r5ou8u9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WQOV7VS6"
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-50e34a72660so4950409e87.1
+        for <git@vger.kernel.org>; Wed, 20 Dec 2023 08:50:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1703091001; x=1703695801; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LDSK3oOTfn+axqzVuMQuDs/Ly1S8adY6x2s67e6/vZI=;
+        b=WQOV7VS6VgBztcPokX089uV2WEx1ZNJzIw1wlnqp0hvazL0V9IXoW8puB4Hs1YuVZ4
+         VwqWJYP/MhTfl4loiD0PTP8Z4milJLAXosfg2PmfXk+F+d5jpm7n2qV6KUCGT7cM93RE
+         oS03PmrT1j72ioppTb23viG4EAr1GWnHf+GVh5y6F0R3kEi5kYqPwrjNTdevCLc07eBW
+         9YkKx14ieM6thTiidV71UViREVc36JoTsh333+hA/ThL4+ttOo87mU5+JrfERKc2CWq1
+         ELjQVprSNicLWAxJ6FShdaS8rHUBo54zKOOYKVAwYB2Eor4zC1EdvbafQdwkxBLIlFde
+         JCkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703091001; x=1703695801;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=LDSK3oOTfn+axqzVuMQuDs/Ly1S8adY6x2s67e6/vZI=;
+        b=GvK6i9uKi0PG3iK+SMxbThKp8l1tHMsIeWVTc8qmx7gg2rFXoAofVdiu+lV8mJGPmn
+         NZpPECUY7m33A0AHalueqEH8OmJCdBnQ9BzFAJzdntXzdY8yje1i3qmm3XSfKRr5M5IE
+         233furcFwYix/CyNATU/BLVal9LHQ/S8fSHjsOg0Yt9HFrrcqzqYSJpB10XJ/RkMZF0O
+         clfISvzUdFcrSClW3T0bVbe7FUpe4lsF+lNnV0Xz/sxuSDsMqWw81+bwvZUKV4viUmcP
+         IzyFI3naBfl5HUQN+fyss9TIIe+/E3fgs1692KdMsJVGW7AeKUU0z5quhSeTJqQ/1KaN
+         gigg==
+X-Gm-Message-State: AOJu0YzVoMj9e6y8sKMZNdN/D0usSwXVw4H+AP+tS8/N48JGBdxzIcEY
+	ag/7zZ5n7G1Dw3qaQ2V+KANx+0060Vdj9Cy8OEMGEvjc45s=
+X-Google-Smtp-Source: AGHT+IGmlu6hulPEUxzC2TuakAc8YMPDH9YTyn73x3KUJLr/EM6bAyoozaJTVBSTVLC/KzmLThRU2MFMgkFVm77MJLw=
+X-Received: by 2002:a05:6512:3e0f:b0:50e:54aa:750d with SMTP id
+ i15-20020a0565123e0f00b0050e54aa750dmr828475lfv.85.1703091000545; Wed, 20 Dec
+ 2023 08:50:00 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 57A94D8A-9F56-11EE-99DF-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+References: <pull.1623.git.1702975319.gitgitgadget@gmail.com>
+ <e5c7f29af439c48f59b2f35af93a7972e66a5b6b.1702975320.git.gitgitgadget@gmail.com>
+ <35fc350d-018a-49cf-a28e-e5ce21fe7dec@gmail.com> <CABPp-BH_iP2KjPi-5kW8ROQWfy8XoUmbGhyT-Y1dZGtCtZXQGQ@mail.gmail.com>
+ <CACZqfqAiSpGP5ABN7MZ50Za=-vAEKnqE0ravzEMbLJCByfRd8w@mail.gmail.com>
+In-Reply-To: <CACZqfqAiSpGP5ABN7MZ50Za=-vAEKnqE0ravzEMbLJCByfRd8w@mail.gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Wed, 20 Dec 2023 08:49:48 -0800
+Message-ID: <CABPp-BFjotLN4sCe+6uHAU7qhr1COM0B4EdW0f0-X-xf5qXinA@mail.gmail.com>
+Subject: Re: [PATCH 4/8] SubmittingPatches: update extra tags list
+To: Josh Soref <jsoref@gmail.com>
+Cc: git@vger.kernel.org, phillip.wood@dunelm.org.uk
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Elijah Newren <newren@gmail.com> writes:
+On Wed, Dec 20, 2023 at 8:09=E2=80=AFAM Josh Soref <jsoref@gmail.com> wrote=
+:
+>
+> On Wed, Dec 20, 2023 at 10:30=E2=80=AFAM Elijah Newren <newren@gmail.com>=
+ wrote:
+> > On Wed, Dec 20, 2023 at 7:18=E2=80=AFAM Phillip Wood <phillip.wood123@g=
+mail.com> wrote:
+> > > Thanks for adding these, they are widely used and should be documente=
+d.
+> > > The patch also adds a mention for "Noticed-by:" - I'm less convinced =
+by
+> > > the need for that as I explain below.
+> > >
+> > > > Updating the create suggestion to something less commonly used.
+> > >
+> > > I'm not quite sure I understand what you mean by this sentence.
+>
+> Tentatively rewritten as:
+>     Updating the "create your own tag" suggestion as 'Mentored-by' has be=
+en
+>     promoted.
+>
+> This commit is adding bulleted items including promoting 'Mentored-by',
+> which means that the suggestion of "invent your own" would really need
+> a new suggestion.
+>
+> Personally I'm not a fan of "invent your own", but I'm trying to
+> follow "when in Rome" (which is a big thing in the Git process
+> documentation covered by the two files subject to this series). More
+> on this later.
 
-> ...  I'm tempted to just
-> oversimplify ("...marked with red."), but am slightly concerned about
-> red/green color-blind folks.
+Yeah, well it appears that those of us who have been here in Rome for
+a while aren't a fan of it anymore either; see also Junio's response
+in this thread about that.
 
-(sheepishly raises hand).  Thanks for being considerate.
+> > > > diff --git a/Documentation/SubmittingPatches b/Documentation/Submit=
+tingPatches
+> > > > index 32e90238777..694a7bafb68 100644
+> > > > @@ -348,6 +348,8 @@ If you like, you can put extra tags at the end:
+> > > >
+> > > >   . `Reported-by:` is used to credit someone who found the bug that
+> > > >     the patch attempts to fix.
+> > > > +. `Noticed-by:` liked `Reported-by:` indicates someone who noticed
+> > > > +  the item being fixed.
+> > >
+> > > I wonder if we really need a separate "Noticed-by" footer in addition=
+ to
+> > > "Reported-by". Personally I use the latter to acknowledge the person =
+who
+> > > reported the issue being fix regards of weather I'm fixing a bug or s=
+ome
+> > > other issue.
+> >
+> > I'm not sure I'd mention both either; feels like we're making it hard
+> > for users to choose.  Also, I think there's a minor distinction
+> > between them, but it's hard to convey simply: To me, Reported-by
+> > suggests someone sent a mail to the list specifically about the bug or
+> > issue in question.  Also, to me, Noticed-by suggests that during a
+> > back-and-forth discussion of some sort on another topic, a fellow Git
+> > contributor noticed an issue and mentioned it as an aside.  But,
+> > that's how _I_ would have used them, I didn't do any digging to find
+> > out if that's really how they are used.
+>
+> Given that Noticed-by is more common than Co-authored-by, I have a
+> hard time arguing that it shouldn't be included.
 
-> I suspect they'd figure it out anyway by
-> comparing the checkmarks (within green) to the x's (within red),
+Not if you look at the last three years; there Co-authored-by is more
+than 17 times more common than Noticed-by.
 
-I 100% agree with this.
+> You could see that I struggled with it based on my lousy first drafts [1]=
+.
+>
+> Anyway, tentatively:
+>
+> . `Noticed-by:` like `Reported-by:` indicates a Git contributor who
+> called the item (being fixed) out as an aside.
+>
+> Here, I'm struggling with the tension between "noticed-by probably
+> hints that something is being fixed" and "noticed-by is addressing who
+> suggested it and why we're attributing it to them"
+>
+> "as an aside" is itself an ellipsis for something like "as an aside to
+> some unrelated discussion and didn't really circle back to it as a top
+> level discussion point, but here we're closing the loop" -- but this
+> is obviously way too long-winded to be the written form
 
-> but
-> if we want to be more detailed, perhaps we drop the "cross" altogether
-> and just describe it literally: "...marked with a red circle
-> containing a white x."?
+Given the large drop-off in usage of the Noticed-by trailer, I'd
+suggest just leaving it out.
 
-Thanks.
+> > Either way, if we're going to define them as synonyms, I'd rather we
+> > just left the less common one out.  If there's a distinction, and it's
+> > not a pain to describe, then maybe it'd be worth adding both.
+> >
+> > If we do add both, though, we at least need to fix "liked" to "like"
+> > in your description.
+>
+> Right, it's a "first draft" [1]...
+
+:-)
+
+[...]
+
+> I personally agree. I think encouraging non-core contributors to
+> invent their own is not a good idea. It leads to various things
+> (including inconsistently cased items because users fail to review the
+> current set / understand them/their-construction).
+>
+> Saying that it's ok for core contributors to suggest a new tag and
+> that if a core contributor suggests a new tag that the person writing
+> the current series should just accept the tag and trust that it'll be
+> ok.
+>
+> Note: I'm not going to draft wording to this effect on my own, and if
+> I were to provide such a change, it'd be its own commit prior to the
+> one here, because it's a significant process change as opposed to
+> clarifying the list of recommended tags.
+
+Perhaps replace
+
+   You can also create your own tag or use one that's in common usage
+   such as "Thanks-to:", "Based-on-patch-by:", or "Mentored-by:".
+
+with
+
+   While you can also create your own trailer if the situation warrants it,=
+ we
+   encourage you to instead use one of the common trailers in this project
+   highlighted above.
+
+?
