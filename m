@@ -1,132 +1,149 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 255771D698
-	for <git@vger.kernel.org>; Wed, 20 Dec 2023 08:53:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D930D1F5F4
+	for <git@vger.kernel.org>; Wed, 20 Dec 2023 09:17:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lz8gEt/t"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-40d3352b525so6069015e9.1
-        for <git@vger.kernel.org>; Wed, 20 Dec 2023 00:53:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1703062421; x=1703667221; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Vtv06wccbYG6FgiYAiCii8cfKyOpqCvmcgj7FaWycUI=;
-        b=Lz8gEt/tik4mqPu7N4xjkuuwJc9XBLSP031Wm6QNDrpBBWxD4/mY0sdrMR6QHNmwPQ
-         IWfF3DzIUGwCSLd0uuYrIhLWiBSlg14F3nSO8Lj8ENkOlGt0fX0Jwo8iMrwBe3reQXk4
-         QWQsWqRPfvsycs0lFJzojt4OZp9Ig3luYP2t2Nq8WEik3+FzHQ2ZMjKY5QvmCieTQjfM
-         jQN73lrpvJY9gOg1RqSx9cPP63GKy7X7/vHIjDblv454i6Y1c5dIv7st//3uw+spGP/l
-         HHhevgueFGoHtlsHe6UcloD7LDxjlJzph8k1n6/GEYcVinV5n43aeOHBl/14NjqYGRvX
-         oSfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703062421; x=1703667221;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Vtv06wccbYG6FgiYAiCii8cfKyOpqCvmcgj7FaWycUI=;
-        b=TPTJXNWQ/1bg64DvLyzMpyVTcb3Pte3eSXtf3tK4DcGk+d31cyXNtPsTFIXEncOykm
-         RTBeTUQbx5ANEK3dXX4CGyryPED5jm7VpZYH9TbFSjfasynPZ+4f0OeD9FwmkV6VO4HA
-         X0WO8KPrhi5KWk+Qaoif1WAOb5eQiRRSwr6SSlQlIzu4HnycG6iiPMfe6l23xvwacRK7
-         QIiMVSqjsMqP/g5SRyN1nK17O90nnXUSU/tWb6xBYNEg8pKhtLzThCEcM96Nku1zSm29
-         gpKVvLbi3nrmC2cQP3oH9l6hggWE7XhvlIB3ldYAP4WXjZXEjeQ1ZN2lI8+/gDHGAQ1I
-         0IHQ==
-X-Gm-Message-State: AOJu0YyKalI2GUHesN/JfaD/Stod7SAv2K/wEQvTbXVMRlOw9OWECeTx
-	5aYMRTeXyNRcxBw0W5Vwp7Q=
-X-Google-Smtp-Source: AGHT+IEzi1dLkK9/bqR9/0FKYhvVjl90RJZyVTc2zAmBTDB4MWSBmuVQAgp0hkgRSH/W3aId2Y0A3A==
-X-Received: by 2002:a05:600c:b86:b0:40d:2fa9:4abd with SMTP id fl6-20020a05600c0b8600b0040d2fa94abdmr698280wmb.132.1703062421130;
-        Wed, 20 Dec 2023 00:53:41 -0800 (PST)
-Received: from Michaels-MBP.fritz.box (2001-4dd7-e0bf-0-e5b0-3039-5d18-ec57.ipv6dyn.netcologne.de. [2001:4dd7:e0bf:0:e5b0:3039:5d18:ec57])
-        by smtp.gmail.com with ESMTPSA id r2-20020a056000014200b003366224319csm9777650wrx.53.2023.12.20.00.53.40
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 20 Dec 2023 00:53:40 -0800 (PST)
-From: Michael Lohmann <mial.lohmann@gmail.com>
-X-Google-Original-From: Michael Lohmann <mi.al.lohmann@gmail.com>
-To: gitster@pobox.com
-Cc: Johannes.Schindelin@gmx.de,
-	git@vger.kernel.org,
-	mi.al.lohmann@gmail.com,
-	mial.lohmann@gmail.com,
-	phillip.wood123@gmail.com,
-	phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] rebase-interactive: show revert option and add single letter shortcut
-Date: Wed, 20 Dec 2023 09:53:34 +0100
-Message-Id: <20231220085334.13234-1-mi.al.lohmann@gmail.com>
-X-Mailer: git-send-email 2.39.3 (Apple Git-145)
-In-Reply-To: <xmqqmsu7e4hp.fsf@gitster.g>
-References: <xmqqmsu7e4hp.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KF5nwHz7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AV4IQozk"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id 7075D5C00D5
+	for <git@vger.kernel.org>; Wed, 20 Dec 2023 04:17:06 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute1.internal (MEProxy); Wed, 20 Dec 2023 04:17:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
+	 t=1703063826; x=1703150226; bh=NGeFcX67vsynCvLhbxAB9N88UcXyudEw
+	fZYG0zpuB94=; b=KF5nwHz7XIXE2rFMg9vqI3NO3BUEDbgLCwJgshhQQmo0tUU8
+	AET/zR+p4cmcoa/ckp8PzTjJyC5ceDBUsyTq7HR/n/+j1NyBsDKLf4x8F3hhfD4Z
+	umR90yPaVlPFzcMvUSj3c1ydiPPKDIsWzNfQEbtanhXDtTReeiYLnDgvHbyhpPCT
+	stK2Q6FuB6sSWG6y0b6Ngww81JZjjxHCC18k3yWJMsnVwh1l0GqtfRPK1sUqibj7
+	CYxPKYOi8AaKSPuLUSdVrvcNCzLybICEf9O0us1zmhkYegcWf+N6SVoelX8n9abO
+	K/1EvbvMyUzKl0rEugzUwLeyyJeSo46zojhN8g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1703063826; x=1703150226; bh=NGeFcX67vsynCvLhbxAB9N88UcXyudEwfZY
+	G0zpuB94=; b=AV4IQozkYUjxFOWg5i2AUgScYDBWKbQgzuCa9Zv7m+CZjjnrkqK
+	vpWCHBYTNCE32zHFzjtlfebAB/bA39/XCTU7HDW0x32HxZKFBUZTGQd7DcELuH8N
+	XYjvFphz907RKAxNWscdXEX1ZzhNI3/7J+sjxWdszHwobegr3DaByRfUb1QdLdLa
+	qS5b93txXoc9vgdLkxAlCfKXtF/EPw8tqsweV1woCT+VOYJyUl3BGlwjaTaZu1Vg
+	gt8r6ybJdnJ2jTKLF1I1O8Yum5+Asl+d1ZwQhAPO3CJps5OYTVrYmjnyp51kqvrp
+	xihzsWVEeaysY+EJMfmUIiFbLeTsXZKp/Mw==
+X-ME-Sender: <xms:ErGCZRUKvrB1M-Sl090HnEiSybVv8rSbSHyXR1hCS_xKGsJCuUVMpQ>
+    <xme:ErGCZRlFS8c07cl6DU1LP68qUiKKqxR7r__AwwOR98x8Uwe2b9KGjkIewc7EGfmvm
+    wUn2EkXJh8Svlm4hw>
+X-ME-Received: <xmr:ErGCZdY5jdNDt4-4mHYb5fPB6FC_JlOShJ2K251FUaRhp-iqxA-7SkzFyFnVMb5D0IejX4raPtjlmvwWiYSKWKj7gsmcSM7ncpyuccnT7GZfWw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdduvddgtdefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkgggtugesghdtreertd
+    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
+    rdhimheqnecuggftrfgrthhtvghrnhepjeeifedvueelfffgjeduffdvgefhiefgjefgvd
+    dvfeduvefffeevfffhgfekieffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:ErGCZUVQQx9nazeWGEv1dzlvB3VAazIURxsCkFsvJlMfayccAOtP-Q>
+    <xmx:ErGCZbnvpttn0ihnzZRhQkIdJ5FZ1FkVF_0ltBjH2CgdU6VcYXWfzA>
+    <xmx:ErGCZRfk5m5jIJVgXbXdvXS8iJEeX7ZAkqm1KdRJeCQcjnrw5jV6pg>
+    <xmx:ErGCZRSi_2OIF7gKfoUrcnsRi1pghTgLaCiOimrdQJmbzCJFM0siUg>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Wed, 20 Dec 2023 04:17:05 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id ef14103b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Wed, 20 Dec 2023 09:15:08 +0000 (UTC)
+Date: Wed, 20 Dec 2023 10:17:01 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: git@vger.kernel.org
+Subject: [PATCH 0/7] reftable: fixes and optimizations (pt.2)
+Message-ID: <cover.1703063544.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-Hi Junio,
-
-On 18. Dec 2023, at 19:43, Junio C Hamano <gitster@pobox.com> wrote:
-> Michael Lohmann <mial.lohmann@gmail.com> writes:
->
->> A `revert` in an interactive rebase can be useful, e.g. if a faulty
->> commit was pushed to the main branch already, so you can't just drop it.
-> 
-> But wouldn't that be typically done simply by running "git revert",
-> totally outside the context of "git rebase -i"?
-> 
-> Interactive rebase is more geared toward rearranging an already
-> built history *after* such a "git revert" is made and possibly other
-> commits are made either before or after that commit that was created
-> by "git revert".
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="RrZPrcIFiP86mTyN"
+Content-Disposition: inline
 
 
-Right - I recently found myself in a situation where a coworker merged a
-faulty commit leading to a build failure and (given that only the two of
-us actively worked on that project) we coordinated that he would prepare
-a proper fix, while I wanted to rebase my current feature branch on
-master, but with that commit reverted. For the sake of a clean history I
-preferred to have the revert commit right at the merge-base, instead of
-somewhere in the middle of all of my commits.
+--RrZPrcIFiP86mTyN
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-But you are right - if there are more than two people working on a
-project, the typical way of properly doing this would be to revert the
-offending commit in the master branch until a fix is available.
+Hi,
 
-You can also do the revert you want to create in your feature branch and
-directly update the master:
-- `git rebase -i origin/master`
-- add the following two lines to the top of the todo list:
-    revert B
-    exec git push origin @:refs/heads/revert-commit
+this is the second set of patches that fixes bugs and performs some
+slight memory optimizations. The series builds on top of c0cadb0576,
+which has been merged to `next`.
 
-Instead of
-- `git switch origin/master -c revert-commit`
-- `git revert B`
-- `git push origin HEAD`
-- `git switch -`
-- `git rebase revert-commit`
+The series is structured as follows:
 
-So with the interactive revert you can create the "revert-commit” branch
-"directly from within your own branch”. But indeed - it really is not
-needed...
+  - Patch 1: some hardening to not corrupt the reftable stack on
+    compaction.
 
-> A much cleaner way to structure your branch is not to muck with such
-> tentative changes *on* the branch you eventually want to store the
-> final result on.  Fork another branch and rebase B away:
+  - Patch 2: fix corruption of a reftable when writing multiple indices.
 
-I really like that workflow! I’ll adapt it :)
+  - Patches 3 - 7: various smallish refactorings to optimize memory
+    usage. Overall these reduce allocations when iterating many refs by
+    almost 85%.
 
-So in total: I don’t think documenting this is necessary (that is also
-why my first message was not directly the patch, but the question why
-this is undocumented) and it might even lead to the unclean workflow
-that I ended up having, so even from that perspective it might not be a
-good thing.
+Thanks in advance for your review!
 
-Thank you very much for this very detailed explanation of the workflow!
-Michael
+Patrick
 
-P.S. I am sorry - the first reply only went directly to Junio and not the
-mailing list
+Patrick Steinhardt (7):
+  reftable/stack: do not overwrite errors when compacting
+  reftable/writer: fix index corruption when writing multiple indices
+  reftable/record: constify some parts of the interface
+  reftable/record: store "val1" hashes as static arrays
+  reftable/record: store "val2" hashes as static arrays
+  reftable/merged: really reuse buffers to compute record keys
+  reftable/merged: transfer ownership of records when iterating
+
+ reftable/block_test.c      |   4 +-
+ reftable/merged.c          |   8 +--
+ reftable/merged_test.c     |  16 +++---
+ reftable/readwrite_test.c  | 103 +++++++++++++++++++++++++++++++------
+ reftable/record.c          |  17 ++----
+ reftable/record_test.c     |   5 --
+ reftable/reftable-record.h |  10 ++--
+ reftable/stack.c           |  20 +++----
+ reftable/stack_test.c      |   2 -
+ reftable/writer.c          |   4 +-
+ 10 files changed, 117 insertions(+), 72 deletions(-)
+
+
+base-commit: c0cadb0576d4920915eb3bd38a7d1abfcbd25f98
+--=20
+2.43.GIT
+
+
+--RrZPrcIFiP86mTyN
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWCsQgACgkQVbJhu7ck
+PpREBQ/8DRnh4wlfteJdz4eg8BSU1GIwm7+PlAt/oNUJ+ur+sPYgj2UqRmF8KbG8
+Vzl4pI49awoeXo6ABdB+A+XGsKO84dQMfW3+cz0gQWLnCnJyj4EEWTq2C4pqtYHi
+BcMRgfKxIqVP2N1o5NqbxN+CPKZ5xQ34cd+ljUIWDd4PlQPT4GlHTTGoeaP0ZovP
+XTUUJn0yRev77+eTXHukmxBWXot8rNBJP0y4EnoRyCgR+OR0Em9XXC/Jt/kW6mqj
+22LNR52h2jjbNWGJNt2HJmV7gj6fdAW+rUUVBE8/jtOIfOlNf3MmllnuBhmT6H/u
+wxUMAfY1742gOsWek1mAJxjMXdF6yn+wiNiNFheNFYHSZR0GHD33z3LAHox7vI6n
+Ix3x6E1l52GKS3tn18a6q1MIdvGvBpz+nYbGmVmzhxv55+9AClrEuPvoCEVgLgis
+ANo7yz/I7Ung4/s0I19j1KCcpIAwCPeMdzEK2hAWYuH94E/H5q7wb99Q+PpYA6Hy
+Q+hVBw9rNmXu2r9MSmwzg9uE3chm/hXqFQskzSnrdfxfpRrFXCFEF1ob+EWJq88/
+xrWsJW0NvsBbVjOQBpI2alDlaQaMDHTbq5ItMW0w62pMcxGjyDaBlQBHtqu8YZxu
+Ee5u3PFJhocAyUdPBp9hxcCHNsYwiSLfYa3W/2/H463/MHm0nck=
+=GcWi
+-----END PGP SIGNATURE-----
+
+--RrZPrcIFiP86mTyN--
