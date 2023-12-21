@@ -1,54 +1,54 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF20D62801
-	for <git@vger.kernel.org>; Thu, 21 Dec 2023 16:41:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E22B262802
+	for <git@vger.kernel.org>; Thu, 21 Dec 2023 16:41:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eDEtsHWg"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-40d31116dbeso11199435e9.3
-        for <git@vger.kernel.org>; Thu, 21 Dec 2023 08:41:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Iw5resZh"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-40d2764c0f2so12287655e9.2
+        for <git@vger.kernel.org>; Thu, 21 Dec 2023 08:41:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1703176874; x=1703781674; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bo9KrKd0uarMaCQRl4V5z2H51GssgCe/Oq2aIPJ3taY=;
-        b=eDEtsHWgjANoF21Yr7bF337uVLt2SZ7Zu346vBXsvHFGkPxiKbJMTPpM/M9StQcn5j
-         NmQnNPyk4iu9l6YunJ0+nMOrO2CK0BHV2YyxCqgFfsxUPw5znTmbFWrpRbu8CxI0s9K9
-         Mk0qoscx92e9O9TxIC3Ap9Rupk9HsUj4qcKeMOo5uMaPXYvpcsKrYavoCMC8AbaDV+OT
-         sVOTvml6TI6rbw3K63o3FHSfWtyePKY2N8jLsgML2hoaCSkIa2T8xUK5ffYXc/Olx7G3
-         wbZT3svKUZC/iEtN4BUNcDB2YFl8bwK2r9oN2TVEJh4k5/Eip4rQquy7oTYxuKTqNY/r
-         dP2Q==
+        bh=0N6lFlKeQrCV5Y3jSNXSQdLhuHPOK/Q/kxNsCc8xQr0=;
+        b=Iw5resZhyJn2DcMXxyXVw7N7AWGt/4l7iF58wKT1auTD37KDsUs9vGPsBd0KlM8fDm
+         kF/1BIVGmtGunRgVimNKTvsH20E4L1hZ4eJ58+zz5DCp2c3bIZTe1ZpsZ1aNESmb28E+
+         +7Lif3/i86w0ih3mkl2NlK672UbK5cFOtyNnVPZSvmsjr+6xGmKoF8P5bXQsjedmDnCD
+         YWhxwIUM7+r6IAlKEI1OcIbe8cDU9NFkryXP5f9SVSB5YuqJbl9TL6njV8ZoQhQH9K2n
+         oelkSGfBzYgOIjIQZ7BMzccYNUtjBOoiru4zUFxF7zcls2JODVVOIk8hpF/GOUtggwBq
+         jRQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1703176874; x=1703781674;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=bo9KrKd0uarMaCQRl4V5z2H51GssgCe/Oq2aIPJ3taY=;
-        b=Ds8ZgLg2wg+PnXGtVpv3so+vOc1ugU0GKYuT+vKgW3Ba5izwoNIzYl4GrCK9ZV4SOd
-         KjN2360jop2lLwvVOQpG1b3n/bMKnB5OXPV+eo42FVRAWr5xWHMASAdO4hXcAnQVlJoj
-         rAtgApeRYMU/vvdDHCNn9AFFu6834G3LvKGmViEFSYMb8vauoeIxqz5g5qSUXBMo7xUv
-         DTa0jms1rcH64WyAC8iImpd8rSTBd3hb1klz3hJuQ3hS/Xws6FS8Eal1CGxXdO0mWUHl
-         26aXq+IblGc9onkSH1ByVNAQ8VG+2Il9XEt6rqMtCaICFgjR2NUKwGmfI9B9ebCM0gvQ
-         gjJw==
-X-Gm-Message-State: AOJu0YzdY82l464fifvo2V0Y64DZUuC9nMOc/fXZzPAOjsgJ5PCIdAHr
-	VrcxESq2vvUQC1+2IkD1WYH3OPIyB54=
-X-Google-Smtp-Source: AGHT+IEAo+BMOyrVmSq/uFXGS4Wzm7Q2lSVG65enqM6pl5XQ29IjnD0DF986IKxOAGLET5gBqtSZ2g==
-X-Received: by 2002:a05:600c:2b0e:b0:40b:351b:fcc2 with SMTP id y14-20020a05600c2b0e00b0040b351bfcc2mr1256wme.19.1703176874573;
-        Thu, 21 Dec 2023 08:41:14 -0800 (PST)
+        bh=0N6lFlKeQrCV5Y3jSNXSQdLhuHPOK/Q/kxNsCc8xQr0=;
+        b=S9xlDljkKZXd7QQpO1HcO1ZA8lxkHv9ePXcg7wURLSbKfzVDmlrjzZlj+NTuq2n8tg
+         TbI5rXehr0qaz2weXXOzmY0yPVaWGn1kLolTcjUGgpncPag2wx7/QX4ynTu19c8enT1/
+         cpXbrf2AJRX+R9DX6Qzq5M3Cz1VDUut9mkQpT4AOObRzJqhwqk2WVBWxWCX9P75y6hEB
+         nguwxdJ6nxSNMuW/qYwJnu3P/NsC/dyg/palTivu7C+MpUI4ZMa0O2ZY9h0j+yAiqeCb
+         i/MijqepOZS53TQK85gQKkOOIMpeGE8P6Co2VpUFDrh9+1Jim8Ct/YUS7hZgixpQ6jAe
+         13SA==
+X-Gm-Message-State: AOJu0Yxu/IVSmelRLuDQSSp22QvBd0vPxgUMyePAUwOXYnGBceZcBdyT
+	dS3veg3Qv+WCHV0CJLmtd7r7leWS8SY=
+X-Google-Smtp-Source: AGHT+IHzlFHY0LJC2Xa360gi26b7p/fK7i38+RnX+ZriR3ZGUN33rStTxQh0c0Tp1gMTtg9oAyTTTA==
+X-Received: by 2002:a05:600c:3495:b0:40b:5e21:bdb4 with SMTP id a21-20020a05600c349500b0040b5e21bdb4mr2262wmq.67.1703176873893;
+        Thu, 21 Dec 2023 08:41:13 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m5-20020adfe945000000b003366c058509sm2392129wrn.23.2023.12.21.08.41.14
+        by smtp.gmail.com with ESMTPSA id az32-20020a05600c602000b0040cebe1d7f7sm4012997wmb.12.2023.12.21.08.41.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Dec 2023 08:41:14 -0800 (PST)
-Message-ID: <a4878f58fe487460bdcf94e6de08e2d03c3bfa5e.1703176866.git.gitgitgadget@gmail.com>
+        Thu, 21 Dec 2023 08:41:13 -0800 (PST)
+Message-ID: <77576327df8710efad73487f4be79e6801bc1fd3.1703176866.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1623.v2.git.1703176865.gitgitgadget@gmail.com>
 References: <pull.1623.git.1702975319.gitgitgadget@gmail.com>
 	<pull.1623.v2.git.1703176865.gitgitgadget@gmail.com>
 From: "Josh Soref via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 21 Dec 2023 16:41:05 +0000
-Subject: [PATCH v2 9/9] SubmittingPatches: hyphenate non-ASCII
+Date: Thu, 21 Dec 2023 16:41:04 +0000
+Subject: [PATCH v2 8/9] SubmittingPatches: clarify GitHub artifact format
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,25 +68,39 @@ Cc: Elijah Newren <newren@gmail.com>,
 
 From: Josh Soref <jsoref@gmail.com>
 
-Git documentation does this with the exception of ancient release notes.
+GitHub wraps artifacts generated by workflows in a .zip file.
+
+Internally, workflows can package anything they like in them.
+
+A recently generated failure artifact had the form:
+
+windows-artifacts.zip
+  Length      Date    Time    Name
+---------  ---------- -----   ----
+ 76001695  12-19-2023 01:35   artifacts.tar.gz
+ 11005650  12-19-2023 01:35   tracked.tar.gz
+---------                     -------
+ 87007345                     2 files
 
 Signed-off-by: Josh Soref <jsoref@gmail.com>
 ---
- Documentation/SubmittingPatches | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/SubmittingPatches | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index cb0dcce6a17..9283eb0ef71 100644
+index 8f79253c5cb..cb0dcce6a17 100644
 --- a/Documentation/SubmittingPatches
 +++ b/Documentation/SubmittingPatches
-@@ -699,7 +699,7 @@ message to an external program, and this is a handy way to drive
- `git am`.  However, if the message is MIME encoded, what is
- piped into the program is the representation you see in your
- `*Article*` buffer after unwrapping MIME.  This is often not what
--you would want for two reasons.  It tends to screw up non ASCII
-+you would want for two reasons.  It tends to screw up non-ASCII
- characters (most notably in people's names), and also
- whitespaces (fatal in patches).  Running "C-u g" to display the
- message in raw form before using "|" to run the pipe can work
+@@ -605,7 +605,8 @@ branches here: `https://github.com/<Your GitHub handle>/git/actions/workflows/ma
+ If a branch did not pass all test cases then it is marked with a red
+ +x+. In that case you can click on the failing job and navigate to
+ "ci/run-build-and-tests.sh" and/or "ci/print-test-failures.sh". You
+-can also download "Artifacts" which are tarred (or zipped) archives
++can also download "Artifacts" which are zip archives containing
++tarred (or zipped) archives
+ with test data relevant for debugging.
+ 
+ Then fix the problem and push your fix to your GitHub fork. This will
 -- 
 gitgitgadget
+
