@@ -1,48 +1,52 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F815634F9
-	for <git@vger.kernel.org>; Thu, 21 Dec 2023 20:57:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A161876916
+	for <git@vger.kernel.org>; Thu, 21 Dec 2023 20:59:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="VkgEwRvi"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7DA5D1C74E4;
-	Thu, 21 Dec 2023 15:57:21 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=XMZNWtJXjOazBMfv3lcRs0T8O4sSXzhZ48tJL/
-	INwKc=; b=VkgEwRviyLx/6NgBc0wm8DFrReQQohJx2Vzc0aCJi6LshD4Xjld5bI
-	btMYsQJBMx148bGV25ocPoUoc0/5NESm5B1yG9Xca4WPOlb9efZjg0MHAQOUFXTQ
-	tKCBKZkBkQRp2QfzjybRsT3+xGji5hOW4qmCLggw0JaemKftvut10=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 745081C74E3;
-	Thu, 21 Dec 2023 15:57:21 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.193.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E02CA1C74E2;
-	Thu, 21 Dec 2023 15:57:20 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Josh Soref via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  =?utf-8?Q?Ren?=
- =?utf-8?Q?=C3=A9?= Scharfe
- <l.s.r@web.de>,  Phillip Wood <phillip.wood123@gmail.com>,  Josh Soref
- <jsoref@gmail.com>
-Subject: Re: [PATCH v2 2/9] CodingGuidelines: write punctuation marks
-In-Reply-To: <c0db8336e519cb43767effbe842dc8b97f914a4b.1703176866.git.gitgitgadget@gmail.com>
-	(Josh Soref via GitGitGadget's message of "Thu, 21 Dec 2023 16:40:58
-	+0000")
-References: <pull.1623.git.1702975319.gitgitgadget@gmail.com>
-	<pull.1623.v2.git.1703176865.gitgitgadget@gmail.com>
-	<c0db8336e519cb43767effbe842dc8b97f914a4b.1703176866.git.gitgitgadget@gmail.com>
-Date: Thu, 21 Dec 2023 12:57:19 -0800
-Message-ID: <xmqqplyzl1e8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H5gTTcCk"
+Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-4260dc2d828so794321cf.0
+        for <git@vger.kernel.org>; Thu, 21 Dec 2023 12:59:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1703192344; x=1703797144; darn=vger.kernel.org;
+        h=mime-version:message-id:date:subject:to:from:user-agent:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=u9KSbGMOAwVP3qokB6114pbfjOP7wuitmmwfgfsVQKE=;
+        b=H5gTTcCkijgNLLVrth+TMvd7wEw2EjuAg0q+Y2F3SlLWvStv1UD+mbHOgvrtKBuDXC
+         IHUqmTcYNA6DWxR9I/7m7PEcUvqQzSylZ4i9ZO/t0hhrDvdP5hc32Tf3j0gpH0bFToPj
+         nvDsYhJxus8pVWyodf6zZ+kJljmXHVrL3C0y07rzjKhYhMF2UViP+rFwg7BrLcU2GoOS
+         We0F98I72l3ZqICCY0AbT/so0/dI52h/pNk9F0Bhvhp5HOdU4Pk9g3hm+3Y68VsPFxs4
+         goCUuShYAYUedqxsj7tWOftiaRuI1+M9/5IzhcNWZnI1bE5bP+4XzoQWYKuEz4FxW4+/
+         jlCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703192344; x=1703797144;
+        h=mime-version:message-id:date:subject:to:from:user-agent
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=u9KSbGMOAwVP3qokB6114pbfjOP7wuitmmwfgfsVQKE=;
+        b=Ea1qUQoZGal/lV8NVMy3aedzE0samlD4/6QQKJXO9af1L3lcj9dVzwiW/t5qZafY0z
+         lvlaSw7CkyNUonfijIjjdTN1ZaJQ6tC1Jg7PS20fCUskTDH6keX/mF1cay8b8QhzOGna
+         EIE+Vq/flfVwwS2ZseCXD3m4o+G1m825175e17gVTKdxhYmbTG9zuiFdCm5rrx/cIPet
+         MtQyYaI5eoqEztqidlI4NAuIkaMve2wdN3Orjfknj3tx2yMda4VisX9FB59WUH5RixjP
+         fMmFkR2k6cbygG4Slsf7zf7VsFb8oI74PcXn4BwD/9bg8gfJyupFoRrQGuSPA74RH2X3
+         1v7w==
+X-Gm-Message-State: AOJu0Yw0k2aXN245CV0auwA7Aqo2lF74Vdb7EaXJj0HKczcERpYBmnfr
+	BtDyICQeCMLgZ9ysjs3n/9lIBEHS5Es=
+X-Google-Smtp-Source: AGHT+IFAZnM7kU+pMyY/k3Wcw+jqHsKt4xjrhzLTKLHgVyUTVI+dCunZUJaysSBp91Weu73j5qU6Yg==
+X-Received: by 2002:a05:620a:3188:b0:77d:c4eb:3d99 with SMTP id bi8-20020a05620a318800b0077dc4eb3d99mr965722qkb.0.1703192344166;
+        Thu, 21 Dec 2023 12:59:04 -0800 (PST)
+Received: from epic96565.epic.com (pat-verona-j.epic.com. [199.204.56.215])
+        by smtp.gmail.com with ESMTPSA id u10-20020ae9c00a000000b007759a81d88esm900181qkk.50.2023.12.21.12.59.03
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Dec 2023 12:59:03 -0800 (PST)
+User-agent: mu4e 1.10.8; emacs 29.1
+From: Sean Allred <allred.sean@gmail.com>
+To: Git List <git@vger.kernel.org>
+Subject: rebase invoking pre-commit
+Date: Thu, 21 Dec 2023 14:58:35 -0600
+Message-ID: <m0sf3vi86g.fsf@epic96565.epic.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -50,34 +54,15 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID:
- 888E5434-A043-11EE-A370-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-"Josh Soref via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Is there a current reason why pre-commit shouldn't be invoked during
+rebase, or is this just waiting for a reviewable patch?
 
-Nobody seems to have commented on this step in the previous round,
-but I do not understand what you mean by ...
+This was brought up before at [1] in 2015, but that thread so old at
+this point that it seemed prudent to double-check before investing time
+in a developing and testing a patch.
 
-> From: Josh Soref <jsoref@gmail.com>
->
-> - Match style in Release Notes
+[1]: https://lore.kernel.org/git/1m55i3m.1fum4zo1fpnhncM%25lists@haller-berlin.de/
 
-... at all.  The patch text is fine, though.
-
-> Signed-off-by: Josh Soref <jsoref@gmail.com>
-> ---
->  Documentation/CodingGuidelines | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-> index af94ed3a75d..578587a4715 100644
-> --- a/Documentation/CodingGuidelines
-> +++ b/Documentation/CodingGuidelines
-> @@ -578,7 +578,7 @@ Externally Visible Names
->     . The variable name describes the effect of tweaking this knob.
->  
->     The section and variable names that consist of multiple words are
-> -   formed by concatenating the words without punctuations (e.g. `-`),
-> +   formed by concatenating the words without punctuation marks (e.g. `-`),
->     and are broken using bumpyCaps in documentation as a hint to the
->     reader.
+--
+Sean Allred
