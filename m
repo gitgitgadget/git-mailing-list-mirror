@@ -1,199 +1,240 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 754985820B
-	for <git@vger.kernel.org>; Thu, 21 Dec 2023 16:33:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 302E336084
+	for <git@vger.kernel.org>; Thu, 21 Dec 2023 16:41:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BYrr66/d"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-40d22d3e751so12857895e9.1
-        for <git@vger.kernel.org>; Thu, 21 Dec 2023 08:33:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QwH8O35h"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-40c339d2b88so10075145e9.3
+        for <git@vger.kernel.org>; Thu, 21 Dec 2023 08:41:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1703176379; x=1703781179; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=9b+5My6IBjBHkvuOvcM0+1o4H+BBgnxeZVYEmkYSwtg=;
-        b=BYrr66/dv80gRPm9NMWzgv4bOFcJWz96IPAWIgOniTrt51TjtOK+TR1SsosXcJov8g
-         JrCSIRwW4xkwhKWnBSr+s67RLUJ+e44v1fkRxrK8kP+7ABh5f2Se7eRRK2s+ADe5k56K
-         MUZmwLt21isMU78No/ds/JBpJp39I9eFOSrmGlVFZU2F8MlRyV37jhWQUrksddxDayKQ
-         z+bMuugJvPxooDA9cONW4tgC0Xvy28r6l9SQVdA3RbMu7s+spZZ5VvfkGtUo8mmGT8g9
-         D0AeGiUNa7AL0Zs27fsdraZE154EXk8i3EKlCSAwhJvUOG/wEhjB5iMNPq98JXxqc0E9
-         de6g==
+        d=gmail.com; s=20230601; t=1703176867; x=1703781667; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1KJjJrQqnipA1iN2ZwbEdJjM3Y/XXHdpYv680rDOpac=;
+        b=QwH8O35hPea0AcmsoNIEG04G4FSu07US0ewsGNlFmSXvxOrEtPb/g+ftyiZ5kDwlEW
+         ee7pRNPFujLKsdd2zzMKP6aUA7XNrsIes4pn4AGr1c87MDyppqfDexoFmE/Ix4RqxSZu
+         s8B0+66H1YFL2zaZfSe+IiT+ZcegJDRRCae8FOuoxAJqGMyOt4MNBeXpkMV4xdCdcRaV
+         kfnmCUeThpbAbiP+YYlyLm6MOEnmooVEGlx+dscidHen9Jh3e7dHBJI8EYWEtcCE60bJ
+         GTKqEu6OCxpE4JWjkmplsr65SQGUE3OP6qUsQwbvHIK84fXj4akldT8CgxeJHXht68sy
+         iWWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703176379; x=1703781179;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9b+5My6IBjBHkvuOvcM0+1o4H+BBgnxeZVYEmkYSwtg=;
-        b=fB25MLekLJeA23cCG9SDDx4M4UEaiWlGbewiPjvOdy1ZYDV1eJbdzX50nDVBqTT61X
-         Rr9Fphl1QpR8MhDniIWBdMdhoEmp38NojJyY27iBqv4lmy532dG7xjx+iha+Xn5dG5hw
-         2LWHfZjk7C/PMCO2BeN9DDs1iVnh+CuNVja9fbzCkb5Z4edy0rUafKlA6htosLP76SPY
-         /09zAQNqXcmUJmgHasPiFVDRtQ11pp2G9KB2oj/yQ5cXSVHrdv7lOI5zdUZpq6+8pY/l
-         99rSoRt39WPkMsiHsVj64yHFPJuXg/JxbgPoSZDYeR9xaBGJ9gb++052jieaukVMR90m
-         lcDA==
-X-Gm-Message-State: AOJu0YyChd/c4ZvXjD88IDrNtWPseJw12j+8FHqdWsjyK82hcSUBghm4
-	Ubf0CqRxhd52ftSPy/+EiVU=
-X-Google-Smtp-Source: AGHT+IHqwFFfz0Qf+L1qsH5NSluNj2c7ge3v7iC/A/0g74Gt2frzx1230eX+Srxmu3Y+UDxk9SWiMQ==
-X-Received: by 2002:a05:600c:354b:b0:40c:6e98:7c50 with SMTP id i11-20020a05600c354b00b0040c6e987c50mr700407wmq.165.1703176378456;
-        Thu, 21 Dec 2023 08:32:58 -0800 (PST)
-Received: from [192.168.1.212] ([84.64.64.237])
-        by smtp.gmail.com with ESMTPSA id n33-20020a05600c502100b004030e8ff964sm11869837wmr.34.2023.12.21.08.32.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Dec 2023 08:32:58 -0800 (PST)
-Message-ID: <cfba7098-3c23-4a81-933c-b7fefdedec8a@gmail.com>
-Date: Thu, 21 Dec 2023 16:32:57 +0000
+        d=1e100.net; s=20230601; t=1703176867; x=1703781667;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1KJjJrQqnipA1iN2ZwbEdJjM3Y/XXHdpYv680rDOpac=;
+        b=uCBETkj8riu4aTNnh9uzMtYHamFHawSkU+rPN9EUi1rehe28R2UWZa9pCXWTKM+Bmt
+         Fr+3O45fEjxLpOQ8uaDy0mgtgGCJY3GkKdy/aUGHm7FzG9PLskuOx+F3oKPBPW5O1Thg
+         9ZHtpT0DEE7WRffukAYE3HURgRiQxlVO01R+qoeGRIemr9V5jOhOGISrMDV3VuP/jf4s
+         Xb0tbqiiOSuLtDF0CfkRRR1QGczJoR77yCkDK6FZz6WO3EprsrFVeebqQeRuFHpBJZGu
+         jVt+6oSadIyHMXd7ZObDrvD9O+BQo0NUyTo4Tl+zeOVIDIRcYsyn5/EuaOkWoojVgNp+
+         bcZQ==
+X-Gm-Message-State: AOJu0YyanNK6G2OsU8fnI9z7aMzLFiylWt0IhYgKtiZFL5oQ0ArWH9uD
+	b9BI0irAA0bByuIrYZeWBEmaM/Lq25s=
+X-Google-Smtp-Source: AGHT+IG+eVc/iIHbiuc+b0q3JVTMNzMfxBT1zAMbpheW8IOw44S1SUrhnqm4m6gnxIgK3zpQhHddYg==
+X-Received: by 2002:a05:600c:4fc9:b0:40d:3130:1db5 with SMTP id o9-20020a05600c4fc900b0040d31301db5mr85wmq.47.1703176866972;
+        Thu, 21 Dec 2023 08:41:06 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id cx1-20020a056000092100b00336598903e9sm2386205wrb.58.2023.12.21.08.41.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Dec 2023 08:41:06 -0800 (PST)
+Message-ID: <pull.1623.v2.git.1703176865.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1623.git.1702975319.gitgitgadget@gmail.com>
+References: <pull.1623.git.1702975319.gitgitgadget@gmail.com>
+From: "Josh Soref via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 21 Dec 2023 16:40:56 +0000
+Subject: [PATCH v2 0/9] Minor improvements to CodingGuidelines and SubmittingPatches
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: phillip.wood123@gmail.com
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 0/1] revert/cherry-pick: add --show-current-patch option
-Content-Language: en-US
-To: Michael Lohmann <mial.lohmann@gmail.com>
-Cc: git@vger.kernel.org, mi.al.lohmann@gmail.com, newren@gmail.com,
- phillip.wood@dunelm.org.uk
-References: <42ff6b11-f991-4a6d-ad68-ca8c5a3cd735@gmail.com>
- <20231220065141.7599-1-mi.al.lohmann@gmail.com>
-In-Reply-To: <20231220065141.7599-1-mi.al.lohmann@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>,
+    =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+    Phillip Wood <phillip.wood123@gmail.com>,
+    Josh Soref <jsoref@gmail.com>,
+    Josh Soref <jsoref@gmail.com>
 
-Hi Michael
+These are a bunch of things I've run into over my past couple of attempts to
+contribute to Git.
 
-On 20/12/2023 06:51, Michael Lohmann wrote:
-> Hi Phillip
-> 
-> On 18/12/2023 16:42, Phillip Wood wrote:
->> Thanks for bringing this up I agree it can be very helpful to look at
->> the original commit when resolving cherry-pick and revert conflicts.
+ * Incremental punctuation/grammatical improvements
+ * Update extra tags suggestions based on common usage
+ * drop reference to an article that was discontinued over a decade ago
+ * update GitHub references
+ * harmonize non-ASCII while I'm here
 
-As an aside I find it useful is to do a kind of range-diff before 
-committing the conflict resolution. Unfortunately one cannot use "git 
-range-diff" because the conflict resolution is not yet committed. 
-Instead I use
+Note that I'm trying to do things "in the neighborhood". It'll be slower
+than me replacing things topically, but hopefully easier for others to
+digest. My current estimate is a decade or two :).
 
-     diff <(git diff CHERRY_PICK_HEAD^-) <(git diff HEAD)
+Josh Soref (9):
+  CodingGuidelines: move period inside parentheses
+  CodingGuidelines: write punctuation marks
+  SubmittingPatches: drop ref to "What's in git.git"
+  SubmittingPatches: discourage new trailers
+  SubmittingPatches: update extra tags list
+  SubmittingPatches: improve extra tags advice
+  SubmittingPatches: clarify GitHub visual
+  SubmittingPatches: clarify GitHub artifact format
+  SubmittingPatches: hyphenate non-ASCII
 
-in practice it is helpful to pipe the diffs through sed to delete the 
-"index" lines and normalize the hunk headers.
+ Documentation/CodingGuidelines  |  4 ++--
+ Documentation/SubmittingPatches | 27 ++++++++++++++++++++-------
+ 2 files changed, 22 insertions(+), 9 deletions(-)
 
->> I'm in two minds about this change though - I wonder if it'd be better
->> to improve the documentation for CHERRY_PICK_HEAD and REVERT_HEAD and
->> tell users to run "git show CHERRY_PICK_HEAD" instead. I think the
->> main reason we have a "--show-current-patch" option for "rebase" is
->> that there are two different implementations of that command and the
->> patched-based one of them does not support REBASE_HEAD. That reasoning
->> does not apply to "cherry-pick" and "revert" and
->> "--show-current-patch" suggests a patch-based implementation which is
->> also not the case for these commands.
-> 
-> I appreciate the urge of limiting the interface to the minimum needed
-> and not to duplicate functionality that already exists. On the other
-> hand, this would
-> a) grant the user the same experience, not having to wonder about
-> implementation details such as different backends for rebase, but not
-> for revert/cherry-pick and
-> b) (I know it is more indicative of me, but:) when I am looking for a
-> feature in software and I look into the respective man page I tend to
-> focus first on the synopsis instead of reading the whole page (or
-> sometimes I even just rely on the shell autocompletion for
-> discoverability).
-> 
-> So yes, mentioning REVERT_HEAD and CHERRY_PICK_HEAD in the respective
-> docs would technically be sufficient, but I don't think it is as
-> discoverable to an average user (who does not know about the details of
-> all the existing pseudo refs) as a toplevel action would be. But an
-> assessment of the pros and cons is not on me to decide.
 
-To make the psuedo refs discoverable we should certainly be mentioning 
-them in the section about resolving conflicts. I haven't checked what 
-the docs say at the moment but a worked example showing how to inspect 
-the conflicts and the original changes would be helpful I think. That 
-does assume that the user actually reads the section about resolving 
-conflicts rather than just scanning the available command line options 
-though.
+base-commit: 624eb90fa8f65a79396615f3c2842ac5a3743350
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1623%2Fjsoref%2Fdocumentation-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1623/jsoref/documentation-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1623
 
-> I have to be honest: I have troubles distinguishing a "patch" and a
-> "diff", the latter of which `git show <commit>` shows according to the
-> documentation ("For commits it shows the log message and textual
-> diff."), though my understanding was that a patch is a diff + context
-> lines, which is what `git show` actually shows... I think this is
-> probably why I don't feel so strong about the potential loose usage of
-> the word here.
+Range-diff vs v1:
 
-I think for the purposes of this discussion "patch" and "diff" are 
-largely interchangeable (a "patch" is essentially a "diff" with a commit 
-message). Maybe I'm overthinking it but the reason I'm not very keen on 
-"--show-current-patch" (in addition to the "duplicate functionality" 
-argument you mention above) is that cherry-pick and revert do not work 
-by applying patches (or diffs) but use a 3-way merge instead. I think 
---show-current-patch first appeared as an option to "git am" which makes 
-sense as that command is all about applying patches.
+  1:  b9a8eb6aa4e =  1:  b9a8eb6aa4e CodingGuidelines: move period inside parentheses
+  2:  c0db8336e51 =  2:  c0db8336e51 CodingGuidelines: write punctuation marks
+  3:  22d66c5b78a =  3:  22d66c5b78a SubmittingPatches: drop ref to "What's in git.git"
+  4:  e5c7f29af43 !  4:  eac2211332f SubmittingPatches: update extra tags list
+     @@ Metadata
+      Author: Josh Soref <jsoref@gmail.com>
+      
+       ## Commit message ##
+     -    SubmittingPatches: update extra tags list
+     +    SubmittingPatches: discourage new trailers
+      
+     -    Add items with at least 100 uses:
+     -    - Co-authored-by
+     -    - Helped-by
+     -    - Mentored-by
+     -    - Suggested-by
+     -
+     -    Updating the create suggestion to something less commonly used.
+     -
+     -    git log |
+     -      perl -ne 'next unless /^\s+[A-Z][a-z]+-\S+:/;s/^\s+//;s/:.*/:/;print'|
+     -      sort|uniq -c|sort -n|grep '[0-9][0-9] '
+     -      11 Helped-By:
+     -      13 Message-ID:
+     -      14 Reported-By:
+     -      22 Acked-By:
+     -      27 Inspired-by:
+     -      29 Requested-by:
+     -      35 Original-patch-by:
+     -      43 Contributions-by:
+     -      47 Signed-Off-By:
+     -      65 Based-on-patch-by:
+     -      68 Thanks-to:
+     -      88 Improved-by:
+     -     145 Co-authored-by:
+     -     171 Noticed-by:
+     -     182 Tested-by:
+     -     361 Suggested-by:
+     -     469 Mentored-by:
+     -    1196 Reported-by:
+     -    1727 Helped-by:
+     -    2177 Reviewed-by:
+     -    2202 Acked-by:
+     -    95313 Signed-off-by:
+     +    There seems to be consensus amongst the core Git community on a working
+     +    set of common trailers, and there are non-trivial costs to people
+     +    inventing new trailers (research to discover what they mean/how they
+     +    differ from existing trailers) such that inventing new ones is generally
+     +    unwarranted and not something to be recommended to new contributors.
+      
+     +    Suggested-by: Elijah Newren <newren@gmail.com>
+          Signed-off-by: Josh Soref <jsoref@gmail.com>
+      
+       ## Documentation/SubmittingPatches ##
+      @@ Documentation/SubmittingPatches: If you like, you can put extra tags at the end:
+     - 
+     - . `Reported-by:` is used to credit someone who found the bug that
+     -   the patch attempts to fix.
+     -+. `Noticed-by:` liked `Reported-by:` indicates someone who noticed
+     -+  the item being fixed.
+     - . `Acked-by:` says that the person who is more familiar with the area
+     -   the patch attempts to modify liked the patch.
+     - . `Reviewed-by:`, unlike the other tags, can only be offered by the
+     -@@ Documentation/SubmittingPatches: If you like, you can put extra tags at the end:
+     -   patch after a detailed analysis.
+       . `Tested-by:` is used to indicate that the person applied the patch
+         and found it to have the desired effect.
+     -+. `Co-authored-by:` is used to indicate that multiple people
+     -+  contributed to the work of a patch.
+     -+. `Helped-by:` is used to credit someone with helping develop a
+     -+  patch.
+     -+. `Mentored-by:` is used to credit someone with helping develop a
+     -+  patch.
+     -+. `Suggested-by:` is used to credit someone with suggesting the idea
+     -+  for a patch.
+       
+     - You can also create your own tag or use one that's in common usage
+     +-You can also create your own tag or use one that's in common usage
+      -such as "Thanks-to:", "Based-on-patch-by:", or "Mentored-by:".
+     -+such as "Thanks-to:", "Based-on-patch-by:", or "Improved-by:".
+     ++While you can also create your own trailer if the situation warrants it, we
+     ++encourage you to instead use one of the common trailers in this project
+     ++highlighted above.
+       
+       [[git-tools]]
+       === Generate your patch using Git tools out of your commits.
+  -:  ----------- >  5:  8848572fe2c SubmittingPatches: update extra tags list
+  5:  11688e4360c !  6:  8f16c7caa73 SubmittingPatches: improve extra tags advice
+     @@ Commit message
+          Signed-off-by: Josh Soref <jsoref@gmail.com>
+      
+       ## Documentation/SubmittingPatches ##
+     -@@ Documentation/SubmittingPatches: If you like, you can put extra tags at the end:
+     - You can also create your own tag or use one that's in common usage
+     - such as "Thanks-to:", "Based-on-patch-by:", or "Improved-by:".
+     +@@ Documentation/SubmittingPatches: While you can also create your own trailer if the situation warrants it, we
+     + encourage you to instead use one of the common trailers in this project
+     + highlighted above.
+       
+      +Extra tags should only capitalize the very first letter, i.e. favor
+      +"Signed-off-by" over "Signed-Off-By" and "Acked-by:" over "Acked-By".
+  6:  043d2a24202 !  7:  cdb5fd0957f SubmittingPatches: clarify GitHub visual
+     @@ Metadata
+       ## Commit message ##
+          SubmittingPatches: clarify GitHub visual
+      
+     -    Some people would expect a cross to be upright, and potentially have
+     -    unequal lengths...
+     +    GitHub has two general forms for its states, sometimes they're a simple
+     +    colored object (e.g. green check or red x), and sometimes there's also a
+     +    colored container (e.g. green box or red circle) with containing that
+     +    object (e.g. check or x).
+      
+     -    GitHub uses a white x overlaying a solid red circle to indicate failure.
+     +    That's a lot of words to try to describe things, but in general, the key
+     +    for a failure is that it's recognized as an `x` and that it's associated
+     +    with the color red -- the color of course is problematic for people who
+     +    are red-green color-blind, but that's why they are paired with distinct
+     +    shapes.
+     +
+     +    Using the term `cross` doesn't really help.
+      
+          Signed-off-by: Josh Soref <jsoref@gmail.com>
+      
+  7:  cdab65a4259 !  8:  77576327df8 SubmittingPatches: clarify GitHub artifact format
+     @@ Commit message
+      
+          GitHub wraps artifacts generated by workflows in a .zip file.
+      
+     -    Internally workflows can package anything they like in them.
+     +    Internally, workflows can package anything they like in them.
+      
+          A recently generated failure artifact had the form:
+      
+  8:  92469324813 =  9:  a4878f58fe4 SubmittingPatches: hyphenate non-ASCII
 
-I'd be interested to hear what other people think about whether it makes 
-"--show-current-patch" make sense for other commands.
-
-> Also the documentation of cherry-pick already uses the word "patch" in a
-> (according to my understanding from a technical perspective) sloppy (but
-> from a layman's point of view probably nevertheless helpful) way:
-> 
->> The following sequence attempts to backport a patch, bails out because
->> the code the patch applies to has changed too much, and then tries
->> again, this time exercising more care about matching up context lines.
->>
->> ------------
->> $ git cherry-pick topic^             <1>
->> $ git diff                           <2>
->> $ git cherry-pick --abort            <3>
->> $ git cherry-pick -Xpatience topic^  <4>
->> ------------
->> <1> apply the change that would be shown by `git show topic^`.
->>      In this example, the patch does not apply cleanly, so
->>      information about the conflict is written to the index and
->>      working tree and no new commit results.
-> 
-> Should that also be rephrased?
-
-It would certainly be more accurate for the first paragraph to say 
-something like
-
-     The following sequence tries to backport a commit. It bails out
-     because the code modified by the commit has conflicting changes in
-     the current branch.
-
-The bit about exercising more care about matching up context lines is 
-moot these days as the default merge strategy is "ort" which uses the 
-histogram diff algorithm to do just that so commands <3> & <4> should 
-not be needed.
-
-> 
-> Out of curiosity: The following from the rebase docs seems to imply that
-> the apply backend will probably be removed in the future:
->> --apply
->>            Use applying strategies to rebase (calling git-am
->>            internally). This option may become a no-op in the future
->>            once the merge backend handles everything the apply one
->>            does.
-> 
-> But I would expect the `rebase --show-current-patch` still to be
-> working. Would that only be a legacy compatibility flag and instead also
-> for rebases the recommended option would be to run
-> `git show REBASE_HEAD`?
-
-The long term goal is to remove the apply backend but I don't think 
-anyone is actively working on it at the moment. We'd certainly need to 
-keep the --show-current-patch option for backwards compatibility.
-
-I'll be off the list for the next couple of weeks but I'll be sure to 
-catch up with this thread in the New Year
-
-Best Wishes
-
-Phillip
+-- 
+gitgitgadget
