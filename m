@@ -1,230 +1,116 @@
-Received: from mout.web.de (mout.web.de [217.72.192.78])
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39AC22206F
-	for <git@vger.kernel.org>; Thu, 21 Dec 2023 12:20:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090526E5B6
+	for <git@vger.kernel.org>; Thu, 21 Dec 2023 12:28:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="Hdf3QSDV"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-	t=1703161194; x=1703765994; i=l.s.r@web.de;
-	bh=AGBlGZ1sf7HoI10T3mjvuKe0KOoiPf+ycPc7L5hTHao=;
-	h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
-	 In-Reply-To;
-	b=Hdf3QSDVL266gg/ZybOoX2PqBlz6oO7gDO6KgrKNVOW6qt149y3yTX6K2XJ+ovUX
-	 FRjwwscemF3clxzUQEIT770PpDe+T08iUZUN9SwZ+nsQXcg7niuXGuWl4LM4WvaSt
-	 gBOIIHPaTAYJbl9gfarIVKRFo/QR2Ve8xscTwTKgcqPrOcM0MlV+EN2rGM+XoijKC
-	 /N3WF1QzMU0gSYFOVG1pYbYTMQnesGkqYDNfuvJny1IOC5fEZEbqXKSxlFSllRU7p
-	 XPTcK8PVmxHa7qL/+tqAsmxhe0GeHzeLEdt/Vnv/NHwaQBxGlcjNmkMf0ZvQHS7MN
-	 bDDhg1R12q6VA7Gu7w==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.23.9]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1M3V6G-1rGqG810fS-0015G0; Thu, 21
- Dec 2023 13:19:54 +0100
-Message-ID: <d44cb8e7-ffce-4184-b9b5-6bb56705dcd1@web.de>
-Date: Thu, 21 Dec 2023 13:19:53 +0100
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="foFsN+ds"
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 09EE35B166;
+	Thu, 21 Dec 2023 12:22:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1703161348;
+	bh=0GlkImtSegBYmIjNqd6EKxkZ0lUhSPiNMehRMHFW3F4=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=foFsN+dsfGofrF/oIFnOpcJ53cQcARyug4dBWN9c6t1fqEjiWMGZ7yQmNtMvw58U4
+	 bjuTyvMlwIhWIfWJNeuOmFnOMOMYx3dxVu1eyczZEXKhfBymiD/I2C70fpcaMjt855
+	 W0wzEfwhDumJsPbZEEJx/+474zn/PGurLJjDOLn4XH3Ba3Op7BUjRL6Trjg5gOGLir
+	 SVwhGWt8r5fKp9U1dhE6hNvjOSK3aP0MqboH3QnfM5I4mC84NZhjo7GD5yzh2nDX9K
+	 HB09F7swIGGGpVTTDFo0istrZkYLUoSqpqzl6P0RRPUCapXfaom7rQiVqu1xTZOu//
+	 cASS8XhXnC3hgvFIR5HCrciwPeUXsThntjNnk6azuHYd4MOgJRroyi5Fh5V360CN35
+	 KCXycv4Wdk8E7Cw4UgdmWJ74QAmU1QVqifS9uxgZMsbw4p6y6rvGgEqxpQ0JzARB40
+	 4a6FxAkmL/NaE3QRHs2ZdTVsMV3cB6qZet2jsLF+ejkZ8P4yOTN
+Date: Thu, 21 Dec 2023 12:22:26 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Devste Devste <devstemail@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: git bisect stuck - --force flag required for checkout
+Message-ID: <ZYQuAjNjCzSy4X6Z@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Devste Devste <devstemail@gmail.com>, git@vger.kernel.org
+References: <CANM0SV3SEF28QJ2V0Q9ydp8yDbL8TDc1m871oxOB=UtwF1TtxQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] t1006: add tests for %(objectsize:disk)
-Content-Language: en-US
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Ondrej Pohorelsky <opohorel@redhat.com>,
- "brian m . carlson" <sandals@crustytoothpaste.net>,
- Junio C Hamano <gitster@pobox.com>
-References: <CA+B51BEpSh1wT627Efpysw3evVocpiDCoQ3Xaza6jKE3B62yig@mail.gmail.com>
- <9feeb6cf-aabf-4002-917f-3f6c27547bc8@web.de>
- <20231212200153.GB1127366@coredump.intra.peff.net>
- <ff735aac-b60b-4d52-a6dc-180ab504fc8d@web.de>
- <65557f2d-9de0-49ae-a858-80476aa52b68@web.de>
- <20231214205936.GA2272813@coredump.intra.peff.net>
- <6750c93c-78d0-46b5-bfc2-0774156ed2ed@web.de>
- <20231221094722.GA570888@coredump.intra.peff.net>
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <20231221094722.GA570888@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="bVG1L6RzGAV/wKxm"
+Content-Disposition: inline
+In-Reply-To: <CANM0SV3SEF28QJ2V0Q9ydp8yDbL8TDc1m871oxOB=UtwF1TtxQ@mail.gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+
+
+--bVG1L6RzGAV/wKxm
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:WLflaCtr9VOCPNurFYMR8hbB/hGVi46ehSxGFGZryNAlvoJnQ8P
- HgjPljimzGSNUsUDsCc5ryndoDG0ba1c9uavq3zK29Uil4Zh460Jt9fwrg3VsqTnqeNyyMt
- YhFnD/e6s+Ge/wmznwj8S0eGz2kuacSNmBlNfkuj5su8e6Q6dWjdGyKpffq3JgwqXIB4ixA
- EpQXPfuKwD+JSBZGwZI0A==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:rHuiNOEnT90=;iNlZhmbmhcXHWohvWtX4ysp3uid
- 0b3n5PG/Uc987+VfZsYjIRKhmCxjHf/SGXOsoIGSagNZ7lNa7rw/jxAqAWJO+aeAJmU88RquS
- Lh6/1HgDuWnHLA9Lstivc8yI9mz5utwO8HpmPwjPhy4Z9O/oVvS19ARfFf9MVDLD3ZvUotsQu
- T46X7c94IZSylF+VGPuxNulFZcDIL5pHW5clhOC+0XtjhebcS5gAPFUWw1ckL7OttG9cbOAKR
- 9UHFBHXJFlOksJyzajsyJ/LCjDVMh4Iw4YatQydDluuhuELV24fl1drYXXNQT+M81a56Ngpbw
- hqk+UNZ7/GGwgkxnb5WGeSKR5MHhQZPqIGYRILPra2zUdB5ZLUMhKcJMMMr61V2Y3ZEIE8g3d
- niNNgNU0vwDV8tjEPfWD6dhAmgFd9VLoPCG0qHY5HJ5KN98W0KhtPYClqleHJB+0J8Ql9XmZl
- +iM5AxfTQNyifapMNdtFb5juvILxLeiUP/qkN62hzv/2Hbujwwn72q/6lPSNOLDiOoCS4++Qg
- 1xQoXehoI0C9QuuA9b7aChY/460E3aLkO6FJ5L2K73M4a4//NNQnijf28h4aSBG5fROpLrPHh
- oZR4/KfoTJZKsuMqekTywrTCBbYqOtsX0k3EgQu4aZdYnaqxfALkeHw4dVvQqWfm9vIdVmXsO
- gQ1hjjWZ2cEywyF+LishtMchp8J70uIIMreYr1Ko07S4Tj6V+HKtZFRTmNcG1/cmwZuinmiN2
- N05DE+MWDRkBAykpLLB5aZVFsHaE+uM/ndvhAXZv6TiWtJ5MVNAuIR6upKUhAYd4xiTJcOENh
- 0KojjAwQZpJ4JFvaO5CwOw0ZA6KBJME4gOwwGxjTaZtsBXYGDZxkIi/ViN3X300Krpn2cHz75
- R44Zxc8jqFHkkuHgNN46qvEgF83loedQ45Jf9LNtUOdSWAJTuB2oIlGXhnq7jnYFgbHX02Qnz
- irC5mA==
 
-Am 21.12.23 um 10:47 schrieb Jeff King:
-> On Tue, Dec 19, 2023 at 05:42:39PM +0100, Ren=C3=A9 Scharfe wrote:
->
->>> This adds a packed-object function, but I doubt anybody actually calls
->>> it. If we're going to do that, it's probably worth adding some tests f=
-or
->>> "cat-file --batch-check" or similar.
->>
->> Yes, and I was assuming that someone else would be eager to add such
->> tests. *ahem*
->
-> :P OK, here it is. This can be its own topic, or go on top of the
-> rs/t6300-compressed-size-fix branch.
+On 2023-12-21 at 10:47:57, Devste Devste wrote:
+> Thank you for filling out a Git bug report!
+> Please answer the following questions to help us understand your issue.
+>=20
+> What did you do before the bug happened? (Steps to reproduce your issue)
+> add file Foo.txt to .git and commit
+> add some commits with any changes to other files, as this is needed
+> for reproduction
+> run: git config core.ignorecase false
 
-Great, thank you!
+`core.ignorecase` is specifically designed for this case.  It's set
+internally by Git when the repository is created, and it's not supposed
+to be changed by the user.
 
-> -- >8 --
-> Subject: [PATCH] t1006: add tests for %(objectsize:disk)
->
-> Back when we added this placeholder in a4ac106178 (cat-file: add
-> %(objectsize:disk) format atom, 2013-07-10), there were no tests,
-> claiming "[...]the exact numbers returned are volatile and subject to
-> zlib and packing decisions".
->
-> But we can use a little shell hackery to get the expected numbers
-> ourselves. To a certain degree this is just re-implementing what Git is
-> doing under the hood, but it is still worth doing. It makes sure we
-> exercise the %(objectsize:disk) code at all, and having the two
-> implementations agree gives us more confidence.
->
-> Note that our shell code assumes that no object appears twice (either in
-> two packs, or as both loose and packed), as then the results really are
-> undefined. That's OK for our purposes, and the test will notice if that
-> assumption is violated (the shell version would produce duplicate lines
-> that Git's output does not have).
->
-> Helped-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> I stole a bit of your awk. You can tell because I'd have written it in
-> perl. ;)
+If you want a repository where there's no case sensitivity, then I'd
+recommend WSL.  It's also possible to make some directories case
+sensitive in Windows 10 and newer and allegedly that works recursively,
+so you could use `fsutil` to do that, then run `git init`, then add
+data.
 
-I think we can do it even in shell, especially if...
+> rename Foo.txt to foo.txt and commit
+> add some commits with any changes to other files, as this is needed
+> for reproduction
+> run: git bisect start && git bisect bad
+> eventually, when running "git bisect good" (or bad) you will get an error:
+> >error: The following untracked working tree files would be overwritten b=
+y checkout:
+> >Foo.php
+>=20
+> Anything else you want to add:
+> git bisect good/bad needs to have support for a "--force" flag, which
+> is passed to the git checkout it runs internally
+> At the moment git bisect cannot be used on Windows, as there is no way
+> to continue the bisect from here.
+> Changing the "git config core.ignorecase true" temporarily is not an
+> option, as this will introduce a variety of other bugs,
+> which, on Windows, eventually will require you to completely delete
+> and reclone the repo, as Windows file paths are case-insensitive
 
->
->  t/t1006-cat-file.sh | 34 ++++++++++++++++++++++++++++++++++
->  1 file changed, 34 insertions(+)
->
-> diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-> index 271c5e4fd3..21915be308 100755
-> --- a/t/t1006-cat-file.sh
-> +++ b/t/t1006-cat-file.sh
-> @@ -1100,6 +1100,40 @@ test_expect_success 'cat-file --batch=3D"batman" =
-with --batch-all-objects will wor
->  	cmp expect actual
->  '
->
-> +test_expect_success 'cat-file %(objectsize:disk) with --batch-all-objec=
-ts' '
-> +	# our state has both loose and packed objects,
-> +	# so find both for our expected output
-> +	{
-> +		find .git/objects/?? -type f |
-> +		awk -F/ "{ print \$0, \$3\$4 }" |
-> +		while read path oid
-> +		do
-> +			size=3D$(test_file_size "$path") &&
-> +			echo "$oid $size" ||
-> +			return 1
-> +		done &&
-> +		rawsz=3D$(test_oid rawsz) &&
-> +		find .git/objects/pack -name "*.idx" |
-> +		while read idx
-> +		do
-> +			git show-index <"$idx" >idx.raw &&
-> +			sort -n <idx.raw >idx.sorted &&
-> +			packsz=3D$(test_file_size "${idx%.idx}.pack") &&
-> +			end=3D$((packsz - rawsz)) &&
-> +			awk -v end=3D"$end" "
-> +			  NR > 1 { print oid, \$1 - start }
-> +			  { start =3D \$1; oid =3D \$2 }
-> +			  END { print oid, end - start }
-> +			" idx.sorted ||
+Could you share what those problems are?  `core.ignorecase` is
+specifically designed to deal with case-insensitive file systems, and
+that's why Git sets it to true.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
-... we stop slicing the data against the grain.  Let's reverse the order
-(sort -r), then we don't need to carry the oid forward:
+--bVG1L6RzGAV/wKxm
+Content-Type: application/pgp-signature; name="signature.asc"
 
-			sort -nr <idx.raw >idx.sorted &&
-			packsz=3D$(test_file_size "${idx%.idx}.pack") &&
-			end=3D$((packsz - rawsz)) &&
-			awk -v end=3D"$end" "
-			  { print \$2, end - \$1; end =3D \$1 }
-			" idx.sorted ||
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.3 (GNU/Linux)
 
-And at that point it should be easy to use a shell loop instead of awk:
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZYQuAgAKCRB8DEliiIei
+gSGxAQCobxwQOWIEkC4CsA2UJiVXAodUZk1Kb8mSc0+krOHiuAEAsCN9yUfxCc8O
+9s+mdu3fMi2aFKlV75FjPwkYikkQ9AY=
+=ERml
+-----END PGP SIGNATURE-----
 
-			while read start oid rest
-			do
-				size=3D$((end - start)) &&
-				end=3D$start &&
-				echo "$oid $size" ||
-				return 1
-			done <idx.sorted
-
-> +			return 1
-> +		done
-> +	} >expect.raw &&
-> +	sort <expect.raw >expect &&
-
-The reversal above becomes irrelevant with that line, so the result in
-expect stays the same.
-
-Should we deduplicate here, like cat-file does (i.e. use "sort -u")?
-Having the same object in multiple places for whatever reason would not
-be a cause for reporting an error in this test, I would think.
-
-> +	git cat-file --batch-all-objects \
-> +		--batch-check=3D"%(objectname) %(objectsize:disk)" >actual &&
-> +	test_cmp expect actual
-> +'
-> +
->  test_expect_success 'set up replacement object' '
->  	orig=3D$(git rev-parse HEAD) &&
->  	git cat-file commit $orig >orig &&
-
-One more thing: We can do the work of the first awk invocation in the
-already existing loop as well:
-
-> +test_expect_success 'cat-file %(objectsize:disk) with --batch-all-objec=
-ts' '
-> +	# our state has both loose and packed objects,
-> +	# so find both for our expected output
-> +	{
-> +		find .git/objects/?? -type f |
-> +		awk -F/ "{ print \$0, \$3\$4 }" |
-> +		while read path oid
-> +		do
-> +			size=3D$(test_file_size "$path") &&
-> +			echo "$oid $size" ||
-> +			return 1
-> +		done &&
-
-... but the substitutions are a bit awkward:
-
-		find .git/objects/?? -type f |
-		while read path
-		do
-			basename=3D${path##*/} &&
-			dirname=3D${path%/$basename} &&
-			oid=3D"${dirname#.git/objects/}${basename}" &&
-			size=3D$(test_file_size "$path") &&
-			echo "$oid $size" ||
-			return 1
-		done &&
-
-The avoided awk invocation might be worth the trouble, though.
-
-Ren=C3=A9
+--bVG1L6RzGAV/wKxm--
