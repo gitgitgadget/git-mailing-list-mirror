@@ -1,162 +1,122 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F9F76AD6
-	for <git@vger.kernel.org>; Thu, 21 Dec 2023 17:02:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 958B336084
+	for <git@vger.kernel.org>; Thu, 21 Dec 2023 17:07:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TfPXBff/"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 358361C56DC;
-	Thu, 21 Dec 2023 12:02:17 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=Xu7BPpkntOopT96c/cxIwJKxMHr7U55NxLXVU0
-	i3IrM=; b=TfPXBff/IoJNw5MC+huM4S30ZVdSlE5iIsZ2Mvk/p5AXQ4Z623wA7b
-	eN6XCZdTQxqRuxk05jvCuBqdaoDc2tlAsI0xgMkF963FsZyQhVMv1wtGynwqGprt
-	bSmlFeVlOsJ/j7JRqNEqYu4rvJPcGrz8yF3qI1QDHs0jZ2rnS1i/I=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2E13A1C56DA;
-	Thu, 21 Dec 2023 12:02:17 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.193.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 960551C56D9;
-	Thu, 21 Dec 2023 12:02:16 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Josh Steadmon <steadmon@google.com>,  git@vger.kernel.org
-Subject: Re: [PATCH/RFC] sparse-checkout: take care of "--end-of-options" in
- set/add
-In-Reply-To: <20231221084011.GB545870@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 21 Dec 2023 03:40:11 -0500")
-References: <xmqqbkakqx6s.fsf@gitster.g> <ZYN-5H-2NNoRRpf-@google.com>
-	<xmqqplz0p90k.fsf@gitster.g>
-	<20231221084011.GB545870@coredump.intra.peff.net>
-Date: Thu, 21 Dec 2023 09:02:15 -0800
-Message-ID: <xmqqsf3vmqug.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WPaEZxUE"
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-50e281b149aso1270061e87.1
+        for <git@vger.kernel.org>; Thu, 21 Dec 2023 09:07:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1703178439; x=1703783239; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=S/Qb8Nd2vlHKe8zkSjZGvl20FgrI3zwEtZsq70gSbLg=;
+        b=WPaEZxUE6drzW2l0IRcJ70LCauN2pjz6oY+OF/MGXiBLV7BcRi/29wO4S86dIvuTSt
+         MOdQ+8UrgbUtRMWoZoPWBS4qSzgcpyamszU9CFQpCL9RctAzqtnn9uA/V3KKTraTU36S
+         Q13mBc8k0eIbh2SiUkIVnJX6qpFErCDuBOqprJdPy2LT29bCfTLgG+XW75zBHUXZV7Ux
+         m9XvOU0RSGgn8nJibnGQbKyFwGLNUT1/TLDWg2aK1IBEBJGnuS/7PfoTb+hkYc8LKOWL
+         yGS+GjRC+cTDZaFCW5w7AiX+GMD7F0JdEZ42pjtUtzxBVNN5JBGgxoVQhtRmqrMKkHL0
+         Qe2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703178439; x=1703783239;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=S/Qb8Nd2vlHKe8zkSjZGvl20FgrI3zwEtZsq70gSbLg=;
+        b=IeZZnr3QhbAB/rYhOsOVKHsMutvbIP5maOoKnh/86XVN0iM2orIrhyLOFPvUPtBXJ0
+         pZt7qstgqSJLxzZdIzq7qc5mWWjpXkwbrPQLW9X/6g8qkyLfNT6EHAHGRNkn/VuheSez
+         Y/YkYJj0akcmF7Xv6jyTF6iNDRqIXHVVC4Pi74FXk0GztrzFBXrzdU9j4txIzH2hJ7wx
+         cO8lKh7LH/xpOSwaVLPNXjAmRJpnDI1gi5apt6e//vP9dSHfBRLEEhqIxQHLg2ldsKDo
+         dWZgNwz3uE4WngoyIfQnsF1efRMN2tyIRcO8AlUASq3Q1vC4IG0wLKtSMhdN66GRD04r
+         GhaQ==
+X-Gm-Message-State: AOJu0Yy+e2p49ETZixgdHo8yxfdiwgApUIS33DfWRkReYFL9pBBbZsNf
+	0FONLgtNIGO962lF+E49aMdPvFB3zI7a3w==
+X-Google-Smtp-Source: AGHT+IHsOQPivVY7SgljDbg7yNlRLiFgYQL5Vlty7d0pszxbzEcq+Zxf7iz2xihpBZpOTuD1ghcNeA==
+X-Received: by 2002:a19:e048:0:b0:50e:65f3:cb0b with SMTP id g8-20020a19e048000000b0050e65f3cb0bmr171769lfj.13.1703178438976;
+        Thu, 21 Dec 2023 09:07:18 -0800 (PST)
+Received: from localhost.localdomain (h-213.61.124.196.host.de.colt.net. [213.61.124.196])
+        by smtp.gmail.com with ESMTPSA id en6-20020a17090728c600b00a23577b265csm1163789ejc.173.2023.12.21.09.07.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Dec 2023 09:07:18 -0800 (PST)
+From: Karthik Nayak <karthik.188@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	ps@pks.im,
+	christian.couder@gmail.com,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: [RFC 0/2] Initial changes to support printing all refs
+Date: Thu, 21 Dec 2023 18:07:13 +0100
+Message-Id: <20231221170715.110565-1-karthik.188@gmail.com>
+X-Mailer: git-send-email 2.40.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- B1BC8446-A022-11EE-8A7C-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: 8bit
 
-Jeff King <peff@peff.net> writes:
+With the upcoming introduction of the reftable backend, it becomes ever
+so important to provide the necessary tooling for printing all refs
+associated with a repository.
 
-> On Wed, Dec 20, 2023 at 06:46:51PM -0800, Junio C Hamano wrote:
->
->> Josh Steadmon <steadmon@google.com> writes:
->> 
->> > I can confirm that this fixes an issue noticed by sparse-checkout users
->> > at $DAYJOB. Looks good to me. Thanks!
->> 
->> Heh, there is another one that is not converted in the same file for
->> "check-rules" subcommand, so the posted patch is way incomplete, I
->> think.
->
-> Yeah. I think it is in the same boat as the other two, in that I believe
-> that the KEEP_UNKNOWN_OPT flag is counter-productive and should just be
-> dropped.
+While regular refs stored within the "refs/" namespace are currently
+supported by multiple commands like git-for-each-ref(1),
+git-show-ref(1). Neither support printing all the operational refs
+within the repository.
 
-If we dropped KEEP_UNKNOWN_OPT, however, the pattern that is
-currently accepted will stop working, e.g.,
+This is crucial because with the reftable backend, all these refs will
+also move to reftable. It would be necessary to identify all the refs
+that are stored within the reftable since there is no easy way to do so
+otherwise. This is because the reftable itself is a binary format and
+all access will be via git. Unlike the filesystem backend, which allows
+access directly via the filesystem.
 
- $ git sparse-checkout [add/set] --[no-]cone --foo bar
+This patch series is an RFC to discuss the intent and direction to be
+taken to implement tooling for printing all refs in a repository. The
+patches in this series implement a rather simple way to do this, by
+iterating over a static list of operational refs. The drawback of this
+approach is that this could still miss refs in the reftable/files
+backend which are not in "refs" namespace or part of the list. The
+positive being that this is ref backend agnostic.
 
-as we would barf with "--foo: unknown option", and the users who are
-used to this sloppy command line parsing we had for the past few
-years must now write "--end-of-options" before "--foo".  After all,
-the reason why the original authors of this code used KEEP_UNKNOWN
-is likely to deal with path patterns that begin with dashes.
+The alternate approach would be to patch this inside individual backends
+respectively, in the reftable backend this is rather simple, since we
+simply iterate over all refs and not filter for "refs" namespace. In the
+files backend, this can be done in two ways:
 
-The patch in the message that started this thread may not be
-correct, either, I am afraid.  For either of these:
+1. static approach: similar to this patch series, the files backend
+would iterate over a static list of operational refs apart from the
+"refs" directory.
 
- $ git sparse-checkout [add/set] --[no-]cone foo --end-of-options bar
- $ git sparse-checkout [add/set] --[no-]cone --foo --end-of-options bar
+2. dynamic approach: iterate over all files in `.git` folder and print
+any refs if encountered. This is rather tedious and error prone, since
+any file could be mistaken for a reference if the content is reference
+like.
 
-we would see that "foo" (or "--foo") is not "--end-of-options", and
-we end up using three patterns "foo" (or "--foo"),
-"--end-of-options", and "bar", I suspect.  I wonder if we should
-notice the "foo" or "--foo" that were not understood and error out,
-instead.
+Personally, I'm leaning towards implementing this functionality inside
+individual backends respectively, because that would allow the reftable
+backend to print all its refs while the current approach might miss some
+refs. But with the files backend, it would be best to still use a static
+list.
 
-But after all, it is not absolutely necessary to notice and barf.
-The ONLY practical use of the "--end-of-options" mechanism is to
-allow us to write (this applies to any git subcommand):
+Over this, I'm also curious on what the mailing list thinks about
+exposing this to the client side. Would an `--all` option for
+git-for-each-ref(1) be sufficient?
 
- #!/bin/sh
- git cmd --hard --coded --options --end-of-options "$@"
+Karthik Nayak (2):
+  refs: introduce the `refs_single_ref` function
+  ref-filter: support filtering of operational refs
 
-in scripts to protect the intended operation from mistaking the
-end-user input as options.  And with a script written carefully to
-do so, all the args that appear before "--end-of-options" would be
-recognizable by the command line parser.  On the other hand, such a
-"notice and barf" would not help a script that is written without
-"--end-of-options", when it is fed "$@" that happens to begin with
-"--end-of-options".  We would silently swallow "--end-of-options"
-without any chance to notice the lack of "--end-of-options" in the
-script.  So I dunno.
+ ref-filter.c | 12 ++++++++++++
+ ref-filter.h |  4 +++-
+ refs.c       | 26 +++++++++++++++++++++++---
+ refs.h       |  5 +++++
+ 4 files changed, 43 insertions(+), 4 deletions(-)
 
-Here is an additional test on top of [1/3]
-<20231221065925.3234048-2-gitster@pobox.com>
+-- 
+2.43.GIT
 
-that demonstrates and summarizes the idea.
-
- t/t1090-sparse-checkout-scope.sh | 34 ++++++++++++++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
-
-diff --git c/t/t1090-sparse-checkout-scope.sh w/t/t1090-sparse-checkout-scope.sh
-index 5b96716235..da9534d222 100755
---- c/t/t1090-sparse-checkout-scope.sh
-+++ w/t/t1090-sparse-checkout-scope.sh
-@@ -54,6 +54,40 @@ test_expect_success 'return to full checkout of main' '
- 	test "$(cat b)" = "modified"
- '
- 
-+test_expect_success 'sparse-checkout set command line parsing' '
-+	# baseline
-+	git sparse-checkout disable &&
-+	git sparse-checkout set --no-cone "a*" &&
-+	echo "a*" >expect &&
-+	test_cmp .git/info/sparse-checkout expect &&
-+
-+	# unknown string that looks like a dashed option is
-+	# taken as a mere pattern
-+	git sparse-checkout disable &&
-+	git sparse-checkout set --no-cone --foo "a*" &&
-+	test_write_lines "--foo" "a*" >expect &&
-+	test_cmp .git/info/sparse-checkout expect &&
-+
-+	# --end-of-options can be used to protect parameters that
-+	# potentially begin with dashes
-+	set x --cone "a*" && shift &&
-+	git sparse-checkout disable &&
-+	git sparse-checkout set --no-cone --end-of-options "$@" &&
-+	test_write_lines "$@" >expect &&
-+	test_cmp .git/info/sparse-checkout expect &&
-+
-+	# but writing --end-of-options after what the command does not
-+	# recognize is too late; it becomes one of the patterns, so
-+	# that the end-user input that happens to be "--end-of-options"
-+	# can be passed through.  To be absoutely sure, you should write
-+	# --end-of-options yourself before taking "$@" in.
-+	set x --foo --end-of-options "a*" && shift &&
-+	git sparse-checkout disable &&
-+	git sparse-checkout set --no-cone "$@" &&
-+	test_write_lines "$@" >expect &&
-+	test_cmp .git/info/sparse-checkout expect
-+'
-+
- test_expect_success 'skip-worktree on files outside sparse patterns' '
- 	git sparse-checkout disable &&
- 	git sparse-checkout set --no-cone "a*" &&
