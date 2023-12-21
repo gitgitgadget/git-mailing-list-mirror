@@ -1,116 +1,108 @@
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090526E5B6
-	for <git@vger.kernel.org>; Thu, 21 Dec 2023 12:28:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52114AF79
+	for <git@vger.kernel.org>; Thu, 21 Dec 2023 15:06:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="foFsN+ds"
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 09EE35B166;
-	Thu, 21 Dec 2023 12:22:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1703161348;
-	bh=0GlkImtSegBYmIjNqd6EKxkZ0lUhSPiNMehRMHFW3F4=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=foFsN+dsfGofrF/oIFnOpcJ53cQcARyug4dBWN9c6t1fqEjiWMGZ7yQmNtMvw58U4
-	 bjuTyvMlwIhWIfWJNeuOmFnOMOMYx3dxVu1eyczZEXKhfBymiD/I2C70fpcaMjt855
-	 W0wzEfwhDumJsPbZEEJx/+474zn/PGurLJjDOLn4XH3Ba3Op7BUjRL6Trjg5gOGLir
-	 SVwhGWt8r5fKp9U1dhE6hNvjOSK3aP0MqboH3QnfM5I4mC84NZhjo7GD5yzh2nDX9K
-	 HB09F7swIGGGpVTTDFo0istrZkYLUoSqpqzl6P0RRPUCapXfaom7rQiVqu1xTZOu//
-	 cASS8XhXnC3hgvFIR5HCrciwPeUXsThntjNnk6azuHYd4MOgJRroyi5Fh5V360CN35
-	 KCXycv4Wdk8E7Cw4UgdmWJ74QAmU1QVqifS9uxgZMsbw4p6y6rvGgEqxpQ0JzARB40
-	 4a6FxAkmL/NaE3QRHs2ZdTVsMV3cB6qZet2jsLF+ejkZ8P4yOTN
-Date: Thu, 21 Dec 2023 12:22:26 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Devste Devste <devstemail@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: git bisect stuck - --force flag required for checkout
-Message-ID: <ZYQuAjNjCzSy4X6Z@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Devste Devste <devstemail@gmail.com>, git@vger.kernel.org
-References: <CANM0SV3SEF28QJ2V0Q9ydp8yDbL8TDc1m871oxOB=UtwF1TtxQ@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jTV3crsM"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-336755f1688so803821f8f.0
+        for <git@vger.kernel.org>; Thu, 21 Dec 2023 07:06:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1703171163; x=1703775963; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZBcaRmSqy08pp9rXUPwWaBpCV8gQSfVxpzsfBrBmHRg=;
+        b=jTV3crsM3J2NekwmPPuSOyqy9xf27HOPou25/xieEgok+0J4lD+Cdt9N+KZ0E3kq9A
+         KODC25lJQl41IPjgY7SVIy/6Ogf8lBBrq55l4lbq2EWusRgyyem6ZI0QSxa81+wxl8N5
+         snNef6qOWapby2MhKPjbwi7K1rtNgKbJw5iZGRvQ710B4NmeUZf9dgSAuT7TgN9M6gBz
+         O04YHw7+m5UYXrJAILRik6U4AQ8lD68bVgmLMmi1Dcxcor3+TyOnbXhCDKBby2XDqbyz
+         DWAI7oJA5FCtDbilYwU41B+qOFOKmgH1dXrQHmPXZ7UW5PEdWwQ241YVWK37TxLPcbC/
+         2KpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703171163; x=1703775963;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZBcaRmSqy08pp9rXUPwWaBpCV8gQSfVxpzsfBrBmHRg=;
+        b=RWuSeTDE73joGEhSssT8zegEeOhIQhMv47lLxLToX4C4iBWzX2v0Iu3aJyvQ00UPUT
+         L+3SdJvOAdBF3ccO6b3KxlLnyQS0/JIYqkXIa+LWtwtPSNgYwOBFWcmvfA/jn6YR28/P
+         rsTAFCHIQExYHRHjoYt+1ETCK4tLkAza4Z5R6xy5imc5n1oKb/Jizag6zctZ690NBvcX
+         jFXfK79QnPOdfxgVM3ncgXkAQ6IQm6Yr7oIjCEQNE75q41ZWkifOFC8y60pnOy2Xj4Pb
+         9vjjJMaP0C8q8mYxuaGo+TijCe0j8hpsC9lb+HbS/d1hc9ofIi2YWW1gqV77ZvxL1o+o
+         o+kQ==
+X-Gm-Message-State: AOJu0YyL/7eQ3aRq4YD87ctrCVLDzlQFxzsHaONI1DYOZ2YZd1JAQ2Xd
+	KouvMmeaSvYvS+in4FlSAPA=
+X-Google-Smtp-Source: AGHT+IHO1a6QXZ4SXMfedXBSZJm7J1Sl4BSvrlZJGXa16X1lYZtm12oI6l4B87y3FNkkLf90BzPhSg==
+X-Received: by 2002:a5d:4111:0:b0:336:9ec:683 with SMTP id l17-20020a5d4111000000b0033609ec0683mr879059wrp.24.1703171162608;
+        Thu, 21 Dec 2023 07:06:02 -0800 (PST)
+Received: from [192.168.1.212] ([84.64.64.237])
+        by smtp.gmail.com with ESMTPSA id z5-20020adff1c5000000b003366e974cacsm2202644wro.73.2023.12.21.07.06.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 21 Dec 2023 07:06:02 -0800 (PST)
+Message-ID: <23d47364-9ec2-4273-8ea5-f106550e125a@gmail.com>
+Date: Thu, 21 Dec 2023 15:06:01 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="bVG1L6RzGAV/wKxm"
-Content-Disposition: inline
-In-Reply-To: <CANM0SV3SEF28QJ2V0Q9ydp8yDbL8TDc1m871oxOB=UtwF1TtxQ@mail.gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
+User-Agent: Mozilla Thunderbird
+From: phillip.wood123@gmail.com
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] Use ^=1 to toggle between 0 and 1
+Content-Language: en-US
+To: Jeff King <peff@peff.net>, phillip.wood@dunelm.org.uk
+Cc: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+ AtariDreams via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org,
+ Seija Kijin <doremylover123@gmail.com>
+References: <pull.1620.git.git.1702401468082.gitgitgadget@gmail.com>
+ <20231212200920.GC1127366@coredump.intra.peff.net>
+ <8bea38fe-38a3-412a-b189-541a6596d623@web.de>
+ <20231213080143.GA1684525@coredump.intra.peff.net>
+ <4d0b2a5f-305b-4350-b164-44923cb250d8@web.de>
+ <20231214220503.GA3320432@coredump.intra.peff.net>
+ <99b3a727-36fd-4fa5-a6be-60ae6fc5911e@gmail.com>
+ <20231221095606.GB570888@coredump.intra.peff.net>
+In-Reply-To: <20231221095606.GB570888@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
+Hi Peff
 
---bVG1L6RzGAV/wKxm
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 21/12/2023 09:56, Jeff King wrote:
+> On Fri, Dec 15, 2023 at 02:46:36PM +0000, Phillip Wood wrote:
+> 
+>>> Yeah. b2() is wrong for passing "2" to a bool.
+>>
+>> I think it depends what you mean by "wrong" §6.3.1.2 of standard is quite
+>> clear that when any non-zero scalar value is converted to _Bool the result
+>> is "1"
+> 
+> Yeah, sorry, I was being quite sloppy with my wording. I meant "wrong"
+> as in "I would ideally flag this in review for being weird and
+> confusing".
 
-On 2023-12-21 at 10:47:57, Devste Devste wrote:
-> Thank you for filling out a Git bug report!
-> Please answer the following questions to help us understand your issue.
->=20
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> add file Foo.txt to .git and commit
-> add some commits with any changes to other files, as this is needed
-> for reproduction
-> run: git config core.ignorecase false
+That makes sense, it certainly is confusing
 
-`core.ignorecase` is specifically designed for this case.  It's set
-internally by Git when the repository is created, and it's not supposed
-to be changed by the user.
+> Of course there are many reasonable cases where you might pass an
+> integer "foo" rather than explicitly booleanizing it with "!!foo". So I
+> do agree it's a real potential problem (and I'm sufficiently convinced
+> that we should avoid an "int" fallback if we can).
 
-If you want a repository where there's no case sensitivity, then I'd
-recommend WSL.  It's also possible to make some directories case
-sensitive in Windows 10 and newer and allegedly that works recursively,
-so you could use `fsutil` to do that, then run `git init`, then add
-data.
+I had a look at gnulib the other day and the list of limitations in the 
+documentation of their <stdbool.h> fallback makes it look quite 
+unattractive. They helpfully list some compilers where _Bool is not 
+implemented (IRIX, Tru64) or does not work correctly (HP-UX, AIX). As 
+far as I can see all the bug reports cited are from 2003-2006 on 
+obsolete compiler versions, hopefully _Bool is better supported these days.
 
-> rename Foo.txt to foo.txt and commit
-> add some commits with any changes to other files, as this is needed
-> for reproduction
-> run: git bisect start && git bisect bad
-> eventually, when running "git bisect good" (or bad) you will get an error:
-> >error: The following untracked working tree files would be overwritten b=
-y checkout:
-> >Foo.php
->=20
-> Anything else you want to add:
-> git bisect good/bad needs to have support for a "--force" flag, which
-> is passed to the git checkout it runs internally
-> At the moment git bisect cannot be used on Windows, as there is no way
-> to continue the bisect from here.
-> Changing the "git config core.ignorecase true" temporarily is not an
-> option, as this will introduce a variety of other bugs,
-> which, on Windows, eventually will require you to completely delete
-> and reclone the repo, as Windows file paths are case-insensitive
+Best Wishes
 
-Could you share what those problems are?  `core.ignorecase` is
-specifically designed to deal with case-insensitive file systems, and
-that's why Git sets it to true.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+Phillip
 
---bVG1L6RzGAV/wKxm
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.3 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZYQuAgAKCRB8DEliiIei
-gSGxAQCobxwQOWIEkC4CsA2UJiVXAodUZk1Kb8mSc0+krOHiuAEAsCN9yUfxCc8O
-9s+mdu3fMi2aFKlV75FjPwkYikkQ9AY=
-=ERml
------END PGP SIGNATURE-----
-
---bVG1L6RzGAV/wKxm--
+> -Peff
