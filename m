@@ -1,28 +1,29 @@
 Received: from mout.web.de (mout.web.de [212.227.17.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA67D7691D
-	for <git@vger.kernel.org>; Thu, 21 Dec 2023 23:13:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D96E178E90
+	for <git@vger.kernel.org>; Thu, 21 Dec 2023 23:13:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="Vef+6wW/"
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="MbTpECmz"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-	t=1703200397; x=1703805197; i=l.s.r@web.de;
-	bh=2zLetmXicq0i2JGreYXYW4ybSs2WLr8SfUsTc9ndOkg=;
-	h=X-UI-Sender-Class:Date:To:From:Subject:Cc;
-	b=Vef+6wW/bt4NNYbfMQqC/hrSzIOJ1rKyTdx8RSaKChgGGTjxS24LB5vqWP/6cIBN
-	 bYrImJBNjVC79F96gXooNhf+JhHMyfSJiBJTh6DworXJFo7S1ZK0yOqccqixqJuuA
-	 dO1jmD+p0cI0Ksdt4DZK4QtLL8/Igd0qTWjDPeFz8D8sxRE1uC2yrrXtrWBdKsWB7
-	 p/J6+XxVDZSXeNdawCCL/npco7HLyQ5UjQpcwTy1r0a6RA70Xh+7mhJCeX6xxjdOE
-	 S774PSrJZ+jgiNyvubi5nheF0DSj9LYSHnnCESUgGgZIOXPJfOL7tsKZFiC/M6srp
-	 7B//4I1ZBt1nRKDOMA==
+	t=1703200391; x=1703805191; i=l.s.r@web.de;
+	bh=p9gshi1yI9s4PqSLqJwm96LmA89yDFPMfQDrcAFLJOw=;
+	h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
+	 In-Reply-To;
+	b=MbTpECmzaYVhZ9+sZOhwJyl9Rt4Bz7Ti3+hmLQq+F72dNyYxYrDAJQgpyfDXyu67
+	 ATFMl/m7kO+mtS2R2O2awnOr5zBoTMoxEJx4xRfy0cewRCoXtdMP9rHrzkAiHZzrn
+	 jx1WyVKF6bRpbA/N+c81KKamTmRikkZbFzPSnKgXoXAvGglQ+PAyDUotgjtTRMnWg
+	 GMrD2kGtb+8u9qYD6/s4e8gTY52TWZFyFiT0D73mxfUgYkUor2LLkzDbvWkXICVTs
+	 nqjvAASgXAHHYwmp0Bq8sXoLViRNClS6bPgFWxeB4bwoJsjzmVnriOtEqm4OpiuFM
+	 3JZxsxkJ2RCLREnWDw==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from [192.168.178.29] ([79.203.23.9]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MK56y-1rZdXH0ku6-00LvBz; Fri, 22
- Dec 2023 00:13:17 +0100
-Message-ID: <fa89d269-1a23-4ed6-bebc-30c0b629f444@web.de>
-Date: Fri, 22 Dec 2023 00:13:16 +0100
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mae3c-1qjsIX2WGw-00cMBL; Fri, 22
+ Dec 2023 00:13:11 +0100
+Message-ID: <120b3194-5eee-47ed-b2d8-bc6731b71a6b@web.de>
+Date: Fri, 22 Dec 2023 00:13:10 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -30,150 +31,107 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] t1006: add tests for %(objectsize:disk)
 Content-Language: en-US
-To: Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Ondrej Pohorelsky <opohorel@redhat.com>,
+ "brian m . carlson" <sandals@crustytoothpaste.net>,
+ Junio C Hamano <gitster@pobox.com>
+References: <CA+B51BEpSh1wT627Efpysw3evVocpiDCoQ3Xaza6jKE3B62yig@mail.gmail.com>
+ <9feeb6cf-aabf-4002-917f-3f6c27547bc8@web.de>
+ <20231212200153.GB1127366@coredump.intra.peff.net>
+ <ff735aac-b60b-4d52-a6dc-180ab504fc8d@web.de>
+ <65557f2d-9de0-49ae-a858-80476aa52b68@web.de>
+ <20231214205936.GA2272813@coredump.intra.peff.net>
+ <6750c93c-78d0-46b5-bfc2-0774156ed2ed@web.de>
+ <20231221094722.GA570888@coredump.intra.peff.net>
+ <d44cb8e7-ffce-4184-b9b5-6bb56705dcd1@web.de>
+ <20231221213034.GB1446091@coredump.intra.peff.net>
 From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] mem-pool: fix big allocations
-Cc: Jameson Miller <jamill@microsoft.com>
+In-Reply-To: <20231221213034.GB1446091@coredump.intra.peff.net>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:5vaxK9jgSq6Dg2YAJerUpDueOxBaCrl1BsEr5/L7PrNmbBZYnAm
- 1cxFGmh4xKe4hYaC8YsU0m1tn1aYaOtiZN41Amv7uVZSVp6w3QSIkNCq9Cl2mvZ91zHT73y
- /zFrGmHhAgcWnoAsoYcW+dUNXig49PSyb+ofFfTcLw/SxQ+NG3Oc1l6ONZJ8L9lDa/C6O/S
- zSsaT8LYsakdE21ZEMlzg==
+X-Provags-ID: V03:K1:xtO1wtlUKi7yeoeucHGoNdxM3oc9kgqkp9umgH4ss+4KysyS/90
+ tPZ3M4CW60dAsXYaPAbVtlPrswBbiwmvH/KWpASRQg/yV4SAKlQ3hb3aJOyI0VnJv3GNtfl
+ a17RaEqqkpLDqkrOOjDeoYAY/MDuzvzov75H73W/pQ2VmX4NsLwj09GAMRJaWAMq+PwEKhw
+ jesRBiEDB77wAvUMlzfUw==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:5d68egDDhLM=;eK2n/MMFCCtkfguQFoFacV1jG0x
- YdWNT5Z4uVRhOJJikjapY8yItUnltHWOk7/JmlfV0EKg1ZESIfYi+zST9fr21BVCeYs56bhTZ
- YItQHsSbP0mtbIS55F8Q7q/33bG+4B6N11i6Jjpn2a7jI3h1wuEbCv6KnQ8aDnZ4muo8XaBEl
- iz4Xsubw3LTBo6+JZWfLIqlB0VlAR6y9SjkhDKqb4efj6+P5NJW4YCtF+3Ssz7fq3KUCHis9s
- DkF5gtb0xj05oME9fIfhHUNb9EWPzRRQeHMHpPZ6HKSP7rRRSAm4QZOXpZFek2JQ20GXL3n9g
- MRsb9BVJzbSUMq9TTcDs+DnJ2l4GryOCKkP6fBgndxJbuPFHmu6NyF+Ks9ULlXU3H9fKRp5PP
- lKvlzL6OYVawRHgZlizRSCrkyUd65YWlSw1+3TbSUEycRKzyRPQR+cB4bUYbu0U3ZKmxDIqEb
- 7XB8LqZOFk1lshH63m9hMu2rZ/l+Kcp/LRLBzqlbBhBVA5mcBIjKhM5mXlY98xPzwFG/GqNuc
- xKszwBNuwC1beKqkOBy8XFWESR+qwzYAkvhjbqOPw30wHD9m61VszPnoV6d9bZ5R1i3IbCxC7
- 0Cedv+jgoY/jAB15INGEvgm6+kMRqcqnqWEBuXdZDqbafRXA3LED0AbcpSzW6dbjqU0skplqX
- vKI5O+bWIXxuzOHvSK9JSiZ+Xkd7L/obe5kLgHeLk3ORnO256Gz1R02kaq6P1sjgsNBV75HlU
- WtR2LDgv36X9o0Ooi6AQMXbdq/I1MrHyeACTZEqBwDDaowGV+5aQWBUC6ovM/lmoJSOHlCAMY
- GDxT6o5CZfpJsOSN9kbx74CAAv3IjUD64t/F+iQ4hE9GGmVM6pmmAcfs8rRSLx7tL2cARU64x
- f+119+LA8/F4/V531YLRutpB7Ft5NGii8zL4e2mkYeWrnZ30Lkx7n1bK1EyRqrVz0xZfX+pXQ
- Okn+EA==
+UI-OutboundReport: notjunk:1;M01:P0:wtkK5KUgEk4=;W3aSUqFjiWmF/TY4vFAObJkJ8bj
+ GQePqQyq7nc/c/xyA45hGC2YRTMGS7WRVY/5PuYZLbKjozBr0p/inErrr4V7277aXyl/WAyuF
+ gxkjQ7hK5AD33PWmauVjzsGrFu1z8YUZFpIVJe7XAFBHuL6yyvJcy20QK6dPnoClSyC/BC8BD
+ Y2CCENrrTpR+tEaDDAsDfxEe3RtJF/6MHDlCWmT585iGcGuhBliyu86p7aGokI6mPexzuwI0j
+ y+lnC4MGqOd0TIAz4gZApvd92W93ovWVbbZ9riNHjC2G5KIoS5KOF7R0t9ZdDlESQiSan76at
+ L5h/DAXDiLQU2Cw/I44pmVELretKYNocdYnhHuEiBH4MD/iUWfXJAbMJlbGN19vaavuhGBmx/
+ MTQBVN84ntZ5cpmDnDh2rP5+ez6IffS740HvZDLS9nt9o5PmgQ2mxftPFgv43mQ6S0fuyB+Vk
+ ZjgkLSJjOsbPNp6oOaSTsCM4uXfxDb938OTDktFPAfwGLQAHRw+BRGp1zzPar0En9IV4Vhdin
+ qjf+nnh0ENiSB0CKTx7H+EtVjvaP6OQ3LCY7DyM7obiK/OGRW70ApR1WJtlPcGgzBW4miCHBk
+ v+amtK98n+BtWRSY4a68prZK0lZta/4kFKWiEscAFcqYk8YwqaxiaIVr5Rsk73k3EGnSNvnsq
+ ea64wTMhRdCRt/qzsUEGLmuwh57BRi7KSvlt3/U1OP7G86X1Q7Pi10uKlWLIOR1FD8PCNzhmp
+ 8YTX0gAOgTx2DS8i+wL+zUpPcfwrk74agoJYmy+Emw/b5WQA88d8dMtM++YCdy9ow5rhbQ5lE
+ bEdnEeMqJv3Oyf/AXUfEQAs008eMtA9kKyGK8q79RPRZT3A0sHWQtiyMCiY4eDEpAczSPU/2V
+ CvGa4up6JOX68MnB5mZeIY9fxZ18bS2Gq5qgxm0mrNA/AY3aEMoVohRBFDivCjwea5/wqXmxT
+ 6U2rzg==
 
-Memory pool allocations that require a new block and would fill at
-least half of it are handled specially.  Before 158dfeff3d (mem-pool:
-add life cycle management functions, 2018-07-02) they used to be
-allocated outside of the pool.  This patch made mem_pool_alloc() create
-a bespoke block instead, to allow releasing it when the pool gets
-discarded.
+Am 21.12.23 um 22:30 schrieb Jeff King:
+> On Thu, Dec 21, 2023 at 01:19:53PM +0100, Ren=C3=A9 Scharfe wrote:
+>
+>> I think we can do it even in shell, especially if...
+>> [...]
+>
+> Yeah, your conversion looks accurate. I do wonder if it is worth golfing
+> further, though. If it were a process invocation per object, I'd
+> definitely say the efficiency gain is worth it. But dropping one process
+> from the whole test isn't that exciting either way.
 
-Unfortunately mem_pool_alloc() returns a pointer to the start of such a
-bespoke block, i.e. to the struct mp_block at its top.  When the caller
-writes to it, the management information gets corrupted.  This affects
-mem_pool_discard() and -- if there are no other blocks in the pool --
-also mem_pool_alloc().
+Fair enough.
 
-Return the payload pointer of bespoke blocks, just like for smaller
-allocations, to protect the management struct.
+>
+>> (sort -r), then we don't need to carry the oid forward:
+>>
+>> 			sort -nr <idx.raw >idx.sorted &&
+>> 			packsz=3D$(test_file_size "${idx%.idx}.pack") &&
+>> 			end=3D$((packsz - rawsz)) &&
+>> 			awk -v end=3D"$end" "
+>> 			  { print \$2, end - \$1; end =3D \$1 }
+>> 			" idx.sorted ||
+>>
+>> And at that point it should be easy to use a shell loop instead of awk:
+>>
+>> 			while read start oid rest
+>> 			do
+>> 				size=3D$((end - start)) &&
+>> 				end=3D$start &&
+>> 				echo "$oid $size" ||
+>> 				return 1
+>> 			done <idx.sorted
+>
+> The one thing I do like is that we don't have to escape anything inside
+> an awk program that is forced to use double-quotes. ;)
 
-Also update next_free to mark the block as full.  This is only strictly
-necessary for the first allocated block, because subsequent ones are
-inserted after the current block and never considered for further
-allocations, but it's easier to just do it in all cases.
+For me it's processing the data in the "correct" order (descending, i.e.
+starting at the end, which we have to calculate first anyway based on the
+size).
 
-Add a basic unit test to demonstate the issue by using mem_pool_calloc()
-with a tiny block size, which forces the creation of a bespoke block.
-Without the mem_pool_alloc() fix it reports zeroed pointers:
+>> Should we deduplicate here, like cat-file does (i.e. use "sort -u")?
+>> Having the same object in multiple places for whatever reason would not
+>> be a cause for reporting an error in this test, I would think.
+>
+> No, for the reasons I said in the commit message: if an object exists in
+> multiple places the test is already potentially invalid, as Git does not
+> promise which version it will use. So it might work racily, or it might
+> work for now but be fragile. By not de-duplicating, we make sure the
+> test's assumption holds.
 
-   ok 1 - mem_pool_calloc returns 100 zeroed bytes with big block
-   # check "((pool->mp_block->next_free) !=3D (((void*)0))) =3D=3D 1" fail=
-ed at t/unit-tests/t-mem-pool.c:22
-   #    left: 0
-   #   right: 1
-   # check "((pool->mp_block->end) !=3D (((void*)0))) =3D=3D 1" failed at =
-t/unit-tests/t-mem-pool.c:23
-   #    left: 0
-   #   right: 1
-   not ok 2 - mem_pool_calloc returns 100 zeroed bytes with tiny block
-   1..2
+Oh, skipped that paragraph.  Still I don't see how a duplicate object
+would necessarily invalidate t1006.  The comment for the test "cat-file
+=2D-batch-all-objects shows all objects" a few lines above indicates that
+it's picky about the provenance of objects, but it uses a separate
+repository.  I can't infer the same requirement for the root repo, but
+we already established that I can't read.
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- Makefile                  |  1 +
- mem-pool.c                |  6 +++---
- t/unit-tests/t-mem-pool.c | 34 ++++++++++++++++++++++++++++++++++
- 3 files changed, 38 insertions(+), 3 deletions(-)
- create mode 100644 t/unit-tests/t-mem-pool.c
+Anyway, if someone finds a use for git repack without -d or
+git unpack-objects or whatever else causes duplicates in the root
+repository of t1006 then they can try to reverse your ban with concrete
+arguments.
 
-diff --git a/Makefile b/Makefile
-index 88ba7a3c51..15990ff312 100644
-=2D-- a/Makefile
-+++ b/Makefile
-@@ -1340,6 +1340,7 @@ THIRD_PARTY_SOURCES +=3D sha1collisiondetection/%
- THIRD_PARTY_SOURCES +=3D sha1dc/%
-
- UNIT_TEST_PROGRAMS +=3D t-basic
-+UNIT_TEST_PROGRAMS +=3D t-mem-pool
- UNIT_TEST_PROGRAMS +=3D t-strbuf
- UNIT_TEST_PROGS =3D $(patsubst %,$(UNIT_TEST_BIN)/%$X,$(UNIT_TEST_PROGRAM=
-S))
- UNIT_TEST_OBJS =3D $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(UNIT_TEST_PROGRAMS=
-))
-diff --git a/mem-pool.c b/mem-pool.c
-index c34846d176..e8d976c3ee 100644
-=2D-- a/mem-pool.c
-+++ b/mem-pool.c
-@@ -99,9 +99,9 @@ void *mem_pool_alloc(struct mem_pool *pool, size_t len)
-
- 	if (!p) {
- 		if (len >=3D (pool->block_alloc / 2))
--			return mem_pool_alloc_block(pool, len, pool->mp_block);
--
--		p =3D mem_pool_alloc_block(pool, pool->block_alloc, NULL);
-+			p =3D mem_pool_alloc_block(pool, len, pool->mp_block);
-+		else
-+			p =3D mem_pool_alloc_block(pool, pool->block_alloc, NULL);
- 	}
-
- 	r =3D p->next_free;
-diff --git a/t/unit-tests/t-mem-pool.c b/t/unit-tests/t-mem-pool.c
-new file mode 100644
-index 0000000000..2295779b0b
-=2D-- /dev/null
-+++ b/t/unit-tests/t-mem-pool.c
-@@ -0,0 +1,34 @@
-+#include "test-lib.h"
-+#include "mem-pool.h"
-+
-+#define check_ptr(a, op, b) check_int(((a) op (b)), =3D=3D, 1)
-+
-+static void setup_static(void (*f)(struct mem_pool *), size_t block_alloc=
-)
-+{
-+	struct mem_pool pool =3D { .block_alloc =3D block_alloc };
-+	f(&pool);
-+	mem_pool_discard(&pool, 0);
-+}
-+
-+static void t_calloc_100(struct mem_pool *pool)
-+{
-+	size_t size =3D 100;
-+	char *buffer =3D mem_pool_calloc(pool, 1, size);
-+	for (size_t i =3D 0; i < size; i++)
-+		check_int(buffer[i], =3D=3D, 0);
-+	if (!check_ptr(pool->mp_block, !=3D, NULL))
-+		return;
-+	check_ptr(pool->mp_block->next_free, <=3D, pool->mp_block->end);
-+	check_ptr(pool->mp_block->next_free, !=3D, NULL);
-+	check_ptr(pool->mp_block->end, !=3D, NULL);
-+}
-+
-+int cmd_main(int argc, const char **argv)
-+{
-+	TEST(setup_static(t_calloc_100, 1024 * 1024),
-+	     "mem_pool_calloc returns 100 zeroed bytes with big block");
-+	TEST(setup_static(t_calloc_100, 1),
-+	     "mem_pool_calloc returns 100 zeroed bytes with tiny block");
-+
-+	return test_done();
-+}
-=2D-
-2.43.0
+Ren=C3=A9
