@@ -1,90 +1,111 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2FD676DA0
-	for <git@vger.kernel.org>; Thu, 21 Dec 2023 21:27:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="MzQVuJm7"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8926C1C8FBA;
-	Thu, 21 Dec 2023 16:27:55 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=GIXe/pApFQkoUUToNG8rGny3wK2SIjPQ2l1hmy
-	3T4Ek=; b=MzQVuJm7NyndcY8O5bzo8RikkMa/m8+043kPApbIiusJfVzsWXzWD8
-	2qKAxDZVr/1QFRmwDEOXErzXjIyw0btVNXpGlVl513qKOET6S7cEXwLQaBEDd/MQ
-	xzl24QqJ8i1i3I6OFuvxbG7XksOxEN6iKh4o5Etu1gxikDXmPkS+Q=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 80C8A1C8FB9;
-	Thu, 21 Dec 2023 16:27:55 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.193.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DE71F1C8FB8;
-	Thu, 21 Dec 2023 16:27:54 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Josh Soref via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  =?utf-8?Q?Ren?=
- =?utf-8?Q?=C3=A9?= Scharfe
- <l.s.r@web.de>,  Phillip Wood <phillip.wood123@gmail.com>,  Josh Soref
- <jsoref@gmail.com>
-Subject: Re: [PATCH v2 7/9] SubmittingPatches: clarify GitHub visual
-In-Reply-To: <cdb5fd0957fee7ce8c19720f588da96898cd3dc9.1703176866.git.gitgitgadget@gmail.com>
-	(Josh Soref via GitGitGadget's message of "Thu, 21 Dec 2023 16:41:03
-	+0000")
-References: <pull.1623.git.1702975319.gitgitgadget@gmail.com>
-	<pull.1623.v2.git.1703176865.gitgitgadget@gmail.com>
-	<cdb5fd0957fee7ce8c19720f588da96898cd3dc9.1703176866.git.gitgitgadget@gmail.com>
-Date: Thu, 21 Dec 2023 13:27:53 -0800
-Message-ID: <xmqqv88rjleu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B32776909
+	for <git@vger.kernel.org>; Thu, 21 Dec 2023 21:30:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 28270 invoked by uid 109); 21 Dec 2023 21:30:35 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 21 Dec 2023 21:30:35 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 28117 invoked by uid 111); 21 Dec 2023 21:30:34 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 21 Dec 2023 16:30:34 -0500
+Authentication-Results: peff.net; auth=none
+Date: Thu, 21 Dec 2023 16:30:34 -0500
+From: Jeff King <peff@peff.net>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc: git@vger.kernel.org, Ondrej Pohorelsky <opohorel@redhat.com>,
+	"brian m . carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t1006: add tests for %(objectsize:disk)
+Message-ID: <20231221213034.GB1446091@coredump.intra.peff.net>
+References: <CA+B51BEpSh1wT627Efpysw3evVocpiDCoQ3Xaza6jKE3B62yig@mail.gmail.com>
+ <9feeb6cf-aabf-4002-917f-3f6c27547bc8@web.de>
+ <20231212200153.GB1127366@coredump.intra.peff.net>
+ <ff735aac-b60b-4d52-a6dc-180ab504fc8d@web.de>
+ <65557f2d-9de0-49ae-a858-80476aa52b68@web.de>
+ <20231214205936.GA2272813@coredump.intra.peff.net>
+ <6750c93c-78d0-46b5-bfc2-0774156ed2ed@web.de>
+ <20231221094722.GA570888@coredump.intra.peff.net>
+ <d44cb8e7-ffce-4184-b9b5-6bb56705dcd1@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- CDB392AA-A047-11EE-8662-25B3960A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <d44cb8e7-ffce-4184-b9b5-6bb56705dcd1@web.de>
 
-"Josh Soref via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Thu, Dec 21, 2023 at 01:19:53PM +0100, René Scharfe wrote:
 
-> From: Josh Soref <jsoref@gmail.com>
->
-> GitHub has two general forms for its states, sometimes they're a simple
-> colored object (e.g. green check or red x), and sometimes there's also a
-> colored container (e.g. green box or red circle) with containing that
-> object (e.g. check or x).
->
-> That's a lot of words to try to describe things, but in general, the key
-> for a failure is that it's recognized as an `x` and that it's associated
-> with the color red -- the color of course is problematic for people who
-> are red-green color-blind, but that's why they are paired with distinct
-> shapes.
->
-> Using the term `cross` doesn't really help.
+> I think we can do it even in shell, especially if...
+> [...]
 
-I am not sure if this is accurate.  Using `x` alone does not help,
-either.
+Yeah, your conversion looks accurate. I do wonder if it is worth golfing
+further, though. If it were a process invocation per object, I'd
+definitely say the efficiency gain is worth it. But dropping one process
+from the whole test isn't that exciting either way.
 
-I think this was raised during the review of the initial round, but
-...
+> (sort -r), then we don't need to carry the oid forward:
+> 
+> 			sort -nr <idx.raw >idx.sorted &&
+> 			packsz=$(test_file_size "${idx%.idx}.pack") &&
+> 			end=$((packsz - rawsz)) &&
+> 			awk -v end="$end" "
+> 			  { print \$2, end - \$1; end = \$1 }
+> 			" idx.sorted ||
+> 
+> And at that point it should be easy to use a shell loop instead of awk:
+> 
+> 			while read start oid rest
+> 			do
+> 				size=$((end - start)) &&
+> 				end=$start &&
+> 				echo "$oid $size" ||
+> 				return 1
+> 			done <idx.sorted
 
->  If a branch did not pass all test cases then it is marked with a red
-> -cross. In that case you can click on the failing job and navigate to
-> ++x+. In that case you can click on the failing job and navigate to
+The one thing I do like is that we don't have to escape anything inside
+an awk program that is forced to use double-quotes. ;)
 
-... it would help if we added something like ", instead of a green
-checkmark" after "with a red x".  It will make the contrast with the
-succeeding case stronger.  IOW, we can take advantage of the idea to
-use "pair with distinct shapes and colors" ourselves.
+> Should we deduplicate here, like cat-file does (i.e. use "sort -u")?
+> Having the same object in multiple places for whatever reason would not
+> be a cause for reporting an error in this test, I would think.
 
->  "ci/run-build-and-tests.sh" and/or "ci/print-test-failures.sh". You
->  can also download "Artifacts" which are tarred (or zipped) archives
->  with test data relevant for debugging.
+No, for the reasons I said in the commit message: if an object exists in
+multiple places the test is already potentially invalid, as Git does not
+promise which version it will use. So it might work racily, or it might
+work for now but be fragile. By not de-duplicating, we make sure the
+test's assumption holds.
+
+> One more thing: We can do the work of the first awk invocation in the
+> already existing loop as well:
+> [...]
+> ... but the substitutions are a bit awkward:
+> 
+> 		find .git/objects/?? -type f |
+> 		while read path
+> 		do
+> 			basename=${path##*/} &&
+> 			dirname=${path%/$basename} &&
+> 			oid="${dirname#.git/objects/}${basename}" &&
+> 			size=$(test_file_size "$path") &&
+> 			echo "$oid $size" ||
+> 			return 1
+> 		done &&
+> 
+> The avoided awk invocation might be worth the trouble, though.
+
+Yeah, I briefly considered whether it would be possible in pure shell,
+but didn't get very far before assuming it was going to be ugly. Thank
+you for confirming. ;)
+
+Again, if we were doing one awk per object, I'd try to avoid it. But
+since we can cover all objects in a single pass, I think it's OK.
+
+-Peff
