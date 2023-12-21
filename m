@@ -1,178 +1,158 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from mout.web.de (mout.web.de [217.72.192.78])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 821D011734
-	for <git@vger.kernel.org>; Thu, 21 Dec 2023 06:59:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 302591401C
+	for <git@vger.kernel.org>; Thu, 21 Dec 2023 07:30:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="m31chFpb"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id DA93E346C4;
-	Thu, 21 Dec 2023 01:59:33 -0500 (EST)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references:mime-version
-	:content-transfer-encoding; s=sasl; bh=aXx/CEb8V3GWZJgttIS/8RNZ4
-	z6BoLepkL58LL81O2Q=; b=m31chFpb4Cp0S8VAPrGHSD5zKgztE/ZcwmGShPhKv
-	WGwnk19kch0kxrdlwnBzjCY11sEMeSVjtRgsQKxAamB6IX3+sUCMh4vjFTb0ZDp6
-	QnM7MeMMietcFi0nYA9WgnPsWG4hKuutGrrO0HBOgMufp7Rbz2/p5uVrizf5wCXA
-	aA=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id D2B09346C3;
-	Thu, 21 Dec 2023 01:59:33 -0500 (EST)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.193.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7C798346C2;
-	Thu, 21 Dec 2023 01:59:30 -0500 (EST)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>,
-	Josh Steadmon <steadmon@google.com>
-Subject: [PATCH 1/3] sparse-checkout: take care of "--end-of-options" in set/add/check-rules
-Date: Wed, 20 Dec 2023 22:59:23 -0800
-Message-ID: <20231221065925.3234048-2-gitster@pobox.com>
-X-Mailer: git-send-email 2.43.0-174-g055bb6e996
-In-Reply-To: <20231221065925.3234048-1-gitster@pobox.com>
-References: <20231221065925.3234048-1-gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="TxZryTo+"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+	t=1703143837; x=1703748637; i=l.s.r@web.de;
+	bh=PF5sBD1vMW614UZSqgxaRJUTaoOILrxy0d/N6zWlI/o=;
+	h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
+	 In-Reply-To;
+	b=TxZryTo+SW3RvnmDK32rEbu+8bZ/mnBaAJlvH4cgkPrcK5zhmSmMugqgukKT/btf
+	 tipxLpTalntj7LIiDuJfYh3xvIvk6yAHUJ0gDCkzRPHtmx7JxA9jVLHy8nPsPKBWo
+	 /7SmhFLPeuBexKPCsHBP1HakvllszUjuyIINq4zlp/XYIxbG6c1DXqZBS0CLgysFO
+	 ewtUOzO7c+ilMLf1H7CG2lwpNVnnSvwxXyyJrYK+Cl0mbKNRRa55a4FSwzr4CkWUZ
+	 nm3sR5eQfy3otUWj/biiTxU2SEPK+eCQJAa3YGemxMIHCj7RAFNWHD29qY4Q+Fdiq
+	 hp3FZ6nY+C2dA1Lhqg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([79.203.23.9]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mfc4g-1qnUOb3DUu-00fvLi; Thu, 21
+ Dec 2023 08:30:37 +0100
+Message-ID: <296e8d69-c1d7-4ad2-943a-dfc54940abc2@web.de>
+Date: Thu, 21 Dec 2023 08:30:36 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Pobox-Relay-ID:
- 7D0EA2DC-9FCE-11EE-A879-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC/PATCH] archive: "--list" does not take further options
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>
+References: <xmqqbkakqx6s.fsf@gitster.g> <xmqqttocp98r.fsf@gitster.g>
+Content-Language: en-US
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <xmqqttocp98r.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:lBA3l0TmEp90ZdQtkzLP8ajdxk03tc2l5voasdM0D1TYRQfPcVi
+ YRsmW5KdAlx0iSkbjReTUD1oMfdgF9o2Ep70rMZ9gMowl1Dl/9H6ExyqclsoEP4ueF9uOO/
+ JKvWiaFDUOe/q3r/wAn8beu7N3gmmzi9PNOs1ld/gUCcYFkar3FxppH53x8+Ok/JeajEEnm
+ GRZep7Ygsb/it56Sa1GRw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:C4PmpUM4g0g=;QCZx+frimukV3PDUjMOjeaA4jji
+ +XlbmrNCDQ9qH/q/gGkFEQnF1ihsGSh/RmpnbE6yuBmGQj6AYMkjJ6ccvB3QBKnYsmWCT1gMs
+ 6/3e3/EYuabWxSg1xJzB77pRfB7ifYjzdSRkXTs4Ei3Gdgxl0UdsAQExkDsbIKECHOlauZEGQ
+ Bc7uqb0ZZDhvumXH9k0DQPhDl1jYEiwRudw1Ki68iOfDb5nq5wA3K5JRGBDD/L+V00cMDUpT0
+ K8qVxbx4aP7hqn06bFPD6bHtWjXOnSiEsZE+c55BHLpb3ZpLatjQAK7qYcgM85kjGdOqX4F5A
+ aJH6qRJJMcLzY4tP7WoUUZiAj35/1QE0lmidIgzS6qFVzcoJmjOeXDjn1Hmzw9i6PGPAAHoB8
+ +QYi4TiR8zNL4vOXh2LVtZxCTZrvh3ZxDKrMip1qvIGGSTDciq0IEl2D+KWdmtE3sXQRU4yqs
+ gwVIm3YIVyf63I+Pz5tKGCneWJUDcusK/+r+1OOxj0jKyObUWEcakYSJC4aOh9g/oPtdl/t3j
+ HtSrfYb3Z2I0WKGxqGOg1OEzAX1mVgJqZwLx8VVvA5sVRqkSuQO+cZUuDpSuK2p6U86ZBGXNj
+ /lTqxlfkBDhDEYnGFaVfuQIRHvHg3twHe8Ru8z9NQgaoZ+stsL4Z/Y7CaNv0Yk787Y4cB6UCX
+ wzNxty/edKPkrGBQM4zNyI61saLAe/n/wHYXGqfqHmXc82KxyplWCaoom0M+5Ec4JFVCiLqq0
+ vco7JBVQp7JYStuYeD+yWW40Df6B8SDAdAHV6R7pD5FjHOrmSLGb+Y1o3br3ULnV+tGLs9/Wc
+ JpnBLuUe/QAEaBlGqNEozKUWGJ1Zy9TcXelyBNQBzfUZzxuc0FvCyLFhoQkDuT6+6YJx1/VyX
+ orNs2qso4xfsVrm+LGKtFGrKiFkJ0bCH3vnOZX0N2bB51BhuLyDIXquRsp5JEo+9cjrcjk6/h
+ UW0/WA==
 
-93851746 (parse-options: decouple "--end-of-options" and "--",
-2023-12-06) updated the world order to make callers of parse-options
-that set PARSE_OPT_KEEP_UNKNOWN_OPT responsible for deciding what to
-do with "--end-of-options" they may see after parse_options() returns.
+Am 21.12.23 um 03:41 schrieb Junio C Hamano:
+> "git archive --list blah" should notice an extra command line
+> parameter that goes unused.  Make it so.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  * This was done to convince myself that even though cmd_archive()
+>    calls parse_options with PARSE_OPT_KEEP_UNKNOWN_OPT and then
+>    uses the resulting argc/argv without apparent filtering of the
+>    "--end-of-options" thing, it is correctly handling it, either
+>    locally or remotely.
+>
+>    - locally, write_archive() uses parse_archive_args(), which calls
+>      parse_options() without KEEP_UNKNOWN_OPT and "--end-of-options"
+>      is handled there just fine.
+>
+>    - remotely, run_remote_archiver() relays the local parameters,
+>      including "--end-of-options" via the "argument" packet.  Then
+>      the arguments are assembled into a strvec and used by the
+>      upload-archive running on the other side to spawn an
+>      upload-archive--writer process with.
+>      cmd_upload_archive_writer() then makes the same write_archive()
+>      call; "--end-of-options" would still be in argv[] if the
+>      original "git archive --remote" invocation had one, but it is
+>      consumed the same way as the local case in write_archive() by
+>      calling parse_archive_args().
+>
+>    I do not like the remote error behaviour this one adds at all.
+>    Do we use a more proper mechanism to propagate a remote error
+>    back for other subcommands we can reuse here?
 
-This unfortunately broke "sparse-checkout set/add", and from this
-invocation,
+Don't we have one?  It would affect other unsupported options as well,
+and this seems to work just fine, e.g.:
 
-  "git sparse-checkout [add|set] --[no-]cone --end-of-options pattern..."
+   $ git archive --remote=3D. --format=3Dfoo HEAD
+   remote: fatal: Unknown archive format 'foo'
+   remote: git upload-archive: archiver died with error
+   fatal: sent error to the client: git upload-archive: archiver died with=
+ error
 
-we now see "--end-of-options" listed in .git/info/sparse-checkout as if
-it is one of the path patterns.
+>
+>  archive.c           |  7 +++++++
+>  t/t5000-tar-tree.sh | 14 ++++++++++++++
+>  2 files changed, 21 insertions(+)
+>
+> diff --git c/archive.c w/archive.c
+> index 9aeaf2bd87..3244e9f9f2 100644
+> --- c/archive.c
+> +++ w/archive.c
+> @@ -641,6 +641,13 @@ static int parse_archive_args(int argc, const char =
+**argv,
+>  		base =3D "";
+>
+>  	if (list) {
+> +		if (argc) {
+> +			if (!is_remote)
+> +				die(_("extra command line parameter '%s'"), *argv);
+> +			else
+> +				printf("!ERROR! extra command line parameter '%s'\n",
+> +				       *argv);
+> +		}
 
-A breakage that results from the same cause exists in the check-rules
-subcommand, but check-rules has a few other problems that need to be
-corrected before it can fully work with --end-of-options safely,
-which will be addressed later.
+So just call die() here?
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/sparse-checkout.c          | 3 +++
- parse-options.c                    | 8 ++++++++
- parse-options.h                    | 2 ++
- t/t1090-sparse-checkout-scope.sh   | 8 ++++++++
- t/t1091-sparse-checkout-builtin.sh | 2 +-
- 5 files changed, 22 insertions(+), 1 deletion(-)
+>  		for (i =3D 0; i < nr_archivers; i++)
+>  			if (!is_remote || archivers[i]->flags & ARCHIVER_REMOTE)
+>  				printf("%s\n", archivers[i]->name);
+> diff --git c/t/t5000-tar-tree.sh w/t/t5000-tar-tree.sh
+> index 918a2fc7c6..04592f45b0 100755
+> --- c/t/t5000-tar-tree.sh
+> +++ w/t/t5000-tar-tree.sh
+> @@ -124,6 +124,20 @@ test_expect_success 'setup' '
+>  	EOF
+>  '
+>
+> +test_expect_success '--list notices extra parameters' '
+> +	test_must_fail git archive --list blah &&
+> +	# NEEDSWORK: remote error does not result in non-zero
+> +	# exit, which we might want to change later.
+> +	git archive --remote=3D. --list blah >remote-out &&
+> +	grep "!ERROR! " remote-out
 
-diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-index 5c8ffb1f75..8f55127202 100644
---- a/builtin/sparse-checkout.c
-+++ b/builtin/sparse-checkout.c
-@@ -779,6 +779,7 @@ static int sparse_checkout_add(int argc, const char *=
-*argv, const char *prefix)
- 			     builtin_sparse_checkout_add_options,
- 			     builtin_sparse_checkout_add_usage,
- 			     PARSE_OPT_KEEP_UNKNOWN_OPT);
-+	parse_opt_skip_end_of_options(&argc, &argv);
-=20
- 	sanitize_paths(argc, argv, prefix, add_opts.skip_checks);
-=20
-@@ -826,6 +827,7 @@ static int sparse_checkout_set(int argc, const char *=
-*argv, const char *prefix)
- 			     builtin_sparse_checkout_set_options,
- 			     builtin_sparse_checkout_set_usage,
- 			     PARSE_OPT_KEEP_UNKNOWN_OPT);
-+	parse_opt_skip_end_of_options(&argc, &argv);
-=20
- 	if (update_modes(&set_opts.cone_mode, &set_opts.sparse_index))
- 		return 1;
-@@ -998,6 +1000,7 @@ static int sparse_checkout_check_rules(int argc, con=
-st char **argv, const char *
- 			     builtin_sparse_checkout_check_rules_options,
- 			     builtin_sparse_checkout_check_rules_usage,
- 			     PARSE_OPT_KEEP_UNKNOWN_OPT);
-+	parse_opt_skip_end_of_options(&argc, &argv);
-=20
- 	if (check_rules_opts.rules_file && check_rules_opts.cone_mode < 0)
- 		check_rules_opts.cone_mode =3D 1;
-diff --git a/parse-options.c b/parse-options.c
-index d50962062e..fe265bbf68 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -1321,3 +1321,11 @@ void die_for_incompatible_opt4(int opt1, const cha=
-r *opt1_name,
- 		break;
- 	}
- }
-+
-+void parse_opt_skip_end_of_options(int *argc, const char ***argv)
-+{
-+	if (*argc && !strcmp(**argv, "--end-of-options")) {
-+		(*argc)--;
-+		(*argv)++;
-+	}
-+}
-diff --git a/parse-options.h b/parse-options.h
-index bd62e20268..0d3354d4a8 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -498,6 +498,8 @@ int parse_opt_passthru_argv(const struct option *, co=
-nst char *, int);
- /* value is enum branch_track* */
- int parse_opt_tracking_mode(const struct option *, const char *, int);
-=20
-+void parse_opt_skip_end_of_options(int *argc, const char ***argv);
-+
- #define OPT__VERBOSE(var, h)  OPT_COUNTUP('v', "verbose", (var), (h))
- #define OPT__QUIET(var, h)    OPT_COUNTUP('q', "quiet",   (var), (h))
- #define OPT__VERBOSITY(var) { \
-diff --git a/t/t1090-sparse-checkout-scope.sh b/t/t1090-sparse-checkout-s=
-cope.sh
-index 3a14218b24..5b96716235 100755
---- a/t/t1090-sparse-checkout-scope.sh
-+++ b/t/t1090-sparse-checkout-scope.sh
-@@ -57,6 +57,14 @@ test_expect_success 'return to full checkout of main' =
-'
- test_expect_success 'skip-worktree on files outside sparse patterns' '
- 	git sparse-checkout disable &&
- 	git sparse-checkout set --no-cone "a*" &&
-+	cat .git/info/sparse-checkout >wo-eoo &&
-+
-+	git sparse-checkout disable &&
-+	git sparse-checkout set --no-cone --end-of-options "a*" &&
-+	cat .git/info/sparse-checkout >w-eoo &&
-+
-+	test_cmp wo-eoo w-eoo &&
-+
- 	git checkout-index --all --ignore-skip-worktree-bits &&
-=20
- 	git ls-files -t >output &&
-diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout=
--builtin.sh
-index f67611da28..e33a6ed1b4 100755
---- a/t/t1091-sparse-checkout-builtin.sh
-+++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -334,7 +334,7 @@ test_expect_success 'cone mode: set with nested folde=
-rs' '
-=20
- test_expect_success 'cone mode: add independent path' '
- 	git -C repo sparse-checkout set deep/deeper1 &&
--	git -C repo sparse-checkout add folder1 &&
-+	git -C repo sparse-checkout add --end-of-options folder1 &&
- 	cat >expect <<-\EOF &&
- 	/*
- 	!/*/
---=20
-2.43.0-174-g055bb6e996
+... and use test_must_fail in both cases?
 
+> +'
+> +
+> +test_expect_success 'end-of-options is correctly eaten' '
+> +	git archive --list --end-of-options &&
+> +	git archive --remote=3D. --list --end-of-options >remote-out &&
+> +	! grep "!ERROR! " remote-out
+> +'
+> +
+>  test_expect_success 'populate workdir' '
+>  	mkdir a &&
+>  	echo simple textfile >a/a &&
