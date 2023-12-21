@@ -1,54 +1,54 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A7B55E73
-	for <git@vger.kernel.org>; Thu, 21 Dec 2023 16:41:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2C9F58214
+	for <git@vger.kernel.org>; Thu, 21 Dec 2023 16:41:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BeDENsrp"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-40c2308faedso11314735e9.1
-        for <git@vger.kernel.org>; Thu, 21 Dec 2023 08:41:10 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m75eHebX"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-40c41b43e1eso12369345e9.1
+        for <git@vger.kernel.org>; Thu, 21 Dec 2023 08:41:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1703176869; x=1703781669; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=RZ+mRYR4ZuIXNnMs9/cNBaByPR4a4sdcF8Ik2YtQRXM=;
-        b=BeDENsrp0hPSyjWtpvq9sdt8fVozhqLtPGmnxIIZYEjwodh5ssbMqKhxMvrGCDxvwI
-         IXD0DFxEbhYyL2EzVfyO5QfdNA7LY+K2GMFN7t+mnVt2WZGcWss7UNHbx8DSIFpFWByQ
-         C8yXk5dmntrFaBuWDjXg1fkw2vG+93coxRr2gSNJ+wsXt1YYDFE2GpCCORf6r0Deyl1s
-         d5ZvmaRCkbEm7+oJXuS0ytzg5/siE8lFt40nMimpFzrxOYQRiW5/z1RwvM9ya0qtXWoi
-         wHEhqoLIU+BCPBiCcuGb+xfGX3sxqRxi+/GeyzOFxIXKGZ7aJXalKr2GJNOg3GK2GR5k
-         gpaw==
+        bh=7IvwM4W/NlDHwNbKAl3tiFP3CE30lrBYpPWWZEMxuUY=;
+        b=m75eHebXoC4E7f7Ux8GZyStvcsxdbl1v4Hk6AQmjw2h/HDbXUcbSr+4sqYMlAhCWD8
+         uEq10+OAu3yBMDC6FcPaqHdIohUb2lg53BoDNvbGkd6tPwZu764JjUXVInG1xXhG+M3e
+         QH8NBx/Oi04j2vWbqjlWgkURKyOqJMfGRsLKcI25xJeSQuc8WmjjASfDUP4/IBE6m17U
+         wE/l3I/oV19kKHQSfHP2vpQFnAZFZ/AAdyCfbkS0xTgnrBrddGPzg5UgZFGqI/6LyK4Q
+         XVFsgx0UU9unAUVXxh6Nrj3DFj5dwZHakEacpAw4PXtkYo1sHaU6fBemKhPfNtkPbdnY
+         8XGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1703176869; x=1703781669;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=RZ+mRYR4ZuIXNnMs9/cNBaByPR4a4sdcF8Ik2YtQRXM=;
-        b=j5UnGujmvOsYsnoO0ZJlwRs3EncZp5baSxeD/RNr3c+9yqUA8cP7dyMYyOgkTtGjnQ
-         MKl2+b5UkSYkjUXqBA3fl7mK4LM0l+fP2c8o3r1SX51gwxPjQKcSuLjdzN7Bb/Royncq
-         cB3QwgQcUG7BI00Y22WMjwqJUK5X4qCTXUr3mkJ4VChoYo01x9+2rZ9+KLS6cx+kr2hg
-         eLtefUzbLKFIyLuwjx/mMJUKOkQ1ysuOM0bjeQSL/UtnWFg13DcZeUVvTIFgDSiFd+M/
-         Un0QQ3u5xd/3NIGyKb4REnsJXhw7oTMy2SLuc6/KVD2PFbFTGeWIiDpgjSJZcGYLNJut
-         G3oA==
-X-Gm-Message-State: AOJu0YxV0KgrMUe2Fg7LBihg0kD8IlP6myhurLmA9dh9f/Omxw1r1aqW
-	HGjqTlG7F79ptyqgtvoKYFlr9DwMubY=
-X-Google-Smtp-Source: AGHT+IHxvyhosvitCUN+52/rKREMPtnkmLjUpMXCzhflQ7VlTzSMYnm+q9mykYc5/mS/d1z28hWQ1Q==
-X-Received: by 2002:a7b:ce0a:0:b0:40c:2c6d:c833 with SMTP id m10-20020a7bce0a000000b0040c2c6dc833mr950433wmc.137.1703176868563;
-        Thu, 21 Dec 2023 08:41:08 -0800 (PST)
+        bh=7IvwM4W/NlDHwNbKAl3tiFP3CE30lrBYpPWWZEMxuUY=;
+        b=qoXJKkPb3LpzIOcMtVfPg+i55QZqQo/lw0/IJxQNhIbriBpxLdM5LwlmSR6KCrUUl/
+         UwPX/frBfW2rU9adYLB8lPmQplK8xfaMHJmZbODK8bY0mbtY7VkPRH0I5knjg24g01K1
+         7wMl1TSMI25fU6KifJjsgyEIv54NjHJolsheVsAUzFhDfnBN0KyevLuWTAEdS3hGx4JD
+         Cj34UbTWp3e13kTSWIbNWudnkrrbzvWPV7miY2jfms4GsCh5ocIuKjBxpSNPgyZxOnGm
+         XvenFfqgL/N9I8OT1Sc55r1FPUVSoQNsoWFHR0pSUlf0n+aXEqLYYRJbxQRacEMaODqb
+         AAUA==
+X-Gm-Message-State: AOJu0YyCPg3rlYXjfIiEIc2qo75HBpZ6vAwvPuqZOTt6uZfxPYhPQ2xQ
+	U5zAhBy+nkt9Ek2SJwTyggJlY5XlYEA=
+X-Google-Smtp-Source: AGHT+IGzY2zp/NsAFPJCB9BwwVPhpRtw44XY6WzoioMRue8EX9HC+lJAkJLWblGJ3rISPWRRCWNWJw==
+X-Received: by 2002:a05:600c:511d:b0:40b:36e9:bf4b with SMTP id o29-20020a05600c511d00b0040b36e9bf4bmr8879wms.41.1703176869061;
+        Thu, 21 Dec 2023 08:41:09 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p35-20020a05600c1da300b0040b360cc65csm4094064wms.0.2023.12.21.08.41.07
+        by smtp.gmail.com with ESMTPSA id c10-20020a7bc2aa000000b0040b2b38a1fasm3804691wmk.4.2023.12.21.08.41.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Dec 2023 08:41:07 -0800 (PST)
-Message-ID: <c0db8336e519cb43767effbe842dc8b97f914a4b.1703176866.git.gitgitgadget@gmail.com>
+        Thu, 21 Dec 2023 08:41:08 -0800 (PST)
+Message-ID: <22d66c5b78a6930e195141df848266cac099ca08.1703176866.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1623.v2.git.1703176865.gitgitgadget@gmail.com>
 References: <pull.1623.git.1702975319.gitgitgadget@gmail.com>
 	<pull.1623.v2.git.1703176865.gitgitgadget@gmail.com>
 From: "Josh Soref via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 21 Dec 2023 16:40:58 +0000
-Subject: [PATCH v2 2/9] CodingGuidelines: write punctuation marks
+Date: Thu, 21 Dec 2023 16:40:59 +0000
+Subject: [PATCH v2 3/9] SubmittingPatches: drop ref to "What's in git.git"
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,26 +68,28 @@ Cc: Elijah Newren <newren@gmail.com>,
 
 From: Josh Soref <jsoref@gmail.com>
 
-- Match style in Release Notes
+"What's in git.git" was last seen in 2010:
+  https://lore.kernel.org/git/?q=%22what%27s+in+git.git%22
+  https://lore.kernel.org/git/7vaavikg72.fsf@alter.siamese.dyndns.org/
 
 Signed-off-by: Josh Soref <jsoref@gmail.com>
 ---
- Documentation/CodingGuidelines | 2 +-
+ Documentation/SubmittingPatches | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index af94ed3a75d..578587a4715 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -578,7 +578,7 @@ Externally Visible Names
-    . The variable name describes the effect of tweaking this knob.
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index bce7f97815c..32e90238777 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -570,7 +570,7 @@ their trees themselves.
+   master).
  
-    The section and variable names that consist of multiple words are
--   formed by concatenating the words without punctuations (e.g. `-`),
-+   formed by concatenating the words without punctuation marks (e.g. `-`),
-    and are broken using bumpyCaps in documentation as a hint to the
-    reader.
+ * Read the Git mailing list, the maintainer regularly posts messages
+-  entitled "What's cooking in git.git" and "What's in git.git" giving
++  entitled "What's cooking in git.git" giving
+   the status of various proposed changes.
  
+ == GitHub CI[[GHCI]]
 -- 
 gitgitgadget
 
