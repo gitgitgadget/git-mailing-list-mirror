@@ -1,92 +1,116 @@
-Received: from fallback24.i.mail.ru (fallback24.i.mail.ru [79.137.243.78])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAE27627F8
-	for <git@vger.kernel.org>; Thu, 21 Dec 2023 17:34:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=inbox.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=inbox.ru
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E55F634F1
+	for <git@vger.kernel.org>; Thu, 21 Dec 2023 18:14:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=inbox.ru header.i=@inbox.ru header.b="kryFpN1w";
-	dkim=pass (2048-bit key) header.d=inbox.ru header.i=@inbox.ru header.b="ljw+1BvL"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=inbox.ru; s=mail4;
-	h=Content-Transfer-Encoding:Content-Type:MIME-Version:Subject:To:Message-ID:Reply-To:From:Date:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=7QkZveSPLjg1vQM+PO6D3SrXagyTUWRzFdxcg+FFb+4=;
-	t=1703180043;x=1703270043; 
-	b=kryFpN1w5xzOMQ2FXeEArkN5MgiguU2IDincIJiN5Qn/4vOgyKk6z9S9Ziwq41d3i8T2e6d1XQi9/xaHPqCKS4/QVHsiMvxZ7A6/sjZbkvpdYRU6Dy6jyANR57eYO4R75+JpEIhmC6g1buTYbZ1rcjePheOd71dPs3/sIRverWngKLFKunc+6urKKHAobz2qB08yYHsx74QV0v5SSd3UtA/6Ob4Qivg4fd4PDTAMB79eC8afV7ukNUZlvX7rs/MkER9fdMu/YaiIAQmy2J1qWtwuZ4dbCE1M55etj2fbP5xlJ9d23fahdQoer7AO/CljWsPu6v5cz1k3nmByJJzeRg==;
-Received: from [10.12.4.14] (port=58078 helo=smtp39.i.mail.ru)
-	by fallback24.i.mail.ru with esmtp (envelope-from <andry@inbox.ru>)
-	id 1rGMcR-00EveJ-8O
-	for git@vger.kernel.org; Thu, 21 Dec 2023 20:13:59 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=inbox.ru;
-	s=mail4; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Subject:To:
-	Message-ID:Reply-To:From:Date:From:Sender:To:Cc:Content-Type:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:
-	References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:
-	List-Owner:List-Archive:X-Cloud-Ids:Disposition-Notification-To;
-	bh=7QkZveSPLjg1vQM+PO6D3SrXagyTUWRzFdxcg+FFb+4=; t=1703178839; x=1703268839; 
-	b=ljw+1BvLQiwK8G+Wv6+arygWW3IUpR03QZXPbt1DRUmKrojgHnGErIaf1o4BnNU8ER3Xc1ZKCPN
-	CBx73G3YuyJdD1tuPCJRwZZW234gcfUftd6jmOe54u7xKgwP2pCcLYIyoymZEm+UJn1xy8tKHTMNE
-	qT3lFFh+Xtvrg/OEo8EnKofHII8Q8kvyRVj5mk6NNM8TQBPY4aLpxkUoDyr+C2UZ7I56K08SZftNZ
-	6b3uGKrWvUjmPN43JJf2GCAzhJ+/pmG610sRYZqGdtn9D3LS/3KGTkz6aOfnmLGwcTN7E1XyEJUOI
-	wHneWwgziBMvP1LmGeswb/RoRe+HqwEgbQgw==;
-Received: by smtp39.i.mail.ru with esmtpa (envelope-from <andry@inbox.ru>)
-	id 1rGMcI-00ECrs-2G
-	for git@vger.kernel.org; Thu, 21 Dec 2023 20:13:51 +0300
-Date: Thu, 21 Dec 2023 20:16:04 +0400
-From: Andry <andry@inbox.ru>
-Reply-To: Andry <andry@inbox.ru>
-Message-ID: <1585479613.20231221201604@inbox.ru>
-To: Git <git@vger.kernel.org>
-Subject: [ISSUE] `git push` keep asking for username when the global config already configured (wincred)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="WHM+2c2q"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id BA0951862C;
+	Thu, 21 Dec 2023 13:14:03 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=KoLJMDXnCHSO
+	hZFCkUW3D6G2UN/G31ZgkVa/cguYzfg=; b=WHM+2c2q050CVPE8sLZXr2WhZt0T
+	wotHPtcIBr2HY6xVOHO9fHOJPchzXK7UYtP8Va8S9AfgB5MTgLL8KGZMaYHGU9NC
+	qeDqCMlFPrmay9BSMFlXymmX5381LwejGI8zs8gaGuA+yj5cfEEu44qJvlcYfsRZ
+	fKLX8Xc4JaULL5U=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id B2F8A1862B;
+	Thu, 21 Dec 2023 13:14:03 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.193.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D2D0918628;
+	Thu, 21 Dec 2023 13:13:59 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,  git@vger.kernel.org
+Subject: Re: [RFC/PATCH] archive: "--list" does not take further options
+In-Reply-To: <20231221085948.GD545870@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 21 Dec 2023 03:59:48 -0500")
+References: <xmqqbkakqx6s.fsf@gitster.g> <xmqqttocp98r.fsf@gitster.g>
+	<296e8d69-c1d7-4ad2-943a-dfc54940abc2@web.de>
+	<20231221085948.GD545870@coredump.intra.peff.net>
+Date: Thu, 21 Dec 2023 10:13:58 -0800
+Message-ID: <xmqqmsu3mnix.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-Mailru-Src: smtp
-X-7564579A: 646B95376F6C166E
-X-77F55803: 4F1203BC0FB41BD9F008C97756F746CA9853402441EE20032119B858DB59C778182A05F53808504003DCAC054060D959F453BBB9209CD93AD792382AD482A05B4C0D741934107B3F
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7CA8E915ACC910FBDEA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637652CD06254D2F21C8638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D8B088B2D19E295963DFE79F5E16AE25016F9789CCF6C18C3F8528715B7D10C86859CC434672EE6371117882F4460429724CE54428C33FAD305F5C1EE8F4F765FC1BE95B8C87527B4BA471835C12D1D9774AD6D5ED66289B52BA9C0B312567BB23117882F44604297287769387670735201E561CDFBCA1751FC26CFBAC0749D213D2E47CDBA5A96583BA9C0B312567BB2376E601842F6C81A19E625A9149C048EE4B6963042765DA4B098B145E00970258D8FC6C240DEA76429C9F4D5AE37F343AA9539A8B242431040A6AB1C7CE11FEE3B5C78E0E843E24DAC0837EA9F3D19764C4224003CC836476E2F48590F00D11D6E2021AF6380DFAD1A18204E546F3947CD2DCF9CF1F528DBC2E808ACE2090B5E1725E5C173C3A84C317B107DEF921CE79089D37D7C0E48F6C8AA50765F790063785BD4F17004B3EE2EFF80C71ABB335746BA297DBC24807EABDAD6C7F3747799A
-X-C1DE0DAB: 0D63561A33F958A5A789BED2C55EE5E1B81BC05A58C49AF285E0F3DA940750965A4FF58CDAEABE2AA132EA92956906CB923ED95CB96E383303803A57F48E4E5ABADB2A551DC3F950AD821FE3CBC9797D794DB285CF8A07CE1638054B7D09EC08F36E2E0160E5C55389181B4E2F58B1401E618B5D5F965AFD200F62B2C1E683AF3D58D961240FA4EF6DABF04D5057A81F1E618B5D5F965AFDCD68EDCA48B5F1B5
-X-C8649E89: 1C3962B70DF3F0ADBF74143AD284FC7177DD89D51EBB774242A1950755802D361004E42C50DC4CA955A7F0CF078B5EC49A30900B95165D348E5EF936B2E46EBAE3945BAA5386BFAE6996826B5ACCD567032F7B61C4036FAEC20A564757D412D91D7E09C32AA3244C7B8A378369B157305F55E75C6F86A23F30363D8B7DA7DD44BC4AF6B5DE6957CB5DA084F8E80FEBD3B6B12ABA45D4B9D28815B87D7EC76CB9
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojbL9S8ysBdXjiCA9vDDHRrUsNT3dd19ir
-X-Mailru-Sender: DC3EB4EBD01594E4BED89F5F1533D14E7B42D997E611D8D9F453BBB9209CD93A98C36B72C391314758EE59803C9A990DFB559BB5D741EB96FE679880309AA8C36F53C80213D1719C67EA787935ED9F1B
-X-Mras: Ok
-X-7564579A: 646B95376F6C166E
-X-77F55803: 6242723A09DB00B46003E5D5A82ECDADC2F5468305071511075AA909EE590006049FFFDB7839CE9E0BADB79DF678AC5C4C6E27B7185E0B7D87EC2050014093BCC3E5166AF3E530AC
-X-7FA49CB5: 0D63561A33F958A59169F2F59D82996FF12F1898C22CA9A2E1BE1A16A3C9BD5FCACD7DF95DA8FC8BD5E8D9A59859A8B64071617579528AACCC7F00164DA146DAFE8445B8C89999728AA50765F7900637529BE3F22733EA6E389733CBF5DBD5E9C8A9BA7A39EFB766F5D81C698A659EA7CC7F00164DA146DA9985D098DBDEAEC8EB7D890E3377C531F6B57BC7E6449061A352F6E88A58FB86F5D81C698A659EA775ECD9A6C639B01B78DA827A17800CE71DEE98A42835BCDB43847C11F186F3C59DAA53EE0834AAEE
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojd2R+qgYPpI0S1MlxQ+tP4w==
-X-Mailru-MI: 8000000000601000
-X-Mras: Ok
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ B6AC132C-A02C-11EE-891E-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-Hello Git,
+Jeff King <peff@peff.net> writes:
 
-Accidentally have found the issue when the Git is properly installed (git-scm.com) and configured over the global config under Window 8.
-Btu if try to use the Cygwin (cygwin.com) installation for the Bash interpreter like this from the `myscript.bat`:
+> On Thu, Dec 21, 2023 at 08:30:36AM +0100, Ren=C3=A9 Scharfe wrote:
+>> ...
+>> Don't we have one?  It would affect other unsupported options as well,
+>> and this seems to work just fine, e.g.:
+>> ...
+> Right. The whole idea of upload-archive is to spawn a separate writer
+> process and mux the conversation (including errors) back over the wire.
 
-myscript.bat -> myscript.sh -> `git push ...`
+Thanks, both.  Just to tie the loose end, let me queue this and
+merge it to 'next'.
 
-Then the git asks for the username.
+----- >8 --------- >8 --------- >8 -----
+Subject: [PATCH] archive: "--list" does not take further options
 
-If directly run the command `git push ...`, then it works as expected without the username prompt.
+"git archive --list blah" should notice an extra command line
+parameter that goes unused.  Make it so.
 
-The issue is around the HOME variable behind the Cygwin installation, when the Git thinks the configuration is in the Cygwin, instead of in the Windows users folder.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ archive.c           |  2 ++
+ t/t5000-tar-tree.sh | 10 ++++++++++
+ 2 files changed, 12 insertions(+)
 
-The workaround can be something like this:
-
-```bash
-  # WORKAROUND:
-  #   The `git push` asks for username under the bash shell call from the Windows cmd.exe script.
-  #
-  [[ -n "${COMSPEC+x}" ]] && unset HOME
-```
-
->git --version
-git version 2.43.0.windows.1
-
->winver
-Version 6.2 (Build 9200)
+diff --git a/archive.c b/archive.c
+index ca11db185b..8da820d1ce 100644
+--- a/archive.c
++++ b/archive.c
+@@ -685,6 +685,8 @@ static int parse_archive_args(int argc, const char **=
+argv,
+ 		base =3D "";
+=20
+ 	if (list) {
++		if (argc)
++			die(_("extra command line parameter '%s'"), *argv);
+ 		for (i =3D 0; i < nr_archivers; i++)
+ 			if (!is_remote || archivers[i]->flags & ARCHIVER_REMOTE)
+ 				printf("%s\n", archivers[i]->name);
+diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
+index 4b4c3315d8..72b8d0ff02 100755
+--- a/t/t5000-tar-tree.sh
++++ b/t/t5000-tar-tree.sh
+@@ -124,6 +124,16 @@ test_expect_success 'setup' '
+ 	EOF
+ '
+=20
++test_expect_success '--list notices extra parameters' '
++	test_must_fail git archive --list blah &&
++	test_must_fail git archive --remote=3D. --list blah
++'
++
++test_expect_success 'end-of-options is correctly eaten' '
++	git archive --list --end-of-options &&
++	git archive --remote=3D. --list --end-of-options
++'
++
+ test_expect_success 'populate workdir' '
+ 	mkdir a &&
+ 	echo simple textfile >a/a &&
+--=20
+2.43.0-174-g055bb6e996
 
