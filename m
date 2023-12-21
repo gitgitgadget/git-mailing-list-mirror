@@ -1,182 +1,92 @@
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fallback24.i.mail.ru (fallback24.i.mail.ru [79.137.243.78])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C6CF627E5
-	for <git@vger.kernel.org>; Thu, 21 Dec 2023 17:07:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAE27627F8
+	for <git@vger.kernel.org>; Thu, 21 Dec 2023 17:34:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=inbox.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=inbox.ru
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MNJyCmwX"
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-552d39ac3ccso3919321a12.0
-        for <git@vger.kernel.org>; Thu, 21 Dec 2023 09:07:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1703178442; x=1703783242; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IIAxp/FD+dMxzIK605pn8H9YJfXne+MzPui1TAupPw8=;
-        b=MNJyCmwXtTLEetCswmzofHfjkrSGeqtYXrHdHfbWRAzp0DMKXk//CZvY1Ew3ylvSaf
-         EOFIHd7kCRtwQeCSkbj7xTscws7eagaXqdoBrpId0OkR6iAIdGEBSBalwu4VwxweiHtE
-         GPqvHwgl2rxrr5e9jcnlSXKeNOE7Ym3pX3rTqCE3/z9pq9ofQpRMrKxCVJE/O33fFG3A
-         NvYKQOwMfxIPA5ml6BgJ/Hdfvki5bO+zsEb36IMF/I+cd9oIAE+vkJ9LrOyR1CfBuP+7
-         Sl0lXwNvl8H02lbnDuVLzPSFbZkYWD6T4nmfL4UtjYtsBWdmcbREXvQwaq0hbFTbwfLP
-         V1wQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703178442; x=1703783242;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=IIAxp/FD+dMxzIK605pn8H9YJfXne+MzPui1TAupPw8=;
-        b=Q9+UO4Pf3Ec6pU3/rKc6Zz6Kx0jN5xe8X4V9W8adWFlH23GyvwXQ60IFBHvGGXhZXw
-         F4O2Wgk0ennMZ9T6uUatjUlK0bd/84VxdZntAApVXKNFhDevY8zyENFDKpafX4qvmBut
-         sKPawhC40gUYVZVw0iyQg/ozvkCZqCAtarVTQBpoAJGUECto03+0Q2RiYm7wT3COdh6y
-         8RC7FbOH9lpAHiL3GZA++H/xe/scZqlYnwKvHKnX1SHRVDqYrBaoY/1ehBJi+hDd8Y0r
-         /htVCn2hxS/bSzgGQMGG2vjct0PcC0MPR96JErG4/kwIzB+mY8Z3KYXyIXAb3K3NSd8L
-         yAOw==
-X-Gm-Message-State: AOJu0YwAx9K8X770i/OAz8/93ieGPlcZ+10gMQgq794IFszoKQXl2yTJ
-	F5uBfQ8JWwzW+eBbfu12Av0fUMNnZPralA==
-X-Google-Smtp-Source: AGHT+IGwFyex/iGVy09WSMM/13kou2yXE1tf6KrumFo/0s2MFiaH4IlWE/nAVQ9JpAmN0IYO4byBoA==
-X-Received: by 2002:a17:906:739c:b0:a1d:2f59:81a4 with SMTP id f28-20020a170906739c00b00a1d2f5981a4mr1088084ejl.62.1703178442095;
-        Thu, 21 Dec 2023 09:07:22 -0800 (PST)
-Received: from localhost.localdomain (h-213.61.124.196.host.de.colt.net. [213.61.124.196])
-        by smtp.gmail.com with ESMTPSA id en6-20020a17090728c600b00a23577b265csm1163789ejc.173.2023.12.21.09.07.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Dec 2023 09:07:21 -0800 (PST)
-From: Karthik Nayak <karthik.188@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	ps@pks.im,
-	christian.couder@gmail.com,
-	Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH 2/2] ref-filter: support filtering of operational refs
-Date: Thu, 21 Dec 2023 18:07:15 +0100
-Message-Id: <20231221170715.110565-3-karthik.188@gmail.com>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20231221170715.110565-1-karthik.188@gmail.com>
-References: <20231221170715.110565-1-karthik.188@gmail.com>
+	dkim=pass (2048-bit key) header.d=inbox.ru header.i=@inbox.ru header.b="kryFpN1w";
+	dkim=pass (2048-bit key) header.d=inbox.ru header.i=@inbox.ru header.b="ljw+1BvL"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=inbox.ru; s=mail4;
+	h=Content-Transfer-Encoding:Content-Type:MIME-Version:Subject:To:Message-ID:Reply-To:From:Date:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=7QkZveSPLjg1vQM+PO6D3SrXagyTUWRzFdxcg+FFb+4=;
+	t=1703180043;x=1703270043; 
+	b=kryFpN1w5xzOMQ2FXeEArkN5MgiguU2IDincIJiN5Qn/4vOgyKk6z9S9Ziwq41d3i8T2e6d1XQi9/xaHPqCKS4/QVHsiMvxZ7A6/sjZbkvpdYRU6Dy6jyANR57eYO4R75+JpEIhmC6g1buTYbZ1rcjePheOd71dPs3/sIRverWngKLFKunc+6urKKHAobz2qB08yYHsx74QV0v5SSd3UtA/6Ob4Qivg4fd4PDTAMB79eC8afV7ukNUZlvX7rs/MkER9fdMu/YaiIAQmy2J1qWtwuZ4dbCE1M55etj2fbP5xlJ9d23fahdQoer7AO/CljWsPu6v5cz1k3nmByJJzeRg==;
+Received: from [10.12.4.14] (port=58078 helo=smtp39.i.mail.ru)
+	by fallback24.i.mail.ru with esmtp (envelope-from <andry@inbox.ru>)
+	id 1rGMcR-00EveJ-8O
+	for git@vger.kernel.org; Thu, 21 Dec 2023 20:13:59 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=inbox.ru;
+	s=mail4; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Subject:To:
+	Message-ID:Reply-To:From:Date:From:Sender:To:Cc:Content-Type:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:
+	References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:
+	List-Owner:List-Archive:X-Cloud-Ids:Disposition-Notification-To;
+	bh=7QkZveSPLjg1vQM+PO6D3SrXagyTUWRzFdxcg+FFb+4=; t=1703178839; x=1703268839; 
+	b=ljw+1BvLQiwK8G+Wv6+arygWW3IUpR03QZXPbt1DRUmKrojgHnGErIaf1o4BnNU8ER3Xc1ZKCPN
+	CBx73G3YuyJdD1tuPCJRwZZW234gcfUftd6jmOe54u7xKgwP2pCcLYIyoymZEm+UJn1xy8tKHTMNE
+	qT3lFFh+Xtvrg/OEo8EnKofHII8Q8kvyRVj5mk6NNM8TQBPY4aLpxkUoDyr+C2UZ7I56K08SZftNZ
+	6b3uGKrWvUjmPN43JJf2GCAzhJ+/pmG610sRYZqGdtn9D3LS/3KGTkz6aOfnmLGwcTN7E1XyEJUOI
+	wHneWwgziBMvP1LmGeswb/RoRe+HqwEgbQgw==;
+Received: by smtp39.i.mail.ru with esmtpa (envelope-from <andry@inbox.ru>)
+	id 1rGMcI-00ECrs-2G
+	for git@vger.kernel.org; Thu, 21 Dec 2023 20:13:51 +0300
+Date: Thu, 21 Dec 2023 20:16:04 +0400
+From: Andry <andry@inbox.ru>
+Reply-To: Andry <andry@inbox.ru>
+Message-ID: <1585479613.20231221201604@inbox.ru>
+To: Git <git@vger.kernel.org>
+Subject: [ISSUE] `git push` keep asking for username when the global config already configured (wincred)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+X-Mailru-Src: smtp
+X-7564579A: 646B95376F6C166E
+X-77F55803: 4F1203BC0FB41BD9F008C97756F746CA9853402441EE20032119B858DB59C778182A05F53808504003DCAC054060D959F453BBB9209CD93AD792382AD482A05B4C0D741934107B3F
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7CA8E915ACC910FBDEA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637652CD06254D2F21C8638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D8B088B2D19E295963DFE79F5E16AE25016F9789CCF6C18C3F8528715B7D10C86859CC434672EE6371117882F4460429724CE54428C33FAD305F5C1EE8F4F765FC1BE95B8C87527B4BA471835C12D1D9774AD6D5ED66289B52BA9C0B312567BB23117882F44604297287769387670735201E561CDFBCA1751FC26CFBAC0749D213D2E47CDBA5A96583BA9C0B312567BB2376E601842F6C81A19E625A9149C048EE4B6963042765DA4B098B145E00970258D8FC6C240DEA76429C9F4D5AE37F343AA9539A8B242431040A6AB1C7CE11FEE3B5C78E0E843E24DAC0837EA9F3D19764C4224003CC836476E2F48590F00D11D6E2021AF6380DFAD1A18204E546F3947CD2DCF9CF1F528DBC2E808ACE2090B5E1725E5C173C3A84C317B107DEF921CE79089D37D7C0E48F6C8AA50765F790063785BD4F17004B3EE2EFF80C71ABB335746BA297DBC24807EABDAD6C7F3747799A
+X-C1DE0DAB: 0D63561A33F958A5A789BED2C55EE5E1B81BC05A58C49AF285E0F3DA940750965A4FF58CDAEABE2AA132EA92956906CB923ED95CB96E383303803A57F48E4E5ABADB2A551DC3F950AD821FE3CBC9797D794DB285CF8A07CE1638054B7D09EC08F36E2E0160E5C55389181B4E2F58B1401E618B5D5F965AFD200F62B2C1E683AF3D58D961240FA4EF6DABF04D5057A81F1E618B5D5F965AFDCD68EDCA48B5F1B5
+X-C8649E89: 1C3962B70DF3F0ADBF74143AD284FC7177DD89D51EBB774242A1950755802D361004E42C50DC4CA955A7F0CF078B5EC49A30900B95165D348E5EF936B2E46EBAE3945BAA5386BFAE6996826B5ACCD567032F7B61C4036FAEC20A564757D412D91D7E09C32AA3244C7B8A378369B157305F55E75C6F86A23F30363D8B7DA7DD44BC4AF6B5DE6957CB5DA084F8E80FEBD3B6B12ABA45D4B9D28815B87D7EC76CB9
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojbL9S8ysBdXjiCA9vDDHRrUsNT3dd19ir
+X-Mailru-Sender: DC3EB4EBD01594E4BED89F5F1533D14E7B42D997E611D8D9F453BBB9209CD93A98C36B72C391314758EE59803C9A990DFB559BB5D741EB96FE679880309AA8C36F53C80213D1719C67EA787935ED9F1B
+X-Mras: Ok
+X-7564579A: 646B95376F6C166E
+X-77F55803: 6242723A09DB00B46003E5D5A82ECDADC2F5468305071511075AA909EE590006049FFFDB7839CE9E0BADB79DF678AC5C4C6E27B7185E0B7D87EC2050014093BCC3E5166AF3E530AC
+X-7FA49CB5: 0D63561A33F958A59169F2F59D82996FF12F1898C22CA9A2E1BE1A16A3C9BD5FCACD7DF95DA8FC8BD5E8D9A59859A8B64071617579528AACCC7F00164DA146DAFE8445B8C89999728AA50765F7900637529BE3F22733EA6E389733CBF5DBD5E9C8A9BA7A39EFB766F5D81C698A659EA7CC7F00164DA146DA9985D098DBDEAEC8EB7D890E3377C531F6B57BC7E6449061A352F6E88A58FB86F5D81C698A659EA775ECD9A6C639B01B78DA827A17800CE71DEE98A42835BCDB43847C11F186F3C59DAA53EE0834AAEE
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojd2R+qgYPpI0S1MlxQ+tP4w==
+X-Mailru-MI: 8000000000601000
+X-Mras: Ok
 
-With the upcoming introduction of the reftable backend, it becomes ever
-so important to provide the necessary tooling for printing all refs
-associated with a repository.
+Hello Git,
 
-While regular refs stored within the "refs/" namespace are currently
-supported by multiple commands like git-for-each-ref(1),
-git-show-ref(1). Neither support printing all the operational refs
-within the repository.
+Accidentally have found the issue when the Git is properly installed (git-scm.com) and configured over the global config under Window 8.
+Btu if try to use the Cygwin (cygwin.com) installation for the Bash interpreter like this from the `myscript.bat`:
 
-This is crucial because with the reftable backend, all these refs will
-also move to reftable. It would be necessary to identify all the refs
-that are stored within the reftable since there is no easy way to do so
-otherwise. This is because the reftable itself is a binary format and
-all access will be via git. Unlike the filesystem backend, which allows
-access directly via the filesystem.
+myscript.bat -> myscript.sh -> `git push ...`
 
-This commit adds the necessary code to iterate over operational refs
-present in a repository and provides a new filter flag
-'FILTER_REFS_OPERATIONAL' to iterate over operational refs.
+Then the git asks for the username.
 
-This flag can now be used to extend existing git commands to print
-operational refs.
+If directly run the command `git push ...`, then it works as expected without the username prompt.
 
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- ref-filter.c | 12 ++++++++++++
- ref-filter.h |  4 +++-
- refs.c       | 14 ++++++++++++++
- refs.h       |  3 +++
- 4 files changed, 32 insertions(+), 1 deletion(-)
+The issue is around the HOME variable behind the Cygwin installation, when the Git thinks the configuration is in the Cygwin, instead of in the Windows users folder.
 
-diff --git a/ref-filter.c b/ref-filter.c
-index fdaabb5bb4..307a512c27 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -2756,6 +2756,10 @@ static int filter_ref_kind(struct ref_filter *filter, const char *refname)
- 	    filter->kind == FILTER_REFS_REMOTES ||
- 	    filter->kind == FILTER_REFS_TAGS)
- 		return filter->kind;
-+
-+	if (filter->kind & FILTER_REFS_OPERATIONAL)
-+		return filter->kind;
-+
- 	return ref_kind_from_refname(refname);
- }
- 
-@@ -3032,6 +3036,14 @@ static int do_filter_refs(struct ref_filter *filter, unsigned int type, each_ref
- 	if (!filter->kind)
- 		die("filter_refs: invalid type");
- 	else {
-+		size_t i;
-+		if (filter->kind & FILTER_REFS_OPERATIONAL) {
-+			for (i = 0; i < operational_refs_max; i++) {
-+				refs_single_ref(get_main_ref_store(the_repository),
-+								operational_refs[i], fn, cb_data);
-+			}
-+		}
-+
- 		/*
- 		 * For common cases where we need only branches or remotes or tags,
- 		 * we only iterate through those refs. If a mix of refs is needed,
-diff --git a/ref-filter.h b/ref-filter.h
-index 0ce5af58ab..eec1d29514 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -23,7 +23,9 @@
- #define FILTER_REFS_ALL            (FILTER_REFS_TAGS | FILTER_REFS_BRANCHES | \
- 				    FILTER_REFS_REMOTES | FILTER_REFS_OTHERS)
- #define FILTER_REFS_DETACHED_HEAD  0x0020
--#define FILTER_REFS_KIND_MASK      (FILTER_REFS_ALL | FILTER_REFS_DETACHED_HEAD)
-+#define FILTER_REFS_OPERATIONAL    0x0040
-+#define FILTER_REFS_KIND_MASK      (FILTER_REFS_ALL | FILTER_REFS_DETACHED_HEAD | \
-+				    FILTER_REFS_OPERATIONAL)
- 
- struct atom_value;
- struct ref_sorting;
-diff --git a/refs.c b/refs.c
-index cebc5458d3..70f6854301 100644
---- a/refs.c
-+++ b/refs.c
-@@ -82,6 +82,20 @@ static unsigned char refname_disposition[256] = {
- 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 4, 4
- };
- 
-+const char *operational_refs[] = {
-+	"HEAD",
-+	"ORIG_HEAD",
-+	"REBASE_HEAD",
-+	"REVERT_HEAD",
-+	"CHERRY_PICK_HEAD",
-+	"BISECT_HEAD",
-+	"BISECT_EXPECTED_REV",
-+	"NOTES_MERGE_PARTIAL",
-+	"NOTES_MERGE_REF",
-+};
-+
-+const int operational_refs_max = ARRAY_SIZE(operational_refs) - 1;
-+
- struct ref_namespace_info ref_namespace[] = {
- 	[NAMESPACE_HEAD] = {
- 		.ref = "HEAD",
-diff --git a/refs.h b/refs.h
-index e147f13a85..b01938a91a 100644
---- a/refs.h
-+++ b/refs.h
-@@ -15,6 +15,9 @@ int default_ref_storage_format(void);
- int ref_storage_format_by_name(const char *name);
- const char *ref_storage_format_to_name(int ref_storage_format);
- 
-+extern const char *operational_refs[];
-+extern const int operational_refs_max;
-+
- /*
-  * Resolve a reference, recursively following symbolic refererences.
-  *
--- 
-2.43.GIT
+The workaround can be something like this:
+
+```bash
+  # WORKAROUND:
+  #   The `git push` asks for username under the bash shell call from the Windows cmd.exe script.
+  #
+  [[ -n "${COMSPEC+x}" ]] && unset HOME
+```
+
+>git --version
+git version 2.43.0.windows.1
+
+>winver
+Version 6.2 (Build 9200)
 
