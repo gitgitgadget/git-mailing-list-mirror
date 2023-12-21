@@ -1,132 +1,93 @@
-Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 027854D5BC
-	for <git@vger.kernel.org>; Thu, 21 Dec 2023 10:45:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 073846AB88
+	for <git@vger.kernel.org>; Thu, 21 Dec 2023 10:48:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FfweiC71";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KYtQnI8d"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.west.internal (Postfix) with ESMTP id C04E73200A40;
-	Thu, 21 Dec 2023 05:45:24 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Thu, 21 Dec 2023 05:45:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1703155524; x=1703241924; bh=zvJgNsLM8S
-	N+YRVLL9+lpb37i5UTfzM77AijgNyPRp0=; b=FfweiC71HfMhj4ATh4lQMLifeF
-	H+E3zuA7eQBsji2Whc5Z/xTo9scCmhTFQvajnZnY7NV0MDQ+CHEdfIyYDZcVeKF+
-	yUnrPauI67U6Eurr+x0yzJnaeVYwMO0JLf38tGT2I0Hvu2jDEhBrpnkKNnQQlCll
-	Yfwv9fEXnGA4GavYWP9ADkhTQZYusLJ9kAntKj7uAAclfEo8mQT6gJTc7Q0kNWts
-	hN0zCVC97MzTlScxDIXjh6nT2vSzvAOtDhhca3xF/QHpawlHRFQDefomJDUqyA0c
-	vidtzRvaCjeF0DEYUqefWQv4q9rK8f0zvTuK+L4Ar/rpQeibZeGmkfxwAocQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1703155524; x=1703241924; bh=zvJgNsLM8SN+YRVLL9+lpb37i5UT
-	fzM77AijgNyPRp0=; b=KYtQnI8deUBu0dcLVi+RUn72vlsIia13WcU+RhCOigiY
-	TXZy29hrvxXwEYeYm2PIk0BuZKKamskhPYMEx5u8a0JDuVhRtI04Aw90+O3Uo1dQ
-	ZBsdZabl/jOISc2Q8w/Dudjb5/QTqqBMZLqJfd466GLAxM+24Fa7NDuNxVUwU8iz
-	R/WDmikgySOfiBD5laeMg1prip7eblIjBB9kPNXkH17rhDu7ZQP318qWm4cuX/yd
-	N+rRZdDfhGtwUnqfMbKcCGToEmHZWFKUgqOniEWB4A2ktmTDX/Tck3x7R7Bz4B/z
-	egS3ktEcYqE31NNWTCn3G+9INDBHO7Biwfx/dc/sMQ==
-X-ME-Sender: <xms:RBeEZUpCoBhMsjHuPzXQ1jbNY9wJ7-9hzQDMpeXuZy9va3pcjj_9XQ>
-    <xme:RBeEZarR-Af9CCFImlaCI7CBwh3h5LprQQaQ_cmy82I0U95bbwysjrtjGnOtokBdo
-    pRqaId8KFJYjPXx9Q>
-X-ME-Received: <xmr:RBeEZZNZaJ3X1QMz4OLHoOu_Ka89OPJ-NoWNILdhb5-0lUDJlt0XVDpm3MstKBdXBAdMYtGlM9pfsWSYJ33BKJG-vFM1uG-NVLylZLnbdHhBow>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvddugedgvddtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnheptefgkedthedvkeejtedttdehgeefheehtefgudetheduudefkefgtdfggeejgedt
-    necuffhomhgrihhnpehpuhgslhhitgdqihhnsghogidrohhrghenucevlhhushhtvghruf
-    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:RBeEZb6hTxissQzCCRZpgv3RP48Yde3CsSteb9A777VRUmdLDXu3kA>
-    <xmx:RBeEZT5WpAC4aCq663fPlvgV2XYkTyMd0gTnj_9Ihk1V-pFDEg6Mpg>
-    <xmx:RBeEZbgIg7HrUbIL7D5yXX3EvX1wiSz2P1_AJfgeIJjlIDLRWdfzgQ>
-    <xmx:RBeEZTGtgNxPKBWQSJvgdwx08vkJiN0EwvjOt6nlFxUvPM5acTkgEA>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 21 Dec 2023 05:45:23 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id b021a13b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 21 Dec 2023 10:43:24 +0000 (UTC)
-Date: Thu, 21 Dec 2023 11:45:19 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Han-Wen Nienhuys <hanwenn@gmail.com>
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	psteinhardt@gitlab.com
-Subject: Re: [PATCH 5/8] reftable/stack: perform auto-compaction with
- transactional interface
-Message-ID: <ZYQXP6xPiZbM2aOf@framework>
-References: <cover.1700549493.git.ps@pks.im>
- <25522b042cdc5986972cc7b62e6b88be0569d3cb.1700549493.git.ps@pks.im>
- <CAOw_e7Yfdt_Wqm-9XDJknaN-iH=haP0R4K-S4c_E3EFDzvG5aA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="du7mUTea"
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2cc95f1102eso5994441fa.1
+        for <git@vger.kernel.org>; Thu, 21 Dec 2023 02:48:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1703155690; x=1703760490; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Sr0XMxAZYpEfCXsgM7g5aN7XRY/p639pFL1udxXsCJs=;
+        b=du7mUTeaQxV55/0b5IBVe6c2QccJ3fKjktynRgmW0e609cRGNKkl4Zi/0uzqwuJ5Ox
+         w/GVlv4g4dV6I4dFyf4B56aMKwBW89D+SJIX5LwLdUnx3mH+kbn5OlpMHbSXkT/UK5Gf
+         WVn1MVU4Us0UdlxSCj+pBzBELJjwQgPRvGXjk1dVS2UcvhTD2NIn2dWJFg0b54UgPZvE
+         s6XdNrDu9TE9vzftS5gwmXAcny0fKyQeaPsDcr8GNIC1/ujS9qXccfTmKAoAukt0hCcE
+         fyB1HzTLEjXS1mgoFT0CJfh7qDC+wXTM9nU2pvU4CKMs32mJNMjs6Q+tzDXAXrv0biPz
+         +NbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703155690; x=1703760490;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Sr0XMxAZYpEfCXsgM7g5aN7XRY/p639pFL1udxXsCJs=;
+        b=SOYb7Jbhz7rxPF9mJu+rTC68lBWhL26MRn0TXy8DxZ0E7jYakYSjlLPsCs/SWPfL4l
+         mVWtA/7UN+Nfn51OfGyFEknPXfUGGoaaMeXGk+uDstKrW6PUoc4dykotNjp3eDDUD5kT
+         xqQ1D+pGuoAQCFRESkxG9ovgoa8OARs/ENrSp3iCkzHa3hz0gb272Ks9fOKo4KCwIQWO
+         VyHeXCtCnYbOKr3sbrahuroURvtAUalQUEK5rd+HESb5X09pgsGakXVKh/wp9tWj3Cvz
+         qTNTqOQB4BYJcJ1+vB+WOlGgvjfKBFe+W4BjdLdRLsm6yFUaSNFj6xqocN3TTjTD2yCJ
+         lWhw==
+X-Gm-Message-State: AOJu0YwMgVO9Y4aIGAw9+ZJ86FCD22Mt+zPVPHPJxKLxtESR3r4a9ICx
+	WnKaU5zuHnxnAwtmS0TKoT8qjDThyCRwhAj2ysZT9Wtoxy5L6w==
+X-Google-Smtp-Source: AGHT+IFyTi4g6Pg4m44CZw/a3C7m6FQtMLeNbnomwQAtuTCZX7IVo1ftIva9KbBJ2LLb0RV9qRFLg450FESryaUmKDA=
+X-Received: by 2002:ac2:598d:0:b0:50b:fdc5:dec5 with SMTP id
+ w13-20020ac2598d000000b0050bfdc5dec5mr6142582lfn.75.1703155689470; Thu, 21
+ Dec 2023 02:48:09 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="iZ4bOytCvuLY2pH7"
-Content-Disposition: inline
-In-Reply-To: <CAOw_e7Yfdt_Wqm-9XDJknaN-iH=haP0R4K-S4c_E3EFDzvG5aA@mail.gmail.com>
+From: Devste Devste <devstemail@gmail.com>
+Date: Thu, 21 Dec 2023 11:47:57 +0100
+Message-ID: <CANM0SV3SEF28QJ2V0Q9ydp8yDbL8TDc1m871oxOB=UtwF1TtxQ@mail.gmail.com>
+Subject: git bisect stuck - --force flag required for checkout
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
+
+What did you do before the bug happened? (Steps to reproduce your issue)
+add file Foo.txt to .git and commit
+add some commits with any changes to other files, as this is needed
+for reproduction
+run: git config core.ignorecase false
+rename Foo.txt to foo.txt and commit
+add some commits with any changes to other files, as this is needed
+for reproduction
+run: git bisect start && git bisect bad
+eventually, when running "git bisect good" (or bad) you will get an error:
+>error: The following untracked working tree files would be overwritten by checkout:
+>Foo.php
+
+Anything else you want to add:
+git bisect good/bad needs to have support for a "--force" flag, which
+is passed to the git checkout it runs internally
+At the moment git bisect cannot be used on Windows, as there is no way
+to continue the bisect from here.
+Changing the "git config core.ignorecase true" temporarily is not an
+option, as this will introduce a variety of other bugs,
+which, on Windows, eventually will require you to completely delete
+and reclone the repo, as Windows file paths are case-insensitive
+
+[System Info]
+git version:
+git version 2.39.1.windows.1
+cpu: i686
+built from commit: b03dafd9c26b06c92d509a07ab01b01e6d0d85ee
+sizeof-long: 4
+sizeof-size_t: 4
+shell-path: /bin/sh
+feature: fsmonitor--daemon
+uname: Windows 10.0
+compiler info: gnuc: 12.2
+libc info: no libc information available
 
 
---iZ4bOytCvuLY2pH7
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, Dec 21, 2023 at 11:29:52AM +0100, Han-Wen Nienhuys wrote:
-> On Tue, Nov 21, 2023 at 8:07=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wr=
-ote:
-> > Whenever updating references or reflog entries in the reftable stack, we
-> > need to add a new table to the stack, thus growing the stack's length by
-> ..
->=20
-> bug is correctly identified, but can't the fix remove the
->=20
->          if (!st->disable_auto_compact)
->                 return reftable_stack_auto_compact(st);
->=20
-> fragment from reftable_stack_add? reftable_addition_commit eventually
-> calls reftable_addition_commit.
-
-"calls reftable_stack_add" you probably mean here. But yes, you're
-right. As this patch series has already been merged to `next` I can roll
-this cleanup into my second patch series that addresses issues with the
-reftable library [1]. Does that work for you?
-
-[1]: http://public-inbox.org/git/xmqqr0jgsn9g.fsf@gitster.g/T/#t
-
-Patrick
-
---iZ4bOytCvuLY2pH7
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWEFz4ACgkQVbJhu7ck
-PpQsBhAAj9brNP+uO5Eq37Qu1UIZr7dl3ZC8S8IwO4YCdorW49uuV8vfOYERRX17
-2kbdj9LvlZJpb11Z+qogrup2GrYqq9bj4GwsrnTuHVqrovdlCI9O3B4zwe3y9KO0
-M0exekueX4EyNUyYe3yy8iTw0JsazBKwrag9bSmuYlE/jiGHJkCPiDH14QfA0pEi
-xaaXHIHOIqUKIEXlCGOH1YpAnmXpbmB1QFfjiDBbo1UXbsio6K+OhV4zJxeCJc7r
-2XB+VviE4pRhhU2lYlXIEW45oS28WZ4Z3+QbILqVYioY2nSaYO8vvCG02qYovXtG
-xh80p0H0DzjHUK8MXcB47jHStyZ2ucljCSU6+r/C/g+yMfNa15T+PWyp85MBAd4t
-Q3HEz3VKsMSbqqdx6SlmJCjQLR3dGAxMdK91X8Pza0DVo47snCAIxtwhBGXET5XC
-e8Srf2MbOdW81kMgCxGtnHaRo1/+qYqJPhdzbXsMpUIvcWebWx1D0ekuQdVUTknb
-oqBKKPbk1TTyP668Y4lZY2pqqQDIzip1/v63B3d1opaEaVp9LrN6Cgn3JZU3wwZP
-2nAmmJMu/hleW2lTczP1ORdH1pY3eHYvjG73Ah/91xb/PVpppVVZh+mfNvxW1Am3
-rmPAVqOiuZ/TcstRtW2AbK9lZ+cuaz16v7GFd2XYXj42Ke41pEA=
-=T2j4
------END PGP SIGNATURE-----
-
---iZ4bOytCvuLY2pH7--
+[Enabled Hooks]
