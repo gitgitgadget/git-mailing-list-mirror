@@ -1,54 +1,54 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2C9F58214
-	for <git@vger.kernel.org>; Thu, 21 Dec 2023 16:41:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC565822C
+	for <git@vger.kernel.org>; Thu, 21 Dec 2023 16:41:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m75eHebX"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-40c41b43e1eso12369345e9.1
-        for <git@vger.kernel.org>; Thu, 21 Dec 2023 08:41:11 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PWCzl13o"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-40c39ef63d9so10200775e9.3
+        for <git@vger.kernel.org>; Thu, 21 Dec 2023 08:41:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1703176869; x=1703781669; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1703176870; x=1703781670; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7IvwM4W/NlDHwNbKAl3tiFP3CE30lrBYpPWWZEMxuUY=;
-        b=m75eHebXoC4E7f7Ux8GZyStvcsxdbl1v4Hk6AQmjw2h/HDbXUcbSr+4sqYMlAhCWD8
-         uEq10+OAu3yBMDC6FcPaqHdIohUb2lg53BoDNvbGkd6tPwZu764JjUXVInG1xXhG+M3e
-         QH8NBx/Oi04j2vWbqjlWgkURKyOqJMfGRsLKcI25xJeSQuc8WmjjASfDUP4/IBE6m17U
-         wE/l3I/oV19kKHQSfHP2vpQFnAZFZ/AAdyCfbkS0xTgnrBrddGPzg5UgZFGqI/6LyK4Q
-         XVFsgx0UU9unAUVXxh6Nrj3DFj5dwZHakEacpAw4PXtkYo1sHaU6fBemKhPfNtkPbdnY
-         8XGQ==
+        bh=2XxHqJWvbMaJ8kSLADFR194AUuAUgfHnTsU1sdJ8Qlg=;
+        b=PWCzl13oanh9iNJaHhRJ3bn18QA87sqPxbb0V+HiVwIYhE1HggT6fKVU0stCnEwUBO
+         MrRd824UbZ3WlaGWu0eNXE8FaAp8n8t2xkCiarB19esu9asmamZcaadFjnZkwE/yeO/X
+         99MAY07GesWYl10FL4zJJGuHDLtW3LgdIbQuOE8mveIcp/G3cTxFjkux+m2d4SeSjdj/
+         QMB5SmGNSpr4Bz+RvyjGQYwL7M2OnklJvyURVtMnKvt+6OXFNEw8aNV0up1Pf5zAzN0g
+         pkwRtq3Ct6JAnXEnRYfwXsxfV6OpGCIpzBAEHMrd4pWpI9kWgy2AG2//Fa0aDa/VIGqW
+         MX3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703176869; x=1703781669;
+        d=1e100.net; s=20230601; t=1703176870; x=1703781670;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=7IvwM4W/NlDHwNbKAl3tiFP3CE30lrBYpPWWZEMxuUY=;
-        b=qoXJKkPb3LpzIOcMtVfPg+i55QZqQo/lw0/IJxQNhIbriBpxLdM5LwlmSR6KCrUUl/
-         UwPX/frBfW2rU9adYLB8lPmQplK8xfaMHJmZbODK8bY0mbtY7VkPRH0I5knjg24g01K1
-         7wMl1TSMI25fU6KifJjsgyEIv54NjHJolsheVsAUzFhDfnBN0KyevLuWTAEdS3hGx4JD
-         Cj34UbTWp3e13kTSWIbNWudnkrrbzvWPV7miY2jfms4GsCh5ocIuKjBxpSNPgyZxOnGm
-         XvenFfqgL/N9I8OT1Sc55r1FPUVSoQNsoWFHR0pSUlf0n+aXEqLYYRJbxQRacEMaODqb
-         AAUA==
-X-Gm-Message-State: AOJu0YyCPg3rlYXjfIiEIc2qo75HBpZ6vAwvPuqZOTt6uZfxPYhPQ2xQ
-	U5zAhBy+nkt9Ek2SJwTyggJlY5XlYEA=
-X-Google-Smtp-Source: AGHT+IGzY2zp/NsAFPJCB9BwwVPhpRtw44XY6WzoioMRue8EX9HC+lJAkJLWblGJ3rISPWRRCWNWJw==
-X-Received: by 2002:a05:600c:511d:b0:40b:36e9:bf4b with SMTP id o29-20020a05600c511d00b0040b36e9bf4bmr8879wms.41.1703176869061;
-        Thu, 21 Dec 2023 08:41:09 -0800 (PST)
+        bh=2XxHqJWvbMaJ8kSLADFR194AUuAUgfHnTsU1sdJ8Qlg=;
+        b=d07DUFrmkvFyyVP1lvSMMkS2boRHfjUHLKqZ6OEQ+qx71TEQHmH6ishW40JD8CZTDe
+         KfiEoplX0IPv6khYcTNHPDAf3eK0nmU1DGkKnUNMHZqjDd/2NYvX5I/ckQH1zL0YGvVh
+         SjiPos7ZSXtJFyQYv+qviZHLj6+LLq4OQvGqRT0QB0W1rMQ4Q0HNKBLJXAj+SJdpgoc1
+         9V6SmiXh8kpYOL2wtMdmkPJfrnfwS3ksG9I/4hjie93Tt0kH9Zs81QK1SVFEYk98Yxjv
+         w2hzAs06iI0CLLMoRAmdyfp0VGRx36HpUcbsXOp5bs9Z3Ns9S7EZjlpZvWexrFg342OU
+         IeTA==
+X-Gm-Message-State: AOJu0YyxVqs6sf5bUbZ2aziVNmRHmZ/ijxLOcQouPoRS1QpO+G87JqYQ
+	opxRq9HdYcdZzaET5ZJD8fIuQZbAYYU=
+X-Google-Smtp-Source: AGHT+IFZ4E5HBgim5sgmPTeAY8uqQ8kHgGOcitjJstTqZqPVT11bIuhNZBEcgpcov2n4C5QzwO0gCQ==
+X-Received: by 2002:a05:600c:5106:b0:40c:a5d:860d with SMTP id o6-20020a05600c510600b0040c0a5d860dmr1043968wms.169.1703176870429;
+        Thu, 21 Dec 2023 08:41:10 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c10-20020a7bc2aa000000b0040b2b38a1fasm3804691wmk.4.2023.12.21.08.41.08
+        by smtp.gmail.com with ESMTPSA id w20-20020a05600c475400b0040b4fca8620sm11668905wmo.37.2023.12.21.08.41.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Dec 2023 08:41:08 -0800 (PST)
-Message-ID: <22d66c5b78a6930e195141df848266cac099ca08.1703176866.git.gitgitgadget@gmail.com>
+        Thu, 21 Dec 2023 08:41:09 -0800 (PST)
+Message-ID: <eac2211332f754c5f4127a58aafb9882bfe939e8.1703176866.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1623.v2.git.1703176865.gitgitgadget@gmail.com>
 References: <pull.1623.git.1702975319.gitgitgadget@gmail.com>
 	<pull.1623.v2.git.1703176865.gitgitgadget@gmail.com>
 From: "Josh Soref via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 21 Dec 2023 16:40:59 +0000
-Subject: [PATCH v2 3/9] SubmittingPatches: drop ref to "What's in git.git"
+Date: Thu, 21 Dec 2023 16:41:00 +0000
+Subject: [PATCH v2 4/9] SubmittingPatches: discourage new trailers
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,28 +68,34 @@ Cc: Elijah Newren <newren@gmail.com>,
 
 From: Josh Soref <jsoref@gmail.com>
 
-"What's in git.git" was last seen in 2010:
-  https://lore.kernel.org/git/?q=%22what%27s+in+git.git%22
-  https://lore.kernel.org/git/7vaavikg72.fsf@alter.siamese.dyndns.org/
+There seems to be consensus amongst the core Git community on a working
+set of common trailers, and there are non-trivial costs to people
+inventing new trailers (research to discover what they mean/how they
+differ from existing trailers) such that inventing new ones is generally
+unwarranted and not something to be recommended to new contributors.
 
+Suggested-by: Elijah Newren <newren@gmail.com>
 Signed-off-by: Josh Soref <jsoref@gmail.com>
 ---
- Documentation/SubmittingPatches | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/SubmittingPatches | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index bce7f97815c..32e90238777 100644
+index 32e90238777..58dfe405049 100644
 --- a/Documentation/SubmittingPatches
 +++ b/Documentation/SubmittingPatches
-@@ -570,7 +570,7 @@ their trees themselves.
-   master).
+@@ -356,8 +356,9 @@ If you like, you can put extra tags at the end:
+ . `Tested-by:` is used to indicate that the person applied the patch
+   and found it to have the desired effect.
  
- * Read the Git mailing list, the maintainer regularly posts messages
--  entitled "What's cooking in git.git" and "What's in git.git" giving
-+  entitled "What's cooking in git.git" giving
-   the status of various proposed changes.
+-You can also create your own tag or use one that's in common usage
+-such as "Thanks-to:", "Based-on-patch-by:", or "Mentored-by:".
++While you can also create your own trailer if the situation warrants it, we
++encourage you to instead use one of the common trailers in this project
++highlighted above.
  
- == GitHub CI[[GHCI]]
+ [[git-tools]]
+ === Generate your patch using Git tools out of your commits.
 -- 
 gitgitgadget
 
