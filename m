@@ -1,42 +1,47 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 263B976915
-	for <git@vger.kernel.org>; Thu, 21 Dec 2023 20:40:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F815634F9
+	for <git@vger.kernel.org>; Thu, 21 Dec 2023 20:57:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="YXMm45hW"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 4ABC7195A2;
-	Thu, 21 Dec 2023 15:40:08 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="VkgEwRvi"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7DA5D1C74E4;
+	Thu, 21 Dec 2023 15:57:21 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=z/Ff8MM2lO+mqVEjJlEMMalLLMxbpbquv3s4yy
-	1TSHs=; b=YXMm45hWKi9RMh+KLR1dLzfvm8SqRRwXK2aEtItAaUaaewDdeS/YJe
-	iVByI0++/fS5KtWpqdgH7cAzAjm/ncvugzCK+InIKJ177wtbqai961nRp7GBOrJ7
-	KhjXZ/E+1Q0nc9ucYcj0go91aOFR+RyIb6ajz5flumsPCElLQUUZk=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 2EB95195A1;
-	Thu, 21 Dec 2023 15:40:08 -0500 (EST)
+	:content-type; s=sasl; bh=XMZNWtJXjOazBMfv3lcRs0T8O4sSXzhZ48tJL/
+	INwKc=; b=VkgEwRviyLx/6NgBc0wm8DFrReQQohJx2Vzc0aCJi6LshD4Xjld5bI
+	btMYsQJBMx148bGV25ocPoUoc0/5NESm5B1yG9Xca4WPOlb9efZjg0MHAQOUFXTQ
+	tKCBKZkBkQRp2QfzjybRsT3+xGji5hOW4qmCLggw0JaemKftvut10=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 745081C74E3;
+	Thu, 21 Dec 2023 15:57:21 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.193.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BBDDC1959D;
-	Thu, 21 Dec 2023 15:40:04 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E02CA1C74E2;
+	Thu, 21 Dec 2023 15:57:20 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im,  christian.couder@gmail.com
-Subject: Re: [PATCH 2/2] ref-filter: support filtering of operational refs
-In-Reply-To: <20231221170715.110565-3-karthik.188@gmail.com> (Karthik Nayak's
-	message of "Thu, 21 Dec 2023 18:07:15 +0100")
-References: <20231221170715.110565-1-karthik.188@gmail.com>
-	<20231221170715.110565-3-karthik.188@gmail.com>
-Date: Thu, 21 Dec 2023 12:40:03 -0800
-Message-ID: <xmqqzfy3l270.fsf@gitster.g>
+To: "Josh Soref via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  =?utf-8?Q?Ren?=
+ =?utf-8?Q?=C3=A9?= Scharfe
+ <l.s.r@web.de>,  Phillip Wood <phillip.wood123@gmail.com>,  Josh Soref
+ <jsoref@gmail.com>
+Subject: Re: [PATCH v2 2/9] CodingGuidelines: write punctuation marks
+In-Reply-To: <c0db8336e519cb43767effbe842dc8b97f914a4b.1703176866.git.gitgitgadget@gmail.com>
+	(Josh Soref via GitGitGadget's message of "Thu, 21 Dec 2023 16:40:58
+	+0000")
+References: <pull.1623.git.1702975319.gitgitgadget@gmail.com>
+	<pull.1623.v2.git.1703176865.gitgitgadget@gmail.com>
+	<c0db8336e519cb43767effbe842dc8b97f914a4b.1703176866.git.gitgitgadget@gmail.com>
+Date: Thu, 21 Dec 2023 12:57:19 -0800
+Message-ID: <xmqqplyzl1e8.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -46,30 +51,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 1EF60ED8-A041-11EE-BD32-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+ 888E5434-A043-11EE-A370-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+"Josh Soref via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> With the upcoming introduction of the reftable backend, it becomes ever
-> so important to provide the necessary tooling for printing all refs
-> associated with a repository.
+Nobody seems to have commented on this step in the previous round,
+but I do not understand what you mean by ...
 
-We have pseudoref (those all caps files outside the refs/ hierarchy)
-as an official term defined in the glossary, and Patrick's reftable
-work based on Han-Wen's work revealed the need to treat FETCH_HEAD
-and MERGE_HEAD as "even more pecurilar than pseudorefs" that need
-different term (tentatively called "special refs").  Please avoid
-coming up with yet another random name "operational" without
-discussing.
+> From: Josh Soref <jsoref@gmail.com>
+>
+> - Match style in Release Notes
 
-With a quick look at the table in this patch, "pseudorefs" appears
-to be the closest word that people are already familiar with, I
-think.  A lot more reasonable thing to do may be to scan the
-$GIT_DIR for files whose name satisfy refs.c:is_pseudoref_syntax()
-and list them, instead of having a hardcoded list of these special
-refs.  In addition, when reftable and other backends that can
-natively store things outside refs/ hierarchy is in use, they ought
-to know what they have so enumerating these would not be an issue
-for them without having such a hardcoded table of names.
+... at all.  The patch text is fine, though.
 
-
+> Signed-off-by: Josh Soref <jsoref@gmail.com>
+> ---
+>  Documentation/CodingGuidelines | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+> index af94ed3a75d..578587a4715 100644
+> --- a/Documentation/CodingGuidelines
+> +++ b/Documentation/CodingGuidelines
+> @@ -578,7 +578,7 @@ Externally Visible Names
+>     . The variable name describes the effect of tweaking this knob.
+>  
+>     The section and variable names that consist of multiple words are
+> -   formed by concatenating the words without punctuations (e.g. `-`),
+> +   formed by concatenating the words without punctuation marks (e.g. `-`),
+>     and are broken using bumpyCaps in documentation as a hint to the
+>     reader.
