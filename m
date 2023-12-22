@@ -1,94 +1,76 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B150F1171B
-	for <git@vger.kernel.org>; Fri, 22 Dec 2023 10:06:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1368F17730
+	for <git@vger.kernel.org>; Fri, 22 Dec 2023 11:41:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gjoBafC8"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-40d3bebbf6eso13174935e9.1
-        for <git@vger.kernel.org>; Fri, 22 Dec 2023 02:06:02 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MmwoNHnz"
+Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-1f066fc2a2aso804631fac.0
+        for <git@vger.kernel.org>; Fri, 22 Dec 2023 03:41:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1703239561; x=1703844361; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=mNBu42R18FwHzPjoS31oWW6rq8pzSkSsiLkPSs0cbnk=;
-        b=gjoBafC8fV0Rr6K1chu3EQOv7NxCGpNp4Z1UvePBSnZJykxOdUvTNpcOiWCKfGdvjF
-         VzpEcP866NBLoL0iSd18MqYU5TLfEWiOiiGoqev+Oo41EvpJ3fUY5VfRxsdD0vqlLDYl
-         oOfOJ4Mt3U0iy7E29Bu/J8fGzUxqkiZSKVSU2etfpdcOzokXmff2dJ9rgBZtzckRjsGv
-         u50EGGaohOedcd2p0KFDgib0CqHOSHorO5mykckWtSQiG87bn+exSr7I3Cpt0m4/LfRL
-         nbKNIjixymdd7sP5vUsj/Mu2PfsQlq9XWh2Wn/eazBt4rKqInfSZKtO/563ndXDh8huw
-         zH6w==
+        d=gmail.com; s=20230601; t=1703245272; x=1703850072; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jiYYZkgrUgCajPLEwQEvgK9uVXeh47/LcT62WhAq+EM=;
+        b=MmwoNHnz9sgYcZ76N80Fkk6Kt5d/H5TQ3TNvlcZ6hcoJsALtfAIxN7YRgNTEoGOnfX
+         WKpOcfVOecDKEmiuRLw0Oe2cX/sJXoR9557ROdzSdogaPEL/nhnl5cik+5O3A+FgTgA+
+         /IowZf1JvUdLLPFV0L2fuFR5bLdgmVURCpUR3BXFj2uGQdVkD6yAlyruQRZOSGKCjHp4
+         nL1FyEzfBSBZP9OQF6oXomGDGQ7m6JnC3Zpj1jzZoK14hw1bxvh4npqQOhEEHAnzkHmX
+         +BvOWP7jflgO4PsRSKHD1gxKVZGBw+/s04iHPFIiyHQTji9FkF2rEIgRcHijot+BNL7S
+         0gGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703239561; x=1703844361;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mNBu42R18FwHzPjoS31oWW6rq8pzSkSsiLkPSs0cbnk=;
-        b=lcdFRCgzzbKJV7uoOlD/SPIxR6RjA+vOFqZUdEOsbzbWtJDHlcgwxjricagCOykxPg
-         j3ns5cC2TZ9/FMDPjTuOzklpE2H9a0eNQhQCik7cB/MI7BUomNyO9bm83zdTch3gPwVb
-         Ckpg4x6peP7nDCLX5q96Ve7HuxzBB5pR/ZVittesxgo1IZ62vnlrHBPQrisMzhijLcLn
-         iQucFdsO+5Ch8fmpuPpKpUdCowXTU/AgofS+3rMp0vXwbIUu5C3bTgSU9/lUrzJn98Y1
-         l/Nhwbl9+BOSRkYQkECaYJxzNFhY0kfIDLjpTg7uWK/0ibzSpZHjANiwHS4JV57xb+Tg
-         BlJQ==
-X-Gm-Message-State: AOJu0YwNkrQgNyEYQaCSLZJoxcbBYpkeAmlvid0TsBnCU9F8KvbOZx8J
-	Y9lYgP6CDVoeEzAlO/tDV5Fe9p6M2c8=
-X-Google-Smtp-Source: AGHT+IEY2aQ3lPJg/+xOnm7zrCinfZWQpZJwQa1LaRtQq00uU1jNeBW1aVxdhXIG+DWkm1NMpNRyqQ==
-X-Received: by 2002:a05:600c:450f:b0:40d:42de:47e with SMTP id t15-20020a05600c450f00b0040d42de047emr684287wmo.48.1703239560619;
-        Fri, 22 Dec 2023 02:06:00 -0800 (PST)
-Received: from [192.168.1.212] ([84.64.64.237])
-        by smtp.gmail.com with ESMTPSA id e18-20020a056000121200b0033660aabe76sm3913482wrx.39.2023.12.22.02.06.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Dec 2023 02:06:00 -0800 (PST)
-Message-ID: <bf1ce173-50d7-405f-88c1-7edb7ec5a55a@gmail.com>
-Date: Fri, 22 Dec 2023 10:05:56 +0000
+        d=1e100.net; s=20230601; t=1703245272; x=1703850072;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jiYYZkgrUgCajPLEwQEvgK9uVXeh47/LcT62WhAq+EM=;
+        b=J19cWGacM9xQVKzbjcWJSh/te6XDHfZsMHazf571nrTBAFUaQASPjuugsZvf8Ist9s
+         xO2t0UK05mT0ZoatHBxs5rAgCuAVvLCIfRiLuzqze6Vd++3UmmXkyujSsIO+vbboaP76
+         pPFceT78soY5P1aO7lqQ7JsTpkFeczJcpA1SOZsZGFyUdhYlgFsCRIDk7m4M33lnJZ+F
+         Fzi3Jo/PUuo6SRYam0owq05LA1/L80K/n9cLqWsi3qhKbhWvKpObyQoPw7opvYF9tiOy
+         HBYy95dL9Xo/TIJRy4deuef2t5gtmTvD1Yh2udZDdXXQJ9GjVp1uabBcbDYqtljScaC2
+         Op3Q==
+X-Gm-Message-State: AOJu0YyP0DWOXrvcSxw5ooEMPHzxN+u5s+YblvOZP1RU5oi67W0zCNwc
+	VWCQ1D0BNQcK3Bu4UWnCLnfEtIismgzgsgFvdRN793Ebwqk=
+X-Google-Smtp-Source: AGHT+IHh9h5VT6erHQMfqvzWtTgEVzElAhVJoQy1ea5oGSOsKwW+MY0/wNBwlq3NT816zV72/AtpfZhIaaQgNpC6lJk=
+X-Received: by 2002:a05:6870:9195:b0:203:90ab:c19 with SMTP id
+ b21-20020a056870919500b0020390ab0c19mr1056465oaf.48.1703245271646; Fri, 22
+ Dec 2023 03:41:11 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 22 Dec 2023 03:41:10 -0800
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <239ca38efdbe3195e6319be4423b17d2b42e0b9f.1703067989.git.ps@pks.im>
+References: <cover.1703067989.git.ps@pks.im> <239ca38efdbe3195e6319be4423b17d2b42e0b9f.1703067989.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: rebase invoking pre-commit
-To: Sean Allred <allred.sean@gmail.com>, Git List <git@vger.kernel.org>
-References: <m0sf3vi86g.fsf@epic96565.epic.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <m0sf3vi86g.fsf@epic96565.epic.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Date: Fri, 22 Dec 2023 03:41:10 -0800
+Message-ID: <CAOLa=ZSY-FBUMOx9SHkJqf7XteQC=hVoYxo73q=E1wL3QOBYtA@mail.gmail.com>
+Subject: Re: [PATCH 01/12] t: introduce DEFAULT_REPO_FORMAT prereq
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Sean
+Patrick Steinhardt <ps@pks.im> writes:
 
-On 21/12/2023 20:58, Sean Allred wrote:
-> Is there a current reason why pre-commit shouldn't be invoked during
-> rebase, or is this just waiting for a reviewable patch?
+> A limited number of tests require repositories to have the default
+> repository format or otherwise they would fail to run, e.g. because they
+> fail to detect the correct hash function. While the hash function is the
+> only extension right now that creates problems like this, we are about
+> to add a second extensions for the ref format.
+>
 
-The reason that we don't run the pre-commit hook is that the commit 
-being rebased may have been created with "git commit --no-verify" and so 
-running the pre-commit hook would stop it from being rebased - see 
-e637122ef2 (rebase -m: do not trigger pre-commit verification, 2008-03-16).
+Nit: s/extensions/extension
 
-I think that most of the time it would be valuable to run the pre-commit 
-hook when committing a conflict resolution but we'd need to add 
-something like "git rebase --continue --no-verify" as a way to bypass it 
-when resolving conflicts in commits that were created with "git commit 
---no-verify".
+> -test_expect_success SHA1 'git branch -m q q2 without config should succeed' '
+> +test_expect_success DEFAULT_REPO_FORMAT 'git branch -m q q2 without config should succeed' '
+>  	git branch -m q q2 &&
+>  	git branch -m q2 q
+>  '
 
-Best Wishes
-
-Phillip
-
-> This was brought up before at [1] in 2015, but that thread so old at
-> this point that it seemed prudent to double-check before investing time
-> in a developing and testing a patch.
-> 
-> [1]: https://lore.kernel.org/git/1m55i3m.1fum4zo1fpnhncM%25lists@haller-berlin.de/
-> 
-> --
-> Sean Allred
-> 
+My only concern is whether we'll end up blindly adding
+DEFAULT_REPO_FORMAT for tests where only SHA1 is a prereq or only where
+the new format extension is a prereq.
