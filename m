@@ -1,94 +1,94 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EEEC185D
-	for <git@vger.kernel.org>; Fri, 22 Dec 2023 01:30:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B150F1171B
+	for <git@vger.kernel.org>; Fri, 22 Dec 2023 10:06:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="aNwcR5If"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gjoBafC8"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-40d3bebbf6eso13174935e9.1
+        for <git@vger.kernel.org>; Fri, 22 Dec 2023 02:06:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1703239561; x=1703844361; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=mNBu42R18FwHzPjoS31oWW6rq8pzSkSsiLkPSs0cbnk=;
+        b=gjoBafC8fV0Rr6K1chu3EQOv7NxCGpNp4Z1UvePBSnZJykxOdUvTNpcOiWCKfGdvjF
+         VzpEcP866NBLoL0iSd18MqYU5TLfEWiOiiGoqev+Oo41EvpJ3fUY5VfRxsdD0vqlLDYl
+         oOfOJ4Mt3U0iy7E29Bu/J8fGzUxqkiZSKVSU2etfpdcOzokXmff2dJ9rgBZtzckRjsGv
+         u50EGGaohOedcd2p0KFDgib0CqHOSHorO5mykckWtSQiG87bn+exSr7I3Cpt0m4/LfRL
+         nbKNIjixymdd7sP5vUsj/Mu2PfsQlq9XWh2Wn/eazBt4rKqInfSZKtO/563ndXDh8huw
+         zH6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703239561; x=1703844361;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mNBu42R18FwHzPjoS31oWW6rq8pzSkSsiLkPSs0cbnk=;
+        b=lcdFRCgzzbKJV7uoOlD/SPIxR6RjA+vOFqZUdEOsbzbWtJDHlcgwxjricagCOykxPg
+         j3ns5cC2TZ9/FMDPjTuOzklpE2H9a0eNQhQCik7cB/MI7BUomNyO9bm83zdTch3gPwVb
+         Ckpg4x6peP7nDCLX5q96Ve7HuxzBB5pR/ZVittesxgo1IZ62vnlrHBPQrisMzhijLcLn
+         iQucFdsO+5Ch8fmpuPpKpUdCowXTU/AgofS+3rMp0vXwbIUu5C3bTgSU9/lUrzJn98Y1
+         l/Nhwbl9+BOSRkYQkECaYJxzNFhY0kfIDLjpTg7uWK/0ibzSpZHjANiwHS4JV57xb+Tg
+         BlJQ==
+X-Gm-Message-State: AOJu0YwNkrQgNyEYQaCSLZJoxcbBYpkeAmlvid0TsBnCU9F8KvbOZx8J
+	Y9lYgP6CDVoeEzAlO/tDV5Fe9p6M2c8=
+X-Google-Smtp-Source: AGHT+IEY2aQ3lPJg/+xOnm7zrCinfZWQpZJwQa1LaRtQq00uU1jNeBW1aVxdhXIG+DWkm1NMpNRyqQ==
+X-Received: by 2002:a05:600c:450f:b0:40d:42de:47e with SMTP id t15-20020a05600c450f00b0040d42de047emr684287wmo.48.1703239560619;
+        Fri, 22 Dec 2023 02:06:00 -0800 (PST)
+Received: from [192.168.1.212] ([84.64.64.237])
+        by smtp.gmail.com with ESMTPSA id e18-20020a056000121200b0033660aabe76sm3913482wrx.39.2023.12.22.02.06.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 22 Dec 2023 02:06:00 -0800 (PST)
+Message-ID: <bf1ce173-50d7-405f-88c1-7edb7ec5a55a@gmail.com>
+Date: Fri, 22 Dec 2023 10:05:56 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1703208601;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=JiiDmL5zEJOyqLdIf9jjzQsycJgiAW2gY9fIKrosJ38=;
-	b=aNwcR5IfPbjQuttLtgMeDYpKpwtJQnWh6wEcoeJF7wzKr8n6XP8qYPpNs9klVRxgXCIq26
-	41Qe1yPk9EUSEML/DTDFwWhdtlFospyXaYT2UrwJWRts8bgHoJRGdryVwJrz0tzqHFHc9O
-	Lz+Vkooh3AnEW3Eu9UaCl8OWLUxheHYJfjhwjYj8zWBSZv+JswEDKIusIpN2JzZZHPMXZD
-	ZPaMYuiV7HGwBGPryxqEly5YloVZaXfsPgXob6QU5WJ++oDVZC6Yijsjuv00brr8Ecoz+/
-	SZQtGzWCJkVSFEQ+TXkab9U35EpGqrcCFZk+SwOxfZgTZiXa1ygbqahUxBcV0Q==
-Date: Fri, 22 Dec 2023 02:30:01 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Josh Soref via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Elijah Newren <newren@gmail.com>, =?UTF-8?Q?Ren?=
- =?UTF-8?Q?=C3=A9_Scharfe?= <l.s.r@web.de>, Phillip Wood
- <phillip.wood123@gmail.com>, Josh Soref <jsoref@gmail.com>
-Subject: Re: [PATCH v2 1/9] CodingGuidelines: move period inside parentheses
-In-Reply-To: <xmqqedffl13r.fsf@gitster.g>
-References: <pull.1623.git.1702975319.gitgitgadget@gmail.com>
- <pull.1623.v2.git.1703176865.gitgitgadget@gmail.com>
- <b9a8eb6aa4e87cd96fbf2b5d514350508076d756.1703176866.git.gitgitgadget@gmail.com>
- <xmqqedffl13r.fsf@gitster.g>
-Message-ID: <b3b03da0e33b805f1f420a0dc1a19d86@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: rebase invoking pre-commit
+To: Sean Allred <allred.sean@gmail.com>, Git List <git@vger.kernel.org>
+References: <m0sf3vi86g.fsf@epic96565.epic.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <m0sf3vi86g.fsf@epic96565.epic.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-On 2023-12-21 22:03, Junio C Hamano wrote:
-> "Josh Soref via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> From: Josh Soref <jsoref@gmail.com>
->> 
->> The contents within parenthesis should be omittable without resulting
->> in broken text.
->> 
->> Eliding the parenthesis left a period to end a run without any 
->> content.
-> 
-> Nobody seems to have commented on this one in the previous round,
-> but quite honestly, for this particular instance, I suspect that it
-> may become easier to read if we just lost these parentheses, as the
-> next sentence "You do not have to include more than ..." is just a
-> bit of extra material to support the first sentence like the one we
-> see in the parentheses.  Alternatively, moving that "You do not have
-> to" also inside the same parentheses might work slightly better.
+Hi Sean
 
-I agree with simply erasing the parentheses, it makes the paragraph flow 
-much better.
+On 21/12/2023 20:58, Sean Allred wrote:
+> Is there a current reason why pre-commit shouldn't be invoked during
+> rebase, or is this just waiting for a reviewable patch?
 
-> It might be even easier to follow if we moved the list of "approved
-> headers" (and the "You do not have to ... more than one" note that
-> supports the "currently approved list") totally out of line by
-> making it a side note.
+The reason that we don't run the pre-commit hook is that the commit 
+being rebased may have been created with "git commit --no-verify" and so 
+running the pre-commit hook would stop it from being rebased - see 
+e637122ef2 (rebase -m: do not trigger pre-commit verification, 2008-03-16).
+
+I think that most of the time it would be valuable to run the pre-commit 
+hook when committing a conflict resolution but we'd need to add 
+something like "git rebase --continue --no-verify" as a way to bypass it 
+when resolving conflicts in commits that were created with "git commit 
+--no-verify".
+
+Best Wishes
+
+Phillip
+
+> This was brought up before at [1] in 2015, but that thread so old at
+> this point that it seemed prudent to double-check before investing time
+> in a developing and testing a patch.
 > 
->> Signed-off-by: Josh Soref <jsoref@gmail.com>
->> ---
->>  Documentation/CodingGuidelines | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->> 
->> diff --git a/Documentation/CodingGuidelines 
->> b/Documentation/CodingGuidelines
->> index 8ed517a5ca0..af94ed3a75d 100644
->> --- a/Documentation/CodingGuidelines
->> +++ b/Documentation/CodingGuidelines
->> @@ -450,7 +450,7 @@ For C programs:
->>     one of the approved headers that includes it first for you.  (The
->>     approved headers currently include "builtin.h",
->>     "t/helper/test-tool.h", "xdiff/xinclude.h", or
->> -   "reftable/system.h").  You do not have to include more than one of
->> +   "reftable/system.h".)  You do not have to include more than one of
->>     these.
->> 
->>   - A C file must directly include the header files that declare the
+> [1]: https://lore.kernel.org/git/1m55i3m.1fum4zo1fpnhncM%25lists@haller-berlin.de/
+> 
+> --
+> Sean Allred
+> 
