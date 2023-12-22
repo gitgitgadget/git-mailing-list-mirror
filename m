@@ -1,131 +1,145 @@
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f176.google.com (mail-il1-f176.google.com [209.85.166.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F080A2C188
-	for <git@vger.kernel.org>; Fri, 22 Dec 2023 17:57:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BAC46D6EF
+	for <git@vger.kernel.org>; Fri, 22 Dec 2023 18:27:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="tzQWFms1"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-	t=1703267868; x=1703872668; i=tboegi@web.de;
-	bh=/d7RRvXnyCRcxqGCmWo3VEx3m5vsgT31+HcTcLLOy6Q=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:
-	 In-Reply-To;
-	b=tzQWFms1qf6YoyaX5zo0BEfUR2pqf+j8hLJL37+01br3RFv1Chg/dcMY2BT1JPE4
-	 dLVdwXGsfNph0+D43WkNzfaOTZn/ssjSxppwp0vpkmM+9RIKd8em6QCcHY3gvkbcM
-	 8ph3N/p0M+u1N2A12lNOIBXn5Nw+VX5KEtKVFZWcu694h6STmWkmolbhqjjAq6d3m
-	 RdaemZkaVbJHyffn6oMybG43tD3Rpxlh25ondqnvsDCKctEPGvQillwZ6rN1+kpHa
-	 2oNQpKwT+F85norIQ1n6VKnZC/rzzd9chFgASiOC+ktUEYSPh1g+XZvr0SpkXkHox
-	 tuwT65eDUmTChi3oRA==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from localhost ([195.198.253.159]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MEUSE-1rWj9K1cuQ-00GMng; Fri, 22
- Dec 2023 18:57:48 +0100
-Date: Fri, 22 Dec 2023 18:57:47 +0100
-From: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To: Chandra Pratap via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Chandra Pratap <chandrapratap376@gmail.com>,
-	Chandra Pratap <chandrapratap3519@gmail.com>
-Subject: Re: [PATCH] sideband.c: replace int with size_t for clarity
-Message-ID: <20231222175747.GA2880@tb-raspi4>
-References: <pull.1625.git.1703264469238.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GTkuSsie"
+Received: by mail-il1-f176.google.com with SMTP id e9e14a558f8ab-35fc1a1b52bso7864425ab.2
+        for <git@vger.kernel.org>; Fri, 22 Dec 2023 10:27:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1703269657; x=1703874457; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=r8WCtHlaeWnpoZpYnlI5VUa++/SUm2rbjhVRH7qV3WI=;
+        b=GTkuSsiedvq//Omj4rM7gtOu03N9PgPNNKx+GkSI+IxWo2hfV/CbAHgGpi7IolTykH
+         TwRGEPGkr1dSz0vBFbPRE5boYl6O/q1RlWBoh7wOMCMK03HftI1hgJ+PFuxMHQkTKCTn
+         KWK+bySumckcuiSi3t3CfqirU5Op6T1I733C9x6rptBJsdhyqjSs3ilSd+1CRB+XYQyv
+         i5tkEmOcSw8BBSKcxqFHJIUcgPowkcBd2pXmP5u8XQibHqgzGEaiFZVz7CKbJZKzNTe0
+         w8FCFxyqTJM0q9YyAqWCuaCw7dAT8S7qknEhu+enktKVU+ppt94PrYNo5Eg9b0MiUf7X
+         bA6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703269657; x=1703874457;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=r8WCtHlaeWnpoZpYnlI5VUa++/SUm2rbjhVRH7qV3WI=;
+        b=DVG/WNUhj7gmV1dpJJIzoiGbOfHjB8SCE7hsSNH+mvk8XNvebYy5dW87ocvC/Egp+1
+         kyrf+pJSKPgidhHvRDelel/gmlT/Rvy8NOgFGELPhpI/8gXFmkNP/07wgF8y1BcftdJO
+         oXR7SR/xXXQmv0clhyMAKCPbZy7tivptsuo73bJiOTRYfAHlcNNrKMH961oq1heonL3l
+         UUc9oLxrQgUrQ6MMAHOfFCFRcUCTr4+VFSosTPEpIdcmIjTHthJ5qy5Nrp26XgrVXOvT
+         yC9vZdSX/Ow8KYgGQ6VcNV7Jn8fPlLZvZxz2Su2eNSapJEG5T9f8ijKuzmj75zYgJl7I
+         3Fcw==
+X-Gm-Message-State: AOJu0YwzhhzjFQsTDuDFDNjwCAhC+ZJH2X10b4D/poAwa8tV5kO770sM
+	VAtZOzBeSMN8vHzo1hQr/3+ESICrC12T0A/g8f8=
+X-Google-Smtp-Source: AGHT+IG2NmzeEPnQwa6TW9fS1jyt+PApySaFOmIvDxffwPgosm464P6W9QvK8gYWwOvxO9PNe0EdcxGzzXB8/IHSK2w=
+X-Received: by 2002:a05:6e02:1aa6:b0:35f:ca3f:fa67 with SMTP id
+ l6-20020a056e021aa600b0035fca3ffa67mr1786558ilv.43.1703269656666; Fri, 22 Dec
+ 2023 10:27:36 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.1625.git.1703264469238.gitgitgadget@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Provags-ID: V03:K1:r+65TV1t9tdl88UO6qqAA2y/hfQ8AZzXOw2opr6HfzoKqKPkklj
- jw3ShP+J7nSp8Nl+ZF3/YdyaG9iaZETzasaTk9iN5UeuvLaw04MyZQzM7Rhhpdtxgk8meat
- CK18h5jCEI7bxxHXng680pxBVptRwI4QomqcVAKhdcz4jig08x1TLs8EDKAA/Qn1PUtQ484
- hmUil4qW3p6n6eJ/zqNuw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:gJXFmC23xYI=;w5ligThy5yYhtP6ceRtk6ANbGoO
- p0X2dMEjo+iiYzy2Qkfwc0sfCFaJ5sRT+Y1j/S6uNVY6X5Moiu9utQjZugmJXjj2WFJoBa+yJ
- VodBub5xnlBu3+b2gWf+SZnwdt5hvUCtYfZZTTVPYjth3oPMMI3Q2g3sXKF+85dTIP+QMDO5D
- 7juPmlBHp6usa4p++4/jPK0L+CRI1iSTYqv6tRW+O+8ybO0LNoF/nL4wFoxz2f1KrTLVE/Vpu
- eqmpFd/6hXeS5/nZNYYN8c4l2AwkCIePUvM3GJ/r+w2E5WB3SjoJdmnkFV4YjqM8OZGqjdN09
- 5Hc21VsOXnR+iAGMZC7nJ4+bAUCw3D84+m/DeMyfqBh9BBOmUfVmgCazmorH8idEGDLiXnY6t
- feFvYbpbmIBF8bWzfGmOrpjK9x07wd4ldhO2G02dwYk8ATs47DmQrL68affwNss9V6Cj3f1oF
- 7ai8VbxxwUNClrX1v+9reZTV3sKjAGl1pFYb4NAuDugo0ZBkpLafNWmXFuOLnVTa5BDEmaOUI
- 6Ym23Y+9MdeUNeIlDjrX0pH66Uz6MuiiHhK6pdGdRNN9OkU20c3txG4qzDyN64Ai771uQqgtu
- 8QA7/HKGXClKi5F4bFZIewOLCLANHOR7lS7/Vq+AAKDUin5zea6MoVZO/31yEqu9IpE+MRdmI
- Qa0nzjkb9AzS8SFm1cNlBEkFczK2euhyCzNn7QhVBo5X0PM4d4SHEggmPIuo2bfsnaglp6BMn
- EYUkdjmKa43MJ5rPTjqPdvECyva+f7hf4FEdiaVHUX19TBkav2D5oBdLxSuEerr45uZJK4gbL
- AZ2+/y9qbafV9IL3D5exO+oPKpFYxS0Me1N/+bn1mt4m8pgZNSIhiNAQGA5GxCXVKgJK/xb3A
- 4PkDgCaPtXh2KEz7+ytT4vyvtwNp9EmxQlBpzfPnWPn/l5hqSr58isYYXWMWn6qpzviLi7yVg
- vTgjcLG4W75o2Pce3YlTQjqpXsY=
+References: <pull.1625.git.1703264469238.gitgitgadget@gmail.com> <20231222175747.GA2880@tb-raspi4>
+In-Reply-To: <20231222175747.GA2880@tb-raspi4>
+From: Chandra Pratap <chandrapratap3519@gmail.com>
+Date: Fri, 22 Dec 2023 23:57:25 +0530
+Message-ID: <CA+J6zkQ=+bCsi7URtpTfgawTrmVVALvMi3kdnMi=mUjB_Yxxwg@mail.gmail.com>
+Subject: Re: [PATCH] sideband.c: replace int with size_t for clarity
+To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+Cc: Chandra Pratap via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Chandra Pratap <chandrapratap376@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Dec 22, 2023 at 05:01:09PM +0000, Chandra Pratap via GitGitGadget =
-wrote:
-> From: Chandra Pratap <chandrapratap3519@gmail.com>
+Thanks for the feedback, Torsten. I was working on improving the rest of
+sideband.c as you suggested when I encountered this snippet on line 82:
+
+while (0 < n && isspace(*src)) {
+strbuf_addch(dest, *src);
+src++;
+n--;
+}
+
+Here, we are decreasing the value of an unsigned type to potentially below
+0 which may lead to overflow and result in some nasty bug. In this case,
+is it wise to continue with replacing 'int n' with 'size_t n' as the
+NEEDSWORK tag suggests or should we improve upon the rest of the file
+and revert 'size_t n' to 'int n' ?
+
+On Fri, 22 Dec 2023 at 23:27, Torsten B=C3=B6gershausen <tboegi@web.de> wro=
+te:
 >
-> Replace int with size_t for clarity and remove the
-> 'NEEDSWORK' tag associated with it.
+> On Fri, Dec 22, 2023 at 05:01:09PM +0000, Chandra Pratap via GitGitGadget=
+ wrote:
+> > From: Chandra Pratap <chandrapratap3519@gmail.com>
+> >
+> > Replace int with size_t for clarity and remove the
+> > 'NEEDSWORK' tag associated with it.
+> >
+> > Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
+> > ---
+> >     sideband.c: replace int with size_t for clarity
+> >
+> > Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1625%=
+2FChand-ra%2Fdusra-v1
+> > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1625/Cha=
+nd-ra/dusra-v1
+> > Pull-Request: https://github.com/gitgitgadget/git/pull/1625
+> >
+> >  sideband.c | 3 +--
+> >  1 file changed, 1 insertion(+), 2 deletions(-)
+> >
+> > diff --git a/sideband.c b/sideband.c
+> > index 6cbfd391c47..1599e408d1b 100644
+> > --- a/sideband.c
+> > +++ b/sideband.c
+> > @@ -69,9 +69,8 @@ void list_config_color_sideband_slots(struct string_l=
+ist *list, const char *pref
+> >   * of the line. This should be called for a single line only, which is
+> >   * passed as the first N characters of the SRC array.
+> >   *
+> > - * NEEDSWORK: use "size_t n" instead for clarity.
+> >   */
+> > -static void maybe_colorize_sideband(struct strbuf *dest, const char *s=
+rc, int n)
+> > +static void maybe_colorize_sideband(struct strbuf *dest, const char *s=
+rc, size_t n)
+> >  {
+> >       int i;
+> >
 >
-> Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
-> ---
->     sideband.c: replace int with size_t for clarity
+> Thanks for working on this.
+> There is, however, more potential for improvements.
+> First of all: the "int i" from above.
+> Further down, we read
+>         for (i =3D 0; i < ARRAY_SIZE(keywords); i++) {
 >
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1625%2=
-FChand-ra%2Fdusra-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1625/Chan=
-d-ra/dusra-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1625
+> However, a size of an array can never be negative, so that
+> an unsigned data type is a better choice than a signed.
+> And, arrays can have more elements than an int can address,
+> at least in theory.
+> For a reader it makes more sense, to replace
+> int i;
+> with
+> size_t i;
 >
->  sideband.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
 >
-> diff --git a/sideband.c b/sideband.c
-> index 6cbfd391c47..1599e408d1b 100644
-> --- a/sideband.c
-> +++ b/sideband.c
-> @@ -69,9 +69,8 @@ void list_config_color_sideband_slots(struct string_li=
-st *list, const char *pref
->   * of the line. This should be called for a single line only, which is
->   * passed as the first N characters of the SRC array.
->   *
-> - * NEEDSWORK: use "size_t n" instead for clarity.
->   */
-> -static void maybe_colorize_sideband(struct strbuf *dest, const char *sr=
-c, int n)
-> +static void maybe_colorize_sideband(struct strbuf *dest, const char *sr=
-c, size_t n)
->  {
->  	int i;
+> And further down, there is another place for improvments:
 >
-
-Thanks for working on this.
-There is, however, more potential for improvements.
-First of all: the "int i" from above.
-Further down, we read
-	for (i =3D 0; i < ARRAY_SIZE(keywords); i++) {
-
-However, a size of an array can never be negative, so that
-an unsigned data type is a better choice than a signed.
-And, arrays can have more elements than an int can address,
-at least in theory.
-For a reader it makes more sense, to replace
-int i;
-with
-size_t i;
-
-
-And further down, there is another place for improvments:
-
-		int len =3D strlen(p->keyword);
-		if (n < len)
-			continue;
-
-Even here, a strlen is never negative. And a size_t is the choice for len,
-since all "modern" implementations declare strlen() to return size_t
-
-Do you think that you can have a look at these changes ?
-
-I will be happy to do a review, and possibly other people as well.
+>                 int len =3D strlen(p->keyword);
+>                 if (n < len)
+>                         continue;
+>
+> Even here, a strlen is never negative. And a size_t is the choice for len=
+,
+> since all "modern" implementations declare strlen() to return size_t
+>
+> Do you think that you can have a look at these changes ?
+>
+> I will be happy to do a review, and possibly other people as well.
