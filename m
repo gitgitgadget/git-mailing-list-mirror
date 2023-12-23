@@ -1,54 +1,54 @@
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1271412E55
-	for <git@vger.kernel.org>; Sat, 23 Dec 2023 17:15:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92B4312E71
+	for <git@vger.kernel.org>; Sat, 23 Dec 2023 17:15:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eEEFjXeZ"
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-336755f1688so2558318f8f.0
-        for <git@vger.kernel.org>; Sat, 23 Dec 2023 09:15:08 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AkP1msyx"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-40c60dfa5bfso30621055e9.0
+        for <git@vger.kernel.org>; Sat, 23 Dec 2023 09:15:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1703351707; x=1703956507; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1703351708; x=1703956508; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=N3TGCI/YCgWfYljSZYwF1mWsCWRqnsoG9BODzgV1+jA=;
-        b=eEEFjXeZYCf/2mAIandWsN6+2QwIBuOAo3ixFJZXzio3uduQzx49LiAe7JauXz1FYC
-         ftfpXRfw8YrkhzYuf8DMlnW97NDBdtlP1C0Lrot9fYcvMLnGUZkJDaNzQJzvXmDbi0QU
-         Xd7Pt3A6jTbrP1Jb+Avv3Knorsowv7EfDw5INE6FoIGvdepuO68/BmzlnxCXLBjuYQtL
-         2lZcgs7dCGk666iKo8s3usK5k26epZl6kSJPkTN1GyjHUIbnP5dqLVyAjSc6ENfzj3Hf
-         DIYSbSj6cJj0j8TUX5ZjDr+6ocCSgFKZbY8zK8ohB1ZnjgzNR6APRdMGFB2WVwaAr2Lr
-         dPcw==
+        bh=eKpv5ZFzjn3B1VgPJnotlQlSa+AAZOHqDH7ko024YjQ=;
+        b=AkP1msyxsS/+3gWt4ri5Stq1LANw/5SHKg847TrAala3W+zwTSg446Z/HfhiztAoCQ
+         L783q7sWdndS82TiEq8n7Vgbg1ASd6E9ndlyOdCiAPVZYNFh7b6tETniiJkMuDpDPYW6
+         DsUYuVaTTq0ba6zwG859JgErPUyMBtEM1AWZWBrg6/m4tZ6gJ4lbsR5TrsrDvj60NzQ/
+         pqKniQLEjsmpqMgKxN1FizhB6SNShkvo6ngCuBrtD3SQUyU1IIwtWKScaD4RfFKinadQ
+         7Rn/ivR8+OxSgm8S4buHRFaTUaEVC0qbBNXVOsVVUtXiPkWeF5vVVeToEwAkCi+lbm+L
+         jx1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703351707; x=1703956507;
+        d=1e100.net; s=20230601; t=1703351708; x=1703956508;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=N3TGCI/YCgWfYljSZYwF1mWsCWRqnsoG9BODzgV1+jA=;
-        b=YHAXLr0iP1T7QziZq4sKIArDLcfh2TQaym+xYuio2vCfQbEhgkJPk81m46rbyMQCwy
-         lkGcAsQ6VIEapkvIa4KJVsTBjKfAmzINzYp0BkUOvWYvYx9YNKsEJXdTWL4cdvo3mvUC
-         qDzW/XqaMBN29YG7ONP9P6SQsZ00cY9i/1M5d/NOQQl7rYYmHFAg8ctWZJHWhEy9ZPeS
-         CpQ41JtlWJeBD8thWCE1PweZd96x1BKJu2DGrfUK15ua7andfg5h1CoZ2xlnmQtyov2E
-         iVvZbT6T1WYg2KA0duKD0JrYgEDUznu3LUtNVlroFUp/AgY++gsTzYDpkl+h8RdXgszg
-         GIgw==
-X-Gm-Message-State: AOJu0YzSz1QET+RNuJLtU/FQyC30pQQrZhgAfs7tXwBvy5m7NXlCWogf
-	GYaQKxg/PJLaR9rKPD7Z+EQrrOxiKNU=
-X-Google-Smtp-Source: AGHT+IFJKqKk4IzzzGgrD9vWoNDuxWp49W9Aw7WH4/NH/I4ZEIAjxesuaLxs/SE8iPgFeAAowY1RDw==
-X-Received: by 2002:adf:e40c:0:b0:336:8d5b:8535 with SMTP id g12-20020adfe40c000000b003368d5b8535mr1697893wrm.59.1703351706665;
-        Sat, 23 Dec 2023 09:15:06 -0800 (PST)
+        bh=eKpv5ZFzjn3B1VgPJnotlQlSa+AAZOHqDH7ko024YjQ=;
+        b=wsVSY88yQn9r66YGIm9tOyzcoJ58fayfaPHZbeyNuG++jqwR6kczgfXS4VH8Brt66s
+         udA17plK0/YXV7dO4GXITgVBPpDf85ss/l2f+Ou9WiaS3j3Wbjs3mNrBMjIqwegGvLsZ
+         ZRas5OPSrIwufl0ylw0GaVqZTfdy0QpkNg5Eg7f6O6M+kklKX4qF1f/BQrcaprfYEsie
+         iMyaONCZsrY84qMdjH7l9ykXahhF7UwlF25sUwQ30nw00VWuhqENvs8XKKMwYRjA45C/
+         veWEMoajzyrdGWwctwbMy9RgUjedKBr5ksoYu29N/s1sYzEehqXq3A/84xE0FVmhUwq+
+         XmUg==
+X-Gm-Message-State: AOJu0YzjOC5MEfBrfPUVe2xqGvq+aPGfcryDg1IjyoLoiofHfXVCbUN3
+	x8s23VUaEEZx/8LjyoFu1bMV28NEOoc=
+X-Google-Smtp-Source: AGHT+IHTYLNWztnuNubxwdDg2RPsBCYh6TsXoGBSAq3P8xdHcPbbmWB946XzRB2x8TxAJ7FPPwAeVw==
+X-Received: by 2002:a05:600c:33aa:b0:40d:4205:60e5 with SMTP id o42-20020a05600c33aa00b0040d420560e5mr1799302wmp.127.1703351708340;
+        Sat, 23 Dec 2023 09:15:08 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p13-20020adfe60d000000b00336607f6630sm6862201wrm.47.2023.12.23.09.15.06
+        by smtp.gmail.com with ESMTPSA id bl13-20020adfe24d000000b003365fcc1846sm6861429wrb.52.2023.12.23.09.15.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 23 Dec 2023 09:15:06 -0800 (PST)
-Message-ID: <6211270d6781074745dee1aefbefbf8bca141434.1703351701.git.gitgitgadget@gmail.com>
+        Sat, 23 Dec 2023 09:15:07 -0800 (PST)
+Message-ID: <e5ba799753d8d165788d0eaf5689be466f5f0db1.1703351701.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1617.v2.git.1703351700.gitgitgadget@gmail.com>
 References: <pull.1617.git.1701585682.gitgitgadget@gmail.com>
 	<pull.1617.v2.git.1703351700.gitgitgadget@gmail.com>
 From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 23 Dec 2023 17:14:51 +0000
-Subject: [PATCH v2 03/12] archive.h: remove unnecessary include
+Date: Sat, 23 Dec 2023 17:14:52 +0000
+Subject: [PATCH v2 04/12] blame.h: remove unnecessary includes
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,60 +71,47 @@ source files explicitly include the headers they need.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- archive-tar.c | 1 +
- archive-zip.c | 1 +
- archive.c     | 1 +
- archive.h     | 1 -
- 4 files changed, 3 insertions(+), 1 deletion(-)
+ blame.c | 2 ++
+ blame.h | 3 ---
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/archive-tar.c b/archive-tar.c
-index 07269968399..f2a0ed77523 100644
---- a/archive-tar.c
-+++ b/archive-tar.c
-@@ -9,6 +9,7 @@
- #include "tar.h"
- #include "archive.h"
+diff --git a/blame.c b/blame.c
+index 141756975bf..1a16d4eb6a5 100644
+--- a/blame.c
++++ b/blame.c
+@@ -3,6 +3,7 @@
  #include "object-store-ll.h"
-+#include "strbuf.h"
- #include "streaming.h"
- #include "run-command.h"
- #include "write-or-die.h"
-diff --git a/archive-zip.c b/archive-zip.c
-index 7229e3e454f..fd1d3f816d3 100644
---- a/archive-zip.c
-+++ b/archive-zip.c
-@@ -10,6 +10,7 @@
- #include "streaming.h"
- #include "utf8.h"
- #include "object-store-ll.h"
-+#include "strbuf.h"
- #include "userdiff.h"
- #include "write-or-die.h"
- #include "xdiff-interface.h"
-diff --git a/archive.c b/archive.c
-index 4562a69a0cc..50fd35bd27b 100644
---- a/archive.c
-+++ b/archive.c
-@@ -5,6 +5,7 @@
- #include "environment.h"
- #include "gettext.h"
+ #include "cache-tree.h"
+ #include "mergesort.h"
++#include "commit.h"
+ #include "convert.h"
+ #include "diff.h"
+ #include "diffcore.h"
+@@ -10,6 +11,7 @@
  #include "hex.h"
-+#include "object-name.h"
  #include "path.h"
- #include "pretty.h"
+ #include "read-cache.h"
++#include "revision.h"
  #include "setup.h"
-diff --git a/archive.h b/archive.h
-index 3a4bdfbd078..bbe65ba0f90 100644
---- a/archive.h
-+++ b/archive.h
-@@ -1,7 +1,6 @@
- #ifndef ARCHIVE_H
- #define ARCHIVE_H
+ #include "tag.h"
+ #include "trace2.h"
+diff --git a/blame.h b/blame.h
+index 31ddc85f19e..5b4e47d44c6 100644
+--- a/blame.h
++++ b/blame.h
+@@ -1,12 +1,9 @@
+ #ifndef BLAME_H
+ #define BLAME_H
  
--#include "object-name.h"
- #include "pathspec.h"
- #include "string-list.h"
+-#include "commit.h"
+ #include "oidset.h"
+ #include "xdiff-interface.h"
+-#include "revision.h"
+ #include "prio-queue.h"
+-#include "diff.h"
  
+ #define PICKAXE_BLAME_MOVE		01
+ #define PICKAXE_BLAME_COPY		02
 -- 
 gitgitgadget
 
