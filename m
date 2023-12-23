@@ -1,55 +1,54 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43B0811C93
-	for <git@vger.kernel.org>; Sat, 23 Dec 2023 17:15:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1271412E55
+	for <git@vger.kernel.org>; Sat, 23 Dec 2023 17:15:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FbfCH2My"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-336897b6bd6so2514877f8f.2
-        for <git@vger.kernel.org>; Sat, 23 Dec 2023 09:15:06 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eEEFjXeZ"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-336755f1688so2558318f8f.0
+        for <git@vger.kernel.org>; Sat, 23 Dec 2023 09:15:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1703351705; x=1703956505; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1703351707; x=1703956507; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GFKpsdp2o3YTXIe4JCGPsqVbXJJnbQVjI8qM+BqcSMc=;
-        b=FbfCH2MynlF+2GpI6qVQsluL+MMnwK5QxYwTZAa2F25f4VcENp1S9PRHrHX07NqqqF
-         324t7d1LBBSSg+ENyWyUy3T5xDKlMZ3DiUbRLGgC9mMVeTaRkw1+PagkDL9C2+qOuT9C
-         7NgKrV8MDCDOw1NmSxChE7DAxjEN+Dc7DY97gg0kxxqDhbwqN97ObBEzPwbqPYQNXYGG
-         kmahQGS6fv4bApFh0/q7qYqpDAzlsh2W9spaooI+atK9dhQ/+2maKvaHtVBMaU/H7c+J
-         KaLBsUGk03UvRrcKLEvrxEOSHlyLHqa4lhxz1rZxhxlC5zXB4c2lNX8ZLKESDddHuB0/
-         kzgQ==
+        bh=N3TGCI/YCgWfYljSZYwF1mWsCWRqnsoG9BODzgV1+jA=;
+        b=eEEFjXeZYCf/2mAIandWsN6+2QwIBuOAo3ixFJZXzio3uduQzx49LiAe7JauXz1FYC
+         ftfpXRfw8YrkhzYuf8DMlnW97NDBdtlP1C0Lrot9fYcvMLnGUZkJDaNzQJzvXmDbi0QU
+         Xd7Pt3A6jTbrP1Jb+Avv3Knorsowv7EfDw5INE6FoIGvdepuO68/BmzlnxCXLBjuYQtL
+         2lZcgs7dCGk666iKo8s3usK5k26epZl6kSJPkTN1GyjHUIbnP5dqLVyAjSc6ENfzj3Hf
+         DIYSbSj6cJj0j8TUX5ZjDr+6ocCSgFKZbY8zK8ohB1ZnjgzNR6APRdMGFB2WVwaAr2Lr
+         dPcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703351705; x=1703956505;
+        d=1e100.net; s=20230601; t=1703351707; x=1703956507;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=GFKpsdp2o3YTXIe4JCGPsqVbXJJnbQVjI8qM+BqcSMc=;
-        b=ApFWVhfCyv3EdA2h70S23tPZb1kBCXkxahqNxJ7r7wIHToUwRmF3yqTDqHE09uUvx7
-         GV3BMlKg4v3a844l+lw5STDbEL+SeJ3hcF3Dq1Nd7M/oOmIEnakvREiPw9Kyk1d7Mxit
-         1g1uHfQoNmVfGcsdP8u9qgyW6W+JJWWGtqQbxc39IFTE70q/wSoN3EmN0JyKTyh7r54O
-         ZS7xrx5yMNW8xXLQ64g4OI9o0jlV51BTzltIQR6zmk2lVQ8rsJE3txd7cjgBEDF81YlG
-         vEoWwnwO3Z6IpGPbITupVNl5hOe8hPcy6SjfvsbKm5Di43bQhnLTZsfLxO0dI3tIva3q
-         ruNg==
-X-Gm-Message-State: AOJu0Yywdbd6y1Upp7/mDK2YHcrguRV67PUIGOtuBUt0WsGOo415Vd0i
-	wfUA8iqNV3H4FVqXFbX0UzkZgtjT77E=
-X-Google-Smtp-Source: AGHT+IGmsQQeY+4X6WKdQxINGAX/+gUU7OBQ1on7LW46TEUDGSLOAJQbi7C6K/TadDaIqroAyO4mCw==
-X-Received: by 2002:a05:6000:c3:b0:336:6143:b14c with SMTP id q3-20020a05600000c300b003366143b14cmr1684057wrx.33.1703351704669;
-        Sat, 23 Dec 2023 09:15:04 -0800 (PST)
+        bh=N3TGCI/YCgWfYljSZYwF1mWsCWRqnsoG9BODzgV1+jA=;
+        b=YHAXLr0iP1T7QziZq4sKIArDLcfh2TQaym+xYuio2vCfQbEhgkJPk81m46rbyMQCwy
+         lkGcAsQ6VIEapkvIa4KJVsTBjKfAmzINzYp0BkUOvWYvYx9YNKsEJXdTWL4cdvo3mvUC
+         qDzW/XqaMBN29YG7ONP9P6SQsZ00cY9i/1M5d/NOQQl7rYYmHFAg8ctWZJHWhEy9ZPeS
+         CpQ41JtlWJeBD8thWCE1PweZd96x1BKJu2DGrfUK15ua7andfg5h1CoZ2xlnmQtyov2E
+         iVvZbT6T1WYg2KA0duKD0JrYgEDUznu3LUtNVlroFUp/AgY++gsTzYDpkl+h8RdXgszg
+         GIgw==
+X-Gm-Message-State: AOJu0YzSz1QET+RNuJLtU/FQyC30pQQrZhgAfs7tXwBvy5m7NXlCWogf
+	GYaQKxg/PJLaR9rKPD7Z+EQrrOxiKNU=
+X-Google-Smtp-Source: AGHT+IFJKqKk4IzzzGgrD9vWoNDuxWp49W9Aw7WH4/NH/I4ZEIAjxesuaLxs/SE8iPgFeAAowY1RDw==
+X-Received: by 2002:adf:e40c:0:b0:336:8d5b:8535 with SMTP id g12-20020adfe40c000000b003368d5b8535mr1697893wrm.59.1703351706665;
+        Sat, 23 Dec 2023 09:15:06 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b15-20020a5d4b8f000000b00336a0c083easm2517676wrt.53.2023.12.23.09.15.04
+        by smtp.gmail.com with ESMTPSA id p13-20020adfe60d000000b00336607f6630sm6862201wrm.47.2023.12.23.09.15.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 23 Dec 2023 09:15:04 -0800 (PST)
-Message-ID: <2f8ff69314e6fbff828ea63eae2362fc6e3dea25.1703351701.git.gitgitgadget@gmail.com>
+        Sat, 23 Dec 2023 09:15:06 -0800 (PST)
+Message-ID: <6211270d6781074745dee1aefbefbf8bca141434.1703351701.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1617.v2.git.1703351700.gitgitgadget@gmail.com>
 References: <pull.1617.git.1701585682.gitgitgadget@gmail.com>
 	<pull.1617.v2.git.1703351700.gitgitgadget@gmail.com>
 From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 23 Dec 2023 17:14:49 +0000
-Subject: [PATCH v2 01/12] treewide: remove unnecessary includes from header
- files
+Date: Sat, 23 Dec 2023 17:14:51 +0000
+Subject: [PATCH v2 03/12] archive.h: remove unnecessary include
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,72 +65,66 @@ Cc: Elijah Newren <newren@gmail.com>,
 
 From: Elijah Newren <newren@gmail.com>
 
-There are three kinds of unnecessary includes:
-  * includes which aren't directly needed, but which include some other
-    forgotten include
-  * includes which could be replaced by a simple forward declaration of
-    some structs
-  * includes which aren't needed at all
-
-Remove the third kind of include.  Subsequent commits (and a subsequent
-series) will work on removing some of the other kinds of includes.
+The unnecessary include in the header transitively pulled in some
+other headers actually needed by source files, though.  Have those
+source files explicitly include the headers they need.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- fetch-pack.h       | 1 -
- midx.h             | 1 -
- ref-filter.h       | 1 -
- submodule-config.h | 1 -
- 4 files changed, 4 deletions(-)
+ archive-tar.c | 1 +
+ archive-zip.c | 1 +
+ archive.c     | 1 +
+ archive.h     | 1 -
+ 4 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fetch-pack.h b/fetch-pack.h
-index 8c7752fc821..6775d265175 100644
---- a/fetch-pack.h
-+++ b/fetch-pack.h
-@@ -2,7 +2,6 @@
- #define FETCH_PACK_H
- 
- #include "string-list.h"
--#include "run-command.h"
- #include "protocol.h"
- #include "list-objects-filter-options.h"
- #include "oidset.h"
-diff --git a/midx.h b/midx.h
-index a5d98919c85..eb57a37519c 100644
---- a/midx.h
-+++ b/midx.h
-@@ -1,7 +1,6 @@
- #ifndef MIDX_H
- #define MIDX_H
- 
--#include "repository.h"
- #include "string-list.h"
- 
- struct object_id;
-diff --git a/ref-filter.h b/ref-filter.h
-index 1524bc463a5..4ecb6ab1c60 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -3,7 +3,6 @@
- 
+diff --git a/archive-tar.c b/archive-tar.c
+index 07269968399..f2a0ed77523 100644
+--- a/archive-tar.c
++++ b/archive-tar.c
+@@ -9,6 +9,7 @@
+ #include "tar.h"
+ #include "archive.h"
+ #include "object-store-ll.h"
++#include "strbuf.h"
+ #include "streaming.h"
+ #include "run-command.h"
+ #include "write-or-die.h"
+diff --git a/archive-zip.c b/archive-zip.c
+index 7229e3e454f..fd1d3f816d3 100644
+--- a/archive-zip.c
++++ b/archive-zip.c
+@@ -10,6 +10,7 @@
+ #include "streaming.h"
+ #include "utf8.h"
+ #include "object-store-ll.h"
++#include "strbuf.h"
+ #include "userdiff.h"
+ #include "write-or-die.h"
+ #include "xdiff-interface.h"
+diff --git a/archive.c b/archive.c
+index 4562a69a0cc..50fd35bd27b 100644
+--- a/archive.c
++++ b/archive.c
+@@ -5,6 +5,7 @@
+ #include "environment.h"
  #include "gettext.h"
- #include "oid-array.h"
--#include "refs.h"
- #include "commit.h"
- #include "string-list.h"
- #include "strvec.h"
-diff --git a/submodule-config.h b/submodule-config.h
-index 2a37689cc27..e8164cca3e4 100644
---- a/submodule-config.h
-+++ b/submodule-config.h
-@@ -2,7 +2,6 @@
- #define SUBMODULE_CONFIG_CACHE_H
+ #include "hex.h"
++#include "object-name.h"
+ #include "path.h"
+ #include "pretty.h"
+ #include "setup.h"
+diff --git a/archive.h b/archive.h
+index 3a4bdfbd078..bbe65ba0f90 100644
+--- a/archive.h
++++ b/archive.h
+@@ -1,7 +1,6 @@
+ #ifndef ARCHIVE_H
+ #define ARCHIVE_H
  
- #include "config.h"
--#include "hashmap.h"
- #include "submodule.h"
- #include "strbuf.h"
- #include "tree-walk.h"
+-#include "object-name.h"
+ #include "pathspec.h"
+ #include "string-list.h"
+ 
 -- 
 gitgitgadget
 
