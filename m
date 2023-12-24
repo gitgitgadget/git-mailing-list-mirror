@@ -1,161 +1,126 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0DB67EA
-	for <git@vger.kernel.org>; Sun, 24 Dec 2023 01:00:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AADD9A3C
+	for <git@vger.kernel.org>; Sun, 24 Dec 2023 01:03:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z3h5Vmv5"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-40d4e529f24so11955285e9.2
-        for <git@vger.kernel.org>; Sat, 23 Dec 2023 17:00:15 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NGB3+63M"
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-50e77169686so324128e87.2
+        for <git@vger.kernel.org>; Sat, 23 Dec 2023 17:03:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1703379613; x=1703984413; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=25iRw4KtUbrmK0K5gGF8oBvuFDifdsL/Ih4TEYgmfa4=;
-        b=Z3h5Vmv52GjYJq+RefHBPIC1B8oxPnIwMrPkQ4NMla3/pkKrwxMuAaQpeBNO2uChUF
-         hJXzfbK5GWkp27jbYX81k+kz7JIM6AH6QZ8apONDBq345uODzZmVzm0f6SXfffgecWi/
-         bIMqgUniRrSCKCeZnEeBfEF+JovwaMwx7r805+YK6/C6rlwtETN1bHJCc/zdoFeZSEJO
-         ATAgOXbHC5xjWVxz9lQ3TDFN2hLtzVjRxto2yejMTkHGoyAakHfvMzhS2A/14UYzbdBD
-         opM92RaZSp2Lx/rwZLuSuRHGxr+BkT084KrSxCkTnPe69/E+CqPQGPR4gfK+hdrHzWnw
-         YJIg==
+        d=gmail.com; s=20230601; t=1703379782; x=1703984582; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jWFI+MDgTsIPjfp+8k37Vs4hVMZ5lPEddTdHFsZ9tBQ=;
+        b=NGB3+63MTaRvkMMBFek2Rl/sLeU9v3sSqnkKwfvGCWpVpiXHlIzfdAN69YSCSbz4ir
+         xQetYNKk+gD+cGJZwsc8RzuJU0SHNJUFO1XIbS3OR0nbuZ884RMPSw1QBMLaiXeA19hn
+         XrzXcezepfB8x+PDSJnLQ/b+zxMmWZ1UKn+CMK19nMl4mW/Lnjw7A8MxTS5aLVTQ1OFT
+         GsK4SkX4vPLjHxMrcCofoTb5lrFVG9v2jen86hEKy4ijpXLqX9QyeQYcqgB8PpLMT9Rd
+         5v5+vuVfEKCvmNLLp9hFCDDp9fqQCGIC54ZLO4X1hdzhgOSbEDHctPWw3+K2oQ5U158M
+         +kYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703379613; x=1703984413;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=25iRw4KtUbrmK0K5gGF8oBvuFDifdsL/Ih4TEYgmfa4=;
-        b=EbSVEL/YIXX8BRBFGZZHaz4xL+hVDZHLebWmMUdb8NBTXlW3eZJSm24EtLhMYiflyR
-         V1OIKWdR+4jri6n78RUZ+op7bp5YhIFjELuYST/VsKqrsa6x33ipGHdi+lifRdbX5+r3
-         nmrgJ2iKoD2b4LeA3oAjirheF4YWJ7YRk0+EqpB+eDoCkAGZpxQn+4io9z3UvhR4jD0R
-         3hfStDhFn3DomGgsRhXIz4Xt7zT+uPbpSBhKWn+oIOyQ6ua6KtIkzEgryywhmXhNVAMi
-         FOVYhaRviiDaK2EHo7rP14otjKcsx2PQZVpvTD/u+8wgtATndH/hfENPT0QNf3N+IhW+
-         1BHA==
-X-Gm-Message-State: AOJu0YyIwnVXe/5RlAqvmagMsn82DUjlhnGk++IJzvBwYwVMXUnahhbz
-	MFnUbZeuBD3Ouy1+47jpJxW+tWMenA8=
-X-Google-Smtp-Source: AGHT+IF20EF/3DmMFHAZCDx7ZmsvXbZIFdHmhiJ+U/PpA8sjp6uIi5Dr6nn1d8TbkPRy9QusmtiUkg==
-X-Received: by 2002:a05:600c:4593:b0:40c:2734:13cd with SMTP id r19-20020a05600c459300b0040c273413cdmr1414205wmo.43.1703379612962;
-        Sat, 23 Dec 2023 17:00:12 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a7-20020a5d4d47000000b00333404e9935sm7467540wru.54.2023.12.23.17.00.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 23 Dec 2023 17:00:12 -0800 (PST)
-Message-ID: <pull.1625.git.git.1703379611749.gitgitgadget@gmail.com>
-From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 24 Dec 2023 01:00:11 +0000
-Subject: [PATCH] sparse-checkout: be consistent with end of options markers
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1703379782; x=1703984582;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jWFI+MDgTsIPjfp+8k37Vs4hVMZ5lPEddTdHFsZ9tBQ=;
+        b=bBgsLp5NaGIzlnLCkZvRBeiPXpyMTNtzwg95NU/8L903hYnUMLEChFLyPVEMQLLA6F
+         hC9hBamhnJtB2isUpYWQ/bM/A+zoXNopcT3RY77ABoFOgDm//L2oe+Rhgh/SOQRK/paI
+         Hlx9BeS6gVUM540RdiV8rx6tflNv0RQtgQDt1dQumWf+EmFKbIVx7ST+GdT1MmAppspQ
+         GZRopGMwAzOzLXd/RM4FFf3RFGBjx7GjrIv/B+TLD1fmU/sPGLGlbxdHEoUy7YugWHL5
+         l3hFctYKUGcTZJSnqf/1zpTRqKlOucUw4ceH4TwdwIvpf91BhedYjnZkMXGrlfO9It7j
+         WAFA==
+X-Gm-Message-State: AOJu0YwNrNOA0aaNbm8ZckWihoBqfjSwOse0BLiXXp8OFKJ7ysGpLgt/
+	EtZM1affCASSzOi5DbEwn9YhhFIiwk5GCISzHno=
+X-Google-Smtp-Source: AGHT+IGCnZ4PqlvB7LUji8hbpSxgf8/1cd79Zu1keo+L3HkeAMbtH8+PSuSIK0vwOkPP1X/vCgYj4NwGKvjlFOLzcYg=
+X-Received: by 2002:a05:6512:3592:b0:50e:6a07:5c02 with SMTP id
+ m18-20020a056512359200b0050e6a075c02mr1332872lfr.15.1703379782274; Sat, 23
+ Dec 2023 17:03:02 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: "Randall S. Becker" <randall.becker@nexbridge.ca>,
-    Jeff King <peff@peff.net>,
-    Elijah Newren <newren@gmail.com>,
-    Elijah Newren <newren@gmail.com>
-
+References: <xmqqbkakqx6s.fsf@gitster.g> <ZYN-5H-2NNoRRpf-@google.com>
+ <xmqqplz0p90k.fsf@gitster.g> <20231221084011.GB545870@coredump.intra.peff.net>
+ <xmqqsf3vmqug.fsf@gitster.g> <20231221214550.GD1446091@coredump.intra.peff.net>
+ <xmqqle9njjp3.fsf@gitster.g> <20231223100229.GA2016274@coredump.intra.peff.net>
+ <CABPp-BF9XZeESHdxdcZ91Vsn5tKqQ6_3tC11e7t9vTFp=uufbg@mail.gmail.com>
+In-Reply-To: <CABPp-BF9XZeESHdxdcZ91Vsn5tKqQ6_3tC11e7t9vTFp=uufbg@mail.gmail.com>
 From: Elijah Newren <newren@gmail.com>
+Date: Sat, 23 Dec 2023 17:02:49 -0800
+Message-ID: <CABPp-BG640jNdAdJic0wqmYXwz1HyzcBB6-W9Ef70AHqtPSECA@mail.gmail.com>
+Subject: Re: [PATCH/RFC] sparse-checkout: take care of "--end-of-options" in set/add
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, Josh Steadmon <steadmon@google.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-93851746 (parse-options: decouple "--end-of-options" and "--",
-2023-12-06) updated the world order to make callers of parse-options
-that set PARSE_OPT_KEEP_UNKNOWN_OPT responsible for deciding what to
-do with "--end-of-options" they may see after parse_options() returns.
+On Sat, Dec 23, 2023 at 2:45=E2=80=AFPM Elijah Newren <newren@gmail.com> wr=
+ote:
+>
+> Hi,
+>
+> On Sat, Dec 23, 2023 at 2:02=E2=80=AFAM Jeff King <peff@peff.net> wrote:
+> >
+> > On Thu, Dec 21, 2023 at 02:04:56PM -0800, Junio C Hamano wrote:
+> >
+> > > Jeff King <peff@peff.net> writes:
+> > >
+> > > > Right, that is the "gotcha" I mentioned in my other email. Though t=
+hat
+> > > > is the way it has behaved historically, my argument is that users a=
+re
+> > > > unreasonable to expect it to work:
+> > > >
+> > > >   1. It is not consistent with the rest of Git commands.
+> > > >
+> > > >   2. It is inconsistent with respect to existing options (and is an
+> > > >      accident waiting to happen when new options are added).
+> > > >
+> > > > So I'd consider it a bug-fix.
+> > >
+> > > So the counter-proposal here is just to drop KEEP_UNKNOWN_OPT and
+> > > deliberately break them^W^W^Wrealign their expectations?
+> >
+> > Yes. :) But keep in mind we are un-breaking other people, like those wh=
+o
+> > typo:
+> >
+> >   git sparse-checkout --sikp-checks
+> >
+> > and don't see an error (instead, we make a garbage entry in the sparse
+> > checkout file).
+>
+> I think you mean
+>      git sparse-checkout set --sikp-checks
+> or
+>      git sparse-checkout add --sikp-checks
+> (i.e. with either 'set' or 'add' in there)
+>
+> Neither of these are currently an error, but I agree both definitely
+> ought to be.  (Without the 'set' or 'add', you currently do get an
+> error, as we'd expect.)
+>
+> > > I do not have much stake in sparse-checkout, so I am fine with that
+> > > direction.  But I suspect other folks on the list would have users
+> > > of their own who would rather loudly complain to them if we broke
+> > > them ;-)
+> >
+> > Likewise, I have never used sparse-checkout myself, and I don't care
+> > _that_ much. My interest is mostly in having various Git commands behav=
+e
+> > consistently. This whole discussion started because the centralized
+> > --end-of-options fix interacted badly with this unusual behavior.
+>
+> Well, I care quite a bit about sparse-checkout, and I would rather see
+> Peff's proposed fix, even if some users might have to tweak their
+> commands a little.
 
-This made a previous bug in sparse-checkout more visible; namely,
-that
-
-  git sparse-checkout [add|set] --[no-]cone --end-of-options ...
-
-would simply treat "--end-of-options" as one of the paths to include in
-the sparse-checkout.  But this was already problematic before; namely,
-
-  git sparse-checkout [add|set| --[no-]cone --sikp-checks ...
-
-would not give an error on the mis-typed "--skip-checks" but instead
-simply treat "--sikp-checks" as a path or pattern to include in the
-sparse-checkout, which is highly unfriendly.
-
-This behavior begain when the command was converted to parse-options in
-7bffca95ea (sparse-checkout: add '--stdin' option to set subcommand,
-2019-11-21).  Back then it was just called KEEP_UNKNOWN. Later it was
-renamed to KEEP_UNKNOWN_OPT in 99d86d60e5 (parse-options:
-PARSE_OPT_KEEP_UNKNOWN only applies to --options, 2022-08-19) to clarify
-that it was only about dashed options; we always keep non-option
-arguments.  Looking at that original patch, both Peff and I think that
-the author was simply confused about the mis-named option, and really
-just wanted to keep the non-option arguments.  We never should have used
-the flag all along (and the other cases were cargo-culted within the
-file).
-
-Remove the erroneous PARSE_OPT_KEEP_UNKNOWN_OPT flag now to fix this
-bug.  Note that this does mean that anyone who might have been using
-
-  git sparse-checkout [add|set] [--[no-]cone] --foo --bar
-
-to request paths or patterns '--foo' and '--bar' will now have to use
-
-  git sparse-checkout [add|set] [--[no-]cone] -- --foo --bar
-
-That makes sparse-checkout more consistent with other git commands,
-provides users much friendlier error messages and behavior, and is
-consistent with the all-capps warning in git-sparse-checkout.txt that
-this command "is experimental...its behavior...will likely change".  :-)
-
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
-    [RFC] sparse-checkout: be consistent with end of options markers
-    
-    Follow-up to thread over at
-    https://lore.kernel.org/git/CABPp-BF9XZeESHdxdcZ91Vsn5tKqQ6_3tC11e7t9vTFp=uufbg@mail.gmail.com/
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1625%2Fgitgitgadget%2Fsparse-checkout-end-of-options-consistency-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1625/gitgitgadget/sparse-checkout-end-of-options-consistency-v1
-Pull-Request: https://github.com/git/git/pull/1625
-
- builtin/sparse-checkout.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
-
-diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-index 5c8ffb1f759..0e68e9b0b0d 100644
---- a/builtin/sparse-checkout.c
-+++ b/builtin/sparse-checkout.c
-@@ -777,8 +777,7 @@ static int sparse_checkout_add(int argc, const char **argv, const char *prefix)
- 
- 	argc = parse_options(argc, argv, prefix,
- 			     builtin_sparse_checkout_add_options,
--			     builtin_sparse_checkout_add_usage,
--			     PARSE_OPT_KEEP_UNKNOWN_OPT);
-+			     builtin_sparse_checkout_add_usage, 0);
- 
- 	sanitize_paths(argc, argv, prefix, add_opts.skip_checks);
- 
-@@ -824,8 +823,7 @@ static int sparse_checkout_set(int argc, const char **argv, const char *prefix)
- 
- 	argc = parse_options(argc, argv, prefix,
- 			     builtin_sparse_checkout_set_options,
--			     builtin_sparse_checkout_set_usage,
--			     PARSE_OPT_KEEP_UNKNOWN_OPT);
-+			     builtin_sparse_checkout_set_usage, 0);
- 
- 	if (update_modes(&set_opts.cone_mode, &set_opts.sparse_index))
- 		return 1;
-@@ -996,8 +994,7 @@ static int sparse_checkout_check_rules(int argc, const char **argv, const char *
- 
- 	argc = parse_options(argc, argv, prefix,
- 			     builtin_sparse_checkout_check_rules_options,
--			     builtin_sparse_checkout_check_rules_usage,
--			     PARSE_OPT_KEEP_UNKNOWN_OPT);
-+			     builtin_sparse_checkout_check_rules_usage, 0);
- 
- 	if (check_rules_opts.rules_file && check_rules_opts.cone_mode < 0)
- 		check_rules_opts.cone_mode = 1;
-
-base-commit: 055bb6e9969085777b7fab83e3fee0017654f134
--- 
-gitgitgadget
+And I wrote it up as a patch over at
+https://lore.kernel.org/git/pull.1625.git.git.1703379611749.gitgitgadget@gm=
+ail.com/
