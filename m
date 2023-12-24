@@ -1,140 +1,98 @@
 Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A0DC468C
-	for <git@vger.kernel.org>; Sun, 24 Dec 2023 07:46:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F34AB111A
+	for <git@vger.kernel.org>; Sun, 24 Dec 2023 07:51:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Kokzz4wu"
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-50e7288a6e1so972794e87.2
-        for <git@vger.kernel.org>; Sat, 23 Dec 2023 23:46:15 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PqR/dzS0"
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-50e67e37661so2322251e87.0
+        for <git@vger.kernel.org>; Sat, 23 Dec 2023 23:51:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1703403973; x=1704008773; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1703404290; x=1704009090; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DjZydqF3LeTxtBX2dPOoLY26aABENcOgBRv0b6cdqLg=;
-        b=Kokzz4wubSZt4C9vW6xxY8oMPLV9NJ5Yt2IhmAX74hglOyiPSRJFxlLqhhb/Tecc2q
-         eNxbP5NDypSsEyCZe0GAXzG92r9pKLi8+6d2vezw2zt3IRAsojNSCTD39ksGUeUO6Lze
-         4ApGJy4BwuAkka5YclgNXA/++fe4m2eQoS13BA0l7mgfDWiNANV937l3ts2qWIDzZDgf
-         UzCMTj/Y0KcvBBdw0q77rz+net721oPOwabAqpKd83Fm8xpy+YDbBaoxN9lro0Rp3qnL
-         4A3VkHR8ZVjTHY9Xefcbig70c7Y4Lvvxf1stHo27VKpXPcJ+C9odyqrWCvEMdKWrZrAI
-         RBGQ==
+        bh=flVkesae/MhD3DTzRmMDiwgl+tSoE8yRNpLCjq0mYek=;
+        b=PqR/dzS0tN4Sl6UE696h4TzTg5GPFyn9QzleE7jpvnZof3Pwzl7IqsFIcSY0bbiDAr
+         xqWhwOHetR3EcF9HT+fGNRVS/CCH3YiMc4k14d+YD1AVZBKFq8h9PuRgckd1y662wVqQ
+         4/HvVKeIpasXa3KURtBDCpvG07Gm98LxcQR1iJIh+4mb8VSEKv7HZLB7xtL+4TBu065t
+         X+RFdS8OAABjjk1UofWT6QDL4XSHpA6ignXqSFL3ktcxXrPEJi4NcMNzke7GvDGlkCaK
+         vhwvvSu8tAzipOyoj6qtmndnf4Z7+/xkgMXlHCQ3MObNX98t9r3hpTP0Y5GRLxb10lPX
+         7dRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703403973; x=1704008773;
+        d=1e100.net; s=20230601; t=1703404290; x=1704009090;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=DjZydqF3LeTxtBX2dPOoLY26aABENcOgBRv0b6cdqLg=;
-        b=PcOjQsCmFtP/efj9UFI7xrWuVPZD8TZIVO4eme0/w828on2yAQOUoRLAFsthpCPkYR
-         OqPVPqXfwgd+jhS9SryARUTRpa+RFIy5DDTz2+mdCnBRzC+k9Nn736bTpxXBdsNXliAM
-         wbbMwcO/X4chpJ/qm0XqmsDMTpdAGFS6KQJw8vVMvp7vgXfKN6Tw4R+CQH2MFCiaGYDo
-         VQvBEEoTq6Cc0SGTI7RuU5xg8n69ny7Gpe/qhsJ85cg+Ho8H/dFXS3mdZtqNWdpvopkv
-         C6wBaInm7OhvgIY5lJuMznuDvzN7z9Q9l60Wt37haiiHtvAYYYjq3l1DQTz0ob9yRauN
-         Tx7g==
-X-Gm-Message-State: AOJu0Ywa2FiiU3Txa3RG5fZ3glK2nQVuYctGZD9/dzXmVv2/boIyBa0/
-	qgSDfInaPaDCWnrAqZmwJIKbSwfeQmAisQnqq9lOLFPQwyI=
-X-Google-Smtp-Source: AGHT+IHIop+5hoArLQr2QlTiXdPvmlxl+00HX6FoPy6iHp/57cxROR9MwZhyR3Ok6qDZxpdivhB8fijTNFDNGh91r/k=
-X-Received: by 2002:a05:6512:2fc:b0:50e:242a:775e with SMTP id
- m28-20020a05651202fc00b0050e242a775emr1655624lfq.106.1703403973193; Sat, 23
- Dec 2023 23:46:13 -0800 (PST)
+        bh=flVkesae/MhD3DTzRmMDiwgl+tSoE8yRNpLCjq0mYek=;
+        b=sOCzl2aCx9A0fpMeufvgTdOL4c96+RyzxhZ3eWvpu0vuGTZ06/GpJhIdAS2vg1NHtJ
+         32KorpyW48aKCW/KtFW90EOE/LYvjVKHl+3JnbFg4gxquujG9sSqBnTE1X6uxkKoIm+g
+         CnouR68DoupqXoA3LPnEP20e+KJ2jy/yNNNMTAhXTd7uNnX7qBMRmyQgcSNZilkDQlHm
+         v9G7mhh/xsm0OzZHvu92FMv1wckqJMZAeJMGUJpfS/R5DBd3EI4CfD8tPDJUwDOimKgS
+         Fvb98qfLnMPHKdJZCJBtu1TGHthY/eLqx0QcOj9MG1H9Bst9ycAQcVpRrM9t7obux7k8
+         BMkg==
+X-Gm-Message-State: AOJu0YymFRrroYMOpFRDpQMJIDyOwvtoh9+e2yOkyYzwRw1x5d+eM6iP
+	D/oDn3gE9bxlTDuWmcJcdomtyjVyE+KOrgtzxM0tIlpo
+X-Google-Smtp-Source: AGHT+IG/Zzfc/CTr/59yx/R6is6P6PdFX1OQDua8fJs+nu55eclEe0iNJ4Z1FYHu4yiW5FJscNXc+XCbukqri9RzF4A=
+X-Received: by 2002:a05:6512:2399:b0:50e:6d0f:c1d4 with SMTP id
+ c25-20020a056512239900b0050e6d0fc1d4mr1698630lfv.26.1703404289731; Sat, 23
+ Dec 2023 23:51:29 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <LO6P265MB6736043BE8FB607DB671D21EFAAAA@LO6P265MB6736.GBRP265.PROD.OUTLOOK.COM>
- <CABPp-BHYaxa7QoXabM=7hW-93hQLK-=KayGtDHtWxxdAnJCcJw@mail.gmail.com>
- <LO6P265MB6736F5F9E8368A9DE95D294FFAA9A@LO6P265MB6736.GBRP265.PROD.OUTLOOK.COM>
- <CABPp-BHEX+SyophEfgRqDbNdrAS3=bptt_cKzHLBSutnBAxexw@mail.gmail.com> <990ab7d5-e29a-4766-b112-c8908a7ed196@iee.email>
-In-Reply-To: <990ab7d5-e29a-4766-b112-c8908a7ed196@iee.email>
+References: <20231221065925.3234048-1-gitster@pobox.com> <20231221065925.3234048-3-gitster@pobox.com>
+In-Reply-To: <20231221065925.3234048-3-gitster@pobox.com>
 From: Elijah Newren <newren@gmail.com>
-Date: Sat, 23 Dec 2023 23:46:01 -0800
-Message-ID: <CABPp-BEdSGBt7DCrJCmOtG+RgZ2F3fNZQJ91PjZQxNa-ShKf8g@mail.gmail.com>
-Subject: Re: Git Rename Detection Bug
-To: Philip Oakley <philipoakley@iee.email>
-Cc: Jeremy Pridmore <jpridmore@rdt.co.uk>, "git@vger.kernel.org" <git@vger.kernel.org>, 
-	Paul Baumgartner <pbaumgartner@rdt.co.uk>
+Date: Sat, 23 Dec 2023 23:51:19 -0800
+Message-ID: <CABPp-BF3Vqq8Y8+2pQyO7-StUVPR3as+Q_aL+o92ydoJY-8zEw@mail.gmail.com>
+Subject: Re: [PATCH 2/3] sparse-checkout: use default patterns for 'set' only !stdin
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Philip,
-
-Sorry for the late reply; I somehow missed this earlier.
-
-On Wed, Nov 15, 2023 at 8:51=E2=80=AFAM Philip Oakley <philipoakley@iee.ema=
-il> wrote:
+On Wed, Dec 20, 2023 at 10:59=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
+ wrote:
 >
-> Hi Elijah,
+> "git sparse-checkout set ---no-cone" uses default patterns when none
+> is given from the command line, but it should do so ONLY when
+> --stdin is not being used.  Right now, add_patterns_from_input()
+> called when reading from the standard input is sloppy and does not
+> check if there are extra command line parameters that the command
+> will silently ignore, but that will change soon and not setting this
+> unnecessary and unused default patterns start to matter when it gets
+> fixed.
 >
-> On 11/11/2023 05:46, Elijah Newren wrote:
-> > * filename similarity is extraordinarily expensive compared to exact
-> > renames, and if not carefully handled, can sometimes rival the cost of
-> > file content similarity computations given our spanhash
-> > representations.
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  * This came from f2e3a218 (sparse-checkout: enable `set` to
+>    initialize sparse-checkout mode, 2021-12-14) by Elijah.
 >
-> I've not heard of spanhash representation before. Any references or
-> further reading?
+>  builtin/sparse-checkout.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+> index 8f55127202..04ae81fce8 100644
+> --- a/builtin/sparse-checkout.c
+> +++ b/builtin/sparse-checkout.c
+> @@ -837,7 +837,7 @@ static int sparse_checkout_set(int argc, const char *=
+*argv, const char *prefix)
+>          * non-cone mode, if nothing is specified, manually select just t=
+he
+>          * top-level directory (much as 'init' would do).
+>          */
+> -       if (!core_sparse_checkout_cone && argc =3D=3D 0) {
+> +       if (!core_sparse_checkout_cone && !set_opts.use_stdin && argc =3D=
+=3D 0) {
+>                 argv =3D default_patterns;
+>                 argc =3D default_patterns_nr;
+>         } else {
+> --
+> 2.43.0-174-g055bb6e996
 
-You can find more in diffcore-delta.c, especially the big comment near
-the top of the file.  But here's a short explanation of spanhashes:
-  * Split files into chunks delimited either by LF or 64 bytes,
-whichever comes first.
-  * Hash every chunk into an integer between 0 and 107926
-  * Keep a character count for each of those integers as well (thus if
-a line has N characters, but appears twice in the file, the associated
-count for that integer will be 2N).
-  * A "spanhash" is the combination of the integer that a chunk (or
-span) hashes to, plus the count associated with it.
-  * The list/array of spanhashes for a file (i.e. the list/array of
-integers and character counts) is used to compare one file to another.
-
-Now, why do I claim that comparison of filenames can rival cost of
-file content similarity?  Well, in a monorepo of interest, the median
-sized file is named something close to
-"modules/client-resources/src/main/resources/buttons/smallTriangleBlackRigh=
-t.png"
-and is 2875 bytes.  As a png, all its chunks are probably the full 64
-characters, which works out to about 45 chunks (assuming the 64-byte
-chunks are different from each other).  The filename is 79 characters.
-So, for this case, 45 pairs of integers vs 79 characters.  So, the
-comparison cost is roughly the same order of magnitude.
-(Yes, creating the spanhashes is a heavy overhead; however, we only
-initialize it once and then do N comparisons of each spanhash to the
-other spanhashes.  And we'd be doing N comparisons of each filename to
-other filenames, so the overhead of creating the spanhashes can be
-overlooked if your merge has enough files modified on both sides of
-history.)
-
-Yes, this particular repository is a case I randomly picked that you
-can argue is special.  But rather than look at the particular example,
-I think it's interesting to check how the spanhash size vs. filename
-size scale with repository size.  From my experience: (1) I don't
-think the median-sized file varies all that much between small and big
-repositories; every time I check a repo the median size seems to be
-order of a few thousand bytes, regardless of whether the repository
-I'm looking at is tiny or huge, (2) while small repositories often
-have much shorter filenames, big repositories often will have
-filenames even longer than my example; length of filename tends to
-grow with repository size from deep directory nestings.  So, between
-these two facts, I'd expect the filename comparison costs to grow
-relative to file content comparison costs, when considering only
-median-sized files being modified.  And since it's common to have
-merges or rebases or diffs where only approximately-median-sized files
-are involved, I think this is relevant to look at.  Finally, since I
-already had an example that showed the cost likely roughly comparable
-for a random repository of interest, and it's not even all that big a
-repository compared to many out there, I think the combination
-motivates pretty well my claim that filename similarity costs _could_
-rival file content similarity costs if one wasn't careful.
-
-I don't have a rigorous proof here.  And, in fact, I ended up doing
-this rough back-of-the-envelope analysis _after_ implementing some
-filename similarity comparison ideas and seeing performance degrade
-badly, and wondering why it made such a difference.  I don't know if I
-ever got exact numbers, but I certainly didn't record them.  This
-rough analysis, though, was what made me realize that I needed to be
-careful with any such added filename comparisons, though, and is why
-I'm leery of adding more.
+Thanks for catching this; the fix looks good to me.
