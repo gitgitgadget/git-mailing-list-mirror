@@ -1,151 +1,126 @@
-Received: from mout.web.de (mout.web.de [217.72.192.78])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB9423C3
-	for <git@vger.kernel.org>; Sun, 24 Dec 2023 09:30:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DA055382
+	for <git@vger.kernel.org>; Sun, 24 Dec 2023 13:42:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="j+oB1KWp"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-	t=1703410219; x=1704015019; i=l.s.r@web.de;
-	bh=DLClHvtFAH2KthkwTDvh/H6k6qyDSZoloHI85j4lnSk=;
-	h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
-	 In-Reply-To;
-	b=j+oB1KWpTUJ7bY6Tipy9M0nF0/BSkhW00n7CU/YbOuW/d02JkW3Wl8f6KkmdKEOk
-	 b0fOYOvbWKkZaMW5qiqC2hyJ/frkmERN7s2pbvfljOErORH7UUUVaqN3TJPB00HYB
-	 WFpcHEWvwV5kZmfVkhQsPpYESQ+18rsfTtfug6MhBUM+iSt9tM9kJbRu4SGZ29LIw
-	 kktCmRxs4c72iY2SYcBOOLR72g536s1+Byt1EvRC4hzcKRGJCG20tnRUb7O3/xCU2
-	 ome4UgajkRNk81wItJYTQ6DcxOjj6GfQJvh5YbiL+KrPRMg5uvota3LcH6XfHYFkh
-	 T4WKcoDY+erxeHRCww==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.23.9]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MMp8Y-1rXlle3oZQ-00Isf0; Sun, 24
- Dec 2023 10:30:18 +0100
-Message-ID: <290b20f6-ce3b-49b3-a61d-69277fd8c430@web.de>
-Date: Sun, 24 Dec 2023 10:30:17 +0100
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="oV8QtJUk"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+	t=1703425369; x=1704030169; i=johannes.schindelin@gmx.de;
+	bh=EUuHGQ7HOlC8cWnYzfGHFkw/6PghHyM9S28k+D1KCls=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:
+	 References;
+	b=oV8QtJUkeDf2dNUkFi+MUrkt/WE+gd2ui+OAglD0dQhXCbux/lfm0yi3vcHqDEJs
+	 lYqeE2JjiciAaZUCtFgIf7OjeR1akHyf9wKQJtFhZ/DaABi6HBMc3vrD6+jpJuNyP
+	 yO6OLvC+ftg3t8qClvnSj2yrqjNHmEG+MyM8TTeKVW43cNqmqIkUtdQW/+Ihe1O1T
+	 wLmeRv+k9uHZyGrXHZEhACczKk3MWV/hqLkwTOa0Mzbnr4kPpLnwXiEBJH4gBMCPl
+	 n+vSFO4IQ4NaNqDPGVo8f4NgO07xgHTM67x1qbceOpiIx6d/7sD6Bfdoku0DWOhIQ
+	 lntgnpBe/A/akitFOQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.215.56]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MIMbU-1rVdq11ltk-00ELum; Sun, 24
+ Dec 2023 14:42:49 +0100
+Date: Sun, 24 Dec 2023 14:42:48 +0100 (CET)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Chandra Pratap via GitGitGadget <gitgitgadget@gmail.com>
+cc: git@vger.kernel.org, =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>, 
+    Chandra Pratap <chandrapratap376@gmail.com>, 
+    Chandra Pratap <chandrapratap3519@gmail.com>
+Subject: Re: [PATCH v3] Teach git apply to respect core.fileMode settings
+In-Reply-To: <pull.1620.v3.git.1703066893657.gitgitgadget@gmail.com>
+Message-ID: <82dadb69-5016-dec6-3699-4d994ea7929d@gmx.de>
+References: <pull.1620.v2.git.1703010646036.gitgitgadget@gmail.com> <pull.1620.v3.git.1703066893657.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] t1006: add tests for %(objectsize:disk)
-Content-Language: en-US
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Ondrej Pohorelsky <opohorel@redhat.com>,
- "brian m . carlson" <sandals@crustytoothpaste.net>,
- Junio C Hamano <gitster@pobox.com>
-References: <9feeb6cf-aabf-4002-917f-3f6c27547bc8@web.de>
- <20231212200153.GB1127366@coredump.intra.peff.net>
- <ff735aac-b60b-4d52-a6dc-180ab504fc8d@web.de>
- <65557f2d-9de0-49ae-a858-80476aa52b68@web.de>
- <20231214205936.GA2272813@coredump.intra.peff.net>
- <6750c93c-78d0-46b5-bfc2-0774156ed2ed@web.de>
- <20231221094722.GA570888@coredump.intra.peff.net>
- <d44cb8e7-ffce-4184-b9b5-6bb56705dcd1@web.de>
- <20231221213034.GB1446091@coredump.intra.peff.net>
- <120b3194-5eee-47ed-b2d8-bc6731b71a6b@web.de>
- <20231223101853.GC2016274@coredump.intra.peff.net>
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <20231223101853.GC2016274@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:NxWzOgdqAlnJm9By3xz7Ik6jDba6PqC5bV0+K2Y4rnS5AA4Yxgw
- s5zrr/lLNSzoAQXQh4AIBagQl4ajatPH+c0PByI0ksQY/KKlyZAl9IOPY19cocCu/npDiAu
- DrduQvfYlI2X8e3z/dnbkZhUOIiBIbMLQh/IsO7qX6Von87z3sCe7FsionLVtz1YOGgjTdR
- bUp4ixODEmfkUT9IxiP7w==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:nmzzHYDOcJ0tn0lNhFgh6Oii+Y2pejoh5NwrxXt0C/rSGpGLDqi
+ a9eAmYU8EBTd38sA0Sl31t/XR5vv4WP7EFTYne+LKqwo+aphUhI3vwTaxRg+kMN2ntLfs9p
+ +CFovWByFk6MUugEDMroBcUZim+bfo75XV0dcWm+jXD/6WPh0Lo+E6OkPQlIb/dTkuLP53v
+ E5MuiOTv9HwxnTF/5WgXw==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:NFn/chfSwzM=;Gog2Le28xnNesrKpza6iyHpF8sA
- N0Fmph3DwIIgyc9/PZhdgLFFJzhghwOw8o4qSKgOx9DkIUQx2tETkG3Z59YMLELXgp1t/ZSx/
- GGsvyjJS3EhOnNoPcLyt/KVs37Tf4j5bSTxYLYjNpr9xkgLUZUeHByMRHeHpYRpKhIprTDwfa
- QRmlLgZOejV8i9LP2dfgcdT/sgWSk8/kkFBMSMMBOnkrP3iCdeK3vyxcwANSoAFpsTZKLRYCt
- YlEFMvmuqjz5K+1bmbNS5oo5cHGAQLhiWTIkzW/nOIlPxwcftNYtMXGNgvsXtUOdhQ58omHA8
- U1JkYU47vh516xhBJsgWPRbagG/doeI1PCZG585+OiYmZFIuuEdcmf4n9HoLx2p5WOrlBfq/z
- hJbP68+DsnK4vBlLb3p0vh7A6HcPfxvcPySLwVqMmVS48ic2XvFZ/lj91uxoaChPayZii2sFt
- FZwXprCqHqHPOjdXjoYFGiPcas9EfO90HvKGkP84n0Wj8EE9Fuj8JQHK+OVMolum16px4OQzD
- 0oJBdEmyYnLc6/tKNHjzAo/lhpXQBvoiirHTXCHWv0iKwe0mNqvVOy34qLcTO9wN43Q2FdWCB
- DhuYFfxo8yY2m8yAbyz/LE+ocTW2f3TNFpPQ2c5J+ZVvd95tyw37Xkag+ZRcDFwgiCL9dNdyl
- coHJM1Rk71zGKiYvdEBufvK1t1fNFDBT8rHMt3mXEiUq5u7xZZlRFIoV91ME2wn5QKwHn12zN
- KrQGpr0UoIxZdh48US1XznUUlNhhBBhcgb6ZT/Eqn3mwUgQzc09JL0trflL6IzR74QzydD1Qk
- IsSyZ4uKQPj+RZnTBJds9/OWdCl2o1qjBAOwR+Xf/JmxIe6r62F6pQXCv2TwsRIc4F5+sc+QB
- HPvxOsVWUIg+RcmKptjIHAH+PncvWKUpfU/KjZDHfzZw+D8fs6oHPMyxkohKbte/3Pw+1FSlU
- Xx4Hyg==
+UI-OutboundReport: notjunk:1;M01:P0:5sl3+M8YijE=;9KlKGCl5hSoMQWJz2V3cuWZkTNK
+ 3NvUKlRUrESKHxNoFNVMB3oP7jgYVyQv3Ut3PnRbdlC/NUoetToSqh/OAQDhia6hQ0Zz44sgW
+ OkrPY1MyIhFqNOJ8X+jU8JrMFcW86UPTiNAf7W7WlOFwrUo4Mwcs7RkNJfVQU8/x6xeaVN///
+ 5VOJ5ogkD1tFwEKHp5DQfMC6LlKigiIMU+ZPNlMN2TMH09npgp5gfvM9pTtyPH4fpcc3Bs9rC
+ 9dp4hAzQvO0EcQIFss4dUPIIMZDqWOxc9sfzD3RC7sl6DHb8dkb+yKKisQQKBWvScC+J1eamr
+ J/qVTunADXEYMZMGhTER8eTgej45UT76Bua8mkOtoA2W/1kdp+0Nu5D5fzzCo4Q6P9PaZCisz
+ IQn73ETrMZ+e9M7zzawjlO+lD7fDi45fWHMYVTcirB9nsebCL/28kq12srZOHFOSy1+HQERrC
+ 8N3LCQ3nnPJY3n6Rf7W6ammXl+SBaE1KE/Walz7GHyA0Qm1IRRIkNZ/ujZLDV0bRvM6KCi03E
+ sILB9HPCoujlWjDh26XzfvnmwZ2eykwRexTCEHhgU1bJMHhomdVrMHml4vU4KO8bCYo2nrVIP
+ WYiKBylRWH86UlPMKalxQowNHmFjslZui9SM0TuNn74CTpZfdwiSoSyvnQDyGtcZ7s/Ghzmpq
+ olcQ1FZKsp0bUp0AqjHYdv8azlKLyZQFYJ3DWvXe0irUUZtaBxNWEoi0dg7JfQHIAx/8FQobO
+ 4Cjq32AP8iRclhgFYrPjDPnQu0SvuAZJxPTNtGpD/LciqZA/uWNw2tuPdbKwunHZ2fykakCCK
+ kn2qIiHO9+mOgVMUrUWapBWOlG5rLWngOwffK5mws2lCFnhpiG3F3sK/C+vSh/mR43xmUJMAf
+ vmYim0V4Ahm1/nHZ84GDDDf/kvSQ/QKW5iD3GHKR0aAh91VpehTG0fL3BDS/JhymUe4AaSeCq
+ F97PIA==
+Content-Transfer-Encoding: quoted-printable
 
-Am 23.12.23 um 11:18 schrieb Jeff King:
-> On Fri, Dec 22, 2023 at 12:13:10AM +0100, Ren=C3=A9 Scharfe wrote:
->
->>>> Should we deduplicate here, like cat-file does (i.e. use "sort -u")?
->>>> Having the same object in multiple places for whatever reason would n=
-ot
->>>> be a cause for reporting an error in this test, I would think.
->>>
->>> No, for the reasons I said in the commit message: if an object exists =
-in
->>> multiple places the test is already potentially invalid, as Git does n=
-ot
->>> promise which version it will use. So it might work racily, or it migh=
-t
->>> work for now but be fragile. By not de-duplicating, we make sure the
->>> test's assumption holds.
->>
->> Oh, skipped that paragraph.  Still I don't see how a duplicate object
->> would necessarily invalidate t1006.  The comment for the test "cat-file
->> --batch-all-objects shows all objects" a few lines above indicates that
->> it's picky about the provenance of objects, but it uses a separate
->> repository.  I can't infer the same requirement for the root repo, but
->> we already established that I can't read.
->
-> The cat-file documentation explicitly calls this situation out:
->
->   Note also that multiple copies of an object may be present in the
->   object database; in this case, it is undefined which copy=E2=80=99s si=
-ze or
->   delta base will be reported.
->
-> So if t1006 were to grow such a duplicate object, what will happen? If
-> we de-dup in the new test, then we might end up mentioning the same copy
-> (and the test passes), or we might not (and the test fails). But much
-> worse, the results might be racy (depending on how cat-file happens to
-> decide which one to use). By no de-duping, then the test will reliably
-> fail and the author can decide how to handle it then.
->
-> IOW it is about failing immediately and predictably rather than letting
-> a future change to sneak a race or other accident-waiting-to-happen into
-> t1006.
->
->> Anyway, if someone finds a use for git repack without -d or
->> git unpack-objects or whatever else causes duplicates in the root
->> repository of t1006 then they can try to reverse your ban with concrete
->> arguments.
->
-> In the real world, the most common way to get a duplicate is to fetch or
-> push into a repository, such that:
->
->   1. There are enough objects to retain the pack (100 by default)
->
->   2. There's a thin delta in the on-the-wire pack (i.e., a delta against
->      a base that the sender knows the receiver has, but which isn't
->      itself sent).
->
-> Then "index-pack --fix-thin" will complete the on-disk pack by storing a
-> copy of the base object in it. And now we have it in two packs (and if
-> it's a delta or loose in the original, the size will be different).
+Hi,
 
-I think I get it now.  The size possibly being different is crucial.
-cat-file deduplicates based on object ID alone.  sort -u in t1006 would
-deduplicate based on object ID and size, meaning that it would only
-remove duplicates of the same size.  Emulating the deduplication of
-cat-file is also possible, but would introduce the race you mentioned.
+On Wed, 20 Dec 2023, Chandra Pratap via GitGitGadget wrote:
 
-However, even removing only same-size duplicates is unreliable because
-there is no guarantee that the same object has the same size in
-different packs.  Adding a new object that is a better delta base would
-change the size.
+> diff --git a/apply.c b/apply.c
+> index 3d69fec836d..58f26c40413 100644
+> --- a/apply.c
+> +++ b/apply.c
+> @@ -3778,8 +3778,12 @@ static int check_preimage(struct apply_state *sta=
+te,
+>  		return error_errno("%s", old_name);
+>  	}
+>
+> -	if (!state->cached && !previous)
+> -		st_mode =3D ce_mode_from_stat(*ce, st->st_mode);
+> +	if (!state->cached && !previous) {
+> +		if (!trust_executable_bit)
+> +			st_mode =3D *ce ? (*ce)->ce_mode : patch->old_mode;
+> +		else
+> +			st_mode =3D ce_mode_from_stat(*ce, st->st_mode);
+> +	}
 
-So, deduplicating based on object ID and size is sound for any
-particular run, but sizes are not stable and thus we need to know if
-the tests do something that adds duplicates of any size.
+I noticed a CI breakage in t2106.3 in `seen` that seems to be caused by
+this, and I can make it go away with this patch:
 
-Ren=C3=A9
+=2D- snip --
+=46rom 5c2a709b629d396528dabe2f92bf3d4deb5bbdb2 Mon Sep 17 00:00:00 2001
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Date: Sun, 24 Dec 2023 14:01:49 +0100
+Subject: [PATCH] fixup! Teach git apply to respect core.fileMode settings
+
+As pointed out e.g. by t2016.3(git checkout -p), if the patch is to be
+applied in reverse (`git apply -R`), then the `old_mode` is actually 0,
+and we must use `new_mode` instead.
+
+While at it, add some defensive code to ignore `ce_mode` should it be 0.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+=2D--
+ apply.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/apply.c b/apply.c
+index 58f26c404136..5ad06ef2f843 100644
+=2D-- a/apply.c
++++ b/apply.c
+@@ -3780,7 +3780,9 @@ static int check_preimage(struct apply_state *state,
+
+ 	if (!state->cached && !previous) {
+ 		if (!trust_executable_bit)
+-			st_mode =3D *ce ? (*ce)->ce_mode : patch->old_mode;
++			st_mode =3D *ce && (*ce)->ce_mode ? (*ce)->ce_mode :
++				(state->apply_in_reverse ?
++				 patch->new_mode : patch->old_mode);
+ 		else
+ 			st_mode =3D ce_mode_from_stat(*ce, st->st_mode);
+ 	}
+=2D- snap --
+
+I guess you can slap on that `Reviewed-by:` footer again, after all... ;-)
+
+Ciao,
+Johannes
