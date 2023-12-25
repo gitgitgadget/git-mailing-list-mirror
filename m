@@ -1,50 +1,53 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E75C953E08
-	for <git@vger.kernel.org>; Mon, 25 Dec 2023 21:21:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC9F53E04
+	for <git@vger.kernel.org>; Mon, 25 Dec 2023 21:21:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B4tSgDHi"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-40d2376db79so39421945e9.0
-        for <git@vger.kernel.org>; Mon, 25 Dec 2023 13:21:31 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M9r0Ib95"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-40d31116dbeso48735695e9.3
+        for <git@vger.kernel.org>; Mon, 25 Dec 2023 13:21:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1703539290; x=1704144090; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1703539291; x=1704144091; darn=vger.kernel.org;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=FAsF9MJ9skmo0nPiiqrkJC6pPLLeMSlp1c4eqJeHdU0=;
-        b=B4tSgDHiXVyYnO3PLlcZfgZsT3bZS3df7HcNbOnmJSB3XM0CmpzYZj0o8i/terGvoL
-         SG76XIQaqHlubNpe3niwvP60KoTDBLmw7mlQ1C68S3CrjwBUihg+HnaGvEou/9v+zZZo
-         P/20Yn8wsH3T/thgjTWilW6uRWQEjkpBJD+S2MlpMRPdEa9K0Hu4jJMrr8UZar6acPCp
-         y/1Vzvr/qwXqN2YSEfR3Z0OYNl0qwdgiti/dvUafmjAeRC8JaZhFt3SrL4HCms+QJtZK
-         FECrrD3EUNWiBgdWX/hht67nM0Ye8OZFRg4QwL5CMjs/jWgv1hdlOYf2hXZaxAwxOvZ3
-         l33g==
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UJZZ4c85vj0uLFt67mpASO29sOd/3z6AK05WEXuAWvY=;
+        b=M9r0Ib9546DjhrOBRbrxHfqJfxMeqex1fJPG3PCvHg275dXUHXYLR+3z2XgfHyRKye
+         gaU9ioABwCFhKisIsPl8n8ehnqXWopriGGptHwJSGwhxVd4Y0BFlIJzRdX/YBOW2K2Dp
+         XdumUz3YW6pLhbtTjUTbAOltK5sqD1izCD3Uq9c19ORZkbENEQ1ZkGVwJo0+s0g0JhjZ
+         YgnJg3RLjgLEDT7ScJrgaTvj6LRhYItVPuC8WGqXuAVFSyRMWkSKxAlajUJIlDVAdGEM
+         7B4be5f+9H1ABMWWFmi5Q9jCb41ZCoBkiAAx+PbqegjF696c1JAmA2XP2A0qUT0Wa5Nj
+         w1rA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703539290; x=1704144090;
+        d=1e100.net; s=20230601; t=1703539291; x=1704144091;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=FAsF9MJ9skmo0nPiiqrkJC6pPLLeMSlp1c4eqJeHdU0=;
-        b=aUYauxiy+5hLigQjXeDsWyR/htwJCMyAnaX5pgBwKq4jQrx2xYHEffTaX/K3mCAh3v
-         XYbwKjAAd/s7omRprxHgArMZu0NJULgba8Lh3gyKHHeXtUWqbYV9+1/SkRkcMvLCxxud
-         07b37tsPDogYkzD2K61ysgWMXkxwIXOZf9/XG8+y1KX9PjcnrV/63hIK5nfvnSajL5tn
-         tj0jEdSoPuEG2JJpU+JSbsNnaFPkHg/VMQNR1sIktFh4UxHqGzY5B1Su3StHFljXyGR+
-         hWdw4+1kb7Wx/OUuAz/+PrcJ4w6Ng5HffEwDzQbJm3blQc83aAwZ9tzzvpUyQ8UsmpSg
-         hyKg==
-X-Gm-Message-State: AOJu0Yw8j2jL7q7vg2iAzEGyipZdkb/YKVRpSQRJqSw2e1gSTUMF1WWK
-	EQxtwBk3TwKpYCPwLyD+VAfrVNQ7C5A=
-X-Google-Smtp-Source: AGHT+IHHMtpPFA0CWmQPA6yVY+oJQ9LuT3yjxydVmO5x9B8o1AERT4IrKuu3a1Ch50sdjMf6LY/UKw==
-X-Received: by 2002:a05:600c:548d:b0:40c:2822:958f with SMTP id iv13-20020a05600c548d00b0040c2822958fmr3700517wmb.73.1703539289594;
-        Mon, 25 Dec 2023 13:21:29 -0800 (PST)
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=UJZZ4c85vj0uLFt67mpASO29sOd/3z6AK05WEXuAWvY=;
+        b=IANSjynm/crbiQ/rpPCWwbZ7OjYMWOBGkASdfG84FvM4TgBXZ1PMCHG150qP2VIGXJ
+         S65aidjOxMLh2OsdPbqv6d3xKvtqLDiEFrBJJNCJKoHN2ZKfCgHp8c0aLRkbZ2hhlZPV
+         7DX0IGnAG16/UzrWTZ1JR/hO5pP2SPnfewJGEUAJk5uxb8N3tJYYBjuhgPBDW8k+9qPO
+         RxWSo0UpesMTUcdR3Ll5lvo0/FNzo+LTjTU0dqq/e8KHSlClMt3yDQEZ1q9pj8GWXVKb
+         QWpP0roeV3ovc5gp52jFKlzdQag2cemIUUjop+55dkuBhVR9x6BwCQkpqiGD1hajfvB/
+         r95Q==
+X-Gm-Message-State: AOJu0YwIxN+jA76+HM4c0cHEobwxaYPtquw+z+0UCZ4BUiI/0SQ1jyHj
+	6UCjOk3DHAr6atV6Cvm6A5y5Ic1j/a0=
+X-Google-Smtp-Source: AGHT+IEe/cHmTYw8JeJrD4qDeY4JvvR2YAiMkP4TlcO/OqCk6U2XkLdsbSAtlPouG+EgmEn3SSeoGQ==
+X-Received: by 2002:a05:600c:4593:b0:40d:3fee:97fa with SMTP id r19-20020a05600c459300b0040d3fee97famr3269063wmo.33.1703539290813;
+        Mon, 25 Dec 2023 13:21:30 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m20-20020a05600c3b1400b0040b4c59f133sm18467973wms.1.2023.12.25.13.21.28
+        by smtp.gmail.com with ESMTPSA id n9-20020a05600c4f8900b0040d56075463sm5114894wmq.44.2023.12.25.13.21.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Dec 2023 13:21:29 -0800 (PST)
-Message-ID: <pull.1626.git.1703539287.gitgitgadget@gmail.com>
-From: "=?UTF-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 25 Dec 2023 21:21:25 +0000
-Subject: [PATCH 0/2] Fix doc placeholders
+        Mon, 25 Dec 2023 13:21:30 -0800 (PST)
+Message-ID: <e928f273c2a26310d8bf77a075207c15626766dd.1703539288.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1626.git.1703539287.gitgitgadget@gmail.com>
+References: <pull.1626.git.1703539287.gitgitgadget@gmail.com>
+From: "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 25 Dec 2023 21:21:27 +0000
+Subject: [PATCH 2/2] doc: enforce placeholders in documentation
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -55,62 +58,96 @@ Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Fcc: Sent
 To: git@vger.kernel.org
-Cc: =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+Cc: =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+    =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
-While setting up a check of (the absence of) translations of commands,
-options and environment variable in the manpages in the manpage translation
-project, some false positives appeared.
+From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
-Here is a series that enforces the formatting rules for placeholders in
-documentation and help.
+Any string that is not meant to be used verbatim in the documentation
+should be marked as a placeholder.
 
-Jean-Noël Avila (2):
-  doc: enforce dashes in placeholders
-  doc: enforce placeholders in documentation
+Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
+---
+ Documentation/diff-options.txt | 2 +-
+ Documentation/git-config.txt   | 8 ++++----
+ Documentation/git-daemon.txt   | 4 ++--
+ Documentation/git-difftool.txt | 2 +-
+ Documentation/git.txt          | 2 +-
+ 5 files changed, 9 insertions(+), 9 deletions(-)
 
- Documentation/diff-options.txt             |  2 +-
- Documentation/git-blame.txt                |  2 +-
- Documentation/git-bugreport.txt            |  4 ++--
- Documentation/git-commit-graph.txt         |  2 +-
- Documentation/git-config.txt               |  8 ++++----
- Documentation/git-cvsserver.txt            |  4 ++--
- Documentation/git-daemon.txt               | 10 +++++-----
- Documentation/git-diagnose.txt             |  2 +-
- Documentation/git-difftool.txt             |  2 +-
- Documentation/git-fast-import.txt          |  4 ++--
- Documentation/git-fetch.txt                |  4 ++--
- Documentation/git-filter-branch.txt        |  6 +++---
- Documentation/git-format-patch.txt         | 20 ++++++++++----------
- Documentation/git-mv.txt                   |  2 +-
- Documentation/git-notes.txt                |  2 +-
- Documentation/git-replace.txt              |  6 +++---
- Documentation/git-revert.txt               |  4 ++--
- Documentation/git-send-email.txt           |  2 +-
- Documentation/git-status.txt               |  4 ++--
- Documentation/git-submodule.txt            |  4 ++--
- Documentation/git-svn.txt                  | 18 +++++++++---------
- Documentation/git-tag.txt                  |  2 +-
- Documentation/git.txt                      |  4 ++--
- Documentation/gitdiffcore.txt              |  8 ++++----
- Documentation/gitformat-index.txt          |  4 ++--
- Documentation/githooks.txt                 |  8 ++++----
- Documentation/gitk.txt                     |  4 ++--
- Documentation/gitprotocol-capabilities.txt |  2 +-
- Documentation/gitprotocol-http.txt         | 14 +++++++-------
- Documentation/gitprotocol-v2.txt           |  8 ++++----
- Documentation/gitsubmodules.txt            |  4 ++--
- Documentation/gitweb.conf.txt              | 10 +++++-----
- Documentation/gitweb.txt                   |  2 +-
- Documentation/trace2-target-values.txt     |  2 +-
- Documentation/urls.txt                     |  8 ++++----
- Documentation/user-manual.txt              |  4 ++--
- builtin/commit-graph.c                     |  2 +-
- 37 files changed, 99 insertions(+), 99 deletions(-)
-
-
-base-commit: 564d0252ca632e0264ed670534a51d18a689ef5d
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1626%2Fjnavila%2Ffix_doc_placeholders-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1626/jnavila/fix_doc_placeholders-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1626
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index 53ec3c9a347..aaaff0d46f0 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -299,7 +299,7 @@ and accumulating child directory counts in the parent directories:
+ 	Synonym for --dirstat=cumulative
+ 
+ --dirstat-by-file[=<param1,param2>...]::
+-	Synonym for --dirstat=files,param1,param2...
++	Synonym for --dirstat=files,<param1>,<param2>...
+ 
+ --summary::
+ 	Output a condensed summary of extended header information
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index b1caac887ae..dff39093b5e 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -103,11 +103,11 @@ OPTIONS
+ 	names are not.
+ 
+ --get-urlmatch <name> <URL>::
+-	When given a two-part name section.key, the value for
+-	section.<URL>.key whose <URL> part matches the best to the
++	When given a two-part <name> as <section>.<key>, the value for
++	<section>.<URL>.<key> whose <URL> part matches the best to the
+ 	given URL is returned (if no such key exists, the value for
+-	section.key is used as a fallback).  When given just the
+-	section as name, do so for all the keys in the section and
++	<section>.<key> is used as a fallback).  When given just the
++	<section> as name, do so for all the keys in the section and
+ 	list them.  Returns error code 1 if no value is found.
+ 
+ --global::
+diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
+index 6ab792228a1..ede7b935d64 100644
+--- a/Documentation/git-daemon.txt
++++ b/Documentation/git-daemon.txt
+@@ -141,8 +141,8 @@ otherwise `stderr`.
+ 	specified with no parameter, a request to
+ 	git://host/{tilde}alice/foo is taken as a request to access
+ 	'foo' repository in the home directory of user `alice`.
+-	If `--user-path=path` is specified, the same request is
+-	taken as a request to access `path/foo` repository in
++	If `--user-path=<path>` is specified, the same request is
++	taken as a request to access `<path>/foo` repository in
+ 	the home directory of user `alice`.
+ 
+ --verbose::
+diff --git a/Documentation/git-difftool.txt b/Documentation/git-difftool.txt
+index 50cb080085e..c05f97aca96 100644
+--- a/Documentation/git-difftool.txt
++++ b/Documentation/git-difftool.txt
+@@ -90,7 +90,7 @@ instead.  `--no-symlinks` is the default on Windows.
+ --extcmd=<command>::
+ 	Specify a custom command for viewing diffs.
+ 	'git-difftool' ignores the configured defaults and runs
+-	`$command $LOCAL $REMOTE` when this option is specified.
++	`<command> $LOCAL $REMOTE` when this option is specified.
+ 	Additionally, `$BASE` is set in the environment.
+ 
+ -g::
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index d51473a3274..8d565142024 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -202,7 +202,7 @@ If you just want to run git as if it was started in `<path>` then use
+ 	Do not perform optional operations that require locks. This is
+ 	equivalent to setting the `GIT_OPTIONAL_LOCKS` to `0`.
+ 
+---list-cmds=group[,group...]::
++--list-cmds=<group>[,<group>...]::
+ 	List commands by group. This is an internal/experimental
+ 	option and may change or be removed in the future. Supported
+ 	groups are: builtins, parseopt (builtin commands that use
 -- 
 gitgitgadget
