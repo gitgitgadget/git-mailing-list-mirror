@@ -1,96 +1,145 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F9C117F8
-	for <git@vger.kernel.org>; Tue, 26 Dec 2023 19:19:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 977EE1852
+	for <git@vger.kernel.org>; Tue, 26 Dec 2023 19:19:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="nb+a5hTV"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-	t=1703618341; x=1704223141; i=johannes.schindelin@gmx.de;
-	bh=6hETFZnP1ZjoUYi3QJLYw8xR7z1WpHhgwSLLzKU/2iU=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:
-	 References;
-	b=nb+a5hTV8hmdSpncNrz55MD7CiPcAp9PBUbpVX4bHI66meWiVgHlQop8tHLK2/Ju
-	 2LJGIkRR/PZ3C7/Yn/MZyGPiTVce+BpzabJViD/gYu9Jfm/G8gUbPJ5G4HHx0mLwp
-	 0FOmG9opdigVEUiZQv57ED4s0YnC2qtzES9gGIRy0Z1xw7vB8TzfDRXICjIDjVQUO
-	 V+jNP3XTgG28VMV0xyBmWCHrBPKlcwoSia0HNJ/z5AuS/1SkiyRDrEkc/eph2WvLs
-	 2Tpiv2ihlIgDp82uQpjZMikUfJpuxw2YF1o+NKjy6537/58ZCBB7R6RIGoeBnxuv9
-	 35oaKq/sLa50a31htA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([92.157.3.119]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1ML9yc-1rZK8F0ipu-00IGdK; Tue, 26
- Dec 2023 20:19:01 +0100
-Date: Tue, 26 Dec 2023 20:18:58 +0100 (CET)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-cc: Chandra Pratap via GitGitGadget <gitgitgadget@gmail.com>, 
-    git@vger.kernel.org, =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>, 
-    Chandra Pratap <chandrapratap376@gmail.com>, 
-    Chandra Pratap <chandrapratap3519@gmail.com>
-Subject: Re: [PATCH v3] Teach git apply to respect core.fileMode settings
-In-Reply-To: <xmqq4jg4j28z.fsf@gitster.g>
-Message-ID: <fb022e3c-adb5-e341-9fd0-9c5311abe908@gmx.de>
-References: <pull.1620.v2.git.1703010646036.gitgitgadget@gmail.com> <pull.1620.v3.git.1703066893657.gitgitgadget@gmail.com> <82dadb69-5016-dec6-3699-4d994ea7929d@gmx.de> <xmqq4jg4j28z.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kIqN01A/"
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-50e80d40a41so845318e87.1
+        for <git@vger.kernel.org>; Tue, 26 Dec 2023 11:19:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1703618385; x=1704223185; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VJKXkkUVnxXYMAQc9/W6vwdTRw1DyO7UhgO+092SbUA=;
+        b=kIqN01A/K67n6CVlcQxES3odv4jH8E6d95WypnRpyhkbDB20V9ANkGa/WVYjAhPHn8
+         T+1lPALM0R9xeESLWE2yjnhzYqFTMzutYLBix0nqAL9xU/TiS2s0x754Bwukul+1Pixe
+         vfyjeM1TW96R3u/PaxjqtN+T/N0Pynl5pJU2s1nVf78C3sXRkPp6qPNLZ+D9aJtXILRs
+         +w+IS6kUePhXl+b+egK1Pqfy8i56pa2WvAoguKft+/JwDtCnl4wKu1MNHIjHt53JFCHO
+         UMT6RkD9ZgCPFlOe8QvQNiustOEWROm4rx7LVrmGzGawbjKKEWEX8qFJSWLT4wYVsIuG
+         x0+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703618385; x=1704223185;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=VJKXkkUVnxXYMAQc9/W6vwdTRw1DyO7UhgO+092SbUA=;
+        b=HYM3lvDywD3btzSWGOuAhl2iqjHnXR9UsH6BBWG/wqsm8y2AFrpILVegIYYd280Bfs
+         8eXCK8SLztLBgJAxfwDF8LoiCpqnU1UiaxXhQXW5je0nQdVBL8XxdXNVHvv3oK/f65jo
+         nEieNwbxiUhpBs2Gnr1BSHWZ7pV0wcNCPkpsh0q6xEAaDz/s4H7QDq/39E5YtosKItxy
+         PwaYXWptUu26tjL3X2IwdPfHweu3HHE7gaDC9UsqoPGk9ywwSvIS6Sy9Y2dkOJ4O8iTA
+         fwnvrtJ9aALO9zCNYvc5O60rEJQnB/hMA505YjpMjQ/t0S2X8nT/ULAYd9iumWULivxk
+         YhXw==
+X-Gm-Message-State: AOJu0Yy+W1S8aL0H8/vqSGsvO8vsjuwO+EDMd46Rm8h8ktJDjsPKd9uY
+	N7YzxxignFM924CA+LLE53l6EIHePhdQ6nsKb34=
+X-Google-Smtp-Source: AGHT+IFkKQzqH0LMPZJcSD3yJLtWCt6LCoQLVF6VijaHCO0qfPBp8iiVlaw8ea2n5EC5R67vxIgg9F/6E876Xvymv5g=
+X-Received: by 2002:ac2:4c0e:0:b0:50e:75e3:10f0 with SMTP id
+ t14-20020ac24c0e000000b0050e75e310f0mr1539638lfq.62.1703618385012; Tue, 26
+ Dec 2023 11:19:45 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:F7Vp9IJdppGW1/Ada1OOe+4fcHdCu4l0/GyV3ZXVzmtoCGLC85v
- rldmLX7CIq6r2Af6aU2rbpd9xvdnnmrE+95jV6XKehrOhcqTfZyg/dYNWxIsh04y47rVoVA
- EIp437CywFMoysaghc9IBvrBlEOAbeh41DTEpZgOYMO4kexP+Iw5fL3l5mDGysAewG8Vwi9
- WEPHXcN5q5BeNWfu5egDQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:+cKnTV1V7+Q=;wOit8vQKEj8NTLS7pC9H8k7bcKg
- L45zNx/nXX3n25JgZdHPTkEZpDwXMYd14rYthK5iyuKHIforu7NJfCjxO60UiwZ+XCn+MyKP6
- oEikJFFCdHUWSyOGHRtvSB8vmatSciS6JabMItF4A99k8/AtGv2D3ArdAvDotv69tMZsQ/+jA
- mMINq6zomzN82XFBrSoC9Fm5DwnLxLmziUmnYQTIdqjVUIbqGMIQklMyO2jmiZ4MLYlyvLY7b
- T1ptXTfy/uZL4OaFlQVEgNfX5lgvS0M6thLvrbnTna0UTgv+COdzgJcveBG2TaGclYnnJyzva
- tzAPtS8r4aD7tSj14Ua6aSFnFbL+o7Qwfnb/ZOKNmWks8CtcDOI5hYbLomqowuq+kcEp6nhdk
- H4dPYaEZSNtsK8zMW0UbWcLo+bKZ2hZcqept/lCh2UVYLaTJzVQZUMw1+vYLzQbNjaXf6Tq1H
- nOAmPDOQHm1cJjMQg0uCVcwHkRGdDJLDHh4/988sVP20BegaFsk2KMERJ1qn7AjdmYP0hU6fL
- wnZOLWq4CTlVTDPcaVgSZnPa2Jyp0uGRq0zFqCX7ue/0iJYch7+U0Z6Zmf7lXzUPt/CScq0Fx
- O/xqh812IuPIn05Ujokutlt/bLouXx58fHFQlJqMJZcENfJlZevR7/TDn4A9gBOl3fTdZz0qZ
- FXumKwG5Ob++xn44U4hG5xtJJiA9sAPbdjTDm4HWMQfjm+mb9QQgQIxaKASMSYRhzzDUxkNvg
- wKKEulEc57wBnQiqOC/A+S3BjI380SA9MJrOjnn3Uy8HI69fQCQjXilVdovzjtzZFR1fSaxkv
- RIuw5oJTjZ/ZnV2g2sB6EjPfdlL9xuCjvZqpAKr+7c1ed6Lc4dyLyxFKsBT859yW8SysaUGD/
- WStSzzcHcLiWlYsXr+aRYUaNaq3urdyFyN2ExMFAy7wCsY/o6fFVfAKb5O/R2+dNnhUJQLmJY
- Xe5j8Q==
+References: <pull.1625.git.git.1703379611749.gitgitgadget@gmail.com> <xmqq8r5gj2o3.fsf@gitster.g>
+In-Reply-To: <xmqq8r5gj2o3.fsf@gitster.g>
+From: Elijah Newren <newren@gmail.com>
+Date: Tue, 26 Dec 2023 11:19:34 -0800
+Message-ID: <CABPp-BGSUytAZ+mCWRsP7NoHbO3sBBtnbeAs=UZo6eVMa62XbQ@mail.gmail.com>
+Subject: Re: [PATCH] sparse-checkout: be consistent with end of options markers
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	"Randall S. Becker" <randall.becker@nexbridge.ca>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Junio,
+Hi,
 
-On Tue, 26 Dec 2023, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Tue, Dec 26, 2023 at 9:26=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> > While at it, add some defensive code to ignore `ce_mode` should it be =
-0.
+> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> Is it defensive or is it hiding a problematic index under the rug?
-
-I wrote this defensive code only out of habit, not because I saw a
-`ce_mode` that was 0.
-
-> If there is an index entry whose ce_mode is 0, I suspect we would
-> want to error out with a BUG(), unless it is an intent-to-add entry.
+> > From: Elijah Newren <newren@gmail.com>
+> >
+> > 93851746 (parse-options: decouple "--end-of-options" and "--",
+> > 2023-12-06) updated the world order to make callers of parse-options
+> > that set PARSE_OPT_KEEP_UNKNOWN_OPT responsible for deciding what to
+> > do with "--end-of-options" they may see after parse_options() returns.
+> >
+> > This made a previous bug in sparse-checkout more visible; namely,
+> > that
+> >
+> >   git sparse-checkout [add|set] --[no-]cone --end-of-options ...
+> >
+> > would simply treat "--end-of-options" as one of the paths to include in
+> > the sparse-checkout.  But this was already problematic before; namely,
+> >
+> >   git sparse-checkout [add|set| --[no-]cone --sikp-checks ...
+> >
+> > would not give an error on the mis-typed "--skip-checks" but instead
+> > simply treat "--sikp-checks" as a path or pattern to include in the
+> > sparse-checkout, which is highly unfriendly.
+> >
+> > This behavior begain when the command was converted to parse-options in
+> > 7bffca95ea (sparse-checkout: add '--stdin' option to set subcommand,
+> > 2019-11-21).  Back then it was just called KEEP_UNKNOWN. Later it was
+> > renamed to KEEP_UNKNOWN_OPT in 99d86d60e5 (parse-options:
+> > PARSE_OPT_KEEP_UNKNOWN only applies to --options, 2022-08-19) to clarif=
+y
+> > that it was only about dashed options; we always keep non-option
+> > arguments.  Looking at that original patch, both Peff and I think that
+> > the author was simply confused about the mis-named option, and really
+> > just wanted to keep the non-option arguments.  We never should have use=
+d
+> > the flag all along (and the other cases were cargo-culted within the
+> > file).
+> >
+> > Remove the erroneous PARSE_OPT_KEEP_UNKNOWN_OPT flag now to fix this
+> > bug.  Note that this does mean that anyone who might have been using
+> >
+> >   git sparse-checkout [add|set] [--[no-]cone] --foo --bar
+> >
+> > to request paths or patterns '--foo' and '--bar' will now have to use
+> >
+> >   git sparse-checkout [add|set] [--[no-]cone] -- --foo --bar
+> >
+> > That makes sparse-checkout more consistent with other git commands,
+> > provides users much friendlier error messages and behavior, and is
+> > consistent with the all-capps warning in git-sparse-checkout.txt that
+> > this command "is experimental...its behavior...will likely change".  :-=
+)
+> >
+> > Signed-off-by: Elijah Newren <newren@gmail.com>
+> > ---
 >
-> Shouldn't it cause an error to apply a patch that mucks with
-> "newfile" after you did
+> Nicely described.
 >
-> 	$ git add -N newfile
+> Apparently we do not have an existing test to cover the case of
+> "misspelt options becoming a pattern" that this bugfix corrects;
+> otherwise we would have a s/failure/success/ to update such an older
+> expectation, and have to wonder if the existing behaviour is
+> intentional.  Since there is no such test, we can feel a bit safer
+> in "fixing" this odd behaviour.
 >
-> If we allow ce_mode=3D=3D0 to be propagated to st_mode, I suspect we
-> will catch such a case with the "mode is different" warning code, at
-> least.
+> Also, this corrects "--end-of-options" that becomes one of the
+> patterns.  Such a bug was not detected in our test suite.
+>
+> So we should at least have two new tests.
+>
+>  (1) Pass "--foo" without the end of options marker and make sure we
+>      error out, instead of making it as one of the patterns.
+>
+>  (2) Pass "--end-of-options foo" and make sure the command succeeds,
+>      and "--end-of-options" does not become one of the patterns.
+>
+> Thanks.
 
-Is `ce_mode =3D=3D 0` an indicator of a new file? In my tests, `git add -N=
-`
-will add the file with a non-zero mode...
-
-Ciao,
-Johannes
+I did actually create two such tests last Saturday, but they obviously
+somehow went missing from my submission (I guess even if the high
+fevers from Wed-Fri last week were gone, I was still more affected
+than I realized?)  Anyway, I'll resubmit with those test cases.
