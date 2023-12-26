@@ -1,155 +1,96 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE020641
-	for <git@vger.kernel.org>; Tue, 26 Dec 2023 18:46:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F9C117F8
+	for <git@vger.kernel.org>; Tue, 26 Dec 2023 19:19:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="tuvpq/q5"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 247CA1DC6DE;
-	Tue, 26 Dec 2023 13:46:02 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=PsTzxyTuCzJKBCeWBQYgDo09ELT1iizNZRYp1y
-	sfZYs=; b=tuvpq/q5wDD8p5o/FN+VQcOt/pIV85/z1T+u8x/vdcNWoOUeKy9dvx
-	JHG3UZgSj7CjIGG61Y3F9pPWysT1gU3owNImg2PjCAjU6onQ+1xJeIXYBf88c/UH
-	Ak6T8jGMQrehSJDU1bgK+K+7jZclaT2xNSJD6j8EFZj6iBesL5pW8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1120F1DC6DD;
-	Tue, 26 Dec 2023 13:46:02 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.193.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6D3411DC6DC;
-	Tue, 26 Dec 2023 13:46:00 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Achu Luma <ach.lumap@gmail.com>
-Cc: christian.couder@gmail.com,  git@vger.kernel.org,  Christian Couder
- <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] Port helper/test-ctype.c to unit-tests/t-ctype.c
-In-Reply-To: <20231221231527.8130-1-ach.lumap@gmail.com> (Achu Luma's message
-	of "Fri, 22 Dec 2023 00:15:27 +0100")
-References: <20231221231527.8130-1-ach.lumap@gmail.com>
-Date: Tue, 26 Dec 2023 10:45:59 -0800
-Message-ID: <xmqqsf3ohkew.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="nb+a5hTV"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+	t=1703618341; x=1704223141; i=johannes.schindelin@gmx.de;
+	bh=6hETFZnP1ZjoUYi3QJLYw8xR7z1WpHhgwSLLzKU/2iU=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:
+	 References;
+	b=nb+a5hTV8hmdSpncNrz55MD7CiPcAp9PBUbpVX4bHI66meWiVgHlQop8tHLK2/Ju
+	 2LJGIkRR/PZ3C7/Yn/MZyGPiTVce+BpzabJViD/gYu9Jfm/G8gUbPJ5G4HHx0mLwp
+	 0FOmG9opdigVEUiZQv57ED4s0YnC2qtzES9gGIRy0Z1xw7vB8TzfDRXICjIDjVQUO
+	 V+jNP3XTgG28VMV0xyBmWCHrBPKlcwoSia0HNJ/z5AuS/1SkiyRDrEkc/eph2WvLs
+	 2Tpiv2ihlIgDp82uQpjZMikUfJpuxw2YF1o+NKjy6537/58ZCBB7R6RIGoeBnxuv9
+	 35oaKq/sLa50a31htA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([92.157.3.119]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1ML9yc-1rZK8F0ipu-00IGdK; Tue, 26
+ Dec 2023 20:19:01 +0100
+Date: Tue, 26 Dec 2023 20:18:58 +0100 (CET)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+cc: Chandra Pratap via GitGitGadget <gitgitgadget@gmail.com>, 
+    git@vger.kernel.org, =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>, 
+    Chandra Pratap <chandrapratap376@gmail.com>, 
+    Chandra Pratap <chandrapratap3519@gmail.com>
+Subject: Re: [PATCH v3] Teach git apply to respect core.fileMode settings
+In-Reply-To: <xmqq4jg4j28z.fsf@gitster.g>
+Message-ID: <fb022e3c-adb5-e341-9fd0-9c5311abe908@gmx.de>
+References: <pull.1620.v2.git.1703010646036.gitgitgadget@gmail.com> <pull.1620.v3.git.1703066893657.gitgitgadget@gmail.com> <82dadb69-5016-dec6-3699-4d994ea7929d@gmx.de> <xmqq4jg4j28z.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 0381090A-A41F-11EE-BF46-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:F7Vp9IJdppGW1/Ada1OOe+4fcHdCu4l0/GyV3ZXVzmtoCGLC85v
+ rldmLX7CIq6r2Af6aU2rbpd9xvdnnmrE+95jV6XKehrOhcqTfZyg/dYNWxIsh04y47rVoVA
+ EIp437CywFMoysaghc9IBvrBlEOAbeh41DTEpZgOYMO4kexP+Iw5fL3l5mDGysAewG8Vwi9
+ WEPHXcN5q5BeNWfu5egDQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:+cKnTV1V7+Q=;wOit8vQKEj8NTLS7pC9H8k7bcKg
+ L45zNx/nXX3n25JgZdHPTkEZpDwXMYd14rYthK5iyuKHIforu7NJfCjxO60UiwZ+XCn+MyKP6
+ oEikJFFCdHUWSyOGHRtvSB8vmatSciS6JabMItF4A99k8/AtGv2D3ArdAvDotv69tMZsQ/+jA
+ mMINq6zomzN82XFBrSoC9Fm5DwnLxLmziUmnYQTIdqjVUIbqGMIQklMyO2jmiZ4MLYlyvLY7b
+ T1ptXTfy/uZL4OaFlQVEgNfX5lgvS0M6thLvrbnTna0UTgv+COdzgJcveBG2TaGclYnnJyzva
+ tzAPtS8r4aD7tSj14Ua6aSFnFbL+o7Qwfnb/ZOKNmWks8CtcDOI5hYbLomqowuq+kcEp6nhdk
+ H4dPYaEZSNtsK8zMW0UbWcLo+bKZ2hZcqept/lCh2UVYLaTJzVQZUMw1+vYLzQbNjaXf6Tq1H
+ nOAmPDOQHm1cJjMQg0uCVcwHkRGdDJLDHh4/988sVP20BegaFsk2KMERJ1qn7AjdmYP0hU6fL
+ wnZOLWq4CTlVTDPcaVgSZnPa2Jyp0uGRq0zFqCX7ue/0iJYch7+U0Z6Zmf7lXzUPt/CScq0Fx
+ O/xqh812IuPIn05Ujokutlt/bLouXx58fHFQlJqMJZcENfJlZevR7/TDn4A9gBOl3fTdZz0qZ
+ FXumKwG5Ob++xn44U4hG5xtJJiA9sAPbdjTDm4HWMQfjm+mb9QQgQIxaKASMSYRhzzDUxkNvg
+ wKKEulEc57wBnQiqOC/A+S3BjI380SA9MJrOjnn3Uy8HI69fQCQjXilVdovzjtzZFR1fSaxkv
+ RIuw5oJTjZ/ZnV2g2sB6EjPfdlL9xuCjvZqpAKr+7c1ed6Lc4dyLyxFKsBT859yW8SysaUGD/
+ WStSzzcHcLiWlYsXr+aRYUaNaq3urdyFyN2ExMFAy7wCsY/o6fFVfAKb5O/R2+dNnhUJQLmJY
+ Xe5j8Q==
+Content-Transfer-Encoding: quoted-printable
 
-Achu Luma <ach.lumap@gmail.com> writes:
+Hi Junio,
 
-> diff --git a/t/helper/test-ctype.c b/t/helper/test-ctype.c
-> deleted file mode 100644
-> index e5659df40b..0000000000
-> --- a/t/helper/test-ctype.c
-> +++ /dev/null
-> @@ -1,70 +0,0 @@
-> -#include "test-tool.h"
-> -
-> -static int rc;
-> -
-> -static void report_error(const char *class, int ch)
-> -{
-> -	printf("%s classifies char %d (0x%02x) wrongly\n", class, ch, ch);
-> -	rc = 1;
-> -}
+On Tue, 26 Dec 2023, Junio C Hamano wrote:
 
-So, if we have a is_foo() that characterises a byte that ought to
-be "foo" but gets miscategorised not to be "foo", we used to
-pinpoint exactly the byte value that was an issue.  We did not do
-any early return ...
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> > While at it, add some defensive code to ignore `ce_mode` should it be =
+0.
+>
+> Is it defensive or is it hiding a problematic index under the rug?
 
-> ...
-> -#define TEST_CLASS(t,s) {			\
-> -	int i;					\
-> -	for (i = 0; i < 256; i++) {		\
-> -		if (is_in(s, i) != t(i))	\
-> -			report_error(#t, i);	\
-> -	}					\
-> -	if (t(EOF))				\
-> -		report_error(#t, EOF);		\
-> -}
+I wrote this defensive code only out of habit, not because I saw a
+`ce_mode` that was 0.
 
-... and reported for all errors in the "class".
+> If there is an index entry whose ce_mode is 0, I suspect we would
+> want to error out with a BUG(), unless it is an intent-to-add entry.
+>
+> Shouldn't it cause an error to apply a patch that mucks with
+> "newfile" after you did
+>
+> 	$ git add -N newfile
+>
+> If we allow ce_mode=3D=3D0 to be propagated to st_mode, I suspect we
+> will catch such a case with the "mode is different" warning code, at
+> least.
 
-> diff --git a/t/unit-tests/t-ctype.c b/t/unit-tests/t-ctype.c
-> new file mode 100644
-> index 0000000000..41189ba9f9
-> --- /dev/null
-> +++ b/t/unit-tests/t-ctype.c
-> @@ -0,0 +1,76 @@
-> +#include "test-lib.h"
-> +
-> +static int is_in(const char *s, int ch)
-> +{
-> +	/*
-> +	 * We can't find NUL using strchr. Accept it as the first
-> +	 * character in the spec -- there are no empty classes.
-> +	 */
-> +	if (ch == '\0')
-> +		return ch == *s;
-> +	if (*s == '\0')
-> +		s++;
-> +	return !!strchr(s, ch);
-> +}
-> +
-> +/* Macro to test a character type */
-> +#define TEST_CTYPE_FUNC(func, string)			\
-> +static void test_ctype_##func(void)				\
-> +{								\
-> +	int i;                                     	 	\
-> +	for (i = 0; i < 256; i++)                 		\
-> +		check_int(func(i), ==, is_in(string, i)); 	\
-> +}
+Is `ce_mode =3D=3D 0` an indicator of a new file? In my tests, `git add -N=
+`
+will add the file with a non-zero mode...
 
-Now, we let check_int() to do the checking for each and every byte
-value for the class.  check_int() uses different reporting and shows
-the problematic value in a way that is more verbose and at the same
-time is a less specific and harder to understand:
-
-		test_msg("   left: %"PRIdMAX, a);
-		test_msg("  right: %"PRIdMAX, b);
-
-But that is probably the price to pay to use a more generic
-framework, I guess.
-
-> +int cmd_main(int argc, const char **argv) {
-> +	/* Run all character type tests */
-> +	TEST(test_ctype_isspace(), "isspace() works as we expect");
-> +	TEST(test_ctype_isdigit(), "isdigit() works as we expect");
-> +	TEST(test_ctype_isalpha(), "isalpha() works as we expect");
-> +	TEST(test_ctype_isalnum(), "isalnum() works as we expect");
-> +	TEST(test_ctype_is_glob_special(), "is_glob_special() works as we expect");
-> +	TEST(test_ctype_is_regex_special(), "is_regex_special() works as we expect");
-> +	TEST(test_ctype_is_pathspec_magic(), "is_pathspec_magic() works as we expect");
-> +	TEST(test_ctype_isascii(), "isascii() works as we expect");
-> +	TEST(test_ctype_islower(), "islower() works as we expect");
-> +	TEST(test_ctype_isupper(), "isupper() works as we expect");
-> +	TEST(test_ctype_iscntrl(), "iscntrl() works as we expect");
-> +	TEST(test_ctype_ispunct(), "ispunct() works as we expect");
-> +	TEST(test_ctype_isxdigit(), "isxdigit() works as we expect");
-> +	TEST(test_ctype_isprint(), "isprint() works as we expect");
-> +
-> +	return test_done();
-> +}
-
-As a practice to use the unit-tests framework, the patch looks OK.
-helper/test-ctype.c indeed is an oddball that runs once and checks
-everything it wants to check, for which the unit tests framework is
-much more suited.
-
-Let's see how others react and then queue.
-
-Thanks.
+Ciao,
+Johannes
