@@ -1,40 +1,39 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E853E107A5
-	for <git@vger.kernel.org>; Tue, 26 Dec 2023 23:32:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 671C5107AF
+	for <git@vger.kernel.org>; Tue, 26 Dec 2023 23:32:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="EOqoFszy"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 5066332DED;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="q3MNYKDb"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EC3551DE124;
 	Tue, 26 Dec 2023 18:32:28 -0500 (EST)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:date:message-id:in-reply-to:references:mime-version
-	:content-transfer-encoding; s=sasl; bh=2NPRSkYZAGLLZP9BAskPccQHD
-	w4ATwGn05Wd5Iw1OJk=; b=EOqoFszyCl4wfjm0KjEDkIIkGkgVLZFA4xlZqb/0J
-	TBedhiax8mMe3qmKyajP/HnipGjo7n4X0bqaLEfMJocksza395DpwZfiYg2NLZxG
-	191YbPJOMKSjaMpjmdRcP9+sx5+7lraeH6efboobUuziX08Ppnkx4IzZxoDWmjYX
-	8c=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 48E4632DEC;
+	:content-transfer-encoding; s=sasl; bh=O+I0h+A+q65ko/KgJC0FiVJng
+	mCBXHw3gDDf+DEsxAg=; b=q3MNYKDb2R5Ub2cCoU+ISMQZZN52C5jThzAKUbc0d
+	PhcwqCrWqTzzZdTU5dCGo1J7VmV419JbNbKSSLfE2LtD8UAXZrXb57ut4fC9213D
+	vsrGf1QiKaY1+Ce4fa8JiauVl9DpbxHJDOUfleCGpUzCeokUEdKAn9dON57UP+Sc
+	ik=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D66C81DE123;
 	Tue, 26 Dec 2023 18:32:28 -0500 (EST)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.193.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EA88F32DEB;
-	Tue, 26 Dec 2023 18:32:24 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 344CD1DE122;
+	Tue, 26 Dec 2023 18:32:28 -0500 (EST)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Cc: Chandra Pratap <chandrapratap3519@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v4 1/3] apply: ignore working tree filemode when !core.filemode
-Date: Tue, 26 Dec 2023 15:32:16 -0800
-Message-ID: <20231226233218.472054-2-gitster@pobox.com>
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH v4 2/3] apply: correctly reverse patch's pre- and post-image mode bits
+Date: Tue, 26 Dec 2023 15:32:17 -0800
+Message-ID: <20231226233218.472054-3-gitster@pobox.com>
 X-Mailer: git-send-email 2.43.0-174-g055bb6e996
 In-Reply-To: <20231226233218.472054-1-gitster@pobox.com>
 References: <pull.1620.v3.git.1703066893657.gitgitgadget@gmail.com>
@@ -46,94 +45,59 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-Pobox-Relay-ID:
- 0643329E-A447-11EE-9A68-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ 08336C90-A447-11EE-A45D-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
-From: Chandra Pratap <chandrapratap3519@gmail.com>
+When parsing the patch header, unless it is a patch that changes
+file modes, we only read the mode bits into the .old_mode member of
+the patch structure and leave .new_mode member as initialized, i.e.,
+to 0.  Later when we need the original mode bits, we consult .old_mode.
 
-When applying a patch that adds an executable file, git apply
-ignores the core.fileMode setting (core.fileMode in git config
-specifies whether the executable bit on files in the working tree
-should be honored or not) resulting in warnings like:
+However, reverse_patches() that is used to swap the names and modes
+of the preimage and postimage files is not aware of this convention,
+leading the .old_mode to be 0 while the mode we read from the patch
+is left in .new_mode.
 
-warning: script.sh has type 100644, expected 100755
+Only swap .old_mode and .new_mode when .new_mode is not 0 (i.e. we
+saw a patch that modifies the filemode and know what the new mode
+is).  When .new_mode is set to 0, it means the preimage and the
+postimage files have the same mode (which is in the .old_mode member)
+and when applying such a patch in reverse, the value in .old_mode is
+what we expect the (reverse-) preimage file to have.
 
-even when core.fileMode is set to false, which is undesired. This
-is extra true for systems like Windows.
-
-Fix this by inferring the correct file mode from either the existing
-index entry, and when it is unavailable, assuming that the file mode
-was OK by pretending it had the mode that the preimage wants to see,
-when core.filemode is set to false. Add a test case that verifies
-the change and prevents future regression.
-
-Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
-Reviewed-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Reported-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- apply.c                   | 10 ++++++++--
- t/t4129-apply-samemode.sh | 27 +++++++++++++++++++++++++++
- 2 files changed, 35 insertions(+), 2 deletions(-)
+ apply.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/apply.c b/apply.c
-index 3d69fec836..3b090652cf 100644
+index 3b090652cf..6b1adccb2f 100644
 --- a/apply.c
 +++ b/apply.c
-@@ -3778,8 +3778,14 @@ static int check_preimage(struct apply_state *stat=
-e,
- 		return error_errno("%s", old_name);
+@@ -2220,7 +2220,8 @@ static void reverse_patches(struct patch *p)
+ 		struct fragment *frag =3D p->fragments;
+=20
+ 		SWAP(p->new_name, p->old_name);
+-		SWAP(p->new_mode, p->old_mode);
++		if (p->new_mode)
++			SWAP(p->new_mode, p->old_mode);
+ 		SWAP(p->is_new, p->is_delete);
+ 		SWAP(p->lines_added, p->lines_deleted);
+ 		SWAP(p->old_oid_prefix, p->new_oid_prefix);
+@@ -3780,9 +3781,8 @@ static int check_preimage(struct apply_state *state=
+,
+=20
+ 	if (!state->cached && !previous) {
+ 		if (!trust_executable_bit)
+-			st_mode =3D (*ce && (*ce)->ce_mode) ? (*ce)->ce_mode :
+-				(state->apply_in_reverse
+-				 ? patch->new_mode : patch->old_mode);
++			st_mode =3D (*ce && (*ce)->ce_mode)
++				? (*ce)->ce_mode : patch->old_mode;
+ 		else
+ 			st_mode =3D ce_mode_from_stat(*ce, st->st_mode);
  	}
-=20
--	if (!state->cached && !previous)
--		st_mode =3D ce_mode_from_stat(*ce, st->st_mode);
-+	if (!state->cached && !previous) {
-+		if (!trust_executable_bit)
-+			st_mode =3D (*ce && (*ce)->ce_mode) ? (*ce)->ce_mode :
-+				(state->apply_in_reverse
-+				 ? patch->new_mode : patch->old_mode);
-+		else
-+			st_mode =3D ce_mode_from_stat(*ce, st->st_mode);
-+	}
-=20
- 	if (patch->is_new < 0)
- 		patch->is_new =3D 0;
-diff --git a/t/t4129-apply-samemode.sh b/t/t4129-apply-samemode.sh
-index e7a7295f1b..e7026507dc 100755
---- a/t/t4129-apply-samemode.sh
-+++ b/t/t4129-apply-samemode.sh
-@@ -101,4 +101,31 @@ test_expect_success POSIXPERM 'do not use core.share=
-dRepository for working tree
- 	)
- '
-=20
-+test_expect_success 'git apply respects core.fileMode' '
-+	test_config core.fileMode false &&
-+	echo true >script.sh &&
-+	git add --chmod=3D+x script.sh &&
-+	git ls-files -s script.sh >ls-files-output &&
-+	test_grep "^100755" ls-files-output &&
-+	test_tick && git commit -m "Add script" &&
-+	git ls-tree -r HEAD script.sh >ls-tree-output &&
-+	test_grep "^100755" ls-tree-output &&
-+
-+	echo true >>script.sh &&
-+	test_tick && git commit -m "Modify script" script.sh &&
-+	git format-patch -1 --stdout >patch &&
-+	test_grep "^index.*100755$" patch &&
-+
-+	git switch -c branch HEAD^ &&
-+	git apply --index patch 2>err &&
-+	test_grep ! "has type 100644, expected 100755" err &&
-+	git reset --hard &&
-+
-+	git apply patch 2>err &&
-+	test_grep ! "has type 100644, expected 100755" err &&
-+
-+	git apply --cached patch 2>err &&
-+	test_grep ! "has type 100644, expected 100755" err
-+'
-+
- test_done
 --=20
 2.43.0-174-g055bb6e996
 
