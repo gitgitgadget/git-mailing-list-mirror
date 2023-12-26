@@ -1,43 +1,44 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 130E94F885
-	for <git@vger.kernel.org>; Tue, 26 Dec 2023 17:14:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87A1D4F88B
+	for <git@vger.kernel.org>; Tue, 26 Dec 2023 17:18:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="lD2K3lK7"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 727A331964;
-	Tue, 26 Dec 2023 12:14:31 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hVBJKguR"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 856531DBE9D;
+	Tue, 26 Dec 2023 12:18:16 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=lCKBdySlZ3Ee7VWMdfk8IZEgh5zjt68p+YugF/
-	g8qBQ=; b=lD2K3lK7xVoM/5icSFQ4iw2eJPclhQGGZhwPyutNr5u1OvTinZBUQX
-	rf2fZIM7KyNVuxoVmKGSRWNa9J98IBTsRj+fEQnnuPsHLLhId3WW57bZ55efW07G
-	YJsROl/XGLREztRWX1GnEaMrBjqVI523A5eugih+hYSXoPe3W7Kuw=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 6AB3F31963;
-	Tue, 26 Dec 2023 12:14:31 -0500 (EST)
+	:content-type; s=sasl; bh=WgeHrKv6zev2YIAUlYZ7UDaFYzC66wwGw6Z4tF
+	wTsyQ=; b=hVBJKguRBBBZsm4uU6G0qoWhdRIuampLAyVb5f6Y8bFlYdz9aDc2bb
+	AbOHhoOTfPnox72Fpq7ra7DWIcWLP+Ojpmf11bOsECddj3jPdDKzlwTDR737dxFa
+	T3pst4wpf3hAMqih3UC/PrJ1IaPrH78K7pMFz5m0qCSs3Dk1eS4MU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 79B421DBE9C;
+	Tue, 26 Dec 2023 12:18:16 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.193.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 18D9531961;
-	Tue, 26 Dec 2023 12:14:28 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DF4111DBE9B;
+	Tue, 26 Dec 2023 12:18:15 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Chandra Pratap via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Chandra Pratap <chandrapratap376@gmail.com>,
-  Chandra Pratap <chandrapratap3519@gmail.com>
-Subject: Re: [PATCH] sideband.c: replace int with size_t for clarity
-In-Reply-To: <pull.1625.git.1703264469238.gitgitgadget@gmail.com> (Chandra
-	Pratap via GitGitGadget's message of "Fri, 22 Dec 2023 17:01:09
-	+0000")
-References: <pull.1625.git.1703264469238.gitgitgadget@gmail.com>
-Date: Tue, 26 Dec 2023 09:14:26 -0800
-Message-ID: <xmqqo7ecj37x.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  "Randall S. Becker" <randall.becker@nexbridge.ca>,
+  Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH] sparse-checkout: be consistent with end of options markers
+In-Reply-To: <20231224083206.GA2053380@coredump.intra.peff.net> (Jeff King's
+	message of "Sun, 24 Dec 2023 03:32:06 -0500")
+References: <pull.1625.git.git.1703379611749.gitgitgadget@gmail.com>
+	<20231224083206.GA2053380@coredump.intra.peff.net>
+Date: Tue, 26 Dec 2023 09:18:14 -0800
+Message-ID: <xmqqfrzoj31l.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -47,34 +48,25 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 39CD1F88-A412-11EE-8D46-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ C19677F2-A412-11EE-BDBB-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-"Chandra Pratap via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> -static void maybe_colorize_sideband(struct strbuf *dest, const char *src, int n)
-> +static void maybe_colorize_sideband(struct strbuf *dest, const char *src, size_t n)
+> On Sun, Dec 24, 2023 at 01:00:11AM +0000, Elijah Newren via GitGitGadget wrote:
+>
+>> Remove the erroneous PARSE_OPT_KEEP_UNKNOWN_OPT flag now to fix this
+>> bug.  Note that this does mean that anyone who might have been using
+>> [...]
+>
+> Thanks for wrapping this up in patch form. It looks good to me,
+> including the reasoning. You didn't add any tests, but I find it rather
+> unlikely that we'd later regress here.
 
-Changing the type of the paramter alone might be a good start, but
-does not really help anybody, as (1) the callers are not taught to
-handle wider integral types for the values they pass and (2) the
-function uses "int len" it computes internally to compare with "n".
+Surely.  I am certainly OK with just dropping KEEP_UNKNOWN but I
+would strongly prefer to document what we "fixed" (your "misspelt
+option name" example) and what (mis|ab)use the people may have been
+relying on we have "broken" (the same "misspelt" behaviour that can
+be intentional is now forbidden, and we document that this change in
+behaviour is intentional) with a new test.
 
-There are three callers in demultiplex_sideband(), one of whose
-paramters is "int len" and is passed to this function in one of
-these calls.  Among the other two, one uses "int linelen" derived
-from scanning the piece of memory read from sideband via strpbrk(),
-and the other uses strlen(b) which is the length of the "remainder"
-of the same buffer after the loop that processes one line at a time
-using the said strpbrk() is done with the complete lines in the
-early part.
-
-The buffer involved in all of the above stores bytes taken from a
-packet received via the pkt-line interface, which is capable of
-transferring only 64kB at a time.
-
-I _think_ the most productive use of our time is to replace the
-NEEDSWORK with a comment saying why it is fine to use "int" here to
-avoid tempting the next developer to come up with this patch
-again---they will waste their time to do so without thinking it
-through if we leave the (incomplete) NEEDSWORK comment, I am afraid.
-
+Thanks.
