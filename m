@@ -1,46 +1,46 @@
 Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7DEB48CD9
-	for <git@vger.kernel.org>; Wed, 27 Dec 2023 22:15:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27C1949888
+	for <git@vger.kernel.org>; Wed, 27 Dec 2023 22:22:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="IqoAb6M/"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="kPfrCQ5f"
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id E827437FDD;
-	Wed, 27 Dec 2023 17:15:49 -0500 (EST)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 67A1618017;
+	Wed, 27 Dec 2023 17:22:56 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=X2fTjx2wbhu68J3pgr9eUKRV9XVC8i9Uy73jDv
-	ST7RI=; b=IqoAb6M/TNAY/jE1m+X3sRsfZbmJArEFofeXjNek8rMz4s76NSHLfA
-	unzG9I4olRzv/Bqcl13QFGMBISXutFDybs+Zf6hTjOEWP4KeQ2bjchFA1OP0wGGN
-	bb2RoC3uSdehSaXRdTicBAKfsReFcxicF/8NvvKdlmlMdhSjk0qeQ=
+	:content-type; s=sasl; bh=3xs/t0I4FGGFNNJUorEzdwQBiPRQHB7XsZcuWc
+	ZA0TM=; b=kPfrCQ5f2XLtzB6NrIr8QoNrffpiwZh/b7wmYSmMhbG5dd9sjGxIvw
+	7sjHN6Q8lmieTeK2t9Uz7kHQYY97nLa/V2tB3VKHRIAo1fwzQSxqLc1TrG6teuVz
+	zA/3AIA1iqhUkExcgXy8hrpnu5/C7+7ZxKd+tcXjwVLMf92qKra/c=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id E09ED37FDC;
-	Wed, 27 Dec 2023 17:15:49 -0500 (EST)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 5FF8A18016;
+	Wed, 27 Dec 2023 17:22:56 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.200.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7103337FD9;
-	Wed, 27 Dec 2023 17:15:46 -0500 (EST)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 06EAC18015;
+	Wed, 27 Dec 2023 17:22:52 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Sebastian Thiel <sebastian.thiel@icloud.com>,  Josh
- Triplett <josh@joshtriplett.org>
-Subject: Re: [PATCH] precious-files.txt: new document proposing new precious
- file type
-In-Reply-To: <CABPp-BGSTYDUR1oYYXkCSh-1i2zwxBM=-gnoe-ezNbtPi5CV2A@mail.gmail.com>
-	(Elijah Newren's message of "Tue, 26 Dec 2023 22:54:11 -0800")
-References: <pull.1627.git.1703643931314.gitgitgadget@gmail.com>
-	<xmqq8r5gfc3j.fsf@gitster.g>
-	<CABPp-BGSTYDUR1oYYXkCSh-1i2zwxBM=-gnoe-ezNbtPi5CV2A@mail.gmail.com>
-Date: Wed, 27 Dec 2023 14:15:44 -0800
-Message-ID: <xmqqsf3nl2b3.fsf@gitster.g>
+To: "Chandra Pratap via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Torsten =?utf-8?Q?B=C3=B6gershausen?=
+ <tboegi@web.de>,  Chandra
+ Pratap <chandrapratap376@gmail.com>,  Chandra Pratap
+ <chandrapratap3519@gmail.com>
+Subject: Re: [PATCH v3] sideband.c: remove redundant 'NEEDSWORK' tag
+In-Reply-To: <pull.1625.v3.git.1703672407895.gitgitgadget@gmail.com> (Chandra
+	Pratap via GitGitGadget's message of "Wed, 27 Dec 2023 10:20:07
+	+0000")
+References: <pull.1625.v2.git.1703351016486.gitgitgadget@gmail.com>
+	<pull.1625.v3.git.1703672407895.gitgitgadget@gmail.com>
+Date: Wed, 27 Dec 2023 14:22:51 -0800
+Message-ID: <xmqqmstvl1z8.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -50,23 +50,16 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 7BC1F906-A505-11EE-A327-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ 7A02E0CA-A506-11EE-A156-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Elijah Newren <newren@gmail.com> writes:
+"Chandra Pratap via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> There are
-> precisely two choices in our design for how older Git versions can
-> treat precious files:
->   * ignored-and-expendable
->   * untracked-and-precious
-> If we pick syntax that causes older Git versions to treat precious
-> files as ignored-and-expendable, we risk deleting important files.
+>       - * NEEDSWORK: use "size_t n" instead for clarity.
+>      ++ * It is fine to use "int n" here instead of "size_t n" as all calls to this
+>      ++ * function pass an 'int' parameter.
 
-Yes but not really.  I'd expect the adoption of precious feature and
-the adoption of versions of Git that supports that feature will go
-more or less hand in hand.  Projects that, for any reason, need to
-keep their participants at pre-precious versions of Git would
-naturally refrain from marking the "precious" paths in their "ignore"
-mechanism before their participants are ready, so even if we chose
-syntax that will make the precious ones mistaken as merely ignored,
-the damage would be fairly small.
+This does not sound like a sufficient justification, though.
+
+We should also explain why "int" is good enough for these callers.
+Otherwise, using size_t throughout the callchain would become
+another viable solution.
