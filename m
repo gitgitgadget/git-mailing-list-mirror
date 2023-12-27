@@ -1,92 +1,53 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BEE710951
-	for <git@vger.kernel.org>; Tue, 26 Dec 2023 23:32:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67BCC2563
+	for <git@vger.kernel.org>; Wed, 27 Dec 2023 01:18:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="QeLmIqH2"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 53B091D8701;
-	Tue, 26 Dec 2023 18:32:30 -0500 (EST)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references:mime-version
-	:content-transfer-encoding; s=sasl; bh=t10ET0JO+R6qTaD0DHzjOuTwx
-	1Nhi3Ain34zFZOMtSE=; b=QeLmIqH2R9nDWl8eG3Tf+eM0x0euy63v+QmyGqv3/
-	1MDBNm4iau0CToPdsml3kyIhiwt6wbhhjjhrJMkgOipfFQVhdloaE8A6Py7kIqdH
-	FKY9ZlW7nD25c4u6ZMih6sZm1mnelwNhPSeC9y3GwYIyoQKRPcaicmU1eJocI/LM
-	Wo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4B73C1D8700;
-	Tue, 26 Dec 2023 18:32:30 -0500 (EST)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.193.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B52091D86FF;
-	Tue, 26 Dec 2023 18:32:29 -0500 (EST)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH v4 3/3] apply: code simplification
-Date: Tue, 26 Dec 2023 15:32:18 -0800
-Message-ID: <20231226233218.472054-4-gitster@pobox.com>
-X-Mailer: git-send-email 2.43.0-174-g055bb6e996
-In-Reply-To: <20231226233218.472054-1-gitster@pobox.com>
-References: <pull.1620.v3.git.1703066893657.gitgitgadget@gmail.com>
- <20231226233218.472054-1-gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XYv+s9hb"
+Received: by mail-io1-f50.google.com with SMTP id ca18e2360f4ac-7bb0af58134so17687939f.3
+        for <git@vger.kernel.org>; Tue, 26 Dec 2023 17:18:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1703639882; x=1704244682; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=a67+Xn2ScPIinix0jYfRqCmskGmMpaGSAycuaim21OI=;
+        b=XYv+s9hbzJTetBZQ2rx01xgJnmrGd8B9ScTHBivejeBnAbaDbo3h4Qf5CaqNF3793u
+         j2oTjscUaiMsnjftKC3lYyMerXx6indgq4UnUhuqZv1IzC0O7a9hdNU9JZ+rQTyvPFtc
+         MFuxAVOHcje/Q4WA6H+7rOUEw8JJZ8YjgHPmDEa9IATwe/JMxTwtSHdFtNzT3N0fzfWe
+         HtPa+vo2c9LHcBDkOfOw3mRv9PSoqM4NzVyjBNf/ARpnIuRd2GG2lrDg2CI/hys/7CXV
+         LIQnd5SesgWpsQcnq9Zn0OsjgVWPkz+/iXZBoAt5XJr+SOHS4O22gZdjZ2T4nWY4qR/v
+         KC5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703639882; x=1704244682;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=a67+Xn2ScPIinix0jYfRqCmskGmMpaGSAycuaim21OI=;
+        b=FqNaRWAlTi/YexMPIIlq4w8HsI6lhSHHbfB5bORYnblNC2nZQJo4opEDLSNCCPDJCw
+         RxX0Fkuf1ATCGfs3HhlLWy3zv3RNF7l/faq4r1eV2fXiClpelQaPBr46neF3+UxjUHCA
+         JyiNG0rul//+o++SzPNdDMsgc07qOiI23Mm9G1TTCD4Nu1TPZ6SavGSdqlsU84auzYsx
+         JabRpLwqRzMV1c/nM27EiQLr1xLsdayrJ/8zXaM+lm2mME0PVa1dR839ZDVf9HAjHF/N
+         vITQ0lMoume5GeuDEiWGbJpoOSEu5rsL2Akd/uXgUc65eUwsXY5hf0wZKzdApSjaxRH5
+         4png==
+X-Gm-Message-State: AOJu0Yx16Uqfx05obXBZm9on/ttndD91+DTSDF7BsfdZtxeHc6oDA5G4
+	hRp9d0qzZPbAc1DK6Wm749Duzyw9Qy/K7HHENlNGWMHi+/8=
+X-Google-Smtp-Source: AGHT+IHZcXneziyIh3iP4WrheQZUOb1ASL4u4l2/kDL0/EKFUKwcIwjbKzdZ7O7uqsqSBYqFT3z1IiMScqp9qQ6RzXU=
+X-Received: by 2002:a05:6e02:144c:b0:360:a97:9311 with SMTP id
+ p12-20020a056e02144c00b003600a979311mr5677973ilo.29.1703639882198; Tue, 26
+ Dec 2023 17:18:02 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Pobox-Relay-ID:
- 091C70F2-A447-11EE-A731-25B3960A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+From: Kirandeep Paul <kdspaul@gmail.com>
+Date: Tue, 26 Dec 2023 17:17:51 -0800
+Message-ID: <CA+cTC5sAm9FSqs05=_OX_PbybAOcDdyfesJRwyKAzdotj+9N=A@mail.gmail.com>
+Subject: subscribe to git mailing list
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Rewrite a bit hard-to-read ternary ?: expression into a cascade of
-if/else.
-
-Given that read-cache.c:add_index_entry() makes sure that the
-.ce_mode member is filled with a reasonable value before placing a
-cache entry in the index, if we see (ce_mode =3D=3D 0), there is
-something seriously wrong going on.  Catch such a bug and abort,
-instead of silently ignoring such an entry and silently skipping
-the check.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- apply.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
-
-diff --git a/apply.c b/apply.c
-index 6b1adccb2f..493a263a48 100644
---- a/apply.c
-+++ b/apply.c
-@@ -3780,11 +3780,15 @@ static int check_preimage(struct apply_state *sta=
-te,
- 	}
-=20
- 	if (!state->cached && !previous) {
--		if (!trust_executable_bit)
--			st_mode =3D (*ce && (*ce)->ce_mode)
--				? (*ce)->ce_mode : patch->old_mode;
--		else
-+		if (*ce && !(*ce)->ce_mode)
-+			BUG("ce_mode =3D=3D 0 for path '%s'", old_name);
-+
-+		if (trust_executable_bit)
- 			st_mode =3D ce_mode_from_stat(*ce, st->st_mode);
-+		else if (*ce)
-+			st_mode =3D (*ce)->ce_mode;
-+		else
-+			st_mode =3D patch->old_mode;
- 	}
-=20
- 	if (patch->is_new < 0)
---=20
-2.43.0-174-g055bb6e996
-
+subscribe git
