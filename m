@@ -1,69 +1,69 @@
 Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE8368473
-	for <git@vger.kernel.org>; Thu, 28 Dec 2023 09:58:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AC798473
+	for <git@vger.kernel.org>; Thu, 28 Dec 2023 09:58:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="D85QN7Z8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZAmpxrcE"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id DC4405C0082;
-	Thu, 28 Dec 2023 04:58:09 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cNb25k5t";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="zv93B+2a"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id EEBDB5C0082;
+	Thu, 28 Dec 2023 04:58:13 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Thu, 28 Dec 2023 04:58:09 -0500
+  by compute5.internal (MEProxy); Thu, 28 Dec 2023 04:58:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1703757489; x=1703843889; bh=CFBX5RLq38
-	hd/uUyhw+oIQXABSbvSjjoviIa1E6z/Mg=; b=D85QN7Z8+iszCcUEkQX5KrfgLU
-	OestKHuQQDkHkQlpT/e9cYZIWeelOVMx8aV4i5rKd908s4+/pecpf+/nXnX+LOsT
-	Zgz8BkrPrqrwo4nBHL16xBSV8lFZIJwiBrYTziaJlwjsGgKPYGBL2zX/4lkpB+ab
-	jcYI4MyOcwy//ILOhNSZyVYNgC8fRTc5g9hEP/u11NNYNDBlpFAgiDZO6XQThkoG
-	EhfpDptGBYeS8IxDP4RCjOvYCy3+T5HFXdou82qTqSlRgkrpTB9p70fHt3K9JgJc
-	QoSm+/pckDpKDO2cl93VkklG3Q85tpUnO8LIgGIg2KPkeRPG507ovCENkugw==
+	:subject:to:to; s=fm2; t=1703757493; x=1703843893; bh=ES29+49hdb
+	m6yk2kWvXFeQAmEQWIxEqHxkwPa+MxlwU=; b=cNb25k5tlWHgMYqpBnyiX9bLY7
+	7sAvuIx8jJp9kvuzXg6BvwZvOLTvxHtZMIjChQhkxcGkjgGVPX+ayf22k8h+mKWE
+	Zp1I9PKJ46PrIAChfS0f2sBp0iFYwkBwaY9O558U4+wAzIk5RatDEz4W27pYOuF0
+	74apM1tGZZU2viW2s33Y58gGrqoV19C7itzp4tttrUU404tcDGpHM0jcxyJVTcO1
+	/Wb429ddCeBM1msmkINH2tAwCsOWb4dZFYRF5e751fLvkWHFBeQ0ZffJ93SFBDAZ
+	n3M0kR8S1RyuYofx7Qcsk0VuK+x2KihcoPYEFSYaoWJMYnz2xyOqs3gwkIqw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1703757489; x=1703843889; bh=CFBX5RLq38hd/uUyhw+oIQXABSbv
-	SjjoviIa1E6z/Mg=; b=ZAmpxrcEH0A5bikRjbiQnD6b2Dq67fsmO6zbV/JnWDmY
-	Dezet6kZa9XpHMGi7GEILiMI/OO16UT1Ww4bVboOX1jLFl7AX//rd2AYu5ie7Q6T
-	NkVOwkukrTInLLwFiV6cR+hcq2w9XJbc4Vu+kLfHnjANrUXRdVLchRpP27hw6ICq
-	YJVqXNdizvhAa9SnIF4jGQZUpAYkaDqV+kbFrDeTGgtsWajeDe00gUKBsNzpTfWC
-	PHFQlEXLLSbvUZ3wZsYDmStu/WjDD6+R9+RfYtCnY3dYgYN4aObvWqoU+xzEt+In
-	OVT5c+7dnTSBIqT6f3zvEOwge/wJnALMN429QrZktg==
-X-ME-Sender: <xms:sUaNZQM5LsOy5N4XUqi7n3j1kG1ltwgtwFRsMVaet-23hRwGAY4C-g>
-    <xme:sUaNZW8UoRIEChiQULVAhyXHxlzO4SmGexSuGcaMHx4Km0wGTiOBAZWPwJyZQdgXo
-    8sRKKtabCSydpm-0w>
-X-ME-Received: <xmr:sUaNZXTFpbYQM41uD0VQUXSaRKa5otEDUHZkBmK-VnBmxT7PtP505GbPvjlZSTy15szb9CFHuvJ5yZd8Vba0hX4B0Y4u9o8O_rfFHJTYcq6xCg>
+	fm2; t=1703757493; x=1703843893; bh=ES29+49hdbm6yk2kWvXFeQAmEQWI
+	xEqHxkwPa+MxlwU=; b=zv93B+2aL7A3MUKI8vX2mga4huRve1ionFQNC74FdiUA
+	Ux3lqjswagxCLwNNcJIis+Xk1+f0zWz6S1TNKpbznjd9SAxhb2RJN+6oa226Yjqd
+	Q2EACi0WW2JTRmxG80l/uz+0EcJMD/Mpjeh5TSA7rJRpH7uFDwcmkELBhVo8XRhe
+	7jZkHdIUdWi4WPpyba9DHIu5JCBd+nL4DCqRSSbFxcdp8OCMTiWckFwO5p2riLr3
+	eh5Ghici4LHi+Jq/+NyuHIEZ2hxCC4T8HhCrBU3OcA8JXxLelt6t7Ha8M9wIzHHc
+	l4Jz/2M6zHdu/CRz/UuGbyCyyeNueilwzmZZRkWVFg==
+X-ME-Sender: <xms:tUaNZSG2Gp7HgMGIk1KgW9C03gS71dzc26WHu4nn0bxAExxsUQ0M_w>
+    <xme:tUaNZTVOYx2SpdQ3VGKEJleKRVV0GcsXORCXpQ2ZGDp8kk94Nnqs9MbLzZmUrwHLb
+    -JgXCUfpcKNuSglvg>
+X-ME-Received: <xmr:tUaNZcJCyMGV7KcslOhjJclCLZqWkjpK_eUvwHusZkhaBVxyE7sCY0e5ZydvaI6xDfHTYgkvkdsjLUEOXxbb00G5fgU4eGRAFgVuJBfVOuJgZA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdefuddguddtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:sUaNZYu2zpfsyrBa1hkUNjfz53_sPmeabiixtI3TqGz2o8t9uq7Uzg>
-    <xmx:sUaNZYdfbGnAbqBjuOozLkrAc7rKieOJAlX1aMEH6wZVAk5bMPG6tQ>
-    <xmx:sUaNZc2SUuT3wBzbyaS_fK1FAaTd73vWuISZ9F83JrW8WR32JJ1qDg>
-    <xmx:sUaNZUHoc8e5SSU2zY6rgiKOE5bMMUCWkah6UH5_fTEYWfVFv7clyQ>
+X-ME-Proxy: <xmx:tUaNZcEk-nlJTj2JS4RqeiIi8ZpdkI3Lxcj-F2dEwVaaCQZEKEvQ7A>
+    <xmx:tUaNZYXQtiiVCwf7Or_J8131KmncRlagvBvbLv3YFdxxU1jQd-yMEQ>
+    <xmx:tUaNZfPisKap6hs4ruSmr8IZhwd0G0ql99hKfOK7PqCbDzj-WDM9vQ>
+    <xmx:tUaNZTenTmAB4HFwFl4PJzM82yFZR63rlH2S1kElC9OcgQwQ_8tyrA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 28 Dec 2023 04:58:08 -0500 (EST)
+ 28 Dec 2023 04:58:13 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 4d390357 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 28 Dec 2023 09:55:54 +0000 (UTC)
-Date: Thu, 28 Dec 2023 10:58:06 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 888e4cad (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 28 Dec 2023 09:55:59 +0000 (UTC)
+Date: Thu, 28 Dec 2023 10:58:11 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 10/12] builtin/init: introduce `--ref-format=` value flag
-Message-ID: <e382b5bf0853726169ade0f657bd70ad9cf57710.1703753910.git.ps@pks.im>
+Subject: [PATCH v2 11/12] builtin/clone: introduce `--ref-format=` value flag
+Message-ID: <257233658de252252f2493593f6af958947c2aa2.1703753910.git.ps@pks.im>
 References: <cover.1703067989.git.ps@pks.im>
  <cover.1703753910.git.ps@pks.im>
 Precedence: bulk
@@ -73,96 +73,79 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="1d80q5OYhxFvWcrR"
+	protocol="application/pgp-signature"; boundary="l7Y+PczdZalVEeDS"
 Content-Disposition: inline
 In-Reply-To: <cover.1703753910.git.ps@pks.im>
 
 
---1d80q5OYhxFvWcrR
+--l7Y+PczdZalVEeDS
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Introduce a new `--ref-format` value flag for git-init(1) that allows
+Introduce a new `--ref-format` value flag for git-clone(1) that allows
 the user to specify the ref format that is to be used for a newly
 initialized repository.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/git-init.txt |  7 +++++++
- builtin/init-db.c          | 13 ++++++++++++-
- t/t0001-init.sh            | 26 ++++++++++++++++++++++++++
- 3 files changed, 45 insertions(+), 1 deletion(-)
+ Documentation/git-clone.txt |  6 ++++++
+ builtin/clone.c             | 12 +++++++++++-
+ t/t5601-clone.sh            | 17 +++++++++++++++++
+ 3 files changed, 34 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
-index 6f0d2973bf..e8dc645bb5 100644
---- a/Documentation/git-init.txt
-+++ b/Documentation/git-init.txt
-@@ -11,6 +11,7 @@ SYNOPSIS
- [verse]
- 'git init' [-q | --quiet] [--bare] [--template=3D<template-directory>]
- 	  [--separate-git-dir <git-dir>] [--object-format=3D<format>]
-+	  [--ref-format=3D<format>]
- 	  [-b <branch-name> | --initial-branch=3D<branch-name>]
- 	  [--shared[=3D<permissions>]] [<directory>]
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index c37c4a37f7..6e43eb9c20 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -311,6 +311,12 @@ or `--mirror` is given)
+ 	The result is Git repository can be separated from working
+ 	tree.
 =20
-@@ -57,6 +58,12 @@ values are 'sha1' and (if enabled) 'sha256'.  'sha1' is =
-the default.
- +
- include::object-format-disclaimer.txt[]
-=20
-+--ref-format=3D<format>::
++--ref-format=3D<ref-format::
 +
 +Specify the given ref storage format for the repository. The valid values =
 are:
 ++
 +include::ref-storage-format.txt[]
 +
- --template=3D<template-directory>::
-=20
- Specify the directory from which templates will be used.  (See the "TEMPLA=
-TE
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index b6e80feab6..770b2822fe 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -58,6 +58,7 @@ static int shared_callback(const struct option *opt, cons=
-t char *arg, int unset)
- static const char *const init_db_usage[] =3D {
- 	N_("git init [-q | --quiet] [--bare] [--template=3D<template-directory>]\=
-n"
- 	   "         [--separate-git-dir <git-dir>] [--object-format=3D<format>]\=
-n"
-+	   "         [--ref-format=3D<format>]\n"
- 	   "         [-b <branch-name> | --initial-branch=3D<branch-name>]\n"
- 	   "         [--shared[=3D<permissions>]] [<directory>]"),
- 	NULL
-@@ -77,8 +78,10 @@ int cmd_init_db(int argc, const char **argv, const char =
-*prefix)
- 	const char *template_dir =3D NULL;
- 	unsigned int flags =3D 0;
- 	const char *object_format =3D NULL;
-+	const char *ref_format =3D NULL;
- 	const char *initial_branch =3D NULL;
- 	int hash_algo =3D GIT_HASH_UNKNOWN;
-+	int ref_storage_format =3D REF_STORAGE_FORMAT_UNKNOWN;
- 	int init_shared_repository =3D -1;
- 	const struct option init_db_options[] =3D {
- 		OPT_STRING(0, "template", &template_dir, N_("template-directory"),
-@@ -96,6 +99,8 @@ int cmd_init_db(int argc, const char **argv, const char *=
+ -j <n>::
+ --jobs <n>::
+ 	The number of submodules fetched at the same time.
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 0fb3816d0c..18093d5d16 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -72,6 +72,7 @@ static char *remote_name =3D NULL;
+ static char *option_branch =3D NULL;
+ static struct string_list option_not =3D STRING_LIST_INIT_NODUP;
+ static const char *real_git_dir;
++static const char *ref_format;
+ static char *option_upload_pack =3D "git-upload-pack";
+ static int option_verbosity;
+ static int option_progress =3D -1;
+@@ -157,6 +158,8 @@ static struct option builtin_clone_options[] =3D {
+ 		    N_("any cloned submodules will be shallow")),
+ 	OPT_STRING(0, "separate-git-dir", &real_git_dir, N_("gitdir"),
+ 		   N_("separate git dir from working tree")),
++	OPT_STRING(0, "ref-format", &ref_format, N_("format"),
++		   N_("specify the reference format to use")),
+ 	OPT_STRING_LIST('c', "config", &option_config, N_("key=3Dvalue"),
+ 			N_("set config inside the new repository")),
+ 	OPT_STRING_LIST(0, "server-option", &server_options,
+@@ -932,6 +935,7 @@ int cmd_clone(int argc, const char **argv, const char *=
 prefix)
- 			   N_("override the name of the initial branch")),
- 		OPT_STRING(0, "object-format", &object_format, N_("hash"),
- 			   N_("specify the hash algorithm to use")),
-+		OPT_STRING(0, "ref-format", &ref_format, N_("format"),
-+			   N_("specify the reference format to use")),
- 		OPT_END()
- 	};
+ 	int submodule_progress;
+ 	int filter_submodules =3D 0;
+ 	int hash_algo;
++	int ref_storage_format =3D REF_STORAGE_FORMAT_UNKNOWN;
+ 	const int do_not_override_repo_unix_permissions =3D -1;
 =20
-@@ -159,6 +164,12 @@ int cmd_init_db(int argc, const char **argv, const cha=
-r *prefix)
- 			die(_("unknown hash algorithm '%s'"), object_format);
- 	}
+ 	struct transport_ls_refs_options transport_ls_refs_options =3D
+@@ -957,6 +961,12 @@ int cmd_clone(int argc, const char **argv, const char =
+*prefix)
+ 	if (option_single_branch =3D=3D -1)
+ 		option_single_branch =3D deepen ? 1 : 0;
 =20
 +	if (ref_format) {
 +		ref_storage_format =3D ref_storage_format_by_name(ref_format);
@@ -170,78 +153,72 @@ r *prefix)
 +			die(_("unknown ref storage format '%s'"), ref_format);
 +	}
 +
- 	if (init_shared_repository !=3D -1)
- 		set_shared_repository(init_shared_repository);
+ 	if (option_mirror)
+ 		option_bare =3D 1;
 =20
-@@ -237,6 +248,6 @@ int cmd_init_db(int argc, const char **argv, const char=
+@@ -1108,7 +1118,7 @@ int cmd_clone(int argc, const char **argv, const char=
  *prefix)
+ 	 * their on-disk data structures.
+ 	 */
+ 	init_db(git_dir, real_git_dir, option_template, GIT_HASH_UNKNOWN,
+-		REF_STORAGE_FORMAT_UNKNOWN, NULL,
++		ref_storage_format, NULL,
+ 		do_not_override_repo_unix_permissions, INIT_DB_QUIET | INIT_DB_SKIP_REFD=
+B);
 =20
- 	flags |=3D INIT_DB_EXIST_OK;
- 	return init_db(git_dir, real_git_dir, template_dir, hash_algo,
--		       REF_STORAGE_FORMAT_UNKNOWN, initial_branch,
-+		       ref_storage_format, initial_branch,
- 		       init_shared_repository, flags);
- }
-diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index 30ce752cc1..b131d665db 100755
---- a/t/t0001-init.sh
-+++ b/t/t0001-init.sh
-@@ -576,6 +576,32 @@ test_expect_success 'init with GIT_DEFAULT_REF_FORMAT=
-=3Dgarbage' '
- 	test_cmp expect err
+ 	if (real_git_dir) {
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index 47eae641f0..fb1b9c686d 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -157,6 +157,23 @@ test_expect_success 'clone --mirror does not repeat ta=
+gs' '
+=20
  '
 =20
-+test_expect_success 'init with --ref-format=3Dfiles' '
-+	test_when_finished "rm -rf refformat" &&
-+	git init --ref-format=3Dfiles refformat &&
++test_expect_success 'clone with files ref format' '
++	test_when_finished "rm -rf ref-storage" &&
++	git clone --ref-format=3Dfiles --mirror src ref-storage &&
 +	echo files >expect &&
-+	git -C refformat rev-parse --show-ref-format >actual &&
++	git -C ref-storage rev-parse --show-ref-format >actual &&
 +	test_cmp expect actual
 +'
 +
-+test_expect_success 're-init with same format' '
-+	test_when_finished "rm -rf refformat" &&
-+	git init --ref-format=3Dfiles refformat &&
-+	git init --ref-format=3Dfiles refformat &&
-+	echo files >expect &&
-+	git -C refformat rev-parse --show-ref-format >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'init with --ref-format=3Dgarbage' '
-+	test_when_finished "rm -rf refformat" &&
++test_expect_success 'clone with garbage ref format' '
 +	cat >expect <<-EOF &&
 +	fatal: unknown ref storage format ${SQ}garbage${SQ}
 +	EOF
-+	test_must_fail git init --ref-format=3Dgarbage refformat 2>err &&
-+	test_cmp expect err
++	test_must_fail git clone --ref-format=3Dgarbage --mirror src ref-storage =
+2>err &&
++	test_cmp expect err &&
++	test_path_is_missing ref-storage
 +'
 +
- test_expect_success MINGW 'core.hidedotfiles =3D false' '
- 	git config --global core.hidedotfiles false &&
- 	rm -rf newdir &&
+ test_expect_success 'clone to destination with trailing /' '
+=20
+ 	git clone src target-1/ &&
 --=20
 2.43.GIT
 
 
---1d80q5OYhxFvWcrR
+--l7Y+PczdZalVEeDS
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWNRq0ACgkQVbJhu7ck
-PpRaUA/9G6mZCUawX3Ae1/Uxk7bDirPO5YaDMca+A5Cb62p36PgDUmQi6Zmf8Q3J
-LJyR158SI0LlX5AbOKp6LddmNjkxiPL6ViWaxsaSfr1DkVkM/1Dqhl9kpuRRSvgN
-xldWB+y+mN09n5+fHkaEQw4S/wL00kwul/Kteh2RzxiZb/W1gOUk2mjm6oCYOO7d
-8GwHtKMqBTzYZ1Oi5oHXaYa5c23eVVUyI1folqvZ/GDkeYt0UdrVJZvdzh/o0XFW
-l20dT/Mz5GMLsc6QWUMO/krsXXaiuxJPJW6gp0iNuc1/2DrEE5Sfqwe7I8YyeFCp
-vvGi9CH4Q+kiqvUnSNEOqlY4Y1I6QGgzxghlWz+NWMUOVzymuCELngOq4vZYcoN+
-8vtyntJqug43fX0gV515sXn0P3cXWRs2D9bfGBB4JhTwoMseOZJREcixM9ZQmlgR
-8Wy6CI7Cu2CW276sRFs9JTr8na8klJtQjgN4+SBL8WsFljQT78i8pyOtH8nYDqQG
-bYXG1tbhXmLsM5rdk3TLJkUBybVlbwJkXi7BepNiyyAMeeN50lhmsE7k4sGLKvf6
-ZB8CgUPoP8f71tsohGAEi6Jtaernp7Dl0rh2xfEtRQBLDteKuMztTrDFg4KUGj3u
-j0A9Whpr7aefc109jCWt765HSCi+wsBeCV4m2n+DhASeruLmiwY=
-=ZmGK
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWNRrIACgkQVbJhu7ck
+PpSAlQ//RMhkeE7EAtBxi40iVgs7IDKi+hQVPbe9hilLpRoH5FheO0SUi5XzTsPz
+nX7ONeou2svLUw6xP+glf/ZoxMs90AO0QiQNyZ54ZmPC6HR5gP+HCyTbf3bsabDq
+zmvQd+j40nnE24pxv6o6T4bZy6GHpx+KK6Nc0HropAt+nUyDXtGfVAAqrA6kWxFT
+a5prgnMGSHlMAgXmrR3xhmmvDvjYR4g3gAsRVZ8QiYPP86HsfN/V0Z2916iyeD0a
+enmJ2C6GkzZhoZhU2Iu6v4EOfBT7hVspeW+Tmvbw+gbliaglJGSzHiWJJ1EL+Q08
+Kcd8zveTNzSd5tq7AZboPxD6gnqU5Pgf0eItee525ZE6y7NO52tGzhQOwVVOFzye
+inVzZuVO9nua137+UFlbkt4na9wHNsGILKqQm9X8RtIhQm30W3eJOmgUOUl0cjmL
+sNkCQ8WYEMxRjKnuA9sAz4LM0TnKYwg8KF86UU/FjGKqH5UCY9ZgK/YtWvLUuTNy
+1FDeFBOdmM0I7gAs14YkdjrnN5hDOHskI9Zo7oO/UjAQqfW1C1/2kJvuI6idMXgO
+3+ypgAqAGTB9Izt42vrSmiQzX51bccOpMcwejhvCpaSJvMfqikPUWyp6VwKly+9z
+a4qfKi4Qc9gltdWvCCnWO4PU5KLTBXoAGabwbpBNpNKFEbP0zBY=
+=Aruu
 -----END PGP SIGNATURE-----
 
---1d80q5OYhxFvWcrR--
+--l7Y+PczdZalVEeDS--
