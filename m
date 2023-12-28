@@ -1,45 +1,44 @@
 Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1F13163
-	for <git@vger.kernel.org>; Thu, 28 Dec 2023 00:10:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B4117CD
+	for <git@vger.kernel.org>; Thu, 28 Dec 2023 00:19:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="B1OfNgYr"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="XINM70fl"
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id D468C18918;
-	Wed, 27 Dec 2023 19:10:56 -0500 (EST)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id CF99218A91;
+	Wed, 27 Dec 2023 19:19:02 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=gDTGFKfsxq79
-	GUkK9uizCX4cRTdDCnjeT433KGrcUDQ=; b=B1OfNgYrzDE0H7NubNrL/bUDCe9E
-	lLx6A3YhD6PCoaEzNCbEYNFE95opbMCZXdvVYYvPxT/tzbyL0qYAb0GBbCE5QWn+
-	0YPNINf2ln8p4tFA2GVuG3Ngiw+UxIXK6TSWGQ/kKetlRsRBRioNT1q5cIEfYXKx
-	XmlUrKqV7n/DrdQ=
+	:content-type; s=sasl; bh=WV7WL2Jjd6Qx7zRzGnacyNikREWHl2ZiFESibN
+	+T8Vw=; b=XINM70flayJ7ks/813F9IFxih8V3bsE+uRE/oGWifq1tohYfLd0rKa
+	9beDLZbVrjWgPPbpK9jrAM6VtXJBDy1maPplCpCTRXAuTsHmAoxcCUyOzsY7AQaw
+	adtZR7RYV58GYvv1ti5tkT4tfNpLFCzI2oMXnuJSK7kyKu+AoBCGo=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id CC1BC18917;
-	Wed, 27 Dec 2023 19:10:56 -0500 (EST)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id CA09018A90;
+	Wed, 27 Dec 2023 19:19:02 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.200.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4952A18916;
-	Wed, 27 Dec 2023 19:10:52 -0500 (EST)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6B86C18A89;
+	Wed, 27 Dec 2023 19:18:59 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Britton Leo Kerin <britton.kerin@gmail.com>,  git@vger.kernel.org,
-  Britton L Kerin <britton.kergin@gmail.com>
-Subject: Re: [PATCH 1/1] doc: use singular form of repeatable path arg
-In-Reply-To: <CAPig+cShsSSd-jpvSW_sq3-R++zjtHU-m2PmTsz-Nx9YVRStug@mail.gmail.com>
-	(Eric Sunshine's message of "Wed, 27 Dec 2023 17:29:20 -0500")
-References: <20231227205340.9886-1-britton.kerin@gmail.com>
-	<3d46bca1-96d4-43ba-a912-1f7c76942287@smtp-relay.sendinblue.com>
-	<CAPig+cShsSSd-jpvSW_sq3-R++zjtHU-m2PmTsz-Nx9YVRStug@mail.gmail.com>
-Date: Wed, 27 Dec 2023 16:10:50 -0800
-Message-ID: <xmqq5y0jkwz9.fsf@gitster.g>
+To: Elijah Newren <newren@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/3] sparse-checkout: use default patterns for 'set'
+ only !stdin
+In-Reply-To: <CABPp-BF3Vqq8Y8+2pQyO7-StUVPR3as+Q_aL+o92ydoJY-8zEw@mail.gmail.com>
+	(Elijah Newren's message of "Sat, 23 Dec 2023 23:51:19 -0800")
+References: <20231221065925.3234048-1-gitster@pobox.com>
+	<20231221065925.3234048-3-gitster@pobox.com>
+	<CABPp-BF3Vqq8Y8+2pQyO7-StUVPR3as+Q_aL+o92ydoJY-8zEw@mail.gmail.com>
+Date: Wed, 27 Dec 2023 16:18:57 -0800
+Message-ID: <xmqq1qb7kwlq.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -47,58 +46,35 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain
 X-Pobox-Relay-ID:
- 8FF4F292-A515-11EE-8A9F-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+ B250740A-A516-11EE-B4E3-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Elijah Newren <newren@gmail.com> writes:
 
-> On Wed, Dec 27, 2023 at 3:55=E2=80=AFPM Britton Leo Kerin
-> <britton.kerin@gmail.com> wrote:
->> This is more correct because the <path>... doc syntax already indicate=
-s
->> that the arg is "array-type".  It's how other tools do it.  Finally, t=
-he
->> later document text mentions 'path' arguments, while it doesn't mentio=
-n
->> 'paths'.
+>> diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+>> index 8f55127202..04ae81fce8 100644
+>> --- a/builtin/sparse-checkout.c
+>> +++ b/builtin/sparse-checkout.c
+>> @@ -837,7 +837,7 @@ static int sparse_checkout_set(int argc, const char **argv, const char *prefix)
+>>          * non-cone mode, if nothing is specified, manually select just the
+>>          * top-level directory (much as 'init' would do).
+>>          */
+>> -       if (!core_sparse_checkout_cone && argc == 0) {
+>> +       if (!core_sparse_checkout_cone && !set_opts.use_stdin && argc == 0) {
+>>                 argv = default_patterns;
+>>                 argc = default_patterns_nr;
+>>         } else {
+>> --
+>> 2.43.0-174-g055bb6e996
 >
-> Yep, makes sense.
->
->> Signed-off-by: Britton L Kerin <britton.kergin@gmail.com>
+> Thanks for catching this; the fix looks good to me.
 
-Micronit.  This should be identical to how From: line identifies the
-author.  s/L/Leo/ should be sufficient, I presume?
+Actually I am not so sure.
 
->> ---
->> diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.t=
-xt
->> @@ -17,7 +17,7 @@ The command takes various subcommands, and different=
- options depending
->>   git bisect start [--term-(new|bad)=3D<term-new> --term-(old|good)=3D=
-<term-old>]
->> -                 [--no-checkout] [--first-parent] [<bad> [<good>...]]=
- [--] [<paths>...]
->> +                 [--no-checkout] [--first-parent] [<bad> [<good>...]]=
- [--] [<path>...]
->
-> Looking good.
->
-> In builtin/bisect.c, the "usage" string says "[<pathspec>...]" rather
-> than "[<path>...]". Perhaps it makes sense to unify these?
+An obvious alternative would be to collect the patterns, either from
+the command line or from the standard input, and then use the
+default when we collected nothing.
 
-Yup, and that would be a good thing to do in a single patch, and
-also it would be a good place to stop.  Further clean-up you
-suggested below are very much worth doing, but it probably is good
-to leave out of this single focused fix we are reviewing here and
-instead be done as separate patch(es).
-
-Thanks.
-
-> Also, there are a few more documentation files that could use the
-> "<paths>" to "<path>..." fixup (though not always in the synopsis). A
-> 'grep' indicates that git-checkout.txt, git-diff.txt, and
-> git-rev-list-options.txt also mention "<paths>". Those may be outside
-> the scope of this patch, although they could easily be included, as
-> well, or made part of a patch series if you feel inclined.
+But I guess those who use the standard input should be able to
+specify everything fully, so it would probably be OK.
