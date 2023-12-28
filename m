@@ -1,69 +1,69 @@
 Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43AA76AA4
-	for <git@vger.kernel.org>; Thu, 28 Dec 2023 09:57:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A10C6FAE
+	for <git@vger.kernel.org>; Thu, 28 Dec 2023 09:57:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="r2sXgHq7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WGmGpSj2"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VBRKMSfg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wUW6zhLC"
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.nyi.internal (Postfix) with ESMTP id 6EA9B5C009A;
-	Thu, 28 Dec 2023 04:57:39 -0500 (EST)
+	by mailout.nyi.internal (Postfix) with ESMTP id 8ABC35C0080;
+	Thu, 28 Dec 2023 04:57:43 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Thu, 28 Dec 2023 04:57:39 -0500
+  by compute4.internal (MEProxy); Thu, 28 Dec 2023 04:57:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1703757459; x=1703843859; bh=ThHNvtiBE1
-	DXdy2l1mKw/6f1SBDmaL/UZAf45/H2Kwk=; b=r2sXgHq7k29a2MmaqqFMgeudU8
-	pDQCVlwzoa2BC9e0ajGD4WNHCEfSawKlaQVPCHcw+Kbq7nvIt+BH/X+tFxwsR/3q
-	4kAftn3UynPJpVX3rlFui1epgzc4DQ7whKKg7V8oQptb6nosDl6GMLIBS/syT4Kb
-	YbUrcFhJ0H5336u+tNflm2t5SgBhxK8UmuaT5D8n+zAP9U/X5mHTr0PqMrJcsnrl
-	EVcDtxP7kDAYaccWpaxNbIRpTUzIH2h8Mhj+GGpHPcIFxtAP3RtqbN3cu2D1BNv/
-	Zl80drkrPbHA+wJ21x+Qbv2Tok8qPFc9X9AItBU8gwhCV83mckNPR1t+2zfA==
+	:subject:to:to; s=fm2; t=1703757463; x=1703843863; bh=H0IqTM+tyU
+	QOtcaOgjasBkKFMbzO3ffAo7k1Hlwdt9Q=; b=VBRKMSfgGwi2334pQEVb0Hudsp
+	z4bXlOjS+qp1p/IpV1emNuru7Kt+I6SejmP9pfhyzTzlyXZjnMz7bhSjYLUa5C+b
+	w2gy04fgkSvxRGIgtQ1RJlCu+J0lV8I9w534WWSP/GEs3vkImi+FIThcrm+dVUGC
+	D9JSnBciIhkya/Ft5muedZMWUA1AkXLItSR4NmqXvythVNJAktwdypME51hK06KB
+	iVBscRR8pradJiJxCTgc6G8+Qb4ydLUB+fDM71ijVgHcF0KjclqVYHc7AOYPnrpa
+	ZIO4yw4hb5dXI+aqzn8AYd9NgSNluMuQsu7VJAwxCbcRBdhP7Kml6t19QB6A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1703757459; x=1703843859; bh=ThHNvtiBE1DXdy2l1mKw/6f1SBDm
-	aL/UZAf45/H2Kwk=; b=WGmGpSj2a+kDV0U8uJzFXFFgAneVJUi1rzA75J0NqxmJ
-	vNPwslBV1RgtAi3dsxNafFWubiXOZNpNrN2s55q8h0xWhjvBS/gEMLIxMBXmrola
-	TSYgySQ25pkA3x2iaQj15Vyw+3Jp22HT/ihPzRuNb2BywzluXQ8pCC0AYs0ZxsRe
-	YKwtgFnIqUlKT7ZJNbMENVPgl/QzcpE2i7qPKfCurtlxLbGO1oKMXQ1lQU21ei3x
-	/sOjAJXxzNcEMZBRDmc1wOGAxzmEbpYTRmKG3ZM+KMvXCFvVhSmmnB94+KkEtePU
-	9HUHyheS9uHRsiFWfimL7R/NHzsc3bJl2Tk9MBPo6A==
-X-ME-Sender: <xms:k0aNZdjHkIDiO5k758_M4edJ3h2FD4lhhrg2P-39LlyGThVgYZHGXQ>
-    <xme:k0aNZSBDR6RC5vUu2U0OWKkbUUEh7pf9qs8W_FQy2BX1b4S7ja9-rV_-ByazEEf0_
-    toTTxDNL5Qh54gWyw>
-X-ME-Received: <xmr:k0aNZdGshpF2OsU4TQkpGB0ISN8ltHa3jlTvrQiJyKoVP9TIiiWNST-EcS3XA9JN3q7w-xIkiu41HZFS1qXdm_ejT_3a5zZ2466dgrTfXqcAnA>
+	fm2; t=1703757463; x=1703843863; bh=H0IqTM+tyUQOtcaOgjasBkKFMbzO
+	3ffAo7k1Hlwdt9Q=; b=wUW6zhLCi3tRg65Af1tgwXYlXWJDghd4ma1dcI04VNq5
+	2z3VeGLeyz29Ow9TfsfI1vABNPvV46YlQN9FM5Blla6xtV98CYZPs0wUkloYq62C
+	dh1EqXiYro+zDCciG8otES5YdoOFDYErpJqRVF4PTs9y24R2pUV3MO3ie2ek8B6Z
+	4G1TZghCn9SKBM8Sl1QV88/ir9pEUw6J72pGYISodw39s7D+BDKhSHH1Arz+VxcS
+	exuIKKW/S2EWwtPasBBXRRh3ZQUBnmd0BMpEkHTDPxYI1S3STx5P1jkZG5qku9Nz
+	8oNsvsvLz9OFhO/K+mofnB4rBsrWlslwPswclQbDEA==
+X-ME-Sender: <xms:l0aNZYlpJTJ4Gt5ZWJQJsUioHFwVr0Cbku7t8mt7XQTOhlMHJHRAiw>
+    <xme:l0aNZX0hAVco-kSiGjutrLebNMQZuLXRR_ww_z4Jtsl1_slSyiTv5L9px6iluxuVb
+    Woo3TjpTh_PkQt5oA>
+X-ME-Received: <xmr:l0aNZWroLUyka4w-_-y2VIwUQbowCgUhB67SDC20-AMS42mNA8iCrbPFpDiLervvOdgHtIfZR84I1oBpHjPNUMM0Kqtq0ytq2Tshw5SZg5ndSQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdefuddguddtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:k0aNZSTHKsm-mbSeHNWb6cykTfSNHBEPOfaf4v9jrt6Ef7bLwi-8nQ>
-    <xmx:k0aNZazmlB91M7AdhQPi67i5keTatsxkyP1HOicJUyWAYXODza4vbQ>
-    <xmx:k0aNZY5bG4nnRl9aK6CBEkZc4mDymHsebNqWEZIP2q_PiveqqIwFrw>
-    <xmx:k0aNZfoSvr9v2-INI7sOmS7Q8gn8aRliX3p7RjJYlL-UIYiPRPTG0w>
+X-ME-Proxy: <xmx:l0aNZUmd9iCjU0qKVG1knJDom3qOnq1ddiklU7UBlq0sWMvpu6dfjQ>
+    <xmx:l0aNZW1S4CNQm1KguSKHKcdnmrpYnivHQCgVa_Mf02-Mb2cHH8Fh1w>
+    <xmx:l0aNZbui89PfzvSE_pqDSUbWI7u8N23yEK-jd_R9PnA3dsRSvjCAZA>
+    <xmx:l0aNZb-oXpl9zY9sKMh8BYQK0Jyr3n_YoJ9XOQ8K1jVac8tKhDngkA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 28 Dec 2023 04:57:38 -0500 (EST)
+ 28 Dec 2023 04:57:42 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 54df6443 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 28 Dec 2023 09:55:23 +0000 (UTC)
-Date: Thu, 28 Dec 2023 10:57:35 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id a85902da (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 28 Dec 2023 09:55:28 +0000 (UTC)
+Date: Thu, 28 Dec 2023 10:57:40 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 03/12] refs: refactor logic to look up storage backends
-Message-ID: <12329b99b753f79fe93fe017e71b08227d213c1e.1703753910.git.ps@pks.im>
+Subject: [PATCH v2 04/12] setup: start tracking ref storage format
+Message-ID: <ddd099fbaf3d8f4b6b6276048d0fcbc814f9e59c.1703753910.git.ps@pks.im>
 References: <cover.1703067989.git.ps@pks.im>
  <cover.1703753910.git.ps@pks.im>
 Precedence: bulk
@@ -73,202 +73,307 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="kvuTqvYHElgRe7TD"
+	protocol="application/pgp-signature"; boundary="uegl1NB8pgVUjg0p"
 Content-Disposition: inline
 In-Reply-To: <cover.1703753910.git.ps@pks.im>
 
 
---kvuTqvYHElgRe7TD
+--uegl1NB8pgVUjg0p
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-In order to look up ref storage backends, we're currently using a linked
-list of backends, where each backend is expected to set up its `next`
-pointer to the next ref storage backend. This is kind of a weird setup
-as backends need to be aware of other backends without much of a reason.
+In order to discern which ref storage format a repository is supposed to
+use we need to start setting up and/or discovering the format. This
+needs to happen in two separate code paths.
 
-Refactor the code so that the array of backends is centrally defined in
-"refs.c", where each backend is now identified by an integer constant.
-Expose functions to translate from those integer constants to the name
-and vice versa, which will be required by subsequent patches.
+  - The first path is when we create a repository via `init_db()`. When
+    we are re-initializing a preexisting repository we need to retain
+    the previously used ref storage format -- if the user asked for a
+    different format then this indicates an error and we error out.
+    Otherwise we either initialize the repository with the format asked
+    for by the user or the default format, which currently is the
+    "files" backend.
+
+  - The second path is when discovering repositories, where we need to
+    read the config of that repository. There is not yet any way to
+    configure something other than the "files" backend, so we can just
+    blindly set the ref storage format to this backend.
+
+Wire up this logic so that we have the ref storage format always readily
+available when needed. As there is only a single backend and because it
+is not configurable we cannot yet verify that this tracking works as
+expected via tests, but tests will be added in subsequent commits. To
+countermand this ommission now though, raise a BUG() in case the ref
+storage format is not set up properly in `ref_store_init()`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs.c                | 34 +++++++++++++++++++++++++---------
- refs.h                |  3 +++
- refs/debug.c          |  1 -
- refs/files-backend.c  |  1 -
- refs/packed-backend.c |  1 -
- refs/refs-internal.h  |  1 -
- repository.h          |  3 +++
- 7 files changed, 31 insertions(+), 13 deletions(-)
+ builtin/clone.c   |  5 +++--
+ builtin/init-db.c |  4 +++-
+ refs.c            |  4 ++--
+ repository.c      |  6 ++++++
+ repository.h      |  4 ++++
+ setup.c           | 26 +++++++++++++++++++++++---
+ setup.h           |  6 +++++-
+ 7 files changed, 46 insertions(+), 9 deletions(-)
 
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 343f536cf8..48aeb1b90b 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -1107,7 +1107,8 @@ int cmd_clone(int argc, const char **argv, const char=
+ *prefix)
+ 	 * repository, and reference backends may persist that information into
+ 	 * their on-disk data structures.
+ 	 */
+-	init_db(git_dir, real_git_dir, option_template, GIT_HASH_UNKNOWN, NULL,
++	init_db(git_dir, real_git_dir, option_template, GIT_HASH_UNKNOWN,
++		REF_STORAGE_FORMAT_UNKNOWN, NULL,
+ 		do_not_override_repo_unix_permissions, INIT_DB_QUIET | INIT_DB_SKIP_REFD=
+B);
+=20
+ 	if (real_git_dir) {
+@@ -1292,7 +1293,7 @@ int cmd_clone(int argc, const char **argv, const char=
+ *prefix)
+ 	hash_algo =3D hash_algo_by_ptr(transport_get_hash_algo(transport));
+ 	initialize_repository_version(hash_algo, 1);
+ 	repo_set_hash_algo(the_repository, hash_algo);
+-	create_reference_database(NULL, 1);
++	create_reference_database(the_repository->ref_storage_format, NULL, 1);
+=20
+ 	/*
+ 	 * Before fetching from the remote, download and install bundle
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index cb727c826f..b6e80feab6 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -11,6 +11,7 @@
+ #include "object-file.h"
+ #include "parse-options.h"
+ #include "path.h"
++#include "refs.h"
+ #include "setup.h"
+ #include "strbuf.h"
+=20
+@@ -236,5 +237,6 @@ int cmd_init_db(int argc, const char **argv, const char=
+ *prefix)
+=20
+ 	flags |=3D INIT_DB_EXIST_OK;
+ 	return init_db(git_dir, real_git_dir, template_dir, hash_algo,
+-		       initial_branch, init_shared_repository, flags);
++		       REF_STORAGE_FORMAT_UNKNOWN, initial_branch,
++		       init_shared_repository, flags);
+ }
 diff --git a/refs.c b/refs.c
-index 16bfa21df7..ab14634731 100644
+index ab14634731..be8fcabde0 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -33,17 +33,33 @@
- /*
-  * List of all available backends
-  */
--static struct ref_storage_be *refs_backends =3D &refs_be_files;
-+static const struct ref_storage_be *refs_backends[] =3D {
-+	[REF_STORAGE_FORMAT_FILES] =3D &refs_be_files,
-+};
-=20
--static struct ref_storage_be *find_ref_storage_backend(const char *name)
-+static const struct ref_storage_be *find_ref_storage_backend(int ref_stora=
-ge_format)
- {
--	struct ref_storage_be *be;
--	for (be =3D refs_backends; be; be =3D be->next)
--		if (!strcmp(be->name, name))
--			return be;
-+	if (ref_storage_format < ARRAY_SIZE(refs_backends))
-+		return refs_backends[ref_storage_format];
- 	return NULL;
- }
-=20
-+int ref_storage_format_by_name(const char *name)
-+{
-+	for (int i =3D 0; i < ARRAY_SIZE(refs_backends); i++)
-+		if (refs_backends[i] && !strcmp(refs_backends[i]->name, name))
-+			return i;
-+	return REF_STORAGE_FORMAT_UNKNOWN;
-+}
-+
-+const char *ref_storage_format_to_name(int ref_storage_format)
-+{
-+	const struct ref_storage_be *be =3D find_ref_storage_backend(ref_storage_=
-format);
-+	if (!be)
-+		return "unknown";
-+	return be->name;
-+}
-+
- /*
-  * How to handle various characters in refnames:
-  * 0: An acceptable character for refs
-@@ -2029,12 +2045,12 @@ static struct ref_store *ref_store_init(struct repo=
+@@ -2045,10 +2045,10 @@ static struct ref_store *ref_store_init(struct repo=
 sitory *repo,
  					const char *gitdir,
  					unsigned int flags)
  {
--	const char *be_name =3D "files";
--	struct ref_storage_be *be =3D find_ref_storage_backend(be_name);
-+	int format =3D REF_STORAGE_FORMAT_FILES;
-+	const struct ref_storage_be *be =3D find_ref_storage_backend(format);
+-	int format =3D REF_STORAGE_FORMAT_FILES;
+-	const struct ref_storage_be *be =3D find_ref_storage_backend(format);
++	const struct ref_storage_be *be;
  	struct ref_store *refs;
 =20
++	be =3D find_ref_storage_backend(repo->ref_storage_format);
  	if (!be)
--		BUG("reference backend %s is unknown", be_name);
-+		BUG("reference backend is unknown");
+ 		BUG("reference backend is unknown");
 =20
- 	refs =3D be->init(repo, gitdir, flags);
- 	return refs;
-diff --git a/refs.h b/refs.h
-index ff113bb12a..e2098ea51b 100644
---- a/refs.h
-+++ b/refs.h
-@@ -11,6 +11,9 @@ struct string_list;
- struct string_list_item;
- struct worktree;
+diff --git a/repository.c b/repository.c
+index a7679ceeaa..691cabf45b 100644
+--- a/repository.c
++++ b/repository.c
+@@ -104,6 +104,11 @@ void repo_set_hash_algo(struct repository *repo, int h=
+ash_algo)
+ 	repo->hash_algo =3D &hash_algos[hash_algo];
+ }
 =20
-+int ref_storage_format_by_name(const char *name);
-+const char *ref_storage_format_to_name(int ref_storage_format);
++void repo_set_ref_storage_format(struct repository *repo, int format)
++{
++	repo->ref_storage_format =3D format;
++}
 +
  /*
-  * Resolve a reference, recursively following symbolic refererences.
-  *
-diff --git a/refs/debug.c b/refs/debug.c
-index 83b7a0ba65..b9775f2c37 100644
---- a/refs/debug.c
-+++ b/refs/debug.c
-@@ -426,7 +426,6 @@ static int debug_reflog_expire(struct ref_store *ref_st=
-ore, const char *refname,
- }
+  * Attempt to resolve and set the provided 'gitdir' for repository 'repo'.
+  * Return 0 upon success and a non-zero value upon failure.
+@@ -184,6 +189,7 @@ int repo_init(struct repository *repo,
+ 		goto error;
 =20
- struct ref_storage_be refs_be_debug =3D {
--	.next =3D NULL,
- 	.name =3D "debug",
- 	.init =3D NULL,
- 	.init_db =3D debug_init_db,
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index ad8b1d143f..43fd0ac760 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -3241,7 +3241,6 @@ static int files_init_db(struct ref_store *ref_store,=
- struct strbuf *err UNUSED)
- }
+ 	repo_set_hash_algo(repo, format.hash_algo);
++	repo_set_ref_storage_format(repo, format.ref_storage_format);
+ 	repo->repository_format_worktree_config =3D format.worktree_config;
 =20
- struct ref_storage_be refs_be_files =3D {
--	.next =3D NULL,
- 	.name =3D "files",
- 	.init =3D files_ref_store_create,
- 	.init_db =3D files_init_db,
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index b9fa097a29..8d1090e284 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -1705,7 +1705,6 @@ static struct ref_iterator *packed_reflog_iterator_be=
-gin(struct ref_store *ref_s
- }
-=20
- struct ref_storage_be refs_be_packed =3D {
--	.next =3D NULL,
- 	.name =3D "packed",
- 	.init =3D packed_ref_store_create,
- 	.init_db =3D packed_init_db,
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 4af83bf9a5..8e9f04cc67 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -663,7 +663,6 @@ typedef int read_symbolic_ref_fn(struct ref_store *ref_=
-store, const char *refnam
- 				 struct strbuf *referent);
-=20
- struct ref_storage_be {
--	struct ref_storage_be *next;
- 	const char *name;
- 	ref_store_init_fn *init;
- 	ref_init_db_fn *init_db;
+ 	/* take ownership of format.partial_clone */
 diff --git a/repository.h b/repository.h
-index 5f18486f64..ea4c488b81 100644
+index ea4c488b81..d3a24da4d6 100644
 --- a/repository.h
 +++ b/repository.h
-@@ -24,6 +24,9 @@ enum fetch_negotiation_setting {
- 	FETCH_NEGOTIATION_NOOP,
- };
+@@ -163,6 +163,9 @@ struct repository {
+ 	/* Repository's current hash algorithm, as serialized on disk. */
+ 	const struct git_hash_algo *hash_algo;
 =20
-+#define REF_STORAGE_FORMAT_UNKNOWN 0
-+#define REF_STORAGE_FORMAT_FILES   1
++	/* Repository's reference storage format, as serialized on disk. */
++	int ref_storage_format;
 +
- struct repo_settings {
- 	int initialized;
+ 	/* A unique-id for tracing purposes. */
+ 	int trace2_repo_id;
 =20
+@@ -202,6 +205,7 @@ void repo_set_gitdir(struct repository *repo, const cha=
+r *root,
+ 		     const struct set_gitdir_args *extra_args);
+ void repo_set_worktree(struct repository *repo, const char *path);
+ void repo_set_hash_algo(struct repository *repo, int algo);
++void repo_set_ref_storage_format(struct repository *repo, int format);
+ void initialize_the_repository(void);
+ RESULT_MUST_BE_USED
+ int repo_init(struct repository *r, const char *gitdir, const char *worktr=
+ee);
+diff --git a/setup.c b/setup.c
+index bc90bbd033..e58ab7e786 100644
+--- a/setup.c
++++ b/setup.c
+@@ -1566,6 +1566,8 @@ const char *setup_git_directory_gently(int *nongit_ok)
+ 		}
+ 		if (startup_info->have_repository) {
+ 			repo_set_hash_algo(the_repository, repo_fmt.hash_algo);
++			repo_set_ref_storage_format(the_repository,
++						    repo_fmt.ref_storage_format);
+ 			the_repository->repository_format_worktree_config =3D
+ 				repo_fmt.worktree_config;
+ 			/* take ownership of repo_fmt.partial_clone */
+@@ -1659,6 +1661,8 @@ void check_repository_format(struct repository_format=
+ *fmt)
+ 	check_repository_format_gently(get_git_dir(), fmt, NULL);
+ 	startup_info->have_repository =3D 1;
+ 	repo_set_hash_algo(the_repository, fmt->hash_algo);
++	repo_set_ref_storage_format(the_repository,
++				    fmt->ref_storage_format);
+ 	the_repository->repository_format_worktree_config =3D
+ 		fmt->worktree_config;
+ 	the_repository->repository_format_partial_clone =3D
+@@ -1899,7 +1903,8 @@ static int is_reinit(void)
+ 	return ret;
+ }
+=20
+-void create_reference_database(const char *initial_branch, int quiet)
++void create_reference_database(int ref_storage_format,
++			       const char *initial_branch, int quiet)
+ {
+ 	struct strbuf err =3D STRBUF_INIT;
+ 	int reinit =3D is_reinit();
+@@ -1919,6 +1924,7 @@ void create_reference_database(const char *initial_br=
+anch, int quiet)
+ 	safe_create_dir(git_path("refs"), 1);
+ 	adjust_shared_perm(git_path("refs"));
+=20
++	repo_set_ref_storage_format(the_repository, ref_storage_format);
+ 	if (refs_init_db(&err))
+ 		die("failed to set up refs db: %s", err.buf);
+=20
+@@ -2137,8 +2143,20 @@ static void validate_hash_algorithm(struct repositor=
+y_format *repo_fmt, int hash
+ 	}
+ }
+=20
++static void validate_ref_storage_format(struct repository_format *repo_fmt=
+, int format)
++{
++	if (repo_fmt->version >=3D 0 &&
++	    format !=3D REF_STORAGE_FORMAT_UNKNOWN &&
++	    format !=3D repo_fmt->ref_storage_format) {
++		die(_("attempt to reinitialize repository with different reference stora=
+ge format"));
++	} else if (format !=3D REF_STORAGE_FORMAT_UNKNOWN) {
++		repo_fmt->ref_storage_format =3D format;
++	}
++}
++
+ int init_db(const char *git_dir, const char *real_git_dir,
+-	    const char *template_dir, int hash, const char *initial_branch,
++	    const char *template_dir, int hash,
++	    int ref_storage_format, const char *initial_branch,
+ 	    int init_shared_repository, unsigned int flags)
+ {
+ 	int reinit;
+@@ -2181,13 +2199,15 @@ int init_db(const char *git_dir, const char *real_g=
+it_dir,
+ 	check_repository_format(&repo_fmt);
+=20
+ 	validate_hash_algorithm(&repo_fmt, hash);
++	validate_ref_storage_format(&repo_fmt, ref_storage_format);
+=20
+ 	reinit =3D create_default_files(template_dir, original_git_dir,
+ 				      &repo_fmt, prev_bare_repository,
+ 				      init_shared_repository);
+=20
+ 	if (!(flags & INIT_DB_SKIP_REFDB))
+-		create_reference_database(initial_branch, flags & INIT_DB_QUIET);
++		create_reference_database(repo_fmt.ref_storage_format,
++					  initial_branch, flags & INIT_DB_QUIET);
+ 	create_object_directory();
+=20
+ 	if (get_shared_repository()) {
+diff --git a/setup.h b/setup.h
+index 3f0f17c351..4927abf2cf 100644
+--- a/setup.h
++++ b/setup.h
+@@ -115,6 +115,7 @@ struct repository_format {
+ 	int worktree_config;
+ 	int is_bare;
+ 	int hash_algo;
++	int ref_storage_format;
+ 	int sparse_index;
+ 	char *work_tree;
+ 	struct string_list unknown_extensions;
+@@ -131,6 +132,7 @@ struct repository_format {
+ 	.version =3D -1, \
+ 	.is_bare =3D -1, \
+ 	.hash_algo =3D GIT_HASH_SHA1, \
++	.ref_storage_format =3D REF_STORAGE_FORMAT_FILES, \
+ 	.unknown_extensions =3D STRING_LIST_INIT_DUP, \
+ 	.v1_only_extensions =3D STRING_LIST_INIT_DUP, \
+ }
+@@ -175,10 +177,12 @@ void check_repository_format(struct repository_format=
+ *fmt);
+=20
+ int init_db(const char *git_dir, const char *real_git_dir,
+ 	    const char *template_dir, int hash_algo,
++	    int ref_storage_format,
+ 	    const char *initial_branch, int init_shared_repository,
+ 	    unsigned int flags);
+ void initialize_repository_version(int hash_algo, int reinit);
+-void create_reference_database(const char *initial_branch, int quiet);
++void create_reference_database(int ref_storage_format,
++			       const char *initial_branch, int quiet);
+=20
+ /*
+  * NOTE NOTE NOTE!!
 --=20
 2.43.GIT
 
 
---kvuTqvYHElgRe7TD
+--uegl1NB8pgVUjg0p
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWNRo8ACgkQVbJhu7ck
-PpTgaQ/7BhhljrNCAGIKgOg9iO1A4hQNOD5Nz88SS6KPeKMicPHLi9KjsYBa9/RN
-sLP3zpQYgUlQRT2jqljuJj8T6JAZ7+lEb1MoNpSlo4dO3aU1CKxIhC46f8SeXXA5
-2dMXJRPrRvCriXRC9kZQES9Hl+JvM97EE90xoExZraA//NonDbvlx2As5Suh+VWl
-JmkJzlx0+5FoGoGT5pX0oY4b68pRtYtlPoH3E8wLKiVyq0mY5RY9JMMhx4dkVWu9
-j6z6HO4XFm0+lUzkZnLInVq1LqkFogFkoa0Xkh+WW/8v2YDLU+ZgtqXTVQVsOjdm
-MjpQTgLnQ7c3eNYJLUk7syb5V55I4T1UleCs3NRtzGm/f9UJe6E+6ioBmBubATQZ
-Yjret4mlwxZn2uyhmhfgoGdgJQwbFUEQoBU8xs/K1FlOaql2IPOWyiNH57D87UQp
-2TyxNCzPuAT/VP+23fomFX3FMxXuE4zguxxg+Gzgv0iuZvq6Jvp3sT1/3nJQhnRA
-lS2lM3bL1HGV6XHqOxIgbjjBrNYKAKijCvaaTqzSmY32daYyRqN232D0i7BfQyaO
-H4UEyf8pX/IykRSEh8WKf7EG0HC1SUO2l98da5gzVBkeuQxB0qgWvP9zqJQw5idG
-P4UuctwxUnrLkQlfpCJLS2slYTR8QRjJK2yO7XuoEIrmXox/cAg=
-=8Qxq
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWNRpMACgkQVbJhu7ck
+PpT9qRAAglqX5KCcJN5eMGCSezr6TO5YLUsMIbmFmMn9me0SIinMWvW0ac+k5OIu
+RyVyQku96SRtNChUknGikTmLs9WAJzLud6b+nwNHmHXyuqi2tUoY+jWMPGoLq2ZB
+KdPokb2RstizYwIKs5TD8897yQD83bkBGGmBaKmctAArKsbE3OTabD3jH2UU34OC
+qhu4Erz/gLlblU3ziuWGSAYQwI5+2WslaiADMY3A9S4SCFtiTM4MTlssQeKY6Xhj
+jvwaXoJO2ZFJLql6aZSiGUOaijt2XxFvaou4SS1AsQWfD4B1s/8i1jtboXj7fZz4
+zwt+8iT5xzSYdP45g4y8O69vR9pdvansLW+E9B/KhKpZzCd3whFhVqP74O1sz21N
+HtQFnzARUzhiN1CTKnaVz/pj7KCWRhl3GUskScEBiuGbT/CTEqkJsLmpLDzTMheE
+l/X4sN7X+b1gYLQx+Ka+hMUsLhYy8dPnFtfA33kz8gfa/R31u2BLQkdggvILt7kn
+DX7sLfN/uxXaRd7aOej9KA+dD9ywsaPvqb3n93+Qzh/LmbzdRde/ZAd8asFjWThm
++E5E88WBKxhD7m2R4z8VckT1CMTZoegc1JlUBzOOgtvMikNE3ywMXtkOVnFR+lzF
+FGINOCUP7CbD0HjOcnNjKbU6NTSBycPXqiwcle+zFWIiIGkxGn8=
+=QIzq
 -----END PGP SIGNATURE-----
 
---kvuTqvYHElgRe7TD--
+--uegl1NB8pgVUjg0p--
