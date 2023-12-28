@@ -1,87 +1,63 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BDEDF9E4
-	for <git@vger.kernel.org>; Thu, 28 Dec 2023 18:11:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="PsQXd0Ab"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id D60CC1E7CB;
-	Thu, 28 Dec 2023 13:11:36 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=OXfamkhqfbOBQ6MRO0BvpDxush7VOgaVs7bOlI
-	daLJ4=; b=PsQXd0AbS/GOh/D9wYLgQTZqrZHaSqdyIN53RLAyzA/ZBATG1KRtMC
-	PNO7915HwjfIh0uUdb7wUkoCcqkVKT7bKMjN0Ph9uau0F+nrCUDAJeYM5Ec3x4LO
-	oj3TEQivGovjqXyugYX7n+jJ0NUNYznYpSxMKPEdRpI/dDgj142sk=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id CEDC61E7CA;
-	Thu, 28 Dec 2023 13:11:36 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7EC5A1E7C9;
-	Thu, 28 Dec 2023 13:11:33 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/6] worktree: initialize refdb via ref backends
-In-Reply-To: <cover.1703754513.git.ps@pks.im> (Patrick Steinhardt's message of
-	"Thu, 28 Dec 2023 10:59:47 +0100")
-References: <cover.1703754513.git.ps@pks.im>
-Date: Thu, 28 Dec 2023 10:11:31 -0800
-Message-ID: <xmqqedf6gpt8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BD70101C6
+	for <git@vger.kernel.org>; Thu, 28 Dec 2023 18:13:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-67f9ace0006so30033686d6.0
+        for <git@vger.kernel.org>; Thu, 28 Dec 2023 10:13:16 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703787195; x=1704391995;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+Nz6yf7VmjQ9ofZgOdbnX1lmDr73L9KVEh9mgTfY0iw=;
+        b=HgLmj5eP0+3EpujZ6jBFq1AR1uHLXmJ35YNsSww7FVtjZ+ZEly6qPHDYZXCFuWR2Ig
+         XzW9g5FWiOvZ0xCPTUhk1yBpgXPZALzJqW8OHbZjXb8mR9KiyCZSSYCWMLc+9Sma9l9J
+         jx4eSHufkQlXgS50wAif4bLA1iZLWyRj9piCSjJMfPnUhuExdgOPalqzrplVHAQqnusQ
+         rlu97D8kE77qBvGs4c+zZ4vQuNadQV2es/o5bEMt0eMzJTH3x5VlnV+AIFJIQj73joTd
+         batgHkok1SlLOInC9Ej25G+Fj7Y+nasWvfovhKNtvpinlJZwmjXRepwm/k+JXq0U3rA6
+         OGpQ==
+X-Gm-Message-State: AOJu0YxUvU6R7h5z0eEQy9YtKDR99wuve/2RDRq0oArIuY+k8FpRKQW0
+	2Qea0G77hLaLSCvRhDCRwycefEyQLkZZzpLta1k=
+X-Google-Smtp-Source: AGHT+IHLQlsSTf9nnEdo+R0c14nVaDAi0AIxmlNAwYgqHQJhS3Q0Fei5hhBkqXzvOygR30WausgdkGXV+NokcS0kC9I=
+X-Received: by 2002:a05:6214:5006:b0:67f:4f8b:8f31 with SMTP id
+ jo6-20020a056214500600b0067f4f8b8f31mr16302316qvb.31.1703787195207; Thu, 28
+ Dec 2023 10:13:15 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 8855BB38-A5AC-11EE-9053-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+References: <cover.1703067989.git.ps@pks.im> <cover.1703753910.git.ps@pks.im>
+ <ecf4f1ddee36643f0ff7e3d40b9aa7c7e6e6ce43.1703753910.git.ps@pks.im> <CAPig+cT6mRyJijL1qo2g56Yny-JxkDYjjmGpAncyS_4Hcpaz6Q@mail.gmail.com>
+In-Reply-To: <CAPig+cT6mRyJijL1qo2g56Yny-JxkDYjjmGpAncyS_4Hcpaz6Q@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Thu, 28 Dec 2023 13:13:04 -0500
+Message-ID: <CAPig+cSKpzOCOzC_mtNoA4yYmHCtMxB-Ujsd7YYHK-SPJvgt8w@mail.gmail.com>
+Subject: Re: [PATCH v2 02/12] worktree: skip reading HEAD when repairing worktrees
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>, 
+	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Thu, Dec 28, 2023 at 1:08=E2=80=AFPM Eric Sunshine <sunshine@sunshineco.=
+com> wrote:
+> Having said all that, I'm not overly opposed to this patch, especially
+> since your main focus is on getting the reftable backend integrated,
+> and because the changes (and ugliness) introduced by this patch are
+> entirely self-contained and private to worktree.c, so are not a
+> show-stopper by any means. Rather, I wanted to get down to writing
+> what I think would be a better future approach if someone gets around
+> to tackling it. (There is no pressing need at the moment, and that
+> someone doesn't have to be you.)
 
-> when initializing worktrees we manually create the on-disk data
-> structures required for the ref backend in "worktree.c". This works just
-> fine right now where we only have a single user-exposed ref backend, but
-> it will become unwieldy once we have multiple ref backends. This patch
-> series thus refactors how we initialize worktrees so that we can use
-> `refs_init_db()` to initialize required files for us.
->
-> This patch series conflicts with ps/refstorage-extension. The conflict
-> can be solved as shown below. I'm happy to defer this patch series
-> though until the topic has landed on `master` in case this causes
-> issues.
-
-Resolution is not all that bad, but the change in function signature
-means comments/explanations near both the caller and the callee of
-the get_linked_worktree() function may need updating, I would think.
-For example, ...
-
-> diff --git a/worktree.h b/worktree.h
-> index 8a75691eac..f14784a2ff 100644
-> --- a/worktree.h
-> +++ b/worktree.h
-> @@ -61,7 +61,8 @@ struct worktree *find_worktree(struct worktree **list,
->   * Look up the worktree corresponding to `id`, or NULL of no such worktree
->   * exists.
->   */
-> -struct worktree *get_linked_worktree(const char *id);
-> +struct worktree *get_linked_worktree(const char *id,
-> +				     int skip_reading_head);
-
-... this now needs to help developers who may want to add new
-callers what to pass in "skip_reading_head" and why.
-
-We may indeed want to build this on top of the refstorage-extansion
-thing, as it seems to be relatively close to completion.
-
-Thanks (and a happy new year).
+I forgot to mention that, if you reroll for some reason, the
+get_worktrees()/get_worktrees_internal() dance might deserve an
+in-source NEEDSWORK comment explaining that get_worktrees_internal()
+exists to work around the shortcoming that a corruption-tolerant
+function for retrieving worktree metadata (for use by the "repair"
+function) does not yet exist.
