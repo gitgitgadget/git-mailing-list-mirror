@@ -1,69 +1,72 @@
 Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F29101ED
-	for <git@vger.kernel.org>; Thu, 28 Dec 2023 19:57:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F06DF101EF
+	for <git@vger.kernel.org>; Thu, 28 Dec 2023 20:01:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nyPg/K+M";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DInPeMjs"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.west.internal (Postfix) with ESMTP id 9213832009F4;
-	Thu, 28 Dec 2023 14:57:45 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Thu, 28 Dec 2023 14:57:45 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eRukDZey";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QpZOOHg9"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.west.internal (Postfix) with ESMTP id 1D701320031A;
+	Thu, 28 Dec 2023 15:01:59 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute2.internal (MEProxy); Thu, 28 Dec 2023 15:01:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1703793465; x=1703879865; bh=ngzNmE/jmY
-	69bS8VK7dcPGJrqukLj0NIho55Syiobe4=; b=nyPg/K+Me2HaD4xutXMGnMcjmL
-	KF7Hx1S3Gkz8IH9oo0cQ62stHa1J+RzMXtYGhn0mDKm3prtKKyuRP3cdm7mpzjtk
-	lBGrJUrwQ5T0YokjCCD7BxxRzLy1Qkr+UXPhQWzSDyo3KCS6A45foaa0aMk3urdi
-	IgWpsduz7S97ZvZ8BCMDEaEPAGjjW2YUtuLE+dFojYN63y58OhhqD/GP+9Xjfhgw
-	QFc1aJXyDq3kSS14e28fIDsEbJEm8ZoNbvD2yHPA3wd3qhACy/FUraU+pcGBGWn9
-	6x+SzjuebLv4NtBmhprzh4n8MWA8qqn1h8ZgfKIa9YBiW6Cx6sY3p24TsApQ==
+	:subject:to:to; s=fm2; t=1703793718; x=1703880118; bh=lH/NNEu/fu
+	mTmOgQtpjmBqa/GSUBWDJ5FHfzpTF+H7k=; b=eRukDZeyU3mMIURyU1c8ZpwU/2
+	/GZdO/jbkVc3HJuvrga1u32t25mcUWSX2+GdeGxS8/2CJJI/KuF6SAfbR1G23vgJ
+	KmRXavKzHK+6I4OFfGphpd4NzrY4D1z3rsHI9duZ1QRrb3TkAwv938Z7K8Y0uNyK
+	9LWpZxqRacNJL6xfdBjc8fE2Pg/1yjWDtnNNG4B1Fwhl1lEzbzQ/QplRfFSfu8Zq
+	IgOKRD9TSsg3wMMr2qPBbWXvnw5YD1tMw8rLo2tKKsFZJanBDU4oC0stjrJ0Jx9m
+	2of+kJO5AQlckh1GsGjacF19TN1KCuQ5h28WOn2+NMDQ05xNnu50UVq2Kefw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1703793465; x=1703879865; bh=ngzNmE/jmY69bS8VK7dcPGJrqukL
-	j0NIho55Syiobe4=; b=DInPeMjs8WlkzSgizxxlSmXMe9aaZ6G6/HOeUlfW7pYb
-	NGlVSE8cKtQi425+1uKRev8JrvqOAQRL1A8F4tKa8H5icBO5ex4fsxcKlQhfnJfw
-	8LAW7oEnJPn/h192HFhMH69fIXQB168roNyzXiCLQ/p5krM9ulg5izLe1vDs2rpg
-	6kAAEwnpb40tTsdldMboX9mpho0++V3WFE1tyecgkpMACJRjGf+Bd6UQvTVG7lDO
-	aRMDquiD2bSAhsxQSeP/Li0rd1X+0+qIRakt1kZaPtLP6DOvwxNVXWEpUAiB+u3V
-	wgc5rUYKQ6SwZRxz52Er1ejjf50LAwfUrP8TvOIDGw==
-X-ME-Sender: <xms:ONONZYEDyz4djHCSHzhw_LtPj2blYYjQeiSspNYQ5yptDbgiFpje7Q>
-    <xme:ONONZRWAeIK8hVDDBKkuL0jEtLeO_mR2rus7YFY0IcfloJkkKKdNQLgblO6RrYonL
-    8NNCzOT5sM43wzzsw>
-X-ME-Received: <xmr:ONONZSK_HRFb_nfdU0jAWYrcenKdCl57Lq8TPJSbBtZEdwCiygGRSG_E421NzSoW7tcVPheOV6HlZWe13HFth1zCvebqBH52ngtJvu30KNENng>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdefuddgudefvdcutefuodetggdotefrod
+	fm2; t=1703793718; x=1703880118; bh=lH/NNEu/fumTmOgQtpjmBqa/GSUB
+	WDJ5FHfzpTF+H7k=; b=QpZOOHg9ZvckCq4K7p9HOPnhZ+9mR1+6oL3zC6Y0COkM
+	VwYd8+HABLsBOzf1mdv8xC8ruZG/uiD1qrtcDYt1f9Wzdh3+L1ax9UylunswuB5l
+	JjQvd9Q02YbVWnD9h0jZqXXspusFxIIwmO0o50nYaGIawSlGEa+2phn1ggMa/Ky9
+	yxAiRpq4d5X0ll0fXvqFxejgjAawy75QXiwj+7fERVeCiurxMNlZbOxsSTvllYSH
+	6gi1czVmfHYJRW8X4+HevYh19VtirI4rTs+iAmU8Di+FOZae6DELLLJYa1jnNBQ5
+	+1F54/+7gOLTtyRJD2aNYeW8LWUKIT60YO941eEhVg==
+X-ME-Sender: <xms:NtSNZaKTMn-FxkOb8PdKK0uInVeyGFR19lRtNEY2IMn99RmVCunh4A>
+    <xme:NtSNZSKEenbhQNlGaZLtRtyJ13kyR9OwaUujuJECzkjaDpUjJeW0rhOGdNfc0b_kU
+    vW8_OPURYQijnbiEA>
+X-ME-Received: <xmr:NtSNZasmmcf5CkIML6kf1C2J10bMFGSy09l8YsGg_oPN9YmgHHaDbXgUY_rcgDzYGWQ8jYEEbKi2Dq_uDuv5UlliFPgIecZHUhf4SfqwJBj4PA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdefuddgudeffecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
     dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
     sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeige
     ekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfr
     rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:ONONZaFZnvc25IpeX-4UYYBEqb7LB5mc5xNHIhlfD4Wvd7iF7nCLAw>
-    <xmx:ONONZeWToi2_uXz5ibFfn-6QIptBnpsKWvx3ukaL_w3wKE4tV1sKbA>
-    <xmx:ONONZdNSG-15Vu0SFz--aMfITpI7A8iKA1YxDaOK0ogLV3RlDsdCew>
-    <xmx:OdONZXfewpSz4LJ90a8ZXGHINfm3ILofYN3cSSUGntdfmYxyd5rDig>
+X-ME-Proxy: <xmx:NtSNZfaEesmW6LlhthUGTCcqgjvZ-K4IIVF0jwWI9LSXgCL7dUA2wg>
+    <xmx:NtSNZRZlq_-17xfiV33vyRcpVCTPIbqAPc65nu4Dngc20uhIiI2KCw>
+    <xmx:NtSNZbBq-p1rP62WwWi8L2-jVvV-Cim134H_w51DVAQ_SUhjz0ebjg>
+    <xmx:NtSNZSBOxs2EXUzHZbqkDkfs3JSuABUZ6xIVtGl5tNFTKaPIch5XoA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 28 Dec 2023 14:57:44 -0500 (EST)
+ 28 Dec 2023 15:01:57 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 39ab6617 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 28 Dec 2023 19:55:26 +0000 (UTC)
-Date: Thu, 28 Dec 2023 20:57:39 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id bb8cefb5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 28 Dec 2023 19:59:42 +0000 (UTC)
+Date: Thu, 28 Dec 2023 21:01:55 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/6] worktree: initialize refdb via ref backends
-Message-ID: <ZY3TMy75mYzz0Pab@framework>
-References: <cover.1703754513.git.ps@pks.im>
- <xmqqedf6gpt8.fsf@gitster.g>
+Subject: Re: [PATCH 04/12] setup: start tracking ref storage format when
+Message-ID: <ZY3UMwe0X4gVHyAm@framework>
+References: <cover.1703067989.git.ps@pks.im>
+ <6564659d403de098799ddb8101b74c2803a655d4.1703067989.git.ps@pks.im>
+ <xmqqv88ssp4r.fsf@gitster.g>
+ <ZY04OlTNUEZs5T-T@tanuki>
+ <xmqqplyqgsem.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,84 +74,70 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="DAAibA34WtQM1XPf"
+	protocol="application/pgp-signature"; boundary="0eKy0S9alMUXIc9d"
 Content-Disposition: inline
-In-Reply-To: <xmqqedf6gpt8.fsf@gitster.g>
+In-Reply-To: <xmqqplyqgsem.fsf@gitster.g>
 
 
---DAAibA34WtQM1XPf
+--0eKy0S9alMUXIc9d
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Dec 28, 2023 at 10:11:31AM -0800, Junio C Hamano wrote:
+On Thu, Dec 28, 2023 at 09:15:29AM -0800, Junio C Hamano wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
 >=20
-> > when initializing worktrees we manually create the on-disk data
-> > structures required for the ref backend in "worktree.c". This works just
-> > fine right now where we only have a single user-exposed ref backend, but
-> > it will become unwieldy once we have multiple ref backends. This patch
-> > series thus refactors how we initialize worktrees so that we can use
-> > `refs_init_db()` to initialize required files for us.
+> > Makes me wonder whether we should then also add the following diff to
+> > "setup: set repository's format on init" when both topics are being
+> > merged together:
 > >
-> > This patch series conflicts with ps/refstorage-extension. The conflict
-> > can be solved as shown below. I'm happy to defer this patch series
-> > though until the topic has landed on `master` in case this causes
-> > issues.
+> > diff --git a/setup.c b/setup.c
+> > index 3d980814bc..3d35c78c68 100644
+> > --- a/setup.c
+> > +++ b/setup.c
+> > @@ -2210,6 +2210,7 @@ int init_db(const char *git_dir, const char *real=
+_git_dir,
+> >  	 * format we can update the repository's settings accordingly.
+> >  	 */
+> >  	repo_set_hash_algo(the_repository, repo_fmt.hash_algo);
+> > +	repo_set_compat_hash_algo(the_repository, repo_fmt.compat_hash_algo);
+> >  	repo_set_ref_storage_format(the_repository, repo_fmt.ref_storage_form=
+at);
+> > =20
+> >  	if (!(flags & INIT_DB_SKIP_REFDB))
 >=20
-> Resolution is not all that bad, but the change in function signature
-> means comments/explanations near both the caller and the callee of
-> the get_linked_worktree() function may need updating, I would think.
-> For example, ...
->=20
-> > diff --git a/worktree.h b/worktree.h
-> > index 8a75691eac..f14784a2ff 100644
-> > --- a/worktree.h
-> > +++ b/worktree.h
-> > @@ -61,7 +61,8 @@ struct worktree *find_worktree(struct worktree **list,
-> >   * Look up the worktree corresponding to `id`, or NULL of no such work=
-tree
-> >   * exists.
-> >   */
-> > -struct worktree *get_linked_worktree(const char *id);
-> > +struct worktree *get_linked_worktree(const char *id,
-> > +				     int skip_reading_head);
->=20
-> ... this now needs to help developers who may want to add new
-> callers what to pass in "skip_reading_head" and why.
->=20
-> We may indeed want to build this on top of the refstorage-extansion
-> thing, as it seems to be relatively close to completion.
+> Shouldn't that come from the series that wants .compat_hash_algo in
+> the repo_fmt structure, whichever it is, not added by an evil merge?
 
-Fair enough. I'll wait for the refstorage extension topic to hit `next`
-or `master` first so as to not build deep dependency chains when things
-may still move around. I don't mind waiting another one or two weeks,
-especially during holidays where things are moving slower anyway.
+Well, the above code is newly added by my series to ensure that
+`init_db()` results in a properly initialized repo upon return. So the
+compat hash algo series cannot yet call `repo_set_compat_hash_algo()`
+because the code site doesn't exist, whereas my series cannot yet add
+the call because there is no compat hash algo yet.
 
-> Thanks (and a happy new year).
-
-Thanks, the same to you, too.
+So depending on which series lands first we'll either have to adapt the
+respective other series or do an evil merge.
 
 Patrick
 
---DAAibA34WtQM1XPf
+--0eKy0S9alMUXIc9d
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWN0y4ACgkQVbJhu7ck
-PpS1Tw/+JgTkZqkXo/uUV4meEj5lSejsoo8Iq8g3PnH8VQjljSlGuunfm/IVTsKe
-Xz7UJHYtZWcD4Etdm2GGRaahDliHLaZ6cVknTOXQhr9jcnNJ/F+OhuPveOPyj/8e
-SAGW5bOHlyc1yD7arFTPJDuay0kr57BdBqRH5DUg6twN9+9o28m5QQtvcuSPI8wl
-aXcYgZrrBPyHDAwLwJkZ5EXsJZ9GUe74Q/5K2nuX1eY8XsyNfp2VTopIoPsflCuv
-GWp3s4z3Sl/f+MVA0uAYwPvx5eO6llYcONFx85DY70btDFgpRN1isLVNPJpqnNDj
-WTMKV9x+y1+tkgfYZTT4H2hMVGCl4qix0a4Fel8+qEq8p4FoK73kQMiVrC2ipT48
-S8FUc8uOEhC4suu18d5vvGyCcm5h8OiNv36B6kOADGMiI6GPbpKVB+cOAVEh9uch
-ON8oj8ZJq9rHBfc3YFVItGw6anKbDL8pB/c6LQK85qg8TJZd8HasISKphPTo/V+7
-AddL2OowFUo3ECDKea2XuyaEZMiAPmnq8lYjlRe5Q/qgXDhRPpj1WyHl9IPmYegS
-mi78Yp2tJIubvWhP5x0awgXkOubrQZ9uctydmyywGckD3w5xNhy0/VhzpiEJHopb
-naxHgeGlJMYdFPtV1U1r6QiYXu9W6mu2bcEa7Rr1SVjymttWbNY=
-=y0Vl
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWN1DIACgkQVbJhu7ck
+PpSLXQ/+OcMKov5cpkuJ4slx5nhTl6XMjDg7syi5ivqRK4pRCaA7WkqtjriLmUZb
+mt1ooiF+94lnXc6O/mblFnvxeBf5dcyYldk7+5HrMO5tLaSTegjb9UaPAnJHQ7T2
+2VcVafUuZo1O1Lk00pU4xOf8dyLRGyDjRqkjdQF2YtikcxviZUGt1xa40uI3TY6T
+WlDrWsSBUZv8v4qPdAnc6xAkIAa0ur4VnedGbSb9CGuYqc/IYIRAq2pa2md2skTb
+Anqz1ua8f6u8u1VwIC23q7DH+V3zTNlslsrJJO72gbauhqQYgFnifCTWmhE4DxWv
+iI2K8P3EU2WEx5HUC68DPcvWdGDvZ/AmRDRNbqOM5IFVOPnOGvOljGg389afIwlO
+lJyd448VF8w5Ma+BF+ZyBkdCzt+VqLJIS8deby2MDaCTOFjoDhEqD4ZD13FNO9I2
+6MHJww32BIGF2t0GPmqN6CRTKaq7aRJVWCfZQFOQ2o/rEb6uH+JJNz/iayhFe4IV
+QlGYh/Hh+d8TdVPHepPd0wUglHIZT1LC9ERZoiJ8443Tq4DXOlrI6Wd7BP8BHRMi
+df+gBhCO+iiJX3w6pNCSDQruFGK7fSA7V8sEZ65/Ya4KujyW4XHemUGrm7QmF2Vt
+Fji7w/dRTW4LCjj6cxBZabiJ4oRKeTGj7ZoLvH+noz2S8iFAU0o=
+=GBbB
 -----END PGP SIGNATURE-----
 
---DAAibA34WtQM1XPf--
+--0eKy0S9alMUXIc9d--
