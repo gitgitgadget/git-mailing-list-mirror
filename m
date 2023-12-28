@@ -1,50 +1,27 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 022D7F4EC
-	for <git@vger.kernel.org>; Thu, 28 Dec 2023 15:10:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50706F4F6
+	for <git@vger.kernel.org>; Thu, 28 Dec 2023 15:59:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iee.email
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iee.email
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eU+RxptP"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-40d60a96533so13311495e9.1
-        for <git@vger.kernel.org>; Thu, 28 Dec 2023 07:10:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1703776225; x=1704381025; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=HIoGKp43y97ZuUQoX5PVlnUYAZlsMmw4ROoggLoFWTA=;
-        b=eU+RxptPhCPaJaZYKHp2yqqoZYzsM3dXGFEHa9k14nFeEGtL0baALn9oWv8VE9aE7N
-         N/92yxgDaPtdrmjeRGGo8Bo440TMGqqGJbb2zsqs2DRwWPYEyFCBDeRKlb52R+Cya9cT
-         D4zQMq5baXHDtcBb8B00+l8HYRWxL2dxiMm+p7SFwCRgqJf6a89Om3ZQUOKzOYTYfpJd
-         ercZbaumcxJaI0rm+aEXg12yLV7lPj+/yGpYW+raqtQxzpkT1BTlCeyr1KIrni8khimg
-         47JEPMKn8owh4Wb3YKWBfvMnBfB4zRb41Pa/bBt0Q4NMOUQJvrCdirOGCjKStxnn3980
-         oWeA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703776225; x=1704381025;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=HIoGKp43y97ZuUQoX5PVlnUYAZlsMmw4ROoggLoFWTA=;
-        b=AU0XH4c1AV0hSWbDJ0Sl+JhhqBJMClT5wkd8xwbdS3msV2F8TTSk2M859OBUuNr75w
-         Dr1SaWmn9kOqLxtuGZmOJClUXS5PoZYnJF0jutPLdEHW+j3wp+kQzkeLZ9NhhKLg5NZS
-         Z4R1yPdJKhvzt6TU+ihRNygDgNxACxCpBseUerY1yMWW6oXtTQmnxpmElPlv3YsaseGg
-         sgWAf6Pq+u8CGSW8N/tUmVRXbmAY7/VhXnFlPRSWceQa9fipJWoORCiIkr3YqZ1WiCXt
-         6EzSu9uqzYNFWU9IdrZTe6+pdJ3sVDY/y9xFVHv7lTa50aaBS1oY2Sm0gUY83v84tVeM
-         JAsg==
-X-Gm-Message-State: AOJu0YzvPNoKCY0g0gA7QDG+5BhIK7kiEvz8YPCUJpIm+TlRAKxSg9VN
-	8GojM/nS6i9PZqzrBmVjHC8=
-X-Google-Smtp-Source: AGHT+IEFAEVrD7Duf172IIbsbPn4CDNbQKt8+egtFGAaQy0Z9SeTQxihanipMYyLih9MoerPpE+gDg==
-X-Received: by 2002:a05:600c:3d8d:b0:40d:5575:a18d with SMTP id bi13-20020a05600c3d8d00b0040d5575a18dmr3654863wmb.59.1703776224941;
-        Thu, 28 Dec 2023 07:10:24 -0800 (PST)
-Received: from [192.168.1.212] ([84.64.64.237])
-        by smtp.gmail.com with ESMTPSA id l4-20020a05600c1d0400b0040d3276ba19sm27821876wms.25.2023.12.28.07.10.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 28 Dec 2023 07:10:23 -0800 (PST)
-Message-ID: <9aad15c8-8d3b-475b-bd44-5d24121cb793@gmail.com>
-Date: Thu, 28 Dec 2023 15:10:22 +0000
+	dkim=pass (1024-bit key) header.d=iee.email header.i=@iee.email header.b="QIDzT/Az"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=iee.email;
+	s=2023082200; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:To:Subject:MIME-Version:Date:Message-ID:Reply-To:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID; bh=45glwtULkTbB/HlGGF4VwAfVKm+TpOG9AQip13j2+LE=; b=QIDzT/
+	AzG6IyqT0fi8bK3+kLlJU2d0Lp3A/LFiRg7BPksISgcGczWHhTnrXuvGj0xo0KN+B3CZZCZwL/NOa
+	VLFLxp1Svt+wuXW5PZjqEMXzS6p9VNh1yhgPVIT9rd7fQjVC8g0eihdZgr66642xrOm8VfG9CMFUz
+	PhZ2w/zrfTM=;
+Received: from host-92-26-4-33.as13285.net ([92.26.4.33] helo=[192.168.1.112])
+	by smtp.hosts.co.uk with esmtpa (Exim)
+	(envelope-from <philipoakley@iee.email>)
+	id 1rIsOG-00087j-Ec;
+	Thu, 28 Dec 2023 15:33:45 +0000
+Message-ID: <0438051f-7943-46df-bea7-7b790cddd72b@iee.email>
+Date: Thu, 28 Dec 2023 15:33:43 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -52,134 +29,129 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] mem-pool: fix big allocations
-Content-Language: en-US
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
- Git List <git@vger.kernel.org>
-Cc: Jameson Miller <jamill@microsoft.com>
-References: <fa89d269-1a23-4ed6-bebc-30c0b629f444@web.de>
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <fa89d269-1a23-4ed6-bebc-30c0b629f444@web.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: Git Rename Detection Bug
+Content-Language: en-GB
+To: Elijah Newren <newren@gmail.com>
+Cc: Jeremy Pridmore <jpridmore@rdt.co.uk>,
+ "git@vger.kernel.org" <git@vger.kernel.org>,
+ Paul Baumgartner <pbaumgartner@rdt.co.uk>
+References: <LO6P265MB6736043BE8FB607DB671D21EFAAAA@LO6P265MB6736.GBRP265.PROD.OUTLOOK.COM>
+ <CABPp-BHYaxa7QoXabM=7hW-93hQLK-=KayGtDHtWxxdAnJCcJw@mail.gmail.com>
+ <LO6P265MB6736F5F9E8368A9DE95D294FFAA9A@LO6P265MB6736.GBRP265.PROD.OUTLOOK.COM>
+ <CABPp-BHEX+SyophEfgRqDbNdrAS3=bptt_cKzHLBSutnBAxexw@mail.gmail.com>
+ <990ab7d5-e29a-4766-b112-c8908a7ed196@iee.email>
+ <CABPp-BEdSGBt7DCrJCmOtG+RgZ2F3fNZQJ91PjZQxNa-ShKf8g@mail.gmail.com>
+From: Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <CABPp-BEdSGBt7DCrJCmOtG+RgZ2F3fNZQJ91PjZQxNa-ShKf8g@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Hi René
+Hi Elijah,
+Many thanks.. personal notes in-line.
 
-On 21/12/2023 23:13, René Scharfe wrote:
-> +#define check_ptr(a, op, b) check_int(((a) op (b)), ==, 1)
-> [...]
-> +static void t_calloc_100(struct mem_pool *pool)
-> +{
-> +	size_t size = 100;
-> +	char *buffer = mem_pool_calloc(pool, 1, size);
-> +	for (size_t i = 0; i < size; i++)
-> +		check_int(buffer[i], ==, 0);
-> +	if (!check_ptr(pool->mp_block, !=, NULL))
-> +		return;
-> +	check_ptr(pool->mp_block->next_free, <=, pool->mp_block->end);
-> +	check_ptr(pool->mp_block->next_free, !=, NULL);
-> +	check_ptr(pool->mp_block->end, !=, NULL);
-> +}
+On 24/12/2023 07:46, Elijah Newren wrote:
+> Hi Philip,
+> 
+> Sorry for the late reply; I somehow missed this earlier.
+> 
+> On Wed, Nov 15, 2023 at 8:51 AM Philip Oakley <philipoakley@iee.email> wrote:
+>>
+>> Hi Elijah,
+>>
+>> On 11/11/2023 05:46, Elijah Newren wrote:
+>>> * filename similarity is extraordinarily expensive compared to exact
+>>> renames, and if not carefully handled, can sometimes rival the cost of
+>>> file content similarity computations given our spanhash
+>>> representations.
+>>
+>> I've not heard of spanhash representation before. Any references or
+>> further reading?
+> 
+> You can find more in diffcore-delta.c, especially the big comment near
+> the top of the file.
 
-It's great to see the unit test framework being used here. I wonder
-though if it would be simpler just to use
++1
 
-	check(ptr != NULL)
+>         But here's a short explanation of spanhashes:
+>   * Split files into chunks delimited either by LF or 64 bytes,
+> whichever comes first.
 
-as I'm not sure what the check_ptr() macro adds. The diff at the end of
-this email shows a possible implementation of a check_ptr() macro for
-the unit test library. I'm wary of adding it though because I'm not sure
-printing the pointer values is actually very useful most of the
-time. I'm also concerned that the rules around pointer arithmetic and
-comparisons mean that many pointer tests such as
+neat
 
-     check_ptr(pool->mp_block->next_free, <=, pool->mp_block->end);
 
-will be undefined if they fail. The documentation for check_ptr() below
-tries to illustrate that concern. If the compiler can prove that a check
-is undefined when that check fails it is at liberty to hard code the
-test as passing. In practice I think most failing pointer comparisons
-would fall into the category of "this is undefined but the compiler
-can't prove it" but that doesn't really make me any happier.
+>   * Hash every chunk into an integer between 0 and 107926
 
-Best Wishes
+as per the comment, this is 1 less than a nice prime 107927 that fits
+17bits.
+Some discussions at
+https://lore.kernel.org/git/7vwtezt202.fsf@assigned-by-dhcp.cox.net/ and
+surrounding  messages.
 
-Phillip
+The hash is very similar to a CRC, a rotating 64bit value, using 7 bit
+shifts and a 8bit char addition, then reduced to a hash computed at ~#L157
 
----- >8 ----
-diff --git a/t/unit-tests/test-lib.h b/t/unit-tests/test-lib.h
-index a8f07ae0b7..ecd1fce17d 100644
---- a/t/unit-tests/test-lib.h
-+++ b/t/unit-tests/test-lib.h
-@@ -99,6 +99,39 @@ int check_int_loc(const char *loc, const char *check, int ok,
-  int check_uint_loc(const char *loc, const char *check, int ok,
-  		   uintmax_t a, uintmax_t b);
-  
-+/*
-+ * Compare two pointers. Prints a message with the two values if the
-+ * comparison fails. NB this is not thread safe.
-+ *
-+ * Use this with care. The rules around pointer arithmetic and comparison
-+ * in C are quite strict and violating them results in undefined behavior
-+ * To avoid a failing comparison resulting undefined behavior we compare
-+ * the integer value of the pointers. While this avoids undefined
-+ * behavior in the comparison in many cases a failing test will be the
-+ * result of creating an invalid pointer in a way that violates the
-+ * rules on pointer arithmetic. For example if `start` and `end` are
-+ * pointers to the beginning and end of an allocation and `offset` is an
-+ * integer then
-+ *
-+ *     check_ptr(start + offset, <=, end)
-+ *
-+ * is undefined when `offset` is larger than `end - start`. Rewriting the
-+ * comparison as
-+ *
-+ *     check_uint(offset, <=, end - start)
-+ *
-+ * avoids undefined behavior when offset is too large, but is still
-+ * undefined if there is a bug that means `start` and `end` do not point
-+ * to the same allocation.
-+ */
-+#define check_ptr(a, op, b)						\
-+	(test__tmp[0].p = (a), test__tmp[1].p = (b),			\
-+	 check_ptr_loc(TEST_LOCATION(), #a" "#op" "#b,			\
-+		       (uintptr_t)test__tmp[0].p op (uintptr_t)test__tmp[1].p,	\
-+			test__tmp[0].p, test__tmp[1].p))
-+
-+int check_ptr_loc(const char *loc, const char *check, int ok, void *a, void *b);
-+
-  /*
-   * Compare two chars. Prints a message with the two values if the
-   * comparison fails. NB this is not thread safe.
-@@ -133,6 +166,7 @@ int check_str_loc(const char *loc, const char *check,
-  #define TEST__MAKE_LOCATION(line) __FILE__ ":" TEST__STR(line)
-  
-  union test__tmp {
-+	void *p;
-  	intmax_t i;
-  	uintmax_t u;
-  	char c;
-diff --git a/t/unit-tests/test-lib.c b/t/unit-tests/test-lib.c
-index 7bf9dfdb95..cb757edbd8 100644
---- a/t/unit-tests/test-lib.c
-+++ b/t/unit-tests/test-lib.c
-@@ -311,6 +311,18 @@ int check_uint_loc(const char *loc, const char *check, int ok,
-  	return ret;
-  }
-  
-+int check_ptr_loc(const char *loc, const char *check, int ok, void *a, void *b)
-+{
-+	int ret = test_assert(loc, check, ok);
-+
-+	if (!ret) {
-+		test_msg("   left: %p", a);
-+		test_msg("  right: %p", b);
-+	}
-+
-+	return ret;
-+}
-+
-  static void print_one_char(char ch, char quote)
-  {
-  	if ((unsigned char)ch < 0x20u || ch == 0x7f) {
+>   * Keep a character count for each of those integers as well (thus if
+> a line has N characters, but appears twice in the file, the associated
+> count for that integer will be 2N).
+>   * A "spanhash" is the combination of the integer that a chunk (or
+> span) hashes to, plus the count associated with it.
+>   * The list/array of spanhashes for a file (i.e. the list/array of
+> integers and character counts) is used to compare one file to another.
+
+I was surprised to see that I'd been in the area at #L162 ;-)
+
+Thank you for the useful summary.
+
+
+> 
+> Now, why do I claim that comparison of filenames can rival cost of
+> file content similarity?  Well, in a monorepo of interest, the median
+> sized file is named something close to
+> "modules/client-resources/src/main/resources/buttons/smallTriangleBlackRight.png"
+> and is 2875 bytes.  As a png, all its chunks are probably the full 64
+> characters, which works out to about 45 chunks (assuming the 64-byte
+> chunks are different from each other).  The filename is 79 characters.
+> So, for this case, 45 pairs of integers vs 79 characters.  So, the
+> comparison cost is roughly the same order of magnitude.
+> (Yes, creating the spanhashes is a heavy overhead; however, we only
+> initialize it once and then do N comparisons of each spanhash to the
+> other spanhashes.  And we'd be doing N comparisons of each filename to
+> other filenames, so the overhead of creating the spanhashes can be
+> overlooked if your merge has enough files modified on both sides of
+> history.)
+
+Nice point about the hashes only being computed once.
+
+> 
+> Yes, this particular repository is a case I randomly picked that you
+> can argue is special.  But rather than look at the particular example,
+> I think it's interesting to check how the spanhash size vs. filename
+> size scale with repository size.  From my experience: (1) I don't
+> think the median-sized file varies all that much between small and big
+> repositories; every time I check a repo the median size seems to be
+> order of a few thousand bytes, regardless of whether the repository
+> I'm looking at is tiny or huge, (2) while small repositories often
+> have much shorter filenames, big repositories often will have
+> filenames even longer than my example; length of filename tends to
+> grow with repository size from deep directory nestings.  So, between
+> these two facts, I'd expect the filename comparison costs to grow
+> relative to file content comparison costs, when considering only
+> median-sized files being modified.  And since it's common to have
+> merges or rebases or diffs where only approximately-median-sized files
+> are involved, I think this is relevant to look at.  Finally, since I
+> already had an example that showed the cost likely roughly comparable
+> for a random repository of interest, and it's not even all that big a
+> repository compared to many out there, I think the combination
+> motivates pretty well my claim that filename similarity costs _could_
+> rival file content similarity costs if one wasn't careful.
+> 
+> I don't have a rigorous proof here.  And, in fact, I ended up doing
+> this rough back-of-the-envelope analysis _after_ implementing some
+> filename similarity comparison ideas and seeing performance degrade
+> badly, and wondering why it made such a difference.  I don't know if I
+> ever got exact numbers, but I certainly didn't record them.  This
+> rough analysis, though, was what made me realize that I needed to be
+> careful with any such added filename comparisons, though, and is why
+> I'm leery of adding more.
+
+Thanks again.
