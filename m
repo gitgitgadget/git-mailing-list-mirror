@@ -1,106 +1,154 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D160B101E1
-	for <git@vger.kernel.org>; Thu, 28 Dec 2023 19:36:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F29101ED
+	for <git@vger.kernel.org>; Thu, 28 Dec 2023 19:57:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BbnxkvG/"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-40d5aefcc2fso23226495e9.0
-        for <git@vger.kernel.org>; Thu, 28 Dec 2023 11:36:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1703792192; x=1704396992; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=vS3LtMndWuzJsPtpvgXXbnqnTk1PvZGEWMTy+HZUGRc=;
-        b=BbnxkvG/qDnuUKOpzAOYy0f/mobSrjILSBtPLg4k6wH4Anfw6PS7k79PPgWZAE1yD/
-         5n2uVKnisQAeT+Tnk8tTMVxuXuRhktCuUjTKaLarqm1rumuzlppf/PNKXj8h17s78scw
-         +en9H8yB3JaP1KQhrsI17Mll75HsCFQ9zeercc7tyGzjkKzu1Jd69fBhS9IjNxXaEeFv
-         VwzRZiBQBq+0pnN2D7gdSwqZHt6mxq2SJcLRwOcD4BrEpgAEtMwdy+SHGDQebkUdwraS
-         S8/G2tgGwEFGCZBg24f0+f5o4OY5qQmIPpc+W1PkKbPRqDYz/cSSovl0J530kR1uJZhm
-         30FA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703792192; x=1704396992;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=vS3LtMndWuzJsPtpvgXXbnqnTk1PvZGEWMTy+HZUGRc=;
-        b=flF8pTnsvFJQxLBilxd724MQLIEpdorAFlr5NYtDgFjUfghsYL1g09dhsB5WAn/MWi
-         Ug4EUkMANOWatQ13RYyiknAK9g/IM9D+kO5tlnaEN87UQSxxMzU/KwrQVlobj2fXv6m0
-         HWYjPhOu+4WurHHu9N1+MXcPxRxdkncGxfyuBB2wOCVH/cPoWurDI5DGl//L7/mZX3aN
-         UhqC9i6HyNYTQR7ROICimZt1AwO+VcDN1NIZGp850qrmR+zlTJigh8WhoQiqL+s41wU4
-         JReQvKCIcwm2m2GtRKzL+iVb9bJw/mayoUKy/MgQFklV11k5jp2WvJTIhjy/Q5Gft3xa
-         HLkA==
-X-Gm-Message-State: AOJu0Yxk/fB/1uqBYIHR7rmtyNWjWI4d8VNXwhMF/SczRcQtaa1AIc3X
-	1oGvx4kFa6a66y2H5Z0YaFY=
-X-Google-Smtp-Source: AGHT+IGMygqncuOn9uSXvqldeJqLPXCYywZa59OBNW773uWV6dliZGuEEnJx8JYdtFIBPL3zgcnerA==
-X-Received: by 2002:a05:600c:21c3:b0:40c:32bf:20f with SMTP id x3-20020a05600c21c300b0040c32bf020fmr5503397wmj.147.1703792191913;
-        Thu, 28 Dec 2023 11:36:31 -0800 (PST)
-Received: from [192.168.1.212] ([84.64.64.237])
-        by smtp.gmail.com with ESMTPSA id p35-20020a05600c1da300b0040b360cc65csm29274595wms.0.2023.12.28.11.36.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 28 Dec 2023 11:36:31 -0800 (PST)
-Message-ID: <9bafdbfe-f451-43b1-806d-be3d70e21892@gmail.com>
-Date: Thu, 28 Dec 2023 19:36:31 +0000
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nyPg/K+M";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DInPeMjs"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.west.internal (Postfix) with ESMTP id 9213832009F4;
+	Thu, 28 Dec 2023 14:57:45 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute5.internal (MEProxy); Thu, 28 Dec 2023 14:57:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1703793465; x=1703879865; bh=ngzNmE/jmY
+	69bS8VK7dcPGJrqukLj0NIho55Syiobe4=; b=nyPg/K+Me2HaD4xutXMGnMcjmL
+	KF7Hx1S3Gkz8IH9oo0cQ62stHa1J+RzMXtYGhn0mDKm3prtKKyuRP3cdm7mpzjtk
+	lBGrJUrwQ5T0YokjCCD7BxxRzLy1Qkr+UXPhQWzSDyo3KCS6A45foaa0aMk3urdi
+	IgWpsduz7S97ZvZ8BCMDEaEPAGjjW2YUtuLE+dFojYN63y58OhhqD/GP+9Xjfhgw
+	QFc1aJXyDq3kSS14e28fIDsEbJEm8ZoNbvD2yHPA3wd3qhACy/FUraU+pcGBGWn9
+	6x+SzjuebLv4NtBmhprzh4n8MWA8qqn1h8ZgfKIa9YBiW6Cx6sY3p24TsApQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1703793465; x=1703879865; bh=ngzNmE/jmY69bS8VK7dcPGJrqukL
+	j0NIho55Syiobe4=; b=DInPeMjs8WlkzSgizxxlSmXMe9aaZ6G6/HOeUlfW7pYb
+	NGlVSE8cKtQi425+1uKRev8JrvqOAQRL1A8F4tKa8H5icBO5ex4fsxcKlQhfnJfw
+	8LAW7oEnJPn/h192HFhMH69fIXQB168roNyzXiCLQ/p5krM9ulg5izLe1vDs2rpg
+	6kAAEwnpb40tTsdldMboX9mpho0++V3WFE1tyecgkpMACJRjGf+Bd6UQvTVG7lDO
+	aRMDquiD2bSAhsxQSeP/Li0rd1X+0+qIRakt1kZaPtLP6DOvwxNVXWEpUAiB+u3V
+	wgc5rUYKQ6SwZRxz52Er1ejjf50LAwfUrP8TvOIDGw==
+X-ME-Sender: <xms:ONONZYEDyz4djHCSHzhw_LtPj2blYYjQeiSspNYQ5yptDbgiFpje7Q>
+    <xme:ONONZRWAeIK8hVDDBKkuL0jEtLeO_mR2rus7YFY0IcfloJkkKKdNQLgblO6RrYonL
+    8NNCzOT5sM43wzzsw>
+X-ME-Received: <xmr:ONONZSK_HRFb_nfdU0jAWYrcenKdCl57Lq8TPJSbBtZEdwCiygGRSG_E421NzSoW7tcVPheOV6HlZWe13HFth1zCvebqBH52ngtJvu30KNENng>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdefuddgudefvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
+    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
+    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeige
+    ekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:ONONZaFZnvc25IpeX-4UYYBEqb7LB5mc5xNHIhlfD4Wvd7iF7nCLAw>
+    <xmx:ONONZeWToi2_uXz5ibFfn-6QIptBnpsKWvx3ukaL_w3wKE4tV1sKbA>
+    <xmx:ONONZdNSG-15Vu0SFz--aMfITpI7A8iKA1YxDaOK0ogLV3RlDsdCew>
+    <xmx:OdONZXfewpSz4LJ90a8ZXGHINfm3ILofYN3cSSUGntdfmYxyd5rDig>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 28 Dec 2023 14:57:44 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 39ab6617 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 28 Dec 2023 19:55:26 +0000 (UTC)
+Date: Thu, 28 Dec 2023 20:57:39 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 0/6] worktree: initialize refdb via ref backends
+Message-ID: <ZY3TMy75mYzz0Pab@framework>
+References: <cover.1703754513.git.ps@pks.im>
+ <xmqqedf6gpt8.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: phillip.wood123@gmail.com
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2] mem-pool: fix big allocations
-Content-Language: en-US
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
- Git List <git@vger.kernel.org>
-Cc: Jameson Miller <jamill@microsoft.com>,
- Phillip Wood <phillip.wood@dunelm.org.uk>, Elijah Newren <newren@gmail.com>,
- Junio C Hamano <gitster@pobox.com>
-References: <fa89d269-1a23-4ed6-bebc-30c0b629f444@web.de>
- <1c39c0e7-05b2-4726-a90c-f78df4356a41@web.de>
-In-Reply-To: <1c39c0e7-05b2-4726-a90c-f78df4356a41@web.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="DAAibA34WtQM1XPf"
+Content-Disposition: inline
+In-Reply-To: <xmqqedf6gpt8.fsf@gitster.g>
 
-Hi René
 
-On 28/12/2023 19:19, René Scharfe wrote:
-> Interdiff against v1:
->    diff --git a/t/unit-tests/t-mem-pool.c b/t/unit-tests/t-mem-pool.c
->    index 2295779b0b..a0d57df761 100644
->    --- a/t/unit-tests/t-mem-pool.c
->    +++ b/t/unit-tests/t-mem-pool.c
->    @@ -1,8 +1,6 @@
->     #include "test-lib.h"
->     #include "mem-pool.h"
-> 
->    -#define check_ptr(a, op, b) check_int(((a) op (b)), ==, 1)
->    -
->     static void setup_static(void (*f)(struct mem_pool *), size_t block_alloc)
->     {
->     	struct mem_pool pool = { .block_alloc = block_alloc };
->    @@ -16,11 +14,10 @@ static void t_calloc_100(struct mem_pool *pool)
->     	char *buffer = mem_pool_calloc(pool, 1, size);
->     	for (size_t i = 0; i < size; i++)
->     		check_int(buffer[i], ==, 0);
->    -	if (!check_ptr(pool->mp_block, !=, NULL))
->    +	if (!check(pool->mp_block != NULL))
->     		return;
->    -	check_ptr(pool->mp_block->next_free, <=, pool->mp_block->end);
->    -	check_ptr(pool->mp_block->next_free, !=, NULL);
->    -	check_ptr(pool->mp_block->end, !=, NULL);
->    +	check(pool->mp_block->next_free != NULL);
->    +	check(pool->mp_block->end != NULL);
->     }
+--DAAibA34WtQM1XPf
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The changes to the unit tests look good to me (I haven't really looked 
-at the actual bug fix in the mem_pool code).
+On Thu, Dec 28, 2023 at 10:11:31AM -0800, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+>=20
+> > when initializing worktrees we manually create the on-disk data
+> > structures required for the ref backend in "worktree.c". This works just
+> > fine right now where we only have a single user-exposed ref backend, but
+> > it will become unwieldy once we have multiple ref backends. This patch
+> > series thus refactors how we initialize worktrees so that we can use
+> > `refs_init_db()` to initialize required files for us.
+> >
+> > This patch series conflicts with ps/refstorage-extension. The conflict
+> > can be solved as shown below. I'm happy to defer this patch series
+> > though until the topic has landed on `master` in case this causes
+> > issues.
+>=20
+> Resolution is not all that bad, but the change in function signature
+> means comments/explanations near both the caller and the callee of
+> the get_linked_worktree() function may need updating, I would think.
+> For example, ...
+>=20
+> > diff --git a/worktree.h b/worktree.h
+> > index 8a75691eac..f14784a2ff 100644
+> > --- a/worktree.h
+> > +++ b/worktree.h
+> > @@ -61,7 +61,8 @@ struct worktree *find_worktree(struct worktree **list,
+> >   * Look up the worktree corresponding to `id`, or NULL of no such work=
+tree
+> >   * exists.
+> >   */
+> > -struct worktree *get_linked_worktree(const char *id);
+> > +struct worktree *get_linked_worktree(const char *id,
+> > +				     int skip_reading_head);
+>=20
+> ... this now needs to help developers who may want to add new
+> callers what to pass in "skip_reading_head" and why.
+>=20
+> We may indeed want to build this on top of the refstorage-extansion
+> thing, as it seems to be relatively close to completion.
 
-Best Wishes
+Fair enough. I'll wait for the refstorage extension topic to hit `next`
+or `master` first so as to not build deep dependency chains when things
+may still move around. I don't mind waiting another one or two weeks,
+especially during holidays where things are moving slower anyway.
 
-Phillip
+> Thanks (and a happy new year).
+
+Thanks, the same to you, too.
+
+Patrick
+
+--DAAibA34WtQM1XPf
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWN0y4ACgkQVbJhu7ck
+PpS1Tw/+JgTkZqkXo/uUV4meEj5lSejsoo8Iq8g3PnH8VQjljSlGuunfm/IVTsKe
+Xz7UJHYtZWcD4Etdm2GGRaahDliHLaZ6cVknTOXQhr9jcnNJ/F+OhuPveOPyj/8e
+SAGW5bOHlyc1yD7arFTPJDuay0kr57BdBqRH5DUg6twN9+9o28m5QQtvcuSPI8wl
+aXcYgZrrBPyHDAwLwJkZ5EXsJZ9GUe74Q/5K2nuX1eY8XsyNfp2VTopIoPsflCuv
+GWp3s4z3Sl/f+MVA0uAYwPvx5eO6llYcONFx85DY70btDFgpRN1isLVNPJpqnNDj
+WTMKV9x+y1+tkgfYZTT4H2hMVGCl4qix0a4Fel8+qEq8p4FoK73kQMiVrC2ipT48
+S8FUc8uOEhC4suu18d5vvGyCcm5h8OiNv36B6kOADGMiI6GPbpKVB+cOAVEh9uch
+ON8oj8ZJq9rHBfc3YFVItGw6anKbDL8pB/c6LQK85qg8TJZd8HasISKphPTo/V+7
+AddL2OowFUo3ECDKea2XuyaEZMiAPmnq8lYjlRe5Q/qgXDhRPpj1WyHl9IPmYegS
+mi78Yp2tJIubvWhP5x0awgXkOubrQZ9uctydmyywGckD3w5xNhy0/VhzpiEJHopb
+naxHgeGlJMYdFPtV1U1r6QiYXu9W6mu2bcEa7Rr1SVjymttWbNY=
+=y0Vl
+-----END PGP SIGNATURE-----
+
+--DAAibA34WtQM1XPf--
