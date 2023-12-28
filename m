@@ -1,27 +1,29 @@
-Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+Received: from mout.web.de (mout.web.de [212.227.17.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50706F4F6
-	for <git@vger.kernel.org>; Thu, 28 Dec 2023 15:59:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iee.email
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iee.email
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C2C8F502
+	for <git@vger.kernel.org>; Thu, 28 Dec 2023 16:05:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iee.email header.i=@iee.email header.b="QIDzT/Az"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=iee.email;
-	s=2023082200; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:To:Subject:MIME-Version:Date:Message-ID:Reply-To:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID; bh=45glwtULkTbB/HlGGF4VwAfVKm+TpOG9AQip13j2+LE=; b=QIDzT/
-	AzG6IyqT0fi8bK3+kLlJU2d0Lp3A/LFiRg7BPksISgcGczWHhTnrXuvGj0xo0KN+B3CZZCZwL/NOa
-	VLFLxp1Svt+wuXW5PZjqEMXzS6p9VNh1yhgPVIT9rd7fQjVC8g0eihdZgr66642xrOm8VfG9CMFUz
-	PhZ2w/zrfTM=;
-Received: from host-92-26-4-33.as13285.net ([92.26.4.33] helo=[192.168.1.112])
-	by smtp.hosts.co.uk with esmtpa (Exim)
-	(envelope-from <philipoakley@iee.email>)
-	id 1rIsOG-00087j-Ec;
-	Thu, 28 Dec 2023 15:33:45 +0000
-Message-ID: <0438051f-7943-46df-bea7-7b790cddd72b@iee.email>
-Date: Thu, 28 Dec 2023 15:33:43 +0000
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="pKopoEh9"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+	t=1703779534; x=1704384334; i=l.s.r@web.de;
+	bh=GFYkV2XW0vx2zJCRX726ZiGURsWu+zuN5RHO0pgDiWE=;
+	h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
+	 In-Reply-To;
+	b=pKopoEh9TlQyMwGOacJ/3OlgR1fDnjaAm9MH0tvIHQJqPNqu8ezmIbBbWGDEACSQ
+	 wrq1kNeFKeNBxhZQ+w8SupwYagqMVPbeQv18g7Sk+Ah+D+6tc8QCKkv0bkgBjYqjK
+	 iFQbJvDl1ZXvy6rZUaMnEhPNRdPWZbgE+lL6H6UjNJmPZCWciNLW1eOdw3CVKU/uT
+	 BlS3WMEJW0BM/wrarzg/VN4qaHTDONCJE3jxC3piLQDoD5xE1VLqK5ocGXWIKDHen
+	 8rCMDj5qtFr1UEOMhfBcUpeUaTMdN5a9e5tOQJ7zFEtwQ7gXJhHa2jYOW6UgShnDr
+	 UR31/EAc79Ywxd9NaA==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([79.203.23.9]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MadzU-1qhtNE1wRW-00c3Qd; Thu, 28
+ Dec 2023 17:05:34 +0100
+Message-ID: <e01be0ec-a054-42a1-8abe-6891c04b59a2@web.de>
+Date: Thu, 28 Dec 2023 17:05:33 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -29,129 +31,108 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Git Rename Detection Bug
-Content-Language: en-GB
-To: Elijah Newren <newren@gmail.com>
-Cc: Jeremy Pridmore <jpridmore@rdt.co.uk>,
- "git@vger.kernel.org" <git@vger.kernel.org>,
- Paul Baumgartner <pbaumgartner@rdt.co.uk>
-References: <LO6P265MB6736043BE8FB607DB671D21EFAAAA@LO6P265MB6736.GBRP265.PROD.OUTLOOK.COM>
- <CABPp-BHYaxa7QoXabM=7hW-93hQLK-=KayGtDHtWxxdAnJCcJw@mail.gmail.com>
- <LO6P265MB6736F5F9E8368A9DE95D294FFAA9A@LO6P265MB6736.GBRP265.PROD.OUTLOOK.COM>
- <CABPp-BHEX+SyophEfgRqDbNdrAS3=bptt_cKzHLBSutnBAxexw@mail.gmail.com>
- <990ab7d5-e29a-4766-b112-c8908a7ed196@iee.email>
- <CABPp-BEdSGBt7DCrJCmOtG+RgZ2F3fNZQJ91PjZQxNa-ShKf8g@mail.gmail.com>
-From: Philip Oakley <philipoakley@iee.email>
-In-Reply-To: <CABPp-BEdSGBt7DCrJCmOtG+RgZ2F3fNZQJ91PjZQxNa-ShKf8g@mail.gmail.com>
+Subject: Re: [PATCH] Port helper/test-ctype.c to unit-tests/t-ctype.c
+Content-Language: en-US
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Christian Couder <christian.couder@gmail.com>,
+ Achu Luma <ach.lumap@gmail.com>, git@vger.kernel.org,
+ Christian Couder <chriscool@tuxfamily.org>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>,
+ Josh Steadmon <steadmon@google.com>
+References: <20231221231527.8130-1-ach.lumap@gmail.com>
+ <xmqqsf3ohkew.fsf@gitster.g>
+ <CAP8UFD1vC6=7ESx1w7S9Q9P0Bsc+c03wgHToNBaP+ivvm9BKBg@mail.gmail.com>
+ <f743b473-40f8-423d-bf5b-d42b92e5aa1b@web.de> <xmqqcyurky00.fsf@gitster.g>
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <xmqqcyurky00.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:tEzQI70cXRzoJ0W4POGkUaN36qYqW/cnfoilgB7qBIEZCl8s8Fp
+ SghiiU5STrPxBHjBuuBG/xmrh4jd9+3HAqF27tMKy94t+MHzbZf1Kwn46K3dQHv3F9LQmIx
+ z+PWi8+Itw2O32+RZvD5gQtMsNy5g4gJMZWDfL3jsusfFkn+/mXUneMjZR5d3qD+6J5d8Y1
+ AaU1v33Nn0Gn+XDOjLM5g==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:JoyU3aoMdoI=;3BWrvpr4qQdk0qj/Vz3J7wf7TOI
+ E3Td5ixun3c052KL6tMKUCilUwIb7+NtVvJkR8IcY3kTdtG+4RKHz0fabn13Y2/JAwUB+la6N
+ Ynrpx6+ni8TaBfJyBufLc7/SlDe8o/90gt5Re6tWnkTqkEf2xYyJpey1G5akfP2V1avlXbaab
+ TLcmFY38hKQw40WyeiamnKsQyzzsqwRGfY/p0SDBfFzuknCe4/X/EhXc5jjl1QMzINNq5n6cP
+ 2Ta2Ybb+Ujb/kq8iD9FAg1MwoM2MBtbE+GNfUw8NzGXsitpa0VvkjF99ekfo7IJoM1JoKQ7ir
+ r7YtiJvuhGGNKzW90measPrMKNOc44KRKet0tWH7YN/pHdK4lRQ+H8yjTWXR1KBol25rJM+uh
+ BXqnFlif5G2FuMdC98SE7R+SOjiaPtAcXz4K6g6MADaGVMQVZ3f8NSEO5B1+jdCcOdqHPZF5Q
+ DVSMcc3fk17XGG44iYSnBmEQWiKvfViwmm3zRQUF2qs9jal8pcNVqVQ/kYYaR/z2FO0hs0eBF
+ AILrjXBw9IIa94PHwolj8LPqJLd0TJnOuSuK435o9CqEUinw2Ov3kL3cad703mSJR9/z+tuIz
+ u/b6dGiaTd5ZIKJPioY4TG130pI8k+2pHhDGYpmZyWm3TFoxl7mTp+tZdkzsMdWE4swxHj9Zu
+ Y/yBVW8EWlqVvmz9Sf41js1Rz7F2tslvmInjoSTm6zUbC47HJSQjj3K4lFiUPYkit07tFdHqT
+ q4z5dVCqc30HVHKtFF1gmWf8mGR+6Aw9QQFFiZ06X3O4bB9D2jZZjWt0zln+eqF2uM5YX/8F2
+ sS1HdNr58kyeSB+TftOHeafDXiUC93yOC3StBgIepMLrmJqM0VPrDZiypGuojoaydgkT8oZuN
+ vW+UOPB6+03LKS4aLHYxi/ZL0XkIQLNVaLD+p8VagalnbfmTBBZL+l4I8SoXQ/cBO0hUFVYAQ
+ ACmyxQsN+xSO2rUmf0kN2mZ/uAs=
 
-Hi Elijah,
-Many thanks.. personal notes in-line.
-
-On 24/12/2023 07:46, Elijah Newren wrote:
-> Hi Philip,
-> 
-> Sorry for the late reply; I somehow missed this earlier.
-> 
-> On Wed, Nov 15, 2023 at 8:51 AM Philip Oakley <philipoakley@iee.email> wrote:
+Am 28.12.23 um 00:48 schrieb Junio C Hamano:
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>
+>>> Also it might not be a big issue here, but when the new unit test
+>>> framework was proposed, I commented on the fact that "left" and
+>>> "right" were perhaps a bit less explicit than "actual" and "expected".
 >>
->> Hi Elijah,
->>
->> On 11/11/2023 05:46, Elijah Newren wrote:
->>> * filename similarity is extraordinarily expensive compared to exact
->>> renames, and if not carefully handled, can sometimes rival the cost of
->>> file content similarity computations given our spanhash
->>> representations.
->>
->> I've not heard of spanhash representation before. Any references or
->> further reading?
-> 
-> You can find more in diffcore-delta.c, especially the big comment near
-> the top of the file.
+>> True.
+>> ...
+>> The added repetition is a bit grating.  With a bit of setup, loop
+>> unrolling and stringification you can retain the property of only havin=
+g
+>> to mention the class name once.  Demo patch below.
+>
+> Nice.
+>
+> This (and your mempool thing) being one of the early efforts to
+> adopt the unit-test framework outside the initial set of sample
+> tests, it is understandable that we might find what framework offers
+> is still lacking.  But at the same time, while the macro tricks
+> demonstrated here are all amusing to read and admire, it feels a bit
+> too much to expect that the test writers are willing to invent
+> something like these every time they want to test.
+>
+> Being a relatively faithful conversion of the original ctype tests,
+> with its thorough enumeration of test samples and expected output,
+> is what makes this test program require these macro tricks, and it
+> does not have much to do with the features (or lack thereof) of the
+> framework, I guess.
 
-+1
+*nod*
 
->         But here's a short explanation of spanhashes:
->   * Split files into chunks delimited either by LF or 64 bytes,
-> whichever comes first.
+>
+>> +struct ctype {
+>> +	const char *name;
+>> +	const char *expect;
+>> +	int actual[256];
+>> +};
+>> +
+>> +static void test_ctype(const struct ctype *class)
+>> +{
+>> +	for (int i =3D 0; i < 256; i++) {
+>> +		int expect =3D is_in(class->expect, i);
+>> +		int actual =3D class->actual[i];
+>> +		int res =3D test_assert(TEST_LOCATION(), class->name,
+>> +				      actual =3D=3D expect);
+>> +		if (!res)
+>> +			test_msg("%s classifies char %d (0x%02x) wrongly",
+>> +				 class->name, i, i);
+>> +	}
+>>  }
+>
+> Somehow, the "test_assert" does not seem to be adding much value
+> here (i.e. we can do "res =3D (actual =3D=3D expect)" there).  Is this
+> because we want to be able to report success, too?
+>
+>     ... goes and looks at test_assert() ...
+>
+> Ah, is it because we want to be able to "skip" (which pretends that
+> the assert() was satisified).  OK, but then the error reporting from
+> it is redundant with our own test_msg().
 
-neat
+True, the test_msg() emits the old message here, but it doesn't have to
+report that the check failed anymore, because test_assert() already
+covers that part.  It would only have to report the misclassified
+character and perhaps the expected result.
 
-
->   * Hash every chunk into an integer between 0 and 107926
-
-as per the comment, this is 1 less than a nice prime 107927 that fits
-17bits.
-Some discussions at
-https://lore.kernel.org/git/7vwtezt202.fsf@assigned-by-dhcp.cox.net/ and
-surrounding  messages.
-
-The hash is very similar to a CRC, a rotating 64bit value, using 7 bit
-shifts and a 8bit char addition, then reduced to a hash computed at ~#L157
-
->   * Keep a character count for each of those integers as well (thus if
-> a line has N characters, but appears twice in the file, the associated
-> count for that integer will be 2N).
->   * A "spanhash" is the combination of the integer that a chunk (or
-> span) hashes to, plus the count associated with it.
->   * The list/array of spanhashes for a file (i.e. the list/array of
-> integers and character counts) is used to compare one file to another.
-
-I was surprised to see that I'd been in the area at #L162 ;-)
-
-Thank you for the useful summary.
-
-
-> 
-> Now, why do I claim that comparison of filenames can rival cost of
-> file content similarity?  Well, in a monorepo of interest, the median
-> sized file is named something close to
-> "modules/client-resources/src/main/resources/buttons/smallTriangleBlackRight.png"
-> and is 2875 bytes.  As a png, all its chunks are probably the full 64
-> characters, which works out to about 45 chunks (assuming the 64-byte
-> chunks are different from each other).  The filename is 79 characters.
-> So, for this case, 45 pairs of integers vs 79 characters.  So, the
-> comparison cost is roughly the same order of magnitude.
-> (Yes, creating the spanhashes is a heavy overhead; however, we only
-> initialize it once and then do N comparisons of each spanhash to the
-> other spanhashes.  And we'd be doing N comparisons of each filename to
-> other filenames, so the overhead of creating the spanhashes can be
-> overlooked if your merge has enough files modified on both sides of
-> history.)
-
-Nice point about the hashes only being computed once.
-
-> 
-> Yes, this particular repository is a case I randomly picked that you
-> can argue is special.  But rather than look at the particular example,
-> I think it's interesting to check how the spanhash size vs. filename
-> size scale with repository size.  From my experience: (1) I don't
-> think the median-sized file varies all that much between small and big
-> repositories; every time I check a repo the median size seems to be
-> order of a few thousand bytes, regardless of whether the repository
-> I'm looking at is tiny or huge, (2) while small repositories often
-> have much shorter filenames, big repositories often will have
-> filenames even longer than my example; length of filename tends to
-> grow with repository size from deep directory nestings.  So, between
-> these two facts, I'd expect the filename comparison costs to grow
-> relative to file content comparison costs, when considering only
-> median-sized files being modified.  And since it's common to have
-> merges or rebases or diffs where only approximately-median-sized files
-> are involved, I think this is relevant to look at.  Finally, since I
-> already had an example that showed the cost likely roughly comparable
-> for a random repository of interest, and it's not even all that big a
-> repository compared to many out there, I think the combination
-> motivates pretty well my claim that filename similarity costs _could_
-> rival file content similarity costs if one wasn't careful.
-> 
-> I don't have a rigorous proof here.  And, in fact, I ended up doing
-> this rough back-of-the-envelope analysis _after_ implementing some
-> filename similarity comparison ideas and seeing performance degrade
-> badly, and wondering why it made such a difference.  I don't know if I
-> ever got exact numbers, but I certainly didn't record them.  This
-> rough analysis, though, was what made me realize that I needed to be
-> careful with any such added filename comparisons, though, and is why
-> I'm leery of adding more.
-
-Thanks again.
+Ren=C3=A9
