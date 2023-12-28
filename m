@@ -1,44 +1,44 @@
 Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2DE73C16
-	for <git@vger.kernel.org>; Thu, 28 Dec 2023 06:27:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98A4263C5
+	for <git@vger.kernel.org>; Thu, 28 Dec 2023 06:27:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="E0oPraUx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ufhg5GE1"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ubbrn7Za";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lWH1/1JI"
 Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id AF4AB5C010F;
-	Thu, 28 Dec 2023 01:27:39 -0500 (EST)
+	by mailout.nyi.internal (Postfix) with ESMTP id E4A065C010E;
+	Thu, 28 Dec 2023 01:27:43 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Thu, 28 Dec 2023 01:27:39 -0500
+  by compute2.internal (MEProxy); Thu, 28 Dec 2023 01:27:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1703744859; x=1703831259; bh=eOm8G2tJDF
-	3Dqla/n8CTufL1OF0PMSdiQhDl4GZAxoc=; b=E0oPraUxjqSU/PirfkCtF+Hvyf
-	MiZj1d2eLZ99ur9axZdq6Ox212W/S371PPlcLVUuRgCmiUCT4TmZtlFAbb0rZ1kp
-	4xNyT7GPT3m63ipwAYGQhYrMhFcnsbyTvFhc83uZVGPEXdzrzjMkDt8/bon/8xqo
-	kMZGGCvLh0EJlmn5GfGwOpc2rs+0ZYK3ShBvJ9AU7/Dk2sCb8TheWg+GrHJWQ4SD
-	fvjTN07JJaJBFLFgn8Zdlhzt3cV5WLYb/FgonNbcKvX1SGNWHzXjsnemoaX0d4l6
-	8+2VCB9y9Ej+xLaWDSLWROKLfNbGDIHBnuNv48KHLSxKZXB8032E3zAgRNEw==
+	:subject:to:to; s=fm2; t=1703744863; x=1703831263; bh=zMVDAjSy4+
+	GwA5SiHU6w4XlD+kYIrOWe6A88bZoeHtQ=; b=ubbrn7Za+2hPZMSFTmYfRcQ5Wv
+	IablxBZMSs9qOG56KDz59MTrAXleLPh2QrT5dV8jO7iCKWSnhkdXE+Ad67ZiZsPV
+	pAwOR7uhk68gfChm+U/dvdVELIwIMFYs0y9qW2ZpTdSDRfG0IEOhadwkCIUsrCog
+	uaGk4iRPk2fPRiEeSXoNEdS8/R0Q9tEnipi0LXcTHv7t2DDCQARL0z5JaMPScKdh
+	Z3g3KxUO684PZBsvOtbA5KVf+KHcanE/pR55n1DncOlZGIzWym+DxcGadzr24Tdr
+	ymxZyPq0D8+4DCYeGjbueDEnM8l52xLzWauge0jA3l47+sATo4ehLRxBBuLQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1703744859; x=1703831259; bh=eOm8G2tJDF3Dqla/n8CTufL1OF0P
-	MSdiQhDl4GZAxoc=; b=ufhg5GE1n1lO0Y0Pw5CnpKOcWMIncDbX5FIT2i7iURUm
-	wu72Bz5VEYBHEkTfHdTqeVwmQ9PHY3VuslwgSTx9qwy6F/Go5AqBT6f/DADDArTd
-	gQgCfaDxAYlSFv5SV+itixNnH5+h2HMyPdWySD4BM30awit7eB3izJN68DmgYHMj
-	3kIEVYTBs6KPfTK6gkNfZH5wvXmRC9yYeHRd1RPdBnIvfJKMECm28FSUcIe93Kqi
-	S1lJuije3r8CQPxuzvsOexMqujq+I31Qfy5sP6LXX8/HAQroqM4Nj1dF0VtVduSB
-	GwujLWC9PysDcHcUhTC303/yb8RfiZM6ryd7sA+oMg==
-X-ME-Sender: <xms:WxWNZckF_88pSwsoJuHjzNAKg7f1qReK9fTV9x0Pad3YxUzztZxa4A>
-    <xme:WxWNZb0oCppJJTqKK4fgRk8CVDgNCV7EiJ_zNBZyFCcW126NmVQBbxI9P1BvvkOQ8
-    mKjSjoHglj0lYDnHw>
-X-ME-Received: <xmr:WxWNZap-iSJ8OUjePDNK2Eq5GCdgtgYKC3z5lzZmZes24hpSGvMiPnKfqYwpSM1kvqnHFwdKy-yc8sEDwrakcrGNK36M9UwMkmZi4GEzaFzeqQ>
+	fm2; t=1703744863; x=1703831263; bh=zMVDAjSy4+GwA5SiHU6w4XlD+kYI
+	rOWe6A88bZoeHtQ=; b=lWH1/1JI1Ijz8l/TRCXTFDwK9CZzPqOZ2uqW1hRD31Jl
+	G62RPen+0Yh6KuPVYc2ayp/WWdvmO2ojZvl+c/Uk56m6l4EJDIcyFVX8AGtKlP5m
+	qpvtW4ppvoc1UIodDleMInWutdG5jDhlv/29yT+FD8c9Um2C8h5BafQzpEek6OZU
+	HCeA55BRrrwOkAPwFlcUUalcGFPYMJ4IyxWeCTSkWOfxXAYC+2SuPgXWMdZzBg+l
+	/e5zSSgSlC+1LPhznrrQ5EC/in2zjPhllYKx/YmpCtAjzgi/XRLrXNWR+EIpCEBY
+	baUCw+5eGN85/NC8cI2TDVxpZutVMfUMyt7zfaU68w==
+X-ME-Sender: <xms:XxWNZaBz9V0d5ADXFkgD48voUt6vz67cq3zco-tStlIti1KQGG880g>
+    <xme:XxWNZUgX2iYT6dZF5tPlsi9GVNFUVzXHeobkywuV0DJj2gMuhyB8U4buH-oq2M1ge
+    hc1YC8rcpSGmFwIUQ>
+X-ME-Received: <xmr:XxWNZdnxhlnO613qTNHxPvl3kDohwRXAvsNUYrkS1zjxXU1NZax_FdUpPxMgrpPs-pIL0OKAQ0oYV2hSHoiGtk9Cbh--trOm9xmmGtZ9AaTfqw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeftddgleejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
@@ -46,24 +46,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeftddgleejucetufdoteggod
     phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
     eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
     rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:WxWNZYkW87GMxVumCmyif-tiJ8UdsTkPmEnkTFM-FJAFykl3u7pR1Q>
-    <xmx:WxWNZa1yT_sBjEg2VOOhkCQsxzrSH8QwtaIpXJ9wa2hfvB2multx0w>
-    <xmx:WxWNZfvdPaCp51BDw5L4SBfhpsiLNfVW3zfX4nUNWXpAYEV1naGniw>
-    <xmx:WxWNZf8JeV8nrji8qkxkTgOTcAPhsbGLlxwAjyoi6e98iVMG5Er0iw>
+X-ME-Proxy: <xmx:XxWNZYxbrcL7cXpE298kyAlfRSD0dQsKnHDWXzZNKGl02jDHuhhQ8A>
+    <xmx:XxWNZfSGY626rd0Kn3B8utjoa1TUtuaS5X9Py5mTkqQpXRaoJqFvyw>
+    <xmx:XxWNZTZKdsAiZ9Frg9X2GWySbrHRsg3fhslyl0Rp1SWzU8KXh7D-Ig>
+    <xmx:XxWNZWLMxw7zHxVkaehr9L9sKjNEn3kBFHAhWf6BhiVL98Elhhvcvw>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 28 Dec 2023 01:27:38 -0500 (EST)
+ 28 Dec 2023 01:27:42 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 5108d6a5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 28 Dec 2023 06:25:25 +0000 (UTC)
-Date: Thu, 28 Dec 2023 07:27:37 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 9fd2e268 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 28 Dec 2023 06:25:29 +0000 (UTC)
+Date: Thu, 28 Dec 2023 07:27:41 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Han-Wen Nienhuys <hanwenn@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 1/8] reftable/stack: do not overwrite errors when
- compacting
-Message-ID: <22a57020c66551f1828b56cfccda97f1c77117dc.1703743174.git.ps@pks.im>
+Subject: [PATCH v2 2/8] reftable/stack: do not auto-compact twice in
+ `reftable_stack_add()`
+Message-ID: <a08f7efc992538e88803b157c142a55df65a1a81.1703743174.git.ps@pks.im>
 References: <cover.1703063544.git.ps@pks.im>
  <cover.1703743174.git.ps@pks.im>
 Precedence: bulk
@@ -73,108 +73,74 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="whdchsFdusjlG/S8"
+	protocol="application/pgp-signature"; boundary="gxJEY1oMf25UPscQ"
 Content-Disposition: inline
 In-Reply-To: <cover.1703743174.git.ps@pks.im>
 
 
---whdchsFdusjlG/S8
+--gxJEY1oMf25UPscQ
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-In order to compact multiple stacks we iterate through the merged ref
-and log records. When there is any error either when reading the records
-=66rom the old merged table or when writing the records to the new table
-then we break out of the respective loops. When breaking out of the loop
-for the ref records though the error code will be overwritten, which may
-cause us to inadvertently skip over bad ref records. In the worst case,
-this can lead to a compacted stack that is missing records.
+In 5c086453ff (reftable/stack: perform auto-compaction with
+transactional interface, 2023-12-11), we fixed a bug where the
+transactional interface to add changes to a reftable stack did not
+perform auto-compaction by calling `reftable_stack_auto_compact()` in
+`reftable_stack_addition_commit()`. While correct, this change may now
+cause us to perform auto-compaction twice in the non-transactional
+interface `reftable_stack_add()`:
 
-Fix the code by using `goto done` instead so that any potential error
-codes are properly returned to the caller.
+  - It performs auto-compaction by itself.
 
+  - It now transitively performs auto-compaction via the transactional
+    interface.
+
+Remove the first instance so that we only end up doing auto-compaction
+once.
+
+Reported-by: Han-Wen Nienhuys <hanwenn@gmail.com>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/stack.c | 20 ++++++++------------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+ reftable/stack.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
 diff --git a/reftable/stack.c b/reftable/stack.c
-index 16bab82063..8729508dc3 100644
+index 8729508dc3..7ffeb3ee10 100644
 --- a/reftable/stack.c
 +++ b/reftable/stack.c
-@@ -801,18 +801,16 @@ static int stack_write_compact(struct reftable_stack =
-*st,
- 			err =3D 0;
- 			break;
- 		}
--		if (err < 0) {
--			break;
--		}
-+		if (err < 0)
-+			goto done;
-=20
- 		if (first =3D=3D 0 && reftable_ref_record_is_deletion(&ref)) {
- 			continue;
- 		}
-=20
- 		err =3D reftable_writer_add_ref(wr, &ref);
--		if (err < 0) {
--			break;
--		}
-+		if (err < 0)
-+			goto done;
- 		entries++;
+@@ -425,9 +425,6 @@ int reftable_stack_add(struct reftable_stack *st,
+ 		return err;
  	}
- 	reftable_iterator_destroy(&it);
-@@ -827,9 +825,8 @@ static int stack_write_compact(struct reftable_stack *s=
-t,
- 			err =3D 0;
- 			break;
- 		}
--		if (err < 0) {
--			break;
--		}
-+		if (err < 0)
-+			goto done;
- 		if (first =3D=3D 0 && reftable_log_record_is_deletion(&log)) {
- 			continue;
- 		}
-@@ -845,9 +842,8 @@ static int stack_write_compact(struct reftable_stack *s=
-t,
- 		}
 =20
- 		err =3D reftable_writer_add_log(wr, &log);
--		if (err < 0) {
--			break;
--		}
-+		if (err < 0)
-+			goto done;
- 		entries++;
- 	}
+-	if (!st->disable_auto_compact)
+-		return reftable_stack_auto_compact(st);
+-
+ 	return 0;
+ }
 =20
 --=20
 2.43.GIT
 
 
---whdchsFdusjlG/S8
+--gxJEY1oMf25UPscQ
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWNFVgACgkQVbJhu7ck
-PpQrSw//RwkVy9KCBEmGoAtxoDGLag8L4m1tWWSuiAQNW9jqFIaQNjJTkqPyPBjf
-Kv7s2mEmFytWoVIyXbSpw5879VnlG22uaVQ5WUhjx+a9k45uXQ3C5ik/5iN/MADg
-a3luXPpKYjXN8fCZTztp2qP+sV3hdHFZmPxSSm78lQvAP2XnpevjuG6PgZHM4aY3
-pW0PLBfPwyMgm0kCGjI29QftxgvTjuzYkPmVrJu2GCNYDkohpTqwnd2y6uXETURv
-ItOTs3eCY/TspLDaWOHeL3LCCdAPAhHPMck54AfyaQ0/8X0OpOkMaM1Y+XLlp5Mt
-9/uF7ldr90/Ol+gZm6McKkc8O0cjzyQfihwOXOXWRiiV8NWJ1x0ZP7Iu93jXaXFM
-ShtQ4jB4iC19TkiBQsCJ0dPQJ18ENQLBQ0G0pQPCyEdFFqAi3rKuZ23pYZS7LH7b
-Dx8Tyym+dYm7jhAPPrJqrrB6GTfzDL3voHkA4CRSkRpO7k5EebUHwC8WBrbuJn3I
-uZIMp68USQSTnseK2QmBh13p7seL1P7WXjFO4StMWQ0PKA8TutbQDR8XIaoaqOyi
-dBSkDy901ojqeJRwnDURvNS98Rki8OjqpIglY7kLcYnoNfCHYM1hSotljsubrL2d
-ctUHXDVwIoLUR/QBIaTvqScABmjzFfAFv/Cx8MA3SmxtYGedkkY=
-=Au4L
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWNFVwACgkQVbJhu7ck
+PpR94Q//UrkD0OmctgC5R6bRsyITlmnG/Ow6x1M6QdUAaFllSctJhF0YIN6jeNKx
+xfAfO4d9rOg6Iv3Dx3adcgWOp7HRN9P8QAt5b1XaAZIZZhyIo+MM1ub7fV/wb5wB
+cT+8gI66ehkgkz7KK3Aa/zBhmFr/Cim8gVB8aROHN6fhw2/bbzzqNmdG3+9JA8H1
+IReGahtUsgqvlm9R/cCqEKe/t9imAX4Hr7cGJhNH3n19YEby3w6upaCqGFmeyRjZ
+Ofb/BQ3Y3UlMz3QI8GNC7hp/X/gfqe6J5xlptTDwRQ0dCR9RNVSiZkGD13WUP4fd
++qb9b3AoQlyWFN+AHBrEEWklppQL98FBMU6z1LoTSTKQNP8Wl8AKA4BJgHxYHGcC
+Z8LwomvJv1fmPBHLyRmehWaiBWl+dP09BnhjkGPUDzZvWmIShQbmLgPIq7qOtEgx
+T3MhCNvDUPhS58TmUQEWJtNUzwLLmCHMT6F5vM9G2nvK6Gahqv37rxImUgZx3AxK
+2mnLv4qmg9Qy62BZe7NwokBJKugBAb0V9ADlyOGKjKHFXvB+cXhYIjhYqjVktzU9
+eE6KwyvWQ3zcg/ZFHJ+qQRlvDI98cqJsmeGKrtu3uZXF/W/QV/ptQKYbw4OGXPCa
+Kef46WE2SGVLbqgWrzmxp2x9jdSSBzrhFX1cWDkOsJhTBlIQWxI=
+=+juT
 -----END PGP SIGNATURE-----
 
---whdchsFdusjlG/S8--
+--gxJEY1oMf25UPscQ--
