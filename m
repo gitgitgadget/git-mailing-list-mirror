@@ -1,73 +1,69 @@
-Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 349314402
-	for <git@vger.kernel.org>; Thu, 28 Dec 2023 05:54:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C3FD3C0B
+	for <git@vger.kernel.org>; Thu, 28 Dec 2023 06:27:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dirqOoMN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BS91+l2k"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.west.internal (Postfix) with ESMTP id BE67C3200A71;
-	Thu, 28 Dec 2023 00:54:03 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Thu, 28 Dec 2023 00:54:04 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mQpnwv0k";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="o6Im1uIS"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id 681CD5C003B;
+	Thu, 28 Dec 2023 01:27:37 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute3.internal (MEProxy); Thu, 28 Dec 2023 01:27:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1703742843; x=1703829243; bh=VSdmPHGdpY
-	pzArKoscMIihURFU4A0Fp/3v10Olxgbqk=; b=dirqOoMNGpQHGK201sIW29Pb/T
-	DW55ixJ8W80/PMROmKUr2lEeJdBiIBSnU5gRLTBHxBLKXm6xVeplzw/EJ/qJQkWM
-	5MOaKP9ClGP/AwQjFM326/Z/HZ9+qy9I0TA2HGGh9L0avcjOb5QvVzynF10gGzNW
-	HD++CMBhm1uff9VxBTFTo1wjPDZqguorwhIZDNo6e252ZfJt6LqpZvT7KTEk41OP
-	DYM/h3cuWAlGDHnNN1D3ZY/qmNZvId/DtC4/vfuz+fywhoDevAUL4cI63/vJ5Joo
-	bWUvmaRajosLEOCU2BlGAzX6aV+vkl3SKaXAg7u4RaZOIYPmHWZLvF0eK5Qg==
+	:subject:to:to; s=fm2; t=1703744857; x=1703831257; bh=LGS65O0evW
+	0UkviqATnbY7DZf9s1J627nudWJVhjg/I=; b=mQpnwv0kOGQZxX48N2q1kpZ12r
+	4uLxnkx1qWzAIbHWaOorCTvl4ZpW+B4qq9FG/LbD8Rg1lEnmrSZymSEBMSV+78Ji
+	goQWsv13cVLWtGuHYiqEFLDIZA8rw1jeiWV593xRpAhWuF+h0Qedw/+iwSruDBYb
+	hKh03l32aKhClMm6Lj7O1bykWItFO3TZw382E3tRHlL0Lnxp7QCMoyA08boUhHZf
+	xGbc8+bMg+FyP/c5oH2fi1jOT0czg/8rnqTe/4e4vSv9UoxzoIGZ/DYTO4MdbaGb
+	0ZxGEWFeTnQpPkgxD9zOQozgxyoWmKb0aPv7ZUxL4C9d2nDcZp0J6u/nax2w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1703742843; x=1703829243; bh=VSdmPHGdpYpzArKoscMIihURFU4A
-	0Fp/3v10Olxgbqk=; b=BS91+l2kAHNPnPmR61cn2yc8y23YTD1m1oz+FlaGSAdB
-	S5QMa2UDcbx0VwfuzXvAkWkxVgiuA9K0TBd+6xu0RC493pHY/RDWJRXuBsjbWeSk
-	7R4PRmpbXTtupo08w/rD/0WoUGJzL1xkuCMfc/K+ED8F2VWStcso7/2XNR4OB2U4
-	vvFFSGdc7c19LOSEQ7OfyMFrM4CERlrkewnYGEMD8G1kq0PkjsxuJqy1auWORZKl
-	zS2aABvSstsn9CyukCKBk3khw3FOcAAbF/FTxoQrpzbhkeTfOCIKjGB9y0Zrg4UW
-	OJ3cUcpenJRgv7kcluSSyJzyaThTEM4z/YIVHRIDkA==
-X-ME-Sender: <xms:ew2NZYol5VsHK39Z4gMpDMR4GOB7A8gJ8c8asdyY_Dnlb3elzBsiTQ>
-    <xme:ew2NZeoTeY8UWayCwQrWaCzVTbFB94g9vN1a_ExeXA_AvZUc7sdio2C_CnFhpBHia
-    6M_rsFVeUe8zYeg5A>
-X-ME-Received: <xmr:ew2NZdMOih1rsHc5ZsJbgiLc1oRW-8u3S3NG2EAvVys_8UJHO27PlMpaetxKSfOsR1eaKyy7F3XOQyOQHLqutAOLoNwgA10dyFjlfEU1kLE6ng>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeftddgleduucetufdoteggodetrfdotf
+	fm2; t=1703744857; x=1703831257; bh=LGS65O0evW0UkviqATnbY7DZf9s1
+	J627nudWJVhjg/I=; b=o6Im1uISqSLwRBLODh3akWnpijRO+M4APf/1RdNv0eNI
+	TlOe3tsG1DByBQiAT2ABvnfUMFGueY0ndBKnRiFpwtZpHs7R23laa8q069HkZ/7I
+	pwyndCIipthunZuCDv1dN9XGd6LAvd/RHkl1zLHnXNJxG20bpxduUtDpsanhn3Vh
+	SYDTlzYHyZXDa/KeKtADtMuAtqeChUtafPIj8YxGUMXn13Zm1HF5hWxE2N2wxBHf
+	IaUWyBoVUE/pgIrvUelWfOpAeKhXZjSaDCgQgovhIKrKMCnVpU4QM1wnUCM5lT8d
+	rrIzbg9qHKc6a4WjndDocLH7um5VLvn2QnqdhW35Qw==
+X-ME-Sender: <xms:WRWNZRhKmNz9lzzG7kplVgDrghOWwlo9lPX_0wij3yAmdg08xavUVA>
+    <xme:WRWNZWA4fyU6aomNW-xByz5sZUqhG5IE2mQU_8VFGX2OdX076KIfpB_LQLOrCrtvf
+    6mWr5EX-U5gMAjcyg>
+X-ME-Received: <xmr:WRWNZRGZsXOhB0hpCvUwFbwY7o5U3uxBVHFjkfwPscVpBC_-n7hHnDXrxAOIcGiDRNMiQA5qFg8D7BhObl-1NjEGQT43dMCUYD1htb6R_LsniA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeftddgleejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnheptefgkedthedvkeejtedttdehgeefheehtefgudetheduudefkefgtdfggeejgedt
-    necuffhomhgrihhnpehpuhgslhhitgdqihhnsghogidrohhrghenucevlhhushhtvghruf
-    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:ew2NZf5NgYasF4ZdD7j_WKVG0CsW4wH9v5d2IrzxKt7iYzE0dfWKIg>
-    <xmx:ew2NZX4tjNedS8mHdZ6fYEWYgFCDANeTCZiHlGDjBBZi7i1VaCEuIA>
-    <xmx:ew2NZfgunWzXgTGeof3ST8OTjt0wq0-NZ_i6a8HBFonlgnsMJ2pl_g>
-    <xmx:ew2NZRTbKMnPyWl1mgbG1mCe1cRepkovFbn5FgOrWdJnEir6CEV58Q>
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
+    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
+    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:WRWNZWTesvAznDY-fERBjYdhf5IzpvTdx0m3OyFxVQgw87wBK2bKMA>
+    <xmx:WRWNZexMaigLEBOOnh-TjWv4rASahGCC782rvJy8oFMaInN27l4_AQ>
+    <xmx:WRWNZc5k1ciiKPXuumJKZMwqGYqQKkFYUarpY_a7EnmKw58nyF3plg>
+    <xmx:WRWNZTrS-XoOxzSahVC__pmUGLvuBDPI31y8fSh4lyhpBduybj4QAw>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 28 Dec 2023 00:54:02 -0500 (EST)
+ 28 Dec 2023 01:27:36 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id cf1c17c9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 28 Dec 2023 05:51:47 +0000 (UTC)
-Date: Thu, 28 Dec 2023 06:53:58 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id d540bc50 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 28 Dec 2023 06:25:21 +0000 (UTC)
+Date: Thu, 28 Dec 2023 07:27:32 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Han-Wen Nienhuys <hanwenn@gmail.com>
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2 11/11] reftable/block: reuse buffer to compute record
- keys
-Message-ID: <ZY0Ndkv2v7TXVskc@tanuki>
-References: <cover.1700549493.git.ps@pks.im>
- <cover.1702047081.git.ps@pks.im>
- <02b11f3a80608ba8748a0d0e2294f432e02464e5.1702047081.git.ps@pks.im>
- <CAOw_e7bQ+jxO2zhj32mDksq9uBKQfNt=wMNP5K6Oy1DqievCdg@mail.gmail.com>
+To: git@vger.kernel.org
+Cc: Han-Wen Nienhuys <hanwenn@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 0/8] reftable: fixes and optimizations (pt.2)
+Message-ID: <cover.1703743174.git.ps@pks.im>
+References: <cover.1703063544.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,64 +71,138 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="E+gMiRw54j1JMbHe"
+	protocol="application/pgp-signature"; boundary="2ApRt7Qy+GuBwAOv"
 Content-Disposition: inline
-In-Reply-To: <CAOw_e7bQ+jxO2zhj32mDksq9uBKQfNt=wMNP5K6Oy1DqievCdg@mail.gmail.com>
+In-Reply-To: <cover.1703063544.git.ps@pks.im>
 
 
---E+gMiRw54j1JMbHe
-Content-Type: text/plain; charset=utf-8
+--2ApRt7Qy+GuBwAOv
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Dec 21, 2023 at 11:43:27AM +0100, Han-Wen Nienhuys wrote:
-> On Fri, Dec 8, 2023 at 3:53=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wro=
-te:
->=20
-> > @@ -84,10 +84,12 @@ struct block_iter {
-> >
-> >         /* key for last entry we read. */
-> >         struct strbuf last_key;
-> > +       struct strbuf key;
-> >  };
->=20
-> it's slightly more efficient, but the new field has no essential
-> meaning. If I encountered this code with the change you make here, I
-> would probably refactor it in the opposite direction to increase code
-> clarity.
->=20
-> I suspect that the gains are too small to be measurable, but if you
-> are after small efficiency gains, you can have
-> reftable_record_decode() consume the key to avoid copying overhead in
-> record.c.
+Hi,
 
-Fair enough. I've done a better job for these kinds of refactorings for
-the reftable library in my second patch series [1] by including some
-benchmarks via Valgrind. This should result in less handwavy and
-actually measurable/significant performance improvements.
+this is the second version of my patch series that contains additional
+fixes and optimizations for the reftable library. Changes compared to
+v1:
+
+  - Added a patch to not auto-compact twice in `reftable_stack_add()`,
+    reported by Han-Wen.
+
+  - Fixed an issue I've previously introduced while rebasing the patch
+    series.
+
+  - Fixed a missing header, as reported by Junio.
+
+Due to the added patch that avoids double auto-compaction this patch
+series now depends on 637e34a783 (Merge branch 'ps/reftable-fixes',
+2023-12-27).
 
 Patrick
 
-[1]: https://public-inbox.org/git/xmqqr0jgsn9g.fsf@gitster.g/T/#t
+Patrick Steinhardt (8):
+  reftable/stack: do not overwrite errors when compacting
+  reftable/stack: do not auto-compact twice in `reftable_stack_add()`
+  reftable/writer: fix index corruption when writing multiple indices
+  reftable/record: constify some parts of the interface
+  reftable/record: store "val1" hashes as static arrays
+  reftable/record: store "val2" hashes as static arrays
+  reftable/merged: really reuse buffers to compute record keys
+  reftable/merged: transfer ownership of records when iterating
 
---E+gMiRw54j1JMbHe
+ reftable/block_test.c      |   4 +-
+ reftable/merged.c          |   8 +--
+ reftable/merged_test.c     |  16 +++---
+ reftable/readwrite_test.c  | 102 +++++++++++++++++++++++++++++++------
+ reftable/record.c          |  17 ++-----
+ reftable/record_test.c     |   5 --
+ reftable/reftable-record.h |  11 ++--
+ reftable/stack.c           |  23 +++------
+ reftable/stack_test.c      |   2 -
+ reftable/writer.c          |   4 +-
+ 10 files changed, 117 insertions(+), 75 deletions(-)
+
+Range-diff against v1:
+1:  573fb2c4fb =3D 1:  22a57020c6 reftable/stack: do not overwrite errors w=
+hen compacting
+-:  ---------- > 2:  a08f7efc99 reftable/stack: do not auto-compact twice i=
+n `reftable_stack_add()`
+2:  86ee79c48d =3D 3:  c00e08d97f reftable/writer: fix index corruption whe=
+n writing multiple indices
+3:  3ad4a0e5b9 =3D 4:  3416268087 reftable/record: constify some parts of t=
+he interface
+4:  06c9eab678 ! 5:  46ca3a37f8 reftable/record: store "val1" hashes as sta=
+tic arrays
+    @@ reftable/readwrite_test.c: static void test_write_object_id_length(v=
+oid)
+      	};
+      	int err;
+      	int i;
+    +@@ reftable/readwrite_test.c: static void test_write_multiple_indices(=
+void)
+    + 	writer =3D reftable_new_writer(&strbuf_add_void, &writer_buf, &opts);
+    + 	reftable_writer_set_limits(writer, 1, 1);
+    + 	for (i =3D 0; i < 100; i++) {
+    +-		unsigned char hash[GIT_SHA1_RAWSZ] =3D {i};
+    + 		struct reftable_ref_record ref =3D {
+    + 			.update_index =3D 1,
+    + 			.value_type =3D REFTABLE_REF_VAL1,
+    +-			.value.val1 =3D hash,
+    ++			.value.val1 =3D {i},
+    + 		};
+    +=20
+    + 		strbuf_reset(&buf);
+    =20
+      ## reftable/record.c ##
+     @@ reftable/record.c: static void reftable_ref_record_copy_from(void *=
+rec, const void *src_rec,
+    @@ reftable/record_test.c: static void test_reftable_ref_record_roundtr=
+ip(void)
+      		case REFTABLE_REF_VAL2:
+    =20
+      ## reftable/reftable-record.h ##
+    +@@ reftable/reftable-record.h: license that can be found in the LICENS=
+E file or at
+    + #ifndef REFTABLE_RECORD_H
+    + #define REFTABLE_RECORD_H
+    +=20
+    ++#include "hash-ll.h"
+    + #include <stdint.h>
+    +=20
+    + /*
+     @@ reftable/reftable-record.h: struct reftable_ref_record {
+      #define REFTABLE_NR_REF_VALUETYPES 4
+      	} value_type;
+5:  49f13c123f =3D 6:  c8a36917b1 reftable/record: store "val2" hashes as s=
+tatic arrays
+6:  32b7ddee28 =3D 7:  6313f8affd reftable/merged: really reuse buffers to =
+compute record keys
+7:  3dbabea22a =3D 8:  25a3919e58 reftable/merged: transfer ownership of re=
+cords when iterating
+
+--=20
+2.43.GIT
+
+
+--2ApRt7Qy+GuBwAOv
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWNDW0ACgkQVbJhu7ck
-PpTfGg//ajytLrgLdxuWO2e5vn5GhaOVRzIggAV2B8uUR4R4I2G9GfIM0J1ScK3A
-kdW5zGbI9TZWa0bf9TZ+4gRCYxLNO+eBe48Y87aO9uIsfuzEyePbkvYPOjV59YRx
-+Thx4YK/0KOeq13t3WW+PsKlSZfOWIJU+xPo12MfAHhO2a9sgcsjIUuMZneMHJ6/
-AOWriUV6HKexsVFOjVqg+Sc+C0fuqS1StYQajgxawLRFDBDzTqhAdXWdevFGdUA1
-N7DtPuSN34VU1v7IyqnJ57FEV1XldREMWWU2xGdZ6LMThgqHfc5e5BJdRZGO4iSq
-XDA3Oitz1gTFa7okRpYpvZD3fbrlM2slZ/RIC5lqIWY5DcGNclhk4/hchva0/t1Z
-rKG0v1luHMMl8q1Z6dai8VxExoc5c7SyUCzLEN1dUCfRPKPKdJd2oXVphLi/EDVW
-qeq7nXIKZEr4Jtw6YgKR9r/1ull3xYo/QY7os45MzLfHgo/SqjbsSksHG5v39X4w
-qqF2S8Ycy4hx1A0Lb13Yum+emLqHJ1Gg1iQNDu28U1MtqLz96v/agWj1qP35oGb8
-A8eRclJLgSUsNf3cp+Xl2gN+U+f4m6KnqkRJRsuMHOz3mBf3Mf/ulSdjbANPkn9U
-NrDaySCxoI4CeT2Omzhm/PdYen2tsLVrW01LPBCGVbhfls9OT28=
-=/n6C
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWNFVMACgkQVbJhu7ck
+PpRiDw/9Hk4NqTxLY+x95iqn7IGcvNJzW6MRDmBhtHLtTiy4QeXhZhSniuXv1gTa
+VK7rr1U/ptdw+kY+otY6zdVThxhfaGYTe4OLg+Mp5SS812kqdMOyLDdqi2Ci8/QS
+4HBkVFDHwgUR7JVhhuERTZpuRHVTPkWgI7Zms1l7X+v/yYVk/JtT+iHq3yo62Ofl
+zyBcxVs87SNJAkqFkBJd2pZ5vBr+09epQwnwTIVtPprSfGV5DaMCOS54ROo5Dxy2
+s4/PXVhFoOdwkzzjFqDKhy+7IyBU0mIHSFj+B9T4Oog8e2yeDP0TCL4VyJ1y2bfY
+UxxFWlYSCllwmeHhoEPBv5uL8Eim6m6yrqgWf55quIC8ckb9qcBMjkEo8YiCwCwF
+GJSPbuU04RPOwxWgCzTAgkCnlQioD7EAdBRRB7pJgqiuTz+2s6dpUfBP3vP77ILZ
+oCHoeNLe9vU+DuAuofgCWzagQtcdRW1X6g/pERP1LkqJ0we0Yxjf9UIQeAVH64e7
+PvgI0uRcW7uVUwJFZ9fAtelKVc+k2i8+xPmO4FnfSRjZESLRZYG5ipAEsaJRATQN
+Rb1EBVKDEdigwQzcFR8QhxuU9UOKYuzR26N8vRIHejCyRaNmor2I4jG3IBtsMZhn
+XzkoW2sRgf3LnHRJ71iocp4L5qawmAKipy/1rCwy1sHb8uHIFaY=
+=k1/w
 -----END PGP SIGNATURE-----
 
---E+gMiRw54j1JMbHe--
+--2ApRt7Qy+GuBwAOv--
