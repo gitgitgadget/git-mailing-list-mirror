@@ -1,29 +1,29 @@
 Received: from mout.web.de (mout.web.de [212.227.17.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECE40F9D7
-	for <git@vger.kernel.org>; Thu, 28 Dec 2023 18:56:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3656F10787
+	for <git@vger.kernel.org>; Thu, 28 Dec 2023 19:19:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="AU7U3rrj"
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="H8gC5d6x"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-	t=1703789761; x=1704394561; i=l.s.r@web.de;
-	bh=D45Tkwo62XIta/fWC4fToVUFxvfZCNxEwnWmQ5bjGYE=;
-	h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
+	t=1703791147; x=1704395947; i=l.s.r@web.de;
+	bh=XBP6ydNjBiKyA4hhIJ9aOneZj9ZiiAvvExpthEh66CE=;
+	h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:
 	 In-Reply-To;
-	b=AU7U3rrjaWV0dq7me+puu8G+RVPw1vy9GyPSu0aKvcegJxr3iC4k7vhFly8fz6Xz
-	 oD0H978JAfxA3sXL3dvi61jbjLlVjHqduNz1S5nkZhBvkILoJV65rdYqFLntCNj5K
-	 TUQKud8ippgfgFMXNJTXUY21mINzaUf6dXQwL/wQAETuIfjQXgQ4nGobvd4DYLGWS
-	 /rz4Iu1yPdBjO0bXtzisWUDqBEsljbThQTAv5PziUq1JUj39NeSIzz8nTkzh/jb7f
-	 9DiA/yp96zKmO3HI+GJ6p5AhrnlX4P7kP+OWtA2GYhbcJyzAGLuc7Lx6o6edT7ZSM
-	 R0tCtRltzjGnabkGHA==
+	b=H8gC5d6xejB9Ew3lfcDZTc6aj4dCrkNZOVu9fzZA8L1meGVJkTIMT2bXLcuRl87x
+	 QxV8NaMCIsINkKAqiBRWVfD6LuPwydTyQomg24P+vM6BFmgs4LoS68kwy3JrHZ/Qg
+	 +DnfNDYM9yvFWJOd3lZ1BBoFVSRcg5AC8bVzrWRhhzhecEykKfwBLg97oxz3euVrN
+	 omIo2V72kxZXqwPFfNQexu905kcKrFKYBJVkv+O1yHEfQ1nm+ukcl6CTUDDVO/vvP
+	 rQirg7fO238oYNK6h37T38m53qIvW6sco8taauIWriTwCr1ajWEzYaJpM8qsAbQAP
+	 bc1Gu3Gie5XHmAEd9Q==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from [192.168.178.29] ([79.203.23.9]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1M1rTG-1rGjgv3ISG-002kR1; Thu, 28
- Dec 2023 19:56:01 +0100
-Message-ID: <34f5913f-b187-43c3-99b7-3d57065dba12@web.de>
-Date: Thu, 28 Dec 2023 19:56:01 +0100
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mq1CC-1qxOf31xWE-00nIRs; Thu, 28
+ Dec 2023 20:19:07 +0100
+Message-ID: <1c39c0e7-05b2-4726-a90c-f78df4356a41@web.de>
+Date: Thu, 28 Dec 2023 20:19:06 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -31,115 +31,175 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mem-pool: fix big allocations
+Subject: [PATCH v2] mem-pool: fix big allocations
 Content-Language: en-US
-To: phillip.wood@dunelm.org.uk, Git List <git@vger.kernel.org>
-Cc: Jameson Miller <jamill@microsoft.com>
-References: <fa89d269-1a23-4ed6-bebc-30c0b629f444@web.de>
- <9aad15c8-8d3b-475b-bd44-5d24121cb793@gmail.com>
- <c5d35735-10e2-4b71-8fc7-6218e7002549@web.de>
- <e1e43a6c-3e06-4453-88a3-f00476132bcd@gmail.com>
 From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <e1e43a6c-3e06-4453-88a3-f00476132bcd@gmail.com>
+To: Git List <git@vger.kernel.org>
+Cc: Jameson Miller <jamill@microsoft.com>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>, Elijah Newren <newren@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>
+References: <fa89d269-1a23-4ed6-bebc-30c0b629f444@web.de>
+In-Reply-To: <fa89d269-1a23-4ed6-bebc-30c0b629f444@web.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:YzT6IEJCEM4FMSNGlzAwZJH89ARz6Uj7KPTa67D1HAohK/wuwon
- let/upy56evYmhQfMiIeRLzHmsNch2xAaH5doOQiL+dFSSNIrXh9dgtG+guMAGAgE1kx/g4
- Odm+tieomJSKrRbRjS9nTLSBgtI/lJ6RL+uSAOFxGDaYrn4oc4MEaX1USHqm2P//NkyhxSb
- dIffyFDh4+1XIA7U36FJw==
+X-Provags-ID: V03:K1:ogzzd3bSDM8opK6rWAlwY6hJCaZRXjAnnD5vmOuOkTl1jbPjEql
+ ATt2RiWrQiiR9aPJXkB+j1FPqZ8mds4E7OCAk1XBd8Fsf82AliKPdyqIBwBAXR6BIRpztMK
+ rt2bz33Ho2VT0EhfKpUiwCBU4dOPhds1ro4cuHq7Fy8qPdZttlTJvdFQ/6221LZAvqj85Zr
+ CmzJrB44YUZ2bUNvhmh0g==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:1/e2q37lczw=;5U7vVPfbU81FeiA0vemiw337Ri3
- D3bshf2RpBut/sZkCcOPE95SSNsCS6ZypINMnBAU4J+SNGfett8vZwFez/dI/GC5RTPLU7YCS
- SA3z+d7v0T32aVFNHNfJAKO99lqjOKxG7u+qKD3bDNqoU3frydKpGxuPHeO3em6x7PrEy+pSB
- M1zS1bLO+ZBSNxB7a2C04WWX0OD4qlcqQs4PhMZdtdR7DlycYjq34tgvIJLuSFgWhg0r2H0tw
- MxXV8b/KVG78xQZzG//4orsY6WQSDW3L8lB3SeU4xW8dXiuIbRzISF2MIEaTBXN8D4EXNPQvD
- BUg38PsVVoJ3+RI2R7viMJGEnarJo1RnoAOqHD/zXE6Njoex1eFCO2GqOYFnYOwWt+OiV+oKe
- ueQsxYy/xmEYGekpoXc3vjtJZ5rww3bxZY2GkEd8XMYKnAI81/fPDWpJ3ibNkGWGFTFFrzFYc
- Wz4Esawh63X6+Y7VrNLWzaotGQBzvrPA9u/DcKs6oQPa35XJwtwZNa/TMbXp3NoHvOar5px5L
- u8oxwZYLnA5RVIY+CIuXx7NUrp3ZMIivw0QEjN37Tl1bHDHfNOSGmufLYD70bf766mfaHqUYK
- jf4eNa0Xcq58k4xvkBZNlLy60y/553/IP3hEuKLKuazTqKL6XDat9qPXM5Yl18DF9bD8zMTHG
- tNrWWkJPldBl44LaMAS5bXeo1PfUOnqcBbxWRLFx+m70OlMqYE5KLImPc86woDFHUir9sfieE
- aORG5gU5cwQXTTD4g7hNje7WrNk7fwBP+uUXstrQIMS6LebOlvHEuMWqDbGPfBYAoXSyKDZMM
- osryX78tyIJqu6/WNIhWecBPgfOBYJqkNfZDUJEQy+kn2fTWOGPvOO4TleczSXMt/OgTDtWb2
- MF1sICUxUkDSa6FCk/dei77SnWv6ZifGBp5sdvH5hZya1GSaKCoAJFEoRlDjBJGsT5bTOoAt5
- DkukPQ==
+UI-OutboundReport: notjunk:1;M01:P0:IkBQqzJw+Ck=;JmAT1caCHZkh9F/A+vMv7TasTzh
+ UXhQSLTftpgBkTZUsNG6wXhywGcY0ggQfczM9xSRmrQ+yKy7PY9up+KuzaLwB8AQ0dEGmql26
+ 7yqXgTvXlaZxKaPnxAgxhMH2BxoctKOCYCE2mpfa1jq8hxHdrk04wuwa3PqY03kY04ebsHOik
+ EpGoBlGqj3rZZpr5dlaOQ6VDL4zBIbK54ibFU7mxYzLmCse4h6kga45QouAGvzYM4vFikasmv
+ k96KhKiT8E+44HN4H+cCxo4gsTkFevGZV2iwyk62pQmOrJkz2rv39Agn6qUl5bJSMaj8C2wdu
+ XXXsm6G1fDhs/I0TmXrDKpTx3LMHBVBpazpZ8ouTWx6NEajT+qiAK3NvRZ1x2TPZGJO5Rw5bU
+ RiJ/sv5UqlFXVJWMEjXCFf3tF4BjCUQ5OLutQ+xWagTwvedK+W/75hnFZ8JnX7WVekA4+GRTb
+ TIPE72mzZN+7ir4d74TK8MYgnXNJCzduhTqNU5eoyJMYi2/v1xuZAfgtOtFytFEkHAIZCzLJT
+ X7R8tJl7wzG5N3vEY+KQFEU4NI5t8Hqov5I2FUqOkOnqXmNZ2cceh1fkKKTAXBBMcyfjCP6o/
+ +lh3BF6535h7KE7oC5TarIcaVJTuIyGgxqQF9FD+AdZrJwg9EzjJBq7XkAv2NOAaXQiKzz580
+ XTYN6rc4VtTFniINYxz74rvI5gS1w4tnlZ5l3PXq5WlZ2cdrVvedn/Q6dZ+8fRE/tMnbEl7oW
+ b3F3mPHmfDvz8SJk2hwv3miqJjU3b7U+dYKO26ZEoe35gQ8AJJQNrmuADaqa/G1cP0+nY4An0
+ Hu+X6QxJ1QI37sNsKLL3rxOcr3eMv/UCWJWh+qxzKAPJCru1WSj4b7sajPLHS3D2sJpvO5ny1
+ e/Jx4IGOKvAcp8PJ4XQL3kuQMVURW7JA2A/fJU6Hdvr+wrEEYvDLcggk92IgblhYBmPudZHWg
+ ZI1g/w==
 
-Am 28.12.23 um 17:48 schrieb phillip.wood123@gmail.com:
-> On 28/12/2023 16:05, Ren=C3=A9 Scharfe wrote:
->> Am 28.12.23 um 16:10 schrieb Phillip Wood:
->>> The diff at the end of
->>> this email shows a possible implementation of a check_ptr() macro for
->>> the unit test library. I'm wary of adding it though because I'm not su=
-re
->>> printing the pointer values is actually very useful most of the
->>> time. I'm also concerned that the rules around pointer arithmetic and
->>> comparisons mean that many pointer tests such as
->>>
->>> =C2=A0=C2=A0=C2=A0=C2=A0 check_ptr(pool->mp_block->next_free, <=3D, po=
-ol->mp_block->end);
->>>
->>> will be undefined if they fail.
->>
->> True, the compiler could legally emit mush when it finds out that the
->> pointers are for different objects.=C2=A0 And the error being fixed pro=
-duces
->> such unrelated pointer pairs -- oops.
->>
->> This check is not important here, we can just drop it.
->>
->> mem_pool_contains() has the same problem, by the way.
->>
->> Restricting ourselves to only equality comparisons for pointers prevent=
-s
->> some interesting sanity checks, though.=C2=A0 Casting to intptr_t or
->> uintptr_t would allow arbitrary comparisons without risk of undefined
->> behavior, though.=C2=A0 Perhaps that would make a check_ptr() macro via=
-ble
->> and useful.
->
-> That certainly helps and the check_ptr() macro in my previous email
-> casts the pointers to uintptr_t before comparing them. Maybe I'm
-> worrying too much, but my concern is that in a failing comparison it
-> is likely one of the pointers is invalid (for example it is the
-> result of some undefined pointer arithmetic) and the program is
-> undefined from the point the invalid pointer is created.
+Memory pool allocations that require a new block and would fill at
+least half of it are handled specially.  Before 158dfeff3d (mem-pool:
+add life cycle management functions, 2018-07-02) they used to be
+allocated outside of the pool.  This patch made mem_pool_alloc() create
+a bespoke block instead, to allow releasing it when the pool gets
+discarded.
 
-There are no restrictions on integer comparisons.  So comparing after
-casting to uintptr_t should not invoke undefined behavior.  If undefined
-behavior was involved in calculating the pointers in the first place
-then the compiler might still legally go crazy, but not due to the
-comparison.  Right?
+Unfortunately mem_pool_alloc() returns a pointer to the start of such a
+bespoke block, i.e. to the struct mp_block at its top.  When the caller
+writes to it, the management information gets corrupted.  This affects
+mem_pool_discard() and -- if there are no other blocks in the pool --
+also mem_pool_alloc().
 
-Whether the result of a uintptr_t-cast comparison of pointers to
-different objects is meaningful is a different question.  Hopefully
-range checks are possible.
+Return the payload pointer of bespoke blocks, just like for smaller
+allocations, to protect the management struct.
 
-> The
-> documentation for check_ptr() in my previous mail contains the
-> following example
->
-> =C2=A0=C2=A0=C2=A0 For example if `start` and `end` are pointers to the =
-beginning and
-> =C2=A0=C2=A0=C2=A0 end of an allocation and `offset` is an integer then
->
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 check_ptr(start + offset, <=
-=3D, end)
->
-> =C2=A0=C2=A0=C2=A0 is undefined when `offset` is larger than `end - star=
-t`. Rewriting
-> =C2=A0=C2=A0=C2=A0 the comparison as
->
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 check_uint(offset, <=3D, end =
-- start)
->
-> =C2=A0=C2=A0=C2=A0 avoids undefined behavior when offset is too large, b=
-ut is still
-> =C2=A0=C2=A0=C2=A0 undefined if there is a bug that means `start` and `e=
-nd` do not
-> =C2=A0=C2=A0=C2=A0 point to the same allocation.
+Also update next_free to mark the block as full.  This is only strictly
+necessary for the first allocated block, because subsequent ones are
+inserted after the current block and never considered for further
+allocations, but it's easier to just do it in all cases.
 
-True, but in such a unit test we'd need additional checks verifying
-that start and end belong to the same object.  Or perhaps use a
-numerical size instead of an end pointer.
+Add a basic unit test to demonstrate the issue by using
+mem_pool_calloc() with a tiny block size, which forces the creation of a
+bespoke block.
 
-Ren=C3=A9
+Helped-by: Phillip Wood <phillip.wood123@gmail.com>
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+Changes since v1:
+- simply use check() instead of a custom check_ptr() macro
+- drop unnecessary comparison of next_free and end pointers
+
+Interdiff against v1:
+  diff --git a/t/unit-tests/t-mem-pool.c b/t/unit-tests/t-mem-pool.c
+  index 2295779b0b..a0d57df761 100644
+  --- a/t/unit-tests/t-mem-pool.c
+  +++ b/t/unit-tests/t-mem-pool.c
+  @@ -1,8 +1,6 @@
+   #include "test-lib.h"
+   #include "mem-pool.h"
+
+  -#define check_ptr(a, op, b) check_int(((a) op (b)), =3D=3D, 1)
+  -
+   static void setup_static(void (*f)(struct mem_pool *), size_t block_all=
+oc)
+   {
+   	struct mem_pool pool =3D { .block_alloc =3D block_alloc };
+  @@ -16,11 +14,10 @@ static void t_calloc_100(struct mem_pool *pool)
+   	char *buffer =3D mem_pool_calloc(pool, 1, size);
+   	for (size_t i =3D 0; i < size; i++)
+   		check_int(buffer[i], =3D=3D, 0);
+  -	if (!check_ptr(pool->mp_block, !=3D, NULL))
+  +	if (!check(pool->mp_block !=3D NULL))
+   		return;
+  -	check_ptr(pool->mp_block->next_free, <=3D, pool->mp_block->end);
+  -	check_ptr(pool->mp_block->next_free, !=3D, NULL);
+  -	check_ptr(pool->mp_block->end, !=3D, NULL);
+  +	check(pool->mp_block->next_free !=3D NULL);
+  +	check(pool->mp_block->end !=3D NULL);
+   }
+
+   int cmd_main(int argc, const char **argv)
+
+ Makefile                  |  1 +
+ mem-pool.c                |  6 +++---
+ t/unit-tests/t-mem-pool.c | 31 +++++++++++++++++++++++++++++++
+ 3 files changed, 35 insertions(+), 3 deletions(-)
+ create mode 100644 t/unit-tests/t-mem-pool.c
+
+diff --git a/Makefile b/Makefile
+index 88ba7a3c51..15990ff312 100644
+=2D-- a/Makefile
++++ b/Makefile
+@@ -1340,6 +1340,7 @@ THIRD_PARTY_SOURCES +=3D sha1collisiondetection/%
+ THIRD_PARTY_SOURCES +=3D sha1dc/%
+
+ UNIT_TEST_PROGRAMS +=3D t-basic
++UNIT_TEST_PROGRAMS +=3D t-mem-pool
+ UNIT_TEST_PROGRAMS +=3D t-strbuf
+ UNIT_TEST_PROGS =3D $(patsubst %,$(UNIT_TEST_BIN)/%$X,$(UNIT_TEST_PROGRAM=
+S))
+ UNIT_TEST_OBJS =3D $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(UNIT_TEST_PROGRAMS=
+))
+diff --git a/mem-pool.c b/mem-pool.c
+index c34846d176..e8d976c3ee 100644
+=2D-- a/mem-pool.c
++++ b/mem-pool.c
+@@ -99,9 +99,9 @@ void *mem_pool_alloc(struct mem_pool *pool, size_t len)
+
+ 	if (!p) {
+ 		if (len >=3D (pool->block_alloc / 2))
+-			return mem_pool_alloc_block(pool, len, pool->mp_block);
+-
+-		p =3D mem_pool_alloc_block(pool, pool->block_alloc, NULL);
++			p =3D mem_pool_alloc_block(pool, len, pool->mp_block);
++		else
++			p =3D mem_pool_alloc_block(pool, pool->block_alloc, NULL);
+ 	}
+
+ 	r =3D p->next_free;
+diff --git a/t/unit-tests/t-mem-pool.c b/t/unit-tests/t-mem-pool.c
+new file mode 100644
+index 0000000000..a0d57df761
+=2D-- /dev/null
++++ b/t/unit-tests/t-mem-pool.c
+@@ -0,0 +1,31 @@
++#include "test-lib.h"
++#include "mem-pool.h"
++
++static void setup_static(void (*f)(struct mem_pool *), size_t block_alloc=
+)
++{
++	struct mem_pool pool =3D { .block_alloc =3D block_alloc };
++	f(&pool);
++	mem_pool_discard(&pool, 0);
++}
++
++static void t_calloc_100(struct mem_pool *pool)
++{
++	size_t size =3D 100;
++	char *buffer =3D mem_pool_calloc(pool, 1, size);
++	for (size_t i =3D 0; i < size; i++)
++		check_int(buffer[i], =3D=3D, 0);
++	if (!check(pool->mp_block !=3D NULL))
++		return;
++	check(pool->mp_block->next_free !=3D NULL);
++	check(pool->mp_block->end !=3D NULL);
++}
++
++int cmd_main(int argc, const char **argv)
++{
++	TEST(setup_static(t_calloc_100, 1024 * 1024),
++	     "mem_pool_calloc returns 100 zeroed bytes with big block");
++	TEST(setup_static(t_calloc_100, 1),
++	     "mem_pool_calloc returns 100 zeroed bytes with tiny block");
++
++	return test_done();
++}
+=2D-
+2.43.0
