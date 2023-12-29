@@ -1,44 +1,44 @@
 Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCDA023B5
-	for <git@vger.kernel.org>; Fri, 29 Dec 2023 07:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D6B76101
+	for <git@vger.kernel.org>; Fri, 29 Dec 2023 07:26:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Y+0ugiif";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fwm8xqYN"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id DFED35C0180;
-	Fri, 29 Dec 2023 02:26:29 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="xDgyQYi8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JrLYa0p/"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailout.nyi.internal (Postfix) with ESMTP id 35C6B5C0170;
+	Fri, 29 Dec 2023 02:26:33 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Fri, 29 Dec 2023 02:26:29 -0500
+  by compute6.internal (MEProxy); Fri, 29 Dec 2023 02:26:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1703834789; x=1703921189; bh=53J8I4VJuw
-	XFrFrit1FX6vtx4cZym7HamKXTAjYPnt8=; b=Y+0ugiifGtZSpg9pfEuaL91aCd
-	ekb4VM4SjfVE4/B7R2o01QyRNk5W/c1/8oRmwsmk+DVzcxoC+qwqqwikSA7UHYN6
-	3xSkODAeMNbIpHasK9HAE22nLH8+IzZS/iFZVys3K+N1hCYqk/3XEZiMeOLrYBuT
-	0YV5jRRvwkqME95SL0IQfBUnY0USF7kENUpkkt5MX+tqLxdAEm7luxNwbsqzwSge
-	1xSDOG0uUgjWD/GmhVYjBcLMCKatZvK/xhKzRLInLMf2CQXMV+/jQZK4kkbkGNMw
-	2Nk2qPX+xY2918EXUFjrcv13RPx7PsvGuvSEeOlIfMMBcz/fbDySJcOWLOKw==
+	:subject:to:to; s=fm2; t=1703834793; x=1703921193; bh=YX/fIJsulC
+	GsHREQlwvCUA7knnuDAm0AEgJgd5BhRZg=; b=xDgyQYi89rZWCTug+iLYvRjgs6
+	u+mRTSlXJa/M5Frz3oUBA6jLmtDgk81Hv0BMKcnB4KSAlFIvuOHxaIk9+/QtAQR0
+	wBaJVmE//SKDU67fbxQJnCi2VQFSl/4fiU3YXUjyJNpu9gvFGmwFLcRw+R0hGY6o
+	6sXcBSbPgjHaGJqpG5zn0iiIO/303wm2EX+CPZk8FBsuMMLv6pFf9tM012AAdbFm
+	KYe2DIe+b1JcAVK/ReuuzBzwAXb4LQp/UdJBjIdQtMDdFejTY3VM5NRRmPwhWJ9C
+	Q2iNK7Gaq4cXHwyWgS2Q9IICXHYHs4UnmB1HiaZq7dIx8AW3gyuaV0a2cfWQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1703834789; x=1703921189; bh=53J8I4VJuwXFrFrit1FX6vtx4cZy
-	m7HamKXTAjYPnt8=; b=fwm8xqYNXANd6EtoGw8W5HFKr1pAN+WRsFgKtxbSNg8b
-	y28mtTO4GiWkM8lCOzrUIDP+vZA9prIWpvBqVvGFjYVQWNNFAOkO7TwBHD/FiQR8
-	4+flzjkABMNMXDlWiovd/pDcl7p0RAk3w2ZMF6hMn+BqeOz4Gxrb9FDOS7PB53cf
-	zE108cnWw3SZUfk4ZOyil62xMSQKVgFgIAv/kkN87p4e1vdHQoc4FBZVOhpnPxHe
-	5R0oFCthrWnecRBjGAueW9D5b4jNfAt98kwNXH9W7l3z4MhqRiatupssAOeDae2a
-	8m2i1wT8SMBw5xcGeKjcPp1cnfTLouboMxSBOvBsmQ==
-X-ME-Sender: <xms:pXSOZa0iWcn_NG8TuSCOFfUHOcfAMewGgnN6vUvTq0Nw2y233qvz6Q>
-    <xme:pXSOZdFNjRWAQRGuju26tEuaPnHSoxrCkgSLeblfnmjKLfNO2Wfd4Rt81bWmIoVNV
-    mip7I7ZBF1uQ57aKg>
-X-ME-Received: <xmr:pXSOZS5AIBMVt8XiB67GFoLv6xlxkVrIXIBiNrkZYJF5NHWx4qTpUki0w11eQVCq4vt7wLm4fPdc6WoYAH9go771mXTwqzOiKcrv-VYd5Ak72oEYKA>
+	fm2; t=1703834793; x=1703921193; bh=YX/fIJsulCGsHREQlwvCUA7knnuD
+	Am0AEgJgd5BhRZg=; b=JrLYa0p/a1qAYFQgsWKqU2dfhcESFBmSQQmZ6efp79Rv
+	c5GiQr5WRHTIfG5656CC+ckJA3abtjOLjSn+CU3+TFul2Pj5U84WzV0TxX4YPmX8
+	MajSNGX14/p4+IH10N+H68jD+kkyA3a+KwkhJOIEQYZ+hB3DS8x5tRfI3CEP/sEV
+	wJv/6op4t9oS4AfwFVgm+UlsEWR8xIZzfS57Z39TdinF9Hc5eeec5w4IEakO0V2r
+	1gW0x+5tyhKaVheB4KfdWgupw7Kl+2GCdPQ9LSP6jPExcYxgLV/w9dBikHq9Qv+R
+	vACoHrG2MsUcm8fx2I03ERDj/jY+Z1dbcHA9cxJkYA==
+X-ME-Sender: <xms:qXSOZa2UtrUU-UCTqv3NI5qxEM3lSzs1d-wp5DWxaI5JiLK2VIKT2Q>
+    <xme:qXSOZdHXwsX4QNKc-zAWT6BysT1DQgaM3MmD3-wiMew2QyKozxGDbrcyWcJ2FHyFM
+    TOB4U7iYddldM_1Rg>
+X-ME-Received: <xmr:qXSOZS4C6GvtFEkyVX2AXkJvanVmV00AebWDadG142I0euu9DpHvKfmVmjHOXz3juFKlwF2iVMyAml3TffQvXMQj0Yv6X26WS5XQQJYfWkcE-fG8ng>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdefvddguddutdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
@@ -47,24 +47,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdefvddguddutdcutefuodetgg
     gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
     teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
     esphhkshdrihhm
-X-ME-Proxy: <xmx:pXSOZb0TsHH-_ZJ7DU6Oc6rnuwOOPy6UU-g01ZgxzNEOLU029rhbZQ>
-    <xmx:pXSOZdH5M-5wLAwYlfXMvHHTUG4szMQH5Z8FbFEyMs5L39k7CBp-Gw>
-    <xmx:pXSOZU_AJSr7cWI3MCzdUGWRpOHK9dijqImEM2RiTqwKChHCkzJ0_A>
-    <xmx:pXSOZSQQ3KNuaxHIaSaFnLXGcBJi6YlU-4PyR38GGcbY1tEj7at7OQ>
+X-ME-Proxy: <xmx:qXSOZb2tCY-ATemr6X0tZBi05BEW35QfsArZNkrUFQts3tYCJFkDJA>
+    <xmx:qXSOZdGLtuVkjNuH_I8hJfGfjocJChm_4esi7mk4GqIGKq--FfB5jg>
+    <xmx:qXSOZU_q6XNxz0bGKnWdd5GTGxmRa54TGsmOSpsWqRQme4Vs2m_s5w>
+    <xmx:qXSOZSTiXr49dyHmRFMZa9vCJ1BvyQTo-PTgGUT04XYmqD6YkMqMFQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 29 Dec 2023 02:26:28 -0500 (EST)
+ 29 Dec 2023 02:26:32 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 1d9cc5d1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 29 Dec 2023 07:24:12 +0000 (UTC)
-Date: Fri, 29 Dec 2023 08:26:26 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 4e7b3a98 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 29 Dec 2023 07:24:16 +0000 (UTC)
+Date: Fri, 29 Dec 2023 08:26:30 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v3 01/12] t: introduce DEFAULT_REPO_FORMAT prereq
-Message-ID: <578deaabcf5fa608a62993dd7586d7eec272c4e2.1703833819.git.ps@pks.im>
+Subject: [PATCH v3 02/12] worktree: skip reading HEAD when repairing worktrees
+Message-ID: <77c7213c66d6b5caf2c24e17578d3e42f7b745a7.1703833819.git.ps@pks.im>
 References: <cover.1703067989.git.ps@pks.im>
  <cover.1703833818.git.ps@pks.im>
 Precedence: bulk
@@ -74,85 +74,166 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="yFFbMLkbrvkFX7VH"
+	protocol="application/pgp-signature"; boundary="qKU/7vYuYPe6ALK6"
 Content-Disposition: inline
 In-Reply-To: <cover.1703833818.git.ps@pks.im>
 
 
---yFFbMLkbrvkFX7VH
+--qKU/7vYuYPe6ALK6
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-A limited number of tests require repositories to have the default
-repository format or otherwise they would fail to run, e.g. because they
-fail to detect the correct hash function. While the hash function is the
-only extension right now that creates problems like this, we are about
-to add a second extension for the ref format.
+When calling `git init --separate-git-dir=3D<new-path>` on a preexisting
+repository, we move the Git directory of that repository to the new path
+specified by the user. If there are worktrees present in the repository,
+we need to repair the worktrees so that their gitlinks point to the new
+location of the repository.
 
-Introduce a new DEFAULT_REPO_FORMAT prereq that can easily be amended
-whenever we add new format extensions. Next to making any such changes
-easier on us, the prerequisite's name should also help to clarify the
-intent better.
+This repair logic will load repositories via `get_worktrees()`, which
+will enumerate up and initialize all worktrees. Part of initialization
+is logic that we resolve their respective worktree HEADs, even though
+that information may not actually be needed in the end by all callers.
+
+Although not a problem presently with the file-based reference backend,
+it will become a problem with the upcoming reftable backend. In the
+context of git-init(1) we do not have a fully-initialized repository set
+up via `setup_git_directory()` or friends. Consequently, we do not know
+about the repository format when `repair_worktrees()` is called, and
+properly setting up all parts of the repositroy in `init_db()` before we
+try to repair worktrees is not an easy task. With the introduction of
+the reftable backend, we would ultimately try to look up the worktree
+HEADs before we have figured out the reference format, which does not
+work.
+
+We do not require the worktree HEADs at all to repair worktrees. So
+let's fix this issue by skipping over the step that reads them.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t3200-branch.sh | 2 +-
- t/test-lib.sh     | 4 ++++
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ worktree.c | 31 +++++++++++++++++++++++--------
+ 1 file changed, 23 insertions(+), 8 deletions(-)
 
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 6a316f081e..de7d3014e4 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -519,7 +519,7 @@ EOF
+diff --git a/worktree.c b/worktree.c
+index a56a6c2a3d..cc34a3419b 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -51,7 +51,7 @@ static void add_head_info(struct worktree *wt)
+ /**
+  * get the main worktree
+  */
+-static struct worktree *get_main_worktree(void)
++static struct worktree *get_main_worktree(int skip_reading_head)
+ {
+ 	struct worktree *worktree =3D NULL;
+ 	struct strbuf worktree_path =3D STRBUF_INIT;
+@@ -70,11 +70,13 @@ static struct worktree *get_main_worktree(void)
+ 	 */
+ 	worktree->is_bare =3D (is_bare_repository_cfg =3D=3D 1) ||
+ 		is_bare_repository();
+-	add_head_info(worktree);
++	if (!skip_reading_head)
++		add_head_info(worktree);
+ 	return worktree;
+ }
 =20
- mv .git/config .git/config-saved
+-static struct worktree *get_linked_worktree(const char *id)
++static struct worktree *get_linked_worktree(const char *id,
++					    int skip_reading_head)
+ {
+ 	struct worktree *worktree =3D NULL;
+ 	struct strbuf path =3D STRBUF_INIT;
+@@ -93,7 +95,8 @@ static struct worktree *get_linked_worktree(const char *i=
+d)
+ 	CALLOC_ARRAY(worktree, 1);
+ 	worktree->path =3D strbuf_detach(&worktree_path, NULL);
+ 	worktree->id =3D xstrdup(id);
+-	add_head_info(worktree);
++	if (!skip_reading_head)
++		add_head_info(worktree);
 =20
--test_expect_success SHA1 'git branch -m q q2 without config should succeed=
-' '
-+test_expect_success DEFAULT_REPO_FORMAT 'git branch -m q q2 without config=
- should succeed' '
- 	git branch -m q q2 &&
- 	git branch -m q2 q
- '
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 876b99562a..dc03f06b8e 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1936,6 +1936,10 @@ test_lazy_prereq SHA1 '
- 	esac
- '
+ done:
+ 	strbuf_release(&path);
+@@ -118,7 +121,14 @@ static void mark_current_worktree(struct worktree **wo=
+rktrees)
+ 	free(git_dir);
+ }
 =20
-+test_lazy_prereq DEFAULT_REPO_FORMAT '
-+	test_have_prereq SHA1
-+'
+-struct worktree **get_worktrees(void)
++/*
++ * NEEDSWORK: This function exists so that we can look up metadata of a
++ * worktree without trying to access any of its internals like the refdb. =
+It
++ * would be preferable to instead have a corruption-tolerant function for
++ * retrieving worktree metadata that could be used when the worktree is kn=
+own
++ * to not be in a healthy state, e.g. when creating or repairing it.
++ */
++static struct worktree **get_worktrees_internal(int skip_reading_head)
+ {
+ 	struct worktree **list =3D NULL;
+ 	struct strbuf path =3D STRBUF_INIT;
+@@ -128,7 +138,7 @@ struct worktree **get_worktrees(void)
+=20
+ 	ALLOC_ARRAY(list, alloc);
+=20
+-	list[counter++] =3D get_main_worktree();
++	list[counter++] =3D get_main_worktree(skip_reading_head);
+=20
+ 	strbuf_addf(&path, "%s/worktrees", get_git_common_dir());
+ 	dir =3D opendir(path.buf);
+@@ -137,7 +147,7 @@ struct worktree **get_worktrees(void)
+ 		while ((d =3D readdir_skip_dot_and_dotdot(dir)) !=3D NULL) {
+ 			struct worktree *linked =3D NULL;
+=20
+-			if ((linked =3D get_linked_worktree(d->d_name))) {
++			if ((linked =3D get_linked_worktree(d->d_name, skip_reading_head))) {
+ 				ALLOC_GROW(list, counter + 1, alloc);
+ 				list[counter++] =3D linked;
+ 			}
+@@ -151,6 +161,11 @@ struct worktree **get_worktrees(void)
+ 	return list;
+ }
+=20
++struct worktree **get_worktrees(void)
++{
++	return get_worktrees_internal(0);
++}
 +
- # Ensure that no test accidentally triggers a Git command
- # that runs the actual maintenance scheduler, affecting a user's
- # system permanently.
+ const char *get_worktree_git_dir(const struct worktree *wt)
+ {
+ 	if (!wt)
+@@ -591,7 +606,7 @@ static void repair_noop(int iserr UNUSED,
+=20
+ void repair_worktrees(worktree_repair_fn fn, void *cb_data)
+ {
+-	struct worktree **worktrees =3D get_worktrees();
++	struct worktree **worktrees =3D get_worktrees_internal(1);
+ 	struct worktree **wt =3D worktrees + 1; /* +1 skips main worktree */
+=20
+ 	if (!fn)
 --=20
 2.43.GIT
 
 
---yFFbMLkbrvkFX7VH
+--qKU/7vYuYPe6ALK6
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWOdKEACgkQVbJhu7ck
-PpTP4g/+Nn7M7UqpYZhrLZoNSoiyWnNZF+5h94i9kRWnilSFLaEOgct6iwcLqDyi
-sXEcQr24Sc4NV3DqdMCg78B2SYcmGDbm1tXtjuQ9JYn/PY5BePcG3qd0fj13QfJo
-B9u1gh5OeNrSvHBL8m9vTxpTl+FsfLKqPgRDk7RPsCEa9cxvPbNhNnqknqKipL2z
-8+PVDYv5Mn80dFqbxb7G0gHoN1xMTJVyFPVUpI/u7wubBsFoyoMdJxQTbr0lpzDF
-tT0OKLHS9ahhSrluIP1MBz4l13SAnGXUGNjjSwykiQ1P3tq+SZyoqnioTEEPseJ8
-ZZzW1uhnWC+0GwDtA4W1fH0H3pBMIMwHzg9nrTthbfGpB+nqxS1FKCYdIg6Izohm
-mhvjvOqS5bguIARKaenswcC0UQ43v6dftawC50UNRLTk7Z1F4ozhOpRQ3YyIAYzh
-5j73UCeUwX8Gn2P6ByZ9YfICKRURlvwrTOetKjHujW9N3jc1bH0b+G4ek5g3vNSd
-pqy+zN1PNM68Cj8S6o5QhyqcxUYk8gdub5PB191bfLKSQ/K9HmYlrlKXzZX8sF+y
-EPx49YAXPejRyIHAXdkMic/jEjXigjEgOunIVXDprA+uRGF8Vgwad03PXzkwRqyt
-LEvSXeocjwSakys4c2KnDDfYB6BxIGrCzi1lIFi26s+OrwNHNvc=
-=7ttT
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWOdKUACgkQVbJhu7ck
+PpTNThAAiCDYS5kqzigOGPgnx05+ZolYPtIz2LzK4mi2P/KGSbmjtEPoB2i98jN1
+bApTOTFXMzhjTNgcpVy07ANQTX9TFvTi1xwnblEm9b7NDefcj5TmCSKkO8YaH+ME
+Nr7sps0EMmcBfAwT3Mvxn8lnqWcJJ4XJhFRWEKvw6RAOJw/UZdI3P0T5Ii19dPvn
+JX/0KH2zDINYsSVe+VZYbEI/Nlv/Uw+YaqYHs3Xbir09FoIJXW/D5gjxb57M4Wfj
+Jae9kZ63baUQAQgltz94FfzX24NtU+FSxvJSpucpnZ7mu68A7ySItCTFfG/Tay5S
+YP5T1igxRSasGvRqNR5gipTmY8R6h/SMnVT8TsuMz2vmGqtBQR0M50yjcYltcsle
+HCujBt0E6PI2jZCuIHoF3J44/OHtUnO2Cpe2cT7W303J0ce3vdPAaZYI4TfcWAN3
+NMYfFczaAV9B0i4Mhkd0q2BLfnk/wjU1MKdlW/jFy9R3hvnSWeDuoS8Um+A81RMk
+5MQlZ/neUNKBC24YE3uKUuDiyXey9BGrd/IgDDCyDZIR0CGjl/LRSezPPoz6Sa9V
+DO/apIi8X01f57vf6V1eWPex3HeKmL5pHUJEevmyt2/llh4Dc/TtrwGTXtCcoQDo
+BUxIP+L8shLTLW/yBWzqecEJv1Vnn8wL2G5AayHITVCybyo/OFw=
+=5NI8
 -----END PGP SIGNATURE-----
 
---yFFbMLkbrvkFX7VH--
+--qKU/7vYuYPe6ALK6--
