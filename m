@@ -1,62 +1,88 @@
-Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout3.freenet.de (mout3.freenet.de [195.4.92.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B10D10A18
-	for <git@vger.kernel.org>; Fri, 29 Dec 2023 10:36:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-3bbd7d60729so839727b6e.0
-        for <git@vger.kernel.org>; Fri, 29 Dec 2023 02:36:01 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703846161; x=1704450961;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LIrZm8JV5BP+0pJLC/1KHL0+tKscTNjR0o1JaUOxVsQ=;
-        b=eQNMJH8FyUpYQ8bh+aYK20NHBhvjmedLpK0eevB780DpcCUp6vxpHNSTi3Xz6Jzpwu
-         XSkr3nu1LBKwtdzQey+nqPe2B8JGJkkgGuu6Y1zDg5NBDrWC4GJPfZ+uOvvZbugG/oPs
-         N1XrXlg7pymLPo7mwwSJKUolTiaz4Zu6rHHvlP6QjylOYQfRs3+3n+/nfxAK9vI+c813
-         WsR1fEPmeBz94KdZNVWsAiagH16f0/yT7O4vXSkikF84mVDHs78oJjq7p+sQSR9gzPqv
-         eGVodwNdztwAMP/tAt/KZLLbeI82y5odRJhGzbAFWHPVVSJDcLCdTZQOEEgpMpCvmAFz
-         syrw==
-X-Gm-Message-State: AOJu0Yxtfqumqm3hhdQDMJjBZzdChGmDX0NLmH4DRwSgtVET/B3b3KbA
-	/mNeI2CPAfnDU33NThlZ3ZCtnDmuNAK/wsa1GMh3izwB
-X-Google-Smtp-Source: AGHT+IHJKf7mVOPNTxiQjgEavLA6KYsAH9EBC5+fADEVOnm+FELwQypium9G+hoEtyEmUS3rjFuhJw6Mau1cpTJvG44=
-X-Received: by 2002:a05:6808:130e:b0:3b9:dcf0:63b9 with SMTP id
- y14-20020a056808130e00b003b9dcf063b9mr13277263oiv.23.1703846160837; Fri, 29
- Dec 2023 02:36:00 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6C011187
+	for <git@vger.kernel.org>; Fri, 29 Dec 2023 12:03:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=freenet.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freenet.de
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=freenet.de header.i=@freenet.de header.b="AkZsU7DQ"
+Received: from [195.4.92.121] (helo=sub2.freenet.de)
+	by mout3.freenet.de with esmtpa (ID soekkle@freenet.de) (port 25) (Exim 4.94.2 #2)
+	id 1rJBaX-006l0a-8t; Fri, 29 Dec 2023 13:03:41 +0100
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=freenet.de;
+	s=mjaymdexmjqk; h=Content-Transfer-Encoding:Content-Type:MIME-Version:
+	Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=eqHRjOd3NyVVKxws5eE7B/Pi/bzjErAaZPXigCK2Qu8=; b=AkZsU7DQNmFIJctJ4OEcVFVhPU
+	yxgVqd8Mt291Tb6UGz7G5P0+GHNiQeM1pqGonrlviaI8IFXwUqJn9Q/iGF6q5VcypMtevlcjXR8Xh
+	+meRU5y2h7hkRcv2JWJX0FtrKMnva4n4qyQcHeih4xW1BptMbazvYo+r6zzI8R3QApA5N4qmnF86/
+	NB+9owiGlgIKtHofbxDdOY5p7Icx6fK1rcdZbigyVvgUDF8hD+Tkwz7E5JcX2IGSmt7HhBRFr5xi/
+	ACpNQEtlVny3wOSZd+pfBTcWZAIpLjVyex9/c7GeOQXFpxofBzWmul3affeUom81m80dVztx1/Qr7
+	aN+2oG/A==;
+Received: from p200300e2e7202b00dacb8afffee0ca63.dip0.t-ipconnect.de ([2003:e2:e720:2b00:dacb:8aff:fee0:ca63]:54966 helo=soren-pc.lan)
+	by sub2.freenet.de with esmtpsa (ID soekkle@freenet.de) (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (port 465) (Exim 4.94.2 #2)
+	id 1rJBaW-002SgR-Vo; Fri, 29 Dec 2023 13:03:41 +0100
+From: =?UTF-8?q?S=C3=B6ren=20Krecker?= <soekkle@freenet.de>
+To: git@vger.kernel.org
+Cc: sunshine@sunshineco.com,
+	=?UTF-8?q?S=C3=B6ren=20Krecker?= <soekkle@freenet.de>
+Subject: [PATCH 0/1 v2] Replace SID with domain/username on Windows
+Date: Fri, 29 Dec 2023 13:03:18 +0100
+Message-Id: <20231229120319.3797-1-soekkle@freenet.de>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1703754513.git.ps@pks.im> <3cf6ceb274d20ce76d0be65e4362a33579627052.1703754513.git.ps@pks.im>
-In-Reply-To: <3cf6ceb274d20ce76d0be65e4362a33579627052.1703754513.git.ps@pks.im>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Fri, 29 Dec 2023 05:35:49 -0500
-Message-ID: <CAPig+cRWCFdVd_+By2T-sP58u22OcgDQogSS0UP5ZYYf2K5W_A@mail.gmail.com>
-Subject: Re: [PATCH 3/6] refs/files: skip creation of "refs/{heads,tags}" for worktrees
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-FN-MUUID: 170385142059A4807E1B0FO
+X-Originated-At: 2003:e2:e720:2b00:dacb:8aff:fee0:ca63!54966
+X-Scan-TS: Fri, 29 Dec 2023 13:03:41 +0100
 
-On Fri, Dec 29, 2023 at 5:16=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
-> The files ref backend will create both "refs/heads" and "refs/tags" in
-> the Git directory. While this logic makes sense for normal repositories,
-> it does not fo worktrees because those refs are "common" refs that would
-> always be contained in the main repository's ref database.
+Improve error message on windows systems, if owner of reposotory and current user are not equal. 
 
-s/fo/for/
 
-(not worth a reroll)
+Old Message:
+'''
+fatal: detected dubious ownership in repository at 'C:/Users/test/source/repos/git'
+'C:/Users/test/source/repos/git' is owned by:
+	'S-1-5-21-571067702-4104414259-3379520149-500'
+but the current user is:
+	'S-1-5-21-571067702-4104414259-3379520149-1001'
+To add an exception for this directory, call:
 
-> Introduce a new flag telling the backend that it is expected to create a
-> per-worktree ref database and skip creation of these dirs in the files
-> backend when the flag is set. No other backends (currently) need
-> worktree-specific logic, so this is the only required change to start
-> creating per-worktree ref databases via `refs_init_db()`.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+	git config --global --add safe.directory C:/Users/test/source/repos/git 
+'''
+
+New Massage:
+'''
+fatal: detected dubious ownership in repository at 'C:/Users/test/source/repos/git'
+'C:/Users/soren/source/repos/git' is owned by:
+        'DESKTOP-L78JVA6/Administrator'
+but the current user is:
+        'DESKTOP-L78JVA6/test'
+To add an exception for this directory, call:
+
+        git config --global --add safe.directory C:/Users/test/source/repos/git
+'''
+
+
+I hope that I have succeeded in addressing all the points raised.
+
+Sören Krecker (1):
+  Replace SID with domain/username
+
+ compat/mingw.c | 28 ++++++++++++++++++++++++----
+ 1 file changed, 24 insertions(+), 4 deletions(-)
+
+
+base-commit: e79552d19784ee7f4bbce278fe25f93fbda196fa
+-- 
+2.39.2
+
