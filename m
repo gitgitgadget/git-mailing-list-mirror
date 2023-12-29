@@ -1,71 +1,70 @@
 Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B57EBE76
-	for <git@vger.kernel.org>; Fri, 29 Dec 2023 07:27:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830F0C8CE
+	for <git@vger.kernel.org>; Fri, 29 Dec 2023 07:27:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="w96ZwXGY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NJlCe+u/"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="p9odUuDu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gU1aEkHZ"
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.nyi.internal (Postfix) with ESMTP id 7E9485C0175;
-	Fri, 29 Dec 2023 02:27:03 -0500 (EST)
+	by mailout.nyi.internal (Postfix) with ESMTP id D2F475C0184;
+	Fri, 29 Dec 2023 02:27:07 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Fri, 29 Dec 2023 02:27:03 -0500
+  by compute3.internal (MEProxy); Fri, 29 Dec 2023 02:27:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1703834823; x=1703921223; bh=jxVJ9rOYWm
-	lnKgLPm14xSPG0U3p9OJSta0ABiogYLY8=; b=w96ZwXGYqklSXhA8glH6nUJpcD
-	mpoBoXc33hj92/epnnJGsh8WDrb/Srl7o6u+lhy4xLZMGhivBL4O4tz4K2At/F03
-	Mg1knlPW18Or65U0OV/tv7z+6tGncbIjlUuuiNkHh5cJoyk5yKyXIx0J8OU1BmGX
-	NYWu+F/oeV7sM7lpPNcX3C/tGsWQMIgEtyRNbpWfwGc61No6vAyx3+ulEaPTS235
-	izWXIO+I0R/NenGp7SDRdoSPYvKF7p9UCD2VqjrQAheqYGZ6dkCHA2Zbbbzgfzs6
-	lcKn50vekho36IDx4G8A4nE8Y7qtlnb+fM3iC7XyhW/s7tUllz0MikDDypvw==
+	:subject:to:to; s=fm2; t=1703834827; x=1703921227; bh=/JPSnppaKi
+	ZO3nXm9DEN+3Gc4HZEN8toGs9DO/HBAR4=; b=p9odUuDuUdLEsrDoyjuP1TC9xo
+	366G/D9QMapd3mP6ToTU15j9J7b32mNMQWe0K/L3pHNw/Fvrl+RYISgzKqcFbMZy
+	IgemGF6ZZ9siHDI/ddt8DDxn0y3vH+TbKforiz6WbvPL886l36dHANhaaxUYTi/u
+	W9mmDBGbLqohMFVpGg+AK4y/QhVgGPfxLA/Kqe9xrvYGQXxZ1nCcceNQrNW7K/Xi
+	PfcSxcShOx2Fdq4+X8cKKSwIwalYkAf8V1NOtmFBu84OYON/Q283olKbNq4U0zgM
+	oksaN4Tg+cAVG1fIy+pPa6XfI43jSUl1fkjuNhxyV86SNC/GLZbTl64+Vb+w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1703834823; x=1703921223; bh=jxVJ9rOYWmlnKgLPm14xSPG0U3p9
-	OJSta0ABiogYLY8=; b=NJlCe+u/6HozPO7ic4SwLVFm5joRZV7CW3385yaiPNC2
-	FZd210dg1aRYCZuMmvs088tHkffnztdAfQm8ARwyjjJbGSKRL/qQjCuqYZv6WGzS
-	ssqxMdpWo+5D3evj00Z+qd0FjB3KC/cZS4oMdXYSp1zsx+yEfAtNklPE0L9bbbTG
-	kswIKIpNKVVz34Ar4092TmJ64DzegTJ2mBvKdnStdvHFtTBpsiq3qyPPXOyyA7Fg
-	F01knbeYLggC3+QjVhmPhfExjjabgbHMVfj2vfIpl30j1ALsLpUSUN+8meaXhBGz
-	1nhAYvyOMGzZBHlqaV+KDppcOqWHCE90DMgZ8dRvtQ==
-X-ME-Sender: <xms:x3SOZcR1OkQT9Nv9qOY65DxutCNY4i4zP6MzPcgQOHfYD5ErZCHifA>
-    <xme:x3SOZZxYWGOJzCTVFDqoXVgUIyTHbKlPPXCVWqt9H76xEb84Fj5vVkX2IZDF1C9-v
-    GeVIww_GDxyd0cT-A>
-X-ME-Received: <xmr:x3SOZZ06apsaMMQ4Q6dp71q0Msae9BdHWXoEoHdRvC9P3U38MFN8e6Ze3mYQ8VVhIbwUI_aXYeK7GbT82gJc6iEruXZkfEq2EIU9pWrYkyVJ4Zpc9w>
+	fm2; t=1703834827; x=1703921227; bh=/JPSnppaKiZO3nXm9DEN+3Gc4HZE
+	N8toGs9DO/HBAR4=; b=gU1aEkHZMkQNnehU6TGE3HgKmFTVgcTh9FQbADm+If62
+	JrkCeMy/xMmmC4zlfftJsWHVmUDkHuac0Myd3hGfhcKrrTthSR9zgvgLfth0HXRa
+	P1nGD9OHfjs4fpeBJTsV+1npndW0IGlvDnn3e8/I1665RKFV6TVtu/tS0mBmwLFo
+	8KB1uGVixrVen4Bo2HWjPAMhj4xf4Unq+zrWiB22KUE6Q+fza01FPZ9dfrqDkrok
+	M/GjKOmQzT/xXG+7d5mlGKkF62Xb4IvzEk0JGOXPqTBlMU1lEf5wN+Yo2JwZtkf+
+	CONMG553Ok1WZvOIMk9+fIZ4wYhMTyBrSzaPOxGwKw==
+X-ME-Sender: <xms:y3SOZQa6d6Xlja_YKxbtEpMeyjSZj09IvqTlGWNt-vDbd3pJKeydVQ>
+    <xme:y3SOZba0mf6qs1ark5KIFMbevCdhYbX4ZMYiwSWeR6lCVeFlqjhCe0TQ-HrhRR15X
+    5PBsWHIkG2p4br9gw>
+X-ME-Received: <xmr:y3SOZa_N9eJJpI91aqdB-VeJVXXZG92IBGXVt_PcW8FmsMOSFRq4EVdYcEnfqmM9JWLGmgCg7Aug2JEGSXBA-TZ4h-qPTOjuxiD9hiRARKNp5NpTNA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdefvddguddutdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
     enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
     rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
     gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
-    teenucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
+    teenucevlhhushhtvghrufhiiigvpeefnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
     esphhkshdrihhm
-X-ME-Proxy: <xmx:x3SOZQBvgxAVxV15Tibo16O5FDHuaMwqXP--2fYQqgYyuzryfVbfzg>
-    <xmx:x3SOZVgH9K24dCEYDl2KmrXVOD2q-TYiA35UukEcnqJ2VU7Jxg9voQ>
-    <xmx:x3SOZcrMhuXQvWGHX7uBC1hDxtrHEvWQxNqtNTt5umqPCmSN57Af5A>
-    <xmx:x3SOZYunh3EYtbzm_1gNgFkiZHp3KMO5d51sNwLiFMIGsJ0ngQCJAg>
+X-ME-Proxy: <xmx:y3SOZao5qx14UG270aUTxrLpRrN9N8v5xwz54VZp_fYXPyXVgKYg-g>
+    <xmx:y3SOZboNskgBCWPCjnicN4infpxmcmzwOTVPfVOcllN7ovzbf7vpWw>
+    <xmx:y3SOZYSQg2Biq53jTptYo810BpHImjZPb5kV2SSqjAWJCG5vKpx0ow>
+    <xmx:y3SOZS1YJzSFN8bqdQ1qpNWkOzpJR33A70UDIl2TDKS5C71nGhWozQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 29 Dec 2023 02:27:02 -0500 (EST)
+ 29 Dec 2023 02:27:06 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id d5100359 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 29 Dec 2023 07:24:46 +0000 (UTC)
-Date: Fri, 29 Dec 2023 08:27:00 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 02b14237 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 29 Dec 2023 07:24:50 +0000 (UTC)
+Date: Fri, 29 Dec 2023 08:27:04 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v3 09/12] builtin/rev-parse: introduce `--show-ref-format`
- flag
-Message-ID: <4ee3c9a2d169e5a8fa657531919f9b2833f2a1ac.1703833819.git.ps@pks.im>
+Subject: [PATCH v3 10/12] builtin/init: introduce `--ref-format=` value flag
+Message-ID: <25773e356063e5c109c238105c148b1112cc9672.1703833819.git.ps@pks.im>
 References: <cover.1703067989.git.ps@pks.im>
  <cover.1703833818.git.ps@pks.im>
 Precedence: bulk
@@ -75,109 +74,175 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Xvkk06tnpzQptvQn"
+	protocol="application/pgp-signature"; boundary="UldrM6uUYgBoZTz5"
 Content-Disposition: inline
 In-Reply-To: <cover.1703833818.git.ps@pks.im>
 
 
---Xvkk06tnpzQptvQn
+--UldrM6uUYgBoZTz5
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Introduce a new `--show-ref-format` to git-rev-parse(1) that causes it
-to print the ref format used by a repository.
+Introduce a new `--ref-format` value flag for git-init(1) that allows
+the user to specify the ref format that is to be used for a newly
+initialized repository.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/git-rev-parse.txt |  3 +++
- builtin/rev-parse.c             |  4 ++++
- t/t1500-rev-parse.sh            | 17 +++++++++++++++++
- 3 files changed, 24 insertions(+)
+ Documentation/git-init.txt |  7 +++++++
+ builtin/init-db.c          | 13 ++++++++++++-
+ t/t0001-init.sh            | 26 ++++++++++++++++++++++++++
+ 3 files changed, 45 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.=
-txt
-index 912fab9f5e..546faf9017 100644
---- a/Documentation/git-rev-parse.txt
-+++ b/Documentation/git-rev-parse.txt
-@@ -307,6 +307,9 @@ The following options are unaffected by `--path-format`:
- 	input, multiple algorithms may be printed, space-separated.
- 	If not specified, the default is "storage".
+diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
+index 6f0d2973bf..e8dc645bb5 100644
+--- a/Documentation/git-init.txt
++++ b/Documentation/git-init.txt
+@@ -11,6 +11,7 @@ SYNOPSIS
+ [verse]
+ 'git init' [-q | --quiet] [--bare] [--template=3D<template-directory>]
+ 	  [--separate-git-dir <git-dir>] [--object-format=3D<format>]
++	  [--ref-format=3D<format>]
+ 	  [-b <branch-name> | --initial-branch=3D<branch-name>]
+ 	  [--shared[=3D<permissions>]] [<directory>]
 =20
-+--show-ref-format::
-+	Show the reference storage format used for the repository.
+@@ -57,6 +58,12 @@ values are 'sha1' and (if enabled) 'sha256'.  'sha1' is =
+the default.
+ +
+ include::object-format-disclaimer.txt[]
+=20
++--ref-format=3D<format>::
 +
++Specify the given ref storage format for the repository. The valid values =
+are:
+++
++include::ref-storage-format.txt[]
++
+ --template=3D<template-directory>::
 =20
- Other Options
- ~~~~~~~~~~~~~
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index 917f122440..d08987646a 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -1062,6 +1062,10 @@ int cmd_rev_parse(int argc, const char **argv, const=
- char *prefix)
- 				puts(the_hash_algo->name);
- 				continue;
- 			}
-+			if (!strcmp(arg, "--show-ref-format")) {
-+				puts(ref_storage_format_to_name(the_repository->ref_storage_format));
-+				continue;
-+			}
- 			if (!strcmp(arg, "--end-of-options")) {
- 				seen_end_of_options =3D 1;
- 				if (filter & (DO_FLAGS | DO_REVS))
-diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
-index 3f9e7f62e4..a669e592f1 100755
---- a/t/t1500-rev-parse.sh
-+++ b/t/t1500-rev-parse.sh
-@@ -208,6 +208,23 @@ test_expect_success 'rev-parse --show-object-format in=
- repo' '
- 	grep "unknown mode for --show-object-format: squeamish-ossifrage" err
+ Specify the directory from which templates will be used.  (See the "TEMPLA=
+TE
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index b6e80feab6..a4f81e2af5 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -58,6 +58,7 @@ static int shared_callback(const struct option *opt, cons=
+t char *arg, int unset)
+ static const char *const init_db_usage[] =3D {
+ 	N_("git init [-q | --quiet] [--bare] [--template=3D<template-directory>]\=
+n"
+ 	   "         [--separate-git-dir <git-dir>] [--object-format=3D<format>]\=
+n"
++	   "         [--ref-format=3D<format>]\n"
+ 	   "         [-b <branch-name> | --initial-branch=3D<branch-name>]\n"
+ 	   "         [--shared[=3D<permissions>]] [<directory>]"),
+ 	NULL
+@@ -77,8 +78,10 @@ int cmd_init_db(int argc, const char **argv, const char =
+*prefix)
+ 	const char *template_dir =3D NULL;
+ 	unsigned int flags =3D 0;
+ 	const char *object_format =3D NULL;
++	const char *ref_format =3D NULL;
+ 	const char *initial_branch =3D NULL;
+ 	int hash_algo =3D GIT_HASH_UNKNOWN;
++	unsigned int ref_storage_format =3D REF_STORAGE_FORMAT_UNKNOWN;
+ 	int init_shared_repository =3D -1;
+ 	const struct option init_db_options[] =3D {
+ 		OPT_STRING(0, "template", &template_dir, N_("template-directory"),
+@@ -96,6 +99,8 @@ int cmd_init_db(int argc, const char **argv, const char *=
+prefix)
+ 			   N_("override the name of the initial branch")),
+ 		OPT_STRING(0, "object-format", &object_format, N_("hash"),
+ 			   N_("specify the hash algorithm to use")),
++		OPT_STRING(0, "ref-format", &ref_format, N_("format"),
++			   N_("specify the reference format to use")),
+ 		OPT_END()
+ 	};
+=20
+@@ -159,6 +164,12 @@ int cmd_init_db(int argc, const char **argv, const cha=
+r *prefix)
+ 			die(_("unknown hash algorithm '%s'"), object_format);
+ 	}
+=20
++	if (ref_format) {
++		ref_storage_format =3D ref_storage_format_by_name(ref_format);
++		if (ref_storage_format =3D=3D REF_STORAGE_FORMAT_UNKNOWN)
++			die(_("unknown ref storage format '%s'"), ref_format);
++	}
++
+ 	if (init_shared_repository !=3D -1)
+ 		set_shared_repository(init_shared_repository);
+=20
+@@ -237,6 +248,6 @@ int cmd_init_db(int argc, const char **argv, const char=
+ *prefix)
+=20
+ 	flags |=3D INIT_DB_EXIST_OK;
+ 	return init_db(git_dir, real_git_dir, template_dir, hash_algo,
+-		       REF_STORAGE_FORMAT_UNKNOWN, initial_branch,
++		       ref_storage_format, initial_branch,
+ 		       init_shared_repository, flags);
+ }
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index 30ce752cc1..b131d665db 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -576,6 +576,32 @@ test_expect_success 'init with GIT_DEFAULT_REF_FORMAT=
+=3Dgarbage' '
+ 	test_cmp expect err
  '
 =20
-+test_expect_success 'rev-parse --show-ref-format' '
-+	test_detect_ref_format >expect &&
-+	git rev-parse --show-ref-format >actual &&
++test_expect_success 'init with --ref-format=3Dfiles' '
++	test_when_finished "rm -rf refformat" &&
++	git init --ref-format=3Dfiles refformat &&
++	echo files >expect &&
++	git -C refformat rev-parse --show-ref-format >actual &&
 +	test_cmp expect actual
 +'
 +
-+test_expect_success 'rev-parse --show-ref-format with invalid storage' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		git config extensions.refstorage broken &&
-+		test_must_fail git rev-parse --show-ref-format 2>err &&
-+		grep "error: invalid value for ${SQ}extensions.refstorage${SQ}: ${SQ}bro=
-ken${SQ}" err
-+	)
++test_expect_success 're-init with same format' '
++	test_when_finished "rm -rf refformat" &&
++	git init --ref-format=3Dfiles refformat &&
++	git init --ref-format=3Dfiles refformat &&
++	echo files >expect &&
++	git -C refformat rev-parse --show-ref-format >actual &&
++	test_cmp expect actual
 +'
 +
- test_expect_success '--show-toplevel from subdir of working tree' '
- 	pwd >expect &&
- 	git -C sub/dir rev-parse --show-toplevel >actual &&
++test_expect_success 'init with --ref-format=3Dgarbage' '
++	test_when_finished "rm -rf refformat" &&
++	cat >expect <<-EOF &&
++	fatal: unknown ref storage format ${SQ}garbage${SQ}
++	EOF
++	test_must_fail git init --ref-format=3Dgarbage refformat 2>err &&
++	test_cmp expect err
++'
++
+ test_expect_success MINGW 'core.hidedotfiles =3D false' '
+ 	git config --global core.hidedotfiles false &&
+ 	rm -rf newdir &&
 --=20
 2.43.GIT
 
 
---Xvkk06tnpzQptvQn
+--UldrM6uUYgBoZTz5
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWOdMMACgkQVbJhu7ck
-PpS5KQ//QTLQ41ot05Vc/RMIlJOqVZA4mJUpG014FJbMWL+I5SUlxp+OzIxgG3D/
-I5uuzfCKLn6wShYPqWoUWrqOA9ZAMfnouMymj083QAdmdyVsAwkqVm+rze5ALnik
-2CK5/xadKpT3uYbRoWPH4R5vjGhk2fwDX+MBCfV4M9pd4lSEDKqxP3qupI3eqfOv
-2LgixkfBPm8y20UHw+zWofVlZJlhGUmsMXAix4o6LNXPFespaZGeWcUTXJQxA1kq
-ppfV3QlgaZTCZeTl9Z5wgBt8qlXIIrVrXPv3Iek/fAf84vu6jY5n3QnmHe8CzLIG
-0FOwAQPYTQ4o365LF4xglWzya28ZQQh3yfmEewhMxoMRBrfklsYjMrsgUfVhXBAW
-EDdiJ5fVPd/mkGME1TlHtedqTeKot5iJeUozoeL4/5sB2+6wqThl8JszDeYyb95K
-C43XtMJtvUbhAJfTYQ+dWLOxINa92FRy40qLZNdoCz15s6kQnCggaGu4IegFC/yh
-OGY8wT/QkjuOpUSvN4tLF+ThRCFULWJXPreI3MhFXasMF5AMkq4i8xzjy/J8Oy5m
-xy9Hx9KFJuUoQRlAUZOSuYxx5pAKEP1xmewe3I/8ZNDCFAPKaR6dFsERSMQUQCi1
-d2WW1cqreKZOWNeLTiPlyozJ6uSMiD03/zCovICVxL1Am2rA3uo=
-=hZyC
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWOdMgACgkQVbJhu7ck
+PpSlBw//dZK98tNoMIA4ncpIq/oq1yPZrbtBA4uzHstOfhng+QN4ihZZ5t9x8e0s
+6LXuuKDh1p1jbSyKbLqzutSUEvMhec30znQPOuDqWgzkKRnrKme40+UJswGjmMuQ
+/lDP5bXgPY8sXnc/P+KJCDjba/77sEcFTh4+LpZp4Fz8fok2lRw8+kURGnWVzAKQ
+Eg4pzF7psVD1TfXLUSzf2GWB8Pl9oAUDaHeyDuB1pFzOb4/+bcC9wysS8jZFQJZp
+zv4ngqgk9tUZ9KOPcd8DdIc7ypnSaLgO2ghMHJ66kRQ5XAFuRogUu1wUADHfVxyN
+7Mt7FldBMKjmNJxlf1Ewf+Z+9kpEzJuVrxRH/etanQBpKGt/hf48CLI85ha4Y6l7
+2yddKotcI9SDj6vUAktOhcy2AAAXhktkPcyO9BFsR5g/lR/U55QOmB3o+67Z9/jl
+WhaX5vIQyPJrS2rVodpG6gGW8eod5/QFMCk2bmxxrHvlRzbzyt1PQCAeIOPsuqb6
+qNyTbuh4kVIlG14KkqLONkNkc8c71N+Qoj8YEMzK7BbfrRuaU/dyKzIifjJEqnYT
+BL/gKkF3ucU5C2XHUXn9wvAtYIxtH3IvfVm6Unrs92UvrBMqxfCucXSrB9Id6n0j
+sxalV18FTp5gX4kog3b3tQVWb9Xq3/sD7g6jioe5sHbeIj5fT7Y=
+=ZKkF
 -----END PGP SIGNATURE-----
 
---Xvkk06tnpzQptvQn--
+--UldrM6uUYgBoZTz5--
