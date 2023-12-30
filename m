@@ -1,85 +1,52 @@
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us2-ob2-3.mailhostbox.com (us2-ob2-3.mailhostbox.com [208.91.199.209])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA9B72567
-	for <git@vger.kernel.org>; Sat, 30 Dec 2023 03:21:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62E268489
+	for <git@vger.kernel.org>; Sat, 30 Dec 2023 12:34:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infohubinnovations.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infohubinnovations.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H8gfWz34"
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-5f0462ee5d4so1990897b3.0
-        for <git@vger.kernel.org>; Fri, 29 Dec 2023 19:21:22 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=infohubinnovations.com header.i=@infohubinnovations.com header.b="NRFAMPyY"
+Received: from [192.168.1.3] (unknown [60.243.150.188])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: ramesh@infohubinnovations.com)
+	by us2.outbound.mailhostbox.com (Postfix) with ESMTPSA id B6940500342
+	for <git@vger.kernel.org>; Sat, 30 Dec 2023 12:25:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1703906482; x=1704511282; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=S2j6LK0tNCvw+0zS6LmVm1WW2wyGOJWf5p+mOVgOAPE=;
-        b=H8gfWz34dBW3RvOF6P5Vxg8PvsvihlfkXok0Lz1hitlPAHE4Vfi1sGur/TEpP8Y5dv
-         kkzGdjR7lGyv7ia9AmFuaLIeWtXL2zmEw5gh7lZPxq9rLmQl+4li2/sIhnbV5AzgaYfX
-         ZaUM5pdnbBbJNIqwZPH7U5LZXSqtTzP98plX4o4nNKjwKfOb3aQngRRSENYUBHtVbSzs
-         sZ6Xh5vrSWebT19JVwfkako1pXvpq+EdTynmKaERxB1YTzuwvsc1hn5g1q3Kte8aoQDx
-         m+1NcQkB9nyQFJp2xu8NyIAd1AIu63OaKDgWaZpXpmfDi+XqXHbmWaGCNa+Xp7pv0YIk
-         4Ygg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703906482; x=1704511282;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=S2j6LK0tNCvw+0zS6LmVm1WW2wyGOJWf5p+mOVgOAPE=;
-        b=lZJjkQPd/BYgvioOwHDaoKOfE87CMTl2YyDlP28YqSqwiTqbEnNb4QAJOROTQXMF++
-         7TIQZqkqlabpab7Rjufaunq3VuobMpGc+Eng7/uKVF47tDIgbXxH6DFg7oQsbSNqkZx4
-         DOX1K0Uzs+RFBGsdQlUi+yIq5WhWeYscN35x75YYnzHHFkv8E4w9XIEdJMx1AD3PKZjQ
-         HT9e6uQwTt2kVBYojs9tR4LSvOoSqT5Uiht6/Ejtp5FJyNAOZWvY7RdwV57q7FXSNMdW
-         vOgnWit4zSXqkjY/62rKPVySLfXFIe8LesvVxocMrXnejelt7PSYI+z4BzHoWcfT+/S4
-         DGJw==
-X-Gm-Message-State: AOJu0Yy9F1SHv9zEISWKbF01cJ5/dKP7bIFVqwisUIvyN15JG5egAqgm
-	2oAlw4R5Fo2Ifu7xf0Tt+WQlmHZoEwoWK7wvqFbUTMzMaxo=
-X-Google-Smtp-Source: AGHT+IGsC6MxqZXoK8I0kBpu2gOxoaUArv9tm9x0AyCBQ1x0iy+0SnC+SOQ+fOLHLfdm5i0zum2eH1QwRBNHk+GZ6W4=
-X-Received: by 2002:a25:dfd5:0:b0:dbd:c3aa:43ab with SMTP id
- w204-20020a25dfd5000000b00dbdc3aa43abmr11093930ybg.1.1703906481663; Fri, 29
- Dec 2023 19:21:21 -0800 (PST)
+	d=infohubinnovations.com; s=20220207; t=1703939120;
+	bh=N2bj+km5YY+y/ZznimPwWoUrG3dLPFI4ghQo4jWnLBg=;
+	h=Date:To:From:Subject;
+	b=NRFAMPyY2bMW+Q5mQsfM2JL5qh8PEuyUd83/o0/3bVFC3oKOMS4VuAdmyoz5r3PCN
+	 +u/IQNoqRe0Xi18H7v2+M/+zHi84+l2olYJpifpBhBdxS7Z2ljRbU8H7HPe889iytk
+	 VXl6dhkQE6VJ2D8a0o+/VqVdrJBSE1aKHAxHa8VM=
+Message-ID: <7aefb4c3-da1b-429b-a519-044084265994@infohubinnovations.com>
+Date: Sat, 30 Dec 2023 17:55:17 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Askar Safin <safinaskar@gmail.com>
-Date: Sat, 30 Dec 2023 06:20:43 +0300
-Message-ID: <CAPnZJGBbA1VLAdP5mZnbF77-x-87JjU3Ku2MhrQu0SFoJL7ggw@mail.gmail.com>
-Subject: [BUG] Asks for "To" even if "To" already specified in letter
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
 To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+From: Ramesh <ramesh@infohubinnovations.com>
+Subject: You are marked as spam, and therefore cannot authorize a third party
+ application.
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-CMAE-Score: 0
+X-CMAE-Analysis: v=2.4 cv=fLxaYbWe c=1 sm=1 tr=0 ts=65900c30
+	a=YzUHeAx2L5Vh+3zlzot+jw==:117 a=YzUHeAx2L5Vh+3zlzot+jw==:17
+	a=CQTh9BFugTK7ixPW:21 a=IkcTkHD0fZMA:10 a=I7OygJVwlcCVpGmgF6cA:9
+	a=QEXdDO2ut3YA:10 a=zgiPjhLxNE0A:10
 
-Hi. I found a bug. Steps to reproduce:
-- Create file /tmp/m with following text:
-===
-Subject: subj
-To: example@example.com
+Hi GitHub Team,
 
-text
-===
-- Send it using command "git send-email /tmp/m"
+I am trying to clone my repository from local machine.But i am getting 
+the follow exception that  "You are marked as spam, and therefore cannot 
+authorize a third party application.". Can you please suggest the same.I 
+have deleted all my accounts except this account.
 
-You will see that git asks for "To". git says: "To whom should the
-emails be sent (if anyone)?"
-I don't like this. git should just use "To" from /tmp/m without asking.
-
-Seen with git 2.43.0.
-
-If I execute "git send-email --to-cmd='#' /tmp/m" or
-"git send-email --to-cmd=':' /tmp/m" or
-"git send-email --to-cmd='true' /tmp/m", then "To" is not asked.
-
-Same happens when I send one single patch without cover letter. Steps
-to reproduce:
-- Clone some repo
-- Make some (single) commit
-- Execute in the repo "git send-email --annotate HEAD^"
-- Editor will be spawned. Add header "To: example@example.com", then
-save and exit from the editor
-
-You will see the question "To whom should the emails be sent (if
-anyone)?", too. And again you can workaround using --to-cmd tricks.
-
--- 
-Askar Safin
