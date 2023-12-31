@@ -1,95 +1,64 @@
-Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout1.freenet.de (mout1.freenet.de [195.4.92.91])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2992D10E2
-	for <git@vger.kernel.org>; Sun, 31 Dec 2023 04:09:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-680a06cc763so9249326d6.1
-        for <git@vger.kernel.org>; Sat, 30 Dec 2023 20:09:02 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703995742; x=1704600542;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lXR+UFPPzJ2ozGOv/zNoBDncuXcN9ZVYshYz/Wc9ulA=;
-        b=I3nWPgOO08nA9M6gsDFTZ+RMReWH6rO6OBN3O1i63ZB6mvWY0Zuurzi9GAeg+zJszr
-         x9MZFuLPPjbMpmeuPgE9bZZPSmCVbSIkZuGyIudYNQM38K60EdMa7RkS3pbSsEiVGKPe
-         DzgyZX3i993FKxcZEnsBwlkyYSuErYm9ExeC67zyh0uLtC0Y3bYFZuzuhbSN4BnC5mDe
-         q6g4Um/uozd9JSY18XZMTzQjTT2fB9ms7VUOLBArHvoh8LewCj8C1QD6piyzyI0xq6qq
-         nzV12walimV8ItWs9WFu7NUAFypZPiWKf1DEoTShkNY17bKmgzlk8GL+sthuAxvLYfFf
-         nNWQ==
-X-Gm-Message-State: AOJu0YwR0F0NcVZUCgN5Q0qTETHAVHXU3/OXyvg06UXAOGNXfsulspIJ
-	dVrbH81NSaUram9ftTQ9vwVjcxVEIY1qM2IvbZo=
-X-Google-Smtp-Source: AGHT+IGwYjjACJnbudlzspvQLvwdVC2eG+Y4P93qgq4QA+ow+8EVjBOBWQL2oPVAS9V1ixFeGoHTGWertXX5jO8r4k4=
-X-Received: by 2002:a05:6214:62a:b0:67a:a394:e20c with SMTP id
- a10-20020a056214062a00b0067aa394e20cmr23672410qvx.38.1703995742067; Sat, 30
- Dec 2023 20:09:02 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B352D184C
+	for <git@vger.kernel.org>; Sun, 31 Dec 2023 09:13:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=freenet.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freenet.de
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=freenet.de header.i=@freenet.de header.b="Y/PtGsbl"
+Received: from [195.4.92.119] (helo=sub0.freenet.de)
+	by mout1.freenet.de with esmtpa (ID soekkle@freenet.de) (port 25) (Exim 4.94.2 #2)
+	id 1rJrsK-000SBx-4a; Sun, 31 Dec 2023 10:12:52 +0100
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=freenet.de;
+	s=mjaymdexmjqk; h=Content-Transfer-Encoding:Content-Type:MIME-Version:
+	References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=U0Vgp5pxZB49S/vTa5nljdfqhz27Ywbpf1YKD+Njaog=; b=Y/PtGsblPW6uzAteRUB+Uc/+/W
+	VZ8cqos4GP4/yz3pbRHjt/z2FYG+6mx7m5W941JXiCT5EimwGsAChuAmjer03g1zGDlRbO2fgcjoG
+	DIObg9c9E3K4Gzv5r3JHO3ogbkM4/R4EompmWvjPCNJIk/viVRK4C3prGuQQbRCs/mZjomlVBN6Y2
+	jRrILV53RAxvujV76lBA8XzcQSwe+lNDWhj5AOf7P6RUzriDLZsKnKUIWHizsjXzVbGMRr5Poz0Eq
+	lIAX29KzycSY5XTCP3boLijQXHVgvJUcYh7AtOT/luIG0wAsl5++RSrQakWwGNAgN1G/7qg8z1JRN
+	HCcpPWaw==;
+Received: from p200300e2e7202b00dacb8afffee0ca63.dip0.t-ipconnect.de ([2003:e2:e720:2b00:dacb:8aff:fee0:ca63]:50650 helo=soren-pc.lan)
+	by sub0.freenet.de with esmtpsa (ID soekkle@freenet.de) (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (port 465) (Exim 4.94.2 #2)
+	id 1rJrsJ-00BgXI-Rq; Sun, 31 Dec 2023 10:12:51 +0100
+From: =?UTF-8?q?S=C3=B6ren=20Krecker?= <soekkle@freenet.de>
+To: git@vger.kernel.org
+Cc: sunshine@sunshineco.com,
+	=?UTF-8?q?S=C3=B6ren=20Krecker?= <soekkle@freenet.de>
+Subject: [PATCH V3 0/1] Replace SID with domain/username on Windows
+Date: Sun, 31 Dec 2023 10:12:44 +0100
+Message-Id: <20231231091245.2853-1-soekkle@freenet.de>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <CAPig+cT4jy4MkyGxtSOZj6U3vUxLaRa-4wr7PON-EebAjT8pwQ@mail.gmail.com>
+References: <CAPig+cT4jy4MkyGxtSOZj6U3vUxLaRa-4wr7PON-EebAjT8pwQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231229120319.3797-1-soekkle@freenet.de>
-In-Reply-To: <20231229120319.3797-1-soekkle@freenet.de>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Sat, 30 Dec 2023 23:08:51 -0500
-Message-ID: <CAPig+cT4jy4MkyGxtSOZj6U3vUxLaRa-4wr7PON-EebAjT8pwQ@mail.gmail.com>
-Subject: Re: [PATCH 0/1 v2] Replace SID with domain/username on Windows
-To: =?UTF-8?Q?S=C3=B6ren_Krecker?= <soekkle@freenet.de>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-FN-MUUID: 170401397124D450576935O
+X-Originated-At: 2003:e2:e720:2b00:dacb:8aff:fee0:ca63!50650
+X-Scan-TS: Sun, 31 Dec 2023 10:12:51 +0100
 
-On Fri, Dec 29, 2023 at 7:03=E2=80=AFAM S=C3=B6ren Krecker <soekkle@freenet=
-.de> wrote:
-> Improve error message on windows systems, if owner of reposotory and curr=
-ent user are not equal.
->
-> Old Message:
-> '''
-> fatal: detected dubious ownership in repository at 'C:/Users/test/source/=
-repos/git'
-> 'C:/Users/test/source/repos/git' is owned by:
->         'S-1-5-21-571067702-4104414259-3379520149-500'
-> but the current user is:
->         'S-1-5-21-571067702-4104414259-3379520149-1001'
-> To add an exception for this directory, call:
->
->         git config --global --add safe.directory C:/Users/test/source/rep=
-os/git
-> '''
->
-> New Massage:
-> '''
-> fatal: detected dubious ownership in repository at 'C:/Users/test/source/=
-repos/git'
-> 'C:/Users/soren/source/repos/git' is owned by:
->         'DESKTOP-L78JVA6/Administrator'
-> but the current user is:
->         'DESKTOP-L78JVA6/test'
-> To add an exception for this directory, call:
->
->         git config --global --add safe.directory C:/Users/test/source/rep=
-os/git
-> '''
->
-> I hope that I have succeeded in addressing all the points raised.
+I improve the commit message with example of old and new error output.
 
-Thanks, this explanation does an excellent job of helping reviewers
-understand why the patch is desirable.
+Thanks to Eric Sunshine.
 
-It's also important that people digging through the project history in
-the future also understand the reason for this change, so it's very
-valuable for the explanation to be part of the commit message of the
-patch itself, not just in the cover letter (which doesn't become part
-of the permanent project history). Therefore, can you reroll once
-again, placing this explanation in the commit message of the patch
-itself? Doing so should help the patch get accepted into the project.
+Sören Krecker (1):
+  Replace SID with domain/username
 
-That's as much as I can add. Hopefully, one or more Windows folks will
-chime in regarding the actual patch content (whether it's acceptable
-as-is or needs some tweaks).
+ compat/mingw.c | 28 ++++++++++++++++++++++++----
+ 1 file changed, 24 insertions(+), 4 deletions(-)
 
-Thanks.
+
+base-commit: e79552d19784ee7f4bbce278fe25f93fbda196fa
+-- 
+2.39.2
+
