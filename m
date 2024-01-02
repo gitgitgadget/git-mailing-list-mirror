@@ -1,66 +1,145 @@
-Received: from mout0.freenet.de (mout0.freenet.de [195.4.92.90])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD10815AE7
-	for <git@vger.kernel.org>; Tue,  2 Jan 2024 19:20:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=freenet.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freenet.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA6A616401
+	for <git@vger.kernel.org>; Tue,  2 Jan 2024 19:56:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freenet.de header.i=@freenet.de header.b="KhSWlSy2"
-Received: from [195.4.92.125] (helo=sub6.freenet.de)
-	by mout0.freenet.de with esmtpa (ID soekkle@freenet.de) (port 25) (Exim 4.94.2 #2)
-	id 1rKkEU-00Ax8f-HE; Tue, 02 Jan 2024 20:15:22 +0100
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=freenet.de;
-	s=mjaymdexmjqk; h=Content-Transfer-Encoding:Content-Type:MIME-Version:
-	References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=HEa/ay7DKq98HpZDjt6XemXbz0B4PF9+HQ1A36TXeRo=; b=KhSWlSy2PCipb9Kk6Cw0TjfJ43
-	vU8f3RvSyG3/P0myMu0w2uy+MuzcM2D/c/1WoXLf0XFbNimSk9vEBsH8Iw3XJArIGO+mjsDwkp0y/
-	ybVunT3NWQGi1WZtRVKA6KEQbSX/+fW14MG2zz/pzeaIzH2K1CDfMlXWP4BwZDVWGz6LuuPpVbF/B
-	kzaSMgVJZLnn2ZPSfpextrINqM6x/kTF77gi81NPR+hPcpVSMCrMJ5SxHuXRxH2itffCteIr13v0P
-	vqzQnMtSfhncjaXOOJS/mUOuwWUP/D+im4AVqIUwOTCHoHSUafv8WARvEkgOxLQ6qpYeRSdTlxsjM
-	7frYv37Q==;
-Received: from p200300e2e7202b00dacb8afffee0ca63.dip0.t-ipconnect.de ([2003:e2:e720:2b00:dacb:8aff:fee0:ca63]:60616 helo=soren-pc.lan)
-	by sub6.freenet.de with esmtpsa (ID soekkle@freenet.de) (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (port 465) (Exim 4.94.2 #2)
-	id 1rKkEU-00HPxr-8A; Tue, 02 Jan 2024 20:15:22 +0100
-From: =?UTF-8?q?S=C3=B6ren=20Krecker?= <soekkle@freenet.de>
-To: git@vger.kernel.org
-Cc: sunshine@sunshineco.com,
-	=?UTF-8?q?S=C3=B6ren=20Krecker?= <soekkle@freenet.de>
-Subject: [PATCH V4 0/1] Replace SID with domain/username on Windows
-Date: Tue,  2 Jan 2024 20:15:13 +0100
-Message-Id: <20240102191514.2583-1-soekkle@freenet.de>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <xmqqsf3feilq.fsf@gitster.g>
-References: <xmqqsf3feilq.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="HgSZDTQJ"
+Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-3bbc649c275so2616643b6e.0
+        for <git@vger.kernel.org>; Tue, 02 Jan 2024 11:56:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1704225411; x=1704830211; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=3TgNLpyThFHWPYNBW+n3lZuq7dJmJdn70KIi8AGrNaU=;
+        b=HgSZDTQJm115x9n6T+xQhc0spmOqH8fXLY0ikD6L1mIbxx9aWcaXrDvL+jkLGGcSNr
+         OI/9d9wwNK5vsN7gedQdQz+10hoFMf3ZbxL81hE8Ay9IWohMzT4k6VEwiHe5nZ077Vsm
+         rB7h9iOVNNomNOJBKMQdxzYr5Bmmuq6/yk2pPXyj/HAYrJp5WlFRq28egGBitiJEzhRX
+         3aQ6ocJG0polzx4qMKkEEVDz1BGoNYEyxws4daqpDe+LxQ8qsn1lO3JYN7u0ofzg7juC
+         YaL/9pCUXhJYNnWa5EZ9fPKV+BUyiSvXg7l/EylvgJsVn/qsiNoQn++nv5WlMOc6DjRQ
+         FJEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704225411; x=1704830211;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3TgNLpyThFHWPYNBW+n3lZuq7dJmJdn70KIi8AGrNaU=;
+        b=RpWDQluICWPZ1C7ZDji7e0MS6r0dLSI+1rPPrf04566vWCaDj83ZFhH0SUB7cbhGkt
+         isEiV0ADhhLWDcl1/msTgeCXNr+Kmwaz79SOv5VVZJqGGxPnKzZABOIBH85GAMto3nel
+         j53cJc8DOlnzxQEbevlz0rEqhFM9Yy5RqrWeSO0jAdSmMz/fF50DMiLBQ/G5G5UsP8DR
+         Elnq7mbBs62IKtl0ZDlVWt7sY/HiVewe2BEXyTh0/hi0rU4h47uHIxTwPriHmhjZ6vqC
+         GOSTc5zuSVD3c6+EcTfcRAjRhrra39VgnvATLaVvu2qL+wcTCM1ElFEGj++VzObCJAKF
+         9Uvw==
+X-Gm-Message-State: AOJu0YyehY12rZFVAPatZwN/ikEF2qn1H59CqzW02bjUVkF4rIgMB1yA
+	4FpVHg2AZpbkCw2RrVaa/F9D0BpVb76fKyAbsQ8OaPiGxPCmuA==
+X-Google-Smtp-Source: AGHT+IGylkVFOAAR82YUU027hJ3RpdKA+jU2plzpXvbUtVDFu4ieHntqgfVjvyukNBoaafzgQGW7Ow==
+X-Received: by 2002:a05:6808:152c:b0:3b8:b063:8938 with SMTP id u44-20020a056808152c00b003b8b0638938mr9053551oiw.70.1704225411699;
+        Tue, 02 Jan 2024 11:56:51 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id y16-20020a056808061000b003bbc235c5d0sm1953581oih.24.2024.01.02.11.56.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 Jan 2024 11:56:51 -0800 (PST)
+Date: Tue, 2 Jan 2024 14:56:50 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jakub Wilk <jwilk@jwilk.net>, git@vger.kernel.org,
+	Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git-clone.txt: document -4 and -6
+Message-ID: <ZZRqgmDycyAXCrGZ@nand.local>
+References: <20230527123849.5990-1-jwilk@jwilk.net>
+ <xmqq1qivd8d0.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-FN-MUUID: 1704222922713300CB22DFO
-X-Originated-At: 2003:e2:e720:2b00:dacb:8aff:fee0:ca63!60616
-X-Scan-TS: Tue, 02 Jan 2024 20:15:22 +0100
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq1qivd8d0.fsf@gitster.g>
 
-Hi everone,
+On Thu, Jun 01, 2023 at 03:06:35PM +0900, Junio C Hamano wrote:
+> Jakub Wilk <jwilk@jwilk.net> writes:
+>
+> > These options were added in c915f11eb4 ("connect & http: support -4 and
+> > -6 switches for remote operations").
+> >
+> > Signed-off-by: Jakub Wilk <jwilk@jwilk.net>
+> > ---
+> >  Documentation/git-clone.txt | 8 ++++++++
+> >  1 file changed, 8 insertions(+)
+>
+> The patch is not _wrong_ per-se, but there are other options that
+> are common among the "fetch" family of commands.  I counted at least
+> these should be shared between "fetch" and "clone", by splitting
+> them out of "fetch-options.txt" into a new file, and including that
+> new file from "fetch-options.txt" and "git-clone.txt".  Those marked
+> with (?) are described in different phrasing between "clone" and
+> "fetch", and may fall into the "let's keep them separate, because
+> they mean different things" category (later):
+>
+>  * --jobs
+>  * --upload-pack
+>  * --quiet (?)
+>  * --verbose (?)
+>  * --progress
+>  * --server-option
+>  * --ipv[46]
+>
+> Note that these happen to share the same name, but to "clone" and
+> "fetch" they different things, so leaving them separate is the right
+> thing to do.
+>
+>  * --no-tags
+>  * --recurse-submodules
 
-I improve the commit message with information from Microsoft, fixes a memmory access error and the message in case of an error.
+I wrote this ugly shell incantation to find an exhaustive list of
+potentially shareable options:
 
-Vielen dank für die Hinweise von Junio C Hamano.
+    $ grep '^-.*::$' <Documentation/fetch-options.txt |
+      tr -d ':' | sed -e 's/\[=/=[/' -e 's/<[^>]*>//' |
+      grep -Eo '^[^=]+' | awk -F] '
+        /\[no-\]/ { print "--" $2; print "--no-" $2; next }
+        { print $0 }
+      ' |
+    while read arg
+    do
+      if grep -Fwq -- $arg Documentation/fetch-options.txt &&
+         grep -Fwq -- $arg Documentation/git-clone.txt
+      then
+        echo $arg;
+      fi
+    done
 
-Sören Krecker (1):
-  Replace SID with domain/username
+It turned up the following results:
 
- compat/mingw.c | 34 ++++++++++++++++++++++++++++++----
- 1 file changed, 30 insertions(+), 4 deletions(-)
+    -a
+    --depth
+    --shallow-since
+    --shallow-exclude
+    --no-tags
+    --recurse-submodules
+    -j, --jobs
+    -u, --upload-pack
+    -q, --quiet
+    -v, --verbose
+    --progress
+    -o, --server-option
 
+-a is a false-positive (it comes from "you can simply run `git repack
+-a`", which is in the clone documentation).
 
-base-commit: e79552d19784ee7f4bbce278fe25f93fbda196fa
--- 
-2.39.2
+Even though depth, and the shallow options are shared by both fetch and
+clone, they have different wording in each context, so they should be
+kept separate.
 
+I agree with your thinking that `--no-tags` and `--recurse-submodules`
+should be kept separate.
+
+That makes our two lists equal (modulo the --ipv[46] options, which were
+previously not documented in git-clone(1) until this patch).
+
+Thanks,
+Taylor
