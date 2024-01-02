@@ -1,44 +1,47 @@
 Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B098F14F65
-	for <git@vger.kernel.org>; Tue,  2 Jan 2024 16:20:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9FED1549B
+	for <git@vger.kernel.org>; Tue,  2 Jan 2024 16:29:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="eZetvwOS"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="V4BA82bJ"
 Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 542882E61B;
-	Tue,  2 Jan 2024 11:20:47 -0500 (EST)
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 4058E2E7E3;
+	Tue,  2 Jan 2024 11:29:18 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=/gumDWlLUORB
-	b0pNINEa5mth4OUIeskBZ6Rjl6QL5xM=; b=eZetvwOSIy1RgwKYa+ShdWieyo2s
-	do/81DvpR7OiuY4Nbxh2bYCsRi3969fU2yLoIPXQIGrHjVC9gMotwGHRWhxkItyO
-	JMKjo7wXtLW3/zOT1jp8eUG2GRtnDkpjN0RPY56UdwQyBQZKGOLeiuS/3tugYLNW
-	zDDnIXyT4Ht4q3Y=
+	:content-type:content-transfer-encoding; s=sasl; bh=ozIUAy/G4BT+
+	FM2Um77kJIeQaLObvM+4kYZ4GA2Am+0=; b=V4BA82bJHFUH+fp3AfvGghv4BoKE
+	z2dRHq04OLW/cDUYleGuF76gRmsIwhktaj7ODDsR+qjUPpI7dpygOH8T2l2ZnGM0
+	or3dD7T2LT6qIcl6R9BoSkLA0pV8TCBMS8CzVORGXiaaxRKHRDhC8CW/PDSj1Fnb
+	1rHS4timXDP6iDc=
 Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 4C9E32E61A;
-	Tue,  2 Jan 2024 11:20:47 -0500 (EST)
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 38A5F2E7E2;
+	Tue,  2 Jan 2024 11:29:18 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.200.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E8D002E618;
-	Tue,  2 Jan 2024 11:20:43 -0500 (EST)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D85302E7E0;
+	Tue,  2 Jan 2024 11:29:14 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?S=C3=B6ren?= Krecker <soekkle@freenet.de>
-Cc: git@vger.kernel.org,  sunshine@sunshineco.com
-Subject: Re: [PATCH v2 1/1] Replace SID with domain/username
-In-Reply-To: <20231229120319.3797-2-soekkle@freenet.de> (=?utf-8?Q?=22S?=
- =?utf-8?Q?=C3=B6ren?= Krecker"'s
-	message of "Fri, 29 Dec 2023 13:03:19 +0100")
-References: <20231229120319.3797-1-soekkle@freenet.de>
-	<20231229120319.3797-2-soekkle@freenet.de>
-Date: Tue, 02 Jan 2024 08:20:42 -0800
-Message-ID: <xmqqplyjg10l.fsf@gitster.g>
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc: Chandra Pratap via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Chandra Pratap <chandrapratap376@gmail.com>,
+  Chandra Pratap <chandrapratap3519@gmail.com>
+Subject: Re: [PATCH] write-or-die: make GIT_FLUSH a Boolean environment
+ variable
+In-Reply-To: <20240101082446.GA21905@tb-raspi4> ("Torsten =?utf-8?Q?B?=
+ =?utf-8?Q?=C3=B6gershausen=22's?=
+	message of "Mon, 1 Jan 2024 09:24:46 +0100")
+References: <pull.1628.git.1703955246308.gitgitgadget@gmail.com>
+	<20240101082446.GA21905@tb-raspi4>
+Date: Tue, 02 Jan 2024 08:29:13 -0800
+Message-ID: <xmqqil4bg0me.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -48,93 +51,71 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 X-Pobox-Relay-ID:
- E0F34774-A98A-11EE-B260-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+ 117D5424-A98C-11EE-8843-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
-S=C3=B6ren Krecker <soekkle@freenet.de> writes:
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-> Replace SID with domain/username in erromessage, if owner of repository
-> and user are not equal on windows systems.
-
-"erromessage" -> "error messages" or something?
-
-This may not be a question raised by anybody who know Windows, but
-because I do not do Windows, it makes me wonder if this is losing
-information.  Can two SID for the same user be active at the same
-time, which would cause user_sid_to_user_name() potentially yield
-the same string for two different SID?
-
-In any case, I am reasonably sure that Dscho will say yes or no to
-this patch (the above "makes me wonder" does not need to be
-resolved) and I can wait until then.
-
-Thanks.
-
-> Signed-off-by: S=C3=B6ren Krecker <soekkle@freenet.de>
-> ---
->  compat/mingw.c | 28 ++++++++++++++++++++++++----
->  1 file changed, 24 insertions(+), 4 deletions(-)
+>> -	char *cp;
+>> +	int cp;
+>>
+>>  	if (f =3D=3D stdout) {
+>>  		if (skip_stdout_flush < 0) {
+>> -			/* NEEDSWORK: make this a normal Boolean */
+>> -			cp =3D getenv("GIT_FLUSH");
+>> -			if (cp)
+>> -				skip_stdout_flush =3D (atoi(cp) =3D=3D 0);
+>> +			cp =3D git_env_bool("GIT_FLUSH", -1);
+>> +			if (cp >=3D 0)
+>> +				skip_stdout_flush =3D (cp =3D=3D 0);
+>>  			else if ((fstat(fileno(stdout), &st) =3D=3D 0) &&
+>>  				 S_ISREG(st.st_mode))
+>>  				skip_stdout_flush =3D 1;
 >
-> diff --git a/compat/mingw.c b/compat/mingw.c
-> index 42053c1f65..05aeaaa9ad 100644
-> --- a/compat/mingw.c
-> +++ b/compat/mingw.c
-> @@ -2684,6 +2684,26 @@ static PSID get_current_user_sid(void)
->  	return result;
->  }
-> =20
-> +static BOOL user_sid_to_user_name(PSID sid, LPSTR *str)
-> +{
-> +	SID_NAME_USE pe_use;
-> +	DWORD len_user =3D 0, len_domain =3D 0;
-> +	BOOL translate_sid_to_user;
-> +
-> +	/* returns only FALSE, because the string pointers are NULL*/
-> +	LookupAccountSidA(NULL, sid, NULL, &len_user, NULL, &len_domain,
-> +			  &pe_use);=20
-> +	/*Alloc needed space of the strings*/
-> +	ALLOC_ARRAY((*str), (size_t)len_domain + (size_t)len_user);=20
-> +	translate_sid_to_user =3D LookupAccountSidA(NULL, sid, (*str) + len_d=
-omain, &len_user,
-> +				   *str, &len_domain, &pe_use);
-> +	*(*str + len_domain) =3D '/';
-> +	if (translate_sid_to_user =3D=3D FALSE) {
-> +		FREE_AND_NULL(*str);
-> +	}
-> +	return translate_sid_to_user;
-> +}
-> +
->  static int acls_supported(const char *path)
->  {
->  	size_t offset =3D offset_1st_component(path);
-> @@ -2767,7 +2787,7 @@ int is_path_owned_by_current_sid(const char *path=
-, struct strbuf *report)
->  		} else if (report) {
->  			LPSTR str1, str2, to_free1 =3D NULL, to_free2 =3D NULL;
-> =20
-> -			if (ConvertSidToStringSidA(sid, &str1))
-> +			if (user_sid_to_user_name(sid, &str1))
->  				to_free1 =3D str1;
->  			else
->  				str1 =3D "(inconvertible)";
-> @@ -2776,7 +2796,7 @@ int is_path_owned_by_current_sid(const char *path=
-, struct strbuf *report)
->  				str2 =3D "(none)";
->  			else if (!IsValidSid(current_user_sid))
->  				str2 =3D "(invalid)";
-> -			else if (ConvertSidToStringSidA(current_user_sid, &str2))
-> +			else if (user_sid_to_user_name(current_user_sid, &str2))
->  				to_free2 =3D str2;
->  			else
->  				str2 =3D "(inconvertible)";
-> @@ -2784,8 +2804,8 @@ int is_path_owned_by_current_sid(const char *path=
-, struct strbuf *report)
->  				    "'%s' is owned by:\n"
->  				    "\t'%s'\nbut the current user is:\n"
->  				    "\t'%s'\n", path, str1, str2);
-> -			LocalFree(to_free1);
-> -			LocalFree(to_free2);
-> +			free(to_free1);
-> +			free(to_free2);
->  		}
->  	}
+> I think that the "cp" variable could be renamed,
+> cp is not a "char pointer" any more.
+
+Absolutely.  Very good point.
+
+> However, using the logic from git_env_bool(), it can go away anyway,
+> wouldn't it ?
+
+True.
+
+If we are doing clean-ups in this area, we may want to also stop
+doing "=3D=3D 0" comparisons on lines the patch touches while at it.
+
+>   diff --git a/write-or-die.c b/write-or-die.c
+>   index 42a2dc73cd..01b042bf12 100644
+>   --- a/write-or-die.c
+>   +++ b/write-or-die.c
+>   @@ -13,21 +13,21 @@
+>     * more. So we just ignore that case instead (and hope we get
+>     * the right error code on the flush).
+>     *
+>   + * The flushing can be skipped like this:
+>   + * GIT_FLUSH=3D0 git-rev-list HEAD
+>   + *
+>     * If the file handle is stdout, and stdout is a file, then skip the
+>   - * flush entirely since it's not needed.
+>   + * flush as well since it's not needed.
+>     */
+>    void maybe_flush_or_die(FILE *f, const char *desc)
+>    {
+>           static int skip_stdout_flush =3D -1;
+>           struct stat st;
+>   -       char *cp;
+>
+>           if (f =3D=3D stdout) {
+>                   if (skip_stdout_flush < 0) {
+>   -                       /* NEEDSWORK: make this a normal Boolean */
+>   -                       cp =3D getenv("GIT_FLUSH");
+>   -                       if (cp)
+>   -                               skip_stdout_flush =3D (atoi(cp) =3D=3D=
+ 0);
+>   +                       if (git_env_bool("GIT_FLUSH", -1) =3D=3D 0)
+>   +                               skip_stdout_flush =3D 1;
+>                           else if ((fstat(fileno(stdout), &st) =3D=3D 0=
+) &&
+>                                    S_ISREG(st.st_mode))
+>                                   skip_stdout_flush =3D 1;
