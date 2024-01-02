@@ -1,123 +1,140 @@
-Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C13A14010
-	for <git@vger.kernel.org>; Tue,  2 Jan 2024 15:23:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B098F14F65
+	for <git@vger.kernel.org>; Tue,  2 Jan 2024 16:20:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TQ0HL6NQ"
-Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-2044d093b3fso6312255fac.3
-        for <git@vger.kernel.org>; Tue, 02 Jan 2024 07:23:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1704209029; x=1704813829; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=vSTTyWf2kjSn+vfkJClKvo58zrrJ2khRevHfo/HflDA=;
-        b=TQ0HL6NQvyJCexzEtdD0ZOX6UrzIOs73t22Aq3SFets+od2gwQsajfkdG/zEzWrJRq
-         yP/Dp0p6OnNOKGQb6SR2wRqrXzWaoImKqrxzlua1yfbZNJEOa7qFkuSjZxqewJjkRIkN
-         fpt81SU397zeRJNJXC8YD+HyQ14VZrQlb6xUsA4GgGCuTxab9JGSvWOOsPaYYIYtEBX4
-         a/FXgKYVFnyKAHbW8VVq1Dy+cc+0rK7tyd/wtSIrmfvBb9zwVPhN5otdKLRolNuIXy2k
-         XtzO/Lh9IieMyuJYZa6nZRQkEFcB4EloN7M8szYmXwh/NiVOPXulbjf/IP2PpktEfSaM
-         1i/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704209029; x=1704813829;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vSTTyWf2kjSn+vfkJClKvo58zrrJ2khRevHfo/HflDA=;
-        b=UOl2MhX8J6CwuALQEMx0Q/C7YwFzHwO7HJAmkb54C01lERxsXSoQvz22Mjrcq3txck
-         JCR+yuCJsT2JZZ13I/xB+Q6jnFm/WNk6Ce3E47bU3ztGPKKdbOMJDFkSY4Db+iUgtV4J
-         GxNDymn32YUgdJBgeOqmHVEKCygNufPwVVu/Uk+V3YsnH+ZfJYKxz7jI6CXIGAUcwpGe
-         RM7tSOuzk5qSG5FdmX8o9lDOp/7DXQGZXXikfoCSePZbwdnKSboePIBW1S/t8euRM3No
-         TTaGpRKxSnjiA9SL2nVrTVERCPamB8CBe9lRLMnb5STkMYg0D8U5HmcwCrnUe+ndQt7J
-         9X0w==
-X-Gm-Message-State: AOJu0YwmrsIRWX9sWH93SAMankfh61RrE54UqQGwA1GRviweFBimcMxF
-	NQ7sAmR5jw+HySEg89ahDFx8KCPXpjuh174bcOB7mZbH
-X-Google-Smtp-Source: AGHT+IFzhmrM2RHoR/ahG/6AJ35Q72C9l1w9ftm2rlnFNapKMvlUfKho9B58MP9TLiNMq894HoLLv768RJpLPe3BvB0=
-X-Received: by 2002:a05:6870:1709:b0:204:9a7:5b4a with SMTP id
- h9-20020a056870170900b0020409a75b4amr21685152oae.15.1704209029316; Tue, 02
- Jan 2024 07:23:49 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 2 Jan 2024 07:23:48 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <ZY1PLtPue4PgbhwU@tanuki>
-References: <20231221170715.110565-1-karthik.188@gmail.com>
- <20231221170715.110565-3-karthik.188@gmail.com> <xmqqzfy3l270.fsf@gitster.g> <ZY1PLtPue4PgbhwU@tanuki>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="eZetvwOS"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 542882E61B;
+	Tue,  2 Jan 2024 11:20:47 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=/gumDWlLUORB
+	b0pNINEa5mth4OUIeskBZ6Rjl6QL5xM=; b=eZetvwOSIy1RgwKYa+ShdWieyo2s
+	do/81DvpR7OiuY4Nbxh2bYCsRi3969fU2yLoIPXQIGrHjVC9gMotwGHRWhxkItyO
+	JMKjo7wXtLW3/zOT1jp8eUG2GRtnDkpjN0RPY56UdwQyBQZKGOLeiuS/3tugYLNW
+	zDDnIXyT4Ht4q3Y=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 4C9E32E61A;
+	Tue,  2 Jan 2024 11:20:47 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E8D002E618;
+	Tue,  2 Jan 2024 11:20:43 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?S=C3=B6ren?= Krecker <soekkle@freenet.de>
+Cc: git@vger.kernel.org,  sunshine@sunshineco.com
+Subject: Re: [PATCH v2 1/1] Replace SID with domain/username
+In-Reply-To: <20231229120319.3797-2-soekkle@freenet.de> (=?utf-8?Q?=22S?=
+ =?utf-8?Q?=C3=B6ren?= Krecker"'s
+	message of "Fri, 29 Dec 2023 13:03:19 +0100")
+References: <20231229120319.3797-1-soekkle@freenet.de>
+	<20231229120319.3797-2-soekkle@freenet.de>
+Date: Tue, 02 Jan 2024 08:20:42 -0800
+Message-ID: <xmqqplyjg10l.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 2 Jan 2024 07:23:48 -0800
-Message-ID: <CAOLa=ZSzmmLTNRX_muNGP7tG65mkpKXfUG9sbNZBL3qv930B8g@mail.gmail.com>
-Subject: Re: [PATCH 2/2] ref-filter: support filtering of operational refs
-To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com
-Content-Type: multipart/mixed; boundary="000000000000d0deb5060df8153e"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ E0F34774-A98A-11EE-B260-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
---000000000000d0deb5060df8153e
-Content-Type: text/plain; charset="UTF-8"
+S=C3=B6ren Krecker <soekkle@freenet.de> writes:
 
-Patrick Steinhardt <ps@pks.im> writes:
-> One interesting question is how we should treat files that look like a
-> pseudoref, but which really aren't. I'm not aware of any such files
-> written by Git itself, but it could certainly be that a user wrote such
-> a file into the repository manually. But given that we're adding new
-> behaviour that will be opt-in (e.g. via a new switch) I'd rather err on
-> the side of caution and mark any such file as broken instead of silently
-> ignoring them.
+> Replace SID with domain/username in erromessage, if owner of repository
+> and user are not equal on windows systems.
+
+"erromessage" -> "error messages" or something?
+
+This may not be a question raised by anybody who know Windows, but
+because I do not do Windows, it makes me wonder if this is losing
+information.  Can two SID for the same user be active at the same
+time, which would cause user_sid_to_user_name() potentially yield
+the same string for two different SID?
+
+In any case, I am reasonably sure that Dscho will say yes or no to
+this patch (the above "makes me wonder" does not need to be
+resolved) and I can wait until then.
+
+Thanks.
+
+> Signed-off-by: S=C3=B6ren Krecker <soekkle@freenet.de>
+> ---
+>  compat/mingw.c | 28 ++++++++++++++++++++++++----
+>  1 file changed, 24 insertions(+), 4 deletions(-)
 >
-
-This is definitely tricky, especially since something like
-`COMMIT_EDITMSG` passes the `is_pseudoref_syntax()` check and could
-simply contain a commit-ish object ID. Here identifying that this is not
-a pseudoref is hard when it satisfies both:
-1. The general pseudoref syntax
-2. Contains the expected file content type
-
->
-> Yup, for the reftable we don't have the issue of "How do we detect refs
-> dynamically" at all. So I would love for there to be a way to print all
-> refs in the refdb, regardless of whether they start with `refs/` or look
-> like a pseudoref or whatever else. Otherwise it wouldn't be possible for
-> a user to delete anything stored in the refdb that may have a funny
-> name, be it intentionally, by accident or due to a bug.
->
-> In the reftable backend, the ref iterator's `_advance()` function has a
-> hardcoded `starts_with(refname, "refs/")` check. If false, then we'd
-> skip the ref in order to retain the same behaviour that the files
-> backend has. So maybe what we should be doing is to introduce a new flag
-> `DO_FOR_EACH_ALL_REFS` and expose it via git-for-each-ref(1) or
-> git-show-ref(1). So:
->
->   - For the reftable backend we'd skip the `starts_with()` check and
->     simply return all refs.
->
->   - For the files backend we'd also iterate through all files in
->     $GIT_DIR and check whether they are pseudoref-like.
->
-
-This makes sense to me and is along what I was considering for the
-dynamic approach, thanks for writing it down, clarifies my thoughts.
-
---000000000000d0deb5060df8153e
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 6126c2d9c5339bdc_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1XVUtvTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMi9HQy80cWlLaTNqOXpFVVZXTlBrc0ZZKzdHZ2JwcwpKVDlDMnFqblNt
-WnVFU281S2EyT1FEM0RFc3FhV1kxc0dEc2NHRGYxbmZva1lMaGJxM25YTndOQUtPL0ZUcnFOCmZF
-MGR5eG90ajNSZlBHT2ZoS3RIaUJ4VUZibW9EdkRzb0d2NHdjazYrdDNJV1AzVE5melkzU1dlaFRW
-Ylc1dlMKYmQ3NGkvcVZlcHZEMjh3TFNlMHkrUTF5a0FCUWJMN0FzTHpNbksvQjVhYmJzczVmeVhE
-YTg3NnA3b1VLclFOQgpncUR2UUlncmk4UmFuVjM0QWE2TVZUK0dMRlZheHZmQmUyK2laam45Smxp
-K3VLYytvaFM5VzhkMUhOTnd3RnVGClRsblBaVXVTV3BLR25UcU5LRW5yTkZSWUc4YnZSanpBTDFs
-K3d6WndOZWRIMjZyVTlha1BGd0tyVzdIbnIvY28KT2pkZ1RyMmNLeGJqYU56UDlZU05TcStBaytP
-Y24yRkJxRmlyMlNKdkMwUVhjTi9vSDFBZ0xXajJkY2lISW82SApKVU5iZXlrVnAwUHU0Y2pCRlNl
-RlBGVndWd2VVYzBLa2UyUjFBZ25uRDg4bGM3K1A1K0grVCttSGZ6Rm0yYWNWClMvZkVTQmRYTm5o
-ZmQzYWlFZC9ZclZyYnNJOWpYdm04aHEwUjBjOD0KPWN5UHcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000d0deb5060df8153e--
+> diff --git a/compat/mingw.c b/compat/mingw.c
+> index 42053c1f65..05aeaaa9ad 100644
+> --- a/compat/mingw.c
+> +++ b/compat/mingw.c
+> @@ -2684,6 +2684,26 @@ static PSID get_current_user_sid(void)
+>  	return result;
+>  }
+> =20
+> +static BOOL user_sid_to_user_name(PSID sid, LPSTR *str)
+> +{
+> +	SID_NAME_USE pe_use;
+> +	DWORD len_user =3D 0, len_domain =3D 0;
+> +	BOOL translate_sid_to_user;
+> +
+> +	/* returns only FALSE, because the string pointers are NULL*/
+> +	LookupAccountSidA(NULL, sid, NULL, &len_user, NULL, &len_domain,
+> +			  &pe_use);=20
+> +	/*Alloc needed space of the strings*/
+> +	ALLOC_ARRAY((*str), (size_t)len_domain + (size_t)len_user);=20
+> +	translate_sid_to_user =3D LookupAccountSidA(NULL, sid, (*str) + len_d=
+omain, &len_user,
+> +				   *str, &len_domain, &pe_use);
+> +	*(*str + len_domain) =3D '/';
+> +	if (translate_sid_to_user =3D=3D FALSE) {
+> +		FREE_AND_NULL(*str);
+> +	}
+> +	return translate_sid_to_user;
+> +}
+> +
+>  static int acls_supported(const char *path)
+>  {
+>  	size_t offset =3D offset_1st_component(path);
+> @@ -2767,7 +2787,7 @@ int is_path_owned_by_current_sid(const char *path=
+, struct strbuf *report)
+>  		} else if (report) {
+>  			LPSTR str1, str2, to_free1 =3D NULL, to_free2 =3D NULL;
+> =20
+> -			if (ConvertSidToStringSidA(sid, &str1))
+> +			if (user_sid_to_user_name(sid, &str1))
+>  				to_free1 =3D str1;
+>  			else
+>  				str1 =3D "(inconvertible)";
+> @@ -2776,7 +2796,7 @@ int is_path_owned_by_current_sid(const char *path=
+, struct strbuf *report)
+>  				str2 =3D "(none)";
+>  			else if (!IsValidSid(current_user_sid))
+>  				str2 =3D "(invalid)";
+> -			else if (ConvertSidToStringSidA(current_user_sid, &str2))
+> +			else if (user_sid_to_user_name(current_user_sid, &str2))
+>  				to_free2 =3D str2;
+>  			else
+>  				str2 =3D "(inconvertible)";
+> @@ -2784,8 +2804,8 @@ int is_path_owned_by_current_sid(const char *path=
+, struct strbuf *report)
+>  				    "'%s' is owned by:\n"
+>  				    "\t'%s'\nbut the current user is:\n"
+>  				    "\t'%s'\n", path, str1, str2);
+> -			LocalFree(to_free1);
+> -			LocalFree(to_free2);
+> +			free(to_free1);
+> +			free(to_free2);
+>  		}
+>  	}
