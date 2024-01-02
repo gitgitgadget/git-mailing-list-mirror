@@ -1,77 +1,91 @@
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95220DF44
-	for <git@vger.kernel.org>; Mon,  1 Jan 2024 20:53:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4F89F9F0
+	for <git@vger.kernel.org>; Tue,  2 Jan 2024 13:23:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K+LyUblj"
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-55614bb435aso2282546a12.1
-        for <git@vger.kernel.org>; Mon, 01 Jan 2024 12:53:39 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hw/oLerN"
+Received: by mail-oo1-f50.google.com with SMTP id 006d021491bc7-594cb19c5d9so1973552eaf.0
+        for <git@vger.kernel.org>; Tue, 02 Jan 2024 05:23:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1704142417; x=1704747217; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=8Z3x8hP/CHCOY2HkDRGjVvLlA9nPNASkiSWSgj0Von0=;
-        b=K+LyUblj1VhWfLi125OQ472RDL/AdXcCi+2R6JjK+SlYNcCYgpX81V0SJfhCjanK8A
-         mkj7+pTJKQgwpifkjVOoLguCFB0aRIhWTMNCiSJ0caZ6wmeQHvbhjve6dCZqkQTs0DNn
-         E+VarpkXRw6Hmr2p6Ub2+fSZ3/bjM/nOzN8+SDriejO1YMOvn2EFu7cwSegWflb0zDFL
-         A1k8r9lMWwRBj7ENhj5dZhFTadd7/j9KKKxeEi1MtvtRv2LaSpQz1jsTP58AG52d8lXw
-         1Q7qGVr+9G2as4R3OENJghFqs2ZaQKPaLYBkkYOV/WAzPBl4CTKSz2jgHsxPnkovVl7H
-         neRg==
+        d=gmail.com; s=20230601; t=1704201799; x=1704806599; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=iNpfYbA7IIwyxBWgaXFJ8rFC807ZFDsc2mOyYjDnARU=;
+        b=Hw/oLerNfEnlO22kT8QeBg0Pke8SLpF/EFwjKNRBYEftwGyOVxd9/Xsk3MwaX6ovoT
+         F6J+PVuUSKTh4EI2gtMcvoPiJRkBlvcrrwn7pgLPrQrM6wl6uoReshb1v3ReTWwfVXWN
+         QgGPayjmob2f88fn/TSeF/ebrJPuz6D7JlNzEhpi/bF/s5BXwIW7GVcO+fXgy+N96jr+
+         c55oeiAXqAfPODdBs81aN7DoP3TCB3RGov0X9WYs/rwhTpXWOIf+KKoJJKXbfSIQXZp/
+         SOYIg1tMST3tBNv+NooDiSu4o1WFS4GLrn24UwNhg/ni/MR4Zw3zJPByJwnglaU2Qs4+
+         s+jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704142417; x=1704747217;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8Z3x8hP/CHCOY2HkDRGjVvLlA9nPNASkiSWSgj0Von0=;
-        b=ElaUE6umdX0nBUPi7UMgjUBTeA5sVgHNVJzL+9U8O74OoZyee4SualIx5TcpEsXv+B
-         zpVtzh59rc2plbgQenMUte214NQS9xpYT3iDQqpoC9hpkyT5MkN694NkKoomVDotXzHP
-         znJvIgwzOs8HCvsjUSfJHNHO7nbSDqPYcr/oEoanHtT6m4spNZLN0X1ZlXHYbKkeDGFL
-         HSd1HWr9wbBbxlTiBSs9CaOX8AGg63H9bGXV/8u17uMx5QAowouUL4yUzbuDCIuh+KOq
-         +3t2TRAdncPGio0gKWhZcByfOkisFVQJoYod5mHW5R6j1lxjhE7wHhT+jHJZ2iGAV0mN
-         dong==
-X-Gm-Message-State: AOJu0YwNDBLi8DidYP/C9TkE/8ZRsALXLjTTZUoEcrSBJYcsRfzaNjlQ
-	mx+gjE4xerL/52apklMzwtwKnjmyTtLgewYbi22AjhpMsiA=
-X-Google-Smtp-Source: AGHT+IG3+kr6prasuD00mmxi17hyVswEN1ORs74QwpbS5XxakGZQklHtnuErMoD4gkaDR4oCpw+W8eO6poYWYmwLtSo=
-X-Received: by 2002:a17:907:36c7:b0:a27:e002:5ccd with SMTP id
- bj7-20020a17090736c700b00a27e0025ccdmr2657698ejc.33.1704142417017; Mon, 01
- Jan 2024 12:53:37 -0800 (PST)
+        d=1e100.net; s=20230601; t=1704201799; x=1704806599;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=iNpfYbA7IIwyxBWgaXFJ8rFC807ZFDsc2mOyYjDnARU=;
+        b=mYTfyzY4F83vm/nRhZy+Z1wmk7AXqNASU6jAlTgAlvfRfp56LpRdGKl9F1ww3n4tko
+         +mPMHySRUtn+r5iQgINeO82eDACCDi/hiylF9yi/xVFeHjzIQ/vHtMZajqika21g/RkN
+         Df1caouYsNTwPWRHzegK7+v0sEMHkvbQJSF9aKMxaXx6PfPFxDLqjxVhvNgrGdGO8IEI
+         mPHtXExmtWEr5/uaa9CDrfxBoBnwPkGTvAekPj0rLIltGrvmTukF6q7U45AoTb7dfo6W
+         TskhZXYjPshYGapoI6naFICVUYoUki5kdzq9qJobrKpZEosUAopsj/SzCQljKt+C6Ek6
+         8HEg==
+X-Gm-Message-State: AOJu0YyGnnQOElbq61mPBxY/0PYGFEdIXEXeQpeFwD2Ye/9wXx4ybv0k
+	Z82cS2mkFWRlRh/XqKU6LI7kpZXvRGnH8JwbpoNOwowG
+X-Google-Smtp-Source: AGHT+IGR88tg2azajyCU5WpU+OTr14ykcAXuLGQjGAP9uBpl686c9dYplXmNiFq2mWLShbMnOv/nw95iKoGIfkbunIQ=
+X-Received: by 2002:a05:6871:6108:b0:1fa:df5e:48be with SMTP id
+ ra8-20020a056871610800b001fadf5e48bemr5788480oab.15.1704201798731; Tue, 02
+ Jan 2024 05:23:18 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 2 Jan 2024 05:23:18 -0800
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <ae013eaa4aba0d68172ff03dbe9f2c2bca596285.1703754513.git.ps@pks.im>
+References: <cover.1703754513.git.ps@pks.im> <ae013eaa4aba0d68172ff03dbe9f2c2bca596285.1703754513.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Christian Couder <christian.couder@gmail.com>
-Date: Mon, 1 Jan 2024 21:53:25 +0100
-Message-ID: <CAP8UFD2igzQSqSmxgZmuqBn-7CyWzcOZR5WmZxOWc1pby9jW3Q@mail.gmail.com>
-Subject: [ANNOUNCE] Git Rev News edition 106
-To: git <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
-	Markus Jansen <mja@jansen-preisler.de>, =?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
-	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, Taylor Blau <me@ttaylorr.com>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	lwn@lwn.net, Josh Soref <jsoref@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>, 
-	Elijah Newren <newren@gmail.com>, VonC <vonc@laposte.net>, Scott Chacon <schacon@gmail.com>
+Date: Tue, 2 Jan 2024 05:23:18 -0800
+Message-ID: <CAOLa=ZTR6aW5aoxcMOS3U3TL1VxSfmyVno9fu7B5201pJTqyyg@mail.gmail.com>
+Subject: Re: [PATCH 2/6] setup: move creation of "refs/" into the files backend
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hi everyone,
+Patrick Steinhardt <ps@pks.im> writes:
 
-The 106th edition of Git Rev News is now published:
+> Move the code to create the directory into the files backend itself to
+> make it so. This means that future ref backends will also need to have
+> equivalent logic around to ensure that the directory exists, but it
+> seems a lot more sensible to have it this way round than to require
+> callers to create the directory themselves.
+>
 
-  https://git.github.io/rev_news/2023/12/31/edition-106/
+Why not move it to refs.c:refs_init_db() instead? this way each
+implementation doesn't have to do it?
 
-Thanks a lot to VonC, Josh Soref and =C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec who h=
-elped this month!
-
-Enjoy,
-Christian, Jakub, Markus and Kaartic.
-
-PS: An issue for the next edition is already opened and contributions
-are welcome:
-
-  https://github.com/git/git.github.io/issues/679
+@@ -2020,14 +2024,30 @@ const char *refs_resolve_ref_unsafe(struct
+ref_store *refs,
+ /* backend functions */
+ int refs_init_db(struct ref_store *refs, int flags, struct strbuf *err)
+ {
++	/*
++	 * We need to create a "refs" dir in any case so that older versions of
++	 * Git can tell that this is a repository. This serves two main
++	 * purposes:
++	 *
++	 * - Clients will know to stop walking the parent-directory chain when
++	 *   detecting the Git repository. Otherwise they may end up detecting
++	 *   a Git repository in a parent directory instead.
++	 *
++	 * - Instead of failing to detect a repository with unknown reference
++	 *   format altogether, old clients will print an error saying that
++	 *   they do not understand the reference format extension.
++	 */
++	safe_create_dir(git_path("refs"), 1);
++	adjust_shared_perm(git_path("refs"));
++
+ 	return refs->be->init_db(refs, flags, err);
+ }
